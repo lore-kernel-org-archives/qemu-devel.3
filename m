@@ -4,139 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D24CC4452A
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 12:41:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF916C44515
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 12:42:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlnIv-0004CU-44; Mon, 20 Jul 2026 08:41:05 -0400
+	id 1wlnKV-0005Be-EX; Mon, 20 Jul 2026 08:42:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wlnIp-0004Be-8p
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 08:40:59 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wlnKN-0005Ap-66
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 08:42:36 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wlnIm-0003O3-A4
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 08:40:58 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ id 1wlnKL-0003kY-9s
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 08:42:34 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66KAvUFp2430532
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 12:40:55 GMT
+ 66KAvWB81910265
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 12:42:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- NcK2lD80IW58EG28I3el0j7EYsxuzJRrUYu7Z7vsjWc=; b=kcbk4AOFmjGhYfLb
- lhhUubZ7qK9XvT4iVgcnoPmXhOIbPnsSs5rf9+67S64riU2louQH6/f53VZcZx0h
- /T33lr0yI6qjAR5NQYMgHj96cD/s+4Pj59rx+b2L963mTSco8CkOYReRiAUPpYsu
- 8fFskLR638m0k7jVTAVoKrbeN7VpG+0hikZZCQ/vhBgo/N+s0csElGgGrMJAEGNA
- vk6CosQB5u/ccsfNa3SgkSFrdgL4EJsBHQXwG80ObHDTMltWuhUoeC8H/MVNIIm5
- YMticXRfvOp2ynwa84IEEdG5iJFSutGyzE43cZKDezKsGjcMX7pxfDdZdPAr6gH5
- e6EUnw==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhhgyrmr1-1
+ WUEFeqe3nmFgcDPXmVor19zyDV7iuIH2BWCvGqlAub8=; b=dhDVHhQYX/MiEu9X
+ t6Yl1RVacUdH/3GQTaoAuWNARadsFbjKLrnSrbM8NIiYRfWJXCRfYR3XAGyIhE/N
+ AEgaGvenWRtgelulvGguK+xDJZT6cUWS2RMmEp1bBFkCOk6xKjfXQxqs8QbRBWoc
+ VQozE42VRWFIfX6imJqK1Tg2qaFR9EUvbNSV57hwBmuzy6/pR+tfGvt1/UxzCmN+
+ FIwgmUHIJVvC5Apxvyu7WjRo+SKMh+aY1JYHOMPrki+Zi/EvaGz0SR7ffHYLLzQP
+ lY9xEI+4dR4G5vtA2rk7w2olkKoy9JwLmjuAtazyuJhtymfMx1kvr6dRIJWt09wp
+ snJDXw==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhgs50vh7-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 12:40:54 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-8f1e4e0eac1so173153696d6.1
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 05:40:54 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 12:42:30 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-51c0408254aso88035041cf.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 05:42:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784551254; x=1785156054; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1784551350; x=1785156150; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=NcK2lD80IW58EG28I3el0j7EYsxuzJRrUYu7Z7vsjWc=;
- b=ZxqgxX5/UMnsVhzFdpSJHY0o/J6HSNB/xUD5ai+8N5dtebZ0EjsSy/fJeO20N9b70p
- iiYYoKaEftqJVCJm+8IZ3zk4I7Wie8y63r/F+uxBAOhoJ8SUSs8B4ILNDhFGToEhaQDa
- LMBcJPgJBxKG8jeW48PQsoGbkmPd8cSiz+vb8GssTELB58DAkZW/bwwhRw1nIn/ZHXI2
- JRhLlDfkHLKs/mN1c0LxojVxVQjOGVDFxZadmw8OKCbTqJ+tqsd6estG4LCK2+DRrtPy
- M7PjBUYgCBy4+Ab6vJIwlPOzmftX6Pgq6E2rzcZBxZhBac6yDi9tmXDAofwDJesCE2QC
- ofgg==
+ bh=WUEFeqe3nmFgcDPXmVor19zyDV7iuIH2BWCvGqlAub8=;
+ b=WTv6H0UXspGwcw6Fq8PZdYYSkjkV2IuBvVA+Kvl8YPJsdmSLi1dNm7vpQDmwl3K4iA
+ vw3t1ApVzLWKkVIPSCrM9D7aItt7g7205oQMM6p1wZ4g3G0QfZkLOjlj0n+xeiwMKskP
+ nz/CZTdY3Azmej6d4kqkcfEHOVNEBZn+DarZSreu+Z+Q/ec493oyM+iZHxzC1ZU/ztzA
+ OrnSvDVsjrtT5dtamp2xWCkMRdAtIyHW7McY9LUSKuNIw2k8t6WFzQvVXBamQNov+oWL
+ bxIUOVN/X+KRIaKjAtpfOHelL75XQ9Z5mgBLI6lN84TLdLK4fyKu88u77iMhnwJnFyx0
+ m5ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784551254; x=1785156054;
+ d=1e100.net; s=20251104; t=1784551350; x=1785156150;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=NcK2lD80IW58EG28I3el0j7EYsxuzJRrUYu7Z7vsjWc=;
- b=bn6fJJmcYBKkLA4PKqq0gm/3Mw+mnxD5DkX+Y4jrysauNrBfY+6B6BYC3wZ1pMO1ib
- 53wtDX0yeY36iN9/bQGMjkO0QPTOYh/0m6nMs+e1oL/XDhALDf3dG81awJrAVtvxOJw6
- xTh9IcTbKVjxqrDhHx/UBUjzesHignqFphi5VubRA8ES6heEFlcBKXJjpJltIqFpgX46
- j4EJYJGRD5kgeq1VMeNYq61vV8y09ZfctpLac2b3d+bxbwHgl2xy6rVuT0NraDePZGYy
- vxla8WOBv4CEMCcDK76ZRoVp+E5xStbbLKnPrW0otnooyj7ljpXqnsUVz/M15nbuEAHI
- Hkvw==
-X-Gm-Message-State: AOJu0YwvkeQhOsHgkYytVQsCWF0o2GLFHWVp0+DVLQd83Xa3IJbGBjRx
- L90j5KynjF9pZUZm58O3f3XTwyZYvGJrPu3TT9qBT/A2s4GlXYHfX/05aKwJUm8MUITzKCIz3Fi
- Uhn3/mz3sBLvfJplF7cg2Fu9ugdYLMPmzSdPW0c/x5wrD2oYekXUuWH6nww==
-X-Gm-Gg: AfdE7ckQm6lOPXPrVVcXoFPRVeXVsK8TcxZW1QJ29UQVGdOylyKsnY7XAjY71KQk+Te
- sh/BzHhliZ0yRU3IN6JKgruL+tuhsjcejZtUni52npD08b1Y7VDGZhXBuFN0/wCckkZkefNuxY7
- IvBRBYeEYI/PNJEClFVwBjbbAVF6e9dx2RRlIaAAoAIzElfM8EFZ1PE77hvHR2b4zaR9LXk9yCM
- VNMNJ0C8ErZbyjGtNoxCqOvgp2MjAI9bbrwUzn/DbWGzNO9QuSy2hoCqMrUdzXC/7Hqe3OdlDfg
- X0NQCi77/8wBkkzK99adKhn0ffBF8sEhmcpOxy1yCTwXWKyd4RyKIM90DEBchzzfZS8gqcUP3xg
- XIciraeBNyT/KYqlaEcHEIgqqNdiGiGBYIc3TYGIUVAmWE1zbErA=
-X-Received: by 2002:a05:622a:401a:b0:51c:868:899d with SMTP id
- d75a77b69052e-5213bf113b2mr129462361cf.15.1784551254161; 
- Mon, 20 Jul 2026 05:40:54 -0700 (PDT)
-X-Received: by 2002:a05:622a:401a:b0:51c:868:899d with SMTP id
- d75a77b69052e-5213bf113b2mr129461851cf.15.1784551253375; 
- Mon, 20 Jul 2026 05:40:53 -0700 (PDT)
+ bh=WUEFeqe3nmFgcDPXmVor19zyDV7iuIH2BWCvGqlAub8=;
+ b=WanekLmkmXIujuCg43zpQiU4/+Ks8WgWfbTFZakPQ9B9DPv03sxh+pyuVHsTmPoLfJ
+ FWLOMJ0k/nexxJRJjDms1slhsJBo66E9e4Id/IZXhAsEXTZpqukxfwgySE6Ozvy1KV66
+ CTWeNbLgYy3kI7pTCm5jWfktaZXizC1ND3dnUbJWFdPpYU/z32HUU/2kEylcrqfANjT1
+ oU9+XzxdHFkPtMSAdzD473JXiJLQk77dAeD1KFiOZ/xXkIYYnwbIxnj9qwnD+D0fCDZy
+ 3cdsT7xS0K+cnaujkTLPbiTq5XQbaitKUTqzuSBKg+JM80x8fzIWTne3yV6WwNdvBBJw
+ FPCg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrjFSGS4hJoujAzVKkdeQcrRYJivsYvDgl9Khjh5zTjrlaZXGTwgMvM+iV56GB0B+3g70etyvhVOWqr@nongnu.org
+X-Gm-Message-State: AOJu0YyFzcnehr8a73DNBlnIGxiq5cnAIT5SrOqkrTxVdZEfYwk/zBx0
+ okpKvuGiFl1A3k1k3sYS4+ih+J+RqQMBW7kwr9P2Rl8jSB6bJG4NWYfFcS+LWaUyNhH8SPJA/6t
+ BYRezPkQ631rH3P2KW84b6y9IrBF2cG9+fQRv21Pd1lBlDVeYIrVe62moxg==
+X-Gm-Gg: AfdE7clJiX163cWr7JENXa/TErHXayBXv3nWFd5OtMPYWu+cESnch1KpVG8hUyL9wU6
+ 2CCfwG+CtQpAyCNbFPMfIKACMCOBMvfr0fbl+SZuGDzuE8eCiPFKnnvIb3qpbh4Op9DHRF5uw6L
+ R/0d7ZeAiMlkRSS9iH3SWhcd0I3uJ4dbZ6xUPtfaJdVhyy6TMJkEVhmFGEdj3/HQhnwl1/ji7xe
+ IdDjVwrSp4C3eIpAtq6keC6s+Mqu2lv0Ha4wrFdkfhaB4IaIPnTOPGx8AxPnphRYegKmvPeC9kF
+ Fce2t/yX+gGfQNwUzqxSKyM08ogprwwzTlC59/Y/IHqKG9bX2MIg3gMnLT71LamZQftIWEfVB2D
+ lfL1pzXXdNepr4Bl2pMrX4qLNugQlgV9Dao2FqNnFtj7o+9PqWpk=
+X-Received: by 2002:a05:622a:50c:b0:516:82e2:7788 with SMTP id
+ d75a77b69052e-51fbeeb3148mr168186421cf.1.1784551349888; 
+ Mon, 20 Jul 2026 05:42:29 -0700 (PDT)
+X-Received: by 2002:a05:622a:50c:b0:516:82e2:7788 with SMTP id
+ d75a77b69052e-51fbeeb3148mr168186181cf.1.1784551349489; 
+ Mon, 20 Jul 2026 05:42:29 -0700 (PDT)
 Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f63e52aa4sm30280010f8f.10.2026.07.20.05.40.51
+ 5b1f17b1804b1-4954a2aa698sm255832295e9.4.2026.07.20.05.42.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Jul 2026 05:40:52 -0700 (PDT)
-Message-ID: <ff3d5146-2322-4fc1-8615-a162fc838984@oss.qualcomm.com>
-Date: Mon, 20 Jul 2026 14:40:51 +0200
+ Mon, 20 Jul 2026 05:42:28 -0700 (PDT)
+Message-ID: <2f85ee9f-91a6-4e61-8438-8c5f3a0dee38@oss.qualcomm.com>
+Date: Mon, 20 Jul 2026 14:42:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/usb/xhci: clamp interval exponent to avoid UB shift in
- xhci_init_epctx()
+Subject: Re: [PATCH v2 3/7] bitops.h: Add find_first_bit32()
 Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
- Feifan Qian <bea1e@proton.me>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Gerd Hoffmann <kraxel@redhat.com>
-References: <sXJQOREScD4G6fYInirO2wbLtvZf6EK1yuTrP6U3GQBM5dIq7dhRnCm9uxSSiRRK0b4m7OEZRqEgjzHCTFoS0DruFvYUXh-UUXhkY0x786A=@proton.me>
- <CAJ+F1CK=jxw1Nf8UYa6jx344HknSXyj5A4MaoUWr5xJSK-ohjg@mail.gmail.com>
- <f8f6b689-eb5f-442b-ae69-f09c226ea9f2@redhat.com>
- <56a25874-cb6f-4510-8946-bd60e11fde43@oss.qualcomm.com>
- <d815f5a5-f3bd-422e-98fd-eeb12f8bb91e@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org,
+ pierrick.bouvier@oss.qualcomm.com, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ matheus.bernardino@oss.qualcomm.com, ltaylorsimpson@gmail.com,
+ Thomas Huth <th.huth+qemu@posteo.eu>,
+ Laurent Vivier <lvivier@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+References: <20260715185701.1287176-1-brian.cain@oss.qualcomm.com>
+ <20260715185701.1287176-4-brian.cain@oss.qualcomm.com>
+ <cc3b6f33-6cc7-484c-901c-ffa4003c2865@oss.qualcomm.com>
+ <CAFEAcA9iSgrua_ekOQ=EaXp=Mcxwk52qK6AkRXCrH1KcRm_vTA@mail.gmail.com>
+ <6e4220ed-1e4f-4174-88cd-151c03b8048d@oss.qualcomm.com>
+ <CAFEAcA-_rWzq3zq4AfduTRodMTcBZEU6bFtX3qhJYfn3VfBLdA@mail.gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <d815f5a5-f3bd-422e-98fd-eeb12f8bb91e@redhat.com>
+In-Reply-To: <CAFEAcA-_rWzq3zq4AfduTRodMTcBZEU6bFtX3qhJYfn3VfBLdA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDE0MSBTYWx0ZWRfX8ExDoXxCXiR7
- ZjcCqr3DfSin07W4VvwsMy5UfKSlx2equnw1nGud+z5m473cGGlCQxbkFCHLvssL9Rj71LZsK6n
- ds3824x273NOLgUkmIyXvIT6+m9geT4=
-X-Authority-Analysis: v=2.4 cv=LK9WhpW9 c=1 sm=1 tr=0 ts=6a5e1756 cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDE0MSBTYWx0ZWRfX3wfkJzFgy+NJ
+ pQk5xfU/tTWbtWBklWOPp49hB50Lagj8E8zmuUc/ghy6O/WMCVjcr9SxjXhuvxI2SoEkbcCmJLF
+ 4T0cnNEUix3gzAfTp8XU0vqtjk6NSKk=
+X-Proofpoint-GUID: w-1C7pZ4uRLgZ77aNEAz4FPabHq5on5c
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDE0MSBTYWx0ZWRfX+l9zTz68x72U
+ Cwq/CqCIbqv8oI/hA+rWxorymRDAo4iXSLg9FQkqqhb+D3oYK4MoTXeT+emsc6Pqdj+HYOgmUZU
+ SXEWAvJLnwjMMxjPyMHGvQT3Pjgo/4HIcIOFrWVua0VLJAkw9yj7372BWVY4pn6YkDBlLjpQeUi
+ RrvFY1D1RM4YkB1aaHinWfCaJk+fSZZ2CYHx0a5y/IrUtpYQrm3X8TjRT4ugVXryjiN4MoRkdSn
+ M/J6Pm5USQIWmIn1XTWI2bYEYjhdx+8nJ0lp5HxXQ5CZtWZ9eF2ZGZUgcaxs/m33yCHf/wHM/9A
+ YgdsEUcutAw0il0Ppo8YrBc4XM8phT+dT8IS2hFG1DBExY6AiUfn+0jc1eG2G35/yxT73o21I3+
+ BZSZxQ0kDsxkLQEqEVzEv3TODgn08/fbIZnXF1yBvVw4MuXKNSPW6hicWRr+iYyXdccsYFJKuRh
+ +qGJbMq548lvakR3WGA==
+X-Authority-Analysis: v=2.4 cv=CpiPtH4D c=1 sm=1 tr=0 ts=6a5e17b6 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=dfoUiL5mPq-3FJnU9voA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=1HOtulTD9v-eNWfpl4qZ:22
-X-Proofpoint-ORIG-GUID: zkD9yZw_i3Cvkq6eZ5gCCyw-zLKnm6sl
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDE0MSBTYWx0ZWRfX8gcXcLdk5dsd
- oN/oj7I1TKkN68uxzfrw5jvdllfF5CAr6m+USCL3MiDZKNNrm3+fyvnU95o9yf05J7CiKwctUCl
- CD7qdsT2M3Ccl9WppR9L9DcFle6kxDtiyZfeuU+ROWinRYzIDp2NJMmo5TGCx24eTR76qrJGoR9
- N8ZYPXF3OMns6q8JSfeyUvrqDdMm/ljNCdOY8xQN1OxB+G2d8RrYpmxRYoY4bXHYIggsP2KoxdB
- pwknLB9ALDVcvKmqAZsPnkTM7PK/jibAk0GOdxcpMAFdX5MuIUlKpHlvpvKS1S0XJDTyB4J0zV1
- WNxGemHvB3jn6oqS4wb6wEgvvNzwSGTCx4kf1Dtli2R6ON3w5X+KGGTqmUkhKfulUA4EmP59+Eo
- oeLQTXvtTmX5dWHsny9DaJPnjpHHdo+idfUiaigzHJByrNu/YQdUo9gqhrUnIujhusNonVis+xP
- AGEGKnLFlcGBOOSeopw==
-X-Proofpoint-GUID: zkD9yZw_i3Cvkq6eZ5gCCyw-zLKnm6sl
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=XfjdRMWuiX4hZh7pmcAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-ORIG-GUID: w-1C7pZ4uRLgZ77aNEAz4FPabHq5on5c
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-20_02,2026-07-20_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 phishscore=0 clxscore=1015 malwarescore=0
- suspectscore=0 impostorscore=0 lowpriorityscore=0 spamscore=0 adultscore=0
+ malwarescore=0 priorityscore=1501 phishscore=0 spamscore=0 clxscore=1015
+ suspectscore=0 lowpriorityscore=0 impostorscore=0 adultscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200141
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -159,54 +164,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/7/26 14:03, Thomas Huth wrote:
-> On 20/07/2026 13.42, Philippe Mathieu-Daudé wrote:
->> On 20/7/26 10:37, Thomas Huth wrote:
->>> On 24/04/2026 16.54, Marc-André Lureau wrote:
->>>> Hi
+On 20/7/26 13:51, Peter Maydell wrote:
+> On Mon, 20 Jul 2026 at 12:46, Philippe Mathieu-Daudé
+> <philmd@oss.qualcomm.com> wrote:
+>>
+>> On 20/7/26 10:31, Peter Maydell wrote:
+>>> On Mon, 20 Jul 2026 at 08:49, Philippe Mathieu-Daudé
+>>> <philmd@oss.qualcomm.com> wrote:
 >>>>
->>>> On Fri, Apr 24, 2026 at 4:37 PM Feifan Qian <bea1e@proton.me> wrote:
->>>>>
->>>>> The xHCI endpoint context dword 0 bits 23:16 ("Interval") are written
->>>>> by the guest and passed directly as the shift amount in:
->>>>>
->>>>>      epctx->interval = 1 << ((ctx[0] >> 16) & 0xff);
->>>>>
->>>>> The shift amount can be 0-255.  Shifting a 32-bit `int` left by >= 32
->>>>> is undefined behaviour under C11 §6.5.7p4.  With UBSan
->>>>> (halt_on_error=1) this causes QEMU to abort; with aggressive compiler
->>>>> optimisations that assume UB is unreachable the result is
->>>>> unpredictable.
->>>>>
->>>>> Clamp the exponent to [0, 31] with MIN() before the shift, and use
->>>>> `1u` (unsigned) to avoid shifting a signed integer.  The xHCI
->>>>> specification defines a maximum meaningful Interval value of 15 for
->>>>> most endpoint types; clamping to 31 is the minimal safe fix that
->>>>> preserves the full unsigned 32-bit range for any compliant value.
+>>>> Hi Brian,
 >>>>
->>>> I think we should clamp it to 15, to comply with the spec.
->>>> Otherwise, the patch looks fine.
+>>>> some random thoughts...
+>>>>
+>>>> On 15/7/26 20:56, Brian Cain wrote:
+>>>>> set_bit32()/test_bit32()/etc already let devices operate on
+>>>>> guest-visible uint32_t register arrays without depending on the
+>>>>> host's 'unsigned long' size. find_first_bit() has no such
+>>>>> equivalent, which pushes callers towards casting a uint32_t array
+>>>>> to 'unsigned long *'.
+>>>>>
+>>>>> Add find_first_bit32(), implemented the same way as find_first_bit().
+>>>>>
+>>>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>>>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>>>>> ---
+>>>>>     include/qemu/bitops.h | 30 ++++++++++++++++++++++++++----
+>>>>>     1 file changed, 26 insertions(+), 4 deletions(-)
+>>>>
+>>>>
+>>>>> +/**
+>>>>> + * find_first_bit32 - find the first set bit in a memory region
+>>>>> + * @addr: The address to start the search at
+>>>>
+>>>> s/addr/ptr/?
+>>>>
+>>>>> + * @size: The maximum size to search
+>>>>
+>>>> Pre-existing, it is not clear this is expressed in bits. Neither if
+>>>> we expect it to be a multiple of 32, or @addr to be 32-bit aligbed.
+>>>>
+>>>> Maybe rename as @last_searched_bit?
 >>>
->>> Some endpoint types seem also to allow up to 18, so I'm going to pick up
+>>> Could we please stop bikeshedding this function? It's
+>>> a simple copy of the existing find_first_bit() but
+>>> with the type changed from 'unsigned long' to 'uint32_t'.
+>>> The comments and parameter names on that existing function
+>>> have been fine for years, and having the new function
+>>> pick different names and comment phrasing seems unnecessary
+>>> and obscures the parallels between the two functions.
 >>
->> Which ones? I agree with Marc-André they are using illegal values.
+>> Argument renaming of course implies renaming the other companion
+>> methods. You taught me to add public APIs with good descriptions
+>> when possible, I thought your advice was worth to other contributors.
+>> I'm not considering this review comment as bikeshedding. Anyway,
+>> thanks for your review and advice. I don't object if Brian keeps
+>> the current names or rename as @a, @b, @foo, @bar.
 > 
-> According to the XHCI spec, the "FS Isoch" endpoints are using values up 
-> to 18.
-> 
->>> this patch with 31 replaced by 18.
->>
->> If we don't want to report the illegal value as GUEST_ERROR, I'd
->> just clamp to the spec and call it a day:
->>
->>      epctx->interval = 1u << extract32(ctx[0], 16, 4);
-> The spec says that the interval field is 8 bit, so this is certainly 
-> also not right.
-> 
-> I'd say let's fix now the undefined behavior with the current patch, and 
-> if someone feels like implementing the spec more precisely, this can be 
-> done with a separate patch later.
+> Sorry for being a bit grumpy -- it's just that this is the
+> second time around of somebody suggesting a change here
+> to something that's already present in the existing
+> function this is patterned off (and which we borrowed from
+> the Linux kernel originally).
 
-Sure no problem.
-
+Ah, I missed the previous suggestion and didn't know about the
+historical origin. Thanks Peter.
 
