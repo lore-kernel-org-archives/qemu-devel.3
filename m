@@ -4,142 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB451C4451B
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 08:26:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39FF2C4451B
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 08:27:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wljK3-0006cM-8g; Mon, 20 Jul 2026 04:25:59 -0400
+	id 1wljLM-00077w-2V; Mon, 20 Jul 2026 04:27:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wljJe-0006Zk-VK
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:25:35 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wljLJ-00077d-Ok; Mon, 20 Jul 2026 04:27:18 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wljJc-0001dq-BS
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:25:34 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66K6RoDH1263202
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 08:25:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- UQTmmlk3Ftp56dW3WFZ8bcsagWfeiqwA7V2wJpSIxpU=; b=RZ7afEKWl5wCeByS
- G16daZdK1FAAMw2q64I/IcE4dU5G4voWbrqNf1NTVAI2UGPcrfwYHgqv26yVTvcG
- GcJ3Rl90J2IpFbqRKPhzaUtqvhFhF4/gpHHhTEyGDrVyzT7z9DIAKOOLL5Q5CUtp
- Uoc1E71OzHGFiQV6OH5r/CyQDpwYt2yt6wjgdSt1KF/I2DG7MtYcRg0nwtaGiG6d
- 8WMTmfXceCSdXP4W3u9VkyLWK56CukFGbIL4MJ1mSeRlOwhIckOd6zJC22H8Ur32
- aXFS53p7NL21QAqvKHRAEhUte9UVyyCnUz4ihZYeAKeJykO8A/uxlD35srWaxdgc
- 13KQHg==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fg2nhn5jw-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 08:25:26 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-904ee4473a8so159543106d6.2
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 01:25:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784535925; x=1785140725; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=UQTmmlk3Ftp56dW3WFZ8bcsagWfeiqwA7V2wJpSIxpU=;
- b=Kd3AqQpT7+RZaiqSUhc1wZT66gdLZhOPngyUnNFOfHSLBIxEuRjiLrwPmapaj2H54P
- FSP9kl0A4G79dmOF34UxE3OC2P0+6C9RBgBi8RTAJTVad91tRm3UwFCTkHMnhjPlGrrW
- rzxD7dPTN4+O6MDsxTGkG1s71l1elVj+MH33Ad6LkzS/bfQ/xynt65NF3LiXjXuIvyGA
- jfOhvuZmMdLUIKFBcapXwKyg4JPTRf4GMgY1GEpGgFr7zcMwbfLLPGn27b4iB6PRQu8i
- d5TMGet8lf79IIDLiR90EcE/p4iHHtkM2b8ijQMsvZx27fNCB9fzsShiewJtOxJSsi5x
- ywUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784535925; x=1785140725;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=UQTmmlk3Ftp56dW3WFZ8bcsagWfeiqwA7V2wJpSIxpU=;
- b=jFNOM5E4iC8LFs6ipGLgv0qbttxcRSEp+gMPc8Mn/UU88lr/BKFr9Ehoi0Qg3vpB0A
- /eVz8ZQiH3o24pnCbi64U3Z6MYCzU6S6sJvBZu5YupxMCERcpIYnnIOcTrDt7NGpC5hZ
- 8LiFIoXWDIj035WaTOQfqtwXjQpbN436O0tCWuZYVD0/zOHJUm7dKJ+LJtQkpEi6T1M2
- hI+DVGsoJkujc8bRBapJxEQpR2xom+dNnfv84X6/p6gnScrdRsDeAuPSu+Xkks8xgx51
- PAzfdOB5MH8qHZrRRl+fwOlg57Bg2KRn3GPXK6YMEvvmCAy7oQf+Maoyl7WCRuTHmz7E
- hdMg==
-X-Gm-Message-State: AOJu0Yw0HsfgHRwAhwpitdabdoKtnEUvxgMNFTsEKMQ6mTToJPkQF4nx
- mGAz41SG8eNO4AdvDt6AF5QJiRtJ8IbZNBerLNZCWehXtGzaxRU87W4Gdc4Xoq422BqS/YdZvsn
- zJT+cM24y03vl+yAmxIqEd65mH7vmOctQiCobIz9abG77EoDkSwXrL2K3mA==
-X-Gm-Gg: AfdE7cmlM4OvQafbZCoHnjZ5yX1zRrhl9PGzjap/u76Ybq5xlfdhDHEtvZQIHu2dsDd
- WquwcNIw3Q+uFe7iRVNLecHnM6BnvZMm1xsIBb0VHcQHlrnyc75AsoF3hj/pU4Hh7uWhg+PM/RS
- DQXQN/wN2XhBetC0Hwl3bOo4LX7c3xOL9bQXDDN+ENtxpgampoyq8LCNAHSnGqKUmCyIc6bVZgH
- yvN2dBqTTMTEGZmCBDYp9IDEodk4fM9ulG+2B3DLX63Xr2z6tOE0ZIl7EhAEjaOzIsHdojGTW+w
- rUi7D447Cg/aaFBxTEck+JQVD6OeMmArw9BlTRmzwxyBSkVYhs09wXnC9BmPE2pBkY77t0+YFDU
- FYPfcxebg3x0NOcOKqNfy5szMbqftWbKl/I9VMNKkQEBuaewCL1I=
-X-Received: by 2002:ac8:5ac1:0:b0:51b:fc54:c23c with SMTP id
- d75a77b69052e-5213e67a3c3mr119006681cf.61.1784535925483; 
- Mon, 20 Jul 2026 01:25:25 -0700 (PDT)
-X-Received: by 2002:ac8:5ac1:0:b0:51b:fc54:c23c with SMTP id
- d75a77b69052e-5213e67a3c3mr119006431cf.61.1784535925104; 
- Mon, 20 Jul 2026 01:25:25 -0700 (PDT)
-Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f63e52aa4sm28555684f8f.10.2026.07.20.01.25.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Jul 2026 01:25:24 -0700 (PDT)
-Message-ID: <45c9ab4c-3f47-44a0-8f48-bad329c9c1cd@oss.qualcomm.com>
-Date: Mon, 20 Jul 2026 10:25:23 +0200
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wljLG-0001ka-VI; Mon, 20 Jul 2026 04:27:17 -0400
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 313378076B;
+ Mon, 20 Jul 2026 11:27:09 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:c56::1:1b] (unknown
+ [2a02:6bf:8080:c56::1:1b])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id 8RQECN0XKGk0-GRSujW03; Mon, 20 Jul 2026 11:27:08 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1784536028;
+ bh=5G+poiKlqQtGU40Q26Znl8zMkzL9D1bx+jI85HAcFZM=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=AOyTfS1aAdNJwl8Rq28A2bxfskUUEoW5JuLgb4t1CLw7yqusWstQK2F09QN2RMEYI
+ lkqc7u/UXW35fPutoBUeUM6sROPiRFUVs+0jhQEkkxYltYQfpzr4wBBz8NKqMFikjN
+ xFhcD9RrJrBxBYBQYzIskMB4AHOGO0HkjJp1FUZk=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <0dd80eb6-7510-4453-afd4-b0fe5713b664@yandex-team.ru>
+Date: Mon, 20 Jul 2026 11:27:07 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] riscv/virt: Add optional UART1
+Subject: Re: [PATCH v2 2/3] migration/block-dirty-bitmap: reject bitmap load
+ onto ro node
+To: "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Eric Blake <eblake@redhat.com>, John Snow <jsnow@redhat.com>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+References: <20260716112242.3000035-1-den@openvz.org>
+ <20260716112242.3000035-3-den@openvz.org>
 Content-Language: en-US
-To: Yanfeng Liu <yfliu2008@qq.com>, qemu-riscv@nongnu.org
-Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com,
- pierrick.bouvier@oss.qualcomm.com, sunilvl@ventanamicro.com,
- palmer@dabbelt.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- chao.liu.zevorn@gmail.com
-References: <tencent_4EEBFC805F3E59863BEDC38094EF5A109206@qq.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <tencent_4EEBFC805F3E59863BEDC38094EF5A109206@qq.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20260716112242.3000035-3-den@openvz.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=Le0MLDfi c=1 sm=1 tr=0 ts=6a5ddb76 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=dZbOZ2KzAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-GUID: nKhG0DVK-YX4g0_xBcfxQyCPcOZrYiB4
-X-Proofpoint-ORIG-GUID: nKhG0DVK-YX4g0_xBcfxQyCPcOZrYiB4
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDA5MiBTYWx0ZWRfX+/SsLvjLedSk
- riE5QiJ4nBoTDoNBeNyDgOLkTKeorLXy2vgJnY/EXTiExwGHiJQ8WPhbobud/qjStrVyAqY0i/V
- b4RApxOPpcw4tl/z4nM+Vf6qCAuhAmqNfQBskqCn7+ijjHak53U4s1b9eA81oVm0sRwTav7VHp3
- 8Kkvx6eyU7MNl4JUQuVYx+YVjZTP9JbDqZ9lSFrOex3znDDxyZPTauIstyC21tugHJdMpjUyNCz
- po6g5vtjs2CqG0wBiUpiJmnnGScIloSUVR3niOk4jPwLyXLLqFlddPabIMN3KzzU06riR80KdcO
- p3RJoVhI9q6VSegDStDMRDJfvL2HpBVPSoAX9hXhIlkaT8tt3RM7nIVeGLo7IKQ5frpNtOsvANu
- M2IaFEoA14+ovY5sMdPMI0KkqPmZjA/LLiz2EfYxLISWaNpYhU/5f+01eDxJAQGl0cOSqeJeNL3
- UIUCqNQvD9UGp5Q20fQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDA5MiBTYWx0ZWRfX1CqWEUtuxuhJ
- AMu0IKK5MsxkBeD3HIPjdZJLxHpdTppqjC6YgaQibr3FxKKvsHuVkRcCKhgXDzFm7qX4GZdkbWT
- szG83BBybGj16ElVKO7L7PGqmWRvrMw=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-20_01,2026-07-17_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 clxscore=1015 adultscore=0 phishscore=0
- bulkscore=0 impostorscore=0 priorityscore=1501 malwarescore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200092
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,27 +77,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/7/26 04:16, Yanfeng Liu wrote:
-> This adds optional UART1 to RiscV virt board if required at
-> runtime to simplify multicore development.
+On 16.07.26 14:22, Denis V. Lunev wrote:
+> dirty_bitmap_load_start() creates an incoming migrated bitmap with
+> bdrv_create_dirty_bitmap() and, if the source marked it persistent,
+> calls bdrv_dirty_bitmap_set_persistence() without checking whether
+> the destination node can be written to. Same gap as
+> qmp_block_dirty_bitmap_add(), reached via incoming migration: a
+> persistent bitmap for a read-only destination (e.g. a migrated
+> CD-ROM-class attachment with dirty-bitmaps migration enabled) ends
+> up writable in memory on a node that can never store it.
 > 
-> Note that UART0 remains default serial_hd(0) and it is:
+> Reject it the same way, with one difference from the QMP path:
+> every destination node is BDRV_O_INACTIVE until migration completes,
+> so bdrv_is_writable() would reject every incoming persistent
+> bitmap, not just read-only ones. Check bdrv_is_read_only() alone.
 > 
-> - the lowest address UART
-> - first serial in DTB
-> - behind /aliases/serial0 in DTB
-> - the /chosen/stdout-path in DTB
-> 
-> Note that UART1 is placed at different page from UART0 to
-> support page level isolation.
-> 
-> Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
-> ---
->   docs/system/riscv/virt.rst |  5 ++++-
->   hw/riscv/virt-acpi-build.c | 12 ++++++++----
->   hw/riscv/virt.c            | 40 ++++++++++++++++++++++++++++----------
->   include/hw/riscv/virt.h    |  3 +++
->   4 files changed, 45 insertions(+), 15 deletions(-)
+> Signed-off-by: Denis V. Lunev<den@openvz.org>
+> CC: Eric Blake<eblake@redhat.com>
+> CC: Vladimir Sementsov-Ogievskiy<vsementsov@yandex-team.ru>
+> CC: John Snow<jsnow@redhat.com>
+> CC: Andrey Drobyshev<andrey.drobyshev@virtuozzo.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+
+-- 
+Best regards,
+Vladimir
 
