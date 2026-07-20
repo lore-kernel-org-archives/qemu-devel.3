@@ -4,103 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF9AFC44524
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 08:49:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9BD8C4451B
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 08:50:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wljgU-000250-N6; Mon, 20 Jul 2026 04:49:10 -0400
+	id 1wljhY-0004Q8-Nc; Mon, 20 Jul 2026 04:50:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harsh.prateek.bora@gmail.com>)
- id 1wljgL-0001zs-Rj
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:49:08 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <shankerwangmiao@gmail.com>)
+ id 1wljhV-0004Or-G2
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:50:14 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <harsh.prateek.bora@gmail.com>)
- id 1wljgI-00045N-PX
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:49:00 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-c15ca7a7ca9so687662966b.0
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 01:48:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784537337; cv=none;
- d=google.com; s=arc-20260327;
- b=h6ON0L448wcneVQ70G15fwcKp9U/KC4V7wGe+A3VC+d7voTzy+2KiRm9qExfrzI3is
- NMio6+owwS82z47bOARlew/L7Gr+JOX5RocixAnd5ruArhOypm7FzkuJlME7jKRutvFR
- ERtdgTma1B3EYk3UAHacrTtVyVZ5Oqq8CNwdI1YLlgEwLu2G0lYW/kGUd0d4BcghilIP
- EoVOHB6gOO6tx4YnyMEW2dgZLJ48+NzkLTnpaxzODGg6zsCv9iRmCo1hyjPar6d5ZQXy
- j1MFmQ1BcPyAXdrsTnR1gTRKBPk7r8zq4i9e5SwsPCTw8dPDJfJAzRcNGFYEfUT4ehKL
- Sk9w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=rm8z9NYOGt/sbJGAZGsuA6m49jiXeXGY3jUyy1j/Cc8=;
- fh=73W7Ai9r/ud1TUtB+afMqkPQHTtJWUNcu/T9z3b7Rms=;
- b=fQj9Z+ePirzM9u6bEBRPeXVbAYptA8EdnDI45Yc4nlA+DJLWr74XeopHC6rVB3JHxx
- c1eixBJFgM9AQD43y4m9Xj8o0Y18V6i1UADChmw80pA7o/bBDr8ZLQPX5/6EDs1YNozt
- 2DUYiZHNCDvqtiv5jbi/KhMz05aB+wcD0c5BRcRANOqfQcc3vq/xPCAINwg7Z3Xva7yB
- TfO4+IizKO+1XkKlAHVg3f8Ni2yKOO4sWKv18UU4tk7g9Uow9BJgzfXBg+YRLPRS5PHn
- 07W0tqzuZELjIDFXEJvLN0j4DGsb3lfhC/2qIHepp10zsQYWIH+SMfVhyDmtvI/m8h3D
- bIxA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <shankerwangmiao@gmail.com>)
+ id 1wljhT-0004No-JL
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:50:13 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-84a3e5ca66eso1248061b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 01:50:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784537337; x=1785142137; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=rm8z9NYOGt/sbJGAZGsuA6m49jiXeXGY3jUyy1j/Cc8=;
- b=c7v95CA4AyRBIy9jn04rZCnF2R3+Dnu8T91iFEPX5Ht92SEyD+3pCqLazUTMR971Ey
- B1MTL+zEDyP54Vr3es6wcQsgXiHpSm6qi6lM2gT0CFVSOuKA0nIQpL8MeJ/EqY4X5Q9Z
- 1Tkhwy3q0R7MV+tObDsL9O+8AGEuTNKlJuqiRemQtk6DklTD6B7CSuSXzRc0rAdHiUfK
- Hcc6oKH8RyKPsqU4ytpIFbAKIRgxHytAiqPEdn2VEkl2UM3JSLR9iFx4te5VUXaT9XMw
- cqj4TCmZS8mdIVNxf+4QFpWkdtW1vHOsSdfSR0GBQTrCyu7MSXGDLiIzR//Q74d4+e6X
- H0bQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784537337; x=1785142137;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ d=gmail.com; s=20251104; t=1784537410; x=1785142210; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:content-type:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=rm8z9NYOGt/sbJGAZGsuA6m49jiXeXGY3jUyy1j/Cc8=;
- b=A5pIMtZdhYuQsfrjMMizkqb3wf6KDt4GeUpYlo5ViPZkSRTZC9OkUb32TKoo29C8jm
- dhYgUmShxeK70r9GG5XacZN759VF8F2W+1O8mVoSjNbYnTRpvb+udQ143rJTi+B2mq/p
- /dfI9RFatzPssXsbgjDnMVUdAvK00WbaVnQdd6TxcE9ZfZjd/AnJ+aE8aJPUGbR4Xdjc
- bxjtezz+a3T25Z/2xBsLcxCJpEJAKvR3A3193xWZW8YhQudjJXfPVP/Yx95nN51FdV+A
- iv4bq0xJPkFOlEpXQ5sZ3ncRuLC7d4qvOCKiG3lU4M9BdXC2/4b8oqjj7G6qU+WCWYkH
- l89w==
-X-Gm-Message-State: AOJu0Yytfrwiam/7Ypu9F0BtpB9OtRX1MxXDn99plTca05I29D3JsLlk
- bHIlXfcfiWbbJ34HK/xAXOMIJIf1KSJbBgVE+A/0J2pNwZBOW0WNXX9FE/fp7fVyGHNHkyVc1ZV
- Pc6sJodZKcJKo6khLe+dtcJ8eBjD6ktY=
-X-Gm-Gg: AfdE7ck7S2Xg96V0Crev9kimgXXKfN21jYdl/Ks48JiFFqlckCbdE+iazKOFreW0iFA
- bWX2XZ6j2zkURL7QZAFF9i/szGFsLzxulBVi23JpbxC26NoblGqAVDNMGKakv5Je0M6qH+Xxf35
- Gwg77XKMMqQ5cRMlWq2TuySEoA0YN0s8To6Tj1QSBfpU8OBVr+PBSh7jZlek5YdrI3rkO57gsrL
- h6vo09f8O6jg1XfLlAIdklZpJcup+s/pejY4hPylNkNZIwKz2B+HO0+F5Rgo5LCKvfvdRJ8413U
- uyh9rcSi9rznxczbnnIQFWaHGD6nJXE=
-X-Received: by 2002:a17:906:eece:b0:c0d:cd71:6463 with SMTP id
- a640c23a62f3a-c16b46b6474mr542387666b.16.1784537336531; Mon, 20 Jul 2026
- 01:48:56 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260709095056.1803725-1-peter.maydell@linaro.org>
- <20260709201237.46ba7f2d-72-amachhiw@linux.ibm.com>
- <CAFEAcA8__tL8Dh5XwAK_GifA2boh1uMfL_eZgMTFvyMq15hLwA@mail.gmail.com>
-In-Reply-To: <CAFEAcA8__tL8Dh5XwAK_GifA2boh1uMfL_eZgMTFvyMq15hLwA@mail.gmail.com>
-From: Harsh Prateek Bora <harsh.prateek.bora@gmail.com>
-Date: Mon, 20 Jul 2026 14:18:43 +0530
-X-Gm-Features: AUfX_mzBYFsGb_kiv4ETnPppPta-YU_azIP-8E44N_xcrAtTcyOeePoPgceJde4
-Message-ID: <CAEuJdmrG_rRsivvfhEsVV+7y-q=NZ0L6hzxXPdgWGmX7OOLaHg@mail.gmail.com>
-Subject: Re: [PATCH] target/ppc: Remove unused helper_lscbx()
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>, 
- Glenn Miles <milesg@linux.ibm.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>
-Content-Type: multipart/alternative; boundary="000000000000084fe0065706fa80"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=harsh.prateek.bora@gmail.com; helo=mail-ej1-x62a.google.com
+ bh=zpvwf6XG3PE14rYErPFv+buEkaHBcr9h2qTqBtJkkoU=;
+ b=b5OdbE/doiiqSawXjHjHvsiPBHKSWuMbcjnFjL63WnQZmO818MyWBkgVguyEQZAFob
+ dhyA05Lfq3n51i+JkP9LIXXrtfoIuvcbHZlkP1JcVjgFeKtpYAjThj/ZGixcoA8gHToR
+ sWzv4ktt5V9hJCfnKMsEbcuSRovOUItYyyPNELRK8SYuZ1Ggvhx8ZuM/f99Lwzh5Qp4h
+ IyeJ0YfaNXTg4N3hVKRs7A8g4r/1qP8znkW22MJt36p8PoN2Elkg9gFHMlOaktahLM0k
+ faPOEGmuIgsOdfpbdSh11TnQnnR4AD9wbkCAjXstkt9YDlCCjzVRxT3uKlW/Zretyfyq
+ RWHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784537410; x=1785142210;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:content-type:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=zpvwf6XG3PE14rYErPFv+buEkaHBcr9h2qTqBtJkkoU=;
+ b=dqiWrXti5LxXmbYTX9aHlXTZRHAPFV4pqMOJUsPnbwh70BviZ1fSXOOOvF9tGN3f51
+ t+8IA9n/XGWx+wBN44jN93+nHn/O6zQCuePNW6rtwAJrRKvxDs4YM6wMsXazwdsj8pNh
+ 9H8eLi1HiliKo4iQp4jEVlt4ALAewotnljVD2VqdnttYiXXCmH475ruL1Z+73mjVLtTu
+ ftvi2Cg23oF4pLNiOIA99R9cfLyJvpr1QVJ/3T793r7xJ+JSF9o3Q0wQ6Y/oRlCWO3xk
+ 4EGTOV7g7zsXk/ZwZwFosZIcrDlzBXfYq4UEGgBG4FHUaSA/Uz5C6Wse7TLiXe9etgFp
+ VU0Q==
+X-Gm-Message-State: AOJu0YxUtxusNHnByEWpkBYlV7f1ID+8HbF+3w21+zT4Zl1fiZ9GEfRF
+ oUhmWVMRJZ2Q9Qqout+0OaLaetQXLEuzeYC/7j6cXvqGpzBoqz1CoOM0
+X-Gm-Gg: AfdE7ckBxtP3eSIG/kCnsDsOv/U25zmaByjru/a2mTzYu2a2Ng50BN7jIl2KxZnIvdH
+ OdGOmEwWO7RuR4rBj8gZQ3GDdRJg2EU4IKLklrxjQc2syTwrCAYqxZKynJbBkZQDyjHzOiZsGhW
+ 24ZKxRsxrxMwxIdTZnmY3F7jOr46mi1hR/VlB16VJTqdAaUY7jwPeZrXEGDpvoQqI65SmRI6n26
+ Cb4Zg2BqcILcTITJwhXoUlfP5KIdjh7En74vLm7Yfjs6epDQAo5fWaza6GMI8+OKKpEfIyD0Xzp
+ FAUS95Z7AcCOPJ9MdV+923yNajpmd1QrYoX2HDz5lNre7IaareEXrZ6OyL+qIcj+St8GY321ATf
+ nW3uBjAtY8k7kcydwyC4WmsSb1vYDe4j4FoDuYDNuful90K88L7LbZrmDaKZ48TIO9il6R+1nqe
+ /jQ2AFiNHSMA/8aW6oloCbH+fibw==
+X-Received: by 2002:a05:6a00:278d:b0:848:3dbd:5cb0 with SMTP id
+ d2e1a72fcca58-84c29444e58mr9047785b3a.2.1784537409634; 
+ Mon, 20 Jul 2026 01:50:09 -0700 (PDT)
+Received: from smtpclient.apple ([23.247.139.92])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-84c2af331e0sm5179239b3a.28.2026.07.20.01.50.06
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 20 Jul 2026 01:50:08 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.8\))
+Subject: Re: [PATCH v2] target/loongarch: fix data race in CSR_ESTAT
+From: Miao Wang <shankerwangmiao@gmail.com>
+In-Reply-To: <3613f855-8b22-2e94-fa14-339acec997ed@loongson.cn>
+Date: Mon, 20 Jul 2026 16:49:53 +0800
+Cc: qemu-devel@nongnu.org, Song Gao <17746591750@163.com>,
+ Xianglai Li <lixianglai@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Xi Ruoyao <xry111@xry111.site>,
+ b4-sent@kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <185FB2BE-2645-45CF-BA2B-316F67495FF5@gmail.com>
+References: <20260716-loong-race-v2-1-01e68e4b850f@gmail.com>
+ <3613f855-8b22-2e94-fa14-339acec997ed@loongson.cn>
+To: Bibo Mao <maobibo@loongson.cn>
+X-Mailer: Apple Mail (2.3826.700.81.1.8)
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=shankerwangmiao@gmail.com; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,248 +106,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000084fe0065706fa80
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Hi Peter,
+> 2026=E5=B9=B47=E6=9C=8820=E6=97=A5 16:34=EF=BC=8CBibo Mao =
+<maobibo@loongson.cn> =E5=86=99=E9=81=93=EF=BC=9A
+>=20
+>=20
+>=20
+> On 2026/7/16 =E4=B8=8A=E5=8D=884:48, Miao Wang via B4 Relay wrote:
+>> From: Miao Wang <shankerwangmiao@gmail.com>
+>> The CSR_ESTAT register of a CPU can be read and written by both the
+>> CPU thread and other threads (e.g., the interrupt controller thread).
+>> Currently the possible readers and writers of CSR_ESTAT are:
+>> - Readers
+>>   - tcg generated by trans_csrrd(, CSR_ESTAT)
+>>   - loongarch_cpu_has_work()
+>> - Writers
+>>   - tcg generated by trans_csrxchg(, CSR_ESTAT)
+>>   - helper_csrwr_estat()
+>>   - helper_csrrd_msgir()
+>>   - loongarch_cpu_set_irq()
+>>   - loongarch_cpu_do_interrupt()
+>>   - loongarch_cpu_exec_interrupt()
+>> The access from the CPU thread is not synchronized with the access =
+from
+>> other threads, which may lead to data races. The above readers and
+>> writers shall all run on the corresponding CPU thread except for
+>> loongarch_cpu_set_irq(). To fix this, the access to CSR_ESTAT in
+>> loongarch_cpu_set_irq() is moved to the CPU thread by using
+>> async_run_on_cpu().
+>> The data race has been identified while running the test cases from
+>> dracut, which is using QEMU to boot a LoongArch guest. By running the
+>> tests repeatedly (about 30 times) in the following conditions, the
+>> guest will hang in the middle of booting:
+>> - Host architecture: LoongArch64 or Aarch64
+>> - Guest kernel: 7.1.3+deb14-loong64
+>> - Number of vCPUs: 1 or 2
+>> - CPU Features: max, la464,msgint=3Doff,ptw=3Doff, or =
+la464,msgint=3Doff,ptw=3Don
+>> - Accelerator: tcg
+>> When the guest hangs, the guest kernel log shows various errors =
+related
+>> to RCU stalls or other Soft Lockup or Hard Lockup issues. When =
+running
+>> with 1 vCPU and the guest hangs, the guest kernel directly hangs =
+without
+>> any messages and stucks at idle_exit.
+>> With this patch, the guest can boot successfully without any hangs
+>> during repeated runs of the test cases.
+>> Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
+>> ---
+>> Changes in v2:
+>> - Simplify the changes to move the access to CSR_ESTAT from the only
+>>   unsynchronized loongarch_cpu_set_irq() to the CPU thread using
+>>   async_run_on_cpu() to avoid the race condition.
+>> - Link to v1: =
+https://lore.kernel.org/qemu-devel/20260714-loong-race-v1-1-54111549c95e@g=
+mail.com
+>> ---
+>>  target/loongarch/cpu.c | 27 +++++++++++++++++++--------
+>>  1 file changed, 19 insertions(+), 8 deletions(-)
+>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+>> index =
+fb03424ffa8cd5e5d250531cc2a36fa789fc25a9..126c3ad276cc44311942542e086bcabe=
+41d91b63 100644
+>> --- a/target/loongarch/cpu.c
+>> +++ b/target/loongarch/cpu.c
+>> @@ -57,12 +57,27 @@ static vaddr loongarch_cpu_get_pc(CPUState *cs)
+>>  #ifndef CONFIG_USER_ONLY
+>>  #include "hw/loongarch/virt.h"
+>>  +static void do_set_cpu_estat(CPUState *cs, run_on_cpu_data data)
+>> +{
+>> +    CPULoongArchState *env =3D cpu_env(cs);
+>> +    CPUSysState *sys =3D env_sys(env);
+>> +
+>> +    int irq =3D data.host_int;
+>> +    int level =3D irq >=3D 0 ? 1 : 0;
+>> +    irq =3D level ? irq : -irq;
+>> +
+>> +    sys->CSR_ESTAT =3D deposit64(sys->CSR_ESTAT, irq, 1, level !=3D =
+0);
+>> +    if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
+>> +        cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+>> +    } else {
+>> +        cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+>> +    }
+>> +}
+>> +
+>>  void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+>>  {
+>>      LoongArchCPU *cpu =3D opaque;
+>> -    CPULoongArchState *env =3D &cpu->env;
+>>      CPUState *cs =3D CPU(cpu);
+>> -    CPUSysState *sys =3D env_sys(env);
+>>        if (irq < 0 || irq >=3D N_IRQS) {
+>>          return;
+>> @@ -71,12 +86,8 @@ void loongarch_cpu_set_irq(void *opaque, int irq, =
+int level)
+>>      if (kvm_enabled()) {
+>>          kvm_loongarch_set_interrupt(cpu, irq, level);
+>>      } else if (tcg_enabled()) {
+>> -        sys->CSR_ESTAT =3D deposit64(sys->CSR_ESTAT, irq, 1, level =
+!=3D 0);
+>> -        if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
+>> -            cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+>> -        } else {
+>> -            cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+>> -        }
+>> +        async_run_on_cpu(cs, do_set_cpu_estat,
+>> +                         RUN_ON_CPU_HOST_INT(level ? irq : -irq));
+> This is a good method with async_run_on_cpu, there is one small issue =
+with irq =3D=3D 0 interrupt injection where -irq/irq are both 0.
 
-I am travelling till July end.
-If it's urgent, Could you please take it via your next PR or I can take it
-via next PPC PR in August.
+Since according to Section 7.4.6. of Loongarch Reference Manual Vol1,
+bit [1:0] stands for the software interrupt SW1 and SW0, I expect that
+these two irqs should not be manipulated by hardware sources and thus
+the irq here should be larger than 2. Can you further explain under
+what condition the irq line 0 and 1 of a cpu core would be connected
+to external outputs.
 
-Thanks
-Harsh
+Cheers,
 
-On Mon, 20 Jul, 2026, 2:10=E2=80=AFpm Peter Maydell, <peter.maydell@linaro.=
-org>
-wrote:
+Miao Wang
 
-> Ping: this has been reviewed, is somebody on the ppc side
-> going to pick it up ?
->
-> thanks
-> -- PMM
->
-> On Thu, 9 Jul 2026 at 15:46, Amit Machhiwal <amachhiw@linux.ibm.com>
-> wrote:
-> >
-> > On 2026/07/09 10:50 AM, Peter Maydell wrote:
-> > > The helper_lscbx() function isn't called anywhere.  It used to be
-> > > used by the PPC 601 CPU support; we removed that in commit 005b69fdcc
-> > > in 2022 but missed this helper function.
-> > >
-> > > Fixes: 005b69fdcc ("target/ppc: Remove PowerPC 601 CPUs")
-> > > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > > ---
-> > > This came to my attention because Coverity reported a
-> > > "shifts into sign bit" issue in the function: CID 1663681
-> > > ---
-> > >  target/ppc/helper.h     |  1 -
-> > >  target/ppc/mem_helper.c | 28 ----------------------------
-> > >  2 files changed, 29 deletions(-)
-> >
-> > "git grep lscbx" returns only the declaration in helper.h and the
-> > definition in mem_helper.c -- no TCG translator references, no
-> > gen_lscbx, nothing in translate.c. Confirmed dead code with zero
-> > callers. Thanks for the cleanup.
-> >
-> > Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-> >
-> > Thanks,
-> > Amit
-> >
-> > >
-> > > diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-> > > index e99c8c824b..6b2d19a3ad 100644
-> > > --- a/target/ppc/helper.h
-> > > +++ b/target/ppc/helper.h
-> > > @@ -54,7 +54,6 @@ DEF_HELPER_FLAGS_2(dcbzl, TCG_CALL_NO_WG, void, env=
-,
-> tl)
-> > >  #endif
-> > >  DEF_HELPER_FLAGS_2(icbi, TCG_CALL_NO_WG, void, env, tl)
-> > >  DEF_HELPER_FLAGS_2(icbiep, TCG_CALL_NO_WG, void, env, tl)
-> > > -DEF_HELPER_5(lscbx, tl, env, tl, i32, i32, i32)
-> > >
-> > >  #if defined(TARGET_PPC64)
-> > >  DEF_HELPER_4(DIVDEU, i64, env, i64, i64, i32)
-> > > diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
-> > > index 119dc1df23..787ba2cdec 100644
-> > > --- a/target/ppc/mem_helper.c
-> > > +++ b/target/ppc/mem_helper.c
-> > > @@ -367,34 +367,6 @@ void helper_icbiep(CPUPPCState *env, target_ulon=
-g
-> addr)
-> > >  #endif
-> > >  }
-> > >
-> > > -/* XXX: to be tested */
-> > > -target_ulong helper_lscbx(CPUPPCState *env, target_ulong addr,
-> uint32_t reg,
-> > > -                          uint32_t ra, uint32_t rb)
-> > > -{
-> > > -    int i, c, d;
-> > > -
-> > > -    d =3D 24;
-> > > -    for (i =3D 0; i < xer_bc; i++) {
-> > > -        c =3D cpu_ldub_data_ra(env, addr, GETPC());
-> > > -        addr =3D addr_add(env, addr, 1);
-> > > -        /* ra (if not 0) and rb are never modified */
-> > > -        if (likely(reg !=3D rb && (ra =3D=3D 0 || reg !=3D ra))) {
-> > > -            env->gpr[reg] =3D (env->gpr[reg] & ~(0xFF << d)) | (c <<=
- d);
-> > > -        }
-> > > -        if (unlikely(c =3D=3D xer_cmp)) {
-> > > -            break;
-> > > -        }
-> > > -        if (likely(d !=3D 0)) {
-> > > -            d -=3D 8;
-> > > -        } else {
-> > > -            d =3D 24;
-> > > -            reg++;
-> > > -            reg =3D reg & 0x1F;
-> > > -        }
-> > > -    }
-> > > -    return i;
-> > > -}
-> > > -
-> > >
-> /************************************************************************=
-*****/
-> > >  /* Altivec extension helpers */
-> > >  #if HOST_BIG_ENDIAN
-> > > --
-> > > 2.43.0
->
->
 
---000000000000084fe0065706fa80
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto">Hi Peter,<div dir=3D"auto"><br></div><div dir=3D"auto">I =
-am travelling till July end.</div><div dir=3D"auto">If it&#39;s urgent, Cou=
-ld you please take it via your next PR or I can take it via next PPC PR in =
-August.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Thanks=C2=A0</di=
-v><div dir=3D"auto">Harsh</div></div><br><div class=3D"gmail_quote gmail_qu=
-ote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, 20 Jul, 2026, =
-2:10=E2=80=AFpm Peter Maydell, &lt;<a href=3D"mailto:peter.maydell@linaro.o=
-rg">peter.maydell@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"g=
-mail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-l=
-eft:1ex">Ping: this has been reviewed, is somebody on the ppc side<br>
-going to pick it up ?<br>
-<br>
-thanks<br>
--- PMM<br>
-<br>
-On Thu, 9 Jul 2026 at 15:46, Amit Machhiwal &lt;<a href=3D"mailto:amachhiw@=
-linux.ibm.com" target=3D"_blank" rel=3D"noreferrer">amachhiw@linux.ibm.com<=
-/a>&gt; wrote:<br>
-&gt;<br>
-&gt; On 2026/07/09 10:50 AM, Peter Maydell wrote:<br>
-&gt; &gt; The helper_lscbx() function isn&#39;t called anywhere.=C2=A0 It u=
-sed to be<br>
-&gt; &gt; used by the PPC 601 CPU support; we removed that in commit 005b69=
-fdcc<br>
-&gt; &gt; in 2022 but missed this helper function.<br>
-&gt; &gt;<br>
-&gt; &gt; Fixes: 005b69fdcc (&quot;target/ppc: Remove PowerPC 601 CPUs&quot=
-;)<br>
-&gt; &gt; Signed-off-by: Peter Maydell &lt;<a href=3D"mailto:peter.maydell@=
-linaro.org" target=3D"_blank" rel=3D"noreferrer">peter.maydell@linaro.org</=
-a>&gt;<br>
-&gt; &gt; ---<br>
-&gt; &gt; This came to my attention because Coverity reported a<br>
-&gt; &gt; &quot;shifts into sign bit&quot; issue in the function: CID 16636=
-81<br>
-&gt; &gt; ---<br>
-&gt; &gt;=C2=A0 target/ppc/helper.h=C2=A0 =C2=A0 =C2=A0|=C2=A0 1 -<br>
-&gt; &gt;=C2=A0 target/ppc/mem_helper.c | 28 ----------------------------<b=
-r>
-&gt; &gt;=C2=A0 2 files changed, 29 deletions(-)<br>
-&gt;<br>
-&gt; &quot;git grep lscbx&quot; returns only the declaration in helper.h an=
-d the<br>
-&gt; definition in mem_helper.c -- no TCG translator references, no<br>
-&gt; gen_lscbx, nothing in translate.c. Confirmed dead code with zero<br>
-&gt; callers. Thanks for the cleanup.<br>
-&gt;<br>
-&gt; Reviewed-by: Amit Machhiwal &lt;<a href=3D"mailto:amachhiw@linux.ibm.c=
-om" target=3D"_blank" rel=3D"noreferrer">amachhiw@linux.ibm.com</a>&gt;<br>
-&gt;<br>
-&gt; Thanks,<br>
-&gt; Amit<br>
-&gt;<br>
-&gt; &gt;<br>
-&gt; &gt; diff --git a/target/ppc/helper.h b/target/ppc/helper.h<br>
-&gt; &gt; index e99c8c824b..6b2d19a3ad 100644<br>
-&gt; &gt; --- a/target/ppc/helper.h<br>
-&gt; &gt; +++ b/target/ppc/helper.h<br>
-&gt; &gt; @@ -54,7 +54,6 @@ DEF_HELPER_FLAGS_2(dcbzl, TCG_CALL_NO_WG, void,=
- env, tl)<br>
-&gt; &gt;=C2=A0 #endif<br>
-&gt; &gt;=C2=A0 DEF_HELPER_FLAGS_2(icbi, TCG_CALL_NO_WG, void, env, tl)<br>
-&gt; &gt;=C2=A0 DEF_HELPER_FLAGS_2(icbiep, TCG_CALL_NO_WG, void, env, tl)<b=
-r>
-&gt; &gt; -DEF_HELPER_5(lscbx, tl, env, tl, i32, i32, i32)<br>
-&gt; &gt;<br>
-&gt; &gt;=C2=A0 #if defined(TARGET_PPC64)<br>
-&gt; &gt;=C2=A0 DEF_HELPER_4(DIVDEU, i64, env, i64, i64, i32)<br>
-&gt; &gt; diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c<br=
->
-&gt; &gt; index 119dc1df23..787ba2cdec 100644<br>
-&gt; &gt; --- a/target/ppc/mem_helper.c<br>
-&gt; &gt; +++ b/target/ppc/mem_helper.c<br>
-&gt; &gt; @@ -367,34 +367,6 @@ void helper_icbiep(CPUPPCState *env, target_=
-ulong addr)<br>
-&gt; &gt;=C2=A0 #endif<br>
-&gt; &gt;=C2=A0 }<br>
-&gt; &gt;<br>
-&gt; &gt; -/* XXX: to be tested */<br>
-&gt; &gt; -target_ulong helper_lscbx(CPUPPCState *env, target_ulong addr, u=
-int32_t reg,<br>
-&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 uint32_t ra, uint32_t rb)<br>
-&gt; &gt; -{<br>
-&gt; &gt; -=C2=A0 =C2=A0 int i, c, d;<br>
-&gt; &gt; -<br>
-&gt; &gt; -=C2=A0 =C2=A0 d =3D 24;<br>
-&gt; &gt; -=C2=A0 =C2=A0 for (i =3D 0; i &lt; xer_bc; i++) {<br>
-&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 c =3D cpu_ldub_data_ra(env, addr, GE=
-TPC());<br>
-&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 addr =3D addr_add(env, addr, 1);<br>
-&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* ra (if not 0) and rb are never mo=
-dified */<br>
-&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (likely(reg !=3D rb &amp;&amp; (r=
-a =3D=3D 0 || reg !=3D ra))) {<br>
-&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;gpr[reg] =3D (=
-env-&gt;gpr[reg] &amp; ~(0xFF &lt;&lt; d)) | (c &lt;&lt; d);<br>
-&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (unlikely(c =3D=3D xer_cmp)) {<br=
->
-&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (likely(d !=3D 0)) {<br>
-&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 d -=3D 8;<br>
-&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 d =3D 24;<br>
-&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 reg++;<br>
-&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 reg =3D reg &amp; 0x1F=
-;<br>
-&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; &gt; -=C2=A0 =C2=A0 }<br>
-&gt; &gt; -=C2=A0 =C2=A0 return i;<br>
-&gt; &gt; -}<br>
-&gt; &gt; -<br>
-&gt; &gt;=C2=A0 /**********************************************************=
-*******************/<br>
-&gt; &gt;=C2=A0 /* Altivec extension helpers */<br>
-&gt; &gt;=C2=A0 #if HOST_BIG_ENDIAN<br>
-&gt; &gt; --<br>
-&gt; &gt; 2.43.0<br>
-<br>
-</blockquote></div>
-
---000000000000084fe0065706fa80--
 
