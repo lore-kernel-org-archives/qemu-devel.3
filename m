@@ -4,96 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A24B1C44521
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 07:50:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D94A9C44515
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 07:54:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlil2-0001qh-AV; Mon, 20 Jul 2026 03:49:48 -0400
+	id 1wlipU-0002t7-8r; Mon, 20 Jul 2026 03:54:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wlikz-0001qH-Hw
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 03:49:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wlipT-0002sy-7J
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 03:54:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wlikx-0005xr-O4
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 03:49:45 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wlipR-0006R3-EJ
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 03:54:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784533782;
+ s=mimecast20190719; t=1784534060;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=knjdhtBAVjdablLNVmiBRHa9Qm7l+WbC//o1s6JKwn4=;
- b=RgZhN10Pqg/zO2wdCjwiOuT9RwKlJzxzA5bfS0Xy7i5FKTcsK8/zo14pwOrqHmpHVqWkl8
- tSr7Zmspn1VSYoy3bKzii4Jza2aePWMdTPSPatE1WXl1R4OHf14n9br/sJgaCDbK9EntDb
- 8THT2rKVU6l2rnknnW6c6/wfez29MrQ=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=72LgIGz5p2bwvLqG6dmw1qKf1cAUcPzxiaTAyTgnJSQ=;
+ b=F7F1yoaTfgbRAM1deAId3TyLKqEZMfqW45EK0Xxj5HLqzM1Bi+5S4KsWCaP20KkJoJyzS/
+ tdPkDEI9i8DsJ8RvkEfXHAn0OhVUtfRd7QBWUq3iSIwZOug+TvOcsfJC7cmQVm3Nd9VoY6
+ WO2SXaGlSMj28mWlmkDgO5kY0ngycss=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-38-PchkIS6vOGOYzx02RnibPA-1; Mon, 20 Jul 2026 03:49:40 -0400
-X-MC-Unique: PchkIS6vOGOYzx02RnibPA-1
-X-Mimecast-MFC-AGG-ID: PchkIS6vOGOYzx02RnibPA_1784533779
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-47f70ed473bso73870f8f.1
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 00:49:39 -0700 (PDT)
+ us-mta-113-keecBrtVOOiHYmtgoE-NlA-1; Mon, 20 Jul 2026 03:54:18 -0400
+X-MC-Unique: keecBrtVOOiHYmtgoE-NlA-1
+X-Mimecast-MFC-AGG-ID: keecBrtVOOiHYmtgoE-NlA_1784534057
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4955ce558d8so8321145e9.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 00:54:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784533779; x=1785138579; darn=nongnu.org;
+ d=redhat.com; s=google; t=1784534057; x=1785138857; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:references:to:from:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=knjdhtBAVjdablLNVmiBRHa9Qm7l+WbC//o1s6JKwn4=;
- b=lQyjt6sZTy+Y9AjezM6x+SSoQDdrg1ikkl8wwnhGSuxGb9FTLdiBTa1VfjNsoJWEiw
- is00b+6Gg4Nodu0Udy/TiTKITtr5je1PdO3ELtzqb+jja0yCSS2jvh49OEBZPBFhkql8
- RbxXYMV9Tca3mfPN0Ob0dxoX/tIC1xexGnY6RWSuyGWgivXpRemeLUUnBx273aEQiQFT
- Q14T9BoW4frX5yooaesW5ppCbMr/q5ixLJczEaBgvBLTP9RJws1PDLlyrau7ILHY2HS6
- IBTglZx0qmeQ9aNhObeMZjtVsa7mqsffXv0+7r8nrIhve/jOc1gG82r14nuDaCDyM9IH
- BSAA==
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=72LgIGz5p2bwvLqG6dmw1qKf1cAUcPzxiaTAyTgnJSQ=;
+ b=oZ5Vr7MszVnpYTXQGicXuZZOB6OuAqeOtuvMd55pXAQcBRfU3cUjd12vrlOI/hIX1g
+ dBwTc6KHJQrK9UCW2iv+17hhp4vIMzVU5VIoTBQFKTcxdxUydsE0EoJOE2qzvPCBH7Gk
+ P+Iwy7XD2kLWbizzcKkFvfGE2YFHD8TrQHDsMU61ShPc+rw7eoZ16ILY1m8yxWguAHCp
+ oAfHXnEY6cZ2mw2jGxdqoGwJqw6WXrmVzB3z7jBlwUO7dD8X+2IdCMjBqMszVuY0NY+/
+ y5PBZfNkTZIstTAWI92wN4JT9b9oLcsg4hE2a/lyjBZn3qEhqPrVusomzMZgZU0inE0/
+ KHZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784533779; x=1785138579;
+ d=1e100.net; s=20251104; t=1784534057; x=1785138857;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:references:to:from:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=knjdhtBAVjdablLNVmiBRHa9Qm7l+WbC//o1s6JKwn4=;
- b=RhXg4neeLb71bS70KgpAcJiwIOFFn3V4VS2ZVsqvk702O9kdfpTl4hRA6IqEIACJRa
- lpLT4Szm6zUXm+6AVTFiKYrcGKB6FibDlc7i7rxjLvC/im6g4lfHce+95ErO7BUJukfx
- MxQRWthwdRM8MJa7zYS6CQiZYEu+xY9QKMKvdW4chrbA70VFFosbUoAG52iy11PvdkEE
- oEoQy74R/7PjI5vHbLaaCeUyBackB1NjRh6a7CStYRbJqNch5HZOjUWwyeWlVU8rSdss
- zU6BaFj+cLhOyTnSZ1He6e8FAeYTuKUrx0S1VPdbnmesWztYVGRIJZQvjQQDSbJ7t5sl
- x38w==
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=72LgIGz5p2bwvLqG6dmw1qKf1cAUcPzxiaTAyTgnJSQ=;
+ b=Gh6AWlsUabj5RpnoHpwyJjehnQ4cvEUUcCrbU1+3WrsrjBeJErBr8mXmmxYoR1fytl
+ s3XwZQ5gj3FuuajNScpK4JNY1cNpRZFQUlgvpwpB9Fl3AV2t0r6UiirKmwcqTgl98y7S
+ /9enxzbsRxoOjpYlQanqnd9ocBYK3PgeQ5SGQD/otxJu4BYB48UQK+s3gCYqZXSzFwk7
+ QLM6jJMUywPoEhhTVGsVOWHYX5LnLVoNSM7jtZdA7f6zb7cpQ0naFMlHZ4LsfI/OkUP5
+ 6ILYxHaTW1BcEeGtd89opV/BYmGzHOYeUmFhbGeTmbACDEOO5ik+A8T7+bf+Wtifh9ub
+ vjuQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RomkQbzXu4y3KWGVeCu8K+epuHJcXTLRNwKP7rUUvcB8O2K7GsiUQBGkAsnBcz8CWMvGXgu5uz4ia+N@nongnu.org
-X-Gm-Message-State: AOJu0YycZ9JX8itFVsXOGy6RG7vztOLKjSjbQMLZN6cYLYk8ekGPKk/d
- o0AF+4AYWfAFa8Agrd/AWDQP9Q2qGB/IytkNwFem4+oVJQXA1UVXTsl4PQH9Mw87HFWaB9fSui/
- w08YB/WqiE8tfHO9yTJ8MooaDFTRJGgrdP2QvTibw0K3ZI6in4RGmjrdB
-X-Gm-Gg: AfdE7clULOrLTr3QbYPYm62c/K9DnkJWIvjBRCD+CvkMGrqZXBTxkfoYalmoTkqLdBk
- AicjCBV94PN1wHeDHE0cCjZzoruLuaBrDrIb7AMC3G8N8A08nLd6IOqe2hoF5gP8XvOBgqgnQYS
- GAQg+XSq1yleffWUnwPS5qtV4fn6ERgFYujASsinuSOn+8SrbbXuN9wj3B2uiBpEzp0TUe47wzL
- hq9N55j9z3FTGYF7YlDgu7wNWgKkAlHxUo0tTB3ImurbBX75UbbvkPX/6M1yyNgXtguSRsDqyjX
- pUrT7+ixrGSOkH3EZl5Ke+9dxX9SH98t0jOIqRIlBp6DsH0KWix0pHH9Xryz/Ko1LnC4XA8yZw=
+ AHgh+RoAxMNxOf0zYzVDc6fCKFylknuZ0DV0BscBj5/MHCU7KuQuwpFbZSdS9pdTXv9NGhouPnSJD71qE4WQ@nongnu.org
+X-Gm-Message-State: AOJu0YzzrwuNbYtlnJlzEovDkn/PM2PCuAoVWOeUGN0iUT7I3E2F62nR
+ SZwwaGQ/XAiYDoUh4eTnl18NVtypkWuazVBACgZEvCOyyUdSbNm2ntbPWmDduKPcRb6tQZBNd72
+ 21K0zCFpx5YtsUSe6EzG7d0a/LcjWM2wzMtDs+7JZYApbvYoG1w3xq5nD
+X-Gm-Gg: AfdE7ckKgL0KveZwCffuxVv4mlJMr0qF4Zg7rVTG8qcWIAjbDheQbJm8kdUEd2+c3OE
+ kRYORlIBYjZ9nJtCSwFc223RzPqgxoczvia7taxTgCEy4PdE+Kv1EcUtN3/wyiM9SLGHd1kKorc
+ N7ajaT5ongW/sfiop4xoCiHirPvA/3aNnYLprW4D8jirmHY6XzsemAqAKj1wsLP9Tzrn/Ww4FoN
+ jG2wOEJG98/BNxkL/l8eqMRT07QkdG+ubHJp4EH+iwv6JUXohqaFtZpVClBk5jDCNFP/4thpDgN
+ f6A/sWT9RP6jXmUSoUKAOqwdSME2EnFoA6ol4AEiumdehkHagSQiE0Fd8JKsHKXQmsFHXEC7cw=
  =
-X-Received: by 2002:a5d:5e8d:0:b0:470:2fb1:3dbc with SMTP id
- ffacd0b85a97d-47f62325a8amr15353909f8f.35.1784533778877; 
- Mon, 20 Jul 2026 00:49:38 -0700 (PDT)
-X-Received: by 2002:a5d:5e8d:0:b0:470:2fb1:3dbc with SMTP id
- ffacd0b85a97d-47f62325a8amr15353882f8f.35.1784533778503; 
- Mon, 20 Jul 2026 00:49:38 -0700 (PDT)
+X-Received: by 2002:a7b:c055:0:b0:492:6f6f:fa42 with SMTP id
+ 5b1f17b1804b1-4954a516ae6mr90938245e9.37.1784534057448; 
+ Mon, 20 Jul 2026 00:54:17 -0700 (PDT)
+X-Received: by 2002:a7b:c055:0:b0:492:6f6f:fa42 with SMTP id
+ 5b1f17b1804b1-4954a516ae6mr90938035e9.37.1784534057065; 
+ Mon, 20 Jul 2026 00:54:17 -0700 (PDT)
 Received: from [192.168.0.9] ([47.64.112.144])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f63e49acesm26556954f8f.6.2026.07.20.00.49.37
+ 5b1f17b1804b1-4954a2a24b6sm269916095e9.3.2026.07.20.00.54.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Jul 2026 00:49:37 -0700 (PDT)
-Message-ID: <6a97df11-6179-404a-8bf8-e3609c346f4e@redhat.com>
-Date: Mon, 20 Jul 2026 09:49:37 +0200
+ Mon, 20 Jul 2026 00:54:16 -0700 (PDT)
+Message-ID: <483f9f02-a03a-4ba3-8442-934023561c59@redhat.com>
+Date: Mon, 20 Jul 2026 09:54:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] usbredir: fix infinite loop and SIGFPE with zero
- max_packet_size
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH] hw/display/vhost-user-gpu: validate message payload sizes
 To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-References: <20260716141107.3597076-1-marcandre.lureau@redhat.com>
- <22e68ec3-c020-4a5a-9463-dfc66ed4b503@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+References: <20260713125130.101787-1-marcandre.lureau@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -137,18 +138,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <22e68ec3-c020-4a5a-9463-dfc66ed4b503@redhat.com>
+In-Reply-To: <20260713125130.101787-1-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: permerror client-ip=170.10.133.124;
+Received-SPF: permerror client-ip=170.10.129.124;
  envelope-from=thuth@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,34 +165,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/07/2026 09.38, Thomas Huth wrote:
-> On 16/07/2026 16.11, marcandre.lureau@redhat.com wrote:
->> From: Marc-André Lureau <marcandre.lureau@redhat.com>
->>
->> A malicious usbredir peer can send an ep_info message resetting
->> max_packet_size to 0 after bulk receiving has started. This causes:
->> - infinite loop in usbredir_buffered_bulk_packet() where the splitting
->>    loop increments by max_packet_size (0)
->> - SIGFPE in usbredir_buffered_bulk_in_complete_ftdi() from modulo by 0
->> - SIGFPE in usbredir_handle_buffered_bulk_in_data() from division by 0
->>    when computing bytes_per_transfer
->>
->> Fix by stopping and disabling bulk receiving in usbredir_ep_info() when
->> max_packet_size is set to 0.
->>
->> Add post-load check, and assert() for the invariant.
->>
->> Fixes: CVE-2026-63319
->> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3995
->> Reported-by: Tristan @TristanInSec
->> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->> ---
->>   hw/usb/redirect.c | 24 ++++++++++++++++++++++++
->>   1 file changed, 24 insertions(+)
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-I'm currently assembling a pull request with some other USB fixes, so I'm 
-going to pick this up for that PR unless someone else wants to take this patch.
+On 13/07/2026 14.51, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> A malicious or buggy vhost-user-gpu backend can send messages with
+> undersized payloads, leading to out-of-bounds reads when the handler
+> accesses struct fields beyond the allocated buffer. However,
+> vhost-user-gpu is considered trusted by QEMU by design (it has access to
+> shared memory etc).
+> 
+> Add a centralized minimum payload size check in vhost_user_gpu_chr_read()
+> that rejects messages before dispatch, and a per-pixel bounds check in
+> the VHOST_USER_GPU_UPDATE handler to ensure the variable-length data
+> covers the declared width x height.
+> 
+> Fixes: 267f66465 ("hw/display: add vhost-user-vga & gpu-pci")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3866
+> Reported-by: Feifan Qian <bea1e@proton.me>
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   hw/display/vhost-user-gpu.c | 38 +++++++++++++++++++++++++++++++++++++
+>   1 file changed, 38 insertions(+)
 
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
