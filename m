@@ -4,73 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B945BC4451B
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 09:35:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87DF3C44515
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 09:38:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlkOr-0002jh-PD; Mon, 20 Jul 2026 05:35:01 -0400
+	id 1wlkSY-0005WE-Hu; Mon, 20 Jul 2026 05:38:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wlkOO-0002UO-QC
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 05:34:37 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wlkOL-0000yr-LE
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 05:34:32 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8BxGOuh611qkzkFAA--.20692S3;
- Mon, 20 Jul 2026 17:34:25 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJBxb8ef611qb8ESAA--.32973S2;
- Mon, 20 Jul 2026 17:34:23 +0800 (CST)
-Subject: Re: [PATCH v2] target/loongarch: fix data race in CSR_ESTAT
-To: Miao Wang <shankerwangmiao@gmail.com>
-Cc: qemu-devel@nongnu.org, Song Gao <17746591750@163.com>,
- Xianglai Li <lixianglai@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Xi Ruoyao <xry111@xry111.site>
-References: <20260716-loong-race-v2-1-01e68e4b850f@gmail.com>
- <3613f855-8b22-2e94-fa14-339acec997ed@loongson.cn>
- <185FB2BE-2645-45CF-BA2B-316F67495FF5@gmail.com>
- <7a7cc87e-a097-30df-3085-a4249a2233b9@loongson.cn>
- <2E82143C-8EC0-47F4-B0FF-5C35D36078E7@gmail.com>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <c4b1f905-49e8-13f6-b9c1-caa17b9343e9@loongson.cn>
-Date: Mon, 20 Jul 2026 17:34:13 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wlkSS-0005Uz-VA
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 05:38:45 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wlkSR-0001KR-6H
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 05:38:44 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-81e69a2db34so49295967b3.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 02:38:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784540322; cv=none;
+ d=google.com; s=arc-20260327;
+ b=HgEacak/kJQhRaY3yaa08AgiCgMqdBqFDcfM8KM4EMbdO1F1mHuWVxmBXaemodwaxJ
+ AKt2jp1YtBNjmJnEsDntm+ABvBxGwAi44DrlCDzeSBHETvAej8l29UF/IafXgD6UPlLR
+ 2aoOKETnIbF51tc9rkQteSI+iUdTq2RR+qIB7liNtFoJA33iQGvuN4B7HLNEA2uhSX7O
+ zlSqELafQVwCwj93eGPwASq5e4qiu8g5DgtdAoVFYIGXIy/MnxqJv90cXZyOoJ+vIhvp
+ D0UK2Lpf4Ly8EN4ag2F1vX418+2Sti5e3PKDqfBx7pHdMXb5GliRq3o3uBMfDwvB2Sxe
+ UaZg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=fGs3YhUAy5iS39FJNJw5sUjFsROlOzM4DzyuocfWb0Q=;
+ fh=s3NtNAP3kwCTVC9F9j28vf7WgKiQrzz4SlBOeBsXzE8=;
+ b=dZdsxmuAnga1HoUJX/M7r1BvjPfTDm2Tbk5bsMkn+E+qn4FyzpkKfZ3W51L5IPdwfa
+ Vk+bTKs0BMJkbovgcd/jvk5uOiyYwtXQh48bEoSOJEcj1B+jURiOhpsT8JkWZ31ApalW
+ QVH76MkOsi4i/dg9p+IcvmMRaMN37Xw2+qKwoUyA70h7aXVhYfkRq9EXzgOQtybwo1yY
+ /l8+SM6aF4NP1c1W9YmVtUEnj0iz6OOrfYvC0FLIhsUhAwebHA45V0/pSoKeGw4GwI7k
+ ZNH7xIfq/rmFpWuBbNZDJzeLVH+ZDxkd/wfTwY4u/2NdyHILmIbJb5fHs239//9FFfZG
+ F62w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1784540322; x=1785145122; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=fGs3YhUAy5iS39FJNJw5sUjFsROlOzM4DzyuocfWb0Q=;
+ b=ZyZdEi5j9rB+bYMoseThqcmK5LT51xWP45+M8cQVpmRVOBaneZJQbG9cmZy1SryYUo
+ bav3DdtXlu39xuvIG/9UNEoNoH7m5ghrdOgkVV1eum/JksOb6obj+RxhjDy4MDfHqJZr
+ YNlmXqWz2DlQI4kuLmsv1RN5yVW9Se6QlVmfU9oktM2re79eqTY1dmjt4MFxSoMH0A1U
+ 4IO52G+qk8vf6XlFKfRPz6ou/bd9sa22lvEfHPXFmPilpMsmzH43vvvAqJx/P92uYim5
+ rN+w2RapFoUf5ksn/ctk5D5SsTGRY9A3+mr8JJqN55aJ0em/8aY1QIT/Ybzzjiy+slKs
+ 4rBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784540322; x=1785145122;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=fGs3YhUAy5iS39FJNJw5sUjFsROlOzM4DzyuocfWb0Q=;
+ b=ONEcbwnfww0fsgObRFYi0C6BlCbIuYSZYtfaGpAM2aWblmCiMK+0c+iVLY87WYKSgR
+ 8/AhWEePv4d3axMXYwXPXeqcxexYjnm/ijyj88bNThU/LvKMSK2GZ6qsCcpO3T9Gc02L
+ NXvfMUi3tu04dUNl0zj4fs4I6c9v3Ea3ZwGyQYgno9LvtfoDAzajxEoOIXYcsogdk/iL
+ LhhQ2tCU8zisBbhLKwDm9WfHyRV9Me0jubgPgUpiwIGKAkPTVjNF722Q27XiNLXuW16Y
+ W/hJOQXJQkjISxAPHP+4yTkW89cW2TFkF2oBKe1O8UPVByflFSXa2f7t/0KllrEkZD35
+ Gm0w==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpftuWVv9XKqecix1oRUVLO04PBcbDh05I82a8lBmdDqAaj7HieccaiGtqQ8YmCk5ZhdsztjnHQ817/@nongnu.org
+X-Gm-Message-State: AOJu0YxJDy66KNkH1/riW+tOjWLOe7AQVjJJ7tG5cYVP7bCp9IkzUfzb
+ VTcYb+Z+L7QfbbntI+R7k9Asb7iLutm/NgH1gD+bzz63pEGdF6GssYReSDT+KWeWsAmHt5kJunA
+ XPot7n5po7BH2Wd2gUM/Qmi5cKXI8Y81qzQGLzc57cA==
+X-Gm-Gg: AR+sD10d3Lpzkn5g5KaKnlKpxMkzc6f5PB6ftieQBI3xmkuHyTU69OVWmA378DflzAh
+ A8Gcir3U8DchDm5qnjDxdF1CoSU4ebBfYlUmIN/SVhBTkIQtAmBVKRU5Mdb3DKWIwaJgkqNMUs+
+ RXRE1/gcHRHrq41EmvgctS7j1GOST5zwwmYl0Ii3qWJBd4T+v0+JekQ3ud2vPBnqa/n/jIM2Tjf
+ JiEEQhNqEXNAvRFyWxNmx0jfI4ihtmifQ1jM2eENgr1FrS1SB5Y4FpEcseATJwGHA42F/mTE7Da
+ yJFCOJSgXpSWgRIfB6Hx7Pfawz5FP1w0ywRF2SM8KfQ3pwjOwn1y9led
+X-Received: by 2002:a05:690c:6111:b0:81e:6816:9487 with SMTP id
+ 00721157ae682-81ef28da68amr40494987b3.66.1784540321603; Mon, 20 Jul 2026
+ 02:38:41 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <2E82143C-8EC0-47F4-B0FF-5C35D36078E7@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxb8ef611qb8ESAA--.32973S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3Gr15JF15ur15Gr4kWw13ZFc_yoWxWr4kpr
- W7CF13tr4kJrW7Jw1vq3WYyrn0vr1fKr1IvFsrtw1fCrn8tw15Xr18tr9xuFyku348Wr10
- vr1FgFZxWa4jyFgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9Sb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
- 67AKxVW8ZVWrXwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
- 8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
- CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
- 1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBI
- daVFxhVjvjDU0xZFpf9x07jnUUUUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.494,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <CAJSP0QXRy1Dc_MwqtU_gS1+jOdrW=Vk6YynP75q5HP3Rz_CpTA@mail.gmail.com>
+ <904444A5-0120-4BE6-8E11-C7167F2A3BDB@unpredictable.fr>
+ <D91DC576-2462-4652-9E8C-5A7C96791622@unpredictable.fr>
+In-Reply-To: <D91DC576-2462-4652-9E8C-5A7C96791622@unpredictable.fr>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 20 Jul 2026 10:38:30 +0100
+X-Gm-Features: AUfX_mwmsDuPawTQUb1yoVNqwq9y2LJJvn2tFHACUO5HV2mHaV5oUq3WsWZNhLw
+Message-ID: <CAFEAcA-X7h0hQ4FaTaVoEUKTJvxfaK8GcihR=+RzxOTBf3X_mw@mail.gmail.com>
+Subject: Re: macOS builds broken in CI
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: Stefan Hajnoczi <stefanha@gmail.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,145 +122,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 25 Jun 2026 at 20:15, Mohamed Mediouni <mohamed@unpredictable.fr> w=
+rote:
+>
+>
+>
+> > On 25. Jun 2026, at 21:11, Mohamed Mediouni <mohamed@unpredictable.fr> =
+wrote:
+> >
+> >
+> >
+> >> On 25. Jun 2026, at 20:38, Stefan Hajnoczi <stefanha@gmail.com> wrote:
+> >>
+> >> Hi Alex,
+> >> tests/tcg/multiarch/system/Makefile.softmmu-target's
+> >> run-gdbstub-interrupt seems to be broken on GitLab CI macOS runners. 5
+> >> days ago it still passed, but now rerunning the pipeline on the same
+> >> commit ID fails:
+> >>
+> >> - Good (5 days ago): https://gitlab.com/qemu-project/qemu/-/pipelines/=
+2615134022
+> >> - Bad (today): https://gitlab.com/qemu-project/qemu/-/pipelines/262970=
+4018
+> >>
+> >> I've tried many CI runs with different pull requests applied on top of
+> >> qemu.git/master and they fail in the same way. Maybe it's an
+> >> environmental thing with the macOS runners?
+> >>
+> >> It's unclear where the SIGKILL (Error 137) comes from. Could it be an
+> >> out-of-memory condition on macOS runners?
+> >
+> > Hi,
+> >
+> > SIGKILL is the known symptom for failure during signature verification
+> > by AMFI.
+> >
+> > Now that we don=E2=80=99t have separate -unsigned binaries anymore but =
+relying
+> > on in-place ad-hoc (w/o certificate) signing with entitlements we might
+> > have issues linked to that.
+> >
+> > In the past file modification had issues with verification tied to the
+> > inode and the workaround being a reboot or a cat binary > new_binary;
+> > chmod +x new_binary so that the old (now out of sync) signing state is =
+lost
+> >
+> This is highlighted in the software update context in: https://developer.=
+apple.com/documentation/security/updating-mac-software
+>
+> > This code is incorrect because it modifies the command-line tool=E2=80=
+=99s executable file in place. macOS caches information about the code=E2=
+=80=99s signature in the kernel. It doesn=E2=80=99t flush that cache when y=
+ou modify the file=E2=80=99s contents. Modifying the file in place yields a=
+ mismatch between the file=E2=80=99s contents and the in-kernel cache, whic=
+h can cause a hard-to-reproduce code-signing crash the next time you run th=
+e tool.
+> > While this example uses a command-line tool to demonstrate the issue, u=
+pdating any file that contains signed code might trigger this code-signing =
+crash. That includes executables, frameworks, dynamic libraries, and bundle=
+s.
+> > To update a file that contains signed code without risking this crash, =
+write the updated code to a temporary file and replace the existing file wi=
+th that temporary one:
 
+I was just looking at this again today, but looking at our
+scripts/entitlement.sh, when meson.build calls the script SRC
+will be qemu-system-foo-unsigned and DST will be
+qemu-system-foo, and we take the in_place case and do:
 
-On 2026/7/20 下午5:20, Miao Wang wrote:
-> Hi,
-> 
->> 2026年7月20日 17:04，Bibo Mao <maobibo@loongson.cn> 写道：
->>
->>
->>
->> On 2026/7/20 下午4:49, Miao Wang wrote:
->>> Hi,
->>>> 2026年7月20日 16:34，Bibo Mao <maobibo@loongson.cn> 写道：
->>>>
->>>>
->>>>
->>>> On 2026/7/16 上午4:48, Miao Wang via B4 Relay wrote:
->>>>> From: Miao Wang <shankerwangmiao@gmail.com>
->>>>> The CSR_ESTAT register of a CPU can be read and written by both the
->>>>> CPU thread and other threads (e.g., the interrupt controller thread).
->>>>> Currently the possible readers and writers of CSR_ESTAT are:
->>>>> - Readers
->>>>>    - tcg generated by trans_csrrd(, CSR_ESTAT)
->>>>>    - loongarch_cpu_has_work()
->>>>> - Writers
->>>>>    - tcg generated by trans_csrxchg(, CSR_ESTAT)
->>>>>    - helper_csrwr_estat()
->>>>>    - helper_csrrd_msgir()
->>>>>    - loongarch_cpu_set_irq()
->>>>>    - loongarch_cpu_do_interrupt()
->>>>>    - loongarch_cpu_exec_interrupt()
->>>>> The access from the CPU thread is not synchronized with the access from
->>>>> other threads, which may lead to data races. The above readers and
->>>>> writers shall all run on the corresponding CPU thread except for
->>>>> loongarch_cpu_set_irq(). To fix this, the access to CSR_ESTAT in
->>>>> loongarch_cpu_set_irq() is moved to the CPU thread by using
->>>>> async_run_on_cpu().
->>>>> The data race has been identified while running the test cases from
->>>>> dracut, which is using QEMU to boot a LoongArch guest. By running the
->>>>> tests repeatedly (about 30 times) in the following conditions, the
->>>>> guest will hang in the middle of booting:
->>>>> - Host architecture: LoongArch64 or Aarch64
->>>>> - Guest kernel: 7.1.3+deb14-loong64
->>>>> - Number of vCPUs: 1 or 2
->>>>> - CPU Features: max, la464,msgint=off,ptw=off, or la464,msgint=off,ptw=on
->>>>> - Accelerator: tcg
->>>>> When the guest hangs, the guest kernel log shows various errors related
->>>>> to RCU stalls or other Soft Lockup or Hard Lockup issues. When running
->>>>> with 1 vCPU and the guest hangs, the guest kernel directly hangs without
->>>>> any messages and stucks at idle_exit.
->>>>> With this patch, the guest can boot successfully without any hangs
->>>>> during repeated runs of the test cases.
->>>>> Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
->>>>> ---
->>>>> Changes in v2:
->>>>> - Simplify the changes to move the access to CSR_ESTAT from the only
->>>>>    unsynchronized loongarch_cpu_set_irq() to the CPU thread using
->>>>>    async_run_on_cpu() to avoid the race condition.
->>>>> - Link to v1: https://lore.kernel.org/qemu-devel/20260714-loong-race-v1-1-54111549c95e@gmail.com
->>>>> ---
->>>>>   target/loongarch/cpu.c | 27 +++++++++++++++++++--------
->>>>>   1 file changed, 19 insertions(+), 8 deletions(-)
->>>>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
->>>>> index fb03424ffa8cd5e5d250531cc2a36fa789fc25a9..126c3ad276cc44311942542e086bcabe41d91b63 100644
->>>>> --- a/target/loongarch/cpu.c
->>>>> +++ b/target/loongarch/cpu.c
->>>>> @@ -57,12 +57,27 @@ static vaddr loongarch_cpu_get_pc(CPUState *cs)
->>>>>   #ifndef CONFIG_USER_ONLY
->>>>>   #include "hw/loongarch/virt.h"
->>>>>   +static void do_set_cpu_estat(CPUState *cs, run_on_cpu_data data)
->>>>> +{
->>>>> +    CPULoongArchState *env = cpu_env(cs);
->>>>> +    CPUSysState *sys = env_sys(env);
->>>>> +
->>>>> +    int irq = data.host_int;
->>>>> +    int level = irq >= 0 ? 1 : 0;
->>>>> +    irq = level ? irq : -irq;
->>>>> +
->>>>> +    sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
->>>>> +    if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
->>>>> +        cpu_interrupt(cs, CPU_INTERRUPT_HARD);
->>>>> +    } else {
->>>>> +        cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
->>>>> +    }
->>>>> +}
->>>>> +
->>>>>   void loongarch_cpu_set_irq(void *opaque, int irq, int level)
->>>>>   {
->>>>>       LoongArchCPU *cpu = opaque;
->>>>> -    CPULoongArchState *env = &cpu->env;
->>>>>       CPUState *cs = CPU(cpu);
->>>>> -    CPUSysState *sys = env_sys(env);
->>>>>         if (irq < 0 || irq >= N_IRQS) {
->>>>>           return;
->>>>> @@ -71,12 +86,8 @@ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
->>>>>       if (kvm_enabled()) {
->>>>>           kvm_loongarch_set_interrupt(cpu, irq, level);
->>>>>       } else if (tcg_enabled()) {
->>>>> -        sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
->>>>> -        if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
->>>>> -            cpu_interrupt(cs, CPU_INTERRUPT_HARD);
->>>>> -        } else {
->>>>> -            cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
->>>>> -        }
->>>>> +        async_run_on_cpu(cs, do_set_cpu_estat,
->>>>> +                         RUN_ON_CPU_HOST_INT(level ? irq : -irq));
->>>> This is a good method with async_run_on_cpu, there is one small issue with irq == 0 interrupt injection where -irq/irq are both 0.
->>> Since according to Section 7.4.6. of Loongarch Reference Manual Vol1,
->>> bit [1:0] stands for the software interrupt SW1 and SW0, I expect that
->>> these two irqs should not be manipulated by hardware sources and thus
->>> the irq here should be larger than 2. Can you further explain under
->>> what condition the irq line 0 and 1 of a cpu core would be connected
->>> to external outputs.
->> loongarch_cpu_set_irq() is not only for external interrupts, percpu interrupt injection also uses loongarch_cpu_set_irq() such as IRQ_TIMER etc.
-> 
-> The users of loongarch_cpu_set_irq() are limited. The main usage is
-> as the callback of qdev_init_gpio_in(). Other usage is for the timer,
-> where the irq number is IRQ_TIMER, i.e. 11.
-> 
->> With SW1 and SW0, if the CPU set bit0 of estat, it will inject SW0 to this CPU itself. And de-assert the irq if the CPU clear bit0 of estat.
-> 
-> When SW1 and/or SW0 are set by the guest code running in the emulated
-Linux kernel does not use SW0/SW1 now, which does not meaning that it is 
-not an interrupt. It is only interrupt generated by software, rather 
-than hardware.
+  cp -pPf "$SRC" "$DST.tmp"
+  SRC=3D"$DST.tmp"
 
-> CPU, the handling of the software IRQs in the qemu side does not
-> involve loongarch_cpu_set_irq(). As a result, I believe that it is
-> safe to assume that the second parameter of loongarch_cpu_set_irq(),
-> i.e. irq should not be smaller than 2. I also suggest enforce this
-So, What is behavior with the code *set_csr_estat(BIT(0))* on real 
-hardware? and how should QEMU TCG implement this instruction?
+to copy the -unsigned binary to a .tmp file. Then we
+run codesign on that .tmp file, and finally
 
-Regards
-Bibo Mao
-> check at the entrance of loongarch_cpu_set_irq().
-> 
-> Cheers,
-> 
-> Miao Wang
-> 
+  mv -f "$SRC" "$DST"
 
+to rename the signed binary to its final name.
+
+So that looks to me like we're following the rules for
+not signing executables in place to me...
+
+-- PMM
 
