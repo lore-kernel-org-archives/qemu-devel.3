@@ -4,104 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6D1EC44515
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 08:41:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98652C4451B
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 08:43:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wljZI-0006R2-G1; Mon, 20 Jul 2026 04:41:44 -0400
+	id 1wljaG-0007Nn-5X; Mon, 20 Jul 2026 04:42:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wljZG-0006BV-8l
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:41:42 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wljZE-0003SW-Cg
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:41:42 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-80814edb536so67453167b3.2
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 01:41:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784536899; cv=none;
- d=google.com; s=arc-20260327;
- b=NJBNNlBqbQklmrbOVOvwRgFl7JrgZ8ZIPmMmdu1j9PQ0UmHPgMosbgtMjSaw7wZUCA
- Bz4r6QwyMZt9SmGqsID2rzc+BoXPRvGTjsh27nDmoPs2rd5iFz+y32eMvyigIEdUUxz2
- /0XiiPxYLWXRBM7RBqHbqSRP/5Tz+II8CxrbrYtmoENkFBjkOgN/cF/TM3O48ZfgUmiT
- 5JaG/CtrH65OAEHOftgAHVOY4hVXgWZQ7Sv6US+CddOWwzYnUAJAYtRpa+0TiN+LmpnB
- 5kTf3RW8VREx+uJuq8H1Q0yEbSxpTtSo5A5Vr6QGQjrn8RXmM8PZaLph069Ijtrvzq/9
- TuCA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=EMCFqIk1cvsrPQ6Nv8ZE2kq9WxwWNuFpSUFhPci6Jv0=;
- fh=N98ljGDrl6SjWC3df2+h4NM0iI+rITWAtTHiuzLCNEE=;
- b=BZMqUphELSidHmYXbfjCz0WBO5OsCtaJ1IuvMSCrF3skKN5o++8nSRrjq8IXbdm7A/
- Rmm2qkcxTforfd3thRW9IbKeR6tYWWtA4PN7s2e55n+mvw3UAXbI5ACsGeYC4orul1nm
- zQgzeCOwE0RnvzQKRe1vk6TSlzIQORW1lwL+afJYv5E9P/DLFJnRDa9ZqRDnyqx+Ijvs
- a13+2iWGqgvRb+zuMZMlnSrueaDJ9FkYwClXZVbaq37JJ4g+H/7Zs2gJ0G/xKUR5cz+e
- 2cSevLi5MMFfiLdXR8zJPz64L1z8xyx9nxrIzt2aoPTLzOpd2DGcUvx9f55v20Foq1CM
- RGvQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784536899; x=1785141699; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=EMCFqIk1cvsrPQ6Nv8ZE2kq9WxwWNuFpSUFhPci6Jv0=;
- b=wRSAfxj78ANVzMwnwMXcLSqwEpknaGFZQGGUAg3fS9DXNULA6xHjKYykm+i8VT1MGd
- oPbkAsSjwEPDtag8HcXP5ZEj6oZ3HRdLWoUgPCZ8DH3cI7K4XVUI5RrvdQljYQTkbCMO
- 7U9gRTp+PNXx7T/Fnc4lXGB63fjAHXnowrOp0oK/HtuZvzSYc9qeaKcv8Z9fs8lJvXUW
- HJX+gnDWPGXGKNigCb6VsQtwsRx1yKkMl4XSiVJwp3kem8gfuuqmXrTv5WWdbkbVqHfN
- E17PfVvQ5XdE/k2X95RoVi2nVsG335tfPsIsJdAMPcpwfwoZxqMJdwfYCKYcoC+zLjcw
- edkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784536899; x=1785141699;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=EMCFqIk1cvsrPQ6Nv8ZE2kq9WxwWNuFpSUFhPci6Jv0=;
- b=ryVExeNXVcuvYxGWsUES0rj72FBif4qdQFWRevsPYskMEPTR7TTA6EFPQa+WLOlqwv
- sO5U2277b3akSMe8+xQwiSxC5moKxXDam8FtIXBF4vwo/+beiCOQ9VG8bB2yeEY0o8ib
- 9NrxUj1YAHfd+p5/GBgKWoiSysxCb0jiXbqOQkPFiQVbKOYg8ctG8yaRmTKmCrW3RxM5
- BFhfYUXgBIhbLPlaqgLWtO9SGXyQ+RAz/x07+VaP75TUhTVUzlRsYIUavypk26Z/aup4
- O6tpl8D3go73rJN9XUVG3qfoZXezF0Icp+fiamNHgay6zi4h6jP8l+w4X/7aH4hRU3E0
- bsEQ==
-X-Gm-Message-State: AOJu0YzxskyswLVaPXNgG7pPsjTBnstfoa5SQ6YpDRUSpR8i42qDTNeu
- 6z9tZ4UdZiuz/egkite6YK4Kfnj9r6XucobUxhSw6p1lcxu26BtZ3KjK9k1gubtypj+QRs38YhN
- 2X3XrFqi83q7qXwBqx+G/0d2i4hAzsyJ+PaVmPIU/30zKvM9XPUjd
-X-Gm-Gg: AR+sD13MZ35c//GZWpUEWpdLRMKBIYlCoVoBm5HmVzdaloSPD4BDnVbFUtQ/orEZTjT
- ZKhOWnMZTnI0yXrFB30UNDG2RZ6AJ8DE6DZ3f74J/iWCPGD7B0j8VuWTgeWeUU1ZpFtTlMhJ5nH
- 0jR+WVBoiQLZSD0eOrM8LqIjdQQnLY1q0a7Rvf/MwuHmysSQIuiUZV14uhVSkhJP3G+k85ulW19
- ++hpzl1qvDWZgSn25dlLpI37p9tmpg9wJduyFe5TNbDzxdeWMtJDM20s6tTAY+wLQ/wFsyTEWP/
- dU997/5/1WPvkhWdPXnTGfYL+jitViKjkeapjANUtEPZaw==
-X-Received: by 2002:a05:690c:3709:b0:81d:26f9:bc85 with SMTP id
- 00721157ae682-81ef25e1756mr41486607b3.45.1784536899195; Mon, 20 Jul 2026
- 01:41:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <lingqian_gi@163.com>)
+ id 1wlihZ-0001fS-Oh; Mon, 20 Jul 2026 03:46:15 -0400
+Received: from m16.mail.163.com ([220.197.31.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lingqian_gi@163.com>)
+ id 1wlihV-0005S9-PM; Mon, 20 Jul 2026 03:46:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=r0
+ jAeRmeX6OgKpkedoidgh05noVyOAy4fykHKI6+jZY=; b=TTYtx35nawPi8wh18/
+ 1gozj9jZNNnd+mlOAl1C2e2nMVz1mDdoVqf+NowunHOE+/y8ke8MH2XB4Y20ZakZ
+ F2GXtiDDbCU61mcibfcLBevZ+WS6+8ASX1FYFu1SthdwUMdnzQhTO02JyXP1D64U
+ JW3AjX4C5DaBHCQr2jQtPsxFA=
+Received: from localhost.localdomain (unknown [])
+ by gzga-smtp-mtada-g0-4 (Coremail) with SMTP id
+ _____wB3sFop0l1qwlRuKw--.5096S3; 
+ Mon, 20 Jul 2026 15:45:46 +0800 (CST)
+From: Jian Cai <lingqian_gi@163.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: chao.liu@processmission.com, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com
+Subject: [RFC PATCH 1/3] hw/riscv: add K230 SRAM device model
+Date: Mon, 20 Jul 2026 15:45:43 +0800
+Message-ID: <20260720074545.8987-2-lingqian_gi@163.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260720074545.8987-1-lingqian_gi@163.com>
+References: <20260720074545.8987-1-lingqian_gi@163.com>
 MIME-Version: 1.0
-References: <20260706162704.787495-1-peter.maydell@linaro.org>
-In-Reply-To: <20260706162704.787495-1-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 20 Jul 2026 09:41:26 +0100
-X-Gm-Features: AUfX_myPX00TaItZgy2Q7JKw_4KBxQpxvAc2mHEKk2cUYXFtAFhMiv9RGfudYpg
-Message-ID: <CAFEAcA_AE+D=3TJ26s7zhvVN_rhak13EJU1Yw-iaahHT83p6Fg@mail.gmail.com>
-Subject: Re: [PATCH] hw/net/xilinx_axienet: Don't write checksums off end of
- packet
-To: qemu-devel@nongnu.org
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>, 
- Jason Wang <jasowangio@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: _____wB3sFop0l1qwlRuKw--.5096S3
+X-Coremail-Antispam: 1Uf129KBjvJXoW3AF47JF13CFyfZFWfCw4Durg_yoW7Cr4UpF
+ ykCrn5Cr4xXrWfA3WSgF4xXa4F9an3Cr4UCws7uryvv39rKry8tr4Dt340ya47Jr48G3yY
+ 9FyaqF1F9w1Ut3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07j_yCXUUUUU=
+X-Originating-IP: [42.193.175.155]
+X-CM-SenderInfo: 5olqw15ldqswrl6rljoofrz/xtbCwQuwpmpd0ivodAAA3O
+Received-SPF: pass client-ip=220.197.31.5; envelope-from=lingqian_gi@163.com;
+ helo=m16.mail.163.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 20 Jul 2026 04:42:40 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -116,81 +75,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping for review, please?
+The K230 shared SRAM (2 MB at 0x80200000) has no software-visible
+controller registers: it is a pure on-chip RAM block accessed via
+the AXI bus. This patch wraps it as a SysBusDevice so that it appears
+in the QOM tree, supports VMState migration, and can be introspected
+by management tools.
 
-thanks
--- PMM
+Clock gating (CMU at 0x91100000, offset 0x5c) and reset control
+(RMU at 0x91101000, offsets 0x60/0x64) are handled by separate
+system-controller peripherals and are not modelled here.
 
-On Mon, 6 Jul 2026 at 17:27, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> The xilinx_axienet device has ethernet checksum offloading, with a
-> mode where the guest provides the offsets within the packet where
-> the data to be checksummed starts, and where the final checksum
-> should be written into the packet.
->
-> We don't sanity check the TX_CSINSERT offset before writing the
-> checksum data into it, which means the guest can pass us a value that
-> is larger than the packet itself and cause us to write the checksum
-> off the end of the buffer.  We also don't explicitly check the
-> TX_CSBEGIN offset; this doesn't currently cause any problems because
-> we will pass a negative length to net_checksum_add() which does
-> nothing, but it's a potential trap for the future if the type
-> used for the length gets changed to be unsigned.
->
-> Explicitly check the offsets.  The datasheet doesn't say what happens
-> if the guest misprograms this, so we choose to log an error and send
-> the packet as-is.
->
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3599
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->  hw/net/xilinx_axienet.c | 29 ++++++++++++++++++-----------
->  1 file changed, 18 insertions(+), 11 deletions(-)
->
-> diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c
-> index 970732b162..a44dda5385 100644
-> --- a/hw/net/xilinx_axienet.c
-> +++ b/hw/net/xilinx_axienet.c
-> @@ -919,20 +919,27 @@ xilinx_axienet_data_stream_push(StreamSink *obj, uint8_t *buf, size_t size,
->      if (s->hdr[0] & 1) {
->          unsigned int start_off = s->hdr[1] >> 16;
->          unsigned int write_off = s->hdr[1] & 0xffff;
-> -        uint32_t tmp_csum;
-> -        uint16_t csum;
->
-> -        tmp_csum = net_checksum_add(s->txpos - start_off,
-> -                                    buf + start_off);
-> -        /* Accumulate the seed.  */
-> -        tmp_csum += s->hdr[2] & 0xffff;
-> +        if (start_off > s->txpos || write_off + 2 > s->txpos) {
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                          "%s: offsets outside packet, skipping checksum\n",
-> +                          TYPE_XILINX_AXI_ENET);
-> +        } else {
-> +            uint32_t tmp_csum;
-> +            uint16_t csum;
->
-> -        /* Fold the 32bit partial checksum.  */
-> -        csum = net_checksum_finish(tmp_csum);
-> +            tmp_csum = net_checksum_add(s->txpos - start_off,
-> +                                        buf + start_off);
-> +            /* Accumulate the seed.  */
-> +            tmp_csum += s->hdr[2] & 0xffff;
->
-> -        /* Writeback.  */
-> -        buf[write_off] = csum >> 8;
-> -        buf[write_off + 1] = csum & 0xff;
-> +            /* Fold the 32bit partial checksum.  */
-> +            csum = net_checksum_finish(tmp_csum);
-> +
-> +            /* Writeback.  */
-> +            buf[write_off] = csum >> 8;
-> +            buf[write_off + 1] = csum & 0xff;
-> +        }
->      }
->
->      qemu_send_packet(qemu_get_queue(s->nic), buf, s->txpos);
-> --
-> 2.43.0
+Reference:
+K230 TRM V0.3.1 (2024-11-18), Section 5.2 Sram
+
+Signed-off-by: Jian Cai <lingqian_gi@163.com>
+---
+ MAINTAINERS                  |  5 +++
+ hw/riscv/k230_sram.c         | 81 ++++++++++++++++++++++++++++++++++++
+ include/hw/riscv/k230_sram.h | 35 ++++++++++++++++
+ 3 files changed, 121 insertions(+)
+ create mode 100644 hw/riscv/k230_sram.c
+ create mode 100644 include/hw/riscv/k230_sram.h
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 6171cc7494..3567563ba6 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1825,6 +1825,11 @@ L: qemu-riscv@nongnu.org
+ S: Maintained
+ F: docs/system/riscv/k230.rst
+ F: hw/riscv/k230.c
++F: hw/riscv/k230_sram.c
++F: include/hw/riscv/k230_sram.h
++F: hw/riscv/k230_sram.c
++F: include/hw/riscv/k230_sram.h
++F: tests/qtest/k230-sram-test.c
+ F: hw/watchdog/k230_wdt.c
+ F: include/hw/riscv/k230.h
+ F: include/hw/watchdog/k230_wdt.h
+diff --git a/hw/riscv/k230_sram.c b/hw/riscv/k230_sram.c
+new file mode 100644
+index 0000000000..1d960e733e
+--- /dev/null
++++ b/hw/riscv/k230_sram.c
+@@ -0,0 +1,81 @@
++/*
++ * K230 SRAM Controller
++ *
++ * K230 Technical Reference Manual V0.3.1 (2024-11-18):
++ * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
++ *
++ * The K230 shared SRAM (2 MB at 0x80200000) has no software-visible
++ * controller registers.  This device wraps the SRAM as a SysBusDevice
++ * so that it appears in the QOM tree, supports migration (VMState),
++ * and can be introspected by management tools.
++ *
++ * Clock gating is controlled by the CMU at 0x91100000 (shrm_CLK_CFG,
++ * offset 0x5c, bit 10: sram_aclk_enable).  Reset is controlled by the
++ * RMU at 0x91101000 (SRAM_RST_TIM/SRAM_RST_CTL, offsets 0x60/0x64).
++ * Those peripherals are not modelled yet, so SRAM is always enabled
++ * in the current QEMU implementation.
++ *
++ * Copyright (c) 2026 Jian Cai <lingqian_gi@163.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/units.h"
++#include "hw/core/sysbus.h"
++#include "migration/vmstate.h"
++#include "qapi/error.h"
++#include "hw/riscv/k230_sram.h"
++
++static void k230_sram_realize(DeviceState *dev, Error **errp)
++{
++    K230SramState *s = K230_SRAM(dev);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++
++    memory_region_init_ram(&s->sram, OBJECT(dev), "k230.sram",
++                           2 * MiB, &error_fatal);
++    sysbus_init_mmio(sbd, &s->sram);
++}
++
++static void k230_sram_reset_hold(Object *obj, ResetType type)
++{
++    /*
++     * No software-visible registers to reset.  SRAM content is preserved
++     * across warm reset on real hardware; a cold reset would clear it,
++     * but QEMU memory_region_init_ram already zeroes the region on init.
++     */
++}
++
++static const VMStateDescription vmstate_k230_sram = {
++    .name = "k230.sram",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_END_OF_LIST()
++    },
++};
++
++static void k230_sram_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    dc->realize = k230_sram_realize;
++    rc->phases.hold = k230_sram_reset_hold;
++    dc->vmsd = &vmstate_k230_sram;
++    dc->desc = "K230 SRAM";
++}
++
++static const TypeInfo k230_sram_info = {
++    .name          = TYPE_K230_SRAM,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(K230SramState),
++    .class_init    = k230_sram_class_init,
++};
++
++static void k230_sram_register_type(void)
++{
++    type_register_static(&k230_sram_info);
++}
++
++type_init(k230_sram_register_type)
+diff --git a/include/hw/riscv/k230_sram.h b/include/hw/riscv/k230_sram.h
+new file mode 100644
+index 0000000000..6d15970ab9
+--- /dev/null
++++ b/include/hw/riscv/k230_sram.h
+@@ -0,0 +1,35 @@
++/*
++ * K230 SRAM Controller
++ *
++ * K230 Technical Reference Manual V0.3.1 (2024-11-18):
++ * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
++ *
++ * The K230 shared SRAM (2 MB at 0x80200000) has no software-visible
++ * controller registers: it is a pure on-chip RAM block accessed directly
++ * via the AXI bus.  Clock gating (CMU at 0x91100000, offset 0x5c) and
++ * reset control (RMU at 0x91101000, offsets 0x60/0x64) are handled by
++ * separate system-controller peripherals and are not modelled here yet.
++ *
++ * Copyright (c) 2026 Jian Cai <lingqian_gi@163.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef K230_SRAM_H
++#define K230_SRAM_H
++
++#include "hw/core/sysbus.h"
++#include "qom/object.h"
++
++#define TYPE_K230_SRAM "riscv.k230.sram"
++OBJECT_DECLARE_SIMPLE_TYPE(K230SramState, K230_SRAM)
++
++struct K230SramState {
++    /*< private >*/
++    SysBusDevice parent_obj;
++
++    /*< public >*/
++    MemoryRegion sram;          /* 2 MB SRAM storage */
++};
++
++#endif /* K230_SRAM_H */
+-- 
+2.43.0
+
 
