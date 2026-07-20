@@ -4,135 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C12BFC44515
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 11:54:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B04AC44515
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 11:54:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlmZ7-00085s-Nd; Mon, 20 Jul 2026 07:53:45 -0400
+	id 1wlmZj-0008SF-5v; Mon, 20 Jul 2026 07:54:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wlmZ4-00085G-VS
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 07:53:43 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wlmZ3-0003Ur-GR
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 07:53:42 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66KAvlTs2458147
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 11:53:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=3gyoZecx2HuCCDG/JhJkdO
- 8C7TK4ySlCA12puV1Bnuw=; b=dIlzbbpP7s/+3quIGcsFLAUW5o2eK41Zt6r4L1
- BndgCpj2pRHIUwqAV/OQX06tVSIJk3AhgWit38u1PpWH9lcJHF26f9oLy44zJUNF
- 7WlKrXoEuRxjqan6N/RHsgguJ3FkYh9ZFF+OcWQE6nqL9LR9lR7gv9+ed56X1bPa
- aKvLXKL4gEVcnUhZwrXCiyVTxfGj2pRynD9NqcjBP/0oGWqcle01IhmbyxA9Kv26
- 8fpOtwipIeJzyAdpmxJ00yPk8EkPZ9OwefZqVQJz/3Zme+Swkw8Ip8R6jQTNkl7v
- ZgDw3C0IdEz4o64TWUMjAJ5vC0O+FM/h595AdrJn6fBOkMCA==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhf0ks8b3-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 11:53:39 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51c0f0a0760so239801991cf.2
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 04:53:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784548419; x=1785153219; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=3gyoZecx2HuCCDG/JhJkdO8C7TK4ySlCA12puV1Bnuw=;
- b=RroD3TDL5g28iyfAhAN25THsatun87F0uWUaaWW34kh3XN1hmSyOx/0S7in9Vs035I
- uD03Ljg4tk3tdlQAs3FebkXIgUOyMsEVoSng0LxLZj+HymunVq//GLsXQtZ2lTKlJ0xR
- 28zBvALJMRE/kRTfcoH4y3KUpxbc95nqVDZSHR4VyAbtdAWABS8FZ/DEnjicmrt74a39
- 5pDleCnmCdH9SCHAZ7Umsz3qLX+0ia/CYY/W4gsDIVpO2vxDqZB+GWI4GyMG3l8PD+eg
- mpL49rJGreLkYyhSXXb8Wgw2zQVhvVtfy6ZVyzaMabCae6jPWEZz+ogQ4Y3uXhJfewFP
- gaIQ==
+ (Exim 4.90_1) (envelope-from <timo.teras@gmail.com>)
+ id 1wlmZe-0008Rf-7R
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 07:54:19 -0400
+Received: from mail-ot1-f54.google.com ([209.85.210.54])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <timo.teras@gmail.com>)
+ id 1wlmZb-0003Xv-RS
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 07:54:17 -0400
+Received: by mail-ot1-f54.google.com with SMTP id
+ 46e09a7af769-7eb63dbd229so2247910a34.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 04:54:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784548419; x=1785153219;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=3gyoZecx2HuCCDG/JhJkdO8C7TK4ySlCA12puV1Bnuw=;
- b=YYlqU407JOsaVCqkuZTGdmHk2sggo5nZE6aw3sz2xVIOswRebvCBPdfCD4akt6PKGZ
- scEntPUuq+o0o1MNmvLm3I6/Hq3lTKJZK8U2IxqvE6/7PPYVue4AjMrbeB1eAY3oh5K7
- XeFTTnlTMGVmQKBEuvaypNA6hoDfdEEKWSoBE9RTuIfV1v9r1/ygVhVcibzvQnv5SLKP
- 8wgQ8H3pViVGgiAU/VS9EG/hdxBKKWNYN5vRluRFE03VmBZSYDrnxgk7mDUQvq4QliWy
- X+rvi9aa+GYxyo8gmeL2djU6F0WLx82d6kuxRgnJvTC3YFGdWP+gCfkBAypDcQslNMVe
- 6uvA==
-X-Gm-Message-State: AOJu0YxAEhX++gsQW6JMvQaXBPDLxWrCsSimKI3Pz/ytKTN54xx2Ju5W
- dLZPuO7pi/4yBmr1CmllnYO8PjDr5fasyfrQemiZqkhFsYUDm9N+Ko8p2S2Vgmv7l+s+2HlDp4i
- vKVZln4tjh4VQm39s4BGbbdmtxUJn+NjYKxuUPpHEBiesMalFd3+tguoli1ak6SxxBA==
-X-Gm-Gg: AfdE7ckaTreozuoy9le9nxq27Ge5tMTISHAbRvHhVM4DvRTsjBTK9bTX/iay4fR4C9z
- 0FIuXF1IiDEDEtgAZgPvMeKk1tIk+UK2NhV1AlNBOrU3L/SUKczm196q/PR5hUhVe6nG3nQRA3Q
- 7FnvZhMABQUTWG6lX9NVhBKyqoOesyWw/XbSyAy7F0M214QSjH7p8zYNg3JiKkX8RX7kJCJn+5t
- QI45mT4K06aKzuhJu8J3ZHnRbffCb4oLMgWjxa7XymOX4pSKoQOVe/sWk6cB2ZFYkhnhYgyFIhP
- bZ0I2vVR/n8tLaOrhPEWHhWembd9LcHNktP1jHj2UHKRobC9EK1QVcy9zncBrOrTdqU5UEks0BU
- +H+KYnczn56xFCvK6Tl2tjyhDkWOTv83xqGrCqasaPzPf5YlamUq76BwoBA==
-X-Received: by 2002:a05:622a:3d0:b0:51a:8c9a:8fb4 with SMTP id
- d75a77b69052e-5213f2788e9mr123146321cf.69.1784548419269; 
- Mon, 20 Jul 2026 04:53:39 -0700 (PDT)
-X-Received: by 2002:a05:622a:3d0:b0:51a:8c9a:8fb4 with SMTP id
- d75a77b69052e-5213f2788e9mr123146121cf.69.1784548418803; 
- Mon, 20 Jul 2026 04:53:38 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4954a2692a3sm241202895e9.0.2026.07.20.04.53.37
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 20 Jul 2026 04:53:37 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Alexander Graf <agraf@csgraf.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-stable@nongnu.org, Matthew Jackson <matthew@pq.io>
-Subject: [PATCH] hw/misc/applesmc: Fix a typo setting MSSD key
-Date: Mon, 20 Jul 2026 13:53:36 +0200
-Message-ID: <20260720115336.75063-1-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.53.0
+ d=1e100.net; s=20251104; t=1784548454; x=1785153254;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=7kELQ8t+LDEX0C4kGuwieMAsNtxfKr2VYrYjD1QKjdI=;
+ b=ldhozvsBlejHIk8EdHb2Twt3Z8PYQ+O+FUA0myiW0IcAl4zY4VG8ZseyUl6MQBGFPk
+ w8V8abTQK6e0AWwv1Q1wzYcMUde1ylHT/H2XjxJTApaLmKs4UKtU8qGo4L+IxTgPk0vt
+ wi6jAvzjgfoiq3ucDxcqBmCk+NHw4iBeQBrdjyaDYFz7JpfXkrNFYa9rPdX8qTAJr/vt
+ fjqIgyV1yVHCoZydcHzPrxli7E9/2JjSqOCxpFFsRHJXjBu1KphMHbtIB+D7LZTMCEO6
+ 9vnkW0fV3pcJBOYRL35V0SA/jjRzoLjZ/fOF4dSBGz/YOyjQuI/Drql4a4986SGwA8Ni
+ pDmw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpeBwzqJRdJn6/SNL7QK/FSBUbvx0r8rkQ8d943NgboeTLw89jZ3kJMGNi0VLtmmOQ/HB7mI48A6O1g@nongnu.org
+X-Gm-Message-State: AOJu0YwQX2Wrf2vYXuVzpy+g0fCBgo4t86uPvIdDKAZl9GhzPnDfsGRf
+ Yb/aQsuNUQRyN/XQh/PKSPs5tA4XCSepyUEzlhBVZlARacoQR+nQhQ6yuFCmb1v8
+X-Gm-Gg: AfdE7cl37HDok5RoHF9aEndI5v4Zk6Q5wt1kriiVdN1begiE+RAmnB4NAZVMeJpLjvg
+ OQ2/nndaTCyRhqxtiGofJ9q0oL7tT2151yFqH4I56p2P6j9Yed8lryg6q1SFYly8+C67Kw+U7Jd
+ UfQZVNvSIUTjH6fCeIMBFtpkMBgmgD54Nsd1WZAquApbQZYjV5mZOHfbPKcVRSLH9tfWbjf6s6M
+ Xkio4fxs/qMEt7RUFxK2d2jAGc5G4zvDi8GnMx5H8xOKbJFoezkyDtz9hJdHHhYFRgDiiNTehnc
+ KHAssWjAl9GkCLq/jh/gs1GaSSpzdnDbwdRf0MGn/kePvsM4L9DLCNXFCF56Msb+DaHFdDmPyFP
+ Rx8Vnq0TA2BdxD8/t7RdfdsYkt24Qq3n27ovFsDW/t334cGCgK318W3OkT2ayV6oph5BqPaWRG2
+ N3hGjlhDdcp8c41yDbFI0Qv+VU3fAqNFBWkyoJaGsJOr7pNQ==
+X-Received: by 2002:a05:6830:7309:b0:7e9:dabf:fba0 with SMTP id
+ 46e09a7af769-7eda927fe99mr6496546a34.15.1784548453931; 
+ Mon, 20 Jul 2026 04:54:13 -0700 (PDT)
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com.
+ [209.85.160.52]) by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-7edaf94c13csm7977275a34.16.2026.07.20.04.54.13
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Jul 2026 04:54:13 -0700 (PDT)
+Received: by mail-oa1-f52.google.com with SMTP id
+ 586e51a60fabf-44aeefa1c00so4966334fac.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 04:54:13 -0700 (PDT)
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoEOvcZB1hSq/TZigqr/ZEMrqjvnO1yOJfjTt5fs5x8MAODnos/cXiznN72359bXG0DuwieYKlgqszS@nongnu.org
+X-Received: by 2002:a05:687c:3022:b0:43b:516f:5f0e with SMTP id
+ 586e51a60fabf-45660cc955bmr7383353fac.9.1784548452799; Mon, 20 Jul 2026
+ 04:54:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: NcaHcgvFM_N8lhLk2M75jAWDYbk06X5D
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDEzMiBTYWx0ZWRfXyS871LRqeVnO
- m7s044Y4rOiFTrP1i74Cg93TJjFOc/+lg16UU9YSv/YKyE791J+pVvIzuixy+agG9Yi+VjwRp02
- GTACTM0ygkDi/tNjO2ZjS5iYgBF+sjk=
-X-Authority-Analysis: v=2.4 cv=G58s1dk5 c=1 sm=1 tr=0 ts=6a5e0c43 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8 a=17tSaWqMGGc7pqR7pAQA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDEzMiBTYWx0ZWRfX4ubYmWG5bR4A
- qQxiJpnTveg8kCpq5iH0BVcdplPrHUrtJ5oR4DWedBval4W2SLR9qcUmx9dGUf9S1WnmM7T2pmi
- dEx/2AP/9sDthDoSmFWPGx2uHcR0i3bTP0xa6hz1B77LE6+JqRF4UBCIkqvT/U6NileUES5W6lt
- 4yInzih0qXXk8gcpeji0VhlaaxvrjICgLpf+u6X6/DZ4DwBpJ89OyDhWF1/il24UouJMs1uqcWu
- OUQZ1BgAFz3ISsBdIrHCgbakWIe0bvBl4pPhxInIUxBcRlA4dplQ1whAWtmfCcc55tjzYgVCjo3
- KehMeziFRbni6qy0J3HR4s1lKIctF/bDlIKpct6VQJntRIuSWZ+hfm3IUC4HMBmZV+YSXcPRoch
- wj/bA/TxRY8hOEGMa4f6bA1TMiISP1hcbuxDct+aRmO/E6mwiThirCNqG/Zso3LbZ0LE4PT+av/
- SHlut/A7S/viqOEWAbw==
-X-Proofpoint-GUID: NcaHcgvFM_N8lhLk2M75jAWDYbk06X5D
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-20_02,2026-07-20_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 clxscore=1015 spamscore=0
- lowpriorityscore=0 malwarescore=0 adultscore=0 phishscore=0 bulkscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607200132
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20250912-usbhost-disconnect-v1-1-9c7c5fa9b50a@iki.fi>
+ <bb76dd56-e97e-4d1c-aaf8-9eb55e6858b3@redhat.com>
+ <al4GiC3G1u2lgTJD@sirius.home.kraxel.org>
+In-Reply-To: <al4GiC3G1u2lgTJD@sirius.home.kraxel.org>
+From: =?UTF-8?Q?Timo_Ter=C3=A4s?= <timo.teras@iki.fi>
+Date: Mon, 20 Jul 2026 14:54:01 +0300
+X-Gmail-Original-Message-ID: <CABTJ_OeeS8YW95jfdhB_YUfcvTa-zof8e6bXrdi3R8uQbMUoQA@mail.gmail.com>
+X-Gm-Features: AUfX_mwrn6SgspX1aGUGBqVUpAu416OrajJAqQZtpw_miYIeqzK4icbFvjSc2Ug
+Message-ID: <CABTJ_OeeS8YW95jfdhB_YUfcvTa-zof8e6bXrdi3R8uQbMUoQA@mail.gmail.com>
+Subject: Re: [PATCH] hw/usb/host-libusb: keep autoscan enabled for bus+addr
+ selector
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000009d1c6706570990ef"
+Received-SPF: pass client-ip=209.85.210.54; envelope-from=timo.teras@gmail.com;
+ helo=mail-ot1-f54.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,37 +103,299 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In commit 1ddda5cd364 we meant to set MSSD=3, but due
-to a typo we ended setting MSSD=0. Convert the two other
-NATJ and MSSP keys to use hexadecimal notation to avoid
-similar copy/paste typos.
+--0000000000009d1c6706570990ef
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Cc: qemu-stable@nongnu.org
-Fixes: 1ddda5cd364 ("AppleSMC device emulation")
-Reported-by: Matthew Jackson <matthew@pq.io>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- hw/misc/applesmc.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Hi!
 
-diff --git a/hw/misc/applesmc.c b/hw/misc/applesmc.c
-index fd96f5f245f..d004e8b4431 100644
---- a/hw/misc/applesmc.c
-+++ b/hw/misc/applesmc.c
-@@ -333,9 +333,9 @@ static void applesmc_isa_realize(DeviceState *dev, Error **errp)
-     applesmc_add_key(s, "REV ", 6, "\x01\x13\x0f\x00\x00\x03");
-     applesmc_add_key(s, "OSK0", 32, s->osk);
-     applesmc_add_key(s, "OSK1", 32, s->osk + 32);
--    applesmc_add_key(s, "NATJ", 1, "\0");
--    applesmc_add_key(s, "MSSP", 1, "\0");
--    applesmc_add_key(s, "MSSD", 1, "\0x3");
-+    applesmc_add_key(s, "NATJ", 1, "\x00");
-+    applesmc_add_key(s, "MSSP", 1, "\x00");
-+    applesmc_add_key(s, "MSSD", 1, "\x03");
- }
- 
- static void applesmc_unrealize(DeviceState *dev)
--- 
-2.53.0
+The more specific use case that does not work without this (not realized
+until after writing issue/commit) is devices that need to switch modes, or
+hot plugging new items to the specific physical port. In these scenarios
+the original device disconnects and later new one connects to the port.
+Detection of the new device does not work in any device combination without
+this commit.
 
+Timo
+
+
+On Mon, 20 Jul 2026, 14.39 Gerd Hoffmann, <kraxel@redhat.com> wrote:
+
+> On Mon, Jul 20, 2026 at 10:12:27AM +0200, Thomas Huth wrote:
+> >
+> >  Hi Gerd,
+> >
+> > since you originally wrote commit e058fa2dd599, could you maybe have a
+> look
+> > at this patch?
+>
+> Not sure what is going on here, I'm confident I had tested this back
+> then.  Maybe behavior depends on the kind of usb device or libusb
+> version or host os or a combination of those.  If disconnect detection
+> does not work reliable (as written in the gitlab issue) turning
+> autoscan back on should indeed fix it and it should also not cause
+> other problems.
+>
+> Commit message should be a bit more verbose so it is not needed to
+> visit gitlab for additional info.  With that:
+>
+> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+>
+> take care,
+>   Gerd
+>
+> >
+> >  Thanks,
+> >   Thomas
+> >
+> >
+> > On 12/09/2025 13.14, Timo Ter=C3=A4s wrote:
+> > > This is partial revert of commit e058fa2dd599.
+> > >
+> > > The portion to immediately validate the device is kept, but this
+> > > adds and enables again the autoscan functionality. This is needed
+> > > to detect and relay USB device disconnect event to the guest.
+> > >
+> > > Fixes: e058fa2dd599 ("usb-host: add special case for bus+addr")
+> > > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3111
+> > > Signed-off-by: Timo Ter=C3=A4s <timo.teras@iki.fi>
+> > > ---
+> > >   hw/usb/host-libusb.c | 14 ++++----------
+> > >   1 file changed, 4 insertions(+), 10 deletions(-)
+> > >
+> > > diff --git a/hw/usb/host-libusb.c b/hw/usb/host-libusb.c
+> > > index
+> b74670ae25696b5252f0d034cb9b759e338a050f..f0baf6b2f2d12fbf8feb5b788b46d31=
+87028df58
+> 100644
+> > > --- a/hw/usb/host-libusb.c
+> > > +++ b/hw/usb/host-libusb.c
+> > > @@ -90,7 +90,6 @@ struct USBHostDevice {
+> > >       uint32_t                         iso_urb_frames;
+> > >       uint32_t                         options;
+> > >       uint32_t                         loglevel;
+> > > -    bool                             needs_autoscan;
+> > >       bool                             allow_one_guest_reset;
+> > >       bool                             allow_all_guest_resets;
+> > >       bool                             suppress_remote_wake;
+> > > @@ -1211,7 +1210,6 @@ static void usb_host_realize(USBDevice *udev,
+> Error **errp)
+> > >   #if LIBUSB_API_VERSION >=3D 0x01000107 && !defined(CONFIG_WIN32)
+> > >       if (s->hostdevice) {
+> > >           int fd;
+> > > -        s->needs_autoscan =3D false;
+> > >           fd =3D qemu_open(s->hostdevice, O_RDWR, errp);
+> > >           if (fd < 0) {
+> > >               return;
+> > > @@ -1227,7 +1225,6 @@ static void usb_host_realize(USBDevice *udev,
+> Error **errp)
+> > >           !s->match.vendor_id &&
+> > >           !s->match.product_id &&
+> > >           !s->match.port) {
+> > > -        s->needs_autoscan =3D false;
+> > >           ldev =3D usb_host_find_ref(s->match.bus_num,
+> > >                                    s->match.addr);
+> > >           if (!ldev) {
+> > > @@ -1242,14 +1239,13 @@ static void usb_host_realize(USBDevice *udev,
+> Error **errp)
+> > >                          s->match.bus_num, s->match.addr);
+> > >               return;
+> > >           }
+> > > -    } else {
+> > > -        s->needs_autoscan =3D true;
+> > > -        QTAILQ_INSERT_TAIL(&hostdevs, s, next);
+> > > -        usb_host_auto_check(NULL);
+> > >       }
+> > >       s->exit.notify =3D usb_host_exit_notifier;
+> > >       qemu_add_exit_notifier(&s->exit);
+> > > +
+> > > +    QTAILQ_INSERT_TAIL(&hostdevs, s, next);
+> > > +    usb_host_auto_check(NULL);
+> > >   }
+> > >   static void usb_host_instance_init(Object *obj)
+> > > @@ -1267,9 +1263,7 @@ static void usb_host_unrealize(USBDevice *udev)
+> > >       USBHostDevice *s =3D USB_HOST_DEVICE(udev);
+> > >       qemu_remove_exit_notifier(&s->exit);
+> > > -    if (s->needs_autoscan) {
+> > > -        QTAILQ_REMOVE(&hostdevs, s, next);
+> > > -    }
+> > > +    QTAILQ_REMOVE(&hostdevs, s, next);
+> > >       usb_host_close(s);
+> > >   }
+> > >
+> > > ---
+> > > base-commit: 190d5d7fd725ff754f94e8e0cbfb69f279c82b5d
+> > > change-id: 20250912-usbhost-disconnect-192ecaa8fc3e
+> > >
+> > > Best regards,
+> >
+>
+> --
+>
+>
+
+--0000000000009d1c6706570990ef
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto">Hi!<div dir=3D"auto"><br></div><div dir=3D"auto">The more=
+ specific use case that does not work without this (not realized until afte=
+r writing issue/commit) is devices that need to switch modes, or hot pluggi=
+ng new items to the specific physical port. In these scenarios the original=
+ device disconnects and later new one connects to the port. Detection of th=
+e new device does not work in any device combination without this commit.</=
+div><div dir=3D"auto"><br></div><div dir=3D"auto">Timo</div><br><br><div cl=
+ass=3D"gmail_quote gmail_quote_container" dir=3D"auto"><div dir=3D"ltr" cla=
+ss=3D"gmail_attr">On Mon, 20 Jul 2026, 14.39 Gerd Hoffmann, &lt;<a href=3D"=
+mailto:kraxel@redhat.com">kraxel@redhat.com</a>&gt; wrote:<br></div><blockq=
+uote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc =
+solid;padding-left:1ex">On Mon, Jul 20, 2026 at 10:12:27AM +0200, Thomas Hu=
+th wrote:<br>
+&gt; <br>
+&gt;=C2=A0 Hi Gerd,<br>
+&gt; <br>
+&gt; since you originally wrote commit e058fa2dd599, could you maybe have a=
+ look<br>
+&gt; at this patch?<br>
+<br>
+Not sure what is going on here, I&#39;m confident I had tested this back<br=
+>
+then.=C2=A0 Maybe behavior depends on the kind of usb device or libusb<br>
+version or host os or a combination of those.=C2=A0 If disconnect detection=
+<br>
+does not work reliable (as written in the gitlab issue) turning<br>
+autoscan back on should indeed fix it and it should also not cause<br>
+other problems.<br>
+<br>
+Commit message should be a bit more verbose so it is not needed to<br>
+visit gitlab for additional info.=C2=A0 With that:<br>
+<br>
+Acked-by: Gerd Hoffmann &lt;<a href=3D"mailto:kraxel@redhat.com" target=3D"=
+_blank" rel=3D"noreferrer">kraxel@redhat.com</a>&gt;<br>
+<br>
+take care,<br>
+=C2=A0 Gerd<br>
+<br>
+&gt; <br>
+&gt;=C2=A0 Thanks,<br>
+&gt;=C2=A0 =C2=A0Thomas<br>
+&gt; <br>
+&gt; <br>
+&gt; On 12/09/2025 13.14, Timo Ter=C3=A4s wrote:<br>
+&gt; &gt; This is partial revert of commit e058fa2dd599.<br>
+&gt; &gt; <br>
+&gt; &gt; The portion to immediately validate the device is kept, but this<=
+br>
+&gt; &gt; adds and enables again the autoscan functionality. This is needed=
+<br>
+&gt; &gt; to detect and relay USB device disconnect event to the guest.<br>
+&gt; &gt; <br>
+&gt; &gt; Fixes: e058fa2dd599 (&quot;usb-host: add special case for bus+add=
+r&quot;)<br>
+&gt; &gt; Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issue=
+s/3111" rel=3D"noreferrer noreferrer" target=3D"_blank">https://gitlab.com/=
+qemu-project/qemu/-/issues/3111</a><br>
+&gt; &gt; Signed-off-by: Timo Ter=C3=A4s &lt;<a href=3D"mailto:timo.teras@i=
+ki.fi" target=3D"_blank" rel=3D"noreferrer">timo.teras@iki.fi</a>&gt;<br>
+&gt; &gt; ---<br>
+&gt; &gt;=C2=A0 =C2=A0hw/usb/host-libusb.c | 14 ++++----------<br>
+&gt; &gt;=C2=A0 =C2=A01 file changed, 4 insertions(+), 10 deletions(-)<br>
+&gt; &gt; <br>
+&gt; &gt; diff --git a/hw/usb/host-libusb.c b/hw/usb/host-libusb.c<br>
+&gt; &gt; index b74670ae25696b5252f0d034cb9b759e338a050f..f0baf6b2f2d12fbf8=
+feb5b788b46d3187028df58 100644<br>
+&gt; &gt; --- a/hw/usb/host-libusb.c<br>
+&gt; &gt; +++ b/hw/usb/host-libusb.c<br>
+&gt; &gt; @@ -90,7 +90,6 @@ struct USBHostDevice {<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0uint32_t=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0iso_urb_frames;<=
+br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0uint32_t=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0options;<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0uint32_t=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0loglevel;<br>
+&gt; &gt; -=C2=A0 =C2=A0 bool=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0needs_autoscan;<=
+br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0bool=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0allow_=
+one_guest_reset;<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0bool=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0allow_=
+all_guest_resets;<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0bool=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0suppre=
+ss_remote_wake;<br>
+&gt; &gt; @@ -1211,7 +1210,6 @@ static void usb_host_realize(USBDevice *ude=
+v, Error **errp)<br>
+&gt; &gt;=C2=A0 =C2=A0#if LIBUSB_API_VERSION &gt;=3D 0x01000107 &amp;&amp; =
+!defined(CONFIG_WIN32)<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0if (s-&gt;hostdevice) {<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0int fd;<br>
+&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;needs_autoscan =3D false;<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0fd =3D qemu_open(s-&gt;ho=
+stdevice, O_RDWR, errp);<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (fd &lt; 0) {<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>
+&gt; &gt; @@ -1227,7 +1225,6 @@ static void usb_host_realize(USBDevice *ude=
+v, Error **errp)<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0!s-&gt;match.vendor_id &a=
+mp;&amp;<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0!s-&gt;match.product_id &=
+amp;&amp;<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0!s-&gt;match.port) {<br>
+&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;needs_autoscan =3D false;<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ldev =3D usb_host_find_re=
+f(s-&gt;match.bus_num,<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;match.add=
+r);<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!ldev) {<br>
+&gt; &gt; @@ -1242,14 +1239,13 @@ static void usb_host_realize(USBDevice *u=
+dev, Error **errp)<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;match.bus_num, s-&gt;match.addr);<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt; &gt; -=C2=A0 =C2=A0 } else {<br>
+&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;needs_autoscan =3D true;<br>
+&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 QTAILQ_INSERT_TAIL(&amp;hostdevs, s,=
+ next);<br>
+&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 usb_host_auto_check(NULL);<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;exit.notify =3D usb_host_exit_not=
+ifier;<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0qemu_add_exit_notifier(&amp;s-&gt;exit)=
+;<br>
+&gt; &gt; +<br>
+&gt; &gt; +=C2=A0 =C2=A0 QTAILQ_INSERT_TAIL(&amp;hostdevs, s, next);<br>
+&gt; &gt; +=C2=A0 =C2=A0 usb_host_auto_check(NULL);<br>
+&gt; &gt;=C2=A0 =C2=A0}<br>
+&gt; &gt;=C2=A0 =C2=A0static void usb_host_instance_init(Object *obj)<br>
+&gt; &gt; @@ -1267,9 +1263,7 @@ static void usb_host_unrealize(USBDevice *u=
+dev)<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0USBHostDevice *s =3D USB_HOST_DEVICE(ud=
+ev);<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0qemu_remove_exit_notifier(&amp;s-&gt;ex=
+it);<br>
+&gt; &gt; -=C2=A0 =C2=A0 if (s-&gt;needs_autoscan) {<br>
+&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 QTAILQ_REMOVE(&amp;hostdevs, s, next=
+);<br>
+&gt; &gt; -=C2=A0 =C2=A0 }<br>
+&gt; &gt; +=C2=A0 =C2=A0 QTAILQ_REMOVE(&amp;hostdevs, s, next);<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0usb_host_close(s);<br>
+&gt; &gt;=C2=A0 =C2=A0}<br>
+&gt; &gt; <br>
+&gt; &gt; ---<br>
+&gt; &gt; base-commit: 190d5d7fd725ff754f94e8e0cbfb69f279c82b5d<br>
+&gt; &gt; change-id: 20250912-usbhost-disconnect-192ecaa8fc3e<br>
+&gt; &gt; <br>
+&gt; &gt; Best regards,<br>
+&gt; <br>
+<br>
+-- <br>
+<br>
+</blockquote></div></div>
+
+--0000000000009d1c6706570990ef--
 
