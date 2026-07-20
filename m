@@ -4,90 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FF0FC44515
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 20:12:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02B28C44529
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 20:12:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wluL9-00065X-UU; Mon, 20 Jul 2026 16:11:51 -0400
+	id 1wluL7-00063f-TN; Mon, 20 Jul 2026 16:11:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wluL7-00063c-Dn
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 16:11:49 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wluL6-00062o-7g
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 16:11:48 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wluL5-00065l-VI
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 16:11:49 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-493f75f7172so82875935e9.1
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 13:11:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wluL4-00065U-Pk
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 16:11:47 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4954a32cf1eso14469285e9.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 13:11:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784578306; x=1785183106; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=U/09Eb0HUBr/JHocdx6RIzxAMDkihyLBxhmQ0AfJ/9A=;
- b=mblU+kogo00SPTfPJovoCn0wuFi6uzxh432w8uRnoZFuWjAZqYwzdE2CTG3FIylzbH
- QDiLDYgsd0nfBaCuAqE9EFllXMrlV6Z/XYDuKWrc3tQPz2KLwxUFb5UelPg62GEwsglV
- ZnZyIPuS+4frMeaFqaTdCZ0oya5SZs8+U39hFNte66eLr0uGyiGSRPNTC9k2ePwKER+h
- HYzEvk1Nv8XbA/EZt8uEOGtbIbj3j97mQhqha2bS9IS8k2gtdP8AFwJpHUL4EEaTZIOO
- I2NoBtvqi7HxMKM6i147oyXsxqzmUrK0M1DwqR5N4/d5WXtIGvRXKXVELIG499ksSSrv
- ki6A==
+ d=gmail.com; s=20251104; t=1784578305; x=1785183105; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=LgRFB/oAk9Vb6Dp39nHDMiixlW8E2fZ95ocnpRXZ3u4=;
+ b=kn3WcqxXS6zJs5okS5kscifH/YXlHbbmdsmmwunE7ENYNpMErmeSkKxdvZG1aVBW9W
+ SGslBm6RDochniwbud9kWtxjUXwuakVo9tOF4a7vr52t2ibAjFQE2AjxKlTZhHmpds1X
+ VWObhhgmXg9Cmr3MMzo0TxCfssq7VehQ2HRTNM/h2wrVswRtQOnogK+DNSVx8Ul9Syjr
+ JpXSQrmTCflI09CmK635aQKYg1tqaJl5ioyuC6Oxb+Gf/5/E3SJkN96yvH6xxaQEv3R5
+ LmK5iW43FA2Q6e2QebVWUW7f4+X2Em1fjnT10bltEPIVDrm2eBqCgqTrMJ4hUiHJPq4H
+ 3ANA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784578306; x=1785183106;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=U/09Eb0HUBr/JHocdx6RIzxAMDkihyLBxhmQ0AfJ/9A=;
- b=RgZ9ltbFj/W4MP+92I2W5RmsWUZpxdlochNlQRBceTYOH/7Hj0K1VcaKrHGfJBiFYr
- 7c8x3mepTM6PMtcU+eeZrKvr9sZJhLjstoLJAxxQaPV+MfY9qA6UDfqKZWB+zAHx4zMa
- 0B4jBLzYinTnMHimnTNgpDHRtX/POKdgWXvMkpVWLYmmo5kz7dkpBA0c3nDn41anhv3k
- 6L4aJD0sgakBy43sd/rmQduNO9HlJ2XJ4hLJUrHoz0GAHrRqE7lSP4Q2OyZPvVmrfLB8
- 4QCxhLQRCCohH9xC6BJLWKSxRGFW5/rmAywgIq6QpQcHeume62yuju9qJv6U6tttYbhH
- 2pnQ==
-X-Gm-Message-State: AOJu0Yyb5Be0HaO/yqMi6m+ieo+XInwApfTcOSQFRpNmJCxqVwaLp3sF
- vSJNa6szxf2vEJQtxw5pvtha3xbY/uanfmUkPsin/PadOWQFluvAwvETMILWWA==
-X-Gm-Gg: AfdE7cn95duHdsqJzo79WA/uat7m88HyNgEyzu28GtOhi28KgcG0vyIxOxBM3TpG8Wg
- OONTmUiVYS3LSza05hUyodVB789lufiUX8CnAvKH/KJqt9MXhBqPhxOJIz6+j/GVWuQAxRelzEh
- KNXuN6au2IrFJhR3WkG+FN/G68pyq7jSTvhj63OyLhDR+ayI2XKT7TwE/3m/vMzkJU+L4doQH4/
- pjVM+75UrI0deKmhFVuvOAwuh4pNu0/Ct5lSDqrHoyO7IC639neerOaumgJkVj6A00Dsep1SFTF
- x1+FaaqLs2eoMyWJQTRePYlhR2eaf98owRX+aOWRGhY+cqCRnJ57rtRbRsYcqm0qnwRg8XX50Lm
- DKnvFsakSpltq6/KqwD3J+15dufY/lIMv8VpryQtucfSVfQuuGjui//qYjltN5yyDMgB/BsErTX
- Vd00w/JFtvKTCaE2fKM9AZWezJsN+bVsPsOcJcnbDdtfQakfh8Z6ois3ytpHAZMQTXiEilPjpGU
- 3YXcoQ+W+nzqfAdb7k5dCfpkw==
-X-Received: by 2002:a05:600c:4593:b0:495:3a52:cd7e with SMTP id
- 5b1f17b1804b1-4954a40e2f3mr182158835e9.25.1784578306152; 
- Mon, 20 Jul 2026 13:11:46 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1784578305; x=1785183105;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=LgRFB/oAk9Vb6Dp39nHDMiixlW8E2fZ95ocnpRXZ3u4=;
+ b=D2WQny7DES2QnJsC9uRk7ISSGmpO/pFydAuA1Q40uBAvEFNPmEONZ+T8vJSVoa3QWH
+ 3ksS0mvW988RXXCU6LvTSYoesx+ig9tlPiUtMJVvAfY4bxdxsauy1nwaeU/YkxUa0CNA
+ s2oVzdUKEUL2SOzqKZ221O08WxhXtno2TmiGX+drae2sqS2VOLYgggbnYX8PfOA1aBWm
+ Rfsucw/5zcws4vPuioxGe+b3s4xCC515o9EFhJheza0myjqc2tOY2d/BMhR4ml5x9nX5
+ RlZFlJkcd60Jade8qOBQLFV9ZxtlKltBA26YzJZbYGHVsCDegRKR2TyxYcjhhx9k7ZzO
+ M3mA==
+X-Gm-Message-State: AOJu0Yzv2CC2YykbFVTJSd8WXPC2AH3Zg1MTMoTkslTsVzHBKDAQ+b89
+ BmuW7oUKEuAxplB9bW3lfwsKdKJJXw9acyZAfPCXYEeI6CwvOK5rVJ0sAJ36Nw==
+X-Gm-Gg: AfdE7clImefVnjehLyNS2tGLnH7az62whPgxjiPF7YV6IH34NKQt6AsspaOI49NDMwh
+ Eu0e2U7sc2h4RV1GuFax5WjmlHrGr8wYBZIBmDVcp712rFQBipp0JdvYs0LcxN2LxjXLNMyG+/n
+ A+ItwYQIHYFjpqGoVahjU8XacZ77lHOaa13ky738J/uw+wGwIZWTGGF/mMnvR2E2PVaQJwqOFmq
+ NCqoO/GeptY2qdNl57auNsf99Cg2+6Y1N79eI728QsBffrNl5+dffgVVPRKM1EqiUQ8l8qkUsQ9
+ /5lVeQSSQFjOLhXSdF3RpdNdkfgrmPeaGOq8W2yqUsUWPy9yMc4sBPbLHSy1C/ZgYCWk0eDoMjH
+ fCn5PvQwnTs7kv0SY5wyby9NA6Ud2yScLZnoybhdnhGQ85jDWzR+ZIOKpuPxXhrhNi7KNO3/RfH
+ XyHRBqA9EJNqn6Z11URYEytMtbbIKr0xinu6E10x4SBMOAR6PNA2o3ohrm79K1cdN0zDhaP+zVZ
+ EVGFlbYMzM5GCtvMT/o4SlRHFjktIWdU9SA
+X-Received: by 2002:a05:600c:310e:b0:495:52dc:73a1 with SMTP id
+ 5b1f17b1804b1-49552dc776bmr118571975e9.29.1784578304840; 
+ Mon, 20 Jul 2026 13:11:44 -0700 (PDT)
 Received: from Provence.localdomain
  (dynamic-2a02-3100-225b-5200-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:225b:5200:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-495653bfabesm15934935e9.10.2026.07.20.13.11.44
+ 5b1f17b1804b1-495653bfabesm15934935e9.10.2026.07.20.13.11.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jul 2026 13:11:45 -0700 (PDT)
+ Mon, 20 Jul 2026 13:11:44 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Bin Meng <bmeng.cn@gmail.com>, Bernhard Beschow <shentey@gmail.com>,
- Bin Meng <bin.meng@processmission.com>, Christian Speich <c.speich@avm.de>
-Subject: [PATCH v2 1/2] hw/sd/sd: Fix error case for CMD18
-Date: Mon, 20 Jul 2026 22:11:32 +0200
-Message-ID: <20260720201133.24796-2-shentey@gmail.com>
+ Bin Meng <bmeng.cn@gmail.com>, Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH v2 0/2] SD & SDHCI fixes for-11.1
+Date: Mon, 20 Jul 2026 22:11:31 +0200
+Message-ID: <20260720201133.24796-1-shentey@gmail.com>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260720201133.24796-1-shentey@gmail.com>
-References: <20260720201133.24796-1-shentey@gmail.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FREEMAIL_REPLY=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,39 +100,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In commit 468fa450a7e0 ("hw/sd: Switch read/write primitive to
-buf+len"), `sd_read_byte()` changed its contract to return the read size
-rather than the read value (and was renamed to `sd_read_data()`
-accordingly). In an error case, however, `sd_read_data()` returns 0 by
-means of `dummy_byte` which is the code for the old contract. Moreover,
-`sdbus_read_data()` asserts the virtual method `read_data()` (and thus
-`sd_read_data()`) to return a non-zero size, i.e. to make progress and
-not loop forever. Fix the code to behave like the "DAT read illegal for
-command" case.
+This series fixes two issues in the SD subsystem. The first one could send QEMU
+into an endless loop or crash it (depending on whether assert() does something).
+The second patch fixes possible file system corruption in e500 and imx25-pdk
+machines, i.e. the ones using eSDHC rather than uSDHC, though I could only
+verify that with imx53 emulation on my imx53 branch [1].
 
-Fixes: 468fa450a7e0 ("hw/sd: Switch read/write primitive to buf+len")
-Reviewed-by: Bin Meng <bin.meng@processmission.com>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
-cc: Christian Speich <c.speich@avm.de>
----
- hw/sd/sd.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+v2:
+* Add missing R-b tag in first commit (Bin)
+* Fix typo in commit message of second commit (Bin)
+* Fix topic (fixes are intended for 11.1)
 
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 3360757004..a30c541df0 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -2860,7 +2860,8 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
-         if (sd->data_offset == 0) {
-             if (!address_in_range(sd, "READ_MULTIPLE_BLOCK",
-                                   sd->data_start, io_len)) {
--                return dummy_byte;
-+                *value = dummy_byte;
-+                return length;
-             }
-             partition_access = sd->ext_csd[EXT_CSD_PART_CONFIG]
-                     & EXT_CSD_PART_CONFIG_ACC_MASK;
+[1] https://github.com/shentok/qemu/tree/imx53
+
+Supersedes: 20260719211923.1079282-1-shentey@gmail.com
+
+Bernhard Beschow (2):
+  hw/sd/sd: Fix error case for CMD18
+  hw/sd/sdhci: Extract uSDHC-specific quirk
+
+ hw/sd/sd.c    |  3 ++-
+ hw/sd/sdhci.c | 73 +++++++++++++++++++++++++++++++--------------------
+ 2 files changed, 46 insertions(+), 30 deletions(-)
+
 -- 
 2.55.0
 
