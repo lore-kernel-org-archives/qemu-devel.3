@@ -4,114 +4,158 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39F6CC44529
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 04:44:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CD31C4452B
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 05:15:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm2KP-0005T5-RZ; Tue, 21 Jul 2026 00:43:38 -0400
+	id 1wm2oS-0007Tr-9d; Tue, 21 Jul 2026 01:14:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ojaswin@linux.ibm.com>)
- id 1wm2KK-0005Re-H7; Tue, 21 Jul 2026 00:43:32 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wm2oQ-0007Sk-Fv
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 01:14:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ojaswin@linux.ibm.com>)
- id 1wm2KH-0005uV-GU; Tue, 21 Jul 2026 00:43:32 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66KNClp53563406; Tue, 21 Jul 2026 04:43:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=ukIiMnlnhQqcnNfxwGbtrdZohDeKT/
- 5GloEtqy0Tdyg=; b=gHCa2qHRI/qP7Rve8mSs38Iox232l7z8BAk0MZZ06wABUq
- AKc8gPok/YtzKx/QkNXwJucQ+aj2diaQk9idIIK8IriLDW3iri76zCt4VYQ2cssX
- Agu024Ux3TMEcu0ThWZ3L5xWnEP8U2lXV8pGNdZ2+jzSyK+1sK/QUUDvpfIJPe0y
- 7Wau1gsmtWGISL3YxAUxEf0pk0IR3RLwgpJE4a0UnKBxxQ6kRD0KdcQYRoOPcu2Q
- V4M8emr7bOFE14gUgAJXMu6GLjUc22xaKids/6tTOFNlXfWkIyPpPg9bO4wH3/7Q
- 4J1zm5PZL2oh5MGV6UdDSU4nMG2sDmPbt3A0TE4Q==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fg790tv22-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 Jul 2026 04:43:24 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66L4Yc1r027014;
- Tue, 21 Jul 2026 04:43:23 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fgpgy8fqj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 Jul 2026 04:43:23 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66L4hJWI27460072
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 21 Jul 2026 04:43:19 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B8C702004E;
- Tue, 21 Jul 2026 04:43:19 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 19AB320043;
- Tue, 21 Jul 2026 04:43:17 +0000 (GMT)
-Received: from li-dc0c254c-257c-11b2-a85c-98b6c1322444.ibm.com (unknown
- [9.124.219.62])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 21 Jul 2026 04:43:16 +0000 (GMT)
-Date: Tue, 21 Jul 2026 10:13:14 +0530
-From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-To: Chinmay Rath <rathc@linux.ibm.com>
-Cc: Nikhil Kumar Singh <nikhilks@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, npiggin@gmail.com, harshpb@linux.ibm.com
-Subject: Re: [RFC PATCH 15/28] target/ppc: move various conditional branch
- insns to decodetree
-Message-ID: <al744ltN2DcUGbaG@li-dc0c254c-257c-11b2-a85c-98b6c1322444.ibm.com>
-References: <20260520160728.2283628-1-rathc@linux.ibm.com>
- <20260520160728.2283628-16-rathc@linux.ibm.com>
- <46867b5b-bb66-4378-8722-d918fd720037@linux.ibm.com>
- <aldMCp8X6_lpE97M@li-dc0c254c-257c-11b2-a85c-98b6c1322444.ibm.com>
- <8aa63fba-4b12-4c67-9c1b-d3dccf3b4b0f@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wm2oO-0000t1-Fs
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 01:14:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784610874;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=XTaAz2NfG11f78JGCG8dvPj6L9Q4kB1/oovgxv4XAIQ=;
+ b=TyYX8mX25RBYbQu6h0wh6KHcc08AxEBqskzsxAWkLAMkUkL/BMmtlH/A6AUgNQK3Z37YW9
+ 7bXQe4r0EFL9Eacux4yvTrOLU5FiwGUlUKfZ8KgRod2UcDXXtEruG4fzW+PsCGKDaGDriZ
+ UmehNWQs71VRB8UuhPm1GFZrV0B5BPY=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-445-hBAz6lAfPsGXy4B6BRUjSw-1; Tue, 21 Jul 2026 01:14:32 -0400
+X-MC-Unique: hBAz6lAfPsGXy4B6BRUjSw-1
+X-Mimecast-MFC-AGG-ID: hBAz6lAfPsGXy4B6BRUjSw_1784610872
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4955e865174so11363025e9.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 22:14:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1784610872; x=1785215672; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=XTaAz2NfG11f78JGCG8dvPj6L9Q4kB1/oovgxv4XAIQ=;
+ b=lD3uRHowEiVDPVEkb5JDWiAiMHTot4YD6kLuwZkD2sbg8sxAgP7084cN2EKRMXmvJ/
+ 8bPRxJEjnY3o5NSTxevzIctx0uKO9F1mer6ML7YjNYUaYsb6E/nZfn0fqJdwp6jJ93Xq
+ EZQuFISSeKfuBYV3vnR47RhbdxQDS9sMHbxF4bQZYDGiPlq31x3KrbgY5gmSymgoUX34
+ FAx1nQufZirBkClIbcR4OmK79m81pxGLrVwbFS7wQuWPLqGSUbVO+TcmjgPRR6n7rqnN
+ w/t4pQ2zZ7LnbrXwT3blM1TRw58oRF4U4lAmc0J8A0PyA70UzQUpAW+NqNUKlbFYWLbm
+ U3EA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784610872; x=1785215672;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=XTaAz2NfG11f78JGCG8dvPj6L9Q4kB1/oovgxv4XAIQ=;
+ b=pAwaAp6E66d+sNkW/iUhIba6rgVSPa0Zbb2xws8ZwjqBNuFT1BRXf2g8RHwjicvE1o
+ iiSLIMQMFEOAN6qKiWKF5tQXJr8738svnV5khxm3Vi90UUvyiZkPX692RcWt8AsmAXl3
+ lMim1+MRakbPHqsvYsN3xxijlPwoBZfWIis4QT6OVqxpyh+duYw+iBjhqQz0UCrIEYG0
+ CU+SDSur77H1r72dRPaXQZR7vq2f6SZKX0B5JWgzhpBFr6dHidAFI/0rP4G0228J/uRh
+ eY14nzt4E29nwglIzq5TT9eEVmLN7sLYhpX1O+BE59TuyEx0NSX0t0MC+CY3zX7dUdxv
+ C68w==
+X-Gm-Message-State: AOJu0Yw+Ek5rAYtj1g/aGNKnR1FMyt2VC6qz1PWh8IU4bjLMR3/2qI4H
+ yDXkrZqrb69NffSs+qbU5vr/g/Nn3vdhCb/c86lR9YpPGCW3t9TG7lJu/Y9asW48cE5dKpGt5OH
+ FrsfbsBWi3B8pGJyLlDqXlwxzb2TPW+rq+iIIK2TNxhQq5DJeNrJdHY82
+X-Gm-Gg: AfdE7clv3VaANj9p0+ucntT7ECfItGJeEhHWvL7ELOn4vJI+ResERwyrVaNmh4gwzio
+ JIA9FQcn36jG0t49fmhmYSF2EJ3rIPYXRG2TLC2lxn6xsAbJBGOG2axRwcWWPue/nsIwTTcG/Jl
+ xBiME9LMLeR/kT53ZM9IBLesQtsdbEQvhztZ1il787mHi77ALWkofkWRLV/CY5iIFEonnW7Fy2V
+ CX0okyHI06LD3Bc2s0M5MPp7VhsRPAtsy/a0gP8EgqoPrp1QcTNa3aAy7zotk+EbIoeRs6coXnD
+ bylRnD3h6w3ZaJYuzYGQ+lgTbIkxZaYBvD2POZ+EUMnT8Ir6bHaWe662qD3csqn9XH+XmJ6Nj2G
+ 7MSGWe3HBRSLDir6R/DU33Zur700WPAGti6Izw2Q=
+X-Received: by 2002:a05:600c:4fce:b0:493:fa66:4861 with SMTP id
+ 5b1f17b1804b1-4954a404bc2mr208468885e9.25.1784610871683; 
+ Mon, 20 Jul 2026 22:14:31 -0700 (PDT)
+X-Received: by 2002:a05:600c:4fce:b0:493:fa66:4861 with SMTP id
+ 5b1f17b1804b1-4954a404bc2mr208468555e9.25.1784610871306; 
+ Mon, 20 Jul 2026 22:14:31 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
+ ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4956547319dsm37369735e9.5.2026.07.20.22.14.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Jul 2026 22:14:30 -0700 (PDT)
+Message-ID: <de6169d2-15ac-4f46-a249-ddb753946be5@redhat.com>
+Date: Tue, 21 Jul 2026 07:14:29 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8aa63fba-4b12-4c67-9c1b-d3dccf3b4b0f@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: WicWd0WinCdPxTcjQdQq6yxCxvYZWDTI
-X-Authority-Analysis: v=2.4 cv=V6RNF+ni c=1 sm=1 tr=0 ts=6a5ef8ed cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=iDgHuyZHGN0JCDqn-7AA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDA0NSBTYWx0ZWRfX2OmFEytQPLz+
- 7IqcbLPUGzQHuHO6j34x1VyDzrkGbNvu2YfAFmAsrwUIGL5woUovKMp9QwakBCw2q7V/QPS3MLY
- GhvBD0d5FXHaSpe2riWjN11z+ZOEvNs=
-X-Proofpoint-GUID: fpW1U_oFjAPI0uTKieLw5JN2ildJB7rB
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDA0NSBTYWx0ZWRfXz+uAPdlwRzYG
- RQUW2P0WTdseiRb4taTlS4FA8geRv82AlYDPhjFNBBbvC2FSyivbLfRZzaHBG2ndtRL/QuNzpEM
- zMVwMGnmm0Z3e9JEc/Oq3vCv60ai3I9FLoEIEFLgTlaafm9XAtaXRA0461YvEXXXJSbkkP6JR9u
- qzEhkESHejHkKBrX+aQC+Z0yFJECzIgdeM3WLPJYppPEMh3GFOLRGZGi0j7+V23jD5PIA2c+Igh
- PvnahPTCpHshUhxIQg5s2DKg7g3GxWcg2vNlIP4lALuMbs6seK1rBumwHrErcHSP7NGpvY8v3Pk
- dfZEDmFE2RstrWEBqIdEIWpllNauMuS1tt8jKLVjlLrWbLauVR4DGqvc68YLIZC+tAKi1XyjD4f
- rwc1U+sv8o/DHo8kaFrwQz+PX92kEs7Yqm8Tp2diFaMlQNRj8Jt2WZuKWD/vpLK20pyupCoG4Ku
- XiJhCsinp4DcnZPsUCA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-20_06,2026-07-20_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015
- spamscore=0 impostorscore=0 phishscore=0 priorityscore=1501 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607210045
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=ojaswin@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] build: fix sparc64 host
+To: Alex Williamson <alex@shazbot.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, mjt@tls.msk.ru,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20260720221715.27108-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260720171031.259f590e@shazbot.org>
+ <089649f0-b677-4c1a-a42b-eb9853f4fc7a@oss.qualcomm.com>
+ <a2273203-403c-4da1-b3dd-0933dd70faf0@app.fastmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <a2273203-403c-4da1-b3dd-0933dd70faf0@app.fastmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: permerror client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,442 +171,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 20, 2026 at 06:49:49PM +0530, Chinmay Rath wrote:
+On 7/21/26 05:33, Alex Williamson wrote:
+> On Mon, Jul 20, 2026, at 8:48 PM, Pierrick Bouvier wrote:
+>> On 7/20/2026 4:10 PM, Alex Williamson wrote:
+>>> On Mon, 20 Jul 2026 22:17:13 +0000
+>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> wrote:
+>>>
+>>>> It was reported that build on sparc64 host is currently broken, due to inclusion
+>>>> of asm/kvm.h, which is not present on this platform:
+>>>> https://lore.kernel.org/qemu-devel/c3a7cd83-7666-40c5-9baa-ebe64edacab6@tls.msk.ru/
+>>>
+>>> Isn't is sufficient just to remove the stale <linux/kvm.h> include?
+>>>
+>>> I don't know of a case that fails, platforms that support vfio might
+>>> actually be a sub-set of those that support KVM, but being dependent on
+>>> a KVM supported host has no technical basis.  KVM and VFIO are
+>>> independent features where neither should have a hard dependency on the
+>>> other.  Thanks,
+>>>
+>>
+>> It's related to a recent change that was made to get rid of CONFIG_KVM
+>> in the file to deduplicate hw/vfio/listener.c between targets. So it's
+>> now unconditionally included, thus the regression.
 > 
-> On 7/15/26 14:29, Ojaswin Mujoo wrote:
-> > On Mon, Jul 06, 2026 at 10:50:39PM +0530, Nikhil Kumar Singh wrote:
-> > > On 20/05/26 21:37, Chinmay Rath wrote:
-> > > > From: Ojaswin Mujoo<ojaswin@linux.ibm.com>
-> > > > 
-> > > > Convert the following instrunctions to decodetree specification:
-> > > The word should be spelled `instructions` and not `instrunctions`. Please
-> > > fix this in the
-> > > commit message.
-> > Hi Nikhil, thanks for the review. I'll make the change.
-> > > > bc
-> > > > bca
-> > > > bcl
-> > > > bcla
-> > > > 
-> > > > bclr
-> > > > bclrl
-> > > > 
-> > > > bcctr
-> > > > bcctrl
-> > > > 
-> > > > bctar
-> > > > bctarl
-> > > > 
-> > > > The branch was tested by comparing the qemu -D log -d op,in_asm output for
-> > > > each instruction and also for the various combinations of branch option
-> > > > (BO) bits for the conditional branch instructions. Additionally, gdb
-> > > > was used to confirm the LR and other register's behavior is consistent
-> > > > to legacy behavior.
-> > > > 
-> > > > Further, the changes also pass a boot test into Fedora distro.
-> > > > 
-> > > > Signed-off-by: Ojaswin Mujoo<ojaswin@linux.ibm.com>
-> > > > Signed-off-by: Chinmay Rath<rathc@linux.ibm.com>
-> > > > ---
-> > > >    target/ppc/insn32.decode               |  13 ++
-> > > >    target/ppc/translate.c                 | 148 -----------------------
-> > > >    target/ppc/translate/branch-impl.c.inc | 157 +++++++++++++++++++++++++
-> > > >    3 files changed, 170 insertions(+), 148 deletions(-)
-> > > > 
-> > > > diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-> > > > index b98fe01a84..34b36cbef6 100644
-> > > > --- a/target/ppc/insn32.decode
-> > > > +++ b/target/ppc/insn32.decode
-> > > > @@ -1485,6 +1485,19 @@ CLRBHRB         011111 ----- ----- ----- 0110101110 -
-> > > >    B               010010 ........................ . .  @I_b
-> > > > +%bd             2:14 !function=times_4
-> > > > +&bcond          bo:uint32_t bi bd aa:bool lk:bool
-> > > > +@B_bcond        ...... bo:5 bi:5 .............. aa:1 lk:1 &bcond bd=%bd
-> > > > +
-> > > > +BC              010000 ..... ..... .............. . .  @B_bcond
-> > > > +
-> > > > +&bclr          bo bi bh lk:bool
-> > > > +@XL_bclr       ...... bo:5 bi:5 --- bh:2 .......... lk:1 &bclr
-> > > > +
-> > > > +BCLR            010011 ..... ..... ---.. 0000010000 . @XL_bclr
-> > > > +BCCTR           010011 ..... ..... ---.. 1000010000 . @XL_bclr
-> > > > +BCTAR           010011 ..... ..... ---.. 1000110000 . @XL_bclr
-> > > > +
-> > > >    ## Misc POWER instructions
-> > > >    ATTN            000000 00000 00000 00000 0100000000 0
-> > > > diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> > > > index 37a164951f..22125c30a5 100644
-> > > > --- a/target/ppc/translate.c
-> > > > +++ b/target/ppc/translate.c
-> > > > @@ -3089,150 +3089,6 @@ static inline void gen_setlr(DisasContext *ctx, target_ulong nip)
-> > > >        tcg_gen_movi_tl(cpu_lr, nip);
-> > > >    }
-> > > > -#define BCOND_IM  0
-> > > > -#define BCOND_LR  1
-> > > > -#define BCOND_CTR 2
-> > > > -#define BCOND_TAR 3
-> > > > -
-> > > > -static void gen_bcond(DisasContext *ctx, int type)
-> > > > -{
-> > > > -    uint32_t bo = BO(ctx->opcode);
-> > > > -    TCGLabel *l1;
-> > > > -    TCGv target;
-> > > > -    target_long bhrb_type = BHRB_TYPE_OTHER;
-> > > > -
-> > > > -    if (type == BCOND_LR || type == BCOND_CTR || type == BCOND_TAR) {
-> > > > -        target = tcg_temp_new();
-> > > > -        if (type == BCOND_CTR) {
-> > > > -            tcg_gen_mov_tl(target, cpu_ctr);
-> > > > -        } else if (type == BCOND_TAR) {
-> > > > -            gen_load_spr(target, SPR_TAR);
-> > > > -        } else {
-> > > > -            tcg_gen_mov_tl(target, cpu_lr);
-> > > > -        }
-> > > > -        if (!LK(ctx->opcode)) {
-> > > > -            bhrb_type |= BHRB_TYPE_INDIRECT;
-> > > > -        }
-> > > > -        bhrb_type |= BHRB_TYPE_XL_FORM;
-> > > > -    } else {
-> > > > -        target = NULL;
-> > > > -    }
-> > > > -    if (LK(ctx->opcode)) {
-> > > > -        gen_setlr(ctx, ctx->base.pc_next);
-> > > > -        bhrb_type |= BHRB_TYPE_CALL;
-> > > > -    }
-> > > > -    l1 = gen_new_label();
-> > > > -    if ((bo & 0x4) == 0) {
-> > > > -        /* Decrement and test CTR */
-> > > > -        TCGv temp = tcg_temp_new();
-> > > > -
-> > > > -        if (type == BCOND_CTR) {
-> > > > -            /*
-> > > > -             * All ISAs up to v3 describe this form of bcctr as invalid but
-> > > > -             * some processors, ie. 64-bit server processors compliant with
-> > > > -             * arch 2.x, do implement a "test and decrement" logic instead,
-> > > > -             * as described in their respective UMs. This logic involves CTR
-> > > > -             * to act as both the branch target and a counter, which makes
-> > > > -             * it basically useless and thus never used in real code.
-> > > > -             *
-> > > > -             * This form was hence chosen to trigger extra micro-architectural
-> > > > -             * side-effect on real HW needed for the Spectre v2 workaround.
-> > > > -             * It is up to guests that implement such workaround, ie. linux, to
-> > > > -             * use this form in a way it just triggers the side-effect without
-> > > > -             * doing anything else harmful.
-> > > > -             */
-> > > > -            if (unlikely(!is_book3s_arch2x(ctx))) {
-> > > > -                gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
-> > > > -                return;
-> > > > -            }
-> > > > -
-> > > > -            if (NARROW_MODE(ctx)) {
-> > > > -                tcg_gen_ext32u_tl(temp, cpu_ctr);
-> > > > -            } else {
-> > > > -                tcg_gen_mov_tl(temp, cpu_ctr);
-> > > > -            }
-> > > > -            if (bo & 0x2) {
-> > > > -                tcg_gen_brcondi_tl(TCG_COND_NE, temp, 0, l1);
-> > > > -            } else {
-> > > > -                tcg_gen_brcondi_tl(TCG_COND_EQ, temp, 0, l1);
-> > > > -            }
-> > > > -            tcg_gen_subi_tl(cpu_ctr, cpu_ctr, 1);
-> > > > -        } else {
-> > > > -            tcg_gen_subi_tl(cpu_ctr, cpu_ctr, 1);
-> > > > -            if (NARROW_MODE(ctx)) {
-> > > > -                tcg_gen_ext32u_tl(temp, cpu_ctr);
-> > > > -            } else {
-> > > > -                tcg_gen_mov_tl(temp, cpu_ctr);
-> > > > -            }
-> > > > -            if (bo & 0x2) {
-> > > > -                tcg_gen_brcondi_tl(TCG_COND_NE, temp, 0, l1);
-> > > > -            } else {
-> > > > -                tcg_gen_brcondi_tl(TCG_COND_EQ, temp, 0, l1);
-> > > > -            }
-> > > > -        }
-> > > > -        bhrb_type |= BHRB_TYPE_COND;
-> > > > -    }
-> > > > -    if ((bo & 0x10) == 0) {
-> > > > -        /* Test CR */
-> > > > -        uint32_t bi = BI(ctx->opcode);
-> > > > -        uint32_t mask = 0x08 >> (bi & 0x03);
-> > > > -        TCGv_i32 temp = tcg_temp_new_i32();
-> > > > -
-> > > > -        if (bo & 0x8) {
-> > > > -            tcg_gen_andi_i32(temp, cpu_crf[bi >> 2], mask);
-> > > > -            tcg_gen_brcondi_i32(TCG_COND_EQ, temp, 0, l1);
-> > > > -        } else {
-> > > > -            tcg_gen_andi_i32(temp, cpu_crf[bi >> 2], mask);
-> > > > -            tcg_gen_brcondi_i32(TCG_COND_NE, temp, 0, l1);
-> > > > -        }
-> > > > -        bhrb_type |= BHRB_TYPE_COND;
-> > > > -    }
-> > > > -
-> > > > -    gen_update_branch_history(ctx, ctx->cia, target, bhrb_type);
-> > > > -
-> > > > -    if (type == BCOND_IM) {
-> > > > -        target_ulong li = (target_long)((int16_t)(BD(ctx->opcode)));
-> > > > -        if (likely(AA(ctx->opcode) == 0)) {
-> > > > -            gen_goto_tb(ctx, 0, ctx->cia + li);
-> > > > -        } else {
-> > > > -            gen_goto_tb(ctx, 0, li);
-> > > > -        }
-> > > > -    } else {
-> > > > -        if (NARROW_MODE(ctx)) {
-> > > > -            tcg_gen_andi_tl(cpu_nip, target, (uint32_t)~3);
-> > > > -        } else {
-> > > > -            tcg_gen_andi_tl(cpu_nip, target, ~3);
-> > > > -        }
-> > > > -        gen_lookup_and_goto_ptr(ctx);
-> > > > -    }
-> > > > -    if ((bo & 0x14) != 0x14) {
-> > > > -        /* fallthrough case */
-> > > > -        gen_set_label(l1);
-> > > > -        gen_goto_tb(ctx, 1, ctx->base.pc_next);
-> > > > -    }
-> > > > -    ctx->base.is_jmp = DISAS_NORETURN;
-> > > > -}
-> > > > -
-> > > > -static void gen_bc(DisasContext *ctx)
-> > > > -{
-> > > > -    gen_bcond(ctx, BCOND_IM);
-> > > > -}
-> > > > -
-> > > > -static void gen_bcctr(DisasContext *ctx)
-> > > > -{
-> > > > -    gen_bcond(ctx, BCOND_CTR);
-> > > > -}
-> > > > -
-> > > > -static void gen_bclr(DisasContext *ctx)
-> > > > -{
-> > > > -    gen_bcond(ctx, BCOND_LR);
-> > > > -}
-> > > > -
-> > > > -static void gen_bctar(DisasContext *ctx)
-> > > > -{
-> > > > -    gen_bcond(ctx, BCOND_TAR);
-> > > > -}
-> > > > -
-> > > >    /***                      Condition register logical                       ***/
-> > > >    #define GEN_CRLOGIC(name, tcg_op, opc)                                        \
-> > > >    static void glue(gen_, name)(DisasContext *ctx)                               \
-> > > > @@ -5367,10 +5223,6 @@ GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
-> > > >    /* ISA v3.0 changed the extended opcode from 62 to 30 */
-> > > >    GEN_HANDLER(wait, 0x1F, 0x1E, 0x01, 0x039FF801, PPC_WAIT),
-> > > >    GEN_HANDLER_E(wait, 0x1F, 0x1E, 0x00, 0x039CF801, PPC_NONE, PPC2_ISA300),
-> > > > -GEN_HANDLER(bc, 0x10, 0xFF, 0xFF, 0x00000000, PPC_FLOW),
-> > > > -GEN_HANDLER(bcctr, 0x13, 0x10, 0x10, 0x00000000, PPC_FLOW),
-> > > > -GEN_HANDLER(bclr, 0x13, 0x10, 0x00, 0x00000000, PPC_FLOW),
-> > > > -GEN_HANDLER_E(bctar, 0x13, 0x10, 0x11, 0x0000E000, PPC_NONE, PPC2_BCTAR_ISA207),
-> > > >    GEN_HANDLER(rfi, 0x13, 0x12, 0x01, 0x03FF8001, PPC_FLOW),
-> > > >    #if defined(TARGET_PPC64)
-> > > >    GEN_HANDLER(rfid, 0x13, 0x12, 0x00, 0x03FF8001, PPC_64B),
-> > > > diff --git a/target/ppc/translate/branch-impl.c.inc b/target/ppc/translate/branch-impl.c.inc
-> > > > index 745f71afd1..44ed40422e 100644
-> > > > --- a/target/ppc/translate/branch-impl.c.inc
-> > > > +++ b/target/ppc/translate/branch-impl.c.inc
-> > > > @@ -55,3 +55,160 @@ static bool trans_B(DisasContext *ctx, arg_I_b *a)
-> > > >        return true;
-> > > >    }
-> > > > +
-> > > > +#define BCOND_IM  0
-> > > > +#define BCOND_LR  1
-> > > > +#define BCOND_CTR 2
-> > > > +#define BCOND_TAR 3
-> > > > +
-> > > > +static bool bcond_helper(DisasContext *ctx, int type, uint32_t bo, int bi,
-> > > > +                         int bd, int bh, bool aa, bool lk)
-> > > > +{
-> > > > +    TCGLabel *l1;
-> > > > +    TCGv target;
-> > > > +    target_long bhrb_type = BHRB_TYPE_OTHER;
-> > > > +
-> > > > +    if (type == BCOND_IM && bh != -1) {
-> > > > +        /* BCOND_IM should never use bh */
-> > > > +        return false;
-> > > > +    } else if (type != BCOND_IM && (bd != -1 || aa != 0)) {
-> > > > +        /* Other BCOND types should never use bd or aa */
-> > > > +        return false;
-> > > > +    }
-> > > > +
-> > > > +    if (type == BCOND_LR || type == BCOND_CTR || type == BCOND_TAR) {
-> > > > +        target = tcg_temp_new();
-> > > > +        if (type == BCOND_CTR) {
-> > > > +            tcg_gen_mov_tl(target, cpu_ctr);
-> > > > +        } else if (type == BCOND_TAR) {
-> > > > +            gen_load_spr(target, SPR_TAR);
-> > > > +        } else {
-> > > > +            tcg_gen_mov_tl(target, cpu_lr);
-> > > > +        }
-> > > > +        if (!lk) {
-> > > > +            bhrb_type |= BHRB_TYPE_INDIRECT;
-> > > > +        }
-> > > > +        bhrb_type |= BHRB_TYPE_XL_FORM;
-> > > > +    } else {
-> > > > +        target = NULL;
-> > > > +    }
-> > > > +    if (lk) {
-> > > > +        gen_setlr(ctx, ctx->base.pc_next);
-> > > > +        bhrb_type |= BHRB_TYPE_CALL;
-> > > > +    }
-> > > > +    l1 = gen_new_label();
-> > > > +    if ((bo & 0x4) == 0) {
-> > > > +        /* Decrement and test CTR */
-> > > > +        TCGv temp = tcg_temp_new();
-> > > > +
-> > > > +        if (type == BCOND_CTR) {
-> > > > +            /*
-> > > > +             * All ISAs up to v3 describe this form of bcctr as invalid but
-> > > > +             * some processors, ie. 64-bit server processors compliant with
-> > > > +             * arch 2.x, do implement a "test and decrement" logic instead,
-> > > > +             * as described in their respective UMs. This logic involves CTR
-> > > > +             * to act as both the branch target and a counter, which makes
-> > > > +             * it basically useless and thus never used in real code.
-> > > > +             *
-> > > > +             * This form was hence chosen to trigger extra micro-architectural
-> > > > +             * side-effect on real HW needed for the Spectre v2 workaround.
-> > > > +             * It is up to guests that implement such workaround, ie. linux, to
-> > > > +             * use this form in a way it just triggers the side-effect without
-> > > > +             * doing anything else harmful.
-> > > > +             */
-> > > > +            if (unlikely(!is_book3s_arch2x(ctx))) {
-> > > > +                gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
-> > > > +                return true;
-> > > > +            }
-> > > > +
-> > > > +            if (NARROW_MODE(ctx)) {
-> > > > +                tcg_gen_ext32u_tl(temp, cpu_ctr);
-> > > > +            } else {
-> > > > +                tcg_gen_mov_tl(temp, cpu_ctr);
-> > > > +            }
-> > > > +            if (bo & 0x2) {
-> > > > +                tcg_gen_brcondi_tl(TCG_COND_NE, temp, 0, l1);
-> > > > +            } else {
-> > > > +                tcg_gen_brcondi_tl(TCG_COND_EQ, temp, 0, l1);
-> > > > +            }
-> > > > +            tcg_gen_subi_tl(cpu_ctr, cpu_ctr, 1);
-> > > > +        } else {
-> > > > +            tcg_gen_subi_tl(cpu_ctr, cpu_ctr, 1);
-> > > > +            if (NARROW_MODE(ctx)) {
-> > > > +                tcg_gen_ext32u_tl(temp, cpu_ctr);
-> > > > +            } else {
-> > > > +                tcg_gen_mov_tl(temp, cpu_ctr);
-> > > > +            }
-> > > > +            if (bo & 0x2) {
-> > > > +                tcg_gen_brcondi_tl(TCG_COND_NE, temp, 0, l1);
-> > > > +            } else {
-> > > > +                tcg_gen_brcondi_tl(TCG_COND_EQ, temp, 0, l1);
-> > > > +            }
-> > > > +        }
-> > > > +        bhrb_type |= BHRB_TYPE_COND;
-> > > > +    }
-> > > > +    if ((bo & 0x10) == 0) {
-> > > > +        /* Test CR */
-> > > > +        uint32_t mask = 0x08 >> (bi & 0x03);
-> > > > +        TCGv_i32 temp = tcg_temp_new_i32();
-> > > > +
-> > > > +        if (bo & 0x8) {
-> > > > +            tcg_gen_andi_i32(temp, cpu_crf[bi >> 2], mask);
-> > > > +            tcg_gen_brcondi_i32(TCG_COND_EQ, temp, 0, l1);
-> > > > +        } else {
-> > > > +            tcg_gen_andi_i32(temp, cpu_crf[bi >> 2], mask);
-> > > > +            tcg_gen_brcondi_i32(TCG_COND_NE, temp, 0, l1);
-> > > > +        }
-> > > > +        bhrb_type |= BHRB_TYPE_COND;
-> > > > +    }
-> > > > +
-> > > > +    gen_update_branch_history(ctx, ctx->cia, target, bhrb_type);
-> > > > +
-> > > > +    if (type == BCOND_IM) {
-> > > > +        target_ulong li = (target_long)((int16_t)(bd));
-> > > > +        if (likely(aa == 0)) {
-> > > > +            gen_goto_tb(ctx, 0, ctx->cia + li);
-> > > > +        } else {
-> > > > +            gen_goto_tb(ctx, 0, li);
-> > > > +        }
-> > > > +    } else {
-> > > > +        if (NARROW_MODE(ctx)) {
-> > > > +            tcg_gen_andi_tl(cpu_nip, target, (uint32_t)~3);
-> > > > +        } else {
-> > > > +            tcg_gen_andi_tl(cpu_nip, target, ~3);
-> > > > +        }
-> > > > +        gen_lookup_and_goto_ptr(ctx);
-> > > > +    }
-> > > > +    if ((bo & 0x14) != 0x14) {
-> > > > +        /* fallthrough case */
-> > > > +        gen_set_label(l1);
-> > > > +        gen_goto_tb(ctx, 1, ctx->base.pc_next);
-> > > > +    }
-> > > > +    ctx->base.is_jmp = DISAS_NORETURN;
-> > > > +
-> > > > +    return true;
-> > > > +}
-> > > > +
-> > > > +static bool trans_BC(DisasContext *ctx, arg_bcond *a)
-> > > > +{
-> > > > +    /*
-> > > > +     * bh is not used for bc variants hence we pass -1
-> > > > +     */
-> > > > +    return bcond_helper(ctx, BCOND_IM, a->bo, a->bi, a->bd, -1, a->aa, a->lk);
-> > > > +}
-> > > > +
-> > > > +/*
-> > > > + * This helper is shared by bclr, bcctr and bctar.
-> > > > + */
-> > > > +static bool bclr_helper(DisasContext *ctx, arg_bclr *a, int type)
-> > > > +{
-> > > > +    /*
-> > > > +     * bd and aa is not used for bc variants hence we pass -1 and 0 respectively
-> > > > +     */
-> > > > +    return bcond_helper(ctx, type, a->bo, a->bi, -1, a->bh, 0, a->lk);
-> > > > +}
-> > > > +
-> > > > +TRANS(BCLR, bclr_helper, BCOND_LR)
-> > > > +TRANS(BCCTR, bclr_helper, BCOND_CTR)
-> > > > +TRANS(BCTAR, bclr_helper, BCOND_TAR)
-> > > > +
-> > > The patch looks mostly fine, but I noticed one small issue regarding the
-> > > bctar instruction.
-> > > 
-> > > Actually, in the legacy implementation, bctar was properly guarded by the
-> > > ISA 2.07 feature flag like this:
-> > > GEN_HANDLER_E(bctar, 0x13, 0x10, 0x11, 0x0000E000, PPC_NONE,
-> > > PPC2_BCTAR_ISA207)
-> > > 
-> > > But in the new decodetree implementation, it is getting mapped directly
-> > > using the standard macro
-> > > TRANS(BCTAR, bclr_helper, BCOND_TAR)
-> > Yes you are right, I missed this. Thanks for pointing it out.
-> > 
-> > > Since the TRANS macro doesn't apply any secondary instruction flags (and
-> > > even bclr_helper / bcond_helper are not checking for it),
-> > > this check is being missed out.
-> Hi Nikhil,
-> Thanks for catching this !
-> > > 
-> > > It could be better if you can just write a dedicated translation handler for
-> > > the same to enforce the BCTAR_ISA207 check.
-> > > I guess Chinmay can tell better on this.
-> > I think we can just do the following and it should be good enough:
-> > 
-> > -TRANS(BCTAR, bclr_helper, BCOND_TAR)
-> > +TRANS_FLAGS2(BCTAR_ISA207, BCTAR, bclr_helper, BCOND_TAR)
-> > 
-> > If this looks okay, I can send a v2.
+> I understand.  I'm suggesting the fix is simply:
 > 
-> Hi Ojas,
-> Since it is just a single line change, I will take care of it while posting
-> v2 series.
+> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+> index c19600e980a8..008f488a3e7d 100644
+> --- a/hw/vfio/listener.c
+> +++ b/hw/vfio/listener.c
+> @@ -20,7 +20,6 @@
+>   
+>   #include "qemu/osdep.h"
+>   #include <sys/ioctl.h>
+> -#include <linux/kvm.h>
+>   #include <linux/vfio.h>
+>   
+>   #include "exec/target_page.h"
+> 
+> This builds in both a native amd64 environment and a cross-compiled sparc64 environment.
 
-Sure Chinmay, thanks!
-> 
-> Regards,
-> Chinmay
-> 
-> > 
-> > Regards,
-> > ojaswin
-> > 
-> > > Thanks
-> > > ~ Nikhil
-> > > 
-> 
+This leaves linux/kvm.h included only in the following VFIO files:
+
+   hw/vfio/kvm-spapr.c
+   hw/vfio/kvm-helpers.c
+
+Looks clean to me.
+
+Thanks,
+
+C.
+
 
