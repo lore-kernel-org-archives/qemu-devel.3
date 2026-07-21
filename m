@@ -4,136 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CCFAC44529
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 10:17:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC576C4451C
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 10:20:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm7Wy-0003vc-RM; Tue, 21 Jul 2026 06:16:56 -0400
+	id 1wm7Zt-0005Yr-Au; Tue, 21 Jul 2026 06:19:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wm7Wx-0003ur-L0
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 06:16:55 -0400
+ id 1wm7Zr-0005Y7-SS
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 06:19:55 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wm7Wv-0008MK-3Z
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 06:16:55 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1wm7Zq-0000SD-CF
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 06:19:55 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66L8hoaf534739
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 10:16:52 GMT
+ 66LACaEj3884161
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 10:19:53 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- /ZXHq4MF7lH3EMSRkoGZWLXhin8D0GRMqMiGdC9iHfQ=; b=RphHM2PhB2n5JwRC
- I7kHsAFnbV/yL8Q8WKLlP5H/XhIEadSdLl1ahJAfLQ0XGEgM0rfU2qFbtz4GDisv
- OGvgQbSHvDq1Ch3pxKYEmGNnj35jm1ZwXy8Jo3EOOEQ2zRpjvSTF9P7zVq0ouu0B
- dTpKQkINTRLzSIcDMlH7I7RGddkM3CAepOjTlwg4aubzZJuWfG2wCo4y3UvVym3o
- qSwegUpuLTG6iXG1R7BI7VF3eZjQxY56iDYXqm811dSIEbE5esveYLvtT6xyjhpn
- KQhaX46pmQ05gZiQAP6kX8F9CSGAMzDhBoQxopK+wJ4mwBbrkkBo/OBos4u1TNKL
- UlOE5Q==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fj1duhpbd-1
+ Gay3jtCU2MLIaSHa5lHT0Pyb1+Jniu0JwkjjHcWj50U=; b=MhCEMugjN3+dRUy3
+ zwMa08D1Jcd8Zlb7Fm+YgEzIz7t7MOaFhF4TcGf4wgffjH2AdcWxg9Z+YQzUqb8X
+ aBy7pQy2+duVaPqaky6YpxlNIMZQ2n1tzIEsHBNaQGnOH0Csx0thkxuKqnKvWtnR
+ Bk1x9sHezRb8PsfWhPVxcuGzAzWZnCDEk+fguVlE4b4mv9y8RE3qNSKsqKYlHkrV
+ uv5OmKQQG8ybqh/wSfHp0fFyMnkuNG/3LjG5NVl2AxnRPPgiNSP044yuxL5aW+b8
+ SEy2W6X1N7+ccoKq0i6Dr9DkEkDHoN+XqiRv9aRVNH3+u6z5AGl9IJETvqAk4+gJ
+ rlZxsQ==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhqvcbweh-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 10:16:51 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-5174a236220so205028401cf.3
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 03:16:51 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 10:19:52 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51c1c7f135bso161236231cf.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 03:19:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784629011; x=1785233811; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1784629192; x=1785233992; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=/ZXHq4MF7lH3EMSRkoGZWLXhin8D0GRMqMiGdC9iHfQ=;
- b=ej38AfWj2DIo0s5OZpCHxCKkAUUT3nNgzB5bq5oQLXm/Q5FAlNhLXc9UqndfTYitBU
- +eej5LkLdmV3GoJ86I26zHe+I1WLnzefK8Mh2rqiPE3GFY6EzOpcExZUYA3Z9BJLCTuG
- 10pX5rSu4/S0rmCxIPULzkHHikad2hPx0j5+yBtJdyJgAfGfbQH261fwyfgFKmofhYaF
- d/zUjZRXYEJiTZtICKfINJcdxza2rfa2YNQ5lbLYKrKjV4XFb66IXZ1Dw75Xl3ViNv8f
- Y+Leq1yhZ1vi+elM/M7+iOfXy5hEz3N3KwN0s/aCG8uQrh8Yyv9Hw3vjoo7ZjctirP7g
- JKKw==
+ bh=Gay3jtCU2MLIaSHa5lHT0Pyb1+Jniu0JwkjjHcWj50U=;
+ b=dm2FpXtfn8Aih8z07NxtpDXVXCx2WCLCnO86zl4MBat28vCsgldL8ADEAkx4rskQQj
+ Rw2oBtbBV0zXo2/6fB8pdJRt2AFwFUW72je2JeBzGfA/z02SWYtQobuGpE5NsGyyauw5
+ yxKSqdTQvEJ9XcM0L6WfcSy7g9JQD2BpwzBIuG+L4cbpHHb6VLhvBJPudLkX0mP1S+Tr
+ SbayXHok6Mr0M98x8j6I7hCflGwrtiIxqXGRjQb6bw2R8CiRvMRDpzDSlklymGNLa/xM
+ bcyv4R6K26xKsLoF/EcecK45rHweThl+LQXzevwqZcHautpNuw9T1+D98SgiMwkFYU/F
+ C+kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784629011; x=1785233811;
+ d=1e100.net; s=20251104; t=1784629192; x=1785233992;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=/ZXHq4MF7lH3EMSRkoGZWLXhin8D0GRMqMiGdC9iHfQ=;
- b=PWIjeitzp7UptocGw6MOqCuqINMwg0La7PIGZAjVutR3ofEZ03Go8DZMvfc9Uz5vMg
- u28tbFX+rh/qZX7Fm87iZVbji4WBLpEMlNdCIccbuEK4HpT2FHh6WVlKyz/dt86wIfCj
- cgocVKmEitBo9ruxM3lbutgpOLnZN7nZSKF+jbXmtB0UTlnkER03jJI0yrY7na2J3v0f
- Sv2fbvFeGjpLj3cYrgZFM1MABkIY/V+G2xzGUd/ehiKM0Xy96fSexs6lvvYxbx7XBqNh
- sQvpjsAVeYJHNRJRhswjTWIVnIS0NTDMbsPuUE2nKaZYGM4c17GbCoQQNtA1fnJJskAQ
- l5Og==
+ bh=Gay3jtCU2MLIaSHa5lHT0Pyb1+Jniu0JwkjjHcWj50U=;
+ b=HQp6dG0P7pUqKeRyJvtAFS/hD69e9tHVKB6R5rloskC+Vsz806In1Ub3lLr1uitYB7
+ eZOjYdhfdp8bD9siAfwkJluK2z2R3nuw73J1uNDsyYLuPgvEbXs8eBnWdO6KzWLMYp8g
+ h6KpkATaKyP/0nkC295sfSP2PINscjb90GDymkwtYnmQuXu8TdO7ifaCq9Av+B8BXVhG
+ +1iszdiP3TfVOjndXTAdxgoM3QrUNsKuPhxqsfytryKEBEx/bD7rrZ5nJFC/AA8Qyf2M
+ jT9OUVgGq06TtrzvPI+mUULxKjhFRcLIokfMQ9vQkRUNIg2c39bHk3UvTSs41pB0mVM0
+ ALSA==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrmaxcTmVTy8K4kEyKnileZFKi8Kj/d4RxAZh/RwO5NtKv3EGdCycwNV/hwcOQhO+Ta4NlQKbllf2lF@nongnu.org
-X-Gm-Message-State: AOJu0Yx2n+sGFJ+Vvfw2syjxw6Xev00OPvu1BvnsQD8qRB6o3jcwf12j
- hmyGIaEK3kJut1dup3syvJF7TulCdNYR34yx9UTmmxwQXTeu7JK4qc5PZwKcJUZK9jKJIP941a+
- vvnuk0r00upWKNriHaPvaSyqoPo6U2R/K9B1JDlhBdZ85/hekpK4E/a0bgbN4zUVrzw==
-X-Gm-Gg: AfdE7cm7YTe7pEze3Teee7txX201ipYJDsNWYyNf9hhyCL9zS3beh+74cLUf9CPAX2q
- 6LU1W67Y8feapyR+K2lVJFWDpittQDimsuqr0fGOZhzTvTIuuPew+yt6LG4GLcyQo66M7DXYVuE
- qa7RJ7rhiOTDaPxJ07JqsKlDOTeFqhZ+QvdRcfaYl83jh13IDm6fErN4QPoJ36Dsr535oZiKE6q
- i6bkmCkLe4ubk7OHg9kswJX/m95L9aPfs6OOtEHPhdQnFimH3Bke4MjwTjZxqnkZ80Txnkdj9gL
- 4ZWcUbqluY/KbZTxLde9v9xnIkIB1rsEQFJZeuQoLngHI81976O47RTy+iWRiiGzFIBr2t/mXh7
- 9O9AJFdIC++y72ACAW3ERYbRmcoNXUiklmJAkycHIGjbme5YXewc=
-X-Received: by 2002:a05:622a:2295:b0:51c:ba4:d837 with SMTP id
- d75a77b69052e-5213c012055mr159253641cf.18.1784629011093; 
- Tue, 21 Jul 2026 03:16:51 -0700 (PDT)
-X-Received: by 2002:a05:622a:2295:b0:51c:ba4:d837 with SMTP id
- d75a77b69052e-5213c012055mr159253311cf.18.1784629010460; 
- Tue, 21 Jul 2026 03:16:50 -0700 (PDT)
+ AHgh+Rr5tokSBnv8EAfU0VexBhzBxnXTKw+b5rXZ96hYvRTxTWBlKdy1IIAoniuyQ0Sl8vKVoLKZkC9MA6fX@nongnu.org
+X-Gm-Message-State: AOJu0Yx9wjXGvBhiULjkTAAVrEh7h/Ti0jVyEvDC4kqwWKXTbNqa1vJw
+ y10SKdUjlnm7Z5V+mMG1cggz2E06sgoa9AclX/djmAl2P7Llr2mDmw72bBMSHa9QAQz2KgPMh3T
+ vWDAVGIbkYEWb0mrQ45usti49hxXSJpIfkSkBbw5eB5Jlz9OkGg8Qtd7Xzw==
+X-Gm-Gg: AfdE7cnyrzW8xmtGmC+9j7Xv8e5Px0F6/b9sKWSh364HwgVw1kZ7GQ8jbg75RUn9NZU
+ iR3CCpKsSLwbizkUDFsBghSfP8lBlcntsCywTVSedE8ev3EsEMxbwFWOV1YmqLL+iI2VK/9u8cM
+ Sf9xJfK3UOdAhL7h6icIx6kbd+DfIQCWTTu+qVMhkIwW+dZiU9vqmdtINJebZPnwc7IGOGnVkel
+ waLGsS8AOjdvLtw34P0E3DlosPLkjamKd2A7rwcbVvw/YXMeLCToFa2sJRyNUraYB+2w1SmjcWm
+ oeQfaaYc7qnPlzZrHGlnN4jTaAdxMxLeEMgmuR8HopS7hdmnxLBW5hD4Mn3dU08IL8C4VSdm/U3
+ BsAcnFJpLRQ9VcUnqHjjQC46vnEyxthmhwtRzAGniGY+oU7cjZNY=
+X-Received: by 2002:a05:622a:4110:b0:51a:8b64:69e0 with SMTP id
+ d75a77b69052e-5213d2b7109mr165033601cf.11.1784629192407; 
+ Tue, 21 Jul 2026 03:19:52 -0700 (PDT)
+X-Received: by 2002:a05:622a:4110:b0:51a:8b64:69e0 with SMTP id
+ d75a77b69052e-5213d2b7109mr165033471cf.11.1784629192057; 
+ Tue, 21 Jul 2026 03:19:52 -0700 (PDT)
 Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4956536870esm60491435e9.3.2026.07.21.03.16.49
+ 5b1f17b1804b1-495653c98ebsm52020745e9.13.2026.07.21.03.19.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Jul 2026 03:16:49 -0700 (PDT)
-Message-ID: <be300233-ab2e-4da0-ae8e-f3afdfa27de1@oss.qualcomm.com>
-Date: Tue, 21 Jul 2026 12:16:49 +0200
+ Tue, 21 Jul 2026 03:19:51 -0700 (PDT)
+Message-ID: <c48ade4d-52ff-42a6-9fe2-67db70c71c8d@oss.qualcomm.com>
+Date: Tue, 21 Jul 2026 12:19:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/net: cadence: Return current Cadence GEM queue pointers
+Subject: Re: [PATCH] net: Correct padding check in qemu_receive_packet()
 Content-Language: en-US
-To: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>
-Cc: qemu-stable@nongnu.org, Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Jason Wang <jasowangio@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-References: <20260720120731.2022475-1-bin.meng@processmission.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Bin Meng <bmeng.cn@gmail.com>, Jason Wang <jasowangio@gmail.com>,
+ Jason Wang <jasowang@redhat.com>
+References: <20260629164246.2028947-1-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260720120731.2022475-1-bin.meng@processmission.com>
+In-Reply-To: <20260629164246.2028947-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: t5CdAwb_DKjdyGmg67V-5EysN4Gro7Aw
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDEwOSBTYWx0ZWRfXyT2lTTOfgpRl
- 2ErggbpoEZ7wXti9n1vkcmN5OoTMH5CnScGLA31RaN1MEE4kP/E2OFQd10YhB8Yn1F9w1zkPvJ1
- y99sVNPuOT2C22ZdgRHLzA9zLzki6F7FD0rhD8rnorfUxDobguixLjuTD9rnyJA5B2dhQ9S9Xjr
- fyU3SpSrXmPfyGdD89iIAYqZTcacywil9wNgPhM96//MrpomhFcP5Gj1XXBapYGdcn6RQbi49Rm
- MnNbJOvIWmyt3NvzXRu3K5z5/B1xR7qJ1YU0sK2k73yirCV6Y7uNjgrWxLbSWhgYyPHw7bOJFLw
- fdIT9QCOxDvRs4ZRMqwhSg25oVUQj2/VxUuPF0eEN6DOInw1G8U9drsWefr+oSNxQhA2tpwmWwX
- ZH3A8kS55RpaVV0M22sa2bIkLDBqFhbs2K18dOEyo3VPar1izv6VA83S7mp3liW3HZjt4sOjJuE
- p/qnlf+VSGZ+gY6Cx/A==
-X-Authority-Analysis: v=2.4 cv=I9JVgtgg c=1 sm=1 tr=0 ts=6a5f4713 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDEwOSBTYWx0ZWRfXxaK7PCX9kM59
+ tdcJq3vHQWuHv0we2VYgM4/B2E5nf+kbgE+fIJAIXxRUhhsVvHMJHegGBTt3afdaJURwNVrjA5o
+ qeBVPDYVoDkgB/pxl4pyE0Bwqt9/qro=
+X-Proofpoint-GUID: sIdRuhflVN6EiMDOWcPNi72cRQ7X_att
+X-Authority-Analysis: v=2.4 cv=OMYXGyaB c=1 sm=1 tr=0 ts=6a5f47c8 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=69wJf7TsAAAA:8 a=FRSEYCzRAAAA:8 a=EUspDBNiAAAA:8 a=7Ce04qy9-wfap1NzfZcA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
- a=Fg1AiH1G6rFz08G2ETeA:22 a=H4N_Y-AU75W7NKDNhZlT:22
-X-Proofpoint-GUID: t5CdAwb_DKjdyGmg67V-5EysN4Gro7Aw
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDEwOSBTYWx0ZWRfX2u7/otvR3I5r
- GZvTllhujjpoSxMss6JXJl7+BLXRCae6F5P0sXRzPv/FXuwk2TZf4qYlV4f6T1VIFWJ3aIYyFzk
- rq7IJar++sqacuKtCcUK/nfooG0J+Ek=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=69wJf7TsAAAA:8 a=pGLkceISAAAA:8 a=KKAkSRfTAAAA:8 a=Bg4sYZIGnuBg2hlKu24A:9
+ a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22 a=Fg1AiH1G6rFz08G2ETeA:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: sIdRuhflVN6EiMDOWcPNi72cRQ7X_att
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDEwOSBTYWx0ZWRfX1+d4IQLzBJ0z
+ dWf17y8kvDrkIPXdQlbiKRKH07k6UZeem+mZTN7vuxYGiqAm+fWpFZb0XfuVrHhvPEiZSZHIZs3
+ d/p9VdhSg5gEjVB0QSQx2a8u/jJUig8D9LOP2TGKLS97G3TLTqdhvexYbYzy2k76mcp4DaUPKyy
+ xUKrFX3sso4ydDVO78CsXeBjE15xReiSYfLDEpcsaPWnkVrx/+pncOCSZpjLaGEpzSbvHABZjtA
+ cCQ5pCsljet05vlDnfKMhx++aFY6SP2HxrCHEL752dZG+iq05Ur5KDhyugGnFwecYQf+I/FKTBq
+ icBwJV+/njVxT5vKsjYFZrBHLGHw4YM5FWw7KMb8RKV0ZJGcweaUrN3MSp582GOXfU/Ic/wRWe/
+ UevlHO3j45MLcI24iQTjzViPecOKM3JTnRa+LM6nN0OCbHwXYj2Y7zfobjxnqzy6REg/kE9fk41
+ Sq5nhiHc1rfzDDrauNQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-20_06,2026-07-20_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 spamscore=0 clxscore=1015 suspectscore=0
- lowpriorityscore=0 phishscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607210109
+ spamscore=0 adultscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
+ bulkscore=0 malwarescore=0 clxscore=1015 impostorscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607210109
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -142,7 +139,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,38 +155,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/7/26 14:07, Bin Meng wrote:
-> Cadence GEM queue pointer registers are programmed with the descriptor
-> ring base, but reads return the descriptor currently being accessed.
-> The model tracked the current positions separately while continuing to
-> return the configured base.
+On 29/6/26 18:42, Peter Maydell wrote:
+> In qemu_receive_packet() we check to see if we should pad a short
+> packet.  This is doing the wrong test: because this function is used
+> when the device adds a packet to its own incoming queue (i.e.  for
+> loopback), we should be checking the NetClientState's own do_not_pad
+> flag, not that for its peer.
 > 
-> The Linux macb driver uses the transmit queue pointer when recovering
-> from a used-buffer interrupt. A stale priority-queue pointer can make
-> the driver restart DMA before that queue handles its completion
-> interrupt, causing queue 0 to repeatedly raise TX_USED.
+> We didn't notice this earlier, because at the moment all the real
+> peers of a network device (i.e.  the network backends) do not set
+> do_not_pad, so net_peer_needs_padding() always returns true except in
+> the corner case where the network device has no peer at all.
 > 
-> The primary queue has had this mismatch since the initial model.
-> Priority queue support later copied the same register-read behavior.
+> The effect of this is that if a network device has no peer (e.g.
+> because QEMU was started with -net none or with -nodefaults) then we
+> can still let through the kind of "guest misprograms the network
+> device to loopback-transmit a short packet and then we mishandle it
+> in the receive path" bug like #3043 which commit a01344d9d78 was
+> trying to fix.
 > 
-> A single-queue machine usually handles TX_COMPLETE before TX_USED and
-> empties the software queue before the restart check, which kept the
-> issue hidden there.
+> Since the distinction between "we should check nc->do_not_pad"
+> and "we should check nc->peer->do_not_pad" is a bit subtle, add
+> enough documentation commentary to make it more obvious.
 > 
-> Return the current RX and TX descriptor positions on queue-pointer reads
-> and clear those positions on reset.
-> 
-> Fixes: e9f186e514a7 ("cadence_gem: initial version of device model")
-> Fixes: 6710172501be ("cadence_gem: Add queue support")
 > Cc: qemu-stable@nongnu.org
-> Signed-off-by: Bin Meng <bin.meng@processmission.com>
-> 
+> Fixes: a01344d9d78 ("net: pad packets to minimum length in qemu_receive_packet()")
+> Suggested-by: Bin Meng <bmeng.cn@gmail.com>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
-> 
->   hw/net/cadence_gem.c | 17 ++++++++++++++++-
->   1 file changed, 16 insertions(+), 1 deletion(-)
+>   include/net/net.h | 23 +++++++++++++++++++++++
+>   net/net.c         |  2 +-
+>   2 files changed, 24 insertions(+), 1 deletion(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-
-and queued, thanks.
+Patch queued, thanks.
 
