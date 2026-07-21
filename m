@@ -4,45 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FE31C4451C
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 08:20:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5DF5C4451C
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 08:20:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm5gb-0000og-Hu; Tue, 21 Jul 2026 04:18:45 -0400
+	id 1wm5hB-0001Qf-LN; Tue, 21 Jul 2026 04:19:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wm5gZ-0000ia-JB; Tue, 21 Jul 2026 04:18:43 -0400
+ id 1wm5h9-0001FX-7Y; Tue, 21 Jul 2026 04:19:19 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wm5gV-0001Zo-1y; Tue, 21 Jul 2026 04:18:43 -0400
+ id 1wm5h5-0001Zg-Nz; Tue, 21 Jul 2026 04:19:18 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66L8GsBk050170
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66L8GsBj050170
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 21 Jul 2026 17:17:31 +0900 (JST)
+ Tue, 21 Jul 2026 17:17:30 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=74z+WGcQbZrnUWzO8IpesNYQCkBFwkcCNQpXzRgkRAQ=; 
+DKIM-Signature: a=rsa-sha256; bh=QUBJRRaBwI6YuxGcgOV5El7ScpP8jVakZ+A2xhA0+Mk=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
  s=rs20250326; t=1784621851; v=1;
- b=pWDaHLGP2CiznhGzBGdTfYlStxGLZCRdbtbpO5ZqhvmY2GqWTnLWMwlSEoUqF7OF
- g/Z2K+e+1rhz128DMEP2AOdHEDusKPgw1KfF15QDZ7ef3fva7TnHefKx3IuVfij/
- In/NWhhsW+qUHHwQR0HtrL1g2ZyAMvVifJXgs2oZxXe0JyV2on4gDVZtmak2NIdn
- 1Yi1YtXiLQE5+RuyCSZlTB8yjVXkRZA+0XLdC8PPqBoz3/o9mnobXmnN87Pb6hNv
- oSWtW9PC1Z0Wehg0vIc/Lps+hMgMvEXtvjE3LT3iOXBKpps3PgWybyJ5dyM1HY+F
- AtkUOLwxGYXhO2lKKPjIAQ==
+ b=Glq243S84ANSirhEeOPefno4HFiAfL14/oucGZHmdrdOp7Vb/5fO4NQck7xe3paV
+ liGqdEYNzME6RbJ7jC9BFtZ5Ef8GAZfwjFEwFC3PpNIrUsjOeAxBBmPsRu6K8z1q
+ BokCQDV+oT+lqS1pPmTiBqOq7tLvsYw0v+y43OTvMdgROsUwIvSHjbC7pzGBjWFT
+ Cqmrm71czxz8nVv0gD8qHN4atsvWpketN6OTbK6oT2VRpEpIJBiuetnHzY83xZ83
+ dNxqnfVBm7Y4bQvl8QviwjUWXCDiaG49YdO7kydY/zG1FIXIHvP30Gshm9Fgphg7
+ ZXQ3/YlvrXpN17LytzLmaA==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 21 Jul 2026 17:16:51 +0900
-Subject: [PATCH for-11.2 v3 01/15] qdev: Clarify instantiation and realization
+Subject: [PATCH for-11.2 v3 00/15] qdev: Clarify and enforce the device
+ realization lifecycle
+Date: Tue, 21 Jul 2026 17:16:50 +0900
+Message-Id: <20260721-qdev-v3-0-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260721-qdev-v3-1-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
-References: <20260721-qdev-v3-0-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260721-qdev-v3-0-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/3XMQQ6DIBRF0a2YPy4EMKJ21H00HSh8lDYRC5bUG
+ PdeQu2ww5f7cjYI6C0GOBcbeIw2WDelUZ4KUGM3DUisThsEExVrmSRPjZG0WKm+Vkwa00G6zh6
+ NfWfmCsZ5wjkVcEtltGFxfs1+5LkfVPOlIiecaCNKaWqFVa8vPgxUWWrpiyzusTraKXqfsxbFT
+ 5BMivYQRBIapblue2S6+S/s+/4BcGm8t/EAAAA=
+X-Change-ID: 20250906-qdev-9e5cb7c06ffa
 To: qemu-devel@nongnu.org
 Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
@@ -69,13 +73,13 @@ Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-925f5
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5766;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4820;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=iN4gJbhjAWNYi0fkVyPjLxZU5zRhIVoCJvLYK+5ZGWs=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ1a8toDk7vR0l1dNrYbcRSt+ZUjPUnVe4LFlSnbZgY+zd
- gb8i7DqKGVhEONikBVTZEkp2s2tEV37qTAhvgVmDisTyBAGLk4BmMirTYwMh0P1XM/5B5lnPjmz
- t/ipT/3aa9cdHEIkdxb7Fa0K+uu0n+F/ktc/31yRiNCwotYts3zePsz/mvK+8EH9tdllR3/yfLv
- OBAA=
+ bh=BN/eXHnD1VZPxPM3nwjmCEIhG7t4WXjySTU6vcs5GgU=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ1a8NkuO2sSMNex5htuVtp2Peq21XEtvTtXL285FEu/NA
+ 3O+NFd2lLIwiHExyIopsqQU7ebWiK79VJgQ3wIzh5UJZAgDF6cATOTka0aGnwc2l++++GW1AePB
+ S4eWRrX2xW2o5z14/8B5YcXTtXNSJjD8Uws7llTM9u5XbM0KvosbAneW5auvzf0WrcjuV7c5Wns
+ pHwA=
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -101,121 +105,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The distinction of instantiation and realization was vague in the old
-documentation so this change clarifies it.
+qdev currently represents a device's realization state with a single
+boolean. This cannot distinguish a device that has never been realized
+from one whose realization has failed or that has been unrealized, nor
+can it represent realization in progress. Consequently, the same device
+can enter DeviceClass::realize() reentrantly or more than once.
+Supporting that complicates device implementations, and the behavior is
+untested and likely broken.
 
-The old documentation said:
-> The former may not fail (and must not abort or exit, since it is
-> called during device introspection already), and the latter may return
-> error information to the caller and must be re-entrant.
-> Trivial field initializations should go into #TypeInfo.instance_init.
-> Operations depending on @props static properties should go into
-> @realize.
+This series first clarifies the division of work between
+TypeInfo.instance_init, pre-realize property setting, and
+DeviceClass::realize, including the implications of device introspection
+and property-dependent child creation.
 
-The first problem with the old documentation is that it is unclear what
-"trivial field initializations" means and why triviality makes
-initialization appropriate for #TypeInfo.instance_init. Another problem
-is that the documentation is not comprehensive enough; for example, it
-mentions @props static properties, but it does not say anything about
-the other properties.
+The remaining direct reads of DeviceState::realized are then converted
+to qdev_is_realized(). Keeping users behind this accessor allows the
+underlying lifecycle representation to change without exposing it; the
+accessor is also made const so callers with a const DeviceState can use
+it.
 
-The keys to distinguish instantiation and realization are property
-setting and device introspection. The fact that property setting happens
-after #TypeInfo.instance_init and before realization implies that
-operations depending on properties should go into @realize.
+Before changing that representation, the series fixes an existing
+qdev invariant. qdev_realize() can attach an unparented device to a
+bus before giving it a QOM parent. A failure between those operations
+leaves a bus child that object_unparent() cannot remove, causing
+bus_unparent() to loop indefinitely. qdev_realize() now establishes
+the QOM parent before attaching the device to its bus and rolls the
+parent back on failure.
 
-The fact that instantiation happens during device introspection but
-realization does not implies:
-- Instance properties should be added in #TypeInfo.instance_init.
-- Instantiation must not have any side effect not contained in the
-  instance.
-- Any operations without special requirements should go into @realize so
-  that they can be skipped during device introspection.
-
-Note these two facts to guide appropriate instantiation and realization.
-
-We also omit mention of the realized property because it is a QOM
-interface detail, not part of the device API.
+Finally, DeviceState::realized and the QOM realized property are
+replaced with four explicit phases: initialized, realizing, realized,
+and retired.
+Entering the realizing phase before invoking callbacks prevents
+reentrant realization. A failure after realization starts, or the start
+of unrealization, moves the device to the terminal retired phase, so a
+device's realize method is invoked at most once.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- include/hw/core/qdev.h | 52 ++++++++++++++++++++++++++++----------------------
- 1 file changed, 29 insertions(+), 23 deletions(-)
+Changes in v3:
+- Ensured devices are QOM-parented before attaching them to a bus,
+  avoiding unparentable bus children when realization fails.
+- Clarified property-dependent child creation.
+- Removed documentation references to the QOM realized property.
+- Replaced DeviceState::realized and the QOM realized property with
+  device phases. The realizing phase prevents reentrant realization, and
+  the terminal retired phase prevents another attempt after realization
+  fails or unrealization begins.
+- Link to v2: https://lore.kernel.org/qemu-devel/20260629-qdev-v2-1-8cd1d9be0d8d@rsg.ci.i.u-tokyo.ac.jp
 
-diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-index e14762234115..aba7072131c4 100644
---- a/include/hw/core/qdev.h
-+++ b/include/hw/core/qdev.h
-@@ -22,27 +22,35 @@
-  * Realization
-  * -----------
-  *
-- * Devices are constructed in two stages:
-- *
-- * 1) object instantiation via object_initialize() and
-- * 2) device realization via the #DeviceState.realized property
-- *
-- * The former may not fail (and must not abort or exit, since it is called
-- * during device introspection already), and the latter may return error
-- * information to the caller and must be re-entrant.
-- * Trivial field initializations should go into #TypeInfo.instance_init.
-- * Operations depending on @props static properties should go into @realize.
-+ * Devices are constructed in the following order:
-+ *
-+ * 1) #TypeInfo.instance_init
-+ * 2) pre-realize property value setting
-+ * 3) device realization
-+ *
-+ * #TypeInfo.instance_init may not fail. #DeviceClass.realize can
-+ * fail, returning error information to the caller. A device realize
-+ * method should handle being called again after it has failed once.
-+ * #TypeInfo.instance_init should add instance properties but must not
-+ * have any side effect not contained in the instance, since it happens
-+ * during device introspection already. Any operations without special
-+ * requirements should go @realize so that they can be skipped during
-+ * device introspection.
-  * After successful realization, setting static properties will fail.
-  *
-- * As an interim step, the #DeviceState.realized property can also be
-- * set with qdev_realize(). In the future, devices will propagate this
-- * state change to their children and along busses they expose. The
-- * point in time will be deferred to machine creation, so that values
-- * set in @realize will not be introspectable beforehand. Therefore
-- * devices must not create children during @realize; they should
-- * initialize them via object_initialize() in their own
-- * #TypeInfo.instance_init and forward the realization events
-- * appropriately.
-+ * In the future, devices will propagate this state change to their
-+ * children and along busses they expose. The point in time will be
-+ * deferred to machine creation, so that values set in @realize will not
-+ * be introspectable beforehand. Therefore devices should not create
-+ * children during @realize; they should initialize them (e.g. by
-+ * calling object_initialize_child()) in their own
-+ * #TypeInfo.instance_init method, and then realize them (e.g. by
-+ * calling qdev_realize()) in their own #DeviceClass.realize method.
-+ *
-+ * Occasionally a device may need to decide whether or not to create
-+ * a child object based on the value of a property. In this case it
-+ * will need to both create and realize the child in its realize method,
-+ * because the property value is not known until that point.
-  *
-  * Any type may override the @realize and/or @unrealize callbacks but needs
-  * to call the parent type's implementation if keeping their functionality
-@@ -101,10 +109,8 @@ typedef int (*DeviceSyncConfig)(DeviceState *dev, Error **errp);
- /**
-  * struct DeviceClass - The base class for all devices.
-  * @props: Properties accessing state fields.
-- * @realize: Callback function invoked when the #DeviceState:realized
-- * property is changed to %true.
-- * @unrealize: Callback function invoked when the #DeviceState:realized
-- * property is changed to %false.
-+ * @realize: Callback function to realize the device.
-+ * @unrealize: Callback function to unrealize the device.
-  * @sync_config: Callback function invoked when QMP command device-sync-config
-  * is called. Should synchronize device configuration from host to guest part
-  * and notify the guest about the change.
+Changes in v2:
+- Clarified the ordering of #TypeInfo.instance_init, pre-realize
+  property setting, and realization.
+- Clarified that #TypeInfo.instance_init is for per-instance properties,
+  not class properties.
+- Link to v1: https://lore.kernel.org/qemu-devel/20250908-qdev-v1-1-df236f7ce5bd@rsg.ci.i.u-tokyo.ac.jp
 
--- 
-2.55.0
+---
+Akihiko Odaki (15):
+      qdev: Clarify instantiation and realization
+      qdev: Make qdev_is_realized() take a const DeviceState *
+      hw/hyperv/balloon: Use qdev_is_realized()
+      hw/intc/apic: Use qdev_is_realized()
+      hw/mem/memory-device: Use qdev_is_realized()
+      hw/mem/pc-dimm: Use qdev_is_realized()
+      hw/nvram: Use qdev_is_realized()
+      hw/ppc/pnv_xscom: Use qdev_is_realized()
+      hw/vfio: Use qdev_is_realized()
+      hw/virtio/virtio-mem: Use qdev_is_realized()
+      hw/virtio/virtio-qmp: Use qdev_is_realized()
+      target/i386/cpu: Use qdev_is_realized()
+      target/s390x: Use qdev_is_realized()
+      hw/qdev: Parent device before setting parent bus
+      hw/qdev: Prevent devices from being realized more than once
+
+ qapi/common.json           |  19 ++++++
+ include/hw/core/qdev.h     |  62 ++++++++++---------
+ hw/core/qdev-clock.c       |   4 +-
+ hw/core/qdev-properties.c  |   4 +-
+ hw/core/qdev.c             | 147 ++++++++++++++++++++++++++++-----------------
+ hw/hyperv/hv-balloon.c     |   2 +-
+ hw/intc/apic_common.c      |   2 +-
+ hw/mem/memory-device.c     |   4 +-
+ hw/mem/pc-dimm.c           |   2 +-
+ hw/nvram/xlnx-bbram.c      |   2 +-
+ hw/nvram/xlnx-efuse.c      |   2 +-
+ hw/ppc/pnv_xscom.c         |   2 +-
+ hw/scsi/scsi-bus.c         |   4 +-
+ hw/vfio/container-legacy.c |   4 +-
+ hw/vfio/device.c           |   4 +-
+ hw/vfio/iommufd.c          |   2 +-
+ hw/virtio/virtio-mem.c     |   4 +-
+ hw/virtio/virtio-qmp.c     |   4 +-
+ qom/qom-qmp-cmds.c         |   2 +-
+ system/qdev-monitor.c      |   5 +-
+ target/i386/cpu.c          |   2 +-
+ target/s390x/cpu_models.c  |   4 +-
+ tests/unit/test-qdev.c     | 125 +++++++++++++++++++++++++++++++++++++-
+ 23 files changed, 301 insertions(+), 111 deletions(-)
+---
+base-commit: 499039798cdad7d86b787fec0eaf1da4151c0f05
+change-id: 20250906-qdev-9e5cb7c06ffa
+
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
 
