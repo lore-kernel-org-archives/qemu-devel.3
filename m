@@ -4,48 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DD7CC44529
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 07:43:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63845C44529
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 07:52:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm589-0006Gl-1O; Tue, 21 Jul 2026 03:43:09 -0400
+	id 1wm5GM-0000JN-Uq; Tue, 21 Jul 2026 03:51:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wm586-0006Fs-3Y
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 03:43:07 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wm5GH-0000I3-4k
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 03:51:33 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wm582-0004fh-6g
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 03:43:05 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wm5GF-00061x-6h
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 03:51:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784619761; bh=xleSM0xo8Yd4+5Isp43168/WjZ8WgYnIlp5lR7OdoXs=;
+ t=1784620274; bh=dIzMZ7UWUwp1iCUopvp0w0aMUMv/k+10oET1iPjH8+w=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=o2P1zllUoqEz4AisM7Q0IQbgi2FEtXrdpUF82yyBvSg4SmW3sBso2sUfdiQCqZtxn
- YTrWbMLKc6BUWzERI5gYG7IDXDgMU4mrI5qzxEHaMYFaDksehcphTEw90CySs7zhoE
- k1Ey7YNZMWuxcBugL5f484JDuFVw4zbuQbIjg7H6z9/CSevI/Kko8GcyvTOBg5VR1i
- 2Jcdn3kd5q1bIWlCL8h4UaOGRbNGhVnzbWiILg3GWKOqDP2EXvZNXBdJbU+HFMh1pA
- SS/0uKSPu+FvEDh966OXBuTzrq3tkuSy2hpjDmWiRSar60LqBBHQKziYeuxbld8wWA
- 5OII6RciXi5Sg==
+ b=L/IPlCgUg/hSkW7BaDxHqWJCQZIziab1aCU5+e0Tf7ZaWn3TN3S2YIMQdhurcVkWB
+ 4hhtubw11uUwDjSjoHHkimYn9RgZcH+9yRD2i2/u10cyI5ejYs+a9jE1il8sSQKT9/
+ m6L/YfTH++XJoYJXN3Zn18Y9/AvUYPH9/fh5yLzlZdpxkLct/wkFo7z3H8thrfqfeP
+ aML5/g5IVOgfA2EgJ7r2K5i5pwPwYuqm8Gu0V2nmJSRtVXcK1UzVdgHlrZw9N2gIvl
+ Bgl/9U+IU27n50Xw/m1XVVgR+E+t7AEQbLYNmHZm7H55g0ejUKGDJ8uJtoSWW9K8nP
+ eWx5dU0nuRpEg==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id EBD031C3558;
- Tue, 21 Jul 2026 10:42:40 +0300 (MSK)
-Message-ID: <892e09ae-7083-4a9c-8f45-9c79c0ce8775@tls.msk.ru>
-Date: Tue, 21 Jul 2026 10:42:54 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id 75C341C3564;
+ Tue, 21 Jul 2026 10:51:14 +0300 (MSK)
+Message-ID: <f1a2f0b3-5548-45f2-a4b4-61c10dc8b3b4@tls.msk.ru>
+Date: Tue, 21 Jul 2026 10:51:28 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] build: fix sparc64 host
-To: Alex Williamson <alex@shazbot.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20260720221715.27108-1-pierrick.bouvier@oss.qualcomm.com>
- <20260720171031.259f590e@shazbot.org>
- <089649f0-b677-4c1a-a42b-eb9853f4fc7a@oss.qualcomm.com>
- <a2273203-403c-4da1-b3dd-0933dd70faf0@app.fastmail.com>
+Subject: Re: [PATCH] docs: fix sphinx build failure
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+References: <20260720222717.33078-1-pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -91,7 +85,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <a2273203-403c-4da1-b3dd-0933dd70faf0@app.fastmail.com>
+In-Reply-To: <20260720222717.33078-1-pierrick.bouvier@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -117,54 +111,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21.07.2026 06:33, Alex Williamson wrote:
-
-> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-> index c19600e980a8..008f488a3e7d 100644
-> --- a/hw/vfio/listener.c
-> +++ b/hw/vfio/listener.c
-> @@ -20,7 +20,6 @@
->   
->   #include "qemu/osdep.h"
->   #include <sys/ioctl.h>
-> -#include <linux/kvm.h>
->   #include <linux/vfio.h>
->   
->   #include "exec/target_page.h"
+On 21.07.2026 01:27, Pierrick Bouvier wrote:
+> We recently started to have those failures appearing when building
+> documentation. It's hard to identify if it comes from a python, sphinx
+> or sphinx extension, but it blocks us.
 > 
-> This builds in both a native amd64 environment and a cross-compiled sparc64 environment.
+> Exception occurred:
+>    File "/usr/lib/python3.13/multiprocessing/connection.py", line 399, in _recv
+>      raise EOFError
+> EOFError
+> The full traceback has been saved in /tmp/sphinx-*.log, if you want to report the issue to the developers.
+> 
+> This seems to be the generic error message for "something went wrong in
+> sphinx multiprocess":
+> - https://github.com/sphinx-doc/sphinx/issues/11449
+> - https://github.com/sphinx-doc/sphinx/issues/14458
+> - https://github.com/sphinx-doc/sphinx/issues/8973
 
-Building it on native sparc64 (and on all other targets) on debian right 
-now:
-https://buildd.debian.org/status/package.php?p=qemu&suite=experimental
+FWIW, this time, it looks like it is a genuine bug in debian update of
+python3.  I was able to reproduce the issue without -j option too, after
+about 300 retries (did build in a loop), and the python backtrace (it
+segfaulted) shows pattern similar to what was reported on debian.
+I haven't reproduced it after installing the fixed packages, but with
+so many attempts to failure, about 500 successful runs in a row is
+not conclusive still.
 
-It's - drum roll - finishing building, so I guess it will be fine, let's
-see in a few minutes.
+> Solve the issue by simply going back to sequential builds. We didn't
+> notice a huge speedup anyway.
 
+The thing is: it looks like actually, at least the version of sphinx
+I have on debian stable - sphinx ignores -j option always using single
+core no matter which -j arg it is given.  I weren't able to run it in
+true parallel mode.  Maybe it spawns single "parallel" thread still,
+exploring the problematic code paths still, and without -j it wont -
+I dunno.
 
-An unrelated note: we've very frequent failure of test qemu:io-qcow2-161 
-   on ppc64 host:
-
-stderr:
---- /build/reproducible-path/qemu-11.1.0~rc0+ds/tests/qemu-iotests/161.out
-+++ 
-/build/reproducible-path/qemu-11.1.0~rc0+ds/b/qemu/scratch/qcow2-file-161/161.out.bad
-@@ -34,6 +34,8 @@
-  *** Commit and then change an option on the backing file
-
-  Formatting 'TEST_DIR/t.IMGFMT.base', fmt=IMGFMT size=1048576
-+qemu-img: TEST_DIR/t.IMGFMT.base: Failed to get "write" lock
-+Is another process using the image [TEST_DIR/t.IMGFMT.base]?
-  Formatting 'TEST_DIR/t.IMGFMT.int', fmt=IMGFMT size=1048576 
-backing_file=TEST_DIR/t.IMGFMT.base backing_fmt=IMGFMT
-  Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576 
-backing_file=TEST_DIR/t.IMGFMT.int backing_fmt=IMGFMT
-  { 'execute': 'qmp_capabilities' }
-
-Retrying several times makes it work in the end.
-So far this happens on ppc64 debian buildds only.
+So, I guess, with this in mind, it should definitely be okay to have
+this change.
 
 Thanks,
 
 /mjt
+
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>   docs/meson.build | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/docs/meson.build b/docs/meson.build
+> index a8d893681ec..4d8cc545fcc 100644
+> --- a/docs/meson.build
+> +++ b/docs/meson.build
+> @@ -4,7 +4,7 @@ sphinx_build = find_program(fs.parent(python.full_path()) / 'sphinx-build',
+>   # Check if tools are available to build documentation.
+>   build_docs = false
+>   if sphinx_build.found()
+> -  SPHINX_ARGS = ['env', 'CONFDIR=' + qemu_confdir, sphinx_build, '-q', '-j', 'auto']
+> +  SPHINX_ARGS = ['env', 'CONFDIR=' + qemu_confdir, sphinx_build, '-q']
+>     # If we're making warnings fatal, apply this to Sphinx runs as well
+>     if get_option('werror')
+>       SPHINX_ARGS += [ '-W', '-Dkerneldoc_werror=1' ]
+
 
