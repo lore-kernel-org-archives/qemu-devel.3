@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36B11C44532
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 12:48:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1463AC4451C
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 12:52:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm9t4-0000h9-0C; Tue, 21 Jul 2026 08:47:54 -0400
+	id 1wm9wo-0001gG-MJ; Tue, 21 Jul 2026 08:51:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wm9t2-0000gw-4y
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 08:47:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wm9wn-0001g4-BU
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 08:51:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wm9sz-0000Vh-O2
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 08:47:51 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wm9wl-0000vI-Pu
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 08:51:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784638066;
+ s=mimecast20190719; t=1784638302;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=JZp1mpbmLsX0yiVu0eQsF0NvZEZvFN7lA1CPYRYhcYc=;
- b=ff2Dxjb3hCpTK1/B0YqkqGVuIv4F/iFjknyZZu9FPp3+C/E5Nm6iJYQSzmtynDmhiVrOk4
- QEBknG7gEaPhsiAkQgjcFvMMKP4o9TGsQ16A/m1Y54CGnMBShetMtIpREZSFqG5X+WWdwL
- zApxBIgFlEnwVJ4UXvE7KI3Xbqt3kBM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=TfGjVxj0zYeYIgwOkcaWVwMbY7bT3t0NnYdpAGK+liA=;
+ b=HT3WNQVJicLCh10nPIcb/fqC90cj3xt3UOq7VuDmR6hfHo8G8/htF2JSpQF/87PEcUJq59
+ UXzoZHmJoN0Ehv/S4jalrdhTAipMn4ldhPFa+lF97v3ITmeO5Iks762fHDeAXWJSC3Cb5v
+ qxpUWcnzp7SIMVRRxlZ+iFIiP7AK2rM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-687-TriVhH4tOjyQrXHyBKgDNg-1; Tue,
- 21 Jul 2026 08:47:43 -0400
-X-MC-Unique: TriVhH4tOjyQrXHyBKgDNg-1
-X-Mimecast-MFC-AGG-ID: TriVhH4tOjyQrXHyBKgDNg_1784638062
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-Ns7WOR6QMWinDuVdH2xDkQ-1; Tue,
+ 21 Jul 2026 08:51:41 -0400
+X-MC-Unique: Ns7WOR6QMWinDuVdH2xDkQ-1
+X-Mimecast-MFC-AGG-ID: Ns7WOR6QMWinDuVdH2xDkQ_1784638300
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 05104195F171; Tue, 21 Jul 2026 12:47:42 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C78F21964CE2; Tue, 21 Jul 2026 12:51:39 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6CF841800352; Tue, 21 Jul 2026 12:47:41 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3AB6D1955F74; Tue, 21 Jul 2026 12:51:38 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DF38021E6920; Tue, 21 Jul 2026 14:47:38 +0200 (CEST)
+ id 8858021E6920; Tue, 21 Jul 2026 14:51:36 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: Zhang Chen <zhangckid@gmail.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
@@ -54,26 +54,28 @@ Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
  Bonzini <pbonzini@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,  Jason Wang
  <jasowang@redhat.com>,  Fam Zheng <fam@euphon.net>,  Daniel P .
  =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Subject: Re: [RESEND PATCH V10 00/15] iothread: Support tracking and
- querying IOThread holders
-In-Reply-To: <20260716172108.87700-1-zhangckid@gmail.com> (Zhang Chen's
- message of "Fri, 17 Jul 2026 01:20:41 +0800")
+Subject: Re: [RESEND PATCH V10 13/15] monitor/hmp: Add holders support for
+ hmp_info_iothreads
+In-Reply-To: <20260716172108.87700-14-zhangckid@gmail.com> (Zhang Chen's
+ message of "Fri, 17 Jul 2026 01:20:54 +0800")
 References: <20260716172108.87700-1-zhangckid@gmail.com>
-Date: Tue, 21 Jul 2026 14:47:38 +0200
-Message-ID: <87v7a8o6fp.fsf@pond.sub.org>
+ <20260716172108.87700-14-zhangckid@gmail.com>
+Date: Tue, 21 Jul 2026 14:51:36 +0200
+Message-ID: <87se5co693.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: permerror client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: permerror client-ip=170.10.133.124;
  envelope-from=armbru@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,33 +91,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With this series applied:
+Zhang Chen <zhangckid@gmail.com> writes:
 
-    $ qemu-system-x86_64 -S -display none -chardev id=chr-mon0,backend=stdio -object monitor-hmp,id=mon0,chardev=chr-mon0 -chardev id=chr-mon1,backend=socket,path=test-hmp,server=on,wait=off -object monitor-qmp,id=mon1,chardev=chr-mon1
+> Exposed the iothread holders via the Human Monitor Interface (HMP)
+> command 'info iothreads' to assist with manual debugging and
+> performance tuning.
+>
+> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> ---
+>  monitor/hmp-cmds.c | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
+>
+> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+> index e9fb8d827a..cd2d9c1d59 100644
+> --- a/monitor/hmp-cmds.c
+> +++ b/monitor/hmp-cmds.c
+> @@ -240,11 +240,33 @@ void hmp_info_iothreads(Monitor *mon, const QDict *qdict)
+>      IOThreadInfoList *info_list = qmp_query_iothreads(NULL);
+>      IOThreadInfoList *info;
+>      IOThreadInfo *value;
+> +    IOThreadHolderList *h;
+>  
+>      for (info = info_list; info; info = info->next) {
+>          value = info->value;
+>          monitor_printf(mon, "%s:\n", value->id);
+>          monitor_printf(mon, "  thread_id=%" PRId64 "\n", value->thread_id);
+> +        monitor_printf(mon, "  holders=");
+
+This is unconditional.
+
+> +        if (value->holders) {
+> +            for (h = value->holders; h; h = h->next) {
+> +                IOThreadHolder *holder = h->value;
+> +
+> +                switch (holder->type) {
+> +                case IO_THREAD_HOLDER_KIND_BLOCK_EXPORT:
+> +                    monitor_printf(mon, "[block-export: %s]",
+> +                                   holder->u.block_export.export_name);
+> +                    break;
+> +                case IO_THREAD_HOLDER_KIND_QOM_OBJECT:
+> +                    monitor_printf(mon, "[qom-path: %s]",
+> +                                   holder->u.qom_object.qom_path);
+> +                    break;
+> +                default:
+> +                    monitor_printf(mon, "[unknown]");
+> +                    break;
+> +                }
+> +            }
+> +            monitor_printf(mon, "\n");
+
+This isn't.  Results in messed-up output when there are no holders:
+
+    $ qemu-system-x86_64 -S -display none -monitor stdio -object iothread,id=iot0
     QEMU 11.0.90 monitor - type 'help' for more information
-    (qemu) q
-    **
-    ERROR:../iothread.c:99:iothread_unref: code should not be reached
-    Bail out! ERROR:../iothread.c:99:iothread_unref: code should not be reached
-    Aborted                    (core dumped) qemu-system-x86_64 -S -display none -chardev id=chr-mon0,backend=stdio -object monitor-hmp,id=mon0,chardev=chr-mon0 -chardev id=chr-mon1,backend=socket,path=test-hmp,server=on,wait=off -object monitor-qmp,id=mon1,chardev=chr-mon1
+    (qemu) info iothreads 
+    iot0:
+      thread_id=1035908
+      holders=  poll-max-ns=32768
+      poll-grow=2
+      poll-shrink=2
+      poll-weight=3
+      aio-max-batch=0
 
-Stack backtrace:
+There's no need for a conditional here, the loop does nothing just fine
+when the list is empty.
 
-    #0  0x00007f182873832c in __pthread_kill_implementation () at /lib64/libc.so.6
-    #1  0x00007f18286de15e in raise () at /lib64/libc.so.6
-    #2  0x00007f18286c56d0 in abort () at /lib64/libc.so.6
-    #3  0x00007f182ac53482 in g_assertion_message[cold] ()
-        at /lib64/libglib-2.0.so.0
-    #4  0x00007f182acc1447 in g_assertion_message_expr ()
-        at /lib64/libglib-2.0.so.0
-    #5  0x000055ffa06cb50e in iothread_unref
-        (iothread=0x55ffdb3bd740, holder=0x7ffc6152d8c0) at ../iothread.c:99
-    #6  0x000055ffa06cc13a in iothread_put_aio_context
-        (iothread=0x55ffdb3bd740, holder=0x7ffc6152d8c0) at ../iothread.c:444
-    #7  0x000055ffa07d9af6 in monitor_cleanup () at ../monitor/monitor.c:679
-    #8  0x000055ffa047ca8c in qemu_cleanup (status=0) at ../system/runstate.c:1046
-    #9  0x000055ffa07fccb7 in qemu_default_main (opaque=0x0) at ../system/main.c:51
-    #10 0x000055ffa07fcd64 in main (argc=12, argv=0x7ffc6152da98)
-        at ../system/main.c:93
+> +        }
+>          monitor_printf(mon, "  poll-max-ns=%" PRId64 "\n", value->poll_max_ns);
+>          monitor_printf(mon, "  poll-grow=%" PRId64 "\n", value->poll_grow);
+>          monitor_printf(mon, "  poll-shrink=%" PRId64 "\n", value->poll_shrink);
 
 
