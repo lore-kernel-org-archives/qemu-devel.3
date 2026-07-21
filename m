@@ -4,95 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86C79C44529
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 12:22:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB55DC44529
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 12:22:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm9T6-00024n-El; Tue, 21 Jul 2026 08:21:04 -0400
+	id 1wm9UN-0003cJ-4G; Tue, 21 Jul 2026 08:22:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1wm9T1-00021F-Po
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 08:20:59 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1wm9Sy-0003om-MJ
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 08:20:58 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-8484f229529so4877751b3a.2
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 05:20:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wm9U5-0003Gw-OB
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 08:22:05 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wm9U4-0003wZ-5J
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 08:22:05 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66LART7v1455614
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 12:22:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ Sg+aRlSfL1je4BTZTcRTkOp9Hr5XLA1t0eyNuOYYM9s=; b=Um1G55YFxtOpIwik
+ YxKX58AksiBbWDaHidB6DZZwxRbH94d7NiGo57rLHZf3Y/Gd0KXw4yB2lKM5pz8z
+ hjKN4qPsj/d9ppLZ9wATGpgWWu8kSfRnHOZsNdTy3tUqQyoiQ74LLVIy86rHaTd+
+ UPEuZwa/Ntez7PqWKZ31JOjxwgpkPHlCbmpAXY8d8edmV1BRLWn3DsaSRy2ffP59
+ BIf2njiGZ3swIVXF9dyCUr0L6CKd0sAlhLEUyK39GPssGum+lBCNwnHbQiaAJcHC
+ pFp2pGcP0JhtVj7esDuQmWR5SkuEjrSUgkS3zBeQhbAo7tv66RAYfn5BT1hISoFs
+ vKjxmw==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fj1duj855-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 12:22:00 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-52769fc3f2eso1901171cf.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 05:22:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1784636454; x=1785241254; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=G1L7AhgtqGZO/tvlcFZtCZEsobOgcDT65d8cvBeS6bY=;
- b=kIg7JSzJreJgM8F32LPEAJQH8ii1ISShEO8ljl2EiEic0Hi4eyWop375IVd/PQ1Wow
- fpLBoIA2Gg0Vtuz5AjRHfFhB9KeinKcEjm3e07Wh1hPeZz5wHzzmAnT1uzrPtiWXFktL
- yb5U3zIQghsYUoLwZov4LcAA8tzeEtNJ3rdLp8cvX+yBNc8ImNMsszkF80iL+3hGSU2a
- m9rFUgCztwcmfxLs5O2JlUW9TfshLv6ZwfbWZm4EMXYfHVBkhQ04/AUU5oeqkDRu7M3D
- Y2J30/jO8xHZY1LsvBnLz6KG252b2+Pj84cYk3z6jR1/D+s4yI6Lse7EmYrJw23eaL+0
- r+YQ==
+ d=oss.qualcomm.com; s=google; t=1784636520; x=1785241320; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Sg+aRlSfL1je4BTZTcRTkOp9Hr5XLA1t0eyNuOYYM9s=;
+ b=PG2GF+2S61eQMBd36Er1O9FLV0ZBkQjFRok91ekKpMwni8iXVwuf9MvquROAybaqQ5
+ dGjCYSQ/qM3yCakFNHSKAqzD5HP9OgwOShUQsTAco4Ll7F/pDJhlv3a28kvQYz7BRiz9
+ ZMrsmuFduQ0A+KWmD5AxuvKH2+p5+TQROcjw+Q4cCNw2KjgS2OLSt1V5dAbvDPj2/oF1
+ J7t6/rXwMBqT+S1FCT7ooA1ZVmjfBTYHKl9TjuJVzLJP7EyA/DFMzx5vqkNfeBeX+e6A
+ 53Ce/B1XAvfQ1RE/C6sbAqpRtArshBmGgtpKWDh3uDLnlpS+s+vQqaU2Q4BpRyys112O
+ 2oNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784636454; x=1785241254;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=G1L7AhgtqGZO/tvlcFZtCZEsobOgcDT65d8cvBeS6bY=;
- b=UglpZyWD9zjFZ6kAC4cYPfo7ycerb9+flG5+Xm7xk4/b7g6lpHZYR7G4Vnz2K+DozG
- PxqN8MrucmybfvEcEsFIENpQK9fb5B8v05UrLkcs1mDEJ2uWdCiIdXmKiHZztFx8Uejl
- XQV/KaEbdVQLW0mOBKTz43VKNOEFpTd0X+GmXDtu2qqCyal+DnVJNU6nHUMN1XkiZ/0g
- 3gJ5Sr/kqIDktVzfRHEwbdPEMl2i4JJTEakZRhi7/f/8eAKtFopQBO+8x0wIvUMl3mqX
- MpkW5baivn29OH6tKegJ+i7Qqqf2gvlHfMGTOi/hJcG3w0Lk1dokAimHgMNeHlegYDk6
- Zk+A==
-X-Gm-Message-State: AOJu0YywtDq8wjbQONfP3hlbJdYiTgb/8/HWlSaKodq9uYCsCQ2xsSDB
- bbhh7XY9urwdjayg9in//TBq1TaawzlJaoXzClZnEuwjIrtL9DCoQttnkcEOXD9KIPg8L91Jg2y
- 8LgV2mibgzGSbhwPZ5L5+3SOxINxwvS4vraqx4R99DtO9grywRBjv091MSC7eeJPFyECLrZQp9P
- d6XrOCVmPhA6rN2nHneIVqOsiXDxnzcT+6I7UXtiY=
-X-Gm-Gg: AR+sD10K74+/xp6AodHz/GBfZJxNV1cpdeswPKacEZ2Kr2qSYiulrP7mgH0AP6Yjtz1
- Ub0O0pDjxMQkfAZtVzngTbkSsN6DDkBHUze6GLxnWpcD6TlUhDS7UWiop6vs3Bh7WsqvBKmibfG
- 3eKvx1DEoxmtyPw9h150L0YLAaax4VV+8rkX4ZGi0/w1d6jvJvdJVmGlCA+mKSK6sYGixsgS35F
- heP0C358GDd9wRCYEaPWc2LT9RlMcGaPO2kGiPMZMMFT0GY2km8FdvzH7Rp/TbAHt0UeojQ9uW1
- 9JyrcCIhmtmRgICSiaTUhsmTPEI9d6mdYYcrelajdaB0lTrtrnM7qvATKglFCPWWtUPBAnbSkMX
- 45+hlKuscAt7FuNe0CeslbiBD97LSTTCPcFmJD4aOhiNsQFYC/dUSGHxEt6IyTM+e4OxI/gTsw1
- DgAG6p3mdBo7E/+lfaNQUppqcNiFFKYupQXR3IHCxem49f+MBzzbc+L8bbSLo2zbY/EP7isfefm
- eMdQq/0weYEySfR
-X-Received: by 2002:a05:6a00:440e:b0:848:8027:cb6 with SMTP id
- d2e1a72fcca58-84c2945a8edmr18023143b3a.45.1784636454325; 
- Tue, 21 Jul 2026 05:20:54 -0700 (PDT)
-Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
- [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cb517aad95dsm5904568a12.7.2026.07.21.05.20.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Jul 2026 05:20:53 -0700 (PDT)
-From: Max Chou <max.chou@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Max Chou <max.chou@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH 5/5] tests/tcg/riscv64: Add tests for SiFive int8 matmul
- extensions
-Date: Tue, 21 Jul 2026 20:20:33 +0800
-Message-ID: <20260721122034.1567146-6-max.chou@sifive.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260721122034.1567146-1-max.chou@sifive.com>
-References: <20260721122034.1567146-1-max.chou@sifive.com>
+ d=1e100.net; s=20251104; t=1784636520; x=1785241320;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Sg+aRlSfL1je4BTZTcRTkOp9Hr5XLA1t0eyNuOYYM9s=;
+ b=H1kAk0bohE/4wZlJD8v5QzOkTjf6rxStZ+/cygJAfBpbmnaqt61WK1LY53o2rm2JG6
+ bpvFC4TE4G+YYkTO5+1p9LuEIoY/6Jp6E2D3zpjSeXPpOjoPtdWmTcyqQLjiBGtHh1L8
+ 7psISZRU92YtG1AydDW7a4pc4ddXj+6bco2cvrh06DDowEw3KiBnNVk6vWtlC9dbCEBa
+ jlFqT+Ijl9vski5gmAwnM2cbvnDMTEoxDizaRI4bOCoORqrhcTKSmL30O6Z96FBtUaTl
+ WZMC6003aLEm3gCWrkWfVA74te79Ul1UU2nlqrHDNYFgsRDMjFOJIjXcGN+s6nBMsDLk
+ KtvA==
+X-Gm-Message-State: AOJu0Yyxrc8cETOULGkLx9+M3CJneMPRMHhUgdVlwcvOPrF/vNcV56Ek
+ cfLW9I1imWAYdMohyXkB0muiZ+djd3dw44Gfnig8d73FX5ds2S7Kao0vkdAdfuP5uk8ukebD2NU
+ yAtH1rT2o4wkzild/CGb4RdV0e6+RlS4T9WfHIVdLDTfRtz8R1tDxMs8JgzxfjfXvXw==
+X-Gm-Gg: AfdE7cn2du7k6udTqGMdCKuCnQWW2nfOP6ZdZozVhqDlyDd8EVQ+12OSEONIzedo5UZ
+ Fy84IuSo0BRqF4J6ap1EVyv5vkkJSeGlMLBknxqz8DG/m7GNU/DT3IhPoJCWZuFb9m8PugPEXJ+
+ TpRp6mmKtc8qts2mNNRAA2LxBQL//ZgSMLUGLDYTRqO9KIabKiuG0+UG17t6fs57rEf0jFfumWi
+ tLYQGpeowcy0/FQ7ZOc4ClajThASmFh+Fqw7+i7xn+iZDvCT9wWnkw0QfDon5eZSiSf/I55ASeC
+ 0F4N2Y6LKiOLHZze8QtpzOF65mSD3jeIutJuRSj5JtmJ5AQFOxq6P7ytqygYSYCNINMBfNgawAY
+ XfjJndEMwqnZxNU4JJIeP2rvyM/zueYF8+kY/Hj9Vq0crRoZYenklstokjg==
+X-Received: by 2002:a05:622a:2b07:b0:51c:7b12:5fe6 with SMTP id
+ d75a77b69052e-5213f378922mr180367251cf.82.1784636519991; 
+ Tue, 21 Jul 2026 05:21:59 -0700 (PDT)
+X-Received: by 2002:a05:622a:2b07:b0:51c:7b12:5fe6 with SMTP id
+ d75a77b69052e-5213f378922mr180366871cf.82.1784636519457; 
+ Tue, 21 Jul 2026 05:21:59 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49548e0fcdbsm309001545e9.2.2026.07.21.05.21.58
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 21 Jul 2026 05:21:58 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH 3/4] target/arm: Only compile gicv5-cpuif.c when GICv5 is
+ selected
+Date: Tue, 21 Jul 2026 14:21:33 +0200
+Message-ID: <20260721122135.6288-4-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260721122135.6288-1-philmd@oss.qualcomm.com>
+References: <20260721122135.6288-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=max.chou@sifive.com; helo=mail-pf1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-ORIG-GUID: I0_36NrA4adraf_nRG9L0j3A1Ivwq_D3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDEzMSBTYWx0ZWRfX4OsOV6xpOYxT
+ 1VKG28d/QjdEzszG7B97j1E+N0xc/kefCmqfSeOoFrVdAeYXE+acU0mqpeBW4AMP+jUI1qJbfIe
+ 7fpKuNjMgQtWrmzi/56RluV4XbqsvA1wGp7KoTYwNZMHM6FufrHCW4H/+tmzlWoHY5xBkuApUlu
+ DFauoTTPGNki3QUorDa286IvHfLJJkWLpVWMeWzPL5AHH5A+FpYK793St+DLd8Nsq99VqeJkLuH
+ +P+SW4glMv7gvdJcaI8dW86+LawqUz9+O67p/WZ512WTpWM+XRJL23umafqwwINXsut939hLPHE
+ 0SFeitJr+a2OB/ZQeGN0KxWJXol/YeREGApqjH4daArjyg36qlu+AsPh0XKyNIsObr580lOMsHb
+ iefo82pFuycw3FPRY5GMSfGH96pHUtk3o6TuvDNvPIJ4BiZvpvwNwnvrkRzUqZ6a4zJ58jz9FCP
+ NVppVwaNFn4L5UgKUbw==
+X-Authority-Analysis: v=2.4 cv=I9JVgtgg c=1 sm=1 tr=0 ts=6a5f6468 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=EH4q0pLv-eCGfy9bPtsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-GUID: I0_36NrA4adraf_nRG9L0j3A1Ivwq_D3
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDEzMSBTYWx0ZWRfX02NCleBmJXAV
+ v15d4vLpYSuCFGSlfz4D4hBq8ZRvpF+/JShgulfADirZgXOma/1gkGM6BAt/wMCMdQmU8vTCPeg
+ kfzlPZsr3wS26Fy1yzpWHxaQK0eBi4Q=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-21_01,2026-07-20_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 adultscore=0 spamscore=0 clxscore=1015 suspectscore=0
+ lowpriorityscore=0 phishscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607210131
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,318 +154,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a test that exercises all SiFive int8 matrix-multiply instructions
-from the Xsfvqmaccqoq and Xsfvqmaccdod extensions.
+Only compile gicv5-cpuif.c when ARM_GICV5 is Kconfig-selected,
+otherwise we get when building with --without-default-devices:
 
-For each tile shape the test covers the four signedness variants
-(sf.vqmaccu / sf.vqmacc / sf.vqmaccus / sf.vqmaccsu) and the
-reserved-encoding path: with vl set to a value that is not a multiple
-of the tile size the helper raises an illegal-instruction exception.
+  Undefined symbols for architecture arm64:
+    "_gicv5_activate", referenced from:
+        _gicr_cdia_read in target_arm_tcg_gicv5-cpuif.c.o
+    "_gicv5_deactivate", referenced from:
+        _gic_cddi_write in target_arm_tcg_gicv5-cpuif.c.o
+    "_gicv5_get_hppi", referenced from:
+        _gic_hppi in target_arm_tcg_gicv5-cpuif.c.o
+    "_gicv5_request_config", referenced from:
+        _gic_cdrcfg_write in target_arm_tcg_gicv5-cpuif.c.o
+    "_gicv5_set_enabled", referenced from:
+        _gic_cddis_write in target_arm_tcg_gicv5-cpuif.c.o
+        _gic_cden_write in target_arm_tcg_gicv5-cpuif.c.o
+    "_gicv5_set_handling", referenced from:
+        _gic_cdhm_write in target_arm_tcg_gicv5-cpuif.c.o
+    "_gicv5_set_pending", referenced from:
+        _gic_cdpend_write in target_arm_tcg_gicv5-cpuif.c.o
+    "_gicv5_set_priority", referenced from:
+        _gic_cdpri_write in target_arm_tcg_gicv5-cpuif.c.o
+    "_gicv5_set_target", referenced from:
+        _gic_cdaff_write in target_arm_tcg_gicv5-cpuif.c.o
 
-Signed-off-by: Max Chou <max.chou@sifive.com>
+Fixes: ee0f1ce00db ("target/arm: GICv5 cpuif: Initial skeleton and GSB barrier insns")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- MAINTAINERS                               |   1 +
- tests/tcg/riscv64/Makefile.softmmu-target |   7 +
- tests/tcg/riscv64/test-xsfvqmacc.S        | 260 ++++++++++++++++++++++
- 3 files changed, 268 insertions(+)
- create mode 100644 tests/tcg/riscv64/test-xsfvqmacc.S
+ target/arm/tcg/meson.build | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 1a40d86685..d7bfe19b1d 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -396,6 +396,7 @@ S: Supported
- F: target/riscv/xsf.decode
- F: target/riscv/tcg/insn_trans/trans_xsf.c.inc
- F: disas/riscv-xsf*
-+F: tests/tcg/riscv64/test-xsfvqmacc.S
- 
- RENESAS RX CPUs
- R: Yoshinori Sato <yoshinori.sato@nifty.com>
-diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-index 82be8a2c91..0615dc83e8 100644
---- a/tests/tcg/riscv64/Makefile.softmmu-target
-+++ b/tests/tcg/riscv64/Makefile.softmmu-target
-@@ -41,5 +41,12 @@ comma:= ,
- run-test-crc32: test-crc32
- 	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)xlrbr=true $(QEMU_OPTS)$<)
- 
-+# The SiFive int8 matmul instructions are reserved unless VLEN >= 256, so the
-+# runner selects vlen=256 along with both extensions.
-+EXTRA_RUNS += run-test-xsfvqmacc
-+XSFVQMACC_CPU = rv64$(comma)v=true$(comma)vlen=256$(comma)xsfvqmaccdod=true$(comma)xsfvqmaccqoq=true
-+run-test-xsfvqmacc: test-xsfvqmacc
-+	$(call run-test, $<, $(QEMU) -cpu $(XSFVQMACC_CPU) $(QEMU_OPTS)$<)
-+
- # We don't currently support the multiarch system tests
- undefine MULTIARCH_TESTS
-diff --git a/tests/tcg/riscv64/test-xsfvqmacc.S b/tests/tcg/riscv64/test-xsfvqmacc.S
-new file mode 100644
-index 0000000000..a116712e50
---- /dev/null
-+++ b/tests/tcg/riscv64/test-xsfvqmacc.S
-@@ -0,0 +1,260 @@
-+/*
-+ * Test the SiFive Xsfvqmaccqoq/Xsfvqmaccdod custom int8 matrix-multiply
-+ * extensions.
-+ *
-+ * The eight instructions widen 8-bit integer inputs to 32 bits and perform
-+ * a matrix-multiply-accumulate into a vector of int32 accumulators:
-+ *
-+ *   C[j] += A * B[j]
-+ *
-+ * Xsfvqmaccqoq (4x8x4): A is 4x8, B[j] is 8x4, C[j] is 4x4 int32. One matrix
-+ * operation is performed per 32 elements of vl (TILE_SIZE = 32).
-+ * Xsfvqmaccdod (2x8x2): A is 2x8, B[j] is 8x2, C[j] is 2x2 int32. One matrix
-+ * operation is performed per 16 elements of vl (TILE_SIZE = 16).
-+ *
-+ * The input tiles below contain bytes >= 0x80 so that each signedness
-+ * variant produces a distinct result; the expected int32 tiles were computed
-+ * with an independent reference model of the specification. The accumulators
-+ * are cleared before every operation, so the expected value is the pure
-+ * matrix product.
-+ *
-+ * Test exits via semihosting with status 0 on success, or the 1-based index
-+ * of the first failing operation.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+	.option arch, +v
-+	.option norvc
-+
-+	.text
-+
-+/*
-+ * Run one 4x8x4 operation: load the 32-byte A and B tiles, clear the 4x4
-+ * int32 accumulator (vd = v4:v5, EMUL = 2), execute the op, then compare the
-+ * 16 int32 results against the expected tile.
-+ */
-+.macro RUN_QOQ id, word, exp
-+	li	a2, 32
-+	vsetvli	t0, a2, e8, m1, ta, ma
-+	la	t1, a_qoq
-+	vle8.v	v1, (t1)
-+	la	t1, b_qoq
-+	vle8.v	v2, (t1)
-+	vsetvli	t0, x0, e32, m2, ta, ma
-+	vmv.v.i	v4, 0
-+	li	a2, 32
-+	vsetvli	t0, a2, e8, m1, ta, ma
-+	.word	\word
-+	vsetvli	t0, x0, e32, m2, ta, ma
-+	la	t1, result
-+	vse32.v	v4, (t1)
-+	la	a0, result
-+	la	a1, \exp
-+	li	a2, 16
-+	li	t6, \id
-+	call	check_words
-+.endm
-+
-+/*
-+ * Run one 2x8x2 operation: load the 16-byte A and B tiles, clear the 2x2
-+ * int32 accumulator (vd = v4, EMUL = 1), execute the op, then compare the
-+ * 4 int32 results against the expected tile.
-+ */
-+.macro RUN_DOD id, word, exp
-+	li	a2, 16
-+	vsetvli	t0, a2, e8, m1, ta, ma
-+	la	t1, a_dod
-+	vle8.v	v1, (t1)
-+	la	t1, b_dod
-+	vle8.v	v2, (t1)
-+	vsetvli	t0, x0, e32, m1, ta, ma
-+	vmv.v.i	v4, 0
-+	li	a2, 16
-+	vsetvli	t0, a2, e8, m1, ta, ma
-+	.word	\word
-+	vsetvli	t0, x0, e32, m1, ta, ma
-+	la	t1, result
-+	vse32.v	v4, (t1)
-+	la	a0, result
-+	la	a1, \exp
-+	li	a2, 4
-+	li	t6, \id
-+	call	check_words
-+.endm
-+
-+	.global _start
-+_start:
-+	/* Enable the vector unit (mstatus.VS = Initial). */
-+	li	t0, 1 << 9
-+	csrs	mstatus, t0
-+
-+	/* Route synchronous traps to trap_handler (mtvec direct mode). */
-+	la	t0, trap_handler
-+	csrw	mtvec, t0
-+
-+	RUN_QOQ	1, 0xF220A25B, exp_qoq_u	/* sf.vqmaccu.4x8x4  */
-+	RUN_QOQ	2, 0xF620A25B, exp_qoq_s	/* sf.vqmacc.4x8x4   */
-+	RUN_QOQ	3, 0xFA20A25B, exp_qoq_us	/* sf.vqmaccus.4x8x4 */
-+	RUN_QOQ	4, 0xFE20A25B, exp_qoq_su	/* sf.vqmaccsu.4x8x4 */
-+	RUN_DOD	5, 0xB220A25B, exp_dod_u	/* sf.vqmaccu.2x8x2  */
-+	RUN_DOD	6, 0xB620A25B, exp_dod_s	/* sf.vqmacc.2x8x2   */
-+	RUN_DOD	7, 0xBA20A25B, exp_dod_us	/* sf.vqmaccus.2x8x2 */
-+	RUN_DOD	8, 0xBE20A25B, exp_dod_su	/* sf.vqmaccsu.2x8x2 */
-+
-+	/*
-+	 * Illegal-instruction reporting test (op 9).
-+	 *
-+	 * When vl is not a multiple of the tile size the instruction is
-+	 * reserved and the helper raises an illegal-instruction exception at
-+	 * runtime.
-+	 */
-+	la	t1, trap_mtval
-+	sd	zero, 0(t1)
-+	la	t1, trap_mcause
-+	sd	zero, 0(t1)
-+	/* vl = 16 is not a multiple of the 4x8x4 tile size (32 elements). */
-+	li	a2, 16
-+	vsetvli	t0, a2, e8, m1, ta, ma
-+	.word	0xF220A25B		/* sf.vqmaccu.4x8x4, traps */
-+	/* The handler skips the faulting insn, so control resumes here. */
-+	li	a0, 9			/* fail code for this check */
-+	la	t1, trap_mcause
-+	ld	t2, 0(t1)
-+	li	t3, 2			/* RISCV_EXCP_ILLEGAL_INST */
-+	bne	t2, t3, _exit
-+	la	t1, trap_mtval
-+	ld	t2, 0(t1)
-+	li	t3, 0xF220A25B
-+	bne	t2, t3, _exit
-+
-+	li	a0, 0
-+	j	_exit
-+
-+/*
-+ * Machine-mode trap handler: record mcause and mtval, then advance mepc
-+ * past the 4-byte faulting instruction and return.
-+ */
-+	.balign	4
-+trap_handler:
-+	csrr	t4, mcause
-+	la	t5, trap_mcause
-+	sd	t4, 0(t5)
-+	csrr	t4, mtval
-+	la	t5, trap_mtval
-+	sd	t4, 0(t5)
-+	csrr	t4, mepc
-+	addi	t4, t4, 4
-+	csrw	mepc, t4
-+	mret
-+
-+/*
-+ * check_words(a0 = result, a1 = expected, a2 = word count).
-+ * Returns to the caller if every word matches; otherwise exits with the
-+ * operation index held in t6.
-+ */
-+check_words:
-+1:	beqz	a2, 2f
-+	lw	t2, 0(a0)
-+	lw	t3, 0(a1)
-+	bne	t2, t3, 3f
-+	addi	a0, a0, 4
-+	addi	a1, a1, 4
-+	addi	a2, a2, -1
-+	j	1b
-+2:	ret
-+3:	mv	a0, t6
-+	j	_exit
-+
-+/* Exit through the semihosting SYS_EXIT_EXTENDED call with a0 as the code. */
-+_exit:
-+	la	a1, semiargs
-+	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
-+	sd	t0, 0(a1)
-+	sd	a0, 8(a1)
-+	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
-+	.balign	16
-+	slli	zero, zero, 0x1f
-+	ebreak
-+	srai	zero, zero, 0x7
-+	j	.
-+
-+	.data
-+	.balign	8
-+semiargs:
-+	.space	16
-+result:
-+	.space	64
-+trap_mcause:
-+	.space	8
-+trap_mtval:
-+	.space	8
-+
-+/*
-+ * A (4x8, row-major) in bytes [0, 32) of vs1.
-+ */
-+a_qoq:
-+	.byte	0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x80
-+	.byte	0xFF, 0x01, 0x00, 0x02, 0x7F, 0x03, 0x04, 0x05
-+	.byte	0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x08
-+	.byte	0x00, 0x00, 0x81, 0x00, 0x00, 0x02, 0x00, 0x03
-+/*
-+ * B (8x4, row-major) in bytes [0, 32) of vs2.
-+ */
-+b_qoq:
-+	.byte	0x01, 0x02, 0x03, 0x04
-+	.byte	0x05, 0x06, 0x07, 0x08
-+	.byte	0x80, 0x7F, 0xFF, 0x01
-+	.byte	0x00, 0x10, 0x20, 0x30
-+	.byte	0x02, 0x02, 0x02, 0x02
-+	.byte	0xFE, 0x01, 0x00, 0x7F
-+	.byte	0x03, 0x00, 0x81, 0x04
-+	.byte	0x40, 0x50, 0x60, 0x70
-+/*
-+ * A (2x8, row-major) in bytes [0, 16) of vs1.
-+ */
-+a_dod:
-+	.byte	0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x80
-+	.byte	0xFF, 0x7F, 0x00, 0x02, 0x81, 0x03, 0x04, 0x05
-+/*
-+ * B (8x2, row-major) in bytes [0, 16) of vs2.
-+ */
-+b_dod:
-+	.byte	0x01, 0x02
-+	.byte	0x80, 0x7F
-+	.byte	0x03, 0xFF
-+	.byte	0x00, 0x10
-+	.byte	0x02, 0xFE
-+	.byte	0x7F, 0x01
-+	.byte	0x81, 0x04
-+	.byte	0x40, 0x50
-+
-+	.balign	4
-+exp_qoq_u:
-+	.word	0x0000279e, 0x000029db, 0x0000371f, 0x00003bf7
-+	.word	0x00000648, 0x000004b5, 0x00000826, 0x0000091f
-+	.word	0x00007be0, 0x00002030, 0x000074f0, 0x000042f0
-+	.word	0x0000433c, 0x000040f1, 0x0000819f, 0x000002cf
-+exp_qoq_s:
-+	.word	0xffffde9e, 0xffffd9db, 0xffffcd1f, 0xffffcbf7
-+	.word	0x00000248, 0x000002b5, 0x00000126, 0x0000051f
-+	.word	0xffffebe0, 0x00002030, 0xffffd4f0, 0x000042f0
-+	.word	0x0000403c, 0xffffc1f1, 0x0000019f, 0x000001cf
-+exp_qoq_us:
-+	.word	0x00001e9e, 0x000029db, 0x00002d1f, 0x00003bf7
-+	.word	0x00000348, 0x000004b5, 0x00000426, 0x0000091f
-+	.word	0xffffebe0, 0x00002030, 0xffffd4f0, 0x000042f0
-+	.word	0xffffc03c, 0x000040f1, 0x0000009f, 0x000002cf
-+exp_qoq_su:
-+	.word	0xffffe79e, 0xffffd9db, 0xffffd71f, 0xffffcbf7
-+	.word	0x00000548, 0x000002b5, 0x00000526, 0x0000051f
-+	.word	0x00007be0, 0x00002030, 0x000074f0, 0x000042f0
-+	.word	0xffffc33c, 0xffffc1f1, 0xffff829f, 0x000001cf
-+exp_dod_u:
-+	.word	0x00002795, 0x00003155, 0x00004642, 0x0000c2c0
-+exp_dod_s:
-+	.word	0xffffde95, 0xffffd955, 0xffffc042, 0x000041c0
-+exp_dod_us:
-+	.word	0x00001e95, 0x00002955, 0xffffc342, 0x000041c0
-+exp_dod_su:
-+	.word	0xffffe795, 0xffffe155, 0x00004342, 0xffffc2c0
+diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
+index 573e8b5af48..1cd98c1b857 100644
+--- a/target/arm/tcg/meson.build
++++ b/target/arm/tcg/meson.build
+@@ -83,11 +83,13 @@ arm_common_user_system_ss.add(when: 'TARGET_AARCH64', if_true: files(
+ arm_common_system_ss.add(files(
+   'cpregs-at.c',
+   'cpu32-system.c',
+-  'gicv5-cpuif.c',
+   'psci.c',
+   'tlb_helper.c',
+   'tlb-insns.c',
+ ))
++arm_common_system_ss.add(when: 'CONFIG_ARM_GICV5', if_true: files(
++  'gicv5-cpuif.c',
++))
+ arm_user_ss.add(files(
+   'tlb_helper.c',
+ ))
 -- 
-2.55.0
+2.53.0
 
 
