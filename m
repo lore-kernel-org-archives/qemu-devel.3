@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 931D2C4452B
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 18:50:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4015C44536
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 18:50:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmFX8-0002vG-37; Tue, 21 Jul 2026 14:49:39 -0400
+	id 1wmFWw-0002FJ-MT; Tue, 21 Jul 2026 14:49:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wmFUu-00015P-VN
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 14:47:21 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1wmFUi-00010j-2T
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 14:47:11 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wmFUt-0006ft-2i
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 14:47:20 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-38e58034d05so3793656a91.2
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 11:47:18 -0700 (PDT)
+ id 1wmFUc-0006bC-9g
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 14:47:05 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-38dfe7eb825so6602987a91.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 11:47:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784659637; x=1785264437; darn=nongnu.org;
+ d=linaro.org; s=google; t=1784659621; x=1785264421; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=zXdLcTVmLaodZE2u8MGvlXRVuwgv/NIQIsqWIhdsBA0=;
- b=qFAZdXG6eVFYRd/DWP2zAC25gZaSJpLUA2n00uuxDAVRSpN1ldZBXAFzpm2B+jc3vU
- y20u7+Q2oGM1dQeotm9BAfjb5/IWQmEGEtrEKivKor99p5pv++/3XYoZUGi2bKglcwV5
- v+CjNtadMqidzkh3Wurp3eZe0LDwodynB9AxrrH8HsDiDpVeRQCjKmKrJj/y0HIdy9ev
- heyf91+Mkko5bbXFmC/23kcZjlazrpSvtKHKaITloT6LleaniSYGmSV5KK6X1oH6TGnL
- /WSrg7pWGyhHtZSLaXS+H8vMctRFdlzhBv4NttdpwiJafT8TT1nZITU/dnRWOn6vaScI
- chwA==
+ bh=f1MyR0YlBgtED+/qnozxNwnJtMJGl7ehLr6zJ+FuVuk=;
+ b=yt1rS4+SHPQPuLab/bPSS0M5Jo0sKC2WQGjbtE6O+cR2jPx32E+kKVA3MQ/Meu6GIN
+ XhN+syG+74SUcr8150KGfiCAR03PJR68R5UA2/HM4ynrpwJFPW1JVQWe/gDqkl3EvTLz
+ kbeihPJ3zrCCQbnnh9yU0O5xqaZAg3/ie9gd2c2795IkJiu7iyleQpBd5tEPENr8bpNv
+ kjdSQ0r0PdqB8PDkBtjVK92qOreMxmLLSH5lvJQwwBVutwQrXIxTGUkOXYRBmOLW8tIM
+ AA0XNDeR02SLRFeDtCwLz+9Lq3StQR6rMtGpxZSfn9GMdV0fMkeCfCPAhXQ5UvF2bxp2
+ SnFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784659637; x=1785264437;
+ d=1e100.net; s=20251104; t=1784659621; x=1785264421;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=zXdLcTVmLaodZE2u8MGvlXRVuwgv/NIQIsqWIhdsBA0=;
- b=ZPbJgwzs82fGXjEHg5LDis/J9eNFoTtec0O0Cy+2914pZWgXRc3CXswewN24kZiyKZ
- qWoOlYrRfIOnFDJSHkoNL3gu+hJrnxCYsSiGf20onRnkJ4nhXXAXxE148uEn9fRR6Wb7
- GQZAWUAwxPnEMxrWOcLdn2ReW/Bl6wtQXrz77ts9wDaNycXosH1R3iRli8gnkYlduQ7/
- EukTmW5YMaIyAm39FVSF+yVou94bPYNnYYYe82oFtZrpNrxyBpLN0bMcmosmZqTQnzxd
- K3GIbjl0lpEAvu818aN5ebwnLndGNcni6OBdBsl4PpZkMXqKmQ1yPEeeOm0lZDuhXuXF
- Ooig==
-X-Gm-Message-State: AOJu0YxZWDYoNKpvOdtkhdia2gcD88ly6aEOg3g6f023cIKhDTw/QAmg
- GjM9+jGJSCHsbMVBwSoW9TpjYaMowTfRiJUxj7i5duiIFZ/BKyIXAvM76THz8IUS1ncaA8ng+qT
- xegXz
-X-Gm-Gg: AR+sD125SP1UBgH1LK04nSny3rRZfd9mkDU0tLXzaLGxnQgj6grkrt+uxjrOAX3QqpO
- ecgeQ09AFXEkr+zB5FyyQumT8zw/EumUwujKqtDnfDRTKrmHTeSDnP9TdLTDdyspcpTggwKkdBR
- Z7lfgOPwVPGz38nttS29oWuzz8KHdTmwyRoKGw+K4Jq/CD0Kgl4pttdBvoxRXZQ0uwHbKpBFH67
- mVo1aTl6huOpV9OBtF2FeyZbdjaUDff7iOTy4pGXHHepP+BvliM3xGSdM7TWJBEQR6Q2NpjVQhC
- qw1kfBXYoWx32ov8+u4ezI1qJowQfz3l8RRS61l5+M1fup7WI07jDVgZWYiQMFG3D4fGd2ItkEF
- N2tzleJTVUUTDZEezSD+WFF44rKTdMbrZmr/3fpzT4IRgOW/7WeNjUeZOaUqNhBGrWRb9pyoTWF
- dS6gYrnsU=
-X-Received: by 2002:a17:90b:2fc5:b0:38e:2c8f:a01a with SMTP id
- 98e67ed59e1d1-38e4b4119c7mr20424288a91.11.1784659637131; 
- Tue, 21 Jul 2026 11:47:17 -0700 (PDT)
+ bh=f1MyR0YlBgtED+/qnozxNwnJtMJGl7ehLr6zJ+FuVuk=;
+ b=sIwSXLQrAUUFrgBQL6/SoEIyDNWm78DKxGOd8o0vIYiJs3QyJj5LqNX1MbJzefQqSV
+ vxYI4qj+PQwn28AbOHp7MzSfIBiXj0wkn+karDuYaewktyplqFYVmnZdgR97mkGxU8sx
+ pdw4/5I2Dd+uz87kG726fBRth/2wqVDsKh3u/XGiWWQHUzjYYLcSkEcNwtfc4vSTj5Gy
+ B8YfKsl/R9o/pwvLLIKK0V96VtzRURa+O8rlvj6nGSWBYKew70czTlIzKnUbKe7voHI0
+ iXCBWd1tlDyB79ebGJIc2piq6hnUzvMUerEamgOR0BUmRoUxSr82HqaAUAws/JTTLE3H
+ eg+w==
+X-Gm-Message-State: AOJu0YwA/UMh1jd6g2JwuUMUxiye2d8VflNJ8qYkgKfVIXfMd8Fnww3s
+ IJEYkXOWax8Nart+10ouvuCsf6qDAKGSXuyB0bVyxz23cNy/50zHQ8CUllgZcL1ngFQ0cKWC56d
+ qdoa6
+X-Gm-Gg: AR+sD10BeVZstrQOdrpR9U0Go+MNq18p6JTzVWYcmoQ36mIoTOo9ztP3zYbIOLHeOZJ
+ HINYC3xymMTL7PFcSqC1LzFq5xPg7c2J1L2gAafBHAjNad2SuNT8Km1vSYhUqH7aCIedopW8Pru
+ QsuBqtLYC41I14oeED5LbqNZ3xhmFUwu7FVgYS/4OwXob+N7mMtcoa8YHS1vroNNQOFz0UTyfJt
+ +CjlpevfbDUcsBmXNTcjXuYwPRIdQuB669fRFwCkdDTyr15b4vX+z91AkoiO+olYFagI8b2OfZA
+ eM6yJ34jDYkb526L+TCNs6ykNSbznlGpfIBSHzlnQ6MkPA/m5byVF8aJ6mHU9vCtUIfjschNh3q
+ hOfmW8LR5KYsqtSjdIDFjvHt2A72P02Aytz/oBb4FEETC5wNnOJ/sdvrrUV0BI1UX3Lt2brqHRA
+ +Uqkk/QSw=
+X-Received: by 2002:a17:90b:534d:b0:37f:a915:1c29 with SMTP id
+ 98e67ed59e1d1-38e4b42ebd6mr20136533a91.19.1784659620660; 
+ Tue, 21 Jul 2026 11:47:00 -0700 (PDT)
 Received: from stoup.. ([32.140.233.50]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13ce29e340esm41108094c88.5.2026.07.21.11.47.16
+ a92af1059eb24-13ce29e340esm41108094c88.5.2026.07.21.11.46.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Jul 2026 11:47:16 -0700 (PDT)
+ Tue, 21 Jul 2026 11:47:00 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 14/20] target/arm: Implement and enable FEAT_SSVE_BitPerm for
- -cpu max
-Date: Tue, 21 Jul 2026 11:46:50 -0700
-Message-ID: <20260721184656.530230-15-richard.henderson@linaro.org>
+Subject: [PATCH 01/20] target/arm: Remove DO_ZPZZ_FP from translate-sme.c
+Date: Tue, 21 Jul 2026 11:46:37 -0700
+Message-ID: <20260721184656.530230-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260721184656.530230-1-richard.henderson@linaro.org>
 References: <20260721184656.530230-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,100 +99,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Expand the macro at each use site.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpu-features.h      |  5 +++++
- linux-user/aarch64/elfload.c   |  1 +
- target/arm/tcg/cpu64.c         |  1 +
- target/arm/tcg/translate-sve.c | 12 ++++++------
- docs/system/arm/emulation.rst  |  1 +
- 5 files changed, 14 insertions(+), 6 deletions(-)
+ target/arm/tcg/translate-sve.c | 67 +++++++++++++++++++++++++++-------
+ 1 file changed, 54 insertions(+), 13 deletions(-)
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 44dfc7d457..d3130fbe67 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -1605,6 +1605,11 @@ static inline bool isar_feature_aa64_ssve_aes(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64SMFR0, AES);
- }
- 
-+static inline bool isar_feature_aa64_ssve_bitperm(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64SMFR0, SBITPERM);
-+}
-+
- static inline bool isar_feature_aa64_ssve_f8fma(const ARMISARegisters *id)
- {
-     return FIELD_EX64_IDREG(id, ID_AA64SMFR0, SF8FMA);
-diff --git a/linux-user/aarch64/elfload.c b/linux-user/aarch64/elfload.c
-index 7afbfca418..4359312ee3 100644
---- a/linux-user/aarch64/elfload.c
-+++ b/linux-user/aarch64/elfload.c
-@@ -181,6 +181,7 @@ abi_ulong get_elf_hwcap(CPUState *cs)
-     GET_FEATURE_ID(aa64_sve2p2, ARM_HWCAP_A64_SVE2P2);
-     GET_FEATURE_ID(aa64_sme2p2, ARM_HWCAP_A64_SME2P2);
-     GET_FEATURE_ID(aa64_sve_bfscale, ARM_HWCAP_A64_SVE_BFSCALE);
-+    GET_FEATURE_ID(aa64_ssve_bitperm, ARM_HWCAP_A64_SME_SBITPERM);
- 
-     return hwcaps;
- }
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index 4a44d148e2..c7f8217cb3 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1390,6 +1390,7 @@ void aarch64_max_tcg_initfn(Object *obj)
-     t = FIELD_DP64(t, ID_AA64SMFR0, STMOP, 1);    /* FEAT_SME_TMOP */
-     t = FIELD_DP64(t, ID_AA64SMFR0, SFEXPA, 1);   /* FEAT_SSVE_FEXPA */
-     t = FIELD_DP64(t, ID_AA64SMFR0, AES, 1);      /* FEAT_SSVE_AES */
-+    t = FIELD_DP64(t, ID_AA64SMFR0, SBITPERM, 1); /* FEAT_SSVE_BitPerm */
-     t = FIELD_DP64(t, ID_AA64SMFR0, SF8DP2, 1);   /* FEAT_SSVE_FP8DOT2 */
-     t = FIELD_DP64(t, ID_AA64SMFR0, SF8DP4, 1);   /* FEAT_SSVE_FP8DOT4 */
-     t = FIELD_DP64(t, ID_AA64SMFR0, SF8FMA, 1);   /* FEAT_SSVE_FP8FMA */
 diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 0b522e22ef..08372d9d8b 100644
+index fc4cc8c479..ff6032a07f 100644
 --- a/target/arm/tcg/translate-sve.c
 +++ b/target/arm/tcg/translate-sve.c
-@@ -7420,22 +7420,22 @@ static gen_helper_gvec_3 * const bext_fns[4] = {
-     gen_helper_sve2_bext_b, gen_helper_sve2_bext_h,
-     gen_helper_sve2_bext_s, gen_helper_sve2_bext_d,
- };
--TRANS_FEAT_NONSTREAMING(BEXT, aa64_sve_bitperm, gen_gvec_ool_arg_zzz,
--                        bext_fns[a->esz], a, 0)
-+TRANS_FEAT_STREAMING_IF(BEXT, aa64_sve_bitperm, aa64_ssve_bitperm,
-+                        gen_gvec_ool_arg_zzz, bext_fns[a->esz], a, 0)
+@@ -4415,13 +4415,6 @@ TRANS_FEAT_NONSTREAMING(FTSMUL, aa64_sve, gen_gvec_fpst_arg_zzz,
+  *** SVE Floating Point Arithmetic - Predicated Group
+  */
  
- static gen_helper_gvec_3 * const bdep_fns[4] = {
-     gen_helper_sve2_bdep_b, gen_helper_sve2_bdep_h,
-     gen_helper_sve2_bdep_s, gen_helper_sve2_bdep_d,
- };
--TRANS_FEAT_NONSTREAMING(BDEP, aa64_sve_bitperm, gen_gvec_ool_arg_zzz,
--                        bdep_fns[a->esz], a, 0)
-+TRANS_FEAT_STREAMING_IF(BDEP, aa64_sve_bitperm, aa64_ssve_bitperm,
-+                        gen_gvec_ool_arg_zzz, bdep_fns[a->esz], a, 0)
+-#define DO_ZPZZ_FP(NAME, FEAT, name) \
+-    static gen_helper_gvec_4_ptr * const name##_zpzz_fns[4] = { \
+-        NULL,                  gen_helper_##name##_h,           \
+-        gen_helper_##name##_s, gen_helper_##name##_d            \
+-    };                                                          \
+-    TRANS_FEAT(NAME, FEAT, gen_gvec_fpst_arg_zpzz, name##_zpzz_fns[a->esz], a)
+-
+ #define DO_ZPZZ_AH_FP(NAME, FEAT, name, ah_name)                        \
+     static gen_helper_gvec_4_ptr * const name##_zpzz_fns[4] = {         \
+         NULL,                  gen_helper_##name##_h,                   \
+@@ -4464,9 +4457,33 @@ DO_ZPZZ_AH_FP_B16(FMAX_zpzz, aa64_sme_or_sve, sve_fmax, sve_ah_fmax)
+ DO_ZPZZ_FP_B16(FMINNM_zpzz, aa64_sme_or_sve, sve_fminnum)
+ DO_ZPZZ_FP_B16(FMAXNM_zpzz, aa64_sme_or_sve, sve_fmaxnum)
+ DO_ZPZZ_AH_FP(FABD, aa64_sme_or_sve, sve_fabd, sve_ah_fabd)
+-DO_ZPZZ_FP(FSCALE, aa64_sme_or_sve, sve_fscalbn)
+-DO_ZPZZ_FP(FDIV, aa64_sme_or_sve, sve_fdiv)
+-DO_ZPZZ_FP(FMULX, aa64_sme_or_sve, sve_fmulx)
++
++static gen_helper_gvec_4_ptr * const sve_fscalbn_zpzz_fns[4] = {
++    NULL,
++    gen_helper_sve_fscalbn_h,
++    gen_helper_sve_fscalbn_s,
++    gen_helper_sve_fscalbn_d,
++};
++TRANS_FEAT(FSCALE, aa64_sme_or_sve, gen_gvec_fpst_arg_zpzz,
++           sve_fscalbn_zpzz_fns[a->esz], a)
++
++static gen_helper_gvec_4_ptr * const sve_fdiv_zpzz_fns[4] = {
++    NULL,
++    gen_helper_sve_fdiv_h,
++    gen_helper_sve_fdiv_s,
++    gen_helper_sve_fdiv_d,
++};
++TRANS_FEAT(FDIV, aa64_sme_or_sve, gen_gvec_fpst_arg_zpzz,
++           sve_fdiv_zpzz_fns[a->esz], a)
++
++static gen_helper_gvec_4_ptr * const sve_fmulx_zpzz_fns[4] = {
++    NULL,
++    gen_helper_sve_fmulx_h,
++    gen_helper_sve_fmulx_s,
++    gen_helper_sve_fmulx_d,
++};
++TRANS_FEAT(FMULX, aa64_sme_or_sve, gen_gvec_fpst_arg_zpzz,
++           sve_fmulx_zpzz_fns[a->esz], a)
  
- static gen_helper_gvec_3 * const bgrp_fns[4] = {
-     gen_helper_sve2_bgrp_b, gen_helper_sve2_bgrp_h,
-     gen_helper_sve2_bgrp_s, gen_helper_sve2_bgrp_d,
- };
--TRANS_FEAT_NONSTREAMING(BGRP, aa64_sve_bitperm, gen_gvec_ool_arg_zzz,
--                        bgrp_fns[a->esz], a, 0)
-+TRANS_FEAT_STREAMING_IF(BGRP, aa64_sve_bitperm, aa64_ssve_bitperm,
-+                        gen_gvec_ool_arg_zzz, bgrp_fns[a->esz], a, 0)
+ static gen_helper_gvec_4_ptr * const sve2_famax_zpzz_fns[4] = {
+     NULL,
+@@ -8057,9 +8074,33 @@ TRANS_FEAT_NONSTREAMING(HISTCNT, aa64_sve2, gen_gvec_ool_arg_zpzz,
+ TRANS_FEAT_NONSTREAMING(HISTSEG, aa64_sve2, gen_gvec_ool_arg_zzz,
+                         a->esz == 0 ? gen_helper_sve2_histseg : NULL, a, 0)
  
- static gen_helper_gvec_3 * const cadd_fns[4] = {
-     gen_helper_sve2_cadd_b, gen_helper_sve2_cadd_h,
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index 4c91bb45c8..fbc98d47d4 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -191,6 +191,7 @@ the following architecture extensions:
- - FEAT_SME_MOP4 (Quarter-tile outer product instructions)
- - FEAT_SME_TMOP (Structured sparsity outer product instructions)
- - FEAT_SSVE_AES (Streaming SVE Mode Advanced Encryption Standard and 128-bit polynomial multiply long instructions)
-+- FEAT_SSVE_BitPerm (Streaming Scalable Vector Bit Permutes instructions)
- - FEAT_SSVE_FEXPA (Streaming FEXPA instruction)
- - FEAT_SSVE_FP8DOT2 (SVE2 FP8 2-way dot product to half-precision instructions in Streaming SVE mode)
- - FEAT_SSVE_FP8DOT4 (SVE2 FP8 4-way dot product to single-precision instructions in Streaming SVE mode)
+-DO_ZPZZ_FP(FADDP, aa64_sme_or_sve2, sve2_faddp_zpzz)
+-DO_ZPZZ_FP(FMAXNMP, aa64_sme_or_sve2, sve2_fmaxnmp_zpzz)
+-DO_ZPZZ_FP(FMINNMP, aa64_sme_or_sve2, sve2_fminnmp_zpzz)
++static gen_helper_gvec_4_ptr * const sve_faddp_zpzz_fns[4] = {
++    NULL,
++    gen_helper_sve2_faddp_zpzz_h,
++    gen_helper_sve2_faddp_zpzz_s,
++    gen_helper_sve2_faddp_zpzz_d,
++};
++TRANS_FEAT(FADDP, aa64_sme_or_sve2, gen_gvec_fpst_arg_zpzz,
++           sve_faddp_zpzz_fns[a->esz], a)
++
++static gen_helper_gvec_4_ptr * const sve_fmaxnmp_zpzz_fns[4] = {
++    NULL,
++    gen_helper_sve2_fmaxnmp_zpzz_h,
++    gen_helper_sve2_fmaxnmp_zpzz_s,
++    gen_helper_sve2_fmaxnmp_zpzz_d,
++};
++TRANS_FEAT(FMAXNMP, aa64_sme_or_sve2, gen_gvec_fpst_arg_zpzz,
++           sve_fmaxnmp_zpzz_fns[a->esz], a)
++
++static gen_helper_gvec_4_ptr * const sve_fminnmp_zpzz_fns[4] = {
++    NULL,
++    gen_helper_sve2_fminnmp_zpzz_h,
++    gen_helper_sve2_fminnmp_zpzz_s,
++    gen_helper_sve2_fminnmp_zpzz_d,
++};
++TRANS_FEAT(FMINNMP, aa64_sme_or_sve2, gen_gvec_fpst_arg_zpzz,
++           sve_fminnmp_zpzz_fns[a->esz], a)
++
+ DO_ZPZZ_AH_FP(FMAXP, aa64_sme_or_sve2, sve2_fmaxp_zpzz, sve2_ah_fmaxp_zpzz)
+ DO_ZPZZ_AH_FP(FMINP, aa64_sme_or_sve2, sve2_fminp_zpzz, sve2_ah_fminp_zpzz)
+ 
 -- 
 2.43.0
 
