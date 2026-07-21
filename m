@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAAADC4452D
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 17:07:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 444F1C44536
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 17:07:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmDuz-0004se-E2; Tue, 21 Jul 2026 13:06:09 -0400
+	id 1wmDuf-0004pL-AX; Tue, 21 Jul 2026 13:05:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wmDuh-0004pj-7a
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 13:05:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wmDuU-0004nI-Ei
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 13:05:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wmDuf-00076B-St
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 13:05:50 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wmDuT-00073l-0q
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 13:05:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784653549;
+ s=mimecast20190719; t=1784653536;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wMoD6iqK1wu+TgRJjxcl3VN9qo7MyHMpGeXR6ihAqGI=;
- b=PXOw/elIu62B7+xQb4Nm8ztznVib8RLYrRNuVuSCXPGdZeASei20cZP7phY6mmkZgSST/3
- tMm2MP30br/cIJ9N+hycVWujWXSxJ8NP0EggeQgvErFQBBPiavXgKpOoxkxDaKOb4QOiwr
- Qn/c9k+V3jHnmOrGmuQQyhyLQUO1NOs=
+ bh=blsxiSwTZBU9OljdnlSUcNjUJjFpLVjGvPU4TO4d0KE=;
+ b=a4cG84OaVGZHGP87WI7NG01zNVj2cMMaX0yfKcRlSqEChcaCnfQF9NbBgPt0fsSq8vUN5D
+ A+aHl6TGOoNNB5HUtsCeuKsYVq6T5ZDGIIxXe56I+gYhI4RLwHcl8hhlBhECzBgsTU45Vx
+ NsZbHy05HmqS1og4JTM6MO2eohKZKDo=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-583-iP89sCxQO1STJyOTD-A0UA-1; Tue,
- 21 Jul 2026 13:05:47 -0400
-X-MC-Unique: iP89sCxQO1STJyOTD-A0UA-1
-X-Mimecast-MFC-AGG-ID: iP89sCxQO1STJyOTD-A0UA_1784653546
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-146-qvl-g8nAOjC13Gfeg_-Jdw-1; Tue,
+ 21 Jul 2026 13:05:33 -0400
+X-MC-Unique: qvl-g8nAOjC13Gfeg_-Jdw-1
+X-Mimecast-MFC-AGG-ID: qvl-g8nAOjC13Gfeg_-Jdw_1784653532
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7481419774FA; Tue, 21 Jul 2026 17:05:46 +0000 (UTC)
+ id BDFAB19774F7; Tue, 21 Jul 2026 17:05:32 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.48.82])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 37B2A1598; Tue, 21 Jul 2026 17:05:44 +0000 (UTC)
+ id 8AC4F1599; Tue, 21 Jul 2026 17:05:31 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 13/13] vfio-user: vfio_user_device_io_set_irqs: prevent
- excessive malloc
-Date: Tue, 21 Jul 2026 19:05:18 +0200
-Message-ID: <20260721170518.4160785-14-clg@redhat.com>
+Subject: [PULL 05/13] vfio-user: vfio_user_get_region_info: prevent buffer
+ overflow
+Date: Tue, 21 Jul 2026 19:05:10 +0200
+Message-ID: <20260721170518.4160785-6-clg@redhat.com>
 In-Reply-To: <20260721170518.4160785-1-clg@redhat.com>
 References: <20260721170518.4160785-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: permerror client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: permerror client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,34 +86,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thanos Makatos <thanos.makatos@nutanix.com>
 
-This isn't in practise a problem since irq->argsz is not externally
-provided, it's a good hardening step nonetheless.
+If the vfio-user responds with a value large enough such that adding
+the header size to it overflows, a smaller buffer would be
+inadvertently allocated, leading to buffer overflow.
 
-Fixes: ca1add1696 ("vfio-user: implement VFIO_USER_DEVICE_GET/SET_IRQ*")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3867
 Signed-off-by: Thanos Makatos <thanos.makatos@nutanix.com>
+Fixes: 667866d66620 ("vfio-user: implement VFIO_USER_DEVICE_GET_REGION_INFO")
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260721122643.30985-10-thanos.makatos@nutanix.com
+Link: https://lore.kernel.org/qemu-devel/20260721122643.30985-2-thanos.makatos@nutanix.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio-user/device.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ hw/vfio-user/device.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
 diff --git a/hw/vfio-user/device.c b/hw/vfio-user/device.c
-index daac0e21b6b8fd5f91e3bb52044871b18021d337..1a01e748cd43311cea65c749288fc2003064db09 100644
+index b8d2b7c1a84bb1914a71fdccbbdff675373cef3b..e58167a81879e94520bda24717280e2347422e77 100644
 --- a/hw/vfio-user/device.c
 +++ b/hw/vfio-user/device.c
-@@ -297,6 +297,11 @@ static int vfio_user_device_io_set_irqs(VFIODevice *vbasedev,
-             error_printf("vfio_user_set_irqs argsz too large\n");
-             return -E2BIG;
-         }
-+        if (size > proxy->max_xfer_size) {
-+            error_printf("vfio_user_device_io_set_irqs argsz too large\n");
-+            return -E2BIG;
-+        }
+@@ -128,12 +128,21 @@ static int vfio_user_get_region_info(VFIOUserProxy *proxy,
+         error_printf("vfio_user_get_region_info argsz too small\n");
+         return -E2BIG;
+     }
 +
-         msgp = g_malloc0(size);
++    /*
++     * Ensure that size doesn't overflow, otherwise we'll allocate a much
++     * smaller buffer than we need.
++     */
++    if (__builtin_add_overflow(info->argsz, sizeof(VFIOUserHdr), &size)) {
++        error_printf("vfio_user_get_region_info argsz too large\n");
++        return -E2BIG;
++    }
++
+     if (fds != NULL && fds->send_fds != 0) {
+         error_printf("vfio_user_get_region_info can't send FDs\n");
+         return -EINVAL;
+     }
  
-         vfio_user_request_msg(&msgp->hdr, VFIO_USER_DEVICE_SET_IRQS, size, 0);
+-    size = info->argsz + sizeof(VFIOUserHdr);
+     msgp = g_malloc0(size);
+ 
+     vfio_user_request_msg(&msgp->hdr, VFIO_USER_DEVICE_GET_REGION_INFO,
 -- 
 2.55.0
 
