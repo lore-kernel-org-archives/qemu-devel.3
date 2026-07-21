@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E1B2C4451C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E95EBC44537
 	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 16:14:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmD6g-0001Xt-Av; Tue, 21 Jul 2026 12:14:10 -0400
+	id 1wmD6g-0001YS-Je; Tue, 21 Jul 2026 12:14:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
- id 1wmD6e-0001Wl-J5; Tue, 21 Jul 2026 12:14:08 -0400
+ id 1wmD6f-0001XX-L0; Tue, 21 Jul 2026 12:14:09 -0400
 Received: from m16.mail.163.com ([117.135.210.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
- id 1wmD6Y-0006mw-Cc; Tue, 21 Jul 2026 12:14:08 -0400
+ id 1wmD6Y-0006mn-FL; Tue, 21 Jul 2026 12:14:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=2C
- wr/NQLi2LBpvm2lynDSiv8qhWyCobDkd/OMkiCYzM=; b=SmPO91hXFRM2P5A54r
- DKE96IMIYBXBEayr0VPQ8qpCkRBVishaxe/a6RG1lEb6ng3GPo8J79gU2ePSlRdg
- ccae12p0v03Zc1AzUOgAExgmmk5rx7rumyt0YDL2ow6iBsVfYjGrGdgHxBbGIwue
- pfQLcdE/6ikuG3APbrAfvfimY=
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=/6
+ xFNW3nSjXVU6ABy2yqsYArc1MfpOsaiXfmBHVeH8I=; b=ZgtTMkddznxp9FJrZd
+ McIl+xRBZz3l38y1K52dUP8GspCu+VZ3yu2Ex8vf4BK5kjNYVw3UInBotryNeDYr
+ S6ybV//U8nU9oRou9w9UyB4R2KGRRdGUm3AqQ+FD2baZZM9NPQSv8qeCJZvXPpRc
+ VO/r2jlepYRKvZRY0P+uhChqI=
 Received: from dt-VM.localdomain (unknown [])
  by gzga-smtp-mtada-g1-1 (Coremail) with SMTP id
- _____wD3F6+wml9qkr5qKg--.58375S8; 
- Wed, 22 Jul 2026 00:13:41 +0800 (CST)
+ _____wD3F6+wml9qkr5qKg--.58375S6; 
+ Wed, 22 Jul 2026 00:13:40 +0800 (CST)
 From: Tao Ding <dingtao0430@163.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, pbonzini@redhat.com, palmer@dabbelt.com,
@@ -35,21 +35,21 @@ Cc: qemu-riscv@nongnu.org, pbonzini@redhat.com, palmer@dabbelt.com,
  daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
  chao.liu@processmission.com, farosas@suse.de, lvivier@redhat.com,
  Tao Ding <dingtao0430@163.com>
-Subject: [PATCH 6/7] tests/qtest: add test for K230 decomp gzip
-Date: Wed, 22 Jul 2026 00:13:34 +0800
-Message-ID: <20260721161335.73872-7-dingtao0430@163.com>
+Subject: [PATCH 4/7] hw/misc: add K230 decomp gzip
+Date: Wed, 22 Jul 2026 00:13:32 +0800
+Message-ID: <20260721161335.73872-5-dingtao0430@163.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260721161335.73872-1-dingtao0430@163.com>
 References: <20260721161335.73872-1-dingtao0430@163.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wD3F6+wml9qkr5qKg--.58375S8
-X-Coremail-Antispam: 1Uf129KBjvJXoW3WFyxtFW3tw4xtr4UAw1DWrg_yoW3uFWfp3
- s8Gw1Yvr18tF4fGanrXF4kCF15WrZ3K34rC3yjgry09rs7JryktFn3t3yrXwn5G3ykZF1F
- 9395K3Z09F18XaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pRyCJ9UUUUU=
+X-CM-TRANSID: _____wD3F6+wml9qkr5qKg--.58375S6
+X-Coremail-Antispam: 1Uf129KBjvAXoWfur1xJr1DtF1kCFW3Ary5Arb_yoW8ZFW5Co
+ WavwsYq34UXFyxur4kArs29r43Xw4rGw4qgwn8C3s09a4rAr18GwnF9wn8Wa18Grs8tF93
+ XF1Yg3s7Jayqyryxn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7v73VFW2AGmfu7bjvjm3
+ AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjTRtKsUDUUUU
 X-Originating-IP: [101.204.18.42]
-X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC-RVGhGpfmrVfEwAA38
+X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC-RRGhGpfmrRfBAAA3r
 Received-SPF: pass client-ip=117.135.210.5; envelope-from=dingtao0430@163.com;
  helo=m16.mail.163.com
 X-Spam_score_int: -18
@@ -76,221 +76,667 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit adds test cases for Decomp_gzip.
-A compressed data segment has been pre-set, configure GSDMA and decomp_gzip.
-Compare the decompressed data with the original data
+Decompression accelerator is mainly used to implement hardware GZIP decompression function.
+According to the k230 SDK, this hardware will be used during the uboot phase to decompress 
+compressed files. 
 
-Run this qtest:
-    $ mkdir build && cd build && ../configure --target-list="riscv64-softmmu"
-    $ QTEST_QEMU_BINARY=./qemu-system-riscv64   tests/qtest/k230-decomp-gzip-test
+Decomp_gzip does not have the ability to access the system bus. 
+Therefore, SDMA is required for data transmission. A typical scenario is SDMA moving compressed 
+data from DDR to SRAM, and Decomp_gzip reading data from SRAM. After decompression, decomp_gzip 
+writes the data back to SRAM, and SDMA moves the data from SRAM to DDR.
+
+According to "K230 Technical Reference Manual v0.3.1" section 15.
+https://download.kendryte.com/developer/k230/HDK/K230%E7%A1%AC%E4%BB%B6%E6%96%87%E6%A1%A3/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
 
 Signed-off-by: Tao Ding <dingtao0430@163.com>
 ---
- tests/qtest/k230-decomp-gzip-test.c | 181 ++++++++++++++++++++++++++++
- tests/qtest/meson.build             |   2 +-
- 2 files changed, 182 insertions(+), 1 deletion(-)
- create mode 100644 tests/qtest/k230-decomp-gzip-test.c
+ hw/misc/Kconfig                    |   3 +
+ hw/misc/k230_decomp_gzip.c         | 498 +++++++++++++++++++++++++++++
+ hw/misc/meson.build                |   1 +
+ hw/misc/trace-events               |   4 +
+ include/hw/misc/k230_decomp_gzip.h |  92 ++++++
+ 5 files changed, 598 insertions(+)
+ create mode 100644 hw/misc/k230_decomp_gzip.c
+ create mode 100644 include/hw/misc/k230_decomp_gzip.h
 
-diff --git a/tests/qtest/k230-decomp-gzip-test.c b/tests/qtest/k230-decomp-gzip-test.c
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index 1543ee6653..28687482f8 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -257,4 +257,7 @@ config XLNX_VERSAL_TRNG
+ config XLNX_ZYNQ_DDRC
+     bool
+ 
++config K230_DECOMP_GZIP
++    bool
++
+ source macio/Kconfig
+diff --git a/hw/misc/k230_decomp_gzip.c b/hw/misc/k230_decomp_gzip.c
 new file mode 100644
-index 0000000000..adddf8f2eb
+index 0000000000..4284262259
 --- /dev/null
-+++ b/tests/qtest/k230-decomp-gzip-test.c
-@@ -0,0 +1,181 @@
++++ b/hw/misc/k230_decomp_gzip.c
+@@ -0,0 +1,498 @@
 +/*
-+ * QTest testcase for K230 GZIP decompression engine
++ * Kendryte K230 GZIP decompression engine
++ *
++ * Copyright (c) 2026 Tao Ding <dingtao0430@163.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * Decompression accelerator is mainly used to implement hardware
++ * GZIP decompression function. (K230 TRM section 15)
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "hw/core/qdev-properties.h"
++#include "migration/vmstate.h"
++#include "system/address-spaces.h"
++#include "hw/core/irq.h"
++#include "hw/misc/k230_decomp_gzip.h"
++#include "trace.h"
++
++#define GZIP_METHOD_DEFLATE    8
++#define GZIP_METHOD_VENDOR_9   9
++
++
++#define K230_DECOMP_GZIP_OUTPUT_SLOTS 4
++#define K230_DECOMP_GZIP_INPUT_SLOTS 2
++
++static void k230_decomp_gzip_set_output(K230DecompGzipState *s, int line,
++                                        int level)
++{
++    qemu_set_irq(s->signal_out[line], level);
++}
++
++static bool k230_decomp_gzip_read_mem(K230DecompGzipState *s, hwaddr addr,
++                                      void *buf, size_t len)
++{
++    MemTxResult ret = address_space_read(&address_space_memory,
++                                         s->sram_base + addr,
++                                         MEMTXATTRS_UNSPECIFIED, buf, len);
++
++    return ret == MEMTX_OK;
++}
++
++static bool k230_decomp_gzip_write_mem(K230DecompGzipState *s, hwaddr addr,
++                                       const void *buf, size_t len)
++{
++    return address_space_write(&address_space_memory, s->sram_base + addr,
++                               MEMTXATTRS_UNSPECIFIED, buf, len) == MEMTX_OK;
++}
++
++static hwaddr k230_decomp_gzip_output_addr(K230DecompGzipState *s)
++{
++    return K230_DECOMP_GZIP_SRAM_OUT_BASE +
++           s->output.slot * K230_DECOMP_GZIP_BLOCK_SIZE +
++           s->output.current_offset;
++}
++
++static hwaddr k230_decomp_gzip_input_addr(K230DecompGzipState *s)
++{
++    return s->input.slot * K230_DECOMP_GZIP_BLOCK_SIZE +
++           K230_DECOMP_GZIP_SRAM_IN_BASE;
++}
++
++static uint32_t k230_decomp_gzip_current_input_size(K230DecompGzipState *s)
++{
++    if (s->total_requested == 0) {
++        return 0;
++    }
++
++    return ((s->total_requested - 1) % K230_DECOMP_GZIP_BLOCK_SIZE) + 1;
++}
++
++static void k230_decomp_gzip_update_ctrl_en(K230DecompGzipState *s)
++{
++    int level = s->active && !!(s->gzip_src_size & K230_DECOMP_GZIP_CTRL_EN);
++
++    k230_decomp_gzip_set_output(s, K230_DECOMP_GZIP_GPIO_DECOMP_CTRL_EN,
++                                level);
++}
++
++static void k230_decomp_gzip_reset_stream(K230DecompGzipState *s)
++{
++    if (s->zstream_inited) {
++        inflateEnd(&s->zs);
++        s->zstream_inited = false;
++    }
++    memset(&s->zs, 0, sizeof(s->zs));
++}
++
++static void k230_decomp_gzip_finish(K230DecompGzipState *s, bool crc_ok)
++{
++    s->active = false;
++    k230_decomp_gzip_reset_stream(s);
++    k230_decomp_gzip_update_ctrl_en(s);
++    if (crc_ok) {
++        s->decomp_stat |= K230_DECOMP_GZIP_STAT_CRC_OK;
++    } else {
++        s->decomp_stat &= ~K230_DECOMP_GZIP_STAT_CRC_OK;
++    }
++}
++
++static bool k230_decomp_gzip_load_input(K230DecompGzipState *s,
++                                        uint32_t addr, uint32_t size)
++{
++    s->input.current_offset = 0;
++
++    return k230_decomp_gzip_read_mem(s, addr, s->input_buf, size);
++}
++
++static bool k230_decomp_gzip_request_input(K230DecompGzipState *s)
++{
++    uint32_t total_requested = s->total_requested;
++
++    k230_decomp_gzip_set_output(s, K230_DECOMP_GZIP_GPIO_DMA_WRITE_REQ, 1);
++    if (s->total_requested == total_requested) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: dma write request not acknowledged\n",
++                      TYPE_K230_DECOMP_GZIP);
++        return false;
++    }
++    return true;
++}
++
++static bool k230_decomp_gzip_request_output(K230DecompGzipState *s)
++{
++    uint32_t slot = s->output.slot;
++    uint32_t current_offset = s->output.current_offset;
++
++    k230_decomp_gzip_set_output(s, K230_DECOMP_GZIP_GPIO_DMA_READ_REQ, 1);
++    if (s->output.slot == slot &&
++        s->output.current_offset == current_offset) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: dma read request not acknowledged\n",
++                      TYPE_K230_DECOMP_GZIP);
++        return false;
++    }
++    return true;
++}
++
++static bool k230_decomp_gzip_init_stream(K230DecompGzipState *s)
++{
++    /* The compression script for K230 will modify the third byte to 0x9 */
++    if (s->input_buf[2] == GZIP_METHOD_VENDOR_9) {
++        s->input_buf[2] = GZIP_METHOD_DEFLATE;
++    }
++
++    if (inflateInit2(&s->zs, 15 + 16) != Z_OK) {
++        return false;
++    }
++
++    s->zstream_inited = true;
++    return true;
++}
++
++static bool k230_decomp_gzip_run_inflate(K230DecompGzipState *s)
++{
++    uint32_t output_size = s->gzip_out_size;
++    uint32_t current_input_size = k230_decomp_gzip_current_input_size(s);
++    uint32_t avail_in;
++    uint32_t avail_out;
++    uint32_t consumed;
++    uint32_t produced;
++    int ret;
++
++    avail_in = current_input_size - s->input.current_offset;
++    avail_out = K230_DECOMP_GZIP_BLOCK_SIZE - s->output.current_offset;
++
++    s->zs.next_in = s->input_buf + s->input.current_offset;
++    s->zs.avail_in = avail_in;
++    s->zs.next_out = s->output_buf;
++    s->zs.avail_out = avail_out;
++
++    ret = inflate(&s->zs, Z_NO_FLUSH);
++    if (ret != Z_OK && ret != Z_STREAM_END && ret != Z_BUF_ERROR) {
++        return false;
++    }
++
++    consumed = avail_in - s->zs.avail_in;
++    produced = avail_out - s->zs.avail_out;
++
++    if (produced) {
++        if (s->total_produced + produced > output_size ||
++            !k230_decomp_gzip_write_mem(s, k230_decomp_gzip_output_addr(s),
++                                        s->output_buf, produced)) {
++            return false;
++        }
++        s->output.current_offset += produced;
++        s->total_produced += produced;
++    }
++
++    if (consumed) {
++        s->input.current_offset += consumed;
++    }
++
++    if (ret == Z_STREAM_END) {
++        s->stream_end = true;
++        if (s->total_produced != output_size) {
++            return false;
++        }
++    }
++
++    return true;
++}
++
++static void k230_decomp_gzip_kick(K230DecompGzipState *s)
++{
++    if (!s->active || s->in_kick) {
++        return;
++    }
++
++    uint32_t input_size = s->gzip_src_size & K230_DECOMP_GZIP_DMA_IN_MASK;
++    s->in_kick = true;
++    while (s->active) {
++        uint32_t current_input_size = k230_decomp_gzip_current_input_size(s);
++        /* Output is full or last block */
++        if (s->output.current_offset == K230_DECOMP_GZIP_BLOCK_SIZE ||
++            (s->stream_end && s->output.current_offset != 0)) {
++            if (!k230_decomp_gzip_request_output(s)) {
++                k230_decomp_gzip_finish(s, false);
++                break;
++            }
++            continue;
++        }
++
++        if (!s->zstream_inited) {
++            if (!k230_decomp_gzip_request_input(s) ||
++                !k230_decomp_gzip_init_stream(s)) {
++                k230_decomp_gzip_finish(s, false);
++                break;
++            }
++            continue;
++        }
++
++        /* Transfer finish */
++        if (s->stream_end) {
++            k230_decomp_gzip_finish(s,
++                                    s->total_produced == s->gzip_out_size);
++            break;
++        }
++
++        /* Input buf has has been fully decompreed, need request more */
++        if (s->input.current_offset == current_input_size) {
++            if (s->total_requested < input_size) {
++                if (!k230_decomp_gzip_request_input(s)) {
++                    k230_decomp_gzip_finish(s, false);
++                    break;
++                }
++                continue;
++            }
++            k230_decomp_gzip_finish(s, false);
++            break;
++        }
++
++        /* Decompress the data, input buf or output buf are consumed in one block */
++        if (!k230_decomp_gzip_run_inflate(s)) {
++            k230_decomp_gzip_finish(s, false);
++            break;
++        }
++    }
++    s->in_kick = false;
++}
++
++static void k230_decomp_gzip_handle_ack(void *opaque, int n, int level)
++{
++    K230DecompGzipState *s = opaque;
++
++    if (!level || !s->active) {
++        return;
++    }
++
++    switch (n) {
++    case K230_DECOMP_GZIP_GPIO_DMA_WRITE_ACK:
++    {
++        uint32_t input_size = s->gzip_src_size & K230_DECOMP_GZIP_DMA_IN_MASK;
++        uint32_t chunk = MIN(K230_DECOMP_GZIP_BLOCK_SIZE,
++                             input_size - s->total_requested);
++
++        if (!k230_decomp_gzip_load_input(s, k230_decomp_gzip_input_addr(s),
++                                         chunk)) {
++            k230_decomp_gzip_finish(s, false);
++            return;
++        }
++        s->total_requested += chunk;
++        s->input.slot = (s->input.slot + 1) % K230_DECOMP_GZIP_INPUT_SLOTS;
++        break;
++    }
++    case K230_DECOMP_GZIP_GPIO_DMA_READ_ACK:
++        if (s->output.current_offset == 0) {
++            k230_decomp_gzip_finish(s, false);
++            return;
++        }
++        s->output.slot = (s->output.slot + 1) % K230_DECOMP_GZIP_OUTPUT_SLOTS;
++        s->output.current_offset = 0;
++        break;
++    default:
++        return;
++    }
++
++    k230_decomp_gzip_kick(s);
++}
++
++static void k230_decomp_gzip_start(K230DecompGzipState *s)
++{
++    uint32_t input_size = s->gzip_src_size & K230_DECOMP_GZIP_DMA_IN_MASK;
++
++    k230_decomp_gzip_reset_stream(s);
++    s->decomp_stat &= ~K230_DECOMP_GZIP_STAT_CRC_OK;
++    s->total_requested = 0;
++    s->total_produced = 0;
++    s->stream_end = false;
++    memset(&s->input, 0, sizeof(s->input));
++    memset(&s->output, 0, sizeof(s->output));
++
++    if (!(s->gzip_src_size & K230_DECOMP_GZIP_CTRL_EN) ||
++        input_size == 0 || s->gzip_out_size == 0) {
++        k230_decomp_gzip_finish(s, false);
++        return;
++    }
++
++    s->active = true;
++    k230_decomp_gzip_update_ctrl_en(s);
++    k230_decomp_gzip_kick(s);
++}
++
++static uint64_t k230_decomp_gzip_read(void *opaque, hwaddr offset,
++                                      unsigned size)
++{
++    K230DecompGzipState *s = opaque;
++    uint64_t value = 0;
++
++    switch (offset) {
++    case K230_DECOMP_GZIP_DECOMP_START:
++        value = s->decomp_start;
++        break;
++    case K230_DECOMP_GZIP_GZIP_SRC_SIZE:
++        value = s->gzip_src_size;
++        break;
++    case K230_DECOMP_GZIP_GZIP_OUT_SIZE:
++        value = s->gzip_out_size;
++        break;
++    case K230_DECOMP_GZIP_DECOMP_STAT:
++        value = s->decomp_stat;
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: bad read offset 0x%" HWADDR_PRIx "\n",
++                      TYPE_K230_DECOMP_GZIP, offset);
++        break;
++    }
++
++    trace_k230_decomp_gzip_read(offset, size, value);
++    return value;
++}
++
++static void k230_decomp_gzip_write(void *opaque, hwaddr offset,
++                                   uint64_t value, unsigned size)
++{
++    K230DecompGzipState *s = opaque;
++
++    trace_k230_decomp_gzip_write(offset, size, value);
++
++    switch (offset) {
++    case K230_DECOMP_GZIP_DECOMP_START:
++        s->decomp_start = value;
++        if (value & K230_DECOMP_GZIP_START) {
++            k230_decomp_gzip_start(s);
++        }
++        break;
++    case K230_DECOMP_GZIP_GZIP_SRC_SIZE:
++        s->gzip_src_size = value;
++        k230_decomp_gzip_update_ctrl_en(s);
++        break;
++    case K230_DECOMP_GZIP_GZIP_OUT_SIZE:
++        s->gzip_out_size = value;
++        break;
++    case K230_DECOMP_GZIP_DECOMP_STAT:
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: bad write offset 0x%" HWADDR_PRIx "\n",
++                      TYPE_K230_DECOMP_GZIP, offset);
++        break;
++    }
++}
++
++static const MemoryRegionOps k230_decomp_gzip_ops = {
++    .read = k230_decomp_gzip_read,
++    .write = k230_decomp_gzip_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid.min_access_size = 4,
++    .valid.max_access_size = 4,
++    .impl.min_access_size = 4,
++    .impl.max_access_size = 4,
++};
++
++static const VMStateDescription vmstate_k230_decomp_gzip_slot = {
++    .name = "k230.decomp-gzip.slot",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(slot, K230DecompGzipSlotState),
++        VMSTATE_UINT32(current_offset, K230DecompGzipSlotState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static const VMStateDescription vmstate_k230_decomp_gzip = {
++    .name = "k230.decomp-gzip",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(decomp_start, K230DecompGzipState),
++        VMSTATE_UINT32(gzip_src_size, K230DecompGzipState),
++        VMSTATE_UINT32(gzip_out_size, K230DecompGzipState),
++        VMSTATE_UINT32(decomp_stat, K230DecompGzipState),
++        VMSTATE_STRUCT(input, K230DecompGzipState, 1,
++                       vmstate_k230_decomp_gzip_slot,
++                       K230DecompGzipSlotState),
++        VMSTATE_STRUCT(output, K230DecompGzipState, 1,
++                       vmstate_k230_decomp_gzip_slot,
++                       K230DecompGzipSlotState),
++        VMSTATE_UINT32(total_requested, K230DecompGzipState),
++        VMSTATE_UINT32(total_produced, K230DecompGzipState),
++        VMSTATE_BOOL(active, K230DecompGzipState),
++        VMSTATE_BOOL(in_kick, K230DecompGzipState),
++        VMSTATE_BOOL(zstream_inited, K230DecompGzipState),
++        VMSTATE_BOOL(stream_end, K230DecompGzipState),
++        VMSTATE_UINT8_ARRAY(input_buf, K230DecompGzipState,
++                            K230_DECOMP_GZIP_BLOCK_SIZE),
++        VMSTATE_UINT8_ARRAY(output_buf, K230DecompGzipState,
++                            K230_DECOMP_GZIP_BLOCK_SIZE),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static void k230_decomp_gzip_reset(DeviceState *dev)
++{
++    K230DecompGzipState *s = K230_DECOMP_GZIP(dev);
++
++    k230_decomp_gzip_reset_stream(s);
++    memset(&s->zs, 0, sizeof(s->zs));
++    s->decomp_start = 0;
++    s->gzip_src_size = 0;
++    s->gzip_out_size = 0;
++    s->decomp_stat = 0;
++    memset(&s->input, 0, sizeof(s->input));
++    memset(&s->output, 0, sizeof(s->output));
++    s->total_requested = 0;
++    s->total_produced = 0;
++    s->active = false;
++    s->in_kick = false;
++    s->stream_end = false;
++}
++
++static void k230_decomp_gzip_realize(DeviceState *dev, Error **errp)
++{
++    K230DecompGzipState *s = K230_DECOMP_GZIP(dev);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++
++    memory_region_init_io(&s->iomem, OBJECT(dev), &k230_decomp_gzip_ops, s,
++                          TYPE_K230_DECOMP_GZIP,
++                          K230_DECOMP_GZIP_MMIO_SIZE);
++    sysbus_init_mmio(sbd, &s->iomem);
++    qdev_init_gpio_in(dev, k230_decomp_gzip_handle_ack,
++                      K230_DECOMP_GZIP_NUM_GPIOS_IN);
++    qdev_init_gpio_out(dev, s->signal_out,
++                       K230_DECOMP_GZIP_NUM_GPIOS_OUT);
++}
++
++static const Property k230_decomp_gzip_properties[] = {
++    DEFINE_PROP_UINT64("sram-base", K230DecompGzipState, sram_base, 0),
++};
++
++static void k230_decomp_gzip_class_init(ObjectClass *oc, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(oc);
++
++    dc->realize = k230_decomp_gzip_realize;
++    device_class_set_legacy_reset(dc, k230_decomp_gzip_reset);
++    device_class_set_props(dc, k230_decomp_gzip_properties);
++    dc->vmsd = &vmstate_k230_decomp_gzip;
++    dc->desc = "Kendryte K230 GZIP decompression engine";
++}
++
++static const TypeInfo k230_decomp_gzip_info = {
++    .name = TYPE_K230_DECOMP_GZIP,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(K230DecompGzipState),
++    .class_init = k230_decomp_gzip_class_init,
++};
++
++static void k230_decomp_gzip_register_types(void)
++{
++    type_register_static(&k230_decomp_gzip_info);
++}
++
++type_init(k230_decomp_gzip_register_types)
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 23265f6035..6f6bf3c85c 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -36,6 +36,7 @@ system_ss.add(when: 'CONFIG_SIFIVE_E_PRCI', if_true: files('sifive_e_prci.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_E_AON', if_true: files('sifive_e_aon.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_U_OTP', if_true: files('sifive_u_otp.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_U_PRCI', if_true: files('sifive_u_prci.c'))
++system_ss.add(when: 'CONFIG_K230_DECOMP_GZIP', if_true: files('k230_decomp_gzip.c'))
+ 
+ subdir('macio')
+ 
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+index c9a868b3ef..16db4ba0cc 100644
+--- a/hw/misc/trace-events
++++ b/hw/misc/trace-events
+@@ -442,3 +442,7 @@ iommu_testdev_dma_read(uint64_t gva, uint32_t len) "gva=0x%" PRIx64 " len=%u"
+ iommu_testdev_dma_verify(uint32_t expected, uint32_t actual) "expected=0x%x actual=0x%x"
+ iommu_testdev_dma_result(uint32_t result) "DMA completed result=0x%x"
+ iommu_testdev_dma_armed(bool armed) "armed=%d"
++
++# k230_decomp_gzip.c
++k230_decomp_gzip_read(uint64_t offset, unsigned int size, uint64_t value) "K230 DECOMP GZIP read: [0x%"PRIx64"] size %u -> 0x%"PRIx64
++k230_decomp_gzip_write(uint64_t offset, unsigned int size, uint64_t value) "K230 DECOMP GZIP write: [0x%"PRIx64"] size %u <- 0x%"PRIx64
+diff --git a/include/hw/misc/k230_decomp_gzip.h b/include/hw/misc/k230_decomp_gzip.h
+new file mode 100644
+index 0000000000..9911af0095
+--- /dev/null
++++ b/include/hw/misc/k230_decomp_gzip.h
+@@ -0,0 +1,92 @@
++/*
++ * K230 Decompress Engine
 + *
 + * Copyright (c) 2026 Tao Ding <dingtao0430@163.com>
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#include "qemu/osdep.h"
-+#include "qemu/bitops.h"
-+#include "libqtest.h"
-+#include "hw/dma/k230_gsdma.h"
-+#include "hw/misc/k230_decomp_gzip.h"
++#ifndef HW_MISC_K230_DECOMP_GZIP_H
++#define HW_MISC_K230_DECOMP_GZIP_H
 +
-+#define K230_DECOMP_GZIP_BASE 0x80808000
-+#define K230_GSDMA_BASE       0x80800000
-+#define K230_SRAM_BASE        0x80200000
-+#define TEST_LLT_ADDR0        0x01000000
-+#define TEST_LLT_ADDR1        0x01000040
-+#define TEST_SRC_ADDR         0x01100000
-+#define TEST_DST_ADDR         0x01200000
++#include <zlib.h>
++#include "hw/core/sysbus.h"
 +
-+#define TEST_PAYLOAD_LEN          (sizeof(test_payload) - 1)
++#define TYPE_K230_DECOMP_GZIP "riscv.k230.decomp-gzip"
++OBJECT_DECLARE_SIMPLE_TYPE(K230DecompGzipState, K230_DECOMP_GZIP)
 +
-+static inline uint64_t gzip_reg(hwaddr off)
-+{
-+    return K230_DECOMP_GZIP_BASE + off;
-+}
-+
-+static inline uint64_t gsdma_reg(hwaddr off)
-+{
-+    return K230_GSDMA_BASE + off;
-+}
-+
-+static inline uint64_t gsdma_ch_reg(unsigned int ch, hwaddr off)
-+{
-+    return K230_GSDMA_BASE + K230_GSDMA_CH_BASE +
-+           ch * K230_GSDMA_CH_STRIDE + off;
-+}
-+
-+static inline hwaddr k230_sram_addr(hwaddr off)
-+{
-+    return K230_SRAM_BASE + off;
-+}
-+
-+static inline hwaddr k230_sram_input_addr(unsigned int slot)
-+{
-+    return k230_sram_addr(K230_DECOMP_GZIP_SRAM_IN_BASE +
-+                          slot * K230_DECOMP_GZIP_BLOCK_SIZE);
-+}
-+
-+static const uint8_t test_gzip_data[] = {
-+    0x1f, 0x8b, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x02, 0xff, 0xf3, 0x36, 0x32, 0x36, 0x50, 0x48,
-+    0xaf, 0xca, 0x2c, 0x50, 0x28, 0x2e, 0x29, 0x4a,
-+    0x4d, 0xcc, 0xcd, 0xcc, 0x4b, 0x57, 0x28, 0x49,
-+    0x2d, 0x2e, 0xe1, 0xf2, 0x1e, 0x5a, 0x12, 0x00,
-+    0xdb, 0x9d, 0xbc, 0xdd, 0xc8, 0x00, 0x00, 0x00,
++/* K230 DECOMP GZIP ACK input */
++enum {
++    K230_DECOMP_GZIP_GPIO_DMA_WRITE_ACK,
++    K230_DECOMP_GZIP_GPIO_DMA_READ_ACK,
++    K230_DECOMP_GZIP_NUM_GPIOS_IN,
 +};
 +
-+static const uint8_t test_payload[] =
-+    "K230 gzip streaming test\n"
-+    "K230 gzip streaming test\n"
-+    "K230 gzip streaming test\n"
-+    "K230 gzip streaming test\n"
-+    "K230 gzip streaming test\n"
-+    "K230 gzip streaming test\n"
-+    "K230 gzip streaming test\n"
-+    "K230 gzip streaming test\n";
++/* K230 DECOMP GZIP REQ output */
++enum {
++    K230_DECOMP_GZIP_GPIO_DECOMP_CTRL_EN,
++    K230_DECOMP_GZIP_GPIO_DMA_WRITE_REQ,
++    K230_DECOMP_GZIP_GPIO_DMA_READ_REQ,
++    K230_DECOMP_GZIP_NUM_GPIOS_OUT,
++};
 +
-+static void write_sdma_llt_node(QTestState *qts, hwaddr addr, uint32_t src,
-+                                uint32_t dst, uint32_t len, uint32_t next)
-+{
-+    qtest_writel(qts, addr + offsetof(K230GSDMALLT, cfg), 0);
-+    qtest_writel(qts, addr + offsetof(K230GSDMALLT, src_addr), src);
-+    qtest_writel(qts, addr + offsetof(K230GSDMALLT, line_size), len);
-+    qtest_writel(qts, addr + offsetof(K230GSDMALLT, line_cfg), 0x1);
-+    qtest_writel(qts, addr + offsetof(K230GSDMALLT, dst_addr), dst);
-+    qtest_writel(qts, addr + offsetof(K230GSDMALLT, next_llt_addr), next);
-+}
++#define K230_DECOMP_GZIP_MMIO_SIZE       0x4000
 +
-+static void test_reset_and_rw(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
++/* K230 DECOMP GZIP Registers map */
++/* Start decompression controller */
++#define K230_DECOMP_GZIP_DECOMP_START    0x00
++/* Source data length register */
++#define K230_DECOMP_GZIP_GZIP_SRC_SIZE   0x04
++/* Output data length register */
++#define K230_DECOMP_GZIP_GZIP_OUT_SIZE   0x08
++/* Decompress status register */
++#define K230_DECOMP_GZIP_DECOMP_STAT     0x0c
 +
-+    g_assert_cmphex(qtest_readl(qts, gzip_reg(K230_DECOMP_GZIP_DECOMP_START)),
-+                    ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, gzip_reg(K230_DECOMP_GZIP_GZIP_SRC_SIZE)),
-+                    ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, gzip_reg(K230_DECOMP_GZIP_GZIP_OUT_SIZE)),
-+                    ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, gzip_reg(K230_DECOMP_GZIP_DECOMP_STAT)),
-+                    ==, 0);
++/* Start decompression controller */
++#define K230_DECOMP_GZIP_START           (1U << 0)
 +
-+    qtest_writel(qts, gzip_reg(K230_DECOMP_GZIP_DECOMP_START),
-+                 K230_DECOMP_GZIP_START);
++#define K230_DECOMP_GZIP_CTRL_EN         (1U << 31)
++#define K230_DECOMP_GZIP_DMA_IN_MASK     0x7fffffffU
 +
-+    qtest_writel(qts, gzip_reg(K230_DECOMP_GZIP_GZIP_SRC_SIZE), 0xffffffff);
-+    g_assert_cmphex(qtest_readl(qts, gzip_reg(K230_DECOMP_GZIP_GZIP_SRC_SIZE)),
-+                    ==, 0xffffffff);
++#define K230_DECOMP_GZIP_STAT_CRC_OK     (1U << 10)
++#define K230_DECOMP_GZIP_STAT_STATE_MASK 0xfU
 +
-+    qtest_writel(qts, gzip_reg(K230_DECOMP_GZIP_GZIP_OUT_SIZE), 0x12345678);
-+    g_assert_cmphex(qtest_readl(qts, gzip_reg(K230_DECOMP_GZIP_GZIP_OUT_SIZE)),
-+                    ==, 0x12345678);
++#define K230_DECOMP_GZIP_BLOCK_SIZE      0x00020000
++#define K230_DECOMP_GZIP_SRAM_IN_BASE    0x80000
++#define K230_DECOMP_GZIP_SRAM_OUT_BASE   0
 +
-+    qtest_quit(qts);
-+}
++typedef struct K230DecompGzipSlotState {
++    uint32_t slot;  /* Slot index */
++    /*
++     * Data offset in current slot.
++     * First valid data in input buffer. Last valid data in output buffer.
++     */
++    uint32_t current_offset;
++} K230DecompGzipSlotState;
 +
-+static void test_gsdma_handshake_flow(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+    uint32_t stat;
-+    uint8_t output[TEST_PAYLOAD_LEN];
++struct K230DecompGzipState {
++    SysBusDevice parent_obj;
 +
-+    qtest_memwrite(qts, TEST_SRC_ADDR, test_gzip_data, sizeof(test_gzip_data));
-+    write_sdma_llt_node(qts, TEST_LLT_ADDR0, TEST_SRC_ADDR,
-+                        k230_sram_input_addr(0),
-+                        sizeof(test_gzip_data), 0);
-+    write_sdma_llt_node(qts, TEST_LLT_ADDR1,
-+                        k230_sram_addr(K230_DECOMP_GZIP_SRAM_OUT_BASE),
-+                        TEST_DST_ADDR, TEST_PAYLOAD_LEN, 0);
++    MemoryRegion iomem;
++    hwaddr sram_base;
++    qemu_irq signal_out[K230_DECOMP_GZIP_NUM_GPIOS_OUT];
++    uint32_t decomp_start;
++    uint32_t gzip_src_size;
++    uint32_t gzip_out_size;
++    uint32_t decomp_stat;
++    K230DecompGzipSlotState input;  /* decomp gzip ring input */
++    K230DecompGzipSlotState output; /* decomp gzip ring output */
++    uint32_t total_requested;
++    uint32_t total_produced;
++    bool active;
++    bool in_kick;
++    bool zstream_inited;
++    bool stream_end;
++    /* Read from ring input. */
++    uint8_t input_buf[K230_DECOMP_GZIP_BLOCK_SIZE];
++    /* Write to ring output. */
++    uint8_t output_buf[K230_DECOMP_GZIP_BLOCK_SIZE];
++    z_stream zs;
++};
 +
-+    qtest_writel(qts, gsdma_reg(K230_GSDMA_DMA_CH_EN), BIT(0) | BIT(1));
-+    qtest_writel(qts, gsdma_ch_reg(0, K230_GSDMA_CH_CFG),
-+                 K230_GSDMA_CH0_CFG_DECOMP_CTRL_EN);
-+    qtest_writel(qts, gsdma_ch_reg(1, K230_GSDMA_CH_CFG), 0);
-+    qtest_writel(qts, gsdma_ch_reg(0, K230_GSDMA_CH_LLT_SADDR), TEST_LLT_ADDR0);
-+    qtest_writel(qts, gsdma_ch_reg(1, K230_GSDMA_CH_LLT_SADDR), TEST_LLT_ADDR1);
-+    qtest_writel(qts, gsdma_ch_reg(0, K230_GSDMA_CH_CTL), K230_GSDMA_CTL_START);
-+    qtest_writel(qts, gsdma_ch_reg(1, K230_GSDMA_CH_CTL), K230_GSDMA_CTL_START);
-+
-+    g_assert_cmphex(qtest_readl(qts, gsdma_reg(K230_GSDMA_DMA_CH_EN)),
-+                    ==, BIT(0) | BIT(1));
-+    g_assert_cmphex(qtest_readl(qts, gsdma_ch_reg(0, K230_GSDMA_CH_CFG)) &
-+                    K230_GSDMA_CH0_CFG_DECOMP_CTRL_EN,
-+                    ==, K230_GSDMA_CH0_CFG_DECOMP_CTRL_EN);
-+    g_assert_cmphex(qtest_readl(qts, gsdma_ch_reg(0, K230_GSDMA_CH_LLT_SADDR)),
-+                    ==, TEST_LLT_ADDR0);
-+    g_assert_cmphex(qtest_readl(qts, gsdma_ch_reg(1, K230_GSDMA_CH_LLT_SADDR)),
-+                    ==, TEST_LLT_ADDR1);
-+
-+    qtest_writel(qts, gzip_reg(K230_DECOMP_GZIP_GZIP_SRC_SIZE),
-+                 K230_DECOMP_GZIP_CTRL_EN | sizeof(test_gzip_data));
-+    qtest_writel(qts, gzip_reg(K230_DECOMP_GZIP_GZIP_OUT_SIZE),
-+                 TEST_PAYLOAD_LEN);
-+    qtest_writel(qts, gzip_reg(K230_DECOMP_GZIP_DECOMP_START),
-+                 K230_DECOMP_GZIP_START);
-+
-+    stat = qtest_readl(qts, gzip_reg(K230_DECOMP_GZIP_DECOMP_STAT));
-+    g_assert_cmphex(stat & K230_DECOMP_GZIP_STAT_CRC_OK, ==,
-+                    K230_DECOMP_GZIP_STAT_CRC_OK);
-+
-+    g_assert_cmphex(qtest_readl(qts,
-+                                gsdma_ch_reg(0, K230_GSDMA_CH_CURRENT_LLT)),
-+                    ==, TEST_LLT_ADDR0);
-+    g_assert_cmphex(qtest_readl(qts,
-+                                gsdma_ch_reg(1, K230_GSDMA_CH_CURRENT_LLT)),
-+                    ==, TEST_LLT_ADDR1);
-+
-+    stat = qtest_readl(qts, gsdma_reg(K230_GSDMA_DMA_INT_STAT));
-+    g_assert_cmphex(stat & K230_GSDMA_SDMA_DONE_INT(0), ==,
-+                    K230_GSDMA_SDMA_DONE_INT(0));
-+    g_assert_cmphex(stat & K230_GSDMA_SDMA_DONE_INT(1), ==,
-+                    K230_GSDMA_SDMA_DONE_INT(1));
-+
-+    qtest_memread(qts, TEST_DST_ADDR, output, sizeof(output));
-+    g_assert_cmpmem(output, sizeof(output), test_payload, TEST_PAYLOAD_LEN);
-+
-+    qtest_quit(qts);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("/k230-decomp-gzip/reset-and-rw", test_reset_and_rw);
-+    qtest_add_func("/k230-decomp-gzip/gsdma-handshake-flow",
-+                   test_gsdma_handshake_flow);
-+
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 1b13a777c9..7da12421af 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -297,7 +297,7 @@ qtests_riscv64 = ['riscv-csr-test'] + \
-   (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
-    config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
-    ['iommu-riscv-test'] : []) + \
--  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test', 'k230-gsdma-test'] : [])
-+  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test', 'k230-gsdma-test', 'k230-decomp-gzip-test'] : [])
- 
- qtests_hexagon = ['boot-serial-test']
- 
++#endif
 -- 
 2.43.0
 
