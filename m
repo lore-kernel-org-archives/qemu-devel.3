@@ -4,62 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1902C44529
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 06:09:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 318D4C4452B
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 06:10:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm3f7-00037t-6a; Tue, 21 Jul 2026 02:09:05 -0400
+	id 1wm3gQ-0004Qc-Fy; Tue, 21 Jul 2026 02:10:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lingqian_gi@163.com>)
- id 1wm3f5-00037V-5a; Tue, 21 Jul 2026 02:09:03 -0400
-Received: from m16.mail.163.com ([220.197.31.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lingqian_gi@163.com>)
- id 1wm3ey-00012C-9r; Tue, 21 Jul 2026 02:09:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version:
- Content-Type; bh=NbRFyAIXD5fwnPyAV8Vs+ddMpdavc8dlEgAhyETj7lc=;
- b=CZLO2LjdqT8vAtiUOExaLNhHVcF+jbj9qga5jL4QMxrbFrWR9Zz/f2PDltyZes
- JuHUZtGploDg9YO7AyLVnMT89CDbg9RVUwgVYVRSQPo8h/5fpDzsuz82Kh+94tKE
- 3QMglJ5FdHfffoEy1984CyzfZRRprhpWQ3cQXzka0kNQ0=
-Received: from localhost.localdomain (unknown [])
- by gzga-smtp-mtada-g1-0 (Coremail) with SMTP id
- _____wD3v8vlDF9qWYX7KA--.47423S2; 
- Tue, 21 Jul 2026 14:08:37 +0800 (CST)
-From: Jian Cai <lingqian_gi@163.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: chao.liu@processmission.com, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, Jian Cai <lingqian_gi@163.com>
-Subject: [PATCH v2] hw/riscv/k230: add k230_sram_create() helper function
-Date: Tue, 21 Jul 2026 14:04:07 +0800
-Message-ID: <20260721060409.9688-2-lingqian_gi@163.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260720074545.8987-2-lingqian_gi@163.com>
-References: <20260720074545.8987-2-lingqian_gi@163.com>
+ (Exim 4.90_1) (envelope-from <jianghaotian.sunday@gmail.com>)
+ id 1wm3gJ-0004NI-Ko
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 02:10:21 -0400
+Received: from mail-pj2-x01.google.com ([2607:f8b0:4864:39::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jianghaotian.sunday@gmail.com>)
+ id 1wm3gH-0001Me-7j
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 02:10:18 -0400
+Received: by mail-pj2-x01.google.com with SMTP id
+ d9443c01a7336-2ce7ac92dfcso60079795ad.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 23:10:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1784614215; x=1785219015; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=o766GxEhV3PGRBXOiHXJb69DGsBYL5EaUQhlyW7i0BA=;
+ b=NN3BTMGMV68ijsiObLXDA2T32pmgwDBJJgEjqi0ZGAff21pRVvOokbsss6Wilu1Q+e
+ VskPVpEtxbpmQSv903Ixs5FI3euyU1keHNV++ttCR0efQj9UMgSiniugV1BE7wGEOx9h
+ oCV6Oo90kb/ZKDPHyb+sCiICnfh6zHZSPi3n/RAJx7z5yt/+VR0pDWrr2Dp+UssrOA7P
+ Ii63sWU75U9s+y4GA5Y4q0ARaYYFefNa9dl7tYV+qlowUoiraQ63eMufk1u8ZQChIEaK
+ F/8DDXS4KqDPzJAw9JLeyJ9Yq7+vPMiv3p2KrpzqgDTCqs/d+17TSAJwiSrPxurdJsL4
+ 8mRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784614215; x=1785219015;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=o766GxEhV3PGRBXOiHXJb69DGsBYL5EaUQhlyW7i0BA=;
+ b=XelOLyKoMVOXF1dP6rzyg5Hwl0WGJmkP8CDY5bFBhDA/DOvUwbm9D4TUx9voAolBkx
+ 4iC9QLsjXmZFSBIHpwwNJt+BD/C+wcBgh/qejYdviuHc3XuL9KNEzJyh3JUWfWlQiC/k
+ OAW6SPachHnlfI1qaThS9ADlZM6zmHopif0J3uvOrPUM6gr/zhJ2GsnupIy/oe+H9Pbx
+ QGW5e1fYb6x9OTMHSD+2fLXn+eFEaaVn6e46AjkEGwKn4he+D5lCYhwhfCrJLQPwtZtQ
+ taZqRFUOUW/TAFxkc8dxS8CqONxBeeuxMsxbbq85gobjFb78/YMqvszSgO+LsV24SVgz
+ bHdA==
+X-Gm-Message-State: AOJu0Yx6J6o1Q6xIqtjhdw7CP5xPaTBGtLssj/Gp6Oz+ZLSJEyjKWUtx
+ NnP77iq7XmAAGlrXRmG878q8Ft9WltHUZirv1268hlUuWcnm7hY00bY35F8spFMfCSgwE37p
+X-Gm-Gg: AR+sD10ssFYajsoqiNmduzAq8EvxkoEvG/jBoH5yj9xglkwCk6231092DLDdu1H5bIJ
+ gR1gSh7bu3T8A2z4/5CoInpVVxlJ/iWMp01SDtXmpd9ZdGY/1RLTq7NG7ysBmpIZb5686ZDrTH7
+ DvXzNsNT0d7ee51Z36uS+r1p1+zM8P8vS1R7UXBo+/xf6RDKl7adHc4rIhQA5sYnI78wpewdgOZ
+ J0GbdA0Lr0fmgQrvPinep2QNKCndH5NO7V28FB2mvqdmJtaP5xN4qulDe9cel2vd2PipZ38rRAm
+ LElFGVfcveZ6RShjs9Kwf/ZTqZ7Xm5ZDfKVWAleW0QBibAXi/sPhE68lHlQeN9Uw2euDeK6ow5H
+ /6xeAvcG32RFP5Glb74toxt1kLCoVeCl6Q56uxM6JzOX+LTPCRPiMO4tw8QYaRYpkiGYKaKYM8f
+ JZFTXWrgL23NYziJ4+5qTwKxSsUaBJEcWrQEkrrj4uEZwS7ZVpizwkZY7jP/FFxZZAt0yzMAevq
+ Aph91QhAaeB8OmYtl3uaT0LBerfHg==
+X-Received: by 2002:a17:902:c411:b0:2c9:97a9:2096 with SMTP id
+ d9443c01a7336-2cf349edab6mr171939945ad.42.1784614215156; 
+ Mon, 20 Jul 2026 23:10:15 -0700 (PDT)
+Received: from VM-210-252-ubuntu.. ([14.116.239.40])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2cf3477eecdsm68615165ad.78.2026.07.20.23.10.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 20 Jul 2026 23:10:14 -0700 (PDT)
+From: jianghaotian.sunday@gmail.com
+To: qemu-devel@nongnu.org
+Cc: kraxel@redhat.com, philmd@redhat.com, thuth@redhat.com, alxndr@bu.edu,
+ qemu-stable@nongnu.org, Haotian Jiang <jianghaotian.sunday@gmail.com>
+Subject: [PATCH] hw/audio/intel-hda: restrict all DMA engine paths to memories
+Date: Tue, 21 Jul 2026 14:09:41 +0800
+Message-Id: <20260721060941.2989396-1-jianghaotian.sunday@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wD3v8vlDF9qWYX7KA--.47423S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxCF4rWryrXF48GFWxuryUKFg_yoW5KF1DpF
- s7Gr929rn7GFyDZFs3tF1rXFyvqa1vgr1UWwn7u34kGr47Jryqyr4rJ3W0v3W7WrWxAw1U
- uFyYqF1ru3W8J3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRnSdkUUUUU=
-X-Originating-IP: [42.193.175.155]
-X-CM-SenderInfo: 5olqw15ldqswrl6rljoofrz/xtbCwQeupGpfDOc5UgAA35
-Received-SPF: pass client-ip=220.197.31.5; envelope-from=lingqian_gi@163.com;
- helo=m16.mail.163.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::1;
+ envelope-from=jianghaotian.sunday@gmail.com; helo=mail-pj2-x01.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,96 +98,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The K230 shared SRAM (2 MB at 0x80200000) has no software-visible
-controller registers: it is a pure on-chip RAM block accessed via
-the AXI bus.  Replace the inline memory_region_init_ram calls in
-k230_soc_realize() with a static k230_sram_create() helper, which
-follows the same pattern as the existing k230_create_plic() and
-k230_create_uart() helpers.
+From: Haotian Jiang <jianghaotian.sunday@gmail.com>
 
-Also fix two non-ASCII characters (registered sign and em-dash)
-in k230.rst that would cause git send-email to reject the patch
-as 8-bit.
+CVE-2021-3611 (commit 79fa99831d) restricted the DMA engine to memories
+by setting attrs.memory=true, but only applied this to intel_hda_response.
+Three other DMA engine access points still use MEMTXATTRS_UNSPECIFIED,
+allowing a malicious guest to trigger DMA-to-self-MMIO reentry:
 
-Reference:
-K230 TRM V0.3.1 (2024-11-18), Section 5.2 Sram
-https://github.com/revyos/external-docs/blob/master/K230/en-us/
-K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
+  - intel_hda_xfer (line 398): called from the audio timer callback
+    (hda_codec_xfer -> bus->xfer), so the MemReentrancyGuard does not
+    fire (engaged_in_io is false outside MMIO dispatch). A guest that
+    points a BDL entry at the HDA controller's own MMIO BAR can write
+    audio samples to device registers, triggering whandler side effects
+    such as starting/stopping streams or injecting codec commands via
+    CORBWP.
+  - intel_hda_parse_bdl (line 478): uses pci_dma_read which hardcodes
+    MEMTXATTRS_UNSPECIFIED. A guest-controlled BDL base address can
+    point at controller MMIO, allowing the DMA engine to read device
+    registers as BDL descriptors.
+  - intel_hda_corb_run (line 333): ldl_le_pci_dma reads the CORB ring
+    with MEMTXATTRS_UNSPECIFIED, allowing the DMA engine to read
+    controller MMIO as CORB entries.
 
-Signed-off-by: Jian Cai <lingqian_gi@163.com>
+Fix all three by passing {.memory = true} explicitly, matching the
+fix already applied to intel_hda_response. For intel_hda_parse_bdl,
+replace pci_dma_read with pci_dma_rw to pass the controlled attrs.
+
+Fixes: 79fa99831d ("hw/audio/intel-hda: Restrict DMA engine to memories (not MMIO devices)")
+Reported-by: Haotian Jiang of Tencent Security (Yunding Lab) <jianghaotian.sunday@gmail.com>
+Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
+Cc: qemu-stable@nongnu.org
 ---
+ hw/audio/intel-hda.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-Changes in v2:
-- Dropped SysBusDevice model per Chao Liu's review; use a static helper
-  function k230_sram_create() in k230.c instead.
-- Removed k230_sram.c, k230_sram.h, and k230-sram-test.c.
-- Fixed two non-ASCII characters (registered sign, em-dash) in k230.rst.
-- Removed SRAM entries from MAINTAINERS (no new files added).
-- v1: [RFC PATCH 0/3] hw/riscv: add K230 SRAM device model
-  https://lore.kernel.org/qemu-devel/
-
- docs/system/riscv/k230.rst |  3 ++-
- hw/riscv/k230.c            | 14 ++++++++++----
- 2 files changed, 12 insertions(+), 5 deletions(-)
-
-diff --git a/docs/system/riscv/k230.rst b/docs/system/riscv/k230.rst
-index cea8202e55..18eb6806f6 100644
---- a/docs/system/riscv/k230.rst
-+++ b/docs/system/riscv/k230.rst
-@@ -2,7 +2,7 @@ Kendryte K230 virt reference platform (``k230``)
- ==========================================================================
- The ``k230`` machine is compatible with the Kendryte K230 SDK.
+diff --git a/hw/audio/intel-hda.c b/hw/audio/intel-hda.c
+index d7c2c3c2fd..3d361a4976 100644
+--- a/hw/audio/intel-hda.c
++++ b/hw/audio/intel-hda.c
+@@ -305,6 +305,7 @@ static int intel_hda_send_command(IntelHDAState *d, uint32_t verb)
  
--The K230 is a chip from the AIoT SoC series made by Kendryte ® — a part of
-+The K230 is a chip from the AIoT SoC series made by Kendryte (R) -- a part of
- Canaan Inc. It uses a brand-new multi-heterogeneous unit accelerated computing
- structure.
- 
-@@ -111,3 +111,4 @@ this machine does not emulate those controllers yet. Replace ``${INITRD_END}``
- with the host-calculated value above when typing the command. ``cma=0`` avoids
- the SDK kernel reserving too much of the little-core memory window for initramfs
- boot.
-+
-diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
-index 656f28190c..96add64c2a 100644
---- a/hw/riscv/k230.c
-+++ b/hw/riscv/k230.c
-@@ -14,6 +14,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/units.h"
- #include "cpu-qom.h"
- #include "qemu/cutils.h"
- #include "qemu/error-report.h"
-@@ -151,6 +152,14 @@ static void k230_create_uart(MemoryRegion *sys_mem, DeviceState *plic,
-                    399193, serial_hd(index), DEVICE_LITTLE_ENDIAN);
- }
- 
-+static void k230_sram_create(K230SoCState *s)
-+{
-+    memory_region_init_ram(&s->sram, OBJECT(s), "k230.sram",
-+                           memmap[K230_DEV_SRAM].size, &error_fatal);
-+    memory_region_add_subregion(get_system_memory(),
-+                                memmap[K230_DEV_SRAM].base, &s->sram);
-+}
-+
- static void k230_soc_realize(DeviceState *dev, Error **errp)
+ static void intel_hda_corb_run(IntelHDAState *d)
  {
-     K230SoCState *s = RISCV_K230_SOC(dev);
-@@ -162,10 +171,7 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
-     c908_cpus = s->c908_cpu.num_harts;
++    const MemTxAttrs attrs = { .memory = true };
+     hwaddr addr;
+     uint32_t rp, verb;
  
-     /* SRAM */
--    memory_region_init_ram(&s->sram, OBJECT(dev), "sram",
--                           memmap[K230_DEV_SRAM].size, &error_fatal);
--    memory_region_add_subregion(sys_mem, memmap[K230_DEV_SRAM].base,
--                                &s->sram);
-+    k230_sram_create(s);
+@@ -330,7 +331,7 @@ static void intel_hda_corb_run(IntelHDAState *d)
  
-     /* BootROM */
-     memory_region_init_rom(&s->bootrom, OBJECT(dev), "bootrom",
+         rp = (d->corb_rp + 1) & 0xff;
+         addr = intel_hda_addr(d->corb_lbase, d->corb_ubase);
+-        ldl_le_pci_dma(&d->pci, addr + 4 * rp, &verb, MEMTXATTRS_UNSPECIFIED);
++        ldl_le_pci_dma(&d->pci, addr + 4 * rp, &verb, attrs);
+         d->corb_rp = rp;
+ 
+         dprint(d, 2, "%s: [rp 0x%x] verb 0x%08x\n", __func__, rp, verb);
+@@ -395,7 +396,7 @@ static void intel_hda_response(HDACodecDevice *dev, bool solicited, uint32_t res
+ static bool intel_hda_xfer(HDACodecDevice *dev, uint32_t stnr, bool output,
+                            uint8_t *buf, uint32_t len)
+ {
+-    const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
++    const MemTxAttrs attrs = { .memory = true };
+     HDACodecBus *bus = HDA_BUS(dev->qdev.parent_bus);
+     IntelHDAState *d = container_of(bus, IntelHDAState, codecs);
+     hwaddr addr;
+@@ -466,6 +467,7 @@ static bool intel_hda_xfer(HDACodecDevice *dev, uint32_t stnr, bool output,
+ 
+ static void intel_hda_parse_bdl(IntelHDAState *d, IntelHDAStream *st)
+ {
++    const MemTxAttrs attrs = { .memory = true };
+     hwaddr addr;
+     uint8_t buf[16];
+     uint32_t i;
+@@ -475,7 +477,8 @@ static void intel_hda_parse_bdl(IntelHDAState *d, IntelHDAStream *st)
+     g_free(st->bpl);
+     st->bpl = g_new(bpl, st->bentries);
+     for (i = 0; i < st->bentries; i++, addr += 16) {
+-        pci_dma_read(&d->pci, addr, buf, 16);
++        pci_dma_rw(&d->pci, addr, buf, 16,
++                   DMA_DIRECTION_TO_DEVICE, attrs);
+         st->bpl[i].addr  = le64_to_cpu(*(uint64_t *)buf);
+         st->bpl[i].len   = le32_to_cpu(*(uint32_t *)(buf + 8));
+         st->bpl[i].flags = le32_to_cpu(*(uint32_t *)(buf + 12));
 -- 
-2.43.0
+2.34.1
 
 
