@@ -4,79 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70383C4451C
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 06:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0529C44529
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 06:59:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm4QG-0004Th-FR; Tue, 21 Jul 2026 02:57:48 -0400
+	id 1wm4Rg-0005Su-Ta; Tue, 21 Jul 2026 02:59:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wm4QE-0004SQ-Gn
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 02:57:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wm4Rf-0005Sh-Ar
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 02:59:15 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wm4QB-0007mq-Og
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 02:57:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784617062;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3ZrJzdWl4nKR+UpyUghQvLt1YZMJBW5vuX249EaXa9s=;
- b=FVdYWTTaAwXUdo4icI08ZigW96jYFK4alK83F+5Jvxb2VlszupGQ4SuA1RisV2hvVsvmed
- u9BYQHrAYEMQ7j3E2FApuIV9ffnHn4pzqOes75pzpE9l10CyfDDaYQyvPDvURBgt8KvzfV
- P4I7NYmqFe63sPacRqGFYYfGgGSqdj4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-47-Vx72GP16ORODwzv9fBaRGw-1; Tue,
- 21 Jul 2026 02:57:39 -0400
-X-MC-Unique: Vx72GP16ORODwzv9fBaRGw-1
-X-Mimecast-MFC-AGG-ID: Vx72GP16ORODwzv9fBaRGw_1784617057
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 60680195F15E; Tue, 21 Jul 2026 06:57:37 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A5AC6180034F; Tue, 21 Jul 2026 06:57:36 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3F99821E6920; Tue, 21 Jul 2026 08:57:34 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: jasowang@redhat.com,  mst@redhat.com,  peterx@redhat.com,
- farosas@suse.de,  raphael.s.norwitz@gmail.com,  bchaney@akamai.com,
- qemu-devel@nongnu.org,  berrange@redhat.com,  pbonzini@redhat.com,
- yc-core@yandex-team.ru,  mark.caveayland@nutanix.com,  Jason Wang
- <jasowangio@gmail.com>,  Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v19 13/15] net/tap: support local migration with virtio-net
-In-Reply-To: <20260714154246.1242856-14-vsementsov@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Tue, 14 Jul 2026 18:42:41 +0300")
-References: <20260714154246.1242856-1-vsementsov@yandex-team.ru>
- <20260714154246.1242856-14-vsementsov@yandex-team.ru>
-Date: Tue, 21 Jul 2026 08:57:34 +0200
-Message-ID: <87a4rksuch.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wm4Rc-0007tZ-7H
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 02:59:15 -0400
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 07E658079D;
+ Tue, 21 Jul 2026 09:59:07 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:45b::1:22] (unknown
+ [2a02:6bf:8080:45b::1:22])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id 5xP2eD2XR4Y0-mxzuURl3; Tue, 21 Jul 2026 09:59:06 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1784617146;
+ bh=AQbuOt3G+i4umJ0kwWyDpT+borce9eXz+5X51fVaO6c=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=V885/eY+oE0cHyp3fBWX3m4Jf7bHgMQifg0loKBSsdhfFcMn8UNKVWz52UyaeRxAZ
+ 5ZJ0Vm/oRJ30WECUqVLUU+mJV+T6wfeVY3WoczyEjxBgWSjejaaKpR2YBkhGT5edPA
+ F8XIanW/KbZ9NKje8v0Zh0WuDbuL9k1e8lt+C34g=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <b788b7cb-df52-4397-ad3c-a0eb695d8d46@yandex-team.ru>
+Date: Tue, 21 Jul 2026 09:59:05 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: permerror client-ip=170.10.129.124;
- envelope-from=armbru@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v19 01/15] net/tap: rework tap_parse_script
+To: Markus Armbruster <armbru@redhat.com>
+Cc: jasowang@redhat.com, mst@redhat.com, peterx@redhat.com, farosas@suse.de,
+ raphael.s.norwitz@gmail.com, bchaney@akamai.com, qemu-devel@nongnu.org,
+ berrange@redhat.com, pbonzini@redhat.com, yc-core@yandex-team.ru,
+ mark.caveayland@nutanix.com, Jason Wang <jasowangio@gmail.com>
+References: <20260714154246.1242856-1-vsementsov@yandex-team.ru>
+ <20260714154246.1242856-2-vsementsov@yandex-team.ru>
+ <87wluoswnf.fsf@pond.sub.org>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <87wluoswnf.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -88,198 +80,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+On 21.07.26 09:07, Markus Armbruster wrote:
+> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+> 
+>> Factor out tap_is_explicit_no_script() helper, to simplify
+>> further changes.
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> ---
+>>   net/tap.c | 27 +++++++++++++++++++++------
+>>   1 file changed, 21 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/net/tap.c b/net/tap.c
+>> index 57ffb09885c..fedd48c48d2 100644
+>> --- a/net/tap.c
+>> +++ b/net/tap.c
+>> @@ -92,19 +92,34 @@ static void launch_script(const char *setup_script, const char *ifname,
+>>   static void tap_send(void *opaque);
+>>   static void tap_writable(void *opaque);
+>>   
+>> -static char *tap_parse_script(const char *script_arg, const char *default_path)
+>> +static bool tap_is_explicit_no_script(const char *script_arg)
+>>   {
+>> -    g_autofree char *res = g_strdup(script_arg);
+>> +    if (!script_arg) {
+>> +        return false;
+>> +    }
+>>   
+>> -    if (!res) {
+>> -        res = get_relocated_path(default_path);
+>> +    if (script_arg[0] == '\0') {
+>> +        return true;
+>> +    }
+>> +
+>> +    if (strcmp(script_arg, "no") == 0) {
+>> +        return true;
+>>       }
+>>   
+>> -    if (res[0] == '\0' || strcmp(res, "no") == 0) {
+>> +    return false;
+>> +}
+>> +
+>> +static char *tap_parse_script(const char *script_arg, const char *default_path)
+>> +{
+>> +    if (tap_is_explicit_no_script(script_arg)) {
+>>           return NULL;
+>>       }
+>>   
+>> -    return g_steal_pointer(&res);
+>> +    if (!script_arg) {
+>> +        return get_relocated_path(default_path);
+>> +    }
+>> +
+>> +    return g_strdup(script_arg);
+>>   }
+>>   
+>>   static void tap_update_fd_handler(TAPState *s)
+> 
+> Before the patch, we default @script_arg to get_relocated_path(default)
+> first, then check for "" or "no".  After the patch, we do it the other
+> way round.  Works, because get_relocated_path() never returns "" or
+> "no".  Worth mentioning in the commit message?
 
-> Support transferring of TAP state (including open fd).
->
-> Add new property "local-migration-supported", which defines
-> whether local-migration is actually supported for this TAP device.
-> Starting from 11.2 QEMU Machine Types it's enabled by default.
->
-> Note that local-migration (including migrating opened FDs
-> through migration channel, which must be UNIX socket) is
-> enabled by global "local" migration parameters. But individual
-> devices may have additional options to enable/disable it
-> per device.
->
-> The tricky thing is that we need to know whether to call open/connect in
-> TAP initialization code, i.e. we need to know the value of migration
-> parameter "local" when creating the TAP device.  For incoming migration,
-> we can know only for TAP devices created with QMP after setting the
-> migration parameter with QMP.
->
-> So the full picture is:
->
-> On source, to start outgoing "local" migration you need:
->
->  - migration parameter "local" set to true
->  - "local-migration-supported" TAP option set to true (the
->    default, starting from 11.2 QEMU Machine Types)
->
-> If at least one of these options is not set, TAP backend
-> doesn't participate in migration.
->
-> On target, things are more difficult:
->
-> Same, you need both "local" and "local-migration-supported"
-> be set. And same, if one of them is not set, TAP backend
-> is initialized as usual, and doesn't accept any incoming
-> state.
->
-> Additionally, if you are going to set "local", it must be
-> set before creating the TAP device. If TAP device created
-> with "local" unset, it initializes as usual. If you enable
-> "local" after it and start incoming migration, it will fail
-> in .pre_load handler of TAP backend.
->
-> Moreover, there are interface restrictions: if you create TAP
-> device when QEMU is in INCOMING state, and both "local"
-> and "local-migration-supported" set, most of TAP options are
-> not allowed, and script/downscript are required to be explicitly
-> unset (set to "" or "no").
->
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->  net/tap.c     | 165 ++++++++++++++++++++++++++++++++++++++++++++++++--
->  qapi/net.json |  22 ++++++-
->  2 files changed, 180 insertions(+), 7 deletions(-)
->
-> diff --git a/net/tap.c b/net/tap.c
-> index 2bd4b089573..4162820bcee 100644
-> --- a/net/tap.c
-> +++ b/net/tap.c
-> @@ -38,12 +38,17 @@
->  #include "monitor/monitor.h"
->  #include "system/runstate.h"
->  #include "system/system.h"
-> +#include "migration/misc.h"
->  #include "qapi/error.h"
->  #include "qemu/cutils.h"
->  #include "qemu/error-report.h"
->  #include "qemu/main-loop.h"
->  #include "qemu/sockets.h"
->  #include "hw/virtio/vhost.h"
-> +#include "hw/core/vmstate-if.h"
-> +#include "migration/vmstate.h"
-> +#include "qom/object.h"
-> +#include "qom/compat-properties.h"
->  
->  #include "net/tap.h"
->  #include "net/util.h"
-> @@ -71,6 +76,8 @@ static const int kernel_feature_bits[] = {
->  
->  OBJECT_DECLARE_SIMPLE_TYPE(TAPState, TAP_NETDEV)
->  
-> +static const VMStateDescription vmstate_tap;
-> +
->  struct TAPState {
->      Object parent_obj;
->  
-> @@ -95,6 +102,7 @@ struct TAPState {
->      int queue_index;
->      bool read_poll_detached;
->      VMChangeStateEntry *vmstate;
-> +    bool local_migration_supported;
->  };
->  
->  static void launch_script(const char *setup_script, const char *ifname,
-> @@ -409,6 +417,8 @@ static void tap_cleanup(NetClientState *nc)
->      tap_write_poll(s, false);
->      close(s->fd);
->      s->fd = -1;
-> +
-> +    vmstate_unregister(VMSTATE_IF(s), &vmstate_tap, s);
->  }
->  
->  static void tap_poll(NetClientState *nc, bool enable)
-> @@ -445,6 +455,76 @@ static VHostNetState *tap_get_vhost_net(NetClientState *nc)
->      return s->vhost_net;
->  }
->  
-> +static bool tap_is_wait_incoming(NetClientState *nc)
-> +{
-> +    TAPState *s = container_of(nc, TAPState, nc);
-> +    assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
-> +    return s->fd == -1;
-> +}
-> +
-> +static bool tap_pre_load(void *opaque, Error **errp)
-> +{
-> +    TAPState *s = opaque;
-> +
-> +    if (s->fd != -1) {
-> +        error_setg(errp,
-> +                   "TAP is already initialized and cannot receive "
-> +                   "incoming fd.  For local migration, 'local' "
-> +                   "migration parameter must be set _before_ "
-> +                   "creating TAP device.");
+Will mention it
 
-From error_setg()'s contract:
+> 
+> The new order feels slightly clearer to me.
+> 
+> Reviewed-by: Markus Armbruster <armbru@redhat.com>
+> 
 
- * The resulting message should be a single phrase, with no newline or
- * trailing punctuation.
+Thanks!
 
-Suggest something like
-
-           error_setg(errp,
-                      "TAP is already initialized and cannot receive "
-                      "incoming fd");
-           error_append_hint(errp,
-                             "Migration parameter 'local' must be set"
-                             " _before_ creating the TAP device.");
-
-Requires ERRP_GUARD().
-
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-
-[...]
-
-> diff --git a/qapi/net.json b/qapi/net.json
-> index ada0329ef9d..d0d6e303b0d 100644
-> --- a/qapi/net.json
-> +++ b/qapi/net.json
-> @@ -435,6 +435,25 @@
->  # @poll-us: maximum number of microseconds that could be spent on busy
->  #     polling for tap (since 2.7)
->  #
-> +# @local-migration-supported: enable local migration for this TAP
-> +#     backend.  When set, local migration is enabled/disabled by
-> +#     migration parameter @local for this TAP backend.  When unset,
-> +#     migration parameter @local is ignored for this TAP backend.
-> +#     To be able to do incoming local migration of a TAP backend,
-> +#     migration parameter @local must be set _before_ creating the
-> +#     TAP backend.  Otherwise, TAP backend is initialized as usual,
-> +#     opening/creating TAP devices in kernel.  In this case further
-> +#     local incoming migration (with migration parameter @local set
-> +#     after creating TAP backend with @local-migration-supporeted
-> +#     parameter set) will simply fail.
-> +#     Moreover, when QEMU is in incoming migration state, migration
-> +#     parameter @local is set and @local-migration-supported is set,
-> +#     the following options are not supported and must not be set:
-> +#     @fd, @fds, @helper, @br, @ifname, @sndbuf, @vnet_hdr.
-> +#     Additionally in this case @script and @downscipt must be
-> +#     explicitly disabled (empty strings or "no").
-> +#     (Since 11.2)
-
-Default?
-
-> +#
->  # Since: 1.2
->  ##
->  { 'struct': 'NetdevTapOptions',
-> @@ -453,7 +472,8 @@
->      '*vhostfds':   'str',
->      '*vhostforce': 'bool',
->      '*queues':     'uint32',
-> -    '*poll-us':    'uint32'} }
-> +    '*poll-us':    'uint32',
-> +    '*local-migration-supported': 'bool' } }
->  
->  ##
->  # @NetdevSocketOptions:
-
+-- 
+Best regards,
+Vladimir
 
