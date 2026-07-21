@@ -4,130 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 380C1C4451C
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 10:41:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FED1C4451C
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 10:42:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm7tp-000657-QT; Tue, 21 Jul 2026 06:40:33 -0400
+	id 1wm7uQ-0006un-8v; Tue, 21 Jul 2026 06:41:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wm7to-00064u-M7
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 06:40:32 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wm7uO-0006mo-6o
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 06:41:08 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wm7tl-00035y-Pg
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 06:40:32 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ id 1wm7uM-0003IX-At
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 06:41:07 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66LARvNs1252118
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 10:40:29 GMT
+ 66LARNdA945886
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 10:41:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- DIzpMBVIX9iNrP/c8/KMOEKN80fjo92tfLWtNpAZBd8=; b=eSC5/TMK80oRXZVz
- MxqT71J4lRUQukt5BDBZpqA0RZOPveho5T9PqbcmTJeJjHpT8xwQEbSLUPryZ67d
- iZWqkOq8aZwzwPm2S64KK5Ob6c+dNfhka/qXeuqnJ5KHxz8mkQRB0gIgxDrAtg/g
- nJ7unpbENhBiatfg2XJ//84CX7x5rK9mm0aZJoUXwXtyyyagUjG+EAVqqWYJuxo8
- SNCV7LQLUFlH4sUlhFgTuMzF94UJ4z4mpw1IWMDRyC1cPOO8hz974ap7fMJX57hN
- 1VeSdWsxtmzEeLjoDXHlmOreXv2J3XdrPUo+s1mI8oMCHZC7rXrh1Fx2VDLLMLz9
- k4VZiA==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhqvcbyuq-1
+ 9OEdg4Y/czGP7sdFRIVKRI2DQ40/n6xNagJwYMwJZaQ=; b=WqIhEIPE3VzjITgl
+ hM5mBGdexaqtHmqo1vcwgc1vqQDn4NWGLAJb0YgnjSZluuDucBeyZkpdcEjh0BLQ
+ n5tBRPF/hGn0CD988a2/Avfee0S5x/O4qiKXV9H6En+bKolGVZKcORL65/Wf2nEC
+ b4ikqEhK+j3vsD7bMbYyT7yQ2Qf7oMnGEF/YyBpYqlFdWpMTMbZGOqtdsgE+gFDw
+ edr0r89Kln1ftXcm0DepG01MMr156xizhDlHatGSwaYaDp7e5ZOsbUmP7MCqKspi
+ 9mtYayE3pLbglphz9H7dhawGksU3Z8lS6ewtn1jIF1+brCMBsdd1YlAaRmE2zMOU
+ +ph09g==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fj1es1shf-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 10:40:28 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-5174a236220so205537221cf.3
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 03:40:28 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 10:41:04 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-51c0f0a0760so268544871cf.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 03:41:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784630428; x=1785235228; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1784630464; x=1785235264; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=DIzpMBVIX9iNrP/c8/KMOEKN80fjo92tfLWtNpAZBd8=;
- b=Gt5vdY1c0zHvrP6j+lnqT+D5h2cnkLQX16MaZHLVdWL1aQvsVcpUkrw7CZ87hSajCk
- FQcS4Ri9w9U7O0jbnfWynMLnEK9f6nM5Od7hTsh8Vp9FKuXpm7dg/strL/WxjPZ7yrDG
- fQGAiL0TAtU+2wjuuozOwvcwv9VjrV2PrsMHaRpM/9PWqURTGlrZEq1NPTksIVfAr5ck
- 2thdPW8X4sw6APchV2VeWn0ay0kjobbRX5NUUaXZEPNo6VdFzZoBXzS/VXtZhhOMheWw
- IYANc7ZD+sKKGtJvpu+JDYL2yneIsnJX8GOBYqBiuC2ocxZ0LCQnpuA34wx8jxsuYc7/
- mqjg==
+ bh=9OEdg4Y/czGP7sdFRIVKRI2DQ40/n6xNagJwYMwJZaQ=;
+ b=W1fntK+4Gh/Qki+EKgmBtFjQNKxciD4x9+JzCTbc0bXHOe7pjvzBuBB/vtti7IfU9g
+ HgCFFk+yXamEYM/m8FF8FKxZ9a+vAmgrGWKdPLzLx+qv2LQFkHIz82INKInVHFBF/9eJ
+ qi4e0vnw6S3TrlLZhHr9/LOUHmf7hVhjTSXKqCZy5oDV2z2AI42jzsjinM1Vj0kqE9Rk
+ 4lVRyHsgm3vaL7NCQP2p0NlFf5pwcR8dhOHFXKkc1C9QVYtHtFFaKKKlms9dYOo7ciB7
+ Ae5YBTtPmFsgiyNpbgZESdxJ5kuL5fcgt8Ukn13hlpfBIsl0w5iA02ICxw3WrE70O+yg
+ 6pDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784630428; x=1785235228;
+ d=1e100.net; s=20251104; t=1784630464; x=1785235264;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=DIzpMBVIX9iNrP/c8/KMOEKN80fjo92tfLWtNpAZBd8=;
- b=hF8yRJimqzZ1sP9q+4NbrHBfpueK6rCmZZUS5iySS2w2BGpWdab77WsvfaAe780h/X
- VF13aWeqSq1MKwp76+osYW86Uco5HiZYbA47687rKVLfMnr0KkADaDritBBHWfQpfr80
- kQzJtO22e9WoEDZJByY4EHuracnzMuQJuVf0o5Quxz+VDSe23PLM3wrw4CQMR7xTqUSQ
- Eauwmi5xgrgd6MFJXEkPah265jAtDrwz0KV/reqFunqDfkE9lQLhsHAJ1INMpFWjS5Eb
- BLvW7fQuHDxbiiGNWPFhssNxZg2U0qLQvVsEVd0PVJIMRKyZVEMJFdxHfy2oed6nP+BS
- 8Ewg==
-X-Gm-Message-State: AOJu0YzEhKfy10wTdDIwfAtBeOJvl1mSgdpd3s5VY6D5mTW/7RE8Ky+r
- HGBzIO14397Ziv5+IM4FCGGG3qIF8T1mtYURSsAvumoqBEVE9xp0mr7WMyrYDwhc6NJTq+6ysDq
- abAl09yWs+lg4fY5lI+heu9N4VYesT4UYg3zjssaf1oXhxGzc8NxHpYZzHOQtQ/gE3w==
-X-Gm-Gg: AfdE7ck8fHFySiAmfEQQykdncybceS6NFOZPsY4r4xYtrKdXSER75ZBP3CwAuBglb9e
- QASq1/xXSYaAgw0efW7F4KrGPv8nB3kt2cNgA645xOOYLryxiQaflIlkN2IbUJSshmksrAIfqT3
- g6pHdM0YDtJz16bppD0rNC5ScmwMZX2qz6g8Brp/S+nIG2w1OZ/JgPd/J0CBycB4f47AXSQVsAb
- m43RUKm8BOe8EcSzsBfV7HHKHp8SWAtCzld4O+MWRY3mLmJ+iSdN+XRPFyMlZouJjXbcXRp5lcE
- JnQeVLWRZoL/Fac7kQbf9/6SeLeRDpD3kEIdNpq1s4QieC3tXjtknOCEjC4jVhRMMu3hIr3pXzX
- tO7vfSElcSQ97Zkvq2Rto6zVwXqp8kEtDKmd3yrNKPNHFgQPTkxGoupen7A==
-X-Received: by 2002:a05:622a:1f0d:b0:51c:13d6:b4e3 with SMTP id
- d75a77b69052e-5213e67f164mr164452011cf.64.1784630428197; 
- Tue, 21 Jul 2026 03:40:28 -0700 (PDT)
-X-Received: by 2002:a05:622a:1f0d:b0:51c:13d6:b4e3 with SMTP id
- d75a77b69052e-5213e67f164mr164451801cf.64.1784630427723; 
- Tue, 21 Jul 2026 03:40:27 -0700 (PDT)
+ bh=9OEdg4Y/czGP7sdFRIVKRI2DQ40/n6xNagJwYMwJZaQ=;
+ b=KHUhp1rlq2i4WJr2CfwE0+qMyC0wPhAz7EkiLoIQJSnC6ZWDnyG5yV/WaSvdU16TUP
+ GXEAdPA5bo6FsN02VVRFni64jwhXIPaB5Wz7x8RErMR4dHCc+WajT1Ns+CdRf2qDHrNg
+ +7GuTePXudCfCC3OfNn2K4GbK+Zoh7UyV9FnNt5pEkgbNZ8BhJazK79l4DotiQoqj2VR
+ 2NdU2JEwonuzG+z82R+zAdrmKAK5xa9KRyk1U48iaYUj7bIJ6u+bW43pFTi1tPw3WBMx
+ ZrNGljJiApLbIlQVTuJij6zswC1mHoSLGUHdZu2QDNHnkQ9PlTchWCWv8YLGnngcfSG2
+ 5+vA==
+X-Gm-Message-State: AOJu0YwCTSBeI/tO9GYWEAgKCmdRJiHwn0M4XQ68mKCqzayXGMh9SPPc
+ BEoKPuZG3mEqiaPjZBPN/us21ULFHQAHtC7xHPJgfzndbEdhaCF0egeTQAIbVbmA8bueMDPxtiI
+ xdOAma1r1JXWN/7vkJrBu82S4BQjP8Fq0be3uswvdhM1GRdNn73hlK+pQEoghY4/eiA==
+X-Gm-Gg: AfdE7cnc7HrJf5VRtxQBc0OttLpaEiUfzRHdp4CRhZS85juWN8z6vqxr24QH8axjVB4
+ h0NWH5y9/MJiS/hzy5EdQlt+An3o3P416bfJLm4jUIKt0AeAXMD51BWLKRvdHr2u9lv9k1+x++W
+ MTqXIE6hIt/15KqgGSq3jGI1vvupdn3IPjab300YCWfmxJZCF3B/ecCM4Q4MpaqsHgMckMUWkpq
+ Le5Gv9lqZrzJnQPTSi9SuomXf5SoaBAZw9NPMSim1E8waE6jjxtXDy6Pvz4FaePIt4aTlPRFmqI
+ ipJtSsEHV8zSUgJLaIyc1+3wRfFJexOHtMMrpPqeG4MwONrmZVKhefj9QYdjC18ZZ2gbWddURFH
+ ZGNsWez3MuVkZ7G6PU1qnkKUf0Une4sj+pwr5DURdRd6M0hkfNaICwhHEog==
+X-Received: by 2002:ac8:7c43:0:b0:51b:f0ab:2b1b with SMTP id
+ d75a77b69052e-5213e876ed7mr169973101cf.49.1784630463771; 
+ Tue, 21 Jul 2026 03:41:03 -0700 (PDT)
+X-Received: by 2002:ac8:7c43:0:b0:51b:f0ab:2b1b with SMTP id
+ d75a77b69052e-5213e876ed7mr169972891cf.49.1784630463078; 
+ Tue, 21 Jul 2026 03:41:03 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49563969482sm158369905e9.3.2026.07.21.03.40.26
+ ffacd0b85a97d-47f63ed2314sm1970930f8f.23.2026.07.21.03.41.02
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Jul 2026 03:40:26 -0700 (PDT)
+ Tue, 21 Jul 2026 03:41:02 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 3/9] user/guest-host: Include exec/abi_ptr.h
-Date: Tue, 21 Jul 2026 12:39:58 +0200
-Message-ID: <20260721104004.84934-4-philmd@oss.qualcomm.com>
+Subject: [PULL 8/9] hw/audio/intel-hda: restrict all DMA engine paths to
+ memories
+Date: Tue, 21 Jul 2026 12:40:03 +0200
+Message-ID: <20260721104004.84934-9-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260721104004.84934-1-philmd@oss.qualcomm.com>
 References: <20260721104004.84934-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDExMiBTYWx0ZWRfX0oc1J/zFd+dt
- 8hLQhsZb0Im5WvFBjHV95nD97PA1KKix0A1n2JjsnnquA0feTcb79Dwa6b3CNz4jNLRxrV8DM9a
- fYLhcwCR8DDise8wWCaeQPOYVuVwFVM=
-X-Proofpoint-GUID: WWF3wnVkLrnrgDaP68_5oI1Fb1SazEW9
-X-Authority-Analysis: v=2.4 cv=OMYXGyaB c=1 sm=1 tr=0 ts=6a5f4c9c cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Authority-Analysis: v=2.4 cv=SPZykuvH c=1 sm=1 tr=0 ts=6a5f4cc0 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=xfvfwgUyMf2eb4QU6igA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: WWF3wnVkLrnrgDaP68_5oI1Fb1SazEW9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDExMiBTYWx0ZWRfX9uSC27Txs+2p
- LacO7tUVlS57msF3ODq4oHrAAoFqZMc6dzmFi2KF8x4NXTftX5eTTWRr+NRWONefS5LGyrNEXbM
- xAqecBVAR+D5cuhTAb7Aeq88YfitNyj0UNGx56hnfKs7P4SK1bGdrV8HtsqgN/DLIj6+3cgFWn9
- F5SXT5cYd1BN6ySX/HJG9kljVKVfW1RLEphG6pPy3mNG3p4VMt3yFf259QLdTgptbTDUqrlv9xd
- jSzrW7+jjWBmEgX/PHk+PmcBKybVzELYTojEyDPYCAkHtDF8lfUBLA8h2mEBXwbsStCHDbgUNdE
- Zhllq2hJ7F6Grl1dLGvPyuu5ctrLrFIGMaG9tBbMVSa9DesLdsGIS1jHQSPqsF3hEZc7gSEKwtl
- BSQO5/VkH6H67DizM1dRzcmmVeTIM35AXdAGxuLNty4pWlUY8TtLoBIcWm4XhlH7H0TfKydx8ke
- j1lo4mMCod61yXzl+eg==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=pGLkceISAAAA:8 a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8 a=wJWD-ArndqrXDSP5iLEA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
+ a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-GUID: 1f1GCh_Zgbsud3xWAlZ3wc1uZ4Q7Hlu7
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDExMiBTYWx0ZWRfX0ieT0R9Zc+An
+ +jzuC6w/fHzq/+Ja09r7juvJXEVJZU9BdouCMIaZ8xhUtzX0E+caL1UHkM53ExPd6xJV7PHkFNL
+ Ya+u3Vpc1cCRwY/ejMb9LYtEXl9PhurnVPMNHApFovKwCOeDtIDFRHt/zJgXEBGaNBjjrAQOInS
+ S7cKbnlwObHtVIcl3XojgXTYhm4fLWbg9a2EatTqn/U6seQ2SA64yGTSIKCbJNbEGI0/iNNq2Je
+ XED8jGvEAIcoCQCpZj7LWgPCdvw5U1FcYtYLLfLGL6II3UUMcbLLDdgAsziz7RENhLOH3BQ60FO
+ 3tAqPrad9jr9+VsDhS6YhT1HOjrtwYtgOZp+IV5ljE9vwRb7gAyJn1d7Yazhjyp5G6eT5a0HHTV
+ sx6+rPyRF+wqoVPNxaFl9f34Q7X2LOBXX0X1ld5vjAKDzubdDN8KR+Yu2CA8Ju1VL4Th5WM5FKD
+ hJCsNqJ9KwfrOXOLgOg==
+X-Proofpoint-ORIG-GUID: 1f1GCh_Zgbsud3xWAlZ3wc1uZ4Q7Hlu7
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDExMiBTYWx0ZWRfX7FB/zto++Mo9
+ GH3vIej/DK+RJeLnVW+79SSdIzFnxAUel1zJnRURdf2BtwzfXkGVYqr8KmH33JqzwF6Xxj2BbcZ
+ 27ET9KrxP42e91vOjoP546iWPOn/fJ0=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-21_01,2026-07-20_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
- bulkscore=0 malwarescore=0 clxscore=1015 impostorscore=0 phishscore=0
+ adultscore=0 priorityscore=1501 bulkscore=0 phishscore=0 lowpriorityscore=0
+ spamscore=0 clxscore=1015 suspectscore=0 malwarescore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607210112
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -150,31 +152,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Haotian Jiang <jianghaotian.sunday@gmail.com>
 
-The COMPILING_PER_TARGET block uses the abi_ptr type
-without including the proper header.
+CVE-2021-3611 (commit 79fa99831d) restricted the DMA engine to memories
+by setting attrs.memory=true, but only applied this to intel_hda_response.
+Three other DMA engine access points still use MEMTXATTRS_UNSPECIFIED,
+allowing a malicious guest to trigger DMA-to-self-MMIO reentry:
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+  - intel_hda_xfer (line 398): called from the audio timer callback
+    (hda_codec_xfer -> bus->xfer), so the MemReentrancyGuard does not
+    fire (engaged_in_io is false outside MMIO dispatch). A guest that
+    points a BDL entry at the HDA controller's own MMIO BAR can write
+    audio samples to device registers, triggering whandler side effects
+    such as starting/stopping streams or injecting codec commands via
+    CORBWP.
+  - intel_hda_parse_bdl (line 478): uses pci_dma_read which hardcodes
+    MEMTXATTRS_UNSPECIFIED. A guest-controlled BDL base address can
+    point at controller MMIO, allowing the DMA engine to read device
+    registers as BDL descriptors.
+  - intel_hda_corb_run (line 333): ldl_le_pci_dma reads the CORB ring
+    with MEMTXATTRS_UNSPECIFIED, allowing the DMA engine to read
+    controller MMIO as CORB entries.
+
+Fix all three by passing {.memory = true} explicitly, matching the
+fix already applied to intel_hda_response. For intel_hda_parse_bdl,
+replace pci_dma_read with pci_dma_rw to pass the controlled attrs.
+
+Fixes: 79fa99831d ("hw/audio/intel-hda: Restrict DMA engine to memories (not MMIO devices)")
+Reported-by: Haotian Jiang of Tencent Security (Yunding Lab) <jianghaotian.sunday@gmail.com>
+Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
+Cc: qemu-stable@nongnu.org
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260717232306.378988-2-richard.henderson@linaro.org>
+Message-ID: <20260721060941.2989396-1-jianghaotian.sunday@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- include/user/guest-host.h | 1 +
- 1 file changed, 1 insertion(+)
+ hw/audio/intel-hda.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/include/user/guest-host.h b/include/user/guest-host.h
-index 506efc097e0..f136f81f5d9 100644
---- a/include/user/guest-host.h
-+++ b/include/user/guest-host.h
-@@ -80,6 +80,7 @@ static inline bool guest_range_valid_untagged_vaddr(vaddr start, vaddr len)
- })
+diff --git a/hw/audio/intel-hda.c b/hw/audio/intel-hda.c
+index d7c2c3c2fd4..3d361a4976c 100644
+--- a/hw/audio/intel-hda.c
++++ b/hw/audio/intel-hda.c
+@@ -305,6 +305,7 @@ static int intel_hda_send_command(IntelHDAState *d, uint32_t verb)
  
- #ifdef COMPILING_PER_TARGET
-+#include "exec/abi_ptr.h"
+ static void intel_hda_corb_run(IntelHDAState *d)
+ {
++    const MemTxAttrs attrs = { .memory = true };
+     hwaddr addr;
+     uint32_t rp, verb;
  
- /*
-  * These functions take the guest virtual address as an abi_ptr.  This
+@@ -330,7 +331,7 @@ static void intel_hda_corb_run(IntelHDAState *d)
+ 
+         rp = (d->corb_rp + 1) & 0xff;
+         addr = intel_hda_addr(d->corb_lbase, d->corb_ubase);
+-        ldl_le_pci_dma(&d->pci, addr + 4 * rp, &verb, MEMTXATTRS_UNSPECIFIED);
++        ldl_le_pci_dma(&d->pci, addr + 4 * rp, &verb, attrs);
+         d->corb_rp = rp;
+ 
+         dprint(d, 2, "%s: [rp 0x%x] verb 0x%08x\n", __func__, rp, verb);
+@@ -395,7 +396,7 @@ static void intel_hda_response(HDACodecDevice *dev, bool solicited, uint32_t res
+ static bool intel_hda_xfer(HDACodecDevice *dev, uint32_t stnr, bool output,
+                            uint8_t *buf, uint32_t len)
+ {
+-    const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
++    const MemTxAttrs attrs = { .memory = true };
+     HDACodecBus *bus = HDA_BUS(dev->qdev.parent_bus);
+     IntelHDAState *d = container_of(bus, IntelHDAState, codecs);
+     hwaddr addr;
+@@ -466,6 +467,7 @@ static bool intel_hda_xfer(HDACodecDevice *dev, uint32_t stnr, bool output,
+ 
+ static void intel_hda_parse_bdl(IntelHDAState *d, IntelHDAStream *st)
+ {
++    const MemTxAttrs attrs = { .memory = true };
+     hwaddr addr;
+     uint8_t buf[16];
+     uint32_t i;
+@@ -475,7 +477,8 @@ static void intel_hda_parse_bdl(IntelHDAState *d, IntelHDAStream *st)
+     g_free(st->bpl);
+     st->bpl = g_new(bpl, st->bentries);
+     for (i = 0; i < st->bentries; i++, addr += 16) {
+-        pci_dma_read(&d->pci, addr, buf, 16);
++        pci_dma_rw(&d->pci, addr, buf, 16,
++                   DMA_DIRECTION_TO_DEVICE, attrs);
+         st->bpl[i].addr  = le64_to_cpu(*(uint64_t *)buf);
+         st->bpl[i].len   = le32_to_cpu(*(uint32_t *)(buf + 8));
+         st->bpl[i].flags = le32_to_cpu(*(uint32_t *)(buf + 12));
 -- 
 2.53.0
 
