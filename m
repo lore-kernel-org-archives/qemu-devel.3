@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02378C4452B
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 08:20:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3FB0C44529
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 08:20:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm5gc-0000qx-Uc; Tue, 21 Jul 2026 04:18:47 -0400
+	id 1wm5hC-0001SX-EE; Tue, 21 Jul 2026 04:19:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wm5gX-0000dr-Vj; Tue, 21 Jul 2026 04:18:41 -0400
+ id 1wm5h9-0001FW-7R; Tue, 21 Jul 2026 04:19:19 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wm5gU-0001Zi-9o; Tue, 21 Jul 2026 04:18:41 -0400
+ id 1wm5h5-0001Zc-OZ; Tue, 21 Jul 2026 04:19:18 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66L8GsBt050170
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66L8GsBo050170
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 21 Jul 2026 17:17:35 +0900 (JST)
+ Tue, 21 Jul 2026 17:17:33 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=Iv7enNv9vL+vKj7nCr+LWhCY/F9M6rCau2rEhwbdDCk=; 
+DKIM-Signature: a=rsa-sha256; bh=KCkvLBJ8aCkGl3UnV8nuvJrHcJ4tFIcRZ/oODyRyGkA=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1784621855; v=1;
- b=UHQwlkhj9VChpI9WpiKHcxUBPyqRY7YleNYkT/wkybwBMCxHilYoZDMXHwwqeRQI
- KtMIqfE+Gb8HziF4NVU/UjbhFRWtahFBL+mxjc+DSjz0XfA0cPPRUVlJs3EEMVqp
- TbefWJ8XxKuY80CCz4l4Q6UXTBrGixiGtoh6b9Vm4PvG3/yqebYDx+jQ5yoPKQ9x
- odNJZhUZIyxJTpEG1GiHfemCVfXGmd7B4SKs8nBI5jJ1U8zYqjS3DAy3lH3vlslJ
- +tF/kqGWXFsPwNfMSAA/sy5rwa1NBJXqvt9pDlRx5gfKc15yMQUX1myniO+q9oGY
- dT6+Ial50nY0rz0GT0rT2Q==
+ s=rs20250326; t=1784621853; v=1;
+ b=DlhQ9n3r2fBtwhHK5SVRatUR7zcz1i0OyPi1SyVWtAj0C1kzFUjc3HBBuCZPXzD1
+ BvtbK/nucm1L6ocrvMFwnZ2P3dzmirG/90z4OtUQUt7qewnmnjRgRPWaEUChK96u
+ vwp2siMoDR7xfrSVJAEi9WJoa1FKj3pEbxlK0+/NDjTyqVC7O0cdlzqMM7u3Mw/o
+ Ha1I+pEFJWidTZQ7wvTxQuFGjYjPJd4xcLI05cZZsEbmVx6TmOiEsd8TpE49ttNc
+ mDqWSjzKqrx+UqUdr1aUCNTElJdmmB35QP2M0gQMq0HeptxBIqGtznH5vKSlYv5Q
+ bfFRhGCCrV+C6VCXUBhXQg==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 21 Jul 2026 17:17:00 +0900
-Subject: [PATCH for-11.2 v3 10/15] hw/virtio/virtio-mem: Use qdev_is_realized()
+Date: Tue, 21 Jul 2026 17:16:55 +0900
+Subject: [PATCH for-11.2 v3 05/15] hw/mem/memory-device: Use qdev_is_realized()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260721-qdev-v3-10-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260721-qdev-v3-5-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260721-qdev-v3-0-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260721-qdev-v3-0-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -69,13 +69,13 @@ Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-925f5
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1345;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1325;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=OLHddyMfdGW1CwQ4LuGxhyAlMkypNtaeD0eH7Ze+1Ww=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ1a8tvi2kC0X9xS8uKRd84yrTuet2KSSoOdT/p0s2X4jU
- N/xhZR9RykLgxgXg6yYIktK0W5ujejaT4UJ8S0wc1iZQIYwcHEKwESKehkZtq2891BuL5fuOd9z
- +1bFb9100uvGsZdfQhes4tLxt3Hmi2X4X6vIcOQa+6SQvYzrzl9meZo6k6O5p3aLxUm+x1e+i6x
- y4wcA
+ bh=80CkMV8WZ5hqRVetX6Z0kr6XzMUsXkxBMrdyWT951R8=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ1a8tsj9sIPxynKSfizrnWb/dpO6wSFw20C3aj3PNs+lT
+ Q8+tS3qKGVhEONikBVTZEkp2s2tEV37qTAhvgVmDisTyBAGLk4BmEikN8N/D6kf1SeMv/yIZdob
+ Wlpbpav7v9N/2Z9QI033pdMktx37wPDPRO6JcIVPuUrsKi7D/f92W/eIWGpb2Yle/RhtwHg6V5s
+ bAA==
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -107,30 +107,30 @@ DeviceState::realized directly.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/virtio/virtio-mem.c | 4 ++--
+ hw/mem/memory-device.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-index 35e03ed75998..7130ed852d9c 100644
---- a/hw/virtio/virtio-mem.c
-+++ b/hw/virtio/virtio-mem.c
-@@ -1453,7 +1453,7 @@ static void virtio_mem_set_requested_size(Object *obj, Visitor *v,
-      * The block size and memory backend are not fixed until the device was
-      * realized. realize() will verify these properties then.
-      */
--    if (DEVICE(obj)->realized) {
-+    if (qdev_is_realized(DEVICE(obj))) {
-         if (!QEMU_IS_ALIGNED(value, vmem->block_size)) {
-             error_setg(errp, "'%s' has to be multiples of '%s' (0x%" PRIx64
-                        ")", name, VIRTIO_MEM_BLOCK_SIZE_PROP,
-@@ -1507,7 +1507,7 @@ static void virtio_mem_set_block_size(Object *obj, Visitor *v, const char *name,
-     VirtIOMEM *vmem = VIRTIO_MEM(obj);
-     uint64_t value;
+diff --git a/hw/mem/memory-device.c b/hw/mem/memory-device.c
+index 9cf82b84cf44..24bebfb6b31e 100644
+--- a/hw/mem/memory-device.c
++++ b/hw/mem/memory-device.c
+@@ -59,7 +59,7 @@ static int memory_device_build_list(Object *obj, void *opaque)
  
--    if (DEVICE(obj)->realized) {
-+    if (qdev_is_realized(DEVICE(obj))) {
-         error_setg(errp, "'%s' cannot be changed", name);
-         return;
+     if (object_dynamic_cast(obj, TYPE_MEMORY_DEVICE)) {
+         DeviceState *dev = DEVICE(obj);
+-        if (dev->realized) { /* only realized memory devices matter */
++        if (qdev_is_realized(dev)) {
+             *list = g_slist_insert_sorted(*list, dev, memory_device_addr_sort);
+         }
+     }
+@@ -326,7 +326,7 @@ static int memory_device_plugged_size(Object *obj, void *opaque)
+         const MemoryDeviceState *md = MEMORY_DEVICE(obj);
+         const MemoryDeviceClass *mdc = MEMORY_DEVICE_GET_CLASS(obj);
+ 
+-        if (dev->realized && !memory_device_is_empty(md)) {
++        if (qdev_is_realized(dev) && !memory_device_is_empty(md)) {
+             *size += mdc->get_plugged_size(md, &error_abort);
+         }
      }
 
 -- 
