@@ -4,83 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6000CC4452D
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 08:52:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8342CC4452B
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 08:52:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm6C8-0005VC-Pq; Tue, 21 Jul 2026 04:51:20 -0400
+	id 1wm6Bl-0005M2-Oz; Tue, 21 Jul 2026 04:50:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wm6C1-0005TR-IW
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 04:51:13 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1wm6Bk-0005LI-9n
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 04:50:56 -0400
+Received: from mail-wm2-x09.google.com ([2a00:1450:4864:31::9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wm6By-0005iu-Ri
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 04:51:12 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4954dff6536so23961215e9.0
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 01:51:10 -0700 (PDT)
+ id 1wm6Bi-0005fi-GZ
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 04:50:56 -0400
+Received: by mail-wm2-x09.google.com with SMTP id
+ 5b1f17b1804b1-49553da76dcso10038785e9.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 01:50:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784623869; x=1785228669; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=hbE+1TFJ2PollExrCKISYsmaeN1UnHb+b/ard1c1p80=;
- b=WszsefPiXEOJaNxHP7MVtzpa9XziW6XcH3EVv0V7TqJcNwfDFJk8eDf56Dh0KPUFSX
- SCQN8Xb/wJsZdzzskE20Z6Qh3r9TDJ/c8V2sXAYXxg+Mlc0+JiG7oJjxBergpQIw1cSz
- PwbptvPffcwmAwHgsTjmup0Vwoxc6oy0xntTI3cDCQbfkn6Nkiyi0jPtohg7Hfo23N/n
- eRTUPC09Gj7ZU+P4EmG4Gf8qf9rQknr1vj8xf84SFiBm4ZK1zS6XKxXR3o/i46cg4W/T
- QoJlZmiLb9l2qTvB6YoXl9b4+cac3sc+8XmWNGVj5U9QVzFLByA54uNn69V6tOVasbL6
- 30tA==
+ d=linaro.org; s=google; t=1784623853; x=1785228653; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=1kyKn+GcUZJvG04ymgDR9MxyuSI0QZ12iCuSZmsG/QM=;
+ b=YRQkcraKzx20feBxJd70/i8tGC2m+0xRrioyBCS7hiIinkqAtJJGE7wHGwP5PVjVrc
+ 8uXmFHRlOslo35yz+Fn//xCaJ2vauy6BnjApPvBGnDCMr2j6t4Gk26+Zk+lPTWuZ2nAq
+ sg/A7GenzXL48UU0mOOx3plkJxgVFy2U661B/2Ebv56aca4uPd26hEiuZkkzZMe8ON9/
+ ZvuNBQD/FeAv7P1NzfDuxXcIz7eQ3/6fX+ZKRocPeG+lfCtjz8O/lf3Yu7KXsL4GhRx+
+ 2CnBW/b0S3AwV/6X2/Sf3U+vUtfwsUldQhCRLoBYJftoDfz+xSPCTi8l02QfHmWIzJOj
+ Y4Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784623869; x=1785228669;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=hbE+1TFJ2PollExrCKISYsmaeN1UnHb+b/ard1c1p80=;
- b=Hgx58lqJCNLOGiHb/P7hHEa+DESUagWqT2SKkD3d/CMH3MF7AF7vfPnl+FDsFv/q2d
- jTFwqes5e7RBGBDb1o88B9gRmbxvKtwS/7RJlo7bLSZ7QV66wwJamEKoWnvC1tXCFIzL
- gtYiz3ItNxXMQ8lLSSyNQZpvXnMGJuA4Spgkdr8AW/gZ0IFnOxMfHRpsXV87iLWhj5s9
- IMmbNO46SDSPAO13LPfgRk6e7weSN1H4mY2iX7Nx2LEuXuHXc2Jh2GO3MTFrYrGeMJ3Y
- etxDu6yPbKBiVn73w67J+S6Kv2h53qBmTdYrZL1k8/Ix1sslc9T4etRA5g279INYKd+G
- golw==
-X-Gm-Message-State: AOJu0Yy3ImqW8XazL57onS1iDTK9LXISIZxnWyQ2No7i1It7ASeaKFbu
- MjdyJmTci8zxIpfrPxiuw8i8rO94bArYe0dhcLOJVgPCoIksA/CpDNWlCqDWc7aqaGdhvUSksFZ
- tCdeVwc14sw==
-X-Gm-Gg: AfdE7ckPo1e5Fi8i26v9Uf2evfn6euvqMq0U7QFZdw0NSbybGnSpMyS64goVc+AL5BF
- 40tgNAT7dB25pdnxZlZ0wRRBWcc21P9J7Z2YUCaHvoVlmHStWhm9p2W/w6GiJ6j/hqYRSnjojQX
- TGsQj8qI9hdcdNnXtFJnKolj6P87/V0pai1tiy6BLyHXla6d/ahUx0JBlpV24uHDLW11aanxhXN
- 0WkoH2KPVeab2gyKpqAabtL8cr0YXUXNRHCXfwaowzCBKUAqxGHrmhL7GZfOYuIvG+kcx2asSO8
- Eyph++3AXNqtgawD9ONwhUySmPh/D8lF/OJ7/epGMOc2vlSCDHmPZq4e5rDUqnfpMOroXtJwIQF
- C3aSZiAtNnMQoegA46kB0270W3zZqlQLARtY9Rt9AKFhYBtreweiIBGbnEdedmVSwoQROaTSZ6i
- 1dg2wVXk7F7ju3zU/WCG+2DiF7uyr/faI3VfgmMWd4WmDRHdntSfX+obrz6Kwgcii9Iqg1Om0Xz
- 4aAPpE+lsU=
-X-Received: by 2002:a05:600c:3b8c:b0:495:5039:391c with SMTP id
- 5b1f17b1804b1-495503939b1mr165187515e9.26.1784623869221; 
- Tue, 21 Jul 2026 01:51:09 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1784623853; x=1785228653;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=1kyKn+GcUZJvG04ymgDR9MxyuSI0QZ12iCuSZmsG/QM=;
+ b=gbNHfmWOLQLE/clUBvsWfI9dqhAd+UDKldSUJGi04jZ/ORI5VS6Kye11STZfzHaQU6
+ cfcE7KeizRRApmyRkr5VtXN7H+pwm7/Ek/6xsbGWS03jlxifKR4v9n4Ka9ew5thMk8U2
+ +RUkaNsq3+9wwOVzbWRCTKDZEv7B19+8F8gZ8KOdXp+JtzxnCQb9IMpdXFj+qBva9Z1Z
+ YChFklFsdGteA+VTdvw36Eko1CYd+pqitqy/+V7+0KevzBEj6V0ja28QRq0YRBSOfAjj
+ 35reqs2SgHvi2mHnNwDkVMowILuwg29rSKERd+JTa00hM6twyeIN/XygUacsRjttzKwq
+ xbhQ==
+X-Gm-Message-State: AOJu0YxjHOfbnAVl0d86mA6T5puljrcDtphXfkJnMKHHA4dY7csGvCgX
+ JBzv4zZVYXZdsb9ANtsZ4Y8/7InCnbXPWpl8BsXFxPhXAwI5pQ/KLd5yVRJ2Zz0vyUFcMa2z4LT
+ gjayJAWNaDuAs
+X-Gm-Gg: AfdE7cm0Sppx1yRbqUCpH/GERVzj0FA7i4euombpd533x4g3Sp7GCfR8EvcLWVmUyxV
+ Mnsd/9WBa/b/vCGwd2UvLyQ2QSOlx2fvbdsJatBgpfjAs46dwQP4svyff+xrrdLNcawi3/n5N1X
+ 04d0B3In9rDFP/vlTpxDmjWVZ36OZXMo6UYN2epKKdqiiCldYJD4+yWa2T2AwQiGZffJPni2XBi
+ ur63MxXCb2fD3sPs+wj0NZthKLledQA+MS2QR6ohviS0c0PV23mA05mLxBmdm36APmMLGCvXgGW
+ 6082AAXh1iza5jjHT9qmZADN+J3kdPYaZQdayqQ1eLCHZmSd+GfKlPNu0GEaAufqCDh2gVkm7YY
+ Ivlcpf+CGBcPVtFzm0TpjY4NWEsp29QBiNsw2kxatJ1J70TPH5b0d/+pW/q1AK+nEVTL/yI2kLN
+ Lmt5se172i3MuR1ptwL+7TFHLvURNwuXQN6oQZ/LA0NZpzGiQiIMaxniRobrF30u4B80a+B4UVI
+ a7a6r9XYao=
+X-Received: by 2002:a05:600c:3b1b:b0:493:ece1:86b9 with SMTP id
+ 5b1f17b1804b1-4954a3d649fmr201543905e9.8.1784623852866; 
+ Tue, 21 Jul 2026 01:50:52 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4956537c7desm68707245e9.7.2026.07.21.01.51.08
+ 5b1f17b1804b1-4956537c7desm68707245e9.7.2026.07.21.01.50.50
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Jul 2026 01:51:08 -0700 (PDT)
+ Tue, 21 Jul 2026 01:50:51 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 15/16] MAINTAINERS: Add soc_dma to OMAP section
-Date: Tue, 21 Jul 2026 09:50:49 +0100
-Message-ID: <20260721085050.421257-16-peter.maydell@linaro.org>
+Subject: [PULL 00/16] target-arm queue
+Date: Tue, 21 Jul 2026 09:50:34 +0100
+Message-ID: <20260721085050.421257-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260721085050.421257-1-peter.maydell@linaro.org>
-References: <20260721085050.421257-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:31::9;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm2-x09.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,35 +99,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The hw/dma/soc_dma.c code appears to have been written with the idea
-that it abstracts out DMA transfer operations from the details of a
-particular DMA controller device.  In practice, it's used only by the
-omap_dma code and I would not today recommend trying to use it in any
-new DMA device.  Add the files to the OMAP section of MAINTAINERS so
-that patches can be cc'd to the appropriate places.
+Hi; here's a pullreq for arm; these are all bug fixes.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260710105907.2570621-10-peter.maydell@linaro.org
----
- MAINTAINERS | 2 ++
- 1 file changed, 2 insertions(+)
+thanks
+-- PMM
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 74fc43f5f20..a28935c8986 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2205,7 +2205,9 @@ M: Peter Maydell <peter.maydell@linaro.org>
- L: qemu-arm@nongnu.org
- S: Odd Fixes
- F: hw/*/omap*
-+F: hw/dma/soc_dma.c
- F: include/hw/arm/omap.h
-+F: include/hw/dma/soc_dma.h
- F: docs/system/arm/sx1.rst
- F: tests/functional/arm/test_sx1.py
- 
--- 
-2.43.0
+The following changes since commit bd6079a7a1d14de0918a7715ef6db85dc32de3bb:
 
+  Merge tag 'next-pull-request' of https://gitlab.com/peterx/qemu into staging (2026-07-20 11:12:38 -0400)
+
+are available in the Git repository at:
+
+  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260721
+
+for you to fetch changes up to b693da615a7ab2adae7383fecb87b0e13966256e:
+
+  Revert "target/arm: Build cpu32-system.o as common object" (2026-07-20 19:05:30 +0100)
+
+----------------------------------------------------------------
+target-arm queue:
+ * hw/char: imx_serial: add missing migration state
+ * hw/net/xilinx_axienet: Fix PHY register 17 link status reporting
+ * target/arm: GICv5 cpuif: gicr_cdia_read() ppibit should be 64 bits
+ * target/arm: GICv5 cpuif: Writes to ICC_APR_EL1 can change IRQ/FIQ
+ * target/ppc: Remove unused helper_lscbx()
+ * target/arm: Fix testing of raw mtx value
+ * hw/dma/omap_dma: don't allow guest to memcopy arbitrary memory
+ * target/arm: restore missing A-profile CPU types to qemu-arm
+
+----------------------------------------------------------------
+Jay Chang (1):
+      hw/net/xilinx_axienet: Fix PHY register 17 link status reporting
+
+Peter Maydell (13):
+      target/arm: GICv5 cpuif: gicr_cdia_read() ppibit should be 64 bits
+      target/arm: GICv5 cpuif: Writes to ICC_APR_EL1 can change IRQ/FIQ
+      target/ppc: Remove unused helper_lscbx()
+      hw/dma/soc_dma: Remove soc_dma_port_fifo support
+      hw/dma/soc_dma: Simplify soc_dma_ch_update()
+      hw/dma/soc_dma: Remove union from memmap_entry_s struct
+      hw/dma/omap_dma: Be more careful about overflow in transfer setup
+      hw/dma/soc_dma: dma bytes is uint64_t
+      hw/dma/soc_dma: Use physical_memory_map() for mem2mem transfers
+      hw/dma/soc_dma: Remove unused mem.base, paddr fields
+      include/hw/arm/omap_dma.h: Move to include/hw/dma
+      MAINTAINERS: Add soc_dma to OMAP section
+      Revert "target/arm: Build cpu32-system.o as common object"
+
+Richard Henderson (1):
+      target/arm: Fix testing of raw mtx value
+
+Tao Ding (1):
+      hw/char: imx_serial: add missing migration state
+
+ MAINTAINERS                                |   2 +
+ hw/arm/omap1.c                             |   8 +-
+ hw/char/imx_serial.c                       |   5 +-
+ hw/dma/omap_dma.c                          |  37 +++---
+ hw/dma/soc_dma.c                           | 196 ++++++++++-------------------
+ hw/net/xilinx_axienet.c                    |   3 +
+ include/hw/{arm => dma}/soc_dma.h          |  33 ++---
+ target/arm/tcg/{cpu32-system.c => cpu32.c} |  10 +-
+ target/arm/tcg/gicv5-cpuif.c               |   4 +-
+ target/arm/tcg/meson.build                 |   5 +-
+ target/arm/tcg/mte_helper.c                |  25 ++--
+ target/ppc/helper.h                        |   1 -
+ target/ppc/mem_helper.c                    |  28 -----
+ 13 files changed, 136 insertions(+), 221 deletions(-)
+ rename include/hw/{arm => dma}/soc_dma.h (70%)
+ rename target/arm/tcg/{cpu32-system.c => cpu32.c} (99%)
 
