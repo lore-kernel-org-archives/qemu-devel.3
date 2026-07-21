@@ -4,101 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DDCDC44529
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 15:08:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDF4BC44532
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 15:10:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmC4u-0002xG-Ti; Tue, 21 Jul 2026 11:08:17 -0400
+	id 1wmC6f-0003jA-5Q; Tue, 21 Jul 2026 11:10:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wmC4s-0002we-UK
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 11:08:14 -0400
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wmC6e-0003if-D8
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 11:10:04 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wmC4q-0004Ud-Sn
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 11:08:14 -0400
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wmC4d-00000000zbn-0cpv; Tue, 21 Jul 2026 17:07:59 +0200
-Message-ID: <b83e940e-554f-491e-a6ce-db990c4166bc@maciej.szmigiero.name>
-Date: Tue, 21 Jul 2026 17:07:53 +0200
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wmC6c-0004cb-Gs
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 11:10:04 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66LDgGbp1399798
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 15:10:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ h216/Ut1PggvkXukyp1mHEZcWbwudOlhJ52hOfPWP9E=; b=FJTOQIUu+SSD2mie
+ ckvK0LiWdl6/hcEDMVs6vePpFmrWalNAejVuKXppa17ZLDXAwR0b+8UgjsbdB8B+
+ mhK5H8UdpPwVbnVMqNHZ+QRG4DGmUvsQzA7mUyM4i7gHffs0w/ELpuKTCTkNVIpE
+ 6/PGdKrgxe5af1VWjwneX6s4NZoVrZG3a0QkIvMtK22/QBxqsD32y1uo/X4ZtJwQ
+ RzXps96QcS9Hz0GMHqTSMKYhdGvukwyVD3VO8erwBM4YgJ05Szxl6SnZo3yCGlKZ
+ gLuaYMEkXrqxR5NxlpwV5ssQS6o+DKA4VepE9ExutOnFGQhLWbiwmeGVdx9T83BW
+ KEWjmg==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fj1es33cd-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 15:10:00 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-cb6ef846b33so2163750a12.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 08:10:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1784646600; x=1785251400; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=h216/Ut1PggvkXukyp1mHEZcWbwudOlhJ52hOfPWP9E=;
+ b=SuCBJObSR0hSkgHDhIsA0sRtOlDmKOyiEMeS5wOlbOcmGzQMFiMLVuZpzs49bPg7TK
+ kxEUNWRvXWOjwO8GQ+Q430brvr1fgr7S06oyx+IFmtS/1DMPB3TkKH9q94gDbktsyZRB
+ nbHCIE/D2I01bSZVoAGPtlfrVhfqXUqmNrdL/h8s0+cbGy0rhNKPjhTgqMEe+SH1NhOr
+ p83BHvfk3tDOGnPW1M3+IjcVlpLAAlPEuDdIIVyKp3WjmSw+p/1HrYX6WQ9l5LrP1WDP
+ WJAg1DXginbL6CADJQgwuXqlUTHX2qQ/CcQQfGOOUBqjOqDqsDW6MQh0S8NCdRO2A3Vt
+ aPxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784646600; x=1785251400;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=h216/Ut1PggvkXukyp1mHEZcWbwudOlhJ52hOfPWP9E=;
+ b=L7S7sJvT3YGd6B4KJOrxRrlStiYjWA9eJopdnM4ny/Xde78F+z+wzvTF3rgHroidEz
+ mky0QqSzHJo0Xirekx5bWpgdj31/1MCcfW9vyxoOWtF5GusaWk2rtpShZ0rAufY2iVzT
+ Sh1axPXtH+fjeT55EFmowU4xm7h71CMoX5csqFjHTtU05pODe114K/yyjRWhL0jC6g8F
+ qdhaLcyIfMUyfh/eTfidn0cRlqrxKy/nuTB+7zeVwm5Mmu6aGxiWgNokCUrZv8TpzVrs
+ vghJ3NoNbd18i8sDBpvJM4LEGLeH27IEiMZxjjGKzDuS7bM4WPSvoTpcTjltll4s+VNm
+ aVJg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rq5ea3l+pItQsMs8SdiZBdctPQfsSKBx88Rcvoi2PqW3BPCR8hOjeTDWmk99ZFzkUaHaHspW0+N67n5@nongnu.org
+X-Gm-Message-State: AOJu0Yzrq0s7XRoFVndlvfatlU3lEJUeM0UW9ekjhtI8Cr7vcJ8yj4/I
+ 4Gd3UZXtsruHPoiWaRu1mg+7lYB6fzo+EqydX1mHivkkejLmMRdOS8s1ULNtzeIYXTsH8qArK4s
+ xCxs6eO8AIjoE877upR5nw34XiTh2mUO7l3oKdfWeCchtKL9B9fFYekuXAA==
+X-Gm-Gg: AfdE7clbdn8kc82zRemAy1n5T5+7sKodo0Z36QuV2jlAnfXZuh5ZCxWkL82ONJw2T6P
+ 2/YcD0R+Fw/P+FlpTP2rzFG+fK9I7AOrI9sYhPq6LCRe1Jtv7ddIjb8oMKMxmb8wpr7pYweTl9v
+ B7DTCWp38jYDt1tpXSe+0MTCp/ApjH8mk/V0Bp2huOCJJIrK3+xSkxK9ru8q8BusT1p4j6o5asI
+ bOiIRZLIx+mpsem1KBmE3/FaN7bxa7/ki/VXsO8OsdWRDDHrb0tIcdXu+Vl8TTE4k8Db7phmwfY
+ aovO9PSMviYtIdqe+F3jmwQkeE6rCvw/P4+31Qp94+YPeGkZaFqPhK3uq0HVYKD+0It8TeopQiA
+ 9iL02BDVS3rV5z6ll2MraE5dvYT8U6QNG9CVet2WJoGRAqoRMoPJGLCoW2y4UyXDkye9F
+X-Received: by 2002:a05:6a20:c78f:b0:3bf:9bd9:cf54 with SMTP id
+ adf61e73a8af0-3c42921e146mr74272637.8.1784646594906; 
+ Tue, 21 Jul 2026 08:09:54 -0700 (PDT)
+X-Received: by 2002:a05:6a20:c78f:b0:3bf:9bd9:cf54 with SMTP id
+ adf61e73a8af0-3c42921e146mr74207637.8.1784646594331; 
+ Tue, 21 Jul 2026 08:09:54 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3142a1bb77csm53474648eec.18.2026.07.21.08.09.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Jul 2026 08:09:53 -0700 (PDT)
+Message-ID: <50acec5e-c8cd-4aef-b35b-1b3f171695ab@oss.qualcomm.com>
+Date: Tue, 21 Jul 2026 08:09:53 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Subject: Re: [PATCH 2/2] vfio/migration: Parallelize device state transitions
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, Alex Williamson <alex@shazbot.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
- qemu-devel@nongnu.org
-References: <c739f4fe-1f43-45c4-b98f-109366526405@maciej.szmigiero.name>
- <e79a3746-9c7e-46a5-ad81-537b9d3affdb@maciej.szmigiero.name>
- <akvWlciUvxjDbBBZ@x1.local>
- <e602d0cd-dfc2-441d-a017-067e55418dad@maciej.szmigiero.name>
- <alZssI9OmGJyD-rc@x1.local>
- <19b76c19-4c7b-4a48-8c77-7db8746ff570@maciej.szmigiero.name>
- <alenmdWqD-x3bYll@x1.local>
- <5513c20b-0f5c-4bf2-93fc-d1619e3319c1@maciej.szmigiero.name>
- <aljc2-4XfpSkX_ay@x1.local>
- <cb1bdf37-58e8-4498-bc56-d65c4fcc3fa0@maciej.szmigiero.name>
- <al42_qzCLAjE-Mch@x1.local>
-Content-Language: en-US, pl-PL
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <al42_qzCLAjE-Mch@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Subject: Re: [PATCH] docs: fix sphinx build failure
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+References: <20260720222717.33078-1-pierrick.bouvier@oss.qualcomm.com>
+ <f1a2f0b3-5548-45f2-a4b4-61c10dc8b3b4@tls.msk.ru>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <f1a2f0b3-5548-45f2-a4b4-61c10dc8b3b4@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=SPZykuvH c=1 sm=1 tr=0 ts=6a5f8bc8 cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=NEAV23lmAAAA:8 a=EUspDBNiAAAA:8 a=ILG-I2LR5uE-4FblJz4A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
+X-Proofpoint-GUID: iWxV5KNTeYKLA8YSAFtw0LSFT2jy-rEX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDE2MCBTYWx0ZWRfX4DPnYPPi18VZ
+ 3yMs4Yf13cS4jowM+UVlW+Gq9vJxFplO7rR9pSLqQkBqv+dHRjM5N1lahJ7SpBHjrroC+ViDZ8J
+ encNcpvoktmZQd6HeBuceZcFYnaPeSJlbQPlYz0FPH5NhHzGIzMR9g1fx/3l7IlYSyPAPI8c8Q0
+ Iif1jQO49PvcuvOkIr+C6ZRxjq8DTH40+ZSwDhThdqzNNcQ7OTYJbr5pUSpeJeRfX5LU6MUlR6J
+ PRHxzQk1vXS9aQ/6rtBi5pvx9Rw3macTwxJH6U2UnbMQpS07Xmk7zfFLWfC//1W7KlQ+XTFQ5/P
+ K4Ldk+ZbpiAWjD+s9GDZQQr7ZJee/MO6oeGtnSglA+0npcj8BX0VImosCxgKFsjY9LUvW5bfojG
+ 5/K2oZRYM0hZc1yE4DxbsNgm0AkY5J/AU4M1QLTXWcp/Ru8WiTnc106aso2jExM8gTYhNmXAN3s
+ BwRgg9egFZCZtj4dKrA==
+X-Proofpoint-ORIG-GUID: iWxV5KNTeYKLA8YSAFtw0LSFT2jy-rEX
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDE2MCBTYWx0ZWRfX9P9Nnd3FiYBW
+ ViiHs+uoD1h3vxurs4tIgWTDJ1PYTIqsHIUWewpnRfDQ8UAs/nMVWWMGD9Lle3GnIqOESlhjNQk
+ LLX9dFZkZlq6m2YorkaA7CGyxPv0ggc=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-21_03,2026-07-20_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 bulkscore=0 phishscore=0 lowpriorityscore=0
+ spamscore=0 clxscore=1015 suspectscore=0 malwarescore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607210160
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,113 +157,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20.07.2026 16:55, Peter Xu wrote:
-> On Fri, Jul 17, 2026 at 04:31:32PM +0200, Maciej S. Szmigiero wrote:
->> Inside the VFIO code such sync point for VFIO devices could/should indeed
->> be created, but then it's not available for these other (non-VFIO) devices
->> for the purpose of avoiding the regression from the previous paragraph.
+On 7/21/2026 12:51 AM, Michael Tokarev wrote:
+> On 21.07.2026 01:27, Pierrick Bouvier wrote:
+>> We recently started to have those failures appearing when building
+>> documentation. It's hard to identify if it comes from a python, sphinx
+>> or sphinx extension, but it blocks us.
 >>
->> However, replacing the order priority/adjustment mechanism from patch 1
->> with the "pre" and "post" handlers I described above would avoid having
->> that regression (and help fix the vhost-net case too).
+>> Exception occurred:
+>>    File "/usr/lib/python3.13/multiprocessing/connection.py", line 399,
+>> in _recv
+>>      raise EOFError
+>> EOFError
+>> The full traceback has been saved in /tmp/sphinx-*.log, if you want to
+>> report the issue to the developers.
+>>
+>> This seems to be the generic error message for "something went wrong in
+>> sphinx multiprocess":
+>> - https://github.com/sphinx-doc/sphinx/issues/11449
+>> - https://github.com/sphinx-doc/sphinx/issues/14458
+>> - https://github.com/sphinx-doc/sphinx/issues/8973
 > 
-> I'm not sure I fully get the pre/post handlers idea, I think it sounds
-> working, but in all cases I want to decouple it with patch 1: I don't think
-> it requires patch 1, am I right?
-
-It wouldn't require the *current* patch 1 but it would need to be implemented
-in some preparatory patch so it would effectively be a new patch 1 (or a set
-of patches replacing patch 1).
-
-Assuming that we would go this route instead of the one you described below.
-
-> Now if we want to avoid this "theoretical regression" and solve both things
-> together.. I think we may need to refactor the notifiers mechanism.
+> FWIW, this time, it looks like it is a genuine bug in debian update of
+> python3.  I was able to reproduce the issue without -j option too, after
+> about 300 retries (did build in a loop), and the python backtrace (it
+> segfaulted) shows pattern similar to what was reported on debian.
+> I haven't reproduced it after installing the fixed packages, but with
+> so many attempts to failure, about 500 successful runs in a row is
+> not conclusive still.
 > 
-> Firstly, I hope we're on the same page that essentially prepare_cb() is the
-> priority mechanism here, we only have HIGH and NORMAL priority, where cb()
-> is the NORMAL priority.
-
-Yeah, I think the current situation could be described this way.
-
-> We also need to persist depth concept per-notifier, I think we should start
-> by renaming VMChangeStateEntry.priority to depth, add a comment explaining
-> it (on different order of invokations on VM start/shutdown).
+>> Solve the issue by simply going back to sequential builds. We didn't
+>> notice a huge speedup anyway.
 > 
-> But then, I don't think we need anything as complex as pre/post hooks with
-> hashes.  I think you're right then we need SYNC point which can be
-> essentially a priority notifier that is in the middle of HIGH and NORMAL.
+> The thing is: it looks like actually, at least the version of sphinx
+> I have on debian stable - sphinx ignores -j option always using single
+> core no matter which -j arg it is given.  I weren't able to run it in
+> true parallel mode.  Maybe it spawns single "parallel" thread still,
+> exploring the problematic code paths still, and without -j it wont -
+> I dunno.
 > 
-> Hence, I want to see if below should be the easiest:
-> 
->    - Rename VMChangeStateEntry.priority to depth
-> 
->    - Normalize prepare_cb() into VM_CHANGE_NOTIFY_PRI_HIGH, making cb() to
->      be NORMAL, OTOH.  With this, prepare_cb() needs to be registered
->      separately with qemu_add_vm_change_state_handler_prio_full().  The
->      function now should drop prepare_cb() but instead take a real
->      "priority" value of VM_CHANGE_NOTIFY_PRI_*.
+> So, I guess, with this in mind, it should definitely be okay to have
+> this change.
+>
 
-And where the qdev tree depth will go in a call to
-qemu_add_vm_change_state_handler_prio_full() - as an additional "depth"
-parameter?
+Good to know if might be fixed in the future with a python update. We
+can re-include it at this time.
+I can send a PR current fix once the patch has received a reviewed-by.
 
-> 
->    - Introduce VM_CHANGE_NOTIFY_PRI_SYNC, in the middle of PREPARE / NORMAL.
-> 
->    - VFIO can now register its 3rd notifier against SYNC.
-> 
-> All rest devices will need to shift part of its logic into PRI_HIGH to
-> either quiesce DMA or enable the backend to accept DMA (when on dest QEMU).
-> None of them will need SYNC only if they'll also switch to an async thread
-> model.
-
-In principle, this *should* work but with some caveats:
-* vhost-net would need the DMA-stopping part of its cb() handler separated
-and moved into prepare_cb(),
-
-* There's some restore code in "PowerPC sPAPR XIVE interrupt controller"
-running from cb() at prio 0, so originally always completing before VFIO device
-was switched into RUNNING state.
-I'm not 100% sure if it's okay to make VFIO device reach this state before
-that interrupt controller restore code finishes,
-
-* The postponed dirty memory logging stop handler also runs from cb() at
-prio 0, so currently always finishes before VFIO device was switched into
-RUNNING state.
-This handler also stops DMA logging for VFIO device or its container,
-but here I presume it should be safe to do so while the VFIO device has already
-started dirtying memory even though this couldn't happen in the existing code?
-
-* There's some sync/setup of x86 vAPIC state (for 32-bit guests?) also running
-from cb() at prio 0.
-Not sure if this needs to finish before VFIO device gets switched into
-RUNNING state.
-
-These 3 possible issues above (besides vhost-net move/refactor) could be
-theoretically worked around by moving these callbacks from cb() to a new
-priority *before* VM_CHANGE_NOTIFY_PRI_SYNC (maybe called
-VM_CHANGE_NOTIFY_PRI_SYNC_BEFORE or similar) as I presume they won't need the
-VFIO device to reach DMA-accepting state but at the same time they shouldn't
-delay the launch of VFIO device state changing threads from VM_CHANGE_NOTIFY_PRI_HIGH.
-
-Also, the final VFIO thread joining/collection does *not* need to be ordered
-with exiting cb() handlers, so it should really run at VM_CHANGE_NOTIFY_PRI_LOW
-(below PRI_NORMAL) for best parallelism.
-
-
-The disadvantages of this overall design are that it would need coordination
-between different sub-maintainers, increase the "blast radius" of the patch
-set to different parts of QEMU code, and so obviously would be more
-regression-risky than the aforementioned "pre" and "post" handlers design.
-
-Especially that probably few people would be able to test, for example,
-the PPC XIVE case with VFIO.
+Regards,
+Pierrick
 
 > Thanks,
 > 
-
-Thanks,
-Maciej
+> /mjt
+> 
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>> ---
+>>   docs/meson.build | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/docs/meson.build b/docs/meson.build
+>> index a8d893681ec..4d8cc545fcc 100644
+>> --- a/docs/meson.build
+>> +++ b/docs/meson.build
+>> @@ -4,7 +4,7 @@ sphinx_build =
+>> find_program(fs.parent(python.full_path()) / 'sphinx-build',
+>>   # Check if tools are available to build documentation.
+>>   build_docs = false
+>>   if sphinx_build.found()
+>> -  SPHINX_ARGS = ['env', 'CONFDIR=' + qemu_confdir, sphinx_build, '-
+>> q', '-j', 'auto']
+>> +  SPHINX_ARGS = ['env', 'CONFDIR=' + qemu_confdir, sphinx_build, '-q']
+>>     # If we're making warnings fatal, apply this to Sphinx runs as well
+>>     if get_option('werror')
+>>       SPHINX_ARGS += [ '-W', '-Dkerneldoc_werror=1' ]
+> 
 
 
