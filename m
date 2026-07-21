@@ -4,144 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41350C44532
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DDCDC44529
 	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 15:08:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmC4q-0002w1-KC; Tue, 21 Jul 2026 11:08:12 -0400
+	id 1wmC4u-0002xG-Ti; Tue, 21 Jul 2026 11:08:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wmC4o-0002uF-13
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 11:08:10 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wmC4s-0002we-UK
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 11:08:14 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wmC4j-0004Ue-VU
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 11:08:08 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66LDgG8U1399813
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 15:08:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 9OzkRurjKJbcihQ33q5FHvyCTx9Tr6zk5X9BBevs/fg=; b=WiNHR4kmljtWUgt2
- IiahOPWwobkqTbxpypz8QpQHX20soLPMIxG70wxS3mxnDbEjCyLFNF3YWhDe0Oj1
- tlvUf/bbwC01Zs/5wSfgaqH87hpQKrDaediswJhRQEeStDR+uV6uTEJpbuVwY0g5
- Qt7mA7xxlHEPrFICqjdjeu7IVVtXMJnzor4Tg9Lw3Fw1T3OOU/DXdsy9kcL2JJ3/
- d6zZ+f86NeFl3HzZ29Okh849EHLI1jaPPahuhkrgyKx3ZI8tCCsCzEg8qf85GWx+
- T6PR75DHZQnjNo+r9HByeAwRxWQDHBvBGXbmCRYRahmnIGWw77JUBpoILIp5qncX
- 5wLyjA==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fj1es3312-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 15:08:02 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-38dc085b0a7so17617899a91.2
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 08:08:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784646482; x=1785251282; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=9OzkRurjKJbcihQ33q5FHvyCTx9Tr6zk5X9BBevs/fg=;
- b=QVThTig8/eCltN7arroWM9e6qxCDIF1LWrTtcFiQyNL7AFh+vDD248h9NrdMBYA7SM
- FxOsVuQ1S0v6Q9IBps0jKpMy40wcCQopOGwMFX57aksx/I2D6rwv6ucNHIafXj6blYNi
- nukhdQWmFb0SFKJTuFQgifV+T1Pd2RJINU4oU/pBT0l3J/VNir/MTM/gL8tePdYbC/kf
- r+8ucZpH4h+GCnOfvi219tfm2Tlw/e3y7HspKO0ecrHEnfkg520AKL3V5wLW7hqXP8iW
- fje9MUjJ+fLbuPToISinN4YYBkTab2foZGILR6LqdHA+lihKDt5VU+A9MJff4tdNXUd9
- YcZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784646482; x=1785251282;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=9OzkRurjKJbcihQ33q5FHvyCTx9Tr6zk5X9BBevs/fg=;
- b=dZP34TDGgEGqt4+WBkyEufFEpVnRzJjshsRW2BOafuFnlxdALenJkRMdR/tLh1legj
- 2FGuoWerIuSNsd8twXLGglGewg9wpJntJMWA9wV1j1634n5UwZPrfa28PmCgjDdvzr2l
- BSTwE9AdU94fH8fdsGYWNlq5+3dXAg6NsZp6clwVPVQve2DsFpMBuYHwuEauXr0kUJz7
- wzGawAAb+jWiI9rTzh4KYWWJRLCB9Z8CFsfUcpjD5T8hPkk4IbT1M8nRgfWSigygK4Qo
- tcmSYeJMoKy8thKKtyqLMKn6GBITFmUeLNHezmKmcMplebsJFWfP9ErvUCeuLdA8E7D+
- JKTw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpxJiRpNn2nBKir4iu9ThGbf8Vbc2KNFguHbizOsORLX2z68Q3La9VCZ/nQzer0ibYAKYP/iZ0ejLsr@nongnu.org
-X-Gm-Message-State: AOJu0YwnYnrTB8lu2yhRYJ30GcwtPEiSnUP9ELbB6AiO2kqTkiHRuWpR
- 85UN3OtPRiMHk6arIM9tn/SXU5JqiVHN9ambi5BZydLRYy8EVk6tYZwkFY47onqE5z9UBUvmxXG
- Ka02buwZQHhulijjBeAqIjaps+Je5k5gKrIn4t0ioB1Ct8X9/5kcMVX+F5Q==
-X-Gm-Gg: AR+sD13++Kw9MiGWuJQGfYMzBSWAWJLX3OKD5SoIUVFmKK0dJj0P6XbnGFjaIch+3FA
- LHIIy082WeojUl/apbm9wyac9NBqtSTREQXa62XjV7vxjVjsjuGrWxwrTsW1HcqRE5dotwvObo6
- QIAUBV0lAbYv5goTIHkDeL7BgBDEPN5muG9ZFwDF7IQYUQ6G6tkFZTkbYRia+iTIzUvrzeHgGmm
- j3HVHJ2LFyPGHSyrzlYkPPcxdZSUP9HB0YfddnDMBldZCMD2KWE7zlj6L/eP4fe681oKojOE9MR
- AhA+sxvR2aSYT0z1ANg2tVR6rBmR6MRwRQ3XtUqedD/WY5icgJmNe5G+wAmhA9ABvQK/FioPT06
- uJqsaO52JIeiqCXI5ZpU1P4Ikfexw0VFhl186LoC0k/0ME5RzHmGNIHlm9ufkdT7YVw4y
-X-Received: by 2002:a17:90b:2807:b0:37e:9e9:6ffc with SMTP id
- 98e67ed59e1d1-38e4b532703mr19733652a91.25.1784646481569; 
- Tue, 21 Jul 2026 08:08:01 -0700 (PDT)
-X-Received: by 2002:a17:90b:2807:b0:37e:9e9:6ffc with SMTP id
- 98e67ed59e1d1-38e4b532703mr19733600a91.25.1784646480942; 
- Tue, 21 Jul 2026 08:08:00 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13ce2a129f3sm38526814c88.7.2026.07.21.08.07.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Jul 2026 08:08:00 -0700 (PDT)
-Message-ID: <2b79064b-2cc4-4f29-afba-964db80d7652@oss.qualcomm.com>
-Date: Tue, 21 Jul 2026 08:07:59 -0700
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wmC4q-0004Ud-Sn
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 11:08:14 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wmC4d-00000000zbn-0cpv; Tue, 21 Jul 2026 17:07:59 +0200
+Message-ID: <b83e940e-554f-491e-a6ce-db990c4166bc@maciej.szmigiero.name>
+Date: Tue, 21 Jul 2026 17:07:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] tests/qtest: add qct-qtimer qtest
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: philmd@oss.qualcomm.com, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- matheus.bernardino@oss.qualcomm.com
-References: <20260718013241.1550124-1-brian.cain@oss.qualcomm.com>
- <20260718013241.1550124-4-brian.cain@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260718013241.1550124-4-brian.cain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Subject: Re: [PATCH 2/2] vfio/migration: Parallelize device state transitions
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
+ qemu-devel@nongnu.org
+References: <c739f4fe-1f43-45c4-b98f-109366526405@maciej.szmigiero.name>
+ <e79a3746-9c7e-46a5-ad81-537b9d3affdb@maciej.szmigiero.name>
+ <akvWlciUvxjDbBBZ@x1.local>
+ <e602d0cd-dfc2-441d-a017-067e55418dad@maciej.szmigiero.name>
+ <alZssI9OmGJyD-rc@x1.local>
+ <19b76c19-4c7b-4a48-8c77-7db8746ff570@maciej.szmigiero.name>
+ <alenmdWqD-x3bYll@x1.local>
+ <5513c20b-0f5c-4bf2-93fc-d1619e3319c1@maciej.szmigiero.name>
+ <aljc2-4XfpSkX_ay@x1.local>
+ <cb1bdf37-58e8-4498-bc56-d65c4fcc3fa0@maciej.szmigiero.name>
+ <al42_qzCLAjE-Mch@x1.local>
+Content-Language: en-US, pl-PL
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ xsFNBFpGusUBEADXUMM2t7y9sHhI79+2QUnDdpauIBjZDukPZArwD+sDlx5P+jxaZ13XjUQc
+ 6oJdk+jpvKiyzlbKqlDtw/Y2Ob24tg1g/zvkHn8AVUwX+ZWWewSZ0vcwp7u/LvA+w2nJbIL1
+ N0/QUUdmxfkWTHhNqgkNX5hEmYqhwUPozFR0zblfD/6+XFR7VM9yT0fZPLqYLNOmGfqAXlxY
+ m8nWmi+lxkd/PYqQQwOq6GQwxjRFEvSc09m/YPYo9hxh7a6s8hAP88YOf2PD8oBB1r5E7KGb
+ Fv10Qss4CU/3zaiyRTExWwOJnTQdzSbtnM3S8/ZO/sL0FY/b4VLtlZzERAraxHdnPn8GgxYk
+ oPtAqoyf52RkCabL9dsXPWYQjkwG8WEUPScHDy8Uoo6imQujshG23A99iPuXcWc/5ld9mIo/
+ Ee7kN50MOXwS4vCJSv0cMkVhh77CmGUv5++E/rPcbXPLTPeRVy6SHgdDhIj7elmx2Lgo0cyh
+ uyxyBKSuzPvb61nh5EKAGL7kPqflNw7LJkInzHqKHDNu57rVuCHEx4yxcKNB4pdE2SgyPxs9
+ 9W7Cz0q2Hd7Yu8GOXvMfQfrBiEV4q4PzidUtV6sLqVq0RMK7LEi0RiZpthwxz0IUFwRw2KS/
+ 9Kgs9LmOXYimodrV0pMxpVqcyTepmDSoWzyXNP2NL1+GuQtaTQARAQABzTBNYWNpZWogUy4g
+ U3ptaWdpZXJvIDxtYWlsQG1hY2llai5zem1pZ2llcm8ubmFtZT7CwZQEEwEIAD4CGwMFCwkI
+ BwIGFQoJCAsCBBYCAwECHgECF4AWIQRyeg1N257Z9gOb7O+Ef143kM4JdwUCaZD5QgUJESzD
+ fQAKCRCEf143kM4JdxkAEAC9cPa1ONCizZerNCJR9fI1ezsYWjNYpTWoYWT2vWug8repG8EJ
+ E6/l300/TRf0kYy9vNC0PUe+uJeJig2HxfwuCAHECobvvANSEq+KTUXq1sE3tJ7ZKCZwDiR/
+ zs4axmFlZVzFUHkzCqH/y7xBBHHQJrtSD0W/Gs1DbCb1xCblyE4uzQ9DytlxkZdVgXt3Fmm8
+ Xa6JAxoDnUktl6LWpQ4tW6IRXN4gOQeRQKzREIIbk1gEvba/60JvuS1GX2KK2/SRODspF9TV
+ 5IKHmnepKOSpwLhkR3U4uV1D/4aqcJaDsH1krdAse5nkyXXQ7aBMvGLx2KADaoq6uhBFswyZ
+ L7/AuhKEq4+YTuvE+EBYJS1YXFCisqQgG2zDGQc2I5AVpQlF6isKa+kcQBT7V27XuSrcsYdH
+ Op7nJynlyBg7nYkgAdy+zLgQ+0fgCmtWha5qJUP6oVWcMfA6btSiN+rNkMylqgXbkeHgdDkr
+ 1+VshxGvQSMm/4DStFJwZ7zEln9qxr4AQbfdugNZmMb3F/haKvUuNh2TJHICgbwjEDryZipf
+ 2iUjqBVVzW4ut7fgHkBq9yw2Vy5ryr+R/N/1Pja6gvtvU53dfDIGXxBRGTQFD92xXVd/Ml8/
+ G0QvpiUCuUBvVGJb8k0Xlx9CYWlyFqoNUevPW8e8CCw+j3i+H9tMPuvJjs7AzQRaRrwiAQwA
+ xnVmJqeP9VUTISps+WbyYFYlMFfIurl7tzK74bc67KUBp+PHuDP9p4ZcJUGC3UZJP85/GlUV
+ dE1NairYWEJQUB7bpogTuzMI825QXIB9z842HwWfP2RW5eDtJMeujzJeFaUpmeTG9snzaYxY
+ N3r0TDKj5dZwSIThIMQpsmhH2zylkT0jH7kBPxb8IkCQ1c6wgKITwoHFjTIO0B75U7bBNSDp
+ XUaUDvd6T3xd1Fz57ujAvKHrZfWtaNSGwLmUYQAcFvrKDGPB5Z3ggkiTtkmW3OCQbnIxGJJw
+ /+HefYhB5/kCcpKUQ2RYcYgCZ0/WcES1xU5dnNe4i0a5gsOFSOYCpNCfTHttVxKxZZTQ/rxj
+ XwTuToXmTI4Nehn96t25DHZ0t9L9UEJ0yxH2y8Av4rtf75K2yAXFZa8dHnQgCkyjA/gs0ujG
+ wD+Gs7dYQxP4i+rLhwBWD3mawJxLxY0vGwkG7k7npqanlsWlATHpOdqBMUiAR22hs02FikAo
+ iXNgWTy7ABEBAAHCwXwEGAEIACYCGwwWIQRyeg1N257Z9gOb7O+Ef143kM4JdwUCaZD5YwUJ
+ ESzCOAAKCRCEf143kM4Jd4+KEADEBLxVKXGqinMD1nb/QPA0Rj35WluRdPIB2dcDcyTOtiyN
+ ErIQQMhr0W4sxZOd741a2nv89VZKjzBNjihOZgbEuHfG/0lhIZ5t6aF7k4gbMctzQT7utzmD
+ y5OoV+/VFHguLThwxRvCMkGEieE8Cb4muYdQgaq1s5ipV1IqF3cDYg2iGupnsYSgOfw7ZyvG
+ 9c7Fxn7jiD/wI9eL3AesCkVFbF0r/9yLbuW6vh3kd/+bORO1GK4snSjrZLi04bnihnDfa33N
+ Pik3cmUZZANzo+HkADZjJ1pl3DZn1Qj8STk6YhaTtJhLKH4lteAlSS4xRIeoiw/2hbzbRr4j
+ hnu96hf6ukM7E7oC89SfWGXZHbUds77MFyKvBTCMJnkQq+PbmYp1vgTnOl3JO7ARZ3rNPkHE
+ IpOWDjHRyDiKVVxt2bKaELZrFGcYYTVXt9pUfY1xFt76G0piVr50+jTezgMmZYr7aZOrqlUi
+ WHQjcZZbROLql/+ngphSgdthGIhVWrIMHJu1UxnRiwKc/fzDFUZ9hFL+W4ZLm+52TzMatpta
+ oNdcP9rtsQjdYMNLuwysP4keDX8yBXADwJD7eQ+ryIIKh6X1lBMIWxeZG5W0DQ6/4BCUEbCe
+ 1DqkYRtZyUEzgAbaHliaa5t3dfCtSMz5cAbGqxarXc7bKOjA6P8hCwgP0tEypA==
+In-Reply-To: <al42_qzCLAjE-Mch@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=SPZykuvH c=1 sm=1 tr=0 ts=6a5f8b52 cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=w0l9nLhl7B5hx7oss10A:9 a=QEXdDO2ut3YA:10
- a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-GUID: xTFL5bcSP4vNsStRB7DJux8gQ_p6hZy6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDE2MCBTYWx0ZWRfXyUR3lCRVZYAo
- QDlA8Dnnut9CwclzlMnD6X5u+uszYnUGEI0rxsIws4y+f4oCr5DSFOtJKOM84XhxSu7kcoQWcte
- wAueSIVHyVFluxd+WicR2IC0wBPsYQfB6zc1ob4WSSQlaRdyoqX5wE5WqP0BeBIFE18iEX03Dff
- mPnISNMxc6HVsSvrvbmocLV6PJsbbCQXONfPD62NnMLt0Lf3Bj3vBpdOxl03pdsZcdaD6/ddY/c
- bPYog0YnxgSvSew5nxIKpmbts5zPRAj/n+pl4PanY8Y5kxIDa38vXskhaIi+bpSVQ5sDw1d/ZKt
- IS9kPbCRiuJGXuNcSXIM3D+VlqwQAuoLzqJHaJ/r42GFkGbmxaijEQ8Xk05iV4/hTFOtdChHIeP
- L6Whdt7GMnJSI6IwSV2kLUZXqNGAwd6JSqtg1jDRjjClc7jh7bjMxPKZ272vLV74Dny6EQPs17x
- 5mQErbshB7fXzz7SM9w==
-X-Proofpoint-ORIG-GUID: xTFL5bcSP4vNsStRB7DJux8gQ_p6hZy6
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDE2MCBTYWx0ZWRfX+4p44QUWfdEL
- GXtpoLSOKRZ7g4C37plsB5Wd4jGieTy0Xbt4bJ0iOBCOEny5nL5CBcBTZxSRLHjPQ2sWe7IJxDv
- En672luJImFlGlS2cFg+K3ayL4oKkjU=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-21_03,2026-07-20_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 bulkscore=0 phishscore=0 lowpriorityscore=0
- spamscore=0 clxscore=1015 suspectscore=0 malwarescore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607210160
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,269 +114,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/17/2026 6:32 PM, Brian Cain wrote:
-> Add a qtest exercising the QCT QTimer's register access, view-region
-> frame addressing, and one-shot timer firing behavior.
+On 20.07.2026 16:55, Peter Xu wrote:
+> On Fri, Jul 17, 2026 at 04:31:32PM +0200, Maciej S. Szmigiero wrote:
+>> Inside the VFIO code such sync point for VFIO devices could/should indeed
+>> be created, but then it's not available for these other (non-VFIO) devices
+>> for the purpose of avoiding the regression from the previous paragraph.
+>>
+>> However, replacing the order priority/adjustment mechanism from patch 1
+>> with the "pre" and "post" handlers I described above would avoid having
+>> that regression (and help fix the vhost-net case too).
 > 
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  MAINTAINERS                   |   1 +
->  tests/qtest/qct-qtimer-test.c | 213 ++++++++++++++++++++++++++++++++++
->  tests/qtest/meson.build       |   2 +-
->  3 files changed, 215 insertions(+), 1 deletion(-)
->  create mode 100644 tests/qtest/qct-qtimer-test.c
+> I'm not sure I fully get the pre/post handlers idea, I think it sounds
+> working, but in all cases I want to decouple it with patch 1: I don't think
+> it requires patch 1, am I right?
+
+It wouldn't require the *current* patch 1 but it would need to be implemented
+in some preparatory patch so it would effectively be a new patch 1 (or a set
+of patches replacing patch 1).
+
+Assuming that we would go this route instead of the one you described below.
+
+> Now if we want to avoid this "theoretical regression" and solve both things
+> together.. I think we may need to refactor the notifiers mechanism.
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 2c73705c727..94977c3be77 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -255,6 +255,7 @@ F: include/hw/intc/hex-l2vic.h
->  F: tests/qtest/l2vic-test.c
->  F: hw/timer/qct-qtimer.c
->  F: include/hw/timer/qct-qtimer.h
-> +F: tests/qtest/qct-qtimer-test.c
->  X: target/hexagon/idef-parser/
->  X: target/hexagon/gen_idef_parser_funcs.py
->  F: linux-user/hexagon/
-> diff --git a/tests/qtest/qct-qtimer-test.c b/tests/qtest/qct-qtimer-test.c
-> new file mode 100644
-> index 00000000000..146d98126ac
-> --- /dev/null
-> +++ b/tests/qtest/qct-qtimer-test.c
-> @@ -0,0 +1,213 @@
-> +/*
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * QTest testcase for the QCT QTimer
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "libqtest-single.h"
-> +#include "hw/timer/qct-qtimer.h"
-> +#include "qemu/bitops.h"
-> +
-> +#define QTIMER_DEFAULT_FREQ_HZ 19200000ULL
-> +#define QTIMER_VIEW_BASE 0xfc921000
+> Firstly, I hope we're on the same page that essentially prepare_cb() is the
+> priority mechanism here, we only have HIGH and NORMAL priority, where cb()
+> is the NORMAL priority.
 
-Should this be properties, in case another sec maps this at a different
-address/has different freq?
+Yeah, I think the current situation could be described this way.
 
-> +
-> +#define TIMER_TEST_OFFSET 1000
-> +/* TIMER_TEST_OFFSET ticks expressed in nanoseconds of QEMU_CLOCK_VIRTUAL */
-> +#define TIMER_TEST_NS \
-> +    ((TIMER_TEST_OFFSET * 1000000000ULL) / QTIMER_DEFAULT_FREQ_HZ)
-> +
-> +static uint32_t qtimer_read32(uint64_t base, uint32_t offset)
-> +{
-> +    return readl(base + offset);
-> +}
-> +
-> +static void qtimer_write32(uint64_t base, uint32_t offset, uint32_t value)
-> +{
-> +    writel(base + offset, value);
-> +}
-> +
-> +static uint64_t qtimer_read64(uint64_t base, uint32_t offset)
-> +{
-> +    uint32_t lo = qtimer_read32(base, offset);
-> +    uint32_t hi = qtimer_read32(base, offset + 4);
-> +
-> +    return ((uint64_t)hi << 32) | lo;
-> +}
-> +
-> +static void qtimer_write64(uint64_t base, uint32_t offset, uint64_t value)
-> +{
-> +    qtimer_write32(base, offset, extract64(value, 0, 32));
-> +    qtimer_write32(base, offset + 4, extract64(value, 32, 32));
-> +}
-> +
-> +/* Test basic device presence and register access */
-> +static void test_qtimer_basic_access(void)
-> +{
-> +    uint32_t val;
-> +
-> +    val = qtimer_read32(QTIMER_VIEW_BASE, QCT_QTIMER_CNT_FREQ);
-> +    g_assert_cmpuint(val, ==, QTIMER_DEFAULT_FREQ_HZ);
-> +}
-> +
-> +/* Test multiple timer frames */
-> +static void test_qtimer_multiple_frames(void)
-> +{
-> +    uint32_t val;
-> +    uint64_t frame0_base = QTIMER_VIEW_BASE;
-> +    uint64_t frame1_base = QTIMER_VIEW_BASE + 0x1000;
-> +
-> +    val = qtimer_read32(frame0_base, QCT_QTIMER_CNT_FREQ);
-> +    g_assert_cmpuint(val, ==, QTIMER_DEFAULT_FREQ_HZ);
-> +
-> +    val = qtimer_read32(frame1_base, QCT_QTIMER_CNT_FREQ);
-> +    g_assert_cmpuint(val, ==, QTIMER_DEFAULT_FREQ_HZ);
-> +}
-> +
-> +/* Test that registers exist and can be accessed */
-> +static void test_qtimer_register_reads(void)
-> +{
-> +    qtimer_read32(QTIMER_VIEW_BASE, QCT_QTIMER_CNT_FREQ);
-> +    qtimer_read64(QTIMER_VIEW_BASE, QCT_QTIMER_CNTPCT_LO);
-> +    qtimer_read64(QTIMER_VIEW_BASE, QCT_QTIMER_CNTP_CVAL_LO);
-> +    qtimer_read32(QTIMER_VIEW_BASE, QCT_QTIMER_CNTP_CTL);
-> +    qtimer_read32(QTIMER_VIEW_BASE, QCT_QTIMER_CNTP_TVAL);
-> +}
-> +
-> +/* Test timer control and value registers */
-> +static void test_qtimer_control_registers(void)
-> +{
-> +    uint32_t ctl_val;
-> +    uint64_t cval_before, cval_after;
-> +
-> +    cval_before = qtimer_read64(QTIMER_VIEW_BASE, QCT_QTIMER_CNTPCT_LO);
-> +
-> +    qtimer_write32(QTIMER_VIEW_BASE, QCT_QTIMER_CNTP_TVAL, 1000);
-> +
-> +    qtimer_write32(QTIMER_VIEW_BASE, QCT_QTIMER_CNTP_CTL, 1);
-> +    ctl_val = qtimer_read32(QTIMER_VIEW_BASE, QCT_QTIMER_CNTP_CTL);
-> +    if (ctl_val & 1) {
-> +        g_assert_cmpuint(ctl_val & 1, ==, 1);
-> +    }
+> We also need to persist depth concept per-notifier, I think we should start
+> by renaming VMChangeStateEntry.priority to depth, add a comment explaining
+> it (on different order of invokations on VM start/shutdown).
+> 
+> But then, I don't think we need anything as complex as pre/post hooks with
+> hashes.  I think you're right then we need SYNC point which can be
+> essentially a priority notifier that is in the middle of HIGH and NORMAL.
+> 
+> Hence, I want to see if below should be the easiest:
+> 
+>    - Rename VMChangeStateEntry.priority to depth
+> 
+>    - Normalize prepare_cb() into VM_CHANGE_NOTIFY_PRI_HIGH, making cb() to
+>      be NORMAL, OTOH.  With this, prepare_cb() needs to be registered
+>      separately with qemu_add_vm_change_state_handler_prio_full().  The
+>      function now should drop prepare_cb() but instead take a real
+>      "priority" value of VM_CHANGE_NOTIFY_PRI_*.
 
-Seems like this if can be reduced to:
-g_assert(ctl_val)?
+And where the qdev tree depth will go in a call to
+qemu_add_vm_change_state_handler_prio_full() - as an additional "depth"
+parameter?
 
-> +
-> +    /* CVAL should be greater than before since we set TVAL */
-> +    cval_after = qtimer_read64(QTIMER_VIEW_BASE, QCT_QTIMER_CNTP_CVAL_LO);
-> +    g_assert_cmpuint(cval_after, >, cval_before);
-> +
-> +    qtimer_write32(QTIMER_VIEW_BASE, QCT_QTIMER_CNTP_CTL, 0);
-> +    ctl_val = qtimer_read32(QTIMER_VIEW_BASE, QCT_QTIMER_CNTP_CTL);
-> +    g_assert_cmpuint(ctl_val & 1, ==, 0);
-> +}
-> +
-> +/* Test CVAL register direct access */
-> +static void test_qtimer_cval_access(void)
-> +{
-> +    uint64_t current_time, test_cval, read_cval;
-> +
-> +    current_time = qtimer_read64(QTIMER_VIEW_BASE, QCT_QTIMER_CNTPCT_LO);
-> +    test_cval = current_time + 10000;
-> +
-> +    qtimer_write64(QTIMER_VIEW_BASE, QCT_QTIMER_CNTP_CVAL_LO, test_cval);
-> +    read_cval = qtimer_read64(QTIMER_VIEW_BASE, QCT_QTIMER_CNTP_CVAL_LO);
-> +    g_assert_cmpuint(read_cval, ==, test_cval);
-> +}
-> +
-> +/* Test counter progression */
-> +static void test_qtimer_counter_progression(void)
-> +{
-> +    uint32_t freq;
-> +    uint64_t count1, count2;
-> +
-> +    /*
-> +     * In qtest mode the virtual clock does not advance on its own, so
-> +     * reading the counter twice must give the same value.
-> +     */
-> +    count1 = qtimer_read64(QTIMER_VIEW_BASE, QCT_QTIMER_CNTPCT_LO);
-> +    count2 = qtimer_read64(QTIMER_VIEW_BASE, QCT_QTIMER_CNTPCT_LO);
-> +    g_assert_cmpuint(count2, ==, count1);
-> +
-> +    freq = qtimer_read32(QTIMER_VIEW_BASE, QCT_QTIMER_CNT_FREQ);
-> +    g_assert_cmpuint(freq, ==, QTIMER_DEFAULT_FREQ_HZ);
-> +}
-> +
-> +/* Test timer behavior with clock control */
-> +static void test_qtimer_timer_behavior(void)
-> +{
-> +    uint64_t current_count, target_count, read_cval, new_count;
-> +    uint64_t ctl_val, count_after_disable;
-> +
-> +    current_count = qtimer_read64(QTIMER_VIEW_BASE, QCT_QTIMER_CNTPCT_LO);
-> +
-> +    target_count = current_count + TIMER_TEST_OFFSET;
-> +    qtimer_write64(QTIMER_VIEW_BASE, QCT_QTIMER_CNTP_CVAL_LO, target_count);
-> +
-> +    read_cval = qtimer_read64(QTIMER_VIEW_BASE, QCT_QTIMER_CNTP_CVAL_LO);
-> +    g_assert_cmpuint(read_cval, ==, target_count);
-> +
-> +    qtimer_write32(QTIMER_VIEW_BASE, QCT_QTIMER_CNTP_CTL, 1);
-> +
-> +    ctl_val = qtimer_read64(QTIMER_VIEW_BASE, QCT_QTIMER_CNTP_CTL);
-> +    /* EN set, IMASK clear, ISTAT not yet pending */
-> +    g_assert_cmpuint(ctl_val, ==, 0x1);
-> +
-> +    /* Step forward but not past the target */
-> +    qtest_clock_step(global_qtest, TIMER_TEST_NS / 2);
-> +    new_count = qtimer_read64(QTIMER_VIEW_BASE, QCT_QTIMER_CNTPCT_LO);
-> +    g_assert_cmpuint(new_count, >=, current_count);
-> +
-> +    /* Step past the target */
-> +    qtest_clock_step(global_qtest, TIMER_TEST_NS);
-> +    new_count = qtimer_read64(QTIMER_VIEW_BASE, QCT_QTIMER_CNTPCT_LO);
-> +    g_assert_cmpuint(new_count, >=, target_count);
-> +
-> +    qtimer_write32(QTIMER_VIEW_BASE, QCT_QTIMER_CNTP_CTL, 0);
-> +
-> +    ctl_val = qtimer_read64(QTIMER_VIEW_BASE, QCT_QTIMER_CNTP_CTL);
-> +    /* EN cleared, ISTAT set since new_count >= target_count */
-> +    g_assert_cmpuint(ctl_val, ==, 0x4);
-> +
-> +    /*
-> +     * CNTPCT runs independently of CNTP_CTL.EN: only the compare/IRQ
-> +     * logic is gated by EN, so the counter must keep advancing.
-> +     */
-> +    qtest_clock_step(global_qtest, TIMER_TEST_NS / 2);
-> +    count_after_disable = qtimer_read64(QTIMER_VIEW_BASE,
-> +                                        QCT_QTIMER_CNTPCT_LO);
-> +    g_assert_cmpuint(count_after_disable, >, new_count);
-> +
-> +    /* ISTAT remains set while CNTPCT >= CVAL, even with EN=0 */
-> +    ctl_val = qtimer_read64(QTIMER_VIEW_BASE, QCT_QTIMER_CNTP_CTL);
-> +    g_assert_cmpuint(ctl_val, ==, 0x4);
-> +}
-> +
-> +static void test_qtimer_on_machine(gconstpointer data)
-> +{
-> +    const char *machine = (const char *)data;
-> +    g_autofree char *args = g_strdup_printf(
-> +        "-machine %s -global qct-qtimer.freq-scale=1", machine);
-> +
-> +    qtest_start(args);
-> +
-> +    test_qtimer_basic_access();
-> +    test_qtimer_multiple_frames();
-> +    test_qtimer_register_reads();
-> +    test_qtimer_control_registers();
-> +    test_qtimer_cval_access();
-> +    test_qtimer_counter_progression();
-> +    test_qtimer_timer_behavior();
-> +
-> +    qtest_end();
-> +}
-> +
-> +int main(int argc, char **argv)
-> +{
-> +    g_test_init(&argc, &argv, NULL);
-> +
-> +    qtest_add_data_func("/qct-qtimer/virt/all-tests", "virt",
-> +                        test_qtimer_on_machine);
-> +    qtest_add_data_func("/qct-qtimer/V66G_1024/all-tests", "V66G_1024",
-> +                        test_qtimer_on_machine);
-> +
-> +    return g_test_run();
-> +}
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index a76863c7dd6..651246b2ebb 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -299,7 +299,7 @@ qtests_riscv64 = ['riscv-csr-test'] + \
->     ['iommu-riscv-test'] : []) + \
->    (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test'] : [])
->  
-> -qtests_hexagon = ['boot-serial-test', 'l2vic-test']
-> +qtests_hexagon = ['boot-serial-test', 'l2vic-test', 'qct-qtimer-test']
->  
->  qos_test_ss = ss.source_set()
->  qos_test_ss.add(
+> 
+>    - Introduce VM_CHANGE_NOTIFY_PRI_SYNC, in the middle of PREPARE / NORMAL.
+> 
+>    - VFIO can now register its 3rd notifier against SYNC.
+> 
+> All rest devices will need to shift part of its logic into PRI_HIGH to
+> either quiesce DMA or enable the backend to accept DMA (when on dest QEMU).
+> None of them will need SYNC only if they'll also switch to an async thread
+> model.
+
+In principle, this *should* work but with some caveats:
+* vhost-net would need the DMA-stopping part of its cb() handler separated
+and moved into prepare_cb(),
+
+* There's some restore code in "PowerPC sPAPR XIVE interrupt controller"
+running from cb() at prio 0, so originally always completing before VFIO device
+was switched into RUNNING state.
+I'm not 100% sure if it's okay to make VFIO device reach this state before
+that interrupt controller restore code finishes,
+
+* The postponed dirty memory logging stop handler also runs from cb() at
+prio 0, so currently always finishes before VFIO device was switched into
+RUNNING state.
+This handler also stops DMA logging for VFIO device or its container,
+but here I presume it should be safe to do so while the VFIO device has already
+started dirtying memory even though this couldn't happen in the existing code?
+
+* There's some sync/setup of x86 vAPIC state (for 32-bit guests?) also running
+from cb() at prio 0.
+Not sure if this needs to finish before VFIO device gets switched into
+RUNNING state.
+
+These 3 possible issues above (besides vhost-net move/refactor) could be
+theoretically worked around by moving these callbacks from cb() to a new
+priority *before* VM_CHANGE_NOTIFY_PRI_SYNC (maybe called
+VM_CHANGE_NOTIFY_PRI_SYNC_BEFORE or similar) as I presume they won't need the
+VFIO device to reach DMA-accepting state but at the same time they shouldn't
+delay the launch of VFIO device state changing threads from VM_CHANGE_NOTIFY_PRI_HIGH.
+
+Also, the final VFIO thread joining/collection does *not* need to be ordered
+with exiting cb() handlers, so it should really run at VM_CHANGE_NOTIFY_PRI_LOW
+(below PRI_NORMAL) for best parallelism.
+
+
+The disadvantages of this overall design are that it would need coordination
+between different sub-maintainers, increase the "blast radius" of the patch
+set to different parts of QEMU code, and so obviously would be more
+regression-risky than the aforementioned "pre" and "post" handlers design.
+
+Especially that probably few people would be able to test, for example,
+the PPC XIVE case with VFIO.
+
+> Thanks,
+> 
+
+Thanks,
+Maciej
 
 
