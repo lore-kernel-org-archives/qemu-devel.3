@@ -4,77 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39547C44529
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 12:22:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86C79C44529
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 12:22:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm9Sy-0001zu-9D; Tue, 21 Jul 2026 08:20:57 -0400
+	id 1wm9T6-00024n-El; Tue, 21 Jul 2026 08:21:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wm9Si-0001wN-3r
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 08:20:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wm9Sd-0003l3-WF
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 08:20:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784636432;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=DaIB8/dRo7mJ2fJJe8Xya1YtnR0CMfP7PNeLpiwaSF8=;
- b=Z12pL2+l3PgpPTajBcpWMthphovO0rYeSvM4+XMIMRD0+nJPRwUqxpMNpJf8Rz1UuHMnRP
- bMQGDBGarxi8nfIEkmIkGTczrEXocpNKksuaaXAXcj3r7/PdpmiHZ6m3bc7nfUHXYKMc5T
- NmGbW7tEJbTc0j3triC5A964wWNLzy8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-473-ChacZ2L5OGiBV-1EmrMYig-1; Tue,
- 21 Jul 2026 08:20:28 -0400
-X-MC-Unique: ChacZ2L5OGiBV-1EmrMYig-1
-X-Mimecast-MFC-AGG-ID: ChacZ2L5OGiBV-1EmrMYig_1784636427
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5A5FB1956056; Tue, 21 Jul 2026 12:20:27 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 62AA83004190; Tue, 21 Jul 2026 12:20:26 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id BB9A621E6920; Tue, 21 Jul 2026 14:20:23 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
- <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  "Michael S .
- Tsirkin" <mst@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,  Jason Wang
- <jasowang@redhat.com>,  Fam Zheng <fam@euphon.net>,  Daniel P .
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Subject: Re: [RESEND PATCH V10 02/15] iothread: introduce iothread_ref/unref
- to track attached devices
-In-Reply-To: <20260716172108.87700-3-zhangckid@gmail.com> (Zhang Chen's
- message of "Fri, 17 Jul 2026 01:20:43 +0800")
-References: <20260716172108.87700-1-zhangckid@gmail.com>
- <20260716172108.87700-3-zhangckid@gmail.com>
-Date: Tue, 21 Jul 2026 14:20:23 +0200
-Message-ID: <87ecgwpm9k.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1wm9T1-00021F-Po
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 08:20:59 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1wm9Sy-0003om-MJ
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 08:20:58 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-8484f229529so4877751b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 05:20:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1784636454; x=1785241254; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=G1L7AhgtqGZO/tvlcFZtCZEsobOgcDT65d8cvBeS6bY=;
+ b=kIg7JSzJreJgM8F32LPEAJQH8ii1ISShEO8ljl2EiEic0Hi4eyWop375IVd/PQ1Wow
+ fpLBoIA2Gg0Vtuz5AjRHfFhB9KeinKcEjm3e07Wh1hPeZz5wHzzmAnT1uzrPtiWXFktL
+ yb5U3zIQghsYUoLwZov4LcAA8tzeEtNJ3rdLp8cvX+yBNc8ImNMsszkF80iL+3hGSU2a
+ m9rFUgCztwcmfxLs5O2JlUW9TfshLv6ZwfbWZm4EMXYfHVBkhQ04/AUU5oeqkDRu7M3D
+ Y2J30/jO8xHZY1LsvBnLz6KG252b2+Pj84cYk3z6jR1/D+s4yI6Lse7EmYrJw23eaL+0
+ r+YQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784636454; x=1785241254;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=G1L7AhgtqGZO/tvlcFZtCZEsobOgcDT65d8cvBeS6bY=;
+ b=UglpZyWD9zjFZ6kAC4cYPfo7ycerb9+flG5+Xm7xk4/b7g6lpHZYR7G4Vnz2K+DozG
+ PxqN8MrucmybfvEcEsFIENpQK9fb5B8v05UrLkcs1mDEJ2uWdCiIdXmKiHZztFx8Uejl
+ XQV/KaEbdVQLW0mOBKTz43VKNOEFpTd0X+GmXDtu2qqCyal+DnVJNU6nHUMN1XkiZ/0g
+ 3gJ5Sr/kqIDktVzfRHEwbdPEMl2i4JJTEakZRhi7/f/8eAKtFopQBO+8x0wIvUMl3mqX
+ MpkW5baivn29OH6tKegJ+i7Qqqf2gvlHfMGTOi/hJcG3w0Lk1dokAimHgMNeHlegYDk6
+ Zk+A==
+X-Gm-Message-State: AOJu0YywtDq8wjbQONfP3hlbJdYiTgb/8/HWlSaKodq9uYCsCQ2xsSDB
+ bbhh7XY9urwdjayg9in//TBq1TaawzlJaoXzClZnEuwjIrtL9DCoQttnkcEOXD9KIPg8L91Jg2y
+ 8LgV2mibgzGSbhwPZ5L5+3SOxINxwvS4vraqx4R99DtO9grywRBjv091MSC7eeJPFyECLrZQp9P
+ d6XrOCVmPhA6rN2nHneIVqOsiXDxnzcT+6I7UXtiY=
+X-Gm-Gg: AR+sD10K74+/xp6AodHz/GBfZJxNV1cpdeswPKacEZ2Kr2qSYiulrP7mgH0AP6Yjtz1
+ Ub0O0pDjxMQkfAZtVzngTbkSsN6DDkBHUze6GLxnWpcD6TlUhDS7UWiop6vs3Bh7WsqvBKmibfG
+ 3eKvx1DEoxmtyPw9h150L0YLAaax4VV+8rkX4ZGi0/w1d6jvJvdJVmGlCA+mKSK6sYGixsgS35F
+ heP0C358GDd9wRCYEaPWc2LT9RlMcGaPO2kGiPMZMMFT0GY2km8FdvzH7Rp/TbAHt0UeojQ9uW1
+ 9JyrcCIhmtmRgICSiaTUhsmTPEI9d6mdYYcrelajdaB0lTrtrnM7qvATKglFCPWWtUPBAnbSkMX
+ 45+hlKuscAt7FuNe0CeslbiBD97LSTTCPcFmJD4aOhiNsQFYC/dUSGHxEt6IyTM+e4OxI/gTsw1
+ DgAG6p3mdBo7E/+lfaNQUppqcNiFFKYupQXR3IHCxem49f+MBzzbc+L8bbSLo2zbY/EP7isfefm
+ eMdQq/0weYEySfR
+X-Received: by 2002:a05:6a00:440e:b0:848:8027:cb6 with SMTP id
+ d2e1a72fcca58-84c2945a8edmr18023143b3a.45.1784636454325; 
+ Tue, 21 Jul 2026 05:20:54 -0700 (PDT)
+Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
+ [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-cb517aad95dsm5904568a12.7.2026.07.21.05.20.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Jul 2026 05:20:53 -0700 (PDT)
+From: Max Chou <max.chou@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Max Chou <max.chou@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PATCH 5/5] tests/tcg/riscv64: Add tests for SiFive int8 matmul
+ extensions
+Date: Tue, 21 Jul 2026 20:20:33 +0800
+Message-ID: <20260721122034.1567146-6-max.chou@sifive.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260721122034.1567146-1-max.chou@sifive.com>
+References: <20260721122034.1567146-1-max.chou@sifive.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: permerror client-ip=170.10.129.124;
- envelope-from=armbru@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=max.chou@sifive.com; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,338 +109,318 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhang Chen <zhangckid@gmail.com> writes:
+Add a test that exercises all SiFive int8 matrix-multiply instructions
+from the Xsfvqmaccqoq and Xsfvqmaccdod extensions.
 
-> Currently, IOThreads do not maintain a record of which devices are
-> associated with them.
+For each tile shape the test covers the four signedness variants
+(sf.vqmaccu / sf.vqmacc / sf.vqmaccus / sf.vqmaccsu) and the
+reserved-encoding path: with vl set to a value that is not a multiple
+of the tile size the helper raises an illegal-instruction exception.
 
-It's not just devices, it's QOM objects and block exports, as far as I
-can tell.
+Signed-off-by: Max Chou <max.chou@sifive.com>
+---
+ MAINTAINERS                               |   1 +
+ tests/tcg/riscv64/Makefile.softmmu-target |   7 +
+ tests/tcg/riscv64/test-xsfvqmacc.S        | 260 ++++++++++++++++++++++
+ 3 files changed, 268 insertions(+)
+ create mode 100644 tests/tcg/riscv64/test-xsfvqmacc.S
 
->                       This makes it difficult to monitor the
-> workload distribution of IOThreads, especially in complex
-> hotplug scenarios involving multiple virtio-blk or virtio-scsi devices.
->
-> This patch introduces a reference counting and tracking mechanism
-> within the IOThread object:
->
-> - iothread_ref(): Prepends the device's IOThreadHolder to a list.
-> - iothread_unref(): Searches for the IOThreadHolder using a
-
-Search what?
-
->   string comparison (strcmp), releases the associated memory
->   upon a successful match.
-
-More implementation detail than I'd use here.
-
-> - holders: A IOThreadHolderList storing the IOThreadHolder
->   of attached devices for runtime introspection.
-
-Is this the list mentioned for iothread_ref()?  If yes, I'd put it
-first, then refer to it, perhaps like this:
-
-  - holders: a list describing what is "holding" the I/O thread
-  - iothread_ref(): add a "holder" to this list
-  - iothread_unref(): remove a "holder" from this list
-
-And maybe
-
-  A "holder" can be a QOM object or a block export.
-
-> A later commit will add QMP commands to let management applications
-> query the attachment status of IOThreads.
->
-> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> ---
->  include/system/iothread.h | 11 ++++++
->  iothread.c                | 70 +++++++++++++++++++++++++++++++++++++++
->  qapi/misc.json            | 59 +++++++++++++++++++++++++++++++++
->  3 files changed, 140 insertions(+)
->
-> diff --git a/include/system/iothread.h b/include/system/iothread.h
-> index a1ef7696cb..ef0b2f9648 100644
-> --- a/include/system/iothread.h
-> +++ b/include/system/iothread.h
-> @@ -38,6 +38,9 @@
->  #define IOTHREAD_POLL_WEIGHT_DEFAULT 0ULL
->  #endif
->  
-> +typedef struct IOThreadHolder IOThreadHolder;
-> +typedef struct IOThreadHolderList IOThreadHolderList;
-
-These are is already defined in generated qapi/qapi-types-misc.h.  Why
-not include it instead?
-
-> +
->  struct IOThread {
->      EventLoopBase parent_obj;
->  
-> @@ -50,6 +53,11 @@ struct IOThread {
->      bool stopping;              /* has iothread_stop() been called? */
->      bool running;               /* should iothread_run() continue? */
->      int thread_id;
-> +    /*
-> +     * The list elements are of type IOThreadHolder, which can
-> +     * represent either a QOM path or a block export name.
-> +     */
-
-Back when holders was a GList, explaining the element type in a comment
-was useful.  Now it's not.
-
-> +    IOThreadHolderList *holders;
->  
->      /* AioContext poll parameters */
->      int64_t poll_max_ns;
-> @@ -82,4 +90,7 @@ void iothread_destroy(IOThread *iothread);
->   */
->  bool qemu_in_iothread(void);
->  
-> +void iothread_ref(IOThread *iothread, const IOThreadHolder *holder);
-> +void iothread_unref(IOThread *iothread, const IOThreadHolder *holder);
-> +
->  #endif /* IOTHREAD_H */
-> diff --git a/iothread.c b/iothread.c
-> index 3558535b40..38f273c0e9 100644
-> --- a/iothread.c
-> +++ b/iothread.c
-> @@ -21,10 +21,78 @@
->  #include "system/iothread.h"
->  #include "qapi/error.h"
->  #include "qapi/qapi-commands-misc.h"
-> +#include "qapi/clone-visitor.h"
-> +#include "qapi/qapi-visit-misc.h"
->  #include "qemu/error-report.h"
->  #include "qemu/rcu.h"
->  #include "qemu/main-loop.h"
->  
-> +/*
-> + * iothread_ref:
-> + * @iothread: the iothread to track
-> + * @holder: the IOThreadHolder object initialized by the caller
-> + *
-> + * Add the @holder to the iothread's tracking list.
-> + */
-
-This is confusing.  What's tracking what?
-
-Here's my attempt:
-
-   /*
-    * Add a deep copy of @holder to @iothread's list of holders.
-    */
-
-If you really want to use "tracking list", you should define the term,
-say with a comment next to @holder in struct IOThread.
-
-> +void iothread_ref(IOThread *iothread, const IOThreadHolder *holder)
-> +{
-> +    assert(holder);
-> +
-> +    QAPI_LIST_PREPEND(iothread->holders, QAPI_CLONE(IOThreadHolder, holder));
-> +}
-> +
-> +static int iothread_holder_compare(const IOThreadHolder *holder_a,
-> +                                   const IOThreadHolder *holder_b)
-> +{
-> +    const char *name_a, *name_b;
-> +
-> +    if (holder_a->type != holder_b->type) {
-> +        return holder_b->type - holder_a->type;
-> +    }
-> +
-> +    switch (holder_a->type) {
-> +    case IO_THREAD_HOLDER_KIND_QOM_OBJECT:
-> +        name_a = holder_a->u.qom_object.qom_path;
-> +        name_b = holder_b->u.qom_object.qom_path;
-> +        break;
-> +    case IO_THREAD_HOLDER_KIND_BLOCK_EXPORT:
-> +        name_a = holder_a->u.block_export.export_name;
-> +        name_b = holder_b->u.block_export.export_name;
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +
-> +    return strcmp(name_a, name_b);
-> +}
-> +
-> +/*
-> + * This function removes the @holder from the @iothread's tracking list.
-
-Imperative mood, please:
-
-    * Remove @holder from @iothread's list of holders.
-
-> + * The @holder must match the one used previously in iothread_ref().
-
-I believe the next sentence makes this one redundant.
-
-> + * It is a programming error to call this with a @holder that is not
-> + * currently associated with the @iothread.
-> + */
-> +void iothread_unref(IOThread *iothread, const IOThreadHolder *holder)
-> +{
-> +    IOThreadHolderList **prev = &iothread->holders;
-> +    IOThreadHolderList *curr;
-> +
-> +    assert(holder);
-> +
-> +    while (*prev) {
-> +        curr = *prev;
-> +        if (iothread_holder_compare(curr->value, holder) == 0) {
-> +            *prev = curr->next;
-> +            curr->next = NULL;
-> +            qapi_free_IOThreadHolderList(curr);
-> +            return;
-> +        }
-> +        prev = &curr->next;
-> +    }
-> +
-> +    g_assert_not_reached();
-> +}
-> +
->  static void *iothread_run(void *opaque)
->  {
->      IOThread *iothread = opaque;
-> @@ -129,6 +197,7 @@ static void iothread_instance_finalize(Object *obj)
->          iothread->main_loop = NULL;
->      }
->      qemu_sem_destroy(&iothread->init_done_sem);
-> +    qapi_free_IOThreadHolderList(iothread->holders);
->  }
->  
->  static void iothread_init_gcontext(IOThread *iothread, const char *thread_name)
-> @@ -373,6 +442,7 @@ static int query_one_iothread(Object *object, void *opaque)
->      info = g_new0(IOThreadInfo, 1);
->      info->id = iothread_get_id(iothread);
->      info->thread_id = iothread->thread_id;
-> +    info->holders = QAPI_CLONE(IOThreadHolderList, iothread->holders);
->      info->poll_max_ns = iothread->poll_max_ns;
->      info->poll_grow = iothread->poll_grow;
->      info->poll_shrink = iothread->poll_shrink;
-> diff --git a/qapi/misc.json b/qapi/misc.json
-> index c71a5fe657..096e418b7a 100644
-> --- a/qapi/misc.json
-> +++ b/qapi/misc.json
-> @@ -67,6 +67,56 @@
->  ##
->  { 'command': 'query-name', 'returns': 'NameInfo', 'allow-preconfig': true }
->  
-> +
-> +##
-> +# @IOThreadHolderBlockExport:
-> +#
-> +# @export-name: Name of the block export.
-
-What's a block export name?
-
-Is it BlockExportOptions member @id?
-
-Is it BlockExportOptions member @node-name?
-
-Something else?
-
-> +#
-> +# Since: 11.1
-
-By now 11.2.
-
-> +#
-> +##
-> +{ 'struct': 'IOThreadHolderBlockExport',
-> +  'data': { 'export-name': 'str' } }
-> +
-> +##
-> +# @IOThreadHolderQomObject:
-> +#
-> +# @qom-path: Path to the object in the QOM tree.
-> +#
-> +# Since: 11.1
-> +#
-> +##
-> +{ 'struct': 'IOThreadHolderQomObject',
-> +  'data': { 'qom-path': 'str' } }
-> +
-> +##
-> +# @IOThreadHolderKind:
-> +#
-> +# @block-export: A block export.
-> +# @qom-object: A QOM Object.
-> +#
-> +# Since: 11.1
-> +##
-> +{ 'enum': 'IOThreadHolderKind',
-> +  'data': [ 'block-export', 'qom-object' ] }
-> +
-> +##
-> +# @IOThreadHolder:
-> +#
-> +# The block export or QOM object holding the I/O thread.
-> +#
-> +# @type: the kind of I/O thread holder.
-
-We should use "iothread" for consistency (even though I/O thread is
-nicer).
-
-> +#
-> +# Since: 11.1
-> +##
-> +{ 'union': 'IOThreadHolder',
-> +  'base': { 'type': 'IOThreadHolderKind' },
-> +  'discriminator': 'type',
-> +  'data': {
-> +    'block-export': 'IOThreadHolderBlockExport',
-> +    'qom-object': 'IOThreadHolderQomObject' } }
-> +
->  ##
->  # @IOThreadInfo:
->  #
-> @@ -76,6 +126,11 @@
->  #
->  # @thread-id: ID of the underlying host thread
->  #
-> +# @holders: the QOM objects or block nodes currently
-> +#     associated with this iothread.  When an associated component is
-> +#     detached or destroyed, it is removed from this list.
-> +#     (Since 11.1)
-
-Wrap lines more nicely, please:
-
-   # @holders: the QOM objects or block nodes currently associated with
-   #     this iothread.  When an associated component is detached or
-   #     destroyed, it is removed from this list.  (Since 11.1)
-
-
-> +#
->  # @poll-max-ns: maximum polling time in ns, 0 means polling is
->  #     disabled (since 2.9)
->  #
-> @@ -98,6 +153,7 @@
->  { 'struct': 'IOThreadInfo',
->    'data': {'id': 'str',
->             'thread-id': 'int',
-> +           'holders': ['IOThreadHolder'],
->             'poll-max-ns': 'int',
->             'poll-grow': 'int',
->             'poll-shrink': 'int',
-> @@ -124,6 +180,8 @@
->  #              {
->  #                 "id":"iothread0",
->  #                 "thread-id":3134,
-> +#                 "holders":[{"qom-path": "/machine/peripheral/blk1/virtio-backend", "type": "qom-object"},
-> +#                            {"qom-path": "/machine/peripheral/blk2/virtio-backend", "type": "qom-object"}],
->  #                 "poll-max-ns":32768,
->  #                 "poll-grow":0,
->  #                 "poll-shrink":0,
-> @@ -132,6 +190,7 @@
->  #              {
->  #                 "id":"iothread1",
->  #                 "thread-id":3135,
-> +#                 "holders":[{"export-name": "fmt_qcow2", "type": "block-export"}],
->  #                 "poll-max-ns":32768,
->  #                 "poll-grow":0,
->  #                 "poll-shrink":0,
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 1a40d86685..d7bfe19b1d 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -396,6 +396,7 @@ S: Supported
+ F: target/riscv/xsf.decode
+ F: target/riscv/tcg/insn_trans/trans_xsf.c.inc
+ F: disas/riscv-xsf*
++F: tests/tcg/riscv64/test-xsfvqmacc.S
+ 
+ RENESAS RX CPUs
+ R: Yoshinori Sato <yoshinori.sato@nifty.com>
+diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
+index 82be8a2c91..0615dc83e8 100644
+--- a/tests/tcg/riscv64/Makefile.softmmu-target
++++ b/tests/tcg/riscv64/Makefile.softmmu-target
+@@ -41,5 +41,12 @@ comma:= ,
+ run-test-crc32: test-crc32
+ 	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)xlrbr=true $(QEMU_OPTS)$<)
+ 
++# The SiFive int8 matmul instructions are reserved unless VLEN >= 256, so the
++# runner selects vlen=256 along with both extensions.
++EXTRA_RUNS += run-test-xsfvqmacc
++XSFVQMACC_CPU = rv64$(comma)v=true$(comma)vlen=256$(comma)xsfvqmaccdod=true$(comma)xsfvqmaccqoq=true
++run-test-xsfvqmacc: test-xsfvqmacc
++	$(call run-test, $<, $(QEMU) -cpu $(XSFVQMACC_CPU) $(QEMU_OPTS)$<)
++
+ # We don't currently support the multiarch system tests
+ undefine MULTIARCH_TESTS
+diff --git a/tests/tcg/riscv64/test-xsfvqmacc.S b/tests/tcg/riscv64/test-xsfvqmacc.S
+new file mode 100644
+index 0000000000..a116712e50
+--- /dev/null
++++ b/tests/tcg/riscv64/test-xsfvqmacc.S
+@@ -0,0 +1,260 @@
++/*
++ * Test the SiFive Xsfvqmaccqoq/Xsfvqmaccdod custom int8 matrix-multiply
++ * extensions.
++ *
++ * The eight instructions widen 8-bit integer inputs to 32 bits and perform
++ * a matrix-multiply-accumulate into a vector of int32 accumulators:
++ *
++ *   C[j] += A * B[j]
++ *
++ * Xsfvqmaccqoq (4x8x4): A is 4x8, B[j] is 8x4, C[j] is 4x4 int32. One matrix
++ * operation is performed per 32 elements of vl (TILE_SIZE = 32).
++ * Xsfvqmaccdod (2x8x2): A is 2x8, B[j] is 8x2, C[j] is 2x2 int32. One matrix
++ * operation is performed per 16 elements of vl (TILE_SIZE = 16).
++ *
++ * The input tiles below contain bytes >= 0x80 so that each signedness
++ * variant produces a distinct result; the expected int32 tiles were computed
++ * with an independent reference model of the specification. The accumulators
++ * are cleared before every operation, so the expected value is the pure
++ * matrix product.
++ *
++ * Test exits via semihosting with status 0 on success, or the 1-based index
++ * of the first failing operation.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++	.option arch, +v
++	.option norvc
++
++	.text
++
++/*
++ * Run one 4x8x4 operation: load the 32-byte A and B tiles, clear the 4x4
++ * int32 accumulator (vd = v4:v5, EMUL = 2), execute the op, then compare the
++ * 16 int32 results against the expected tile.
++ */
++.macro RUN_QOQ id, word, exp
++	li	a2, 32
++	vsetvli	t0, a2, e8, m1, ta, ma
++	la	t1, a_qoq
++	vle8.v	v1, (t1)
++	la	t1, b_qoq
++	vle8.v	v2, (t1)
++	vsetvli	t0, x0, e32, m2, ta, ma
++	vmv.v.i	v4, 0
++	li	a2, 32
++	vsetvli	t0, a2, e8, m1, ta, ma
++	.word	\word
++	vsetvli	t0, x0, e32, m2, ta, ma
++	la	t1, result
++	vse32.v	v4, (t1)
++	la	a0, result
++	la	a1, \exp
++	li	a2, 16
++	li	t6, \id
++	call	check_words
++.endm
++
++/*
++ * Run one 2x8x2 operation: load the 16-byte A and B tiles, clear the 2x2
++ * int32 accumulator (vd = v4, EMUL = 1), execute the op, then compare the
++ * 4 int32 results against the expected tile.
++ */
++.macro RUN_DOD id, word, exp
++	li	a2, 16
++	vsetvli	t0, a2, e8, m1, ta, ma
++	la	t1, a_dod
++	vle8.v	v1, (t1)
++	la	t1, b_dod
++	vle8.v	v2, (t1)
++	vsetvli	t0, x0, e32, m1, ta, ma
++	vmv.v.i	v4, 0
++	li	a2, 16
++	vsetvli	t0, a2, e8, m1, ta, ma
++	.word	\word
++	vsetvli	t0, x0, e32, m1, ta, ma
++	la	t1, result
++	vse32.v	v4, (t1)
++	la	a0, result
++	la	a1, \exp
++	li	a2, 4
++	li	t6, \id
++	call	check_words
++.endm
++
++	.global _start
++_start:
++	/* Enable the vector unit (mstatus.VS = Initial). */
++	li	t0, 1 << 9
++	csrs	mstatus, t0
++
++	/* Route synchronous traps to trap_handler (mtvec direct mode). */
++	la	t0, trap_handler
++	csrw	mtvec, t0
++
++	RUN_QOQ	1, 0xF220A25B, exp_qoq_u	/* sf.vqmaccu.4x8x4  */
++	RUN_QOQ	2, 0xF620A25B, exp_qoq_s	/* sf.vqmacc.4x8x4   */
++	RUN_QOQ	3, 0xFA20A25B, exp_qoq_us	/* sf.vqmaccus.4x8x4 */
++	RUN_QOQ	4, 0xFE20A25B, exp_qoq_su	/* sf.vqmaccsu.4x8x4 */
++	RUN_DOD	5, 0xB220A25B, exp_dod_u	/* sf.vqmaccu.2x8x2  */
++	RUN_DOD	6, 0xB620A25B, exp_dod_s	/* sf.vqmacc.2x8x2   */
++	RUN_DOD	7, 0xBA20A25B, exp_dod_us	/* sf.vqmaccus.2x8x2 */
++	RUN_DOD	8, 0xBE20A25B, exp_dod_su	/* sf.vqmaccsu.2x8x2 */
++
++	/*
++	 * Illegal-instruction reporting test (op 9).
++	 *
++	 * When vl is not a multiple of the tile size the instruction is
++	 * reserved and the helper raises an illegal-instruction exception at
++	 * runtime.
++	 */
++	la	t1, trap_mtval
++	sd	zero, 0(t1)
++	la	t1, trap_mcause
++	sd	zero, 0(t1)
++	/* vl = 16 is not a multiple of the 4x8x4 tile size (32 elements). */
++	li	a2, 16
++	vsetvli	t0, a2, e8, m1, ta, ma
++	.word	0xF220A25B		/* sf.vqmaccu.4x8x4, traps */
++	/* The handler skips the faulting insn, so control resumes here. */
++	li	a0, 9			/* fail code for this check */
++	la	t1, trap_mcause
++	ld	t2, 0(t1)
++	li	t3, 2			/* RISCV_EXCP_ILLEGAL_INST */
++	bne	t2, t3, _exit
++	la	t1, trap_mtval
++	ld	t2, 0(t1)
++	li	t3, 0xF220A25B
++	bne	t2, t3, _exit
++
++	li	a0, 0
++	j	_exit
++
++/*
++ * Machine-mode trap handler: record mcause and mtval, then advance mepc
++ * past the 4-byte faulting instruction and return.
++ */
++	.balign	4
++trap_handler:
++	csrr	t4, mcause
++	la	t5, trap_mcause
++	sd	t4, 0(t5)
++	csrr	t4, mtval
++	la	t5, trap_mtval
++	sd	t4, 0(t5)
++	csrr	t4, mepc
++	addi	t4, t4, 4
++	csrw	mepc, t4
++	mret
++
++/*
++ * check_words(a0 = result, a1 = expected, a2 = word count).
++ * Returns to the caller if every word matches; otherwise exits with the
++ * operation index held in t6.
++ */
++check_words:
++1:	beqz	a2, 2f
++	lw	t2, 0(a0)
++	lw	t3, 0(a1)
++	bne	t2, t3, 3f
++	addi	a0, a0, 4
++	addi	a1, a1, 4
++	addi	a2, a2, -1
++	j	1b
++2:	ret
++3:	mv	a0, t6
++	j	_exit
++
++/* Exit through the semihosting SYS_EXIT_EXTENDED call with a0 as the code. */
++_exit:
++	la	a1, semiargs
++	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.data
++	.balign	8
++semiargs:
++	.space	16
++result:
++	.space	64
++trap_mcause:
++	.space	8
++trap_mtval:
++	.space	8
++
++/*
++ * A (4x8, row-major) in bytes [0, 32) of vs1.
++ */
++a_qoq:
++	.byte	0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x80
++	.byte	0xFF, 0x01, 0x00, 0x02, 0x7F, 0x03, 0x04, 0x05
++	.byte	0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x08
++	.byte	0x00, 0x00, 0x81, 0x00, 0x00, 0x02, 0x00, 0x03
++/*
++ * B (8x4, row-major) in bytes [0, 32) of vs2.
++ */
++b_qoq:
++	.byte	0x01, 0x02, 0x03, 0x04
++	.byte	0x05, 0x06, 0x07, 0x08
++	.byte	0x80, 0x7F, 0xFF, 0x01
++	.byte	0x00, 0x10, 0x20, 0x30
++	.byte	0x02, 0x02, 0x02, 0x02
++	.byte	0xFE, 0x01, 0x00, 0x7F
++	.byte	0x03, 0x00, 0x81, 0x04
++	.byte	0x40, 0x50, 0x60, 0x70
++/*
++ * A (2x8, row-major) in bytes [0, 16) of vs1.
++ */
++a_dod:
++	.byte	0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x80
++	.byte	0xFF, 0x7F, 0x00, 0x02, 0x81, 0x03, 0x04, 0x05
++/*
++ * B (8x2, row-major) in bytes [0, 16) of vs2.
++ */
++b_dod:
++	.byte	0x01, 0x02
++	.byte	0x80, 0x7F
++	.byte	0x03, 0xFF
++	.byte	0x00, 0x10
++	.byte	0x02, 0xFE
++	.byte	0x7F, 0x01
++	.byte	0x81, 0x04
++	.byte	0x40, 0x50
++
++	.balign	4
++exp_qoq_u:
++	.word	0x0000279e, 0x000029db, 0x0000371f, 0x00003bf7
++	.word	0x00000648, 0x000004b5, 0x00000826, 0x0000091f
++	.word	0x00007be0, 0x00002030, 0x000074f0, 0x000042f0
++	.word	0x0000433c, 0x000040f1, 0x0000819f, 0x000002cf
++exp_qoq_s:
++	.word	0xffffde9e, 0xffffd9db, 0xffffcd1f, 0xffffcbf7
++	.word	0x00000248, 0x000002b5, 0x00000126, 0x0000051f
++	.word	0xffffebe0, 0x00002030, 0xffffd4f0, 0x000042f0
++	.word	0x0000403c, 0xffffc1f1, 0x0000019f, 0x000001cf
++exp_qoq_us:
++	.word	0x00001e9e, 0x000029db, 0x00002d1f, 0x00003bf7
++	.word	0x00000348, 0x000004b5, 0x00000426, 0x0000091f
++	.word	0xffffebe0, 0x00002030, 0xffffd4f0, 0x000042f0
++	.word	0xffffc03c, 0x000040f1, 0x0000009f, 0x000002cf
++exp_qoq_su:
++	.word	0xffffe79e, 0xffffd9db, 0xffffd71f, 0xffffcbf7
++	.word	0x00000548, 0x000002b5, 0x00000526, 0x0000051f
++	.word	0x00007be0, 0x00002030, 0x000074f0, 0x000042f0
++	.word	0xffffc33c, 0xffffc1f1, 0xffff829f, 0x000001cf
++exp_dod_u:
++	.word	0x00002795, 0x00003155, 0x00004642, 0x0000c2c0
++exp_dod_s:
++	.word	0xffffde95, 0xffffd955, 0xffffc042, 0x000041c0
++exp_dod_us:
++	.word	0x00001e95, 0x00002955, 0xffffc342, 0x000041c0
++exp_dod_su:
++	.word	0xffffe795, 0xffffe155, 0x00004342, 0xffffc2c0
+-- 
+2.55.0
 
 
