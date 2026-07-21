@@ -4,145 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 384DFC4451C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 591C9C44529
 	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 09:59:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm7F7-0000rP-Dw; Tue, 21 Jul 2026 05:58:29 -0400
+	id 1wm7Fe-00018Z-52; Tue, 21 Jul 2026 05:59:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wm7F5-0000pp-Pj
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 05:58:27 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wm7Fc-00017t-N3
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 05:59:00 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wm7F3-0005m3-1R
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 05:58:27 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66L6CoB53884161
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 09:58:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- AvmPEeXORihifk6lBg/ffgkbdyeGUuLEFjdKJ1RgRqE=; b=RceIT9Xvp1zmjIsA
- uMjLDbsS+LusM9gF7au7lsv5QMpfV0g8Hve8969revEFRxM8FCRaGqm7nM6yvU/r
- AhOtBLN3O0y4Fk0tOPWxTUA13vlkLmIL6FmEqzHOKCCUAhjSrLJE6Bp77VOro2vo
- WjEq4jr+xd6Bqb3kM1kETK47OONv5/2ok6BlSyEXqFGzGBPmeivd1H++PHf8qsK1
- WdvQEHlsZrV/kdv0UTkqmxHu8Ys5rvVORZAaaqbkuEZ12sS8jR8yP8/KsWP3p5LK
- q2HoLHMdmPZStw9Vf6QyQvhHlVQCi1Bb5Ia5mIUOupJDffZAvE3bXVt9ktNKz+c0
- tIFfyw==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhqvcbtsp-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 09:58:23 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51c21c01cf3so171153291cf.2
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 02:58:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784627903; x=1785232703; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:references:cc:to
- :from:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=AvmPEeXORihifk6lBg/ffgkbdyeGUuLEFjdKJ1RgRqE=;
- b=VXVhZMfsHCEpPDc+b7o+1K4+Xh08Hd2g4DJ7h3iF20Td3skPO9X1z4jdvq9/KnM4H7
- 2mxIGE6d2xWxLvK5iovwcJHc1euq1D7t8EP8BjOopLDiV4oycBiMFf9mmsUABPYr+MiI
- 2S0JrRdKdGLQPkxfjqAM+xQ27Q0eT5ij9lwGVXfkbDDga3iDOk8RhMebAKE4sjLtrBRl
- yWUPsYYwAfct7BF7/8RlhIVLvqS7or0iHEWqU+zFDZHs9Ju8P815MDkfMW2kZDwd8SVz
- lWG8QlIRks4LXJC59cGDhqBMAtN4whcbVK4usoFU0gdWzwuXTqqtXIiRXpy5ZvCQKB74
- E6YA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784627903; x=1785232703;
- h=content-transfer-encoding:content-type:in-reply-to:references:cc:to
- :from:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=AvmPEeXORihifk6lBg/ffgkbdyeGUuLEFjdKJ1RgRqE=;
- b=h7x8WKjUmHxucbLbfx+ka7MLNV3nkajimsKP0N8pi0pnv95hQIlWzUqF9vQZs8D+rD
- TuGePCTbt4MFo2+AiFWJO9VwSMWNjZOztIIN2KZDsLSho3A3k+43Ujw3EvOuf4fO9Kn1
- Nb5/y0/hF9cDU162oDUx9+YqddRF2eVFE6f56Lc4SIU2WlVFZG/V0CA6tYgqQ5hz1ftv
- OzA3Qs94CDGKqbbLtq2113maEJeT+/N14BNG1BhqsAqzIeQVO5v/XxRSuSVcR1383F0S
- 8KKD3dLwQ5XnHr00Jzv4Lr1bQKojywpmpQogEQYdKmsaOBs7+jrKvBAhnAgOPoYQynnH
- 3A7Q==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqiwcBbiBz86q6omaJyJtNFL0kk1nYoWLDd0OGsXYDtlPObGH3MZNnDPfUDyFIZRocs2AFxNsFzCB6m@nongnu.org
-X-Gm-Message-State: AOJu0YwdlQiWIjdP92CddqskZ4y5rao7DnBXwDMeDDdf05MUvWgTOfxP
- c1o4Jl3hw7l6TSb/CT4lENgLqHsPL6CDWwW9L1wrKdVbq/swSHK3JisPLBLdV4w/802Ac4IIuJU
- bFloxEvADtMkpKffQrdzeYH1X31MmMikZ1Z01Q3qMjdCtIJejFyIVTZG1wg==
-X-Gm-Gg: AfdE7cmvU3IMpfCuaJ4QYlQRY1op6+EQPAct+vEL4qoNBRCWnXDBPROMPUIAlc7DhHD
- szJl6+YwFE8b2evzMVIK7EUZRomoacSBatbjUTxk90C9j5YjUSHRgBqu1PocMQpNQmImvIl+h0R
- 3r0DiTuEtonaV5Q0UUPswyCkTdZQ0uObsB0laVao6AFUCA8FzksoLgA635xnniTW4iob1FbMPUT
- pt5aq+vth9R98nOc0p4Kx45oMKfemcWuKETIEzjAnLEGojxTKMdmvT7DJzfXgj+jdeZ7zahTwVJ
- GW6wdhOAJoisnxL7h+h71biHCdEMqaxDcMfUaJ2WbtqRtPuGkhmeSkm4rCMxo7l3/vnk9DzzbSA
- 161qo6ZtfYRe9Zx7QW4I5nw2VPCTVo+/BWkIhDx2/ANjppTdZSTE=
-X-Received: by 2002:a05:622a:38b:b0:51a:8c97:fb9d with SMTP id
- d75a77b69052e-5213fc58323mr161022531cf.70.1784627902869; 
- Tue, 21 Jul 2026 02:58:22 -0700 (PDT)
-X-Received: by 2002:a05:622a:38b:b0:51a:8c97:fb9d with SMTP id
- d75a77b69052e-5213fc58323mr161022421cf.70.1784627902461; 
- Tue, 21 Jul 2026 02:58:22 -0700 (PDT)
-Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f63e49acesm36251511f8f.6.2026.07.21.02.58.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Jul 2026 02:58:21 -0700 (PDT)
-Message-ID: <e705d648-eaa2-404a-b654-a15b1648e0a9@oss.qualcomm.com>
-Date: Tue, 21 Jul 2026 11:58:20 +0200
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wm7FZ-0005nv-48
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 05:59:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1784627919; bh=AzYlZUTagdh+628Ynjpf0NzhAuUkVn8HEcov5Q5MTmc=;
+ h=Date:Subject:From:To:Cc:References:In-Reply-To;
+ b=tQrs7tHd5GYYlaAjcFaEUioFuUXy3yeIZvMIFIZDzIfbI/rzK79K6J5oAFVNulYrQ
+ Y9tiF8oCncoXKwOn1i9mTUSkZ2gc54YwDt1/egNBYFpf9BHI5ANXPKRxIWZ2KzCt1H
+ jRzOvv5iIOtBDAqLsNfbIV67OKTKe58rUpLmcb/pq3uYhSSDjfr9WIOs1pt2jE2w7o
+ qDcVuaeGvqiBL/Cw1Yw/55RnrC1muN+pbV0/L6uHImN9g4lWsDtKW+dP9bKkY9mpLS
+ ddEU2HL87QOU7BUjxt/9gY/F2ymWZ2y8sDHoPpDUVyJTH/d7QqoLeYI91c2ZN9rWnI
+ 1oGr2kIV4V5DA==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 5565E1C3631;
+ Tue, 21 Jul 2026 12:58:39 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 425C23F28EB;
+ Tue, 21 Jul 2026 12:58:54 +0300 (MSK)
+Message-ID: <c3303753-5f89-4953-9ed4-53e0e393e901@tls.msk.ru>
+Date: Tue, 21 Jul 2026 12:58:40 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/ide/core: Fix possible crash via NULL pointer in
- ide_cancel_dma_sync()
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- John Snow <jsnow@redhat.com>
-Cc: Alexander Bulekov <alxndr@bu.edu>, qemu-block@nongnu.org,
- qemu-stable@nongnu.org, qemu-trivial@nongnu.org
-References: <20260721070216.82984-1-thuth@redhat.com>
- <3f8027d5-f7db-4fb5-8386-1d5f93974a10@nutanix.com>
- <563e1a3e-1420-4f6b-9244-9ad4360c207f@oss.qualcomm.com>
-In-Reply-To: <563e1a3e-1420-4f6b-9244-9ad4360c207f@oss.qualcomm.com>
+Subject: Re: [PATCH 0/2] build: fix sparc64 host
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: Alex Williamson <alex@shazbot.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20260720221715.27108-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260720171031.259f590e@shazbot.org>
+ <089649f0-b677-4c1a-a42b-eb9853f4fc7a@oss.qualcomm.com>
+ <a2273203-403c-4da1-b3dd-0933dd70faf0@app.fastmail.com>
+ <892e09ae-7083-4a9c-8f45-9c79c0ce8775@tls.msk.ru>
+Content-Language: en-US, ru-RU
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <892e09ae-7083-4a9c-8f45-9c79c0ce8775@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDEwNSBTYWx0ZWRfX4Ly80+n9GI52
- ZzalbustIMDr28XwNu86tsErnFWkBqBPdwZvUTpyTHvLBlu1WaVzcvFtagrazMtdv8EH0+vU93l
- Tmw9+XrOJQrRor/1ic4Arb7YEIT8pXY=
-X-Proofpoint-GUID: bFVEHTuollM6-zCeLqQNPzV4vDvYifYl
-X-Authority-Analysis: v=2.4 cv=OMYXGyaB c=1 sm=1 tr=0 ts=6a5f42bf cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=RpNjiQI2AAAA:8 a=20KFwNOVAAAA:8 a=2QUrxFv762PGgihxwb4A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-ORIG-GUID: bFVEHTuollM6-zCeLqQNPzV4vDvYifYl
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDEwNSBTYWx0ZWRfXzmimU7anTUvu
- apuV7pYZnNjsDfNc2ifEFR/EYm9Yc1U4P1Cf7YRMuS1n0ICax6knW8cZy3Zzt5vPNwlLfCspPUO
- cV0GNdWaR9pakY55ff4oAnOUIzV9TUQL1hP31qFXJlrdbDyD0AzBm/X+jyC8OTpgLPl8hG+9AtD
- euUq39vkW+ydKZyyec004BA6Mwcpv/A+t1sMB8cK5keCpWNJ+o5dV1XJ3qFqAV4yx7zHd/kMSyE
- 0lauPDslWTSwq0GZPlrkBZHXwbdPjo9KFGW+31GM9LlSmdWlca/y1uZt1QjGV2BM/LtqfhmmDTB
- odDeQn4SVkyBfUX/RNPBd959AKFTRe5lmRVj3262qeayLHaIpgDIgj3phRQC4kZeOJ+0QIMuIAn
- 4ZJkdW+1l40jXl1WgGy6yjzXd6zENZwgn0DKTZkQ0ghALtRo/l96sYOghcPe7r1dB9sl5mVmjvO
- E4FwJz6GjDes6IR8vnw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-20_06,2026-07-20_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
- bulkscore=0 malwarescore=0 clxscore=1015 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607210105
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,106 +121,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/7/26 11:51, Philippe Mathieu-DaudÃ© wrote:
-> On 21/7/26 10:29, Mark Cave-Ayland wrote:
->> On 21/07/2026 08:02, Thomas Huth wrote:
->>
->>> From: Thomas Huth <thuth@redhat.com>
->>>
->>> ide_cancel_dma_sync() is called with a "IDEState *s" for one of the
->>> two IDE drives on a bus (primary or secondary drive) to cancel all
->>> pending DMA transfers on the drive. The code then checks
->>> s->bus->dma->aiocb to see whether there is any IO in flight on the
->>> *bus* and then calls blk_drain(s->blk) to wait for its completion.
->>> However, s->bus->dma->aiocb might belong to the other drive on the
->>> bus, and if there is no disk attached to the current drive, s->blk
->>> is NULL. Since blk_drain() does not check its parameter for a NULL
->>> pointer, QEMU can crash in such a case.
->>>
->>> To fix the problem, we have to check that "blk" is not NULL before
->>> calling blk_drain(). And we have to call blk_drain() for both drives,
->>> otherwise the assert(s->bus->dma->aiocb == NULL) statement after
->>> the blk_drain() might trigger if the IO in flight belongs to the
->>> the other drive.
->>>
->>> Resolves: https://urldefense.proofpoint.com/v2/url? 
->>> u=https-3A__gitlab.com_qemu-2Dproject_qemu_-2D_work-5Fitems_905&d=DwIDAg&c=s883GpUCOChKOHiocYtGcg&r=c23RpsaH4D2MKyD3EPJTDa0BAxz6tV8aUJqVSoytEiY&m=BbZFP82dEZMyWzN5GnJ9XaxwmyrmYGbqWbEBNSUM_afB5JRRF3InIaZAr5UpUUh2&s=rCgSz13wVfk11Z-Uw5WTQViAQKkSvwpQqf_dJX1tiro&e=
->>> Reported-by: Alexander Bulekov <alxndr@bu.edu>
->>> Resolves: https://urldefense.proofpoint.com/v2/url? 
->>> u=https-3A__gitlab.com_qemu-2Dproject_qemu_-2D_work-5Fitems_4052&d=DwIDAg&c=s883GpUCOChKOHiocYtGcg&r=c23RpsaH4D2MKyD3EPJTDa0BAxz6tV8aUJqVSoytEiY&m=BbZFP82dEZMyWzN5GnJ9XaxwmyrmYGbqWbEBNSUM_afB5JRRF3InIaZAr5UpUUh2&s=B-AkqMAsQwA0LzU5ptwPJ3ZIBAA8ncf5ZbQg8GTwaME&e=
->>> Reported-by: dong ling
->>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>> ---
->>>   v2: Drain both drives
->>>
->>>   hw/ide/core.c | 9 ++++++++-
->>>   1 file changed, 8 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/hw/ide/core.c b/hw/ide/core.c
->>> index f78b00220b8..f43ab95b07b 100644
->>> --- a/hw/ide/core.c
->>> +++ b/hw/ide/core.c
->>> @@ -741,10 +741,17 @@ void ide_cancel_dma_sync(IDEState *s)
->>>        * In the future we'll be able to safely cancel the I/O if the
->>>        * whole DMA operation will be submitted to disk with a single
->>>        * aio operation with preadv/pwritev.
->>> +     *
->>> +     * Note: s->bus->dma->aiocb might belong to the adjacent IDEState,
->>> +     * so we have to drain both drives to get it cleared.
->>>        */
->>>       if (s->bus->dma->aiocb) {
->>>           trace_ide_cancel_dma_sync_remaining();
->>> -        blk_drain(s->blk);
->>> +        for (int i = 0; i < 2; i++) {
->>> +            if (s->bus->ifs[i].blk) {
->>> +                blk_drain(s->bus->ifs[i].blk);
->>> +            }
->>> +        }
->>>           assert(s->bus->dma->aiocb == NULL);
->>>       }
->>>   }
->>
->> Doesn't ide_bus_active_if() do the right thing here for in-flight 
->> requests?
+On 7/21/26 10:42, Michael Tokarev wrote:
+> On 21.07.2026 06:33, Alex Williamson wrote:
 > 
-> bmdma_cmd_writeb() already calls ide_bus_active_if().
+>> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+>> index c19600e980a8..008f488a3e7d 100644
+>> --- a/hw/vfio/listener.c
+>> +++ b/hw/vfio/listener.c
+>> @@ -20,7 +20,6 @@
+>>   #include "qemu/osdep.h"
+>>   #include <sys/ioctl.h>
+>> -#include <linux/kvm.h>
+>>   #include <linux/vfio.h>
+>>   #include "exec/target_page.h"
+>>
+>> This builds in both a native amd64 environment and a cross-compiled sparc64 environment.
 > 
-> Is the issue in the caller, bmdma_cmd_writeb(), instead of
-> here in ide_cancel_dma_sync()?
+> Building it on native sparc64 (and on all other targets) on debian right now:
+> https://buildd.debian.org/status/package.php?p=qemu&suite=experimental
+> 
+> It's - drum roll - finishing building, so I guess it will be fine, let's
+> see in a few minutes.
 
-i.e.:
+With this change, everything is now green on the debian side.
 
--- >8 --
-diff --git a/hw/ide/pci.c b/hw/ide/pci.c
-index 7ce1ae67ab2..e7c6af9a49e 100644
---- a/hw/ide/pci.c
-+++ b/hw/ide/pci.c
-@@ -384,7 +384,7 @@ void bmdma_cmd_writeb(BMDMAState *bm, uint32_t val)
-      /* Ignore writes to SSBM if it keeps the old value */
-      if ((val & BM_CMD_START) != (bm->cmd & BM_CMD_START)) {
-          if (!(val & BM_CMD_START)) {
--            ide_cancel_dma_sync(ide_bus_active_if(bm->bus));
-+            ide_cancel_dma_sync(bmdma_active_if(bm));
-              bm->status &= ~BM_STATUS_DMAING;
-          } else {
-              bm->cur_addr = bm->addr;
----
+Thanks,
 
-> 
->> I'd expect to be able to do something like:
->>
->>    if (s->bus->dma->aiocb) {
->>        trace_ide_cancel_dma_sync_remaining();
->>        blk_drain(ide_bus_active_if(s->bus)->blk);
->>    }
->>
->>
->> ATB,
->>
->> Mark.
->>
->>
-> 
-> 
-
+/mjt
 
