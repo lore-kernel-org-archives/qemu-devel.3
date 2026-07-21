@@ -4,148 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EF6BC4452B
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 20:37:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AE75C4452D
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 20:41:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmHCy-0003a5-PO; Tue, 21 Jul 2026 16:36:56 -0400
+	id 1wmHGc-00055p-W9; Tue, 21 Jul 2026 16:40:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wmHCx-0003Zk-LB
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 16:36:55 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1wmHGa-000550-B2
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 16:40:40 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wmHCw-00061W-44
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 16:36:55 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66LHRMuF2446029
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 20:36:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- XFFqVtpBpQbaqPThEh/QDJY0pbFLoPfJBGmm0F3HSDs=; b=D/6P25fjGL70Htwo
- Jhg5e3O2jco8L+TNCYkvxk6WA276cBZLb68fBODEiX8ySiOQk/7JeJgG+Gp2q1TF
- loPEzdk6w2IMfBqECyWK3RoDpOqFRqhIjvJeC+libKb+z3KbVaTimKrPcwOXXF73
- JjYcVHP9t0hwnDVfwoUwBM9bDeJc2bobhqW5hNf6O69BVI9N0uCUuTsC4PyU0kHo
- yuzeY5p3OO/Sbt6KhPerouiSzWe8h1Lu0nfQLZ8r1Ah/+UXahAA5D8qKy3Pi/Hqz
- Tw7/BS0DkGHDKv79QDt64YTtW1MA01MgrI4ACPnCfAhVeUuJ3+PKjdxsM9TDWdBX
- Nj2wQQ==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fjd6d0tge-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 20:36:52 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51c1d7886cdso126310681cf.1
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 13:36:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784666212; x=1785271012; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=XFFqVtpBpQbaqPThEh/QDJY0pbFLoPfJBGmm0F3HSDs=;
- b=EgCrq7OCSIDD5SA9bfpJ6bDnOLRQ8BZZQjDUFc19uK6uNYuYy19CvC8Vfaw1fciN/I
- /dcntq2e6wOah358IaMV88rSBwQYVqwu7gUYfOl1nl8bh42OpddwAzM7jm6bDgvDEv1A
- vSMIxeLflgAG2d7U4P4cMCuaZJW4DqPssyF9YLybZuKPndVhDsJZwYGwz2jjRJy5hm2C
- NSyqP1wht3qy5lgzoqvhYlkJ6esEnaNG647ITBQis2/ZJAtaaUUxL7mGYp4MiHSCEZC0
- 9vdGkUKW00tGML6U/kNmw7O3VoisCvKS9A7u3yDRFX7ywIseAExEMkrm1i1eWe5CK1CM
- Hc9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784666212; x=1785271012;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=XFFqVtpBpQbaqPThEh/QDJY0pbFLoPfJBGmm0F3HSDs=;
- b=R2Tp43TZEYnT2nq/ALcVNn+N1wDEAEg5/iUktwbwvWMrT7TRwnao12TZTrCvhHZSt1
- o0w357fw9s980Tuw6+cxeL8Z7DVPAiQOUJMjZsLNDOHiqE7px/VRXOQxgG/+WmokEWd2
- racUwFo4YnHIWhCLjmLPsVf73404o+794bdYLram/I20GFaSgKDcgbNPIEifW4Fu/Cp8
- wRJ0f+6keNRnS8GP3mysZtCXFr3AoS6AodWbGL+8LiSPySVxAuvVewcOtRobXhA2vfCl
- sGvjGVEASrW6rYab56rGm4i2uBYnJ1H2DjXnk2ABelDLDVDGPDu9tzyTPRbtKVn+Nx0/
- UIMw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrtecE6oVqXlu1jKVmKVJ+mLLzTr4mOw+jqfXEpc4r4MNj3ZY+/SCV1gpa2RX2E0nWf2+ZyhKTe3Kno@nongnu.org
-X-Gm-Message-State: AOJu0YyHne9LfuH3JveV/sAunjhy0Htbb/zQCDws/3a5HUhjQv4uZQEF
- WFPo69P/+sHRv/V5vhAb3zVMeBS8AOaeP3dlyKdu3XOQIgcuU14Ov1UoIC0mloiHKXiwPL1ADNX
- U82TkU3/JlOgaJZ060F8Zq/xRoaM95XQ5tRMDvWUCaNGcyzg+id86tjoyDg==
-X-Gm-Gg: AfdE7clvuKZkw3GESNnx/85X9NKurtEgHYAtcX8JjY4/w1RFHLZeGo2gTtNF8SnxKQq
- 8r8Afn732lTm/rlEug1Jb8y+1MRBnAVhPFZQ/kw8nB5wGqvHAQwCzxqStN/7BXfGCLHT1xok+Zf
- YeWk7CUX5Tt6NAFMLFwd/6Spkf2zinrb7I7YyfhPvSb3oOqwDZfvEJsiEfKrDAerk16qQkg8lNE
- S5BqEnM3ZwX7y4mdXSQNVhHDzuvVDUJy5Pu3qDZPW5LCVnT8GqhkYFYXd23m2rWSawcqXaKMSlz
- Q2CUPjfqWPSEN+BkO8Ag5dEP9R8EI4JMoGXA+ciol3WQGR86MGIf3xipYsaKi1Y2Xtxr+P7FLX3
- yiMjZgAacf8D3nM7UzR5m85WtL502L8SY5/09EGAYTJL7CsXVboM=
-X-Received: by 2002:ac8:5fd5:0:b0:51a:8c86:bd48 with SMTP id
- d75a77b69052e-5213cdccb5bmr189544381cf.69.1784666212274; 
- Tue, 21 Jul 2026 13:36:52 -0700 (PDT)
-X-Received: by 2002:ac8:5fd5:0:b0:51a:8c86:bd48 with SMTP id
- d75a77b69052e-5213cdccb5bmr189543911cf.69.1784666211736; 
- Tue, 21 Jul 2026 13:36:51 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4956537c6besm88418005e9.8.2026.07.21.13.36.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Jul 2026 13:36:50 -0700 (PDT)
-Message-ID: <0a8f5dca-ec5d-48c2-a2e3-47a092e808b8@oss.qualcomm.com>
-Date: Tue, 21 Jul 2026 22:36:49 +0200
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1wmHGY-00070t-Eb
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 16:40:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=nUjY9jZ/4fxfhOPn+DFGSfgewlMRznly5mZ+3RNN6Rk=; b=VkHnq3KqbvD6BaLV6WgZbRVSM6
+ DwQvezG07ZM4Y0EViFg+mAoXrE10xUjUB0eJ/OxJtM1JA8xML9vyuKGNZ/RFEAgvoQ0RDiZX6JJHd
+ JzyVnI2eaND/iH+jEkgaFa5rddchXeqR4nODzOfAP5cj6wjQhEBbN/dXFC28xvZFdNrziciyys2Qv
+ A2Vv4TjFwP5+lO63P/uG+637fjY295xKWG1A2l1NLlFeil/RiwHk9TtxTCGKO+GAsCzDr1Dqie+qI
+ xoQ+WpFvkDb2o2mH0TvcyC4DC6upa1QzZ/4XaQD/Bsg1oh+/yygQPF0vgZDgSclppf4/G8KaEh6j7
+ W5JlAAbBb9zeEhueFYrViKyANtpufKZAwt96hgnWST2HxtE0iEN7Dyn8xS9+JljupdS6SUFKmOeR4
+ 0mywvNUY5/+9u3rJZjG5QBj1/n0edungxIpfoYTj1xuq+xuMqotLpnRSPrAceQ597O1P4YpFaBLCa
+ fvPidAZPCHTZSzxVKdXG3455u4DqzmJe1gx4lP/2HJ0b640/wn6Rsm5o3AcSYKihy+PXTHl/kyDKD
+ oklUqFFo7KTqinBEn9nX4+fPzpXA00TkJYavX/c6/tiz9zfF6vJa6AsWAZrMOOGbyJw0wnRfkrUN2
+ rJLS3VWOVIIr2lBrvKFUQT1Irne17aPBf+0I6MOSk=;
+Received: from [2a02:8012:2f01:0:34d0:4e6f:4b12:1620]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1wmHGK-003qWi-8t; Tue, 21 Jul 2026 21:40:24 +0100
+Message-ID: <48a8eb25-4d26-47f4-8cf2-7cb81760f50a@ilande.co.uk>
+Date: Tue, 21 Jul 2026 21:40:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/7] hw/intc: Add l2vic interrupt controller
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20260721161904.363367-1-pbonzini@redhat.com>
 Content-Language: en-US
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: pierrick.bouvier@oss.qualcomm.com, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- peter.maydell@linaro.org, matheus.bernardino@oss.qualcomm.com,
- ltaylorsimpson@gmail.com, Thomas Huth <th.huth+qemu@posteo.eu>,
- Laurent Vivier <lvivier@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Sid Manning <sidneym@quicinc.com>,
- Matheus Tavares Bernardino <quic_mathbern@quicinc.com>,
- Damien Hedde <damien.hedde@dahe.fr>
-References: <20260715185701.1287176-1-brian.cain@oss.qualcomm.com>
- <20260715185701.1287176-5-brian.cain@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260715185701.1287176-5-brian.cain@oss.qualcomm.com>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20260721161904.363367-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: c8iBBjOy7SMM-KRdPSxBn92Na2pUDaX6
-X-Proofpoint-ORIG-GUID: c8iBBjOy7SMM-KRdPSxBn92Na2pUDaX6
-X-Authority-Analysis: v=2.4 cv=XaG5Co55 c=1 sm=1 tr=0 ts=6a5fd864 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=qanWtBFF2Cr9fZHPp7sA:9 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDIxNCBTYWx0ZWRfX3/nJwu+Xd05p
- BD8Y00Ccz6pD0MTlPtRoJMwN0SlS+Kk9WZOMgXtyVPwCLAE48V1Amk4jRsE4R9HkB64f33xFur3
- IuxRVymmWWs2U6B0gCZF5QMS0khPSbe1uJ0Ut6Zd9qsAX0ptcroq8ON5GIwAetE/wPhwdh4UFxG
- OVdPwg4EOKoCO8hHGaJIjZkVS5CeLsYtQCYRNqbeKrkj6bCeRNlfE3gjUSr2XmQ0vKtzg7XGg1U
- sZP3/b632MX4MXe3FoWUX/PDiu42KSFCbxLUsXWT0U9fds0GTLifhENz9uLZUBo7Ld9xOSsVOtv
- LzjGEBYXgAckFH6bTMhIKQUGLyMSWrQfUORofUgnzyIgic0ntdC8+9UqiwCjJFVFztFKti1aRvm
- +ykqxA+rhJdjbahRIkSmRpGN4Cooq0P8ktbgLECJme5kiCehslbZ5WoGpwrKNm82w76lmqj4xsZ
- LGs2+GxNCkHOs5B4P0g==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDIxNCBTYWx0ZWRfXybLbzWQhTbHX
- 0v9SAfxYCNvrCTMpXoUTUWa/Yx96QgwHaDeNmLPgeh7T1nEOAPb2nnG2Xfs0Z8NB/vNN1fhws/s
- JAOxhwQkVUP3wpL9QnmKqrrZqZyHFCc=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-21_03,2026-07-21_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0 suspectscore=0
- bulkscore=0 impostorscore=0 clxscore=1015 malwarescore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607210214
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:34d0:4e6f:4b12:1620
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH] scsi-disk: protect against guest sending truncated data
+ for MODE SELECT commands
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -162,59 +104,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/7/26 20:56, Brian Cain wrote:
-> From: Sid Manning <sidneym@quicinc.com>
+On 21/07/2026 17:19, Paolo Bonzini wrote:
+
+> scsi-disk has a MODE SELECT path where a truncated mode page can be
+> allowed by a compatibility quirk, but the parser continues to use the
+> page's declared length rather than the number of bytes actually remaining
+> in the request buffer.  This means that scsi_disk_check_mode_select() and
+> scsi_disk_apply_mode_select() can read beyond the valid part of inbuf[],
+> potentially up to the emulated age's length.
+
+page's?
+
+> Clamping page_len (the size of the page) to len (whatever the
+> guest provided) ensures that scsi_disk_check_mode_select() and
+> scsi_disk_apply_mode_select() do not access anything beyond bounds;
+> however, this requires care to accept and handle truncated input in
+> those two functions.
 > 
-> The Hexagon DSP requires an L2VIC to route up to 1024
-> external interrupt sources through 4 VID output groups into
-> the core's 8 interrupt inputs.  This device model implements
-> the register interface, interrupt steering, and edge/level
-> type handling needed by the sysemu machine models.
+> In particular, until scsi_disk_check_mode_select()'s first call to
+> mode_sense_page() the number of bytes to be cleared in mode_current[] is
+> unknown, so zero it completely.  And for everything else, be conservative
+> and use len when providing inputs to other functions; but at the same time,
+> ensure all accesses to inbuf[] are bound by expected_len.
 > 
-> Co-authored-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-> Co-authored-by: Damien Hedde <damien.hedde@dahe.fr>
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> Note that pages longer than the emulated one are still rejected.
+> 
+> Fixes: 389e18eb9aa4 ("scsi-disk: add SCSI_DISK_QUIRK_MODE_PAGE_TRUNCATED quirk for Macintosh")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4051
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   MAINTAINERS                    |   3 +
->   docs/devel/hexagon-l2vic.rst   |  55 ++++
->   docs/devel/index-internals.rst |   1 +
->   include/hw/intc/hex-l2vic.h    |  87 ++++++
->   target/hexagon/cpu.h           |   2 +
->   hw/intc/hex-l2vic.c            | 532 +++++++++++++++++++++++++++++++++
->   target/hexagon/cpu.c           |   2 +
->   target/hexagon/op_helper.c     |  21 +-
->   hw/hexagon/Kconfig             |   1 +
->   hw/intc/Kconfig                |   3 +
->   hw/intc/meson.build            |   2 +
->   hw/intc/trace-events           |   4 +
->   12 files changed, 712 insertions(+), 1 deletion(-)
->   create mode 100644 docs/devel/hexagon-l2vic.rst
->   create mode 100644 include/hw/intc/hex-l2vic.h
->   create mode 100644 hw/intc/hex-l2vic.c
+>   hw/scsi/scsi-disk.c | 21 +++++++++++++--------
+>   1 file changed, 13 insertions(+), 8 deletions(-)
+> 
+> diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+> index 5ba5b46c4f4..85d0bd0b811 100644
+> --- a/hw/scsi/scsi-disk.c
+> +++ b/hw/scsi/scsi-disk.c
+> @@ -1524,7 +1524,7 @@ static void scsi_disk_emulate_read_data(SCSIRequest *req)
+>   static int scsi_disk_check_mode_select(SCSIDiskState *s, int page,
+>                                          uint8_t *inbuf, int inlen)
+>   {
+> -    uint8_t mode_current[SCSI_MAX_MODE_LEN];
+> +    uint8_t mode_current[SCSI_MAX_MODE_LEN] = { 0 };
+>       uint8_t mode_changeable[SCSI_MAX_MODE_LEN];
+>       uint8_t *p;
+>       int len, expected_len, changeable_len, i;
+> @@ -1543,21 +1543,21 @@ static int scsi_disk_check_mode_select(SCSIDiskState *s, int page,
+>       }
+>   
+>       p = mode_current;
+> -    memset(mode_current, 0, inlen + 2);
+>       len = mode_sense_page(s, page, &p, 0);
+> -    if (len < 0 || len != expected_len) {
+> +    /* The guest may send a truncated page, but not a longer one.  */
+> +    if (len < 0 || expected_len > len) {
+>           return -1;
+>       }
+>   
+>       p = mode_changeable;
+> -    memset(mode_changeable, 0, inlen + 2);
+> +    memset(mode_changeable, 0, len);
+>       changeable_len = mode_sense_page(s, page, &p, 1);
+>       assert(changeable_len == len);
+>   
+>       /* Check that unchangeable bits are the same as what MODE SENSE
+>        * would return.
+>        */
+> -    for (i = 2; i < len; i++) {
+> +    for (i = 2; i < expected_len; i++) {
+>           if (((mode_current[i] ^ inbuf[i - 2]) & ~mode_changeable[i]) != 0) {
+>               return -1;
+>           }
+> @@ -1565,11 +1565,15 @@ static int scsi_disk_check_mode_select(SCSIDiskState *s, int page,
+>       return 0;
+>   }
+>   
+> -static void scsi_disk_apply_mode_select(SCSIDiskState *s, int page, uint8_t *p)
+> +/* Note p may be truncated, so check any bytes you access against len.  */
+> +static void scsi_disk_apply_mode_select(SCSIDiskState *s, int page,
+> +                                        uint8_t *p, int len)
+>   {
+>       switch (page) {
+>       case MODE_PAGE_CACHING:
+> -        blk_set_enable_write_cache(s->qdev.conf.blk, (p[0] & 4) != 0);
+> +        if (len > 0) {
+> +            blk_set_enable_write_cache(s->qdev.conf.blk, (p[0] & 4) != 0);
+> +        }
+>           break;
+>   
+>       default:
+> @@ -1612,6 +1616,7 @@ static int mode_select_pages(SCSIDiskReq *r, uint8_t *p, int len, bool change)
+>                   goto invalid_param_len;
+>               }
+>               trace_scsi_disk_mode_select_page_truncated(page, page_len, len);
+> +            page_len = len;
+>           }
+>   
+>           if (!change) {
+> @@ -1619,7 +1624,7 @@ static int mode_select_pages(SCSIDiskReq *r, uint8_t *p, int len, bool change)
+>                   goto invalid_param;
+>               }
+>           } else {
+> -            scsi_disk_apply_mode_select(s, page, p);
+> +            scsi_disk_apply_mode_select(s, page, p, page_len);
+>           }
+>   
+>           p += page_len;
+
+Thanks for looking at this, Paolo. I've just done a quick check of the q800 machine 
+and the CDROM still appears to be working with this patch so:
+
+Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
 
-> +/*
-> + * Find out if this irq is associated with a group other than
-> + * the default group
-> + */
-> +static uint32_t *get_int_group(HexL2VICState *s, int irq)
-> +{
-> +    int n = irq & 0x1f;
-> +    if (n < 8) {
-> +        return s->int_group_n0;
-> +    }
-> +    if (n < 16) {
-> +        return s->int_group_n1;
-> +    }
-> +    if (n < 24) {
-> +        return s->int_group_n2;
-> +    }
-> +    return s->int_group_n3;
+ATB,
 
-Declaring int_group_n[4], this could be:
-
-        return s->int_group_n[extract32(irq, 3, 2)];
-
-> +}
+Mark.
 
 
