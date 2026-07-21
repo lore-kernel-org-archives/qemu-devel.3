@@ -4,82 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76A4FC4451C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76A91C44532
 	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 13:07:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmABh-0006VC-0A; Tue, 21 Jul 2026 09:07:09 -0400
+	id 1wmABk-0006Vo-N3; Tue, 21 Jul 2026 09:07:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wmABf-0006V2-F6
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 09:07:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wmABd-00039k-3U
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 09:07:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784639223;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wmABj-0006VU-68
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 09:07:11 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wmABh-0003A4-CS
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 09:07:10 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id AE25B7A521;
+ Tue, 21 Jul 2026 13:07:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1784639226; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=R932s6TjcSVK7BiTrudQuD5BEr/QfJkBc8GItSWdBk4=;
- b=LYz/nVKmLQqvzvWNevfFfP42JWD0v1cEs6KXOyNgkRvya2QAaj4kXRzw8Kqa1jKsXgslRk
- kmylZyPAOrQ+CHr9X867MD46DNOMOtMctEJTVOpE124H1LEQguq14sCsICuInClrrf0ab+
- Je7aV2oRX3nM5DtgCDRXd7IIw+hRLnM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-a_hzDTsVNviYfSBF0kpKPA-1; Tue,
- 21 Jul 2026 09:06:59 -0400
-X-MC-Unique: a_hzDTsVNviYfSBF0kpKPA-1
-X-Mimecast-MFC-AGG-ID: a_hzDTsVNviYfSBF0kpKPA_1784639218
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ bh=o803PJ9l6njTp4Y8jgMyVF5/7oMPojEHx1uIz1lWvqI=;
+ b=rgGJK+q33Ji3L0qK7ENTv8a9h6/XVPQPkK1AVoKQ1S+LHwyylgQmZM2w/kyVcEW/Ojfzjv
+ SF3UyQxaii3wYzXs+5tOElaCQqeeiMNo1Z7/XB3ChP2AJthE0QvL0DkxEIM1N1lsU+rQoT
+ or/GrmUmQcoAvqjDfhiEqCZgiKDHLIU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1784639226;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=o803PJ9l6njTp4Y8jgMyVF5/7oMPojEHx1uIz1lWvqI=;
+ b=FwdSnK8HATNrsGyEpUEvdrUpmAowHD3IFTTtALZoORcs4+HsyXBHD1X1DqqFyBcugbZQfj
+ vQM1Kkl7ngzY0QCg==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1784639226; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=o803PJ9l6njTp4Y8jgMyVF5/7oMPojEHx1uIz1lWvqI=;
+ b=rgGJK+q33Ji3L0qK7ENTv8a9h6/XVPQPkK1AVoKQ1S+LHwyylgQmZM2w/kyVcEW/Ojfzjv
+ SF3UyQxaii3wYzXs+5tOElaCQqeeiMNo1Z7/XB3ChP2AJthE0QvL0DkxEIM1N1lsU+rQoT
+ or/GrmUmQcoAvqjDfhiEqCZgiKDHLIU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1784639226;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=o803PJ9l6njTp4Y8jgMyVF5/7oMPojEHx1uIz1lWvqI=;
+ b=FwdSnK8HATNrsGyEpUEvdrUpmAowHD3IFTTtALZoORcs4+HsyXBHD1X1DqqFyBcugbZQfj
+ vQM1Kkl7ngzY0QCg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 263C018005B1; Tue, 21 Jul 2026 13:06:58 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5E8D31955F74; Tue, 21 Jul 2026 13:06:57 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id EE8D821E6920; Tue, 21 Jul 2026 15:06:54 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Mitsuru Kariya <Mitsuru.Kariya@oss.nttdata.com>
-Cc: qemu-devel@nongnu.org,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Eric Blake <eblake@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,  Laurent Vivier <lvivier@redhat.com>,
- Peter Xu <peterx@redhat.com>,  Jason Wang <jasowang@redhat.com>
-Subject: Re: [PATCH 2/5] qemu-options: document
- keep-alive-count/idle/interval for -netdev stream
-In-Reply-To: <20260720053333.2316643-1-Mitsuru.Kariya@oss.nttdata.com>
- (Mitsuru Kariya's message of "Mon, 20 Jul 2026 14:33:33 +0900")
-References: <20260524073442.435408-3-Mitsuru.Kariya@oss.nttdata.com>
- <87y0gx8sld.fsf@pond.sub.org>
- <20260720053333.2316643-1-Mitsuru.Kariya@oss.nttdata.com>
-Date: Tue, 21 Jul 2026 15:06:54 +0200
-Message-ID: <87ldb4o5jl.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E6143779AA;
+ Tue, 21 Jul 2026 13:07:05 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 7VdaKvluX2oYdAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 21 Jul 2026 13:07:05 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH] docs: Add security considerations for migration
+In-Reply-To: <al9CtDmpv7lXJKe6@redhat.com>
+References: <20260720182750.3029289-1-farosas@suse.de>
+ <al9CtDmpv7lXJKe6@redhat.com>
+Date: Tue, 21 Jul 2026 10:07:02 -0300
+Message-ID: <87wluo330p.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: permerror client-ip=170.10.129.124;
- envelope-from=armbru@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:email,
+ suse.de:mid]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,45 +120,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mitsuru Kariya <Mitsuru.Kariya@oss.nttdata.com> writes:
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> Thank you for reviewing, and I'm sorry for the late reply.
+> On Mon, Jul 20, 2026 at 03:27:50PM -0300, Fabiano Rosas wrote:
+>> Add the security considerations that are unique to migration and that
+>> do not already fall into one of the other categories. Some aspects are
+>> better framed as security architecture considerations, so extend that
+>> section to mention TLS and clarify that disk images and guest network
+>> also need to be isolated from other processes, not just other guests.
+>>=20
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  docs/system/security.rst | 22 ++++++++++++++++++----
+>>  1 file changed, 18 insertions(+), 4 deletions(-)
+>>=20
+>> diff --git a/docs/system/security.rst b/docs/system/security.rst
+>> index 52bbf0cc7a2..26c686718cf 100644
+>> --- a/docs/system/security.rst
+>> +++ b/docs/system/security.rst
+>> @@ -133,6 +133,16 @@ an issue as a normal bug.
+>>    that affect the level 0 QEMU process. While these bugs should be
+>>    fixed, they will not be triaged as security flaws at this time.
+>>=20=20
+>> +* **migration/snapshots**. Migration failures and snapshot load
+>> +  failures are considered part of normal operation as long as the
+>> +  source virtual machine and savevm file, respectively, are still
+>> +  functional. Aborting the QEMU process at the migration/snapshot
+>> +  destination is similarly not considered a security issue. The
+>> +  migration stream is assumed to be secure as long as the design
+>> +  principles described in the Architecture section are held, in
+>> +  which case plain manipulation of the stream is not considered as
+>> +  an attack vector.
+>> +
+>>  * **low severity impact**. As a catch all rule, issues which
+>>    are judged to have a "low" severity impact on the system will
+>>    usually not justify handling as security bugs, nor assignment
+>> @@ -159,10 +169,11 @@ could allow malicious guests to gain code executio=
+n in QEMU.  At this point the
+>>  guest has escaped the virtual machine and is able to act in the context=
+ of the
+>>  QEMU process on the host.
+>>=20=20
+>> -Guests often interact with other guests and share resources with them. =
+ A
+>> -malicious guest must not gain control of other guests or access their d=
+ata.
+>> -Disk image files and network traffic must be protected from other guest=
+s unless
+>> -explicitly shared between them by the user.
+>> +Guests often interact with other guests and share resources with them.
+>> +A malicious guest must not gain control of other guests or access
+>> +their data.  Disk image files and network traffic must be protected
+>> +from other guests, users and processes unless explicitly shared with
+>> +them by the user.
+>>=20=20
+>>  Principle of Least Privilege
+>>  ''''''''''''''''''''''''''''
+>> @@ -223,6 +234,9 @@ Some Linux distros already ship with UNIX groups for=
+ these devices by default.
+>>    system calls that are not needed by QEMU, thereby reducing the host k=
+ernel
+>>    attack surface.
+>>=20=20
+>> +- Transport Layer Security (TLS) protocol can be used to ensure hypervi=
+sor
+>> +  authenticity and encryption of the live migration connection.
 >
-> Markus Armbruster <armbru@redhat.com> writes:
->> You document these options only for -netdev stream.  They also work
->> for -netdev dgram, possibly more (didn't check).  Shouldn't we
->> document them every where they work?
+> I'd be a bit stronger
 >
-> As you pointed out, options such as keep-alive* are accepted by -netdev
-> dgram as well. However, since these options are TCP-specific, they have
-> no effect on sockets created by -netdev dgram.
-> In fact, while these options are applied to sockets in
-> inet_set_sockopts(), it is only called from inet_connect_saddr() and
-> inet_listen_saddr(), which are for TCP, and not from inet_dgram_saddr(),
-> which is for UDP. (I also confirmed this with strace.)
+>  - Transport Layer Security (TLS) protocol should be used to ensure
+>    hypervisor authenticity and encryption of the live migration
+>    connection where the network is untrusted.
 >
-> Since the options are effectively no-ops there, I thought documenting
-> them was unnecessary =E2=80=94 but would you prefer that I add some note =
-about
-> it?
 
-We should not accept options and then silently ignore them.
+The tone of the "Isolation mechanisms" sections is a non-prescriptive
+one, so for consistency "can" is more fitting, IMO. The addition about
+untrusted networks already serves to indicate that there's no other
+option (untrusted network without TLS). I'll add that part in v2.
 
-Can we reject them instead?
-
-> For completeness, I also checked places other than -netdev stream and
-> -incoming tcp:.
-> For -blockdev driver=3Dnbd and -drive driver=3Dnbd, the keep-alive* optio=
-ns
-> do take effect.  However, the documentation for -blockdev refers
-> readers to the blockdev-add QMP command, and -drive is documented as
-> accepting the same options as -blockdev, so I concluded that no
-> additional description is needed there.
+> None the less,=20
 >
-> As for -netdev socket, -drive file=3Dnbd:, -chardev socket, and -vnc,
-> they can also be used with TCP connections, but the keep-alive* options
-> cannot be specified with them.
+> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>
 
-Thanks for checking!
+Thank you, I appreciate your guidance in these matters, it's always very
+helpful.
 
+>
+>
+> With regards,
+> Daniel
 
