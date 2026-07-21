@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BA78C44529
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEFB1C4452B
 	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 08:52:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm6Bz-0005Sq-Jr; Tue, 21 Jul 2026 04:51:11 -0400
+	id 1wm6Bs-0005Pn-NH; Tue, 21 Jul 2026 04:51:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wm6Bv-0005RQ-U4
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 04:51:07 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1wm6Bp-0005O6-Nn
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 04:51:01 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wm6Bu-0005hk-7E
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 04:51:07 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-47f703a9d05so1458105f8f.0
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 01:51:05 -0700 (PDT)
+ id 1wm6Bo-0005gd-9n
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 04:51:01 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-490cf322ed0so78316795e9.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 01:50:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784623865; x=1785228665; darn=nongnu.org;
+ d=linaro.org; s=google; t=1784623859; x=1785228659; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=2OH8VSOIHdDNZWpR3lhruykF7B4xhDvib/Al3Gjf0HA=;
- b=gJEi6Le6zerxNlIgWzR3ILyEfp2H6ikWrrHDzS+1ueE4se5NsOcn3GpLJTwDM1Dfrr
- Bsx6d8McEyXvB2zAuJL+ZGk7sOwWh2/NIjBRnVEtC9GQsgubgHQya0vEcmRmhzq5ebh7
- X688HVdUtaoNWP7E4+Blk2tyEX5nKetIvCTcquLbFDZpQfnWPQ88PvdgVk3zlvxqiX8I
- LcIQwo9I0Cu76oMC/Y/pc59+TXxCi3Ar8/x6S1PhDNJ0lq0D74k1tJFSreWrNOzmNsB2
- hiQ71Ivqeiu8K9tDklnNtNUxqpnimNz/isqP96b9STZ628jvf2pkWH70ohkExZ4EKOFJ
- o/Nw==
+ bh=wyDVo0Oy7ludu4ybUH/QsUXKNrzdkD6NiRMRp1tTo+w=;
+ b=IrgEhYhdmdDYr0sdgdmX2p32K0xFR4/SUiR9ag5NI1Qttt3R97QX4P1fJiKygR+Wux
+ HXbqpKE6sIE/JqXV+sNsi6EX2NfSPAsNaVeiTUHuXKuN3MjWi3x+FiUSPKJkr1jst6pB
+ 2U4S4ZyMWchfj4dUpmRvcm476H535ayQI9t9fZ/xcAM2s2aEA1xQpvtDzMM1DVFv2RlF
+ hQ6b2FMnMMR9r0IPa7EzxlFPstNJ+5HtTtcNqgk7ZLHd7oewKrWmV4Xfg0VxIQICQESr
+ l6scDB0KoIUuQ+ric+aev0HJ7jVDVpB2A968iywFDHsGu9zA4aaDCEAyItBsRxMyelE4
+ TqfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784623865; x=1785228665;
+ d=1e100.net; s=20251104; t=1784623859; x=1785228659;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=2OH8VSOIHdDNZWpR3lhruykF7B4xhDvib/Al3Gjf0HA=;
- b=STGI2elaPLHO9mPUseoWybw6e9ZkIxwmCetz35c3R9WEu5UHkalBxI/eYLf5z3e+Rv
- KjH6aksZrqSDb2p/C2obblCwyiNPIfOCfDhclwnOOP8PSa0bIXkk4OJ2CUkVOXCiBKnV
- sE2fXi2A9yGklAPIcZdVoskuP5qzlbUJh2den5bpJPwWHuyepbshiDK4jvif5MIj8hdL
- i+uKb71dUwTjW6fPo2A/jMPK2wl2obDgJbp5+I/KJT5EEtTvR9lKw2VCQZJVw8nwNnVO
- Mj4/u84iUYEmDcff157joAWPv2RW33VeDhM+zmXdekHvXxm1TmFFGUsXjfOggGu30jLD
- qQUQ==
-X-Gm-Message-State: AOJu0YzXzNQO9HLx/U8tt4sbWrViJkp0xNH7JyzlzJCo680ElZVu1+wx
- VYVivY41y62kcPPleEpiZoYilNahBYr1gbZOeEsmmyXuVKwNkrLRjkmHR9JbwR5WcgEeyC6h9Dn
- ClMOvp234yg==
-X-Gm-Gg: AfdE7cnSMh+93kbcoTqlpL7nTN5L7l5FO/hIFCpIxSF3Hm4fXkpSOdzIo81o00eKyqu
- tQtwYkVvW6Lcyums6lun9wgTUb6yZt3RaCuInGl77W+yhapAOMizztLLnPxhKl04jMT+TymD6VO
- LJHKwqcmlcvGYFR+nLu1g1eupSezPefejLhb3tSuqgMtxpLs3eN0ztBbNDMSo8ZrYkcpk/t9mKp
- YPcy4kHZdCkzDU4M8ZuyqyvT7PV8O3f2Bdb6tubi5aZm1z4peG28xl9zaWTsV2NBIm/aa8DnTXQ
- JSqKVHGpszicjO1FeAQbrMgZIyJCjXhVuWeOCiMXI8AnL0ljgjlwsQe1M+rex3R+G/2m5YFw9B9
- 1LThwr7r8lvm1h81h8j9v6c4IkHcF1IPGfGzefuRNTLPH6KdjZzl96HQE1zLbGp14Uk7/Sx2ilj
- eLvJiNgCmbVqngD8C2InWN5wtIXB8715km3JMWy5GxVZ6fAb9MF25oAJIj3y/IMCnd1lDLB3wvX
- PIGzlxkjrs=
-X-Received: by 2002:a05:600c:b8d:b0:493:a613:56b2 with SMTP id
- 5b1f17b1804b1-4954a3d0d5fmr205377895e9.8.1784623864706; 
- Tue, 21 Jul 2026 01:51:04 -0700 (PDT)
+ bh=wyDVo0Oy7ludu4ybUH/QsUXKNrzdkD6NiRMRp1tTo+w=;
+ b=cDRHU6pdBcDOwNz6RUkZt+2VzbXd5ERjSnHFAo29moYA95KEcsjCQzr9xK+1EgTHoR
+ tI5TsyGwfJYbzv0sc+6tKQnt/hWjhBmtE8YFLdC06YTPduh7WXq5M5NW8haOkEUC686Z
+ wqsCqeVlgJWhauK52gMRu59xffp1pfLoDt3W2e06I0eQNzwCVicliWAVKUATJG5ToaEh
+ E+L8ZsNPeyR51qgA1zgrfCxP9rac/noRVLTgLNMFf7dcej7Yoi+hCuODdO4Qqq4Af/f6
+ 77GlpSsQSvr5yGuwOwtCPSHzmw1+UxIL9kBX1oAPiNUP4wHCedscqe28I/x9hPan/jSR
+ 0iDg==
+X-Gm-Message-State: AOJu0YyqOAs6Si1yKw1RIZZ6SljqBKEYa0s1dYhZM2cvcAxuU6Rtxhsj
+ mFUnk4o/NUs6vTU5Su+JM3uaoPkctCWnXPZh+8R/v7BLgMV5PRklDFky9j4cjzx86PtZEA176DC
+ GSJM+Unz5gg==
+X-Gm-Gg: AfdE7cmHu7a2E95ZLxmfqwVGr83H2gg+PoPWRiL6Xu2c80Y8Cy1im32Hk816G/j3cen
+ k4vXCurmA/mPKO2kkrxnfF0PTAdu7algNoCVqD4mrXbOErtNC/eSVCHWJsMSO0mSHmT/+qZfyxL
+ RwSi0Z0nUI2LVsp+ETJPMNCrsZbxaEScCtd7S5vg2ZWUrm1tAuHwlUN80LQBa4CG5bzoJVY6qXV
+ egpIDq/oi04n5Rql9BsbXnvmlhTYdXPNb/F1WJPfvsbmvNSP4+rwXqz+oMcnnuPzmngxMuvRxys
+ MF3vhqtTioDoz+qdI8PG+hkK+geyC0xWhaqITtO33q77ohkeAv6w2EL/JcVvUVZ9SxKtykgBRlm
+ 0Ah2CqeYipN6GvD9e1BtBlDTaeII0n6oyiJNjzwcp66JWJI+bYnqt8+X29o5xGcZic2pbxVZRpB
+ D6G1brovQUTRa2QzVE5sNgESqivwnwDXj21MDh6HhLkgszXWov0+USk+LXBhtgBwyWyZO8+8mdg
+ lgI6obOgRE=
+X-Received: by 2002:a05:600c:4f12:b0:493:f0f5:f2d2 with SMTP id
+ 5b1f17b1804b1-4954a3d0ceemr210844225e9.1.1784623858648; 
+ Tue, 21 Jul 2026 01:50:58 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4956537c7desm68707245e9.7.2026.07.21.01.51.03
+ 5b1f17b1804b1-4956537c7desm68707245e9.7.2026.07.21.01.50.57
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Jul 2026 01:51:03 -0700 (PDT)
+ Tue, 21 Jul 2026 01:50:57 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 10/16] hw/dma/omap_dma: Be more careful about overflow in
- transfer setup
-Date: Tue, 21 Jul 2026 09:50:44 +0100
-Message-ID: <20260721085050.421257-11-peter.maydell@linaro.org>
+Subject: [PULL 05/16] target/ppc: Remove unused helper_lscbx()
+Date: Tue, 21 Jul 2026 09:50:39 +0100
+Message-ID: <20260721085050.421257-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260721085050.421257-1-peter.maydell@linaro.org>
 References: <20260721085050.421257-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,113 +101,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In omap_dma_transfer_setup(), the maximum number of elements we can
-transfer is 0xffff * 0xffff == 0xfffe0001 (because the max frame
-count and max elements per frame are both 65535).  However, we store
-total element counts in 'int' variables, and use INT_MAX as a "bigger
-than any valid value" sentinel, and when performing arithmetic with
-the total count of transferred elements we are not careful about
-avoiding overflows. Fix these:
+The helper_lscbx() function isn't called anywhere.  It used to be
+used by the PPC 601 CPU support; we removed that in commit 005b69fdcc
+in 2022 but missed this helper function.
 
- - use uint32_t rather than int for the local variables tracking
-   various element and frame counts
- - use UINT_MAX as our sentinel
- - calculate new packet, element and frame counter values using
-   arithmetic on a local uint32_t, rather than doing it in-place
-   on local variables that are only 'int' because the actual
-   counter registers are 16 bits
- - use 64-bit arithmetic when calculating how much to advance the
-   source and dest pointers and the total dma->bytes transferred
-
-Note that since soc_dma_ch_s::bytes is only 'int' this can still
-overflow; we'll fix that in a subsequent patch.
-
+Fixes: 005b69fdcc ("target/ppc: Remove PowerPC 601 CPUs")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
-Message-id: 20260710105907.2570621-5-peter.maydell@linaro.org
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Message-id: 20260709095056.1803725-1-peter.maydell@linaro.org
 ---
- hw/dma/omap_dma.c | 30 ++++++++++++++++++++----------
- 1 file changed, 20 insertions(+), 10 deletions(-)
+ target/ppc/helper.h     |  1 -
+ target/ppc/mem_helper.c | 28 ----------------------------
+ 2 files changed, 29 deletions(-)
 
-diff --git a/hw/dma/omap_dma.c b/hw/dma/omap_dma.c
-index 77f14414989..14b310bf404 100644
---- a/hw/dma/omap_dma.c
-+++ b/hw/dma/omap_dma.c
-@@ -391,7 +391,7 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
-     struct omap_dma_reg_set_s *a;
-     struct omap_dma_channel_s *ch = dma->opaque;
-     struct omap_dma_s *s = dma->dma->opaque;
--    int frames, min_elems, elements[__omap_dma_intr_last];
-+    uint32_t frames, min_elems, elements[__omap_dma_intr_last];
+diff --git a/target/ppc/helper.h b/target/ppc/helper.h
+index e99c8c824b4..6b2d19a3ad9 100644
+--- a/target/ppc/helper.h
++++ b/target/ppc/helper.h
+@@ -54,7 +54,6 @@ DEF_HELPER_FLAGS_2(dcbzl, TCG_CALL_NO_WG, void, env, tl)
+ #endif
+ DEF_HELPER_FLAGS_2(icbi, TCG_CALL_NO_WG, void, env, tl)
+ DEF_HELPER_FLAGS_2(icbiep, TCG_CALL_NO_WG, void, env, tl)
+-DEF_HELPER_5(lscbx, tl, env, tl, i32, i32, i32)
  
-     a = &ch->active_set;
+ #if defined(TARGET_PPC64)
+ DEF_HELPER_4(DIVDEU, i64, env, i64, i64, i32)
+diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
+index 119dc1df233..787ba2cdec5 100644
+--- a/target/ppc/mem_helper.c
++++ b/target/ppc/mem_helper.c
+@@ -367,34 +367,6 @@ void helper_icbiep(CPUPPCState *env, target_ulong addr)
+ #endif
+ }
  
-@@ -403,7 +403,14 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
-                         __func__, dma->num);
-     }
- 
--    min_elems = INT_MAX;
-+    /*
-+     * The maximum frame count and maximum element count are both 0xffff,
-+     * so our worst case possible number of elements to transfer is
-+     * 0xffff * 0xffff == 0xfffe0001. We can therefore keep element
-+     * counts in a uint32_t and use UINT_MAX as a sentinel value for
-+     * "not set" / "condition does not occur".
-+     */
-+    min_elems = UINT_MAX;
- 
-     /* Check all the conditions that terminate the transfer starting
-      * with those that can occur the soonest.  */
-@@ -413,7 +420,7 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
-         if (elements[id] < min_elems)   \
-             min_elems = elements[id];   \
-     } else              \
--        elements[id] = INT_MAX;
-+        elements[id] = UINT_MAX;
- 
-     /* Elements */
-     INTR_CHECK(
-@@ -465,7 +472,7 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
-                     (a->frames - a->frame - 1) * a->elements +
-                     (a->elements - a->element))
- 
--    dma->bytes = min_elems * ch->data_type;
-+    dma->bytes = (uint64_t)min_elems * ch->data_type;
- 
-     /* Set appropriate interrupts and/or deactivate channels */
- 
-@@ -528,8 +535,9 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
- 
-     /* Update packet number */
-     if (ch->fs && ch->bs) {
--        a->pck_element += min_elems;
--        a->pck_element %= a->pck_elements;
-+        /* Can't overflow: worst case min_elems 0xFFFE0001 + element 0xFFFF */
-+        uint32_t new_pck_element = a->pck_element + min_elems;
-+        a->pck_element = new_pck_element % a->pck_elements;
-     }
- 
-     /*
-@@ -537,13 +545,15 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
-      * can skip part of this.
-      */
-     if (dma->update) {
-+        /* Can't overflow: worst case min_elems 0xFFFE0001 + element 0xFFFF */
-+        uint32_t new_element = a->element + min_elems;
-         a->element += min_elems;
- 
--        frames = a->element / a->elements;
--        a->element = a->element % a->elements;
-+        frames = new_element / a->elements;
-+        a->element = new_element % a->elements;
-         a->frame += frames;
--        a->src += min_elems * a->elem_delta[0] + frames * a->frame_delta[0];
--        a->dest += min_elems * a->elem_delta[1] + frames * a->frame_delta[1];
-+        a->src += (uint64_t)min_elems * a->elem_delta[0] + frames * a->frame_delta[0];
-+        a->dest += (uint64_t)min_elems * a->elem_delta[1] + frames * a->frame_delta[1];
- 
-         /* If the channel is async, update cpc */
-         if (!ch->sync && frames) {
+-/* XXX: to be tested */
+-target_ulong helper_lscbx(CPUPPCState *env, target_ulong addr, uint32_t reg,
+-                          uint32_t ra, uint32_t rb)
+-{
+-    int i, c, d;
+-
+-    d = 24;
+-    for (i = 0; i < xer_bc; i++) {
+-        c = cpu_ldub_data_ra(env, addr, GETPC());
+-        addr = addr_add(env, addr, 1);
+-        /* ra (if not 0) and rb are never modified */
+-        if (likely(reg != rb && (ra == 0 || reg != ra))) {
+-            env->gpr[reg] = (env->gpr[reg] & ~(0xFF << d)) | (c << d);
+-        }
+-        if (unlikely(c == xer_cmp)) {
+-            break;
+-        }
+-        if (likely(d != 0)) {
+-            d -= 8;
+-        } else {
+-            d = 24;
+-            reg++;
+-            reg = reg & 0x1F;
+-        }
+-    }
+-    return i;
+-}
+-
+ /*****************************************************************************/
+ /* Altivec extension helpers */
+ #if HOST_BIG_ENDIAN
 -- 
 2.43.0
 
