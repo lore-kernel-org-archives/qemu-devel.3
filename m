@@ -4,150 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 317AFC4452B
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 05:18:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C87FDC4452B
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 05:39:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm2rA-000093-Eb; Tue, 21 Jul 2026 01:17:28 -0400
+	id 1wm3BL-0007Iz-Pe; Tue, 21 Jul 2026 01:38:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wm2r5-00008V-AR
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 01:17:24 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wm3BF-0007Hz-BD
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 01:38:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wm2qy-0001R7-3Y
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 01:17:19 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66KNCS5d045372
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 05:17:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- pwy0I2HcgeXqVaG6BPQGV/xnhnZyItDOcXQ/p/yY0/g=; b=HPum/lUoJVhh1Ssn
- MG0rf9Eftiqns18mKHQVr1FW1/TGHnQ+tyvjDqoy5Nyqrplhfpp3pNZ65bnJnHFv
- 36zet8n6PFJezWJmSL4ihKVK8PRzLzFNkwx1gixV7E3psXQtxC3VFkRNVDfZwMm8
- fToxgskxGKOVRbtC97ODCzpt9iEZq7aHiF/Q5YtAwZSt2DarPQlY6M9/3pMw4HWT
- ecxaNrOs3oD0m1bhgnqoKopKc78wInLsET79SHg10VV7wrfXi9G2kkphUh940QLt
- k+UFT4ucKgAj5KNP2DHwt/L9Qbc6QpplcIPxwvcQXHCVnF1L4EH1a0cF8preKA/F
- iK70hQ==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhqv5tden-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 05:17:13 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-38e54b6556aso4047250a91.2
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 22:17:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wm3BA-0004S3-BA
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 01:38:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784612286;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RDQgbWjPhObyv4PmR2GPuEBf2QWmtRpPo5OKrp5L04Y=;
+ b=Almw+mhOi3MSZk2tRlY7km1JPnODxCeTzSvZHb9v1fN50uknwKm9soumUlYs7Xy/hoN9eW
+ /4nSUGfp2oLOpl4cBNb5iWYvuisJyrdDgQupDF0KF5yNaX74l5VSQ6YJrPxZo8Czcz1/Uv
+ AajJIpMznO3P7ys8tOz0i4jy7kXzEno=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-489-qlbVc7bOP32ixTNYtMY4lQ-1; Tue, 21 Jul 2026 01:38:04 -0400
+X-MC-Unique: qlbVc7bOP32ixTNYtMY4lQ-1
+X-Mimecast-MFC-AGG-ID: qlbVc7bOP32ixTNYtMY4lQ_1784612284
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2cca3673560so192100225ad.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 22:38:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784611032; x=1785215832; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=pwy0I2HcgeXqVaG6BPQGV/xnhnZyItDOcXQ/p/yY0/g=;
- b=kXlCkIoFlW0CDdbdd7MRB7voMAPml/kRmvlPk4kJfSsEv9EBdnC6MQ5FsJBrz2OW+T
- dX7EFfovglCQA+p9D+peRLldWrB/wr4fTFG/TzWFMHzeKZWsm5Ej9mUI+LEFDucC5CjS
- hAJywbF6Rka9xZ3BUP9uhiVfmiu+agcoWPMplKyJFLfuqtSt55BWnaUigcKho+E+8o7A
- xtV7lV8qzijbthTFYUcojBioHZDXzXpZHydQ77gCNeWELsli/NNCuuZSASqPRbVe6ALL
- 0LgoeDIgM/LxPw/W3EE8ZMKUvct5y0Q0wrfNiHSNj+PchsND2PVjcTky2QM6jGdpU7dw
- qWWg==
+ d=redhat.com; s=google; t=1784612283; x=1785217083; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=RDQgbWjPhObyv4PmR2GPuEBf2QWmtRpPo5OKrp5L04Y=;
+ b=gT5tH6LPY5++JJ3/9snn+s4ROGevaJipOP/gSfX2RmeO6Qec9dbPwAhWOBXEkzwpT3
+ READZhjwgU+aeY3wLNmYIFU2D813avKsvaOFWnYOKRI3fVcXPNq70sjYVbWMZfufa1h4
+ UjZUOvyqTEjZIOUT+HGmIm/D+wYXdcqHbsTM9kiJYZfLNNeNd0ix8HaYfBKPwz3Qznwn
+ PjpeOS9Vsf1pY89KvfdO8rpQUkCKG7IX69uD081rqjnIHmk+rk/VsEke9H3uQ1EqF/Ih
+ vyR+XO0ak8NIu8QKCtyhBmTBTcTYEQl/rZ/V+WOrlw+BUlFZVnZSBXKRNq3UBAdtZ66Y
+ 29NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784611032; x=1785215832;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1784612283; x=1785217083;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=pwy0I2HcgeXqVaG6BPQGV/xnhnZyItDOcXQ/p/yY0/g=;
- b=lbRihD6gmUgck1MJD0ziCKSxLHQ7CHAzDtk+o501fn9LTL3nb39H0RweI2339/hrc8
- H22M3Gbm7v3q2CvXwx/U387Nyof5n+bjfZc5lvWWGs4X/Eb3kHspzaizpgHaWZYX274R
- y8q7NMAVc0g7zeF4bgYpa2oMLjzmBFIp3526GTkD5tfIIUJ9V6DL2fwY+m0tTTmCfeTu
- 0UUGBIF4Y0EENPtr4XU2pvdAkfN1LOPbslpTTj7Xdo22pIkl0bVS+1SBxDuKXnaG/28c
- Dn6mivZtzGVULOsIg5HDGYDa0bGfqRFvZSR1VeyHkbaNqBkhQvlhY1KQfcBLtctP6YMw
- yZrw==
-X-Gm-Message-State: AOJu0YzeoBBlKedM5du2Q4GCbmKCjONh7QR2e6UuAXtX26fWu8ZEr9Wi
- ufLEFGzTyNOQo4JHx+ttc1clxNe96EoA80i+44nwbpGWXRCPRbDEMltT/x/BTY6H8ZmNpOoMx9x
- nBN9+5xkLdrid89qfBhoUq9xzR/GjHVwIYzhisRp+T/Wl03ywLszzPr6lTQ==
-X-Gm-Gg: AR+sD10sqvgXpDoIc52ZwKr4O7MB3XDfbxAwmNjNC4sKMO/foDfmnMQrBfeisB0+GJJ
- HmZ+ppOCRpMBQjdfpUmYxS5fTJBxV0bNioxWozfEKuJedZQJpmUSSA4sojtYVcG23DynCie/oCJ
- YAJJbZ/FVapFyUaFL0Hcd6LAP1c5uWCJIroSk0vD92P0CPKQt2+IT1J9hwu25hQGN1wiRsJCKzW
- Q8Ww5ZOoOOBUiTzKingqu6DlIm+YJBbgXbh+tk2ybe5Ez/QXlppFTzz2TWEdBA2KbmLI5QEsw84
- XS0KBTjbbdKFRMZwaXWGXrs9g3qC9ibKS3i5nvbFWKaFphpjB4cSHIcL3Fb8VOEkI6vbHJexBjm
- XjorUYjll9By1eh7IUDEoIWaLScqCDpscNrknoznlahoxybo2yE05yLdSVa8DCSpX+RRu
-X-Received: by 2002:a17:90b:1e44:b0:38e:584f:2515 with SMTP id
- 98e67ed59e1d1-38e584f25c6mr9731401a91.37.1784611032395; 
- Mon, 20 Jul 2026 22:17:12 -0700 (PDT)
-X-Received: by 2002:a17:90b:1e44:b0:38e:584f:2515 with SMTP id
- 98e67ed59e1d1-38e584f25c6mr9731388a91.37.1784611031933; 
- Mon, 20 Jul 2026 22:17:11 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13d0784011esm2764154c88.2.2026.07.20.22.17.10
+ bh=RDQgbWjPhObyv4PmR2GPuEBf2QWmtRpPo5OKrp5L04Y=;
+ b=IG/7rI/13rH7EeNVCVIyJTm7ocgIKVojwc7oAWWmgE8Q4HcMF4RC0sOzgq6FzH1SBS
+ gI01j5DFJvjCw7yUpbixH0yETyM0LdC1jqTPedgFv0CD3M+WceCsQIaDNLdFcbkgeDIs
+ zH1p+7SFqJ0xvXd0+DjvulABiPWH0Oo9aXhDDVHoi5QAoHgGAZf4WcPrLD8LsUxgUd+b
+ NMDieiH20yBaEe5vhniARDo+RHgDwcfE9HnbLhWHw9nJvhB5846rShmEaVScuZ6NzstW
+ ii+j4KYDwQ9p9io2m4mSFqdWB+FPlUkNoHz68fPJ1ZSXp1wj92k2wiZFUReW4CCFyg6g
+ yL8w==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrazqcV5coK0jxKdaCBGNvDUVG2HLYWf+QmWGcH9wl2TvxCxbRdbVHPosOuwnA3pLWOHR8BqESGJ204@nongnu.org
+X-Gm-Message-State: AOJu0YzTBhVDgFJcB6jeSG93L95Nkd+pXWP5sIkgYYEitB1grmpD6sin
+ UXCXOV6rdz5fcELMTgOKXvdTloF+B36TR4OWSY2MrHMdcE0vyzpniA+M1e4WBqm90aRcuqZfWx2
+ XASgRU1pzj4JsAUVouM5jFwd5tFksNJjVcEaTcBCe+EmvycZfOMGMOcRq
+X-Gm-Gg: AR+sD11MYEBU7Eo/7H50icrklJkhboP4Qaoid6wxl4tGOYp0CPcy1e7L5JXrvJCCXGR
+ K4O1Q06yAJRt+gXH8zjqCb8rTFaCyQu6DxGlQEBsuoyPO4vftmeQt2+bDPO4mSuY9B7lQE+EaXE
+ L/peXGdaWWISW80jaanFMM+8O/CHf9dpdfgvIgbE8tPxbnCxjuh63KtZALrxE46nhgVTR3fQrOJ
+ Szau9eb18+yMgkZV/fkIlKbJ+27muZ8mKeNh+ZS/f2I3yu2Io8dVIjanGx3G1kJFz0cI+VfdHwf
+ 9gb0qRM+1Ln8K0VO+SxBQ+gw55BKmjZJTZ9G+9HWqMH6fjKnFc0/dHixSAXvDMK7eCaqU18Y3LW
+ Zw2ecJjKJ1ovPltM2z02tmE/HxzfjB3Ky7QdsaGZURGM=
+X-Received: by 2002:a17:903:2c47:b0:2c9:cf41:adf9 with SMTP id
+ d9443c01a7336-2cf34a822c8mr181831335ad.47.1784612283549; 
+ Mon, 20 Jul 2026 22:38:03 -0700 (PDT)
+X-Received: by 2002:a17:903:2c47:b0:2c9:cf41:adf9 with SMTP id
+ d9443c01a7336-2cf34a822c8mr181831065ad.47.1784612283062; 
+ Mon, 20 Jul 2026 22:38:03 -0700 (PDT)
+Received: from [192.168.68.51] (n175-34-8-244.mrk21.qld.optusnet.com.au.
+ [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2cf345111d5sm68144975ad.37.2026.07.20.22.37.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Jul 2026 22:17:11 -0700 (PDT)
-Message-ID: <a0d5c160-fc29-4c5c-b82c-d79151022e5d@oss.qualcomm.com>
-Date: Mon, 20 Jul 2026 22:17:09 -0700
+ Mon, 20 Jul 2026 22:38:02 -0700 (PDT)
+Message-ID: <59882c5b-545d-4768-8bf4-723fed97a801@redhat.com>
+Date: Tue, 21 Jul 2026 15:37:53 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] build: fix sparc64 host
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Alex Williamson <alex@shazbot.org>
-Cc: qemu-devel@nongnu.org, mjt@tls.msk.ru,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20260720221715.27108-1-pierrick.bouvier@oss.qualcomm.com>
- <20260720171031.259f590e@shazbot.org>
- <089649f0-b677-4c1a-a42b-eb9853f4fc7a@oss.qualcomm.com>
- <a2273203-403c-4da1-b3dd-0933dd70faf0@app.fastmail.com>
- <de6169d2-15ac-4f46-a249-ddb753946be5@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH v3 1/2] system/memory: Use qemu_ram_{copy, move}() in ram
+ device region accessors
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, peterx@redhat.com,
+ alex@shazbot.org, richard.henderson@linaro.org, berrange@redhat.com,
+ philmd@mailo.com, david@kernel.org, clg@redhat.com, pbonzini@redhat.com,
+ phrdina@redhat.com, jugraham@redhat.com, liugang24219@sangfor.com.cn,
+ dinghui@sangfor.com.cn, shan.gavin@gmail.com,
+ qemu-s390x <qemu-s390x@nongnu.org>
+References: <20260625091334-mutt-send-email-mst@kernel.org>
+ <CAFEAcA8xK+t3-prEphtkq-o9UY2mgS6cowhs880GOaxL9dKSGw@mail.gmail.com>
+ <20260625101817-mutt-send-email-mst@kernel.org>
+ <CAFEAcA8-Un+Q1yBDqLWCLPRwtgTA_VhJqGobgZChrFhAeVfG8A@mail.gmail.com>
+ <20260625123119-mutt-send-email-mst@kernel.org>
+ <CAFEAcA8UjtXgmPC27fOKMwbaWs2piwGYudtwCNWQHuu3E_7A-A@mail.gmail.com>
+ <5faf04b9-d596-4a1d-9fe3-5e9ad5f0a99a@redhat.com>
+ <73f79841-8cc7-4ca6-8f6b-fb97b53a6fe8@redhat.com>
+ <20260717091756-mutt-send-email-mst@kernel.org>
+ <CAFEAcA-O6Z4JrVV0DL_tta6khRyUta_Zz5mJt6OszaW1mu0o6Q@mail.gmail.com>
+ <20260717095407-mutt-send-email-mst@kernel.org>
+ <9c2ad22a-e768-4a07-85a2-01ce1fc14368@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <de6169d2-15ac-4f46-a249-ddb753946be5@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <9c2ad22a-e768-4a07-85a2-01ce1fc14368@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDA1MiBTYWx0ZWRfXxXWLAKIHeFlJ
- uc1IVCFdZVPDTOUCiK0eIL9bofklAR6h5ogygqdQgYra+rjQGSFTW0vc+h2W4jkwnPpiI69VIVF
- IPVW8HsiRRug5V9DpDXn0AqgKsv7kixfaRqDXIOvnUFtaH0KYAQBaRPnzVT4tXaQazmmzJ9fQQl
- gElD1pg55hJl5C1VBe5tJd6hlGTxWIp+petan3h0iW6eA5+F2ausA0nVUZQopy925EGqbUXlXey
- 5R0IwBuQpObI6DPr6RQyFRR5g8XECJcBGJRJnqCnvI5ajowHWeumPu4S23oT9EiiBU+jo7rA7gW
- zWX8z6djsA+8X7UnqTgwHZSr9/E4584+5sfSlnhvBR2F0ipPRg3Jzm76nhXmEoyMxj0tCnXllg9
- DOPTHfw/R+a0kwvxYXbSZlEz0GZHiIQyvMPwVKVgJOlE2nvrJ22E46euKIxEP1h9v4WI9Xngu0s
- aY3DlW71Y9M5nAjoigg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDA1MiBTYWx0ZWRfX0jG/rmvuqFFZ
- QrldtlM4jlAadgj0U74c+luBc9JhRcGJnvwaeuJHBPY2aQb1L58B9TK3ykW+Z3l4mB7JEl+Brhv
- LA77ZmcJOO47GPoXcYyID0yf9u5phCo=
-X-Authority-Analysis: v=2.4 cv=WNpPmHsR c=1 sm=1 tr=0 ts=6a5f00d9 cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=9qUTvQc-AAAA:8 a=F09qlkv3ylOdv3rp5iQA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22
- a=axOgMmt4Ejcwn1cqzmsR:22
-X-Proofpoint-GUID: YmwPnwp12-9luoVU52qop_IlPeiBpFLi
-X-Proofpoint-ORIG-GUID: YmwPnwp12-9luoVU52qop_IlPeiBpFLi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-20_06,2026-07-20_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 clxscore=1015 suspectscore=0 spamscore=0 malwarescore=0
- priorityscore=1501 impostorscore=0 phishscore=0 bulkscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607210052
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=gshan@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,65 +140,248 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/20/2026 10:14 PM, Cédric Le Goater wrote:
-> On 7/21/26 05:33, Alex Williamson wrote:
->> On Mon, Jul 20, 2026, at 8:48 PM, Pierrick Bouvier wrote:
->>> On 7/20/2026 4:10 PM, Alex Williamson wrote:
->>>> On Mon, 20 Jul 2026 22:17:13 +0000
->>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> wrote:
+On 7/20/26 7:12 PM, Philippe Mathieu-Daudé wrote:
+> On 17/7/26 15:55, Michael S. Tsirkin wrote:
+>> On Fri, Jul 17, 2026 at 02:49:53PM +0100, Peter Maydell wrote:
+>>> On Fri, 17 Jul 2026 at 14:24, Michael S. Tsirkin <mst@redhat.com> wrote:
+>>>> On Thu, Jul 09, 2026 at 07:52:12PM +1000, Gavin Shan wrote:
+>>>>> Could you help to confirm if the conclusion is to have unified qemu_ram_{copy, move}()
+>>>>> for all architectures? In qemu_ram_{copy, move}(), the fixed sized accesses like
+>>>>> 1/2/4/8 bytes are handled by __builtin_{memcpy, memmove}() and fall back to
+>>>>> memcpy/memmove() for other sized accesses. It's basically what was proposed by
+>>>>> Michael :-)
 >>>>
->>>>> It was reported that build on sparc64 host is currently broken, due
->>>>> to inclusion
->>>>> of asm/kvm.h, which is not present on this platform:
->>>>> https://lore.kernel.org/qemu-devel/c3a7cd83-7666-40c5-9baa-
->>>>> ebe64edacab6@tls.msk.ru/
+>>>> No. __builtin_ and  memcpy/memmove are same on modern linuxes.
 >>>>
->>>> Isn't is sufficient just to remove the stale <linux/kvm.h> include?
->>>>
->>>> I don't know of a case that fails, platforms that support vfio might
->>>> actually be a sub-set of those that support KVM, but being dependent on
->>>> a KVM supported host has no technical basis.  KVM and VFIO are
->>>> independent features where neither should have a hard dependency on the
->>>> other.  Thanks,
->>>>
+>>>> I'd say as a 1st step, on x86 hosts we can do a fixed size
+>>>> memmove for 1/2/4/8, on other hosts
+>>>> *aligned* 1/2/4/8 bytes can do
+>>>>   __atomic_store ... __ATOMIC_RELAXED
+>>>> and the rest can hobble along on memmove
+>>>> and hope for the best.
 >>>
->>> It's related to a recent change that was made to get rid of CONFIG_KVM
->>> in the file to deduplicate hw/vfio/listener.c between targets. So it's
->>> now unconditionally included, thus the regression.
+>>> I don't think we should be doing something that's x86-host specific,
+>>> as I've mentioned previously.
+>>>
+>>> -- PMM
 >>
->> I understand.  I'm suggesting the fix is simply:
->>
->> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
->> index c19600e980a8..008f488a3e7d 100644
->> --- a/hw/vfio/listener.c
->> +++ b/hw/vfio/listener.c
->> @@ -20,7 +20,6 @@
->>     #include "qemu/osdep.h"
->>   #include <sys/ioctl.h>
->> -#include <linux/kvm.h>
->>   #include <linux/vfio.h>
->>     #include "exec/target_page.h"
->>
->> This builds in both a native amd64 environment and a cross-compiled
->> sparc64 environment.
->
+>> Shrug. Of course we already have arch specific code in asm.
+>> But we can make the unaligned 1/2/4/8 for x86 host a separate
+>> optimization on top. They are unlikely to be common.
+> 
+> Note we have include/qemu/host-pci-mmio.h with s390x specific
+> optimizations in util/s390x_pci_mmio.c ...
+> 
 
-Thanks, I'm ok with this.
-Do you have instructions (or better, a Dockerfile) for the cross compile
-sparc64 environment you use?
-It's the only host we don't have cross compilation environment at the
-moment.
+Philippe, Thanks for pointing it out that s390x already had private PCI
+MMIO accessors.
 
-> This leaves linux/kvm.h included only in the following VFIO files:
-> 
->   hw/vfio/kvm-spapr.c
->   hw/vfio/kvm-helpers.c
-> 
-> Looks clean to me.
-> 
-> Thanks,
-> 
-> C.
-> 
+If Peter is fine with two variants for x86 and non-x86 architectures.
+I can post (v4) for further review. That will be something like below
+and let me know if there are any other improvements are needed.
+
+----- include/system/memory.h
+
++/**
++ * qemu_ram_copy: copy data to ramblock
++ *
++ * @dst: destination where the data is copied to
++ * @src: source where the data is copied from
++ * @n: length of data to be copied
++ *
++ * Copy @n bytes from @src to @dst with the assumption that @src and @dst
++ * do not overlap. For x86, the fixed sized accesses like 1/2/4/8 bytes are
++ * handled by __builtin_memcpy() no matter whether @src or @dst is aligned
++ * to the access size, and fall back to memcpy() for other access sizes. For
++ * other architectures, data is copied from @src to @dst in units of 1/2/4/8
++ * bytes, ensuring proper alignment in each unit and order among the units.
++ */
++void qemu_ram_copy(void *dest, const void *src, size_t n);
++
++/**
++ * qemu_ram_move: move data to ramblock
++ *
++ * @dst: destination where the data is moved to
++ * @src: source where the data is moved from
++ * @n: length of data to be moved
++ *
++ * Move @n bytes from @src to @dst with the assumption that @src and @dst
++ * can overlap. For x86, the fixed sized accesses like 1/2/4/8 bytes are
++ * handled by __builtin_memmove() no matter whether @src or @dst is aligned
++ * to the access size, and fall back to memmove() for other access sizes.
++ * For other architectures, data is moved from @src to @dst in units of
++ * 1/2/4/8 bytes, ensuring proper alignment in each unit and order among
++ * the units.
++ */
++void qemu_ram_move(void *dest, const void *src, size_t n);
++
+
+----- system/physmem.c
+
++static void qemu_ram_unsafe_copy(void *dst, const void *src, size_t n)
++{
++    switch (n) {
++    case 1:
++        __builtin_memcpy(dst, src, 1);
++        break;
++    case 2:
++        __builtin_memcpy(dst, src, 2);
++        break;
++    case 4:
++        __builtin_memcpy(dst, src, 4);
++        break;
++    case 8:
++        __builtin_memcpy(dst, src, 8);
++        break;
++    default:
++        memcpy(dst, src, n);
++    }
++}
++
++static void qemu_ram_unsafe_move(void *dst, const void *src, size_t n)
++{
++    switch (n) {
++    case 1:
++        __builtin_memmove(dst, src, 1);
++        break;
++    case 2:
++        __builtin_memmove(dst, src, 2);
++        break;
++    case 4:
++        __builtin_memmove(dst, src, 4);
++        break;
++    case 8:
++        __builtin_memmove(dst, src, 8);
++        break;
++    default:
++        memmove(dst, src, n);
++    }
++}
++
++static void qemu_ram_safe_copy(void *dst, const void *src,
++                               size_t n, size_t max_step)
++{
++    uintptr_t test, step;
++
++    /* Aligned maximal step */
++    max_step = pow2floor(max_step);
++
++    while (n) {
++        test = (uintptr_t)src | (uintptr_t)dst | n | max_step;
++        step = test & -test;
++
++        switch (step) {
++        case 1:
++            qatomic_set((uint8_t *)dst, qatomic_read((uint8_t *)src));
++            src += 1;
++            dst += 1;
++            n -= 1;
++            break;
++        case 2:
++            qatomic_set((uint16_t *)dst, qatomic_read((uint16_t *)src));
++            src += 2;
++            dst += 2;
++            n -= 2;
++            break;
++        case 4:
++            qatomic_set((uint32_t *)dst, qatomic_read((uint32_t *)src));
++            src += 4;
++            dst += 4;
++            n -= 4;
++            break;
++        case 8:
++        default:
++            qatomic_set((uint64_t *)dst, qatomic_read((uint64_t *)src));
++            src += 8;
++            dst += 8;
++            n -= 8;
++        }
++    }
++}
++
++static void qemu_ram_safe_copy_backwards(void *dst, const void *src,
++                                         size_t n, size_t max_step)
++{
++    uintptr_t test, step;
++
++    /* Aligned maximal step */
++    max_step = pow2floor(max_step);
++
++    /* End of the blocks */
++    src += n;
++    dst += n;
++
++    while (n) {
++        test = (uintptr_t)src | (uintptr_t)dst | n | max_step;
++        step = test & -test;
++
++        switch (step) {
++        case 1:
++            src -= 1;
++            dst -= 1;
++            n -= 1;
++            qatomic_set((uint8_t *)dst, qatomic_read((uint8_t *)src));
++            break;
++        case 2:
++            src -= 2;
++            dst -= 2;
++            n -= 2;
++            qatomic_set((uint16_t *)dst, qatomic_read((uint16_t *)src));
++            break;
++        case 4:
++            src -= 4;
++            dst -= 4;
++            n -= 4;
++            qatomic_set((uint32_t *)dst, qatomic_read((uint32_t *)src));
++            break;
++        case 8:
++        default:
++            src -= 8;
++            dst -= 8;
++            n -= 8;
++            qatomic_set((uint64_t *)dst, qatomic_read((uint64_t *)src));
++        }
++    }
++}
++
++/* x86 should work with __builtin_{memcpy, memmove}() for IO access */
++#if defined(__i386__) || defined(__x86_64__)
++#define HOST_UNALIGNED_VECTOR_MMIO_OK 1
++#else
++#define HOST_UNALIGNED_VECTOR_MMIO_OK 0
++#endif
++
++void qemu_ram_copy(void *dst, const void *src, size_t n)
++{
++    if (src == dst || n == 0) {
++        return;
++    }
++
++    if (HOST_UNALIGNED_VECTOR_MMIO_OK) {
++        qemu_ram_unsafe_copy(dst, src, n);
++    } else {
++        qemu_ram_safe_copy(dst, src, n, 8);
++    }
++}
++void qemu_ram_move(void *dst, const void *src, size_t n)
++{
++    if (src == dst || n == 0) {
++        return;
++    }
++
++    if (HOST_UNALIGNED_VECTOR_MMIO_OK) {
++        qemu_ram_unsafe_move(dst, src, n);
++    } else if (dst < src) {
++        qemu_ram_safe_copy(dst, src, n, src - dst);
++    } else {
++        qemu_ram_safe_copy_backwards(dst, src, n, dst - src);
++    }
++}
+
+
+Thanks,
+Gavin
+
+
 
 
