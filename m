@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D219C4451C
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 15:56:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDD6FC4451C
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 15:56:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmCpZ-0005Zi-Qk; Tue, 21 Jul 2026 11:56:31 -0400
+	id 1wmCpR-00055k-V1; Tue, 21 Jul 2026 11:56:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wmCpV-0005QI-OM
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 11:56:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wmCpP-00051d-Nb
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 11:56:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wmCpT-0004ym-Mo
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 11:56:25 -0400
+ id 1wmCpN-0004yE-U5
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 11:56:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784649381;
+ s=mimecast20190719; t=1784649377;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=thjoMG93XhaMiqUqxzecaQxiprvv1anEQEDbaeg3RPo=;
- b=BqxB4zDGK31PWl/ctBy9ygaaQqghVSavrFyMj13mMMjSm936hwtFiVkd+pxUVt4X65bblU
- Gnkxny9M80rvjloql7fALvPWiHr+gwD+4hT4b/Irh24jpyfm4Vzp6IWHVkt+LWaDQO/Vgn
- UNyIDuAwtVKj2c9llxAra2yr5WR7Cek=
+ bh=Os2JXx0gcWKjyLiV5BevPuMLA0GWYkKP+Xpy0OT7P+U=;
+ b=GIRNHEqaBmy46ABZFYSEXmQFHSqQgU4TfxxGHlAT1Fwsym3OAVRp3jC8+kkSLAsasmzWAj
+ XRayBqdiwLd20dBFrJg8eT+c8SzV8a1hDQerBmF+mrf6yQqrOPtYVnUDWnxyia6RZ7jw+0
+ 6iTzGVBPZJj4spoGCNk7/PFoK4sGfy0=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-253-8WpxRDAbMBSCcGKGRvW7BQ-1; Tue,
- 21 Jul 2026 11:56:18 -0400
-X-MC-Unique: 8WpxRDAbMBSCcGKGRvW7BQ-1
-X-Mimecast-MFC-AGG-ID: 8WpxRDAbMBSCcGKGRvW7BQ_1784649376
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-584-ZbPPVxOeNaeoma_-UraHYA-1; Tue,
+ 21 Jul 2026 11:56:13 -0400
+X-MC-Unique: ZbPPVxOeNaeoma_-UraHYA-1
+X-Mimecast-MFC-AGG-ID: ZbPPVxOeNaeoma_-UraHYA_1784649372
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6ACC4197702A; Tue, 21 Jul 2026 15:56:16 +0000 (UTC)
+ id 2967E1956077; Tue, 21 Jul 2026 15:56:12 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.32.83])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 97E141800616; Tue, 21 Jul 2026 15:56:12 +0000 (UTC)
+ id C551718002B1; Tue, 21 Jul 2026 15:56:08 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
@@ -57,26 +57,26 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Kyle Evans <kevans@freebsd.org>,
  Li-Wen Hsu <lwhsu@freebsd.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: [PULL 4/5] gitlab: introduce files mapping GitLab accounts to real
- names
-Date: Tue, 21 Jul 2026 16:55:53 +0100
-Message-ID: <20260721155554.128840-5-berrange@redhat.com>
+ Luc Michel <luc.michel@amd.com>
+Subject: [PULL 3/5] meson.build: re-add explicit gcrypt/nettle request check
+Date: Tue, 21 Jul 2026 16:55:52 +0100
+Message-ID: <20260721155554.128840-4-berrange@redhat.com>
 In-Reply-To: <20260721155554.128840-1-berrange@redhat.com>
 References: <20260721155554.128840-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: permerror client-ip=170.10.129.124;
+Received-SPF: permerror client-ip=170.10.133.124;
  envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,280 +92,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is desirable to be able to discover the GitLab account handle
-assocaited with a real name in the MAINTAINERS file.
+From: Luc Michel <luc.michel@amd.com>
 
-Rather that duplicating the same account handle multiple times,
-inline with the MAINTAINERS file entries, this introduces mapping
-files:
+c4b3d0074 removed the check that nettle or gcrypt were explicitly
+requested as the crypto library to use, breaking the --enable-nettle and
+--enable-gcrypt options. Re-add the logic to force usage of nettle or
+gcrypt for crypto operations, while still keeping gnutls for TLS.
 
-  * .gitlab-map-auto - data automatically queried from GitLab
-    using the 'glab' tool and REST API
-  * .gitlab-map-manual - manual overrides/augmentation for
-    cases where the MAINTAINERS real name does not match the
-    GitLab account real name
-
-The former would need refreshing when we add new MAINTAINERS
-entries, if the person had to be added as a GitLab account
-member. For this purpose scripts/gitlab-map-update can be
-used, assuming the user has the 'glab' client tool present
-and configured with an access token.
-
-To audit how many maintainers have GitLab handles present/missing
-scripts/gitlab-map-check can run a report.
-
-  $ ./scripts/gitlab-map-check
-  Missing GitLab handle for maintainer 'Akihiko Odaki'
-  Missing GitLab handle for maintainer 'Albert Esteve'
-  ....
-  Missing GitLab handle for maintainer 'Zhenzhong Duan'
-  Missing GitLab handle for maintainer 'Zhuoying Cai'
-  GitLab handles missing: 158 / present: 68
-
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Fixes: c4b3d0074 (crypto: bump min gnutls to 3.7.5)
+Tested-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Luc Michel <luc.michel@amd.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- .gitlab-map-auto          | 93 +++++++++++++++++++++++++++++++++++++++
- .gitlab-map-manual        | 18 ++++++++
- scripts/gitlab-map-check  | 51 +++++++++++++++++++++
- scripts/gitlab-map-update | 45 +++++++++++++++++++
- 4 files changed, 207 insertions(+)
- create mode 100644 .gitlab-map-auto
- create mode 100644 .gitlab-map-manual
- create mode 100755 scripts/gitlab-map-check
- create mode 100755 scripts/gitlab-map-update
+ crypto/cipher.c                |  2 +-
+ crypto/meson.build             |  2 +-
+ meson.build                    | 11 ++++++++++-
+ tests/unit/test-crypto-block.c |  3 ++-
+ 4 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/.gitlab-map-auto b/.gitlab-map-auto
-new file mode 100644
-index 0000000000..28ce448f1b
---- /dev/null
-+++ b/.gitlab-map-auto
-@@ -0,0 +1,93 @@
-+# This file is auto-generated by scripts/gitlab-map-update
-+#
-+# This GitLab map associates GitLab account handles
-+# with real names, in order to allow mapping from
-+# MAINTAINERS entries. The format of entries is
-+#
-+#    {gitlab-handle}<tab>{real name}
-+#
-+# Manual overrides must be placed in .gitlab-map-manual
-+TaoTang	Tao Tang
-+a1xndr	Alexander Bulekov
-+adi-g15-ibm	Aditya Gupta
-+agraf	Alexander Graf
-+alex.williamson	Alex Williamson
-+aliang1	Aihua Liang
-+alistair23	Alistair Francis
-+anisinha	Ani Sinha
-+anthony-linaro	Anthony Roberts
-+anthonyper	Anthony PERARD
-+berrange	Daniel P. Berrangé
-+birkelund	Klaus Jensen
-+bonzini	Paolo Bonzini
-+brian-cain	Brian Cain
-+bsdimp	Warner Losh
-+cborntra	Christian Borntraeger
-+chao23.liu	Chao Liu (Zevorn)
-+cleber.gnu	Cleber Rosa
-+clegoate	Cédric Le Goater
-+cohuck	Cornelia Huck
-+cota_	Emilio Cota
-+dagrh	Dr. David Alan Gilbert
-+danielhb	Daniel Henrique Barboza
-+davidhildenbrand	David Hildenbrand
-+dgibson	dgibson
-+dwmw2	David Woodhouse
-+eauger1	Eric Auger
-+ebblake	Eric Blake
-+edgar.iglesias	Edgar E. Iglesias
-+ehabkost	Eduardo Habkost
-+eldondev	Eldon
-+epilys	Manos Pitsidianakis
-+famzheng	Fam Zheng
-+farosas	Fabiano Rosas
-+gautammenghani	Gautam Menghani
-+gkurz	Greg Kurz
-+gusbromero	Gustavo Romero
-+harshpb	Harsh Prateek Bora
-+hdeller	Helge Deller
-+hreitz	Hanna Czenczek
-+imammedo	Igor Mammedov
-+jasowang	Jason Wang
-+jmacarthur	Jim MacArthur
-+jsnow	John Snow
-+juan.quintela	Juan Quintela
-+kbastian-qemu	Bastian Koppelmann
-+kmwolf	Kevin Wolf
-+kostyanf14	Kostiantyn Kostiuk
-+kraxel	Gerd Hoffmann
-+lbmeng	Bin Meng
-+legoater	Cédric Le Goater
-+lvivier	Laurent Vivier
-+lygstate	Yonggang Luo
-+maciejsszmigiero	Maciej S. Szmigiero
-+marcandre.lureau	Marc-André Lureau
-+marcandre.lureau-rh	Marc-André Lureau
-+mauromatteo.cascella	Mauro Matteo Cascella
-+mcayland	Mark Cave-Ayland
-+mdroth	Michael Roth
-+mediouni-m	M. Mediouni
-+mjt0k	Michael Tokarev
-+mstredhat	MST
-+npiggin	npiggin
-+p-b-o	Pierrick Bouvier
-+pauldzim	Paul Zimmerman
-+peterx	Peter Xu
-+philmd	Philippe Mathieu-Daudé
-+pierrick.bouvier	Pierrick Bouvier
-+pipo.sk	Peter Krempa
-+pkrempa	Peter Krempa (work)
-+pm215	Peter Maydell
-+qemu-janitor	Qemu Janitor
-+rathc	Chinmay Rath
-+rth7680	Richard Henderson
-+schoenebeck	Christian Schoenebeck
-+sgarzarella	Stefano Garzarella
-+sstabellini	Stefano Stabellini
-+stefanberger	Stefan Berger
-+stefanha	Stefan Hajnoczi
-+stsquad	Alex Bennée
-+stweil	Stefan Weil
-+thuth	Thomas Huth
-+vsementsov	Vladimir Sementsov-Ogievskiy
-+xcancerberox	Joaquin de Andres
-diff --git a/.gitlab-map-manual b/.gitlab-map-manual
-new file mode 100644
-index 0000000000..f605a540e9
---- /dev/null
-+++ b/.gitlab-map-manual
-@@ -0,0 +1,18 @@
-+# This GitLab map associates GitLab account handles
-+# with real names, in order to allow mapping from
-+# MAINTAINERS entries. The format of entries is
-+#
-+#    {gitlab-handle}<tab>{real name}
-+#
-+# This file is manually written, to augment the
-+# auto-generated data in .gitlab-map-auto. This
-+# is needed where a GitLab account real name does
-+# not exactly match the MAINTAINERS file real
-+# name.
-+#
-+berrange	Daniel P. Berrange
-+dgibson	David Gibson
-+hreitz	Hanna Reitz
-+mstredhat	Michael S. Tsirkin
-+npiggin	Nicholas Piggin
-+mediouni-m	Mohamed Mediouni
-diff --git a/scripts/gitlab-map-check b/scripts/gitlab-map-check
-new file mode 100755
-index 0000000000..f72a06756d
---- /dev/null
-+++ b/scripts/gitlab-map-check
-@@ -0,0 +1,51 @@
-+#!/bin/sh
-+# SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/crypto/cipher.c b/crypto/cipher.c
+index 515165e0dc..229710f76b 100644
+--- a/crypto/cipher.c
++++ b/crypto/cipher.c
+@@ -142,7 +142,7 @@ qcrypto_cipher_validate_key_length(QCryptoCipherAlgo alg,
+ #include "cipher-gcrypt.c.inc"
+ #elif defined CONFIG_NETTLE
+ #include "cipher-nettle.c.inc"
+-#elif defined CONFIG_GNUTLS
++#elif defined CONFIG_GNUTLS_CRYPTO
+ #include "cipher-gnutls.c.inc"
+ #else
+ #include "cipher-stub.c.inc"
+diff --git a/crypto/meson.build b/crypto/meson.build
+index b51597a879..6ac83857aa 100644
+--- a/crypto/meson.build
++++ b/crypto/meson.build
+@@ -38,7 +38,7 @@ if nettle.found()
+   endif
+ elif gcrypt.found()
+   crypto_ss.add(gcrypt, files('hash-gcrypt.c', 'hmac-gcrypt.c', 'pbkdf-gcrypt.c'))
+-elif gnutls.found()
++elif gnutls_crypto.found()
+   crypto_ss.add(gnutls, files('hash-gnutls.c', 'hmac-gnutls.c', 'pbkdf-gnutls.c'))
+ else
+   crypto_ss.add(files('hash-glib.c', 'hmac-glib.c', 'pbkdf-stub.c'))
+diff --git a/meson.build b/meson.build
+index 164328ded8..06c43b4358 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1783,11 +1783,13 @@ if not get_option('libcbor').auto() or have_system
+ endif
+ 
+ gnutls = not_found
++gnutls_crypto = not_found
+ gnutls_bug1717_workaround = false
+ if get_option('gnutls').enabled() or (get_option('gnutls').auto() and have_system)
+   gnutls = dependency('gnutls', version: '>=3.7.5',
+                       method: 'pkg-config',
+                       required: get_option('gnutls'))
++  gnutls_crypto = gnutls
+ 
+   #if gnutls.found() and not get_option('gnutls-bug1717-workaround').disabled()
+     # XXX: when bug 1717 is resolved, add logic to probe for
+@@ -1811,7 +1813,12 @@ if get_option('nettle').enabled() and get_option('gcrypt').enabled()
+   error('Only one of gcrypt & nettle can be enabled')
+ endif
+ 
+-if not gnutls.found()
++# Explicit nettle/gcrypt request, so ignore gnutls for crypto
++if get_option('nettle').enabled() or get_option('gcrypt').enabled()
++  gnutls_crypto = not_found
++endif
 +
-+missing=0
-+present=0
-+
-+grep -E '^(R|M):' MAINTAINERS | \
-+sed -E -e 's/^(M|R): //' -e 's/ <.*//' | \
-+sort | uniq > names.txt
-+while IFS= read -r NAME
-+do
-+  grep "$NAME" .gitlab-map-{auto,manual} > /dev/null
-+  if test $? != 0
-+  then
-+    echo "Missing GitLab handle for maintainer '$NAME'"
-+    missing=$(($missing + 1))
-+  else
-+    present=$(($present + 1))
-+  fi
-+done < names.txt
-+rm -f names.txt
-+
-+echo "GitLab handles missing: $missing / present: $present"
-+
-+# .gitlab-map-manual is to provide alternate real names
-+# for cases where name in MAINTAINERS does not match
-+# the GitLab account real name. As such...
-+
-+# ...all gitlab handles in .gitlab-map-manual must also exist
-+# in .gitlab-map-auto and ....
-+for HANDLE in $(grep -v '^#' .gitlab-map-manual | awk '{print $1}')
-+do
-+    grep -E "^$HANDLE\s" .gitlab-map-auto >/dev/null
-+    if test $? != 0
-+    then
-+	echo "Unexpected GitLab handle '$HANDLE' is not a member"
-+    fi
-+done
-+
-+# ...and all realnames in .gitlab-map-manual must also
-+# exist in MAINTAINERS
-+grep -v '^#' .gitlab-map-manual | \
-+awk '{ $1 = ""; print substr($0, 2) }' | \
-+while IFS= read -r NAME
-+do
-+    grep -E "\s$NAME\s" MAINTAINERS >/dev/null
-+    if test $? != 0
-+    then
-+	echo "Unexpected real name '$NAME' is not a maintainer"
-+    fi
-+done
-diff --git a/scripts/gitlab-map-update b/scripts/gitlab-map-update
-new file mode 100755
-index 0000000000..c134c226aa
---- /dev/null
-+++ b/scripts/gitlab-map-update
-@@ -0,0 +1,45 @@
-+#!/bin/sh
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+echo "Checking authentication token status"
-+glab auth status
-+
-+if test $? != 0
-+then
-+  echo "ERROR: not authenticated with gitlab.com"
-+  exit 1
-+fi
-+
-+if ! test -f .gitlab-map-auto
-+then
-+  echo "ERROR: cannot find existing '.gitlab-map-auto file'"
-+  echo "ERROR: this must be executed from the root of the"
-+  echo "ERROR: git repository checkout"
-+  exit 1
-+fi
-+
-+fail=0
-+echo "Updating member list from qemu-project"
-+glab api --paginate /groups/qemu-project/members | \
-+    jq -r -c '.[] | [.username, .name] | @tsv' | \
-+    grep -v '^group_3038080_bot' > \
-+    .gitlab-map-auto.tmp
-+test $? != 0 && fail=1
-+
-+echo "Updating member list from qemu-project/qemu"
-+glab api --paginate /projects/qemu-project%2fqemu/members | \
-+    jq -r -c '.[] | [.username, .name] | @tsv' | \
-+    grep -v 'Duo Developer' >> \
-+    .gitlab-map-auto.tmp
-+test $? != 0 && fail=1
-+
-+if test $fail == 0
-+then
-+  grep '^#' .gitlab-map-auto > .gitlab-map-auto.new
-+  LC_ALL=C sort .gitlab-map-auto.tmp | uniq >> .gitlab-map-auto.new
-+  mv .gitlab-map-auto.new .gitlab-map-auto
-+  echo "OK: GitLab member list updated"
-+else
-+  echo "ERROR: Updating member list failed"
-+fi
-+rm -f .gitlab-map-auto.tmp
++if not gnutls_crypto.found()
+   if (not get_option('gcrypt').auto() or have_system) and not get_option('nettle').enabled()
+     gcrypt = dependency('libgcrypt', version: '>=1.9.4',
+                         required: get_option('gcrypt'))
+@@ -2513,6 +2520,7 @@ config_host_data.set('CONFIG_XKBCOMMON', xkbcommon.found())
+ config_host_data.set('CONFIG_KEYUTILS', keyutils.found())
+ config_host_data.set('CONFIG_GETTID', has_gettid)
+ config_host_data.set('CONFIG_GNUTLS', gnutls.found())
++config_host_data.set('CONFIG_GNUTLS_CRYPTO', gnutls_crypto.found())
+ config_host_data.set('CONFIG_GNUTLS_BUG1717_WORKAROUND', gnutls_bug1717_workaround)
+ config_host_data.set('CONFIG_TASN1', tasn1.found())
+ config_host_data.set('CONFIG_GCRYPT', gcrypt.found())
+@@ -4865,6 +4873,7 @@ summary_info = {}
+ summary_info += {'TLS priority':      get_option('tls_priority')}
+ summary_info += {'GNUTLS support':    gnutls}
+ if gnutls.found()
++  summary_info += {'  GNUTLS crypto':   gnutls_crypto.found()}
+   summary_info += {'  GNUTLS bug 1717 workaround': gnutls_bug1717_workaround }
+ endif
+ summary_info += {'libgcrypt':         gcrypt}
+diff --git a/tests/unit/test-crypto-block.c b/tests/unit/test-crypto-block.c
+index 218e585f98..3ac7f17b2a 100644
+--- a/tests/unit/test-crypto-block.c
++++ b/tests/unit/test-crypto-block.c
+@@ -31,7 +31,8 @@
+ #endif
+ 
+ #if (defined(_WIN32) || defined RUSAGE_THREAD) && \
+-    (defined(CONFIG_NETTLE) || defined(CONFIG_GCRYPT))
++    (defined(CONFIG_NETTLE) || defined(CONFIG_GCRYPT) || \
++     defined(CONFIG_GNUTLS_CRYPTO))
+ #define TEST_LUKS
+ #else
+ #undef TEST_LUKS
 -- 
 2.55.0
 
