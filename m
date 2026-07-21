@@ -4,46 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1914DC4451C
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 19:02:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7E42C4451C
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 19:04:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmFip-0005Ir-Kk; Tue, 21 Jul 2026 15:01:45 -0400
+	id 1wmFlF-0006bn-4t; Tue, 21 Jul 2026 15:04:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmFiZ-0005Ez-RM; Tue, 21 Jul 2026 15:01:29 -0400
+ id 1wmFkm-0006Vz-Uc; Tue, 21 Jul 2026 15:03:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmFiX-0000W2-77; Tue, 21 Jul 2026 15:01:27 -0400
+ id 1wmFkl-0000by-A6; Tue, 21 Jul 2026 15:03:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784660463; bh=0KoN2Ti55u0GeS+Ipzctxr+zyfEVtZ0IHutiqKQtnt0=;
+ t=1784660605; bh=TBGotlleWiJiLnkUy14IUybgloCZwDasLFvyPonrdEk=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=L6B1jA6P8ml02O7LdkpjAsA4xo6B1p8EdRInG7J3GvUdMaX/OFVhU+WCs3dVsAkPu
- ozweeelV8nbT158ZmhU0xfbYKY9eIJu+4MLOY9be5p34gDihnsmdfwuwVQ+sYAmYR9
- Ad7/rODn25MaY7HXqccNx1eKgq7URhKpkywGBkqMgkF/pLZeyePqT33g4I4AemerOX
- vusIOFhXjx8CU1HTm+Ez7r0QcR3uqg7hb94Ij/kZ5GbwV/5mFcT/+k95jtnBJvgoF3
- 8H6i335Bvwkv1eMgQPZLRMJnebwVnR4UCR6vT/YiqVmAwCZcNLvpT6vxiCTs6HaMJo
- IeARY7FIVJxSw==
+ b=Ou1bDxlxxdR/+P4PkTzHmFkhrodyioJVf2YvuVh9CHHsICs74JtJ8KgDRyOKKgVwE
+ HxTV+DHIBKeOfZt6ZivivZD6tnxPHJ4wMgqE6iXfasg2jOxQ9EcnCg/a4uegslupGD
+ fGV8AVx3+4TGn9HlNS4CPtbhyY/OBnYXfiari70Vmo3WUClJGW23ftnj2K+Y4xQ1Dx
+ NIlEQgVPZqA4HVRbrR9moq8B3/KIH3EUdMQZc6JI9Qkagu3tceoWlxcPbD9QhHKGY8
+ XKBPycXFAnIyOVneJ4VLvG0j927sVwuVorbm32fPJ1xHV+IA3JGSBFIF/MDN178ucT
+ d+QLHXoT1McvQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E82411C37B5;
- Tue, 21 Jul 2026 22:01:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 03A271C37BD;
+ Tue, 21 Jul 2026 22:03:25 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 96A8E3F2B92;
- Tue, 21 Jul 2026 22:01:19 +0300 (MSK)
-Message-ID: <63046247-5e3a-4943-852a-985ffdc1f087@tls.msk.ru>
-Date: Tue, 21 Jul 2026 22:01:10 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id B59273F2B93;
+ Tue, 21 Jul 2026 22:03:40 +0300 (MSK)
+Message-ID: <47fb7730-adba-419b-9c85-298ff245cce9@tls.msk.ru>
+Date: Tue, 21 Jul 2026 22:03:32 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] hw/char: imx_serial: add missing migration state
-To: Tao Ding <dingtao0430@163.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- marcandre.lureau@redhat.com, pbonzini@redhat.com,
- QEMU Stable <qemu-stable@nongnu.org>
-References: <20260715131819.14827-1-dingtao0430@163.com>
- <20260715131819.14827-2-dingtao0430@163.com>
+Subject: Re: [PATCH] hw/net/xilinx_axienet: Fix PHY register 17 link status
+ reporting
+To: Jay Chang <jay.chang@sifive.com>, qemu-devel@nongnu.org
+Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowangio@gmail.com>,
+ "open list:Xilinx Zynq" <qemu-arm@nongnu.org>,
+ Frank Chang <frank.chang@sifive.com>, QEMU Stable <qemu-stable@nongnu.org>
+References: <20260713064617.85374-1-jay.chang@sifive.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -89,7 +91,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260715131819.14827-2-dingtao0430@163.com>
+In-Reply-To: <20260713064617.85374-1-jay.chang@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -115,87 +117,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/15/26 16:18, Tao Ding wrote:
-> Add ucr2 from imx_serial to vmstate, and increment the version_id.
+On 7/13/26 09:46, Jay Chang wrote:
+> The Marvell 88E1111 PHY register 17 (PHY Specific Status Register)
+> bit 10 reports real-time link status. Previously, this register
+> returned a fixed value of 0x8800 with bit 10 always cleared,
+> causing U-Boot to always detect "No link" even when the link
+> was up.
 > 
-> Migrating on sabrelite can reproduce this issue:
-> 1. Prepare the U-Boot required for sabrelite. (according to sabrelite.rst)
-> 2. Compile qemu
->      $ mkdir build && cd build && ../configure --target-list="arm-softmmu" && make -j4
-> 3. Start sabrelite and prepare for migration
->      $ ./build/qemu-system-arm -M sabrelite \
->      -smp 1 -m 1G -display none -serial null -serial mon:stdio \
->      -kernel ~/u-boot
-> 4. Enter qemu monitor after uboot. (ctrl + a + c)
->      (qemu) stop
->      (qemu) xp /4wx 0x021e8084
->      021e8084: 0x00004027 0x00000784 0x00008000 0x00000a01
->      (qemu) migrate -d file:vmstate
->      (qemu) q
-> 
-> Load the migrated vmstate, before repairing:
-> 
-> $ ./build/qemu-system-arm -M sabrelite \
->      -smp 1 -m 1G -display none -serial null -serial mon:stdio \
->      -kernel ~/u-boot -incoming file:vmstate
-> 
-> (ctrl + a + c)
->      QEMU 11.0.50 monitor - type 'help' for more information
->      (qemu) xp /4wx 0x021e8084
->      021e8084: 0x00000004 0x00000784 0x00008000 0x00000a01
->      (qemu) q
-> 
-> It can be found that the data for address 0x021e8084 (register of usr2 in imx_serial of sabrelite)
-> is not the data before the migration.
-> 
-> After being repaired:
-> $ ./build/qemu-system-arm -M sabrelite \
->      -smp 1 -m 1G -display none -serial null -serial mon:stdio \
->      -kernel ~/u-boot -incoming file:vmstate
-> (ctrl + a + c)
->      QEMU 11.0.50 monitor - type 'help' for more information
->      (qemu) xp /4wx 0x021e8084
->      021e8084: 0x00004027 0x00000784 0x00008000 0x00000a01
-> 
-> Signed-off-by: Tao Ding <dingtao0430@163.com>
+> Signed-off-by: Jay Chang <jay.chang@sifive.com>
+> Reviewed-by: Frank Chang <frank.chang@sifive.com>
 
+I'm picking this up for qemu-stable.
+Please let me know if I should not.
 
-Somehow, this grow Cc: qemu-stable@ in the final version which was
-applied as v11.1.0-rc0-68-g8833ff95eaf.  I don't think this is a
-good candidate for the stable series, since this fix changes the
-migration stream format, which is very difficult to do in the stable
-series.
+> ---
+>   hw/net/xilinx_axienet.c | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c
+> index 970732b162..9f5f65ecfa 100644
+> --- a/hw/net/xilinx_axienet.c
+> +++ b/hw/net/xilinx_axienet.c
+> @@ -103,6 +103,9 @@ static unsigned int tdk_read(struct PHY *phy, unsigned int req)
+>           case 17:
+>               /* Marvell PHY on many xilinx boards.  */
+>               r = 0x8000; /* 1000Mb  */
+> +            if (phy->link) {
+> +                r |= 0x0400; /* Link is up */
+> +            }
 
-FWIW.
+Shouldn't we clear this bit somewhere?
 
 Thanks,
 
 /mjt
-
->   hw/char/imx_serial.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/char/imx_serial.c b/hw/char/imx_serial.c
-> index 080b7f6331..fb41ee2ac5 100644
-> --- a/hw/char/imx_serial.c
-> +++ b/hw/char/imx_serial.c
-> @@ -43,14 +43,15 @@
->   
->   static const VMStateDescription vmstate_imx_serial = {
->       .name = TYPE_IMX_SERIAL,
-> -    .version_id = 3,
-> -    .minimum_version_id = 3,
-> +    .version_id = 4,
-> +    .minimum_version_id = 4,
->       .fields = (const VMStateField[]) {
->           VMSTATE_FIFO32(rx_fifo, IMXSerialState),
->           VMSTATE_TIMER(ageing_timer, IMXSerialState),
->           VMSTATE_UINT32(usr1, IMXSerialState),
->           VMSTATE_UINT32(usr2, IMXSerialState),
->           VMSTATE_UINT32(ucr1, IMXSerialState),
-> +        VMSTATE_UINT32(ucr2, IMXSerialState),
->           VMSTATE_UINT32(uts1, IMXSerialState),
->           VMSTATE_UINT32(onems, IMXSerialState),
->           VMSTATE_UINT32(ufcr, IMXSerialState),
-
 
