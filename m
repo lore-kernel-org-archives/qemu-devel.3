@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98FEEC44529
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 08:21:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DF9AC44529
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 08:21:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm5gd-0000rg-H9; Tue, 21 Jul 2026 04:18:47 -0400
+	id 1wm5gd-0000s2-R2; Tue, 21 Jul 2026 04:18:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wm5gZ-0000hH-3H; Tue, 21 Jul 2026 04:18:43 -0400
+ id 1wm5gZ-0000hN-4h; Tue, 21 Jul 2026 04:18:43 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wm5gU-0001Zn-C9; Tue, 21 Jul 2026 04:18:42 -0400
+ id 1wm5gU-0001Zp-QT; Tue, 21 Jul 2026 04:18:42 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66L8GsBl050170
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66L8GsBr050170
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 21 Jul 2026 17:17:31 +0900 (JST)
+ Tue, 21 Jul 2026 17:17:34 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=EJkHV2s0GXDHJ/nv2t/lNaPG4brj3e8w2SRhfpoDRgs=; 
+DKIM-Signature: a=rsa-sha256; bh=1+Q0gM0m/5wtZS8DTvxZyd2mJsJSViM4tttw9b7y4ME=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1784621852; v=1;
- b=vjbVZT/KlSXZjhmU6TeVbEQ2WuBKoV5E7yaxBH5a9BdAzvokj95o0vL35X1MR6wC
- EtI1O6LNQkQonP0GflgU/BsF+CBVVSCArKD/xKbGbWyJV6DyMhhvriTsRkYofbHX
- Fiso5SUjDxe42QuSu6BlskHou56vmU06o36S8pqYl6NMAstNBWvh4p9Opzec3PCN
- 62qI8mueDvqPJWKWDfZui1vn3orfpL1fXTzHX/lrGZ/I3+EXgJvX4lzWaWg0N2NL
- TONrfkcxNrGMU7woTonr0kbJ6BzN84gq3nqEJnVLdHsdLGKbkpIzwGpyohrAzl70
- T32YatluLk3BbBwL4qALEQ==
+ s=rs20250326; t=1784621854; v=1;
+ b=rcSso+16BQY1CxUcgByFOIFFXrd07pGDNcqetVrZRzgqMvxpvGMUkGEkF6Kf9bHL
+ qmx6H+bmfO7ttWibSC2MkH+V8rTqf/nPXlA8+2BBjGK+4bJH5YwDMjL1aIVhRhYD
+ gQWLs5VZdPYgg1yYPHVpoSvJnuBsowGPASG12aUO8jUtqSNQc4OFEL2ZhgQG6gvb
+ GHLLEeOS3am4U7tGBVWLW1rZwi/7X4I/Q7tnPLeUPSbb0ZQuqwlKfgM32o8p1Jz8
+ v6G9lp97+UKpyVJf2EA2RCKIj4IyHzGsPD6COkwRb6FlkyYl/5EvmD/aklxbI9tV
+ WvgQ96HLHxTCBwcvBAoy3Q==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 21 Jul 2026 17:16:52 +0900
-Subject: [PATCH for-11.2 v3 02/15] qdev: Make qdev_is_realized() take a
- const DeviceState *
+Date: Tue, 21 Jul 2026 17:16:58 +0900
+Subject: [PATCH for-11.2 v3 08/15] hw/ppc/pnv_xscom: Use qdev_is_realized()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260721-qdev-v3-2-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260721-qdev-v3-8-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260721-qdev-v3-0-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260721-qdev-v3-0-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -70,13 +69,13 @@ Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-925f5
-X-Developer-Signature: v=1; a=openpgp-sha256; l=832;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=850;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=UB3C/P5S8Rdd+yOhuVkWMGvp9D9roZmSCruzuwAk7CA=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ1a8tmCK4hyLL17Hb/cvOjvX4N3X/7kWf1JnnDR/I/QgM
- vhC7ptzHaUsDGJcDLJiiiwpRbu5NaJrPxUmxLfAzGFlAhnCwMUpABPxF2RkuBd1R391m6Tu/I2p
- c693ngo0j9rwN/vfeUbPV3sPuERnMjMyHOkOmcl2/Zr9pjePtvzw9r5u4XfgePHWJdPrN815G3/
- qHisA
+ bh=TvwbU3DfZ+01MjNYza79qDHcgcPZ4wt6XCANops45eo=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ1a8ttiX4hNRM97MPMHi/I2/ltMgYbVbS9Y05uqIrltvi
+ 299jLXtKGVhEONikBVTZEkp2s2tEV37qTAhvgVmDisTyBAGLk4BmMglMYY/PFeOivqEFV2IOs3L
+ v0fk0p6TWsp9KutlZGf/am9w2yPOycjw03bemZNdby+6x6meWp7oG/3gw+xX61/tLWlvD5v61nY
+ iMwA=
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -102,27 +101,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qdev_is_realized() only reads DeviceState. Make its parameter const so a
-later caller with a const DeviceState * can use it.
+DeviceState fields should be accessed through qdev helpers rather than
+directly. Use qdev_is_realized() instead of reading
+DeviceState::realized directly.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- include/hw/core/qdev.h | 2 +-
+ hw/ppc/pnv_xscom.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-index aba7072131c4..3f47ea72c009 100644
---- a/include/hw/core/qdev.h
-+++ b/include/hw/core/qdev.h
-@@ -443,7 +443,7 @@ DeviceState *qdev_try_new(const char *name);
-  * Context: May be called outside big qemu lock.
-  * Return: true if the device has been fully constructed, false otherwise.
-  */
--static inline bool qdev_is_realized(DeviceState *dev)
-+static inline bool qdev_is_realized(const DeviceState *dev)
- {
-     return qatomic_load_acquire(&dev->realized);
- }
+diff --git a/hw/ppc/pnv_xscom.c b/hw/ppc/pnv_xscom.c
+index dc1ffc6c014f..7af722584e29 100644
+--- a/hw/ppc/pnv_xscom.c
++++ b/hw/ppc/pnv_xscom.c
+@@ -253,7 +253,7 @@ static int xscom_dt_child(Object *child, void *opaque)
+         /*
+          * Only "realized" devices should be configured in the DT
+          */
+-        if (xc->dt_xscom && DEVICE(child)->realized) {
++        if (xc->dt_xscom && qdev_is_realized(DEVICE(child))) {
+             _FDT((xc->dt_xscom(xd, args->fdt, args->xscom_offset)));
+         }
+     }
 
 -- 
 2.55.0
