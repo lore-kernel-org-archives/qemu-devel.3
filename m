@@ -4,125 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BE10C4452B
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 16:29:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D239C4452B
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 16:51:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmDKS-0001kP-QW; Tue, 21 Jul 2026 12:28:24 -0400
+	id 1wmDfo-0000LU-0S; Tue, 21 Jul 2026 12:50:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wmDKM-0001jd-Gl
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 12:28:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wmDfn-0000LL-1C
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 12:50:27 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wmDKF-0000en-8b
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 12:28:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784651280;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=peKFTWHWFOH2wI/x2JGjvWU2w+n3RfJucxy4ZWT+h4g=;
- b=VXf8KsaMxkD9mbqFWf223iuBB0BYwmlGJuXVOza6pMRZjeNf4T3NTC98UykJOmMgBQCcpW
- fWRkSglWSrKbDy3fZ5R85hzlVXSxpBHzCJS3vdO4yPgLwLypkGBhUr7lCVOdQnIF8kWIQr
- J/UIK/4lKcK9k8QQzePcWsyoEM8eJ5c=
-Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com
- [209.85.221.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-630-nFgao_FFNcGu4az5ejwqSg-1; Tue, 21 Jul 2026 12:27:58 -0400
-X-MC-Unique: nFgao_FFNcGu4az5ejwqSg-1
-X-Mimecast-MFC-AGG-ID: nFgao_FFNcGu4az5ejwqSg_1784651278
-Received: by mail-vk1-f197.google.com with SMTP id
- 71dfb90a1353d-5c0fd51869dso2175599e0c.0
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 09:27:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wmDfk-0004mn-TV
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 12:50:26 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66LDfr142962587
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 16:50:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 6cgY8+qmduX8S4nVs5DaH1cWkBp94hjmX499ARdyxNg=; b=Ry3zhXRgUtwqjmnp
+ uwmyqIKEElML6Y21idvi6Lqrs9sC01DHC5JYd8OYeD+KMxDWBgBsX3DOqFXE1Bzm
+ z7/+cKEq40bMHwA+nbxDqUJMo953SKl+iIYgdxGcJXnV7825Ht+mjhs0cB+0ebSw
+ fsg3l4njoWn4E2t506fI3Ook6K9pi/mBWypwbiPY0zRhZQQHkop86fnEBascpG0f
+ sJ20Z+kSk+6lk9fWzxbJXhAMCxX8DxhAI5ydkVEFKqKzf8NR29aJrH38kyE2+7mp
+ umAl1DxfMSNSxVzpESOs7ustRondfycj/penqQ1VIhmW/kmsjEiSuAxnHjByLrSa
+ qN6ItA==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fj6nssyvx-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 16:50:21 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2ccd1958e8fso114468995ad.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 09:50:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784651278; x=1785256078; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=peKFTWHWFOH2wI/x2JGjvWU2w+n3RfJucxy4ZWT+h4g=;
- b=OrWLdepXBOn6C5KpbiAyKB2/MpTk0O0E7+i27sfiVQLjR+grsOQMaHVIyVe1YrczK6
- wA11A7gWp+90f43iFS6+wvL4SL7wnSz+/J7vdVRu+GLzPN5Om1awUa0zNkeJcNQe1CTP
- Y8fHtDZyOIdzG990hjT+doY/PAT4VaN436tiH4pVhwWVKBABO5LrdIL8IprfSeXageAf
- uGwspoW09AxnJrbS1kHi/JY9QgAo6zCuUwCJaH+xCBHadJr7Yn5LXFwEhBQSOaSOqhk9
- BR3jXPqApAhoyBid4wFVq98ODbebmG9a9ErYdUgrMUZrkpjgE3Td8fBUBH/t8f4pgcQo
- cUfg==
+ d=oss.qualcomm.com; s=google; t=1784652621; x=1785257421; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=6cgY8+qmduX8S4nVs5DaH1cWkBp94hjmX499ARdyxNg=;
+ b=KgV6vhud/o0Le5vYUsbFYt781UK0UfMCxGFPdOWFR2YqjaK5+PujVbk+XVHvCxWDoF
+ qYiFHs1jVJlMnH+khmEPWaltw51WjC1/hphT2XjzlBc+fb94w89mfoBJ/dOtOHAlz3vi
+ ssjbwiFLmIVD7lKGtfgvCCs617J18pnsYhoirdA5Rwkmoa6bno+/7np6TJ/4K9q4Uuic
+ /WbMK5uhR446HcTDTcz+dCGA8sSFmVoykd9wnVjiLHBK1ZSWC+Q2Lfnlf1cQs4MeXBDN
+ wwBWieY+VxylWV7AQ1okfhcmwwfQLuEIUB5AJCJTP4EDHdqY7D3Ew3vf3kEEs4lYwJPV
+ XCbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784651278; x=1785256078;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=peKFTWHWFOH2wI/x2JGjvWU2w+n3RfJucxy4ZWT+h4g=;
- b=fgu2/u4RVAvMThMJ90K+qxws2qTU4gl4Ks/lnM3Q82BpMnnNbjJbTlKA2q+j9zmflS
- A/DF8BsIspNMlNb14jFyxw0IQuEVIhoNfxSfks+CsuBOk9Pknuyg0UHWFlr1H82rpKAr
- frYoKF8dQaPKLKne/KxY2ZUoeAkunuqPTYhHXX7TE3YmpefkWUGMRVEiKvc0jD7hyhct
- DfkiP6+pc+2tpUohp1kJscOnUVx/hr4or1apx6WbnnNApSbib9hbILhc5aBIAMspqlwq
- tiYwkAhtuUOxQqejfRvEXZD2/m+6wxf4834YzKtpk46SwvdTv/j2M1VER8TJfm7qlt0B
- +7+w==
+ d=1e100.net; s=20251104; t=1784652621; x=1785257421;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=6cgY8+qmduX8S4nVs5DaH1cWkBp94hjmX499ARdyxNg=;
+ b=PAHNTBaWkMzid0mjTfIbNG9/zy2CQkSBCXB8xgYfinhwa5a+7vUeqFfvH6x7dz460N
+ aU50ZX6OnSYZ4oSbPM9lyhwdBoLw+RfoANtModgi7TwNgqGAPr5/RJbpE3r7q6BaJYiW
+ RoCLowu9fjlcMTiPwPh7QynRbIf+9ThVFPtZhl/ofJg9alaRNuD1dd7SnQxiR16xL3VX
+ fQx55PMrJbhj031PTuBi15AH2b6/wlNRBjmXrFwX2NL5MNrU0omIQhk6ybRu79VnOTf9
+ bnzuGsN3fKSYBoD+lnVTW6GBwnP9pHlW36OVfk8SrLrQp2vMEdd7HMd/8dSX+C0r5g+I
+ MMBQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrNaHdjSNra2TnDOhlDKOhi3KgC961KcUxUsbYcgQtyjAUlfwz4jLNacj1ILNo74kyTPUxs1ebftQP0@nongnu.org
-X-Gm-Message-State: AOJu0Yw1ybu0B6pck5VW8R3oYyNS5jNElCHG1OpWV2W/TG84yOIbQFHG
- hjxeoBE5o6OXdgeNLsd8NnLSbLm2UhzLou312dS5hg8wx3DufDHzvTyyzEd///XXRlyti8+wIPZ
- BH4aRDX8IK2bD1nIaHGJmLh1dkzhQrHOnqhzUo4SLuwbV3fq8quwsEaP0
-X-Gm-Gg: AR+sD101W3tIkjzf/tXEDFGfzMCUfwPVHff/RJV3TbgDGlCz8gboTcYHKf+iQG+6E4B
- s8LwZXEyb9snRRQ7ecxFSxcuUYWhrAf9NSlxCjcRThn/gVLngRhsNeM4ouOO6Gpim9S24CjJkBi
- IwZQ9T1nGCzl/ci7iYtz1zTVB7QJYoVqqC1DITJtWkPNN6CUrBN4uXFBkOPUtygIWpMsWYygRu3
- IsSFPkgEOHpGQdDMEgsXsURn2RTuC1vAijbADl7rUYdnoqAsj94g0qktc6ac8Mob+JpMI4dlDWY
- yi1fh2SBfz7qPUdURIPEE0z5z34XS1nGJw2P6abGIBMmxKVEUCFqBUhvSM5EdkAVhz9I9KcxDM8
- LZg7jRPnEfgGAiLKb+XUIacG6y0DG1uooGDuo7hcSL4dDJuISyuhRcUHqer8=
-X-Received: by 2002:a05:6102:d8e:b0:729:65e:f08c with SMTP id
- ada2fe7eead31-74753146d97mr5850101137.0.1784651278036; 
- Tue, 21 Jul 2026 09:27:58 -0700 (PDT)
-X-Received: by 2002:a05:6102:d8e:b0:729:65e:f08c with SMTP id
- ada2fe7eead31-74753146d97mr5850060137.0.1784651277372; 
- Tue, 21 Jul 2026 09:27:57 -0700 (PDT)
-Received: from x1.local
- (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
- by smtp.gmail.com with ESMTPSA id
- ada2fe7eead31-747581b09absm12522517137.8.2026.07.21.09.27.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Jul 2026 09:27:56 -0700 (PDT)
-Date: Tue, 21 Jul 2026 12:27:54 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Gavin Shan <gshan@redhat.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, alex@shazbot.org,
- richard.henderson@linaro.org, berrange@redhat.com, philmd@mailo.com,
- david@kernel.org, clg@redhat.com, pbonzini@redhat.com,
- phrdina@redhat.com, jugraham@redhat.com,
- liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn,
- shan.gavin@gmail.com, qemu-s390x <qemu-s390x@nongnu.org>
-Subject: Re: [PATCH v3 1/2] system/memory: Use qemu_ram_{copy, move}() in ram
- device region accessors
-Message-ID: <al-eCtxGjG4HHEbl@x1.local>
-References: <CAFEAcA8-Un+Q1yBDqLWCLPRwtgTA_VhJqGobgZChrFhAeVfG8A@mail.gmail.com>
- <20260625123119-mutt-send-email-mst@kernel.org>
- <CAFEAcA8UjtXgmPC27fOKMwbaWs2piwGYudtwCNWQHuu3E_7A-A@mail.gmail.com>
- <5faf04b9-d596-4a1d-9fe3-5e9ad5f0a99a@redhat.com>
- <73f79841-8cc7-4ca6-8f6b-fb97b53a6fe8@redhat.com>
- <20260717091756-mutt-send-email-mst@kernel.org>
- <CAFEAcA-O6Z4JrVV0DL_tta6khRyUta_Zz5mJt6OszaW1mu0o6Q@mail.gmail.com>
- <20260717095407-mutt-send-email-mst@kernel.org>
- <9c2ad22a-e768-4a07-85a2-01ce1fc14368@oss.qualcomm.com>
- <59882c5b-545d-4768-8bf4-723fed97a801@redhat.com>
+ AHgh+RoFVPAtcpvxTAEv2revYCElfhfjepgbRaheRYlbjP6oP+7kCU2E/8SJX00RXXl7GAUktK9c9+7KueGU@nongnu.org
+X-Gm-Message-State: AOJu0YwVONMWQhDixauMx6vYcTuMVaj88mvbBsfWHc3B7/lLRtaggm5U
+ zcYLTe5W4QjROZVjLH5Tg3CJa45wk4rwLVhfwtbn1KScuhD2v2ZD2LajBiwy1b+4kRuEyCqwzLo
+ rvrQthvq1XCoF0KPTFbj5BZwnOXD+0sh4aGUoFIUsTTr9EJszCiPp1+3zoQ==
+X-Gm-Gg: AR+sD10IQOrVIRJ451CuEENj726Jkh42wdjMYZI32Olgqly1v74JPuqf9jN/SyRT4B/
+ ZH5CbCvGCPbtcv28CGEtgmKFK4r5bE57CRx/3PA0IsdLrZadFQeQOo3+PN8GXtZ44dkPb3kJOFM
+ sj0S++88+ss1yKiIsPQyZ8hBHyUS9dIVxmddUK/cx9nyhFASZyeBz9rV2Pw2Pdy/wKXZv0pCcDG
+ ASnIGKqzCCnViuZmi26tj5fTruuLF9UG+7TOEb4nXSKf67ZjqAX2qZAItd3juv+KPXdSKHjU05N
+ EQ82pI07DJyPnLpecgrPkQQY2nyC9mWddbFyckkL6uQik/DJl3FZGSuTSDeowmXof6Q201gq09H
+ wZ8FCBX8cA+hj/FGLP1SlHwNq3G89npwe2B81/Mf/8xVXSxBC8qaZcn+GVueuemywjVE/
+X-Received: by 2002:a17:903:2383:b0:2c9:97a7:f544 with SMTP id
+ d9443c01a7336-2cf34a18cefmr208361545ad.42.1784652620598; 
+ Tue, 21 Jul 2026 09:50:20 -0700 (PDT)
+X-Received: by 2002:a17:903:2383:b0:2c9:97a7:f544 with SMTP id
+ d9443c01a7336-2cf34a18cefmr208361175ad.42.1784652619974; 
+ Tue, 21 Jul 2026 09:50:19 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3147dc6162csm649975eec.7.2026.07.21.09.50.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Jul 2026 09:50:18 -0700 (PDT)
+Message-ID: <1114d029-f7f3-44d4-b19f-f919b1d0e00b@oss.qualcomm.com>
+Date: Tue, 21 Jul 2026 09:50:17 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <59882c5b-545d-4768-8bf4-723fed97a801@redhat.com>
-Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=peterx@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] dlcall: correct the syscall number claim and the
+ guest requirements
+To: Ziyang Zhang <functioner@sjtu.edu.cn>, qemu-devel <qemu-devel@nongnu.org>
+Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Florian Hofhammer <florian.hofhammer@epfl.ch>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
+ Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
+References: <20260719074730.1520517-1-functioner@sjtu.edu.cn>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260719074730.1520517-1-functioner@sjtu.edu.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: ihedXwhtJD84UHXH7bru9qLMFdlKJePd
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDE3NyBTYWx0ZWRfXyEJD1qPuyiz9
+ PcnNko7R8WA//WVJ3fC3NHMhWFaWgHQ3YwMVp9B0JLbqrvb4zQYSv9c44m8kHt4Lu2P7vLUjDU/
+ 7OFKaZCTEbF2voP+wN+tXuiGL6k4YNM=
+X-Authority-Analysis: v=2.4 cv=ZJjnX37b c=1 sm=1 tr=0 ts=6a5fa34d cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=uUglX_S_jsOhXFroYCcA:9 a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-ORIG-GUID: ihedXwhtJD84UHXH7bru9qLMFdlKJePd
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDE3NyBTYWx0ZWRfX2LsnclSZququ
+ LgXMUmU2AZ03Ysom9ppHyB3DGrEE20oANRdYUiYnHGnJ1787X9YJSq1RleHloeY024tYpeUBP53
+ 5SQ8GwqJoWlTyTPF/5wuYKXNA3wrISc+NXXWox9OQNd94/5vxS8VCpVTqyZL11CJaMigws07euS
+ 99M21SrmMLA/t1R4tEWWLNh6LzaYTKwJTQnhlx0FLgGo1aHw4ZlEyNxcRl573tXbU7VRyp93ld4
+ KcPbv5a7TzjHJQK0y6ml4nkT/zvGdiVhRzbkXdK8vwhtUblLdzCqdyC4DtgR0NVtHHp2pl4txBC
+ cTA+Ogpq6bghCEjTS8rMUJmsVc24BBIB2lmBO8g3USeo/tnRqDEu8SbBy1YC/nYy2+f5AFGFh1R
+ khK0ZIErpihMeRTRyd5jCeHRFFw3sQc+2bQCJAl95av8fGBLkAXZK2uA+qMML8ss1hYoBtDtE2Y
+ di0ADu1F7tJvzifha7g==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-21_03,2026-07-20_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 priorityscore=1501 suspectscore=0 impostorscore=0
+ malwarescore=0 spamscore=0 lowpriorityscore=0 adultscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607210177
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,34 +160,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 21, 2026 at 03:37:53PM +1000, Gavin Shan wrote:
-> If Peter is fine with two variants for x86 and non-x86 architectures.
-> I can post (v4) for further review. That will be something like below
-> and let me know if there are any other improvements are needed.
+On 7/19/2026 12:47 AM, Ziyang Zhang wrote:
+> Hi,
+> 
+> Three small follow-ups to the dlcall plugin merged for 11.1. There is no
+> functional change: all of them are comment and documentation fixes.
+> 
+> The first one matters most. The plugin picks 4096 as its magic syscall number,
+> and the comment justified that by saying every Linux ABI keeps its syscall
+> numbers well below it. That is not true for MIPS O32, which bases its numbering
+> at 4000, so 4000 + 96 is a real getpriority. Loading the plugin on such a guest
+> would let the filter consume a legitimate getpriority() and read its arguments
+> as a dlcall request, where the first one selects an operation and the second is
+> taken as a string pointer.
+> 
+> Raising the number does not rescue that case, which is the part I had wrong at
+> first. O32 answers numbers its table does not define with ENOSYS in cpu_loop(),
+> before do_syscall() and therefore before the filter, so on O32 there is no
+> number that is both free and reachable. Its N32 and N64 ABIs base at 6000 and
+> 5000 and have no such gate, so they are unaffected.
+> 
+> I checked this under qemu-mips rather than only reading cpu_loop(), using a
+> plugin that logs what its syscall filter receives. A plain getpriority() from
+> the guest arrives at the filter as num=4096 a1=0, which is what dlcall would
+> read as an operation ID with a NULL key, while syscall(8192, ...) returns
+> ENOSYS and never reaches the filter at all.
+> 
+> There is an upper bound elsewhere too. arm32 answers anything past ARM_NR_BASE
+> (0xf0000) with ENOSYS or SIGILL before do_syscall(), as the comment in
+> tests/tcg/multiarch/test-plugin-syscall-filter.c already notes, so a large
+> number is not a safe default either. 4096 sits below that and above the
+> ordinary syscall numbers, which is why it works on the targets people use this
+> with.
+> 
+> That test carried the same wrong reason, so the second patch corrects it. It
+> picked 4096 believing no ISA uses the number, when what actually keeps it safe
+> is that the filter matches on the first argument as well: a real syscall
+> carrying this number falls through untouched. tests/tcg/plugins/setpc.c matches
+> on the number alone, which works for the single test program it is loaded with,
+> but the collision applies there too, so neither test shows that 4096 is free.
+> 
+> I have deliberately not changed the default, nor restricted which guests may
+> load the plugin. The number is already configurable with syscall_num=N, and
+> dlcall is generic infrastructure rather than something tied to one userspace
+> project, so it should not decide which guest architectures people may
+> experiment with. What was wrong here was the reasoning in the comments, so they
+> now describe what a target actually does with the number.
+> 
+> The last patch extends the guest_base == 0 warning, since the guest must match
+> the host's pointer width and endianness as well, and tidies two things in the
+> prose: a library is not turned into thunks but has thunks produced for it, and
+> argument marshalling, callbacks and variadic functions belong with Lorelei
+> rather than in the plugin's description, since they are precisely what it does
+> not do.
+> 
+> Also in the first patch, two out pointers were dereferenced without the assert
+> the others carry.
+> 
+> Thanks,
+> Ziyang Zhang
+> 
+> Ziyang Zhang (3):
+>   contrib/plugins/dlcall: correct the syscall number claim, note the
+>     data model
+>   tests/tcg: correct why the magic syscall number is safe here
+>   docs/about/emulation: sharpen the dlcall boundary and its guest
+>     requirements
+> 
+>  contrib/plugins/dlcall.c                      | 32 +++++++++++++------
+>  docs/about/emulation.rst                      | 31 ++++++++++++------
+>  .../multiarch/test-plugin-syscall-filter.c    |  9 ++++--
+>  3 files changed, 50 insertions(+), 22 deletions(-)
+> 
 
-I have a generic question on the "unaligned access for x86": I think the
-question is about the one Michael raised here on unaligned access may break
-x86 here:
+This was merged into master (83e8f88135cba892934b1d4d04f4c063e213700a).
+Thank you for your contribution!
 
-  https://lore.kernel.org/qemu-devel/20260617022330-mutt-send-email-mst@kernel.org/
-
-  3. (theoretical concern) also on x86, unaligned accesses are
-  possible on guest and host, so converting an unaligned access to a
-  series of aligned ones can in theory break devices.
-
-Is that a real problem we need to consider, or can we start with unified
-approach and leave it for later?
-
-PS: I apologize if I missed important piece of info along the way; I didn't
-follow closely on the discussion on this topic in the past few weeks.
-
-One thing to mention is, what we change should only need to affect
-ram_device, AFAIU.. so most memcpy()/memmove() shouldn't be changed for any
-arch when it's pure RAM.
-
-Thanks,
-
--- 
-Peter Xu
-
+Regards,
+Pierrick
 
