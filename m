@@ -4,148 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65CF1C4451C
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 09:25:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D890C44529
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 09:47:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm6i9-0006Ex-Dt; Tue, 21 Jul 2026 05:24:25 -0400
+	id 1wm73c-0004zK-Gq; Tue, 21 Jul 2026 05:46:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
- id 1wm6i7-0006EA-KW; Tue, 21 Jul 2026 05:24:23 -0400
-Received: from mail-japaneastazolkn190120002.outbound.protection.outlook.com
- ([2a01:111:f403:d405::2] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wm73a-0004yU-BJ
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 05:46:34 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
- id 1wm6i5-0001h9-VI; Tue, 21 Jul 2026 05:24:23 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PKw+GvryZ1RMltAWFcmlV5TK6Xk6YxpKMKZlYMlGTn8OltlI9qev/j173Drjhwp4l8kbDgVWkJ6BeqtcWvgQsuM/mInrXmaVtU11+F7YIXjlHi2X5/VQXi+sCQAupgw3rrwO6cEX936Fv/9HitmkUVp7m32wLLJ/GT51lLIcSXDEDsgLckUeo0IEj3h97n1jMbxlkSp8Ud7ZQanXG7F4qKbv9jth6tpwqLlF2SQrzKGE3klvJNy4CqHOutzKAlr4PHVO7c3Oj5FCJSegKxPSTShewVDBITz5+TtctPgm6aPewc+RVezboXrALy18mg9zf0S7qzpX0//whYpU9Q4XQg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=EIDpaqZKFMDwcaLe7vxZo+kTDfMP6/EVxGXZs/6eaVw=;
- b=wUBZrnHBNPOoOCC9FsT/cc0mhJqOdTVWDMQj9EW9VS8LUqsCeJgKXNZqDXzspRZfyYMWdJ3FWcfYmqhLYw4n9hv2mfei2I5a8BFKbSxn1q55EE1upONXpe+ksgLLhK1FSCP0c9QQfApnd63wsptAGRPIqTVyRsyEKhN4tQoszk1ADcL3IK9sr13TKp9w4udn4pb/Ufn0Sbi8fsy6XuRvEbxMgnvmdP3IIH7O/XlQ9tsirQXgX7cDsAKy4616HRiUnVD3Faqtj3vttaFIP8VVMXrEoltHoa3Ktn7b/74uXKbtTVy4Sfpmx7aYBlGy858ptVB6CHF3bpSEFLQrlIv5zQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=EIDpaqZKFMDwcaLe7vxZo+kTDfMP6/EVxGXZs/6eaVw=;
- b=HGm9iG2ys/PLW6gZ05sPLRkBExjdwKk1d++wMrvUW1C2/PB8PzO8vuDiQgTCscw1JH95qJNykTaddBKZg8tBoUoI5IOGAEmWvJrWSUVbny0mAwkzL3Zi3tHxz+ZltLVH2K2enEe25MlEVL41Sx+Xzs18pYfAX+DlIjOdYJyTD3Hu5zrdhLIE1SVSYu6pG9Oa0BjNn9A9HudJmpdNyCk1KbUs+0ABI7GyoKiFfzWVd/ehQVOyLq2v7rJxKGdOgnwfMPcBEj//0VBqLIMVYkH7EBkuUkM6//UmEzVscs4vEGU9Q4Nx7TpITU4TGt/7OHw36WSOBfG5y9ZtI+M0QfPv1w==
-Received: from SE3PR04MB8922.apcprd04.prod.outlook.com (2603:1096:101:2e9::7)
- by SETPR04MB9714.apcprd04.prod.outlook.com (2603:1096:101:317::16)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.10; Tue, 21 Jul
- 2026 09:24:16 +0000
-Received: from SE3PR04MB8922.apcprd04.prod.outlook.com
- ([fe80::3450:f139:5238:8f58]) by SE3PR04MB8922.apcprd04.prod.outlook.com
- ([fe80::3450:f139:5238:8f58%5]) with mapi id 15.21.0245.009; Tue, 21 Jul 2026
- 09:24:16 +0000
-Message-ID: <SE3PR04MB8922C6C73BB1982D8F66BC4FF3C22@SE3PR04MB8922.apcprd04.prod.outlook.com>
-Date: Tue, 21 Jul 2026 17:24:02 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/riscv/riscv-iommu: fix U-bit check to apply only to
- leaf S/VS-stage PTEs
-To: Andrew Jones <andrew.jones@oss.qualcomm.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: alistair.francis@wdc.com, palmer@dabbelt.com,
- daniel.barboza@oss.qualcomm.com
-References: <20260717112340.1071148-1-andrew.jones@oss.qualcomm.com>
-Content-Language: en-US
-From: "Nutty.Liu" <nutty.liu@hotmail.com>
-In-Reply-To: <20260717112340.1071148-1-andrew.jones@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TP0P295CA0047.TWNP295.PROD.OUTLOOK.COM
- (2603:1096:910:3::13) To SE3PR04MB8922.apcprd04.prod.outlook.com
- (2603:1096:101:2e9::7)
-X-Microsoft-Original-Message-ID: <64218c7c-2039-4546-96cc-1ff344d04c10@hotmail.com>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wm73Y-0004Qm-AI
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 05:46:34 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66L8nbnc535680
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 09:46:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ O/VbOD5Do0gCOvwj8oon6ZnqAJI/nP3DOmO1X4JAqr4=; b=Jez42HCZ8Mq762vT
+ vh9vb3vkAHa1ztl9UQx0NBsWI/gG3/2fEIk8k1OPs+LbLbmd8bIAuVhUe0BXsD+k
+ g5o6QjeK4w+Jf6xlTrgQbOxE1/M75KqhS8neIl5hSLJIH2G4WC3aPSmD/8JxHpHV
+ TkEhA7eW/3+q6vPGuzmnaXI91oTzdbUf8/f/J1NWDHuiq18YcDF9zgyjcF08WDys
+ j6Mzy5nub01qKLwNcH5pBEPYPyM2GkD0wD5L2iFDsdtpsQcYK3NyENyjhCzZ9OD+
+ U9UvJt/+PFxgbRJdaZfmNjxaDPGOuX/S9RXn2GT39G1scBuMZGQiSnANghaaCqVJ
+ hPqV6w==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fj1duhjec-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 09:46:30 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-51a8b0a08d2so161967661cf.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 02:46:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1784627190; x=1785231990; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=O/VbOD5Do0gCOvwj8oon6ZnqAJI/nP3DOmO1X4JAqr4=;
+ b=D0mTC0SRfKQQAG+ElM3tkOOsvHIlK8+7BFB5BLRl1QjxsGczwIXcAy1YkDTHVxDhHW
+ UtaChaaJDCaeBeEl24J16q6Xo6j+D9MORBDeTbg9KBRAnyzgobXvQsRl4bGOVeqakf6f
+ oLZPk1mpPQADmSA9aZBOZ3n0J/aMvhOwg2McmDh0n+X/Igix2LWBYRvzbtAYKRsx5cit
+ HjcXcGcHbqKJ9UqgRlC7EjawLG0CAxztawaZ1TzHpF/b3OaAQHOnChcQTd48YuZ4tuuF
+ ltHgZ+wJkJhRbjgTQGDGGhYW6Ni8aThb0CTyobjzk7ZfrEELtSkLuxc1d2RodinsotRX
+ Aj/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784627190; x=1785231990;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=O/VbOD5Do0gCOvwj8oon6ZnqAJI/nP3DOmO1X4JAqr4=;
+ b=biNARmqlF86ssWpW8eMYjYs6KhK6iubYIgKoJ08nqAN65ayA99BwGk1BP+nxGZc0Kt
+ FjGVB44LHAcXGu6lg7rEKrTZ0GJnaRq0g+TgOp7VQMYNjTTlECt5V1kQ/Q/VR0NDBJ+r
+ doAa9aTj/qCZtSDH+VNsOdH7MQFvjcM7wZ8hwBJVvN1ouYvupMABTXMMqZDyMTh43eeE
+ iy2tlnFYZRDBKVkFVodPeCIuyxaX3SDeEetUSAUQpXlGZtNhs3lnhTslIkSdGyn18n1Z
+ dNL25DNSkcD2OszkOJxpfxUqXpY65fF7FZpb+RH3sAZ/mP6zhpLU0bYmFM5nd8rajlvU
+ u79Q==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RocjkpnxGFnX+EcDUiX5wmtX/8mJQiNj0oqdJDPMuPAweD/A3+A52nKYojwJcNRMJn7fQSUO3HNHNHJ@nongnu.org
+X-Gm-Message-State: AOJu0YzFhRR8+KQ1Br3cgDgnxTP7LZi3VCEBbJuWC98TG+1hvCL82n+q
+ sNcOs5+qHsLDMNdwd5AfV+CofRl7bziY04/MSn0fQwhl6MshFL5SobT/fa9BN0QeAQSXKsCytN2
+ 7tSLMkNfc6DHzTcJontB7giypIZqhQWT+2RKkF4d4pinkmU8j4DkhPAOb0g==
+X-Gm-Gg: AfdE7cnMk1Inr2BG/YQFVE7aj2LTY6ldNgh4FeSdmYkUIFSz10Ee85IpS6E5FuUFwoH
+ v4hzrZlkRi9yrbg3Xfz8NVV+Xw/A0c3h5wtBJlKiKiJHoxKBtqRDVnEeXlCJDRADN/mAwg3U6HQ
+ joQVMnAszuwC3OWnIfwYu22fXulasUUgberCaOeGd6rUM5jV877CwBuCK7ZdRu4TXIXN6Qw5Eef
+ o37w7T7yzeQAR8yY90V5K7fXfb92l5l6ycM6lbtbmd2Nv18aHwGZc5DaXflv7f3q30MlhV1JISJ
+ stS2U+7yKmnyolieSnlt7MOhByvIL/4B/RXjlg4p/uT3EjmoaLnbYJnkxpX8z4Kndrbm36tqCdA
+ IXOV+BS92h4GKag31lQojOEsjaMSbXdYhWZjoy/Jm2uz56IWuG+U=
+X-Received: by 2002:a05:622a:2589:b0:51c:b900:513d with SMTP id
+ d75a77b69052e-5213e082536mr173707521cf.53.1784627190041; 
+ Tue, 21 Jul 2026 02:46:30 -0700 (PDT)
+X-Received: by 2002:a05:622a:2589:b0:51c:b900:513d with SMTP id
+ d75a77b69052e-5213e082536mr173707191cf.53.1784627189340; 
+ Tue, 21 Jul 2026 02:46:29 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f63edcd13sm37072607f8f.26.2026.07.21.02.46.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Jul 2026 02:46:28 -0700 (PDT)
+Message-ID: <85a6581d-b5b0-4827-9897-cfa63e19ab5e@oss.qualcomm.com>
+Date: Tue, 21 Jul 2026 11:46:27 +0200
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SE3PR04MB8922:EE_|SETPR04MB9714:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9142d187-1101-4b27-35f5-08dee709d56f
-X-Microsoft-Antispam: BCL:0;
- ARA:14566002|23021999003|4140399003|25010399006|19110799012|8060799015|22091999003|5072599009|12121999013|19101099003|55001999006|24121999003|15080799012|6090799003|41001999006|440099028|3412199025|40105399003|52005399003|26121999007;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?UlE4enRBNzJuZXRuYzZZQkNIVFRMY0hXSDcreGE4bTI0RnlTcHR3czZSVSs2?=
- =?utf-8?B?VTNpcVJmaEEybER4YkwzT3ZORHpwb0pIaUl6QVA4cGFxRTBnV1lHYitGUVcv?=
- =?utf-8?B?ZmVPYWFtQ2ZFVUo4NjdNcStRdWtsaFhuSXg1UVQ4MnN2blc4Uk9hbS9jRERK?=
- =?utf-8?B?N01qaEdONWhmbEgvK3ZOSVRJLzNMYW9VQlBBR0s2Q3drcmVvVVV5V3BYYTkz?=
- =?utf-8?B?bXcvNWs0RDdid3RkY1hoZDExWVRCZEZabjM4ai9TL3FheEhvQzBMZ0NmdGc1?=
- =?utf-8?B?ZDNCdUVpR05WMDNrMHB5L05EM090NERNWkZ5VkpiK0hiNHJHSGdSdGpzK2h4?=
- =?utf-8?B?L2R5QzNzdlJLbkJ6NDFTVlUzbHBzRy9rbUNkYjNnNERQNUF5RlRCTWVTYncw?=
- =?utf-8?B?YVZCS0xjTCtoUFJhbWdQTXhPYlI4OVprWEROR2lGOUpNbi96R01XNk5EaTJP?=
- =?utf-8?B?QVdxZjlIRUwvVGZUNkdQQldXTDFrWVNRTVhwY2lvcVpteUcrWXZMc1d0elpT?=
- =?utf-8?B?NjV4M0lwQXZwNXp4V1RWVDRqUmhRSkpPMGRtRndOR1FDd3gzOXhiYnV5SjlW?=
- =?utf-8?B?RnIxd1piSzVhdkEzVFA0emFuVEZraUJXYitUS2dveGxydTVoVFFvSjlrV01a?=
- =?utf-8?B?a1hpMXE0cU9scHZ2ODlGeUdzSTBXYUM0dmlTNU5XK3RnTFBoaUpiOC9kQ3lZ?=
- =?utf-8?B?eUFvM3l0L0h6MXlBWkJlSGN1MGZDM2xtdDVNcDJzekFpczFRUmxkVE9qd1JH?=
- =?utf-8?B?V0xRVTZMUCt0OEZzcFNVYzFkWCtPQ3ZRNDdsczYwSUkzcmNCelEwbGZyRnR6?=
- =?utf-8?B?OFZacmdHaTF0Uy8yTzNWM2JWWWFMSURma1ZGdHVYNCtXdDRhTCsvTWF2Q3Fn?=
- =?utf-8?B?SmNuaDNjZmhLNVFoM0hxc2dQT3VpWEtvZmd6ZUlzT2dxb1R0OFVjTGl3Vm5p?=
- =?utf-8?B?RUsxQWMwN2kwZ0Mwd1BhZUJNVUlUbGRoU2xMTzNaUHZPMWxnR1FRNUVFKzFO?=
- =?utf-8?B?cmloU0tGVXZOK0FWY1NLZnpTYTcvWjFLLzA4RTlRWjlMMmJlUlJLMU54RERy?=
- =?utf-8?B?UDQ4QnpSR0FVUnZIZVVaZ1EvR2pKY3RpcDY4RWNvNTAxTTRMTS9UdzlWMlRu?=
- =?utf-8?B?UDNFNWdib1dUanJCeHM2Ym5xcWhyU200ZXRpN0JRUFE5UFJVWGx5a1NnZFBS?=
- =?utf-8?B?UU82MFVqTHVJb1RzeUVjUDVyMDdYTnZ4S1QwRmozYXU2U1FMQWxHOENpWUd3?=
- =?utf-8?B?anV1ZndiQVRsdzFzUTF5RWthZDE2TTFKV2dxQ015RS9rT2MvT2s2UVQ0YWJE?=
- =?utf-8?B?NWM1Z0NwT2dSNWFmQUNhQzRsdWpHUXZ0TVM1ZG9vZHhoaC9WUmY1Qjd1WGRO?=
- =?utf-8?B?eVlRWU5JUHZ2VUFzSHhoVkxiMktZZFU4TEZFUjRTR3A2L3E2dmxtSTdDRHpG?=
- =?utf-8?B?MldHYkRpcFdQUXZ6U09lZWFnY3RGQkdLMGhlVVVBdVp0bVB6eGU3RURQVm9N?=
- =?utf-8?B?WWlxTG1sdHhqYlJ1a3NaeVFoZXZQVVUxN2NnUmxYR0hHVU1DTGtQODFoUGNq?=
- =?utf-8?B?eG5YZz09?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MnBydndGUE44bjZBSFBiQWRlYy9LVmNXZ0ZGak9NSmtEV0hxRjZ1cVZrdkVF?=
- =?utf-8?B?ckhiWmFraGVuL3ZkS1p5bHBmZzdtcmNYd2I0UkFNVUhxV0hZYWVzdkxPUHhB?=
- =?utf-8?B?dUJOanJiQWltM0xIQmlpaFF2dWNpaWt6andBWXYyZndRWEk5M0VMd2VncjRm?=
- =?utf-8?B?M3FBQ1l3Mi9pOFRSYVh0Z0NuU3R5aUxsTHhiUDBINlRHOVlYMldGU05ZNEpD?=
- =?utf-8?B?dUVpOTIvUHk0WFhPTjloUWQzUGUzWUhPQ2FRbFZPUnFhczZxODFnaGpTVmg4?=
- =?utf-8?B?b0xVOEQrMk8vQm5jRzZKTE4zQ1RUa0RtTzViZnhERHVVdHRpRStUdllZa2Nu?=
- =?utf-8?B?UUl0MldsZFYwRmFHcThkd0ZSQ1prQ3R5Tm16Ykk1ZWJDdEZpR3pzbFZIMHpu?=
- =?utf-8?B?Q3RBWm9zU09UT21GMEZaekw5SktlM1RTdS80aFB6dW94U0ZKR250bGIxQWJr?=
- =?utf-8?B?Ky9xNjBvUW43VEYzaWswL20xSHFoNGZNQ2UzaGFrK3p6ZDJscVJXaFAzMURM?=
- =?utf-8?B?eUxZaEZwa2pOYkhJTmtDUVVEWGg2c3Rsc0NDUEJ0LzF3a0dFTHhnS1NzczZu?=
- =?utf-8?B?dHhoc0p5K215NUExbGtMMU03UTRpUnE5ZWxBMCtHWktRNzhKK3lrdzFZb2Y0?=
- =?utf-8?B?bFVzdXY5QjdzeU1uSmxOTHJMbWM5L3I3bGVyWW05UW53L21ZR3lxaWxUb3Zr?=
- =?utf-8?B?QW9zSTNqMkdNQUF5bmc2WEN4KzQ2dElQK3BFbms1SmxOZVBMVnl6b3JPMFdQ?=
- =?utf-8?B?a3YvUHgrZUNUbWw2bTNxVlUzaytXQlB0TXNlN09jVW9VSjk3WEZCODllYnhU?=
- =?utf-8?B?TnorZ0U5a08yeGp1dkM2QzU4ZVpMN05YNVhiMHNIQ1hrK2lRL01pTjk3SFBn?=
- =?utf-8?B?MlpwVmpySVFUSm80U1c5QmtFdlNnOUVGcGhzbFZDMy9HUG11T0lYeWhpOUVi?=
- =?utf-8?B?di9lVmFDQnNKcEQ4LzczckJEeC9hN1RrRW41YlFBZnpGNis2azlGV2ZuakFY?=
- =?utf-8?B?WmZyaldZVHJ1WkdHQ1pIN2oxVjVrVlJrdFhWN1RISXVwRmpEMWtDZi9MQmhs?=
- =?utf-8?B?dml5cWxpYU5ZZGorTE91MUp4UXNEUFRkSWMxNUJySnJvbThBcjBkQVZKYzlK?=
- =?utf-8?B?Qlhmc1RML1F2MmJITThKNjlnZzA1MUhLUi9EeE9LWDJXLzM3djFRblg0R2ZE?=
- =?utf-8?B?Um8yTlNqRW5rakVaNWJUbVIra0xjWE81NnlDVGJMV1hXTThreTNyeDlOOURO?=
- =?utf-8?B?YWk2R1ppVTd5N2pxSXI5dnVEMHJ2TDU4NDJwVEpRVGxOQVpXUGhzOTNIeU11?=
- =?utf-8?B?SFlocFFKOXlxelNDN2lKWTJhcHhaODJpREV1VHd5V1dvVVVra1QvOCtsa0tL?=
- =?utf-8?B?MVpZdFdPZmtDQUtnR0lPZ3pKaE41eDNWcnNNSWprUk8vQjZZUnMwd3JoSnZ4?=
- =?utf-8?B?YXdMbHN3ODF3V1FXa1FHQWdtQXZ3S1NvQkRRS1RySVdRVUtWV2pqS0xGbi9I?=
- =?utf-8?B?OHVBUFZHOXkxUVVpejdBaVRWd0Y2WURIT29UdDFXM1FxSUhQN3ZNbG40QUla?=
- =?utf-8?B?aGJBSE9NL1NHWU5NRzR4VS9FbnNSMXVKWjF0alVlemFDZVRhRFl6ZElGeXlq?=
- =?utf-8?B?U1RJbDZWMHk4dWM4R0l2SWJXTHJMdU56OCsyMjZVdUswUnhrcElQOC8rcjZu?=
- =?utf-8?B?T1Y3TTU2OWIwV1J3MnNYeTJyeTVLd3FDeGllR0p5YVRzRE1FSWhmSjJnRW9V?=
- =?utf-8?B?a3UxbndMeGVoQU15aHVoY3FuZTFvaldoTEJMNXRYU1BEVVRDeEt3WFRoallu?=
- =?utf-8?B?QkRzZ0xLaFJhZHZrV2NIMzF6RDFoV1V4Q2hiTEtaUVhPYjZSVWlEeXNoS25v?=
- =?utf-8?Q?/NPUjSfQcbukA?=
-X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-c3e7a.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9142d187-1101-4b27-35f5-08dee709d56f
-X-MS-Exchange-CrossTenant-AuthSource: SE3PR04MB8922.apcprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jul 2026 09:24:15.9787 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SETPR04MB9714
-Received-SPF: pass client-ip=2a01:111:f403:d405::2;
- envelope-from=nutty.liu@hotmail.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/audio/intel-hda: restrict all DMA engine paths to
+ memories
+Content-Language: en-US
+To: jianghaotian.sunday@gmail.com, qemu-devel@nongnu.org
+Cc: kraxel@redhat.com, philmd@redhat.com, thuth@redhat.com, alxndr@bu.edu,
+ qemu-stable@nongnu.org
+References: <20260721060941.2989396-1-jianghaotian.sunday@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260721060941.2989396-1-jianghaotian.sunday@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: u43sxwK9DFclwmar7KAFsAybI7S7trKX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDEwMiBTYWx0ZWRfX+ysf+YJAXAwG
+ w6xgPZ7bizfC9DSgMZ775+kILORo4+V8tDcKuYuPANk1ODZTxi89FRa7xuh1tEaHEtlPd3RqAh5
+ gHaNYOxd4a6BN3mkn6bTeV2WFGUjsv4DOWZD4+ARbTG/21lVnPKLqGwhPdLu2KdoqQfDo17PvqN
+ IP1uCN9KaNtRQ5RCqBchB323HjznvbvBIoLiq8lg8TOxaHEn+kPKPVD13k9LYxNCqc/JbVmMmDb
+ U88/bl/Jq7jp8DvxETvqc3aPOGQcyzUe+aREwyx+fCW7aRquFcnVbr/4maBke5DKxJEdTuV7k8p
+ KssAjzOl5t3O7DofWlej1bgFpxujoztt6Mkhz/HdfDLfTXxCgOwYlFsCuDgiep1gIRkL0ccLzJX
+ 6kQg0VlK9Pco60vBRulKwe+4AFP58UoqC5R7LFjcfbUgQHW+h9WrQSlGuKS2zBPHUsJ/tDXaCcc
+ 0QyRjdkRlFBfELRYD5A==
+X-Authority-Analysis: v=2.4 cv=I9JVgtgg c=1 sm=1 tr=0 ts=6a5f3ff6 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=pGLkceISAAAA:8 a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8 a=MdMbO4X_2lyUEMNyGkoA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
+ a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-GUID: u43sxwK9DFclwmar7KAFsAybI7S7trKX
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDEwMiBTYWx0ZWRfX4ZoTjIUG+8ii
+ nAsti0d3Tk7tY+DdXFaVQG1+A8k+3tbr18a5uoKuAiV0M3bpWOU6jWh2a52t3cIT8w8F7T0Q29v
+ aA2zUePwkWYtrvmQnqjuYipFVRdI5Uc=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-20_06,2026-07-20_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 adultscore=0 spamscore=0 clxscore=1015 suspectscore=0
+ lowpriorityscore=0 phishscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607210102
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,62 +157,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 7/17/2026 7:23 PM, Andrew Jones wrote:
-> Commit b795ea0ba471 ("hw/riscv/riscv-iommu.c: fault when !PTE_U and
-> no priv access") placed its check ahead of the leaf-vs-non-leaf
-> branch in riscv_iommu_spa_fetch(), so it fires on every PTE walked,
-> including non-leaf/table entries. Per the RISC-V privileged spec's
-> address translation algorithm (Sv39/Sv48/etc., the "leaf PTE has
-> been reached" step, followed separately by the U-bit permission
-> check), the U bit is only defined and checked for the leaf PTE
-> reached at the end of the walk -- non-leaf PTEs don't carry a
-> meaningful U bit at all.
->
-> Move the check after the leaf/non-leaf branch, alongside the other
-> leaf-only checks, mirroring how the G_STAGE U-bit check (added in
-> 9158c900ab30) is already correctly placed.
->
-> Fixes: b795ea0ba471 ("hw/riscv/riscv-iommu.c: fault when !PTE_U and no priv access")
-> Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-
-Thanks,
-Nutty
+On 21/7/26 08:09, jianghaotian.sunday@gmail.com wrote:
+> From: Haotian Jiang <jianghaotian.sunday@gmail.com>
+> 
+> CVE-2021-3611 (commit 79fa99831d) restricted the DMA engine to memories
+> by setting attrs.memory=true, but only applied this to intel_hda_response.
+> Three other DMA engine access points still use MEMTXATTRS_UNSPECIFIED,
+> allowing a malicious guest to trigger DMA-to-self-MMIO reentry:
+> 
+>    - intel_hda_xfer (line 398): called from the audio timer callback
+>      (hda_codec_xfer -> bus->xfer), so the MemReentrancyGuard does not
+>      fire (engaged_in_io is false outside MMIO dispatch). A guest that
+>      points a BDL entry at the HDA controller's own MMIO BAR can write
+>      audio samples to device registers, triggering whandler side effects
+>      such as starting/stopping streams or injecting codec commands via
+>      CORBWP.
+>    - intel_hda_parse_bdl (line 478): uses pci_dma_read which hardcodes
+>      MEMTXATTRS_UNSPECIFIED. A guest-controlled BDL base address can
+>      point at controller MMIO, allowing the DMA engine to read device
+>      registers as BDL descriptors.
+>    - intel_hda_corb_run (line 333): ldl_le_pci_dma reads the CORB ring
+>      with MEMTXATTRS_UNSPECIFIED, allowing the DMA engine to read
+>      controller MMIO as CORB entries.
+> 
+> Fix all three by passing {.memory = true} explicitly, matching the
+> fix already applied to intel_hda_response. For intel_hda_parse_bdl,
+> replace pci_dma_read with pci_dma_rw to pass the controlled attrs.
+> 
+> Fixes: 79fa99831d ("hw/audio/intel-hda: Restrict DMA engine to memories (not MMIO devices)")
+> Reported-by: Haotian Jiang of Tencent Security (Yunding Lab) <jianghaotian.sunday@gmail.com>
+> Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
+> Cc: qemu-stable@nongnu.org
 > ---
->   hw/riscv/riscv-iommu.c | 14 +++++++-------
->   1 file changed, 7 insertions(+), 7 deletions(-)
->
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index f6865d1e164e..ed9fb09f8bc7 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -476,13 +476,6 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
->               break;                /* Invalid PTE */
->           } else if (pte & PTE_RESERVED(false)) {
->               break;                /* Reserved PTE bits set */
-> -        } else if (!(pte & PTE_U) && !pv) {
-> -            /*
-> -             * All accesses are assumed to be User mode unless
-> -             * process_id is valid (pv).  In case we have a
-> -             * non-user mode PTE and !pv we need to fault.
-> -             */
-> -            break;
->           } else if (!(pte & (PTE_R | PTE_W | PTE_X))) {
->               base = PPN_PHYS(ppn); /* Inner PTE, continue walking */
->           } else if ((pte & (PTE_R | PTE_W | PTE_X)) == PTE_W) {
-> @@ -491,6 +484,13 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
->               break;                /* Reserved leaf PTE flags: PTE_W + PTE_X */
->           } else if (ppn & ((1ULL << (va_skip - TARGET_PAGE_BITS)) - 1)) {
->               break;                /* Misaligned PPN */
-> +        } else if (!(pte & PTE_U) && !pv) {
-> +            /*
-> +             * All accesses are assumed to be User mode unless
-> +             * process_id is valid (pv).  In case we have a
-> +             * non-user mode leaf PTE and !pv we need to fault.
-> +             */
-> +            break;
->           } else if ((iotlb->perm & IOMMU_RO) && !(pte & PTE_R)) {
->               break;                /* Read access check failed */
->           } else if ((iotlb->perm & IOMMU_WO) && !(pte & PTE_W)) {
+>   hw/audio/intel-hda.c | 9 ++++++---
+>   1 file changed, 6 insertions(+), 3 deletions(-)
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
