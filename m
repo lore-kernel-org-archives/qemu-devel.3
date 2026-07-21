@@ -4,143 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0381C4451C
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 11:18:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2B9AC4451C
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 11:34:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm8UG-0005EI-Vd; Tue, 21 Jul 2026 07:18:13 -0400
+	id 1wm8js-0006My-49; Tue, 21 Jul 2026 07:34:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wm8Tw-000576-OO
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 07:17:57 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wm8Tv-00011k-5F
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 07:17:52 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66LARPdH1482233
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 11:17:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- MNnu0UB7nGtNikgJzDyfTYtQeI8XAfwWuLpzSI6/228=; b=Chc0Q2EwgMKO4nHv
- Onf5PfmO1B6JUx9UXCOPkov5x4KpmiKv8gZkc+UFWqlf8rqlyQ3ck4YL2J/HVy1J
- //HOyfd3l9vXzUnroG8i5zHSj+duy8o/0JdkjSi7mespX1nDuEhL5t+po8gjyUys
- opmcZtMuhwTv4QcaFXcROlQh/M48gQkwSqAxaSYizqkY07x98wuJR9cao+IaEIjw
- 87Jtg75ltA1Zh76GwBIz7HbI6FA/eCt47c+HrDdIQjwmR/lg6Xts4/eS2cPOZrkn
- 9fEiGqqGWkKGp6/t6qdPmtoFhAG4uocSOEWUGpcTe+H+HpmJ1bJ+w3a1fjPBPCVn
- l1/5WQ==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhvqnax68-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 11:17:48 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-51bfe3fa93bso229436081cf.2
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 04:17:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1wm8jp-0006MU-PI
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 07:34:17 -0400
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1wm8jn-0003Qy-VS
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 07:34:17 -0400
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-81ef8255cccso36504137b3.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 04:34:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784633653; cv=none;
+ d=google.com; s=arc-20260327;
+ b=r8NDm8WeX+V+OVNiNh9BL03ODjJVvoAoW/wSPCeyktxYad2Mdv6AWcqGE0z2JKW/zQ
+ sSjBwAtLfwuJV45m0l56QI8XDIoVRkRq9EoRxk942BDbP9Qgi0hFPnd8TGN90yjnJo+q
+ d9MRTJsBfSQ3l4qm+Q8s9ktur6MmwIvGj9cjqpTNhw6ZS1StVQ76xm+NgZiCqhAqMQLf
+ S8rrsjLXnfI8a64PnutDe4I3DobutUQaBf+ZLw5sK/xd/ofYNj+ZiTzDePg+e0W+THdX
+ +7Lp+JVGmOgnttDsoFJ5fmnhQh77PAyf4bjxbpBQKsr+BpW8VkybqKUqDpT3B2XMs3uK
+ SIxA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Adw0bfmgzk5Vit31VHrElTAMoIYKWiscNzV4U5ClrVw=;
+ fh=lQ2JeqdPLK5m79TkyaIfIjf4mxrp7E3SOgrqek3tz2k=;
+ b=QbPT8Iekq9GKMpSbPKVwiSIEvtVmnkapsf5AzU5zZVOIVJgd+VER9hZIiMhPXH9sRR
+ kO0mxqUAlYCu3Qkk0LM/UCsZKXE+r9EjhCh2eOshhGX0fGa9OVTjtw7eSHQCUNJZ24R1
+ 5P6hgm8dlshZoTdAx0zbjz1t1USj3dg3O+XMAYMeDWCVgJq824miHPa3pMqk2OvDNPje
+ XTPcIfj5AHtgBKFKkRFyWGM6llRU187GHmS6zfhIIdyEHan+3Hs1OC4aI07cevsYmP48
+ miUFXXY/A4YSytbRsgAtWZYaCu9PbODMrNUAUug4r1hcwGf475aG4r4QTqOfI9mBP8Ix
+ bvOA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784632667; x=1785237467; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=MNnu0UB7nGtNikgJzDyfTYtQeI8XAfwWuLpzSI6/228=;
- b=XJP+2Gh6l5pSPv59tAdhNtNwqRtz6EUWeLADrlyrTKL7UciSL/QveUQN8/TKidUAaB
- gU0+HVd6ZmPECUMATMO+xWAkeWATVTna8hMw44VIzw7QXQ/J0KFTO8J2o9f4hZK3xbuW
- koo44QeevbJyOP+lwVhxp8uE7PwvrCBRGHPRaPyMThLif/bm9BYeh9Ptnv2irqgRgZH0
- akB5PGWozXJv/y+AjpezrLJBmg2KBBvZI/B/pIydqEU2UWOUhaRuZYJwoRP7JFkh0Gio
- de5x65+4RCriPR/zp24xvAwD0bp4Iw3TXezw0zD10I1mbcT1nEwEznTJRiRotLf5Ktv8
- IYEA==
+ d=gmail.com; s=20251104; t=1784633653; x=1785238453; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Adw0bfmgzk5Vit31VHrElTAMoIYKWiscNzV4U5ClrVw=;
+ b=eqbH3oBcNdgkym2Tt82uPSUlEN7M7a+K1aajOYKOikCyTiwFjk2hOfnWPl0v5Sh11b
+ khee6RJBhTbLx+P6dCOMmp26WILtpVbelfONdA2Bep9LS6EvHw/iKZcq5MnhwuCQ5JKs
+ +CTNkU+BONOJsz6Hfw7TFeeMTFC0cfjWvla86m0icKcYdT9i+gPruGdG08QoL62E7QsK
+ 7L4qFQzVZf1gx1TuFYokuqxPQAitgEJWR76hq6yRMFP7o8Axg2746xTLdqgfh5QFRs7n
+ 1xeCIozWW9mJMYoIlztJU7d2WEV2vQ6uf+9++fimD+o4YRTuI/B54mePnZKw5Va7S64f
+ FOtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784632667; x=1785237467;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=MNnu0UB7nGtNikgJzDyfTYtQeI8XAfwWuLpzSI6/228=;
- b=d8RwdsVgQvSfuXjCD+9D8wfZ2MdJt0GSvuKiJiO/WF6UkrIqkMgbUtHVL3St12sWG7
- yGctY+vj1VNbfi3oNtz7qmWY6m2q+VMbZJQiHtxS5zrB+RVUfGUzWkbl+Y32640qs7Of
- t5Txv5JwOqlgKgAp37glGYOaD/A6ZqyNy5LaqLKfkpgGzlrQfCIaj2YggESMfEnP0FEF
- Xd0ai78j6O9m+T94JagsPWg0aoeOCSII5chTciy6xxRvBzvIReRc5EF1laWkCIivGB5v
- GlMmOG1RTPq487vfgyuclPzxHA96ymZJqHD7vmUerTr4dKvXWcHOfUoMeSNT22fB4YNv
- S9nQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RofA0fFM5IqUOqXFsZ52JDRF820NQP/3W0q4+RHQagvGr5mdUxT/MVn3CUr+q1ians8zZ65wNNHX6TQ@nongnu.org
-X-Gm-Message-State: AOJu0Yy94RXLXfuyhuH+UWRMVDD2/ACKRHP+A5xZfSKr0akU0h7BJZfN
- PDnusVnJbPu8N/btjomYL0og0LkaACdTfaydm3kpI79G5GtTDHsNwnYdw3Pfj0wa29bsFmptz/H
- JsAhb3gHm2kfJATq2SUR1vwJsGbqSkBaUzl44mQH/RNRMpsaFiNQA/OXeYA==
-X-Gm-Gg: AfdE7cmPKGtCE24ayz21is15W3cVDzob8XmILOrfDfSjp3KylFdTvgUei0eR/1Gl2W4
- Ia0rP6HS0O6flm/LgvpvJfMWHPwPp+Ze1A0pUwiDgZVLqcGEAA/FZv5ZcpWGOv24dXtol5dyEUo
- 3jo3Qzwk8KP5owrVAIHIVuyQtQbGJ7NO9xLHX74B1lF+U9jJObDb1hR/qUh0ajANULVZ3W6l96W
- cqjDswmmfaZZ8GelLfEhqYsysLbDWF/o3MhlvmE648raBom1c6tChBZTHgfPUCcjozvk7l6K8As
- mvp1amC0IRiNQFkqyVj4fxEXbn/vDavSK31q0ESwdmCHvEksJvwjts7/xIOtwg1+rhvANY2GIv3
- yCHjAbHmlxGOtrVXdEmOm9CtWNXBJjObLyySFJCTN0GAtw2QtUNE=
-X-Received: by 2002:a05:622a:1a85:b0:51c:15c5:2be6 with SMTP id
- d75a77b69052e-5213c0135d8mr165236371cf.8.1784632667144; 
- Tue, 21 Jul 2026 04:17:47 -0700 (PDT)
-X-Received: by 2002:a05:622a:1a85:b0:51c:15c5:2be6 with SMTP id
- d75a77b69052e-5213c0135d8mr165236071cf.8.1784632666744; 
- Tue, 21 Jul 2026 04:17:46 -0700 (PDT)
-Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f63e65644sm36693034f8f.16.2026.07.21.04.17.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Jul 2026 04:17:45 -0700 (PDT)
-Message-ID: <5e1cbaf7-dd89-4bfe-8ab8-27b61c85c4e8@oss.qualcomm.com>
-Date: Tue, 21 Jul 2026 13:17:45 +0200
+ d=1e100.net; s=20251104; t=1784633653; x=1785238453;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Adw0bfmgzk5Vit31VHrElTAMoIYKWiscNzV4U5ClrVw=;
+ b=LWLveYZilOjY4crbuyHtA1ckpGQ/vlYADuHD5LZJPttllaV5reYmOjLzdytDXb3NvB
+ JHgTZDyIO5sF/ocGL94Db9iiPDGPsyxEc0L8yCAzk3nvh0+XIJCs4Ye8C4Ylvs1D+hO1
+ eYAfPLya+HCpaT0hPN/ErsFpVJpbah7nDGgk77ExsaRKW+Zi7ayNFn+DPriWqSDQ2umD
+ 7fBk1Oe8a30LLEhjrIB8fiNdp6TfzA8+TAWBsQkFSgRRpUVHnsaxMIrD7gWk1f94vF5N
+ ZvG7uk2tYXV4roZI0DIiNSBvfLH8hAIE6RQQYclO5nMOsAYUIytjb/Mz1MqTopaptRPu
+ wZVA==
+X-Gm-Message-State: AOJu0Yw1U+wq8VINv5F+RUfPYdoPS5jn2ylBm+dTgk/htlGgMh3cfvxV
+ 98+5anhvWHkgpZ9rPWQ/hUtZQ2/s6XjNZp4tckrlO0dnjH/I1qlG9v8B1w1yIzTd7o0V5Pj3uEd
+ pnFfxyfH/A3BZFw63RjfwZgDo+t4ukFg=
+X-Gm-Gg: AR+sD12xgEKhgUF85qYcklXQDbkLOGIcgKa5Ucu6dl40MTBStNU7HpQS29AXfcAF9A4
+ 84lx6uSg3WP+TjUEhIW2BfWFVpLxs7oB/Mj7xU7iz+cbTJ60WxYI5K47Q4I+w+KmAsAo/zG+vBQ
+ xnpt8liEyotwd4+5uuxaUIMnWDyLBt9dBGvE7cmDLJ1eqm5gFFmB2yUmNoBwU+bl0TxGP95RRYF
+ tjkOAKtPYrHsHEtrF5GBYt9FkCpWY6MYhvMGC/HJY0MUP03MugN4SE5DVHHFQ==
+X-Received: by 2002:a05:690c:4b0e:b0:7d0:79f:339f with SMTP id
+ 00721157ae682-81ef26a5ca6mr59606657b3.34.1784633653225; Tue, 21 Jul 2026
+ 04:34:13 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] hw/net: fix rx_desc_len on migration load
-Content-Language: en-US
-To: Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org
-Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Jason Wang <jasowangio@gmail.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-References: <20260721111126.3278244-1-lvivier@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260721111126.3278244-1-lvivier@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDExOCBTYWx0ZWRfX5R1r7fKTV2J2
- ZEsScjh34QucwISRb+Uu3aJs2s2GxTG9QtJxuM5RmvN1jmAHx+KTfvZGca7qJj111/PU2UfMAFC
- vWyXbE/usrfsrdIZGkNDNfDdeJQfuVdh/BC9QoPDqDPwutoYCr9yDYxIcxg04iSFwFAgvdvys/D
- ttmu4Owg3B/AdD0se9NsPAeQrpo0k2DSWdUIZMXeifAkd9jPQ2U3Wfgsx2la3wpU/7zYmoZxPtx
- +l2HLZ+2SaaYWgTTDFKxPMvjyV2gBkhbQtsh6iIjkStRuvVYsnRK0F68Ltd6nanzd8tdSTttKb9
- ZJRKStgJr/viks4QywMjsulBnetoe1yyGN1fL50aVeOqZqe4ANhsDOJwtaLH7JYhJI6WN/B7lUg
- PYnmDRnt9bFipCSX6AjOyffeIaWPSA4DW/0AD7Ia3tb4wjhDdZx1vhHrbuu30pPqXc7muUrQt12
- Hfvn/l7GYdqjIyBbojg==
-X-Proofpoint-ORIG-GUID: N9-RUZ_BiukryRuReX2nTXbcVCxu2qig
-X-Proofpoint-GUID: N9-RUZ_BiukryRuReX2nTXbcVCxu2qig
-X-Authority-Analysis: v=2.4 cv=M5F97Sws c=1 sm=1 tr=0 ts=6a5f555c cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=p0WdMEafAAAA:8 a=EUspDBNiAAAA:8 a=Gb-HvRjteCOY3wdVK28A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDExOCBTYWx0ZWRfX+Qxctrn57wvw
- anMI/otxGHPcQOj1pllRlLqj6o8NsruxIkswqqtVO63/VTskm89WhPnGXvRWdY76ao2ox7d0wPZ
- v0XdrCv4kfJeAoUvOTfHh5HsLx7ZoRY=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-21_01,2026-07-20_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0
- priorityscore=1501 spamscore=0 bulkscore=0 impostorscore=0 phishscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607210118
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <CAFEAcA_UhmCxJc16CHE=4ZR1+PA0=4-29=fEe+d+iUmhLTzpuQ@mail.gmail.com>
+ <CAEUhbmW=02DNwVH7pLtuWBzEnEVJiJNrZVcys-pLY_cS0uro1Q@mail.gmail.com>
+ <CAFEAcA9DB+j3KJCM9yxVoSzQaXgx4uC_Bb7qm_p+OwS6EKn1fQ@mail.gmail.com>
+ <CAFEAcA9t7TjhCSZ1EyBOPStu6vadq3UA9FMgbWOqkqfM0aMDoA@mail.gmail.com>
+ <CAFEAcA9O4naO3WJXYL_qCZAvoGRchEryFnBHMJm-MT0+CjH=aw@mail.gmail.com>
+In-Reply-To: <CAFEAcA9O4naO3WJXYL_qCZAvoGRchEryFnBHMJm-MT0+CjH=aw@mail.gmail.com>
+From: Bin Meng <bmeng.cn@gmail.com>
+Date: Tue, 21 Jul 2026 19:34:02 +0800
+X-Gm-Features: AUfX_myePWJG3f7DOU8F64g905hz731F4TYfihHfOb0M2Amp03MYcNqNke-O1gs
+Message-ID: <CAEUhbmU18Z7zvkErg_CMvgnhkJuY69oON6SjoiqvCbrrG8g7gA@mail.gmail.com>
+Subject: Re: QEMU net code and padding of short packets
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, Jason Wang <jasowang@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=bmeng.cn@gmail.com; helo=mail-yw1-x1134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,27 +119,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/7/26 13:11, Laurent Vivier wrote:
-> rx_desc_len is migrated as a raw uint8_t from the stream in both
-> e1000e and igb, but it is a derived value that can be computed from
-> the register state. A crafted migration stream can set rx_desc_len
-> to an invalid value, causing a stack buffer overflow in
-> e1000e_write_packet_to_guest() which copies rx_desc_len bytes into
-> a 32-byte stack union.
-> 
-> Recalculate rx_desc_len from the register state in post_load,
-> ignoring the untrusted value from the stream.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3869
-> 
-> Laurent Vivier (2):
->    hw/net/e1000e: recalculate rx_desc_len on migration load
->    hw/net/igb: recalculate rx_desc_len on migration load
-> 
->   hw/net/e1000e_core.c | 2 ++
->   hw/net/igb_core.c    | 2 ++
->   2 files changed, 4 insertions(+)
+Hi Peter,
 
-Series:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+On Tue, Jul 21, 2026 at 12:22=E2=80=AFAM Peter Maydell <peter.maydell@linar=
+o.org> wrote:
+>
+> On Mon, 29 Jun 2026 at 17:31, Peter Maydell <peter.maydell@linaro.org> wr=
+ote:
+> > I ran into this from a different angle today, and I think
+> > qemu_receive_packet()'s check is wrong currently, not just
+> > with this change. Although net_peer_needs_padding() will
+> > almost always return "true" today, if the network device
+> > has no peer (e.g. run with -net none or -nodefaults and no
+> > other network backend connected to it) then we won't pad
+> > packets we feed in for loopback, and so the bugs which
+> > commit a01344d9d78 is trying to fix still occur. I'll send
+> > a patch to make that change once I've tested it a bit.
+> >
+> > I'm also looking at a variant of this involving vlan headers:
+> > https://gitlab.com/qemu-project/qemu/-/work_items/3518
+> >
+> > In commit 63b901bfd30 you removed the code from rtl8139.c
+> > which handled padding out short frames in the device's
+> > receive path, because we now do the padding at the other end.
+> > However, in this case the padding code in the device was
+> > also handling a case where there's an 802.1Q vlan tag: it makes
+> > the buffer at least MIN_BUF_SIZE + VLAN_HLEN =3D=3D 64 bytes, with
+> > the comment "Include some tailroom in case a vlan tag is
+> > later removed". Then later we use this to avoid the copy
+> > from the buffer reading off the end, but now the copy can
+> > read 4 bytes of data off the end of the packet into guest
+> > memory.
+> >
+> > How should we handle this? We could:
+> >  - reinstate the rtl8139 padding code
+> >  - make the generic padding code allow enough extra space
+> >    for the 802.1Q vlan tag (so devices can assume that the
+> >    frame is at least its minimum size even if there's a
+> >    vlan tag)
+> >  - have rtl8139 special case this
+>
+> Ping? How do you think we should handle the "short packet
+> with a vlan header" case? I think I lean towards making
+> the generic code deal with it.
+>
+> I'm also still very unsure whether our network layer is
+> intended to distinguish "this is a short packet that we
+> padded" from "this is a packet that the guest padded".
+> Is a network driver/card model supposed to be able to
+> opt in to getting unpadded packets and then identify and
+> diagnose-as-error incoming short packets if it wants to?
+> That would mean we need to distinguish "we padded this
+> because the guest sent a short packet and we don't want
+> to deal with that in loopback or otherwise" from "we
+> padded this because it comes from a source that hands
+> us legitimate short packets that would have been padded
+> if they'd ever gone through a real network device".
+>
+
+Sorry for the delayed reply. I went back through the original change
+and the current rtl8139 path. I think the source/destination
+distinction you pointed out is real, but the current net API does not
+encode it explicitly. The intent of 969e50b61a285 was that a short
+packet supplied by a normal backend is a valid Ethernet packet whose
+zero padding has been omitted. Before delivering it to a physical NIC
+model, QEMU materializes that padding. A packet transmitted by a NIC
+model, on the other hand, is the actual result of that model's TX path
+and should reach the backend unchanged. The original commit explicitly
+accepted the consequence that slirp/tap could no longer be used to
+inject a real runt frame into a NIC model. So I don't think do_not_pad
+should also be interpreted as "this physical NIC can receive and
+diagnose real runts". That is a different property. virtio-net uses
+do_not_pad because it accepts a length-delimited logical packet, not
+because it is modelling runt-frame reception.
+
+For the current cleanup, I think centralizing the padding as in your
+draft series is still the right direction, provided we document that
+contract. If we later want to support injecting genuine runt frames,
+we will need a separate per-packet indication for "padding omitted"
+versus "exact wire length". That indication would need to survive
+queues, filters and hubs; a source-side boolean alone would not be
+sufficient. For the VLAN case, after looking at it more closely, I
+agree that the generic padding code should handle it. A single-tagged
+Ethernet frame has a minimum length of ETH_ZLEN + VLAN_HLEN =3D=3D 64
+bytes without FCS, so padding it to 64 is not merely providing private
+tailroom for rtl8139. Ideally the helper could derive the minimum from
+the L2 header length, which would also cover double-tagged frames.
+
+There is also an independent rtl8139 loopback bug in
+rtl8139_transfer_frame(). When dot1q_buf is present, it allocates and
+fills buf2 using iov_size(iov, 3), which includes the inserted VLAN
+tag, but calls qemu_receive_packet() with the original size. We need
+to pass buf2_size there as well. Otherwise the padding helper will
+copy four bytes less than the buffer actually contains. With both
+changes, the loopback RX path receives a 64-byte tagged frame, and
+VLAN stripping leaves the expected 60-byte frame without relying on an
+out-of-bounds read.
+
+Regards,
+Bin
 
