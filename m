@@ -4,99 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E713BC4451C
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 07:10:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13A4DC4451C
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 07:10:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm4cL-0002Bd-Tq; Tue, 21 Jul 2026 03:10:18 -0400
+	id 1wm4cR-0002EO-LM; Tue, 21 Jul 2026 03:10:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wm4cJ-0002Ak-1V
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 03:10:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wm4cP-0002DK-Ov
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 03:10:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wm4cG-0000ls-PV
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 03:10:14 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wm4cO-0000mQ-6G
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 03:10:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784617811;
+ s=mimecast20190719; t=1784617819;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ZMO4Re7I5CJWeuCotjiNenDVRWR5sPzMiHPMEcsvfCY=;
- b=PoIkqST1KJ2epNuiz2VGqOL0GZxTzqBAMyEvVTBsvZlrgAsXSqJHPLn/onfCp+QlSvWcoL
- t3krClQh0ySQH+DfMY+7jtUY7j/NdPuEK28+0UtASYGVOghgjTSWUxuu0n55uBsKOxwtfh
- uSt9QQBGwCHKGzJ2SxbRQ12ngb2jj5E=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=WZ9J8xvRtW4RMzexTj3Azwld+ktz7lUuDOWbDmbyENE=;
+ b=SAowreeBS6fv7sUON4XyyKljKkIfYPUj5Nr+LtKPs3aFFnfu6tOKX3vjYEcHsalAPhqc8X
+ dTsUx7pgyy3Xnu7Y1Q423B4uSlwQeHfpeqIZxvdV223a2qhMmCE1QI5wDaDMlrPNPCaLqq
+ JkHpmT41YuSyUMSN4q/eSzp71MmerNU=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-33-wBy7fPXSMqGgyo5xp38XTA-1; Tue, 21 Jul 2026 03:10:09 -0400
-X-MC-Unique: wBy7fPXSMqGgyo5xp38XTA-1
-X-Mimecast-MFC-AGG-ID: wBy7fPXSMqGgyo5xp38XTA_1784617808
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-492488f8583so146042595e9.2
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 00:10:09 -0700 (PDT)
+ us-mta-84-9gyCyZZrPAysjGpDDVR9rA-1; Tue, 21 Jul 2026 03:10:17 -0400
+X-MC-Unique: 9gyCyZZrPAysjGpDDVR9rA-1
+X-Mimecast-MFC-AGG-ID: 9gyCyZZrPAysjGpDDVR9rA_1784617816
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-495569acf8dso13229735e9.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 00:10:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784617808; x=1785222608; darn=nongnu.org;
+ d=redhat.com; s=google; t=1784617816; x=1785222616; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=ZMO4Re7I5CJWeuCotjiNenDVRWR5sPzMiHPMEcsvfCY=;
- b=Mu+xvPAHw5TxUN1djSoP/v3icHd9AaZ/sFP5rsJ+GlNKDpvrK2l65HngLrvtIH+LSz
- dGbJNJX9dShYr/oWyJltgwHIb+NDcsqJOIp/QUW3H+HRTIjj4keUZ+Ji76vfpHU3zVOH
- uLafJneUnDcr4tMsFfHtuynGMFZ2YAX579dslJ7nHpF2EAsZlktbIcOdwQp8c9+paFIn
- JtUeEgL0FfsIv86JlZpIDUxhY2T3w5ncOYGvZwUSbRRcbp/R/PAtaPVxoVehRrGgoICX
- QFh3j/pQYAlo7sNNwkV8U6I288aEqvOZuRVJpXe+IECMBYjqPDgjnPL7PYPRRIKHDbR5
- eEvw==
+ :content-type; bh=WZ9J8xvRtW4RMzexTj3Azwld+ktz7lUuDOWbDmbyENE=;
+ b=MAfCDxBwdvHmWYnByztgKNLKJSwaawWaycFD1vnfeHJkWrUS7teXw6JqlSkXVOB5bW
+ 1DIB2L0HoPrCR0S47Hnh0dFTwzckKf7m7eaGzFG0+Wn+HiSx4u7bVaIOHRKxIllbgkMZ
+ 6YeEi2jWQdljEUrDCU0SHKHRRLlbfjJHX3weoBFrDBCiFJr/KL5XGsbREyjFFHVs5s7/
+ UaSeIQM9JkSMOJ3DZ3tPPasqDmfJBB/cDRGjucixgmReUOjH4cjOqk8OYh4VA6aTSX7d
+ g496mcaqi+YvskX/qvrHKh1S09xEc0+TXCbG7GP01rB5v+RD6rCwHtx3BCwBxyjRVNQy
+ 6etw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784617808; x=1785222608;
+ d=1e100.net; s=20251104; t=1784617816; x=1785222616;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ZMO4Re7I5CJWeuCotjiNenDVRWR5sPzMiHPMEcsvfCY=;
- b=rt9Ovc9D0jQV1xVP+eAHt8O15pHEcspnuuEIGnohURKv7CqJVCXuBhzwX2nnd08c7e
- sG891gjlSmvBVL4+Lob/5NR5i5zGbHz1V8esUh5k0pRkhjjWvV7XZeRgbaZftJSYDdqU
- VxfW54GjiMUUEAOfM1KzRFi6ai7YmTEyPiqMiqiRUrH+AwBeY6xtKQInyM/7k4tlSpRG
- 7Q7YZvBE4XZ6p0HGHGMFL1I9MVzfSH8STIu4u1GzvwHoVl/M0yfLc+MnVmIChphKQU12
- Uq0UhZdgwN+3mchYmU5kJIHyIGrdMpIteK8ibdUT9R7YB0vlY74YeACmOYUetA7I5ghd
- XCKQ==
+ bh=WZ9J8xvRtW4RMzexTj3Azwld+ktz7lUuDOWbDmbyENE=;
+ b=lY+WOeiWG7Y9zoM9Oenoakk5iRNFTHh/bCq9xyAWIOwkNHmZNVChUsYZGnDqB6HDcK
+ nbbN4CUJKVotYNU9NYQ+dHPsa0k5VkQSEKnCPpuHk4QB7bfBezpmoZ7ryD+1mi/iGx+J
+ W9yNz4kJqMKDUo7Deujc2eD5UXqbv98FT97UQRfjhQ2kRKYPpiOmvd02hFCvqoZrxs4s
+ MNrsUKg4bMUPSciLD1UXfX+i9BBU8D9ONXzKlSp1Fy3DpAzeW1NcdWx0hUMSXZklzcVG
+ EYapg1m6v2Yj/crGDe+dIN1jPvSs7GohGsaF12a5NEvebcHWXr3O1w3CwTllL7JSqXpA
+ ZHNg==
 X-Forwarded-Encrypted: i=1;
- AHgh+RotN7DlccLfkj4S5QXt/p2ol+bMcHl29lMGsNsvyufvH24FXFlBrHe9dLrXjam3kmsUkAK8e6+TUskU@nongnu.org
-X-Gm-Message-State: AOJu0YwDmvSvATOkxB159rZ65BPqZ82MLAEtQDBn5wHSjiTU6bitppoL
- NouAV7aSyebfkNiFf53S5cKyXUGFBR8ZKoZX0XGldPnMDYv5Q4DJ7pbGkaGXEd3hxnKo5+CB7je
- e3rxRztfrKmAMM4wK0bV74OhmIvXsrUJmc7v4GsQRZvXzGYrbR3oxNh6S
-X-Gm-Gg: AfdE7ckLx9vChjfYu6Tc3WTL5PuH3aUExS5gLmW4kxGKPQ7bcC3jw3UDWQo22UT169u
- OKCon9XsKReWKoPgpQzTLpPU+JDMvat9Jbo1ULFcyAymN+kWAADD/Qn+FHzzFalDEVa+tQuYo15
- C1DRrqAkq2IwOyrjdiCRduRABBQYs1TI3w2D/Nl0kadtpWzvl+Z0mbq1+40mFWlLTTi/y/9dYJj
- mmA0DfJYBxL9YbG6nWr+dwJy/7j/H2XMd8pM4Lwxc2uF8AqyJ8oGt70JjC9V1hTCcT1Z83G2sDE
- LvOOO66+QL5aE3ressMW2UormLk1022jJE6MtfAIgfPMOYbu42tEkmvK4W9K1oyxrsJYwKtuePB
- PerS9mcDIEzr815UKGxyFACOrhPyk5+XNzQCvyVw=
-X-Received: by 2002:a05:600c:580d:b0:495:4598:6e14 with SMTP id
- 5b1f17b1804b1-4954a4060demr143083135e9.24.1784617808333; 
- Tue, 21 Jul 2026 00:10:08 -0700 (PDT)
-X-Received: by 2002:a05:600c:580d:b0:495:4598:6e14 with SMTP id
- 5b1f17b1804b1-4954a4060demr143082685e9.24.1784617807799; 
- Tue, 21 Jul 2026 00:10:07 -0700 (PDT)
+ AHgh+Rr+cIJrWOBxbjnfLV9MgmfJ85LAa69wvyWjDXdyiFF8RMG+cjEiTLycnjwOKl0GEbHnmbABI9nkn8yd@nongnu.org
+X-Gm-Message-State: AOJu0YxLp90s796UmCy5+3sYDMUNvHnpBC+1yv1gXdHPWdZMO/tyds8J
+ cbhtMLP3oURi6YsIaxIumdUF9uRlzPA+12p+my4El8iizZaV6f7TAl2sH98/ygG4SGdgLcs65G8
+ IPQrKKsLR9eXeXsRm1Bv1hvdG6jD5+Z0VbFJUBdkXtgDR5GatQjw1OooE1rbtTQM4
+X-Gm-Gg: AfdE7cmQPPtTD3iDG5+RkARHhspFN/P26BE61XGENxH6aa90MoSk3jbz38AoBn+Rcv+
+ MUiiw8HXLJK0tocPh2TF1PVrr1b90ALIZ7FQNS5WLbcER6FLxX48rSzBnZoX3/oJb8JlX49cibO
+ ux1xqpbAVFRy9vVl68B0s9sFoEVQfA8KaxoqZUxTQH8koh484uPwrft+G+ZiCiD9B27jPysexPr
+ L6QcAGTfIdtIOIEDGd/h5Dfge53fLbNqBsWlwPqO4LBuooCFddH9Gz1NQXWvUlSiDOlBtGHw2bb
+ 14L+0c/O0TPvzFr1aTt87R5EFHaIN1dsYuNXZKeCU1NzzFSpOs/0UajBdz+m/eC5y6XiwDumrDG
+ LzWnZcaYe8DEJFyEanmEQBh8mwWrrxKTXzJC2gGQ=
+X-Received: by 2002:a05:600c:a42:b0:493:e983:806e with SMTP id
+ 5b1f17b1804b1-4954a3ee98emr206877515e9.3.1784617815834; 
+ Tue, 21 Jul 2026 00:10:15 -0700 (PDT)
+X-Received: by 2002:a05:600c:a42:b0:493:e983:806e with SMTP id
+ 5b1f17b1804b1-4954a3ee98emr206876545e9.3.1784617814434; 
+ Tue, 21 Jul 2026 00:10:14 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
  ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-495653bffefsm43431195e9.9.2026.07.21.00.10.06
+ 5b1f17b1804b1-495653d38dbsm43404725e9.15.2026.07.21.00.10.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Jul 2026 00:10:07 -0700 (PDT)
-Message-ID: <8ac1d358-6f66-437d-8218-cb4be586ae65@redhat.com>
-Date: Tue, 21 Jul 2026 09:10:06 +0200
+ Tue, 21 Jul 2026 00:10:13 -0700 (PDT)
+Message-ID: <b57ac497-a029-483c-a256-75d11d461b40@redhat.com>
+Date: Tue, 21 Jul 2026 09:10:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] vfio-user: vfio_user_get_region_info: prevent
- buffer overflow
+Subject: Re: [PATCH v2 2/6] vfio-user: vfio_user_get_region_info: respect
+ max_xfer_size
 To: Thanos Makatos <thanos.makatos@nutanix.com>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 Cc: John Levon <john.levon@nutanix.com>
 References: <20260720091718.2642-1-thanos.makatos@nutanix.com>
  <20260720135823.21070-1-thanos.makatos@nutanix.com>
- <20260720135823.21070-2-thanos.makatos@nutanix.com>
+ <20260720135823.21070-3-thanos.makatos@nutanix.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -142,18 +142,18 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260720135823.21070-2-thanos.makatos@nutanix.com>
+In-Reply-To: <20260720135823.21070-3-thanos.makatos@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: permerror client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: permerror client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,45 +170,26 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/20/26 15:58, Thanos Makatos wrote:
-> If the vfio-user responds with a value large enough such that adding
-> the header size to it overflows, a smaller buffer would be
-> inadvertently allocated, leading to buffer overflow.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3867
-> 
 > Signed-off-by: Thanos Makatos <thanos.makatos@nutanix.com>
 > ---
->   hw/vfio-user/device.c | 11 ++++++++++-
->   1 file changed, 10 insertions(+), 1 deletion(-)
+>   hw/vfio-user/device.c | 4 ++++
+>   1 file changed, 4 insertions(+)
 > 
 > diff --git a/hw/vfio-user/device.c b/hw/vfio-user/device.c
-> index b8d2b7c1a8..e58167a818 100644
+> index e58167a818..8350bb2c01 100644
 > --- a/hw/vfio-user/device.c
 > +++ b/hw/vfio-user/device.c
-> @@ -128,12 +128,21 @@ static int vfio_user_get_region_info(VFIOUserProxy *proxy,
->           error_printf("vfio_user_get_region_info argsz too small\n");
+> @@ -137,6 +137,10 @@ static int vfio_user_get_region_info(VFIOUserProxy *proxy,
+>           error_printf("vfio_user_get_region_info argsz too large\n");
 >           return -E2BIG;
 >       }
-> +
-> +    /*
-> +     * Ensure that size doesn't overflow, otherwise we'll allocate a much
-> +     * smaller buffer than we need.
-> +     */
-> +    if (__builtin_add_overflow(info->argsz, sizeof(VFIOUserHdr), &size)) {
+> +    if (size > proxy->max_xfer_size) {
 > +        error_printf("vfio_user_get_region_info argsz too large\n");
 > +        return -E2BIG;
 > +    }
-> +
+>   
 >       if (fds != NULL && fds->send_fds != 0) {
 >           error_printf("vfio_user_get_region_info can't send FDs\n");
->           return -EINVAL;
->       }
->   
-> -    size = info->argsz + sizeof(VFIOUserHdr);
->       msgp = g_malloc0(size);
->   
->       vfio_user_request_msg(&msgp->hdr, VFIO_USER_DEVICE_GET_REGION_INFO,
-
 
 Fixes: 667866d66620 ("vfio-user: implement VFIO_USER_DEVICE_GET_REGION_INFO")
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
