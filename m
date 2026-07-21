@@ -4,112 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 904D7C4452F
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 13:15:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5037C4451C
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 13:19:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmAJN-0002AY-JM; Tue, 21 Jul 2026 09:15:05 -0400
+	id 1wmANL-0003r2-Iy; Tue, 21 Jul 2026 09:19:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wmAJM-00029w-7W
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 09:15:04 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wmAJK-0004Mn-6d
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 09:15:03 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wmANK-0003qq-Ia
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 09:19:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wmANI-0005Wu-Ap
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 09:19:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784639946;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rCyPK+2XSHZ5BDckkQgVmgaarr787w6zzeQT+B59V7E=;
+ b=RHwBGL/kj7yKJqwyNgMfcNx7azoTKFwsYtfS1sFq7xRpmT1UcR7qmnUyeyltSE+v6yuCMQ
+ 8DT1yklSrMe7HDCWIyOEfi9+NljSPLNco+3qe0Yb8vBZ8LWXYKL0Dd9wyQztFqTxTeD3hM
+ 6oPtdixcH3Of0n750zh94jvK4+8zw0o=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-321-CK9fBM7HOsmWS9CEvts8aQ-1; Tue,
+ 21 Jul 2026 09:12:59 -0400
+X-MC-Unique: CK9fBM7HOsmWS9CEvts8aQ-1
+X-Mimecast-MFC-AGG-ID: CK9fBM7HOsmWS9CEvts8aQ_1784639577
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 82C937A530;
- Tue, 21 Jul 2026 13:15:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1784639700; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=WK4jDRk3tBLZtWM/SlakkKFYeM9tJHiMADPfj6sdEB4=;
- b=SYbTL78WAtFW5Qaxh/73fSRThtqlZwXojj0O+nGxv1xhygtwUUF5qlDj5p6agLXtq4+NNS
- 5QVMO0BkkpCDNGMDHyuXdxHaBrNjiPk5R9+zmYcj+S0wtiThIjZ+NFOZXWSQhnvJbYYG+V
- XhIEX9h7OLZUQYPE3RlORS6WskNQawc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1784639700;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=WK4jDRk3tBLZtWM/SlakkKFYeM9tJHiMADPfj6sdEB4=;
- b=yrD2Z79+9Xz8xrAS2zxz/TEFjSuUSZLyNAzkzkrA8vH9skF7cH3nwrB+Qu2Rarl16w9EzI
- OSuxQNEjkhbtnJAg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=SYbTL78W;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=yrD2Z79+
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1784639700; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=WK4jDRk3tBLZtWM/SlakkKFYeM9tJHiMADPfj6sdEB4=;
- b=SYbTL78WAtFW5Qaxh/73fSRThtqlZwXojj0O+nGxv1xhygtwUUF5qlDj5p6agLXtq4+NNS
- 5QVMO0BkkpCDNGMDHyuXdxHaBrNjiPk5R9+zmYcj+S0wtiThIjZ+NFOZXWSQhnvJbYYG+V
- XhIEX9h7OLZUQYPE3RlORS6WskNQawc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1784639700;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=WK4jDRk3tBLZtWM/SlakkKFYeM9tJHiMADPfj6sdEB4=;
- b=yrD2Z79+9Xz8xrAS2zxz/TEFjSuUSZLyNAzkzkrA8vH9skF7cH3nwrB+Qu2Rarl16w9EzI
- OSuxQNEjkhbtnJAg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 64713779AA;
- Tue, 21 Jul 2026 13:14:59 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id P7mODdNwX2q7ewAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 21 Jul 2026 13:14:59 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH v2] docs: Add security considerations for migration
-Date: Tue, 21 Jul 2026 10:14:57 -0300
-Message-ID: <20260721131457.3062767-1-farosas@suse.de>
-X-Mailer: git-send-email 2.53.0
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 667881926B7D; Tue, 21 Jul 2026 13:12:57 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D15AB1954235; Tue, 21 Jul 2026 13:12:56 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 6CC0D21E6920; Tue, 21 Jul 2026 15:12:54 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Mitsuru Kariya <Mitsuru.Kariya@oss.nttdata.com>
+Cc: qemu-devel@nongnu.org,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Eric Blake <eblake@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,  Laurent Vivier <lvivier@redhat.com>,
+ Peter Xu <peterx@redhat.com>,  Jason Wang <jasowang@redhat.com>
+Subject: Re: [PATCH 4/5] util/qemu-sockets: add TCP_USER_TIMEOUT support
+In-Reply-To: <20260720053335.2316729-1-Mitsuru.Kariya@oss.nttdata.com>
+ (Mitsuru Kariya's message of "Mon, 20 Jul 2026 14:33:35 +0900")
+References: <20260524073442.435408-5-Mitsuru.Kariya@oss.nttdata.com>
+ <87se758rv2.fsf@pond.sub.org>
+ <20260720053335.2316729-1-Mitsuru.Kariya@oss.nttdata.com>
+Date: Tue, 21 Jul 2026 15:12:54 +0200
+Message-ID: <87ecgwo59l.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 82C937A530
-X-Spamd-Result: default: False [-3.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- TO_DN_SOME(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCPT_COUNT_THREE(0.00)[4];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:email, suse.de:mid,
- imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=armbru@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,67 +92,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the security considerations that are unique to migration and that
-do not already fall into one of the other categories. Some aspects are
-better framed as security architecture considerations, so extend that
-section to mention TLS and clarify that disk images and guest network
-also need to be isolated from other processes, not just other guests.
+Mitsuru Kariya <Mitsuru.Kariya@oss.nttdata.com> writes:
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- docs/system/security.rst | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+> Thank you for reviewing, and I'm sorry for the late reply.
+>
+> Markus Armbruster <armbru@redhat.com> writes:
+>> Actually, it's "transmitted data may remain unacknowledged, or
+>> buffered data may remain untransmitted".  Moreover, the interaction
+>> with @keep-alive is not mentioned.  ...  Have it point to tcp(7) for
+>> details?  Perhaps something like [...]  What do you think?
+>
+> Agreed, thanks -- adopted in v2.  I took your wording almost verbatim,
+> with two small adjustments:
+>   - reflowed to stay within the 70-column limit the QAPI doc checker
+>     enforces (the original wrapping tripped it), and
+>   - kept "(Since 11.1)" to match the neighbouring members.
+> The interaction with @keep-alive is left to the tcp(7) reference, as you
+> suggested, to keep it short.  I also updated the -netdev stream
+> addr.user-timeout entry in qemu-options.hx to match (per your other
+> comment).  I've added your Suggested-by to the patch.
+>
+> The text now reads:
+>
+>   # @user-timeout: maximum time in milliseconds that transmitted data
+>   #     may remain unacknowledged, or buffered data may remain
+>   #     untransmitted, before the connection is closed.  See tcp(7)
+>   #     for details.  Only supported for TCP sockets on systems where
+>   #     the TCP_USER_TIMEOUT socket option is defined (Linux only).
+>   #     When set to 0, system setting is used.  (Since 11.1)
 
-diff --git a/docs/system/security.rst b/docs/system/security.rst
-index 52bbf0cc7a2..af626a42307 100644
---- a/docs/system/security.rst
-+++ b/docs/system/security.rst
-@@ -133,6 +133,16 @@ an issue as a normal bug.
-   that affect the level 0 QEMU process. While these bugs should be
-   fixed, they will not be triaged as security flaws at this time.
- 
-+* **migration/snapshots**. Migration failures and snapshot load
-+  failures are considered part of normal operation as long as the
-+  source virtual machine and savevm file, respectively, are still
-+  functional. Aborting the QEMU process at the migration/snapshot
-+  destination is similarly not considered a security issue. The
-+  migration stream is assumed to be secure as long as the design
-+  principles described in the Architecture section are held, in
-+  which case plain manipulation of the stream is not considered as
-+  an attack vector.
-+
- * **low severity impact**. As a catch all rule, issues which
-   are judged to have a "low" severity impact on the system will
-   usually not justify handling as security bugs, nor assignment
-@@ -159,10 +169,11 @@ could allow malicious guests to gain code execution in QEMU.  At this point the
- guest has escaped the virtual machine and is able to act in the context of the
- QEMU process on the host.
- 
--Guests often interact with other guests and share resources with them.  A
--malicious guest must not gain control of other guests or access their data.
--Disk image files and network traffic must be protected from other guests unless
--explicitly shared between them by the user.
-+Guests often interact with other guests and share resources with them.
-+A malicious guest must not gain control of other guests or access
-+their data.  Disk image files and network traffic must be protected
-+from other guests, users and processes unless explicitly shared with
-+them by the user.
- 
- Principle of Least Privilege
- ''''''''''''''''''''''''''''
-@@ -223,6 +234,9 @@ Some Linux distros already ship with UNIX groups for these devices by default.
-   system calls that are not needed by QEMU, thereby reducing the host kernel
-   attack surface.
- 
-+- Transport Layer Security (TLS) protocol can be used to ensure authenticity and
-+  encryption of the live migration connection where the network is untrusted.
-+
- Sensitive configurations
- ------------------------
- 
--- 
-2.53.0
+Better.
+
+Swap "See tcp(7) for details." and the next sentence, to hopefully help
+the reader understand what to look for in tcp(7)?
 
 
