@@ -4,51 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F25B3C4451C
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 12:09:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45680C4451C
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 12:11:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm9Gm-0006z9-TW; Tue, 21 Jul 2026 08:08:20 -0400
+	id 1wm9Iv-00081H-2r; Tue, 21 Jul 2026 08:10:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wm9Ge-0006vJ-GX; Tue, 21 Jul 2026 08:08:14 -0400
+ id 1wm9Is-0007zn-G9; Tue, 21 Jul 2026 08:10:30 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wm9Gb-0001Tb-M3; Tue, 21 Jul 2026 08:08:12 -0400
+ id 1wm9Iq-0001sj-R1; Tue, 21 Jul 2026 08:10:30 -0400
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66LC7vM1044992
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66LCAKej045818
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 21 Jul 2026 21:07:57 +0900 (JST)
+ Tue, 21 Jul 2026 21:10:20 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=bDMJaN5yXd1EQyF3Ntjt61mHO7zEZbcl60qreYhGdzw=; 
+DKIM-Signature: a=rsa-sha256; bh=JR8KYisS1exnA+cDcQ5qUmRkBOKa5qNf07fKDFkLWr4=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1784635677; v=1;
- b=o+XcDqwtRB6jM8Rn94IyK+itEOwmLIDVCo4+xqXPZbmwts+uq4Myby2XQDY7Uc2p
- yRPL/wwOmDEPTD2gtqoCbCEoXQKbSJ8wgcSys+ZNRD9TLhD+Wnq+BoPV6ESfqPlw
- 3xGoLFvPg+7/R628Ya5u7Br0DeD8uDsiWfQ4ODmXYIOzq+EWihDkSm9/Oh4D9xNa
- NHbFZAOIVhKTE00FNdK/wE4fV1CCWPK8f9LAOSk1yC5BtFCpghN7sCDGwuySY0h8
- PBltNTXiACPR8DHGD++Y/kZmUneH0ttmKs/A31t/xFQWShqUauTXMEmeJ+bBnygl
- D15Hn7vS88r59MbiN82uPw==
-Message-ID: <03ce1631-e8a8-4506-8295-e216830d47ae@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 21 Jul 2026 21:07:57 +0900
+ s=rs20250326; t=1784635820; v=1;
+ b=o6VsGect1F8l5XS/TyDOMbjagjhRRsQ0VWlN4U+Ek2ld8qmjmqKDbZ4uZV7yxKRo
+ Arwh96ND2VFnW9GEfeR7wZHf5xN6O8jHn3KqAnm6W0Gu2Q61PwTKFQFZqQ6LhDWv
+ vMZ6+N3NoaJ21LpzEymDj7ZXCrDSz838GfBw1W7CibxZalMaqkR+fQwLnn9MeOrH
+ waUyohw8I8OfyzhuGzdc2tFaVABp2TEerYyNmLkGmVvLXtTHS6H5JtFt10Y4QT72
+ UxoxckumXXQekYLU53Dtzh99zUpnyUyDsn0qUk3fhROhRwsmkdAgADqXVeFS49DB
+ umTJmBk7m9vxan2GA0a9iA==
+Message-ID: <d134541f-0ac0-43be-87cc-c03cd712f40b@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 21 Jul 2026 21:10:19 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] hw/net/e1000e: recalculate rx_desc_len on migration
- load
+Subject: Re: [PATCH 2/2] hw/net/igb: recalculate rx_desc_len on migration load
 To: Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org
 Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
  Jason Wang <jasowangio@gmail.com>,
  Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, qemu-stable@nongnu.org
 References: <20260721111126.3278244-1-lvivier@redhat.com>
- <20260721111126.3278244-2-lvivier@redhat.com>
+ <20260721111126.3278244-3-lvivier@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260721111126.3278244-2-lvivier@redhat.com>
+In-Reply-To: <20260721111126.3278244-3-lvivier@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -75,41 +74,35 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/07/21 20:11, Laurent Vivier wrote:
-> rx_desc_len is migrated as a raw uint8_t from the stream, but it
-> is a derived value that can be computed from the register state in
-> core.mac[RCTL]. A crafted migration stream can set rx_desc_len to
-> an invalid value (e.g. 64), causing a stack buffer overflow in
-> e1000e_write_packet_to_guest() which copies rx_desc_len bytes into
-> a 32-byte stack union.
+> Same issue as e1000e: rx_desc_len is migrated from the stream but
+> can be computed from the register state. Recalculate it in post_load
+> to prevent a crafted migration stream from setting an invalid value.
 
-The value is derived from core.mac[RFCTL] and core.mac[RCTL], not solely 
-core.mac[RCTL].
+igb actually doesn't use the register state. igb_calc_rxdesclen() calls 
+igb_rx_use_legacy_descriptor() to determine the value, but 
+igb_rx_use_legacy_descriptor() is currently a stub and returns false.
 
-The change itself looks good to me.
+The change itself is fine.
 
 Regards,
 Akihiko Odaki
 
 > 
-> Recalculate rx_desc_len from the register state in post_load,
-> ignoring the untrusted value from the stream.
-> 
 > Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3869
 > Signed-off-by: Laurent Vivier <lvivier@redhat.com>
 > ---
->   hw/net/e1000e_core.c | 2 ++
+>   hw/net/igb_core.c | 2 ++
 >   1 file changed, 2 insertions(+)
 > 
-> diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
-> index 46e156a5ddc2..31eb39e4aa40 100644
-> --- a/hw/net/e1000e_core.c
-> +++ b/hw/net/e1000e_core.c
-> @@ -3557,5 +3557,7 @@ e1000e_core_post_load(E1000ECore *core)
->       e1000e_intrmgr_resume(core);
->       e1000e_autoneg_resume(core);
+> diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
+> index 45d8fd795b84..2a4883907353 100644
+> --- a/hw/net/igb_core.c
+> +++ b/hw/net/igb_core.c
+> @@ -4548,5 +4548,7 @@ igb_core_post_load(IGBCore *core)
+>       igb_intrmgr_resume(core);
+>       igb_autoneg_resume(core);
 >   
-> +    e1000e_calc_rxdesclen(core);
+> +    igb_calc_rxdesclen(core);
 > +
 >       return 0;
 >   }
