@@ -4,137 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DB3BC44529
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 11:12:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CED8C44529
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 11:13:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm8OP-0000hb-QC; Tue, 21 Jul 2026 07:12:09 -0400
+	id 1wm8Pf-0002OI-KE; Tue, 21 Jul 2026 07:13:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wm8ON-0000ek-RD
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 07:12:07 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wm8PU-0002MC-Md
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 07:13:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wm8OM-000061-37
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 07:12:07 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66LARVhP1455656
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 11:12:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=x/dpwD/dIEO2/b4WafLEQq
- 0d8ciQocT3y5V1sAKa07U=; b=LQWhje7yumIaBeQPiU2qccVo6bWwsz8960mNih
- hHbm7ZrmIhaaVYg8tLMeJWQyowQ1VFrlSt1BNQ2gK8S/sEFaQXKEAMODPjo5jAij
- akm0rSIWTRuC72wNxBafS6xXA4ubDaF27ViUqPtD2YQ/y6lp+sSt5KEBzzzm8M3n
- sXylkR8WT6RMDv+ViVD2GFtHx/hGfajDkgE1DERKbq9BL7rj43Ji6j9DPoUJr3HA
- vaNrTdsJ1Z+sZCEcsEyIrckhwGfa+7Ta9Nh4rvQhB993o2pqCC0ynPZcq3OddyqJ
- d0PfwrnJbM0eXZuX98APJ45116nimupAmg7s3nM8ShZC4dNg==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fj1duhw15-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 11:12:04 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-9077b4c35c5so113395046d6.2
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 04:12:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wm8PT-0000Ba-0W
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 07:13:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784632394;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=rQ9kRaJLjO2WGiPc5CjouYXuLHNO9uZo5SjulZ7K2IA=;
+ b=DXNtkUwNaCPgwji38eaB40cxeIutTNt131UmlF6KT0n4B32rAs/7fgDNqhp3DJhVrI7DHM
+ W3WXu60mIgJUnMje4xWrtW3P1SOqglOovbAHIxriS/wJ9F/t2BQU4qjw12dFp+iAR0zTOM
+ C06cgGRt+h60Oc3vUzusn6L7QSoDu/I=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-679-OTi54nEfOny-uNBwAC_Luw-1; Tue, 21 Jul 2026 07:13:12 -0400
+X-MC-Unique: OTi54nEfOny-uNBwAC_Luw-1
+X-Mimecast-MFC-AGG-ID: OTi54nEfOny-uNBwAC_Luw_1784632392
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-47407691804so7831930f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 04:13:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784632324; x=1785237124; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=x/dpwD/dIEO2/b4WafLEQq0d8ciQocT3y5V1sAKa07U=;
- b=FWw9RH48Jh1Jbh/trRjlTV0hi9scTqg4Bq5ETr544ueF8zvVPNgf0hrBW6njoH3ggi
- JDqgMwtiKuRT0EiyzfEpvQqbbohhnL3V2r4c5m+uy6ZZT8B8as8zvLo2W5Ou0FZzXQAS
- X8RTKki6lVSIG53Q1AjUX+BufS901rcY9HqhaigibxtPuuhyAhXbFyliWU4wnA+pnPP6
- 61MnxIi3kjfbqpd40V6g+9huJ1IwJl9NF6BZJ2PzpNQMo7nt3Y6SMlZi6nowRB4G9W8J
- 2dIIpZP2O9N7VDX73xEYWEC8b6szcVmh7DITvmJhyJTGb44skkI+l8RQeEAVP0Qobzvl
- f87g==
+ d=redhat.com; s=google; t=1784632391; x=1785237191; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=rQ9kRaJLjO2WGiPc5CjouYXuLHNO9uZo5SjulZ7K2IA=;
+ b=A1E6/r2uN0aaM79HaVwDRVYlpybLSL7c+uxpXbcL08HXkOlVSlyXr18LIRIpHcORTw
+ YLrOWoW5pFk106FNH14b3/VECW52NSh438ukKeuz7Jnq82sfj5zMUoXwOLg+sv/+2C8j
+ nQuwiQqv+rpdAEdj1qLGNHW0zBId3LUFNLWsAgh3s6tUN34Evqjl6q/bdyVl39xN/WZd
+ Tqp8MA1LHoGCSa+zs310Rgb91qFvO+wk/7/6pNE4oS8j7VWBIosJ9Ti/+9zweGozLxhd
+ GOLDSEw91fcGr6G8x6q2doNkAgEG21gmfg1WTPCAMHPLsoW4GLQ+POqeQEuOR0APf2s8
+ fWDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784632324; x=1785237124;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=x/dpwD/dIEO2/b4WafLEQq0d8ciQocT3y5V1sAKa07U=;
- b=bI68kP9DRlE7DybIOywKA2cPXk+O4HaCizKBwp68/i7NGW5Cy6YT0KPOZlF4GM6Axu
- 3FtCW6pCk8+25k2mLUQ4OgHAB9UrbA6r4RIhtG5r15NOvOrW4MvYzubf/rZ6xjq5Bw6Z
- ZEOA8W63ipMamWxjtGoMtoMSQ1q3Wr8bojCHMKxWkU0ClTjArc8xHblnffxABJYCvN76
- 7PW7SeN2bQaXya1BgKMclV/kf7j4KMUq3eBLeqlAJWzZCkpMJp3Z2tkTX4M8oT5I0+XU
- jM00rmxq+rdSWm+gwXyiuCSdehKXkyoHJIzmdl4HfQR/FfipnDrgYrS43lyY0N7MlIfz
- FaLg==
-X-Gm-Message-State: AOJu0YwqTVeSRvNNM2ICdNvtR+zrny4dIYrQmQ68DB4t++KoTOJX497+
- BEiXJtKKTG5qXg0SZii9Zh6hsgurKiUrIb3NFywmOwIvphHx0EGGPGe1ug/E8+aOev0W7aeAWs2
- XSSDny1cTblmeY8eEf0NfO3b4IiyM4dX9OKLd/QvcU2x1F7WflOR0jnSRhHMC1cPxNQ==
-X-Gm-Gg: AfdE7clytfQQZKRxY/ipFqUkKzZSaA8tq61rpFWqKp8Sn8ZzQdDC3LSky8f74VEDGh3
- JHJHBZFTLn+fscsVqVATBtd4E62pmIyKp0xXvGHGq8JauQEY9Fx7SKpJ0mC1iAxlZ5O14bAcV47
- nYJ39/fUbaff47kUfbAFCMgegpVTJZ7Gium1ollT6oU0xHzXkWy0jB45v5w8M9E0L5mGGVi7R4F
- PnrujFteyraKXzotuQKG3VGpKJsUr2ZaLEswsHisvioYmSAlWhVwn909NqGqEEjxVQbEkCninqt
- Ig9oKj1WE8VaIvVgaoBoDB8vdMhGz0oFz/NXIFgdgLXttB7QApHvSYTRerLQQCR+A9oj1qDyt16
- jLS0UmK2kTvgl72Boj+5u1vxEtP+lrE0aepPC7Wf34h2Jmxb4WJkNe+phCQ==
-X-Received: by 2002:ac8:7c42:0:b0:51a:6feb:dc8a with SMTP id
- d75a77b69052e-5213a384365mr160582301cf.18.1784632324262; 
- Tue, 21 Jul 2026 04:12:04 -0700 (PDT)
-X-Received: by 2002:ac8:7c42:0:b0:51a:6feb:dc8a with SMTP id
- d75a77b69052e-5213a384365mr160582041cf.18.1784632323866; 
- Tue, 21 Jul 2026 04:12:03 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4956537c6besm58469755e9.8.2026.07.21.04.12.02
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Jul 2026 04:12:03 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH] accel/accel-irq: Avoid using inlined functions with external
- linkage
-Date: Tue, 21 Jul 2026 13:12:01 +0200
-Message-ID: <20260721111201.85714-1-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.53.0
+ d=1e100.net; s=20251104; t=1784632391; x=1785237191;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=rQ9kRaJLjO2WGiPc5CjouYXuLHNO9uZo5SjulZ7K2IA=;
+ b=SDQTTvtksXNHPwC3zfsO2mb1fGG+CaKqG1iJAeELJqkzEc1N/QdG6ZDIaHJ3vCqyjU
+ H1wSkgFn6SJm0GnEw3A3pUn+20Ev8Yq9rcTZtEDPijo/gnRHCvbACZhdqmxGLj7Uenma
+ u2gmWCH22P62g7hlWtFS2tHSoKb2RYEquRbXI/RyzDLprNzxtI/OUuK1zAVUzu/+KbpI
+ 5H0kBhF6QVkLqmZIzkGQInApTs8inH8L6f4of3hdnq14+/Ork6c6Y2TZQJl96DSROnl6
+ WvqS/z3TWK9e3bCrsFUgksfZgfbo2TQsQ4Lb77sPIHiypqHYLJRf74gc4bPQdoXeCjb4
+ 246g==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqkiUwTdFdFzKE5nV3S63U4jSIVHqdXx0qAazfNJwsTtxD4j/1X2zb8shRXR8NnxSHRf578z/Hb5KwU@nongnu.org
+X-Gm-Message-State: AOJu0YxpFz6UxCdBklbjooJU7AsDSJWRjn+ON81UTjiw6pdVG7iFGpwe
+ KhvcsrtkY+pzWEQ8aE4+nZNz12ENgAPB00K6jJAL7hsL5gHMg53UtDtUCKKdiM8LNHVUweuWjnn
+ tu2hAJLTiq0GFNNbOLQVmE8ApDvT3bOeCaKUTXBBLQvAjpoUqDnXpBrQs
+X-Gm-Gg: AR+sD116MUIsDDzG4WTkPJ5yOfSXmpPLybgG5b/BeTeoAaAvjNLdGi0vemm0TOv1oXk
+ +AzZnAmiO23YlZ+yihkMKsOGxqQCGh+53jBYACbAI2AVSO9feaiu69w9Koct09u8zSbJeOGI9ZG
+ aody2baIkefouHNu4x46LU8fawhrDkWEmUosyqb9VxtsRgxiIWdZT+m/RgkWZrW9CVKKO0MGkfQ
+ TSOHCv7l+7JRSXBe+vaEd0IzKaVQXzXgukEAWV8ysaMmgVibiQJeuwB1H6+SOx6KIklWvEjARbC
+ UeVnYxqBxyuOLKUckmj16m+SGnXA9MINXnf/vyC6CltK1+59H/0oOu9ArrZAJxKFJBz4feAPd+W
+ PtHt+UflmluDUhvmkbHIS+//svBV5Vzarcxv479M=
+X-Received: by 2002:a05:6000:4b0e:b0:47f:5371:1b15 with SMTP id
+ ffacd0b85a97d-47f623173c1mr20617126f8f.26.1784632391560; 
+ Tue, 21 Jul 2026 04:13:11 -0700 (PDT)
+X-Received: by 2002:a05:6000:4b0e:b0:47f:5371:1b15 with SMTP id
+ ffacd0b85a97d-47f623173c1mr20617088f8f.26.1784632391076; 
+ Tue, 21 Jul 2026 04:13:11 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
+ ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f63ed244bsm2023759f8f.20.2026.07.21.04.13.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Jul 2026 04:13:10 -0700 (PDT)
+Message-ID: <bf33df32-94bd-41c1-9554-5c6b85742820@redhat.com>
+Date: Tue, 21 Jul 2026 13:13:09 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vfio/pci: Guard accel_irqchip_begin_route_changes() calls
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>
+References: <20260721105026.3932297-1-clg@redhat.com>
+ <ade146fa-58cf-4ebc-90a8-259d8bf1c137@oss.qualcomm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
+ 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
+ S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
+ lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
+ EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
+ xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
+ hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
+ VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
+ k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
+ RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
+ 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
+ V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
+ pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
+ KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
+ bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
+ TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
+ CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
+ YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
+ LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
+ JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
+ jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
+ IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
+ 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
+ yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
+ hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
+ s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
+ LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
+ wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
+ XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
+ HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
+ izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <ade146fa-58cf-4ebc-90a8-259d8bf1c137@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: XlgR89HkiDuqCxBpRX4RdjDkqoi8KBqC
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDExOCBTYWx0ZWRfX0oVbMV2RaTB+
- zcES3O2YTaIhBXex1SddIfKQ1OKAbtMJTGlPWXm9cEEvHdhy/JN5uwBm5A7OuWEbJyDYDrmvCYM
- Br0iUFcQbWh4juT53hZHsmfH0FBzWuTcQ8lTNNcrwmJ5tkrB43eOIwS7s+jDKEtchRj7St5pEQV
- 2bAEuJ3bXR+W328/sl0hjjbjKg6ZxV6coUcNyB6I5Kx/A5Xds4YzeKnW8uGqvZCvSKG7KRTDUHR
- WKlKUseEeElLCrzHrpbR4dw/4QSJOmVE7s9UL+x0ugNmFN+ybDnASigP9RaFvZ7vP5akZsqZir6
- bHF87T6fICHC3VI3sYXC1X3qMpOknc9TPWvp73HFnCJtyNxSPTp4gx5Y9f6LjIPX3JXbmUvIWsH
- JXQdRwk+hZHvilLtqPRXZXrJCBYU5oj1lcL0k8wyIDwjZUEUlDmNQGOEMchL/YjHorW/HtuYF3M
- tWb3oPXGBjDcl8qSCyA==
-X-Authority-Analysis: v=2.4 cv=I9JVgtgg c=1 sm=1 tr=0 ts=6a5f5404 cx=c_pps
- a=wEM5vcRIz55oU/E2lInRtA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=0-0h5_n0kt7SgkJO7NkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=zZCYzV9kfG8A:10 a=OIgjcC2v60KrkQgK7BGD:22
-X-Proofpoint-GUID: XlgR89HkiDuqCxBpRX4RdjDkqoi8KBqC
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDExOCBTYWx0ZWRfX/MlFVQbTWLpP
- sDs0KkU6GOPR9XUmDdMpvI0Gx+l7yyfVeYy1tfqnuxQGcNIilGq4lTMV3TTAQsiVXaeNpcsN327
- opgiOyQ3Yq77dVwRSI4hQ73BGXMUfCI=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-21_01,2026-07-20_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 spamscore=0 clxscore=1015 suspectscore=0
- lowpriorityscore=0 phishscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607210118
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: permerror client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,33 +168,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Similarly to commit 9de9fa5cf2 ("hw/arm/smmu-common: Avoid using
-inlined functions with external linkage"):
+On 7/21/26 13:04, Philippe Mathieu-Daudé wrote:
+> On 21/7/26 12:50, CÃ©dric Le Goater wrote:
+>> Since commit 49b2dcbd2422 ("accel/accel-irq: add generic
+>> begin_route_changes"), accel_irqchip_begin_route_changes() aborts when
+>> no accelerator irqchip is available. This causes a fatal error when
+>> running VFIO passthrough devices under TCG emulation:
+>>
+>>    qemu-system-aarch64: can't initiate route change, no accel irqchip available
+>>
+>> The previous kvm_irqchip_begin_route_changes() was a simple inline
+>> that did not have a fatal path. The VFIO code already handles the
+>> absence of KVM MSI routing gracefully by falling back to userspace
+>> handling, but the new generic function aborts before that fallback
+>> can take effect.
+>>
+>> Guard the call sites in hw/vfio/pci.c with
+>> accel_msi_via_irqfd_enabled() so that route changes are only
+>> initiated when an accelerator irqchip is actually present.
+>>
+>> Fixes: 49b2dcbd2422 ("accel/accel-irq: add generic begin_route_changes")
+>> Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>> ---
+>>   hw/vfio/pci.c | 6 ++++--
+>>   1 file changed, 4 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+>> index 380dd8c15f8d5bb98b725075978eef2e4e1e6c2d..a3147d28665abd29fd804bd08bdffc3c7440033c 100644
+>> --- a/hw/vfio/pci.c
+>> +++ b/hw/vfio/pci.c
+>> @@ -699,7 +699,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
+>>           if (msg) {
+>>               if (vdev->defer_kvm_irq_routing) {
+>>                   vfio_pci_add_kvm_msi_virq(vdev, vector, nr, true);
+>> -            } else {
+>> +            } else if (accel_msi_via_irqfd_enabled()) {
+>>                   vfio_route_change = accel_irqchip_begin_route_changes();
+> 
+> Pre-existing, either we use the accel_*() API which is agnostic to the
+> host hw accelerator implementation (KVM, MSHV), 
+> or we directly use the hw API.
 
-  None of our code base require / use inlined functions with external
-  linkage. Some places use internal inlining in the hot path. These
-  two functions are certainly not in any hot path and don't justify
-  any inlining, so these are likely oversights rather than intentional.
+That would be a partial revert. I am fine with that.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- accel/accel-irq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+C.
 
-diff --git a/accel/accel-irq.c b/accel/accel-irq.c
-index 830be27c7f9..b687f663394 100644
---- a/accel/accel-irq.c
-+++ b/accel/accel-irq.c
-@@ -90,7 +90,7 @@ int accel_irqchip_remove_irqfd_notifier_gsi(EventNotifier *n, int virq)
-     return -ENOSYS;
- }
- 
--inline AccelRouteChange accel_irqchip_begin_route_changes(void)
-+AccelRouteChange accel_irqchip_begin_route_changes(void)
- {
-     if (mshv_msi_via_irqfd_enabled()) {
-         return (AccelRouteChange) {
--- 
-2.53.0
+> 
+>>                   vfio_pci_add_kvm_msi_virq(vdev, vector, nr, true);
+> 
+> Here there is an implicit KVM dependency, so I'm not sure why we have
+> these accel_* calls. Maybe "system/accel-irq.h" is incomplete in that
+> regard.
+> 
+>>                   accel_irqchip_commit_route_changes(&vfio_route_change);
+>> @@ -801,7 +801,9 @@ void vfio_pci_prepare_kvm_msi_virq_batch(VFIOPCIDevice *vdev)
+>>   {
+>>       assert(!vdev->defer_kvm_irq_routing);
+>>       vdev->defer_kvm_irq_routing = true;
+>> -    vfio_route_change = accel_irqchip_begin_route_changes();
+>> +    if (accel_msi_via_irqfd_enabled()) {
+> 
+> (IOW here I'd rather a kvm_msi_via_irqfd_enabled() call)
+> 
+>> +        vfio_route_change = accel_irqchip_begin_route_changes();
+>> +    }
+>>   }
+>>   void vfio_pci_commit_kvm_msi_virq_batch(VFIOPCIDevice *vdev)
+> 
 
 
