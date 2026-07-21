@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42DB2C4451C
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 07:14:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 281B8C4451C
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 07:16:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm4gY-0005aB-Sf; Tue, 21 Jul 2026 03:14:40 -0400
+	id 1wm4i4-0006Bc-KU; Tue, 21 Jul 2026 03:16:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wm4gM-0005ZG-CF
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 03:14:26 -0400
+ id 1wm4i3-0006BQ-FR
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 03:16:11 -0400
 Received: from forwardcorp1b.mail.yandex.net
  ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wm4gI-000110-24
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 03:14:25 -0400
+ id 1wm4i1-0001HC-A5
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 03:16:11 -0400
 Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
- by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 196F2809DC;
- Tue, 21 Jul 2026 10:14:16 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 14186806C1;
+ Tue, 21 Jul 2026 10:16:08 +0300 (MSK)
 Received: from [IPV6:2a02:6bf:8080:45b::1:22] (unknown
  [2a02:6bf:8080:45b::1:22])
  by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id EEQfYE2XbW20-93pjrnal; Tue, 21 Jul 2026 10:14:15 +0300
+ id 7GQZfE2XJOs0-JMgBpKv6; Tue, 21 Jul 2026 10:16:07 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1784618055;
- bh=j/B8Jxx8T3CzbNDHx+FRLHyp5oPVuFr0RHTm4oJTSP0=;
+ s=default; t=1784618167;
+ bh=MdjBS/DoGlLNBYPn3DBCV31lTzovAylEeHh0j54GOes=;
  h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=MGWM+z4lbxwOYIYl5dC3Jt2Qkxp57VSR15HQl/VOi8BvkGlLXXccQG91rzLjGK7i9
- yvf8QSjsrK6bCgtu/XYxiYRkvtpFLHy3g+f6n8JA/VBsrdmCVjyCDR0qROpo33o4gC
- C1Nqbu4oVs2TDL+lExbwVNQvGK7bCTtcdRMRuEUw=
+ b=apP57eE+0/dhuXqNvGlRv4B6U9XRq0eJbU0xUn2t3Q2VHp6E1v30WvvR2wrYExmh6
+ wtUr25bra2OaVI7Gn6KDMYtNkVzrZuSHzs4+l/omIT2DGrxbLh9H+SytKvEnwRGhCS
+ KjOPrYS8k14gXr70qaBh8pR19vN2x+Cf6s57Llp8=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <8872727e-1ffe-4d41-aac4-1e4ae682897e@yandex-team.ru>
-Date: Tue, 21 Jul 2026 10:14:14 +0300
+Message-ID: <6f547b5b-db44-4a14-bf70-cc6e6e7182ba@yandex-team.ru>
+Date: Tue, 21 Jul 2026 10:16:07 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v19 09/15] qapi: add local migration parameter
+Subject: Re: [PATCH v19 13/15] net/tap: support local migration with virtio-net
 To: Markus Armbruster <armbru@redhat.com>
 Cc: jasowang@redhat.com, mst@redhat.com, peterx@redhat.com, farosas@suse.de,
  raphael.s.norwitz@gmail.com, bchaney@akamai.com, qemu-devel@nongnu.org,
  berrange@redhat.com, pbonzini@redhat.com, yc-core@yandex-team.ru,
- mark.caveayland@nutanix.com, Eric Blake <eblake@redhat.com>
+ mark.caveayland@nutanix.com, Jason Wang <jasowangio@gmail.com>,
+ Eric Blake <eblake@redhat.com>
 References: <20260714154246.1242856-1-vsementsov@yandex-team.ru>
- <20260714154246.1242856-10-vsementsov@yandex-team.ru>
- <87ik68suso.fsf@pond.sub.org>
+ <20260714154246.1242856-14-vsementsov@yandex-team.ru>
+ <87a4rksuch.fsf@pond.sub.org>
 Content-Language: en-US
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <87ik68suso.fsf@pond.sub.org>
+In-Reply-To: <87a4rksuch.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
@@ -81,88 +82,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21.07.26 09:47, Markus Armbruster wrote:
+On 21.07.26 09:57, Markus Armbruster wrote:
 > Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 > 
->> We are going to implement local-migration feature: some devices will be
->> able to transfer open file descriptors through migration stream (which
->> must UNIX domain socket for that purpose).  This allows to transfer the
->> whole backend state without reconnecting and restarting the backend
->> service. For example, virtio-net will migrate its attached TAP netdev,
->> together with its connected file descriptors.
+>> Support transferring of TAP state (including open fd).
 >>
->> In this commit we introduce a migration parameter, which enables
->> the feature for devices that support it (none at the moment).
+>> Add new property "local-migration-supported", which defines
+>> whether local-migration is actually supported for this TAP device.
+>> Starting from 11.2 QEMU Machine Types it's enabled by default.
+>>
+>> Note that local-migration (including migrating opened FDs
+>> through migration channel, which must be UNIX socket) is
+>> enabled by global "local" migration parameters. But individual
+>> devices may have additional options to enable/disable it
+>> per device.
+>>
+>> The tricky thing is that we need to know whether to call open/connect in
+>> TAP initialization code, i.e. we need to know the value of migration
+>> parameter "local" when creating the TAP device.  For incoming migration,
+>> we can know only for TAP devices created with QMP after setting the
+>> migration parameter with QMP.
+>>
+>> So the full picture is:
+>>
+>> On source, to start outgoing "local" migration you need:
+>>
+>>   - migration parameter "local" set to true
+>>   - "local-migration-supported" TAP option set to true (the
+>>     default, starting from 11.2 QEMU Machine Types)
+>>
+>> If at least one of these options is not set, TAP backend
+>> doesn't participate in migration.
+>>
+>> On target, things are more difficult:
+>>
+>> Same, you need both "local" and "local-migration-supported"
+>> be set. And same, if one of them is not set, TAP backend
+>> is initialized as usual, and doesn't accept any incoming
+>> state.
+>>
+>> Additionally, if you are going to set "local", it must be
+>> set before creating the TAP device. If TAP device created
+>> with "local" unset, it initializes as usual. If you enable
+>> "local" after it and start incoming migration, it will fail
+>> in .pre_load handler of TAP backend.
+>>
+>> Moreover, there are interface restrictions: if you create TAP
+>> device when QEMU is in INCOMING state, and both "local"
+>> and "local-migration-supported" set, most of TAP options are
+>> not allowed, and script/downscript are required to be explicitly
+>> unset (set to "" or "no").
 >>
 >> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> Acked-by: Markus Armbruster <armbru@redhat.com>
->> Acked-by: Peter Xu <peterx@redhat.com>
->> Reviewed-by: Ben Chaney <bchaney@akamai.com>
+>> ---
+>>   net/tap.c     | 165 ++++++++++++++++++++++++++++++++++++++++++++++++--
+>>   qapi/net.json |  22 ++++++-
+>>   2 files changed, 180 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/net/tap.c b/net/tap.c
+>> index 2bd4b089573..4162820bcee 100644
+>> --- a/net/tap.c
+>> +++ b/net/tap.c
+>> @@ -38,12 +38,17 @@
+>>   #include "monitor/monitor.h"
+>>   #include "system/runstate.h"
+>>   #include "system/system.h"
+>> +#include "migration/misc.h"
+>>   #include "qapi/error.h"
+>>   #include "qemu/cutils.h"
+>>   #include "qemu/error-report.h"
+>>   #include "qemu/main-loop.h"
+>>   #include "qemu/sockets.h"
+>>   #include "hw/virtio/vhost.h"
+>> +#include "hw/core/vmstate-if.h"
+>> +#include "migration/vmstate.h"
+>> +#include "qom/object.h"
+>> +#include "qom/compat-properties.h"
+>>   
+>>   #include "net/tap.h"
+>>   #include "net/util.h"
+>> @@ -71,6 +76,8 @@ static const int kernel_feature_bits[] = {
+>>   
+>>   OBJECT_DECLARE_SIMPLE_TYPE(TAPState, TAP_NETDEV)
+>>   
+>> +static const VMStateDescription vmstate_tap;
+>> +
+>>   struct TAPState {
+>>       Object parent_obj;
+>>   
+>> @@ -95,6 +102,7 @@ struct TAPState {
+>>       int queue_index;
+>>       bool read_poll_detached;
+>>       VMChangeStateEntry *vmstate;
+>> +    bool local_migration_supported;
+>>   };
+>>   
+>>   static void launch_script(const char *setup_script, const char *ifname,
+>> @@ -409,6 +417,8 @@ static void tap_cleanup(NetClientState *nc)
+>>       tap_write_poll(s, false);
+>>       close(s->fd);
+>>       s->fd = -1;
+>> +
+>> +    vmstate_unregister(VMSTATE_IF(s), &vmstate_tap, s);
+>>   }
+>>   
+>>   static void tap_poll(NetClientState *nc, bool enable)
+>> @@ -445,6 +455,76 @@ static VHostNetState *tap_get_vhost_net(NetClientState *nc)
+>>       return s->vhost_net;
+>>   }
+>>   
+>> +static bool tap_is_wait_incoming(NetClientState *nc)
+>> +{
+>> +    TAPState *s = container_of(nc, TAPState, nc);
+>> +    assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+>> +    return s->fd == -1;
+>> +}
+>> +
+>> +static bool tap_pre_load(void *opaque, Error **errp)
+>> +{
+>> +    TAPState *s = opaque;
+>> +
+>> +    if (s->fd != -1) {
+>> +        error_setg(errp,
+>> +                   "TAP is already initialized and cannot receive "
+>> +                   "incoming fd.  For local migration, 'local' "
+>> +                   "migration parameter must be set _before_ "
+>> +                   "creating TAP device.");
+> 
+>  From error_setg()'s contract:
+> 
+>   * The resulting message should be a single phrase, with no newline or
+>   * trailing punctuation.
+> 
+> Suggest something like
+> 
+>             error_setg(errp,
+>                        "TAP is already initialized and cannot receive "
+>                        "incoming fd");
+>             error_append_hint(errp,
+>                               "Migration parameter 'local' must be set"
+>                               " _before_ creating the TAP device.");
+> 
+> Requires ERRP_GUARD().
+
+Will follow this, thanks
+
+> 
+>> +        return false;
+>> +    }
+>> +
+>> +    return true;
+>> +}
 > 
 > [...]
 > 
->> diff --git a/qapi/migration.json b/qapi/migration.json
->> index 66bd900465a..813c1f76e46 100644
->> --- a/qapi/migration.json
->> +++ b/qapi/migration.json
->> @@ -830,7 +830,8 @@
->>              'zero-page-detection',
->>              'direct-io',
->>              { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
->> -           'cpr-exec-command'] }
->> +           'cpr-exec-command',
->> +           'local'] }
->>   
->>   ##
->>   # @migrate-set-parameters:
->> @@ -1012,6 +1013,15 @@
->>   #     Must be set to the same value on both source and destination
->>   #     before migration starts.  (Since 11.1)
+>> diff --git a/qapi/net.json b/qapi/net.json
+>> index ada0329ef9d..d0d6e303b0d 100644
+>> --- a/qapi/net.json
+>> +++ b/qapi/net.json
+>> @@ -435,6 +435,25 @@
+>>   # @poll-us: maximum number of microseconds that could be spent on busy
+>>   #     polling for tap (since 2.7)
 >>   #
->> +# @local: Permit the use of optimizations for local migration.
->> +#     This must only be set when both the source and destination
->> +#     QEMU processes are on the same OS and directly connected
+>> +# @local-migration-supported: enable local migration for this TAP
+>> +#     backend.  When set, local migration is enabled/disabled by
+>> +#     migration parameter @local for this TAP backend.  When unset,
+>> +#     migration parameter @local is ignored for this TAP backend.
+>> +#     To be able to do incoming local migration of a TAP backend,
+>> +#     migration parameter @local must be set _before_ creating the
+>> +#     TAP backend.  Otherwise, TAP backend is initialized as usual,
+>> +#     opening/creating TAP devices in kernel.  In this case further
+>> +#     local incoming migration (with migration parameter @local set
+>> +#     after creating TAP backend with @local-migration-supporeted
+>> +#     parameter set) will simply fail.
+>> +#     Moreover, when QEMU is in incoming migration state, migration
+>> +#     parameter @local is set and @local-migration-supported is set,
+>> +#     the following options are not supported and must not be set:
+>> +#     @fd, @fds, @helper, @br, @ifname, @sndbuf, @vnet_hdr.
+>> +#     Additionally in this case @script and @downscipt must be
+>> +#     explicitly disabled (empty strings or "no").
+>> +#     (Since 11.2)
 > 
-> I think "on the same OS" is less than clear.  Does it mean both ends run
-> Linux, or both ends run Windows?  That doesn't make sense.  Recommend to
-> scratch it, because what matters is the UNIX domain socket.
-
-Agree.
-
+> Default?
 > 
-> With that, my Acked-by stands.
-> 
-> Ignorant question you may well have covered before: could we forgo
-> @local and simply use "is a UNIX domain socket"?
 
-My mistake is still not having the answer in commit message.
+Default is false now, no tricks with Machine Types. Will add.
 
-We can't because, UNIX socket may be only a first part of transfer
-channel to the remote target.
-
-https://lore.kernel.org/qemu-devel/20260713162057-mutt-send-email-mst@kernel.org/
-
-
-> 
->> +#     with a UNIX domain socket as the migration channel to enable
->> +#     use of file descriptor passing.  Individual device backends
->> +#     may need additional configuration flags set  to enable local
->> +#     migration optimizations.  This will be documented against the
->> +#     device backends where it applies.  (Since 11.2)
 >> +#
->>   # Features:
->>   #
->>   # @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
->> @@ -1053,7 +1063,8 @@
->>               '*direct-io': 'bool',
->>               '*x-rdma-chunk-size': { 'type': 'uint64',
->>                                       'features': [ 'unstable' ] },
->> -            '*cpr-exec-command': [ 'str' ]} }
->> +            '*cpr-exec-command': [ 'str' ],
->> +            '*local': 'bool' } }
+>>   # Since: 1.2
+>>   ##
+>>   { 'struct': 'NetdevTapOptions',
+>> @@ -453,7 +472,8 @@
+>>       '*vhostfds':   'str',
+>>       '*vhostforce': 'bool',
+>>       '*queues':     'uint32',
+>> -    '*poll-us':    'uint32'} }
+>> +    '*poll-us':    'uint32',
+>> +    '*local-migration-supported': 'bool' } }
 >>   
 >>   ##
->>   # @query-migrate-parameters:
+>>   # @NetdevSocketOptions:
 > 
 
 
