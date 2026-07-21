@@ -4,69 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACD24C4451C
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 08:52:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BA78C44529
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 08:52:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm6Bn-0005N6-Mb; Tue, 21 Jul 2026 04:50:59 -0400
+	id 1wm6Bz-0005Sq-Jr; Tue, 21 Jul 2026 04:51:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1wm6Bm-0005MP-By; Tue, 21 Jul 2026 04:50:58 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1wm6Bk-0005fo-P0; Tue, 21 Jul 2026 04:50:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=RjimWnqmHsNVDASdqxBR6CDlPbi3iLgTQoVIt7skhHg=; b=PM8Q9kJ50RgUnZhenHWgJSroUh
- 9d24X9ALnyODosKeawNs8M6RHGbxAkDzATbRverUFQYS7kN5i0/YEvE7riyVXuhByoCzNpmR2F+uf
- RjnvN2dr9hCERsctmaCk4YtCDhRDCobIHQfCt5IbJinWlRblSfkbdP3vauJxybxrdkmb6BjPVIPq6
- Y3dPvXSo7YoNHggKhg11q2VbfDI9nX6GlxuRl+bgvsiQUUrwdU3QZoHKceWE0OR4wmg24OQJR978y
- H0S1KbsDzUINWYfyXe/JdwBDJMagAgsKONq5NzYXK0/aVx7upfaugcoPIf8Uy88cgbHTM+siOVFOB
- CQoQVBOus418Sta3g+c3LtDvyboclxS4nxR9s83FADKEzoE8YO4Peb1ik/A5uAYEBG9k48HtTll+y
- I7efPhu8rU2PqqX9+d/Lj3tFEiFi16IwD4rtbLFlNYcYmuSlU8+WcYZYwjrABF8TXV9e5z8PPn24j
- YiAPBd9MMgTtNpu7Z5QJpDxVIzKMXr9aKP+uRba+rXGYbLjRCgYBhVw+e34/gTOojL18GhiVtAMvO
- N8sxa+8/F4xJFqIXONy2UmIkCJXBEXmyYYZMm42MOGhPVHe7fPP98RKEyezazCKeQkAY5MGwp2jtC
- kr/Rte0ErDQ9ZiJx75A3aVMCCKhmjgoeHiozfK7UQ=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: qemu-devel@nongnu.org,
- Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@oss.qualcomm.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau <marcandre.lureau@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Daniel =?UTF-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- John Snow <jsnow@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Fam Zheng <fam@euphon.net>, "Denis V. Lunev" <den@openvz.org>,
- Greg Kurz <groug@kaod.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- xen-devel@lists.xenproject.org, Li Zhijian <lizhijian@fujitsu.com>
-Subject: Re: [PATCH 7/8] hw/9pfs: annotate V9fsTransport callbacks as
- coroutine_fn
-Date: Tue, 21 Jul 2026 10:50:49 +0200
-Message-ID: <1962171.tdWV9SEqCh@weasel>
-In-Reply-To: <CAMxuvay01r=EchTO=PocqPtdtZtxcJs+AJZExRA8rBao31mH7w@mail.gmail.com>
-References: <20260720-co-v1-0-fabb4db3c204@redhat.com>
- <6287083.lOV4Wx5bFT@weasel>
- <CAMxuvay01r=EchTO=PocqPtdtZtxcJs+AJZExRA8rBao31mH7w@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wm6Bv-0005RQ-U4
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 04:51:07 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wm6Bu-0005hk-7E
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 04:51:07 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-47f703a9d05so1458105f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 01:51:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1784623865; x=1785228665; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=2OH8VSOIHdDNZWpR3lhruykF7B4xhDvib/Al3Gjf0HA=;
+ b=gJEi6Le6zerxNlIgWzR3ILyEfp2H6ikWrrHDzS+1ueE4se5NsOcn3GpLJTwDM1Dfrr
+ Bsx6d8McEyXvB2zAuJL+ZGk7sOwWh2/NIjBRnVEtC9GQsgubgHQya0vEcmRmhzq5ebh7
+ X688HVdUtaoNWP7E4+Blk2tyEX5nKetIvCTcquLbFDZpQfnWPQ88PvdgVk3zlvxqiX8I
+ LcIQwo9I0Cu76oMC/Y/pc59+TXxCi3Ar8/x6S1PhDNJ0lq0D74k1tJFSreWrNOzmNsB2
+ hiQ71Ivqeiu8K9tDklnNtNUxqpnimNz/isqP96b9STZ628jvf2pkWH70ohkExZ4EKOFJ
+ o/Nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784623865; x=1785228665;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=2OH8VSOIHdDNZWpR3lhruykF7B4xhDvib/Al3Gjf0HA=;
+ b=STGI2elaPLHO9mPUseoWybw6e9ZkIxwmCetz35c3R9WEu5UHkalBxI/eYLf5z3e+Rv
+ KjH6aksZrqSDb2p/C2obblCwyiNPIfOCfDhclwnOOP8PSa0bIXkk4OJ2CUkVOXCiBKnV
+ sE2fXi2A9yGklAPIcZdVoskuP5qzlbUJh2den5bpJPwWHuyepbshiDK4jvif5MIj8hdL
+ i+uKb71dUwTjW6fPo2A/jMPK2wl2obDgJbp5+I/KJT5EEtTvR9lKw2VCQZJVw8nwNnVO
+ Mj4/u84iUYEmDcff157joAWPv2RW33VeDhM+zmXdekHvXxm1TmFFGUsXjfOggGu30jLD
+ qQUQ==
+X-Gm-Message-State: AOJu0YzXzNQO9HLx/U8tt4sbWrViJkp0xNH7JyzlzJCo680ElZVu1+wx
+ VYVivY41y62kcPPleEpiZoYilNahBYr1gbZOeEsmmyXuVKwNkrLRjkmHR9JbwR5WcgEeyC6h9Dn
+ ClMOvp234yg==
+X-Gm-Gg: AfdE7cnSMh+93kbcoTqlpL7nTN5L7l5FO/hIFCpIxSF3Hm4fXkpSOdzIo81o00eKyqu
+ tQtwYkVvW6Lcyums6lun9wgTUb6yZt3RaCuInGl77W+yhapAOMizztLLnPxhKl04jMT+TymD6VO
+ LJHKwqcmlcvGYFR+nLu1g1eupSezPefejLhb3tSuqgMtxpLs3eN0ztBbNDMSo8ZrYkcpk/t9mKp
+ YPcy4kHZdCkzDU4M8ZuyqyvT7PV8O3f2Bdb6tubi5aZm1z4peG28xl9zaWTsV2NBIm/aa8DnTXQ
+ JSqKVHGpszicjO1FeAQbrMgZIyJCjXhVuWeOCiMXI8AnL0ljgjlwsQe1M+rex3R+G/2m5YFw9B9
+ 1LThwr7r8lvm1h81h8j9v6c4IkHcF1IPGfGzefuRNTLPH6KdjZzl96HQE1zLbGp14Uk7/Sx2ilj
+ eLvJiNgCmbVqngD8C2InWN5wtIXB8715km3JMWy5GxVZ6fAb9MF25oAJIj3y/IMCnd1lDLB3wvX
+ PIGzlxkjrs=
+X-Received: by 2002:a05:600c:b8d:b0:493:a613:56b2 with SMTP id
+ 5b1f17b1804b1-4954a3d0d5fmr205377895e9.8.1784623864706; 
+ Tue, 21 Jul 2026 01:51:04 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4956537c7desm68707245e9.7.2026.07.21.01.51.03
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Jul 2026 01:51:03 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 10/16] hw/dma/omap_dma: Be more careful about overflow in
+ transfer setup
+Date: Tue, 21 Jul 2026 09:50:44 +0100
+Message-ID: <20260721085050.421257-11-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260721085050.421257-1-peter.maydell@linaro.org>
+References: <20260721085050.421257-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,48 +102,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tuesday, 21 July 2026 10:39:52 CEST Marc-Andr=C3=A9 Lureau wrote:
-> Hi
->=20
-> On Tue, Jul 21, 2026 at 12:38=E2=80=AFPM Christian Schoenebeck
->=20
-> <qemu_oss@crudebyte.com> wrote:
-> > On Tuesday, 21 July 2026 10:25:34 CEST Philippe Mathieu-Daud=C3=A9 wrot=
-e:
-> > > On 21/7/26 10:06, Marc-Andr=C3=83=C2=A9 Lureau wrote:
-> > > > Hi
-> > > >=20
-> > > > On Tue, Jul 21, 2026 at 11:58=E2=80=AFAM Marc-Andr=C3=A9 Lureau
-> >=20
-> > > > <marcandre.lureau@redhat.com> wrote:
-> > [...]
-> >=20
-> > > >> most of them are "return-type co_annotation fn(..)"
-> > > >> we even have scripts/block-coroutine-wrapper.py that relies and
-> > > >> produce this order..
-> > > >> a bit late to change the style imho...
-> > > >>=20
-> > > >> At least, let's not make this a requirement for this series, please
-> > >=20
-> > > Not a requirement on my side, but if we had to pick a style,
-> > > I'd vote for "attribute before return type".
-> >=20
-> > Yep, because that's a) the most compiler-friendly option (all compilers
-> > allow it, including MSC) and b) it's the most diff-noise friendly
-> > solution (can be prepended on its own line without touching any of the
-> > existing line(s) at all).
->=20
-> ok, what should I do? Send a preliminary patch to fix all annotation
-> positions? or just change the position in this patch or series?
+In omap_dma_transfer_setup(), the maximum number of elements we can
+transfer is 0xffff * 0xffff == 0xfffe0001 (because the max frame
+count and max elements per frame are both 65535).  However, we store
+total element counts in 'int' variables, and use INT_MAX as a "bigger
+than any valid value" sentinel, and when performing arithmetic with
+the total count of transferred elements we are not careful about
+avoiding overflows. Fix these:
 
-Your decision. I'm just giving my 2cts. As this is not a behaviour change, =
-it=20
-is way below my threshold level for taking any strong position. If you can=
-=20
-make this for this patch for now, that would nice, but if not, not a deal=20
-breaker either:
+ - use uint32_t rather than int for the local variables tracking
+   various element and frame counts
+ - use UINT_MAX as our sentinel
+ - calculate new packet, element and frame counter values using
+   arithmetic on a local uint32_t, rather than doing it in-place
+   on local variables that are only 'int' because the actual
+   counter registers are 16 bits
+ - use 64-bit arithmetic when calculating how much to advance the
+   source and dest pointers and the total dma->bytes transferred
 
-Acked-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Note that since soc_dma_ch_s::bytes is only 'int' this can still
+overflow; we'll fix that in a subsequent patch.
 
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
+Message-id: 20260710105907.2570621-5-peter.maydell@linaro.org
+---
+ hw/dma/omap_dma.c | 30 ++++++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
+
+diff --git a/hw/dma/omap_dma.c b/hw/dma/omap_dma.c
+index 77f14414989..14b310bf404 100644
+--- a/hw/dma/omap_dma.c
++++ b/hw/dma/omap_dma.c
+@@ -391,7 +391,7 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
+     struct omap_dma_reg_set_s *a;
+     struct omap_dma_channel_s *ch = dma->opaque;
+     struct omap_dma_s *s = dma->dma->opaque;
+-    int frames, min_elems, elements[__omap_dma_intr_last];
++    uint32_t frames, min_elems, elements[__omap_dma_intr_last];
+ 
+     a = &ch->active_set;
+ 
+@@ -403,7 +403,14 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
+                         __func__, dma->num);
+     }
+ 
+-    min_elems = INT_MAX;
++    /*
++     * The maximum frame count and maximum element count are both 0xffff,
++     * so our worst case possible number of elements to transfer is
++     * 0xffff * 0xffff == 0xfffe0001. We can therefore keep element
++     * counts in a uint32_t and use UINT_MAX as a sentinel value for
++     * "not set" / "condition does not occur".
++     */
++    min_elems = UINT_MAX;
+ 
+     /* Check all the conditions that terminate the transfer starting
+      * with those that can occur the soonest.  */
+@@ -413,7 +420,7 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
+         if (elements[id] < min_elems)   \
+             min_elems = elements[id];   \
+     } else              \
+-        elements[id] = INT_MAX;
++        elements[id] = UINT_MAX;
+ 
+     /* Elements */
+     INTR_CHECK(
+@@ -465,7 +472,7 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
+                     (a->frames - a->frame - 1) * a->elements +
+                     (a->elements - a->element))
+ 
+-    dma->bytes = min_elems * ch->data_type;
++    dma->bytes = (uint64_t)min_elems * ch->data_type;
+ 
+     /* Set appropriate interrupts and/or deactivate channels */
+ 
+@@ -528,8 +535,9 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
+ 
+     /* Update packet number */
+     if (ch->fs && ch->bs) {
+-        a->pck_element += min_elems;
+-        a->pck_element %= a->pck_elements;
++        /* Can't overflow: worst case min_elems 0xFFFE0001 + element 0xFFFF */
++        uint32_t new_pck_element = a->pck_element + min_elems;
++        a->pck_element = new_pck_element % a->pck_elements;
+     }
+ 
+     /*
+@@ -537,13 +545,15 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
+      * can skip part of this.
+      */
+     if (dma->update) {
++        /* Can't overflow: worst case min_elems 0xFFFE0001 + element 0xFFFF */
++        uint32_t new_element = a->element + min_elems;
+         a->element += min_elems;
+ 
+-        frames = a->element / a->elements;
+-        a->element = a->element % a->elements;
++        frames = new_element / a->elements;
++        a->element = new_element % a->elements;
+         a->frame += frames;
+-        a->src += min_elems * a->elem_delta[0] + frames * a->frame_delta[0];
+-        a->dest += min_elems * a->elem_delta[1] + frames * a->frame_delta[1];
++        a->src += (uint64_t)min_elems * a->elem_delta[0] + frames * a->frame_delta[0];
++        a->dest += (uint64_t)min_elems * a->elem_delta[1] + frames * a->frame_delta[1];
+ 
+         /* If the channel is async, update cpc */
+         if (!ch->sync && frames) {
+-- 
+2.43.0
 
 
