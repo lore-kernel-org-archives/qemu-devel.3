@@ -4,72 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5037C4451C
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 13:19:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D43C3C44532
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 13:45:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmANL-0003r2-Iy; Tue, 21 Jul 2026 09:19:11 -0400
+	id 1wmAm4-0000n9-9k; Tue, 21 Jul 2026 09:44:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wmANK-0003qq-Ia
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 09:19:10 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wmAlz-0000cp-0F
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 09:44:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wmANI-0005Wu-Ap
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 09:19:10 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wmAlw-0001UP-4c
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 09:44:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784639946;
+ s=mimecast20190719; t=1784641472;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rCyPK+2XSHZ5BDckkQgVmgaarr787w6zzeQT+B59V7E=;
- b=RHwBGL/kj7yKJqwyNgMfcNx7azoTKFwsYtfS1sFq7xRpmT1UcR7qmnUyeyltSE+v6yuCMQ
- 8DT1yklSrMe7HDCWIyOEfi9+NljSPLNco+3qe0Yb8vBZ8LWXYKL0Dd9wyQztFqTxTeD3hM
- 6oPtdixcH3Of0n750zh94jvK4+8zw0o=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Cx8vLMJg9zXjhYyWKskgl/CVpCD47uOslPzrLgIp52M=;
+ b=dT4tfyOn4CtjVVbVzIxd8c/YNiLoaH/KH5r7Jx4apgqH+xVLpx9LSw9jkp5VpjQjUwn2zB
+ J2bCS7JXnMYbVWAKtgdQlLQ7EDDbdRLbNjcO+QFWw3fmUxdW8ztcjhKdKAiG2bCuuOymFT
+ 93MDog3ZIa3hf3MTBkJyY1fZxI+ezeI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-321-CK9fBM7HOsmWS9CEvts8aQ-1; Tue,
- 21 Jul 2026 09:12:59 -0400
-X-MC-Unique: CK9fBM7HOsmWS9CEvts8aQ-1
-X-Mimecast-MFC-AGG-ID: CK9fBM7HOsmWS9CEvts8aQ_1784639577
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-357-KKDI551uMEmXrxSTtl1wVQ-1; Tue,
+ 21 Jul 2026 09:44:28 -0400
+X-MC-Unique: KKDI551uMEmXrxSTtl1wVQ-1
+X-Mimecast-MFC-AGG-ID: KKDI551uMEmXrxSTtl1wVQ_1784641467
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 667881926B7D; Tue, 21 Jul 2026 13:12:57 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D15AB1954235; Tue, 21 Jul 2026 13:12:56 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6CC0D21E6920; Tue, 21 Jul 2026 15:12:54 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Mitsuru Kariya <Mitsuru.Kariya@oss.nttdata.com>
-Cc: qemu-devel@nongnu.org,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Eric Blake <eblake@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,  Laurent Vivier <lvivier@redhat.com>,
- Peter Xu <peterx@redhat.com>,  Jason Wang <jasowang@redhat.com>
-Subject: Re: [PATCH 4/5] util/qemu-sockets: add TCP_USER_TIMEOUT support
-In-Reply-To: <20260720053335.2316729-1-Mitsuru.Kariya@oss.nttdata.com>
- (Mitsuru Kariya's message of "Mon, 20 Jul 2026 14:33:35 +0900")
-References: <20260524073442.435408-5-Mitsuru.Kariya@oss.nttdata.com>
- <87se758rv2.fsf@pond.sub.org>
- <20260720053335.2316729-1-Mitsuru.Kariya@oss.nttdata.com>
-Date: Tue, 21 Jul 2026 15:12:54 +0200
-Message-ID: <87ecgwo59l.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B98CC195F17D; Tue, 21 Jul 2026 13:44:27 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.155])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E36F73003EFD; Tue, 21 Jul 2026 13:44:26 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Anatol Belski <anbelski@linux.microsoft.com>
+Subject: [PATCH for-11.1] virtio: avoid packed vring virtio_queue_empty()
+ infinite loops (CVE-2026-16457)
+Date: Tue, 21 Jul 2026 09:44:24 -0400
+Message-ID: <20260721134424.196337-1-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: permerror client-ip=170.10.129.124;
- envelope-from=armbru@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+ envelope-from=stefanha@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -92,38 +82,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mitsuru Kariya <Mitsuru.Kariya@oss.nttdata.com> writes:
+Virtqueue handler functions in device emulation code often look
+something like this:
 
-> Thank you for reviewing, and I'm sorry for the late reply.
->
-> Markus Armbruster <armbru@redhat.com> writes:
->> Actually, it's "transmitted data may remain unacknowledged, or
->> buffered data may remain untransmitted".  Moreover, the interaction
->> with @keep-alive is not mentioned.  ...  Have it point to tcp(7) for
->> details?  Perhaps something like [...]  What do you think?
->
-> Agreed, thanks -- adopted in v2.  I took your wording almost verbatim,
-> with two small adjustments:
->   - reflowed to stay within the 70-column limit the QAPI doc checker
->     enforces (the original wrapping tripped it), and
->   - kept "(Since 11.1)" to match the neighbouring members.
-> The interaction with @keep-alive is left to the tcp(7) reference, as you
-> suggested, to keep it short.  I also updated the -netdev stream
-> addr.user-timeout entry in qemu-options.hx to match (per your other
-> comment).  I've added your Suggested-by to the patch.
->
-> The text now reads:
->
->   # @user-timeout: maximum time in milliseconds that transmitted data
->   #     may remain unacknowledged, or buffered data may remain
->   #     untransmitted, before the connection is closed.  See tcp(7)
->   #     for details.  Only supported for TCP sockets on systems where
->   #     the TCP_USER_TIMEOUT socket option is defined (Linux only).
->   #     When set to 0, system setting is used.  (Since 11.1)
+  while (!virtio_queue_empty(vq)) {
+      ...pop and process virtqueue element...
+  }
 
-Better.
+virtio-blk, virtio-scsi, virtio-crypto, and vhost-shadow-virtqueue use
+this pattern.
 
-Swap "See tcp(7) for details." and the next sentence, to hopefully help
-the reader understand what to look for in tcp(7)?
+The device may break (i.e. hit an error that requires device reset)
+during the loop. virtio_queue_empty() returns 1 for broken split vrings
+but not for broken packed vrings, leading to an infinite loop.
+
+Adjust the packed vring behavior to match split vrings and avoid
+infinite loops.
+
+Fixes: CVE-2026-16457
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3968
+Reported-by: Anatol Belski <anbelski@linux.microsoft.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
+ hw/virtio/virtio.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index f4d86a36553..3795e3c8c68 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -763,6 +763,10 @@ static int virtio_queue_packed_empty_rcu(VirtQueue *vq)
+     struct VRingPackedDesc desc;
+     VRingMemoryRegionCaches *cache;
+ 
++    if (virtio_device_disabled(vq->vdev)) {
++        return 1;
++    }
++
+     if (unlikely(!vq->vring.desc)) {
+         return 1;
+     }
+-- 
+2.55.0
 
 
