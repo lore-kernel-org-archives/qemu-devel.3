@@ -4,143 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A5F8C4452D
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 06:39:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E755AC44529
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 06:44:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm46n-00033l-J5; Tue, 21 Jul 2026 02:37:41 -0400
+	id 1wm4DH-00086X-CA; Tue, 21 Jul 2026 02:44:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
- id 1wm46d-0002gg-Ki
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 02:37:36 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wm4DF-000869-TT
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 02:44:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
- id 1wm46b-0004TW-Rd
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 02:37:31 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66L4ShGu526992
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 06:37:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=vNILrqZOki4
- ga/4fJZJkmvVhO0/4YSMRXaOl2EAjZlM=; b=SQRau4pAbe0Eb1I8SCtEre18F8L
- 4ss/Vez+T1dG5nxAZ+WznR92tZcQS/cw0f1khxC6G2KqGcaNj0Q3J6VZiDrGzZBT
- Xf2+5mf5AlIwlEmVKdPqs4CjRU6ROBSpvCSKkY+oij181o2H5iq+C1H1srhZ7T1t
- KuB419DSablmI1hKUH4e/Fb8A61TA02Ee7A0Xv1vHKWOT/KFUjQCF0dgVsMBGJJi
- PEF9d4ckA22Nm8zNheXebtUul/CEOkk7sgHfcKE+2zf34mH6ZxKN2EqGUd3re0bI
- rnjp0HV1yZDcgDOBN5dJmbpdMxp2O5OKSoCalEgDYuctTpKK0XsXnCFVn7A==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fj1se0em3-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 06:37:16 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2cf44f2c49bso13098505ad.3
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 23:37:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wm4DC-00052L-Vp
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 02:44:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784616258;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=p+tkwyDp1Yn7DqT72sgxYjvB1R8s3O1UAMDF8OfxCOw=;
+ b=Gshx/1KSlEN2DFoz7Qs3XtGUPjcpajZxDiUA/QQrw3V+a7o+d6gmdllpSdV6meOpsM7M4g
+ CS0lt8In6HaFIL6gB8Jdu8DA2Drd4ALjkPxOSrefZp/Ae5J3s9eEZhSlCwQBRUoM02l/rA
+ GiLH0Gcf6LvJDF+uVBGvliaMJEymm2c=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-125-LiaBLZAaPJyGmKPTXsu1Pw-1; Tue, 21 Jul 2026 02:44:16 -0400
+X-MC-Unique: LiaBLZAaPJyGmKPTXsu1Pw-1
+X-Mimecast-MFC-AGG-ID: LiaBLZAaPJyGmKPTXsu1Pw_1784616255
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49545071724so52030325e9.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 23:44:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784615836; x=1785220636; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=vNILrqZOki4ga/4fJZJkmvVhO0/4YSMRXaOl2EAjZlM=;
- b=OnwiNdTgKiVED6NvLb+5iDRgRSuZzhXBWShntA7gnAlzE60qdfvU4eydxB+vvae5gO
- l13H1s2Vd6f+U+uFgSOcUrBooa3co/r8SgfD49MmL3ahCMVD9GLoBfxjbByft8GGrLpj
- tT97zcz6VmCr+u7RaScqYtk7KRtuyP/Bp2fHsEX58oPpsbmtCnMpOgnCSQDAie5LvQPF
- Co9LIvmmaTDFCva+0JTR7P6uQoocKcGWntpheM9ZgmNQP2GiYWwWMKai3sgEkwDEGHlw
- XVBm0aKdHGPB/NIIWup4NbSTPQWtyCoqaKUFl2/JBEnc79uiRJ6fS6zYf9LMHvRYalCZ
- DjFQ==
+ d=redhat.com; s=google; t=1784616255; x=1785221055; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=p+tkwyDp1Yn7DqT72sgxYjvB1R8s3O1UAMDF8OfxCOw=;
+ b=fvATbl5FiQZWU/YrDZUILBgEdDgUcMVrhaAiTnZxoRjtDZVxmcYXYbCFuvMEmuVWSw
+ Xg+25RNFNJjh7RwMgvZOKzJ7z3X21CZVUr5BmMhnd+LTFLMWKlKCL4iO6l0GBjduhj6u
+ N5H/PCwMIe86N4lxLiI0/lX7IzC/HEa1nkxI31CAh6HiFvs9Aw7qYD1canvyfrTWAfzq
+ c83T8bJEYPm6EOLRvZVmj+benAIu/IS8eh7PsA9myUr7KXurDqKzvmfBKjtZBoXpRM+v
+ 65B1rHhPQrb68XUtHrbltI38T5AyEs4sZ10+WAS1rHPAnMonjFOUhMEFMRQobzkY/9rG
+ vIgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784615836; x=1785220636;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=vNILrqZOki4ga/4fJZJkmvVhO0/4YSMRXaOl2EAjZlM=;
- b=BcIUUAK8B4yzcH8sYUmQTow5rqI46zMvzkcP+CeG1l1EZGPT2BroaiNeuyUcAlDgx/
- v/2Z0Mexen4q7Zqhn3GjD6VcGN96kxwCCYDJMLXWjCpZAuugyM653rCYoc2A6Qt1acQ8
- KiR9mhRqggkD8faS6bdFruohUoN+w+y2Qb2g7NWZOKA62ECrcujPjfeyFtV9S8DJ4/1o
- VqpM8I1r+sHSjEvdfnQ+zKYTQ2abdY8EiNxDz5kOyecaGQUnVtk6UlI0tgMCmSGctPRu
- Vu52eWfJDdkkRKUJU56nXBxJicbwVHiLmfZ4jKALkzZRh95BQVUZ8P4YQY5nedzjj7bJ
- FhIg==
+ d=1e100.net; s=20251104; t=1784616255; x=1785221055;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=p+tkwyDp1Yn7DqT72sgxYjvB1R8s3O1UAMDF8OfxCOw=;
+ b=lzNo19wfqDDmHQO8odGDK++iB3j4gaeX+QJWZXvwkify9C2opCTYIHZzrcGJG2uhup
+ Zplod5Iox0q34jLCQOv6aezrzh6Ygqb/e7XxUokHixOkCUhbvbRHcrZLbBeNxLwWEG6d
+ cwd3fRnIxp6MBUMyfbY8C0c5HVZ07AI2wCwMpqEwFLW5cJReceSIXRWcKn2k67zH1ikB
+ DEZC9I35QW+H4R77utFZIf3bSyj42pLETFiOWCTBfnwbIQ5lbG+kcWyE8S/9WGzD7u4M
+ E3S7W64kV2GHIegQrR6mppvyxncNirfmzxmemT0K7FttwrWi0ZOtlHE8kQbzuCOX4RRr
+ iyyw==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rr6dPxEOya2NeEHVaXCSqZ8izqUZ7Y9w6+4fcdAYE+sDQt3zGraLhEGKyD4MpzSU91FQlIbP9B/nJlp@nongnu.org
-X-Gm-Message-State: AOJu0YzihO4C/Rdqx3H6GcD9JzTD8ojhmp6R0V1PzMp/1b7CAklZbsO0
- uziB/cXJT3ZHyMIsoKC8X4EMAZFBl+d7zSYo6gn97DHn+1zu+sbF5l2YNZYr8Ym6Klla+yEjuD5
- 2Vyu85nfrxL1cBtwVnOdqPrTLZnUvgIqhdag0ZtF/Pv0tJi5SK8SmjPFYb/BOcffepg==
-X-Gm-Gg: AfdE7clAwCr79Zsygi/jOZ+WePyYnPGidqIgjyeGxKcHfGvvq/5xzF2sjhtvCSxL88c
- QDyPwRw4GaIURAoBumADuVf4cvB2z4lPpys6mwPpeYfXqFxZGKZwVxALV8iINGm0bCsIeidNLJL
- GcRVtdiZoe3Cq+3b6ykJ4AypJOrPWmK7wwgThYjTy27/oI6y1Jqm1YMOpd+ffY7Xy5DjXFAxC5g
- n5S6IJLSE4Xqg3CvOkua44ZIW+gP2IUO1O0gAP51yzrnFFgjz3r9GL4gx4xWiaOYV+nYWAu69sA
- qxjv7YLbGZQzpw2jFWDeBDgVwKpG3jqFEniR+EOTN170pBglkceeyuANGlvmHf4yCd1Or++JxIb
- ef7GUVwXzzD68Anqh91vIv3GAa89buKQ76CmWmWlMtKWQUgePbFH3t0zlW0aj1PKF8MtzvI5cEE
- I1kLij9C3d1EJgq+4DaRmpCATJL2889vU=
-X-Received: by 2002:a17:903:b88:b0:2cc:e3b6:f305 with SMTP id
- d9443c01a7336-2cf349ba609mr138979245ad.4.1784615835962; 
- Mon, 20 Jul 2026 23:37:15 -0700 (PDT)
-X-Received: by 2002:a17:903:b88:b0:2cc:e3b6:f305 with SMTP id
- d9443c01a7336-2cf349ba609mr138979075ad.4.1784615835518; 
- Mon, 20 Jul 2026 23:37:15 -0700 (PDT)
-Received: from hu-slingapp-blr.qualcomm.com
- (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+ AHgh+Rp99jEIGZcqo00fo8q7pG2jALGoxPNDr56dvvonzKrnpkdVKyXa8lFwrmadzNiQ9R+rWasi1GMfsuyD@nongnu.org
+X-Gm-Message-State: AOJu0Yw6SoRqVmpvTFSm/nwu13uQmJgL43bBML1JWjVR1gTp4kAGp8EK
+ uwZcDY8uBm1c4vRwuypnkij0o9v/2O5XjDZqlI0k/pbgsF8uas6JJWtBySmF/QNwO2RDpeEOiAb
+ k32nEUM3cG3NQ//YBj0d6aGNjlN4IJsT1SvM1+kDXGfNyXCA9aHbIRxND
+X-Gm-Gg: AfdE7cleXWVc4Td5IVWx7r7E759C3t4vScKf+m76w4ouFC59KeVVs1wRrYxqDLJE8V2
+ Kev3Bom8tDMCAfjbpExLlGUUmCMrsfT8qLeWM9JwVMPurGDKClMqmCWabU9ZcCJxv0FT1gjM65t
+ NASoxsAYBoPS6H24CFbonxcvGM/AU6pynh/qqpvsgA4F019YlNjUK+CM/WUmzdj+Mqiedg+veou
+ 9t8X2hoDjjEX+NUV8z8fGFyeAAsEqiIBsgNpQ5BCnY+dOwn7qFO8IIViXa6MIiWU06VIMAr4O7z
+ 8DHPMlAKmhBySFi9z3wlS06nL4kmUwLDbzD2SBOVIqtOIwPNdo/PfPLWr/J13iSlxK13FIyImg=
+ =
+X-Received: by 2002:a05:600c:a44:b0:492:68bc:3237 with SMTP id
+ 5b1f17b1804b1-4954a40c014mr176717195e9.32.1784616255078; 
+ Mon, 20 Jul 2026 23:44:15 -0700 (PDT)
+X-Received: by 2002:a05:600c:a44:b0:492:68bc:3237 with SMTP id
+ 5b1f17b1804b1-4954a40c014mr176716935e9.32.1784616254719; 
+ Mon, 20 Jul 2026 23:44:14 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.113.188])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3142a1bb8a4sm47161380eec.14.2026.07.20.23.37.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jul 2026 23:37:15 -0700 (PDT)
-From: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
-To: qemu-riscv@nongnu.org
-Cc: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-devel@nongnu.org (open list:All patches CC here)
-Subject: [PATCH v5 08/10] docs/system/riscv: document initial virt RPMI support
-Date: Tue, 21 Jul 2026 12:06:34 +0530
-Message-ID: <3a8f2d3fdff3bbd3760d0a5ae75bcaffbda1c47b.1784547370.git.subrahmanya.lingappa@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1784547370.git.subrahmanya.lingappa@oss.qualcomm.com>
-References: <cover.1784547370.git.subrahmanya.lingappa@oss.qualcomm.com>
+ 5b1f17b1804b1-4956546db7bsm45230385e9.3.2026.07.20.23.44.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Jul 2026 23:44:14 -0700 (PDT)
+Message-ID: <029d4e97-0a58-4121-86e4-bf27d1faaa17@redhat.com>
+Date: Tue, 21 Jul 2026 08:44:12 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/ide/core: Fix possible crash via NULL pointer in
+ ide_cancel_dma_sync()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>
+Cc: Alexander Bulekov <alxndr@bu.edu>, qemu-block@nongnu.org,
+ qemu-stable@nongnu.org, qemu-trivial@nongnu.org
+References: <20260720194210.663629-1-thuth@redhat.com>
+ <cd8ff4ea-9d66-4be1-b8ff-e361cfaea5d2@oss.qualcomm.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <cd8ff4ea-9d66-4be1-b8ff-e361cfaea5d2@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: UzaY3YB2AlWO_e-rh8VhA5oGJ5gF1zDD
-X-Authority-Analysis: v=2.4 cv=TIZ1jVla c=1 sm=1 tr=0 ts=6a5f139c cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=NEAV23lmAAAA:8
- a=V1jnuoLLAAAA:20 a=EUspDBNiAAAA:8 a=RyhCfiGMEKD-kOZgqhYA:9
- a=uG9DUKGECoFWVXl0Dc02:22 a=bA3UWDv6hWIuX7UZL3qL:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDA2NyBTYWx0ZWRfX42bnIawHQbTI
- djprgzDFnakFLGQRblcLeVJsm8hU/+N/W6BirC50jqSr9mbtWEnFzp05KAXtav7lWq+VwHAp0IT
- gae8pwJ78eWD2AQzpd2us02SILsVWiU=
-X-Proofpoint-GUID: UzaY3YB2AlWO_e-rh8VhA5oGJ5gF1zDD
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDA2NyBTYWx0ZWRfX8hSm5A/j/XpZ
- ajEttJdvwL5ShVbqcVKc0MIWUfgp6BtR5ef7o7WGC7EqBAYEJN9izKaleT+qJ4FgcnQZ3kYirTZ
- v6zlcJtNnW3J+yMwPXOElKBj21EIrehoVj7mRe92G9C/fvKJkJAHCjWqrosxTCxvAPYElFZ0aGP
- NqOxgK4T9AwCqIyQeYYd6hV1dyhjUWtlEKvu9Mb8bCL4rGu+ZKwy1FDuJY5DOmDP+0SfRWnaKot
- 34dDc07cp5X6aperBPV+2a0KGHjwJ+hWPb69l4Jp3fQm9Hi/U/Euh3NKdub7ojatRqJ61LrKG+g
- Jbe9S/FfCCWxub7Jh2VlJmWpx0wzRBKP4k85emlbRrkOcBO0Deye9CWfXfkhJuq9B3EofFwccVK
- mNIZ2JyNI/hCf1gvbUfr84YlangkeA1///+zAdiunpXhwGY5XlT6Fm+kort3dDETXtWl+QEdGPF
- jJczYRJ3TOceJHgBlDw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-20_06,2026-07-20_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 impostorscore=0 priorityscore=1501 spamscore=0
- clxscore=1015 malwarescore=0 bulkscore=0 suspectscore=0 adultscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607210067
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=subrahmanya.lingappa@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=thuth@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,92 +168,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Document the opt-in virt RPMI transport and the initial HSM, system
-reset, and system suspend service groups.
+On 20/07/2026 22.36, Philippe Mathieu-Daudé wrote:
+> On 20/7/26 21:42, Thomas Huth wrote:
+>> From: Thomas Huth <thuth@redhat.com>
+>>
+>> ide_cancel_dma_sync() is called with a "IDEState *s" for one of the
+>> two IDE drives on a bus (primary or secondary drive) to cancel all
+>> pending DMA transfers on the drive. The code then checks
+>> s->bus->dma->aiocb to see whether there is any IO in flight on the
+>> *bus* and then calls blk_drain(s->blk) to wait for its completion.
+>> However, s->bus->dma->aiocb might belong to the other drive on the
+>> bus, and if there is no disk attached to the current drive, s->blk
+>> is NULL. Since blk_drain() does not check its parameter for a NULL
+>> pointer, QEMU can crash in such a case.
+>>
+>> Fix the problem by checking s->blk to be a valid pointer before
+>> calling blk_drain() in this function.
+>>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/905
+>> Reported-by: Alexander Bulekov <alxndr@bu.edu>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4052
+>> Reported-by: dong ling
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   hw/ide/core.c | 5 ++++-
+>>   1 file changed, 4 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/ide/core.c b/hw/ide/core.c
+>> index f78b00220b8..49848c8e6bd 100644
+>> --- a/hw/ide/core.c
+>> +++ b/hw/ide/core.c
+>> @@ -741,8 +741,11 @@ void ide_cancel_dma_sync(IDEState *s)
+>>        * In the future we'll be able to safely cancel the I/O if the
+>>        * whole DMA operation will be submitted to disk with a single
+>>        * aio operation with preadv/pwritev.
+>> +     *
+>> +     * Note: s->bus->dma->aiocb might belong to the adjacent IDEState,
+>> +     * so we have to check s->blk for not being NULL, too.
+>>        */
+>> -    if (s->bus->dma->aiocb) {
+>> +    if (s->bus->dma->aiocb && s->blk) {
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> 
+> If you don't object, I'll change to:
+> 
+>         if (s->blk && s->bus->dma->aiocb) {
+> 
+> when queueing.
+Please unqueue it again - I just noticed that it is now possible to trigger 
+the assert(s->bus->dma->aiocb == NULL) after the blk_drain() instead...
+I think we simply have to drain both drives, primary and secondary, if their 
+"blk" is not NULL... I'll send a v2.
 
-Signed-off-by: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
----
- docs/system/riscv/virt.rst | 65 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 65 insertions(+)
-
-diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
-index 60850970ce..31cd945a3b 100644
---- a/docs/system/riscv/virt.rst
-+++ b/docs/system/riscv/virt.rst
-@@ -146,6 +146,71 @@ The following machine-specific options are supported:
- 
-   Enables the riscv-iommu-sys platform device. Defaults to 'off'.
- 
-+- rpmi=[on|off]
-+
-+  Enables the RISC-V RPMI shared-memory transport. This option defaults to
-+  "off", is TCG-only, and is available only when QEMU is built with librpmi
-+  support. This support targets the RISC-V Platform Management Interface
-+  (RPMI) Specification v1.0 Ratified (`RPMI v1.0 specification`_). The initial
-+  ``virt`` implementation exposes RPMI system reset, system suspend, and HSM
-+  service groups. System reset can request shutdown or cold reboot through
-+  RPMI. HSM uses the ``virt`` hart IDs and supports hart discovery, status,
-+  start, stop, and suspend commands. System suspend uses QEMU's suspend and
-+  wakeup path. Migration is currently blocked while RPMI transport and service
-+  VMState support is being designed.
-+
-+  The build dependency is provided by `librpmi`_. QEMU requires librpmi 1.0.0
-+  or newer. If the host distribution does not provide a librpmi development
-+  package, build and install it from the upstream source tree so that
-+  ``pkg-config`` can find ``librpmi.pc``:
-+
-+  .. code-block:: bash
-+
-+    $ git clone https://github.com/riscv-software-src/librpmi.git
-+    $ cd librpmi
-+    $ make
-+    $ make install I=/usr/local
-+    $ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
-+    $ pkg-config --modversion librpmi
-+
-+  The librpmi repository can also generate installable ``librpmi-dev`` Debian
-+  packages with ``make deb-pkg`` and ``librpmi-devel`` RPM packages with
-+  ``make rpm-pkg``. After installing librpmi, configure QEMU with
-+  ``--enable-librpmi`` or ``-Dlibrpmi=enabled``.
-+
-+.. _RPMI v1.0 specification: https://github.com/riscv-non-isa/riscv-rpmi/releases/download/v1.0/riscv-rpmi.pdf
-+.. _librpmi: https://github.com/riscv-software-src/librpmi
-+
-+RPMI firmware and guest smoke
-+-----------------------------
-+
-+A firmware-level RPMI smoke test can be run with OpenSBI, a Linux kernel, and a
-+RISC-V disk image:
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-riscv64 \
-+      -machine virt,rpmi=on \
-+      -cpu rv64 -smp 4 -m 4G -nographic \
-+      -bios /path/to/fw_jump.bin \
-+      -kernel /path/to/Image \
-+      -append "root=/dev/vda rw console=ttyS0 earlycon=sbi" \
-+      -drive file=/path/to/rootfs.img,format=raw,if=virtio,snapshot=on
-+
-+The OpenSBI banner should report RPMI-backed HSM and system suspend support.
-+After the guest reaches a shell, normal guest reboot/poweroff commands exercise
-+the RPMI system reset path.
-+
-+RPMI device tree policy
-+-----------------------
-+
-+RPMI is currently described through FDT only; no ACPI representation is emitted
-+for the RPMI transport or service groups. The ``virt`` machine uses the
-+``riscv,rpmi-shmem-mbox`` shared-memory mailbox node plus child service nodes
-+with ``riscv,rpmi-*`` compatible strings. These binding names are part of the
-+RPMI RFC surface and may be revised if the RISC-V RPMI bindings change during
-+review.
-+
- Running Linux kernel
- --------------------
- 
--- 
-2.43.0
+  Thomas
 
 
