@@ -4,75 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F60EC4452B
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 06:08:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1902C44529
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 06:09:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm3eG-0002dK-2z; Tue, 21 Jul 2026 02:08:12 -0400
+	id 1wm3f7-00037t-6a; Tue, 21 Jul 2026 02:09:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wm3e7-0002br-FT
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 02:08:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <lingqian_gi@163.com>)
+ id 1wm3f5-00037V-5a; Tue, 21 Jul 2026 02:09:03 -0400
+Received: from m16.mail.163.com ([220.197.31.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wm3e5-000107-5r
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 02:08:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784614079;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=uge8e9Gc6iyZ8ABJQi6bPBexHYNmQGXZnp9Bx4zBf70=;
- b=F3e1gaaSANUeS/cE5uIALq5EjVRdMdYkXjgpI1dE3yaCXzE8M68LUde8oKVupFr75JCc8+
- JO61zsnWao5c7ElC7lo5pO1dDzvLMx6MVM0fY6cB5UfVd+jvtQtiU7o2gdLlwp9oHoRAc+
- ulyyTiZnhqH+IQ0YS1Y0YVb5aCK0iuM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-354-IJitwLfJOJy0wiOKehgaNg-1; Tue,
- 21 Jul 2026 02:07:54 -0400
-X-MC-Unique: IJitwLfJOJy0wiOKehgaNg-1
-X-Mimecast-MFC-AGG-ID: IJitwLfJOJy0wiOKehgaNg_1784614073
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 525631809CBB; Tue, 21 Jul 2026 06:07:52 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4F0E81954233; Tue, 21 Jul 2026 06:07:51 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DC56321E6920; Tue, 21 Jul 2026 08:07:48 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: jasowang@redhat.com,  mst@redhat.com,  peterx@redhat.com,
- farosas@suse.de,  raphael.s.norwitz@gmail.com,  bchaney@akamai.com,
- qemu-devel@nongnu.org,  berrange@redhat.com,  pbonzini@redhat.com,
- yc-core@yandex-team.ru,  mark.caveayland@nutanix.com,  Jason Wang
- <jasowangio@gmail.com>
-Subject: Re: [PATCH v19 01/15] net/tap: rework tap_parse_script
-In-Reply-To: <20260714154246.1242856-2-vsementsov@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Tue, 14 Jul 2026 18:42:29 +0300")
-References: <20260714154246.1242856-1-vsementsov@yandex-team.ru>
- <20260714154246.1242856-2-vsementsov@yandex-team.ru>
-Date: Tue, 21 Jul 2026 08:07:48 +0200
-Message-ID: <87wluoswnf.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <lingqian_gi@163.com>)
+ id 1wm3ey-00012C-9r; Tue, 21 Jul 2026 02:09:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version:
+ Content-Type; bh=NbRFyAIXD5fwnPyAV8Vs+ddMpdavc8dlEgAhyETj7lc=;
+ b=CZLO2LjdqT8vAtiUOExaLNhHVcF+jbj9qga5jL4QMxrbFrWR9Zz/f2PDltyZes
+ JuHUZtGploDg9YO7AyLVnMT89CDbg9RVUwgVYVRSQPo8h/5fpDzsuz82Kh+94tKE
+ 3QMglJ5FdHfffoEy1984CyzfZRRprhpWQ3cQXzka0kNQ0=
+Received: from localhost.localdomain (unknown [])
+ by gzga-smtp-mtada-g1-0 (Coremail) with SMTP id
+ _____wD3v8vlDF9qWYX7KA--.47423S2; 
+ Tue, 21 Jul 2026 14:08:37 +0800 (CST)
+From: Jian Cai <lingqian_gi@163.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: chao.liu@processmission.com, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, Jian Cai <lingqian_gi@163.com>
+Subject: [PATCH v2] hw/riscv/k230: add k230_sram_create() helper function
+Date: Tue, 21 Jul 2026 14:04:07 +0800
+Message-ID: <20260721060409.9688-2-lingqian_gi@163.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260720074545.8987-2-lingqian_gi@163.com>
+References: <20260720074545.8987-2-lingqian_gi@163.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=armbru@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: _____wD3v8vlDF9qWYX7KA--.47423S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxCF4rWryrXF48GFWxuryUKFg_yoW5KF1DpF
+ s7Gr929rn7GFyDZFs3tF1rXFyvqa1vgr1UWwn7u34kGr47Jryqyr4rJ3W0v3W7WrWxAw1U
+ uFyYqF1ru3W8J3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRnSdkUUUUU=
+X-Originating-IP: [42.193.175.155]
+X-CM-SenderInfo: 5olqw15ldqswrl6rljoofrz/xtbCwQeupGpfDOc5UgAA35
+Received-SPF: pass client-ip=220.197.31.5; envelope-from=lingqian_gi@163.com;
+ helo=m16.mail.163.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,69 +75,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+The K230 shared SRAM (2 MB at 0x80200000) has no software-visible
+controller registers: it is a pure on-chip RAM block accessed via
+the AXI bus.  Replace the inline memory_region_init_ram calls in
+k230_soc_realize() with a static k230_sram_create() helper, which
+follows the same pattern as the existing k230_create_plic() and
+k230_create_uart() helpers.
 
-> Factor out tap_is_explicit_no_script() helper, to simplify
-> further changes.
->
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->  net/tap.c | 27 +++++++++++++++++++++------
->  1 file changed, 21 insertions(+), 6 deletions(-)
->
-> diff --git a/net/tap.c b/net/tap.c
-> index 57ffb09885c..fedd48c48d2 100644
-> --- a/net/tap.c
-> +++ b/net/tap.c
-> @@ -92,19 +92,34 @@ static void launch_script(const char *setup_script, const char *ifname,
->  static void tap_send(void *opaque);
->  static void tap_writable(void *opaque);
->  
-> -static char *tap_parse_script(const char *script_arg, const char *default_path)
-> +static bool tap_is_explicit_no_script(const char *script_arg)
->  {
-> -    g_autofree char *res = g_strdup(script_arg);
-> +    if (!script_arg) {
-> +        return false;
-> +    }
->  
-> -    if (!res) {
-> -        res = get_relocated_path(default_path);
-> +    if (script_arg[0] == '\0') {
-> +        return true;
-> +    }
-> +
-> +    if (strcmp(script_arg, "no") == 0) {
-> +        return true;
->      }
->  
-> -    if (res[0] == '\0' || strcmp(res, "no") == 0) {
-> +    return false;
-> +}
-> +
-> +static char *tap_parse_script(const char *script_arg, const char *default_path)
-> +{
-> +    if (tap_is_explicit_no_script(script_arg)) {
->          return NULL;
->      }
->  
-> -    return g_steal_pointer(&res);
-> +    if (!script_arg) {
-> +        return get_relocated_path(default_path);
-> +    }
-> +
-> +    return g_strdup(script_arg);
->  }
->  
->  static void tap_update_fd_handler(TAPState *s)
+Also fix two non-ASCII characters (registered sign and em-dash)
+in k230.rst that would cause git send-email to reject the patch
+as 8-bit.
 
-Before the patch, we default @script_arg to get_relocated_path(default)
-first, then check for "" or "no".  After the patch, we do it the other
-way round.  Works, because get_relocated_path() never returns "" or
-"no".  Worth mentioning in the commit message?
+Reference:
+K230 TRM V0.3.1 (2024-11-18), Section 5.2 Sram
+https://github.com/revyos/external-docs/blob/master/K230/en-us/
+K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
 
-The new order feels slightly clearer to me.
+Signed-off-by: Jian Cai <lingqian_gi@163.com>
+---
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Changes in v2:
+- Dropped SysBusDevice model per Chao Liu's review; use a static helper
+  function k230_sram_create() in k230.c instead.
+- Removed k230_sram.c, k230_sram.h, and k230-sram-test.c.
+- Fixed two non-ASCII characters (registered sign, em-dash) in k230.rst.
+- Removed SRAM entries from MAINTAINERS (no new files added).
+- v1: [RFC PATCH 0/3] hw/riscv: add K230 SRAM device model
+  https://lore.kernel.org/qemu-devel/
+
+ docs/system/riscv/k230.rst |  3 ++-
+ hw/riscv/k230.c            | 14 ++++++++++----
+ 2 files changed, 12 insertions(+), 5 deletions(-)
+
+diff --git a/docs/system/riscv/k230.rst b/docs/system/riscv/k230.rst
+index cea8202e55..18eb6806f6 100644
+--- a/docs/system/riscv/k230.rst
++++ b/docs/system/riscv/k230.rst
+@@ -2,7 +2,7 @@ Kendryte K230 virt reference platform (``k230``)
+ ==========================================================================
+ The ``k230`` machine is compatible with the Kendryte K230 SDK.
+ 
+-The K230 is a chip from the AIoT SoC series made by Kendryte ® — a part of
++The K230 is a chip from the AIoT SoC series made by Kendryte (R) -- a part of
+ Canaan Inc. It uses a brand-new multi-heterogeneous unit accelerated computing
+ structure.
+ 
+@@ -111,3 +111,4 @@ this machine does not emulate those controllers yet. Replace ``${INITRD_END}``
+ with the host-calculated value above when typing the command. ``cma=0`` avoids
+ the SDK kernel reserving too much of the little-core memory window for initramfs
+ boot.
++
+diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
+index 656f28190c..96add64c2a 100644
+--- a/hw/riscv/k230.c
++++ b/hw/riscv/k230.c
+@@ -14,6 +14,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/units.h"
+ #include "cpu-qom.h"
+ #include "qemu/cutils.h"
+ #include "qemu/error-report.h"
+@@ -151,6 +152,14 @@ static void k230_create_uart(MemoryRegion *sys_mem, DeviceState *plic,
+                    399193, serial_hd(index), DEVICE_LITTLE_ENDIAN);
+ }
+ 
++static void k230_sram_create(K230SoCState *s)
++{
++    memory_region_init_ram(&s->sram, OBJECT(s), "k230.sram",
++                           memmap[K230_DEV_SRAM].size, &error_fatal);
++    memory_region_add_subregion(get_system_memory(),
++                                memmap[K230_DEV_SRAM].base, &s->sram);
++}
++
+ static void k230_soc_realize(DeviceState *dev, Error **errp)
+ {
+     K230SoCState *s = RISCV_K230_SOC(dev);
+@@ -162,10 +171,7 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
+     c908_cpus = s->c908_cpu.num_harts;
+ 
+     /* SRAM */
+-    memory_region_init_ram(&s->sram, OBJECT(dev), "sram",
+-                           memmap[K230_DEV_SRAM].size, &error_fatal);
+-    memory_region_add_subregion(sys_mem, memmap[K230_DEV_SRAM].base,
+-                                &s->sram);
++    k230_sram_create(s);
+ 
+     /* BootROM */
+     memory_region_init_rom(&s->bootrom, OBJECT(dev), "bootrom",
+-- 
+2.43.0
 
 
