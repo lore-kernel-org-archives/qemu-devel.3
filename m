@@ -4,103 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7E42C4451C
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 19:04:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ACF3C4451C
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 19:12:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmFlF-0006bn-4t; Tue, 21 Jul 2026 15:04:13 -0400
+	id 1wmFsg-00010o-2h; Tue, 21 Jul 2026 15:11:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmFkm-0006Vz-Uc; Tue, 21 Jul 2026 15:03:46 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wmFsf-00010V-1d; Tue, 21 Jul 2026 15:11:53 -0400
+Received: from flow-b2-smtp.messagingengine.com ([202.12.124.137])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmFkl-0000by-A6; Tue, 21 Jul 2026 15:03:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784660605; bh=TBGotlleWiJiLnkUy14IUybgloCZwDasLFvyPonrdEk=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=Ou1bDxlxxdR/+P4PkTzHmFkhrodyioJVf2YvuVh9CHHsICs74JtJ8KgDRyOKKgVwE
- HxTV+DHIBKeOfZt6ZivivZD6tnxPHJ4wMgqE6iXfasg2jOxQ9EcnCg/a4uegslupGD
- fGV8AVx3+4TGn9HlNS4CPtbhyY/OBnYXfiari70Vmo3WUClJGW23ftnj2K+Y4xQ1Dx
- NIlEQgVPZqA4HVRbrR9moq8B3/KIH3EUdMQZc6JI9Qkagu3tceoWlxcPbD9QhHKGY8
- XKBPycXFAnIyOVneJ4VLvG0j927sVwuVorbm32fPJ1xHV+IA3JGSBFIF/MDN178ucT
- d+QLHXoT1McvQ==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 03A271C37BD;
- Tue, 21 Jul 2026 22:03:25 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B59273F2B93;
- Tue, 21 Jul 2026 22:03:40 +0300 (MSK)
-Message-ID: <47fb7730-adba-419b-9c85-298ff245cce9@tls.msk.ru>
-Date: Tue, 21 Jul 2026 22:03:32 +0300
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wmFsd-0001Ti-8n; Tue, 21 Jul 2026 15:11:52 -0400
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailflow.stl.internal (Postfix) with ESMTP id C4240130024B;
+ Tue, 21 Jul 2026 15:11:48 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-02.internal (MEProxy); Tue, 21 Jul 2026 15:11:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+ t=1784661108; x=1784668308; bh=NO/Bf4Hy+riUTl2qe/TbgQ7CWxbCHlQJ
+ 5TwBNd0+lN8=; b=RNL1jnOKrhjM917Qf60Bnp0vytJub9B6oaKxWAAOTzNymNuU
+ +ubRKVHZw2+HqRcQJWfanw0EQupJcmTkDOBa23Fqb9B6aa3FZIaipGSjo4AkIK9Y
+ hBNx+k6f+p+9ieLcLVx5oZ2+DRdGqV500VmcvhBrNAOeEASzdlKC5eoA42K+PoIt
+ 0m1NBhNb+jlxQXtqfiTdqc4pkYnlryYsVv9GJ7srwEl7E7Lp40MBRnarjXhAg/Hb
+ uAq/+SB/TmMWtoJkn1PmihS5EtVxh5rJQ6iMCN/ASGsHT04pUAMTzH5y+EQGD6/H
+ l7wQ8CF92uxnfJgnp0rK52Qim9IPiGCzXMf8iw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784661108; x=
+ 1784668308; bh=NO/Bf4Hy+riUTl2qe/TbgQ7CWxbCHlQJ5TwBNd0+lN8=; b=a
+ O+FGUW+XfHKQxMtNuuSHrpbbpuddEhOJlKK6LheCH7tuWi+pH8hw9vENJJpbId2I
+ D4SHvC1U08VxYfYNKHUSu1skbTCWJJg9R4k0pgX/QEC1tVy1o+dtCN8ybLF9bqgi
+ Qmri8rJ3/boiPDDNafbTjWzZOtgPXGjowAV4pe5XpcU7oPoMwAdFAMqtnh5AWhNf
+ XP7NBzJDU+WRvjmrp8C1vDMk5oOoxYm2H1qsDoQcJFm+j60r9B/x8lM7S7hlO/vP
+ DN+MnY9OXo5y3peBPZG8HW1V+jYeQUCO7kr7BXoJvTxY1HigGAoTExePI6pfgIzq
+ ZBT+ikdxNsvHTmlZeaHhQ==
+X-ME-Sender: <xms:dMRfasWdwwZ7zM2aHhDTczo8SjLXQfHEhpWVJKxY-xMH3xEugZeQWw>
+ <xme:dMRfahSZVHcahTqVEiDs4CMJBZpyuODGdQzDBTRlDQmbG6KpC6jNrCVm3lly5aFpO
+ OXd07cJgtiWYjJ5HFvVQUn3cEtpuGiDc4bRtZlDN7htS7Wl-ph9Jw>
+X-ME-Received: <xmr:dMRfaun5sY7qv34raHEoxKfTGuv1a3HL3gU0yZ6tnM4yfRv1C4ciBuW7mudh63MYggwPgRSMql5H0FR2KjiZnnLTWrqJ2rAOrsqO4TtwvTdkcClYZ8zq>
+X-ME-Proxy-Cause: dmFkZTGDu7H/ySR8IrV9f0/NN4Nt1zS6GSOHhNpq6s+dLsH+eTaIhgfsq7Hlq6TR8mVXen
+ +IY5HkfX2erXSZs3qi5dVJ+hpT3SzUm8HRPHRyMhcpDLDaW1aXZSF6sdsfzXzyFDpMfwm4
+ JyzKki2h0hZQdaLvZ9bcNakoIvdcVH0BjSxctHZlmkH3XONi9D4DmnyyeBp30dgsCf5J+D
+ hC1y9alDAOJ1jcXvmBjumzIr7nOplErO6CLmhJovxd3XcNsyQClAYtM3AvpkW13EUgkyx6
+ YFIkoKrUvHhcw7TM5m6HeHnSLIiMhblD5EnvjyeuLzv1Jlzxe0YqQg1fwVETx7x+susxdr
+ IK3EtuMZ8dp8QFZIPilINBOUu1IIYIMjeFUY+3AU6h2uRHXErTg0Ee+tZKxFWuZPnqJsse
+ 8Q17Q1AjsgN4Hpt8gYOSInT/ZjMdmNSvVtIkBqWOGxtHMAoKaM4AN8gG1LcS/iKcpSC6G2
+ X+82RA0QKBSfyK0Y4avQAmgegF+DcJM9SAXeBElFUQonaAbNo3p/fzJtrVh9+lMxWymIMC
+ y/8mIbVSX2BFGEkU5xgze0vP5oLVmITZ+NJQV6ZBiiRdzuJm/KCQZDlrueCuoK1W1E1qks
+ iJtYRu3sqmBuESCN5JR0UMXtlolgjP0t10/ukNPdRtNEotMvcNrRZxvbPWiA
+X-ME-Proxy: <xmx:dMRfav4daGsgEs6vH3alKYzeRWSXTLXmgiQ4-bUjWqcEFFGbzDIACg>
+ <xmx:dMRfashUSaREn91mmrbFJ4Dj8VOMlDAOQOnn4GEbQQCqfndU6b_yAQ>
+ <xmx:dMRfakHELfyy28rr-vzyNcicPhnv_uKLzX2RaeSTaQSOk5S5rtJ0ug>
+ <xmx:dMRfaqSzR1vJCtuy-5VsLuNKjOBxo6FfuWJLAqmYuVHiYSoEr4zxgg>
+ <xmx:dMRfaifHRYQ1_wr6ArCzs627ebxyQv4orDohrFIaD0SGtpjvEzKrYkN7>
+Feedback-ID: ifd214418:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 21 Jul 2026 15:11:48 -0400 (EDT)
+Message-ID: <28c36627407ccdfb548f4410dc2e798cb1c25bfd.camel@alistair23.me>
+Subject: Re: riscv & qemu-stable (was: [PULL 0/4] riscv-to-apply queue)
+From: Alistair <alistair@alistair23.me>
+To: Michael Tokarev <mjt@tls.msk.ru>, Alistair Francis	
+ <Alistair.Francis@wdc.com>, "alistair23@gmail.com" <alistair23@gmail.com>, 
+ "qemu-devel@nongnu.org"	 <qemu-devel@nongnu.org>, QEMU RISC-V TCG CPUs
+ <qemu-riscv@nongnu.org>
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, qemu-stable
+ <qemu-stable@nongnu.org>
+Date: Wed, 22 Jul 2026 05:11:47 +1000
+In-Reply-To: <e375775e-9450-4725-b124-e5a6d3b50ac9@tls.msk.ru>
+References: <20260714040758.28332-1-alistair.francis@wdc.com>
+ <a6c5b847faea8793440e4e0aa7334e7b02b838b3.camel@wdc.com>
+ <e375775e-9450-4725-b124-e5a6d3b50ac9@tls.msk.ru>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.2 (by Flathub.org) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/net/xilinx_axienet: Fix PHY register 17 link status
- reporting
-To: Jay Chang <jay.chang@sifive.com>, qemu-devel@nongnu.org
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowangio@gmail.com>,
- "open list:Xilinx Zynq" <qemu-arm@nongnu.org>,
- Frank Chang <frank.chang@sifive.com>, QEMU Stable <qemu-stable@nongnu.org>
-References: <20260713064617.85374-1-jay.chang@sifive.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260713064617.85374-1-jay.chang@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=202.12.124.137;
+ envelope-from=alistair@alistair23.me; helo=flow-b2-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,38 +111,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/13/26 09:46, Jay Chang wrote:
-> The Marvell 88E1111 PHY register 17 (PHY Specific Status Register)
-> bit 10 reports real-time link status. Previously, this register
-> returned a fixed value of 0x8800 with bit 10 always cleared,
-> causing U-Boot to always detect "No link" even when the link
-> was up.
-> 
-> Signed-off-by: Jay Chang <jay.chang@sifive.com>
-> Reviewed-by: Frank Chang <frank.chang@sifive.com>
+On Wed, 2026-07-15 at 15:30 +0300, Michael Tokarev wrote:
+> On 7/14/26 07:19, Alistair Francis wrote:
+> [..]
+> > Assuming that we don't backport plugin fixes then nothing in this
+> > PR
+> > should be backported to stable.
+>=20
+> I was afraid you might feel uncomfortable, after recent my emails
+> about qemu-stable in context of riscv.=C2=A0 But everything I'm trying
+> to do are attempts to make things easier, not more complicated :)
 
-I'm picking this up for qemu-stable.
-Please let me know if I should not.
+Not at all!
 
-> ---
->   hw/net/xilinx_axienet.c | 3 +++
->   1 file changed, 3 insertions(+)
-> 
-> diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c
-> index 970732b162..9f5f65ecfa 100644
-> --- a/hw/net/xilinx_axienet.c
-> +++ b/hw/net/xilinx_axienet.c
-> @@ -103,6 +103,9 @@ static unsigned int tdk_read(struct PHY *phy, unsigned int req)
->           case 17:
->               /* Marvell PHY on many xilinx boards.  */
->               r = 0x8000; /* 1000Mb  */
-> +            if (phy->link) {
-> +                r |= 0x0400; /* Link is up */
-> +            }
+I just feel guilty that you are picking up the slack and trying to make
+things easier/clearer
 
-Shouldn't we clear this bit somewhere?
+> Maybe I wanted too much, asking if there's something for stable
+> in every riscv pullreq in the past :)
 
-Thanks,
+I felt that was just because I was doing a bad job of indicating what
+should be backproted.
 
-/mjt
+>=20
+> I learned about the riscv pull requests - everything with Fixes and
+> Resolves should be picked up.=C2=A0 That's okay with me.=C2=A0 I think I'=
+ll
+
+That seems like a good starting place. I can CC qemu-stable on anything
+else that stands out.
+
+Do others not do something similar? Fixes and Resolves seems like the
+perfect indicator for backporting.
+
+> take it easier - pick things up for the most recent stable series
+> (currently 11.0.x), and for older/LTS series, I'll take just what
+> can be easily applied - to avoid losing everyone's time and patience
+> in long discussions about what needs to be picked up and what should
+> not.=C2=A0 As long as riscv don't have versioned machines in qemu, I
+> assume it is a fast-moving target, so older qemu is not very relevant
+> for it anymore (because besides fixes, older versions don't have many
+> required features too, developed later), and there's no need to spend
+> significant resources in that area.
+
+That all seems reasonable to me. It's tricky as it is moving fast and
+we have things like draft extensions, which makes more complex.
+
+Alistair
+
+>=20
+> Hopefully this roadmap will work :)
+>=20
+> Thanks,
+>=20
+> /mjt
 
