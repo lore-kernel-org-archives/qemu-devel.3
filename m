@@ -4,104 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0664BC44529
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 08:18:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BAA5C4451C
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 08:19:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm5fQ-0000FZ-BI; Tue, 21 Jul 2026 04:17:32 -0400
+	id 1wm5gc-0000pi-1h; Tue, 21 Jul 2026 04:18:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wm5fK-0000F8-1f
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 04:17:26 -0400
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wm5fI-0001Nx-CU
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 04:17:25 -0400
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-80a123ef90aso66395747b3.0
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 01:17:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784621843; cv=none;
- d=google.com; s=arc-20260327;
- b=BDd+xoBMZckzg6PhOASraaPYD0EHgezv1GfKkH6kxg+Nv7H3GUMc7eLO1R7vkHvZYn
- fe5VXKhrVPSuA1wdtYCG4XYj0np9z5r/7hCyja1/2dXrVqE6v8XHFSnI8JVUSK6qGSXI
- 0LtpBcAc2YsFBNT1gdZWChOuAMhYj2Ovm1mk76dhdcHJkORJKlZPhEXLsL8eWpPOEcEg
- sIbiTHcVmYeKqFZBVvWXI0dD/n5zYKc3rwU1jR1ElQJ7Y3ZoIPKM781rn3m3S06zuboT
- 3jVDbFsouvSEefyu4/ff+onHL9eVsGHkBYQZais2TYdE0CAtOhPOGjQR4JtLMREGW9vl
- Cvew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=uRmidZqvaK3SlITRFi+wxqFFhl2CGenbjqZsWNchpbg=;
- fh=anZl6Td6NaKjHGFM8y4oK3yu8UEI3L8plTd5OD+C2Mo=;
- b=iDJ2b0ivXMXWrSaROG1APJOC+6pv7Y2ElJ9/bMpUxFut9XH8/wEkf80Pa4DjirQISI
- WnznUM69RW2+uiJwItTWQ5py7Fh+rNVqmt5SRKiB2GrApR9tRfiyCirI3pbLe7WbG9EX
- P1RWUs4uk5b09wpNWl16EjAxPaV5jhW5NvwvVo/GOrWcQ1fev5cs3qjFdHoXV68NMzr2
- 1WAZccjw0XBW+/u4V+sntK2+Zl9dLaTHPIW9RganfucwwI/mtgdczlsFYdTs/wvc74G5
- YOwtBci4V8kD4dAdUxLXqAo7jttHBRvnyZaIL7JvnEmkgz4qzuzn6IjVm+pIyUxOfZaE
- ZfgQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784621843; x=1785226643; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=uRmidZqvaK3SlITRFi+wxqFFhl2CGenbjqZsWNchpbg=;
- b=T7TAzmvT48q5OUSMvD99txSKlIm07QSD1pMTB8CIyUudErRGdb8iTGyqukefZ6dPGX
- /5CJ/12XGWry1pxp7m1LLCkBm8wZSKgSGbR1N8fA87Hgf7UiNJi75n8bz+Pys48iE0B2
- izg2t+GJvvY916p3d9IT3fm/XACiD6ypWDp2VTteDNYCLpK0jk3DJW95Hp6PSXDGtIdd
- UmFkpKDFFKuBqQCjKkiduymHcgxOOeIjJMQaL6bmABQFE/Z4yNS1Ykin+fA601Mq03Sq
- y0RG13UoDz6l83UmA3Fjg7ml18YE6FxBns3108/2VOaHLP6i1W099aAnsLLR+81B8ueZ
- QjQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784621843; x=1785226643;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=uRmidZqvaK3SlITRFi+wxqFFhl2CGenbjqZsWNchpbg=;
- b=c6IKLhXisZGW8a+hS9LjgISB5iZgMPx3t4MmE+XmHz10R/UI+/Ie2h8pyB6RmAByQD
- CNGuap1K3n7gyOiv8yQ3NGlPaH0m5/6abA00A0CVQ0To8b8tjLBh2zwx0EyvRrrTnCuL
- 1DqyaFxZU4rTlD4/FFFML8jElF3V/xCSCPSPg1EiQ1uueZBSeYR8Wvog03vU2a4HwTQ7
- i2KFUbkrnH8UxaORaDLYJWLHxzjsGWYojppli6Np5gUkS+EK+bOk834QK5z7F1CLIAnn
- O5LGDqxzbgutsy9VXS+T8POzoy0hKXhmtGlety66BT5NWGscd+jc6f+GY/EM22izRO80
- d/FA==
-X-Gm-Message-State: AOJu0YwIs/sE9qIDcd5Y5dqQ+Fff7WNFZefPMb7sNcmuCVjF8QtRSa9d
- 8xmkheNqoV0LOMeNTZnGdYGL5WLPTF/aciSlNJFlgMOMmKELrYdy8BCCrZDyyhAHVANR4NvYxWD
- 0p84mJxLvM5eMgAKgeYN+wbyK/mVrs7qwg5J2vGBS4Q==
-X-Gm-Gg: AR+sD13DnnkxNDDx3ZPKw7p4AdV6IaYsaA+tKKcl4Vv9TLkRDSIk5uMyQj6d0EvWhJh
- zQaCmAa1U0ScBrdeC0YzVY5/NPgIn36+VROWEl0ra86rZ1N3J92tsdydvGHs39ifGA7l/Pde+xS
- cs6EPbEedU0RxOJoza7h3InbHpdweZk/P4uqxI0xMcg3tlQraHVIL+uHmwVPllFKbMxpj8vi8Do
- NaZYLYJPVsVnN7pnuIA+/8fb1qgxGXlMaaeO9Cc5bm5kHZKU3Egg1yl84gCC6uYr3WOmeh99lEM
- ySp6OJhrGSXrFR/vCZh2f1zH9llBp1PF0B50+Yp47VsgEg==
-X-Received: by 2002:a05:690c:6893:b0:81e:7b95:c77c with SMTP id
- 00721157ae682-81ee28f1752mr84175247b3.19.1784621842622; Tue, 21 Jul 2026
- 01:17:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wm5gZ-0000he-9D; Tue, 21 Jul 2026 04:18:43 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wm5gU-0001Zm-Lu; Tue, 21 Jul 2026 04:18:42 -0400
+Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.183]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66L8GsBq050170
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 21 Jul 2026 17:17:34 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=ayV5U0AkguNWQXEJrrEujyrrGzP6cg1PsUJnuJHlcfs=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-Id:To:Subject:Date;
+ s=rs20250326; t=1784621854; v=1;
+ b=i4WuNMf3paC5wVXYUgo+Mxz+vbOpwTYZYwn2GVWfHV16yDSWouTy0ss3ISLC6Nbp
+ Tfo0JC197tqzDhLlQ2w+IG5bIsWTPJn7pqYNNJQIrfb11IHPFy3hsK/MMlu4jYok
+ N/vRRyvtROBLOI1RFIXqfTqEAEDzk6nMAMEXoIBW367YkNlgxwe89a/YY0PAYJQc
+ PXRrItVDAQwuYOi6nwv+4CQnilPz0LLWQ+DQAn1MT7hPqgXiVb8rcWnpvjNO6CIA
+ O8GejFeLs60QuN5SDI6etsUiZ/8/hNnrtueZufWuT7+Dm40LuMT2hSDCekKXkwxe
+ Wxj0XNkWmbaxdg+HNdNbcQ==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 21 Jul 2026 17:16:57 +0900
+Subject: [PATCH for-11.2 v3 07/15] hw/nvram: Use qdev_is_realized()
 MIME-Version: 1.0
-References: <20260717-fix-v1-0-cb9f7d49dc52@redhat.com>
- <20260717-fix-v1-7-cb9f7d49dc52@redhat.com>
-In-Reply-To: <20260717-fix-v1-7-cb9f7d49dc52@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 21 Jul 2026 09:17:08 +0100
-X-Gm-Features: AUfX_mweEwgykiOE-u7JfG6-JQICty0OsmAIfugw44mw9h82Z6l6zMstGbwvRis
-Message-ID: <CAFEAcA_jkg8G=hQdsS-FEaHd658SbJqTzMAWrmvjREmXXbx1hg@mail.gmail.com>
-Subject: Re: [GIT PULL 07/15] ui/vnc: fix out-of-bounds write in lossy refresh
- dirty marking
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260721-qdev-v3-7-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260721-qdev-v3-0-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260721-qdev-v3-0-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
+To: qemu-devel@nongnu.org
+Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ David Hildenbrand <david@kernel.org>, Igor Mammedov <imammedo@redhat.com>,
+ FangSheng Huang <FangSheng.Huang@amd.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>, Aditya Gupta <adityag@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Alex Williamson <alex@shazbot.org>,
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org,
+ Luc Michel <luc@lmichel.fr>, Fam Zheng <fam@euphon.net>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.16-dev-925f5
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1368;
+ i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
+ bh=GhEbcxfFd0c90bqsnl8dfQymBOUb4OlEMTs1trflWMU=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ1a8tqjxVJEJVZeaxH7kCdw8yssq99T7qfwJP1uxxhfrw
+ v4dn7euo5SFQYyLQVZMkSWlaDe3RnTtp8KE+BaYOaxMIEMYuDgFYCLP6hn+8O+6vWil1U0dxwWL
+ bCZuY57NtKgnTGHjiYr/GrcOl71uuM/IsCxN1mvTv4cW2crsiXNjyvO/bzotuEqp4fqUQzXuU0r
+ O8AAA
+X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
+ fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,64 +101,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 17 Jul 2026 at 12:54, Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@redhat.com> wrote:
->
-> vnc_refresh_lossy_rect() marks a full VNC_STAT_RECT (64) rows of the
-> dirty bitmap when refreshing a lossy tile. When the display height is
-> not a multiple of VNC_STAT_RECT, the last tile row is a partial tile and
-> the loop writes past the end of vs->dirty[VNC_MAX_HEIGHT].
->
-> For example, with a 2160-pixel-high display (VNC_MAX_HEIGHT), the last
-> stat tile starts at y=3D2112. The unconditional 64-row loop writes rows
-> 2112..2175, overflowing 16 rows (640 bytes) past the dirty bitmap into
-> subsequent VncState fields.
->
-> Fix by passing the effective display height into
-> vnc_refresh_lossy_rect() and clamping the inner loop.
->
-> Fixes: CVE-2026-61475
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3935
-> Reported-by: "Vulnerability Report" <vr@darknavy.com>
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
-> ---
->  ui/vnc.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/ui/vnc.c b/ui/vnc.c
-> index 8d91cee4d9f..c957731877f 100644
-> --- a/ui/vnc.c
-> +++ b/ui/vnc.c
-> @@ -3000,18 +3000,18 @@ void vnc_sent_lossy_rect(VncWorker *worker, int x=
-, int y, int w, int h)
->      }
->  }
->
-> -static int vnc_refresh_lossy_rect(VncDisplay *vd, int x, int y)
-> +static int vnc_refresh_lossy_rect(VncDisplay *vd, int x, int y,
-> +                                  int height)
->  {
->      VncState *vs;
->      int sty =3D y / VNC_STAT_RECT;
->      int stx =3D x / VNC_STAT_RECT;
->      int has_dirty =3D 0;
-> -    int height =3D MIN(pixman_image_get_height(vd->guest.fb),
-> -                     pixman_image_get_height(vd->server));
->      int rows;
->
->      y =3D QEMU_ALIGN_DOWN(y, VNC_STAT_RECT);
->      x =3D QEMU_ALIGN_DOWN(x, VNC_STAT_RECT);
-> +    rows =3D MIN(VNC_STAT_RECT, height - y);
+DeviceState fields should be accessed through qdev helpers rather than
+directly. Use qdev_is_realized() instead of reading
+DeviceState::realized directly.
 
-Hi. Coverity points out (CID 1664010) that this added line...
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+ hw/nvram/xlnx-bbram.c | 2 +-
+ hw/nvram/xlnx-efuse.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
->      rows =3D MIN(VNC_STAT_RECT, height - y);
+diff --git a/hw/nvram/xlnx-bbram.c b/hw/nvram/xlnx-bbram.c
+index edfb592a5ec9..e336874bdef4 100644
+--- a/hw/nvram/xlnx-bbram.c
++++ b/hw/nvram/xlnx-bbram.c
+@@ -468,7 +468,7 @@ static void bbram_prop_set_drive(Object *obj, Visitor *v, const char *name,
+     qdev_prop_drive.set(obj, v, name, opaque, errp);
+ 
+     /* Fill initial data if backend is attached after realized */
+-    if (dev->realized) {
++    if (qdev_is_realized(dev)) {
+         bbram_bdrv_read(XLNX_BBRAM(obj), errp);
+     }
+ }
+diff --git a/hw/nvram/xlnx-efuse.c b/hw/nvram/xlnx-efuse.c
+index 1a9650ba128d..03c9fbc0d076 100644
+--- a/hw/nvram/xlnx-efuse.c
++++ b/hw/nvram/xlnx-efuse.c
+@@ -233,7 +233,7 @@ static void efuse_prop_set_drive(Object *obj, Visitor *v, const char *name,
+     qdev_prop_drive.set(obj, v, name, opaque, errp);
+ 
+     /* Fill initial data if backend is attached after realized */
+-    if (dev->realized) {
++    if (qdev_is_realized(dev)) {
+         efuse_bdrv_read(XLNX_EFUSE(obj), errp);
+     }
+ }
 
-...is a duplicate of this pre-existing line, so it does nothing.
+-- 
+2.55.0
 
-Were you intending to clamp a different variable here ?
-
-thanks
--- PMM
 
