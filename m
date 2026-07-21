@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22822C4451C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 454C8C4452B
 	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 16:19:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmDBc-0007Ui-36; Tue, 21 Jul 2026 12:19:16 -0400
+	id 1wmDBd-0007c1-E5; Tue, 21 Jul 2026 12:19:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wmDBa-0007OS-29
+ id 1wmDBa-0007OZ-CH
  for qemu-devel@nongnu.org; Tue, 21 Jul 2026 12:19:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wmDBY-0007ZJ-Ez
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 12:19:13 -0400
+ id 1wmDBW-0007Z2-Vd
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 12:19:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784650751;
+ s=mimecast20190719; t=1784650749;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding;
- bh=73qJ/wX2AV358W8VtAs2RZM0ZZNuM2sd0/LpTCR/P9s=;
- b=USPypL1I9Oqrq3hQusC1LsRD+h8VbI9LiBO5N8iRj17NAsN+AbTNGo0TgxTKgG6MyUNeGM
- s8MubzDo0QbcDRzZ/iYe7lqnavb4zAZTK27BgjSccy3ohGT/W3hmJofGflUJ9OA9wPvNBR
- glMyck3uwWgzKsGUOfa80G5Thq9WPj4=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=sxk79o48sVZ44ehC1RFZi7bdieBEB5DuNMUzHGcuWW4=;
+ b=Byu687DdwvMPLBcpl9GkGnAwjVlucfEncNBtlY78mA+i/tjQ+vPylta6NbUMSyZiAQ4qIx
+ Fe0HiaZfdNymiW8VxJ2pfZ/Xe4UbmV/1j+dDVMGoBupyc3f9HctnhAJW0PFAOShH2m1GCl
+ HpeMTUr80GfHOyRt17P1JI7YaCsqOp0=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-475-AIQT-Fm2PBy6f169r99PXg-1; Tue, 21 Jul 2026 12:19:10 -0400
-X-MC-Unique: AIQT-Fm2PBy6f169r99PXg-1
-X-Mimecast-MFC-AGG-ID: AIQT-Fm2PBy6f169r99PXg_1784650749
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-476608a9fefso4889472f8f.1
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 09:19:10 -0700 (PDT)
+ us-mta-687-iPrWg_lzNFa8JzU-FughFw-1; Tue, 21 Jul 2026 12:19:07 -0400
+X-MC-Unique: iPrWg_lzNFa8JzU-FughFw-1
+X-Mimecast-MFC-AGG-ID: iPrWg_lzNFa8JzU-FughFw_1784650746
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4955edc851aso12828805e9.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 09:19:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784650749; x=1785255549; darn=nongnu.org;
+ d=redhat.com; s=google; t=1784650746; x=1785255546; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:to
  :from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=73qJ/wX2AV358W8VtAs2RZM0ZZNuM2sd0/LpTCR/P9s=;
- b=E0TZL665HE9fCHtqKPvln1IkFYOmmgc7mpHCMpJDy5LOFS4MayI8Ybi6wfMAsFnyIp
- RLs0RUXoSQNKEeKU0acql8Wc49r9SoihMB7LE85ZJywxY7+Gbn5F+miNqKOohZNbGKj+
- W84bQAwV6ToOaJuBEypeKlw9kdN6vZ7hkfWzRBjscpIvuSEi+nIPLgvs48iocON8mduN
- o1KVMoOENMWekZEB29t8HSLj0U6OgKiRCI8hCHKCYAN22URK+8y419So2bhxK169Fz1F
- GlBC0YAUlt6eWXlmLtj6nWRZ2YXLnV+f8iB7j38xcBpzO3dpVT4Vy/TeLcl1cqItvrhN
- ZWZw==
+ bh=sxk79o48sVZ44ehC1RFZi7bdieBEB5DuNMUzHGcuWW4=;
+ b=Y9dGD6eysyvApfMcwY5UQw19lxwg1ZMpGBw3lyONDSHmo9mPSmiOhR+kHe0JGjVxDc
+ wDC+Q4FX0rwstGI+ADwcuIS/pF6RXxiIr7hEH556C4ejUuh8L+ON+aolGqPjPqqDkqCT
+ z+MEv5MbchM4msDEe+dk+r3g6yfYt4JQdrEJuwJnuyDb4aFjksD9f7crULvyhZP7FZjx
+ RrlMlzi9GhO6bfZ9BhfZdXFfU+rypbe18iYK6ICIYw3Z6TY4tOcr/x74xSGK/uVTF/is
+ LAr7SuxcL8F7msvtT5yjknkkAGjhNrtJxP3GVa3/0A/0fVtiwuZbikNm/KZItsOsJSLt
+ 8R1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784650749; x=1785255549;
+ d=1e100.net; s=20251104; t=1784650746; x=1785255546;
  h=content-transfer-encoding:mime-version:message-id:date:subject:to
  :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=73qJ/wX2AV358W8VtAs2RZM0ZZNuM2sd0/LpTCR/P9s=;
- b=ocDoPeJgDjpTi7svS/UxKV0AFVLrHd0Y/+x2IWOJ6z2pQNmbfXGtOp/PPzVvADmNme
- 1HLcuXCpnBQoqidVovRhzB6pdI1P9r1T27b/7Mdmz+yqheS9q4x3v9q5AbWOyyT/9sxw
- cJcL4pJuD8R48MMLvsJfyYY4oXaAuGVP86hWnwmzfcDVmBJjHIaGBdTL/kH4MCWw699d
- wjLoOuDCW9EmBnGQPOY2xtcbkdO3EXkP8YLgac7jEAp96kbOGT5HpkhHHPtFmsifu+lC
- 8Is8z9TNrH1Zoec7gpwPY0ie1MdKBkv3XzN+V5XZYya8LhNPd8yiDtwxN0QuSAhYPUJi
- 9IvA==
-X-Gm-Message-State: AOJu0Yzv+AbKdDFO4osFt8UY9sIA8yh+SjtM9GgLPQM1bzQ2u6mh/Nqs
- edjhPAAP0+rJ4yq8RWXnNxRMjxC1Uyqj14lbemlhoXLb4lOOD28est/XXipw/Z8tLQ3sI30oiI4
- zhMhA6C54O/pnj5qm0CKwQDH0s0PNdBVa9QcUh0Lc0lsdWjHC1kcrlM4ak18TksfhlIFk68+BJB
- Y4tfXpk5mdbQi0QtqGtC5lMVwnQZo8rkcqG7WPllun
-X-Gm-Gg: AR+sD100lJNPwmB03pJ1NgvDqDScURWW0v1T94bYEfa5fI/hC995r5IZcdY6wWwtiKt
- JrNEtsCTXdNObZLkRxjZk8Rxh5uCTCn7om3E2hB1PJR0zKG9boG4ECBxZfyNNGwFeyu41tNImaA
- Qcj/WFyMGN87MhWXw7w23/X1t9qn19cmvnbJQrBMmuszQuxdygFLj+ssCmDriDeBK6/WFat+GD0
- 8cFGRi7riUOPiLgYJ9KiuFING/0q+Q4v7uv13cXXxhnKuIEbxiLrj44Me53XblZbzdj51yOgVje
- k08MERFmDgh6M78YSW9nsyGd4yuOiTR3l4hVbToAAfcDRvhfReghL59PEMOSfdzR9vlwAGrsc4K
- NuQUb86xhyz2v99zN4ObpCKh6/56+p7oUqcLfvdkONKrdnEgEhbqOhXqRrzcAEn51HkBprpkpZ8
- Uf/Q==
-X-Received: by 2002:a05:6000:2386:b0:46b:70db:2113 with SMTP id
- ffacd0b85a97d-47f8405f230mr554938f8f.0.1784650749006; 
- Tue, 21 Jul 2026 09:19:09 -0700 (PDT)
-X-Received: by 2002:a05:6000:2386:b0:46b:70db:2113 with SMTP id
- ffacd0b85a97d-47f8405f230mr554895f8f.0.1784650748474; 
- Tue, 21 Jul 2026 09:19:08 -0700 (PDT)
+ bh=sxk79o48sVZ44ehC1RFZi7bdieBEB5DuNMUzHGcuWW4=;
+ b=M2Hjty5KGIs4mjgjHgZ1X3D6p2eRs16jl8L3Kxg2EAPIBg+cLSregXavwZVhCnIWvV
+ JhoggkRSGFWINqCgLlGiFh9KtAo1hSDEVju8mje6SWZFDdSXxUZV/3RJBhyJH/C1ZlG4
+ U9Ujro40XrswaGPzxChn9AAqyKGVuSrUpwikIhQQuKhNS1GAF9yMQfyrBJoNgpThQ1JO
+ 0JqSea//hR4FZ0W8cYOL0uUHXczHVv6r6rIW1WrASj3Pgr7WI1aKLnWEm/7Pc7MDHl+1
+ 49m6P0klvI+Db6uH684yCkFTWE0WgF4BEhwWCc/PcTG4D+fO4PntjoIzSxfiLkXs8kpv
+ y0kQ==
+X-Gm-Message-State: AOJu0Yxtbq5btx03SDNlvMv8VU0+HUp1x8H0u+Z7GDsGWWsXOFMBcE1g
+ VbFtzN6x9jQ5IlxalsA7qJEN1UG43j2Byj+DEtrmGx3PfwahvSRX6NJDUvNiIZw+KcFH9G2f8bF
+ AZRoQsEN3hccE5ywN/lXPaJcAq1Zeblx2Ya3xfPsKUH4hFcD6IQjfXUFjE35CcI96qb0LTecasz
+ osdC3kbBT+Sn8lH0goELCPbXEBOmWaTu/H3gr8NAck
+X-Gm-Gg: AfdE7cnuL4LfJl/Z7MIvxrz0KRw39jZcncjpruYyKDT050D4fE/skQV69pRwrdLeaHu
+ 2o4S4vj3gi5R6UuaV3x4TGWK/Foi9+c2VkYfCoFWYnxQ3u81HzKwbKosd/dNFDO8QlyJo94ivaD
+ LkTqi4z0ZI0IUOWeRTe/QaTwOf2iqMz5vyNqbdYgKYllUOC78J8yvPCtAy2UMmhiyMx2uo8gXNt
+ B+h9sywWOatdX1Il95xvt46EPWsUU/tJckGC7jmzrzRvzknKR9Ze/Fe3SGEaOT6GjxSTX6GKf3Y
+ Z5awQvYvQmirvrQZg+9RJwJHXrAcdNceB2fDZHtYZCzl0cWlyiEi/GJO3rMxN9x2lkeoyqIvWji
+ 8fxkCMyQ+xcAEHvXQz7l720B37DfBhEItZsmpWOTjlyj2Egv0zU9hRSop0q2sd+igdrd6dSxbzX
+ royw==
+X-Received: by 2002:a05:600c:350f:b0:493:e365:ace9 with SMTP id
+ 5b1f17b1804b1-4954a3db7e8mr217281025e9.11.1784650746341; 
+ Tue, 21 Jul 2026 09:19:06 -0700 (PDT)
+X-Received: by 2002:a05:600c:350f:b0:493:e365:ace9 with SMTP id
+ 5b1f17b1804b1-4954a3db7e8mr217280675e9.11.1784650745753; 
+ Tue, 21 Jul 2026 09:19:05 -0700 (PDT)
 Received: from [192.168.1.84] ([93.56.170.76])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f63e519f4sm38555499f8f.14.2026.07.21.09.19.07
+ 5b1f17b1804b1-4955df9d2f6sm140339165e9.4.2026.07.21.09.19.04
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Jul 2026 09:19:07 -0700 (PDT)
+ Tue, 21 Jul 2026 09:19:04 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH] scsi-disk: fix off by one in assertion
-Date: Tue, 21 Jul 2026 18:19:07 +0200
-Message-ID: <20260721161907.363392-1-pbonzini@redhat.com>
+Subject: [PATCH] scsi-disk: protect against guest sending truncated data for
+ MODE SELECT commands
+Date: Tue, 21 Jul 2026 18:19:04 +0200
+Message-ID: <20260721161904.363367-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -116,33 +117,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When documenting the invariant that mode pages need to fit the smallest
-output buffer of all callers (which is SCSI_MAX_MODE_LEN), the expression
-used by the assertion was incorrect.
+scsi-disk has a MODE SELECT path where a truncated mode page can be
+allowed by a compatibility quirk, but the parser continues to use the
+page's declared length rather than the number of bytes actually remaining
+in the request buffer.  This means that scsi_disk_check_mode_select() and
+scsi_disk_apply_mode_select() can read beyond the valid part of inbuf[],
+potentially up to the emulated age's length.
 
-Even though SCSI_MAX_MODE_LEN is indeed 256, using "length < 256" had
-two issues: 1) it used the wrong operator, since "length < ..." is more
-related to having room for extra data; 2) it missed the extra two bytes
-for page number and length.
+Clamping page_len (the size of the page) to len (whatever the
+guest provided) ensures that scsi_disk_check_mode_select() and
+scsi_disk_apply_mode_select() do not access anything beyond bounds;
+however, this requires care to accept and handle truncated input in
+those two functions.
 
+In particular, until scsi_disk_check_mode_select()'s first call to
+mode_sense_page() the number of bytes to be cleared in mode_current[] is
+unknown, so zero it completely.  And for everything else, be conservative
+and use len when providing inputs to other functions; but at the same time,
+ensure all accesses to inbuf[] are bound by expected_len.
+
+Note that pages longer than the emulated one are still rejected.
+
+Fixes: 389e18eb9aa4 ("scsi-disk: add SCSI_DISK_QUIRK_MODE_PAGE_TRUNCATED quirk for Macintosh")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4051
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/scsi/scsi-disk.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/scsi/scsi-disk.c | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
 diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index 85d0bd0b811..1b0cce128c5 100644
+index 5ba5b46c4f4..85d0bd0b811 100644
 --- a/hw/scsi/scsi-disk.c
 +++ b/hw/scsi/scsi-disk.c
-@@ -1321,7 +1321,7 @@ static int mode_sense_page(SCSIDiskState *s, int page, uint8_t **p_outbuf,
+@@ -1524,7 +1524,7 @@ static void scsi_disk_emulate_read_data(SCSIRequest *req)
+ static int scsi_disk_check_mode_select(SCSIDiskState *s, int page,
+                                        uint8_t *inbuf, int inlen)
+ {
+-    uint8_t mode_current[SCSI_MAX_MODE_LEN];
++    uint8_t mode_current[SCSI_MAX_MODE_LEN] = { 0 };
+     uint8_t mode_changeable[SCSI_MAX_MODE_LEN];
+     uint8_t *p;
+     int len, expected_len, changeable_len, i;
+@@ -1543,21 +1543,21 @@ static int scsi_disk_check_mode_select(SCSIDiskState *s, int page,
+     }
+ 
+     p = mode_current;
+-    memset(mode_current, 0, inlen + 2);
+     len = mode_sense_page(s, page, &p, 0);
+-    if (len < 0 || len != expected_len) {
++    /* The guest may send a truncated page, but not a longer one.  */
++    if (len < 0 || expected_len > len) {
          return -1;
      }
  
--    assert(length < 256);
-+    assert(length + 2 <= SCSI_MAX_MODE_LEN);
-     (*p_outbuf)[0] = page;
-     (*p_outbuf)[1] = length;
-     *p_outbuf += length + 2;
+     p = mode_changeable;
+-    memset(mode_changeable, 0, inlen + 2);
++    memset(mode_changeable, 0, len);
+     changeable_len = mode_sense_page(s, page, &p, 1);
+     assert(changeable_len == len);
+ 
+     /* Check that unchangeable bits are the same as what MODE SENSE
+      * would return.
+      */
+-    for (i = 2; i < len; i++) {
++    for (i = 2; i < expected_len; i++) {
+         if (((mode_current[i] ^ inbuf[i - 2]) & ~mode_changeable[i]) != 0) {
+             return -1;
+         }
+@@ -1565,11 +1565,15 @@ static int scsi_disk_check_mode_select(SCSIDiskState *s, int page,
+     return 0;
+ }
+ 
+-static void scsi_disk_apply_mode_select(SCSIDiskState *s, int page, uint8_t *p)
++/* Note p may be truncated, so check any bytes you access against len.  */
++static void scsi_disk_apply_mode_select(SCSIDiskState *s, int page,
++                                        uint8_t *p, int len)
+ {
+     switch (page) {
+     case MODE_PAGE_CACHING:
+-        blk_set_enable_write_cache(s->qdev.conf.blk, (p[0] & 4) != 0);
++        if (len > 0) {
++            blk_set_enable_write_cache(s->qdev.conf.blk, (p[0] & 4) != 0);
++        }
+         break;
+ 
+     default:
+@@ -1612,6 +1616,7 @@ static int mode_select_pages(SCSIDiskReq *r, uint8_t *p, int len, bool change)
+                 goto invalid_param_len;
+             }
+             trace_scsi_disk_mode_select_page_truncated(page, page_len, len);
++            page_len = len;
+         }
+ 
+         if (!change) {
+@@ -1619,7 +1624,7 @@ static int mode_select_pages(SCSIDiskReq *r, uint8_t *p, int len, bool change)
+                 goto invalid_param;
+             }
+         } else {
+-            scsi_disk_apply_mode_select(s, page, p);
++            scsi_disk_apply_mode_select(s, page, p, page_len);
+         }
+ 
+         p += page_len;
 -- 
 2.55.0
 
