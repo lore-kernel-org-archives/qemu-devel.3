@@ -4,80 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6306AC4451C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5AA0C44536
 	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 15:56:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmCpR-00055Z-V9; Tue, 21 Jul 2026 11:56:22 -0400
+	id 1wmCp7-0004P9-32; Tue, 21 Jul 2026 11:56:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wmCpJ-0004y8-22
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 11:56:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wmCpH-0004xk-2C
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 11:56:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784649370;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QheUhG6B28CxdAvqoTOybLRApIzFG0nB93Av+Z/Uids=;
- b=LIQOX7grv7dMOp1xGYJYjW0HfuOxiZsQls9BFCgWZiQ8ALH08XIb2Qhw6VtFxlule3CqqH
- guJSFYpMn/BRa+ifjc1RXxWsnvjqYwF2e60cErrhHn+ZKDSHgzR/B8s8/fLM1sr0FCPpvF
- DThADQ/ymdeMDeKcNK2uxCkS91eVRL4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-282-Jq2q71lYOjGW3h1ZRYfE0w-1; Tue,
- 21 Jul 2026 11:56:06 -0400
-X-MC-Unique: Jq2q71lYOjGW3h1ZRYfE0w-1
-X-Mimecast-MFC-AGG-ID: Jq2q71lYOjGW3h1ZRYfE0w_1784649365
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 649DD1956077; Tue, 21 Jul 2026 15:56:04 +0000 (UTC)
-Received: from berrange.com (unknown [10.44.32.83])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C69961800619; Tue, 21 Jul 2026 15:56:00 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Warner Losh <imp@bsdimp.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Kyle Evans <kevans@freebsd.org>,
- Li-Wen Hsu <lwhsu@freebsd.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Jessica Clarke <jrtc27@jrtc27.com>
-Subject: [PULL 1/5] test-util-filemonitor: Adapt to FreeBSD 15's native
- inotify semantics
-Date: Tue, 21 Jul 2026 16:55:50 +0100
-Message-ID: <20260721155554.128840-2-berrange@redhat.com>
-In-Reply-To: <20260721155554.128840-1-berrange@redhat.com>
-References: <20260721155554.128840-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wmCp5-0004Oe-7F
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 11:55:59 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wmCp1-0004wf-8e
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 11:55:57 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2caced6038eso70036985ad.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 08:55:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1784649353; x=1785254153; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=esfN3+MqvjAs0EJnLFZN7ym+EQDZLXK0XGGmLbAR5L8=;
+ b=bmA90sR956ZA4t3mznLlbuDEAokJ2z+6G7NyEkunyZPJ5zciy7KotNAqIGbTyxtAUi
+ M9MydDKSR087UO2YfBimRNRQEGAJ6S9mdsdIVrr6KBpRoEXSPAReYywmLU3gZWpVA2pc
+ ARbP9mIefsRWPryDGhx9v/ItwqkbgmEAUcdyHDVvP5EH51IcHOlP7Qi2ltHZhCbwzU2Z
+ pCmBBvxsESYDwTzgDdfzpH6ogWLoUT4KRDBRoBsOJYQu3L81mu+Iq2bhb0Wi0ZBW3UyK
+ 2rCTSfi91NEjrxTnzWuDKY5qBQdrc4OG0ukTJztVnlqH4CxDebXN5ofJxtcvcoUIuBSB
+ wnZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784649353; x=1785254153;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=esfN3+MqvjAs0EJnLFZN7ym+EQDZLXK0XGGmLbAR5L8=;
+ b=QJIWDiJDkVOV6wpLEUKCMHfONs+euDMeRfIT2tnuQZKMcWzagMfrIMS+V/HghGRo/d
+ WmZWZrc0BOVjT4HDjr8zXnWnDet79jc5Y1K9POxN9cslqeknbva+Ypq84GIU85I1XioL
+ 0YUsAqQ2eCcMD7gWqQpcbcxn4R3izwgZ6INvsh4jfcZiok+4DU0AtdAv9t1J6eOGXxvH
+ natkHC9EtKNJ4BRCuKZcMagNp57nIjUJu1rpmMEEoeGJBsfCe7+Z0xaTdEqLQ/zFcRQI
+ WMpaDmloICV2N1NymF0SIIMkdMbFLz5yVxv7yRcx7/LR0BRD6U/zxK1xIo84bphr5Rvu
+ x9Vw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpiSI4JPI7e+/igngt0mFSVpERTwrq2t0yY9N1Qrr+bIA2CtyW70oGSnUfR2S8hKrGuORgLJvyGJJx8@nongnu.org
+X-Gm-Message-State: AOJu0YxcCiwUWTdarrB1w/0Xr7lfTIOMX+VyUWwy/6VasM3gcgvV+IYm
+ Bhj3h6HJEHblV1KRlWjAZjoMB+H4WUogWIswbNvrWJ3qZVRnHA6tjYHcjTNBip+1uvc=
+X-Gm-Gg: AR+sD122pbg2Uw3RT3TUAPq0VdZbT5jzyzThUOg1THfb+rq0VCN6ViCzwTjYLEGP81E
+ HEN4e/q5OOF0RrbyDHv1DS0v2KuOcUGRX9AW1gwnej6T7dLicUsJ8CAG6Jo5Nx3uGz8/ewICD9N
+ NYDW8OIdDHWX1jYTqhRTRxlS/Oqzoib0L+SyQKPX2fkFQYvluF9KJSdttNDrbKfgceOQehlyNjQ
+ 1Xr0Ytk0g3pTCGA74gpi9YxmB0GerXVTJnAGSGBgleSF0EdmBlQ4+LN3BdKKX1HPIK3qjbyeEYh
+ nQ0iisFtJzYeyAh2zr5dwKKThkPt72KPL5uCLvLbGztHeeDKtTpFzabKVlgyH3MpEJc+dcYq78z
+ JynTZm34HD+AJE+uFinYntkQTtPgcT39G/+NJJte756mT28xeytDojLw9OmZlRVntTUrKG2Sx9i
+ PCp/apvG3KHbDheqU=
+X-Received: by 2002:a17:902:f706:b0:2cc:92ae:b36 with SMTP id
+ d9443c01a7336-2cf8dde30a5mr1731355ad.24.1784649352905; 
+ Tue, 21 Jul 2026 08:55:52 -0700 (PDT)
+Received: from [172.20.2.34] ([32.140.233.50])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3147df09a9dsm226445eec.19.2026.07.21.08.55.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Jul 2026 08:55:52 -0700 (PDT)
+Message-ID: <a78e4f8d-6cc8-438e-b970-2f193991f5e5@linaro.org>
+Date: Tue, 21 Jul 2026 08:55:41 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 12/17] target/arm: Split out helpers for creating MTEDESC
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+References: <20260717232306.378988-1-richard.henderson@linaro.org>
+ <20260717232306.378988-14-richard.henderson@linaro.org>
+ <d714d068-874f-44e1-bdc5-0529188af176@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <d714d068-874f-44e1-bdc5-0529188af176@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,98 +107,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jessica Clarke <jrtc27@jrtc27.com>
+On 7/20/26 01:35, Philippe Mathieu-Daudé wrote:
+> On 18/7/26 01:23, Richard Henderson wrote:
+>> Assert that align and size values fit in their fields.
+>> This results in more fields being filled than some
+>> helpers actually use, but uniformity is for the best.
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   target/arm/tcg/translate-a64.c | 123 ++++++++++++++++-----------------
+>>   1 file changed, 58 insertions(+), 65 deletions(-)
+> 
+> 
+>> +static TCGv_i32 gen_mtedesc_xas(DisasContext *s, bool write, int idx,
+>> +                                unsigned align, unsigned size)
+>> +{
+>> +    int desc = 0;
+>> +
+>> +    desc = FIELD_DP32(desc, MTEDESC, MIDX, idx);
+>> +    desc = FIELD_DP32(desc, MTEDESC, TBI, s->tbid);
+>> +    desc = FIELD_DP32(desc, MTEDESC, TCMA, s->tcma);
+>> +    desc = FIELD_DP32(desc, MTEDESC, WRITE, write);
+>> +    desc = FIELD_DP32(desc, MTEDESC, ALIGN, align);
+>> +    desc = FIELD_DP32(desc, MTEDESC, MTX, s->mtx);
+>> +    desc = FIELD_DP32(desc, MTEDESC, SIZEM1, size - 1);
+>> +
+>> +    assert(FIELD_EX32(desc, MTEDESC, ALIGN) == align);
+>> +    assert(FIELD_EX32(desc, MTEDESC, SIZEM1) == size - 1);
+> 
+> Why assert? This can't happen...
 
-FreeBSD 15 introduces a native inotify implementation rather than
-requiring use of the kqueue-based libinotify package. This native
-implementation does not generate the extra deleted events, so don't
-expect them. However, the original implementation did have a bug that
-caused IN_IGNORED to never be generated if you did not also watch for
-IN_DELETE_SELF, which affects 15.0 and 15.1, but has been fixed and will
-no longer apply in 15.2 / 16.0.
+It's not impossible: this is a bitfield smaller than 'unsigned', and it'll also catch size 
+== 0.  The largest use so far is 512 for user-mode DC_ZVA, 9 bits, and we currently 
+allocate 18 bits to this field.  It's just about future-proofing.
 
-Note that the deleted event check is for the userspace version, since
-that governs whether libinotify is being used or not, whereas the
-ignored event check is both for the userspace version (to check if we're
-using the native syscall) and the kernel version (to check if the kernel
-has the bug or not).
 
-All __FreeBSD_version values used here correspond to the value in-tree
-at the time of the relevant commits. Since neither commit bumped the
-value there will be a window of development snapshots between each
-commit and the previous bump that will be incorrectly identified here,
-but this is the best we can do, and something users of snapshots should
-be prepared to deal with.
-
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Jessica Clarke <jrtc27@jrtc27.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- tests/unit/test-util-filemonitor.c | 29 ++++++++++++++++++++++++++++-
- 1 file changed, 28 insertions(+), 1 deletion(-)
-
-diff --git a/tests/unit/test-util-filemonitor.c b/tests/unit/test-util-filemonitor.c
-index 02e67fc96a..972651dc1e 100644
---- a/tests/unit/test-util-filemonitor.c
-+++ b/tests/unit/test-util-filemonitor.c
-@@ -27,6 +27,10 @@
- 
- #include <utime.h>
- 
-+#ifdef __FreeBSD__
-+#include <osreldate.h>
-+#endif
-+
- enum {
-     QFILE_MONITOR_TEST_OP_ADD_WATCH,
-     QFILE_MONITOR_TEST_OP_DEL_WATCH,
-@@ -221,6 +225,24 @@ qemu_file_monitor_test_expect(QFileMonitorTestData *data,
- }
- 
- 
-+static bool
-+expect_broken_ignored(void)
-+{
-+#if defined(__FreeBSD__) && __FreeBSD_version >= 1500051
-+    int osreldate;
-+
-+    osreldate = getosreldate();
-+    if (osreldate == -1) {
-+        g_printerr("Unable to call getosreldate: %s\n", strerror(errno));
-+        abort();
-+    }
-+    return osreldate < 1501501 || (osreldate >= 1600000 && osreldate < 1600019);
-+#else
-+    return false;
-+#endif
-+}
-+
-+
- static void
- test_file_monitor_events(void)
- {
-@@ -360,7 +382,7 @@ test_file_monitor_events(void)
-         { .type = QFILE_MONITOR_TEST_OP_EVENT,
-           .filesrc = "one.txt", .watchid = &watch4,
-           .eventid = QFILE_MONITOR_EVENT_DELETED },
--#ifdef __FreeBSD__
-+#if defined(__FreeBSD__) && __FreeBSD_version < 1500051
-         { .type = QFILE_MONITOR_TEST_OP_EVENT,
-           .filesrc = "two.txt", .watchid = &watch0,
-           .eventid = QFILE_MONITOR_EVENT_DELETED },
-@@ -539,6 +561,11 @@ test_file_monitor_events(void)
-                 g_printerr("Event id=%" PRIx64 " event=%d file=%s\n",
-                            *op->watchid, op->eventid, op->filesrc);
-             }
-+            if (op->eventid == QFILE_MONITOR_EVENT_IGNORED &&
-+                expect_broken_ignored()) {
-+                g_printerr("Expect ignored event to be broken, skipping\n");
-+                break;
-+            }
-             if (!qemu_file_monitor_test_expect(&data, *op->watchid,
-                                                op->eventid, op->filesrc,
-                                                op->swapnext))
--- 
-2.55.0
-
+r~
 
