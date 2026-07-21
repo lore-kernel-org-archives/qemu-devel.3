@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BAA5C4451C
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 08:19:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89750C44529
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 08:19:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm5gc-0000pi-1h; Tue, 21 Jul 2026 04:18:46 -0400
+	id 1wm5gb-0000n7-52; Tue, 21 Jul 2026 04:18:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wm5gZ-0000he-9D; Tue, 21 Jul 2026 04:18:43 -0400
+ id 1wm5gX-0000dk-T1; Tue, 21 Jul 2026 04:18:41 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wm5gU-0001Zm-Lu; Tue, 21 Jul 2026 04:18:42 -0400
+ id 1wm5gU-0001Zl-6L; Tue, 21 Jul 2026 04:18:41 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66L8GsBq050170
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66L8GsBm050170
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 21 Jul 2026 17:17:34 +0900 (JST)
+ Tue, 21 Jul 2026 17:17:32 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=ayV5U0AkguNWQXEJrrEujyrrGzP6cg1PsUJnuJHlcfs=; 
+DKIM-Signature: a=rsa-sha256; bh=QJdO8kWEJWFrWQEmsjHLFwL4fD5SiN3l+Gq/RjxUgpo=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1784621854; v=1;
- b=i4WuNMf3paC5wVXYUgo+Mxz+vbOpwTYZYwn2GVWfHV16yDSWouTy0ss3ISLC6Nbp
- Tfo0JC197tqzDhLlQ2w+IG5bIsWTPJn7pqYNNJQIrfb11IHPFy3hsK/MMlu4jYok
- N/vRRyvtROBLOI1RFIXqfTqEAEDzk6nMAMEXoIBW367YkNlgxwe89a/YY0PAYJQc
- PXRrItVDAQwuYOi6nwv+4CQnilPz0LLWQ+DQAn1MT7hPqgXiVb8rcWnpvjNO6CIA
- O8GejFeLs60QuN5SDI6etsUiZ/8/hNnrtueZufWuT7+Dm40LuMT2hSDCekKXkwxe
- Wxj0XNkWmbaxdg+HNdNbcQ==
+ s=rs20250326; t=1784621852; v=1;
+ b=dK99hcyYXJ6a8iHRnL5exEp8q41Z8CKznHj0jA/F4JNqRyFu+D2uOqSnO/ekpVcP
+ xUIO3d6VV2VnU2iWScvvg1RTFy0JbwmuazNF/Nu9xib3DMuAZLWik4FSnjy4+52h
+ VGuh6dnirwhDb5dzJsV0BBE7d0Ubk4CSs7RJp0SVX+teh3PxvIGblmOXS+8EMepf
+ rqf0r8WWrsN1DNPPXurGbMZZcRenqo31uZ9QrJHt5+zw1G1LWiz2Mw7XRXdVx41h
+ wX8cx+XJyp2a70W1Q5FgWM5IC6my5c4izGwdSkueSi67C5NjtL3muhobO0TfHkFm
+ GGI5uqFT61UiEOzdxIEhsQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 21 Jul 2026 17:16:57 +0900
-Subject: [PATCH for-11.2 v3 07/15] hw/nvram: Use qdev_is_realized()
+Date: Tue, 21 Jul 2026 17:16:53 +0900
+Subject: [PATCH for-11.2 v3 03/15] hw/hyperv/balloon: Use
+ qdev_is_realized()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260721-qdev-v3-7-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260721-qdev-v3-3-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260721-qdev-v3-0-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260721-qdev-v3-0-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -69,13 +70,13 @@ Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-925f5
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1368;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=865;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=GhEbcxfFd0c90bqsnl8dfQymBOUb4OlEMTs1trflWMU=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ1a8tqjxVJEJVZeaxH7kCdw8yssq99T7qfwJP1uxxhfrw
- v4dn7euo5SFQYyLQVZMkSWlaDe3RnTtp8KE+BaYOaxMIEMYuDgFYCLP6hn+8O+6vWil1U0dxwWL
- bCZuY57NtKgnTGHjiYr/GrcOl71uuM/IsCxN1mvTv4cW2crsiXNjyvO/bzotuEqp4fqUQzXuU0r
- O8AAA
+ bh=qcidLoOOEYgyPb6/Qv1h9Ul1icQVToMMquS9cbdMc4I=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ1a8tvBEltpjEnOlYi9NrTmSMPXRBMGnCSzOCTyCoknKs
+ msdBH51lLIwiHExyIopsqQU7ebWiK79VJgQ3wIzh5UJZAgDF6cATOShGSPDqSn7enqn/3FkmbYx
+ MVW11uKJ9aLYRasMXs++ptdr809JmeGf1gQz8YiQpj+Xgudknf4ccddz7uOqvO0T/fQ9XJbcTnb
+ lBgA=
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -107,36 +108,22 @@ DeviceState::realized directly.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/nvram/xlnx-bbram.c | 2 +-
- hw/nvram/xlnx-efuse.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ hw/hyperv/hv-balloon.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/nvram/xlnx-bbram.c b/hw/nvram/xlnx-bbram.c
-index edfb592a5ec9..e336874bdef4 100644
---- a/hw/nvram/xlnx-bbram.c
-+++ b/hw/nvram/xlnx-bbram.c
-@@ -468,7 +468,7 @@ static void bbram_prop_set_drive(Object *obj, Visitor *v, const char *name,
-     qdev_prop_drive.set(obj, v, name, opaque, errp);
+diff --git a/hw/hyperv/hv-balloon.c b/hw/hyperv/hv-balloon.c
+index 9dd759f11e8a..b8664a246b47 100644
+--- a/hw/hyperv/hv-balloon.c
++++ b/hw/hyperv/hv-balloon.c
+@@ -197,7 +197,7 @@ static int build_dimm_list(Object *obj, void *opaque)
  
-     /* Fill initial data if backend is attached after realized */
--    if (dev->realized) {
-+    if (qdev_is_realized(dev)) {
-         bbram_bdrv_read(XLNX_BBRAM(obj), errp);
+     if (object_dynamic_cast(obj, TYPE_PC_DIMM)) {
+         DeviceState *dev = DEVICE(obj);
+-        if (dev->realized) { /* only realized DIMMs matter */
++        if (qdev_is_realized(dev)) { /* only realized DIMMs matter */
+             *list = g_slist_prepend(*list, dev);
+         }
      }
- }
-diff --git a/hw/nvram/xlnx-efuse.c b/hw/nvram/xlnx-efuse.c
-index 1a9650ba128d..03c9fbc0d076 100644
---- a/hw/nvram/xlnx-efuse.c
-+++ b/hw/nvram/xlnx-efuse.c
-@@ -233,7 +233,7 @@ static void efuse_prop_set_drive(Object *obj, Visitor *v, const char *name,
-     qdev_prop_drive.set(obj, v, name, opaque, errp);
- 
-     /* Fill initial data if backend is attached after realized */
--    if (dev->realized) {
-+    if (qdev_is_realized(dev)) {
-         efuse_bdrv_read(XLNX_EFUSE(obj), errp);
-     }
- }
 
 -- 
 2.55.0
