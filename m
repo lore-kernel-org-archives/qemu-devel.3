@@ -4,135 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCAC9C4451C
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 08:40:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ADC0C4451C
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 08:47:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm61K-0001It-Ol; Tue, 21 Jul 2026 04:40:10 -0400
+	id 1wm68C-00044w-UW; Tue, 21 Jul 2026 04:47:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wm61K-0001Il-13
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 04:40:10 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wm68A-00043H-1M
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 04:47:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wm61I-0004Wn-3a
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 04:40:09 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wm688-0005Gn-23
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 04:47:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784623207;
+ s=mimecast20190719; t=1784623631;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1+3mmICKSXr7PfAtflwEbwDlN/hD/1oxnaHEUk7fiek=;
- b=LIaSeRqEmnM8H9wRvBQ7mGG4b34S4sO63T1A28NllvK5ZK5Ert89SeJnZDDMk+W6CfF7Hr
- j2zlKIq5kDytCWEQTWUwTvL2yd1rUSTPX5/oleDG+VnhfNoHOn2B84DziV4/NdDIj8U9mG
- 3DhutsU11DAufTz+pYz+qZGUGCDu1IU=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=9oGiPuHPwmUMBCbg7MWlHF1UyJCPQO0OYgFhuqsUsRo=;
+ b=CC97KyhIAzGb1Y3uxf6uVvgDaqUsANsgyYEn0dBlOai49Jj4PX8045bP98J6l3lGUdmJeC
+ DGjix/6Npz/uEG2xk8fOWEwLhvCstj7qVj7E4ZZGU0gEMIXR9VjroSAVZ8QO1F5BTohOR9
+ NddZIkWj7h5xtiuocD3TWl1Bt+Fc6O0=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-670-aswJzXNtP1C_ywZ_TSy57w-1; Tue, 21 Jul 2026 04:40:05 -0400
-X-MC-Unique: aswJzXNtP1C_ywZ_TSy57w-1
-X-Mimecast-MFC-AGG-ID: aswJzXNtP1C_ywZ_TSy57w_1784623205
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-ca124bf0189so3302057a12.0
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 01:40:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784623204; cv=none;
- d=google.com; s=arc-20260327;
- b=g1P4i6LpMUh+iQp70dRSLZ1hzLWv/lmLj5scWMbxlkzX91ytIhdP7tIkVkjTMjsb1/
- +W9fPBFRhEsTNyrBZ4P6MSYUFfEMopH0OsbviCQpiiUQfs5wTRLMhxfq1sBNrw7MfVtK
- tEGlav6vzQzZfnCKGdUziOlMxibBgoz04PxFErPbP/ZZkzKlmJjfzP0UcfuBdJacwoVl
- T89nTfxepYAc7rNrVL5iCMYx8rPzwO7S/Ntn9ukedhBrgQSmcejt3I7kuZkeYDqbOwyv
- C1Qb7J7cxX6yzki0bZ/mhvIwFABxOw1b1akAajcS5uDnXy1yG3zk/Bpf7g+QJppfBnY2
- T5XQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=1+3mmICKSXr7PfAtflwEbwDlN/hD/1oxnaHEUk7fiek=;
- fh=psxz2jTyB2Gkkq/pspSW/oHl41en5ZXIOFwATMgFy6c=;
- b=kgKyoJdw6zZBy9vtpkLhVMOqiEjR4cRzlqhYs8yJ9nvfwsuidVTvt4X8La1P9G1gRj
- DyYt8ypk7K286yg/sudlobWIeLkpRLDM7d6D6W/3hw6n+kXmDXMdmBtwhrhZjK2o7IEm
- cQ66l88uGoLNf75aXVX/bDbj2prEao64DvomXWe1KRnmpf8SSWhwCMMJUlNpVltRFDVd
- PqzAyvkuFgVHK06oLvsoafHpF7BQEaQCzzX6YLihfyDrPxApAe861hwQsxebYDcn4Ivi
- XQS2UGTy+M+zu5G+XFAVDnQik8pZdFwcGOD1DEluN0CzoIOQNTw8Ykmh/lF8nkUSAzoJ
- 5bDA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ us-mta-616-XmczA6r_MJO_Xri6r8Oxsw-1; Tue, 21 Jul 2026 04:47:09 -0400
+X-MC-Unique: XmczA6r_MJO_Xri6r8Oxsw-1
+X-Mimecast-MFC-AGG-ID: XmczA6r_MJO_Xri6r8Oxsw_1784623628
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-47407691804so7717273f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 01:47:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784623204; x=1785228004; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=1+3mmICKSXr7PfAtflwEbwDlN/hD/1oxnaHEUk7fiek=;
- b=mKQmOPb6WdsrWEiUeGsbTlIwJ1J3T965k1BkhrJXdjNwbe1VGYO8NLNPko3BM0knBg
- ZOTldKbS0njghAp6sxc93dxDUsY0at430T04uhZ7zzxg7bZzmuZBfWaNSJWR3J4w8n0m
- LYQ8XejLZOWxYnLa6NJWzYLJEqyaYSfmWahaAfV3wcDvQU73Nc5SXKF0/7ECCCq/ZI6Y
- esxLoqPvwH1jq3ICGAStOzGBC3MIkZgpzf04G/s8XQl+INTyoAa3FOTUSIJ1fqJQyp3V
- 0aegz+7rys/IWh5bjvbW/bhBbFLkIsQkLcd+WNhgdzZf58xNldbZKluAJtcNqgUCrjkJ
- EmoQ==
+ d=redhat.com; s=google; t=1784623628; x=1785228428; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=9oGiPuHPwmUMBCbg7MWlHF1UyJCPQO0OYgFhuqsUsRo=;
+ b=LiJef1xavvbqz8Un+3p2B3ZMj/YwP2T/LSoy9YS5Ub4klRbe0XMebfZx0jJxR2AxyY
+ Czasm6th4NEF1OLSoDX3jNWpX5kTNJsC26nSiqkJjqkPQyqQG4JJDBtSp4Jzfz4humQG
+ vsySLuZWI8tHYZ2nL9uYIGe3Xs2vbClh60JKR+CWf9eP4HZtFRZMAkjcER4ME9fqh1LC
+ Y4oDXMrWBHJNig2UI2fxdIx3zwXpFxGW8tPNT0GMR+ZZGKQV73eRGP/I1bbsuLb+myf9
+ JBXjFoAoJNvnZ/6L3DU5raLBfkey0+BtE8VpwN0124f+GlVK5dJhKfO0l/Y1OigVU/r1
+ a9mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784623204; x=1785228004;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=1+3mmICKSXr7PfAtflwEbwDlN/hD/1oxnaHEUk7fiek=;
- b=bOxW8vIgYkcXY6cAuuqpWNQSOYyD2CMNvnjCbv8GRiBChdvoKporweqrCOWFjE6/62
- TJ3OH/jGQm2KSYhTzLer9eUSDhStbo3rzg1gkkvYRk5P5AD9Jr78npvU4jTnKNMfMFQB
- QzpEnm/ezr7VzBeCHM9eFm6ltRejrKHDPCun4hEeQGE6zk4Hzc0wtQGWcOIf0+Syxa02
- UzxICadkF5+aRRlPY7mA6Llof4cIT7G/RxpDs4Sg6cy9RV1OnwEyrmcU0KwwiqG/zh/r
- efLkHxELnEEUT7TjEDsNUGzdlXRRSMe+boiEa5xLX89ZvSB3hp0iAI68rIH5Fe5xHGhh
- XZng==
-X-Gm-Message-State: AOJu0Yx/yJVYvJFagiwx5YluCUfNaVDwtrQHaMoMwzM1UCRafOvPoFdr
- 5wo4dWhMLFkF1tpAmr8vjJMGSjG+R+64MLBXmlauEKlbI/46j8YcoT+hiBxFjXRooiH8Bq069ro
- jI8UasGClXFigZ0u+SmwL85Krf2dnuPxdHqT2NHw0OGfsqZz0YxjBr5Eibf/SjlEn9k7ss2Dq/r
- ju9c+Lk1KM7lbC6joaSXN5Y4IkxFGzLuQ=
-X-Gm-Gg: AfdE7cnuuteb0BU6Sd8bCwqmMScsYvbWOEERgiYFajaJavJRhxldElGxUVrwfI2SFFJ
- oJeQH+75pskW8sikEK8UkpuGOOPYA55udMtI5fK6NKW+StbSyljS/Ax549cGCCSjptrqzTqirZY
- vTnnayPGKw84mEjI5w76oiYZJH0Xb1HOz320r7MnkV+6vqHZEfzNXRrBKvZbnHYbGe5BEXSvNAE
- I7aJ+WB9znv5DwAWSQll8v/fmj8H+CgnabTnSpem1j9cKC1TGwzk/xG/3O1dBeWR7tQt2241mJE
- VA==
-X-Received: by 2002:a05:6a21:3e02:b0:3c3:d92b:29be with SMTP id
- adf61e73a8af0-3c3d92b29dfmr8974178637.25.1784623204579; 
- Tue, 21 Jul 2026 01:40:04 -0700 (PDT)
-X-Received: by 2002:a05:6a21:3e02:b0:3c3:d92b:29be with SMTP id
- adf61e73a8af0-3c3d92b29dfmr8974154637.25.1784623204145; Tue, 21 Jul 2026
- 01:40:04 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1784623628; x=1785228428;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=9oGiPuHPwmUMBCbg7MWlHF1UyJCPQO0OYgFhuqsUsRo=;
+ b=nl9bDRZUu3K5G0kCWYogvRs6e+/GaivLadjRy4afsCNdB1+wFFlaP6hfdYVD4YZdOO
+ clnEk+q8QxRAgLUKbJXs3B1zkeNTn3G/Hr56AzeYw1k9SKbwRbMiOsdPGxsdTb/mU3/B
+ OArZh3G5bbxdRuz1+pGX+11QbjJLEdccFUyEfNO4CGtThW+59mIy0iY10AkqIMEo0y8/
+ HDmbOl1MmtopKjigSNzBA0NCjK9vqgRuYAhM39L7adHq8r/P3tFWZT54hRoUpPhpoFha
+ VAyJlyXfIJGHAzhfA5AujcVY30Y6Pp8NmOgQxz/ON9Ec/n+tZuRDTfilM+ZYTjesqvyQ
+ F19Q==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RreD3CAnR0OrJIP//aBHfHGl618br/XU+nwQxlfLx77JDvy5mdSXpOj2L5dS94sYA05OD2/3UNJTECj@nongnu.org
+X-Gm-Message-State: AOJu0Yyv3Zzay+J7mbjchQoz04WVy5O3MYYfDUzf/Dn039pGBeeRKEA/
+ pmFHFIJt48/Cpnx6yJvxYfLQDR5POWXc9724R+DXu5wbV8esiXvyYykKrsahHuB5y9p+g+pNwlv
+ 0oxZ4dcAMEvAQKDRVkp7+7+OGDBbBMbbdqQtCU77gmQXv5wpRGdedqpUV
+X-Gm-Gg: AfdE7cnD7fzvG4v7Zo+7ZbeYK/EQNJxEUXX0/wCuv5Mx5XZBtakPGaZyQTi7J+p9Ia6
+ vNxAVQIkQHdP6JJ1O/Z9eT3cqG8h3iJF4nhLf1WHmPyMq0Vr6d3r8okuEX/YDiiv2gSrgeKaUuc
+ NVHQhWrHB4CcFDwJeGJPS54QF6/dImPbOfb/7iV24GDEf7bGUpjheDGL6GmaF62/hfoggE4zG3w
+ wPrcuR4x7w7tqUXEZw02srZIp9zWONQh2dfEfpUSWKsM2vZO6zdzgCrCVcGD5bmhPCfEEuFb5hb
+ fsHXHCVUMGHq8v6QpKrpKuqpMBt3LBvJu6ezp6T0EhjlQumfWQwQxuJAM3ddbHq1V6aElJj3tw=
+ =
+X-Received: by 2002:a05:600c:4f09:b0:495:5b32:df72 with SMTP id
+ 5b1f17b1804b1-4955b32e0c7mr103736675e9.35.1784623627927; 
+ Tue, 21 Jul 2026 01:47:07 -0700 (PDT)
+X-Received: by 2002:a05:600c:4f09:b0:495:5b32:df72 with SMTP id
+ 5b1f17b1804b1-4955b32e0c7mr103736315e9.35.1784623627468; 
+ Tue, 21 Jul 2026 01:47:07 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.113.188])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-495653bffefsm48909235e9.9.2026.07.21.01.47.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Jul 2026 01:47:06 -0700 (PDT)
+Message-ID: <9196384b-a1d3-477c-9a25-82ba8ee3f82d@redhat.com>
+Date: Tue, 21 Jul 2026 10:47:05 +0200
 MIME-Version: 1.0
-References: <20260720-co-v1-0-fabb4db3c204@redhat.com>
- <CAMxuvaySONs4r=1Bmsao1f1cZdviGGwPVM8+1Q+1vdY0X-pYVw@mail.gmail.com>
- <af19f823-234c-462d-8c52-4d8cf4b93c4c@oss.qualcomm.com>
- <6287083.lOV4Wx5bFT@weasel>
-In-Reply-To: <6287083.lOV4Wx5bFT@weasel>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 21 Jul 2026 12:39:52 +0400
-X-Gm-Features: AUfX_mxRdL-DqzkjpYIAmbj-FBmtHJVc5VSImiqMsANjDJqpsxKJSZx6GWIMBMY
-Message-ID: <CAMxuvay01r=EchTO=PocqPtdtZtxcJs+AJZExRA8rBao31mH7w@mail.gmail.com>
-Subject: Re: [PATCH 7/8] hw/9pfs: annotate V9fsTransport callbacks as
- coroutine_fn
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Markus Armbruster <armbru@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/ide/core: Fix possible crash via NULL pointer in
+ ide_cancel_dma_sync()
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-devel@nongnu.org,
  John Snow <jsnow@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, 
- Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng <fam@euphon.net>,
- "Denis V. Lunev" <den@openvz.org>, 
- Greg Kurz <groug@kaod.org>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, xen-devel@lists.xenproject.org,
- Li Zhijian <lizhijian@fujitsu.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Alexander Bulekov <alxndr@bu.edu>, qemu-block@nongnu.org,
+ qemu-stable@nongnu.org, qemu-trivial@nongnu.org
+References: <20260721070216.82984-1-thuth@redhat.com>
+ <3f8027d5-f7db-4fb5-8386-1d5f93974a10@nutanix.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <3f8027d5-f7db-4fb5-8386-1d5f93974a10@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=mlureau@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+ envelope-from=thuth@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -155,38 +168,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On 21/07/2026 10.29, Mark Cave-Ayland wrote:
+> On 21/07/2026 08:02, Thomas Huth wrote:
+> 
+>> From: Thomas Huth <thuth@redhat.com>
+>>
+>> ide_cancel_dma_sync() is called with a "IDEState *s" for one of the
+>> two IDE drives on a bus (primary or secondary drive) to cancel all
+>> pending DMA transfers on the drive. The code then checks
+>> s->bus->dma->aiocb to see whether there is any IO in flight on the
+>> *bus* and then calls blk_drain(s->blk) to wait for its completion.
+>> However, s->bus->dma->aiocb might belong to the other drive on the
+>> bus, and if there is no disk attached to the current drive, s->blk
+>> is NULL. Since blk_drain() does not check its parameter for a NULL
+>> pointer, QEMU can crash in such a case.
+>>
+>> To fix the problem, we have to check that "blk" is not NULL before
+>> calling blk_drain(). And we have to call blk_drain() for both drives,
+>> otherwise the assert(s->bus->dma->aiocb == NULL) statement after
+>> the blk_drain() might trigger if the IO in flight belongs to the
+>> the other drive.
+>>
+>> Resolves: https://urldefense.proofpoint.com/v2/url? 
+>> u=https-3A__gitlab.com_qemu-2Dproject_qemu_-2D_work-5Fitems_905&d=DwIDAg&c=s883GpUCOChKOHiocYtGcg&r=c23RpsaH4D2MKyD3EPJTDa0BAxz6tV8aUJqVSoytEiY&m=BbZFP82dEZMyWzN5GnJ9XaxwmyrmYGbqWbEBNSUM_afB5JRRF3InIaZAr5UpUUh2&s=rCgSz13wVfk11Z-Uw5WTQViAQKkSvwpQqf_dJX1tiro&e=
+>> Reported-by: Alexander Bulekov <alxndr@bu.edu>
+>> Resolves: https://urldefense.proofpoint.com/v2/url? 
+>> u=https-3A__gitlab.com_qemu-2Dproject_qemu_-2D_work-5Fitems_4052&d=DwIDAg&c=s883GpUCOChKOHiocYtGcg&r=c23RpsaH4D2MKyD3EPJTDa0BAxz6tV8aUJqVSoytEiY&m=BbZFP82dEZMyWzN5GnJ9XaxwmyrmYGbqWbEBNSUM_afB5JRRF3InIaZAr5UpUUh2&s=B-AkqMAsQwA0LzU5ptwPJ3ZIBAA8ncf5ZbQg8GTwaME&e=
+>> Reported-by: dong ling
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   v2: Drain both drives
+>>
+>>   hw/ide/core.c | 9 ++++++++-
+>>   1 file changed, 8 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/ide/core.c b/hw/ide/core.c
+>> index f78b00220b8..f43ab95b07b 100644
+>> --- a/hw/ide/core.c
+>> +++ b/hw/ide/core.c
+>> @@ -741,10 +741,17 @@ void ide_cancel_dma_sync(IDEState *s)
+>>        * In the future we'll be able to safely cancel the I/O if the
+>>        * whole DMA operation will be submitted to disk with a single
+>>        * aio operation with preadv/pwritev.
+>> +     *
+>> +     * Note: s->bus->dma->aiocb might belong to the adjacent IDEState,
+>> +     * so we have to drain both drives to get it cleared.
+>>        */
+>>       if (s->bus->dma->aiocb) {
+>>           trace_ide_cancel_dma_sync_remaining();
+>> -        blk_drain(s->blk);
+>> +        for (int i = 0; i < 2; i++) {
+>> +            if (s->bus->ifs[i].blk) {
+>> +                blk_drain(s->bus->ifs[i].blk);
+>> +            }
+>> +        }
+>>           assert(s->bus->dma->aiocb == NULL);
+>>       }
+>>   }
+> 
+> Doesn't ide_bus_active_if() do the right thing here for in-flight requests? 
+> I'd expect to be able to do something like:
+> 
+>    if (s->bus->dma->aiocb) {
+>        trace_ide_cancel_dma_sync_remaining();
+>        blk_drain(ide_bus_active_if(s->bus)->blk);
+>    }
+Sounds appealing, so I gave it a try, but it does not seem to work: I can 
+still trigger the problem with this code (both, the NULL pointer dereference 
+and the assert() after the drain). Looks like it is possible to trigger a 
+DMA transfer for the other drive, and then while the transfer is still in 
+flight, switch the current drive and trigger the code path that calls 
+ide_cancel_dma_sync(). So we need indeed to drain both drives, i.e. use this 
+current patch here.
 
-On Tue, Jul 21, 2026 at 12:38=E2=80=AFPM Christian Schoenebeck
-<qemu_oss@crudebyte.com> wrote:
->
-> On Tuesday, 21 July 2026 10:25:34 CEST Philippe Mathieu-Daud=C3=A9 wrote:
-> > On 21/7/26 10:06, Marc-Andr=C3=83=C2=A9 Lureau wrote:
-> > > Hi
-> > >
-> > > On Tue, Jul 21, 2026 at 11:58=E2=80=AFAM Marc-Andr=C3=A9 Lureau
-> > >
-> > > <marcandre.lureau@redhat.com> wrote:
-> [...]
-> > >> most of them are "return-type co_annotation fn(..)"
-> > >> we even have scripts/block-coroutine-wrapper.py that relies and
-> > >> produce this order..
-> > >> a bit late to change the style imho...
-> > >>
-> > >> At least, let's not make this a requirement for this series, please
-> >
-> > Not a requirement on my side, but if we had to pick a style,
-> > I'd vote for "attribute before return type".
->
-> Yep, because that's a) the most compiler-friendly option (all compilers a=
-llow
-> it, including MSC) and b) it's the most diff-noise friendly solution (can=
- be
-> prepended on its own line without touching any of the existing line(s) at
-> all).
->
-
-ok, what should I do? Send a preliminary patch to fix all annotation
-positions? or just change the position in this patch or series?
+  Thomas
 
 
