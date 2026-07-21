@@ -4,60 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D34B9C4451C
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 12:18:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3900BC44529
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 12:21:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wm9QT-00014g-Bm; Tue, 21 Jul 2026 08:18:23 -0400
+	id 1wm9T2-00021z-37; Tue, 21 Jul 2026 08:21:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wm9QP-00014F-PZ; Tue, 21 Jul 2026 08:18:18 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wm9QM-0003K7-SN; Tue, 21 Jul 2026 08:18:17 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66LCI0au049078
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 21 Jul 2026 21:18:00 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=tiz6sP8dmtLsU9Hg5DlqASAIyW24ZuCrV9bo/PpbL1Y=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1784636281; v=1;
- b=MBwxc82W7vc8qA2AzOiBVq1gz+UfrC2CfNk7laj3SFDBj3AiERVrcfJVaxOazPG1
- JZykgUWU4bc3pt4/E42XOogPY8EC5TsCA09LZDSXTSCs/ZWqzgf5DnfJXx9Xycgk
- gSsvqzPe8byF7+lHLveweEML1kGJuPCGVoXOBxvacg5w+JC1ZZJvxHaByQQRNu7j
- TDcZWe0+e11oMtMqRXGbKmRRVv3kUukf9sClP+GViIjNV0m9/Lk4+/LsHSj3YXQD
- emWhVfEuTvZpfBk+2WK3ECNTezib0Qk2IpR/6Be4OZmX8GmDekQUGqaM4YgvvDD5
- vToni9r8lsAChcjn5mZZFQ==
-Message-ID: <5072abe3-162f-4760-9250-107877b266ef@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 21 Jul 2026 21:18:00 +0900
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1wm9Sr-0001yl-UC
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 08:20:49 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1wm9Sq-0003nM-1D
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 08:20:49 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-c9aea40d799so3820926a12.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 05:20:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1784636446; x=1785241246; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=UDmKj9ojGbNAJQJDYvvRAPXarsrqhccfsavTta3uxqc=;
+ b=FaYKmApYnYkN8Nh1n0DLfH8nOhjzZ08nZ5BXkJPcrHAlkcASnRZsDMRNt6uJKSwTKN
+ xGLwQgXippZmblfQ2ib0fY2BtWexOq7jY611CCrN5yIMInVItj17BaZwly5N8DlG1Xss
+ OklioTc8psiMJJCRD0p/LIW72hX7wC5YwtAmRy+z5rK5jTTWZKR1cDGJW/u8KiEr/3fk
+ Zb2PgmG5ED+qwHiy25fxXHMqET111pWca7HZ/MnKqMJb53/GLD3Cj5xjmrZAmquYrj+c
+ qtQrW3rlWH65BftAkXKX11Ff0I64XY+GG6Z6cC00YfDBJnwPBqCGsTnEdqTEoGb5OkOQ
+ xlkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784636446; x=1785241246;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=UDmKj9ojGbNAJQJDYvvRAPXarsrqhccfsavTta3uxqc=;
+ b=QsoRotNonexJtZMCP5oSBPkfa7J6ChuW5yqalibMt/fc2HAikJGf115be13fgO+m9p
+ x90QNYjCT7FiBv86HCLQqTxI0q6X+rI2FlCdxEFtTeupz7BzvW7j1RJJYa9xOYN/IOoR
+ 4B8SJXtaHwYS9EvQIqh1N7QeBh1X9wnsSPYGh/cNvedvId8G/uw2Yujvyu7QG06McEmu
+ PHrvCUkxjxE/6ENuJQAa/05l9QXfWkEUN7qNBXv5YOOgUrEJO7QX/grPVUx43YtX4fXJ
+ k/FSZ9IRM57TlV8Ro9ALd34OUTU7mtiqFv/koGUpD0cckpv3iS7tT1nkcXMpM9PTLHt9
+ zLJg==
+X-Gm-Message-State: AOJu0YyHxczTsrBaGbFKCCxP/paKVqr7TJ3YlHAQT1oS3zk7lAxlNPhC
+ yXoJAhk86OZw5lMTx8hWGsKRnsyXIb8JT0X8W2/fL8t8dSTPviQE8T/EEI2n2JwMKvBXjC6QtRp
+ nLPDPLFq6RksnJ0WRmInFS9pwQKRFxVlZFyJ1Fubfhsjd1L4L/KeWo6zGAEE3IVNmGQWsgPJSbj
+ ey8r22WZfvVeHEeLoKe8GsySlwDUbcrnLGMl5CuR8=
+X-Gm-Gg: AfdE7cnC65N2V5T065GELEX9wDyOGSAyL8KxrpjQVIC4/YI+OI6hrJJjLOzCZ81m7YB
+ nmg5jO4oF5H1l39FRjYP/JEqnx37nz9E1BJvcjjwhvYc8iJfPJEsfX1lHS8Z1+pBh5qP7skW04y
+ BZxBf1E7TbxpZRJfbEWPb6vmo9S4TQ8TjY/cU6w70S4Z1WiRz12VWpWOcMsYyBfqXRG3jhxCzHN
+ kXTYLD+QwSwr4cXTov+qLuYm4GZn/qjhnPXKorzYq4p6BnPt1JICLBV3pPZYnJLdxhDJ5rkiq9P
+ tqBjsytHiJiYD2PQ9Z6EBszxsaryx0bqtJgFrdVhrEtZHezXDXsJQIMSMSKLLw0vrAP8EdmCVWp
+ rIPr0qFYX8NkWX0kxmBSFikISPfgaCKS5jrMf9waJEZ7Nj09nTROsCvHmRQzmkXGsYiMoRCWZG3
+ YmNXD5OX/cjNeiI9kUpBLEx+lfHX+9wYO5JvxrjD6quCC16mbVlk0oAs4Wl2QaWogrMvauVdlqd
+ fSCOGjkL2rSGbZa
+X-Received: by 2002:a05:6a21:1519:b0:3c3:a168:edc3 with SMTP id
+ adf61e73a8af0-3c3ad9717dfmr17121896637.38.1784636446435; 
+ Tue, 21 Jul 2026 05:20:46 -0700 (PDT)
+Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
+ [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-cb517aad95dsm5904568a12.7.2026.07.21.05.20.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Jul 2026 05:20:45 -0700 (PDT)
+From: Max Chou <max.chou@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Max Chou <max.chou@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Frank Chang <frank.chang@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PATCH 2/5] target/riscv: Add SiFive custom int8 matmul extension
+ implied rules
+Date: Tue, 21 Jul 2026 20:20:30 +0800
+Message-ID: <20260721122034.1567146-3-max.chou@sifive.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260721122034.1567146-1-max.chou@sifive.com>
+References: <20260721122034.1567146-1-max.chou@sifive.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] hw/net/e1000e: recalculate rx_desc_len on migration
- load
-To: Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org
-Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Jason Wang <jasowangio@gmail.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, qemu-stable@nongnu.org
-References: <20260721111126.3278244-1-lvivier@redhat.com>
- <20260721111126.3278244-2-lvivier@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260721111126.3278244-2-lvivier@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=max.chou@sifive.com; helo=mail-pg1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,51 +110,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/21 20:11, Laurent Vivier wrote:
-> rx_desc_len is migrated as a raw uint8_t from the stream, but it
-> is a derived value that can be computed from the register state in
-> core.mac[RCTL]. A crafted migration stream can set rx_desc_len to
-> an invalid value (e.g. 64), causing a stack buffer overflow in
-> e1000e_write_packet_to_guest() which copies rx_desc_len bytes into
-> a 32-byte stack union.
-> 
-> Recalculate rx_desc_len from the register state in post_load,
-> ignoring the untrusted value from the stream.
-> 
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3869
-> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-> ---
->   hw/net/e1000e_core.c | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
-> index 46e156a5ddc2..31eb39e4aa40 100644
-> --- a/hw/net/e1000e_core.c
-> +++ b/hw/net/e1000e_core.c
-> @@ -3557,5 +3557,7 @@ e1000e_core_post_load(E1000ECore *core)
->       e1000e_intrmgr_resume(core);
->       e1000e_autoneg_resume(core);
->   
-> +    e1000e_calc_rxdesclen(core);
+From: Frank Chang <frank.chang@sifive.com>
 
-e1000e_set_rx_control()
-e1000e has similar derived values in rxbuf_min_shift, rxbuf_sizes[], and 
-rx_desc_buf_size, and e1000e_set_rx_control() computes it in sequence:
+Add SiFive custom int8 matmul extension implied rules to enable the
+implied extensions of SiFive custom int8 matmul extension recursively.
 
-     e1000e_parse_rxbufsize(core);
-     e1000e_calc_rxdesclen(core);
-     core->rxbuf_min_shift = ((val / E1000_RCTL_RDMTS_QUAT) & 3) + 1 +
-                                 E1000_RING_DESC_LEN_SHIFT;
+Signed-off-by: Frank Chang <frank.chang@sifive.com>
+Signed-off-by: Max Chou <max.chou@sifive.com>
+---
+ target/riscv/cpu.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-I suggest creating a function to replicate this sequence for 
-e1000e_core_post_load() instead of only calling e1000e_calc_rxdesclen().
-
-Regards,
-Akihiko Odaki
-
-> +
->       return 0;
->   }
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index e643d7c7af..70baa054f9 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2811,6 +2811,24 @@ static RISCVCPUImpliedExtsRule ZVFBFA_IMPLIED = {
+     },
+ };
+ 
++static RISCVCPUImpliedExtsRule XSFVQMACCDOD_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_xsfvqmaccdod),
++    .implied_multi_exts = {
++        CPU_CFG_OFFSET(ext_zve32x),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule XSFVQMACCQOQ_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_xsfvqmaccqoq),
++    .implied_multi_exts = {
++        CPU_CFG_OFFSET(ext_zve32x),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
+ RISCVCPUImpliedExtsRule *riscv_misa_ext_implied_rules[] = {
+     &RVA_IMPLIED, &RVD_IMPLIED, &RVF_IMPLIED,
+     &RVM_IMPLIED, &RVV_IMPLIED, &RVG_IMPLIED,
+@@ -2832,6 +2850,7 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
+     &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SHA_IMPLIED,
+     &SSCFG_IMPLIED, &SUPM_IMPLIED, &SSPM_IMPLIED, &SMCTR_IMPLIED,
+     &SSCTR_IMPLIED, &SSSTATEEN_IMPLIED,
++    &XSFVQMACCDOD_IMPLIED, &XSFVQMACCQOQ_IMPLIED,
+     NULL
+ };
+ 
+-- 
+2.55.0
 
 
