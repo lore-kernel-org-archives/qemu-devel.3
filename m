@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BD1AC44536
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5AD1C44539
 	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:57:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWQd-0002Bp-Pu; Wed, 22 Jul 2026 08:52:03 -0400
+	id 1wmWVG-0004gb-B9; Wed, 22 Jul 2026 08:56:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWQO-0001YG-50; Wed, 22 Jul 2026 08:51:49 -0400
+ id 1wmWTZ-0000Bu-52; Wed, 22 Jul 2026 08:55:05 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWQM-0002MC-2v; Wed, 22 Jul 2026 08:51:47 -0400
+ id 1wmWTW-00036p-TM; Wed, 22 Jul 2026 08:55:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724574; bh=d5kglI1MqnONfrBHBTIre/pXwXtqFL5heBdzevbDvl4=;
+ t=1784724575; bh=2oV0XPV6jUJTJjyR4nt4ei97iaII65Yy0IECiTyZ9kI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=kptRXORfHLCGhvUH8s2lafXeGM95m6ByKjPt3wM7PVItV9YNMzQoLAMlZ2GXSOD/u
- jstXqyYTYDZPv+poyUVlMJUVZ2xR2fMT80tDCDESZX1KJrbCPynSXMOR2T6UMSvXUQ
- WXpuoFugjUyr8LNllU3kiB681iQD/6z5wHiSCWP64WGar4A34HS/RGrQq3wbA0C8iB
- 8PZ+3K6CLHl+eG3SGg81msr+4nIW3FQkmIU2rUR8m0ezTb+GUKG3QBmEPKNL2iFrxp
- V9731FLsynxLUxpHEkXl3s6fLEXpC0ftKVxn9ZW81Yaz5iNEpABULdtgibW0Ovnr2K
- RqCNB6XUISr0w==
+ b=Y3grYjeY0ijQqAWxTx/VgZ/mTyU6xcqh5g1WatS/tvfSugfkl6OUd5P9qHk5XQ0Pz
+ FDGE4Ln5Gyj689ZrooLDUL08AkjPJtMoHBJw2UeDm0NFSOBxYVAw7g9NbuHhcfKbJC
+ WUetz8c8hfXvqZverjhx9p08Bgoc0Ib6o+F0yV7qJ2Zk6rBRkaDBgjpQPVdJSXI/td
+ Xf5oWz4KHGvmfk3p8FuyrjSbJEz32H5EDi2Wsaxzvt0zcKtjW22+d6Vi6oVf37dYhz
+ dwj6YDEWT7bliRj79k+hEvSs2E9VE1tJLm/Nba01+nWcbx0w+KDfKLsrhXAK0v7Wd1
+ oUmtCDL9q7RVw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 901FE1C3B32;
- Wed, 22 Jul 2026 15:49:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4B2A21C3B53;
+ Wed, 22 Jul 2026 15:49:35 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D814E3F3782;
- Wed, 22 Jul 2026 15:49:51 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 930703F37A3;
+ Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 9B4DC17F39; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
+ id E9BAA17F7B; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 v2 085/127] hw/usb/dev-wacom: Don't write off end of
- buffer
-Date: Wed, 22 Jul 2026 15:48:10 +0300
-Message-ID: <20260722124859.32371-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v2 118/127] usbredir: fix infinite loop and SIGFPE
+ with zero max_packet_size
+Date: Wed, 22 Jul 2026 15:48:43 +0300
+Message-ID: <20260722124859.32371-37-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
@@ -73,43 +73,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-In usb_wacom_handle_data() we allocate a buffer with a size
-determined by the transfer size requested by the guest.  We then fill
-it in by calling either usb_mouse_poll() or usb_wacom_poll(), both of
-which functions take a length and return an actual length, which we
-pass to usb_packet_copy().  However, usb_mouse_poll() doesn't check
-the buffer size as it fills in the buffer, so if the guest passes an
-overly short transfer size then it will write off the end of the
-allocated buffer.
+A malicious usbredir peer can send an ep_info message resetting
+max_packet_size to 0 after bulk receiving has started. This causes:
+- infinite loop in usbredir_buffered_bulk_packet() where the splitting
+  loop increments by max_packet_size (0)
+- SIGFPE in usbredir_buffered_bulk_in_complete_ftdi() from modulo by 0
+- SIGFPE in usbredir_handle_buffered_bulk_in_data() from division by 0
+  when computing bytes_per_transfer
 
-Check the length is at least big enough for the minimum 3 byte
-packet and return nothing if it is not, as usb_wacom_poll() does.
+Fix by stopping and disabling bulk receiving in usbredir_ep_info() when
+max_packet_size is set to 0.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3672
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260706182034.1003176-1-peter.maydell@linaro.org
-(cherry picked from commit 2c6fae7d7da874615d8585f6d2b16ffb673c5c9a)
+Add post-load check, and assert() for the invariant.
+
+Fixes: CVE-2026-63319
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3995
+Reported-by: Tristan @TristanInSec
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260716141107.3597076-1-marcandre.lureau@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit a002485bfef184f04a58adfd2a848c19f583f7d0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/dev-wacom.c b/hw/usb/dev-wacom.c
-index 14d07e81281..473ea6a0f70 100644
---- a/hw/usb/dev-wacom.c
-+++ b/hw/usb/dev-wacom.c
-@@ -252,6 +252,10 @@ static int usb_mouse_poll(USBWacomState *s, uint8_t *buf, int len)
-     if (s->buttons_state & MOUSE_EVENT_MBUTTON)
-         b |= 0x04;
+diff --git a/hw/usb/redirect.c b/hw/usb/redirect.c
+index 46db0b73af7..5c73d0f19dc 100644
+--- a/hw/usb/redirect.c
++++ b/hw/usb/redirect.c
+@@ -690,6 +690,7 @@ static void usbredir_buffered_bulk_in_complete_ftdi(USBRedirDevice *dev,
+     struct buf_packet *bulkp;
+     int count;
  
-+    if (len < 3) {
-+        return 0;
++    assert(maxp != 0);
+     while ((bulkp = QTAILQ_FIRST(&dev->endpoint[EP2I(ep)].bufpq)) &&
+            p->actual_length < p->iov.size && p->status == USB_RET_SUCCESS) {
+         if (bulkp->len < 2) {
+@@ -739,6 +740,7 @@ static void usbredir_handle_buffered_bulk_in_data(USBRedirDevice *dev,
+             .stream_id = 0,
+             .no_transfers = 5,
+         };
++        assert(dev->endpoint[EP2I(ep)].max_packet_size != 0);
+         /* Round bytes_per_transfer up to a multiple of max_packet_size */
+         bpt = 512 + dev->endpoint[EP2I(ep)].max_packet_size - 1;
+         bpt /= dev->endpoint[EP2I(ep)].max_packet_size;
+@@ -793,6 +795,7 @@ static void usbredir_handle_bulk_data(USBRedirDevice *dev, USBPacket *p,
+     }
+ 
+     if (dev->endpoint[EP2I(ep)].bulk_receiving_enabled) {
++        assert(maxp != 0);
+         if (size != 0 && (size % maxp) == 0) {
+             usbredir_handle_buffered_bulk_in_data(dev, p, ep);
+             return;
+@@ -1801,6 +1804,17 @@ static void usbredir_ep_info(void *priv,
+         if (usbredirparser_peer_has_cap(dev->parser,
+                                      usb_redir_cap_ep_info_max_packet_size)) {
+             dev->endpoint[i].max_packet_size = ep_info->max_packet_size[i];
++            if (ep_info->max_packet_size[i] == 0 &&
++                dev->endpoint[i].bulk_receiving_enabled) {
++                USBPacket *p = dev->endpoint[i].pending_async_packet;
++                usbredir_stop_bulk_receiving(dev, I2EP(i));
++                dev->endpoint[i].bulk_receiving_enabled = 0;
++                if (p != NULL) {
++                    dev->endpoint[i].pending_async_packet = NULL;
++                    p->status = USB_RET_IOERROR;
++                    usb_packet_complete(&dev->dev, p);
++                }
++            }
+         }
+ #if USBREDIR_VERSION >= 0x000700
+         if (usbredirparser_peer_has_cap(dev->parser,
+@@ -2161,6 +2175,7 @@ static void usbredir_buffered_bulk_packet(void *priv, uint64_t id,
+     }
+ 
+     /* Data must be in maxp chunks for buffered_bulk_add_*_data_to_packet */
++    assert(dev->endpoint[EP2I(ep)].max_packet_size != 0);
+     len = dev->endpoint[EP2I(ep)].max_packet_size;
+     status = usb_redir_success;
+     free_on_destroy = NULL;
+@@ -2244,6 +2259,15 @@ static int usbredir_post_load(void *priv, int version_id)
+     usbredir_setup_usb_eps(dev);
+     usbredir_check_bulk_receiving(dev);
+ 
++    for (int i = 0; i < MAX_ENDPOINTS; i++) {
++        if (dev->endpoint[i].bulk_receiving_started &&
++            dev->endpoint[i].max_packet_size == 0) {
++            error_report("usbredir: endpoint %d has bulk receiving started "
++                         "with zero max_packet_size", i);
++            return -EINVAL;
++        }
 +    }
 +
-     buf[0] = b;
-     buf[1] = dx;
-     buf[2] = dy;
+     return 0;
+ }
+ 
 -- 
 2.47.3
 
