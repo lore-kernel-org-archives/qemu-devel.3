@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 390B8C44539
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8BD3C4453C
 	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:00:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWWu-0007vS-C1; Wed, 22 Jul 2026 08:58:34 -0400
+	id 1wmWWb-0007dQ-Ll; Wed, 22 Jul 2026 08:58:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWU1-0001Ut-0M; Wed, 22 Jul 2026 08:55:35 -0400
+ id 1wmWU7-0001l5-IO; Wed, 22 Jul 2026 08:55:40 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWTy-0003Ln-M3; Wed, 22 Jul 2026 08:55:32 -0400
+ id 1wmWU5-0003Q1-Ql; Wed, 22 Jul 2026 08:55:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724575; bh=7sJDU3ne1UmK05/NHpD0EoX8IlcMyqyado09dvHbjts=;
+ t=1784724575; bh=s3s9oP/bcNs4nflLd+KbE5R+nM/kjFOdWRbRh+VQJ+g=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=i/9OBmmEa0IHjDMGXP89v4Z8mGIjSGkhDw+RAoE4iVuH4X2F7JLTvgmeWcd2oph4S
- 5CItcH3FvE0lUeB6JofQdXE71bm0QfoMCJFMEam6+LNxtPsXCF8qCmdz822Gr46tLS
- IqY0lHxY5hEfXNB736dKSy+EzcDsGhtBvdImRI7CUBDT3C1R81/IP18wvj0F41ZQHr
- REQXayf51DPRHLzpXulHkl8Vle1UstHHzJGXdS6E6qqpZ6hNfc77wDsC5cX2nnPCWr
- iLCNGSHdf1wP+waG/ScAya2FwByUpLoVGmpYiaOeALLGQTtUQEun2AavjuZFNkhDSW
- 6GhHPQGp5qm2Q==
+ b=wbNj37WTmEqg6kbZC4vnp7wbXMJB09DOllIufUDDno4teB9gCv95cqb0OXt2Yli4s
+ 4qNo79h6D+5TTD6VnE0MJ/R+qLKiHpH8MhdG/J+EY/KMwud/PnCBZtRTgs776Z8TjQ
+ dHeLEP54V1/Dhd4JOJY74FR6ik4/EC/U5WSVOHXEwG9h8TvJSfiO8DWPBg2EZaGW4T
+ eJ+YbQv+24oo7zW9Vx3/YzuIjQPyllz46nS14YmjghouVxGgj6X39NnqZJg77qE76H
+ +gc+IOkciTA6tVnzqiPqiYDuMLuzOALetN4OhNvioNmOUDFsAfcBGkMKwketJTwGKo
+ DBDQMO6BpjKVg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5FFA01C3B57;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6FE0D1C3B5A;
  Wed, 22 Jul 2026 15:49:35 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A90663F37A7;
+ by tsrv.corpit.ru (Postfix) with ESMTP id B85EC3F37AA;
  Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id F354317F83; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
+ id 062B017F89; Wed, 22 Jul 2026 15:49:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Bin Meng <bmeng.cn@gmail.com>, Bin Meng <bin.meng@processmission.com>,
+Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Matthew Jackson <matthew@pq.io>, Alexander Graf <agraf@csgraf.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 v2 122/127] net: Correct padding check in
- qemu_receive_packet()
-Date: Wed, 22 Jul 2026 15:48:47 +0300
-Message-ID: <20260722124859.32371-41-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v2 125/127] hw/misc/applesmc: Fix a typo setting MSSD
+ key
+Date: Wed, 22 Jul 2026 15:48:50 +0300
+Message-ID: <20260722124859.32371-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
@@ -74,90 +75,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-In qemu_receive_packet() we check to see if we should pad a short
-packet.  This is doing the wrong test: because this function is used
-when the device adds a packet to its own incoming queue (i.e.  for
-loopback), we should be checking the NetClientState's own do_not_pad
-flag, not that for its peer.
-
-We didn't notice this earlier, because at the moment all the real
-peers of a network device (i.e.  the network backends) do not set
-do_not_pad, so net_peer_needs_padding() always returns true except in
-the corner case where the network device has no peer at all.
-
-The effect of this is that if a network device has no peer (e.g.
-because QEMU was started with -net none or with -nodefaults) then we
-can still let through the kind of "guest misprograms the network
-device to loopback-transmit a short packet and then we mishandle it
-in the receive path" bug like #3043 which commit a01344d9d78 was
-trying to fix.
-
-Since the distinction between "we should check nc->do_not_pad"
-and "we should check nc->peer->do_not_pad" is a bit subtle, add
-enough documentation commentary to make it more obvious.
+In commit 1ddda5cd364 we meant to set MSSD=3, but due
+to a typo we ended setting MSSD=0. Convert the two other
+NATJ and MSSP keys to use hexadecimal notation to avoid
+similar copy/paste typos.
 
 Cc: qemu-stable@nongnu.org
-Fixes: a01344d9d78 ("net: pad packets to minimum length in qemu_receive_packet()")
-Suggested-by: Bin Meng <bmeng.cn@gmail.com>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Bin Meng <bin.meng@processmission.com>
-Message-ID: <20260629164246.2028947-1-peter.maydell@linaro.org>
+Fixes: 1ddda5cd364 ("AppleSMC device emulation")
+Reported-by: Matthew Jackson <matthew@pq.io>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit b1e73b2ddbb2850e394b9c47cfcb14dba8048a71)
+Reviewed-by: Alexander Graf <agraf@csgraf.de>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-Id: <20260720115336.75063-1-philmd@oss.qualcomm.com>
+(cherry picked from commit 2142689d92ca87b53ad1a0a8d48f439baf17e13a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/net/net.h b/include/net/net.h
-index 45bc86fc86b..9edfacf827c 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -349,9 +349,32 @@ uint32_t net_crc32_le(const uint8_t *p, int len);
-     .offset     = vmstate_offset_macaddr(_state, _field),            \
+diff --git a/hw/misc/applesmc.c b/hw/misc/applesmc.c
+index fd96f5f245f..d004e8b4431 100644
+--- a/hw/misc/applesmc.c
++++ b/hw/misc/applesmc.c
+@@ -333,9 +333,9 @@ static void applesmc_isa_realize(DeviceState *dev, Error **errp)
+     applesmc_add_key(s, "REV ", 6, "\x01\x13\x0f\x00\x00\x03");
+     applesmc_add_key(s, "OSK0", 32, s->osk);
+     applesmc_add_key(s, "OSK1", 32, s->osk + 32);
+-    applesmc_add_key(s, "NATJ", 1, "\0");
+-    applesmc_add_key(s, "MSSP", 1, "\0");
+-    applesmc_add_key(s, "MSSD", 1, "\0x3");
++    applesmc_add_key(s, "NATJ", 1, "\x00");
++    applesmc_add_key(s, "MSSP", 1, "\x00");
++    applesmc_add_key(s, "MSSD", 1, "\x03");
  }
  
-+/**
-+ * net_peer_needs_padding: Should we pad as we send out packets?
-+ * @nc: NetClientState
-+ *
-+ * Return true if the peer of this NetClientState (i.e. the
-+ * destination that qemu_send_packet() etc send to) requires us to pad
-+ * out packets that are shorter than the minimum ethernet frame
-+ * length.
-+ */
- static inline bool net_peer_needs_padding(NetClientState *nc)
- {
-   return nc->peer && !nc->peer->do_not_pad;
- }
- 
-+/**
-+ * net_client_needs_padding: Should we pad as we queue packets to ourselves?
-+ * @nc: NetClientState
-+ *
-+ * Return true if this NetClientState requires us to pad out packets
-+ * that are shorter than the minimum ethernet frame length.  This is
-+ * the check to make in qemu_receive_packet() when we are queuing a
-+ * packet back into ourselves (i.e. loopback).
-+ */
-+static inline bool net_client_needs_padding(NetClientState *nc)
-+{
-+    return !nc->do_not_pad;
-+}
-+
- #endif
-diff --git a/net/net.c b/net/net.c
-index 4ccc8763465..5977fe4cfbd 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -783,7 +783,7 @@ ssize_t qemu_receive_packet(NetClientState *nc, const uint8_t *buf, int size)
-         return 0;
-     }
- 
--    if (net_peer_needs_padding(nc)) {
-+    if (net_client_needs_padding(nc)) {
-         if (eth_pad_short_frame(min_pkt, &min_pktsz, buf, size)) {
-             buf = min_pkt;
-             size = min_pktsz;
+ static void applesmc_unrealize(DeviceState *dev)
 -- 
 2.47.3
 
