@@ -4,51 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32918C4453C
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:03:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67FFCC44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:03:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWPc-0008T4-Te; Wed, 22 Jul 2026 08:51:01 -0400
+	id 1wmWRr-000385-8K; Wed, 22 Jul 2026 08:53:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWPV-0007uB-Tg; Wed, 22 Jul 2026 08:50:53 -0400
+ id 1wmWRP-0002iV-Uz; Wed, 22 Jul 2026 08:52:58 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWPU-0002Hx-4F; Wed, 22 Jul 2026 08:50:53 -0400
+ id 1wmWRO-0002US-D8; Wed, 22 Jul 2026 08:52:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724391; bh=dpHSSvgtm7iGUG6OLfjvxoLYQM0XSvjTiLyxczzE+Tc=;
+ t=1784724574; bh=2/eB0ERPe4CsWEDIDQTng1/Ud46Y0zC79nesY/gqSqE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=bIU8VTN7V7BkBK77k2zB9yM3Ag+iKsVnKQvp6Bg+9F+zumZiQxy6WHW8sZ/WRG7n4
- ryxcZRl+/h14L8KWghuErg2ZvezfnZPG4cjJ6cjoYY16CxNvbHUg7o3wxEymMsvgfy
- gkRl8zZidXBEf4gnHSX5+M/ad1ZePg8VbnEvW/rdlJFGvutNuWfUQ8I5zWOvzN/yRy
- FO5s5siP0rYMBiggBPyj1Eob3YWoNF9oyq4isyKJuolmx9/B5m1qEIcg+wIZg2ECIG
- mKIPPQBWXOJueqNVSZKbbkyqrgl+/rFktTIIoAOSITsoICa16tOxxcbUOmwPtRXv5I
- +kPEvM5ZURZbw==
+ b=AzaAnj3k25z/JPE8IanOagRn9vV8czhj95+Gh5EbaUIQdu2yuZFFL5KZRFU6F6bOa
+ YSh68M6AStBold2CN4uBUR0jEEfj0O8vaLy4aOFq0ptfT8NDaL4UcJaLzNpswZNWmM
+ eRRbiPkMK4iE3aXD2fwpR62cs9D8kUC51FbVJkvRrNLTjJ5w8tgR0qtoG7qDxufzpn
+ X2q1mhEkcNeMwu3A/EYuu3vgTHYjBC+7RoN+BqCJC6+vUCd6LZmBMkeEbBsV1bKUAb
+ eYtYOmmp3ngXlXFwuh4PX485YoTb2B7shRINJWkrObJAlfLO3lhANDQmQECsdnmVqe
+ FPFlNulHe9q0A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 28EC01C3B21;
- Wed, 22 Jul 2026 15:46:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CFAE81C3B3E;
+ Wed, 22 Jul 2026 15:49:34 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6FF5A3F377B;
- Wed, 22 Jul 2026 15:46:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 244503F378E;
+ Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A0B5C17F2B; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id B7D0E17F51; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, Dmitry Pimenov <sun4qemu@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Matthew Jackson <matthew@pq.io>, Alexander Graf <agraf@csgraf.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 120/122] hw/misc/applesmc: Fix a typo setting MSSD
- key
-Date: Wed, 22 Jul 2026 15:46:09 +0300
-Message-ID: <20260722124622.31034-45-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v2 097/127] hw/sparc64/niagara: use int64_t for vdisk
+ size to avoid truncation
+Date: Wed, 22 Jul 2026 15:48:22 +0300
+Message-ID: <20260722124859.32371-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
-References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
+References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,40 +73,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+From: Dmitry Pimenov <sun4qemu@gmail.com>
 
-In commit 1ddda5cd364 we meant to set MSSD=3, but due
-to a typo we ended setting MSSD=0. Convert the two other
-NATJ and MSSP keys to use hexadecimal notation to avoid
-similar copy/paste typos.
+blk_getlength() returns int64_t, but niagara_init() stored it in an int,
+truncating the if=pflash virtual-ramdisk size for images >= 2 GiB. A ~4 GiB
+image truncated to 0/negative, failed the `size > 0` check, and exit(1)'d
+before the CPU ran, ending with:
 
-Cc: qemu-stable@nongnu.org
-Fixes: 1ddda5cd364 ("AppleSMC device emulation")
-Reported-by: Matthew Jackson <matthew@pq.io>
+  qemu-system-sparc64: could not load ram disk
+
+Signed-off-by: Dmitry Pimenov <sun4qemu@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20260710222350.9185-1-sun4qemu@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Alexander Graf <agraf@csgraf.de>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-Id: <20260720115336.75063-1-philmd@oss.qualcomm.com>
-(cherry picked from commit 2142689d92ca87b53ad1a0a8d48f439baf17e13a)
+(cherry picked from commit 76dbe26fd6500a94b85bf0f3a39d73b72f5fab7b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/misc/applesmc.c b/hw/misc/applesmc.c
-index 97ea842d60c..6d7655f3bfa 100644
---- a/hw/misc/applesmc.c
-+++ b/hw/misc/applesmc.c
-@@ -333,9 +333,9 @@ static void applesmc_isa_realize(DeviceState *dev, Error **errp)
-     applesmc_add_key(s, "REV ", 6, "\x01\x13\x0f\x00\x00\x03");
-     applesmc_add_key(s, "OSK0", 32, s->osk);
-     applesmc_add_key(s, "OSK1", 32, s->osk + 32);
--    applesmc_add_key(s, "NATJ", 1, "\0");
--    applesmc_add_key(s, "MSSP", 1, "\0");
--    applesmc_add_key(s, "MSSD", 1, "\0x3");
-+    applesmc_add_key(s, "NATJ", 1, "\x00");
-+    applesmc_add_key(s, "MSSP", 1, "\x00");
-+    applesmc_add_key(s, "MSSD", 1, "\x03");
- }
- 
- static void applesmc_unrealize(DeviceState *dev)
+diff --git a/hw/sparc64/niagara.c b/hw/sparc64/niagara.c
+index 209be380473..b7983042c28 100644
+--- a/hw/sparc64/niagara.c
++++ b/hw/sparc64/niagara.c
+@@ -137,7 +137,7 @@ static void niagara_init(MachineState *machine)
+        outside of the partition RAM */
+     if (dinfo) {
+         BlockBackend *blk = blk_by_legacy_dinfo(dinfo);
+-        int size = blk_getlength(blk);
++        int64_t size = blk_getlength(blk);
+         if (size > 0) {
+             memory_region_init_ram(&s->vdisk_ram, NULL, "sun4v_vdisk.ram", size,
+                                    &error_fatal);
 -- 
 2.47.3
 
