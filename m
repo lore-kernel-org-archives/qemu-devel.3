@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5EB5C4453C
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:54:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D81AEC44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:54:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWP8-0004yU-QX; Wed, 22 Jul 2026 08:50:32 -0400
+	id 1wmWPl-0000XS-Hg; Wed, 22 Jul 2026 08:51:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWNy-00041h-R7; Wed, 22 Jul 2026 08:49:23 -0400
+ id 1wmWPT-0007iR-OX; Wed, 22 Jul 2026 08:50:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWNv-0001um-Ci; Wed, 22 Jul 2026 08:49:18 -0400
+ id 1wmWPR-0002Fw-NW; Wed, 22 Jul 2026 08:50:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724390; bh=+vm56tPTTeZVe1mo75AWDitko8RK/ZCBqWZJOR8e0Nc=;
+ t=1784724391; bh=muNAh4RU3UYOtUuju152tRHPb6SeX/QYPbJCxpOiBfA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=BR8UWXKVxy4b2q7caOZUatTg2lZNgazHsrMlYrJM7myYiMvjDCsK2LRoW1JI15cnM
- rkLaJSrWz64LfPAilNpj/nW14XrtFRCkxYbnitPX6nc/kEeYLq3cOW31jZ4i9bXklj
- 0TmiSfiP9xVnAdV7V+MLgjK/mA1KxogTTDrNf7vk5DmlQObR0scVsuvsMewGhwxzAc
- +Hna39TeRjjWJUklY+MbfmxSd8B2LIs6xsP4Lv7GpdTQ5dvtD9QrgOXIi0hFA555DK
- YpuCzEo6ALdeC4STRp0VHeHFZlZ61du2LFXOFRV4Wc0HwIcFT44NC/7IA67qDf1DvH
- UDf0qiohkjyMg==
+ b=v1UnMQrmciMjQfQgrbV2el3X4ziu5/Kvp8+UCCXvBtNEwwZZMtxYzTuTAhh3IzKuu
+ O6m5UaspXdpQgllUAtFislLcrvFlhah7rzPlP6WZt3KbggY0lxTABeNsObYRG7h21D
+ MHUZ8JBd63lNOanujjKQ6adGWZgotxjKJqjyCERR5FwQ4Un8hDaHM7HuddufuBdnO8
+ 4BIAMTtE+t9DVNSoZvMzGAmJ0FjOo3C3HpRJc05JOU+MPycFrN7C6OUtDvEyl3vbHX
+ +mAww4ohopqUvgYAAKTrzs4jusocww0mT39mUmL5u2q0KlzKFoHxlk2aLuvyCZiAbP
+ Hsbr1jegrkzGA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C939C1C3B11;
- Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 21C831C3B20;
+ Wed, 22 Jul 2026 15:46:31 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1D4423F376B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6A6D93F377A;
  Wed, 22 Jul 2026 15:46:48 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 7AD3717F0B; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id 9E3F817F29; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 104/122] ui/vnc: validate SetPixelFormat field
- ranges
-Date: Wed, 22 Jul 2026 15:45:53 +0300
-Message-ID: <20260722124622.31034-29-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 v2 119/122] replay: fix use of uninitialized pointer
+ on error
+Date: Wed, 22 Jul 2026 15:46:08 +0300
+Message-ID: <20260722124622.31034-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
@@ -77,39 +76,76 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The VNC SetPixelFormat message carries red/green/blue_max as 16-bit
-values, but PixelFormat stores them as uint8_t. A client sending a
-max value above 255 (e.g. 0x0100) passes the existing non-zero check
-but silently truncates to 0 on assignment, leading to a division by
-zero in the Tight PNG palette path.
+When bdrv_snapshot_list() returns a negative error code, sn_tab is
+uninitialized. The loop does not execute (since i=0 < negative is
+false), but the code falls through to g_free(sn_tab) which frees
+an uninitialized pointer.
 
-Add explicit range checks if any channel max exceeds UINT8_MAX.
-
-Fixes: CVE-2026-15578
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3976
-Reported-by: dong ling
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Fixes: f6baed3d1485 ("replay: implement replay-seek command")
 Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
-(cherry picked from commit 6075444c5a72ab531295d92050d95cebea8a8119)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20260719113216.1177594-1-marcandre.lureau@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit fe68e4b47bf5a3ff016a8c2b580e05c93df05752)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/vnc.c b/ui/vnc.c
-index b42e0973101..8be69754e0e 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -2308,6 +2308,11 @@ static void set_pixel_format(VncState *vs, int bits_per_pixel,
-         return;
+diff --git a/replay/replay-debugging.c b/replay/replay-debugging.c
+index 11053640021..7b904a14165 100644
+--- a/replay/replay-debugging.c
++++ b/replay/replay-debugging.c
+@@ -139,9 +139,8 @@ static char *replay_find_nearest_snapshot(int64_t icount,
+                                           int64_t *snapshot_icount)
+ {
+     BlockDriverState *bs;
+-    QEMUSnapshotInfo *sn_tab;
++    g_autofree QEMUSnapshotInfo *sn_tab = NULL;
+     QEMUSnapshotInfo *nearest = NULL;
+-    char *ret = NULL;
+     int rv;
+     int nb_sns, i;
+ 
+@@ -149,15 +148,19 @@ static char *replay_find_nearest_snapshot(int64_t icount,
+ 
+     bs = bdrv_all_find_vmstate_bs(NULL, false, NULL, NULL);
+     if (!bs) {
+-        goto fail;
++        return NULL;
      }
  
-+    if (red_max > UINT8_MAX || green_max > UINT8_MAX || blue_max > UINT8_MAX) {
-+        vnc_client_error(vs);
-+        return;
+     nb_sns = bdrv_snapshot_list(bs, &sn_tab);
++    if (nb_sns < 0) {
++        return NULL;
 +    }
-+
-     if (red_shift >= bits_per_pixel || red_shift >= 32 ||
-         green_shift >= bits_per_pixel || green_shift >= 32 ||
-         blue_shift >= bits_per_pixel || blue_shift >= 32) {
+ 
+     for (i = 0; i < nb_sns; i++) {
+         rv = bdrv_all_has_snapshot(sn_tab[i].name, false, NULL, NULL);
+-        if (rv < 0)
+-            goto fail;
++        if (rv < 0) {
++            return NULL;
++        }
+         if (rv == 1) {
+             if (sn_tab[i].icount != -1ULL
+                 && sn_tab[i].icount <= icount
+@@ -166,14 +169,12 @@ static char *replay_find_nearest_snapshot(int64_t icount,
+             }
+         }
+     }
+-    if (nearest) {
+-        ret = g_strdup(nearest->name);
+-        *snapshot_icount = nearest->icount;
++    if (!nearest) {
++        return NULL;
+     }
+-    g_free(sn_tab);
+ 
+-fail:
+-    return ret;
++    *snapshot_icount = nearest->icount;
++    return g_strdup(nearest->name);
+ }
+ 
+ static void replay_seek(int64_t icount, QEMUTimerCB callback, Error **errp)
 -- 
 2.47.3
 
