@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 577C2C44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:01:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73DB4C44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:01:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWOr-0004Mf-Ae; Wed, 22 Jul 2026 08:50:13 -0400
+	id 1wmWWJ-0006Gq-KB; Wed, 22 Jul 2026 08:57:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWO6-00043u-4c; Wed, 22 Jul 2026 08:49:28 -0400
+ id 1wmWUS-0002yN-53; Wed, 22 Jul 2026 08:56:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWO2-0001vS-4f; Wed, 22 Jul 2026 08:49:25 -0400
+ id 1wmWUQ-0003Q9-1l; Wed, 22 Jul 2026 08:55:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724390; bh=2RD8qi8VQRp7qHb0S3XjGlgOLsWQ7CEchCoq2QbSDvE=;
+ t=1784724575; bh=hqZcyCH4yuc+xazwyDmjX54gmTgf6XfktIwYp/ksvwU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=vd+9Lc3Vq6HOUvGstY1I0oPLrex3YttHgbMn44/wgKZDbVCXG109asNJUxPs6d2tD
- WFmVTo63rTZwzflB647qhOznqm9fVtPOCm/tF+uhjhkxvfLJMR/cO/J6IzwI/EeQSS
- pnYSi1BpFfMLCw/inso3g3JPK82C4CKqqf5L7lNY//47SvlUl9FL5vvo1dyU1XmLib
- X3EJXFDndbIunIbxOeKzfV8TBRtqKiQ4Qogt2OVa2PPTDMlxubCul8A8JYmwRjd/dk
- XtPSoTjuj0pcTw8eHJo31tkvye6KcjZvW1xbZrtJxd6589JKbLDiBTDSzFJgsbgWFX
- OupzLpEboWNrQ==
+ b=CfYM3tHF3Mz2L7TAkXks7VJB1I3St+jrHMxusPVMk74aaH40cfw7kuUk9D05w+0K0
+ fM5Q5lk7sK4Xh/Ei2/eAnvZUX0e4dL1qptNfr27oKBQFJsFwC7gfEy9Qs8PpGUGY+8
+ v6l9EkRpyOhVRt5cScYA7G3ZijfjeAis9tQrml1rqp6BNE9RycXIce7Cju/FrTh04K
+ Pxw9G29NPld9+r47oXUlTzp2BjGy2jPJabe816PmVKH5VMxLxzGCJzwC/gMJiIcrzz
+ xZ+wzMxits01pEJyCV07k5AZvba7VxxpdjTA9WP4PCoFePleDtD7VS2HKXR4AHggmg
+ 66LD8TXkgPfIA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D92931C3B14;
- Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7646E1C3B5B;
+ Wed, 22 Jul 2026 15:49:35 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2CA273F376E;
- Wed, 22 Jul 2026 15:46:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id BE7883F37AB;
+ Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 81D8217F11; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id 0879C17F8B; Wed, 22 Jul 2026 15:49:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, Bin Meng <bin.meng@processmission.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 107/122] hw/display/virtio-gpu: Check
- pixman_image_create_bits() results
-Date: Wed, 22 Jul 2026 15:45:56 +0300
-Message-ID: <20260722124622.31034-32-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v2 126/127] hw/net/cadence: Return current Cadence GEM
+ queue pointers
+Date: Wed, 22 Jul 2026 15:48:51 +0300
+Message-ID: <20260722124859.32371-45-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
-References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
+References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,35 +73,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+From: Bin Meng <bin.meng@processmission.com>
 
-pixman_image_create_bits() returns NULL for allocation failures and
-unaligned strides, which may be supplied by the guest with
-VIRTIO_GPU_CMD_SET_SCANOUT_BLOB, and virtio_gpu_do_set_scanout()
-subsequently dereferences it.
+Cadence GEM queue pointer registers are programmed with the descriptor
+ring base, but reads return the descriptor currently being accessed.
+The model tracked the current positions separately while continuing to
+return the configured base.
 
-Fixes: fa06e5cb7b10 ("virtio-gpu: fix scanout rectangles")
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260717-pixman-v1-1-89ea33b50b75@rsg.ci.i.u-tokyo.ac.jp>
-(cherry picked from commit f1af81ba2aeec7b5a5ee8529ef55275865aea0c0)
+The Linux macb driver uses the transmit queue pointer when recovering
+from a used-buffer interrupt. A stale priority-queue pointer can make
+the driver restart DMA before that queue handles its completion
+interrupt, causing queue 0 to repeatedly raise TX_USED.
+
+The primary queue has had this mismatch since the initial model.
+Priority queue support later copied the same register-read behavior.
+
+A single-queue machine usually handles TX_COMPLETE before TX_USED and
+empties the software queue before the restart check, which kept the
+issue hidden there.
+
+Return the current RX and TX descriptor positions on queue-pointer reads
+and clear those positions on reset.
+
+Fixes: e9f186e514a7 ("cadence_gem: initial version of device model")
+Fixes: 6710172501be ("cadence_gem: Add queue support")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Bin Meng <bin.meng@processmission.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20260720120731.2022475-1-bin.meng@processmission.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit 94c510a5dc4836550af1ecddcfa1ff945bae562a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 0fa61d10972..2178f5edbb6 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -670,6 +670,10 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
-         void *ptr = data + fb->offset;
-         rect = pixman_image_create_bits(fb->format, r->width, r->height,
-                                         ptr, fb->stride);
-+        if (!rect) {
-+            *error = VIRTIO_GPU_RESP_ERR_UNSPEC;
-+            return false;
-+        }
+diff --git a/hw/net/cadence_gem.c b/hw/net/cadence_gem.c
+index b568fa3392d..39e3620ef5b 100644
+--- a/hw/net/cadence_gem.c
++++ b/hw/net/cadence_gem.c
+@@ -1469,6 +1469,8 @@ static void gem_reset(DeviceState *d)
  
-         if (res->image) {
-             pixman_image_ref(res->image);
+     /* Set post reset register values */
+     memset(&s->regs[0], 0, sizeof(s->regs));
++    memset(&s->rx_desc_addr[0], 0, sizeof(s->rx_desc_addr));
++    memset(&s->tx_desc_addr[0], 0, sizeof(s->tx_desc_addr));
+     s->regs[R_NWCFG] = 0x00080000;
+     s->regs[R_NWSTATUS] = 0x00000006;
+     s->regs[R_DMACFG] = 0x00020784;
+@@ -1593,9 +1595,22 @@ static uint64_t gem_read(void *opaque, hwaddr offset, unsigned size)
+     offset >>= 2;
+     retval = s->regs[offset];
+ 
+-    DB_PRINT("offset: 0x%04x read: 0x%08x\n", (unsigned)offset*4, retval);
++    DB_PRINT("offset: 0x%04x read: 0x%08x\n", (unsigned)offset * 4,
++             retval);
+ 
+     switch (offset) {
++    case R_RXQBASE:
++        retval = s->rx_desc_addr[0];
++        break;
++    case R_TXQBASE:
++        retval = s->tx_desc_addr[0];
++        break;
++    case R_TRANSMIT_Q1_PTR ... R_TRANSMIT_Q7_PTR:
++        retval = s->tx_desc_addr[offset - R_TRANSMIT_Q1_PTR + 1];
++        break;
++    case R_RECEIVE_Q1_PTR ... R_RECEIVE_Q7_PTR:
++        retval = s->rx_desc_addr[offset - R_RECEIVE_Q1_PTR + 1];
++        break;
+     case R_ISR:
+         DB_PRINT("lowering irqs on ISR read\n");
+         /* The interrupts get updated at the end of the function. */
 -- 
 2.47.3
 
