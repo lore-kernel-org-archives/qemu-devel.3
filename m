@@ -4,47 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E926C44536
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:07:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6902C44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:07:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWUR-0002uE-HX; Wed, 22 Jul 2026 08:55:59 -0400
+	id 1wmWUO-0002gK-Ed; Wed, 22 Jul 2026 08:55:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWSY-0004Ce-71; Wed, 22 Jul 2026 08:54:04 -0400
+ id 1wmWSa-0004Ic-Te; Wed, 22 Jul 2026 08:54:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWSR-0002oT-MS; Wed, 22 Jul 2026 08:53:58 -0400
+ id 1wmWSU-0002pN-NY; Wed, 22 Jul 2026 08:54:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724575; bh=I2HFeA2xu/ok25spknF/B47PL0Y4GO/eKINQ/pS9J/M=;
+ t=1784724575; bh=inF44hwGEHsauNC/J47QySf69c4VQVGV/bAR0jFlzRk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ICd6gXLLjHom1NoqiJx4TkkKjazgvL9ANIs3P89Yc/snbPh4W0r79116OX6nwFvFK
- Tj/yJeT3ozlD1qVH1pdtRb6g3s0uJTYtGubGX3ofmlUw+MkgQKH/SrcL4ritWWtP+U
- xUGoIpnMkxnF79rPHg0E+Vg2eYcGoKyN9r5CWOA6fGORh0pZDjzFLvuE7ZErxzzKsA
- Wjhoup1UNQyjVsgduTS5xr+7piE5Q5dgbv0BSY+FMtXMuMdcgwxuhu5DVauFamEsHH
- BVDcO8IPvQqIXmaw5hSQgZ77FC2Dtq+zm1ZJ/BewLlew2+6aa6pyDGbg1BStZIFkJ1
- eBS+Oxr3RHgVg==
+ b=NJHegnrste56hd788gMVkmqmgSE0wLdrI8G0Gl+SQVk6u0dj5ZoLWn+XTDq1jhr7f
+ nU274ma9RkhokOkYbKIyj3aehcNjFomSw+nFdKVKnD5hVnbRxXDnU1CPRcwg7MdfHi
+ SP2Bt3E+2A4aaPfI1stiQayUioZJkNW9TTPAqmahL0XibQ6L7/iircLdXJXUeXui5Z
+ 9gtOgegKtIAW2ZDta1o26rtfAVQulZbUxGaHXxx6KaOYqoV5uZLHLiqbWk4KnZiGif
+ JqVa/LYBHHYMjOH+pWkjnoFwJCkkh4anOJJDoGdpIsVmLiDCg7xbn41djnUkBvrf4D
+ vu/oI8egpedeA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0A43C1C3B47;
+ by isrv.corpit.ru (Postfix) with ESMTP id 1009F1C3B48;
  Wed, 22 Jul 2026 15:49:35 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 52A383F3797;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 589243F3798;
  Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id CD16017F63; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
+ id CF86D17F65; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Laurent Vivier <lvivier@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 v2 106/127] ui/input-barrier: fix off-by-one in
- keycode bounds check
-Date: Wed, 22 Jul 2026 15:48:31 +0300
-Message-ID: <20260722124859.32371-25-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v2 107/127] ui/gtk: Narrow DMA-BUF critical section
+Date: Wed, 22 Jul 2026 15:48:32 +0300
+Message-ID: <20260722124859.32371-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
@@ -74,34 +72,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-Use strict "<" to fix the off-by-one.
+Scanout operations need to be properly ordered to avoid tearing. The
+virtio specification allows the guest to use pageflip. With pageflip,
+the guest only modifies the invisible framebuffer while the host scans
+out the visible framebuffer. The guest may choose not to use pageflip to
+avoid its overhead, accepting the risk of tearing.
 
-Fixes: 6105683da35b ("ui: add an embedded Barrier client")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3951
-Reported-by: huntr bubble
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Laurent Vivier <lvivier@redhat.com>
-Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
-(cherry picked from commit 82b4d693d522d406c950067caa4f14f45f4b679e)
-(Mjt: fixup the change to before v11.0.0-365-gd276ad86eb8
- "ui: rename init_keyboard_layout->kbd_layout_new()")
+ui/gtk performs the following procedure to flush a scanout:
+1) Queue a draw event.
+2) The draw event gets triggered.
+3) Blit the guest framebuffer to the host framebuffer.
+
+When flushing a DMA-BUF scanout, ui/gtk blocks the device before 2) if
+possible and unblocks it after 3) to enforce proper ordering. However,
+blocking the device before 2) has two problems.
+
+First, it can leave the device blocked indefinitely because GTK
+sometimes decides to cancel 2) when the window is not visible for
+example. ui/gtk regularly repeats 1) as a workaround, but it is not
+applicable to GtkGLArea because it causes display corruption.
+
+Second, the behavior is inconsistent with the other types of scanout
+that leave the device unblocked between 1) and 2).
+
+To fix these problems, let ui/gtk block the device only when the
+queued draw event runs, immediately before 3). Blocking before that is
+unnecessary since ui/gtk does not access the framebuffer yet. If the
+guest does not use pageflip but instead updates the visible framebuffer
+directly, ui/gtk should not add the overhead of a pre-draw block.
+
+ui/gtk still blocks the device during 3) for DMA-BUF. Unlike the other
+scanout types, 3) can happen asynchronously with the device for a
+DMA-BUF, so ui/gtk needs to keep the visible guest framebuffer stable
+for the blit.
+
+With the problems fixed, the workaround to repeat 1) is no longer
+necessary and is removed.
+
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260628-gtk-v2-1-1e4839012f09@rsg.ci.i.u-tokyo.ac.jp>
+(cherry picked from commit 53f0d87db7b4bc4b8c906eedcce6fec17d39824f)
+(Mjt: back-port to before v11.0.0-787-g405a42e3655
+ "ui/console: rename public API to use consistent qemu_console_ prefix" which
+ renamed graphic_hw_gl_block() to qemu_console_hw_gl_block())
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/input-barrier.c b/ui/input-barrier.c
-index 0a2198ca500..d4b3079261a 100644
---- a/ui/input-barrier.c
-+++ b/ui/input-barrier.c
-@@ -87,7 +87,7 @@ static kbd_layout_t *kbd_layout;
- static int input_barrier_to_qcode(uint16_t keyid, uint16_t keycode)
- {
-     /* keycode is optional, if it is not provided use keyid */
--    if (keycode && keycode <= qemu_input_map_xorgkbd_to_qcode_len) {
-+    if (keycode && keycode < qemu_input_map_xorgkbd_to_qcode_len) {
-         return qemu_input_map_xorgkbd_to_qcode[keycode];
+diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+index fa8fe8970c1..beb7c735b84 100644
+--- a/ui/gtk-egl.c
++++ b/ui/gtk-egl.c
+@@ -91,6 +91,7 @@ void gd_egl_draw(VirtualConsole *vc)
+             } else {
+                 qemu_dmabuf_set_draw_submitted(dmabuf, false);
+             }
++            graphic_hw_gl_block(vc->gfx.dcl.con, true);
+         }
+ #endif
+         gd_egl_scanout_flush(&vc->gfx.dcl, 0, 0, vc->gfx.w, vc->gfx.h);
+@@ -405,14 +406,11 @@ void gd_egl_flush(DisplayChangeListener *dcl,
+ 
+     if (vc->gfx.guest_fb.dmabuf &&
+         !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+-        graphic_hw_gl_block(vc->gfx.dcl.con, true);
+         qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
+         gtk_egl_set_scanout_mode(vc, true);
+-        gtk_widget_queue_draw_area(area, x, y, w, h);
+-        return;
      }
  
+-    gd_egl_scanout_flush(&vc->gfx.dcl, x, y, w, h);
++    gtk_widget_queue_draw_area(area, x, y, w, h);
+ }
+ 
+ void gtk_egl_init(DisplayGLMode mode)
+diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+index ce49000d3f1..0a66e516821 100644
+--- a/ui/gtk-gl-area.c
++++ b/ui/gtk-gl-area.c
+@@ -86,6 +86,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
+             } else {
+                 qemu_dmabuf_set_draw_submitted(dmabuf, false);
+             }
++            graphic_hw_gl_block(vc->gfx.dcl.con, true);
+         }
+ #endif
+ 
+@@ -163,27 +164,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
+ 
+     gd_update_monitor_refresh_rate(vc, vc->window ? vc->window : vc->gfx.drawing_area);
+ 
+-    if (vc->gfx.guest_fb.dmabuf &&
+-        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+-        /*
+-         * gd_egl_refresh() calls gd_egl_draw() if a DMA-BUF draw has already
+-         * been submitted, but this function does not call gd_gl_area_draw() in
+-         * such a case due to display corruption.
+-         *
+-         * Calling gd_gl_area_draw() is necessary to prevent a situation where
+-         * there is a scheduled draw event but it won't happen bacause the window
+-         * is currently in inactive state (minimized or tabified). If draw is not
+-         * done for a long time, gl_block timeout and/or fence timeout (on the
+-         * guest) will happen eventually.
+-         *
+-         * However, it is found that calling gd_gl_area_draw() here causes guest
+-         * display corruption on a Wayland Compositor. The display corruption is
+-         * more serious than the possible fence timeout so gd_gl_area_draw() is
+-         * omitted for now.
+-         */
+-        return;
+-    }
+-
+     if (!vc->gfx.gls) {
+         if (!gtk_widget_get_realized(vc->gfx.drawing_area)) {
+             return;
+@@ -347,7 +327,6 @@ void gd_gl_area_scanout_flush(DisplayChangeListener *dcl,
+ 
+     if (vc->gfx.guest_fb.dmabuf &&
+         !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+-        graphic_hw_gl_block(vc->gfx.dcl.con, true);
+         qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
+         gtk_gl_area_set_scanout_mode(vc, true);
+     }
 -- 
 2.47.3
 
