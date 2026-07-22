@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F362C44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:56:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 254CBC44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:56:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWSl-0005Kt-0P; Wed, 22 Jul 2026 08:54:15 -0400
+	id 1wmWTb-0000Jz-OE; Wed, 22 Jul 2026 08:55:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWRT-0002jA-KF; Wed, 22 Jul 2026 08:53:00 -0400
+ id 1wmWRu-0003VV-TK; Wed, 22 Jul 2026 08:53:24 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWRS-0002W9-1X; Wed, 22 Jul 2026 08:52:55 -0400
+ id 1wmWRt-0002dl-4n; Wed, 22 Jul 2026 08:53:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724574; bh=hegvjN5u07X0tI6Sh+JSFjFf+1iP+8GgZkKx6m2isBY=;
+ t=1784724574; bh=MgM47pT4tVSiS5jidfjSc8kwj5mUmkV3qUXI8y8mt5E=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=W23OvSuOKcPS47Y+aEZjP8uEHdfwSKIC9WtLDKJVi0+4HflUV7OBEjgMf7WVdBUf1
- s0Ng0Eese+nHcgad1j9DIZk88FPCXmdXci9PXRQHGb9nsukNK2MI/0KLa5dfAHupmW
- K4rMFSZkTNta5KqUh2GlTwEyY69sd4EKKnfQUD5RuXf7l32tEJinQ4sYMQq1RSxIgc
- aVgn+fBKCpYZ680rfbn9SxfLAcHZD0+sfc0E40HZuU9qwq0Ydg2I/8O/LBOgJtD8S7
- zWpYQmo0x/ivBh5TM1+0nqytAJTE/2UMmJbPQts5jQmurpGiqughRJuiHTQP53bM6n
- N0i6B9pXGAzmA==
+ b=qqMhcpKRF9a2rPS/tUjZhRSw5cPSahbQgr87hVMM93gwODG6fwqR5BnFvTUV1mz5V
+ PZm2KiQy7GDGyQNiMJ5cNzzF9itxAjRvcpsv3zqgdRbnfenUEgD+xmZSXjvhEE1GoE
+ oLu3Ojlf2BzmnFgPxFntzWbFonb5SxxtVp5OLz20pVZyOFDWqbfcOKz1qjJ8oVWls0
+ TLiRDl8so87y+7ODA/OTwjWYJLX9ri31laquA/oe7wKyb8enWRK+XRpaZPJskK4ta5
+ 3//G+mKymtLoBZeigdVsJmX2aW1v/U96L0Q0gFQx6FfK3VqmQteryXa8ob+l5gLCYU
+ 5oacZhWjJe5gA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DA3131C3B40;
+ by isrv.corpit.ru (Postfix) with ESMTP id EEA811C3B44;
  Wed, 22 Jul 2026 15:49:34 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2E3FE3F3790;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 43BDD3F3794;
  Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id BC9AB17F55; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
+ id C617A17F5D; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Miao Wang <shankerwangmiao@gmail.com>,
+Cc: qemu-stable@nongnu.org, Rohitashv Kumar <roohiit@amazon.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 v2 099/127] hw/scsi/vmw_pvscsi: add a comment to
- explain the endianness
-Date: Wed, 22 Jul 2026 15:48:24 +0300
-Message-ID: <20260722124859.32371-18-mjt@tls.msk.ru>
+ Puranjay Mohan <puranjay@kernel.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v2 103/127] net: only advertise passt in netdev help
+ when CONFIG_PASST
+Date: Wed, 22 Jul 2026 15:48:28 +0300
+Message-ID: <20260722124859.32371-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
@@ -73,46 +73,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Miao Wang <shankerwangmiao@gmail.com>
+From: Rohitashv Kumar <roohiit@amazon.de>
 
-Add a comment to explain the endianness of the pvscsi device. We have
-no information about the endianness should be little-endian or CPU
-native endian because the current driver code is designed to work only
-on x86 and is not endianness aware. We assume that the pvscsi device is
-implicitly little-endian.
+show_netdevs() lists each conditionally-compiled netdev backend behind
+its CONFIG_* guard (CONFIG_SLIRP for "user", CONFIG_L2TPV3 for
+"l2tpv3", CONFIG_NET_BRIDGE for "bridge", ...). The "passt" entry was
+added unconditionally, so "-netdev help" advertises passt even in
+builds configured with --disable-passt. Trying to use it then fails
+with "Parameter 'type' does not accept value 'passt'", since the QAPI
+NetClientDriver enum member "passt" is gated by 'if': 'CONFIG_PASST'.
 
-Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
+Guard the help entry with CONFIG_PASST so the advertised backends match
+those actually compiled into the binary.
+
+Signed-off-by: Rohitashv Kumar <roohiit@amazon.de>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260710-pvscsi-endianness-v3-2-27fe1c4d1f6e@gmail.com>
+Reviewed-by: Puranjay Mohan <puranjay@kernel.org>
+Message-ID: <20260713194511.1058450-1-rohit.kuma1313@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit ecc569639aeb5b702f1098d3eb5b28d3168604c8)
+(cherry picked from commit 504f2bad932c4f1b067d3b759597ed38e57576a1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/vmw_pvscsi.h b/hw/scsi/vmw_pvscsi.h
-index a3ae517e199..defff9e179e 100644
---- a/hw/scsi/vmw_pvscsi.h
-+++ b/hw/scsi/vmw_pvscsi.h
-@@ -108,6 +108,20 @@ enum PVSCSICommands {
- #define PVSCSI_COMMAND_PROCESSING_FAILED     (-1)
- #define PVSCSI_COMMAND_NOT_ENOUGH_DATA       (-2)
- 
-+/*
-+ * About endianess for the below structs:
-+ *
-+ * These structs are used to describe the data that is exchanged between the
-+ * guest and the PVSCSI device. The endianess of the fields in these structs
-+ * is not defined by any standard. The current implemented drivers are designed
-+ * to only work on x86 architecture, so there is no endianess awareness in the
-+ * drivers and thus we have no idea whether the fields should be in little-
-+ * endian or target native endian format.
-+ *
-+ * Considering the above, we assume that PVSCSI is implicitly little-endian and
-+ * expect the fields in these structs to be in little-endian format.
-+ */
-+
- /*
-  * Command descriptor for PVSCSI_CMD_RESET_DEVICE --
-  */
+diff --git a/net/net.c b/net/net.c
+index a176936f9bc..4ccc8763465 100644
+--- a/net/net.c
++++ b/net/net.c
+@@ -1385,7 +1385,9 @@ void show_netdevs(void)
+         "dgram",
+         "hubport",
+         "tap",
++#ifdef CONFIG_PASST
+         "passt",
++#endif
+ #ifdef CONFIG_SLIRP
+         "user",
+ #endif
 -- 
 2.47.3
 
