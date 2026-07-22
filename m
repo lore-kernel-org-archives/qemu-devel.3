@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D50B9C4453D
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 17:06:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3B52C44532
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 17:06:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmaOK-0005FB-OH; Wed, 22 Jul 2026 13:05:56 -0400
+	id 1wmaOS-0005Iq-P0; Wed, 22 Jul 2026 13:06:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wmaO6-0005DE-6u
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 13:05:42 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wmaO8-0005De-ST
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 13:05:47 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wmaO4-0001aJ-3n
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 13:05:41 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-495437bb891so53564515e9.1
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 10:05:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wmaO7-0001bW-8h
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 13:05:44 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4954c0833b4so37170115e9.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 10:05:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1784739939; x=1785344739; darn=nongnu.org;
+ d=openvz.org; s=google; t=1784739942; x=1785344742; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=yfUxWo9DRfnzypPrGvcp6jHwrWI7DnwyNSb11uKFohg=;
- b=UfiLf6IQmGYZoAsI545lPW1kNHGgT9JDqG+RIjZJBNWv/xs2yI8FhQ5/F1SIAh9NpR
- +tyLcdbwC9upBn0D+o8zhvLB0wD/CjPk9kuu2RYEvEO081oVrbOZCkaSYbkEOOQgfo78
- RuAV4Z9XG7ANC6sCQ/V/tcrcjWHvFYlcGExBsrZX9icZZ7I/B/atXDHE1TRiDNQ6WlTy
- VHKrU0Q11ETevvylHgG44n6g025NVEY/pzv8lpIfYnXmJmubI7LrGvgSEYJq6vmVIA17
- 5wEtFuo9Xpw6m0hs7JF9zQ8YsKguhRepiJxnzesLgh6BqeLR6hQD9MhpmVi7LqvuExdS
- k1aA==
+ bh=uhfeGe/4CB094Qsb3YMVun3IRBzdJrjy7hL+hy4mT8o=;
+ b=obpby+CLkN/xw8MotLp2Tsz1rqx1ESd4U64wqCyGD0Ik0YYFcMSC6He9tsX/8pRp19
+ wb/jhu2aQYknvWAuqjTghgvNqH5WWJ9yZS8reHqvju0ENffS3ojiThzDbxliISmw7/Cz
+ FHAww/BvLbUOLqs3eJ9XGzj1dX9jVZCRLC89fhi2O02VS/6KZfqV+09WcyzZyUN3Jhbi
+ V1EQSDUBl1rMq/gzJ1bkXTJKA2h9DG/RVvpaJsD2q3730tuzsx57TGZM45D+ehUke7au
+ d/dh79FIg0GCghryJBfHwKaBLrCGMvBtQk1VOokF1fLsjYYY1OuNe5zvAzWCDtaavSGh
+ /sag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784739939; x=1785344739;
+ d=1e100.net; s=20251104; t=1784739942; x=1785344742;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=yfUxWo9DRfnzypPrGvcp6jHwrWI7DnwyNSb11uKFohg=;
- b=g7472v55rkbxd2z9yWyMCyx4QVz5GkfN7sEnTbTVFVOugX1hueilzlFUAEOy4rKQd/
- 83P1qcvQanOZWYvdSwNhxJS6T/nBHU2R9oQuBiAQpuoHCNXM28uYhsVsIbA2LKa7AaKi
- yV9OrpxFg1f3gPbzQJ4c6eXhcrJN40by8tEkTZtH3L4IwD1EnSYkEV0nURNx11mN+Qtg
- Xn/FghIH3/ibimsgr/uH2Z2SOf9tupSp0cezriy+PUV0yJijtbsj+Iq9GF2rcOUnaeJt
- iUStwkDHHMFTR3mp8RynR9E5gy+TFX4nobdNQYkRuxrUP9wGs9NkCf26M64dUtxvF++x
- Bs/w==
-X-Gm-Message-State: AOJu0YySzywTeqvwQpMUxIbS3j3Q5eLy2GKLXpai/jFj2/dgp7Fd2TVn
- T+fh+PvL/g8rxdZXcwWs5dbrik6P819szCyZOUe5L6naYCP8L2WBVd33jRqNF8e0tcGep1p2tMS
- BEgeW
-X-Gm-Gg: AR+sD10RBlRZip0sEAqXoxCpezcUhnTmupALsZ+ZdSJsgLHOPdgBsDNYGJ0rl6KVv7n
- YT087h7KZXV6mHPSFj3B7i5U8IJ/eYRWbu4bb0msWiMjMsT+GHwgDREGwEPo8VPOoGq4ZDJX43M
- YvMOe7lrlt/JkTgQObSON5XmOTzISG1btY4qzvstKYNb9ftEkGkCEeFGTJWaqOseKMu5sWjXMgi
- YFeesEmsBfWonBcIX2obawO0ZHogJ3cy574OJOwKRR1vM0x05iS3QvVv8SAmnu8Ko3gimmO9253
- imILTMmNTdKgPByHaaCIwRAJ0+oKzA2ub1XBlQMT+QwpSo0d4RI+JlfZQE3yymqvBTSfoKjf6q/
- cgcsMjVk0IE/FOHgW3s6zfPAXL9KSlYUi1Q9YGX6aqOOLsXGdlLJIg3awz3EoPzQMsJJhTseO2o
- c=
-X-Received: by 2002:a05:600c:4f88:b0:493:b698:9247 with SMTP id
- 5b1f17b1804b1-4956a50fe9dmr58627915e9.14.1784739938686; 
- Wed, 22 Jul 2026 10:05:38 -0700 (PDT)
+ bh=uhfeGe/4CB094Qsb3YMVun3IRBzdJrjy7hL+hy4mT8o=;
+ b=mr9bOrVgf4iLr2ofdi5iOrFh7A3DqBl1p0/xE3fZ9zVVujj8EGZBGxNucAWfBN4/Li
+ a0EImLO3i+1bNhY5wB0PeAtBBb8yPvLc8iHNGzIBoV1C6Mq2u9+U3S5eBYsHTZkcaf4+
+ T2BSOIWD/O+zmVFasDHS6UvlIJ9Wzyx7rBIPDfL1S0CM3Lm90xDnpbX8QfeRygu3risZ
+ sT0dMfhDiSKyFyvLC++n+Dhz7i/8gGOS2P4ZLs3ttKM6VWJEtwwQPJcbMwrGN1DnWue4
+ gxP1cnazIm09FrN/B4E7tSZ8VxRngM2Xfd5aQH1V7c8HonoN5frGwpBICDhyy6j9lZ/B
+ ksug==
+X-Gm-Message-State: AOJu0YyL5GD8Q9b4v6l7NXHCFF85lP4n4aVZIEiZhTZGTJ8K0Arx+lva
+ 2bc1XRu26/oRhJCapzK/Vmj4tnAKlq9IbDq0HoJh1Er+vrolP/SRuUDiytx439Mis3vsFRON/Cn
+ +CmPu
+X-Gm-Gg: AR+sD13S/HTP2usOd7Bgq9k2f+WV1KWNwV29WPkLwI0QJ5Yed62eFooq2wHYCbYOXQl
+ uj0SjKDAAiTYJ+PK29/a1GF11HLnPgaW7nXC76O5iNHvHS5EdU/NwFzD+Qw3LU7bGXO7U9TP2L/
+ YF9btfsmH4m+8WLwiyMII8YwJCtsV4cSocT/vs9+IVYluU5mVbyD8ySAg6YHDGxd8AL1giyuj22
+ Zk+ftLakJ4CmWOYNlNBf2PK1P44ZNPv5qEL3jlIq8e/yuU/Szxae06mExBCCXyvHbxzfhaIi2aR
+ ONtIKM6dZg7BpZ/hIOrnieg5bkDira6ks0CyJ32qqvHkrt37K39Pi5eJ427SAfa5kdybLkDPwoR
+ 7Utn4Ei9EesOAHQSGzCEM9rmYJSqRFJLN3eszBfUYBmEANQYYi99wvbh6aqotf8k7FuNDLUPJGI
+ k=
+X-Received: by 2002:a05:600c:3b28:b0:493:a623:d090 with SMTP id
+ 5b1f17b1804b1-4954a3f36b6mr272514675e9.10.1784739941881; 
+ Wed, 22 Jul 2026 10:05:41 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:9c54:c407:8170:580d])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4956b7483f0sm63993215e9.3.2026.07.22.10.05.37
+ 5b1f17b1804b1-4956b7483f0sm63993215e9.3.2026.07.22.10.05.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Jul 2026 10:05:38 -0700 (PDT)
+ Wed, 22 Jul 2026 10:05:41 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org,
 	qemu-block@nongnu.org
-Cc: den@openvz.org, Thomas Huth <thuth@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH 7/9] parallels: avoid fatal abort on large bitmap L1 table
-Date: Wed, 22 Jul 2026 19:05:25 +0200
-Message-ID: <20260722170527.2593225-8-den@openvz.org>
+Cc: den@openvz.org,
+	Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PATCH 9/9] MAINTAINERS: update parallels tree location
+Date: Wed, 22 Jul 2026 19:05:27 +0200
+Message-ID: <20260722170527.2593225-10-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260722170527.2593225-1-den@openvz.org>
 References: <20260722170527.2593225-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=den@openvz.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,38 +100,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-parallels_load_bitmap() allocated the L1 table with g_new(), which
-aborts the whole process on allocation failure instead of returning
-an error.
-
-Use g_try_new() and fail the open normally.
+src.openvz.org is become unmaintained, point to the GitLab tree
+instead.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Thomas Huth <thuth@redhat.com>
 CC: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- block/parallels-ext.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/parallels-ext.c b/block/parallels-ext.c
-index 704e16e1de..7f6ab6b0d2 100644
---- a/block/parallels-ext.c
-+++ b/block/parallels-ext.c
-@@ -169,7 +169,13 @@ parallels_load_bitmap(BlockDriverState *bs, uint8_t *data, size_t data_size,
-     }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index a28935c898..902db77218 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4393,7 +4393,7 @@ F: block/parallels.c
+ F: block/parallels-ext.c
+ F: docs/interop/parallels.rst
+ F: docs/interop/prl-xml.rst
+-T: git https://src.openvz.org/scm/~den/qemu.git parallels
++T: git https://gitlab.com/dlunev/qemu.git parallels
  
-     if (bf.l1_size != 0) {
--        l1_table = g_new(uint64_t, bf.l1_size);
-+        l1_table = g_try_new(uint64_t, bf.l1_size);
-+        if (!l1_table) {
-+            error_setg(errp, "Failed to allocate the bitmap L1 table "
-+                       "(%" PRIu32 " entries)", bf.l1_size);
-+            goto fail;
-+        }
-+
-         for (i = 0; i < bf.l1_size; i++, data += sizeof(uint64_t)) {
-             l1_table[i] = ldq_le_p(data);
-         }
+ qed
+ M: Stefan Hajnoczi <stefanha@redhat.com>
 -- 
 2.53.0
 
