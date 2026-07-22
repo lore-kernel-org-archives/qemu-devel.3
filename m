@@ -4,52 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFEADC4453A
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 21:18:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5DF1C44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 21:30:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmeJE-0000u3-5T; Wed, 22 Jul 2026 17:16:56 -0400
+	id 1wmeVe-0004Zm-0K; Wed, 22 Jul 2026 17:29:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmeJC-0000tL-Tt; Wed, 22 Jul 2026 17:16:54 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wmeVa-0004Yt-M7
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 17:29:42 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmeJA-00034d-Tp; Wed, 22 Jul 2026 17:16:54 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wmeVY-0004zE-0e
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 17:29:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784754991; bh=fM1CbQX+gNcsQHAMEzktz/6QBkoc+eTCEzg/RJVTK1c=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=tDVWxu86oLa8ksKFGNMrJDb83pnN5HKgMq1DYn7ylKbUEOsAMo6XjLAPIU913okpY
- aDA3pItSioa9dKqFTcoRK3uSP7t9pxe5/OPbwuxTtCl/W5aerP+dHbjD3L0h+B82UV
- IUn+yMA6fgcE1fE/belJvLeMcpiGqkpHkVnrngCneuse8WBB5/6JQdx3jYmocrz9RR
- OC8ASQIzfasTsXuC6VDwlFnX0L9nnSy5stYaLF16m/toqpfYfwnyE871CjfmxTCZfb
- t3rBeumvwdPUmOoC/5lAPgJVJNp6/MRjfQtMiKtPg5l64lsep+Vm2pMsy2NH3Di2VV
- hmMPalRFifskQ==
+ t=1784755756; bh=9j7cQXcuCwmUKCVMnIuRt+ZN1Z+0vzX9Hipx/CV6iIQ=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=Cehd9nnVmvq3M38w6rIec6dX9H0UyrGYrad/7uJA++A3WS4e06/ifqCP+oRv8ZVct
+ tsi1rG7VaAFhdndShcPScAE4K7JZAPlhV+CT7Si0sYg553+8jOQxL1jn10Iq+8fyjY
+ RBJ3LDuMhBU3o4l+CuthyZ4Mo4dBo9cnUjSjGH5/tcfudQUp7W3OLa1pHNtAknLOno
+ jSFCPJHjnMP5wx3Jw3RQnCvcAoNdYCeEg4jkgdrEt7gwYOx+yMKqwgI4jGRw5YUZHe
+ /YRJm6N/wfOCI2H3Adnz9rvLsL2FSOUm/PrzxniCutm45JbrfWjqvBrsQONDFbpUol
+ 0ITASyU3cl5Zw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AF6431C3D3C;
- Thu, 23 Jul 2026 00:16:31 +0300 (MSK)
-Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id ACEE03F39F8;
- Thu, 23 Jul 2026 00:16:49 +0300 (MSK)
-Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id BD11A1805C; Thu, 23 Jul 2026 00:16:40 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 v3 128/129] target/arm: teach arm_cpu_has_work about
- halting reasons
-Date: Thu, 23 Jul 2026 00:16:27 +0300
-Message-ID: <20260722211634.251325-1-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.3-20260723001345@cover.tls.msk.ru>
-References: <qemu-stable-11.0.3-20260723001345@cover.tls.msk.ru>
+ by isrv.corpit.ru (Postfix) with ESMTP id 59F7C1C3D61;
+ Thu, 23 Jul 2026 00:29:16 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4CE623F3A03;
+ Thu, 23 Jul 2026 00:29:34 +0300 (MSK)
+Message-ID: <e74d05ed-913f-4b24-94d3-6a2442073848@tls.msk.ru>
+Date: Thu, 23 Jul 2026 00:29:25 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vfio/region: Clarify dma-buf failure messages
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>, Nicolin Chen <nicolinc@nvidia.com>
+References: <20260715070622.198400-1-clg@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260715070622.198400-1-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,233 +112,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+On 7/15/26 10:06, Cédric Le Goater wrote:
+> The dma-buf failure messages in vfio_region_create_dma_buf() say "PCI
+> BAR IOMMU mappings may fail", which suggests the BAR is broken. In
+> practice, only P2P DMA is affected -- normal passthrough uses the mmap
+> fallback.
+> 
+> Reword both messages to mention P2P DMA explicitly and clarify that
+> the mmap fallback is in use. Use warn_report_err_once() at the call
+> site so per-BAR repetition on mdev devices is suppressed.
+> 
+> Fixes: dcf1b77e834d ("hw/vfio/region: Create dmabuf for PCI BAR per region")
 
-With the advent of WFE and WFI we need to pay closer attention to the
-reason why the vCPU may be sleeping to figure out if we should wake
-it up.
+FWIW (it's applied to master branch already), this is commit 8cfaf22668c,
+not dcf1b77e834d.
 
-Create env->halt_reason to track this and then re-order the tests so
-we:
+Thanks,
 
-  - ignore everything is the vCPU is powered off
-  - wake up if the event_register is set and we were in a WFE
-  - otherwise any IRQ event does wake the vCPU up.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-id: 20260529082948.363931-3-alex.bennee@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 6fd2fcdc61b709470b8bcfb9d10e714d4b222199)
-(Mjt: context fixups in target/arm/cpu.h target/arm/internals.h)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/target/arm/arm-powerctl.c b/target/arm/arm-powerctl.c
-index a788376d1d3..a06be5cc997 100644
---- a/target/arm/arm-powerctl.c
-+++ b/target/arm/arm-powerctl.c
-@@ -78,7 +78,7 @@ static void arm_set_cpu_on_async_work(CPUState *target_cpu_state,
- 
-     /* Finally set the power status */
-     assert(bql_locked());
--    target_cpu->power_state = PSCI_ON;
-+    arm_set_cpu_power_state(target_cpu, PSCI_ON);
- }
- 
- int arm_set_cpu_on(uint64_t cpuid, uint64_t entry, uint64_t context_id,
-@@ -186,7 +186,7 @@ static void arm_set_cpu_on_and_reset_async_work(CPUState *target_cpu_state,
- 
-     /* Finally set the power status */
-     assert(bql_locked());
--    target_cpu->power_state = PSCI_ON;
-+    arm_set_cpu_power_state(target_cpu, PSCI_ON);
- }
- 
- int arm_set_cpu_on_and_reset(uint64_t cpuid)
-@@ -239,7 +239,7 @@ static void arm_set_cpu_off_async_work(CPUState *target_cpu_state,
-     ARMCPU *target_cpu = ARM_CPU(target_cpu_state);
- 
-     assert(bql_locked());
--    target_cpu->power_state = PSCI_OFF;
-+    arm_set_cpu_power_state(target_cpu, PSCI_OFF);
-     target_cpu_state->halted = 1;
-     target_cpu_state->exception_index = EXCP_HLT;
- }
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index ccc47c8a9ad..124be8c401e 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -144,18 +144,36 @@ static bool arm_cpu_has_work(CPUState *cs)
- {
-     ARMCPU *cpu = ARM_CPU(cs);
- 
--    if (arm_feature(&cpu->env, ARM_FEATURE_M)) {
--        if (cpu->env.event_register) {
--            return true;
--        }
-+    /*
-+     * Only another PSCI call can wake the CPU up in which case the
-+     * power_state would be set by arm_set_cpu_on_and_reset_async_work()
-+     */
-+    if (cpu->power_state == PSCI_OFF) {
-+        g_assert(cpu->env.halt_reason == HALT_PSCI);
-+        return false;
-+    }
-+
-+    /*
-+     * A wake-up event should only wake us if we are halted on a WFE
-+     */
-+    if (cpu->env.halt_reason == HALT_WFE && cpu->env.event_register) {
-+        cpu->env.halt_reason = NOT_HALTED;
-+        return true;
-+    }
-+
-+    /*
-+     * Otherwise pretty much any IRQ would wake us up
-+     */
-+    if (cpu_test_interrupt(cs,
-+                           CPU_INTERRUPT_FIQ | CPU_INTERRUPT_HARD
-+                           | CPU_INTERRUPT_NMI | CPU_INTERRUPT_VINMI | CPU_INTERRUPT_VFNMI
-+                           | CPU_INTERRUPT_VFIQ | CPU_INTERRUPT_VIRQ | CPU_INTERRUPT_VSERR
-+                           | CPU_INTERRUPT_EXITTB)) {
-+        cpu->env.halt_reason = NOT_HALTED;
-+        return true;
-     }
- 
--    return (cpu->power_state != PSCI_OFF)
--        && cpu_test_interrupt(cs,
--               CPU_INTERRUPT_FIQ | CPU_INTERRUPT_HARD
--               | CPU_INTERRUPT_NMI | CPU_INTERRUPT_VINMI | CPU_INTERRUPT_VFNMI
--               | CPU_INTERRUPT_VFIQ | CPU_INTERRUPT_VIRQ | CPU_INTERRUPT_VSERR
--               | CPU_INTERRUPT_EXITTB);
-+    return false;
- }
- #endif /* !CONFIG_USER_ONLY */
- 
-@@ -250,7 +268,7 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
-     env->vfp.xregs[ARM_VFP_MVFR1] = cpu->isar.mvfr1;
-     env->vfp.xregs[ARM_VFP_MVFR2] = cpu->isar.mvfr2;
- 
--    cpu->power_state = cs->start_powered_off ? PSCI_OFF : PSCI_ON;
-+    arm_set_cpu_power_state(cpu, cs->start_powered_off ? PSCI_OFF : PSCI_ON);
- 
-     if (arm_feature(env, ARM_FEATURE_AARCH64)) {
-         /* 64 bit CPUs always start in 64 bit mode */
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 657ff4ab20b..9721991c6b7 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -257,6 +257,19 @@ typedef enum ARMFPStatusFlavour {
- } ARMFPStatusFlavour;
- #define FPST_COUNT  10
- 
-+/**
-+ * ARMHaltReason - the reason we have entered halt state
-+ *
-+ * To be able to correctly wake up via arm_cpu_has_work() we need to
-+ * track the reason we went to sleep.
-+ */
-+typedef enum {
-+    NOT_HALTED = 0,
-+    HALT_PSCI,
-+    HALT_WFI,
-+    HALT_WFE
-+} ARMHaltReason;
-+
- typedef struct CPUArchState {
-     /* Regs for current mode.  */
-     uint32_t regs[16];
-@@ -760,6 +773,9 @@ typedef struct CPUArchState {
-     /* Optional fault info across tlb lookup. */
-     ARMMMUFaultInfo *tlb_fi;
- 
-+    /* Reason the CPU is halted */
-+    ARMHaltReason halt_reason;
-+
-     /*
-      * The event register is shared by all ARM profiles (A/R/M),
-      * so it is stored in the top-level CPU state.
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 556c0729c72..01e2bc3ac3c 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1943,4 +1943,15 @@ int compare_u64(const void *a, const void *b);
- /* Used in FEAT_MEC to set the MECIDWidthm1 field in the MECIDR_EL2 register. */
- #define MECID_WIDTH 16
- 
-+/**
-+ * arm_set_cpu_power_state() - set power state synced with halt_reason
-+ */
-+static inline void arm_set_cpu_power_state(ARMCPU *cpu, ARMPSCIState state)
-+{
-+    CPUARMState *env = &cpu->env;
-+
-+    cpu->power_state = state;
-+    env->halt_reason = state == PSCI_OFF ? HALT_PSCI : NOT_HALTED;
-+}
-+
- #endif
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index d4a68874b88..c08e4797b32 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -1143,11 +1143,12 @@ static int kvm_arm_sync_mpstate_to_qemu(ARMCPU *cpu)
-     if (cap_has_mp_state) {
-         struct kvm_mp_state mp_state;
-         int ret = kvm_vcpu_ioctl(CPU(cpu), KVM_GET_MP_STATE, &mp_state);
-+        ARMPSCIState state;
-         if (ret) {
-             return ret;
-         }
--        cpu->power_state = (mp_state.mp_state == KVM_MP_STATE_STOPPED) ?
--            PSCI_OFF : PSCI_ON;
-+        state = (mp_state.mp_state == KVM_MP_STATE_STOPPED) ? PSCI_OFF : PSCI_ON;
-+        arm_set_cpu_power_state(cpu, state);
-     }
-     return 0;
- }
-diff --git a/target/arm/machine.c b/target/arm/machine.c
-index b0e499515cf..62401c5a3ea 100644
---- a/target/arm/machine.c
-+++ b/target/arm/machine.c
-@@ -916,7 +916,7 @@ static int get_power(QEMUFile *f, void *opaque, size_t size,
- {
-     ARMCPU *cpu = opaque;
-     bool powered_off = qemu_get_byte(f);
--    cpu->power_state = powered_off ? PSCI_OFF : PSCI_ON;
-+    arm_set_cpu_power_state(cpu, powered_off ? PSCI_OFF : PSCI_ON);
-     return 0;
- }
- 
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index aa14f15eb62..d39c183ecfa 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -403,6 +403,7 @@ void HELPER(wfi)(CPUARMState *env, uint32_t insn_len)
-                         target_el);
-     }
- 
-+    env->halt_reason = HALT_WFI;
-     cs->exception_index = EXCP_HLT;
-     cs->halted = 1;
-     cpu_loop_exit(cs);
-@@ -463,6 +464,7 @@ void HELPER(wfit)(CPUARMState *env, uint64_t timeout)
-     } else {
-         timer_mod(cpu->wfxt_timer, nexttick);
-     }
-+    env->halt_reason = HALT_WFI;
-     cs->exception_index = EXCP_HLT;
-     cs->halted = 1;
-     cpu_loop_exit(cs);
-@@ -507,6 +509,7 @@ void HELPER(wfe)(CPUARMState *env)
-             return;
-         }
- 
-+        env->halt_reason = HALT_WFE;
-         cs->exception_index = EXCP_HLT;
-         cs->halted = 1;
-         cpu_loop_exit(cs);
--- 
-2.47.3
-
+/mjt
 
