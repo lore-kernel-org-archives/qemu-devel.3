@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E6CBC44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 11:47:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F294AC4453C
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 11:47:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmVP8-0004Lm-57; Wed, 22 Jul 2026 07:46:26 -0400
+	id 1wmVP8-0004PR-OM; Wed, 22 Jul 2026 07:46:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rangolit@gmail.com>)
- id 1wmLNA-0000Aa-GF
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 21:03:46 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ id 1wmLNE-0000Bd-3G
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 21:03:48 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rangolit@gmail.com>)
- id 1wmLN8-0002gw-H4
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 21:03:44 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-c197e7e4e94so451762466b.2
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 18:03:39 -0700 (PDT)
+ id 1wmLNC-0002hf-KI
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 21:03:47 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-c1c26d7e951so190285866b.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 18:03:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784682218; x=1785287018; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1784682225; x=1785287025; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ED8ZNuacLaQvPx2m8uKBXJmG6gJ49gu9pZqGBkx0woU=;
- b=GpY8zogXYHnTBvfEOBxBjcEzjINNwZLBKGSNQaW0LhE8R1hFhZJMAazfRBYBBKSCNq
- IO1xuxBRnIX0RMyqevh850uY+Y/79wCE4Cx8UrEch7+PSe93tuuQIn2F9wAx3acTGX4a
- BHUSiwFPR5rNL4GbSINrmgTrT1TeUbXwSGNYy+s7T733683s4NpA/F6TCb7KrTiwLBZK
- l+G7ZHzOR31XMFiA+12nHQvCDKtDZIhG6/aqEdDf/RYC3GCOpcDo5Fx7gyZNA3T5xRNr
- kzdrU2Dc8T0YESVbH9zZxVuC/VqdpwsW+Rpja5RQle8q8g017U/DjRwypqzpq4hHgo+0
- i68Q==
+ bh=Ydxv0Q4bD+qLHCya35AjaRVSkKhuKwlB7W4JrVReJxs=;
+ b=Vaop/T9a/iMJ2yvWBzxrwFm9+2xbXrHBs4Syw/K85UpIcsVdaOEwr4zACALHa4nCP7
+ JUR16Erz62zN5B3anLiLTaKX865DBmyzXpGxMMoEwWgfF2SRLgEqKHw0SrisNbWNJAC6
+ o4U/8d1llLAVVUSmwidDv72rTkCIzX0Vr045mpvMx6v25TvGCdV6u+510nITMae063WS
+ s2P69Be7QZm/ITNnoky1zfuN6pNGS6FEy40WG8OSxwiRBw6c/JEAkzV2nXiXvt0TdMPO
+ bH+cxs5hr+GeOQEDilLJ47mbT1k/jnRbhFyTKZ2GgvhdYBrRFVysYqtSh2++OYpFBVq8
+ Wl5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784682218; x=1785287018;
+ d=1e100.net; s=20251104; t=1784682225; x=1785287025;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=ED8ZNuacLaQvPx2m8uKBXJmG6gJ49gu9pZqGBkx0woU=;
- b=nzvcobQ6HI8tqkmDYVFXVAH4ctkIhFbfgEmN75FpcV1WdHpSIZE1pDevh6qhezWqIC
- YkdvzWJNyjKeXLUlFjmvpJkR2bltuAC1EexGI30+r+mWZh50+wuMkoMiqbtnx3Hw2Ya8
- o4MJfIGyN/yaMiSHmitj8K8uJEHPhV0A83dNV9aIbMI15ZLrwVXwgYvyLHQuigrdGlBx
- 5z+EXTSe8WKrexigqgpW/BL8gsrS6Bqz8MIbNfpMKFYDUTj1QBq2oMtQ33a7AmVfcREZ
- P5+1f9B3ScDPdMntgZ77YDGi2CP8RvVQJEZkMoOMJgam0h8OpuiU309We/MGkUsg5uEb
- gq8w==
-X-Gm-Message-State: AOJu0Yz9WsCcKuoRrvS5eeKj7mNPYPAWtn5mDMf8KFBLCRS8trzkNzn0
- PBCLzVXus4oJhIVWMpfqXA22Zq+LPR7nVYhqdIpn6VHlnPbGvdBuUUVXdfOovks37OM=
-X-Gm-Gg: AfdE7clOKQTCFeJUbiKBzQNmvMR2/9sfKbBCpRsUBwftOlWMIeBbuSJvUJD2SgZ+5yx
- Y+tGSjW7aO6WWYAYRMW7TBlz8cmBSvE/lnWxXs6nXpjgvFTbM3Otu2aeyhla6F9awtgG9309r1/
- l7HkmzIf2LkvblilRwcF71WOer1jfItxUHr4/uUTNHglPawRGS49g486Hwkgu1bKxYi8Cp/AWx4
- rMEQnpupV5mDeEZclb/trvu695PtTAV1GQfbxzB2NtnC41FWpUITwog4mW85YH5KDR6kpglWn+g
- 7ooq0aFkz83SBJEiFulCsvUERy+e9cIQ7uUawvB+Mwkug1CQwFIjSf0sgdD9So6Sdv5nIbvIKC5
- egLQwjMzuoWvslqioZLx3a5VLkfoQyNXJJHi8kji6aHAhwv615YQPeeEuAO7TmSigLg==
-X-Received: by 2002:a17:907:74a:b0:c15:cee4:5244 with SMTP id
- a640c23a62f3a-c16b46f30abmr925111566b.21.1784682218221; 
- Tue, 21 Jul 2026 18:03:38 -0700 (PDT)
+ bh=Ydxv0Q4bD+qLHCya35AjaRVSkKhuKwlB7W4JrVReJxs=;
+ b=MupiJOd7yjgez9ZULz/w2Xn9OOkWlaDEUS95gUvjN1yJC/45IuXFP8leOgYG50Sd/p
+ vlYwf8oMXi4mkampz5JcMsLrxByH4nMVvm6bsSe3CQYwxDjstOrL5flL74bXtO1eylcF
+ r93zdIvGsIFEJfXgO48FY0JFNI4mGnQRWon/SdjO+4iLBREsHy0DgXpS3aaThh+IpnPH
+ h4CqhOh3C1oH15k+1UQVqTSRAMekzrEzy82bVd8nunLk9pSOMFhy8iPef8/bRLJ04REt
+ OeQGTya75VvJ1OAk1nKVeTF49OMDDCcqWFFY2c6rwk2VlKOxhFmpVbu4TTwij6R1zwH5
+ jCEQ==
+X-Gm-Message-State: AOJu0Yz4/ZdRh4JuVhXZz7HYVF8aZl6zYoJcGmWsSZ5mkWYMmvhu/CDG
+ LzGnezUAi1JdNzDPC57AuHCCBDSjJ/p0VwfYbP5fAmrl0ct4gVDTplHM5Oop0DNbeQE=
+X-Gm-Gg: AR+sD13w9B+9S5xkSmUj6KDZOI+zbA46St0HQ1BqdsbB9mJjCURncoL60QyPPV6fjvb
+ bFUBO/1Y1BC/UdbgFzElDITpl53ti4VcmS/z+qWeZnMghkSPjNQv8JPqyM8f1PvVWSvIFFaQYxN
+ W3DMFI6lAipNtLuhTiwCea5o5mi+b9NOA8IQNIB2kZHp0G+cUvCv87rnnH5Z19Cjyk8yB3Q5r6+
+ JsUht1bMYJBxlF/fgwTVUrbEepV/zcdtDiloDEJUXc02YVqnxI1/elYN26i0yRza5Y5kSXuQah7
+ X+9BOCCN8ma4qQbQlqKgkvsaSDZjNWxLIOFMYhpu/DR3KFnxzWSyvPWhppJcV7FGXxo1aJVkx3y
+ GWPXOMGGM2T3cI8cXHBb1mzYB5Sw2QLgeNErDelieRWftWMGCKuKEeHgkT+I1FV8rvw==
+X-Received: by 2002:a17:907:c70c:b0:c12:67d2:3d6b with SMTP id
+ a640c23a62f3a-c16b4572384mr863768366b.11.1784682224602; 
+ Tue, 21 Jul 2026 18:03:44 -0700 (PDT)
 Received: from Arc ([109.245.172.88]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c1c32ebac95sm32694066b.47.2026.07.21.18.03.36
+ a640c23a62f3a-c1c32ebac95sm32694066b.47.2026.07.21.18.03.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Jul 2026 18:03:37 -0700 (PDT)
+ Tue, 21 Jul 2026 18:03:43 -0700 (PDT)
 From: Konstantin Nigmatullin <rangolit@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Konstantin Nigmatullin <rangolit@gmail.com>, qemu-block@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, Peter Lieven <pl@kamp.de>,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH 3/5] iscsi: cancel in-flight iSCSI tasks when the session dies
-Date: Wed, 22 Jul 2026 03:02:52 +0200
-Message-ID: <20260722010254.424820-4-rangolit@gmail.com>
+Subject: [PATCH 5/5] iscsi: avoid null iSCSI error strings after cancel or
+ timeout
+Date: Wed, 22 Jul 2026 03:02:54 +0200
+Message-ID: <20260722010254.424820-6-rangolit@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260722010254.424820-1-rangolit@gmail.com>
 References: <20260722010254.424820-1-rangolit@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=rangolit@gmail.com; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=rangolit@gmail.com; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Wed, 22 Jul 2026 07:46:12 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,40 +101,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Coroutines waiting on a dead target never woke, so blk_drain_all could
-not finish and QEMU would not exit.
+Cancelled and timed-out tasks often left err_str unset, so logs printed
+"(null)" instead of a useful reason.
 
 See: https://gitlab.com/qemu-project/qemu/-/work_items/3067
 Signed-off-by: Konstantin Nigmatullin <rangolit@gmail.com>
 ---
- block/iscsi.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ block/iscsi.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 diff --git a/block/iscsi.c b/block/iscsi.c
-index e7f2d54986..330f17e08b 100644
+index b6207d03e5..0ab12987b8 100644
 --- a/block/iscsi.c
 +++ b/block/iscsi.c
-@@ -381,6 +381,12 @@ static void iscsi_timed_check_events(void *opaque)
- 
-         if (iscsilun->request_timed_out) {
-             iscsilun->request_timed_out = false;
-+            /*
-+             * Drop local in-flight tasks so coroutines waiting on a dead
-+             * session wake with CANCELLED instead of blocking drain forever
-+             * (especially when command timeout is disabled).
-+             */
-+            iscsi_scsi_cancel_all_tasks(iscsilun->iscsi);
-             iscsi_reconnect(iscsilun->iscsi);
-         }
- 
-@@ -1427,6 +1433,7 @@ static void iscsi_nop_timed_event(void *opaque)
-         error_report("iSCSI: NOP timeout. Reconnecting...");
-         iscsilun->request_timed_out = true;
+@@ -290,6 +290,20 @@ iscsi_co_generic_cb(struct iscsi_context *iscsi, int status,
          iscsilun->nop_failures = 0;
-+        iscsi_scsi_cancel_all_tasks(iscsilun->iscsi);
-     } else if (iscsi_nop_out_async(iscsilun->iscsi, iscsi_nop_cb, NULL, 0,
-                                    iscsilun) != 0) {
-         error_report("iSCSI: failed to sent NOP-Out. Disabling NOP messages.");
+     }
+ 
++    if (status != SCSI_STATUS_GOOD && !iTask->do_retry && !iTask->err_str) {
++        const char *e = iscsi_get_error(iscsi);
++
++        if (e && e[0]) {
++            iTask->err_str = g_strdup(e);
++        } else if (status == SCSI_STATUS_CANCELLED) {
++            iTask->err_str = g_strdup("task cancelled");
++        } else if (status == SCSI_STATUS_TIMEOUT) {
++            iTask->err_str = g_strdup("command timed out");
++        } else {
++            iTask->err_str = g_strdup("I/O error");
++        }
++    }
++
+     /*
+      * aio_co_wake() is safe to call: iscsi_service(), which called us, is only
+      * run from the event_timer and/or the FD handlers, never from the request
 -- 
 2.53.0
 
