@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D78B7C44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:51:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C905C44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:51:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWPg-0000T1-Su; Wed, 22 Jul 2026 08:51:05 -0400
+	id 1wmWPa-0008HG-R2; Wed, 22 Jul 2026 08:50:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWNs-0003zW-JZ; Wed, 22 Jul 2026 08:49:19 -0400
+ id 1wmWP6-0004o0-9o; Wed, 22 Jul 2026 08:50:30 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWNn-0001tC-HQ; Wed, 22 Jul 2026 08:49:09 -0400
+ id 1wmWP3-0002Eu-AD; Wed, 22 Jul 2026 08:50:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724390; bh=J9a48cWEgTgFtqpPf8tmVd3EWC7yUB/j19YWh3nygu0=;
+ t=1784724391; bh=VhI/sbuMQXKM3OAOJIXT9eG2AP2kRgHDM9PHZKOuPB0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=PPZpdWYELfsn8wCskEUbyXgq+cbVbYLapkq0rdCcI6HnG/mocJjzzLBiiQxb6444S
- gEB86ap/UHkXLbJB657hYnYj+MS+8rfGOdRB4kyODPGBw0DR6wSzZOxkyzMvTrpP2O
- ie40cgdXY3RtvZso4EdrU2gojNHlag1qLbdII8d3Q0lsLFbqWe4VKQEmZL7of/qheT
- PRcosgmtagiE1pfznG2quARpJdm6fo72GdK1/0pghpRwqpcwRi8razsS8ri29Uc/kW
- ePXihx4hmMxUNOLsrDkQ4Q2iwowEUINA5yTDWY5y4nrEyT3GmJgfhEtURBZrHkoIEv
- 5ecvhwmDxA8yw==
+ b=V4XLnYOqvu6a1/WJkXs4D/DsB34xcJ+cUBfmytT2vnErKHjd95o74WExzECSFYw7A
+ FZ47JEA6TZZGb/FxvMNDCxg3NDAlQfG/65yX2n9MKxxU94ogLj3nMN59rvzpr+EhcK
+ pda9wnJLgbvy8idGn6Hk+lQAoWPlygeUpwID1+tnigK5qVJYGmYd0NX6du6nTMgaJQ
+ KfUhkgc3njEhuuqLnwkdwQc2ly3T2AQHBSPsm/tSQednlXFuF0x28dgto29eeJ3of4
+ +aw4Fi2DxpEn6NVc5wP7ct1Iern/Qd0SMynGXHBApJsauiL2txFEsu/yEuHymyQgrs
+ y0nb7YFBpQmQQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BDCEB1C3B0F;
- Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1A7981C3B1E;
+ Wed, 22 Jul 2026 15:46:31 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 115B33F3769;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 60EDF3F3778;
  Wed, 22 Jul 2026 15:46:48 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 760E217F07; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id 995B217F25; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Bin Meng <bmeng.cn@gmail.com>, Bin Meng <bin.meng@processmission.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 102/122] ui/gtk: Narrow DMA-BUF critical section
-Date: Wed, 22 Jul 2026 15:45:51 +0300
-Message-ID: <20260722124622.31034-27-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 v2 117/122] net: Correct padding check in
+ qemu_receive_packet()
+Date: Wed, 22 Jul 2026 15:46:06 +0300
+Message-ID: <20260722124622.31034-42-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
@@ -72,130 +74,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Scanout operations need to be properly ordered to avoid tearing. The
-virtio specification allows the guest to use pageflip. With pageflip,
-the guest only modifies the invisible framebuffer while the host scans
-out the visible framebuffer. The guest may choose not to use pageflip to
-avoid its overhead, accepting the risk of tearing.
+In qemu_receive_packet() we check to see if we should pad a short
+packet.  This is doing the wrong test: because this function is used
+when the device adds a packet to its own incoming queue (i.e.  for
+loopback), we should be checking the NetClientState's own do_not_pad
+flag, not that for its peer.
 
-ui/gtk performs the following procedure to flush a scanout:
-1) Queue a draw event.
-2) The draw event gets triggered.
-3) Blit the guest framebuffer to the host framebuffer.
+We didn't notice this earlier, because at the moment all the real
+peers of a network device (i.e.  the network backends) do not set
+do_not_pad, so net_peer_needs_padding() always returns true except in
+the corner case where the network device has no peer at all.
 
-When flushing a DMA-BUF scanout, ui/gtk blocks the device before 2) if
-possible and unblocks it after 3) to enforce proper ordering. However,
-blocking the device before 2) has two problems.
+The effect of this is that if a network device has no peer (e.g.
+because QEMU was started with -net none or with -nodefaults) then we
+can still let through the kind of "guest misprograms the network
+device to loopback-transmit a short packet and then we mishandle it
+in the receive path" bug like #3043 which commit a01344d9d78 was
+trying to fix.
 
-First, it can leave the device blocked indefinitely because GTK
-sometimes decides to cancel 2) when the window is not visible for
-example. ui/gtk regularly repeats 1) as a workaround, but it is not
-applicable to GtkGLArea because it causes display corruption.
+Since the distinction between "we should check nc->do_not_pad"
+and "we should check nc->peer->do_not_pad" is a bit subtle, add
+enough documentation commentary to make it more obvious.
 
-Second, the behavior is inconsistent with the other types of scanout
-that leave the device unblocked between 1) and 2).
-
-To fix these problems, let ui/gtk block the device only when the
-queued draw event runs, immediately before 3). Blocking before that is
-unnecessary since ui/gtk does not access the framebuffer yet. If the
-guest does not use pageflip but instead updates the visible framebuffer
-directly, ui/gtk should not add the overhead of a pre-draw block.
-
-ui/gtk still blocks the device during 3) for DMA-BUF. Unlike the other
-scanout types, 3) can happen asynchronously with the device for a
-DMA-BUF, so ui/gtk needs to keep the visible guest framebuffer stable
-for the blit.
-
-With the problems fixed, the workaround to repeat 1) is no longer
-necessary and is removed.
-
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260628-gtk-v2-1-1e4839012f09@rsg.ci.i.u-tokyo.ac.jp>
-(cherry picked from commit 53f0d87db7b4bc4b8c906eedcce6fec17d39824f)
-(Mjt: back-port to before v11.0.0-787-g405a42e3655
- "ui/console: rename public API to use consistent qemu_console_ prefix" which
- renamed graphic_hw_gl_block() to qemu_console_hw_gl_block())
+Cc: qemu-stable@nongnu.org
+Fixes: a01344d9d78 ("net: pad packets to minimum length in qemu_receive_packet()")
+Suggested-by: Bin Meng <bmeng.cn@gmail.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Bin Meng <bin.meng@processmission.com>
+Message-ID: <20260629164246.2028947-1-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit b1e73b2ddbb2850e394b9c47cfcb14dba8048a71)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-index 947c99334bd..fd72f02ff6f 100644
---- a/ui/gtk-egl.c
-+++ b/ui/gtk-egl.c
-@@ -91,6 +91,7 @@ void gd_egl_draw(VirtualConsole *vc)
-             } else {
-                 qemu_dmabuf_set_draw_submitted(dmabuf, false);
-             }
-+            graphic_hw_gl_block(vc->gfx.dcl.con, true);
-         }
- #endif
-         gd_egl_scanout_flush(&vc->gfx.dcl, 0, 0, vc->gfx.w, vc->gfx.h);
-@@ -383,14 +384,11 @@ void gd_egl_flush(DisplayChangeListener *dcl,
- 
-     if (vc->gfx.guest_fb.dmabuf &&
-         !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
--        graphic_hw_gl_block(vc->gfx.dcl.con, true);
-         qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
-         gtk_egl_set_scanout_mode(vc, true);
--        gtk_widget_queue_draw_area(area, x, y, w, h);
--        return;
-     }
- 
--    gd_egl_scanout_flush(&vc->gfx.dcl, x, y, w, h);
-+    gtk_widget_queue_draw_area(area, x, y, w, h);
+diff --git a/include/net/net.h b/include/net/net.h
+index cdd5b109b0d..e42e8263e8a 100644
+--- a/include/net/net.h
++++ b/include/net/net.h
+@@ -329,9 +329,32 @@ uint32_t net_crc32_le(const uint8_t *p, int len);
+     .offset     = vmstate_offset_macaddr(_state, _field),            \
  }
  
- void gtk_egl_init(DisplayGLMode mode)
-diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-index ddb51efd5f4..bfcf96e25d6 100644
---- a/ui/gtk-gl-area.c
-+++ b/ui/gtk-gl-area.c
-@@ -73,6 +73,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
-             } else {
-                 qemu_dmabuf_set_draw_submitted(dmabuf, false);
-             }
-+            graphic_hw_gl_block(vc->gfx.dcl.con, true);
-         }
++/**
++ * net_peer_needs_padding: Should we pad as we send out packets?
++ * @nc: NetClientState
++ *
++ * Return true if the peer of this NetClientState (i.e. the
++ * destination that qemu_send_packet() etc send to) requires us to pad
++ * out packets that are shorter than the minimum ethernet frame
++ * length.
++ */
+ static inline bool net_peer_needs_padding(NetClientState *nc)
+ {
+   return nc->peer && !nc->peer->do_not_pad;
+ }
+ 
++/**
++ * net_client_needs_padding: Should we pad as we queue packets to ourselves?
++ * @nc: NetClientState
++ *
++ * Return true if this NetClientState requires us to pad out packets
++ * that are shorter than the minimum ethernet frame length.  This is
++ * the check to make in qemu_receive_packet() when we are queuing a
++ * packet back into ourselves (i.e. loopback).
++ */
++static inline bool net_client_needs_padding(NetClientState *nc)
++{
++    return !nc->do_not_pad;
++}
++
  #endif
- 
-@@ -135,27 +136,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
- 
-     gd_update_monitor_refresh_rate(vc, vc->window ? vc->window : vc->gfx.drawing_area);
- 
--    if (vc->gfx.guest_fb.dmabuf &&
--        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
--        /*
--         * gd_egl_refresh() calls gd_egl_draw() if a DMA-BUF draw has already
--         * been submitted, but this function does not call gd_gl_area_draw() in
--         * such a case due to display corruption.
--         *
--         * Calling gd_gl_area_draw() is necessary to prevent a situation where
--         * there is a scheduled draw event but it won't happen bacause the window
--         * is currently in inactive state (minimized or tabified). If draw is not
--         * done for a long time, gl_block timeout and/or fence timeout (on the
--         * guest) will happen eventually.
--         *
--         * However, it is found that calling gd_gl_area_draw() here causes guest
--         * display corruption on a Wayland Compositor. The display corruption is
--         * more serious than the possible fence timeout so gd_gl_area_draw() is
--         * omitted for now.
--         */
--        return;
--    }
--
-     if (!vc->gfx.gls) {
-         if (!gtk_widget_get_realized(vc->gfx.drawing_area)) {
-             return;
-@@ -314,7 +294,6 @@ void gd_gl_area_scanout_flush(DisplayChangeListener *dcl,
- 
-     if (vc->gfx.guest_fb.dmabuf &&
-         !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
--        graphic_hw_gl_block(vc->gfx.dcl.con, true);
-         qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
-         gtk_gl_area_set_scanout_mode(vc, true);
+diff --git a/net/net.c b/net/net.c
+index c2d0d83bc96..4a5ceaf7865 100644
+--- a/net/net.c
++++ b/net/net.c
+@@ -764,7 +764,7 @@ ssize_t qemu_receive_packet(NetClientState *nc, const uint8_t *buf, int size)
+         return 0;
      }
+ 
+-    if (net_peer_needs_padding(nc)) {
++    if (net_client_needs_padding(nc)) {
+         if (eth_pad_short_frame(min_pkt, &min_pktsz, buf, size)) {
+             buf = min_pkt;
+             size = min_pktsz;
 -- 
 2.47.3
 
