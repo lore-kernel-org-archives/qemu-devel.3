@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 244CEC44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:58:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4F43C44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:58:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWSi-0004x8-7p; Wed, 22 Jul 2026 08:54:12 -0400
+	id 1wmWVe-0005Kc-FS; Wed, 22 Jul 2026 08:57:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWRL-0002hw-PE; Wed, 22 Jul 2026 08:52:51 -0400
+ id 1wmWU4-0001aP-94; Wed, 22 Jul 2026 08:55:36 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWRI-0002Ro-EE; Wed, 22 Jul 2026 08:52:47 -0400
+ id 1wmWU2-0003PP-H1; Wed, 22 Jul 2026 08:55:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724574; bh=YTsjE7Ij+5nEMqpFgQqKnAyyApwjpy2aG0GRM3nmThI=;
+ t=1784724575; bh=muNAh4RU3UYOtUuju152tRHPb6SeX/QYPbJCxpOiBfA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=LOFjUe37HmG2F1diP9BK2qPsj9V0/HlNIL7piriCe7+Aofb6ngXyrX4fOooY3HECN
- Cs4JFitERIuxTtMJ7ue6k9D6iQHkxmiOnm8DT32NtlQwAqKTtcE0LBXYnBIfpwTh7d
- xRiXcuJPCQVz+tmbLtCM9lddQtJ+j9c5qmjx6IfcQEwW1bCHbj2iudIMhU7gRmLM00
- Fuhu6vSFExDjaLw7lfAy1ao/67ZD7gG+Uz+T/YWKiEeoEeu7Au1y0H8hQB2wAra5Pl
- ALwOZny6RDx7vc9/4hGa2bDGIPjCGJ/+kXxwScONkwZR9oymkCih8b+VW6EMuodgOv
- qKa+kEO7zdEkA==
+ b=ReAMMU49Ufxrmp9Zu2bC45jBdn1BFTNuMEraSXdBXA0GOT+4JKgaRU2d9c2EgrOfN
+ sd/hPpDcrzGgjX9s2UKh6N79UgPTVSkiGbfb7HzGJcB1sPWM6fCjOjK0ZLvz55xz5n
+ PeDi2zY5Qaj8N36qgqtIU27g97ztW991zfLk8T4n90yrK+OvDdft74w2sLlbDlUtT0
+ wFY/IxkaEzPzVaFhIMSZo2mJiZnGzbefm1JDeBfyJ6/8tfxkds8yOsPr6iQ65s7uCc
+ StmavTvvQrMG4enoQgl1z1eOiFcSYyTkjEW8CWvEk+KXavRL7lkfWzhTJshb0Rn6n0
+ oP0XEVzMnNDcQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C5A7C1C3B3C;
- Wed, 22 Jul 2026 15:49:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6A7631C3B59;
+ Wed, 22 Jul 2026 15:49:35 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1AADA3F378C;
+ by tsrv.corpit.ru (Postfix) with ESMTP id B36803F37A9;
  Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B315F17F4D; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
+ id 03DD517F87; Wed, 22 Jul 2026 15:49:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Haotian Jiang <sundayjiang@tencent.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 v2 095/127] hw/misc/ivshmem: clear chardev handlers
- before freeing peers
-Date: Wed, 22 Jul 2026 15:48:20 +0300
-Message-ID: <20260722124859.32371-14-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v2 124/127] replay: fix use of uninitialized pointer
+ on error
+Date: Wed, 22 Jul 2026 15:48:49 +0300
+Message-ID: <20260722124859.32371-43-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
@@ -73,64 +74,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Haotian Jiang <sundayjiang@tencent.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-ivshmem_exit() frees s->peers and s->msi_vectors but does not clear
-the chardev handlers registered in ivshmem_common_realize(). Those
-handlers are only removed later in object_finalize() via release_chr,
-which runs after ivshmem_exit().
+When bdrv_snapshot_list() returns a negative error code, sn_tab is
+uninitialized. The loop does not execute (since i=0 < negative is
+false), but the code falls through to g_free(sn_tab) which frees
+an uninitialized pointer.
 
-Between exit and finalize, ivshmem_read() can fire on pending chardev
-data and process_msg_connect() dereferences the freed s->peers.
-Additionally, s->peers, s->nb_peers, and s->msi_vectors are not
-zeroed after free, leaving dangling pointers that make the UAF code
-paths reachable.
-
-Fix by clearing chardev handlers at the beginning of ivshmem_exit(),
-before any resources they access are freed, and nullifying freed
-pointers.
-
-Cc: qemu-stable@nongnu.org
-Fixes: f64a078d45a ("ivshmem: fix pci_ivshmem_exit()")
-Link: https://gitlab.com/qemu-project/qemu/-/work_items/3594
-Reported-by: Haotian Jiang <sundayjiang@tencent.com>
-Signed-off-by: Haotian Jiang <sundayjiang@tencent.com>
-Message-ID: <tencent_3105EC28797360A155078F53@qq.com>
+Fixes: f6baed3d1485 ("replay: implement replay-seek command")
+Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20260719113216.1177594-1-marcandre.lureau@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 5157ceb10ca83d1c257ff84368458153a10a2f23)
+(cherry picked from commit fe68e4b47bf5a3ff016a8c2b580e05c93df05752)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/misc/ivshmem-pci.c b/hw/misc/ivshmem-pci.c
-index c987eebb983..2010f436756 100644
---- a/hw/misc/ivshmem-pci.c
-+++ b/hw/misc/ivshmem-pci.c
-@@ -938,6 +938,9 @@ static void ivshmem_exit(PCIDevice *dev)
-     IVShmemState *s = IVSHMEM_COMMON(dev);
-     int i;
+diff --git a/replay/replay-debugging.c b/replay/replay-debugging.c
+index 11053640021..7b904a14165 100644
+--- a/replay/replay-debugging.c
++++ b/replay/replay-debugging.c
+@@ -139,9 +139,8 @@ static char *replay_find_nearest_snapshot(int64_t icount,
+                                           int64_t *snapshot_icount)
+ {
+     BlockDriverState *bs;
+-    QEMUSnapshotInfo *sn_tab;
++    g_autofree QEMUSnapshotInfo *sn_tab = NULL;
+     QEMUSnapshotInfo *nearest = NULL;
+-    char *ret = NULL;
+     int rv;
+     int nb_sns, i;
  
-+    qemu_chr_fe_set_handlers(&s->server_chr,
-+                             NULL, NULL, NULL, NULL, NULL, NULL, true);
-+
-     migrate_del_blocker(&s->migration_blocker);
+@@ -149,15 +148,19 @@ static char *replay_find_nearest_snapshot(int64_t icount,
  
-     if (memory_region_is_mapped(s->ivshmem_bar2)) {
-@@ -966,6 +969,8 @@ static void ivshmem_exit(PCIDevice *dev)
-             close_peer_eventfds(s, i);
+     bs = bdrv_all_find_vmstate_bs(NULL, false, NULL, NULL);
+     if (!bs) {
+-        goto fail;
++        return NULL;
+     }
+ 
+     nb_sns = bdrv_snapshot_list(bs, &sn_tab);
++    if (nb_sns < 0) {
++        return NULL;
++    }
+ 
+     for (i = 0; i < nb_sns; i++) {
+         rv = bdrv_all_has_snapshot(sn_tab[i].name, false, NULL, NULL);
+-        if (rv < 0)
+-            goto fail;
++        if (rv < 0) {
++            return NULL;
++        }
+         if (rv == 1) {
+             if (sn_tab[i].icount != -1ULL
+                 && sn_tab[i].icount <= icount
+@@ -166,14 +169,12 @@ static char *replay_find_nearest_snapshot(int64_t icount,
+             }
          }
-         g_free(s->peers);
-+        s->peers = NULL;
-+        s->nb_peers = 0;
      }
- 
-     if (ivshmem_has_feature(s, IVSHMEM_MSI)) {
-@@ -973,6 +978,7 @@ static void ivshmem_exit(PCIDevice *dev)
+-    if (nearest) {
+-        ret = g_strdup(nearest->name);
+-        *snapshot_icount = nearest->icount;
++    if (!nearest) {
++        return NULL;
      }
+-    g_free(sn_tab);
  
-     g_free(s->msi_vectors);
-+    s->msi_vectors = NULL;
+-fail:
+-    return ret;
++    *snapshot_icount = nearest->icount;
++    return g_strdup(nearest->name);
  }
  
- static int ivshmem_pre_load(void *opaque)
+ static void replay_seek(int64_t icount, QEMUTimerCB callback, Error **errp)
 -- 
 2.47.3
 
