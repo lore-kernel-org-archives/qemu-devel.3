@@ -4,55 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A8BFC44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:13:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E481C44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:16:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmVox-0000dQ-8v; Wed, 22 Jul 2026 08:13:07 -0400
+	id 1wmVrY-0001SK-S0; Wed, 22 Jul 2026 08:15:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhang_wei@open-hieco.net>)
- id 1wmVou-0000cp-CC
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 08:13:04 -0400
-Received: from [115.124.28.97] (helo=out28-97.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wmVrX-0001S4-Ef
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 08:15:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhang_wei@open-hieco.net>)
- id 1wmVop-0005CL-TE
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 08:13:04 -0400
-X-Alimail-AntiSpam: AC=CONTINUE; BC=0.07438458|-1; CH=green;
- DM=|CONTINUE|false|; DS=CONTINUE|ham_alarm|0.00192932-6.01843e-05-0.998011;
- FP=7181970613962591499|0|0|0|0|-1|-1|-1; HT=maildocker-contentspam033032053168;
- MF=zhang_wei@open-hieco.net; NM=1; PH=DS; RN=7; RT=7; SR=0;
- TI=SMTPD_---.iS5c.XV_1784722236; 
-Received: from 192.168.124.3(mailfrom:zhang_wei@open-hieco.net
- fp:SMTPD_---.iS5c.XV_1784722236 cluster:ay29) by smtp.aliyun-inc.com;
- Wed, 22 Jul 2026 20:10:37 +0800
-Message-ID: <ed76e6e5-27c8-42c0-b9ef-0275f2fe4221@open-hieco.net>
-Date: Wed, 22 Jul 2026 20:10:34 +0800
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wmVrU-0005lb-MU
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 08:15:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784722542;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Il2iJMVjZQCsqFCEuOX5Gn1j7lRuc8N16zrXPFhfBHM=;
+ b=HEIYkHxJV0/ezLrLcQukjtTOOtnNlxTKXMyh4t8zOACpnxolG0O5NL1awE0vxdbsPjoie2
+ LpEKLYxmOTYVxJDz6wFMYC2tuNRPikSNHPsZHyay56fWhiLQM4k6IL+pqknKffq2SuWjRN
+ wOgnZN9ct30N0hz7AUrrt2y1Baif0og=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-573-lwxo-iblOmeJK0wCKm1Krw-1; Wed,
+ 22 Jul 2026 08:15:39 -0400
+X-MC-Unique: lwxo-iblOmeJK0wCKm1Krw-1
+X-Mimecast-MFC-AGG-ID: lwxo-iblOmeJK0wCKm1Krw_1784722538
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A33F41955DE9; Wed, 22 Jul 2026 12:15:37 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B82901956042; Wed, 22 Jul 2026 12:15:36 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4EC8721E6920; Wed, 22 Jul 2026 14:15:34 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Roland Clobus <rclobus@rclobus.nl>
+Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@gmail.com>
+Subject: Re: [PATCH v2 1/5] virtio-gpu: Support the configurable EDID fields
+In-Reply-To: <20260707075536.126865-1-rclobus@rclobus.nl> (Roland Clobus's
+ message of "Tue, 7 Jul 2026 09:47:56 +0200")
+References: <20260707075536.126865-1-rclobus@rclobus.nl>
+Date: Wed, 22 Jul 2026 14:15:34 +0200
+Message-ID: <87cxwfjk49.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/9] target/i386: Fix Hygon vendor-specific CPU behavior
-From: Tina Zhang <zhang_wei@open-hieco.net>
-To: qemu-devel@nongnu.org
-Cc: kvm@vger.kernel.org, "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Tina Zhang <zhang_wei@hygon.cn>, Yongwei Xu <xuyongwei@hygon.cn>
-References: <20260706055530.1752094-1-zhang_wei@open-hieco.net>
-Content-Language: en-US
-In-Reply-To: <20260706055530.1752094-1-zhang_wei@open-hieco.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.97 (deferred)
-Received-SPF: pass client-ip=115.124.28.97;
- envelope-from=zhang_wei@open-hieco.net; helo=out28-97.mail.aliyun.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, RDNS_NONE=0.793,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=armbru@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,85 +86,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Roland Clobus <rclobus@rclobus.nl> writes:
 
-Just a gentle ping on this series.
+> Adds support for the fields that are currently configurable
+> in the function qemu_edid_generate.
+>
+> * The serial number does not need to be numerical.
+> See https://en.wikipedia.org/wiki/Extended_Display_Identification_Data
+>
+> * The name can be optional, there are now many more fields to set
+>
+> Signed-off-by: Roland Clobus <rclobus@rclobus.nl>
 
-This series fixes several Hygon Dhyana vendor-specific CPU behavior gaps 
-where QEMU currently keys AMD-compatible paths only on AuthenticAMD.
+[...]
 
-The guest-visible changes are gated by x-hygon-vendor-abi-fixes and kept 
-off for pc-11.0 and older machine types.  The KVM runtime changes do not 
-change guest CPU model ABI.
+> diff --git a/qapi/virtio.json b/qapi/virtio.json
+> index 09dd0e6d05..791d2f30f1 100644
+> --- a/qapi/virtio.json
+> +++ b/qapi/virtio.json
+> @@ -970,24 +970,62 @@
+>  ##
+>  # @VirtIOGPUOutput:
+>  #
+> -# Describes configuration of a VirtIO GPU output.  If both @xres and
+> -# @yres are set, they take precedence over root virtio-gpu resolution
+> -# configuration and enable the corresponding output.  If none of @xres
+> -# and @yres are set, root virtio-gpu resolution configuration takes
+> -# precedence and only the first output is enabled.  Only setting one
+> -# of @xres or @yres is an error.
+> +# Describes configuration of a VirtIO GPU output.  Matches the fields
+> +# of struct @qemu_edid_info.
 
-Any comments would be appreciated.
+Blank lines between paragraphs, so they get actually rendered as
+separate paragraphs.
 
-Thanks,
-Tina
+If VirtIOGPUOutput matches qemu_edid_info, could it *replace*
+qemu_edid_info?
 
-On 7/6/2026 1:55 PM, zhang_wei@open-hieco.net wrote:
-> From: Tina Zhang <zhang_wei@hygon.cn>
-> 
-> Hygon Dhyana uses the HygonGenuine vendor string, but a number of
-> guest-visible and KVM-facing interfaces follow AMD-compatible behavior.
-> QEMU currently keys several of these paths only on AuthenticAMD, so Hygon
-> guests can see vendor-inconsistent CPUID/MSR state or use the wrong KVM
-> PMU/MCE handling paths.
-> 
-> This series makes those checks explicit for Hygon where appropriate.
-> 
-> Guest-visible CPU ABI changes are gated by the new
-> x-hygon-vendor-abi-fixes property.  The property defaults to true for new
-> machine types and is disabled for pc-11.0 and older, so existing machine
-> types keep their previous Hygon ABI for migration compatibility.
-> 
-> The KVM injected-MCE and PMU path changes are not CPUID model table
-> changes.  They make QEMU use the AMD-compatible runtime handling that
-> Linux/KVM already uses for Hygon.
-> 
-> The series covers:
-> 
->    * AMD CPUID[0x80000001].EDX aliases for Hygon
->    * hiding Intel cache CPUID leaves 2 and 4 for Hygon
->    * hiding IA32_ARCH_CAPABILITIES for Hygon unless old ABI requires it
->    * AMD MCE status encoding for Hygon memory-failure injection
->    * AMD PMU MSR setup/save/restore paths for Hygon
->    * disabling Intel-style MCA broadcast for Hygon injected MCEs
->    * AMD IOMMU HT GPA hole layout for Hygon on new machine types
->    * AMD legacy cache fallback for Hygon when legacy-cache=on
->    * AMD-shaped default ucode-rev value for Hygon
-> 
-> Tests were added for the Dhyana CPUID/ucode compatibility behavior and
-> for the Hygon HT GPA hole memory-layout case.
-> 
-> Tested with:
-> 
->    ninja -C build
-> 
->    build/pyvenv/bin/meson test -C build --print-errorlogs \
->        qemu:qtest-i386/test-x86-cpuid-compat \
->        qemu:qtest-x86_64/test-x86-cpuid-compat \
->        qemu:func-x86_64-mem_addr_space
-> 
-> Tina Zhang (9):
->    target/i386: Sync AMD CPUID aliases for Hygon
->    target/i386: Hide Intel cache CPUID leaves for Hygon
->    target/i386: Hide ARCH_CAPABILITIES for Hygon
->    target/i386/kvm: Use AMD MCE status encoding for Hygon
->    target/i386/kvm: Use AMD PMU MSR paths for Hygon
->    target/i386: Do not broadcast injected MCEs for Hygon
->    hw/i386: Apply AMD IOMMU HT GPA hole to Hygon
->    target/i386: Use AMD legacy cache fallback for Hygon
->    target/i386: Use AMD ucode-rev default for Hygon
-> 
->   hw/i386/pc.c                                  | 22 +++--
->   target/i386/cpu.c                             | 86 +++++++++++++----
->   target/i386/cpu.h                             | 12 +++
->   target/i386/helper.c                          |  6 +-
->   target/i386/kvm/kvm.c                         | 36 +++++--
->   .../functional/x86_64/test_mem_addr_space.py  | 36 +++++++
->   tests/qtest/test-x86-cpuid-compat.c           | 95 +++++++++++++++++++
->   7 files changed, 263 insertions(+), 30 deletions(-)
-> 
+> +# If values are set, they take precedence over the root virtio-gpu
+> +# configuration.
+> +# If none of @xres and @yres are set, the root virtio-gpu resolution
+> +# configuration is used and only the first output is enabled.
+> +#
+> +# @vendor: a 3 letter code for the vendor (since xx.x TODO)
+> +#          Default: "RHT" (Red Hat, Inc.)
+
+You need to replace the TODO placeholders before we can merge the patch.
+
+Posting patches that are not ready for merge is okay, but please tag
+them with RFC, and explain why in the cover letter.
+
+>  #
+>  # @name: the name of the output
+> +#        Default: "QEMU Monitor"
+> +#
+> +# @serial: the serial number (since xx.x TODO)
+
+What's the default?
+
+> +#
+> +# @widthmm: width of the display in mm (since xx.x TODO)
+
+Contradiction: "in mm" vs.
+
+> +#           If @widthmm is set, @heightmm must be set too
+> +#           If both @widthmm and @heightmm are unset,
+> +#             100 DPI is assumed
+
+"DPI".  What's the unit?
+
+Does the default apply to both widthmm and heightmm?
+
+Also, fails to build:
+
+    [77/78] Generating docs/QEMU manual with a custom command
+    FAILED: [code=3D1] docs/docs.stamp=20
+    /usr/bin/env CONFDIR=3Detc/qemu /work/armbru/qemu/bld-docs/pyvenv/bin/s=
+phinx-build -q -j auto -W -Dkerneldoc_werror=3D1 -Dversion=3D11.0.90 -Drele=
+ase=3D -Ddepfile=3Ddocs/docs.d -Ddepfile_stamp=3Ddocs/docs.stamp -b html -d=
+ /work/armbru/qemu/bld-docs/docs/manual.p /work/armbru/qemu/docs /work/armb=
+ru/qemu/bld-docs/docs/manual
+    /work/armbru/qemu/docs/../qapi/virtio.json:973: ERROR: Unexpected inden=
+tation. [docutils]
+
+With the indentation fixed, this gets rendered like
+
+    =E2=80=A2 widthmm (int, optional) =E2=80=93 width of the display in mm =
+(since xx.x
+      TODO) If widthmm is set, heightmm must be set too If both widthmm
+      and heightmm are unset, 100 DPI is assumed
+
+End your sentences with punctuation, and separate your paragraphs with
+blank lines, please.
+
+> +#
+> +# @heightmm: height of the display in mm (since xx.x TODO)
+> +#           If @heightmm is set, @widthmm must be set too
+
+Please separate words with dashes in member names: width-mm, height-mm.
+
+We don't normally put the unit in the member name.  E.g.
+
+    ##
+    # @ChardevVC:
+    #
+    # Configuration info for virtual console chardevs.
+    #
+    # @width: console width, in pixels
+    #
+    # @height: console height, in pixels
+    #
+    # @cols: console width, in chars
+    #
+    # @rows: console height, in chars
+
+Perhaps an argument could be made that it's helpful here, because
+millimeters is unusual.
+
+>  #
+>  # @xres: horizontal resolution of the output in pixels (since 11.0)
+> +#        If @xres is set, @yres must be set too
+>  #
+>  # @yres: vertical resolution of the output in pixels (since 11.0)
+> +#        If @yres is set, @xres must be set too
+
+Defaults?
+
+> +#
+> +# @xmax: maximum horizontal resolution of the output in pixels
+> +#        If @xmax is set, @ymax must be set too
+> +#        (since xx.x TODO)
+> +#
+> +# @ymax: maximum vertical resolution of the output in pixels
+> +#        If @ymax is set, @xmax must be set too
+> +#        (since xx.x TODO)
+
+Defaults?
+
+> +#
+> +# @refreshrate: refreshrate in mHz (since xx.x TODO)
+> +#               Default: 75000
+> +#
+> +# .. note:: keep the defaults in sync with hw/display/edid-generate.c
+>  #
+>  # Since: 10.1
+>  ##
+>=20=20
+>  { 'struct': 'VirtIOGPUOutput',
+> -  'data': { 'name': 'str', '*xres': 'uint16', '*yres': 'uint16' } }
+> +  'data': { '*vendor': 'str',
+> +            '*name': 'str',
+> +            '*serial': 'str',
+> +            '*widthmm': 'uint16',
+> +            '*heightmm': 'uint16',
+> +            '*xres': 'uint32',
+> +            '*yres': 'uint32',
+> +            '*xmax': 'uint32',
+> +            '*ymax': 'uint32',
+> +            '*refreshrate': 'uint32' } }
+>=20=20
+>  ##
+>  # @DummyVirtioForceArrays:
 
 
