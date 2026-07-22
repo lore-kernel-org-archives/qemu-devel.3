@@ -4,75 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07BBBC4453C
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 11:25:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2461AC44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 11:46:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmV4X-0006Ql-6X; Wed, 22 Jul 2026 07:25:09 -0400
+	id 1wmVOx-0004F3-6H; Wed, 22 Jul 2026 07:46:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1wmV4T-0006Ju-Pv
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 07:25:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1wmV4S-0005qj-CX
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 07:25:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784719503;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OwIMjyFIP+qlwdPkq7veT0IMBIvjr7F/c9zAWO1v/7c=;
- b=PGr8o5WIAwQvZ8iSpr8t4xR6DOlbqCs8SomXzt5CWMHvtmaMTyR05lzhymlyOIG5s71SLU
- AMs5OTEV3QwOGVczpQj3kilEDTqWzeehglcDVN2U7BaD+iOZ6HypiE4WJEp8zy8dNF8eav
- isfBvffYDK6NU5cfykykRsgSundn3Ls=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-505-5Otf1zOAOIO_GYmm7qExQw-1; Wed,
- 22 Jul 2026 07:25:00 -0400
-X-MC-Unique: 5Otf1zOAOIO_GYmm7qExQw-1
-X-Mimecast-MFC-AGG-ID: 5Otf1zOAOIO_GYmm7qExQw_1784719498
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 54A0B197750F; Wed, 22 Jul 2026 11:24:58 +0000 (UTC)
-Received: from lenovo-t14s.redhat.corp
- (headnet03.pony-001.prod.iad2.dc.redhat.com [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 58C541800626; Wed, 22 Jul 2026 11:24:56 +0000 (UTC)
-From: Laurent Vivier <lvivier@redhat.com>
+ (Exim 4.90_1) (envelope-from <rangolit@gmail.com>)
+ id 1wmLN9-0000AR-3s
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 21:03:44 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rangolit@gmail.com>)
+ id 1wmLN3-0002gj-3m
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 21:03:42 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-69e8ea2783aso5412719a12.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 18:03:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1784682216; x=1785287016; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=zdT93fDs6UB1uSpu3Au/OcyMYvv7vHTYp3jSGdCEpFU=;
+ b=IFPH2cHdodoLTJSG2GP4eNzlAbO2PV54bX1GhQ85KzIQmGBqGprd1x1GPZz1vFA2VX
+ XE3jh6sfg5phRkJVrrO7JmJGinjBOuOI/lpw7shiGptM6fs/wEe8lTZHp+lGHTee6Bxy
+ 8bsT+HsTk+x9idBZvMYm66RBg4iP6lHMBUPMjlpxRuWeG8enM+ef7ak21tkvjIdM3fL+
+ vah0D0ZMwTDclJJLTK193rk2BmuF30oMs7FTVetf+Mc8GMv9KHxePzJGIGgvtU/7okMt
+ LbJYhLcoaPX8By57fbyfx9Kj3wwYnCuTJXGMA5Yji3JM0JvjMQSljJwGZwllwawm6joX
+ hpWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784682216; x=1785287016;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=zdT93fDs6UB1uSpu3Au/OcyMYvv7vHTYp3jSGdCEpFU=;
+ b=cjE8OhtapjZhYkSEds84IkqNN0kkMbGwazAb77L/AzdPPCUQkfJf2lN/2pXuyHhlDX
+ 8mCxYJin0/5pKK6Q990UaGCOtyGr+X92V7ASgdgotYJK5IOhuri8dY47GspO2c+Iu3kq
+ KdWmFYL1DF0SXdxwOL7O+/J0LH6YIQlpSKFZoRSpYeVBrTdYHBfgMqQ2jDaKLKW+rjR3
+ 2o16RP6O9sVysvqixWX+c7SLTkg4cZBi4+g/fcEuQI9pytc19IJmVEKaEMQXhtSR98OM
+ FaleJDJbf/aQaRqMg8NKaExky/e0Sq/k08EZN2bGCpUaQhhJviZVByinBWt7b0xAAPNa
+ o+qQ==
+X-Gm-Message-State: AOJu0YzCpOah3rmfWdRPXJ/KOjK+Z5HkaHzfa9D1nvPlhzwpkuW7f98S
+ fPyyldCqNKXaj0I4VM4RhDl4hBYljauyKdmDDXKRLTFy3LAQW/GXc2qzhnB2jjCZ1zs=
+X-Gm-Gg: AR+sD100b8aFIBikhbMgJG6wPls+3BN9rCw5mhY5RVPmlgAQrLaBq87xBpe23/eCjZX
+ tLVyomkGTRDng8E7DEgy119jTAKA2dnNFY+ECP6xmEBgvUk1XFvRCw1EvLMJCiZ/KBhaLzxTj10
+ 8kUZFcKu3KrYa2Gg4srhhZcx5t7Q8Fo5cSAo+21Fs+lGJZ5m9hACirW9DjcXvoGJStzw4UOCk1s
+ lYSID/B/QXgu7sZYQWgg9lYWdEDTTsXnTldLde+VF5Qv4iFc22ibFqzuIHb16bDiidYJ6gL30TJ
+ 0AYc4mSmcemfmsRlgBhhjJOOpaRQnmE8U7XueIVbKSOOQ/pxhCetr6Im5jyz9i8FaCp6N0Gx5RO
+ c5MPhQViZA5F/N4MVXgO8Ibt5yuwLQ0g8fAnXQP8gjPUgtEOKC8GLdG9iABpfYk+a7jQqkIyTNf
+ x4
+X-Received: by 2002:a17:907:d22:b0:c1c:254c:16c1 with SMTP id
+ a640c23a62f3a-c1c254c27bcmr158104566b.0.1784682215539; 
+ Tue, 21 Jul 2026 18:03:35 -0700 (PDT)
+Received: from Arc ([109.245.172.88]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c1c32ebac95sm32694066b.47.2026.07.21.18.03.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Jul 2026 18:03:35 -0700 (PDT)
+From: Konstantin Nigmatullin <rangolit@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Jason Wang <jasowangio@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Laurent Vivier <lvivier@redhat.com>, qemu-stable@nongnu.org
-Subject: [PATCH v2 2/2] hw/net/igb: recalculate rx_desc_len on migration load
-Date: Wed, 22 Jul 2026 13:24:49 +0200
-Message-ID: <20260722112449.1386162-3-lvivier@redhat.com>
-In-Reply-To: <20260722112449.1386162-1-lvivier@redhat.com>
-References: <20260722112449.1386162-1-lvivier@redhat.com>
+Cc: Konstantin Nigmatullin <rangolit@gmail.com>, qemu-block@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Lieven <pl@kamp.de>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Subject: [PATCH 2/5] iscsi: stop retrying timed-out iSCSI commands
+Date: Wed, 22 Jul 2026 03:02:51 +0200
+Message-ID: <20260722010254.424820-3-rangolit@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260722010254.424820-1-rangolit@gmail.com>
+References: <20260722010254.424820-1-rangolit@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: permerror client-ip=170.10.129.124;
- envelope-from=lvivier@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=rangolit@gmail.com; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 22 Jul 2026 07:46:12 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,31 +101,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-rx_desc_len is migrated as a raw uint8_t from the stream but is a
-derived value. Currently igb_rx_use_legacy_descriptor() is a stub
-that always returns false, so rx_desc_len is always set to
-sizeof(union e1000_adv_rx_desc). Recalculate it in post_load to
-prevent a crafted migration stream from setting an invalid value.
+Retrying SCSI_STATUS_TIMEOUT up to seven times kept drain and shutdown
+blocked for minutes after the target was already gone.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+See: https://gitlab.com/qemu-project/qemu/-/work_items/3067
+Signed-off-by: Konstantin Nigmatullin <rangolit@gmail.com>
 ---
- hw/net/igb_core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ block/iscsi.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
-index 45d8fd795b84..2a4883907353 100644
---- a/hw/net/igb_core.c
-+++ b/hw/net/igb_core.c
-@@ -4548,5 +4548,7 @@ igb_core_post_load(IGBCore *core)
-     igb_intrmgr_resume(core);
-     igb_autoneg_resume(core);
+diff --git a/block/iscsi.c b/block/iscsi.c
+index bf74b4cb65..e7f2d54986 100644
+--- a/block/iscsi.c
++++ b/block/iscsi.c
+@@ -240,19 +240,21 @@ iscsi_co_generic_cb(struct iscsi_context *iscsi, int status,
  
-+    igb_calc_rxdesclen(core);
-+
-     return 0;
- }
+     if (status != SCSI_STATUS_GOOD) {
+         iTask->err_code = -EIO;
+-        if (iTask->retries++ < ISCSI_CMD_RETRIES) {
++        if (status == SCSI_STATUS_TIMEOUT) {
++            /*
++             * Do not retry timed-out commands. Retries keep in-flight I/O
++             * alive across a dead session and can block blk_drain_all()
++             * (and thus QEMU exit) for minutes or indefinitely. Kick
++             * reconnect and fail this request.
++             */
++            error_report("iSCSI timed out: %s", iscsi_get_error(iscsi));
++            iscsilun->request_timed_out = true;
++        } else if (iTask->retries++ < ISCSI_CMD_RETRIES) {
+             if (status == SCSI_STATUS_BUSY ||
+-                status == SCSI_STATUS_TIMEOUT ||
+                 status == SCSI_STATUS_TASK_SET_FULL) {
+                 unsigned retry_time =
+                     exp_random(iscsi_retry_times[iTask->retries - 1]);
+-                if (status == SCSI_STATUS_TIMEOUT) {
+-                    /* make sure the request is rescheduled AFTER the
+-                     * reconnect is initiated */
+-                    retry_time = EVENT_INTERVAL * 2;
+-                    iTask->iscsilun->request_timed_out = true;
+-                }
+-                error_report("iSCSI Busy/TaskSetFull/TimeOut"
++                error_report("iSCSI Busy/TaskSetFull"
+                              " (retry #%u in %u ms): %s",
+                              iTask->retries, retry_time,
+                              iscsi_get_error(iscsi));
 -- 
-2.54.0
+2.53.0
 
 
