@@ -4,84 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC61AC44532
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 11:10:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF2A2C44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 11:10:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmUpm-0007gM-BN; Wed, 22 Jul 2026 07:09:54 -0400
+	id 1wmUqc-0008Q9-7C; Wed, 22 Jul 2026 07:10:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wmUpj-0007eW-4Y; Wed, 22 Jul 2026 07:09:51 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wmUqb-0008Pg-75
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 07:10:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wmUpf-0003xu-Sm; Wed, 22 Jul 2026 07:09:50 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66MB8ToJ079507
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 22 Jul 2026 20:08:29 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=xxUbCS5x1p2A+F1GzYuGIgb7InmsOTFII1rl+Hgrt8I=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1784718510; v=1;
- b=gwLlnUDvy9KXjvM99jxi8cImoh52eF9dcxtgvKkyrZy5oKQ1oyETdI1azn+lyGFs
- 3o52WajzeQROI+P4tEf7hAyCDS4uHtgB6t55WOIXU4BfDojm8gXljZOr6bAWdZjn
- aMQJRxUuhOx5GI/i8BedFWJYdda2ekduAJKuFQsUoGWHHk5wU0C7YDZap4wVYzIc
- Enlrc4bAdNu9rrS1GUOY1uPi9+qkeOW5Yr0P0/w6d4rPjz+ryizuqchu0ws/b+iH
- j4SHFBzXflk2Ocki6h+H8fcbbIk4K2o+ZHxEvrvGuZXLWSRFvak3NG9e0DtphVe7
- A0MMM9lYj6FMArl2FAI95g==
-Message-ID: <3a1e6538-2669-4e73-9855-e4b7f33604e7@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 22 Jul 2026 20:08:29 +0900
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wmUqY-00043A-To
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 07:10:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784718641;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QEbc3CpFQ1PPCLExeK7MkMzZrEkYFgHC1uQKWvOBDWY=;
+ b=cZYymrJ5OxzFXhrZx33ML7iqejF3h234mjUvqewF0cru8ffw9ciuNCugajn3XdwXR4D1Lj
+ ooPO/MPfW91lg23/hgMf/TN55k9Y8igKZzeyg+xrORA0affTnPFh4AAfIBJ6nElfY+ftGC
+ UhZNK6PwJCsAREDmK9zlm0csf5zf/e0=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-466-Zw3VqOP1M4eICa7TJMrFVg-1; Wed, 22 Jul 2026 07:10:39 -0400
+X-MC-Unique: Zw3VqOP1M4eICa7TJMrFVg-1
+X-Mimecast-MFC-AGG-ID: Zw3VqOP1M4eICa7TJMrFVg_1784718639
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-cb6cf425e86so4905478a12.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 04:10:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784718639; cv=none;
+ d=google.com; s=arc-20260327;
+ b=puAP5qAKan+VVM5uf376qYiYO3GSBseo0hRNMZ/TCF6UhB4+fLQD9jR9fQc4UVemnb
+ 7iHt5l6lPuCFgZRWBxrN+YOsl1DyXJ6kc57+/kTCBc/oRY3odvA5mx9P9FbcWiVot+P1
+ Mkf90ajceISnEuxct3CAvI6b2tn3V3ukEtjC84OjsJZrZWz3iNmw6HshRzn5wTw00s+r
+ Nd3TYSBh+bMA1uRb5CKtmnbLJ9OmmOr6jDDj61iogAYpJ9+p7XkpKDjU1TimArqq4TQi
+ yFe0jvCIfwOaFKkLL525/X7XBgcYO40ZBo4UgXmOFTZ4IMaOUTb21/q85QN/pQw7t+wp
+ nA9g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=QEbc3CpFQ1PPCLExeK7MkMzZrEkYFgHC1uQKWvOBDWY=;
+ fh=XeZOgne7iH5XYhdQQU/OH3guajGL76tH0mUZpv9EfpA=;
+ b=SVKx6BazlQoubNXz/PMF7fLnKWlE0F8MGuRHR3dV2azDOgvGOGyRVBNqaCPofSSvvX
+ kL4vBKeD/8lTFvz+dt1RtNgPoEHjogP2I0ZnFiUxCnpxAQQWgTJrBAJJI/9UqUIkPpPP
+ JhZ4wPNH0oktduRBRLeGIT06EBPeCdlOGuNe0Jd2st5kkvCuBUp0cc4W93VxNeLQZiob
+ gwHK0U88Y1PlVtbtQxpCC9Fv+V5yo7hvdEQnqu6F7yPi3c0RTQi0jtXZ/cKtOMYwsbwu
+ a5gbpfjW0dz4i1v5Ky3VDut2dPAEci/S7VNgE157llRAiTG3jQoIrCPwBhMKulvPbhcp
+ OvQQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1784718639; x=1785323439; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=QEbc3CpFQ1PPCLExeK7MkMzZrEkYFgHC1uQKWvOBDWY=;
+ b=IhZQE6o5gLV6nCywJB0aaCR/1hjGkYf66i84AoWfMGJ78+/qDYusaFKgNH147wGsiq
+ x9UyeC9FFYVRJ8GAg+XlvKEqVWU9YlNAkb8kmR+VOCE+3SKPhfy5MLLPxr2XyCkANQdg
+ z4G0SjZsqbACFrMJ+bBQ3zdhI/CL26FkaUTglvwutnCtDWNb3mJ/HXyqKj+7Gcdaxc0r
+ m2335rcnk5wlHMJFmkqvAS/yy5M6ZowZsHhGF3LonGV2nspDLWmO1qqTvp/xVaJqQyzM
+ dN2g15cE+u6YH5vJJJ7JKOaHilEFivjgQ1RldZhxnKh/XqEjpS9U5/J8MzKTMGCQZY4P
+ lUrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784718639; x=1785323439;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=QEbc3CpFQ1PPCLExeK7MkMzZrEkYFgHC1uQKWvOBDWY=;
+ b=S/hWEw6JpTtWJLfwbDeHVU87HACMi3Lwq8y/TBzV8JhB2IzZxtj5TMNBRxCkkw++v3
+ aYkALhSCed7eyud6O53zop7IaHmJ58ULoHmGa7uqstZSIlhLw4KTARqgQtMVduj7aIS+
+ ZftcBui4rSXH+1dsPtHqKaVAGpwgLurpBzpMvQI4nt7Sq+wR+bHAW+yl0qBUIyhDVKZk
+ FExTkz9u2Z901Frri1clBnyFV+59u2REGmiX2hrEZ7bNbGiYiwQbBVWX6pjNsqSFQu7C
+ gmLJlB7yOgfZ4iy2Yx/LdFQ0FJc6RJUJUCGdqVToN9xwHCBzP2hYYNcl1/AQEi9vASS6
+ EwfQ==
+X-Gm-Message-State: AOJu0Ywv1Gpe8kj9/XoqWEIvRwPBjpv/Z97fWl6A9MADAgaDkYcy+5N8
+ j9fSX9Ak8+Bg90eFB/mCkqHuQ8VIChM774LzMd0/ZCF81bzZY6YIvlbaEbMz6s9zxugiVIAy708
+ Q9qOtboH56L7dbv+yvZYIWGgrnuelrSCbjFP9cmSplog6HAgR34LNR1nLmEPhY+7YoNDkzFKvMi
+ go8b9rcEjWI1HqLgQzzGr2NPZ2T+fhGhQ=
+X-Gm-Gg: AR+sD11tuH17d8DlxZammIqaXx2YvUA2bCD5FcSqa4mCZHaH9aZXlNaKg45apmGrJQC
+ KPvBko+wwHkV2PGykASgRvvmo7+eSiGIH4UxCSUem6Q1DcBpZOZwy4QNtRmbAbAnbpfoMJHONyb
+ jC/JSDM18MENSvFLr/1l3u/yonsNzD2sZt3yQcPqxznh3stD3IUDXQR6OVsuzUjGJtd/QEWabHr
+ lNdgYJB0K0jNIUaUhsFL9EO9jvubRqOgZ3b4Q72YuaI97PGROiR+npL3aSgIUmZMJk9DC3eqHT0
+ Tw==
+X-Received: by 2002:a05:6a21:c14e:10b0:3c3:bf10:419a with SMTP id
+ adf61e73a8af0-3c3bf1044efmr20102415637.71.1784718638587; 
+ Wed, 22 Jul 2026 04:10:38 -0700 (PDT)
+X-Received: by 2002:a05:6a21:c14e:10b0:3c3:bf10:419a with SMTP id
+ adf61e73a8af0-3c3bf1044efmr20102388637.71.1784718638166; Wed, 22 Jul 2026
+ 04:10:38 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-11.2 v3 15/15] hw/qdev: Prevent devices from being
- realized more than once
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- David Hildenbrand <david@kernel.org>, Igor Mammedov <imammedo@redhat.com>,
- FangSheng Huang <FangSheng.Huang@amd.com>,
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>, Aditya Gupta <adityag@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Hendrik Brueckner <brueckner@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org,
- Luc Michel <luc@lmichel.fr>, Fam Zheng <fam@euphon.net>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <20260721-qdev-v3-0-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
- <20260721-qdev-v3-15-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
- <356ebc59-d2cb-4c47-867e-8fc693b3a593@oss.qualcomm.com>
- <a5597a0e-c18c-4649-bfd1-20d77897ff88@rsg.ci.i.u-tokyo.ac.jp>
- <8d979f89-374a-4b86-93c8-9d7dcc311ca6@oss.qualcomm.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <8d979f89-374a-4b86-93c8-9d7dcc311ca6@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20260521145451.1831984-1-marcandre.lureau@redhat.com>
+ <ag8yBA7jpCo9dYR_@x1.local>
+In-Reply-To: <ag8yBA7jpCo9dYR_@x1.local>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Wed, 22 Jul 2026 15:10:26 +0400
+X-Gm-Features: AUfX_mxpQu5__smB8QJULCuNGTbbW-00dXUdJygGM95v3zx0hmeGOnUKRwfWp1g
+Message-ID: <CAMxuvayB3ywMQqE1rE0M4sKLLg5H0H8Mh69r=AcA+wwfQqT28g@mail.gmail.com>
+Subject: Re: [PATCH] target/i386/sev: fix MemoryRegion reference leaks in
+ gpa2hva callers
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>, 
+ "open list:X86 KVM CPUs" <kvm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: permerror client-ip=170.10.133.124;
+ envelope-from=mlureau@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,197 +141,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/22 18:57, Philippe Mathieu-Daudé wrote:
-> On 22/7/26 07:12, Akihiko Odaki wrote:
->> On 2026/07/22 5:11, Philippe Mathieu-Daudé wrote:
->>> Hi Akihiko,
->>>
->>> On 21/7/26 10:17, Akihiko Odaki wrote:
->>>> qdev currently permits reentrant realization of the same device. It 
->>>> also
->>>> permits another realization attempt after a device has been unrealized
->>>> or a previous attempt has failed. Either path can invoke
->>>> DeviceClass::realize() more than once. Supporting repeated realization
->>>> adds complexity to device implementations. It is untested and likely
->>>> broken.
->>>>
->>>> Replace the bool DeviceState::realized field with the enum-valued
->>>> DeviceState::phase field. The enum has four values:
->>>>
->>>> - initialized
->>>> - realizing
->>>> - realized
->>>> - retired
->>>
->>> Excellent.
->>>
->>> I have been working on something similar.
->>>
->>> I'd start the first patch only including:
->>>
->>> DEVICE_PHASE_UNREALIZED (false)
->>> DEVICE_PHASE_REALIZED (true)
->>>
->>> Then gradually rename DEVICE_PHASE_REALIZED -> DEVICE_PHASE_CREATED
->>> and add the DEVICE_PHASE_REALIZING and DEVICE_PHASE_RETIRED phases,
->>> so we can discuss them during the review process.
->>
->> A gradual conversion makes sense. I kept the "realized" phase as-is 
->> because it maps exactly to the current external behavior. This patch 
->> splits the internal "unrealized" state into three distinct phases, but 
->> the external concept of being "realized" remains unchanged. This 
->> allows us to avoid a tree-wide refactoring, which is also why 
->> qdev_is_realized() is preserved.
->>
->>>
->>>> Realization can start only in the initialized phase. It moves the 
->>>> device
->>>> to the realizing phase before invoking callbacks, preventing another
->>>> realization attempt. Successful realization moves it to the realized
->>>> phase; failure after realization has started moves it to the retired
->>>> phase. Unrealization also moves a realized device to the retired phase.
->>>
->>> So what is the difference between 'initialized' and 'retired'?
->>
->> The first statement in this paragraph differentiates 'initialized' 
->> from everything else: realization can start only in the initialized 
->> phase. A 'retired' device cannot be realized. This property avoids re- 
->> entrancy.
-> 
-> But we do use unrealize -> realize again, in hotplug path.
-> 
-> So we need to be able to move from 'retired' to 'realizing'
-> again, thus my wonder what is the difference between 'realizing'
-> and 'initialized'.
-> 
-> I.e. this test should pass:
-> 
-> static void test_qdev_realize_hotplug(void)
-> {
->      Object *mt = object_new(TYPE_MY_DEV);
-> 
->      /* plug */
->      g_assert_false(qdev_realize(DEVICE(mt), NULL, NULL));
-> 
->      /* unplug */
->      qdev_unrealize(DEVICE(mt));
-> 
->      /* re-plug */
->      g_assert_false(qdev_realize(DEVICE(mt), NULL, NULL));
->      qdev_unrealize(DEVICE(mt));
->      object_unparent(mt);
->      object_unref(mt);
-> }
-> 
-> Maybe your 'retired' could be renamed as transient 'unrealizing',
-> similar to 'realizing' phase, then we could transition to the
-> 'unrealized' initial phase?
+Hi
 
-I could not find an in-tree hotplug path that unrealizes and then
-realizes the same DeviceState.
+On Thu, May 21, 2026 at 8:25=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote:
+>
+> On Thu, May 21, 2026 at 06:54:51PM +0400, marcandre.lureau@redhat.com wro=
+te:
+> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> >
+> > gpa2hva() returns a referenced MemoryRegion via its p_mr out-parameter
+> > (inherited from memory_region_find()), but both SEV callers were failin=
+g
+> > to release it.
+> >
+> > Fixes: c7f7e6970d3b ("sev: add sev-inject-launch-secret")
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
 
-In the normal device_del path, the unplug handler unrealizes the device, 
-and completed unplug then unparents it. A later device_add calls 
-qdev_new(), so it realizes a new DeviceState. Reusing an ID or slot does 
-not reuse the object.
-
-The virtio-net failover path does retain and replug the same object, but 
-it deliberately keeps the device realized. The partial-unplug path skips 
-the unplug handler, and replug invokes the pre_plug and plug callbacks 
-directly instead of qdev_realize().
-
-More generally, I believe same-instance unrealize -> realize is unsafe. 
-Realize callbacks may create QOM children whose lifetime is tied to the 
-DeviceState rather than its realized state [1]. For example, 
-memory_region_init() initializes an embedded QOM object and adds it as a 
-child of the device. Unrealizing the device does not generally finalize 
-that MemoryRegion, so a second realization may try to initialize the 
-same object again.
-
-So introducing an unrealizing -> unrealized transition would require 
-every realize/unrealize pair to restore the state of a fresh instance. 
-That contract is not tested, and is the complexity this series is meant 
-to remove.
-
-[1] 
-https://lore.kernel.org/qemu-devel/64bc4a38-f1d2-45ff-8f4c-c941d6a41e18@rsg.ci.i.u-tokyo.ac.jp/
-
-Regards,
-Akihiko Odaki
-
-> 
->>
->>>
->>>> The QOM realized property is an internal lifecycle property, not for
->>>> end users. Replace it with the enum-valued phase property.
->>>>
->>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>> ---
->>>>   qapi/common.json          |  19 ++++++++
->>>>   include/hw/core/qdev.h    |  12 ++---
->>>>   hw/core/qdev-clock.c      |   4 +-
->>>>   hw/core/qdev-properties.c |   4 +-
->>>>   hw/core/qdev.c            |  98 +++++++++++++++++++++++++ 
->>>> +--------------
->>>>   hw/scsi/scsi-bus.c        |   4 +-
->>>>   qom/qom-qmp-cmds.c        |   2 +-
->>>>   system/qdev-monitor.c     |   5 ++-
->>>>   tests/unit/test-qdev.c    | 112 ++++++++++++++++++++++++++++++++++ 
->>>> + + +++++++++-
->>>>   9 files changed, 212 insertions(+), 48 deletions(-)
->>>>
->>>> diff --git a/qapi/common.json b/qapi/common.json
->>>> index af7e3d618a7c..88a308cbd172 100644
->>>> --- a/qapi/common.json
->>>> +++ b/qapi/common.json
->>>> @@ -7,6 +7,25 @@
->>>>   # *****************
->>>>   ##
->>>> +##
->>>> +# @DevicePhase:
->>>> +#
->>>> +# An enumeration of the device phases
->>>> +#
->>>> +# @initialized: the initial phase
->>>> +#
->>>> +# @realizing: the phase during realization
->>>> +#
->>>> +# @realized: the phase after realization
->>>> +#
->>>> +# @retired: the terminal phase entered when unrealization begins or
->>>> +#           realization fails after starting
->>>> +#
->>>> +# Since: 11.1
->>>> +##
->>>> +{ 'enum': 'DevicePhase',
->>>> +  'data': [ 'initialized', 'realizing', 'realized', 'retired' ] }
->>>> +
->>>
->>>
->>>> @@ -477,10 +477,10 @@ bool qdev_unplug_blocked(DeviceState *dev, 
->>>> Error **errp)
->>>>       return false;
->>>>   }
->>>> -static bool device_get_realized(Object *obj, Error **errp)
->>>> +static int device_get_phase(Object *obj, Error **errp)
->>>
->>> DevicePhase
->>
->> device_get_phase() must return int to match the getter type required by
->> object_class_property_add_enum():
->>
->>      int (*get)(Object *, Error **)
->>
->> Using DevicePhase there would not match the callback type.
-> 
-> Ah right.
-> 
->>
->>>
->>>>   {
->>>>       DeviceState *dev = DEVICE(obj);
->>>> -    return dev->realized;
->>>> +    return dev->phase;
->>>>   }
+If nobody object, I'll queue this patch before it is forgotten.
 
 
