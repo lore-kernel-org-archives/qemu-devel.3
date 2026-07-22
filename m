@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4511BC4453A
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 18:42:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A0E9C4453A
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 18:42:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmbsv-0004Pt-0Y; Wed, 22 Jul 2026 14:41:37 -0400
+	id 1wmbsz-0004TR-J0; Wed, 22 Jul 2026 14:41:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wmbsj-0004Mm-2B
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 14:41:28 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ id 1wmbsk-0004Mu-EC
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 14:41:30 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wmbsg-0006N0-LU
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 14:41:24 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-38e88b60121so2811812a91.3
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 11:41:21 -0700 (PDT)
+ id 1wmbsh-0006NU-QQ
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 14:41:26 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-38e42560ebcso6111194a91.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 11:41:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784745681; x=1785350481; darn=nongnu.org;
+ d=linaro.org; s=google; t=1784745682; x=1785350482; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=hoczlY2y26Dl/5Nu2k5E9x3RU2NVrWsSXJQ8sVstzR8=;
- b=OOEizBbljfg3OmxjGGoYwsEydHasOsJp+ehrRvqTqTn9+ddde7SnRNH0swLW30mSux
- edkw0IteEg+m2FoYz96wuniLEiYJ34MIyZLhM6TVDtE4HAUFfiTQRME1vIyh8KyhvONw
- SqAlLKblZ6J0v05z5nE+DhVti+SQnZRCmaTGARhVvjXd73dxLrQWmw9M73yeIP82FYXv
- GkqpdVflikIiOp9rXSxBv4pqN6ckjlRDDr3I9LzgohpwsOL6lecWQ+RiQ01rdm6MDInD
- wi/Z/4gQWw1n5W0ucPk0LNubQ8oTSmrjeq6xJFF+nn/pUW4uzggkpxZchQrZBPurTH/m
- qtew==
+ bh=1iV4cfKmJ85SbIeZG946KmTHF9GXveJIAMOLWNKJw6s=;
+ b=FVLXx7sXgaZbz0eX7s/pex54wb5FZa3b6ulp8uVhVJE6Tup3qbesKlz66iLd8SuULF
+ ghLuI+wwWQLDuQT6JwxoQGNrNe9X9UC93Guf8NUucikDOXlxrMrVpqnnsZnOOJ2DrVXx
+ 1hqL79uYvTcwhrBH832C70zrffBoPU0c441xhZzctSI73oUgbyh+lXA7If8zSzMxFYdQ
+ OohWhfqSAgts1cH2LMHyc1owxrlYnq/kQkEtduMleV/PAToUeqKB1a8czQMpe7A4gYaW
+ e+XutmRHj3QeUvtiPNODK2qLjcfAsmWomnhCJ5SbNbyfBEizp69pwWL4p7yNSNPp18fB
+ Q1/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784745681; x=1785350481;
+ d=1e100.net; s=20251104; t=1784745682; x=1785350482;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=hoczlY2y26Dl/5Nu2k5E9x3RU2NVrWsSXJQ8sVstzR8=;
- b=nxi5z+IUCbhBClJDyE9foz2hXMlY1zGxvNRYT66673DHGL19b96/RN/wmpSY4qFb0a
- 4pxHyWNYXnVVvwhGYmikGakLJ5UaROhNqGu1QHtCSY9eAQ9jUe6krUpnNRSrm6nHx4vg
- 1xg9QmEYZOlt0iT77O7nGjaKTm++DWpT9f2dJJ3JUZ5GHgVV5UKZybxyrYJHg9yeOcZ1
- nRQ/iQn7i5et795wopEUUlFIBeuIDSKlczwNRGNPHQvyB3CpE0DOlhlGupsrVjAgYj9j
- 1p8uw2r2png30y7xY5R3y++er3Js0KikEIIkepYofwEFYa7TrBHliv113q0dtMBnJV06
- tPKQ==
-X-Gm-Message-State: AOJu0YxAsAdm4VjPuJ+kd5x26xfXSq4hbVy/u2IkYEGeQUgikQU/57pI
- cf+CRH6CltRzLpW5zCUZRMvo5w0DJ4Nk6a3zKhQbbp5ncCjy60Hxr6RptRf7kLMIqyyKePr84C4
- rtiJS
-X-Gm-Gg: AR+sD10n+zmL09vZ+IQOq9Irkmc8KZ2SZdZjhw0YLCFuV1cJw5/KYb8uht27OGIN3gd
- FDJMDYAMs1ZO5m/g6anIvUOgEy2pJNylnAi5VRWUA7aOWJVCvahML/kJsZQkyikb5lsfEqI47lQ
- WBavkUIyvDOOB3Fi+2QhLr/OpexEbJi9QCTC3KB99/fTVEVyAr+9geEj6lYThAFqbh7aZWblwK3
- ZNfPl6Bf1biUbfblYJ3lKkGmbaeaIU+J7s9JUW2RMkI8aTVpY14q78jdCx0ru+vGORdt+rVrJy4
- NaS9M4HG/+WvJpvi5YgQhBsyo6nJoZ/t+ZLDWXMzC5rWaUe+iQYMBzLkfNb3r3/XrqH/+grBw3j
- ABg4HlKX7CtLR+BVJ+5eC9ANNc5CX8p5yQLYRkMqh5BdN14NjCqbzXDByKDVGvjb8CLK64AJ947
- QFBnPiqx5NpbL4qhm3qIALLhtOh861i9W/xq9TOhhy8CBxGW9VWp4PBgNHrF40ZA==
-X-Received: by 2002:a17:90b:5405:b0:38e:9045:bac0 with SMTP id
- 98e67ed59e1d1-38e9045bb77mr9335260a91.5.1784745680451; 
- Wed, 22 Jul 2026 11:41:20 -0700 (PDT)
+ bh=1iV4cfKmJ85SbIeZG946KmTHF9GXveJIAMOLWNKJw6s=;
+ b=TBEeExm/lQgMl7AchvwquyXg1X6Sr3yMQvZxPwOSKwR2CbN7jO6qbgvjzi7mPKABOG
+ tWgBILBNKHI5OK4rs3gGpmFHuGgfZk8Qmkn11vdl5+f3fZNg8+QcpcBKIjsITVZ17smb
+ 3BY4jbHmb6ME8iHPc1dZ0fuShYk7d6kcbyod1L5fTkuXeC+r9pTNSANCDk/klWSxHUYy
+ 6nF2W6q2vhkVtg/fT1oqcwF3Y8HczFD5BAKpmcntbD3PuVSCQwBl3hUmPT860s30gezd
+ AFTIo74xicaKXS388D4m4cMkSoGg0rTJwmclFiJlT3N/UAA4/yE0MaAC4PN00+ZnUWKH
+ BEag==
+X-Gm-Message-State: AOJu0YyVmz3bIkGMr6o1X1Jln/4nnQUe1vePFqmiq2GlajGxyDSKEsfu
+ oRHlBLURvvvtqFuFjxcPJjHW5YJCrM1ET5Gkj9W1zOnIGwItjQMZJhIh4CgdGAS6vt9GH3jPFR+
+ N1UdU
+X-Gm-Gg: AR+sD11jfIfwvGL+9JD1lvhJVEn3exLRjw+nSYVOuJeEY0sEGFNW/n80EccNowG3L6B
+ CtBVYgbpXj4tXFKPx8hA7cdho2kgy1XQCca44hDICukb2LsFPhO5kqa6VBxiiQP6qnuzG320/3u
+ acqhaWSEFCympgnbtzuJjJ2KC+Y9HJw0KEOwemzFfco5dok5yKZR/DPZSMh42rCOzl++iLx1Bqj
+ 0BrAENZwqX+Rt4OKHwYve8t90c1SQwNxNq3Xm00lA3HvXhNhLUdqkrbNFzhhjRj5SuNO8Ule/wo
+ E/0En0XK0QZfg/dd0uaAzrmL+iLNJOVXc+bQ4v9JUQ1rHayQ7SDMUxFDjT9GEkrbK4WjajRUqNQ
+ 10QKLYFkrMkr7V3G1mw6pTJ6gq/h/Iv/MKXboY+lgF/5cpZOE6e0+d59HzOQVInVEigwhcRBoU3
+ EOc491aGiMiHhqI7Emh3OYxQK3zU7eicz5Eweyo85tCnt+tM33d2jL4k1/z4A11rP3/GbHOB1U
+X-Received: by 2002:a17:90a:d886:b0:37f:9cdf:f03c with SMTP id
+ 98e67ed59e1d1-38e4b54082emr22950740a91.31.1784745682195; 
+ Wed, 22 Jul 2026 11:41:22 -0700 (PDT)
 Received: from stoup.. (162-198-231-97.lightspeed.wlfrct.sbcglobal.net.
  [162.198.231.97]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13d13015052sm8559298c88.5.2026.07.22.11.41.19
+ a92af1059eb24-13d13015052sm8559298c88.5.2026.07.22.11.41.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Jul 2026 11:41:20 -0700 (PDT)
+ Wed, 22 Jul 2026 11:41:21 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 1/3] accel/tcg: Add infrastructure for atomic 64-byte
- load/store
-Date: Wed, 22 Jul 2026 11:41:15 -0700
-Message-ID: <20260722184117.11937-2-richard.henderson@linaro.org>
+Subject: [PATCH 3/3] host/aarch64: Implement atomic64_{read,
+ set} with FEAT_LS64
+Date: Wed, 22 Jul 2026 11:41:17 -0700
+Message-ID: <20260722184117.11937-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260722184117.11937-1-richard.henderson@linaro.org>
 References: <20260722184117.11937-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,261 +101,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Detect the host feature in cpuid, then use it.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/accel/tcg/cpu-ldst-common.h           |  6 ++++
- include/qemu/atomic512.h                      | 12 +++++++
- include/qemu/value64.h                        | 14 ++++++++
- accel/tcg/cputlb.c                            | 30 +++++++++++++++++
- accel/tcg/user-exec.c                         | 33 +++++++++++++++++++
- accel/tcg/ldst_common.c.inc                   | 31 +++++++++++++++++
- .../include/generic/host/atomic512-ldst.h.inc | 16 +++++++++
- 7 files changed, 142 insertions(+)
- create mode 100644 include/qemu/atomic512.h
- create mode 100644 include/qemu/value64.h
- create mode 100644 host/include/generic/host/atomic512-ldst.h.inc
+ host/include/aarch64/host/cpuinfo.h           |  1 +
+ include/qemu/value64.h                        |  7 ++++
+ util/cpuinfo-aarch64.c                        | 14 ++++++--
+ .../include/aarch64/host/atomic512-ldst.h.inc | 36 +++++++++++++++++++
+ meson.build                                   |  8 +++++
+ 5 files changed, 63 insertions(+), 3 deletions(-)
+ create mode 100644 host/include/aarch64/host/atomic512-ldst.h.inc
 
-diff --git a/include/accel/tcg/cpu-ldst-common.h b/include/accel/tcg/cpu-ldst-common.h
-index f12be8cfb7..d8fae3384e 100644
---- a/include/accel/tcg/cpu-ldst-common.h
-+++ b/include/accel/tcg/cpu-ldst-common.h
-@@ -15,6 +15,7 @@
- #include "exec/vaddr.h"
- #include "exec/mmu-access-type.h"
- #include "qemu/int128.h"
-+#include "qemu/value64.h"
+diff --git a/host/include/aarch64/host/cpuinfo.h b/host/include/aarch64/host/cpuinfo.h
+index fe671534e4..ac3a224fc3 100644
+--- a/host/include/aarch64/host/cpuinfo.h
++++ b/host/include/aarch64/host/cpuinfo.h
+@@ -12,6 +12,7 @@
+ #define CPUINFO_AES             (1u << 3)
+ #define CPUINFO_PMULL           (1u << 4)
+ #define CPUINFO_BTI             (1u << 5)
++#define CPUINFO_LS64            (1u << 6)
  
- uint8_t cpu_ldb_mmu(CPUArchState *env, vaddr ptr, MemOpIdx oi, uintptr_t ra);
- uint16_t cpu_ldw_mmu(CPUArchState *env, vaddr ptr, MemOpIdx oi, uintptr_t ra);
-@@ -117,4 +118,9 @@ uint32_t cpu_ldl_code_mmu(CPUArchState *env, vaddr addr,
- uint64_t cpu_ldq_code_mmu(CPUArchState *env, vaddr addr,
-                           MemOpIdx oi, uintptr_t ra);
- 
-+Value64 cpu_atomic_ld64_mmu(CPUArchState *env, vaddr ptr,
-+                            MemOpIdx oi, uintptr_t ra);
-+void cpu_atomic_st64_mmu(CPUArchState *env, vaddr ptr, const Value64 *val,
-+                         MemOpIdx oi, uintptr_t ra);
-+
- #endif /* ACCEL_TCG_CPU_LDST_COMMON_H */
-diff --git a/include/qemu/atomic512.h b/include/qemu/atomic512.h
-new file mode 100644
-index 0000000000..8553a0feba
---- /dev/null
-+++ b/include/qemu/atomic512.h
-@@ -0,0 +1,12 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ * Load/store for 512-bit atomic operations.
-+ */
-+
-+#ifndef QEMU_ATOMIC512_H
-+#define QEMU_ATOMIC512_H
-+
-+#include "qemu/value64.h"
-+#include "host/atomic512-ldst.h.inc"
-+
-+#endif /* QEMU_ATOMIC512_H */
+ /* Initialized with a constructor. */
+ extern unsigned cpuinfo;
 diff --git a/include/qemu/value64.h b/include/qemu/value64.h
-new file mode 100644
-index 0000000000..7de287a13d
---- /dev/null
+index 7de287a13d..b74316bf82 100644
+--- a/include/qemu/value64.h
 +++ b/include/qemu/value64.h
-@@ -0,0 +1,14 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#ifndef QEMU_VALUE64_H
-+#define QEMU_VALUE64_H
-+
-+/*
-+ * An stream of 64 bytes; no endianness implied.
-+ * The members are perforce host byte ordering.
-+ */
-+typedef union {
-+    uint64_t l[8];
-+} Value64;
-+
-+#endif /* QEMU_VALUE64_H */
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 7f7c208ba1..1f192f1837 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -42,6 +42,7 @@
- #include "exec/tlb-flags.h"
- #include "qemu/atomic.h"
- #include "qemu/atomic128.h"
-+#include "qemu/atomic512.h"
- #include "tb-internal.h"
- #include "trace.h"
- #include "tb-hash.h"
-@@ -2429,6 +2430,20 @@ static Int128 do_ld16_mmu(CPUState *cpu, vaddr addr,
-     return ret;
- }
+@@ -3,12 +3,19 @@
+ #ifndef QEMU_VALUE64_H
+ #define QEMU_VALUE64_H
  
-+static Value64 do_atomic_ld64_mmu(CPUState *cpu, vaddr addr,
-+                                  MemOpIdx oi, uintptr_t ra)
-+{
-+    MMULookupLocals l;
-+
-+    cpu_req_mo(cpu, TCG_MO_LD_LD | TCG_MO_ST_LD);
-+    mmu_lookup(cpu, addr, oi, ra, MMU_DATA_LOAD, &l);
-+
-+    if (likely(HAVE_ATOMIC512_LD && !(l.page[0].flags & TLB_MMIO))) {
-+        return atomic64_read(l.page[0].haddr);
-+    }
-+    cpu_loop_exit_atomic(cpu, ra);
-+}
++#ifdef __aarch64__
++#include <arm_acle.h>
++#endif
 +
  /*
-  * Store Helpers
+  * An stream of 64 bytes; no endianness implied.
+  * The members are perforce host byte ordering.
   */
-@@ -2825,6 +2840,21 @@ static void do_st16_mmu(CPUState *cpu, vaddr addr, Int128 val,
-     }
- }
+ typedef union {
+     uint64_t l[8];
++#ifdef __aarch64__
++    data512_t arm;
++#endif
+ } Value64;
  
-+static void do_atomic_st64_mmu(CPUState *cpu, vaddr addr, const Value64 *val,
-+                               MemOpIdx oi, uintptr_t ra)
-+{
-+    MMULookupLocals l;
-+
-+    cpu_req_mo(cpu, TCG_MO_LD_ST | TCG_MO_ST_ST);
-+    mmu_lookup(cpu, addr, oi, ra, MMU_DATA_LOAD, &l);
-+
-+    if (likely(HAVE_ATOMIC512_ST && !(l.page[0].flags & TLB_MMIO))) {
-+        atomic64_set(l.page[0].haddr, val);
-+    } else {
-+        cpu_loop_exit_atomic(cpu, ra);
-+    }
-+}
-+
- #include "ldst_common.c.inc"
+ #endif /* QEMU_VALUE64_H */
+diff --git a/util/cpuinfo-aarch64.c b/util/cpuinfo-aarch64.c
+index 288074c08f..0a01050626 100644
+--- a/util/cpuinfo-aarch64.c
++++ b/util/cpuinfo-aarch64.c
+@@ -13,9 +13,6 @@
+ #  include <asm/hwcap.h>
+ #  include "elf.h"
+ # endif
+-# ifndef HWCAP2_BTI
+-#  define HWCAP2_BTI 0  /* added in glibc 2.32 */
+-# endif
+ #endif
+ #ifdef CONFIG_ELF_AUX_INFO
+ #include <sys/auxv.h>
+@@ -29,6 +26,13 @@
+ # include <sys/sysctl.h>
+ #endif
  
- /*
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index a35aca7889..d6d2eec2e1 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -35,6 +35,7 @@
- #include "exec/page-protection.h"
- #include "exec/helper-proto-common.h"
- #include "qemu/atomic128.h"
-+#include "qemu/atomic512.h"
- #include "qemu/bswap.h"
- #include "qemu/int128.h"
- #include "trace.h"
-@@ -1116,6 +1117,22 @@ static Int128 do_ld16_mmu(CPUState *cpu, vaddr addr,
-     return ret;
- }
++#ifndef HWCAP2_BTI
++# define HWCAP2_BTI 0  /* added in glibc 2.32 */
++#endif
++#ifndef HWCAP3_LS64
++# define HWCAP3_LS64 0 /* added in glibc 2.44 */
++#endif
++
+ unsigned cpuinfo;
  
-+static Value64 do_atomic_ld64_mmu(CPUState *cpu, vaddr addr,
-+                                  MemOpIdx oi, uintptr_t ra)
-+{
-+    void *haddr;
-+
-+    cpu_req_mo(cpu, TCG_MO_LD_LD | TCG_MO_ST_LD);
-+    haddr = cpu_mmu_lookup(cpu, addr, get_memop(oi), ra, MMU_DATA_LOAD);
-+
-+    if (HAVE_ATOMIC512_LD) {
-+        Value64 ret = atomic64_read(haddr);
-+        clear_helper_retaddr();
-+        return ret;
-+    }
-+    cpu_loop_exit_atomic(cpu, ra);
-+}
-+
- static void do_st1_mmu(CPUState *cpu, vaddr addr, uint8_t val,
-                        MemOpIdx oi, uintptr_t ra)
- {
-@@ -1191,6 +1208,22 @@ static void do_st16_mmu(CPUState *cpu, vaddr addr, Int128 val,
-     clear_helper_retaddr();
- }
+ #ifdef CONFIG_DARWIN
+@@ -72,6 +76,9 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
  
-+static void do_atomic_st64_mmu(CPUState *cpu, vaddr addr, const Value64 *val,
-+                               MemOpIdx oi, uintptr_t ra)
-+{
-+    void *haddr;
+     unsigned long hwcap2 = qemu_getauxval(AT_HWCAP2);
+     info |= (hwcap2 & HWCAP2_BTI ? CPUINFO_BTI : 0);
 +
-+    cpu_req_mo(cpu, TCG_MO_LD_ST | TCG_MO_ST_ST);
-+    haddr = cpu_mmu_lookup(cpu, addr, get_memop(oi), ra, MMU_DATA_LOAD);
-+
-+    if (HAVE_ATOMIC512_ST) {
-+        atomic64_set(haddr, val);
-+        clear_helper_retaddr();
-+    } else {
-+        cpu_loop_exit_atomic(cpu, ra);
-+    }
-+}
-+
- uint8_t cpu_ldb_code_mmu(CPUArchState *env, vaddr addr,
-                          MemOpIdx oi, uintptr_t ra)
- {
-diff --git a/accel/tcg/ldst_common.c.inc b/accel/tcg/ldst_common.c.inc
-index 57f3e06192..3ce560a1f2 100644
---- a/accel/tcg/ldst_common.c.inc
-+++ b/accel/tcg/ldst_common.c.inc
-@@ -189,6 +189,23 @@ Int128 cpu_ld16_mmu(CPUArchState *env, vaddr addr,
-     return ret;
- }
- 
-+Value64 cpu_atomic_ld64_mmu(CPUArchState *env, vaddr addr,
-+                            MemOpIdx oi, uintptr_t ra)
-+{
-+    MemOp mop = get_memop(oi);
-+
-+    tcg_debug_assert((mop & MO_SIZE) == MO_512);
-+    tcg_debug_assert(memop_alignment_bits(mop) == MO_512);
-+    tcg_debug_assert((mop & MO_BSWAP) == 0);
-+
-+    {
-+        Value64 ret = do_atomic_ld64_mmu(env_cpu(env), addr, oi, ra);
-+        /* TODO: 48 other bytes unreported to plugins. */
-+        plugin_load_cb(env, addr, ret.l[0], ret.l[1], oi);
-+        return ret;
-+    }
-+}
-+
- /*
-  * Store helpers for cpu_ldst.h
-  */
-@@ -243,3 +260,17 @@ void cpu_st16_mmu(CPUArchState *env, vaddr addr, Int128 val,
-     do_st16_mmu(env_cpu(env), addr, val, oi, retaddr);
-     plugin_store_cb(env, addr, int128_getlo(val), int128_gethi(val), oi);
- }
-+
-+void cpu_atomic_st64_mmu(CPUArchState *env, vaddr addr, const Value64 *val,
-+                         MemOpIdx oi, uintptr_t retaddr)
-+{
-+    MemOp mop = get_memop(oi);
-+
-+    tcg_debug_assert((mop & MO_SIZE) == MO_512);
-+    tcg_debug_assert(memop_alignment_bits(mop) == MO_512);
-+    tcg_debug_assert((mop & MO_BSWAP) == 0);
-+
-+    do_atomic_st64_mmu(env_cpu(env), addr, val, oi, retaddr);
-+    /* TODO: 48 other bytes unreported to plugins. */
-+    plugin_store_cb(env, addr, val->l[0], val->l[1], oi);
-+}
-diff --git a/host/include/generic/host/atomic512-ldst.h.inc b/host/include/generic/host/atomic512-ldst.h.inc
++    unsigned long hwcap3 = qemu_getauxval(AT_HWCAP3);
++    info |= (hwcap3 & HWCAP3_LS64 ? CPUINFO_LS64 : 0);
+ #endif
+ #ifdef CONFIG_DARWIN
+     info |= sysctl_for_bool("hw.optional.arm.FEAT_LSE") * CPUINFO_LSE;
+@@ -79,6 +86,7 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
+     info |= sysctl_for_bool("hw.optional.arm.FEAT_AES") * CPUINFO_AES;
+     info |= sysctl_for_bool("hw.optional.arm.FEAT_PMULL") * CPUINFO_PMULL;
+     info |= sysctl_for_bool("hw.optional.arm.FEAT_BTI") * CPUINFO_BTI;
++    info |= sysctl_for_bool("hw.optional.arm.FEAT_LS64") * CPUINFO_LS64;
+ #endif
+ #if defined(__OpenBSD__) && !defined(CONFIG_ELF_AUX_INFO)
+     int mib[2];
+diff --git a/host/include/aarch64/host/atomic512-ldst.h.inc b/host/include/aarch64/host/atomic512-ldst.h.inc
 new file mode 100644
-index 0000000000..8b79fcd13d
+index 0000000000..a254560be7
 --- /dev/null
-+++ b/host/include/generic/host/atomic512-ldst.h.inc
-@@ -0,0 +1,16 @@
++++ b/host/include/aarch64/host/atomic512-ldst.h.inc
+@@ -0,0 +1,36 @@
 +/*
 + * SPDX-License-Identifier: GPL-2.0-or-later
-+ * Load/store for 512-bit atomic operations, generic version.
++ * Load/store for 512-bit atomic operations, AArch64 version.
 + */
 +
 +#ifndef HOST_ATOMIC512_LDST_H
 +#define HOST_ATOMIC512_LDST_H
 +
-+#define HAVE_ATOMIC512_LD 0
-+#define HAVE_ATOMIC512_ST 0
++#ifdef CONFIG_ARM_LS64_BUILTIN
++#include "host/cpuinfo.h"
++#include <arm_acle.h>
 +
-+/* Fallback definitions that must be optimized away, or error.  */
-+Value64 QEMU_ERROR("unsupported atomic") atomic64_read(const void *s);
-+void QEMU_ERROR("unsupported atomic") atomic64_set(void *d, const Value64 *v);
++#ifdef __ARM_FEATURE_LS64
++# define HAVE_ATOMIC512_LD  true
++# define ATTR_LS64_ACCEL
++#else
++# define HAVE_ATOMIC512_LD  likely(cpuinfo & CPUINFO_LS64)
++# define ATTR_LS64_ACCEL  __attribute__((target("+ls64")))
++#endif
++#define HAVE_ATOMIC512_ST   HAVE_ATOMIC512_LD
++
++static inline Value64 ATTR_LS64_ACCEL atomic64_read(const void *s)
++{
++    return (Value64){ .arm = __arm_ld64b(s) };
++}
++
++static inline void ATTR_LS64_ACCEL atomic64_set(void *d, const Value64 *v)
++{
++    __arm_st64b(d, v->arm);
++}
++
++#else
++#include "host/include/generic/host/atomic512-ldst.h.inc"
++#endif
 +
 +#endif /* HOST_ATOMIC512_LDST_H */
+diff --git a/meson.build b/meson.build
+index 164328ded8..5afeda83fd 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3106,6 +3106,14 @@ config_host_data.set('CONFIG_ARM_AES_BUILTIN', cc.compiles('''
+     void foo(uint8x16_t *p) { *p = vaesmcq_u8(*p); }
+   '''))
+ 
++config_host_data.set('CONFIG_ARM_LS64_BUILTIN', cc.compiles('''
++    #include <arm_acle.h>
++    #ifndef __ARM_FEATURE_LS64
++    __attribute__((target("+ls64")))
++    #endif
++    void foo(void *p, void *q) { __arm_st64b(q, __arm_ld64b(p)); }
++  '''))
++
+ if get_option('membarrier').disabled()
+   have_membarrier = false
+ elif host_os == 'windows'
 -- 
 2.43.0
 
