@@ -4,52 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 365C0C44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:05:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2D1CC44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:06:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWWN-0006o1-DK; Wed, 22 Jul 2026 08:57:59 -0400
+	id 1wmWQT-0001b4-4V; Wed, 22 Jul 2026 08:51:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWSh-0004vp-Mg; Wed, 22 Jul 2026 08:54:11 -0400
+ id 1wmWPw-0001Ix-Ux; Wed, 22 Jul 2026 08:51:21 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWSe-0002z0-MS; Wed, 22 Jul 2026 08:54:11 -0400
+ id 1wmWPu-0002JI-T5; Wed, 22 Jul 2026 08:51:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724575; bh=JCp7PXb0rrm5LzWpVDZAWpvtrxnE4YAYdtvlId6pm5c=;
+ t=1784724574; bh=Vn8oHTWI78bSB6GVAvrg1zO2J5n8kGszefFE2ycn884=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=GnHF6wrCasGLB+dMhVlaCrFgJYIOgnoAEkxuvX2WUJliHlNfctvRao9S9XyM2cgWS
- wDgzPexoi0TXXmrvfbrXWmZofK27cFGOIZhz30O6+H/pjcIbIr78sWotNRZHctVYUa
- FgHUBbnzf6m74+lCInEwZrumrxvYNbbLDaLbf4J1YkTq8A1l8HxfC4Bmm1pks3Xitm
- fxRrHjy2vvP2aSau3JcMTsomdQ7FAuQ6lvlwid+j5wuD1lIzXSCDQuiMDdXelZrm1G
- nfH3Y7XGN0F2Oo/VJ2qUcksXmvdrf++gOh1ajTpGRoLwcfF5AezrHTG1HIA4qz2gDN
- dcCv0lr0iaO+A==
+ b=mOXdHfAp2xV3i42pA5BAV7vVktrTTO34y2swEkpZIV68ij6yCaoZVQF0uH/kxc9hu
+ 447vx9Strlur8QEq31+bxzQm9lIO3htIcfZFadrGmmiYiMkk8oVDYnb9mChjKxgOWC
+ 3WXOLP3vZ738K0pdlja/lI0sw+kCjr0xf+ImaI03BGDxlTW7liCtnNknESrwHdtnWX
+ 8KuiLDPZ/PtlL1q7BTokIpB13raeMTAHdqh9svPkR/5JLp4kAymwSi1pTsHvDv3CI6
+ L0kY9BBEQgCpos1qIRzft5nUbBzuZOA0kmPY09PIoXSY5ArlaLQEO01H6ECnTt+w3V
+ y5BOi+bXw7zKg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1F8F71C3B4B;
- Wed, 22 Jul 2026 15:49:35 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7B2CD1C3B2F;
+ Wed, 22 Jul 2026 15:49:34 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 67A343F379B;
- Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C3DB43F377F;
+ Wed, 22 Jul 2026 15:49:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id D6B6917F6B; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
+ id 939F217F33; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- admin@fluentlogic.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 v2 110/127] hw/display/virtio-gpu: cap submit_3d
- command buffer allocation
-Date: Wed, 22 Jul 2026 15:48:35 +0300
-Message-ID: <20260722124859.32371-29-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v2 082/127] linux-user: Validate guest-passed dm_ioctl
+ data_size
+Date: Wed, 22 Jul 2026 15:48:07 +0300
+Message-ID: <20260722124859.32371-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,143 +71,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Both virgl_cmd_submit_3d() and rutabaga_cmd_submit_3d() pass the
-guest-controlled cs.size directly to malloc() without bounds checking. A
-malicious guest can set cs.size to an arbitrarily large value, causing
-an OOM abort that crashes the QEMU process.
+In do_ioctl_dm() we work with a struct dm_ioctl from the guest.  This
+has a fixed initial part, and then a variable data part; the guest
+tells us how long that part is by setting the data_size field.  The
+data_size is supposed to include the length of the fixed parts of the
+struct dm_ioctl.  Currently we don't validate anything about the
+guest-provided data_size, and we use it to allocate a buffer which we
+then copy the fixed part of the dm_ioctl struct into.  This means
+that if the guest passes a very small data_size the copy of the fixed
+part will overrun the buffer.
 
-Checking cs.size against the descriptor payload length (iov_size) is not
-sufficient: indirect descriptor tables can repeat entries aliasing the
-same guest-physical range, inflating iov_size() to nearly 4 GiB while
-referring to only a small amount of unique memory.
+Perform the same sanitizing of the minimum and maximum limits of the
+data_size that the kernel does in drivers/md/dm-ioctl.c in the
+copy_params() function.
 
-Instead, cap cs.size at 4 MiB. With 4 KiB pages and QEMU's
-VIRTQUEUE_MAX_SIZE (1024) mapped-iov limit, the Linux virtio driver
-cannot carry more than ~4 MiB of inline command data, so legitimate
-submissions are unaffected.
-
-Fixes: 9d9e152136bd ("virtio-gpu: add 3d mode and virgl rendering support.")
-Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for gfxstream")
-Fixes: d52c454aadc ("contrib: add vhost-user-gpu")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3776
-Reported-by: admin@fluentlogic.org
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-(cherry picked from commit 8720061c6d343c77b4f3a061cce631c05ecc0482)
+Cc: qemu-stable@nongnu.org
+Fixes: 56e904ecb2018 ("linux-user: implement device mapper ioctls")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3736
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit a47e3c26b1a07292e18658e9d33425f61b4716d1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
-index 51da0e3667f..550fd03bf5c 100644
---- a/contrib/vhost-user-gpu/virgl.c
-+++ b/contrib/vhost-user-gpu/virgl.c
-@@ -202,6 +202,13 @@ virgl_cmd_submit_3d(VuGpu *g,
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 11d3b41dff2..ec249806b91 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -5088,6 +5088,9 @@ do_ioctl_usbdevfs_submiturb(const IOCTLEntry *ie, uint8_t *buf_temp,
+ }
+ #endif /* CONFIG_USBFS */
  
-     VUGPU_FILL_CMD(cs);
++#define DM_MAX_TARGETS                  1048576
++#define DM_MAX_TARGET_PARAMS            1024
++
+ static abi_long do_ioctl_dm(const IOCTLEntry *ie, uint8_t *buf_temp, int fd,
+                             int cmd, abi_long arg)
+ {
+@@ -5100,6 +5103,7 @@ static abi_long do_ioctl_dm(const IOCTLEntry *ie, uint8_t *buf_temp, int fd,
+     abi_long ret;
+     void *big_buf = NULL;
+     char *host_data;
++    const size_t minimum_data_size = offsetof(struct dm_ioctl, data);
  
-+    if (cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
-+        g_critical("%s: command buffer too large (%u)",
-+                   __func__, cs.size);
-+        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-+        return;
+     arg_type++;
+     target_size = thunk_type_size(arg_type, 0);
+@@ -5111,9 +5115,26 @@ static abi_long do_ioctl_dm(const IOCTLEntry *ie, uint8_t *buf_temp, int fd,
+     thunk_convert(buf_temp, argptr, arg_type, THUNK_HOST);
+     unlock_user(argptr, arg, 0);
+ 
+-    /* buf_temp is too small, so fetch things into a bigger buffer */
+-    big_buf = g_malloc0(((struct dm_ioctl*)buf_temp)->data_size * 2);
+-    memcpy(big_buf, buf_temp, target_size);
++    /* At this point this includes the size of the fixed dm_ioctl parts */
++    guest_data_size = ((struct dm_ioctl *)buf_temp)->data_size;
++
++    if (guest_data_size < minimum_data_size ||
++        guest_data_size > DM_MAX_TARGETS * DM_MAX_TARGET_PARAMS) {
++        ret = -TARGET_EINVAL;
++        goto out;
 +    }
 +
-     buf = g_malloc(cs.size);
-     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-                    sizeof(cs), buf, cs.size);
-diff --git a/contrib/vhost-user-gpu/vugpu.h b/contrib/vhost-user-gpu/vugpu.h
-index 654c392fbbf..2374eb90cb9 100644
---- a/contrib/vhost-user-gpu/vugpu.h
-+++ b/contrib/vhost-user-gpu/vugpu.h
-@@ -22,6 +22,7 @@
- #include "qemu/queue.h"
- #include "qemu/iov.h"
- #include "qemu/bswap.h"
-+#include "qemu/units.h"
- #include "vugbm.h"
++    /*
++     * buf_temp is too small, so fetch things into a bigger buffer. Here
++     * we copy all of the fixed parts of struct dm_ioctl but not the
++     * data at the end (which in the struct is "char data[7]" but in
++     * reality is command-specific and might be nothing or might be
++     * much larger, as defined by data_size). We know struct dm_ioctl's
++     * size is not target specific so we don't need to distinguish between
++     * its minimum size for the host vs the target.
++     */
++    big_buf = g_malloc0(guest_data_size * 2);
++    memcpy(big_buf, buf_temp, minimum_data_size);
+     buf_temp = big_buf;
+     host_dm = big_buf;
  
- typedef enum VhostUserGpuRequest {
-@@ -163,6 +164,14 @@ struct virtio_gpu_ctrl_command {
-     QTAILQ_ENTRY(virtio_gpu_ctrl_command) next;
- };
+@@ -5122,7 +5143,8 @@ static abi_long do_ioctl_dm(const IOCTLEntry *ie, uint8_t *buf_temp, int fd,
+         ret = -TARGET_EINVAL;
+         goto out;
+     }
+-    guest_data_size = host_dm->data_size - host_dm->data_start;
++    /* Adjust down to only the size of the payload */
++    guest_data_size -= host_dm->data_start;
+     host_data = (char*)host_dm + host_dm->data_start;
  
-+/*
-+ * With 4 KiB pages and QEMU's VIRTQUEUE_MAX_SIZE (1024) mapped-iov
-+ * limit, the largest inline command is ~4 MiB.  Cap submit_3d
-+ * allocations to this value to prevent a malicious guest from
-+ * triggering an OOM abort via an inflated cs.size field.
-+ */
-+#define VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE (4 * MiB)
-+
- #define VUGPU_FILL_CMD(out) do {                                \
-         size_t vugpufillcmd_s_ =                                \
-             iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num, 0,  \
-diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-index ebb6c783fb0..e5e85fde583 100644
---- a/hw/display/virtio-gpu-rutabaga.c
-+++ b/hw/display/virtio-gpu-rutabaga.c
-@@ -351,6 +351,14 @@ rutabaga_cmd_submit_3d(VirtIOGPU *g,
-     VIRTIO_GPU_FILL_CMD(cs);
-     trace_virtio_gpu_cmd_ctx_submit(cs.hdr.ctx_id, cs.size);
- 
-+    if (cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: command buffer too large (%u)\n",
-+                      __func__, cs.size);
-+        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-+        return;
-+    }
-+
-     buf = g_new0(uint8_t, cs.size);
-     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-                    sizeof(cs), buf, cs.size);
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index add85bd4e61..7c787456746 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -608,6 +608,14 @@ static void virgl_cmd_submit_3d(VirtIOGPU *g,
-     VIRTIO_GPU_FILL_CMD(cs);
-     trace_virtio_gpu_cmd_ctx_submit(cs.hdr.ctx_id, cs.size);
- 
-+    if (cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: command buffer too large (%u)\n",
-+                      __func__, cs.size);
-+        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-+        return;
-+    }
-+
-     buf = g_malloc(cs.size);
-     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-                    sizeof(cs), buf, cs.size);
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index f69fc194627..b9bad27c97a 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -15,6 +15,7 @@
- #define HW_VIRTIO_GPU_H
- 
- #include "qemu/queue.h"
-+#include "qemu/units.h"
- #include "ui/qemu-pixman.h"
- #include "ui/console.h"
- #include "hw/virtio/virtio.h"
-@@ -299,6 +300,14 @@ struct VirtIOGPURutabaga {
-     struct rutabaga *rutabaga;
- };
- 
-+/*
-+ * With 4 KiB pages and QEMU's VIRTQUEUE_MAX_SIZE (1024) mapped-iov
-+ * limit, the largest inline command is ~4 MiB.  Cap submit_3d
-+ * allocations to this value to prevent a malicious guest from
-+ * triggering an OOM abort via an inflated cs.size field.
-+ */
-+#define VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE (4 * MiB)
-+
- #define VIRTIO_GPU_FILL_CMD(out) do {                                   \
-         size_t virtiogpufillcmd_s_ =                                    \
-             iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num, 0,          \
+     argptr = lock_user(VERIFY_READ, guest_data, guest_data_size, 1);
 -- 
 2.47.3
 
