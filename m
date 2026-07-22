@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8FA5C44536
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 11:46:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C62F9C44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 11:47:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmVPA-0004Vf-AB; Wed, 22 Jul 2026 07:46:28 -0400
+	id 1wmVPA-0004XY-RR; Wed, 22 Jul 2026 07:46:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rangolit@gmail.com>)
- id 1wmLMt-00008C-Sa
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 21:03:27 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ id 1wmLNC-0000Aj-3F
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 21:03:46 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rangolit@gmail.com>)
- id 1wmLMs-0002fq-5v
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 21:03:27 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-c16794450aeso880741866b.2
- for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 18:03:23 -0700 (PDT)
+ id 1wmLN9-0002hA-4o
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 21:03:45 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-c15d3cd51b2so1369095266b.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 18:03:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784682203; x=1785287003; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=qROMMcxHf4isRrUkdba+z8CKRJ2KBgA2iSFDFcYe2wA=;
- b=TOXb3xPLeBvDk8dCJJtI9ftokKxwHjwzsU4WjiA9f4oFC5FR7FYsD9FukklVTdBbmI
- Mf0ok3rZscws2KTsRoEHB49u0idJPqKBSpmmTtXiZusv90NNWinY6WW6pjajPo9aSV6a
- RPABSZ4/+oL2036Unh0YhRTjn6iJhsa1jqCHl5ExzLgPTqbjMy9v68Vb1T1rbVuOZSHG
- vDtwc/w9XfRmItAQseRhYvJt60jySr0JOSML6+ZM00hSWbuUHd9FiZurokIAb79Q/LQp
- cqw8t76nykHTd8xy16/cls3tDy4s/yePvqGKN5QxKa77pM6xntYbRwl2b5d7eeGehdg9
- g2kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784682203; x=1785287003;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1784682222; x=1785287022; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=qROMMcxHf4isRrUkdba+z8CKRJ2KBgA2iSFDFcYe2wA=;
- b=Evy/NaX3N7HOVpujwgFDhGguDJvJ+0CT1CL8suWhNR3/nqUAWQGI4Sm24KIEb68QED
- FUmz5mxgG0kZMn1CVoMqTh7y6R4zZ6Zg8Tw0vqVmbJXIiSCVh/4t/gftKD3x0LRhN3yI
- GqZ/JmH1n7u0Ku1wvYqM9gwmcPt3GF3khrc3DxQqU7C8Gdpoydnk5+1LKQBIq3DmWVkc
- vFUt6dJHSRGqhdyEsG1Bdo3ggQA2MGGPxomvgnuDKp66b00LYVG8SPaK6fNZ1MDDsOct
- M1nzJjW0mZ0IvxlTdbC9bfaqRs5Gesuw9fXXaukLqUfVDLRkwxNVR5S0++9DakT1V47e
- UFtw==
-X-Gm-Message-State: AOJu0Yx/RghWJWeAQzFQx+AgUGFN7dnRNkQ70zxyYCuiBuinTMjNkIEy
- Tx2U/S62v20QtLs1QWka7OxD35TMShjwTl16+ka0+iNbCeXtqDMFYIRHReloWhaM1b0=
-X-Gm-Gg: AR+sD10nMj5L4t/9gn8cwnoIUWFUzV2fPZqWv6zjSc9w0E0aXkvNIf39EOizwMbD0Fu
- sJusnKMRTnH8URqvO46tpzHkJ3vHYqVf/958bBtFFUyQAJ6HKwMu/Zu75tmKOaUcypZYBzdl30U
- Jn5hrC6adQy6BqRf9YUc7zgnu7Uzvx/5ejBHHiQY0akmJiUAVeXqKn/pwg+ZC11dk4sff6FhKt4
- +yKvB95gFxHaVD9/NErJuiMkBeJ7LKv9nkqvZQob/ozvvFSvZa+SD31L2UfgAkWrvt5yUTQTuz+
- KOxlqwh/Tjt+QY0OcJbFiiq1LFYpiSjMQ584kBenYSOzdmlSzqjM/vZ4QX5sYDqMt04XvEnHEgt
- +cnIgdPYbnyAthhPpZd+4OZFfBVbgciiI7jpUoLqAXIJxSI2s0XmrYYvMum3E48IlrQ==
-X-Received: by 2002:a17:907:3cd6:b0:c16:12b6:243e with SMTP id
- a640c23a62f3a-c16b4797e93mr992368566b.44.1784682202434; 
- Tue, 21 Jul 2026 18:03:22 -0700 (PDT)
+ bh=Erq1uqG60FGH82vJJ5aDBApZSrpA1rGh49YRLXOpd+0=;
+ b=Oc9EeDhG7Rggt+7SmRenTzZUmMY82AlQ8lHG4Xvk0TS70tjoVaRxBH1D9Sr+TBxLXP
+ tJ53w7iKh9XTXJ0O9bhEtGvHlsOc9lnWdUvx9XcX7EjNOWMqzdIga6iC0hNStWGaIWlB
+ ER7hlMfTZHSlswmQ5fmTCkVoIetc0WOPFFKf2Ol6U/TIMjQWwoHu7Bu06qze/iVFbk5o
+ m+OdHqhFjsg76eAoAUgrocgnKJHTJvUuLA+ERyV9+lhAT8hgeI3SMeiiA+dZRY+uuwst
+ WMJLv9t5dTZ7aox+4kVEC483DcNfDZttgVvIFrTrHm5zxqZq0jXROMoGHaRJTJDAjg3m
+ EH7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784682222; x=1785287022;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Erq1uqG60FGH82vJJ5aDBApZSrpA1rGh49YRLXOpd+0=;
+ b=eQmvLmN+i8BMnG18ROWxPllEWwTIxvEyLMI18sgUcyuUHGvfh7QdP3HCamsBzye1e0
+ BxjAC+bRCgMEMCKq/wx0fAb7CASM3U7yNW3wRy5qwZzh2gMlL1id4BI2jLzOMfvJSGKK
+ Bvdktl0KOevwuQzbqpVxs08l/muISPNCN/1esh/GKe5iWb5sXmWbByb88ga5JOCKBSvR
+ 4CoU/sL8Wyn08DuJzzD6wb18zr2uWU+DnJFRWSFygQrn0YFRjD2jwHI8z2RZlY6cFyXN
+ 8y0leetofEMCa9lBDGpvtZw9qTgE7m0C7BEqRIJor0LtaDn+mLetXBghHxOAeB8NzBFq
+ lRRg==
+X-Gm-Message-State: AOJu0YxoNlLJZpU6YN7d6z5G68RdU02C1XXwWUmottKYk8PnuJt83zDM
+ LhaJPQGO+71MNXaNcTz5NrWa8uuMo4p6BzQ66oatNOc0S7EKghu6570jrZ8v+jt5yFw=
+X-Gm-Gg: AR+sD128e+GFqDxnYrtXDy71R1hBvKiJr7iHE2LsVNZf+yztp51OAqZ1z6v9U4VGjoX
+ zmCN9rTYgkgznnt3V8Sj0UUX88RIq67VtjKH+/ZlpRCL1unLZ1cnLA3jlGjgaKmItbU0BwDmDMO
+ xNEU+nyyaqK/Li2o+J2WXhActkm6wBM8Xx+KSK+6cTMvStlCp48ykCVeLI4DRDY6u6Y/MK4HyaF
+ WyAGhwL9cJeLXaXQVy21XBesXgqKl49s/1ztVkzQiWenUMcN9RyAVF7990pHwdn3tqwfQ3RWxlG
+ 6wmeGxEOpJxFgioMpI2ovWCO4Wjf7HJhluTaVIFBulv4Uyy3tKpFtWKs8ryEU+E7u2/VO6yZEhk
+ ZhRRGWSEMePNYrPlc1uxKk2pXzNMYaFNSmnPv/7z5ZEqjSjB27qHBZR4lYG7Jnf+X+g==
+X-Received: by 2002:a17:907:3e1d:b0:c12:34ed:e100 with SMTP id
+ a640c23a62f3a-c16b489328cmr952031866b.62.1784682221400; 
+ Tue, 21 Jul 2026 18:03:41 -0700 (PDT)
 Received: from Arc ([109.245.172.88]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c1c32ebac95sm32694066b.47.2026.07.21.18.03.20
+ a640c23a62f3a-c1c32ebac95sm32694066b.47.2026.07.21.18.03.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Jul 2026 18:03:21 -0700 (PDT)
+ Tue, 21 Jul 2026 18:03:40 -0700 (PDT)
 From: Konstantin Nigmatullin <rangolit@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Konstantin Nigmatullin <rangolit@gmail.com>, qemu-block@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, Peter Lieven <pl@kamp.de>,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH 0/5] iscsi: fix hang after abrupt target disconnect
-Date: Wed, 22 Jul 2026 03:02:49 +0200
-Message-ID: <20260722010254.424820-1-rangolit@gmail.com>
+Subject: [PATCH 4/5] iscsi: fail new iSCSI I/O while the transport is known
+ down
+Date: Wed, 22 Jul 2026 03:02:53 +0200
+Message-ID: <20260722010254.424820-5-rangolit@gmail.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260722010254.424820-1-rangolit@gmail.com>
+References: <20260722010254.424820-1-rangolit@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=rangolit@gmail.com; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=rangolit@gmail.com; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -82,7 +86,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 22 Jul 2026 07:46:11 -0400
+X-Mailman-Approved-At: Wed, 22 Jul 2026 07:46:12 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,51 +101,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When an iSCSI target disappears (for example tgtd is killed), QEMU can
-leave guest I/O stuck and then fail to exit on SIGINT because
-virtio_scsi_dataplane_stop blocks forever in blk_drain_all().
+After the first disconnect failure, queued requests kept restarting long
+waits so blk_drain_all never stayed idle and QEMU could not exit.
 
-This is a stack of problems in block/iscsi.c, not only the documented
-default command timeout of 0:
+See: https://gitlab.com/qemu-project/qemu/-/work_items/3067
+Signed-off-by: Konstantin Nigmatullin <rangolit@gmail.com>
+---
+ block/iscsi.c | 59 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 58 insertions(+), 1 deletion(-)
 
-1. NOP dead-session detection never fired in practice because
-   iscsi_get_nops_in_flight() stayed at 0 on a dead TCP session.
-2. SCSI_STATUS_TIMEOUT was retried like BUSY (up to seven full
-   timeouts), so drain stayed busy for minutes even with -iscsi
-   timeout=N.
-3. In-flight coroutines were not cancelled locally, so with timeout=0
-   waiters never woke.
-4. After one failure, queued I/O restarted another long wait, so drain
-   never stayed idle (permanent hang).
-
-This series addresses those without changing the default timeout value.
-
-Verified with the GitLab #3067 recipe (default timeout=0). After killing
-tgtd and unmounting, the guest correctly sees I/O errors, and Ctrl-C
-makes QEMU exit cleanly instead of hanging in blk_drain_all:
-
-  (initramfs) umount /mnt
-  qemu-system-x86_64: terminating on signal 2
-  qemu-system-x86_64: iSCSI: NOP timeout. Reconnecting...
-  qemu-system-x86_64: iSCSI SYNCHRONIZECACHE10 failed: SENSE KEY:UNIT_ATTENTION(6) ASCQ:BUS_RESET(0x2900)
-
-Residual host messages such as NOP timeout / SYNCHRONIZECACHE10
-UNIT_ATTENTION(BUS_RESET) are expected while in-flight flush fails on a
-dead session during reconnect; they are cosmetic and not a correctness
-issue for this series.
-
-Buglink: https://gitlab.com/qemu-project/qemu/-/issues/3067
-
-Konstantin Nigmatullin (5):
-  iscsi: detect dead iSCSI sessions via local NOP failure counting
-  iscsi: stop retrying timed-out iSCSI commands
-  iscsi: cancel in-flight iSCSI tasks when the session dies
-  iscsi: fail new iSCSI I/O while the transport is known down
-  iscsi: avoid null iSCSI error strings after cancel or timeout
-
- block/iscsi.c | 124 +++++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 113 insertions(+), 11 deletions(-)
-
+diff --git a/block/iscsi.c b/block/iscsi.c
+index 330f17e08b..b6207d03e5 100644
+--- a/block/iscsi.c
++++ b/block/iscsi.c
+@@ -103,6 +103,12 @@ typedef struct IscsiLun {
+     bool dpofua;
+     bool has_write_same;
+     bool request_timed_out;
++    /*
++     * Set when the transport is known to be down (command or NOP timeout).
++     * New I/O fails immediately until libiscsi reports logged-in again after
++     * reconnect. Prevents drain/shutdown from waiting forever on a dead target.
++     */
++    bool fail_io;
+     /* Consecutive NOP-Outs without a successful NOP-In reply. */
+     int nop_failures;
+ } IscsiLun;
+@@ -245,10 +251,12 @@ iscsi_co_generic_cb(struct iscsi_context *iscsi, int status,
+              * Do not retry timed-out commands. Retries keep in-flight I/O
+              * alive across a dead session and can block blk_drain_all()
+              * (and thus QEMU exit) for minutes or indefinitely. Kick
+-             * reconnect and fail this request.
++             * reconnect and fail this request; further I/O is rejected via
++             * fail_io until the session is logged in again.
+              */
+             error_report("iSCSI timed out: %s", iscsi_get_error(iscsi));
+             iscsilun->request_timed_out = true;
++            iscsilun->fail_io = true;
+         } else if (iTask->retries++ < ISCSI_CMD_RETRIES) {
+             if (status == SCSI_STATUS_BUSY ||
+                 status == SCSI_STATUS_TASK_SET_FULL) {
+@@ -277,6 +285,9 @@ iscsi_co_generic_cb(struct iscsi_context *iscsi, int status,
+                 }
+             }
+         }
++    } else {
++        iscsilun->fail_io = false;
++        iscsilun->nop_failures = 0;
+     }
+ 
+     /*
+@@ -379,6 +390,10 @@ static void iscsi_timed_check_events(void *opaque)
+         /* check for timed out requests */
+         iscsi_service(iscsilun->iscsi, 0);
+ 
++        if (iscsilun->fail_io && iscsi_is_logged_in(iscsilun->iscsi)) {
++            iscsilun->fail_io = false;
++        }
++
+         if (iscsilun->request_timed_out) {
+             iscsilun->request_timed_out = false;
+             /*
+@@ -604,6 +619,15 @@ static void coroutine_fn iscsi_co_wait_for_task(IscsiTask *iTask,
+     qemu_mutex_lock(&iscsilun->mutex);
+ }
+ 
++/* Called with iscsilun->mutex held. */
++static int iscsi_co_reject_if_failing(IscsiLun *iscsilun)
++{
++    if (iscsilun->fail_io) {
++        return -EIO;
++    }
++    return 0;
++}
++
+ static int coroutine_fn
+ iscsi_co_writev(BlockDriverState *bs, int64_t sector_num, int nb_sectors,
+                 QEMUIOVector *iov, int flags)
+@@ -631,6 +655,10 @@ iscsi_co_writev(BlockDriverState *bs, int64_t sector_num, int nb_sectors,
+     iscsi_co_init_iscsitask(iscsilun, &iTask);
+     qemu_mutex_lock(&iscsilun->mutex);
+ retry:
++    if (iscsi_co_reject_if_failing(iscsilun)) {
++        r = -EIO;
++        goto out_unlock;
++    }
+     if (iscsilun->use_16_for_rw) {
+ #if LIBISCSI_API_VERSION >= (20160603)
+         iTask.task = iscsi_write16_iov_task(iscsilun->iscsi, iscsilun->lun, lba,
+@@ -730,6 +758,10 @@ static int coroutine_fn iscsi_co_block_status(BlockDriverState *bs,
+ 
+     qemu_mutex_lock(&iscsilun->mutex);
+ retry:
++    if (iscsi_co_reject_if_failing(iscsilun)) {
++        ret = -EIO;
++        goto out_unlock;
++    }
+     if (iscsi_get_lba_status_task(iscsilun->iscsi, iscsilun->lun,
+                                   lba, 8 + 16, iscsi_co_generic_cb,
+                                   &iTask) == NULL) {
+@@ -861,6 +893,10 @@ static int coroutine_fn iscsi_co_readv(BlockDriverState *bs,
+     iscsi_co_init_iscsitask(iscsilun, &iTask);
+     qemu_mutex_lock(&iscsilun->mutex);
+ retry:
++    if (iscsi_co_reject_if_failing(iscsilun)) {
++        qemu_mutex_unlock(&iscsilun->mutex);
++        return -EIO;
++    }
+     if (iscsilun->use_16_for_rw) {
+ #if LIBISCSI_API_VERSION >= (20160603)
+         iTask.task = iscsi_read16_iov_task(iscsilun->iscsi, iscsilun->lun, lba,
+@@ -927,6 +963,10 @@ static int coroutine_fn iscsi_co_flush(BlockDriverState *bs)
+     iscsi_co_init_iscsitask(iscsilun, &iTask);
+     qemu_mutex_lock(&iscsilun->mutex);
+ retry:
++    if (iscsi_co_reject_if_failing(iscsilun)) {
++        qemu_mutex_unlock(&iscsilun->mutex);
++        return -EIO;
++    }
+     if (iscsi_synchronizecache10_task(iscsilun->iscsi, iscsilun->lun, 0, 0, 0,
+                                       0, iscsi_co_generic_cb, &iTask) == NULL) {
+         qemu_mutex_unlock(&iscsilun->mutex);
+@@ -1170,6 +1210,10 @@ coroutine_fn iscsi_co_pdiscard(BlockDriverState *bs, int64_t offset,
+     iscsi_co_init_iscsitask(iscsilun, &iTask);
+     qemu_mutex_lock(&iscsilun->mutex);
+ retry:
++    if (iscsi_co_reject_if_failing(iscsilun)) {
++        r = -EIO;
++        goto out_unlock;
++    }
+     if (iscsi_unmap_task(iscsilun->iscsi, iscsilun->lun, 0, 0, &list, 1,
+                          iscsi_co_generic_cb, &iTask) == NULL) {
+         r = -ENOMEM;
+@@ -1255,6 +1299,10 @@ coroutine_fn iscsi_co_pwrite_zeroes(BlockDriverState *bs, int64_t offset,
+     qemu_mutex_lock(&iscsilun->mutex);
+     iscsi_co_init_iscsitask(iscsilun, &iTask);
+ retry:
++    if (iscsi_co_reject_if_failing(iscsilun)) {
++        qemu_mutex_unlock(&iscsilun->mutex);
++        return -EIO;
++    }
+     if (use_16_for_ws) {
+         /*
+          * iscsi_writesame16_task num_blocks argument is uint32_t. We rely here
+@@ -1423,6 +1471,10 @@ static void iscsi_nop_timed_event(void *opaque)
+     IscsiLun *iscsilun = opaque;
+ 
+     QEMU_LOCK_GUARD(&iscsilun->mutex);
++    if (iscsilun->fail_io && iscsi_is_logged_in(iscsilun->iscsi)) {
++        iscsilun->fail_io = false;
++    }
++
+     /*
+      * Prefer libiscsi's counter when it works; also track locally because
+      * some libiscsi builds leave nops_in_flight at 0 across a dead TCP
+@@ -1432,6 +1484,7 @@ static void iscsi_nop_timed_event(void *opaque)
+         iscsi_get_nops_in_flight(iscsilun->iscsi) >= MAX_NOP_FAILURES) {
+         error_report("iSCSI: NOP timeout. Reconnecting...");
+         iscsilun->request_timed_out = true;
++        iscsilun->fail_io = true;
+         iscsilun->nop_failures = 0;
+         iscsi_scsi_cancel_all_tasks(iscsilun->iscsi);
+     } else if (iscsi_nop_out_async(iscsilun->iscsi, iscsi_nop_cb, NULL, 0,
+@@ -2398,6 +2451,10 @@ iscsi_co_copy_range_to(BlockDriverState *bs,
+     qemu_mutex_lock(&dst_lun->mutex);
+     iscsi_task.task = iscsi_xcopy_task(data.size);
+ retry:
++    if (iscsi_co_reject_if_failing(dst_lun)) {
++        r = -EIO;
++        goto out_unlock;
++    }
+     if (iscsi_scsi_command_async(dst_lun->iscsi, dst_lun->lun,
+                                  iscsi_task.task, iscsi_co_generic_cb,
+                                  &data,
 -- 
 2.53.0
+
 
