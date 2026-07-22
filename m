@@ -4,57 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 308D2C44536
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 11:47:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE014C44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 11:47:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmVP9-0004TM-IO; Wed, 22 Jul 2026 07:46:27 -0400
+	id 1wmVPA-0004VM-6C; Wed, 22 Jul 2026 07:46:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhengrong.lzr@alibaba-inc.com>)
- id 1wmMBc-00051n-RN
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 21:55:52 -0400
-Received: from [140.205.0.204] (helo=out0-204.mail.aliyun.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhengrong.lzr@alibaba-inc.com>)
- id 1wmMBX-0001zI-6y
- for qemu-devel@nongnu.org; Tue, 21 Jul 2026 21:55:52 -0400
+ (Exim 4.90_1) (envelope-from <rangolit@gmail.com>)
+ id 1wmLN0-00009C-NZ
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 21:03:34 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rangolit@gmail.com>)
+ id 1wmLMy-0002gA-96
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 21:03:34 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-c197eaaab00so434154166b.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 18:03:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=alibaba-inc.com; s=default;
- t=1784685281; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=+u2oer4DmXodby6+49ERUiXbSIEaxJzPbTIPwrrlTKw=;
- b=s4KICt8y0q1uE8x56zMtYUgKX+q0OqlUNv89jH9EHi0kdx/ZhvlT89xAXUid7OCrcmHiUzglXkyJCaHNZHh4FywOBE8mqEp8kJDMfqYVqVdhPboYKIqaRiwTQhqRSdoPKqhH9TgjiHGjbkc58SuuvlWoeyaQ+7cYOhp7d6dQlJA=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R441e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033040074035;
- MF=zhengrong.lzr@alibaba-inc.com; NM=1; PH=DS; RN=2; SR=0;
- TI=SMTPD_---.iRHeHY5_1784684963; 
-Received: from U-92DF4J33-2338.local(mailfrom:zhengrong.lzr@alibaba-inc.com
- fp:SMTPD_---.iRHeHY5_1784684963 cluster:ay29) by smtp.aliyun-inc.com;
- Wed, 22 Jul 2026 09:49:28 +0800
-From: "=?UTF-8?B?5p2O5bOl5bWYKOadkeWPlCk=?=" <zhengrong.lzr@alibaba-inc.com>
+ d=gmail.com; s=20251104; t=1784682211; x=1785287011; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=k4yK7lDliBq/8FU36kdREjJRsf5raunpvsSFKyNur14=;
+ b=Yr66Nc4+wi4NDDYmkdcgn559/eD92A8LiDfx4fuBU31QzbyJDoLAaQnXPzMH4uTcz5
+ xZsXyRigAvTWaxEc3ru6mHcUo+aVwTAFTc252sMwrwKky0lc/nLPdNoux7RaPIZmv5Tn
+ lDkZVEOpazUFF4A6S4POKJcxHCP0V4f34ukWsqzYfYyK0MksNcdq04YJamdN9s42AfDC
+ XXfnkbHzxUMMo21uLJdBljHzzTlFK2IWK1O2N1kWyouck8dfK3N5az/kZD2GxjI2JtML
+ UhY/GuRw2WwGpP4TibQfeVfPI+QmaV/IjGYaVSQO0d2ERt0o5rczog/VQ7VgRFSz8QWo
+ /HQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784682211; x=1785287011;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=k4yK7lDliBq/8FU36kdREjJRsf5raunpvsSFKyNur14=;
+ b=KXnushHE0x5Dks0Gf+WLaCfhTFQvQ9uZ4GSGzTWs7fj55wPL9g4HHJStRMONMGnW1K
+ v5rEWFW8QIlEk9soP9LtUQGX14lz0+LebIm7c0L8hWhw+mZKeLZ82NxsT6big7ALRaVS
+ y7DfF5JITO6XfAgG6kZFVx/MrLg9vQVj/pDWaeQEA0LUdtmpyPCvJ5Nky3KEx8ZxtQvC
+ 2LmNl+LNVY6DsQ0ad1/jG9h/CcINnZV9dlmKSFxXFcBD8LHLjkNld/D6y2+NOrDc3HrL
+ RgxZBXa4DuFfGU9DeuRX7SLSv3HqUGjx3mb3wvzbqKF5GsicwCpHmQXQuoZ7IRGzSURr
+ +wkA==
+X-Gm-Message-State: AOJu0YxPyYFZQCzuVJHeIhAlTtiNO1XbuJ1sCQqx/tW1SvEPRd4FXPUJ
+ 8XuVlhJkmROVV2jcmk8dzk4NGGpWJAjUh6I6zQEaq0SyMiOFLQDju1s7jnfWv+yoZdc=
+X-Gm-Gg: AR+sD13R3Yzd3Te/XJqXy09ae4Kcz4sRmdYvoLpe+p3KUeAKn+TcaUi/JS8yoEM6jMm
+ YQ+2mnI8+MBRK0gJVrIHCxkh5eOTinHjupT7KHPc+/pY8T3kFe58RfDqq4ICzlfR+toCn89iWD+
+ lzHkT+CPXStUvamfjXWU50RbRGNq03Sk4fVf6nMTDy+gOjK62DiEeA06wNvNfoxsTVP1VhYeoco
+ hcE3NrAIxh4C98DKOHy2o2Q0hqoPwUsXZymhUNcBegn4gxDsiMHEpD23fJ4fhIR+53HX1NSrUyW
+ o0AE253BI/W3WOxv8jWPga9oUhdrCO8G+4R5+1pB7/waljBbQs/XjupAiJx34P5LZBtzATZgjxY
+ S5hCe+ufgo7p5rJCOGgmeQypEztxiUSyDoE9ARS7+NCBb/W0WcxBTywPfW+TRjbwfaA==
+X-Received: by 2002:a17:907:1ca4:b0:c16:19fc:9976 with SMTP id
+ a640c23a62f3a-c16b48ed368mr834040966b.53.1784682210508; 
+ Tue, 21 Jul 2026 18:03:30 -0700 (PDT)
+Received: from Arc ([109.245.172.88]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c1c32ebac95sm32694066b.47.2026.07.21.18.03.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Jul 2026 18:03:30 -0700 (PDT)
+From: Konstantin Nigmatullin <rangolit@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: <pbonzini@redhat.com>, <viktor.prutyanov@phystech.edu>,
- <odaki@rsg.ci.i.u-tokyo.ac.jp>, <zhao1.liu@intel.com>,
- "=?UTF-8?B?5p2O5bOl5bWYKOadkeWPlCk=?=" <zhengrong.lzr@alibaba-inc.com>
-Subject: [PATCH 2/3] dump: add crash_occurred flag to QEMUCPUState
-Date: Wed, 22 Jul 2026 09:48:38 +0800
-Message-ID: <20260722014840.36671-2-zhengrong.lzr@alibaba-inc.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260722014840.36671-1-zhengrong.lzr@alibaba-inc.com>
-References: <20260722014840.36671-1-zhengrong.lzr@alibaba-inc.com>
+Cc: Konstantin Nigmatullin <rangolit@gmail.com>, qemu-block@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Lieven <pl@kamp.de>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Subject: [PATCH 1/5] iscsi: detect dead iSCSI sessions via local NOP failure
+ counting
+Date: Wed, 22 Jul 2026 03:02:50 +0200
+Message-ID: <20260722010254.424820-2-rangolit@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260722010254.424820-1-rangolit@gmail.com>
+References: <20260722010254.424820-1-rangolit@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 140.205.0.204 (deferred)
-Received-SPF: pass client-ip=140.205.0.204;
- envelope-from=zhengrong.lzr@alibaba-inc.com; helo=out0-204.mail.aliyun.com
-X-Spam_score_int: -12
-X-Spam_score: -1.3
-X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RDNS_NONE=0.793,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=rangolit@gmail.com; helo=mail-ej1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Wed, 22 Jul 2026 07:46:12 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,74 +101,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add is_crash_occurred_cpu field to QEMUCPUState so that
-dump-guest-memory can record which CPU triggered the guest
-panic. Bump QEMUCPUSTATE_VERSION to 2.
+libiscsi nops_in_flight stayed at 0 on a dead TCP session, so QEMU never
+noticed the target had vanished when command timeout was disabled.
 
-The new field is appended after kernel_gs_base, so existing
-tools that check the 'size' field can safely ignore it when
-reading older dumps.
-
-Signed-off-by: Zhengrong Li <zhengrong.lzr@alibaba-inc.com>
+See: https://gitlab.com/qemu-project/qemu/-/work_items/3067
+Signed-off-by: Konstantin Nigmatullin <rangolit@gmail.com>
 ---
- contrib/elf2dmp/qemu_elf.h | 2 ++
- target/i386/arch_dump.c    | 8 +++++++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ block/iscsi.c | 26 ++++++++++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/elf2dmp/qemu_elf.h b/contrib/elf2dmp/qemu_elf.h
-index adc50238b4..3b28332e67 100644
---- a/contrib/elf2dmp/qemu_elf.h
-+++ b/contrib/elf2dmp/qemu_elf.h
-@@ -27,6 +27,8 @@ typedef struct QEMUCPUState {
-     QEMUCPUSegment ldt, tr, gdt, idt;
-     uint64_t cr[5];
-     uint64_t kernel_gs_base;
-+    uint8_t  is_crash_occurred_cpu;
-+    uint8_t  pad[7];
- } QEMUCPUState;
+diff --git a/block/iscsi.c b/block/iscsi.c
+index 7d6bf185ea..bf74b4cb65 100644
+--- a/block/iscsi.c
++++ b/block/iscsi.c
+@@ -103,6 +103,8 @@ typedef struct IscsiLun {
+     bool dpofua;
+     bool has_write_same;
+     bool request_timed_out;
++    /* Consecutive NOP-Outs without a successful NOP-In reply. */
++    int nop_failures;
+ } IscsiLun;
  
- int is_system(QEMUCPUState *s);
-diff --git a/target/i386/arch_dump.c b/target/i386/arch_dump.c
-index 16e47c4747..f1c31984c5 100644
---- a/target/i386/arch_dump.c
-+++ b/target/i386/arch_dump.c
-@@ -237,7 +237,7 @@ int x86_cpu_write_elf32_note(WriteCoreDumpFunction f, CPUState *cs,
-  * please count up QEMUCPUSTATE_VERSION if you have changed definition of
-  * QEMUCPUState, and modify the tools using this information accordingly.
-  */
--#define QEMUCPUSTATE_VERSION (1)
-+#define QEMUCPUSTATE_VERSION (2)
- 
- struct QEMUCPUSegment {
-     uint32_t selector;
-@@ -264,6 +264,8 @@ struct QEMUCPUState {
-      * by checking 'size' field.
-      */
-     uint64_t kernel_gs_base;
-+    uint8_t  is_crash_occurred_cpu;
-+    uint8_t  pad[7];
- };
- 
- typedef struct QEMUCPUState QEMUCPUState;
-@@ -279,6 +281,7 @@ static void copy_segment(QEMUCPUSegment *d, SegmentCache *s)
- 
- static void qemu_get_cpustate(QEMUCPUState *s, CPUX86State *env)
- {
-+    CPUState *cs = env_cpu(env);
-     memset(s, 0, sizeof(QEMUCPUState));
- 
-     s->version = QEMUCPUSTATE_VERSION;
-@@ -324,6 +327,9 @@ static void qemu_get_cpustate(QEMUCPUState *s, CPUX86State *env)
- 
- #ifdef TARGET_X86_64
-     s->kernel_gs_base = env->kernelgsbase;
-+    if (cs->crash_occurred) {
-+        s->is_crash_occurred_cpu = 1;
-+    }
- #endif
+ typedef struct IscsiTask {
+@@ -1398,17 +1400,37 @@ static char *get_initiator_name(QemuOpts *opts)
+     return iscsi_name;
  }
  
++static void iscsi_nop_cb(struct iscsi_context *iscsi, int status,
++                         void *command_data, void *opaque)
++{
++    IscsiLun *iscsilun = opaque;
++
++    if (status == SCSI_STATUS_GOOD) {
++        iscsilun->nop_failures = 0;
++    }
++}
++
+ static void iscsi_nop_timed_event(void *opaque)
+ {
+     IscsiLun *iscsilun = opaque;
+ 
+     QEMU_LOCK_GUARD(&iscsilun->mutex);
+-    if (iscsi_get_nops_in_flight(iscsilun->iscsi) >= MAX_NOP_FAILURES) {
++    /*
++     * Prefer libiscsi's counter when it works; also track locally because
++     * some libiscsi builds leave nops_in_flight at 0 across a dead TCP
++     * session, which disabled disconnect detection entirely.
++     */
++    if (iscsilun->nop_failures >= MAX_NOP_FAILURES ||
++        iscsi_get_nops_in_flight(iscsilun->iscsi) >= MAX_NOP_FAILURES) {
+         error_report("iSCSI: NOP timeout. Reconnecting...");
+         iscsilun->request_timed_out = true;
+-    } else if (iscsi_nop_out_async(iscsilun->iscsi, NULL, NULL, 0, NULL) != 0) {
++        iscsilun->nop_failures = 0;
++    } else if (iscsi_nop_out_async(iscsilun->iscsi, iscsi_nop_cb, NULL, 0,
++                                   iscsilun) != 0) {
+         error_report("iSCSI: failed to sent NOP-Out. Disabling NOP messages.");
+         return;
++    } else {
++        iscsilun->nop_failures++;
+     }
+ 
+     timer_mod(iscsilun->nop_timer, qemu_clock_get_ms(QEMU_CLOCK_REALTIME) + NOP_INTERVAL);
 -- 
-2.43.0
+2.53.0
 
 
