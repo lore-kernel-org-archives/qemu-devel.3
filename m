@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 162DCC44536
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:00:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 577C2C44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:01:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWPF-0005hG-SP; Wed, 22 Jul 2026 08:50:38 -0400
+	id 1wmWOr-0004Mf-Ae; Wed, 22 Jul 2026 08:50:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWMk-00035z-HD; Wed, 22 Jul 2026 08:48:04 -0400
+ id 1wmWO6-00043u-4c; Wed, 22 Jul 2026 08:49:28 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWMh-0001p3-Qz; Wed, 22 Jul 2026 08:48:01 -0400
+ id 1wmWO2-0001vS-4f; Wed, 22 Jul 2026 08:49:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724390; bh=V7ZwXYuTEc7rg5CdTQToUaKFVZtju8QFckF74ZN/Mpk=;
+ t=1784724390; bh=2RD8qi8VQRp7qHb0S3XjGlgOLsWQ7CEchCoq2QbSDvE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=gfj+RHjHoHNhFvDzdhEWcZsXlJu1zmug0JU9Sw3rrcz7IAZAqUzKiFNb0kp2tntc2
- Q0JI4tMJYYitywU468B2PnaAzmk3ss26u74vZ8TcKCTBlQNiRT5vh+FjdBI/HnZy81
- LAzRQQtDu6UCHSvLnG7Oe9nQdVUVimqimp1rPs6HGCpfy1lqDkUw16byngH017TFNJ
- VJ19TmdXWbJsaALZQ/zRoPOfdiUahAGf+Hgs3InKI4A6I02/kJ+Y8btA7KLSftbYtR
- pWQLnnze/58ajMOEPruw7PEff1esrFUDsBHZEKCe/LkZIakTvBtuftIbo/6Q2WmmmG
- HRFh2MXLMeAqQ==
+ b=vd+9Lc3Vq6HOUvGstY1I0oPLrex3YttHgbMn44/wgKZDbVCXG109asNJUxPs6d2tD
+ WFmVTo63rTZwzflB647qhOznqm9fVtPOCm/tF+uhjhkxvfLJMR/cO/J6IzwI/EeQSS
+ pnYSi1BpFfMLCw/inso3g3JPK82C4CKqqf5L7lNY//47SvlUl9FL5vvo1dyU1XmLib
+ X3EJXFDndbIunIbxOeKzfV8TBRtqKiQ4Qogt2OVa2PPTDMlxubCul8A8JYmwRjd/dk
+ XtPSoTjuj0pcTw8eHJo31tkvye6KcjZvW1xbZrtJxd6589JKbLDiBTDSzFJgsbgWFX
+ OupzLpEboWNrQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8AEAC1C3B06;
+ by isrv.corpit.ru (Postfix) with ESMTP id D92931C3B14;
  Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D2F2B3F3760;
- Wed, 22 Jul 2026 15:46:47 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2CA273F376E;
+ Wed, 22 Jul 2026 15:46:48 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 6073117EF5; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id 81D8217F11; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Dmitry Pimenov <sun4qemu@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 093/122] hw/sparc64/niagara: use int64_t for vdisk
- size to avoid truncation
-Date: Wed, 22 Jul 2026 15:45:42 +0300
-Message-ID: <20260722124622.31034-18-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 v2 107/122] hw/display/virtio-gpu: Check
+ pixman_image_create_bits() results
+Date: Wed, 22 Jul 2026 15:45:56 +0300
+Message-ID: <20260722124622.31034-32-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
@@ -73,35 +73,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dmitry Pimenov <sun4qemu@gmail.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-blk_getlength() returns int64_t, but niagara_init() stored it in an int,
-truncating the if=pflash virtual-ramdisk size for images >= 2 GiB. A ~4 GiB
-image truncated to 0/negative, failed the `size > 0` check, and exit(1)'d
-before the CPU ran, ending with:
+pixman_image_create_bits() returns NULL for allocation failures and
+unaligned strides, which may be supplied by the guest with
+VIRTIO_GPU_CMD_SET_SCANOUT_BLOB, and virtio_gpu_do_set_scanout()
+subsequently dereferences it.
 
-  qemu-system-sparc64: could not load ram disk
-
-Signed-off-by: Dmitry Pimenov <sun4qemu@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260710222350.9185-1-sun4qemu@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 76dbe26fd6500a94b85bf0f3a39d73b72f5fab7b)
+Fixes: fa06e5cb7b10 ("virtio-gpu: fix scanout rectangles")
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260717-pixman-v1-1-89ea33b50b75@rsg.ci.i.u-tokyo.ac.jp>
+(cherry picked from commit f1af81ba2aeec7b5a5ee8529ef55275865aea0c0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/sparc64/niagara.c b/hw/sparc64/niagara.c
-index 805ba6b1e3d..0a854681c4a 100644
---- a/hw/sparc64/niagara.c
-+++ b/hw/sparc64/niagara.c
-@@ -137,7 +137,7 @@ static void niagara_init(MachineState *machine)
-        outside of the partition RAM */
-     if (dinfo) {
-         BlockBackend *blk = blk_by_legacy_dinfo(dinfo);
--        int size = blk_getlength(blk);
-+        int64_t size = blk_getlength(blk);
-         if (size > 0) {
-             memory_region_init_ram(&s->vdisk_ram, NULL, "sun4v_vdisk.ram", size,
-                                    &error_fatal);
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 0fa61d10972..2178f5edbb6 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -670,6 +670,10 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
+         void *ptr = data + fb->offset;
+         rect = pixman_image_create_bits(fb->format, r->width, r->height,
+                                         ptr, fb->stride);
++        if (!rect) {
++            *error = VIRTIO_GPU_RESP_ERR_UNSPEC;
++            return false;
++        }
+ 
+         if (res->image) {
+             pixman_image_ref(res->image);
 -- 
 2.47.3
 
