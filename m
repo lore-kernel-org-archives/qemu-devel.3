@@ -4,130 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6F96C4453C
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 16:10:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9C56C4453C
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 16:10:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmZVt-0002hO-0b; Wed, 22 Jul 2026 12:09:41 -0400
+	id 1wmZWV-0003sv-9t; Wed, 22 Jul 2026 12:10:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wmZVr-0002gQ-4t
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 12:09:39 -0400
+ id 1wmZWS-0003lT-AR
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 12:10:16 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wmZVp-0001v3-LS
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 12:09:38 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1wmZWO-0002CM-SL
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 12:10:14 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66MFYBS51260632
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 16:09:36 GMT
+ 66MFY3pu1310319
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 16:10:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Cfw08zrS/HQBV5FgdUQoKFEqIatiAJuiZqcnB2We1EM=; b=YKnoZehN3QcxntIp
- npaRkFJo+pCIdP7PsSf6aiU608y8m57DQAHzAeEDeXH2TNcdi1MkmYUHyNdiptWl
- c2rjEICo0B3nIa/yUqq7yrXH2JJ4uI0jZjVmvaSL+0iY7vsLnQkGlSYyl6oIsyWc
- Cm8D1GN10DsFEjTLHZ0Tm177Onhq2ILU0P0IYY4hMsBBu2GUasLKH+ek3xsfi6mN
- ZzRbhMqg5016ynytOnN3BlYetZ2Yvx1qh0u7i6WaR4WQ1Q3MNP5Ql4bjAJ9zwrqr
- Aprsn2U3TlyMa3qwVkTcCfHnfJmWysDPQpfNLWr3E+MX5K+hWggEUNNnyaS1aM1R
- M4QdBw==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fjuu79fgr-1
+ 3sMR1nC0WJ6g3Wl8rImqyxWn4BZfIUb7CkmDbwhese8=; b=OIcTwHvYWd1ruFIA
+ gnQZKpDvL+OE1LWnZUWbhQhOZpa0hZVXXR7mw3tyIKxdq3/Y3J29o9azhldWZDaS
+ XV2yOJGaGGaKxRUGFf551kY4Qtsp9yeyzqQ5itg4FXOVMRBGwYoZYu7ZRtCCMmci
+ X8d4neZXLf6MdsfpfEoKTY4e/YMhYau/Kht7IWajd/9S9t9vDJz1ND3TMLuf2x1M
+ 5JlYEiBrkVMg5pEcsRRLgKGjAkgwxSrdi6RsdKRNpY5NpCM9uFTXWjkDkRyL3qCv
+ T58Bm63nmrHyPDC3NSPBowcDzcwOEzy6vXYXQXhbFWsIIjVEU/gSB9OnZcxGbR+m
+ 1HAibQ==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fjt799xuw-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 16:09:35 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-5174a23afcbso117412841cf.3
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 09:09:34 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 16:10:11 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51a8db414c7so222355251cf.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 09:10:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784736536; x=1785341336; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1784736571; x=1785341371; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=Cfw08zrS/HQBV5FgdUQoKFEqIatiAJuiZqcnB2We1EM=;
- b=aYDqAyuGqKMhxams7UD6WuAbDHhwV0ndGFFafXE61GRX7pia/SyOm/wFIT0aFJECjS
- +nVXWNI17a/x2rJ9HY6DAJcp/rHYvgEL/MegpenDlwljEUmIy5pWlW0Px41ei6/EWq1T
- cGKxz4V89Aif99uLHsWDFUMjz8VC7bQm3h1JK5iLqe/NanktMmXGxx1uJotMyVkQn6x1
- z3NpmV2U0cscvOF50p6zcjX1WmHy66QQaIQb4ou/e59trfkpxCV8lHekzS7WOt67FYUo
- Mv0Py8osK7yxxkNg1Ll9ognR3/+YmA8AxIg5ECaVyu8XDxR9v1Cy3+zEmr89xlz5LdFA
- dR+Q==
+ bh=3sMR1nC0WJ6g3Wl8rImqyxWn4BZfIUb7CkmDbwhese8=;
+ b=Jsmr+zGaVo1ufIasOeqsMQAxfQBj4r8hllcku8hTOPpyxUehDZKzSqZbWroqB+6XxN
+ H/ipnxETIOvOf5eHz0XdyVCGvqtK70ml76bL0nhmG/sGwsp1Qw9wekfNzv+KXFlquKa1
+ E8hIX1tPlUwAH7QU627g4u04bZlcFHIXYXYfs2/xw+pwL8GFgi9vOwiXrC53jpTJX50o
+ 7vhDklgEDDk3jpvTbm7pdrLHMvc8tK/b8QlG08zhrARIxjel61CIEyUoXJNnDKuT2ZOy
+ GGp61EgNx/FZ3tzuQC006foyjtt963E9Q7O5mjV3yU5B9mcKM47hWuZ0pDXre4+ZiRJe
+ x2iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784736536; x=1785341336;
+ d=1e100.net; s=20251104; t=1784736571; x=1785341371;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Cfw08zrS/HQBV5FgdUQoKFEqIatiAJuiZqcnB2We1EM=;
- b=ZwC71ZqbkQ/pqtTmGNkZXGqMUs4a0u3T2Bcp0oh31zunVDix07Fugf8Ksh82HMdPLQ
- ZWhV0nficwdSEFBhvk2hXupv97am3XsAKCJBdlO+g1dRLMRmRaKp84eZkKM8m5OTG4oy
- cv/whe+ezYAxRNMIet89RRaHmHyVkrIo3L4gyPQNAni3gX1EcxpqtzhKZ7Yy1ATEsr8F
- pxR3/nM1r39vhetQBm5u0P6nF4XaU1P0Fy/k/tXxQivFU/HF9FCSnllMBoGHDoBXxEgz
- 1foFW6Zlyh8uwUaH1MXYyoxmK1+aOJYwMNcNcqo9MO7CgHJkhLL5+t87LVMLyKPEdGLF
- qdHQ==
-X-Gm-Message-State: AOJu0YzxGauo9gu2bbfXr0K7kef1yqkRg6hqHnyZoplgDdV3MBZSWMVD
- H7N+viWpmWDUU4/hKNPqOk69GB1riMWzrn9pihLuQgR2VwM1BLOx4u+NS/Yp63NBalhnDYr6RH0
- SvcXxEeesf5SwW0E+1W8FjhTO5svoO3xDkNfUftax70rdT9HpvBw9ibsB4BKx4qT4MQ==
-X-Gm-Gg: AR+sD12w1N/RYiG3k6J2dkONjvnLcf4wr+uvvoLXiX7fcx2uidfB1aD+Cxaf+u7zSNo
- roHy26FE5/VZ6kv0XPFfgl05cl62vCPsah8i6uahN5ryaNyazKpd3yp/d0Pa4uxI+X8N4E9cpI2
- 8Q4S2hIIr+uBKtFr/MqQcLRXXDgmuxW1ISMYN26dDU3SGguPC4oNFd3B5OhFARNVfWWgX/NCoev
- Avn+ELCPWMTfs/AkOvbWXA5R21DMUvXNbPo7i2SYkl3QHp6kmsugELg8eC7ToMFjPeHWHDrHgTD
- JeRO2/KmGFjOIclfWU98CDuUxNiVcWKJQzc/QImX10vmgICLEgQhryLvBJlKEumRtbE8iAARLo6
- nnjCw+0LnY2pQwi8QfJKpt1wFxeDqER9E6ZGgiY7uEEvVTxdELJHRdAw=
-X-Received: by 2002:a05:622a:11c2:b0:528:3a24:f396 with SMTP id
- d75a77b69052e-5283a24f6c0mr5320371cf.73.1784736536235; 
- Wed, 22 Jul 2026 09:08:56 -0700 (PDT)
-X-Received: by 2002:a05:622a:11c2:b0:528:3a24:f396 with SMTP id
- d75a77b69052e-5283a24f6c0mr5319321cf.73.1784736535198; 
- Wed, 22 Jul 2026 09:08:55 -0700 (PDT)
+ bh=3sMR1nC0WJ6g3Wl8rImqyxWn4BZfIUb7CkmDbwhese8=;
+ b=mHXzM9KcgkucW/+vXdMQrlVBRl2MjUiiCd36E2CIbHSITXFejYZl7QFuLtprEOscxE
+ k8laWclR2HPQFAsVcmljgcz6lAeSYexrSYS8gfSxifLn3sO+uUtfwDJVqRDqtYqWgA6u
+ 4Bqc2HC1lDH9Hxrg8uqgBRbztzd8obsmxRW7r3Yxbbc5xvR3uwRugtP1IexGj0iJBEC9
+ LigV3bbNT5S3fomjUNOuR0qnwbeiUDVeBMKTdelLj4Wwr8VXORPnkWFa+ewviQnbDq75
+ /sWMCwJdvND9HlevtyBUkktt3qPLkZG12hN17X5u8bNnLFbQx/7WEkrHmNSTktPsrsZ+
+ Pk1Q==
+X-Gm-Message-State: AOJu0YzmztSk1CaCa6saBzj/VRHquww9+1SBm3Fn37Y5sfIs+tE4DHMa
+ XN6BjunrtfiRtMv2q7CEX/wbIUvuMrSk3h1LHE/5pwW9bv4zhjAbu1szhWSPg6w2pe4fN80FH+Z
+ U3eSKWmYHVDRSSaOGhWMU/IEU+2TSCcHLLfgfzoex1HyNxMSp/UtHs6lmczYpFhjI/Q==
+X-Gm-Gg: AR+sD13fxO3nFoUT11Nn7GaqV1MJqjaf7w0IyOcrWPTbHA7ws/R+rQ1M6ZrVWJUrXlx
+ 28sxiwt5YdxESAOe0BF2V8l4T7lmRO6Ijr9OjphVR4r4HlAz4R7I8uXyYcPCTjaJtVm4aqyqXpY
+ rhPEct+ea9siD3NcQWeOJKFprBk5LkzHU2NXL6io14IPfsAusyhuTnC+3FgrgXbfViCyN3rtiD2
+ Y9arEZi+KGeG+1gV9VtdOVpQVRt2GggsThCRD+2hGafsyoIJKqSThZSEkn51Rn3lM88vANmR7Kq
+ t7b5Nw9BtyMBOU71EdV36yu6qMfRpOwmqWTvvuoURU4qzYejNfj3HrVi+3d8fw8nrtqg7Zbjnd0
+ PjyV5bvPY0/fgs2NarQo6g5gy9lDICqqujhbti2wSZyqAboPjRBVVmsk=
+X-Received: by 2002:a05:622a:a07:b0:51b:fde4:cd57 with SMTP id
+ d75a77b69052e-5213cec9838mr242945311cf.31.1784736571601; 
+ Wed, 22 Jul 2026 09:09:31 -0700 (PDT)
+X-Received: by 2002:a05:622a:a07:b0:51b:fde4:cd57 with SMTP id
+ d75a77b69052e-5213cec9838mr242944861cf.31.1784736570917; 
+ Wed, 22 Jul 2026 09:09:30 -0700 (PDT)
 Received: from localhost.localdomain (92.171.88.92.rev.sfr.net. [92.88.171.92])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4956b030a64sm57062335e9.3.2026.07.22.09.08.53
+ ffacd0b85a97d-47f85b9a60asm7278089f8f.3.2026.07.22.09.09.29
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 22 Jul 2026 09:08:54 -0700 (PDT)
+ Wed, 22 Jul 2026 09:09:30 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Luc Michel <luc.michel@amd.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v2 4/7] target/microblaze: Set MO_ENDIAN in do_load/do_store
- callers
-Date: Wed, 22 Jul 2026 18:08:04 +0200
-Message-ID: <20260722160807.24031-5-philmd@oss.qualcomm.com>
+Subject: [PATCH v2 7/7] target/microblaze/translate: fix reversed load/store
+ translation
+Date: Wed, 22 Jul 2026 18:08:07 +0200
+Message-ID: <20260722160807.24031-8-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260722160807.24031-1-philmd@oss.qualcomm.com>
 References: <20260722160807.24031-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: eUoJUA1tUXNJ3cno-ZEHVwziSVTYTGJV
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIyMDE1OSBTYWx0ZWRfXz5gN83OBZXaV
- bu1qOCZARJPpBwsA2pbxd95WINzvgJ8x12DKlw2nHy19hURlnF3EnQ4q3VvscTvKNx6pNpojCFo
- v37u4jEZj0YUKn6dyhtnKlII9mpJw2I=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIyMDE1OSBTYWx0ZWRfX7BTQXFxteDAk
- tdAzPMe+jfu6B0FXwnuF06F9HEcSsKxpLLb+Q2HgYyLtjsWYP0/HK1868ebhoZyZ7JpR2WLaY/M
- OSDA0JPXepuT90ZdOPsbG8fbVxElxKhNF965FhuA3+8M+9WajPstf/+/fzkuZEla0aATvETHoUM
- A69QONf1s7MoTVgaa0gx4pAnTwxi+T1OCa2ekWI3BSGN7GyhQH8U6yl4n/Ifo6E5OrgbnoYQOh+
- 8yKj/YwG+UJ16sKVLkpywXo8mtyTIQ88myxcZGi8hyCctskQPAoEXfxqyY0jQRw++FNl9YAeFfe
- pQ+Fq1g/+uzor3GrcffYWrxRxhJoKZYyM+BA18hYpdpjrpuGX6xJhPkY575R0fvmakGwekzIFYf
- O0YlNqCYxha78S8R3b/kXplw/IBt3aCTN4OyosyJetFiK57ktoXsuWsdVeaKZcTPea7C7Kl5EKS
- eY23qluhTi0snTVmieg==
-X-Proofpoint-GUID: eUoJUA1tUXNJ3cno-ZEHVwziSVTYTGJV
-X-Authority-Analysis: v=2.4 cv=JuTBas4C c=1 sm=1 tr=0 ts=6a60eb3f cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=8SOIyxyylBkeE3ShledptA==:17
+X-Authority-Analysis: v=2.4 cv=Sr6gLvO0 c=1 sm=1 tr=0 ts=6a60eb63 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=8SOIyxyylBkeE3ShledptA==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=lN58bEdq_bzK_G3D1aMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=kacYvNCVWA4VmyqE58fU:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=zd2uoN0lAAAA:8 a=EUspDBNiAAAA:8 a=Kki4pL45bOIGBibXXkoA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-ORIG-GUID: 1ssMUivjyF3V3E4g7ZxjZqZ7eLDl4sm1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIyMDE1OSBTYWx0ZWRfX49hZZDTfLsF6
+ xRZOGqh3s1ZSAPcvYlOyXObwFy0SnvSzyX3lnCFwpGB6ABzU2sI2kuge0yLdniGqJi91jaCfdvb
+ VE2aK5/8+rCChbAWFJ/Ob8wmLE3KUATTR/kdCs34vjT4lcSBoB54zBflRMs+ml5PmB2NgNZw+FJ
+ ud1JdRM6GG+AB+VLB4addPxb8LBHck/MOy8hoMhKPdzxwvZYsaSfoXmAmvUmP93p/qaIL4QtKmf
+ SlEHvy7vDosySPDgqn1qT1iK3OvZUdi3f5okkc4pwWL3KQj0CMlJOrUEfwo3PTn02XdladlYk8U
+ viePnXrN+vwWqUgxocsMFYw98ooJltff6qph9HkUslCtS4zm4faXNmmgBb1aO2HQCHR3CZQc9rj
+ bp3PgLNrV3xd/HJnpn8FePmnkdXUBTb6Y2lIkGfqRUt7Ge4jC7LPM7CqoSG2FhlnFtwaOiMPzLm
+ Qi8XlIFsf0pOAqIULCg==
+X-Proofpoint-GUID: 1ssMUivjyF3V3E4g7ZxjZqZ7eLDl4sm1
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIyMDE1OSBTYWx0ZWRfX2wrmht5oT9TI
+ zh7giCLoNFEovmbAi5BSXf50wdltVlH26lPgkjPmRkNGZjOcfghyVDkV740ltqGI5feLZgO5NFQ
+ +nps4dp1rQn+noRQnzGujYcJRJweBk8=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-22_04,2026-07-22_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 suspectscore=0 spamscore=0 adultscore=0
- phishscore=0 clxscore=1015 bulkscore=0 lowpriorityscore=0 malwarescore=0
+ malwarescore=0 suspectscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
+ adultscore=0 clxscore=1015 impostorscore=0 phishscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607220159
 Received-SPF: pass client-ip=205.220.180.131;
@@ -154,68 +154,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Again set the MO_ENDIAN bit in the caller rather than the
-callee, allowing to further simplify.
+From: Luc Michel <luc.michel@amd.com>
 
+Since 36a9529e60e0 the TCGv returned by compute_ldst_addr_type{a,b} for
+the address can be a target register or a constant. However
+do_{load,store} might modify it in the case of a reversed load/store.
+
+Fix this by factoring out the reversed access logic and copying the
+address in a new TCGv_i32 if it needs to be modified.
+
+Fixes: 36a9529e60e0 (target/microblaze: Simplify compute_ldst_addr_type{a,b})
+Signed-off-by: Luc Michel <luc.michel@amd.com>
+[PMD: Return early for tcg_constant_i32() calls]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- target/microblaze/translate.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ target/microblaze/translate.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
-index 3f2de375d97..d4826981913 100644
+index 8c530ed1191..1ad96410598 100644
 --- a/target/microblaze/translate.c
 +++ b/target/microblaze/translate.c
-@@ -716,8 +716,6 @@ static bool do_load(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
- {
-     MemOp size = mop & MO_SIZE;
+@@ -617,7 +617,10 @@ static TCGv_i32 reverse_ldst_addr(TCGv_i32 addr, MemOp mop)
+      */
  
--    mop |= mo_endian(dc);
--
-     /*
-      * When doing reverse accesses we need to byteswap the data
-      * lanes on the way back into the CPU core.
-@@ -749,13 +747,13 @@ static bool do_load(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
- static bool trans_ld_typea(DisasContext *dc, arg_typea *arg, const MemOp mop)
- {
-     TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_load(dc, arg->rd, addr, mop, dc->mem_index);
-+    return do_load(dc, arg->rd, addr, mop | mo_endian(dc), dc->mem_index);
- }
+     if (mo_size < MO_32) {
+-        tcg_gen_xori_i32(addr, addr, 3 - mo_size);
++        TCGv_i32 new_addr = tcg_temp_new_i32();
++
++        tcg_gen_xori_i32(new_addr, addr, 3 - mo_size);
++        return new_addr;
+     }
  
- static bool trans_ld_typeb(DisasContext *dc, arg_typeb *arg, const MemOp mop)
- {
-     TCGv_i32 addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
--    return do_load(dc, arg->rd, addr, mop, dc->mem_index);
-+    return do_load(dc, arg->rd, addr, mop | mo_endian(dc), dc->mem_index);
- }
+     return addr;
+@@ -637,7 +640,7 @@ static TCGv_i32 compute_ldst_addr_typea(DisasContext *dc, int ra, int rb,
+     } else if (rb) {
+         ret = cpu_R[rb];
+     } else {
+-        ret = tcg_constant_i32(0);
++        return tcg_constant_i32(0);
+     }
+     ret = reverse_ldst_addr(ret, mop);
  
- TRANS(lbu,  trans_ld_typea, MO_UB)
-@@ -839,8 +837,6 @@ static bool do_store(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
- {
-     MemOp size = mop & MO_SIZE;
+@@ -659,7 +662,7 @@ static TCGv_i32 compute_ldst_addr_typeb(DisasContext *dc, int ra, int imm,
+     } else if (ra) {
+         ret = cpu_R[ra];
+     } else {
+-        ret = tcg_constant_i32(imm);
++        return tcg_constant_i32(imm);
+     }
+     ret = reverse_ldst_addr(ret, mop);
  
--    mop |= mo_endian(dc);
--
-     /*
-      * When doing reverse accesses we need to byteswap the data
-      * lanes on the way back into the CPU core.
-@@ -872,13 +868,13 @@ static bool do_store(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
- static bool trans_st_typea(DisasContext *dc, arg_typea *arg, const MemOp mop)
- {
-     TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_store(dc, arg->rd, addr, mop, dc->mem_index);
-+    return do_store(dc, arg->rd, addr, mop | mo_endian(dc), dc->mem_index);
- }
- 
- static bool trans_st_typeb(DisasContext *dc, arg_typeb *arg, const MemOp mop)
- {
-     TCGv_i32 addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
--    return do_store(dc, arg->rd, addr, mop, dc->mem_index);
-+    return do_store(dc, arg->rd, addr, mop | mo_endian(dc), dc->mem_index);
- }
- 
- TRANS(sb,   trans_st_typea, MO_UB)
 -- 
 2.53.0
 
