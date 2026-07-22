@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22AEDC4453C
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 17:06:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9231FC44532
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 17:07:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmaOE-0005EG-0s; Wed, 22 Jul 2026 13:05:50 -0400
+	id 1wmaOT-0005J6-0w; Wed, 22 Jul 2026 13:06:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wmaO5-0005Co-Hh
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 13:05:41 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wmaO7-0005DH-EW
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 13:05:44 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wmaO3-0001Zw-78
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 13:05:41 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4954a2e73a9so36469695e9.3
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 10:05:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wmaO5-0001ax-I2
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 13:05:43 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-493f75f7172so99490865e9.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 10:05:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1784739938; x=1785344738; darn=nongnu.org;
+ d=openvz.org; s=google; t=1784739940; x=1785344740; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=7pAFxtzfR1kXmS5OJ99MnGy/nFG6E2fuCMA2MDYotSI=;
- b=rNuPAx453FfBIvjARgpu4wf93+8uoVdf2jexSPMm51qvam1e5cPupH1tasBuL4qQL0
- CaoRr/CxZ1s9HofRO8NjxRaLz0Qk118mbYPvK9Z2JkvbLDJQV5eSfXQe4tfZBK2wBNEz
- BTMf9KNRjFiJ0AEEAz/95Xk+HutoSGb+C/ojL5kCLFPxBttatJGjVGoOjVqKkkJHwHQG
- Zwj8/MV6Me0dussx+oSU7gXYy3W7NfWlE3THuPYn4JjyKQGGLJWDZsDt09d8V5F0sAO0
- qrl/4duaHU0st9dI6FfGHeXwjbPy4oRntWl08P3/7eDSyCKgU7nVy6yFvf3IEazrmd4O
- JKAg==
+ bh=c49tA2kmkgqkYuO/8OxNBkqfpXW7FHoFYG45qhc9Iks=;
+ b=HYFKExrTam6DtA/g4VzX6Iu9DPC/Rkq1Gpu9gdLADaS6R4O168IX198r9eFM/EH+dJ
+ 68r/ih82GCBbHNzODfcix+f2nDVYEhhcvgzpERarHujD4o+OFQrSy4chc2h7PpSGWoqW
+ TY0CWl49kzRJVpIv2vfDgJuqqt1v+jSQRok26nTBvtNZ2cUZGiarvJpn69SrcOH70dCC
+ U729lcPbTNlzLTe7pwBJglMEqzTqw6rwEenug8qoUpPSs7B3f3c0A8Y/p+z1WJaORIRL
+ d4RHl7epbI8VfUjtG0CYXUENdn8bMg8Htz817YEUp5pvkvwV20Bo6fGxxvubvmQrNUry
+ oUtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784739938; x=1785344738;
+ d=1e100.net; s=20251104; t=1784739940; x=1785344740;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=7pAFxtzfR1kXmS5OJ99MnGy/nFG6E2fuCMA2MDYotSI=;
- b=Km6ct+QIIjTHf6L9eBP7d1FPoLt1Ji1d865XVPxYPDamYSEnHGbHDIYjzmzPcghTk0
- w5NarzmwPVJtPzmILJf8DcFtBDFnAcaFVWg1I+0Te2hb6qjQ99Yr9hYQGvOPAhNl4yvC
- 15aYEX9vZ2TCwKBYYbXO7Z60cO1cHg/B8TK4fnjhhq7OKmDLopUE9t+Xf3CUiyv/WQSa
- q04bQS0q15V18SlOeqL/hilBG6fOknb8RFO7XwY9pg0NGWJwuI5IDu0BCgOVwvZ9mbi+
- 9Qof2EOBydGBexc7DfECU5S6S03m8td162tXTRGpCzKh+AGm7mpLW6nyQHD38GVNEOWH
- XpyQ==
-X-Gm-Message-State: AOJu0YzYbri2S4WBKdsqgfaAWeUMBFY3memDuxSBhGI3L9lfww3OBpoK
- NzXiNskemrFsft+suzz2XD6Oo83I+FmTHaxMeMd4JmAn/uqrkouj42keo4M4xJjSTZ0Pe9522OO
- 6vSUx
-X-Gm-Gg: AR+sD12Jxy1i6xgSDcKsDNsGPDeeOj8aL4Ptjb3JUDeiYIM32I7KcF9Q3ada0F+qMDc
- 6HfDPs23MSmOhroPNGz+uMFc2dbyuEfxCjQy+G9AL51zwcinF/ROE0vr9hooGazlCkdKtBlQ7qV
- 5R6ODFFeA+dGYO8ch2PcvS26Rtj92kd0D2fCbZIimW0tascm84E99ESQs423t/QBNXALHSoRvE1
- 0cmFJOCXcpO5kLh7WCiAjFKgHMPcdHLGrPoPtnjXMXqo5elZaMdLHpgcsv/3mu8X7rWW4UBodup
- wFq1c0lOipmU/q/QnYk0IzQzEw4DcJ6TpYhbhBaA/SGNl4Nh95jE4JMvHYVWHUraZoCIVjKSwmB
- HZrmSWi+JeYwrr1/Hf9FrjTNUE2A8iGnTFQYwdVg2uHAujprlCIIJYX3IUJ+Yg3Ys2ekOe9zVjU
- p4SXNSYH29mg==
-X-Received: by 2002:a05:600c:574d:b0:492:4a50:41fe with SMTP id
- 5b1f17b1804b1-4954a405e58mr190434835e9.22.1784739937725; 
- Wed, 22 Jul 2026 10:05:37 -0700 (PDT)
+ bh=c49tA2kmkgqkYuO/8OxNBkqfpXW7FHoFYG45qhc9Iks=;
+ b=mUaMdN83lTP47GfO0ZJJQS+ikvW34YD3M1IdKWn17+6zuDM/WL0DoXqdUo+1WDMbMC
+ xPjvEJcO1XijN5W05AuxIovEnB7pgr8SLP4TGIvK6AZspIttKK3Yi2LxFyxpiWO/5W6J
+ rOWqday9QxqMf7WQ28Jy7GYUaDnCDj+sVV2Dj1Nloa2PA0SNAHKd43Xb9zPpcFl7mHP/
+ Jq9z+dSZFsVZRTVe0rGOTKmO5W3NCRBsgEOgf6PW8ET/h/4hI3jp6VP/i9j2V/nzRJL9
+ 2Q/XXi9qUPk3XimasAQChcw9yt+LJOxdThXLkjqiGtee3tvFTM1eRwpJOqYcEe4T9TJY
+ +E6A==
+X-Gm-Message-State: AOJu0Yxyz6/AzRkY6Ey4clRcNRf7CigNAlID5diFVcISmAOM/QLJuAJv
+ Qcf7tjcpqgonqQvuOxmvGKD29uX6f7exmhNRvO79YP2KiJCzDLEf4Tt9LPJi09GWM4pg3ujzd11
+ jUW0a
+X-Gm-Gg: AR+sD12uBo++ZdItCRvI8VTvxOkjPBBImmimoeqo3M2HqqR15IEy5hwujklszFHUNy1
+ AoS6fH1FBQOJm3IZ203ASB+zKPvke028oG7pj7YyfFzg25GXhPFwO0S2RGkFgd6/HaipmHesa9k
+ xITOtNfwl5kYHXT8rnTePNFFnpNYhhNo1AD0UNtZV4aoskfbWLVCoJdM5YChl+Q29aCnV8BlDgU
+ +7fxv3RWr+H4V80CITNL6LQ6QNWloZB1g/u/aa8+Y26orovYD62aBwuLzUXqYanz0vgF+tGcTu/
+ lAFfnEdgL6M1YkaWcDzPYv5hNYwFa41oNFHPkvOq9znq7IdPdk6v+GvqES5F+TNg/7oPvv7mTS5
+ tMW3KpAYt04QmPMQlnyh0a9ya5JHvuj6tvtHPKQF3TbvgE7Fj15z9djpaathTiUTIhGeNzSuapN
+ U=
+X-Received: by 2002:a05:600c:1d25:b0:495:6c44:633f with SMTP id
+ 5b1f17b1804b1-4956c4463c8mr37143635e9.31.1784739939918; 
+ Wed, 22 Jul 2026 10:05:39 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:9c54:c407:8170:580d])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4956b7483f0sm63993215e9.3.2026.07.22.10.05.36
+ 5b1f17b1804b1-4956b7483f0sm63993215e9.3.2026.07.22.10.05.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Jul 2026 10:05:37 -0700 (PDT)
+ Wed, 22 Jul 2026 10:05:39 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org,
 	qemu-block@nongnu.org
-Cc: den@openvz.org, Thomas Huth <thuth@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH 6/9] parallels: skip loading a genuinely empty bitmap L1 table
-Date: Wed, 22 Jul 2026 19:05:24 +0200
-Message-ID: <20260722170527.2593225-7-den@openvz.org>
+Cc: den@openvz.org, Feifan Qian <bea1e@proton.me>,
+ Thomas Huth <thuth@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PATCH 8/9] parallels: validate BAT capacity against advertised disk
+ size
+Date: Wed, 22 Jul 2026 19:05:26 +0200
+Message-ID: <20260722170527.2593225-9-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260722170527.2593225-1-den@openvz.org>
 References: <20260722170527.2593225-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=den@openvz.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=den@openvz.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,52 +101,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-parallels_load_bitmap_data() unconditionally calls
-bdrv_dirty_bitmap_deserialize_finish() even when there is nothing to
-deserialize, which hits an assertion in hbitmap
-(hbitmap_iter_init: 'pos < hb->size') when the bitmap itself has
-zero size, i.e. the disk is a zero-sector image.
+parallels_open() copied nb_sectors, tracks, and bat_entries from the
+image header without checking that the BAT actually covers the
+advertised virtual disk size. An image whose header claims more
+sectors than its BAT covers passes the generic block-layer bounds
+check on open. A write into the gap between BAT coverage and the
+advertised size then reaches allocate_clusters(), whose internal
+assert(idx < s->bat_size && idx + to_allocate <= s->bat_size) aborts
+the process instead of returning a normal I/O error.
 
-Skip allocating, populating and loading the L1 table entirely when
-l1_size == 0. This is safe only because the previous commit already
-guarantees l1_size == 0 exclusively means the disk has 0 size.
+Reject such images at open time by requiring
+bat_size * tracks >= total_sectors, matching the invariant that
+allocate_clusters() already assumes.
 
+Reported-by: Feifan Qian <bea1e@proton.me>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3804
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 CC: Thomas Huth <thuth@redhat.com>
 CC: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- block/parallels-ext.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ block/parallels.c                             |  6 ++++++
+ tests/qemu-iotests/tests/parallels-checks     | 21 +++++++++++++++++++
+ tests/qemu-iotests/tests/parallels-checks.out |  7 +++++++
+ 3 files changed, 34 insertions(+)
 
-diff --git a/block/parallels-ext.c b/block/parallels-ext.c
-index 97744c9696..704e16e1de 100644
---- a/block/parallels-ext.c
-+++ b/block/parallels-ext.c
-@@ -168,14 +168,17 @@ parallels_load_bitmap(BlockDriverState *bs, uint8_t *data, size_t data_size,
-         goto fail;
+diff --git a/block/parallels.c b/block/parallels.c
+index 8a7e8b4aba..93b5fa9dcd 100644
+--- a/block/parallels.c
++++ b/block/parallels.c
+@@ -1328,6 +1328,12 @@ static int parallels_open(BlockDriverState *bs, QDict *options, int flags,
+         return -EFBIG;
      }
  
--    l1_table = g_new(uint64_t, bf.l1_size);
--    for (i = 0; i < bf.l1_size; i++, data += sizeof(uint64_t)) {
--        l1_table[i] = ldq_le_p(data);
--    }
-+    if (bf.l1_size != 0) {
-+        l1_table = g_new(uint64_t, bf.l1_size);
-+        for (i = 0; i < bf.l1_size; i++, data += sizeof(uint64_t)) {
-+            l1_table[i] = ldq_le_p(data);
-+        }
++    if ((uint64_t)s->bat_size * s->tracks < bs->total_sectors) {
++        error_setg(errp, "Invalid image: Catalog size too small for "
++                   "advertised disk size");
++        return -EINVAL;
++    }
++
+     size = bat_entry_off(s->bat_size);
+     s->header_size = ROUND_UP(size, bdrv_opt_mem_align(bs->file->bs));
+     s->header = qemu_try_blockalign(bs->file->bs, s->header_size);
+diff --git a/tests/qemu-iotests/tests/parallels-checks b/tests/qemu-iotests/tests/parallels-checks
+index eef1c86809..66199fff1a 100755
+--- a/tests/qemu-iotests/tests/parallels-checks
++++ b/tests/qemu-iotests/tests/parallels-checks
+@@ -225,6 +225,27 @@ echo "== an unallocated cluster still reads as zeroes =="
+ # Clear image
+ _make_test_img $SIZE
  
--    ret = parallels_load_bitmap_data(bs, l1_table, bf.l1_size, bitmap, errp);
--    if (ret < 0) {
--        goto fail;
-+        ret = parallels_load_bitmap_data(bs, l1_table, bf.l1_size, bitmap,
-+                                         errp);
-+        if (ret < 0) {
-+            goto fail;
-+        }
-     }
++echo "== TEST OVERSIZED VIRTUAL DISK CHECK =="
++
++BAT_ENTRIES_OFFSET=32
++NB_SECTORS_OFFSET=36
++
++TRACKS=$(peek_file_le $TEST_IMG $CLUSTER_SIZE_OFFSET 4)
++BAT_ENTRIES=$(peek_file_le $TEST_IMG $BAT_ENTRIES_OFFSET 4)
++COVERED_SECTORS=$((BAT_ENTRIES * TRACKS))
++
++echo "== advertise one more cluster than the BAT covers =="
++poke_file_le "$TEST_IMG" $NB_SECTORS_OFFSET 8 $((COVERED_SECTORS + TRACKS))
++
++echo "== open must fail cleanly instead of aborting =="
++{ $QEMU_IMG info "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
++
++echo "== write into the uncovered range must fail cleanly too =="
++{ $QEMU_IO -c "write -P 0x41 $((COVERED_SECTORS * 512)) $CLUSTER_SIZE" "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
++
++# Clear image
++_make_test_img $SIZE
++
+ echo "== TEST BAT ENTRY POINTING OUTSIDE IMAGE =="
  
-     /* We support format extension only for RO parallels images. */
+ echo "== corrupt image: point first cluster far outside the file =="
+diff --git a/tests/qemu-iotests/tests/parallels-checks.out b/tests/qemu-iotests/tests/parallels-checks.out
+index 86d5b6ac2d..7b73498271 100644
+--- a/tests/qemu-iotests/tests/parallels-checks.out
++++ b/tests/qemu-iotests/tests/parallels-checks.out
+@@ -147,6 +147,13 @@ Child node '/file':
+ read 1048576/1048576 bytes at offset 0
+ 1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4194304
++== TEST OVERSIZED VIRTUAL DISK CHECK ==
++== advertise one more cluster than the BAT covers ==
++== open must fail cleanly instead of aborting ==
++qemu-img: Could not open 'TEST_DIR/t.parallels': Invalid image: Catalog size too small for advertised disk size
++== write into the uncovered range must fail cleanly too ==
++qemu-io: can't open device TEST_DIR/t.parallels: Invalid image: Catalog size too small for advertised disk size
++Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4194304
+ == TEST BAT ENTRY POINTING OUTSIDE IMAGE ==
+ == corrupt image: point first cluster far outside the file ==
+ == read-only read must return zeroes, not an I/O error ==
 -- 
 2.53.0
 
