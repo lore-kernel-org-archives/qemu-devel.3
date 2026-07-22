@@ -4,105 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 229BDC44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 09:04:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1F54C44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 09:27:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmSs3-0003DA-NC; Wed, 22 Jul 2026 05:04:07 -0400
+	id 1wmTER-0006wi-MZ; Wed, 22 Jul 2026 05:27:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1wmSs2-0003Cg-2X
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 05:04:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wmTEQ-0006v4-Ov; Wed, 22 Jul 2026 05:27:14 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1wmSs0-00023i-As
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 05:04:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784711042;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JrgpIi0HNbumg/z9ek8Waym9B+6vmB3/xyREI80w94U=;
- b=Bu6loNR/x3dff3l1Zr8A/NjA3U2f3BEgqpkX5xshJ0A/ciCY8dnZI9/i80qthSkeFNWV6v
- bBu8PDUdXKtedpbqzYcztFLkQAyILdfVUGVYRxnYCFAfnNJgVzdguExqtXrsrqZXMbfkOL
- w0PeX+GQbGno1lswESwdkWRtFwPXK5Y=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-498-YGyQsdEQMMSlWQBSljFEdg-1; Wed, 22 Jul 2026 05:04:00 -0400
-X-MC-Unique: YGyQsdEQMMSlWQBSljFEdg-1
-X-Mimecast-MFC-AGG-ID: YGyQsdEQMMSlWQBSljFEdg_1784711039
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4954a93c565so33340785e9.2
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 02:04:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784711039; x=1785315839; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=JrgpIi0HNbumg/z9ek8Waym9B+6vmB3/xyREI80w94U=;
- b=WyfdLy7SEXZCLTnbASIPMMRAPFaMMgdE05dYkFZ5qjpiKMwQDOQqmneOs4CuLz36fi
- 3qTaOpciXNldyEEkT1DzHS6gYq12tCMYLs1b/sTLFqN6XrfGLqSxlnGcbyc0To9aBrdu
- d6cyEX7bZbuj8mm1CunQksLvmbauE9qxYN6aLMBWJEg+qo071vK+l/P+af+eKoxsFzFb
- cDPQHz27znr07tf8SJC091OHoUIGmLLLbzLNwxQSGsN2dnDOxdc6uQAw6m7yWbz6KQl6
- mhRgnVSoaJ1WZwI5dryOS9uJmwVfGLQKDZNWCN+EaH7oF7aFiCTYRF7rFb5LRDYOos0p
- FMnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784711039; x=1785315839;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=JrgpIi0HNbumg/z9ek8Waym9B+6vmB3/xyREI80w94U=;
- b=q/SjzAbF8DrjHLZYS988gDNCdszla7j+xw2yeWp0omS7zUrdbusW7m9RL8Z+G+Lq5c
- PJSlkp5UvlD9KoldvPfEtki6jxb8cazBVq58YB8sUrUDlVg4GDnXBVJA/OmI4fs9wQTu
- vmgQTt0MSigVy3FemPDCaQbZlIjtKJfosYUBeELdCGmVzxWVkydvcUNut2qssHLjWXBP
- GfFzIqItlJs38na42oAd2OZzPEmwW+55uhPuCxqyx/55WB7Scpv9xue0+BN15MyqQIHo
- ytu8bE/4YvMvqoym6fpHjjYvML6ta1rZVBcPbhRRdzz4qbyJjIVgl+imHkV+L9m1A5sW
- tK8A==
-X-Gm-Message-State: AOJu0YzwQiQgMUNGHFg9pheqhXg37HHTPnx8vii8upWnE9ZBQAPjL640
- RR0To23/tgcH/iGasJp+MrXjsGf9gvSRUKtHmHsVmVvJSv8yy5wNRhmJSgEzj2j8hlC8GIu2p1q
- kOAbDmr0lp9M0GWWxKc12Hw0NQXbM9YGEZPY8q/1VbNyWRWYx1OQqN8bc
-X-Gm-Gg: AR+sD13YYkPpEKttSPuZD1xYxjKAOenlV4ZoqHWBeN9B+Uap5QqdXZVAvLLR0ujoR3y
- u+YI793lV7454+KW3e3L7yr9I28QkMhdEKQTMBqNxJit6N7oFW+Wb/A0w0jQle3ZC/fzVyhxRNc
- 6wL81sO5f9xA6b8kNakH2cjHlNtmjHNZQFj6LjKHuSzlromsJMovUhgGtB4H66A0MLVcWWyezvp
- Jm3WToXxqyRWIFDb4oRNyYAAbOZpnY8RgoQx+tHZ8v7pLeOiqxCzB0bwqBFTGlGGQbzN0qBTpyK
- r6fbuKM5BbLLbF0Jp0qt0le7IdYd6KEU2AH7HUUYRDJ6asnoqod4psQXQS5J9KPy/6DvJXM/wk7
- 0ZZs1ef0402yLw5UgY37dk61vImMr4QGq1ARO
-X-Received: by 2002:a05:600c:4746:b0:495:4d07:4fcb with SMTP id
- 5b1f17b1804b1-4954d0784c6mr227222125e9.36.1784711039263; 
- Wed, 22 Jul 2026 02:03:59 -0700 (PDT)
-X-Received: by 2002:a05:600c:4746:b0:495:4d07:4fcb with SMTP id
- 5b1f17b1804b1-4954d0784c6mr227221645e9.36.1784711038762; 
- Wed, 22 Jul 2026 02:03:58 -0700 (PDT)
-Received: from leonardi-redhat ([151.29.41.106])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85bd77a9sm4117179f8f.14.2026.07.22.02.03.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Jul 2026 02:03:58 -0700 (PDT)
-Date: Wed, 22 Jul 2026 11:03:56 +0200
-From: Luigi Leonardi <leonardi@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, mcascell@redhat.com
-Subject: Re: [PATCH v4 0/6] hw/uefi: security fixes
-Message-ID: <amCHXsudpi4S7LeR@leonardi-redhat>
-References: <20260720143244.821889-1-kraxel@redhat.com>
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wmTEO-00054y-Rl; Wed, 22 Jul 2026 05:27:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=JV+6R3Z+uApSS66FpMIjveS11Gn6G09dxlql/5NK+qU=; b=mieZ9XUeuUFykIfBZdy1HX8mIy
+ nLVbfEKN37uV1TRpimjAd/UHAVSz6ol98cz5L9eBjWUTpi9IgSsfr1Tr9+IUlcS5iXKgqCUly61LN
+ 0T4hu2jo5fqc8ePA3ATMlYAnE//i7xa+tZ8R9u/t9cGKkrbLfATellY+2uXwdvFpGJKSURRDK4bUy
+ Nq4bhnfyTu1g801yGb7A/TcSvmusfE2OMZQw5SIq4LOvtwpi3yrfihPQenwG0YR2ifR4Jk/1VC2+5
+ aDoi9nNdGvQHCPJTPPgiK2FHKuhtg03WPSiDPBZunhYa5g8IeueGUxtfz9WKa0p9mdQmbFdwgVu9x
+ jkVYfgAGqKuRw1U4yaIlTtP06hJhhOeHzRxov88KlBrE73sf+eO0koQiZu2EYZeyY5ZSdqttKL9WV
+ pQtF97ypsopiuY3CRBRjwMnen6WNJk6MhVCwbHGP6wJtdto2zUDNDQOZYJakiS3tWxU4z73oXhipr
+ obdI1Wqkabm8BWMXbtvk6vdEgpHhtgmVRrW60XpSmh4CPr1k9c7TQAXBsz2sUGZgkhMAii2uxlG7i
+ C0q8U+CPHsqES13eZgnzUbSQDVfh3JMiQuarKBpaQXvj/w14hVTFbktnLRMEpxSv2rdi/dJNyMp5q
+ nDn8cF3knFQE0bzZV0i3eUnUBCKYN2rFiGX//YrL0=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: Stefano Stabellini <sstabellini@kernel.org>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>, 
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: Re: [PATCH v2 2/2] hw/9pfs/xen: drain in-flight PDUs before xen-9p
+ disconnect
+Date: Wed, 22 Jul 2026 11:27:08 +0200
+Message-ID: <6012362.DvuYhMxLoT@weasel>
+In-Reply-To: <afbe101f9fef3110d79023c604be0b28006cfb60.1784392605.git.qemu_oss@crudebyte.com>
+References: <cover.1784392605.git.qemu_oss@crudebyte.com>
+ <afbe101f9fef3110d79023c604be0b28006cfb60.1784392605.git.qemu_oss@crudebyte.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20260720143244.821889-1-kraxel@redhat.com>
-Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=leonardi@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,35 +70,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 20, 2026 at 04:32:36PM +0200, Gerd Hoffmann wrote:
->v4:
-> - add fix for CVE-2026-16288
-> - fix format string (Luigi).
->v3:
-> - just drop debug function instead of trying to fix it.
-> - add three more CVE fixes.
->
->Gerd Hoffmann (6):
->  hw/uefi: add sanity check
->  hw/uefi: remove debug function
->  hw/uefi: check lower limit for signature list size
->  hw/uefi: account variable policy entries against storage size
->  hw/uefi: add post_load checks
->  hw/uefi: make SetupMode read-only
->
-> hw/uefi/var-service-auth.c    |  7 ++++
-> hw/uefi/var-service-core.c    | 14 +++++++-
-> hw/uefi/var-service-json.c    |  5 +++
-> hw/uefi/var-service-policy.c  | 68 ++++++++++++++++-------------------
-> hw/uefi/var-service-siglist.c |  3 ++
-> hw/uefi/var-service-vars.c    | 19 ++++++++++
-> 6 files changed, 78 insertions(+), 38 deletions(-)
->
->-- 
->2.55.0
->
->
+Hi Stefano,
 
-Acked-by: Luigi Leonardi <leonardi@redhat.com>
+chance that you might be looking at this v2 Xen patch soon? If not, just let 
+me know, then I'll send out a PR with other fixes piled up on my side in the 
+meantime, as QEMU release window narrows.
+
+/Christian 
+
+On Saturday, 18 July 2026 18:50:06 CEST Christian Schoenebeck wrote:
+> The xen-9p disconnect path has two issues:
+> 
+> 1. It frees the Xen9pfsRing structures while in-flight PDUs may still
+>    reference them via pdu->tag to index rings[]. This causes a UAF
+>    in xen_9pfs_push_and_notify() when worker threads resume after
+>    completing filesystem operations.
+> 
+> 2. It never calls v9fs_device_unrealize_common(), which means server
+>    state (struct LocalData, mountfd, FIDs) is never cleaned up on
+>    disconnect, causing a resource leak on every guest-initiated
+>    disconnect.
+> 
+> Fix both by draining in-flight PDUs via v9fs_reset() before tearing
+> down rings, and calling v9fs_device_unrealize_common() to clean up
+> server state.
+> 
+> Additionally, explicit calls of xen_9pfs_disconnect() in the error
+> paths of xen_9pfs_pdu_vmarshal() and xen_9pfs_pdu_vunmarshal() must
+> be deferred (via aio_bh_schedule_oneshot()), because
+> xen_9pfs_pdu_v(un)marshal() are running within a coroutine context
+> which makes them unsafe [1] for calling v9fs_reset() directly, as
+> the latter e.g. has a loop like:
+> 
+>     while (!QLIST_EMPTY(&s->active_list)) {
+>         aio_poll(qemu_get_aio_context(), true);
+>     }
+> 
+> which would a) never terminate (as the coroutine is on the
+> active_list) and b) aio_poll() is marked as no_coroutine_fn.
+> 
+> [1] https://lore.kernel.org/qemu-devel/3351181.5fSG56mABF@weasel/
+> 
+> And finally, add an idempotent guard to xen_9pfs_disconnect(),
+> just for the case.
+> 
+> Fixes: b37eeb0201 ("xen/9pfs: introduce Xen 9pfs backend")
+> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> ---
+>  hw/9pfs/xen-9p-backend.c | 19 +++++++++++++++++--
+>  1 file changed, 17 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
+> index 24c90d97ec..edb65a7afc 100644
+> --- a/hw/9pfs/xen-9p-backend.c
+> +++ b/hw/9pfs/xen-9p-backend.c
+> @@ -68,6 +68,11 @@ typedef struct Xen9pfsDev {
+> 
+>  static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev);
+> 
+> +static void xen_9pfs_disconnect_bh(void *opaque)
+> +{
+> +    xen_9pfs_disconnect(opaque);
+> +}
+> +
+>  static void xen_9pfs_in_sg(Xen9pfsRing *ring,
+>                             struct iovec *in_sg,
+>                             int *num,
+> @@ -150,7 +155,8 @@ static ssize_t xen_9pfs_pdu_vmarshal(V9fsPDU *pdu,
+>                        "Failed to encode VirtFS reply type %d\n",
+>                        pdu->id + 1);
+>          xen_be_set_state(&xen_9pfs->xendev, XenbusStateClosing);
+> -        xen_9pfs_disconnect(&xen_9pfs->xendev);
+> +        aio_bh_schedule_oneshot(qemu_get_aio_context(),
+> +                                xen_9pfs_disconnect_bh, &xen_9pfs->xendev);
+> }
+>      return ret;
+>  }
+> @@ -173,7 +179,8 @@ static ssize_t xen_9pfs_pdu_vunmarshal(V9fsPDU *pdu,
+>          xen_pv_printf(&xen_9pfs->xendev, 0,
+>                        "Failed to decode VirtFS request type %d\n",
+> pdu->id); xen_be_set_state(&xen_9pfs->xendev, XenbusStateClosing);
+> -        xen_9pfs_disconnect(&xen_9pfs->xendev);
+> +        aio_bh_schedule_oneshot(qemu_get_aio_context(),
+> +                                xen_9pfs_disconnect_bh, &xen_9pfs->xendev);
+> }
+>      return ret;
+>  }
+> @@ -368,10 +375,18 @@ static void xen_9pfs_evtchn_event(void *opaque)
+>  static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev)
+>  {
+>      Xen9pfsDev *xen_9pdev = container_of(xendev, Xen9pfsDev, xendev);
+> +    V9fsState *s = &xen_9pdev->state;
+>      int i;
+> 
+> +    if (!xen_9pdev->rings) {
+> +        return;
+> +    }
+> +
+>      trace_xen_9pfs_disconnect(xendev->name);
+> 
+> +    v9fs_reset(s);
+> +    v9fs_device_unrealize_common(s);
+> +
+>      for (i = 0; i < xen_9pdev->num_rings; i++) {
+>          if (xen_9pdev->rings[i].evtchndev != NULL) {
+>             
+> qemu_set_fd_handler(qemu_xen_evtchn_fd(xen_9pdev->rings[i].evtchndev),
+
+
+
 
 
