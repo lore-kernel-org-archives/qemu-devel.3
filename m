@@ -4,50 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F9BEC44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:56:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BD1AC44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:57:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWPZ-00088j-ED; Wed, 22 Jul 2026 08:50:57 -0400
+	id 1wmWQd-0002Bp-Pu; Wed, 22 Jul 2026 08:52:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWNz-000424-8x; Wed, 22 Jul 2026 08:49:23 -0400
+ id 1wmWQO-0001YG-50; Wed, 22 Jul 2026 08:51:49 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWNw-0001up-2x; Wed, 22 Jul 2026 08:49:18 -0400
+ id 1wmWQM-0002MC-2v; Wed, 22 Jul 2026 08:51:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724390; bh=pQlmvh05+nKTY0hF0+TKy7QiDoandcqzhWUgTD9/tXE=;
+ t=1784724574; bh=d5kglI1MqnONfrBHBTIre/pXwXtqFL5heBdzevbDvl4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=mnUUwrKOV4Pwh2BJ+rCKd6laqvNGs6s0oMKuvDyFrS33P//ZBu5d64ijnuRuTKg9G
- krRhR+LvEXgQV5CQvAcxWakn07nk+kd0C3uxeR3xRloKOTLrBOJJJF/33KfNKYDrPd
- tPhPFZ0+Uo2kdW5MCeG7Sy+C1ZwAr6bTBpUw7myZWZlhKLL3UfQhSHe4tfZQp8RCEi
- l6FNmB1yvCt72oGSJi1WqsDMI+G16J5XYe4ihd535TrRGr1nyK/TJ5hP+uSHBBQWFH
- wrRm5fr48g83DsGOXaZgobDIy765sOqJXNa9HoOuiS2o8R4lgGIsEj5zXoscQuODQK
- JlOw1xwoC8OmQ==
+ b=kptRXORfHLCGhvUH8s2lafXeGM95m6ByKjPt3wM7PVItV9YNMzQoLAMlZ2GXSOD/u
+ jstXqyYTYDZPv+poyUVlMJUVZ2xR2fMT80tDCDESZX1KJrbCPynSXMOR2T6UMSvXUQ
+ WXpuoFugjUyr8LNllU3kiB681iQD/6z5wHiSCWP64WGar4A34HS/RGrQq3wbA0C8iB
+ 8PZ+3K6CLHl+eG3SGg81msr+4nIW3FQkmIU2rUR8m0ezTb+GUKG3QBmEPKNL2iFrxp
+ V9731FLsynxLUxpHEkXl3s6fLEXpC0ftKVxn9ZW81Yaz5iNEpABULdtgibW0Ovnr2K
+ RqCNB6XUISr0w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CFA1F1C3B12;
- Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 901FE1C3B32;
+ Wed, 22 Jul 2026 15:49:34 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 229143F376C;
- Wed, 22 Jul 2026 15:46:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D814E3F3782;
+ Wed, 22 Jul 2026 15:49:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 7D33317F0D; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id 9B4DC17F39; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- admin@fluentlogic.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 105/122] hw/display/virtio-gpu: cap submit_3d
- command buffer allocation
-Date: Wed, 22 Jul 2026 15:45:54 +0300
-Message-ID: <20260722124622.31034-30-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v2 085/127] hw/usb/dev-wacom: Don't write off end of
+ buffer
+Date: Wed, 22 Jul 2026 15:48:10 +0300
+Message-ID: <20260722124859.32371-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
-References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
+References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,143 +73,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Both virgl_cmd_submit_3d() and rutabaga_cmd_submit_3d() pass the
-guest-controlled cs.size directly to malloc() without bounds checking. A
-malicious guest can set cs.size to an arbitrarily large value, causing
-an OOM abort that crashes the QEMU process.
+In usb_wacom_handle_data() we allocate a buffer with a size
+determined by the transfer size requested by the guest.  We then fill
+it in by calling either usb_mouse_poll() or usb_wacom_poll(), both of
+which functions take a length and return an actual length, which we
+pass to usb_packet_copy().  However, usb_mouse_poll() doesn't check
+the buffer size as it fills in the buffer, so if the guest passes an
+overly short transfer size then it will write off the end of the
+allocated buffer.
 
-Checking cs.size against the descriptor payload length (iov_size) is not
-sufficient: indirect descriptor tables can repeat entries aliasing the
-same guest-physical range, inflating iov_size() to nearly 4 GiB while
-referring to only a small amount of unique memory.
+Check the length is at least big enough for the minimum 3 byte
+packet and return nothing if it is not, as usb_wacom_poll() does.
 
-Instead, cap cs.size at 4 MiB. With 4 KiB pages and QEMU's
-VIRTQUEUE_MAX_SIZE (1024) mapped-iov limit, the Linux virtio driver
-cannot carry more than ~4 MiB of inline command data, so legitimate
-submissions are unaffected.
-
-Fixes: 9d9e152136bd ("virtio-gpu: add 3d mode and virgl rendering support.")
-Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for gfxstream")
-Fixes: d52c454aadc ("contrib: add vhost-user-gpu")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3776
-Reported-by: admin@fluentlogic.org
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-(cherry picked from commit 8720061c6d343c77b4f3a061cce631c05ecc0482)
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3672
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-id: 20260706182034.1003176-1-peter.maydell@linaro.org
+(cherry picked from commit 2c6fae7d7da874615d8585f6d2b16ffb673c5c9a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
-index 51da0e3667f..550fd03bf5c 100644
---- a/contrib/vhost-user-gpu/virgl.c
-+++ b/contrib/vhost-user-gpu/virgl.c
-@@ -202,6 +202,13 @@ virgl_cmd_submit_3d(VuGpu *g,
+diff --git a/hw/usb/dev-wacom.c b/hw/usb/dev-wacom.c
+index 14d07e81281..473ea6a0f70 100644
+--- a/hw/usb/dev-wacom.c
++++ b/hw/usb/dev-wacom.c
+@@ -252,6 +252,10 @@ static int usb_mouse_poll(USBWacomState *s, uint8_t *buf, int len)
+     if (s->buttons_state & MOUSE_EVENT_MBUTTON)
+         b |= 0x04;
  
-     VUGPU_FILL_CMD(cs);
- 
-+    if (cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
-+        g_critical("%s: command buffer too large (%u)",
-+                   __func__, cs.size);
-+        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-+        return;
++    if (len < 3) {
++        return 0;
 +    }
 +
-     buf = g_malloc(cs.size);
-     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-                    sizeof(cs), buf, cs.size);
-diff --git a/contrib/vhost-user-gpu/vugpu.h b/contrib/vhost-user-gpu/vugpu.h
-index 654c392fbbf..2374eb90cb9 100644
---- a/contrib/vhost-user-gpu/vugpu.h
-+++ b/contrib/vhost-user-gpu/vugpu.h
-@@ -22,6 +22,7 @@
- #include "qemu/queue.h"
- #include "qemu/iov.h"
- #include "qemu/bswap.h"
-+#include "qemu/units.h"
- #include "vugbm.h"
- 
- typedef enum VhostUserGpuRequest {
-@@ -163,6 +164,14 @@ struct virtio_gpu_ctrl_command {
-     QTAILQ_ENTRY(virtio_gpu_ctrl_command) next;
- };
- 
-+/*
-+ * With 4 KiB pages and QEMU's VIRTQUEUE_MAX_SIZE (1024) mapped-iov
-+ * limit, the largest inline command is ~4 MiB.  Cap submit_3d
-+ * allocations to this value to prevent a malicious guest from
-+ * triggering an OOM abort via an inflated cs.size field.
-+ */
-+#define VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE (4 * MiB)
-+
- #define VUGPU_FILL_CMD(out) do {                                \
-         size_t vugpufillcmd_s_ =                                \
-             iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num, 0,  \
-diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-index f6eb29472e8..a61454aeb99 100644
---- a/hw/display/virtio-gpu-rutabaga.c
-+++ b/hw/display/virtio-gpu-rutabaga.c
-@@ -351,6 +351,14 @@ rutabaga_cmd_submit_3d(VirtIOGPU *g,
-     VIRTIO_GPU_FILL_CMD(cs);
-     trace_virtio_gpu_cmd_ctx_submit(cs.hdr.ctx_id, cs.size);
- 
-+    if (cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: command buffer too large (%u)\n",
-+                      __func__, cs.size);
-+        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-+        return;
-+    }
-+
-     buf = g_new0(uint8_t, cs.size);
-     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-                    sizeof(cs), buf, cs.size);
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 030b329d5ae..30bf5b5029e 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -486,6 +486,14 @@ static void virgl_cmd_submit_3d(VirtIOGPU *g,
-     VIRTIO_GPU_FILL_CMD(cs);
-     trace_virtio_gpu_cmd_ctx_submit(cs.hdr.ctx_id, cs.size);
- 
-+    if (cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: command buffer too large (%u)\n",
-+                      __func__, cs.size);
-+        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-+        return;
-+    }
-+
-     buf = g_malloc(cs.size);
-     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-                    sizeof(cs), buf, cs.size);
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index a42957c4e2c..156c7457e17 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -15,6 +15,7 @@
- #define HW_VIRTIO_GPU_H
- 
- #include "qemu/queue.h"
-+#include "qemu/units.h"
- #include "ui/qemu-pixman.h"
- #include "ui/console.h"
- #include "hw/virtio/virtio.h"
-@@ -280,6 +281,14 @@ struct VirtIOGPURutabaga {
-     struct rutabaga *rutabaga;
- };
- 
-+/*
-+ * With 4 KiB pages and QEMU's VIRTQUEUE_MAX_SIZE (1024) mapped-iov
-+ * limit, the largest inline command is ~4 MiB.  Cap submit_3d
-+ * allocations to this value to prevent a malicious guest from
-+ * triggering an OOM abort via an inflated cs.size field.
-+ */
-+#define VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE (4 * MiB)
-+
- #define VIRTIO_GPU_FILL_CMD(out) do {                                   \
-         size_t virtiogpufillcmd_s_ =                                    \
-             iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num, 0,          \
+     buf[0] = b;
+     buf[1] = dx;
+     buf[2] = dy;
 -- 
 2.47.3
 
