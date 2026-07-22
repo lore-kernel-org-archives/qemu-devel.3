@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09B62C44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 09:39:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87EBCC4453A
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 09:40:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmTPu-0005zZ-2c; Wed, 22 Jul 2026 05:39:07 -0400
+	id 1wmTR5-0006cf-R8; Wed, 22 Jul 2026 05:40:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmTPo-0005yQ-C6; Wed, 22 Jul 2026 05:39:02 -0400
+ id 1wmTR2-0006bd-8N; Wed, 22 Jul 2026 05:40:16 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmTPl-0006h3-6P; Wed, 22 Jul 2026 05:39:00 -0400
+ id 1wmTR0-0006s7-K7; Wed, 22 Jul 2026 05:40:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784713117; bh=t6z5Ny/6ekG8jHUnlhUboLUGOqdJ1CMqouoB9hm9n3c=;
- h=Date:Subject:To:References:Cc:From:In-Reply-To;
- b=xPmeoDO9KyPNgw5pgLFxDV3SXzXkF4FBEfiPcFafTwFev4GvqTI224Xzb+cWrXvyo
- HLX82Ui7M8H+VBpyFF6LAJ8UwCTLxXtSNRaW24fazcUyFKTSNVz4bSWKSJd+Rayry1
- JnIiyatrfeiwVKuhK/XJ3WMk8TiZBB5wJVpU5M8smJKIFRH4vT87KxfXtKjuTVovZc
- 4gXkiDzTotAKEWvpfBNoLNJ/SilL4ylcbhj/zjY0GdNjTWKc3ETBBiR27mezFL34tM
- NMXdI0vHo2FAppCLKvIHtt9jkYQXeL1a7K0Ht6kAtPpqhrjm0SPVkL7BKT7IfhGOLN
- DtRiUAURYOlgw==
+ t=1784713194; bh=OsdA/yFkfua06AjEzmA38GoTrAYbjXMUZgwCPSXxTIE=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=u19CMzUyF7KbbNHQ2rLyXX6022bM2tUIl2zMioeyO6P1ICWNwvhOL9hiK4CkUt80q
+ xr4dczQ6rIKrptFDnwrmvwikj4fVt/8sm9OBvgLhrQQAQgVjbq30fsl+tgSBgh0VMQ
+ lDdhhcuytvtA8rL2QbO+rYu9UbRqXnFlp0gpFbTYk7Hq6rJMX0pSrSowivJ79dSgI5
+ MvZT2kPGJdy+wJZSJqc/XBcf3Xn6SHTCwpk2Ft4XUEenWB1Er1p6YY9mnbWQzr2LUz
+ Exde43ORZ84fh1CgKikXI63Fd6XfjgdZOUsX++AsQ3LargKuI/vmn6q6UNn0rhBS0B
+ N62rOffbOpg9Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 10B961C3A1F;
- Wed, 22 Jul 2026 12:38:37 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D994F1C3A23;
+ Wed, 22 Jul 2026 12:39:54 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0350A3F3624;
- Wed, 22 Jul 2026 12:38:54 +0300 (MSK)
-Message-ID: <05b2e507-0c87-4f9c-9a1a-846a44bd396a@tls.msk.ru>
-Date: Wed, 22 Jul 2026 12:38:45 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id D7D813F362B;
+ Wed, 22 Jul 2026 12:40:11 +0300 (MSK)
+Message-ID: <63a8ce14-2d30-4ee6-8700-a25a2d52c2bb@tls.msk.ru>
+Date: Wed, 22 Jul 2026 12:40:03 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/display/qxl: validate monitors_config heads[] in
- phys2virt
+Subject: Re: [PATCH] replay: fix use of uninitialized pointer on error
 To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-References: <20260715072722.1643289-1-marcandre.lureau@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, QEMU Stable <qemu-stable@nongnu.org>
+References: <20260719113216.1177594-1-marcandre.lureau@redhat.com>
 Content-Language: en-US, ru-RU
-Cc: QEMU Stable <qemu-stable@nongnu.org>
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
@@ -87,7 +87,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260715072722.1643289-1-marcandre.lureau@redhat.com>
+In-Reply-To: <20260719113216.1177594-1-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -113,52 +113,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/15/26 10:27, marcandre.lureau@redhat.com wrote:
+On 7/19/26 14:32, marcandre.lureau@redhat.com wrote:
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> The qxl_phys2virt() call for guest_monitors_config only validates
-> sizeof(QXLMonitorsConfig), which covers the fixed header (count and
-> max_allowed) since commit 8efec0ef8bbc ("hw/display/qxl: Pass requested
-> buffer size to qxl_phys2virt()"), but not the flexible array member
-> heads[]. When count == 1, heads[0] is accessed without its memory being
-> validated, allowing a guest to cause an out-of-bounds read.
+> When bdrv_snapshot_list() returns a negative error code, sn_tab is
+> uninitialized. The loop does not execute (since i=0 < negative is
+> false), but the code falls through to g_free(sn_tab) which frees
+> an uninitialized pointer.
 > 
-> Include sizeof(QXLHead) in the size passed to qxl_phys2virt() so that
-> the first head entry is validated within the guest memory slot, preventing
-> guest-visible memory reading.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4027
-> Reported-by: Tristan @TristanInSec
+> Fixes: f6baed3d1485 ("replay: implement replay-seek command")
 > Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+> ---
+>   replay/replay-debugging.c | 23 ++++++++++++-----------
+>   1 file changed, 12 insertions(+), 11 deletions(-)
 
-I'm picking this one up for the stable qemu series.
-Please let me know if I shouldn't.
-
-It would be nice if changes which should be picked up,
-had Cc: qemu-stable@ in the first place, to avoid this
-extra round-trip.  I'm trying to keep it as simple as
-possible, only asking to reply if I should not pick it
-up, but it is more work for everyone still.
+I'm picking this up for the current stable qemu series.
+Please let me know if I should not.
 
 Thanks,
 
 /mjt
-
->   hw/display/qxl.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/display/qxl.c b/hw/display/qxl.c
-> index 74258afa582..3df796175c2 100644
-> --- a/hw/display/qxl.c
-> +++ b/hw/display/qxl.c
-> @@ -270,7 +270,7 @@ static void qxl_spice_monitors_config_async(PCIQXLDevice *qxl, int replay)
->       }
->   
->       cfg = qxl_phys2virt(qxl, qxl->guest_monitors_config, MEMSLOT_GROUP_GUEST,
-> -                        sizeof(QXLMonitorsConfig));
-> +                        sizeof(QXLMonitorsConfig) + sizeof(QXLHead));
->       if (cfg != NULL && cfg->count == 1) {
->           qxl->guest_primary.resized = 1;
->           qxl->guest_head0_width  = cfg->heads[0].width;
-
 
