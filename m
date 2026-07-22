@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62536C44536
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:02:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDDE2C4453E
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:03:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWOr-0004MZ-H0; Wed, 22 Jul 2026 08:50:17 -0400
+	id 1wmWO7-00041o-Pe; Wed, 22 Jul 2026 08:49:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWMJ-0002ni-9o; Wed, 22 Jul 2026 08:47:35 -0400
+ id 1wmWME-0002lG-5n; Wed, 22 Jul 2026 08:47:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWMH-0001nR-Kw; Wed, 22 Jul 2026 08:47:35 -0400
+ id 1wmWMB-0001dw-Jf; Wed, 22 Jul 2026 08:47:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724390; bh=Uj5SPltuEMKQ9l7jZ/Gupa4rWwu9kglq7Of8y4m2wBI=;
+ t=1784724390; bh=YcrhrvRe6bgu/eosWGv78+Uh4KtUuKbE2yRgKxfdOHU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=nl701QvTTYTeORmIiImkqddv73AvyhPOROMRMPgR5KfnkfXsDIkNdJtZUGvw+ynUN
- 8nacp9SzmfPWla3LJpKKQLwF7NYADWpC4CQLfMEXoRcKQ0v2rG4NDFym6uPOFjZ4mo
- wqmtZmCZ/WW7SXNecMJxUayS4p5GOJFc5ktTnittyH/l5ac3TuL2W7Y3d6GvHffpR0
- UDaFUoMDG1fEhCHgjxLmbnoY9HF3nNSGGxI+JyvyOUr5pBbefntebqOZ72/1YT/OEA
- WZLdIYnUNwd/rhjd/etPUm3/+z8YasnmnJ1mi5gBmCh+jAgToNPexPcBJvTZVACfvy
- ml44gJWo5xLQw==
+ b=rYtEvUX9tUlyKvjlZBQtR+MQmKGTm0n9Dvo8Xf6bqKHv0gXyZkQTf2ecpMCLJBzlt
+ W2HqMZR7OdDSArz+bFEWFBBUPgbhJDrp4N++hiSKZLIThXTm3IZRLLomMnos2Z+NMz
+ Tly4ENDJVZJnwknX5+7aenBeY3eEWkKC3E+TrW6YYvw1VjaaLQYwX7Qz6bQYO+6ufg
+ b7fILMXT+2ZEfV9axHm2RLn+lOHK/qzZ0p3AEQu3jFTO4AwFD7m7mzdUjLPon4goAZ
+ Q7YiDz28limioA32DAjSk0nedrqdbUYFzHLgu2OHA5Zq6xuLT4byqlabwO8VmiD4dQ
+ k4Knv368YX6RQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 79FFE1C3B03;
+ by isrv.corpit.ru (Postfix) with ESMTP id 68C451C3B00;
  Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C1AC03F375D;
+ by tsrv.corpit.ru (Postfix) with ESMTP id B08933F375A;
  Wed, 22 Jul 2026 15:46:47 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 58EC917EEF; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id 51D6717EE9; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 090/122] linux-user/alpha: populate AT_HWCAP from
- env->amask
-Date: Wed, 22 Jul 2026 15:45:39 +0300
-Message-ID: <20260722124622.31034-15-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Collin Walling <walling@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 v2 087/122] s390x/sclp: prevent re-reading the sclp
+ header
+Date: Wed, 22 Jul 2026 15:45:36 +0300
+Message-ID: <20260722124622.31034-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,60 +73,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-Alpha has never set AT_HWCAP in linux-user emulation, so getauxval(AT_HWCAP)
-always returned 0 regardless of the emulated CPU model.
+We verify the sccb length and then allocate based on that length. The
+following access re-reads the sccb again. This can race against other
+vCPUs overwriting the length field.
 
-The Linux kernel computes ELF_HWCAP as ~amask(-1), i.e. the set of ISA
-extension bits that the amask instruction reports as supported (cleared in
-its output).  env->amask stores exactly those bits with the same layout
-(BWX=0x1, FIX=0x2, CIX=0x4, MVI=0x100, TRAP=0x200, PREFETCH=0x1000), so
-returning it directly from get_elf_hwcap matches the kernel convention.
+sclp_service_call_protected does not need a change as the ultravisor
+provides a consistent snapshot.
 
-Add HAVE_ELF_HWCAP to target_elf.h and implement get_elf_hwcap() in
-elfload.c to expose the emulated CPU's capability mask to user-space
-programs via the auxiliary vector.
-
-Without this fix, programs using getauxval(AT_HWCAP) to detect BWX/FIX/CIX
-(such as glibc's memcpy or JIT compilers targeting Alpha) incorrectly
-concluded that no extensions were available even when emulating ev56+.
-
-Signed-off-by: Matt Turner <mattst88@gmail.com>
+Fixes: c1db53a5910f ("s390/sclp: read sccb from mem based on provided length")
 Cc: qemu-stable@nongnu.org
-Reviewed-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 7a2e863f9dd52883d6f59bb425f30609fc14aee4)
-(Mjt: in 10.0.x, the code is in linux-user/elfload.c, -  back-port changes
- to pre-elfload-reorg state: HAVE_ELF_HWCAP is ELF_HWCAP, get_elf_hwcap()
- accepts no argument and returns uint32_t)
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Reviewed-by: Collin Walling <walling@linux.ibm.com>
+Message-ID: <20260709142906.197474-2-borntraeger@linux.ibm.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+(cherry picked from commit 20701190e023216d0213a107a491402ce2cc501e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 35b7ea23880..6b1be150a3e 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -1720,6 +1720,20 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs, const CPUM68KState *e
- #define ELF_CLASS      ELFCLASS64
- #define ELF_ARCH       EM_ALPHA
+diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
+index 3a7302f760c..ea5362771cf 100644
+--- a/hw/s390x/sclp.c
++++ b/hw/s390x/sclp.c
+@@ -333,7 +333,8 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
+     /*
+      * we want to work on a private copy of the sccb, to prevent guests
+      * from playing dirty tricks by modifying the memory content after
+-     * the host has checked the values
++     * the host has checked the values.
++     * Reuse the previously fetched header
+      */
+     work_sccb = g_malloc0(be16_to_cpu(header.length));
+     ret = address_space_read(as, sccb, attrs,
+@@ -341,6 +342,7 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
+     if (ret != MEMTX_OK) {
+         return -PGM_ADDRESSING;
+     }
++    work_sccb->h = header;
  
-+#define ELF_HWCAP get_elf_hwcap()
-+
-+static uint32_t get_elf_hwcap(void)
-+{
-+    CPUState *cs = thread_cpu;
-+    /*
-+     * The Linux kernel computes ELF_HWCAP as ~amask(-1), which clears a bit
-+     * for each supported ISA extension.  env->amask stores exactly those bits
-+     * set for the extensions supported by the emulated CPU model, matching
-+     * the kernel's convention: bit set in AT_HWCAP ↔ extension present.
-+     */
-+    return cpu_env(cs)->amask;
-+}
-+
- static inline void init_thread(struct target_pt_regs *regs,
-                                struct image_info *infop)
- {
+     if (!sclp_command_code_valid(code)) {
+         work_sccb->h.response_code = cpu_to_be16(SCLP_RC_INVALID_SCLP_COMMAND);
 -- 
 2.47.3
 
