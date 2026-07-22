@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CECBBC44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:54:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA42BC44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:54:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWPp-0000vW-5o; Wed, 22 Jul 2026 08:51:13 -0400
+	id 1wmWPO-0006zH-6l; Wed, 22 Jul 2026 08:50:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWPZ-00089D-DJ; Wed, 22 Jul 2026 08:50:57 -0400
+ id 1wmWMp-0003IN-Ol; Wed, 22 Jul 2026 08:48:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWPX-0002Id-Cd; Wed, 22 Jul 2026 08:50:57 -0400
+ id 1wmWMm-0001pW-Ci; Wed, 22 Jul 2026 08:48:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724391; bh=nV6KU/rdZP69Sb0KkbRVIy6e5R2PbpdxZxyDoobIdM8=;
+ t=1784724390; bh=IOv4t64P0BugPgkhYwNwbj+bLiaWpxe0BEeBlYyjZZ4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=htXVJKF0sSPJxV1HAoiQlTQAH7uAVWY1QJTV0ewd3ScTsdm8tTQfCpd0cyp+CSEo7
- 5Yz8VTS1+c1SPG0+onaUPOztWtjm2N4Xf0WBZft5JuoPclXjItSm4qvDilBVfUXXlz
- fLuUMgQi7pI8+TZ7HwIRUmJe0H0TSXKGRI90LUkOXRunBslNUxWfeTpbjcZNJR+aKW
- l6ddhGCheKBbC1zP3kD9lOpKVGgv6AeoeAyP99Trivu5A04LeAm99TZRWxESFdUO5O
- uEgiXQkNfosf0A2BANYFjE4vDrWAXfbBwqfov3xMYFCh79UYOmDlGSrA7PpbBfh2Ev
- r1gIHzic3d2rA==
+ b=GYNwkZFWboA5f5NnLP067JzrrBzPHVaj+qb8otMZxtwbni4qV7UGssq11OFiPjN6f
+ 2xawnovDxKxczjC9tnUpUP5I8c7NIBNe8mZwdjPFtuxbZV33K7sWH8fdkUvfKgk0PB
+ yvm2iY7RRfizVL7qk6NMUrku8xyLodbwVK4b1irTefJKmmpwhf/TYz6S0cYwqYMHgO
+ PbDgRzuPMtt8FNde3L4f2pwEKGQ6U19aTlMCihkxx3Hng50ZJ53/xqvdyVZiDC/Tqi
+ gRAR+otuHkVCtwuUIyTyVO11vMMNG89LxRJSZcBEIzM5aHIajnlgpM20AXZD7cVHRR
+ 8eDrz0+VaY++g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 36AFC1C3B23;
- Wed, 22 Jul 2026 15:46:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 957061C3B08;
+ Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7C2173F377D;
- Wed, 22 Jul 2026 15:46:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id DD8263F3762;
+ Wed, 22 Jul 2026 15:46:47 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A5A6A17F2F; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id 6593C17EF9; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Haotian Jiang <jianghaotian.sunday@gmail.com>,
+Cc: qemu-stable@nongnu.org, Miao Wang <shankerwangmiao@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 122/122] hw/audio/intel-hda: restrict all DMA
- engine paths to memories
-Date: Wed, 22 Jul 2026 15:46:11 +0300
-Message-ID: <20260722124622.31034-47-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 v2 095/122] hw/scsi/vmw_pvscsi: add a comment to
+ explain the endianness
+Date: Wed, 22 Jul 2026 15:45:44 +0300
+Message-ID: <20260722124622.31034-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
@@ -73,90 +73,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Haotian Jiang <jianghaotian.sunday@gmail.com>
+From: Miao Wang <shankerwangmiao@gmail.com>
 
-CVE-2021-3611 (commit 79fa99831d) restricted the DMA engine to memories
-by setting attrs.memory=true, but only applied this to intel_hda_response.
-Three other DMA engine access points still use MEMTXATTRS_UNSPECIFIED,
-allowing a malicious guest to trigger DMA-to-self-MMIO reentry:
+Add a comment to explain the endianness of the pvscsi device. We have
+no information about the endianness should be little-endian or CPU
+native endian because the current driver code is designed to work only
+on x86 and is not endianness aware. We assume that the pvscsi device is
+implicitly little-endian.
 
-  - intel_hda_xfer (line 398): called from the audio timer callback
-    (hda_codec_xfer -> bus->xfer), so the MemReentrancyGuard does not
-    fire (engaged_in_io is false outside MMIO dispatch). A guest that
-    points a BDL entry at the HDA controller's own MMIO BAR can write
-    audio samples to device registers, triggering whandler side effects
-    such as starting/stopping streams or injecting codec commands via
-    CORBWP.
-  - intel_hda_parse_bdl (line 478): uses pci_dma_read which hardcodes
-    MEMTXATTRS_UNSPECIFIED. A guest-controlled BDL base address can
-    point at controller MMIO, allowing the DMA engine to read device
-    registers as BDL descriptors.
-  - intel_hda_corb_run (line 333): ldl_le_pci_dma reads the CORB ring
-    with MEMTXATTRS_UNSPECIFIED, allowing the DMA engine to read
-    controller MMIO as CORB entries.
-
-Fix all three by passing {.memory = true} explicitly, matching the
-fix already applied to intel_hda_response. For intel_hda_parse_bdl,
-replace pci_dma_read with pci_dma_rw to pass the controlled attrs.
-
-Fixes: 79fa99831d ("hw/audio/intel-hda: Restrict DMA engine to memories (not MMIO devices)")
-Reported-by: Haotian Jiang of Tencent Security (Yunding Lab) <jianghaotian.sunday@gmail.com>
-Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
-Cc: qemu-stable@nongnu.org
+Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260721060941.2989396-1-jianghaotian.sunday@gmail.com>
+Message-ID: <20260710-pvscsi-endianness-v3-2-27fe1c4d1f6e@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit c257745248b02fd468619b4b1fdbbade5344191d)
+(cherry picked from commit ecc569639aeb5b702f1098d3eb5b28d3168604c8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/audio/intel-hda.c b/hw/audio/intel-hda.c
-index 3214992ddc5..0ba635caca6 100644
---- a/hw/audio/intel-hda.c
-+++ b/hw/audio/intel-hda.c
-@@ -305,6 +305,7 @@ static int intel_hda_send_command(IntelHDAState *d, uint32_t verb)
+diff --git a/hw/scsi/vmw_pvscsi.h b/hw/scsi/vmw_pvscsi.h
+index 17fcf662730..b9df53a3223 100644
+--- a/hw/scsi/vmw_pvscsi.h
++++ b/hw/scsi/vmw_pvscsi.h
+@@ -108,6 +108,20 @@ enum PVSCSICommands {
+ #define PVSCSI_COMMAND_PROCESSING_FAILED     (-1)
+ #define PVSCSI_COMMAND_NOT_ENOUGH_DATA       (-2)
  
- static void intel_hda_corb_run(IntelHDAState *d)
- {
-+    const MemTxAttrs attrs = { .memory = true };
-     hwaddr addr;
-     uint32_t rp, verb;
- 
-@@ -330,7 +331,7 @@ static void intel_hda_corb_run(IntelHDAState *d)
- 
-         rp = (d->corb_rp + 1) & 0xff;
-         addr = intel_hda_addr(d->corb_lbase, d->corb_ubase);
--        ldl_le_pci_dma(&d->pci, addr + 4 * rp, &verb, MEMTXATTRS_UNSPECIFIED);
-+        ldl_le_pci_dma(&d->pci, addr + 4 * rp, &verb, attrs);
-         d->corb_rp = rp;
- 
-         dprint(d, 2, "%s: [rp 0x%x] verb 0x%08x\n", __func__, rp, verb);
-@@ -395,7 +396,7 @@ static void intel_hda_response(HDACodecDevice *dev, bool solicited, uint32_t res
- static bool intel_hda_xfer(HDACodecDevice *dev, uint32_t stnr, bool output,
-                            uint8_t *buf, uint32_t len)
- {
--    const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
-+    const MemTxAttrs attrs = { .memory = true };
-     HDACodecBus *bus = HDA_BUS(dev->qdev.parent_bus);
-     IntelHDAState *d = container_of(bus, IntelHDAState, codecs);
-     hwaddr addr;
-@@ -466,6 +467,7 @@ static bool intel_hda_xfer(HDACodecDevice *dev, uint32_t stnr, bool output,
- 
- static void intel_hda_parse_bdl(IntelHDAState *d, IntelHDAStream *st)
- {
-+    const MemTxAttrs attrs = { .memory = true };
-     hwaddr addr;
-     uint8_t buf[16];
-     uint32_t i;
-@@ -475,7 +477,8 @@ static void intel_hda_parse_bdl(IntelHDAState *d, IntelHDAStream *st)
-     g_free(st->bpl);
-     st->bpl = g_new(bpl, st->bentries);
-     for (i = 0; i < st->bentries; i++, addr += 16) {
--        pci_dma_read(&d->pci, addr, buf, 16);
-+        pci_dma_rw(&d->pci, addr, buf, 16,
-+                   DMA_DIRECTION_TO_DEVICE, attrs);
-         st->bpl[i].addr  = le64_to_cpu(*(uint64_t *)buf);
-         st->bpl[i].len   = le32_to_cpu(*(uint32_t *)(buf + 8));
-         st->bpl[i].flags = le32_to_cpu(*(uint32_t *)(buf + 12));
++/*
++ * About endianess for the below structs:
++ *
++ * These structs are used to describe the data that is exchanged between the
++ * guest and the PVSCSI device. The endianess of the fields in these structs
++ * is not defined by any standard. The current implemented drivers are designed
++ * to only work on x86 architecture, so there is no endianess awareness in the
++ * drivers and thus we have no idea whether the fields should be in little-
++ * endian or target native endian format.
++ *
++ * Considering the above, we assume that PVSCSI is implicitly little-endian and
++ * expect the fields in these structs to be in little-endian format.
++ */
++
+ /*
+  * Command descriptor for PVSCSI_CMD_RESET_DEVICE --
+  */
 -- 
 2.47.3
 
