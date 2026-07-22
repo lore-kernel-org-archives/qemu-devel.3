@@ -4,96 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46B35C4452B
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Jul 2026 21:02:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14822C4452D
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 00:17:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmHak-00037X-BL; Tue, 21 Jul 2026 17:01:30 -0400
+	id 1wmKdt-0002XV-Uj; Tue, 21 Jul 2026 20:16:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wmHai-000377-5z; Tue, 21 Jul 2026 17:01:28 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1wmKds-0002Vn-Cy
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 20:16:56 -0400
+Received: from mail-eastusazon11011037.outbound.protection.outlook.com
+ ([52.101.52.37] helo=BL2PR02CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wmHaf-00032m-QT; Tue, 21 Jul 2026 17:01:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=DANVh01wZQngRMeJF44qSiOarmvTfw1KElvyojABCyM=; b=qVvZ8M8ZMR200Oi7/x61RVEg5j
- 8ThWpbb0TM4J/Zsq+0GQaLVzIDKwXlZjoA7ZrpSSKLSPOQjsXH0eYUN/daDKRvBdlUjwqWiO2WRuj
- 05F498lKdDJB72BLYDrkT7iMcQmY61Hhg+53Gpf5Dc+ysL9lzBHiLbKmgZdOfVFkfj7nYvdESp1S7
- RP+wDTvcglPEKv5NsIa+/Kp2aMGzfwvc0YB/ste4HJOFDjDdBFG/sbaJu3wjUvPbYby9KbNNseZfZ
- 67tytl6NP379thoMiDubNn9wdWsCkG6oVcbuycnFZCbAAeh4+6o1yOdGImSNDFkn0hFyAWyuGo/la
- TSV26oaLYE46e/Fk0nITSRwV8QQGfy6KOinb2nzfQ3DpJe7C7VZ/XTV08xIc0qjjGGBqLWmIEmGnm
- FvHtCjjeBSiBCGrd4Z1NcjeLY6RKwjebCSzHZ15of7zv7Z9d6bBZl6VlHvRth+yqpi/MSDk66vbA5
- 2IQxYG42zKD0TRpRUktfHXyw+EY/5W3+TPRVOInLnpTMMqnV/mr83qXWnFKQQUKyopCEifKZyfCYm
- JnocYb0TZXFUVAy5W6VxwtCkZdSsjMvzDe//Aky4mcftW1FK49pFYhPJU8J4keLi69pxw/O4FYMdz
- oNUVPcLhHh8NDD6lP6KmHaJF0svU7hyJs78qFnzOs=;
-Received: from [2a02:8012:2f01:0:34d0:4e6f:4b12:1620]
- by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wmHaS-003qg4-5x; Tue, 21 Jul 2026 22:01:12 +0100
-Message-ID: <db7478f3-3cfa-43bc-901c-01842f180a92@ilande.co.uk>
-Date: Tue, 21 Jul 2026 22:01:20 +0100
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1wmKdp-0005o6-Rv
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 20:16:56 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=H6Gvrq7uOcWcZuaCzdvhcWPrnbzTZL4ofePaQjf4heNQ/wDTiE562F0XZ5WWXgzuPvqgNii4qd+dZScVvLjkBKYMXcbpGDIiQ2wDdbgH8stK5NVRxw/cFltK6x6a4Qo6CfnP6SiAoYDDdYStV8Qo3kGQDLoADfcmA62kMRXzRgpoOiVOebFPrg/QUbBusfWog7/tHau7clNWyyiPGypTF+zpnhpGa1NNKpDPvBiGrq0aLFTrwRxQdsFe8O1gGqCjtiMw8IlyZ2ydHEr8u/bRc7c1xYflIxRP0OxvG2F1CcS8qoZevVEXL2wvM/t8NyQjXnrJWCe1eg1xFtCoVboCfA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=DFzOQvRVt1ciMahGqafEYQboh3OYnQq5RdWfd1scmzo=;
+ b=hoXPyQHgGEw7XQ0Dk3izZhEypb1/Z9CxsP563kZ60VfV2C8kR3XGIGfiZKovVV/63CX2VsM+vkzJrlrE3rpFJmkxhGc3JWfWNKKHHQLQ55+Msv4J+285B6NXnh7WS0Jn/v3xepGXuDS3Hz558JjUcF6t+ETJgfhmhvmBWqrUOmi17ihpBE+HyMmuCcgTgdKOeKVRM+jwLfoS378bXS0Z7y0qBFX9+KMfb7nlaOaC90W+xBCwu0yGwAJRp+l2vfeygx8SBjNBva8flWICf5XsraSdSwuSFcadruIaYb4rxIgIgq2sf69lTcHv3Phq6KuyVYABgCnHYJHGTBh5RKjTeg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=DFzOQvRVt1ciMahGqafEYQboh3OYnQq5RdWfd1scmzo=;
+ b=uUcXfxiyl/bwc8c/ZuQ2UWQJ6temHpRqc0GlW9fa6T+MN8WdWa+YAQ2x1bO+1Rhu+YfHEPNV0wyNatVtiR/KqOp22R2AHv74mDcq4eoaEbciIdiueo4abD+jwg3+brYdIbUnKnWaNdIj8GGusWLMpERB81oTFT16qc2N0xyVcjc=
+Received: from PH0PR07CA0024.namprd07.prod.outlook.com (2603:10b6:510:5::29)
+ by SJ2PR12MB8955.namprd12.prod.outlook.com (2603:10b6:a03:542::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.18; Wed, 22 Jul
+ 2026 00:11:45 +0000
+Received: from CY4PEPF0000EDD2.namprd03.prod.outlook.com
+ (2603:10b6:510:5:cafe::62) by PH0PR07CA0024.outlook.office365.com
+ (2603:10b6:510:5::29) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.245.10 via Frontend Transport; Wed,
+ 22 Jul 2026 00:11:45 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ CY4PEPF0000EDD2.mail.protection.outlook.com (10.167.241.198) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.245.5 via Frontend Transport; Wed, 22 Jul 2026 00:11:45 +0000
+Received: from localhost (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Tue, 21 Jul
+ 2026 19:11:44 -0500
+Date: Tue, 21 Jul 2026 19:10:53 -0500
+To: <qemu-devel@nongnu.org>
+CC: <stefanha@redhat.com>
+Subject: [ANNOUNCE] QEMU 11.1.0-rc1 is now available
+Message-ID: <tdnktodfircf6x7qqvpuzegxaucsp7bxszesvlmu23iq37sowq@aayrijkcpjnb>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>,
- qemu-stable@nongnu.org
-References: <20260313170938.449538-1-peter.maydell@linaro.org>
- <48fdece2-5b98-4785-9b47-9eb2528803e2@ilande.co.uk>
- <CAFEAcA_zf5joZKeiU=c5qP+PzbkrPEVOBZ0nMrOhidiywi_s8w@mail.gmail.com>
- <CAFEAcA-MQ8tObH=9j-O-bqfGMLc2oTwaM1xEzv__GU2qrncmgw@mail.gmail.com>
- <CAFEAcA_boBOkNAaUgX=QEQvm3Mgy2ewkSNtx8zR9e=P58aWmmQ@mail.gmail.com>
- <CAFEAcA-VF47TGkRQBh_phZVvZ36tN5OJepbb1z=t=O=R3CwZDg@mail.gmail.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <CAFEAcA-VF47TGkRQBh_phZVvZ36tN5OJepbb1z=t=O=R3CwZDg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:34d0:4e6f:4b12:1620
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH] target/sparc: Set reg window data structures currently
- after vmstate load
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000EDD2:EE_|SJ2PR12MB8955:EE_
+X-MS-Office365-Filtering-Correlation-Id: f5fdcf18-f4ed-45e4-db36-08dee785d0bd
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|82310400026|36860700016|376014|1800799024|6133799003|10067099003|56012099006|11063799006|13003099007|18002099003|27256017;
+X-Microsoft-Antispam-Message-Info: 3HdI39tKjkBEEAS11QIKn6ddGPJYO7j3VjIYsTh+t/uUnawF6v79fB87XWZY43Hd1EMOLkMqZTJA/Zn18aRA8tIN5wjSYoMxx5mgKtPZ12Eh8rPtdzAU9p8UpMZbXy0y9HJDSSAWnPglz/bTbICACDs+C/TxSR6yCx4pw2mlv6CaQEpaowWxWkBLo/llcYsf1VI7lEJeMrPh9YDuexMoQWBZ1+Cb6y18LZgLsdmJyy2PUKGkt8aie694RoF0Vr7de0SWHpG8ehLDVrwpSq88Nj0V6m7AJQlUnwuglBtkfvwbdVihK7fRc6pv4Vz/YClJB+hCpnVfRUdespOjYRwRhEpGibZ+859iu3O8LZycbljn6ncLZTBXs5egcOiaEKYVJkDWYTJt4yxqa+Y97wIzV5c7KeRPEps+7NQgeD/+JopLo3JuhiQ64HnoaPDM4eQ3+vDrqRU8UMa0bKl+lHHMJxGlOCF0OEWwnlUH9YnPn5ALStLkZonLgISFHacAi5Istc2SLbdS7v0h0fDlOKEaGSq5onn2QDHJDJewZpsQMLdWqD2rkusmPfIzwI8zy1YoPW1OP9C1TSUknVR8YDWjhJf1g0cITmjMTlgsgCOAVC+cACCxl5jICOivgre24uqKU+6YF2byt+sEp1Qvl19zOfjX9yr+KxHIt0JwrzT6E56CsQw5ocM/3g7qyDyYBYudPwCEfpcppDUNX9s4q1sgOA==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(23010399003)(82310400026)(36860700016)(376014)(1800799024)(6133799003)(10067099003)(56012099006)(11063799006)(13003099007)(18002099003)(27256017);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: pB2P/MFXqFvmI8o17Fkz5RIV5qCYuE7A2/vPW5WQFp5F6Ym4ZmAXXJwh8DL7ZAC0oHqJJRfM2/XeVv1O64fum74K+la2/1PdSGdSVv6AY9SDP1hrOTW7l2j8VmrkYC66R1aKfsFCwq+TnBvtFMAq3xIwPpBmtgzfTzRBfzwF5uDLjX6gq0gdwujcJf3OZjIAgPlGHXangfXe1SWdNfI6fJGQTLVJlr9c7WWrwZDXtWAPlB4qP9f8tM1qRQ8IcRvFo/Zf//MfutTb9wvlciiB78j+Wg6NI0h8hQZcgjmme71NTxlkMW0JbeceNRLa/AsG+a3lw8r1Qe8OFNgUPLJ/ANZTcTLvQYww0RQ2UkZdLvLxW/bdmpHvyENuZ1xutuKhly4Bst5HcRbbzLdOX+p4RUYAlKuFyMqNwgxUjJosGkdW3jpcEMyfHeGqn26ENQtY
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jul 2026 00:11:45.1076 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: f5fdcf18-f4ed-45e4-db36-08dee785d0bd
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EDD2.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8955
+Received-SPF: permerror client-ip=52.101.52.37;
+ envelope-from=Michael.Roth@amd.com;
+ helo=BL2PR02CU003.outbound.protection.outlook.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,247 +118,126 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Michael Roth <michael.roth@amd.com>
+From:  Michael Roth via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/07/2026 09:46, Peter Maydell wrote:
+Hello,
 
-> Ping^3. It would be nice to get this fix into 11.1, since it's
-> a bug that trips the address-sanitizer.
-> 
-> thanks
-> -- PMM
-> 
-> On Mon, 11 May 2026 at 15:45, Peter Maydell <peter.maydell@linaro.org> wrote:
->>
->> Ping^2. I think this is now the only remaining blocker to being
->> able to do a full sanitizer test run. I'm happy to throw it into
->> my target-arm queue if you don't have any other sparc patches you
->> need to send, but I think it would be better if it had a
->> reviewed-by tag first :-)
->>
->> -- PMM
->>
->> On Thu, 30 Apr 2026 at 14:02, Peter Maydell <peter.maydell@linaro.org> wrote:
->>>
->>> Ping ? Now we're in the 11.1 cycle it would be nice to get these
->>> remaining sanitizer errors fixed so we can maybe get a CI job
->>> to test a sanitizer build.
->>>
->>> thanks
->>> -- PMM
->>>
->>> On Fri, 20 Mar 2026 at 11:02, Peter Maydell <peter.maydell@linaro.org> wrote:
->>>>
->>>> On Mon, 16 Mar 2026 at 21:42, Mark Cave-Ayland
->>>> <mark.cave-ayland@ilande.co.uk> wrote:
->>>>>
->>>>> On 13/03/2026 17:09, Peter Maydell wrote:
->>>>>
->>>>>> In the SPARC CPU state, env->regwptr points into the env->regbase
->>>>>> array at wherever the architectural CWP (current window pointer) says
->>>>>> we are in the register windows.  We don't migrate this directly,
->>>>>> since it's a host pointer, so we must ensure it is set up again
->>>>>> after migration load.
->>>>>>
->>>>>> We also have to deal with a special case when CWP is (nwindows - 1).
->>>>>> In this case, while running we keep the "in" register data for this
->>>>>> window in a temporary location at the end of the regbase[] array, so
->>>>>> that generated code doesn't have to special case this "wrap around"
->>>>>> case.  In cpu_pre_save() we call cpu_set_cwp() to force a copy of the
->>>>>> wrapped data from its temporary location into the architectural
->>>>>> location in window 0's "out" registers.  We then migrate only
->>>>>> (nwindows * 16) entries in the regbase[] array.  So on the
->>>>>> destination we need to copy the "in" register data back to its
->>>>>> temporary location again.
->>>>>>
->>>>>> For 32-bit SPARC we get this right, because the CWP is in the PSR.
->>>>>> The get_psr() function does:
->>>>>>       env->cwp = 0;
->>>>>>       cpu_put_psr_raw(env, val);
->>>>>> which causes cpu_put_psr_raw() to call cpu_set_cwp() in a way that
->>>>>> sets up both regwptr and the wrapped-register data.
->>>>>>
->>>>>> However, for 64-bit SPARC the CWP is not in the PSR, and
->>>>>> cpu_put_psr_raw() will not call cpu_set_cwp().  This leaves the guest
->>>>>> register state in a corrupted state, and the guest will likely crash
->>>>>> on the destination if it didn't happen to be executing with CWP == 0.
->>>>>>
->>>>>> Fix this by adding a cpu_post_load hook which does the cpu_set_cwp()
->>>>>> for the 64-bit case, and enough commentary to explain what is going
->>>>>> on.
->>>>>>
->>>>>> Cc: qemu-stable@nongnu.org
->>>>>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->>>>>> ---
->>>>>> I ran into this because the "sparc64-migration" functional test seems
->>>>>> to hit this reliably when built with the address sanitizer.  This is
->>>>>> probably a timing thing, because it doesn't trip any ASAN failures,
->>>>>> the guest just crashes on the destination side most of the time
->>>>>> because it returns from a subroutine to a corrupt %o7 return address.
->>>>>>
->>>>>> As far as I can tell this is what the problem is, but I'm a bit
->>>>>> surprised that we have never hit this, given how likely you are to
->>>>>> hit it on a vmsave/vmload or migration.  So am I missing something?
->>>>>> ---
->>>>>>    target/sparc/machine.c | 41 +++++++++++++++++++++++++++++++++++++++--
->>>>>>    1 file changed, 39 insertions(+), 2 deletions(-)
->>>>>>
->>>>>> diff --git a/target/sparc/machine.c b/target/sparc/machine.c
->>>>>> index 4dd75aff74..b935c31630 100644
->>>>>> --- a/target/sparc/machine.c
->>>>>> +++ b/target/sparc/machine.c
->>>>>> @@ -167,14 +167,50 @@ static int cpu_pre_save(void *opaque)
->>>>>>        SPARCCPU *cpu = opaque;
->>>>>>        CPUSPARCState *env = &cpu->env;
->>>>>>
->>>>>> -    /* if env->cwp == env->nwindows - 1, this will set the ins of the last
->>>>>> -     * window as the outs of the first window
->>>>>> +    /*
->>>>>> +     * If env->cwp == env->nwindows - 1, this will set the ins of the last
->>>>>> +     * window as the outs of the first window. We do this because we only
->>>>>> +     * transfer the (nwindows * 16) entries of regbase[] that correspond
->>>>>> +     * to the "proper" locations of the registers; this call has the
->>>>>> +     * effect of copying the wrap register values from their temporary
->>>>>> +     * location down to their proper location ready for migration.
->>>>>>         */
->>>>>>        cpu_set_cwp(env, env->cwp);
->>>>>>
->>>>>>        return 0;
->>>>>>    }
->>>>>>
->>>>>> +static int cpu_post_load(void *opaque, int version_id)
->>>>>> +{
->>>>>> +    /*
->>>>>> +     * For 32-bit SPARC we set the register window data structures
->>>>>> +     * up again correctly when get_psr() called cpu_put_psr_raw(),
->>>>>> +     * which calls cpu_set_cwp(). But for 64-bit SPARC the CWP isn't
->>>>>> +     * part of the PSR, so we need to handle it here.
->>>>>> +     *
->>>>>> +     * There are two things we need to have happen:
->>>>>> +     * 1. regwptr points into regbase[] at the location determined by CWP.
->>>>>> +     * 2. If CWP is (nwindows - 1) then we keep the "in" regs of this window
->>>>>> +     *    in a copy at a temporary location at the end of the regbase[]
->>>>>> +     *    array. For migration we only transferred the (nwindows * 16)
->>>>>> +     *    entries of regbase[] that correspond to the "proper" locations
->>>>>> +     *    of the registers, so now we must copy the wrap registers back to
->>>>>> +     *    their temporary location.
->>>>>> +     *
->>>>>> +     * We achieve both of these by setting env->cwp to 0 and then calling
->>>>>> +     * cpu_set_cwp(). This is the same thing get_psr() does for 32-bit.
->>>>>> +     */
->>>>>> +#if defined(TARGET_SPARC64)
->>>>>> +    SPARCCPU *cpu = opaque;
->>>>>> +    CPUSPARCState *env = &cpu->env;
->>>>>> +    uint32_t cwp = env->cwp;
->>>>>> +
->>>>>> +    env->cwp = 0;
->>>>>> +    cpu_set_cwp(env, cwp);
->>>>>> +#endif
->>>>>> +    return 0;
->>>>>> +}
->>>>>> +
->>>>>>    /* 32-bit SPARC retains migration compatibility with older versions
->>>>>>     * of QEMU; 64-bit SPARC has had a migration break since then, so the
->>>>>>     * versions are different.
->>>>>> @@ -190,6 +226,7 @@ const VMStateDescription vmstate_sparc_cpu = {
->>>>>>        .version_id = SPARC_VMSTATE_VER,
->>>>>>        .minimum_version_id = SPARC_VMSTATE_VER,
->>>>>>        .pre_save = cpu_pre_save,
->>>>>> +    .post_load = cpu_post_load,
->>>>>>        .fields = (const VMStateField[]) {
->>>>>>            VMSTATE_UINTTL_ARRAY(env.gregs, SPARCCPU, 8),
->>>>>>            VMSTATE_UINT32(env.nwindows, SPARCCPU),
->>>>>
->>>>> Nice analysis! I suspect the reason this doesn't always show up is because any
->>>>> context switch (e.g. OpenBIOS, kernel to user, 32-bit to 64-bit etc.) will flush the
->>>>> entire register window set to the stack, and hence reset env->cwp back to 0.
->>>>>
->>>>> It does instinctively feel odd that 32-bit and 64-bit aren't handled in the same way
->>>>> - I wonder if this implicit behaviour on 32-bit somehow needs to be more explicit?
->>>>
->>>> I did wonder about that, but I preferred leaving the 32-bit handling
->>>> the way it is -- trying to unify it with 64-bit would require making
->>>> the get_psr() code path go out of its way to avoid updating the
->>>> reg window data structures, which seems awkward and a bit unnecessary
->>>> given the code does work. So I opted to describe the way the 32-bit
->>>> targets do it in the cpu_post_load() comment, so at least we have
->>>> a record of it.
->>>>
->>>> Are you OK with this patch as it stands, or would you like me to
->>>> change it?
+On behalf of the QEMU Team, I'd like to announce the availability of the
+second release candidate for the QEMU 11.1 release. This release is meant
+for testing purposes and should not be used in a production environment.
 
-Sorry about the long delay getting to this one. Looking through the migration code, 
-the current approach uses get/put handlers for registers that need to do more than 
-just update value in the state. Longer term that code could do with an update to use 
-.post_load, but for now I think it makes sense to use the existing pattern, 
-particularly as it keeps the separation between 32-bit and 64-bit.
+  http://download.qemu.org/qemu-11.1.0-rc1.tar.xz
+  http://download.qemu.org/qemu-11.1.0-rc1.tar.xz.sig
 
-The following diff gives the same output in analyze-migration.py and I think should 
-solve the issue based upon your analysis:
+You can help improve the quality of the QEMU 11.1 release by testing this
+release and reporting bugs using our GitLab issue tracker:
 
-diff --git a/target/sparc/machine.c b/target/sparc/machine.c
-index 5f402e098cf..8fdf1782113 100644
---- a/target/sparc/machine.c
-+++ b/target/sparc/machine.c
-@@ -151,6 +151,37 @@ static const VMStateInfo vmstate_xcc = {
-      .get = get_xcc,
-      .put = put_xcc,
-  };
-+
-+static int get_cwp(QEMUFile *f, void *opaque, size_t size,
-+                   const VMStateField *field)
-+{
-+    SPARCCPU *cpu = opaque;
-+    CPUSPARCState *env = &cpu->env;
-+    uint32_t val = qemu_get_be32(f);
-+
-+    /* needed to ensure that the wrapping registers are correctly updated */
-+    env->cwp = 0;
-+    cpu_set_cwp(env, val);
-+
-+    return 0;
-+}
-+
-+static int put_cwp(QEMUFile *f, void *opaque, size_t size,
-+                   const VMStateField *field, JSONWriter *vmdesc)
-+{
-+    SPARCCPU *cpu = opaque;
-+    CPUSPARCState *env = &cpu->env;
-+    uint32_t val = cpu_get_cwp64(env);
-+
-+    qemu_put_be32(f, val);
-+    return 0;
-+}
-+
-+static const VMStateInfo vmstate_cwp = {
-+    .name = "uint32",
-+    .get = get_cwp,
-+    .put = put_cwp,
-+};
-  #else
-  static bool fq_needed(void *opaque)
-  {
-@@ -286,7 +317,14 @@ const VMStateDescription vmstate_sparc_cpu = {
-          VMSTATE_CPU_TIMER(env.hstick, SPARCCPU),
-          /* On SPARC32 env.psrpil and env.cwp are migrated as part of the PSR */
-          VMSTATE_UINT32(env.psrpil, SPARCCPU),
--        VMSTATE_UINT32(env.cwp, SPARCCPU),
-+        {
-+            .name = "env.cwp",
-+            .version_id = 0,
-+            .size = sizeof(uint32_t),
-+            .info = &vmstate_cwp,
-+            .flags = VMS_SINGLE,
-+            .offset = 0,
-+        },
-  #endif
-          VMSTATE_END_OF_LIST()
-      },
+  https://gitlab.com/qemu-project/qemu/-/milestones/19
 
+The release plan, as well a documented known issues for release
+candidates, are available at:
 
-ATB,
+  http://wiki.qemu.org/Planning/11.1
 
-Mark.
+Please add entries to the ChangeLog for the 11.1 release below:
 
+  http://wiki.qemu.org/ChangeLog/11.1
+
+Thank you to everyone involved!
+
+Changes since rc0:
+
+cbd42e2b75: Update version for v11.1.0-rc1 release (Stefan Hajnoczi)
+c3662589c4: docs: fix sphinx build failure (Pierrick Bouvier)
+ad14439be5: gitlab: remove gdb from MacOS jobs (Alex Bennée)
+d06edc83b5: vfio/listener: Remove unnecessary 'linux/kvm.h' include (Cédric Le Goater)
+c257745248: hw/audio/intel-hda: restrict all DMA engine paths to memories (Haotian Jiang)
+c477e32b64: hw/sd/sdcard: Fix error case for CMD18 (Bernhard Beschow)
+94c510a5dc: hw/net/cadence: Return current Cadence GEM queue pointers (Bin Meng)
+2142689d92: hw/misc/applesmc: Fix a typo setting MSSD key (Philippe Mathieu-Daudé)
+fe68e4b47b: replay: fix use of uninitialized pointer on error (Marc-André Lureau)
+701e8d1ee9: user/guest-host: Include exec/abi_ptr.h (Richard Henderson)
+9f436938c5: hw/display/qxl: validate monitors_config heads[] in phys2virt (Marc-André Lureau)
+b1e73b2ddb: net: Correct padding check in qemu_receive_packet() (Peter Maydell)
+533c98e769: docs/about/emulation: sharpen the dlcall boundary and its guest requirements (Ziyang Zhang)
+99916cdb4d: tests/tcg: correct why the magic syscall number is safe here (Ziyang Zhang)
+bc5b22b4d4: contrib/plugins/dlcall: correct the syscall number claim, note the data model (Ziyang Zhang)
+b693da615a: Revert "target/arm: Build cpu32-system.o as common object" (Peter Maydell)
+fcebaea2e3: MAINTAINERS: Add soc_dma to OMAP section (Peter Maydell)
+a5223ea536: include/hw/arm/omap_dma.h: Move to include/hw/dma (Peter Maydell)
+f5541f51cf: hw/dma/soc_dma: Remove unused mem.base, paddr fields (Peter Maydell)
+3162318194: hw/dma/soc_dma: Use physical_memory_map() for mem2mem transfers (Peter Maydell)
+22afad9489: hw/dma/soc_dma: dma bytes is uint64_t (Peter Maydell)
+efbf01e03f: hw/dma/omap_dma: Be more careful about overflow in transfer setup (Peter Maydell)
+68f788e705: hw/dma/soc_dma: Remove union from memmap_entry_s struct (Peter Maydell)
+f00bef33fe: hw/dma/soc_dma: Simplify soc_dma_ch_update() (Peter Maydell)
+02cfe21f6a: hw/dma/soc_dma: Remove soc_dma_port_fifo support (Peter Maydell)
+1f8aa4b6af: target/arm: Fix testing of raw mtx value (Richard Henderson)
+a148ca7627: target/ppc: Remove unused helper_lscbx() (Peter Maydell)
+2a9847868f: target/arm: GICv5 cpuif: Writes to ICC_APR_EL1 can change IRQ/FIQ (Peter Maydell)
+4ef00a9fc4: target/arm: GICv5 cpuif: gicr_cdia_read() ppibit should be 64 bits (Peter Maydell)
+8392734722: hw/net/xilinx_axienet: Fix PHY register 17 link status reporting (Jay Chang)
+8833ff95ea: hw/char: imx_serial: add missing migration state (Tao Ding)
+94bd02908a: iotests/108: avoid leaking FUSE mount (Stefan Hajnoczi)
+cc479aa897: hw/usb/hcd-xhci-sysbus: Fix OOB heap access in xhci_sysbus_intr_raise() (Thomas Huth)
+4daeaa2fe0: hw/usb/hcd-xhci: Fix guest-triggerable assert() in xhci_find_stream() (Thomas Huth)
+a002485bfe: usbredir: fix infinite loop and SIGFPE with zero max_packet_size (Marc-André Lureau)
+9bf52d056a: usbredir: fix use-after-free on buffered bulk packet overflow (Marc-André Lureau)
+ba54d7e66e: tests/qtest: add xhci-pci unplug finalize regression test (Xiangfeng Cai)
+054ef33f67: hw/usb/hcd-xhci-pci: break host link cycle so device_finalize() runs on unplug (Xiangfeng Cai)
+12d8ee9d53: hw/usb/xhci: clamp interval exponent to avoid UB shift in xhci_init_epctx() (Feifan Qian)
+c0e370474b: linux-user/sparc: Take pending signals in sparc64_set_context() (Peter Maydell)
+260d15c45b: tests/functional/hexagon: add arch_tests functional test (Brian Cain)
+94a5b3ff4e: target/hexagon: fix PC not advancing for non-COF TB-ending packets (Brian Cain)
+c4066c84cd: target/hexagon: initialize deferred sreg-write temps to current value (Brian Cain)
+44d1829c6c: target/hexagon: fix get_phys_addr_debug with in-page offset (Matheus Tavares Bernardino)
+430261acac: tests/tcg/hexagon: add unaligned scalar test (Brian Cain)
+13eb268182: target/hexagon: raise SIGBUS on unaligned data access in sysemu (Brian Cain)
+84b9a537d6: target/hexagon: raise SIGBUS on unaligned scalar stores (Brian Cain)
+93cf730514: target/hexagon: raise SIGBUS on unaligned scalar loads (Brian Cain)
+d7a6df755b: target/hexagon: handle misaligned load/store cause codes in cpu_loop (Brian Cain)
+8aea63e965: target/hexagon: fix -Wshadow=local build error on GCC 14 (Brian Cain)
+e872e09add: gitlab-ci: build hexagon-softmmu to enable functional test (Brian Cain)
+390bf4fbc3: tests/docker: hexagon fix podman untar, 22.1.8 (Brian Cain)
+60f2281450: migration: clean up postcopy blocktime presentation (Bin Guo)
+c923ae77e7: migration: fix ineffective overflow assert in postcopy blocktime (Bin Guo)
+f1af81ba2a: hw/display/virtio-gpu: Check pixman_image_create_bits() results (Akihiko Odaki)
+9c724426f5: hw/display/virtio-gpu: reject strides exceeding INT_MAX (Akihiko Odaki)
+e99488c5d4: hw/display/virtio-gpu: handle migration iov allocation failure (Marc-André Lureau)
+8720061c6d: hw/display/virtio-gpu: cap submit_3d command buffer allocation (Marc-André Lureau)
+861372428b: hw/display/virtio-gpu: validate stride against width on scanout (Marc-André Lureau)
+6d2cf4466f: hw/display/qxl: fix TOCTOU in cursor chunk data_size handling (Marc-André Lureau)
+db2716bce2: hw/display/virtio-gpu: fix dmabuf_fd leak on remap failure (Marc-André Lureau)
+6075444c5a: ui/vnc: validate SetPixelFormat field ranges (Marc-André Lureau)
+e650e4fe0f: ui/vnc: fix out-of-bounds write in lossy refresh dirty marking (Marc-André Lureau)
+53f0d87db7: ui/gtk: Narrow DMA-BUF critical section (Akihiko Odaki)
+82b4d693d5: ui/input-barrier: fix off-by-one in keycode bounds check (Marc-André Lureau)
+3162692a3b: ui/vnc: use RFB wire types for client message handlers (Marc-André Lureau)
+fb71c895d7: ui/vnc: validate color shifts in SetPixelFormat (Marc-André Lureau)
+3543c2b855: ui/vnc: fix OOB write in vnc_refresh_lossy_rect (Marc-André Lureau)
+40cdadfefd: i386/tdx: fix uninitialized variable warning in tdx_check_features (Marc-André Lureau)
+c4ce04cfb7: tests/docker: ensure container command is probed at most once (Daniel P. Berrangé)
+fdff1c864a: plugins/execlog: fix execlog vcpu_exit execution print loss (Harry van Haaren)
+c0c8990a2b: plugins/execlog: fix segfault/race-cond on per-vCPU structures (Harry van Haaren)
+504f2bad93: net: only advertise passt in netdev help when CONFIG_PASST (Rohitashv Kumar)
+ebe66684a5: hw/usb/hcd-xhci: Use qemu_log_mask() instead of fprintf() statement (Thomas Huth)
+96c9f9709d: hw/usb/hcd-xhci: Remove the FIXME macro (Thomas Huth)
+5257259428: hw/usb/hcd-xhci: Turn guest-triggerable abort() into qemu_log_mask() (Thomas Huth)
+98e5a8eb4f: hw/usb/hcd-ohci: Make sure that ohci_service_ed_list() cannot loop forever (Thomas Huth)
+564c4d7e99: hw/display/virtio-gpu: fix dmabuf_fd leak on remap failure (Marc-André Lureau)
+76dbe26fd6: hw/sparc64/niagara: use int64_t for vdisk size to avoid truncation (Dmitry Pimenov)
+a3cc0069e1: hw/display/qxl: fix TOCTOU in cursor chunk data_size handling (Marc-André Lureau)
+ecc569639a: hw/scsi/vmw_pvscsi: add a comment to explain the endianness (Miao Wang)
+5a811329bd: hw/scsi/vmw_pvscsi: translate data endianness (Miao Wang)
+6387fbad45: docs/devel: Document SSI dummy-cycle ownership (Bin Meng)
+5157ceb10c: hw/misc/ivshmem: clear chardev handlers before freeing peers (Haotian Jiang)
+506fa577db: hw/sparc64/sun4u: Mark unusable PCI busses as full to ease device plugging (Thomas Huth)
+87f608e3c2: json-parser: fix formatting of comment (Paolo Bonzini)
+f87693a841: MAINTAINERS: Regularise the status fields (again) (Markus Armbruster)
+9dbce799e7: qom: Fix device-list-properties & friends to show legacy-FOO props (Markus Armbruster)
+8b61adae4e: qapi: Fix misspelled section tags in doc comments (Markus Armbruster)
+8ba384cc32: migration: Fix invalid %ud format and trace arg typo (yujun)
 
