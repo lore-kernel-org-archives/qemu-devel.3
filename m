@@ -4,50 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C905C44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:51:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A8E0C44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:53:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWPa-0008HG-R2; Wed, 22 Jul 2026 08:50:58 -0400
+	id 1wmWQG-0001Sx-F4; Wed, 22 Jul 2026 08:51:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWP6-0004o0-9o; Wed, 22 Jul 2026 08:50:30 -0400
+ id 1wmWQ0-0001Kj-JW; Wed, 22 Jul 2026 08:51:27 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWP3-0002Eu-AD; Wed, 22 Jul 2026 08:50:27 -0400
+ id 1wmWPx-0002LY-4S; Wed, 22 Jul 2026 08:51:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724391; bh=VhI/sbuMQXKM3OAOJIXT9eG2AP2kRgHDM9PHZKOuPB0=;
+ t=1784724574; bh=4kbCOMfTn3JZdp+8ABXEDnWPGsAgWE0wR8oCHUg5/Vg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=V4XLnYOqvu6a1/WJkXs4D/DsB34xcJ+cUBfmytT2vnErKHjd95o74WExzECSFYw7A
- FZ47JEA6TZZGb/FxvMNDCxg3NDAlQfG/65yX2n9MKxxU94ogLj3nMN59rvzpr+EhcK
- pda9wnJLgbvy8idGn6Hk+lQAoWPlygeUpwID1+tnigK5qVJYGmYd0NX6du6nTMgaJQ
- KfUhkgc3njEhuuqLnwkdwQc2ly3T2AQHBSPsm/tSQednlXFuF0x28dgto29eeJ3of4
- +aw4Fi2DxpEn6NVc5wP7ct1Iern/Qd0SMynGXHBApJsauiL2txFEsu/yEuHymyQgrs
- y0nb7YFBpQmQQ==
+ b=lMHNbYZ7+J9Iu7l2hLzr+TDaR9+0LtKcPPngMwlnWaObgkXM2rUsIQyI0DBlWCGPc
+ apNk+glShFftkGCq77d3U9YBjmaiD3iT9OoAp+k8ehO10axDr0G5fkiaWOjgQMfqkC
+ LIxV7hYDLKD0SHya6qHtL8VU2BjmQYlkmPJ+k+N+FMvduGdn3l8hEtsrVr8mFfnd40
+ JuOOCGXptDW4oh6z5+9dZ+CGQ6m776gjBi5Z4DeL/SeMI5csyvtLE86YrGgXKOAYgl
+ PVX8Sz9DFC7C4DZEUZmN1bXv1qzXks6vC7sc6MgIGgCAn/LQ8HjhOnFI6uCEy4XfFJ
+ 2z2Co7WXflHKA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1A7981C3B1E;
- Wed, 22 Jul 2026 15:46:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 85D241C3B30;
+ Wed, 22 Jul 2026 15:49:34 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 60EDF3F3778;
- Wed, 22 Jul 2026 15:46:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id CCFA23F3780;
+ Wed, 22 Jul 2026 15:49:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 995B217F25; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id 965CB17F35; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Bin Meng <bmeng.cn@gmail.com>, Bin Meng <bin.meng@processmission.com>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 117/122] net: Correct padding check in
- qemu_receive_packet()
-Date: Wed, 22 Jul 2026 15:46:06 +0300
-Message-ID: <20260722124622.31034-42-mjt@tls.msk.ru>
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v2 083/127] target/arm: Be more defensive for invalid
+ tlbi_aa64_get_range
+Date: Wed, 22 Jul 2026 15:48:08 +0300
+Message-ID: <20260722124859.32371-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
-References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
+References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,90 +73,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-In qemu_receive_packet() we check to see if we should pad a short
-packet.  This is doing the wrong test: because this function is used
-when the device adds a packet to its own incoming queue (i.e.  for
-loopback), we should be checking the NetClientState's own do_not_pad
-flag, not that for its peer.
-
-We didn't notice this earlier, because at the moment all the real
-peers of a network device (i.e.  the network backends) do not set
-do_not_pad, so net_peer_needs_padding() always returns true except in
-the corner case where the network device has no peer at all.
-
-The effect of this is that if a network device has no peer (e.g.
-because QEMU was started with -net none or with -nodefaults) then we
-can still let through the kind of "guest misprograms the network
-device to loopback-transmit a short packet and then we mishandle it
-in the receive path" bug like #3043 which commit a01344d9d78 was
-trying to fix.
-
-Since the distinction between "we should check nc->do_not_pad"
-and "we should check nc->peer->do_not_pad" is a bit subtle, add
-enough documentation commentary to make it more obvious.
+It's possible to program TCR_ELx with an invalid granule size,
+which could match passing an invalid granule size to TLBI RVA,
+which would then fall through to assert in arm_granule_bits.
 
 Cc: qemu-stable@nongnu.org
-Fixes: a01344d9d78 ("net: pad packets to minimum length in qemu_receive_packet()")
-Suggested-by: Bin Meng <bmeng.cn@gmail.com>
+Fixes: 3c003f7029e ("target/arm: Use ARMGranuleSize in ARMVAParameters")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-id: 20260710175818.528974-1-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Bin Meng <bin.meng@processmission.com>
-Message-ID: <20260629164246.2028947-1-peter.maydell@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit b1e73b2ddbb2850e394b9c47cfcb14dba8048a71)
+(cherry picked from commit 79cabc6cb7fb3a47d193cbb9a6bee71af5536dfc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/net/net.h b/include/net/net.h
-index cdd5b109b0d..e42e8263e8a 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -329,9 +329,32 @@ uint32_t net_crc32_le(const uint8_t *p, int len);
-     .offset     = vmstate_offset_macaddr(_state, _field),            \
- }
+diff --git a/target/arm/tcg/tlb-insns.c b/target/arm/tcg/tlb-insns.c
+index 1a0a3325836..b24eb57788b 100644
+--- a/target/arm/tcg/tlb-insns.c
++++ b/target/arm/tcg/tlb-insns.c
+@@ -854,7 +854,7 @@ static TLBIRange tlbi_aa64_get_range(CPUARMState *env, ARMMMUIdx mmuidx,
+     gran = tlbi_range_tg_to_gran_size(page_size_granule);
  
-+/**
-+ * net_peer_needs_padding: Should we pad as we send out packets?
-+ * @nc: NetClientState
-+ *
-+ * Return true if the peer of this NetClientState (i.e. the
-+ * destination that qemu_send_packet() etc send to) requires us to pad
-+ * out packets that are shorter than the minimum ethernet frame
-+ * length.
-+ */
- static inline bool net_peer_needs_padding(NetClientState *nc)
- {
-   return nc->peer && !nc->peer->do_not_pad;
- }
- 
-+/**
-+ * net_client_needs_padding: Should we pad as we queue packets to ourselves?
-+ * @nc: NetClientState
-+ *
-+ * Return true if this NetClientState requires us to pad out packets
-+ * that are shorter than the minimum ethernet frame length.  This is
-+ * the check to make in qemu_receive_packet() when we are queuing a
-+ * packet back into ourselves (i.e. loopback).
-+ */
-+static inline bool net_client_needs_padding(NetClientState *nc)
-+{
-+    return !nc->do_not_pad;
-+}
-+
- #endif
-diff --git a/net/net.c b/net/net.c
-index c2d0d83bc96..4a5ceaf7865 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -764,7 +764,7 @@ ssize_t qemu_receive_packet(NetClientState *nc, const uint8_t *buf, int size)
-         return 0;
-     }
- 
--    if (net_peer_needs_padding(nc)) {
-+    if (net_client_needs_padding(nc)) {
-         if (eth_pad_short_frame(min_pkt, &min_pktsz, buf, size)) {
-             buf = min_pkt;
-             size = min_pktsz;
+     /* The granule encoded in value must match the granule in use. */
+-    if (gran != param.gran) {
++    if (gran != param.gran || gran == GranInvalid) {
+         qemu_log_mask(LOG_GUEST_ERROR, "Invalid tlbi page size granule %d\n",
+                       page_size_granule);
+         return ret;
 -- 
 2.47.3
 
