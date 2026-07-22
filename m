@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F158C4453C
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:56:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F9BEC44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:56:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWSi-00051h-QL; Wed, 22 Jul 2026 08:54:13 -0400
+	id 1wmWPZ-00088j-ED; Wed, 22 Jul 2026 08:50:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWRQ-0002iW-8M; Wed, 22 Jul 2026 08:52:58 -0400
+ id 1wmWNz-000424-8x; Wed, 22 Jul 2026 08:49:23 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWRO-0002UU-DN; Wed, 22 Jul 2026 08:52:52 -0400
+ id 1wmWNw-0001up-2x; Wed, 22 Jul 2026 08:49:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724574; bh=Z9NovRRrrRmFzzj+x4ZTSGZ4L134vAH+bgIVVCzD93s=;
+ t=1784724390; bh=pQlmvh05+nKTY0hF0+TKy7QiDoandcqzhWUgTD9/tXE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=iUa19B6wfo+Jt/+gysYeN0ALBEihxdzVz+A99AZqLnwHMdl91KXYYkaYlj/23WvFR
- fHBC/QBs3Keq436uZqbtZAYcE4dQh1AhBn4nG7vhYYHg1WCqDTzAZi2UoOAvSmAGZk
- h3le8Jedd9VAgPqDdCJlYOZMF8RgAyqI/Eww+aoJXiTw3dGkH7DohX96xpP6ix7GFg
- h1nCfDU0rc7dGOaSqeNLgrRDdQTUAkJLUrBrkal+6S1nn4ni7gMkfi9vlREDBFvI4e
- ClyGwJjnZ8K7wWsAwqyLWJ40ZGn/ja40g1l0qQg9Fc+qplRgsg4roVRuKDnZx4WjBM
- 4qvBe8hD4JLQQ==
+ b=mnUUwrKOV4Pwh2BJ+rCKd6laqvNGs6s0oMKuvDyFrS33P//ZBu5d64ijnuRuTKg9G
+ krRhR+LvEXgQV5CQvAcxWakn07nk+kd0C3uxeR3xRloKOTLrBOJJJF/33KfNKYDrPd
+ tPhPFZ0+Uo2kdW5MCeG7Sy+C1ZwAr6bTBpUw7myZWZlhKLL3UfQhSHe4tfZQp8RCEi
+ l6FNmB1yvCt72oGSJi1WqsDMI+G16J5XYe4ihd535TrRGr1nyK/TJ5hP+uSHBBQWFH
+ wrRm5fr48g83DsGOXaZgobDIy765sOqJXNa9HoOuiS2o8R4lgGIsEj5zXoscQuODQK
+ JlOw1xwoC8OmQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D5D1F1C3B3F;
- Wed, 22 Jul 2026 15:49:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CFA1F1C3B12;
+ Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2966B3F378F;
- Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 229143F376C;
+ Wed, 22 Jul 2026 15:46:48 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id BA3D117F53; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
+ id 7D33317F0D; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Miao Wang <shankerwangmiao@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ admin@fluentlogic.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 v2 098/127] hw/scsi/vmw_pvscsi: translate data
- endianness
-Date: Wed, 22 Jul 2026 15:48:23 +0300
-Message-ID: <20260722124859.32371-17-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 v2 105/122] hw/display/virtio-gpu: cap submit_3d
+ command buffer allocation
+Date: Wed, 22 Jul 2026 15:45:54 +0300
+Message-ID: <20260722124622.31034-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
-References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
+References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,156 +74,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Miao Wang <shankerwangmiao@gmail.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-This patch improves the implementation of the pvscsi device by
-translating the endianness of the data sent or received from the guest.
-This ensures pvscsi can work on big-endian hosts with little-endian
-guests.
+Both virgl_cmd_submit_3d() and rutabaga_cmd_submit_3d() pass the
+guest-controlled cs.size directly to malloc() without bounds checking. A
+malicious guest can set cs.size to an arbitrarily large value, causing
+an OOM abort that crashes the QEMU process.
 
-This patch assumes, although not having found any specifications, that
-the pvscsi device is little-endian, since pvscsi seems to be used only
-on x86 platforms, which are little-endian.
+Checking cs.size against the descriptor payload length (iov_size) is not
+sufficient: indirect descriptor tables can repeat entries aliasing the
+same guest-physical range, inflating iov_size() to nearly 4 GiB while
+referring to only a small amount of unique memory.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
-Message-ID: <20260710-pvscsi-endianness-v3-1-27fe1c4d1f6e@gmail.com>
-[PMD: Rebased on top of commit cb30b8758d4 physmem API conversion]
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 5a811329bde78fc223abc384c85b0f62e3b34f7c)
-(Mjt: re-rebased to before commit cb30b8758d4 physmem API conversion)
+Instead, cap cs.size at 4 MiB. With 4 KiB pages and QEMU's
+VIRTQUEUE_MAX_SIZE (1024) mapped-iov limit, the Linux virtio driver
+cannot carry more than ~4 MiB of inline command data, so legitimate
+submissions are unaffected.
+
+Fixes: 9d9e152136bd ("virtio-gpu: add 3d mode and virgl rendering support.")
+Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for gfxstream")
+Fixes: d52c454aadc ("contrib: add vhost-user-gpu")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3776
+Reported-by: admin@fluentlogic.org
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit 8720061c6d343c77b4f3a061cce631c05ecc0482)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/vmw_pvscsi.c b/hw/scsi/vmw_pvscsi.c
-index 11ae6b9b747..687119394d3 100644
---- a/hw/scsi/vmw_pvscsi.c
-+++ b/hw/scsi/vmw_pvscsi.c
-@@ -392,9 +392,18 @@ static void
- pvscsi_cmp_ring_put(PVSCSIState *s, struct PVSCSIRingCmpDesc *cmp_desc)
- {
-     hwaddr cmp_descr_pa;
-+    PVSCSIRingCmpDesc cmp_desc_conv;
+diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
+index 51da0e3667f..550fd03bf5c 100644
+--- a/contrib/vhost-user-gpu/virgl.c
++++ b/contrib/vhost-user-gpu/virgl.c
+@@ -202,6 +202,13 @@ virgl_cmd_submit_3d(VuGpu *g,
  
-     cmp_descr_pa = pvscsi_ring_pop_cmp_descr(&s->rings);
-     trace_pvscsi_cmp_ring_put(cmp_descr_pa);
-+    cmp_desc_conv = (struct PVSCSIRingCmpDesc) {
-+        .context = cpu_to_le64(cmp_desc->context),
-+        .dataLen = cpu_to_le64(cmp_desc->dataLen),
-+        .senseLen = cpu_to_le32(cmp_desc->senseLen),
-+        .hostStatus = cpu_to_le16(cmp_desc->hostStatus),
-+        .scsiStatus = cpu_to_le16(cmp_desc->scsiStatus),
-+    };
-+    cmp_desc = &cmp_desc_conv;
-     cpu_physical_memory_write(cmp_descr_pa, cmp_desc, sizeof(*cmp_desc));
- }
+     VUGPU_FILL_CMD(cs);
  
-@@ -402,9 +411,18 @@ static void
- pvscsi_msg_ring_put(PVSCSIState *s, struct PVSCSIRingMsgDesc *msg_desc)
- {
-     hwaddr msg_descr_pa;
-+    PVSCSIRingMsgDesc msg_desc_conv;
-+    int i;
- 
-     msg_descr_pa = pvscsi_ring_pop_msg_descr(&s->rings);
-     trace_pvscsi_msg_ring_put(msg_descr_pa);
-+    msg_desc_conv = (PVSCSIRingMsgDesc) {
-+        .type = cpu_to_le32(msg_desc->type),
-+    };
-+    for (i = 0; i < ARRAY_SIZE(msg_desc->args); i++) {
-+        msg_desc_conv.args[i] = cpu_to_le32(msg_desc->args[i]);
++    if (cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
++        g_critical("%s: command buffer too large (%u)",
++                   __func__, cs.size);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        return;
 +    }
-+    msg_desc = &msg_desc_conv;
-     cpu_physical_memory_write(msg_descr_pa, msg_desc, sizeof(*msg_desc));
- }
- 
-@@ -481,6 +499,9 @@ pvscsi_get_next_sg_elem(PVSCSISGState *sg)
-     struct PVSCSISGElement elem;
- 
-     cpu_physical_memory_read(sg->elemAddr, &elem, sizeof(elem));
-+    elem.addr = le64_to_cpu(elem.addr);
-+    elem.length = le32_to_cpu(elem.length);
-+    elem.flags = le32_to_cpu(elem.flags);
-     if ((elem.flags & ~PVSCSI_KNOWN_FLAGS) != 0) {
-         /*
-             * There is PVSCSI_SGE_FLAG_CHAIN_ELEMENT flag described in
-@@ -759,6 +780,12 @@ pvscsi_process_io(PVSCSIState *s)
- 
-         trace_pvscsi_process_io(next_descr_pa);
-         cpu_physical_memory_read(next_descr_pa, &descr, sizeof(descr));
-+        descr.context = le64_to_cpu(descr.context);
-+        descr.dataAddr = le64_to_cpu(descr.dataAddr);
-+        descr.dataLen = le64_to_cpu(descr.dataLen);
-+        descr.senseAddr = le64_to_cpu(descr.senseAddr);
-+        descr.senseLen = le32_to_cpu(descr.senseLen);
-+        descr.flags = le32_to_cpu(descr.flags);
-         pvscsi_process_request_descriptor(s, &descr);
-     }
- 
-@@ -808,6 +835,17 @@ pvscsi_on_cmd_setup_rings(PVSCSIState *s)
- {
-     PVSCSICmdDescSetupRings *rc =
-         (PVSCSICmdDescSetupRings *) s->curr_cmd_data;
-+    PVSCSICmdDescSetupRings translated;
-+    int i;
 +
-+    translated.reqRingNumPages = le32_to_cpu(rc->reqRingNumPages);
-+    translated.cmpRingNumPages = le32_to_cpu(rc->cmpRingNumPages);
-+    translated.ringsStatePPN = le64_to_cpu(rc->ringsStatePPN);
-+    for (i = 0; i < PVSCSI_SETUP_RINGS_MAX_NUM_PAGES; i++) {
-+        translated.reqRingPPNs[i] = le64_to_cpu(rc->reqRingPPNs[i]);
-+        translated.cmpRingPPNs[i] = le64_to_cpu(rc->cmpRingPPNs[i]);
+     buf = g_malloc(cs.size);
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    sizeof(cs), buf, cs.size);
+diff --git a/contrib/vhost-user-gpu/vugpu.h b/contrib/vhost-user-gpu/vugpu.h
+index 654c392fbbf..2374eb90cb9 100644
+--- a/contrib/vhost-user-gpu/vugpu.h
++++ b/contrib/vhost-user-gpu/vugpu.h
+@@ -22,6 +22,7 @@
+ #include "qemu/queue.h"
+ #include "qemu/iov.h"
+ #include "qemu/bswap.h"
++#include "qemu/units.h"
+ #include "vugbm.h"
+ 
+ typedef enum VhostUserGpuRequest {
+@@ -163,6 +164,14 @@ struct virtio_gpu_ctrl_command {
+     QTAILQ_ENTRY(virtio_gpu_ctrl_command) next;
+ };
+ 
++/*
++ * With 4 KiB pages and QEMU's VIRTQUEUE_MAX_SIZE (1024) mapped-iov
++ * limit, the largest inline command is ~4 MiB.  Cap submit_3d
++ * allocations to this value to prevent a malicious guest from
++ * triggering an OOM abort via an inflated cs.size field.
++ */
++#define VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE (4 * MiB)
++
+ #define VUGPU_FILL_CMD(out) do {                                \
+         size_t vugpufillcmd_s_ =                                \
+             iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num, 0,  \
+diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
+index f6eb29472e8..a61454aeb99 100644
+--- a/hw/display/virtio-gpu-rutabaga.c
++++ b/hw/display/virtio-gpu-rutabaga.c
+@@ -351,6 +351,14 @@ rutabaga_cmd_submit_3d(VirtIOGPU *g,
+     VIRTIO_GPU_FILL_CMD(cs);
+     trace_virtio_gpu_cmd_ctx_submit(cs.hdr.ctx_id, cs.size);
+ 
++    if (cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: command buffer too large (%u)\n",
++                      __func__, cs.size);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        return;
 +    }
-+    rc = &translated;
- 
-     trace_pvscsi_on_cmd_arrived("PVSCSI_CMD_SETUP_RINGS");
- 
-@@ -831,6 +869,11 @@ pvscsi_on_cmd_abort(PVSCSIState *s)
-     PVSCSICmdDescAbortCmd *cmd = (PVSCSICmdDescAbortCmd *) s->curr_cmd_data;
-     PVSCSIRequest *r, *next;
- 
-+    PVSCSICmdDescAbortCmd translated = *cmd;
-+    translated.context = le32_to_cpu(cmd->context);
-+    translated.target = le32_to_cpu(cmd->target);
-+    cmd = &translated;
 +
-     trace_pvscsi_on_cmd_abort(cmd->context, cmd->target);
+     buf = g_new0(uint8_t, cs.size);
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    sizeof(cs), buf, cs.size);
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 030b329d5ae..30bf5b5029e 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -486,6 +486,14 @@ static void virgl_cmd_submit_3d(VirtIOGPU *g,
+     VIRTIO_GPU_FILL_CMD(cs);
+     trace_virtio_gpu_cmd_ctx_submit(cs.hdr.ctx_id, cs.size);
  
-     QTAILQ_FOREACH_SAFE(r, &s->pending_queue, next, next) {
-@@ -862,6 +905,10 @@ pvscsi_on_cmd_reset_device(PVSCSIState *s)
-         (struct PVSCSICmdDescResetDevice *) s->curr_cmd_data;
-     SCSIDevice *sdev;
- 
-+    PVSCSICmdDescResetDevice translated = *cmd;
-+    translated.target = le32_to_cpu(cmd->target);
-+    cmd = &translated;
-+
-     sdev = pvscsi_device_find(s, 0, cmd->target, cmd->lun, &target_lun);
- 
-     trace_pvscsi_on_cmd_reset_dev(cmd->target, (int) target_lun, sdev);
-@@ -892,6 +939,14 @@ pvscsi_on_cmd_setup_msg_ring(PVSCSIState *s)
- {
-     PVSCSICmdDescSetupMsgRing *rc =
-         (PVSCSICmdDescSetupMsgRing *) s->curr_cmd_data;
-+    PVSCSICmdDescSetupMsgRing translated = *rc;
-+    int i;
-+
-+    translated.numPages = le32_to_cpu(rc->numPages);
-+    for (i = 0; i < PVSCSI_SETUP_MSG_RING_MAX_NUM_PAGES; i++) {
-+        translated.ringPPNs[i] = le64_to_cpu(rc->ringPPNs[i]);
++    if (cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: command buffer too large (%u)\n",
++                      __func__, cs.size);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        return;
 +    }
-+    rc = &translated;
++
+     buf = g_malloc(cs.size);
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    sizeof(cs), buf, cs.size);
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index a42957c4e2c..156c7457e17 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -15,6 +15,7 @@
+ #define HW_VIRTIO_GPU_H
  
-     trace_pvscsi_on_cmd_arrived("PVSCSI_CMD_SETUP_MSG_RING");
+ #include "qemu/queue.h"
++#include "qemu/units.h"
+ #include "ui/qemu-pixman.h"
+ #include "ui/console.h"
+ #include "hw/virtio/virtio.h"
+@@ -280,6 +281,14 @@ struct VirtIOGPURutabaga {
+     struct rutabaga *rutabaga;
+ };
  
-@@ -994,7 +1049,7 @@ pvscsi_on_command_data(PVSCSIState *s, uint32_t value)
-     size_t bytes_arrived = s->curr_cmd_data_cntr * sizeof(uint32_t);
- 
-     assert(bytes_arrived < sizeof(s->curr_cmd_data));
--    s->curr_cmd_data[s->curr_cmd_data_cntr++] = value;
-+    s->curr_cmd_data[s->curr_cmd_data_cntr++] = cpu_to_le32(value);
- 
-     pvscsi_do_command_processing(s);
- }
++/*
++ * With 4 KiB pages and QEMU's VIRTQUEUE_MAX_SIZE (1024) mapped-iov
++ * limit, the largest inline command is ~4 MiB.  Cap submit_3d
++ * allocations to this value to prevent a malicious guest from
++ * triggering an OOM abort via an inflated cs.size field.
++ */
++#define VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE (4 * MiB)
++
+ #define VIRTIO_GPU_FILL_CMD(out) do {                                   \
+         size_t virtiogpufillcmd_s_ =                                    \
+             iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num, 0,          \
 -- 
 2.47.3
 
