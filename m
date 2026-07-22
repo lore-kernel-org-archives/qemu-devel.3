@@ -4,76 +4,165 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 506EEC4453A
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 09:52:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0855C4453A
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 09:58:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmTcc-0006dX-P6; Wed, 22 Jul 2026 05:52:14 -0400
+	id 1wmTi6-0001uY-7L; Wed, 22 Jul 2026 05:57:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wmTcX-0006Ww-Fz
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 05:52:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wmTi0-0001ti-IX
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 05:57:50 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wmTcV-00019G-7z
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 05:52:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784713925;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=U8wdrXioiQU759OWlv63OOR3b8wxb4eN9XMZEAEZRIM=;
- b=YSaJcp8uITVCJUe/ju/BhLDaxOqW3bYSylzZGfUpRUfbj1S8yerREen3324to2O019xh82
- v22MhQUFV40skQx4CTdlvLnoKdRMyBKaA5m9qD/kH/HJiQK++VGwUjP18TzrblSjDV3Pji
- mqUEC38+pp5QeLc+6LgSR/jFnJrIcRo=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-41-38HQwv5tOUSFXbywM3gQUA-1; Wed,
- 22 Jul 2026 05:52:02 -0400
-X-MC-Unique: 38HQwv5tOUSFXbywM3gQUA-1
-X-Mimecast-MFC-AGG-ID: 38HQwv5tOUSFXbywM3gQUA_1784713921
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 96DBA191DFFC; Wed, 22 Jul 2026 09:52:00 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BF8C13004082; Wed, 22 Jul 2026 09:51:59 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 72D6C21E6920; Wed, 22 Jul 2026 11:51:57 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Ilya Chichkov <ilya.chichkov.dev@gmail.com>
-Cc: qemu-devel@nongnu.org,  =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>,  Corey Minyard <cminyard@mvista.com>,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- Daniel P . =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  Laurent Vivier
- <lvivier@redhat.com>
-Subject: Re: [PATCH v4] hw/i2c: Add remote I2C master with host CUSE bridge
-In-Reply-To: <20260720173055.2468210-1-ilya.chichkov.dev@gmail.com> (Ilya
- Chichkov's message of "Mon, 20 Jul 2026 20:30:54 +0300")
-References: <87pl10md1j.fsf@pond.sub.org>
- <20260720173055.2468210-1-ilya.chichkov.dev@gmail.com>
-Date: Wed, 22 Jul 2026 11:51:57 +0200
-Message-ID: <87fr1bl5c2.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wmThx-0002KT-72
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 05:57:47 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66M8xIct4018304
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 09:57:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ YrNrx8IXRArj6evka/CvXtr7MNaKWGLRoL5YwM3PfjQ=; b=iVnUnVIGZ+TloSZR
+ n3dYXra+AbqmWrm39XaSshFXkrITOh87ojCjXo/pr+Fe4+AUPMh2So0yRLETC7by
+ Xpi5aQtibAFW+pJUdeBZNJYmWfzbKiw+5/4RTL/F7IMUfHFMHQsFXqEdhzpfrJgG
+ 9nf1HX+oAokp/31gWMAFJl7bdFCZyanyyKWjclvH7K2QNB0Riz0IztyqU9wZ1udo
+ Q6eG61GxKFl8CB76H5LDFRpOokbAYd5VOjcyTcikkLVAMKXjyRfE1DKRdMrCApFb
+ 0gXVZKIQGJfigwZC+5uz55dGlSq7ggL33Zqraez79zyMa1Z01hgSp9tBANcIulkh
+ 0Z/IpQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fjd6fufk4-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 09:57:41 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-92e695a3b28so1229326785a.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 02:57:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1784714261; x=1785319061; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=YrNrx8IXRArj6evka/CvXtr7MNaKWGLRoL5YwM3PfjQ=;
+ b=W1F5Ga464enTghLw+K9oemiMcsL9Nyh4+kHXy4D78SXPlwq+kGIZi5GcOje9lAeXQq
+ MkmdHVeCK+2A+BTPOwe8mL34oVpuMYYhAevjkA4UdQ2n94Jt0LSg3U84KWa5/nH9vbRh
+ 6SSFN2UZEguz7V8O4fN/5TbyRqPHD2mFgdqBjenL2DhKXTx28HmmMEIzfaztCcic8bjF
+ QAybQ9o/VGXqb3Ypqb7HlDqyYpVI1h5kmZfxEqO+HatUgS5NB6nKz1i2qp5zEgJvp2RN
+ mK5p9On7XaosTiqAuTh+FlzPLi1YUVmkQqh51YgBfO//8z4NBYRFu5Svs7Fo51RRkJWo
+ CsCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784714261; x=1785319061;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=YrNrx8IXRArj6evka/CvXtr7MNaKWGLRoL5YwM3PfjQ=;
+ b=Au4TZrAm9vydz2EbMkX3IwqJCj6hdrNiUDTDbt1GIJmNVsabkZJrMs5Rx0imr6VWVt
+ Vv//7qg8wD2xutp1Rsjz9Jhm5MEyjDbnucnlYn45AbMMGcBoKc8pGPpHMckV6QXayrlW
+ UEhx2ErslIM3SmJNBm2ynPPws6PL4HXlF5rhcSV68xzp1aJ/D2IOcUa2eqohCH6qv0AN
+ 6GuaN+ilNOIsFJ3IW+77qyQUiQk4UfgaMkAZ3+B+3ziGsUEmcJmri1C01btmiB60FuqO
+ ZBVQOEcpHVxf7doeKyXu27gmRBJRGG+Z8cQV83prHWVdUn1RZd40fp4YnppsVVCEGp46
+ 0ciw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RreGpmFS2hsQjgcgIiEQSUf0KvCvdukCSRWGaPmNkouXL0Y8T3GJYP+41AJK6fU5mVOWQHuFna1f+dX@nongnu.org
+X-Gm-Message-State: AOJu0YyZBuHgfehtQmxG+OISGiqEuDIrBq3MOsmhLjgL4xpeF6lbxIg8
+ WCHv1dz199WkWdiefxLzi+RlojR4yA0b2wQcOCHBDKpqVB8eOsNAs9m6PVcsIXG1s+pYstmxly0
+ csB8VZt7Rt/PPFEaph64MKv90VDUpDOcKtKXkQg0ptsb45kADQXG1M027Cw==
+X-Gm-Gg: AR+sD139wu8qYidKCE9Il9F/fo1dTIGX9lTT7ZsizbdOW3aNbVYnLkq44UZ+HX8zRwb
+ 1VGw+veKMkhPUwVfF0VW6k7XgX/YBbx3Q8Nx1QkyBkcMLDVzLoFhq990hgLu6XA/seqPzsGmhvX
+ DV8MpHPE+uhuCNoLQnN+xsJA2l17LxykWjQQIuOEVBrNP2Va/ZoPqox2X7gsl2cIT54vq4XhvjQ
+ NVlj0r0P1Y2GghxXdNSnjQeUr/ILyaH5HSoCNNzeGSIqG+VAL8wiM3FD1GXzNjvmVlrnt1gokpT
+ Uepe0yAURCH2ApBYRN0YpYumstA/JHeF62xDYzkEul7zZHOndS6XVddQC1E1BA3+2K2+3AFefuW
+ EW5hcfy7JkgC0bd4rIps5EHKy0XpOkKxANyBR4M4LJQHmV0NG/1Y=
+X-Received: by 2002:a05:622a:aad3:20b0:528:ce0:e9f8 with SMTP id
+ d75a77b69052e-5280ce0ebc0mr10707751cf.3.1784714260615; 
+ Wed, 22 Jul 2026 02:57:40 -0700 (PDT)
+X-Received: by 2002:a05:622a:aad3:20b0:528:ce0:e9f8 with SMTP id
+ d75a77b69052e-5280ce0ebc0mr10707571cf.3.1784714260119; 
+ Wed, 22 Jul 2026 02:57:40 -0700 (PDT)
+Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f85bb5127sm5064638f8f.10.2026.07.22.02.57.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 Jul 2026 02:57:39 -0700 (PDT)
+Message-ID: <8d979f89-374a-4b86-93c8-9d7dcc311ca6@oss.qualcomm.com>
+Date: Wed, 22 Jul 2026 11:57:36 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: permerror client-ip=170.10.129.124;
- envelope-from=armbru@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-11.2 v3 15/15] hw/qdev: Prevent devices from being
+ realized more than once
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ David Hildenbrand <david@kernel.org>, Igor Mammedov <imammedo@redhat.com>,
+ FangSheng Huang <FangSheng.Huang@amd.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>, Aditya Gupta <adityag@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org,
+ Luc Michel <luc@lmichel.fr>, Fam Zheng <fam@euphon.net>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <20260721-qdev-v3-0-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
+ <20260721-qdev-v3-15-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
+ <356ebc59-d2cb-4c47-867e-8fc693b3a593@oss.qualcomm.com>
+ <a5597a0e-c18c-4649-bfd1-20d77897ff88@rsg.ci.i.u-tokyo.ac.jp>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <a5597a0e-c18c-4649-bfd1-20d77897ff88@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: AvMalZl7B-VJW8amgZZiKpZ27Bzy9Tuf
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIyMDA5NSBTYWx0ZWRfX44KnD5iMQFLx
+ pDnvtj+ZDdDAVTsjX49v1Lc+lkW5hSIwhUkLeIbeYhdGVSxZ4ClkBDx+HCvO213Fq+LYkApSt/9
+ HsHVBQH5aIYJ6//0UzQVWgwKrVuAMKoCH/I7w6y9eb9C8SgJ2fsIptEZkfxwClRUugnpw/7wn5s
+ hENlY6wmHkOeT5gTYzKuAGH+ONaV/6kN5+F/jEEBZQf3NseNA/BUNvVO/XTlDIRc0edvr28lin7
+ M2Gq/SLOOjCam0ewLVW/qnarRgCeg8jnavm0Q5UMpFyPA5CjQVBoajC2hBdK8p/LNlSlqE7hmpU
+ FuerC/+s1hQHptgfiI6Ht958JS609W94B1g6wC+1iiYFGzAI82FWcZNPQHdi6YVsVP1MWcA1/Jy
+ O6RuaNexcuButKhbjLmuljLp6DXtIYxVs685ujPjYni/HSLteQJBclcOH9LugJDKmg7JsH+XU/j
+ dEibjLOl5mgYe3iYvyA==
+X-Authority-Analysis: v=2.4 cv=e/o2j6p/ c=1 sm=1 tr=0 ts=6a609415 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=lYN5X0wpDFwZmuDoHbIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-ORIG-GUID: AvMalZl7B-VJW8amgZZiKpZ27Bzy9Tuf
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIyMDA5NSBTYWx0ZWRfX/u7r7wBenQVV
+ eEHF5PWWK4I/S0uJZdxKKZH/QokpPqBHud6yZVex331WOl7w2VLtYEUP9J2ybwIGZt5YCyVSTUH
+ iWro9kuCOH0H8zJS9qrP78fDFlVOxDE=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-22_03,2026-07-21_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0 spamscore=0 bulkscore=0 priorityscore=1501
+ impostorscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607220095
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,122 +178,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We prefer revisions be posted as new threads.  Next time :)
+On 22/7/26 07:12, Akihiko Odaki wrote:
+> On 2026/07/22 5:11, Philippe Mathieu-Daudé wrote:
+>> Hi Akihiko,
+>>
+>> On 21/7/26 10:17, Akihiko Odaki wrote:
+>>> qdev currently permits reentrant realization of the same device. It also
+>>> permits another realization attempt after a device has been unrealized
+>>> or a previous attempt has failed. Either path can invoke
+>>> DeviceClass::realize() more than once. Supporting repeated realization
+>>> adds complexity to device implementations. It is untested and likely
+>>> broken.
+>>>
+>>> Replace the bool DeviceState::realized field with the enum-valued
+>>> DeviceState::phase field. The enum has four values:
+>>>
+>>> - initialized
+>>> - realizing
+>>> - realized
+>>> - retired
+>>
+>> Excellent.
+>>
+>> I have been working on something similar.
+>>
+>> I'd start the first patch only including:
+>>
+>> DEVICE_PHASE_UNREALIZED (false)
+>> DEVICE_PHASE_REALIZED (true)
+>>
+>> Then gradually rename DEVICE_PHASE_REALIZED -> DEVICE_PHASE_CREATED
+>> and add the DEVICE_PHASE_REALIZING and DEVICE_PHASE_RETIRED phases,
+>> so we can discuss them during the review process.
+> 
+> A gradual conversion makes sense. I kept the "realized" phase as-is 
+> because it maps exactly to the current external behavior. This patch 
+> splits the internal "unrealized" state into three distinct phases, but 
+> the external concept of being "realized" remains unchanged. This allows 
+> us to avoid a tree-wide refactoring, which is also why 
+> qdev_is_realized() is preserved.
+> 
+>>
+>>> Realization can start only in the initialized phase. It moves the device
+>>> to the realizing phase before invoking callbacks, preventing another
+>>> realization attempt. Successful realization moves it to the realized
+>>> phase; failure after realization has started moves it to the retired
+>>> phase. Unrealization also moves a realized device to the retired phase.
+>>
+>> So what is the difference between 'initialized' and 'retired'?
+> 
+> The first statement in this paragraph differentiates 'initialized' from 
+> everything else: realization can start only in the initialized phase. A 
+> 'retired' device cannot be realized. This property avoids re-entrancy.
 
-Fails to build for me:
+But we do use unrealize -> realize again, in hotplug path.
 
-    [334/335] Generating docs/QEMU manual with a custom command
-    FAILED: [code=1] docs/docs.stamp 
-    /usr/bin/env CONFDIR=etc/qemu /work/armbru/qemu/bld-docs/pyvenv/bin/sphinx-build -q -j auto -W -Dkerneldoc_werror=1 -Dversion=11.0.90 -Drelease= -Ddepfile=docs/docs.d -Ddepfile_stamp=docs/docs.stamp -b html -d /work/armbru/qemu/bld-docs/docs/manual.p /work/armbru/qemu/docs /work/armbru/qemu/bld-docs/docs/manual
-    /work/armbru/qemu/docs/system/devices/remote-i2c-master.rst: WARNING: document isn't included in any toctree [toc.not_included]
+So we need to be able to move from 'retired' to 'realizing'
+again, thus my wonder what is the difference between 'realizing'
+and 'initialized'.
 
-Should you add a reference to your new .rst to
-docs/system/device-emulation.rst section "Emulated Devices"?
+I.e. this test should pass:
 
-Ilya Chichkov <ilya.chichkov.dev@gmail.com> writes:
+static void test_qdev_realize_hotplug(void)
+{
+     Object *mt = object_new(TYPE_MY_DEV);
 
-> Add a "remote-i2c-master" device that exposes a QEMU I2C bus to the
-> host system through a FUSE/CUSE character device. This lets external
-> host programs and standard i2c-tools interact with I2C slaves emulated
-> inside QEMU as if they were real devices attached to the host.
->
-> The implementation is split into three layers:
->
->   - A non-blocking finite state machine that drives the QEMU I2C
->     master. It is pumped by a QEMU Bottom Half and uses virtual timers
->     to yield during long transfers and to model clock stretching for
->     asynchronous slaves, so the main loop is never blocked. The FSM
->     walks IDLE -> ADDR -> SEND/RECV -> WAIT_STRETCH -> END -> FINISHED
->     and handles NACKs (ENXIO), lost arbitration (EBUSY, with optional
->     back-off and retry), stretch timeouts, and manual abort/reset.
->
->   - An abstract RemoteI2CBackend QOM base class that decouples the
->     internal I2C hardware state machine (the frontend) from any
->     host-specific transport, exposing on_tx_complete and on_tx_error
->     virtual callbacks.
->
->   - A concrete remote-i2c-backend-cuse backend implementing that
->     transport over CUSE. It manages the FUSE session and integrates
->     its file descriptors into QEMU's main AioContext event loop,
->     translates Linux I2C_RDWR, I2C_SMBUS and I2C_SLAVE ioctls into
->     generic byte streams for the FSM, and formats responses back into
->     Linux I2C/SMBus structures for the FUSE driver. SMBus repeated
->     start is supported for atomic write-then-read operations.
->
-> Example usage:
->
->   -device remote-i2c-master,i2cbus=i2c-bus.0,devname=i2c-33
->   -object remote-i2c-backend-cuse,id=b0,devname=i2c-33
->
-> This creates /dev/i2c-33 on the host, usable with i2c-tools:
->
->   i2cdetect -y -l
->   i2cget -y <bus_id> <addr> <reg>
->
-> Signed-off-by: Ilya Chichkov <ilya.chichkov.dev@gmail.com>
+     /* plug */
+     g_assert_false(qdev_realize(DEVICE(mt), NULL, NULL));
 
-[...]
+     /* unplug */
+     qdev_unrealize(DEVICE(mt));
 
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index dd45ac1087..1552103a4a 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -1258,6 +1258,8 @@
->      'tls-creds-psk',
->      'tls-creds-x509',
->      'tls-cipher-suites',
-> +    { 'name': 'remote-i2c-backend-cuse',
-> +      'if': 'CONFIG_LINUX' },
->      { 'name': 'x-remote-object', 'features': [ 'unstable' ] },
->      { 'name': 'x-vfio-user-server', 'features': [ 'unstable' ] }
->    ] }
-> @@ -1334,6 +1336,8 @@
->        'tls-creds-psk':              'TlsCredsPskProperties',
->        'tls-creds-x509':             'TlsCredsX509Properties',
->        'tls-cipher-suites':          'TlsCredsProperties',
-> +      'remote-i2c-backend-cuse':    { 'type': 'RemoteI2CBackendCuseProperties',
-> +                                      'if': 'CONFIG_LINUX' },
->        'x-remote-object':            'RemoteObjectProperties',
->        'x-vfio-user-server':         'VfioUserServerProperties'
->    } }
-> @@ -1377,3 +1381,27 @@
->  ##
->  { 'command': 'object-del', 'data': {'id': 'str'},
->    'allow-preconfig': true }
-> +
-> +##
-> +# @RemoteI2CBackendCuseProperties:
-> +#
-> +# Properties for the CUSE remote I2C backend.  See
-> +# :doc:`/system/devices/remote-i2c-master` for usage information.
+     /* re-plug */
+     g_assert_false(qdev_realize(DEVICE(mt), NULL, NULL));
+     qdev_unrealize(DEVICE(mt));
+     object_unparent(mt);
+     object_unref(mt);
+}
 
-Suggest "for detailed usage information."
+Maybe your 'retired' could be renamed as transient 'unrealizing',
+similar to 'realizing' phase, then we could transition to the
+'unrealized' initial phase?
 
-> +#
-> +# @devname: The name of the character device node to create under /dev
-> +#     (e.g., 'i2c-33' creates /dev/i2c-33).  The node is accessible
-> +#     via the standard Linux I2C device interface and usable directly
-> +#     with i2c-tools and the Linux i2c-dev API.
-> +#
-> +# @fuse-opts: Options passed verbatim to the FUSE/CUSE session at
-> +#     mount time, one option (or argument) per list element.  For
-> +#     example ['-d'] enables debug tracing, and ['-o', 'allow_other']
-> +#     grants other users access.  See the libfuse documentation for
-> +#     the full list of supported options.
-> +#
-> +# Since: 11.2
-> +##
-> +{ 'struct': 'RemoteI2CBackendCuseProperties',
-> +  'data': { 'devname': 'str',
-> +            '*fuse-opts': ['str'] },
-> +  'if': 'CONFIG_LINUX' }
+> 
+>>
+>>> The QOM realized property is an internal lifecycle property, not for
+>>> end users. Replace it with the enum-valued phase property.
+>>>
+>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>> ---
+>>>   qapi/common.json          |  19 ++++++++
+>>>   include/hw/core/qdev.h    |  12 ++---
+>>>   hw/core/qdev-clock.c      |   4 +-
+>>>   hw/core/qdev-properties.c |   4 +-
+>>>   hw/core/qdev.c            |  98 +++++++++++++++++++++++++ 
+>>> +--------------
+>>>   hw/scsi/scsi-bus.c        |   4 +-
+>>>   qom/qom-qmp-cmds.c        |   2 +-
+>>>   system/qdev-monitor.c     |   5 ++-
+>>>   tests/unit/test-qdev.c    | 112 +++++++++++++++++++++++++++++++++++ 
+>>> + +++++++++-
+>>>   9 files changed, 212 insertions(+), 48 deletions(-)
+>>>
+>>> diff --git a/qapi/common.json b/qapi/common.json
+>>> index af7e3d618a7c..88a308cbd172 100644
+>>> --- a/qapi/common.json
+>>> +++ b/qapi/common.json
+>>> @@ -7,6 +7,25 @@
+>>>   # *****************
+>>>   ##
+>>> +##
+>>> +# @DevicePhase:
+>>> +#
+>>> +# An enumeration of the device phases
+>>> +#
+>>> +# @initialized: the initial phase
+>>> +#
+>>> +# @realizing: the phase during realization
+>>> +#
+>>> +# @realized: the phase after realization
+>>> +#
+>>> +# @retired: the terminal phase entered when unrealization begins or
+>>> +#           realization fails after starting
+>>> +#
+>>> +# Since: 11.1
+>>> +##
+>>> +{ 'enum': 'DevicePhase',
+>>> +  'data': [ 'initialized', 'realizing', 'realized', 'retired' ] }
+>>> +
+>>
+>>
+>>> @@ -477,10 +477,10 @@ bool qdev_unplug_blocked(DeviceState *dev, 
+>>> Error **errp)
+>>>       return false;
+>>>   }
+>>> -static bool device_get_realized(Object *obj, Error **errp)
+>>> +static int device_get_phase(Object *obj, Error **errp)
+>>
+>> DevicePhase
+> 
+> device_get_phase() must return int to match the getter type required by
+> object_class_property_add_enum():
+> 
+>      int (*get)(Object *, Error **)
+> 
+> Using DevicePhase there would not match the callback type.
 
-Please add this type before its use.  Put it right before
-RemoteObjectProperties?
+Ah right.
 
-With that, QAPI schema
-Acked-by: Markus Armbruster <armbru@redhat.com>
-
-[...]
-
+> 
+>>
+>>>   {
+>>>       DeviceState *dev = DEVICE(obj);
+>>> -    return dev->realized;
+>>> +    return dev->phase;
+>>>   }
 
