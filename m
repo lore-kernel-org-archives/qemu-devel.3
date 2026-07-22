@@ -4,117 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69283C4453C
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 14:09:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38E60C44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 14:12:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmXct-0004C7-0b; Wed, 22 Jul 2026 10:08:47 -0400
+	id 1wmXgK-00058k-21; Wed, 22 Jul 2026 10:12:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1wmXcr-0004By-OH
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 10:08:45 -0400
-Received: from mail-westusazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c000::1] helo=BYAPR05CU005.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1wmXcp-0007wc-3u
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 10:08:45 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gLw5rKIJtiWKb65Usen4KQl4WG8wTPVXVNRzT3vCJm747JhQxQKttfKOmUXiF+CMTvHJ9bfpmZkX/buoXfwPyXEIkA9G06pNQmLq12siRv/lJlfTCXzgB4qM74aUH49oQ03hQhrGHN6srKyB8wVajWvxZEFL/VR9iBLjy4RIPKN2mln6qsDlkaCe4ic5KnACh2h0FQ+02HBd+M9ZJLCcEP+EeZIBubGKufJH0beP5vtOkzseUTjNfyjMmCQ9GhcdVAisYAL3e6ce2P3Sl6LAQQ5vjWAMcqdTWbnUwF+crtm03XnKSwojTvh053kJhpC2LGwr/OQqjpxaNcHnAPv6Fw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0Dccv141j90E4KeVjOwjEzU3IX2pFpcEKrfdyKXTpGQ=;
- b=ioHBufKRGwzDfZFGwA+417mndIH7ujJt6DZbnL3Sax/zPK2xBEDUXBCUcC8QTgfcaFCZ7/CkuAKlwhYRf5vFbsFogLcyWqaKcVFA8kYPGF0aUGIw5r/yQUPnBkGl2TVfgyzJYyBTZibfNmSXik/wzlJMNNyaQU/k2is4aAvdfuhxaukWMPiTG+jzzXY9XgRRPQcypMFWIaQsj/f6cnYzSKbJuPqhsbjNxFFMxx+RUwt8/6DV9YmlIII1MFi3JQZMp4ywJV4AiiKU8B+yJ84n2vGttfiyX57MBi8NhQzoLM4mBcRsBBCISAASA5Bz6oLhGUBvzqqGYlA+nftYB0NzXw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=oss.qualcomm.com smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0Dccv141j90E4KeVjOwjEzU3IX2pFpcEKrfdyKXTpGQ=;
- b=cYMlK0IhjlXApFp2lNibk2DHNXJBLvGp0uu43gwApZUWeUdlYOXV1H799dqkHO9wwU+L6AVy34oQCuIo/khgPNm+qAEVOemv/Fx9imxrLxB5q86bolEKePiJZvG8IcCenPnMmB0DHAJ6/UeY6hCICOrJIATcHWkbLlPAx74BcSM=
-Received: from SJ0PR03CA0213.namprd03.prod.outlook.com (2603:10b6:a03:39f::8)
- by LV1PR12MB999281.namprd12.prod.outlook.com (2603:10b6:408:3bd::7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.10; Wed, 22 Jul
- 2026 14:08:36 +0000
-Received: from SJ5PEPF000001D0.namprd05.prod.outlook.com
- (2603:10b6:a03:39f:cafe::14) by SJ0PR03CA0213.outlook.office365.com
- (2603:10b6:a03:39f::8) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.245.10 via Frontend Transport; Wed,
- 22 Jul 2026 14:08:36 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
-Received: from satlexmb08.amd.com (165.204.84.17) by
- SJ5PEPF000001D0.mail.protection.outlook.com (10.167.242.52) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.245.5 via Frontend Transport; Wed, 22 Jul 2026 14:08:35 +0000
-Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Wed, 22 Jul
- 2026 09:08:35 -0500
-Received: from XFR-LUMICHEL-L2.amd.com (10.180.168.240) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41 via Frontend
- Transport; Wed, 22 Jul 2026 09:08:34 -0500
-Date: Wed, 22 Jul 2026 16:08:32 +0200
-From: Luc Michel <luc.michel@amd.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-CC: <qemu-devel@nongnu.org>, "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, 
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>, Richard Henderson
- <richard.henderson@linaro.org>, Francisco Iglesias
- <francisco.iglesias@amd.com>, Frederic Konrad <frederic.konrad@amd.com>
-Subject: Re: [PATCH] target/microblaze/translate: fix reversed load/store
- translation
-Message-ID: <amDO4OyZk2rcRC9G@XFR-LUMICHEL-L2.amd.com>
-References: <20260710072348.3575-1-luc.michel@amd.com>
- <7358d920-d631-43b0-8285-c162bd67df78@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
+ id 1wmXgI-00058P-Ew
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 10:12:18 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wmXgG-0008LA-5o
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 10:12:18 -0400
+Received: from linux.microsoft.com (unknown [86.121.140.206])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 704CD20B7167;
+ Wed, 22 Jul 2026 07:11:59 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 704CD20B7167
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1784729521;
+ bh=5KItUqlm1yZHbNIjgZbkYd0pkpbh/Smp+YFdrFuj4QA=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=S0fKWD1Af2nIXUowWbw+zgEFetA/fnufwq//ub/iuPMfJ4JjYXlFwibjqLTwsN28v
+ HxAJlbZ7LxwVO2jwidzjnY6bj7+yz9xmXK3JMFZ5mv+uqaT/jhQ0V4nk3ofva1ELsb
+ 1aGdJpwbJXRuMzykO57Dsjojsaus5O+zxsg+ZbOg=
+Date: Wed, 22 Jul 2026 17:12:08 +0300
+From: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Magnus Kulke <magnuskulke@microsoft.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
+ Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <doru.blanzeanu@microsoft.com>,
+ Wei Liu <liuwe@microsoft.com>
+Subject: Re: [PATCH 07/12] target/i386/mshv: migrate SIMP and SIEFP state
+Message-ID: <amDPuJ4DMcVkTjhF@linux.microsoft.com>
+References: <20260710101534.664604-1-magnuskulke@linux.microsoft.com>
+ <20260710101534.664604-8-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <7358d920-d631-43b0-8285-c162bd67df78@oss.qualcomm.com>
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF000001D0:EE_|LV1PR12MB999281:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1a2b0b54-a022-419d-bdf2-08dee7fab896
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|82310400026|23010399003|36860700016|376014|13003099007|22082099003|18002099003|6133799003|3023799007|4143699003|10067099003|56012099006|11063799006;
-X-Microsoft-Antispam-Message-Info: blkQHTcMRFIUcvusuhmw7zzohizjPF/Ny0idfV4bUYZrzoJGzH7K/KeQLIC3Vkt7DenYfHS+XyrNErSQLjGud2+vmSFAG5aGm2vbhuofkVmSYI3Ksk2tFOhn+wWLoJ/WQXfSvXConqelD5ZEcPqqvN+iXwOgACcv0tlxYSn2SLrr5yne1mMd83hM/opO9Svfnzvczeil2S5XeHRpYK4Q0KsTkKaGnfqzHYbAr5+ngHstG1JFHQTsQnHWYAfF1zn1XwLXZhXJnR0XDW6mQ8i+fNu9FnQglQn3vuMzbMSZSKYtF/2URxQPe5q2V7O+LWHkHPN6S4Amt6QLSHX7PbuHRYTlaEUH0/3quOKe4/nDN0VWLPDYHcSMtlOkwLmUjiudHbxwItOnhJ9ntR6oalov0nopVfsPtKuS8xLZlXbJMQsLohZLoMUnP/vF4UkpnDCDNnO77ju9IGNaTYbhPMDhimVG1l+9wEWDLgnGqD8otB0P5T0EEO4RA0KJA0iVrhr0O+Y8SE/xd1ApJ9jP2t+UfREVZtSXTlCtsdg2BZM/hPQN4eAe6MMm0WkyuGdbLXeVvnbCMpN0619j0YdTokJe1BT3vx/ejouPpUWu0gTpHwFRat+ia+JDRfs6bEEe8NGgMAjGTyHnAhbjcUEtl9fQ/ssh77bkewoW9FL8JgY2f7FqliWbrurjuxz3doieIXKNfVms+97805Ec03rnbb6iWw==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb08.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(82310400026)(23010399003)(36860700016)(376014)(13003099007)(22082099003)(18002099003)(6133799003)(3023799007)(4143699003)(10067099003)(56012099006)(11063799006);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 4K3nSAPO66dsceJIHD2RSTiZDkP/wbcyohuayxhFi8QnCz77nF+aSshAWQL4bRxx4nDgDaLes0Z/1j4WtOmE7qwCBqBIxW6/WT54xeCbic3v5a67fKvwt0QhefSbg4hWu9ONb2bKQcfIWKKiE+sF/n48ZpK61jNzPDAOIr6pKKCeNkP+6G6VoiAwSxU1++gH6BiwyqafsE1I45qPdjdRrT59JJwUh8Z2XzCZFJCXrHwYE44pDGsyk0WYr2MIHN45ISUiYM0VlwueqJTNPdiKdv1uUJxQLsPLXoPj38nKfI1gLtzT83n7exwDaLcvO2bo5SQySB78NU+cBRBND8TJ+xnVHXMaKk5sNtQ9YrtY4MKgUyXwiJrJyA1eyQIFfks7ufPJquQowf9u0xygOapxvW90iRuSWtMNWetf1tD4BfYhvwbQidtB5BKZEhZl+das
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jul 2026 14:08:35.7164 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1a2b0b54-a022-419d-bdf2-08dee7fab896
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb08.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001D0.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV1PR12MB999281
-Received-SPF: permerror client-ip=2a01:111:f403:c000::1;
- envelope-from=Luc.Michel@amd.com;
- helo=BYAPR05CU005.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20260710101534.664604-8-magnuskulke@linux.microsoft.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,45 +72,421 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14:02 Wed 22 Jul     , Philippe Mathieu-DaudÃ© wrote:
-> Hi Luc,
+On Fri, Jul 10, 2026 at 12:15:29PM +0200, Magnus Kulke wrote:
+> This part SynIC state is retrieved from the hypervisor via aligned state
+> pages:
 > 
-> On 10/7/26 09:23, Luc Michel wrote:
-> > Since 36a9529e60e0 the TCGv returned by compute_ldst_addr_type{a,b} for
-> > the address can be a target register or a constant. However
-> > do_{load,store} might modify it in the case of a reversed load/store.
+> - Add new synic source file
+> - Centralize the synic_enabled() check
+> - r/w pages from the hyper via aligned pages
+> - only handle pages when synic is enabled
+> - add buffers for migration to VM state
 > 
-> Register are modifiable, aren't they? IIUC compute_ldst_addr_typeb()
-> is not used by the reversed opcodes and the only issue is the 0 constant
-> in compute_ldst_addr_typea(). Is that analysis correct?
-
-Hi Phil,
-
-The address registers are never modified by a load/store instruction.
-(See e.g., https://docs.amd.com/r/en-US/ug984-vivado-microblaze-ref/lw ) 
-
-36a9529e60e0 introduced an optimization that can return the global TCGv
-used for rA or rB storage instead of copying it.
-
-The bug appears in the reversed load/store case, where the
-do_load/do_store functions treat the `addr' TCGv_i32 as a temp and
-modify it. Since 36a9529e60e0, addr can alias rA, rB, or a 0 TCG
-constant. Those 3 cases are buggy.
-
-Thanks
-
-Luc
-
+> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+> ---
+>  include/system/mshv_int.h    |   7 ++
+>  target/i386/cpu.h            |   5 ++
+>  target/i386/machine.c        |  26 ++++++
+>  target/i386/mshv/meson.build |   1 +
+>  target/i386/mshv/mshv-cpu.c  |  64 +++++++++++++++
+>  target/i386/mshv/msr.c       |   7 +-
+>  target/i386/mshv/synic.c     | 155 +++++++++++++++++++++++++++++++++++
+>  7 files changed, 260 insertions(+), 5 deletions(-)
+>  create mode 100644 target/i386/mshv/synic.c
 > 
-> > Fix this by factoring out the reversed access logic and copying the
-> > address in a new TCGv_i32 if it needs to be modified.
-> > 
-> > Fixes: 36a9529e60e0 (target/microblaze: Simplify compute_ldst_addr_type{a,b})
-> > Signed-off-by: Luc Michel <luc.michel@amd.com>
-> > ---
-> >   target/microblaze/translate.c | 56 ++++++++++++++++++++---------------
-> >   1 file changed, 32 insertions(+), 24 deletions(-)
-> 
+> diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+> index c2f13c0194..bc023d3535 100644
+> --- a/include/system/mshv_int.h
+> +++ b/include/system/mshv_int.h
+> @@ -138,4 +138,11 @@ int mshv_init_msrs(const CPUState *cpu);
+>  int mshv_get_msrs(CPUState *cpu);
+>  int mshv_set_msrs(const CPUState *cpu);
+>  
+> +/* synic */
+> +int mshv_get_simp(int cpu_fd, uint8_t *page);
+> +int mshv_set_simp(int cpu_fd, const uint8_t *page);
+> +int mshv_get_siefp(int cpu_fd, uint8_t *page);
+> +int mshv_set_siefp(int cpu_fd, const uint8_t *page);
+> +bool mshv_synic_enabled(const CPUState *cpu);
+> +
+>  #endif
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index e6a197602d..9270ae95d0 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -33,6 +33,7 @@
+>  #include "qemu/cpu-float.h"
+>  #include "qemu/timer.h"
+>  #include "standard-headers/asm-x86/kvm_para.h"
+> +#include "hw/hyperv/hvgdk_mini.h"
+>  
+>  #define XEN_NR_VIRQS 24
+>  
+> @@ -2299,6 +2300,10 @@ typedef struct CPUArchState {
+>  #if defined(CONFIG_HVF) || defined(CONFIG_MSHV) || defined(CONFIG_WHPX)
+>      void *emu_mmio_buf;
+>  #endif
+> +#if defined(CONFIG_MSHV)
+> +    uint8_t hv_simp_page[HV_HYP_PAGE_SIZE];
+> +    uint8_t hv_siefp_page[HV_HYP_PAGE_SIZE];
+> +#endif
+>  
+>      uint64_t mcg_cap;
+>      uint64_t mcg_ctl;
+> diff --git a/target/i386/machine.c b/target/i386/machine.c
+> index df0e0c178e..023a397ab8 100644
+> --- a/target/i386/machine.c
+> +++ b/target/i386/machine.c
+> @@ -951,6 +951,29 @@ static const VMStateDescription vmstate_msr_hyperv_reenlightenment = {
+>      }
+>  };
+>  
+> +#ifdef CONFIG_MSHV
+> +static bool mshv_synic_vp_state_needed(void *opaque)
+> +{
+> +    X86CPU *cpu = opaque;
+> +    CPUX86State *env = &cpu->env;
+> +
+> +    /* Only migrate SIMP/SIEFP if SynIC is enabled */
+> +    return env->msr_hv_synic_control & 1;
+> +}
+> +
+> +static const VMStateDescription vmstate_mshv_synic_vp_state = {
+> +    .name = "cpu/mshv_synic_vp_state",
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .needed = mshv_synic_vp_state_needed,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_BUFFER(env.hv_simp_page, X86CPU),
+> +        VMSTATE_BUFFER(env.hv_siefp_page, X86CPU),
+> +        VMSTATE_END_OF_LIST()
+> +    }
+> +};
+> +#endif
+> +
+>  static bool avx512_needed(void *opaque)
+>  {
+>      X86CPU *cpu = opaque;
+> @@ -1915,6 +1938,9 @@ const VMStateDescription vmstate_x86_cpu = {
+>          &vmstate_cet,
+>  #ifdef TARGET_X86_64
+>          &vmstate_apx,
+> +#endif
+> +#ifdef CONFIG_MSHV
+> +        &vmstate_mshv_synic_vp_state,
+>  #endif
+>          NULL
+>      }
+> diff --git a/target/i386/mshv/meson.build b/target/i386/mshv/meson.build
+> index 6091c21887..31ff4cc995 100644
+> --- a/target/i386/mshv/meson.build
+> +++ b/target/i386/mshv/meson.build
+> @@ -3,6 +3,7 @@ i386_mshv_ss = ss.source_set()
+>  i386_mshv_ss.add(files(
+>    'mshv-cpu.c',
+>    'msr.c',
+> +  'synic.c',
+>  ))
+>  
+>  i386_system_ss.add_all(when: 'CONFIG_MSHV', if_true: i386_mshv_ss)
+> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+> index 333ee35e72..57244bc667 100644
+> --- a/target/i386/mshv/mshv-cpu.c
+> +++ b/target/i386/mshv/mshv-cpu.c
+> @@ -111,6 +111,33 @@ static enum hv_register_name FPU_REGISTER_NAMES[26] = {
+>  
+>  static int set_special_regs(const CPUState *cpu);
+>  
+> +static int get_synic_state(CPUState *cpu)
+> +{
+> +    X86CPU *x86cpu = X86_CPU(cpu);
+> +    CPUX86State *env = &x86cpu->env;
+> +    int cpu_fd = mshv_vcpufd(cpu);
+> +    int ret;
+> +
+> +    /* SIMP/SIEFP can only be read when SynIC is enabled */
+> +    if (!mshv_synic_enabled(cpu)) {
+> +        return 0;
+> +    }
+> +
+> +    ret = mshv_get_simp(cpu_fd, env->hv_simp_page);
+> +    if (ret < 0) {
+> +        error_report("failed to get simp state");
+> +        return -1;
+> +    }
+> +
+> +    ret = mshv_get_siefp(cpu_fd, env->hv_siefp_page);
+> +    if (ret < 0) {
+> +        error_report("failed to get siefp state");
+> +        return -1;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+>  static int get_xsave_state(CPUState *cpu)
+>  {
+>      X86CPU *x86cpu = X86_CPU(cpu);
+> @@ -969,6 +996,11 @@ int mshv_arch_load_vcpu_state(CPUState *cpu)
+>          return ret;
+>      }
+>  
+> +    ret = get_synic_state(cpu);
+> +    if (ret < 0) {
+> +        return ret;
+> +    }
+> +
+>      ret = get_vcpu_events(cpu);
+>      if (ret < 0) {
+>          return ret;
+> @@ -1381,6 +1413,33 @@ static int set_xc_reg(const CPUState *cpu)
+>      return 0;
+>  }
+>  
+> +static int set_synic_state(const CPUState *cpu)
+> +{
+> +    X86CPU *x86cpu = X86_CPU(cpu);
+> +    CPUX86State *env = &x86cpu->env;
+> +    int cpu_fd = mshv_vcpufd(cpu);
+> +    int ret;
+> +
+> +    /* SIMP/SIEFP can only be written when SynIC is enabled */
+> +    if (!mshv_synic_enabled(cpu)) {
+> +        return 0;
+> +    }
+> +
+> +    ret = mshv_set_simp(cpu_fd, env->hv_simp_page);
+> +    if (ret < 0) {
+> +        error_report("failed to set simp state");
+> +        return -1;
+> +    }
+> +
+> +    ret = mshv_set_siefp(cpu_fd, env->hv_siefp_page);
+> +    if (ret < 0) {
+> +        error_report("failed to set siefp state");
+> +        return -1;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+>  int mshv_arch_store_vcpu_state(const CPUState *cpu)
+>  {
+>      int ret;
+> @@ -1421,6 +1480,11 @@ int mshv_arch_store_vcpu_state(const CPUState *cpu)
+>          return ret;
+>      }
+>  
+> +    ret = set_synic_state(cpu);
+> +    if (ret < 0) {
+> +        return ret;
+> +    }
+> +
+>      ret = set_vcpu_events(cpu);
+>      if (ret < 0) {
+>          return ret;
+> diff --git a/target/i386/mshv/msr.c b/target/i386/mshv/msr.c
+> index 5288e32b6d..d3788d7715 100644
+> --- a/target/i386/mshv/msr.c
+> +++ b/target/i386/mshv/msr.c
+> @@ -332,7 +332,6 @@ int mshv_get_msrs(CPUState *cpu)
+>      size_t i, j;
+>      uint32_t name;
+>      X86CPU *x86cpu = X86_CPU(cpu);
+> -    bool synic_enabled;
+>  
+>      set_hv_name_in_assocs(assocs, n_assocs);
+>  
+> @@ -360,8 +359,7 @@ int mshv_get_msrs(CPUState *cpu)
+>      store_in_env(cpu, assocs, n_assocs);
+>  
+>      /* Read SINT MSRs only if SynIC is enabled */
+> -    synic_enabled = x86cpu->env.msr_hv_synic_control & 1;
+> -    if (synic_enabled) {
+> +    if (mshv_synic_enabled(cpu)) {
+>          QEMU_BUILD_BUG_ON(MSHV_MSR_TOTAL_COUNT < HV_SINT_COUNT);
+>  
+>          for (i = 0; i < HV_SINT_COUNT; i++) {
+> @@ -415,7 +413,6 @@ int mshv_set_msrs(const CPUState *cpu)
+>      int ret;
+>      size_t i, j;
+>      X86CPU *x86cpu = X86_CPU(cpu);
+> -    bool synic_enabled = x86cpu->env.msr_hv_synic_control & 1;
+>  
+>      load_from_env(cpu, assocs, n_assocs);
+>  
+> @@ -449,7 +446,7 @@ int mshv_set_msrs(const CPUState *cpu)
+>      }
+>  
+>      /* SINT MSRs can only be written if SCONTROL has been set, so we split */
+> -    if (synic_enabled) {
+> +    if (mshv_synic_enabled(cpu)) {
+>          QEMU_BUILD_BUG_ON(MSHV_MSR_TOTAL_COUNT < HV_SINT_COUNT);
+>  
+>          for (i = 0; i < HV_SINT_COUNT; i++) {
+> diff --git a/target/i386/mshv/synic.c b/target/i386/mshv/synic.c
+> new file mode 100644
+> index 0000000000..8f9fee6ed7
+> --- /dev/null
+> +++ b/target/i386/mshv/synic.c
+> @@ -0,0 +1,155 @@
+> +/*
+> + * QEMU MSHV SynIC support
+> + *
+> + * Copyright Microsoft, Corp. 2026
+> + *
+> + * Authors: Magnus Kulke  <magnuskulke@microsoft.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/memalign.h"
+> +#include "qemu/error-report.h"
+> +
+> +#include "system/mshv.h"
+> +#include "system/mshv_int.h"
+> +
+> +#include "linux/mshv.h"
+> +#include "hw/hyperv/hvgdk_mini.h"
+> +#include "cpu.h"
+> +
+> +#include <sys/ioctl.h>
+> +
+> +bool mshv_synic_enabled(const CPUState *cpu)
+> +{
+> +    X86CPU *x86cpu = X86_CPU(cpu);
+> +
+> +    return x86cpu->env.msr_hv_synic_control & 1;
+> +}
+> +
+> +static int get_vp_state(int cpu_fd, struct mshv_get_set_vp_state *state)
+> +{
+> +    int ret;
+> +
+> +    ret = ioctl(cpu_fd, MSHV_GET_VP_STATE, state);
+> +    if (ret < 0) {
+> +        error_report("failed to get vp state: %s", strerror(errno));
+> +        return -1;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +static int set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state)
+> +{
+> +    int ret;
+> +
+> +    ret = ioctl(cpu_fd, MSHV_SET_VP_STATE, state);
+> +    if (ret < 0) {
+> +        error_report("failed to set vp state: %s", strerror(errno));
+> +        return -1;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +int mshv_get_simp(int cpu_fd, uint8_t *page)
+> +{
+> +    int ret;
+> +    void *buffer;
+> +    struct mshv_get_set_vp_state args = {0};
+> +
+> +    buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
+> +    args.buf_ptr = (uint64_t)buffer;
+> +    args.buf_sz = HV_HYP_PAGE_SIZE;
+> +    args.type = MSHV_VP_STATE_SIMP;
+> +
+> +    ret = get_vp_state(cpu_fd, &args);
+> +
+> +    if (ret < 0) {
+> +        qemu_vfree(buffer);
+> +        error_report("failed to get simp");
+> +        return -1;
+> +    }
+> +
+> +    memcpy(page, buffer, HV_HYP_PAGE_SIZE);
+> +    qemu_vfree(buffer);
+> +
+> +    return 0;
+> +}
+> +
+> +int mshv_set_simp(int cpu_fd, const uint8_t *page)
+> +{
+> +    int ret;
+> +    void *buffer;
+> +    struct mshv_get_set_vp_state args = {0};
+> +
+> +    buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
+> +    args.buf_ptr = (uint64_t)buffer;
+> +    args.buf_sz = HV_HYP_PAGE_SIZE;
+> +    args.type = MSHV_VP_STATE_SIMP;
+> +
+> +    assert(page);
+> +    memcpy(buffer, page, HV_HYP_PAGE_SIZE);
+> +
+> +    ret = set_vp_state(cpu_fd, &args);
+> +    qemu_vfree(buffer);
+> +
+> +    if (ret < 0) {
+> +        error_report("failed to set simp");
+> +        return -1;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +int mshv_get_siefp(int cpu_fd, uint8_t *page)
+> +{
+> +    int ret;
+> +    void *buffer;
+> +    struct mshv_get_set_vp_state args = {0};
+> +
+> +    buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
+> +    args.buf_ptr = (uint64_t)buffer;
+> +    args.buf_sz = HV_HYP_PAGE_SIZE;
+> +    args.type = MSHV_VP_STATE_SIEFP,
+> +
+> +    ret = get_vp_state(cpu_fd, &args);
+> +
+> +    if (ret < 0) {
+> +        qemu_vfree(buffer);
+> +        error_report("failed to get siefp");
+> +        return -1;
+> +    }
+> +
+> +    memcpy(page, buffer, HV_HYP_PAGE_SIZE);
+> +    qemu_vfree(buffer);
+> +
+> +    return 0;
+> +}
+> +
+> +int mshv_set_siefp(int cpu_fd, const uint8_t *page)
+> +{
+> +    int ret;
+> +    void *buffer;
+> +    struct mshv_get_set_vp_state args = {0};
+> +
+> +    buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
+> +    args.buf_ptr = (uint64_t)buffer;
+> +    args.buf_sz = HV_HYP_PAGE_SIZE;
+> +    args.type = MSHV_VP_STATE_SIEFP,
+> +
+> +    assert(page);
+> +    memcpy(buffer, page, HV_HYP_PAGE_SIZE);
+> +
+> +    ret = set_vp_state(cpu_fd, &args);
+> +    qemu_vfree(buffer);
+> +
+> +    if (ret < 0) {
+> +        error_report("failed to set simp");
+> +        return -1;
+> +    }
+> +
+> +    return 0;
+> +}
+> -- 
+> 2.34.1
 
--- 
+Reviewed-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
 
