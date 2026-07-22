@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D9C3C44533
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 07:40:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55CD8C44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 07:41:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmRYg-0005Oq-DQ; Wed, 22 Jul 2026 03:40:03 -0400
+	id 1wmRYq-0005RS-F6; Wed, 22 Jul 2026 03:40:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wmRYd-0005NC-DS
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 03:39:59 -0400
+ id 1wmRYi-0005PV-Ff
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 03:40:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wmRYa-0000SK-B7
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 03:39:59 -0400
+ id 1wmRYg-0000Tk-OJ
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 03:40:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784705995;
+ s=mimecast20190719; t=1784706002;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=h0++QkczzracjaGvTNYRjSenA7oXvFOCAJoayCG6dao=;
- b=fQkPPvmsMrHoPOITjp0oaybYafwKfp7YUJ817tPsD01E+vRO2Hn1QWGMYa50cbIFb4bWjQ
- 1dK5DVQMMOAhLpJj2Go58qapOyEZgWOBvGpOn0P18eqgj0RAayOCrO+DGG8IG6odht4Vi+
- XzvI/weFMXc6xqZOaM5EQ4yQCyVMDQo=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=GIx8SGAxd2EVHX3PLDEtKIS3/cXh7/KX8IzpBchdZxY=;
+ b=ZmeV8skTBvZVVUGIt4r6r1PEyqbO+WKazF8qH6MjN57ykHzmpFtJx2KyripbO4x0jMF7oR
+ okGNSHri5RpXTwuq1U4Y5nXQcvIC0Q7lrtNQYJoCQSdKxOrA0sYB6vt9jF5R8Gntqp+rHC
+ cn/YfXKA3aKX7woDyb6MTB44E27ajoU=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-411-nC55yGiyMsGEkG-WOjjdAQ-1; Wed, 22 Jul 2026 03:39:53 -0400
-X-MC-Unique: nC55yGiyMsGEkG-WOjjdAQ-1
-X-Mimecast-MFC-AGG-ID: nC55yGiyMsGEkG-WOjjdAQ_1784705992
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-493fa6e28a7so114355895e9.1
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 00:39:53 -0700 (PDT)
+ us-mta-119-SLajVKm1M5ujsiwSrbpjCg-1; Wed, 22 Jul 2026 03:40:00 -0400
+X-MC-Unique: SLajVKm1M5ujsiwSrbpjCg-1
+X-Mimecast-MFC-AGG-ID: SLajVKm1M5ujsiwSrbpjCg_1784706000
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-47f5a972b0eso5054169f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 00:40:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784705992; x=1785310792; darn=nongnu.org;
+ d=redhat.com; s=google; t=1784705999; x=1785310799; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=h0++QkczzracjaGvTNYRjSenA7oXvFOCAJoayCG6dao=;
- b=hCoaOQRAWYhOPSbPzNa5m/UHSrtGo4tetGdNICXBAch97Ylw7gZxH1wfhtR35pm01J
- AuMqnwqrR5INhN6gbM8fqzcDTAbidE72O9C6EKtE+GAKPQ0plqU8g6QnI+BW0v9BVCld
- cClsSv+dtZv01AYg87l9ScV2Cy0FH+tP9asJ/4SSS7OeYegv8xUxX9rIe+gFyWTFe+A6
- NJ9a28+NwmVhH+mLwFIoMvdYNhjufAOc6Jo5upfkS8azXcGrNUBsvN+G7R3sqM6DIYhh
- y41/1wgYkvUy80jgBjdTqzWL73BEXiKSP5VmA7YebU7guXd+OotWH+npqsaNIVKYokez
- 9i3w==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=GIx8SGAxd2EVHX3PLDEtKIS3/cXh7/KX8IzpBchdZxY=;
+ b=N7ssuqbLgjtAHx81LtaQAdYujoi0qc2dMSzqB5ud3cUzfs2WBc6ZEQcl3WSHjVGwUV
+ yXPBLLJ7JwC69s7DuMbu8KhMzcWACfqpnE3NdckABVNnv6AvcfGc0KV8pMjkvRmE/wOh
+ 3RwdiyEt2Bs2Lac5TNcfocz5X2+YrMP84+bkZlkrdsNun2vXUeV9V2IEBCZaxFXMRGhu
+ 6xBdtvLRqC92sz4vNoj1zHqL/PnJqYdbPHJA/X374vPMrE2EaT9uumlrOreQZbZiC9gA
+ Wxh5Hv6o0yIi2a5zdUl/aK9vtwBipDIDpi4qmwJaAqjs8OZgP95MpwoDX2R6DtWToK5W
+ r6rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784705992; x=1785310792;
+ d=1e100.net; s=20251104; t=1784705999; x=1785310799;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=h0++QkczzracjaGvTNYRjSenA7oXvFOCAJoayCG6dao=;
- b=T++soyApaUjN28w8mUrOe6YuSpmblntmucWb9K23EAihJwVBnBusV1folNf9mYGglm
- lmrFUY6GQiBLgU0vAQMRa3I3SOznqohq7ZpqZCcEZ/VLrkJLM01vKGJLVQGAJiD4daNe
- RLAj2x9fsP3AJZm2q0stveJZLAT4x5xW3sYICzSt6LygDawb/3tQfH/mdZ1YHt5wFHla
- QY/Z7N58NXwuVi6FDMRHy0zwsGxxyCDmhIs3D0TrPvpHvDe8cKV8pBct3VA1zo1NCMt9
- c6qf+0QmXpPl/610a9/Ithe+dSiH1iqOzUCezKIqTyU4TkYfrX5vlJthH30CEhxqQbml
- 4kdQ==
-X-Gm-Message-State: AOJu0Yx4/aXTH4xg5ComxDQKagLvFmrzCGV+yJUWQ6DdViUNH99w/GyC
- rL54NFTbRcoL5OxQS9PzThysPCB4MKT23OZCh1ElHIveO3UJcw8ivj7CarXAcCqniJ86Sm8S9XE
- eVoAgwWGfYm4iMNXnzwO2I3ClL3fNHgID5EzR4kykezHWAbsbI/kk526TavSo7xFpiYZlxB/8mE
- Dgm0asmvgyUr6XrfUibOBr2Gy7q/xLygfteVScZ782
-X-Gm-Gg: AR+sD10ysSIT1cMgwTtlk1mQauFZkQAeK5t7MrNaFjgEs/ijH9PgySI40Gol5Vhrjrv
- 2SfywUvCLq+uaQfLWR3r754jnSzch1/B2nuzVHNieHRItcsXinbYQE3KTkVaikw5d9QPXdDJ3iJ
- F4VSWbkVmC2jm7lUZM7k+XofWzaXkCji8ZrhF8/T889afSxGv9OBj1y35bTF6WQWJyTG+POZzFh
- y1R9ioKHmqtpwf6Dj+GTMyBTtQM8Nd6StGmSXEikuC5K+sGX8EByNUbauHWlrHyeR+e5nDe7zFb
- GeVIvD2AePFN8L57Ol2mFlwtOwG8IWePxY1lHgffDhRQl9o9Xd+L3/u1RuDwqj3r9yieaksSNnH
- HS+Rggs6qS9RVnuXipj+YMgE7fM2XfaAT7QSTL+99PnODKx1FTHqeSeN5AKTmlvEeRI8LIe05Vp
- lV2USI
-X-Received: by 2002:a05:6000:4a12:b0:472:fe1a:1ee9 with SMTP id
- ffacd0b85a97d-47f62303929mr25218405f8f.20.1784705992292; 
- Wed, 22 Jul 2026 00:39:52 -0700 (PDT)
-X-Received: by 2002:a05:6000:4a12:b0:472:fe1a:1ee9 with SMTP id
- ffacd0b85a97d-47f62303929mr25218383f8f.20.1784705991878; 
- Wed, 22 Jul 2026 00:39:51 -0700 (PDT)
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=GIx8SGAxd2EVHX3PLDEtKIS3/cXh7/KX8IzpBchdZxY=;
+ b=lBa85xlKkeeAiCQOCXootJAXtdREkHsHm1sTQ45sKbA55HLdih5TL3oe83AGlWhOse
+ XoGjHZpIypaJFjziBbj05oteTUnKlMnE7i5t/Z1S2urxyJ2qV3t5GV+mTJ8BauSXFckW
+ meXF+oO3i0hW08Lqdzb0F8vzg5zCfIGGTLPvfmCIs28F6iGriRq5hEKqOGgntUCl3Uau
+ x7n6H+mreysGeuFVg2rI3yVOF8Y3zpMnZZFReTmFgPQ8pvT3OlFHMzTg92C3I7ZRJ5oY
+ k7cUSjB9xvmcWNlzH7ToCeOTGp4iNqb/pZwAOgROJ63e0zRgDbfGZ8IqQsUKTfKBEMf+
+ M5og==
+X-Gm-Message-State: AOJu0YziKe6bTz5CKhkXi38s4wHiVYO1qtmOfOMWn5kk8wmMKH4hI7dO
+ YWOMrv2Pzq4oJkzJUD2G3IXLvqTIl+lCaIZo/QH7vzf2aqMWSzlStMipTY9z8mszUod2zZys9Bo
+ 9CbfXKLnWSlFelG3X8q0lZUmARxcQCQ8fcMyLpSyCguHdf5tXrRbEJ3Db0aH3XuxDVb887DRA95
+ Gjl/iNjb94182khX6XNrtct1IXVpGWHyC8vBqzOCIb
+X-Gm-Gg: AR+sD13HHXPJC1o8b96lwZCr/KZr2oHZzAljb7YPeWhpH4fVE8W85YHoRynM5O7NPpR
+ X/9cCEFcWzbWB+LITaM2u9aZjlLLbvuPIIydeCbZkkyAj8JVk1DKoI/MkJ29Ocw7fIG6r6g6vSl
+ F9r/nzVdMJSvIS3atyqjyJAYW9EQS+/rAM+N3Cv8DiBO0ehMBTa6/6+8gSgRJWkk2QTP9/n+Rc6
+ sTdTZkha7FXvLkXa4gAyK9NgOHlD9xpRmQ6548fVxaFqtX21aXWwEDC16jppjyXK7HrZxiteIad
+ OPlWXOQnYjby/WBC5HTqzEMQ/fTo97Y2DV1Px5NPhUhwuHUbdvSlugVDpXAqYXLsuFXUxL8WOEK
+ dTfjGisnYNDNF2yAlQJ/pL/ArsZOM5HUcH86Q/PsgPuxbWqJpcv3nydhtSjG/x1xQF35JGjfohS
+ 5B6U1R
+X-Received: by 2002:a05:6000:1867:b0:474:18d9:8371 with SMTP id
+ ffacd0b85a97d-47f6232f892mr28676546f8f.28.1784705999580; 
+ Wed, 22 Jul 2026 00:39:59 -0700 (PDT)
+X-Received: by 2002:a05:6000:1867:b0:474:18d9:8371 with SMTP id
+ ffacd0b85a97d-47f6232f892mr28676496f8f.28.1784705999079; 
+ Wed, 22 Jul 2026 00:39:59 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.94.110])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85b9a60asm3782380f8f.3.2026.07.22.00.39.51
- for <qemu-devel@nongnu.org>
+ ffacd0b85a97d-47f85c6e9a2sm3534191f8f.35.2026.07.22.00.39.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Jul 2026 00:39:51 -0700 (PDT)
+ Wed, 22 Jul 2026 00:39:58 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 1/5] target/i386: tcg: remove FIXME
-Date: Wed, 22 Jul 2026 09:39:39 +0200
-Message-ID: <20260722073943.396872-2-pbonzini@redhat.com>
+Cc: Andrey Polivoda <apolivodaa433@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 3/5] target/i386: helper_sysret(): Check that RCX contains a
+ canonical address when emulating an Intel CPU
+Date: Wed, 22 Jul 2026 09:39:41 +0200
+Message-ID: <20260722073943.396872-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260722073943.396872-1-pbonzini@redhat.com>
 References: <20260722073943.396872-1-pbonzini@redhat.com>
@@ -120,26 +122,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Andrey Polivoda <apolivodaa433@gmail.com>
+
+Intel and AMD CPUs implement SYSRETQ instruction differently.
+One of these differences is whether a canonicality check of the address that
+will be loaded to RIP is performed: Intel CPUs do this check, AMD CPUs don't.
+
+Currently, QEMU does not perform this check when emulating Intel CPUs.
+This patch corrects this by implementing the canonlicality check on a new RIP
+value from RCX and performing it only when emulating Intel CPUs.
+
+Flags and segment registers' caches are updated only after checking the new RIP
+value to ensure that CPU state is not modified in case the #GP(0) exception
+is raised due to the check failure.
+
+Cc: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Fixes: 14ce26e75513 ("x86_64 target support")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3223
+Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
+Link: https://lore.kernel.org/r/20260608091815.31303-1-apolivodaa433@gmail.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/emit.c.inc | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ target/i386/tcg/seg_helper.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index 83c889cc3b2..e4ef5a87580 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -3424,7 +3424,9 @@ static void gen_rot_overflow(X86DecodedInsn *decode, TCGv result, TCGv old,
- /*
-  * RCx operations are invariant modulo 8*operand_size+1.  For 8 and 16-bit operands,
-  * this is less than 0x1f (the mask applied by gen_shift_count) so reduce further.
-- * FIXME: are flags updated if the count is nonzero, but a multiple of (8 << op) + 1?
-+ * A count that is a nonzero multiple of (8 << op) + 1 reduces to 0 and leaves
-+ * CF and OF unmodified (confirmed against hardware that rcl $9,%al behaves
-+ * exactly like rcl $0,%al).
-  */
- static MemOp gen_rotc_count(DisasContext *s, X86DecodedInsn *decode,
-                             bool *can_be_zero, TCGv *count, int unit)
+diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+index 58aac720119..d5c174b7fd7 100644
+--- a/target/i386/tcg/seg_helper.c
++++ b/target/i386/tcg/seg_helper.c
+@@ -1096,17 +1096,22 @@ void helper_sysret(CPUX86State *env, int dflag)
+     selector = (env->star >> 48) & 0xffff;
+ #ifdef TARGET_X86_64
+     if (env->hflags & HF_LMA_MASK) {
+-        cpu_load_eflags(env, (uint32_t)(env->regs[11]), TF_MASK | AC_MASK
+-                        | ID_MASK | IF_MASK | IOPL_MASK | VM_MASK | RF_MASK |
+-                        NT_MASK);
+         if (dflag == 2) {
++            uint64_t new_rip = env->regs[R_ECX];
++            if (IS_INTEL_CPU(env)) {
++                int shift = (get_pg_mode(env) & PG_MODE_LA57) ? 56 : 47;
++                int64_t sext = (int64_t)new_rip >> shift;
++                if (sext != 0 && sext != -1) {
++                    raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
++                }
++            }
+             cpu_x86_load_seg_cache(env, R_CS, (selector + 16) | 3,
+                                    0, 0xffffffff,
+                                    DESC_G_MASK | DESC_P_MASK |
+                                    DESC_S_MASK | (3 << DESC_DPL_SHIFT) |
+                                    DESC_CS_MASK | DESC_R_MASK | DESC_A_MASK |
+                                    DESC_L_MASK);
+-            env->eip = env->regs[R_ECX];
++            env->eip = new_rip;
+         } else {
+             cpu_x86_load_seg_cache(env, R_CS, selector | 3,
+                                    0, 0xffffffff,
+@@ -1120,6 +1125,10 @@ void helper_sysret(CPUX86State *env, int dflag)
+                                DESC_G_MASK | DESC_B_MASK | DESC_P_MASK |
+                                DESC_S_MASK | (3 << DESC_DPL_SHIFT) |
+                                DESC_W_MASK | DESC_A_MASK);
++
++        cpu_load_eflags(env, (uint32_t)(env->regs[11]), TF_MASK | AC_MASK
++                        | ID_MASK | IF_MASK | IOPL_MASK | VM_MASK | RF_MASK |
++                        NT_MASK);
+     } else
+ #endif
+     {
 -- 
 2.55.0
 
