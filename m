@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65E12C44536
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:57:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6A17C44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:57:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWSg-0004do-2w; Wed, 22 Jul 2026 08:54:10 -0400
+	id 1wmWT8-0006w7-08; Wed, 22 Jul 2026 08:54:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWRL-0002hv-P4; Wed, 22 Jul 2026 08:52:51 -0400
+ id 1wmWRn-0002yY-Le; Wed, 22 Jul 2026 08:53:15 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWRJ-0002S5-Jp; Wed, 22 Jul 2026 08:52:47 -0400
+ id 1wmWRm-0002WM-2v; Wed, 22 Jul 2026 08:53:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724574; bh=W9ZWu8jClDeBqXTuB10O9Lz+YYopjsdes2bAYV10UE8=;
+ t=1784724574; bh=MuV1oD5RodqMA6o5+FYCUAy4Fie0JGoNBFuB3N1Fy3k=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Z4rJEghBTF/QXmaG3ZYor177TzFnCAH+d7sJIUrhCFvf9LY4lQdrdDX+O4HA/bDFj
- Cqhb0vk7fitS186GNNwg5A0ug8zX14ke0TTL7xQoHOyEbfzHblc2HGkDv8278lUWgb
- jhEGpG75mJ8MwB2UEHE5SVp61IW64sulns8kkTvwm4KnPV5roAo4CPXIQTjhiulxZ6
- lBwwZmoc1dxpwIIjHMlDsN7YXqxVELPdnD9c+kihuj/B/3srSGiZT9Fe64BvoZkTWn
- 1AokqLIsHxMFBcfZgROe1Do/L7CycO4u/FWJ/x6qe7MX/a/atRcOgfpTUqZmpP1EBA
- E9GKjhLGY5GKw==
+ b=RWjLToWqjRPzY79PbnkIT4ryEYbe9ryHMWmblyDbNmXg1hDxshg4xZJHnzokx15KJ
+ hmH35iEo3LUo/6qBLbsh4IMedK6R4snc1b2xXV6LYdmlgSzJ2fW3nK6luvluxNDDBu
+ oUvQBfGIdoYNmdn9++4XEALyhYjUsDwgAdiWA9NQ4YIv6hOfFFai0pxtJ1nHwy237j
+ /5ioztSV3ewTceCvaAI4Nx6zXtrgWmioyD5/InRv/K7LQyJj9jzHW6hW60XtX5kDka
+ Q9DX0jHTehIghHkoVjwyF4HdXSPJGezrWNHApdML7gGYqLU9A+e37nnMpqkFQOAMa8
+ Z3GSkRCShFWVw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CA8711C3B3D;
+ by isrv.corpit.ru (Postfix) with ESMTP id DDF071C3B41;
  Wed, 22 Jul 2026 15:49:34 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1F3A93F378D;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 330473F3791;
  Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B58DA17F4F; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
+ id BF0D617F57; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Feifan Qian <bea1e@proton.me>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 v2 096/127] hw/display/qxl: fix TOCTOU in cursor chunk
- data_size handling
-Date: Wed, 22 Jul 2026 15:48:21 +0300
-Message-ID: <20260722124859.32371-15-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v2 100/127] hw/display/virtio-gpu: fix dmabuf_fd leak
+ on remap failure
+Date: Wed, 22 Jul 2026 15:48:25 +0300
+Message-ID: <20260722124859.32371-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
@@ -77,131 +78,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Snapshot chunk.data_size into a host-local variable before passing it to
-qxl_phys2virt() for validation, and pass it through qxl_cursor() and
-qxl_unpack_chunks() so that no subsequent code re-reads the field.
+When virtio_gpu_create_udmabuf() succeeds but virtio_gpu_remap_udmabuf()
+fails (mmap returns MAP_FAILED), virtio_gpu_init_udmabuf() returns early
+without closing the dmabuf fd. Since res->blob is never set in this
+path, later cleanup via virtio_gpu_cleanup_mapping() skips
+virtio_gpu_fini_udmabuf() entirely, leaking the file descriptor.
 
-Without this, a racing vCPU can inflate data_size between the
-qxl_phys2virt() validation and the memcpy in qxl_unpack_chunks(),
-causing a source read past the validated region. In practice the read
-stays within the guest's own VRAM mmap, so the impact is limited.
+Call virtio_gpu_destroy_udmabuf() before the early return to close
+the fd. This function already handles partial state correctly: it
+skips the munmap when res->remapped is NULL and closes the fd when
+res->dmabuf_fd >= 0.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3757
-Reported-by: Feifan Qian <bea1e@proton.me>
-Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+Fixes: 9b60cdf98723 ("virtio-gpu: Add udmabuf helpers")
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260710134352.2313675-1-marcandre.lureau@redhat.com>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <20260713125622.111513-1-marcandre.lureau@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit a3cc0069e151e5eb5db57bb4e86b00861d5b97ab)
+(cherry picked from commit 564c4d7e99d87b39c3faea52ef8759df7f786f61)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
-index 1fe63b6f5ca..cf0f6849cd0 100644
---- a/hw/display/qxl-render.c
-+++ b/hw/display/qxl-render.c
-@@ -217,7 +217,8 @@ void qxl_render_update_area_done(PCIQXLDevice *qxl, QXLCookie *cookie)
- }
- 
- static void qxl_unpack_chunks(void *dest, size_t size, PCIQXLDevice *qxl,
--                              QXLDataChunk *chunk, uint32_t group_id)
-+                              QXLDataChunk *chunk, uint32_t group_id,
-+                              uint32_t chunk_data_size)
- {
-     uint32_t max_chunks = 32;
-     size_t offset = 0;
-@@ -225,22 +226,21 @@ static void qxl_unpack_chunks(void *dest, size_t size, PCIQXLDevice *qxl,
-     QXLPHYSICAL next_chunk_phys = 0;
- 
-     for (;;) {
--        bytes = MIN(size - offset, chunk->data_size);
-+        bytes = MIN(size - offset, chunk_data_size);
-         memcpy(dest + offset, chunk->data, bytes);
-         offset += bytes;
-         if (offset == size) {
+diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
+index 74b6a7766af..20884f397e9 100644
+--- a/hw/display/virtio-gpu-udmabuf.c
++++ b/hw/display/virtio-gpu-udmabuf.c
+@@ -143,6 +143,7 @@ void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
+         }
+         virtio_gpu_remap_udmabuf(res);
+         if (!res->remapped) {
++            virtio_gpu_destroy_udmabuf(res);
              return;
          }
-         next_chunk_phys = chunk->next_chunk;
--        /* fist time, only get the next chunk's data size */
-         chunk = qxl_phys2virt(qxl, next_chunk_phys, group_id,
-                               sizeof(QXLDataChunk));
-         if (!chunk) {
-             return;
-         }
--        /* second time, check data size and get data */
-+        chunk_data_size = chunk->data_size;
-         chunk = qxl_phys2virt(qxl, next_chunk_phys, group_id,
--                              sizeof(QXLDataChunk) + chunk->data_size);
-+                              sizeof(QXLDataChunk) + chunk_data_size);
-         if (!chunk) {
-             return;
-         }
-@@ -252,7 +252,7 @@ static void qxl_unpack_chunks(void *dest, size_t size, PCIQXLDevice *qxl,
- }
- 
- static QEMUCursor *qxl_cursor(PCIQXLDevice *qxl, QXLCursor *cursor,
--                              uint32_t group_id)
-+                              uint32_t group_id, uint32_t chunk_data_size)
- {
-     QEMUCursor *c;
-     uint8_t *and_mask, *xor_mask;
-@@ -272,11 +272,11 @@ static QEMUCursor *qxl_cursor(PCIQXLDevice *qxl, QXLCursor *cursor,
-     case SPICE_CURSOR_TYPE_MONO:
-         /* Assume that the full cursor is available in a single chunk. */
-         size = 2 * cursor_get_mono_bpl(c) * c->height;
--        if (size != cursor->data_size || cursor->chunk.data_size < size) {
-+        if (size != cursor->data_size || chunk_data_size < size) {
-             qxl_set_guest_bug(qxl, "%s: bad monochrome cursor %ux%u"
-                               " data_size %u chunk_size %u",
-                               __func__, c->width, c->height,
--                              cursor->data_size, cursor->chunk.data_size);
-+                              cursor->data_size, chunk_data_size);
-             goto fail;
-         }
-         and_mask = cursor->chunk.data;
-@@ -288,7 +288,8 @@ static QEMUCursor *qxl_cursor(PCIQXLDevice *qxl, QXLCursor *cursor,
-         break;
-     case SPICE_CURSOR_TYPE_ALPHA:
-         size = sizeof(uint32_t) * c->width * c->height;
--        qxl_unpack_chunks(c->data, size, qxl, &cursor->chunk, group_id);
-+        qxl_unpack_chunks(c->data, size, qxl, &cursor->chunk, group_id,
-+                          chunk_data_size);
-         if (qxl->debug > 2) {
-             cursor_print_ascii_art(c, "qxl/alpha");
-         }
-@@ -325,19 +326,23 @@ int qxl_render_cursor(PCIQXLDevice *qxl, QXLCommandExt *ext)
-     }
-     switch (cmd->type) {
-     case QXL_CURSOR_SET:
-+    {
-+        uint32_t chunk_data_size;
-+
-         /* First read the QXLCursor to get QXLDataChunk::data_size ... */
-         cursor = qxl_phys2virt(qxl, cmd->u.set.shape, ext->group_id,
-                                sizeof(QXLCursor));
-         if (!cursor) {
-             return 1;
-         }
-+        chunk_data_size = cursor->chunk.data_size;
-         /* Then read including the chunked data following QXLCursor. */
-         cursor = qxl_phys2virt(qxl, cmd->u.set.shape, ext->group_id,
--                               sizeof(QXLCursor) + cursor->chunk.data_size);
-+                               sizeof(QXLCursor) + chunk_data_size);
-         if (!cursor) {
-             return 1;
-         }
--        c = qxl_cursor(qxl, cursor, ext->group_id);
-+        c = qxl_cursor(qxl, cursor, ext->group_id, chunk_data_size);
-         if (c == NULL) {
-             c = cursor_builtin_left_ptr();
-         }
-@@ -351,6 +356,7 @@ int qxl_render_cursor(PCIQXLDevice *qxl, QXLCommandExt *ext)
-         qemu_mutex_unlock(&qxl->ssd.lock);
-         qemu_bh_schedule(qxl->ssd.cursor_bh);
-         break;
-+    }
-     case QXL_CURSOR_MOVE:
-         qemu_mutex_lock(&qxl->ssd.lock);
-         qxl->ssd.mouse_x = cmd->u.position.x;
+         pdata = res->remapped;
 -- 
 2.47.3
 
