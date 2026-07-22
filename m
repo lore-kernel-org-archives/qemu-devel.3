@@ -4,145 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AED09C4453A
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 20:09:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1835C4453A
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 20:11:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmdFR-0001pi-9V; Wed, 22 Jul 2026 16:08:57 -0400
+	id 1wmdHX-0002iI-3M; Wed, 22 Jul 2026 16:11:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wmdFQ-0001pS-FC
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 16:08:56 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wmdFO-00024F-PN
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 16:08:56 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66MHrRSD1596735
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 20:08:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- v3ezydXYj9GGlHb8jCl9yBGu3CqqujQa1077tE/OmLc=; b=kWtpfJ72ADikA/kV
- tchgtAfkFYmXy3oa4Y5VoavZXRiibWR4b7IG9XJTzfmCbHUn1K4FPYNktGWFjC+S
- /z/8Y8X35LAGeVZCAsONdhSkzqqhleVkUHvkFnDcyTj2s5DX5YO2n9QganuFCS4Q
- Ek+coTKYgUcyo3UiytwM1pCD7AUJYtTxCIy09WuTrnAog+Yux7w7zJUwvMAJBMNX
- 5mUyxFBAZN0eY9fE+36irBgcjzOtXkQVedh5G4igf4LedYUDoAC6RaJlqRkaXhf0
- p6QjE/IqFycbAlV35tQn8j14c6S1DRrPcLByrBJk6wNmnxk1Hsd3f8B7BA63W0us
- tjptsg==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fjuu7agx8-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 20:08:53 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8efe7db1c42so240343236d6.3
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 13:08:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1wmdHS-0002h4-Qm
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 16:11:02 -0400
+Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1wmdHQ-0002W1-V8
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 16:11:02 -0400
+Received: by mail-yw1-x112a.google.com with SMTP id
+ 00721157ae682-81ef8255cccso49964527b3.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 13:10:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784750933; x=1785355733; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=v3ezydXYj9GGlHb8jCl9yBGu3CqqujQa1077tE/OmLc=;
- b=VMz+evIKq3thqZn9obLsQh+gUXaU4yugxXtks0zREUSKpKs/CjQUysAg3UMI7DaPFB
- 7ORomR3vzBw1onqITHX9gguv9ni4Im5UiNnzmoiB9wW05BZebE2RFX8lyFk0CI5VLWcg
- v4YpmiHEE11mW6jQF1j6sb/wD1MOoom+UrXA3PmuqDt/k7t1Nyc0Nuk59EPA9jCMouJ9
- UsJ2+dwMwfsjutmDtMlcOTm6oBtutKhL6GMn3M2Q5wCoPGgbvSDpxzYGwUm2yHhnFlwp
- B3ZyMNUPdKYCHzdmP6FeNzmoQBxf7ZnyzF10bpNvr78dzfzlSGh0oU9OeXJq8s4iUoNW
- +JBQ==
+ d=gmail.com; s=20251104; t=1784751058; x=1785355858; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=YOILP0Pnl+nB+lm+CUiKOOV4KZnWh2wtQlwbvvyjiNg=;
+ b=Jrdcd5FMFeXfWs6wPU5Ew9zc6xugtMBfJYI3Mao+0Q57xhGKlHgZIUmc9X200SYMCW
+ efyUdxSvfHZCVgIuDI3XGoSlvuW9EPFPsbf20psFcQ2tZbINU7/djRV861he5o4uPJRS
+ wQXLlbr47cbUbPcPcxvkN6IpuPcxAoOr23H5t4fVIP4QjAN4m4GL2aVNd1S2OGz7DtU2
+ hcZZPUhTgQJLFIURBZHbDPaVYRMHtvPVe5lt6D5CE832bW+K5Ir3PmX0e4xtvy6SQMzF
+ DfDsUTeledvYwacGtnWEdr7tzzUquK7vXjD1Q1PhILqEXyUdgB2y2m1LIJtQ8kbDm9EU
+ R37Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784750933; x=1785355733;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1784751058; x=1785355858;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=v3ezydXYj9GGlHb8jCl9yBGu3CqqujQa1077tE/OmLc=;
- b=QgJX2gkkq7us/X/444iSov5XTMU15lDL7hqlI5u/nZAzyDAMI39chmSoP2XxH77Rku
- tANKSPULSaWUPgZXlzDEZxbmvAt/X+qg3v6ayFBUuu0h5ZxIq8GPSPak4vFBJ8UfrgEJ
- +pBlTInYgzFgFLhKav4YTk8x537n7dUWxYXxAGk7Ww1bGvvIVnH5o+rY1NIsLbhYKOIE
- jHxsBPlcAq0OlMcJc+RnQpbGpGxvPmo4wtb7ABXEWyWr8Yv7OKcD/ni6oNriVxhVeGP/
- BztX9O7vjfwK+gTmded1s+LOzOyzsypzB5fIe5a2tz9cvkqek8T05ClZfWjPz4n3Oczr
- TCcw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrWq90kI+AaqQao7P37JbWQnFjvCxNm2OuPb6IvkJDtYy1T1zGvXNICLY19SgtAKmreXQy8vwcxdZdn@nongnu.org
-X-Gm-Message-State: AOJu0Yx/9sNXvLelPIvCozUheUUE/9ie+aheleeB5yNM0nIU3Jr8lnru
- KdgBLqWaPHNJ+wb6tSTKWQgElOYKAG84/a7eEmPvXd/NlWiL7twZ1VLukrjvW/5vAnDPhQgTXiT
- 0pvjnXBoL6jSFrVRTc9xAdFtOGQVNM3tGJ7IGVptaWV7j0EVT75Rju4zq5w==
-X-Gm-Gg: AR+sD11hOyrkThlr5uUl5ujGY0kDUXFt2dHdyb/IM+MRe2ymzeansTIHgT+agA4lqOT
- DfyryKLxltgVw82rrMh8k2V2wU7FAaKhMicX7zI+NH2iA6cGNlRv22t8YPlDsbaU83g23w8NhBb
- 9my5U7mir88tQVUluDMCIPr9R1T+WLarpOifr07cX1CP8vUivvAd291ZmgkpogaDRvs/z0Im1dC
- Iqc52wOgTfqH7PvrGB12TE9N5FtFCL7KnL6Uu6rr68nWYFQJcbcJo/qlyzBAVP09FrkZ0gP12H4
- F0FKI0ji8CsTX+AJSwxx6s5YjY/D0MXADtWfC4kBTXce/UTLIeBKSIE7A1mCLpcaTWCIqt6lnXG
- HMT6Yfizoy8NCI7y9YDfYJ+CAwyRKb80VrAjUBA==
-X-Received: by 2002:a05:6214:469d:b0:8df:1814:3a1d with SMTP id
- 6a1803df08f44-907ca5734b8mr4346006d6.22.1784750932673; 
- Wed, 22 Jul 2026 13:08:52 -0700 (PDT)
-X-Received: by 2002:a05:6214:469d:b0:8df:1814:3a1d with SMTP id
- 6a1803df08f44-907ca5734b8mr4345216d6.22.1784750931821; 
- Wed, 22 Jul 2026 13:08:51 -0700 (PDT)
-Received: from [192.168.68.107] ([152.234.122.204])
+ bh=YOILP0Pnl+nB+lm+CUiKOOV4KZnWh2wtQlwbvvyjiNg=;
+ b=CondJtPFBSgXnfBls6a2oALLzbYuriM3mU/Lz70wSeVQIpO5pN+9wfOx8n+PtcVNfN
+ 5fp2Viery4UB5iJNupZdifrhfSh3MgnZRj5VNVxeTTYNjBiJWemymnCTRguyKoHgFqVm
+ tU+mQJx8TSwNgYAqsqMZGvRiMjGDlTeuqvZy1jJEKyjoxdpO8Yfxyr4MtleO2nqFELaf
+ 0rLMYeCSFU9JzGP9Va77qMR8VgmD+CXzRS1Jdj3wTGnmi6pfI/wECpKPSHoABOTS4U0A
+ jkprRtl9vROJl3WBeA49A9WP9tDr1oDI3+1HLfdkdPYHGf0carPgsQ1Uqw5yg7nL9pD4
+ h0iw==
+X-Gm-Message-State: AOJu0YxGclVvToAFKC1SGDITLMBt6XNqr7YtK7pDtcySl29449CPn0V6
+ FwPi+E/CPnd83N66Iqv5w1itHtIoHPCKw5ZEIqIcIweuS4g0mzJChkh4oTVranjd
+X-Gm-Gg: AR+sD129sTCBzt5mU0w+xveUJlNPYmVE9wsZcuekoiUGTDj42BYze3RDi3cmtlqdBvh
+ 9lSe5rhCdBw4JnxebGsokDb6CbbXkkoQ7p+yo04+4+EGMb76bkvwzwXbblKoJ+FQyIN7XWI2JKy
+ rSk4axvwiPED8P8MF1jl3xh0+AD2mGq9W+KmxVjv5iMRaPxMkxHwdsJ8Ecq+To3EetuCAQyqI82
+ 6uXEGxvTCVV+BYcLumoUAyk6biLdSkk3mrcAUDipCp+kEGxanqq5opWZS+l2gGmoCsTsgUsqbDv
+ Tbr1mbALe/ZzbG6tm9Mz+KkV4EIQKmYUCe36i57wN2hulIcnegdYuiCi6lHzCKRwU0QURM1K0i6
+ JTEPpEEsaREDD4YV9JIv5ChNct9w+VijNsEvzS/0tAX2A+q7fc+5BFcl1l5VzeDa71NJp9d21AP
+ T97TdHRYr2BnVnmn0n3A==
+X-Received: by 2002:a05:690c:6712:b0:80c:8596:4653 with SMTP id
+ 00721157ae682-81f4c3b4eadmr198207b3.69.1784751057969; 
+ Wed, 22 Jul 2026 13:10:57 -0700 (PDT)
+Received: from MacLin.attlocal.net ([2600:1700:e140:14d0:eb7d:6ac0:a76f:2c5f])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-907ba8b5f6esm28481326d6.5.2026.07.22.13.08.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Jul 2026 13:08:51 -0700 (PDT)
-Message-ID: <4288473d-e741-449b-bfab-573db154ae7e@oss.qualcomm.com>
-Date: Wed, 22 Jul 2026 17:08:48 -0300
+ 00721157ae682-81f40366af6sm10389407b3.43.2026.07.22.13.10.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 22 Jul 2026 13:10:57 -0700 (PDT)
+From: Connor Kite <connorkite@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com, stefanha@redhat.com, Connor Kite <connorkite@gmail.com>
+Subject: [PATCH] util/iova-tree: gapless map
+Date: Wed, 22 Jul 2026 13:07:05 -0700
+Message-ID: <20260722200951.553764-2-connorkite@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] hw/riscv: Connect K230 DDR controller and PHY models
-To: Junze Cao <caojunze424@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, chao.liu@processmission.com,
- pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, farosas@suse.de, lvivier@redhat.com,
- pbonzini@redhat.com
-References: <20260716132423.931427-1-caojunze424@gmail.com>
- <20260716132423.931427-3-caojunze424@gmail.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260716132423.931427-3-caojunze424@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: GoZ3G1nAkO1dkEOEHDZ0fPk1SVJqKGFF
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIyMDE5OCBTYWx0ZWRfXzwu35pvQagW8
- S7fu+JH6MNrhDD1lklQvUwSsIUp72hKlYOc/Wrhdfnh35JYkbt8NDnnEB4tfJzKnEqiAog7QIUY
- DCPRqOTmnc+K9WPEEQyUpRhn9MjI+Vw=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIyMDE5OCBTYWx0ZWRfX+auGboz7NtLY
- C1KSJS8bRGpsGyJ7LxF4QnSHNApL/y5WdD1eM8E0LAXrhSJDUn8W2vp2ii5yIIf11H7JyoXpV7k
- DoaBUdCsiL7F768AHtMYj4g5uyisUOFONABQCUaevuS+nC+5D3Yrjn8K5qVKPvz2U09S0crCIYw
- QOBXDtviKnUGFclOvAhb8fCfIDM9MLSnZYaVzKAYJCjEFszgAxdqu315xiNvxU3tPbWibvz9VhT
- 8ZlNpypJzzwWTjfzFyn72TcKt2jpbnOcNOCMFav/vKo1zSSe7DeFP5dCVb/XYGIUm0W3o7E4ZNJ
- OYVHJCAJNvUl11dgXGAiKs3u71JXkx7BNIGTqBcQ5g25LQmUjwQumbFfOOcgJgICVnhKkaca2mn
- +ninnTt9vM3/T1wJVNauRyqTP6idTziJ5LwBuXj09yU1azbuIgwRAuGltQgQ2Lt3CEvwOrxGw2c
- qnR8cUQsQ8YGvaBmqlA==
-X-Proofpoint-GUID: GoZ3G1nAkO1dkEOEHDZ0fPk1SVJqKGFF
-X-Authority-Analysis: v=2.4 cv=JuTBas4C c=1 sm=1 tr=0 ts=6a612355 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=J0RmenBMOwS19r/fhzI3tQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=wxDdFtoxzKiW3rREV3YA:9 a=QEXdDO2ut3YA:10
- a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-22_05,2026-07-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 suspectscore=0 spamscore=0 adultscore=0
- phishscore=0 clxscore=1015 bulkscore=0 lowpriorityscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607220198
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
+ envelope-from=connorkite@gmail.com; helo=mail-yw1-x112a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,125 +96,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+iova-tree prevents mapping of overlapping ranges, but range checks
+inflate the effective size of regions by 1 byte, resulting in gaps
+between regions in the iova address space.  If there are alignment
+requirements for regions in the iova space, this can throw them off.
 
+Adjust range checks to allow adjacent regions with no gap between them.
 
-On 7/16/2026 10:24 AM, Junze Cao wrote:
-> Replace the unimplemented K230 DDR configuration region with the DDRC
-> model and map the PHY model at 0x9a000000.
-> 
-> Connect the controller to the PHY so DFI status reflects PHY training and
-> initialization state.
-> 
-> Signed-off-by: Junze Cao <caojunze424@gmail.com>
-> ---
+Signed-off-by: Connor Kite <connorkite@gmail.com>
+---
+ util/iova-tree.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-
->   docs/system/riscv/k230.rst |  4 ++++
->   hw/riscv/k230.c            | 19 ++++++++++++++++---
->   include/hw/riscv/k230.h    |  4 ++++
->   3 files changed, 24 insertions(+), 3 deletions(-)
-> 
-> diff --git a/docs/system/riscv/k230.rst b/docs/system/riscv/k230.rst
-> index cea8202e55..06a819fbdb 100644
-> --- a/docs/system/riscv/k230.rst
-> +++ b/docs/system/riscv/k230.rst
-> @@ -20,12 +20,16 @@ The ``k230`` machine supports the following devices:
->   * Platform-Level Interrupt Controller (PLIC)
->   * 2 K230 Watchdog Timer
->   * 5 UART
-> +* K230 DDRC CFG and DDR PHY
->   
->   Boot options
->   ------------
->   The ``k230`` machine supports K230 SDK boot through M-mode U-Boot, which then
->   starts OpenSBI/Linux with ``bootm``. It also supports direct Linux boot.
->   
-> +The DDRC CFG and DDR PHY models allow the K230 SDK U-Boot SPL to complete DDR
-> +initialization before loading the next boot stage.
-> +
->   K230 SDK Linux kernels use T-HEAD C9xx private MAEE page table attributes. QEMU
->   does not implement MAEE in the generic RISC-V MMU, so such kernels need to be
->   built with standard RISC-V PTE bits before they can boot under QEMU.
-> diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
-> index 656f28190c..627150b463 100644
-> --- a/hw/riscv/k230.c
-> +++ b/hw/riscv/k230.c
-> @@ -97,6 +97,7 @@ static const MemMapEntry memmap[] = {
->       [K230_DEV_SPI] =          { 0x91584000,  0x00001000 },
->       [K230_DEV_HI_SYS_CFG] =   { 0x91585000,  0x00000400 },
->       [K230_DEV_DDRC_CFG] =     { 0x98000000,  0x02000000 },
-> +    [K230_DEV_DDR_PHY] =      { 0x9A000000,  0x00400000 },
->       [K230_DEV_FLASH] =        { 0xC0000000,  0x08000000 },
->       [K230_DEV_PLIC] =         { 0xF00000000, 0x00400000 },
->       [K230_DEV_CLINT] =        { 0xF04000000, 0x00400000 },
-> @@ -108,6 +109,11 @@ static void k230_soc_init(Object *obj)
->       RISCVHartArrayState *cpu0 = &s->c908_cpu;
->   
->       object_initialize_child(obj, "c908-cpu", cpu0, TYPE_RISCV_HART_ARRAY);
-> +    object_initialize_child(obj, "ddr-cfg", &s->ddr_cfg,
-> +                            TYPE_K230_DDR_CFG);
-> +    object_initialize_child(obj, "ddr-phy", &s->ddr_phy,
-> +                            TYPE_K230_DDR_PHY);
-> +    s->ddr_cfg.phy = &s->ddr_phy;
->       object_initialize_child(obj, "k230-wdt0", &s->wdt[0], TYPE_K230_WDT);
->       object_initialize_child(obj, "k230-wdt1", &s->wdt[1], TYPE_K230_WDT);
->   
-> @@ -158,6 +164,16 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
->       int c908_cpus;
->   
->       sysbus_realize(SYS_BUS_DEVICE(&s->c908_cpu), &error_fatal);
-> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->ddr_cfg), errp)) {
-> +        return;
-> +    }
-> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->ddr_phy), errp)) {
-> +        return;
-> +    }
-> +    sysbus_mmio_map(SYS_BUS_DEVICE(&s->ddr_cfg), 0,
-> +                    memmap[K230_DEV_DDRC_CFG].base);
-> +    sysbus_mmio_map(SYS_BUS_DEVICE(&s->ddr_phy), 0,
-> +                    memmap[K230_DEV_DDR_PHY].base);
->   
->       c908_cpus = s->c908_cpu.num_harts;
->   
-> @@ -361,9 +377,6 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
->       create_unimplemented_device("hi_sys_cfg", memmap[K230_DEV_HI_SYS_CFG].base,
->                                   memmap[K230_DEV_HI_SYS_CFG].size);
->   
-> -    create_unimplemented_device("ddrc_cfg", memmap[K230_DEV_DDRC_CFG].base,
-> -                                memmap[K230_DEV_DDRC_CFG].size);
-> -
->       create_unimplemented_device("flash", memmap[K230_DEV_FLASH].base,
->                                   memmap[K230_DEV_FLASH].size);
->   }
-> diff --git a/include/hw/riscv/k230.h b/include/hw/riscv/k230.h
-> index 592e1c26bf..80ca16338c 100644
-> --- a/include/hw/riscv/k230.h
-> +++ b/include/hw/riscv/k230.h
-> @@ -16,6 +16,7 @@
->   #define HW_K230_H
->   
->   #include "hw/core/boards.h"
-> +#include "hw/misc/k230_ddr.h"
->   #include "hw/riscv/riscv_hart.h"
->   #include "hw/watchdog/k230_wdt.h"
->   
-> @@ -32,6 +33,8 @@ typedef struct K230SoCState {
->       /*< public >*/
->       RISCVHartArrayState c908_cpu; /* Small core */
->   
-> +    K230DDRCfgState ddr_cfg;
-> +    K230DDRPhyState ddr_phy;
->       K230WdtState wdt[2];
->       MemoryRegion sram;
->       MemoryRegion bootrom;
-> @@ -112,6 +115,7 @@ enum {
->       K230_DEV_SPI,
->       K230_DEV_HI_SYS_CFG,
->       K230_DEV_DDRC_CFG,
-> +    K230_DEV_DDR_PHY,
->       K230_DEV_FLASH,
->       K230_DEV_PLIC,
->       K230_DEV_CLINT,
+diff --git a/util/iova-tree.c b/util/iova-tree.c
+index 5b0c95ff15..834ffab324 100644
+--- a/util/iova-tree.c
++++ b/util/iova-tree.c
+@@ -59,11 +59,11 @@ static int iova_tree_compare(gconstpointer a, gconstpointer b, gpointer data)
+ {
+     const DMAMap *m1 = a, *m2 = b;
+ 
+-    if (m1->iova > m2->iova + m2->size) {
++    if (m1->iova >= m2->iova + m2->size) {
+         return 1;
+     }
+ 
+-    if (m1->iova + m1->size < m2->iova) {
++    if (m1->iova + m1->size <= m2->iova) {
+         return -1;
+     }
+ 
+@@ -96,8 +96,8 @@ static gboolean iova_tree_find_address_iterator(gpointer key, gpointer value,
+     g_assert(key == value);
+ 
+     needle = args->needle;
+-    if (map->translated_addr + map->size < needle->translated_addr ||
+-        needle->translated_addr + needle->size < map->translated_addr) {
++    if (map->translated_addr + map->size <= needle->translated_addr ||
++        needle->translated_addr + needle->size <= map->translated_addr) {
+         return false;
+     }
+ 
+@@ -125,7 +125,7 @@ int iova_tree_insert(IOVATree *tree, const DMAMap *map)
+ {
+     DMAMap *new;
+ 
+-    if (map->iova + map->size < map->iova || map->perm == IOMMU_NONE) {
++    if (map->iova + map->size <= map->iova || map->perm == IOMMU_NONE) {
+         return IOVA_ERR_INVALID;
+     }
+ 
+@@ -174,14 +174,14 @@ static void iova_tree_alloc_map_in_hole(struct IOVATreeAllocArgs *args)
+     const DMAMap *prev = args->prev, *this = args->this;
+     uint64_t hole_start, hole_last;
+ 
+-    if (this && this->iova + this->size < args->iova_begin) {
++    if (this && this->iova + this->size <= args->iova_begin) {
+         return;
+     }
+ 
+-    hole_start = MAX(prev ? prev->iova + prev->size + 1 : 0, args->iova_begin);
+-    hole_last = this ? this->iova : HWADDR_MAX;
++    hole_start = MAX(prev ? prev->iova + prev->size : 0, args->iova_begin);
++    hole_last = this ? this->iova - 1 : HWADDR_MAX;
+ 
+-    if (hole_last - hole_start > args->new_size) {
++    if (hole_last - hole_start + 1 > args->new_size) {
+         args->iova_result = hole_start;
+         args->iova_found = true;
+     }
+@@ -244,7 +244,7 @@ int iova_tree_alloc_map(IOVATree *tree, DMAMap *map, hwaddr iova_begin,
+         iova_tree_alloc_map_in_hole(&args);
+     }
+ 
+-    if (!args.iova_found || args.iova_result + map->size > iova_last) {
++    if (!args.iova_found || args.iova_result + map->size - 1 > iova_last) {
+         return IOVA_ERR_NOMEM;
+     }
+ 
+@@ -262,11 +262,11 @@ static int gpa_tree_compare(gconstpointer a, gconstpointer b, gpointer data)
+ {
+     const DMAMap *m1 = a, *m2 = b;
+ 
+-    if (m1->translated_addr > m2->translated_addr + m2->size) {
++    if (m1->translated_addr >= m2->translated_addr + m2->size) {
+         return 1;
+     }
+ 
+-    if (m1->translated_addr + m1->size < m2->translated_addr) {
++    if (m1->translated_addr + m1->size <= m2->translated_addr) {
+         return -1;
+     }
+ 
+@@ -287,7 +287,7 @@ int gpa_tree_insert(IOVATree *tree, const DMAMap *map)
+ {
+     DMAMap *new;
+ 
+-    if (map->translated_addr + map->size < map->translated_addr ||
++    if (map->translated_addr + map->size <= map->translated_addr ||
+         map->perm == IOMMU_NONE) {
+         return IOVA_ERR_INVALID;
+     }
+-- 
+2.43.0
 
 
