@@ -4,49 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D9E0C44536
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:56:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F362C44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:56:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWQb-0001x4-JF; Wed, 22 Jul 2026 08:52:01 -0400
+	id 1wmWSl-0005Kt-0P; Wed, 22 Jul 2026 08:54:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWQS-0001da-4t; Wed, 22 Jul 2026 08:51:54 -0400
+ id 1wmWRT-0002jA-KF; Wed, 22 Jul 2026 08:53:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWQP-0002Ne-T2; Wed, 22 Jul 2026 08:51:51 -0400
+ id 1wmWRS-0002W9-1X; Wed, 22 Jul 2026 08:52:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724574; bh=GbhzJiYH1o5RqcSWWgUEqLfwpcbdaBogNO4lYDymo/k=;
+ t=1784724574; bh=hegvjN5u07X0tI6Sh+JSFjFf+1iP+8GgZkKx6m2isBY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=M3GfMpkWtFH0EwaoNFfmfH0BuBxkomyL8ZjhOxQZoyxW4vp8xtJB/b+r6vLCd+miC
- Y0fm8y8Vgn2id/8YVjAImWk9DRqqWcEMkVgG64V5UGREgbpJuBJJ37gSya8Og5rNeq
- w0nvqAdHXsH7cbkBueJ73QbDVe486UbeZiqzVxuILWf9dpQQVxGFc2b+WS900VsGHC
- nBnFPtlLNJ+efukonGtZBn9Yte0Rr6gFNZofz4yk4u61PzZIdYnooBk+r24SYKTNBK
- E8KLsLia20ZjaUCdNLC/cWG0flDl/f/MmNhTD5LLYL+B6+M6YCODAwSFtHxJCRrkoJ
- omUeYurw4WpPg==
+ b=W23OvSuOKcPS47Y+aEZjP8uEHdfwSKIC9WtLDKJVi0+4HflUV7OBEjgMf7WVdBUf1
+ s0Ng0Eese+nHcgad1j9DIZk88FPCXmdXci9PXRQHGb9nsukNK2MI/0KLa5dfAHupmW
+ K4rMFSZkTNta5KqUh2GlTwEyY69sd4EKKnfQUD5RuXf7l32tEJinQ4sYMQq1RSxIgc
+ aVgn+fBKCpYZ680rfbn9SxfLAcHZD0+sfc0E40HZuU9qwq0Ydg2I/8O/LBOgJtD8S7
+ zWpYQmo0x/ivBh5TM1+0nqytAJTE/2UMmJbPQts5jQmurpGiqughRJuiHTQP53bM6n
+ N0i6B9pXGAzmA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A07DC1C3B35;
+ by isrv.corpit.ru (Postfix) with ESMTP id DA3131C3B40;
  Wed, 22 Jul 2026 15:49:34 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E99413F3785;
- Wed, 22 Jul 2026 15:49:51 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2E3FE3F3790;
+ Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A276517F3F; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
+ id BC9AB17F55; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- BALATON Zoltan <balaton@eik.bme.hu>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 v2 088/127] hw/display/sm501: Don't allow guest to set
- ram size larger than it is
-Date: Wed, 22 Jul 2026 15:48:13 +0300
-Message-ID: <20260722124859.32371-7-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Miao Wang <shankerwangmiao@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v2 099/127] hw/scsi/vmw_pvscsi: add a comment to
+ explain the endianness
+Date: Wed, 22 Jul 2026 15:48:24 +0300
+Message-ID: <20260722124859.32371-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,84 +73,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Miao Wang <shankerwangmiao@gmail.com>
 
-The SM501 DRAM_CONTROL register has a 7 bit Size field which allows
-the guest to change the local memory size.  We use the local memory
-size in bounds checks calculations for 2D operations. Currently we
-have no check on the validity of the value the guest programs to
-this field, which means that the guest can:
- - set it to a reserved value (6 or 7) which will cause
-   get_local_mem_size() to read outside sm501_mem_local_size[]
- - set it to a value corresponding to more RAM than the card
-   was created with, so that the 2D bounds check will let 2D
-   operations access off the end of the memory region
+Add a comment to explain the endianness of the pvscsi device. We have
+no information about the endianness should be little-endian or CPU
+native endian because the current driver code is designed to work only
+on x86 and is not endianness aware. We assume that the pvscsi device is
+implicitly little-endian.
 
-Fix this by decoupling the value the guest reads and writes to this
-field from the internal size we consider the local memory to have.
-We validate changes and ignore them except for readback if they would
-be reserved values or values for more memory than the card has.
-
-Cc: qemu-stable@nongnu.org
-Reported-by: Heechan Kang
-Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260707150933.1410507-4-peter.maydell@linaro.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3811
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 2ac2cf0483d090f2f2d795ed06a94cc865b972fe)
+Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20260710-pvscsi-endianness-v3-2-27fe1c4d1f6e@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit ecc569639aeb5b702f1098d3eb5b28d3168604c8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/sm501.c b/hw/display/sm501.c
-index 80156724641..6173da691a8 100644
---- a/hw/display/sm501.c
-+++ b/hw/display/sm501.c
-@@ -571,6 +571,25 @@ static uint32_t get_local_mem_size_index(uint32_t size)
-     return index;
- }
+diff --git a/hw/scsi/vmw_pvscsi.h b/hw/scsi/vmw_pvscsi.h
+index a3ae517e199..defff9e179e 100644
+--- a/hw/scsi/vmw_pvscsi.h
++++ b/hw/scsi/vmw_pvscsi.h
+@@ -108,6 +108,20 @@ enum PVSCSICommands {
+ #define PVSCSI_COMMAND_PROCESSING_FAILED     (-1)
+ #define PVSCSI_COMMAND_NOT_ENOUGH_DATA       (-2)
  
-+static void set_new_local_mem_size_index(SM501State *s, uint32_t idx)
-+{
-+    /*
-+     * Update local_mem_size_index on guest write. We don't allow this
-+     * to be set to larger than the actual RAM size. (The guest will
-+     * still read back the SYSTEM_CONTROL.Size bits that it wrote.)
-+     */
-+    if (idx < ARRAY_SIZE(sm501_mem_local_size) &&
-+        sm501_mem_local_size[idx] <= memory_region_size(&s->local_mem_region)) {
-+        s->local_mem_size_index = idx;
-+        return;
-+    }
-+    qemu_log_mask(LOG_GUEST_ERROR,
-+                  "sm501: Guest set DRAM_CONTROL.Size to 0x%x but "
-+                  "local memory is not that large\n",
-+                  idx);
-+    /* Don't change the effective size, leave it as whatever it was */
-+}
++/*
++ * About endianess for the below structs:
++ *
++ * These structs are used to describe the data that is exchanged between the
++ * guest and the PVSCSI device. The endianess of the fields in these structs
++ * is not defined by any standard. The current implemented drivers are designed
++ * to only work on x86 architecture, so there is no endianess awareness in the
++ * drivers and thus we have no idea whether the fields should be in little-
++ * endian or target native endian format.
++ *
++ * Considering the above, we assume that PVSCSI is implicitly little-endian and
++ * expect the fields in these structs to be in little-endian format.
++ */
 +
- static ram_addr_t get_fb_addr(SM501State *s, int crt)
- {
-     return (crt ? s->dc_crt_fb_addr : s->dc_panel_fb_addr) & 0x3FFFFF0;
-@@ -990,7 +1009,7 @@ static uint64_t sm501_system_config_read(void *opaque, hwaddr addr,
-         ret = 0x050100A0;
-         break;
-     case SM501_DRAM_CONTROL:
--        ret = (s->dram_control & 0x07F107C0) | s->local_mem_size_index << 13;
-+        ret = (s->dram_control & 0x07F1E7C0);
-         break;
-     case SM501_ARBTRTN_CONTROL:
-         ret = s->arbitration_control;
-@@ -1049,8 +1068,7 @@ static void sm501_system_config_write(void *opaque, hwaddr addr,
-         s->gpio_63_32_control = value & 0xFF80FFFF;
-         break;
-     case SM501_DRAM_CONTROL:
--        s->local_mem_size_index = (value >> 13) & 0x7;
--        /* TODO : check validity of size change */
-+        set_new_local_mem_size_index(s, (value >> 13) & 0x7);
-         s->dram_control &= 0x80000000;
-         s->dram_control |= value & 0x7FFFFFC3;
-         break;
+ /*
+  * Command descriptor for PVSCSI_CMD_RESET_DEVICE --
+  */
 -- 
 2.47.3
 
