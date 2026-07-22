@@ -4,95 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA81EC4453A
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 21:04:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5250AC4453A
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 21:17:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wme6z-0005q4-DM; Wed, 22 Jul 2026 17:04:17 -0400
+	id 1wmeJC-0000tJ-SR; Wed, 22 Jul 2026 17:16:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wme6x-0005pC-Qh; Wed, 22 Jul 2026 17:04:15 -0400
+ id 1wmeJA-0000sF-G3; Wed, 22 Jul 2026 17:16:52 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wme6u-0000uH-P7; Wed, 22 Jul 2026 17:04:15 -0400
+ id 1wmeJ6-0002x0-B3; Wed, 22 Jul 2026 17:16:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784754222; bh=MQy66xNGRQ+DtkNiKIxf4sTmH/nCApiF57Mi/R/Pask=;
- h=Date:Subject:To:References:From:In-Reply-To;
- b=ehKO2QCI37GWPXMWUiIVZPtF0gF9A+UA2jdTQUf23qfLkwQimnNQK3FGRPHIcm64x
- u3o/H4Ksbq4VtcS0eJnNSBQGvNcOGIqZL7PKUGj8uoxLAGl9TY4obN6l8k3GjTkqg/
- QAH1oDCMhvOaF5FR4T+pNuTSIITrYdKW80OnRBys9ha5VZOnmYvvpaH/9zd2cOHqH1
- orqYTiw9/VG/g+y8shdcN7WPolrgC05A+13/F84kaX2Y/UBLypOHndqT7m+uu7A3KM
- tp3Qg1IVdqhV3wrjGCMPEAuyQz48sZznu9px3bHuLCRxZ9mCOA8KmoNCkqgUx0yjsg
- Kg8GcomEIMjpg==
+ t=1784754985; bh=oqcPpwKj+O6qu/ABMxRxAupWfgh1oIge2DZpHm69UDg=;
+ h=From:To:Cc:Subject:Date;
+ b=gEWUQEZYyk2VyyiHbTGasD/EFIzgsIHtwBq+7bwZy/Xh6DEUCqBCdbYXuXDP38lbx
+ ucyJOyGLjeVguc/Hzf1J5CvxdC1ZSRBV6PHyl6h7y20aENw9dmjagbovA3mdg9TVpM
+ 4wA1H2EWdCZhv6cSYD6gUlbVD2iE7JLrcgA2xQRTDebQzDOilng5wHwMqZ0+bbpzcq
+ htB3yDvHsJ64evvtVRnyEjzAe/7f9TrXuxMK8STSM1LHdQPhq6e4kjfxvwJVc9uwTE
+ 9JtSgCOU3IXTpOSgOZuUyG43cfwik6PLfKoVc2k1zYsx31KDK8tHfAPxNgvQ3JnrkJ
+ JCu0qm/dblDgw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7114E1C3D28;
- Thu, 23 Jul 2026 00:03:42 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5EA1F3F39E1;
- Thu, 23 Jul 2026 00:04:00 +0300 (MSK)
-Message-ID: <8cb51856-64f1-4794-b0a7-302e2a4a1a88@tls.msk.ru>
-Date: Thu, 23 Jul 2026 00:03:51 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 20/71] target/arm: teach arm_cpu_has_work about halting
- reasons
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- qemu-stable <qemu-stable@nongnu.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-References: <20260610161202.2235298-1-peter.maydell@linaro.org>
- <20260610161202.2235298-21-peter.maydell@linaro.org>
- <CAFEAcA99VL1B57MsZ=WRjEw-vyPcxh_bw0Xj2DWQTydihWMyNg@mail.gmail.com>
- <CAFEAcA_aXzZtC2XVdZOf1SyFR3imUoxpda91RuuMRF+2me5L3Q@mail.gmail.com>
-Content-Language: en-US, ru-RU
+ by isrv.corpit.ru (Postfix) with ESMTP id 3C8281C3D3A;
+ Thu, 23 Jul 2026 00:16:25 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3552C3F39F7;
+ Thu, 23 Jul 2026 00:16:43 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id 3FA701805A; Thu, 23 Jul 2026 00:16:34 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <CAFEAcA_aXzZtC2XVdZOf1SyFR3imUoxpda91RuuMRF+2me5L3Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v3 000/129] Patch Round-up for stable 11.0.3,
+ freeze on 2026-07-22 (frozen)
+Date: Thu, 23 Jul 2026 00:16:26 +0300
+Message-ID: <qemu-stable-11.0.3-20260723001345@cover.tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -117,60 +70,289 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/22/26 20:29, Peter Maydell wrote:
-> On Tue, 21 Jul 2026 at 18:06, Peter Maydell <peter.maydell@linaro.org> wrote:
->>
->> cc: to qemu-stable as a late "could we backport this (plus the
->> commit fixing a bug in this)" request...
->>
->> On Wed, 10 Jun 2026 at 17:12, Peter Maydell <peter.maydell@linaro.org> wrote:
->>>
->>> From: Alex Bennée <alex.bennee@linaro.org>
->>>
->>> With the advent of WFE and WFI we need to pay closer attention to the
->>> reason why the vCPU may be sleeping to figure out if we should wake
->>> it up.
->>>
->>> Create env->halt_reason to track this and then re-order the tests so
->>> we:
->>>
->>>    - ignore everything is the vCPU is powered off
->>>    - wake up if the event_register is set and we were in a WFE
->>>    - otherwise any IRQ event does wake the vCPU up.
->>>
->>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
->>> Message-id: 20260529082948.363931-3-alex.bennee@linaro.org
->>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->>
->> I didn't realize at the time, but this is actually fixing a bug,
->> which was just reported via the qemu-discuss list:
->> https://lists.gnu.org/archive/html/qemu-discuss/2026-07/msg00000.html
->>
->> For M-profile, we already added SEV/WFE support, and that's in the
->> 11.0 release, but arm_cpu_has_work() incorrectly checks for the
->> event register before it checks whether the CPU is powered off.
->> This only affects M-profile machines with multiple CPUs, and
->> the effect is that a SEV on core 0 incorrectly starts core 1
->> when it's powered down.
->>
->> Could we backport this change (commit 6fd2fcdc61b70) plus the
->> bugfix followup (commit c2804566f654 "target/arm: do not clear
->> halting reason in has_work helper") to the 11.0.x branch, please?
->>
->> (Earlier branches don't have SEV wake anything up so don't need
->> a backport.)
-> 
-> We could also do a simpler version of the fix for stable
-> branches if preferred, which is basically changing only
-> arm_cpu_has_work() to return false if cpu->power_state == PSCI_OFF
-> before looking at cpu->env.event_register.
+The following patches are queued for QEMU stable v11.0.3:
 
-Hm.  And I missed this one when you emailed qemu-stable 2 days ago.
-Just picked up these two commits.  This will result in another
-pipeline run for 11.0.x, but we're just in time :)
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-11.0
 
-Thanks,
+v3: 2 more last-minute fixes from Peter Maydell.  Technically are on
+the schedule still.
+
+Patch freeze is 2026-07-22 (frozen), and the release is planned for 2026-07-24:
+
+  https://wiki.qemu.org/Planning/11.0
+
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
+
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
+
+Thanks!
 
 /mjt
+
+--------------------------------------
+01* eef29e060dcc Emmanuel Blot:
+   meson: build macOS signed binary as part of the default target
+02* 27f6d5ba9c97 Marc-André Lureau:
+   ui/gtk: fix bad widget realize on non-GFX VC
+03* a57e4612b61d Christian Borntraeger:
+   s390x/kvm: clamp stsi 3.2.2 size
+04* a1c0e5a73740 Christian Schoenebeck:
+   hw/9pfs: add msize_limit transport callback
+05* 4a1a2fa4d351 Christian Schoenebeck:
+   9pfs/virtio: implement msize_limit callback
+06* 815d1799c3d3 Christian Schoenebeck:
+   9pfs/xen: implement msize_limit callback
+07* bb5ab96e35a1 Christian Schoenebeck:
+   hw/9pfs: cap negotiated msize to transport limit
+08* 4b615eaa1be4 Christian Schoenebeck:
+   hw/9pfs: add response_buffer_size transport callback
+09* 12bcbdca8ae9 Christian Schoenebeck:
+   9pfs/virtio: implement response_buffer_size callback
+10* 69c8f5e6946f Christian Schoenebeck:
+   9pfs/xen: implement response_buffer_size callback
+11* 64c6c7e0df72 Christian Schoenebeck:
+   hw/9pfs: cap Treaddir allocation (CVE-2026-9238)
+12* 693b296b176d Christian Schoenebeck:
+   hw/9pfs: add xattr FID limit to prevent memory exhaustion
+13* e6116a81f04c Christian Schoenebeck:
+   hw/9pfs: add max_xattr option
+14* 44cb540d2d07 Christian Schoenebeck:
+   qemu-options: document 9pfs max_xattr option
+15* 54b8f64c422d Christian Schoenebeck:
+   tests/9p: add Tread / Rread test client functions
+16* c46150530b3d Christian Schoenebeck:
+   tests/9p: add Tclunk / Rclunk test client functions
+17* 7664feb26fef Christian Schoenebeck:
+   tests/9p: add Txattrcreate / Rxattrcreate test client functions
+18* 0e3085ddc7fb Christian Schoenebeck:
+   hw/9pfs: enable xattr (mockup) support for synth fs driver
+19* 7e42d569a68a Christian Schoenebeck:
+   hw/9pfs: add xattr count query interface to fs synth driver
+20* df8825554366 Christian Schoenebeck:
+   tests/9p: increase P9_MAX_SIZE for test client
+21* 84525ece6817 Christian Schoenebeck:
+   tests/9p: add virtio_9p_add_synth_driver_args() test client function
+22* 0e1085819e44 Christian Schoenebeck:
+   tests/9p: add 3 xattr FID limit test cases (synth fs driver)
+23* 04a62cdfe873 Christian Schoenebeck:
+   tests/9p: add 3 xattr FID limit test cases (local fs driver)
+24* 32cae47c332f Christian Schoenebeck:
+   hw/9pfs: fix invalid union access by v9fs_co_fsync()
+25* c3aa2491cd2c Christian Schoenebeck:
+   hw/9pfs: fix invalid union access by v9fs_co_fstat()
+26* 75893c058b21 Christian Schoenebeck:
+   hw/9pfs/local: harden local_fid_fd() on FID types
+27* fa2cf7488379 Inochi Amaoto:
+   target/riscv: Check PMP before updating PTE
+28* fdfcd98f6656 Qingwei Hu:
+   hw/riscv/virt-acpi-build: Fix RINTC PLIC context ID for KVM
+29* 46d96da13098 ZhengXiang Qin:
+   target/riscv: avoid abort when reading vtype before env->xl is set
+30* dcd028517749 SeungJu Cheon:
+   target/riscv: Apply UXL WARL handling to vsstatus
+31* 64ce9ac18757 Daniel Henrique Barboza:
+   hw/riscv/riscv-iommu.c: always fault with SADE=0 and A=0
+32* 36b37f849480 Laurent Vivier:
+   hw/char/virtio-serial-bus: fix guest-triggerable OOM in control_out()
+33* 32a90850e1e4 Junjie Cao:
+   virtio-net: validate RSS indirections_len in post_load
+34* bc22c7e4187a Feifan Qian:
+   hw/net/fsl_etsec: validate FCB offsets in process_tx_fcb()
+35* d77a93ca4b53 Oliver Upton:
+   target/arm: Only evaluate SCR_EL3.PIEN if ARM_FEATURE_EL3 is present
+36* 62b425bec3d5 Alex Bennée:
+   hw/arm: use cortex-a9 mpcore base for CBAR on npcm7xx machines
+37* ec917cd49918 Jesper Wendel Devantier:
+   hw/nvme: fix FDP set FDP events
+38* 034baf047fe1 Keith Busch:
+   hw/nvme: ensure sgl forward progress
+39* d88cd8f5570f Christian Borntraeger:
+   s390x/sclp: reject invalid write event data headers
+40* 2d709a70c757 Matthew Rosato:
+   s390x/pci: Tighten region detection for BAR read/write
+41* b8c8ec1d7526 Matthew Rosato:
+   s390x/pci: Shrink RPCIT ranges to registered window
+42* 386268daea86 Matthew Rosato:
+   s390x/ioinst: Require strict length and format for SEI CHSC handler
+43* 22f2da06a8b2 Eric Farman:
+   s390x/css: limit number of CHPIDs in description
+44* e819c126a8d9 Miao Wang:
+   target/loongarch: Enable TARGET_PAGE_BITS_VARY for loongarch64 user-only
+45* 42f599172ae0 Torin Carey:
+   hw/misc/edu: restrict dma access to dma buffer
+46* 3565faa0ace1 Junjie Cao:
+   hw/display/ati: reset host_data.next in write handler after flush
+47* 90f8e5c30767 Junjie Cao:
+   hw/display/ati: guard against zero bpp in ati_host_data_flush
+48* d9f78431d8eb Denis V. Lunev:
+   hw/ide/ahci: cancel in-flight buffered reads on command engine restart
+49* cb7bc10385f3 Denis V. Lunev:
+   tests/qtest/ahci: test ATAPI read completing after engine restart
+50* 03071f99a3e1 Peter Maydell:
+   hw/dma/i8257: Return zeroes for read_memory in verify mode
+51* 831a13665ab1 Peter Maydell:
+   hw/scsi/mptsas: Reset doorbell state on reset
+52* 0e51b71c7b77 Thomas Huth:
+   hw/display/qxl: Fix mono cursor validation that can read past a cursor 
+   chunk
+53* dbc0ed562230 no92:
+   intel_iommu: Correctly set pt bit in extended capability register
+54* e03463812e74 lizhaoxin04:
+   vdpa: fix use-after-free of vqs in vhost_vdpa_device_unrealize
+55* 8addbdb793b7 Nathan Chen:
+   hw/arm/smmuv3: Update ATC invalidation check
+56* 7913b3b9463f hemanshu.khilari.foss:
+   hw/core/qdev-clock: Fix potential null pointer dereference
+57* 15c57ac351cc Stefan Hajnoczi:
+   scsi: adjust error_prepend() formatting
+58* 15a202656cd5 Stefan Hajnoczi:
+   scsi: always send valid PREEMPT TYPE field
+59* b9a3b329d09d Stefan Hajnoczi:
+   scsi: register again after PREEMPT without reservation
+60* 9e41b5d22aeb Sanjeeva Yerrapureddy:
+   hw/net: fix e1000e/igb ip_len inflation by Ethernet minimum-frame padding
+61* b79a9b6e5b56 Richard Henderson:
+   accel/tcg: Use TLB_FORCE_SLOW not TLB_MMIO for user-only plugins
+62* e03b7dac65d9 Ilya Leoshkevich:
+   accel/tcg: Make PageFlagsNodes' start and last immutable
+63* c56ebd64b82a Richard Henderson:
+   tcg/loongarch64: Fix cmp_vec with TCG_COND_NE
+64* 614a52cf549e Randy Schifflin:
+   target/sh4: fixup tcg for sh4 fipr/ftrv instructions
+65* 4952681a5fdc yujun:
+   crypto/x509-utils: fix gnutls error code in crt_init failure path
+66* 90aacd5bc405 Jia Jia:
+   hw/ufs: avoid double unref of wrapped scsi-hd
+67* b18e3f0e2d0f Daniel Henrique Barboza:
+   hw/riscv/riscv-iommu.c: fix fault type for spa_fetch() faults
+68* c1d5ec3a2f4b Daniel Henrique Barboza:
+   hw/riscv/riscv-iommu.c: check for reserved PTE bits
+69* b795ea0ba471 Daniel Henrique Barboza:
+   hw/riscv/riscv-iommu.c: fault when !PTE_U and no priv access
+70* 9158c900ab30 Daniel Henrique Barboza:
+   hw/riscv/riscv-iommu.c: fault for non-user PTE in G_STAGE
+71* 11486349ad9b Daniel Henrique Barboza:
+   hw/riscv/riscv-iommu.c: check reserved MSI PTE basic bits
+72* 58e801f74e6a Daniel Henrique Barboza:
+   hw/riscv/riscv-iommu-sys.c: record fault on IOMMU-generated MSI write
+73* bf274c54295c Daniel Henrique Barboza:
+   hw/riscv/riscv-iommu.c: check for misaligned IOHGATP_PPN
+74* 79616dd6e499 Daniel Henrique Barboza:
+   hw/riscv/riscv-iommu.c: update ioval2 when faulting in spa_fetch()
+75* 6d2b9d542fe2 Daniel Henrique Barboza:
+   hw/riscv/riscv-iommu: forbid GATE/SADE if caps.AMO_HWADD is zero
+76* ca7bac51e04f Chengbo Gao:
+   hw/riscv/riscv-iommu: Avoid caching PCI device IDs
+77* ce7fb3282756 Daniel Henrique Barboza:
+   hw/riscv/riscv-iommu.c: set ftype and iova in riscv_iommu_ctx()
+78* c7e61854544b Alistair Francis:
+   hw/pci/pcie_doe: Check mailbox length for overflows
+79* 18a522099090 Heinrich Schuchardt:
+   tests: allow differences in SPCR
+80* 15c73b0f17d2 Heinrich Schuchardt:
+   hw/acpi: correct field sequence in SPCR table
+81* ec7d32428757 Heinrich Schuchardt:
+   tests: update SPCR loongarch64 and riscv64 test data
+82* a47e3c26b1a0 Peter Maydell:
+   linux-user: Validate guest-passed dm_ioctl data_size
+83* 79cabc6cb7fb Richard Henderson:
+   target/arm: Be more defensive for invalid tlbi_aa64_get_range
+84* 4571c79c57ca Peter Maydell:
+   hw/net/vmxnet3: Correct bounds check on tx queue index
+85* 2c6fae7d7da8 Peter Maydell:
+   hw/usb/dev-wacom: Don't write off end of buffer
+86* b378a1bd86b4 Peter Maydell:
+   hw/display/sm501: Catch bad coordinates for RTL operations
+87* 422734d5fc2b Peter Maydell:
+   hw/display/sm501: Avoid overflow problems in bounds check calculations
+88* 2ac2cf0483d0 Peter Maydell:
+   hw/display/sm501: Don't allow guest to set ram size larger than it is
+89* 3c2749443429 Peter Maydell:
+   hw/misc/stm32_rcc: Correct offset-to-irq calculation
+90* 20701190e023 Christian Borntraeger:
+   s390x/sclp: prevent re-reading the sclp header
+91* 8a116a28535c Christian Borntraeger:
+   s390x/sclpcpi: check event length field before reading from buffer
+92* 33bece0fa121 Eric Farman:
+   s390x/css: firm up handling of chained TIC CCWs
+93* 9db18ed0631d Matt Turner:
+   linux-user/alpha: add coredump support
+94* 7a2e863f9dd5 Matt Turner:
+   linux-user/alpha: populate AT_HWCAP from env->amask
+95* 5157ceb10ca8 Haotian Jiang:
+   hw/misc/ivshmem: clear chardev handlers before freeing peers
+96* a3cc0069e151 Marc-André Lureau:
+   hw/display/qxl: fix TOCTOU in cursor chunk data_size handling
+97* 76dbe26fd650 Dmitry Pimenov:
+   hw/sparc64/niagara: use int64_t for vdisk size to avoid truncation
+98* 5a811329bde7 Miao Wang:
+   hw/scsi/vmw_pvscsi: translate data endianness
+99* ecc569639aeb Miao Wang:
+   hw/scsi/vmw_pvscsi: add a comment to explain the endianness
+100* 564c4d7e99d8 Marc-André Lureau:
+   hw/display/virtio-gpu: fix dmabuf_fd leak on remap failure
+101* 98e5a8eb4fb9 Thomas Huth:
+   hw/usb/hcd-ohci: Make sure that ohci_service_ed_list() cannot loop forever
+102* 5257259428ea Thomas Huth:
+   hw/usb/hcd-xhci: Turn guest-triggerable abort() into qemu_log_mask()
+103* 504f2bad932c Rohitashv Kumar:
+   net: only advertise passt in netdev help when CONFIG_PASST
+104* 3543c2b855cc Marc-André Lureau:
+   ui/vnc: fix OOB write in vnc_refresh_lossy_rect
+105* fb71c895d7ff Marc-André Lureau:
+   ui/vnc: validate color shifts in SetPixelFormat
+106* 82b4d693d522 Marc-André Lureau:
+   ui/input-barrier: fix off-by-one in keycode bounds check
+107* 53f0d87db7b4 Akihiko Odaki:
+   ui/gtk: Narrow DMA-BUF critical section
+108* e650e4fe0fb3 Marc-André Lureau:
+   ui/vnc: fix out-of-bounds write in lossy refresh dirty marking
+109* 6075444c5a72 Marc-André Lureau:
+   ui/vnc: validate SetPixelFormat field ranges
+110* 8720061c6d34 Marc-André Lureau:
+   hw/display/virtio-gpu: cap submit_3d command buffer allocation
+111* e99488c5d4a0 Marc-André Lureau:
+   hw/display/virtio-gpu: handle migration iov allocation failure
+112* f1af81ba2aee Akihiko Odaki:
+   hw/display/virtio-gpu: Check pixman_image_create_bits() results
+113* 78420b59f0fe Alex Bennée:
+   accel/tcg: move jit thread manipulation into do_tb_phys_invalidate
+114* 12d8ee9d5358 Feifan Qian:
+   hw/usb/xhci: clamp interval exponent to avoid UB shift in 
+   xhci_init_epctx()
+115* 054ef33f674c Xiangfeng Cai:
+   hw/usb/hcd-xhci-pci: break host link cycle so device_finalize() runs on 
+   unplug
+116* ba54d7e66e25 Xiangfeng Cai:
+   tests/qtest: add xhci-pci unplug finalize regression test
+117* 9bf52d056a03 Marc-André Lureau:
+   usbredir: fix use-after-free on buffered bulk packet overflow
+118* a002485bfef1 Marc-André Lureau:
+   usbredir: fix infinite loop and SIGFPE with zero max_packet_size
+119* 4daeaa2fe0f9 Thomas Huth:
+   hw/usb/hcd-xhci: Fix guest-triggerable assert() in xhci_find_stream()
+120* cc479aa89743 Thomas Huth:
+   hw/usb/hcd-xhci-sysbus: Fix OOB heap access in xhci_sysbus_intr_raise()
+121* 83927347227c Jay Chang:
+   hw/net/xilinx_axienet: Fix PHY register 17 link status reporting
+122* b1e73b2ddbb2 Peter Maydell:
+   net: Correct padding check in qemu_receive_packet()
+123* 9f436938c521 Marc-André Lureau:
+   hw/display/qxl: validate monitors_config heads[] in phys2virt
+124* fe68e4b47bf5 Marc-André Lureau:
+   replay: fix use of uninitialized pointer on error
+125* 2142689d92ca Philippe Mathieu-Daudé:
+   hw/misc/applesmc: Fix a typo setting MSSD key
+126* 94c510a5dc48 Bin Meng:
+   hw/net/cadence: Return current Cadence GEM queue pointers
+127* c257745248b0 Haotian Jiang:
+   hw/audio/intel-hda: restrict all DMA engine paths to memories
+128 6fd2fcdc61b7 Alex Bennée:
+   target/arm: teach arm_cpu_has_work about halting reasons
+129 c2804566f654 Alex Bennée:
+   target/arm: do not clear halting reason in has_work helper
+
+(commit(s) marked with * were in previous series and are not resent)
 
