@@ -4,144 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 121BFC44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:08:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A8BFC44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:13:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmVkl-0007m1-58; Wed, 22 Jul 2026 08:08:47 -0400
+	id 1wmVox-0000dQ-8v; Wed, 22 Jul 2026 08:13:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wmVkY-0007jI-M7
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 08:08:38 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <zhang_wei@open-hieco.net>)
+ id 1wmVou-0000cp-CC
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 08:13:04 -0400
+Received: from [115.124.28.97] (helo=out28-97.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wmVkU-0004lV-FF
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 08:08:33 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66M8xMsT412355
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 12:08:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- hZ00FU2q+5o6KK/0+Ek74PkBK3QiatBVtQpQCrrtX8E=; b=OTOWenW9dhvebydl
- wXwrIbzeZE3EVgbMXJOKxX3PbaMp6UhtOAnd84JlvF/Da9IwGY/CNVVVeJgfTcLK
- niOZAR/Uk/+0Gvb5O95XE76B8L4JKkH3oKWW5QBxm1rHtLRUooWwR9BfTSpIxsYU
- y71mIk72e4sudw2/Cc+Tbd31XYkVDdaHZyXe5jKFAiH51pl7q4ck4u901Dzi4V/d
- v/PPlEVhxnhRm3WsAH9mOY6piKjNssms9491JpA9mRYWklRoSLsxANj53+UgBicI
- 91VPZWGkDMQ58C4oCmtj/ojmpuZiXX65QJoiw3SDrHPOcxfuFY2AJEwzZk1MY5/D
- v9FwXg==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fjpxdhrb1-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 12:08:28 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-51bff5c7035so152834541cf.2
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 05:08:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784722107; x=1785326907; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=hZ00FU2q+5o6KK/0+Ek74PkBK3QiatBVtQpQCrrtX8E=;
- b=dr9bG5YaRmP7CaFBhx97gbLuqhi1gkskevp1c4rZpgh74sz2APo1HraDZnjjeQoQT1
- QlG7/pdazmdwCwcMSjkJaLkMWcRP7dj2KkbBWS0d61Ob2WoZifR3021NRA5XeIHURhLg
- Q0g/TKDf06PI3saP//PCqbL+4eKsdIwZjD5qv24NdvJhlNHkGQmY40xFpLlcrqjkQc5M
- v8xhMOZvxi6tX7fqFvA795oXyafbltVINHqh/H3nL4mg/c7u47ZvjP3yWxxodhDdhaZM
- ZoeyB9UYiDtxDVX9WvBVCkvtHPnIyU91p+rRqyWzkWUDCbt8UeKDkHjVkbdhXLKspHXx
- lg4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784722107; x=1785326907;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=hZ00FU2q+5o6KK/0+Ek74PkBK3QiatBVtQpQCrrtX8E=;
- b=k9HcKennmvIh30XSmZju/tZVK9iztB3/QzqOfdtnM6kWqLw8WC49kX9/Nezm9PDRMt
- nLPZNXZtHaBay325yJjrTjL+AxwWU4p59KMxU3TahcgiepK208mDK+O9ZRftmt67NaQV
- qgiPdKCh3AkIOxYJ5BuSkh8l5fv25jPMuFU4eyA7uWZ/92+yHVnz/ayWdSlRS5xQVsaL
- CF+0v1i2W4hXBkmPiYRHwF7F53xid3JL/LFL+uqZ5Y1LlIBYlg60ExqCO+3U8cG+2YJ+
- MRp5FHeOn8tkumUM2CmSS3CC/efKRxS3PONY0YEIm7RDS/q1oqijJwsYG6Ys5MW0vGw1
- af5A==
-X-Forwarded-Encrypted: i=1;
- AHgh+Ro+hLp6CDT07W7mnyL9rvd5CU86DtuSz5GZngK25PLdtLczrYqeV7h52fpHkEfjvkGthjayaa+Ci/X+@nongnu.org
-X-Gm-Message-State: AOJu0Yz9Z3rq8PxyYdKwfTx+oHsOOULQk5n+Pm6ayQprgIsuHvyp6m5B
- BBozv/7AJSiJQRxOKr1L3YJf8uP3gqomOJXOlSSSXdSptlnEGXiyOtEUZXpLTkiKi8SgIbOzuyb
- aodnwj0pQPaVehFORnTQ9POqKvwFddoyxtEMtxLiCXgxq2WaGzOgmeMNflw==
-X-Gm-Gg: AR+sD12BrSVUwWCqSkzs0aAxKmzUUX1IXJD6Xwen5Goh7emzhV6OA9GD6bTklfhDaxp
- u0aOlD96S1hESPVo2blFvfJznlFbLsQpBQpEqdiiQa40hIct0DTBsMK1LS6TVhc8ZnXLPPGQOUR
- VCrBQ8VUYJv7mKpRZIRxp1lxGyujqCoE6cOMteptNmaqic6x0G+zba5biwJkvdCYRQEWNsiT/NI
- hzr+cqVTRKKFHUm/6sQaJLOgSYl1ioqff01uO70zkGn3yOIz4r9PPccv73MKb0PzUrGHjTMuDIV
- M7nfPgYcZQtBzIuwsm1tijbtokOtA3APVbjI5/fVpJTUq7Gmmx1m/b8vKnoZro1Eyxe4M/YL/KC
- FGqwJ39kdgag8juaYbo8hBMz7AmUQh3DPRWlyLvpCAECfWORoSM4=
-X-Received: by 2002:a05:622a:4d4b:b0:51c:7b12:5fda with SMTP id
- d75a77b69052e-5213d3ba87emr226221551cf.86.1784722069451; 
- Wed, 22 Jul 2026 05:07:49 -0700 (PDT)
-X-Received: by 2002:a05:622a:4d4b:b0:51c:7b12:5fda with SMTP id
- d75a77b69052e-5213d3ba87emr226161691cf.86.1784722009146; 
- Wed, 22 Jul 2026 05:06:49 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4956a4f9a1csm67128035e9.5.2026.07.22.05.06.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Jul 2026 05:06:47 -0700 (PDT)
-Message-ID: <ed6fa97a-6f71-4341-846c-4a98da02d81a@oss.qualcomm.com>
-Date: Wed, 22 Jul 2026 14:06:47 +0200
+ (Exim 4.90_1) (envelope-from <zhang_wei@open-hieco.net>)
+ id 1wmVop-0005CL-TE
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 08:13:04 -0400
+X-Alimail-AntiSpam: AC=CONTINUE; BC=0.07438458|-1; CH=green;
+ DM=|CONTINUE|false|; DS=CONTINUE|ham_alarm|0.00192932-6.01843e-05-0.998011;
+ FP=7181970613962591499|0|0|0|0|-1|-1|-1; HT=maildocker-contentspam033032053168;
+ MF=zhang_wei@open-hieco.net; NM=1; PH=DS; RN=7; RT=7; SR=0;
+ TI=SMTPD_---.iS5c.XV_1784722236; 
+Received: from 192.168.124.3(mailfrom:zhang_wei@open-hieco.net
+ fp:SMTPD_---.iS5c.XV_1784722236 cluster:ay29) by smtp.aliyun-inc.com;
+ Wed, 22 Jul 2026 20:10:37 +0800
+Message-ID: <ed76e6e5-27c8-42c0-b9ef-0275f2fe4221@open-hieco.net>
+Date: Wed, 22 Jul 2026 20:10:34 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/net/virtio-net: check packet size before VLAN tag
- access in receive_filter()
+Subject: Re: [PATCH v1 0/9] target/i386: Fix Hygon vendor-specific CPU behavior
+From: Tina Zhang <zhang_wei@open-hieco.net>
+To: qemu-devel@nongnu.org
+Cc: kvm@vger.kernel.org, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ Tina Zhang <zhang_wei@hygon.cn>, Yongwei Xu <xuyongwei@hygon.cn>
+References: <20260706055530.1752094-1-zhang_wei@open-hieco.net>
 Content-Language: en-US
-To: Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowangio@gmail.com>, 
- qemu-stable@nongnu.org
-References: <20260722115008.1570510-1-lvivier@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260722115008.1570510-1-lvivier@redhat.com>
+In-Reply-To: <20260706055530.1752094-1-zhang_wei@open-hieco.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIyMDExOCBTYWx0ZWRfX64DNkFle34hs
- h9HN972lEl8uBZOhrsTFGzBU04iM+jLgS1eR8gniS2uRN9LaK5wc3voB8XPCnjZr97KpnbOEFXx
- dO16Q0/vqhoatg5nqUIjo9xY2OIEdYjq9UmzzhSEnlkMDxV7OduqewI9g8LS7UmEaBNgfAT/CVc
- 5ZzyxULCKLukPQKwxxDVUkdGxeUOpCb1pwQ5nJ+r85xMGDnJHfZdn7ZSyHmvXKHmTd3YH+ne1gP
- LYHhDeEgnaAlTeTX2mcymzI7YkLAMHt+NXM5yZzjfZidlwIDoXoeJFblOq7Y536ALv+StdaqAUl
- t5lfjJBKuwt4dIJForOX9WAOJLNBL6wbsUCNQnX+mx1N6sNs3MUCzhulZus9Z7efJ1YmnyjcBre
- uyzEQum64sUoPu6sDDKvUehDBP8CWX3t9ZjEjMjkXJq8beNgbLyRSMwQ+e7gJtn8QcmgvjZwIiW
- KtKyxp8qt95Yy/P5INw==
-X-Proofpoint-GUID: WVudS_CetmP74EugcJKU7nXFKe5loZiv
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIyMDExOCBTYWx0ZWRfXyevpzEcnRubt
- HMrIEGigXz17AQOwxhrJnuzltX/EU/QP/uTmT+IJFOEOeP0k8fdkGqCb8CD5vsZtrhfOOR0UVzc
- zGBVogVB5hksrGK9hKF7YFYSbu4n+UM=
-X-Authority-Analysis: v=2.4 cv=b7iCJNGx c=1 sm=1 tr=0 ts=6a60b2bc cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=p0WdMEafAAAA:8 a=69wJf7TsAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8
- a=Od7xHPywqgSLGS_NIKAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=zgiPjhLxNE0A:10 a=a_PwQJl-kcHnX1M80qC6:22 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-ORIG-GUID: WVudS_CetmP74EugcJKU7nXFKe5loZiv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-22_03,2026-07-21_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 suspectscore=0 spamscore=0
- lowpriorityscore=0 bulkscore=0 adultscore=0 impostorscore=0 clxscore=1015
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607220118
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.97 (deferred)
+Received-SPF: pass client-ip=115.124.28.97;
+ envelope-from=zhang_wei@open-hieco.net; helo=out28-97.mail.aliyun.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, RDNS_NONE=0.793,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,21 +68,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/7/26 13:50, Laurent Vivier wrote:
-> receive_filter() reads ptr[14..15] to extract the VLAN ID without
-> checking the packet is large enough. A short frame with VLAN TPID
-> at bytes 12-13 but no VLAN TCI causes a 2-byte out-of-bounds read.
-> 
-> Add size checks before accessing the Ethernet header and the VLAN
-> tag fields.
-> 
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3788
-> Fixes: f21c0ed97c97 ("qemu:virtio-net: Add VLAN filtering (Alex Williamson)")
-> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-> ---
->   hw/net/virtio-net.c | 13 ++++++++++++-
->   1 file changed, 12 insertions(+), 1 deletion(-)
+Hi,
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Just a gentle ping on this series.
+
+This series fixes several Hygon Dhyana vendor-specific CPU behavior gaps 
+where QEMU currently keys AMD-compatible paths only on AuthenticAMD.
+
+The guest-visible changes are gated by x-hygon-vendor-abi-fixes and kept 
+off for pc-11.0 and older machine types.  The KVM runtime changes do not 
+change guest CPU model ABI.
+
+Any comments would be appreciated.
+
+Thanks,
+Tina
+
+On 7/6/2026 1:55 PM, zhang_wei@open-hieco.net wrote:
+> From: Tina Zhang <zhang_wei@hygon.cn>
+> 
+> Hygon Dhyana uses the HygonGenuine vendor string, but a number of
+> guest-visible and KVM-facing interfaces follow AMD-compatible behavior.
+> QEMU currently keys several of these paths only on AuthenticAMD, so Hygon
+> guests can see vendor-inconsistent CPUID/MSR state or use the wrong KVM
+> PMU/MCE handling paths.
+> 
+> This series makes those checks explicit for Hygon where appropriate.
+> 
+> Guest-visible CPU ABI changes are gated by the new
+> x-hygon-vendor-abi-fixes property.  The property defaults to true for new
+> machine types and is disabled for pc-11.0 and older, so existing machine
+> types keep their previous Hygon ABI for migration compatibility.
+> 
+> The KVM injected-MCE and PMU path changes are not CPUID model table
+> changes.  They make QEMU use the AMD-compatible runtime handling that
+> Linux/KVM already uses for Hygon.
+> 
+> The series covers:
+> 
+>    * AMD CPUID[0x80000001].EDX aliases for Hygon
+>    * hiding Intel cache CPUID leaves 2 and 4 for Hygon
+>    * hiding IA32_ARCH_CAPABILITIES for Hygon unless old ABI requires it
+>    * AMD MCE status encoding for Hygon memory-failure injection
+>    * AMD PMU MSR setup/save/restore paths for Hygon
+>    * disabling Intel-style MCA broadcast for Hygon injected MCEs
+>    * AMD IOMMU HT GPA hole layout for Hygon on new machine types
+>    * AMD legacy cache fallback for Hygon when legacy-cache=on
+>    * AMD-shaped default ucode-rev value for Hygon
+> 
+> Tests were added for the Dhyana CPUID/ucode compatibility behavior and
+> for the Hygon HT GPA hole memory-layout case.
+> 
+> Tested with:
+> 
+>    ninja -C build
+> 
+>    build/pyvenv/bin/meson test -C build --print-errorlogs \
+>        qemu:qtest-i386/test-x86-cpuid-compat \
+>        qemu:qtest-x86_64/test-x86-cpuid-compat \
+>        qemu:func-x86_64-mem_addr_space
+> 
+> Tina Zhang (9):
+>    target/i386: Sync AMD CPUID aliases for Hygon
+>    target/i386: Hide Intel cache CPUID leaves for Hygon
+>    target/i386: Hide ARCH_CAPABILITIES for Hygon
+>    target/i386/kvm: Use AMD MCE status encoding for Hygon
+>    target/i386/kvm: Use AMD PMU MSR paths for Hygon
+>    target/i386: Do not broadcast injected MCEs for Hygon
+>    hw/i386: Apply AMD IOMMU HT GPA hole to Hygon
+>    target/i386: Use AMD legacy cache fallback for Hygon
+>    target/i386: Use AMD ucode-rev default for Hygon
+> 
+>   hw/i386/pc.c                                  | 22 +++--
+>   target/i386/cpu.c                             | 86 +++++++++++++----
+>   target/i386/cpu.h                             | 12 +++
+>   target/i386/helper.c                          |  6 +-
+>   target/i386/kvm/kvm.c                         | 36 +++++--
+>   .../functional/x86_64/test_mem_addr_space.py  | 36 +++++++
+>   tests/qtest/test-x86-cpuid-compat.c           | 95 +++++++++++++++++++
+>   7 files changed, 263 insertions(+), 30 deletions(-)
+> 
+
 
