@@ -4,51 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF27DC4453F
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:58:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81A28C531C9
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:58:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWPc-0008T6-Td; Wed, 22 Jul 2026 08:51:01 -0400
+	id 1wmWQY-0001rj-F1; Wed, 22 Jul 2026 08:51:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWOx-0004gi-2E; Wed, 22 Jul 2026 08:50:22 -0400
+ id 1wmWQQ-0001dU-Rb; Wed, 22 Jul 2026 08:51:52 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWOu-0001yz-Bx; Wed, 22 Jul 2026 08:50:18 -0400
+ id 1wmWQP-0002MW-1N; Wed, 22 Jul 2026 08:51:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724391; bh=B8CzTrWFjDMpFD+y+AofC4iV2Gnd4/FxHOTRymy9Dto=;
+ t=1784724574; bh=uwlZI8ywxKZ8oDgDlrkycoFA4rbj9VtqhRSRhx2U9oM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=FzDyDbBAXHioQpgrPtfx3G+VXk9RrhhzDXKc+/07wDI6DNvIf98TNvDmQJBUxrPhX
- kB0DLvmRo2WWeGzM3qRs4YfAOldUxBSRcbLm1fl+4pApKp20PN5MUGx82AqhVxdfEf
- 52BBoogf9efPdiKR1EZwi0sp8tL/TrMY6lKN26wt0VPGox7r4v28mcga9C56qYwy3T
- cVKyzNubCTlet9xDisMQnL0PrGps0ES+TNVCU3Bp7GA59J12BSKtZ90yGhdBttID9G
- TTy8yMoaQJFEtViqxj1y2YGbtEj29QIX4/spjW8l8QN5BIqGbPnmhsq5VrO4lEd8pU
- JImHUE0jJwseg==
+ b=UbE2A/1f1ndMaXSNyB12xMO+ypvyHdc7+LPvqAm+rZllrIt+MHXqRoFQ+hH0Rm9DA
+ 9mBVdv3lhtKxzd1pd58q/Kwxr/C7OdTrnaJdQuinSfXdPZBgXWE/wX/9vNbkcerSxr
+ IrvbNHnD8URvBcIJ6YQZ04HVnIoph2BdJxV7f0Jv5FI0h82XWTbewsCh8LZg0BtVYm
+ PhLe2mj9PQ5sjn2ln3edpJ9wIAASde2vDl3bdOeRFeSokSxJYNSIqSDyTJcK0iCVHB
+ 2tUN9Yx1+PyLhZNueRuFLY+LOt6vWDbobPy1OG6L+rFEWGUxcz260yJK4xKfZcLNSb
+ lGtgc06saWyeQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 03A821C3B1A;
- Wed, 22 Jul 2026 15:46:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9B3B31C3B34;
+ Wed, 22 Jul 2026 15:49:34 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4B31B3F3774;
- Wed, 22 Jul 2026 15:46:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E49943F3784;
+ Wed, 22 Jul 2026 15:49:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 8FF0017F1D; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id A013517F3D; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 113/122] usbredir: fix infinite loop and SIGFPE
- with zero max_packet_size
-Date: Wed, 22 Jul 2026 15:46:02 +0300
-Message-ID: <20260722124622.31034-38-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v2 087/127] hw/display/sm501: Avoid overflow problems
+ in bounds check calculations
+Date: Wed, 22 Jul 2026 15:48:12 +0300
+Message-ID: <20260722124859.32371-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
-References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
+References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,101 +71,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-A malicious usbredir peer can send an ep_info message resetting
-max_packet_size to 0 after bulk receiving has started. This causes:
-- infinite loop in usbredir_buffered_bulk_packet() where the splitting
-  loop increments by max_packet_size (0)
-- SIGFPE in usbredir_buffered_bulk_in_complete_ftdi() from modulo by 0
-- SIGFPE in usbredir_handle_buffered_bulk_in_data() from division by 0
-  when computing bytes_per_transfer
+When we check that a 2D rectangle operation isn't going to run off
+the end of video RAM, we do the calculations as 32 bit arithmetic.
+This means that carefully chosen guest register values can cause an
+overflow so we don't detect that the operation is going to go outside
+video memory.
 
-Fix by stopping and disabling bulk receiving in usbredir_ep_info() when
-max_packet_size is set to 0.
+Abstract the check out into a function, do the calculations as
+64-bit arithmetic, and add assertions about the ranges of the
+inputs.
 
-Add post-load check, and assert() for the invariant.
-
-Fixes: CVE-2026-63319
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3995
-Reported-by: Tristan @TristanInSec
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260716141107.3597076-1-marcandre.lureau@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit a002485bfef184f04a58adfd2a848c19f583f7d0)
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3584
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+Message-id: 20260707150933.1410507-3-peter.maydell@linaro.org
+(cherry picked from commit 422734d5fc2b5adec704b352082385511959d5a7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/redirect.c b/hw/usb/redirect.c
-index 72131289a8f..bbd3a7a47f8 100644
---- a/hw/usb/redirect.c
-+++ b/hw/usb/redirect.c
-@@ -690,6 +690,7 @@ static void usbredir_buffered_bulk_in_complete_ftdi(USBRedirDevice *dev,
-     struct buf_packet *bulkp;
-     int count;
- 
-+    assert(maxp != 0);
-     while ((bulkp = QTAILQ_FIRST(&dev->endpoint[EP2I(ep)].bufpq)) &&
-            p->actual_length < p->iov.size && p->status == USB_RET_SUCCESS) {
-         if (bulkp->len < 2) {
-@@ -739,6 +740,7 @@ static void usbredir_handle_buffered_bulk_in_data(USBRedirDevice *dev,
-             .stream_id = 0,
-             .no_transfers = 5,
-         };
-+        assert(dev->endpoint[EP2I(ep)].max_packet_size != 0);
-         /* Round bytes_per_transfer up to a multiple of max_packet_size */
-         bpt = 512 + dev->endpoint[EP2I(ep)].max_packet_size - 1;
-         bpt /= dev->endpoint[EP2I(ep)].max_packet_size;
-@@ -793,6 +795,7 @@ static void usbredir_handle_bulk_data(USBRedirDevice *dev, USBPacket *p,
-     }
- 
-     if (dev->endpoint[EP2I(ep)].bulk_receiving_enabled) {
-+        assert(maxp != 0);
-         if (size != 0 && (size % maxp) == 0) {
-             usbredir_handle_buffered_bulk_in_data(dev, p, ep);
-             return;
-@@ -1801,6 +1804,17 @@ static void usbredir_ep_info(void *priv,
-         if (usbredirparser_peer_has_cap(dev->parser,
-                                      usb_redir_cap_ep_info_max_packet_size)) {
-             dev->endpoint[i].max_packet_size = ep_info->max_packet_size[i];
-+            if (ep_info->max_packet_size[i] == 0 &&
-+                dev->endpoint[i].bulk_receiving_enabled) {
-+                USBPacket *p = dev->endpoint[i].pending_async_packet;
-+                usbredir_stop_bulk_receiving(dev, I2EP(i));
-+                dev->endpoint[i].bulk_receiving_enabled = 0;
-+                if (p != NULL) {
-+                    dev->endpoint[i].pending_async_packet = NULL;
-+                    p->status = USB_RET_IOERROR;
-+                    usb_packet_complete(&dev->dev, p);
-+                }
-+            }
-         }
- #if USBREDIR_VERSION >= 0x000700
-         if (usbredirparser_peer_has_cap(dev->parser,
-@@ -2161,6 +2175,7 @@ static void usbredir_buffered_bulk_packet(void *priv, uint64_t id,
-     }
- 
-     /* Data must be in maxp chunks for buffered_bulk_add_*_data_to_packet */
-+    assert(dev->endpoint[EP2I(ep)].max_packet_size != 0);
-     len = dev->endpoint[EP2I(ep)].max_packet_size;
-     status = usb_redir_success;
-     free_on_destroy = NULL;
-@@ -2244,6 +2259,15 @@ static int usbredir_post_load(void *priv, int version_id)
-     usbredir_setup_usb_eps(dev);
-     usbredir_check_bulk_receiving(dev);
- 
-+    for (int i = 0; i < MAX_ENDPOINTS; i++) {
-+        if (dev->endpoint[i].bulk_receiving_started &&
-+            dev->endpoint[i].max_packet_size == 0) {
-+            error_report("usbredir: endpoint %d has bulk receiving started "
-+                         "with zero max_packet_size", i);
-+            return -EINVAL;
-+        }
-+    }
-+
-     return 0;
+diff --git a/hw/display/sm501.c b/hw/display/sm501.c
+index efc457786a3..80156724641 100644
+--- a/hw/display/sm501.c
++++ b/hw/display/sm501.c
+@@ -682,6 +682,28 @@ static inline void hwc_invalidate(SM501State *s, int crt)
+                             get_fb_addr(s, crt) + start, end - start);
  }
  
++static bool sm501_rect_outside_vram(SM501State *s, uint32_t base,
++                                    uint32_t x, uint32_t y,
++                                    uint32_t width, uint32_t height,
++                                    uint32_t pitch, uint32_t bypp)
++{
++    /*
++     * Return true if the 2D area specified by the arguments is
++     * partially or completely outside the VRAM (a guest error)
++     *
++     * Limits on the input sizes mean we can't overflow as long as
++     * we do all the arithmetic at 64 bits.
++     */
++    uint64_t rect_size, last_addr;
++
++    assert(x <= UINT16_MAX && y <= UINT16_MAX && height <= UINT16_MAX &&
++           pitch <= UINT16_MAX && bypp <= 8);
++    rect_size = (((uint64_t)y + height) * pitch + x + width) * bypp;
++    last_addr = base + rect_size;
++
++    return last_addr >= get_local_mem_size(s);
++}
++
+ static void sm501_2d_operation(SM501State *s)
+ {
+     int cmd = (s->twoD_control >> 16) & 0x1F;
+@@ -731,9 +753,8 @@ static void sm501_2d_operation(SM501State *s)
+         dst_y -= height - 1;
+     }
+ 
+-    if (dst_base >= get_local_mem_size(s) ||
+-        dst_base + (dst_x + width + (dst_y + height) * dst_pitch) * bypp >=
+-        get_local_mem_size(s)) {
++    if (sm501_rect_outside_vram(s, dst_base, dst_x, dst_y, width, height,
++                                dst_pitch, bypp)) {
+         qemu_log_mask(LOG_GUEST_ERROR, "sm501: 2D op dest is outside vram.\n");
+         return;
+     }
+@@ -760,9 +781,8 @@ static void sm501_2d_operation(SM501State *s)
+             src_y -= height - 1;
+         }
+ 
+-        if (src_base >= get_local_mem_size(s) ||
+-            src_base + (src_x + width + (src_y + height) * src_pitch) * bypp >=
+-            get_local_mem_size(s)) {
++        if (sm501_rect_outside_vram(s, src_base, src_x, src_y, width, height,
++                                    src_pitch, bypp)) {
+             qemu_log_mask(LOG_GUEST_ERROR,
+                           "sm501: 2D op src is outside vram.\n");
+             return;
 -- 
 2.47.3
 
