@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2986BC44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:50:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 064DEC4453C
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:51:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWMR-0002xK-SO; Wed, 22 Jul 2026 08:47:47 -0400
+	id 1wmWLd-0002Ke-9m; Wed, 22 Jul 2026 08:46:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWMG-0002nU-7H; Wed, 22 Jul 2026 08:47:35 -0400
+ id 1wmWLc-0002K7-4R; Wed, 22 Jul 2026 08:46:52 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWMC-0001mu-Hz; Wed, 22 Jul 2026 08:47:31 -0400
+ id 1wmWLa-0001ag-BJ; Wed, 22 Jul 2026 08:46:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724390; bh=OcYwZc34stgULov+pGXFoN3p7Da5ufsOWcySG86J41I=;
+ t=1784724390; bh=Uxec9SGHFiGdviOUYMAMGH7B7poqjGe2Ips6zB6Q+RA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ZVM4zg7IBysvLbxCO25tFga/2fNy0lZQ7kVLz7k59j5xQBTLFLbTcWBpFM6fv9Cg8
- BX141lvikgxP+UpBT68qzvteljX2kXNMtvA0EB5OAyK4RUzw8WqLcTGzCWmsGVFu/i
- 3wd/wQ6yQ/U4E8e4iq/3QijdHh6E1i1kYpyICsVrXo4x1qw27C75s4Ldk16IRt9uSg
- bUZGhHCOHh1X9Mxmj8uX2LD7ZylQe0fWXNQdLnqBJzRcB5Cyf+IwIwigDvA053CqUo
- MNoIxyubCFOZokgamQM32h65hgaKeikKJTJZln46O+PcNdaicvKEQz9u3AusikkZbv
- maSBgB8KN+xzg==
+ b=TZnpmAsFh4srvzsM4sBKsgKr6HxViHaZIjsa/E3K4wCqZvL041mXwtB+v+dLhVb6l
+ g/1yvuzxuKAL3jFHAYDfyzokC1BBz8HCoB+alyBG9yVXcCBpvo2+KOr0PE0zQ8YM0H
+ o7vlk+ob+hdOLw+9kCeq4ZkkUOYVyJoI2W1kQiShAx5h+Vv88FUnsOWCaXdwHa9sJf
+ 7SMkRN0XL0zZozxY49eYob+VJCcLG0be2phk8t5AnrTnJmBpx9Qk0SgZSkWD5/afeT
+ AX5nLEwqcm79Qkk17Py/whHuU+SFBxumKXr2PpWvsynCxU8tODistIbp2LWQkHmORt
+ ugw1sXAEVJINg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6F7201C3B01;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2BD5B1C3AF5;
  Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B72503F375B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 660473F374F;
  Wed, 22 Jul 2026 15:46:47 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 544BF17EEB; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id 37A7017ED3; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Farhan Ali <alifm@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Nutty Liu <nutty.liu@hotmail.com>, Chao Liu <chao.liu.zevorn@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 088/122] s390x/css: firm up handling of chained
- TIC CCWs
-Date: Wed, 22 Jul 2026 15:45:37 +0300
-Message-ID: <20260722124622.31034-13-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 v2 062/122] hw/riscv/riscv-iommu.c: fault when !PTE_U
+ and no priv access
+Date: Wed, 22 Jul 2026 15:45:25 +0300
+Message-ID: <20260722124622.31034-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
@@ -73,69 +74,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Farman <farman@linux.ibm.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-The logic in css_interpret_ccw() correctly returns -EINVAL if a
-Transfer-In-Channel (TIC) CCW is command chained to another TIC CCW.
-The same routine also correctly returns -EINVAL if 256 CCWs do not
-perform a data transfer as part of the I/O operation [0].
+All IOMMU accesses are assumed to be user mode unless told otherwise,
+i.e. we have a process_id.  In case we have a non-user mode leaf PTE
+(PTE_U isn't set) and we are running in user mode, we need to throw a
+fault.
 
-What is missing, however, is a combination of these two, where a loop
-can be generated that will continue processing CCWs but without
-providing an opportunity to catch a breath. Fix this by capping
-the number of TIC CCWs in a channel program at the same limit as
-the CCWs without data transfer.
+This also reflects on qos-riscv-iommu tests: the tests always run in
+user mode so our PTEs must have PTE_U (bit 0x10) set.
 
-[0] See "Invalid Sequence" in z/Architecture Principles of Operation
-    (SA22-7832-14), p16-27
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Message-ID: <20260713074708.884282-1-borntraeger@linux.ibm.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-(cherry picked from commit 33bece0fa121c0a85df4f0372145ca74b967e78e)
+Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3553
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Message-ID: <20260701121111.537654-3-daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit b795ea0ba4715182805994db0cdabd2650a553a7)
+(Mjt: omit changes in tests/qtest/libqos/qos-riscv-iommu.h which was added later)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/css.c b/hw/s390x/css.c
-index 38d2d90028c..991fc126089 100644
---- a/hw/s390x/css.c
-+++ b/hw/s390x/css.c
-@@ -1104,6 +1104,12 @@ static int css_interpret_ccw(SubchDev *sch, hwaddr ccw_addr,
-             ret = -EINVAL;
-             break;
-         }
-+        /* Limit the number of TICs in a given channel program */
-+        if (sch->ccw_tic_cnt == 255) {
-+            ret = -EINVAL;
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index ca2c6f93572..d25f7a74259 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -285,6 +285,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+         G_STAGE = 1,
+     } pass;
+     MemTxResult ret;
++    bool pv = !!ctx->process_id;
+ 
+     satp = get_field(ctx->satp, RISCV_IOMMU_ATP_MODE_FIELD);
+     gatp = get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
+@@ -458,6 +459,13 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+             break;                /* Invalid PTE */
+         } else if (pte & PTE_RESERVED) {
+             break;                /* Reserved PTE bits set */
++        } else if (!(pte & PTE_U) && !pv) {
++            /*
++             * All accesses are assumed to be User mode unless
++             * process_id is valid (pv).  In case we have a
++             * non-user mode PTE and !pv we need to fault.
++             */
 +            break;
-+        }
-+        sch->ccw_tic_cnt++;
-         sch->channel_prog = ccw.cda;
-         ret = -EAGAIN;
-         break;
-@@ -1155,6 +1161,7 @@ static void sch_handle_start_func_virtual(SubchDev *sch)
-         sch->ccw_fmt_1 = !!(orb->ctrl0 & ORB_CTRL0_MASK_FMT);
-         schib->scsw.flags |= (sch->ccw_fmt_1) ? SCSW_FLAGS_MASK_FMT : 0;
-         sch->ccw_no_data_cnt = 0;
-+        sch->ccw_tic_cnt = 0;
-         suspend_allowed = !!(orb->ctrl0 & ORB_CTRL0_MASK_SPND);
-     } else {
-         /* Start Function resumed via rsch */
-diff --git a/include/hw/s390x/css.h b/include/hw/s390x/css.h
-index cd97e2b7075..9ee66ca39ac 100644
---- a/include/hw/s390x/css.h
-+++ b/include/hw/s390x/css.h
-@@ -132,6 +132,7 @@ struct SubchDev {
-     bool ccw_fmt_1;
-     bool thinint_active;
-     uint8_t ccw_no_data_cnt;
-+    uint8_t ccw_tic_cnt;
-     uint16_t migrated_schid; /* used for mismatch detection */
-     CcwDataStream cds;
-     /* transport-provided data: */
+         } else if (!(pte & (PTE_R | PTE_W | PTE_X))) {
+             base = PPN_PHYS(ppn); /* Inner PTE, continue walking */
+         } else if ((pte & (PTE_R | PTE_W | PTE_X)) == PTE_W) {
 -- 
 2.47.3
 
