@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D8B0C44536
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 18:42:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9414BC4453C
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 18:42:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmbsx-0004RS-Qt; Wed, 22 Jul 2026 14:41:39 -0400
+	id 1wmbsy-0004Rx-6J; Wed, 22 Jul 2026 14:41:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wmbsi-0004Mg-VQ
+ id 1wmbsj-0004Mn-LK
  for qemu-devel@nongnu.org; Wed, 22 Jul 2026 14:41:28 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wmbsf-0006Mc-Il
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 14:41:24 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-38dfe910e9dso9599115a91.3
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 11:41:20 -0700 (PDT)
+ id 1wmbsg-0006N8-RQ
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 14:41:25 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-38e041ea211so10756506a91.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 11:41:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784745680; x=1785350480; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ci30RsoW4mS9/4BClyDGhjGaYIKtBfyn+RMKn46TFnM=;
- b=YKQzfI9x/7QFd2FfTm4a+gRbirxm5naCAQIvYUleSq1GiGC+zrzSApUHhvlhiXE+dp
- gASW3Lu8fFCrpRCJ73rhlr04f/d2QmmYbLzxKrDhRCN94SbyPYt0hBDgKMT4OAkOATEp
- 6j2eAYBBKVmEdzNx/1Q4a3YKgwqax3rWv+tDHJDH5CF7qnPBUnD06T3VgdrmvaxMhI/X
- bQLVszk8CUaOMK5apfCzO/ZNkxhJPXBXQz/BK6g7UQ++ynZXCgmVnk6ovk3NBvV0l1OO
- ty8JGIJ9dBQtee2CWqNplaie8FsuK8uU5we27dCJJ8SZM76L42dYoYmjrtD1inMR/+YJ
- kmCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784745680; x=1785350480;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1784745681; x=1785350481; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ci30RsoW4mS9/4BClyDGhjGaYIKtBfyn+RMKn46TFnM=;
- b=j+IvKn6AngfwD8y5LOAqXxu3It4actyfPBH5Yt7d1AAhKnAeg3XvBN7Y67Q+La2HVP
- 23s5s4D+YWp0aBROcbn+j9Lezinb7KpRts20UMU4kdI+3HPQyzvabTZxVU2ArAR3dgKB
- hkoVmmPtW60EleMvNHWNVXqGnwVBOrC2Cv5s+QpGZ1lAfsN0VTEGsqp4/itbru/vQwdK
- mtLU5l/4szWeE+BALZHyRty5XtpXZVZ/tPPv2343YhrcaMD8mdIxvIt8Qt7SzhCA7aPm
- UKAU/+1HaHcR5rvYZBk55tnu6aMFLXMdskC2VJL8Fd1IGnE19OdaI2nXglos0LOrTb2+
- 7pOA==
-X-Gm-Message-State: AOJu0Yw6q55YJssCMY1Dz7nn/TSphMTQwuEI1+Sg6QOY/b7jDEJRwdhq
- trNOYv4Jqf1ktRSZ7ZIrmGu+SGk3TuUD2q4LHl5R+ecji4gg/eSTVmVwSkaWrXTpfAHaQXCA5tc
- tT5na
-X-Gm-Gg: AR+sD12S1ftpk9BSdTTzEZ2DGqtqbkY5RAaelg1o07uxrIM4EbtDFIqtMFOlN1NWXzu
- hB1zLx9jx1IJV4L80cJgQvWkTxcvnizKef1juv2okIMky9FO2LGVVTewXCxCGnD4O7O5RMv4Zta
- NfWexNM8akd2buCK7Ka/rxNvryuB7/Y9E0jcxB7RGkwY5ts+At6wVmlsnjLxjlb7nH4GNFNJ5p7
- 1lrQJ+BUu3Mo2Gjp4PHaFSrgYuhQxR5r/sc1/Y9lzpMHMFms8ASnL6GK1vOMG+eFn6IUr2odviZ
- cKVdijswvGrX0gqesOHWjqBkQQo0jylR2WJWWQccQjS3y6xgvJH26iIJ1Xg5jDDnexsnyPtDEbh
- Qk4TGZD2C9/FHLp23E/YHJuARKBA5gWUWAncxK5uiCmJOOi8whr7XNqjFcM7PSIbD/O1/BP9iZA
- cuUCDAln9XO2CwtWy6yi9ocVXwcOMIbftgLQjWl/cY53GtSiB/zTuVswKSwbMn/g==
-X-Received: by 2002:a17:90b:554d:b0:37d:ee77:78ac with SMTP id
- 98e67ed59e1d1-38e4b479fb3mr23667127a91.19.1784745679564; 
- Wed, 22 Jul 2026 11:41:19 -0700 (PDT)
+ bh=xq5Wzub/cfVSWWjxSqknbzvC0pj6eWHPPN8HDFNrQqg=;
+ b=XRtlqi+FTUpK85EPM6KrBcy1LUnwnIBglUyuVfFAhdtnUpg25p6lh3G22hN61NHAZS
+ n6STLTJqIJgUDZXw4D29+5qyVVhX2s5/9coVjXQ3yP1NwYnCnpOOsxfIINFs6JG3ifcO
+ Z42rOwFcdJM8HKDGbQVsHM5vyfszgvnpg2hvtgKe60Tv53y//YmuU6qxvNqLytEK0w10
+ Of/LQHh+OZALGBNqDZbF7d+Etqdq828rNgPQi29yzWBqYTMl5jELwhuxm+coSZs5VQ/V
+ qyfOPl+2YlnTVbGh4Woi0wXIX8dJ7P4sYIvwuu1iptloSvO2TxwK4x/DU6lcYiOVGS16
+ HZMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784745681; x=1785350481;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=xq5Wzub/cfVSWWjxSqknbzvC0pj6eWHPPN8HDFNrQqg=;
+ b=A/iXXMzmTU7LI34YH2fmx5pB5SQmMuip0TLR5QMJAbRCMNWGNftx/rRBdocUR2mubT
+ 6bTArDyrFkGKUAhmgiDfaR+TWYbQbctp8K168E/FyPZ1bmf93jkcf0SEqYGguyrDz7Ln
+ xq/ED+eyiDvuD9p2FexyWOb6vyYoGUjwZuy/yGru40JryS3Be1/pq+VrGvsXCHZXxt6z
+ xwW5ekc/XOfy7IcvBYHNLVLnnC4cCjgfazXQw+uZvlChc0DyCYUzFCByVuC25RsMjKuX
+ 8TUAqWsVMcK0RuPFldY6xZd+vPS2ICyXdmwZnonNcDMLQk0JOL0Htv1A37eeOfmipdCo
+ AioQ==
+X-Gm-Message-State: AOJu0Yxat2HR9lGOQ7zW1NhVMAtwvrmENaOfLN6Tbu0ZfiENftA3lKiF
+ wehshmD5STlEp+oSdiknQPp7YjZ4VAr0yPCXbtTRtg2FEYg8H6oh20cbwjvQBIyRS2tAXBssX7c
+ dPoWS
+X-Gm-Gg: AR+sD11clqi0rsAwVJmil7GTBu1CprIsic50v5jixkxDJOp4TUxubZiv12/+SKfm3BY
+ 6fa/oI6+JqK4WQxOq6FnBl0WAofde0aoHTtYH/UBfW3ZzxGHUZHrrLj9VEs/JnE+UrhkFt0Ep80
+ f7Hv2l32TPGfNETMtnKPjvBtS2zC9XlhOtZbHB2OgMUcVW2M9ophBVlYNLTmjWOcYpVdNgZ/Uyd
+ AE0cAH44W1Ddw0pvjr2bh3NnFQ1o5TralMyvDfXsQhzopdWsBwbjT73PQJ/HFHbCtZuA9Fpgtls
+ ryS9j/vEfxNdVI6Z+ep0bX5q9gamB30TmF5/rMj4iHxhQYVgzFlsESDXVCOHvff/4SM9Z+72C3b
+ BomresQFE+3asjWcNFB9scG2rlj1MBMxz0L+sNe6QbhjrDrZPO8zvcp4BoU137EatW8QwzMoeap
+ 0mRlFyW5rdGRf2xRLkrAtyk5ki5OpBIQz2VdRpGXZ5ET9vM/Lx5vXzMebyDH/weQ==
+X-Received: by 2002:a05:6a20:ae2f:b0:3c3:834e:89bc with SMTP id
+ adf61e73a8af0-3c3ad93177cmr24610343637.50.1784745681267; 
+ Wed, 22 Jul 2026 11:41:21 -0700 (PDT)
 Received: from stoup.. (162-198-231-97.lightspeed.wlfrct.sbcglobal.net.
  [162.198.231.97]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13d13015052sm8559298c88.5.2026.07.22.11.41.18
+ a92af1059eb24-13d13015052sm8559298c88.5.2026.07.22.11.41.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Jul 2026 11:41:19 -0700 (PDT)
+ Wed, 22 Jul 2026 11:41:20 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH for-11.2 0/3] accel/tcg: Add infrastructure for atomic 64-byte
- load/store
-Date: Wed, 22 Jul 2026 11:41:14 -0700
-Message-ID: <20260722184117.11937-1-richard.henderson@linaro.org>
+Subject: [PATCH 2/3] host/x86_64: Implement atomic64_set with MOVDIR64B
+Date: Wed, 22 Jul 2026 11:41:16 -0700
+Message-ID: <20260722184117.11937-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260722184117.11937-1-richard.henderson@linaro.org>
+References: <20260722184117.11937-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,37 +100,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prepare to implement FEAT_LS64 for AArch64 with some tcg infrastructure.
+Detect the host feature in cpuid, then use it.
 
-r~
-
-Richard Henderson (3):
-  accel/tcg: Add infrastructure for atomic 64-byte load/store
-  host/x86_64: Implement atomic64_set with MOVDIR64B
-  host/aarch64: Implement atomic64_{read,set} with FEAT_LS64
-
- host/include/aarch64/host/cpuinfo.h           |  1 +
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
  host/include/x86_64/host/cpuinfo.h            |  1 +
- include/accel/tcg/cpu-ldst-common.h           |  6 ++++
- include/qemu/atomic512.h                      | 12 +++++++
- include/qemu/cpuid.h                          |  3 ++
- include/qemu/value64.h                        | 21 +++++++++++
- accel/tcg/cputlb.c                            | 30 ++++++++++++++++
- accel/tcg/user-exec.c                         | 33 +++++++++++++++++
- util/cpuinfo-aarch64.c                        | 14 ++++++--
+ include/qemu/cpuid.h                          |  3 +++
  util/cpuinfo-i386.c                           |  1 +
- accel/tcg/ldst_common.c.inc                   | 31 ++++++++++++++++
- .../include/aarch64/host/atomic512-ldst.h.inc | 36 +++++++++++++++++++
- .../include/generic/host/atomic512-ldst.h.inc | 16 +++++++++
- host/include/x86_64/host/atomic512-ldst.h.inc | 21 +++++++++++
- meson.build                                   |  8 +++++
- 15 files changed, 231 insertions(+), 3 deletions(-)
- create mode 100644 include/qemu/atomic512.h
- create mode 100644 include/qemu/value64.h
- create mode 100644 host/include/aarch64/host/atomic512-ldst.h.inc
- create mode 100644 host/include/generic/host/atomic512-ldst.h.inc
+ host/include/x86_64/host/atomic512-ldst.h.inc | 21 +++++++++++++++++++
+ 4 files changed, 26 insertions(+)
  create mode 100644 host/include/x86_64/host/atomic512-ldst.h.inc
 
+diff --git a/host/include/x86_64/host/cpuinfo.h b/host/include/x86_64/host/cpuinfo.h
+index 93d029d499..34c4334f3d 100644
+--- a/host/include/x86_64/host/cpuinfo.h
++++ b/host/include/x86_64/host/cpuinfo.h
+@@ -28,6 +28,7 @@
+ #define CPUINFO_AES             (1u << 18)
+ #define CPUINFO_PCLMUL          (1u << 19)
+ #define CPUINFO_GFNI            (1u << 20)
++#define CPUINFO_MOVDIR64B       (1u << 21)
+ 
+ /* Initialized with a constructor. */
+ extern unsigned cpuinfo;
+diff --git a/include/qemu/cpuid.h b/include/qemu/cpuid.h
+index de7a900509..435fc7af9c 100644
+--- a/include/qemu/cpuid.h
++++ b/include/qemu/cpuid.h
+@@ -71,6 +71,9 @@
+ #ifndef bit_GFNI
+ #define bit_GFNI        (1 << 8)
+ #endif
++#ifndef bit_MOVDIR64B
++#define bit_MOVDIR64B   (1 << 28)
++#endif
+ 
+ /* Leaf 0x80000001, %ecx */
+ #ifndef bit_LZCNT
+diff --git a/util/cpuinfo-i386.c b/util/cpuinfo-i386.c
+index f4c5b6ff40..bb88abcf8f 100644
+--- a/util/cpuinfo-i386.c
++++ b/util/cpuinfo-i386.c
+@@ -29,6 +29,7 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
+         __cpuid_count(7, 0, a, b7, c7, d);
+         info |= (b7 & bit_BMI ? CPUINFO_BMI1 : 0);
+         info |= (b7 & bit_BMI2 ? CPUINFO_BMI2 : 0);
++        info |= (c7 & bit_MOVDIR64B ? CPUINFO_MOVDIR64B : 0);
+     }
+ 
+     if (max >= 1) {
+diff --git a/host/include/x86_64/host/atomic512-ldst.h.inc b/host/include/x86_64/host/atomic512-ldst.h.inc
+new file mode 100644
+index 0000000000..7db9a0b753
+--- /dev/null
++++ b/host/include/x86_64/host/atomic512-ldst.h.inc
+@@ -0,0 +1,21 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ * Load/store for 512-bit atomic operations, generic version.
++ */
++
++#ifndef HOST_ATOMIC512_LDST_H
++#define HOST_ATOMIC512_LDST_H
++
++#include "host/cpuinfo.h"
++
++#define HAVE_ATOMIC512_LD 0
++#define HAVE_ATOMIC512_ST likely(cpuinfo & CPUINFO_MOVDIR64B)
++
++Value64 QEMU_ERROR("unsupported atomic") atomic64_read(const void *s);
++
++static inline void atomic64_set(void *d, const Value64 *v)
++{
++    asm volatile("movdir64b (%1),%0" : : "r"(d), "r"(v) : "memory");
++}
++
++#endif /* HOST_ATOMIC512_LDST_H */
 -- 
 2.43.0
 
