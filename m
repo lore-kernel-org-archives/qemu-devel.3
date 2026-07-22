@@ -4,51 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97A9EC44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:07:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E926C44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:07:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWO6-0003zn-Be; Wed, 22 Jul 2026 08:49:30 -0400
+	id 1wmWUR-0002uE-HX; Wed, 22 Jul 2026 08:55:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWMh-00033w-OT; Wed, 22 Jul 2026 08:48:03 -0400
+ id 1wmWSY-0004Ce-71; Wed, 22 Jul 2026 08:54:04 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWMf-0001nq-0t; Wed, 22 Jul 2026 08:47:58 -0400
+ id 1wmWSR-0002oT-MS; Wed, 22 Jul 2026 08:53:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724390; bh=W9ZWu8jClDeBqXTuB10O9Lz+YYopjsdes2bAYV10UE8=;
+ t=1784724575; bh=I2HFeA2xu/ok25spknF/B47PL0Y4GO/eKINQ/pS9J/M=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=SM4cvQZpI0FcSDZoaDF2k5gR1mpnfhF6JyrruAbpIB2eqs42oySYRQ/3uHtyKZZ1T
- 0a/fmT9Rf43cG31V7HHhO+O8SUfVVZy2abBuoibX1/yXnzk8JxPbtugSv/DUwqBfTa
- gU4uzajjwuRAEOUyMdI7UtXRFAHnPxEpJLj5TKEXuN9BQhClfzRIP8AD9bNoBFTVIe
- Fg3dybOcAJALxypkJnVSnI7Wdoc2+doakZgvexeG6lb3gw3mNgJCWmbOonIiIwxOiS
- 45jNTTA3R5nkcIbGv+H06S6J3ncEvYKF10mjraOLW1ileA1m3TcDyB/QvgphzWqyhp
- Yd1pg3nLlV0vA==
+ b=ICd6gXLLjHom1NoqiJx4TkkKjazgvL9ANIs3P89Yc/snbPh4W0r79116OX6nwFvFK
+ Tj/yJeT3ozlD1qVH1pdtRb6g3s0uJTYtGubGX3ofmlUw+MkgQKH/SrcL4ritWWtP+U
+ xUGoIpnMkxnF79rPHg0E+Vg2eYcGoKyN9r5CWOA6fGORh0pZDjzFLvuE7ZErxzzKsA
+ Wjhoup1UNQyjVsgduTS5xr+7piE5Q5dgbv0BSY+FMtXMuMdcgwxuhu5DVauFamEsHH
+ BVDcO8IPvQqIXmaw5hSQgZ77FC2Dtq+zm1ZJ/BewLlew2+6aa6pyDGbg1BStZIFkJ1
+ eBS+Oxr3RHgVg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 855EB1C3B05;
- Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0A43C1C3B47;
+ Wed, 22 Jul 2026 15:49:35 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id CB5453F375F;
- Wed, 22 Jul 2026 15:46:47 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 52A383F3797;
+ Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 5DC4C17EF3; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id CD16017F63; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Feifan Qian <bea1e@proton.me>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 092/122] hw/display/qxl: fix TOCTOU in cursor
- chunk data_size handling
-Date: Wed, 22 Jul 2026 15:45:41 +0300
-Message-ID: <20260722124622.31034-17-mjt@tls.msk.ru>
+ Laurent Vivier <lvivier@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v2 106/127] ui/input-barrier: fix off-by-one in
+ keycode bounds check
+Date: Wed, 22 Jul 2026 15:48:31 +0300
+Message-ID: <20260722124859.32371-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
-References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
+References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,131 +76,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Snapshot chunk.data_size into a host-local variable before passing it to
-qxl_phys2virt() for validation, and pass it through qxl_cursor() and
-qxl_unpack_chunks() so that no subsequent code re-reads the field.
+Use strict "<" to fix the off-by-one.
 
-Without this, a racing vCPU can inflate data_size between the
-qxl_phys2virt() validation and the memcpy in qxl_unpack_chunks(),
-causing a source read past the validated region. In practice the read
-stays within the guest's own VRAM mmap, so the impact is limited.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3757
-Reported-by: Feifan Qian <bea1e@proton.me>
-Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+Fixes: 6105683da35b ("ui: add an embedded Barrier client")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3951
+Reported-by: huntr bubble
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260710134352.2313675-1-marcandre.lureau@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit a3cc0069e151e5eb5db57bb4e86b00861d5b97ab)
+Reviewed-by: Laurent Vivier <lvivier@redhat.com>
+Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit 82b4d693d522d406c950067caa4f14f45f4b679e)
+(Mjt: fixup the change to before v11.0.0-365-gd276ad86eb8
+ "ui: rename init_keyboard_layout->kbd_layout_new()")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
-index 1fe63b6f5ca..cf0f6849cd0 100644
---- a/hw/display/qxl-render.c
-+++ b/hw/display/qxl-render.c
-@@ -217,7 +217,8 @@ void qxl_render_update_area_done(PCIQXLDevice *qxl, QXLCookie *cookie)
- }
- 
- static void qxl_unpack_chunks(void *dest, size_t size, PCIQXLDevice *qxl,
--                              QXLDataChunk *chunk, uint32_t group_id)
-+                              QXLDataChunk *chunk, uint32_t group_id,
-+                              uint32_t chunk_data_size)
+diff --git a/ui/input-barrier.c b/ui/input-barrier.c
+index 0a2198ca500..d4b3079261a 100644
+--- a/ui/input-barrier.c
++++ b/ui/input-barrier.c
+@@ -87,7 +87,7 @@ static kbd_layout_t *kbd_layout;
+ static int input_barrier_to_qcode(uint16_t keyid, uint16_t keycode)
  {
-     uint32_t max_chunks = 32;
-     size_t offset = 0;
-@@ -225,22 +226,21 @@ static void qxl_unpack_chunks(void *dest, size_t size, PCIQXLDevice *qxl,
-     QXLPHYSICAL next_chunk_phys = 0;
- 
-     for (;;) {
--        bytes = MIN(size - offset, chunk->data_size);
-+        bytes = MIN(size - offset, chunk_data_size);
-         memcpy(dest + offset, chunk->data, bytes);
-         offset += bytes;
-         if (offset == size) {
-             return;
-         }
-         next_chunk_phys = chunk->next_chunk;
--        /* fist time, only get the next chunk's data size */
-         chunk = qxl_phys2virt(qxl, next_chunk_phys, group_id,
-                               sizeof(QXLDataChunk));
-         if (!chunk) {
-             return;
-         }
--        /* second time, check data size and get data */
-+        chunk_data_size = chunk->data_size;
-         chunk = qxl_phys2virt(qxl, next_chunk_phys, group_id,
--                              sizeof(QXLDataChunk) + chunk->data_size);
-+                              sizeof(QXLDataChunk) + chunk_data_size);
-         if (!chunk) {
-             return;
-         }
-@@ -252,7 +252,7 @@ static void qxl_unpack_chunks(void *dest, size_t size, PCIQXLDevice *qxl,
- }
- 
- static QEMUCursor *qxl_cursor(PCIQXLDevice *qxl, QXLCursor *cursor,
--                              uint32_t group_id)
-+                              uint32_t group_id, uint32_t chunk_data_size)
- {
-     QEMUCursor *c;
-     uint8_t *and_mask, *xor_mask;
-@@ -272,11 +272,11 @@ static QEMUCursor *qxl_cursor(PCIQXLDevice *qxl, QXLCursor *cursor,
-     case SPICE_CURSOR_TYPE_MONO:
-         /* Assume that the full cursor is available in a single chunk. */
-         size = 2 * cursor_get_mono_bpl(c) * c->height;
--        if (size != cursor->data_size || cursor->chunk.data_size < size) {
-+        if (size != cursor->data_size || chunk_data_size < size) {
-             qxl_set_guest_bug(qxl, "%s: bad monochrome cursor %ux%u"
-                               " data_size %u chunk_size %u",
-                               __func__, c->width, c->height,
--                              cursor->data_size, cursor->chunk.data_size);
-+                              cursor->data_size, chunk_data_size);
-             goto fail;
-         }
-         and_mask = cursor->chunk.data;
-@@ -288,7 +288,8 @@ static QEMUCursor *qxl_cursor(PCIQXLDevice *qxl, QXLCursor *cursor,
-         break;
-     case SPICE_CURSOR_TYPE_ALPHA:
-         size = sizeof(uint32_t) * c->width * c->height;
--        qxl_unpack_chunks(c->data, size, qxl, &cursor->chunk, group_id);
-+        qxl_unpack_chunks(c->data, size, qxl, &cursor->chunk, group_id,
-+                          chunk_data_size);
-         if (qxl->debug > 2) {
-             cursor_print_ascii_art(c, "qxl/alpha");
-         }
-@@ -325,19 +326,23 @@ int qxl_render_cursor(PCIQXLDevice *qxl, QXLCommandExt *ext)
+     /* keycode is optional, if it is not provided use keyid */
+-    if (keycode && keycode <= qemu_input_map_xorgkbd_to_qcode_len) {
++    if (keycode && keycode < qemu_input_map_xorgkbd_to_qcode_len) {
+         return qemu_input_map_xorgkbd_to_qcode[keycode];
      }
-     switch (cmd->type) {
-     case QXL_CURSOR_SET:
-+    {
-+        uint32_t chunk_data_size;
-+
-         /* First read the QXLCursor to get QXLDataChunk::data_size ... */
-         cursor = qxl_phys2virt(qxl, cmd->u.set.shape, ext->group_id,
-                                sizeof(QXLCursor));
-         if (!cursor) {
-             return 1;
-         }
-+        chunk_data_size = cursor->chunk.data_size;
-         /* Then read including the chunked data following QXLCursor. */
-         cursor = qxl_phys2virt(qxl, cmd->u.set.shape, ext->group_id,
--                               sizeof(QXLCursor) + cursor->chunk.data_size);
-+                               sizeof(QXLCursor) + chunk_data_size);
-         if (!cursor) {
-             return 1;
-         }
--        c = qxl_cursor(qxl, cursor, ext->group_id);
-+        c = qxl_cursor(qxl, cursor, ext->group_id, chunk_data_size);
-         if (c == NULL) {
-             c = cursor_builtin_left_ptr();
-         }
-@@ -351,6 +356,7 @@ int qxl_render_cursor(PCIQXLDevice *qxl, QXLCommandExt *ext)
-         qemu_mutex_unlock(&qxl->ssd.lock);
-         qemu_bh_schedule(qxl->ssd.cursor_bh);
-         break;
-+    }
-     case QXL_CURSOR_MOVE:
-         qemu_mutex_lock(&qxl->ssd.lock);
-         qxl->ssd.mouse_x = cmd->u.position.x;
+ 
 -- 
 2.47.3
 
