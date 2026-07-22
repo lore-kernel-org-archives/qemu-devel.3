@@ -4,51 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F136C531C9
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:06:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57A07C4453F
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:06:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWRo-0002wt-4J; Wed, 22 Jul 2026 08:53:16 -0400
+	id 1wmWPQ-0007E5-8N; Wed, 22 Jul 2026 08:50:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWQs-0002Xo-3h; Wed, 22 Jul 2026 08:52:19 -0400
+ id 1wmWNs-0003zX-QU; Wed, 22 Jul 2026 08:49:19 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWQp-0002Ob-OK; Wed, 22 Jul 2026 08:52:17 -0400
+ id 1wmWNp-0001tM-10; Wed, 22 Jul 2026 08:49:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724574; bh=0XGVl2YA0qhTkdDUkLRvXBmhGpmQzcC6RBKE1kIU8VU=;
+ t=1784724390; bh=nQOQyxNmFpVz4tp6sj6mq8eedidmmUgBGMFfTtJ1nT8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=hKxgcd8+yrVCAoCB8zFGB8zzUZtWFLEVuC9xKZiYkfgq25ZpVdYE7re40I4YJgIHJ
- nhY2KL/lWxf7x/Ml2ZrsYvllTnDBunGSRyoSVaVnp3TYdeepCHQNTwFPKQvQF4THMd
- vQfDR0Tg+KcjjoH/oHfx3D/mCaO0QZfLflW4OSSjPSljUSfnaQRz4aFyk5hk/a8TJ1
- j3fXHRckPT2q7YjBsUqlHER60o3MMftCBv+8VlgaeyPDyk2GVFAqx4NtN0f68wfDpq
- XwhRpUZBGYC+3Wlyw2YkHpVJKl94xGzLIlGKxD/xOsmIv33UlOw6lsk1R2PhBedsT8
- bjTJ4GFJNSimQ==
+ b=TVTXAffraNDN9xuaCEvUA9tMUWRheGGsBCE+ULY6dHfLi5J5S5VtA76vhA+0qw8/Q
+ iZwf6gMJZPV7lIvMHz8wkkYu1L1z/xGsEw3UnIbbwKPtKtoLzK4F7xz2JGz5spB6R3
+ qqzfluq13gCmCf2xXOLpV7mrlr/nSZ7+mIGOwrQ74qjApc56MTKTC17GU9o8g4+LqX
+ UqLK+vOl6e9T0MTqKIhILPgXSgojm/RXxYPCNW24CnYpXhuy14tJJHj3weyscC9Oaf
+ ekcdjEhCq/mwbky5pNNwHqP9UcizxD/vt3SbNjyprWt5ih4jRyUWjdGhcmtc775SZt
+ BGQTsZabhaNfw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B0F0C1C3B38;
- Wed, 22 Jul 2026 15:49:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C38D81C3B10;
+ Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 060AC3F3788;
- Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 176BE3F376A;
+ Wed, 22 Jul 2026 15:46:48 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A9D4F17F45; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
+ id 786F917F09; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Janosch Frank <frankja@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 v2 091/127] s390x/sclpcpi: check event length field
- before reading from buffer
-Date: Wed, 22 Jul 2026 15:48:16 +0300
-Message-ID: <20260722124859.32371-10-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ "Vulnerability Report" <vr@darknavy.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 v2 103/122] ui/vnc: fix out-of-bounds write in lossy
+ refresh dirty marking
+Date: Wed, 22 Jul 2026 15:45:52 +0300
+Message-ID: <20260722124622.31034-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
-References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
+References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,39 +75,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-A guest might send a too short SCCB with SCLP_EVENT_CTRL_PGM_ID. QEMU
-would fill its data structures with garbage data. Check for the precise
-length of the CBI data structure and reject otherwise.
+vnc_refresh_lossy_rect() marks a full VNC_STAT_RECT (64) rows of the
+dirty bitmap when refreshing a lossy tile. When the display height is
+not a multiple of VNC_STAT_RECT, the last tile row is a partial tile and
+the loop writes past the end of vs->dirty[VNC_MAX_HEIGHT].
 
-Fixes: f345978f24be ("hw/s390x: add Control-Program Identification to QOM")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Message-ID: <20260709142906.197474-3-borntraeger@linux.ibm.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-(cherry picked from commit 8a116a28535c34b001e68b52f85d6be3acb75350)
+For example, with a 2160-pixel-high display (VNC_MAX_HEIGHT), the last
+stat tile starts at y=2112. The unconditional 64-row loop writes rows
+2112..2175, overflowing 16 rows (640 bytes) past the dirty bitmap into
+subsequent VncState fields.
+
+Fix by passing the effective display height into
+vnc_refresh_lossy_rect() and clamping the inner loop.
+
+Fixes: CVE-2026-61475
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3935
+Reported-by: "Vulnerability Report" <vr@darknavy.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit e650e4fe0fb35b7a8ec9fc04e00346c02640bd58)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/sclpcpi.c b/hw/s390x/sclpcpi.c
-index 68fc1b809bf..ec4bdf23509 100644
---- a/hw/s390x/sclpcpi.c
-+++ b/hw/s390x/sclpcpi.c
-@@ -97,6 +97,11 @@ static int write_event_data(SCLPEvent *event, EventBufferHeader *evt_buf_hdr)
-                                              ebh);
-     SCLPEventCPI *e = SCLP_EVENT_CPI(event);
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 397773f1e52..b42e0973101 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -2989,18 +2989,18 @@ void vnc_sent_lossy_rect(VncState *vs, int x, int y, int w, int h)
+     }
+ }
  
-+    /* Caller checks sccb length, buffer header checking is our duty */
-+    if (be16_to_cpu(evt_buf_hdr->length) != sizeof(ControlProgramIdMsg)) {
-+        return SCLP_RC_INCONSISTENT_LENGTHS;
-+    }
-+
-     ascii_put(e->system_type, (char *)cpim->data.system_type,
-               sizeof(cpim->data.system_type));
-     ascii_put(e->system_name, (char *)cpim->data.system_name,
+-static int vnc_refresh_lossy_rect(VncDisplay *vd, int x, int y)
++static int vnc_refresh_lossy_rect(VncDisplay *vd, int x, int y,
++                                  int height)
+ {
+     VncState *vs;
+     int sty = y / VNC_STAT_RECT;
+     int stx = x / VNC_STAT_RECT;
+     int has_dirty = 0;
+-    int height = MIN(pixman_image_get_height(vd->guest.fb),
+-                     pixman_image_get_height(vd->server));
+     int rows;
+ 
+     y = QEMU_ALIGN_DOWN(y, VNC_STAT_RECT);
+     x = QEMU_ALIGN_DOWN(x, VNC_STAT_RECT);
++    rows = MIN(VNC_STAT_RECT, height - y);
+ 
+     rows = MIN(VNC_STAT_RECT, height - y);
+     if (rows <= 0) {
+@@ -3071,7 +3071,7 @@ static int vnc_update_stats(VncDisplay *vd,  struct timeval * tv)
+ 
+             if (timercmp(&res, &VNC_REFRESH_LOSSY, >)) {
+                 rect->freq = 0;
+-                has_dirty += vnc_refresh_lossy_rect(vd, x, y);
++                has_dirty += vnc_refresh_lossy_rect(vd, x, y, height);
+                 memset(rect->times, 0, sizeof (rect->times));
+                 continue ;
+             }
 -- 
 2.47.3
 
