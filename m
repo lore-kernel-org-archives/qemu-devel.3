@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C841C4453C
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 17:07:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8B0BC4453C
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 17:07:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmaO1-00059S-Gp; Wed, 22 Jul 2026 13:05:37 -0400
+	id 1wmaO2-00059q-6O; Wed, 22 Jul 2026 13:05:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wmaNz-00058t-Ao
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wmaNz-000598-QD
  for qemu-devel@nongnu.org; Wed, 22 Jul 2026 13:05:35 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wmaNx-0001Y9-Mc
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wmaNy-0001YG-3x
  for qemu-devel@nongnu.org; Wed, 22 Jul 2026 13:05:35 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4956869750eso14249545e9.2
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 10:05:32 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4955de8797cso22910955e9.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 10:05:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1784739932; x=1785344732; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=NiCfracLLvn4exF/YmQ5C0p8DSUHbxX5ZlcIeQT0Ajo=;
- b=i/3x59MKEZ9QRKMjDAly3dUSvyvEpN0wH5LW5GTm9FxgxXS+e4hNDDsPmQ+Sc42Vy2
- oaD4poN1SqGDYOHziyiyEZUoPYONtK6ae8ZXZprtWlvvTUkat32yFby60zOLWBYCrBQ2
- GmkaW82eENIkPWW3Z+ZRuOoG2ZUUCXt8C510fDMEn6pAA/po2e9CAROXdsUO5N1W9JDP
- ZOprt4od1Je09rW2d+5LlyPWNssvl6waOyTarvTofmLU4eSv8bvFivo+hLRpvh3EfvGS
- jUatWMnGBqfZJ7JTZQK+pJVETf5lZTiXXsS/rVG2tzudx0/5CzicEbIyBfsNycY06w3v
- Vo0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784739932; x=1785344732;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=openvz.org; s=google; t=1784739933; x=1785344733; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=NiCfracLLvn4exF/YmQ5C0p8DSUHbxX5ZlcIeQT0Ajo=;
- b=ZwiCNMhZym11rmCCVeNXmB8eLYOQun4FaaNPNWpPxZJx6f1+Ql0Sq7VH58tjHV+Ztq
- YqO6MRMXOz1ABLjdco2BCu72wj4cUAUzDyxknUSopTOn6JH9WChTgpOTvoaf3vfpCUQ8
- fnVoJDGm83aVsF6KLA/m4U7nTMPsq+8EpW2+sPyindFAOPQVzX+ep8hk7+LHEl1cR2iV
- yec1mOH4V2JFK5b0joGGixkZ538XwZLrZ54Bwgo0ThFs/bAUrBu0dW9Snp6SnB4jcsJq
- CWFKsK+CifnAd/VObx4dBDsrE7myjow5YpMxJc/uya2izMps/Uf031jTfvXYF57E2ZDn
- JfbA==
-X-Gm-Message-State: AOJu0YwyMsSiXmed+XKo+KAXEQpQ7+1nb5qovqHVbEGx0vDsQqsCSYIi
- bhwFSlGad99+r8ztgEhPn1Z8KakLZJaxbJiA3xJwboU1PoLCq9+1n4cLNT79vNj5LYi0/690iSX
- yu3sp
-X-Gm-Gg: AR+sD12IvHLZsBio2ACs/I+LO6m7gZIiJRdI4tlKCYrDWJoFpEDEmwY9fP0VSSxxMCU
- tXZQQi5GWsrF+jtLLaUsJ5ZqwAYr1e5+tVQqNlV33pxcuIqNSavi4vFHmVGqMKCwRGqIuG8tXel
- D1ERDiR0J0xUeUu0fkdVibjsukHiyZg7EBtqt+OWnqdXUxDsrmGTqyH+z3scXgpJGDwarZKi9NS
- C9tQYcqhttyvYdCk2ltJfh+q4bLPoo9/CalzJ04Nh2j+MOEMpuVbGAhAmlr6/CrCVixmbhanQ6G
- s8HyBI7PaUyehfOydF1Kdk5jwayKOyj3SRYLSogijl51/tR0/nK++lMUuEcJQJHoGe+kHT3RTr3
- Azc1AIB8i2lFGsu4q8KV+XxDI6Kpm7a2T3lpD824duJP19rVIxgQ6tnTu2vjgzPh/fbTqNVn55P
- 0=
-X-Received: by 2002:a05:600c:3515:b0:493:be13:98b with SMTP id
- 5b1f17b1804b1-4954a50c47emr257354455e9.23.1784739931698; 
- Wed, 22 Jul 2026 10:05:31 -0700 (PDT)
+ bh=6peXfCAI9PBCc+mW0GS1f5pARDqtu1ectajEcLcGxc4=;
+ b=bKNxdLfBZqq60BOvjAPWergIOC6S+PpuQkQ9GwnQF1u8hMWYMwCrplcpasO7vgN62u
+ onXBs16iw4kTdoxAwDV3JIHsdz1iOJr3rVNRe8sdcMaAGkoAzHbmZ46F99uxNEyjahUT
+ +IYnCAM4SZmuHFYJ4aQPF7wNo6+txs6ikPjK3vIpxyLE+MNdEko3mi4Z10Uii2c1ATyU
+ lTGk81IsE14SNDHskpwW7dYV49nxYSkIAHkIG8l9DTmhDXZnZ/4QmtIxiP8Lg3AZoRZf
+ 1oVbaB+Ov35xCrnwmW9TxzRn0H94sRrXNGDhLg4JzgahAf49SOmPbvbK8pEfz/oDtOl6
+ vrBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784739933; x=1785344733;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=6peXfCAI9PBCc+mW0GS1f5pARDqtu1ectajEcLcGxc4=;
+ b=XBB3hSvQeXfIPOpFE9IHr28Nr0+2gLhRS5cAYTqNvO59C2bLoWzxBxo2ZR8+M5RyY6
+ Gz+y8SAZ1UMbf1c2NNra1pXbrVcIHt7UKbSukHrybbgbdapYc6Up07HuRPu8JqWFQJv6
+ QmUSvj/naq+EJ3A2zBNwvnczn0XeQetEHmyOUmZsubr7PqwO6OQOWL5y/C8YtGyrvm4A
+ XRBSg5eLslDq6KDzUet+I0a27chXeoj+CtSVkYuNMPgjKScz/Jr0qjjBhTmaqiGaVYzT
+ 5hEHzo4/8QVXMdMUm+PO1V5X72UsQCekNnD9oMnxAr/vVoOLdfIrSPSRNAp6f/CZedqm
+ eXPQ==
+X-Gm-Message-State: AOJu0YxJJsH7MSoge1FDiXJOsQ/7s0/LTUTo8/pajW8Y74TDb5Rha0q3
+ aNoxHhRpcFJM5TtMen3PYsDBG4lmpF6HR1313xMXgcI8H/SxNjHFBkFq3a6qKHwXgBiSpM/obup
+ OvVsd
+X-Gm-Gg: AR+sD103uW0tLwCSdgGUYWVT4TqvZJ99ANQIMl5883o1Q5vw+MYzDLGua/djFJGdGCr
+ mzcie7wx/WGZqz7vF7DRXIGJLQChR0hMZUk80Uxi/eDdGhpvhHE1TxGGuhBPI2TjX8wBECY8dKQ
+ Mjx7DPfJ8HAUCkC/pIAWjsNp/9P4sUvcJlbA2yBjr6O8e7PVNbSZBY4B6bmULF8wvAAcLkbuROT
+ Or/P8L2IV8I/MnLtXjzn20l85ibbK5vTNb2NZwbITLsnrePpDw3M1DXg2mlovbHQeUXsPH89xf1
+ NxBS6QwugVleUS7RExnMmna9VahaiSJ0i2eGTi4dkVFpT7Y6HUdfWTiyXjq3ulPg2WjpxRySAam
+ MboOu/7/fSLcYf6gmX5MUpyf0zdgzRdrWu4GuXAqqV6pPHkvHA9K1Z7FE3UQmxAdIMe6ba/KelB
+ k=
+X-Received: by 2002:a05:600c:1554:b0:495:3de8:33a6 with SMTP id
+ 5b1f17b1804b1-4954a3dc7bcmr304740015e9.16.1784739932647; 
+ Wed, 22 Jul 2026 10:05:32 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:9c54:c407:8170:580d])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4956b7483f0sm63993215e9.3.2026.07.22.10.05.29
+ 5b1f17b1804b1-4956b7483f0sm63993215e9.3.2026.07.22.10.05.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Jul 2026 10:05:30 -0700 (PDT)
+ Wed, 22 Jul 2026 10:05:32 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org,
 	qemu-block@nongnu.org
 Cc: den@openvz.org, Thomas Huth <thuth@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH 0/9] parallels: fix reachable assertion and related
- bounds-checking gaps
-Date: Wed, 22 Jul 2026 19:05:18 +0200
-Message-ID: <20260722170527.2593225-1-den@openvz.org>
+Subject: [PATCH 1/9] parallels: fix integer overflow in header size calculation
+Date: Wed, 22 Jul 2026 19:05:19 +0200
+Message-ID: <20260722170527.2593225-2-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260722170527.2593225-1-den@openvz.org>
+References: <20260722170527.2593225-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=den@openvz.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=den@openvz.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,33 +100,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series fixes a bunch of reachable asserts within parallels
-block drivers through a specially crafted images.
+parallels_open() caches bat_entry_off(s->bat_size) - a uint32_t -
+in a plain int before it feeds into s->header_size. Near the
+"Catalog too large" bound the value exceeds INT_MAX and overflows
+on assignment.
+
+Match the cached value's type to bat_entry_off()'s return type.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 CC: Thomas Huth <thuth@redhat.com>
 CC: Stefan Hajnoczi <stefanha@redhat.com>
+---
+ block/parallels.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Denis V. Lunev (9):
-  parallels: fix integer overflow in header size calculation
-  parallels: read header/BAT table in bounded chunks
-  parallels: fix bat_entries overflow in image creation
-  parallels: reject BAT entries pointing outside backed storage
-  parallels: validate bitmap L1 table size before allocating it
-  parallels: skip loading a genuinely empty bitmap L1 table
-  parallels: avoid fatal abort on large bitmap L1 table
-  parallels: validate BAT capacity against advertised disk size
-  MAINTAINERS: update parallels tree location
-
- MAINTAINERS                                   |   2 +-
- block/parallels-ext.c                         |  52 +++++----
- block/parallels.c                             |  74 ++++++++++---
- tests/qemu-iotests/212                        |   8 +-
- tests/qemu-iotests/212.out                    |  10 +-
- tests/qemu-iotests/tests/parallels-checks     | 102 ++++++++++++++++++
- tests/qemu-iotests/tests/parallels-checks.out |  59 ++++++++++
- 7 files changed, 270 insertions(+), 37 deletions(-)
-
+diff --git a/block/parallels.c b/block/parallels.c
+index 7a90fb5220..59f00c64a6 100644
+--- a/block/parallels.c
++++ b/block/parallels.c
+@@ -1240,7 +1240,8 @@ static int parallels_open(BlockDriverState *bs, QDict *options, int flags,
+ {
+     BDRVParallelsState *s = bs->opaque;
+     ParallelsHeader ph;
+-    int ret, size, i;
++    int ret, i;
++    uint32_t size;
+     int64_t file_nb_sectors, sector;
+     uint32_t data_start;
+     bool need_check = false;
 -- 
 2.53.0
 
