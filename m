@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6A17C44536
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:57:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30AF9C4453C
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:57:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWT8-0006w7-08; Wed, 22 Jul 2026 08:54:38 -0400
+	id 1wmWVm-0005ST-8B; Wed, 22 Jul 2026 08:57:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWRn-0002yY-Le; Wed, 22 Jul 2026 08:53:15 -0400
+ id 1wmWSR-0003uo-K9; Wed, 22 Jul 2026 08:53:57 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWRm-0002WM-2v; Wed, 22 Jul 2026 08:53:15 -0400
+ id 1wmWSG-0002fq-At; Wed, 22 Jul 2026 08:53:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724574; bh=MuV1oD5RodqMA6o5+FYCUAy4Fie0JGoNBFuB3N1Fy3k=;
+ t=1784724575; bh=o2+fTKwAszMuwJ4k0k2/Qn3Bbb++duGgwQV8zI0yTx4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=RWjLToWqjRPzY79PbnkIT4ryEYbe9ryHMWmblyDbNmXg1hDxshg4xZJHnzokx15KJ
- hmH35iEo3LUo/6qBLbsh4IMedK6R4snc1b2xXV6LYdmlgSzJ2fW3nK6luvluxNDDBu
- oUvQBfGIdoYNmdn9++4XEALyhYjUsDwgAdiWA9NQ4YIv6hOfFFai0pxtJ1nHwy237j
- /5ioztSV3ewTceCvaAI4Nx6zXtrgWmioyD5/InRv/K7LQyJj9jzHW6hW60XtX5kDka
- Q9DX0jHTehIghHkoVjwyF4HdXSPJGezrWNHApdML7gGYqLU9A+e37nnMpqkFQOAMa8
- Z3GSkRCShFWVw==
+ b=T4JJGuUOwoEeAz9KVJ5m6bJg3LovjdKM8Q32EZKGsc5B0vlpATMsl8SZaJ7Avu9ZH
+ zlEUTJzo1+MnGi4RVksEHaMe9lKIsq8MwhV9+oNB9qJWkqVlnUos/PgqsbFGUlyPAy
+ wSVyOqDY98wYwK4esUW2gajseBiPbzlYbTJiBaoZHE7hvnj+hSTzxRbxtTIi3B6vsv
+ 12Bjz4xRWQ6YkLUhqnLq3uUgjMYcWUBiG6dJdFTCRfapwHCJUAV3juoZFfKwmHnzV7
+ QtkI8bWtaRmQ4ZsYclNtrdsvnESP+hM2rFk2REgSvE/DPR1Rg9QkoxldRkUA5qwcax
+ rtAdNThTma0Kg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DDF071C3B41;
- Wed, 22 Jul 2026 15:49:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 04DF21C3B46;
+ Wed, 22 Jul 2026 15:49:35 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 330473F3791;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4DE433F3796;
  Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id BF0D617F57; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
+ id CAA3B17F61; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 v2 100/127] hw/display/virtio-gpu: fix dmabuf_fd leak
- on remap failure
-Date: Wed, 22 Jul 2026 15:48:25 +0300
-Message-ID: <20260722124859.32371-19-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v2 105/127] ui/vnc: validate color shifts in
+ SetPixelFormat
+Date: Wed, 22 Jul 2026 15:48:30 +0300
+Message-ID: <20260722124859.32371-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
@@ -78,39 +76,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-When virtio_gpu_create_udmabuf() succeeds but virtio_gpu_remap_udmabuf()
-fails (mmap returns MAP_FAILED), virtio_gpu_init_udmabuf() returns early
-without closing the dmabuf fd. Since res->blob is never set in this
-path, later cleanup via virtio_gpu_cleanup_mapping() skips
-virtio_gpu_fini_udmabuf() entirely, leaking the file descriptor.
+A malicious VNC client can send a SetPixelFormat message with shift
+values >= 32, causing UB mask computation
+(e.g. red_max << red_shift where red_shift is 255). Apparently, this is
+not covered by -fwrapv.
 
-Call virtio_gpu_destroy_udmabuf() before the early return to close
-the fd. This function already handles partial state correctly: it
-skips the munmap when res->remapped is NULL and closes the fd when
-res->dmabuf_fd >= 0.
+Reject color shifts >= bits_per_pixel || 32 before computing masks.
 
-Fixes: 9b60cdf98723 ("virtio-gpu: Add udmabuf helpers")
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Fixes: 9f64916da20 ("pixman/vnc: use pixman images in vnc.")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3948
+Reported-by: huntr bubble
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Message-ID: <20260713125622.111513-1-marcandre.lureau@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 564c4d7e99d87b39c3faea52ef8759df7f786f61)
+Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit fb71c895d7ff3c68f228095b5e6494e6c23b6a0b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
-index 74b6a7766af..20884f397e9 100644
---- a/hw/display/virtio-gpu-udmabuf.c
-+++ b/hw/display/virtio-gpu-udmabuf.c
-@@ -143,6 +143,7 @@ void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
-         }
-         virtio_gpu_remap_udmabuf(res);
-         if (!res->remapped) {
-+            virtio_gpu_destroy_udmabuf(res);
-             return;
-         }
-         pdata = res->remapped;
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 1e6490f2730..d2ae127f0bf 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -2282,6 +2282,13 @@ static void set_pixel_format(VncState *vs, int bits_per_pixel,
+         return;
+     }
+ 
++    if (red_shift >= bits_per_pixel || red_shift >= 32 ||
++        green_shift >= bits_per_pixel || green_shift >= 32 ||
++        blue_shift >= bits_per_pixel || blue_shift >= 32) {
++        vnc_client_error(vs);
++        return;
++    }
++
+     vs->client_pf.rmax = red_max ? red_max : 0xFF;
+     vs->client_pf.rbits = ctpopl(red_max);
+     vs->client_pf.rshift = red_shift;
 -- 
 2.47.3
 
