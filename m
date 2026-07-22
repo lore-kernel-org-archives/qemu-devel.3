@@ -4,53 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76397C44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:00:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC3C2C44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:00:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWPM-0006jp-G0; Wed, 22 Jul 2026 08:50:44 -0400
+	id 1wmWQY-0001t3-NC; Wed, 22 Jul 2026 08:51:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWO6-00043t-4n; Wed, 22 Jul 2026 08:49:28 -0400
+ id 1wmWQU-0001e0-0Z; Wed, 22 Jul 2026 08:51:54 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWO1-0001vM-NN; Wed, 22 Jul 2026 08:49:24 -0400
+ id 1wmWQS-0002Ny-Az; Wed, 22 Jul 2026 08:51:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724390; bh=UmKhz2xvwnjZIkVWAK0A3aebKAilI8XVlQ5eyXFFtMk=;
+ t=1784724574; bh=h41YpVYrSNiFtFkcI0Db1OJd2GnLLW2ArByv8YYVzBo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=PeS8VAqX5Uo52tqbnHVz2ZpN8NIMAP1bLiSnIMjz1nqKEUR89xEITWKfLmn8FZDcO
- uCCQJyqd6HTotJI8fQ8+bsf2pNdG4WQPYo+JA4LiEmciacxVCqlQ+W3lKQpm2/rhKy
- tOWifsgOmJCJsDjD/dqCrwzTk3MnO1ekcl1RZOL1fATiVRutlqMtsBrMq8O9OhH3RD
- lx3kDj7YhpU5qb5+FUabvW+mL+dAFaNQOVndyipfnwy19jx8QQpkXsccF/rDuqwRQN
- 5cyqTvVKTCRI/OwNg0juJxGQgwPO3+YRZEC9Wq++Sj/mThvpuXPCRYJ36SLz8zOC0c
- a374TiY50P1DQ==
+ b=tM4psxO0Omz/ve8nU3F8Wzml65pYI8ZnC3EMv5nCDUM9S32ugE5eU0bH4bkJelG3l
+ 3Ls64IdcirkqvOt1ZyXVjIjwGXmH87FQJEEZGmSPMlnkR0wjkNgLxK/9ayQ+axWhpo
+ MgTyLVV+tr8AL7TGFno9FG4adKUG7AEh03nw/u4XVRwsa1mr7Gts3DljwmsGaEOmCQ
+ vQqpHi3wQ4zfQXKuXn4+w+p8lo/F24W6CTgVuC5jDtGDwWZyAcD88lsdUgm6MSlXhM
+ qJ27S+usiotrRnz75FrOUIzBlHa08c6zkCHJxawEpBKocrGa6kM/N60oX2x8t2Rzis
+ BuTWXPqkBo/QA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D43D51C3B13;
- Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A69F81C3B36;
+ Wed, 22 Jul 2026 15:49:34 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 283B93F376D;
- Wed, 22 Jul 2026 15:46:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id EE1E13F3786;
+ Wed, 22 Jul 2026 15:49:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 7F86C17F0F; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id A4EC417F41; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Feifan Qian <bea1e@proton.me>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 106/122] hw/display/virtio-gpu: handle migration
- iov allocation failure
-Date: Wed, 22 Jul 2026 15:45:55 +0300
-Message-ID: <20260722124622.31034-31-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v2 089/127] hw/misc/stm32_rcc: Correct offset-to-irq
+ calculation
+Date: Wed, 22 Jul 2026 15:48:14 +0300
+Message-ID: <20260722124859.32371-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
-References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
+References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -75,63 +72,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-An unbounded iov_cnt from the migration stream drives two g_new()
-allocations whose combined size can exceed available memory, causing
-GLib to abort the process.
+In the STM32 RCC, there is a block of 5 "enable" registers, each of
+which has 32 bits; each bit determines the level of one of the 5 * 32
+= 160 enable_irq output lines.  The code calculates the irq to be
+worked on using
+  irq_offset = ((addr - STM32_RCC_AHB1_ENR) / 4) * 32;
 
-Switch to g_try_new() and propagate the failure as a migration error.
+This assumes that the registers are all consecutive; however, there
+is a gap between the AHB1/2/3 registers and the APB1/2 registers, so
+for the APB1/2 registers we calculate a number that is 32 too high
+and can index off the end of the enable_irq[] array.
 
-Fixes: 0c244e50ee12 ("virtio-gpu: add live migration support")
-Fixes: f66767f75c9c ("virtio-gpu: add virtio-gpu/blob vmstate subsection")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3753
-Reported-by: Feifan Qian <bea1e@proton.me>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-(cherry picked from commit e99488c5d4a009a156a29f9ff6a7f12d091c2646)
+The handling of the reset registers has an identical bug.
+
+Adjust the calculation of irq_offset to cope with the gap, and fix
+the case labels so accesses to the gap fall into the default
+LOG_UNIMP rather than being treated as if they were an actual
+register.
+
+Coverity CID: 1663683, 1663686
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-id: 20260709104832.1989240-1-peter.maydell@linaro.org
+(cherry picked from commit 3c2749443429a2a6b60bfa5c32964628631dfa23)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 0d1e991e1cb..0fa61d10972 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -1336,8 +1336,15 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
-             return -EINVAL;
-         }
+diff --git a/hw/misc/stm32_rcc.c b/hw/misc/stm32_rcc.c
+index 74ea29b1560..5cfb39e5607 100644
+--- a/hw/misc/stm32_rcc.c
++++ b/hw/misc/stm32_rcc.c
+@@ -53,6 +53,27 @@ static uint64_t stm32_rcc_read(void *opaque, hwaddr addr, unsigned int size)
+     return value;
+ }
  
--        res->addrs = g_new(uint64_t, res->iov_cnt);
--        res->iov = g_new(struct iovec, res->iov_cnt);
-+        res->addrs = g_try_new(uint64_t, res->iov_cnt);
-+        res->iov = g_try_new(struct iovec, res->iov_cnt);
-+        if (res->iov_cnt && (!res->addrs || !res->iov)) {
-+            pixman_image_unref(res->image);
-+            g_free(res->addrs);
-+            g_free(res->iov);
-+            g_free(res);
-+            return -EINVAL;
-+        }
- 
-         /* read data */
-         for (i = 0; i < res->iov_cnt; i++) {
-@@ -1409,8 +1416,15 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
-         res->resource_id = resource_id;
-         res->blob_size = qemu_get_be32(f);
-         res->iov_cnt = qemu_get_be32(f);
--        res->addrs = g_new(uint64_t, res->iov_cnt);
--        res->iov = g_new(struct iovec, res->iov_cnt);
++static int reg_offset_to_irq_offset(hwaddr addr)
++{
++    /*
++     * The reset and enable registers aren't all consecutive. In getting the
++     * irq index from the register offset, we need to account for the gap
++     * between the AHB regs and the APB regs.
++     */
++    switch (addr) {
++    case STM32_RCC_AHB1_RSTR ... STM32_RCC_AHB3_RSTR:
++        return ((addr - STM32_RCC_AHB1_RSTR) / 4) * 32;
++    case STM32_RCC_APB1_RSTR ... STM32_RCC_APB2_RSTR:
++        return ((addr - STM32_RCC_APB1_RSTR) / 4) * 32 + STM32_RCC_N_AHB_IRQS;
++    case STM32_RCC_AHB1_ENR ... STM32_RCC_AHB3_ENR:
++        return ((addr - STM32_RCC_AHB1_ENR) / 4) * 32;
++    case STM32_RCC_APB1_ENR ... STM32_RCC_APB2_ENR:
++        return ((addr - STM32_RCC_APB1_ENR) / 4) * 32 + STM32_RCC_N_AHB_IRQS;
++    default:
++        g_assert_not_reached();
++    }
++}
 +
-+        res->addrs = g_try_new(uint64_t, res->iov_cnt);
-+        res->iov = g_try_new(struct iovec, res->iov_cnt);
-+        if (res->iov_cnt && (!res->addrs || !res->iov)) {
-+            g_free(res->addrs);
-+            g_free(res->iov);
-+            g_free(res);
-+            return -EINVAL;
-+        }
+ static void stm32_rcc_write(void *opaque, hwaddr addr,
+                             uint64_t val64, unsigned int size)
+ {
+@@ -69,11 +90,12 @@ static void stm32_rcc_write(void *opaque, hwaddr addr,
+     }
  
-         /* read data */
-         for (i = 0; i < res->iov_cnt; i++) {
+     switch (addr) {
+-    case STM32_RCC_AHB1_RSTR...STM32_RCC_APB2_RSTR:
++    case STM32_RCC_AHB1_RSTR ... STM32_RCC_AHB3_RSTR:
++    case STM32_RCC_APB1_RSTR ... STM32_RCC_APB2_RSTR:
+         prev_value = s->regs[addr / 4];
+         s->regs[addr / 4] = value;
+ 
+-        irq_offset = ((addr - STM32_RCC_AHB1_RSTR) / 4) * 32;
++        irq_offset = reg_offset_to_irq_offset(addr);
+         for (int i = 0; i < 32; i++) {
+             new_value = extract32(value, i, 1);
+             if (extract32(prev_value, i, 1) && !new_value) {
+@@ -82,11 +104,12 @@ static void stm32_rcc_write(void *opaque, hwaddr addr,
+             }
+         }
+         return;
+-    case STM32_RCC_AHB1_ENR...STM32_RCC_APB2_ENR:
++    case STM32_RCC_AHB1_ENR ... STM32_RCC_AHB3_ENR:
++    case STM32_RCC_APB1_ENR ... STM32_RCC_APB2_ENR:
+         prev_value = s->regs[addr / 4];
+         s->regs[addr / 4] = value;
+ 
+-        irq_offset = ((addr - STM32_RCC_AHB1_ENR) / 4) * 32;
++        irq_offset = reg_offset_to_irq_offset(addr);
+         for (int i = 0; i < 32; i++) {
+             new_value = extract32(value, i, 1);
+             if (!extract32(prev_value, i, 1) && new_value) {
+diff --git a/include/hw/misc/stm32_rcc.h b/include/hw/misc/stm32_rcc.h
+index 4dccacc2db5..a94781bf347 100644
+--- a/include/hw/misc/stm32_rcc.h
++++ b/include/hw/misc/stm32_rcc.h
+@@ -65,7 +65,11 @@
+ 
+ #define STM32_RCC_NREGS ((STM32_RCC_DCKCFGR2 >> 2) + 1)
+ #define STM32_RCC_PERIPHERAL_SIZE 0x400
+-#define STM32_RCC_NIRQS (32 * 5) /* 32 bits per reg, 5 en/rst regs */
++
++/* 32 bits per reg, 3 AHB regs and 2 APB regs */
++#define STM32_RCC_N_AHB_IRQS (32 * 3)
++#define STM32_RCC_N_APB_IRQS (32 * 2)
++#define STM32_RCC_NIRQS (STM32_RCC_N_AHB_IRQS + STM32_RCC_N_APB_IRQS)
+ 
+ #define STM32_RCC_GPIO_IRQ_OFFSET 0
+ 
 -- 
 2.47.3
 
