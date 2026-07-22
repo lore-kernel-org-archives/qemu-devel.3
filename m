@@ -4,134 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C85CC4453E
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 16:09:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6F96C4453C
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 16:10:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmZVp-0002eD-Hf; Wed, 22 Jul 2026 12:09:37 -0400
+	id 1wmZVt-0002hO-0b; Wed, 22 Jul 2026 12:09:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wmZVm-0002Xo-AH
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 12:09:34 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wmZVr-0002gQ-4t
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 12:09:39 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wmZVk-0001uc-2b
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 12:09:33 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1wmZVp-0001v3-LS
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 12:09:38 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66MFYDx11044081
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 16:09:30 GMT
+ 66MFYBS51260632
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 16:09:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- SvsO42z+fMRhgnR2H/WYmxk0aZPrJF+vcCqMZiY66to=; b=QhNm4FOAnzDpkrUs
- k0rc06Wof5z6W2rZ6GxsDws+Ga4WUBW+0swG/NXdoMrBxKR60mLkN2NBrc4E8UgI
- 4UW1x8FUmq8TBPfEoy6jXRxBQ8+dmnbeC/z/UgC5ASvAJdSiIrTA3qVQCIMoRHEJ
- LIBYi52oGNAS8BShg3tGkPzTAduvfWe5K68+ro70kkmZvXylePg4cpq0Sft4KO+A
- BgHZwo23W8w7aNPUpCIdWIwzyXNGwKJPHFrIAHmeV6XJX4pv44MfRN1843L6wk11
- ftUC/u0bWSiBUCjANuINPTVf6zvXeVnpcUnykc5zpXYshvevp4ouVNJxkfLn1JMT
- 1DVJtw==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fjnu4u3rx-1
+ Cfw08zrS/HQBV5FgdUQoKFEqIatiAJuiZqcnB2We1EM=; b=YKnoZehN3QcxntIp
+ npaRkFJo+pCIdP7PsSf6aiU608y8m57DQAHzAeEDeXH2TNcdi1MkmYUHyNdiptWl
+ c2rjEICo0B3nIa/yUqq7yrXH2JJ4uI0jZjVmvaSL+0iY7vsLnQkGlSYyl6oIsyWc
+ Cm8D1GN10DsFEjTLHZ0Tm177Onhq2ILU0P0IYY4hMsBBu2GUasLKH+ek3xsfi6mN
+ ZzRbhMqg5016ynytOnN3BlYetZ2Yvx1qh0u7i6WaR4WQ1Q3MNP5Ql4bjAJ9zwrqr
+ Aprsn2U3TlyMa3qwVkTcCfHnfJmWysDPQpfNLWr3E+MX5K+hWggEUNNnyaS1aM1R
+ M4QdBw==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fjuu79fgr-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 16:09:29 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-51c1a97644aso47434581cf.2
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 09:09:25 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 16:09:35 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-5174a23afcbso117412841cf.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 09:09:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784736525; x=1785341325; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1784736536; x=1785341336; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=SvsO42z+fMRhgnR2H/WYmxk0aZPrJF+vcCqMZiY66to=;
- b=QKKIZmKCTxVwHKdDhnL6pzWe1U110VdOuOxujxNpBwf7YX3nECDw1WVAZ9gZeNU5Bq
- ENg8/vAaaMUbZrKVsmbEm8S3QJh+Qq+pFB02921cNo30XxEMqdarPpaYr4BgHfj8l+FV
- LbAFgFJEutm+z4CUziNaF83PNIZwD18JVcFRubMwNcFb+fhZzos93zo0HsfAO2mnVoF/
- 7PsfSntrdhQMQsjZAWV7hBmpcD7KsZAC2nLgHojb5dWS0mbJnkMWOe/FYitoramrOQpi
- B8Fq0vKv4caTD4MousIQ60KJhoi7+LaROEb8HzEcq9mraSvm9oiLqgXksAvMjcjIWshr
- k6ig==
+ bh=Cfw08zrS/HQBV5FgdUQoKFEqIatiAJuiZqcnB2We1EM=;
+ b=aYDqAyuGqKMhxams7UD6WuAbDHhwV0ndGFFafXE61GRX7pia/SyOm/wFIT0aFJECjS
+ +nVXWNI17a/x2rJ9HY6DAJcp/rHYvgEL/MegpenDlwljEUmIy5pWlW0Px41ei6/EWq1T
+ cGKxz4V89Aif99uLHsWDFUMjz8VC7bQm3h1JK5iLqe/NanktMmXGxx1uJotMyVkQn6x1
+ z3NpmV2U0cscvOF50p6zcjX1WmHy66QQaIQb4ou/e59trfkpxCV8lHekzS7WOt67FYUo
+ Mv0Py8osK7yxxkNg1Ll9ognR3/+YmA8AxIg5ECaVyu8XDxR9v1Cy3+zEmr89xlz5LdFA
+ dR+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784736525; x=1785341325;
+ d=1e100.net; s=20251104; t=1784736536; x=1785341336;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=SvsO42z+fMRhgnR2H/WYmxk0aZPrJF+vcCqMZiY66to=;
- b=WQMsQ0ZtI1Dy2sqewDWpg4d4JDTIWaIWa85lYMeCve/RSFkmIw1VGtvraR4wfMm9XF
- f9qYPFfXn/OjXqZzmNW8qvRFky10en6+mlaSrw1NskXUC67AWmvELXcrWitGdzmzmYqL
- J1JvLFkrohPorZD8J1Qax76y0oF1snBYzBV+XEq9gv7rS6Nmb75vC920fHHYvHxX5Id/
- P50wdeNSeXhMlEFiALLkqW9xHJeTSBcQCGGdaXDFDTNHK6/ULPg/3ge+15NQUoKPjDON
- 8N+4YO6qqtiTctW8hX0lwq7DMtmhsBfnsAcFvYACLu4KisEGgFhhTMkuxbyFOKNVap3K
- 1xPA==
-X-Gm-Message-State: AOJu0Yyb60U82vr/6uDcu6Zs3c2UJ7LbRF1Sn+389IppbFdSUIgW7Dq2
- EPRox5RqLiq7d7wyNF5bUn3FuQtLeMg/IPzm4t9zh0fhk73oQS9M8ipwhw4XMySUcMHEiDWGNJ8
- AX+6dS+BIdFTqeSECfcdJ5isSKvszyGE4LWDye/0Ai+shcgeQLGh7BsVV6LMjZrZe7A==
-X-Gm-Gg: AR+sD10bAk/O6kv06TsmEbhXJnqKlkEoB0Gd4vb0grwSAjI6R8UTUDMf/FPfkkFuX+N
- Blw2HTvpIrLoK3bw7nvkDwJdeO8i55d7aeFzusZgAGzI7NeUsE+/f31RgzGP4XntYbY60GVvGoE
- PZQsAQuSdN/9L9/JaTN1jSvI/PSxtVZeiJTYf/A3qzTtS2QnBH26hg6PjghZ0l57vE/p2IZdoD6
- USeSZVGQlFDoE4lfjoeA/g8YpZq22DE0ofqKZZaX51zjnKM5TDmjdjl2+IDAIj+76b8wRcoa2F+
- 4C4GLHHZtEJNHP1X7oI4lbwTlJZLNeGCQ1R0/hWH4kiO1b4O1Rr98eum/f6CbeK8p25o06ahyuI
- gziGyzBqn6R742z7yOsKvVhTqUFBCtLfR3xitQsD4cFJROzLokrYqCqM=
-X-Received: by 2002:a05:622a:124b:b0:51c:168d:3ae0 with SMTP id
- d75a77b69052e-5213c007103mr213145901cf.1.1784736524741; 
- Wed, 22 Jul 2026 09:08:44 -0700 (PDT)
-X-Received: by 2002:a05:622a:124b:b0:51c:168d:3ae0 with SMTP id
- d75a77b69052e-5213c007103mr213145411cf.1.1784736524296; 
- Wed, 22 Jul 2026 09:08:44 -0700 (PDT)
+ bh=Cfw08zrS/HQBV5FgdUQoKFEqIatiAJuiZqcnB2We1EM=;
+ b=ZwC71ZqbkQ/pqtTmGNkZXGqMUs4a0u3T2Bcp0oh31zunVDix07Fugf8Ksh82HMdPLQ
+ ZWhV0nficwdSEFBhvk2hXupv97am3XsAKCJBdlO+g1dRLMRmRaKp84eZkKM8m5OTG4oy
+ cv/whe+ezYAxRNMIet89RRaHmHyVkrIo3L4gyPQNAni3gX1EcxpqtzhKZ7Yy1ATEsr8F
+ pxR3/nM1r39vhetQBm5u0P6nF4XaU1P0Fy/k/tXxQivFU/HF9FCSnllMBoGHDoBXxEgz
+ 1foFW6Zlyh8uwUaH1MXYyoxmK1+aOJYwMNcNcqo9MO7CgHJkhLL5+t87LVMLyKPEdGLF
+ qdHQ==
+X-Gm-Message-State: AOJu0YzxGauo9gu2bbfXr0K7kef1yqkRg6hqHnyZoplgDdV3MBZSWMVD
+ H7N+viWpmWDUU4/hKNPqOk69GB1riMWzrn9pihLuQgR2VwM1BLOx4u+NS/Yp63NBalhnDYr6RH0
+ SvcXxEeesf5SwW0E+1W8FjhTO5svoO3xDkNfUftax70rdT9HpvBw9ibsB4BKx4qT4MQ==
+X-Gm-Gg: AR+sD12w1N/RYiG3k6J2dkONjvnLcf4wr+uvvoLXiX7fcx2uidfB1aD+Cxaf+u7zSNo
+ roHy26FE5/VZ6kv0XPFfgl05cl62vCPsah8i6uahN5ryaNyazKpd3yp/d0Pa4uxI+X8N4E9cpI2
+ 8Q4S2hIIr+uBKtFr/MqQcLRXXDgmuxW1ISMYN26dDU3SGguPC4oNFd3B5OhFARNVfWWgX/NCoev
+ Avn+ELCPWMTfs/AkOvbWXA5R21DMUvXNbPo7i2SYkl3QHp6kmsugELg8eC7ToMFjPeHWHDrHgTD
+ JeRO2/KmGFjOIclfWU98CDuUxNiVcWKJQzc/QImX10vmgICLEgQhryLvBJlKEumRtbE8iAARLo6
+ nnjCw+0LnY2pQwi8QfJKpt1wFxeDqER9E6ZGgiY7uEEvVTxdELJHRdAw=
+X-Received: by 2002:a05:622a:11c2:b0:528:3a24:f396 with SMTP id
+ d75a77b69052e-5283a24f6c0mr5320371cf.73.1784736536235; 
+ Wed, 22 Jul 2026 09:08:56 -0700 (PDT)
+X-Received: by 2002:a05:622a:11c2:b0:528:3a24:f396 with SMTP id
+ d75a77b69052e-5283a24f6c0mr5319321cf.73.1784736535198; 
+ Wed, 22 Jul 2026 09:08:55 -0700 (PDT)
 Received: from localhost.localdomain (92.171.88.92.rev.sfr.net. [92.88.171.92])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-495653731b2sm159078625e9.4.2026.07.22.09.08.42
+ 5b1f17b1804b1-4956b030a64sm57062335e9.3.2026.07.22.09.08.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 22 Jul 2026 09:08:43 -0700 (PDT)
+ Wed, 22 Jul 2026 09:08:54 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Luc Michel <luc.michel@amd.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v2 3/7] target/microblaze: Use TRANS() macro for typeA
- load/store opcodes
-Date: Wed, 22 Jul 2026 18:08:03 +0200
-Message-ID: <20260722160807.24031-4-philmd@oss.qualcomm.com>
+Subject: [PATCH v2 4/7] target/microblaze: Set MO_ENDIAN in do_load/do_store
+ callers
+Date: Wed, 22 Jul 2026 18:08:04 +0200
+Message-ID: <20260722160807.24031-5-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260722160807.24031-1-philmd@oss.qualcomm.com>
 References: <20260722160807.24031-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 7deEJz30sGP5NUAMndLpvKGOosJyHFxh
-X-Authority-Analysis: v=2.4 cv=KLhqylFo c=1 sm=1 tr=0 ts=6a60eb3a cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=8SOIyxyylBkeE3ShledptA==:17
+X-Proofpoint-ORIG-GUID: eUoJUA1tUXNJ3cno-ZEHVwziSVTYTGJV
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIyMDE1OSBTYWx0ZWRfXz5gN83OBZXaV
+ bu1qOCZARJPpBwsA2pbxd95WINzvgJ8x12DKlw2nHy19hURlnF3EnQ4q3VvscTvKNx6pNpojCFo
+ v37u4jEZj0YUKn6dyhtnKlII9mpJw2I=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIyMDE1OSBTYWx0ZWRfX7BTQXFxteDAk
+ tdAzPMe+jfu6B0FXwnuF06F9HEcSsKxpLLb+Q2HgYyLtjsWYP0/HK1868ebhoZyZ7JpR2WLaY/M
+ OSDA0JPXepuT90ZdOPsbG8fbVxElxKhNF965FhuA3+8M+9WajPstf/+/fzkuZEla0aATvETHoUM
+ A69QONf1s7MoTVgaa0gx4pAnTwxi+T1OCa2ekWI3BSGN7GyhQH8U6yl4n/Ifo6E5OrgbnoYQOh+
+ 8yKj/YwG+UJ16sKVLkpywXo8mtyTIQ88myxcZGi8hyCctskQPAoEXfxqyY0jQRw++FNl9YAeFfe
+ pQ+Fq1g/+uzor3GrcffYWrxRxhJoKZYyM+BA18hYpdpjrpuGX6xJhPkY575R0fvmakGwekzIFYf
+ O0YlNqCYxha78S8R3b/kXplw/IBt3aCTN4OyosyJetFiK57ktoXsuWsdVeaKZcTPea7C7Kl5EKS
+ eY23qluhTi0snTVmieg==
+X-Proofpoint-GUID: eUoJUA1tUXNJ3cno-ZEHVwziSVTYTGJV
+X-Authority-Analysis: v=2.4 cv=JuTBas4C c=1 sm=1 tr=0 ts=6a60eb3f cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=8SOIyxyylBkeE3ShledptA==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=EUspDBNiAAAA:8 a=y_U8KOlz_unyMUuETsgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIyMDE1OSBTYWx0ZWRfXyY1lJQtm7zGk
- njtt2lt0WIJ0Scq7CrPGcQF3eSw0Q5jbn4DKUhN6W88ToLk/x/tYSON5+t4hY2PN+sqcWySsbd+
- 3y3t8L13NCfvHPTVCzuEGZJ1FBozJ97eck0sGNhf3dffCVRF4Be+PXW+0/nn5ob/MjhKani4Z47
- htppLYqNylU3Mdx7Osl1BxKl5I6wZdhEJ/HkwVyre7jTUMBcU65tU7+l8kINFcuJoXjFQIWYc57
- CP00scjHe6iB/nIjubacNlDZhBFPe6rkhMpemKjn4F9XcVGehJpleXWHbb0jrZAWPT7mS91mQtD
- NLdNxsHRvKtwvv8BkyJZCbHWlC2iUMoxS8Sna6h/JsJ6FYP5x4JogBeIUyWtpekUUjoXU0e5+A7
- ZMYPXQC91ozk1XrxliioX6uXc/ZrV9Db8FomacFQt94UjEB/LJDJD1p3g5X+4/1TGwphBFl0fRi
- NLv4n7cH8g/5Msl1Epw==
-X-Proofpoint-ORIG-GUID: 7deEJz30sGP5NUAMndLpvKGOosJyHFxh
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIyMDE1OSBTYWx0ZWRfX1XtYPnksWFky
- ESFw5aCtMYIETuuFE5H0OPHtnEp/9YOVcvnFwQYiA26AITdyCTQ0nc26r++LCmh9iiTxd//6s96
- rcLrAaJXSD/YRuWZZ1CHufU63tkP6+A=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=lN58bEdq_bzK_G3D1aMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=kacYvNCVWA4VmyqE58fU:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-22_04,2026-07-22_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
- priorityscore=1501 malwarescore=0 phishscore=0 adultscore=0 suspectscore=0
+ priorityscore=1501 impostorscore=0 suspectscore=0 spamscore=0 adultscore=0
+ phishscore=0 clxscore=1015 bulkscore=0 lowpriorityscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607220159
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -154,176 +154,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While being a no-op since the TRANS() macro expands to the
-same code, this is less code so less maintenance.
+Again set the MO_ENDIAN bit in the caller rather than the
+callee, allowing to further simplify.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- target/microblaze/translate.c | 96 +++++++++--------------------------
- 1 file changed, 24 insertions(+), 72 deletions(-)
+ target/microblaze/translate.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
 diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
-index a2a7ee8b9e0..3f2de375d97 100644
+index 3f2de375d97..d4826981913 100644
 --- a/target/microblaze/translate.c
 +++ b/target/microblaze/translate.c
-@@ -746,28 +746,28 @@ static bool do_load(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
-     return true;
+@@ -716,8 +716,6 @@ static bool do_load(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
+ {
+     MemOp size = mop & MO_SIZE;
+ 
+-    mop |= mo_endian(dc);
+-
+     /*
+      * When doing reverse accesses we need to byteswap the data
+      * lanes on the way back into the CPU core.
+@@ -749,13 +747,13 @@ static bool do_load(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
+ static bool trans_ld_typea(DisasContext *dc, arg_typea *arg, const MemOp mop)
+ {
+     TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+-    return do_load(dc, arg->rd, addr, mop, dc->mem_index);
++    return do_load(dc, arg->rd, addr, mop | mo_endian(dc), dc->mem_index);
  }
  
-+static bool trans_ld_typea(DisasContext *dc, arg_typea *arg, const MemOp mop)
-+{
-+    TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
-+    return do_load(dc, arg->rd, addr, mop, dc->mem_index);
-+}
-+
  static bool trans_ld_typeb(DisasContext *dc, arg_typeb *arg, const MemOp mop)
  {
      TCGv_i32 addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
-     return do_load(dc, arg->rd, addr, mop, dc->mem_index);
+-    return do_load(dc, arg->rd, addr, mop, dc->mem_index);
++    return do_load(dc, arg->rd, addr, mop | mo_endian(dc), dc->mem_index);
  }
  
-+TRANS(lbu,  trans_ld_typea, MO_UB)
-+TRANS(lbur, trans_ld_typea, MO_UB ^ MO_BSWAP)
- TRANS(lbui, trans_ld_typeb, MO_UB)
-+TRANS(lhu,  trans_ld_typea, MO_UW)
-+TRANS(lhur, trans_ld_typea, MO_UW ^ MO_BSWAP)
- TRANS(lhui, trans_ld_typeb, MO_UW)
-+TRANS(lw,   trans_ld_typea, MO_UL)
-+TRANS(lwr,  trans_ld_typea, MO_UL ^ MO_BSWAP)
- TRANS(lwi,  trans_ld_typeb, MO_UL)
- 
--static bool trans_lbu(DisasContext *dc, arg_typea *arg)
--{
--    TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_load(dc, arg->rd, addr, MO_UB, dc->mem_index);
--}
--
--static bool trans_lbur(DisasContext *dc, arg_typea *arg)
--{
--    TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_load(dc, arg->rd, addr, MO_UB ^ MO_BSWAP, dc->mem_index);
--}
--
- static bool trans_lbuea(DisasContext *dc, arg_typea *arg)
+ TRANS(lbu,  trans_ld_typea, MO_UB)
+@@ -839,8 +837,6 @@ static bool do_store(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
  {
-     if (trap_userspace(dc, true)) {
-@@ -782,18 +782,6 @@ static bool trans_lbuea(DisasContext *dc, arg_typea *arg)
- #endif
- }
+     MemOp size = mop & MO_SIZE;
  
--static bool trans_lhu(DisasContext *dc, arg_typea *arg)
--{
--    TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_load(dc, arg->rd, addr, MO_UW, dc->mem_index);
--}
+-    mop |= mo_endian(dc);
 -
--static bool trans_lhur(DisasContext *dc, arg_typea *arg)
--{
--    TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_load(dc, arg->rd, addr, MO_UW ^ MO_BSWAP, dc->mem_index);
--}
--
- static bool trans_lhuea(DisasContext *dc, arg_typea *arg)
+     /*
+      * When doing reverse accesses we need to byteswap the data
+      * lanes on the way back into the CPU core.
+@@ -872,13 +868,13 @@ static bool do_store(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
+ static bool trans_st_typea(DisasContext *dc, arg_typea *arg, const MemOp mop)
  {
-     if (trap_userspace(dc, true)) {
-@@ -810,18 +798,6 @@ static bool trans_lhuea(DisasContext *dc, arg_typea *arg)
- #endif
+     TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+-    return do_store(dc, arg->rd, addr, mop, dc->mem_index);
++    return do_store(dc, arg->rd, addr, mop | mo_endian(dc), dc->mem_index);
  }
  
--static bool trans_lw(DisasContext *dc, arg_typea *arg)
--{
--    TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_load(dc, arg->rd, addr, MO_UL, dc->mem_index);
--}
--
--static bool trans_lwr(DisasContext *dc, arg_typea *arg)
--{
--    TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_load(dc, arg->rd, addr, MO_UL ^ MO_BSWAP, dc->mem_index);
--}
--
- static bool trans_lwea(DisasContext *dc, arg_typea *arg)
- {
-     if (trap_userspace(dc, true)) {
-@@ -893,28 +869,28 @@ static bool do_store(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
-     return true;
- }
- 
-+static bool trans_st_typea(DisasContext *dc, arg_typea *arg, const MemOp mop)
-+{
-+    TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
-+    return do_store(dc, arg->rd, addr, mop, dc->mem_index);
-+}
-+
  static bool trans_st_typeb(DisasContext *dc, arg_typeb *arg, const MemOp mop)
  {
      TCGv_i32 addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
-     return do_store(dc, arg->rd, addr, mop, dc->mem_index);
+-    return do_store(dc, arg->rd, addr, mop, dc->mem_index);
++    return do_store(dc, arg->rd, addr, mop | mo_endian(dc), dc->mem_index);
  }
  
-+TRANS(sb,   trans_st_typea, MO_UB)
-+TRANS(sbr,  trans_st_typea, MO_UB ^ MO_BSWAP)
- TRANS(sbi,  trans_st_typeb, MO_UB)
-+TRANS(sh,   trans_st_typea, MO_UW)
-+TRANS(shr,  trans_st_typea, MO_UW ^ MO_BSWAP)
- TRANS(shi,  trans_st_typeb, MO_UW)
-+TRANS(sw,   trans_st_typea, MO_UL)
-+TRANS(swr,  trans_st_typea, MO_UL ^ MO_BSWAP)
- TRANS(swi,  trans_st_typeb, MO_UL)
- 
--static bool trans_sb(DisasContext *dc, arg_typea *arg)
--{
--    TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_store(dc, arg->rd, addr, MO_UB, dc->mem_index);
--}
--
--static bool trans_sbr(DisasContext *dc, arg_typea *arg)
--{
--    TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_store(dc, arg->rd, addr, MO_UB ^ MO_BSWAP, dc->mem_index);
--}
--
- static bool trans_sbea(DisasContext *dc, arg_typea *arg)
- {
-     if (trap_userspace(dc, true)) {
-@@ -929,18 +905,6 @@ static bool trans_sbea(DisasContext *dc, arg_typea *arg)
- #endif
- }
- 
--static bool trans_sh(DisasContext *dc, arg_typea *arg)
--{
--    TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_store(dc, arg->rd, addr, MO_UW, dc->mem_index);
--}
--
--static bool trans_shr(DisasContext *dc, arg_typea *arg)
--{
--    TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_store(dc, arg->rd, addr, MO_UW ^ MO_BSWAP, dc->mem_index);
--}
--
- static bool trans_shea(DisasContext *dc, arg_typea *arg)
- {
-     if (trap_userspace(dc, true)) {
-@@ -957,18 +921,6 @@ static bool trans_shea(DisasContext *dc, arg_typea *arg)
- #endif
- }
- 
--static bool trans_sw(DisasContext *dc, arg_typea *arg)
--{
--    TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_store(dc, arg->rd, addr, MO_UL, dc->mem_index);
--}
--
--static bool trans_swr(DisasContext *dc, arg_typea *arg)
--{
--    TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
--    return do_store(dc, arg->rd, addr, MO_UL ^ MO_BSWAP, dc->mem_index);
--}
--
- static bool trans_swea(DisasContext *dc, arg_typea *arg)
- {
-     if (trap_userspace(dc, true)) {
+ TRANS(sb,   trans_st_typea, MO_UB)
 -- 
 2.53.0
 
