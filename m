@@ -4,47 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51B95C4453C
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:58:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1CC2C44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:58:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWPS-0007Wh-Dd; Wed, 22 Jul 2026 08:50:50 -0400
+	id 1wmWPM-0006jq-GA; Wed, 22 Jul 2026 08:50:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWNR-0003ax-Vp; Wed, 22 Jul 2026 08:48:49 -0400
+ id 1wmWOV-0004Bd-Kn; Wed, 22 Jul 2026 08:49:58 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWNP-0001so-1z; Wed, 22 Jul 2026 08:48:45 -0400
+ id 1wmWOR-0001wE-N7; Wed, 22 Jul 2026 08:49:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724390; bh=tfvqy3gQpGyGg3b2FWhbbOQRyvTnDpDaOwNWBjwg67M=;
+ t=1784724390; bh=m7Zbmzru9CDNHDmAAUJlJFfh89HAUQCD1fao6fVKpJ0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=D3pRGqMVFVdYTsYqAcphfuVUS5OqOCHijq1LiqAbqvw39tJw4by8F+vLGQLveYyul
- Ury7Z8OzXoULj03GpgGxmeI4Y1JhKX9LlSjZ0XoT77yP+XoeQK1ynqA8rsZoo8qMKJ
- Asj3U/3rvIl3tn1d1fWBVQcQvdHlFNJwmT8m2OmSeEUCF7+EJtPHEmrdRvWcAPNSNB
- kOvtxQ+5ygSL0wrDdMFrfLjBKCCCIiigszaB/WoMBq9+HBY8OBimhfbOXXwbF4TKWg
- C3PDveVKDzNPsor+7Io/wiEmQ3j2iHsRUZPnT0qKLXXQo6KFMYhDxXtPqwJe7zH+7P
- IC8mrBRHaIb2A==
+ b=WvQ8CsbSsUk7H7sUPoLrDJiZY1IRSnfLSF/ufJJonqY0RDTeyaz8VaccJrSlxl3+U
+ 1QSDHqPfAuJLm61KjIQuQBNHPqyo4hjQesOPHc9jc4xlibjzRXQwKv4iINOW7XIKxS
+ HIHC9LXhGqRjkhgG1DExA5ytMPduNZ6nJPlxgCCbpAk0v2UtexR9dzzJzuOkS+AQMb
+ t2xi+PkNij1vKSV7JUTEJIx6ilfUYjL2GRVDkb1HJTUHl6lwB3Kjc49KDiWeMFNTNz
+ qlSwL6EgOSqkBpirZ5SrNWLvgppy50Vzv9PkeIMUzGWMo+9a17v5bHvlTmoGnVp1A2
+ UuWL/RrFG+jbw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B34091C3B0D;
+ by isrv.corpit.ru (Postfix) with ESMTP id E23EB1C3B16;
  Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 05A603F3767;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 366C53F3770;
  Wed, 22 Jul 2026 15:46:48 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 7112617F03; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id 8699D17F15; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 100/122] ui/vnc: validate color shifts in
- SetPixelFormat
-Date: Wed, 22 Jul 2026 15:45:49 +0300
-Message-ID: <20260722124622.31034-25-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Feifan Qian <bea1e@proton.me>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 v2 109/122] hw/usb/xhci: clamp interval exponent to
+ avoid UB shift in xhci_init_epctx()
+Date: Wed, 22 Jul 2026 15:45:58 +0300
+Message-ID: <20260722124622.31034-34-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
@@ -74,41 +72,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Feifan Qian <bea1e@proton.me>
 
-A malicious VNC client can send a SetPixelFormat message with shift
-values >= 32, causing UB mask computation
-(e.g. red_max << red_shift where red_shift is 255). Apparently, this is
-not covered by -fwrapv.
+The xHCI endpoint context dword 0 bits 23:16 ("Interval") are written
+by the guest and passed directly as the shift amount in:
 
-Reject color shifts >= bits_per_pixel || 32 before computing masks.
+    epctx->interval = 1 << ((ctx[0] >> 16) & 0xff);
 
-Fixes: 9f64916da20 ("pixman/vnc: use pixman images in vnc.")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3948
-Reported-by: huntr bubble
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
-(cherry picked from commit fb71c895d7ff3c68f228095b5e6494e6c23b6a0b)
+The shift amount can be 0-255.  Shifting a 32-bit `int` left by >= 32
+is undefined behaviour under C11 §6.5.7p4.  With UBSan
+(halt_on_error=1) this causes QEMU to abort; with aggressive compiler
+optimisations that assume UB is unreachable the result is
+unpredictable.
+
+Clamp the exponent to [0, 18] with MIN() before the shift, and use
+`1u` (unsigned) to avoid shifting a signed integer.  The xHCI
+specification defines a maximum meaningful Interval value of 18 for
+most endpoint types; thus clamping to 18 is a safe fix that
+preserves the full unsigned 32-bit range for any compliant value.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3703
+Reported-by: Feifan Qian <bea1e@proton.me>
+Signed-off-by: Feifan Qian <bea1e@proton.me>
+[thuth: Clamp to 18 instead of 31]
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit 12d8ee9d5358cd8cdd2c2193081b4d7fea4b6098)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/vnc.c b/ui/vnc.c
-index 33432789905..397773f1e52 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -2308,6 +2308,13 @@ static void set_pixel_format(VncState *vs, int bits_per_pixel,
-         return;
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index 5835b1566dc..31def9dad7e 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -1122,7 +1122,7 @@ static void xhci_init_epctx(XHCIEPContext *epctx,
+         epctx->ring.ccs = ctx[2] & 1;
      }
  
-+    if (red_shift >= bits_per_pixel || red_shift >= 32 ||
-+        green_shift >= bits_per_pixel || green_shift >= 32 ||
-+        blue_shift >= bits_per_pixel || blue_shift >= 32) {
-+        vnc_client_error(vs);
-+        return;
-+    }
-+
-     vs->client_pf.rmax = red_max ? red_max : 0xFF;
-     vs->client_pf.rbits = ctpopl(red_max);
-     vs->client_pf.rshift = red_shift;
+-    epctx->interval = 1 << ((ctx[0] >> 16) & 0xff);
++    epctx->interval = 1u << MIN((ctx[0] >> 16) & 0xffu, 18u);
+ }
+ 
+ static TRBCCode xhci_enable_ep(XHCIState *xhci, unsigned int slotid,
 -- 
 2.47.3
 
