@@ -4,110 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3346FC44512
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 07:15:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DD00C4451C
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 07:20:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmR9d-0002oa-C6; Wed, 22 Jul 2026 03:14:09 -0400
+	id 1wmRF2-0004jb-P1; Wed, 22 Jul 2026 03:19:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wmR9b-0002o4-Az
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 03:14:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1wmRF0-0004iW-Pl
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 03:19:42 -0400
+Received: from mail-westcentralusazon11010009.outbound.protection.outlook.com
+ ([40.93.198.9] helo=CY7PR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wmR9U-0005Zo-FE
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 03:14:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784704439;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7rw6w9ogoPhqjNbcM3z322xDGoJiejIRBqWFWI2tGvQ=;
- b=GMD8gTgPTca4gly1FG9IbBLy9CTZHAiLnnC1Z4aWFMOGSJWI/LelGTEeg/EwAwo+/A25lV
- mS3DP/Zckko7r5189ayIQjSH4efeaeOtKzR4dJqmHrrP6dH1QeU+vc+YENAn+kCG1uGeSe
- nPUppMSAF/aaQZKQohPVPubkDUBmRDY=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-503-Dseg2FkEN_eqvi-JQVxrrQ-1; Wed, 22 Jul 2026 03:13:57 -0400
-X-MC-Unique: Dseg2FkEN_eqvi-JQVxrrQ-1
-X-Mimecast-MFC-AGG-ID: Dseg2FkEN_eqvi-JQVxrrQ_1784704437
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-2cec4226c70so198287955ad.1
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 00:13:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784704437; x=1785309237; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=7rw6w9ogoPhqjNbcM3z322xDGoJiejIRBqWFWI2tGvQ=;
- b=Ez4jtB8DgzFLPsmCQtN9TUwNFvEQ0JuVifJxPjD3zGUo7+jnm0Z7TdrTpTCTCe3sWD
- HGEdg7d0Gjyy89WYCzhkcdynZSdSzx6hGGebrSR0d1SoXtgHPsmOEygo7HDcGD9VPh/l
- HhEtoXntcD7zAMtEZCXZrk/uqKTBoH+gmuNA9HM3tBkDT3orZBYQJrDCGGgfe0Q8HQAY
- /gl8S0f82PD1C1um/AE2iqZoO8hSnhllht+emO8AgHO31hd4mKhqsrbPpAfgO0dgsZrA
- RC8Goj23vbMT0YPdzKC6hmYGZnC3exGqjsblMlJNRxSJlUB4Ib9BBOHOER93HVB4X0sl
- t7sQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784704437; x=1785309237;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=7rw6w9ogoPhqjNbcM3z322xDGoJiejIRBqWFWI2tGvQ=;
- b=PbRl3pv0kGEKT0Pdg1ZIvFix9J5G37I9LdmVhFxyaCfXkkVyirUzdMSAvlieGCWnpo
- 702QfWTXC9dNpMNhdhxPt/RXhhDDu/gzjOVqC03sIbaPbuytu/SQ1cI8IJZkw9ebOxmz
- iq8jmsqHmBVLKzS2AyWa9M/sZmTd+toG52TTBc9jWQJNmPdaSGV2gvIZYMVy0Del6Gw4
- ShMapKNNM57hK8O73iLTMJsPGTqJlhlXGQKt7zJFMj0gq9dno7PvxNpNRegp8yRas8j6
- ZjA4wnjqfAIlS3k6mavgVYGdzomM2owKKUDKN37djz6sEc+mjxedF+oHEYyUAGiqJGrf
- kqTA==
-X-Gm-Message-State: AOJu0YxOFhJEt83/Tt2tNX8v+5cq+VyIt85S/NZTF8tGg9j6EwG8naHo
- 8SUxXzmqKD4EyfVnd9OZvnn7s0NVUFMJVu0ghRdk0rzxieBOSbjDDqK3pOZN5wfrzT0SE3gzI6O
- P8Bb4TLnD1zjy3hmR5WIE3hcKzIycEK2Kl0Xnv0/vWbeWr5lTDmyn/+t5
-X-Gm-Gg: AR+sD13kijka8S0XvicEpUYtkog4Qd+0enQyoxumk8GZAyF4Y75tAHr2QNl3soAw2B9
- SqluqgLKiKX4DzV7/vuDFT0Tt9fenuQ15pkQj0BowL2bxbk9uBeyzxsZQFaw4VTUI0hWy6zsk/K
- wwCtVKGgmoSDSn9oideBO6mHeMpOmLz3Od4CHgR1SSqzOkyp6jjJKq33gSe9DDafhTv9ggLmIpm
- HjTlhjJkqNswzb37TKkXpM1nPN9zURKtsdZMEBuQsJkguYKG14g61kGhVnkjZxPbWkeoX6ARxYx
- K6VgD/539MEc12egxFD4HVQsSAO4cuwLNS8ifxQHUDZTV5ii9Zh2lMksoT+pDsvaU3gu0CQiLCP
- uE1kmZzva2I3GenCW8OSWQarI4+kczzQ9YAE+xPwlr8g=
-X-Received: by 2002:a17:903:2986:b0:2ce:b7b7:30e3 with SMTP id
- d9443c01a7336-2cf348575cbmr251670115ad.17.1784704436644; 
- Wed, 22 Jul 2026 00:13:56 -0700 (PDT)
-X-Received: by 2002:a17:903:2986:b0:2ce:b7b7:30e3 with SMTP id
- d9443c01a7336-2cf348575cbmr251669305ad.17.1784704435251; 
- Wed, 22 Jul 2026 00:13:55 -0700 (PDT)
-Received: from [192.168.68.51] (n175-34-8-244.mrk21.qld.optusnet.com.au.
- [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2cf8f3b7c9dsm9207365ad.83.2026.07.22.00.13.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Jul 2026 00:13:54 -0700 (PDT)
-Message-ID: <97a0e92e-ddc7-4eb3-9fcc-7b05bea8b220@redhat.com>
-Date: Wed, 22 Jul 2026 17:13:46 +1000
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1wmREx-0006Cx-9j
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 03:19:41 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=f6rD5JpLTQFhvjK+3+eX+lAmHZOEPgjVHw6JjVnhqdsaJ+IQ9UkKQcDU6vTyFo6LmHqEhrC76tHzIHgDmGML6f2jR1xIZnM+4w3ZWnmRKIiYxsQCMvRKNpHEpZIfaETShQUCeFw1gAuIi1HeFiCM8hKyaIp0VTHDtT4y61Hr4wHhFIA3movHeYhmwjuDr6TReIRsQ7OyYgqcSLxiwe00+2GyxDlG7y9xPkNjsxibYY8pBOKxiWHaBRyDdJmDqqN3DUNZv8iTu3QbS3V4DfItzGNByd5YNYmx3okBwzK26K4QI+F8arNJSDjHCtUHO6eZ+5HLJiG9pkVolVOuD9Xp9A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+N3JWiUCYbn5vSzwb6sdPAkBdVCPj1PARCD2qm/INlU=;
+ b=u3Wf++XkrHLo7zLRKHrtkNAvE04OIiHrqm57/zbm9BJ/coDxynjB56fASA7MQYNEQLy368vt0uje3IlatLT3g1Rh38HO+I6obbkvxTN1NrghFMoWEAKlEEkzH2OpHPkSaegv17s1Xj+LS+uyaaBenmlgnGkRYFNzIa9xASYyAeUcIK9GuC+IMJl0/xmbkbb1iaGJ/x+nnpNfhYeUSfdCsTok9fZFL/p+FD/ApdzOEY+IsxUcDNb95CJdQQPjTvchK6YCkCrOSdWv9a/wwVV9sKKErtpsjkCzYYOmGlqv/iHKT37rh8Rp0tG/iC6QHwY4ads0wA1kSOFEafLZ7DA6Fw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+N3JWiUCYbn5vSzwb6sdPAkBdVCPj1PARCD2qm/INlU=;
+ b=P5LpdUp4aufb0e5B1xay3BVO4ghbtT7R4mV478+Gdra+1u+y0+G0gt6iXqin7EzsfDkCQ2lEj9BbeWcXVoq2as2LKAWW01K+VzCXPAVhrrl95CUYm2548yEcTRfJnzCjwo8T9LKHssKyNF8Ji+uqI9GLXge0LXUK3e6vdDHQZyg=
+Received: from DS1PR04CA0021.namprd04.prod.outlook.com (2603:10b6:8:243::16)
+ by CH2PR12MB4216.namprd12.prod.outlook.com (2603:10b6:610:a8::23) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.10; Wed, 22 Jul
+ 2026 07:14:30 +0000
+Received: from DS2PEPF000061C2.namprd02.prod.outlook.com
+ (2603:10b6:8:243:cafe::1f) by DS1PR04CA0021.outlook.office365.com
+ (2603:10b6:8:243::16) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.245.10 via Frontend Transport; Wed,
+ 22 Jul 2026 07:14:30 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ DS2PEPF000061C2.mail.protection.outlook.com (10.167.23.69) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.245.5 via Frontend Transport; Wed, 22 Jul 2026 07:14:29 +0000
+Received: from satlexmb10.amd.com (10.181.42.219) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Wed, 22 Jul
+ 2026 02:14:29 -0500
+Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb10.amd.com
+ (10.181.42.219) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Wed, 22 Jul
+ 2026 02:14:29 -0500
+Received: from XFR-LUMICHEL-L2.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41 via Frontend
+ Transport; Wed, 22 Jul 2026 02:14:28 -0500
+Date: Wed, 22 Jul 2026 09:14:21 +0200
+From: Luc Michel <luc.michel@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, "Edgar E . Iglesias"
+ <edgar.iglesias@amd.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Francisco Iglesias <francisco.iglesias@amd.com>, Frederic Konrad
+ <frederic.konrad@amd.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH] target/microblaze/translate: fix reversed load/store
+ translation
+Message-ID: <amBtzTFzNTPbEYB9@XFR-LUMICHEL-L2.amd.com>
+References: <20260710072348.3575-1-luc.michel@amd.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v1 00/25] Add Realm support to QEMU-VMM
-To: Mathieu Poirier <mathieu.poirier@linaro.org>, berrange@redhat.com,
- kchamart@redhat.com, pierrick.bouvier@oss.qualcomm.com,
- peter.maydell@linaro.org, mst@redhat.com, cohuck@redhat.com,
- pbonzini@redhat.com, eblake@redhat.com, armbru@redhat.com, jpb@kernel.org,
- lorenzo.pieralisi@linaro.org
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvm@vger.kernel.org
-References: <20260707224306.1202330-1-mathieu.poirier@linaro.org>
-Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20260707224306.1202330-1-mathieu.poirier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: permerror client-ip=170.10.129.124;
- envelope-from=gshan@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20260710072348.3575-1-luc.michel@amd.com>
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS2PEPF000061C2:EE_|CH2PR12MB4216:EE_
+X-MS-Office365-Filtering-Correlation-Id: 681cb6c6-76b3-42cd-f071-08dee7c0df48
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|82310400026|36860700016|376014|1800799024|6133799003|10067099003|11063799006|56012099006|18092099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: 50Fb5C0cXlbdknw88hSz2lsRsBdnpM/rRvFbkmRE+yX+dw63cdDfwGRUMXhrOOGsFYRINWaOCmCnQGgk64r5we7Cuo3I2tLAhrEInExrHwQOVYm2PyzW1AU0zZgTbyfHqJ/9GItsvyCBLWtDcjH4ybNgJsC1B7GC2J0ggiQ1v6/LtDDjCPXm/A1pFMa0OnyaSFlPKyoEhHg73n1oep23Ic4nKK7WrOvevocixRh9rnaw8+4iwoQqvFk88G4Qa0gf/hJTh+Soj5UGh/LpH9MyqrW4nInfUBmaS1FD5NjbvdWtKGrEvcbNnM1oAvuD3P/nKcd0HY+4NkuJ7c6t9O4zw6xDQFH98S6+IpbR1sR1EOEChpPmFRbO+AeWA9xXwuuzA3ygNVSXsnQ1+dSR7tfWpCW62KkIcxp7Fd466x3ZTz70PbfoaUCJvTeqxE8RMTytKFcSIaMnKqb34deGVZa/Q3H4/RcEEgdoDMogGuf7yjBKyyij4sJTfcXKKazju0McVNH4RSY8ARxtm+IHFSBfeZbmwniV8C79ANvmjlHwva4ovcJoIblHyEGMSsxu2G1GEJpGWUwIIJwda/JgWDl2KWZvqGv+JlOrjz7vws+unWLQbQckqwTSY+Avtl9wKK/Qa7zjaPlHNT2VzGwsGkEWX5iKwtGY5PDDnxjTEyr1ykdaZ1pqYwyWNly6Zw3CGYQnsahYT81BKfzD89HZF+AeYw==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(23010399003)(82310400026)(36860700016)(376014)(1800799024)(6133799003)(10067099003)(11063799006)(56012099006)(18092099006)(22082099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: vvRvm8DyduzdBbosRUmvesGzKudPPOfJuiHmz4tEmyBFb9O1JQSDqmQpm5k/LcW6BYWUg+TVXGzEumverBueVhWpC2lQzCjNXlyr2a0vYdyffN7dADNQVQ7kKKYTkie7UPnEeAdsvblCrNxf3tztZHpcRrHI4MPdU8EFO2AKSLKn262pv31dYiH/4pJP3UUCjcwB3mzUKohKG6TYzOVnHq1i/r3l14FMucMy+dLeRl9ARF8F6xvpDj0LHTOAzAfETtB3IjWxFyuMpswHucMNQSGKBaixCT7rU3T+jtYkS2Nv8W2pWGJuPiL3THhhR2eqwpWLUVJ6jKBLk+kBnGQ+DTBh/9tLLEgJDwvFcD2vkTxtNMKip13YszENF/TzCM/qY26RwtA2Y0b6mpaIs1q7tzbpvzbzGlke+vDlBXtQgj19YC0awgNJkQ/KFbDS5S0X
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jul 2026 07:14:29.8232 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 681cb6c6-76b3-42cd-f071-08dee7c0df48
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: DS2PEPF000061C2.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4216
+Received-SPF: permerror client-ip=40.93.198.9; envelope-from=Luc.Michel@amd.com;
+ helo=CY7PR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,132 +133,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Mathieu,
+Hello,
 
-On 7/8/26 8:42 AM, Mathieu Poirier wrote:
-> This patchset provides minimal functionality to start a Realm VM
-> from an Arm RME cabable host using the following command line:
+Gentle ping. The fix just consist in allocating a new TCG temp for the
+address if we need to modify it.
+
+Thanks
+
+Luc
+
+On 09:23 Fri 10 Jul     , Luc Michel wrote:
+> Since 36a9529e60e0 the TCGv returned by compute_ldst_addr_type{a,b} for
+> the address can be a target register or a constant. However
+> do_{load,store} might modify it in the case of a reversed load/store.
 > 
-> qemu-system-aarch64 -M confidential-guest-support=rme0 -object rme-guest,id=rme0 \
->          -cpu host -M virt -enable-kvm -M gic-version=3,its=on -nodefaults ..
+> Fix this by factoring out the reversed access logic and copying the
+> address in a new TCGv_i32 if it needs to be modified.
 > 
-> This set is a refactoring of Jean-Philippe Brucker's initial work dating from
-> a while back.  It is compatible with Steven Price's v14 revision [1] of his work
-> adding CCA support to KVM.
+> Fixes: 36a9529e60e0 (target/microblaze: Simplify compute_ldst_addr_type{a,b})
+> Signed-off-by: Luc Michel <luc.michel@amd.com>
+> ---
+>  target/microblaze/translate.c | 56 ++++++++++++++++++++---------------
+>  1 file changed, 32 insertions(+), 24 deletions(-)
 > 
-> The RME capable host it was tested on is the QEMU SBSA machine.  For convenicence
-> a repository is hosted here [2], along with the TF-A [3], RMM [4] and Linux
-> kernel [5] for the SBSA machine (all compatible with Steven's v14 patchset).
+> diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+> index 8b219afb5dd..9fb84e1bf9f 100644
+> --- a/target/microblaze/translate.c
+> +++ b/target/microblaze/translate.c
+> @@ -701,30 +701,47 @@ static void gen_alignment_check_ea(DisasContext *dc, TCGv_i64 ea, int rb,
+>  static inline MemOp mo_endian(DisasContext *dc)
+>  {
+>      return dc->cfg->endi ? MO_LE : MO_BE;
+>  }
+>  
+> +static void handle_reversed_access(MemOp *mop, TCGv_i32 *addr)
+> +{
+> +    MemOp size = *mop & MO_SIZE;
+> +
+> +    /*
+> +     * When doing reverse accesses we need to do two things.
+> +     *
+> +     * 1. Reverse the address wrt endianness.
+> +     * 2. Byteswap the data lanes on the way back into the CPU core.
+> +     *
+> +     * Use a new TCGv_i32 to modify the address because the current one might be
+> +     * a register or a constant.
+> +     */
+> +
+> +    if (size > MO_8) {
+> +        *mop ^= MO_BSWAP;
+> +    }
+> +
+> +    if (size < MO_32) {
+> +        TCGv_i32 new_addr = tcg_temp_new_i32();
+> +
+> +        tcg_gen_xori_i32(new_addr, *addr, 3 - size);
+> +        *addr = new_addr;
+> +    }
+> +}
+> +
+>  static bool do_load(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
+>                      int mem_index, bool rev)
+>  {
+> +#ifndef CONFIG_USER_ONLY
+>      MemOp size = mop & MO_SIZE;
+> +#endif
+>  
+>      mop |= mo_endian(dc);
+>  
+> -    /*
+> -     * When doing reverse accesses we need to do two things.
+> -     *
+> -     * 1. Reverse the address wrt endianness.
+> -     * 2. Byteswap the data lanes on the way back into the CPU core.
+> -     */
+>      if (rev) {
+> -        if (size > MO_8) {
+> -            mop ^= MO_BSWAP;
+> -        }
+> -        if (size < MO_32) {
+> -            tcg_gen_xori_i32(addr, addr, 3 - size);
+> -        }
+> +        handle_reversed_access(&mop, &addr);
+>      }
+>  
+>      /*
+>       * For system mode, enforce alignment if the cpu configuration
+>       * requires it.  For user-mode, the Linux kernel will have fixed up
+> @@ -864,27 +881,18 @@ static bool trans_lwx(DisasContext *dc, arg_typea *arg)
+>  }
+>  
+>  static bool do_store(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
+>                       int mem_index, bool rev)
+>  {
+> +#ifndef CONFIG_USER_ONLY
+>      MemOp size = mop & MO_SIZE;
+> +#endif
+>  
+>      mop |= mo_endian(dc);
+>  
+> -    /*
+> -     * When doing reverse accesses we need to do two things.
+> -     *
+> -     * 1. Reverse the address wrt endianness.
+> -     * 2. Byteswap the data lanes on the way back into the CPU core.
+> -     */
+>      if (rev) {
+> -        if (size > MO_8) {
+> -            mop ^= MO_BSWAP;
+> -        }
+> -        if (size < MO_32) {
+> -            tcg_gen_xori_i32(addr, addr, 3 - size);
+> -        }
+> +        handle_reversed_access(&mop, &addr);
+>      }
+>  
+>      /*
+>       * For system mode, enforce alignment if the cpu configuration
+>       * requires it.  For user-mode, the Linux kernel will have fixed up
+> -- 
+> 2.53.0
 > 
-> Device Assignment is not included.
-> 
->  From hereon I will keep this set up to date with new releases from Steven.
-> 
-> Thanks,
-> Mathieu
-> 
-> [1]. https://lore.kernel.org/kvm/20260513131757.116630-1-steven.price@arm.com/T/#m06dd14216aaf76acab65b0a76fb84653141ea64f
-> [2]. https://gitlab.com/Linaro/cca-public/qemu/-/tree/upstream-v1?ref_type=heads
-> [3]. https://gitlab.com/Linaro/cca-public/tf-a/trusted-firmware-a/-/tree/cca/v13?ref_type=heads
-> [4]. https://gitlab.com/Linaro/cca-public/rmm/-/tree/cca/v14?ref_type=heads
-> [5]. https://gitlab.com/Linaro/cca-public/linux/-/tree/cca/v14?ref_type=heads
-> 
-[...]
 
-Gave this series + (v14) series a try and found the following issues so far. Note
-some of the HMP commands like those relevant to migration have been skipped since
-we know the migration isn't supported. I list the issues for record and we eventually
-need to figure them out one by one.
-
-(1) qemu is terminiated on exeute qmp command 'dump-guest-memory'
-
-(qemu) dump-guest-memory -p "/tmp/mem" 0x40000000 0x10000000
-**
-ERROR:../system/memory_mapping.c:215:guest_phys_block_add_section: assertion failed: (predecessor->target_end <= target_start)
-Bail out! ERROR:../system/memory_mapping.c:215:guest_phys_block_add_section: assertion failed: (predecessor->target_end <= target_start)
-Aborted
-
-(2) qemu emulation can't be stopped and resumed
-
-(qemu) stop
-(qemu) cont
-Failed to set KVM_REG_ARM_TIMER_CNT
-
-(3) qemu is terminiated on qmp command 'system_reset'
-
-(qemu) system_reset
-cpus are not resettable, terminating
-
-(4) Incompatible to virtio-iommu-pci. The realm guest doesn't boot up with
-     a virtio-iommu-pci device
-
-host$ qemu-system-aarch64 -enable-kvm -object rme-guest,id=rme0                \
--machine virt,gic-version=3,confidential-guest-support=rme0                    \
--m 2G -cpu host -smp maxcpus=4,cpus=4,sockets=1,clusters=1,cores=2,threads=2   \
--object memory-backend-ram,id=mem0,size=2G,share=yes                           \
--numa node,nodeid=0,cpus=0-3,memdev=mem0                                       \
--serial mon:stdio -monitor none -nographic -nodefaults                         \
--bios /mnt/edk2/Build/ArmVirtQemu-AARCH64/RELEASE_GCC5/FV/QEMU_EFI.fd          \
--kernel /mnt/linux/arch/arm64/boot/Image                                       \
--initrd /mnt/buildroot/output/images/rootfs.cpio.xz                            \
--append earlycon=pl011,mmio,0x10009000000                                      \
--device pcie-root-port,bus=pcie.0,chassis=1,id=pcie.1                          \
--device pcie-root-port,bus=pcie.0,chassis=2,id=pcie.2                          \
--device virtio-iommu-pci,bus=pcie.0                                            \
--netdev tap,id=tap1,vhost=on,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown \
--device virtio-net-pci,bus=pcie.2,netdev=tap1,mac=b8:3f:d2:1d:3e:c0
-         :
-UEFI firmware (version  built at 00:09:11 on Jun 30 2026)
-         :
-[    0.000000] Booting Linux on physical CPU 0x0000000000 [0x000f0510]
-[    0.000000] Linux version 7.2.0-rc4-gavin-g1590cf032971 (gshan@nvidia-grace-hopper-01.khw.eng.bos2.dc.redhat.com) (gcc (GCC) 14.3.1 20251022 (Red Hat 14.3.1-4), GNU ld version 2.41-65.el10) #46 SMP PREEMPT Mon Jul 20 06:56:20 EDT 2026
-[    0.000000] KASLR enabled
-[    0.000000] earlycon: pl11 at MMIO 0x0000010009000000 (options '')
-[    0.000000] printk: legacy bootconsole [pl11] enabled
-[    0.000000] efi: EFI v2.7 by EDK II
-[    0.000000] efi: SMBIOS 3.0=0xbff60000 ACPI 2.0=0xbdee2018 INITRD=0xbdd94f18 RNG=0xbdee2a18 MEMRESERVE=0xbdd94f98
-         :
-[   18.374507] virtio-pci 0000:00:03.0: enabling device (0000 -> 0002)
-[   18.594890] Serial: 8250/16550 driver, 4 ports, IRQ sharing enabled
-[   18.651840] Serial: AMBA driver
-[   19.669576] software IO TLB: Memory encryption is active and system is using DMA bounce buffers
-[   35.021315] Freeing initrd memory: 5772K
-[   40.984997] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
-[   41.076752] rcu: 	3-...0: (77 ticks this GP) idle=aed4/1/0x4000000000000000 softirq=83/97 fqs=2365
-[   41.210687] rcu: 	(detected by 2, t=5307 jiffies, g=-1079, q=352 ncpus=4)
-[   41.311646] Sending NMI from CPU 2 to CPUs 3:
-[   51.631564] After 10 seconds, these CPUS still haven't responded to the NMI: 3
-[   51.739789] rcu: rcu_preempt kthread timer wakeup didn't happen for 2685 jiffies! g-1079 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x402
-[   51.910690] rcu: 	Possible timer handling issue on cpu=2 timer-softirq=2168
-[   52.014654] rcu: rcu_preempt kthread starved for 2756 jiffies! g-1079 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x402 ->cpu=2
-[   52.169468] rcu: 	Unless rcu_preempt kthread gets sufficient CPU time, OOM is now expected behavior.
-[   52.304725] rcu: RCU grace-period kthread stack dump:
-[   52.379337] task:rcu_preempt     state:I stack:0     pid:15    tgid:15    ppid:2      task_flags:0x208040 flags:0x00000010
-[   52.542813] Call trace:
-[   52.578516]  __switch_to+0xfc/0x248 (T)
-[   52.636293]  __schedule+0x3a4/0xe68
-[   52.686511]  schedule+0x3c/0xe8
-[   52.731765]  schedule_timeout+0x80/0x120
-[   52.788489]  rcu_gp_fqs_loop+0x110/0x440
-[   52.846921]  rcu_gp_kthread+0x10c/0x120
-[   52.906472]  kthread+0x138/0x150
-[   52.955082]  ret_from_fork+0x10/0x20
-
-(5) As reported previously, 'reboot' on the realm guest causes the termination of qemu process.
-
-root@guest:~# reboot
-     :
-The system is going down NOW!
-Sent SIGTERM to all processes
-Sent SIGKILL to all processes
-Requesting system reboot
-[   61.874435] reboot: Restarting system
-qemu-system-aarch64: cpus are not resettable, terminating
-qemu-system-aarch64: cpus are not resettable, terminating
-qemu-system-aarch64: cpus are not resettable, terminating
-qemu-system-aarch64: cpus are not resettable, terminating
-
-Thanks,
-Gavin
-
+-- 
 
