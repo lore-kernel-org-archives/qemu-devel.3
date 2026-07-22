@@ -4,73 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2595C44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:59:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 938C9C44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 14:03:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmXSZ-0007gG-1y; Wed, 22 Jul 2026 09:58:07 -0400
+	id 1wmXXs-0002m4-Ta; Wed, 22 Jul 2026 10:03:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wmXSV-0007f0-L8
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 09:58:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wmXSU-0006t6-4X
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 09:58:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784728681;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GjAKuZGD/e3TUI8K9fZukuAlvtrrLMVlz77kvZ/XcBE=;
- b=GPl1opKXd1LHSLTIvk8pamOcCvdFdDJDGkrBTRLt3ui+uyIk6mlMd/sDGmxEe0LvDhyQ6k
- UMmng7GPxdArEjpRvZeCFs5eQo2Q01PHdLJ5fzX2BuQIgqieDnFMXG8dFXHaUeqhZ7fzKS
- 4PRAYYNd8ntRlnBoiZ3KEAamoQcFpeI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-66-eAfiO2UcN5Sj6ebwlcc3AQ-1; Wed,
- 22 Jul 2026 09:57:57 -0400
-X-MC-Unique: eAfiO2UcN5Sj6ebwlcc3AQ-1
-X-Mimecast-MFC-AGG-ID: eAfiO2UcN5Sj6ebwlcc3AQ_1784728676
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 84E4A1954111
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 13:57:56 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.44.49.247])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 417983004082; Wed, 22 Jul 2026 13:57:56 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 9A2071826B12; Wed, 22 Jul 2026 15:57:52 +0200 (CEST)
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
-	Luigi Leonardi <leonardi@redhat.com>
-Subject: [PULL 4/6] hw/uefi: account variable policy entries against storage
- size
-Date: Wed, 22 Jul 2026 15:57:48 +0200
-Message-ID: <20260722135752.1264244-5-kraxel@redhat.com>
-In-Reply-To: <20260722135752.1264244-1-kraxel@redhat.com>
-References: <20260722135752.1264244-1-kraxel@redhat.com>
+ (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
+ id 1wmXXr-0002ln-E2
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 10:03:35 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wmXXp-0007O0-UU
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 10:03:35 -0400
+Received: from linux.microsoft.com (unknown [86.121.140.206])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 947BF20B7167;
+ Wed, 22 Jul 2026 07:03:17 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 947BF20B7167
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1784728999;
+ bh=eaIjGCyozH9V40rnl7gMhm+VJnQW4ImQYjEBDphR2Ro=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=Jw6gj+5M0ZC+sz7gEe4kDFEE9iv7Y1VyJGuv6LXlFY2Love0yVpTvF1roLp9PhVZC
+ 7Ppbl6Q3KJyqqmGOfThFUpeGNTa5VtQl8LOpLPvDr7PDV/ZnzV4XzdeZ9O88o3LGMg
+ WbYEbrbjI2GAuX2bCsTTLkNJI0ZElK3b0mBk+Y2M=
+Date: Wed, 22 Jul 2026 17:03:22 +0300
+From: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Magnus Kulke <magnuskulke@microsoft.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
+ Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <doru.blanzeanu@microsoft.com>,
+ Wei Liu <liuwe@microsoft.com>
+Subject: Re: [PATCH 06/12] target/i386/mshv: migrate Synic SINT MSRs
+Message-ID: <amDNqvZ37qZX5Yd1@linux.microsoft.com>
+References: <20260710101534.664604-1-magnuskulke@linux.microsoft.com>
+ <20260710101534.664604-7-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=kraxel@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+In-Reply-To: <20260710101534.664604-7-magnuskulke@linux.microsoft.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,57 +72,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-uefi-vars already tracks (and limits) the memory footprint of UEFI
-variables.  Do that for variable policies too.
+On Fri, Jul 10, 2026 at 12:15:28PM +0200, Magnus Kulke wrote:
+> Migrate HyperV SynIC SINT MSRs. We can only read/write those if SCONTROL
+> is enabled in the guest, hence we have to split the SINT MSR out and
+> make reading/writing them dependent on that MSR.
+> 
+> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+> ---
+>  target/i386/mshv/msr.c | 41 +++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 41 insertions(+)
+> 
+> diff --git a/target/i386/mshv/msr.c b/target/i386/mshv/msr.c
+> index a5f639c3ca..5288e32b6d 100644
+> --- a/target/i386/mshv/msr.c
+> +++ b/target/i386/mshv/msr.c
+> @@ -331,6 +331,8 @@ int mshv_get_msrs(CPUState *cpu)
+>      struct hv_register_assoc assocs[MSHV_MSR_TOTAL_COUNT];
+>      size_t i, j;
+>      uint32_t name;
+> +    X86CPU *x86cpu = X86_CPU(cpu);
+> +    bool synic_enabled;
+>  
+>      set_hv_name_in_assocs(assocs, n_assocs);
+>  
+> @@ -357,6 +359,27 @@ int mshv_get_msrs(CPUState *cpu)
+>  
+>      store_in_env(cpu, assocs, n_assocs);
+>  
+> +    /* Read SINT MSRs only if SynIC is enabled */
+> +    synic_enabled = x86cpu->env.msr_hv_synic_control & 1;
+> +    if (synic_enabled) {
+> +        QEMU_BUILD_BUG_ON(MSHV_MSR_TOTAL_COUNT < HV_SINT_COUNT);
+> +
+> +        for (i = 0; i < HV_SINT_COUNT; i++) {
+> +            assocs[i].name = HV_REGISTER_SINT0 + i;
+> +        }
+> +
+> +        ret = mshv_get_generic_regs(cpu, assocs, HV_SINT_COUNT);
+> +        if (ret < 0) {
+> +            error_report("Failed to get SynIC SINT MSRs");
+> +            return -errno;
+> +        }
+> +
+> +        for (i = 0; i < HV_SINT_COUNT; i++) {
+> +            uint64_t hv_sint_value = assocs[i].value.reg64;
+> +            x86cpu->env.msr_hv_synic_sint[i] = hv_sint_value;
+> +        }
+> +    }
+> +
+>      return 0;
+>  }
+>  
+> @@ -391,6 +414,8 @@ int mshv_set_msrs(const CPUState *cpu)
+>      struct hv_register_assoc assocs[MSHV_MSR_TOTAL_COUNT];
+>      int ret;
+>      size_t i, j;
+> +    X86CPU *x86cpu = X86_CPU(cpu);
+> +    bool synic_enabled = x86cpu->env.msr_hv_synic_control & 1;
+>  
+>      load_from_env(cpu, assocs, n_assocs);
+>  
+> @@ -423,5 +448,21 @@ int mshv_set_msrs(const CPUState *cpu)
+>          return -errno;
+>      }
+>  
+> +    /* SINT MSRs can only be written if SCONTROL has been set, so we split */
+> +    if (synic_enabled) {
+> +        QEMU_BUILD_BUG_ON(MSHV_MSR_TOTAL_COUNT < HV_SINT_COUNT);
+> +
+> +        for (i = 0; i < HV_SINT_COUNT; i++) {
+> +            assocs[i].name        = HV_REGISTER_SINT0 + i;
+> +            assocs[i].value.reg64 = x86cpu->env.msr_hv_synic_sint[i];
+> +        }
+> +
+> +        ret = mshv_set_generic_regs(cpu, assocs, HV_SINT_COUNT);
+> +        if (ret < 0) {
+> +            error_report("Failed to set SynIC SINT MSRs");
+> +            return -errno;
+> +        }
+> +    }
+> +
+>      return 0;
+>  }
+> -- 
+> 2.34.1
 
-Fixes: CVE-2026-61405
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3890
-Acked-by: Luigi Leonardi <leonardi@redhat.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260720143244.821889-5-kraxel@redhat.com>
----
- hw/uefi/var-service-policy.c | 5 +++++
- hw/uefi/var-service-vars.c   | 4 ++++
- 2 files changed, 9 insertions(+)
-
-diff --git a/hw/uefi/var-service-policy.c b/hw/uefi/var-service-policy.c
-index 0880bfe074a6..46c4ff2dacae 100644
---- a/hw/uefi/var-service-policy.c
-+++ b/hw/uefi/var-service-policy.c
-@@ -283,7 +283,12 @@ static uint32_t uefi_vars_mm_check_policy_register(uefi_vars_state *uv,
-         return uefi_vars_mm_policy_error(mhdr, mchk, EFI_ALREADY_STARTED);
-     }
- 
-+    if (uv->used_storage + pe->size > uv->max_storage) {
-+        return uefi_vars_mm_policy_error(mhdr, mchk, EFI_OUT_OF_RESOURCES);
-+    }
-+
-     uefi_vars_add_policy(uv, pe);
-+    uv->used_storage += pe->size;
- 
-     mchk->result = EFI_SUCCESS;
-     return sizeof(*mchk);
-diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
-index 2c83130ebf63..fd07782f1e0d 100644
---- a/hw/uefi/var-service-vars.c
-+++ b/hw/uefi/var-service-vars.c
-@@ -201,11 +201,15 @@ void uefi_vars_clear_all(uefi_vars_state *uv)
- void uefi_vars_update_storage(uefi_vars_state *uv)
- {
-     uefi_variable *var;
-+    uefi_var_policy *pol;
- 
-     uv->used_storage = 0;
-     QTAILQ_FOREACH(var, &uv->variables, next) {
-         uv->used_storage += variable_size(var);
-     }
-+    QTAILQ_FOREACH(pol, &uv->var_policies, next) {
-+        uv->used_storage += pol->entry->size;
-+    }
- }
- 
- static gboolean check_access(uefi_vars_state *uv, uefi_variable *var)
--- 
-2.55.0
-
+Reviewed-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
 
