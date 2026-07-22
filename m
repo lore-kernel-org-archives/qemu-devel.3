@@ -4,99 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55CD8C44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 07:41:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5853DC4452D
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 07:41:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmRYq-0005RS-F6; Wed, 22 Jul 2026 03:40:12 -0400
+	id 1wmRZ9-0005kx-3J; Wed, 22 Jul 2026 03:40:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wmRYi-0005PV-Ff
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 03:40:04 -0400
+ id 1wmRYq-0005St-OA
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 03:40:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wmRYg-0000Tk-OJ
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 03:40:04 -0400
+ id 1wmRYp-0000gN-0o
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 03:40:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784706002;
+ s=mimecast20190719; t=1784706010;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GIx8SGAxd2EVHX3PLDEtKIS3/cXh7/KX8IzpBchdZxY=;
- b=ZmeV8skTBvZVVUGIt4r6r1PEyqbO+WKazF8qH6MjN57ykHzmpFtJx2KyripbO4x0jMF7oR
- okGNSHri5RpXTwuq1U4Y5nXQcvIC0Q7lrtNQYJoCQSdKxOrA0sYB6vt9jF5R8Gntqp+rHC
- cn/YfXKA3aKX7woDyb6MTB44E27ajoU=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Pwr0pISNDb4yeSQL7FH7IcMqN/+xkS+lxwmUQY3lcXo=;
+ b=eCMEi40z+HJkV4uD4ILWgmA2uHL2NULyZgYRukPsV7BfWgIvM+hFG5S0CxWJ1hrGSIB8gq
+ /KZ1KW20KKQD+uye9i3Vp1xe6ciEZG3iNpBCoNTaeR2AtYZ7IG+59j+w1iwo0QvHz+hk2r
+ EDRO404D6wO6zDoiK9C4GNwSQOYq1IU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-119-SLajVKm1M5ujsiwSrbpjCg-1; Wed, 22 Jul 2026 03:40:00 -0400
-X-MC-Unique: SLajVKm1M5ujsiwSrbpjCg-1
-X-Mimecast-MFC-AGG-ID: SLajVKm1M5ujsiwSrbpjCg_1784706000
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-47f5a972b0eso5054169f8f.2
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 00:40:00 -0700 (PDT)
+ us-mta-197-BWBG4z2CMQKV-ld8QoayWg-1; Wed, 22 Jul 2026 03:40:08 -0400
+X-MC-Unique: BWBG4z2CMQKV-ld8QoayWg-1
+X-Mimecast-MFC-AGG-ID: BWBG4z2CMQKV-ld8QoayWg_1784706007
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-49560dddaa4so14465595e9.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 00:40:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784705999; x=1785310799; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=GIx8SGAxd2EVHX3PLDEtKIS3/cXh7/KX8IzpBchdZxY=;
- b=N7ssuqbLgjtAHx81LtaQAdYujoi0qc2dMSzqB5ud3cUzfs2WBc6ZEQcl3WSHjVGwUV
- yXPBLLJ7JwC69s7DuMbu8KhMzcWACfqpnE3NdckABVNnv6AvcfGc0KV8pMjkvRmE/wOh
- 3RwdiyEt2Bs2Lac5TNcfocz5X2+YrMP84+bkZlkrdsNun2vXUeV9V2IEBCZaxFXMRGhu
- 6xBdtvLRqC92sz4vNoj1zHqL/PnJqYdbPHJA/X374vPMrE2EaT9uumlrOreQZbZiC9gA
- Wxh5Hv6o0yIi2a5zdUl/aK9vtwBipDIDpi4qmwJaAqjs8OZgP95MpwoDX2R6DtWToK5W
- r6rQ==
+ d=redhat.com; s=google; t=1784706007; x=1785310807; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Pwr0pISNDb4yeSQL7FH7IcMqN/+xkS+lxwmUQY3lcXo=;
+ b=bFgb+tTNQEnoRBttLAxCFgtl5gDu5sAQqy654R8LcYDeEj9R+80FD3lEcZF0Sd8pmF
+ xpd0FeROrvQ80XygYUeAChD0yVrJrl4UBscBZt5J6HrWLtCkXf0+RtDlmCT+NgyhSwco
+ iFOjGj9OgmiwNMHvB0g2nl9WTNgwH28IjTrMU8uH2ATUBDAORDR+6TdvgnoM8TqIrFOX
+ 07y5BJe0tkqbvM4McHSPB+KeOUhSAT8b3IFueBeWTsy64e7PWdPAzv4c8Ic+KfrLU85q
+ lS00TYqIFTJxL3bJ2A8DIuoe5TJnLxLXZi9D36nBuzi2prqXf5LVJUNrzcVpbuwd1un0
+ 5Crg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784705999; x=1785310799;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=GIx8SGAxd2EVHX3PLDEtKIS3/cXh7/KX8IzpBchdZxY=;
- b=lBa85xlKkeeAiCQOCXootJAXtdREkHsHm1sTQ45sKbA55HLdih5TL3oe83AGlWhOse
- XoGjHZpIypaJFjziBbj05oteTUnKlMnE7i5t/Z1S2urxyJ2qV3t5GV+mTJ8BauSXFckW
- meXF+oO3i0hW08Lqdzb0F8vzg5zCfIGGTLPvfmCIs28F6iGriRq5hEKqOGgntUCl3Uau
- x7n6H+mreysGeuFVg2rI3yVOF8Y3zpMnZZFReTmFgPQ8pvT3OlFHMzTg92C3I7ZRJ5oY
- k7cUSjB9xvmcWNlzH7ToCeOTGp4iNqb/pZwAOgROJ63e0zRgDbfGZ8IqQsUKTfKBEMf+
- M5og==
-X-Gm-Message-State: AOJu0YziKe6bTz5CKhkXi38s4wHiVYO1qtmOfOMWn5kk8wmMKH4hI7dO
- YWOMrv2Pzq4oJkzJUD2G3IXLvqTIl+lCaIZo/QH7vzf2aqMWSzlStMipTY9z8mszUod2zZys9Bo
- 9CbfXKLnWSlFelG3X8q0lZUmARxcQCQ8fcMyLpSyCguHdf5tXrRbEJ3Db0aH3XuxDVb887DRA95
- Gjl/iNjb94182khX6XNrtct1IXVpGWHyC8vBqzOCIb
-X-Gm-Gg: AR+sD13HHXPJC1o8b96lwZCr/KZr2oHZzAljb7YPeWhpH4fVE8W85YHoRynM5O7NPpR
- X/9cCEFcWzbWB+LITaM2u9aZjlLLbvuPIIydeCbZkkyAj8JVk1DKoI/MkJ29Ocw7fIG6r6g6vSl
- F9r/nzVdMJSvIS3atyqjyJAYW9EQS+/rAM+N3Cv8DiBO0ehMBTa6/6+8gSgRJWkk2QTP9/n+Rc6
- sTdTZkha7FXvLkXa4gAyK9NgOHlD9xpRmQ6548fVxaFqtX21aXWwEDC16jppjyXK7HrZxiteIad
- OPlWXOQnYjby/WBC5HTqzEMQ/fTo97Y2DV1Px5NPhUhwuHUbdvSlugVDpXAqYXLsuFXUxL8WOEK
- dTfjGisnYNDNF2yAlQJ/pL/ArsZOM5HUcH86Q/PsgPuxbWqJpcv3nydhtSjG/x1xQF35JGjfohS
- 5B6U1R
-X-Received: by 2002:a05:6000:1867:b0:474:18d9:8371 with SMTP id
- ffacd0b85a97d-47f6232f892mr28676546f8f.28.1784705999580; 
- Wed, 22 Jul 2026 00:39:59 -0700 (PDT)
-X-Received: by 2002:a05:6000:1867:b0:474:18d9:8371 with SMTP id
- ffacd0b85a97d-47f6232f892mr28676496f8f.28.1784705999079; 
- Wed, 22 Jul 2026 00:39:59 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1784706007; x=1785310807;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Pwr0pISNDb4yeSQL7FH7IcMqN/+xkS+lxwmUQY3lcXo=;
+ b=KcQtbDEBW08R6T9wLe+3rWYHv1AogK7I29rdTZFZ9WUMRfPSPUEUOpXXIx5If1rZUS
+ YHTmli2j8CiZw/UcClE0dL9n72m8qpHNStajZRx9lXCszIU1WMecLFd1pP2Ai8h3iOcf
+ csv4OltGd9vxa1jmeJuox6sIABcxMbHNyYCZuqsuKfo4dJ0Kzos1v8uEpnW+0CC3daM3
+ /ML+OD1okY8CUd1rPHTu7eLH0WapfmNB+YmDxOClmMtHNyE7B0CGEdYXorHHZFTHLE+U
+ BDqQyMOyNZRjxAnrqVtGSWsbO5W2PQH04l1qvo3JB2gmvlRLm11cc1akCdEBVNikG25F
+ oAaw==
+X-Gm-Message-State: AOJu0YwtDleUtXQ49R+JwzHPqq+P2cOZZy35pYMNtu7ksxklnxOy6M2E
+ HdwbebWMlEkxuvVXiA7OfaFoatuaNAQPCnrHxDa5BvaUwZ6QMUGx1Zm+UdD454xsyJYL+BZDoks
+ H8PB/33OqBBcnRopyd9La/TKNdKY3YbZ2ncG8HdFC6W23JMRQcXRVkMXdSFD2LZDbCDRWRVxkQM
+ swYOcpR6Ct+qctmr46aKkzRPUvIkWjBSzoLCArjARw
+X-Gm-Gg: AR+sD10IMOQzWh73HF0zvFQ+urwxQDouZlKvaxNYBFS0aangImarS8qKaibotoCi0QT
+ Y2zStXGSbcxUaUGRXR4XYdw2JpUh9+ZrqKH+UMYkOTgfa0Y4V9i7VKzO63eRFr0q5uuNBkIVdsh
+ M95EHYRjmfXKYIzGBQPbE0I2QOO4c+dDjHCO0v+xMowMzIxIKfMcJdyAeU8fS6Stbd0kko14+5+
+ hcAB3sYvk4rWHMSRErZQLAl3WY2RkyQly3HFNRKhQ4beYGYQUqpValK1END6wv/eB6PD2N7M4Xa
+ IJubfZWhEE1oKPPdP285V6NukRbDrf2HG8aAxaeT3+n85k1RWIO2lJ8/6pff2N+3xuhrS4KnXBb
+ JP4ZfzO0dpaTJgDKKk3R1Q2pCTSMdMQPRAOgFr9A8sCMe/jODCso3xDBi1M1IDKxTgxaMspjaf9
+ W5pWqP
+X-Received: by 2002:a05:600c:3b0e:b0:495:6bc9:62b0 with SMTP id
+ 5b1f17b1804b1-4956bf8631bmr11907515e9.17.1784706007309; 
+ Wed, 22 Jul 2026 00:40:07 -0700 (PDT)
+X-Received: by 2002:a05:600c:3b0e:b0:495:6bc9:62b0 with SMTP id
+ 5b1f17b1804b1-4956bf8631bmr11907135e9.17.1784706006889; 
+ Wed, 22 Jul 2026 00:40:06 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.94.110])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c6e9a2sm3534191f8f.35.2026.07.22.00.39.57
+ 5b1f17b1804b1-4956b01a758sm40274325e9.4.2026.07.22.00.40.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Jul 2026 00:39:58 -0700 (PDT)
+ Wed, 22 Jul 2026 00:40:05 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Andrey Polivoda <apolivodaa433@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 3/5] target/i386: helper_sysret(): Check that RCX contains a
- canonical address when emulating an Intel CPU
-Date: Wed, 22 Jul 2026 09:39:41 +0200
-Message-ID: <20260722073943.396872-4-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 5/5] scsi-disk: fix off by one in assertion
+Date: Wed, 22 Jul 2026 09:39:43 +0200
+Message-ID: <20260722073943.396872-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260722073943.396872-1-pbonzini@redhat.com>
 References: <20260722073943.396872-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: permerror client-ip=170.10.129.124;
  envelope-from=pbonzini@redhat.com; helo=us-smtp-delivery-124.mimecast.com
@@ -122,74 +122,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrey Polivoda <apolivodaa433@gmail.com>
+When documenting the invariant that mode pages need to fit the smallest
+output buffer of all callers (which is SCSI_MAX_MODE_LEN), the expression
+used by the assertion was incorrect.
 
-Intel and AMD CPUs implement SYSRETQ instruction differently.
-One of these differences is whether a canonicality check of the address that
-will be loaded to RIP is performed: Intel CPUs do this check, AMD CPUs don't.
+Even though SCSI_MAX_MODE_LEN is indeed 256, using "length < 256" had
+two issues: 1) it used the wrong operator, since "length < ..." is more
+related to having room for extra data; 2) it missed the extra two bytes
+for page number and length.
 
-Currently, QEMU does not perform this check when emulating Intel CPUs.
-This patch corrects this by implementing the canonlicality check on a new RIP
-value from RCX and performing it only when emulating Intel CPUs.
-
-Flags and segment registers' caches are updated only after checking the new RIP
-value to ensure that CPU state is not modified in case the #GP(0) exception
-is raised due to the check failure.
-
-Cc: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Fixes: 14ce26e75513 ("x86_64 target support")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3223
-Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
-Link: https://lore.kernel.org/r/20260608091815.31303-1-apolivodaa433@gmail.com
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/seg_helper.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ hw/scsi/scsi-disk.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
-index 58aac720119..d5c174b7fd7 100644
---- a/target/i386/tcg/seg_helper.c
-+++ b/target/i386/tcg/seg_helper.c
-@@ -1096,17 +1096,22 @@ void helper_sysret(CPUX86State *env, int dflag)
-     selector = (env->star >> 48) & 0xffff;
- #ifdef TARGET_X86_64
-     if (env->hflags & HF_LMA_MASK) {
--        cpu_load_eflags(env, (uint32_t)(env->regs[11]), TF_MASK | AC_MASK
--                        | ID_MASK | IF_MASK | IOPL_MASK | VM_MASK | RF_MASK |
--                        NT_MASK);
-         if (dflag == 2) {
-+            uint64_t new_rip = env->regs[R_ECX];
-+            if (IS_INTEL_CPU(env)) {
-+                int shift = (get_pg_mode(env) & PG_MODE_LA57) ? 56 : 47;
-+                int64_t sext = (int64_t)new_rip >> shift;
-+                if (sext != 0 && sext != -1) {
-+                    raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
-+                }
-+            }
-             cpu_x86_load_seg_cache(env, R_CS, (selector + 16) | 3,
-                                    0, 0xffffffff,
-                                    DESC_G_MASK | DESC_P_MASK |
-                                    DESC_S_MASK | (3 << DESC_DPL_SHIFT) |
-                                    DESC_CS_MASK | DESC_R_MASK | DESC_A_MASK |
-                                    DESC_L_MASK);
--            env->eip = env->regs[R_ECX];
-+            env->eip = new_rip;
-         } else {
-             cpu_x86_load_seg_cache(env, R_CS, selector | 3,
-                                    0, 0xffffffff,
-@@ -1120,6 +1125,10 @@ void helper_sysret(CPUX86State *env, int dflag)
-                                DESC_G_MASK | DESC_B_MASK | DESC_P_MASK |
-                                DESC_S_MASK | (3 << DESC_DPL_SHIFT) |
-                                DESC_W_MASK | DESC_A_MASK);
-+
-+        cpu_load_eflags(env, (uint32_t)(env->regs[11]), TF_MASK | AC_MASK
-+                        | ID_MASK | IF_MASK | IOPL_MASK | VM_MASK | RF_MASK |
-+                        NT_MASK);
-     } else
- #endif
-     {
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index 85d0bd0b811..1b0cce128c5 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -1321,7 +1321,7 @@ static int mode_sense_page(SCSIDiskState *s, int page, uint8_t **p_outbuf,
+         return -1;
+     }
+ 
+-    assert(length < 256);
++    assert(length + 2 <= SCSI_MAX_MODE_LEN);
+     (*p_outbuf)[0] = page;
+     (*p_outbuf)[1] = length;
+     *p_outbuf += length + 2;
 -- 
 2.55.0
 
