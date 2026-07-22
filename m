@@ -4,49 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BDB8C44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:50:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDD17C44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:50:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWPG-0005kC-Ba; Wed, 22 Jul 2026 08:50:38 -0400
+	id 1wmWLi-0002OQ-CU; Wed, 22 Jul 2026 08:46:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWOY-0004CP-M4; Wed, 22 Jul 2026 08:50:00 -0400
+ id 1wmWLh-0002Nb-9d; Wed, 22 Jul 2026 08:46:57 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWOX-0001yS-27; Wed, 22 Jul 2026 08:49:54 -0400
+ id 1wmWLf-0001bW-Mk; Wed, 22 Jul 2026 08:46:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724390; bh=ZbL3Go4PS6XBXeG+quCsX0C9bN+36/RBwEayYbR6fcM=;
+ t=1784724390; bh=F4ECVAy2vQqPctVilBFqRN1NtbN+afsw1RwjFQnROtI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ujMUUYExdPjY+F6spV3THcJhDvyU/GNjCRiHmN7Jfj3PPOD1YOWR54wYRGKoWst5m
- PAf7mqXTj3U7bST9HBJ6KYiJ+8YfXEX6sF/ErYAGzisSoUNaLGn3EcvP86AHGD9ueA
- G4510LAXmJSD/gDhdNPm/rFmsPkCACiJtFp21MD7flOsk99P+rc1sdkVBc1lQmdgR0
- J0gXb4RpRGyI+pXMMaHSfBK0jf0yJLCW1AKYmow/gOLxvmPNdVMdvM4jV3Ch0Jjdb4
- 1NgAMYwLfYaVkgcLKL4v1PHJKN9PkZAs8kE7+QmasSudRsZ6fUovVC/7sv/y9R4wtC
- cQC4yK9F/2Axg==
+ b=w8v2BcazxZWw2noGb1iL2CCuelRYv3eALqR+7lZ3NLzIedHUyHpuwhq5niztp1Mym
+ REgOUzsyd0s3HQW+mNleJIYqhPXsTv73Burc4nYXXlt8bLgn1RHbQSBPv7XgVXan+1
+ sOzpCla58mBZKd26d56XYGN0IOQ8oM5lRI2KGfpZCBLWJbU0SkrM6Mc5W0LVWmecQr
+ 0j2s61sl2mydZHox3kUG0K+W3rS1HNZ4PaDKvVQGQaT096qWFN/LmP3UBpEuVHmKuq
+ Y67QocFs9C4z8ZSS5GEvS2eswqgdYyH0VjwP5dTwkAnuUkFk7AO+pXBPrHXMcUADm0
+ pvV0MiqLZFbUw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EE1491C3B18;
+ by isrv.corpit.ru (Postfix) with ESMTP id 451601C3AF9;
  Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4107F3F3772;
- Wed, 22 Jul 2026 15:46:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8D2483F3753;
+ Wed, 22 Jul 2026 15:46:47 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 8B37E17F19; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id 40F6A17EDB; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Xiangfeng Cai <caixiangfeng@bytedance.com>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 111/122] tests/qtest: add xhci-pci unplug finalize
- regression test
-Date: Wed, 22 Jul 2026 15:46:00 +0300
-Message-ID: <20260722124622.31034-36-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 v2 080/122] hw/usb/dev-wacom: Don't write off end of
+ buffer
+Date: Wed, 22 Jul 2026 15:45:29 +0300
+Message-ID: <20260722124622.31034-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,104 +73,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiangfeng Cai <caixiangfeng@bytedance.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Add a qtest that hot-adds an nec-usb-xhci controller, requests unplug,
-resets the system to process the request, and waits for DEVICE_DELETED.
-This covers the xHCI PCI host-link refcount cycle by verifying that
-device_finalize() runs after unplug.
+In usb_wacom_handle_data() we allocate a buffer with a size
+determined by the transfer size requested by the guest.  We then fill
+it in by calling either usb_mouse_poll() or usb_wacom_poll(), both of
+which functions take a length and return an actual length, which we
+pass to usb_packet_copy().  However, usb_mouse_poll() doesn't check
+the buffer size as it fills in the buffer, so if the guest passes an
+overly short transfer size then it will write off the end of the
+allocated buffer.
 
-Signed-off-by: Xiangfeng Cai <caixiangfeng@bytedance.com>
-Message-ID: <20260618110119.3084296-3-caixiangfeng@bytedance.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit ba54d7e66e251764f06d6231c5832d7c7239aa8b)
+Check the length is at least big enough for the minimum 3 byte
+packet and return nothing if it is not, as usb_wacom_poll() does.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3672
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-id: 20260706182034.1003176-1-peter.maydell@linaro.org
+(cherry picked from commit 2c6fae7d7da874615d8585f6d2b16ffb673c5c9a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/usb-hcd-xhci-test.c b/tests/qtest/usb-hcd-xhci-test.c
-index 0cccfd85a64..b58fa1e2dae 100644
---- a/tests/qtest/usb-hcd-xhci-test.c
-+++ b/tests/qtest/usb-hcd-xhci-test.c
-@@ -10,6 +10,72 @@
- #include "qemu/osdep.h"
- #include "libqtest-single.h"
- #include "libqos/usb.h"
-+#include "qobject/qdict.h"
-+
-+static void wait_device_deleted_event(QTestState *qtest, const char *id)
-+{
-+    QDict *resp, *data;
-+    const char *device;
-+
-+    /*
-+     * Other devices might get removed along with the removed device. Skip
-+     * these. The device of interest will be the last one.
-+     */
-+    for (;;) {
-+        resp = qtest_qmp_eventwait_ref(qtest, "DEVICE_DELETED");
-+        data = qdict_get_qdict(resp, "data");
-+        device = data ? qdict_get_try_str(data, "device") : NULL;
-+        if (device && !strcmp(device, id)) {
-+            qobject_unref(resp);
-+            break;
-+        }
-+        qobject_unref(resp);
-+    }
-+}
-+
-+/*
-+ * Regression test for the xHCI-PCI "host" strong-link reference cycle.
-+ *
-+ * The xHCI PCI wrapper embeds an xhci-core child whose strong "host" link
-+ * points back at the PCI device, forming a refcount cycle. If
-+ * usb_xhci_pci_exit() does not break that cycle, the device's refcount never
-+ * reaches 0 on unplug, device_finalize() never runs, and therefore the
-+ * DEVICE_DELETED event (emitted from device_finalize()) is never sent.
-+ *
-+ * This test hot-plugs an xHCI controller into an ACPI-hotpluggable bus,
-+ * requests its removal and waits for DEVICE_DELETED. Without the fix the event
-+ * is never delivered (device_finalize() is blocked), so the test would
-+ * hang/time out.
-+ */
-+static void test_xhci_unplug_finalize(void)
-+{
-+    QTestState *qtest;
-+    const char *arch = qtest_get_arch();
-+
-+    if (strcmp(arch, "i386") != 0 && strcmp(arch, "x86_64") != 0) {
-+        g_test_skip("Test only runs on x86 (ACPI PCI hotplug)");
-+        return;
-+    }
-+    if (!qtest_has_device("nec-usb-xhci")) {
-+        g_test_skip("Device nec-usb-xhci not available");
-+        return;
-+    }
-+
-+    qtest = qtest_initf("-machine pc");
-+
-+    qtest_qmp_device_add(qtest, "nec-usb-xhci", "xhci-finalize", "{}");
-+
-+    /*
-+     * Request device removal. As the guest is not running, the unplug request
-+     * won't be processed until the next system reset, which performs the
-+     * removal and triggers device_finalize() (and thus DEVICE_DELETED).
-+     */
-+    qtest_qmp_device_del_send(qtest, "xhci-finalize");
-+    qtest_system_reset_nowait(qtest);
-+    wait_device_deleted_event(qtest, "xhci-finalize");
-+
-+    qtest_quit(qtest);
-+}
+diff --git a/hw/usb/dev-wacom.c b/hw/usb/dev-wacom.c
+index 7177c17f031..9d9fc1eb168 100644
+--- a/hw/usb/dev-wacom.c
++++ b/hw/usb/dev-wacom.c
+@@ -252,6 +252,10 @@ static int usb_mouse_poll(USBWacomState *s, uint8_t *buf, int len)
+     if (s->buttons_state & MOUSE_EVENT_MBUTTON)
+         b |= 0x04;
  
- static void test_xhci_hotplug(void)
- {
-@@ -50,6 +116,7 @@ int main(int argc, char **argv)
-     g_test_init(&argc, &argv, NULL);
- 
-     qtest_add_func("/xhci/pci/hotplug", test_xhci_hotplug);
-+    qtest_add_func("/xhci/pci/unplug/finalize", test_xhci_unplug_finalize);
-     if (qtest_has_device("usb-uas")) {
-         qtest_add_func("/xhci/pci/hotplug/usb-uas", test_usb_uas_hotplug);
-     }
++    if (len < 3) {
++        return 0;
++    }
++
+     buf[0] = b;
+     buf[1] = dx;
+     buf[2] = dy;
 -- 
 2.47.3
 
