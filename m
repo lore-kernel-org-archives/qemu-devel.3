@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73DB4C44536
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:01:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED5E1C44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:02:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWWJ-0006Gq-KB; Wed, 22 Jul 2026 08:57:55 -0400
+	id 1wmWTs-0001Cl-13; Wed, 22 Jul 2026 08:55:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWUS-0002yN-53; Wed, 22 Jul 2026 08:56:00 -0400
+ id 1wmWSL-0003t0-CS; Wed, 22 Jul 2026 08:53:53 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWUQ-0003Q9-1l; Wed, 22 Jul 2026 08:55:59 -0400
+ id 1wmWSD-0002du-1r; Wed, 22 Jul 2026 08:53:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724575; bh=hqZcyCH4yuc+xazwyDmjX54gmTgf6XfktIwYp/ksvwU=;
+ t=1784724575; bh=EcGB4+bEaZjNRvmzvdAqXj4RBmZ1uXlQPD11W64gW4s=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=CfYM3tHF3Mz2L7TAkXks7VJB1I3St+jrHMxusPVMk74aaH40cfw7kuUk9D05w+0K0
- fM5Q5lk7sK4Xh/Ei2/eAnvZUX0e4dL1qptNfr27oKBQFJsFwC7gfEy9Qs8PpGUGY+8
- v6l9EkRpyOhVRt5cScYA7G3ZijfjeAis9tQrml1rqp6BNE9RycXIce7Cju/FrTh04K
- Pxw9G29NPld9+r47oXUlTzp2BjGy2jPJabe816PmVKH5VMxLxzGCJzwC/gMJiIcrzz
- xZ+wzMxits01pEJyCV07k5AZvba7VxxpdjTA9WP4PCoFePleDtD7VS2HKXR4AHggmg
- 66LD8TXkgPfIA==
+ b=iA+I+MHhZOd4Kijtto3gMP6YZF5iuLs+yD9zMZUWfq+F5scmAVWWsPHDos5NuZRJ3
+ nN+LOa8WyNIa/akx+/cb2KdMPU8MiklRLWy058jk2PXlh4xzGAr3V/VDsiMm/njETx
+ EyXdsO9KxH6iV+7sBfl5GMUPVKoeHW0AMOviaasOmW1qtWKuvrUsd653j7ab+9QU1H
+ DJqXg6z1ycnCaIPOTH8QIBZr3hQuJYPeDyPGLUJXVCOFvjKmKbmU22++2H/CZA+new
+ 6wkBIy/2ORQgBmdUzhesMPokbYWWbqhFz/RvUnSabAlsLEburhedZJ+fyuq5i5RRZO
+ 7h0eRZ6ZN/5CQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7646E1C3B5B;
+ by isrv.corpit.ru (Postfix) with ESMTP id 005151C3B45;
  Wed, 22 Jul 2026 15:49:35 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id BE7883F37AB;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 48B773F3795;
  Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 0879C17F8B; Wed, 22 Jul 2026 15:49:43 +0300 (MSK)
+ id C858817F5F; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bin Meng <bin.meng@processmission.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 v2 126/127] hw/net/cadence: Return current Cadence GEM
- queue pointers
-Date: Wed, 22 Jul 2026 15:48:51 +0300
-Message-ID: <20260722124859.32371-45-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v2 104/127] ui/vnc: fix OOB write in
+ vnc_refresh_lossy_rect
+Date: Wed, 22 Jul 2026 15:48:29 +0300
+Message-ID: <20260722124859.32371-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
@@ -73,75 +74,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Meng <bin.meng@processmission.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Cadence GEM queue pointer registers are programmed with the descriptor
-ring base, but reads return the descriptor currently being accessed.
-The model tracked the current positions separately while continuing to
-return the configured base.
+vnc_refresh_lossy_rect() always marks a full VNC_STAT_RECT (64) rows
+as dirty when refreshing a lossy tile. When the display height is not
+a multiple of VNC_STAT_RECT (e.g. VNC_MAX_HEIGHT = 2160), the bottom
+tile is partial -- the last tile at y=2112 has only 48 valid rows.
+The unclamped loop writes to vs->dirty[2160..2175], past the end of
+the VNC_MAX_HEIGHT-sized array.
 
-The Linux macb driver uses the transmit queue pointer when recovering
-from a used-buffer interrupt. A stale priority-queue pointer can make
-the driver restart DMA before that queue handles its completion
-interrupt, causing queue 0 to repeatedly raise TX_USED.
+Clamp the row count to the actual surface height so partial bottom
+tiles only mark valid dirty bitmap entries.
 
-The primary queue has had this mismatch since the initial model.
-Priority queue support later copied the same register-read behavior.
-
-A single-queue machine usually handles TX_COMPLETE before TX_USED and
-empties the software queue before the restart check, which kept the
-issue hidden there.
-
-Return the current RX and TX descriptor positions on queue-pointer reads
-and clear those positions on reset.
-
-Fixes: e9f186e514a7 ("cadence_gem: initial version of device model")
-Fixes: 6710172501be ("cadence_gem: Add queue support")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
+Fixes: CVE-2026-48002
+Fixes: 7d964c9d2fc6 ("vnc: refresh lossy rect after a given timeout")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3950
+Reported-by: huntr bubble
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260720120731.2022475-1-bin.meng@processmission.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 94c510a5dc4836550af1ecddcfa1ff945bae562a)
+Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit 3543c2b855cc8cd25a5dbf05564a47ba42f45fad)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/cadence_gem.c b/hw/net/cadence_gem.c
-index b568fa3392d..39e3620ef5b 100644
---- a/hw/net/cadence_gem.c
-+++ b/hw/net/cadence_gem.c
-@@ -1469,6 +1469,8 @@ static void gem_reset(DeviceState *d)
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 1b5fc8117a7..1e6490f2730 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -3014,10 +3014,18 @@ static int vnc_refresh_lossy_rect(VncDisplay *vd, int x, int y)
+     int sty = y / VNC_STAT_RECT;
+     int stx = x / VNC_STAT_RECT;
+     int has_dirty = 0;
++    int height = MIN(pixman_image_get_height(vd->guest.fb),
++                     pixman_image_get_height(vd->server));
++    int rows;
  
-     /* Set post reset register values */
-     memset(&s->regs[0], 0, sizeof(s->regs));
-+    memset(&s->rx_desc_addr[0], 0, sizeof(s->rx_desc_addr));
-+    memset(&s->tx_desc_addr[0], 0, sizeof(s->tx_desc_addr));
-     s->regs[R_NWCFG] = 0x00080000;
-     s->regs[R_NWSTATUS] = 0x00000006;
-     s->regs[R_DMACFG] = 0x00020784;
-@@ -1593,9 +1595,22 @@ static uint64_t gem_read(void *opaque, hwaddr offset, unsigned size)
-     offset >>= 2;
-     retval = s->regs[offset];
+     y = QEMU_ALIGN_DOWN(y, VNC_STAT_RECT);
+     x = QEMU_ALIGN_DOWN(x, VNC_STAT_RECT);
  
--    DB_PRINT("offset: 0x%04x read: 0x%08x\n", (unsigned)offset*4, retval);
-+    DB_PRINT("offset: 0x%04x read: 0x%08x\n", (unsigned)offset * 4,
-+             retval);
++    rows = MIN(VNC_STAT_RECT, height - y);
++    if (rows <= 0) {
++        return 0;
++    }
++
+     QTAILQ_FOREACH(vs, &vd->clients, next) {
+         VncConnection *vc = container_of(vs, VncConnection, vs);
+         int j;
+@@ -3032,7 +3040,7 @@ static int vnc_refresh_lossy_rect(VncDisplay *vd, int x, int y)
+         }
  
-     switch (offset) {
-+    case R_RXQBASE:
-+        retval = s->rx_desc_addr[0];
-+        break;
-+    case R_TXQBASE:
-+        retval = s->tx_desc_addr[0];
-+        break;
-+    case R_TRANSMIT_Q1_PTR ... R_TRANSMIT_Q7_PTR:
-+        retval = s->tx_desc_addr[offset - R_TRANSMIT_Q1_PTR + 1];
-+        break;
-+    case R_RECEIVE_Q1_PTR ... R_RECEIVE_Q7_PTR:
-+        retval = s->rx_desc_addr[offset - R_RECEIVE_Q1_PTR + 1];
-+        break;
-     case R_ISR:
-         DB_PRINT("lowering irqs on ISR read\n");
-         /* The interrupts get updated at the end of the function. */
+         vc->worker.lossy_rect[sty][stx] = 0;
+-        for (j = 0; j < VNC_STAT_RECT; ++j) {
++        for (j = 0; j < rows; ++j) {
+             bitmap_set(vs->dirty[y + j],
+                        x / VNC_DIRTY_PIXELS_PER_BIT,
+                        VNC_STAT_RECT / VNC_DIRTY_PIXELS_PER_BIT);
 -- 
 2.47.3
 
