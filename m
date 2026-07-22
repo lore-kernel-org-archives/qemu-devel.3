@@ -4,97 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68E88C44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:26:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5679CC44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:34:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWx8-0006PG-S0; Wed, 22 Jul 2026 09:25:38 -0400
+	id 1wmX4q-0004kl-55; Wed, 22 Jul 2026 09:33:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wmWx5-0006LE-NG
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 09:25:35 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wmWx3-0001GT-SC
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 09:25:35 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-475417f010dso7180241f8f.2
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 06:25:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784726731; x=1785331531; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=AyJNZsOQSrsXajtXHSxh9uMxVQmxpbqD8AJxt9yc8os=;
- b=l1LDnyrqOQyd6BFGJ/O9pVNcqAWCaAH4mkfsZape/uzpaRSTDQZUYXlyWfIuCVx6KL
- uHsr6pMpQMwAnUKI9wBAMw6d51kWkDqd7l17zhINYP/+rwgB6dHw+tBZpQYWrtMffMeQ
- TfrtDaYm8Fd6eClIk1GKLEjeRtTqZ0QEAxdVllmB6VeL/3gAb5LEJ7Z2WkM4m+0k0ISq
- FsuYJjitDyDmMFgYtrDr/iRusaNYl6ZR43Q9OcKHuIkAXBCw5wzugs2u38S1aP54PEiS
- ulGldfylRwcLzOnaOIs2rgx5c3qXwQNx9+hRISAFctqgtvO7ou4UuzDaRKCmxEIyX76z
- ZrVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784726731; x=1785331531;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=AyJNZsOQSrsXajtXHSxh9uMxVQmxpbqD8AJxt9yc8os=;
- b=m8pq8vzqXZYK44MHfzi/P3puK/zFjSpASFVggHGxBFFi/d8lnfYrzYE2W9GLkIVvjq
- 61rZZFd/FJgJM4JYILsZYemr3bMA9pusrCGSYifIzvOLUpqbVUT0jM5P41iz7XAjPyrP
- 7vR4TysdTexL6Lr5hasL2x0cN8ipigRgCd3CFnJKoHmmVlKO8A5//moRhe1vHlho+wto
- xasvsGgEFw6E7dzZYNha1v/jcTfPcvQoJNbKmdD/h5FW795IOfKDEsgJlv1IL4+bl+h8
- TyhGwWDyUAjhiFGObTC+cbmWugH/qKNJAL/ISd5eL2SMMrNcyZdMEoig84yuv2ocYEaE
- t6Ow==
-X-Forwarded-Encrypted: i=1;
- AHgh+Ro0HQ4O/2c+R1zuQAfDFQKzTqBuihTWGJIuhg0m4yd1ynA8ckPjpEA1ALZcfBE6fJa7u7YEVTb18RlP@nongnu.org
-X-Gm-Message-State: AOJu0YwrU7p9EyTrPheTVE/6FHhC/MAL/VhIWoBdJmF0aJIQv3OAYwm/
- zDzEn3oUdZaZ3no8JYHCt11DA0wzcHR8XtBVKjZO0m2TQ3JxVTvqwi2L57K68e4TSjc=
-X-Gm-Gg: AR+sD13d9axzku+/jGFzIH6sb1kDpm21kUXl/tVJoUepfz4dSrLckH4HRdPlSStoMpt
- hMm5tWOvPNOG92i09vmCin+4qE0tSDmWoZ6ruof556WpZyZcXu2FlsidYERCiJNPtmaeW+RAEHz
- a3/C7eijAmAQg1uW52KELHNY3ZIh5hrmZ3sUiAjkRSJqw/i5nKR4yFn4774rU5uFvCUyaN+NQ50
- zXR6vxrDMOnrimHZqvKFlAP9rcBXnRENY1Suc8P1M4wFxz7C9wYoIPjAmCpHIfNisCLu7a60a+l
- Jyrrhs/vaglw08DzvnDW4gHHMySvzSHEOtbvdHwZ894UtNBw5Ec9V3RTGFfFxXOx4xkJZr//nwl
- RBroAcBRUq4oYgcEDTG+t2/HAmWDcg6Z2SjSDC0lss1nnwPhPWrtzshHDsOI8w9whL/0TPw3WJy
- Xxi+5Ja4itTvX/
-X-Received: by 2002:a05:6000:2f84:b0:47d:ec60:657e with SMTP id
- ffacd0b85a97d-47f623376femr25719255f8f.39.1784726730474; 
- Wed, 22 Jul 2026 06:25:30 -0700 (PDT)
-Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85b9a5a2sm6616016f8f.7.2026.07.22.06.25.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Jul 2026 06:25:29 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 756A85F7DE;
- Wed, 22 Jul 2026 14:25:28 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,  qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PULL 20/71] target/arm: teach arm_cpu_has_work about halting
- reasons
-In-Reply-To: <90bbd0b0-dce4-4945-8ad9-96c895e712ed@oss.qualcomm.com>
- ("Philippe =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 22 Jul 2026
- 13:07:29 +0200")
-References: <20260610161202.2235298-1-peter.maydell@linaro.org>
- <20260610161202.2235298-21-peter.maydell@linaro.org>
- <90bbd0b0-dce4-4945-8ad9-96c895e712ed@oss.qualcomm.com>
-User-Agent: mu4e 1.14.3-pre1; emacs 30.1
-Date: Wed, 22 Jul 2026 14:25:28 +0100
-Message-ID: <87a4rjrwaf.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <Edgar.Iglesias@amd.com>)
+ id 1wmX4i-0004kQ-2e
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 09:33:28 -0400
+Received: from mail-westcentralusazon11013012.outbound.protection.outlook.com
+ ([40.93.201.12] helo=CY3PR05CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Edgar.Iglesias@amd.com>)
+ id 1wmX4Y-0002LI-Lx
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 09:33:21 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CmO31/VZ0WEDSE1SDwAjbakr7k5Y2uDYowN6mAtVETETp35czsF+07u1Y3ppds9TuIGhXqpFRKE4DOdZFiz0DzZcDO8tRdtXWglyBLCjQm6E9nxT5ZfLjsimAjQZk7vYkNDIYB5h9KMyQDOwA4N5siM+rcPXvCIB0RstNLMpqq4TwtYmkCmF7rM6g4FFgCfnNNElzaXrSyytcboGiIxPdFDI0NQlsR660nUOcaNEbOKcNxtnUzHIHq1I6LyeSWl+L4aMyQu0KlAwYN7pxBnyp8JK7G8KV9iMzyOnivclsclF8eBsyxgLDUQ01ySS2J3XyCsrh9UW+125Y/1kg3BflA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=yjL7SrnkZHmRBByH1egqD5E0Iil1yrVZCheQllCxLHU=;
+ b=cdpevtJh3tE0nZqIKDUiUXXOOdlFqWw9Qw574KmYY+vYKHKey2lputrUAAOKrARdLUvKpVuEy18t0EnXg1ha4ZIQCuBbgIQ0R3Kxj7+sZ30MlM8NjIv4ALiDhCRzInO1JSA2XcL6j7onmHAbnA6T1rVHt2g4IZwOzjChA4jElHAur6Q7xYlEmuiBXkT4iFhLdtpsorIQY/WctWijdBwvp9MU4jZxzlY28NGCIgd+K/H4nmb5vHjj3FPBOopV0HP70/pwMKPBODvHufNN5WL5AApffr2g4DCz5tYmIrspFa2JxVkvGOt0+YEpuBv32DbPkA/47cKtFt8vuDMepKaSbA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=yjL7SrnkZHmRBByH1egqD5E0Iil1yrVZCheQllCxLHU=;
+ b=NMhsLBvdr/ERAJb6V3l/OlNnF+lC+yK1ttHXRJRg8BciLNzjYhoB16PfIIAyVdru+l2+jMjDRKEWyPhg/YJ8SGgTXRdi3ni9HLNKHNUZmTMJ3wd/DMRCT1EHYeOCrK0phvq/wSnqpSaKK8IjOu8u4QTZqm/3tU7vx1lLYY62Dco=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from SN7PR12MB6839.namprd12.prod.outlook.com (2603:10b6:806:265::21)
+ by SJ0PR12MB8140.namprd12.prod.outlook.com (2603:10b6:a03:4e3::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.18; Wed, 22 Jul
+ 2026 13:28:10 +0000
+Received: from SN7PR12MB6839.namprd12.prod.outlook.com
+ ([fe80::ae79:f50b:b7a6:4cd8]) by SN7PR12MB6839.namprd12.prod.outlook.com
+ ([fe80::ae79:f50b:b7a6:4cd8%4]) with mapi id 15.21.0245.009; Wed, 22 Jul 2026
+ 13:28:09 +0000
+Date: Wed, 22 Jul 2026 15:28:06 +0200
+From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+To: Luc Michel <luc.michel@amd.com>
+Cc: qemu-devel@nongnu.org, "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Frederic Konrad <frederic.konrad@amd.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH] target/microblaze/translate: fix reversed load/store
+ translation
+Message-ID: <amDFZs-XnqIn-poX@zapote>
+References: <20260710072348.3575-1-luc.michel@amd.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260710072348.3575-1-luc.michel@amd.com>
+User-Agent: Mutt/2.3.2+119 (db9200c7) (2026-05-16)
+X-ClientProxiedBy: CPBP307CA0021.DNKP307.PROD.OUTLOOK.COM
+ (2603:10a6:380:2::14) To SN7PR12MB6839.namprd12.prod.outlook.com
+ (2603:10b6:806:265::21)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN7PR12MB6839:EE_|SJ0PR12MB8140:EE_
+X-MS-Office365-Filtering-Correlation-Id: 12665ef1-be52-4bfe-664f-08dee7f51249
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|23010399003|22082099003|18092099006|18002099003|11063799006|10067099003|6133799003|56012099006;
+X-Microsoft-Antispam-Message-Info: K4Ya89lH1g0oAZte0QPA66Bb+1wD6/MkYc0HRlp+AZ5HfAVG6v2KosIzpIa46YlXJFXkCpnprb/KZl0xsQ9jVPIG7J4acwJAecJHFOB2Ok3Qr88ogAsWtfBuWwYU1n9Dz/s02Geuy+Cs/DzgnUooSmz+Hy9/oAbvCrrrvxuB+gmjik+/vSyHVhqoFSx0yzum1WZB/7zWoY+MPCI4dY6BRADfS0BwjqhB/hqukXURZkSZRGBuXq8q8kMBn1oH/QDKZDNj7rG6BLztdqhz0Eo1K/MEC4aCFgRhmWOkK2IDhCaoYDVzdaV1JYb1lUTZa5HmFSRNEy4PgverfPtpBeANUkmUqKuypCremMtMqGaUxhTZjhE55f6cbpfZ0FdYRHUBi/e7r4BexWQK/1aA3TfHlR00TaBYyigxg3MynSplcikFH0nNk6zyGPDrFQsLOZOT/advFtyGFrWAn6Xe/RtZO7WPkI2EbUa/Ps4tur1BUMWDUQQOdbNFLc5TE36ywugpfz57evKv2dUpLYyCM+b0QKAJxKe9kkHtFsmEeZ7YpC8p/HAAxIfw6W8+KiQaw/3j7AuPdPxjXXKzAfHtcil+RhoI3AaO/ebJ9e38kFp5qEhQa7XREwzeD0SmLIWLs4YMf0PojJIOnB0JxZ+KxYWWytR0hu5lGPuaASimm0aWdsc=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SN7PR12MB6839.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(22082099003)(18092099006)(18002099003)(11063799006)(10067099003)(6133799003)(56012099006);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?hzGxsKpbT5eKzfIOyxuUwThJTFQsHokCnWLyvfsax7aINOXjsiF/dnSK0Jsb?=
+ =?us-ascii?Q?uzLJBRqYKgq771o4YvhkaRuhhfasEhoT+U8TMDSxCZilUH/5J63+veSXcE7j?=
+ =?us-ascii?Q?VecUGURCdP00hujKh6nVBfZiwV28v4QfKg0Gs1yYc/nf/BHzsFvmFJy1xV0j?=
+ =?us-ascii?Q?CfusHlFqFhDFdAzab/hx3xwSupwYYpt6a+lvX2j/MIf96kX2j1qLAOfDPgzy?=
+ =?us-ascii?Q?kM50fzs6QymVd+tU0/e6CDU+vZpr7BQmPQVv6UTpUGsFt1b4HYj1BDkygz16?=
+ =?us-ascii?Q?MU+pqtjnlUXvLvqK6J4k4I3GLJAAhTD82f1MpjJbeLX2D9Iy58ViLP30Uqjh?=
+ =?us-ascii?Q?CkZu9z4tnZc6cpqZ/1f6pc1F7kDUVZBaOsL3EcqQgO1s2X1DcgJiHsoj1G+e?=
+ =?us-ascii?Q?AezUY2BoVDp867bUt84rh2/7sMJlPz5NKbjpYOeCEoodT4WKmAo5ZdPV2hr6?=
+ =?us-ascii?Q?+2b2A3b1itJ1Ahooj0yKLwH4EmnX0EkRvzO+TLBKMCUMy0IOHN4xcxPhCkGY?=
+ =?us-ascii?Q?WukCWNxc1u6xZM8ciPqPq6BwkOpx1j0AScaqGIbHPTsV6vmM7RAEpAAdEMt+?=
+ =?us-ascii?Q?IsZTbkvlE+7Al6TMLGtXbBZjs+m5heQC6fVCDqybANMoDjA+bT3QG5rUdkQX?=
+ =?us-ascii?Q?C6lrHTiwz9UjpWXTZwCzsrkDitKYdapU4f3pivDCjsr+NbyAQQw1vMj24OjM?=
+ =?us-ascii?Q?DNSfWSMwIqLdKLDwlrsKDE9o8GumBT/aVnxJ1Aps78eQS5TjNLLC0Qvy36bE?=
+ =?us-ascii?Q?QfHAvmPGdhnYO8IBEsf2/lwEq19f/VYa3z/rwZ9cDG5wIjdjt5egqUNfJGMc?=
+ =?us-ascii?Q?TEMHbkltn8gVtD2wPvQvak9LNX0jkrEmSZ6NQNZH0XsNHcvBDEXB/qUSaxdB?=
+ =?us-ascii?Q?TsFN4ceK5i0RCprLxJGo9sqKb73aNmfbCLsvhEZrcJqp7jYKwpb/6yt99giB?=
+ =?us-ascii?Q?X823KFtV9S7wc5MbRGxaT5nBvOqOf/Mt3rwcBvmskWP0WB2TKXmbejfMkL0O?=
+ =?us-ascii?Q?UVa7lgBTVcvnFIUn83WfJqVRg6xxdWE1ok5pPcoBWXLMVNqEVEKpc4OZPYCv?=
+ =?us-ascii?Q?YPpr6SBWsPgmyv3Q3n3RYxFjKO1I5u6z/g/T4WU21tkv/0hBtDfCeeghkNms?=
+ =?us-ascii?Q?Uj2dmRKRt6x2mt8Hf09UAFuSBqAs+x4LMjNzS6RYh+OUu3t4RdurBJOlQdpn?=
+ =?us-ascii?Q?1nYAtXWZDLGFqgQ+EejktjFfg5+q5OVL6b+4EGhSHbz1+sSrpwlFg6jmqA/K?=
+ =?us-ascii?Q?lTCdV/EHmQIk7gpISK4KYLILJ/m3upGlg6cjUTGhAB+uV7VqN636xgkCwCW+?=
+ =?us-ascii?Q?cZM374JcODErcDpP2N26x6F45kR4r/wVypre8MA4OHYzT+cfYsZj19oF9BW6?=
+ =?us-ascii?Q?dvS0XGuy1ySuB00whs/xR8oTg/zeOfAkAv1ylHoahbbB4KEpdV4qUTQ+pptd?=
+ =?us-ascii?Q?0PDXeoUBFTmzlzkO0KKjFGVrUEzYi2ilptDKRrsFRTal3LWfa8sGKtVcRjZ3?=
+ =?us-ascii?Q?2jkn/3yDLwXrU+TS5lqIH3k1ct/a45VaCGupYsIXJLkLzRzt/6Ncq0BSr+Kx?=
+ =?us-ascii?Q?KZIMTc7MtE6K9cCrfLX+/pDQboiqTJXOmQLIp73XQqXTItSiq3SKGiC6frhU?=
+ =?us-ascii?Q?zijU0kQFimXNmfyICYJ1wrXt3Duo2tirUvIB8dm0OrYpvhWAIG8xrEnUAres?=
+ =?us-ascii?Q?2JERg5gOLiLon1Yc67iN1929NqdlZnhhABa/rcRnclQ9VPCy?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 12665ef1-be52-4bfe-664f-08dee7f51249
+X-MS-Exchange-CrossTenant-AuthSource: SN7PR12MB6839.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jul 2026 13:28:09.5501 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ilVIn+gMEg+4jY2pgLvxXsUokyF6904giPVD5cOG63Z7dbwg4Rrt1GE+cM4tIo8R
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB8140
+Received-SPF: permerror client-ip=40.93.201.12;
+ envelope-from=Edgar.Iglesias@amd.com;
+ helo=CY3PR05CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,70 +143,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> writes:
+On Fri, Jul 10, 2026 at 09:23:46AM +0200, Luc Michel wrote:
+> Since 36a9529e60e0 the TCGv returned by compute_ldst_addr_type{a,b} for
+> the address can be a target register or a constant. However
+> do_{load,store} might modify it in the case of a reversed load/store.
+> 
+> Fix this by factoring out the reversed access logic and copying the
+> address in a new TCGv_i32 if it needs to be modified.
+> 
+> Fixes: 36a9529e60e0 (target/microblaze: Simplify compute_ldst_addr_type{a,b})
+> Signed-off-by: Luc Michel <luc.michel@amd.com>
 
-> Hi,
->
-> On 10/6/26 18:11, Peter Maydell wrote:
->> From: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> With the advent of WFE and WFI we need to pay closer attention to
->> the
->> reason why the vCPU may be sleeping to figure out if we should wake
->> it up.
->> Create env->halt_reason to track this and then re-order the tests so
->> we:
->>    - ignore everything is the vCPU is powered off
->>    - wake up if the event_register is set and we were in a WFE
->>    - otherwise any IRQ event does wake the vCPU up.
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> Message-id: 20260529082948.363931-3-alex.bennee@linaro.org
->> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->> ---
->>   target/arm/arm-powerctl.c  |  6 +++---
->>   target/arm/cpu.c           | 40 +++++++++++++++++++++++++++-----------
->>   target/arm/cpu.h           | 16 +++++++++++++++
->>   target/arm/internals.h     | 11 +++++++++++
->>   target/arm/kvm.c           |  5 +++--
->>   target/arm/machine.c       |  2 +-
->>   target/arm/tcg/op_helper.c |  3 +++
->>   7 files changed, 66 insertions(+), 17 deletions(-)
->
-> This patch updated TCG and KVM but missed HVF and WHPX:
->
->  - target/arm/hvf/hvf.c
->  - target/arm/whpx/whpx-all.c
 
-Do they need it if they implement cpus_accel->cpu_thread_is_idle?
+LGTM!
 
->
->
->> diff --git a/target/arm/internals.h b/target/arm/internals.h
->> index 21cbd2b1db..b2035b9417 100644
->> --- a/target/arm/internals.h
->> +++ b/target/arm/internals.h
->> @@ -2063,4 +2063,15 @@ bool arm_cpu_match_cpreg_mig_tolerance(ARMCPU *cp=
-u, uint64_t kvmidx,
->>                                          ARMCPRegMigToleranceType type);
->>     +/**
->> + * arm_set_cpu_power_state() - set power state synced with halt_reason
->> + */
->> +static inline void arm_set_cpu_power_state(ARMCPU *cpu, ARMPSCIState st=
-ate)
->> +{
->> +    CPUARMState *env =3D &cpu->env;
->> +
->> +    cpu->power_state =3D state;
->> +    env->halt_reason =3D state =3D=3D PSCI_OFF ? HALT_PSCI : NOT_HALTED;
->> +}
->> +
->>   #endif
-> Why not add/use a getter()?
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 
-How do you mean? Add it as a CPUClass API? Seems overkill for what is
-currently handled internally by Arm.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+
+> ---
+>  target/microblaze/translate.c | 56 ++++++++++++++++++++---------------
+>  1 file changed, 32 insertions(+), 24 deletions(-)
+> 
+> diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+> index 8b219afb5dd..9fb84e1bf9f 100644
+> --- a/target/microblaze/translate.c
+> +++ b/target/microblaze/translate.c
+> @@ -701,30 +701,47 @@ static void gen_alignment_check_ea(DisasContext *dc, TCGv_i64 ea, int rb,
+>  static inline MemOp mo_endian(DisasContext *dc)
+>  {
+>      return dc->cfg->endi ? MO_LE : MO_BE;
+>  }
+>  
+> +static void handle_reversed_access(MemOp *mop, TCGv_i32 *addr)
+> +{
+> +    MemOp size = *mop & MO_SIZE;
+> +
+> +    /*
+> +     * When doing reverse accesses we need to do two things.
+> +     *
+> +     * 1. Reverse the address wrt endianness.
+> +     * 2. Byteswap the data lanes on the way back into the CPU core.
+> +     *
+> +     * Use a new TCGv_i32 to modify the address because the current one might be
+> +     * a register or a constant.
+> +     */
+> +
+> +    if (size > MO_8) {
+> +        *mop ^= MO_BSWAP;
+> +    }
+> +
+> +    if (size < MO_32) {
+> +        TCGv_i32 new_addr = tcg_temp_new_i32();
+> +
+> +        tcg_gen_xori_i32(new_addr, *addr, 3 - size);
+> +        *addr = new_addr;
+> +    }
+> +}
+> +
+>  static bool do_load(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
+>                      int mem_index, bool rev)
+>  {
+> +#ifndef CONFIG_USER_ONLY
+>      MemOp size = mop & MO_SIZE;
+> +#endif
+>  
+>      mop |= mo_endian(dc);
+>  
+> -    /*
+> -     * When doing reverse accesses we need to do two things.
+> -     *
+> -     * 1. Reverse the address wrt endianness.
+> -     * 2. Byteswap the data lanes on the way back into the CPU core.
+> -     */
+>      if (rev) {
+> -        if (size > MO_8) {
+> -            mop ^= MO_BSWAP;
+> -        }
+> -        if (size < MO_32) {
+> -            tcg_gen_xori_i32(addr, addr, 3 - size);
+> -        }
+> +        handle_reversed_access(&mop, &addr);
+>      }
+>  
+>      /*
+>       * For system mode, enforce alignment if the cpu configuration
+>       * requires it.  For user-mode, the Linux kernel will have fixed up
+> @@ -864,27 +881,18 @@ static bool trans_lwx(DisasContext *dc, arg_typea *arg)
+>  }
+>  
+>  static bool do_store(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
+>                       int mem_index, bool rev)
+>  {
+> +#ifndef CONFIG_USER_ONLY
+>      MemOp size = mop & MO_SIZE;
+> +#endif
+>  
+>      mop |= mo_endian(dc);
+>  
+> -    /*
+> -     * When doing reverse accesses we need to do two things.
+> -     *
+> -     * 1. Reverse the address wrt endianness.
+> -     * 2. Byteswap the data lanes on the way back into the CPU core.
+> -     */
+>      if (rev) {
+> -        if (size > MO_8) {
+> -            mop ^= MO_BSWAP;
+> -        }
+> -        if (size < MO_32) {
+> -            tcg_gen_xori_i32(addr, addr, 3 - size);
+> -        }
+> +        handle_reversed_access(&mop, &addr);
+>      }
+>  
+>      /*
+>       * For system mode, enforce alignment if the cpu configuration
+>       * requires it.  For user-mode, the Linux kernel will have fixed up
+> -- 
+> 2.53.0
+> 
 
