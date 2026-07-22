@@ -4,50 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2C2EC44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:54:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAEE5C4453E
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:54:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWSe-0004VR-W0; Wed, 22 Jul 2026 08:54:09 -0400
+	id 1wmWPf-0000O0-RS; Wed, 22 Jul 2026 08:51:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWQw-0002ea-Tt; Wed, 22 Jul 2026 08:52:28 -0400
+ id 1wmWNJ-0003Vz-7y; Wed, 22 Jul 2026 08:48:39 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWQu-0002Qe-1E; Wed, 22 Jul 2026 08:52:21 -0400
+ id 1wmWNE-0001pk-S1; Wed, 22 Jul 2026 08:48:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724574; bh=LLZgFtID7Y0u7woJv6idu+dtYbPMeWbCYDycpRvO6VE=;
+ t=1784724390; bh=1seprXnsYVDP6RSygJDgnEkbj5/o825APt3WEXJncN4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=rFdp+sJyKhFJwjW0MhL6+mKT2S5U7+i4KtD1oL1T3g1R31q7zfNq9lEjCl0JTmFw4
- tnOIW9QAWPlAFVktMDrjJknXhYbVsgNZWGJWfxN+5n4bglJn0R739a0AcZiw4SadFQ
- MYShG1Qm/NGFoTC5y0IAgn9u7o+u/4hI36E5PvWtu/XF0kJrOLP5V3dti97qr5ogCo
- R5IJvvAIt1qFDJ3huxc+ILAL68rnUG5dfweAUR6D/bFjo2XuNrE/DXmE96Eg5468fn
- HtRXGVLLjr6QVzq5jo5NCmylq2i8+0etjM5Rcp596zEYJQyom64gy+9GEDfeNLOxZL
- LzfaczS2CzUXw==
+ b=BBgLG+j7x7uswCndJfVOyhg8Qr85mkgNH+zd6dllfXmOW2vsRgPihonNrNCIWHgmS
+ B4o8DDistLuczJOG883PwldSA8QSdVgLq4PeK4ya/plaAjJnwpxply+g+AOnzUeUH+
+ Hr8dnvYdAE1Ru0NXPn7QVCmndz/BqD+vaaY7Ha9HUN50YdJU+FUq6Indj0NiKVIWPp
+ osjh5b3cf8r6pOimRwWY0IiBoJzkpYkloxX1DWmV40C/StcUjjAZAtcqTIjZ1yRGTB
+ WIvoRZrTllhpGnHA8VBaXy6FyCof/g+Lf5w8QiJzNv4Lf87yhXRw0b6WtlIaghRmdj
+ iMpa6NmHFP1hg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BB1B31C3B3A;
- Wed, 22 Jul 2026 15:49:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9B31D1C3B09;
+ Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0FCB43F378A;
- Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E285E3F3763;
+ Wed, 22 Jul 2026 15:46:47 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id AE7B317F49; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
+ id 67F5217EFB; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Helge Deller <deller@gmx.de>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 v2 093/127] linux-user/alpha: add coredump support
-Date: Wed, 22 Jul 2026 15:48:18 +0300
-Message-ID: <20260722124859.32371-12-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 v2 096/122] hw/display/virtio-gpu: fix dmabuf_fd leak
+ on remap failure
+Date: Wed, 22 Jul 2026 15:45:45 +0300
+Message-ID: <20260722124622.31034-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
-References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
+References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,78 +76,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Define HAVE_ELF_CORE_DUMP and target_elf_gregset_t in target_elf.h,
-mirroring the kernel's elf_gregset_t (ELF_NGREG = 66): r0-r31
-[0..31], f0-f31 [32..63], pc [64], unique [65].  Implement
-elf_core_copy_regs() in elfload.c to populate the gregset from
-CPUAlphaState.
+When virtio_gpu_create_udmabuf() succeeds but virtio_gpu_remap_udmabuf()
+fails (mmap returns MAP_FAILED), virtio_gpu_init_udmabuf() returns early
+without closing the dmabuf fd. Since res->blob is never set in this
+path, later cleanup via virtio_gpu_cleanup_mapping() skips
+virtio_gpu_fini_udmabuf() entirely, leaking the file descriptor.
 
-Without this, bprm->core_dump is NULL for Alpha targets.  When a
-guest signal goes unhandled, dump_core_and_abort() skips the core
-write and falls through to die_with_signal(), which re-raises the
-signal to the host.  The host kernel then writes an x86-64 core file
-for the qemu-alpha process instead of an Alpha guest core.
+Call virtio_gpu_destroy_udmabuf() before the early return to close
+the fd. This function already handles partial state correctly: it
+skips the munmap when res->remapped is NULL and closes the fd when
+res->dmabuf_fd >= 0.
 
-v2: Store thread unique field, same as in Linux kernel. Added by Helge &
-suggested by Richard.
-
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 9db18ed0631d09f349057c22f7872b2c45275d0c)
-(Mjt: pick this for -stable too, helps with debugging and makes subsequent
- changes to apply cleanly)
+Fixes: 9b60cdf98723 ("virtio-gpu: Add udmabuf helpers")
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <20260713125622.111513-1-marcandre.lureau@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit 564c4d7e99d87b39c3faea52ef8759df7f786f61)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/alpha/elfload.c b/linux-user/alpha/elfload.c
-index 1e44475c475..1969f620a54 100644
---- a/linux-user/alpha/elfload.c
-+++ b/linux-user/alpha/elfload.c
-@@ -3,8 +3,20 @@
- #include "qemu/osdep.h"
- #include "qemu.h"
- #include "loader.h"
-+#include "target_elf.h"
- 
- 
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPUAlphaState *env)
-+{
-+    int i;
-+
-+    for (i = 0; i < 31; i++) {
-+        r->regs[i] = tswap64(env->ir[i]);
-+    }
-+    r->pc = tswap64(env->pc);
-+    r->unique = tswap64(env->unique);
-+}
-+
- const char *get_elf_cpu_model(uint32_t eflags)
- {
-     return "ev67";
-diff --git a/linux-user/alpha/target_elf.h b/linux-user/alpha/target_elf.h
-index 864dc6e2e6f..4987ae39448 100644
---- a/linux-user/alpha/target_elf.h
-+++ b/linux-user/alpha/target_elf.h
-@@ -11,4 +11,17 @@
- #define ELF_CLASS               ELFCLASS64
- #define ELF_MACHINE             EM_ALPHA
- 
-+#define HAVE_ELF_CORE_DUMP      1
-+
-+/*
-+ * Matches the kernel's elf_gregset_t (ELF_NGREG = 33):
-+ *   r0-r30 at indices 0-30, pc at 31, ps at 32.
-+ * r31 (hardwired zero) is not stored; pc occupies index 31.
-+ */
-+typedef struct target_elf_gregset_t {
-+    abi_ulong regs[31];  /* integer registers r0-r30  [0..30] */
-+    abi_ulong pc;        /* program counter           [31]    */
-+    abi_ulong unique;    /* thread's UNIQUE field     [32]    */
-+} target_elf_gregset_t;
-+
- #endif
+diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
+index 85ca23cb321..44eb1f5c972 100644
+--- a/hw/display/virtio-gpu-udmabuf.c
++++ b/hw/display/virtio-gpu-udmabuf.c
+@@ -142,6 +142,7 @@ void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
+         }
+         virtio_gpu_remap_udmabuf(res);
+         if (!res->remapped) {
++            virtio_gpu_destroy_udmabuf(res);
+             return;
+         }
+         pdata = res->remapped;
 -- 
 2.47.3
 
