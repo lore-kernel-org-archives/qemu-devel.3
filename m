@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9AE7C4453E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 763C2C4453C
 	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:06:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWPT-0007ho-VU; Wed, 22 Jul 2026 08:50:52 -0400
+	id 1wmWV0-0004LN-JE; Wed, 22 Jul 2026 08:56:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWNT-0003bS-3s; Wed, 22 Jul 2026 08:48:51 -0400
+ id 1wmWSj-0005Ak-8f; Wed, 22 Jul 2026 08:54:13 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWNP-0001sq-2d; Wed, 22 Jul 2026 08:48:46 -0400
+ id 1wmWSh-00031N-9d; Wed, 22 Jul 2026 08:54:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724390; bh=E43CQu5J+3NqLcWmX90uT/f3YTrvkTkpbFPw5yZiNlo=;
+ t=1784724575; bh=gxHmzF2TUc2qQKF6zJTWrVxcqM93J8pbbFwJSbDeI+s=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=QSRRX8Jk+XxQcf9v7/E3+ygymYfGEXAnFCgkunjxrnaSC599kMbclYq0jFHVzaPzk
- JsymmeaihmIsXTA8A79C9RPODfTcEKHBjb0v6VcflogTZs7QNBWx0ozpWE4BLvBW0w
- 7zrdUxl6iobXGMDiqNNL2yRk3TPO+GC2dT3Lh2adD1lR0yrld54U9etjIV0BgnRIye
- YpEpml7HZ3UJSAsmrlP0wtDZhgk4s10L7deSq2JAie8LtCItNbcEWSFsO5HyRdKu+P
- T+HGiokLmD/dmmUd6A8z3klDfeDb4OjYv3W/XBOg11BzwqSuTEsoN50pZ0FmHY1FwC
- bTCeUKnttAJ7A==
+ b=sw23ETNO+WnTQaZSO3yDTpFR8BZC08OsIbaj4FK2qBL9D3PzTH7XkVZ9/oY7sv4q5
+ evzHbELKiY1bkInYiyGJoqowvl0ybNsU4n7GEbuVb3EyuU/oEKeGSfkrPSdE4DtSb1
+ busc5byo103vuDInVLT6uxq3Fr/r6t6K9bySYnDbZgYymV9k61pJIO87PLLjoBs3EV
+ fkMGxqPiFgdquiEKSYkpOQOgH41JqUp/+WKZWxWQyZbhvAqZMkf8kXn1PuAPCe+7Eb
+ 50TPUgU2YkJaQPe5NG/IfuzKFjuBp/IsPincaqCfYrZXnWbh+q7T1xi+HzNq0yDt7v
+ QzpkGJe+svMIQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B86F71C3B0E;
- Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 24A501C3B4C;
+ Wed, 22 Jul 2026 15:49:35 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0BC343F3768;
- Wed, 22 Jul 2026 15:46:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6D5C13F379C;
+ Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 736A917F05; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id D91CC17F6D; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Laurent Vivier <lvivier@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 101/122] ui/input-barrier: fix off-by-one in
- keycode bounds check
-Date: Wed, 22 Jul 2026 15:45:50 +0300
-Message-ID: <20260722124622.31034-26-mjt@tls.msk.ru>
+ Feifan Qian <bea1e@proton.me>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v2 111/127] hw/display/virtio-gpu: handle migration
+ iov allocation failure
+Date: Wed, 22 Jul 2026 15:48:36 +0300
+Message-ID: <20260722124859.32371-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
-References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
+References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,32 +77,61 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Use strict "<" to fix the off-by-one.
+An unbounded iov_cnt from the migration stream drives two g_new()
+allocations whose combined size can exceed available memory, causing
+GLib to abort the process.
 
-Fixes: 6105683da35b ("ui: add an embedded Barrier client")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3951
-Reported-by: huntr bubble
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Laurent Vivier <lvivier@redhat.com>
-Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
-(cherry picked from commit 82b4d693d522d406c950067caa4f14f45f4b679e)
-(Mjt: fixup the change to before v11.0.0-365-gd276ad86eb8
- "ui: rename init_keyboard_layout->kbd_layout_new()")
+Switch to g_try_new() and propagate the failure as a migration error.
+
+Fixes: 0c244e50ee12 ("virtio-gpu: add live migration support")
+Fixes: f66767f75c9c ("virtio-gpu: add virtio-gpu/blob vmstate subsection")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3753
+Reported-by: Feifan Qian <bea1e@proton.me>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit e99488c5d4a009a156a29f9ff6a7f12d091c2646)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/input-barrier.c b/ui/input-barrier.c
-index 7acc48d7046..aad520e7f56 100644
---- a/ui/input-barrier.c
-+++ b/ui/input-barrier.c
-@@ -87,7 +87,7 @@ static kbd_layout_t *kbd_layout;
- static int input_barrier_to_qcode(uint16_t keyid, uint16_t keycode)
- {
-     /* keycode is optional, if it is not provided use keyid */
--    if (keycode && keycode <= qemu_input_map_xorgkbd_to_qcode_len) {
-+    if (keycode && keycode < qemu_input_map_xorgkbd_to_qcode_len) {
-         return qemu_input_map_xorgkbd_to_qcode[keycode];
-     }
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index b998ce8324d..c4d8aab365f 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -1349,8 +1349,15 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
+             return -EINVAL;
+         }
  
+-        res->addrs = g_new(uint64_t, res->iov_cnt);
+-        res->iov = g_new(struct iovec, res->iov_cnt);
++        res->addrs = g_try_new(uint64_t, res->iov_cnt);
++        res->iov = g_try_new(struct iovec, res->iov_cnt);
++        if (res->iov_cnt && (!res->addrs || !res->iov)) {
++            pixman_image_unref(res->image);
++            g_free(res->addrs);
++            g_free(res->iov);
++            g_free(res);
++            return -EINVAL;
++        }
+ 
+         /* read data */
+         for (i = 0; i < res->iov_cnt; i++) {
+@@ -1424,8 +1431,15 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
+         res->resource_id = resource_id;
+         res->blob_size = qemu_get_be32(f);
+         res->iov_cnt = qemu_get_be32(f);
+-        res->addrs = g_new(uint64_t, res->iov_cnt);
+-        res->iov = g_new(struct iovec, res->iov_cnt);
++
++        res->addrs = g_try_new(uint64_t, res->iov_cnt);
++        res->iov = g_try_new(struct iovec, res->iov_cnt);
++        if (res->iov_cnt && (!res->addrs || !res->iov)) {
++            g_free(res->addrs);
++            g_free(res->iov);
++            g_free(res);
++            return -EINVAL;
++        }
+ 
+         /* read data */
+         for (i = 0; i < res->iov_cnt; i++) {
 -- 
 2.47.3
 
