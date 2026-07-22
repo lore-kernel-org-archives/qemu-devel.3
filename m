@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EE57C4453C
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:54:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2C2EC44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:54:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWRL-0002fW-Fj; Wed, 22 Jul 2026 08:52:51 -0400
+	id 1wmWSe-0004VR-W0; Wed, 22 Jul 2026 08:54:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWQp-0002X0-8K; Wed, 22 Jul 2026 08:52:17 -0400
+ id 1wmWQw-0002ea-Tt; Wed, 22 Jul 2026 08:52:28 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWQn-0002OH-Kh; Wed, 22 Jul 2026 08:52:15 -0400
+ id 1wmWQu-0002Qe-1E; Wed, 22 Jul 2026 08:52:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724574; bh=7LRlaPV+KW3aJlHhTgF3Pm0ZQhWMVKeSeIRHPuq9ZQo=;
+ t=1784724574; bh=LLZgFtID7Y0u7woJv6idu+dtYbPMeWbCYDycpRvO6VE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Hq773yCxivLqeoyZfx1eEqDF21iftpBbSeUIw20W6eTR+DjRkET+3o0oUBZB6DXRp
- w+w3sl8xyZDr7DjrVvPd2e4G0KlktRBhNaa+cZh8Q/IWdl+Ak0KGlDbLcCTqgN4HBr
- j1+Pf9QD8AJsLh97LXmpUrujK6X8UD5UaQz/NxRg6HIyxfXr2JX+J/8gUTBrdVwt8T
- fy81KgNr5HcWF7vGZThj7R+iLln7nIR9/TVLfUHKHQT2RaLFdCeaAp6vPzm8jzYgmY
- 7RN1K2OYTcE9kDOO77TtApNEMHwzG6LnEaIIBVpRZTFcWVYKEjQIuI0E9xonvl9faq
- N/w/9sM3nt93A==
+ b=rFdp+sJyKhFJwjW0MhL6+mKT2S5U7+i4KtD1oL1T3g1R31q7zfNq9lEjCl0JTmFw4
+ tnOIW9QAWPlAFVktMDrjJknXhYbVsgNZWGJWfxN+5n4bglJn0R739a0AcZiw4SadFQ
+ MYShG1Qm/NGFoTC5y0IAgn9u7o+u/4hI36E5PvWtu/XF0kJrOLP5V3dti97qr5ogCo
+ R5IJvvAIt1qFDJ3huxc+ILAL68rnUG5dfweAUR6D/bFjo2XuNrE/DXmE96Eg5468fn
+ HtRXGVLLjr6QVzq5jo5NCmylq2i8+0etjM5Rcp596zEYJQyom64gy+9GEDfeNLOxZL
+ LzfaczS2CzUXw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AC0CB1C3B37;
+ by isrv.corpit.ru (Postfix) with ESMTP id BB1B31C3B3A;
  Wed, 22 Jul 2026 15:49:34 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 00FBC3F3787;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0FCB43F378A;
  Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A769417F43; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
+ id AE7B317F49; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Collin Walling <walling@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 v2 090/127] s390x/sclp: prevent re-reading the sclp
- header
-Date: Wed, 22 Jul 2026 15:48:15 +0300
-Message-ID: <20260722124859.32371-9-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Helge Deller <deller@gmx.de>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v2 093/127] linux-user/alpha: add coredump support
+Date: Wed, 22 Jul 2026 15:48:18 +0300
+Message-ID: <20260722124859.32371-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
@@ -73,48 +72,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
+From: Matt Turner <mattst88@gmail.com>
 
-We verify the sccb length and then allocate based on that length. The
-following access re-reads the sccb again. This can race against other
-vCPUs overwriting the length field.
+Define HAVE_ELF_CORE_DUMP and target_elf_gregset_t in target_elf.h,
+mirroring the kernel's elf_gregset_t (ELF_NGREG = 66): r0-r31
+[0..31], f0-f31 [32..63], pc [64], unique [65].  Implement
+elf_core_copy_regs() in elfload.c to populate the gregset from
+CPUAlphaState.
 
-sclp_service_call_protected does not need a change as the ultravisor
-provides a consistent snapshot.
+Without this, bprm->core_dump is NULL for Alpha targets.  When a
+guest signal goes unhandled, dump_core_and_abort() skips the core
+write and falls through to die_with_signal(), which re-raises the
+signal to the host.  The host kernel then writes an x86-64 core file
+for the qemu-alpha process instead of an Alpha guest core.
 
-Fixes: c1db53a5910f ("s390/sclp: read sccb from mem based on provided length")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Reviewed-by: Collin Walling <walling@linux.ibm.com>
-Message-ID: <20260709142906.197474-2-borntraeger@linux.ibm.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-(cherry picked from commit 20701190e023216d0213a107a491402ce2cc501e)
+v2: Store thread unique field, same as in Linux kernel. Added by Helge &
+suggested by Richard.
+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 9db18ed0631d09f349057c22f7872b2c45275d0c)
+(Mjt: pick this for -stable too, helps with debugging and makes subsequent
+ changes to apply cleanly)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
-index b9c3983df19..9bc3b9a0eb8 100644
---- a/hw/s390x/sclp.c
-+++ b/hw/s390x/sclp.c
-@@ -327,7 +327,8 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
-     /*
-      * we want to work on a private copy of the sccb, to prevent guests
-      * from playing dirty tricks by modifying the memory content after
--     * the host has checked the values
-+     * the host has checked the values.
-+     * Reuse the previously fetched header
-      */
-     work_sccb = g_malloc0(be16_to_cpu(header.length));
-     ret = address_space_read(as, sccb, attrs,
-@@ -335,6 +336,7 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
-     if (ret != MEMTX_OK) {
-         return -PGM_ADDRESSING;
-     }
-+    work_sccb->h = header;
+diff --git a/linux-user/alpha/elfload.c b/linux-user/alpha/elfload.c
+index 1e44475c475..1969f620a54 100644
+--- a/linux-user/alpha/elfload.c
++++ b/linux-user/alpha/elfload.c
+@@ -3,8 +3,20 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "loader.h"
++#include "target_elf.h"
  
-     if (!sclp_command_code_valid(code)) {
-         work_sccb->h.response_code = cpu_to_be16(SCLP_RC_INVALID_SCLP_COMMAND);
+ 
++void elf_core_copy_regs(target_elf_gregset_t *r, const CPUAlphaState *env)
++{
++    int i;
++
++    for (i = 0; i < 31; i++) {
++        r->regs[i] = tswap64(env->ir[i]);
++    }
++    r->pc = tswap64(env->pc);
++    r->unique = tswap64(env->unique);
++}
++
+ const char *get_elf_cpu_model(uint32_t eflags)
+ {
+     return "ev67";
+diff --git a/linux-user/alpha/target_elf.h b/linux-user/alpha/target_elf.h
+index 864dc6e2e6f..4987ae39448 100644
+--- a/linux-user/alpha/target_elf.h
++++ b/linux-user/alpha/target_elf.h
+@@ -11,4 +11,17 @@
+ #define ELF_CLASS               ELFCLASS64
+ #define ELF_MACHINE             EM_ALPHA
+ 
++#define HAVE_ELF_CORE_DUMP      1
++
++/*
++ * Matches the kernel's elf_gregset_t (ELF_NGREG = 33):
++ *   r0-r30 at indices 0-30, pc at 31, ps at 32.
++ * r31 (hardwired zero) is not stored; pc occupies index 31.
++ */
++typedef struct target_elf_gregset_t {
++    abi_ulong regs[31];  /* integer registers r0-r30  [0..30] */
++    abi_ulong pc;        /* program counter           [31]    */
++    abi_ulong unique;    /* thread's UNIQUE field     [32]    */
++} target_elf_gregset_t;
++
+ #endif
 -- 
 2.47.3
 
