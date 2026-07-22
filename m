@@ -4,98 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5318C44533
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 05:01:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F8B1C4452D
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 05:13:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmP47-0000M9-Lb; Wed, 22 Jul 2026 01:00:23 -0400
+	id 1wmPGi-0007yW-Tr; Wed, 22 Jul 2026 01:13:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wmP45-0000L5-Ai
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 01:00:17 -0400
-Received: from fout-b7-smtp.messagingengine.com ([202.12.124.150])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wmPGI-0007tn-UV; Wed, 22 Jul 2026 01:12:54 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wmP42-0005ki-RC
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 01:00:17 -0400
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfout.stl.internal (Postfix) with ESMTP id DE38B1D00117;
- Wed, 22 Jul 2026 01:00:10 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-04.internal (MEProxy); Wed, 22 Jul 2026 01:00:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm1; t=1784696410;
- x=1784782810; bh=7uvMFWrVkzgqT2NhVxo6kyGPXalVleF3s0UkXyMbgo8=; b=
- J31tNy0q7LgRGiBk4HZ1G7QYuT+D7Yt6dpSJU8ceHLGZrO2sEU6PcV6OJtt4chRy
- 0YMPqOwCPxZD9GVrD5PJzfCXT5MYWI1wVLQ2jIpK4D4XO6PkyTVzkdXNbTRSfYs1
- rci8qyfLaEyPX4Jd/qgYVvgrNUYHChY1D9OAKQDZFNKXebeCgh1bQL62uzBUJhTR
- mFmzQDqNQtLpJ8NZivasZq4BJWcutQM3tEc9n92XKafwdMR2oaAm6MiCIWZ3wgNB
- ikoSmwF/oe/BHZd72caLjEDTEJnCVW95xoixLFG5bAmTR36ULuTOhJURPW5MO9my
- mjDoYujHPz61vGLDjQ2/OA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784696410; x=
- 1784782810; bh=7uvMFWrVkzgqT2NhVxo6kyGPXalVleF3s0UkXyMbgo8=; b=N
- YbuKsR8ks1CrzN4oJ3IYbpFDu3KWRTizJons/lYy3j8xY/4v0QWxizjQKNgzrfPa
- NTpYGmL+NnL72Xmy7iu8ejrPRfVXOZJ2iQQaGc7cOlitw4jDieQLhks6AX8sIJpO
- 5AL5Pb5lCG8i1BQHjr9+VZPMgUvFQnBM5SnDjKisrCSeMfn7yJGyjR77fZsvW0nZ
- H4rxxEVrrRjyN6gTDc05/X3ZDATAK/d2TW4IHUmhnoC6hKRxUBe+dF0FoaHKB60B
- kMtZEKymTJJoTLjQRv3CEqWWs6rYhsb+vRAnqoz0/qCVvCi5hPu6elfM7QVO8sLa
- vR/w0tRYho8/dF9mJ5rTw==
-X-ME-Sender: <xms:WU5gatohFAaopI9eMF9l7rFXhrPJfg236JK6GtOAUVsuVJD0ajTssA>
- <xme:WU5garpDrM5abijZz96Ivis4UVD9FY1hG5GIi66hMaEnAu9hgG8tw4JSMstwFaBFX
- NQVa1P6We0u_xm-evor2aGkovqrgZgDqD1IOmI_nyxx3Ze3IIkN3A>
-X-ME-Received: <xmr:WU5gasZCbQKy0tJPzPldDiFj7xp3I7yUrlgmtFfKRIAIbD6K0SW1qK1CIHXo0A>
-X-ME-Proxy-Cause: dmFkZTF8FIQCRbI4PhDjbWokBUoXCbm/IQAW9lMNroPYPILdWSLgSNMy1tSg7LZ1eA0lDd
- YkNXlcMgaDk6scP+gGBYkXOWzkREbE3gt7KwY1kqnr60T5WFDqmhMWkVQhS0nw7YOVoV3g
- +24Ips97PM3AHXCoSXrhlFlclLIKyR3BlPMSRVcTu4DJdAst43kuXreW+R0T3X/HPd3JSO
- yv/iD87enUhx0xHmSfFPqoZSMa7Q+p5i3n+SotllOp85XGEbhn17vcj9AWodmvVTTXJaqY
- wAv7SNbNvL3AnxD/Ybs1y6SxOah8ppRtGhmtvbXPp6jqmZaX8Czw7fXZ8AzhNQS1fQm6q/
- 8iqo0GAxb9gQu6tolzSsA+8ba8wdX/ewzPqQrZoddfic15yRSYBXlP/bA0kWxNAE5+Fesd
- KDb+epuCdO5iYQAY7Z5pz0BEVelX9S6M8Hb9R1iY58LHIvCSl9HuVDaRqcSKl2y0YvH/a6
- 0D9y3Ms+bJENm6HbIT1xrz39xJ6W1hYTz8xeiblvj8CLm270leqWcv7Polfc2hpFEmm47i
- ZDhf0ooBjC4si3LgHaK+YrvNHcpX6zPTEW+D5b69JB154QuexkHB6EUiVzwBt3y+9ItL/z
- fIVPYI39JjAmaoBt/wMOLCb113aZyG+HIHrG6YD+T0bGmyRYMN099XLw1ziw
-X-ME-Proxy: <xmx:WU5gap8yv6cYhIXCfjJQtnQflzvSHBNjUTKe5raGY6XfAILiXhqS2A>
- <xmx:WU5gaqk8lUepd_7I3l_ZBqsyQ4W8J7YG2QW5xDTFEufJqTuM2L21KQ>
- <xmx:WU5gamxfYxZxiY_rwdfjrYVuBKZS-iJkb9mJsL6CwgHP-LaIos-yyA>
- <xmx:WU5gas7YGvE1ljAKCJiIQhkTfBcUhnrPCqM8XzjaDrSBmxW7H-kcog>
- <xmx:Wk5gahBOK-NDadYIjUyOISZVWiY2a2zh_4gpCLaHFlopvnSjL9vR-QbV>
-Feedback-ID: i03f14258:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Jul 2026 01:00:08 -0400 (EDT)
-Date: Tue, 21 Jul 2026 23:00:04 -0600
-From: Alex Williamson <alex@shazbot.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Yang Wencheng <east.moutain.yang@gmail.com>, qemu-devel@nongnu.org,
- =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, Philippe
- =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@mailo.com>, Yangwencheng
- <yangwencheng@gmail.com>, alex@shazbot.org
-Subject: Re: [PATCH] hw/vfio: Coalesce repeated PCI_COMMAND memory-decode
- DMA (re)map for passthrough BARs
-Message-ID: <20260721230004.2c03fede@shazbot.org>
-In-Reply-To: <20260721110247-mutt-send-email-mst@kernel.org>
-References: <20260721130611.539089-1-east.moutain.yang@gmail.com>
- <38865e6b-6e80-4581-9aaf-257a53dfb972@app.fastmail.com>
- <20260721110247-mutt-send-email-mst@kernel.org>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wmPGF-0007VH-Hk; Wed, 22 Jul 2026 01:12:54 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66M5C0UB027295
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 22 Jul 2026 14:12:00 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=1x87Yv68/hv4h8gC1ekid76fqo5h7iOuBFTT+mIsAFk=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1784697121; v=1;
+ b=iS/VbEvBWnuKCHIpmunBgHyqYyJ84f+/1c6fhg9IaGV2Ci2FmNCFm8uzNfvhbBEP
+ cyJxUDCOJiPwJf1Exx+syqzn4ptEv50og57EWRQpK4Ylax/NA1s8tA82uZGwW9/r
+ MXQmJOU6aPM8yT72WcmmLYlQ6Xf+n4OVATvb/AN3NyMJlDNr2CCg0Ycfq9MsqhFv
+ 2Lz9kL4j24eZ+80Jz2tMvsmgFdP8NzhEHfX6mEQWMC5L8wOpa+KCvsnxkdchTkxO
+ 4JRIu3zIE0s2EPoYvPZa87+nuqSL2i2TtZzCFoeVYzLOVioZ7DsXVA81yImMkUg1
+ OL90xl+TQG1zU8sJoq3cSA==
+Message-ID: <a5597a0e-c18c-4649-bfd1-20d77897ff88@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 22 Jul 2026 14:12:00 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=202.12.124.150; envelope-from=alex@shazbot.org;
- helo=fout-b7-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-11.2 v3 15/15] hw/qdev: Prevent devices from being
+ realized more than once
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ David Hildenbrand <david@kernel.org>, Igor Mammedov <imammedo@redhat.com>,
+ FangSheng Huang <FangSheng.Huang@amd.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>, Aditya Gupta <adityag@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org,
+ Luc Michel <luc@lmichel.fr>, Fam Zheng <fam@euphon.net>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <20260721-qdev-v3-0-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
+ <20260721-qdev-v3-15-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
+ <356ebc59-d2cb-4c47-867e-8fc693b3a593@oss.qualcomm.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <356ebc59-d2cb-4c47-867e-8fc693b3a593@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,97 +95,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 21 Jul 2026 11:03:39 -0400
-"Michael S. Tsirkin" <mst@redhat.com> wrote:
-
-> On Tue, Jul 21, 2026 at 08:41:04AM -0600, Alex Williamson wrote:
-> > 
-> > 
-> > On Tue, Jul 21, 2026, at 7:06 AM, Yang Wencheng wrote:  
-> > > From: YangWencheng <east.moutain.yang@gmail.com>
-> > >
-> > > A passthrough device's own MMIO/BAR range is registered with the IOMMU
-> > > (VFIO_IOMMU_MAP_DMA) when its memory region becomes part of the guest
-> > > address space, to support peer-to-peer DMA into that BAR from other
-> > > devices. Toggling the guest's PCI_COMMAND memory-decode-enable bit off
-> > > and back on -- something PCI enumeration/attribute code does routinely,
-> > > sometimes several times for the same device (e.g. disable before
-> > > reprogramming a BAR then re-enable, or generic driver probing during
-> > > guest OS boot) -- currently tears down and rebuilds this mapping every
-> > > single time via vfio_listener_region_del()/region_add(), unconditionally.
-> > >
-> > > For devices with very large BARs this is expensive: mapping a 64GB BAR
-> > > into IOMMU page tables measured at ~8.5s per call on this hardware, and
-> > > was observed being repeated 3-5 times for the same BAR during a single
-> > > guest boot, because nothing changed about the underlying mapping between
-> > > the disable and the following re-enable.
-> > >
-> > > Defer the actual VFIO_IOMMU_UNMAP_DMA for "ram device" regions (i.e.
-> > > passthrough device BARs used for P2P DMA -- explicitly not regular guest
-> > > RAM or RamDiscardManager-backed regions, so migration/ballooning/
-> > > virtio-mem are unaffected) instead of issuing it immediately in
-> > > region_del(). If a matching region_add() for the exact same region
-> > > (same MemoryRegion pointer, iova, size, vaddr, readonly) follows, cancel
-> > > the deferred unmap and skip the VFIO_IOMMU_MAP_DMA entirely -- the
-> > > host-side mapping was never actually removed, so there is nothing to
-> > > redo. A region_add() for anything that doesn't match maps normally, as
-> > > before.
-> > >
-> > > Nothing is leaked: any mapping still on the pending list is flushed with
-> > > a real unmap in two places -- vfio_container_instance_finalize(), before
-> > > the container's fd is closed (VM shutdown / last device in a group removed),
-> > > and vfio_bars_finalize(), matched by MemoryRegion pointer to just that
-> > > device's own BARs, so a device hot-unplugged while the container stays
-> > > alive for other devices can't leave a dangling deferred entry either.
-> > >
-> > > This does not weaken the PCI_COMMAND memory-decode security boundary:
-> > > every guest write to PCI_COMMAND is still forwarded synchronously and
-> > > unconditionally to the real device's config space in
-> > > vfio_pci_write_config() (an entirely separate code path, untouched by
-> > > this change), which is what actually gates whether the physical device
-> > > claims/responds to transactions targeting its BAR, independent of
-> > > whatever the IOMMU's routing table still contains. This change only
-> > > avoids redundant bookkeeping of that routing table when nothing about
-> > > the mapping has changed.  
-> > 
-> > Seems like you should focus on huge pfnmap support on your platform
-> > rather than hack the VMM to not behave like bare metal.  Thanks,
-> > 
+On 2026/07/22 5:11, Philippe Mathieu-Daudé wrote:
+> Hi Akihiko,
 > 
-> But bare metal does not tweak an iommu during pci enumeration?
+> On 21/7/26 10:17, Akihiko Odaki wrote:
+>> qdev currently permits reentrant realization of the same device. It also
+>> permits another realization attempt after a device has been unrealized
+>> or a previous attempt has failed. Either path can invoke
+>> DeviceClass::realize() more than once. Supporting repeated realization
+>> adds complexity to device implementations. It is untested and likely
+>> broken.
+>>
+>> Replace the bool DeviceState::realized field with the enum-valued
+>> DeviceState::phase field. The enum has four values:
+>>
+>> - initialized
+>> - realizing
+>> - realized
+>> - retired
+> 
+> Excellent.
+> 
+> I have been working on something similar.
+> 
+> I'd start the first patch only including:
+> 
+> DEVICE_PHASE_UNREALIZED (false)
+> DEVICE_PHASE_REALIZED (true)
+> 
+> Then gradually rename DEVICE_PHASE_REALIZED -> DEVICE_PHASE_CREATED
+> and add the DEVICE_PHASE_REALIZING and DEVICE_PHASE_RETIRED phases,
+> so we can discuss them during the review process.
 
-Bare metal is not using the IOMMU to map the device into a guest
-physical address space, so no, an equivalent operation does not occur
-there.  The proposal here is intentionally leaving stale gpa mappings
-to avoid the unmap/remap overhead, where we've essentially eliminated
-that overhead on other platforms with huge pfnmap support.  The
-specific platform that's being optimized here is also omitted, which
-makes it impossible to determine the ongoing need for this code.
+A gradual conversion makes sense. I kept the "realized" phase as-is 
+because it maps exactly to the current external behavior. This patch 
+splits the internal "unrealized" state into three distinct phases, but 
+the external concept of being "realized" remains unchanged. This allows 
+us to avoid a tree-wide refactoring, which is also why 
+qdev_is_realized() is preserved.
 
-The scheme here effectively assumes that a region_del() will either be
-followed by a region_add() that cancels the deferred unmap, or the
-deferral will be executed on finalize.  It does not actually account
-for cases where the guest might remap the BAR to a different address,
-ex. pci=realloc, leaving a stale mapping in place.  The finalize also
-appears to be using a different MR from the one deferred, such that the
-IOMMU is actually only unmapped due to close().
+> 
+>> Realization can start only in the initialized phase. It moves the device
+>> to the realizing phase before invoking callbacks, preventing another
+>> realization attempt. Successful realization moves it to the realized
+>> phase; failure after realization has started moves it to the retired
+>> phase. Unrealization also moves a realized device to the retired phase.
+> 
+> So what is the difference between 'initialized' and 'retired'?
 
-More importantly though, this entire scheme is relying on a gap in the
-vfio type1 IOMMU backend, where clearing the memory enable bit of the
-command register zaps the CPU mappings and errors faults while cleared,
-but does not generate unmaps in the IOMMU.  IOMMUFD resolves that gap,
-generating a move-notify/invalidate on the dma-buf, which results in an
-IOMMU unmap.  IOW, the premise of this workaround is broken in the
-direction that VFIO is headed.
+The first statement in this paragraph differentiates 'initialized' from 
+everything else: realization can start only in the initialized phase. A 
+'retired' device cannot be realized. This property avoids re-entrancy.
 
-Therefore, I'd once again suggest that effort is better redirected to
-implement huge pfnmap support for whatever platform this might be in
-order to follow a proven solution to this problem for type1.  Huge
-pfnmap is used both in the CPU fault path as well as the DMA mapping
-path, by virtue of generating user faults in the pfnmap.  Alternatively,
-iommufd may provide better p2p DMA mapping performance than type1
-without huge pfnmap, but CPU faults would lag without such support
-anyway.  Thanks,
+> 
+>> The QOM realized property is an internal lifecycle property, not for
+>> end users. Replace it with the enum-valued phase property.
+>>
+>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>> ---
+>>   qapi/common.json          |  19 ++++++++
+>>   include/hw/core/qdev.h    |  12 ++---
+>>   hw/core/qdev-clock.c      |   4 +-
+>>   hw/core/qdev-properties.c |   4 +-
+>>   hw/core/qdev.c            |  98 +++++++++++++++++++++++++ 
+>> +--------------
+>>   hw/scsi/scsi-bus.c        |   4 +-
+>>   qom/qom-qmp-cmds.c        |   2 +-
+>>   system/qdev-monitor.c     |   5 ++-
+>>   tests/unit/test-qdev.c    | 112 ++++++++++++++++++++++++++++++++++++ 
+>> +++++++++-
+>>   9 files changed, 212 insertions(+), 48 deletions(-)
+>>
+>> diff --git a/qapi/common.json b/qapi/common.json
+>> index af7e3d618a7c..88a308cbd172 100644
+>> --- a/qapi/common.json
+>> +++ b/qapi/common.json
+>> @@ -7,6 +7,25 @@
+>>   # *****************
+>>   ##
+>> +##
+>> +# @DevicePhase:
+>> +#
+>> +# An enumeration of the device phases
+>> +#
+>> +# @initialized: the initial phase
+>> +#
+>> +# @realizing: the phase during realization
+>> +#
+>> +# @realized: the phase after realization
+>> +#
+>> +# @retired: the terminal phase entered when unrealization begins or
+>> +#           realization fails after starting
+>> +#
+>> +# Since: 11.1
+>> +##
+>> +{ 'enum': 'DevicePhase',
+>> +  'data': [ 'initialized', 'realizing', 'realized', 'retired' ] }
+>> +
+> 
+> 
+>> @@ -477,10 +477,10 @@ bool qdev_unplug_blocked(DeviceState *dev, Error 
+>> **errp)
+>>       return false;
+>>   }
+>> -static bool device_get_realized(Object *obj, Error **errp)
+>> +static int device_get_phase(Object *obj, Error **errp)
+> 
+> DevicePhase
 
-Alex
+device_get_phase() must return int to match the getter type required by
+object_class_property_add_enum():
+
+     int (*get)(Object *, Error **)
+
+Using DevicePhase there would not match the callback type.
+
+> 
+>>   {
+>>       DeviceState *dev = DEVICE(obj);
+>> -    return dev->realized;
+>> +    return dev->phase;
+>>   }
+> 
+> 
+>> @@ -670,7 +702,6 @@ static void device_initfn(Object *obj)
+>>       }
+>>       dev->instance_id_alias = -1;
+>> -    dev->realized = false;
+> 
+> Can we keep the initialization explicit? This helps when navigating
+> the code base.
+
+Yes, I will make that change in the next version.
+
+Regards,
+Akihiko Odaki
+
+> 
+>>       dev->allow_unplug_during_migration = false;
+>>       QLIST_INIT(&dev->gpios);
+
 
