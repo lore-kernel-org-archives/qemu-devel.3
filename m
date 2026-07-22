@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA42BC44536
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:54:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EE57C4453C
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:54:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWPO-0006zH-6l; Wed, 22 Jul 2026 08:50:46 -0400
+	id 1wmWRL-0002fW-Fj; Wed, 22 Jul 2026 08:52:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWMp-0003IN-Ol; Wed, 22 Jul 2026 08:48:10 -0400
+ id 1wmWQp-0002X0-8K; Wed, 22 Jul 2026 08:52:17 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWMm-0001pW-Ci; Wed, 22 Jul 2026 08:48:05 -0400
+ id 1wmWQn-0002OH-Kh; Wed, 22 Jul 2026 08:52:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724390; bh=IOv4t64P0BugPgkhYwNwbj+bLiaWpxe0BEeBlYyjZZ4=;
+ t=1784724574; bh=7LRlaPV+KW3aJlHhTgF3Pm0ZQhWMVKeSeIRHPuq9ZQo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=GYNwkZFWboA5f5NnLP067JzrrBzPHVaj+qb8otMZxtwbni4qV7UGssq11OFiPjN6f
- 2xawnovDxKxczjC9tnUpUP5I8c7NIBNe8mZwdjPFtuxbZV33K7sWH8fdkUvfKgk0PB
- yvm2iY7RRfizVL7qk6NMUrku8xyLodbwVK4b1irTefJKmmpwhf/TYz6S0cYwqYMHgO
- PbDgRzuPMtt8FNde3L4f2pwEKGQ6U19aTlMCihkxx3Hng50ZJ53/xqvdyVZiDC/Tqi
- gRAR+otuHkVCtwuUIyTyVO11vMMNG89LxRJSZcBEIzM5aHIajnlgpM20AXZD7cVHRR
- 8eDrz0+VaY++g==
+ b=Hq773yCxivLqeoyZfx1eEqDF21iftpBbSeUIw20W6eTR+DjRkET+3o0oUBZB6DXRp
+ w+w3sl8xyZDr7DjrVvPd2e4G0KlktRBhNaa+cZh8Q/IWdl+Ak0KGlDbLcCTqgN4HBr
+ j1+Pf9QD8AJsLh97LXmpUrujK6X8UD5UaQz/NxRg6HIyxfXr2JX+J/8gUTBrdVwt8T
+ fy81KgNr5HcWF7vGZThj7R+iLln7nIR9/TVLfUHKHQT2RaLFdCeaAp6vPzm8jzYgmY
+ 7RN1K2OYTcE9kDOO77TtApNEMHwzG6LnEaIIBVpRZTFcWVYKEjQIuI0E9xonvl9faq
+ N/w/9sM3nt93A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 957061C3B08;
- Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AC0CB1C3B37;
+ Wed, 22 Jul 2026 15:49:34 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id DD8263F3762;
- Wed, 22 Jul 2026 15:46:47 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 00FBC3F3787;
+ Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 6593C17EF9; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id A769417F43; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Miao Wang <shankerwangmiao@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 095/122] hw/scsi/vmw_pvscsi: add a comment to
- explain the endianness
-Date: Wed, 22 Jul 2026 15:45:44 +0300
-Message-ID: <20260722124622.31034-20-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Collin Walling <walling@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v2 090/127] s390x/sclp: prevent re-reading the sclp
+ header
+Date: Wed, 22 Jul 2026 15:48:15 +0300
+Message-ID: <20260722124859.32371-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
-References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
+References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,46 +73,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Miao Wang <shankerwangmiao@gmail.com>
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-Add a comment to explain the endianness of the pvscsi device. We have
-no information about the endianness should be little-endian or CPU
-native endian because the current driver code is designed to work only
-on x86 and is not endianness aware. We assume that the pvscsi device is
-implicitly little-endian.
+We verify the sccb length and then allocate based on that length. The
+following access re-reads the sccb again. This can race against other
+vCPUs overwriting the length field.
 
-Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260710-pvscsi-endianness-v3-2-27fe1c4d1f6e@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit ecc569639aeb5b702f1098d3eb5b28d3168604c8)
+sclp_service_call_protected does not need a change as the ultravisor
+provides a consistent snapshot.
+
+Fixes: c1db53a5910f ("s390/sclp: read sccb from mem based on provided length")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Reviewed-by: Collin Walling <walling@linux.ibm.com>
+Message-ID: <20260709142906.197474-2-borntraeger@linux.ibm.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+(cherry picked from commit 20701190e023216d0213a107a491402ce2cc501e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/vmw_pvscsi.h b/hw/scsi/vmw_pvscsi.h
-index 17fcf662730..b9df53a3223 100644
---- a/hw/scsi/vmw_pvscsi.h
-+++ b/hw/scsi/vmw_pvscsi.h
-@@ -108,6 +108,20 @@ enum PVSCSICommands {
- #define PVSCSI_COMMAND_PROCESSING_FAILED     (-1)
- #define PVSCSI_COMMAND_NOT_ENOUGH_DATA       (-2)
+diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
+index b9c3983df19..9bc3b9a0eb8 100644
+--- a/hw/s390x/sclp.c
++++ b/hw/s390x/sclp.c
+@@ -327,7 +327,8 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
+     /*
+      * we want to work on a private copy of the sccb, to prevent guests
+      * from playing dirty tricks by modifying the memory content after
+-     * the host has checked the values
++     * the host has checked the values.
++     * Reuse the previously fetched header
+      */
+     work_sccb = g_malloc0(be16_to_cpu(header.length));
+     ret = address_space_read(as, sccb, attrs,
+@@ -335,6 +336,7 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
+     if (ret != MEMTX_OK) {
+         return -PGM_ADDRESSING;
+     }
++    work_sccb->h = header;
  
-+/*
-+ * About endianess for the below structs:
-+ *
-+ * These structs are used to describe the data that is exchanged between the
-+ * guest and the PVSCSI device. The endianess of the fields in these structs
-+ * is not defined by any standard. The current implemented drivers are designed
-+ * to only work on x86 architecture, so there is no endianess awareness in the
-+ * drivers and thus we have no idea whether the fields should be in little-
-+ * endian or target native endian format.
-+ *
-+ * Considering the above, we assume that PVSCSI is implicitly little-endian and
-+ * expect the fields in these structs to be in little-endian format.
-+ */
-+
- /*
-  * Command descriptor for PVSCSI_CMD_RESET_DEVICE --
-  */
+     if (!sclp_command_code_valid(code)) {
+         work_sccb->h.response_code = cpu_to_be16(SCLP_RC_INVALID_SCLP_COMMAND);
 -- 
 2.47.3
 
