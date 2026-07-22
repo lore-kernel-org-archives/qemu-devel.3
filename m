@@ -4,152 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E74CC44532
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 10:58:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C5AAC44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 11:08:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmUeX-0002kL-A6; Wed, 22 Jul 2026 06:58:17 -0400
+	id 1wmUnc-0006u1-Jz; Wed, 22 Jul 2026 07:07:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wmUeV-0002hr-Vv
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 06:58:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wmUna-0006tZ-Rr
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 07:07:38 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wmUeT-0001kl-RB
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 06:58:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784717892;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Ys/RxOdeYZj+JqS3E0bNSb8lxGtyzn4JdO0ML2/d+9w=;
- b=Dk78ABXbl6+/0nUvp2ewTyOJmw8Yzd4/UOyKulYuSeEDSTgc0/Ahsyyx0P1JiPZSrMxwpE
- d5yklKOL38eK154Qi3r/8cV7CewdnU5e+8CbfrLCIqam2iLMo845VNJ0iJiZrn6pn2oBPy
- OLnLI8S+H98Y+/PZ1J+39jW3sIQRHKE=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-488-_5v9WVgVMsGNDPFWG1PX6g-1; Wed, 22 Jul 2026 06:58:10 -0400
-X-MC-Unique: _5v9WVgVMsGNDPFWG1PX6g-1
-X-Mimecast-MFC-AGG-ID: _5v9WVgVMsGNDPFWG1PX6g_1784717889
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-473e18559b2so6349935f8f.0
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 03:58:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wmUnY-0003gw-L2
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 07:07:38 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66M8x4ks524026
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 11:07:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ dLZ/YF1HqtycZwLoxFkLoSsMsJaSh/8XppFQXN3Ks4M=; b=myls1NX8jBfiz9z4
+ dVchU8Of8NUkeigo304zgOiS3llrQ7LuKWRQCY150TQ8PQObGEh6pzgJNIWSe+sR
+ P3lhqD94XMAT0bP966tHRkDhnfTFfk1BjV32PCV0QfpimKCt90LaezUqKaL0lCu9
+ K+RrYyHKJMw/BydcphaH1txElCkh3VdrMeLtJ02AmIBVxZkt293vZWRm+3Dswhg+
+ A7O19Q7G4ZwV8xzb42DhE1QNx6oGVtv3bx1qBMTCZjtPVeJ56YZBHUOqHzs1xX7x
+ XgNsTxHNxu2cRMWrSJGaAg+HPvB62XlGsEQGZQU8pnPKmSXEWfe1BJY2y5nv99aC
+ W06MCA==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fjrtt12ef-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 11:07:33 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51a8db414c7so216571191cf.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 04:07:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784717889; x=1785322689; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=Ys/RxOdeYZj+JqS3E0bNSb8lxGtyzn4JdO0ML2/d+9w=;
- b=EPtg9molfTFAb1SymbJ9ym+58Ul87/lgx1DUA4HRyd9WyFoaSYH/LouVtfWqrYM/jc
- nQDx8m3yCJiO8pju50e8QEMjPVB4GRkXQWhuNT1Y00bJ1hQ0rki0ai59KNRHb/Do65TH
- cg6nsHLvhah2Vf5V7H61hFKtlzkdeBonPMyNClnUe1jxfUkXCiegkKfLHYkqpGGufaza
- bEGPSSXB5M8vv/3hKrZ5ZBH1SEXssFKdpHi7uianIbqIBqs6HR0ulm4XDiuYf8DrTU6F
- yeszmg4Mwm4mx8aTP0f3pHeGw1fPiG0nxnFRHcHFmbuNLLaBqPATGnj1vEDLDRYz/Jdw
- 1HMQ==
+ d=oss.qualcomm.com; s=google; t=1784718453; x=1785323253; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=dLZ/YF1HqtycZwLoxFkLoSsMsJaSh/8XppFQXN3Ks4M=;
+ b=j8AdJz3NB+qv5NG3kSwRbgTEGgEr9GPqLMMVlN/d3WxQ0mki1wdxMb7Mg8q3RL6coX
+ wpFeRIp004OASMVfFeiFXucwggmNVQ9SvUnSPWqUBvHXOaZFAeka8HB1gOJMPOSi30Ki
+ CyJq35YqO50mWjQ6uHhdq8p2uGUerPbDd5y4yqXNH47weWRy26XlGXKHxG58KjleZAuv
+ g1XPJN30CTS2Iitn5dmSJjXFxVkBLYi4ECNOdKlU6pJ1R8aUbkw28VJ/ayTSXIc4XJ/p
+ 67OEPAf4peZgoEN2kOJkK8MVD7n54nB4os5pS9UN6SbGCmkQCAcCuLgZrBaN/ax9o9+W
+ AVow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784717889; x=1785322689;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=Ys/RxOdeYZj+JqS3E0bNSb8lxGtyzn4JdO0ML2/d+9w=;
- b=oFxC7ubuWEAAiiV7p6s79vl8WVas7dN076wffiG7642A8apJOWHYTfjZRXoQzx1yk3
- c+oMQaXEL6hQZxu8413CXyL+fKmqskzdAfw8hglqwVw5D4g7CbZwD9EG8OgSbDwngHy0
- P+REh5gkW0m/5WT7kcD/BiwD1vHk/nNEs50fFrIJyasxrlmrqBwjgjsnnLFUY+jsq9h1
- 0zWd/ADNUXEAAPxSOVUV2OfMvTYradU9vNYesLGdf3IKwe8+gf079l66x+0QEhk9Q/yw
- n+NBz3REs9ExW0S+Clz2VMA1r/25qlQmMeLm1NKksExncn0J/1BjztTOlYBkFJxvZ//z
- wStw==
+ d=1e100.net; s=20251104; t=1784718453; x=1785323253;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=dLZ/YF1HqtycZwLoxFkLoSsMsJaSh/8XppFQXN3Ks4M=;
+ b=E4tzwegPCsu0QASzSRfgAUQsARH01/n4wADaX3dh+4WxHhzh/cYfLA73blXKd5v3wH
+ +X/yQNuo0t1gQyq1fRmtT/ihZCa+lxO3rH1GZbJiKGs5tKDUH4SsJKIofkQUGC2MKSTx
+ 5N9Tsj7iE0RQjhxreN9hqZ8fOP6vF54aYNE+jKauyHaOSoE0vmXQPmekkAH9/zj0oK6M
+ T114y31znTIUbpqZb6TxMJAY8JYlnXWjAsCkwxkv8gx6qWL7tKLexPis6+yhaqQK733R
+ KUltKGS4JA7Qy2MoHSLNHsOj7weeCgHI1lZXKyN66rUCv5rR0zdT/d3IxwgxWyUUELYm
+ CJ3A==
 X-Forwarded-Encrypted: i=1;
- AHgh+RoyTVz06vxm6u6oqw6Kn0UN6DsNkeb0pVE++3EDlxnbACR+Uwj1fN3K1a48QG8ao9BqWxNvWFqXdUvw@nongnu.org
-X-Gm-Message-State: AOJu0YyLk4EECLdrGX1hfWCFVDEyl9/M2vdHEuMlLJKfFZ3kmwQfYR2C
- daWBKW3jP+XR/BeY66zfdJm2y93HYGUTbCHPEYWY0/v+dX49e2O/Bo2N31+yIbWwFXRlH4xsYn9
- 3sUPx9HPsaU7j+8LvWb4vFHbPPgrm601kGju+FJo/RXzpWjH+R2J1S89d
-X-Gm-Gg: AR+sD13roZrj98UA8yYRuaQ/6cZ79IrjR//fDUYJ2MeXEah4/DQbcrmk8eQJq8/ybQk
- 2ntsOM0i/ZGuHTVkf2eN8qgEq6PoJTs3u0GFUFvI22gYXxUcM5VuvLtGQ4DLU8g71n24VjVizqo
- TaU2Uu/D7krHGks8vtA7lbttj1fsyWCtUnoiSPbIk9zaAmQV9EvlYawToopzPsciI13R8Nvh9nw
- FUydDllwEpf3fy9lT0fa165IaYnLdC2SaSV9kMOLbUjl/kN+HV8Ns5Gmpa20+lD1cvS3dY0kkI7
- fWJHlRf95ftLbG9h4B5VEoowXUlJlfmMwwisOO+L+0LJcQPWc58c26w3/QJkJFA9Mi6zkiMqfA=
- =
-X-Received: by 2002:a05:6000:60e:b0:475:f0f0:9ec8 with SMTP id
- ffacd0b85a97d-47f6233b609mr25972226f8f.51.1784717889257; 
- Wed, 22 Jul 2026 03:58:09 -0700 (PDT)
-X-Received: by 2002:a05:6000:60e:b0:475:f0f0:9ec8 with SMTP id
- ffacd0b85a97d-47f6233b609mr25972199f8f.51.1784717888854; 
- Wed, 22 Jul 2026 03:58:08 -0700 (PDT)
-Received: from [192.168.0.9] ([47.64.113.188])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85b9a60asm5208666f8f.3.2026.07.22.03.58.07
+ AHgh+Rri83E7F5peaaEJ2L6kdXCyfqX/Cfo1ceLJW2oaTgZ58LFzvF/h5235xI/oIIeLH9bcSNxDjMbT7Gse@nongnu.org
+X-Gm-Message-State: AOJu0YxyvL7VXFPkKKP1Qh2xUqkcrMrIUfbOkEx1pPQr7Tuhg4EK+orJ
+ XDG/vJhB9pC+F8oRsVpMRHOnBSnatAj26hojb0k7sbG24JwomC49q5eiLhHEo1IlxsDP3p5OaTq
+ KFf+so2OY60yk9N2nQ6r/eNZsTazOmbTyyEJp578brp9OzMETNtq1d+UmO/jT8y2JNQ==
+X-Gm-Gg: AR+sD12ViuLWOBGgcx7x4vtCXxfJn0BaGmnLKv7ZnE3HwWxGXTnLVSUGY1fA9a1PWCn
+ IwoTxx3Sh44InYD9HnAL7eMD+cSeUfUMxSICJ/jbRcPVJ1ZW90bLY5tS93XczJp2uUe89oZeUCC
+ dnKMoJMtj9NRsmagxKAfHngeRU5fa7a//JVnmQ5+V7L6HDGD+8dXh+9WXHFqTVa3Qqf5JoRr30Y
+ q36Ey6hfVeVJeBj/XN18ZNTqBMPRBPpCZyE9QuABCBB29cDGKddkGPhFQi3UuGa6hyVWZFKCRkK
+ lztbWJq/xt6k6VZ1G6ufH2UnVdPL4o3TmRzmk/VzOHIvHeLdFNRTFIPvaCBzkX6aiFo0HzZR8Qo
+ e2uiJatsXt+Nwd7bIZFf8iyJoZRl0k/DH1evfRxlH2ZfnFMUMstI=
+X-Received: by 2002:a05:622a:1186:b0:517:6804:3732 with SMTP id
+ d75a77b69052e-5213e77cf30mr193079161cf.55.1784718452611; 
+ Wed, 22 Jul 2026 04:07:32 -0700 (PDT)
+X-Received: by 2002:a05:622a:1186:b0:517:6804:3732 with SMTP id
+ d75a77b69052e-5213e77cf30mr193078691cf.55.1784718451966; 
+ Wed, 22 Jul 2026 04:07:31 -0700 (PDT)
+Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4956ab2f0a2sm42972815e9.1.2026.07.22.04.07.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Jul 2026 03:58:08 -0700 (PDT)
-Message-ID: <0d365d35-1890-4d99-9840-055411754e35@redhat.com>
-Date: Wed, 22 Jul 2026 12:58:06 +0200
+ Wed, 22 Jul 2026 04:07:30 -0700 (PDT)
+Message-ID: <90bbd0b0-dce4-4945-8ad9-96c895e712ed@oss.qualcomm.com>
+Date: Wed, 22 Jul 2026 13:07:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/ide: replace assert with proper error handling
-To: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org
-Cc: jsnow@redhat.com, qemu-block@nongnu.org, qemu-stable@nongnu.org,
- QEMU Trivial <qemu-trivial@nongnu.org>
-References: <20260722104836.351387-1-f.ebner@proxmox.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PULL 20/71] target/arm: teach arm_cpu_has_work about halting
+ reasons
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260722104836.351387-1-f.ebner@proxmox.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260610161202.2235298-1-peter.maydell@linaro.org>
+ <20260610161202.2235298-21-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260610161202.2235298-21-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=thuth@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: ughG2QZFoNf5kGRFRMB90Wfbn3wMvJw7
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIyMDEwOCBTYWx0ZWRfXxwoxQCmNz20C
+ iC5bnr6VtF5F9mzrdmaaAxJxDZf2tHl43ZKVNkffBiA+ti4aYGjEeqk/hE2oeGOH17DHOz2neEY
+ 3DxJBkWTTURt+undcsgLf8CZQcHtU0HIjrBqLIViuLdTXQvcA84Dge5jmnEShFdh/jiyMrkYCvN
+ 7B3x+wh0xf7Km70P2+blnpKJGoRvb0lHxu85NKO2m7cx3+38Ru08ZEUAFS3g04mRzruP2bren3m
+ 2fi1e4c/FusN8lnLThA98cBrnNdjoJfjDU+aD6fm4e3x2Y/p9cmA1JmicY/2HONFRy/Yn7dV/h5
+ 2TKLtmD6EnBrawSz98kqnEyv+qqulJ1648CvGPI+b+uLE6Rt6JncbQpmd2SXkTItD2WfH8Ug2zu
+ 6e6/NMXZe/DpDgHJMGfAPeyemVAIAXY8Awd5ibWZuRqmB4NJ5QeVB3UI45ArFW7NrntPfJOm4FO
+ zBszaKjWHbLQ/o/5e7A==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIyMDEwOCBTYWx0ZWRfX9d2vBFh4vpSx
+ RqD2xPEm0TV5NRjsY3Pbh+yv126cXPGSu7moYsXOusVKCsmnXIyoJLNcrHUwF6UmArgAGhOzacU
+ l2uIMACRRPqIjPn7PRtPMlduBXVIM/g=
+X-Proofpoint-GUID: ughG2QZFoNf5kGRFRMB90Wfbn3wMvJw7
+X-Authority-Analysis: v=2.4 cv=V8lNF+ni c=1 sm=1 tr=0 ts=6a60a476 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=KKAkSRfTAAAA:8 a=U-1Abfq3Vh_TbXKsFRsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=dawVfQjAaf238kedN5IG:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-22_03,2026-07-21_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0
+ adultscore=0 priorityscore=1501 malwarescore=0 clxscore=1015 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607220108
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,57 +156,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/07/2026 12.41, Fiona Ebner wrote:
-> From: Artem Nasonov <anasonov@astralinux.ru>
+Hi,
+
+On 10/6/26 18:11, Peter Maydell wrote:
+> From: Alex Bennée <alex.bennee@linaro.org>
 > 
-> In ide_dma_cb(), the call to prepare_buf() might return a negative
-> result and cause an assertion failure. This was found during fuzzing
-> and can be triggered with some qtest commands. Replace the assert with
-> proper error handling in case the result is negative, but keep the
-> assert for failing to respect the limit upon success. If that happens,
-> it is an implementation error.
+> With the advent of WFE and WFI we need to pay closer attention to the
+> reason why the vCPU may be sleeping to figure out if we should wake
+> it up.
 > 
-> Found by Linux Verification Center (linuxtesting.org) with libFuzzer.
+> Create env->halt_reason to track this and then re-order the tests so
+> we:
 > 
-> Cc: qemu-stable@nongnu.org
-> Fixes: ed78352a59 ("ide: Fix incorrect handling of some PRDTs in ide_dma_cb()")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2777
-> Signed-off-by: Artem Nasonov <anasonov@astralinux.ru>
-> Link: https://lore.kernel.org/qemu-devel/20250116111600.2570490-1-anasonov@astralinux.ru
-> [FE: improve commit message
->       keep assert for failing to respect the limit]
-> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+>    - ignore everything is the vCPU is powered off
+>    - wake up if the event_register is set and we were in a WFE
+>    - otherwise any IRQ event does wake the vCPU up.
+> 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Message-id: 20260529082948.363931-3-alex.bennee@linaro.org
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
-> 
-> Changes in v2:
-> * Update the code comment accordingly.
-> * Keep the assert() when the limit is not respected upon success.
-> 
->   hw/ide/core.c | 8 ++++++--
->   1 file changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/ide/core.c b/hw/ide/core.c
-> index f78b00220b..4c1ee19d8e 100644
-> --- a/hw/ide/core.c
-> +++ b/hw/ide/core.c
-> @@ -921,8 +921,12 @@ static void ide_dma_cb(void *opaque, int ret)
->       s->io_buffer_index = 0;
->       s->io_buffer_size = n * 512;
->       prep_size = s->bus->dma->ops->prepare_buf(s->bus->dma, s->io_buffer_size);
-> -    /* prepare_buf() must succeed and respect the limit */
-> -    assert(prep_size >= 0 && prep_size <= n * 512);
-> +    if (prep_size < 0) {
-> +        ide_dma_error(s);
-> +        return;
-> +    }
-> +    /* If prepare_buf() succeeds, it must respect the limit. */
-> +    assert(prep_size <= n * 512);
+>   target/arm/arm-powerctl.c  |  6 +++---
+>   target/arm/cpu.c           | 40 +++++++++++++++++++++++++++-----------
+>   target/arm/cpu.h           | 16 +++++++++++++++
+>   target/arm/internals.h     | 11 +++++++++++
+>   target/arm/kvm.c           |  5 +++--
+>   target/arm/machine.c       |  2 +-
+>   target/arm/tcg/op_helper.c |  3 +++
+>   7 files changed, 66 insertions(+), 17 deletions(-)
+
+This patch updated TCG and KVM but missed HVF and WHPX:
+
+  - target/arm/hvf/hvf.c
+  - target/arm/whpx/whpx-all.c
+
+
+> diff --git a/target/arm/internals.h b/target/arm/internals.h
+> index 21cbd2b1db..b2035b9417 100644
+> --- a/target/arm/internals.h
+> +++ b/target/arm/internals.h
+> @@ -2063,4 +2063,15 @@ bool arm_cpu_match_cpreg_mig_tolerance(ARMCPU *cpu, uint64_t kvmidx,
+>                                          ARMCPRegMigToleranceType type);
 >   
->       /*
->        * Now prep_size stores the number of bytes in the sglist, and
-
-Thanks for the update!
-
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-
+>   
+> +/**
+> + * arm_set_cpu_power_state() - set power state synced with halt_reason
+> + */
+> +static inline void arm_set_cpu_power_state(ARMCPU *cpu, ARMPSCIState state)
+> +{
+> +    CPUARMState *env = &cpu->env;
+> +
+> +    cpu->power_state = state;
+> +    env->halt_reason = state == PSCI_OFF ? HALT_PSCI : NOT_HALTED;
+> +}
+> +
+>   #endif
+Why not add/use a getter()?
 
