@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04995C4453F
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:05:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D2E7C44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:05:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWQQ-0001Xt-7R; Wed, 22 Jul 2026 08:51:50 -0400
+	id 1wmWPQ-0007Fj-Fr; Wed, 22 Jul 2026 08:50:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWQ0-0001Kk-Jg; Wed, 22 Jul 2026 08:51:28 -0400
+ id 1wmWNN-0003YP-I2; Wed, 22 Jul 2026 08:48:45 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWPy-0002Li-LB; Wed, 22 Jul 2026 08:51:24 -0400
+ id 1wmWNK-0001sE-Ss; Wed, 22 Jul 2026 08:48:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724574; bh=4Q9W3pT/DsD37qsdiI2f9edpTgJkdQaB7uPSIRUr5xY=;
+ t=1784724390; bh=E9L0cdQ6TfwAlDLNImtKBGFf1nUC+N0uI1RSahQ/7Cc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=PfQEE8JctYwfJM/1KCg9nsn3bqQY0w84BnMpaS4dmmjZgG2jKb3VwlVv0/Tp5Nmnu
- 6OrpJYXcgQtv9i/o7dNfLl7Z4j/2vzibmERUCjbYmCOULQWPVVMXo+3cDwqrbCTKyM
- Z26ghCnT9/4A6d5TLobaVUr08hfywH8abUHVeaDMtSmcdkMa3gNW50A/GWUvyrJXoy
- sxNmApIR4I2s5eqDfs5FUtfFTyauUBr1qiDajHSM0Sc6oCF24OVys0bdpkN8XD6Vlt
- 14QGeZP6AdK4DKecoZYJU+QODRas60qW4j+Lcr8ahW69PAYMQcA6N/LtFh2goBFxPt
- HBxFKZmJduhMg==
+ b=P0ttyDkBTygmi5rz9fnkT6vjNKNciz6iXIUePbT4tuHy03EHM/OZ2xhdaEK/Bhwn1
+ i3ACk8cxsnKiEIA7TqUzTGa2fNNyIgblOJFx+utCg289Q7DdiR9/i+auGM5A/iP0/G
+ YXkhHiLcYmvRPZA/foJKsCQbbYA0Bb2k01duEUKvCB3OdUOuup6Yb2KaJo64dC8xc2
+ ZnyBT5pG39jx/GhN8aMPoZjoLAIcA8W8WxEOONIv80X7ar547n8j5fEWDF4zMCC+rz
+ gfVcWMF81U8ncLcoVt2akNDFosMOCgngABy8AOONCPmUvErsMwgfTD78jfMVf77u/F
+ DBlkIN0+zk2VA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8A2DC1C3B31;
- Wed, 22 Jul 2026 15:49:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AD4651C3B0C;
+ Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D38BD3F3781;
- Wed, 22 Jul 2026 15:49:51 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id F40233F3766;
+ Wed, 22 Jul 2026 15:46:47 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 98F6217F37; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
+ id 6EDE417F01; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 v2 084/127] hw/net/vmxnet3: Correct bounds check on tx
- queue index
-Date: Wed, 22 Jul 2026 15:48:09 +0300
-Message-ID: <20260722124859.32371-3-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 v2 099/122] ui/vnc: fix OOB write in
+ vnc_refresh_lossy_rect
+Date: Wed, 22 Jul 2026 15:45:48 +0300
+Message-ID: <20260722124622.31034-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
-References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
+References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,34 +74,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-In vmxnet3_io_bar0_write(), we try to bounds-check the TX queue index
-provided by the guest against the total number of queues.  However,
-we have an off-by-one error: the valid indexes are from 0 to
-txq_num-1, so we need a "<" comparison, not "<=".
+vnc_refresh_lossy_rect() always marks a full VNC_STAT_RECT (64) rows
+as dirty when refreshing a lossy tile. When the display height is not
+a multiple of VNC_STAT_RECT (e.g. VNC_MAX_HEIGHT = 2160), the bottom
+tile is partial -- the last tile at y=2112 has only 48 valid rows.
+The unclamped loop writes to vs->dirty[2160..2175], past the end of
+the VNC_MAX_HEIGHT-sized array.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3780
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Clamp the row count to the actual surface height so partial bottom
+tiles only mark valid dirty bitmap entries.
+
+Fixes: CVE-2026-48002
+Fixes: 7d964c9d2fc6 ("vnc: refresh lossy rect after a given timeout")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3950
+Reported-by: huntr bubble
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260706175408.905362-1-peter.maydell@linaro.org
-(cherry picked from commit 4571c79c57cabd5975fb9d51f78c87675989180b)
+Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit 3543c2b855cc8cd25a5dbf05564a47ba42f45fad)
+(Mjt: fixups for missing v10.0.0-2240-g37ff925d5d4
+ "ui/vnc: Introduce the VncWorker type")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
-index 97156dd33b9..8569484b2f2 100644
---- a/hw/net/vmxnet3.c
-+++ b/hw/net/vmxnet3.c
-@@ -1079,7 +1079,7 @@ vmxnet3_io_bar0_write(void *opaque, hwaddr addr,
-         int tx_queue_idx =
-             VMW_MULTIREG_IDX_BY_ADDR(addr, VMXNET3_REG_TXPROD,
-                                      VMXNET3_REG_ALIGN);
--        if (tx_queue_idx <= s->txq_num) {
-+        if (tx_queue_idx < s->txq_num) {
-             vmxnet3_process_tx_queue(s, tx_queue_idx);
-         } else {
-             qemu_log_mask(LOG_GUEST_ERROR, "vmxnet3: Illegal TX queue %d/%d\n",
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 3760afe564d..33432789905 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -2988,10 +2988,18 @@ static int vnc_refresh_lossy_rect(VncDisplay *vd, int x, int y)
+     int sty = y / VNC_STAT_RECT;
+     int stx = x / VNC_STAT_RECT;
+     int has_dirty = 0;
++    int height = MIN(pixman_image_get_height(vd->guest.fb),
++                     pixman_image_get_height(vd->server));
++    int rows;
+ 
+     y = QEMU_ALIGN_DOWN(y, VNC_STAT_RECT);
+     x = QEMU_ALIGN_DOWN(x, VNC_STAT_RECT);
+ 
++    rows = MIN(VNC_STAT_RECT, height - y);
++    if (rows <= 0) {
++        return 0;
++    }
++
+     QTAILQ_FOREACH(vs, &vd->clients, next) {
+         int j;
+ 
+@@ -3005,7 +3013,7 @@ static int vnc_refresh_lossy_rect(VncDisplay *vd, int x, int y)
+         }
+ 
+         vs->lossy_rect[sty][stx] = 0;
+-        for (j = 0; j < VNC_STAT_RECT; ++j) {
++        for (j = 0; j < rows; ++j) {
+             bitmap_set(vs->dirty[y + j],
+                        x / VNC_DIRTY_PIXELS_PER_BIT,
+                        VNC_STAT_RECT / VNC_DIRTY_PIXELS_PER_BIT);
 -- 
 2.47.3
 
