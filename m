@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED5E1C44536
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:02:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62536C44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:02:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWTs-0001Cl-13; Wed, 22 Jul 2026 08:55:24 -0400
+	id 1wmWOr-0004MZ-H0; Wed, 22 Jul 2026 08:50:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWSL-0003t0-CS; Wed, 22 Jul 2026 08:53:53 -0400
+ id 1wmWMJ-0002ni-9o; Wed, 22 Jul 2026 08:47:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWSD-0002du-1r; Wed, 22 Jul 2026 08:53:46 -0400
+ id 1wmWMH-0001nR-Kw; Wed, 22 Jul 2026 08:47:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724575; bh=EcGB4+bEaZjNRvmzvdAqXj4RBmZ1uXlQPD11W64gW4s=;
+ t=1784724390; bh=Uj5SPltuEMKQ9l7jZ/Gupa4rWwu9kglq7Of8y4m2wBI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=iA+I+MHhZOd4Kijtto3gMP6YZF5iuLs+yD9zMZUWfq+F5scmAVWWsPHDos5NuZRJ3
- nN+LOa8WyNIa/akx+/cb2KdMPU8MiklRLWy058jk2PXlh4xzGAr3V/VDsiMm/njETx
- EyXdsO9KxH6iV+7sBfl5GMUPVKoeHW0AMOviaasOmW1qtWKuvrUsd653j7ab+9QU1H
- DJqXg6z1ycnCaIPOTH8QIBZr3hQuJYPeDyPGLUJXVCOFvjKmKbmU22++2H/CZA+new
- 6wkBIy/2ORQgBmdUzhesMPokbYWWbqhFz/RvUnSabAlsLEburhedZJ+fyuq5i5RRZO
- 7h0eRZ6ZN/5CQ==
+ b=nl701QvTTYTeORmIiImkqddv73AvyhPOROMRMPgR5KfnkfXsDIkNdJtZUGvw+ynUN
+ 8nacp9SzmfPWla3LJpKKQLwF7NYADWpC4CQLfMEXoRcKQ0v2rG4NDFym6uPOFjZ4mo
+ wqmtZmCZ/WW7SXNecMJxUayS4p5GOJFc5ktTnittyH/l5ac3TuL2W7Y3d6GvHffpR0
+ UDaFUoMDG1fEhCHgjxLmbnoY9HF3nNSGGxI+JyvyOUr5pBbefntebqOZ72/1YT/OEA
+ WZLdIYnUNwd/rhjd/etPUm3/+z8YasnmnJ1mi5gBmCh+jAgToNPexPcBJvTZVACfvy
+ ml44gJWo5xLQw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 005151C3B45;
- Wed, 22 Jul 2026 15:49:35 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 79FFE1C3B03;
+ Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 48B773F3795;
- Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C1AC03F375D;
+ Wed, 22 Jul 2026 15:46:47 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id C858817F5F; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
+ id 58EC917EEF; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 v2 104/127] ui/vnc: fix OOB write in
- vnc_refresh_lossy_rect
-Date: Wed, 22 Jul 2026 15:48:29 +0300
-Message-ID: <20260722124859.32371-23-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 v2 090/122] linux-user/alpha: populate AT_HWCAP from
+ env->amask
+Date: Wed, 22 Jul 2026 15:45:39 +0300
+Message-ID: <20260722124622.31034-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
-References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
+References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,59 +72,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Matt Turner <mattst88@gmail.com>
 
-vnc_refresh_lossy_rect() always marks a full VNC_STAT_RECT (64) rows
-as dirty when refreshing a lossy tile. When the display height is not
-a multiple of VNC_STAT_RECT (e.g. VNC_MAX_HEIGHT = 2160), the bottom
-tile is partial -- the last tile at y=2112 has only 48 valid rows.
-The unclamped loop writes to vs->dirty[2160..2175], past the end of
-the VNC_MAX_HEIGHT-sized array.
+Alpha has never set AT_HWCAP in linux-user emulation, so getauxval(AT_HWCAP)
+always returned 0 regardless of the emulated CPU model.
 
-Clamp the row count to the actual surface height so partial bottom
-tiles only mark valid dirty bitmap entries.
+The Linux kernel computes ELF_HWCAP as ~amask(-1), i.e. the set of ISA
+extension bits that the amask instruction reports as supported (cleared in
+its output).  env->amask stores exactly those bits with the same layout
+(BWX=0x1, FIX=0x2, CIX=0x4, MVI=0x100, TRAP=0x200, PREFETCH=0x1000), so
+returning it directly from get_elf_hwcap matches the kernel convention.
 
-Fixes: CVE-2026-48002
-Fixes: 7d964c9d2fc6 ("vnc: refresh lossy rect after a given timeout")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3950
-Reported-by: huntr bubble
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
-(cherry picked from commit 3543c2b855cc8cd25a5dbf05564a47ba42f45fad)
+Add HAVE_ELF_HWCAP to target_elf.h and implement get_elf_hwcap() in
+elfload.c to expose the emulated CPU's capability mask to user-space
+programs via the auxiliary vector.
+
+Without this fix, programs using getauxval(AT_HWCAP) to detect BWX/FIX/CIX
+(such as glibc's memcpy or JIT compilers targeting Alpha) incorrectly
+concluded that no extensions were available even when emulating ev56+.
+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 7a2e863f9dd52883d6f59bb425f30609fc14aee4)
+(Mjt: in 10.0.x, the code is in linux-user/elfload.c, -  back-port changes
+ to pre-elfload-reorg state: HAVE_ELF_HWCAP is ELF_HWCAP, get_elf_hwcap()
+ accepts no argument and returns uint32_t)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/vnc.c b/ui/vnc.c
-index 1b5fc8117a7..1e6490f2730 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -3014,10 +3014,18 @@ static int vnc_refresh_lossy_rect(VncDisplay *vd, int x, int y)
-     int sty = y / VNC_STAT_RECT;
-     int stx = x / VNC_STAT_RECT;
-     int has_dirty = 0;
-+    int height = MIN(pixman_image_get_height(vd->guest.fb),
-+                     pixman_image_get_height(vd->server));
-+    int rows;
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 35b7ea23880..6b1be150a3e 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -1720,6 +1720,20 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs, const CPUM68KState *e
+ #define ELF_CLASS      ELFCLASS64
+ #define ELF_ARCH       EM_ALPHA
  
-     y = QEMU_ALIGN_DOWN(y, VNC_STAT_RECT);
-     x = QEMU_ALIGN_DOWN(x, VNC_STAT_RECT);
- 
-+    rows = MIN(VNC_STAT_RECT, height - y);
-+    if (rows <= 0) {
-+        return 0;
-+    }
++#define ELF_HWCAP get_elf_hwcap()
 +
-     QTAILQ_FOREACH(vs, &vd->clients, next) {
-         VncConnection *vc = container_of(vs, VncConnection, vs);
-         int j;
-@@ -3032,7 +3040,7 @@ static int vnc_refresh_lossy_rect(VncDisplay *vd, int x, int y)
-         }
- 
-         vc->worker.lossy_rect[sty][stx] = 0;
--        for (j = 0; j < VNC_STAT_RECT; ++j) {
-+        for (j = 0; j < rows; ++j) {
-             bitmap_set(vs->dirty[y + j],
-                        x / VNC_DIRTY_PIXELS_PER_BIT,
-                        VNC_STAT_RECT / VNC_DIRTY_PIXELS_PER_BIT);
++static uint32_t get_elf_hwcap(void)
++{
++    CPUState *cs = thread_cpu;
++    /*
++     * The Linux kernel computes ELF_HWCAP as ~amask(-1), which clears a bit
++     * for each supported ISA extension.  env->amask stores exactly those bits
++     * set for the extensions supported by the emulated CPU model, matching
++     * the kernel's convention: bit set in AT_HWCAP ↔ extension present.
++     */
++    return cpu_env(cs)->amask;
++}
++
+ static inline void init_thread(struct target_pt_regs *regs,
+                                struct image_info *infop)
+ {
 -- 
 2.47.3
 
