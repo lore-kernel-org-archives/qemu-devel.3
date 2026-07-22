@@ -4,127 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6577BC4452D
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 02:04:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C653C4452B
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 02:39:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmMJ0-0007OX-PY; Tue, 21 Jul 2026 22:03:30 -0400
+	id 1wmMqv-0001uT-Dm; Tue, 21 Jul 2026 22:38:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1wmMIy-0007Nn-CL; Tue, 21 Jul 2026 22:03:28 -0400
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1wmMIw-000309-G2; Tue, 21 Jul 2026 22:03:28 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SYHKK9U/ADN0qffEFIe9kZsBL7q2MTmlhJR/KAWeipin2eZgYBf+KeupQ7VDtjb++jmcr6WT7BjNnbiEpXihPK140bTevVCmfjvlYx8x0kqm0i9cn8JisFaWboHGNI5goWOIBhHNw/1f0e15gQWSMcm3QSVOyW+yXypNM3bmpycfQzlJHgX9sRuFQzn+1qENA6St0vtp2xLw22nioxsyHDQbQx9LXAqOi728ApvAE0QGm0pNyuS1xUO/9U8tH+yXG6D7Do9UuBCG8vHiQWbvWlXGBhdTq1REsJBv4SAC7QibSe7UmlNKMZuFQ5sSGz32evOaY/U/NJ1j6gqFP7tnAA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jYDFSw6dg80ql8qkSiIqg6vPTreUJQU1Qtey6ExF41A=;
- b=Od26Pw3YI0v7JGTZKq3YleDZABet/CV6b2Q6EByKURI20ePhOve0zCMpJjA2D9HYteCN6VaQSg47oCDjSgJOBcFRVbguzbzR+Vn3lVW56N6L1zJ/oNKi4f7djn+Unk3/0KsCx74TPlYXn9O9vym34FUaGGD0IXGCyCZOJCVSaMbA4lE2VXRmGIPDlitaAjxe5pZgJLGNSnXpeO8FVlu6j5U7T1gzGuPbtn7oZ6n23vOGGEm/KPaomPartq7Y7DjH4a1EpCDajeuIWAZB4qq7hh7gLRzhahhdUFB00epERXZcP9RcF9pFyKQ9lgbdzmh7N0mcA52ZJY8n98YmNp4qaQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jYDFSw6dg80ql8qkSiIqg6vPTreUJQU1Qtey6ExF41A=;
- b=uZRLxqIU+7OhOtyjTmZwUOgbKxkIMe9IWRC3WDjWxTgXogTOuywtPP9LnvEQrhZ3y2WyFBhC+sgAkfztKehzlrxZUzAUzNtJuElx+w8QejlKZ0F8WGF33taohMsVm7ctubHt2Ct7/1xVoaGddZI8MuEAtSJru30TRDsqK6X9gl6o2eVE74ZAD2LzBWxqILU9Zt3F1772NU0dk75s0PR1RuYlsrGpnHaVvuZ6X7gaQlq4sJl3g1WBFNwhvdGdyO09Dl0M5fW0B56gcJ5WjIUCgbRvNrXN7spv9+/EFjh67u9W4SUo4HGNc3q4OYDUQ30cygAxbulyDfloMmBc2aiGIA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
- by TYZPR02MB7908.apcprd02.prod.outlook.com (2603:1096:405:b5::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.10; Wed, 22 Jul
- 2026 02:03:17 +0000
-Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
- ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
- ([fe80::e5f3:5fb7:3d29:5934%4]) with mapi id 15.21.0223.017; Wed, 22 Jul 2026
- 02:03:17 +0000
-Date: Wed, 22 Jul 2026 10:03:11 +0800
-From: Chao Liu <chao.liu@processmission.com>
-To: Tao Ding <dingtao0430@163.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com, 
- palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com, 
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com, farosas@suse.de,
- lvivier@redhat.com, caojunze424@gmail.com
-Subject: Re: [PATCH 0/7] K230: add gsdma and decomp_gzip
-Message-ID: <amAic0uJsYmM8IZl@ChaodeMacBook-Pro.local>
-References: <20260721161335.73872-1-dingtao0430@163.com>
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wmMqt-0001t3-ED
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 22:38:31 -0400
+Received: from mail-pj2-x04.google.com ([2607:f8b0:4864:39::4])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wmMqr-0007Ac-W7
+ for qemu-devel@nongnu.org; Tue, 21 Jul 2026 22:38:31 -0400
+Received: by mail-pj2-x04.google.com with SMTP id
+ d9443c01a7336-2cc80544c74so28346495ad.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Jul 2026 19:38:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1784687907; x=1785292707; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=QISwBCs4sD2mmFmOUbcVxlXxJtN6pCFSLWlNjTB7PfM=;
+ b=AdRadO+1W4jsXxz+jWKuDmk33humW2/JUtLba+4r+tK9FL9jbu25j9Z+uqt0pc2Ayr
+ 4mIujz9OWui+eTn42Dso1itzX7uMS78QrWSl/vq90stt1wqjztv3Q0JfWZjz7RJsufa2
+ Kjy/zeSrwgp7rBYTW05SGXVGy4tjIGv5jnIrmmTQg/+J3HnXsrgg/L8jc6InJUy0uu28
+ 4GU6vWCRBUz2FfKUkOTg+X0EpNdWWemSwnwfA0NGk7nDaRhoJPnDkNyFW9anhbZxpY7W
+ bHuq9SioVcIyoDPE3P80HTQRXCG/Y3yVsa71l8PweHgOXSbfE9GATXiKKxB4TeRw2Inj
+ BeFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784687907; x=1785292707;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=QISwBCs4sD2mmFmOUbcVxlXxJtN6pCFSLWlNjTB7PfM=;
+ b=MUmEL+cfEQSSBhl9yS1utDwcqvp+FoYye/sB9YpS5t0O3x0AcnGsq+qCZqy/RGMkLt
+ rY/0nxc/j7XzQ0fnt7OVkG+i/4G+LHR2bKlNTsgt/WJ/0if6F+bS9qVJFgND4jVW4F81
+ 91D5MzkkS5TeGCQSrMgdhJ2z2rmVufM3xChCWvUQC6hwLkSJnqCw1cSt1v0HCaLd2A93
+ 7TMwc93IRXIKhOojZNjCfXmriv7ivMLRYCPRmLEOG1HcxN2q0oSJ86py/ZibDHIn8lB5
+ aAZtYlux4lUnbnQ+QTXUrOoAV/3p25FD858TSd0ITCchbHr9PnPqjjVpQKwAXSFIzTQO
+ S7lQ==
+X-Gm-Message-State: AOJu0YwShzFRCW5McM3XdVg/nmWRw2NjIL1MCa76Ezemt8HuvrsqYEUp
+ J/lhMMOlMX/micPcjRwunFb9I8QpRuKUwOJfv8HFj7Bub+aynYF/+HoM
+X-Gm-Gg: AR+sD120Su0avHsPV6EPLXn23nw4/+qU8KAwCh0TGVTyC2NQgZNZhET7pVddNEleHPf
+ Lal3zE6RRm3hKEF/EudEJxLBqxtv1OYqXJNbZgHp2U4wP+JQwqslk0mjPPdH7oOphWPlAYAdZkh
+ oPonORTBMr11CPY8sU8UTLuu9lCPXxnh9m8oXiDCPAho1WBXLKu/kM+4fyP8eaDs+hiY+/nm+cE
+ M1178W3ENvODcQUF0mn2PHE9tMTis+ZnaxW4rEPB8Eikj46PPg1wUIeJx3GoI+yLg6T3rDdZ0wg
+ eeZNo4QvFdogADrkqQXg0UkM/xUvYVdoNoDzOTvke4n/7aYETQ2vm32wUkDwgvOzE32nVaSBZrc
+ kuHLkB6yc7dakS7u5l/c1lp/SlEhh5M7IhAnEkYAhEFqqmusvO3rEYWPtlhv3eKyV+ZBxcj5CPY
+ ieKIqBnhNAKdb1Flp/bW699dt3PMaZs+5ss8bLijbd
+X-Received: by 2002:a05:6a21:7008:b0:3bf:a0e5:999f with SMTP id
+ adf61e73a8af0-3c3ad7a439fmr23727951637.22.1784687907302; 
+ Tue, 21 Jul 2026 19:38:27 -0700 (PDT)
+Received: from localhost ([179.255.148.148]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3147dc1b99esm3508104eec.3.2026.07.21.19.38.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Jul 2026 19:38:26 -0700 (PDT)
+Date: Wed, 22 Jul 2026 10:38:23 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Max Chou <max.chou@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: Re: [PATCH v6 1/9] fpu: Fix biased exponent write in
+ parts_float_to_e5m2 saturate path
+Message-ID: <amAtFXK9m1LXFPM-@ChaodeMacBook-Pro.local>
+References: <20260708161859.1124848-1-max.chou@sifive.com>
+ <20260708161859.1124848-2-max.chou@sifive.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260721161335.73872-1-dingtao0430@163.com>
-X-ClientProxiedBy: SJ0PR13CA0019.namprd13.prod.outlook.com
- (2603:10b6:a03:2c0::24) To TYNPR02MB9351.apcprd02.prod.outlook.com
- (2603:1096:405:3d0::15)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|TYZPR02MB7908:EE_
-X-MS-Office365-Filtering-Correlation-Id: 002fbfa2-64c3-46c0-e6a3-08dee7956573
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|23010399003|7416014|376014|34096008|1800799024|56012099006|10067099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: JBddcd1OK1pvL2Sn4SyzvcqlzA3a0bZh9OjhEG85nCLA0F5ctSp2yjGLHxGu2zgseSG/aYfqtRnSRR+mrqgeUpmjDohF2Z2PiEC2Kr849HZxXziO9qRI+5k5fQffKVUA07aJfOgksKDQEc6rgKn4rtUOzvn3HyDtL5TdPRNnExL1y8YjZk4EtYGq3LUbjRQz3XGCpP3C26PJzqEmJJZEY529V41u/LLoZaqYBv5WJ4qrG/KwmeJZnwf8/nk1a11luWx2/0RpEggumcuq2QxSf9uSbBypSk0PZpoYvXHAdE7oy0Vu6vpPsjknjwZtXolKCy0ZNZR7qZqdprmbEhKPd63t4ym0X2NlmhM7Upf2Sb9ijXepZ4dcy9sBmi46qCYx7eQUcBR8AcIsZa/Es6gYiKDXEBDCs/8x6jjTgBJn+EwvEK1+Gc6LrTmHvDj2q70/3BiIN8CT1lz4GlwfU0xoFt0Bp2EvBzX0v6ILBm6uIYwr5DWksZ6CuY2LW49JqO1WhFVgwo9CGiSGCYaDigv+bmJMKa1jwIRw7tim2hlo1ULHbpS5OtVVOh+m52GYYvbu9BOh6Z5/pMLAG48iAWvR0A2PPLGGlTITevXsib8Yqtg4GiuCSixp7tYqKq1CI7YRLcqz3XKnMf/H/aK1JvCJJQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(23010399003)(7416014)(376014)(34096008)(1800799024)(56012099006)(10067099003)(18002099003)(22082099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?SATt9O9ktNpVbJZs7rVKCXNWUl7WhvOxTByh/vu9tJ5DmzgQspAJVdKV04JW?=
- =?us-ascii?Q?GTF18dBWqUKtevqGmlS8k833B98SR9KjCYVsJAEwwbuKdCCRIH7lAPaF3C/k?=
- =?us-ascii?Q?E1f5/cysSdE5mqOaVBg6I9GOVcxFcjM0lDhC18ecSwxSUaOB27KDW5NonuIw?=
- =?us-ascii?Q?M96cSH/lxBXvrP5ia0Q8vqY3sOmb4wW9wSeqWziXe0EEBvO+WJm6WVgi1Kce?=
- =?us-ascii?Q?p/m86m63SnvnoJn0gAB08R3xIiQmSRGLh3foFsrjIrk4dPQQ1AITCgw9M4a4?=
- =?us-ascii?Q?lk3gM+bVPc2/HmtKDC8N2/rW4+kdjHXCU80ZLTfOjMWfKx2p5Gza6E3VI3Cm?=
- =?us-ascii?Q?Mi8tVzWL36xhz9M9E1IZl8mEYBWUFrsp8GijJuWMPpEr5R2faP2bW8HZUXL7?=
- =?us-ascii?Q?h4W4A7ctGe59jnzkg1Bxqw+zCwdBJ/84f0Lx5TyAuif1cOxn7pL8KXH4QNlz?=
- =?us-ascii?Q?336rHFO9fgbnTYxfbG/ai+ByGzjkfRzcBzK6o8HqHVm3BBEOh3wfASCEI+dn?=
- =?us-ascii?Q?EL7ivoJqKQlcTDi+mcDRPjK/ZxvK6BikODOY+0KC+u7p+X6ftxONDR2xCsDG?=
- =?us-ascii?Q?/O/C2iSLJo4Wn7t3x+Vkv2e9TH8B1YrhDt0x9o7vqkLn63c8tRTifJNNzM0n?=
- =?us-ascii?Q?RGMd5EPtWoJhIfMErmiTv640FKQ2E3ajHX9ctzgme5jkytjPzWibj07U7p7b?=
- =?us-ascii?Q?DLOK9dzkydT/Vy+IvkvljdRKyqtiuJHR38tBky6yoQ/1iB3CX+ZYZMCNy20+?=
- =?us-ascii?Q?CxJkLk//yiHIFEXAteUiX7OOI0J98pi9J8orsj8p4WwmR/n4DTXpjhhe7+3R?=
- =?us-ascii?Q?+NSlogLrsvbaiXJ/YP/A/pkTEF8PYWcFgbIA7bIDIzUXH6KMAhn1M9Fvx1pX?=
- =?us-ascii?Q?cLIIOA50cLChm3KpaEOgfFYUsnBT94BdWE53YlJP+en11MpwFhpdLqKcrKK/?=
- =?us-ascii?Q?KCBGZIcM0G0CnbDFipFDrwSMXEU5eo5EQxr+33fNunIIYedvvTPffTB45Xd0?=
- =?us-ascii?Q?mnobgRaVhiePOQiNbvfAEQ98Ercq4WFw5yjBE33zp//JKlJaMxSEdNoVHVxY?=
- =?us-ascii?Q?uZwebv/PF7ahRsn7m8iuFXo+89KxQLJJK5r30hO5+Pj51BC8X6Jee1eGN3ET?=
- =?us-ascii?Q?XuXPRAmPUGCJUwTgfMCXIBerClC/0rHyLDUxoYgUHUtj8ROXRuihqSQl4Rgb?=
- =?us-ascii?Q?WK5Co0thalL2HU3YVUg5sZdJYPOwAme+l2bSwFhaJf/2JUTcFb93dR47b1Hu?=
- =?us-ascii?Q?He4Phb4DuPEIwcNRju6XZH87ERHSwdZnF/DUUIsKRDXNKm6Z7rFdKUai1FDP?=
- =?us-ascii?Q?r59C0QVOqtVR6wCnUWhEEzPoCOMZCOyXb8qGH7VgaY2zb7ChXHVPSQsw+GJ7?=
- =?us-ascii?Q?ft4++z9O3DpL+lQLcpXkoGYdCw5zpKU8tMj3QZ5XuoauDQ+/Nlyvt2d0K2zh?=
- =?us-ascii?Q?GWHCGqRzDCy+bkSwDKVCfc5OGK4tmngYaaco1tnUDIjcl6RnE9x3SV68b/6i?=
- =?us-ascii?Q?A5Ue0yOwXn41LutMzJ71TqT5DEe/X7faRSkxhn8zzZrhZri+aFvtnuWoPlcI?=
- =?us-ascii?Q?XqrwomekIvEBfeg7JXp9qaxJakmyr2ay1r9M+ZF4YiIo7OctwivfXTGpNVG5?=
- =?us-ascii?Q?slkpemXFpINFr1bdzOVaPIFXFse1KrvSDMu/2M/0FTHGCw6buiaTeVwB3Auu?=
- =?us-ascii?Q?Gp2inP9mIBwiq7ANXd5+hmcUKEqdaGBTikOmx2sUaIXzI++4CAbKCNr0/LX1?=
- =?us-ascii?Q?gq3kBrnv/w86U8d7WqhyWcXINiwuD20=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 002fbfa2-64c3-46c0-e6a3-08dee7956573
-X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jul 2026 02:03:17.2999 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: mNUaMPBVh7GMP/KkWCALRfYaYeQLZL4eshiVPWK7n20BW36cnGlLiod3df9iHQkFqxwYFq+kfsLiYrQ4gvBkvmQvM7Y75TJeOo+F4coaD+E=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR02MB7908
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
- envelope-from=chao.liu@processmission.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
+In-Reply-To: <20260708161859.1124848-2-max.chou@sifive.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:39::4;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pj2-x04.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -141,74 +108,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Tao,
-
-On Wed, Jul 22, 2026 at 12:13:28AM +0800, Tao Ding wrote:
-> Hi all,
+On Thu, Jul 09, 2026 at 12:18:51AM +0800, Max Chou wrote:
+> FloatParts64.exp holds an unbiased exponent. Subtract exp_bias to store
+> the unbiased equivalent of the max-normal biased exponent.
 > 
-> This patch series adds GSDMA and Decomp_gzip to the K230 board.
-> Enable k230 to use k230_unzip to decompress files during the u-boot phase.
-> 
-Thanks for the contribution!
-
-I believe you need to update the K230 documentation. If peripheral modeling
-for things like UNGIP and GSDMA has been added, could the boot flow in the
-firmware linux booting path be simplified to better align with the hardware's
-actual boot process?
-
-cc Junze, Can you help review this? Thanks!
-
+> Fixes: d8be49537658 ("fpu: Add conversion routines for OCP FP8 E5M2")
+> Signed-off-by: Max Chou <max.chou@sifive.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
 
 Thanks,
 Chao
-> This series includes the following features:
+
+> ---
+>  fpu/softfloat.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> *patch1: add K230 gsdma which supports sdma, gdma is temporarily not supported
-> *patch2: add gsdma to K230 board
-> *patch3: add K230 gsdma qtest
-> *patch4: add K230 decomp_gzip which decompress data work with sdma
-> *patch5: add decomp_gzip to K230 board
-> *patch6: add K230 decomp_gzip qtest
-> *patch7: add a noc-stub region in K230 board
-> 
-> Thanks
-> 
-> Tao Ding (7):
->   hw/dma: add K230 gsdma
->   hw/riscv: k230: add gsdma in K230 board
->   tests/qtest: add test for K230 gsdma
->   hw/misc: add K230 decomp gzip
->   hw/riscv: k230: add decomp gzip in K230 board
->   tests/qtest: add test for K230 decomp gzip
->   hw/riscv: k230: add a noc stub region in K230 board
-> 
->  hw/dma/Kconfig                      |   3 +
->  hw/dma/k230_gsdma.c                 | 532 ++++++++++++++++++++++++++++
->  hw/dma/meson.build                  |   1 +
->  hw/dma/trace-events                 |   6 +
->  hw/misc/Kconfig                     |   3 +
->  hw/misc/k230_decomp_gzip.c          | 498 ++++++++++++++++++++++++++
->  hw/misc/meson.build                 |   1 +
->  hw/misc/trace-events                |   4 +
->  hw/riscv/Kconfig                    |   2 +
->  hw/riscv/k230.c                     |  38 +-
->  include/hw/dma/k230_gsdma.h         | 128 +++++++
->  include/hw/misc/k230_decomp_gzip.h  |  92 +++++
->  include/hw/riscv/k230.h             |   5 +
->  tests/qtest/k230-decomp-gzip-test.c | 181 ++++++++++
->  tests/qtest/k230-gsdma-test.c       | 201 +++++++++++
->  tests/qtest/meson.build             |   2 +-
->  16 files changed, 1689 insertions(+), 8 deletions(-)
->  create mode 100644 hw/dma/k230_gsdma.c
->  create mode 100644 hw/misc/k230_decomp_gzip.c
->  create mode 100644 include/hw/dma/k230_gsdma.h
->  create mode 100644 include/hw/misc/k230_decomp_gzip.h
->  create mode 100644 tests/qtest/k230-decomp-gzip-test.c
->  create mode 100644 tests/qtest/k230-gsdma-test.c
-> 
-> 
-> base-commit: bd6079a7a1d14de0918a7715ef6db85dc32de3bb
+> diff --git a/fpu/softfloat.c b/fpu/softfloat.c
+> index bc244a44ff..e2e53c1d68 100644
+> --- a/fpu/softfloat.c
+> +++ b/fpu/softfloat.c
+> @@ -2435,7 +2435,8 @@ static void parts_float_to_e5m2(FloatParts64 *a, float_status *s, bool saturate)
+>          /* Per OCP, conversion in SATURATE mode bounds Inf to MAX. */
+>          if (saturate) {
+>              a->cls = float_class_normal;
+> -            a->exp = float8_e5m2_params.exp_max - 1;
+> +            a->exp = (float8_e5m2_params.exp_max - 1 -
+> +                float8_e5m2_params.exp_bias);
+>              a->frac = MAKE_64BIT_MASK(float8_e5m2_params.frac_shift,
+>                                        float8_e5m2_params.frac_size + 1);
+>          }
 > -- 
-> 2.43.0
+> 2.55.0
 > 
 
