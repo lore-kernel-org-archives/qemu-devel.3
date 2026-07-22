@@ -4,50 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEF3AC44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:55:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 103AEC44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:55:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWLx-0002a4-6k; Wed, 22 Jul 2026 08:47:13 -0400
+	id 1wmWPM-0006ih-Bv; Wed, 22 Jul 2026 08:50:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWLn-0002RF-Tl; Wed, 22 Jul 2026 08:47:05 -0400
+ id 1wmWNJ-0003W0-Ab; Wed, 22 Jul 2026 08:48:39 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWLm-0001dB-2r; Wed, 22 Jul 2026 08:47:03 -0400
+ id 1wmWNE-0001px-SH; Wed, 22 Jul 2026 08:48:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724390; bh=ZTTjQwxL0o26VsxY7NB6uaD074sJLQ5p+S/4W2/DC90=;
+ t=1784724390; bh=cWAbnpqrfyi4fwp9/QRd1jcY+tktlSUUT2Lw4k87/54=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=s7Xk7+cwnok3bMtQUSXviao2BszlrpeWskFguCBTuCbhaQMoZNiW9M4kd/l+Hf99a
- TYyLvpMVaQeic21WuyeVgs0Fx8Ap1c/HX/Xee4rWihA15pvDAUss1NemKcgcSlY14Y
- hve/Y396xFiny/eQ92llVIavcSx67lm9pwpUZ06Yg91oewCdxj30oZz8f1O2NTXMOG
- it1UqQWNvKqJ02Wi9lFCaaWm3+O/c65+o629orpQS0bYNPsfg9XrNB9HsIoJ7AD4aJ
- K18s0a8RkhXrBwTOIkE9rRLaqfSyRTuMGu6l3EWT0H3EALae5TzK9cwXR+Bz1wmfqC
- tJoKhuDwc3TVg==
+ b=Y+MRp23reOtbjJng4Kezwyoy0LvBweTGbF3YG/q7/OiaJ0IfHfX8nfH7jFDFFJujp
+ tCdJcDx5f41hwexVzC7sP4K/IoEJme/dJB1TLqm42NBtIRWiL+vYw8eQJX7Gzlc/BU
+ 6szRffbpgvhRFnGRaWxcYciKRUF7QsTbV5cEq1ZdHxbnyJfPWhcSataGHpsPjUp7gQ
+ erFGmc384TLpmGrUyIyTvf2D+SIHcRdA3GZEWczK+tACfwPE+PnIQHZYrWw7fdub8i
+ bykeNn+1LauZWw/RbOBGPdnI3dKWZ30C3DSAVyYyuJjq61DLKsBioCW9YWdvCSlRb2
+ urPgYTA8BUj1Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 58AF51C3AFD;
+ by isrv.corpit.ru (Postfix) with ESMTP id A00B11C3B0A;
  Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A0C733F3757;
+ by tsrv.corpit.ru (Postfix) with ESMTP id E84563F3764;
  Wed, 22 Jul 2026 15:46:47 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 4A85017EE3; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id 6A3E717EFD; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Feifan Qian <bea1e@proton.me>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 084/122] hw/misc/stm32_rcc: Correct offset-to-irq
- calculation
-Date: Wed, 22 Jul 2026 15:45:33 +0300
-Message-ID: <20260722124622.31034-9-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 v2 097/122] hw/usb/hcd-ohci: Make sure that
+ ohci_service_ed_list() cannot loop forever
+Date: Wed, 22 Jul 2026 15:45:46 +0300
+Message-ID: <20260722124622.31034-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,113 +75,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
 
-In the STM32 RCC, there is a block of 5 "enable" registers, each of
-which has 32 bits; each bit determines the level of one of the 5 * 32
-= 160 enable_irq output lines.  The code calculates the irq to be
-worked on using
-  irq_offset = ((addr - STM32_RCC_AHB1_ENR) / 4) * 32;
+The inner while loop in ohci_service_ed_list() could theoretically
+loop forever if a malicious guest prepares a set of bad descriptors.
+Add a check to the loop to avoid this situation.
 
-This assumes that the registers are all consecutive; however, there
-is a gap between the AHB1/2/3 registers and the APB1/2 registers, so
-for the APB1/2 registers we calculate a number that is 32 too high
-and can index off the end of the enable_irq[] array.
-
-The handling of the reset registers has an identical bug.
-
-Adjust the calculation of irq_offset to cope with the gap, and fix
-the case labels so accesses to the gap fall into the default
-LOG_UNIMP rather than being treated as if they were an actual
-register.
-
-Coverity CID: 1663683, 1663686
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-id: 20260709104832.1989240-1-peter.maydell@linaro.org
-(cherry picked from commit 3c2749443429a2a6b60bfa5c32964628631dfa23)
+Reported-by: Feifan Qian <bea1e@proton.me>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3781
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20260713160458.343323-1-thuth@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit 98e5a8eb4fb9145e9dc336b297ec14390ce88ff9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/misc/stm32_rcc.c b/hw/misc/stm32_rcc.c
-index 26672b5b24a..ae806b6aa81 100644
---- a/hw/misc/stm32_rcc.c
-+++ b/hw/misc/stm32_rcc.c
-@@ -53,6 +53,27 @@ static uint64_t stm32_rcc_read(void *opaque, hwaddr addr, unsigned int size)
-     return value;
- }
- 
-+static int reg_offset_to_irq_offset(hwaddr addr)
-+{
-+    /*
-+     * The reset and enable registers aren't all consecutive. In getting the
-+     * irq index from the register offset, we need to account for the gap
-+     * between the AHB regs and the APB regs.
-+     */
-+    switch (addr) {
-+    case STM32_RCC_AHB1_RSTR ... STM32_RCC_AHB3_RSTR:
-+        return ((addr - STM32_RCC_AHB1_RSTR) / 4) * 32;
-+    case STM32_RCC_APB1_RSTR ... STM32_RCC_APB2_RSTR:
-+        return ((addr - STM32_RCC_APB1_RSTR) / 4) * 32 + STM32_RCC_N_AHB_IRQS;
-+    case STM32_RCC_AHB1_ENR ... STM32_RCC_AHB3_ENR:
-+        return ((addr - STM32_RCC_AHB1_ENR) / 4) * 32;
-+    case STM32_RCC_APB1_ENR ... STM32_RCC_APB2_ENR:
-+        return ((addr - STM32_RCC_APB1_ENR) / 4) * 32 + STM32_RCC_N_AHB_IRQS;
-+    default:
-+        g_assert_not_reached();
-+    }
-+}
-+
- static void stm32_rcc_write(void *opaque, hwaddr addr,
-                             uint64_t val64, unsigned int size)
- {
-@@ -69,11 +90,12 @@ static void stm32_rcc_write(void *opaque, hwaddr addr,
+diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
+index b7296ae0363..2974819a2da 100644
+--- a/hw/usb/hcd-ohci.c
++++ b/hw/usb/hcd-ohci.c
+@@ -28,6 +28,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/irq.h"
+ #include "qapi/error.h"
++#include "qemu/log.h"
+ #include "qemu/module.h"
+ #include "qemu/timer.h"
+ #include "hw/usb.h"
+@@ -1130,6 +1131,8 @@ static int ohci_service_ed_list(OHCIState *ohci, uint32_t head)
+         return 0;
      }
- 
-     switch (addr) {
--    case STM32_RCC_AHB1_RSTR...STM32_RCC_APB2_RSTR:
-+    case STM32_RCC_AHB1_RSTR ... STM32_RCC_AHB3_RSTR:
-+    case STM32_RCC_APB1_RSTR ... STM32_RCC_APB2_RSTR:
-         prev_value = s->regs[addr / 4];
-         s->regs[addr / 4] = value;
- 
--        irq_offset = ((addr - STM32_RCC_AHB1_RSTR) / 4) * 32;
-+        irq_offset = reg_offset_to_irq_offset(addr);
-         for (int i = 0; i < 32; i++) {
-             new_value = extract32(value, i, 1);
-             if (extract32(prev_value, i, 1) && !new_value) {
-@@ -82,11 +104,12 @@ static void stm32_rcc_write(void *opaque, hwaddr addr,
-             }
-         }
-         return;
--    case STM32_RCC_AHB1_ENR...STM32_RCC_APB2_ENR:
-+    case STM32_RCC_AHB1_ENR ... STM32_RCC_AHB3_ENR:
-+    case STM32_RCC_APB1_ENR ... STM32_RCC_APB2_ENR:
-         prev_value = s->regs[addr / 4];
-         s->regs[addr / 4] = value;
- 
--        irq_offset = ((addr - STM32_RCC_AHB1_ENR) / 4) * 32;
-+        irq_offset = reg_offset_to_irq_offset(addr);
-         for (int i = 0; i < 32; i++) {
-             new_value = extract32(value, i, 1);
-             if (!extract32(prev_value, i, 1) && new_value) {
-diff --git a/include/hw/misc/stm32_rcc.h b/include/hw/misc/stm32_rcc.h
-index ffbdf202ea5..fc7ef6af5f7 100644
---- a/include/hw/misc/stm32_rcc.h
-+++ b/include/hw/misc/stm32_rcc.h
-@@ -65,7 +65,11 @@
- 
- #define STM32_RCC_NREGS ((STM32_RCC_DCKCFGR2 >> 2) + 1)
- #define STM32_RCC_PERIPHERAL_SIZE 0x400
--#define STM32_RCC_NIRQS (32 * 5) /* 32 bits per reg, 5 en/rst regs */
+     for (cur = head; cur && link_cnt++ < ED_LINK_LIMIT; cur = next_ed) {
++        unsigned int ed_cnt = 0;
 +
-+/* 32 bits per reg, 3 AHB regs and 2 APB regs */
-+#define STM32_RCC_N_AHB_IRQS (32 * 3)
-+#define STM32_RCC_N_APB_IRQS (32 * 2)
-+#define STM32_RCC_NIRQS (STM32_RCC_N_AHB_IRQS + STM32_RCC_N_APB_IRQS)
+         if (ohci_read_ed(ohci, cur, &ed)) {
+             trace_usb_ohci_ed_read_error(cur);
+             ohci_die(ohci);
+@@ -1173,6 +1176,13 @@ static int ohci_service_ed_list(OHCIState *ohci, uint32_t head)
+                     break;
+                 }
+             }
++
++            if (ed_cnt++ > ED_LINK_LIMIT) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "ohci: Too many endpoint descriptors in loop\n");
++                ohci_die(ohci);
++                return 0;
++            }
+         }
  
- #define STM32_RCC_GPIO_IRQ_OFFSET 0
- 
+         if (ohci_put_ed(ohci, cur, &ed)) {
 -- 
 2.47.3
 
