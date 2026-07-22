@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1CC2C44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:58:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 266A8C44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:59:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWPM-0006jq-GA; Wed, 22 Jul 2026 08:50:44 -0400
+	id 1wmWPF-0005e1-M3; Wed, 22 Jul 2026 08:50:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWOV-0004Bd-Kn; Wed, 22 Jul 2026 08:49:58 -0400
+ id 1wmWMf-00033q-BB; Wed, 22 Jul 2026 08:48:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWOR-0001wE-N7; Wed, 22 Jul 2026 08:49:50 -0400
+ id 1wmWMd-0001nh-Ao; Wed, 22 Jul 2026 08:47:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724390; bh=m7Zbmzru9CDNHDmAAUJlJFfh89HAUQCD1fao6fVKpJ0=;
+ t=1784724390; bh=pGsbwCdEHxp7N+hE8YfqznDvenYBypwDapm1jIUOk78=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=WvQ8CsbSsUk7H7sUPoLrDJiZY1IRSnfLSF/ufJJonqY0RDTeyaz8VaccJrSlxl3+U
- 1QSDHqPfAuJLm61KjIQuQBNHPqyo4hjQesOPHc9jc4xlibjzRXQwKv4iINOW7XIKxS
- HIHC9LXhGqRjkhgG1DExA5ytMPduNZ6nJPlxgCCbpAk0v2UtexR9dzzJzuOkS+AQMb
- t2xi+PkNij1vKSV7JUTEJIx6ilfUYjL2GRVDkb1HJTUHl6lwB3Kjc49KDiWeMFNTNz
- qlSwL6EgOSqkBpirZ5SrNWLvgppy50Vzv9PkeIMUzGWMo+9a17v5bHvlTmoGnVp1A2
- UuWL/RrFG+jbw==
+ b=ZkvP9PLExqbjMEHM3dmW+yi2yBXCh3tBiMGWyiRwlRWHTp8XMYwFainUiPz3JtjtB
+ 24kALGNvHryZuHjCxJKJnlIMEqXJlE/Jv5iE+tbF5DBFa3PF9k1ktLwQIJSwvEnCxD
+ ZCrF4RlOAVoefH519v/Sa2xEG611Voi5+/jbk8I+O6XIvcIiiraDI44mTfyE92dOKi
+ G9pKxTMwqCHb73mP4Yktt5XlkbNOXnjKTmLYXrpFapIXdjT2qGTNF8uyHNZc4AOgqL
+ 4DswQ1Nf6DHeJeeN40GHYmdEFKUE9Ah5UKd0cTHVyblv6jfkfeSLIRZj7/UhwIGIhj
+ 7pUxamgxu8s0w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E23EB1C3B16;
+ by isrv.corpit.ru (Postfix) with ESMTP id 7E5741C3B04;
  Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 366C53F3770;
- Wed, 22 Jul 2026 15:46:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C63A33F375E;
+ Wed, 22 Jul 2026 15:46:47 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 8699D17F15; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id 5B53017EF1; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Feifan Qian <bea1e@proton.me>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 109/122] hw/usb/xhci: clamp interval exponent to
- avoid UB shift in xhci_init_epctx()
-Date: Wed, 22 Jul 2026 15:45:58 +0300
-Message-ID: <20260722124622.31034-34-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Haotian Jiang <sundayjiang@tencent.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 v2 091/122] hw/misc/ivshmem: clear chardev handlers
+ before freeing peers
+Date: Wed, 22 Jul 2026 15:45:40 +0300
+Message-ID: <20260722124622.31034-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
@@ -72,46 +73,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Feifan Qian <bea1e@proton.me>
+From: Haotian Jiang <sundayjiang@tencent.com>
 
-The xHCI endpoint context dword 0 bits 23:16 ("Interval") are written
-by the guest and passed directly as the shift amount in:
+ivshmem_exit() frees s->peers and s->msi_vectors but does not clear
+the chardev handlers registered in ivshmem_common_realize(). Those
+handlers are only removed later in object_finalize() via release_chr,
+which runs after ivshmem_exit().
 
-    epctx->interval = 1 << ((ctx[0] >> 16) & 0xff);
+Between exit and finalize, ivshmem_read() can fire on pending chardev
+data and process_msg_connect() dereferences the freed s->peers.
+Additionally, s->peers, s->nb_peers, and s->msi_vectors are not
+zeroed after free, leaving dangling pointers that make the UAF code
+paths reachable.
 
-The shift amount can be 0-255.  Shifting a 32-bit `int` left by >= 32
-is undefined behaviour under C11 §6.5.7p4.  With UBSan
-(halt_on_error=1) this causes QEMU to abort; with aggressive compiler
-optimisations that assume UB is unreachable the result is
-unpredictable.
+Fix by clearing chardev handlers at the beginning of ivshmem_exit(),
+before any resources they access are freed, and nullifying freed
+pointers.
 
-Clamp the exponent to [0, 18] with MIN() before the shift, and use
-`1u` (unsigned) to avoid shifting a signed integer.  The xHCI
-specification defines a maximum meaningful Interval value of 18 for
-most endpoint types; thus clamping to 18 is a safe fix that
-preserves the full unsigned 32-bit range for any compliant value.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3703
-Reported-by: Feifan Qian <bea1e@proton.me>
-Signed-off-by: Feifan Qian <bea1e@proton.me>
-[thuth: Clamp to 18 instead of 31]
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit 12d8ee9d5358cd8cdd2c2193081b4d7fea4b6098)
+Cc: qemu-stable@nongnu.org
+Fixes: f64a078d45a ("ivshmem: fix pci_ivshmem_exit()")
+Link: https://gitlab.com/qemu-project/qemu/-/work_items/3594
+Reported-by: Haotian Jiang <sundayjiang@tencent.com>
+Signed-off-by: Haotian Jiang <sundayjiang@tencent.com>
+Message-ID: <tencent_3105EC28797360A155078F53@qq.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit 5157ceb10ca83d1c257ff84368458153a10a2f23)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-index 5835b1566dc..31def9dad7e 100644
---- a/hw/usb/hcd-xhci.c
-+++ b/hw/usb/hcd-xhci.c
-@@ -1122,7 +1122,7 @@ static void xhci_init_epctx(XHCIEPContext *epctx,
-         epctx->ring.ccs = ctx[2] & 1;
+diff --git a/hw/misc/ivshmem-pci.c b/hw/misc/ivshmem-pci.c
+index 900d523334c..3f7ad4b633c 100644
+--- a/hw/misc/ivshmem-pci.c
++++ b/hw/misc/ivshmem-pci.c
+@@ -920,6 +920,9 @@ static void ivshmem_exit(PCIDevice *dev)
+     IVShmemState *s = IVSHMEM_COMMON(dev);
+     int i;
+ 
++    qemu_chr_fe_set_handlers(&s->server_chr,
++                             NULL, NULL, NULL, NULL, NULL, NULL, true);
++
+     migrate_del_blocker(&s->migration_blocker);
+ 
+     if (memory_region_is_mapped(s->ivshmem_bar2)) {
+@@ -948,6 +951,8 @@ static void ivshmem_exit(PCIDevice *dev)
+             close_peer_eventfds(s, i);
+         }
+         g_free(s->peers);
++        s->peers = NULL;
++        s->nb_peers = 0;
      }
  
--    epctx->interval = 1 << ((ctx[0] >> 16) & 0xff);
-+    epctx->interval = 1u << MIN((ctx[0] >> 16) & 0xffu, 18u);
+     if (ivshmem_has_feature(s, IVSHMEM_MSI)) {
+@@ -955,6 +960,7 @@ static void ivshmem_exit(PCIDevice *dev)
+     }
+ 
+     g_free(s->msi_vectors);
++    s->msi_vectors = NULL;
  }
  
- static TRBCCode xhci_enable_ep(XHCIState *xhci, unsigned int slotid,
+ static int ivshmem_pre_load(void *opaque)
 -- 
 2.47.3
 
