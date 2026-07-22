@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D81AEC44536
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:54:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CECBBC44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:54:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWPl-0000XS-Hg; Wed, 22 Jul 2026 08:51:09 -0400
+	id 1wmWPp-0000vW-5o; Wed, 22 Jul 2026 08:51:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWPT-0007iR-OX; Wed, 22 Jul 2026 08:50:51 -0400
+ id 1wmWPZ-00089D-DJ; Wed, 22 Jul 2026 08:50:57 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWPR-0002Fw-NW; Wed, 22 Jul 2026 08:50:51 -0400
+ id 1wmWPX-0002Id-Cd; Wed, 22 Jul 2026 08:50:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724391; bh=muNAh4RU3UYOtUuju152tRHPb6SeX/QYPbJCxpOiBfA=;
+ t=1784724391; bh=nV6KU/rdZP69Sb0KkbRVIy6e5R2PbpdxZxyDoobIdM8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=v1UnMQrmciMjQfQgrbV2el3X4ziu5/Kvp8+UCCXvBtNEwwZZMtxYzTuTAhh3IzKuu
- O6m5UaspXdpQgllUAtFislLcrvFlhah7rzPlP6WZt3KbggY0lxTABeNsObYRG7h21D
- MHUZ8JBd63lNOanujjKQ6adGWZgotxjKJqjyCERR5FwQ4Un8hDaHM7HuddufuBdnO8
- 4BIAMTtE+t9DVNSoZvMzGAmJ0FjOo3C3HpRJc05JOU+MPycFrN7C6OUtDvEyl3vbHX
- +mAww4ohopqUvgYAAKTrzs4jusocww0mT39mUmL5u2q0KlzKFoHxlk2aLuvyCZiAbP
- Hsbr1jegrkzGA==
+ b=htXVJKF0sSPJxV1HAoiQlTQAH7uAVWY1QJTV0ewd3ScTsdm8tTQfCpd0cyp+CSEo7
+ 5Yz8VTS1+c1SPG0+onaUPOztWtjm2N4Xf0WBZft5JuoPclXjItSm4qvDilBVfUXXlz
+ fLuUMgQi7pI8+TZ7HwIRUmJe0H0TSXKGRI90LUkOXRunBslNUxWfeTpbjcZNJR+aKW
+ l6ddhGCheKBbC1zP3kD9lOpKVGgv6AeoeAyP99Trivu5A04LeAm99TZRWxESFdUO5O
+ uEgiXQkNfosf0A2BANYFjE4vDrWAXfbBwqfov3xMYFCh79UYOmDlGSrA7PpbBfh2Ev
+ r1gIHzic3d2rA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 21C831C3B20;
+ by isrv.corpit.ru (Postfix) with ESMTP id 36AFC1C3B23;
  Wed, 22 Jul 2026 15:46:31 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6A6D93F377A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7C2173F377D;
  Wed, 22 Jul 2026 15:46:48 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 9E3F817F29; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id A5A6A17F2F; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, Haotian Jiang <jianghaotian.sunday@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 119/122] replay: fix use of uninitialized pointer
- on error
-Date: Wed, 22 Jul 2026 15:46:08 +0300
-Message-ID: <20260722124622.31034-44-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 v2 122/122] hw/audio/intel-hda: restrict all DMA
+ engine paths to memories
+Date: Wed, 22 Jul 2026 15:46:11 +0300
+Message-ID: <20260722124622.31034-47-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
@@ -74,78 +73,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Haotian Jiang <jianghaotian.sunday@gmail.com>
 
-When bdrv_snapshot_list() returns a negative error code, sn_tab is
-uninitialized. The loop does not execute (since i=0 < negative is
-false), but the code falls through to g_free(sn_tab) which frees
-an uninitialized pointer.
+CVE-2021-3611 (commit 79fa99831d) restricted the DMA engine to memories
+by setting attrs.memory=true, but only applied this to intel_hda_response.
+Three other DMA engine access points still use MEMTXATTRS_UNSPECIFIED,
+allowing a malicious guest to trigger DMA-to-self-MMIO reentry:
 
-Fixes: f6baed3d1485 ("replay: implement replay-seek command")
-Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+  - intel_hda_xfer (line 398): called from the audio timer callback
+    (hda_codec_xfer -> bus->xfer), so the MemReentrancyGuard does not
+    fire (engaged_in_io is false outside MMIO dispatch). A guest that
+    points a BDL entry at the HDA controller's own MMIO BAR can write
+    audio samples to device registers, triggering whandler side effects
+    such as starting/stopping streams or injecting codec commands via
+    CORBWP.
+  - intel_hda_parse_bdl (line 478): uses pci_dma_read which hardcodes
+    MEMTXATTRS_UNSPECIFIED. A guest-controlled BDL base address can
+    point at controller MMIO, allowing the DMA engine to read device
+    registers as BDL descriptors.
+  - intel_hda_corb_run (line 333): ldl_le_pci_dma reads the CORB ring
+    with MEMTXATTRS_UNSPECIFIED, allowing the DMA engine to read
+    controller MMIO as CORB entries.
+
+Fix all three by passing {.memory = true} explicitly, matching the
+fix already applied to intel_hda_response. For intel_hda_parse_bdl,
+replace pci_dma_read with pci_dma_rw to pass the controlled attrs.
+
+Fixes: 79fa99831d ("hw/audio/intel-hda: Restrict DMA engine to memories (not MMIO devices)")
+Reported-by: Haotian Jiang of Tencent Security (Yunding Lab) <jianghaotian.sunday@gmail.com>
+Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
+Cc: qemu-stable@nongnu.org
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260719113216.1177594-1-marcandre.lureau@redhat.com>
+Message-ID: <20260721060941.2989396-1-jianghaotian.sunday@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit fe68e4b47bf5a3ff016a8c2b580e05c93df05752)
+(cherry picked from commit c257745248b02fd468619b4b1fdbbade5344191d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/replay/replay-debugging.c b/replay/replay-debugging.c
-index 11053640021..7b904a14165 100644
---- a/replay/replay-debugging.c
-+++ b/replay/replay-debugging.c
-@@ -139,9 +139,8 @@ static char *replay_find_nearest_snapshot(int64_t icount,
-                                           int64_t *snapshot_icount)
+diff --git a/hw/audio/intel-hda.c b/hw/audio/intel-hda.c
+index 3214992ddc5..0ba635caca6 100644
+--- a/hw/audio/intel-hda.c
++++ b/hw/audio/intel-hda.c
+@@ -305,6 +305,7 @@ static int intel_hda_send_command(IntelHDAState *d, uint32_t verb)
+ 
+ static void intel_hda_corb_run(IntelHDAState *d)
  {
-     BlockDriverState *bs;
--    QEMUSnapshotInfo *sn_tab;
-+    g_autofree QEMUSnapshotInfo *sn_tab = NULL;
-     QEMUSnapshotInfo *nearest = NULL;
--    char *ret = NULL;
-     int rv;
-     int nb_sns, i;
++    const MemTxAttrs attrs = { .memory = true };
+     hwaddr addr;
+     uint32_t rp, verb;
  
-@@ -149,15 +148,19 @@ static char *replay_find_nearest_snapshot(int64_t icount,
+@@ -330,7 +331,7 @@ static void intel_hda_corb_run(IntelHDAState *d)
  
-     bs = bdrv_all_find_vmstate_bs(NULL, false, NULL, NULL);
-     if (!bs) {
--        goto fail;
-+        return NULL;
-     }
+         rp = (d->corb_rp + 1) & 0xff;
+         addr = intel_hda_addr(d->corb_lbase, d->corb_ubase);
+-        ldl_le_pci_dma(&d->pci, addr + 4 * rp, &verb, MEMTXATTRS_UNSPECIFIED);
++        ldl_le_pci_dma(&d->pci, addr + 4 * rp, &verb, attrs);
+         d->corb_rp = rp;
  
-     nb_sns = bdrv_snapshot_list(bs, &sn_tab);
-+    if (nb_sns < 0) {
-+        return NULL;
-+    }
+         dprint(d, 2, "%s: [rp 0x%x] verb 0x%08x\n", __func__, rp, verb);
+@@ -395,7 +396,7 @@ static void intel_hda_response(HDACodecDevice *dev, bool solicited, uint32_t res
+ static bool intel_hda_xfer(HDACodecDevice *dev, uint32_t stnr, bool output,
+                            uint8_t *buf, uint32_t len)
+ {
+-    const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
++    const MemTxAttrs attrs = { .memory = true };
+     HDACodecBus *bus = HDA_BUS(dev->qdev.parent_bus);
+     IntelHDAState *d = container_of(bus, IntelHDAState, codecs);
+     hwaddr addr;
+@@ -466,6 +467,7 @@ static bool intel_hda_xfer(HDACodecDevice *dev, uint32_t stnr, bool output,
  
-     for (i = 0; i < nb_sns; i++) {
-         rv = bdrv_all_has_snapshot(sn_tab[i].name, false, NULL, NULL);
--        if (rv < 0)
--            goto fail;
-+        if (rv < 0) {
-+            return NULL;
-+        }
-         if (rv == 1) {
-             if (sn_tab[i].icount != -1ULL
-                 && sn_tab[i].icount <= icount
-@@ -166,14 +169,12 @@ static char *replay_find_nearest_snapshot(int64_t icount,
-             }
-         }
-     }
--    if (nearest) {
--        ret = g_strdup(nearest->name);
--        *snapshot_icount = nearest->icount;
-+    if (!nearest) {
-+        return NULL;
-     }
--    g_free(sn_tab);
- 
--fail:
--    return ret;
-+    *snapshot_icount = nearest->icount;
-+    return g_strdup(nearest->name);
- }
- 
- static void replay_seek(int64_t icount, QEMUTimerCB callback, Error **errp)
+ static void intel_hda_parse_bdl(IntelHDAState *d, IntelHDAStream *st)
+ {
++    const MemTxAttrs attrs = { .memory = true };
+     hwaddr addr;
+     uint8_t buf[16];
+     uint32_t i;
+@@ -475,7 +477,8 @@ static void intel_hda_parse_bdl(IntelHDAState *d, IntelHDAStream *st)
+     g_free(st->bpl);
+     st->bpl = g_new(bpl, st->bentries);
+     for (i = 0; i < st->bentries; i++, addr += 16) {
+-        pci_dma_read(&d->pci, addr, buf, 16);
++        pci_dma_rw(&d->pci, addr, buf, 16,
++                   DMA_DIRECTION_TO_DEVICE, attrs);
+         st->bpl[i].addr  = le64_to_cpu(*(uint64_t *)buf);
+         st->bpl[i].len   = le32_to_cpu(*(uint32_t *)(buf + 8));
+         st->bpl[i].flags = le32_to_cpu(*(uint32_t *)(buf + 12));
 -- 
 2.47.3
 
