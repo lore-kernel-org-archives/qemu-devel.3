@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDD17C44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:50:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2986BC44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:50:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWLi-0002OQ-CU; Wed, 22 Jul 2026 08:46:58 -0400
+	id 1wmWMR-0002xK-SO; Wed, 22 Jul 2026 08:47:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWLh-0002Nb-9d; Wed, 22 Jul 2026 08:46:57 -0400
+ id 1wmWMG-0002nU-7H; Wed, 22 Jul 2026 08:47:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWLf-0001bW-Mk; Wed, 22 Jul 2026 08:46:57 -0400
+ id 1wmWMC-0001mu-Hz; Wed, 22 Jul 2026 08:47:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724390; bh=F4ECVAy2vQqPctVilBFqRN1NtbN+afsw1RwjFQnROtI=;
+ t=1784724390; bh=OcYwZc34stgULov+pGXFoN3p7Da5ufsOWcySG86J41I=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=w8v2BcazxZWw2noGb1iL2CCuelRYv3eALqR+7lZ3NLzIedHUyHpuwhq5niztp1Mym
- REgOUzsyd0s3HQW+mNleJIYqhPXsTv73Burc4nYXXlt8bLgn1RHbQSBPv7XgVXan+1
- sOzpCla58mBZKd26d56XYGN0IOQ8oM5lRI2KGfpZCBLWJbU0SkrM6Mc5W0LVWmecQr
- 0j2s61sl2mydZHox3kUG0K+W3rS1HNZ4PaDKvVQGQaT096qWFN/LmP3UBpEuVHmKuq
- Y67QocFs9C4z8ZSS5GEvS2eswqgdYyH0VjwP5dTwkAnuUkFk7AO+pXBPrHXMcUADm0
- pvV0MiqLZFbUw==
+ b=ZVM4zg7IBysvLbxCO25tFga/2fNy0lZQ7kVLz7k59j5xQBTLFLbTcWBpFM6fv9Cg8
+ BX141lvikgxP+UpBT68qzvteljX2kXNMtvA0EB5OAyK4RUzw8WqLcTGzCWmsGVFu/i
+ 3wd/wQ6yQ/U4E8e4iq/3QijdHh6E1i1kYpyICsVrXo4x1qw27C75s4Ldk16IRt9uSg
+ bUZGhHCOHh1X9Mxmj8uX2LD7ZylQe0fWXNQdLnqBJzRcB5Cyf+IwIwigDvA053CqUo
+ MNoIxyubCFOZokgamQM32h65hgaKeikKJTJZln46O+PcNdaicvKEQz9u3AusikkZbv
+ maSBgB8KN+xzg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 451601C3AF9;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6F7201C3B01;
  Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8D2483F3753;
+ by tsrv.corpit.ru (Postfix) with ESMTP id B72503F375B;
  Wed, 22 Jul 2026 15:46:47 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 40F6A17EDB; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id 544BF17EEB; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Farhan Ali <alifm@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 080/122] hw/usb/dev-wacom: Don't write off end of
- buffer
-Date: Wed, 22 Jul 2026 15:45:29 +0300
-Message-ID: <20260722124622.31034-5-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 v2 088/122] s390x/css: firm up handling of chained
+ TIC CCWs
+Date: Wed, 22 Jul 2026 15:45:37 +0300
+Message-ID: <20260722124622.31034-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,43 +73,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Eric Farman <farman@linux.ibm.com>
 
-In usb_wacom_handle_data() we allocate a buffer with a size
-determined by the transfer size requested by the guest.  We then fill
-it in by calling either usb_mouse_poll() or usb_wacom_poll(), both of
-which functions take a length and return an actual length, which we
-pass to usb_packet_copy().  However, usb_mouse_poll() doesn't check
-the buffer size as it fills in the buffer, so if the guest passes an
-overly short transfer size then it will write off the end of the
-allocated buffer.
+The logic in css_interpret_ccw() correctly returns -EINVAL if a
+Transfer-In-Channel (TIC) CCW is command chained to another TIC CCW.
+The same routine also correctly returns -EINVAL if 256 CCWs do not
+perform a data transfer as part of the I/O operation [0].
 
-Check the length is at least big enough for the minimum 3 byte
-packet and return nothing if it is not, as usb_wacom_poll() does.
+What is missing, however, is a combination of these two, where a loop
+can be generated that will continue processing CCWs but without
+providing an opportunity to catch a breath. Fix this by capping
+the number of TIC CCWs in a channel program at the same limit as
+the CCWs without data transfer.
+
+[0] See "Invalid Sequence" in z/Architecture Principles of Operation
+    (SA22-7832-14), p16-27
 
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3672
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260706182034.1003176-1-peter.maydell@linaro.org
-(cherry picked from commit 2c6fae7d7da874615d8585f6d2b16ffb673c5c9a)
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Message-ID: <20260713074708.884282-1-borntraeger@linux.ibm.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+(cherry picked from commit 33bece0fa121c0a85df4f0372145ca74b967e78e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/dev-wacom.c b/hw/usb/dev-wacom.c
-index 7177c17f031..9d9fc1eb168 100644
---- a/hw/usb/dev-wacom.c
-+++ b/hw/usb/dev-wacom.c
-@@ -252,6 +252,10 @@ static int usb_mouse_poll(USBWacomState *s, uint8_t *buf, int len)
-     if (s->buttons_state & MOUSE_EVENT_MBUTTON)
-         b |= 0x04;
- 
-+    if (len < 3) {
-+        return 0;
-+    }
-+
-     buf[0] = b;
-     buf[1] = dx;
-     buf[2] = dy;
+diff --git a/hw/s390x/css.c b/hw/s390x/css.c
+index 38d2d90028c..991fc126089 100644
+--- a/hw/s390x/css.c
++++ b/hw/s390x/css.c
+@@ -1104,6 +1104,12 @@ static int css_interpret_ccw(SubchDev *sch, hwaddr ccw_addr,
+             ret = -EINVAL;
+             break;
+         }
++        /* Limit the number of TICs in a given channel program */
++        if (sch->ccw_tic_cnt == 255) {
++            ret = -EINVAL;
++            break;
++        }
++        sch->ccw_tic_cnt++;
+         sch->channel_prog = ccw.cda;
+         ret = -EAGAIN;
+         break;
+@@ -1155,6 +1161,7 @@ static void sch_handle_start_func_virtual(SubchDev *sch)
+         sch->ccw_fmt_1 = !!(orb->ctrl0 & ORB_CTRL0_MASK_FMT);
+         schib->scsw.flags |= (sch->ccw_fmt_1) ? SCSW_FLAGS_MASK_FMT : 0;
+         sch->ccw_no_data_cnt = 0;
++        sch->ccw_tic_cnt = 0;
+         suspend_allowed = !!(orb->ctrl0 & ORB_CTRL0_MASK_SPND);
+     } else {
+         /* Start Function resumed via rsch */
+diff --git a/include/hw/s390x/css.h b/include/hw/s390x/css.h
+index cd97e2b7075..9ee66ca39ac 100644
+--- a/include/hw/s390x/css.h
++++ b/include/hw/s390x/css.h
+@@ -132,6 +132,7 @@ struct SubchDev {
+     bool ccw_fmt_1;
+     bool thinint_active;
+     uint8_t ccw_no_data_cnt;
++    uint8_t ccw_tic_cnt;
+     uint16_t migrated_schid; /* used for mismatch detection */
+     CcwDataStream cds;
+     /* transport-provided data: */
 -- 
 2.47.3
 
