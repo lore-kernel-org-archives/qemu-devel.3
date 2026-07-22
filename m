@@ -4,98 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 030BCC4453A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF72CC4452D
 	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 07:40:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmRYo-0005QN-J9; Wed, 22 Jul 2026 03:40:12 -0400
+	id 1wmRYe-0005Np-Cs; Wed, 22 Jul 2026 03:40:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wmRYg-0005P3-HU
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 03:40:03 -0400
+ id 1wmRYc-0005Mx-0D
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 03:39:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wmRYe-0000Sp-Qa
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 03:40:02 -0400
+ id 1wmRYY-0000SC-Gy
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 03:39:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784706000;
+ s=mimecast20190719; t=1784705993;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=X2cEn+7WktAkJCeArI/3pHUX+N1KMbDr4AYrLOAoPME=;
- b=CF5Q8RZHinZUNjvFPFycZGU2sn+N+o6ue/qCJfFaI5NAwdFCEgagXOqlrgHfnCT++C+OPr
- HtvYzzKWjyX6HVJRWSxHdSjfS0bhgj2uHI9MhUeMf1H9+zu1A6WppzdO2Lm5xO4L0Z9tNO
- xNtCXd2zPO77Uev4NY/7iiYheZ9TLL8=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=6wcSGOl6+JpWJlabTA7eh1hIi2KvCsfaAgTtOegcmFc=;
+ b=JGMf1w2K7N68Vf2Zv4cmLZufNjWb5qa7NbE5IMfdRvfzqlEhj9kMTWgiyWFCGIP+SIMpf0
+ Q1Uo/vIhYRsvQ2FAQS6yOtZV4dUr1gPSslWlRA/KtcQbOfcYuJP+Ov5LTctP4gLJmgrsfy
+ 0fBnQr1mXVzYwsJLTDp1wNQr4I36BYM=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-64--Hv_623wMvGkOVa7Dn6dqQ-1; Wed, 22 Jul 2026 03:39:58 -0400
-X-MC-Unique: -Hv_623wMvGkOVa7Dn6dqQ-1
-X-Mimecast-MFC-AGG-ID: -Hv_623wMvGkOVa7Dn6dqQ_1784705997
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-495529a93f9so26531425e9.3
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 00:39:58 -0700 (PDT)
+ us-mta-370-VnO4jH9ZND2ZizPJzR4oIw-1; Wed, 22 Jul 2026 03:39:52 -0400
+X-MC-Unique: VnO4jH9ZND2ZizPJzR4oIw-1
+X-Mimecast-MFC-AGG-ID: VnO4jH9ZND2ZizPJzR4oIw_1784705991
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-47485fde05aso7258305f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 00:39:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784705997; x=1785310797; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=X2cEn+7WktAkJCeArI/3pHUX+N1KMbDr4AYrLOAoPME=;
- b=pLwb+lM7Ztlfz2nFnW5cE/wWrmtHfEZAgdu+dQ0HEcU6qfVspNhPApTobARHEbumEz
- gBxOjVgz9Egm0TA+76z55zNSivCZcSiTyCOOC/bFLDgiB4uFUPYxYwZqjcepDQwEaPTB
- Su1u3Cpr5RHA6yH5+ussKnEFiM1eVNTgoBtcWw2AYi/n+rWO+B+MYFUNVDvpbqjnju6u
- tmehjaKIkdpySQDGK/83qZuUM9M9EZkLsOGIB6vp/tX7HmZXHYIoBl4vA4A5rJh068iH
- 978OiV7ZcM3B+LMfiUJJgrfrB3Nc6pMyzF50qBz44Y1SrCv+FyDONZkbLwgHg36U7Qk7
- YqFw==
+ d=redhat.com; s=google; t=1784705991; x=1785310791; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=6wcSGOl6+JpWJlabTA7eh1hIi2KvCsfaAgTtOegcmFc=;
+ b=TrZjcFtwV7oSXBoJf44+f+Sw9L07CWZHxHccgKjFEKOnWWp6vl2O2f8yQjSBUlZZ1n
+ ehrnCHl+84cD3uJ7jSwcPE7HchmZln8cY3YpFMsz9L8M8Q43CVn9+kYpr0jsRwoRY1u/
+ UuKJCRpEMK+zh94AqDzB7RsiEdg+sicD0iecI2vrlipX/3+h+1ThQyOCx2SX6b34h3tZ
+ MB8LpGkQQqJ62B++kL3H8vQFVUolFReR7cV7fKPVMfhdSDm19GQyyrZI7kLnSJ6YSdF7
+ +FJdxif0FfbpWdUMlmjyEoFKsYV30sPx+UvVMN50wO9VpXVW9ZUhRJ78MdfOJxD7rcw/
+ GoKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784705997; x=1785310797;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=X2cEn+7WktAkJCeArI/3pHUX+N1KMbDr4AYrLOAoPME=;
- b=sRKkC1Ptan7cq+niBXcriuWRHMgwKjPuUoOuUqCxyaKs6EmcxBav1k94kTHNt6Rt2f
- JxZ38tU1oW3iNI0QDPHvJIZdLwpbVHfYbZPCyk5saxiVwPWmHIo0lgfZkMyb3PFQfnJy
- Tu1qn7503TKn0q0DBuG8ddErOIjO6xfmKNr1S1xl8Q2Dq4x+6Vzmqfzg7lDs7Py6ycF4
- PQq6lGkfk0kaskrH2X9n8iAw4ZvKdTZvlwYO+cpLmY0pTZz244ZFyfrN7+DZ5XrsVLT/
- mycih3cJnoTWz0qftiZS0uPjqRQJCaa6JPMh/D0FGLxRWUfbUgP3BRvgczAAkDarF39e
- WgeA==
-X-Gm-Message-State: AOJu0YxCyshkl5bQG+eZWiYPTpZNeoMdcCR+m6hkml22LSxDHQekcX0X
- n5z043x94AfL5uK3quOJYXLUoHOApo+8AdCjcqMwtSTCD1aBHNwqIuEJ+/iUPNKPkZzJJQnFMHv
- gGiRWHb5mvTYLfx4m7E0T77hajUMwm+DVnA3Q9x1MaddJKb5frnUH5ZGEqpaRJatXetL6cy5iri
- MLObnB5UbkRJ+dQ28RROINS48JBDb790W/Jdb/wfwT
-X-Gm-Gg: AR+sD10hq8/Sebc9J37JPJOsmmaEb9EN1/hf1vgCMKKHqpsprCHOQJkCQHEAhFbEg8a
- lyQ70EXLGlkBYM7BY/Fq4LOSx8p+eN+eq9rVX99k+ht/YtFDuSZAEHsW36CG03yVWCQIiUHDbD8
- JN8t6U/ZYOm8t/s0E4LAeJaAJgHPjGuVisXZmZP3WWLD17dbT/rTLjNAA1iIkAXeSIaTFT67e8v
- k6A7rdQcCc80NrQr0fM/QMv+vUt6rIKzsxDPbB1TdN6LUB/m70JTh1Dt7iwUI+nmWURFPqb4Z7R
- jHU12i35gfWAy9r1TUQdzWSdh+ReE571Jkfuz2RJB9NKU18eAauKPDFkzw6DMDLJMoD08AnBNTk
- lFT6HBQagfSlI6ukE3GbCbD5zwsk4VJqxuY2iIFdvwK+MnUhBDbbQeoy3wqbvq2MQnJHVQsJ1Nf
- 50H1oB
-X-Received: by 2002:a05:600c:4585:b0:493:b87c:c87d with SMTP id
- 5b1f17b1804b1-4954a3f3644mr233083495e9.11.1784705997201; 
- Wed, 22 Jul 2026 00:39:57 -0700 (PDT)
-X-Received: by 2002:a05:600c:4585:b0:493:b87c:c87d with SMTP id
- 5b1f17b1804b1-4954a3f3644mr233083135e9.11.1784705996766; 
- Wed, 22 Jul 2026 00:39:56 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1784705991; x=1785310791;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=6wcSGOl6+JpWJlabTA7eh1hIi2KvCsfaAgTtOegcmFc=;
+ b=J9lVb4c5NCWDAE0doAUkNNO/xHSXPoBL3SbZcgDj+9yU+n2pnkQ1Uc8baWotjzuqX4
+ apeBKHwFWoIgCU0KYB46Ph6Xr1yJdaK7Xi6Iv9GorUPOVx72NCiOwqe31UTZYLvmLp7K
+ 0+o5vZG8AHHnPtw9dp/N+L62WphdpVFVlqpNEhSSuw1BhvDqsUo171qyNr4lDKJ62LT4
+ 8LryHfEnax4ZzHGfjJbV64Nx/F1ymSeh7aAJxUSYIQKZqXjtQrB/4hPNXWkPPSVC3K8e
+ uU3qdRfErOIbktg/FPnVA+Ce9LXKIFo4PdiF8j9AKfRzwmc7Hn9Tkza3gHsWZkYFzZ0s
+ XpRg==
+X-Gm-Message-State: AOJu0YyGNX6i/HsZWdhDteCw7xa+Zl2Y1ogUL0fUqpAR1Ae8lFvzsXIf
+ YBP1HtnM/sLJaCSO6QXyZGyFts4RI5CP9HUWk5yEcyrjl++FzmfuZBg838kQKsAh3u8ehKj5qKz
+ 3ggxC2Dh223Mi7zSQOv4Wnmr3NGKmVFuE3wl1FbNSC6nXgBG6hItr7b/z9LEjBnqCieGRniW1mG
+ A6qGgYW0Fsrq+4bqVEb+uQ3b/eK+qNWXENryj+RfLl
+X-Gm-Gg: AR+sD11pjjcNsTkBuPRhScoxZudLnKTdZH/18+f7PbWic0XN7I1wGV5gVoRmdKwjjn8
+ kHmxDFXzlS3lTV87JQuK3UQUg32g41jrmrNvD+6bg00bxcvX9X40DXsqWiyEJi9uG8mFhpjQ0sB
+ QnYlrAo01BSEM20pylhsjd6AeipkBz1E7//RE+7pccwuE0r6xbJiWLJ62LabtV5Xq55SGZCDsLI
+ 8iz+T9ebxkvDsYkZfNp4F6P6E1DxjQJXg+EXMr0hbqwyaNnFaoDvoJiKAkJMQqd0KbfGsJAnYFs
+ 3WLjMbWDduIfLyJVr6+RQsXogvQbLBCZUj9FfAj1p4m3sBXUBulQrhqN0emSb3A5qrPnSUxx/wp
+ k25KL8VjZiD4NJOgTPRZuBy9Dh9NbMPQLZh1RHKLBue1nPM4KirDpU9Zc3X2t8/TokyIKerBOnw
+ 882GG2
+X-Received: by 2002:a05:6000:2583:b0:47f:79ea:6e21 with SMTP id
+ ffacd0b85a97d-47f79ea6fa1mr13615084f8f.7.1784705990677; 
+ Wed, 22 Jul 2026 00:39:50 -0700 (PDT)
+X-Received: by 2002:a05:6000:2583:b0:47f:79ea:6e21 with SMTP id
+ ffacd0b85a97d-47f79ea6fa1mr13615049f8f.7.1784705990145; 
+ Wed, 22 Jul 2026 00:39:50 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.94.110])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c67339sm3648414f8f.31.2026.07.22.00.39.53
+ ffacd0b85a97d-47f85c532d4sm3383299f8f.22.2026.07.22.00.39.49
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Jul 2026 00:39:53 -0700 (PDT)
+ Wed, 22 Jul 2026 00:39:49 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 2/5] meson: propagate qemu_ldflags to Rust link step
-Date: Wed, 22 Jul 2026 09:39:40 +0200
-Message-ID: <20260722073943.396872-3-pbonzini@redhat.com>
+Subject: [PULL 0/5] Misc 2026-07-22 changes for QEMU 11.1rc
+Date: Wed, 22 Jul 2026 09:39:38 +0200
+Message-ID: <20260722073943.396872-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260722073943.396872-1-pbonzini@redhat.com>
-References: <20260722073943.396872-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: permerror client-ip=170.10.133.124;
  envelope-from=pbonzini@redhat.com; helo=us-smtp-delivery-124.mimecast.com
@@ -121,46 +117,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Brian Cain <brian.cain@oss.qualcomm.com>
+The following changes since commit ad14439be5731e872d8448a04664a9c0e66624a8:
 
-Sanitizer flags are added to qemu_ldflags and applied globally for
-all_languages, but all_languages never includes 'rust'.
+  gitlab: remove gdb from MacOS jobs (2026-07-21 10:09:47 -0400)
 
-Fixes link errors like the ones below:
+are available in the Git repository at:
 
-    -Wl,-rpath,$ORIGIN/../qemu-macros:<sysroot>/lib/rustlib/x86_64-unknown-linux-gnu/lib"
-      = note: some arguments are omitted. use `--verbose` to show all linker arguments
-      = note: rust-lld: error: undefined symbol: __ubsan_handle_type_mismatch_v1
-              >>> referenced by event-loop-base.c:104 (../qemu_before_fix/event-loop-base.c:104)
-              >>>               libevent-loop-base.a.p/event-loop-base.c.o:(event_loop_base_class_init)
-              >>> referenced by event-loop-base.c:105 (../qemu_before_fix/event-loop-base.c:105)
-              >>>               libevent-loop-base.a.p/event-loop-base.c.o:(event_loop_base_class_init)
-              >>> referenced by event-loop-base.c:58 (../qemu_before_fix/event-loop-base.c:58)
-              >>>               libevent-loop-base.a.p/event-loop-base.c.o:(event_loop_base_set_param)
-              >>> referenced 11240 more times
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
 
-Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260714021236.2361604-1-brian.cain@oss.qualcomm.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- meson.build | 3 +++
- 1 file changed, 3 insertions(+)
+for you to fetch changes up to e2da3d92744d12b0c2e554ed533a4c9011dbd975:
 
-diff --git a/meson.build b/meson.build
-index 164328ded83..5f42bbf40c7 100644
---- a/meson.build
-+++ b/meson.build
-@@ -767,6 +767,9 @@ endif
- add_project_arguments(cc.get_supported_arguments(qemu_common_flags + qemu_cflags + warn_flags),
-                       native: false, language: 'c')
- add_global_link_arguments(qemu_ldflags, native: false, language: all_languages)
-+if have_rust
-+  add_global_link_arguments(qemu_ldflags, native: false, language: 'rust')
-+endif
- 
- if 'cpp' in all_languages
-   add_project_arguments(cxx.get_supported_arguments(qemu_common_flags + qemu_cxxflags),
+  scsi-disk: fix off by one in assertion (2026-07-22 09:36:02 +0200)
+
+----------------------------------------------------------------
+* meson: propagate qemu_ldflags to Rust link step
+* target/i386: helper_sysret(): Check that RCX contains a canonical address when emulating an Intel CPU
+* target/i386: tcg: remove FIXME
+* scsi-disk: protect against guest sending truncated data for MODE SELECT commands
+* scsi-disk: fix off by one in assertion
+
+----------------------------------------------------------------
+Andrey Polivoda (1):
+      target/i386: helper_sysret(): Check that RCX contains a canonical address when emulating an Intel CPU
+
+Brian Cain (1):
+      meson: propagate qemu_ldflags to Rust link step
+
+Paolo Bonzini (3):
+      target/i386: tcg: remove FIXME
+      scsi-disk: protect against guest sending truncated data for MODE SELECT commands
+      scsi-disk: fix off by one in assertion
+
+ meson.build                  |  3 +++
+ hw/scsi/scsi-disk.c          | 23 ++++++++++++++---------
+ target/i386/tcg/seg_helper.c | 17 +++++++++++++----
+ target/i386/tcg/emit.c.inc   |  4 +++-
+ 4 files changed, 33 insertions(+), 14 deletions(-)
 -- 
 2.55.0
 
