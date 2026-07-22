@@ -4,52 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECD8AC44536
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:50:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BDB8C44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:50:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWMe-0002z6-IK; Wed, 22 Jul 2026 08:47:58 -0400
+	id 1wmWPG-0005kC-Ba; Wed, 22 Jul 2026 08:50:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWMB-0002kp-1p; Wed, 22 Jul 2026 08:47:29 -0400
+ id 1wmWOY-0004CP-M4; Wed, 22 Jul 2026 08:50:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWM9-0001dd-DJ; Wed, 22 Jul 2026 08:47:26 -0400
+ id 1wmWOX-0001yS-27; Wed, 22 Jul 2026 08:49:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724390; bh=27tVyj76yu7ecrkT99EBbIhqp+A+PZztAbZYuxVvsHk=;
+ t=1784724390; bh=ZbL3Go4PS6XBXeG+quCsX0C9bN+36/RBwEayYbR6fcM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Mqw4uMkfWvO7e/meZO6CQH4+HqR2F9lZRlBF3ZJApZkG55J0QLwhJ9WjC/4UODP05
- 3f+ZpTkTqZOy6TEfCzq7YHxk8GHQe46HLPWh4sv4027XZ2HR82ptHMj1x/sllkgFeM
- J8zYTOhEBDuhxYdDw9Tve8b/KHeXthhDtyWCV+CxNkjJXJtL+NCYEvYxNnZG//zgEp
- kOI9TbWL7nuR9gxsdRqnOjR6zuU0ZdR3jxnbw6QoMJOh5euviu86lUj3GbuC0U4Zn5
- MpcQP2TuRLIC8gbX9QpUYs8+RYPckLVFxdbLYGP44Lu4KFlaaH98z14h8RZQtx+ipn
- VoYqU2mEnepvQ==
+ b=ujMUUYExdPjY+F6spV3THcJhDvyU/GNjCRiHmN7Jfj3PPOD1YOWR54wYRGKoWst5m
+ PAf7mqXTj3U7bST9HBJ6KYiJ+8YfXEX6sF/ErYAGzisSoUNaLGn3EcvP86AHGD9ueA
+ G4510LAXmJSD/gDhdNPm/rFmsPkCACiJtFp21MD7flOsk99P+rc1sdkVBc1lQmdgR0
+ J0gXb4RpRGyI+pXMMaHSfBK0jf0yJLCW1AKYmow/gOLxvmPNdVMdvM4jV3Ch0Jjdb4
+ 1NgAMYwLfYaVkgcLKL4v1PHJKN9PkZAs8kE7+QmasSudRsZ6fUovVC/7sv/y9R4wtC
+ cQC4yK9F/2Axg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 63BBA1C3AFF;
+ by isrv.corpit.ru (Postfix) with ESMTP id EE1491C3B18;
  Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id AB9093F3759;
- Wed, 22 Jul 2026 15:46:47 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4107F3F3772;
+ Wed, 22 Jul 2026 15:46:48 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 4F55F17EE7; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id 8B37E17F19; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, "Jason J. Herne" <jjherne@linux.ibm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 086/122] hw/s390x/sclp: Do not ignore
- address_space_read/write() errors
-Date: Wed, 22 Jul 2026 15:45:35 +0300
-Message-ID: <20260722124622.31034-11-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Xiangfeng Cai <caixiangfeng@bytedance.com>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 v2 111/122] tests/qtest: add xhci-pci unplug finalize
+ regression test
+Date: Wed, 22 Jul 2026 15:46:00 +0300
+Message-ID: <20260722124622.31034-36-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,70 +71,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Xiangfeng Cai <caixiangfeng@bytedance.com>
 
-If address_space_read() fails, return PGM_ADDRESSING. In the
-unlikely case address_space_write() fails (we already checked
-the address is readable), return PGM_PROTECTION.
+Add a qtest that hot-adds an nec-usb-xhci controller, requests unplug,
+resets the system to process the request, and waits for DEVICE_DELETED.
+This covers the xHCI PCI host-link refcount cycle by verifying that
+device_finalize() runs after unplug.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
-Message-Id: <20251007015802.24748-1-philmd@linaro.org>
-(cherry picked from commit d39ac36fe298400eac7e9272c950bedca29490c0)
-(Mjt: pick this one up for 10.0.x so subsequent changes apply cleanly)
+Signed-off-by: Xiangfeng Cai <caixiangfeng@bytedance.com>
+Message-ID: <20260618110119.3084296-3-caixiangfeng@bytedance.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit ba54d7e66e251764f06d6231c5832d7c7239aa8b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
-index ce31bf8b0c0..3a7302f760c 100644
---- a/hw/s390x/sclp.c
-+++ b/hw/s390x/sclp.c
-@@ -305,6 +305,7 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
-     g_autofree SCCB *work_sccb = NULL;
-     AddressSpace *as = CPU(cpu)->as;
-     const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
-+    MemTxResult ret;
+diff --git a/tests/qtest/usb-hcd-xhci-test.c b/tests/qtest/usb-hcd-xhci-test.c
+index 0cccfd85a64..b58fa1e2dae 100644
+--- a/tests/qtest/usb-hcd-xhci-test.c
++++ b/tests/qtest/usb-hcd-xhci-test.c
+@@ -10,6 +10,72 @@
+ #include "qemu/osdep.h"
+ #include "libqtest-single.h"
+ #include "libqos/usb.h"
++#include "qobject/qdict.h"
++
++static void wait_device_deleted_event(QTestState *qtest, const char *id)
++{
++    QDict *resp, *data;
++    const char *device;
++
++    /*
++     * Other devices might get removed along with the removed device. Skip
++     * these. The device of interest will be the last one.
++     */
++    for (;;) {
++        resp = qtest_qmp_eventwait_ref(qtest, "DEVICE_DELETED");
++        data = qdict_get_qdict(resp, "data");
++        device = data ? qdict_get_try_str(data, "device") : NULL;
++        if (device && !strcmp(device, id)) {
++            qobject_unref(resp);
++            break;
++        }
++        qobject_unref(resp);
++    }
++}
++
++/*
++ * Regression test for the xHCI-PCI "host" strong-link reference cycle.
++ *
++ * The xHCI PCI wrapper embeds an xhci-core child whose strong "host" link
++ * points back at the PCI device, forming a refcount cycle. If
++ * usb_xhci_pci_exit() does not break that cycle, the device's refcount never
++ * reaches 0 on unplug, device_finalize() never runs, and therefore the
++ * DEVICE_DELETED event (emitted from device_finalize()) is never sent.
++ *
++ * This test hot-plugs an xHCI controller into an ACPI-hotpluggable bus,
++ * requests its removal and waits for DEVICE_DELETED. Without the fix the event
++ * is never delivered (device_finalize() is blocked), so the test would
++ * hang/time out.
++ */
++static void test_xhci_unplug_finalize(void)
++{
++    QTestState *qtest;
++    const char *arch = qtest_get_arch();
++
++    if (strcmp(arch, "i386") != 0 && strcmp(arch, "x86_64") != 0) {
++        g_test_skip("Test only runs on x86 (ACPI PCI hotplug)");
++        return;
++    }
++    if (!qtest_has_device("nec-usb-xhci")) {
++        g_test_skip("Device nec-usb-xhci not available");
++        return;
++    }
++
++    qtest = qtest_initf("-machine pc");
++
++    qtest_qmp_device_add(qtest, "nec-usb-xhci", "xhci-finalize", "{}");
++
++    /*
++     * Request device removal. As the guest is not running, the unplug request
++     * won't be processed until the next system reset, which performs the
++     * removal and triggers device_finalize() (and thus DEVICE_DELETED).
++     */
++    qtest_qmp_device_del_send(qtest, "xhci-finalize");
++    qtest_system_reset_nowait(qtest);
++    wait_device_deleted_event(qtest, "xhci-finalize");
++
++    qtest_quit(qtest);
++}
  
-     /* first some basic checks on program checks */
-     if (env->psw.mask & PSW_MASK_PSTATE) {
-@@ -319,7 +320,10 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
+ static void test_xhci_hotplug(void)
+ {
+@@ -50,6 +116,7 @@ int main(int argc, char **argv)
+     g_test_init(&argc, &argv, NULL);
+ 
+     qtest_add_func("/xhci/pci/hotplug", test_xhci_hotplug);
++    qtest_add_func("/xhci/pci/unplug/finalize", test_xhci_unplug_finalize);
+     if (qtest_has_device("usb-uas")) {
+         qtest_add_func("/xhci/pci/hotplug/usb-uas", test_usb_uas_hotplug);
      }
- 
-     /* the header contains the actual length of the sccb */
--    address_space_read(as, sccb, attrs, &header, sizeof(SCCBHeader));
-+    ret = address_space_read(as, sccb, attrs, &header, sizeof(SCCBHeader));
-+    if (ret != MEMTX_OK) {
-+        return -PGM_ADDRESSING;
-+    }
- 
-     /* Valid sccb sizes */
-     if (be16_to_cpu(header.length) < sizeof(SCCBHeader)) {
-@@ -332,7 +336,11 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
-      * the host has checked the values
-      */
-     work_sccb = g_malloc0(be16_to_cpu(header.length));
--    address_space_read(as, sccb, attrs, work_sccb, be16_to_cpu(header.length));
-+    ret = address_space_read(as, sccb, attrs,
-+                            work_sccb, be16_to_cpu(header.length));
-+    if (ret != MEMTX_OK) {
-+        return -PGM_ADDRESSING;
-+    }
- 
-     if (!sclp_command_code_valid(code)) {
-         work_sccb->h.response_code = cpu_to_be16(SCLP_RC_INVALID_SCLP_COMMAND);
-@@ -346,7 +354,11 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
- 
-     sclp_c->execute(sclp, work_sccb, code);
- out_write:
--    address_space_write(as, sccb, attrs, work_sccb, be16_to_cpu(header.length));
-+    ret = address_space_write(as, sccb, attrs,
-+                              work_sccb, be16_to_cpu(header.length));
-+    if (ret != MEMTX_OK) {
-+        return -PGM_PROTECTION;
-+    }
- 
-     sclp_c->service_interrupt(sclp, sccb);
- 
 -- 
 2.47.3
 
