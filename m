@@ -4,49 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2D1CC44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:06:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CADA0C4453F
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:06:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWQT-0001b4-4V; Wed, 22 Jul 2026 08:51:54 -0400
+	id 1wmWV1-0004QD-FL; Wed, 22 Jul 2026 08:56:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWPw-0001Ix-Ux; Wed, 22 Jul 2026 08:51:21 -0400
+ id 1wmWSg-0004eq-A9; Wed, 22 Jul 2026 08:54:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWPu-0002JI-T5; Wed, 22 Jul 2026 08:51:20 -0400
+ id 1wmWSc-0002wU-Ve; Wed, 22 Jul 2026 08:54:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724574; bh=Vn8oHTWI78bSB6GVAvrg1zO2J5n8kGszefFE2ycn884=;
+ t=1784724575; bh=hn2j025oEONJYIInyqiFL/SkKApaOjgJgJoPStBuSn4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=mOXdHfAp2xV3i42pA5BAV7vVktrTTO34y2swEkpZIV68ij6yCaoZVQF0uH/kxc9hu
- 447vx9Strlur8QEq31+bxzQm9lIO3htIcfZFadrGmmiYiMkk8oVDYnb9mChjKxgOWC
- 3WXOLP3vZ738K0pdlja/lI0sw+kCjr0xf+ImaI03BGDxlTW7liCtnNknESrwHdtnWX
- 8KuiLDPZ/PtlL1q7BTokIpB13raeMTAHdqh9svPkR/5JLp4kAymwSi1pTsHvDv3CI6
- L0kY9BBEQgCpos1qIRzft5nUbBzuZOA0kmPY09PIoXSY5ArlaLQEO01H6ECnTt+w3V
- y5BOi+bXw7zKg==
+ b=nqkhN1vQ7ZePcIhKbb4KR+qHUj6N72eawpolLeq9p9F/0TsmrH5IPMWazS3UGRuq4
+ LXNX//mMVSpQQ9Jht92N3cmvDgdEmwDpIZMdSkA/sr/fBFDYoHP3/AM6fhX3fUkrJK
+ OtxbPpxKtg+9lRj0ZyUz83hMoy66jQXegdZU2LgXwRmonia9W4ytJgPOiUG+QowTFa
+ RAoo2mFm/uzf8VjU+nktWCD1OgJ955ldEUy2WbrYDTeVcc6jmX13uO+6T8CGSgWA0x
+ um4JwPRPX1oYo/ksDvJ8eYUvbiUGi4ZHEq5nKZYCr+p8+9q2BJ/dIKnNkRzzwrzTIJ
+ ftUlGHkk4sfzA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7B2CD1C3B2F;
- Wed, 22 Jul 2026 15:49:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1A6111C3B4A;
+ Wed, 22 Jul 2026 15:49:35 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C3DB43F377F;
- Wed, 22 Jul 2026 15:49:51 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 632EE3F379A;
+ Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 939F217F33; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
+ id D427C17F69; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 v2 082/127] linux-user: Validate guest-passed dm_ioctl
- data_size
-Date: Wed, 22 Jul 2026 15:48:07 +0300
-Message-ID: <20260722124859.32371-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v2 109/127] ui/vnc: validate SetPixelFormat field
+ ranges
+Date: Wed, 22 Jul 2026 15:48:34 +0300
+Message-ID: <20260722124859.32371-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,93 +75,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-In do_ioctl_dm() we work with a struct dm_ioctl from the guest.  This
-has a fixed initial part, and then a variable data part; the guest
-tells us how long that part is by setting the data_size field.  The
-data_size is supposed to include the length of the fixed parts of the
-struct dm_ioctl.  Currently we don't validate anything about the
-guest-provided data_size, and we use it to allocate a buffer which we
-then copy the fixed part of the dm_ioctl struct into.  This means
-that if the guest passes a very small data_size the copy of the fixed
-part will overrun the buffer.
+The VNC SetPixelFormat message carries red/green/blue_max as 16-bit
+values, but PixelFormat stores them as uint8_t. A client sending a
+max value above 255 (e.g. 0x0100) passes the existing non-zero check
+but silently truncates to 0 on assignment, leading to a division by
+zero in the Tight PNG palette path.
 
-Perform the same sanitizing of the minimum and maximum limits of the
-data_size that the kernel does in drivers/md/dm-ioctl.c in the
-copy_params() function.
+Add explicit range checks if any channel max exceeds UINT8_MAX.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 56e904ecb2018 ("linux-user: implement device mapper ioctls")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3736
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit a47e3c26b1a07292e18658e9d33425f61b4716d1)
+Fixes: CVE-2026-15578
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3976
+Reported-by: dong ling
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit 6075444c5a72ab531295d92050d95cebea8a8119)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 11d3b41dff2..ec249806b91 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -5088,6 +5088,9 @@ do_ioctl_usbdevfs_submiturb(const IOCTLEntry *ie, uint8_t *buf_temp,
- }
- #endif /* CONFIG_USBFS */
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 16cd3eac2a6..3a041926bf3 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -2282,6 +2282,11 @@ static void set_pixel_format(VncState *vs, int bits_per_pixel,
+         return;
+     }
  
-+#define DM_MAX_TARGETS                  1048576
-+#define DM_MAX_TARGET_PARAMS            1024
-+
- static abi_long do_ioctl_dm(const IOCTLEntry *ie, uint8_t *buf_temp, int fd,
-                             int cmd, abi_long arg)
- {
-@@ -5100,6 +5103,7 @@ static abi_long do_ioctl_dm(const IOCTLEntry *ie, uint8_t *buf_temp, int fd,
-     abi_long ret;
-     void *big_buf = NULL;
-     char *host_data;
-+    const size_t minimum_data_size = offsetof(struct dm_ioctl, data);
- 
-     arg_type++;
-     target_size = thunk_type_size(arg_type, 0);
-@@ -5111,9 +5115,26 @@ static abi_long do_ioctl_dm(const IOCTLEntry *ie, uint8_t *buf_temp, int fd,
-     thunk_convert(buf_temp, argptr, arg_type, THUNK_HOST);
-     unlock_user(argptr, arg, 0);
- 
--    /* buf_temp is too small, so fetch things into a bigger buffer */
--    big_buf = g_malloc0(((struct dm_ioctl*)buf_temp)->data_size * 2);
--    memcpy(big_buf, buf_temp, target_size);
-+    /* At this point this includes the size of the fixed dm_ioctl parts */
-+    guest_data_size = ((struct dm_ioctl *)buf_temp)->data_size;
-+
-+    if (guest_data_size < minimum_data_size ||
-+        guest_data_size > DM_MAX_TARGETS * DM_MAX_TARGET_PARAMS) {
-+        ret = -TARGET_EINVAL;
-+        goto out;
++    if (red_max > UINT8_MAX || green_max > UINT8_MAX || blue_max > UINT8_MAX) {
++        vnc_client_error(vs);
++        return;
 +    }
 +
-+    /*
-+     * buf_temp is too small, so fetch things into a bigger buffer. Here
-+     * we copy all of the fixed parts of struct dm_ioctl but not the
-+     * data at the end (which in the struct is "char data[7]" but in
-+     * reality is command-specific and might be nothing or might be
-+     * much larger, as defined by data_size). We know struct dm_ioctl's
-+     * size is not target specific so we don't need to distinguish between
-+     * its minimum size for the host vs the target.
-+     */
-+    big_buf = g_malloc0(guest_data_size * 2);
-+    memcpy(big_buf, buf_temp, minimum_data_size);
-     buf_temp = big_buf;
-     host_dm = big_buf;
- 
-@@ -5122,7 +5143,8 @@ static abi_long do_ioctl_dm(const IOCTLEntry *ie, uint8_t *buf_temp, int fd,
-         ret = -TARGET_EINVAL;
-         goto out;
-     }
--    guest_data_size = host_dm->data_size - host_dm->data_start;
-+    /* Adjust down to only the size of the payload */
-+    guest_data_size -= host_dm->data_start;
-     host_data = (char*)host_dm + host_dm->data_start;
- 
-     argptr = lock_user(VERIFY_READ, guest_data, guest_data_size, 1);
+     if (red_shift >= bits_per_pixel || red_shift >= 32 ||
+         green_shift >= bits_per_pixel || green_shift >= 32 ||
+         blue_shift >= bits_per_pixel || blue_shift >= 32) {
 -- 
 2.47.3
 
