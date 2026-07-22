@@ -4,59 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E0CBC44536
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:07:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68E88C44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:26:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWWR-00075J-0d; Wed, 22 Jul 2026 08:58:03 -0400
+	id 1wmWx8-0006PG-S0; Wed, 22 Jul 2026 09:25:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWT4-0006m0-Im; Wed, 22 Jul 2026 08:54:35 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWT3-00031x-27; Wed, 22 Jul 2026 08:54:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724575; bh=HXds0l3vK7n+x2gWAHEWtr1X6kDzS4jBOhaLZwrWEtY=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=uEotGvWhYca8UkklUJl1lf1UWWT4u/Uyd9CZ/4UCqS3+VlFNAAi/snUuSjVlwH354
- qe+0yBVYwLJZCSsAQHEkuwPnh3S3l8l7KPbyc0xrMPnJWrMGQQwDxwMWorbisKT03V
- dYVof2UXSECoQEQlS3cfOqc/r+HBXj33Up/T8sW1luVu9JbGyMdOner+QfCob0EaTo
- Wl1STqMMrRuPpocj/L34IwRMMaj/zvNWjFXy7nE6/SjHwb214j2Crm/GjwBk/l/HYf
- Wu08E5JXm5BagTPrP70DNh4eT/6ZGfByOIbXMYn4H95t5/+pqPav1jUteW3Is+Dr8d
- iPP/z5Dnj/dXw==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2AE061C3B4D;
- Wed, 22 Jul 2026 15:49:35 +0300 (MSK)
-Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 741743F379D;
- Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
-Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id DB80D17F6F; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 v2 112/127] hw/display/virtio-gpu: Check
- pixman_image_create_bits() results
-Date: Wed, 22 Jul 2026 15:48:37 +0300
-Message-ID: <20260722124859.32371-31-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
-References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wmWx5-0006LE-NG
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 09:25:35 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wmWx3-0001GT-SC
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 09:25:35 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-475417f010dso7180241f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 06:25:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1784726731; x=1785331531; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=AyJNZsOQSrsXajtXHSxh9uMxVQmxpbqD8AJxt9yc8os=;
+ b=l1LDnyrqOQyd6BFGJ/O9pVNcqAWCaAH4mkfsZape/uzpaRSTDQZUYXlyWfIuCVx6KL
+ uHsr6pMpQMwAnUKI9wBAMw6d51kWkDqd7l17zhINYP/+rwgB6dHw+tBZpQYWrtMffMeQ
+ TfrtDaYm8Fd6eClIk1GKLEjeRtTqZ0QEAxdVllmB6VeL/3gAb5LEJ7Z2WkM4m+0k0ISq
+ FsuYJjitDyDmMFgYtrDr/iRusaNYl6ZR43Q9OcKHuIkAXBCw5wzugs2u38S1aP54PEiS
+ ulGldfylRwcLzOnaOIs2rgx5c3qXwQNx9+hRISAFctqgtvO7ou4UuzDaRKCmxEIyX76z
+ ZrVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784726731; x=1785331531;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=AyJNZsOQSrsXajtXHSxh9uMxVQmxpbqD8AJxt9yc8os=;
+ b=m8pq8vzqXZYK44MHfzi/P3puK/zFjSpASFVggHGxBFFi/d8lnfYrzYE2W9GLkIVvjq
+ 61rZZFd/FJgJM4JYILsZYemr3bMA9pusrCGSYifIzvOLUpqbVUT0jM5P41iz7XAjPyrP
+ 7vR4TysdTexL6Lr5hasL2x0cN8ipigRgCd3CFnJKoHmmVlKO8A5//moRhe1vHlho+wto
+ xasvsGgEFw6E7dzZYNha1v/jcTfPcvQoJNbKmdD/h5FW795IOfKDEsgJlv1IL4+bl+h8
+ TyhGwWDyUAjhiFGObTC+cbmWugH/qKNJAL/ISd5eL2SMMrNcyZdMEoig84yuv2ocYEaE
+ t6Ow==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Ro0HQ4O/2c+R1zuQAfDFQKzTqBuihTWGJIuhg0m4yd1ynA8ckPjpEA1ALZcfBE6fJa7u7YEVTb18RlP@nongnu.org
+X-Gm-Message-State: AOJu0YwrU7p9EyTrPheTVE/6FHhC/MAL/VhIWoBdJmF0aJIQv3OAYwm/
+ zDzEn3oUdZaZ3no8JYHCt11DA0wzcHR8XtBVKjZO0m2TQ3JxVTvqwi2L57K68e4TSjc=
+X-Gm-Gg: AR+sD13d9axzku+/jGFzIH6sb1kDpm21kUXl/tVJoUepfz4dSrLckH4HRdPlSStoMpt
+ hMm5tWOvPNOG92i09vmCin+4qE0tSDmWoZ6ruof556WpZyZcXu2FlsidYERCiJNPtmaeW+RAEHz
+ a3/C7eijAmAQg1uW52KELHNY3ZIh5hrmZ3sUiAjkRSJqw/i5nKR4yFn4774rU5uFvCUyaN+NQ50
+ zXR6vxrDMOnrimHZqvKFlAP9rcBXnRENY1Suc8P1M4wFxz7C9wYoIPjAmCpHIfNisCLu7a60a+l
+ Jyrrhs/vaglw08DzvnDW4gHHMySvzSHEOtbvdHwZ894UtNBw5Ec9V3RTGFfFxXOx4xkJZr//nwl
+ RBroAcBRUq4oYgcEDTG+t2/HAmWDcg6Z2SjSDC0lss1nnwPhPWrtzshHDsOI8w9whL/0TPw3WJy
+ Xxi+5Ja4itTvX/
+X-Received: by 2002:a05:6000:2f84:b0:47d:ec60:657e with SMTP id
+ ffacd0b85a97d-47f623376femr25719255f8f.39.1784726730474; 
+ Wed, 22 Jul 2026 06:25:30 -0700 (PDT)
+Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f85b9a5a2sm6616016f8f.7.2026.07.22.06.25.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 22 Jul 2026 06:25:29 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 756A85F7DE;
+ Wed, 22 Jul 2026 14:25:28 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,  qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PULL 20/71] target/arm: teach arm_cpu_has_work about halting
+ reasons
+In-Reply-To: <90bbd0b0-dce4-4945-8ad9-96c895e712ed@oss.qualcomm.com>
+ ("Philippe =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 22 Jul 2026
+ 13:07:29 +0200")
+References: <20260610161202.2235298-1-peter.maydell@linaro.org>
+ <20260610161202.2235298-21-peter.maydell@linaro.org>
+ <90bbd0b0-dce4-4945-8ad9-96c895e712ed@oss.qualcomm.com>
+User-Agent: mu4e 1.14.3-pre1; emacs 30.1
+Date: Wed, 22 Jul 2026 14:25:28 +0100
+Message-ID: <87a4rjrwaf.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,36 +111,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> writes:
 
-pixman_image_create_bits() returns NULL for allocation failures and
-unaligned strides, which may be supplied by the guest with
-VIRTIO_GPU_CMD_SET_SCANOUT_BLOB, and virtio_gpu_do_set_scanout()
-subsequently dereferences it.
+> Hi,
+>
+> On 10/6/26 18:11, Peter Maydell wrote:
+>> From: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> With the advent of WFE and WFI we need to pay closer attention to
+>> the
+>> reason why the vCPU may be sleeping to figure out if we should wake
+>> it up.
+>> Create env->halt_reason to track this and then re-order the tests so
+>> we:
+>>    - ignore everything is the vCPU is powered off
+>>    - wake up if the event_register is set and we were in a WFE
+>>    - otherwise any IRQ event does wake the vCPU up.
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> Message-id: 20260529082948.363931-3-alex.bennee@linaro.org
+>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+>> ---
+>>   target/arm/arm-powerctl.c  |  6 +++---
+>>   target/arm/cpu.c           | 40 +++++++++++++++++++++++++++-----------
+>>   target/arm/cpu.h           | 16 +++++++++++++++
+>>   target/arm/internals.h     | 11 +++++++++++
+>>   target/arm/kvm.c           |  5 +++--
+>>   target/arm/machine.c       |  2 +-
+>>   target/arm/tcg/op_helper.c |  3 +++
+>>   7 files changed, 66 insertions(+), 17 deletions(-)
+>
+> This patch updated TCG and KVM but missed HVF and WHPX:
+>
+>  - target/arm/hvf/hvf.c
+>  - target/arm/whpx/whpx-all.c
 
-Fixes: fa06e5cb7b10 ("virtio-gpu: fix scanout rectangles")
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260717-pixman-v1-1-89ea33b50b75@rsg.ci.i.u-tokyo.ac.jp>
-(cherry picked from commit f1af81ba2aeec7b5a5ee8529ef55275865aea0c0)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Do they need it if they implement cpus_accel->cpu_thread_is_idle?
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index c4d8aab365f..81d65ec57ca 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -674,6 +674,10 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
-         void *ptr = data + fb->offset;
-         rect = pixman_image_create_bits(fb->format, r->width, r->height,
-                                         ptr, fb->stride);
-+        if (!rect) {
-+            *error = VIRTIO_GPU_RESP_ERR_UNSPEC;
-+            return false;
-+        }
- 
-         if (res->image) {
-             pixman_image_ref(res->image);
--- 
-2.47.3
+>
+>
+>> diff --git a/target/arm/internals.h b/target/arm/internals.h
+>> index 21cbd2b1db..b2035b9417 100644
+>> --- a/target/arm/internals.h
+>> +++ b/target/arm/internals.h
+>> @@ -2063,4 +2063,15 @@ bool arm_cpu_match_cpreg_mig_tolerance(ARMCPU *cp=
+u, uint64_t kvmidx,
+>>                                          ARMCPRegMigToleranceType type);
+>>     +/**
+>> + * arm_set_cpu_power_state() - set power state synced with halt_reason
+>> + */
+>> +static inline void arm_set_cpu_power_state(ARMCPU *cpu, ARMPSCIState st=
+ate)
+>> +{
+>> +    CPUARMState *env =3D &cpu->env;
+>> +
+>> +    cpu->power_state =3D state;
+>> +    env->halt_reason =3D state =3D=3D PSCI_OFF ? HALT_PSCI : NOT_HALTED;
+>> +}
+>> +
+>>   #endif
+> Why not add/use a getter()?
 
+How do you mean? Add it as a CPUClass API? Seems overkill for what is
+currently handled internally by Arm.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
