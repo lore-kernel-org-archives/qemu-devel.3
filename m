@@ -4,51 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CADA0C4453F
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:06:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9AE7C4453E
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:06:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWV1-0004QD-FL; Wed, 22 Jul 2026 08:56:35 -0400
+	id 1wmWPT-0007ho-VU; Wed, 22 Jul 2026 08:50:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWSg-0004eq-A9; Wed, 22 Jul 2026 08:54:10 -0400
+ id 1wmWNT-0003bS-3s; Wed, 22 Jul 2026 08:48:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWSc-0002wU-Ve; Wed, 22 Jul 2026 08:54:09 -0400
+ id 1wmWNP-0001sq-2d; Wed, 22 Jul 2026 08:48:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724575; bh=hn2j025oEONJYIInyqiFL/SkKApaOjgJgJoPStBuSn4=;
+ t=1784724390; bh=E43CQu5J+3NqLcWmX90uT/f3YTrvkTkpbFPw5yZiNlo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=nqkhN1vQ7ZePcIhKbb4KR+qHUj6N72eawpolLeq9p9F/0TsmrH5IPMWazS3UGRuq4
- LXNX//mMVSpQQ9Jht92N3cmvDgdEmwDpIZMdSkA/sr/fBFDYoHP3/AM6fhX3fUkrJK
- OtxbPpxKtg+9lRj0ZyUz83hMoy66jQXegdZU2LgXwRmonia9W4ytJgPOiUG+QowTFa
- RAoo2mFm/uzf8VjU+nktWCD1OgJ955ldEUy2WbrYDTeVcc6jmX13uO+6T8CGSgWA0x
- um4JwPRPX1oYo/ksDvJ8eYUvbiUGi4ZHEq5nKZYCr+p8+9q2BJ/dIKnNkRzzwrzTIJ
- ftUlGHkk4sfzA==
+ b=QSRRX8Jk+XxQcf9v7/E3+ygymYfGEXAnFCgkunjxrnaSC599kMbclYq0jFHVzaPzk
+ JsymmeaihmIsXTA8A79C9RPODfTcEKHBjb0v6VcflogTZs7QNBWx0ozpWE4BLvBW0w
+ 7zrdUxl6iobXGMDiqNNL2yRk3TPO+GC2dT3Lh2adD1lR0yrld54U9etjIV0BgnRIye
+ YpEpml7HZ3UJSAsmrlP0wtDZhgk4s10L7deSq2JAie8LtCItNbcEWSFsO5HyRdKu+P
+ T+HGiokLmD/dmmUd6A8z3klDfeDb4OjYv3W/XBOg11BzwqSuTEsoN50pZ0FmHY1FwC
+ bTCeUKnttAJ7A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1A6111C3B4A;
- Wed, 22 Jul 2026 15:49:35 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B86F71C3B0E;
+ Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 632EE3F379A;
- Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0BC343F3768;
+ Wed, 22 Jul 2026 15:46:48 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id D427C17F69; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
+ id 736A917F05; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 v2 109/127] ui/vnc: validate SetPixelFormat field
- ranges
-Date: Wed, 22 Jul 2026 15:48:34 +0300
-Message-ID: <20260722124859.32371-28-mjt@tls.msk.ru>
+ Laurent Vivier <lvivier@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 v2 101/122] ui/input-barrier: fix off-by-one in
+ keycode bounds check
+Date: Wed, 22 Jul 2026 15:45:50 +0300
+Message-ID: <20260722124622.31034-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
-References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
+References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,39 +76,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The VNC SetPixelFormat message carries red/green/blue_max as 16-bit
-values, but PixelFormat stores them as uint8_t. A client sending a
-max value above 255 (e.g. 0x0100) passes the existing non-zero check
-but silently truncates to 0 on assignment, leading to a division by
-zero in the Tight PNG palette path.
+Use strict "<" to fix the off-by-one.
 
-Add explicit range checks if any channel max exceeds UINT8_MAX.
-
-Fixes: CVE-2026-15578
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3976
-Reported-by: dong ling
+Fixes: 6105683da35b ("ui: add an embedded Barrier client")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3951
+Reported-by: huntr bubble
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Laurent Vivier <lvivier@redhat.com>
 Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
-(cherry picked from commit 6075444c5a72ab531295d92050d95cebea8a8119)
+(cherry picked from commit 82b4d693d522d406c950067caa4f14f45f4b679e)
+(Mjt: fixup the change to before v11.0.0-365-gd276ad86eb8
+ "ui: rename init_keyboard_layout->kbd_layout_new()")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/vnc.c b/ui/vnc.c
-index 16cd3eac2a6..3a041926bf3 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -2282,6 +2282,11 @@ static void set_pixel_format(VncState *vs, int bits_per_pixel,
-         return;
+diff --git a/ui/input-barrier.c b/ui/input-barrier.c
+index 7acc48d7046..aad520e7f56 100644
+--- a/ui/input-barrier.c
++++ b/ui/input-barrier.c
+@@ -87,7 +87,7 @@ static kbd_layout_t *kbd_layout;
+ static int input_barrier_to_qcode(uint16_t keyid, uint16_t keycode)
+ {
+     /* keycode is optional, if it is not provided use keyid */
+-    if (keycode && keycode <= qemu_input_map_xorgkbd_to_qcode_len) {
++    if (keycode && keycode < qemu_input_map_xorgkbd_to_qcode_len) {
+         return qemu_input_map_xorgkbd_to_qcode[keycode];
      }
  
-+    if (red_max > UINT8_MAX || green_max > UINT8_MAX || blue_max > UINT8_MAX) {
-+        vnc_client_error(vs);
-+        return;
-+    }
-+
-     if (red_shift >= bits_per_pixel || red_shift >= 32 ||
-         green_shift >= bits_per_pixel || green_shift >= 32 ||
-         blue_shift >= bits_per_pixel || blue_shift >= 32) {
 -- 
 2.47.3
 
