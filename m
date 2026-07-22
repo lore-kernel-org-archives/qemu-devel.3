@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4292CC44536
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:47:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80A2BC44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:48:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWLc-0002KM-JV; Wed, 22 Jul 2026 08:46:52 -0400
+	id 1wmWLv-0002Rh-BB; Wed, 22 Jul 2026 08:47:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWLb-0002Ju-6G; Wed, 22 Jul 2026 08:46:51 -0400
+ id 1wmWLm-0002Qz-St; Wed, 22 Jul 2026 08:47:02 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWLZ-0001ah-9o; Wed, 22 Jul 2026 08:46:50 -0400
+ id 1wmWLl-0001d2-1L; Wed, 22 Jul 2026 08:47:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724390; bh=J2x9lFy4qpjv+XtsY0SIWJ+HGKzzblQrXkPL0y/onzs=;
+ t=1784724390; bh=5JVO+pPSjSrvdlJiOQfVav6GX/cDOleDJ4yBYo3AJ80=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=O4A1rl/0lidZ7Ep/6B1GTzx38AGg3b6RTQl6rMygSBfJc9ScH9IGR+ukgLDZuefIC
- MuPgx8udh6nBGtokup9mxd3/bRIbsVEv9J/dX3+8zchU5CPqmfktOjceilgG7cgDLZ
- EmDGy7dNN2bUBpE6Zrf9VzSq3DX8sIliBkQtA22ijlR8Upo1J/ltLRoPl9CtCfsPsR
- D6RGBKSCmnDtfi6dSivWFb/8pX0yTyBAHu27EFeKVBWVaFgdH/3rmGsra0NU6gn9si
- awvx0xwvCEc9SQEwwtHJWASoNeV60oP7bbYyXbhwt11J0uoQeZ9tLBb/m/hqQfL03a
- vZBdLdQ7nIhAw==
+ b=ZEwvuDBvGNhms19txeEYWaCEj+wGZK31iPvRsxcLi5iL8zkFpTyuM0JsLmlEDdMDq
+ bo3NADZg7l9WsMLAVDhk5ZIkNajD5Zn6wqlWw462qLxrXtDx7H0LeLasIgbsNFIUkV
+ 3ZOMKcDM41JzIfDGkUyg3fS5r/k3nWN/Jd92TvLwvhKyqV5HkjIPiYm8nf1Jcs7WyR
+ TctHvYSL8YDy1SczyAAvypqbTc5TZRBaxX5fj1O2w9OJicPSxC9mzUiT2nadRqDMsK
+ 5YDXrefgd7EondqOV/oXDDDWYSP/QRZJ2OoEsqaeq/R+2zJ6hq8AVwrSlEdA5ORypP
+ /zfMmTJqHyiBw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 36DE11C3AF6;
+ by isrv.corpit.ru (Postfix) with ESMTP id 5617F1C3AFC;
  Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7C5C23F3750;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9CB183F3756;
  Wed, 22 Jul 2026 15:46:47 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 3A27D17ED5; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id 482C017EE1; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 077/122] linux-user: Validate guest-passed
- dm_ioctl data_size
-Date: Wed, 22 Jul 2026 15:45:26 +0300
-Message-ID: <20260722124622.31034-2-mjt@tls.msk.ru>
+ BALATON Zoltan <balaton@eik.bme.hu>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 v2 083/122] hw/display/sm501: Don't allow guest to
+ set ram size larger than it is
+Date: Wed, 22 Jul 2026 15:45:32 +0300
+Message-ID: <20260722124622.31034-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
@@ -73,91 +73,82 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-In do_ioctl_dm() we work with a struct dm_ioctl from the guest.  This
-has a fixed initial part, and then a variable data part; the guest
-tells us how long that part is by setting the data_size field.  The
-data_size is supposed to include the length of the fixed parts of the
-struct dm_ioctl.  Currently we don't validate anything about the
-guest-provided data_size, and we use it to allocate a buffer which we
-then copy the fixed part of the dm_ioctl struct into.  This means
-that if the guest passes a very small data_size the copy of the fixed
-part will overrun the buffer.
+The SM501 DRAM_CONTROL register has a 7 bit Size field which allows
+the guest to change the local memory size.  We use the local memory
+size in bounds checks calculations for 2D operations. Currently we
+have no check on the validity of the value the guest programs to
+this field, which means that the guest can:
+ - set it to a reserved value (6 or 7) which will cause
+   get_local_mem_size() to read outside sm501_mem_local_size[]
+ - set it to a value corresponding to more RAM than the card
+   was created with, so that the 2D bounds check will let 2D
+   operations access off the end of the memory region
 
-Perform the same sanitizing of the minimum and maximum limits of the
-data_size that the kernel does in drivers/md/dm-ioctl.c in the
-copy_params() function.
+Fix this by decoupling the value the guest reads and writes to this
+field from the internal size we consider the local memory to have.
+We validate changes and ignore them except for readback if they would
+be reserved values or values for more memory than the card has.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 56e904ecb2018 ("linux-user: implement device mapper ioctls")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3736
+Reported-by: Heechan Kang
+Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit a47e3c26b1a07292e18658e9d33425f61b4716d1)
+Message-id: 20260707150933.1410507-4-peter.maydell@linaro.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3811
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 2ac2cf0483d090f2f2d795ed06a94cc865b972fe)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index ca12dbf779a..5d7c37017a3 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -5092,6 +5092,9 @@ do_ioctl_usbdevfs_submiturb(const IOCTLEntry *ie, uint8_t *buf_temp,
+diff --git a/hw/display/sm501.c b/hw/display/sm501.c
+index d451a1fe7d7..da22f8e75f5 100644
+--- a/hw/display/sm501.c
++++ b/hw/display/sm501.c
+@@ -570,6 +570,25 @@ static uint32_t get_local_mem_size_index(uint32_t size)
+     return index;
  }
- #endif /* CONFIG_USBFS */
  
-+#define DM_MAX_TARGETS                  1048576
-+#define DM_MAX_TARGET_PARAMS            1024
-+
- static abi_long do_ioctl_dm(const IOCTLEntry *ie, uint8_t *buf_temp, int fd,
-                             int cmd, abi_long arg)
- {
-@@ -5104,6 +5107,7 @@ static abi_long do_ioctl_dm(const IOCTLEntry *ie, uint8_t *buf_temp, int fd,
-     abi_long ret;
-     void *big_buf = NULL;
-     char *host_data;
-+    const size_t minimum_data_size = offsetof(struct dm_ioctl, data);
- 
-     arg_type++;
-     target_size = thunk_type_size(arg_type, 0);
-@@ -5115,9 +5119,26 @@ static abi_long do_ioctl_dm(const IOCTLEntry *ie, uint8_t *buf_temp, int fd,
-     thunk_convert(buf_temp, argptr, arg_type, THUNK_HOST);
-     unlock_user(argptr, arg, 0);
- 
--    /* buf_temp is too small, so fetch things into a bigger buffer */
--    big_buf = g_malloc0(((struct dm_ioctl*)buf_temp)->data_size * 2);
--    memcpy(big_buf, buf_temp, target_size);
-+    /* At this point this includes the size of the fixed dm_ioctl parts */
-+    guest_data_size = ((struct dm_ioctl *)buf_temp)->data_size;
-+
-+    if (guest_data_size < minimum_data_size ||
-+        guest_data_size > DM_MAX_TARGETS * DM_MAX_TARGET_PARAMS) {
-+        ret = -TARGET_EINVAL;
-+        goto out;
-+    }
-+
++static void set_new_local_mem_size_index(SM501State *s, uint32_t idx)
++{
 +    /*
-+     * buf_temp is too small, so fetch things into a bigger buffer. Here
-+     * we copy all of the fixed parts of struct dm_ioctl but not the
-+     * data at the end (which in the struct is "char data[7]" but in
-+     * reality is command-specific and might be nothing or might be
-+     * much larger, as defined by data_size). We know struct dm_ioctl's
-+     * size is not target specific so we don't need to distinguish between
-+     * its minimum size for the host vs the target.
++     * Update local_mem_size_index on guest write. We don't allow this
++     * to be set to larger than the actual RAM size. (The guest will
++     * still read back the SYSTEM_CONTROL.Size bits that it wrote.)
 +     */
-+    big_buf = g_malloc0(guest_data_size * 2);
-+    memcpy(big_buf, buf_temp, minimum_data_size);
-     buf_temp = big_buf;
-     host_dm = big_buf;
- 
-@@ -5126,7 +5147,8 @@ static abi_long do_ioctl_dm(const IOCTLEntry *ie, uint8_t *buf_temp, int fd,
-         ret = -TARGET_EINVAL;
-         goto out;
-     }
--    guest_data_size = host_dm->data_size - host_dm->data_start;
-+    /* Adjust down to only the size of the payload */
-+    guest_data_size -= host_dm->data_start;
-     host_data = (char*)host_dm + host_dm->data_start;
- 
-     argptr = lock_user(VERIFY_READ, guest_data, guest_data_size, 1);
++    if (idx < ARRAY_SIZE(sm501_mem_local_size) &&
++        sm501_mem_local_size[idx] <= memory_region_size(&s->local_mem_region)) {
++        s->local_mem_size_index = idx;
++        return;
++    }
++    qemu_log_mask(LOG_GUEST_ERROR,
++                  "sm501: Guest set DRAM_CONTROL.Size to 0x%x but "
++                  "local memory is not that large\n",
++                  idx);
++    /* Don't change the effective size, leave it as whatever it was */
++}
++
+ static ram_addr_t get_fb_addr(SM501State *s, int crt)
+ {
+     return (crt ? s->dc_crt_fb_addr : s->dc_panel_fb_addr) & 0x3FFFFF0;
+@@ -989,7 +1008,7 @@ static uint64_t sm501_system_config_read(void *opaque, hwaddr addr,
+         ret = 0x050100A0;
+         break;
+     case SM501_DRAM_CONTROL:
+-        ret = (s->dram_control & 0x07F107C0) | s->local_mem_size_index << 13;
++        ret = (s->dram_control & 0x07F1E7C0);
+         break;
+     case SM501_ARBTRTN_CONTROL:
+         ret = s->arbitration_control;
+@@ -1048,8 +1067,7 @@ static void sm501_system_config_write(void *opaque, hwaddr addr,
+         s->gpio_63_32_control = value & 0xFF80FFFF;
+         break;
+     case SM501_DRAM_CONTROL:
+-        s->local_mem_size_index = (value >> 13) & 0x7;
+-        /* TODO : check validity of size change */
++        set_new_local_mem_size_index(s, (value >> 13) & 0x7);
+         s->dram_control &= 0x80000000;
+         s->dram_control |= value & 0x7FFFFFC3;
+         break;
 -- 
 2.47.3
 
