@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1064C44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:51:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D78B7C44539
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:51:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWPf-0000Jf-4h; Wed, 22 Jul 2026 08:51:03 -0400
+	id 1wmWPg-0000T1-Su; Wed, 22 Jul 2026 08:51:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWPX-00080M-BF; Wed, 22 Jul 2026 08:50:55 -0400
+ id 1wmWNs-0003zW-JZ; Wed, 22 Jul 2026 08:49:19 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWPV-0002IH-7T; Wed, 22 Jul 2026 08:50:55 -0400
+ id 1wmWNn-0001tC-HQ; Wed, 22 Jul 2026 08:49:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724391; bh=AdE7x92jIH2QWSGF6PsRixekPg39t3VeZiT9+BrhRXY=;
+ t=1784724390; bh=J9a48cWEgTgFtqpPf8tmVd3EWC7yUB/j19YWh3nygu0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=a4eV1F9lgXiaextROu/shqrJZo8uGEG5zOvYKQV8nkvq5gK7t2qUvJWxDe9elMp85
- HH1z9yaJ2p9dzdiqSQQUzBPlbMq3HreQ+ZEdVLVOl8eq1x5NPrjXD2uZXcE3cQTJbO
- zkEhse0KTx9ZoNOFffiHfXYJTgs0UlhQI57/5iqE60vEMgaxvbTuXnjCnMyCVnkgqD
- Um2b4ITR0lC8+ZaKS++4buVXYWq8yvlxa+kguUjmSibM6mIx3dZ8Jz36QiXSJ0x/gW
- T/R7Pg5/+EQMf2lNP3kGB8NIKdC5H78sM9T8KEWzFfhh3vp20jc0EQrxZnj369kNyK
- 0X63fie64yUXw==
+ b=PPZpdWYELfsn8wCskEUbyXgq+cbVbYLapkq0rdCcI6HnG/mocJjzzLBiiQxb6444S
+ gEB86ap/UHkXLbJB657hYnYj+MS+8rfGOdRB4kyODPGBw0DR6wSzZOxkyzMvTrpP2O
+ ie40cgdXY3RtvZso4EdrU2gojNHlag1qLbdII8d3Q0lsLFbqWe4VKQEmZL7of/qheT
+ PRcosgmtagiE1pfznG2quARpJdm6fo72GdK1/0pghpRwqpcwRi8razsS8ri29Uc/kW
+ ePXihx4hmMxUNOLsrDkQ4Q2iwowEUINA5yTDWY5y4nrEyT3GmJgfhEtURBZrHkoIEv
+ 5ecvhwmDxA8yw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2F43D1C3B22;
- Wed, 22 Jul 2026 15:46:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id BDCEB1C3B0F;
+ Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 766E03F377C;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 115B33F3769;
  Wed, 22 Jul 2026 15:46:48 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A325117F2D; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+ id 760E217F07; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bin Meng <bin.meng@processmission.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 v2 121/122] hw/net/cadence: Return current Cadence
- GEM queue pointers
-Date: Wed, 22 Jul 2026 15:46:10 +0300
-Message-ID: <20260722124622.31034-46-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 v2 102/122] ui/gtk: Narrow DMA-BUF critical section
+Date: Wed, 22 Jul 2026 15:45:51 +0300
+Message-ID: <20260722124622.31034-27-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
@@ -73,75 +72,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Meng <bin.meng@processmission.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-Cadence GEM queue pointer registers are programmed with the descriptor
-ring base, but reads return the descriptor currently being accessed.
-The model tracked the current positions separately while continuing to
-return the configured base.
+Scanout operations need to be properly ordered to avoid tearing. The
+virtio specification allows the guest to use pageflip. With pageflip,
+the guest only modifies the invisible framebuffer while the host scans
+out the visible framebuffer. The guest may choose not to use pageflip to
+avoid its overhead, accepting the risk of tearing.
 
-The Linux macb driver uses the transmit queue pointer when recovering
-from a used-buffer interrupt. A stale priority-queue pointer can make
-the driver restart DMA before that queue handles its completion
-interrupt, causing queue 0 to repeatedly raise TX_USED.
+ui/gtk performs the following procedure to flush a scanout:
+1) Queue a draw event.
+2) The draw event gets triggered.
+3) Blit the guest framebuffer to the host framebuffer.
 
-The primary queue has had this mismatch since the initial model.
-Priority queue support later copied the same register-read behavior.
+When flushing a DMA-BUF scanout, ui/gtk blocks the device before 2) if
+possible and unblocks it after 3) to enforce proper ordering. However,
+blocking the device before 2) has two problems.
 
-A single-queue machine usually handles TX_COMPLETE before TX_USED and
-empties the software queue before the restart check, which kept the
-issue hidden there.
+First, it can leave the device blocked indefinitely because GTK
+sometimes decides to cancel 2) when the window is not visible for
+example. ui/gtk regularly repeats 1) as a workaround, but it is not
+applicable to GtkGLArea because it causes display corruption.
 
-Return the current RX and TX descriptor positions on queue-pointer reads
-and clear those positions on reset.
+Second, the behavior is inconsistent with the other types of scanout
+that leave the device unblocked between 1) and 2).
 
-Fixes: e9f186e514a7 ("cadence_gem: initial version of device model")
-Fixes: 6710172501be ("cadence_gem: Add queue support")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260720120731.2022475-1-bin.meng@processmission.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 94c510a5dc4836550af1ecddcfa1ff945bae562a)
+To fix these problems, let ui/gtk block the device only when the
+queued draw event runs, immediately before 3). Blocking before that is
+unnecessary since ui/gtk does not access the framebuffer yet. If the
+guest does not use pageflip but instead updates the visible framebuffer
+directly, ui/gtk should not add the overhead of a pre-draw block.
+
+ui/gtk still blocks the device during 3) for DMA-BUF. Unlike the other
+scanout types, 3) can happen asynchronously with the device for a
+DMA-BUF, so ui/gtk needs to keep the visible guest framebuffer stable
+for the blit.
+
+With the problems fixed, the workaround to repeat 1) is no longer
+necessary and is removed.
+
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260628-gtk-v2-1-1e4839012f09@rsg.ci.i.u-tokyo.ac.jp>
+(cherry picked from commit 53f0d87db7b4bc4b8c906eedcce6fec17d39824f)
+(Mjt: back-port to before v11.0.0-787-g405a42e3655
+ "ui/console: rename public API to use consistent qemu_console_ prefix" which
+ renamed graphic_hw_gl_block() to qemu_console_hw_gl_block())
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/cadence_gem.c b/hw/net/cadence_gem.c
-index c36918e5043..defa446fbb2 100644
---- a/hw/net/cadence_gem.c
-+++ b/hw/net/cadence_gem.c
-@@ -1469,6 +1469,8 @@ static void gem_reset(DeviceState *d)
+diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+index 947c99334bd..fd72f02ff6f 100644
+--- a/ui/gtk-egl.c
++++ b/ui/gtk-egl.c
+@@ -91,6 +91,7 @@ void gd_egl_draw(VirtualConsole *vc)
+             } else {
+                 qemu_dmabuf_set_draw_submitted(dmabuf, false);
+             }
++            graphic_hw_gl_block(vc->gfx.dcl.con, true);
+         }
+ #endif
+         gd_egl_scanout_flush(&vc->gfx.dcl, 0, 0, vc->gfx.w, vc->gfx.h);
+@@ -383,14 +384,11 @@ void gd_egl_flush(DisplayChangeListener *dcl,
  
-     /* Set post reset register values */
-     memset(&s->regs[0], 0, sizeof(s->regs));
-+    memset(&s->rx_desc_addr[0], 0, sizeof(s->rx_desc_addr));
-+    memset(&s->tx_desc_addr[0], 0, sizeof(s->tx_desc_addr));
-     s->regs[R_NWCFG] = 0x00080000;
-     s->regs[R_NWSTATUS] = 0x00000006;
-     s->regs[R_DMACFG] = 0x00020784;
-@@ -1582,9 +1584,22 @@ static uint64_t gem_read(void *opaque, hwaddr offset, unsigned size)
-     offset >>= 2;
-     retval = s->regs[offset];
+     if (vc->gfx.guest_fb.dmabuf &&
+         !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+-        graphic_hw_gl_block(vc->gfx.dcl.con, true);
+         qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
+         gtk_egl_set_scanout_mode(vc, true);
+-        gtk_widget_queue_draw_area(area, x, y, w, h);
+-        return;
+     }
  
--    DB_PRINT("offset: 0x%04x read: 0x%08x\n", (unsigned)offset*4, retval);
-+    DB_PRINT("offset: 0x%04x read: 0x%08x\n", (unsigned)offset * 4,
-+             retval);
+-    gd_egl_scanout_flush(&vc->gfx.dcl, x, y, w, h);
++    gtk_widget_queue_draw_area(area, x, y, w, h);
+ }
  
-     switch (offset) {
-+    case R_RXQBASE:
-+        retval = s->rx_desc_addr[0];
-+        break;
-+    case R_TXQBASE:
-+        retval = s->tx_desc_addr[0];
-+        break;
-+    case R_TRANSMIT_Q1_PTR ... R_TRANSMIT_Q7_PTR:
-+        retval = s->tx_desc_addr[offset - R_TRANSMIT_Q1_PTR + 1];
-+        break;
-+    case R_RECEIVE_Q1_PTR ... R_RECEIVE_Q7_PTR:
-+        retval = s->rx_desc_addr[offset - R_RECEIVE_Q1_PTR + 1];
-+        break;
-     case R_ISR:
-         DB_PRINT("lowering irqs on ISR read\n");
-         /* The interrupts get updated at the end of the function. */
+ void gtk_egl_init(DisplayGLMode mode)
+diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+index ddb51efd5f4..bfcf96e25d6 100644
+--- a/ui/gtk-gl-area.c
++++ b/ui/gtk-gl-area.c
+@@ -73,6 +73,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
+             } else {
+                 qemu_dmabuf_set_draw_submitted(dmabuf, false);
+             }
++            graphic_hw_gl_block(vc->gfx.dcl.con, true);
+         }
+ #endif
+ 
+@@ -135,27 +136,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
+ 
+     gd_update_monitor_refresh_rate(vc, vc->window ? vc->window : vc->gfx.drawing_area);
+ 
+-    if (vc->gfx.guest_fb.dmabuf &&
+-        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+-        /*
+-         * gd_egl_refresh() calls gd_egl_draw() if a DMA-BUF draw has already
+-         * been submitted, but this function does not call gd_gl_area_draw() in
+-         * such a case due to display corruption.
+-         *
+-         * Calling gd_gl_area_draw() is necessary to prevent a situation where
+-         * there is a scheduled draw event but it won't happen bacause the window
+-         * is currently in inactive state (minimized or tabified). If draw is not
+-         * done for a long time, gl_block timeout and/or fence timeout (on the
+-         * guest) will happen eventually.
+-         *
+-         * However, it is found that calling gd_gl_area_draw() here causes guest
+-         * display corruption on a Wayland Compositor. The display corruption is
+-         * more serious than the possible fence timeout so gd_gl_area_draw() is
+-         * omitted for now.
+-         */
+-        return;
+-    }
+-
+     if (!vc->gfx.gls) {
+         if (!gtk_widget_get_realized(vc->gfx.drawing_area)) {
+             return;
+@@ -314,7 +294,6 @@ void gd_gl_area_scanout_flush(DisplayChangeListener *dcl,
+ 
+     if (vc->gfx.guest_fb.dmabuf &&
+         !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+-        graphic_hw_gl_block(vc->gfx.dcl.con, true);
+         qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
+         gtk_gl_area_set_scanout_mode(vc, true);
+     }
 -- 
 2.47.3
 
