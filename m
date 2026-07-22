@@ -4,68 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4D9CC44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:36:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98367C44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 12:47:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWBe-0007Ke-5A; Wed, 22 Jul 2026 08:36:34 -0400
+	id 1wmWLf-0002MW-Fp; Wed, 22 Jul 2026 08:46:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wmWBc-0007JA-0v
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 08:36:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wmWLe-0002LK-6q; Wed, 22 Jul 2026 08:46:54 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wmWBa-0008Da-3O
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 08:36:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784723788;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=wvH4kJ16rmYgzYlY20WgRCGo+Mnmz7RCGiO6iGpYuA0=;
- b=ZH38rOReIIiYCumqFv1pTafLN33SOJRgM84UdYJHmGIsoc9gDIf5uBGyLpIQDcr/3gk6Dp
- UyNTBjpJ6S7YehrUdUwcJCmlwQYkCMJFr6VmmPi+yG+Skit1f4TTQhpOeZHhFEy8TfKDyc
- GCUb6zrfg5RKOCpthecFR5GX2iWh358=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-139-ZTbs7avnOh6UddpihfHxbA-1; Wed,
- 22 Jul 2026 08:36:24 -0400
-X-MC-Unique: ZTbs7avnOh6UddpihfHxbA-1
-X-Mimecast-MFC-AGG-ID: ZTbs7avnOh6UddpihfHxbA_1784723783
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 91A00180AAAE; Wed, 22 Jul 2026 12:35:51 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.48.82])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2D9DE763; Wed, 22 Jul 2026 12:35:48 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wmWLc-0001ay-LZ; Wed, 22 Jul 2026 08:46:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1784724390; bh=eWporab3P30K6//s7L8bU0nWG9gWvH7RR0xvZVQt6Mg=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=nGoqNf266XoMZIWckbVRuV191jLdfUqNWgvmznKoGsQ405wNOqmA7BcO9ZCdJfWE/
+ WAiH+xX0Mtamg2vV8nnuqeiCH4qHzQQN6S1bJYKxdiHH9TRcF3Cgs4h+DZcZ/lJebQ
+ UmgJAnp9Lgy+ig0yZQdOUECXAqyzuHKGVCKRhuG0c3JkfdacGo8dhw3zIAWX1p+sGo
+ iOnODS3ruYSV0riI8qJVf9dBC6E/cKSLYX9O5yeyWitot8ei0w0R6oM5vxL7A9nklX
+ E3ES/f1hgWJE8Q7FnF0AO/5VM7wXZlBMkIbPricYF9s5uOMVO93cP1vM/r06dsOlb6
+ jL5Wev8tAc8zQ==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 3BFD11C3AF7;
+ Wed, 22 Jul 2026 15:46:30 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 825163F3751;
+ Wed, 22 Jul 2026 15:46:47 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id 3C76317ED7; Wed, 22 Jul 2026 15:46:38 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v2] linux-user: Guard local FUTEX_CMD_MASK definition
-Date: Wed, 22 Jul 2026 14:35:45 +0200
-Message-ID: <20260722123545.743792-1-clg@redhat.com>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 v2 078/122] target/arm: Be more defensive for invalid
+ tlbi_aa64_get_range
+Date: Wed, 22 Jul 2026 15:45:27 +0300
+Message-ID: <20260722124622.31034-3-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
+References: <qemu-stable-10.0.12-20260722154425@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: permerror client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,38 +73,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Building linux-user on a host with Linux 7.2 kernel headers fails with
-a macro redefinition error for FUTEX_CMD_MASK. The kernel commit
-3ca9595d9fb6 ("futex: Add support for unlocking robust futexes")
-expanded the mask to include the new FUTEX_ROBUST_UNLOCK and
-FUTEX_ROBUST_LIST32 flags, which conflicts with QEMU's local
-definition.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Add a #ifndef guard so the host definition takes precedence when
-available. The local fallback is kept for older kernel headers
-(pre-2.6.29) that lack FUTEX_CMD_MASK or define a mask without
-FUTEX_CLOCK_REALTIME.
+It's possible to program TCR_ELx with an invalid granule size,
+which could match passing an invalid granule size to TLBI RVA,
+which would then fall through to assert in arm_granule_bits.
 
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- linux-user/syscall_defs.h | 2 ++
- 1 file changed, 2 insertions(+)
+Cc: qemu-stable@nongnu.org
+Fixes: 3c003f7029e ("target/arm: Use ARMGranuleSize in ARMVAParameters")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-id: 20260710175818.528974-1-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 79cabc6cb7fb3a47d193cbb9a6bee71af5536dfc)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index 5799769f832fd953fe731a33ad7746113dff9957..e033c7db341622e825da6457b1539dd2682b711f 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2593,7 +2593,9 @@ struct target_drm_i915_getparam {
+diff --git a/target/arm/tcg/tlb-insns.c b/target/arm/tcg/tlb-insns.c
+index 630a481f0f8..4d0442cc56c 100644
+--- a/target/arm/tcg/tlb-insns.c
++++ b/target/arm/tcg/tlb-insns.c
+@@ -839,7 +839,7 @@ static TLBIRange tlbi_aa64_get_range(CPUARMState *env, ARMMMUIdx mmuidx,
+     gran = tlbi_range_tg_to_gran_size(page_size_granule);
  
- #define FUTEX_PRIVATE_FLAG      128
- #define FUTEX_CLOCK_REALTIME    256
-+#ifndef FUTEX_CMD_MASK
- #define FUTEX_CMD_MASK          ~(FUTEX_PRIVATE_FLAG | FUTEX_CLOCK_REALTIME)
-+#endif
- 
- #if defined(TARGET_X86_64)
- #define TARGET_EPOLL_PACKED QEMU_PACKED
+     /* The granule encoded in value must match the granule in use. */
+-    if (gran != param.gran) {
++    if (gran != param.gran || gran == GranInvalid) {
+         qemu_log_mask(LOG_GUEST_ERROR, "Invalid tlbi page size granule %d\n",
+                       page_size_granule);
+         return ret;
 -- 
-2.55.0
+2.47.3
 
 
