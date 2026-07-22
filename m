@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6902C44539
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:07:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E0CBC44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 13:07:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmWUO-0002gK-Ed; Wed, 22 Jul 2026 08:55:56 -0400
+	id 1wmWWR-00075J-0d; Wed, 22 Jul 2026 08:58:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWSa-0004Ic-Te; Wed, 22 Jul 2026 08:54:07 -0400
+ id 1wmWT4-0006m0-Im; Wed, 22 Jul 2026 08:54:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wmWSU-0002pN-NY; Wed, 22 Jul 2026 08:54:03 -0400
+ id 1wmWT3-00031x-27; Wed, 22 Jul 2026 08:54:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784724575; bh=inF44hwGEHsauNC/J47QySf69c4VQVGV/bAR0jFlzRk=;
+ t=1784724575; bh=HXds0l3vK7n+x2gWAHEWtr1X6kDzS4jBOhaLZwrWEtY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=NJHegnrste56hd788gMVkmqmgSE0wLdrI8G0Gl+SQVk6u0dj5ZoLWn+XTDq1jhr7f
- nU274ma9RkhokOkYbKIyj3aehcNjFomSw+nFdKVKnD5hVnbRxXDnU1CPRcwg7MdfHi
- SP2Bt3E+2A4aaPfI1stiQayUioZJkNW9TTPAqmahL0XibQ6L7/iircLdXJXUeXui5Z
- 9gtOgegKtIAW2ZDta1o26rtfAVQulZbUxGaHXxx6KaOYqoV5uZLHLiqbWk4KnZiGif
- JqVa/LYBHHYMjOH+pWkjnoFwJCkkh4anOJJDoGdpIsVmLiDCg7xbn41djnUkBvrf4D
- vu/oI8egpedeA==
+ b=uEotGvWhYca8UkklUJl1lf1UWWT4u/Uyd9CZ/4UCqS3+VlFNAAi/snUuSjVlwH354
+ qe+0yBVYwLJZCSsAQHEkuwPnh3S3l8l7KPbyc0xrMPnJWrMGQQwDxwMWorbisKT03V
+ dYVof2UXSECoQEQlS3cfOqc/r+HBXj33Up/T8sW1luVu9JbGyMdOner+QfCob0EaTo
+ Wl1STqMMrRuPpocj/L34IwRMMaj/zvNWjFXy7nE6/SjHwb214j2Crm/GjwBk/l/HYf
+ Wu08E5JXm5BagTPrP70DNh4eT/6ZGfByOIbXMYn4H95t5/+pqPav1jUteW3Is+Dr8d
+ iPP/z5Dnj/dXw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1009F1C3B48;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2AE061C3B4D;
  Wed, 22 Jul 2026 15:49:35 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 589243F3798;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 741743F379D;
  Wed, 22 Jul 2026 15:49:52 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id CF86D17F65; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
+ id DB80D17F6F; Wed, 22 Jul 2026 15:49:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 v2 107/127] ui/gtk: Narrow DMA-BUF critical section
-Date: Wed, 22 Jul 2026 15:48:32 +0300
-Message-ID: <20260722124859.32371-26-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 v2 112/127] hw/display/virtio-gpu: Check
+ pixman_image_create_bits() results
+Date: Wed, 22 Jul 2026 15:48:37 +0300
+Message-ID: <20260722124859.32371-31-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260722154646@cover.tls.msk.ru>
@@ -74,128 +75,33 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-Scanout operations need to be properly ordered to avoid tearing. The
-virtio specification allows the guest to use pageflip. With pageflip,
-the guest only modifies the invisible framebuffer while the host scans
-out the visible framebuffer. The guest may choose not to use pageflip to
-avoid its overhead, accepting the risk of tearing.
+pixman_image_create_bits() returns NULL for allocation failures and
+unaligned strides, which may be supplied by the guest with
+VIRTIO_GPU_CMD_SET_SCANOUT_BLOB, and virtio_gpu_do_set_scanout()
+subsequently dereferences it.
 
-ui/gtk performs the following procedure to flush a scanout:
-1) Queue a draw event.
-2) The draw event gets triggered.
-3) Blit the guest framebuffer to the host framebuffer.
-
-When flushing a DMA-BUF scanout, ui/gtk blocks the device before 2) if
-possible and unblocks it after 3) to enforce proper ordering. However,
-blocking the device before 2) has two problems.
-
-First, it can leave the device blocked indefinitely because GTK
-sometimes decides to cancel 2) when the window is not visible for
-example. ui/gtk regularly repeats 1) as a workaround, but it is not
-applicable to GtkGLArea because it causes display corruption.
-
-Second, the behavior is inconsistent with the other types of scanout
-that leave the device unblocked between 1) and 2).
-
-To fix these problems, let ui/gtk block the device only when the
-queued draw event runs, immediately before 3). Blocking before that is
-unnecessary since ui/gtk does not access the framebuffer yet. If the
-guest does not use pageflip but instead updates the visible framebuffer
-directly, ui/gtk should not add the overhead of a pre-draw block.
-
-ui/gtk still blocks the device during 3) for DMA-BUF. Unlike the other
-scanout types, 3) can happen asynchronously with the device for a
-DMA-BUF, so ui/gtk needs to keep the visible guest framebuffer stable
-for the blit.
-
-With the problems fixed, the workaround to repeat 1) is no longer
-necessary and is removed.
-
+Fixes: fa06e5cb7b10 ("virtio-gpu: fix scanout rectangles")
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260628-gtk-v2-1-1e4839012f09@rsg.ci.i.u-tokyo.ac.jp>
-(cherry picked from commit 53f0d87db7b4bc4b8c906eedcce6fec17d39824f)
-(Mjt: back-port to before v11.0.0-787-g405a42e3655
- "ui/console: rename public API to use consistent qemu_console_ prefix" which
- renamed graphic_hw_gl_block() to qemu_console_hw_gl_block())
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260717-pixman-v1-1-89ea33b50b75@rsg.ci.i.u-tokyo.ac.jp>
+(cherry picked from commit f1af81ba2aeec7b5a5ee8529ef55275865aea0c0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-index fa8fe8970c1..beb7c735b84 100644
---- a/ui/gtk-egl.c
-+++ b/ui/gtk-egl.c
-@@ -91,6 +91,7 @@ void gd_egl_draw(VirtualConsole *vc)
-             } else {
-                 qemu_dmabuf_set_draw_submitted(dmabuf, false);
-             }
-+            graphic_hw_gl_block(vc->gfx.dcl.con, true);
-         }
- #endif
-         gd_egl_scanout_flush(&vc->gfx.dcl, 0, 0, vc->gfx.w, vc->gfx.h);
-@@ -405,14 +406,11 @@ void gd_egl_flush(DisplayChangeListener *dcl,
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index c4d8aab365f..81d65ec57ca 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -674,6 +674,10 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
+         void *ptr = data + fb->offset;
+         rect = pixman_image_create_bits(fb->format, r->width, r->height,
+                                         ptr, fb->stride);
++        if (!rect) {
++            *error = VIRTIO_GPU_RESP_ERR_UNSPEC;
++            return false;
++        }
  
-     if (vc->gfx.guest_fb.dmabuf &&
-         !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
--        graphic_hw_gl_block(vc->gfx.dcl.con, true);
-         qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
-         gtk_egl_set_scanout_mode(vc, true);
--        gtk_widget_queue_draw_area(area, x, y, w, h);
--        return;
-     }
- 
--    gd_egl_scanout_flush(&vc->gfx.dcl, x, y, w, h);
-+    gtk_widget_queue_draw_area(area, x, y, w, h);
- }
- 
- void gtk_egl_init(DisplayGLMode mode)
-diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-index ce49000d3f1..0a66e516821 100644
---- a/ui/gtk-gl-area.c
-+++ b/ui/gtk-gl-area.c
-@@ -86,6 +86,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
-             } else {
-                 qemu_dmabuf_set_draw_submitted(dmabuf, false);
-             }
-+            graphic_hw_gl_block(vc->gfx.dcl.con, true);
-         }
- #endif
- 
-@@ -163,27 +164,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
- 
-     gd_update_monitor_refresh_rate(vc, vc->window ? vc->window : vc->gfx.drawing_area);
- 
--    if (vc->gfx.guest_fb.dmabuf &&
--        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
--        /*
--         * gd_egl_refresh() calls gd_egl_draw() if a DMA-BUF draw has already
--         * been submitted, but this function does not call gd_gl_area_draw() in
--         * such a case due to display corruption.
--         *
--         * Calling gd_gl_area_draw() is necessary to prevent a situation where
--         * there is a scheduled draw event but it won't happen bacause the window
--         * is currently in inactive state (minimized or tabified). If draw is not
--         * done for a long time, gl_block timeout and/or fence timeout (on the
--         * guest) will happen eventually.
--         *
--         * However, it is found that calling gd_gl_area_draw() here causes guest
--         * display corruption on a Wayland Compositor. The display corruption is
--         * more serious than the possible fence timeout so gd_gl_area_draw() is
--         * omitted for now.
--         */
--        return;
--    }
--
-     if (!vc->gfx.gls) {
-         if (!gtk_widget_get_realized(vc->gfx.drawing_area)) {
-             return;
-@@ -347,7 +327,6 @@ void gd_gl_area_scanout_flush(DisplayChangeListener *dcl,
- 
-     if (vc->gfx.guest_fb.dmabuf &&
-         !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
--        graphic_hw_gl_block(vc->gfx.dcl.con, true);
-         qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
-         gtk_gl_area_set_scanout_mode(vc, true);
-     }
+         if (res->image) {
+             pixman_image_ref(res->image);
 -- 
 2.47.3
 
