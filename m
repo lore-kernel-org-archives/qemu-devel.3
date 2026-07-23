@@ -4,68 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 527D9C531CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 12:45:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 706DAC531CA
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 12:48:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmsn7-0006wr-Nf; Thu, 23 Jul 2026 08:44:45 -0400
+	id 1wmsq6-0008QQ-Vc; Thu, 23 Jul 2026 08:47:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wmsn6-0006wI-7P
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 08:44:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1)
+ (envelope-from <82bc736158e827e05d4b55da27c39d42e2062e96@kylie.crudebyte.com>)
+ id 1wmsq5-0008Pr-BN; Thu, 23 Jul 2026 08:47:49 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wmsn3-0000gM-Rz
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 08:44:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784810680;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=PVEgGZD0a4bNOPMUtuuMmfqj8NAr+4M4g6idRABiZhY=;
- b=GDATL1jCecFttaOJGc/j+ckxcQIQi6l9GmB4GeMo3+aeX/VAvZV8QsLSHdJyP35lsXLeJj
- wbLEiBP8bp9+fyA+qfLsvaln3CrTMkNDm/jdBFOr5brmAiQlgHOQRiH3DcvmXoIdXbrR1f
- lOMXwF5/2p3rbaQRLnkVqWECWDQ+yIo=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-156-dY4QxEl-MiumwqRmR_3NQA-1; Thu,
- 23 Jul 2026 08:44:38 -0400
-X-MC-Unique: dY4QxEl-MiumwqRmR_3NQA-1
-X-Mimecast-MFC-AGG-ID: dY4QxEl-MiumwqRmR_3NQA_1784810677
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9AEEF1945CB6; Thu, 23 Jul 2026 12:44:37 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.32.74])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1AB721956053; Thu, 23 Jul 2026 12:44:34 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
-	Dmitry Fleytman <dmitry.fleytman@gmail.com>
-Cc: qemu-trivial@nongnu.org,
-	qemu-stable@nongnu.org
-Subject: [PATCH v2] hw/display/vmware_vga: Don't allow guest to trigger long
- running loop in host
-Date: Thu, 23 Jul 2026 14:44:32 +0200
-Message-ID: <20260723124432.353969-1-thuth@redhat.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=thuth@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 3
-X-Spam_score: 0.3
-X-Spam_bar: /
-X-Spam_report: (0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.951,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+ (Exim 4.90_1)
+ (envelope-from <82bc736158e827e05d4b55da27c39d42e2062e96@kylie.crudebyte.com>)
+ id 1wmsq3-0001BP-Lr; Thu, 23 Jul 2026 08:47:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
+ Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
+ Content-Description; bh=5s4DKpC1T0PeqN+HSt0e5weoQMg0AJgXHQ4lDgYkK8g=; b=LQx6M
+ bbmcCxGkeHm/6RlU03Co+kEysM8bd4y2gvK940DACKFRw+Mw+DzIhjyBc7aY8e+pDHOCYd2ckk9JE
+ xeQFaCtY7LJhi4V11oBZVmcxuPvGdg7TH5i1Z4qv4hJDSkfUkh0FCNPHnNLXFcVwAXAx6u8w+SWla
+ O1RhvoR6nu6ZP1zylX+nfUuhzUQo4zZtfbPu0CvJxa7Z/VbFAuXYwGa2548Y3poxd/JW2SEPZXk7t
+ 5ZuXvDQMX4sqJdc2fJcRDugwRN0mJEzG3Iy6IIjvdrYgdJWXTpmMrTDHjTZOFRXLmjIXgKvJI6qF5
+ lPwPI3JJox1dG8WussmPROJviVQL5AwjLS4Zxh5JdIs7tcKQLipCTrnJIZpwAD+tuTkCRPa05AfmR
+ pobj+zw9Q4vadtkCsnmZlVxzUjKU5sze3BF7wPQ5eMSUohMBLbzwWfc8LmZsmDol5PvpDPzYExgPy
+ LFNKu7kbuLK+fhmHP7zv6vY5cgeKA1IfZbgTpczzlRgBCGw45VKknokkiHgn5/PLgpv72yVF2qkFr
+ 3I1okD6QFMS9ehTjZkXw722+j/IrQNA3QYjvxlhxmomUuKs2ME71pMtchgfpZxmqr+q1nCT7efAEw
+ VtFuHCZnl8eoKShCX9cfKLGFpAdWGOgO34P0n+P9KdD5Dg4O5reJTwXpPvrWeI=;
+Message-ID: <82bc736158e827e05d4b55da27c39d42e2062e96.1784809978.git.qemu_oss@crudebyte.com>
+In-Reply-To: <cover.1784809978.git.qemu_oss@crudebyte.com>
+References: <cover.1784809978.git.qemu_oss@crudebyte.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Date: Thu, 23 Jul 2026 14:43:24 +0200
+Subject: [PATCH v3 2/2] hw/9pfs/xen: drain in-flight PDUs before xen-9p
+ disconnect
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=82bc736158e827e05d4b55da27c39d42e2062e96@kylie.crudebyte.com;
+ helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,69 +69,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+The xen-9p disconnect path has two issues:
 
-The code in the SVGA_CMD_DEFINE_ALPHA_CURSOR handler in vmsvga_fifo_run()
-basically does:
+1. It frees the Xen9pfsRing structures while in-flight PDUs may still
+   reference them via pdu->tag to index rings[]. This causes a UAF
+   in xen_9pfs_push_and_notify() when worker threads resume after
+   completing filesystem operations.
 
-            x = vmsvga_fifo_read(s);
-            y = vmsvga_fifo_read(s);
-            args = x * y;
-            goto badcmd;
-            ...
-badcmd:
-            len -= args;
-            if (len < 0) {
-                goto rewind;
-            }
-            while (args--) {
-                vmsvga_fifo_read(s);
-            }
+2. It never calls v9fs_device_unrealize_common(), which means server
+   state (struct LocalData, mountfd, FIDs) is never cleaned up on
+   disconnect, causing a resource leak on every guest-initiated
+   disconnect.
 
-Thus by supplying huge values for x and y that overflow the result of
-the multiplication, the guest can trigger a long-running loop here
-that burns the host's CPU cycles.
+Fix both by draining in-flight PDUs via v9fs_reset() before tearing
+down rings, and calling v9fs_device_unrealize_common() to clean up
+server state.
 
-Add some sanity checks so that this cannot happen anymore.
+Additionally, explicit calls of xen_9pfs_disconnect() in the error
+paths of xen_9pfs_pdu_vmarshal() and xen_9pfs_pdu_vunmarshal() must
+be deferred (via aio_bh_schedule_oneshot()), because
+xen_9pfs_pdu_v(un)marshal() are running within a coroutine context
+which makes them unsafe [1] for calling v9fs_reset() directly, as
+the latter e.g. has a loop like:
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3782
-Reported-by: Feifan Qian <bea1e@proton.me>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4026
-Reported-by: Tristan Madani <tristan@talencesecurity.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4076
-Reported-by: Sunday Jiang
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+    while (!QLIST_EMPTY(&s->active_list)) {
+        aio_poll(qemu_get_aio_context(), true);
+    }
+
+which would a) never terminate (as the coroutine is on the
+active_list) and b) aio_poll() is marked as no_coroutine_fn.
+
+[1] https://lore.kernel.org/qemu-devel/3351181.5fSG56mABF@weasel/
+
+And finally, add an idempotent guard to xen_9pfs_disconnect()
+for the v9fs_reset(s) and v9fs_device_unrealize_common(s) calls
+specifically [2], just to be sure.
+
+[2] https://lore.kernel.org/qemu-devel/alpine.DEB.2.22.394.2607221815520.5295@ubuntu-linux-20-04-desktop/
+
+Fixes: b37eeb0201 ("xen/9pfs: introduce Xen 9pfs backend")
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
 ---
- v2: Use SVGA_MAX_WIDTH and SVGA_MAX_HEIGHT instead of an arbitrary value
+ hw/9pfs/9p.c             |  1 +
+ hw/9pfs/xen-9p-backend.c | 17 +++++++++++++++--
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
- hw/display/vmware_vga.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/hw/display/vmware_vga.c b/hw/display/vmware_vga.c
-index f6f9edfd1d9..567806f0e47 100644
---- a/hw/display/vmware_vga.c
-+++ b/hw/display/vmware_vga.c
-@@ -737,6 +737,10 @@ static void vmsvga_fifo_run(struct vmsvga_state_s *s)
-             vmsvga_fifo_read(s);
-             x = vmsvga_fifo_read(s);
-             y = vmsvga_fifo_read(s);
-+            if (x < 0 || x >= SVGA_MAX_WIDTH ||
-+                y < 0 || y >= SVGA_MAX_HEIGHT) {
-+                goto rewind;
-+            }
-             args = x * y;
-             goto badcmd;
-         case SVGA_CMD_RECT_ROP_FILL:
-@@ -776,7 +780,7 @@ static void vmsvga_fifo_run(struct vmsvga_state_s *s)
-             if (len < 0) {
-                 goto rewind;
-             }
--            while (args--) {
-+            while (args-- > 0) {
-                 vmsvga_fifo_read(s);
-             }
-             printf("%s: Unknown command 0x%02x in SVGA command FIFO\n",
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 3119f01117..fc01791830 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -4530,6 +4530,7 @@ void v9fs_device_unrealize_common(V9fsState *s)
+     qp_table_destroy(&s->qpp_table);
+     qp_table_destroy(&s->qpf_table);
+     g_free(s->ctx.fs_root);
++    s->transport = NULL;
+ }
+ 
+ typedef struct VirtfsCoResetData {
+diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
+index 24c90d97ec..a2f118d2ca 100644
+--- a/hw/9pfs/xen-9p-backend.c
++++ b/hw/9pfs/xen-9p-backend.c
+@@ -68,6 +68,11 @@ typedef struct Xen9pfsDev {
+ 
+ static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev);
+ 
++static void xen_9pfs_disconnect_bh(void *opaque)
++{
++    xen_9pfs_disconnect(opaque);
++}
++
+ static void xen_9pfs_in_sg(Xen9pfsRing *ring,
+                            struct iovec *in_sg,
+                            int *num,
+@@ -150,7 +155,8 @@ static ssize_t xen_9pfs_pdu_vmarshal(V9fsPDU *pdu,
+                       "Failed to encode VirtFS reply type %d\n",
+                       pdu->id + 1);
+         xen_be_set_state(&xen_9pfs->xendev, XenbusStateClosing);
+-        xen_9pfs_disconnect(&xen_9pfs->xendev);
++        aio_bh_schedule_oneshot(qemu_get_aio_context(),
++                                xen_9pfs_disconnect_bh, &xen_9pfs->xendev);
+     }
+     return ret;
+ }
+@@ -173,7 +179,8 @@ static ssize_t xen_9pfs_pdu_vunmarshal(V9fsPDU *pdu,
+         xen_pv_printf(&xen_9pfs->xendev, 0,
+                       "Failed to decode VirtFS request type %d\n", pdu->id);
+         xen_be_set_state(&xen_9pfs->xendev, XenbusStateClosing);
+-        xen_9pfs_disconnect(&xen_9pfs->xendev);
++        aio_bh_schedule_oneshot(qemu_get_aio_context(),
++                                xen_9pfs_disconnect_bh, &xen_9pfs->xendev);
+     }
+     return ret;
+ }
+@@ -368,10 +375,16 @@ static void xen_9pfs_evtchn_event(void *opaque)
+ static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev)
+ {
+     Xen9pfsDev *xen_9pdev = container_of(xendev, Xen9pfsDev, xendev);
++    V9fsState *s = &xen_9pdev->state;
+     int i;
+ 
+     trace_xen_9pfs_disconnect(xendev->name);
+ 
++    if (s->transport) {
++        v9fs_reset(s);
++        v9fs_device_unrealize_common(s);
++    }
++
+     for (i = 0; i < xen_9pdev->num_rings; i++) {
+         if (xen_9pdev->rings[i].evtchndev != NULL) {
+             qemu_set_fd_handler(qemu_xen_evtchn_fd(xen_9pdev->rings[i].evtchndev),
 -- 
-2.55.0
+2.47.3
 
 
