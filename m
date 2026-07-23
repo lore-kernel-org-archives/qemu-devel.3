@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6E84C44524
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:56:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEB89C4452B
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:57:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmlS0-0005EF-8e; Thu, 23 Jul 2026 00:54:28 -0400
+	id 1wmlT6-0008DY-AQ; Thu, 23 Jul 2026 00:55:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlRf-0004uz-ET
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:54:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlT5-00086e-5w
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:55:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlRc-0004z2-6U
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:54:05 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlT1-0005QY-0h
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:55:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784782443;
+ s=mimecast20190719; t=1784782530;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lCYDP6Hrj8CzePr1mYVT3Ek4VxvkfuHjDMXZ3o0GlI0=;
- b=QKGOCh2fdZh8KX2S0D2Bp7BBu5n49blqs/3chiJ/CPhWYXp+uKWkyN8QhOkNCKRdPvOAX4
- bF5ZIEpSm3FE5djCcp+6MNdWeZiHbQTh5775gFaUY48Y26Qq/+gA64H9oc6oRL3c1AUQ+M
- rr1O3PYYAMuwrrDYBM2Gd7QNqOtYWD4=
+ bh=l2vKKJq9p+mRJI1PvhlBj7i1Hep84eZpyfHuN/CbTtk=;
+ b=dIDelB9FRgXHdq+A0TaQHgaEX853ZFhitKqy9WlCEjI5PXsGOw7YPUrga19Qb0Jvun8zkZ
+ UpwfobpCHbXoyYOQZO1blsTuMEiJXBEVx8c6PFoeO0v3Ad7oOsZQTZF2rc0ZPB6G46qSh9
+ i0w9lCZt6FXpwpwdo5/HVxixRYasBo4=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-186-flsMf9TDOHOS0HUxRx7iBg-1; Thu,
- 23 Jul 2026 00:53:59 -0400
-X-MC-Unique: flsMf9TDOHOS0HUxRx7iBg-1
-X-Mimecast-MFC-AGG-ID: flsMf9TDOHOS0HUxRx7iBg_1784782436
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-235-klbCYKTsOI62KJTINKYHXg-1; Thu,
+ 23 Jul 2026 00:55:26 -0400
+X-MC-Unique: klbCYKTsOI62KJTINKYHXg-1
+X-Mimecast-MFC-AGG-ID: klbCYKTsOI62KJTINKYHXg_1784782523
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EE8051955DEA; Thu, 23 Jul 2026 04:53:55 +0000 (UTC)
+ id 5C8301955DC2; Thu, 23 Jul 2026 04:55:23 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.44])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D62A618002AE; Thu, 23 Jul 2026 04:53:45 +0000 (UTC)
+ id 5329518002AE; Thu, 23 Jul 2026 04:55:12 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -73,24 +73,23 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Jason Wang <jasowangio@gmail.com>, qemu-trivial@nongnu.org,
  Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH v2 34/44] qapi: convert trivial intro sections for crypto.json
-Date: Thu, 23 Jul 2026 00:47:55 -0400
-Message-ID: <20260723044805.527643-35-jsnow@redhat.com>
+Subject: [PATCH v2 43/44] qapi: convert trivial intro sections for machine.json
+Date: Thu, 23 Jul 2026 00:48:04 -0400
+Message-ID: <20260723044805.527643-44-jsnow@redhat.com>
 In-Reply-To: <20260723044805.527643-1-jsnow@redhat.com>
 References: <20260723044805.527643-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: permerror client-ip=170.10.133.124;
+Received-SPF: permerror client-ip=170.10.129.124;
  envelope-from=jsnow@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,348 +109,771 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/crypto.json | 118 ++++++++++++++++++-----------------------------
- 1 file changed, 45 insertions(+), 73 deletions(-)
+ qapi/machine.json | 261 +++++++++++++++++-----------------------------
+ 1 file changed, 96 insertions(+), 165 deletions(-)
 
-diff --git a/qapi/crypto.json b/qapi/crypto.json
-index 2b55befef97..5c821be1a33 100644
---- a/qapi/crypto.json
-+++ b/qapi/crypto.json
-@@ -10,10 +10,10 @@
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 9b2248038fc..2b0b9757641 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -15,12 +15,11 @@
  
  ##
- # @QCryptoTLSCredsEndpoint:
+ # @SysEmuTarget:
 -#
--# The type of network endpoint that will be using the credentials.
--# Most types of credential require different setup / structures
--# depending on whether they will be used in a server versus a client.
-+#     The type of network endpoint that will be using the credentials.
-+#     Most types of credential require different setup / structures
-+#     depending on whether they will be used in a server versus a
-+#     client.
+-# The comprehensive enumeration of QEMU system emulation ("softmmu")
+-# targets.  Run "./configure --help" in the project root directory,
+-# and look for the \*-softmmu targets near the "--target-list" option.
+-# The individual target constants are not documented here, for the
+-# time being.
++#     The comprehensive enumeration of QEMU system emulation
++#     ("softmmu") targets.  Run "./configure --help" in the project
++#     root directory, and look for the \*-softmmu targets near the
++#     "--target-list" option.  The individual target constants are not
++#     documented here, for the time being.
  #
- # @client: the network endpoint is acting as the client
+ # @rx: since 5.0
  #
-@@ -26,8 +26,7 @@
+@@ -46,9 +45,8 @@
  
  ##
- # @QCryptoSecretFormat:
+ # @S390CpuState:
 -#
--# The data format that the secret is provided in
-+#     The data format that the secret is provided in
+-# An enumeration of cpu states that can be assumed by a virtual S390
+-# CPU
++#     An enumeration of cpu states that can be assumed by a virtual
++#     S390 CPU
  #
- # @raw: raw bytes.  When encoded in JSON only valid UTF-8 sequences
- #     can be used
-@@ -41,8 +40,7 @@
+ # Since: 2.12
+ ##
+@@ -57,8 +55,7 @@
  
  ##
- # @QCryptoHashAlgo:
+ # @CpuInfoS390:
 -#
--# The supported algorithms for computing content digests
-+#     The supported algorithms for computing content digests
+-# Additional information about a virtual S390 CPU
++#     Additional information about a virtual S390 CPU
  #
- # @md5: MD5.  Should not be used in any new code, legacy compat only
+ # @cpu-state: the virtual CPU's state
  #
-@@ -68,8 +66,7 @@
+@@ -75,8 +72,7 @@
  
  ##
- # @QCryptoCipherAlgo:
+ # @CpuInfoFast:
 -#
--# The supported algorithms for content encryption ciphers
-+#     The supported algorithms for content encryption ciphers
+-# Information about a virtual CPU
++#     Information about a virtual CPU
  #
- # @aes-128: AES with 128 bit / 16 byte keys
+ # @cpu-index: index of the virtual CPU
  #
-@@ -110,8 +107,7 @@
+@@ -105,8 +101,7 @@
  
  ##
- # @QCryptoCipherMode:
+ # @query-cpus-fast:
 -#
--# The supported modes for content encryption ciphers
-+#     The supported modes for content encryption ciphers
+-# Return information about all virtual CPUs.
++#     Return information about all virtual CPUs.
  #
- # @ecb: Electronic Code Book
+ # Since: 2.12
  #
-@@ -128,11 +124,11 @@
+@@ -143,9 +138,8 @@
  
  ##
- # @QCryptoIVGenAlgo:
+ # @CompatProperty:
 -#
--# The supported algorithms for generating initialization vectors for
--# full disk encryption.  The 'plain' generator should not be used for
--# disks with sector numbers larger than 2^32, except where
--# compatibility with pre-existing Linux dm-crypt volumes is required.
-+#     The supported algorithms for generating initialization vectors
-+#     for full disk encryption.  The 'plain' generator should not be
-+#     used for disks with sector numbers larger than 2^32, except
-+#     where compatibility with pre-existing Linux dm-crypt volumes is
-+#     required.
+-# Property default values specific to a machine type, for use by
+-# scripts/compare-machine-types.
++#     Property default values specific to a machine type, for use by
++#     scripts/compare-machine-types.
  #
- # @plain: 64-bit sector number truncated to 32-bits
+ # @qom-type: name of the QOM type to which the default applies
  #
-@@ -148,8 +144,7 @@
+@@ -163,8 +157,7 @@
  
  ##
- # @QCryptoBlockFormat:
+ # @MachineInfo:
 -#
--# The supported full disk encryption formats
-+#     The supported full disk encryption formats
+-# Information describing a machine.
++#     Information describing a machine.
  #
- # @qcow: QCow/QCow2 built-in AES-CBC encryption.  Use only for
- #     liberating data from old images.
-@@ -163,8 +158,8 @@
+ # @name: the name of the machine
+ #
+@@ -213,8 +206,7 @@
  
  ##
- # @QCryptoBlockOptionsBase:
+ # @query-machines:
 -#
--# The common options that apply to all full disk encryption formats
-+#     The common options that apply to all full disk encryption
-+#     formats
+-# Return a list of supported machines
++#     Return a list of supported machines
  #
- # @format: the encryption format
- #
-@@ -175,8 +170,7 @@
+ # @compat-props: if true, also return compatibility properties.
+ #     (default: false) (since 9.1)
+@@ -255,8 +247,7 @@
  
  ##
- # @QCryptoBlockOptionsQCow:
+ # @CurrentMachineParams:
 -#
--# The options that apply to QCow/QCow2 AES-CBC encryption format
-+#     The options that apply to QCow/QCow2 AES-CBC encryption format
+-# Information describing the running machine parameters.
++#     Information describing the running machine parameters.
  #
- # @key-secret: the ID of a QCryptoSecret object providing the
- #     decryption key.  Mandatory except when probing image for
-@@ -189,8 +183,7 @@
+ # @wakeup-suspend-support: true if the machine supports wake up from
+ #     suspend
+@@ -268,8 +259,7 @@
  
  ##
- # @QCryptoBlockOptionsLUKS:
+ # @query-current-machine:
 -#
--# The options that apply to LUKS encryption format
-+#     The options that apply to LUKS encryption format
+-# Return information on the current virtual machine.
++#     Return information on the current virtual machine.
  #
- # @key-secret: the ID of a QCryptoSecret object providing the
- #     decryption key.  Mandatory except when probing image for
-@@ -203,8 +196,7 @@
+ # Since: 4.0
+ ##
+@@ -277,8 +267,8 @@
  
  ##
- # @QCryptoBlockCreateOptionsLUKS:
+ # @QemuTargetInfo:
 -#
--# The options that apply to LUKS encryption format initialization
-+#     The options that apply to LUKS encryption format initialization
+-# Information on the target configuration built into the QEMU binary.
++#     Information on the target configuration built into the QEMU
++#     binary.
  #
- # @cipher-alg: the cipher algorithm for data encryption.  Currently
- #     defaults to 'aes-256'.
-@@ -237,9 +229,8 @@
+ # @arch: the target architecture
+ #
+@@ -289,8 +279,7 @@
  
  ##
- # @QCryptoBlockOpenOptions:
+ # @query-target:
 -#
--# The options that are available for all encryption formats when
--# opening an existing volume
-+#     The options that are available for all encryption formats when
-+#     opening an existing volume
+-# Return information about the target for this QEMU
++#     Return information about the target for this QEMU
  #
- # Since: 2.6
+ # Since: 1.2
  ##
-@@ -251,9 +242,8 @@
+@@ -298,8 +287,7 @@
  
  ##
- # @QCryptoBlockCreateOptions:
+ # @UuidInfo:
 -#
--# The options that are available for all encryption formats when
--# initializing a new volume
-+#     The options that are available for all encryption formats when
-+#     initializing a new volume
+-# Guest UUID information (Universally Unique Identifier).
++#     Guest UUID information (Universally Unique Identifier).
  #
- # Since: 2.6
- ##
-@@ -265,9 +255,8 @@
+ # @UUID: the UUID of the guest
+ #
+@@ -312,8 +300,7 @@
  
  ##
- # @QCryptoBlockInfoBase:
+ # @query-uuid:
 -#
--# The common information that applies to all full disk encryption
--# formats
-+#     The common information that applies to all full disk encryption
-+#     formats
+-# Query the guest UUID information.
++#     Query the guest UUID information.
  #
- # @format: the encryption format
+ # Since: 0.14
  #
-@@ -278,8 +267,7 @@
+@@ -326,8 +313,7 @@
  
  ##
- # @QCryptoBlockInfoLUKSSlot:
+ # @GuidInfo:
 -#
--# Information about the LUKS block encryption key slot options
-+#     Information about the LUKS block encryption key slot options
+-# GUID information.
++#     GUID information.
  #
- # @active: whether the key slot is currently in use
+ # @guid: the globally unique identifier
  #
-@@ -299,8 +287,7 @@
+@@ -337,8 +323,7 @@
  
  ##
- # @QCryptoBlockInfoLUKS:
+ # @query-vm-generation-id:
 -#
--# Information about the LUKS block encryption options
-+#     Information about the LUKS block encryption options
+-# Show Virtual Machine Generation ID
++#     Show Virtual Machine Generation ID
  #
- # @cipher-alg: the cipher algorithm for data encryption
- #
-@@ -338,8 +325,7 @@
+ # Since: 2.9
+ ##
+@@ -346,8 +331,7 @@
  
  ##
- # @QCryptoBlockInfo:
+ # @system_reset:
 -#
--# Information about the block encryption options
-+#     Information about the block encryption options
+-# Performs a hard reset of a guest.
++#     Performs a hard reset of a guest.
  #
- # Since: 2.7
- ##
-@@ -350,8 +336,7 @@
+ # Since: 0.14
+ #
+@@ -360,8 +344,7 @@
  
  ##
- # @QCryptoBlockLUKSKeyslotState:
+ # @system_powerdown:
 -#
--# Defines state of keyslots that are affected by the update
-+#     Defines state of keyslots that are affected by the update
+-# Requests that a guest perform a powerdown operation.
++#     Requests that a guest perform a powerdown operation.
  #
- # @active: The slots contain the given password and marked as active
+ # Since: 0.14
  #
-@@ -365,9 +350,8 @@
+@@ -379,11 +362,10 @@
  
  ##
- # @QCryptoBlockAmendOptionsLUKS:
+ # @system_wakeup:
 -#
--# This struct defines the update parameters that activate/de-activate
--# set of keyslots
-+#     This struct defines the update parameters that
-+#     activate/de-activate set of keyslots
+-# Wake up guest from suspend.  If the guest has wake-up from suspend
+-# support enabled (wakeup-suspend-support flag from
+-# `query-current-machine`), wake-up guest from suspend if the guest is
+-# in SUSPENDED state.  Return an error otherwise.
++#     Wake up guest from suspend.  If the guest has wake-up from
++#     suspend support enabled (wakeup-suspend-support flag from
++#     `query-current-machine`), wake-up guest from suspend if the
++#     guest is in SUSPENDED state.  Return an error otherwise.
  #
- # @state: the desired state of the keyslots
+ # Since: 1.1
  #
-@@ -407,9 +391,8 @@
+@@ -399,9 +381,8 @@
  
  ##
- # @QCryptoBlockAmendOptions:
+ # @LostTickPolicy:
 -#
--# The options that are available for all encryption formats when
--# amending encryption settings
-+#     The options that are available for all encryption formats when
-+#     amending encryption settings
+-# Policy for handling lost ticks in timer devices.  Ticks end up
+-# getting lost when, for example, the guest is paused.
++#     Policy for handling lost ticks in timer devices.  Ticks end up
++#     getting lost when, for example, the guest is paused.
  #
- # Since: 5.1
- ##
-@@ -421,8 +404,7 @@
+ # @discard: throw away the missed ticks and continue with future
+ #     injection normally.  The guest OS will see the timer jump ahead
+@@ -431,10 +412,9 @@
  
  ##
- # @SecretCommonProperties:
+ # @inject-nmi:
 -#
--# Properties for objects of classes derived from secret-common.
-+#     Properties for objects of classes derived from secret-common.
+-# Injects a Non-Maskable Interrupt into the default CPU (x86/s390) or
+-# all CPUs (ppc64).  The command fails when the guest doesn't support
+-# injecting.
++#     Injects a Non-Maskable Interrupt into the default CPU (x86/s390)
++#     or all CPUs (ppc64).  The command fails when the guest doesn't
++#     support injecting.
  #
- # @format: the data format that the secret is provided in
- #     (default: raw)
-@@ -463,8 +445,7 @@
+ # Since: 0.14
+ #
+@@ -468,8 +448,7 @@
  
  ##
- # @SecretKeyringProperties:
+ # @NumaOptions:
 -#
--# Properties for secret_keyring objects.
-+#     Properties for secret_keyring objects.
+-# A discriminated record of NUMA options.  (for OptsVisitor)
++#     A discriminated record of NUMA options.  (for OptsVisitor)
  #
- # @serial: serial number that identifies a key to get from the kernel
+ # @type: NUMA option type
  #
-@@ -477,8 +458,7 @@
+@@ -487,8 +466,7 @@
  
  ##
- # @TlsCredsProperties:
+ # @NumaNodeOptions:
 -#
--# Properties for objects of classes derived from tls-creds.
-+#     Properties for objects of classes derived from tls-creds.
+-# Create a guest NUMA node.  (for OptsVisitor)
++#     Create a guest NUMA node.  (for OptsVisitor)
  #
- # @verify-peer: if true the peer credentials will be verified once the
- #     handshake is completed.  This is a no-op for anonymous
-@@ -503,8 +483,7 @@
+ # @nodeid: NUMA node ID (increase by 1 from 0 if omitted)
+ #
+@@ -520,8 +498,7 @@
  
  ##
- # @TlsCredsAnonProperties:
+ # @NumaDistOptions:
 -#
--# Properties for tls-creds-anon objects.
-+#     Properties for tls-creds-anon objects.
+-# Set the distance between 2 NUMA nodes.
++#     Set the distance between 2 NUMA nodes.
+ #
+ # @src: source NUMA node.
+ #
+@@ -541,8 +518,7 @@
+ 
+ ##
+ # @CXLFixedMemoryWindowOptions:
+-#
+-# Create a CXL Fixed Memory Window
++#     Create a CXL Fixed Memory Window
+ #
+ # @size: Size of the Fixed Memory Window in bytes.  Must be a multiple
+ #     of 256MiB.
+@@ -564,8 +540,7 @@
+ 
+ ##
+ # @CXLFMWProperties:
+-#
+-# List of CXL Fixed Memory Windows.
++#     List of CXL Fixed Memory Windows.
+ #
+ # @cxl-fmw: List of `CXLFixedMemoryWindowOptions`
+ #
+@@ -577,8 +552,7 @@
+ 
+ ##
+ # @X86CPURegister32:
+-#
+-# A X86 32-bit register
++#     A X86 32-bit register
+ #
+ # Since: 1.5
+ ##
+@@ -587,8 +561,7 @@
+ 
+ ##
+ # @X86CPUFeatureWordInfo:
+-#
+-# Information about a X86 CPU feature word
++#     Information about a X86 CPU feature word
+ #
+ # @cpuid-input-eax: Input EAX value for CPUID instruction for that
+ #     feature word
+@@ -610,9 +583,8 @@
+ 
+ ##
+ # @DummyForceArrays:
+-#
+-# Not used by QMP; hack to let us use X86CPUFeatureWordInfoList
+-# internally
++#     Not used by QMP; hack to let us use X86CPUFeatureWordInfoList
++#     internally
  #
  # Since: 2.5
  ##
-@@ -514,8 +493,7 @@
+@@ -621,11 +593,10 @@
  
  ##
- # @TlsCredsPskProperties:
+ # @NumaCpuOptions:
 -#
--# Properties for tls-creds-psk objects.
-+#     Properties for tls-creds-psk objects.
+-# Option "-numa cpu" overrides default cpu to node mapping.  It
+-# accepts the same set of cpu properties as returned by
+-# `query-hotpluggable-cpus[].props <query-hotpluggable-cpus>`, where
+-# node-id could be used to override default node mapping.
++#     Option "-numa cpu" overrides default cpu to node mapping.  It
++#     accepts the same set of cpu properties as returned by
++#     `query-hotpluggable-cpus[].props <query-hotpluggable-cpus>`,
++#     where node-id could be used to override default node mapping.
  #
- # @username: the username which will be sent to the server.  For
- #     clients only.  If absent, "qemu" is sent and the property will
-@@ -529,8 +507,7 @@
+ # Since: 2.10
+ ##
+@@ -794,8 +765,7 @@
  
  ##
- # @TlsCredsX509Properties:
+ # @memsave:
 -#
--# Properties for tls-creds-x509 objects.
-+#     Properties for tls-creds-x509 objects.
+-# Save a portion of guest memory to a file.
++#     Save a portion of guest memory to a file.
  #
- # @sanity-check: if true, perform some sanity checks before using the
- #     credentials (default: true)
-@@ -550,8 +527,7 @@
+ # @val: the virtual address of the guest to start from
+ #
+@@ -827,8 +797,7 @@
  
  ##
- # @QCryptoAkCipherAlgo:
+ # @pmemsave:
 -#
--# The supported algorithms for asymmetric encryption ciphers
-+#     The supported algorithms for asymmetric encryption ciphers
+-# Save a portion of guest physical memory to a file.
++#     Save a portion of guest physical memory to a file.
  #
- # @rsa: RSA algorithm
+ # @val: the physical address of the guest to start from
  #
-@@ -562,8 +538,7 @@
+@@ -856,8 +825,7 @@
  
  ##
- # @QCryptoAkCipherKeyType:
+ # @Memdev:
 -#
--# The type of asymmetric keys.
-+#     The type of asymmetric keys.
+-# Information about memory backend
++#     Information about memory backend
  #
- # @public: public key
+ # @id: backend's ID if backend has 'id' property (since 2.9)
  #
-@@ -576,8 +551,7 @@
+@@ -897,8 +865,7 @@
  
  ##
- # @QCryptoRSAPaddingAlgo:
+ # @query-memdev:
 -#
--# The padding algorithm for RSA.
-+#     The padding algorithm for RSA.
+-# Return information for all memory backends.
++#     Return information for all memory backends.
  #
- # @raw: no padding used
+ # Since: 2.1
  #
-@@ -590,8 +564,7 @@
+@@ -1073,9 +1040,9 @@
  
  ##
- # @QCryptoAkCipherOptionsRSA:
+ # @set-numa-node:
 -#
--# Specific parameters for RSA algorithm.
-+#     Specific parameters for RSA algorithm.
+-# Runtime equivalent of '-numa' CLI option, available at preconfigure
+-# stage to configure numa mapping before initializing machine.
++#     Runtime equivalent of '-numa' CLI option, available at
++#     preconfigure stage to configure numa mapping before initializing
++#     machine.
  #
- # @hash-alg: `QCryptoHashAlgo`
- #
-@@ -605,9 +578,8 @@
+ # Since: 3.0
+ ##
+@@ -1086,8 +1053,7 @@
  
  ##
- # @QCryptoAkCipherOptions:
+ # @balloon:
 -#
--# The options that are available for all asymmetric key algorithms
--# when creating a new QCryptoAkCipher.
-+#     The options that are available for all asymmetric key algorithms
-+#     when creating a new QCryptoAkCipher.
+-# Request the balloon driver to change its balloon size.
++#     Request the balloon driver to change its balloon size.
  #
- # @alg: encryption cipher algorithm
+ # @value: the target logical size of the VM in bytes.  We can deduce
+ #     the size of the balloon using this formula:
+@@ -1121,8 +1087,7 @@
+ 
+ ##
+ # @BalloonInfo:
+-#
+-# Information about the guest balloon device.
++#     Information about the guest balloon device.
  #
+ # @actual: the logical size of the VM in bytes.  Formula used:
+ #     logical_vm_size = vm_ram_size - balloon_size
+@@ -1133,8 +1098,7 @@
+ 
+ ##
+ # @query-balloon:
+-#
+-# Return information about the balloon device.
++#     Return information about the balloon device.
+ #
+ # Errors:
+ #     - If the balloon driver is enabled but not functional because
+@@ -1155,10 +1119,9 @@
+ 
+ ##
+ # @BALLOON_CHANGE:
+-#
+-# Emitted when the guest changes the actual BALLOON level.  This value
+-# is equivalent to the @actual field return by the `query-balloon`
+-# command
++#     Emitted when the guest changes the actual BALLOON level.  This
++#     value is equivalent to the @actual field return by the
++#     `query-balloon` command
+ #
+ # @actual: the logical size of the VM in bytes.  Formula used:
+ #     logical_vm_size = vm_ram_size - balloon_size
+@@ -1178,8 +1141,7 @@
+ 
+ ##
+ # @HvBalloonInfo:
+-#
+-# hv-balloon guest-provided memory status information.
++#     hv-balloon guest-provided memory status information.
+ #
+ # @committed: the amount of memory in use inside the guest plus the
+ #     amount of the memory unusable inside the guest (ballooned out,
+@@ -1195,9 +1157,8 @@
+ 
+ ##
+ # @query-hv-balloon-status-report:
+-#
+-# Return the hv-balloon driver data contained in the last received
+-# "STATUS" message from the guest.
++#     Return the hv-balloon driver data contained in the last received
++#     "STATUS" message from the guest.
+ #
+ # Errors:
+ #     - If no hv-balloon device is present, guest memory status
+@@ -1238,8 +1199,7 @@
+ 
+ ##
+ # @MemoryInfo:
+-#
+-# Actual memory information in bytes.
++#     Actual memory information in bytes.
+ #
+ # @base-memory: size of "base" memory specified with command line
+ #     option -m.
+@@ -1272,8 +1232,7 @@
+ 
+ ##
+ # @PCDIMMDeviceInfo:
+-#
+-# PCDIMMDevice state information
++#     PCDIMMDevice state information
+ #
+ # @id: device's ID
+ #
+@@ -1308,8 +1267,7 @@
+ 
+ ##
+ # @VirtioPMEMDeviceInfo:
+-#
+-# VirtioPMEM state information
++#     VirtioPMEM state information
+ #
+ # @id: device's ID
+ #
+@@ -1331,8 +1289,7 @@
+ 
+ ##
+ # @VirtioMEMDeviceInfo:
+-#
+-# VirtioMEMDevice state information
++#     VirtioMEMDevice state information
+ #
+ # @id: device's ID
+ #
+@@ -1366,8 +1323,7 @@
+ 
+ ##
+ # @SgxEPCDeviceInfo:
+-#
+-# Sgx EPC state information
++#     Sgx EPC state information
+ #
+ # @id: device's ID
+ #
+@@ -1392,8 +1348,7 @@
+ 
+ ##
+ # @HvBalloonDeviceInfo:
+-#
+-# hv-balloon provided memory state information
++#     hv-balloon provided memory state information
+ #
+ # @id: device's ID
+ #
+@@ -1522,8 +1477,7 @@
+ 
+ ##
+ # @MemoryDeviceInfo:
+-#
+-# Union containing information about a memory device
++#     Union containing information about a memory device
+ #
+ # @type: memory device type
+ #
+@@ -1544,8 +1498,7 @@
+ 
+ ##
+ # @SgxEPC:
+-#
+-# Sgx EPC cmdline information
++#     Sgx EPC cmdline information
+ #
+ # @memdev: memory backend linked with device
+ #
+@@ -1561,8 +1514,7 @@
+ 
+ ##
+ # @SgxEPCProperties:
+-#
+-# SGX properties of machine types.
++#     SGX properties of machine types.
+ #
+ # @sgx-epc: list of ids of memory-backend-epc objects.
+ #
+@@ -1574,8 +1526,7 @@
+ 
+ ##
+ # @query-memory-devices:
+-#
+-# Lists available memory devices and their state
++#     Lists available memory devices and their state
+ #
+ # Since: 2.1
+ #
+@@ -1598,10 +1549,9 @@
+ 
+ ##
+ # @MEMORY_DEVICE_SIZE_CHANGE:
+-#
+-# Emitted when the size of a memory device changes.  Only emitted for
+-# memory devices that can actually change the size (e.g., virtio-mem
+-# due to guest action).
++#     Emitted when the size of a memory device changes.  Only emitted
++#     for memory devices that can actually change the size (e.g.,
++#     virtio-mem due to guest action).
+ #
+ # @id: device's ID
+ #
+@@ -1625,8 +1575,7 @@
+ 
+ ##
+ # @BootConfiguration:
+-#
+-# Schema for virtual machine boot configuration.
++#     Schema for virtual machine boot configuration.
+ #
+ # @order: Boot order (a=floppy, c=hard disk, d=CD-ROM, n=network)
+ #
+@@ -1710,8 +1659,7 @@
+ 
+ ##
+ # @x-query-irq:
+-#
+-# Query interrupt statistics
++#     Query interrupt statistics
+ #
+ # Features:
+ #
+@@ -1727,8 +1675,7 @@
+ 
+ ##
+ # @x-query-jit:
+-#
+-# Query TCG compiler statistics
++#     Query TCG compiler statistics
+ #
+ # Features:
+ #
+@@ -1745,8 +1692,7 @@
+ 
+ ##
+ # @x-query-numa:
+-#
+-# Query NUMA topology information
++#     Query NUMA topology information
+ #
+ # Features:
+ #
+@@ -1762,8 +1708,7 @@
+ 
+ ##
+ # @x-query-ramblock:
+-#
+-# Query system ramblock information
++#     Query system ramblock information
+ #
+ # Features:
+ #
+@@ -1779,8 +1724,7 @@
+ 
+ ##
+ # @x-query-roms:
+-#
+-# Query information on the registered ROMS
++#     Query information on the registered ROMS
+ #
+ # Features:
+ #
+@@ -1796,8 +1740,7 @@
+ 
+ ##
+ # @x-query-usb:
+-#
+-# Query information on the USB devices
++#     Query information on the USB devices
+ #
+ # Features:
+ #
+@@ -1828,8 +1771,7 @@
+ 
+ ##
+ # @MemorySizeConfiguration:
+-#
+-# Schema for memory size configuration.
++#     Schema for memory size configuration.
+ #
+ # @size: memory size in bytes
+ #
+@@ -1846,8 +1788,7 @@
+ 
+ ##
+ # @dumpdtb:
+-#
+-# Save the FDT in dtb format.
++#     Save the FDT in dtb format.
+ #
+ # @filename: name of the dtb file to be created
+ #
+@@ -1865,8 +1806,7 @@
+ 
+ ##
+ # @x-query-interrupt-controllers:
+-#
+-# Query information on interrupt controller devices
++#     Query information on interrupt controller devices
+ #
+ # Features:
+ #
+@@ -1896,8 +1836,7 @@
+ 
+ ##
+ # @query-firmware-log:
+-#
+-# Find firmware memory log buffer in guest memory, return content.
++#     Find firmware memory log buffer in guest memory, return content.
+ #
+ # @max-size: limit the amount of log data returned.  Up to 1 MiB of
+ #     log data is allowed.  In case the amount of log data is larger
+@@ -1911,8 +1850,7 @@
+ 
+ ##
+ # @dump-skeys:
+-#
+-# Dump the storage keys for an s390x guest
++#     Dump the storage keys for an s390x guest
+ #
+ # @filename: the path to the file to dump to
+ #
+@@ -1950,8 +1888,7 @@
+ 
+ ##
+ # @CpuModelExpansionType:
+-#
+-# An enumeration of CPU model expansion types.
++#     An enumeration of CPU model expansion types.
+ #
+ # @static: Expand to a static CPU model, a combination of a static
+ #     base model name and property delta changes.  As the static base
+@@ -1983,9 +1920,8 @@
+ 
+ ##
+ # @CpuModelCompareResult:
+-#
+-# An enumeration of CPU model comparison results.  The result is
+-# usually calculated using e.g. CPU features or CPU generations.
++#     An enumeration of CPU model comparison results.  The result is
++#     usually calculated using e.g. CPU features or CPU generations.
+ #
+ # @incompatible: If model A is incompatible to model B, model A is not
+ #     guaranteed to run where model B runs and the other way around.
+@@ -2008,8 +1944,7 @@
+ 
+ ##
+ # @CpuModelBaselineInfo:
+-#
+-# The result of a CPU model baseline.
++#     The result of a CPU model baseline.
+ #
+ # @model: the baselined `CpuModelInfo`.
+ #
+@@ -2020,8 +1955,7 @@
+ 
+ ##
+ # @CpuModelCompareInfo:
+-#
+-# The result of a CPU model comparison.
++#     The result of a CPU model comparison.
+ #
+ # @result: The result of the compare operation.
+ #
+@@ -2152,8 +2086,7 @@
+ 
+ ##
+ # @CpuModelExpansionInfo:
+-#
+-# The result of a cpu model expansion.
++#     The result of a cpu model expansion.
+ #
+ # @model: the expanded `CpuModelInfo`.
+ #
+@@ -2222,8 +2155,7 @@
+ 
+ ##
+ # @CpuDefinitionInfo:
+-#
+-# Virtual CPU definition.
++#     Virtual CPU definition.
+ #
+ # @name: the name of the CPU definition
+ #
+@@ -2284,8 +2216,7 @@
+ 
+ ##
+ # @query-cpu-definitions:
+-#
+-# Return a list of supported virtual CPU definitions
++#     Return a list of supported virtual CPU definitions
+ #
+ # Since: 1.2
+ ##
 -- 
 2.55.0
 
