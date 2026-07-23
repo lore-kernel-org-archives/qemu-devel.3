@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C8DBC531D0
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 22:31:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8897AC531CC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 22:32:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wn1we-0004ox-UA; Thu, 23 Jul 2026 18:31:12 -0400
+	id 1wn1wS-0004YU-KE; Thu, 23 Jul 2026 18:31:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wn1wd-0004oF-4r
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 18:31:11 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ id 1wn1wO-0004Oa-GQ
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 18:30:56 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wn1wb-0001SG-Ml
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 18:31:10 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-81e86df8987so10768947b3.3
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 15:31:09 -0700 (PDT)
+ id 1wn1wM-0001QG-Ty
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 18:30:56 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-7dbcb505578so10172577b3.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 15:30:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784845868; x=1785450668; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1784845854; x=1785450654; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=0mhSD+dGlrr16JyRhT612XgJdqAQYtisMHkX7vK1jo8=;
- b=V/ta2K6ExA8jE+q0p63YNPXcwmDT/lEl0FF8BcoHapYgA5V+fp2m24GsTyFtbmslDC
- l7qoc4cPSX3PQLG2jNBY2XwVDUpNDD8DJ6Dk0BXKaCdkkcSzWgwIeNOA1X90V6zHmH/G
- FND15VTLkbcBAdSi80Ocs07wR1LhNBX8laupVu5Lqi2ZN6XlBKfXl4EW1jHBGlu7JPnw
- ghRtHu5AH4pmhCTSoM/Txw/9ibuWO2zPVYJfycMSHQ1+zQ7fWxKejphucpXiK/Yd0ZoR
- nD9Q4cVw4CuC6VQIYmocBQqaOQVRTBoMHC0TVE44Wv8kyi74ugSz6Nsn65LHnoasQtSK
- K8Dg==
+ bh=dn72UNvpMJmsMe5tRQU7u6qlwqtNn/DM1PthO2EpZ4E=;
+ b=ifEoxnG17r485xJldp09YfYpMmugAxhgv628jkRLCcw8Fn+QT4jRlGBR9+DeAJboKN
+ xpijI0aWhWsW+SA9LdXkk0wEMAt5uHhjJM2W5ukWi726kWs3ZENhTd7QYgWsWSXv+Tfq
+ 4kaWd9KG4bsWL9cwXju9DgvjzASUjrF+MQIzYKAFxZlf4SqFc3Yp8WK5NnMHbiJyFfgX
+ f9mWGciW35gsfHx1Y/LfQVzhR3HOZgzxcvsMfVV92NVu3Yfo+IGDagmXB9ClFeB3n6y+
+ zTg8u1lSk2BrQD2rJi981ZZSgwmT1Y7tB+H0sOS5baOcGqtUVjIyoM+0WoQwRzTcAdEN
+ lYRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784845868; x=1785450668;
+ d=1e100.net; s=20251104; t=1784845854; x=1785450654;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=0mhSD+dGlrr16JyRhT612XgJdqAQYtisMHkX7vK1jo8=;
- b=ZYxlt9U2HFLxnzUF+lsYT4NPQR8NFg3boE6B6B2Ako8mmIpd7KPqrY5LJWwQIEuneK
- 0YTaD5taYoK6hmult33A79cWfCqZrESGj1nAMyhjPp0X9TbgvKQ/Mt+fSilomljSDO5q
- RP1G3ualLqWCe1y0t+ULj2Xb5Yyo7l2OiUZg5+jSPOEMFOxUnGrp2e9Vdel9u+Ko+Lv5
- iDjotjR5B9WjBGQ57MZPmSe1Y/HOTsRvul9S+h+IBWFkABDwlRN1v36V1IDbirKa2r7z
- 3gdL/Y89E/lRpTZb5EjCK9VYlkVEW+rfuZVq2q4wZx34Pa3agKb58iCinMu4tmoHY4Rj
- 5x9A==
-X-Gm-Message-State: AOJu0Yy+wj3U4ET4j8Xv0iIOYC6AinafHZyJ5AaJdDS0nXWe74z6nL3t
- G32Qg3JXezIBs3BjXw3R1RUprlsTWhqCjcxIhzTFbhwomLPNdJDLJolZ
-X-Gm-Gg: AR+sD10xaOLO7f5WIh4EzFsFtPLYesJzYLa2345xw7saCnyJNaiGlsdSES6bo26T+qT
- bm234Rf1fcjQ/wYpIxgZy3E6FmfxNA8kNUv8paWygzrqbG7UbDxgf+ZxMtEkUR6xD11jkOnlc3y
- pRt0ZgvWbtwTH3Is6fZgDfIgYdRa27YDK1QqBa/zJ0lTpvABxj0tfxJxwZqC/eKUhyyXi19eR73
- 8EGO/IR9Ag/WN/Xvsw4gd0ct2amFZyFL3G/+//7oPXTCuRn4TO+JnGfrkRKlTo7L41M+/wLm6qV
- qGJftjukj1pIap/pqLZqcIv4FBOFOVTNpW4wx9tmLIw1VWAvUwc/mpi0LDjS1x7R0GaovXZfye8
- cHSRWEt3mAyrarDka+YTPqw2mLC1posN1MF0CZ4nKb1L4l0E0R17cAbVFhnRAieMHFeA+LJQTcF
- kVCma2uTE=
-X-Received: by 2002:a05:690c:600c:b0:81d:6eec:fe22 with SMTP id
- 00721157ae682-81f4c31fc3bmr16487457b3.44.1784845868465; 
- Thu, 23 Jul 2026 15:31:08 -0700 (PDT)
+ bh=dn72UNvpMJmsMe5tRQU7u6qlwqtNn/DM1PthO2EpZ4E=;
+ b=p+3BsK6JOOb5TxEc9YFnQCZFtWe0lCQRhd8xg0uyRE72GOhYOzIxZxEUBWI4MO74vB
+ UfHGxm2wcdaw4yXP9UGPVSvj9HhSIL/7F0cqAf33edmsmtO1W4W5olrrXehU0nF8Vb4I
+ yymZ2BDx0o9CPpASfNqVp/3y+dfa+JO9ghUfscyFG0pDIpA87pa0gqigGVlOgf+cTX5O
+ Jn/wBR6fX7clvRoXJKOL/pUhcc5f5Zx6Xi6BcYai7P06KWke/ROryU+9d1KEcWRD/Hiq
+ ZxRU8zslgc6w5LpB5FOJ9FZC3c2c5dDzWXAIMCPTgFSy0KRvFJmf5C0ocS2IrGCSkGGc
+ TbKw==
+X-Gm-Message-State: AOJu0Yw+XT8VON4WcXPtU7bFPwX+Kdz25XULbTbjPPhBMpSd8j/Ag1qE
+ sFuDJTlJT7CGhqBmRbdZ5cTpfF6Q8YrSILeAzgxsA3UhPnXRa7Vc7s2X
+X-Gm-Gg: AR+sD12KM+6YYdXMhIQqozrHWe5Q55DpvaGm0CurVNIXvC6It9FoLvEkEjv03OfZMFA
+ DnA+FNcFWdfYu5QWKyj0AGXJiC92IO1jKGYD0td+PF9OzS+eroOUmEEkdD4FBQl9dJj0YsoA5h3
+ siazzx+Cewk2pp5+sxFuJRm5Sj3LZrDRC3XO0o3Yw2ykOT9pgvFgTcBySRdqnUqdER5uvhUHyMI
+ M3YnPuQKv6qahT8Wv4yf/SMPZFraG04KTwFGRrNyWd8WSwTKl2u8+GHr1r6YQP/ye85Kja6kjeQ
+ HgB2jlrkwzFfB0BxFytI2Zo5R0LPk67eZRYEz+B1AFtSXkjFQyZwvkH1ZBrXkjVD90eqqqSXGSs
+ JSsqrjya9tqI40YFs4zgzPm4xM1Hbgy9zYwLqYMRcnzqXJNt3xkjnZ0Od64cSFHsyT/xNSs65e9
+ 6Mac+DvNY=
+X-Received: by 2002:a05:690c:7343:b0:81e:84dd:213b with SMTP id
+ 00721157ae682-81f4c36f62fmr13959557b3.71.1784845853861; 
+ Thu, 23 Jul 2026 15:30:53 -0700 (PDT)
 Received: from [127.0.1.1] ([2600:1700:e140:14d0:446f:49ff:37bd:d45a])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-81f33c3c1c5sm35766777b3.17.2026.07.23.15.31.04
+ 00721157ae682-81f33c3c1c5sm35766777b3.17.2026.07.23.15.30.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Jul 2026 15:31:06 -0700 (PDT)
+ Thu, 23 Jul 2026 15:30:53 -0700 (PDT)
 From: Connor Kite <connorkite@gmail.com>
-Date: Thu, 23 Jul 2026 15:30:06 -0700
-Subject: [PATCH RFC 07/15] hw/virtio: iova_tree_foreach wrapper
+Date: Thu, 23 Jul 2026 15:30:02 -0700
+Subject: [PATCH RFC 03/15] backends/cryptodev-vhost-user: add memory
+ isolation bool
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260723-vhost-user-isolated-memory-v1-7-6b97c439eb28@gmail.com>
+Message-Id: <20260723-vhost-user-isolated-memory-v1-3-6b97c439eb28@gmail.com>
 References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
 In-Reply-To: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
 To: qemu-devel@nongnu.org
@@ -97,22 +98,22 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>, 
  Connor Kite <connorkite@gmail.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1784845839; l=1785;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1784845839; l=2812;
  i=connorkite@gmail.com; s=20260723; h=from:subject:message-id;
- bh=Yoe4ouzD+Ga6/WRjo8rrhPx85XUfhnHf/hoKZtpa4Yk=;
- b=SHFDvD0FHkAmxfuGP0PJ+XhJubxb/9Wsa2vNeIpQYm30SiB9dn47KOyhBUjqLUHJCQAMZpONh
- 2Odk2TK5fDCBU7bFrC04DFy3SRr5uW7vINzO/2fA8K0BupPKKrrCzXL
+ bh=u55pm1DDJmv5TyBlbSFATydrnGuQo+DHFoyjUl5G2XI=;
+ b=TKXB2eR8dH4lHlo1pG799OEHZtgpI+vA0TcqAB661T4YwOkzPCVblVNFBDayPTk2anqinPips
+ qyvcLjbXIxLB5oSrVZfjuyh2gM4AkJZud/hWSQw6WX2d4QaC2o04ymR
 X-Developer-Key: i=connorkite@gmail.com; a=ed25519;
  pk=xg/3N8AntFCYogaIgN5NC/KkT7UlZB6ktPIRliJ3hv4=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=connorkite@gmail.com; helo=mail-yw1-x112b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=connorkite@gmail.com; helo=mail-yw1-x1133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,52 +129,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a wrapper to vhost-iova-tree that calls iova_tree_foreach on the
-underlying iova_map.  This provides a means to execute some function on
-each node of the tree.
+Add a memory_isolation property to CryptoDevBackendVhostUser and
+add add it as an optional member of CryptodevVhostUserProperties
+in qapi.
+
+This is needed to be able to specify memory isolation for
+cryptodev-vhost-user objects, and the bool will eventually be
+passed to vhost_user_init() in a future patch.
 
 Signed-off-by: Connor Kite <connorkite@gmail.com>
 ---
- hw/virtio/vhost-iova-tree.c | 15 +++++++++++++++
- hw/virtio/vhost-iova-tree.h |  3 +++
- 2 files changed, 18 insertions(+)
+ backends/cryptodev-vhost-user.c | 22 ++++++++++++++++++++++
+ qapi/qom.json                   |  6 +++++-
+ 2 files changed, 27 insertions(+), 1 deletion(-)
 
-diff --git a/hw/virtio/vhost-iova-tree.c b/hw/virtio/vhost-iova-tree.c
-index fa4147b773..d8206379bf 100644
---- a/hw/virtio/vhost-iova-tree.c
-+++ b/hw/virtio/vhost-iova-tree.c
-@@ -189,3 +189,18 @@ void vhost_iova_tree_remove_gpa(VhostIOVATree *iova_tree, DMAMap map)
-     iova_tree_remove(iova_tree->gpa_iova_map, map);
-     iova_tree_remove(iova_tree->iova_map, map);
- }
-+
-+
-+/**
-+ * Traverse through the iova tree in sorted order
-+ *
-+ * @tree: The VhostIOVATree
-+ * @func: Function called at every node.  A false return value ends traversal
-+ * @data: An argument passed to func
-+ */
-+void vhost_iova_tree_foreach(VhostIOVATree *tree,
-+                             GTraverseFunc func,
-+                             gpointer data)
-+{
-+    iova_tree_foreach(tree->iova_map, func, data);
-+}
-diff --git a/hw/virtio/vhost-iova-tree.h b/hw/virtio/vhost-iova-tree.h
-index 08f63b61cd..f3b7c48cb9 100644
---- a/hw/virtio/vhost-iova-tree.h
-+++ b/hw/virtio/vhost-iova-tree.h
-@@ -29,5 +29,8 @@ const DMAMap *vhost_iova_tree_find_gpa(const VhostIOVATree *iova_tree,
- int vhost_iova_tree_map_alloc_gpa(VhostIOVATree *iova_tree, DMAMap *map,
-                                   hwaddr taddr);
- void vhost_iova_tree_remove_gpa(VhostIOVATree *iova_tree, DMAMap map);
-+void vhost_iova_tree_foreach(VhostIOVATree *tree, GTraverseFunc func,
-+                               gpointer data);
-+
+diff --git a/backends/cryptodev-vhost-user.c b/backends/cryptodev-vhost-user.c
+index cc478d9902..e0547c5d40 100644
+--- a/backends/cryptodev-vhost-user.c
++++ b/backends/cryptodev-vhost-user.c
+@@ -49,6 +49,7 @@ struct CryptoDevBackendVhostUser {
+     CharFrontend chr;
+     char *chr_name;
+     bool opened;
++    bool memory_isolation;
+     CryptoDevBackendVhost *vhost_crypto[MAX_CRYPTO_QUEUE_NUM];
+ };
  
- #endif
+@@ -392,6 +393,23 @@ static void cryptodev_vhost_user_finalize(Object *obj)
+     g_free(s->chr_name);
+ }
+ 
++static void cryptodev_vhost_user_set_mem_isolation(Object *obj, bool value,
++                                                   Error **errp)
++{
++    CryptoDevBackendVhostUser *s =
++                      CRYPTODEV_BACKEND_VHOST_USER(obj);
++
++    s->memory_isolation = value;
++}
++
++static bool cryptodev_vhost_user_get_mem_isolation(Object *obj, Error **errp)
++{
++    CryptoDevBackendVhostUser *s =
++                      CRYPTODEV_BACKEND_VHOST_USER(obj);
++
++    return s->memory_isolation;
++}
++
+ static void
+ cryptodev_vhost_user_class_init(ObjectClass *oc, const void *data)
+ {
+@@ -407,6 +425,10 @@ cryptodev_vhost_user_class_init(ObjectClass *oc, const void *data)
+                                   cryptodev_vhost_user_get_chardev,
+                                   cryptodev_vhost_user_set_chardev);
+ 
++    object_class_property_add_bool(oc, "memory-isolation",
++                                   cryptodev_vhost_user_get_mem_isolation,
++                                   cryptodev_vhost_user_set_mem_isolation);
++
+ }
+ 
+ static const TypeInfo cryptodev_vhost_user_info = {
+diff --git a/qapi/qom.json b/qapi/qom.json
+index c55776af7d..d7ca1b4203 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -350,11 +350,15 @@
+ # @chardev: the name of a Unix domain socket character device that
+ #     connects to the vhost-user server
+ #
++# @memory-isolation: disables access from cryptodev to guest memory.
++#     (default: false)
++#
+ # Since: 2.12
+ ##
+ { 'struct': 'CryptodevVhostUserProperties',
+   'base': 'CryptodevBackendProperties',
+-  'data': { 'chardev': 'str' },
++  'data': { 'chardev': 'str',
++            '*memory-isolation': 'bool' },
+   'if': 'CONFIG_VHOST_CRYPTO' }
+ 
+ ##
 
 -- 
 2.43.0
