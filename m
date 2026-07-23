@@ -4,95 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C24C3C531CC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 18:33:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2399C531D0
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 18:47:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmyDV-0001XG-BL; Thu, 23 Jul 2026 14:32:22 -0400
+	id 1wmyRP-0005Hl-5C; Thu, 23 Jul 2026 14:46:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wmyDA-0001S2-8q
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 14:32:02 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wmyD4-0004iM-4l
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 14:31:59 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-47ddf7b09aaso675075f8f.3
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 11:31:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784831482; x=1785436282; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=9IUQr6dRDSnojFA7KPPEV0ZefekKlqix5Uxqq1XSfSg=;
- b=Slxfd3oofTzjiLrUYAEfiups+zJN3HwDvboMi+EkcWyzwro0Rtnk+VlSCYq4xLt0QX
- yQcbEvXzshUGfKQgcPtZqRzn8VHJ4MGhvV7NjNoQ6lLkwQoJ9fgWl6C1NON7lYNe4BeQ
- VBmdYJyz7XHiOUQgbclJ3E0DsEcIru7aLGIW9X1R2sao0MctnHcwgTQUik9CvkJri+kJ
- 2bRJHMdDTDzC8ItU4K9tyCSJHHgcYJWpqS2qn4AoVG/p3ax4+tiOyckQ5yuJ5dSVpqUs
- EgragKiCbhYs6DOi9V/VCVdrP1V4TJKK8bvloi+MAfWYYXZbslSbfWqc5oZgOQt90vOO
- BlhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784831482; x=1785436282;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=9IUQr6dRDSnojFA7KPPEV0ZefekKlqix5Uxqq1XSfSg=;
- b=gvpPFO+DLD4JqrPntn19yqqd4VCO/GZFwohbx/yi55Tfijc0Hz9s9RiIF1tD95p64t
- 3vAl4XwbhkRlOsl1TI3zlNyUvJmHDJWLLt+A+FiHDe9bu0Q2yoy75DVzL1FZ/hca6aoz
- eFs2gOcnqgzMzfuVNpmApL1kqgviAL6ZQhsenbujFu2qTb0l7VoRzStJ5gigfoKcyX9/
- ItkWt0m+1m8m6GE8EyhQJ2NVjiZXE+/bK+IytaXthSToJIxw7AZ8wncvffNgd12S4EMF
- 0Hmcrd1lXwRtD1y+P3ehBInH8GKGObxa2ry9aibxWtfQb5dDE8V4qffRAvAES6b2v20X
- 602Q==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoN4j5a7lHt0zWzr0JDKKv6FnZzbUFhZ4Ek0Z0MZtFjKSpU3hRPQxlaDyCZ2UVn186uYsfvsvqzBHm7@nongnu.org
-X-Gm-Message-State: AOJu0YyZAPpD712gYVpvdSOH1ZYtF1tutMg01r/TRCllQLu7oLdtr7hO
- zIews7oOZ8EjaJH6VsP8UDD6OODJInAwGXBkoRldHa9VbkhCsmZaLsvN
-X-Gm-Gg: AR+sD11DJxPEvjuhXQ3+sONwPppPTUrM/V0Rg7vgyvB+8eH/rLy8NFPil/oN8DWTRPK
- 6/T1HWTVlyaExcKAUMNKPzqdIbZ+ExnlhlOHdUmxkEv9O1RAuaQ7ni0P76NGF/5Dm4bRSO4l5q5
- z0ZPDrftfw5Az3ZPgAR6k4C5csa8E09OkdykBjMEGJAtqOLgSFmAhTs3nMIFc2EJikePjwllNkm
- OSr6z17w+D2DdGqbpTXB3L6eOXnOYBdLl1hmUem4WcSGkOTl0itoPb0ScuPlvwuxzSnjqLOkQJv
- QgE0P9FksktT6rP+j0VYv970WABs5lYkuW2TkddURA/hmlVrW9onZYaQA/915JcCBaSu2iI9C/U
- cC19WWfBJUhwPU5nPTbdVmaNT2E1gyZ9QehdLHnAcsBHcy+xOzMzH1cAgYfHH/NgPlDZHJIO/wT
- fhrl59v8Vo
-X-Received: by 2002:a05:6000:25c3:b0:475:f0f0:9ef7 with SMTP id
- ffacd0b85a97d-47f8d76ee04mr5099034f8f.60.1784831481490; 
- Thu, 23 Jul 2026 11:31:21 -0700 (PDT)
-Received: from ehlo.thunderbird.net ([185.238.219.95])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c6ef25sm16033983f8f.36.2026.07.23.11.31.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Jul 2026 11:31:20 -0700 (PDT)
-Date: Thu, 23 Jul 2026 18:31:00 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Pavel Pisa <pisa@fel.cvut.cz>
-CC: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org, Matyas Bobek <matyas.bobek@gmail.com>,
- Francisco Iglesias <francisco.iglesias@amd.com>,
- Jason Wang <jasowangio@gmail.com>,
- Vikram Garhwal <vikram.garhwal@bytedance.com>
-Subject: Re: [PATCH 7/9] hw/net/flexcan: Drop oversized 'mb[]' mailbox view
-In-Reply-To: <202607231251.05529.pisa@fel.cvut.cz>
-References: <20260723070059.6332-1-shentey@gmail.com>
- <84061116-c6d5-4def-acd8-ba9c81a0eece@oss.qualcomm.com>
- <F33F7AFC-1868-49E8-95C8-CBB04339F6A3@gmail.com>
- <202607231251.05529.pisa@fel.cvut.cz>
-Message-ID: <3A984F2D-FCCC-401C-8ADD-6335C7F44478@gmail.com>
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wmyQm-0005Df-Qt
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 14:46:20 -0400
+Received: from p-east2-cluster5-host12-snip4-10.eps.apple.com ([57.103.79.83]
+ helo=outbound.st.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wmyQi-0006ix-4U
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 14:46:03 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-100-percent-5 (Postfix) with ESMTPS id
+ 8933F1800CB2; Thu, 23 Jul 2026 18:45:48 +0000 (UTC)
+X-ICL-RepId: 019f904c-50a1-7ba6-8c43-67d131986391
+X-ICL-Out-Info: HUtFAUMHWwJACUgATUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0ITRMFUgddTVYNRw9YHlwUFwtHQ14IXh9MHB0OWAYSAE0KDjYGWQVeCVYDQwU2EhRdRUYDRxlXFFAbRwxVB1deXwoTAF4PD0wBSwouDi8BRBQ+AFkORgZIeEEeLAJdcF0JPnFeB15wQg1BASh3HlwASx1XBFQfUxJVHR0LRVUSBEAIVlBUHkEEVhVsCVgGUxlX
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1784832352; x=1787424352;
+ bh=3PYAbALTtlcIHjAU5FubM1hwxyqzTlhOxy4/wOk8L3c=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=iIXj6CkD1pW0Tt4vVgdjjfCOjQ874+elT/LhD6hpylAf6FRhP4IxGU2KCrkQzu49EroEFmvO4WbPJ/8pnopiyUpvbb/PDswrVN26+WzGk9PvR5U4JgoFVIs73Ukt0XE9ojvD/fIMXC40WRp+ty/9SdlMAq3E2Qx2zJh0yiLAnqPHl+hB10bknLFUaPs1x63rwiZTAo941Su23x2VPrsqLTOt25W/RStQrWVIzWe27ybb3V5cujagW7lj9nWoUBGBG250Rp2Hg2Z3zIoTUtaxKRt1dZjf4Y9nS09YgSeJxg06nwgMwsxHBamVPcWbql0OM9ZZUgvM+C55ZXPuJLt8xQ==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-100-percent-5 (Postfix) with ESMTPSA id
+ 65AF218003E5; Thu, 23 Jul 2026 18:45:41 +0000 (UTC)
 Content-Type: text/plain;
- charset=utf-8
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3897.100.8.1.1\))
+Subject: Re: [PATCH v5 97/98] configure: remove --cross-cc* options
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20260710214343.2065491-98-pierrick.bouvier@oss.qualcomm.com>
+Date: Thu, 23 Jul 2026 20:45:29 +0200
+Cc: qemu-devel@nongnu.org, Brian Cain <brian.cain@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?utf-8?Q?=22Daniel_P_=2E_Berrang=C3=A9=22?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>, Helge Deller <deller@gmx.de>
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Message-Id: <839C9D34-F349-48A9-A56B-0FB305B2492E@unpredictable.fr>
+References: <20260710214343.2065491-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260710214343.2065491-98-pierrick.bouvier@oss.qualcomm.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: Apple Mail (2.3897.100.8.1.1)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIzMDE4MyBTYWx0ZWRfXxoyKJnN4oajV
+ 7oC9zsOLaAaaJD2bv0GEnwXOomzWiHjiHxHpRYQe6bbWe9TGJ3a3JVtWppQExCiLEUlE+2ZUtpT
+ POmJRP1dIFVW/IHDG1IEMpf+bstod5diNyTJDKQ8gWxpo4muJJ+Sk0j0jmHusOksd8tI9qdcVjI
+ ciC3nS1qtkIsfLW3TvoGtWmKW9UHB16JA0WzSVc9Kes62rNakonqU3X8vPO2BD7Umy8pPsbZqu2
+ 8M1bBamJ3bb0vYASQlHy42fCUqYS10piJaNC2kj1vayxtAt482C+luoVnz8I76iEnXee9Eil6Ln
+ SWieT8R68G31j3Cp8eiGLFCdl0U/839QskLn05kH1RKfLQXnoNEVwolaLKZIj4=
+X-Proofpoint-GUID: ZYeXdQ1AHVjYhghpZ4ekUrgrODoCskn6
+X-Proofpoint-ORIG-GUID: ZYeXdQ1AHVjYhghpZ4ekUrgrODoCskn6
+X-Authority-Info-Out: v=2.4 cv=Sbn6t/Ru c=1 sm=1 tr=0 ts=6a62615d
+ cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
+ a=YrL12D//S6tul8v/L+6tKg==:17 a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
+ a=UZ311UNltKGXArjXTUIA:9 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+Received-SPF: pass client-ip=57.103.79.83;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,125 +97,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 23=2E Juli 2026 10:51:05 UTC schrieb Pavel Pisa <pisa@fel=2Ecvut=2Ecz>:
->Hello Bernhard and Philippe,
+> On 10. Jul 2026, at 23:43, Pierrick Bouvier =
+<pierrick.bouvier@oss.qualcomm.com> wrote:
+>=20
+> Those options were useful a few years ago, before containers were
+> available as an alternative for missing cross compilers. Simplify the
+> workflow by removing those options and maintaining only the container
+> based approach.
+>=20
+> Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+> configure | 473 ------------------------------------------------------
+> 1 file changed, 473 deletions(-)
+>=20
+Hi,
 
-Hi Pavel,
+It=E2=80=99s nowhere near an upstream state, but we might want to =
+consider some
+architectures where Linux is not supported.
 
->On Thursday 23 of July 2026 12:26:41 Bernhard Beschow wrote:
->> Am 23=2E Juli 2026 08:20:34 UTC schrieb "Philippe Mathieu-Daud=C3=A9"=
-=20
-><philmd@oss=2Equalcomm=2Ecom>:
->> >On 23/7/26 09:00, Bernhard Beschow wrote:
->> >> As indicated in the comments, the `mb[]` a=2Ek=2Ea=2E `mbs []` views=
- should
->> >> cover 0x400 (1024) bytes=2E However, the `mb[]` array covers four ti=
-mes
->> >> the size since `sizeof(FlexcanRegsMessageBuffer)` returns the size i=
-n
->> >> bytes instead of counting the number of uint32_t fields=2E This shif=
-ts the
->> >> subsequent register offsets by 0xc00 which is not intended=2E Fix th=
-e size
->> >> and thus the offsets by dropping the now unused `mb[]` view=2E
->> >>
->> >> Note that the different size changes the migration layout=2E Since t=
-he
->> >> device model is new, no change in the version fields is needed=2E
->> >
->> >typedef struct FlexcanState {
->> >    =2E=2E=2E
->> >    union {
->> >        FlexcanRegs     regs;
->> >        uint32_t        regs_raw[sizeof(FlexcanRegs) / 4];
->> >    };
->> >    =2E=2E=2E
->> >} FlexcanState;
->> >
->> >static const VMStateDescription vmstate_can =3D {
->> >    =2Ename =3D TYPE_CAN_FLEXCAN,
->> >    =2Eversion_id =3D 1,
->> >    =2Eminimum_version_id =3D 1,
->> >    =2Efields =3D (const VMStateField[]) {
->> >        =2E=2E=2E
->> >        VMSTATE_UINT32_ARRAY(regs_raw, FlexcanState, sizeof(FlexcanReg=
-s) /
->> > 4),
->> >
->> >        ^^^
->> >
->> >This "consider this structure as a casted array of u32" is very fragil=
-e
->> >anyway, and will unlikely scale over time=2E
->> >
->> >        =2E=2E=2E
->> >        VMSTATE_END_OF_LIST(),
->> >    },
->> >};
->>
->> Any suggestions what to do instead?
->>
->
->I would suggest to keep the state as uint32_t array=2E
->It is accessed by this and only by this size as the
->FlexCAN MemoryRegionOps are defined=2E In the fact
->I would like/plan in longer term, even to switch
->the mbs array to be plain area of uint32_t in the future,
->that is remove field
->
->  FlexcanRegsMessageBuffer mbs[FLEXCAN_MAILBOX_COUNT];
->
->in FlexcanRegs=2E
->
->There should be only function which would return start
->of given FlexcanRegsMessageBuffer based on index
->argument and actual message buffers configuration=2E
->It is required for CAN FD where message buffer
->size is configurable=2E The raw/uint32_t area is kept
->the same, but it is distributed to the indexed
->buffers different way=2E
->
->So my preference is to move from structured view
->in direction to the offsets in the words array=2E
->Even the registers could be defined as offsets
->to this array in the theory but as the overlay
->structure for register accesses is used even
->in the Linux kernel driver, I do not think that
->this is necessary=2E
->
->But replacement of
->
->  FlexcanRegsMessageBuffer mbs[FLEXCAN_MAILBOX_COUNT];
->
->with appropriate
->
->  uint32_t mbs[FLEXCAN_MAILBOX_AREA_WORD_COUNT];
->
->and access functions would please me, because
->it helps with future CAN FD support=2E
+An extreme example (which not remotely anywhere near going in tree yet):
+there=E2=80=99s a working IA-64 system emulation tree around (on top of =
+QEMU 11.0)
+that can boot Windows and Linux guests. Linux and glibc do not have =
+upstream
+support anymore for that architecture.
 
-Having CAN FD support would be nice indeed=2E Let's keep the code simple f=
-or now though until it gets implemented=2E Having just one way of doing thi=
-ngs helps avoid traps such as those fixed in this series=2E We can change t=
-he code any time as we need it=2E
+aarch64_be might also be going that route in the not-too-far-away =
+future...
 
-Best regards,
-Bernhard
+And there=E2=80=99s also macOS hosts and others, so while containers as =
+a default
+are very nice, there should still be an option to opt-out I think.
 
->
->Best wishes,
->
->                Pavel Pisa
->    phone:      +420 603531357
->    e-mail:     pisa@cmp=2Efelk=2Ecvut=2Ecz
->    Department of Control Engineering FEE CVUT
->    Karlovo namesti 13, 121 35, Prague 2
->    university: http://control=2Efel=2Ecvut=2Ecz/
->    personal:   http://cmp=2Efelk=2Ecvut=2Ecz/~pisa
->    social:     https://social=2Ekernel=2Eorg/ppisa
->    projects:   https://www=2Eopenhub=2Enet/accounts/ppisa
->    CAN related:http://canbus=2Epages=2Efel=2Ecvut=2Ecz/
->    RISC-V education: https://comparch=2Eedu=2Ecvut=2Ecz/
->    Open Technologies Research Education and Exchange Services
->    https://gitlab=2Efel=2Ecvut=2Ecz/otrees/org/-/wikis/home
+
 
