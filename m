@@ -4,114 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56D75C4452B
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:15:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA27AC4452B
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:49:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmkpF-0002WC-5A; Thu, 23 Jul 2026 00:14:25 -0400
+	id 1wmlMK-0007Ci-1A; Thu, 23 Jul 2026 00:48:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rahul@summations.net>)
- id 1wmkpD-0002Vr-7m
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:14:23 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rahul@summations.net>)
- id 1wmkp3-0007oH-Bm
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:14:16 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-81ed073fed0so1937137b3.0
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 21:14:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784780051; cv=none;
- d=google.com; s=arc-20260327;
- b=N5T5ITqN8TLkj2dHpwDG36pHih0DicimhGQIGGNNn5NDCp8J3KpxSjmbXnNY3A/9LW
- a23Rs8BxSUYOlpVOly14LkL0B4zDyNLoGRV209H/LfEcy+Fkn9cf0+JBXqLAEQO/4MT7
- 7FKM6LzSuXz7WKYZ15y241MIVB8TM2KMmeOUTrQq/ObPcyZ5jlcF9GdXEFrXLeUIGzyo
- 8mwJCsPteUQWx+x5autgFdW7OEqZHfmu8yrdvqbTefc8nKCKDhK1Aa2gz1CjP6oGYufy
- Aa7BTVmg3l6UO5eqYZeOiol9ZBV3yHSZ4e5mOKcLNBb4jEc92TAuulXgBiK4mqorDJSF
- +AFQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=/1dbRvGchufgc9GeL60Y30E5sq5Z/5ej3MLrv6SxgjE=;
- fh=Ka2BEepvMY/2XS6uCw+CsJHUs2FeeiPjQxobS0KU0UU=;
- b=kpXyeKXPNArleDQN+Adycd+vR2OgsFiOYqW3Sooj2wETVH5sFFUM6V4tjrAlM9jMhu
- AB2EYsGQInP4R49OdJ/slQmi35Apt7zVb1NwemuzvtMDs8HwI4Mve/4PEulbEnzU/Qnz
- Ltgki7FYHKAKxqRnO8ffIhmuIEhkZSipvIu7cnpwwhLppIobwMp0VP/xmMNf0JYQfs+0
- jG/j6/QPJ7M3aiObflhQ7AnwALkRNNtoV0dnBWaxQVRGYjo8WL1Bdl0w6d9k3WFqlpzk
- T3/pAe7JI5wCt2YuTWaZjmTYA9hcUpY8V119zCvSgmjA0aE/7KqvEnS5lEy1w8ri0IXT
- swHQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=summations-net.20251104.gappssmtp.com; s=20251104; t=1784780051; x=1785384851;
- darn=nongnu.org; 
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=/1dbRvGchufgc9GeL60Y30E5sq5Z/5ej3MLrv6SxgjE=;
- b=YwGSDKtNK0jURnUXPKKQRVQ93w6qzl0N6D1WSlfqG5g6IgnSwNJtNTg9upGTIdQPKl
- zvCC8EoQvysxB6jn5z3ZrRd0AJv9Q0bc1VIbUUsKm247hp06bOAmA8rZgzj2eeBGJ6w9
- gdpt6pgI5+34ujXf+IzRycenwcmsdAKKb/uTvgvcQrT+5NTr4CTP6tZZTy5DANKODEYW
- nuwyCMvygyEUy3I6TcxWFL3417d2EBI9sbJMMQD0pQsmwak/pZSVYEQa8W+66Pepy0s2
- FkJ9VwpWnYHe8xWl+5MGTNzIk7I1beljSQ43fyHymFbV6+wijVpP7S03z3oter1AImRK
- bsqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784780051; x=1785384851;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=/1dbRvGchufgc9GeL60Y30E5sq5Z/5ej3MLrv6SxgjE=;
- b=rKoWCAPu2fTyxyKZByAQ9XHErTY9b4ei2u2FXO9+foyUnLrl4ZGduMNCJZ8CUzXXNP
- S2qO0W1xgahY4rrzCafcAFWVpJPigYlMFITSjYRHK/pRtqEFNXY/amd/FMBK7BdF7ouq
- juh4EraljrX5VYPO0jyCWokTfn2sDTTuSmL2su2yPkFeJtW0vZpOXuL2U0X40R2B+cn2
- oQfma8D9UF5g+GlPIa0nnWbc5MSqpqlv9bXet7NUShTApTgMxLzIiV9ZZJ0/K4dlU/4V
- HG/mQ4TtOrrMY0/9wPIkiTKBLQ2vUqR8F+U25hNKfdnlZP6Q+xxTAYNN1tEjY+8mVlyP
- vCNw==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rq9BSkzwsCtUybkCi4lxy/Bt+qV0dS6xsrIy5yL+rOcStHNf1TsBAb9fDI7suELoaGYNnH9OqFPvXys@nongnu.org
-X-Gm-Message-State: AOJu0YydTIc0WWIleC7YXRpEsDQRykfEAEgr2aAPkB8khmQbYjb05i5I
- yiCX81+booAnnajo2S1u5g7hhjc7T0IMm6kdwTgt1Xy5hFE1pLSNLDnuoaUvQjJDnG1CdMmWo7h
- wR/aG4owYdQoFiZRPPBqdUf4RLyYBKl8p7YLEeuUgKy4=
-X-Gm-Gg: AR+sD10UWeBBSmvSehQvXmksFEf/hYL2NMTLeMgpCaqCW4kTqAm4K3K3L7T9+kmxD9z
- qEBM9u3QXvGpSmOtE2Ez4Pkl+ybtRmmfs872Ov7HsEWRy8Fp3y9cMyNWAoSjfVTYod9uat9HBBG
- M94GI9xKRgXlp+DcmkHFFpFSqgTKeQ4pzgcptaHELdEvKcz7rgK7MPhOZaX3R5JxZm2IrBm6Z9b
- hUixJWOsvGK7arTiL8JZP8pfjcaxjQxQgeWVdJMQpehx5vVTzTYVbIxNl90Rwq2wgBgpigz0F/Z
- ZO0xVdXdQB0FfdtjpqOHb4ZZh42NNR1gIC+hLWVDSXzpO5Lb8x6884dehHW5gA==
-X-Received: by 2002:a05:690c:e3c7:b0:814:651e:a553 with SMTP id
- 00721157ae682-81f4c1d5e98mr4149257b3.28.1784780050925; Wed, 22 Jul 2026
- 21:14:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlMI-0007Bx-Qi
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:48:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlME-0003w1-JT
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:48:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784782108;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=70xezIyhYhj2L6fFDyjFlBVX1nAg+gjuZd37VGCIuxQ=;
+ b=JeGdgGmrHuyzisujEm+nK3SgctPWgz5Ie1hmmUloudPlgK4n25wbK4I93IQkFg26Y4hQ/y
+ 9lRRJ7GC9Ew0IgYNVn3B5UqnL0rczBpHiLhrT8W17r3qfkbjTh1iHTMmZYgJed9kv/AfEp
+ MEaXs6+5PgUWwDUMDY44zavsblvmkVU=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-226-UgicRAdpN1GEard6mXQZZg-1; Thu,
+ 23 Jul 2026 00:48:24 -0400
+X-MC-Unique: UgicRAdpN1GEard6mXQZZg-1
+X-Mimecast-MFC-AGG-ID: UgicRAdpN1GEard6mXQZZg_1784782102
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8B7C318007D2; Thu, 23 Jul 2026 04:48:20 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.44])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9123918002AE; Thu, 23 Jul 2026 04:48:07 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Lukas Straub <lukasstraub2@web.de>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Zhao Liu <zhao1.liu@intel.com>, Laurent Vivier <laurent@vivier.eu>,
+ Markus Armbruster <armbru@redhat.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Alex Williamson <alex@shazbot.org>, zhenwei pi <zhenwei.pi@linux.dev>,
+ Hanna Reitz <hreitz@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ linux-cxl@vger.kernel.org, Jiri Pirko <jiri@resnulli.us>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Fabiano Rosas <farosas@suse.de>, John Snow <jsnow@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
+ Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ linux-edac@vger.kernel.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, qemu-trivial@nongnu.org,
+ Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH v2 00/44] qapi: convert trivial intro sections
+Date: Thu, 23 Jul 2026 00:47:21 -0400
+Message-ID: <20260723044805.527643-1-jsnow@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20260715145016.17369-1-zhiwei_liu@linux.alibaba.com>
- <a568614fb2f7221583bbcc2c67cf7282d50e4d83.camel@alistair23.me>
- <db11d478-c0cb-4ca6-b7b4-3f53b281452b@linux.alibaba.com>
- <8cc10b77-22a0-40f0-b883-5d3491248fac@oss.qualcomm.com>
- <705186b9-dd43-4e8e-ba42-0b6d0af05081@linux.alibaba.com>
-In-Reply-To: <705186b9-dd43-4e8e-ba42-0b6d0af05081@linux.alibaba.com>
-Date: Thu, 23 Jul 2026 09:43:57 +0530
-X-Gm-Features: AUfX_mx2w8tmlEr7phMRnY00XtbgWlyevpye4TQraJDGBtDtZAtwp68uahGrNpM
-Message-ID: <CABdD5xnzP=mYH3n8Uexfka0G+JbceKxSt=T=4LzjvGfCF4BctQ@mail.gmail.com>
-Subject: Re: [PATCH v7 00/11] target/riscv: Implement Smsdid and Smmpt
- extension
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair <alistair@alistair23.me>, 
- qemu-devel@nongnu.org, xiangyi.zeng@linux.alibaba.com, palmer@dabbelt.com, 
- alistair.francis@wdc.com, chao.liu.zevorn@gmail.com, liwei1518@gmail.com, 
- qemu-riscv@nongnu.org, cxx194832@alibaba-inc.com, 
- rahul.pathak@oss.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=rahul@summations.net; helo=mail-yw1-x1133.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: permerror client-ip=170.10.133.124;
+ envelope-from=jsnow@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,249 +101,130 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Rahul Pathak <rahul@summations.net>
-From:  Rahul Pathak via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhiwei,
+GitLab CI: https://gitlab.com/jsnow/qemu/-/pipelines/2699067787=0D
+=0D
+Hi, this patchset converts trivial "introductory" sections in the QAPI=0D
+documentation to use the new, explicit intro section syntax.=0D
+=0D
+This is being done primarily for the benefit of the forthcoming=0D
+"inliner", a feature for the rendered HTML QMP documentation that=0D
+seeks to "inline" QMP command argument documentation into the argument=0D
+list for each command.=0D
+=0D
+There are two main motives here:=0D
+=0D
+(1) We want the split between the "introduction" and "details"=0D
+    sections to be mechanically obvious, so that auto-generated or=0D
+    inlined documentation has a well-defined, obvious spot to go.=0D
+=0D
+(2) We do not want to inline irrelevant, introductory text describing=0D
+    structures to be copied into command documentation.=0D
+=0D
+This patchset tackles "trivial" conversions: cases where the=0D
+introduction is only a single paragraph and is immediately followed by=0D
+a tagged section, the end of the documentation block, or some other=0D
+pre-existing syntactical delineation.=0D
+=0D
+Future patches that may require more scrutiny will handle the=0D
+remaining conversions - I think this is enough for today, don't you?=0D
+=0D
+John Snow (44):=0D
+  qapi: convert intro sections for error.json=0D
+  qapi: convert intro sections for acpi-hest.json=0D
+  qapi: convert intro sections for ebpf.json=0D
+  qapi: convert intro sections for uefi.json=0D
+  qapi: convert trivial intro sections for compat.json=0D
+  qapi: convert intro sections for vfio.json=0D
+  qapi: convert intro sections for trace.json=0D
+  qapi: convert trivial intro sections for misc-arm.json=0D
+  qapi: convert intro sections for cryptodev.json=0D
+  qapi: convert intro sections for machine-common.json=0D
+  qapi: convert intro sections for accelerator.json=0D
+  qapi: convert intro sections for authz.json=0D
+  qapi: convert trivial intro sections for yank.json=0D
+  qapi: convert intro sections for replay.json=0D
+  qapi: convert trivial intro sections for machine-s390x.json=0D
+  qapi: convert trivial intro sections for acpi.json=0D
+  qapi: convert intro sections for tpm.json=0D
+  qapi: convert trivial intro sections for qdev.json=0D
+  qapi: convert trivial intro sections for control.json=0D
+  qapi: convert intro sections for dump.json=0D
+  qapi: convert intro sections for common.json=0D
+  qapi: convert intro sections for sockets.json=0D
+  qapi: convert trivial intro sections for transaction.json=0D
+  qapi: convert trivial intro sections for stats.json=0D
+  qapi: convert trivial intro sections for job.json=0D
+  qapi: convert intro sections for pci.json=0D
+  qapi: convert trivial intro sections for introspect.json=0D
+  qapi: convert intro sections for rocker.json=0D
+  qapi: convert trivial intro sections for misc-i386.json=0D
+  qapi: convert trivial intro sections for block-export.json=0D
+  qapi: convert intro sections for audio.json=0D
+  qapi: convert trivial intro sections for block.json=0D
+  qapi: convert trivial intro sections for misc.json=0D
+  qapi: convert trivial intro sections for crypto.json=0D
+  qapi: convert intro sections for cxl.json=0D
+  qapi: convert trivial intro sections for run-state.json=0D
+  qapi: convert intro sections for char.json=0D
+  qapi: convert intro sections for virtio.json=0D
+  qapi: convert trivial intro sections for net.json=0D
+  qapi: convert trivial intro sections for qom.json=0D
+  qapi: convert trivial intro sections for ui.json=0D
+  qapi: convert trivial intro sections for migration.json=0D
+  qapi: convert trivial intro sections for machine.json=0D
+  qapi: convert trivial intro sections for block-core.json=0D
+=0D
+ qapi/accelerator.json    |  18 +-=0D
+ qapi/acpi-hest.json      |   4 +-=0D
+ qapi/acpi.json           |  15 +-=0D
+ qapi/audio.json          |  88 ++----=0D
+ qapi/authz.json          |  21 +-=0D
+ qapi/block-core.json     | 646 ++++++++++++++++-----------------------=0D
+ qapi/block-export.json   |  87 +++---=0D
+ qapi/block.json          |  58 ++--=0D
+ qapi/char.json           |  90 ++----=0D
+ qapi/common.json         |  36 +--=0D
+ qapi/compat.json         |   6 +-=0D
+ qapi/control.json        |  30 +-=0D
+ qapi/crypto.json         | 118 +++----=0D
+ qapi/cryptodev.json      |  18 +-=0D
+ qapi/cxl.json            | 128 ++++----=0D
+ qapi/dump.json           |  24 +-=0D
+ qapi/ebpf.json           |  14 +-=0D
+ qapi/error.json          |   3 +-=0D
+ qapi/introspect.json     |  45 +--=0D
+ qapi/job.json            |  18 +-=0D
+ qapi/machine-common.json |  19 +-=0D
+ qapi/machine-s390x.json  |  20 +-=0D
+ qapi/machine.json        | 261 ++++++----------=0D
+ qapi/migration.json      | 201 +++++-------=0D
+ qapi/misc-arm.json       |  15 +-=0D
+ qapi/misc-i386.json      |  52 ++--=0D
+ qapi/misc.json           |  74 ++---=0D
+ qapi/net.json            | 101 +++---=0D
+ qapi/pci.json            |  27 +-=0D
+ qapi/qdev.json           |  23 +-=0D
+ qapi/qom.json            | 138 +++------=0D
+ qapi/replay.json         |  45 ++-=0D
+ qapi/rocker.json         |  39 +--=0D
+ qapi/run-state.json      | 120 +++-----=0D
+ qapi/sockets.json        |  31 +-=0D
+ qapi/stats.json          |  34 +--=0D
+ qapi/tpm.json            |  29 +-=0D
+ qapi/trace.json          |  12 +-=0D
+ qapi/transaction.json    |  14 +-=0D
+ qapi/uefi.json           |   5 +-=0D
+ qapi/ui.json             | 215 +++++--------=0D
+ qapi/vfio.json           |  19 +-=0D
+ qapi/virtio.json         |  91 +++---=0D
+ qapi/yank.json           |  25 +-=0D
+ 44 files changed, 1165 insertions(+), 1912 deletions(-)=0D
+=0D
+-- =0D
+2.55.0=0D
+=0D
 
-A.
-The mmpt probe in OpenSBI was deliberately set to detach
-the mode and sdid write dependency.
-Spec says mmpt=3DBare then SDID and PPN must be 0
-but it doesn't say whether this check is handled by hardware or software.
-and upto the interpretation.
-
-B.
-Also, in your Qemu patch series, the mfence/minval encodings are different
-from what they are suggested by the authors of SMMTT spec.
-Please check the PR raised here in riscv-opcodes
-https://github.com/riscv/riscv-opcodes/pull/389/
-
-I understand that this is not fixed yet. However, in OpenSBI I chose to
-use the same values as in the PR.
-
-Though I haven't fully reviewed your patches,
-
-If I change point A in OpenSBI and change point B in your Qemu,
-I can make OpenSBI SMMPT work with your V7 Qemu SMMPT.
-
-I agree with Daniel and appreciate that you agree to collaborate
-and not duplicate efforts.
-
-I can send a V2 of my OpenSBI series with the change of point A
-and you can update the Qemu with at least the current proposal
-encodings as defined in the PR in riscv-opcodes. This will
-align both OpenSBI and QEMU SMSDID+SMMPT changes.
-
-Thanks
-Rahul
-
-On Thu, Jul 23, 2026 at 9:17=E2=80=AFAM LIU Zhiwei <zhiwei_liu@linux.alibab=
-a.com> wrote:
->
->
-> On 7/23/26 3:52 AM, Daniel Henrique Barboza wrote:
-> >
-> >
-> > On 7/22/2026 12:11 AM, LIU Zhiwei wrote:
-> >>
-> >> On 7/22/26 8:56 AM, Alistair wrote:
-> >>> On Wed, 2026-07-15 at 22:50 +0800, LIU Zhiwei wrote:
-> >>>> This patch set introduces support for the RISC-V Smsdid and Smmpt
-> >>>> (Supervisor Domain Identifier and Memory Protection Table) extension=
-s
-> >>>> v0.4.9(https://github.com/riscv/riscv-smmtt/releases/tag/v0.4.9).
-> >>>> Smmpt provides a hardware mechanism for fine-grained memory
-> >>>> protection,
-> >>>> checked after address translation, which is particularly useful for
-> >>>> supervisor-level sandboxing and security monitoring.
-> >> Hi Alistair,
-> >>> Can you include a link to the upstream submitted patches to use this
-> >>> functionality
-> >> Xiangyi is currently working on OpenSBI support for SMMPT, and we
-> >> already have an internal implementation in place. We plan to upstream
-> >> the OpenSBI support as soon as possible, and once that is done, I=E2=
-=80=99ll
-> >> be able to include a link here.
-> >
-> Hi Daniel
-> > Please be aware that Rahul already sent OpenSBI patches for smmpt and
-> > smsdid:
-> >
-> > [RFC PATCH 0/5] Add Smsdid and Smmpt supervisor domain protection
-> > https://lists.infradead.org/pipermail/opensbi/2026-July/010235.html
-> >
-> > In fact, as I said in another thread [1], Rahul also has a QEMU
-> > implementation of his own.
-> > His OpenSBI patches works with his QEMU changes:
-> >
-> > https://github.com/pathakraul/qemu/tree/rpathak_smmpt_v1
-> Thank you very much for pointing this out and for coordinating between
-> us. I was not aware of Rahul's OpenSBI patches and QEMU implementation.
-> >
-> > But seems like his OpenSBI patches does *not* work with this QEMU patch=
-es,
-> It seams probe_sdidlen in OpenSBI write a sdid to mmpt with bare mode.
-> According to the specification, in bare mode, "The remaining fields in
-> mmpt (SDID, PPN) must
-> be set to zeros.
-> >  but works
-> > with his QEMU implementation.  Seems like there might be things to
-> > improve in both
-> > implementations.
-> >
-> > I asked him to not send his QEMU patches on top of yours because I'd
-> > rather work in
-> > collaboration on top of a single series, and I advise to not send
-> > another OpenSBI support
-> > for the same stuff in that mailing as well.
-> >
-> > IMO you and Rahul should sync up in both OpenSBI and QEMU bits to
-> > avoid effort duplication
-> > on both sides.
->
-> I agree with your suggestion that it is better to avoid duplicated
-> effort and collaborate on a single direction for both the QEMU and
-> OpenSBI sides.
->
-> Since the SMMPT v0.4.9 specification is already close to stabilization,
-> and implementation work has already started in both OpenSBI and QEMU, I
-> believe we should be able to converge quickly through collaboration and
-> help move SMMPT upstream sooner.
->
-> Xiangyi and I will continue to review Rahul's OpenSBI patches to
-> understand the current differences and why they are not yet compatible
-> with our QEMU series. I will also reach out to Rahul directly so that we
-> can sync up and work toward a common implementation.
->
-> Thanks again for the pointers.
->
-> Best regards,
-> Zhiwei
->
-> >
-> >
-> > Cheers,
-> > Daniel
-> >
-> >
-> > [1]
-> > https://lore.kernel.org/qemu-devel/2e2de5da-9eb0-4d56-b193-d8b06b7a3512=
-@oss.qualcomm.com/
-> >
-> >
-> >>
-> >> Thanks,
-> >> Zhiwei
-> >>>
-> >>> Alistair
-> >>>
-> >>>> The rfc patch set:
-> >>>> https://mail.gnu.org/archive/html/qemu-riscv/2025-09/msg00216.html
-> >>>>
-> >>>> v6->v7:
-> >>>>      The implementation is updated from the v0.3.4 specification to
-> >>>>      v0.4.9. The main changes are:
-> >>>>      1. Update the mmpt CSR number to 0x382 and msdcfg to 0x74E.
-> >>>>      2. Update the mmpt register layout: the SDID and PPN field
-> >>>> positions
-> >>>>         changed and the RV64 PPN is now 44 bits.
-> >>>>      3. Rework the MPTE format: the N (NAPOT) bit now lives at bit 2=
-,
-> >>>> the
-> >>>>         non-leaf NAPOT form is removed, NAPOT leaf entries encode a
-> >>>> single
-> >>>>         XWR tuple plus a G granularity field, and non-NAPOT leaf
-> >>>> entries
-> >>>>         hold per-page XWR tuples.
-> >>>>      4. Treat XWR=3D000 as "no access" and a non-leaf entry with N=
-=3D1 as
-> >>>> a
-> >>>>         fault.
-> >>>>      5. Enforce the Smmpt64 root-table PPN alignment (low 3 bits
-> >>>> zero).
-> >>>>      6. Rename the fence instructions mfence.spa/minval.spa to
-> >>>>         mfence.pa/minval.pa.
-> >>>>      7. Drop stale Reviewed-by tags on the substantially reworked
-> >>>> patches.
-> >>>>      8. Introduce the configurable "smmpt-sdidlen" CPU property.
-> >>>>      9. Add disassembly support for the Smmpt.
-> >>>>      10. Add bare-metal M-mode system tests.
-> >>>>      11. Rebase to master.
-> >>>>
-> >>>> v5->v6:
-> >>>>      1. Use explicitly bit fields extract instead of mpte_union_t.
-> >>>>      2. Use the same exception behavior for MPT valiation as PMP
-> >>>>         valiation.
-> >>>>      3. Use PAGE_* instead of MPT_ACCESS_* as they have same value.
-> >>>>      4. Use address_space_*_le instead of address_space_* for SMMPT.
-> >>>>      5. Only print SMMPT address check log when SMMPT is enabled.
-> >>>>      6. Add implied rule for SMMPT as it depends on SMSDID.
-> >>>>      7. Rebase to master.
-> >>>>
-> >>>> v4->v5:
-> >>>>      1. Rebase to master.
-> >>>> v3->v4:
-> >>>>      1. Add missing review tags.
-> >>>> v2->v3:
-> >>>>      1. Fix build error in patch 2.
-> >>>>      2. Rebase to master.
-> >>>>
-> >>>> rfc->v2:
-> >>>>      1. When ext_smmpt is false or BARE mode, make other fields in
-> >>>> mmpt
-> >>>>         CSR zero.
-> >>>>      2. Add patch 5 to fix smrnmi ISA string order.
-> >>>>      3. Fix patch 6 smmpt and smsdid ISA string order.
-> >>>>      4. Make smmpt and smsdid experiment extensions.
-> >>>>      5. Add review tags.
-> >>>>
-> >>>> LIU Zhiwei (11):
-> >>>>    target/riscv: Add basic definitions and CSRs for SMMPT
-> >>>>    target/riscv: Add smmpt-sdidlen property for the mmpt SDID field
-> >>>>    target/riscv: Implement core SMMPT lookup logic
-> >>>>    target/riscv: Integrate SMMPT checks into MMU and TLB fill
-> >>>>    target/riscv: Implement SMMPT fence instructions
-> >>>>    target/riscv: Fix smrnmi isa alphabetical order
-> >>>>    target/riscv: Add disassembly for Smmpt instructions and CSRs
-> >>>>    target/riscv: Enable SMMPT extension
-> >>>>    target/riscv: Add system test for SMMPT extension
-> >>>>    target/riscv: Add system tests for Smmpt52 and Smmpt64
-> >>>>    target/riscv: Add system test for Smmpt34
-> >>>>
-> >>>>   disas/riscv.c                                 |   9 +-
-> >>>>   target/riscv/cpu.c                            |  60 +++-
-> >>>>   target/riscv/cpu.h                            |   8 +
-> >>>>   target/riscv/cpu_bits.h                       |  27 ++
-> >>>>   target/riscv/cpu_cfg_fields.h.inc             |   3 +
-> >>>>   target/riscv/insn32.decode                    |   2 +
-> >>>>   target/riscv/meson.build                      |   1 +
-> >>>>   target/riscv/riscv_smmpt.c                    | 339
-> >>>> ++++++++++++++++++
-> >>>>   target/riscv/riscv_smmpt.h                    |  26 ++
-> >>>>   target/riscv/tcg/cpu_helper.c                 | 119 +++++-
-> >>>>   target/riscv/tcg/csr.c                        | 106 ++++++
-> >>>>   .../tcg/insn_trans/trans_privileged.c.inc     |  30 ++
-> >>>>   target/riscv/tcg/pmp.h                        |   3 +
-> >>>>   tests/tcg/riscv64/Makefile.softmmu-target     |  12 +
-> >>>>   tests/tcg/riscv64/smmpt-common.S              | 256 +++++++++++++
-> >>>>   tests/tcg/riscv64/test-smmpt.S                |  85 +++++
-> >>>>   tests/tcg/riscv64/test-smmpt34.S              |  97 +++++
-> >>>>   tests/tcg/riscv64/test-smmpt52.S              |  91 +++++
-> >>>>   tests/tcg/riscv64/test-smmpt64.S              |  98 +++++
-> >>>>   19 files changed, 1353 insertions(+), 19 deletions(-)
-> >>>>   create mode 100644 target/riscv/riscv_smmpt.c
-> >>>>   create mode 100644 target/riscv/riscv_smmpt.h
-> >>>>   create mode 100644 tests/tcg/riscv64/smmpt-common.S
-> >>>>   create mode 100644 tests/tcg/riscv64/test-smmpt.S
-> >>>>   create mode 100644 tests/tcg/riscv64/test-smmpt34.S
-> >>>>   create mode 100644 tests/tcg/riscv64/test-smmpt52.S
-> >>>>   create mode 100644 tests/tcg/riscv64/test-smmpt64.S
-> >>>>
-> >>>>
-> >>>> base-commit: 499039798cdad7d86b787fec0eaf1da4151c0f05
-> >
->
 
