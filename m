@@ -4,143 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53C8FC531C7
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 08:14:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B315BC531C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 08:17:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmoZB-0001mU-Oi; Thu, 23 Jul 2026 04:14:06 -0400
+	id 1wmoc2-00034g-Im; Thu, 23 Jul 2026 04:17:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wmoZ6-0001kV-SC
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 04:14:01 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1wmoc0-00033G-SJ
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 04:17:00 -0400
+Received: from mail-centralusazlp170110009.outbound.protection.outlook.com
+ ([2a01:111:f403:c111::9] helo=DM5PR21CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wmoZ4-0004iE-Oy
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 04:14:00 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66N7BmBm3158250
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 08:13:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- cE11xcKfBHr3K/YVBoYn9qdqVuZ9xJl3/FIT4mC8e+s=; b=JrQvD+lxwRShIbfj
- GOsTxrOzYtH5INjZVDnEOgLfRDuqHiIa8fRfJxAX5eETlT/qMe6LADZWMWQtyiY2
- 09Um/Aod3LNY+x+h+s2iP8ra4AxPqcEYALpOeldCyDuOln+nQ/pe60W2Lk2qKvI/
- rNTdsrkdv4FGynLyYEmtHJ/kngwth2GLIKc2J9i1USIdRkgEzIkc2Hps5HJDJ6u5
- r3oEJ2wyIRtnktmRVwGlB4WH9nWAHkJlt3Rsuh4FlFNNGSxvR0c4e1TYM7cU09ND
- dJXyWouqYWNSJWxTBbYmjXPXeh/NgGTyMaUdNv26y3cFqGnLerscMZyd22aGhyC4
- SfNALw==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fke0krahc-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 08:13:52 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-51c21c01cf3so6125321cf.2
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 01:13:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784794432; x=1785399232; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=cE11xcKfBHr3K/YVBoYn9qdqVuZ9xJl3/FIT4mC8e+s=;
- b=NvBCYDl3Mshi1iIuyHvA2zuu315ZM3WV6rSDuWToU1kG3NVb3aaiI/cwX9VPzxcHUn
- uL1M2suh1cpMd+/REfAfonyNjU2XDFp5pAtz9VLQxXO789FBKE8stZ3ityXn4yDhxcHM
- r12/cZu2vYRF86ozvN1wG98rnDwms3QsvPxeGRuQEIw18Ld5lkcYPXRwcilNzx7fHfAv
- FxvjxZVa5uS7NPzCanVJ1M2ry4o71u5CKF0wSvIwzdy/QTCZhM2wKZpCfl3MfK2t7UkL
- V5Q0qz1EP9sfv/JcEFxFSQERoTLJX2x4gz9yeCOCX5kxcxtfYFbNLKhcmdn7Sf4dTIA+
- dUNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784794432; x=1785399232;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=cE11xcKfBHr3K/YVBoYn9qdqVuZ9xJl3/FIT4mC8e+s=;
- b=cvogDkqAZGsnt4HVrj09kRGKtKl0YXFVpXZkPVRq4ofYzpyji1Xjj445XJWdbW3NL/
- 42DiXRaIR0Nu/IK8wRbnacAbnir8Kxda6MMj/g4Bw/yuD/0+463xNPe2Ev8fliPkmzbq
- kFEyCsWTv4HnREHnAxcckFBawhotE4Nf/e+ZOwmpktIj5Cbb55zQB+04XGsj4O7EOg4O
- YbQQq2PV515uWld+4VVe1MpBmFYNd5R0v7IY1T6yDEGjVdTQeLpDWci1oosEq8iTYzmX
- Qy10hDW2S8GvXCOvXOqDWvBuv0JkjdeLRDy7YGYYzEUwnBjesBSfJnqQNck1j2T41ouc
- vsmg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RopSE531EodE4iA+PpsOjZz1veUbVFFQrBcbKoh4pK65F8IrvqRBUs7v2OYvUCWi3Z+BLIO76K8nGCO@nongnu.org
-X-Gm-Message-State: AOJu0YxsCQ55nTp6Mx0sUDVOMCcBkNU8IKNJaSfftElNbhaC/mV0cYiT
- +UxbX7sPjI+WSzMsRPDfJfi0PsME4SPPi4pqb9CIFlfypiYNHtI8+o6mGnFksuJbbq6RSxwajwP
- 2+MxPEhI9UmxGTSX+w5YC6I4ccyRDgbtjzdDDnTaE4XxhhgICogB8G1a+BA==
-X-Gm-Gg: AR+sD12oKqFO26iRDHTuMTwHWUKDcvWDIv6rQzvIflwPVfI/4rrbXBLcizJ9XYJBsfp
- G34wNhTrgEy+FHx5duNq3nJGF8DhogXsCbYCNsjonOUQYTl2HIdl4CVHmYtfh520RYr0AiKHPNw
- SJEnI9RFw4pg2K+S/PfTn/iVy7embUk8M7ixJ+iaWqebkpuUavpKasH6wpVAMPjmUes3lXfps/r
- c0YKbgQTQ6YUfdYvvX2Xy+d/AVl2Q+Ljs7EQR7u8+C0pI0yGjQRLBdHd+czEHkNiCozT+VIH0na
- HoZpTdJ/Fl+ZF8dKNc0kL2OGQ4RlqhnNiKD9vSyJhLhJkG5lf0Z7yanOM/h59mzZVVBVYKwWs1F
- UkkW0YGMYpjAOHxIuGZHEgxYdTKgN5OwbfkS+dA1WDxmhszlD+Ck=
-X-Received: by 2002:a05:622a:2595:b0:51c:1fa1:80da with SMTP id
- d75a77b69052e-5283df4fdfemr18925371cf.40.1784794431914; 
- Thu, 23 Jul 2026 01:13:51 -0700 (PDT)
-X-Received: by 2002:a05:622a:2595:b0:51c:1fa1:80da with SMTP id
- d75a77b69052e-5283df4fdfemr18925291cf.40.1784794431583; 
- Thu, 23 Jul 2026 01:13:51 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4956b4e8885sm87631385e9.0.2026.07.23.01.13.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Jul 2026 01:13:50 -0700 (PDT)
-Message-ID: <6b9145ab-7fa4-4817-aa62-17b48baa63cb@oss.qualcomm.com>
-Date: Thu, 23 Jul 2026 10:13:48 +0200
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1wmoby-000545-DT
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 04:17:00 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=fnGwOFyxMnfSkBzf3o37acyXX/evptFqI4+0CIj5hu6WJkTqsYcNtPZHCXvbsUq+f9mvtvzUY9ztjaLRJOI0gwAqL4580PvIyM2tex6JM4GecN04oTlbOiGoDDeSWxSHqAglGMkmOFOG9ui0OzFF7Lrt/VZeApn/SUMeeIcdrTuZu9vzmg49nyCqkN79vDN46sWmSgEm1C1v1jzQHUX64vpH1fZ2HR+nTqAPV7P+WZh1NjYOTTeS173qA9eODKkpOvyj3szTtap9eQpkDKZzXoZG+E/MgdH3kVbnbJe3IKznHqlGs2ZWQ60of+a2FO3syyXnzfIW6pEN2AYQCHM5EQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=NblBCRrF86XjAL6RUouogtW7fqpZ1I76D39y3GsZQjE=;
+ b=YY5bRyi8RKtwee4nM1ySOJZJ57WoXWIfE3rgC28VtI7JrQUqCFYCrjUL8cRyJX1D9AX1BUgNNG4k7jo60XT94rbNmayDiab84GyKnfpZVk/Q2UgJ+N8otjqFsP0sy6k7iQbWQwyw5HfiwanbTrwS1xtbnOs7Eb/XUljLntePcet7stg+1JdIJZHtleVI8wxXu8ZH4UgjkphkhCuTpPfbxm/kHevD1Xvi08L5nfs2FvCLdVS/XI5mX05TQHhZiXO66E4dzMqD9/yX/RqI6k0chNQ9fika0cU7WA0zL/vv/EEpkcOyjCgmUYvfx2m3jZedAxxb3t1+aLjDp3ar48vO7Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=oss.qualcomm.com smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=NblBCRrF86XjAL6RUouogtW7fqpZ1I76D39y3GsZQjE=;
+ b=b4rErWWyegdsDYs8txTEFL+HVl5gTrIu3mOU13+CcPia97Jb72snMikq0yRU0xDBQ9xl+Ra+3iSyKNSObXmlKJsrFlr039+bcKOPNp6JiJwvnvs3htjxPdXoAvbK1vkSwENSYh2M51wv0prDY0m3Sx22ZOoXnP0NCn/jcns1qj8=
+Received: from BN9PR03CA0229.namprd03.prod.outlook.com (2603:10b6:408:f8::24)
+ by CY3PR12MB9577.namprd12.prod.outlook.com (2603:10b6:930:109::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.10; Thu, 23 Jul
+ 2026 08:16:52 +0000
+Received: from BN2PEPF000055E1.namprd21.prod.outlook.com
+ (2603:10b6:408:f8:cafe::72) by BN9PR03CA0229.outlook.office365.com
+ (2603:10b6:408:f8::24) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.245.10 via Frontend Transport; Thu,
+ 23 Jul 2026 08:16:51 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BN2PEPF000055E1.mail.protection.outlook.com (10.167.245.11) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.270.0 via Frontend Transport; Thu, 23 Jul 2026 08:16:51 +0000
+Received: from satlexmb10.amd.com (10.181.42.219) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Thu, 23 Jul
+ 2026 03:16:51 -0500
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb10.amd.com
+ (10.181.42.219) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Thu, 23 Jul
+ 2026 03:16:51 -0500
+Received: from XFR-LUMICHEL-L2.amd.com (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41 via Frontend
+ Transport; Thu, 23 Jul 2026 03:16:50 -0500
+Date: Thu, 23 Jul 2026 10:16:48 +0200
+From: Luc Michel <luc.michel@amd.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+CC: <qemu-devel@nongnu.org>, "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: Re: [PATCH v2 2/7] target/microblaze: Use TRANS() macro for typeB
+ load/store opcodes
+Message-ID: <amHN8DbvLaTfvofG@XFR-LUMICHEL-L2.amd.com>
+References: <20260722160807.24031-1-philmd@oss.qualcomm.com>
+ <20260722160807.24031-3-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 9/9] hw/net/can/flexcan: Remove RX SMB raw view
-Content-Language: en-US
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: Pavel Pisa <pisa@cmp.felk.cvut.cz>, Matyas Bobek <matyas.bobek@gmail.com>,
- Francisco Iglesias <francisco.iglesias@amd.com>,
- Jason Wang <jasowangio@gmail.com>,
- Vikram Garhwal <vikram.garhwal@bytedance.com>
-References: <20260723070059.6332-1-shentey@gmail.com>
- <20260723070059.6332-10-shentey@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260723070059.6332-10-shentey@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: aknFxpfWPtezn0wMorD8Xu181laa9K7w
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIzMDA4MSBTYWx0ZWRfX2tGlBuswGtgW
- X8vae1eG2eEdu92pDGPL1s6QmGFy3YFXlSW+XvMAOMZNblnBySC3A51Dq1eNaUh6xl16VFW6q3+
- KaEAgqjSl2+C9MKcIkoz5zAFDdYG1Ls=
-X-Authority-Analysis: v=2.4 cv=S7DpBosP c=1 sm=1 tr=0 ts=6a61cd40 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-GUID: aknFxpfWPtezn0wMorD8Xu181laa9K7w
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIzMDA4MSBTYWx0ZWRfXz3qUN3gLwwGf
- 5/mexCt8DgZzMn31WMtvlaGQXxk0TcPD+ocx6k6umPBoPet2ms9nHWTPsyXQQGi/icRmtGKeuif
- 0wBtvjgCgkRex1at5ogde3Ww92hZl4AYFfPd3aAsBEFf4X3aMZRR3TwYG92hngkOYpq2nBSmOm7
- +QFEjzjGCV0GB/q/xRFD6W/UXbMWiH3kXyV9r2AsYZSQYoXyHUntoaDKwSukhikcu2tQlIR5H+G
- nAJG4JwJ9DafxqC9XMYW1LC9BLJcEfdnwkuAZzfxlpEXmF02WALmSDNdLkajVwdeyFDUwaNxqIB
- 4xdEavZuSUSbQ/HTIC7/yPugzqQG6tBTt4rOF2zSyYkgN7xVf2f+3SWUAkthUNZIgYjDwlKivhC
- e+oDg2Lk5E0YGMNVs/oTaJvU8gwBQhwYBVlYrhOsVSruPxfGGl5KrTbNPFDfkBSeN3dN0qyaK3H
- 7Uxk9838w7IJKCqniFg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-23_02,2026-07-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 lowpriorityscore=0 malwarescore=0 suspectscore=0 bulkscore=0
- priorityscore=1501 adultscore=0 impostorscore=0 phishscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607230081
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+In-Reply-To: <20260722160807.24031-3-philmd@oss.qualcomm.com>
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN2PEPF000055E1:EE_|CY3PR12MB9577:EE_
+X-MS-Office365-Filtering-Correlation-Id: 07ccb4de-1e29-46b5-f343-08dee892bff3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|1800799024|82310400026|23010399003|36860700016|6133799003|18002099003|22082099003|56012099006|11063799006|4143699003|10067099003;
+X-Microsoft-Antispam-Message-Info: mTLmKrdTRqQfyRyFr4kuMRzY3pO5qhU6kCh7e9pKr5LVU7pixhMcoqbyadjOoA9GuoUrBH8OYCU7UhLbyGjgtih20506jrwUJ96vj2El2N+VMBGroa8X63cSKb3+anF1Xhifc5izDa6HxgeJ3k0KpBDRIk1y4WkF/Ac+L7UonYmM3m53NFgZdSrOvrtcz1iaQ+cQUWfXQhMRHQ4ajnyUrDNXuyTr4wqsRHhQKgQ3rfVDxCHHSjA4CNR9uO15qv/NOQ9om0c5Hchmv3fuMQ3F5Dc8y/LzjdExWjtg1z8n+l9ptFIqjnNGmuAl8iNoO5BmUnxOK6Q5ZCqqODUrbWHPYx2giZy5KbCC0DtKimWTewMgcXy0fC/y6WLiMMSpkPOJYp601nG+wQmsA5/IwqrKd1+AVVsZVX0Y9E4+/LITKOUhnsBrT3T2KtNJbnGRKrl+fuyJv2dGBXYIT/UwNVUiB1craDqlhB352LJTYYp6ryn1j+W/qFnqq9ZbJv/oCUNnmzt6nx4QCRpZQxxeXCEca6JMSqBdKAcx7V1pBNC8l2F7fAJO9WVDSxg6EWJznksmAo2hcvDmkpfS1PTlfXOXn25co0tbJ+aj8ZRGDmq+MGpKo90D/JdnI6Fb/xlyoj0xY2r+cGs28L2Qo8ULninEJYqmuS7Kn4nGzcT1vyp4IGrizqsZBf/aITn1qQdM4cYkrmGPLWFNfzegxubjW6xQMQ==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(82310400026)(23010399003)(36860700016)(6133799003)(18002099003)(22082099003)(56012099006)(11063799006)(4143699003)(10067099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: jNeyVeu5va9S970YTeHfWZzXO/+rckrvm7UefBLd2km5iXl9n5zzb7MWRyuRiWpMYdNCS95R20+uDM3HC82dAju9/LHk6oZDHxPvbhn71g4PThy/ihYP9nJjHj+M6MphJP4V1dKMfex757PcYNR8zHAZ4iK56KpIQcOVsbrj4ijuOQnhxEgYthyJJm/qR8EZYMfJKPyhrS2MPURldw/TZkkY87Ma5p1FtYQRWaCzPVnHRTQJxMDid/EKzdV99fhfDooE01CWnFuGersoY/330lxXPJXEUIr8YG6hkgUnafz8ixYIGK/Fj6diFZdxnyXO1cnv0NdYxphqhyGiexAgAvDb7518xBRjhabdaziohcu5z2Eir8pN7YbIvbQ2KLTMuzd7TgsV2vP8Rj8CUtxK7z73V5x1BfE76qwTekLJckz3e2eJFgiWZmJgZSjXKjG+
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jul 2026 08:16:51.6064 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 07ccb4de-1e29-46b5-f343-08dee892bff3
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF000055E1.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY3PR12MB9577
+Received-SPF: permerror client-ip=2a01:111:f403:c111::9;
+ envelope-from=Luc.Michel@amd.com;
+ helo=DM5PR21CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,16 +133,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/7/26 09:00, Bernhard Beschow wrote:
-> Use the existing `rx_smb0` message buffer view for register masks instead
-> of the raw register array. Since all accesses now use the structured view,
-> remove the redundant `rx_smb0_raw` union member.
+On 18:08 Wed 22 Jul     , Philippe Mathieu-Daudé wrote:
+> While being a no-op since the TRANS() macro expands to the
+> same code, this is less code so less maintenance.
 > 
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> ---
->   include/hw/net/flexcan.h |  5 +----
->   hw/net/can/flexcan.c     | 12 ++++++++++--
->   2 files changed, 11 insertions(+), 6 deletions(-)
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Luc Michel <luc.michel@amd.com>
+
+> ---
+>  target/microblaze/translate.c | 64 +++++++++++++++--------------------
+>  1 file changed, 28 insertions(+), 36 deletions(-)
+> 
+> diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+> index 623980d0af5..a2a7ee8b9e0 100644
+> --- a/target/microblaze/translate.c
+> +++ b/target/microblaze/translate.c
+> @@ -253,6 +253,14 @@ static bool do_typeb_val(DisasContext *dc, arg_typeb *arg, bool side_effects,
+>      return true;
+>  }
+>  
+> +/*
+> + * Helpers for implementing sets of trans_* functions.
+> + * Defer the implementation of NAME to FUNC, with optional extra arguments.
+> + */
+> +#define TRANS(NAME, FUNC, ...) \
+> +    static bool trans_##NAME(DisasContext *ctx, arg_##NAME *a) \
+> +    { return FUNC(ctx, a, __VA_ARGS__); }
+> +
+>  #define DO_TYPEA(NAME, SE, FN) \
+>      static bool trans_##NAME(DisasContext *dc, arg_typea *a) \
+>      { return do_typea(dc, a, SE, FN); }
+> @@ -738,6 +746,16 @@ static bool do_load(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
+>      return true;
+>  }
+>  
+> +static bool trans_ld_typeb(DisasContext *dc, arg_typeb *arg, const MemOp mop)
+> +{
+> +    TCGv_i32 addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
+> +    return do_load(dc, arg->rd, addr, mop, dc->mem_index);
+> +}
+> +
+> +TRANS(lbui, trans_ld_typeb, MO_UB)
+> +TRANS(lhui, trans_ld_typeb, MO_UW)
+> +TRANS(lwi,  trans_ld_typeb, MO_UL)
+> +
+>  static bool trans_lbu(DisasContext *dc, arg_typea *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+> @@ -764,12 +782,6 @@ static bool trans_lbuea(DisasContext *dc, arg_typea *arg)
+>  #endif
+>  }
+>  
+> -static bool trans_lbui(DisasContext *dc, arg_typeb *arg)
+> -{
+> -    TCGv_i32 addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
+> -    return do_load(dc, arg->rd, addr, MO_UB, dc->mem_index);
+> -}
+> -
+>  static bool trans_lhu(DisasContext *dc, arg_typea *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+> @@ -798,12 +810,6 @@ static bool trans_lhuea(DisasContext *dc, arg_typea *arg)
+>  #endif
+>  }
+>  
+> -static bool trans_lhui(DisasContext *dc, arg_typeb *arg)
+> -{
+> -    TCGv_i32 addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
+> -    return do_load(dc, arg->rd, addr, MO_UW, dc->mem_index);
+> -}
+> -
+>  static bool trans_lw(DisasContext *dc, arg_typea *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+> @@ -832,12 +838,6 @@ static bool trans_lwea(DisasContext *dc, arg_typea *arg)
+>  #endif
+>  }
+>  
+> -static bool trans_lwi(DisasContext *dc, arg_typeb *arg)
+> -{
+> -    TCGv_i32 addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
+> -    return do_load(dc, arg->rd, addr, MO_UL, dc->mem_index);
+> -}
+> -
+>  static bool trans_lwx(DisasContext *dc, arg_typea *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+> @@ -893,6 +893,16 @@ static bool do_store(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
+>      return true;
+>  }
+>  
+> +static bool trans_st_typeb(DisasContext *dc, arg_typeb *arg, const MemOp mop)
+> +{
+> +    TCGv_i32 addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
+> +    return do_store(dc, arg->rd, addr, mop, dc->mem_index);
+> +}
+> +
+> +TRANS(sbi,  trans_st_typeb, MO_UB)
+> +TRANS(shi,  trans_st_typeb, MO_UW)
+> +TRANS(swi,  trans_st_typeb, MO_UL)
+> +
+>  static bool trans_sb(DisasContext *dc, arg_typea *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+> @@ -919,12 +929,6 @@ static bool trans_sbea(DisasContext *dc, arg_typea *arg)
+>  #endif
+>  }
+>  
+> -static bool trans_sbi(DisasContext *dc, arg_typeb *arg)
+> -{
+> -    TCGv_i32 addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
+> -    return do_store(dc, arg->rd, addr, MO_UB, dc->mem_index);
+> -}
+> -
+>  static bool trans_sh(DisasContext *dc, arg_typea *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+> @@ -953,12 +957,6 @@ static bool trans_shea(DisasContext *dc, arg_typea *arg)
+>  #endif
+>  }
+>  
+> -static bool trans_shi(DisasContext *dc, arg_typeb *arg)
+> -{
+> -    TCGv_i32 addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
+> -    return do_store(dc, arg->rd, addr, MO_UW, dc->mem_index);
+> -}
+> -
+>  static bool trans_sw(DisasContext *dc, arg_typea *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+> @@ -987,12 +985,6 @@ static bool trans_swea(DisasContext *dc, arg_typea *arg)
+>  #endif
+>  }
+>  
+> -static bool trans_swi(DisasContext *dc, arg_typeb *arg)
+> -{
+> -    TCGv_i32 addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
+> -    return do_store(dc, arg->rd, addr, MO_UL, dc->mem_index);
+> -}
+> -
+>  static bool trans_swx(DisasContext *dc, arg_typea *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+> -- 
+> 2.53.0
+> 
+
+-- 
 
