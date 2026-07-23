@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFDC0C531CC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 07:02:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69F28C531CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 07:03:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmnRT-00023F-PF; Thu, 23 Jul 2026 03:02:03 -0400
+	id 1wmnRU-00023z-Cp; Thu, 23 Jul 2026 03:02:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wmnRF-0001xM-Dq
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wmnRE-0001xE-Dn
  for qemu-devel@nongnu.org; Thu, 23 Jul 2026 03:01:57 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wmnRD-00042X-JM
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 03:01:49 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-49555a0e68bso1202805e9.2
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 00:01:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wmnRC-00042G-Vt
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 03:01:48 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-47f904e80eeso202452f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 00:01:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784790106; x=1785394906; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1784790105; x=1785394905; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=njXFzolhxF9m8wpOePYV3zpTWlWb14dNREPPOWvkdSc=;
- b=BpXX51Tx+bluDBUbmRtFq5NM1VLCj8k3bC3GnRyHNvPiQbrG+CBDWsEh1rTnFcPH7q
- IyD91dcVeP36HZodjQxKSYcou0PK0wIz9PTF64P98+rpEwIVI83MSsX/pzth3YrQaFT1
- NfSsgVzcw9CKysH2q4zHy55naBRZorDOmBHW8xWBp1O1BwD6iYAl3n0hHf4DB+dYmsdL
- OBP01BIJiClp6OQsf1AlyR0KIZI3Qg3Kz6RdKO7BcKwbe7GeWzKqRNIBZGyf+8KDQMuc
- EeHATBGZD4BlzFH/VuP2f33BU8pQ2HTIqbXrTreYAjgOeNvs5qvTMRZ7x4LVSS7hbxGC
- jGCA==
+ bh=82OS8GpNlBq/fjmhNi5hkKVwto7VKi4nd2Pa4nJKAqk=;
+ b=DkrUJzl6jZHX6zDRqdXnqxDj8hoTgoK/v1ouwKImXiVC6dAVk+81dlTIf36GivyJrM
+ BGGMNPDImsL8TvMJQBOPEEPrwrnO016UDgnLtfFKULNzp0YRm/Y+EjhqoGFRXt5U+32D
+ jww1OGU240xApxYR7Her1Dd/+iQOQLcUXAACO08NmcZ2DYpPlBGXMu51gfh+JYlm1Den
+ Qs9VywC4yvFQ9V0dve77gwp325w0NyrLfmMe715fBTMWthlTkjbVYTJBmj02bmW+xWGs
+ v/fjJgxWBYZ5soY69nH7Yxpx7uOp3LNDVycNg1ehTzh/R1wIJ93J5kPCzFswXYsuxZv9
+ KPSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784790106; x=1785394906;
+ d=1e100.net; s=20251104; t=1784790105; x=1785394905;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=njXFzolhxF9m8wpOePYV3zpTWlWb14dNREPPOWvkdSc=;
- b=m9XDzYA1aziBYqYRSYZZVeXOld99j0FaxnLIpzrgTv0PVso+Qh0mWTCi6VKmLCWhF1
- rR5TfQCLV68XMSIKbQroPdhqU2WChMPCtDtBM2AyqUHDyiDwsQAQsWsoFEdzMQYWYteE
- LSUhMgn3YG61nzbZfKmTmZQYcvXfSnehfgt576lRaN3Tu4uZtkwOU/Ai/kkQTOHKstht
- TPMz5v56vM3kLv+ScwcYoj5v4nyJIJBbtThqiw1F0csPFIcsYXqgXwzNP8R9ETYGOw0A
- 5S5Vg68FzTfXspXsXQ0UEPby6m3H2SUP/xyukjaO+NP0i0wv9YQBi7di4d/+5tGicdID
- bKvw==
-X-Gm-Message-State: AOJu0YxuxTq7OXkzqoxwQqW4A8NQrfE3ICgpWrFUotDPjZePT0Eo4M72
- 5b7D6wXLbjUXv4SkUsp85FA5p+yoIrl+ou82ayJb4/zYruuf+s9HTt38s4GUvg==
-X-Gm-Gg: AR+sD13YvvOsSZsJqtt5j0uq4BP3TMiAYbrvTRlJzncHJeELnWr8mkpx+JafPCTBKbY
- vRHYtKhPFNz3RJYKEeJuzijIo+VnA5Cg6B8ekjho84xFQizTE5/IzfyBa8D7usKqAawOtVagFxh
- dITqdO0ltKKLekTs95KvzvpAcpJHd3EiZXJwP8g/L3e0wk9Xfwro+cuFfVS6NDQYzXg9JDHO6VO
- 4XxNJfkeDoym7lsTPn6PbqdOuJy2SV5QOyhFg0Clm/3quS2dPIkfgzlj2BLwBY+nbUbmnfUMbUE
- X3FScOvFNe+POhWa/bp0D/TysRlDE4AtsdvGxFpBu86rMOh4/SI4WoE6VRKDJ8Q3nfTAJNPTROT
- 5Qgvm1e0fVHRYyx61wOzxOGdBH9oCY1+BX7tP1tKZ4z76wd0NXfL7lpKUSUhCGs5/iM/NbA2TTu
- HW4qYis1I1ZH0SznhZ4tp7uNZyV19Vyt5Pu5C4u0lrPesSUCkP6UbwhUr3lGGDX7oE0NB4gBzRb
- ZEUylgfHxdMsJ/62Fko5G5ZWg==
-X-Received: by 2002:a05:600c:1f8f:b0:493:e365:ace9 with SMTP id
- 5b1f17b1804b1-49573c9af36mr15807695e9.11.1784790105841; 
- Thu, 23 Jul 2026 00:01:45 -0700 (PDT)
+ bh=82OS8GpNlBq/fjmhNi5hkKVwto7VKi4nd2Pa4nJKAqk=;
+ b=l5N5ffqIpY9EIcQy2QKun3Gc+TL8Kpp9XjPXbpcRR9sGBWeempXDjakiHrn7w2sV1l
+ LPJQrBe8mOXTwbskeagSc31zOO5XcV/tATc9vl+5KCBNa7//qRoLQ/3ywmQo8N0+6omZ
+ pbm+fzMxruG5hO6eptGAWp4lOrNPtaQQY/TB5vB4SO0HYB44zEwLstaJg8MydmF2kbg2
+ p0Hz0hgSl08fSt4iEawpcElzkkj9H1vfL36blVDUr9fgB7L6Du+1jA5wIbNvmHiJz+fO
+ nmpIz4uggO1NbEOGgJNeO6XmWoRwHG3MfwtJn1vsbriyh239wn1n6LRDZcIUHLN70DOE
+ 2log==
+X-Gm-Message-State: AOJu0YwJ8mrILTbvgml337sDYfS36jjuBNRsQ45eybJwipltKjPRfCFL
+ OLQL/Q4CLdUHuk7IGt/4RgbHODDF9/sk7WUyvEejHV2m/Z4WBfP5oX/mrrISoA==
+X-Gm-Gg: AR+sD11cRXPVp3yuZZT999GkwubcSnZ7/oWLC7VLQq2XPzdTswU5olTpg4UMZFiWeOJ
+ 7P3RgU8z12rRej9OYcYTHfwYmFdLALiICOUGzxR5uu6oii3JOrI2f+FD0LLxoZZch0wOSj1Mfsa
+ kNPOD1MZCEP+jMSJHgKM32rLfaZmsQF928t61+STGwqyduyJEUSw8xF/RLqqptzShEbGGAG5sXt
+ MmFtIoe4md9LTZmxpI7Owdi8xrHImym4gzhDVQDjd3zbPurCrhUO3BtwVRsY8PiAJW7RqfV/xzV
+ VPhkTBBjc0FBIPGNGFt4Udckvl+a5cpCXrlRCbqGyVfytGoVOIttDEHlrVdpiCY/VpMRiCgEydF
+ mJaisF02/YhXy0Ukyxx/UN7y7cd725YN42oEXxoH7w6laIllQzzlJRWFpCIws+BI4ALEpTcT4DM
+ eIYiVLRWCubDtYEIiCMfpwYTzGQAlTrpsX8YVYWFiiJMYqLVl0YAqNbmGRH48aqTwFMP+lzsYd7
+ qGQhjzvVIDVVhYZFr+NW3ZIbwi78nDDTQl+
+X-Received: by 2002:a05:6000:25e8:b0:47f:9235:4366 with SMTP id
+ ffacd0b85a97d-47f923543bfmr533824f8f.49.1784790104959; 
+ Thu, 23 Jul 2026 00:01:44 -0700 (PDT)
 Received: from Provence.localdomain
  (dynamic-2a02-3100-29ed-6000-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:29ed:6000:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c6dc25sm13293923f8f.33.2026.07.23.00.01.45
+ ffacd0b85a97d-47f85c6dc25sm13293923f8f.33.2026.07.23.00.01.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Jul 2026 00:01:45 -0700 (PDT)
+ Thu, 23 Jul 2026 00:01:44 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Pavel Pisa <pisa@cmp.felk.cvut.cz>, Matyas Bobek <matyas.bobek@gmail.com>,
  Francisco Iglesias <francisco.iglesias@amd.com>,
  Jason Wang <jasowangio@gmail.com>,
  Vikram Garhwal <vikram.garhwal@bytedance.com>,
- Bernhard Beschow <shentey@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH 3/9] hw/net/can/flexcan: Fix out-of-bounds access in
- flexcan_mx_rx()
-Date: Thu, 23 Jul 2026 09:00:53 +0200
-Message-ID: <20260723070059.6332-4-shentey@gmail.com>
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH 2/9] hw/net/flexcan: Drop unused RX FIFO register overlay
+Date: Thu, 23 Jul 2026 09:00:52 +0200
+Message-ID: <20260723070059.6332-3-shentey@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260723070059.6332-1-shentey@gmail.com>
 References: <20260723070059.6332-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,29 +104,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Require `last_not_free_to_receive_mbid >= 0` before indexing `mbs[]`.
-This prevents a possible `-1` array index and fixes Coverity CID
-1662790.
+Remove the unused `FlexcanRegsRXFifo` union view now that FIFO accesses
+use the underlying `mbs[]` array directly.
 
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/net/can/flexcan.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/hw/net/flexcan.h | 11 -----------
+ 1 file changed, 11 deletions(-)
 
-diff --git a/hw/net/can/flexcan.c b/hw/net/can/flexcan.c
-index 3a97edf7a4..dd92a38337 100644
---- a/hw/net/can/flexcan.c
-+++ b/hw/net/can/flexcan.c
-@@ -1075,7 +1075,7 @@ static enum FlexcanRx flexcan_mb_rx(FlexcanState *s, const qemu_can_frame *buf)
-         }
-     }
+diff --git a/include/hw/net/flexcan.h b/include/hw/net/flexcan.h
+index 32de7b904a..d8159475e0 100644
+--- a/include/hw/net/flexcan.h
++++ b/include/hw/net/flexcan.h
+@@ -35,16 +35,6 @@ typedef struct FlexcanRegsMessageBuffer {
+     uint32_t data[2];
+ } FlexcanRegsMessageBuffer;
  
--    if (last_not_free_to_receive_mbid >= -1) {
-+    if (last_not_free_to_receive_mbid >= 0) {
-         if (last_not_free_to_receive_locked) {
-             /*
-              * copy to temporary mailbox (SMB)
+-/* RX FIFO view of message buffer registers */
+-typedef struct FlexcanRegsRXFifo {
+-    /* 6 message buffer deep queue, queue back first */
+-    FlexcanRegsMessageBuffer mb_back;
+-    FlexcanRegsMessageBuffer mbs_queue[FLEXCAN_FIFO_DEPTH - 1];
+-
+-    /* number of filter elements active depends on ctrl2 | FLEXCAN_CTRL2_RFFN */
+-    uint32_t                 filter_table_els[128];
+-} FlexcanRegsRXFifo;
+-
+ /* FlexCAN register in hw layout */
+ typedef struct FlexcanRegs {
+     uint32_t mcr;                /* 0x00 */
+@@ -78,7 +68,6 @@ typedef struct FlexcanRegs {
+     union {                      /* 0x80 - not affected by soft reset */
+         uint32_t mb[sizeof(FlexcanRegsMessageBuffer) * FLEXCAN_MAILBOX_COUNT];
+         FlexcanRegsMessageBuffer mbs[FLEXCAN_MAILBOX_COUNT];
+-        FlexcanRegsRXFifo fifo;
+     };
+     uint32_t _reserved4[256];    /* 0x480 */
+     uint32_t rximr[64];          /* 0x880 - not affected by soft reset */
 -- 
 2.55.0
 
