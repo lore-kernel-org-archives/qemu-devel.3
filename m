@@ -4,146 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 430B3C531D1
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 13:55:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AF64C531D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 13:59:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmtt5-0007i5-9o; Thu, 23 Jul 2026 09:54:59 -0400
+	id 1wmtxP-0000jl-NP; Thu, 23 Jul 2026 09:59:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wmtt4-0007hw-CO
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 09:54:58 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wmtxO-0000jV-AO
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 09:59:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wmtt2-00035X-SF
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 09:54:58 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66NCvghD4172631
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 13:54:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- X8Ur67wfDCGM5dWiMyoi4X79L+V/OmhrRreEQsEctDQ=; b=lFZdzqYjoOkszPao
- hwo+vgLhV2ui40eVHzy4efn/j5fv2b80SDASQ0/CdDm79oHwJ/n49aUUWFvzLQTX
- RdbmDWlbDeE8+wCEoJMnZjSjQRgH/gcJJK/jLlDuL2Dg2O2t3Klx5W7Y+j1amK9h
- fUxPv/+vRCdrnCuG1qYkwDeB5u3i2HR8xHx1QtGhPrT0nEL1Siiui+uoqg498Vm9
- bGD5DNjl941te/PItap7GAftvwS5V6olHfaiGfrdABDT/CPcoCdX/ya/phJjyDrY
- 3m+OP7HUSlImHedOon4ebWiWmYe8RWvkRwyY26PKpWDWw6UmI9X5f6HRzl3Kghus
- 0gSomA==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fke7qhmj7-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 13:54:55 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-51a8db414c7so13202231cf.0
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 06:54:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784814895; x=1785419695; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=X8Ur67wfDCGM5dWiMyoi4X79L+V/OmhrRreEQsEctDQ=;
- b=LP9aFw4HpWrK7NQhZFbAf5EZYEGLsPBt1fUVurRkj/RDfvnZ/TYtkq2eNJEHnpgEC0
- Q9l0kqWSBKiHNN0Hpf3NJtX/LnNRrS8gfMaKLV2VyfNBXaG2CojAbzG2B5i/LRfcjQu7
- G/CrNGWBKJW7BazLCWau6r+Aw0lsTnC8bw903cz5DAdrywYWFED64XmGTTpIBZy3MZ7u
- cAULUfuBVMRdWQzMCwZcRW7+W2JW2z+/Y0xkiFSMS8yq07Pj9aoF86UAhHJGCb4Ymipv
- pxKwyPMcYUTXom5mC3J1PFO7twELACCgHYkrr4b8sjkukwivq/VwgKY2qpYjlmxP6877
- QyIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784814895; x=1785419695;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=X8Ur67wfDCGM5dWiMyoi4X79L+V/OmhrRreEQsEctDQ=;
- b=XQlX96wIDiI3e61wsZtzZwyx+Fu18AB+Wh8Q19q1X+kvp7A+KXsATbbHWF1nWOBU6/
- QMWIBfvCMHJ/QWC/VZxmmdaiXLimjfX+hncfvTrqyYvvwJ3kXMkRWrUneg5bP2tYPMO1
- CJmbBLL40POCWL1NtL3vkHi17lMVuMsTgG384Bo8Gzvb/c3OOG04k0xUI9RxkniV6Cke
- wH/J8FeXdZ+lYMskwidMwFKdO+cZuXmQT8UunRcjA06q1VOO1LO8xrgxoU0VJRncIK/n
- p52BK0zOo3bpWfT0PhjzugY0r4SeXYRsIfYXsGw/LE5E1e9ev/UdlMaq0X5qFWZ+WZjO
- lZCw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RotTSfLVEjdeZ0i+4ZVnh6ooLf3+2Ho/Svm+dYd1WO+yrxwRY59/2jblPTdREhCp4DyzjQ+Sl8CGt9W@nongnu.org
-X-Gm-Message-State: AOJu0YyZGqMBOaoOdjVxy1QY6moG6g8yEgDscLQP/3Vt82Qb4Z7U8+N7
- FOIHGAlWEMPNyIoS3mV6f36npBiYthOjPmaX3HEY3YP47KIZP1Ydhadmw0vo62jLVidhBl/CA90
- /lot2ep8Lc2MKhidY7EL5qxdrJPkF7UiS+PkBbMOCYZ2IbkXMBR1esEycfAPSoWp/yA==
-X-Gm-Gg: AR+sD1307ZjZ/wkXUOUOe8ED0wCyfUjJG4iUdnk/OmKPIBFPEKktD0LiYu/xxVrXO1x
- CBGydN+/j4szDOyWWbinTUx5L/RVbwH3mn7JNkIwmnafVhJAq3br7+Grz9A5vxlW8F4YSyGTCzM
- VDfmH0qzdyLZqpGEVPImRnlyvZfjSeXv9PFRKw8Frvydj3ZwtJHMdMW7lKQlTFo3c8CNtiaS2Tc
- ol3G5IDsV13c1a+Au6Gu4dmWXar8JbysUnWVrRHAR4HPl7hRPW58WD/h4HoZjc+eJ0ajioHO2tX
- NkGsTSvAbLI6Lhjey5MF/fnlFR9Ov3WomFLaxZeTAN4AuHHH6jm34xN4xBQ0fWm+Nhoyqm6QNH3
- IfgOce4weL5yetEzgFWzkwKOqvDXceyLN7mw54+huqRfnQ0NomJQ=
-X-Received: by 2002:a05:622a:c09:b0:517:875a:d634 with SMTP id
- d75a77b69052e-5283dda389dmr29236311cf.2.1784814895046; 
- Thu, 23 Jul 2026 06:54:55 -0700 (PDT)
-X-Received: by 2002:a05:622a:c09:b0:517:875a:d634 with SMTP id
- d75a77b69052e-5283dda389dmr29235581cf.2.1784814893648; 
- Thu, 23 Jul 2026 06:54:53 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4956b7483f0sm128463825e9.3.2026.07.23.06.54.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Jul 2026 06:54:53 -0700 (PDT)
-Message-ID: <fe596402-0be0-4edb-ada4-73e73b72e0d8@oss.qualcomm.com>
-Date: Thu, 23 Jul 2026 15:54:52 +0200
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wmtxM-0003W7-5X
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 09:59:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784815161;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=UOt41VTg1gIMOePjbxCy0gpoQUucgBbb1swuQn2CO7A=;
+ b=JwrvDEd10t3VvHY0vhNshWIXz8l4+AtaagD4092/MD7g9NyrNIIQ9cP4Vqfh37fetTN1tn
+ YNWgnHbY/8e7RKWFFdzjsd3l6ZNx4Thk1WnYTDxL2/xitNUVLVVlJqiqXiLkri/cLfaOp8
+ x+JUwteFHYi3HLOHwWwQuqK+xjI/8G0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-693-nZ3utG7wP_aXSLLdQ2SdNg-1; Thu,
+ 23 Jul 2026 09:59:18 -0400
+X-MC-Unique: nZ3utG7wP_aXSLLdQ2SdNg-1
+X-Mimecast-MFC-AGG-ID: nZ3utG7wP_aXSLLdQ2SdNg_1784815157
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5258B19540C1; Thu, 23 Jul 2026 13:59:17 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.7])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 151CB1956053; Thu, 23 Jul 2026 13:59:15 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: akihiko.odaki@gmail.com,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH v2] hw/display/qxl: validate primary surface stride against
+ width
+Date: Thu, 23 Jul 2026 17:59:09 +0400
+Message-ID: <20260723135909.429714-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/display/vmware_vga: Don't allow guest to trigger long
- running loop in host
-Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>
-Cc: qemu-trivial@nongnu.org, qemu-stable@nongnu.org
-References: <20260723120020.330089-1-thuth@redhat.com>
- <d934b1b8-d639-420c-9974-f728fb752bbd@oss.qualcomm.com>
- <a4e46837-e55a-4f9f-8ad5-03f490e39cf8@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <a4e46837-e55a-4f9f-8ad5-03f490e39cf8@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIzMDEzNyBTYWx0ZWRfX4eVTzvbiYwZi
- k4FQFVUCkCSnTwCf6YM4Ljh4cVobGK3cQpFBXqXMdllfWDBKdu0nhWNZB6+Q2pG+3FZmgSRIQZx
- ICoAiJUDL/d/7uqQQGBwDkK4AW2GqfM=
-X-Authority-Analysis: v=2.4 cv=aYxRWxot c=1 sm=1 tr=0 ts=6a621d2f cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=p0WdMEafAAAA:8 a=20KFwNOVAAAA:8 a=J_-Nd1mkAAAA:8 a=NdJ0D6ZV-04Lh1VSvEgA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
- a=n8ForQn92ZFaZtFqRdMw:22
-X-Proofpoint-GUID: SFsAvbEcV5K7mMI_Sh_4CJYK6q8wx7tk
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIzMDEzNyBTYWx0ZWRfXwpXTYJyls0AG
- LkgumTLDf7qGDROWKzXIrT+vDTlnoInGo6hwFl0A8SW0HGK76cUaGpR/LZo1iffN1j6Cmlc4rDp
- Okl5S9yYolMFsl0EZ63zJDMd6pzwXhB0v/bMxWdWrVH1VxMprZf0B9p0n/ZQeN1fAgfXQPFLSwO
- 7mBJNJxaZK5Nf4BSRGT6s64qjn9mnSLJpiPxcYHDZ3VlghrxDVerLI3y8YILb3D4C/dZ12p7vGD
- fth5p9iAo2f8QyZTCnCLcByY+3kFWc4NSourAol3QiDHG5I04w9AqJUDSb+/zu/2eu84sWLQ4Ja
- yr3i7wuwcAIJ33goCqzEH1TNMFHXMzs/y8F5dmtxcvJePipE8NSKWgwaHudR8nkeEDCTT6Od1VD
- X6os8Y65nOVcg5FO8DE4Nu0lq5F5w6ifOnybnmh0c0QaEtzdWnGYVnSNTS/nZgfnjTdKxtWuX5k
- Ux8FjZz7ivRfapYPE4g==
-X-Proofpoint-ORIG-GUID: SFsAvbEcV5K7mMI_Sh_4CJYK6q8wx7tk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-23_04,2026-07-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 malwarescore=0 spamscore=0
- lowpriorityscore=0 phishscore=0 bulkscore=0 clxscore=1015 adultscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607230137
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 3
+X-Spam_score: 0.3
+X-Spam_bar: /
+X-Spam_report: (0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.951,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,95 +83,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/7/26 14:35, Thomas Huth wrote:
-> On 23/07/2026 14.27, Philippe Mathieu-Daudé wrote:
->> Hi Thomas,
->>
->> On 23/7/26 14:00, Thomas Huth wrote:
->>> From: Thomas Huth <thuth@redhat.com>
->>>
->>> The code in the SVGA_CMD_DEFINE_ALPHA_CURSOR handler in 
->>> vmsvga_fifo_run()
->>> basically does:
->>>
->>>              x = vmsvga_fifo_read(s);
->>>              y = vmsvga_fifo_read(s);
->>>              args = x * y;
->>>              goto badcmd;
->>>              ...
->>> badcmd:
->>>              len -= args;
->>>              if (len < 0) {
->>>                  goto rewind;
->>>              }
->>>              while (args--) {
->>>                  vmsvga_fifo_read(s);
->>>              }
->>>
->>> Thus by supplying huge values for x and y that overflow the result of
->>> the multiplication, the guest can trigger a long-running loop here
->>> that burns the host's CPU cycles.
->>>
->>> Add some sanity checks so that this cannot happen anymore.
->>>
->>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3782
->>> Reported-by: Feifan Qian <bea1e@proton.me>
->>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4026
->>> Reported-by: Tristan Madani <tristan@talencesecurity.com>
->>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4076
->>> Reported-by: Sunday Jiang
->>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>> ---
->>>   hw/display/vmware_vga.c | 5 ++++-
->>>   1 file changed, 4 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/hw/display/vmware_vga.c b/hw/display/vmware_vga.c
->>> index f6f9edfd1d9..04cc438cc02 100644
->>> --- a/hw/display/vmware_vga.c
->>> +++ b/hw/display/vmware_vga.c
->>> @@ -737,6 +737,9 @@ static void vmsvga_fifo_run(struct vmsvga_state_s 
->>> *s)
->>>               vmsvga_fifo_read(s);
->>>               x = vmsvga_fifo_read(s);
->>>               y = vmsvga_fifo_read(s);
->>> +            if (x < 0 || x >= 32768 || y < 0 || y >= 32768) {
->>
->> Maybe add a self-decribing definition instead of magic number?
->>
->>    #define ALPHA_CURSOR_SAFE_LIMIT 32768 /* Arbitrary limit */
->>
->> Otherwise LGTM.
-> 
-> There is already this in the code:
-> 
-> #define SVGA_MAX_WIDTH                  2368
-> #define SVGA_MAX_HEIGHT                 1770
-> 
-> Shall I use those? WDYT?
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Ah, these look like good candidates :)
+The existing validation in qxl_create_guest_primary() checks that
+abs(stride) * height fits in vgamem_size and that stride is 4-byte
+aligned, but never checks that abs(stride) is large enough to hold one
+row of pixels for the declared width and format.
 
-> 
->   Thomas
-> 
->>> +                goto rewind;
->>> +            }
->>>               args = x * y;
->>>               goto badcmd;
->>>           case SVGA_CMD_RECT_ROP_FILL:
->>> @@ -776,7 +779,7 @@ static void vmsvga_fifo_run(struct vmsvga_state_s 
->>> *s)
->>>               if (len < 0) {
->>>                   goto rewind;
->>>               }
->>> -            while (args--) {
->>> +            while (args-- > 0) {
->>>                   vmsvga_fifo_read(s);
->>>               }
->>>               printf("%s: Unknown command 0x%02x in SVGA command 
->>> FIFO\n",
->>
-> 
-> 
+A malicious guest can create a primary surface with a stride much
+smaller than width * bytes_per_pixel (e.g. stride=4 for a 64-wide 32bpp
+surface). The spice server rejects this via red_validate_surface(), but
+the return is void and QEMU unconditionally proceeds to set up the local
+rendering state. On the next display refresh, VNC or SDL reads width *
+bytes_pp per scanline from a region backed by only stride bytes per
+row, causing a host-side out-of-bounds read.
+
+Add three checks in qxl_create_guest_primary() before creating the
+surface:
+ - reject unknown surface formats
+ - reject zero width or height
+ - reject surfaces where abs(stride) < width * bytes_per_pixel
+
+Also fix two related issues in qxl-render.c:
+ - qxl_blit() used abs_stride to advance the dst pointer into the
+   DisplaySurface, but when stride is negative the DisplaySurface is a
+   packed buffer whose stride may be smaller. Use surface_stride()
+   instead.
+ - qxl_render_update_area_unlocked() uses guest_head0_width (set via
+   QXL_IO_MONITORS_CONFIG_ASYNC) without validating it against
+   abs_stride, bypassing the new validation. Clamp the effective width
+   to abs_stride / bytes_pp to prevent out-of-bounds access while
+   tolerating the normal transient where the monitor config arrives
+   before the primary surface is resized to match.
+
+Fixes: CVE-2026-16271
+Fixes: 3761abb16784 ("hw/display/qxl: fix signed to unsigned comparison")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3637
+Reported-by: huntr bubble
+Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+---
+ hw/display/qxl-render.c | 11 +++++++++--
+ hw/display/qxl.c        | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 38 insertions(+), 2 deletions(-)
+
+diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
+index 4799c9e8befd..231cad17ee3e 100644
+--- a/hw/display/qxl-render.c
++++ b/hw/display/qxl-render.c
+@@ -27,6 +27,7 @@
+ static void qxl_blit(PCIQXLDevice *qxl, QXLRect *rect)
+ {
+     DisplaySurface *surface = qemu_console_surface(qxl->vga.con);
++    int dst_stride = surface_stride(surface);
+     uint8_t *dst = surface_data(surface);
+     uint8_t *src;
+     int len, i;
+@@ -45,14 +46,14 @@ static void qxl_blit(PCIQXLDevice *qxl, QXLRect *rect)
+     } else {
+         src += rect->top * qxl->guest_primary.abs_stride;
+     }
+-    dst += rect->top  * qxl->guest_primary.abs_stride;
++    dst += rect->top  * dst_stride;
+     src += rect->left * qxl->guest_primary.bytes_pp;
+     dst += rect->left * qxl->guest_primary.bytes_pp;
+     len  = (rect->right - rect->left) * qxl->guest_primary.bytes_pp;
+ 
+     for (i = rect->top; i < rect->bottom; i++) {
+         memcpy(dst, src, len);
+-        dst += qxl->guest_primary.abs_stride;
++        dst += dst_stride;
+         src += qxl->guest_primary.qxl_stride;
+     }
+ }
+@@ -103,6 +104,12 @@ static void qxl_render_update_area_unlocked(PCIQXLDevice *qxl)
+     int height = qxl->guest_head0_height ?: qxl->guest_primary.surface.height;
+     int i;
+ 
++    if (qxl->guest_primary.bytes_pp > 0) {
++        int max_width = qxl->guest_primary.abs_stride
++                        / qxl->guest_primary.bytes_pp;
++        width = MIN(width, max_width);
++    }
++
+     if (qxl->guest_primary.resized) {
+         qxl->guest_primary.resized = 0;
+         qxl->guest_primary.data = qxl_phys2virt(qxl,
+diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+index b7d871b9ee33..41673c369bca 100644
+--- a/hw/display/qxl.c
++++ b/hw/display/qxl.c
+@@ -1496,6 +1496,7 @@ static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
+     QXLSurfaceCreate *sc = &qxl->guest_primary.surface;
+     uint32_t requested_height = le32_to_cpu(sc->height);
+     int requested_stride = le32_to_cpu(sc->stride);
++    uint32_t bytes_pp;
+ 
+     if (requested_stride == INT32_MIN ||
+         abs(requested_stride) * (uint64_t)requested_height
+@@ -1532,6 +1533,34 @@ static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
+         return;
+     }
+ 
++    switch (surface.format) {
++    case SPICE_SURFACE_FMT_16_555:
++    case SPICE_SURFACE_FMT_16_565:
++        bytes_pp = 2;
++        break;
++    case SPICE_SURFACE_FMT_32_xRGB:
++    case SPICE_SURFACE_FMT_32_ARGB:
++        bytes_pp = 4;
++        break;
++    default:
++        qxl_set_guest_bug(qxl, "%s: unhandled format %d",
++                          __func__, surface.format);
++        return;
++    }
++
++    if (surface.width == 0 || surface.height == 0) {
++        qxl_set_guest_bug(qxl, "%s: zero dimension %ux%u",
++                          __func__, surface.width, surface.height);
++        return;
++    }
++
++    if ((uint64_t)surface.width * bytes_pp > abs(surface.stride)) {
++        qxl_set_guest_bug(qxl, "%s: stride too small for width:"
++                          " stride %d width %u bpp %u",
++                          __func__, surface.stride, surface.width, bytes_pp);
++        return;
++    }
++
+     surface.mouse_mode = true;
+     surface.group_id   = MEMSLOT_GROUP_GUEST;
+     if (loadvm) {
+-- 
+2.55.0
 
 
