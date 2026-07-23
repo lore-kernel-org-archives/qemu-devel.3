@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B952C4452B
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:55:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A292C44524
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:56:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmlR7-0004B2-Ue; Thu, 23 Jul 2026 00:53:35 -0400
+	id 1wmlSE-00061K-92; Thu, 23 Jul 2026 00:54:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlQr-0003yf-Jl
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:53:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlSC-0005wB-ER
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:54:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlQo-0004rf-Py
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:53:16 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlSA-00055P-H4
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:54:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784782394;
+ s=mimecast20190719; t=1784782477;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TZNZu5l6HDHHmDozotlg5GKJJCb4xlZSAIjE4YcKWdo=;
- b=IGyC/fQ6cIurI8L5TMpF7cv9g2meaCbTn5HQADu5JVjFq0LnGWl+9jR8PbLs2TaSmkaA1s
- b3I2vt1ixhhE8HCOXY0iSYUszUJLbcYC6vncfeo/7Rx9ygiPAfrR/hsHC5zUhfgyEpe/th
- 37an6vKnvGzbaWrHBuE8VA2n15jeuWY=
+ bh=pYJwMcbrtQiolDG35OJu9PXoTbvWWWpVq26QLgHqBgg=;
+ b=JX8wSrif111I2Qrz5cMXEdH71lTpbkbukYBo8KvSW54XzONzab3NuE8q22puX3he3fFYoB
+ 6ezACqy34SMWRBJOm9C1BF4WylHTwlZ62HhVqILCfZ19oiCMEgixJ0VwzgVSRIJJyJKO8Z
+ V32gu1oyfkRfktfpOSHuA+5OItjw4+g=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-JDYUe2VaNfGJJkoGCkgShQ-1; Thu,
- 23 Jul 2026 00:53:08 -0400
-X-MC-Unique: JDYUe2VaNfGJJkoGCkgShQ-1
-X-Mimecast-MFC-AGG-ID: JDYUe2VaNfGJJkoGCkgShQ_1784782385
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-221-olmRqzpzNQO5IiURxRhHVA-1; Thu,
+ 23 Jul 2026 00:54:35 -0400
+X-MC-Unique: olmRqzpzNQO5IiURxRhHVA-1
+X-Mimecast-MFC-AGG-ID: olmRqzpzNQO5IiURxRhHVA_1784782473
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CD0971944DCE; Thu, 23 Jul 2026 04:53:05 +0000 (UTC)
+ id 0E00118E6A47; Thu, 23 Jul 2026 04:54:33 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.44])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A71CC18002AE; Thu, 23 Jul 2026 04:52:57 +0000 (UTC)
+ id 61D61180029D; Thu, 23 Jul 2026 04:54:24 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -73,25 +73,23 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Jason Wang <jasowangio@gmail.com>, qemu-trivial@nongnu.org,
  Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH v2 29/44] qapi: convert trivial intro sections for
- misc-i386.json
-Date: Thu, 23 Jul 2026 00:47:50 -0400
-Message-ID: <20260723044805.527643-30-jsnow@redhat.com>
+Subject: [PATCH v2 38/44] qapi: convert intro sections for virtio.json
+Date: Thu, 23 Jul 2026 00:47:59 -0400
+Message-ID: <20260723044805.527643-39-jsnow@redhat.com>
 In-Reply-To: <20260723044805.527643-1-jsnow@redhat.com>
 References: <20260723044805.527643-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: permerror client-ip=170.10.133.124;
+Received-SPF: permerror client-ip=170.10.129.124;
  envelope-from=jsnow@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,177 +109,244 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/misc-i386.json | 52 ++++++++++++++++-----------------------------
- 1 file changed, 18 insertions(+), 34 deletions(-)
+ qapi/virtio.json | 91 +++++++++++++++++++-----------------------------
+ 1 file changed, 36 insertions(+), 55 deletions(-)
 
-diff --git a/qapi/misc-i386.json b/qapi/misc-i386.json
-index 05a94d6c416..78ec9aec647 100644
---- a/qapi/misc-i386.json
-+++ b/qapi/misc-i386.json
-@@ -25,8 +25,7 @@
+diff --git a/qapi/virtio.json b/qapi/virtio.json
+index 1fc4e38a44d..0a4753cc343 100644
+--- a/qapi/virtio.json
++++ b/qapi/virtio.json
+@@ -10,8 +10,7 @@
  
  ##
- # @SevState:
+ # @VirtioInfo:
 -#
--# An enumeration of SEV state information used during `query-sev`.
-+#     An enumeration of SEV state information used during `query-sev`.
+-# Basic information about a given VirtIODevice
++#     Basic information about a given VirtIODevice
  #
- # @uninit: The guest is uninitialized.
+ # @path: The VirtIODevice's canonical QOM path
  #
-@@ -52,8 +51,7 @@
+@@ -25,8 +24,7 @@
  
  ##
- # @SevGuestType:
+ # @x-query-virtio:
 -#
--# An enumeration indicating the type of SEV guest being run.
-+#     An enumeration indicating the type of SEV guest being run.
+-# Return a list of all realized VirtIODevices
++#     Return a list of all realized VirtIODevices
  #
- # @sev: The guest is a legacy SEV or SEV-ES guest.
+ # Features:
  #
-@@ -66,8 +64,7 @@
+@@ -69,9 +67,8 @@
  
  ##
- # @SevGuestInfo:
+ # @VhostStatus:
 -#
--# Information specific to legacy SEV/SEV-ES guests.
-+#     Information specific to legacy SEV/SEV-ES guests.
+-# Information about a vhost device.  This information will only be
+-# displayed if the vhost device is active.
++#     Information about a vhost device.  This information will only be
++#     displayed if the vhost device is active.
  #
- # @policy: SEV policy value
+ # @n-mem-sections: vhost_dev n_mem_sections
  #
-@@ -81,8 +78,7 @@
+@@ -112,10 +109,9 @@
  
  ##
- # @SevSnpGuestInfo:
+ # @VirtioStatus:
 -#
--# Information specific to SEV-SNP guests.
-+#     Information specific to SEV-SNP guests.
+-# Full status of the virtio device with most VirtIODevice members.
+-# Also includes the full status of the corresponding vhost device if
+-# the vhost device is active.
++#     Full status of the virtio device with most VirtIODevice members.
++#     Also includes the full status of the corresponding vhost device
++#     if the vhost device is active.
  #
- # @snp-policy: SEV-SNP policy value
+ # @name: VirtIODevice name
  #
-@@ -93,8 +89,7 @@
+@@ -189,8 +185,7 @@
  
  ##
- # @SevInfo:
+ # @x-query-virtio-status:
 -#
--# Information about Secure Encrypted Virtualization (SEV) support
-+#     Information about Secure Encrypted Virtualization (SEV) support
+-# Poll for a comprehensive status of a given virtio device
++#     Poll for a comprehensive status of a given virtio device
  #
- # @enabled: true if SEV is active
+ # @path: Canonical QOM path of the VirtIODevice
  #
-@@ -144,8 +139,7 @@
+@@ -442,9 +437,8 @@
  
  ##
- # @SevLaunchMeasureInfo:
+ # @VirtioDeviceStatus:
 -#
--# SEV Guest Launch measurement information
-+#     SEV Guest Launch measurement information
+-# A structure defined to list the configuration statuses of a virtio
+-# device
++#     A structure defined to list the configuration statuses of a
++#     virtio device
  #
- # @data: the measurement value encoded in base64
- #
-@@ -180,9 +174,8 @@
+ # @statuses: List of decoded configuration statuses of the virtio
+ #     device
+@@ -460,9 +454,8 @@
  
  ##
- # @SevCapability:
+ # @VhostDeviceProtocols:
 -#
--# The struct describes capability for a Secure Encrypted
--# Virtualization feature.
-+#     The struct describes capability for a Secure Encrypted
-+#     Virtualization feature.
+-# A structure defined to list the vhost user protocol features of a
+-# Vhost User device
++#     A structure defined to list the vhost user protocol features of
++#     a Vhost User device
  #
- # @pdh: Platform Diffie-Hellman key (base64 encoded)
- #
-@@ -252,9 +245,8 @@
+ # @protocols: List of decoded vhost user protocol features of a vhost
+ #     user device
+@@ -478,9 +471,9 @@
  
  ##
- # @SevAttestationReport:
+ # @VirtioDeviceFeatures:
 -#
--# The struct describes attestation report for a Secure Encrypted
--# Virtualization feature.
-+#     The struct describes attestation report for a Secure Encrypted
-+#     Virtualization feature.
+-# The common fields that apply to most Virtio devices.  Some devices
+-# may not have their own device-specific features (e.g. virtio-rng).
++#     The common fields that apply to most Virtio devices.  Some
++#     devices may not have their own device-specific features
++#     (e.g. virtio-rng).
  #
- # @data: guest attestation report (base64 encoded)
+ # @transports: List of transport features of the virtio device
  #
-@@ -294,8 +286,7 @@
+@@ -503,9 +496,8 @@
  
  ##
- # @SgxEpcSection:
+ # @VirtQueueStatus:
 -#
--# Information about intel SGX EPC section
-+#     Information about intel SGX EPC section
+-# Information of a VirtIODevice VirtQueue, including most members of
+-# the VirtQueue data structure.
++#     Information of a VirtIODevice VirtQueue, including most members
++#     of the VirtQueue data structure.
  #
- # @node: the numa node
+ # @name: Name of the VirtIODevice that uses this VirtQueue
  #
-@@ -309,8 +300,7 @@
+@@ -556,8 +548,7 @@
  
  ##
- # @SgxInfo:
+ # @x-query-virtio-queue-status:
 -#
--# Information about intel Safe Guard eXtension (SGX) support
-+#     Information about intel Safe Guard eXtension (SGX) support
+-# Return the status of a given VirtIODevice's VirtQueue
++#     Return the status of a given VirtIODevice's VirtQueue
  #
- # @sgx: true if SGX is supported
+ # @path: VirtIODevice canonical QOM path
  #
-@@ -333,8 +323,7 @@
+@@ -640,9 +631,8 @@
  
  ##
- # @query-sgx:
+ # @VirtVhostQueueStatus:
 -#
--# Return information about configured SGX capabilities of guest
-+#     Return information about configured SGX capabilities of guest
+-# Information of a vhost device's vhost_virtqueue, including most
+-# members of the vhost_dev vhost_virtqueue data structure.
++#     Information of a vhost device's vhost_virtqueue, including most
++#     members of the vhost_dev vhost_virtqueue data structure.
  #
- # Since: 6.2
+ # @name: Name of the VirtIODevice that uses this vhost_virtqueue
  #
-@@ -350,8 +339,7 @@
+@@ -682,8 +672,7 @@
  
  ##
- # @query-sgx-capabilities:
+ # @x-query-virtio-vhost-queue-status:
 -#
--# Return information about SGX capabilities of host
-+#     Return information about SGX capabilities of host
+-# Return information of a given vhost device's vhost_virtqueue
++#     Return information of a given vhost device's vhost_virtqueue
  #
- # Since: 6.2
+ # @path: VirtIODevice canonical QOM path
  #
-@@ -367,8 +355,7 @@
+@@ -746,8 +735,7 @@
  
  ##
- # @EvtchnPortType:
+ # @VirtioRingDesc:
 -#
--# An enumeration of Xen event channel port types.
-+#     An enumeration of Xen event channel port types.
+-# Information regarding the vring descriptor area
++#     Information regarding the vring descriptor area
  #
- # @closed: The port is unused.
+ # @addr: Guest physical address of the descriptor area
  #
-@@ -389,8 +376,7 @@
+@@ -764,8 +752,7 @@
  
  ##
- # @EvtchnInfo:
+ # @VirtioRingAvail:
 -#
--# Information about a Xen event channel port
-+#     Information about a Xen event channel port
+-# Information regarding the avail vring (a.k.a. driver area)
++#     Information regarding the avail vring (a.k.a. driver area)
  #
- # @port: the port number
+ # @flags: VRingAvail flags
  #
-@@ -419,8 +405,7 @@
+@@ -782,8 +769,7 @@
  
  ##
- # @xen-event-list:
+ # @VirtioRingUsed:
 -#
--# Query the Xen event channels opened by the guest.
-+#     Query the Xen event channels opened by the guest.
+-# Information regarding the used vring (a.k.a. device area)
++#     Information regarding the used vring (a.k.a. device area)
  #
- # Returns: list of open event channel ports.
+ # @flags: VRingUsed flags
  #
-@@ -456,8 +441,7 @@
+@@ -797,9 +783,8 @@
  
  ##
- # @xen-event-inject:
+ # @VirtioQueueElement:
 -#
--# Inject a Xen event channel port (interrupt) to the guest.
-+#     Inject a Xen event channel port (interrupt) to the guest.
+-# Information regarding a VirtQueue's VirtQueueElement including
+-# descriptor, driver, and device areas
++#     Information regarding a VirtQueue's VirtQueueElement including
++#     descriptor, driver, and device areas
  #
- # @port: The port number
+ # @name: Name of the VirtIODevice that uses this VirtQueue
  #
+@@ -822,8 +807,7 @@
+ 
+ ##
+ # @x-query-virtio-queue-element:
+-#
+-# Return the information about a VirtQueue's VirtQueueElement
++#     Return the information about a VirtQueue's VirtQueueElement
+ #
+ # @path: VirtIODevice canonical QOM path
+ #
+@@ -933,8 +917,7 @@
+ 
+ ##
+ # @IOThreadVirtQueueMapping:
+-#
+-# Describes the subset of virtqueues assigned to an IOThread.
++#     Describes the subset of virtqueues assigned to an IOThread.
+ #
+ # @iothread: the id of IOThread object
+ #
+@@ -951,13 +934,12 @@
+ 
+ ##
+ # @VirtIOGPUOutput:
+-#
+-# Describes configuration of a VirtIO GPU output.  If both @xres and
+-# @yres are set, they take precedence over root virtio-gpu resolution
+-# configuration and enable the corresponding output.  If none of @xres
+-# and @yres are set, root virtio-gpu resolution configuration takes
+-# precedence and only the first output is enabled.  Only setting one
+-# of @xres or @yres is an error.
++#     Describes configuration of a VirtIO GPU output.  If both @xres
++#     and @yres are set, they take precedence over root virtio-gpu
++#     resolution configuration and enable the corresponding output.
++#     If none of @xres and @yres are set, root virtio-gpu resolution
++#     configuration takes precedence and only the first output is
++#     enabled.  Only setting one of @xres or @yres is an error.
+ #
+ # @name: the name of the output
+ #
+@@ -973,9 +955,8 @@
+ 
+ ##
+ # @DummyVirtioForceArrays:
+-#
+-# Not used by QMP; hack to let us use IOThreadVirtQueueMappingList and
+-# VirtIOGPUOutputList internally
++#     Not used by QMP; hack to let us use IOThreadVirtQueueMappingList
++#     and VirtIOGPUOutputList internally
+ #
+ # Since: 9.0
+ ##
 -- 
 2.55.0
 
