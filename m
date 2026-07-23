@@ -4,111 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28339C531CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 10:46:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63028C531CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 10:52:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmqwN-0006Fp-NY; Thu, 23 Jul 2026 06:46:11 -0400
+	id 1wmr27-0000QJ-2I; Thu, 23 Jul 2026 06:52:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wmqwF-0006FO-6R
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 06:46:09 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ (Exim 4.90_1) (envelope-from <matyas.bobek@gmail.com>)
+ id 1wmr22-0000Q0-1J
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 06:52:03 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wmqwD-0000eX-Fm
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 06:46:02 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-8143daf89c7so4244617b3.1
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 03:46:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784803560; cv=none;
- d=google.com; s=arc-20260327;
- b=N3ZXH6UNfxvr8FUrwH5BuIi5L4m7CidQn3L77LKSEUhDKEKGdA5nTqks5SOHcZ1iJI
- 4tjjdfH4r+x/UkdPyhTK/7NRyEEMzVfLgeTcXf1yhSxOvZF752kg5m5B6ichJXOs8Lpy
- K2DHBkMME2Vo+MW5pFasVjWENgFVW82TqleRJhqJeMuGmpJW1z+4JKUjGJyJFqDCAATK
- 7P33rp0RvLb89+ElmE2+RAYNyMtctbs0j34irR50sAb5KTIx+Xl0EeMDbPVU2o7HiABL
- wiMuWqGPqbBFga9XRoO8Pg5sZA0QB3JG81k1qKqpANj6B3qkQvQDr6DYOevNa7rT1qjY
- Tomw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=fKQIqvFI+qnPLn66kWfRVJq/EdEMbY7GUmyED5BG8ZI=;
- fh=x33KSjkiXcsQnLBFtzy0xqZIJArx/YcKIc6eJF9SrJk=;
- b=BBtYVPQ2iDO3l2NfxPa19y1Qzc9WIZKpquyziR4vNaPgqNw8EzwSZ7bUcWhNhliBwr
- kqgk3CqVUkROnzF7/II5Ozy08jdYnotvYdiG7EMNdAhiamIRCMr0X5puieZ9A/t/ftVy
- z6GtbCvGE+qBM2qGesgSUD5lzlMksB2UI6Pw5OzE3y+JBZkcwQrr0znKphYrhjyYRa+p
- NWmNvMySeny0DzPmyhgc6MG13eJqKQdatgA0ZCQ1596MGzKufK7d5uFPziIZrdENSIt/
- qbbek9iTqPGjkwctSgZNkDl7uS6n5CedaeZR0zDOr70+Ns0FbmLkzrpgAcykhlXFTV9D
- ekPA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <matyas.bobek@gmail.com>)
+ id 1wmr1x-00018H-Kf
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 06:52:00 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-49571fea44eso2923315e9.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 03:51:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784803560; x=1785408360; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=fKQIqvFI+qnPLn66kWfRVJq/EdEMbY7GUmyED5BG8ZI=;
- b=KFA13zqWfQgo5B588L2Szqu06EF2+zCPlIDAk5YJxsZZGcRjiVE+oPNTM66alvznS/
- 8+qvHdAMW0i33ZZKSXTIDImOqYW/hjAB/U2zD33Zvya69DrvbtyLcnsRwilJ4xJ1ayUC
- iZMyxsJiSmSMX1bNYfLqO0gesE7blh2Cq0VjaYMzJA8y5oTOYGT9c+WSY1c1uens/tns
- tSxJMZziUzGCOOXnDXqrljtyFuHvQVoxTn/yRaUj/CApImA3bA8gsQC9b7TKNA0MLTl6
- AA+CtOQ1EFYntyLG3MOP0BY4bJ6QxWr0iBIA5jBC6d6ORK8ORp5XUfJxUztXhz9CW8p8
- VMpA==
+ d=gmail.com; s=20251104; t=1784803916; x=1785408716; darn=nongnu.org;
+ h=mime-version:user-agent:content-transfer-encoding:content-type
+ :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=IehoXc+YaA1sm90uWcURWtG+mLW9T+WEr0+9SHHFF5c=;
+ b=hITQkI/qBbw0jiwtdgHRy+Piu7FSSbzkIQAGmzHIoXnT4QsHNiKiQeJIep0GtV+UP0
+ TrWw6DAi68sHjzNzxnQftbXssB2A1spfzcvcVNcXtTUJPPSdohCiloVvlDOI0+TeRPAd
+ DEoOEL/COV/IZyBch1mz6hTZYoeueJalikZASQad+8iPLhVknhF3VHz1iXD1ft7xA8Bb
+ UvWqWb8vTadIVxC4L62efrorx9SBLDlRXwFANmIfTJc1UzMcOCfIkuwnE6XgFobSDEud
+ 64Ie+TLVebLatMFK4P7088psQPnJInji363Z0AzQrC9FbpEQewN+OICvB1CqN6CMbUnJ
+ jwPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784803560; x=1785408360;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
+ d=1e100.net; s=20251104; t=1784803916; x=1785408716;
+ h=mime-version:user-agent:content-transfer-encoding:content-type
+ :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=fKQIqvFI+qnPLn66kWfRVJq/EdEMbY7GUmyED5BG8ZI=;
- b=ATC4KwM2c+ZPZ/o44inQpfFvdZX/XKO1nsHXKv9HWJ6PqSrTXu6/HQLVQ48nMP9VUJ
- mhGEQ7/sKKuUlEm3DWxZmQhL6+OHRu5dHyQURnaLh+lsXAhLmWWZdApUt3DPCsZqNxhF
- lG/2Op+Gyo88+7Ybj/cXUAbi+notbOExBkusy3ioplWXGLWQekaxnArgRfiOP9jwZAfs
- 0Ln1eIIGH2HaMY/kPBRZef8g40beGzupoM9Nh1ASg1gA+8S9YfY2WeUKo/UUm5zzZ+W6
- oJaXMdkEGcjKbJZHe7JvQW3sbnIhvXYl8Ah/7EUkhLWcz99cZ8jQmhlAE1KtivxFp47q
- 6+ig==
+ bh=IehoXc+YaA1sm90uWcURWtG+mLW9T+WEr0+9SHHFF5c=;
+ b=d4ka2Hx0LfoNj6Wr81/5rF5yAW2ul37ouUo3V6sTHi4CZxotFdsmucV7pJkU6gTCMU
+ kBAvWb6iP26GU7IPkHNAvsiO2XlU+LTNjh8Y7P49tX8MFrOn6ijuSMPnoMG4c8ilVrA8
+ w5RQ0XqDxf12ogJEsdxtVbyPNW7bU7iw7/b6X0DoXWXbXxLhCXMTnTF0vo9ffyFE9Sp6
+ +DTIielO3GW3pEM+XiooYZkI5JJaV/nSsxVlqkjRLAShSzP5V/BPLM5RvCVK52kPnxpj
+ gw8xEqp1wHiB3VTw3epu0uCDBIWtegJGFO2Y7idA1RNx6RU7ALgHcR6Tlqp+6aAcXWBH
+ 2Rcg==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpVcsMD3HKr6/nI71pxtlU1cayDNBThQ/QGySU/JoOZno7B55em+ecFv2uMtDF2rsAv88MQTDlXePIM@nongnu.org
-X-Gm-Message-State: AOJu0Yy0DrjLb9JdttAtqe5mTpXdtIYp8r+cIZ76UKmmiHaKeVgkTNfU
- TCw/hNqa1kGiwPOHzpNXQn+O3AsW9JanW9TWW1d3i3/f1kZUMI7vaD8kAaScJ9UmzkamC2jAZkJ
- oa2xM3zCC3Aka7utcZbZkgdJyms8+eMGflBdZ9utp3w==
-X-Gm-Gg: AR+sD12bLzyfoAv6UIv7JVYYixBTd4U7O3HuUf47oQlQQz2XUjFsX07Ic+TMbvNTObK
- KptO/LqkPi6IGOwHoxOGrCp+HaZtpA5U+xWmaTicLEpEOjPom7i7VRHGS99qoakuJpzsGmHv0Pg
- XJfsz1h1POethYiyWk5Mnzt6ovWd/xcyssnUlVmhJd7nu/NwnhQnVh1t+8GOhtVFF23IiY+Ju2c
- 6TV6zQ1v4B1Il5idmcRI1mnKbFl2vJEC76TAMzjlvLWXkuKk7n0j0TpFCj6fcT7k/330Auw/KUH
- JkidwNUlt5ubovhD5Lp8OfsB2HHz42s8bN1hvsBu6vDOug==
-X-Received: by 2002:a05:690c:9986:b0:81e:2b86:d75a with SMTP id
- 00721157ae682-81f4c2fd99emr7042797b3.55.1784803559620; Thu, 23 Jul 2026
- 03:45:59 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260521145451.1831984-1-marcandre.lureau@redhat.com>
- <e7d3e9dc-be97-40f3-b426-3e93a242410a@oss.qualcomm.com>
- <87mrvightj.fsf@pond.sub.org>
-In-Reply-To: <87mrvightj.fsf@pond.sub.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 23 Jul 2026 11:45:47 +0100
-X-Gm-Features: AUfX_my1yVwqDYBFri7PHqiSbZZksCRSQ7Qda_pMQK4AnsOEZwerOgkNdV0ZEE4
-Message-ID: <CAFEAcA-Upx9uacBZ8nq3Co5csNqi-nHaTOVX7t9kUzDW-CL5Bg@mail.gmail.com>
-Subject: Re: [PATCH] target/i386/sev: fix MemoryRegion reference leaks in
- gpa2hva callers
-To: Markus Armbruster <armbru@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- marcandre.lureau@redhat.com, qemu-devel@nongnu.org, 
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>, 
- "open list:X86 KVM CPUs" <kvm@vger.kernel.org>
+ AHgh+RrdxHGVln73d6f5k8tK2Upz8jqVKdKL/bURD5EiGJOWSO6+Qfh3UzcW9KtCreR6EI+opMyvqfoyF4Bo@nongnu.org
+X-Gm-Message-State: AOJu0YzVxeU/yFrRJCJKw0IBC1pLa6rPNiWNdwC4j9Xdmt0wMIcRaUSP
+ T8zgMo3JUTMPlUpXjFJhxw73L+fRyrqdoUj8+D9Xa4qo9WU+d/qHhKBh
+X-Gm-Gg: AR+sD12oVOb3b2BAo94L7oeyUiMzDp+R291K8LjMhBzgAZ7pQxCLrqcL1Gx3cZZoeCn
+ +ioHiQm9zvG+UPbRyfa7aMskdnGzkCv2Fs0l9/H+kzL0OGZ8v0fWVtDqSqehqj350SXS9v3Xd3p
+ 6fEJRHMXuILEdP2R3HsLc4my8DkCk8R6//lHZVO+a5vUhqdhcPRY6QLmYgnxLQmirXSyy7SzCYd
+ 1FBj3X8gMsetcttdw7HInbAG32Z5w3BsI8s53mfKz/xbwNdFJTFt6V2JHb7JCd4AWFaf+4AoXCM
+ Ft/3TMPf96VGdG4Jv6ENCxL09o1ShBe2GhtnCJwJI60ITwt13Ah/0L/U67di/KxKhNwUq2NwfsK
+ mb2YZjfiSyhMkNeO5EswgS5Q8g2NPY3xgKMkGxbJ/JnGLNTZwisTryYT3RC0s4/gbgHE4LZJHOj
+ iqqJZTDbAQ5ygxJzc0S8tu6WTY8r1vc9k0
+X-Received: by 2002:a05:600c:6303:b0:495:4730:15b2 with SMTP id
+ 5b1f17b1804b1-49573d088b0mr26417795e9.31.1784803915345; 
+ Thu, 23 Jul 2026 03:51:55 -0700 (PDT)
+Received: from acidburn.pod.cvut.cz (acidburn.pod.cvut.cz. [147.32.90.2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4956ab22e74sm123636345e9.1.2026.07.23.03.51.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 23 Jul 2026 03:51:54 -0700 (PDT)
+Message-ID: <75ad04f4b6367262a5174245deeaadd32ba317c8.camel@gmail.com>
+Subject: Re: [PATCH 7/9] hw/net/flexcan: Drop oversized 'mb[]' mailbox view
+From: =?UTF-8?Q?Maty=C3=A1=C5=A1?= Bobek <matyas.bobek@gmail.com>
+To: Bernhard Beschow <shentey@gmail.com>, Philippe
+ =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Pavel Pisa <pisa@cmp.felk.cvut.cz>, Francisco Iglesias	
+ <francisco.iglesias@amd.com>, Jason Wang <jasowangio@gmail.com>, Vikram
+ Garhwal	 <vikram.garhwal@bytedance.com>
+Date: Thu, 23 Jul 2026 12:51:52 +0200
+In-Reply-To: <F33F7AFC-1868-49E8-95C8-CBB04339F6A3@gmail.com>
+References: <20260723070059.6332-1-shentey@gmail.com>
+ <20260723070059.6332-8-shentey@gmail.com>
+ <84061116-c6d5-4def-acd8-ba9c81a0eece@oss.qualcomm.com>
+ <F33F7AFC-1868-49E8-95C8-CBB04339F6A3@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+User-Agent: Evolution 3.60.2 
+MIME-Version: 1.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=matyas.bobek@gmail.com; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -126,43 +110,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 23 Jul 2026 at 10:46, Markus Armbruster <armbru@redhat.com> wrote:
->
-> Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> writes:
->
-> > Hi,
-> >
-> > On 21/5/26 16:54, marcandre.lureau@redhat.com wrote:
-> >> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >> gpa2hva() returns a referenced MemoryRegion via its p_mr out-parameter
-> >> (inherited from memory_region_find()), but both SEV callers were faili=
-ng
-> >> to release it.
-> >
-> > Comment orthogonal to your fix; odd to have a non-monitor code
-> > call an undocumented monitor method.
->
-> Which one?
+On Thu, 2026-07-23 at 10:26 +0000, Bernhard Beschow wrote:
+>=20
+>=20
+> Am 23. Juli 2026 08:20:34 UTC schrieb "Philippe Mathieu-Daud=C3=A9"
+> <philmd@oss.qualcomm.com>:
+> > On 23/7/26 09:00, Bernhard Beschow wrote:
+> > > As indicated in the comments, the `mb[]` a.k.a. `mbs []` views
+> > > should
+> > > cover 0x400 (1024) bytes. However, the `mb[]` array covers four
+> > > times
+> > > the size since `sizeof(FlexcanRegsMessageBuffer)` returns the
+> > > size in
+> > > bytes instead of counting the number of uint32_t fields. This
+> > > shifts the
+> > > subsequent register offsets by 0xc00 which is not intended. Fix
+> > > the size
+> > > and thus the offsets by dropping the now unused `mb[]` view.
+> > >=20
+> > > Note that the different size changes the migration layout. Since
+> > > the device
+> > > model is new, no change in the version fields is needed.
+> >=20
+> > typedef struct FlexcanState {
+> > =C2=A0=C2=A0 ...
+> > =C2=A0=C2=A0 union {
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 FlexcanRegs=C2=A0=C2=A0=C2=A0=C2=
+=A0 regs;
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint32_t=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 regs_raw[sizeof(FlexcanRegs) / 4];
+> > =C2=A0=C2=A0 };
+> > =C2=A0=C2=A0 ...
+> > } FlexcanState;
+> >=20
+> > static const VMStateDescription vmstate_can =3D {
+> > =C2=A0=C2=A0 .name =3D TYPE_CAN_FLEXCAN,
+> > =C2=A0=C2=A0 .version_id =3D 1,
+> > =C2=A0=C2=A0 .minimum_version_id =3D 1,
+> > =C2=A0=C2=A0 .fields =3D (const VMStateField[]) {
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ...
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT32_ARRAY(regs_raw, Fle=
+xcanState,
+> > sizeof(FlexcanRegs) / 4),
+> >=20
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ^^^
+> >=20
+> > This "consider this structure as a casted array of u32" is very
+> > fragile
+> > anyway, and will unlikely scale over time.
+> >=20
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ...
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_END_OF_LIST(),
+> > =C2=A0=C2=A0 },
+> > };
+>=20
+> Any suggestions what to do instead?
 
-The gpa2hva() function, presumably. It does seem a bit odd to
-have the target/i386 code directly calling this. The function
-in monitor.c works on the system memory AddressSpace and
-assumes that there is only one kind of "guest physical address",
-because that's the implicit "everything is an old i386 PC"
-kind of assumption that got backed into the human monitor
-command. But it's not really something we should be doing
-more widely.
 
-The i386/sev code looks rather odd to me. It seems to be
-using gpa2hva as a way to get at the host memory that is
-backing the guest memory. Why can't it use the usual
-address_space_map() etc APIs for this? Worse, it looks like
-it keeps that host pointer around in a SevLaunchUpdateData
-struct, and it's not immediately obvious to me that it won't
-go wrong if the memory map later gets moved around and that
-pointer becomes invalid. And it looks like it writes into
-guest memory in a way that will bypass the dirty-tracking.
+The oversized mb[] view is my mistake, it should have been the same
+length as mbs[], i forgot to divide its size by sizeof(u32)... I realy
+meant the mailboxes to be an u32 array, and the struct laid over it was
+just a convenience. It should have been
 
-thanks
--- PMM
+uint32_t mb[sizeof(FlexcanRegsMessageBuffer) * FLEXCAN_MAILBOX_COUNT /
+4];
+
+The regs_raw entry in FlexcanState is the same idea. We tried to avoid
+any endianess-related bugs by treating the registers as an array of
+u32's, and always accessing them as dwords. I see now it's not the
+ideal solution, and I should have documented this choice.
+
+Sorry, Matt
+
+
+--=20
+                Maty=C3=A1=C5=A1 (Matt) Bobek
+
+    Email:      bobekmat@fel.cvut.cz
+
+    Department of Control Engineering FEE CVUT
+    Karlovo namesti 13, 121 35, Prague 2
+    Open Technologies Research Education and Exchange Services
+    https://gitlab.fel.cvut.cz/otrees/org/-/wikis/home
+
 
