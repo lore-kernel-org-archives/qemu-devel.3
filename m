@@ -4,93 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8527C44524
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 07:03:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D3E2C44524
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 07:03:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmnRR-00020e-JQ; Thu, 23 Jul 2026 03:02:01 -0400
+	id 1wmnRR-0001zl-1W; Thu, 23 Jul 2026 03:02:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wmnRG-0001xO-69
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wmnRD-0001xA-8X
  for qemu-devel@nongnu.org; Thu, 23 Jul 2026 03:01:57 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wmnRE-00042p-FX
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 03:01:49 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-493f75f7172so2552395e9.1
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 00:01:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wmnRB-000422-PS
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 03:01:47 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-49558ce01afso1858355e9.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 00:01:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784790107; x=1785394907; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=EM3hMp/KfUSEwl/8SCDaWLH0SWyyv+tEDVdwL/ZkQ2c=;
- b=rO1fh2OT1ZCvZtzYfhBd8VonM4p8dcxN8ne/zxdvwFj/XT/cFctDXfvNk3GOZ/VDkq
- 5yTAdoOB/GV0bNlOJez2Naja8T7UXM/t97vltPou3dDUtWS/lxXWoxbRUPq94IF5AY+g
- 3cygZsHl5ixbEbfTSEM5NSKUpGWIS1jSOR0ZRBTQu+3T+0pnHHN3akDJ2g5RYVqFsA3m
- o1rKXL7kGF69jcX94lsUKOiRjKZ90X1Wn/6s5MybXv3VnEonr2eFxTqfbi+tFUm0grrK
- rCuWavfDoQEQYYAXeehpQa/7TJxMIyEZexaB7QRiLPm+1oIGK2aD0FA0U9rTo/lGzX7a
- Ir7g==
+ d=gmail.com; s=20251104; t=1784790103; x=1785394903; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=rLEpY3rExq9KlY5Yf9lSIXR1ELXuT09C+vQqFK/LjRo=;
+ b=EvyU3KPFxifpgCqpkxG/pcFABrVoiejuTXdWNv9M9becR/ks8dUTD9QJXC6i0tFBm6
+ RTx8qmm9p75UokOtZIbmvHORE9gJQJqiQV9lPZMroUFTNDMlwFMb85Nx8gIybN4gtT2n
+ 6Cg8EFaOTuWRS70e4q/5vfuEHOQeXK9jVz6jActISkmiM1v0QR5hAATVKjsSQIQKenNC
+ vxAuTylkAlx8/GKKhVhhAlEg47nx748PKcWj+3bSpPTWGJtalhRYEok3wKz9kdyRZj97
+ MVRC+lk3gmmR+vEBqQAsEkMON2IEDUDCQO/SPzmfOCep9bEl1jeL3STs0VHKGymQ7Ter
+ K8xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784790107; x=1785394907;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=EM3hMp/KfUSEwl/8SCDaWLH0SWyyv+tEDVdwL/ZkQ2c=;
- b=UCl+ZRC7PH7KmT8fatHhVgvg12JWpV5a3oI91rvGSX9YdJhsSObjvuM6+d2+AZUGOo
- 5S37u4tWHO/+AnInZLEzv/Nqhi6L5i4Pa5NsHKgpmtfojJKBUdmpAupsNejBqOzim7B2
- QFNUf7RAF4wQCA+6Wb/ltFSn0t79D4pd442GxuWS6YqOzK7U/ENU5t2qruTSHdTg0iUS
- V5mq9qbTYDWXXHdD5sKVdqr1IYFOMkWrDrgj4kaXanqPxwZrCELO7L4GpFq2SkeZdWmh
- FTDSZwUVXZhv+CDvI6IfE7pSa4ND9FxpcJmAhvASih6DfO05nhXEQ9SKPKYAo+kCfcgK
- /HyA==
-X-Gm-Message-State: AOJu0Yyrd+BrvMuvvS+UIRGv6OhWb3vvAMmNgkuZTGcB5mumLsgzGbyd
- CEhHw6pvUE2c6xPY/ksR8wOwQYG31xqSexZMhd+wVbvflMm060rt9StwsmW3DQ==
-X-Gm-Gg: AR+sD13x1IIwPt0H94azf3Wm9voOdMzp6Y0tLAV2nZSW0qqeY9EEYLsXnU9N2zj8m0+
- BMnYnDwZ34WsFrnG5giDjdRjhHBu9UW0C6cRZxOwChoRtCFuUOieQsseMY0xAHZ9OCLUrV/FNnz
- z5Im2r3E7m98/BCeRpIZk5Zxjz2cptxyybJ+viwlqfKuXfz8AoE4A60aGimUKnt9Zrv7V31XgYr
- TatMZtDTMb9Ir13+bKrr2ti3BQ6KRkduTVaccqFoLouUhLit0eJNp5Hwkxd7MCMFMFJO37mDneV
- EaA5ZI1/g2BcqcOAZPwq3q9LBPtk+pymrWiUFC9IOI30lpg4jjcd9Aa9aVi5X6nLn7xMPkyzCvN
- LQxFq/50F/4nN5iZz4uUoyMGsiovqNzaojJsczuW/PsoP6RuK38GALmSZ9Tv1aAf77oVLOePk/4
- I/zpN6WO63rpisxXfYXx1so7g5Z0t2ma+6LdynuECH7zJNenA1w05COHhfLcUNaf51v58ITipKf
- Rl+LDxpg8favXgo6OKqPS3kNg==
-X-Received: by 2002:a05:600c:6610:b0:495:6a2a:951f with SMTP id
- 5b1f17b1804b1-49573cd02fdmr19339135e9.17.1784790106711; 
- Thu, 23 Jul 2026 00:01:46 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1784790103; x=1785394903;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=rLEpY3rExq9KlY5Yf9lSIXR1ELXuT09C+vQqFK/LjRo=;
+ b=o4SDPtZtcBzcehT1t3Mf79IrkfsBzPundApMnknOO+FTu96aFsYWlNZ5MQ2VYHtvIk
+ JBJ/fDXliKpm9JwtpjY0yvlhVFSCaUGM9iSEySKMISq5heR0FlTF5MJ5WSd5aYI4QhtJ
+ Hbgw+WEzz/IHLBPhfdz9AO5Jd29IWZQnte17cIbDCUQgGJfb3fXye6/sicsMuQuHuUKL
+ hXBzFeXttJVS5p3rqg0A3j5dfXMX26sXqw31DwBK2XUi3SrIPBLmDgE+YpsnAVR2x1Rm
+ EpVodaCTR3IWOe64lnRb3Ob6UHfUXUEKRZa7gaVxfcDrllzth+NiSS8+XDH4fKqY0vyp
+ qmxA==
+X-Gm-Message-State: AOJu0YxzWtzkyNAwaLKGkB7Rg8QBKegxGazQxvt1iriYCnUjOmjtrSkC
+ eyW3WtqBQSef1G4sbfEOhzeQrU2oCnsUYeksVABM2Hj+AnbKk4ZKayuztmyijA==
+X-Gm-Gg: AR+sD13qOZDLhq9SQdNmhG5pVjxc0u5hT58skMj/+3r4E0lBWI5AjeI0J2+YOixekrl
+ pSjaqCIOpUxT1UZFlO/8bO3E8tCF1gOv9Ey1cygIo6XoB84Ow7VmbMSun4EzSKCBHD0HvjkaJRY
+ uPlf3LzdrdmdT/H5IoNBohm9WHRH4Aht7PdyR6EP4cvPABA2exDe7f6NR7KEeP2yTVJkg1kkGnr
+ pqdSc/b1eC95Eo1WaBt+vywVf4doe5ZsMwclsSBolpvxNHpRyREKxuCaaE5vw6eT2gBv9tyv2Eq
+ o/4fIZilKieaVJFC0VOgfMnZeWFek81fUgG66g1c7cpOg58u9Llz48Fb2zIQ9URz9GtZ/ZTbWo5
+ 7TIa+Cql44Vgp7Hohw74GlydbRqiv+IPQpZc8j+w4mBRGol9XDd7Znbx9hTsdxfHr1+SnS+pyI/
+ Mu+5v7vBiT6MI/qnT4dWBJsO5nPhHem1OAHxmbBinrVzY7WA4i/YpFFgEQVt15nyzjrff1SW3/U
+ BgDKif/4fuCHu6pwFSEXU1OaN5ORrxRypMO
+X-Received: by 2002:a7b:c382:0:b0:495:71f8:7325 with SMTP id
+ 5b1f17b1804b1-49573d0a454mr13670635e9.32.1784790103218; 
+ Thu, 23 Jul 2026 00:01:43 -0700 (PDT)
 Received: from Provence.localdomain
  (dynamic-2a02-3100-29ed-6000-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:29ed:6000:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c6dc25sm13293923f8f.33.2026.07.23.00.01.45
+ ffacd0b85a97d-47f85c6dc25sm13293923f8f.33.2026.07.23.00.01.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Jul 2026 00:01:46 -0700 (PDT)
+ Thu, 23 Jul 2026 00:01:42 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Pavel Pisa <pisa@cmp.felk.cvut.cz>, Matyas Bobek <matyas.bobek@gmail.com>,
  Francisco Iglesias <francisco.iglesias@amd.com>,
  Jason Wang <jasowangio@gmail.com>,
  Vikram Garhwal <vikram.garhwal@bytedance.com>,
- Bernhard Beschow <shentey@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH 4/9] hw/net/can/flexcan: Fix mailbox index calculation in
- flexcan_mem_write()
-Date: Thu, 23 Jul 2026 09:00:54 +0200
-Message-ID: <20260723070059.6332-5-shentey@gmail.com>
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH 0/9] FlexCAN fixes for-11.1
+Date: Thu, 23 Jul 2026 09:00:50 +0200
+Message-ID: <20260723070059.6332-1-shentey@gmail.com>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260723070059.6332-1-shentey@gmail.com>
-References: <20260723070059.6332-1-shentey@gmail.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,42 +102,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Calculate mailbox indices from the `mbs[]` array layout instead of the
-oversized raw `mb[]` view. This prevents accessing mailbox entries beyond
-the valid array range and fixes Coverity CID 1662974.
+This series attempts to fix the Coveriy issues pointed out by Peter in the
+FlexCAN emulation [1]. In addition, it fixes some reset masks to preserve
+register contents across resets as intended. It also fixes some register
+offsets due to a union being inadvertantly too large; this would affect
+migration if addressed after the release. Last but not least it eliminates an
+unneeded union.
 
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- hw/net/can/flexcan.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+Testing done:
+* `make check`
+* Run `cangen` and `candump` on the host and guest in both directions
 
-diff --git a/hw/net/can/flexcan.c b/hw/net/can/flexcan.c
-index dd92a38337..651904fa37 100644
---- a/hw/net/can/flexcan.c
-+++ b/hw/net/can/flexcan.c
-@@ -1151,6 +1151,8 @@ static void flexcan_mem_write(void *opaque, hwaddr addr, uint64_t val,
-                               unsigned size)
- {
-     FlexcanState *s = opaque;
-+    const int mbid = (addr - offsetof(FlexcanRegs, mbs)) /
-+        sizeof(s->regs.mbs[0]);
-     uint32_t write_mask = ((const uint32_t *)
-         &flexcan_regs_write_mask)[addr / 4];
-     uint32_t old_value = s->regs_raw[addr / 4];
-@@ -1208,11 +1210,8 @@ static void flexcan_mem_write(void *opaque, hwaddr addr, uint64_t val,
-     default:
-         s->regs_raw[addr / 4] = (val & write_mask) | (old_value & ~write_mask);
- 
--        if (addr >= offsetof(FlexcanRegs, mb) &&
--            addr < offsetof(FlexcanRegs, _reserved4)) {
-+        if (0 <= mbid && mbid < ARRAY_SIZE(s->regs.mbs)) {
-             /* access to mailbox */
--            int mbid = (addr - offsetof(FlexcanRegs, mb)) /
--                            sizeof(FlexcanRegsMessageBuffer);
- 
-             if (s->locked_mbidx == mbid) {
-                 flexcan_mb_unlock(s);
+[1] https://lore.kernel.org/qemu-devel/CAFEAcA-QBiPfgN4YJXD9FQULobpBVNgeJHSqG7Eqg1CzyKTfaA@mail.gmail.com/
+
+Bernhard Beschow (9):
+  hw/net/can/flexcan: Use mbs[] array for FIFO pop
+  hw/net/flexcan: Drop unused RX FIFO register overlay
+  hw/net/can/flexcan: Fix out-of-bounds access in flexcan_mx_rx()
+  hw/net/can/flexcan: Fix mailbox index calculation in
+    flexcan_mem_write()
+  hw/net/can/flexcan: Fix mailbox index calculation in
+    flexcan_mem_read()
+  hw/net/can/flexcan: Fix mailbox reset mask initialization
+  hw/net/flexcan: Drop oversized 'mb[]' mailbox view
+  hw/net/can/flexcan: Fix RXIMR reset mask
+  hw/net/can/flexcan: Remove RX SMB raw view
+
+ include/hw/net/flexcan.h | 22 +++----------------
+ hw/net/can/flexcan.c     | 47 ++++++++++++++++++++++++----------------
+ 2 files changed, 31 insertions(+), 38 deletions(-)
+
 -- 
 2.55.0
 
