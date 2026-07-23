@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 722EFC531CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 07:03:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43518C44524
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 07:03:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmnRW-00024w-1O; Thu, 23 Jul 2026 03:02:06 -0400
+	id 1wmnRV-00024s-Nh; Thu, 23 Jul 2026 03:02:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wmnRE-0001xD-Bt
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wmnRL-0001xi-1O
  for qemu-devel@nongnu.org; Thu, 23 Jul 2026 03:01:57 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wmnRC-000424-6E
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 03:01:48 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-495590dde14so2854835e9.0
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 00:01:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wmnRJ-00043h-Fv
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 03:01:54 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4954df200ddso1803285e9.0
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 00:01:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784790104; x=1785394904; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1784790110; x=1785394910; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=W8/ql9oV4e6EQ7S+iz2MJkQ+GXmFiJkWowxvSQIx9Bc=;
- b=OfnZ3+E9UaoshLf+hW59CLEH26rajSuY3YhrxNpLHqhbyJtu9eaLI5DlGXh5XpSPHg
- Uq/Lorad3B3k3ustHpw2Z9ZW0C1aV0YMVjz8I66l5BBHqabt5ns4JEH7XEoIzeYsaOaV
- WgljRqLk3G4zps0RTAxiUiCH7OswyZ37s2eWSTzz05i6vNKrHKxt/y18HuLVua3GbfPu
- 73QVzzGuU33x4TrdFfESBLK3qBoPfqEefPgvd7DdAig7M2yKiaGERxJ5XKoPvxggv0+c
- C1/ztRp9zvhTNzPiwWhyqyQW8mhqXuNGYDzhUfuODyg9T3AMDjrE28bL8/6LgCof22V0
- Yoyw==
+ bh=ZQzdmXPKS/GCfPOIlcxRtVIw5smE1l62zCnawYTu9wM=;
+ b=fPx8JMC1Q5rWnof/5IQIAx/b94ljAJQNZ7sjZe4V5gecz7B5eCJhf4i4dxcNHHNs6C
+ JqobpU3h0dUMUKRgeo5aWOZ+3kiEa4PLpaBx0kygSzSvkp92/oYYLtsgbfi3UNvn+645
+ 1JzCrFIJxZrhytz/WRNVv7VGOc4aMHvkJskd4eU6TbyudOHCLMzOFci2CjfAmwKpGyOE
+ NNt036QbD4pwEBVnVtYnN0p6KcLnYUjzzkbd7RbOKHD2xCwLW3jBP7yzv/OqX0W7JQIW
+ xr8qihmBNUIKNmgesmj6waChbTXXrCU2J90X/XqxlW5znzNlaxiIfOBTN4yvt/Pcf9oI
+ Zarg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784790104; x=1785394904;
+ d=1e100.net; s=20251104; t=1784790110; x=1785394910;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=W8/ql9oV4e6EQ7S+iz2MJkQ+GXmFiJkWowxvSQIx9Bc=;
- b=WQBEFdHAjkZb3h5vulJm7VCPpHDkT7rfAEfI8WMvvbU4dYeTfftuom6YizdK7Yhtjx
- zEy5mr9bvVwem9ev/gFL4LOn7/bgQWnTNA7iGucltTAE7si/+78Uc9XHXe4lc/b7Be1Q
- PkFsbO73zLeXAw7ekR7R+7VZvozRp71thLEYOMh/OwdHjLYntrNWCcV65DKGXL7OCfBK
- Wo6U+U2lOOFrZzy9h8J0Fw9VV7xWi7vAlqVzJzVgM6d8WQrWEjyvmM/lrjfGYvU3qywc
- 1O+f5k4uM0V658wg6DeApo4/aUA2wp0kjbxyV035egxieWYPPI9U1spnOij54HvQTiz2
- PwLg==
-X-Gm-Message-State: AOJu0YyS+4Q++cpaqSRsD9K5qshx5zERGn/mdFo+WPY5Vglxo4mE1Ckq
- HOnPJCGgzGQRHXVSUvSodVlN0VbV74Ffk5COK1QykDvpo4NOJb1xC1rHzmrYpw==
-X-Gm-Gg: AR+sD10D/DQTncT2eKtYfijS7hXMoNS++PhNH8wmdueU7G1m/uvMBnZOPzXJDCuaAEg
- 4U1S3PtK7tSJHCm3BfBS5c+4oSDl4+zd4QVsycO3l8SNdA/4Pkptd8mAhFJofGMKU+Dp6EvUVwo
- JuTefB6YSqpQ7NNQ4tXbq6ag4wzpbHgG4P+siXQSy4aJvQAgwzJWciS3SjVYFtx/LVQeOWJtBI4
- suOiiTzPHl/IkGowvMJZGOM+DxYA/DdR0Xj54nLPUdLK/hMHeS49hsk58uqCrXnPgIELTyL099h
- kHnBGuOYSmQSbXLXPucqGiuD220HBOxwK02kC5DRQlt7ed3y9ABaS5ZV1CIP5Hg1H+nf7XCh48v
- JV7EdUcflWImxd3qmy5idXqsjgGanxN8Yg9ITvlmNV4J20s1FTyidEbh28F1Lv1shO9xL+4Azqk
- W4nUYTqwNwOix9+8PEU9/sOQuiVH0P1wQXpC1wbsmYyfYprjP6mDb3CHFvF+rFKf0/oxlbak3qE
- 5B/W7DYFuF0fUl1srT+vT7bew==
-X-Received: by 2002:a05:6000:4108:b0:47f:8fc9:6eaa with SMTP id
- ffacd0b85a97d-47f8fc96f0cmr1598370f8f.8.1784790104073; 
- Thu, 23 Jul 2026 00:01:44 -0700 (PDT)
+ bh=ZQzdmXPKS/GCfPOIlcxRtVIw5smE1l62zCnawYTu9wM=;
+ b=h9YkUcJgM893u1uyv6Ua0gy37P1tUQ75xmWpAYOw6x/78UbOPt6yo1+qdBenv7E+II
+ bOeJGDzqYuLRZQETV8QG1n14YxLnoMAIex6GdX2szbjaYE+crtwCYBqox010pwuNVHqI
+ R4Gtvf09GGOqQnIBeBtmmykGFmFa3M8nCriFAGZKrQqlPZkJ6e88xJVGH7IikIZ1WtvI
+ ewH9XhZVlDPfWB3cTp3Psqhv6PbMyMorSjd1HJoGPigD2JWapJQQk8i3ZqfrQZiHmUHS
+ RzDwHsQ2WoWfSQU5+9SLnx5mL7SrD79Kt/1yoVzo2AY/VBLWxy8r6RaebmaYvtnavAkH
+ +rZQ==
+X-Gm-Message-State: AOJu0YxXyqjwDAwsBP2Lb4725BXUsxcf3BX3Cvl3q1xiuMrXrfWAtkJx
+ 4e/3tFKMDO6F9KdBUbFIQn5X+5ZWp26xbGvrouArQLh9GBIo3MmPRq0MINHeMCui
+X-Gm-Gg: AR+sD12tD3y22BZDZQl5FT2fPbq3G4arqDz8H8PF/0H2st824gwiIlPkUbrLCJj5QRG
+ o1f/c2CiMOXSTkfmTOmQJhRPuDUma1tgL2QnfGaYgdGDLzfto2txdXjLNlsSxOC8JV8lzFpba1h
+ 9talyGNMa/OWRGK2emU/Es8H36qrLWOgBvV5jPJxboR9+RTOUG+9RxsnK1zm59ZgcgIP7B2vf+0
+ N9K5oNe/L+luzSu7sWn6veimGEkhhHda4X2496pF5nGoyY2axTM8sNV7+t1BwCKG0BUomoPUCfY
+ 4hDVs6etBErJmw0k5whAr6zMHLSVQPeIU3Q+2tyTv7CKS9J9MtN+2C9sR95U4kepl9D02rP9VkY
+ X9fauRqBegfMZ7ZKxRlwa1RBzDkGt2IX+Ln27s4Qe7M9bS4yKSH1uwLov52bQtleFebOMNmswpv
+ jg2cZa+Jy2hSGQ9fEocVDCmR3IsImhTiNWEhkk1dbHsoJZcx6aEV2pjzbbWk2iFmv+pLKH1SxZC
+ F3tyFNAxivSnXUum78W+DNGypkrn1A5ltz9
+X-Received: by 2002:a05:600c:4747:b0:495:737a:7afe with SMTP id
+ 5b1f17b1804b1-49573cd3fa3mr23151215e9.15.1784790109832; 
+ Thu, 23 Jul 2026 00:01:49 -0700 (PDT)
 Received: from Provence.localdomain
  (dynamic-2a02-3100-29ed-6000-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:29ed:6000:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c6dc25sm13293923f8f.33.2026.07.23.00.01.43
+ ffacd0b85a97d-47f85c6dc25sm13293923f8f.33.2026.07.23.00.01.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Jul 2026 00:01:43 -0700 (PDT)
+ Thu, 23 Jul 2026 00:01:49 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Pavel Pisa <pisa@cmp.felk.cvut.cz>, Matyas Bobek <matyas.bobek@gmail.com>,
  Francisco Iglesias <francisco.iglesias@amd.com>,
  Jason Wang <jasowangio@gmail.com>,
  Vikram Garhwal <vikram.garhwal@bytedance.com>,
- Bernhard Beschow <shentey@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH 1/9] hw/net/can/flexcan: Use mbs[] array for FIFO pop
-Date: Thu, 23 Jul 2026 09:00:51 +0200
-Message-ID: <20260723070059.6332-2-shentey@gmail.com>
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH 7/9] hw/net/flexcan: Drop oversized 'mb[]' mailbox view
+Date: Thu, 23 Jul 2026 09:00:57 +0200
+Message-ID: <20260723070059.6332-8-shentey@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260723070059.6332-1-shentey@gmail.com>
 References: <20260723070059.6332-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,49 +104,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement FIFO entry shifting using the underlying `mbs[]` array instead
-of the overlapping `fifo` union view. This makes it explicit that the
-operation copies within a contiguous mailbox array and avoids Coverity
-CID 1662971.
+As indicated in the comments, the `mb[]` a.k.a. `mbs []` views should
+cover 0x400 (1024) bytes. However, the `mb[]` array covers four times
+the size since `sizeof(FlexcanRegsMessageBuffer)` returns the size in
+bytes instead of counting the number of uint32_t fields. This shifts the
+subsequent register offsets by 0xc00 which is not intended. Fix the size
+and thus the offsets by dropping the now unused `mb[]` view.
 
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Note that the different size changes the migration layout. Since the device
+model is new, no change in the version fields is needed.
+
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/net/can/flexcan.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ include/hw/net/flexcan.h | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/hw/net/can/flexcan.c b/hw/net/can/flexcan.c
-index da36d10bd3..3a97edf7a4 100644
---- a/hw/net/can/flexcan.c
-+++ b/hw/net/can/flexcan.c
-@@ -879,22 +879,22 @@ static bool flexcan_can_receive(CanBusClientState *client)
-  */
- static void flexcan_fifo_pop(FlexcanState *s)
- {
--    if (s->regs.fifo.mb_back.can_ctrl != 0) {
-+    if (s->regs.mbs[0].can_ctrl != 0) {
-         /* move queue elements forward */
--        memmove(&s->regs.fifo.mb_back, &s->regs.fifo.mbs_queue[0],
--                sizeof(s->regs.fifo.mbs_queue));
-+        memmove(&s->regs.mbs[0], &s->regs.mbs[1],
-+                sizeof(s->regs.mbs[0]) * (FLEXCAN_FIFO_DEPTH - 1));
- 
-         /* clear the first-in slot */
-         memset(&s->regs.mbs[FLEXCAN_FIFO_DEPTH - 1], 0,
-                sizeof(FlexcanRegsMessageBuffer));
- 
-         trace_flexcan_fifo_pop(DEVICE(s)->canonical_path, 1,
--                               s->regs.fifo.mb_back.can_ctrl != 0);
-+                               s->regs.mbs[0].can_ctrl != 0);
-     } else {
-         trace_flexcan_fifo_pop(DEVICE(s)->canonical_path, 0, 0);
-     }
- 
--    if (s->regs.fifo.mb_back.can_ctrl != 0) {
-+    if (s->regs.mbs[0].can_ctrl != 0) {
-         flexcan_irq_iflag_set(s, I_FIFO_AVAILABLE);
-     } else {
-         flexcan_irq_iflag_clear(s, I_FIFO_AVAILABLE);
+diff --git a/include/hw/net/flexcan.h b/include/hw/net/flexcan.h
+index d8159475e0..9affdff837 100644
+--- a/include/hw/net/flexcan.h
++++ b/include/hw/net/flexcan.h
+@@ -65,10 +65,8 @@ typedef struct FlexcanRegs {
+     uint32_t dbg1;               /* 0x58, unused */
+     uint32_t dbg2;               /* 0x5C, unused */
+     uint32_t _reserved3[8];      /* 0x60 */
+-    union {                      /* 0x80 - not affected by soft reset */
+-        uint32_t mb[sizeof(FlexcanRegsMessageBuffer) * FLEXCAN_MAILBOX_COUNT];
+-        FlexcanRegsMessageBuffer mbs[FLEXCAN_MAILBOX_COUNT];
+-    };
++    /* 0x80 - not affected by soft reset */
++    FlexcanRegsMessageBuffer mbs[FLEXCAN_MAILBOX_COUNT];
+     uint32_t _reserved4[256];    /* 0x480 */
+     uint32_t rximr[64];          /* 0x880 - not affected by soft reset */
+     uint32_t _reserved5[24];     /* 0x980 */
 -- 
 2.55.0
 
