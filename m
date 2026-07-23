@@ -4,101 +4,168 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4BBFC531CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 10:12:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 764E0C531CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 10:21:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmqPC-00022z-VO; Thu, 23 Jul 2026 06:11:55 -0400
+	id 1wmqY5-0004Fn-14; Thu, 23 Jul 2026 06:21:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wmqPB-00020F-8d
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 06:11:53 -0400
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
+ id 1wmqY2-0004Eu-Eu; Thu, 23 Jul 2026 06:21:02 -0400
+Received: from mout.web.de ([212.227.17.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wmqP8-0003gM-Ke
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 06:11:53 -0400
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wmqOu-000000016l6-0fgT; Thu, 23 Jul 2026 12:11:36 +0200
-Message-ID: <5d745423-c4a1-4d99-a10c-18c5a0cdac43@maciej.szmigiero.name>
-Date: Thu, 23 Jul 2026 12:11:30 +0200
+ (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
+ id 1wmqXz-0004vM-TA; Thu, 23 Jul 2026 06:21:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+ s=s29768273; t=1784801984; x=1785406784; i=lukasstraub2@web.de;
+ bh=pxVPAP9cay1OArTUUmyp+qn1tN6AsYyOvutDZUfkKSQ=;
+ h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:In-Reply-To:
+ References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=fKleNQfKw534xOlqKMkXg8jPaaNzFxcAw2Ln5tgDRIR8Ki3VuiN+zqe+B7ku13SQ
+ qBwcRPHlVOoiWwpPabAzXW/OLPZ410GuwQWOUlb4q7XEE2CxHXIdTbG5pIljov3iA
+ Rd61zWXZ1w8WuasMfW8YWv4Xt+TGRkIYt6LZrNmz2QPUUhtVYM49/NZh/QQF5YWpv
+ eg7WsZ78Nxi5vWH4zFy+APR524NiaKdbJBEP+tAXZL3AEQIFxsDAUdAJOUgYG7B2D
+ C0+KytFk8CnNl63bbop42pEiJdtHT//2J0wKPSnbdlVspaJo3I5M3RtC7JDvMWzp+
+ Js9pSfL0uZNUJQzEEA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from client.hidden.invalid by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MC0LH-1wh2BJ0uDd-002Br1; Thu, 23
+ Jul 2026 12:19:44 +0200
+Date: Thu, 23 Jul 2026 12:19:31 +0200
+From: Lukas Straub <lukasstraub2@web.de>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex =?UTF-8?B?QmVubsOpZQ==?=
+ <alex.bennee@linaro.org>, Vladimir Sementsov-Ogievskiy
+ <vsementsov@yandex-team.ru>, Zhao Liu <zhao1.liu@intel.com>, Laurent Vivier
+ <laurent@vivier.eu>, Markus Armbruster <armbru@redhat.com>, "Gonglei
+ (Arei)" <arei.gonglei@huawei.com>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVk?=
+ =?UTF-8?B?w6k=?= <philmd@mailo.com>, Alex Williamson <alex@shazbot.org>,
+ zhenwei pi <zhenwei.pi@linux.dev>, Hanna Reitz <hreitz@redhat.com>, Ani
+ Sinha <anisinha@redhat.com>, qemu-block@nongnu.org, Paolo Bonzini
+ <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, Kevin Wolf
+ <kwolf@redhat.com>, linux-cxl@vger.kernel.org, Jiri Pirko
+ <jiri@resnulli.us>, "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?="
+ <berrange@redhat.com>, Stefan Berger <stefanb@linux.vnet.ibm.com>, Fabiano
+ Rosas <farosas@suse.de>, Stefan Hajnoczi <stefanha@redhat.com>, Michael
+ Tokarev <mjt@tls.msk.ru>, Igor Mammedov <imammedo@redhat.com>, "Michael S.
+ Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, Mauro
+ Carvalho Chehab <mchehab+huawei@kernel.org>, linux-edac@vger.kernel.org,
+ =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau <marcandre.lureau@redhat.com>, Richard
+ Henderson <richard.henderson@linaro.org>, Eric Blake <eblake@redhat.com>,
+ =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>, Jason Wang
+ <jasowangio@gmail.com>, qemu-trivial@nongnu.org, Jonathan Cameron
+ <jic23@kernel.org>
+Subject: Re: [PATCH v2 13/44] qapi: convert trivial intro sections for
+ yank.json
+Message-ID: <20260723121931.2427a8e6@penguin>
+In-Reply-To: <20260723044805.527643-14-jsnow@redhat.com>
+References: <20260723044805.527643-1-jsnow@redhat.com>
+ <20260723044805.527643-14-jsnow@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Subject: Re: [PATCH 2/2] vfio/migration: Parallelize device state transitions
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, Alex Williamson <alex@shazbot.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
- qemu-devel@nongnu.org
-References: <akvWlciUvxjDbBBZ@x1.local>
- <e602d0cd-dfc2-441d-a017-067e55418dad@maciej.szmigiero.name>
- <alZssI9OmGJyD-rc@x1.local>
- <19b76c19-4c7b-4a48-8c77-7db8746ff570@maciej.szmigiero.name>
- <alenmdWqD-x3bYll@x1.local>
- <5513c20b-0f5c-4bf2-93fc-d1619e3319c1@maciej.szmigiero.name>
- <aljc2-4XfpSkX_ay@x1.local>
- <cb1bdf37-58e8-4498-bc56-d65c4fcc3fa0@maciej.szmigiero.name>
- <al42_qzCLAjE-Mch@x1.local>
- <b83e940e-554f-491e-a6ce-db990c4166bc@maciej.szmigiero.name>
- <al-4mtSxvaaY5PDH@x1.local>
-Content-Language: en-US, pl-PL
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <al-4mtSxvaaY5PDH@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: multipart/signed; boundary="Sig_/Z9nrlx=IYKvMt1IYn2OQ9CU";
+ protocol="application/pgp-signature"; micalg=pgp-sha512
+X-Provags-ID: V03:K1:lEmLyhMZjBXSJY3xATiY7vyCUJMHaXgbtblfHQhoJ5tHNg5O8vq
+ AD3O9eephN3GLIReoW0BLQRdmIMs1WPfaO2+LDIxK7+BEn5ykYo1uDsk6iobW/k4LkABiaE
+ CVfbhbnketMaI9EwIuWOgoinq5srvOu91+VQljT8dFx00ifEVwixwu0lBlDzIBTGYWpxSIq
+ 2tsvHz1qw3n5pu3I9eE2g==
+UI-OutboundReport: notjunk:1;M01:P0:0MalQRthREE=;gEIguQW4HHuz8e9/Q3jvI+rEuud
+ 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
+ J9nafWEBldY+OsX8HKNEC/izg==
+Received-SPF: pass client-ip=212.227.17.11; envelope-from=lukasstraub2@web.de;
+ helo=mout.web.de
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,237 +181,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21.07.2026 20:21, Peter Xu wrote:
-> On Tue, Jul 21, 2026 at 05:07:53PM +0200, Maciej S. Szmigiero wrote:
->> On 20.07.2026 16:55, Peter Xu wrote:
->>> On Fri, Jul 17, 2026 at 04:31:32PM +0200, Maciej S. Szmigiero wrote:
->>>> Inside the VFIO code such sync point for VFIO devices could/should indeed
->>>> be created, but then it's not available for these other (non-VFIO) devices
->>>> for the purpose of avoiding the regression from the previous paragraph.
->>>>
->>>> However, replacing the order priority/adjustment mechanism from patch 1
->>>> with the "pre" and "post" handlers I described above would avoid having
->>>> that regression (and help fix the vhost-net case too).
->>>
->>> I'm not sure I fully get the pre/post handlers idea, I think it sounds
->>> working, but in all cases I want to decouple it with patch 1: I don't think
->>> it requires patch 1, am I right?
->>
->> It wouldn't require the *current* patch 1 but it would need to be implemented
->> in some preparatory patch so it would effectively be a new patch 1 (or a set
->> of patches replacing patch 1).
->>
->> Assuming that we would go this route instead of the one you described below.
->>
->>> Now if we want to avoid this "theoretical regression" and solve both things
->>> together.. I think we may need to refactor the notifiers mechanism.
->>>
->>> Firstly, I hope we're on the same page that essentially prepare_cb() is the
->>> priority mechanism here, we only have HIGH and NORMAL priority, where cb()
->>> is the NORMAL priority.
->>
->> Yeah, I think the current situation could be described this way.
->>
->>> We also need to persist depth concept per-notifier, I think we should start
->>> by renaming VMChangeStateEntry.priority to depth, add a comment explaining
->>> it (on different order of invokations on VM start/shutdown).
->>>
->>> But then, I don't think we need anything as complex as pre/post hooks with
->>> hashes.  I think you're right then we need SYNC point which can be
->>> essentially a priority notifier that is in the middle of HIGH and NORMAL.
->>>
->>> Hence, I want to see if below should be the easiest:
->>>
->>>     - Rename VMChangeStateEntry.priority to depth
->>>
->>>     - Normalize prepare_cb() into VM_CHANGE_NOTIFY_PRI_HIGH, making cb() to
->>>       be NORMAL, OTOH.  With this, prepare_cb() needs to be registered
->>>       separately with qemu_add_vm_change_state_handler_prio_full().  The
->>>       function now should drop prepare_cb() but instead take a real
->>>       "priority" value of VM_CHANGE_NOTIFY_PRI_*.
->>
->> And where the qdev tree depth will go in a call to
->> qemu_add_vm_change_state_handler_prio_full() - as an additional "depth"
->> parameter?
-> 
-> Yes.  The rename change I mentioned above should have done so.
-> 
->>
->>>
->>>     - Introduce VM_CHANGE_NOTIFY_PRI_SYNC, in the middle of PREPARE / NORMAL.
->>>
->>>     - VFIO can now register its 3rd notifier against SYNC.
->>>
->>> All rest devices will need to shift part of its logic into PRI_HIGH to
->>> either quiesce DMA or enable the backend to accept DMA (when on dest QEMU).
->>> None of them will need SYNC only if they'll also switch to an async thread
->>> model.
->>
->> In principle, this *should* work but with some caveats:
->> * vhost-net would need the DMA-stopping part of its cb() handler separated
->> and moved into prepare_cb(),
-> 
-> I thought this is required with whatever priority impl we will have, even
-> if I don't think we need to fix it right now unless you wanted to..
+--Sig_/Z9nrlx=IYKvMt1IYn2OQ9CU
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-Theoretically this depends on VM's PCI topology but indeed one can argue
-it's a "pre-existing condition".
+Acked-by: Lukas Straub <lukasstraub2@web.de>
 
->>
->> * There's some restore code in "PowerPC sPAPR XIVE interrupt controller"
->> running from cb() at prio 0, so originally always completing before VFIO device
->> was switched into RUNNING state.
->> I'm not 100% sure if it's okay to make VFIO device reach this state before
->> that interrupt controller restore code finishes,
-> 
-> Is anyone using VFIO migration on PPC that you're aware of? 
 
-No, but at the other hand it's hard to be sure of that.
+On Thu, 23 Jul 2026 00:47:34 -0400
+John Snow <jsnow@redhat.com> wrote:
 
-Also, see the next paragraphs about one or two additional possibly
-affected interrupt controllers.
+> (Trivial)
+>=20
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
+>  qapi/yank.json | 25 ++++++++++---------------
+>  1 file changed, 10 insertions(+), 15 deletions(-)
+>=20
+> diff --git a/qapi/yank.json b/qapi/yank.json
+> index f3cd5c15d60..8ac4b773653 100644
+> --- a/qapi/yank.json
+> +++ b/qapi/yank.json
+> @@ -10,9 +10,8 @@
+> =20
+>  ##
+>  # @YankInstanceType:
+> -#
+> -# An enumeration of yank instance types.  See `YankInstance` for more
+> -# information.
+> +#     An enumeration of yank instance types.  See `YankInstance` for
+> +#     more information.
+>  #
+>  # Since: 6.0
+>  ##
+> @@ -21,9 +20,8 @@
+> =20
+>  ##
+>  # @YankInstanceBlockNode:
+> -#
+> -# Specifies which block graph node to yank.  See `YankInstance` for
+> -# more information.
+> +#     Specifies which block graph node to yank.  See `YankInstance`
+> +#     for more information.
+>  #
+>  # @node-name: the name of the block graph node
+>  #
+> @@ -34,9 +32,8 @@
+> =20
+>  ##
+>  # @YankInstanceChardev:
+> -#
+> -# Specifies which character device to yank.  See `YankInstance` for
+> -# more information.
+> +#     Specifies which character device to yank.  See `YankInstance`
+> +#     for more information.
+>  #
+>  # @id: the chardev's ID
+>  #
+> @@ -47,9 +44,8 @@
+> =20
+>  ##
+>  # @YankInstance:
+> -#
+> -# A yank instance can be yanked with the `yank` qmp command to recover
+> -# from a hanging QEMU.
+> +#     A yank instance can be yanked with the `yank` qmp command to
+> +#     recover from a hanging QEMU.
+>  #
+>  # @type: yank instance type
+>  #
+> @@ -74,9 +70,8 @@
+> =20
+>  ##
+>  # @yank:
+> -#
+> -# Try to recover from hanging QEMU by yanking the specified instances.
+> -# See `YankInstance` for more information.
+> +#     Try to recover from hanging QEMU by yanking the specified
+> +#     instances.  See `YankInstance` for more information.
+>  #
+>  # @instances: the instances to be yanked
+>  #
 
-> If not, maybe
-> we don't need to worry too much for now.  Meanwhile, this looks like an
-> existing issue as well.
 
-It's an existing issue *on the target* but for a slightly different reason:
-reading VFIO uAPI it seems that a device is allowed to generate interrupts
-already in RUNNING_P2P state.
-And this state is/was reached already after prepare_cb() handlers, so before
-that PPC interrupt controller handler running from cb() had chance to restore
-it.
+--Sig_/Z9nrlx=IYKvMt1IYn2OQ9CU
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
 
-However, it does not seem to be an existing issue *on the source* since
-there INTC cb() callback are currently always guaranteed to run after the
-VFIO device has already reached STOP_COPY and so was prevented from
-generating  further interrupts.
+-----BEGIN PGP SIGNATURE-----
 
-Here, it would be a (at least theoretical) regression.
+iQIzBAEBCgAdFiEEg/qxWKDZuPtyYo+kNasLKJxdslgFAmph6rMACgkQNasLKJxd
+sljK4w/+Id0AP8insCHJ3FO+GTq0v1mieyttkyhskrVsVjUW9Yk0uAMs3I+BfdWq
+7ywVjXVLloG7W9g+UL+f0YLQ8/UQjQnOSn/J7AVjVF3mwVs+5Ci4MY3YwT2KAhng
+mLBPXu8edzLCkQKdjEI2VEtK8ojy4MybdJ0f0D06OlbVXYQEId9QC06gX0+tVKDw
+MmMCkPRdGA+OT914OQQqSW8roADJ1eGAGg46yXnvb67PmLkSekRsbfSeayTMjbYd
+8LZ6T0JfwC9TvymNNVfSpzpXGexoastZ4F0XS+sAQeo7drpUUIPlYCSaJEkQ8qr5
+ADUOSt0ll8+lU9xaJDsqr4/ZmXxihFJIZQQ9xkTt50HbYBajYofhCmZaYqoMg0PE
+KYwFKYRs43LaeC88yHpuWH4XkbjjRXAZZ74Po4APsBipwXTUsvBlfihm3b0zZHFc
+rG3w/AZxeqXPTrAVFu7cfHTwHwhvhgDtWgGyIe7Jy/CXVbLKeYmAqBepNDpyTsY9
+/5HiKJYK9IaV78VkYmDpjqL2urkAnysZEBNAof/oJhjiy56ZUW6aDjkevN30oFEc
+CZkixR0APKAsU62gneigAAWZCHZbxhd310yjIk4dKhURGKXJiA5OE3F4/TJvV272
+tkvA1mff0XTJCHHLTKGnCeakPdFbQH2dpyaxV58A1IIcx15IKgE=
+=AOKb
+-----END PGP SIGNATURE-----
 
-What's more, there seem to be one more interrupt controller in two
-variants/implementations that also do similar things on the source from their
-cb() handlers: ARM GICv3 basic flavor and ITS flavor.
-
-> For the fix whenever wanted, IIUC the intr controller should register both
-> HIGH and NORMAL priority notifiers, then when VM stop, disable the
-> controller only in NORMAL notifier, and when VM starts, enable the
-> controller only in HIGH notifier (we could think about better names for the
-> three steps, maybe it shouldn't be called as "priority" as well even if the
-> executions will be strictly ordered).
-
-As I wrote above, it looks like a device is already allowed to generate
-interrupts once it reaches RUNNING_P2P state.
-Correspondingly, PRE_COPY_P2P only quiesces *peer-to-peer* DMA, there's no
-mention in the specs that it prevents MSI DMA traffic, let alone INTx
-interrupt generation.
-
-In other words, to implement this properly an interrupt controller would need
-to have its start/restore handler called at some VERY_HIGH priority (called before
-VFIO device state change threads are launched) and have its stop/suspend handler
-called at a VERY_LOW priority (called after VFIO threads are collected) -
-this would be the equivalent of running these INTC cb() at prio 0 during VM stop now.
-
-Assuming, of course that the interrupt controller actually needs to do some work
-on VM start to be able to accept interrupts and that it needs to do some
-saving work on VM stop which can't be done until no new interrupts could came.
-
-> 
->>
->> * The postponed dirty memory logging stop handler also runs from cb() at
->> prio 0, so currently always finishes before VFIO device was switched into
->> RUNNING state.
->> This handler also stops DMA logging for VFIO device or its container,
->> but here I presume it should be safe to do so while the VFIO device has already
->> started dirtying memory even though this couldn't happen in the existing code?
-> 
-> It's only stopping the tracking, results of the tracking shouldn't matter
-> anymore on whether some DMA was trapped.  It looks safe no matter where we
-> put it.
-> 
->>
->> * There's some sync/setup of x86 vAPIC state (for 32-bit guests?) also running
->> from cb() at prio 0.
->> Not sure if this needs to finish before VFIO device gets switched into
->> RUNNING state.
-> 
-> Doesn't look relevant.  IIUC, only anything that is DMA capable can be
-> relevant.
-
-It's relevant since a VFIO device could generate interrupts as soon as it
-is in RUNNING_P2P state.
-
-However, this one here is start-side so it would be an existing issue rather
-than a regression.
-
->>
->> These 3 possible issues above (besides vhost-net move/refactor) could be
->> theoretically worked around by moving these callbacks from cb() to a new
->> priority *before* VM_CHANGE_NOTIFY_PRI_SYNC (maybe called
->> VM_CHANGE_NOTIFY_PRI_SYNC_BEFORE or similar) as I presume they won't need the
->> VFIO device to reach DMA-accepting state but at the same time they shouldn't
->> delay the launch of VFIO device state changing threads from VM_CHANGE_NOTIFY_PRI_HIGH.
-> 
-> IIUC we don't need a 4th step here, correct me otherwise, 
-
-Depends whether we want to fix the existing issues or not.
-If not, then we don't need the extra priority level on the target.
-
-However, I think we still need a possible extra level (VERY_LOW or similar) on
-the source to prevent possible regression with respect to the current code.
-
-But that's a minor detail as I presume adding additional level would be essentially
-only a small data addition in some array and/or enum.
-
-> while the 3rd
-> SYNC was only needed for VFIO's threaded approach.
-
-I assume that we're designing the "plumbing" that allows doing async/threaded
-VFIO state change safely here.
-
->>
->> Also, the final VFIO thread joining/collection does *not* need to be ordered
->> with exiting cb() handlers, so it should really run at VM_CHANGE_NOTIFY_PRI_LOW
->> (below PRI_NORMAL) for best parallelism.
-> 
-> Yes. VFIO device only need its SYNC / MEDIUM priority notifier be ordered
-> with NORMAL notifiers, to make sure all VFIO devices switched to P2P state
-> before the NORMAL notifiers.
-> 
->>
->> The disadvantages of this overall design are that it would need coordination
->> between different sub-maintainers, increase the "blast radius" of the patch
->> set to different parts of QEMU code, and so obviously would be more
->> regression-risky than the aforementioned "pre" and "post" handlers design.
->>
->> Especially that probably few people would be able to test, for example,
->> the PPC XIVE case with VFIO.
-> 
-> We shouldn't justify a solution by "how many subsystems it touches".
-> 
-> I was suggesting to solve one problem at a time, but then prepare_cb()
-> already does it.  You pointed out there might be real regression on VM
-> start path, I agreed.
-> 
-> I thought you wanted to fix all things, which I'm ok with and agree it is
-> better, then it's unavoidable to touch all modules.  But yes, we need to
-> reproduce the problems and verify the fix.
-> 
-> The middle ground is we define the notifiers to suite for the solution we
-> think will fix everything, but you only need to fix VFIO and leave the rest
-> for later. We can discuss the problems in the cover letter or commit logs
-> for future works on top.  After all, in this case of VFIO to do the right
-> things it does need three steps / notifiers.
-
-I think if there are existing issues then it's probably okay just to document
-these for future reference.
-
-However, I would be vary of creating any clear regression, especially on
-a hardware that I can't test.
-
-> Thanks,
-> 
-
-Thanks,
-Maciej
+--Sig_/Z9nrlx=IYKvMt1IYn2OQ9CU--
 
