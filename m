@@ -4,119 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20EDBC531C7
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 08:27:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DDB7C44524
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 08:34:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmomC-0005Ma-L6; Thu, 23 Jul 2026 04:27:32 -0400
+	id 1wmosD-0002kP-73; Thu, 23 Jul 2026 04:33:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1wmomA-0005JO-HS
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 04:27:31 -0400
-Received: from mail-northcentralusazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c105::1] helo=CH1PR05CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wmosB-0002jr-8d
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 04:33:43 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1wmom8-0006P4-3D
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 04:27:30 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=q80mO0x7b87R+4hOkjb6BeJS2Dm5rxjkBSu5WhiR3eD+9kuk/S+9wlFVWNQzomYwhJ6tEX5wfhrF1oYkHIx0OidVTSgqFWXyVsb7bfNXGIIMtl2kqCQAXwTbU8bLVPz14j/M4n8q99H9iOzHvuYl9n1VyD3eUa2pUK5Gyxxvza+HxCjj5lnhQ5NmV0K+gGP6eqg60xUayvBXgVriOTzTmGR4HCP6ccqoKkoQ1Zn0nScb6QAoElddYjk9orqJpvxv6S1cjF+btLYUXhktoZk0Z7KwvAqNp4jZa7clAEdDxqJSmSM8vlCloAq0nobrnXko7KPeFdhSQELdcoxD+W9QHg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TcraXMSVVrhkyMp2awax9m3eJCxGWAFZt/sxX50he2c=;
- b=FZivI1SlxUEGNbF2GV434fSsSymSpFoLr/za8wDC5GrkWw0EOdbHy6wC4Y/82s7ejKnjFF7md5Cg2uHl50JZpY8wsO5bvuPXR38gLDZ9wYIQzd/n78Q6Rc6kP6fBOzHsPLZq0XjN9O0dwOODNKoLY6i74B6slju5Vc2pq+yFX5zYhcwDViHpHaE96g6r1Rh+Y1V/ePSUuRzzzejss2C+0OVwTfEajDiyWiiUOiCZC1lY+GFsZ0hFDT/Nez7GX8OGTGC6JMCrFg1PVUF6eoCu9rsE1yuv6EGxSxDBPFZnIdtto30i8mivXr9YJ/mZEVxMjWhc8HXCqomMyAtL5dtM5A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=oss.qualcomm.com smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TcraXMSVVrhkyMp2awax9m3eJCxGWAFZt/sxX50he2c=;
- b=VFkPpizSm4Bgmx1Sh7oqks+6/tx+9sdGiC1Z0G22tNSGdnaB7pN1RxSUj4N4SU/rF8zxv5htjj4CeElXHScsQAf6fkxIEdG339o2wjD3jXAIYkhcTpUUNDOS1lL/PV0TWKhcv80gT3FVspDjbA2GueSSNy5ewaiHBscJpAWsBbU=
-Received: from SJ0PR03CA0205.namprd03.prod.outlook.com (2603:10b6:a03:2ef::30)
- by DM4PR12MB7573.namprd12.prod.outlook.com (2603:10b6:8:10f::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.11; Thu, 23 Jul
- 2026 08:27:15 +0000
-Received: from SJ1PEPF000026C6.namprd04.prod.outlook.com
- (2603:10b6:a03:2ef:cafe::86) by SJ0PR03CA0205.outlook.office365.com
- (2603:10b6:a03:2ef::30) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.245.10 via Frontend Transport; Thu,
- 23 Jul 2026 08:27:15 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- SJ1PEPF000026C6.mail.protection.outlook.com (10.167.244.103) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.270.5 via Frontend Transport; Thu, 23 Jul 2026 08:27:15 +0000
-Received: from Satlexmb09.amd.com (10.181.42.218) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Thu, 23 Jul
- 2026 03:27:14 -0500
-Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb09.amd.com
- (10.181.42.218) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Thu, 23 Jul
- 2026 01:27:14 -0700
-Received: from XFR-LUMICHEL-L2.amd.com (10.180.168.240) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41 via Frontend
- Transport; Thu, 23 Jul 2026 03:27:13 -0500
-Date: Thu, 23 Jul 2026 10:27:11 +0200
-From: Luc Michel <luc.michel@amd.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-CC: <qemu-devel@nongnu.org>, "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: Re: [PATCH v2 4/7] target/microblaze: Set MO_ENDIAN in
- do_load/do_store callers
-Message-ID: <amHQX7auIZj6Z5Lv@XFR-LUMICHEL-L2.amd.com>
-References: <20260722160807.24031-1-philmd@oss.qualcomm.com>
- <20260722160807.24031-5-philmd@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wmos8-0007Nn-Iu
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 04:33:43 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66N7Bg1v3434656
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 08:33:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ SpaN2BKQIcV0rZMXSnufz+Dkcpw6RRJYHQYqA0DDH9M=; b=aIxRWlXaDf/JMeJv
+ 9tEB/Iiqkwpu+hagfAn2wGi4aeVmrj3PtPxHJ+/VbJO/opVVRo4B7Lj4lYykhUXG
+ ufSP2Hv1/WFFMvIT3AjVm03Il2JY8NWBNWOK05bzJrLelWCNqhe7Eim1pl9cYl2R
+ wsGqaFz5N0U2xiGBZkQqx6gTxt3PjQanpzCCIBgi799rr6H7wctFwOAV2yRP5Nve
+ cmyH7+l9DOJ+L3vmg+VCVRSPrRkD0Hy1cFMfbKN/f8TTM3rLpAbENOkylZZqP3/5
+ 6pSXaW1SpqrFsHSMwD997+DM6nFeJ8xsji501pVPdtjUfUroF2GwVNDv4+70yTOd
+ TOX8rw==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fk5cc29ep-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 08:33:38 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-5276aa86d00so7153511cf.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 01:33:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1784795618; x=1785400418; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=SpaN2BKQIcV0rZMXSnufz+Dkcpw6RRJYHQYqA0DDH9M=;
+ b=J0QqFPktKjKQcxQd1mWQVLPXCljg01wxhB06sklI7sy29ogFNLwNEekOOK7aKeKSRD
+ PVHLUErX+4tIN2FDQAHDe+S7JRsVEAPGDx7wud7uvz6+sATxHYAxUN27tDbfticmHb4x
+ b6Cz2R9W6FvZ+usVsLZ7x40jw9w1Uzcm4um0/eBuWkct5vDGqP2EXEM+fLlgRFqzgdgq
+ co4xAUmePXgNi7Bp4y+EpyBuaScRsBBPEZGn3Lj6IoDyYqwfLYcKL5T+htqa9weYZJ10
+ KwbloC0VtVwwsJV6ZLX6930tADk+CSzd86pD5W9p3hZnlprZ+syFkO0EpZsTI8C3NY6r
+ lOSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784795618; x=1785400418;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=SpaN2BKQIcV0rZMXSnufz+Dkcpw6RRJYHQYqA0DDH9M=;
+ b=oFpFGtbdUEg/kEzjwTwrcqdTpr3sF4p4ILKPIpuA2XvxBCl/CDeXUpX5lFoEH5wyFC
+ YjUwXdNh4tz39MO1dKq/oc3Lr79RUxJlODmZr9UpSGNjwG91z0dSahGLPtFV/7i+8Za2
+ Mq/yhxtRZknDVZzINnlYawakQvf701uAGS3veghfMjeEefA9/MhUwc3s8rp++bf5PXYl
+ 2ypp2bZQb9Ynu7MIdwu60CcZXeKVg/MKLtuZ1RADJjDuLdWWgRJOsGtMSlIAVOPX+VxA
+ UWQ7pUrb4wFN7H1jwEmbF0sxqxq5aeZ/sodiSKVkurhEuyJMGirQTXQSDC+SVUp62HGX
+ 6kGQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rrqj6/8S3qoqk5SRKeOvRiGpDHuN5xU44IP1KYqSz2E3z6nj17ZB2tf9XovNc4hu7RdV0jxxEXcriYf@nongnu.org
+X-Gm-Message-State: AOJu0YxYJUXCpv7F4MC7f+R9sYCAk45SuWza/+RhzCdt1oIPVm9X1+Qc
+ 1CRzL2+DFuRyJZk4VzbS+iciG04Yymh3PO4uZPhVFgpQcTWXz4fafv5I7Db033goAFXmPwBFrXM
+ u/z3AQgxxNkdM9Miyj9Y3U0b+bT6+oSU5/sj+sZkTVjSCRj+35nASEMnt1Q==
+X-Gm-Gg: AR+sD108CrpQsjLNrEI2I3EusuX4x7JK4NS3KNghOOntxpckn5434yj6h2YqPN2AAUE
+ 1akvs00+ZA/N6eXqQzMuY/i/uV0zWbVy/TC9tWrfxZsSZRrl0sgB6EbfBoKswAjagU/0lFy/tCv
+ fp4SrIo/r+ipT8Hl6MLSLLPsHYF9AUd7fg5HTq/C/azdFzqgPwVcqHw9gOlW2I/UmE0P6nFiM4b
+ cwHPzPaPyOxVbbEP6xu8u4/DzSKRiJZwkVC6yCFKchY7Ta8p7Z4ZbEqAVWTWQ+TlJXIQ3Wzbrg3
+ 6ZqYM1cARUlWF/p8jw4PJEhDs2Kf0fCtkcKqcybl8O1QZFJ0sEerNUVHMWgT9QDZy2Sd+Xdl547
+ kHSKbzuwWaLIS7lYEsdMLGlUhC7BdzlRMEN0g3IP/sr4PnwcPDvw=
+X-Received: by 2002:a05:622a:2a12:b0:51a:8c9b:649d with SMTP id
+ d75a77b69052e-5283df77456mr16861021cf.65.1784795618089; 
+ Thu, 23 Jul 2026 01:33:38 -0700 (PDT)
+X-Received: by 2002:a05:622a:2a12:b0:51a:8c9b:649d with SMTP id
+ d75a77b69052e-5283df77456mr16860881cf.65.1784795617657; 
+ Thu, 23 Jul 2026 01:33:37 -0700 (PDT)
+Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f85b9a5d9sm12856725f8f.5.2026.07.23.01.33.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 23 Jul 2026 01:33:36 -0700 (PDT)
+Message-ID: <e7d3e9dc-be97-40f3-b426-3e93a242410a@oss.qualcomm.com>
+Date: Thu, 23 Jul 2026 10:33:36 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/i386/sev: fix MemoryRegion reference leaks in
+ gpa2hva callers
+Content-Language: en-US
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ "open list:X86 KVM CPUs" <kvm@vger.kernel.org>
+References: <20260521145451.1831984-1-marcandre.lureau@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260521145451.1831984-1-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260722160807.24031-5-philmd@oss.qualcomm.com>
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF000026C6:EE_|DM4PR12MB7573:EE_
-X-MS-Office365-Filtering-Correlation-Id: b7a10f45-db2a-4dd5-95c4-08dee89433d6
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|1800799024|36860700016|82310400026|376014|56012099006|10067099003|22082099003|18002099003|11063799006|4143699003;
-X-Microsoft-Antispam-Message-Info: m3tZCR7cL9UDpG7/fxT+vYUO3elBNiC7MWZev+CfNbhvPx/2Ty18xnTJEbaqYuBw/64I0zOyWrirp0rzZx6D9cVIsJTdrfbj0EFvdJgXv+2o7ICRyg9RXT69ZY+7gg/z2BWMl2fRZNWuut2xyj1zPxI4CVdvRr+5ROgxJ8oYDM2EKLJIakh732T0BTJQ7BKr9IKgkr4PZ+Be35Jx12u+rwolq4WqAOGLaovjyqXvd5HLMgUmt22WYJvGyL3YW5SYdumG/nLkFZvjLQydFKh8IR+M6ThZBD3rGzG3G+D/4wcy1LMGpuiK/ixczvkVAQ0LbPfixHk2xfa6YXvNUYhjfG8A3vszZ88NPtO9uA3qkD8O9XZlKUdJcJ6cdfXnAgpGDrcVCjWyAXN3hKtLhAk07WHlheigP3Sg88cxf0X0ifqysSvXb/d6C4ah96lD9dmANQ2LjGPw6510xBF4PJnxQ8fGWjWRGX+Z9t86PXrd1eBSzWj6HDoL2ay5Mzwt+OEAnepV3VrIpFkBlLM1viyTrqwUVsTXvtRO6BY3hXBUFkDxjShbMqkUDGTg2ISx4OpawLk8ktUuyP+jaMe71949NQ59g6UJnlw4t9mYb2hwFM4gKMukvf1zHzmNczIhMDGscLltjzm20GTnMQmhKgsajm5ghiF8vwjP6WGxS8mOQXqg5TdCG82KL/G3d49212FEtczGA/j26P8z/uW8H2kmhQ==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(23010399003)(1800799024)(36860700016)(82310400026)(376014)(56012099006)(10067099003)(22082099003)(18002099003)(11063799006)(4143699003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: RtrATKGEcsJI1jm55ksAX7SGU1ItOczGtQVhifuVXQHs8ACbNM/xy0nHc0aG7atxHxT258E+j/27B6l9mE7wy4xG7VC3QreNC9LQgVwCytthqQugpnek7PMXNqlT8O6PkW89cfkxiFHTvVKE9fr4WiDyswpnkO7PAGUBFJQ6QOJ09OyqkS5tr1eQe1NJUO55cg/q4M0Xqa0Rt8sgqtr+nQceOa7IWhqwzDAcwsN4vxYvyj4VnALAPY7L/oAJGMdjDgRRyrS/2fhr1SfFgOWDvjSKV2JluhxbQ3elN7PHgciDuqX3cVnxOEoilJGYXMtD1UWMyiMVLB8fsAA3C+K2JMNwGGaLQv2DfMJDaveZ5QP0RjxfRVzRCv7qFG//VSnt8wrUoiigqd0pGohND2GWb2u9vDFTjAe0kngBvJFpQ96Q7NRzeqQ+LGS2Et0QRvHB
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jul 2026 08:27:15.4415 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: b7a10f45-db2a-4dd5-95c4-08dee89433d6
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF000026C6.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB7573
-Received-SPF: permerror client-ip=2a01:111:f403:c105::1;
- envelope-from=Luc.Michel@amd.com;
- helo=CH1PR05CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-ORIG-GUID: B29VmCMZF9hH6A2smup4_wAtYSwx21Wf
+X-Proofpoint-GUID: B29VmCMZF9hH6A2smup4_wAtYSwx21Wf
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIzMDA4NSBTYWx0ZWRfXyJf7tU3mc3m1
+ Op29e0mj5W7XOLJefeozWy+kS9Puokr+OayT+ScVmq9wgq+wsKSOJm3BoHvTa+o/XZ4MFIb93iz
+ oxkFrtyfTcuM8Gc1zjfklcUOTMsMy/w=
+X-Authority-Analysis: v=2.4 cv=L/ItheT8 c=1 sm=1 tr=0 ts=6a61d1e2 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=20KFwNOVAAAA:8 a=27Jx0McfqUJ7E1xIHb0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIzMDA4NSBTYWx0ZWRfX1he5gRcAN6yQ
+ AyTmaH2tycT2U0lFahtgag8YNk6y5qWsKwPe0UvNwE0eRg5fbO7GEoNCxkWwBHwDdPeHL5QRgLv
+ 46BcEzDS5yXOjJm06pg/HfLYs1P9p2+5/xga2ItxRFY/Se3rWUj5h/bA9Fu66509iAnGemtMT66
+ lWkExsWK9xaDVTva7LDcFzBLRGXx+14DDAzPKfWfXRb6PNZy+0sNJ8/1yY+OrVLCAr7ppLlxinV
+ nkleNgn7pTKeIciqVkp/VWCFVFB1h1KPnPGZy4kQWuYeTlfunqWnDRi2edgkeAWOHTSbObh48Qy
+ W49oP7BKP4QjxiD3IbBVpYSEondZLgRktmCTwsDUxEaNfjnBEzV9Bs9EUAyD8ubgmrT58i//qnW
+ Dp88d8JJzXilftZJ0PfzGeK4G2m5UgL4+cpYbQ6gEcr0s9Jcf99CAIXUfzUBDLhZXURpt6ysE7s
+ 0s2QheTlWGbaVYEJpPg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-23_02,2026-07-22_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 lowpriorityscore=0 adultscore=0 suspectscore=0
+ priorityscore=1501 impostorscore=0 spamscore=0 bulkscore=0 malwarescore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607230085
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,85 +159,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Phil,
+Hi,
 
-On 18:08 Wed 22 Jul     , Philippe Mathieu-Daudé wrote:
-> Again set the MO_ENDIAN bit in the caller rather than the
-> callee, allowing to further simplify.
-
-I'm not sure I see the benefit of this one. Instead of having the
-mo_endian() call in two places, you end up having it in four places.
-
-Add to this my previous remarks on patch 1 where this is replaced with a
-`mop ^= mo_endian(dc)' plus a comment expliciting things, I guess I
-would leave this in do_load/do_store.
-
--- 
-Luc
-
+On 21/5/26 16:54, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> gpa2hva() returns a referenced MemoryRegion via its p_mr out-parameter
+> (inherited from memory_region_find()), but both SEV callers were failing
+> to release it.
+
+Comment orthogonal to your fix; odd to have a non-monitor code
+call an undocumented monitor method. Should the method be moved
+out of monitor/hmp-cmds.c somewhere into system/ and documented
+(likely in system/physmem.c, also moving the declaration to
+"system/memory.h")? Besides some day we should be able to build
+without monitor.
+
+> Fixes: c7f7e6970d3b ("sev: add sev-inject-launch-secret")
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  target/microblaze/translate.c | 12 ++++--------
->  1 file changed, 4 insertions(+), 8 deletions(-)
+>   include/system/memory.h | 2 ++
+>   target/i386/sev.c       | 4 ++--
+>   2 files changed, 4 insertions(+), 2 deletions(-)
 > 
-> diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
-> index 3f2de375d97..d4826981913 100644
-> --- a/target/microblaze/translate.c
-> +++ b/target/microblaze/translate.c
-> @@ -716,8 +716,6 @@ static bool do_load(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
->  {
->      MemOp size = mop & MO_SIZE;
->  
-> -    mop |= mo_endian(dc);
-> -
->      /*
->       * When doing reverse accesses we need to byteswap the data
->       * lanes on the way back into the CPU core.
-> @@ -749,13 +747,13 @@ static bool do_load(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
->  static bool trans_ld_typea(DisasContext *dc, arg_typea *arg, const MemOp mop)
->  {
->      TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
-> -    return do_load(dc, arg->rd, addr, mop, dc->mem_index);
-> +    return do_load(dc, arg->rd, addr, mop | mo_endian(dc), dc->mem_index);
->  }
->  
->  static bool trans_ld_typeb(DisasContext *dc, arg_typeb *arg, const MemOp mop)
->  {
->      TCGv_i32 addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
-> -    return do_load(dc, arg->rd, addr, mop, dc->mem_index);
-> +    return do_load(dc, arg->rd, addr, mop | mo_endian(dc), dc->mem_index);
->  }
->  
->  TRANS(lbu,  trans_ld_typea, MO_UB)
-> @@ -839,8 +837,6 @@ static bool do_store(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
->  {
->      MemOp size = mop & MO_SIZE;
->  
-> -    mop |= mo_endian(dc);
-> -
->      /*
->       * When doing reverse accesses we need to byteswap the data
->       * lanes on the way back into the CPU core.
-> @@ -872,13 +868,13 @@ static bool do_store(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
->  static bool trans_st_typea(DisasContext *dc, arg_typea *arg, const MemOp mop)
->  {
->      TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
-> -    return do_store(dc, arg->rd, addr, mop, dc->mem_index);
-> +    return do_store(dc, arg->rd, addr, mop | mo_endian(dc), dc->mem_index);
->  }
->  
->  static bool trans_st_typeb(DisasContext *dc, arg_typeb *arg, const MemOp mop)
->  {
->      TCGv_i32 addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
-> -    return do_store(dc, arg->rd, addr, mop, dc->mem_index);
-> +    return do_store(dc, arg->rd, addr, mop | mo_endian(dc), dc->mem_index);
->  }
->  
->  TRANS(sb,   trans_st_typea, MO_UB)
-> -- 
-> 2.53.0
-> 
-
--- 
+> diff --git a/include/system/memory.h b/include/system/memory.h
+> index 1417132f6d9..53f65a224bb 100644
+> --- a/include/system/memory.h
+> +++ b/include/system/memory.h
+> @@ -1343,6 +1343,8 @@ void memory_region_ref(MemoryRegion *mr);
+>    */
+>   void memory_region_unref(MemoryRegion *mr);
+>   
+> +G_DEFINE_AUTOPTR_CLEANUP_FUNC(MemoryRegion, memory_region_unref)
+> +
+>   /**
+>    * memory_region_init_io: Initialize an I/O memory region.
+>    *
 
