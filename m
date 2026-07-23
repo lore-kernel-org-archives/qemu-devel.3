@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35F00C4452B
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:51:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FD2FC4452B
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:51:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmlNW-0000oy-M6; Thu, 23 Jul 2026 00:49:50 -0400
+	id 1wmlP2-0005g7-4I; Thu, 23 Jul 2026 00:51:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlNS-0000S4-IO
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:49:48 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlOo-0005Wn-4v
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:51:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlNQ-00043l-UQ
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:49:46 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlOm-0004QM-D5
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:51:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784782184;
+ s=mimecast20190719; t=1784782267;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ye3PMO0BcG5/sMMpltL1f7W/lGgNiDmYNE87s2b0G5s=;
- b=OnWgdYOXVuAvChN9SEzWOaM+bYq3i4lGgr+Ay2klg12bGkclO3FmKm35AvTCMcgUKGd9fp
- XXcKJbx2mbH9C05IhQrfraODAcLSD8fZ1pV84wtnEB/Nbl2OHL5c5JJ/22WyTdzlvMsRPb
- miotcVvch2akjaotftDieFC1bxwh/4Y=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=9YoGAoaYe1zPbiR9886orVUbPO3VRJkQv0eqUa1lksA=;
+ b=DdnPqvvDwfsNXU9juQW5skiLepm4KkliuZrRYkMPw1LP21AoWvsl5Z+W+/rIyLwV5raJoA
+ gCJ0ecAdhaqD3ztmvvsO9CvqPwTGFTt2XvPoNQZaOXkZ8fYdmZ2eyys7D7LScMYHneozcJ
+ FMiogDIYEXodzbaC28hSdmxzhNSM9Qs=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-564-GsPbBZ2_Ou-Y7VbJ9TXBEA-1; Thu,
- 23 Jul 2026 00:49:40 -0400
-X-MC-Unique: GsPbBZ2_Ou-Y7VbJ9TXBEA-1
-X-Mimecast-MFC-AGG-ID: GsPbBZ2_Ou-Y7VbJ9TXBEA_1784782177
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-270-4z4sKMMpPoyuzGxko269Sw-1; Thu,
+ 23 Jul 2026 00:51:01 -0400
+X-MC-Unique: 4z4sKMMpPoyuzGxko269Sw-1
+X-Mimecast-MFC-AGG-ID: 4z4sKMMpPoyuzGxko269Sw_1784782259
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C2C641955DC2; Thu, 23 Jul 2026 04:49:37 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E5A9F1954B26; Thu, 23 Jul 2026 04:50:58 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.44])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 62CA918002AE; Thu, 23 Jul 2026 04:49:28 +0000 (UTC)
+ id D053618002B5; Thu, 23 Jul 2026 04:50:47 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -73,10 +73,9 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Jason Wang <jasowangio@gmail.com>, qemu-trivial@nongnu.org,
  Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH v2 08/44] qapi: convert trivial intro sections for
- misc-arm.json
-Date: Thu, 23 Jul 2026 00:47:29 -0400
-Message-ID: <20260723044805.527643-9-jsnow@redhat.com>
+Subject: [PATCH v2 16/44] qapi: convert trivial intro sections for acpi.json
+Date: Thu, 23 Jul 2026 00:47:37 -0400
+Message-ID: <20260723044805.527643-17-jsnow@redhat.com>
 In-Reply-To: <20260723044805.527643-1-jsnow@redhat.com>
 References: <20260723044805.527643-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -111,48 +110,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/misc-arm.json | 15 ++++++---------
+ qapi/acpi.json | 15 ++++++---------
  1 file changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/qapi/misc-arm.json b/qapi/misc-arm.json
-index 4dc66d00e5c..8cb2ea77951 100644
---- a/qapi/misc-arm.json
-+++ b/qapi/misc-arm.json
-@@ -5,11 +5,10 @@
+diff --git a/qapi/acpi.json b/qapi/acpi.json
+index 906b3687a55..291a04a7ea4 100644
+--- a/qapi/acpi.json
++++ b/qapi/acpi.json
+@@ -81,10 +81,9 @@
  
  ##
- # @GICCapability:
+ # @ACPIOSTInfo:
 -#
--# The struct describes capability for a specific GIC (Generic
--# Interrupt Controller) version.  These bits are not only decided by
--# QEMU/KVM software version, but also decided by the hardware that the
--# program is running upon.
-+#     The struct describes capability for a specific GIC (Generic
-+#     Interrupt Controller) version.  These bits are not only decided
-+#     by QEMU/KVM software version, but also decided by the hardware
-+#     that the program is running upon.
+-# OSPM Status Indication for a device.  For description of possible
+-# values of @source and @status fields see "_OST (OSPM Status
+-# Indication)" chapter of ACPI5.0 spec.
++#     OSPM Status Indication for a device.  For description
++#     of possible values of @source and @status fields see "_OST (OSPM
++#     Status Indication)" chapter of ACPI5.0 spec.
  #
- # @version: version of GIC to be described.  Currently, only 2 and 3
- #     are supported.
-@@ -48,8 +47,7 @@
+ # @device: device ID associated with slot
+ #
+@@ -107,9 +106,8 @@
  
  ##
- # @SsidSizeMode:
+ # @query-acpi-ospm-status:
 -#
--# SMMUv3 SubstreamID size configuration mode.
-+#     SMMUv3 SubstreamID size configuration mode.
+-# Return a list of `ACPIOSTInfo` for devices that support status
+-# reporting via ACPI _OST method.
++#     Return a list of `ACPIOSTInfo` for devices
++#     that support status reporting via ACPI _OST method.
  #
- # @auto: derive from host IOMMU capabilities
+ # Since: 2.1
  #
-@@ -64,8 +62,7 @@
+@@ -126,8 +124,7 @@
  
  ##
- # @OasMode:
+ # @ACPI_DEVICE_OST:
 -#
--# SMMUv3 Output Address Size configuration mode.
-+#     SMMUv3 Output Address Size configuration mode.
+-# Emitted when guest executes ACPI _OST method.
++#     Emitted when guest executes ACPI _OST method.
  #
- # @auto: derive from host IOMMU capabilities
+ # @info: OSPM Status Indication
  #
 -- 
 2.55.0
