@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B9A7C4452B
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:56:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6E84C44524
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:56:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmlS6-0005ZK-6n; Thu, 23 Jul 2026 00:54:34 -0400
+	id 1wmlS0-0005EF-8e; Thu, 23 Jul 2026 00:54:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlS4-0005TY-G3
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:54:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlRf-0004uz-ET
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:54:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlS2-00054O-Nh
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:54:32 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlRc-0004z2-6U
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:54:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784782470;
+ s=mimecast20190719; t=1784782443;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y2l6GvJOHZN3iItpA5ipqrT2gVM1c+L15Fe47ufdVcE=;
- b=UcaKIhL3HaCq5N0Ni3mgAuoewYKu6wEE9qD0k+WHbSx6+sMUcPYYLihpqjkHnRqzyI+Lvc
- g2iUfCGGuPO6vYIylJZ16udpTpRDu5HsfY1ubotYyEWZdSwRc0vFQkpbYPTNCsbPFMZe5Z
- QUmZjuIKmSBVcm8HLW8TkEuH3+lZTNQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=lCYDP6Hrj8CzePr1mYVT3Ek4VxvkfuHjDMXZ3o0GlI0=;
+ b=QKGOCh2fdZh8KX2S0D2Bp7BBu5n49blqs/3chiJ/CPhWYXp+uKWkyN8QhOkNCKRdPvOAX4
+ bF5ZIEpSm3FE5djCcp+6MNdWeZiHbQTh5775gFaUY48Y26Qq/+gA64H9oc6oRL3c1AUQ+M
+ rr1O3PYYAMuwrrDYBM2Gd7QNqOtYWD4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-cP_UqyUjPW6VzT4_S0CN1A-1; Thu,
- 23 Jul 2026 00:54:26 -0400
-X-MC-Unique: cP_UqyUjPW6VzT4_S0CN1A-1
-X-Mimecast-MFC-AGG-ID: cP_UqyUjPW6VzT4_S0CN1A_1784782464
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-186-flsMf9TDOHOS0HUxRx7iBg-1; Thu,
+ 23 Jul 2026 00:53:59 -0400
+X-MC-Unique: flsMf9TDOHOS0HUxRx7iBg-1
+X-Mimecast-MFC-AGG-ID: flsMf9TDOHOS0HUxRx7iBg_1784782436
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CF1FC1944F10; Thu, 23 Jul 2026 04:54:23 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EE8051955DEA; Thu, 23 Jul 2026 04:53:55 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.44])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2B26918002AE; Thu, 23 Jul 2026 04:54:16 +0000 (UTC)
+ id D62A618002AE; Thu, 23 Jul 2026 04:53:45 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -73,23 +73,24 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Jason Wang <jasowangio@gmail.com>, qemu-trivial@nongnu.org,
  Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH v2 37/44] qapi: convert intro sections for char.json
-Date: Thu, 23 Jul 2026 00:47:58 -0400
-Message-ID: <20260723044805.527643-38-jsnow@redhat.com>
+Subject: [PATCH v2 34/44] qapi: convert trivial intro sections for crypto.json
+Date: Thu, 23 Jul 2026 00:47:55 -0400
+Message-ID: <20260723044805.527643-35-jsnow@redhat.com>
 In-Reply-To: <20260723044805.527643-1-jsnow@redhat.com>
 References: <20260723044805.527643-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: permerror client-ip=170.10.129.124;
+Received-SPF: permerror client-ip=170.10.133.124;
  envelope-from=jsnow@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,312 +110,347 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/char.json | 90 +++++++++++++++++---------------------------------
- 1 file changed, 30 insertions(+), 60 deletions(-)
+ qapi/crypto.json | 118 ++++++++++++++++++-----------------------------
+ 1 file changed, 45 insertions(+), 73 deletions(-)
 
-diff --git a/qapi/char.json b/qapi/char.json
-index abaccefa97e..7ae67eedff8 100644
---- a/qapi/char.json
-+++ b/qapi/char.json
-@@ -12,8 +12,7 @@
+diff --git a/qapi/crypto.json b/qapi/crypto.json
+index 2b55befef97..5c821be1a33 100644
+--- a/qapi/crypto.json
++++ b/qapi/crypto.json
+@@ -10,10 +10,10 @@
  
  ##
- # @ChardevInfo:
+ # @QCryptoTLSCredsEndpoint:
 -#
--# Information about a character device.
-+#     Information about a character device.
+-# The type of network endpoint that will be using the credentials.
+-# Most types of credential require different setup / structures
+-# depending on whether they will be used in a server versus a client.
++#     The type of network endpoint that will be using the credentials.
++#     Most types of credential require different setup / structures
++#     depending on whether they will be used in a server versus a
++#     client.
  #
- # @label: the label of the character device
+ # @client: the network endpoint is acting as the client
  #
-@@ -35,8 +34,7 @@
+@@ -26,8 +26,7 @@
  
  ##
- # @query-chardev:
+ # @QCryptoSecretFormat:
 -#
--# Return information about current character devices.
-+#     Return information about current character devices.
+-# The data format that the secret is provided in
++#     The data format that the secret is provided in
  #
- # Since: 0.14
+ # @raw: raw bytes.  When encoded in JSON only valid UTF-8 sequences
+ #     can be used
+@@ -41,8 +40,7 @@
+ 
+ ##
+ # @QCryptoHashAlgo:
+-#
+-# The supported algorithms for computing content digests
++#     The supported algorithms for computing content digests
+ #
+ # @md5: MD5.  Should not be used in any new code, legacy compat only
  #
 @@ -68,8 +66,7 @@
  
  ##
- # @ChardevBackendInfo:
+ # @QCryptoCipherAlgo:
 -#
--# Information about a character device backend
-+#     Information about a character device backend
+-# The supported algorithms for content encryption ciphers
++#     The supported algorithms for content encryption ciphers
  #
- # @name: The backend name
+ # @aes-128: AES with 128 bit / 16 byte keys
  #
-@@ -79,8 +76,7 @@
+@@ -110,8 +107,7 @@
  
  ##
- # @query-chardev-backends:
+ # @QCryptoCipherMode:
 -#
--# Return information about character device backends.
-+#     Return information about character device backends.
+-# The supported modes for content encryption ciphers
++#     The supported modes for content encryption ciphers
  #
- # Since: 2.0
+ # @ecb: Electronic Code Book
  #
-@@ -108,8 +104,7 @@
+@@ -128,11 +124,11 @@
  
  ##
- # @DataFormat:
+ # @QCryptoIVGenAlgo:
 -#
--# An enumeration of data format.
-+#     An enumeration of data format.
+-# The supported algorithms for generating initialization vectors for
+-# full disk encryption.  The 'plain' generator should not be used for
+-# disks with sector numbers larger than 2^32, except where
+-# compatibility with pre-existing Linux dm-crypt volumes is required.
++#     The supported algorithms for generating initialization vectors
++#     for full disk encryption.  The 'plain' generator should not be
++#     used for disks with sector numbers larger than 2^32, except
++#     where compatibility with pre-existing Linux dm-crypt volumes is
++#     required.
  #
- # @utf8: Data is a UTF-8 string (RFC 3629)
+ # @plain: 64-bit sector number truncated to 32-bits
  #
-@@ -122,8 +117,7 @@
+@@ -148,8 +144,7 @@
  
  ##
- # @ringbuf-write:
+ # @QCryptoBlockFormat:
 -#
--# Write to a ring buffer character device.
-+#     Write to a ring buffer character device.
+-# The supported full disk encryption formats
++#     The supported full disk encryption formats
  #
- # @device: the ring buffer character device name
- #
-@@ -154,8 +148,7 @@
+ # @qcow: QCow/QCow2 built-in AES-CBC encryption.  Use only for
+ #     liberating data from old images.
+@@ -163,8 +158,8 @@
  
  ##
- # @ringbuf-read:
+ # @QCryptoBlockOptionsBase:
 -#
--# Read from a ring buffer character device.
-+#     Read from a ring buffer character device.
+-# The common options that apply to all full disk encryption formats
++#     The common options that apply to all full disk encryption
++#     formats
  #
- # @device: the ring buffer character device name
+ # @format: the encryption format
  #
-@@ -189,8 +182,7 @@
+@@ -175,8 +170,7 @@
  
  ##
- # @ChardevCommon:
+ # @QCryptoBlockOptionsQCow:
 -#
--# Configuration shared across all chardev backends
-+#     Configuration shared across all chardev backends
+-# The options that apply to QCow/QCow2 AES-CBC encryption format
++#     The options that apply to QCow/QCow2 AES-CBC encryption format
  #
- # @logfile: The name of a logfile to save output
- #
-@@ -209,8 +201,7 @@
+ # @key-secret: the ID of a QCryptoSecret object providing the
+ #     decryption key.  Mandatory except when probing image for
+@@ -189,8 +183,7 @@
  
  ##
- # @ChardevFile:
+ # @QCryptoBlockOptionsLUKS:
 -#
--# Configuration info for file chardevs.
-+#     Configuration info for file chardevs.
+-# The options that apply to LUKS encryption format
++#     The options that apply to LUKS encryption format
  #
- # @in: The name of the input file
- #
-@@ -229,8 +220,7 @@
+ # @key-secret: the ID of a QCryptoSecret object providing the
+ #     decryption key.  Mandatory except when probing image for
+@@ -203,8 +196,7 @@
  
  ##
- # @ChardevHostdev:
+ # @QCryptoBlockCreateOptionsLUKS:
 -#
--# Configuration info for device and pipe chardevs.
-+#     Configuration info for device and pipe chardevs.
+-# The options that apply to LUKS encryption format initialization
++#     The options that apply to LUKS encryption format initialization
  #
- # @device: The name of the special file for the device, i.e.
- #     /dev/ttyS0 on Unix or COM1: on Windows
-@@ -243,8 +233,7 @@
+ # @cipher-alg: the cipher algorithm for data encryption.  Currently
+ #     defaults to 'aes-256'.
+@@ -237,9 +229,8 @@
  
  ##
- # @ChardevSocket:
+ # @QCryptoBlockOpenOptions:
 -#
--# Configuration info for (stream) socket chardevs.
-+#     Configuration info for (stream) socket chardevs.
+-# The options that are available for all encryption formats when
+-# opening an existing volume
++#     The options that are available for all encryption formats when
++#     opening an existing volume
  #
- # @addr: socket address to listen on (server=true) or connect to
- #     (server=false)
-@@ -295,8 +284,7 @@
+ # Since: 2.6
+ ##
+@@ -251,9 +242,8 @@
  
  ##
- # @ChardevUdp:
+ # @QCryptoBlockCreateOptions:
 -#
--# Configuration info for datagram socket chardevs.
-+#     Configuration info for datagram socket chardevs.
+-# The options that are available for all encryption formats when
+-# initializing a new volume
++#     The options that are available for all encryption formats when
++#     initializing a new volume
  #
- # @remote: remote address
- #
-@@ -311,8 +299,7 @@
+ # Since: 2.6
+ ##
+@@ -265,9 +255,8 @@
  
  ##
- # @ChardevMux:
+ # @QCryptoBlockInfoBase:
 -#
--# Configuration info for mux chardevs.
-+#     Configuration info for mux chardevs.
+-# The common information that applies to all full disk encryption
+-# formats
++#     The common information that applies to all full disk encryption
++#     formats
  #
- # @chardev: name of the base chardev.
+ # @format: the encryption format
  #
-@@ -324,8 +311,7 @@
+@@ -278,8 +267,7 @@
  
  ##
- # @ChardevHub:
+ # @QCryptoBlockInfoLUKSSlot:
 -#
--# Configuration info for hub chardevs.
-+#     Configuration info for hub chardevs.
+-# Information about the LUKS block encryption key slot options
++#     Information about the LUKS block encryption key slot options
  #
- # @chardevs: IDs to be added to this hub (maximum 4 devices).
+ # @active: whether the key slot is currently in use
  #
-@@ -337,8 +323,7 @@
+@@ -299,8 +287,7 @@
  
  ##
- # @ChardevStdio:
+ # @QCryptoBlockInfoLUKS:
 -#
--# Configuration info for stdio chardevs.
-+#     Configuration info for stdio chardevs.
+-# Information about the LUKS block encryption options
++#     Information about the LUKS block encryption options
  #
- # @signal: Allow signals (such as SIGINT triggered by ^C) be delivered
- #     to QEMU.  Default: true.
-@@ -351,8 +336,7 @@
+ # @cipher-alg: the cipher algorithm for data encryption
+ #
+@@ -338,8 +325,7 @@
  
  ##
- # @ChardevSpiceChannel:
+ # @QCryptoBlockInfo:
 -#
--# Configuration info for spice vm channel chardevs.
-+#     Configuration info for spice vm channel chardevs.
+-# Information about the block encryption options
++#     Information about the block encryption options
  #
- # @type: kind of channel (for example vdagent).
- #
-@@ -365,8 +349,7 @@
+ # Since: 2.7
+ ##
+@@ -350,8 +336,7 @@
  
  ##
- # @ChardevSpicePort:
+ # @QCryptoBlockLUKSKeyslotState:
 -#
--# Configuration info for spice port chardevs.
-+#     Configuration info for spice port chardevs.
+-# Defines state of keyslots that are affected by the update
++#     Defines state of keyslots that are affected by the update
  #
- # @fqdn: name of the channel (see docs/spice-port-fqdn.txt)
+ # @active: The slots contain the given password and marked as active
  #
-@@ -379,8 +362,7 @@
+@@ -365,9 +350,8 @@
  
  ##
- # @ChardevVCEncoding:
+ # @QCryptoBlockAmendOptionsLUKS:
 -#
--# Character encoding expected from the guest on a virtual console.
-+#     Character encoding expected from the guest on a virtual console.
+-# This struct defines the update parameters that activate/de-activate
+-# set of keyslots
++#     This struct defines the update parameters that
++#     activate/de-activate set of keyslots
  #
- # @cp437: CP437 (8-bit Extended ASCII / VGA).  Every byte maps
- #     directly to a glyph; suitable for DOS or other guests that
-@@ -397,8 +379,7 @@
+ # @state: the desired state of the keyslots
+ #
+@@ -407,9 +391,8 @@
  
  ##
- # @ChardevDBus:
+ # @QCryptoBlockAmendOptions:
 -#
--# Configuration info for DBus chardevs.
-+#     Configuration info for DBus chardevs.
+-# The options that are available for all encryption formats when
+-# amending encryption settings
++#     The options that are available for all encryption formats when
++#     amending encryption settings
  #
- # @name: name of the channel (following docs/spice-port-fqdn.txt)
- #
-@@ -415,8 +396,7 @@
+ # Since: 5.1
+ ##
+@@ -421,8 +404,7 @@
  
  ##
- # @ChardevVC:
+ # @SecretCommonProperties:
 -#
--# Configuration info for virtual console chardevs.
-+#     Configuration info for virtual console chardevs.
+-# Properties for objects of classes derived from secret-common.
++#     Properties for objects of classes derived from secret-common.
  #
- # @width: console width, in pixels
- #
-@@ -445,8 +425,7 @@
+ # @format: the data format that the secret is provided in
+ #     (default: raw)
+@@ -463,8 +445,7 @@
  
  ##
- # @ChardevRingbuf:
+ # @SecretKeyringProperties:
 -#
--# Configuration info for ring buffer chardevs.
-+#     Configuration info for ring buffer chardevs.
+-# Properties for secret_keyring objects.
++#     Properties for secret_keyring objects.
  #
- # @size: ring buffer size, must be power of two, default is 65536
+ # @serial: serial number that identifies a key to get from the kernel
  #
-@@ -458,8 +437,7 @@
+@@ -477,8 +458,7 @@
  
  ##
- # @ChardevQemuVDAgent:
+ # @TlsCredsProperties:
 -#
--# Configuration info for QEMU vdagent implementation.
-+#     Configuration info for QEMU vdagent implementation.
+-# Properties for objects of classes derived from tls-creds.
++#     Properties for objects of classes derived from tls-creds.
  #
- # @mouse: enable/disable mouse, default is enabled.
- #
-@@ -475,8 +453,7 @@
+ # @verify-peer: if true the peer credentials will be verified once the
+ #     handshake is completed.  This is a no-op for anonymous
+@@ -503,8 +483,7 @@
  
  ##
- # @ChardevPty:
+ # @TlsCredsAnonProperties:
 -#
--# Configuration info for pty implementation.
-+#     Configuration info for pty implementation.
+-# Properties for tls-creds-anon objects.
++#     Properties for tls-creds-anon objects.
  #
- # @path: optional path to create a symbolic link that points to the
- #     allocated PTY
-@@ -723,8 +700,7 @@
+ # Since: 2.5
+ ##
+@@ -514,8 +493,7 @@
  
  ##
- # @ChardevBackend:
+ # @TlsCredsPskProperties:
 -#
--# Configuration info for the new chardev backend.
-+#     Configuration info for the new chardev backend.
+-# Properties for tls-creds-psk objects.
++#     Properties for tls-creds-psk objects.
  #
- # @type: backend type
- #
-@@ -767,8 +743,7 @@
+ # @username: the username which will be sent to the server.  For
+ #     clients only.  If absent, "qemu" is sent and the property will
+@@ -529,8 +507,7 @@
  
  ##
- # @ChardevReturn:
+ # @TlsCredsX509Properties:
 -#
--# Return info about the chardev backend just created.
-+#     Return info about the chardev backend just created.
+-# Properties for tls-creds-x509 objects.
++#     Properties for tls-creds-x509 objects.
  #
- # @pty: name of the slave pseudoterminal device, present if and only
- #     if a chardev of type 'pty' was created
-@@ -780,8 +755,7 @@
+ # @sanity-check: if true, perform some sanity checks before using the
+ #     credentials (default: true)
+@@ -550,8 +527,7 @@
  
  ##
- # @chardev-add:
+ # @QCryptoAkCipherAlgo:
 -#
--# Add a character device backend
-+#     Add a character device backend
+-# The supported algorithms for asymmetric encryption ciphers
++#     The supported algorithms for asymmetric encryption ciphers
  #
- # @id: the chardev's ID, must be unique
+ # @rsa: RSA algorithm
  #
-@@ -818,8 +792,7 @@
+@@ -562,8 +538,7 @@
  
  ##
- # @chardev-change:
+ # @QCryptoAkCipherKeyType:
 -#
--# Change a character device backend
-+#     Change a character device backend
+-# The type of asymmetric keys.
++#     The type of asymmetric keys.
  #
- # @id: the chardev's ID
+ # @public: public key
  #
-@@ -859,8 +832,7 @@
+@@ -576,8 +551,7 @@
  
  ##
- # @chardev-remove:
+ # @QCryptoRSAPaddingAlgo:
 -#
--# Remove a character device backend
-+#     Remove a character device backend
+-# The padding algorithm for RSA.
++#     The padding algorithm for RSA.
  #
- # @id: the chardev's ID, must not be in use
+ # @raw: no padding used
  #
-@@ -876,8 +848,7 @@
+@@ -590,8 +564,7 @@
  
  ##
- # @chardev-send-break:
+ # @QCryptoAkCipherOptionsRSA:
 -#
--# Send a break to a character device
-+#     Send a break to a character device
+-# Specific parameters for RSA algorithm.
++#     Specific parameters for RSA algorithm.
  #
- # @id: the chardev's ID
+ # @hash-alg: `QCryptoHashAlgo`
  #
-@@ -893,8 +864,7 @@
+@@ -605,9 +578,8 @@
  
  ##
- # @VSERPORT_CHANGE:
+ # @QCryptoAkCipherOptions:
 -#
--# Emitted when the guest opens or closes a virtio-serial port.
-+#     Emitted when the guest opens or closes a virtio-serial port.
+-# The options that are available for all asymmetric key algorithms
+-# when creating a new QCryptoAkCipher.
++#     The options that are available for all asymmetric key algorithms
++#     when creating a new QCryptoAkCipher.
  #
- # @id: device identifier of the virtio-serial port
+ # @alg: encryption cipher algorithm
  #
 -- 
 2.55.0
