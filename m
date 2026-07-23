@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1325CC531FA
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 23:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FB0DC531D0
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 23:37:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wn2xg-0004ym-3d; Thu, 23 Jul 2026 19:36:20 -0400
+	id 1wn2xf-0004xx-HW; Thu, 23 Jul 2026 19:36:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <simonxhy0404@gmail.com>)
- id 1wn2xd-0004x3-V5
+ id 1wn2xd-0004wa-5U
  for qemu-devel@nongnu.org; Thu, 23 Jul 2026 19:36:17 -0400
-Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
+Received: from mail-oa1-x2b.google.com ([2001:4860:4864:20::2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <simonxhy0404@gmail.com>)
- id 1wn2xa-0001dH-Rs
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 19:36:17 -0400
-Received: by mail-ot1-x32e.google.com with SMTP id
- 46e09a7af769-7e9fc3de7ceso534697a34.1
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 16:36:14 -0700 (PDT)
+ id 1wn2xZ-0001d4-Gv
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 19:36:16 -0400
+Received: by mail-oa1-x2b.google.com with SMTP id
+ 586e51a60fabf-456f7012050so729339fac.0
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 16:36:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784849774; x=1785454574; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1784849772; x=1785454572; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=QsTjDwNUUrvIiFVJJdy+rAADKq2UP2nfPLvn8JArCrk=;
- b=HJ+BcOZaD+KitL02EyRACl+zc/Ze1N5w4XjLO0MNqWm3g+MeOXMKNswzNuMYnxBaDz
- k5I6SBxmUnxGRbLNTqEdQWzgRp8lCQmlx6tcfxcGV8uehzPy7NpXIvXu/G3PcVCB77Pb
- vYM0TVzsAgrgNQ3QdO6BwbJ685jUxh6V9L43z7W3oGrf9cflt5VMQXG+l3lmJp4X2bFQ
- KLTbVFAZ4754HWCdDLh5ieAksp9LxNf+w3hTgl6kO/LKovJwvj0jeRhXpaau144RTl+B
- ZMndYn/hkk0TpZQibBPo309ASdglGpXM0+DESy9WydJUKepcbNis/Wfu6tp1rHkZcg1t
- ryMg==
+ bh=d16CZApBwdbjAv2BZVQc7wNcffZyxmsi63Xs9rslxdM=;
+ b=QzN8EiHNvVhPVFiDYeSrPnwssJYO74uyEeLre4ehsPjja4jKwtS5rzIUDn3PaCDt+4
+ pZhu29Vic1KZ7VG2wTshREOb2bRbypYaWlgcp+6hV63mYe0vbcvscvv+27HwDap5SPbw
+ BvC4rydRiZCzc095/zQ2OGWnxtha+TufkmthR1vvXgdgANGcdXE1qjGRdE3vD2ZN9wHN
+ nyPfe7+5GWp9LIG6HXU6x/z1/TZjMuLiVmAJYqfr8CYsiXpGYe9AKz/Cp/3Q4/f3Z9+K
+ PCJQ2Rzg22aaMNwMYiUbWWFZuA/uon89mdgnWj6m1qr7Tpv1sEgYII+vYs8A+Y7KytTa
+ h0HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784849774; x=1785454574;
+ d=1e100.net; s=20251104; t=1784849772; x=1785454572;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=QsTjDwNUUrvIiFVJJdy+rAADKq2UP2nfPLvn8JArCrk=;
- b=mzyaPBOwGPQu0JztJmOuCZDQ2Hh5mt4m2f2qS2qlQ6He5iUgVBgmVMkawbMoXKOO9h
- 1dnAb0rNsSteJS7SRrsDkHwynA49Orm2lR2A8vh0V2MTYzEqzxgGTDBDZl2ngYjmEeCU
- +OZ/jzf0JuKBAkTQ2r21IoaqRGDS98evU8x663PhtdaCp8OBbV30zWcxiPUjeMuHtj+z
- 2tlVAk+e10O2NEo0eQhbrlqjIZDfjVU+7BYg64o0Zt7tlEGVaH/2tgVq9NF3so55m46h
- IH2v7iltWtiGmkZ2/GaHTT7XbgRF4h61hypsBARs1+87hongmwpgFXNqwOWlGzSxPvbz
- 5jEA==
-X-Gm-Message-State: AOJu0YwiMVyBXFA/9V0g5eD+ZGfSeqtqh0qunNtSDy7f4DBoFMYbgU1K
- 5b7uzh1znZuF3uzpR5vINlZnDLLx99V6Iagfv3KBjnK240jApGpBxR8wm2o3Qb75
-X-Gm-Gg: AR+sD11N20z7T+ctVxDhxIuMNuuGB5Lv3nql43+ta4r4B3vJgetIoSqWZtq0lPlTLg1
- U8ewekBNcw1xiwnLQqQ/GoIEQzhAXmT2a9+SwoKOovaRvUIBzlyZTwr53Pqx3rGaKKU9hyTmSvg
- /YxKhgnqpNWJTVq4FrTAPKUflbt8Cz6FKerEDDcNl+4iQS1rEQMB4TX8J1AZBUTeKe1Ir2COFt/
- lfbxRD54beK+Z6g8hYN/IBHVHCA8Zwv77KDWmYQREsNw6Db3cvcJIwZVdN1zHAEFL/DTOnssyBP
- XgpqwuQcTqF47JS4GdIHaBuVEPUFsVXzMfY6Av/kxrAbl/5CrfTI+uR+kNzsIv/rE6/f9T7Z7Na
- KAVf9ifg+toV/EkgcZPZl0UHu4/+Z+2ewqefet0ODB+fp4Ebcm1VBI5jjxc+UjCH+FrgD6y9Sox
- +sOM2dtH/07N+1pcwCmmVoww90pcYcg35d4g==
-X-Received: by 2002:a05:6808:1385:b0:479:f7e7:4a81 with SMTP id
- 5614622812f47-4ab350afc06mr2973941b6e.0.1784849773550; 
- Thu, 23 Jul 2026 16:36:13 -0700 (PDT)
+ bh=d16CZApBwdbjAv2BZVQc7wNcffZyxmsi63Xs9rslxdM=;
+ b=nuDl4Muj9CKJoODHLkfmGksrw9o7LGdblOnUGja49VnCNJmSGnhCRPD8fhfMqArVQq
+ +Wz8zSElQ8XuNXeLNNjWqOwOHNjQlUUbcH7YdQWlZgvfRtlAFZuC17rYk8SJbCELE7vy
+ IGTH8rJAlOCqRGBa6mzj5FJt4bFwwv3VKDFES/AMdWdRaXwnl0gFrDuQJnvvi3auPOC7
+ RDaL2PCWcC+nhwhC1vipYTWFrNuL8nhPURRcginrQZoJ1Cud7vrPq6cEMMhJC2u9YnUh
+ GfgDvdXWUMOw+D4Utej6yg25lCUAXkWTf7vIIsrgRb0LWXEmSuzHYAHfW+raT2XiqDwN
+ me5w==
+X-Gm-Message-State: AOJu0YzcH0l2UAER5EvJmtL7q3BxYcQm94L/NVLOgzejKNvr4FR+xRBN
+ 2ikhNuJQervNWpK43Pdg29SdpUdFMiH8OMPVtDN3jb6sOYFNa4/hyG+W7T+bHa32
+X-Gm-Gg: AR+sD12cpOVWgd0Vpps5vHvXwMlWaSdiN9C6Ekk2vdCTY3/RnqEMKNJAfC8mZmGabxC
+ 9s+iy3GEKNmOFlP0mIYc450KrdIJyziK7MCRlSbys5sV82EjUPfdX1S0hRHlwooZ8RffbCj0eH/
+ o2MyLdXcolRsregHdGIF/PXs0VnA2zhMIK04xzrO2/5tEELUIeoUL/0FuPiJZkskjrrCJWUeERd
+ m86Gt+QF7WcrG5ubwE7GSBHFxC1Jxq9UyXTLLK2cUG1hqa3x4NaCVrjjBJV9Vr7hOAAjVpbu3pg
+ n7TJKiVSqxAdDm5x/0Ir3YGpzP+sBMw6K20myxwQ/exv+HMr7NqlO4BHPxUtX7GWHCRZ6n/LOTF
+ COTLUVmgVnMl2rM47/UvWJ3C967CkJsolz0hwbfds4Ip+R6jgz7abRIkpNNTu/29FDCBUA8xqqQ
+ VTFvPUjGYnYUecJkVVej9uTXM=
+X-Received: by 2002:a05:6808:3190:b0:49e:d43f:1b94 with SMTP id
+ 5614622812f47-4ab380fc337mr2158575b6e.0.1784849772333; 
+ Thu, 23 Jul 2026 16:36:12 -0700 (PDT)
 Received: from HPE-2MQ6131DV6.home.local ([23.124.244.239])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-4ab248c6667sm3631997b6e.0.2026.07.23.16.36.12
+ 5614622812f47-4ab248c6667sm3631997b6e.0.2026.07.23.16.36.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Jul 2026 16:36:13 -0700 (PDT)
+ Thu, 23 Jul 2026 16:36:11 -0700 (PDT)
 From: Simon Xu <simonxhy0404@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Owen Giles <owen.giles@hpe.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Robert Elliott <elliott@hpe.com>, Simon Xu <simonxhy0404@gmail.com>
-Subject: [PATCH 4/4] hw/arm/mps2-tz.c: add new mps3-an555 board
-Date: Thu, 23 Jul 2026 18:36:05 -0500
-Message-Id: <20260723233605.805-5-simonxhy0404@gmail.com>
+Subject: [PATCH 3/4] hw/misc/iotkit-sysinfo: make sys_config2 configurable for
+ SSE-310
+Date: Thu, 23 Jul 2026 18:36:04 -0500
+Message-Id: <20260723233605.805-4-simonxhy0404@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260723233605.805-1-simonxhy0404@gmail.com>
 References: <20260723233605.805-1-simonxhy0404@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32e;
- envelope-from=simonxhy0404@gmail.com; helo=mail-ot1-x32e.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2b;
+ envelope-from=simonxhy0404@gmail.com; helo=mail-oa1-x2b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,291 +104,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add mps3-an555 board modeled after the existing mps3-an547 board.
-- Add additional AHB PPC EXP 1. Add unimplemented timing adapters for SSE-310.
-- Include documentation for SSE-310 and mps3-an555.
-
-Arm mps3-an555 TRM: https://developer.arm.com/documentation/107642/latest/
+Add sys_config2 as QEMU property like sys_config.
+- Modify the sys_config2 register on the SSE-310 for the NPU configurations.
+- Currently sys_config2 is configured to report Ethos-U55 as the NPU type.
 
 Reviewed-by: Owen Giles <owen.giles@hpe.com>
 Reviewed-by: Robert Elliott <elliott@hpe.com>
 Signed-off-by: Simon Xu <simonxhy0404@gmail.com>
 ---
- docs/system/arm/mps2.rst |   6 +-
- hw/arm/mps2-tz.c         | 143 ++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 144 insertions(+), 5 deletions(-)
+ hw/arm/armsse.c                  | 21 +++++++++++++++++++++
+ hw/misc/iotkit-sysinfo.c         | 11 +++++++++++
+ include/hw/misc/iotkit-sysinfo.h |  2 ++
+ 3 files changed, 34 insertions(+)
 
-diff --git a/docs/system/arm/mps2.rst b/docs/system/arm/mps2.rst
-index a305935cc4..489a8b0fa7 100644
---- a/docs/system/arm/mps2.rst
-+++ b/docs/system/arm/mps2.rst
-@@ -1,5 +1,5 @@
--Arm MPS2 and MPS3 boards (``mps2-an385``, ``mps2-an386``, ``mps2-an500``, ``mps2-an505``, ``mps2-an511``, ``mps2-an521``, ``mps3-an524``, ``mps3-an536``, ``mps3-an547``)
--=========================================================================================================================================================================
-+Arm MPS2 and MPS3 boards (``mps2-an385``, ``mps2-an386``, ``mps2-an500``, ``mps2-an505``, ``mps2-an511``, ``mps2-an521``, ``mps3-an524``, ``mps3-an536``, ``mps3-an547``, ``mps3-an555``)
-+=========================================================================================================================================================================================
- 
- These board models use Arm M-profile or R-profile CPUs.
- 
-@@ -31,6 +31,8 @@ FPGA images using M-profile CPUs:
-   Dual Cortex-M33 on an MPS3, as documented in Arm Application Note AN524
- ``mps3-an547``
-   Cortex-M55 on an MPS3, as documented in Arm Application Note AN547
-+``mps3-an555``
-+  Cortex-M85 on an MPS3, as documented in Arm Application Note AN555
- 
- FPGA images using R-profile CPUs:
- 
-diff --git a/hw/arm/mps2-tz.c b/hw/arm/mps2-tz.c
-index f101c1b7c3..04a2b37fd8 100644
---- a/hw/arm/mps2-tz.c
-+++ b/hw/arm/mps2-tz.c
-@@ -1,5 +1,5 @@
- /*
-- * ARM V2M MPS2 board emulation, trustzone aware FPGA images
-+ * Arm V2M MPS2 and MPS3 board emulation, trustzone aware FPGA images
-  *
-  * Copyright (c) 2017 Linaro Limited
-  * Written by Peter Maydell
-@@ -18,12 +18,13 @@
-  *  "mps2-an521" -- Dual Cortex-M33 as documented in Application Note AN521
-  *  "mps2-an524" -- Dual Cortex-M33 as documented in Application Note AN524
-  *  "mps2-an547" -- Single Cortex-M55 as documented in Application Note AN547
-+ *  "mps3-an555" -- Single Cortex-M85 as documented in Application Note AN555
-  *
-  * Links to the TRM for the board itself and to the various Application
-  * Notes which document the FPGA images can be found here:
-  * https://developer.arm.com/products/system-design/development-boards/fpga-prototyping-boards/mps2
-  *
-- * Board TRM:
-+ * MPS2 and MPS2+ Board TRM:
-  * https://developer.arm.com/documentation/100112/latest/
-  * Application Note AN505:
-  * https://developer.arm.com/documentation/dai0505/latest/
-@@ -31,8 +32,12 @@
-  * https://developer.arm.com/documentation/dai0521/latest/
-  * Application Note AN524:
-  * https://developer.arm.com/documentation/dai0524/latest/
-+ * MPS3 Board TRM:
-+ * https://developer.arm.com/documentation/100765/latest/
-  * Application Note AN547:
-  * https://developer.arm.com/documentation/dai0547/latest/
-+ * Application Note AN555:
-+ * https://developer.arm.com/documentation/107642/latest/
-  *
-  * The AN505 defers to the Cortex-M33 processor ARMv8M IoT Kit FVP User Guide
-  * (ARM ECM0601256) for the details of some of the device layout:
-@@ -42,6 +47,8 @@
-  *  https://developer.arm.com/documentation/101104/latest/
-  * and the AN547 uses the SSE-300, whose layout is in the SSE-300 TRM:
-  *  https://developer.arm.com/documentation/101773/latest/
-+ * and the AN555 uses the SSE-310, whose layout is in the SSE-310 TRM:
-+ *  https://developer.arm.com/documentation/102778/latest/
-  */
- 
- #include "qemu/osdep.h"
-@@ -77,7 +84,7 @@
- #include "qom/object.h"
- #include "hw/core/irq.h"
- 
--#define MPS2TZ_NUMIRQ_MAX 96
-+#define MPS2TZ_NUMIRQ_MAX 100
- #define MPS2TZ_RAM_MAX 5
- 
- typedef enum MPS2TZFPGAType {
-@@ -85,6 +92,7 @@ typedef enum MPS2TZFPGAType {
-     FPGA_AN521,
-     FPGA_AN524,
-     FPGA_AN547,
-+    FPGA_AN555,
- } MPS2TZFPGAType;
- 
- /*
-@@ -173,6 +181,7 @@ struct MPS2TZMachineState {
- #define TYPE_MPS2TZ_AN521_MACHINE MACHINE_TYPE_NAME("mps2-an521")
- #define TYPE_MPS3TZ_AN524_MACHINE MACHINE_TYPE_NAME("mps3-an524")
- #define TYPE_MPS3TZ_AN547_MACHINE MACHINE_TYPE_NAME("mps3-an547")
-+#define TYPE_MPS3TZ_AN555_MACHINE MACHINE_TYPE_NAME("mps3-an555")
- 
- OBJECT_DECLARE_TYPE(MPS2TZMachineState, MPS2TZMachineClass, MPS2TZ_MACHINE)
- 
-@@ -207,6 +216,15 @@ static const uint32_t an524_oscclk[] = {
-     23750000,
- };
- 
-+static const uint32_t an555_oscclk[] = {
-+    24000000,
-+    25000000,
-+    30000000,
-+    50000000,
-+    24576000,
-+    23750000,
-+};
-+
- static const RAMInfo an505_raminfo[] = { {
-         .name = "ssram-0",
-         .base = 0x00000000,
-@@ -1103,6 +1121,72 @@ static void mps2tz_common_init(MachineState *machine)
-         },
-     };
- 
-+    const PPCInfo an555_ppcs[] = { {
-+            .name = "apb_ppcexp0",
-+            .ports = {
-+                { "ssram-mpc", make_mpc, &mms->mpc[0], 0x57000000, 0x1000 },
-+                { "qspi-mpc", make_mpc, &mms->mpc[1], 0x57001000, 0x1000 },
-+                { "ddr-mpc", make_mpc, &mms->mpc[2], 0x57002000, 0x1000 },
-+            },
-+        }, {
-+            .name = "apb_ppcexp1",
-+            .ports = {
-+                { "i2c0", make_i2c, &mms->i2c[0], 0x49200000, 0x1000, {},
-+                  { .i2c_internal = true /* touchscreen */ } },
-+                { "i2c1", make_i2c, &mms->i2c[1], 0x49201000, 0x1000, {},
-+                  { .i2c_internal = true /* audio conf */ } },
-+                { "spi0", make_spi, &mms->spi[0], 0x49202000, 0x1000, { 53 } },
-+                { "spi1", make_spi, &mms->spi[1], 0x49203000, 0x1000, { 54 } },
-+                { "spi2", make_spi, &mms->spi[2], 0x49204000, 0x1000, { 55 } },
-+                { "i2c2", make_i2c, &mms->i2c[2], 0x49205000, 0x1000, {},
-+                  { .i2c_internal = false /* shield 0 */ } },
-+                { "i2c3", make_i2c, &mms->i2c[3], 0x49206000, 0x1000, {},
-+                  { .i2c_internal = false /* shield 1 */ } },
-+                { /* port 7 reserved */ },
-+                { "i2c4", make_i2c, &mms->i2c[4], 0x49208000, 0x1000, {},
-+                  { .i2c_internal = true /* DDR4 EEPROM */ } },
-+            },
-+        }, {
-+            .name = "apb_ppcexp2",
-+            .ports = {
-+                { "scc", make_scc, &mms->scc, 0x49300000, 0x1000 },
-+                { "i2s-audio", make_unimp_dev, &mms->i2s_audio, 0x49301000, 0x1000 },
-+                { "fpgaio", make_fpgaio, &mms->fpgaio, 0x49302000, 0x1000 },
-+                { "uart0", make_uart, &mms->uart[0], 0x49303000, 0x1000, { 33, 34, 43 } },
-+                { "uart1", make_uart, &mms->uart[1], 0x49304000, 0x1000, { 35, 36, 44 } },
-+                { "uart2", make_uart, &mms->uart[2], 0x49305000, 0x1000, { 37, 38, 45 } },
-+                { "uart3", make_uart, &mms->uart[3], 0x49306000, 0x1000, { 39, 40, 46 } },
-+                { "uart4", make_uart, &mms->uart[4], 0x49307000, 0x1000, { 41, 42, 47 } },
-+                { "uart5", make_uart, &mms->uart[5], 0x49308000, 0x1000, { 125, 126, 127 } },
-+
-+                { /* port 9 reserved */ },
-+                { "clcd", make_unimp_dev, &mms->cldc, 0x4930a000, 0x1000 },
-+                { "rtc", make_rtc, &mms->rtc, 0x4930b000, 0x1000 },
-+            },
-+        }, {
-+            .name = "ahb_ppcexp0",
-+            .ports = {
-+                { "gpio0", make_unimp_dev, &mms->gpio[0], 0x41100000, 0x1000 },
-+                { "gpio1", make_unimp_dev, &mms->gpio[1], 0x41101000, 0x1000 },
-+                { "gpio2", make_unimp_dev, &mms->gpio[2], 0x41102000, 0x1000 },
-+                { "gpio3", make_unimp_dev, &mms->gpio[3], 0x41103000, 0x1000 },
-+                { /* port 4 USER AHB interface 0 */ },
-+                { /* port 5 USER AHB interface 1 */ },
-+                { /* port 6 USER AHB interface 2 */ },
-+                { /* port 7 USER AHB interface 3 */ },
-+                { "eth-usb", make_eth_usb, NULL, 0x41400000, 0x200000, { 49 } },
-+            },
-+        }, {
-+            .name = "ahb_ppcexp1",
-+            .ports = {
-+                { "dma0", make_dma, &mms->dma[0], 0x41200000, 0x1000, { 59, 57, 58 } },
-+                { "dma1", make_dma, &mms->dma[1], 0x41201000, 0x1000, { 62, 60, 61 } },
-+                { "dma2", make_dma, &mms->dma[2], 0x41202000, 0x1000, { 65, 63, 64 } },
-+                { "dma3", make_dma, &mms->dma[3], 0x41203000, 0x1000, { 68, 66, 67 } },
-+            },
-+        },
-+    };
-+
-     switch (mmc->fpga_type) {
-     case FPGA_AN505:
-     case FPGA_AN521:
-@@ -1117,6 +1201,10 @@ static void mps2tz_common_init(MachineState *machine)
-         ppcs = an547_ppcs;
-         num_ppcs = ARRAY_SIZE(an547_ppcs);
-         break;
-+    case FPGA_AN555:
-+        ppcs = an555_ppcs;
-+        num_ppcs = ARRAY_SIZE(an555_ppcs);
-+        break;
-     default:
-         g_assert_not_reached();
-     }
-@@ -1200,6 +1288,12 @@ static void mps2tz_common_init(MachineState *machine)
-         create_unimplemented_device("U55 timing adapter 1", 0x48103000, 0x1000);
-     }
- 
-+    if (mmc->fpga_type == FPGA_AN555) {
-+        create_unimplemented_device("FPGA SRAM timing adapter", 0x41700000, 0x1000);
-+        create_unimplemented_device("QSPI timing adapter", 0x41701000, 0x1000);
-+        create_unimplemented_device("DDR4 timing adapter", 0x41702000, 0x1000);
-+    }
-+
-     create_non_mpc_ram(mms);
- 
-     if (mmc->fpga_type == FPGA_AN524) {
-@@ -1447,6 +1541,41 @@ static void mps3tz_an547_class_init(ObjectClass *oc, const void *data)
-     mps2tz_set_default_ram_info(mmc);
+diff --git a/hw/arm/armsse.c b/hw/arm/armsse.c
+index 1847c73322..cf8f6c25d1 100644
+--- a/hw/arm/armsse.c
++++ b/hw/arm/armsse.c
+@@ -806,6 +806,22 @@ static uint32_t armsse_sys_config_value(ARMSSE *s, const ARMSSEInfo *info)
+     return sys_config;
  }
  
-+static void mps3tz_an555_class_init(ObjectClass *oc, const void *data)
++static uint32_t armsse_sys_config2_value(ARMSSE *s, const ARMSSEInfo *info)
 +{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+    MPS2TZMachineClass *mmc = MPS2TZ_MACHINE_CLASS(oc);
-+    static const char * const valid_cpu_types[] = {
-+        ARM_CPU_TYPE_NAME("cortex-m85"),
-+        NULL
-+    };
++    /* Return the SYS_CONFIG2 value for this SSE */
++    uint32_t sys_config2;
 +
-+    mc->desc = "ARM MPS3 with AN555 FPGA image for Cortex-M85";
-+    mc->default_cpus = 1;
-+    mc->min_cpus = mc->default_cpus;
-+    mc->max_cpus = mc->default_cpus;
-+    mmc->fpga_type = FPGA_AN555;
-+    mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-m85");
-+    mc->valid_cpu_types = valid_cpu_types;
-+    mmc->scc_id = 0x41055551;
-+    mmc->sysclk_frq = 25 * 1000 * 1000; /* 25MHz */
-+    mmc->apb_periph_frq = 25 * 1000 * 1000; /* 25MHz */
-+    mmc->oscclk = an555_oscclk;
-+    mmc->len_oscclk = ARRAY_SIZE(an555_oscclk);
-+    mmc->fpgaio_num_leds = 10;
-+    mmc->fpgaio_has_switches = true;
-+    mmc->fpgaio_has_dbgctrl = true;
-+    mmc->numirq = 100;
-+    mmc->uart_overflow_irq = 48;
-+    mmc->init_svtor = 0x00000000;
-+    mmc->cpu0_mpu_s = mmc->cpu0_mpu_ns = 8;
-+    mmc->sram_addr_width = 21;
-+    mmc->raminfo = an547_raminfo; /* same as AN547*/
-+    mmc->armsse_type = TYPE_SSE310;
-+    mmc->boot_ram_size = 512 * KiB;
-+    mps2tz_set_default_ram_info(mmc);
++    switch (info->sse_version) {
++    case ARMSSE_SSE310:
++        sys_config2 = 0;
++        sys_config2 = deposit32(sys_config2, 0, 3, 1); /* NPU0 = Ethos-U55 */
++        break;
++    default:
++        g_assert_not_reached();
++    }
++    return sys_config2;
 +}
 +
- static const TypeInfo mps2tz_info = {
-     .name = TYPE_MPS2TZ_MACHINE,
-     .parent = TYPE_MACHINE,
-@@ -1488,6 +1617,13 @@ static const TypeInfo mps3tz_an547_info = {
-     .interfaces = arm_machine_interfaces,
+ /* Clock frequency in HZ of the 32KHz "slow clock" */
+ #define S32KCLK (32 * 1000)
+ 
+@@ -1496,6 +1512,11 @@ static void armsse_realize(DeviceState *dev, Error **errp)
+                                     info->sse_version, &error_abort);
+             object_property_set_int(OBJECT(&s->sysinfo), "IIDR",
+                                     info->iidr, &error_abort);
++            if (info->sse_version == ARMSSE_SSE310) {
++                object_property_set_int(OBJECT(&s->sysinfo), "SYS_CONFIG2",
++                                        armsse_sys_config2_value(s, info),
++                                        &error_abort);
++            }
+             if (!sysbus_realize(sbd, errp)) {
+                 return;
+             }
+diff --git a/hw/misc/iotkit-sysinfo.c b/hw/misc/iotkit-sysinfo.c
+index 21e161bdc2..0905949ef7 100644
+--- a/hw/misc/iotkit-sysinfo.c
++++ b/hw/misc/iotkit-sysinfo.c
+@@ -31,6 +31,7 @@
+ REG32(SYS_VERSION, 0x0)
+ REG32(SYS_CONFIG, 0x4)
+ REG32(SYS_CONFIG1, 0x8)
++REG32(SYS_CONFIG2, 0xc)
+ REG32(IIDR, 0xfc8)
+ REG32(PID4, 0xfd0)
+ REG32(PID5, 0xfd4)
+@@ -87,6 +88,15 @@ static uint64_t iotkit_sysinfo_read(void *opaque, hwaddr offset,
+             goto bad_read;
+         }
+         break;
++    case A_SYS_CONFIG2:
++        switch (s->sse_version) {
++        case ARMSSE_SSE310:
++            return s->sys_config2;
++            break;
++        default:
++            goto bad_read;
++        }
++        break;
+     case A_IIDR:
+         switch (s->sse_version) {
+         case ARMSSE_SSE300:
+@@ -144,6 +154,7 @@ static const MemoryRegionOps iotkit_sysinfo_ops = {
+ static const Property iotkit_sysinfo_props[] = {
+     DEFINE_PROP_UINT32("SYS_VERSION", IoTKitSysInfo, sys_version, 0),
+     DEFINE_PROP_UINT32("SYS_CONFIG", IoTKitSysInfo, sys_config, 0),
++    DEFINE_PROP_UINT32("SYS_CONFIG2", IoTKitSysInfo, sys_config2, 0),
+     DEFINE_PROP_UINT32("sse-version", IoTKitSysInfo, sse_version, 0),
+     DEFINE_PROP_UINT32("IIDR", IoTKitSysInfo, iidr, 0),
  };
+diff --git a/include/hw/misc/iotkit-sysinfo.h b/include/hw/misc/iotkit-sysinfo.h
+index 36dc702c53..1c1b2758d9 100644
+--- a/include/hw/misc/iotkit-sysinfo.h
++++ b/include/hw/misc/iotkit-sysinfo.h
+@@ -16,6 +16,7 @@
+  * QEMU interface:
+  *  + QOM property "SYS_VERSION": value to use for SYS_VERSION register
+  *  + QOM property "SYS_CONFIG": value to use for SYS_CONFIG register
++ *  + QOM property "SYS_CONFIG2": value to use for SYS_CONFIG2 register
+  *  + sysbus MMIO region 0: the system information register bank
+  */
  
-+static const TypeInfo mps3tz_an555_info = {
-+    .name = TYPE_MPS3TZ_AN555_MACHINE,
-+    .parent = TYPE_MPS2TZ_MACHINE,
-+    .class_init = mps3tz_an555_class_init,
-+    .interfaces = arm_machine_interfaces,
-+};
-+
- static void mps2tz_machine_init(void)
- {
-     type_register_static(&mps2tz_info);
-@@ -1495,6 +1631,7 @@ static void mps2tz_machine_init(void)
-     type_register_static(&mps2tz_an521_info);
-     type_register_static(&mps3tz_an524_info);
-     type_register_static(&mps3tz_an547_info);
-+    type_register_static(&mps3tz_an555_info);
- }
- 
- type_init(mps2tz_machine_init);
+@@ -38,6 +39,7 @@ struct IoTKitSysInfo {
+     /* Properties */
+     uint32_t sys_version;
+     uint32_t sys_config;
++    uint32_t sys_config2;
+     uint32_t sse_version;
+     uint32_t iidr;
+ };
 -- 
 2.34.1
 
