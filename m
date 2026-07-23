@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70A68C531CC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 20:05:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41040C531D0
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 20:05:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmzey-0007XH-Dr; Thu, 23 Jul 2026 16:04:48 -0400
+	id 1wmzey-0007XG-Dt; Thu, 23 Jul 2026 16:04:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wmzeH-0007OS-Jd; Thu, 23 Jul 2026 16:04:06 -0400
-Received: from [115.124.30.111] (helo=out30-111.freemail.mail.aliyun.com)
+ id 1wmzeH-0007OP-Iv; Thu, 23 Jul 2026 16:04:06 -0400
+Received: from [115.124.30.132] (helo=out30-132.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wmzeA-0005Rh-MA; Thu, 23 Jul 2026 16:04:03 -0400
+ id 1wmzeA-0005SI-Po; Thu, 23 Jul 2026 16:04:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1784837019; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=wRhLOWtyempeLUIfXjWsGUdKh9L9dsnADem3H/qLM6I=;
- b=xQTkQYBTUUsS/QsB/qzq8nBhG19ihF96ah/qKE/dqDkK2+aPwavx2AFu/3c33ZVYR5pLNeLVmwYWbHAIo0d+i9SPAD5MbFo9ITUOq7rxERjP7oV1vZn5CTo4jWigC+NYSgsotdZmfbGxVQmfpmdXh/Lu2KiNWFqUM3kmt2H51F4=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R141e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
+ t=1784837027; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=Jt1V96ny+CA0zx6XNKmOp9XsUUuethWx7bcnXoNBbgo=;
+ b=fV4Q5cwRRKHmiQzxyZspsAspJvJykhh/hLjv/teohcX7sJZ4rFnpXMX6r4CHCdH3QPVxCKIOJBVGdPnImggh1TYq68my3vxk9ynikPNXA77UTjVnFaNMlyG/RJaYuZiPyQSbTxucqBgoIIOheJR10ZsCiQ0S/ci4HutXEGEi190=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R461e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045133197;
  MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=11; SR=0;
- TI=SMTPD_---0X7h4Ute_1784837017; 
+ TI=SMTPD_---0X7h4Uwk_1784837026; 
 Received: from localhost.localdomain(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0X7h4Ute_1784837017 cluster:ay36) by smtp.aliyun-inc.com;
- Fri, 24 Jul 2026 04:03:38 +0800
+ fp:SMTPD_---0X7h4Uwk_1784837026 cluster:ay36) by smtp.aliyun-inc.com;
+ Fri, 24 Jul 2026 04:03:47 +0800
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: palmer@dabbelt.com, alistair.francis@wdc.com,
@@ -37,16 +37,18 @@ Cc: palmer@dabbelt.com, alistair.francis@wdc.com,
  liwei1518@gmail.com, qemu-riscv@nongnu.org, rahul@summations.net,
  xiangyi.zeng@linux.alibaba.com, cxx194832@alibaba-inc.com,
  LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PATCH v8 00/11] target/riscv: Implement Smsdid and Smmpt extension
-Date: Fri, 24 Jul 2026 04:03:14 +0800
-Message-Id: <20260723200325.24969-1-zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH v8 11/11] target/riscv: Add system test for Smmpt34
+Date: Fri, 24 Jul 2026 04:03:25 +0800
+Message-Id: <20260723200325.24969-12-zhiwei_liu@linux.alibaba.com>
 X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+In-Reply-To: <20260723200325.24969-1-zhiwei_liu@linux.alibaba.com>
+References: <20260723200325.24969-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.111 (deferred)
-Received-SPF: pass client-ip=115.124.30.111;
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.132 (deferred)
+Received-SPF: pass client-ip=115.124.30.132;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-111.freemail.mail.aliyun.com
+ helo=out30-132.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -70,127 +72,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch set introduces support for the RISC-V Smsdid and Smmpt
-(Supervisor Domain Identifier and Memory Protection Table) extensions
-v0.4.9(https://github.com/riscv/riscv-smmtt/releases/tag/v0.4.9).
-Smmpt provides a hardware mechanism for fine-grained memory protection,
-checked after address translation, which is particularly useful for
-supervisor-level sandboxing and security monitoring.
+Add SMMPT system-test coverage for Smmpt34, the RV32-only memory
+protection scheme (2-level MPT with 4-byte entries).
 
-The rfc patch set:
-https://mail.gnu.org/archive/html/qemu-riscv/2025-09/msg00216.html
+Smmpt34 requires a 32-bit CPU, but qemu-system-riscv64 can run a 32-bit
+CPU (-cpu rv32), so the test lives in tests/tcg/riscv64 alongside the
+RV64 Smmpt tests and shares the same harness (smmpt-common.S). It only
+differs in the table geometry: 4-byte MPTEs, two radix levels, a 10-bit
+level-0 index and the RV32 mmpt CSR layout (MODE in bits[31:30]). It
+exercises the same permission and structural checks as the RV64 tests
+(all XWR encodings for load and store, V=0 and reserved-bit leaves, and
+NAPOT leaves with a valid and a reserved G field), using the same access
+addresses. It is built for RV32 and run on qemu-system-riscv64 with
+-cpu rv32.
 
-Rahul Pathak is working on SMMPT OpenSBI support -
-https://lists.infradead.org/pipermail/opensbi/2026-July/010235.html
-
-based on his QEMU SMMPT branch -
-https://github.com/pathakraul/qemu/tree/rpathak_smmpt_v1
-
-As we all agree -
-https://patchew.org/QEMU/20260715145016.17369-1-zhiwei._5Fliu@linux.alibaba.com/
-, we will collaborate on this work and not duplicate efforts. Rahul will
-focus on OpenSBI upstream and I will update the QEMU patch set to v8.
-
-Xiangyi will review the OpenSBI SMMPT patch set and may collaborate to
-upstream the other parts, such as SMSDIA and IOMPT.
-
-v7->v8:
-    1. Update the mfence.pa and minval.pa instruction encodings to match the
-       upstream riscv-opcodes definition
-       (https://github.com/riscv/riscv-opcodes/pull/389/): mfence.pa now uses
-       funct7=0b0011001 and minval.pa uses funct7=0b0011011. The decoder,
-       disassembler and the system test are updated accordingly.
-
-v6->v7:
-    The implementation is updated from the v0.3.4 specification to
-    v0.4.9. The main changes are:
-    1. Update the mmpt CSR number to 0x382 and msdcfg to 0x74E.
-    2. Update the mmpt register layout: the SDID and PPN field positions
-       changed and the RV64 PPN is now 44 bits.
-    3. Rework the MPTE format: the N (NAPOT) bit now lives at bit 2, the
-       non-leaf NAPOT form is removed, NAPOT leaf entries encode a single
-       XWR tuple plus a G granularity field, and non-NAPOT leaf entries
-       hold per-page XWR tuples.
-    4. Treat XWR=000 as "no access" and a non-leaf entry with N=1 as a
-       fault.
-    5. Enforce the Smmpt64 root-table PPN alignment (low 3 bits zero).
-    6. Rename the fence instructions mfence.spa/minval.spa to
-       mfence.pa/minval.pa.
-    7. Drop stale Reviewed-by tags on the substantially reworked patches.
-    8. Introduce the configurable "smmpt-sdidlen" CPU property.
-    9. Add disassembly support for the Smmpt.
-    10. Add bare-metal M-mode system tests.
-    11. Rebase to master.
-
-v5->v6:
-    1. Use explicitly bit fields extract instead of mpte_union_t.
-    2. Use the same exception behavior for MPT valiation as PMP
-       valiation.
-    3. Use PAGE_* instead of MPT_ACCESS_* as they have same value.
-    4. Use address_space_*_le instead of address_space_* for SMMPT.
-    5. Only print SMMPT address check log when SMMPT is enabled.
-    6. Add implied rule for SMMPT as it depends on SMSDID.
-    7. Rebase to master.
-
-v4->v5:
-    1. Rebase to master.
-v3->v4:
-    1. Add missing review tags.
-v2->v3:
-    1. Fix build error in patch 2.
-    2. Rebase to master.
-
-rfc->v2:
-    1. When ext_smmpt is false or BARE mode, make other fields in mmpt
-       CSR zero.
-    2. Add patch 5 to fix smrnmi ISA string order.
-    3. Fix patch 6 smmpt and smsdid ISA string order.
-    4. Make smmpt and smsdid experiment extensions.
-    5. Add review tags.
-
-LIU Zhiwei (11):
-  target/riscv: Add basic definitions and CSRs for SMMPT
-  target/riscv: Add smmpt-sdidlen property for the mmpt SDID field
-  target/riscv: Implement core SMMPT lookup logic
-  target/riscv: Integrate SMMPT checks into MMU and TLB fill
-  target/riscv: Implement SMMPT fence instructions
-  target/riscv: Fix smrnmi isa alphabetical order
-  target/riscv: Add disassembly for Smmpt instructions and CSRs
-  target/riscv: Enable SMMPT extension
-  target/riscv: Add system test for SMMPT extension
-  target/riscv: Add system tests for Smmpt52 and Smmpt64
-  target/riscv: Add system test for Smmpt34
-
- disas/riscv.c                                 |   9 +-
- target/riscv/cpu.c                            |  60 +++-
- target/riscv/cpu.h                            |   8 +
- target/riscv/cpu_bits.h                       |  27 ++
- target/riscv/cpu_cfg_fields.h.inc             |   3 +
- target/riscv/insn32.decode                    |   2 +
- target/riscv/meson.build                      |   1 +
- target/riscv/riscv_smmpt.c                    | 339 ++++++++++++++++++
- target/riscv/riscv_smmpt.h                    |  26 ++
- target/riscv/tcg/cpu_helper.c                 | 119 +++++-
- target/riscv/tcg/csr.c                        | 106 ++++++
- .../tcg/insn_trans/trans_privileged.c.inc     |  30 ++
- target/riscv/tcg/pmp.h                        |   3 +
- tests/tcg/riscv64/Makefile.softmmu-target     |  12 +
- tests/tcg/riscv64/smmpt-common.S              | 257 +++++++++++++
- tests/tcg/riscv64/test-smmpt.S                |  85 +++++
- tests/tcg/riscv64/test-smmpt34.S              |  97 +++++
- tests/tcg/riscv64/test-smmpt52.S              |  91 +++++
- tests/tcg/riscv64/test-smmpt64.S              |  98 +++++
- 19 files changed, 1354 insertions(+), 19 deletions(-)
- create mode 100644 target/riscv/riscv_smmpt.c
- create mode 100644 target/riscv/riscv_smmpt.h
- create mode 100644 tests/tcg/riscv64/smmpt-common.S
- create mode 100644 tests/tcg/riscv64/test-smmpt.S
+Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+---
+ tests/tcg/riscv64/test-smmpt34.S | 97 ++++++++++++++++++++++++++++++++
+ 1 file changed, 97 insertions(+)
  create mode 100644 tests/tcg/riscv64/test-smmpt34.S
- create mode 100644 tests/tcg/riscv64/test-smmpt52.S
- create mode 100644 tests/tcg/riscv64/test-smmpt64.S
 
-
-base-commit: 499039798cdad7d86b787fec0eaf1da4151c0f05
+diff --git a/tests/tcg/riscv64/test-smmpt34.S b/tests/tcg/riscv64/test-smmpt34.S
+new file mode 100644
+index 0000000000..92c8320999
+--- /dev/null
++++ b/tests/tcg/riscv64/test-smmpt34.S
+@@ -0,0 +1,97 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * Test for the Smmpt34 (Supervisor Memory Protection Table) extension,
++ * per SMMTT specification v0.4.9.  Smmpt34 is the RV32-only scheme.
++ *
++ * Although Smmpt34 requires a 32-bit CPU, the program is run on
++ * qemu-system-riscv64 with a 32-bit CPU (-cpu rv32), which lives in the
++ * same target as the RV64 Smmpt tests.  It is therefore kept here in
++ * tests/tcg/riscv64 alongside the other Smmpt tests and shares the same
++ * harness (smmpt-common.S).  Build it for RV32 and run it as:
++ *
++ *   $CC -march=rv32ima_zicsr -mabi=ilp32 -I tests/tcg/riscv64 \
++ *       tests/tcg/riscv64/test-smmpt34.S -Wa,--noexecstack -c -o smmpt34.o
++ *   $LD -m elf32lriscv -T tests/tcg/riscv64/semihost.ld smmpt34.o -o smmpt34
++ *   qemu-system-riscv64 -cpu rv32,x-smmpt=true -M virt -display none \
++ *       -semihosting -device loader,file=smmpt34
++ *
++ * Smmpt34 uses a 2-level MPT with 4-byte entries (8 pages per leaf,
++ * pi = SPA[14:12]).  The supervisor physical address is partitioned as
++ * pn[1] = SPA[33:25] (9-bit root index), pn[0] = SPA[24:15] (10-bit level-0
++ * index) and range offset SPA[14:0].  For the RAM addresses used here
++ * (0x8xxx_xxxx, < 4 GiB) pn[1] resolves to 64.  See smmpt-common.S for the
++ * MPRV trick, the shared address layout and the exit-code convention.
++ *
++ * This test reuses the same shared harness and the same access addresses as
++ * the RV64 tests; only the table geometry (4-byte entries, 2 levels, 10-bit
++ * level-0 index) and the RV32 mmpt layout differ.
++ *
++ * MPT layout (Smmpt34, 2 levels, 4-byte entries):
++ *
++ *   L1 (root) @ 0x8040_0000 : entry[64]  -> non-leaf, PPN(L0)=0x80410
++ *   L0        @ 0x8041_0000 :
++ *     entry[160] -> non-NAPOT leaf (LEAF_ALL_XWR)  covering 0x8050_0000+
++ *     entry[162] -> V=0 (invalid)                  covering 0x8051_0000
++ *     entry[164] -> leaf with a reserved bit set    covering 0x8052_0000
++ *     entry[192] -> NAPOT leaf, G=6, XWR=RW         covering 0x8060_0000
++ *     entry[256] -> NAPOT leaf, reserved G=0        covering 0x8080_0000
++ *
++ *   mmpt = MODE(1=Smmpt34)<<30 | PPN(0x80400)
++ */
++
++#include "smmpt-common.S"
++
++	.option	norvc
++
++	.text
++	.global	_start
++_start:
++	/* Install the M-mode trap handler */
++	lla	t0, mtrap
++	csrw	mtvec, t0
++	csrw	medeleg, zero
++
++	/* PMP entry 0: NAPOT covering the whole space, RWX. */
++	li	t0, -1
++	csrw	pmpaddr0, t0
++	li	t0, 0x1f
++	csrw	pmpcfg0, t0
++
++	/* Build the MPT tables (M-mode stores bypass the MPT). */
++	/* L1[64] = non-leaf -> L0 (PPN 0x80410): (0x80410 << 10) | V */
++	li	t0, 0x80400000
++	li	t1, 0x20104001
++	sw	t1, 0x100(t0)		/* 64 * 4 = 0x100 */
++
++	li	t0, 0x80410000
++	/* L0[160] = non-NAPOT leaf carrying all XWR encodings (pi0..pi7) */
++	li	t1, LEAF_ALL_XWR
++	sw	t1, 0x280(t0)		/* 160 * 4 = 0x280 */
++	/* L0[162] = 0: invalid entry (V=0) */
++	sw	x0, 0x288(t0)		/* 162 * 4 = 0x288 */
++	/* L0[164] = leaf with reserved bit 3 set (V|L|rsv|XWR[pi0]=RW) */
++	li	t1, 0x30B
++	sw	t1, 0x290(t0)		/* 164 * 4 = 0x290 */
++	/* L0[192] = NAPOT leaf: V|L|N | XWR=RW(0x300) | G=6(0x6000) */
++	li	t1, 0x6307
++	sw	t1, 0x300(t0)		/* 192 * 4 = 0x300 */
++	/* L0[256] = NAPOT leaf with reserved G=0: V|L|N | XWR=RW | G=0 */
++	li	t1, 0x307
++	sw	t1, 0x400(t0)		/* 256 * 4 = 0x400 */
++
++	/* Program mmpt: MODE=1 (Smmpt34) at bits[31:30], PPN = 0x80400 */
++	li	t0, 0x40080400
++	csrw	0x382, t0		/* CSR_MMPT */
++
++	/* mfence.pa must not fault in M-mode */
++	TEST_MFENCE_PA 1
++
++	/* Run the shared permission and structural checks */
++	RUN_LEAF_CHECKS
++
++	/* All tests passed */
++	li	a0, 0
++	j	_exit
++
++	SMMPT_HARNESS
 -- 
 2.43.0
 
