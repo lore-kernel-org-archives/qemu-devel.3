@@ -4,93 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9BC6C531CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 10:27:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7BA6C531CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 10:41:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmqdo-00068f-0b; Thu, 23 Jul 2026 06:27:00 -0400
+	id 1wmqqm-00034w-TR; Thu, 23 Jul 2026 06:40:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wmqdi-00068E-Gw
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 06:26:57 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wmqdf-0005wz-Iq
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 06:26:53 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-493f75f7172so4172855e9.1
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 03:26:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784802408; x=1785407208; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=W8aFwPIieKT1xuwjrB3a0EY3IqJkrFSQQKzxxhhM4ec=;
- b=ZVBQmutocquZ0uqWE+MkAujbq0z8O3TlFaJFmaEgPb6elslS/xY5T2PuyyROJa9ipc
- sAku6ku9Qj/Exd3tP3Xo5tA5oWfDb0ibXpDzn4zJdQySDEqF0N91OLbVd/xNqirGs8w0
- BqsNPidJwSPX2qL+9yQeXHXrm/bfln9j8UzU9ZOpp9e56ue4Wg3Izg0D0B5OtcATnv95
- Y9z19bYlOBhHIZwNM7OXHeVBkqsmhI8C4B8ceBcXsCvcOQyVlYpo6isKyy55sZRLdWOK
- vjYcNSXYPes0LqKrjjOle9Xvqsw7ELWr/yXxpYo9ua8H26BvwOIQ5HjFRlqHsDZU+jJj
- dYYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784802408; x=1785407208;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=W8aFwPIieKT1xuwjrB3a0EY3IqJkrFSQQKzxxhhM4ec=;
- b=LC+Dm/+4jKujUVRUmjpsckZAKbGiHob3Kad17/IKRy9RoZGMY4QhOoI88GJKp/IXai
- QX3Uu2xZXSSJnO4xNI6c+4h0zaMIT8HwQfxdM48C1FPnclUC+ir92xaLUtsFip9q6s0E
- oZ8uYtL/lBCX3ghiC+FSn9+9/soS2t2b6C1wDZJu41YtsU9+SoIKqv3D1trwZk3Hpe9T
- HVDogqtS09iAdgyQtxVowf33N+lO3rGkflhkMRHYq7cMzjW+U1sPft8NwiF4beoMOMPF
- IYRTXokfg5WvE+XpD8l2kV71Prs69cibQq3mFqwLTZQURmq60DPmdicLtX4CfDkDe4B5
- dCWQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqGLOnFSG3ocW72PgSP5BizETb84nuC1wziR5AtaiXdppa/KZlH8JwKPJzhTkK+HB4OgUEhZ6LwsHvX@nongnu.org
-X-Gm-Message-State: AOJu0YxAc+K85m9gE1QzTbAhDRLPfp03+Jw0uPmPtPeLdakHKGeA/9SD
- L98pCE6sehHZ4uT9pxteTqboBTpUVAbn74CjzbvkTFJENdJRHvzJi/lx
-X-Gm-Gg: AR+sD13cSn2Q9jV/uLMDs/Wc4fftd73lU2hdWwrbmjkvKBMQOhTt0plovMMHzuV/Wz/
- wK+e0bJ9ZE9ywJiecaJsst49elO0eY1wzh4lhUbwfZDvDicGUf8sXfUnv9JQ2K/x7yABLbXGzwk
- y4qCZAwQyGynjI1tfrJf44QjT37YK3nK6Lnwmx87xB3Ysy5wIUUA46IL0rD4FtrT+gtmMjRgz8U
- 3qye3J0NWxc+Z7/A4s4+FI8RApsNX62gfLsAtLdiu3+KiD0OUylMTIc6P9epLM5U2lqL7bQuLEk
- KUaAqOEcXbR1W+pSsfQSV5P1fw9Tfb8SD6R6ns/kpcGfUJLuVVIpCG2Hl5UeezbtLhLmNVDIn/d
- RlV9FazsQixdbtfjv+FqwrK/M98lri4mzvDUOws0aMm89Q47Vi18D1f17unEHLs4uAwC7rC8979
- J6qGdofCqW
-X-Received: by 2002:a05:600c:a09:b0:495:52db:7e8 with SMTP id
- 5b1f17b1804b1-49573cf6cd1mr29178015e9.19.1784802407520; 
- Thu, 23 Jul 2026 03:26:47 -0700 (PDT)
-Received: from ehlo.thunderbird.net ([185.238.219.40])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4956537c6besm198956095e9.8.2026.07.23.03.26.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Jul 2026 03:26:47 -0700 (PDT)
-Date: Thu, 23 Jul 2026 10:26:41 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-CC: Pavel Pisa <pisa@cmp.felk.cvut.cz>, Matyas Bobek <matyas.bobek@gmail.com>, 
+ (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1wmqqb-00034Y-3R
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 06:40:13 -0400
+Received: from smtpx.feld.cvut.cz ([2001:718:2:1516::210:153]
+ helo=smtpx.fel.cvut.cz)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1wmqqY-0007Zx-HH
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 06:40:12 -0400
+Received: from localhost (unknown [192.168.200.27])
+ by smtpx.fel.cvut.cz (Postfix) with ESMTP id BD60D266DE;
+ Thu, 23 Jul 2026 12:40:02 +0200 (CEST)
+X-Virus-Scanned: IMAP STYX AMAVIS
+Received: from smtpx.fel.cvut.cz ([192.168.200.2])
+ by localhost (cerokez-250.feld.cvut.cz [192.168.200.27]) (amavis, port 10060)
+ with ESMTP id mmaMnOqddThs; Thu, 23 Jul 2026 12:40:01 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fel.cvut.cz;
+ s=felmail; t=1784802935;
+ bh=/hvEb1tIm+mOiN6F7dry3Krqr4vFXJRAKDWO/1ziEi0=;
+ h=From:To:Subject:Date:Cc:References:In-Reply-To:From;
+ b=CRPErIBWdAEbOuGQKYzNWuG2oin+pYY3fkizcu3Hle6/PC34YMxvUze1vQk85MoUj
+ raQd5kJ4tVbrDi2qYLOL/Yyd4GrsS+tCj7Kk2C68uoNON83hx9DgfbfcwqQTPFo3YS
+ xIZC55OKYjFq5+G3YBItvPQtT6owEk4YJYlLgps2VOtb+5u9LCaY1bdUDkeB0bofeI
+ bo/+bzokfgSQq2zdKSMmvRJf9G4Xceusldsj5uitjpjv82qWOsVRV3PEmN9nQ6IxKR
+ Im50QLFYDaygisqMYSPy8wN6nEg8l+gFZfJtzdffDQebWWsOXsLPlQj7B4ZV++GLYb
+ m5IOxx/EC+S0g==
+Received: from [147.32.86.199] (unknown [147.32.86.199])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: pisa)
+ by smtpx.fel.cvut.cz (Postfix) with ESMTPSA id 91F2226768;
+ Thu, 23 Jul 2026 12:35:34 +0200 (CEST)
+From: Pavel Pisa <pisa@fel.cvut.cz>
+To: Bernhard Beschow <shentey@gmail.com>
+Subject: Re: [PATCH 0/9] FlexCAN fixes for-11.1
+Date: Thu, 23 Jul 2026 12:35:34 +0200
+User-Agent: KMail/1.9.10
+Cc: qemu-devel@nongnu.org, Matyas Bobek <matyas.bobek@gmail.com>,
  Francisco Iglesias <francisco.iglesias@amd.com>,
  Jason Wang <jasowangio@gmail.com>,
  Vikram Garhwal <vikram.garhwal@bytedance.com>
-Subject: Re: [PATCH 7/9] hw/net/flexcan: Drop oversized 'mb[]' mailbox view
-In-Reply-To: <84061116-c6d5-4def-acd8-ba9c81a0eece@oss.qualcomm.com>
 References: <20260723070059.6332-1-shentey@gmail.com>
- <20260723070059.6332-8-shentey@gmail.com>
- <84061116-c6d5-4def-acd8-ba9c81a0eece@oss.qualcomm.com>
-Message-ID: <F33F7AFC-1868-49E8-95C8-CBB04339F6A3@gmail.com>
+In-Reply-To: <20260723070059.6332-1-shentey@gmail.com>
+X-KMail-QuotePrefix: > 
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Message-Id: <202607231235.34073.pisa@fel.cvut.cz>
+Received-SPF: pass client-ip=2001:718:2:1516::210:153;
+ envelope-from=pisa@fel.cvut.cz; helo=smtpx.fel.cvut.cz
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, NICE_REPLY_A=-2.494, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,66 +83,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hello Bernhard and others,
 
+On Thursday 23 of July 2026 09:00:50 Bernhard Beschow wrote:
+> This series attempts to fix the Coveriy issues pointed out by Peter in the
+> FlexCAN emulation [1]. In addition, it fixes some reset masks to preserve
+> register contents across resets as intended. It also fixes some register
+> offsets due to a union being inadvertantly too large; this would affect
+> migration if addressed after the release. Last but not least it eliminates
+> an unneeded union.
+>
+> Testing done:
+> * `make check`
+> * Run `cangen` and `candump` on the host and guest in both directions
+>
+> [1]
+> https://lore.kernel.org/qemu-devel/CAFEAcA-QBiPfgN4YJXD9FQULobpBVNgeJHSqG7E
+>qg1CzyKTfaA@mail.gmail.com/
+>
+> Bernhard Beschow (9):
+>   hw/net/can/flexcan: Use mbs[] array for FIFO pop
+>   hw/net/flexcan: Drop unused RX FIFO register overlay
+>   hw/net/can/flexcan: Fix out-of-bounds access in flexcan_mx_rx()
+>   hw/net/can/flexcan: Fix mailbox index calculation in
+>     flexcan_mem_write()
+>   hw/net/can/flexcan: Fix mailbox index calculation in
+>     flexcan_mem_read()
+>   hw/net/can/flexcan: Fix mailbox reset mask initialization
+>   hw/net/flexcan: Drop oversized 'mb[]' mailbox view
+>   hw/net/can/flexcan: Fix RXIMR reset mask
+>   hw/net/can/flexcan: Remove RX SMB raw view
+>
+>  include/hw/net/flexcan.h | 22 +++----------------
+>  hw/net/can/flexcan.c     | 47 ++++++++++++++++++++++++----------------
+>  2 files changed, 31 insertions(+), 38 deletions(-)
 
-Am 23=2E Juli 2026 08:20:34 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <phi=
-lmd@oss=2Equalcomm=2Ecom>:
->On 23/7/26 09:00, Bernhard Beschow wrote:
->> As indicated in the comments, the `mb[]` a=2Ek=2Ea=2E `mbs []` views sh=
-ould
->> cover 0x400 (1024) bytes=2E However, the `mb[]` array covers four times
->> the size since `sizeof(FlexcanRegsMessageBuffer)` returns the size in
->> bytes instead of counting the number of uint32_t fields=2E This shifts =
-the
->> subsequent register offsets by 0xc00 which is not intended=2E Fix the s=
-ize
->> and thus the offsets by dropping the now unused `mb[]` view=2E
->>=20
->> Note that the different size changes the migration layout=2E Since the =
-device
->> model is new, no change in the version fields is needed=2E
->
->typedef struct FlexcanState {
->    =2E=2E=2E
->    union {
->        FlexcanRegs     regs;
->        uint32_t        regs_raw[sizeof(FlexcanRegs) / 4];
->    };
->    =2E=2E=2E
->} FlexcanState;
->
->static const VMStateDescription vmstate_can =3D {
->    =2Ename =3D TYPE_CAN_FLEXCAN,
->    =2Eversion_id =3D 1,
->    =2Eminimum_version_id =3D 1,
->    =2Efields =3D (const VMStateField[]) {
->        =2E=2E=2E
->        VMSTATE_UINT32_ARRAY(regs_raw, FlexcanState, sizeof(FlexcanRegs) =
-/ 4),
->
->        ^^^
->
->This "consider this structure as a casted array of u32" is very fragile
->anyway, and will unlikely scale over time=2E
->
->        =2E=2E=2E
->        VMSTATE_END_OF_LIST(),
->    },
->};
+Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
 
-Any suggestions what to do instead?
+I have tested QEMU mainline with your patches applied
+to behave correctly with SableLitte machine emulation
+and sending of CAN frames from it and to it from the host
+system. You can add my confirmation individual patches
+as well if you want.
 
->
->Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss=2Equalcomm=2Ecom>
+best wishes,
 
-Thanks Phil for the very quick responses!
-
-Best regards,
-Berngard
-
->
->> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->> ---
->>   include/hw/net/flexcan=2Eh | 6 ++----
->>   1 file changed, 2 insertions(+), 4 deletions(-)
+                Pavel Pisa
+    phone:      +420 603531357
+    e-mail:     pisa@cmp.felk.cvut.cz
+    Department of Control Engineering FEE CVUT
+    Karlovo namesti 13, 121 35, Prague 2
+    university: http://control.fel.cvut.cz/
+    personal:   http://cmp.felk.cvut.cz/~pisa
+    social:     https://social.kernel.org/ppisa
+    projects:   https://www.openhub.net/accounts/ppisa
+    CAN related:http://canbus.pages.fel.cvut.cz/
+    RISC-V education: https://comparch.edu.cvut.cz/
+    Open Technologies Research Education and Exchange Services
+    https://gitlab.fel.cvut.cz/otrees/org/-/wikis/home
 
