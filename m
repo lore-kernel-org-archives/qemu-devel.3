@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BF12C44524
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:49:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06523C4452B
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:49:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmlMa-0007kk-RB; Thu, 23 Jul 2026 00:48:52 -0400
+	id 1wmlMi-0007oK-6I; Thu, 23 Jul 2026 00:49:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlMZ-0007jQ-58
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:48:51 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlMg-0007nI-Pp
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:48:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlMX-0003xw-1n
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:48:50 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlMf-0003z0-BU
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:48:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784782128;
+ s=mimecast20190719; t=1784782136;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5vOiO01WF9e6a7qGQTH5ORT8i146iPJx0lQOpzsSDPY=;
- b=dKBSNoopQJoWIuWCpmiNmBESmfUjW5WJc9Fos3t4U27MszR3gX3GYcMcGVkBbHsD+8vtyI
- X64RVncI9TYavkXJ1CGCvrJG5VKr2S0AXhPzEWeGji/XpB7+0/nHfdEAk/uAz8Ziw6vAQX
- YRMsQ++4TnE+0ZduFumTsVqOu/6KwRc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=NSEF3Y3+ufb+xLGwy5XyD2M1KREl2XGjKup2Cecdxwg=;
+ b=ZnF1L2mJSDP+83YuLv6sk2Ge68yeCm50YgHR7Ewh+NXA3t6lVBK/NB0aS/9ldJnvpgcF9B
+ kh5GLSro2QhubJYkX4MiMy19U4JJd1dhtD7McZZBHvbypzYHSmuvbF8wH/piDsnCvORdOL
+ Ul49x8QM9VF4XEJLQWE1NObfi2o4rfU=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-163-hk_oHJISNBSAnP_EJeW1YA-1; Thu,
- 23 Jul 2026 00:48:43 -0400
-X-MC-Unique: hk_oHJISNBSAnP_EJeW1YA-1
-X-Mimecast-MFC-AGG-ID: hk_oHJISNBSAnP_EJeW1YA_1784782121
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-235-5koa4SSgPwmIuwVIehVJAA-1; Thu,
+ 23 Jul 2026 00:48:52 -0400
+X-MC-Unique: 5koa4SSgPwmIuwVIehVJAA-1
+X-Mimecast-MFC-AGG-ID: 5koa4SSgPwmIuwVIehVJAA_1784782130
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A5A1F195606B; Thu, 23 Jul 2026 04:48:39 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 895981800759; Thu, 23 Jul 2026 04:48:49 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.44])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 50663180029D; Thu, 23 Jul 2026 04:48:30 +0000 (UTC)
+ id E8BB018002AE; Thu, 23 Jul 2026 04:48:39 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -73,9 +73,9 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Jason Wang <jasowangio@gmail.com>, qemu-trivial@nongnu.org,
  Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH v2 02/44] qapi: convert intro sections for acpi-hest.json
-Date: Thu, 23 Jul 2026 00:47:23 -0400
-Message-ID: <20260723044805.527643-3-jsnow@redhat.com>
+Subject: [PATCH v2 03/44] qapi: convert intro sections for ebpf.json
+Date: Thu, 23 Jul 2026 00:47:24 -0400
+Message-ID: <20260723044805.527643-4-jsnow@redhat.com>
 In-Reply-To: <20260723044805.527643-1-jsnow@redhat.com>
 References: <20260723044805.527643-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -83,13 +83,13 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: permerror client-ip=170.10.129.124;
  envelope-from=jsnow@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,24 +109,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/acpi-hest.json | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ qapi/ebpf.json | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/qapi/acpi-hest.json b/qapi/acpi-hest.json
-index a01f1dee095..8db804df197 100644
---- a/qapi/acpi-hest.json
-+++ b/qapi/acpi-hest.json
-@@ -13,8 +13,8 @@
+diff --git a/qapi/ebpf.json b/qapi/ebpf.json
+index f0257955fa2..1f7a4d5c126 100644
+--- a/qapi/ebpf.json
++++ b/qapi/ebpf.json
+@@ -20,8 +20,7 @@
  
  ##
- # @inject-ghes-v2-error:
+ # @EbpfObject:
 -#
--# Inject an error with additional ACPI 6.1 GHESv2 error information
-+#     Inject an error with additional ACPI 6.1 GHESv2 error
-+#     information
+-# An eBPF ELF object.
++#     An eBPF ELF object.
  #
- # @cper: contains a base64 encoded string with raw data for a single
- #     CPER record with Generic Error Status Block, Generic Error Data
+ # @object: the eBPF object encoded in base64
+ #
+@@ -33,8 +32,7 @@
+ 
+ ##
+ # @EbpfProgramID:
+-#
+-# The eBPF programs that can be gotten with `request-ebpf`.
++#     The eBPF programs that can be gotten with `request-ebpf`.
+ #
+ # @rss: Receive side scaling, technology that allows steering traffic
+ #     between queues by calculation hash.  Users may set up
+@@ -49,10 +47,10 @@
+ 
+ ##
+ # @request-ebpf:
+-#
+-# Retrieve an eBPF object that can be loaded with libbpf.  Management
+-# applications (e.g. libvirt) may load it and pass file descriptors to
+-# QEMU, so they can run running QEMU without BPF capabilities.
++#     Retrieve an eBPF object that can be loaded with libbpf.
++#     Management applications (e.g. libvirt) may load it and pass file
++#     descriptors to QEMU, so they can run running QEMU without BPF
++#     capabilities.
+ #
+ # @id: The ID of the program to return.
+ #
 -- 
 2.55.0
 
