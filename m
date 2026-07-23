@@ -4,96 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63028C531CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 10:52:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE922C531C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 10:55:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmr27-0000QJ-2I; Thu, 23 Jul 2026 06:52:07 -0400
+	id 1wmr54-0005jj-ID; Thu, 23 Jul 2026 06:55:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matyas.bobek@gmail.com>)
- id 1wmr22-0000Q0-1J
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 06:52:03 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <matyas.bobek@gmail.com>)
- id 1wmr1x-00018H-Kf
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 06:52:00 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-49571fea44eso2923315e9.2
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 03:51:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784803916; x=1785408716; darn=nongnu.org;
- h=mime-version:user-agent:content-transfer-encoding:content-type
- :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=IehoXc+YaA1sm90uWcURWtG+mLW9T+WEr0+9SHHFF5c=;
- b=hITQkI/qBbw0jiwtdgHRy+Piu7FSSbzkIQAGmzHIoXnT4QsHNiKiQeJIep0GtV+UP0
- TrWw6DAi68sHjzNzxnQftbXssB2A1spfzcvcVNcXtTUJPPSdohCiloVvlDOI0+TeRPAd
- DEoOEL/COV/IZyBch1mz6hTZYoeueJalikZASQad+8iPLhVknhF3VHz1iXD1ft7xA8Bb
- UvWqWb8vTadIVxC4L62efrorx9SBLDlRXwFANmIfTJc1UzMcOCfIkuwnE6XgFobSDEud
- 64Ie+TLVebLatMFK4P7088psQPnJInji363Z0AzQrC9FbpEQewN+OICvB1CqN6CMbUnJ
- jwPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784803916; x=1785408716;
- h=mime-version:user-agent:content-transfer-encoding:content-type
- :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=IehoXc+YaA1sm90uWcURWtG+mLW9T+WEr0+9SHHFF5c=;
- b=d4ka2Hx0LfoNj6Wr81/5rF5yAW2ul37ouUo3V6sTHi4CZxotFdsmucV7pJkU6gTCMU
- kBAvWb6iP26GU7IPkHNAvsiO2XlU+LTNjh8Y7P49tX8MFrOn6ijuSMPnoMG4c8ilVrA8
- w5RQ0XqDxf12ogJEsdxtVbyPNW7bU7iw7/b6X0DoXWXbXxLhCXMTnTF0vo9ffyFE9Sp6
- +DTIielO3GW3pEM+XiooYZkI5JJaV/nSsxVlqkjRLAShSzP5V/BPLM5RvCVK52kPnxpj
- gw8xEqp1wHiB3VTw3epu0uCDBIWtegJGFO2Y7idA1RNx6RU7ALgHcR6Tlqp+6aAcXWBH
- 2Rcg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrdxHGVln73d6f5k8tK2Upz8jqVKdKL/bURD5EiGJOWSO6+Qfh3UzcW9KtCreR6EI+opMyvqfoyF4Bo@nongnu.org
-X-Gm-Message-State: AOJu0YzVxeU/yFrRJCJKw0IBC1pLa6rPNiWNdwC4j9Xdmt0wMIcRaUSP
- T8zgMo3JUTMPlUpXjFJhxw73L+fRyrqdoUj8+D9Xa4qo9WU+d/qHhKBh
-X-Gm-Gg: AR+sD12oVOb3b2BAo94L7oeyUiMzDp+R291K8LjMhBzgAZ7pQxCLrqcL1Gx3cZZoeCn
- +ioHiQm9zvG+UPbRyfa7aMskdnGzkCv2Fs0l9/H+kzL0OGZ8v0fWVtDqSqehqj350SXS9v3Xd3p
- 6fEJRHMXuILEdP2R3HsLc4my8DkCk8R6//lHZVO+a5vUhqdhcPRY6QLmYgnxLQmirXSyy7SzCYd
- 1FBj3X8gMsetcttdw7HInbAG32Z5w3BsI8s53mfKz/xbwNdFJTFt6V2JHb7JCd4AWFaf+4AoXCM
- Ft/3TMPf96VGdG4Jv6ENCxL09o1ShBe2GhtnCJwJI60ITwt13Ah/0L/U67di/KxKhNwUq2NwfsK
- mb2YZjfiSyhMkNeO5EswgS5Q8g2NPY3xgKMkGxbJ/JnGLNTZwisTryYT3RC0s4/gbgHE4LZJHOj
- iqqJZTDbAQ5ygxJzc0S8tu6WTY8r1vc9k0
-X-Received: by 2002:a05:600c:6303:b0:495:4730:15b2 with SMTP id
- 5b1f17b1804b1-49573d088b0mr26417795e9.31.1784803915345; 
- Thu, 23 Jul 2026 03:51:55 -0700 (PDT)
-Received: from acidburn.pod.cvut.cz (acidburn.pod.cvut.cz. [147.32.90.2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4956ab22e74sm123636345e9.1.2026.07.23.03.51.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Jul 2026 03:51:54 -0700 (PDT)
-Message-ID: <75ad04f4b6367262a5174245deeaadd32ba317c8.camel@gmail.com>
+ (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1wmr52-0005dI-Lq
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 06:55:08 -0400
+Received: from smtpx.feld.cvut.cz ([147.32.210.153] helo=smtpx.fel.cvut.cz)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1wmr50-0001I6-5e
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 06:55:08 -0400
+Received: from localhost (unknown [192.168.200.27])
+ by smtpx.fel.cvut.cz (Postfix) with ESMTP id D9BEF2677F;
+ Thu, 23 Jul 2026 12:55:02 +0200 (CEST)
+X-Virus-Scanned: IMAP STYX AMAVIS
+Received: from smtpx.fel.cvut.cz ([192.168.200.2])
+ by localhost (cerokez-250.feld.cvut.cz [192.168.200.27]) (amavis, port 10060)
+ with ESMTP id nGLfZm71yaQy; Thu, 23 Jul 2026 12:55:01 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fel.cvut.cz;
+ s=felmail; t=1784803866;
+ bh=IzJEvph+BFIv5s0K0ZvzdOaVpthIO1cI8w32JGwgPps=;
+ h=From:To:Subject:Date:Cc:References:In-Reply-To:From;
+ b=seBmvouuRDjZ+giztT2ldhvIHyAJVUe5Zp1bdXo6UmRXYEq4hGEG/+eFF5P7yfhOY
+ ZnGi+7Y0KZ2PaTM99A5Ds7rEpVoBHXLbs0FHf/GSgLxh4SGVM0qOZ1aQSZXC7WsP/E
+ 2lCFHastKc3Hlapyc3b0xrrn2/RPC9E4RafuBT1cqT53nTKBQFnI0Gxe2WehK5Auhu
+ 3m+9XScojcZ1Uigc5BjHxs0EaDu8CILx2Vec/ABqUhTNah22O7jupry56YBvfQretd
+ H31l29RjtwyBuNGkWuBOA5DuiHqBsudA7YMCUfpnLApFs/Ed//rD4Bmj+SxRSNR2eI
+ cXpo9QgNdn1bg==
+Received: from [147.32.86.199] (unknown [147.32.86.199])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: pisa)
+ by smtpx.fel.cvut.cz (Postfix) with ESMTPSA id 08856266E3;
+ Thu, 23 Jul 2026 12:51:06 +0200 (CEST)
+From: Pavel Pisa <pisa@fel.cvut.cz>
+To: Bernhard Beschow <shentey@gmail.com>
 Subject: Re: [PATCH 7/9] hw/net/flexcan: Drop oversized 'mb[]' mailbox view
-From: =?UTF-8?Q?Maty=C3=A1=C5=A1?= Bobek <matyas.bobek@gmail.com>
-To: Bernhard Beschow <shentey@gmail.com>, Philippe
- =?ISO-8859-1?Q?Mathieu-Daud=E9?=
- <philmd@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Pavel Pisa <pisa@cmp.felk.cvut.cz>, Francisco Iglesias	
- <francisco.iglesias@amd.com>, Jason Wang <jasowangio@gmail.com>, Vikram
- Garhwal	 <vikram.garhwal@bytedance.com>
-Date: Thu, 23 Jul 2026 12:51:52 +0200
-In-Reply-To: <F33F7AFC-1868-49E8-95C8-CBB04339F6A3@gmail.com>
+Date: Thu, 23 Jul 2026 12:51:05 +0200
+User-Agent: KMail/1.9.10
+Cc: "Philippe =?utf-8?q?Mathieu-Daud=C3=A9?=" <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org, Matyas Bobek <matyas.bobek@gmail.com>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Jason Wang <jasowangio@gmail.com>,
+ Vikram Garhwal <vikram.garhwal@bytedance.com>
 References: <20260723070059.6332-1-shentey@gmail.com>
- <20260723070059.6332-8-shentey@gmail.com>
  <84061116-c6d5-4def-acd8-ba9c81a0eece@oss.qualcomm.com>
  <F33F7AFC-1868-49E8-95C8-CBB04339F6A3@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 
+In-Reply-To: <F33F7AFC-1868-49E8-95C8-CBB04339F6A3@gmail.com>
+X-KMail-QuotePrefix: > 
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=matyas.bobek@gmail.com; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Message-Id: <202607231251.05529.pisa@fel.cvut.cz>
+Received-SPF: pass client-ip=147.32.210.153; envelope-from=pisa@fel.cvut.cz;
+ helo=smtpx.fel.cvut.cz
+X-Spam_score_int: -67
+X-Spam_score: -6.8
+X-Spam_bar: ------
+X-Spam_report: (-6.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, NICE_REPLY_A=-2.494,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,87 +86,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2026-07-23 at 10:26 +0000, Bernhard Beschow wrote:
->=20
->=20
-> Am 23. Juli 2026 08:20:34 UTC schrieb "Philippe Mathieu-Daud=C3=A9"
-> <philmd@oss.qualcomm.com>:
-> > On 23/7/26 09:00, Bernhard Beschow wrote:
-> > > As indicated in the comments, the `mb[]` a.k.a. `mbs []` views
-> > > should
-> > > cover 0x400 (1024) bytes. However, the `mb[]` array covers four
-> > > times
-> > > the size since `sizeof(FlexcanRegsMessageBuffer)` returns the
-> > > size in
-> > > bytes instead of counting the number of uint32_t fields. This
-> > > shifts the
-> > > subsequent register offsets by 0xc00 which is not intended. Fix
-> > > the size
-> > > and thus the offsets by dropping the now unused `mb[]` view.
-> > >=20
-> > > Note that the different size changes the migration layout. Since
-> > > the device
-> > > model is new, no change in the version fields is needed.
-> >=20
-> > typedef struct FlexcanState {
-> > =C2=A0=C2=A0 ...
-> > =C2=A0=C2=A0 union {
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 FlexcanRegs=C2=A0=C2=A0=C2=A0=C2=
-=A0 regs;
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint32_t=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 regs_raw[sizeof(FlexcanRegs) / 4];
-> > =C2=A0=C2=A0 };
-> > =C2=A0=C2=A0 ...
-> > } FlexcanState;
-> >=20
-> > static const VMStateDescription vmstate_can =3D {
-> > =C2=A0=C2=A0 .name =3D TYPE_CAN_FLEXCAN,
-> > =C2=A0=C2=A0 .version_id =3D 1,
-> > =C2=A0=C2=A0 .minimum_version_id =3D 1,
-> > =C2=A0=C2=A0 .fields =3D (const VMStateField[]) {
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ...
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_UINT32_ARRAY(regs_raw, Fle=
-xcanState,
-> > sizeof(FlexcanRegs) / 4),
-> >=20
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ^^^
-> >=20
-> > This "consider this structure as a casted array of u32" is very
-> > fragile
-> > anyway, and will unlikely scale over time.
-> >=20
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ...
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VMSTATE_END_OF_LIST(),
-> > =C2=A0=C2=A0 },
-> > };
->=20
+Hello Bernhard and Philippe,
+
+On Thursday 23 of July 2026 12:26:41 Bernhard Beschow wrote:
+> Am 23. Juli 2026 08:20:34 UTC schrieb "Philippe Mathieu-Daud=C3=A9"=20
+<philmd@oss.qualcomm.com>:
+> >On 23/7/26 09:00, Bernhard Beschow wrote:
+> >> As indicated in the comments, the `mb[]` a.k.a. `mbs []` views should
+> >> cover 0x400 (1024) bytes. However, the `mb[]` array covers four times
+> >> the size since `sizeof(FlexcanRegsMessageBuffer)` returns the size in
+> >> bytes instead of counting the number of uint32_t fields. This shifts t=
+he
+> >> subsequent register offsets by 0xc00 which is not intended. Fix the si=
+ze
+> >> and thus the offsets by dropping the now unused `mb[]` view.
+> >>
+> >> Note that the different size changes the migration layout. Since the
+> >> device model is new, no change in the version fields is needed.
+> >
+> >typedef struct FlexcanState {
+> >    ...
+> >    union {
+> >        FlexcanRegs     regs;
+> >        uint32_t        regs_raw[sizeof(FlexcanRegs) / 4];
+> >    };
+> >    ...
+> >} FlexcanState;
+> >
+> >static const VMStateDescription vmstate_can =3D {
+> >    .name =3D TYPE_CAN_FLEXCAN,
+> >    .version_id =3D 1,
+> >    .minimum_version_id =3D 1,
+> >    .fields =3D (const VMStateField[]) {
+> >        ...
+> >        VMSTATE_UINT32_ARRAY(regs_raw, FlexcanState, sizeof(FlexcanRegs)=
+ /
+> > 4),
+> >
+> >        ^^^
+> >
+> >This "consider this structure as a casted array of u32" is very fragile
+> >anyway, and will unlikely scale over time.
+> >
+> >        ...
+> >        VMSTATE_END_OF_LIST(),
+> >    },
+> >};
+>
 > Any suggestions what to do instead?
+>
 
+I would suggest to keep the state as uint32_t array.
+It is accessed by this and only by this size as the
+=46lexCAN MemoryRegionOps are defined. In the fact
+I would like/plan in longer term, even to switch
+the mbs array to be plain area of uint32_t in the future,
+that is remove field
 
-The oversized mb[] view is my mistake, it should have been the same
-length as mbs[], i forgot to divide its size by sizeof(u32)... I realy
-meant the mailboxes to be an u32 array, and the struct laid over it was
-just a convenience. It should have been
+  FlexcanRegsMessageBuffer mbs[FLEXCAN_MAILBOX_COUNT];
 
-uint32_t mb[sizeof(FlexcanRegsMessageBuffer) * FLEXCAN_MAILBOX_COUNT /
-4];
+in FlexcanRegs.
 
-The regs_raw entry in FlexcanState is the same idea. We tried to avoid
-any endianess-related bugs by treating the registers as an array of
-u32's, and always accessing them as dwords. I see now it's not the
-ideal solution, and I should have documented this choice.
+There should be only function which would return start
+of given FlexcanRegsMessageBuffer based on index
+argument and actual message buffers configuration.
+It is required for CAN FD where message buffer
+size is configurable. The raw/uint32_t area is kept
+the same, but it is distributed to the indexed
+buffers different way.
 
-Sorry, Matt
+So my preference is to move from structured view
+in direction to the offsets in the words array.
+Even the registers could be defined as offsets
+to this array in the theory but as the overlay
+structure for register accesses is used even
+in the Linux kernel driver, I do not think that
+this is necessary.
 
+But replacement of
 
---=20
-                Maty=C3=A1=C5=A1 (Matt) Bobek
+  FlexcanRegsMessageBuffer mbs[FLEXCAN_MAILBOX_COUNT];
 
-    Email:      bobekmat@fel.cvut.cz
+with appropriate
 
+  uint32_t mbs[FLEXCAN_MAILBOX_AREA_WORD_COUNT];
+
+and access functions would please me, because
+it helps with future CAN FD support.
+
+Best wishes,
+
+                Pavel Pisa
+    phone:      +420 603531357
+    e-mail:     pisa@cmp.felk.cvut.cz
     Department of Control Engineering FEE CVUT
     Karlovo namesti 13, 121 35, Prague 2
+    university: http://control.fel.cvut.cz/
+    personal:   http://cmp.felk.cvut.cz/~pisa
+    social:     https://social.kernel.org/ppisa
+    projects:   https://www.openhub.net/accounts/ppisa
+    CAN related:http://canbus.pages.fel.cvut.cz/
+    RISC-V education: https://comparch.edu.cvut.cz/
     Open Technologies Research Education and Exchange Services
     https://gitlab.fel.cvut.cz/otrees/org/-/wikis/home
-
 
