@@ -4,61 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0A78C44532
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 01:18:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 407CAC44532
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 01:18:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmi4E-0004cT-1W; Wed, 22 Jul 2026 21:17:42 -0400
+	id 1wmi3w-0004Yw-69; Wed, 22 Jul 2026 21:17:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1wmi44-0004Zz-Hx; Wed, 22 Jul 2026 21:17:32 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
+ id 1wmi3u-0004YR-Q2; Wed, 22 Jul 2026 21:17:22 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1wmi41-0002xb-UF; Wed, 22 Jul 2026 21:17:31 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id BAE86600AB;
- Thu, 23 Jul 2026 01:17:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 341781F00A3A;
- Thu, 23 Jul 2026 01:17:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1784769439;
- bh=7OoojlQ7zf5LlLfLK095v9w5Vh9e3y6NwiF/hoQhbY8=;
- h=Date:From:To:cc:Subject:In-Reply-To:References;
- b=mlw79mHXD7nOAaHOQgTrqOQ/7DtQ7jT1TENmwqKIyMUfgmM7P96irTgtufuWRHt+q
- 4oCNUjAyuaHi7I1xnQoFSlh28lEs4Nrg7ud/sy0MistmnUAMQxFViPbRb/Zv10Mt6X
- sF5kvoS7oGm4AvkaDRSKQZ1gLM+WoX3LrX9q0G2KqllpdKgOTAA1K2BZbGtrTCmEk4
- 1zwnsmUN1hJg9bW4az2+DH9wT2EDnCTSrQDGEXFC/Wz9oAnULN68V0wAd3fsTm9epv
- sjyqa44xsiMGzbkbZ9rSNjqjzicCRy4l7u7bBMDgc2wQhgHQqmzmto4zHu7eS4iEE4
- Hbsz7hm3FeiDw==
-Date: Wed, 22 Jul 2026 18:17:12 -0700 (PDT)
-From: Stefano Stabellini <sstabellini@kernel.org>
-X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-cc: Stefano Stabellini <sstabellini@kernel.org>, qemu-devel@nongnu.org, 
- qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>, 
- Anthony PERARD <anthony@xenproject.org>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: Re: [PATCH v2 2/2] hw/9pfs/xen: drain in-flight PDUs before xen-9p
- disconnect
-In-Reply-To: <6012362.DvuYhMxLoT@weasel>
-Message-ID: <alpine.DEB.2.22.394.2607221815520.5295@ubuntu-linux-20-04-desktop>
-References: <cover.1784392605.git.qemu_oss@crudebyte.com>
- <afbe101f9fef3110d79023c604be0b28006cfb60.1784392605.git.qemu_oss@crudebyte.com>
- <6012362.DvuYhMxLoT@weasel>
-User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
+ (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
+ id 1wmi3t-0002xZ-2A; Wed, 22 Jul 2026 21:17:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1784769441; x=1816305441;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=hBO3fzaslaoxTxxwV/97htR4gR1dlBLu3SsAm+it1ik=;
+ b=mDKZKfe0cbGNtWDbsuQx4Eci7/269Av/SlbTWskNgHHPGs3kiYnHpe1E
+ CIgirUh2LegTPtFCUg12kUVXMkLUl31SCmUCog72puiizOHrChUztfb0i
+ Ep0Y/M12ESckL9gZHL69x1CjUW67xEvTIb/fU9qFTJfTWgkadSkM16GIe
+ tnbGMGi9lZTj0JdIaHJV11VmvAeKTlY80ufqwKby9NN2NaltR3KcfOQxI
+ xirTOYZDkaZBpSj2x7XCxHMOMPF9eDb0M5VTbZd5hQRl8VYx1GmJUXl7p
+ geASVTGC2ivg0AdOdoVDGKYu+qhuZSYlVlBlljnSrRZmvXXus3josOPk5 Q==;
+X-CSE-ConnectionGUID: RT2Ag1JoRlumcK9S4aK0Ow==
+X-CSE-MsgGUID: x/gIbCiyTvemUYIJ97z+iw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11854"; a="96074836"
+X-IronPort-AV: E=Sophos;i="6.25,179,1779174000"; d="scan'208";a="96074836"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Jul 2026 18:17:19 -0700
+X-CSE-ConnectionGUID: v6T75PnGRjaJSURpZP4Kfw==
+X-CSE-MsgGUID: nZ3kjDMaT3WZdOpqn0jw8g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,179,1779174000"; d="scan'208";a="251943349"
+Received: from junjie-desk-dev.bj.intel.com (HELO
+ junjie-desk-dev.tail2c02c1.ts.net) ([10.238.152.71])
+ by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Jul 2026 18:17:18 -0700
+From: Junjie Cao <junjie.cao@intel.com>
+To: Jonathan Cameron <jic23@kernel.org>
+Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org, qemu-stable@nongnu.org
+Subject: [PATCH v2 2/6] hw/cxl: destroy primary CCI before re-initialization
+ on reset
+Date: Thu, 23 Jul 2026 09:16:21 +0800
+Message-ID: <20260723011625.1117034-3-junjie.cao@intel.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260723011625.1117034-1-junjie.cao@intel.com>
+References: <20260723011625.1117034-1-junjie.cao@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Received-SPF: pass client-ip=172.105.4.254;
- envelope-from=sstabellini@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=junjie.cao@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,156 +81,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 22 Jul 2026, Christian Schoenebeck wrote:
-> Hi Stefano,
-> 
-> chance that you might be looking at this v2 Xen patch soon? If not, just let 
-> me know, then I'll send out a PR with other fixes piled up on my side in the 
-> meantime, as QEMU release window narrows.
+ct3d_reset() re-initializes the primary CCI through the call chain
+cxl_device_register_init_t3() -> cxl_initialize_mailbox_t3() ->
+cxl_init_cci(), but never calls cxl_destroy_cci() first.  Each reset
+cycle therefore leaks the old timer and leaves the old mutex
+undestroyed while silently overwriting the CCI state.
 
-This is better but I think there is still an issue
+Per CXL r4.0, the "Mailbox Interfaces Ready" bit in the Memory Device
+Status register (Table 8-212) is set after a Conventional Reset or CXL
+Reset once the device has re-initialized its mailbox interfaces.  The
+CCI is the software abstraction of these interfaces and must be properly
+torn down before re-initialization.
 
- 
-> On Saturday, 18 July 2026 18:50:06 CEST Christian Schoenebeck wrote:
-> > The xen-9p disconnect path has two issues:
-> > 
-> > 1. It frees the Xen9pfsRing structures while in-flight PDUs may still
-> >    reference them via pdu->tag to index rings[]. This causes a UAF
-> >    in xen_9pfs_push_and_notify() when worker threads resume after
-> >    completing filesystem operations.
-> > 
-> > 2. It never calls v9fs_device_unrealize_common(), which means server
-> >    state (struct LocalData, mountfd, FIDs) is never cleaned up on
-> >    disconnect, causing a resource leak on every guest-initiated
-> >    disconnect.
-> > 
-> > Fix both by draining in-flight PDUs via v9fs_reset() before tearing
-> > down rings, and calling v9fs_device_unrealize_common() to clean up
-> > server state.
-> > 
-> > Additionally, explicit calls of xen_9pfs_disconnect() in the error
-> > paths of xen_9pfs_pdu_vmarshal() and xen_9pfs_pdu_vunmarshal() must
-> > be deferred (via aio_bh_schedule_oneshot()), because
-> > xen_9pfs_pdu_v(un)marshal() are running within a coroutine context
-> > which makes them unsafe [1] for calling v9fs_reset() directly, as
-> > the latter e.g. has a loop like:
-> > 
-> >     while (!QLIST_EMPTY(&s->active_list)) {
-> >         aio_poll(qemu_get_aio_context(), true);
-> >     }
-> > 
-> > which would a) never terminate (as the coroutine is on the
-> > active_list) and b) aio_poll() is marked as no_coroutine_fn.
-> > 
-> > [1] https://lore.kernel.org/qemu-devel/3351181.5fSG56mABF@weasel/
-> > 
-> > And finally, add an idempotent guard to xen_9pfs_disconnect(),
-> > just for the case.
-> > 
-> > Fixes: b37eeb0201 ("xen/9pfs: introduce Xen 9pfs backend")
-> > Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-> > ---
-> >  hw/9pfs/xen-9p-backend.c | 19 +++++++++++++++++--
-> >  1 file changed, 17 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
-> > index 24c90d97ec..edb65a7afc 100644
-> > --- a/hw/9pfs/xen-9p-backend.c
-> > +++ b/hw/9pfs/xen-9p-backend.c
-> > @@ -68,6 +68,11 @@ typedef struct Xen9pfsDev {
-> > 
-> >  static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev);
-> > 
-> > +static void xen_9pfs_disconnect_bh(void *opaque)
-> > +{
-> > +    xen_9pfs_disconnect(opaque);
-> > +}
-> > +
-> >  static void xen_9pfs_in_sg(Xen9pfsRing *ring,
-> >                             struct iovec *in_sg,
-> >                             int *num,
-> > @@ -150,7 +155,8 @@ static ssize_t xen_9pfs_pdu_vmarshal(V9fsPDU *pdu,
-> >                        "Failed to encode VirtFS reply type %d\n",
-> >                        pdu->id + 1);
-> >          xen_be_set_state(&xen_9pfs->xendev, XenbusStateClosing);
-> > -        xen_9pfs_disconnect(&xen_9pfs->xendev);
-> > +        aio_bh_schedule_oneshot(qemu_get_aio_context(),
-> > +                                xen_9pfs_disconnect_bh, &xen_9pfs->xendev);
-> > }
-> >      return ret;
-> >  }
-> > @@ -173,7 +179,8 @@ static ssize_t xen_9pfs_pdu_vunmarshal(V9fsPDU *pdu,
-> >          xen_pv_printf(&xen_9pfs->xendev, 0,
-> >                        "Failed to decode VirtFS request type %d\n",
-> > pdu->id); xen_be_set_state(&xen_9pfs->xendev, XenbusStateClosing);
-> > -        xen_9pfs_disconnect(&xen_9pfs->xendev);
-> > +        aio_bh_schedule_oneshot(qemu_get_aio_context(),
-> > +                                xen_9pfs_disconnect_bh, &xen_9pfs->xendev);
-> > }
-> >      return ret;
-> >  }
-> > @@ -368,10 +375,18 @@ static void xen_9pfs_evtchn_event(void *opaque)
-> >  static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev)
-> >  {
-> >      Xen9pfsDev *xen_9pdev = container_of(xendev, Xen9pfsDev, xendev);
-> > +    V9fsState *s = &xen_9pdev->state;
-> >      int i;
-> > 
-> > +    if (!xen_9pdev->rings) {
+The secondary CCIs (vdm_fm_owned_ld_mctp_cci, ld0_cci) already follow
+the correct destroy-before-reinit pattern in the same function; apply
+the same discipline to the primary CCI.
 
-specifically this check is not sufficient are there can be cases where
-rings != NULL but transport is not set and v9fs_reset should not be
-called. For instance xen_be_map_grant_ref() returns NULL,
-xen_9pfs_connect() go out without calling v9fs_device_realize_common().
-s->transport == NULL and also s->fids == NULL but rings != NULL. Later
-v9fs_reset calls g_hash_table_get_values(s->fids)
+Also destroy the secondary CCIs in ct3_exit() where they were
+previously leaked at device removal time.  Guard the primary CCI
+teardown there with the same .initialized check used for the secondary
+CCIs: the primary CCI is only brought up from the reset path
+(cxl_device_register_init_t3()), so a device that is unrealized before
+its first reset would otherwise tear down a never-initialized CCI.
 
+Fixes: cac36a8faffc ("hw/cxl/mbox: Pull the CCI definition out of the CXLDeviceState")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+---
+ hw/mem/cxl_type3.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-
-> > +        return;
-> > +    }
-> > +
-> >      trace_xen_9pfs_disconnect(xendev->name);
-> > 
-> > +    v9fs_reset(s);
-> > +    v9fs_device_unrealize_common(s);
-> > +
-> >      for (i = 0; i < xen_9pdev->num_rings; i++) {
-> >          if (xen_9pdev->rings[i].evtchndev != NULL) {
-> >             
-> > qemu_set_fd_handler(qemu_xen_evtchn_fd(xen_9pdev->rings[i].evtchndev),
-
-See this below. If you agree and add the below to this patch you can add
-my Reviewed-by.
-
-
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 3119f01117..fc01791830 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -4530,6 +4530,7 @@ void v9fs_device_unrealize_common(V9fsState *s)
-     qp_table_destroy(&s->qpp_table);
-     qp_table_destroy(&s->qpf_table);
-     g_free(s->ctx.fs_root);
-+    s->transport = NULL;
- }
- 
- typedef struct VirtfsCoResetData {
-diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
-index edb65a7afc..f0791f9e97 100644
---- a/hw/9pfs/xen-9p-backend.c
-+++ b/hw/9pfs/xen-9p-backend.c
-@@ -384,8 +384,10 @@ static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev)
- 
-     trace_xen_9pfs_disconnect(xendev->name);
- 
--    v9fs_reset(s);
--    v9fs_device_unrealize_common(s);
-+    if (s->transport) {
-+        v9fs_reset(s);
-+        v9fs_device_unrealize_common(s);
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index cba05ec57d..4ac6eaa950 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -1073,7 +1073,15 @@ static void ct3_exit(PCIDevice *pci_dev)
+     cxl_doe_cdat_release(cxl_cstate);
+     msix_uninit_exclusive_bar(pci_dev);
+     g_free(regs->special_ops);
+-    cxl_destroy_cci(&ct3d->cci);
++    if (ct3d->cci.initialized) {
++        cxl_destroy_cci(&ct3d->cci);
 +    }
++    if (ct3d->vdm_fm_owned_ld_mctp_cci.initialized) {
++        cxl_destroy_cci(&ct3d->vdm_fm_owned_ld_mctp_cci);
++    }
++    if (ct3d->ld0_cci.initialized) {
++        cxl_destroy_cci(&ct3d->ld0_cci);
++    }
+     if (ct3d->dc.host_dc) {
+         cxl_destroy_dc_regions(ct3d);
+         address_space_destroy(&ct3d->dc.host_dc_as);
+@@ -1328,6 +1336,9 @@ static void ct3d_reset(DeviceState *dev)
+                               ct3d->flitmode);
+     cxl_component_register_init_common(reg_state, write_msk,
+                                        CXL2_TYPE3_DEVICE, ct3d->hdmdb);
++    if (ct3d->cci.initialized) {
++        cxl_destroy_cci(&ct3d->cci);
++    }
+     cxl_device_register_init_t3(ct3d, CXL_T3_MSIX_MBOX);
  
-     for (i = 0; i < xen_9pdev->num_rings; i++) {
-         if (xen_9pdev->rings[i].evtchndev != NULL) {
+     /*
+-- 
+2.43.0
+
 
