@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C96EAC4452B
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:53:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9437CC531CA
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:53:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmlQj-0003RS-8H; Thu, 23 Jul 2026 00:53:09 -0400
+	id 1wmlQf-00038P-HI; Thu, 23 Jul 2026 00:53:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlQg-0003Ej-Pu
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:53:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlQO-0002vr-2P
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:52:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlQf-0004qJ-7c
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:53:06 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlQL-0004jM-SR
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:52:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784782384;
+ s=mimecast20190719; t=1784782365;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BuLUJmRQbdL+tiBVb/y3st603k+nuJ/NK2BP1mGjFEM=;
- b=ONgIDb4VlLxw/7kqvnMpADr39d6WbmQ9M+B+Eu6S0DIZwvh4eoL6UywZqtZBwFgCFcJs/9
- SpIJqbVOff8nyAE02mgIA+7v21y05q6tC2Q3YWURyUOABiPU/UKLKRbtD0KmNsaBZKsn69
- BDUY3Q81lzJjIktIYfnkFlgYrP3yBoA=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=pvnZrfXGzB4HFIplW/5U/ErhFdiu8ZVe2fFge+4xFIc=;
+ b=YBFZryQ/7f8WBFb+SgYeYmeVHjEaNHmeF9DUw5nULXxUBlWqhV0/qAHIA62hWSQtkOPLfX
+ z9A4rVMQJzFmgjfl3njJPY7pMrXvl5EwWnSDFiNZtH5lV3e4pOBESifB8oXWqHiLNhwQHB
+ WS2kI6tEn5w0fO74OlOKXKMFiABShpo=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-205-CFvqc4DOO3CwZcM_zo-wjQ-1; Thu,
- 23 Jul 2026 00:53:00 -0400
-X-MC-Unique: CFvqc4DOO3CwZcM_zo-wjQ-1
-X-Mimecast-MFC-AGG-ID: CFvqc4DOO3CwZcM_zo-wjQ_1784782377
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-664-wd4iwakjORKRG7QDMyIIYw-1; Thu,
+ 23 Jul 2026 00:52:41 -0400
+X-MC-Unique: wd4iwakjORKRG7QDMyIIYw-1
+X-Mimecast-MFC-AGG-ID: wd4iwakjORKRG7QDMyIIYw_1784782359
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3B2AC1805F18; Thu, 23 Jul 2026 04:52:57 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D070D190C40C; Thu, 23 Jul 2026 04:52:38 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.44])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B996F18002B5; Thu, 23 Jul 2026 04:52:47 +0000 (UTC)
+ id 0C3AB18002B6; Thu, 23 Jul 2026 04:52:28 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -73,23 +73,24 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Jason Wang <jasowangio@gmail.com>, qemu-trivial@nongnu.org,
  Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH v2 28/44] qapi: convert intro sections for rocker.json
-Date: Thu, 23 Jul 2026 00:47:49 -0400
-Message-ID: <20260723044805.527643-29-jsnow@redhat.com>
+Subject: [PATCH v2 26/44] qapi: convert intro sections for pci.json
+Date: Thu, 23 Jul 2026 00:47:47 -0400
+Message-ID: <20260723044805.527643-27-jsnow@redhat.com>
 In-Reply-To: <20260723044805.527643-1-jsnow@redhat.com>
 References: <20260723044805.527643-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: permerror client-ip=170.10.129.124;
+Received-SPF: permerror client-ip=170.10.133.124;
  envelope-from=jsnow@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,143 +110,103 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/rocker.json | 39 +++++++++++++--------------------------
- 1 file changed, 13 insertions(+), 26 deletions(-)
+ qapi/pci.json | 27 +++++++++------------------
+ 1 file changed, 9 insertions(+), 18 deletions(-)
 
-diff --git a/qapi/rocker.json b/qapi/rocker.json
-index 5d2dbd26034..7eb0a88dafd 100644
---- a/qapi/rocker.json
-+++ b/qapi/rocker.json
-@@ -9,8 +9,7 @@
+diff --git a/qapi/pci.json b/qapi/pci.json
+index 694c741e420..a6a79f91afc 100644
+--- a/qapi/pci.json
++++ b/qapi/pci.json
+@@ -13,8 +13,7 @@
  
  ##
- # @RockerSwitch:
+ # @PciMemoryRange:
 -#
--# Rocker switch information.
-+#     Rocker switch information.
+-# A PCI device memory region
++#     A PCI device memory region
  #
- # @name: switch name
+ # @base: the starting address (guest physical)
  #
-@@ -25,8 +24,7 @@
+@@ -26,8 +25,7 @@
  
  ##
- # @query-rocker:
+ # @PciMemoryRegion:
 -#
--# Return rocker switch information.
-+#     Return rocker switch information.
+-# Information about a PCI device I/O region.
++#     Information about a PCI device I/O region.
  #
- # @name: switch name
+ # @bar: the index of the Base Address Register for this region
  #
-@@ -43,8 +41,7 @@
+@@ -51,8 +49,7 @@
  
  ##
- # @RockerPortDuplex:
+ # @PciBusInfo:
 -#
--# An enumeration of port duplex states.
-+#     An enumeration of port duplex states.
+-# Information about a bus of a PCI Bridge device
++#     Information about a bus of a PCI Bridge device
  #
- # @half: half duplex
- #
-@@ -56,8 +53,7 @@
+ # @number: primary bus interface number.  This should be the number of
+ #     the bus the device resides on.
+@@ -80,8 +77,7 @@
  
  ##
- # @RockerPortAutoneg:
+ # @PciBridgeInfo:
 -#
--# An enumeration of port autoneg states.
-+#     An enumeration of port autoneg states.
+-# Information about a PCI Bridge device
++#     Information about a PCI Bridge device
  #
- # @off: autoneg is off
+ # @bus: information about the bus the device resides on
  #
-@@ -69,8 +65,7 @@
+@@ -94,8 +90,7 @@
  
  ##
- # @RockerPort:
+ # @PciDeviceClass:
 -#
--# Rocker switch port information.
-+#     Rocker switch port information.
+-# Information about the Class of a PCI device
++#     Information about the Class of a PCI device
  #
- # @name: port name
- #
-@@ -93,8 +88,7 @@
+ # @desc: a string description of the device's class (not stable, and
+ #     should only be treated as informational)
+@@ -109,8 +104,7 @@
  
  ##
- # @query-rocker-ports:
+ # @PciDeviceId:
 -#
--# Return rocker switch port information.
-+#     Return rocker switch port information.
+-# Information about the Id of a PCI device
++#     Information about the Id of a PCI device
  #
- # @name: port name
+ # @device: the PCI device id
  #
-@@ -115,8 +109,7 @@
+@@ -128,8 +122,7 @@
  
  ##
- # @RockerOfDpaFlowKey:
+ # @PciDeviceInfo:
 -#
--# Rocker switch OF-DPA flow key
-+#     Rocker switch OF-DPA flow key
+-# Information about a PCI device
++#     Information about a PCI device
  #
- # @priority: key priority, 0 being lowest priority
+ # @bus: the bus number of the device
  #
-@@ -153,8 +146,7 @@
+@@ -161,8 +154,7 @@
  
  ##
- # @RockerOfDpaFlowMask:
+ # @PciInfo:
 -#
--# Rocker switch OF-DPA flow mask
-+#     Rocker switch OF-DPA flow mask
+-# Information about a PCI bus
++#     Information about a PCI bus
  #
- # @in-pport: physical input port
+ # @bus: the bus index
  #
-@@ -182,8 +174,7 @@
+@@ -174,8 +166,7 @@
  
  ##
- # @RockerOfDpaFlowAction:
+ # @query-pci:
 -#
--# Rocker switch OF-DPA flow action
-+#     Rocker switch OF-DPA flow action
+-# Return information about the PCI bus topology of the guest.
++#     Return information about the PCI bus topology of the guest.
  #
- # @goto-tbl: next table ID
- #
-@@ -209,8 +200,7 @@
- 
- ##
- # @RockerOfDpaFlow:
--#
--# Rocker switch OF-DPA flow
-+#     Rocker switch OF-DPA flow
- #
- # @cookie: flow unique cookie ID
- #
-@@ -230,8 +220,7 @@
- 
- ##
- # @query-rocker-of-dpa-flows:
--#
--# Return rocker OF-DPA flow information.
-+#     Return rocker OF-DPA flow information.
- #
- # @name: switch name
- #
-@@ -261,8 +250,7 @@
- 
- ##
- # @RockerOfDpaGroup:
--#
--# Rocker switch OF-DPA group
-+#     Rocker switch OF-DPA group
- #
- # @id: group unique ID
- #
-@@ -305,8 +293,7 @@
- 
- ##
- # @query-rocker-of-dpa-groups:
--#
--# Return rocker OF-DPA group information.
-+#     Return rocker OF-DPA group information.
- #
- # @name: switch name
- #
+ # Returns: a list of info for each PCI bus.  Each bus is
+ #     represented by a json-object, which has a key with a json-array
 -- 
 2.55.0
 
