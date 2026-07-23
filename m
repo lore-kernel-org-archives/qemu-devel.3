@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEB89C4452B
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:57:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCC28C531CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:57:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmlT6-0008DY-AQ; Thu, 23 Jul 2026 00:55:36 -0400
+	id 1wmlSR-0006XB-LJ; Thu, 23 Jul 2026 00:54:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlT5-00086e-5w
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:55:35 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlSP-0006St-Qr
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:54:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlT1-0005QY-0h
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:55:33 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlSN-00056h-P2
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:54:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784782530;
+ s=mimecast20190719; t=1784782491;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=l2vKKJq9p+mRJI1PvhlBj7i1Hep84eZpyfHuN/CbTtk=;
- b=dIDelB9FRgXHdq+A0TaQHgaEX853ZFhitKqy9WlCEjI5PXsGOw7YPUrga19Qb0Jvun8zkZ
- UpwfobpCHbXoyYOQZO1blsTuMEiJXBEVx8c6PFoeO0v3Ad7oOsZQTZF2rc0ZPB6G46qSh9
- i0w9lCZt6FXpwpwdo5/HVxixRYasBo4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=b6kt5HzL/dcb4GOtdYVxgWwilYqwRVX6SLi3+dLQtEE=;
+ b=O+BUXRiQWKxdfJpbgE4iEvDMVBC7oP0olSE9d2nQzmsZXjVHuE8yZ6tQC1NgC0LPGecbIB
+ MwHKuMMOt/oF4HAryC3Xe2cag2PhP6Jhb6eI7sshd3IpbfQh8vxTEtWhrT8R23kkSe/lt6
+ hhiOm5GxjSv4JPy3JclZxec9ZJU12gY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-235-klbCYKTsOI62KJTINKYHXg-1; Thu,
- 23 Jul 2026 00:55:26 -0400
-X-MC-Unique: klbCYKTsOI62KJTINKYHXg-1
-X-Mimecast-MFC-AGG-ID: klbCYKTsOI62KJTINKYHXg_1784782523
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-413-LODP7NitOBe99UrCJyb4Mw-1; Thu,
+ 23 Jul 2026 00:54:45 -0400
+X-MC-Unique: LODP7NitOBe99UrCJyb4Mw-1
+X-Mimecast-MFC-AGG-ID: LODP7NitOBe99UrCJyb4Mw_1784782482
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5C8301955DC2; Thu, 23 Jul 2026 04:55:23 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5754118E6A73; Thu, 23 Jul 2026 04:54:42 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.44])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5329518002AE; Thu, 23 Jul 2026 04:55:12 +0000 (UTC)
+ id 87386180029D; Thu, 23 Jul 2026 04:54:33 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -73,9 +73,9 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Jason Wang <jasowangio@gmail.com>, qemu-trivial@nongnu.org,
  Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH v2 43/44] qapi: convert trivial intro sections for machine.json
-Date: Thu, 23 Jul 2026 00:48:04 -0400
-Message-ID: <20260723044805.527643-44-jsnow@redhat.com>
+Subject: [PATCH v2 39/44] qapi: convert trivial intro sections for net.json
+Date: Thu, 23 Jul 2026 00:48:00 -0400
+Message-ID: <20260723044805.527643-40-jsnow@redhat.com>
 In-Reply-To: <20260723044805.527643-1-jsnow@redhat.com>
 References: <20260723044805.527643-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -109,771 +109,317 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/machine.json | 261 +++++++++++++++++-----------------------------
- 1 file changed, 96 insertions(+), 165 deletions(-)
+ qapi/net.json | 101 ++++++++++++++++++--------------------------------
+ 1 file changed, 37 insertions(+), 64 deletions(-)
 
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 9b2248038fc..2b0b9757641 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -15,12 +15,11 @@
+diff --git a/qapi/net.json b/qapi/net.json
+index 1a6382825c5..7aabd8b9260 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -12,8 +12,7 @@
  
  ##
- # @SysEmuTarget:
+ # @set_link:
 -#
--# The comprehensive enumeration of QEMU system emulation ("softmmu")
--# targets.  Run "./configure --help" in the project root directory,
--# and look for the \*-softmmu targets near the "--target-list" option.
--# The individual target constants are not documented here, for the
--# time being.
-+#     The comprehensive enumeration of QEMU system emulation
-+#     ("softmmu") targets.  Run "./configure --help" in the project
-+#     root directory, and look for the \*-softmmu targets near the
-+#     "--target-list" option.  The individual target constants are not
-+#     documented here, for the time being.
- #
- # @rx: since 5.0
- #
-@@ -46,9 +45,8 @@
- 
- ##
- # @S390CpuState:
--#
--# An enumeration of cpu states that can be assumed by a virtual S390
--# CPU
-+#     An enumeration of cpu states that can be assumed by a virtual
-+#     S390 CPU
- #
- # Since: 2.12
- ##
-@@ -57,8 +55,7 @@
- 
- ##
- # @CpuInfoS390:
--#
--# Additional information about a virtual S390 CPU
-+#     Additional information about a virtual S390 CPU
- #
- # @cpu-state: the virtual CPU's state
- #
-@@ -75,8 +72,7 @@
- 
- ##
- # @CpuInfoFast:
--#
--# Information about a virtual CPU
-+#     Information about a virtual CPU
- #
- # @cpu-index: index of the virtual CPU
- #
-@@ -105,8 +101,7 @@
- 
- ##
- # @query-cpus-fast:
--#
--# Return information about all virtual CPUs.
-+#     Return information about all virtual CPUs.
- #
- # Since: 2.12
- #
-@@ -143,9 +138,8 @@
- 
- ##
- # @CompatProperty:
--#
--# Property default values specific to a machine type, for use by
--# scripts/compare-machine-types.
-+#     Property default values specific to a machine type, for use by
-+#     scripts/compare-machine-types.
- #
- # @qom-type: name of the QOM type to which the default applies
- #
-@@ -163,8 +157,7 @@
- 
- ##
- # @MachineInfo:
--#
--# Information describing a machine.
-+#     Information describing a machine.
- #
- # @name: the name of the machine
- #
-@@ -213,8 +206,7 @@
- 
- ##
- # @query-machines:
--#
--# Return a list of supported machines
-+#     Return a list of supported machines
- #
- # @compat-props: if true, also return compatibility properties.
- #     (default: false) (since 9.1)
-@@ -255,8 +247,7 @@
- 
- ##
- # @CurrentMachineParams:
--#
--# Information describing the running machine parameters.
-+#     Information describing the running machine parameters.
- #
- # @wakeup-suspend-support: true if the machine supports wake up from
- #     suspend
-@@ -268,8 +259,7 @@
- 
- ##
- # @query-current-machine:
--#
--# Return information on the current virtual machine.
-+#     Return information on the current virtual machine.
- #
- # Since: 4.0
- ##
-@@ -277,8 +267,8 @@
- 
- ##
- # @QemuTargetInfo:
--#
--# Information on the target configuration built into the QEMU binary.
-+#     Information on the target configuration built into the QEMU
-+#     binary.
- #
- # @arch: the target architecture
- #
-@@ -289,8 +279,7 @@
- 
- ##
- # @query-target:
--#
--# Return information about the target for this QEMU
-+#     Return information about the target for this QEMU
- #
- # Since: 1.2
- ##
-@@ -298,8 +287,7 @@
- 
- ##
- # @UuidInfo:
--#
--# Guest UUID information (Universally Unique Identifier).
-+#     Guest UUID information (Universally Unique Identifier).
- #
- # @UUID: the UUID of the guest
- #
-@@ -312,8 +300,7 @@
- 
- ##
- # @query-uuid:
--#
--# Query the guest UUID information.
-+#     Query the guest UUID information.
- #
- # Since: 0.14
- #
-@@ -326,8 +313,7 @@
- 
- ##
- # @GuidInfo:
--#
--# GUID information.
-+#     GUID information.
- #
- # @guid: the globally unique identifier
- #
-@@ -337,8 +323,7 @@
- 
- ##
- # @query-vm-generation-id:
--#
--# Show Virtual Machine Generation ID
-+#     Show Virtual Machine Generation ID
- #
- # Since: 2.9
- ##
-@@ -346,8 +331,7 @@
- 
- ##
- # @system_reset:
--#
--# Performs a hard reset of a guest.
-+#     Performs a hard reset of a guest.
- #
- # Since: 0.14
- #
-@@ -360,8 +344,7 @@
- 
- ##
- # @system_powerdown:
--#
--# Requests that a guest perform a powerdown operation.
-+#     Requests that a guest perform a powerdown operation.
- #
- # Since: 0.14
- #
-@@ -379,11 +362,10 @@
- 
- ##
- # @system_wakeup:
--#
--# Wake up guest from suspend.  If the guest has wake-up from suspend
--# support enabled (wakeup-suspend-support flag from
--# `query-current-machine`), wake-up guest from suspend if the guest is
--# in SUSPENDED state.  Return an error otherwise.
-+#     Wake up guest from suspend.  If the guest has wake-up from
-+#     suspend support enabled (wakeup-suspend-support flag from
-+#     `query-current-machine`), wake-up guest from suspend if the
-+#     guest is in SUSPENDED state.  Return an error otherwise.
- #
- # Since: 1.1
- #
-@@ -399,9 +381,8 @@
- 
- ##
- # @LostTickPolicy:
--#
--# Policy for handling lost ticks in timer devices.  Ticks end up
--# getting lost when, for example, the guest is paused.
-+#     Policy for handling lost ticks in timer devices.  Ticks end up
-+#     getting lost when, for example, the guest is paused.
- #
- # @discard: throw away the missed ticks and continue with future
- #     injection normally.  The guest OS will see the timer jump ahead
-@@ -431,10 +412,9 @@
- 
- ##
- # @inject-nmi:
--#
--# Injects a Non-Maskable Interrupt into the default CPU (x86/s390) or
--# all CPUs (ppc64).  The command fails when the guest doesn't support
--# injecting.
-+#     Injects a Non-Maskable Interrupt into the default CPU (x86/s390)
-+#     or all CPUs (ppc64).  The command fails when the guest doesn't
-+#     support injecting.
- #
- # Since: 0.14
- #
-@@ -468,8 +448,7 @@
- 
- ##
- # @NumaOptions:
--#
--# A discriminated record of NUMA options.  (for OptsVisitor)
-+#     A discriminated record of NUMA options.  (for OptsVisitor)
- #
- # @type: NUMA option type
- #
-@@ -487,8 +466,7 @@
- 
- ##
- # @NumaNodeOptions:
--#
--# Create a guest NUMA node.  (for OptsVisitor)
-+#     Create a guest NUMA node.  (for OptsVisitor)
- #
- # @nodeid: NUMA node ID (increase by 1 from 0 if omitted)
- #
-@@ -520,8 +498,7 @@
- 
- ##
- # @NumaDistOptions:
--#
--# Set the distance between 2 NUMA nodes.
-+#     Set the distance between 2 NUMA nodes.
- #
- # @src: source NUMA node.
- #
-@@ -541,8 +518,7 @@
- 
- ##
- # @CXLFixedMemoryWindowOptions:
--#
--# Create a CXL Fixed Memory Window
-+#     Create a CXL Fixed Memory Window
- #
- # @size: Size of the Fixed Memory Window in bytes.  Must be a multiple
- #     of 256MiB.
-@@ -564,8 +540,7 @@
- 
- ##
- # @CXLFMWProperties:
--#
--# List of CXL Fixed Memory Windows.
-+#     List of CXL Fixed Memory Windows.
+-# Sets the link status of a virtual network adapter.
++#     Sets the link status of a virtual network adapter.
  #
- # @cxl-fmw: List of `CXLFixedMemoryWindowOptions`
- #
-@@ -577,8 +552,7 @@
- 
- ##
- # @X86CPURegister32:
--#
--# A X86 32-bit register
-+#     A X86 32-bit register
+ # @name: the device name of the virtual network adapter
  #
- # Since: 1.5
- ##
-@@ -587,8 +561,7 @@
- 
- ##
- # @X86CPUFeatureWordInfo:
--#
--# Information about a X86 CPU feature word
-+#     Information about a X86 CPU feature word
- #
- # @cpuid-input-eax: Input EAX value for CPUID instruction for that
- #     feature word
-@@ -610,9 +583,8 @@
+@@ -60,8 +59,7 @@
  
  ##
- # @DummyForceArrays:
+ # @netdev_del:
 -#
--# Not used by QMP; hack to let us use X86CPUFeatureWordInfoList
--# internally
-+#     Not used by QMP; hack to let us use X86CPUFeatureWordInfoList
-+#     internally
- #
- # Since: 2.5
- ##
-@@ -621,11 +593,10 @@
- 
- ##
- # @NumaCpuOptions:
--#
--# Option "-numa cpu" overrides default cpu to node mapping.  It
--# accepts the same set of cpu properties as returned by
--# `query-hotpluggable-cpus[].props <query-hotpluggable-cpus>`, where
--# node-id could be used to override default node mapping.
-+#     Option "-numa cpu" overrides default cpu to node mapping.  It
-+#     accepts the same set of cpu properties as returned by
-+#     `query-hotpluggable-cpus[].props <query-hotpluggable-cpus>`,
-+#     where node-id could be used to override default node mapping.
- #
- # Since: 2.10
- ##
-@@ -794,8 +765,7 @@
- 
- ##
- # @memsave:
--#
--# Save a portion of guest memory to a file.
-+#     Save a portion of guest memory to a file.
+-# Remove a network backend.
++#     Remove a network backend.
  #
- # @val: the virtual address of the guest to start from
+ # @id: the name of the network backend to remove
  #
-@@ -827,8 +797,7 @@
+@@ -80,8 +78,7 @@
  
  ##
- # @pmemsave:
+ # @NetLegacyNicOptions:
 -#
--# Save a portion of guest physical memory to a file.
-+#     Save a portion of guest physical memory to a file.
+-# Create a new Network Interface Card.
++#     Create a new Network Interface Card.
  #
- # @val: the physical address of the guest to start from
+ # @netdev: id of -netdev to connect to
  #
-@@ -856,8 +825,7 @@
+@@ -140,8 +137,7 @@
  
  ##
- # @Memdev:
+ # @NetdevPasstOptions:
 -#
--# Information about memory backend
-+#     Information about memory backend
+-# Unprivileged user-mode network connectivity using passt
++#     Unprivileged user-mode network connectivity using passt
  #
- # @id: backend's ID if backend has 'id' property (since 2.9)
- #
-@@ -897,8 +865,7 @@
+ # @path: Filename of the passt program to run (by default 'passt', and
+ #     use PATH)
+@@ -301,9 +297,8 @@
  
  ##
- # @query-memdev:
+ # @NetdevUserOptions:
 -#
--# Return information for all memory backends.
-+#     Return information for all memory backends.
+-# Use the user mode network stack which requires no administrator
+-# privilege to run.
++#     Use the user mode network stack which requires no administrator
++#     privilege to run.
  #
- # Since: 2.1
+ # @hostname: client hostname reported by the builtin DHCP server
  #
-@@ -1073,9 +1040,9 @@
- 
- ##
- # @set-numa-node:
--#
--# Runtime equivalent of '-numa' CLI option, available at preconfigure
--# stage to configure numa mapping before initializing machine.
-+#     Runtime equivalent of '-numa' CLI option, available at
-+#     preconfigure stage to configure numa mapping before initializing
-+#     machine.
- #
- # Since: 3.0
- ##
-@@ -1086,8 +1053,7 @@
- 
- ##
- # @balloon:
--#
--# Request the balloon driver to change its balloon size.
-+#     Request the balloon driver to change its balloon size.
- #
- # @value: the target logical size of the VM in bytes.  We can deduce
- #     the size of the balloon using this formula:
-@@ -1121,8 +1087,7 @@
- 
- ##
- # @BalloonInfo:
--#
--# Information about the guest balloon device.
-+#     Information about the guest balloon device.
- #
- # @actual: the logical size of the VM in bytes.  Formula used:
- #     logical_vm_size = vm_ram_size - balloon_size
-@@ -1133,8 +1098,7 @@
- 
- ##
- # @query-balloon:
--#
--# Return information about the balloon device.
-+#     Return information about the balloon device.
- #
- # Errors:
- #     - If the balloon driver is enabled but not functional because
-@@ -1155,10 +1119,9 @@
- 
- ##
- # @BALLOON_CHANGE:
--#
--# Emitted when the guest changes the actual BALLOON level.  This value
--# is equivalent to the @actual field return by the `query-balloon`
--# command
-+#     Emitted when the guest changes the actual BALLOON level.  This
-+#     value is equivalent to the @actual field return by the
-+#     `query-balloon` command
- #
- # @actual: the logical size of the VM in bytes.  Formula used:
- #     logical_vm_size = vm_ram_size - balloon_size
-@@ -1178,8 +1141,7 @@
- 
- ##
- # @HvBalloonInfo:
--#
--# hv-balloon guest-provided memory status information.
-+#     hv-balloon guest-provided memory status information.
- #
- # @committed: the amount of memory in use inside the guest plus the
- #     amount of the memory unusable inside the guest (ballooned out,
-@@ -1195,9 +1157,8 @@
- 
- ##
- # @query-hv-balloon-status-report:
--#
--# Return the hv-balloon driver data contained in the last received
--# "STATUS" message from the guest.
-+#     Return the hv-balloon driver data contained in the last received
-+#     "STATUS" message from the guest.
- #
- # Errors:
- #     - If no hv-balloon device is present, guest memory status
-@@ -1238,8 +1199,7 @@
- 
- ##
- # @MemoryInfo:
--#
--# Actual memory information in bytes.
-+#     Actual memory information in bytes.
- #
- # @base-memory: size of "base" memory specified with command line
- #     option -m.
-@@ -1272,8 +1232,7 @@
+@@ -389,8 +384,7 @@
  
  ##
- # @PCDIMMDeviceInfo:
+ # @NetdevTapOptions:
 -#
--# PCDIMMDevice state information
-+#     PCDIMMDevice state information
+-# Used to configure a host TAP network interface backend.
++#     Used to configure a host TAP network interface backend.
  #
- # @id: device's ID
+ # @ifname: interface name
  #
-@@ -1308,8 +1267,7 @@
+@@ -447,9 +441,8 @@
  
  ##
- # @VirtioPMEMDeviceInfo:
+ # @NetdevSocketOptions:
 -#
--# VirtioPMEM state information
-+#     VirtioPMEM state information
+-# Socket netdevs are used to establish a network connection to another
+-# QEMU virtual machine via a TCP socket.
++#     Socket netdevs are used to establish a network connection to
++#     another QEMU virtual machine via a TCP socket.
  #
- # @id: device's ID
+ # @fd: file descriptor of an already opened socket
  #
-@@ -1331,8 +1289,7 @@
+@@ -476,8 +469,7 @@
  
  ##
- # @VirtioMEMDeviceInfo:
+ # @NetdevL2TPv3Options:
 -#
--# VirtioMEMDevice state information
-+#     VirtioMEMDevice state information
+-# Configure an Ethernet over L2TPv3 tunnel.
++#     Configure an Ethernet over L2TPv3 tunnel.
  #
- # @id: device's ID
+ # @src: source address
  #
-@@ -1366,8 +1323,7 @@
+@@ -531,8 +523,7 @@
  
  ##
- # @SgxEPCDeviceInfo:
+ # @NetdevVdeOptions:
 -#
--# Sgx EPC state information
-+#     Sgx EPC state information
+-# Connect to a vde switch running on the host.
++#     Connect to a vde switch running on the host.
  #
- # @id: device's ID
+ # @sock: socket path
  #
-@@ -1392,8 +1348,7 @@
+@@ -553,8 +544,7 @@
  
  ##
- # @HvBalloonDeviceInfo:
+ # @NetdevBridgeOptions:
 -#
--# hv-balloon provided memory state information
-+#     hv-balloon provided memory state information
+-# Connect a host TAP network interface to a host bridge device.
++#     Connect a host TAP network interface to a host bridge device.
  #
- # @id: device's ID
+ # @br: bridge name
  #
-@@ -1522,8 +1477,7 @@
+@@ -569,8 +559,7 @@
  
  ##
- # @MemoryDeviceInfo:
+ # @NetdevHubPortOptions:
 -#
--# Union containing information about a memory device
-+#     Union containing information about a memory device
+-# Connect two or more net clients through a software hub.
++#     Connect two or more net clients through a software hub.
  #
- # @type: memory device type
+ # @hubid: hub identifier number
  #
-@@ -1544,8 +1498,7 @@
+@@ -586,8 +575,8 @@
  
  ##
- # @SgxEPC:
+ # @NetdevNetmapOptions:
 -#
--# Sgx EPC cmdline information
-+#     Sgx EPC cmdline information
+-# Connect a client to a netmap-enabled NIC or to a VALE switch port
++#     Connect a client to a netmap-enabled NIC or to a VALE switch
++#     port
  #
- # @memdev: memory backend linked with device
- #
-@@ -1561,8 +1514,7 @@
+ # @ifname: Either the name of an existing network interface supported
+ #     by netmap, or the name of a VALE port (created on the fly).  A
+@@ -607,8 +596,7 @@
  
  ##
- # @SgxEPCProperties:
+ # @AFXDPMode:
 -#
--# SGX properties of machine types.
-+#     SGX properties of machine types.
+-# Attach mode for a default XDP program
++#     Attach mode for a default XDP program
  #
- # @sgx-epc: list of ids of memory-backend-epc objects.
+ # @skb: generic mode, no driver support necessary
  #
-@@ -1574,8 +1526,7 @@
+@@ -623,8 +611,7 @@
  
  ##
- # @query-memory-devices:
+ # @NetdevAFXDPOptions:
 -#
--# Lists available memory devices and their state
-+#     Lists available memory devices and their state
+-# AF_XDP network backend
++#     AF_XDP network backend
  #
- # Since: 2.1
+ # @ifname: The name of an existing network interface.
  #
-@@ -1598,10 +1549,9 @@
- 
- ##
- # @MEMORY_DEVICE_SIZE_CHANGE:
--#
--# Emitted when the size of a memory device changes.  Only emitted for
--# memory devices that can actually change the size (e.g., virtio-mem
--# due to guest action).
-+#     Emitted when the size of a memory device changes.  Only emitted
-+#     for memory devices that can actually change the size (e.g.,
-+#     virtio-mem due to guest action).
- #
- # @id: device's ID
- #
-@@ -1625,8 +1575,7 @@
+@@ -675,8 +662,7 @@
  
  ##
- # @BootConfiguration:
+ # @NetdevVhostUserOptions:
 -#
--# Schema for virtual machine boot configuration.
-+#     Schema for virtual machine boot configuration.
+-# Vhost-user network backend
++#     Vhost-user network backend
  #
- # @order: Boot order (a=floppy, c=hard disk, d=CD-ROM, n=network)
+ # @chardev: name of a unix socket chardev
  #
-@@ -1710,8 +1659,7 @@
+@@ -836,8 +822,7 @@
  
  ##
- # @x-query-irq:
+ # @NetdevStreamOptions:
 -#
--# Query interrupt statistics
-+#     Query interrupt statistics
+-# Configuration info for stream socket netdev
++#     Configuration info for stream socket netdev
  #
- # Features:
- #
-@@ -1727,8 +1675,7 @@
+ # @addr: socket address to listen on (server=true) or connect to
+ #     (server=false)
+@@ -861,8 +846,7 @@
  
  ##
- # @x-query-jit:
+ # @NetdevDgramOptions:
 -#
--# Query TCG compiler statistics
-+#     Query TCG compiler statistics
+-# Configuration info for datagram socket netdev.
++#     Configuration info for datagram socket netdev.
  #
- # Features:
+ # @remote: remote address
  #
-@@ -1745,8 +1692,7 @@
+@@ -898,8 +882,7 @@
  
  ##
- # @x-query-numa:
+ # @NetClientDriver:
 -#
--# Query NUMA topology information
-+#     Query NUMA topology information
+-# Available netdev drivers.
++#     Available netdev drivers.
  #
- # Features:
+ # @l2tpv3: since 2.1
  #
-@@ -1762,8 +1708,7 @@
+@@ -933,8 +916,7 @@
  
  ##
- # @x-query-ramblock:
+ # @Netdev:
 -#
--# Query system ramblock information
-+#     Query system ramblock information
+-# Captures the configuration of a network device.
++#     Captures the configuration of a network device.
  #
- # Features:
+ # @id: identifier for monitor commands.
  #
-@@ -1779,8 +1724,7 @@
+@@ -972,8 +954,7 @@
  
  ##
- # @x-query-roms:
+ # @RxState:
 -#
--# Query information on the registered ROMS
-+#     Query information on the registered ROMS
+-# Packets receiving state
++#     Packets receiving state
  #
- # Features:
+ # @normal: filter assigned packets according to the mac-table
  #
-@@ -1796,8 +1740,7 @@
+@@ -987,8 +968,7 @@
  
  ##
- # @x-query-usb:
+ # @RxFilterInfo:
 -#
--# Query information on the USB devices
-+#     Query information on the USB devices
+-# Rx-filter information for a NIC.
++#     Rx-filter information for a NIC.
  #
- # Features:
+ # @name: net client name
  #
-@@ -1828,8 +1771,7 @@
+@@ -1033,8 +1013,8 @@
  
  ##
- # @MemorySizeConfiguration:
+ # @query-rx-filter:
 -#
--# Schema for memory size configuration.
-+#     Schema for memory size configuration.
+-# Return rx-filter information for all NICs (or for the given NIC).
++#     Return rx-filter information for all NICs (or for the given
++#     NIC).
  #
- # @size: memory size in bytes
+ # @name: net client name
  #
-@@ -1846,8 +1788,7 @@
+@@ -1082,9 +1062,8 @@
  
  ##
- # @dumpdtb:
+ # @NIC_RX_FILTER_CHANGED:
 -#
--# Save the FDT in dtb format.
-+#     Save the FDT in dtb format.
+-# Emitted once until the `query-rx-filter` command is executed, the
+-# first event will always be emitted
++#     Emitted once until the `query-rx-filter` command is executed,
++#     the first event will always be emitted
  #
- # @filename: name of the dtb file to be created
+ # @name: net client name
  #
-@@ -1865,8 +1806,7 @@
+@@ -1104,8 +1083,7 @@
  
  ##
- # @x-query-interrupt-controllers:
+ # @AnnounceParameters:
 -#
--# Query information on interrupt controller devices
-+#     Query information on interrupt controller devices
- #
- # Features:
+-# Parameters for self-announce timers
++#     Parameters for self-announce timers
  #
-@@ -1896,8 +1836,7 @@
- 
- ##
- # @query-firmware-log:
--#
--# Find firmware memory log buffer in guest memory, return content.
-+#     Find firmware memory log buffer in guest memory, return content.
- #
- # @max-size: limit the amount of log data returned.  Up to 1 MiB of
- #     log data is allowed.  In case the amount of log data is larger
-@@ -1911,8 +1850,7 @@
+ # @initial: Initial delay (in ms) before sending the first GARP/RARP
+ #     announcement
+@@ -1157,11 +1135,10 @@
  
  ##
- # @dump-skeys:
+ # @FAILOVER_NEGOTIATED:
 -#
--# Dump the storage keys for an s390x guest
-+#     Dump the storage keys for an s390x guest
+-# Emitted when VIRTIO_NET_F_STANDBY was enabled during feature
+-# negotiation.  Failover primary devices which were hidden (not
+-# hotplugged when requested) before will now be hotplugged by the
+-# virtio-net standby device.
++#     Emitted when VIRTIO_NET_F_STANDBY was enabled during feature
++#     negotiation.  Failover primary devices which were hidden (not
++#     hotplugged when requested) before will now be hotplugged by the
++#     virtio-net standby device.
  #
- # @filename: the path to the file to dump to
+ # @device-id: QEMU device id of the unplugged device
  #
-@@ -1950,8 +1888,7 @@
+@@ -1178,8 +1155,7 @@
  
  ##
- # @CpuModelExpansionType:
+ # @NETDEV_STREAM_CONNECTED:
 -#
--# An enumeration of CPU model expansion types.
-+#     An enumeration of CPU model expansion types.
- #
- # @static: Expand to a static CPU model, a combination of a static
- #     base model name and property delta changes.  As the static base
-@@ -1983,9 +1920,8 @@
- 
- ##
- # @CpuModelCompareResult:
--#
--# An enumeration of CPU model comparison results.  The result is
--# usually calculated using e.g. CPU features or CPU generations.
-+#     An enumeration of CPU model comparison results.  The result is
-+#     usually calculated using e.g. CPU features or CPU generations.
- #
- # @incompatible: If model A is incompatible to model B, model A is not
- #     guaranteed to run where model B runs and the other way around.
-@@ -2008,8 +1944,7 @@
- 
- ##
- # @CpuModelBaselineInfo:
--#
--# The result of a CPU model baseline.
-+#     The result of a CPU model baseline.
+-# Emitted when the netdev stream backend is connected
++#     Emitted when the netdev stream backend is connected
  #
- # @model: the baselined `CpuModelInfo`.
+ # @netdev-id: QEMU netdev id that is connected
  #
-@@ -2020,8 +1955,7 @@
+@@ -1208,8 +1184,7 @@
  
  ##
- # @CpuModelCompareInfo:
+ # @NETDEV_STREAM_DISCONNECTED:
 -#
--# The result of a CPU model comparison.
-+#     The result of a CPU model comparison.
+-# Emitted when the netdev stream backend is disconnected
++#     Emitted when the netdev stream backend is disconnected
  #
- # @result: The result of the compare operation.
+ # @netdev-id: QEMU netdev id that is disconnected
  #
-@@ -2152,8 +2086,7 @@
+@@ -1226,8 +1201,7 @@
  
  ##
- # @CpuModelExpansionInfo:
+ # @NETDEV_VHOST_USER_CONNECTED:
 -#
--# The result of a cpu model expansion.
-+#     The result of a cpu model expansion.
+-# Emitted when the vhost-user chardev is connected
++#     Emitted when the vhost-user chardev is connected
  #
- # @model: the expanded `CpuModelInfo`.
+ # @netdev-id: QEMU netdev id that is connected
  #
-@@ -2222,8 +2155,7 @@
+@@ -1246,8 +1220,7 @@
  
  ##
- # @CpuDefinitionInfo:
+ # @NETDEV_VHOST_USER_DISCONNECTED:
 -#
--# Virtual CPU definition.
-+#     Virtual CPU definition.
+-# Emitted when the vhost-user chardev is disconnected
++#     Emitted when the vhost-user chardev is disconnected
  #
- # @name: the name of the CPU definition
- #
-@@ -2284,8 +2216,7 @@
- 
- ##
- # @query-cpu-definitions:
--#
--# Return a list of supported virtual CPU definitions
-+#     Return a list of supported virtual CPU definitions
+ # @netdev-id: QEMU netdev id that is disconnected
  #
- # Since: 1.2
- ##
 -- 
 2.55.0
 
