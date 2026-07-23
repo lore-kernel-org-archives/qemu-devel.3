@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9EDDC4452B
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:56:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B9A7C4452B
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:56:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmlS0-0005Fe-Ay; Thu, 23 Jul 2026 00:54:28 -0400
+	id 1wmlS6-0005ZK-6n; Thu, 23 Jul 2026 00:54:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlRw-00052w-Ey
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:54:25 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlS4-0005TY-G3
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:54:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlRt-00050F-IH
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:54:24 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlS2-00054O-Nh
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:54:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784782460;
+ s=mimecast20190719; t=1784782470;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=j66gSEdJekh31Cxv+QGs8EBkjEmWE9xovj2bAgh349I=;
- b=YcWffXW7cGIo36H/lvB3yEOjtVVt4alPyC4dRwvMpDjtz1/qZ6eWNPeKl/z32B9Uwuolcr
- gbAa5pb5cwpAsCiBcoIrhpI2WnlR4huN3xkkrNcbvHipsndsQ5Tr/EcriOmaNklUSQ1rd8
- CMYuTVm29Ujbzv/zo54o9ZutvofIUKI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=Y2l6GvJOHZN3iItpA5ipqrT2gVM1c+L15Fe47ufdVcE=;
+ b=UcaKIhL3HaCq5N0Ni3mgAuoewYKu6wEE9qD0k+WHbSx6+sMUcPYYLihpqjkHnRqzyI+Lvc
+ g2iUfCGGuPO6vYIylJZ16udpTpRDu5HsfY1ubotYyEWZdSwRc0vFQkpbYPTNCsbPFMZe5Z
+ QUmZjuIKmSBVcm8HLW8TkEuH3+lZTNQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-45-7i0Fa4lFPKK6BNYhHf8-hA-1; Thu,
- 23 Jul 2026 00:54:19 -0400
-X-MC-Unique: 7i0Fa4lFPKK6BNYhHf8-hA-1
-X-Mimecast-MFC-AGG-ID: 7i0Fa4lFPKK6BNYhHf8-hA_1784782456
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-cP_UqyUjPW6VzT4_S0CN1A-1; Thu,
+ 23 Jul 2026 00:54:26 -0400
+X-MC-Unique: cP_UqyUjPW6VzT4_S0CN1A-1
+X-Mimecast-MFC-AGG-ID: cP_UqyUjPW6VzT4_S0CN1A_1784782464
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CF1A51805F13; Thu, 23 Jul 2026 04:54:15 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CF1FC1944F10; Thu, 23 Jul 2026 04:54:23 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.44])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CE7E918002AE; Thu, 23 Jul 2026 04:54:06 +0000 (UTC)
+ id 2B26918002AE; Thu, 23 Jul 2026 04:54:16 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -73,10 +73,9 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Jason Wang <jasowangio@gmail.com>, qemu-trivial@nongnu.org,
  Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH v2 36/44] qapi: convert trivial intro sections for
- run-state.json
-Date: Thu, 23 Jul 2026 00:47:57 -0400
-Message-ID: <20260723044805.527643-37-jsnow@redhat.com>
+Subject: [PATCH v2 37/44] qapi: convert intro sections for char.json
+Date: Thu, 23 Jul 2026 00:47:58 -0400
+Message-ID: <20260723044805.527643-38-jsnow@redhat.com>
 In-Reply-To: <20260723044805.527643-1-jsnow@redhat.com>
 References: <20260723044805.527643-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -84,13 +83,13 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: permerror client-ip=170.10.129.124;
  envelope-from=jsnow@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,364 +109,313 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/run-state.json | 120 +++++++++++++++++---------------------------
- 1 file changed, 45 insertions(+), 75 deletions(-)
+ qapi/char.json | 90 +++++++++++++++++---------------------------------
+ 1 file changed, 30 insertions(+), 60 deletions(-)
 
-diff --git a/qapi/run-state.json b/qapi/run-state.json
-index a5771ad4681..bc8c17477e2 100644
---- a/qapi/run-state.json
-+++ b/qapi/run-state.json
-@@ -10,8 +10,7 @@
+diff --git a/qapi/char.json b/qapi/char.json
+index abaccefa97e..7ae67eedff8 100644
+--- a/qapi/char.json
++++ b/qapi/char.json
+@@ -12,8 +12,7 @@
  
  ##
- # @RunState:
+ # @ChardevInfo:
 -#
--# An enumeration of VM run states.
-+#     An enumeration of VM run states.
+-# Information about a character device.
++#     Information about a character device.
  #
- # @debug: QEMU is running on a debugger
+ # @label: the label of the character device
  #
-@@ -63,8 +62,7 @@
+@@ -35,8 +34,7 @@
  
  ##
- # @ShutdownCause:
+ # @query-chardev:
 -#
--# An enumeration of reasons for a shutdown.
-+#     An enumeration of reasons for a shutdown.
- #
- # @none: No shutdown request pending
- #
-@@ -103,8 +101,7 @@
- 
- ##
- # @StatusInfo:
--#
--# Information about VM run state
-+#     Information about VM run state
- #
- # @running: true if all VCPUs are runnable, false if not runnable
- #
-@@ -118,8 +115,7 @@
- 
- ##
- # @query-status:
--#
--# Query the run status of the VM
-+#     Query the run status of the VM
+-# Return information about current character devices.
++#     Return information about current character devices.
  #
  # Since: 0.14
  #
-@@ -134,9 +130,8 @@
+@@ -68,8 +66,7 @@
  
  ##
- # @SHUTDOWN:
+ # @ChardevBackendInfo:
 -#
--# Emitted when the virtual machine has shut down, indicating that QEMU
--# is about to exit.
-+#     Emitted when the virtual machine has shut down, indicating that
-+#     QEMU is about to exit.
+-# Information about a character device backend
++#     Information about a character device backend
  #
- # @guest: If true, the shutdown was triggered by a guest request (such
- #     as a guest-initiated ACPI shutdown request or other
-@@ -162,9 +157,8 @@
+ # @name: The backend name
+ #
+@@ -79,8 +76,7 @@
  
  ##
- # @POWERDOWN:
+ # @query-chardev-backends:
 -#
--# Emitted when the virtual machine is powered down through the power
--# control system, such as via ACPI.
-+#     Emitted when the virtual machine is powered down through the
-+#     power control system, such as via ACPI.
+-# Return information about character device backends.
++#     Return information about character device backends.
  #
- # Since: 0.12
+ # Since: 2.0
  #
-@@ -177,8 +171,7 @@
+@@ -108,8 +104,7 @@
  
  ##
- # @RESET:
+ # @DataFormat:
 -#
--# Emitted when the virtual machine is reset
-+#     Emitted when the virtual machine is reset
+-# An enumeration of data format.
++#     An enumeration of data format.
  #
- # @guest: If true, the reset was triggered by a guest request (such as
- #     a guest-initiated ACPI reboot request or other hardware-specific
-@@ -199,8 +192,7 @@
+ # @utf8: Data is a UTF-8 string (RFC 3629)
+ #
+@@ -122,8 +117,7 @@
  
  ##
- # @STOP:
+ # @ringbuf-write:
 -#
--# Emitted when the virtual machine is stopped
-+#     Emitted when the virtual machine is stopped
+-# Write to a ring buffer character device.
++#     Write to a ring buffer character device.
  #
- # Since: 0.12
+ # @device: the ring buffer character device name
  #
-@@ -213,8 +205,7 @@
+@@ -154,8 +148,7 @@
  
  ##
- # @RESUME:
+ # @ringbuf-read:
 -#
--# Emitted when the virtual machine resumes execution
-+#     Emitted when the virtual machine resumes execution
+-# Read from a ring buffer character device.
++#     Read from a ring buffer character device.
  #
- # Since: 0.12
+ # @device: the ring buffer character device name
  #
-@@ -227,9 +218,8 @@
+@@ -189,8 +182,7 @@
  
  ##
- # @SUSPEND:
+ # @ChardevCommon:
 -#
--# Emitted when guest enters a hardware suspension state, for example,
--# S3 state, which is sometimes called standby state
-+#     Emitted when guest enters a hardware suspension state, for
-+#     example, S3 state, which is sometimes called standby state
+-# Configuration shared across all chardev backends
++#     Configuration shared across all chardev backends
  #
- # Since: 1.1
+ # @logfile: The name of a logfile to save output
  #
-@@ -261,9 +251,8 @@
+@@ -209,8 +201,7 @@
  
  ##
- # @WAKEUP:
+ # @ChardevFile:
 -#
--# Emitted when the guest has woken up from suspend state and is
--# running
-+#     Emitted when the guest has woken up from suspend state and is
-+#     running
+-# Configuration info for file chardevs.
++#     Configuration info for file chardevs.
  #
- # Since: 1.1
+ # @in: The name of the input file
  #
-@@ -276,8 +265,7 @@
+@@ -229,8 +220,7 @@
  
  ##
- # @WATCHDOG:
+ # @ChardevHostdev:
 -#
--# Emitted when the watchdog device's timer is expired
-+#     Emitted when the watchdog device's timer is expired
+-# Configuration info for device and pipe chardevs.
++#     Configuration info for device and pipe chardevs.
  #
- # @action: action that has been taken
- #
-@@ -300,9 +288,8 @@
+ # @device: The name of the special file for the device, i.e.
+ #     /dev/ttyS0 on Unix or COM1: on Windows
+@@ -243,8 +233,7 @@
  
  ##
- # @WatchdogAction:
+ # @ChardevSocket:
 -#
--# An enumeration of the actions taken when the watchdog device's timer
--# is expired
-+#     An enumeration of the actions taken when the watchdog device's
-+#     timer is expired
+-# Configuration info for (stream) socket chardevs.
++#     Configuration info for (stream) socket chardevs.
  #
- # @reset: system resets
- #
-@@ -328,8 +315,7 @@
+ # @addr: socket address to listen on (server=true) or connect to
+ #     (server=false)
+@@ -295,8 +284,7 @@
  
  ##
- # @RebootAction:
+ # @ChardevUdp:
 -#
--# Possible QEMU actions upon guest reboot
-+#     Possible QEMU actions upon guest reboot
+-# Configuration info for datagram socket chardevs.
++#     Configuration info for datagram socket chardevs.
  #
- # @reset: Reset the VM
+ # @remote: remote address
  #
-@@ -343,8 +329,7 @@
+@@ -311,8 +299,7 @@
  
  ##
- # @ShutdownAction:
+ # @ChardevMux:
 -#
--# Possible QEMU actions upon guest shutdown
-+#     Possible QEMU actions upon guest shutdown
+-# Configuration info for mux chardevs.
++#     Configuration info for mux chardevs.
  #
- # @poweroff: Shutdown the VM and exit
+ # @chardev: name of the base chardev.
  #
-@@ -375,8 +360,7 @@
+@@ -324,8 +311,7 @@
  
  ##
- # @watchdog-set-action:
+ # @ChardevHub:
 -#
--# Set watchdog action.
-+#     Set watchdog action.
+-# Configuration info for hub chardevs.
++#     Configuration info for hub chardevs.
  #
- # @action: `WatchdogAction` action taken when watchdog timer expires.
+ # @chardevs: IDs to be added to this hub (maximum 4 devices).
  #
-@@ -392,9 +376,8 @@
+@@ -337,8 +323,7 @@
  
  ##
- # @set-action:
+ # @ChardevStdio:
 -#
--# Set the actions that will be taken by the emulator in response to
--# guest events.
-+#     Set the actions that will be taken by the emulator in response
-+#     to guest events.
+-# Configuration info for stdio chardevs.
++#     Configuration info for stdio chardevs.
  #
- # @reboot: `RebootAction` action taken on guest reboot.
- #
-@@ -425,8 +408,7 @@
+ # @signal: Allow signals (such as SIGINT triggered by ^C) be delivered
+ #     to QEMU.  Default: true.
+@@ -351,8 +336,7 @@
  
  ##
- # @GUEST_PANICKED:
+ # @ChardevSpiceChannel:
 -#
--# Emitted when guest OS panic is detected
-+#     Emitted when guest OS panic is detected
+-# Configuration info for spice vm channel chardevs.
++#     Configuration info for spice vm channel chardevs.
  #
- # @action: action that has been taken, currently always "pause"
+ # @type: kind of channel (for example vdagent).
  #
-@@ -445,8 +427,7 @@
+@@ -365,8 +349,7 @@
  
  ##
- # @GUEST_CRASHLOADED:
+ # @ChardevSpicePort:
 -#
--# Emitted when guest OS crash loaded is detected
-+#     Emitted when guest OS crash loaded is detected
+-# Configuration info for spice port chardevs.
++#     Configuration info for spice port chardevs.
  #
- # @action: action that has been taken, currently always "run"
+ # @fqdn: name of the channel (see docs/spice-port-fqdn.txt)
  #
-@@ -465,8 +446,8 @@
+@@ -379,8 +362,7 @@
  
  ##
- # @GUEST_PVSHUTDOWN:
+ # @ChardevVCEncoding:
 -#
--# Emitted when guest submits a shutdown request via pvpanic interface
-+#     Emitted when guest submits a shutdown request via pvpanic
-+#     interface
+-# Character encoding expected from the guest on a virtual console.
++#     Character encoding expected from the guest on a virtual console.
  #
- # Since: 9.1
- #
-@@ -479,8 +460,8 @@
+ # @cp437: CP437 (8-bit Extended ASCII / VGA).  Every byte maps
+ #     directly to a glyph; suitable for DOS or other guests that
+@@ -397,8 +379,7 @@
  
  ##
- # @GuestPanicAction:
+ # @ChardevDBus:
 -#
--# An enumeration of the actions taken when guest OS panic is detected
-+#     An enumeration of the actions taken when guest OS panic is
-+#     detected
+-# Configuration info for DBus chardevs.
++#     Configuration info for DBus chardevs.
  #
- # @pause: system pauses
+ # @name: name of the channel (following docs/spice-port-fqdn.txt)
  #
-@@ -495,8 +476,7 @@
+@@ -415,8 +396,7 @@
  
  ##
- # @GuestPanicInformationType:
+ # @ChardevVC:
 -#
--# An enumeration of the guest panic information types
-+#     An enumeration of the guest panic information types
+-# Configuration info for virtual console chardevs.
++#     Configuration info for virtual console chardevs.
  #
- # @hyper-v: hyper-v guest panic information type
+ # @width: console width, in pixels
  #
-@@ -513,8 +493,7 @@
+@@ -445,8 +425,7 @@
  
  ##
- # @GuestPanicInformation:
+ # @ChardevRingbuf:
 -#
--# Information about a guest panic
-+#     Information about a guest panic
+-# Configuration info for ring buffer chardevs.
++#     Configuration info for ring buffer chardevs.
  #
- # @type: Crash type that defines the hypervisor specific information
+ # @size: ring buffer size, must be power of two, default is 65536
  #
-@@ -530,8 +509,7 @@
+@@ -458,8 +437,7 @@
  
  ##
- # @GuestPanicInformationHyperV:
+ # @ChardevQemuVDAgent:
 -#
--# Hyper-V specific guest panic information (HV crash MSRs)
-+#     Hyper-V specific guest panic information (HV crash MSRs)
+-# Configuration info for QEMU vdagent implementation.
++#     Configuration info for QEMU vdagent implementation.
  #
- # @arg1: for Windows, `STOP` code for the guest crash.  For Linux,
- #     an error code.
-@@ -560,8 +538,7 @@
+ # @mouse: enable/disable mouse, default is enabled.
+ #
+@@ -475,8 +453,7 @@
  
  ##
- # @S390CrashReason:
+ # @ChardevPty:
 -#
--# Reason why the CPU is in a crashed state.
-+#     Reason why the CPU is in a crashed state.
+-# Configuration info for pty implementation.
++#     Configuration info for pty implementation.
  #
- # @unknown: no crash reason was set
- #
-@@ -586,8 +563,7 @@
+ # @path: optional path to create a symbolic link that points to the
+ #     allocated PTY
+@@ -723,8 +700,7 @@
  
  ##
- # @GuestPanicInformationS390:
+ # @ChardevBackend:
 -#
--# S390 specific guest panic information (PSW)
-+#     S390 specific guest panic information (PSW)
+-# Configuration info for the new chardev backend.
++#     Configuration info for the new chardev backend.
  #
- # @core: core id of the CPU that crashed
+ # @type: backend type
  #
-@@ -607,10 +583,9 @@
+@@ -767,8 +743,7 @@
  
  ##
- # @GuestPanicInformationTdx:
+ # @ChardevReturn:
 -#
--# TDX Guest panic information specific to TDX, as specified in the
--# "Guest-Hypervisor Communication Interface (GHCI) Specification",
--# section TDG.VP.VMCALL<ReportFatalError>.
-+#     TDX Guest panic information specific to TDX, as specified in the
-+#     "Guest-Hypervisor Communication Interface (GHCI) Specification",
-+#     section TDG.VP.VMCALL<ReportFatalError>.
+-# Return info about the chardev backend just created.
++#     Return info about the chardev backend just created.
  #
- # @error-code: TD-specific error code
- #
-@@ -630,9 +605,8 @@
+ # @pty: name of the slave pseudoterminal device, present if and only
+ #     if a chardev of type 'pty' was created
+@@ -780,8 +755,7 @@
  
  ##
- # @GuestPanicInformationSev:
+ # @chardev-add:
 -#
--# Information for AMD SEV-specific termination request (GHCB MSR
--# contents)
-+#     Information for AMD SEV-specific termination request (GHCB MSR
-+#     contents)
+-# Add a character device backend
++#     Add a character device backend
  #
- # @set: The reason code set provided by the guest
+ # @id: the chardev's ID, must be unique
  #
-@@ -646,8 +620,7 @@
+@@ -818,8 +792,7 @@
  
  ##
- # @MEMORY_FAILURE:
+ # @chardev-change:
 -#
--# Emitted when a memory failure occurs on host side.
-+#     Emitted when a memory failure occurs on host side.
+-# Change a character device backend
++#     Change a character device backend
  #
- # @recipient: recipient is defined as `MemoryFailureRecipient`.
+ # @id: the chardev's ID
  #
-@@ -673,8 +646,7 @@
+@@ -859,8 +832,7 @@
  
  ##
- # @MemoryFailureRecipient:
+ # @chardev-remove:
 -#
--# Hardware memory failure occurs, handled by recipient.
-+#     Hardware memory failure occurs, handled by recipient.
+-# Remove a character device backend
++#     Remove a character device backend
  #
- # @hypervisor: memory failure at QEMU process address space.  (none
- #     guest memory, but used by QEMU itself).
-@@ -689,8 +661,7 @@
+ # @id: the chardev's ID, must not be in use
+ #
+@@ -876,8 +848,7 @@
  
  ##
- # @MemoryFailureAction:
+ # @chardev-send-break:
 -#
--# Actions taken by QEMU in response to a hardware memory failure.
-+#     Actions taken by QEMU in response to a hardware memory failure.
+-# Send a break to a character device
++#     Send a break to a character device
  #
- # @ignore: the memory failure could be ignored.  This will only be the
- #     case for action-optional failures.
-@@ -717,8 +688,7 @@
+ # @id: the chardev's ID
+ #
+@@ -893,8 +864,7 @@
  
  ##
- # @MemoryFailureFlags:
+ # @VSERPORT_CHANGE:
 -#
--# Additional information on memory failures.
-+#     Additional information on memory failures.
+-# Emitted when the guest opens or closes a virtio-serial port.
++#     Emitted when the guest opens or closes a virtio-serial port.
  #
- # @action-required: whether a memory failure event is action-required
- #     or action-optional (e.g. a failure during memory scrub).
-@@ -734,8 +704,8 @@
- 
- ##
- # @NotifyVmexitOption:
--#
--# An enumeration of the options specified when enabling notify VM exit
-+#     An enumeration of the options specified when enabling notify VM
-+#     exit
+ # @id: device identifier of the virtio-serial port
  #
- # @run: enable the feature, do nothing and continue if the notify VM
- #     exit happens.
 -- 
 2.55.0
 
