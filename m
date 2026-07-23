@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2D75C531D0
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 20:06:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47F6EC531D0
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 20:06:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmzfE-0007w4-CG; Thu, 23 Jul 2026 16:05:04 -0400
+	id 1wmzfF-00081E-TI; Thu, 23 Jul 2026 16:05:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wmzeI-0007Ol-PA; Thu, 23 Jul 2026 16:04:07 -0400
-Received: from [115.124.30.124] (helo=out30-124.freemail.mail.aliyun.com)
+ id 1wmzeI-0007Pb-T5; Thu, 23 Jul 2026 16:04:07 -0400
+Received: from [115.124.30.133] (helo=out30-133.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wmzeA-0005S4-P0; Thu, 23 Jul 2026 16:04:06 -0400
+ id 1wmzeA-0005Ru-Pd; Thu, 23 Jul 2026 16:04:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1784837026; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=kBj5yGMNBRtpEDFstFG2ij4l26e7v+8t99VjblvjH+I=;
- b=sTx63gZ4hxGfKKjQvOTEvP5RL9BhXhpWNe7bJAkHSk3ZYSDogOXZItZllsQAleMYF0QeqKuKo+6k8pUEoBuw6nKcxONo+P/IKP/8WOs9K84VGS9xfm/jN4qnmRO3Y5vxL9bC7jXj3euGT0gLnuL/ZJunlzcYl9iilD9NZecsobY=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R901e4; CH=green; DM=||false|;
+ t=1784837023; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=o9Tsn3g5F5bgE5q/yvCjG/dBWMS6cVPED04c2iL2CMg=;
+ b=tKVyFowZ5d5BDs8mpuof51t5dQ4/f/IvfAY2jTQZq8dV50SnbsfBcKUPmU4b+rG3iP1EamIq0sLdPVJDAeJZUvFFQ4vZIZtthxoRLQdzWXGbo6g+R/JywR3que7mKdCLfn5poRZrUBxuxCSDRWXFMO8weJt0YPHcTNMpP3iHJMU=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R791e4; CH=green; DM=||false|;
  DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037033178;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=15; SR=0;
- TI=SMTPD_---0X7h4Uvj_1784837024; 
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=13; SR=0;
+ TI=SMTPD_---0X7h4UuV_1784837022; 
 Received: from localhost.localdomain(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0X7h4Uvj_1784837024 cluster:ay36) by smtp.aliyun-inc.com;
- Fri, 24 Jul 2026 04:03:44 +0800
+ fp:SMTPD_---0X7h4UuV_1784837022 cluster:ay36) by smtp.aliyun-inc.com;
+ Fri, 24 Jul 2026 04:03:42 +0800
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: palmer@dabbelt.com, alistair.francis@wdc.com,
@@ -38,21 +38,19 @@ Cc: palmer@dabbelt.com, alistair.francis@wdc.com,
  xiangyi.zeng@linux.alibaba.com, cxx194832@alibaba-inc.com,
  LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Huang Tao <eric.huang@linux.alibaba.com>,
- TANG Tiancheng <lyndra@linux.alibaba.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Frank Chang <frank.chang@sifive.com>
-Subject: [PATCH v8 08/11] target/riscv: Enable SMMPT extension
-Date: Fri, 24 Jul 2026 04:03:22 +0800
-Message-Id: <20260723200325.24969-9-zhiwei_liu@linux.alibaba.com>
+ TANG Tiancheng <lyndra@linux.alibaba.com>
+Subject: [PATCH v8 05/11] target/riscv: Implement SMMPT fence instructions
+Date: Fri, 24 Jul 2026 04:03:19 +0800
+Message-Id: <20260723200325.24969-6-zhiwei_liu@linux.alibaba.com>
 X-Mailer: git-send-email 2.39.3 (Apple Git-146)
 In-Reply-To: <20260723200325.24969-1-zhiwei_liu@linux.alibaba.com>
 References: <20260723200325.24969-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.124 (deferred)
-Received-SPF: pass client-ip=115.124.30.124;
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.133 (deferred)
+Received-SPF: pass client-ip=115.124.30.133;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-124.freemail.mail.aliyun.com
+ helo=out30-133.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -76,59 +74,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch implements v0.4.9 SMMPT
-specification(https://github.com/riscv/riscv-smmtt/releases/tag/v0.4.9).
+This patch completes the SMMPT implementation by adding support for the
+new fence instructions: `mfence.pa` and `minval.pa`.
+
+According to the specification, these instructions act as memory ordering
+fences for MPT updates. In QEMU's TCG model, this is conservatively
+implemented by flushing the entire TLB, which ensures that any subsequent
+memory accesses will re-evaluate permissions and see the effects of any prior
+MPT modifications.
+
+The instructions are privileged and will cause an illegal instruction
+exception if executed outside of M-mode.
 
 Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
 Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
 ---
- target/riscv/cpu.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ target/riscv/insn32.decode                    |  2 ++
+ .../tcg/insn_trans/trans_privileged.c.inc     | 30 +++++++++++++++++++
+ 2 files changed, 32 insertions(+)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 727b2924a6..5f8455dae2 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -265,8 +265,10 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
-     ISA_EXT_DATA_ENTRY(smpmpmt, PRIV_VERSION_1_12_0, ext_smpmpmt),
-     ISA_EXT_DATA_ENTRY(smmpm, PRIV_VERSION_1_13_0, ext_smmpm),
-+    ISA_EXPERIMENTAL_EXT_DATA_ENTRY(smmpt, PRIV_VERSION_1_13_0, ext_smmpt),
-     ISA_EXT_DATA_ENTRY(smnpm, PRIV_VERSION_1_13_0, ext_smnpm),
-     ISA_EXT_DATA_ENTRY(smrnmi, PRIV_VERSION_1_12_0, ext_smrnmi),
-+    ISA_EXPERIMENTAL_EXT_DATA_ENTRY(smsdid, PRIV_VERSION_1_13_0, ext_smsdid),
-     ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
-     ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
-     ISA_EXT_DATA_ENTRY(ssccfg, PRIV_VERSION_1_13_0, ext_ssccfg),
-@@ -2852,6 +2854,15 @@ static RISCVCPUImpliedExtsRule ZVFBFA_IMPLIED = {
-     },
- };
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index 21272fdb50..f0917b7696 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -120,6 +120,8 @@ sret        0001000    00010 00000 000 00000 1110011
+ mret        0011000    00010 00000 000 00000 1110011
+ wfi         0001000    00101 00000 000 00000 1110011
+ sfence_vma  0001001    ..... ..... 000 00000 1110011 @sfence_vma
++mfence_pa   0011001    ..... ..... 000 00000 1110011 @sfence_vma
++minval_pa   0011011    ..... ..... 000 00000 1110011 @sfence_vma
  
-+static RISCVCPUImpliedExtsRule SMMPT_IMPLIED = {
-+    .ext = CPU_CFG_OFFSET(ext_smmpt),
-+    .implied_multi_exts = {
-+        CPU_CFG_OFFSET(ext_smsdid),
+ # *** NMI ***
+ mnret       0111000    00010 00000 000 00000 1110011
+diff --git a/target/riscv/tcg/insn_trans/trans_privileged.c.inc b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
+index a8eaccef67..67f2e56034 100644
+--- a/target/riscv/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
+@@ -160,3 +160,33 @@ static bool trans_sfence_vma(DisasContext *ctx, arg_sfence_vma *a)
+ #endif
+     return false;
+ }
 +
-+        RISCV_IMPLIED_EXTS_RULE_END
-+    },
-+};
++#define REQUIRE_SMSDID(ctx) do {          \
++    if (!ctx->cfg_ptr->ext_smsdid) {      \
++        return false;                     \
++    }                                     \
++} while (0)
 +
- RISCVCPUImpliedExtsRule *riscv_misa_ext_implied_rules[] = {
-     &RVA_IMPLIED, &RVD_IMPLIED, &RVF_IMPLIED,
-     &RVM_IMPLIED, &RVV_IMPLIED, &RVG_IMPLIED,
-@@ -2873,7 +2884,7 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
-     &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SHA_IMPLIED,
-     &SSCFG_IMPLIED, &SUPM_IMPLIED, &SSPM_IMPLIED, &SMCTR_IMPLIED,
-     &SSCTR_IMPLIED, &SSSTATEEN_IMPLIED,
--    NULL
-+    &SMMPT_IMPLIED, NULL
- };
- 
- static const Property riscv_cpu_properties[] = {
++static bool do_mfence_pa(DisasContext *ctx)
++{
++#ifndef CONFIG_USER_ONLY
++    REQUIRE_SMSDID(ctx);
++    if (ctx->priv != PRV_M) {
++        return false;
++    }
++    decode_save_opc(ctx, 0);
++    gen_helper_tlb_flush_all(tcg_env);
++    return true;
++#endif
++    return false;
++}
++
++static bool trans_mfence_pa(DisasContext *ctx, arg_mfence_pa *a)
++{
++    return do_mfence_pa(ctx);
++}
++
++static bool trans_minval_pa(DisasContext *ctx, arg_minval_pa *a)
++{
++    return do_mfence_pa(ctx);
++}
 -- 
 2.43.0
 
