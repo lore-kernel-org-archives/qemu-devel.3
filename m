@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA9F0C531CA
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 12:48:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C3B0C531CA
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 12:48:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmspv-0008N2-QT; Thu, 23 Jul 2026 08:47:39 -0400
+	id 1wmsq6-0008QE-J5; Thu, 23 Jul 2026 08:47:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <82bc736158e827e05d4b55da27c39d42e2062e96@kylie.crudebyte.com>)
- id 1wmspv-0008Mo-23; Thu, 23 Jul 2026 08:47:39 -0400
+ (envelope-from <bc503aefffd20b1806941b3ef708afbd92f0aef2@kylie.crudebyte.com>)
+ id 1wmsq5-0008Pb-1Z; Thu, 23 Jul 2026 08:47:49 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <82bc736158e827e05d4b55da27c39d42e2062e96@kylie.crudebyte.com>)
- id 1wmspt-0001Al-Aq; Thu, 23 Jul 2026 08:47:38 -0400
+ (envelope-from <bc503aefffd20b1806941b3ef708afbd92f0aef2@kylie.crudebyte.com>)
+ id 1wmsq3-0001At-Hx; Thu, 23 Jul 2026 08:47:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:Message-ID:Content-Type:
- Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
- Content-Description; bh=fiFS+g8SAw7nN+LFMTTpbECKPKO+FDmv1qXXgasae1c=; b=iSuwu
- e4+Xz9MAmc4tGpzE7OPjxwBlM0Gqtkk1TK4HZSkBKO9U1Sv9NM7U57Mj2jL0UkGFCzu67z9HhaCCZ
- vlAOUmHukUyRPz0Mi9xCkjENuidDVFpms7G+uXKWj/0P/MBQvtmHTpgFwH15dfJI/GmdYMN4fmt4h
- WLcDSo8mLD381mVHoi1aFvVo+/vcCp/WedCGwxM2bQHXKGy+WbXboNMQU+WsqNe/eYe8WNZQOT2dW
- ZK6TEeSjBF7BSj4vkXGMKZDCHbG8q48V2lJqs/Y3qz5T+cqudd5RJlnHBmPjmhCn5q94k2n88XWK5
- Qqgjy6BUowZ3tA+JYGtUTuSp1v+Zv+XVz1ar9jJ9/fLLc8lBy6pLSZ/xBvizukBIesiW4qiKDo/RZ
- d5PS5tB7QDmo5JM6+JAMVE2tnoAtH8e9/QLYR+jE2xm/X7X2EprEtNSdMNUqxNHQmBSKpm9MVif+c
- em4RYbL5+w4z7ZylEFywg/JxQNnNhyo5gbFJyrUqvV6y1WW0EbDNoiP4p1xJ3pfvcD5gzZf5HfInf
- hxoEhi9ksOuepndwFKLCcHlcLtA4yjeA6z12NGD5rhghWhafpvgDYWyVqKtjJog2W7cXm5VIX3RzL
- 3ZmLXAv5bud5/wE4+sZihHA4/V+a6YhMJ8bHGCTlZ5idDj96FOZH35BT2GeEfM=;
-Message-ID: <cover.1784809978.git.qemu_oss@crudebyte.com>
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
+ Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
+ Content-Description; bh=TnTyMGcps9pLzVD+xAJmeZIkZhLzfTw6EtxKWuY+Rlk=; b=em81i
+ e1qWzqIhGv409/7mFWtZTK9XGcBCXAUFM9qrFS4WaVHA/Pt9s8gLiNSOVAcqfZW4Y4P6BIKPd7vB5
+ ufPTFP5S/qiCnH6Vd7OSmp61FWcHguMHIQaLSrlz/DR30WceAKz9elIKRomfsvGv6isFC1Np1bt0e
+ +LXE4JutFmuWBOCZtNcJe7Zx8hjwJYlLUWfFkhzCAAZT6ee05kbfHvEOgP5lHHQ9QtXdGheQMOR2S
+ nDn0ULrFVvK0LKfHoIB9FnxO+rswDiztqhT+ErhYfnvBpvv/LaHujvOo3Koj4hkF1rB9QWr5BNYeQ
+ /E40+JvbnFZBaKmT6P9DXY1b1EE9KQjnQWy9Pxdacp++YeVbh4XKe0ISQFwzS7ANiWos/y8jjFuwY
+ lvgyJXDewjWhZidBo9ERUHCKD+HO0K/9tGPWY8qRb3Lc9vEIXU1SRulpwpJ1ob/AyfSMrmdBPSMzF
+ 5XC2kmC67QGdHjfH9KXgtJjoYrA3oHft7v1jIMaW80mAu0YFgGbJxykY67SMFV0kUAjOYowPqNpzI
+ INDSHl5PULp1t8qC6ZvyxSJaRUw/lRyc20ECTP2b0oCugx7zSmuU3N2hGS8iy3w1y9itnN15m+sOf
+ ESgiQgwigC/jk4C/xOdHNdTJT79uPoXNphpHdtW6vzXx+qkJJ9Zf6/fgasl9vA=;
+Message-ID: <bc503aefffd20b1806941b3ef708afbd92f0aef2.1784809978.git.qemu_oss@crudebyte.com>
+In-Reply-To: <cover.1784809978.git.qemu_oss@crudebyte.com>
+References: <cover.1784809978.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Thu, 23 Jul 2026 14:43:24 +0200
-Subject: [PATCH v3 0/2] 9p: fix guest-triggered Treaddir/ACPI eject UAF
+Subject: [PATCH v3 1/2] hw/9pfs/virtio: drain in-flight PDUs before virtio-9p
+ unrealize
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Jia Jia <physicalmtea@gmail.com>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=82bc736158e827e05d4b55da27c39d42e2062e96@kylie.crudebyte.com;
+ envelope-from=bc503aefffd20b1806941b3ef708afbd92f0aef2@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -67,44 +67,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A guest can trigger unplugging 9pfs server's virtio-pci device via ACPI
-eject. As a consequence the device is unrealized, server's internal state
-is freed while pending coroutines would still have access to them, causing
-a potential heap-use-after-free.
+From: Jia Jia <physicalmtea@gmail.com>
 
-Overview Patches:
+A guest can trigger a heap-use-after-free in the virtio transport
+unrealize path by submitting a Treaddir request and immediately
+ejecting the device via ACPI PCI hotplug. The unrealize path frees
+struct LocalData while a worker thread still holds a reference
+on it, causing a UAF in local_open_nofollow().
 
- - Patch 1: this is the core fix, that drains all PDUs (i.e. coroutines
-   that handle individual pending requests in parallel) before freeing
-   server state.
+Fix this by draining all in-flight 9p PDUs by calling v9fs_reset()
+before final server cleanup. This ensures all coroutines completed,
+all FIDs are closed, and no worker thread still holds references
+on 9p server state when it is freed.
 
- - Patch 2: fixes a similar identified issue with the Xen transport, even
-   though not triggered via ACPI, it is also prone to UAF, plus a resource
-   leak.
+Fixes: 6cecf09373 ("virtio-9p-device: add minimal unrealize handler")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3937
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+[ Christian Schoenebeck: add commit log message. ]
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+---
+ hw/9pfs/virtio-9p-device.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-v3:
-  - Patch 2: set s->transport = NULL in v9fs_device_unrealize_common()
-    and make the idempotent check just guard the v9fs_reset(s) and
-    v9fs_device_unrealize_common(s) calls in xen_9pfs_disconnect() to
-    prevent a NULL pointer dereference.
-
-v2: [ https://lore.kernel.org/qemu-devel/cover.1784392605.git.qemu_oss@crudebyte.com/ ]
-  - Patch 1: Make Jia the official author of this patch.
-  - Drop prev. patch 2 ("hw/9pfs/virtio: disable hotpluggable property...")
-  - Patch 2: defer explict xen_9pfs_disconnect() call from error paths of
-    xen_9pfs_pdu_vmarshal() and xen_9pfs_pdu_vunmarshal().
-
-Christian Schoenebeck (1):
-  hw/9pfs/xen: drain in-flight PDUs before xen-9p disconnect
-
-Jia Jia (1):
-  hw/9pfs/virtio: drain in-flight PDUs before virtio-9p unrealize
-
- hw/9pfs/9p.c               |  1 +
- hw/9pfs/virtio-9p-device.c |  1 +
- hw/9pfs/xen-9p-backend.c   | 17 +++++++++++++++--
- 3 files changed, 17 insertions(+), 2 deletions(-)
-
+diff --git a/hw/9pfs/virtio-9p-device.c b/hw/9pfs/virtio-9p-device.c
+index 50dc93091d..1ec48fc9e0 100644
+--- a/hw/9pfs/virtio-9p-device.c
++++ b/hw/9pfs/virtio-9p-device.c
+@@ -243,6 +243,7 @@ static void virtio_9p_device_unrealize(DeviceState *dev)
+     V9fsVirtioState *v = VIRTIO_9P(dev);
+     V9fsState *s = &v->state;
+ 
++    v9fs_reset(s);
+     virtio_delete_queue(v->vq);
+     virtio_cleanup(vdev);
+     v9fs_device_unrealize_common(s);
 -- 
 2.47.3
 
