@@ -4,132 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 718EBC4453E
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 06:01:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D92A7C44524
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 06:03:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmmU9-00044b-1q; Thu, 23 Jul 2026 02:00:45 -0400
+	id 1wmmWk-00056b-MP; Thu, 23 Jul 2026 02:03:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wmmU8-00044H-76
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 02:00:44 -0400
+ id 1wmmWi-00055K-RN
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 02:03:24 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wmmU4-0005ZE-OY
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 02:00:42 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1wmmWg-0005df-IX
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 02:03:24 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66N4vYE82512086
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 06:00:37 GMT
+ 66N4vSeU2850590
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 06:03:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- tu7fPYU67b0+YXycWA+1f+vCd/I2qv1yJs0CRvce99k=; b=gf+ewbm375aSgrl6
- hpshPVhVJExtbOg7F8/Crw0ma5/fvP9eGzJwUVDNbvVW31i0qVRreXhvX+08c/Of
- O6JGOyyrDQV83tkX0w89yqB//4Qnir/SeluDHv8Ft2hv2vakBekhWF+b8zFpcYZu
- +V+b63UGaceNuCsILxGXGeKcZLtZFzmjLcsSSLMAVhISUu3JZfa/yeTpy2mvBVtv
- 7sRWx4FgZfW+GSpaPQCOSrsa3yMjAa25QvNWaPtFYTQKE/2bYvyldb9mW56l7m7V
- I7gCI06cAzgRv4h79lw0RjVVyyaavo4ubpn0re3RsFEvg2H60aauebbAVxU8dKH5
- SjJn8g==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fjxmgkmaj-1
+ 5dIfXP4k7T0w/N6bzOXXDpCcB1UHw3MNkwDqEd9a3VI=; b=fxZByc1byi04YA+D
+ 129sKkwvYJwuMkEmUqicYka3ATZNeX6oqrWyNDkzqLXfSKHdv+rixrtUNRpx9NEk
+ zvf/MsbfeE+A0GdIIX6MkB2dJa7UZNYUt3U8X+5bmOkDz3Dc6rLt1duQZ6wCA8iu
+ Hki++YLnxNJIvfI0Jld3uZftgX5wk1c/z5QYaQXIV48yBi9sc0A6Jr8uhIFi+2FX
+ NujOIOKCVfG9ow1gfCrA6eM64ZqC4RmpPcbpP0BGvAYYYjNrZXXUJcXtQ8DXjIAZ
+ VeGWoYUzKVZl2aumr0wLUMUT1wcgt2/eS/II5iPNvw1M6M2BBcilbRCiCThh0LWe
+ 3NhrPg==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fk275jk5d-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 06:00:36 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51c1b4d961dso1514891cf.1
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 23:00:36 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 06:03:20 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51c26012cd0so5450601cf.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 23:03:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784786436; x=1785391236; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ d=oss.qualcomm.com; s=google; t=1784786599; x=1785391399; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=tu7fPYU67b0+YXycWA+1f+vCd/I2qv1yJs0CRvce99k=;
- b=ZTSsPwX1t2nVRcEcDfIrnQ4N4lJ8m+NN9GAWWZgOSSEft1QfECde6IT5JpHLISGBqx
- Vvku3dn3bahLskB9ypMhDgOrRodAAkl/wEfLLCyyn11dZjhB1Vu/ThSeFTfPudUiaST3
- X0m6PH6FV/0agzZrB3hedrHxJaK6JhRcOAu+rBjtupa2iNiQI4h4FB378MV7xhkTD9FB
- P+V8mHTG5T6EJvqvtKkaOfK34cz66HjxSKESIvecstkNfCXu1beR/BfqLea/jY6vs7Rd
- cKdJ5Go1caIWGpmc3Ut4Yy0VwgvnupQ0+CIsTZJSDo/v62nB+92LnJCo6y/9Efk1J0+D
- u9wg==
+ bh=5dIfXP4k7T0w/N6bzOXXDpCcB1UHw3MNkwDqEd9a3VI=;
+ b=KBOqkl/P1voth13BoN3XP0pClhAU2+psm44rufVBtKNiu906jlcAKDwT21tp6Kzioo
+ lW0NnzmqM8VojzdeqNLlmKo7KYmt6qAXFvD+00R5S0JYK2tjB2femWSAKcGJGpOt1HhC
+ 9pvY64wCWEFcV4FqKNjbxmY5GfRXoeeoIrTjgNe/O5jD7g2PRH1ztpmvtxkS8CcRlIyk
+ pPT+5TDqCLvS14AjoW7QlFwv0tP5ggGX0zBfjXBklH1GY99pMhwVKh4lCcWzuJJlePC3
+ ZVAjY5E2Fh61XiJgF8+U1HNRbyIzrK0+Z8YnycUL2A+eGpTkvbWZIBZs+rAWdC1nZ2iI
+ 8BHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784786436; x=1785391236;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ d=1e100.net; s=20251104; t=1784786599; x=1785391399;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=tu7fPYU67b0+YXycWA+1f+vCd/I2qv1yJs0CRvce99k=;
- b=aT6+R0ybCo0abD8HQPej8f20Exq3IkEVGggEQzwybYbxX4l9hsHb3U3rYO9q6iXg8h
- v8pYFNiBol215tbQouiBH/Ht2oM7w4WaZzNXSY76cJn9mcLipzXBYysDaN8t6KHoN3Om
- bgGPJIzLd5Blo2F8kIckdytvbEo/QsyRI5Wp6WyoLZbyyWzQkSvs3usI0+y2LMN63qd5
- /S06wuXbLBBACzF8uLykzxdxsmdJJec0at1YsCP8x9JpfdmI8JNZznfYLKoOR+XTnhl1
- Lao4GXI1BsX8O71rhlOIkXvgk48u9XmNwqLXcp0Wu36ZZZ3Z4CgoNwJUXcWRpDfacUAa
- oogQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rqq6H0JkT42FpGNYomDBpF2tpOqGnMhYa0tV17v6Z9agQmRvkxW8Hv4ud13NiePQhxWAf10egoWHGMD@nongnu.org
-X-Gm-Message-State: AOJu0Yw217RGSRlmI2OObpu7CNAR5ljQKCdqcw5kXCF+WC2WAF7NRLTX
- rCWL08QvOTebrzrx2fPB1gZsRNTrEXoutpv66nWX7nCquHa2bCUf1kVoJ7Pz7MQ2i52/0RnwI86
- KwjpM5LwiteNJMzV6k49DrSE8ZXfvXfEzWk3whVrSpC/eLr1DS4zfe+6EOQ==
-X-Gm-Gg: AR+sD11PxQpY/NfqsHxfiMAtImm2qI9aCj9AWPz2ahd2jAkZ4rZgg+Xt2PQ4y98jnVq
- XpTHhQDx0NTH3oKbVJMNcmhfn/zkhlbVQq91gNFm/kH6hLXHrSr+vx007TeXmWAtFSCXWZh76O/
- a1Jr+og2AHYfBjqN/saWsIJWXDrobC1DwY86V8AE/GQBjlxcpRSxzLdzzCT2BfFo7u2UtbSFmid
- /WvitNXyLT6wp+nWY098jGTiBjPW+BSezJM7NOlkoeLkf0E2d8igK4KtpaxLMErWoL60stRoiSD
- S6sNZnmeM//6E9j0tOIGgJ61LeC+szFT9F8i3/ERRS+7LBX7uQDlQfvNET6zXs7WYD2hKBphvvg
- XpzORL1tNPSU4pI5U57xSOUWj2PSXe1cHo0h9LlHQiA8Cpy9Ggrs=
-X-Received: by 2002:ac8:5fc7:0:b0:517:c582:9161 with SMTP id
- d75a77b69052e-5283ece4591mr12479541cf.7.1784786435516; 
- Wed, 22 Jul 2026 23:00:35 -0700 (PDT)
-X-Received: by 2002:ac8:5fc7:0:b0:517:c582:9161 with SMTP id
- d75a77b69052e-5283ece4591mr12478981cf.7.1784786434872; 
- Wed, 22 Jul 2026 23:00:34 -0700 (PDT)
+ bh=5dIfXP4k7T0w/N6bzOXXDpCcB1UHw3MNkwDqEd9a3VI=;
+ b=F4FY0fnumUdRLxKVckNEMT3P+HvYvu9iij1brDQ3gpDz+/kj/yF47g8p/eRp/tgsbB
+ wmI/y8UJCqvcBqH9u/3rSfUiBUkTxRzwwXVUGiHJqyJP4GLhbW3Ny0KYUrGa9Ok/wbpL
+ PKVGUaNMUc+KOnnBBvEjRZNVFPMR+TB5Prf+lBrPjsMBVD1bausJxxeEPpwmhxsRLN6n
+ hmCg3jP6PCpQ/foPV9FRXE8gfq4bY7dvtxqoFAR7LAhfNI44zDD29vDlEje0CDVQ4XKx
+ k2yvu3Vy/msGT+56PmeMC9KyHkJyU/7hlKB3Yn3b+aWb6ifFr2J202mVpilvfeegG4Jm
+ uedQ==
+X-Gm-Message-State: AOJu0YxZ6tjSAJrvqhicRiz2hakVv3NuN4LYykOut/5ZbW7qv14WDqid
+ rjYiZW8FWVHal7Hj/nVGz6Hinq6qIBt7/lRZ/Ut0sNvWpm4OaUT74zc89hfPPUgLoHUlIZ541lL
+ eZlxGVZFTxOSkdOC5tqO65cyrZiDwmju9nWXIQGu++rC+MmJMQJ8G9G+lQw==
+X-Gm-Gg: AR+sD13evlkN4u01EME72OBAB/DbLKymSPWPD4xODnvN3dp5YxV1CdP67SL+77lzeUR
+ sN3ObsLhrzKmCUQYKNJF/wOjpacAG/hcrnnhETuPmrXtpTn0PokryW3wVQlyKGAzWExnsarDEIb
+ yW/+/yhVixGFejWALRZ9j68aBOvIubxdiDs46uXV1nvtRU9awC6dtvOcBM95s/2Arlr74SE4cyD
+ UlN2t7sRR1x3+lY8dYWAl2Ce3md+w76etdMgBZS3q1BDrp5o4qd1klkFhGY8dwix6dclbI9FsWi
+ AFez5LA75EyLI61nsb8RciT2oupaxH95AmTepHHN2DwJQpyZVw3IjDgVA5FqV/3QJCN3ORnr4Sj
+ ITa5GgHFZzrFe7pN/RHjRH5V6xxqjFi3jiPel0oHqsSELyG0wdas=
+X-Received: by 2002:a05:622a:8c:b0:51c:db4:3cb2 with SMTP id
+ d75a77b69052e-5283df63187mr14764321cf.63.1784786599039; 
+ Wed, 22 Jul 2026 23:03:19 -0700 (PDT)
+X-Received: by 2002:a05:622a:8c:b0:51c:db4:3cb2 with SMTP id
+ d75a77b69052e-5283df63187mr14764091cf.63.1784786598447; 
+ Wed, 22 Jul 2026 23:03:18 -0700 (PDT)
 Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5b2a9bae7d0sm861473e87.34.2026.07.22.23.00.31
+ 5b1f17b1804b1-4956a508aa6sm126057685e9.7.2026.07.22.23.03.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Jul 2026 23:00:33 -0700 (PDT)
-Message-ID: <0323de20-0eb6-4d6f-8951-37a0d81c6b88@oss.qualcomm.com>
-Date: Thu, 23 Jul 2026 08:00:30 +0200
+ Wed, 22 Jul 2026 23:03:17 -0700 (PDT)
+Message-ID: <d30675f5-4719-4622-8a2d-c50ff0d27eb7@oss.qualcomm.com>
+Date: Thu, 23 Jul 2026 08:03:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/audio/intel-hda: restrict all DMA engine paths to
- memories
-To: jianghaotian.sunday@gmail.com, qemu-devel@nongnu.org
-Cc: kraxel@redhat.com, qemu-stable@nongnu.org
-References: <20260723021412.377244-1-jianghaotian.sunday@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH v2 3/6] hw/cxl: convert cxl-type3 to three-phase reset
 Content-Language: en-US
-In-Reply-To: <20260723021412.377244-1-jianghaotian.sunday@gmail.com>
+To: Junjie Cao <junjie.cao@intel.com>, Jonathan Cameron <jic23@kernel.org>
+Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org, qemu-stable@nongnu.org
+References: <20260723011625.1117034-1-junjie.cao@intel.com>
+ <20260723011625.1117034-4-junjie.cao@intel.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260723011625.1117034-4-junjie.cao@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=D+V37PRj c=1 sm=1 tr=0 ts=6a61ae04 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=Q53iJY2a c=1 sm=1 tr=0 ts=6a61aea8 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=pGLkceISAAAA:8 a=69wJf7TsAAAA:8 a=XZgBJ2Msjz3XTiow3qcA:9 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: f_JseXFdgJFMbKW09AIF0f9tJjOVDcEE
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIzMDA1OCBTYWx0ZWRfX3tSLdN7n0L73
- ZyklKCyvKbZZhxgQtpyLOx4pRIFzqLIVROFubCjMy4R6vGJqpsG/A7KOBcZv2xh8eZbnEyucbj0
- CxM/Ed7pAgEHNMA0dYAF/VS01cFRly8=
-X-Proofpoint-ORIG-GUID: f_JseXFdgJFMbKW09AIF0f9tJjOVDcEE
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIzMDA1OCBTYWx0ZWRfXwKjxLj2/KJIJ
- +wQubhGl7vzhHaVSdyKVkpmyDVn17AozKTNe/AJOJgOyBrQ0GAblwauou1+wYvK5cDm3RXLQQg7
- HXZhp07wQxdirwr/0JFCxKcZ0XLS4NqDNkdBb2bLHE2un+J36wydgchUaotuPsp9DzkiuOchLXn
- 90QGPnx2DOk/nEM0UeWJ2RjfdHfhNTPu+xFEDsZla5gWlxA+SD017kP8apjNAR+FGMKY/D/Nw+8
- KRSMy35UyEbSNqy/jlGCrjUGdSrShBdZxk69qEvu0qVpK76sDC4E4CBeLsbZchcPNN46EElw4yB
- IL/o9KSxvipop7U9Y9C0v1FKUsaX7KQPOCG+ISLeLXPuoEZqKjlwu93ZDrOF595R/542NYlHdnh
- 4nGbKCYx54cyrmnZg7OsC8Dah9jfyk9ZfiBI9WxJortcTbJ6sSU7h81t3kLSKYmh2Ccd4Ke7rA4
- p6v6TEO7di4b5uDsbkw==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=QyXUC8HyAAAA:8 a=EUspDBNiAAAA:8 a=9aJME8LnsKA-8nNKvUIA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=ZXulRonScM0A:10 a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIzMDA1OSBTYWx0ZWRfX6/2LIQC0VbcF
+ lt4H5PuSmI8jEzZdXsTNvTMzbZfAFhLXACnHTKs7Zeiau50uYuSIbBKJf4Qggd5lxE8b1XM/s5W
+ TTQcJ4a6WIABOgDz1Jjs8Iuwp1fcy8w=
+X-Proofpoint-GUID: P0h9tC5N8ragt02_f8b_9lFUVZmXO_kh
+X-Proofpoint-ORIG-GUID: P0h9tC5N8ragt02_f8b_9lFUVZmXO_kh
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIzMDA1OSBTYWx0ZWRfXxDYd0JbnVRPl
+ G+HnVwD5fVEiI0QgNAarn4yLkdeJOqpNXFQtVbIbRvRRwSsuklRBh7Fcm+vTIE0Q6g+lBfUN0jG
+ fw2zRMwWMICME3XFxFffNuk9Sab/WdVBgVkF8Xi3GSnj08xkF9oidrbujDzZyUgfgNapBOLf7N0
+ lKRRHrLEw+yqGTmmeu8aP+jY42BZ0YkdsfoOch+kaBFYdjVFnpoNwYwBiTS6A6CHpokG9BOt92G
+ EctIbq7nHn1IqhsRn/mcz8JQ1gtdhf/QHusEMJR5FSg8Sra/Ffp6oYsQNMcXVCtDdkvgiQaX0Bx
+ ldcxVaesDs2uHoUxQe19iFaZjDS0Jn+OJdcT6EXnD62rfnFrO/XnNBvy/0nHmkiSK/Sx9XBlq/w
+ WFn7ITObAxQp+OXaREuyruc2fOR3fUxUzwLew04ATO1H4+7tWLMQJtOJfe1p2eLX1jD+PidxUTz
+ 6PVXsqs513A2uYtMgIA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-23_02,2026-07-22_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0
- suspectscore=0 phishscore=0 clxscore=1015 priorityscore=1501 bulkscore=0
+ suspectscore=0 spamscore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ clxscore=1015 lowpriorityscore=0 phishscore=0 malwarescore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607230058
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607230059
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -154,89 +152,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/7/26 04:14, jianghaotian.sunday@gmail.com wrote:
-> From: Haotian Jiang <jianghaotian.sunday@gmail.com>
+On 23/7/26 03:16, Junjie Cao wrote:
+> Replace the deprecated device_class_set_legacy_reset() registration
+> with the three-phase resettable interface, following the pattern
+> already established by the CXL root port (cxl_rp_reset_hold).
 > 
-> CVE-2021-3611 (commit 79fa99831d) restricted the DMA engine to memories
-> by setting attrs.memory=true, but only applied this to intel_hda_response.
-> Three other DMA engine access points still use MEMTXATTRS_UNSPECIFIED,
-> allowing a malicious guest to trigger DMA-to-self-MMIO reentry:
+> Only the hold phase is needed; enter and exit are left NULL.  The
+> parent hold phase is chained for correctness: TYPE_PCI_DEVICE installs
+> no hold phase today, so parent_phases.hold is currently NULL and the
+> chained call is a no-op, but capturing and invoking it is the correct
+> forward-compatible pattern and mirrors cxl_rp_reset_hold().
 > 
->    - intel_hda_xfer (line 398): called from the audio timer callback
->      (hda_codec_xfer -> bus->xfer), so the MemReentrancyGuard does not
->      fire (engaged_in_io is false outside MMIO dispatch). A guest that
->      points a BDL entry at the HDA controller's own MMIO BAR can write
->      audio samples to device registers, triggering whandler side effects
->      such as starting/stopping streams or injecting codec commands via
->      CORBWP.
->    - intel_hda_parse_bdl (line 478): uses pci_dma_read which hardcodes
->      MEMTXATTRS_UNSPECIFIED. A guest-controlled BDL base address can
->      point at controller MMIO, allowing the DMA engine to read device
->      registers as BDL descriptors.
->    - intel_hda_corb_run (line 333): ldl_le_pci_dma reads the CORB ring
->      with MEMTXATTRS_UNSPECIFIED, allowing the DMA engine to read
->      controller MMIO as CORB entries.
+> No functional change — the reset body is identical; only the
+> registration path and function signature change.
 > 
-> Fix all three by passing {.memory = true} explicitly, matching the
-> fix already applied to intel_hda_response. For intel_hda_parse_bdl,
-> replace pci_dma_read with pci_dma_rw to pass the controlled attrs.
-> 
-> Fixes: 79fa99831d ("hw/audio/intel-hda: Restrict DMA engine to memories (not MMIO devices)")
-> Reported-by: Haotian Jiang of Tencent Security (Yunding Lab) <jianghaotian.sunday@gmail.com>
-> Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
-> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Junjie Cao <junjie.cao@intel.com>
 > ---
->   hw/audio/intel-hda.c | 9 ++++++---
->   1 file changed, 6 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/audio/intel-hda.c b/hw/audio/intel-hda.c
-> index d7c2c3c2fd..3d361a4976 100644
-> --- a/hw/audio/intel-hda.c
-> +++ b/hw/audio/intel-hda.c
-> @@ -305,6 +305,7 @@ static int intel_hda_send_command(IntelHDAState *d, uint32_t verb)
->   
->   static void intel_hda_corb_run(IntelHDAState *d)
->   {
-> +    const MemTxAttrs attrs = { .memory = true };
->       hwaddr addr;
->       uint32_t rp, verb;
->   
-> @@ -330,7 +331,7 @@ static void intel_hda_corb_run(IntelHDAState *d)
->   
->           rp = (d->corb_rp + 1) & 0xff;
->           addr = intel_hda_addr(d->corb_lbase, d->corb_ubase);
-> -        ldl_le_pci_dma(&d->pci, addr + 4 * rp, &verb, MEMTXATTRS_UNSPECIFIED);
-> +        ldl_le_pci_dma(&d->pci, addr + 4 * rp, &verb, attrs);
->           d->corb_rp = rp;
->   
->           dprint(d, 2, "%s: [rp 0x%x] verb 0x%08x\n", __func__, rp, verb);
-> @@ -395,7 +396,7 @@ static void intel_hda_response(HDACodecDevice *dev, bool solicited, uint32_t res
->   static bool intel_hda_xfer(HDACodecDevice *dev, uint32_t stnr, bool output,
->                              uint8_t *buf, uint32_t len)
->   {
-> -    const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
-> +    const MemTxAttrs attrs = { .memory = true };
->       HDACodecBus *bus = HDA_BUS(dev->qdev.parent_bus);
->       IntelHDAState *d = container_of(bus, IntelHDAState, codecs);
->       hwaddr addr;
-> @@ -466,6 +467,7 @@ static bool intel_hda_xfer(HDACodecDevice *dev, uint32_t stnr, bool output,
->   
->   static void intel_hda_parse_bdl(IntelHDAState *d, IntelHDAStream *st)
->   {
-> +    const MemTxAttrs attrs = { .memory = true };
->       hwaddr addr;
->       uint8_t buf[16];
->       uint32_t i;
-> @@ -475,7 +477,8 @@ static void intel_hda_parse_bdl(IntelHDAState *d, IntelHDAStream *st)
->       g_free(st->bpl);
->       st->bpl = g_new(bpl, st->bentries);
->       for (i = 0; i < st->bentries; i++, addr += 16) {
-> -        pci_dma_read(&d->pci, addr, buf, 16);
-> +        pci_dma_rw(&d->pci, addr, buf, 16,
-> +                   DMA_DIRECTION_TO_DEVICE, attrs);
->           st->bpl[i].addr  = le64_to_cpu(*(uint64_t *)buf);
->           st->bpl[i].len   = le32_to_cpu(*(uint32_t *)(buf + 8));
->           st->bpl[i].flags = le32_to_cpu(*(uint32_t *)(buf + 12));
+>   hw/mem/cxl_type3.c          | 16 ++++++++++++----
+>   include/hw/cxl/cxl_device.h |  2 ++
+>   2 files changed, 14 insertions(+), 4 deletions(-)
 
-What difference with commit c257745248b02fd468619b4b1fdbbade5344191d?
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
