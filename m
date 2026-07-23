@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 513F3C531F7
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 15:20:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9457EC531D1
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 15:20:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmvCv-00045F-AN; Thu, 23 Jul 2026 11:19:33 -0400
+	id 1wmvDF-0004EK-8s; Thu, 23 Jul 2026 11:19:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wmvCt-00043d-T7; Thu, 23 Jul 2026 11:19:31 -0400
+ id 1wmvD5-0004Ay-CT; Thu, 23 Jul 2026 11:19:43 -0400
 Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
  ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wmvCr-0007zZ-Om; Thu, 23 Jul 2026 11:19:31 -0400
+ id 1wmvD3-0007zZ-Ko; Thu, 23 Jul 2026 11:19:43 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QPVKISsaFe2UJHArRAqQelFvVGR7r5PASHiW4tepH+daoZI/5t9tcX2PUyD5wXy4CxwdiiA8k45E9kVBR1le75b8mTXDCA5xpGDHLlaKdFkMexcGQ7Xg4KoA5un+VccBRUtZgLjzu6Qf/XliojWvdrIYZoVbiF7YGRUOLHGcat5LFYD5N7UsxJyJjsEbN6aHuPculGkopIizkY1LppVbqaS9PRhUliky3oinh5b0MMOOzLYwlslDb+nmuR3VzMxR6+fne9JsL0cyT5BFuWw+aDHxZOpswYfV9FldvOCT2D5p5sYdEIuBcrVJU+HuZ3N+ZZ++Zbxsxcx2/E3D5e0qdw==
+ b=a1yMr5erH/ubWzvOi2ObwZI0I1i66fJXwAY18MV603bNbsZYUlY087jS9ET8WAO/wv6A2dC1fmXizpG9ToSQKJTZSTWhbd7PTaptXNR5CAaCmqcCaVf3zTvq/yOm4OVVYHw/YKN+ifmrSff10CLsmMAfgZ3SWANRLCZSweShEEy9n3LWPC/xY1BczZ84nqI2siTVzubA5RgKZy4CCjaX4uyoeWnCnCGVK6jERPLV9GgSADNCwmGxwVJC0QLuLJG1lT+lmYwXGqIfRjkHTAGbAeu5O0xIcgWcIKlvYCtzEIyKl+OaYJPNhUBjAkCoTejyeWnIlbMzu5xr25SolF1UBA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GZvOV3ut1QdLAcN2OD7T9+m98yaure4yYaH425c2XSE=;
- b=qEPNbDjCR4dLyiUtNeKye1pOi4gcGmcSX5KodzLOns5QyookvkuhHz4MUAmGapfG/6dtKqmfCT3QuyvF+UvKZ4d+G4KWnRRvA1njujNbR4wyWj7/DDoAnnmrD/FsVQ/kcksr33yTu0+66NbbBrGodN2G1pnjz6zWFOab9/oz2crj+RfteOE4RckiuQX2XNnhHP/WyRG1U3ROAigCshhytlqhkJLtT55/UcxEk/f1aimxumkyTF16CjjzQSc225gw7OzD63hD0d2yD/v2MvHiZeNb5pfpzJKCqx4+pFc2YI40T1ff1U+MBz9MW9fk48O54nnrjljENsTRZYaB0GHVMg==
+ bh=moP7k6X+hNoOnNA6gwYXEhkbpSr0Cxv6gmtgIBoJt/c=;
+ b=rnKM4dwquV+rSQgN9DQ1TeX6VKM30Zh9zEFUIMrqCmW0eNckQryraxGhoxoez4RZZiIwaDhKFBw41amNYIg54LS3oDIMeuSwdffUa+mDpNuZoxyfe3semxb77pCOASAOpSePH/WPWuZuYkTqKdGtP+tv0iYDkbiS0nvIiBFWcsaexsAoaXJ6Ac7RRI8yKgXaaKCB+kuQdkOzQRML5MegheitzfZdBaqRawJRa0EfB9YdZXSsiMolLpW6C5E0pux0JnBzbuOMau49JLjHwgbrTr23J2nJzhvcChkWrPfF1yNXbTc7O/vl8qc/Pgirz68WbJ9UCv19+/6Hoca6LFQlWw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,26 +33,27 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GZvOV3ut1QdLAcN2OD7T9+m98yaure4yYaH425c2XSE=;
- b=AnDWw9S8cMfObJ3deyoikfz4ezENZE0GfJjbZQCn9yIGpNAwv3D4WwGtthBs4LIIEK9kw4BNBQuohHksEmqn6rdqHoknTo7e7sATMm5t3D/raso6haFv9DI0/8CS1ia9GHsjAEOIf9Sy+QNyqOU/WojKIga0eICNg1qbvcatV0yMwYb5+wxW1W4p/xI70N0JdOVoItizaWYW1LtEQzV1Zy+Zyd/26MkKTQFSHOVecZztkRqYl6RUVr/8tijcZclLJajJt8TBySgPFUB8Z9hV3QNSgSfveaEsTnYxZuxxjjPLNvElaf4WufTpMye+tsHcbetbOSp+Tg6Or+rVgcqkhQ==
+ bh=moP7k6X+hNoOnNA6gwYXEhkbpSr0Cxv6gmtgIBoJt/c=;
+ b=QgDEtySzvL3Iod4HuTBf7F+ubGq6wzTQrwq9GxRX/eDlBTNY9BHe3RgQPxt8fhrA53BJr5kQUsOuBBryqfPm0xWqNDNf0fX8IoT1gjCMp1W+J0XxN01vRg6FsNKEPTyotKOQVnYfxBuQdttD8Ao0Z7ZqSSbVTjUU8B9+TCLxiSCoxRXpHnhzFzXo0WskO8VzVM8iRdCy/0wjfhAFzW8Cvv26zZDoyLmB6sztivbuTHjUYJlkTaXqNTh3Eu9llTZejozo0smg7f3fJqGF9f7J2EpaevJ1LBy3H/uVIVvMsJ2u+VVlJKUNS5RUWlhrcfYQvW13NPqYOMkttwDLy22CjA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
  by KL1PR02MB6215.apcprd02.prod.outlook.com (2603:1096:820:9f::11) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.11; Thu, 23 Jul
- 2026 15:19:20 +0000
+ 2026 15:19:27 +0000
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0245.010; Thu, 23 Jul 2026
- 15:19:18 +0000
+ 15:19:26 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Conor Dooley <conor@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Sebastian Huber <sebastian.huber@embedded-brains.de>, qemu-riscv@nongnu.org
-Subject: [PATCH 04/26] hw/misc: pfsoc: Model L2 cache controller registers
-Date: Thu, 23 Jul 2026 23:18:31 +0800
-Message-Id: <20260723151853.2143177-5-bin.meng@processmission.com>
+Cc: Bin Meng <bmeng.cn@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ qemu-block@nongnu.org
+Subject: [PATCH 10/26] hw/sd: sdhci: Support version 4 ADMA 64-bit addressing
+Date: Thu, 23 Jul 2026 23:18:37 +0800
+Message-Id: <20260723151853.2143177-11-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260723151853.2143177-1-bin.meng@processmission.com>
 References: <20260723151853.2143177-1-bin.meng@processmission.com>
@@ -64,56 +65,56 @@ X-ClientProxiedBy: KU0P306CA0037.MYSP306.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|KL1PR02MB6215:EE_
-X-MS-Office365-Filtering-Correlation-Id: c4c32e0c-a006-4e7b-a13b-08dee8cdc3db
+X-MS-Office365-Filtering-Correlation-Id: f6f026fc-57da-4584-687d-08dee8cdc8cc
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|34096008|23010399003|1800799024|376014|366016|56012099006|10067099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: 9/1NXUN296kMPP2Wl7liHtvyRajJ3auoQQKWjpCB32/I3L+Z5Mg0aGM+SNi/zkRJuRfBCGp9vKX2xPYPdoqFZLrNCCQOmMm0FVO/19nKXSNIa7ZQSDXsCctQn9bYQHAbGXvlSJYo+fvJOaCfY+usBSno+vhj/n8XH8TFPRAthi6sYcabCGdiQR7+gnwK7aXoMsrwyFrzn4c4oGup8zefKT+KZDav7ri8quJSDTky0Oyu2npBohycCkWWCu2a6FG/nxQcqyGz1RfkbsTWfDi5W9iH/uq38ypEWvxr7AuwbNeL9BEnZlDuYEyHcxvxxitwluw71GYMxeXLuRMqqcAchcEm1PbPBhbSl+5NWD9Xyzq2UFT+0IN6eOg5HIe697QUWeP52BnRyt7s5+74WjatuTuaKI9Fv8F7KnZByB5zvJbTmepRcusG/R5z1ihJzDN7r53NWIYfd5s00Lkwr7plTM6+Vcq5Xatrn8hm3u/3HihCHM2tsN65hZO26/W+PSDKA9ZwyDK3OzCh9qKz4Rz0DohflObn7i8IY+0qKlnOJLcwBMigym66psUHKAkwte3svMf7Q6YUbN4jW0c5ku2ltoz6z9GlaVpA6KBR0wFHI5kNQK2KmJc8QuHJCKyolc9ATniQV1Vp+qzX1ftM98xrgYR/jTqdDELQJiph4McThsg=
+X-Microsoft-Antispam-Message-Info: 9ErnnwRTChjU++SfwJQa8sV6UiqrouMOIwkIe2L84YOh/pPjzKUvH0aQH9k9oaUgMubPJD78dnXTJfDSyNNP/25kjdd3MTKjlit4xpreOmuEk7osqPvAxbArsVTAwv/ry3zWkd+Lk7NYUnAv+plMdi+5Lg5x5SDRp+Htkg9NM5YU1+V/0BX5fs1Y5yFR0yESqVYfeOiyDaZrgDxtgc1T6yOaJtGzollaWmwcK8lcy+2QecMnOIq7zEvtEBj6LeSRtvugReduOgxPKtxov65lijgN6hYXuSL2uudBzh31eRn3nHY27zNmd7fSuj6W78IKhvIOay3dIE4XcvaxcKUYNNIxWy7xVh++zU2O6t5Jzt6mytlWp+EGA9d2lMZ8dwL1NrnSVdHZXvYsTwhpVueS3ZbNVKw0/qL/FwlgxjyNoPaxG3NsWFu/iRiOwTMpCZKAbQlrWUK2IG6aHs5D8BmI/iSX+65BUooOnbO3fr39QC6Q0jIdHTV/tZbmAqqNkgfk3Fqs+ZIOjIvMUz39rLD4IxuF3jB+/chEqkog+7Yuyq0DaVD29x+HOC4cWv7WSJ8CW/z0C2jWyJPJebMAQhK2F6SBUTJMzTlS12v3+8MRHjg54Xuulaxs5q6LhawNJjymY2OLeb3z/4roovm65tWbB8hvubykeLq2pJkFBkx9wbs=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(34096008)(23010399003)(1800799024)(376014)(366016)(56012099006)(10067099003)(18002099003)(22082099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?DmPjHNaYjUn76/tdhx0nCcX7wXexG12IS4oeSkbyKhuySehN34XiA+Ahwpq2?=
- =?us-ascii?Q?YB6zqeVb6KxJ9+rZK60aD1MHmNVHeKZhRjUj1+dgosH8AOSAOkHMSB1Z9d48?=
- =?us-ascii?Q?q+Xx1m9zTNeAfL6jKxkLLuvhdgs0/fElFLUEJrJLgNOvDZXSiaGYtVqMrsQl?=
- =?us-ascii?Q?4O0vPjDjW/GQNW8FJZlegah/agxr5wS79Q3BwQPT6SwLUPQ69/K/2FfXahK1?=
- =?us-ascii?Q?8gd77MFlRfVXx50/8uJDaqDA5O2w2j7klOt4SvVRtLQYvp4Z51a6NJblyH74?=
- =?us-ascii?Q?6mG5ijPoXV+sl0kTqYwqELIJ4nRMk8aoNS3o7QWW1/OIIoKk9rW6K0Pr9HHB?=
- =?us-ascii?Q?dUqFz02vXe54axEUrPt6oYlbCTmL7Rqfjdt0qlRfaWHPVUJ9X3aKuooU097s?=
- =?us-ascii?Q?AYnYHWJJtpQLDva9u76Qy6E9WaOwFMBeV728FtBxVPOPm4HbNdlak/uDil72?=
- =?us-ascii?Q?/fF+iIFSsQ0c1CW1+lI7797/UCDKvPO2IJsCM/+5/MP43fl0qtje0hz5OAFD?=
- =?us-ascii?Q?og/r1zNbCHdXg0I2LMdXDtFxS7cnf1LOmsFfagDWlOgT5vm96+wraO5V4Rhc?=
- =?us-ascii?Q?077aoUEN0UHQJ8GnVRUxcIPT/peBFwopwN8LS/0Fl+FNiq1CT0kQdDGTY2es?=
- =?us-ascii?Q?kn7sqxi2DRtWFzG1sHtyI0wdND/PHwclSKgR0FI2ysn6qqzEmg8F8KPWb1oE?=
- =?us-ascii?Q?9HmBjoZ5cb4iN8lZW0OQroDW75tuAJ13UoIr4UCgmD3hV07SwaaBWSlXt/28?=
- =?us-ascii?Q?f28eeeregPDL4u0ywqJQyuVTfNhDEHGFV7A8HEnMLgE48qp16xuHHWqRQm7f?=
- =?us-ascii?Q?juiJYfiFoduW+BKARTzfiiUtooQF0Bz/kSh2NLUMx5+gfpC6TVuXjavbaw8A?=
- =?us-ascii?Q?XQy0ylArVrj50w6U0yrBfQdlmhvaKkqx2z837RjBOB5RS2Zg9l8WjjTKyxSk?=
- =?us-ascii?Q?X6b61ygBXXxsefihRbRH8nB25Ro7txr0nyY/PneS7y2ypjEuTr7aFP8Eoc2C?=
- =?us-ascii?Q?gHm9dfvo5Y1+Qa+jvrHyNCRRn9pMcXpyJgs+FnMi4V+g9xnqeOKEECYPPpoK?=
- =?us-ascii?Q?3s4iE0qcArY6Zvw0N+NGowSHBYdqGwxyStmug6Q6fITW7LkB37m7tSaN2eua?=
- =?us-ascii?Q?NsIwI/u4GYcJB3hYReyuvtoqqKgq7W0QNmJofuOmyCvyCwv0fBXj0wUvzh3f?=
- =?us-ascii?Q?BTCTHpRmEJNlzplKhy4xrUa9TkgEgWjMYvsg0nhUNMtijA0CRZjefj/JPn2R?=
- =?us-ascii?Q?ADT6iIiO3mCge+ErmUiDzH8Gr/H9d4tauPbwMZ0oxCeY694om6FcJ5xGEyCQ?=
- =?us-ascii?Q?qqzwgpJwKWQK4BgzeRW2xaix32mDO2mCODAC/xX7EgU7157BXzYZuMjn6+C4?=
- =?us-ascii?Q?3GGGpVhBJIuIZnsDbAWi1OroZEUDaiJecuzx9uVld7qRRwNNkq/qs/m4G0js?=
- =?us-ascii?Q?ucqsP7QJy+vN4yWX/2/upfkx50a0U7/7A7Z/Yjg97AwsQC86lnHvL2bBs8HN?=
- =?us-ascii?Q?wUMBHSpt/+VTU0LVEwQcj5E7WchgTH5yjyNrFHszLE4aGtrlSyVIuVZlYVz0?=
- =?us-ascii?Q?iPErdVDOXrrkKnlPH/wbCqgUwo/apABhYyFPT6PPB8akGYXo7fw5OItcBsx5?=
- =?us-ascii?Q?Zx4n/9NTsbckPbUtXYjPnRUnNPy8oY1Aizb3iAIouckZGSsQyJOegeHoSFdt?=
- =?us-ascii?Q?Yx8TCb9bNGaSCJKOSmgdGXFoQX03Jg99L2ecWR0MaHyQbRBflGv1gsMJ5Ru+?=
- =?us-ascii?Q?Ofew5HeHLaob+u6Y1orXfZXqOtAGMOI=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?wkJgFQpW51AvK+or9akHepgi1RGoHh3uFkiz+E/8c33skkKBo/kB0gEcGKW5?=
+ =?us-ascii?Q?4ZTVNuIe1yatSnhFjoUW693T7cqKW1rsHUGSZbQpif1T0+IWccpxh+cvKlBO?=
+ =?us-ascii?Q?xL0TQ9HumeWP+aRsI7SO5s6k4LNLYXOA+R2VXghyu5RXr2DzjbmaRyDfpP4X?=
+ =?us-ascii?Q?N16+lxJviWHWHOAEGiZbCGvXLnLQyduZWzH3FJewqYMZg+KjO5iSNd92MOIA?=
+ =?us-ascii?Q?J7vqxKez4z8ujkcL20ev3VAFm3aKhhSO9lN+EwOCN4uTYKnaKiPdTAYbdqUR?=
+ =?us-ascii?Q?cMMG3fup/ZIvtN+8LEdItOe2UeukCCs9OJbVrlEjhyRyfbwLV2A6IB/RPWw4?=
+ =?us-ascii?Q?zLAbSm2p/Z1QWbkBPVArfGaZ2tHoGhP9gNRbRFnLtT7wXm+r3u3xTjMajgDv?=
+ =?us-ascii?Q?2IMQUXd081R4Ngkgv0Rcvp8t/jHuOPWNzvPPIKKku1qSh/2+S+YCL/lj3gp6?=
+ =?us-ascii?Q?0qR5QL5u+Dj9b4P0Xdeff3PreH2APPiQyw/LGMCAgGgbJQPU1qgEhem1pEGs?=
+ =?us-ascii?Q?5zD3MvRNgSXsNis5Lzr+xldAGJkcE0ufu1Eyg8+rdSuT/RzKPYhQWJg0qty4?=
+ =?us-ascii?Q?1GQSYJ5rCE8y4PximKIiYJEsx8ytn/7wBtODZA6y7u2vrzc5/3MOVseD7659?=
+ =?us-ascii?Q?SD31wn/JH5+RoimAschaRQwI3K/oPhy9lJFBD/yrRcMRD9RCEJJrxe77I4QY?=
+ =?us-ascii?Q?OvcVk5fS4JP02KwhMqSMOMkJQ2+rdB/zb5GVfEvYPJMXA5KXYklY2yO+ndIS?=
+ =?us-ascii?Q?m111UcWftk35bjnNYaqM52ldG33nYGMdG3UhntLZrHx1QyFY4Xq0smKPcdy2?=
+ =?us-ascii?Q?w02h6Uwx+AaU+lSpMbNUZc1pgpT+Wi27rfeDUt10V0zvPbY8oZuRpmk2dboI?=
+ =?us-ascii?Q?mBro541/K8NYbU6CoNtN5xTYaq3xc2Q7yFpVKiiZJQqFVVQEs2A892M3cCi2?=
+ =?us-ascii?Q?ZqAV8CfLamZJm2WHuIL84ODCQSnQutHPqcgQ5qo1X2DWlDKR2cI0FHZjkrjj?=
+ =?us-ascii?Q?VuVJWs2gCwu7yqVItiqgoVljACe+bRLgbQLXaIRmABDdvU6sJAxk3NTMScrw?=
+ =?us-ascii?Q?sPkbaq4l36GON2+YgMnTm4l+f0X6JmFDP6AH3L+6BkxbGiVCwuU3EDmomyiV?=
+ =?us-ascii?Q?5HG/HxoUWU40lZH+7RGL7nqlEM2ZZAB8vqX32aW6z4BmiH3ur4YOUJe83qGd?=
+ =?us-ascii?Q?vemjlZDNECMlL6dSa2W2xxaThYxSDOtKJPgYd0coFa5Ixvs0v0+Iu70epmJ/?=
+ =?us-ascii?Q?jp/9fxIay/VwZ6EDzh4Fg2VtlQeaaKV885LufacI6C7JX6Fc+YiZRmijmOzJ?=
+ =?us-ascii?Q?/oD7h2Omuju0KA6rJuwkqhmK0XBBJCcgQYPLt+aYHfPVoFG1nFW/zz7Q/w8h?=
+ =?us-ascii?Q?dfgRwI3sWn+CCEANy+gO8aa8XLZrs78/CGlHNSBsktjw4a+FMN+GekfTpCtH?=
+ =?us-ascii?Q?dnBBhNA1jChUYFdBDVgRZeZ7qpx3W1LHaMhbD7zk+V+y7B8irlBz7k2vz8g3?=
+ =?us-ascii?Q?H8TER6GkX3m74wB44nC8aagOhvs1C8BqMfHBCgyJ21tM9F+HgnRxsWIyKBnR?=
+ =?us-ascii?Q?rfufPKxmql1GSEylHFEZOPnv/0Hk6szWWteLjPgSeotHOl4NiyQ6mxKksEvz?=
+ =?us-ascii?Q?+B71Y6HeQV8N7kMsb6rk7F0mZh0rHI7qhS0DD5TNdslXNP8mUbrhIeYFlz6y?=
+ =?us-ascii?Q?L3E4AfApcJ6Hj7BeV/T3Lc1ADR5JYi+sDuDaSNQb3HKeGtnEJs9lSohHrWhH?=
+ =?us-ascii?Q?HVWDPxv8GE7wXhtIgVcytshCiczXJbI=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c4c32e0c-a006-4e7b-a13b-08dee8cdc3db
+X-MS-Exchange-CrossTenant-Network-Message-Id: f6f026fc-57da-4584-687d-08dee8cdc8cc
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jul 2026 15:19:18.6600 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jul 2026 15:19:26.9479 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: xj0f/l1HnqXocDrpapiOiTXmossQ7cn5pXfD73DK25AjYY8UwFHMcKuOxUAHc9jr5mkKS8JxektQITlU1nFZ57OCiqdykaxw8wPhLF4No4M=
+X-MS-Exchange-CrossTenant-UserPrincipalName: 3CX3wRVVF64kf/0Dt9/oxxQJsLELdOgMuPAjTcTsqllf1P2u3E7BdBgslhi+ZSyJCEbQKnF6jyj/PqUFuBYjzSnp8Dq8PsZTWuToDuZCqHY=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR02MB6215
 Received-SPF: pass client-ip=2a01:111:f403:c406::3;
  envelope-from=bin.meng@processmission.com;
@@ -139,288 +140,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement the Config, WayEnable, and per-master WayMask registers
-described by the PolarFire SoC MSS reference manual. Make WayEnable
-monotonic and report the remaining register space as unimplemented.
+The Cadence Linux driver enables version 4 mode and 64-bit addressing in
+Host Control 2 but retains the ADMA2 encoding in Host Control 1. QEMU
+treats the transfer as 32-bit ADMA and uses 12-byte descriptors because
+it only decodes Host Control 1.
+
+Resolve the DMA type from both control registers and use 16-byte version
+4 descriptors. Preserve the legacy 12-byte ADMA2 64-bit format when
+version 4 mode is disabled.
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
 ---
 
- MAINTAINERS                       |   2 +
- include/hw/misc/mchp_pfsoc_l2cc.h |  30 +++++
- hw/misc/mchp_pfsoc_l2cc.c         | 180 ++++++++++++++++++++++++++++++
- hw/misc/Kconfig                   |   3 +
- hw/misc/meson.build               |   1 +
- 5 files changed, 216 insertions(+)
- create mode 100644 include/hw/misc/mchp_pfsoc_l2cc.h
- create mode 100644 hw/misc/mchp_pfsoc_l2cc.c
+ hw/sd/sdhci.c | 25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a28935c898..c0bb18c47a 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1770,11 +1770,13 @@ F: hw/riscv/microchip_pfsoc.c
- F: hw/char/mchp_pfsoc_mmuart.c
- F: hw/misc/mchp_pfsoc_dmc.c
- F: hw/misc/mchp_pfsoc_ioscb.c
-+F: hw/misc/mchp_pfsoc_l2cc.c
- F: hw/misc/mchp_pfsoc_sysreg.c
- F: include/hw/riscv/microchip_pfsoc.h
- F: include/hw/char/mchp_pfsoc_mmuart.h
- F: include/hw/misc/mchp_pfsoc_dmc.h
- F: include/hw/misc/mchp_pfsoc_ioscb.h
-+F: include/hw/misc/mchp_pfsoc_l2cc.h
- F: include/hw/misc/mchp_pfsoc_sysreg.h
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index d2132035eb..00a4b9b0e4 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -227,6 +227,23 @@ static bool sdhci_update_irq(SDHCIState *s)
+     return pending;
+ }
  
- Shakti C class SoC
-diff --git a/include/hw/misc/mchp_pfsoc_l2cc.h b/include/hw/misc/mchp_pfsoc_l2cc.h
-new file mode 100644
-index 0000000000..1b5b3888d5
---- /dev/null
-+++ b/include/hw/misc/mchp_pfsoc_l2cc.h
-@@ -0,0 +1,30 @@
-+/*
-+ * Microchip PolarFire SoC L2 cache controller
-+ *
-+ * Copyright (c) 2026 Process Mission
-+ *
-+ * Author:
-+ *   Bin Meng <bin.meng@processmission.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef MCHP_PFSOC_L2CC_H
-+#define MCHP_PFSOC_L2CC_H
-+
-+#include "hw/core/register.h"
-+#include "hw/core/sysbus.h"
-+
-+#define MCHP_PFSOC_L2CC_REG_SIZE 0x1000
-+#define MCHP_PFSOC_L2CC_REG_NUM  (MCHP_PFSOC_L2CC_REG_SIZE / 8)
-+
-+typedef struct MchpPfSoCL2ccState {
-+    SysBusDevice parent;
-+    uint64_t regs[MCHP_PFSOC_L2CC_REG_NUM];
-+    RegisterInfo regs_info[MCHP_PFSOC_L2CC_REG_NUM];
-+} MchpPfSoCL2ccState;
-+
-+#define TYPE_MCHP_PFSOC_L2CC "mchp.pfsoc.l2cc"
-+OBJECT_DECLARE_SIMPLE_TYPE(MchpPfSoCL2ccState, MCHP_PFSOC_L2CC)
-+
-+#endif
-diff --git a/hw/misc/mchp_pfsoc_l2cc.c b/hw/misc/mchp_pfsoc_l2cc.c
-new file mode 100644
-index 0000000000..b320356572
---- /dev/null
-+++ b/hw/misc/mchp_pfsoc_l2cc.c
-@@ -0,0 +1,180 @@
-+/*
-+ * Microchip PolarFire SoC L2 cache controller
-+ *
-+ * Copyright (c) 2026 Process Mission
-+ *
-+ * Author:
-+ *   Bin Meng <bin.meng@processmission.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "hw/core/register.h"
-+#include "hw/core/registerfields.h"
-+#include "hw/misc/mchp_pfsoc_l2cc.h"
-+
-+REG64(L2_CONFIG, 0x000)
-+    FIELD(L2_CONFIG, BANKS, 0, 8)
-+    FIELD(L2_CONFIG, WAYS, 8, 8)
-+    FIELD(L2_CONFIG, SETS, 16, 8)
-+    FIELD(L2_CONFIG, BYTES, 24, 8)
-+REG64(L2_WAY_ENABLE, 0x008)
-+    FIELD(L2_WAY_ENABLE, VALUE, 0, 8)
-+REG64(L2_WAY_MASK_DMA, 0x800)
-+REG64(L2_WAY_MASK_AXI4_PORT_0, 0x808)
-+REG64(L2_WAY_MASK_AXI4_PORT_1, 0x810)
-+REG64(L2_WAY_MASK_AXI4_PORT_2, 0x818)
-+REG64(L2_WAY_MASK_AXI4_PORT_3, 0x820)
-+REG64(L2_WAY_MASK_HART0_DCACHE, 0x828)
-+REG64(L2_WAY_MASK_HART0_ICACHE, 0x830)
-+REG64(L2_WAY_MASK_HART1_DCACHE, 0x838)
-+REG64(L2_WAY_MASK_HART1_ICACHE, 0x840)
-+REG64(L2_WAY_MASK_HART2_DCACHE, 0x848)
-+REG64(L2_WAY_MASK_HART2_ICACHE, 0x850)
-+REG64(L2_WAY_MASK_HART3_DCACHE, 0x858)
-+REG64(L2_WAY_MASK_HART3_ICACHE, 0x860)
-+REG64(L2_WAY_MASK_HART4_DCACHE, 0x868)
-+REG64(L2_WAY_MASK_HART4_ICACHE, 0x870)
-+
-+#define L2_CONFIG_RESET         0x06091004
-+
-+static uint64_t mchp_pfsoc_l2cc_way_enable_pre_write(RegisterInfo *reg,
-+                                                     uint64_t value)
++static uint8_t sdhci_get_dma_type(SDHCIState *s)
 +{
-+    uint64_t current = *(uint64_t *)reg->data;
++    uint8_t type = SDHC_DMA_TYPE(s->hostctl1);
 +
-+    return MAX(current, value);
-+}
-+
-+#define WAY_MASK_REGISTER(_name)                \
-+    {                                           \
-+        .name = "WAY_MASK_" #_name,             \
-+        .addr = A_L2_WAY_MASK_ ## _name,        \
-+        .reset = UINT64_MAX,                    \
++    /*
++     * In version 4 mode, the legacy ADMA2_32 encoding selects ADMA2,
++     * while ADDRESSING_64 determines its address width.
++     */
++    if (type == SDHC_CTRL_ADMA2_32 &&
++        FIELD_EX32(s->hostctl2, SDHC_HOSTCTL2, VERSION4) &&
++        FIELD_EX32(s->hostctl2, SDHC_HOSTCTL2, ADDRESSING_64)) {
++        return SDHC_CTRL_ADMA2_64;
 +    }
 +
-+static const RegisterAccessInfo mchp_pfsoc_l2cc_regs_info[] = {
-+    {
-+        .name = "CONFIG",
-+        .addr = A_L2_CONFIG,
-+        .reset = L2_CONFIG_RESET,
-+        .ro = UINT64_MAX,
-+    }, {
-+        .name = "WAY_ENABLE",
-+        .addr = A_L2_WAY_ENABLE,
-+        .rsvd = ~R_L2_WAY_ENABLE_VALUE_MASK,
-+        .pre_write = mchp_pfsoc_l2cc_way_enable_pre_write,
-+    },
-+    WAY_MASK_REGISTER(DMA),
-+    WAY_MASK_REGISTER(AXI4_PORT_0),
-+    WAY_MASK_REGISTER(AXI4_PORT_1),
-+    WAY_MASK_REGISTER(AXI4_PORT_2),
-+    WAY_MASK_REGISTER(AXI4_PORT_3),
-+    WAY_MASK_REGISTER(HART0_DCACHE),
-+    WAY_MASK_REGISTER(HART0_ICACHE),
-+    WAY_MASK_REGISTER(HART1_DCACHE),
-+    WAY_MASK_REGISTER(HART1_ICACHE),
-+    WAY_MASK_REGISTER(HART2_DCACHE),
-+    WAY_MASK_REGISTER(HART2_ICACHE),
-+    WAY_MASK_REGISTER(HART3_DCACHE),
-+    WAY_MASK_REGISTER(HART3_ICACHE),
-+    WAY_MASK_REGISTER(HART4_DCACHE),
-+    WAY_MASK_REGISTER(HART4_ICACHE),
-+};
-+
-+static bool mchp_pfsoc_l2cc_register_implemented(hwaddr offset)
-+{
-+    size_t i;
-+
-+    for (i = 0; i < ARRAY_SIZE(mchp_pfsoc_l2cc_regs_info); i++) {
-+        if (mchp_pfsoc_l2cc_regs_info[i].addr == offset) {
-+            return true;
-+        }
-+    }
-+
-+    return false;
++    return type;
 +}
 +
-+static uint64_t mchp_pfsoc_l2cc_read(void *opaque, hwaddr offset,
-+                                     unsigned size)
-+{
-+    if (mchp_pfsoc_l2cc_register_implemented(offset)) {
-+        return register_read_memory(opaque, offset, size);
-+    }
-+
-+    qemu_log_mask(LOG_UNIMP, "%s: unimplemented device read "
-+                  "(size %u, offset 0x%" HWADDR_PRIx ")\n",
-+                  __func__, size, offset);
-+    return 0;
-+}
-+
-+static void mchp_pfsoc_l2cc_write(void *opaque, hwaddr offset,
-+                                  uint64_t value, unsigned size)
-+{
-+    if (mchp_pfsoc_l2cc_register_implemented(offset)) {
-+        register_write_memory(opaque, offset, value, size);
-+        return;
-+    }
-+
-+    qemu_log_mask(LOG_UNIMP, "%s: unimplemented device write "
-+                  "(size %u, value 0x%" PRIx64
-+                  ", offset 0x%" HWADDR_PRIx ")\n",
-+                  __func__, size, value, offset);
-+}
-+
-+static const MemoryRegionOps mchp_pfsoc_l2cc_ops = {
-+    .read = mchp_pfsoc_l2cc_read,
-+    .write = mchp_pfsoc_l2cc_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = { .min_access_size = 1, .max_access_size = 8 },
-+    .impl = { .min_access_size = 1, .max_access_size = 8 },
-+};
-+
-+static void mchp_pfsoc_l2cc_reset(DeviceState *dev)
-+{
-+    MchpPfSoCL2ccState *s = MCHP_PFSOC_L2CC(dev);
-+    size_t i;
-+
-+    memset(s->regs, 0, sizeof(s->regs));
-+    for (i = 0; i < ARRAY_SIZE(mchp_pfsoc_l2cc_regs_info); i++) {
-+        hwaddr addr = mchp_pfsoc_l2cc_regs_info[i].addr;
-+
-+        register_reset(&s->regs_info[addr / sizeof(uint64_t)]);
-+    }
-+}
-+
-+static void mchp_pfsoc_l2cc_init(Object *obj)
-+{
-+    MchpPfSoCL2ccState *s = MCHP_PFSOC_L2CC(obj);
-+    RegisterInfoArray *reg_array;
-+
-+    reg_array = register_init_block64(
-+        DEVICE(obj), mchp_pfsoc_l2cc_regs_info,
-+        ARRAY_SIZE(mchp_pfsoc_l2cc_regs_info), s->regs_info, s->regs,
-+        &mchp_pfsoc_l2cc_ops, false, MCHP_PFSOC_L2CC_REG_SIZE);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &reg_array->mem);
-+}
-+
-+static void mchp_pfsoc_l2cc_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    device_class_set_legacy_reset(dc, mchp_pfsoc_l2cc_reset);
-+}
-+
-+static const TypeInfo mchp_pfsoc_l2cc_info = {
-+    .name = TYPE_MCHP_PFSOC_L2CC,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(MchpPfSoCL2ccState),
-+    .instance_init = mchp_pfsoc_l2cc_init,
-+    .class_init = mchp_pfsoc_l2cc_class_init,
-+};
-+
-+static void mchp_pfsoc_l2cc_register_types(void)
-+{
-+    type_register_static(&mchp_pfsoc_l2cc_info);
-+}
-+
-+type_init(mchp_pfsoc_l2cc_register_types)
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 1543ee6653..772a2d87b3 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -203,6 +203,9 @@ config MCHP_PFSOC_DMC
- config MCHP_PFSOC_IOSCB
-     bool
+ static void sdhci_raise_insertion_irq(void *opaque)
+ {
+     SDHCIState *s = (SDHCIState *)opaque;
+@@ -781,7 +798,7 @@ static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
+     uint32_t adma1 = 0;
+     uint64_t adma2 = 0;
+     hwaddr entry_addr = (hwaddr)s->admasysaddr;
+-    switch (SDHC_DMA_TYPE(s->hostctl1)) {
++    switch (sdhci_get_dma_type(s)) {
+     case SDHC_CTRL_ADMA2_32:
+         dma_memory_read(s->dma_as, entry_addr, &adma2, sizeof(adma2),
+                         MEMTXATTRS_UNSPECIFIED);
+@@ -818,7 +835,9 @@ static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
+                         MEMTXATTRS_UNSPECIFIED);
+         dscr->addr = le64_to_cpu(dscr->addr);
+         dscr->attr &= (uint8_t) ~0xC0;
+-        dscr->incr = 12;
++        /* Version 4 pads 64-bit ADMA2 descriptors from 96 to 128 bits */
++        dscr->incr = FIELD_EX32(s->hostctl2, SDHC_HOSTCTL2, VERSION4) ?
++                     16 : 12;
+         break;
+     }
+ }
+@@ -998,7 +1017,7 @@ static void sdhci_data_transfer(void *opaque)
+     SDHCIState *s = (SDHCIState *)opaque;
  
-+config MCHP_PFSOC_L2CC
-+    bool
-+
- config MCHP_PFSOC_SYSREG
-     bool
- 
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 23265f6035..5f45861d8a 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -30,6 +30,7 @@ system_ss.add(when: 'CONFIG_VIRT_CTRL', if_true: files('virt_ctrl.c'))
- # RISC-V devices
- system_ss.add(when: 'CONFIG_MCHP_PFSOC_DMC', if_true: files('mchp_pfsoc_dmc.c'))
- system_ss.add(when: 'CONFIG_MCHP_PFSOC_IOSCB', if_true: files('mchp_pfsoc_ioscb.c'))
-+system_ss.add(when: 'CONFIG_MCHP_PFSOC_L2CC', if_true: files('mchp_pfsoc_l2cc.c'))
- system_ss.add(when: 'CONFIG_MCHP_PFSOC_SYSREG', if_true: files('mchp_pfsoc_sysreg.c'))
- system_ss.add(when: 'CONFIG_SIFIVE_TEST', if_true: files('sifive_test.c'))
- system_ss.add(when: 'CONFIG_SIFIVE_E_PRCI', if_true: files('sifive_e_prci.c'))
+     if (s->trnmod & SDHC_TRNS_DMA) {
+-        switch (SDHC_DMA_TYPE(s->hostctl1)) {
++        switch (sdhci_get_dma_type(s)) {
+         case SDHC_CTRL_SDMA:
+             sdhci_sdma_transfer(s);
+             break;
 -- 
 2.34.1
 
