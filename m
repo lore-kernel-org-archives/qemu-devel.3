@@ -4,62 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98B23C4452B
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 11:19:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7C2FC4452B
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 11:21:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmrRl-0006Sh-7Y; Thu, 23 Jul 2026 07:18:38 -0400
+	id 1wmrU0-0007K6-77; Thu, 23 Jul 2026 07:20:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zeng_chi911@163.com>)
- id 1wmqHL-0007u9-Ad; Thu, 23 Jul 2026 06:03:47 -0400
-Received: from m16.mail.163.com ([220.197.31.4])
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wmrTy-0007Jl-Qt; Thu, 23 Jul 2026 07:20:54 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zeng_chi911@163.com>)
- id 1wmqHG-0002LA-MN; Thu, 23 Jul 2026 06:03:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=Mw
- INC8YxL+u4ojAvgX/IxJM3V5LoH7R6uMFofMRU/sU=; b=mJgJb2ZCofKtJrH2uF
- K3XAOf8lJEE/gCcFWbpiB+6lp9k/XWUsp6sYzCgzlRMmMldDwjaEVuX3UsDHADQX
- LBBDgClvkc2BhZOHuRB25NRF1bTZBrVQlWnl7cbtMVqLEV5L8a6ZUhWaCT1+RCz7
- AEAgU/IfxoO33stljZMyTs7qM=
-Received: from zengchi (unknown [])
- by gzga-smtp-mtada-g1-4 (Coremail) with SMTP id
- _____wBHWhr05WFqQi8ZLg--.40114S2; 
- Thu, 23 Jul 2026 17:59:16 +0800 (CST)
-From: Zeng Chi <zeng_chi911@163.com>
-To: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- chao.liu@processmission.com
-Cc: qemu-riscv@nongnu.org,
-	qemu-devel@nongnu.org,
-	zengchi@kylinos.cn
-Subject: [PATCH] target/riscv: Fix memory leak in riscv_trigger_unrealize()
-Date: Thu, 23 Jul 2026 17:59:11 +0800
-Message-Id: <20260723095911.3951185-1-zeng_chi911@163.com>
-X-Mailer: git-send-email 2.25.1
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wmrTx-0005CQ-7Y; Thu, 23 Jul 2026 07:20:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=ObMjv2Z3q3+LlLbs1qOTkr5WBbCMzCozqfb4eg5lmV0=; b=lE/OBqHrpKgq/jZTk0iMERQOlx
+ Q9ZL/9lmhv8c3vC+zV6V7ZjB0TPEqSoEURUnlaXZu6shji/bU4SmPx6wBvAtohswzSRc5iTm8PF4D
+ MvwTeLGOh0Fp/qEK9UqWMbPBkEO53YlteCQgTxjs2WKbw/YtmwDaOn0bHvc59se6C/hNGROmnzmMp
+ LPIS7ZGoBSxai54my+xNJv8mRh32KQyzkco6sfEV8a+qGZdNQZaLP2bICz1/+76g1yWP0mj7P0K1e
+ d+WPiLYmkS3k7JKEu0Rc4ZznUdMYcHWG/WQaz+1lAOS5m8txZlGTwVqWAUZkNBH2Y9tMR33eSGWtn
+ duOCmk4WrT86Pt1vYvsDa7Lm5os3CwWUgV0mJjSyzOxoWkHXPewQfn1IEnfYQ5ovJ5bUVA7zYNp1u
+ ObDSvOq/b3pYRWG9aNZEZs+zGeuBPj9Oa9WubUes7j4gmrDFpK8zVrI+9vMHA8b5itUXf9NdAtZSg
+ 5hN9FfYKuZKQCn3yvl6/qyXl5QTXIA9BRFxtZcBj7N4Xrxyh5TcOpVluRsGe4gAEmIvu+hKpBBuT5
+ CUYayMRuS1vi0lG20ZY013Rowlwtq/0dR0jeqZ9s79D/4JO0gq9b6zoshkC5PD2XMvs9rLSTrLN1Y
+ oKseWWXgBCanzq7Wm1V4omXzdV6DZwYOO7zwy+Gxg=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: Stefano Stabellini <sstabellini@kernel.org>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>, 
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: Re: [PATCH v2 2/2] hw/9pfs/xen: drain in-flight PDUs before xen-9p
+ disconnect
+Date: Thu, 23 Jul 2026 13:20:46 +0200
+Message-ID: <6287622.lOV4Wx5bFT@weasel>
+In-Reply-To: <alpine.DEB.2.22.394.2607221815520.5295@ubuntu-linux-20-04-desktop>
+References: <cover.1784392605.git.qemu_oss@crudebyte.com>
+ <6012362.DvuYhMxLoT@weasel>
+ <alpine.DEB.2.22.394.2607221815520.5295@ubuntu-linux-20-04-desktop>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wBHWhr05WFqQi8ZLg--.40114S2
-X-Coremail-Antispam: 1Uf129KBjvdXoW7GFykGrW3AFW7uw4xZr45GFg_yoWkCFXEgw
- 4rWF1DWr4rua4jkFW3Cw48XF1j9a4UKryxtrWfWrnIgFWUuayqv397ur9YkF1kCwsrGFnx
- J397Jry7Aa43CjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
- 9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IU81UDJUUUUU==
-X-Originating-IP: [116.128.244.169]
-X-CM-SenderInfo: 52hqws5fklmiqr6rljoofrz/xtbCvxSpZWph5fSevAAA3f
-Received-SPF: pass client-ip=220.197.31.4; envelope-from=zeng_chi911@163.com;
- helo=m16.mail.163.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 23 Jul 2026 07:18:22 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,39 +71,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zeng Chi <zengchi@kylinos.cn>
+On Thursday, 23 July 2026 03:17:12 CEST Stefano Stabellini wrote:
+> On Wed, 22 Jul 2026, Christian Schoenebeck wrote:
+[...]
+> > > @@ -368,10 +375,18 @@ static void xen_9pfs_evtchn_event(void *opaque)
+> > > 
+> > >  static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev)
+> > >  {
+> > >  
+> > >      Xen9pfsDev *xen_9pdev = container_of(xendev, Xen9pfsDev, xendev);
+> > > 
+> > > +    V9fsState *s = &xen_9pdev->state;
+> > > 
+> > >      int i;
+> > > 
+> > > +    if (!xen_9pdev->rings) {
+> 
+> specifically this check is not sufficient are there can be cases where
+> rings != NULL but transport is not set and v9fs_reset should not be
+> called. For instance xen_be_map_grant_ref() returns NULL,
+> xen_9pfs_connect() go out without calling v9fs_device_realize_common().
+> s->transport == NULL and also s->fids == NULL but rings != NULL. Later
+> v9fs_reset calls g_hash_table_get_values(s->fids)
+> 
+> > > +        return;
+> > > +    }
+> > > +
+> > > 
+> > >      trace_xen_9pfs_disconnect(xendev->name);
+> > > 
+> > > +    v9fs_reset(s);
+> > > +    v9fs_device_unrealize_common(s);
+> > > +
+> > > 
+> > >      for (i = 0; i < xen_9pdev->num_rings; i++) {
+> > >      
+> > >          if (xen_9pdev->rings[i].evtchndev != NULL) {
+> > > 
+> > > qemu_set_fd_handler(qemu_xen_evtchn_fd(xen_9pdev->rings[i].evtchndev),
+> 
+> See this below. If you agree and add the below to this patch you can add
+> my Reviewed-by.
+> 
+> 
+> diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+> index 3119f01117..fc01791830 100644
+> --- a/hw/9pfs/9p.c
+> +++ b/hw/9pfs/9p.c
+> @@ -4530,6 +4530,7 @@ void v9fs_device_unrealize_common(V9fsState *s)
+>      qp_table_destroy(&s->qpp_table);
+>      qp_table_destroy(&s->qpf_table);
+>      g_free(s->ctx.fs_root);
+> +    s->transport = NULL;
+>  }
+> 
+>  typedef struct VirtfsCoResetData {
+> diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
+> index edb65a7afc..f0791f9e97 100644
+> --- a/hw/9pfs/xen-9p-backend.c
+> +++ b/hw/9pfs/xen-9p-backend.c
+> @@ -384,8 +384,10 @@ static void xen_9pfs_disconnect(struct XenLegacyDevice
+> *xendev)
+> 
+>      trace_xen_9pfs_disconnect(xendev->name);
+> 
+> -    v9fs_reset(s);
+> -    v9fs_device_unrealize_common(s);
+> +    if (s->transport) {
+> +        v9fs_reset(s);
+> +        v9fs_device_unrealize_common(s);
+> +    }
+> 
+>      for (i = 0; i < xen_9pdev->num_rings; i++) {
+>          if (xen_9pdev->rings[i].evtchndev != NULL) {
 
-In riscv_trigger_unrealize(), the per-trigger QEMUTimer objects are
-created in riscv_trigger_realize() using timer_new_ns().  However,
-unrealize only calls timer_del() to cancel them, but never frees the
-timer objects themselves. This results in a memory leak every time a
-CPU instance is unrealized (e.g., during hot-unplug or machine teardown).
+Agreed, these two changes makes sense. I'll formally send a v3 with these two 
+changes added now.
 
-Fix it by calling timer_free() for each timer after timer_del().
+My plan is to send a PR with this and other fixes tomorrow already, as we're 
+getting very close to release.
 
-Fixes: 820552a92e32 ("target/riscv: dynamic alloc of debug trigger arrays")
-Signed-off-by: Zeng Chi <zengchi@kylinos.cn>
----
- target/riscv/tcg/debug.c | 1 +
- 1 file changed, 1 insertion(+)
+Thanks Stefano!
 
-diff --git a/target/riscv/tcg/debug.c b/target/riscv/tcg/debug.c
-index 3c0fe70101..ffbdc17023 100644
---- a/target/riscv/tcg/debug.c
-+++ b/target/riscv/tcg/debug.c
-@@ -1081,6 +1081,7 @@ void riscv_trigger_unrealize(CPURISCVState *env)
- 
-     for (int i = 0; i < env->num_triggers; i++) {
-         timer_del(env->itrigger_timer[i]);
-+        timer_free(env->itrigger_timer[i]);
-     }
-     g_free(env->itrigger_timer);
- }
--- 
-2.25.1
+/Christian
 
-
-No virus found
-		Checked by Hillstone Network AntiVirus
 
 
