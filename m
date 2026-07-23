@@ -4,68 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60F0BC44532
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 01:18:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A153AC4453A
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 02:15:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmi4M-0004eR-Sf; Wed, 22 Jul 2026 21:17:52 -0400
+	id 1wmixQ-0007cH-HD; Wed, 22 Jul 2026 22:14:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wmi47-0004aa-NN; Wed, 22 Jul 2026 21:17:39 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wmi44-0002yF-RK; Wed, 22 Jul 2026 21:17:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1784769452; x=1816305452;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=LFZDeluVb0jYrFBCNzRihUZyA/8sIedwSTGxxS78Gns=;
- b=ecirhDrrE29HsCz6Llj0iPfauJSaZQ2lZx5DpEEox8T7C3zcQ0bde+XH
- e+quMHFAmOs6J+8KvF7OyFlhvzYU1r0YJrtQrtaNxBeeFYduIhY5jQbx9
- jPWpa2iSIPQSdinxN+ek7vIy7Wp0OXWbD0vNjjfsPfbRiG/wElGxAz73X
- Mv/UhPN0lb5jDPTufXq/S2iC6ZFXe5i27E58JzITH95WaIqJ7EX08ojLi
- D6/Xb1KgytZJp/sFwBzwEB2DYkPK2P7pByffmJ5tnae7zngkWbRydOPME
- vFMsTPAP+2HtCV94f41f8kJAoh1NJJ6jJF3DIpMCiLohyOBt/HYVRz9EE g==;
-X-CSE-ConnectionGUID: PK6km9+iT7W+P67V1/lvkQ==
-X-CSE-MsgGUID: jFSuhACDTqCjDD8GAPPi6g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11854"; a="96074857"
-X-IronPort-AV: E=Sophos;i="6.25,179,1779174000"; d="scan'208";a="96074857"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Jul 2026 18:17:30 -0700
-X-CSE-ConnectionGUID: H+h8YyNAQWKTeVFtEXdS3g==
-X-CSE-MsgGUID: yLavuJHuSj+zmx5W/s9Ezg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,179,1779174000"; d="scan'208";a="251943360"
-Received: from junjie-desk-dev.bj.intel.com (HELO
- junjie-desk-dev.tail2c02c1.ts.net) ([10.238.152.71])
- by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Jul 2026 18:17:29 -0700
-From: Junjie Cao <junjie.cao@intel.com>
-To: Jonathan Cameron <jic23@kernel.org>
-Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org, qemu-stable@nongnu.org
-Subject: [PATCH v2 5/6] hw/cxl: clear event logs,
- scan media and interrupt policy on reset
-Date: Thu, 23 Jul 2026 09:16:24 +0800
-Message-ID: <20260723011625.1117034-6-junjie.cao@intel.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260723011625.1117034-1-junjie.cao@intel.com>
-References: <20260723011625.1117034-1-junjie.cao@intel.com>
+ (Exim 4.90_1) (envelope-from <jianghaotian.sunday@gmail.com>)
+ id 1wmixP-0007bN-Id
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 22:14:43 -0400
+Received: from mail-pj2-x03.google.com ([2607:f8b0:4864:39::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jianghaotian.sunday@gmail.com>)
+ id 1wmixN-0001MX-U8
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 22:14:43 -0400
+Received: by mail-pj2-x03.google.com with SMTP id
+ 98e67ed59e1d1-38111ea8a88so81827a91.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 19:14:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1784772880; x=1785377680; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=o766GxEhV3PGRBXOiHXJb69DGsBYL5EaUQhlyW7i0BA=;
+ b=YomiUgTkExByLS6Rb+vrWmS/n3505phM0Ekpni9j+c7CV7niUHwfO8CD184FLtiB42
+ Z2C9shGGuje5dIf9uGyEBuxJkGKrZ+PCa21ejOa2hDgQH1Uj8O+eEWUUFNCi7oscP181
+ 0YsfEEQDRmqX0r7cn3rQzTWTiLytd0uN6kRFeYVhEwYp1PSLe8kleq2Kq5aFF6muGd4h
+ EBgpYDs4WCc84vTF73ONpL6BHjBDJEJimeQQGPEklNEkBg5X6GUjQhH97Zcf6RVDWo1N
+ 2cYI/mRd6qibOhna+8nFqRk5H7md2kHznEFBrJRyXdQZXuXWoYs/8Dwq2+QhWyO7ow5K
+ oSig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784772880; x=1785377680;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=o766GxEhV3PGRBXOiHXJb69DGsBYL5EaUQhlyW7i0BA=;
+ b=GnLuBSsUntIWjkMTtNbY3M7evlN4zCS1O8U5h8mbN+EzC9ro8PYMegLYQwCjNraf4G
+ muYaA+OeFp0LbGFnqFhU69ctpfmr4OnkOBKpy2eAgD4DPWUYjLUXU+oV1ojOg5X2S+7c
+ 8W4n9bQe10z1RPS2WsvxpvMxGNCoE2y6/l+QdPoN2QMyW5ELLohR7DhHMuU57sbaIgnJ
+ X0x/0Qdt4tb9Y3Ycz3WMr6nwnnp6KWZnOO3+uNa/RtMNGMYkEd6f21MrqjketiBNip1g
+ J12JHIpURSaDagGw+yk7qo8kxfhZHX/A93zajotGxX50ypoaScCimSJrTwX+dNdo2CSq
+ Ovzw==
+X-Gm-Message-State: AOJu0YwhwU+vrvZ2igOaAfk5otL9+urapfJK7sESbbhv867bTA9CL6e+
+ yTeZjqQCO+utjkMUXNPI77vPfEs+4gobenxN0zM7cDIIh3CRgIsApUwgp2/F0Vk9K/c/bw==
+X-Gm-Gg: AR+sD11bmKGxLTzO3NQnJdRaJ4pH3aj5Ez4i90rMzqwfhakfm388Z9xFJGeNzgUgRrh
+ rzqZMWX78nakO6mGBRz1xF77J8liuGec95jrVIZlrMFPMqq0+Ob7cdSNme97ln69eYwhdtGjdmL
+ fw4v0p3uCqMIioIdsjJNHlQlDX4w/LgdMKN853wjYvOhEGk3oY8VLrAq7mbKRm5BNMRKUahIgFJ
+ g1xKJ8/kzYoyGZYd78SZQQyTafkdvG/1EwixHhjSp9FdtrVeIxVDdTkimkKT6l52L/7rK+a9hlL
+ ECQhzSego/k94r8JfVAXg3ygjvONfMSAh7Qv6L2JbpBOkFwak6GtScHs8wEWuzLc+5NtS9pi9Ik
+ cZL7TqIwgf+gDLZkw2yiKANaH5aimtqRnWjIFbkWFKI9LU/wj4MCz55CipDLJlSHchr7yCmik6A
+ yxPmldSC/857z9OwX45IeaTJnz0xilr12mKjpbLJdZD8dyHyjdkgW6jq68gDlDrjwJlxdoB/HoX
+ aMjnVn/pnczEM0mi0BIPVkLFzIBAA==
+X-Received: by 2002:a17:90b:4c0e:b0:38e:6aa7:68ad with SMTP id
+ 98e67ed59e1d1-38ec648ac8amr1123522a91.5.1784772879979; 
+ Wed, 22 Jul 2026 19:14:39 -0700 (PDT)
+Received: from VM-210-252-ubuntu.. ([14.116.239.39])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-38ecad34d41sm66860a91.9.2026.07.22.19.14.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 22 Jul 2026 19:14:38 -0700 (PDT)
+From: jianghaotian.sunday@gmail.com
+To: qemu-devel@nongnu.org
+Cc: kraxel@redhat.com, Haotian Jiang <jianghaotian.sunday@gmail.com>,
+ qemu-stable@nongnu.org
+Subject: [PATCH] hw/audio/intel-hda: restrict all DMA engine paths to memories
+Date: Thu, 23 Jul 2026 10:14:12 +0800
+Message-Id: <20260723021412.377244-1-jianghaotian.sunday@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.9; envelope-from=junjie.cao@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:39::3;
+ envelope-from=jianghaotian.sunday@gmail.com; helo=mail-pj2-x03.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,73 +98,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Event records, scan media results and event interrupt settings are
-device-internal dynamic state that should not survive a device reset.
+From: Haotian Jiang <jianghaotian.sunday@gmail.com>
 
-Per CXL r4.0 Section 8.2.10.9.4.6 (Get Scan Media Results), "If the
-Scan Media command has not been called since the last Conventional
-Reset, the device shall return the Unsupported return code."  This
-explicitly invalidates scan media results across reset, so clear the
-scan_media_hasrun flag.
+CVE-2021-3611 (commit 79fa99831d) restricted the DMA engine to memories
+by setting attrs.memory=true, but only applied this to intel_hda_response.
+Three other DMA engine access points still use MEMTXATTRS_UNSPECIFIED,
+allowing a malicious guest to trigger DMA-to-self-MMIO reentry:
 
-Per CXL r4.0 Section 8.2.10.2.5 (Set Event Interrupt Policy), "All
-event log interrupt settings shall be reset to 00b (No Interrupts) by
-the device on Conventional Reset."  Clear irq_enabled for every event
-log accordingly.
+  - intel_hda_xfer (line 398): called from the audio timer callback
+    (hda_codec_xfer -> bus->xfer), so the MemReentrancyGuard does not
+    fire (engaged_in_io is false outside MMIO dispatch). A guest that
+    points a BDL entry at the HDA controller's own MMIO BAR can write
+    audio samples to device registers, triggering whandler side effects
+    such as starting/stopping streams or injecting codec commands via
+    CORBWP.
+  - intel_hda_parse_bdl (line 478): uses pci_dma_read which hardcodes
+    MEMTXATTRS_UNSPECIFIED. A guest-controlled BDL base address can
+    point at controller MMIO, allowing the DMA engine to read device
+    registers as BDL descriptors.
+  - intel_hda_corb_run (line 333): ldl_le_pci_dma reads the CORB ring
+    with MEMTXATTRS_UNSPECIFIED, allowing the DMA engine to read
+    controller MMIO as CORB entries.
 
-For the event records there is no direct spec mandate to drop the
-stored records on reset; the Event Status register (Table 8-203) is
-non-sticky and resets to zero per Section 9.7, and no reset flavor
-requires the already-reported records to persist.  Draining the queues
-is therefore a reasonable modelling choice that keeps the records
-consistent with the freshly-reset status register, rather than a spec
-requirement.  Call the existing cxl_discard_all_event_records() helper
-to drain all event queues.  The event log infrastructure itself
-(mutexes, IRQ vectors) remains intact as it is initialized once during
-device realize.
+Fix all three by passing {.memory = true} explicitly, matching the
+fix already applied to intel_hda_response. For intel_hda_parse_bdl,
+replace pci_dma_read with pci_dma_rw to pass the controlled attrs.
 
-This is also where reset-type gating begins: a wakeup from suspend-to-RAM
-(RESET_TYPE_WAKEUP) is not a Conventional or CXL Reset and must retain
-device-internal state, so the hold phase returns early for that type
-before discarding any records.  This mirrors the RESET_TYPE_WAKEUP
-shortcut in virtio-mem and virtio-balloon.  Only the unconditional
-mailbox interface re-initialization and the in-flight sanitize free
-(whose backing timer was already destroyed) run on a wakeup.
-
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Fixes: 79fa99831d ("hw/audio/intel-hda: Restrict DMA engine to memories (not MMIO devices)")
+Reported-by: Haotian Jiang of Tencent Security (Yunding Lab) <jianghaotian.sunday@gmail.com>
+Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
+Cc: qemu-stable@nongnu.org
 ---
- hw/mem/cxl_type3.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ hw/audio/intel-hda.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index a5e6df3033..5bf0cffb72 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -1371,6 +1371,23 @@ static void ct3d_reset_hold(Object *obj, ResetType type)
-      */
-     g_free(ct3d->media_op_sanitize);
-     ct3d->media_op_sanitize = NULL;
-+
-+    /*
-+     * A wakeup from suspend-to-RAM is not a Conventional or CXL Reset.  The
-+     * device-internal dynamic state cleared below (event logs, scan media
-+     * results, and the poison/feature-transfer state cleared in subsequent
-+     * patches) must be preserved across resume, so stop here for a wakeup.
-+     * virtio-mem and virtio-balloon take the same RESET_TYPE_WAKEUP shortcut.
-+     */
-+    if (type == RESET_TYPE_WAKEUP) {
-+        return;
-+    }
-+
-+    cxl_discard_all_event_records(&ct3d->cxl_dstate);
-+    for (int i = 0; i < CXL_EVENT_TYPE_MAX; i++) {
-+        ct3d->cxl_dstate.event_logs[i].irq_enabled = false;
-+    }
-+    ct3d->scan_media_hasrun = false;
- }
+diff --git a/hw/audio/intel-hda.c b/hw/audio/intel-hda.c
+index d7c2c3c2fd..3d361a4976 100644
+--- a/hw/audio/intel-hda.c
++++ b/hw/audio/intel-hda.c
+@@ -305,6 +305,7 @@ static int intel_hda_send_command(IntelHDAState *d, uint32_t verb)
  
- static const Property ct3_props[] = {
+ static void intel_hda_corb_run(IntelHDAState *d)
+ {
++    const MemTxAttrs attrs = { .memory = true };
+     hwaddr addr;
+     uint32_t rp, verb;
+ 
+@@ -330,7 +331,7 @@ static void intel_hda_corb_run(IntelHDAState *d)
+ 
+         rp = (d->corb_rp + 1) & 0xff;
+         addr = intel_hda_addr(d->corb_lbase, d->corb_ubase);
+-        ldl_le_pci_dma(&d->pci, addr + 4 * rp, &verb, MEMTXATTRS_UNSPECIFIED);
++        ldl_le_pci_dma(&d->pci, addr + 4 * rp, &verb, attrs);
+         d->corb_rp = rp;
+ 
+         dprint(d, 2, "%s: [rp 0x%x] verb 0x%08x\n", __func__, rp, verb);
+@@ -395,7 +396,7 @@ static void intel_hda_response(HDACodecDevice *dev, bool solicited, uint32_t res
+ static bool intel_hda_xfer(HDACodecDevice *dev, uint32_t stnr, bool output,
+                            uint8_t *buf, uint32_t len)
+ {
+-    const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
++    const MemTxAttrs attrs = { .memory = true };
+     HDACodecBus *bus = HDA_BUS(dev->qdev.parent_bus);
+     IntelHDAState *d = container_of(bus, IntelHDAState, codecs);
+     hwaddr addr;
+@@ -466,6 +467,7 @@ static bool intel_hda_xfer(HDACodecDevice *dev, uint32_t stnr, bool output,
+ 
+ static void intel_hda_parse_bdl(IntelHDAState *d, IntelHDAStream *st)
+ {
++    const MemTxAttrs attrs = { .memory = true };
+     hwaddr addr;
+     uint8_t buf[16];
+     uint32_t i;
+@@ -475,7 +477,8 @@ static void intel_hda_parse_bdl(IntelHDAState *d, IntelHDAStream *st)
+     g_free(st->bpl);
+     st->bpl = g_new(bpl, st->bentries);
+     for (i = 0; i < st->bentries; i++, addr += 16) {
+-        pci_dma_read(&d->pci, addr, buf, 16);
++        pci_dma_rw(&d->pci, addr, buf, 16,
++                   DMA_DIRECTION_TO_DEVICE, attrs);
+         st->bpl[i].addr  = le64_to_cpu(*(uint64_t *)buf);
+         st->bpl[i].len   = le32_to_cpu(*(uint32_t *)(buf + 8));
+         st->bpl[i].flags = le32_to_cpu(*(uint32_t *)(buf + 12));
 -- 
-2.43.0
+2.34.1
 
 
