@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F476C531CF
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 12:50:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AF10C531CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 12:51:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmssd-0001lM-2w; Thu, 23 Jul 2026 08:50:27 -0400
+	id 1wmstN-0002P9-Q7; Thu, 23 Jul 2026 08:51:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wmssb-0001l9-Dr
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 08:50:25 -0400
+ id 1wmstE-0002KJ-45
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 08:51:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wmssZ-0001Rp-Jp
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 08:50:25 -0400
+ id 1wmstB-0001g6-1s
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 08:51:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784811022;
+ s=mimecast20190719; t=1784811060;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LbPNXoP9r2s8ahTbGwObJE1tvq9S15xgV3E13O8EbC0=;
- b=EWKDKiFIyeWQ6mmtWSGjxw3bipLeV8xCVPL9Zq2E5MNUD9CbN8xsf5SpsoY2oc5lNIAkSL
- n0cKrrU4yMfkpwnjaP5Ed+ey/8HVw4yrmPMjPCm98Blomw+YhUj2g24Rf+p4YaszkATUkH
- 4JKpK9/T0ovFYRXzMLpPZpMOAjYe48c=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ffIfXEmsa5r3UEVywYBh6JvLIE+u+rYPr4mB0bAHg/I=;
+ b=LPpH+dWodQcK/a/2QhlnoSNPKgWa9VV+g0mKRsMLOwvSWb29FYm5QezjU3iKuC57Q/wwsT
+ nUn82O471q2PO8OpMz4Q1pO6syCv3vVvvlP1YbVgSux5Q7dit8ya5FAxSiX2Q3b2WBgzxX
+ Dms8D9/+0ZS9Mux5RGpm8OfQLKFTXQc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-427-hHmdmQcNPYm7M366WfAfzg-1; Thu,
- 23 Jul 2026 08:49:11 -0400
-X-MC-Unique: hHmdmQcNPYm7M366WfAfzg-1
-X-Mimecast-MFC-AGG-ID: hHmdmQcNPYm7M366WfAfzg_1784810949
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-618-ADMGRIgCNs2-Rtjr3NEXLw-1; Thu,
+ 23 Jul 2026 08:50:57 -0400
+X-MC-Unique: ADMGRIgCNs2-Rtjr3NEXLw-1
+X-Mimecast-MFC-AGG-ID: ADMGRIgCNs2-Rtjr3NEXLw_1784811055
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 15BB119775EB; Thu, 23 Jul 2026 12:49:08 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8A1F0195FE30; Thu, 23 Jul 2026 12:50:54 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.32.196])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4764818002A0; Thu, 23 Jul 2026 12:48:59 +0000 (UTC)
-Date: Thu, 23 Jul 2026 13:48:55 +0100
+ id 861EE18002A0; Thu, 23 Jul 2026 12:50:49 +0000 (UTC)
+Date: Thu, 23 Jul 2026 13:50:45 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+To: Jamin Lin <jamin_lin@aspeedtech.com>
+Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>,
  Troy Lee <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>,
  Joel Stanley <joel@jms.id.au>, Eric Blake <eblake@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  Troy Lee <troy_lee@aspeedtech.com>
-Subject: Re: [PATCH v2 07/17] crypto/cipher: Add GCM to QCryptoCipherMode
-Message-ID: <amINt0SKk2u-uqG1@redhat.com>
+Subject: Re: [PATCH v2 10/17] crypto/cipher-nettle: Implement AES-GCM
+Message-ID: <amIOJQavoyH8kLjL@redhat.com>
 References: <20260715033311.1648424-1-jamin_lin@aspeedtech.com>
- <20260715033311.1648424-8-jamin_lin@aspeedtech.com>
- <87o6g8j1nm.fsf@pond.sub.org>
+ <20260715033311.1648424-11-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87o6g8j1nm.fsf@pond.sub.org>
+In-Reply-To: <20260715033311.1648424-11-jamin_lin@aspeedtech.com>
 User-Agent: Mutt/2.4.0 (2026-06-19)
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: permerror client-ip=170.10.133.124;
@@ -101,55 +99,21 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 15, 2026 at 06:51:41AM +0200, Markus Armbruster wrote:
-> Jamin Lin <jamin_lin@aspeedtech.com> writes:
+On Wed, Jul 15, 2026 at 03:33:29AM +0000, Jamin Lin wrote:
+> Add the AES-GCM AEAD mode to the nettle backend so it is available when
+> QEMU is built with nettle instead of gcrypt. GCM is driven through
+> nettle's generic gcm_* interface, using the AES encrypt function for both
+> directions: gcm_set_iv() sets the (typically 96-bit) nonce, gcm_update()
+> feeds the associated data, gcm_encrypt()/gcm_decrypt() need not be block
+> aligned, and gcm_digest() produces the authentication tag.
 > 
-> > Introduce the GCM cipher mode so authenticated encryption can be built
-> > on top of the existing qcrypto_cipher API. GCM is an IV-based mode, so
-> > register it in mode_need_iv. No backend advertises it yet, so it stays
-> > unsupported until a backend and the AAD/tag helpers are added in the
-> > following patches.
-> >
-> > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> > Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> > Acked-by: Daniel P. Berrangé <berrange@redhat.com>
-> 
-> Same person giving Reviewed-by and Acked-by is odd.  Daniel, is this
-> what you want?
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>  crypto/cipher-nettle.c.inc | 128 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 128 insertions(+)
 
-Acked-by in the sense that as crypto subsys maintainer, I'm happy for
-it to be merged by aspeed/arm maintainer as part of this series.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-> 
-> > ---
-> >  qapi/crypto.json | 4 +++-
-> >  crypto/cipher.c  | 1 +
-> >  2 files changed, 4 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/qapi/crypto.json b/qapi/crypto.json
-> > index 2b55befef9..6e3a98ff68 100644
-> > --- a/qapi/crypto.json
-> > +++ b/qapi/crypto.json
-> > @@ -121,10 +121,12 @@
-> >  #
-> >  # @ctr: Counter (Since 2.8)
-> >  #
-> > +# @gcm: Galois/Counter Mode (Since 11.2)
-> > +#
-> >  # Since: 2.6
-> >  ##
-> >  { 'enum': 'QCryptoCipherMode',
-> > -  'data': ['ecb', 'cbc', 'xts', 'ctr']}
-> > +  'data': ['ecb', 'cbc', 'xts', 'ctr', 'gcm']}
-> >  
-> >  ##
-> >  # @QCryptoIVGenAlgo:
-> 
-> Acked-by: Markus Armbruster <armbru@redhat.com>
-> 
-> 
-> [...]
-> 
 
 With regards,
 Daniel
