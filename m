@@ -4,146 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DDB7C44524
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 08:34:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9800BC531CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 08:36:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmosD-0002kP-73; Thu, 23 Jul 2026 04:33:45 -0400
+	id 1wmou7-0003lE-Vt; Thu, 23 Jul 2026 04:35:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wmosB-0002jr-8d
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 04:33:43 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wmos8-0007Nn-Iu
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 04:33:43 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66N7Bg1v3434656
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 08:33:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- SpaN2BKQIcV0rZMXSnufz+Dkcpw6RRJYHQYqA0DDH9M=; b=aIxRWlXaDf/JMeJv
- 9tEB/Iiqkwpu+hagfAn2wGi4aeVmrj3PtPxHJ+/VbJO/opVVRo4B7Lj4lYykhUXG
- ufSP2Hv1/WFFMvIT3AjVm03Il2JY8NWBNWOK05bzJrLelWCNqhe7Eim1pl9cYl2R
- wsGqaFz5N0U2xiGBZkQqx6gTxt3PjQanpzCCIBgi799rr6H7wctFwOAV2yRP5Nve
- cmyH7+l9DOJ+L3vmg+VCVRSPrRkD0Hy1cFMfbKN/f8TTM3rLpAbENOkylZZqP3/5
- 6pSXaW1SpqrFsHSMwD997+DM6nFeJ8xsji501pVPdtjUfUroF2GwVNDv4+70yTOd
- TOX8rw==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fk5cc29ep-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 08:33:38 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-5276aa86d00so7153511cf.2
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 01:33:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wmou6-0003kC-2D
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 04:35:42 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wmou4-0007fv-4s
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 04:35:41 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-cbb85186d43so271812a12.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 01:35:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784795738; cv=none;
+ d=google.com; s=arc-20260327;
+ b=VVGYSjh4ntLzCx36XLuampB8Z5qPvhjhM1TiBZ5eecgongbPJwFGVyWlxyi/ixHpum
+ cPuqnvI6RMznjXBMOz/4U1nI5/2P5h2afXuIOS0Zs7QOw/nDXuopKXsSngxKzHzlFKAC
+ x8N6iBq5T8GhJB+3e3GYiuxZpp7ReDSsEVaoDM8izIJNPXD+Fzp/H3dWWoy+zalDD7nC
+ d07KYgwbcyBTImT/DJByu9MFDcF9l3uIDi6EhUr086HhdKlmwnCvTezAT1sRHk782Gdz
+ 62OooZR7KQLveYrfYMwxaOEmeF2ECL+CRfA5J5LTvuuhevWZYUfL6LmLO28r+Gij85qd
+ hGcA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=avx/9UTFRGD2a3Jmzkma/lYbADz9cvuQDSckzg5qwdc=;
+ fh=yO7hsCEgyCHbk7uK1aZzmseKmGII3G341cBwMKCXdno=;
+ b=RiE/TuimXjKGxr3fZMJIc3Q7G4D3gR8rvXS0WfBaO2U94riusCeZKJHEkZduyr0isM
+ 3TeKr39E3P62+dP3fznPF+TjTX7n3N0A704F36wzIZWHs6YxBRd07KXz7SAtjJUQoH+2
+ nJzGkHXpU4uRp6FeIl3rrcBK9St/1G4o0SQ2HTw7hPHx/ZNF1rg7o5VYgKuRLl2zUzbP
+ tZCqCyM94HGOYohLxuLJGY0cUYMj4CDsh3pzRTvKAqeURxbXu/NKyzKIlaHP6nxE4E7w
+ eKk2bkP+M8DXZUbuwhV+dDcQaIthPfzSwYoK/tx5RNLZYuW8XsfKuJMJ/He69wCJcyui
+ drVw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784795618; x=1785400418; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=SpaN2BKQIcV0rZMXSnufz+Dkcpw6RRJYHQYqA0DDH9M=;
- b=J0QqFPktKjKQcxQd1mWQVLPXCljg01wxhB06sklI7sy29ogFNLwNEekOOK7aKeKSRD
- PVHLUErX+4tIN2FDQAHDe+S7JRsVEAPGDx7wud7uvz6+sATxHYAxUN27tDbfticmHb4x
- b6Cz2R9W6FvZ+usVsLZ7x40jw9w1Uzcm4um0/eBuWkct5vDGqP2EXEM+fLlgRFqzgdgq
- co4xAUmePXgNi7Bp4y+EpyBuaScRsBBPEZGn3Lj6IoDyYqwfLYcKL5T+htqa9weYZJ10
- KwbloC0VtVwwsJV6ZLX6930tADk+CSzd86pD5W9p3hZnlprZ+syFkO0EpZsTI8C3NY6r
- lOSQ==
+ d=gmail.com; s=20251104; t=1784795738; x=1785400538; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=avx/9UTFRGD2a3Jmzkma/lYbADz9cvuQDSckzg5qwdc=;
+ b=Q1Rbr8OVFju9tg6KcwK4bRuFfgniJK9vPN1qA8zQcrcCjJNc0Yakr8n3gXA4HC0QL/
+ hIzQ3URB5pZineVd43VBwshFROHc1ggc3B0ynfs15nfc8FGYaYCdl4rbP+0818ThD3LY
+ Z3bFqiuUhrX+xlHof7AHaGaffF/WE/cDqt+j4I+B5uXT7nwVuJIoqXxsXIVMCLVxowQa
+ Uo+2RtIeF7khx6lLQ3OUS3U7L6sSO37FTRlEmwENXUbi8KQ4oiCWBqqtZVI6zKOsL5y8
+ 2xfn9y5rt1Qvw4rp3flzqWr287crdhH+Pq0eh993+drH/ulugJiFv3ASbzqoQIWZ5a0a
+ Jqkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784795618; x=1785400418;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=SpaN2BKQIcV0rZMXSnufz+Dkcpw6RRJYHQYqA0DDH9M=;
- b=oFpFGtbdUEg/kEzjwTwrcqdTpr3sF4p4ILKPIpuA2XvxBCl/CDeXUpX5lFoEH5wyFC
- YjUwXdNh4tz39MO1dKq/oc3Lr79RUxJlODmZr9UpSGNjwG91z0dSahGLPtFV/7i+8Za2
- Mq/yhxtRZknDVZzINnlYawakQvf701uAGS3veghfMjeEefA9/MhUwc3s8rp++bf5PXYl
- 2ypp2bZQb9Ynu7MIdwu60CcZXeKVg/MKLtuZ1RADJjDuLdWWgRJOsGtMSlIAVOPX+VxA
- UWQ7pUrb4wFN7H1jwEmbF0sxqxq5aeZ/sodiSKVkurhEuyJMGirQTXQSDC+SVUp62HGX
- 6kGQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rrqj6/8S3qoqk5SRKeOvRiGpDHuN5xU44IP1KYqSz2E3z6nj17ZB2tf9XovNc4hu7RdV0jxxEXcriYf@nongnu.org
-X-Gm-Message-State: AOJu0YxYJUXCpv7F4MC7f+R9sYCAk45SuWza/+RhzCdt1oIPVm9X1+Qc
- 1CRzL2+DFuRyJZk4VzbS+iciG04Yymh3PO4uZPhVFgpQcTWXz4fafv5I7Db033goAFXmPwBFrXM
- u/z3AQgxxNkdM9Miyj9Y3U0b+bT6+oSU5/sj+sZkTVjSCRj+35nASEMnt1Q==
-X-Gm-Gg: AR+sD108CrpQsjLNrEI2I3EusuX4x7JK4NS3KNghOOntxpckn5434yj6h2YqPN2AAUE
- 1akvs00+ZA/N6eXqQzMuY/i/uV0zWbVy/TC9tWrfxZsSZRrl0sgB6EbfBoKswAjagU/0lFy/tCv
- fp4SrIo/r+ipT8Hl6MLSLLPsHYF9AUd7fg5HTq/C/azdFzqgPwVcqHw9gOlW2I/UmE0P6nFiM4b
- cwHPzPaPyOxVbbEP6xu8u4/DzSKRiJZwkVC6yCFKchY7Ta8p7Z4ZbEqAVWTWQ+TlJXIQ3Wzbrg3
- 6ZqYM1cARUlWF/p8jw4PJEhDs2Kf0fCtkcKqcybl8O1QZFJ0sEerNUVHMWgT9QDZy2Sd+Xdl547
- kHSKbzuwWaLIS7lYEsdMLGlUhC7BdzlRMEN0g3IP/sr4PnwcPDvw=
-X-Received: by 2002:a05:622a:2a12:b0:51a:8c9b:649d with SMTP id
- d75a77b69052e-5283df77456mr16861021cf.65.1784795618089; 
- Thu, 23 Jul 2026 01:33:38 -0700 (PDT)
-X-Received: by 2002:a05:622a:2a12:b0:51a:8c9b:649d with SMTP id
- d75a77b69052e-5283df77456mr16860881cf.65.1784795617657; 
- Thu, 23 Jul 2026 01:33:37 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85b9a5d9sm12856725f8f.5.2026.07.23.01.33.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Jul 2026 01:33:36 -0700 (PDT)
-Message-ID: <e7d3e9dc-be97-40f3-b426-3e93a242410a@oss.qualcomm.com>
-Date: Thu, 23 Jul 2026 10:33:36 +0200
+ d=1e100.net; s=20251104; t=1784795738; x=1785400538;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=avx/9UTFRGD2a3Jmzkma/lYbADz9cvuQDSckzg5qwdc=;
+ b=OE+/ln+N1i6hLh8TFJaC55eSpCaNcDTvfDlKRqNSjO1yMvGpKuKf8LQHHKL0yLhapW
+ P0nCqZL5Xj8VYlT3WsOdF32XFsfVaWFmlPZ++ovO58j+gpkQO8Mf69yQrJ302haAfkWl
+ VQwuXp34mWjqz42Fgl96aUB4UccThKGV5hF5T5DvoZnqI1wfkVWI7avwu3EuJ1gGym0W
+ aO/1CqCxccEbrQCvduee9d+o8SVac3KvV8Xn0QmtoP5pnC40wzWBX0gJHq7Y9caer0MU
+ U+ApE4LKkngbnoEfL3xnrAfH6s+Zwudrw1qhB0dF5v2466zBjzUm07zmAQQ0ZSOppr0A
+ 8A4g==
+X-Gm-Message-State: AOJu0YyV0ZiS56TlwFpHUmysWnKTJPmXACHqOfOyMdETES+O3oNnh9F2
+ XuGlSQpg6I0jU4AnPiarsu5jrzGVRQflyFsFOxyb0CM/RojeDx1/h78BpfDXNb2lXa6qYNBrvSp
+ aG1RC7Cz9IWwPt4ZDYDDsQoGqEnhpLGQ=
+X-Gm-Gg: AR+sD12QnRdwSNWTlNGMgMGy58tHD+i4EqUY4OZlVoxdpx6JTTY7Tf/y9Ux7IWjxKNo
+ inhVDxkxJi5TapV/TnS/VSFyYb4HvfNBbIGRvZ51APDEtLua9ICaN1nl+SnxRv9ISe1zgCmK7k9
+ 9mUkI1Wtg+LsRQcu3ilQDqKaBBq9h8PX+apiRWJAblbIHBS2oeeJgNxa4m4JMHy0PCJJI9bQ5r0
+ Ca6eOFoJtVP6PLOdtk6q7mLc5BCxNE//Jn3j/NmvOSqbdYgHWn9YF15G4c9pE3w1+VVx+9gVOCN
+ EigaK7KkrLZUc32SWA==
+X-Received: by 2002:a05:6a21:338e:b0:3c0:b55a:80ff with SMTP id
+ adf61e73a8af0-3c44affc91dmr2227012637.24.1784795738296; Thu, 23 Jul 2026
+ 01:35:38 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386/sev: fix MemoryRegion reference leaks in
- gpa2hva callers
-Content-Language: en-US
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Markus Armbruster <armbru@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- "open list:X86 KVM CPUs" <kvm@vger.kernel.org>
-References: <20260521145451.1831984-1-marcandre.lureau@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260521145451.1831984-1-marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: B29VmCMZF9hH6A2smup4_wAtYSwx21Wf
-X-Proofpoint-GUID: B29VmCMZF9hH6A2smup4_wAtYSwx21Wf
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIzMDA4NSBTYWx0ZWRfXyJf7tU3mc3m1
- Op29e0mj5W7XOLJefeozWy+kS9Puokr+OayT+ScVmq9wgq+wsKSOJm3BoHvTa+o/XZ4MFIb93iz
- oxkFrtyfTcuM8Gc1zjfklcUOTMsMy/w=
-X-Authority-Analysis: v=2.4 cv=L/ItheT8 c=1 sm=1 tr=0 ts=6a61d1e2 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=20KFwNOVAAAA:8 a=27Jx0McfqUJ7E1xIHb0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIzMDA4NSBTYWx0ZWRfX1he5gRcAN6yQ
- AyTmaH2tycT2U0lFahtgag8YNk6y5qWsKwPe0UvNwE0eRg5fbO7GEoNCxkWwBHwDdPeHL5QRgLv
- 46BcEzDS5yXOjJm06pg/HfLYs1P9p2+5/xga2ItxRFY/Se3rWUj5h/bA9Fu66509iAnGemtMT66
- lWkExsWK9xaDVTva7LDcFzBLRGXx+14DDAzPKfWfXRb6PNZy+0sNJ8/1yY+OrVLCAr7ppLlxinV
- nkleNgn7pTKeIciqVkp/VWCFVFB1h1KPnPGZy4kQWuYeTlfunqWnDRi2edgkeAWOHTSbObh48Qy
- W49oP7BKP4QjxiD3IbBVpYSEondZLgRktmCTwsDUxEaNfjnBEzV9Bs9EUAyD8ubgmrT58i//qnW
- Dp88d8JJzXilftZJ0PfzGeK4G2m5UgL4+cpYbQ6gEcr0s9Jcf99CAIXUfzUBDLhZXURpt6ysE7s
- 0s2QheTlWGbaVYEJpPg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-23_02,2026-07-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 lowpriorityscore=0 adultscore=0 suspectscore=0
- priorityscore=1501 impostorscore=0 spamscore=0 bulkscore=0 malwarescore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607230085
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260720071556.106003-1-jianghaotian.sunday@gmail.com>
+In-Reply-To: <20260720071556.106003-1-jianghaotian.sunday@gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Thu, 23 Jul 2026 12:35:25 +0400
+X-Gm-Features: AUfX_mzeiOYmGN5wkEmSsMh70E2iixlCAcfS8uYDdjnMyYhOGfJdQqFexg1VT00
+Message-ID: <CAJ+F1CLzPQDtNDkL1YeLbATKFkJ=4J1uXLkrBt=U7A-h8xdkiQ@mail.gmail.com>
+Subject: Re: [PATCH v2] virtio-gpu: fix NULL deref in rutabaga set_scanout
+To: jianghaotian.sunday@gmail.com
+Cc: qemu-devel@nongnu.org, mst@redhat.com, alex.bennee@linaro.org, 
+ odaki@rsg.ci.i.u-tokyo.ac.jp, dmitry.osipenko@collabora.com, 
+ qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pg1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,40 +118,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Hi
 
-On 21/5/26 16:54, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> gpa2hva() returns a referenced MemoryRegion via its p_mr out-parameter
-> (inherited from memory_region_find()), but both SEV callers were failing
-> to release it.
+On Mon, Jul 20, 2026 at 11:17=E2=80=AFAM <jianghaotian.sunday@gmail.com> wr=
+ote:
+>
+> From: Haotian Jiang <jianghaotian.sunday@gmail.com>
+>
+> rutabaga_cmd_set_scanout() checks scanout_id < VIRTIO_GPU_MAX_SCANOUTS
+> (16), but does not check scanout_id < conf.max_outputs like the base
+> class (virtio-gpu.c) and virgl backend (virtio-gpu-virgl.c) do.
+>
+> With the default max_outputs=3D1, virtio_gpu_base_device_realize only
+> initializes scanout[0].con. A guest submitting SET_SCANOUT with
+> scanout_id >=3D 1 takes the con=3DNULL path, and
+> qemu_console_set_surface(NULL, NULL) dereferences con->ds, crashing
+> QEMU.
+>
+> Replace VIRTIO_GPU_MAX_SCANOUTS with vb->conf.max_outputs in the
+> CHECK, since realization already ensures max_outputs <=3D
+> VIRTIO_GPU_MAX_SCANOUTS.
+>
+> Fixes: 1dcc6adbc1 ("gfxstream + rutabaga: add initial support for gfxstre=
+am")
+> Reported-by: Haotian Jiang of Tencent Security (Yunding Lab) <jianghaotia=
+n.sunday@gmail.com>
+> Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
+> Cc: qemu-stable@nongnu.org
 
-Comment orthogonal to your fix; odd to have a non-monitor code
-call an undocumented monitor method. Should the method be moved
-out of monitor/hmp-cmds.c somewhere into system/ and documented
-(likely in system/physmem.c, also moving the declaration to
-"system/memory.h")? Besides some day we should be able to build
-without monitor.
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-> Fixes: c7f7e6970d3b ("sev: add sev-inject-launch-secret")
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   include/system/memory.h | 2 ++
->   target/i386/sev.c       | 4 ++--
->   2 files changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/include/system/memory.h b/include/system/memory.h
-> index 1417132f6d9..53f65a224bb 100644
-> --- a/include/system/memory.h
-> +++ b/include/system/memory.h
-> @@ -1343,6 +1343,8 @@ void memory_region_ref(MemoryRegion *mr);
->    */
->   void memory_region_unref(MemoryRegion *mr);
->   
-> +G_DEFINE_AUTOPTR_CLEANUP_FUNC(MemoryRegion, memory_region_unref)
-> +
->   /**
->    * memory_region_init_io: Initialize an I/O memory region.
->    *
+>  hw/display/virtio-gpu-rutabaga.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rut=
+abaga.c
+> index 6ff1263901..3f78899442 100644
+> --- a/hw/display/virtio-gpu-rutabaga.c
+> +++ b/hw/display/virtio-gpu-rutabaga.c
+> @@ -302,7 +302,7 @@ rutabaga_cmd_set_scanout(VirtIOGPU *g, struct virtio_=
+gpu_ctrl_command *cmd)
+>      trace_virtio_gpu_cmd_set_scanout(ss.scanout_id, ss.resource_id,
+>                                       ss.r.width, ss.r.height, ss.r.x, ss=
+.r.y);
+>
+> -    CHECK(ss.scanout_id < VIRTIO_GPU_MAX_SCANOUTS, cmd);
+> +    CHECK(ss.scanout_id < vb->conf.max_outputs, cmd);
+>      scanout =3D &vb->scanout[ss.scanout_id];
+>
+>      if (ss.resource_id =3D=3D 0) {
+> --
+> 2.34.1
+>
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
