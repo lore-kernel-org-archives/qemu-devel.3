@@ -4,158 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75991C531C7
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 07:37:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8FD9C531C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 07:51:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmnzn-0002dB-G5; Thu, 23 Jul 2026 03:37:31 -0400
+	id 1wmoCv-0007kC-IO; Thu, 23 Jul 2026 03:51:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wmnzm-0002co-3k
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 03:37:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1wmoCo-0007iC-L6
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 03:50:59 -0400
+Received: from mail-southcentralusazon11011026.outbound.protection.outlook.com
+ ([40.93.194.26] helo=SN4PR0501CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wmnzj-00083i-8U
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 03:37:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784792245;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ob9Gw6xMWv+4BflWioB/8IFbQdkw3PkAGT8poQ+VH5o=;
- b=ia3raAnV5GykepOwNAIPMF3SM0dXv6jEDewYaC469JFINv+RwL23vV6TVlgbvEEXvN7W9E
- xbjmKYxsp74aJms9cCbdCQM5NCAX6tjKABJ1Z8zEVNIZ2UUIDyq/swhQRU6M47YMMAqR28
- pS9O9GaC26mOqaluYxZrsydORMAjxUI=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-41-Gx9QZiJeM2qkXysLnsVv2g-1; Thu, 23 Jul 2026 03:37:24 -0400
-X-MC-Unique: Gx9QZiJeM2qkXysLnsVv2g-1
-X-Mimecast-MFC-AGG-ID: Gx9QZiJeM2qkXysLnsVv2g_1784792243
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4955843c6cdso3738085e9.1
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 00:37:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784792243; x=1785397043; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=ob9Gw6xMWv+4BflWioB/8IFbQdkw3PkAGT8poQ+VH5o=;
- b=a/DVxTdaISQKnX0FyUo2u9IRBMszVgYNFwSMZEcVJF1hDXeAsjX6mgJ41PLVdi6sIa
- HVPKtTowZnM8twDyIIVI3xclX20JLNZBYQY7pND5hG1jaIL3ZsP7co83xFl8PV9Gju3+
- HcD1oeKeB0CwPd5+4xeVik8tHvWgkcEiV0CYXeoX9Na1uhEw1w/LWqPGc9EXbJAaWAG0
- KMee5IAaU+lzBp8cGc7iKX/0FN+NTHrOSEQadiHXhyCklqLGB0q0FCUoa889QEwsz7Nq
- BRBLfWdVhBmMXdDGbBi0buhGcMBwKyFxCy5c6ITHKhwIfuO00rk4KoDPNyrTLMAXga1G
- Vhcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784792243; x=1785397043;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ob9Gw6xMWv+4BflWioB/8IFbQdkw3PkAGT8poQ+VH5o=;
- b=bOZBjQWKU+294BHYiHf04dLV9uFFVol5p+wg8faNjWmI1Y5pT3nrswb+RielYg6D00
- kVy/wLhJ16+f5+khgqdTmG3EgX1rdw5Gago6UyyhFJRH5VAtpNK/PI8JAIhDBkOB5oUm
- YRnfbnFJu0AfNCWfjuElPeSAC47JT2KXqJX8nWrsmVtii5RbHSI4tJ7nuc+W0sBDnQ27
- YP6XWg2JMCkFzSFWGukqAduv1EmBnGKSerTCOC3Ch83opcspIW+m+CVrKTEeMTQx1iro
- TD03o7/fyfazBkY2KpqVnqY0veBwSni9Noe2lGiijnSV7Iog9L6sE7gVwQs39HS+08Qv
- RXYg==
-X-Gm-Message-State: AOJu0Yys8b3JnmQ0IdfWGwp8qnk+FgQzuo6V2zFXSc/PbZfrDBZKBeUb
- 05vtm7z5WDejukb5kwzU0A1dwF7Eq9imOV+zvk5k7dwQtWBEHa7sj8b5nEAiV3HzKIXJLCnUqs3
- 1ZVOMET3qxYBbiPczlNiNxxcZ6drsY7uCCAIajRuujHUJg6cwi81/iOhC
-X-Gm-Gg: AR+sD13WUqW8ZqmDd/dnvyK3156LPAMQ7BbIa/kcq+e3OkYOjVlpyi4NlBjpbm3Qp7l
- lpWcjy6w7OFXLb8VBv5VFuRoduiIkDOOXPqbxGIH0r6EEbHPgids3yfkRqmWoVUw6ZN4pluG8sl
- rEu/h1hWJqk86BOdNrI98CPKRl0uEjE0uxFserv921/ph1AkyY7uxwuXrNmuhGgF2xhGssUxFdO
- B/D3HKM/lefxeb23YOsvyuPUMVVRzOjiIgoUgObPmv+qG0rrek/PPnLTbLZNo10UYaVrdkduCKP
- 9dXS03wNkW71IHSaSxiSO7ky7z3H5G+wrd0y0bg4qhl2Z2SoQNR0mLOy1OoTlZxTywUMIF3kthJ
- 1yxRSKJmqIpz2UlJZeNbvgj3rnGIDQI2ZKOvX7Es=
-X-Received: by 2002:a05:600c:154a:b0:493:b877:fbc with SMTP id
- 5b1f17b1804b1-49573d02244mr18199635e9.21.1784792242798; 
- Thu, 23 Jul 2026 00:37:22 -0700 (PDT)
-X-Received: by 2002:a05:600c:154a:b0:493:b877:fbc with SMTP id
- 5b1f17b1804b1-49573d02244mr18199305e9.21.1784792242309; 
- Thu, 23 Jul 2026 00:37:22 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
- ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4956a509901sm224511345e9.8.2026.07.23.00.37.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Jul 2026 00:37:21 -0700 (PDT)
-Message-ID: <c3b5a5f5-0c3a-4793-9dd6-206ba0b6ed72@redhat.com>
-Date: Thu, 23 Jul 2026 09:37:20 +0200
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1wmoCl-00024O-Um
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 03:50:58 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=xSLBGg+PX//SkSMmKfg4Qd4YT0HxmBZXOZirtdc3Q6nsGDZ1DwFGYQaJl8J6jOdFl0cOkixADKScmGbs9d+rm65UGmV4/Q0qPFjHnzGvoA505uIPX1+Lhmfrruka9kA0eLS/J8u1X2JKC2qCMpHK3pDk4S1RLjE4HGAOl6jab405tV9SJjFAMeD6+8WD9HdAyIFpEVaUCqfhwBTeTstDfP8hUiSr5EfnbIA+CIu/ceGyTlNS10QF8IgS8p3o+75OGem7A06rrueIExpsHgRz1HLOI2UGWGF34cQTCv3s55BE5GhuqBjAVtOZiOj0KhA/8rgjQpdCsZISqTTaiG8c8g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Vt5wlm82HXtDQBMYQexmwGJVfMBwDRr1qjA2LsIxG8o=;
+ b=ey5YMpx/ezfOrazq3tggNITERvm45MLEyNFwDuDa6MqbMGQJngpaih6oX03kHsV53km/SHg+Pp+1I9hldPIFS5k2c1v/4bHunN495ZfjbZQKO9pPkh2NVjTU1R3ehmHyEU3qEKJ8ZtXyaV1hITJxY01JFCfQ3gMT4ZZ91oY7ukZtDxi4znW4xr3AU0zU1ANGmu3solL0tvcM8+t+LjURS+PdynPH3CGbRlrgfn2NFeHI/oLI/gnhjvlwWUzM/FCDc5X/ln+g/Aim0joQswErwwPSeCw0m4rB2Izx9xBDTBFQgU4vJ9er4qv3HtfX8tqieStVz1LHNPFMqvR1OnZGJg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=oss.qualcomm.com smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Vt5wlm82HXtDQBMYQexmwGJVfMBwDRr1qjA2LsIxG8o=;
+ b=UDvny2f5PTvpLNXfUI8agGIGFZsy7bj5uyTG/DstOYeQS6xAobvohbb+Rt7g5JFEj6OYSYVlDHimz1TG4JEOrKw8IAYxXKSS5RKyo78/pRulTu2Cyo5ZwBIKxfYOxlkabH36ktp8EWfCulsSM48vV1tLt3WDinAxnBZKNqiaVQ4=
+Received: from SA0PR11CA0073.namprd11.prod.outlook.com (2603:10b6:806:d2::18)
+ by BL1PR12MB5730.namprd12.prod.outlook.com (2603:10b6:208:385::9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.11; Thu, 23 Jul
+ 2026 07:45:43 +0000
+Received: from SN1PEPF00026367.namprd02.prod.outlook.com
+ (2603:10b6:806:d2:cafe::47) by SA0PR11CA0073.outlook.office365.com
+ (2603:10b6:806:d2::18) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.245.11 via Frontend Transport; Thu,
+ 23 Jul 2026 07:45:42 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ SN1PEPF00026367.mail.protection.outlook.com (10.167.241.132) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.270.5 via Frontend Transport; Thu, 23 Jul 2026 07:45:42 +0000
+Received: from satlexmb10.amd.com (10.181.42.219) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Thu, 23 Jul
+ 2026 02:45:41 -0500
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb10.amd.com
+ (10.181.42.219) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Thu, 23 Jul
+ 2026 02:45:41 -0500
+Received: from XFR-LUMICHEL-L2.amd.com (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41 via Frontend
+ Transport; Thu, 23 Jul 2026 02:45:40 -0500
+Date: Thu, 23 Jul 2026 09:45:40 +0200
+From: Luc Michel <luc.michel@amd.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+CC: <qemu-devel@nongnu.org>, "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: Re: [PATCH v2 1/7] target/microblaze: Set MO_BSWAP in
+ do_load/do_store callers
+Message-ID: <amHGeLNByMOItHEe@XFR-LUMICHEL-L2.amd.com>
+References: <20260722160807.24031-1-philmd@oss.qualcomm.com>
+ <20260722160807.24031-2-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/vfio: Coalesce repeated PCI_COMMAND memory-decode DMA
- (re)map for passthrough BARs
-To: Wencheng Yang <east.moutain.yang@gmail.com>,
- Alex Williamson <alex@shazbot.org>, "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>, Yangwencheng <yangwencheng@gmail.com>
-References: <20260721130611.539089-1-east.moutain.yang@gmail.com>
- <38865e6b-6e80-4581-9aaf-257a53dfb972@app.fastmail.com>
- <20260721110247-mutt-send-email-mst@kernel.org>
- <20260721230004.2c03fede@shazbot.org>
- <CALrP2iVwJqufzvjOdiEiE0FPTHkMjMjhA4H0siaLAuAHmw2wLQ@mail.gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <CALrP2iVwJqufzvjOdiEiE0FPTHkMjMjhA4H0siaLAuAHmw2wLQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: permerror client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <20260722160807.24031-2-philmd@oss.qualcomm.com>
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN1PEPF00026367:EE_|BL1PR12MB5730:EE_
+X-MS-Office365-Filtering-Correlation-Id: bf3915bd-4d57-4ad6-fbf2-08dee88e6613
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700016|23010399003|82310400026|376014|1800799024|10067099003|4143699003|11063799006|18002099003|22082099003|56012099006;
+X-Microsoft-Antispam-Message-Info: 7UeUmLkcikUns1hWBNHekzDT2HLwgugi9KkRApp70NjW+lIVCkkSt3PMztUYKwJz1wM5pwYsZpT7Yi1UFGQfps69qbDznoP5tFmgzFBNXAlG/kthw2tSOOoJscRLrr7pi/xt8bkZyfshS5MhRULqoLS6HrTo9tFw0l8ZoWLfxG52X3M2GoXiyYn4P6x88BeEfSjcKGFE7qG5pvOtWL1RybI+s+x1gpY3W3DUyD568ezWSj0GrtNQ9wVFbSDtfii6x/BtDMO9vrG5bKjIUihrYt8vgVWlvDov3Ck3X7eXIgb5KvlsQEX3oUmHNzHxmF5T3Ri2O4QPiMG6askLck5LbhjJLi/RnifH/RG1H4tjpFram9UWaxfY6Xr6phltzbvlyT+nCvMKaK/FTmFJV3IeRg0soJZ4SFtNTxE0jXa6CuTbnm9r4lUgcsa+lLQspsJZUXp1udE32LQNbgxxrLtOJAXlHRxYxkDFrLSdCXONMUxLE25LvurGoW4zx10433RrfZGIF3FrpCQiK8cpx5xMrmEsu5C6cKDjLmpd/FiruvHoVYT/VpdGz6DsKuHQwHo2DlvmyKKBnW9avKjLUAAK84T7t1x9TuH4aDaXJ96l0ijGh2H+EyDXBkBqh3AT5tV+ssDLjqab2tmTY9L/sJGFEXS7oWkcX65dl45aPVCpfC+SF+NBrchvomc8Na3WRJRtDInJOl/GxfbxsA0Qokcpnw==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb08.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700016)(23010399003)(82310400026)(376014)(1800799024)(10067099003)(4143699003)(11063799006)(18002099003)(22082099003)(56012099006);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: OXxSxAfB4Blox/6kv+91u3jc87dwNkSHjHOo7JwY72UV7183W33IN/BBZP6SEt9PQh2G4nJCScwyPY6YnL+02Rs96JXREeWr00hnv2Ssb96OKnn+afbOznEfqIv3+lwD01PrnI8pm+FQC6Hmye1abBVjDPjHakRouiD3ydtcI5yLmVCs/vlBu+bHCCmpNxMmmR76/4TZWC/yIgKAMTH+UTu9fYLvI4m9jv8AnhIyAiKLa2fn+ygCy94s9CIGWC/X4Lly10/a1v4x2Itr6JhX4MTjJIzKOFP9T6sOSIl9Rll1eID5JEzfrlz3SLCDmfsB7+nAcs4GQ5ejZp0GUIp+CzWjaVFf9BMbqggkzDYIdhy+ccXWTG0PrIGwZ1iTqPO3F87JgQ/Wa6sAg/NemdieYx/d2kx/Qb6g6qyDBNFW/QROVBE4hwxUKe1dPqlYOO8m
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jul 2026 07:45:42.8125 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: bf3915bd-4d57-4ad6-fbf2-08dee88e6613
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF00026367.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5730
+Received-SPF: permerror client-ip=40.93.194.26;
+ envelope-from=Luc.Michel@amd.com;
+ helo=SN4PR0501CU005.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,131 +133,252 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+Hi Phil,
 
-On 7/23/26 05:50, Wencheng Yang wrote:
-> __
+On 18:08 Wed 22 Jul     , Philippe Mathieu-Daudé wrote:
+> Instead of setting the MO_BSWAP bit in the do_load/do_store
+> helpers depending on a @rev boolean argument, set it on the
+> callers in the MemOp argument. The repeated caller pattern
+> will allow further simplifications in the next commit.
 > 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> ---
+>  target/microblaze/translate.c | 62 +++++++++++++++--------------------
+>  1 file changed, 26 insertions(+), 36 deletions(-)
 > 
-> On 2026/7/22 13:00, Alex Williamson wrote:
->> On Tue, 21 Jul 2026 11:03:39 -0400
->> "Michael S. Tsirkin"<mst@redhat.com> <mailto:mst@redhat.com> wrote:
->>
->>> On Tue, Jul 21, 2026 at 08:41:04AM -0600, Alex Williamson wrote:
->>>> On Tue, Jul 21, 2026, at 7:06 AM, Yang Wencheng wrote:
->>>>> From: YangWencheng<east.moutain.yang@gmail.com> <mailto:east.moutain.yang@gmail.com>
->>>>>
->>>>> A passthrough device's own MMIO/BAR range is registered with the IOMMU
->>>>> (VFIO_IOMMU_MAP_DMA) when its memory region becomes part of the guest
->>>>> address space, to support peer-to-peer DMA into that BAR from other
->>>>> devices. Toggling the guest's PCI_COMMAND memory-decode-enable bit off
->>>>> and back on -- something PCI enumeration/attribute code does routinely,
->>>>> sometimes several times for the same device (e.g. disable before
->>>>> reprogramming a BAR then re-enable, or generic driver probing during
->>>>> guest OS boot) -- currently tears down and rebuilds this mapping every
->>>>> single time via vfio_listener_region_del()/region_add(), unconditionally.
->>>>>
->>>>> For devices with very large BARs this is expensive: mapping a 64GB BAR
->>>>> into IOMMU page tables measured at ~8.5s per call on this hardware, and
->>>>> was observed being repeated 3-5 times for the same BAR during a single
->>>>> guest boot, because nothing changed about the underlying mapping between
->>>>> the disable and the following re-enable.
->>>>>
->>>>> Defer the actual VFIO_IOMMU_UNMAP_DMA for "ram device" regions (i.e.
->>>>> passthrough device BARs used for P2P DMA -- explicitly not regular guest
->>>>> RAM or RamDiscardManager-backed regions, so migration/ballooning/
->>>>> virtio-mem are unaffected) instead of issuing it immediately in
->>>>> region_del(). If a matching region_add() for the exact same region
->>>>> (same MemoryRegion pointer, iova, size, vaddr, readonly) follows, cancel
->>>>> the deferred unmap and skip the VFIO_IOMMU_MAP_DMA entirely -- the
->>>>> host-side mapping was never actually removed, so there is nothing to
->>>>> redo. A region_add() for anything that doesn't match maps normally, as
->>>>> before.
->>>>>
->>>>> Nothing is leaked: any mapping still on the pending list is flushed with
->>>>> a real unmap in two places -- vfio_container_instance_finalize(), before
->>>>> the container's fd is closed (VM shutdown / last device in a group removed),
->>>>> and vfio_bars_finalize(), matched by MemoryRegion pointer to just that
->>>>> device's own BARs, so a device hot-unplugged while the container stays
->>>>> alive for other devices can't leave a dangling deferred entry either.
->>>>>
->>>>> This does not weaken the PCI_COMMAND memory-decode security boundary:
->>>>> every guest write to PCI_COMMAND is still forwarded synchronously and
->>>>> unconditionally to the real device's config space in
->>>>> vfio_pci_write_config() (an entirely separate code path, untouched by
->>>>> this change), which is what actually gates whether the physical device
->>>>> claims/responds to transactions targeting its BAR, independent of
->>>>> whatever the IOMMU's routing table still contains. This change only
->>>>> avoids redundant bookkeeping of that routing table when nothing about
->>>>> the mapping has changed.
->>>> Seems like you should focus on huge pfnmap support on your platform
->>>> rather than hack the VMM to not behave like bare metal.  Thanks,
->>>>
->>> But bare metal does not tweak an iommu during pci enumeration?
->> Bare metal is not using the IOMMU to map the device into a guest
->> physical address space, so no, an equivalent operation does not occur
->> there.  The proposal here is intentionally leaving stale gpa mappings
->> to avoid the unmap/remap overhead, where we've essentially eliminated
->> that overhead on other platforms with huge pfnmap support.  The
->> specific platform that's being optimized here is also omitted, which
->> makes it impossible to determine the ongoing need for this code.
->>
->> The scheme here effectively assumes that a region_del() will either be
->> followed by a region_add() that cancels the deferred unmap, or the
->> deferral will be executed on finalize.  It does not actually account
->> for cases where the guest might remap the BAR to a different address,
->> ex. pci=realloc, leaving a stale mapping in place.  The finalize also
->> appears to be using a different MR from the one deferred, such that the
->> IOMMU is actually only unmapped due to close().
->>
->> More importantly though, this entire scheme is relying on a gap in the
->> vfio type1 IOMMU backend, where clearing the memory enable bit of the
->> command register zaps the CPU mappings and errors faults while cleared,
->> but does not generate unmaps in the IOMMU.  IOMMUFD resolves that gap,
->> generating a move-notify/invalidate on the dma-buf, which results in an
->> IOMMU unmap.  IOW, the premise of this workaround is broken in the
->> direction that VFIO is headed.
->>
->> Therefore, I'd once again suggest that effort is better redirected to
->> implement huge pfnmap support for whatever platform this might be in
->> order to follow a proven solution to this problem for type1.  Huge
->> pfnmap is used both in the CPU fault path as well as the DMA mapping
->> path, by virtue of generating user faults in the pfnmap.  Alternatively,
->> iommufd may provide better p2p DMA mapping performance than type1
->> without huge pfnmap, but CPU faults would lag without such support
->> anyway.  Thanks,
->>
->> Alex
-> 
-> I noticed you provided a kernel patch "PCI: Batch BAR sizing operations",
-> 
-> the patch eliminates the overhead of IOMMU map/unmap operations from
-> 
-> guest kernel. I found OVMF has the same issue, I tried to fix it in edk2 source
-> 
-> code, but the PCI commands are scattered, it's hard to handle it like kernel.
-> 
-> I think it's reasonable to handle it qemu, as the overhead is introduced by
-> 
-> qemu to support PCIe device passthrough.
-> 
-> 
-> "we've essentially eliminated that overhead on other platforms with huge
->   pfnmap support."
-> 
-> Can you provide some key references about this approach?
-Check these related commits.
+> diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+> index 8b219afb5dd..623980d0af5 100644
+> --- a/target/microblaze/translate.c
+> +++ b/target/microblaze/translate.c
+> @@ -704,22 +704,17 @@ static inline MemOp mo_endian(DisasContext *dc)
+>  }
+>  
+>  static bool do_load(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
+> -                    int mem_index, bool rev)
+> +                    int mem_index)
+>  {
+>      MemOp size = mop & MO_SIZE;
+>  
+>      mop |= mo_endian(dc);
+>  
+>      /*
+> -     * When doing reverse accesses we need to do two things.
+> -     *
+> -     * 1. Reverse the address wrt endianness.
+> -     * 2. Byteswap the data lanes on the way back into the CPU core.
+> +     * When doing reverse accesses we need to byteswap the data
+> +     * lanes on the way back into the CPU core.
 
-Linux :
+You are dropping the wrong part of the comment here. You should keep 1.
 
-   commit f9e54c3a2f5b ("vfio/pci: implement huge_fault support")
+>       */
+> -    if (rev) {
+> -        if (size > MO_8) {
+> -            mop ^= MO_BSWAP;
+> -        }
+> +    if (mop & MO_BSWAP) {
 
-QEMU:
+Unfortunately in the current state of the refactoring we can't really
+get rid of the `rev' argument and rely on `mop' flags here. The MO_BSWAP
+flag means "Host reverse endian". So e.g., for a regular big-endian
+target access on a little-endian host the MO_BSWAP flag is set. Hence
+the 'xor' to flip the bit.  ...
 
-   commit 00b519c0bca0 ("vfio/helpers: Align mmaps")
+>          if (size < MO_32) {
+>              tcg_gen_xori_i32(addr, addr, 3 - size);
+>          }
+> @@ -746,13 +741,13 @@ static bool do_load(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
+>  static bool trans_lbu(DisasContext *dc, arg_typea *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+> -    return do_load(dc, arg->rd, addr, MO_UB, dc->mem_index, false);
+> +    return do_load(dc, arg->rd, addr, MO_UB, dc->mem_index);
+>  }
+>  
+>  static bool trans_lbur(DisasContext *dc, arg_typea *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+> -    return do_load(dc, arg->rd, addr, MO_UB, dc->mem_index, true);
+> +    return do_load(dc, arg->rd, addr, MO_UB ^ MO_BSWAP, dc->mem_index);
 
-Thanks,
+... Here you are xor'ing MO_UB and MO_BSWAP, which will result in the
+MO_BSWAP bit to always be set. What you want is to xor MO_BSWAP with
+mo_endian(dc).
 
-C.
+So what you can do instead, is to set it unconditionally:
 
+    return do_load(dc, arg->rd, addr, MO_UB | MO_BSWAP, dc->mem_index);
+
+And in `do_load'/`do_store', xor it with mo_endian(dc):
+
+     mop ^= mo_endian(dc);
+
+That works but needs a good comment explaining what's going on :)
+
+Thanks
+
+-- 
+Luc
+
+>  }
+>  
+>  static bool trans_lbuea(DisasContext *dc, arg_typea *arg)
+> @@ -772,19 +767,19 @@ static bool trans_lbuea(DisasContext *dc, arg_typea *arg)
+>  static bool trans_lbui(DisasContext *dc, arg_typeb *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
+> -    return do_load(dc, arg->rd, addr, MO_UB, dc->mem_index, false);
+> +    return do_load(dc, arg->rd, addr, MO_UB, dc->mem_index);
+>  }
+>  
+>  static bool trans_lhu(DisasContext *dc, arg_typea *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+> -    return do_load(dc, arg->rd, addr, MO_UW, dc->mem_index, false);
+> +    return do_load(dc, arg->rd, addr, MO_UW, dc->mem_index);
+>  }
+>  
+>  static bool trans_lhur(DisasContext *dc, arg_typea *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+> -    return do_load(dc, arg->rd, addr, MO_UW, dc->mem_index, true);
+> +    return do_load(dc, arg->rd, addr, MO_UW ^ MO_BSWAP, dc->mem_index);
+>  }
+>  
+>  static bool trans_lhuea(DisasContext *dc, arg_typea *arg)
+> @@ -806,19 +801,19 @@ static bool trans_lhuea(DisasContext *dc, arg_typea *arg)
+>  static bool trans_lhui(DisasContext *dc, arg_typeb *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
+> -    return do_load(dc, arg->rd, addr, MO_UW, dc->mem_index, false);
+> +    return do_load(dc, arg->rd, addr, MO_UW, dc->mem_index);
+>  }
+>  
+>  static bool trans_lw(DisasContext *dc, arg_typea *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+> -    return do_load(dc, arg->rd, addr, MO_UL, dc->mem_index, false);
+> +    return do_load(dc, arg->rd, addr, MO_UL, dc->mem_index);
+>  }
+>  
+>  static bool trans_lwr(DisasContext *dc, arg_typea *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+> -    return do_load(dc, arg->rd, addr, MO_UL, dc->mem_index, true);
+> +    return do_load(dc, arg->rd, addr, MO_UL ^ MO_BSWAP, dc->mem_index);
+>  }
+>  
+>  static bool trans_lwea(DisasContext *dc, arg_typea *arg)
+> @@ -840,7 +835,7 @@ static bool trans_lwea(DisasContext *dc, arg_typea *arg)
+>  static bool trans_lwi(DisasContext *dc, arg_typeb *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
+> -    return do_load(dc, arg->rd, addr, MO_UL, dc->mem_index, false);
+> +    return do_load(dc, arg->rd, addr, MO_UL, dc->mem_index);
+>  }
+>  
+>  static bool trans_lwx(DisasContext *dc, arg_typea *arg)
+> @@ -864,22 +859,17 @@ static bool trans_lwx(DisasContext *dc, arg_typea *arg)
+>  }
+>  
+>  static bool do_store(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
+> -                     int mem_index, bool rev)
+> +                     int mem_index)
+>  {
+>      MemOp size = mop & MO_SIZE;
+>  
+>      mop |= mo_endian(dc);
+>  
+>      /*
+> -     * When doing reverse accesses we need to do two things.
+> -     *
+> -     * 1. Reverse the address wrt endianness.
+> -     * 2. Byteswap the data lanes on the way back into the CPU core.
+> +     * When doing reverse accesses we need to byteswap the data
+> +     * lanes on the way back into the CPU core.
+>       */
+> -    if (rev) {
+> -        if (size > MO_8) {
+> -            mop ^= MO_BSWAP;
+> -        }
+> +    if (mop & MO_BSWAP) {
+>          if (size < MO_32) {
+>              tcg_gen_xori_i32(addr, addr, 3 - size);
+>          }
+> @@ -906,13 +896,13 @@ static bool do_store(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
+>  static bool trans_sb(DisasContext *dc, arg_typea *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+> -    return do_store(dc, arg->rd, addr, MO_UB, dc->mem_index, false);
+> +    return do_store(dc, arg->rd, addr, MO_UB, dc->mem_index);
+>  }
+>  
+>  static bool trans_sbr(DisasContext *dc, arg_typea *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+> -    return do_store(dc, arg->rd, addr, MO_UB, dc->mem_index, true);
+> +    return do_store(dc, arg->rd, addr, MO_UB ^ MO_BSWAP, dc->mem_index);
+>  }
+>  
+>  static bool trans_sbea(DisasContext *dc, arg_typea *arg)
+> @@ -932,19 +922,19 @@ static bool trans_sbea(DisasContext *dc, arg_typea *arg)
+>  static bool trans_sbi(DisasContext *dc, arg_typeb *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
+> -    return do_store(dc, arg->rd, addr, MO_UB, dc->mem_index, false);
+> +    return do_store(dc, arg->rd, addr, MO_UB, dc->mem_index);
+>  }
+>  
+>  static bool trans_sh(DisasContext *dc, arg_typea *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+> -    return do_store(dc, arg->rd, addr, MO_UW, dc->mem_index, false);
+> +    return do_store(dc, arg->rd, addr, MO_UW, dc->mem_index);
+>  }
+>  
+>  static bool trans_shr(DisasContext *dc, arg_typea *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+> -    return do_store(dc, arg->rd, addr, MO_UW, dc->mem_index, true);
+> +    return do_store(dc, arg->rd, addr, MO_UW ^ MO_BSWAP, dc->mem_index);
+>  }
+>  
+>  static bool trans_shea(DisasContext *dc, arg_typea *arg)
+> @@ -966,19 +956,19 @@ static bool trans_shea(DisasContext *dc, arg_typea *arg)
+>  static bool trans_shi(DisasContext *dc, arg_typeb *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
+> -    return do_store(dc, arg->rd, addr, MO_UW, dc->mem_index, false);
+> +    return do_store(dc, arg->rd, addr, MO_UW, dc->mem_index);
+>  }
+>  
+>  static bool trans_sw(DisasContext *dc, arg_typea *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+> -    return do_store(dc, arg->rd, addr, MO_UL, dc->mem_index, false);
+> +    return do_store(dc, arg->rd, addr, MO_UL, dc->mem_index);
+>  }
+>  
+>  static bool trans_swr(DisasContext *dc, arg_typea *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typea(dc, arg->ra, arg->rb);
+> -    return do_store(dc, arg->rd, addr, MO_UL, dc->mem_index, true);
+> +    return do_store(dc, arg->rd, addr, MO_UL ^ MO_BSWAP, dc->mem_index);
+>  }
+>  
+>  static bool trans_swea(DisasContext *dc, arg_typea *arg)
+> @@ -1000,7 +990,7 @@ static bool trans_swea(DisasContext *dc, arg_typea *arg)
+>  static bool trans_swi(DisasContext *dc, arg_typeb *arg)
+>  {
+>      TCGv_i32 addr = compute_ldst_addr_typeb(dc, arg->ra, arg->imm);
+> -    return do_store(dc, arg->rd, addr, MO_UL, dc->mem_index, false);
+> +    return do_store(dc, arg->rd, addr, MO_UL, dc->mem_index);
+>  }
+>  
+>  static bool trans_swx(DisasContext *dc, arg_typea *arg)
+> -- 
+> 2.53.0
+> 
+
+-- 
 
