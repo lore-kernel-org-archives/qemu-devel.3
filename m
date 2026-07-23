@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72643C4452B
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:51:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5537CC44524
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:51:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmlNo-0002Uz-Me; Thu, 23 Jul 2026 00:50:08 -0400
+	id 1wmlNg-000246-5G; Thu, 23 Jul 2026 00:50:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlNm-0002O4-Kg
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:50:06 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlNd-0001qU-NP
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:49:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlNk-0004Il-VV
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:50:06 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlNc-00045I-7F
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:49:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784782204;
+ s=mimecast20190719; t=1784782195;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JUM+22WxDywCXikFEUBWpOnNWjGENT0mgqCEYZkslcs=;
- b=iYK/JzQI++N/8DpIG7h54ARsy2v6tFO7DW504WYTyzB2yc8yGC3dfxr5SZWspx2zghHKTk
- wF8Nn2nfmCaOr60enE0gJdHcxDEpePRMXrJ4lj5J8iStoZ6p5OoI0oauR/nQreEL9JUkYz
- vPEq1LAsLTMdnai6yYGt7wPgYQ4qLS0=
+ bh=6MfiGs1YvmhhCQ9TR9AVXMB0jZQk3iPwALbaJBp3oPY=;
+ b=YhBTFEYOIbXPs2Lgsh1gGZQbQRCn0HfcAlt/etDr8g+Q81Sx2/jOIhvVyHuO4ryd6jNXL1
+ qfUeFjdyGXnLUyXr1fyDBrcavkB4lwqiBk0ib6zOxCCtm7/OuADd/oVZNExs/kaPp9bm7S
+ 1DiBBTKHlvyHMMkmuXV/UMstG9VSFLs=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-193-RSTknKbGMyOtFjgmvGgSGw-1; Thu,
- 23 Jul 2026 00:49:59 -0400
-X-MC-Unique: RSTknKbGMyOtFjgmvGgSGw-1
-X-Mimecast-MFC-AGG-ID: RSTknKbGMyOtFjgmvGgSGw_1784782196
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-375-xhXlp8GRPZOFmCouSsprUg-1; Thu,
+ 23 Jul 2026 00:49:49 -0400
+X-MC-Unique: xhXlp8GRPZOFmCouSsprUg-1
+X-Mimecast-MFC-AGG-ID: xhXlp8GRPZOFmCouSsprUg_1784782186
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4AAAB195FE1B; Thu, 23 Jul 2026 04:49:56 +0000 (UTC)
+ id 55B31195D027; Thu, 23 Jul 2026 04:49:46 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.44])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AF08318002B5; Thu, 23 Jul 2026 04:49:46 +0000 (UTC)
+ id 031C4180029D; Thu, 23 Jul 2026 04:49:37 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -73,9 +73,9 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Jason Wang <jasowangio@gmail.com>, qemu-trivial@nongnu.org,
  Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH v2 10/44] qapi: convert intro sections for machine-common.json
-Date: Thu, 23 Jul 2026 00:47:31 -0400
-Message-ID: <20260723044805.527643-11-jsnow@redhat.com>
+Subject: [PATCH v2 09/44] qapi: convert intro sections for cryptodev.json
+Date: Thu, 23 Jul 2026 00:47:30 -0400
+Message-ID: <20260723044805.527643-10-jsnow@redhat.com>
 In-Reply-To: <20260723044805.527643-1-jsnow@redhat.com>
 References: <20260723044805.527643-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -109,67 +109,73 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/machine-common.json | 19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ qapi/cryptodev.json | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
 
-diff --git a/qapi/machine-common.json b/qapi/machine-common.json
-index aca98e994af..0b07811df07 100644
---- a/qapi/machine-common.json
-+++ b/qapi/machine-common.json
-@@ -12,9 +12,8 @@
+diff --git a/qapi/cryptodev.json b/qapi/cryptodev.json
+index eb309c22f86..d0c1e6c8944 100644
+--- a/qapi/cryptodev.json
++++ b/qapi/cryptodev.json
+@@ -12,8 +12,7 @@
  
  ##
- # @S390CpuEntitlement:
+ # @QCryptodevBackendAlgoType:
 -#
--# An enumeration of CPU entitlements that can be assumed by a virtual
--# S390 CPU
-+#     An enumeration of CPU entitlements that can be assumed by a
-+#     virtual S390 CPU
+-# The supported algorithm types of a crypto device.
++#     The supported algorithm types of a crypto device.
  #
- # Since: 8.2
- ##
-@@ -23,8 +22,7 @@
+ # @sym: symmetric encryption
+ #
+@@ -26,8 +25,7 @@
  
  ##
- # @CpuTopologyLevel:
+ # @QCryptodevBackendServiceType:
 -#
--# An enumeration of CPU topology levels.
-+#     An enumeration of CPU topology levels.
+-# The supported service types of a crypto device.
++#     The supported service types of a crypto device.
  #
- # @thread: thread level, which would also be called SMT level or
- #     logical processor level.  The @threads option in
-@@ -65,9 +63,8 @@
+ # @cipher: Symmetric Key Cipher service
+ #
+@@ -46,8 +44,7 @@
  
  ##
- # @CacheLevelAndType:
+ # @QCryptodevBackendType:
 -#
--# Caches a system may have.  The enumeration value here is the
--# combination of cache level and cache type.
-+#     Caches a system may have.  The enumeration value here is the
-+#     combination of cache level and cache type.
+-# The crypto device backend type
++#     The crypto device backend type
  #
- # @l1d: L1 data cache.
+ # @builtin: the QEMU builtin support
  #
-@@ -84,8 +81,7 @@
+@@ -62,8 +59,7 @@
  
  ##
- # @SmpCacheProperties:
+ # @QCryptodevBackendClient:
 -#
--# Cache information for SMP system.
-+#     Cache information for SMP system.
+-# Information about a queue of crypto device.
++#     Information about a queue of crypto device.
  #
- # @cache: Cache name, which is the combination of cache level and
- #     cache type.
-@@ -103,8 +99,7 @@
+ # @queue: the queue index of the crypto device
+ #
+@@ -77,8 +73,7 @@
  
  ##
- # @SmpCachePropertiesWrapper:
+ # @QCryptodevInfo:
 -#
--# List wrapper of `SmpCacheProperties`.
-+#     List wrapper of `SmpCacheProperties`.
+-# Information about a crypto device.
++#     Information about a crypto device.
  #
- # @caches: the list of `SmpCacheProperties`.
+ # @id: the id of the crypto device
  #
+@@ -95,8 +90,7 @@
+ 
+ ##
+ # @query-cryptodev:
+-#
+-# Return information about current crypto devices.
++#     Return information about current crypto devices.
+ #
+ # Since: 8.0
+ ##
 -- 
 2.55.0
 
