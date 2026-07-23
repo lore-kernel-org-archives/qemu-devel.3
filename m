@@ -4,116 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDDB0C531CA
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 12:07:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3492C531CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 12:12:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmsCd-0006hq-7I; Thu, 23 Jul 2026 08:07:03 -0400
+	id 1wmsHa-0007bi-G9; Thu, 23 Jul 2026 08:12:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1wmsCO-0006gn-3j; Thu, 23 Jul 2026 08:06:49 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1wmsHU-0007aM-Jm
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 08:12:06 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1wmsCL-0003zY-6R; Thu, 23 Jul 2026 08:06:47 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66N9BeqC2580272; Thu, 23 Jul 2026 12:06:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=zAfVjCGDd06uVWfIK0kuSd/mt2h4cHY1dgjHgPLWep8=; b=qPIOyluAFDra
- nOev47nwYZZ3ddWiNF3USp52cr6HtdLJcITJJkb08etWG8oHoUG6THk5HxTYRGDR
- Tj4U0TYDPVacJWYz0sIV1MsydXka7K80cZ/FfSP65A/P70pIoDJTlHkjPfn5Pgn6
- JG3eA78jVx8dY087T7Lyemey/OPvIu69LhjNP5tYHeTy1n2OX8L3ljEjNGbiAsYv
- wvxYPlCkIKyQNu3/rEtL6TK4O4J3nigjAy8ovvsd4DQ8j1SJ4a1rgfBuLdPoAjrz
- 1ZBTb1wH+DDtcEThf2QEw3rJxHtR6zKMHw+gyGvsnE+YwGACj6jDPc8WzcSzRFLz
- 3qLR/bhRIQ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fg7abqce4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Jul 2026 12:06:36 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66NC4dmS010256;
- Thu, 23 Jul 2026 12:06:35 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fgmtk40ww-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Jul 2026 12:06:35 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66NC6Yjm25231998
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 Jul 2026 12:06:34 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 66C6B58043;
- Thu, 23 Jul 2026 12:06:34 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C03EA58055;
- Thu, 23 Jul 2026 12:06:33 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 23 Jul 2026 12:06:33 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1wmsHS-0004fw-Hu
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 08:12:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1784808722; x=1816344722;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=eII1PBzEE8SnfKcy8G5nVpzEv4kxcnItr8poopo4trY=;
+ b=lTRhPTy6/Oa0te+0k0TGXNMXZKGyPH9TpYV8wGRteoGu3Uq6Ga9vsgon
+ xafe2dsbTabeTlZU3YR+rLaW8QueUyivfeHWUT1Wbk6IDhvuD87SAt4e3
+ TqwSgfXUsRJgY6a/Vtn1wC1kqKfSDLMocHVSH/MLbVFuMvCmsRAE6Ce+E
+ t1t31geJHCfMe6J6zA2+tNIGVJrv53HRXtj+Z2yqeXR82x5I71zH+DqtX
+ 0cLGzRfcosJbvJFs7C+hVPvFCBmYur2/YeocAmeFFILWZnMZF44i1mrxK
+ RS4sTUciuaMeLgz1yaNeXDDLd7P+f/jxvxKhVfg872+HhfolR577b0meN w==;
+X-CSE-ConnectionGUID: bRVVnmwnTGuSuZFU82naeQ==
+X-CSE-MsgGUID: xLvF/becRe+pQT/mALr6Rg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11854"; a="85313377"
+X-IronPort-AV: E=Sophos;i="6.25,180,1779174000"; d="scan'208";a="85313377"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Jul 2026 05:11:59 -0700
+X-CSE-ConnectionGUID: YLyN8t9OR2KOojv6uusv6w==
+X-CSE-MsgGUID: T9HsjTKRRja0zGk4/DYerg==
+X-ExtLoop1: 1
+Received: from zhaoliu1-desk.sh.intel.com (HELO localhost) ([10.238.208.118])
+ by fmviesa003.fm.intel.com with ESMTP; 23 Jul 2026 05:11:56 -0700
+Date: Thu, 23 Jul 2026 20:11:55 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
+ marcandre.lureau@redhat.com, qemu-devel@nongnu.org,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ "open list:X86 KVM CPUs" <kvm@vger.kernel.org>
+Subject: Re: [PATCH] target/i386/sev: fix MemoryRegion reference leaks in
+ gpa2hva callers
+Message-ID: <amIFC5OwQ5eCPdI0@intel.com>
+References: <20260521145451.1831984-1-marcandre.lureau@redhat.com>
+ <e7d3e9dc-be97-40f3-b426-3e93a242410a@oss.qualcomm.com>
+ <87mrvightj.fsf@pond.sub.org>
+ <CAFEAcA-Upx9uacBZ8nq3Co5csNqi-nHaTOVX7t9kUzDW-CL5Bg@mail.gmail.com>
 MIME-Version: 1.0
-Date: Thu, 23 Jul 2026 14:06:33 +0200
-From: Harald Freudenberger <freude@linux.ibm.com>
-To: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: richard.henderson@linaro.org, david@kernel.org, thuth@redhat.com,
- berrange@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- linux-s390@vger.kernel.org, dengler@linux.ibm.com,
- borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
-Subject: Re: [PATCH v12 17/17] tests/tcg/s390x: Add tests for CPACF
- instructions
-Mail-Reply-To: freude@linux.ibm.com
-In-Reply-To: <33187980-d8d8-43f4-a138-34c67fa63d8b@linux.ibm.com>
-References: <20260710152906.80207-1-freude@linux.ibm.com>
- <20260710152906.80207-18-freude@linux.ibm.com>
- <33187980-d8d8-43f4-a138-34c67fa63d8b@linux.ibm.com>
-Message-ID: <8068c6b81fca91a619c3ea9b116ad5c8@linux.ibm.com>
-X-Sender: freude@linux.ibm.com
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIzMDExNSBTYWx0ZWRfX5xVWrQrTlvmu
- Ae1xTtGayUGNwL0gohPFBI8PekPADYNpSoVqn+AUz1r4oC3pa5vzW7EB/2QIiMv0fTVyCTjiLI4
- PB+mZdp8szEOCHzaFG/lr6gWmD6HPKg1egw1vzTIf6yzylrs8HeG9spzzYS75QZo4N1WeV3Ach3
- S7+fOgj5tcK1OUHxOyshVTAn6XUSEiuIHO2TbpvXiybAvcgVaiFMBVyVziDsUbfMSTPZWMoXbvO
- GcOzRheqKia7BXeyswmzcl656lpfM77llUKfY1PBcHZihiuk0l043gGbXFgbw6AU3m80NilSGFS
- pTtnmpll9RJ0BjcYhzo3xOkjme0bhTMnFKL3tHF2YxDYAvLUbSVXFgHnLAl2CW9fPUUc/gf1qWe
- iMrs7hXCDc3avnhxrqeMbBCafgODCHXJ4Wy34gO8Meofvi0XMbwaRF55ZQxcyKzTQWynjR6HJB8
- jz3O0nLP2UT/H9PBGjw==
-X-Authority-Analysis: v=2.4 cv=F7ZnsKhN c=1 sm=1 tr=0 ts=6a6203cd cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=woZNQi_L4tNMqXH-QfIA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-ORIG-GUID: o9g1NUi2OHWi-bi9tGembB_6OOe8PmfS
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIzMDExNSBTYWx0ZWRfX89Q66KUs8kbL
- v3u58yJhE6AR55hpx+PyeXJAX+PX3cYWUMhgxvSdFajQ623V6qqPULO+4eigrhr9GJgkVT/4Utp
- juiWhaSHtBP868IwJnYqwK6SZhDYVoA=
-X-Proofpoint-GUID: o9g1NUi2OHWi-bi9tGembB_6OOe8PmfS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-23_03,2026-07-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 bulkscore=0 clxscore=1015 priorityscore=1501
- impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607230115
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=freude@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFEAcA-Upx9uacBZ8nq3Co5csNqi-nHaTOVX7t9kUzDW-CL5Bg@mail.gmail.com>
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -52
+X-Spam_score: -5.3
+X-Spam_bar: -----
+X-Spam_report: (-5.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.951,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,65 +87,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: freude@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-07-14 14:01, Ilya Leoshkevich wrote:
-> On 7/10/26 17:29, Harald Freudenberger wrote:
->> Add simple tests for the CPACF instructions implemented:
->> - kdsa - minimal as only query is implemented
->> - kimd - query, sha256, sha512
->> - klmd - query, sha256, sha512
->> - km - query, aes 128, 192, 256 with clear and prot key
->> - kmac - minimal as only query is implemented
->> - kmc - query, aes 128, 192, 256 with clear and prot key
->> - kmctr - query, aes 128, 192, 256 with clear and prot key
->> - pcc - query, xts aes 128, 256 and prot key xts aes 128, 256
->> - prno - query, trng
->> No test for pckmo as this is a privileged instruction.
->> No test for kma, kmf, kmo as these instructions are currently
->> not implemented at all.
->> 
->> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
->> ---
->>   target/s390x/tcg/cpacf.h        |   7 +
->>   tests/tcg/s390x/Makefile.target |   9 +
->>   tests/tcg/s390x/cpacf-kdsa.c    |  58 ++++
->>   tests/tcg/s390x/cpacf-kimd.c    | 166 +++++++++
->>   tests/tcg/s390x/cpacf-klmd.c    | 206 +++++++++++
->>   tests/tcg/s390x/cpacf-km.c      | 590 
->> ++++++++++++++++++++++++++++++++
->>   tests/tcg/s390x/cpacf-kmac.c    |  58 ++++
->>   tests/tcg/s390x/cpacf-kmc.c     | 351 +++++++++++++++++++
->>   tests/tcg/s390x/cpacf-kmctr.c   | 360 +++++++++++++++++++
->>   tests/tcg/s390x/cpacf-pcc.c     | 245 +++++++++++++
->>   tests/tcg/s390x/cpacf-prno.c    | 131 +++++++
->>   tests/tcg/s390x/cpacf.h         | 571 
->> +++++++++++++++++++++++++++++++
->>   12 files changed, 2752 insertions(+)
->>   create mode 100644 tests/tcg/s390x/cpacf-kdsa.c
->>   create mode 100644 tests/tcg/s390x/cpacf-kimd.c
->>   create mode 100644 tests/tcg/s390x/cpacf-klmd.c
->>   create mode 100644 tests/tcg/s390x/cpacf-km.c
->>   create mode 100644 tests/tcg/s390x/cpacf-kmac.c
->>   create mode 100644 tests/tcg/s390x/cpacf-kmc.c
->>   create mode 100644 tests/tcg/s390x/cpacf-kmctr.c
->>   create mode 100644 tests/tcg/s390x/cpacf-pcc.c
->>   create mode 100644 tests/tcg/s390x/cpacf-prno.c
->>   create mode 100644 tests/tcg/s390x/cpacf.h
+On Thu, Jul 23, 2026 at 11:45:47AM +0100, Peter Maydell wrote:
+> Date: Thu, 23 Jul 2026 11:45:47 +0100
+> From: Peter Maydell <peter.maydell@linaro.org>
+> Subject: Re: [PATCH] target/i386/sev: fix MemoryRegion reference leaks in
+>  gpa2hva callers
 > 
-> I get failures when running these on a real z17, for example:
+> On Thu, 23 Jul 2026 at 10:46, Markus Armbruster <armbru@redhat.com> wrote:
+> >
+> > Philippe Mathieu-Daudé <philmd@oss.qualcomm.com> writes:
+> >
+> > > Hi,
+> > >
+> > > On 21/5/26 16:54, marcandre.lureau@redhat.com wrote:
+> > >> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> > >> gpa2hva() returns a referenced MemoryRegion via its p_mr out-parameter
+> > >> (inherited from memory_region_find()), but both SEV callers were failing
+> > >> to release it.
+> > >
+> > > Comment orthogonal to your fix; odd to have a non-monitor code
+> > > call an undocumented monitor method.
+> >
+> > Which one?
 > 
-> $ ./cpacf-kdsa
-> test_kdsa_query failed
-> cpacf-kdsa: 1 failures
+> The gpa2hva() function, presumably. It does seem a bit odd to
+> have the target/i386 code directly calling this. The function
+> in monitor.c works on the system memory AddressSpace and
+> assumes that there is only one kind of "guest physical address",
+> because that's the implicit "everything is an old i386 PC"
+> kind of assumption that got backed into the human monitor
+> command. But it's not really something we should be doing
+> more widely.
+>
+> The i386/sev code looks rather odd to me. It seems to be
+> using gpa2hva as a way to get at the host memory that is
+> backing the guest memory. Why can't it use the usual
+> address_space_map() etc APIs for this?
 
-Ok, I only tested on qemu. But of course you are right, it should
-work fine on a real machine also. Will check this ...
+Yes, I agree.
 
-Oh maybe one thing: query works with a fixed bitfield of subfunctions
-which are supported - by the QEMU CPACF implementation. So a real
-query may result in a lot of more subfunctions enabled in the result
-bitfield and thus the compare will fail.
+For sev_inject_launch_secret, it's straightforward to use
+address_space_map().
+
+> Worse, it looks like
+> it keeps that host pointer around in a SevLaunchUpdateData
+> struct, and it's not immediately obvious to me that it won't
+> go wrong if the memory map later gets moved around and that
+> pointer becomes invalid. And it looks like it writes into
+> guest memory in a way that will bypass the dirty-tracking.
+
+For snp_populate_metadata_pages() and SevLaunchUpdateData,
+I think maybe we can use address_space_map() to get pointer,
+and add a flag to SevLaunchUpdateData marking that data entry
+owns a mapping. Then sev_snp_launch_finish() can unmap if that
+flag is set, in its loop.
+
+Thanks,
+Zhao
+
 
