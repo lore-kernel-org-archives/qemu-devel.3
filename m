@@ -4,153 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0872AC44524
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 06:55:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D89BC44524
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 07:02:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmnKq-0008BD-PB; Thu, 23 Jul 2026 02:55:12 -0400
+	id 1wmnRR-000203-4Y; Thu, 23 Jul 2026 03:02:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wmnKp-0008Ay-0h
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 02:55:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wmnKn-0003XY-8f
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 02:55:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784789708;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Iw1zBylGnVl9+rnQcV/usuToQ/lAQ3WLGuXEI1eevbA=;
- b=Wt6+ZFoUMPll7NBYayTJfBojLMIummyR/dgqiRz8tZGaqClw1sxEbTLfKw6nmWxXCqu4K7
- mDU/jgdNkXi/JV26HRWFlLq9JBfwVul4NDfpLkZoq4v8V9+bUH45xxppIS0sMYtCm7WQ0Z
- hXvcU3FbZGM0YXdWA2wNLzbMkyeMeq8=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-523-ShLcUtMSPGa2f2dUJbV3Eg-1; Thu, 23 Jul 2026 02:55:06 -0400
-X-MC-Unique: ShLcUtMSPGa2f2dUJbV3Eg-1
-X-Mimecast-MFC-AGG-ID: ShLcUtMSPGa2f2dUJbV3Eg_1784789705
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-47f90dbaf84so210838f8f.1
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 23:55:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wmnRJ-0001xW-Ny
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 03:01:57 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wmnRF-000439-SN
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 03:01:51 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-47f365afc5aso140451f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 00:01:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784789705; x=1785394505; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Iw1zBylGnVl9+rnQcV/usuToQ/lAQ3WLGuXEI1eevbA=;
- b=Zt6xFzYmc/cdHk8YRXwf5TpqyV/iVWOzrnii/5hSrlzXam5OMWFF+zBgugr0dJeq0l
- T4VDoCyFzSxS7PNUahgJaoOUJ2sGQ0JGs2fdzshZcgynhfyNxhb7cVvILQgh40L/i6Q6
- vtc+QrvI7ymd1S5l5imx5JT568iHsJG+DaLw6BFvZ42c0gEJLStZOn4cV2CdsLv9JbWm
- kF6oZ4Msv3ES+mjis09sZip68Ncb0RIGts/U2yDbD9qZp/4CbEtdByUxUjhKQQ24Q4cT
- PsNGXTiNpz0Y7h3WPoCpFmZEC3Z+qNq8Ky8qXra5nHXyZpKIvHzxjmVbnBczIWxQdNF6
- yfZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784789705; x=1785394505;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1784790108; x=1785394908; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Iw1zBylGnVl9+rnQcV/usuToQ/lAQ3WLGuXEI1eevbA=;
- b=QZstjMbySKUaXgw7f2VWuMWouXL2UgJmx1UiFC/D4357bQWjb/J3TBTrwzjzdtYyJq
- CZ5GOtoFNWtY956C6ljysEYrj4LBzCaHsbw0Y2TQiZddf9CEXGlMhnrflicmO8C3A9yc
- 5yr4LGBNTxOPEHYILcxedenhKsOzDiPkfSrloSqlkSRwYq+KVWc1jXI37y4UXwmOVxRs
- ZFqwEeX0kBuU0G/cZ98faT7wtUghsgYkM72R67UupPEGR0KfOGe4KyLfSvaenn3xF9ST
- EL5VPq26hNcQJf/vpaVcbG2Ja6XHoJRamcRt9Y35RwFHpF3nlEhDMu+3wWSE/48shXMv
- /eZQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoGpQ4Htu0Sszrb+vqH3K7sHVRikHwWEjdLhvEtchh8CjufjvG5e1OUi7i8GOxePM8P/NuNmNPd0xXi@nongnu.org
-X-Gm-Message-State: AOJu0YzmAivOnZzaZHF6LTgS6e5bdQMQXucZqUh9/Wh8Q+ULqUh6uTL3
- Q5i2MyZCSJu5x9WYtKAnaKGQWyRw5lOr+L/wmjaF9RG7lVTVCRq8kbxiewDOQ7UuNA8kute3hrf
- 5UKzEVuvulZqfKAsXXXS/uqZSrYEBba+taSd6vo11tasUT996zSaxnTIW2Fnk9/Mm
-X-Gm-Gg: AR+sD10pgcTtDgRZSduTN6DBAx88YQZVQQ0m35y0awPSrk3Wi3l0jcPwFBe/wUIe+Y2
- RdA12LrYNEYV8DWV/98xV8i9QrlpEq+DDBDNbFLKOWmzT7RHLd5+X6sVd6lB7CciAWqGotTDnDQ
- 5BVjY3q3fpjBjSN5UCYEh1T75BUYHSgRhDYK7/E37CkAO7Fs1TZh9DtP75q7lU7DiI2Q3R61GFE
- 1oWSDOgP8Cta4lXEKMwu11II16ZrwVs25At8wLGd2f2gEy/x8NQBiBq8PjlnuHtfF8uG8VAqc5J
- WIgNuiPUopHcvEEersqRPRqqGPsCmfRCeK5dEcmcMF5PQETJhncR73PutDI1fl3HRqmRa0kmyev
- xVlhoMt09aQlsliVXKCbeGzbcA7QzaKl59PktTuE=
-X-Received: by 2002:a05:6000:40ca:b0:470:2fb1:3dbc with SMTP id
- ffacd0b85a97d-47f8d7566c4mr2152212f8f.35.1784789705230; 
- Wed, 22 Jul 2026 23:55:05 -0700 (PDT)
-X-Received: by 2002:a05:6000:40ca:b0:470:2fb1:3dbc with SMTP id
- ffacd0b85a97d-47f8d7566c4mr2152183f8f.35.1784789704788; 
- Wed, 22 Jul 2026 23:55:04 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
- ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
+ bh=gJcyrLyvAkPJGCOFIwqQ1qZlG599jZ6Ylb6PlbHkOhE=;
+ b=Qs2dWgtdA8RifsUfQngEq2M8SMWPANSnnxeE97+JfiW9gCvqtn738hT+1JTLNnhW+t
+ yRNQ8FfIvKagiH9O0IBTyrbQdNYkvkJo0z2H/7AX/WE8q0L7pTX0hqdjlE5V3xa9pRRO
+ mifmLajaqiR8LwPURBwIJ7pS89XuyaIGlbyPbRxVpu8JrYnviLJq46i5OfsMdgDLnd9Z
+ qdDmbQMGnLfBawLmacqCerCJL+GhA1p20LmbisVplFMfnPEs+Vs0WUEwrRpIjYvX/jfz
+ WWa8VtIn+55q/dpWZA0kAgUZtJX0Lkoq5z0C0VBksmF8zlSThrrMb/2U103ESvGHGBuK
+ tKEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784790108; x=1785394908;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=gJcyrLyvAkPJGCOFIwqQ1qZlG599jZ6Ylb6PlbHkOhE=;
+ b=LwIq4q/HrryNqKc3DnIdwXsHFKnJl4gJcQaRWD0P+xstsWc9ltCat6DS/I4qYK5puJ
+ 2m+iJGkOSUVJCxC5laoK/hEFo6J3dHhvlv7l9GbjBYgEgWLZ1hLIK/KTA4+7lFREq1Xh
+ +wIi9HYHh5qh/+6km3+hLN+Ao2QJ4TtUMIevc+X+k2Zls5dmXz7eFHOkgCrNMti08FXc
+ hp3LODMiBGhEhWIJLKCkebiC1wZTG5wcj0sPe4ZN7mPJaYcRtkengnO+0JRjCcDi7fv6
+ G7cg4MTqeT9YBGCswKN1kqJZQGTA/1ANmLRxkG/ojH28d6FOtwTBbcQh7Cpdzm3Sm28g
+ U6FQ==
+X-Gm-Message-State: AOJu0YwLf0/b5z+PZ2p5BknBZSqAlGWHleXu9RNS0NlhXyl04jVYam+E
+ LDFLT4wgfcEPpZrAK19MAypotdQG8X27wVDFbZsFUYBDqnZjuGWwbRjUft2e8A==
+X-Gm-Gg: AR+sD10cdbwcixsgoG/UQCPqAybmi2Er8iUH6eU1EecLNSHtW+/L1Jzjwn2+D0Kt3ER
+ UBk8C+MzRV0xtSpisQ50OpD34fEpUWzMeS1/l4iURhU38etb3hc/CSoGhhsaZ8GMJ3PXTF3XBUs
+ M+F+5NlEHYIuq+awbMXHkiWJz+6RuzwTvOjbIjA9EmfxxE0msyYgTy2LpC9oX2s6Lyf53yOBdrl
+ Bft3dyrupONQ6gh0hvYaYuEQn/V2YnZN6QCxmEdIjU1L0+d2KX0+QSMwFf0iGBsS5UcTfZMr5C4
+ YmIxFvRr6KvYbr/BEBkfO3/IozCn+1cE6hJ0BlgLGaIWKfwiSxvQDk6vF/UXmJUweL+cqXEttlU
+ ntv+Lqpm99dd1QjBRGMkaMe7+6ykD88S+B2zlbCij69KjD+uX99AsfoJEcCHWRJnsoPjproqFJ6
+ KHf1GcsIyHD1NCW/DXDDqy6MY9+Wm2/S7ymd/x+07W4Zt+v3uqIZUlGYiZx7MrhTG70xdHYpCsn
+ ZIdvGHToieP7EVfcrLOe69hxg==
+X-Received: by 2002:a5d:6f08:0:b0:478:1a24:912d with SMTP id
+ ffacd0b85a97d-47f8dca552cmr2476700f8f.57.1784790107868; 
+ Thu, 23 Jul 2026 00:01:47 -0700 (PDT)
+Received: from Provence.localdomain
+ (dynamic-2a02-3100-29ed-6000-0219-99ff-feb2-2458.310.pool.telefonica.de.
+ [2a02:3100:29ed:6000:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85b9a659sm13295005f8f.6.2026.07.22.23.55.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Jul 2026 23:55:04 -0700 (PDT)
-Message-ID: <40175d61-af27-4c29-98cb-746c2898aa47@redhat.com>
-Date: Thu, 23 Jul 2026 08:55:02 +0200
+ ffacd0b85a97d-47f85c6dc25sm13293923f8f.33.2026.07.23.00.01.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 23 Jul 2026 00:01:47 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Pavel Pisa <pisa@cmp.felk.cvut.cz>, Matyas Bobek <matyas.bobek@gmail.com>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Jason Wang <jasowangio@gmail.com>,
+ Vikram Garhwal <vikram.garhwal@bytedance.com>,
+ Bernhard Beschow <shentey@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH 5/9] hw/net/can/flexcan: Fix mailbox index calculation in
+ flexcan_mem_read()
+Date: Thu, 23 Jul 2026 09:00:55 +0200
+Message-ID: <20260723070059.6332-6-shentey@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260723070059.6332-1-shentey@gmail.com>
+References: <20260723070059.6332-1-shentey@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio/region: Clarify dma-buf failure messages
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex@shazbot.org>, Nicolin Chen <nicolinc@nvidia.com>
-References: <20260715070622.198400-1-clg@redhat.com>
- <e74d05ed-913f-4b24-94d3-6a2442073848@tls.msk.ru>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <e74d05ed-913f-4b24-94d3-6a2442073848@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: permerror client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,27 +106,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/22/26 23:29, Michael Tokarev wrote:
-> On 7/15/26 10:06, Cédric Le Goater wrote:
->> The dma-buf failure messages in vfio_region_create_dma_buf() say "PCI
->> BAR IOMMU mappings may fail", which suggests the BAR is broken. In
->> practice, only P2P DMA is affected -- normal passthrough uses the mmap
->> fallback.
->>
->> Reword both messages to mention P2P DMA explicitly and clarify that
->> the mmap fallback is in use. Use warn_report_err_once() at the call
->> site so per-BAR repetition on mdev devices is suppressed.
->>
->> Fixes: dcf1b77e834d ("hw/vfio/region: Create dmabuf for PCI BAR per region")
-> 
-> FWIW (it's applied to master branch already), this is commit 8cfaf22668c,
-> not dcf1b77e834d.
-> 
-My bad, dcf1b77e834d is the same commit in an old local vfio-next branch :/
-I sent a scripts/checkpatch update to catch these.
+Calculate mailbox indices from the `mbs[]` array layout instead of the
+oversized raw `mb[]` view. This prevents accessing mailbox entries beyond
+the valid array range and fixes Coverity CID 1662974.
 
-Thanks,
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ hw/net/can/flexcan.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-C.
+diff --git a/hw/net/can/flexcan.c b/hw/net/can/flexcan.c
+index 651904fa37..8d680f1832 100644
+--- a/hw/net/can/flexcan.c
++++ b/hw/net/can/flexcan.c
+@@ -1239,14 +1239,12 @@ static void flexcan_mem_write(void *opaque, hwaddr addr, uint64_t val,
+ static uint64_t flexcan_mem_read(void *opqaue, hwaddr addr, unsigned size)
+ {
+     FlexcanState *s = opqaue;
++    const int mbid = (addr - offsetof(FlexcanRegs, mbs)) /
++        sizeof(s->regs.mbs[0]);
+     uint32_t rv = s->regs_raw[addr >> 2];
+ 
+-    if (addr >= offsetof(FlexcanRegs, mb) &&
+-        addr < offsetof(FlexcanRegs, _reserved4)) {
++    if (0 <= mbid && mbid < ARRAY_SIZE(s->regs.mbs)) {
+         /* reading from mailbox */
+-        hwaddr offset = addr - offsetof(FlexcanRegs, mb);
+-        int mbid = offset / sizeof(FlexcanRegsMessageBuffer);
+-
+         if (addr % 16 == 0 && s->locked_mbidx != mbid) {
+             /* reading control word locks the mailbox */
+             flexcan_mb_unlock(s);
+-- 
+2.55.0
 
 
