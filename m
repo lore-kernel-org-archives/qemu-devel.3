@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E885DC531CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:52:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 699B8C44524
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:53:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmlPA-0005wp-2E; Thu, 23 Jul 2026 00:51:32 -0400
+	id 1wmlQF-0002TS-59; Thu, 23 Jul 2026 00:52:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlP5-0005rg-9p
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:51:28 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlQD-0002AD-3Y
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:52:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlP3-0004Rp-TI
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:51:27 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlQB-0004iF-KR
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:52:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784782285;
+ s=mimecast20190719; t=1784782355;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uK3gVanDkZsjvvgE0Rg1w4gDzuwAaXDx8DZDiRphsfQ=;
- b=RdU9YdhNnA3mmmuLTnmizB43z4aqOm6c6VX7nRkRCiId03jnSsYrqP6BXSzmtX/t3iM1Wl
- H3tT0N9LSfeWhJ/nVJe1LHj6POpLCiGtLpgTxuJLeBKIDAUNjzGwKlpMk3jsYAVHkMaojo
- AkWikKEXR3VYEJYYG5K+RbbDbgIm6fU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ieD8d7uIFceTxEjKltR0VJrAkmqKTvXxTTZUmuZaZws=;
+ b=TO5OYDRSHQWavSbSDVbtWcKlV0Eres4pQt23N71X/1sfa8msbi+arT0T8oZN9YHVNxyDFy
+ 85pOV8PLy2YX3XINp3KnzESxpX/Tfbi/MaKMWtWuCmuh+GLq2anT4W2mkpIJReD0131xua
+ 6jmVAUjEnjLEHZ7vEymBeYfvharbzHs=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-44-1zGTlrKaO5G6JF2UIT2urw-1; Thu,
- 23 Jul 2026 00:51:22 -0400
-X-MC-Unique: 1zGTlrKaO5G6JF2UIT2urw-1
-X-Mimecast-MFC-AGG-ID: 1zGTlrKaO5G6JF2UIT2urw_1784782279
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-684-eeCSOB1aOsS8UW4jt6eH7w-1; Thu,
+ 23 Jul 2026 00:52:31 -0400
+X-MC-Unique: eeCSOB1aOsS8UW4jt6eH7w-1
+X-Mimecast-MFC-AGG-ID: eeCSOB1aOsS8UW4jt6eH7w_1784782348
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5A3101954B26; Thu, 23 Jul 2026 04:51:19 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C89AB19775B0; Thu, 23 Jul 2026 04:52:28 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.44])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5531018002AE; Thu, 23 Jul 2026 04:51:09 +0000 (UTC)
+ id 4947318002B5; Thu, 23 Jul 2026 04:52:21 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -73,9 +73,9 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Jason Wang <jasowangio@gmail.com>, qemu-trivial@nongnu.org,
  Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH v2 18/44] qapi: convert trivial intro sections for qdev.json
-Date: Thu, 23 Jul 2026 00:47:39 -0400
-Message-ID: <20260723044805.527643-19-jsnow@redhat.com>
+Subject: [PATCH v2 25/44] qapi: convert trivial intro sections for job.json
+Date: Thu, 23 Jul 2026 00:47:46 -0400
+Message-ID: <20260723044805.527643-26-jsnow@redhat.com>
 In-Reply-To: <20260723044805.527643-1-jsnow@redhat.com>
 References: <20260723044805.527643-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -110,70 +110,72 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/qdev.json | 23 +++++++++--------------
- 1 file changed, 9 insertions(+), 14 deletions(-)
+ qapi/job.json | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
 
-diff --git a/qapi/qdev.json b/qapi/qdev.json
-index 974cf9c5830..a35321d2fd1 100644
---- a/qapi/qdev.json
-+++ b/qapi/qdev.json
-@@ -14,8 +14,7 @@
+diff --git a/qapi/job.json b/qapi/job.json
+index 31618e6ebcc..b68d7292423 100644
+--- a/qapi/job.json
++++ b/qapi/job.json
+@@ -9,8 +9,7 @@
  
  ##
- # @device-list-properties:
+ # @JobType:
 -#
--# List properties associated with a device.
-+#     List properties associated with a device.
+-# Type of a background job.
++#     Type of a background job.
  #
- # @typename: the type name of a device
+ # @commit: block commit job type, see `block-commit`
  #
-@@ -33,8 +32,7 @@
+@@ -42,8 +41,7 @@
  
  ##
- # @device_add:
+ # @JobStatus:
 -#
--# Add a device.
-+#     Add a device.
+-# Indicates the present state of a given job in its lifetime.
++#     Indicates the present state of a given job in its lifetime.
  #
- # @driver: the name of the new device's driver
+ # @undefined: Erroneous, default state.  Should not ever be visible.
  #
-@@ -85,8 +83,7 @@
+@@ -90,8 +88,7 @@
  
  ##
- # @device_del:
+ # @JobVerb:
 -#
--# Remove a device from a guest
-+#     Remove a device from a guest
+-# Represents command verbs that can be applied to a job.
++#     Represents command verbs that can be applied to a job.
  #
- # @id: the device's ID or QOM path
+ # @cancel: see `job-cancel`
  #
-@@ -121,11 +118,10 @@
+@@ -117,8 +114,7 @@
  
  ##
- # @DEVICE_DELETED:
+ # @JOB_STATUS_CHANGE:
 -#
--# Emitted whenever the device removal completion is acknowledged by
--# the guest.  At this point, it's safe to reuse the specified device
--# ID.  Device removal can be initiated by the guest or by HMP/QMP
--# commands.
-+#     Emitted whenever the device removal completion is acknowledged
-+#     by the guest.  At this point, it's safe to reuse the specified
-+#     device ID.  Device removal can be initiated by the guest or by
-+#     HMP/QMP commands.
+-# Emitted when a job transitions to a different status.
++#     Emitted when a job transitions to a different status.
  #
- # @device: the device's ID if it has one
+ # @id: The job identifier
  #
-@@ -145,9 +141,8 @@
+@@ -259,8 +255,7 @@
  
  ##
- # @DEVICE_UNPLUG_GUEST_ERROR:
+ # @JobInfo:
 -#
--# Emitted when a device hot unplug fails due to a guest reported
--# error.
-+#     Emitted when a device hot unplug fails due to a guest reported
-+#     error.
+-# Information about a job.
++#     Information about a job.
  #
- # @device: the device's ID if it has one
+ # @id: The job identifier
+ #
+@@ -294,8 +289,7 @@
+ 
+ ##
+ # @query-jobs:
+-#
+-# Return information about jobs.
++#     Return information about jobs.
+ #
+ # Returns: a list with info for each active job
  #
 -- 
 2.55.0
