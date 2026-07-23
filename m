@@ -4,54 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 407CAC44532
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 01:18:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C33F4C44536
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 01:18:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmi3w-0004Yw-69; Wed, 22 Jul 2026 21:17:24 -0400
+	id 1wmi3s-0004Xv-QA; Wed, 22 Jul 2026 21:17:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wmi3u-0004YR-Q2; Wed, 22 Jul 2026 21:17:22 -0400
+ id 1wmi3q-0004XO-Ap; Wed, 22 Jul 2026 21:17:18 -0400
 Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wmi3t-0002xZ-2A; Wed, 22 Jul 2026 21:17:22 -0400
+ id 1wmi3o-0002xF-Ni; Wed, 22 Jul 2026 21:17:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1784769441; x=1816305441;
+ t=1784769436; x=1816305436;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=hBO3fzaslaoxTxxwV/97htR4gR1dlBLu3SsAm+it1ik=;
- b=mDKZKfe0cbGNtWDbsuQx4Eci7/269Av/SlbTWskNgHHPGs3kiYnHpe1E
- CIgirUh2LegTPtFCUg12kUVXMkLUl31SCmUCog72puiizOHrChUztfb0i
- Ep0Y/M12ESckL9gZHL69x1CjUW67xEvTIb/fU9qFTJfTWgkadSkM16GIe
- tnbGMGi9lZTj0JdIaHJV11VmvAeKTlY80ufqwKby9NN2NaltR3KcfOQxI
- xirTOYZDkaZBpSj2x7XCxHMOMPF9eDb0M5VTbZd5hQRl8VYx1GmJUXl7p
- geASVTGC2ivg0AdOdoVDGKYu+qhuZSYlVlBlljnSrRZmvXXus3josOPk5 Q==;
-X-CSE-ConnectionGUID: RT2Ag1JoRlumcK9S4aK0Ow==
-X-CSE-MsgGUID: x/gIbCiyTvemUYIJ97z+iw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11854"; a="96074836"
-X-IronPort-AV: E=Sophos;i="6.25,179,1779174000"; d="scan'208";a="96074836"
+ bh=bUy4y8HW0wfdIIGwFykmmFvUk5kLIyAYGJ6OVufZCcQ=;
+ b=R4+H8p8Z7k3OMBns6NGX0mgiytTvBGp4RQsB+Tn9UAI9UVKf4gDfAOW9
+ b8UIGP1cahP8rsK3gKUbbj3SlbIawrF1EoUpdLhUrolYj7rRDqRWtFnbZ
+ /SE89P/EgL2eg35Rukiid+g19BQQKYP0trriLvaMLAWf4M8/ib0Q9ALzU
+ DWNH4V0oMU6ntHw9DjalWX3Uks8D9tzO6+u4rRM8iWySCSfjIj2KnRsVw
+ o4rSbLZd3vfXcJwZoa6tpGkHJn2pNrDy4pNSWU9wMtAw+ckkRyyQtl/t8
+ 0lQAc8FzU+HeVWJHmGcAGhfnZPSEBYBbRG2HytRHb3nDI5wi7JruFDsAV A==;
+X-CSE-ConnectionGUID: 6E/9qsR/TQmg3+Isu1fYnA==
+X-CSE-MsgGUID: AZ2kEZdyRNewKC38W2BsYA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11854"; a="96074831"
+X-IronPort-AV: E=Sophos;i="6.25,179,1779174000"; d="scan'208";a="96074831"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Jul 2026 18:17:19 -0700
-X-CSE-ConnectionGUID: v6T75PnGRjaJSURpZP4Kfw==
-X-CSE-MsgGUID: nZ3kjDMaT3WZdOpqn0jw8g==
+ 22 Jul 2026 18:17:14 -0700
+X-CSE-ConnectionGUID: WBJjti8ISJmASN3vb3+jRg==
+X-CSE-MsgGUID: 6/5Q7KSLR2+GFgXFsMn6SA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,179,1779174000"; d="scan'208";a="251943349"
+X-IronPort-AV: E=Sophos;i="6.25,179,1779174000"; d="scan'208";a="251943345"
 Received: from junjie-desk-dev.bj.intel.com (HELO
  junjie-desk-dev.tail2c02c1.ts.net) ([10.238.152.71])
  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Jul 2026 18:17:18 -0700
+ 22 Jul 2026 18:17:13 -0700
 From: Junjie Cao <junjie.cao@intel.com>
 To: Jonathan Cameron <jic23@kernel.org>
 Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org, qemu-stable@nongnu.org
-Subject: [PATCH v2 2/6] hw/cxl: destroy primary CCI before re-initialization
- on reset
-Date: Thu, 23 Jul 2026 09:16:21 +0800
-Message-ID: <20260723011625.1117034-3-junjie.cao@intel.com>
+Subject: [PATCH v2 1/6] hw/cxl: fix timer leak in cxl_destroy_cci()
+Date: Thu, 23 Jul 2026 09:16:20 +0800
+Message-ID: <20260723011625.1117034-2-junjie.cao@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260723011625.1117034-1-junjie.cao@intel.com>
 References: <20260723011625.1117034-1-junjie.cao@intel.com>
@@ -81,67 +80,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ct3d_reset() re-initializes the primary CCI through the call chain
-cxl_device_register_init_t3() -> cxl_initialize_mailbox_t3() ->
-cxl_init_cci(), but never calls cxl_destroy_cci() first.  Each reset
-cycle therefore leaks the old timer and leaves the old mutex
-undestroyed while silently overwriting the CCI state.
+cxl_init_cci() allocates a QEMUTimer via timer_new_ms() but
+cxl_destroy_cci() never frees it.  This leaks a timer object on every
+device exit path and, more critically, on every device reset cycle since
+the secondary CCIs (vdm_fm_owned_ld_mctp_cci, ld0_cci) are destroyed
+and re-initialized each time ct3d_reset() runs.
 
-Per CXL r4.0, the "Mailbox Interfaces Ready" bit in the Memory Device
-Status register (Table 8-212) is set after a Conventional Reset or CXL
-Reset once the device has re-initialized its mailbox interfaces.  The
-CCI is the software abstraction of these interfaces and must be properly
-torn down before re-initialization.
+Tear the CCI down in the reverse of cxl_init_cci()'s setup order:
+destroy the mutex, then free the timer.  timer_free() cancels any
+pending expiry via timer_del() internally and tolerates a NULL pointer;
+clear the field afterwards so that a repeated timer_free() on the same
+CCI is a safe no-op.
+(The function as a whole is still not idempotent: qemu_mutex_destroy()
+asserts on an already-destroyed mutex.  Callers must not invoke
+cxl_destroy_cci() twice; the .initialized guard added in the next patch
+enforces that.)
 
-The secondary CCIs (vdm_fm_owned_ld_mctp_cci, ld0_cci) already follow
-the correct destroy-before-reinit pattern in the same function; apply
-the same discipline to the primary CCI.
-
-Also destroy the secondary CCIs in ct3_exit() where they were
-previously leaked at device removal time.  Guard the primary CCI
-teardown there with the same .initialized check used for the secondary
-CCIs: the primary CCI is only brought up from the reset path
-(cxl_device_register_init_t3()), so a device that is unrealized before
-its first reset would otherwise tear down a never-initialized CCI.
-
-Fixes: cac36a8faffc ("hw/cxl/mbox: Pull the CCI definition out of the CXLDeviceState")
+Fixes: 98cbac128f1c ("hw/cxl: Support aborting background commands")
 Cc: qemu-stable@nongnu.org
 Signed-off-by: Junjie Cao <junjie.cao@intel.com>
 ---
- hw/mem/cxl_type3.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ hw/cxl/cxl-mailbox-utils.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index cba05ec57d..4ac6eaa950 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -1073,7 +1073,15 @@ static void ct3_exit(PCIDevice *pci_dev)
-     cxl_doe_cdat_release(cxl_cstate);
-     msix_uninit_exclusive_bar(pci_dev);
-     g_free(regs->special_ops);
--    cxl_destroy_cci(&ct3d->cci);
-+    if (ct3d->cci.initialized) {
-+        cxl_destroy_cci(&ct3d->cci);
-+    }
-+    if (ct3d->vdm_fm_owned_ld_mctp_cci.initialized) {
-+        cxl_destroy_cci(&ct3d->vdm_fm_owned_ld_mctp_cci);
-+    }
-+    if (ct3d->ld0_cci.initialized) {
-+        cxl_destroy_cci(&ct3d->ld0_cci);
-+    }
-     if (ct3d->dc.host_dc) {
-         cxl_destroy_dc_regions(ct3d);
-         address_space_destroy(&ct3d->dc.host_dc_as);
-@@ -1328,6 +1336,9 @@ static void ct3d_reset(DeviceState *dev)
-                               ct3d->flitmode);
-     cxl_component_register_init_common(reg_state, write_msk,
-                                        CXL2_TYPE3_DEVICE, ct3d->hdmdb);
-+    if (ct3d->cci.initialized) {
-+        cxl_destroy_cci(&ct3d->cci);
-+    }
-     cxl_device_register_init_t3(ct3d, CXL_T3_MSIX_MBOX);
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 20e0b7e476..a1b9f0243b 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -4771,6 +4771,8 @@ void cxl_init_cci(CXLCCI *cci, size_t payload_max)
+ void cxl_destroy_cci(CXLCCI *cci)
+ {
+     qemu_mutex_destroy(&cci->bg.lock);
++    timer_free(cci->bg.timer);
++    cci->bg.timer = NULL;
+     cci->initialized = false;
+ }
  
-     /*
 -- 
 2.43.0
 
