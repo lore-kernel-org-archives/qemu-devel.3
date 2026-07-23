@@ -4,84 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A153AC4453A
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 02:15:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60F32C4453A
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 02:23:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmixQ-0007cH-HD; Wed, 22 Jul 2026 22:14:44 -0400
+	id 1wmj5z-0005Cj-CF; Wed, 22 Jul 2026 22:23:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jianghaotian.sunday@gmail.com>)
- id 1wmixP-0007bN-Id
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 22:14:43 -0400
-Received: from mail-pj2-x03.google.com ([2607:f8b0:4864:39::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jianghaotian.sunday@gmail.com>)
- id 1wmixN-0001MX-U8
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 22:14:43 -0400
-Received: by mail-pj2-x03.google.com with SMTP id
- 98e67ed59e1d1-38111ea8a88so81827a91.1
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 19:14:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784772880; x=1785377680; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=o766GxEhV3PGRBXOiHXJb69DGsBYL5EaUQhlyW7i0BA=;
- b=YomiUgTkExByLS6Rb+vrWmS/n3505phM0Ekpni9j+c7CV7niUHwfO8CD184FLtiB42
- Z2C9shGGuje5dIf9uGyEBuxJkGKrZ+PCa21ejOa2hDgQH1Uj8O+eEWUUFNCi7oscP181
- 0YsfEEQDRmqX0r7cn3rQzTWTiLytd0uN6kRFeYVhEwYp1PSLe8kleq2Kq5aFF6muGd4h
- EBgpYDs4WCc84vTF73ONpL6BHjBDJEJimeQQGPEklNEkBg5X6GUjQhH97Zcf6RVDWo1N
- 2cYI/mRd6qibOhna+8nFqRk5H7md2kHznEFBrJRyXdQZXuXWoYs/8Dwq2+QhWyO7ow5K
- oSig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784772880; x=1785377680;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=o766GxEhV3PGRBXOiHXJb69DGsBYL5EaUQhlyW7i0BA=;
- b=GnLuBSsUntIWjkMTtNbY3M7evlN4zCS1O8U5h8mbN+EzC9ro8PYMegLYQwCjNraf4G
- muYaA+OeFp0LbGFnqFhU69ctpfmr4OnkOBKpy2eAgD4DPWUYjLUXU+oV1ojOg5X2S+7c
- 8W4n9bQe10z1RPS2WsvxpvMxGNCoE2y6/l+QdPoN2QMyW5ELLohR7DhHMuU57sbaIgnJ
- X0x/0Qdt4tb9Y3Ycz3WMr6nwnnp6KWZnOO3+uNa/RtMNGMYkEd6f21MrqjketiBNip1g
- J12JHIpURSaDagGw+yk7qo8kxfhZHX/A93zajotGxX50ypoaScCimSJrTwX+dNdo2CSq
- Ovzw==
-X-Gm-Message-State: AOJu0YwhwU+vrvZ2igOaAfk5otL9+urapfJK7sESbbhv867bTA9CL6e+
- yTeZjqQCO+utjkMUXNPI77vPfEs+4gobenxN0zM7cDIIh3CRgIsApUwgp2/F0Vk9K/c/bw==
-X-Gm-Gg: AR+sD11bmKGxLTzO3NQnJdRaJ4pH3aj5Ez4i90rMzqwfhakfm388Z9xFJGeNzgUgRrh
- rzqZMWX78nakO6mGBRz1xF77J8liuGec95jrVIZlrMFPMqq0+Ob7cdSNme97ln69eYwhdtGjdmL
- fw4v0p3uCqMIioIdsjJNHlQlDX4w/LgdMKN853wjYvOhEGk3oY8VLrAq7mbKRm5BNMRKUahIgFJ
- g1xKJ8/kzYoyGZYd78SZQQyTafkdvG/1EwixHhjSp9FdtrVeIxVDdTkimkKT6l52L/7rK+a9hlL
- ECQhzSego/k94r8JfVAXg3ygjvONfMSAh7Qv6L2JbpBOkFwak6GtScHs8wEWuzLc+5NtS9pi9Ik
- cZL7TqIwgf+gDLZkw2yiKANaH5aimtqRnWjIFbkWFKI9LU/wj4MCz55CipDLJlSHchr7yCmik6A
- yxPmldSC/857z9OwX45IeaTJnz0xilr12mKjpbLJdZD8dyHyjdkgW6jq68gDlDrjwJlxdoB/HoX
- aMjnVn/pnczEM0mi0BIPVkLFzIBAA==
-X-Received: by 2002:a17:90b:4c0e:b0:38e:6aa7:68ad with SMTP id
- 98e67ed59e1d1-38ec648ac8amr1123522a91.5.1784772879979; 
- Wed, 22 Jul 2026 19:14:39 -0700 (PDT)
-Received: from VM-210-252-ubuntu.. ([14.116.239.39])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38ecad34d41sm66860a91.9.2026.07.22.19.14.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Jul 2026 19:14:38 -0700 (PDT)
-From: jianghaotian.sunday@gmail.com
-To: qemu-devel@nongnu.org
-Cc: kraxel@redhat.com, Haotian Jiang <jianghaotian.sunday@gmail.com>,
- qemu-stable@nongnu.org
-Subject: [PATCH] hw/audio/intel-hda: restrict all DMA engine paths to memories
-Date: Thu, 23 Jul 2026 10:14:12 +0800
-Message-Id: <20260723021412.377244-1-jianghaotian.sunday@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1wmj5f-00055R-5p; Wed, 22 Jul 2026 22:23:15 -0400
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1wmj5d-0002ZT-Hx; Wed, 22 Jul 2026 22:23:14 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=GrP13I0D0UHqxpugl8Kn+nC5Iz7Tkh86LvQ6MNdEK3vmsYWVvcW9UqftcR/zo0gmMnlXhiQHeaqT+u6pUjtHMb36dQuCRzPYQoUEJze0dTkKTzwp/MW0VK63AP9i65Jq9DeGlzyxy9122qCHBG1s2UM8cTIgkOgY28iQafVj9w60x04kvaYJlMzk77fxFszT8cDFV2KRScNORXjRxdlmROFOVlmXFzvg2VrxWpEYgXOd/jyPpkveyR7tR44QZBf1jyNsBf+OeYIdT/MQAu7BdpygD161BGkHjWYtOlIEq4THbv1yb3eGS6eE7EGSxsQcOX26zfXUU73xVJQmh2vqYA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=p6a7jf/6RoL8JvKFkWPGUJHBVfFcLIuF/h2taiuUW0c=;
+ b=iKbNDE5SxNeqKLdBcb0iw9Kb5DNUVNOt8QKjS2EackP7WymjAdVLMUrijKZUtxS8GvYN78OpSXkiWzW2CP/Kpo6DvhiB1NCQOy7P8Q5g2MyVdlPGlo7DGcBnrkFZwG8ZJ8hn/7VGNbuqiXTYw/nn4iIYt2yOKFwSsst2hvtv5nQ0vR5x+XNFR9s5VnzIOM3WR3Avy0LI+PpwxG5Ve2ghNsnFS6Vse74UipKUaEGhSoBGCLGTRRcD1V9ZfFkZa6dKfoCtkEJ96w7zDMiEBDi/pR1vh7xEHAZ4S8yUplp7WZFASywLwnRu+LkCqvp/akoLDrE1RA7sDCM9WuxIgXtFwg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=p6a7jf/6RoL8JvKFkWPGUJHBVfFcLIuF/h2taiuUW0c=;
+ b=JwG+b9EwWMlJ8tOFqD+zvWxAqf9Jdd+ByXNgP+icJoDEU7vQE3E66X5ndc0cgxHJSnfq/J4FYBeRg5ahmPA1R2IRz/Qp3EWnt9FK68fjc6AW0JFg15O8icPZByc4HzE62r8sobLdEarWt3C5RY0TflogrHwuW6CpAb0bn9OBAiHo/ScHf+rTnwr37DC+2NUju3Fi6chTOyuedTxaHpuW/9SlB3Hjb37I2rmopH0XrJFb0uEv7WRqVjPVyWaCz6SzK9Tv4KrCc0B5/WeBcYDvIySxlCiwsQwHtU5rcpbO13pQacO+5IlnZwKbkkCRxqbYRMHDpwmSM+0JlvFoaDfRxg==
+Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
+ by KL1PR06MB7034.apcprd06.prod.outlook.com (2603:1096:820:11e::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.10; Thu, 23 Jul
+ 2026 02:23:02 +0000
+Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
+ ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
+ ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0245.009; Thu, 23 Jul 2026
+ 02:23:02 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, Pierrick
+ Bouvier <pierrick.bouvier@oss.qualcomm.com>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
+Subject: [PATCH v6 01/11] hw/arm/aspeed_ast1700: Correct AST2700 SCU to SCUIO
+Thread-Topic: [PATCH v6 01/11] hw/arm/aspeed_ast1700: Correct AST2700 SCU to
+ SCUIO
+Thread-Index: AQHdGkovL+s/Q63uAE+I4bXDc6Ih0g==
+Date: Thu, 23 Jul 2026 02:23:02 +0000
+Message-ID: <20260723022300.4174471-2-jamin_lin@aspeedtech.com>
+References: <20260723022300.4174471-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260723022300.4174471-1-jamin_lin@aspeedtech.com>
+Accept-Language: zh-TW, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|KL1PR06MB7034:EE_
+x-ms-office365-filtering-correlation-id: e1465b8c-e54c-41c0-350b-08dee8615272
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|23010399003|366016|1800799024|376014|921020|38070700021|56012099006|10067099003|22082099003|18002099003;
+x-microsoft-antispam-message-info: cR56vmGAfvTn60VukGMRY1BZVXnRQGmC6tN7WB6YGjkwr/pSOF4NOMmvEk1fTAJq1E+CJyTtNUvlTBhqwAOoXQnDG3kfYeJtP7wIObgXsMZImGxh7cWC4mbWwByB0oOcAZQmrKW2maSkXpU1CsBl/ssVwVaikJ5+KArpxZ04G4cMY7/9JatkT4giTkYfgj/OhC+bW4RUN3+GOurRi/vLTjF0qPfl5vGShIrh+AnjdhtwS0RqEqSJTqDQ6+dHSZBXnrD/nmw3gjaZxsN69cNpVmqUjYjvfvkHhRI/fFYbEZqhB8L2XZfzzrHwhwI05jsPZMQaN7vVlru1cQby4NQ3BZdfiZ6qQC5OnVZ5Thy2u5B/hkZlayKsRyi2gRqCH2BFmg2aDCVO/yizvtRrhzvuplOK7CvJmuguo63ychZLq3lWXs0+py+I4F+IyD8vgakK1UKQ6UBrpJKGQtGI5tZJ1ePU9nSO0tMf9QUTPqkfdcfxookTM3sCdy2HAd51hroh+VKNXG46AlzqVY+t+sbVZBtgBgUw7TOc81KslqV/I5FlxMn/I631sllBpozorCFK29+0cvdu3NKZf0ocmJ61ddk3BflH2ltdP0lKzeZGK+mx+DsoPS0Tz3Q/47+8BvKGvLErveMp8Ms/D1FJlqsU6rRioJohcNRcFvCsnECWMsSJaZA+bCILgFf7G8LoycfuhxxLwbsMjmZHYe16sshY40RMHXj7PXmd4sYsvkxpenGWgmjbzRmKtK7al0CjyJPR
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(921020)(38070700021)(56012099006)(10067099003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?GQoRshl1Tk6tn/OPf8RYxSweVPjmXNLMTRJQcRu1AQsg09qfK1c2SziiF0?=
+ =?iso-8859-1?Q?RiusHf/pi1IGGKqF2tgLmIwSPIOiuBlhB/zBPQIMYVxlih6flryxpOjUaR?=
+ =?iso-8859-1?Q?7rDRYCXcZZ72HFYAE8f8iA7ADuasKKHdRMTS6cxF5cyNmuobIF1mcrl43U?=
+ =?iso-8859-1?Q?JCis4QTV89pek+JltFmQtGgvle8y10jOy4TFFWDqbR6YEx6UFs1HcVCLKp?=
+ =?iso-8859-1?Q?QS1jNllNTsoccvCUgGHQ27MbucHFUbOIhws2VR1Pk2RynUr1Pj+kEbTanO?=
+ =?iso-8859-1?Q?46h5wsljYJ2ozNVB3Jp35cKBAjs2e953BHZRQx5RNIe9qxBaKhwynJKkd/?=
+ =?iso-8859-1?Q?3H9+12fh3zd2wA6sHiIQ2LO13P9DRwbN29RielAQ1dT0IW8kzDxROLXUUz?=
+ =?iso-8859-1?Q?cQm1Oj7LUXFMqXtzL1//aBY5cxDRSdt4kXcFAITWGr3o/xaz7KJ9nGBQAn?=
+ =?iso-8859-1?Q?lL9pM7I77b/OESbFrXoO5Jtes/eiKU0Hbh+RVdKVPqfHBcWPrD3MsTz01X?=
+ =?iso-8859-1?Q?a3KUJghygXpzgGtPi/a6xxiC1SrnF7T2sLCbWHgfTflW9667d2nmup+rCj?=
+ =?iso-8859-1?Q?HZvshMJR5grUkldHqxVCSTWbUJYDOUhzEtDizvTWIMznQuM+8BuamfRDCT?=
+ =?iso-8859-1?Q?5hPNveCWfBeA1itIiJ95BFTiAPJgN26p6f+q1tEDdtS/ifx0zrhNeQFY7o?=
+ =?iso-8859-1?Q?CO3wYZXGe50PCBRaeUK9xtFwsn1EpzFhklax3f1srvpfA7wbbbROEXeHuI?=
+ =?iso-8859-1?Q?bH88GnvojaffNcqu//fWNtPEbZCDpRN3qQYeS0FeIWVPVU0E48ZJ2+TrP7?=
+ =?iso-8859-1?Q?+Qobf2kBXqTZoK7yo8rRzlAXuQcro9hsM9QyWwt9j76MCm/D11Q1H2C4cq?=
+ =?iso-8859-1?Q?qNVdZgee7rOkeiKjBF4ZJOoFK51lVLUuuW0sK6pe4H4oOW8yiFFMAeEY2U?=
+ =?iso-8859-1?Q?pduWxX5pW96EofDBOPh5UOaWqEeapDk/UGHO/3o8iay0nX/TV5Yp7VOxM+?=
+ =?iso-8859-1?Q?US7ExW4sFcKO9X/g4ki37s0+zIIDj/zk84qa0DbCOlOy2/agAw3PrG6YXy?=
+ =?iso-8859-1?Q?p9CNgAh9hcMH3tvyLYyVl37DNRlrl0gWnE+7Do2Nb1tlqY7Un39SKwnNVW?=
+ =?iso-8859-1?Q?Mb9qTB/8h7qM8UHefGp6XDYczIENXSinojEG7A68w52JAkMAtlTchX+Xpz?=
+ =?iso-8859-1?Q?jodb56n38EmH0r6F/GcSuHezve2F4zm0UCXXGONQDrmDKVLoEUnK1BATS7?=
+ =?iso-8859-1?Q?e/GMFycDdAqi/B66s5DCFaXTP4JZs6CnsbOlcR12KrJYWmRgHUU2rQB/oM?=
+ =?iso-8859-1?Q?lwSu9fSfiIYPR5mFCeSTmP8FKNQLKn2FYkpBXxOCHgIVdlDcgSakooJggj?=
+ =?iso-8859-1?Q?MnZMuxA+9p5biqlXxJi9jv/NMwsbTwj3BhtjvrLZ+Hwx8eFaukN/IThjCt?=
+ =?iso-8859-1?Q?qtTCexae6USO+U2faHnY5QfOUFyatK1Ts0jH0O6P7z81xIg5as3lZxNf7L?=
+ =?iso-8859-1?Q?MyWRAq5w/d167phUaXHxGIqD9cF3M1n2uXllFMvB3PIb88RF/4thhvgIYz?=
+ =?iso-8859-1?Q?SuIpwDe8DVd/Pl1IQay26rK7+KU2scgSJ3MvwiX/Rn4SOB7mn27QCcwAP9?=
+ =?iso-8859-1?Q?Nh+pyypF+xCLGnWhVHZgU0yx87ZHyZrR9Zbfrsd+062H6yDWhgTVJiDybg?=
+ =?iso-8859-1?Q?NN1SJk2YUrSYtaSr8HWVXd+yvnhuigX9AxkO7QYbstrTxGeRrxKBmPCTCX?=
+ =?iso-8859-1?Q?En4tw9+Rg13k86dvTgvYl/HgN7wHhwlKS2/GNbDWa9Dtjl2nM1g9xRNARd?=
+ =?iso-8859-1?Q?AhoYoacjTA=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::3;
- envelope-from=jianghaotian.sunday@gmail.com; helo=mail-pj2-x03.google.com
+X-Exchange-RoutingPolicyChecked: o+Zi49/YtIh0/3FWQE7e36NMYw9l6aaRadBr3xKyf7fhJ1171TxNDi6SH6gbQd0u6meZmU8WJRNbUpKriZ+psUXaPcSlYqd/AtSEX+wyANzOjDr0rwfNEPG+vbJL6xSoFiVZw4kymgrcj3vKFzrUMUA7KedscLYr+EHwzvzHb9ECXIR3lHOpcJ+R5t36zkFuJ0ZZh1VXcUvBxAl2S9iW3TZHoe3sGZpKdtgYG12Dkb1BU6/Dz7hysIcXwX0hfa9Yv+7mu+CNX+1+9UudYpOnTnsr583Kvf0X+JHoSAeWJJvFcc8Yzd76SHyhii+ss0pfZZG7DYgi48CRzchA4n3jjQ==
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e1465b8c-e54c-41c0-350b-08dee8615272
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Jul 2026 02:23:02.5776 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: vl96bLqfMUleeh+AxQ4TuyO3o35XG4KP9h9t9urTtuML/YKaBD1YakQcCT1ljPd4G/MYVfeX9apgyhBgHuakJJdb5IfTrLWrIkcW4HVoHh8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR06MB7034
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=TYPPR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,89 +149,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Haotian Jiang <jianghaotian.sunday@gmail.com>
-
-CVE-2021-3611 (commit 79fa99831d) restricted the DMA engine to memories
-by setting attrs.memory=true, but only applied this to intel_hda_response.
-Three other DMA engine access points still use MEMTXATTRS_UNSPECIFIED,
-allowing a malicious guest to trigger DMA-to-self-MMIO reentry:
-
-  - intel_hda_xfer (line 398): called from the audio timer callback
-    (hda_codec_xfer -> bus->xfer), so the MemReentrancyGuard does not
-    fire (engaged_in_io is false outside MMIO dispatch). A guest that
-    points a BDL entry at the HDA controller's own MMIO BAR can write
-    audio samples to device registers, triggering whandler side effects
-    such as starting/stopping streams or injecting codec commands via
-    CORBWP.
-  - intel_hda_parse_bdl (line 478): uses pci_dma_read which hardcodes
-    MEMTXATTRS_UNSPECIFIED. A guest-controlled BDL base address can
-    point at controller MMIO, allowing the DMA engine to read device
-    registers as BDL descriptors.
-  - intel_hda_corb_run (line 333): ldl_le_pci_dma reads the CORB ring
-    with MEMTXATTRS_UNSPECIFIED, allowing the DMA engine to read
-    controller MMIO as CORB entries.
-
-Fix all three by passing {.memory = true} explicitly, matching the
-fix already applied to intel_hda_response. For intel_hda_parse_bdl,
-replace pci_dma_read with pci_dma_rw to pass the controlled attrs.
-
-Fixes: 79fa99831d ("hw/audio/intel-hda: Restrict DMA engine to memories (not MMIO devices)")
-Reported-by: Haotian Jiang of Tencent Security (Yunding Lab) <jianghaotian.sunday@gmail.com>
-Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
-Cc: qemu-stable@nongnu.org
----
- hw/audio/intel-hda.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/hw/audio/intel-hda.c b/hw/audio/intel-hda.c
-index d7c2c3c2fd..3d361a4976 100644
---- a/hw/audio/intel-hda.c
-+++ b/hw/audio/intel-hda.c
-@@ -305,6 +305,7 @@ static int intel_hda_send_command(IntelHDAState *d, uint32_t verb)
- 
- static void intel_hda_corb_run(IntelHDAState *d)
- {
-+    const MemTxAttrs attrs = { .memory = true };
-     hwaddr addr;
-     uint32_t rp, verb;
- 
-@@ -330,7 +331,7 @@ static void intel_hda_corb_run(IntelHDAState *d)
- 
-         rp = (d->corb_rp + 1) & 0xff;
-         addr = intel_hda_addr(d->corb_lbase, d->corb_ubase);
--        ldl_le_pci_dma(&d->pci, addr + 4 * rp, &verb, MEMTXATTRS_UNSPECIFIED);
-+        ldl_le_pci_dma(&d->pci, addr + 4 * rp, &verb, attrs);
-         d->corb_rp = rp;
- 
-         dprint(d, 2, "%s: [rp 0x%x] verb 0x%08x\n", __func__, rp, verb);
-@@ -395,7 +396,7 @@ static void intel_hda_response(HDACodecDevice *dev, bool solicited, uint32_t res
- static bool intel_hda_xfer(HDACodecDevice *dev, uint32_t stnr, bool output,
-                            uint8_t *buf, uint32_t len)
- {
--    const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
-+    const MemTxAttrs attrs = { .memory = true };
-     HDACodecBus *bus = HDA_BUS(dev->qdev.parent_bus);
-     IntelHDAState *d = container_of(bus, IntelHDAState, codecs);
-     hwaddr addr;
-@@ -466,6 +467,7 @@ static bool intel_hda_xfer(HDACodecDevice *dev, uint32_t stnr, bool output,
- 
- static void intel_hda_parse_bdl(IntelHDAState *d, IntelHDAStream *st)
- {
-+    const MemTxAttrs attrs = { .memory = true };
-     hwaddr addr;
-     uint8_t buf[16];
-     uint32_t i;
-@@ -475,7 +477,8 @@ static void intel_hda_parse_bdl(IntelHDAState *d, IntelHDAStream *st)
-     g_free(st->bpl);
-     st->bpl = g_new(bpl, st->bentries);
-     for (i = 0; i < st->bentries; i++, addr += 16) {
--        pci_dma_read(&d->pci, addr, buf, 16);
-+        pci_dma_rw(&d->pci, addr, buf, 16,
-+                   DMA_DIRECTION_TO_DEVICE, attrs);
-         st->bpl[i].addr  = le64_to_cpu(*(uint64_t *)buf);
-         st->bpl[i].len   = le32_to_cpu(*(uint32_t *)(buf + 8));
-         st->bpl[i].flags = le32_to_cpu(*(uint32_t *)(buf + 12));
--- 
-2.34.1
-
+Per the AST1700 datasheet, its SCU register layout matches the AST2700=0A=
+SCUIO (I/O-die SCU), not the AST2700 SCU. Correct the I/O expander to=0A=
+instantiate TYPE_ASPEED_2700_SCUIO instead of TYPE_ASPEED_2700_SCU, and=0A=
+rename the "scu" field/property to "scuio" throughout=0A=
+aspeed_ast1700.c/h so the type change is clear at every call site.=0A=
+=0A=
+Fixes: b500ab00552da06566a505a397255f4c031670aa ("hw/arm/aspeed: Attach SCU=
+ device to AST1700 model")=0A=
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
+Reviewed-by: Kane Chen <kane_chen@aspeedtech.com>=0A=
+---=0A=
+ include/hw/arm/aspeed_ast1700.h |  2 +-=0A=
+ hw/arm/aspeed_ast1700.c         | 22 +++++++++++-----------=0A=
+ 2 files changed, 12 insertions(+), 12 deletions(-)=0A=
+=0A=
+diff --git a/include/hw/arm/aspeed_ast1700.h b/include/hw/arm/aspeed_ast170=
+0.h=0A=
+index 39c5977cf1..86bdb266b0 100644=0A=
+--- a/include/hw/arm/aspeed_ast1700.h=0A=
++++ b/include/hw/arm/aspeed_ast1700.h=0A=
+@@ -41,7 +41,7 @@ struct AspeedAST1700SoCState {=0A=
+     MemoryRegion sram;=0A=
+     AspeedSMCState spi;=0A=
+     AspeedADCState adc;=0A=
+-    Aspeed2700SCUState scu;=0A=
++    AspeedSCUState scuio;=0A=
+     AspeedGPIOState gpio;=0A=
+     AspeedSGPIOState sgpiom[AST1700_SGPIO_NUM];=0A=
+     AspeedI2CState i2c;=0A=
+diff --git a/hw/arm/aspeed_ast1700.c b/hw/arm/aspeed_ast1700.c=0A=
+index 5af5da5b8a..418c9fcd45 100644=0A=
+--- a/hw/arm/aspeed_ast1700.c=0A=
++++ b/hw/arm/aspeed_ast1700.c=0A=
+@@ -22,7 +22,7 @@ enum {=0A=
+     ASPEED_AST1700_DEV_PWM,=0A=
+     ASPEED_AST1700_DEV_SRAM,=0A=
+     ASPEED_AST1700_DEV_ADC,=0A=
+-    ASPEED_AST1700_DEV_SCU,=0A=
++    ASPEED_AST1700_DEV_SCUIO,=0A=
+     ASPEED_AST1700_DEV_GPIO,=0A=
+     ASPEED_AST1700_DEV_SGPIOM0,=0A=
+     ASPEED_AST1700_DEV_SGPIOM1,=0A=
+@@ -39,7 +39,7 @@ static const hwaddr aspeed_ast1700_io_memmap[] =3D {=0A=
+     [ASPEED_AST1700_DEV_PWM]       =3D  0x000C0000,=0A=
+     [ASPEED_AST1700_DEV_SRAM]      =3D  0x00BC0000,=0A=
+     [ASPEED_AST1700_DEV_ADC]       =3D  0x00C00000,=0A=
+-    [ASPEED_AST1700_DEV_SCU]       =3D  0x00C02000,=0A=
++    [ASPEED_AST1700_DEV_SCUIO]     =3D  0x00C02000,=0A=
+     [ASPEED_AST1700_DEV_GPIO]      =3D  0x00C0B000,=0A=
+     [ASPEED_AST1700_DEV_SGPIOM0]   =3D  0x00C0C000,=0A=
+     [ASPEED_AST1700_DEV_SGPIOM1]   =3D  0x00C0D000,=0A=
+@@ -108,15 +108,15 @@ static void aspeed_ast1700_realize(DeviceState *dev, =
+Error **errp)=0A=
+                         aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_ADC],=
+=0A=
+                         sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->adc), 0)=
+);=0A=
+ =0A=
+-    /* SCU */=0A=
+-    qdev_prop_set_uint32(DEVICE(&s->scu), "silicon-rev",=0A=
++    /* SCUIO */=0A=
++    qdev_prop_set_uint32(DEVICE(&s->scuio), "silicon-rev",=0A=
+                          s->silicon_rev);=0A=
+-    if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {=0A=
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->scuio), errp)) {=0A=
+         return;=0A=
+     }=0A=
+     memory_region_add_subregion(&s->iomem,=0A=
+-                        aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_SCU],=
+=0A=
+-                        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->scu), 0)=
+);=0A=
++                        aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_SCUIO]=
+,=0A=
++                        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->scuio), =
+0));=0A=
+ =0A=
+     /* GPIO */=0A=
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio), errp)) {=0A=
+@@ -171,7 +171,7 @@ static void aspeed_ast1700_realize(DeviceState *dev, Er=
+ror **errp)=0A=
+         hwaddr wdt_offset =3D aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_=
+WDT] +=0A=
+                             i * awc->iosize;=0A=
+ =0A=
+-        object_property_set_link(OBJECT(&s->wdt[i]), "scu", OBJECT(&s->scu=
+),=0A=
++        object_property_set_link(OBJECT(&s->wdt[i]), "scu", OBJECT(&s->scu=
+io),=0A=
+                                  errp);=0A=
+         if (!sysbus_realize(SYS_BUS_DEVICE(&s->wdt[i]), errp)) {=0A=
+             return;=0A=
+@@ -207,9 +207,9 @@ static void aspeed_ast1700_instance_init(Object *obj)=
+=0A=
+     object_initialize_child(obj, "ioexp-adc", &s->adc,=0A=
+                             "aspeed.adc-ast2700");=0A=
+ =0A=
+-    /* SCU */=0A=
+-    object_initialize_child(obj, "ioexp-scu", &s->scu,=0A=
+-                            TYPE_ASPEED_2700_SCU);=0A=
++    /* SCUIO */=0A=
++    object_initialize_child(obj, "ioexp-scu", &s->scuio,=0A=
++                            TYPE_ASPEED_2700_SCUIO);=0A=
+ =0A=
+     /* GPIO */=0A=
+     object_initialize_child(obj, "ioexp-gpio", &s->gpio,=0A=
+-- =0A=
+2.43.0=0A=
 
