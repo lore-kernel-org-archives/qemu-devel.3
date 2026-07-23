@@ -4,140 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52161C44524
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 06:04:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EA4BC44524
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 06:05:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmmWx-0005EH-6G; Thu, 23 Jul 2026 02:03:39 -0400
+	id 1wmmXu-0006Bn-GD; Thu, 23 Jul 2026 02:04:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wmmWv-0005B9-7e
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 02:03:37 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wmmXs-0006B9-M5
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 02:04:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wmmWt-0005f3-KG
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 02:03:37 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66N4vQAR4120632
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 06:03:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 7keMzPCxl7utQPpc2pLfDXAilcSK1raT403Yfw93ii0=; b=d7Poq4HJKISYMxdm
- 5O/32Axjor1ficHyMI+yI8W2w3EULCSGmfRv/ipdHIh0w9HNKisQmVDCinRLMe2/
- 8iVgvRt0fsSwkqcB/S2S0iZl8PRTyEram58aUBg+KiQy+XxMhzv6TodFbEAIK0sw
- pD9wmFl4ZjV1P7zRonlr+9xnzhmXJt39Xeloj2u0Vu79NOMYG6h9/40+oAHYHoWy
- JwTwsbMnG4Xo+wchEx0vR5IZQdWIki1xVUdfmnL1chbByBc6FBxZqxuGNla1ETvZ
- 8dDNjqoTGFw+5P4lyy6inpc94yypmQ832A6sjGgCeTH9rt1j9W6C10Fkcelqh+mE
- oi3dLg==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fk28xth46-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 06:03:34 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51a8db414c7so5884161cf.0
- for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 23:03:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wmmXq-0005gh-7T
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 02:04:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784786672;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=niyOg9VzPAiSo40vNvHu9tZil6B9O1QeQyKulBHn0B8=;
+ b=Q7wXgyAC54OVmaTftbd+JfHJ8pUwswU0M2XbDZMVpHncjQguCElWafsptMUSA+N8zK8qQW
+ pVSqw2qHjQVTr38yLaP+zhY5rEyJ0vAM6xGUHGhYoKONjb9wxM40HfU1Xyg3ZTX58LJYqv
+ Agf6/1gl9Q1+cdP8BGIRUcMmc76gfIQ=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-137-ZcE3hbugOaq_XI-EYZHuCA-1; Thu, 23 Jul 2026 02:04:30 -0400
+X-MC-Unique: ZcE3hbugOaq_XI-EYZHuCA-1
+X-Mimecast-MFC-AGG-ID: ZcE3hbugOaq_XI-EYZHuCA_1784786670
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-47f83450a8eso233778f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 23:04:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784786613; x=1785391413; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=7keMzPCxl7utQPpc2pLfDXAilcSK1raT403Yfw93ii0=;
- b=kDtOLLOhUGAAcf8eQGe98a8pvZS7rc2A05MidMEY2aIF6niWqIq4vt/v1CPShdHA+A
- 6+20a3fU97wfaEnKX+Imv0eRj5HSVsHtbFoR13S8grzL/eyqdo/05M/3x9TJVOGgXkkR
- 6iPP2lgv6vrOZKbXT01YH4uVdQgUrFgtbvjRfDXI723Vq1BmyIGPUtm1zUHI38fezEz9
- bBI8FjNkNEaK8PSo8QiYK3eJJarKd5lMp4qawe9GM7AbPXMtB3C0RKSopnUYSFM3O/fE
- E090jRdD4mGon6rziGkFofHJWVLziKVrRAXGj5/7hcwxhBp9ZU6koSHd2HUPvw8lh181
- Albg==
+ d=redhat.com; s=google; t=1784786669; x=1785391469; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=niyOg9VzPAiSo40vNvHu9tZil6B9O1QeQyKulBHn0B8=;
+ b=ro52uYQ2jq9XWmlccNian7o40wIqoc9aDKOPKUgko21tM4Fax6MoK7e3iYXOD9vrvg
+ NbesNQ4XYdYLYbjo4v1GsYqdK/pu8E8cs2qUjN+uTSY68FTcG44fhcib1NmkvPZfAOpq
+ 1ClI/+rSA01fpfMOi6umyaYfZHDvA2+PgMnTTNOospCCG+SWM07QKba3b/qcx5H2Ttp3
+ XQaIZw/BwTWnPViwgxZ1BbMRr2Vq3+tR4EaFzbEkfPLJhOfkUNQDmC8s8mFh81jSDc6x
+ Qlyvx16KZfvddLuwGg6wvmRxN8ASzVBIYxLtQVqRD3h6rj/TgUWmbZHUsFYXoUEKUZTO
+ pTMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784786613; x=1785391413;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=7keMzPCxl7utQPpc2pLfDXAilcSK1raT403Yfw93ii0=;
- b=DAxMuEddciI0D4bwP6S7fg1ExiHE8ytEX9Df1RScLavmt4KPZ+v+TJNFG8ZhHf4113
- 28wDeufmftMWl/VJixFjiLL/gHHpvBqpFDw3BLyNff8SA+Pparu3yh0Klkdhn2hNgeZB
- d5Xp7Z8E5GhDZz+mbheTVuuKU0Tyk0b0H5GrnZFHD4XUFrK1lALfAZNd/ewcb2jaXNrU
- vUffo/At7xTcl3Xe5BchuOlqYBrXy5h9/itNb8oIJh6vkEWfbe3W40S/qgnl46PN2Ach
- MLirIxvumat/kFiU6zsovAsrxu7HF/s7ndPMC3WDJgRRDF9GgDVQSqx3Hx5XXkyY5Dqu
- 8lLw==
-X-Gm-Message-State: AOJu0YxOsS5E6Yg09McpK7vFdf4+D/IDjzwj7o6E4RPMjNuTCV1ymZ6I
- HNZqj/qK3lubBCHTMhQHfNDy9bqIOYkCG0n6p/SnU3LEC4THZNZGxRJEarSro1s+EnvgN5n17NM
- +Jlr95Px93MiLNMd5z/Mr58108Bm4S8C8kdI7on3JNTUDEUv6myL1u7tKHvmzz9d0Ng==
-X-Gm-Gg: AR+sD10LJKRuGmYb17msS+8XIP8u7IM/bIudw4E2LfS+o4v5gDTks19X+9/zRQ+2lqC
- N6pJLhcYzwuXFwbE8tbAUjREJFk9jXbg//4k2s/SrP2sav6B3pgGZeUsmkUTIwTBCNSkzuo2FgO
- +JOiyy3zyUXcWydzYZh8MkzE4GXbQcZNYlAdIM7x7QwlKGxuL8A8T7jfheMJ2/e7HaY9/zvkWy+
- ArsCgzXMeCNWzsKQYPvR7wPSSiJWfDrxfM06xPLLtR0WgOyoTw/d6m4wpoTBMhwIeBI4Hw5qEwN
- /9AREdjRpnz0pFX6nDHAEc6mTggrdVUePpkjp8qwXYXR5doSmOB+XGBW3auB25V1LYM51Tm2z7O
- AaDW95W+nDakeHC6S9HBPY40HQUbmg9q4Olc1haDvigDSGywFv1w=
-X-Received: by 2002:a05:622a:1c0d:b0:51c:7b11:419e with SMTP id
- d75a77b69052e-5283df78e1amr15704071cf.75.1784786613003; 
- Wed, 22 Jul 2026 23:03:33 -0700 (PDT)
-X-Received: by 2002:a05:622a:1c0d:b0:51c:7b11:419e with SMTP id
- d75a77b69052e-5283df78e1amr15703811cf.75.1784786612505; 
- Wed, 22 Jul 2026 23:03:32 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4956a4f25b6sm114370025e9.2.2026.07.22.23.03.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Jul 2026 23:03:31 -0700 (PDT)
-Message-ID: <3e349615-c5fe-4571-bfc0-683b37126888@oss.qualcomm.com>
-Date: Thu, 23 Jul 2026 08:03:31 +0200
+ d=1e100.net; s=20251104; t=1784786669; x=1785391469;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=niyOg9VzPAiSo40vNvHu9tZil6B9O1QeQyKulBHn0B8=;
+ b=Hpc7CJsMnQDYDswSDfstP6GzRPpzgTRffYquH4fz/BPP/3zJkN17qDmGukzeHI/TaY
+ 8IcdJ5bZgHC8GTKU79JAI6rPyp3sVM4OEd1Ksdtw5xEv4f7yX2ynzNuIyIF1B1Mo2acn
+ BzxLWD9VmURixIQYhy8o5Br15iuSrbct1O1EjymqI4pgDiMbrzjzaB/bPtIrdQnIRRZt
+ Astj90+sQnPVHFsHXVYIYom98OpZRg8BHUWTY0jjoh9Bmms9fr32GQ8s/lP1KrA/K+Fr
+ ViWaoUev17SAOPF1IR66Q95prQ7a6baAOEL7a7A7HpdMrIXMBd6G4Eccq85uDdTRrO/s
+ c5hg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoHBNvgDNuygTIgJAcnUureOn8EWxfObJBE6aeRZ6mqHX59TOA3VwF/svomx6hH8GwkRVDG5UeLQf+6@nongnu.org
+X-Gm-Message-State: AOJu0YzQEER8Dlu2D9UsjIl6DjTZpeO8ZC15R0EbSuAruY+MvvahoaH9
+ sA6qi6F0sG7oBGQtzZUIqUuUYiJUQ5c9vAWPa62TtvaCLEM3u5MhOWoGT8zm0JErj0HK+hfQkAn
+ mfrX8bNCVeuslbLj/lpok+lekK9YIXBWNTRPhZReS2woxsL7bQnV2aveP
+X-Gm-Gg: AR+sD13/toFmhEifH5iRVcaiHrvwMrzDkBTEyP/I3I7eopgSSHzQsRUMuqEYTuML/6h
+ iRn9NH5stWqoXkkHQEffRlQ6J9vtnI1H0Vw8V2gWUcElnpo/ErSW51FAf6AHUqmccukij5JSRvM
+ p3NfwU87IrLMptBqGU64GmNAOUhTbBg6jCm73W8wpxJVOdrR5IO5YtDuhbUl6ZMNBk6DQMhySP1
+ zcxVq39IlKll1Z+d4YnABqKN3T0Aw7IwSx8Hg7nBoUDMpLnqhpHwaOIM4C/Kd/6D+uaNn/ARGwG
+ +VlqEYZ55tPtz0bKNiWkJMjkmqeGDHls43o1NA6x/b4DrwaOYyXu3MxpWF3jQzvpx1LEN5+fz0K
+ qRftg17ed2RH84mq6pXZbNQ==
+X-Received: by 2002:a5d:5f07:0:b0:47f:6f9e:1e82 with SMTP id
+ ffacd0b85a97d-47f8d710b11mr1792054f8f.9.1784786669514; 
+ Wed, 22 Jul 2026 23:04:29 -0700 (PDT)
+X-Received: by 2002:a5d:5f07:0:b0:47f:6f9e:1e82 with SMTP id
+ ffacd0b85a97d-47f8d710b11mr1791974f8f.9.1784786668866; 
+ Wed, 22 Jul 2026 23:04:28 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f85c52fa9sm13412227f8f.20.2026.07.22.23.04.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 22 Jul 2026 23:04:28 -0700 (PDT)
+Date: Thu, 23 Jul 2026 02:04:24 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Gavin Shan <gshan@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, alex@shazbot.org,
+ richard.henderson@linaro.org, berrange@redhat.com, philmd@mailo.com,
+ david@kernel.org, clg@redhat.com, pbonzini@redhat.com,
+ phrdina@redhat.com, jugraham@redhat.com,
+ liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn,
+ shan.gavin@gmail.com, qemu-s390x <qemu-s390x@nongnu.org>
+Subject: Re: [PATCH v3 1/2] system/memory: Use qemu_ram_{copy, move}() in ram
+ device region accessors
+Message-ID: <20260723015708-mutt-send-email-mst@kernel.org>
+References: <73f79841-8cc7-4ca6-8f6b-fb97b53a6fe8@redhat.com>
+ <20260717091756-mutt-send-email-mst@kernel.org>
+ <CAFEAcA-O6Z4JrVV0DL_tta6khRyUta_Zz5mJt6OszaW1mu0o6Q@mail.gmail.com>
+ <20260717095407-mutt-send-email-mst@kernel.org>
+ <9c2ad22a-e768-4a07-85a2-01ce1fc14368@oss.qualcomm.com>
+ <59882c5b-545d-4768-8bf4-723fed97a801@redhat.com>
+ <al-eCtxGjG4HHEbl@x1.local>
+ <6210e178-a93f-4411-810a-41edb1fb656e@redhat.com>
+ <20260722015422-mutt-send-email-mst@kernel.org>
+ <amDyvgR09OJssENX@x1.local>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] hw/cxl: fix timer leak in cxl_destroy_cci()
-Content-Language: en-US
-To: Junjie Cao <junjie.cao@intel.com>, Jonathan Cameron <jic23@kernel.org>
-Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org, qemu-stable@nongnu.org
-References: <20260723011625.1117034-1-junjie.cao@intel.com>
- <20260723011625.1117034-2-junjie.cao@intel.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260723011625.1117034-2-junjie.cao@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: MQuLgdPPi-2iLW8bvNVuNGEaulKakEjZ
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIzMDA1OSBTYWx0ZWRfX8UqkOuI0paml
- XCySsHQdUmEG7uooKjdwjAIqU65+4Ysjz8NSFmdCUskybJ5AvEGYliZ0mYFauisl7wjdVqDfHRq
- U63tFNVWT8xPUqH7DKKpTq/NpQOWs8k=
-X-Proofpoint-GUID: MQuLgdPPi-2iLW8bvNVuNGEaulKakEjZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIzMDA1OSBTYWx0ZWRfX5eaHKqJH0Weg
- kAiE29q5RSpMP24uZuUl83kCgHgpHZz+ypJu/aUxOgnmYusIMJfKsen3uv86fvpSbBSPEUi7Mer
- q1bHuxEK9f61ZQmZ02sp/b9pg3DKuBijA4Q2KakaIBduTHLmCeEdYweG7a2HQvaJvFNiATQ/0OA
- pikVJ2JK9fRLO+tFm6RcBKNBtft5qL1+4IRDR1j6o9/EpEtJzB7rYIkwqU/aOflSoNUzCAYQ140
- H65uXEfWdZuoeBXX89GYaF9oqb5owFUHuliyiQz9Hm//irpOEm0rZUQyiBNE7fpyVOQ8vTjCXT3
- WG7hnSuZHlak6nzr5tE4oabUE8DoExhpa13ny9PrVCERJTHvq+PBvIjqAUpE/pW5VC0SRE2Z4nO
- KGesY9yTAmcU88fJ5JLOyShwO7Xjjjz7i4jh4YrL5hNfmjCsyedq9PCQC1ERRxdIseSE5HlHWu1
- RBkB5RjhVRbgqGtTYOA==
-X-Authority-Analysis: v=2.4 cv=WNxPmHsR c=1 sm=1 tr=0 ts=6a61aeb6 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=69wJf7TsAAAA:8 a=QyXUC8HyAAAA:8 a=EUspDBNiAAAA:8 a=nd1R-Y27xLvYdgTe2jcA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-23_02,2026-07-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 bulkscore=0 priorityscore=1501 malwarescore=0 phishscore=0
- impostorscore=0 suspectscore=0 clxscore=1015 spamscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607230059
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <amDyvgR09OJssENX@x1.local>
+Received-SPF: permerror client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,29 +136,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/7/26 03:16, Junjie Cao wrote:
-> cxl_init_cci() allocates a QEMUTimer via timer_new_ms() but
-> cxl_destroy_cci() never frees it.  This leaks a timer object on every
-> device exit path and, more critically, on every device reset cycle since
-> the secondary CCIs (vdm_fm_owned_ld_mctp_cci, ld0_cci) are destroyed
-> and re-initialized each time ct3d_reset() runs.
+On Wed, Jul 22, 2026 at 12:41:34PM -0400, Peter Xu wrote:
+> On Wed, Jul 22, 2026 at 01:58:18AM -0400, Michael S. Tsirkin wrote:
+> > On Wed, Jul 22, 2026 at 10:53:27AM +1000, Gavin Shan wrote:
+> > > On 7/22/26 2:27 AM, Peter Xu wrote:
+> > > > On Tue, Jul 21, 2026 at 03:37:53PM +1000, Gavin Shan wrote:
+> > > > > If Peter is fine with two variants for x86 and non-x86 architectures.
+> > > > > I can post (v4) for further review. That will be something like below
+> > > > > and let me know if there are any other improvements are needed.
+> > > > 
+> > > > I have a generic question on the "unaligned access for x86": I think the
+> > > > question is about the one Michael raised here on unaligned access may break
+> > > > x86 here:
+> > > > 
+> > > >    https://lore.kernel.org/qemu-devel/20260617022330-mutt-send-email-mst@kernel.org/
+> > > > 
+> > > >    3. (theoretical concern) also on x86, unaligned accesses are
+> > > >    possible on guest and host, so converting an unaligned access to a
+> > > >    series of aligned ones can in theory break devices.
+> > > > 
+> > > > Is that a real problem we need to consider, or can we start with unified
+> > > > approach and leave it for later?
+> > > > 
+> > > 
+> > > I'm leaving this question to Michael.
+> > 
+> > Knowing what I know about hardware designers, it's something someone
+> > somewhere does)
+> > It can be made a separate patch, just to show - it should be all of
+> > ~10LOC.
 > 
-> Tear the CCI down in the reverse of cxl_init_cci()'s setup order:
-> destroy the mutex, then free the timer.  timer_free() cancels any
-> pending expiry via timer_del() internally and tolerates a NULL pointer;
-> clear the field afterwards so that a repeated timer_free() on the same
-> CCI is a safe no-op.
-> (The function as a whole is still not idempotent: qemu_mutex_destroy()
-> asserts on an already-destroyed mutex.  Callers must not invoke
-> cxl_destroy_cci() twice; the .initialized guard added in the next patch
-> enforces that.)
-> 
-> Fixes: 98cbac128f1c ("hw/cxl: Support aborting background commands")
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-> ---
->   hw/cxl/cxl-mailbox-utils.c | 2 ++
->   1 file changed, 2 insertions(+)
+> It's only about removal of anything that might be controversial for now,
+> thanks.  I also wonder if anything would break, then it's more solid proof
+> that per-arch change is required.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Repeating:
+	I think there is exactly 1 kinda reasonable case. A 2 byte read/write at
+	offset 0x1 within a dword. This maps nicely to even classical PCI byte
+	enable mechanism and so yes it works if your CPU can initiate these
+	things, and it's atomic.
+
+It's easy to find more examples of such hardware if one looks. For example,
+LEDCTL on e1000e:
+
+20260625101817-mutt-send-email-mst@kernel.org
+
+
+A claim that no software uses this hardware capability is the strong
+claim that needs proof, not the other way around.
+
+
+What to do on non-x86? reading a dword might work, or reading
+byte by byte might work. Both can cause issues, just different ones,
+but given we did byte by byte previously i guess let's keep
+doing that.
+
+
+> > 
+> > > > PS: I apologize if I missed important piece of info along the way; I didn't
+> > > > follow closely on the discussion on this topic in the past few weeks.
+> > > > 
+> > > > One thing to mention is, what we change should only need to affect
+> > > > ram_device, AFAIU.. so most memcpy()/memmove() shouldn't be changed for any
+> > > > arch when it's pure RAM.
+> > > > 
+> > > 
+> > > It depends. This patch intends to fix issue [1] in the lower layer by using
+> > > the newly added accessors (qemu_ram_{copy, move}) on all directly accessible
+> > > regions including the regular (pure) RAM region. Otherwise, the newly added
+> > > accessors should be limited to ram_device regions only as you said.
+> > > 
+> > > [1] https://lore.kernel.org/qemu-devel/20260527091711.3901-1-liugang24219@sangfor.com.cn/
+> > > 
+> > > Thanks,
+> > > Gavin
+> > 
+> > using memcpy()/memmove() to emulate guest's atomics is generally
+> > kinda broken.
+> > but yes there are architectures where doing it to device ram is
+> > more broken than doing it to regular ram.
+> 
+> If we keep memcpy()/memmove() for len>8 (aligned or not), I am thinking no
+> perf issue will happen, then looks like we can indeed change this even for
+> pure RAM operations, which we can't identify in case of e1000e driver use
+> case.
+> 
+> Then does it mean we should not use __builtin_memcpy()/memmove()?  Even if
+> we know constants 1/2/4/8 would work there, why not we go ahead and use
+> qatomics, which is even more future proof?  I also stumbled on top of
+> commit 77b1757090 ("include/qemu/bswap.h: Use __builtin_memcpy() in
+> accessor functions"), which seems to say the same thing "for the long
+> term".
+> 
+> For "should we still do unaligned access if the guest did it, so as to keep
+> the original behavior of a bare metal" question, are we on the same page
+> that we should just break it into aligned accesses for all archs?  I think
+> it means, we will not be able to emulate guest faults correctly as what
+> will happen on bare metal, but we're missing the fault injection logics
+> anyway, so whenever it's implemented we _could_ switch it back to unaligned
+> accesses.  Before that, breaking unaligned seems like a better way to go to
+> (1) satisfy all legit users, and (2) don't make QEMU crash by guest
+> operations.
+> 
+> Last, one silly question: why do we need any helper named with *memcpy*, if
+> memmove is always superior (to consider range overlap)?  Can we stick with
+> memmove all over the places?
+> 
+> Thanks,
+> 
+> -- 
+> Peter Xu
+
 
