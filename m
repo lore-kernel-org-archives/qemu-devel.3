@@ -4,99 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5DF1C44536
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Jul 2026 21:30:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9D20C44532
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 01:18:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmeVe-0004Zm-0K; Wed, 22 Jul 2026 17:29:46 -0400
+	id 1wmi4G-0004dc-UF; Wed, 22 Jul 2026 21:17:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wmeVa-0004Yt-M7
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 17:29:42 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
+ id 1wmi44-0004a0-Hu; Wed, 22 Jul 2026 21:17:32 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wmeVY-0004zE-0e
- for qemu-devel@nongnu.org; Wed, 22 Jul 2026 17:29:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784755756; bh=9j7cQXcuCwmUKCVMnIuRt+ZN1Z+0vzX9Hipx/CV6iIQ=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=Cehd9nnVmvq3M38w6rIec6dX9H0UyrGYrad/7uJA++A3WS4e06/ifqCP+oRv8ZVct
- tsi1rG7VaAFhdndShcPScAE4K7JZAPlhV+CT7Si0sYg553+8jOQxL1jn10Iq+8fyjY
- RBJ3LDuMhBU3o4l+CuthyZ4Mo4dBo9cnUjSjGH5/tcfudQUp7W3OLa1pHNtAknLOno
- jSFCPJHjnMP5wx3Jw3RQnCvcAoNdYCeEg4jkgdrEt7gwYOx+yMKqwgI4jGRw5YUZHe
- /YRJm6N/wfOCI2H3Adnz9rvLsL2FSOUm/PrzxniCutm45JbrfWjqvBrsQONDFbpUol
- 0ITASyU3cl5Zw==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 59F7C1C3D61;
- Thu, 23 Jul 2026 00:29:16 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4CE623F3A03;
- Thu, 23 Jul 2026 00:29:34 +0300 (MSK)
-Message-ID: <e74d05ed-913f-4b24-94d3-6a2442073848@tls.msk.ru>
-Date: Thu, 23 Jul 2026 00:29:25 +0300
+ (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
+ id 1wmi41-0002y5-MP; Wed, 22 Jul 2026 21:17:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1784769449; x=1816305449;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=msD/IOsgmuLyQHdlEUt3k5JKbV4W8J9VzDhB5nHKV2I=;
+ b=OwOqotLwrxt3w3B8Av9bqhCMJFwoDXZIuLt4Xb5BlLJY2EDeLgvcFTYo
+ 8Xw9iT2x604FwPVAB+me5N5+a5WXiablxdrn1V/MWvRAjkqhME/Sy9kKx
+ ofOPpcoVREsPBuD6xg866+AR/wB6CO7kmaC1BxzctjGxpRLuKEPhiQCa9
+ LFkQR8VyelDkegYayeb+gfeq18VT5ZWMmNGyuX0Evon/9LIynhUJf2uVF
+ Kra/nuIpjakgvKmmb0OO/PQPxc4NMSpONPbc2Qtdp10gzfBDVSNlBxI1z
+ P0dgfyPfTT1WHSzlImv2UTYSsXuqBAjkJQYKfHJUH2DSfEq3/foLoNOqM Q==;
+X-CSE-ConnectionGUID: MPaX3SlEQtKYarrp1OCUhA==
+X-CSE-MsgGUID: d3VdFXcMQmuTp1fwqidGxA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11854"; a="96074849"
+X-IronPort-AV: E=Sophos;i="6.25,179,1779174000"; d="scan'208";a="96074849"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Jul 2026 18:17:27 -0700
+X-CSE-ConnectionGUID: Dl9Y9zC2RNaOcTDehEnZWA==
+X-CSE-MsgGUID: OvRJj6M5RqWgR14rnKSHsA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,179,1779174000"; d="scan'208";a="251943358"
+Received: from junjie-desk-dev.bj.intel.com (HELO
+ junjie-desk-dev.tail2c02c1.ts.net) ([10.238.152.71])
+ by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Jul 2026 18:17:26 -0700
+From: Junjie Cao <junjie.cao@intel.com>
+To: Jonathan Cameron <jic23@kernel.org>
+Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org, qemu-stable@nongnu.org
+Subject: [PATCH v2 4/6] hw/cxl: free in-flight sanitize state on reset
+Date: Thu, 23 Jul 2026 09:16:23 +0800
+Message-ID: <20260723011625.1117034-5-junjie.cao@intel.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260723011625.1117034-1-junjie.cao@intel.com>
+References: <20260723011625.1117034-1-junjie.cao@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio/region: Clarify dma-buf failure messages
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex@shazbot.org>, Nicolin Chen <nicolinc@nvidia.com>
-References: <20260715070622.198400-1-clg@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
- HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
- 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
- /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
- DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
- /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
- 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
- a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
- z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
- y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
- a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
- BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
- /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
- cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
- G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
- b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
- LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
- JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
- 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
- 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
- CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
- k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
- OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
- XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
- tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
- zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
- jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
- xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
- K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
- t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
- +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
- eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
- GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
- Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
- RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
- S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
- wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
- VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
- FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
- YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
- ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
- 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260715070622.198400-1-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=junjie.cao@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,22 +80,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/15/26 10:06, Cédric Le Goater wrote:
-> The dma-buf failure messages in vfio_region_create_dma_buf() say "PCI
-> BAR IOMMU mappings may fail", which suggests the BAR is broken. In
-> practice, only P2P DMA is affected -- normal passthrough uses the mmap
-> fallback.
-> 
-> Reword both messages to mention P2P DMA explicitly and clarify that
-> the mmap fallback is in use. Use warn_report_err_once() at the call
-> site so per-BAR repetition on mdev devices is suppressed.
-> 
-> Fixes: dcf1b77e834d ("hw/vfio/region: Create dmabuf for PCI BAR per region")
+Per CXL r4.0 Section 8.2.9.4, "Background commands do not continue to
+execute across Conventional Resets."  If a sanitize or media operation
+is in progress when the device is reset, the background timer is already
+cancelled and freed via cxl_destroy_cci(), but the per-operation state
+(media_op_sanitize) is heap-allocated separately and would otherwise be
+leaked.
 
-FWIW (it's applied to master branch already), this is commit 8cfaf22668c,
-not dcf1b77e834d.
+Free it unconditionally at the end of the reset hold phase.  The timer
+that advances the operation lives in the CCI that was just destroyed and
+re-initialized, so the operation can never complete after a reset of any
+type; preserving the heap state across reset has no benefit and would
+leak it the next time media_op_sanitize is assigned.
 
-Thanks,
+Note that Section 8.2.10.9.5.1 additionally requires a device whose
+Sanitize was interrupted by reset to remain in the Media Disabled state
+until a successful Sanitize completes.  That latch is not modelled here
+(reset re-enables media via memdev_reg_init_common()) and is left for
+future work; this patch only addresses the resource leak.
 
-/mjt
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+---
+ hw/mem/cxl_type3.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index b842e71c66..a5e6df3033 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -1361,6 +1361,16 @@ static void ct3d_reset_hold(Object *obj, ResetType type)
+     }
+     cxl_initialize_t3_ld_cci(&ct3d->ld0_cci, DEVICE(ct3d), DEVICE(ct3d),
+                              512); /* Max payload made up */
++
++    /*
++     * Free any in-flight sanitize state unconditionally.  The background
++     * timer that would advance it lives in the CCI just torn down and
++     * re-initialized above, so the operation can never complete after this
++     * point regardless of the reset type; keeping the heap state would only
++     * leak it on the next allocation.
++     */
++    g_free(ct3d->media_op_sanitize);
++    ct3d->media_op_sanitize = NULL;
+ }
+ 
+ static const Property ct3_props[] = {
+-- 
+2.43.0
+
 
