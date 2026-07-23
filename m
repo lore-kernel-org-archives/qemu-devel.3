@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E7DAC44536
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 01:18:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E49F8C44536
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 01:18:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmi3p-0004X4-5I; Wed, 22 Jul 2026 21:17:17 -0400
+	id 1wmi44-0004Zw-UD; Wed, 22 Jul 2026 21:17:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wmi3o-0004Wq-AL; Wed, 22 Jul 2026 21:17:16 -0400
+ id 1wmi3y-0004ZJ-9D; Wed, 22 Jul 2026 21:17:26 -0400
 Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wmi3l-0002x3-Hq; Wed, 22 Jul 2026 21:17:16 -0400
+ id 1wmi3v-0002xZ-FN; Wed, 22 Jul 2026 21:17:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1784769433; x=1816305433;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=AkFdo61pjFPTuiiOlBTWNsBrgnIuk5IsPynVbmLIz5c=;
- b=YLV4k6MzR4qyqOzVegUM7imTzEtdAc5/UQoxB9HjK9F/i/3U7YTS9d7u
- zq4+JeIQTzYEJk2qcg0Dnu++/e+U/Yiq17MJClhEKpBKVYKbQNqhgXIrm
- BREJoGZibgGVjhaFC+xYEOm03Zs6pn0XZcSRdvde7TgkS9XKGV60N1Tsm
- rsnk8V/7Oyl/PIY9bPugJaNhV5VrbjCh0SjUBPXKYRCco3sk9u65qpxS6
- bcyY+FRp0uh7skB/rPXoKrmIoJBIXf5JmGJKISnF/fBT4G8lWc6qj1jC9
- WPbTq/YRBdKvoMAN9nwYiU5rr0szS4Cst0you+scNIV4McGP23dMdPlcU w==;
-X-CSE-ConnectionGUID: q4SkkM61STOAn+JQVnL6Kw==
-X-CSE-MsgGUID: fBkUWq+PSCmw9WK4KtTOCQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11854"; a="96074825"
-X-IronPort-AV: E=Sophos;i="6.25,179,1779174000"; d="scan'208";a="96074825"
+ t=1784769443; x=1816305443;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=/QW+6bMVfdc3+/VQ5V93oBga9b/YPL0PkvFyIV5avEA=;
+ b=fs0k7MYh5UJItd3U6xYeMY8cx869RiGxL6dWG1M2z2m6EymOO0MP7WFV
+ nUKfuAkHgB72uWyWDAptVYI+DUc0nV8xql09u1otKffEXp/Bz9bQCsvzE
+ Scix8ROt3Zf2Z9ukFcSbejcThqpziCuV2kjXJ85U8vTB118gO08crJL/i
+ 8uT9i9aqdyLTkJ0VaO+mOquuN0qPzR+lDGEfOUJu4s6TmRtdf32Qq4Hqi
+ d3F0wlp2SCIDUWBXPf3rV3/VtimFZN8Z456EdIOELQOsCSiArWsLNty9s
+ ei1Dff7BFMz+FC1dQrzGzDDeKdkgixBPx4MUEu/TDXWeCVdjIGTlKUE47 Q==;
+X-CSE-ConnectionGUID: MvoRaanWTFOHiTEbLtC+fA==
+X-CSE-MsgGUID: Asq6tt/WTwe/kV7kGF+nSA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11854"; a="96074842"
+X-IronPort-AV: E=Sophos;i="6.25,179,1779174000"; d="scan'208";a="96074842"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Jul 2026 18:17:09 -0700
-X-CSE-ConnectionGUID: m2oTjXZpQByCXvY1SkAZwA==
-X-CSE-MsgGUID: cyEvTKuQSda4SLmo/SM/iQ==
+ 22 Jul 2026 18:17:22 -0700
+X-CSE-ConnectionGUID: cj7CMRtFSOqmc9+SVmQkLQ==
+X-CSE-MsgGUID: c1A9hUpoTTC97+e0urPpmw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,179,1779174000"; d="scan'208";a="251943341"
+X-IronPort-AV: E=Sophos;i="6.25,179,1779174000"; d="scan'208";a="251943350"
 Received: from junjie-desk-dev.bj.intel.com (HELO
  junjie-desk-dev.tail2c02c1.ts.net) ([10.238.152.71])
  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Jul 2026 18:17:08 -0700
+ 22 Jul 2026 18:17:21 -0700
 From: Junjie Cao <junjie.cao@intel.com>
 To: Jonathan Cameron <jic23@kernel.org>
 Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org, qemu-stable@nongnu.org
-Subject: [PATCH v2 0/6] hw/cxl: fix Type-3 device reset resource leaks and
- convert to three-phase
-Date: Thu, 23 Jul 2026 09:16:19 +0800
-Message-ID: <20260723011625.1117034-1-junjie.cao@intel.com>
+Subject: [PATCH v2 3/6] hw/cxl: convert cxl-type3 to three-phase reset
+Date: Thu, 23 Jul 2026 09:16:22 +0800
+Message-ID: <20260723011625.1117034-4-junjie.cao@intel.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260723011625.1117034-1-junjie.cao@intel.com>
+References: <20260723011625.1117034-1-junjie.cao@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,85 +81,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Replace the deprecated device_class_set_legacy_reset() registration
+with the three-phase resettable interface, following the pattern
+already established by the CXL root port (cxl_rp_reset_hold).
 
-The CXL Type-3 device reset path (ct3d_reset) has several issues:
+Only the hold phase is needed; enter and exit are left NULL.  The
+parent hold phase is chained for correctness: TYPE_PCI_DEVICE installs
+no hold phase today, so parent_phases.hold is currently NULL and the
+chained call is a no-op, but capturing and invoking it is the correct
+forward-compatible pattern and mirrors cxl_rp_reset_hold().
 
-1) Resource leaks:
-   - cxl_destroy_cci() never frees the QEMUTimer allocated by
-     cxl_init_cci(), leaking a timer on each destroy/reinit cycle.
-   - The primary CCI (ct3d->cci) is re-initialized through
-     cxl_device_register_init_t3() without being destroyed first,
-     leaking the timer and leaving the mutex undestroyed on every
-     reset.
-   - The secondary CCIs are never destroyed at device exit time,
-     leaking their timers and mutexes on device removal.
+No functional change — the reset body is identical; only the
+registration path and function signature change.
 
-2) Incomplete state cleanup:
-   - Background commands do not survive Conventional Resets (CXL r4.0
-     Section 8.2.9.4), yet the in-flight sanitize state is never freed.
-   - Scan media results are explicitly invalidated after reset (Section
-     8.2.10.9.4.6), yet scan_media_hasrun is never cleared.
-   - Event interrupt settings shall be reset to 00b on Conventional
-     Reset (Section 8.2.10.2.5), yet irq_enabled is never cleared.
-   - When "Injects Persistent Poison" is 0 (the QEMU default), injected
-     poison shall be automatically cleared on reset (Table 8-309), yet
-     the poison lists are never drained.
-   - Stale event records remain in the queues across reset even though
-     the Event Status register (Table 8-203) is non-sticky.
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+---
+ hw/mem/cxl_type3.c          | 16 ++++++++++++----
+ include/hw/cxl/cxl_device.h |  2 ++
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
-3) Deprecated API usage:
-   - Uses device_class_set_legacy_reset() instead of the three-phase
-     resettable interface, preventing reset-type-aware behavior.
-
-This series fixes the issues incrementally:
-  - Patches 1-2: fix resource leaks (deterministic bugs)
-  - Patch 3: mechanical conversion to three-phase reset
-  - Patches 4-6: clean up device state on reset
-
-The state cleanup in patches 4-6 is gated on reset type:
-RESET_TYPE_WAKEUP returns early (patch 5) since a resume from S3 is
-not a Conventional or CXL Reset.  The CCI re-initialization and the
-in-flight sanitize free run unconditionally regardless of type.
-
-Not addressed here:
-
-  - Committed Feature attributes and alert thresholds (Table 8-276
-    Deepest Reset Persistence = None) are not reverted to defaults.
-    Factoring the realize-time defaults into a reset helper is left
-    for a follow-up.
-
-  - Dynamic Capacity extent lifecycle across reset.
-
-  - The Media Disabled latch after an interrupted Sanitize (Section
-    8.2.10.9.5.1); patch 4 addresses only the resource leak.
-
-Tested: per-commit build clean; qtest passes.  Differential
-LeakSanitizer (5x system_reset): pre-series leaks 720 B / 15 allocs
-in cxl_init_cci -> timer_new_ms; post-series zero.  Poison inject ->
-reset -> re-inject same DPAs succeeds (no stale "Overlap" rejection).
-20x inject+reset stress cycles with no crash.
-
-Changes since v1:
-  - Patch 1: reorder cxl_destroy_cci() teardown to reverse
-    cxl_init_cci() order, per Jonathan's review.
-
-v1: https://lore.kernel.org/qemu-devel/20260626062149.1844334-1-junjie.cao@intel.com/
-
-Junjie Cao (6):
-  hw/cxl: fix timer leak in cxl_destroy_cci()
-  hw/cxl: destroy primary CCI before re-initialization on reset
-  hw/cxl: convert cxl-type3 to three-phase reset
-  hw/cxl: free in-flight sanitize state on reset
-  hw/cxl: clear event logs, scan media and interrupt policy on reset
-  hw/cxl: clear poison lists and feature transfer state on reset
-
- hw/cxl/cxl-mailbox-utils.c  |  2 +
- hw/mem/cxl_type3.c          | 74 ++++++++++++++++++++++++++++++++++---
- include/hw/cxl/cxl_device.h |  2 +
- 3 files changed, 73 insertions(+), 5 deletions(-)
-
-
-base-commit: cbd42e2b75b23953a9bdb073c8531518b1bd6163
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 4ac6eaa950..b842e71c66 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -1326,13 +1326,18 @@ MemTxResult cxl_type3_write(PCIDevice *d, hwaddr host_addr, uint64_t data,
+     return address_space_write(as, dpa_offset, attrs, &data, size);
+ }
+ 
+-static void ct3d_reset(DeviceState *dev)
++static void ct3d_reset_hold(Object *obj, ResetType type)
+ {
+-    CXLType3Dev *ct3d = CXL_TYPE3(dev);
++    CXLType3Dev *ct3d = CXL_TYPE3(obj);
++    CXLType3Class *cvc = CXL_TYPE3_GET_CLASS(obj);
+     uint32_t *reg_state = ct3d->cxl_cstate.crb.cache_mem_registers;
+     uint32_t *write_msk = ct3d->cxl_cstate.crb.cache_mem_regs_write_mask;
+ 
+-    pcie_cap_fill_link_ep_usp(PCI_DEVICE(dev), ct3d->width, ct3d->speed,
++    if (cvc->parent_phases.hold) {
++        cvc->parent_phases.hold(obj, type);
++    }
++
++    pcie_cap_fill_link_ep_usp(PCI_DEVICE(obj), ct3d->width, ct3d->speed,
+                               ct3d->flitmode);
+     cxl_component_register_init_common(reg_state, write_msk,
+                                        CXL2_TYPE3_DEVICE, ct3d->hdmdb);
+@@ -2464,6 +2469,7 @@ static void ct3_class_init(ObjectClass *oc, const void *data)
+     DeviceClass *dc = DEVICE_CLASS(oc);
+     PCIDeviceClass *pc = PCI_DEVICE_CLASS(oc);
+     CXLType3Class *cvc = CXL_TYPE3_CLASS(oc);
++    ResettableClass *rc = RESETTABLE_CLASS(oc);
+ 
+     pc->realize = ct3_realize;
+     pc->exit = ct3_exit;
+@@ -2477,9 +2483,11 @@ static void ct3_class_init(ObjectClass *oc, const void *data)
+ 
+     set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
+     dc->desc = "CXL Memory Device (Type 3)";
+-    device_class_set_legacy_reset(dc, ct3d_reset);
+     device_class_set_props(dc, ct3_props);
+ 
++    resettable_class_set_parent_phases(rc, NULL, ct3d_reset_hold, NULL,
++                                       &cvc->parent_phases);
++
+     cvc->get_lsa_size = get_lsa_size;
+     cvc->get_lsa = get_lsa;
+     cvc->set_lsa = set_lsa;
+diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+index ba551fa5f9..b7e20e3fe4 100644
+--- a/include/hw/cxl/cxl_device.h
++++ b/include/hw/cxl/cxl_device.h
+@@ -805,6 +805,8 @@ struct CXLType3Class {
+     /* Private */
+     PCIDeviceClass parent_class;
+ 
++    ResettablePhases parent_phases;
++
+     /* public */
+     uint64_t (*get_lsa_size)(CXLType3Dev *ct3d);
+ 
 -- 
 2.43.0
 
