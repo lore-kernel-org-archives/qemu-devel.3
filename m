@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCC28C531CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:57:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E16C4452B
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:57:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmlSR-0006XB-LJ; Thu, 23 Jul 2026 00:54:55 -0400
+	id 1wmlS5-0005U2-HI; Thu, 23 Jul 2026 00:54:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlSP-0006St-Qr
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:54:53 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlRp-0004zG-SP
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:54:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlSN-00056h-P2
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:54:53 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlRm-0004zi-Oz
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:54:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784782491;
+ s=mimecast20190719; t=1784782454;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=b6kt5HzL/dcb4GOtdYVxgWwilYqwRVX6SLi3+dLQtEE=;
- b=O+BUXRiQWKxdfJpbgE4iEvDMVBC7oP0olSE9d2nQzmsZXjVHuE8yZ6tQC1NgC0LPGecbIB
- MwHKuMMOt/oF4HAryC3Xe2cag2PhP6Jhb6eI7sshd3IpbfQh8vxTEtWhrT8R23kkSe/lt6
- hhiOm5GxjSv4JPy3JclZxec9ZJU12gY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=QarlhGnhBJh2uFLeYPSVEUbavGwmNcs8TuDveYf+Ky0=;
+ b=TFUAF7PqptZ/XiXTeJ+x92b/f5i/ExEZZzuxmHlhv6crOhjkysw+BBi8+M172Euccdp6fL
+ nUT4LRscKGDLGrhLjxRXBTdMGRNl011Cq4zihBxszESfewhUWlpjJSBaMZ7w0tQ17BeYw2
+ 3LrxYQANyCUA9MRN/KMm1GZKOCWRTBY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-413-LODP7NitOBe99UrCJyb4Mw-1; Thu,
- 23 Jul 2026 00:54:45 -0400
-X-MC-Unique: LODP7NitOBe99UrCJyb4Mw-1
-X-Mimecast-MFC-AGG-ID: LODP7NitOBe99UrCJyb4Mw_1784782482
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-645-ZDwcKhefPIqMArqUkbP7BQ-1; Thu,
+ 23 Jul 2026 00:54:09 -0400
+X-MC-Unique: ZDwcKhefPIqMArqUkbP7BQ-1
+X-Mimecast-MFC-AGG-ID: ZDwcKhefPIqMArqUkbP7BQ_1784782446
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5754118E6A73; Thu, 23 Jul 2026 04:54:42 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5DF79182E6BB; Thu, 23 Jul 2026 04:54:06 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.44])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 87386180029D; Thu, 23 Jul 2026 04:54:33 +0000 (UTC)
+ id 6D89C18002AE; Thu, 23 Jul 2026 04:53:56 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -73,9 +73,9 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Jason Wang <jasowangio@gmail.com>, qemu-trivial@nongnu.org,
  Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH v2 39/44] qapi: convert trivial intro sections for net.json
-Date: Thu, 23 Jul 2026 00:48:00 -0400
-Message-ID: <20260723044805.527643-40-jsnow@redhat.com>
+Subject: [PATCH v2 35/44] qapi: convert intro sections for cxl.json
+Date: Thu, 23 Jul 2026 00:47:56 -0400
+Message-ID: <20260723044805.527643-36-jsnow@redhat.com>
 In-Reply-To: <20260723044805.527643-1-jsnow@redhat.com>
 References: <20260723044805.527643-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -83,13 +83,13 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: permerror client-ip=170.10.129.124;
  envelope-from=jsnow@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,316 +109,273 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/net.json | 101 ++++++++++++++++++--------------------------------
- 1 file changed, 37 insertions(+), 64 deletions(-)
+ qapi/cxl.json | 128 ++++++++++++++++++++++----------------------------
+ 1 file changed, 56 insertions(+), 72 deletions(-)
 
-diff --git a/qapi/net.json b/qapi/net.json
-index 1a6382825c5..7aabd8b9260 100644
---- a/qapi/net.json
-+++ b/qapi/net.json
-@@ -12,8 +12,7 @@
+diff --git a/qapi/cxl.json b/qapi/cxl.json
+index 81d6198ba03..9422d5a0e2d 100644
+--- a/qapi/cxl.json
++++ b/qapi/cxl.json
+@@ -9,9 +9,9 @@
  
  ##
- # @set_link:
+ # @CxlEventLog:
 -#
--# Sets the link status of a virtual network adapter.
-+#     Sets the link status of a virtual network adapter.
+-# CXL has a number of separate event logs for different types of
+-# events.  Each such event log is handled and signaled independently.
++#     CXL has a number of separate event logs for different types of
++#     events.  Each such event log is handled and signaled
++#     independently.
  #
- # @name: the device name of the virtual network adapter
+ # @informational: Information Event Log
  #
-@@ -60,8 +59,7 @@
+@@ -32,9 +32,8 @@
  
  ##
- # @netdev_del:
+ # @CXLCommonEventBase:
 -#
--# Remove a network backend.
-+#     Remove a network backend.
+-# Common event base for a CXL Event (CXL r3.2 8.2.10.2.1
+-# Table 8-55 Common Event Record Format).
++#     Common event base for a CXL Event (CXL r3.2 8.2.10.2.1 Table
++#     8-55 Common Event Record Format).
  #
- # @id: the name of the network backend to remove
+ # @path: CXL type 3 device canonical QOM path
  #
-@@ -80,8 +78,7 @@
+@@ -63,8 +62,7 @@
  
  ##
- # @NetLegacyNicOptions:
+ # @CXLGeneralMediaEvent:
 -#
--# Create a new Network Interface Card.
-+#     Create a new Network Interface Card.
+-# Event record for a General Media Event (CXL r3.2 8.2.10.2.1.1).
++#     Event record for a General Media Event (CXL r3.2 8.2.10.2.1.1).
  #
- # @netdev: id of -netdev to connect to
- #
-@@ -140,8 +137,7 @@
+ # @dpa: Device Physical Address (relative to @path device).  Note
+ #     lower bits include some flags.  See CXL r3.2 Table 8-57 General
+@@ -118,10 +116,9 @@
  
  ##
- # @NetdevPasstOptions:
+ # @cxl-inject-general-media-event:
 -#
--# Unprivileged user-mode network connectivity using passt
-+#     Unprivileged user-mode network connectivity using passt
+-# Inject an event record for a General Media Event (CXL r3.2
+-# 8.2.10.2.1.1).  This event type is reported via one of the event
+-# logs specified via the log parameter.
++#     Inject an event record for a General Media Event (CXL r3.2
++#     8.2.10.2.1.1).  This event type is reported via one of the event
++#     logs specified via the log parameter.
  #
- # @path: Filename of the passt program to run (by default 'passt', and
- #     use PATH)
-@@ -301,9 +297,8 @@
+ # Since: 8.1
+ ##
+@@ -130,8 +127,7 @@
  
  ##
- # @NetdevUserOptions:
+ # @CXLDRAMEvent:
 -#
--# Use the user mode network stack which requires no administrator
--# privilege to run.
-+#     Use the user mode network stack which requires no administrator
-+#     privilege to run.
+-# Event record for a DRAM Event (CXL r3.2 8.2.10.2.1.2).
++#     Event record for a DRAM Event (CXL r3.2 8.2.10.2.1.2).
  #
- # @hostname: client hostname reported by the builtin DHCP server
- #
-@@ -389,8 +384,7 @@
+ # @dpa: Device Physical Address (relative to @path device).  Note
+ #     lower bits include some flags.  See CXL r3.2 Table 8-58 DRAM
+@@ -201,10 +197,9 @@
  
  ##
- # @NetdevTapOptions:
+ # @cxl-inject-dram-event:
 -#
--# Used to configure a host TAP network interface backend.
-+#     Used to configure a host TAP network interface backend.
+-# Inject an event record for a DRAM Event (CXL r3.2 8.2.10.2.1.2).
+-# This event type is reported via one of the event logs
+-# specified via the log parameter.
++#     Inject an event record for a DRAM Event (CXL r3.2 8.2.10.2.1.2).
++#     This event type is reported via one of the event logs specified
++#     via the log parameter.
  #
- # @ifname: interface name
- #
-@@ -447,9 +441,8 @@
+ # Since: 8.1
+ ##
+@@ -213,8 +208,7 @@
  
  ##
- # @NetdevSocketOptions:
+ # @CXLMemModuleEvent:
 -#
--# Socket netdevs are used to establish a network connection to another
--# QEMU virtual machine via a TCP socket.
-+#     Socket netdevs are used to establish a network connection to
-+#     another QEMU virtual machine via a TCP socket.
+-# Event record for a Memory Module Event (CXL r3.2 8.2.10.2.1.3).
++#     Event record for a Memory Module Event (CXL r3.2 8.2.10.2.1.3).
  #
- # @fd: file descriptor of an already opened socket
- #
-@@ -476,8 +469,7 @@
+ # @type: Device Event Type.  See CXL r3.2 Table 8-59 Memory Module
+ #     Event Record for bit definitions for bit definiions.
+@@ -267,10 +261,9 @@
  
  ##
- # @NetdevL2TPv3Options:
+ # @cxl-inject-memory-module-event:
 -#
--# Configure an Ethernet over L2TPv3 tunnel.
-+#     Configure an Ethernet over L2TPv3 tunnel.
+-# Inject an event record for a Memory Module Event (CXL r3.2
+-# 8.2.10.2.1.3).  This event includes a copy of the Device Health info
+-# at the time of the event.
++#     Inject an event record for a Memory Module Event (CXL r3.2
++#     8.2.10.2.1.3).  This event includes a copy of the Device Health
++#     info at the time of the event.
  #
- # @src: source address
- #
-@@ -531,8 +523,7 @@
+ # Since: 8.1
+ ##
+@@ -279,13 +272,12 @@
  
  ##
- # @NetdevVdeOptions:
+ # @cxl-inject-poison:
 -#
--# Connect to a vde switch running on the host.
-+#     Connect to a vde switch running on the host.
+-# Poison records indicate that a CXL memory device knows that a
+-# particular memory region may be corrupted.  This may be because of
+-# locally detected errors (e.g. ECC failure) or poisoned writes
+-# received from other components in the system.  This injection
+-# mechanism enables testing of the OS handling of poison records which
+-# may be queried via the CXL mailbox.
++#     Poison records indicate that a CXL memory device knows that a
++#     particular memory region may be corrupted.  This may be because
++#     of locally detected errors (e.g. ECC failure) or poisoned writes
++#     received from other components in the system.  This injection
++#     mechanism enables testing of the OS handling of poison records
++#     which may be queried via the CXL mailbox.
  #
- # @sock: socket path
+ # @path: CXL type 3 device canonical QOM path
  #
-@@ -553,8 +544,7 @@
+@@ -300,10 +292,9 @@
  
  ##
- # @NetdevBridgeOptions:
+ # @CxlUncorErrorType:
 -#
--# Connect a host TAP network interface to a host bridge device.
-+#     Connect a host TAP network interface to a host bridge device.
+-# Type of uncorrectable CXL error to inject.  These errors are
+-# reported via an AER uncorrectable internal error with additional
+-# information logged at the CXL device.
++#     Type of uncorrectable CXL error to inject.  These errors are
++#     reported via an AER uncorrectable internal error with additional
++#     information logged at the CXL device.
  #
- # @br: bridge name
- #
-@@ -569,8 +559,7 @@
+ # @cache-data-parity: Data error such as data parity or data ECC error
+ #     CXL.cache
+@@ -365,8 +356,7 @@
  
  ##
- # @NetdevHubPortOptions:
+ # @CXLUncorErrorRecord:
 -#
--# Connect two or more net clients through a software hub.
-+#     Connect two or more net clients through a software hub.
+-# Record of a single error including header log.
++#     Record of a single error including header log.
  #
- # @hubid: hub identifier number
+ # @type: Type of error
  #
-@@ -586,8 +575,8 @@
+@@ -383,9 +373,8 @@
  
  ##
- # @NetdevNetmapOptions:
+ # @cxl-inject-uncorrectable-errors:
 -#
--# Connect a client to a netmap-enabled NIC or to a VALE switch port
-+#     Connect a client to a netmap-enabled NIC or to a VALE switch
-+#     port
+-# Command to allow injection of multiple errors in one go.  This
+-# allows testing of multiple header log handling in the OS.
++#     Command to allow injection of multiple errors in one go.  This
++#     allows testing of multiple header log handling in the OS.
  #
- # @ifname: Either the name of an existing network interface supported
- #     by netmap, or the name of a VALE port (created on the fly).  A
-@@ -607,8 +596,7 @@
+ # @path: CXL Type 3 device canonical QOM path
+ #
+@@ -399,8 +388,7 @@
  
  ##
- # @AFXDPMode:
+ # @CxlCorErrorType:
 -#
--# Attach mode for a default XDP program
-+#     Attach mode for a default XDP program
+-# Type of CXL correctable error to inject
++#     Type of CXL correctable error to inject
  #
- # @skb: generic mode, no driver support necessary
+ # @cache-data-ecc: Data ECC error on CXL.cache
  #
-@@ -623,8 +611,7 @@
+@@ -432,12 +420,11 @@
  
  ##
- # @NetdevAFXDPOptions:
+ # @cxl-inject-correctable-error:
 -#
--# AF_XDP network backend
-+#     AF_XDP network backend
+-# Command to inject a single correctable error.  Multiple error
+-# injection of this error type is not interesting as there is no
+-# associated header log.  These errors are reported via AER as a
+-# correctable internal error, with additional detail available from
+-# the CXL device.
++#     Command to inject a single correctable error.  Multiple error
++#     injection of this error type is not interesting as there is no
++#     associated header log.  These errors are reported via AER as a
++#     correctable internal error, with additional detail available
++#     from the CXL device.
  #
- # @ifname: The name of an existing network interface.
+ # @path: CXL Type 3 device canonical QOM path
  #
-@@ -675,8 +662,7 @@
+@@ -450,10 +437,9 @@
  
  ##
- # @NetdevVhostUserOptions:
+ # @CxlDynamicCapacityExtent:
 -#
--# Vhost-user network backend
-+#     Vhost-user network backend
+-# A single dynamic capacity extent.  This is a contiguous allocation
+-# of memory by Device Physical Address within a single Dynamic
+-# Capacity Region on a CXL Type 3 Device.
++#     A single dynamic capacity extent.  This is a contiguous
++#     allocation of memory by Device Physical Address within a single
++#     Dynamic Capacity Region on a CXL Type 3 Device.
  #
- # @chardev: name of a unix socket chardev
- #
-@@ -836,8 +822,7 @@
+ # @offset: The offset (in bytes) to the start of the region where the
+ #     extent belongs to.
+@@ -471,10 +457,9 @@
  
  ##
- # @NetdevStreamOptions:
+ # @CxlExtentSelectionPolicy:
 -#
--# Configuration info for stream socket netdev
-+#     Configuration info for stream socket netdev
+-# The policy to use for selecting which extents comprise the added
+-# capacity, as defined in Compute Express Link (CXL) Specification,
+-# Revision 3.1, Table 7-70.
++#     The policy to use for selecting which extents comprise the added
++#     capacity, as defined in Compute Express Link (CXL)
++#     Specification, Revision 3.1, Table 7-70.
  #
- # @addr: socket address to listen on (server=true) or connect to
- #     (server=false)
-@@ -861,8 +846,7 @@
+ # @free: Device is responsible for allocating the requested memory
+ #     capacity and is free to do this using any combination of
+@@ -512,12 +497,12 @@
  
  ##
- # @NetdevDgramOptions:
+ # @cxl-add-dynamic-capacity:
 -#
--# Configuration info for datagram socket netdev.
-+#     Configuration info for datagram socket netdev.
+-# Initiate adding dynamic capacity extents to a host.  This simulates
+-# operations defined in Compute Express Link (CXL) Specification,
+-# Revision 3.1, Section 7.6.7.6.5.  Note that, currently, establishing
+-# success or failure of the full Add Dynamic Capacity flow requires
+-# out of band communication with the OS of the CXL host.
++#     Initiate adding dynamic capacity extents to a host.  This
++#     simulates operations defined in Compute Express Link (CXL)
++#     Specification, Revision 3.1, Section 7.6.7.6.5.  Note that,
++#     currently, establishing success or failure of the full Add
++#     Dynamic Capacity flow requires out of band communication with
++#     the OS of the CXL host.
  #
- # @remote: remote address
+ # @path: path to the CXL Dynamic Capacity Device in the QOM tree.
  #
-@@ -898,8 +882,7 @@
+@@ -558,10 +543,9 @@
  
  ##
- # @NetClientDriver:
+ # @CxlExtentRemovalPolicy:
 -#
--# Available netdev drivers.
-+#     Available netdev drivers.
+-# The policy to use for selecting which extents comprise the released
+-# capacity, defined in the "Flags" field in Compute Express Link (CXL)
+-# Specification, Revision 3.1, Table 7-71.
++#     The policy to use for selecting which extents comprise the
++#     released capacity, defined in the "Flags" field in Compute
++#     Express Link (CXL) Specification, Revision 3.1, Table 7-71.
  #
- # @l2tpv3: since 2.1
- #
-@@ -933,8 +916,7 @@
+ # @tag-based: Extents are selected by the device based on tag, with
+ #     no requirement for contiguous extents.
+@@ -578,12 +562,12 @@
  
  ##
- # @Netdev:
+ # @cxl-release-dynamic-capacity:
 -#
--# Captures the configuration of a network device.
-+#     Captures the configuration of a network device.
+-# Initiate release of dynamic capacity extents from a host.  This
+-# simulates operations defined in Compute Express Link (CXL)
+-# Specification, Revision 3.1, Section 7.6.7.6.6.  Note that,
+-# currently, success or failure of the full Release Dynamic Capacity
+-# flow requires out of band communication with the OS of the CXL host.
++#     Initiate release of dynamic capacity extents from a host.  This
++#     simulates operations defined in Compute Express Link (CXL)
++#     Specification, Revision 3.1, Section 7.6.7.6.6.  Note that,
++#     currently, success or failure of the full Release Dynamic
++#     Capacity flow requires out of band communication with the OS of
++#     the CXL host.
  #
- # @id: identifier for monitor commands.
- #
-@@ -972,8 +954,7 @@
- 
- ##
- # @RxState:
--#
--# Packets receiving state
-+#     Packets receiving state
- #
- # @normal: filter assigned packets according to the mac-table
- #
-@@ -987,8 +968,7 @@
- 
- ##
- # @RxFilterInfo:
--#
--# Rx-filter information for a NIC.
-+#     Rx-filter information for a NIC.
- #
- # @name: net client name
- #
-@@ -1033,8 +1013,8 @@
- 
- ##
- # @query-rx-filter:
--#
--# Return rx-filter information for all NICs (or for the given NIC).
-+#     Return rx-filter information for all NICs (or for the given
-+#     NIC).
- #
- # @name: net client name
- #
-@@ -1082,9 +1062,8 @@
- 
- ##
- # @NIC_RX_FILTER_CHANGED:
--#
--# Emitted once until the `query-rx-filter` command is executed, the
--# first event will always be emitted
-+#     Emitted once until the `query-rx-filter` command is executed,
-+#     the first event will always be emitted
- #
- # @name: net client name
- #
-@@ -1104,8 +1083,7 @@
- 
- ##
- # @AnnounceParameters:
--#
--# Parameters for self-announce timers
-+#     Parameters for self-announce timers
- #
- # @initial: Initial delay (in ms) before sending the first GARP/RARP
- #     announcement
-@@ -1157,11 +1135,10 @@
- 
- ##
- # @FAILOVER_NEGOTIATED:
--#
--# Emitted when VIRTIO_NET_F_STANDBY was enabled during feature
--# negotiation.  Failover primary devices which were hidden (not
--# hotplugged when requested) before will now be hotplugged by the
--# virtio-net standby device.
-+#     Emitted when VIRTIO_NET_F_STANDBY was enabled during feature
-+#     negotiation.  Failover primary devices which were hidden (not
-+#     hotplugged when requested) before will now be hotplugged by the
-+#     virtio-net standby device.
- #
- # @device-id: QEMU device id of the unplugged device
- #
-@@ -1178,8 +1155,7 @@
- 
- ##
- # @NETDEV_STREAM_CONNECTED:
--#
--# Emitted when the netdev stream backend is connected
-+#     Emitted when the netdev stream backend is connected
- #
- # @netdev-id: QEMU netdev id that is connected
- #
-@@ -1208,8 +1184,7 @@
- 
- ##
- # @NETDEV_STREAM_DISCONNECTED:
--#
--# Emitted when the netdev stream backend is disconnected
-+#     Emitted when the netdev stream backend is disconnected
- #
- # @netdev-id: QEMU netdev id that is disconnected
- #
-@@ -1226,8 +1201,7 @@
- 
- ##
- # @NETDEV_VHOST_USER_CONNECTED:
--#
--# Emitted when the vhost-user chardev is connected
-+#     Emitted when the vhost-user chardev is connected
- #
- # @netdev-id: QEMU netdev id that is connected
- #
-@@ -1246,8 +1220,7 @@
- 
- ##
- # @NETDEV_VHOST_USER_DISCONNECTED:
--#
--# Emitted when the vhost-user chardev is disconnected
-+#     Emitted when the vhost-user chardev is disconnected
- #
- # @netdev-id: QEMU netdev id that is disconnected
+ # @path: path to the CXL Dynamic Capacity Device in the QOM tree.
  #
 -- 
 2.55.0
