@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 373C9C44524
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:51:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E78B7C44524
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 04:51:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmlMX-0007f4-Vb; Thu, 23 Jul 2026 00:48:49 -0400
+	id 1wmlP4-0005l1-F5; Thu, 23 Jul 2026 00:51:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlMW-0007dn-JD
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:48:48 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlOw-0005fV-MU
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:51:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlMO-0003wu-BC
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:48:46 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wmlOv-0004R1-3G
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 00:51:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784782119;
+ s=mimecast20190719; t=1784782276;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RnxXR0CXNShNd1Gbm33+Jbw/gGOP7gGinetdejrs1tA=;
- b=h8HGafp3gYLzkjiNOVpjTS1IedpCAOpEQts5OG5EHlzHBRtrjmpMUcj93EQIrHwLG7FW3z
- BPFGS026bGNVQKubQBpCQYHcjJx8kEZR7rnrRsxzpEiFawdosKa5eGqNxS8xUOsTu+d3tl
- w95fykjQLFeYZVpLtyw40cS4gARWcIQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=BLReHKiKZLrcMhTJHEtDrbs61uxUo1HyBJxoZBg4t+Q=;
+ b=b9BEo+sZNHg57Qgsiw/ijFg/s7StU0VEsCfLHWwGAKpA2HkabIUyoR66SKtgtFT0DOMvz+
+ Yaa25cr0uozTeylM02Rofn0eOo7P2009a7AjwJOor5SW5RnTCRNlNWzCKRyea663NzY+rA
+ wh58Gjabv2b7O2tY4yrEzqol7e3xfAA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-MBeTa54gPAuQa6IncaWvdg-1; Thu,
- 23 Jul 2026 00:48:34 -0400
-X-MC-Unique: MBeTa54gPAuQa6IncaWvdg-1
-X-Mimecast-MFC-AGG-ID: MBeTa54gPAuQa6IncaWvdg_1784782111
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-BZq-vpapOaiUMw0l_FqGng-1; Thu,
+ 23 Jul 2026 00:51:11 -0400
+X-MC-Unique: BZq-vpapOaiUMw0l_FqGng-1
+X-Mimecast-MFC-AGG-ID: BZq-vpapOaiUMw0l_FqGng_1784782269
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 30B1D195D02A; Thu, 23 Jul 2026 04:48:30 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DD7811944F05; Thu, 23 Jul 2026 04:51:08 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.44])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C0F6E18002B4; Thu, 23 Jul 2026 04:48:20 +0000 (UTC)
+ id 679A6180029D; Thu, 23 Jul 2026 04:50:59 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -73,9 +73,9 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Jason Wang <jasowangio@gmail.com>, qemu-trivial@nongnu.org,
  Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH v2 01/44] qapi: convert intro sections for error.json
-Date: Thu, 23 Jul 2026 00:47:22 -0400
-Message-ID: <20260723044805.527643-2-jsnow@redhat.com>
+Subject: [PATCH v2 17/44] qapi: convert intro sections for tpm.json
+Date: Thu, 23 Jul 2026 00:47:38 -0400
+Message-ID: <20260723044805.527643-18-jsnow@redhat.com>
 In-Reply-To: <20260723044805.527643-1-jsnow@redhat.com>
 References: <20260723044805.527643-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -109,23 +109,105 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/error.json | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ qapi/tpm.json | 29 ++++++++++-------------------
+ 1 file changed, 10 insertions(+), 19 deletions(-)
 
-diff --git a/qapi/error.json b/qapi/error.json
-index 54cb02fb880..a53b13e55c9 100644
---- a/qapi/error.json
-+++ b/qapi/error.json
-@@ -9,8 +9,7 @@
+diff --git a/qapi/tpm.json b/qapi/tpm.json
+index 3f2850a5733..6d94be656ae 100644
+--- a/qapi/tpm.json
++++ b/qapi/tpm.json
+@@ -10,8 +10,7 @@
  
  ##
- # @QapiErrorClass:
+ # @TpmModel:
 -#
--# QEMU error classes
-+#     QEMU error classes
+-# An enumeration of TPM models
++#     An enumeration of TPM models
  #
- # @GenericError: this is used for errors that don't require a specific
- #     error class.  This should be the default case for most errors
+ # @tpm-tis: TPM TIS model
+ #
+@@ -26,8 +25,7 @@
+ 
+ ##
+ # @query-tpm-models:
+-#
+-# Return a list of supported TPM models
++#     Return a list of supported TPM models
+ #
+ # Since: 1.5
+ #
+@@ -41,8 +39,7 @@
+ 
+ ##
+ # @TpmType:
+-#
+-# An enumeration of TPM types
++#     An enumeration of TPM types
+ #
+ # @passthrough: TPM passthrough type
+ #
+@@ -55,8 +52,7 @@
+ 
+ ##
+ # @query-tpm-types:
+-#
+-# Return a list of supported TPM types
++#     Return a list of supported TPM types
+ #
+ # Since: 1.5
+ #
+@@ -70,8 +66,7 @@
+ 
+ ##
+ # @TPMPassthroughOptions:
+-#
+-# Information about the TPM passthrough type
++#     Information about the TPM passthrough type
+ #
+ # @path: string describing the path used for accessing the TPM device
+ #
+@@ -87,8 +82,7 @@
+ 
+ ##
+ # @TPMEmulatorOptions:
+-#
+-# Information about the TPM emulator type
++#     Information about the TPM emulator type
+ #
+ # @chardev: Name of a unix socket chardev
+ #
+@@ -121,9 +115,8 @@
+ 
+ ##
+ # @TpmTypeOptions:
+-#
+-# A union referencing different TPM backend types' configuration
+-# options
++#     A union referencing different TPM backend types' configuration
++#     options
+ #
+ # @type:
+ #     - 'passthrough' The configuration options for the TPM
+@@ -142,8 +135,7 @@
+ 
+ ##
+ # @TPMInfo:
+-#
+-# Information about the TPM
++#     Information about the TPM
+ #
+ # @id: The Id of the TPM
+ #
+@@ -161,8 +153,7 @@
+ 
+ ##
+ # @query-tpm:
+-#
+-# Return information about the TPM device
++#     Return information about the TPM device
+ #
+ # Since: 1.5
+ #
 -- 
 2.55.0
 
