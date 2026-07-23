@@ -4,79 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B960C531CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 09:12:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 210C8C531C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 09:26:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmpTL-0002H5-6x; Thu, 23 Jul 2026 05:12:07 -0400
+	id 1wmpgR-0002Kw-NA; Thu, 23 Jul 2026 05:25:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenwei.pi@linux.dev>)
- id 1wmpTI-0002Fp-VF
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 05:12:05 -0400
-Received: from out-176.mta1.migadu.com ([95.215.58.176])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenwei.pi@linux.dev>)
- id 1wmpTH-0004HS-Dm
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 05:12:04 -0400
-Message-ID: <344dd201-27c5-41f5-acb1-a6bb4c7192f8@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1784797910;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Ph7nu7v5ynKoGLeN6brlvQB+6K4JFjnx8hTC6Ek69CM=;
- b=jQIhRa7d7a71Qb5eYzYKY5rr8fCi3w8825EkGf8oS7fErG4JRkxRoLoMz3cV8Tx2V2vFx6
- gBSC4JAhHh5Ul0wYdarkwPv7+4HYuu3ucVb9gEALTeFzzLIkTiKn7yTROGN2y1yImohY7U
- XhqWorSuB8BzCAhpwYZPUbyhyWiYBNo=
-Date: Thu, 23 Jul 2026 17:11:25 +0800
-MIME-Version: 1.0
-Subject: Re: [PATCH v2 09/44] qapi: convert intro sections for cryptodev.json
-To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Lukas Straub <lukasstraub2@web.de>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Zhao Liu <zhao1.liu@intel.com>, Laurent Vivier <laurent@vivier.eu>,
- Markus Armbruster <armbru@redhat.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Alex Williamson <alex@shazbot.org>, Hanna Reitz <hreitz@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, qemu-block@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, linux-cxl@vger.kernel.org,
- Jiri Pirko <jiri@resnulli.us>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Fabiano Rosas <farosas@suse.de>, Stefan Hajnoczi <stefanha@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>, Igor Mammedov <imammedo@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- linux-edac@vger.kernel.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>,
+ (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
+ id 1wmpgP-0002Hz-AA
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 05:25:37 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wmpgN-0006Rw-Ld
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 05:25:37 -0400
+Received: from linux.microsoft.com (unknown [167.220.196.63])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 210A320B7167;
+ Thu, 23 Jul 2026 02:25:16 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 210A320B7167
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1784798719;
+ bh=C4GZw/GXg2QwTx4xHjwX0i+zibrsoVkg1VFcLnd5dlA=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=cMBpJDyE20In1ZmOmubebjF7AgL+CeTmHw9v7k2Yxyr7XulK0Z5/6PbVVm4/G1tuW
+ p+nU2IHsk2KgCz2jWg6nhyT8qCJriLKDSBzRYBjkB/2HZLhmkXF53JKy2sAhzHqrMJ
+ 8TlN3Ti3L1CVZOT3xywOrp727Cm2pP8qyEx4zYJo=
+Date: Thu, 23 Jul 2026 12:25:20 +0300
+From: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eric Blake <eblake@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Jason Wang <jasowangio@gmail.com>,
- qemu-trivial@nongnu.org, Jonathan Cameron <jic23@kernel.org>
-References: <20260723044805.527643-1-jsnow@redhat.com>
- <20260723044805.527643-10-jsnow@redhat.com>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-From: zhenwei pi <zhenwei.pi@linux.dev>
-In-Reply-To: <20260723044805.527643-10-jsnow@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=95.215.58.176; envelope-from=zhenwei.pi@linux.dev;
- helo=out-176.mta1.migadu.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ Magnus Kulke <magnuskulke@microsoft.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
+ Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <doru.blanzeanu@microsoft.com>,
+ Wei Liu <liuwe@microsoft.com>
+Subject: Re: [PATCH 10/12] target/i386/mshv: migrate MP_STATE
+Message-ID: <amHeAGrBuPM4kyto@linux.microsoft.com>
+References: <20260710101534.664604-1-magnuskulke@linux.microsoft.com>
+ <20260710101534.664604-11-magnuskulke@linux.microsoft.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260710101534.664604-11-magnuskulke@linux.microsoft.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,80 +72,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-LGTM.
-Acked-by: zhenwei pi <zhenwei.pi@linux.dev>
-
-On 7/23/26 12:47, John Snow wrote:
-> (Trivial)
+On Fri, Jul 10, 2026 at 12:15:32PM +0200, Magnus Kulke wrote:
+> MSHV's "internal activity state" roughly maps to QEMU's env->mp_state
+> and cpu->halted states that describe state of APs in a guest.
 > 
-> Signed-off-by: John Snow <jsnow@redhat.com>
+> We don't invoke set_mp_state as part of store_vcpu_state() b/c we would
+> put all BSP + APs in a RUNNABLE (0) state immediately, breaking SMP boot
+> 
+> Instead we store the mp state as part of the load_cleanup() routine
+> after a migration.
+> 
+> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 > ---
->   qapi/cryptodev.json | 18 ++++++------------
->   1 file changed, 6 insertions(+), 12 deletions(-)
+>  accel/mshv/mshv-all.c       | 10 +++++
+>  include/system/mshv_int.h   |  1 +
+>  target/i386/mshv/mshv-cpu.c | 80 +++++++++++++++++++++++++++++++++++++
+>  3 files changed, 91 insertions(+)
 > 
-> diff --git a/qapi/cryptodev.json b/qapi/cryptodev.json
-> index eb309c22f86..d0c1e6c8944 100644
-> --- a/qapi/cryptodev.json
-> +++ b/qapi/cryptodev.json
-> @@ -12,8 +12,7 @@
->   
->   ##
->   # @QCryptodevBackendAlgoType:
-> -#
-> -# The supported algorithm types of a crypto device.
-> +#     The supported algorithm types of a crypto device.
->   #
->   # @sym: symmetric encryption
->   #
-> @@ -26,8 +25,7 @@
->   
->   ##
->   # @QCryptodevBackendServiceType:
-> -#
-> -# The supported service types of a crypto device.
-> +#     The supported service types of a crypto device.
->   #
->   # @cipher: Symmetric Key Cipher service
->   #
-> @@ -46,8 +44,7 @@
->   
->   ##
->   # @QCryptodevBackendType:
-> -#
-> -# The crypto device backend type
-> +#     The crypto device backend type
->   #
->   # @builtin: the QEMU builtin support
->   #
-> @@ -62,8 +59,7 @@
->   
->   ##
->   # @QCryptodevBackendClient:
-> -#
-> -# Information about a queue of crypto device.
-> +#     Information about a queue of crypto device.
->   #
->   # @queue: the queue index of the crypto device
->   #
-> @@ -77,8 +73,7 @@
->   
->   ##
->   # @QCryptodevInfo:
-> -#
-> -# Information about a crypto device.
-> +#     Information about a crypto device.
->   #
->   # @id: the id of the crypto device
->   #
-> @@ -95,8 +90,7 @@
->   
->   ##
->   # @query-cryptodev:
-> -#
-> -# Return information about current crypto devices.
-> +#     Return information about current crypto devices.
->   #
->   # Since: 8.0
->   ##
+> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+> index 1ca1d4b54f..5921ce693e 100644
+> --- a/accel/mshv/mshv-all.c
+> +++ b/accel/mshv/mshv-all.c
+> @@ -62,6 +62,7 @@ static int init_mshv(int *mshv_fd)
+>  
+>  static int mshv_load_cleanup(void *opaque)
+>  {
+> +    CPUState *cpu;
+>      int ret;
+>  
+>      ret = mshv_arch_set_partition_msrs(first_cpu);
+> @@ -70,6 +71,15 @@ static int mshv_load_cleanup(void *opaque)
+>          return -1;
+>      }
+>  
+> +    CPU_FOREACH(cpu) {
+> +        ret = mshv_arch_set_mp_state(cpu);
+> +        if (ret < 0) {
+> +            error_report("Failed to set mp state for vCPU %d: %s",
+> +                         cpu->cpu_index, strerror(-ret));
+> +            return -1;
+> +        }
+> +    }
+> +
+>      return 0;
+>  }
+>  
+> diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+> index cbfcb8611b..3dffe3c5fb 100644
+> --- a/include/system/mshv_int.h
+> +++ b/include/system/mshv_int.h
+> @@ -99,6 +99,7 @@ int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
+>  int mshv_arch_store_vcpu_state(const CPUState *cpu);
+>  int mshv_arch_load_vcpu_state(CPUState *cpu);
+>  int mshv_arch_set_partition_msrs(const CPUState *cpu);
+> +int mshv_arch_set_mp_state(const CPUState *cpu);
+>  void mshv_arch_init_vcpu(CPUState *cpu);
+>  void mshv_arch_destroy_vcpu(CPUState *cpu);
+>  void mshv_arch_amend_proc_features(
+> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+> index 1485f6a1ef..bff1ac9d17 100644
+> --- a/target/i386/mshv/mshv-cpu.c
+> +++ b/target/i386/mshv/mshv-cpu.c
+> @@ -35,6 +35,11 @@
+>  
+>  #include <sys/ioctl.h>
+>  
+> +#define MSHV_MP_STATE_RUNNABLE       0
+> +#define MSHV_MP_STATE_UNINITIALIZED  1
+> +#define MSHV_MP_STATE_INIT_RECEIVED  2
+> +#define MSHV_MP_STATE_HALTED         3
+> +
+>  #define MAX_REGISTER_COUNT (MAX_CONST(ARRAY_SIZE(STANDARD_REGISTER_NAMES), \
+>                              MAX_CONST(ARRAY_SIZE(SPECIAL_REGISTER_NAMES), \
+>                                        ARRAY_SIZE(FPU_REGISTER_NAMES))))
+> @@ -950,6 +955,76 @@ static int set_vcpu_events(const CPUState *cpu)
+>      return 0;
+>  }
+>  
+> +static int get_mp_state(CPUState *cpu)
+> +{
+> +    X86CPU *x86cpu = X86_CPU(cpu);
+> +    CPUX86State *env = &x86cpu->env;
+> +    struct hv_register_assoc assoc = {
+> +        .name = HV_REGISTER_INTERNAL_ACTIVITY_STATE,
+> +    };
+> +    union hv_internal_activity_register activity;
+> +    int ret;
+> +
+> +    ret = mshv_get_generic_regs(cpu, &assoc, 1);
+> +    if (ret < 0) {
+> +        error_report("failed to get internal activity state");
+> +        return -1;
+> +    }
+> +
+> +    activity.as_uint64 = assoc.value.reg64;
+> +
+> +    /*
+> +     * map MSHV activity state to KVM mp_state values, which are used as the
+> +     * shared representation in env->mp_state and serialized by vmstate_x86_cpu.
+> +     */
+> +
+> +    if (activity.startup_suspend) {
+> +        env->mp_state = MSHV_MP_STATE_UNINITIALIZED;
+> +    } else if (activity.halt_suspend) {
+> +        env->mp_state = MSHV_MP_STATE_HALTED;
+> +    } else {
+> +        env->mp_state = MSHV_MP_STATE_RUNNABLE;
+> +    }
+> +
+> +    cpu->halted = (env->mp_state == MSHV_MP_STATE_HALTED);
+> +
+> +    return 0;
+> +}
+> +
+> +int mshv_arch_set_mp_state(const CPUState *cpu)
+> +{
+> +    X86CPU *x86cpu = X86_CPU(cpu);
+> +    CPUX86State *env = &x86cpu->env;
+> +    union hv_internal_activity_register activity = { 0 };
+> +    struct hv_register_assoc assoc = {
+> +        .name = HV_REGISTER_INTERNAL_ACTIVITY_STATE,
+> +    };
+> +    int ret;
+> +
+> +    switch (env->mp_state) {
+> +    case MSHV_MP_STATE_HALTED:
+> +        activity.halt_suspend = 1;
+> +        break;
+> +    case MSHV_MP_STATE_UNINITIALIZED:
+> +    case MSHV_MP_STATE_INIT_RECEIVED:
+> +        activity.startup_suspend = 1;
+> +        break;
+> +    case MSHV_MP_STATE_RUNNABLE:
+> +    default:
+> +        break;
+> +    }
+> +
+> +    assoc.value.reg64 = activity.as_uint64;
+> +
+> +    ret = mshv_set_generic_regs(cpu, &assoc, 1);
+> +    if (ret < 0) {
+> +        error_report("failed to set internal activity state");
+> +        return -1;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+>  static int update_hflags(CPUState *cpu)
+>  {
+>      X86CPU *x86cpu = X86_CPU(cpu);
+> @@ -1012,6 +1087,11 @@ int mshv_arch_load_vcpu_state(CPUState *cpu)
+>          return ret;
+>      }
+>  
+> +    ret = get_mp_state(cpu);
+> +    if (ret < 0) {
+> +        return ret;
+> +    }
+> +
+>      return 0;
+>  }
+>  
+> -- 
+> 2.34.1
 
+Reviewed-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
 
