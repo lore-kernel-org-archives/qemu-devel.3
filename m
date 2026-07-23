@@ -4,65 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 699D4C44524
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 03:47:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CC55C4452B
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 03:51:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmkOf-0006Zh-4a; Wed, 22 Jul 2026 23:46:57 -0400
+	id 1wmkSb-0000G2-Qt; Wed, 22 Jul 2026 23:51:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wmkOb-0006Yv-Jf; Wed, 22 Jul 2026 23:46:54 -0400
-Received: from [115.124.30.101] (helo=out30-101.freemail.mail.aliyun.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wmkOU-0004V5-KP; Wed, 22 Jul 2026 23:46:53 -0400
+ (Exim 4.90_1) (envelope-from <east.moutain.yang@gmail.com>)
+ id 1wmkSZ-0000Fp-Ej
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 23:50:59 -0400
+Received: from mail-qv1-xf30.google.com ([2607:f8b0:4864:20::f30])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <east.moutain.yang@gmail.com>)
+ id 1wmkSX-0004oa-0r
+ for qemu-devel@nongnu.org; Wed, 22 Jul 2026 23:50:59 -0400
+Received: by mail-qv1-xf30.google.com with SMTP id
+ 6a1803df08f44-8f0e5e36912so1234596d6.2
+ for <qemu-devel@nongnu.org>; Wed, 22 Jul 2026 20:50:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784778650; cv=none;
+ d=google.com; s=arc-20260327;
+ b=GY/d69pxjF3Zqz5ZeXurb5la7z8hgmK9zWNEE7FPYNIOilj8K6fDDMr+kFLZwjlYum
+ FZeI/O/kLBugT8Qcbo3aCNip5AWzgElo2lYOLjulapQwTyoy+LPC4GWRSWEpegp8MXPt
+ kdtLA5wDKEWlYkjl8/AgHCNi3AtdQRTkPBu9MHP8ZU6mA4TU6DXGqj7+3L9MemnyAPDs
+ zeFa38KkEOAawjC3ILwW90SOcpgK/zWDoDqYNRXdzGhBmKwZVvhqsNTH44km5q/B8O+Z
+ l8Rr6zc6qSCWz4ZHMgxE/KNEX0l8GrSnYKWY2jXJIE37PWDi7ZPyEXdkGrHAn6SBTulx
+ 63hg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=kPvNM+8N9mMVQz6GF0jb1d/zTRGeuk/WjE6LIHykSK0=;
+ fh=fV1rKQ+EpzmDMbkFhX4h45vUd86VYu2E/AHgKAyJ2iY=;
+ b=jS3zpQa5uKT8EgY0iub/bTelDZ1HjF2+0o5k0GmQ6prHtY4K99Pr/zY+A8/geIuyEC
+ fcJiOKTcEDlryfH+DVqMRQXTQMWUnHB8JgkSFrors9TrI1Gzr/Zy9RHErzxdM23w5oB0
+ yJUYHKZl7+GKr3bmuwgpOweO1CReIOIswxcxTs2oRs6YoYWKG7PMd7nn50UkCglEKDas
+ seup6Eon/4JLS7Kk0rZQuJ4gx7Z1TJSShXhcUQhNRqsjT5AzloL6wm/6c/Em0n+z2MIq
+ C3cF/tM1EBjv4YyTCgf+i8Lw2vYoQeK/gA6RFDv/WxTeDl4HYX5yErMXRNUtz6VICCFj
+ So1w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1784778382; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=oUUq4FugiH3fS+Az6GU1EViJio6Tdn8HQU+tFqjcIt8=;
- b=D6+KpOE/qWPyoCU8xx2qBFG5ulUueMoLpCRNAmGcQKaJrVB32K3laqhDVz3WXzGpgKbs1g31ueHfyXZiy/0z/9E5qZK2Y02ZDhph2o7FrzX+zqdBE6RpWLvsE5lJg1WRJoJjbmcyEN1UIUgAlC7OZLlAJy2NETGKM9ek+I8P1Zk=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R561e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=11; SR=0;
- TI=SMTPD_---0X7epHR7_1784778379; 
-Received: from 30.166.65.93(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0X7epHR7_1784778379 cluster:ay36) by smtp.aliyun-inc.com;
- Thu, 23 Jul 2026 11:46:20 +0800
-Message-ID: <705186b9-dd43-4e8e-ba42-0b6d0af05081@linux.alibaba.com>
-Date: Thu, 23 Jul 2026 11:46:19 +0800
+ d=gmail.com; s=20251104; t=1784778650; x=1785383450; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=kPvNM+8N9mMVQz6GF0jb1d/zTRGeuk/WjE6LIHykSK0=;
+ b=TYHWwXTt2mtoBBWLK7Pc4PfdopmY3S2WwBtHHFIMlPfJbzjwVQA3FQk0UXgbpK1RyP
+ rZH+Q4VkMYrc5DJ4DfAmNrL+q6JVrUZry83tZ2jD/xhEGxL9HcIcAqbJCbZtub7LWe4W
+ yjAz76D7TwDkqOXAFs7j1pKLZv/hjOVebKfd7RRVyfCdWmLbeac8szWFspZ05cNStvQa
+ dm3hgdFuCjprpt3PawSyRjaRIs/POk/XODdnjXels6VdATMTzaw1hFt870Tmh4vLG99G
+ oNDt+0n3f13A0viQIwbHKehdY9KxgviA/x0bdSIP1Y0vVWYvjsrzlphk2QdWKciLkRb2
+ q1oQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784778650; x=1785383450;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=kPvNM+8N9mMVQz6GF0jb1d/zTRGeuk/WjE6LIHykSK0=;
+ b=X275jpAj7rT/pqrjztZdFwZ4MLJ7bMAuQbx9bR6+auJF1+tw/MWE84bVhFWxLWwtvA
+ Pyr2KR1B1ltEbX+JmrxTtros/w0bEAROrcyDCdZ23einO4ySk6AqkivbbuWQUksZ1RG2
+ dEb11StVpF1jCyuCw/RJ4Q1S8WzKDsuUiVGKjvFc+npyBegdyTzFU663B7O58YWYNBnM
+ S7s9w6LaXM0b7Hw+aVn2PWQwAoFjv6cRU6dEWgQ0Fc4VOtMqPQfLiKsiefVWtMIrijUq
+ fYA6MVX9tzUOv3vmEaSuEiUYlSawh/9RYz04CjTeRIHrUxf/404e5Hu6n1TBNN+F8OQC
+ kaKg==
+X-Gm-Message-State: AOJu0Yze0DNtg+GTmTuol4WwOg4/hboTpwTyk4SxkeSBu8KpD2h6E0uT
+ eKLESRarBBfnn4NXuti14yRo9R+Ml8rBn//iKK7SHgtoOVwgJtIjkS5YdWlvQ+qhT4Y6ubfC3tg
+ 4HTCPk7GUJr7DDeqHSEbAcUpHd0NYhnQ=
+X-Gm-Gg: AR+sD10yDfB9EnXmhrAa294j+15Sn/mzgEjQ7/bMPLE2ZMayC9iXpdxyBnxv6UdK5g6
+ cjtZy7Buv5xk5dMQyxj08UXZnVrRSMHb904fn1CNSDcqeXtE5558l6rdzEZ9dSDJ8L/k+XV6/OS
+ VQ5EX4YTPdGxbkmVtqy4bMblsHNlbb773oeBQ3C7aISvae7puXg+RoTOYgRtyndfwyvVGmYn84g
+ 2Grvc+U28HmMKhELfirrYkxTtNjiTckbtBuKa8NZY0CThq5ENL7Agz5naHI+GA=
+X-Received: by 2002:a05:6214:2c0d:b0:8e9:61e9:8d9 with SMTP id
+ 6a1803df08f44-907ca57d5cemr19962756d6.23.1784778650219; Wed, 22 Jul 2026
+ 20:50:50 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 00/11] target/riscv: Implement Smsdid and Smmpt
- extension
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair <alistair@alistair23.me>, qemu-devel@nongnu.org,
- xiangyi.zeng@linux.alibaba.com
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, chao.liu.zevorn@gmail.com,
- liwei1518@gmail.com, qemu-riscv@nongnu.org, cxx194832@alibaba-inc.com,
- rahul.pathak@oss.qualcomm.com
-References: <20260715145016.17369-1-zhiwei_liu@linux.alibaba.com>
- <a568614fb2f7221583bbcc2c67cf7282d50e4d83.camel@alistair23.me>
- <db11d478-c0cb-4ca6-b7b4-3f53b281452b@linux.alibaba.com>
- <8cc10b77-22a0-40f0-b883-5d3491248fac@oss.qualcomm.com>
-Content-Language: en-US
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <8cc10b77-22a0-40f0-b883-5d3491248fac@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.101 (deferred)
-Received-SPF: pass client-ip=115.124.30.101;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-101.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+References: <20260721130611.539089-1-east.moutain.yang@gmail.com>
+ <38865e6b-6e80-4581-9aaf-257a53dfb972@app.fastmail.com>
+ <20260721110247-mutt-send-email-mst@kernel.org>
+ <20260721230004.2c03fede@shazbot.org>
+In-Reply-To: <20260721230004.2c03fede@shazbot.org>
+From: Wencheng Yang <east.moutain.yang@gmail.com>
+Date: Thu, 23 Jul 2026 11:50:36 +0800
+X-Gm-Features: AUfX_mwA4YhV01sw-3xcHLeG5GNp_Vp8JqNtuJ5Uy2qy5RBQirCmDpitYHdGNOE
+Message-ID: <CALrP2iVwJqufzvjOdiEiE0FPTHkMjMjhA4H0siaLAuAHmw2wLQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/vfio: Coalesce repeated PCI_COMMAND memory-decode DMA
+ (re)map for passthrough BARs
+To: Alex Williamson <alex@shazbot.org>, "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Yangwencheng <yangwencheng@gmail.com>
+Content-Type: multipart/alternative; boundary="00000000000072f82d06573f29d5"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f30;
+ envelope-from=east.moutain.yang@gmail.com; helo=mail-qv1-xf30.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,200 +119,275 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--00000000000072f82d06573f29d5
+Content-Type: text/plain; charset="UTF-8"
 
-On 7/23/26 3:52 AM, Daniel Henrique Barboza wrote:
->
->
-> On 7/22/2026 12:11 AM, LIU Zhiwei wrote:
->>
->> On 7/22/26 8:56 AM, Alistair wrote:
->>> On Wed, 2026-07-15 at 22:50 +0800, LIU Zhiwei wrote:
->>>> This patch set introduces support for the RISC-V Smsdid and Smmpt
->>>> (Supervisor Domain Identifier and Memory Protection Table) extensions
->>>> v0.4.9(https://github.com/riscv/riscv-smmtt/releases/tag/v0.4.9).
->>>> Smmpt provides a hardware mechanism for fine-grained memory
->>>> protection,
->>>> checked after address translation, which is particularly useful for
->>>> supervisor-level sandboxing and security monitoring.
->> Hi Alistair,
->>> Can you include a link to the upstream submitted patches to use this
->>> functionality
->> Xiangyi is currently working on OpenSBI support for SMMPT, and we 
->> already have an internal implementation in place. We plan to upstream 
->> the OpenSBI support as soon as possible, and once that is done, I’ll 
->> be able to include a link here.
->
-Hi Daniel
-> Please be aware that Rahul already sent OpenSBI patches for smmpt and 
-> smsdid:
->
-> [RFC PATCH 0/5] Add Smsdid and Smmpt supervisor domain protection
-> https://lists.infradead.org/pipermail/opensbi/2026-July/010235.html
->
-> In fact, as I said in another thread [1], Rahul also has a QEMU 
-> implementation of his own.
-> His OpenSBI patches works with his QEMU changes:
->
-> https://github.com/pathakraul/qemu/tree/rpathak_smmpt_v1
-Thank you very much for pointing this out and for coordinating between 
-us. I was not aware of Rahul's OpenSBI patches and QEMU implementation.
->
-> But seems like his OpenSBI patches does *not* work with this QEMU patches,
-It seams probe_sdidlen in OpenSBI write a sdid to mmpt with bare mode. 
-According to the specification, in bare mode, "The remaining fields in 
-mmpt (SDID, PPN) must
-be set to zeros.
->  but works
-> with his QEMU implementation.  Seems like there might be things to 
-> improve in both
-> implementations.
->
-> I asked him to not send his QEMU patches on top of yours because I'd 
-> rather work in
-> collaboration on top of a single series, and I advise to not send 
-> another OpenSBI support
-> for the same stuff in that mailing as well.
->
-> IMO you and Rahul should sync up in both OpenSBI and QEMU bits to 
-> avoid effort duplication
-> on both sides.
+On 2026/7/22 13:00, Alex Williamson wrote:
 
-I agree with your suggestion that it is better to avoid duplicated 
-effort and collaborate on a single direction for both the QEMU and 
-OpenSBI sides.
+On Tue, 21 Jul 2026 11:03:39 -0400
+"Michael S. Tsirkin" <mst@redhat.com> <mst@redhat.com> wrote:
 
-Since the SMMPT v0.4.9 specification is already close to stabilization, 
-and implementation work has already started in both OpenSBI and QEMU, I 
-believe we should be able to converge quickly through collaboration and 
-help move SMMPT upstream sooner.
 
-Xiangyi and I will continue to review Rahul's OpenSBI patches to 
-understand the current differences and why they are not yet compatible 
-with our QEMU series. I will also reach out to Rahul directly so that we 
-can sync up and work toward a common implementation.
+On Tue, Jul 21, 2026 at 08:41:04AM -0600, Alex Williamson wrote:
 
-Thanks again for the pointers.
+On Tue, Jul 21, 2026, at 7:06 AM, Yang Wencheng wrote:
 
-Best regards,
-Zhiwei
+From: YangWencheng <east.moutain.yang@gmail.com> <east.moutain.yang@gmail.com>
 
->
->
-> Cheers,
-> Daniel
->
->
-> [1] 
-> https://lore.kernel.org/qemu-devel/2e2de5da-9eb0-4d56-b193-d8b06b7a3512@oss.qualcomm.com/
->
->
->>
->> Thanks,
->> Zhiwei
->>>
->>> Alistair
->>>
->>>> The rfc patch set:
->>>> https://mail.gnu.org/archive/html/qemu-riscv/2025-09/msg00216.html
->>>>
->>>> v6->v7:
->>>>      The implementation is updated from the v0.3.4 specification to
->>>>      v0.4.9. The main changes are:
->>>>      1. Update the mmpt CSR number to 0x382 and msdcfg to 0x74E.
->>>>      2. Update the mmpt register layout: the SDID and PPN field
->>>> positions
->>>>         changed and the RV64 PPN is now 44 bits.
->>>>      3. Rework the MPTE format: the N (NAPOT) bit now lives at bit 2,
->>>> the
->>>>         non-leaf NAPOT form is removed, NAPOT leaf entries encode a
->>>> single
->>>>         XWR tuple plus a G granularity field, and non-NAPOT leaf
->>>> entries
->>>>         hold per-page XWR tuples.
->>>>      4. Treat XWR=000 as "no access" and a non-leaf entry with N=1 as
->>>> a
->>>>         fault.
->>>>      5. Enforce the Smmpt64 root-table PPN alignment (low 3 bits
->>>> zero).
->>>>      6. Rename the fence instructions mfence.spa/minval.spa to
->>>>         mfence.pa/minval.pa.
->>>>      7. Drop stale Reviewed-by tags on the substantially reworked
->>>> patches.
->>>>      8. Introduce the configurable "smmpt-sdidlen" CPU property.
->>>>      9. Add disassembly support for the Smmpt.
->>>>      10. Add bare-metal M-mode system tests.
->>>>      11. Rebase to master.
->>>>
->>>> v5->v6:
->>>>      1. Use explicitly bit fields extract instead of mpte_union_t.
->>>>      2. Use the same exception behavior for MPT valiation as PMP
->>>>         valiation.
->>>>      3. Use PAGE_* instead of MPT_ACCESS_* as they have same value.
->>>>      4. Use address_space_*_le instead of address_space_* for SMMPT.
->>>>      5. Only print SMMPT address check log when SMMPT is enabled.
->>>>      6. Add implied rule for SMMPT as it depends on SMSDID.
->>>>      7. Rebase to master.
->>>>
->>>> v4->v5:
->>>>      1. Rebase to master.
->>>> v3->v4:
->>>>      1. Add missing review tags.
->>>> v2->v3:
->>>>      1. Fix build error in patch 2.
->>>>      2. Rebase to master.
->>>>
->>>> rfc->v2:
->>>>      1. When ext_smmpt is false or BARE mode, make other fields in
->>>> mmpt
->>>>         CSR zero.
->>>>      2. Add patch 5 to fix smrnmi ISA string order.
->>>>      3. Fix patch 6 smmpt and smsdid ISA string order.
->>>>      4. Make smmpt and smsdid experiment extensions.
->>>>      5. Add review tags.
->>>>
->>>> LIU Zhiwei (11):
->>>>    target/riscv: Add basic definitions and CSRs for SMMPT
->>>>    target/riscv: Add smmpt-sdidlen property for the mmpt SDID field
->>>>    target/riscv: Implement core SMMPT lookup logic
->>>>    target/riscv: Integrate SMMPT checks into MMU and TLB fill
->>>>    target/riscv: Implement SMMPT fence instructions
->>>>    target/riscv: Fix smrnmi isa alphabetical order
->>>>    target/riscv: Add disassembly for Smmpt instructions and CSRs
->>>>    target/riscv: Enable SMMPT extension
->>>>    target/riscv: Add system test for SMMPT extension
->>>>    target/riscv: Add system tests for Smmpt52 and Smmpt64
->>>>    target/riscv: Add system test for Smmpt34
->>>>
->>>>   disas/riscv.c                                 |   9 +-
->>>>   target/riscv/cpu.c                            |  60 +++-
->>>>   target/riscv/cpu.h                            |   8 +
->>>>   target/riscv/cpu_bits.h                       |  27 ++
->>>>   target/riscv/cpu_cfg_fields.h.inc             |   3 +
->>>>   target/riscv/insn32.decode                    |   2 +
->>>>   target/riscv/meson.build                      |   1 +
->>>>   target/riscv/riscv_smmpt.c                    | 339
->>>> ++++++++++++++++++
->>>>   target/riscv/riscv_smmpt.h                    |  26 ++
->>>>   target/riscv/tcg/cpu_helper.c                 | 119 +++++-
->>>>   target/riscv/tcg/csr.c                        | 106 ++++++
->>>>   .../tcg/insn_trans/trans_privileged.c.inc     |  30 ++
->>>>   target/riscv/tcg/pmp.h                        |   3 +
->>>>   tests/tcg/riscv64/Makefile.softmmu-target     |  12 +
->>>>   tests/tcg/riscv64/smmpt-common.S              | 256 +++++++++++++
->>>>   tests/tcg/riscv64/test-smmpt.S                |  85 +++++
->>>>   tests/tcg/riscv64/test-smmpt34.S              |  97 +++++
->>>>   tests/tcg/riscv64/test-smmpt52.S              |  91 +++++
->>>>   tests/tcg/riscv64/test-smmpt64.S              |  98 +++++
->>>>   19 files changed, 1353 insertions(+), 19 deletions(-)
->>>>   create mode 100644 target/riscv/riscv_smmpt.c
->>>>   create mode 100644 target/riscv/riscv_smmpt.h
->>>>   create mode 100644 tests/tcg/riscv64/smmpt-common.S
->>>>   create mode 100644 tests/tcg/riscv64/test-smmpt.S
->>>>   create mode 100644 tests/tcg/riscv64/test-smmpt34.S
->>>>   create mode 100644 tests/tcg/riscv64/test-smmpt52.S
->>>>   create mode 100644 tests/tcg/riscv64/test-smmpt64.S
->>>>
->>>>
->>>> base-commit: 499039798cdad7d86b787fec0eaf1da4151c0f05
->
+A passthrough device's own MMIO/BAR range is registered with the IOMMU
+(VFIO_IOMMU_MAP_DMA) when its memory region becomes part of the guest
+address space, to support peer-to-peer DMA into that BAR from other
+devices. Toggling the guest's PCI_COMMAND memory-decode-enable bit off
+and back on -- something PCI enumeration/attribute code does routinely,
+sometimes several times for the same device (e.g. disable before
+reprogramming a BAR then re-enable, or generic driver probing during
+guest OS boot) -- currently tears down and rebuilds this mapping every
+single time via vfio_listener_region_del()/region_add(), unconditionally.
+
+For devices with very large BARs this is expensive: mapping a 64GB BAR
+into IOMMU page tables measured at ~8.5s per call on this hardware, and
+was observed being repeated 3-5 times for the same BAR during a single
+guest boot, because nothing changed about the underlying mapping between
+the disable and the following re-enable.
+
+Defer the actual VFIO_IOMMU_UNMAP_DMA for "ram device" regions (i.e.
+passthrough device BARs used for P2P DMA -- explicitly not regular guest
+RAM or RamDiscardManager-backed regions, so migration/ballooning/
+virtio-mem are unaffected) instead of issuing it immediately in
+region_del(). If a matching region_add() for the exact same region
+(same MemoryRegion pointer, iova, size, vaddr, readonly) follows, cancel
+the deferred unmap and skip the VFIO_IOMMU_MAP_DMA entirely -- the
+host-side mapping was never actually removed, so there is nothing to
+redo. A region_add() for anything that doesn't match maps normally, as
+before.
+
+Nothing is leaked: any mapping still on the pending list is flushed with
+a real unmap in two places -- vfio_container_instance_finalize(), before
+the container's fd is closed (VM shutdown / last device in a group removed),
+and vfio_bars_finalize(), matched by MemoryRegion pointer to just that
+device's own BARs, so a device hot-unplugged while the container stays
+alive for other devices can't leave a dangling deferred entry either.
+
+This does not weaken the PCI_COMMAND memory-decode security boundary:
+every guest write to PCI_COMMAND is still forwarded synchronously and
+unconditionally to the real device's config space in
+vfio_pci_write_config() (an entirely separate code path, untouched by
+this change), which is what actually gates whether the physical device
+claims/responds to transactions targeting its BAR, independent of
+whatever the IOMMU's routing table still contains. This change only
+avoids redundant bookkeeping of that routing table when nothing about
+the mapping has changed.
+
+Seems like you should focus on huge pfnmap support on your platform
+rather than hack the VMM to not behave like bare metal.  Thanks,
+
+
+But bare metal does not tweak an iommu during pci enumeration?
+
+Bare metal is not using the IOMMU to map the device into a guest
+physical address space, so no, an equivalent operation does not occur
+there.  The proposal here is intentionally leaving stale gpa mappings
+to avoid the unmap/remap overhead, where we've essentially eliminated
+that overhead on other platforms with huge pfnmap support.  The
+specific platform that's being optimized here is also omitted, which
+makes it impossible to determine the ongoing need for this code.
+
+The scheme here effectively assumes that a region_del() will either be
+followed by a region_add() that cancels the deferred unmap, or the
+deferral will be executed on finalize.  It does not actually account
+for cases where the guest might remap the BAR to a different address,
+ex. pci=realloc, leaving a stale mapping in place.  The finalize also
+appears to be using a different MR from the one deferred, such that the
+IOMMU is actually only unmapped due to close().
+
+More importantly though, this entire scheme is relying on a gap in the
+vfio type1 IOMMU backend, where clearing the memory enable bit of the
+command register zaps the CPU mappings and errors faults while cleared,
+but does not generate unmaps in the IOMMU.  IOMMUFD resolves that gap,
+generating a move-notify/invalidate on the dma-buf, which results in an
+IOMMU unmap.  IOW, the premise of this workaround is broken in the
+direction that VFIO is headed.
+
+Therefore, I'd once again suggest that effort is better redirected to
+implement huge pfnmap support for whatever platform this might be in
+order to follow a proven solution to this problem for type1.  Huge
+pfnmap is used both in the CPU fault path as well as the DMA mapping
+path, by virtue of generating user faults in the pfnmap.  Alternatively,
+iommufd may provide better p2p DMA mapping performance than type1
+without huge pfnmap, but CPU faults would lag without such support
+anyway.  Thanks,
+
+Alex
+
+I noticed you provided a kernel patch "PCI: Batch BAR sizing operations",
+
+the patch eliminates the overhead of IOMMU map/unmap operations from
+
+guest kernel. I found OVMF has the same issue, I tried to fix it in edk2 source
+
+code, but the PCI commands are scattered, it's hard to handle it like kernel.
+
+I think it's reasonable to handle it qemu, as the overhead is introduced by
+
+qemu to support PCIe device passthrough.
+
+
+"we've essentially eliminated that overhead on other platforms with huge
+ pfnmap support."
+
+Can you provide some key references about this approach?
+
+Thanks,
+YangWencheng
+
+--00000000000072f82d06573f29d5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><u></u>
+
+ =20
+   =20
+ =20
+  <div>
+    <p><br>
+    </p>
+    <div>On 2026/7/22 13:00, Alex Williamson
+      wrote:<br>
+    </div>
+    <blockquote type=3D"cite">
+      <pre>On Tue, 21 Jul 2026 11:03:39 -0400
+&quot;Michael S. Tsirkin&quot; <a href=3D"mailto:mst@redhat.com" target=3D"=
+_blank">&lt;mst@redhat.com&gt;</a> wrote:
+
+</pre>
+      <blockquote type=3D"cite">
+        <pre>On Tue, Jul 21, 2026 at 08:41:04AM -0600, Alex Williamson wrot=
+e:
+</pre>
+        <blockquote type=3D"cite">
+          <pre>On Tue, Jul 21, 2026, at 7:06 AM, Yang Wencheng wrote: =20
+</pre>
+          <blockquote type=3D"cite">
+            <pre>From: YangWencheng <a href=3D"mailto:east.moutain.yang@gma=
+il.com" target=3D"_blank">&lt;east.moutain.yang@gmail.com&gt;</a>
+
+A passthrough device&#39;s own MMIO/BAR range is registered with the IOMMU
+(VFIO_IOMMU_MAP_DMA) when its memory region becomes part of the guest
+address space, to support peer-to-peer DMA into that BAR from other
+devices. Toggling the guest&#39;s PCI_COMMAND memory-decode-enable bit off
+and back on -- something PCI enumeration/attribute code does routinely,
+sometimes several times for the same device (e.g. disable before
+reprogramming a BAR then re-enable, or generic driver probing during
+guest OS boot) -- currently tears down and rebuilds this mapping every
+single time via vfio_listener_region_del()/region_add(), unconditionally.
+
+For devices with very large BARs this is expensive: mapping a 64GB BAR
+into IOMMU page tables measured at ~8.5s per call on this hardware, and
+was observed being repeated 3-5 times for the same BAR during a single
+guest boot, because nothing changed about the underlying mapping between
+the disable and the following re-enable.
+
+Defer the actual VFIO_IOMMU_UNMAP_DMA for &quot;ram device&quot; regions (i=
+.e.
+passthrough device BARs used for P2P DMA -- explicitly not regular guest
+RAM or RamDiscardManager-backed regions, so migration/ballooning/
+virtio-mem are unaffected) instead of issuing it immediately in
+region_del(). If a matching region_add() for the exact same region
+(same MemoryRegion pointer, iova, size, vaddr, readonly) follows, cancel
+the deferred unmap and skip the VFIO_IOMMU_MAP_DMA entirely -- the
+host-side mapping was never actually removed, so there is nothing to
+redo. A region_add() for anything that doesn&#39;t match maps normally, as
+before.
+
+Nothing is leaked: any mapping still on the pending list is flushed with
+a real unmap in two places -- vfio_container_instance_finalize(), before
+the container&#39;s fd is closed (VM shutdown / last device in a group remo=
+ved),
+and vfio_bars_finalize(), matched by MemoryRegion pointer to just that
+device&#39;s own BARs, so a device hot-unplugged while the container stays
+alive for other devices can&#39;t leave a dangling deferred entry either.
+
+This does not weaken the PCI_COMMAND memory-decode security boundary:
+every guest write to PCI_COMMAND is still forwarded synchronously and
+unconditionally to the real device&#39;s config space in
+vfio_pci_write_config() (an entirely separate code path, untouched by
+this change), which is what actually gates whether the physical device
+claims/responds to transactions targeting its BAR, independent of
+whatever the IOMMU&#39;s routing table still contains. This change only
+avoids redundant bookkeeping of that routing table when nothing about
+the mapping has changed. =20
+</pre>
+          </blockquote>
+          <pre>Seems like you should focus on huge pfnmap support on your p=
+latform
+rather than hack the VMM to not behave like bare metal.  Thanks,
+
+</pre>
+        </blockquote>
+        <pre>But bare metal does not tweak an iommu during pci enumeration?
+</pre>
+      </blockquote>
+      <pre>Bare metal is not using the IOMMU to map the device into a guest
+physical address space, so no, an equivalent operation does not occur
+there.  The proposal here is intentionally leaving stale gpa mappings
+to avoid the unmap/remap overhead, where we&#39;ve essentially eliminated
+that overhead on other platforms with huge pfnmap support.  The
+specific platform that&#39;s being optimized here is also omitted, which
+makes it impossible to determine the ongoing need for this code.
+
+The scheme here effectively assumes that a region_del() will either be
+followed by a region_add() that cancels the deferred unmap, or the
+deferral will be executed on finalize.  It does not actually account
+for cases where the guest might remap the BAR to a different address,
+ex. pci=3Drealloc, leaving a stale mapping in place.  The finalize also
+appears to be using a different MR from the one deferred, such that the
+IOMMU is actually only unmapped due to close().
+
+More importantly though, this entire scheme is relying on a gap in the
+vfio type1 IOMMU backend, where clearing the memory enable bit of the
+command register zaps the CPU mappings and errors faults while cleared,
+but does not generate unmaps in the IOMMU.  IOMMUFD resolves that gap,
+generating a move-notify/invalidate on the dma-buf, which results in an
+IOMMU unmap.  IOW, the premise of this workaround is broken in the
+direction that VFIO is headed.
+
+Therefore, I&#39;d once again suggest that effort is better redirected to
+implement huge pfnmap support for whatever platform this might be in
+order to follow a proven solution to this problem for type1.  Huge
+pfnmap is used both in the CPU fault path as well as the DMA mapping
+path, by virtue of generating user faults in the pfnmap.  Alternatively,
+iommufd may provide better p2p DMA mapping performance than type1
+without huge pfnmap, but CPU faults would lag without such support
+anyway.  Thanks,
+
+Alex</pre>
+    </blockquote>
+    <pre>I noticed you provided a kernel patch &quot;PCI: Batch BAR sizing =
+operations&quot;,</pre>
+    <pre>the patch eliminates the overhead of IOMMU map/unmap operations fr=
+om</pre>
+    <pre>guest kernel. I found OVMF has the same issue, I tried to fix it i=
+n edk2 source</pre>
+    <pre>code, but the PCI commands are scattered, it&#39;s hard to handle =
+it like kernel.</pre>
+    <pre>I think it&#39;s reasonable to handle it qemu, as the overhead is =
+introduced by</pre>
+    <pre>qemu to support PCIe device=C2=A0passthrough.
+
+
+&quot;we&#39;ve essentially eliminated that overhead on other platforms wit=
+h huge
+ pfnmap support.&quot;
+
+Can you provide some key references about this approach?
+
+Thanks,=20
+YangWencheng</pre>
+    <p>=C2=A0</p>
+  </div>
+
+</div>
+
+--00000000000072f82d06573f29d5--
 
