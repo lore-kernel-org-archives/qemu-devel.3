@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 210C8C531C7
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 09:26:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 314C8C531CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 09:27:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmpgR-0002Kw-NA; Thu, 23 Jul 2026 05:25:39 -0400
+	id 1wmpi8-0003Ej-3S; Thu, 23 Jul 2026 05:27:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
- id 1wmpgP-0002Hz-AA
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 05:25:37 -0400
+ id 1wmpi6-0003EF-9X
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 05:27:22 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wmpgN-0006Rw-Ld
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 05:25:37 -0400
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wmpi5-0006Vg-1V
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 05:27:22 -0400
 Received: from linux.microsoft.com (unknown [167.220.196.63])
- by linux.microsoft.com (Postfix) with ESMTPSA id 210A320B7167;
- Thu, 23 Jul 2026 02:25:16 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 210A320B7167
+ by linux.microsoft.com (Postfix) with ESMTPSA id C0CD020B7167;
+ Thu, 23 Jul 2026 02:27:04 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C0CD020B7167
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1784798719;
- bh=C4GZw/GXg2QwTx4xHjwX0i+zibrsoVkg1VFcLnd5dlA=;
+ s=default; t=1784798826;
+ bh=1gOzmpVAqSgzWUE84XMa6pD2RbOi+/qfej1C/0CfGq4=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=cMBpJDyE20In1ZmOmubebjF7AgL+CeTmHw9v7k2Yxyr7XulK0Z5/6PbVVm4/G1tuW
- p+nU2IHsk2KgCz2jWg6nhyT8qCJriLKDSBzRYBjkB/2HZLhmkXF53JKy2sAhzHqrMJ
- 8TlN3Ti3L1CVZOT3xywOrp727Cm2pP8qyEx4zYJo=
-Date: Thu, 23 Jul 2026 12:25:20 +0300
+ b=Str5L8uMggZIiBzlWrsdzvcofVHqvKpFx8kpYD5rjl31Qd/hEYT54Z1w8MW40Y1p0
+ XzqEB+C+DidDiyYNjdgK0Blr3LMsqalPj5aiPLhpJCRtlZg+uX9YiQUX7Vvx5tAs+j
+ DNuZX5UGOz7bbBM/SGS3bK4EEGk2hgMZYEU33BzU=
+Date: Thu, 23 Jul 2026 12:27:09 +0300
 From: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
 To: Magnus Kulke <magnuskulke@linux.microsoft.com>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
@@ -40,15 +40,15 @@ Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
  Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <doru.blanzeanu@microsoft.com>,
  Wei Liu <liuwe@microsoft.com>
-Subject: Re: [PATCH 10/12] target/i386/mshv: migrate MP_STATE
-Message-ID: <amHeAGrBuPM4kyto@linux.microsoft.com>
+Subject: Re: [PATCH 11/12] target/i386/mshv: toggle fpu/xsave migration
+Message-ID: <amHebfR_qVUyBAK1@linux.microsoft.com>
 References: <20260710101534.664604-1-magnuskulke@linux.microsoft.com>
- <20260710101534.664604-11-magnuskulke@linux.microsoft.com>
+ <20260710101534.664604-12-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260710101534.664604-11-magnuskulke@linux.microsoft.com>
+In-Reply-To: <20260710101534.664604-12-magnuskulke@linux.microsoft.com>
 Received-SPF: pass client-ip=13.77.154.182;
  envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
 X-Spam_score_int: -19
@@ -72,168 +72,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 10, 2026 at 12:15:32PM +0200, Magnus Kulke wrote:
-> MSHV's "internal activity state" roughly maps to QEMU's env->mp_state
-> and cpu->halted states that describe state of APs in a guest.
-> 
-> We don't invoke set_mp_state as part of store_vcpu_state() b/c we would
-> put all BSP + APs in a RUNNABLE (0) state immediately, breaking SMP boot
-> 
-> Instead we store the mp state as part of the load_cleanup() routine
-> after a migration.
+On Fri, Jul 10, 2026 at 12:15:33PM +0200, Magnus Kulke wrote:
+> MSHV exposes overlapping legacy FP/SSE state through two paths:
+> explicit Hyper-V FPU/XMM + registers and VP XSAVE state. There can
+> be subtle inconsistencies across migrations when XSAVE is written after
+> FPU state.
 > 
 > Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 > ---
->  accel/mshv/mshv-all.c       | 10 +++++
->  include/system/mshv_int.h   |  1 +
->  target/i386/mshv/mshv-cpu.c | 80 +++++++++++++++++++++++++++++++++++++
->  3 files changed, 91 insertions(+)
+>  target/i386/mshv/mshv-cpu.c | 9 +++++----
+>  1 file changed, 5 insertions(+), 4 deletions(-)
 > 
-> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-> index 1ca1d4b54f..5921ce693e 100644
-> --- a/accel/mshv/mshv-all.c
-> +++ b/accel/mshv/mshv-all.c
-> @@ -62,6 +62,7 @@ static int init_mshv(int *mshv_fd)
->  
->  static int mshv_load_cleanup(void *opaque)
->  {
-> +    CPUState *cpu;
->      int ret;
->  
->      ret = mshv_arch_set_partition_msrs(first_cpu);
-> @@ -70,6 +71,15 @@ static int mshv_load_cleanup(void *opaque)
->          return -1;
->      }
->  
-> +    CPU_FOREACH(cpu) {
-> +        ret = mshv_arch_set_mp_state(cpu);
-> +        if (ret < 0) {
-> +            error_report("Failed to set mp state for vCPU %d: %s",
-> +                         cpu->cpu_index, strerror(-ret));
-> +            return -1;
-> +        }
-> +    }
-> +
->      return 0;
->  }
->  
-> diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-> index cbfcb8611b..3dffe3c5fb 100644
-> --- a/include/system/mshv_int.h
-> +++ b/include/system/mshv_int.h
-> @@ -99,6 +99,7 @@ int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
->  int mshv_arch_store_vcpu_state(const CPUState *cpu);
->  int mshv_arch_load_vcpu_state(CPUState *cpu);
->  int mshv_arch_set_partition_msrs(const CPUState *cpu);
-> +int mshv_arch_set_mp_state(const CPUState *cpu);
->  void mshv_arch_init_vcpu(CPUState *cpu);
->  void mshv_arch_destroy_vcpu(CPUState *cpu);
->  void mshv_arch_amend_proc_features(
 > diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-> index 1485f6a1ef..bff1ac9d17 100644
+> index bff1ac9d17..f528dd2b9a 100644
 > --- a/target/i386/mshv/mshv-cpu.c
 > +++ b/target/i386/mshv/mshv-cpu.c
-> @@ -35,6 +35,11 @@
->  
->  #include <sys/ioctl.h>
->  
-> +#define MSHV_MP_STATE_RUNNABLE       0
-> +#define MSHV_MP_STATE_UNINITIALIZED  1
-> +#define MSHV_MP_STATE_INIT_RECEIVED  2
-> +#define MSHV_MP_STATE_HALTED         3
-> +
->  #define MAX_REGISTER_COUNT (MAX_CONST(ARRAY_SIZE(STANDARD_REGISTER_NAMES), \
->                              MAX_CONST(ARRAY_SIZE(SPECIAL_REGISTER_NAMES), \
->                                        ARRAY_SIZE(FPU_REGISTER_NAMES))))
-> @@ -950,6 +955,76 @@ static int set_vcpu_events(const CPUState *cpu)
->      return 0;
->  }
->  
-> +static int get_mp_state(CPUState *cpu)
-> +{
-> +    X86CPU *x86cpu = X86_CPU(cpu);
-> +    CPUX86State *env = &x86cpu->env;
-> +    struct hv_register_assoc assoc = {
-> +        .name = HV_REGISTER_INTERNAL_ACTIVITY_STATE,
-> +    };
-> +    union hv_internal_activity_register activity;
-> +    int ret;
-> +
-> +    ret = mshv_get_generic_regs(cpu, &assoc, 1);
-> +    if (ret < 0) {
-> +        error_report("failed to get internal activity state");
-> +        return -1;
-> +    }
-> +
-> +    activity.as_uint64 = assoc.value.reg64;
-> +
-> +    /*
-> +     * map MSHV activity state to KVM mp_state values, which are used as the
-> +     * shared representation in env->mp_state and serialized by vmstate_x86_cpu.
-> +     */
-> +
-> +    if (activity.startup_suspend) {
-> +        env->mp_state = MSHV_MP_STATE_UNINITIALIZED;
-> +    } else if (activity.halt_suspend) {
-> +        env->mp_state = MSHV_MP_STATE_HALTED;
-> +    } else {
-> +        env->mp_state = MSHV_MP_STATE_RUNNABLE;
-> +    }
-> +
-> +    cpu->halted = (env->mp_state == MSHV_MP_STATE_HALTED);
-> +
-> +    return 0;
-> +}
-> +
-> +int mshv_arch_set_mp_state(const CPUState *cpu)
-> +{
-> +    X86CPU *x86cpu = X86_CPU(cpu);
-> +    CPUX86State *env = &x86cpu->env;
-> +    union hv_internal_activity_register activity = { 0 };
-> +    struct hv_register_assoc assoc = {
-> +        .name = HV_REGISTER_INTERNAL_ACTIVITY_STATE,
-> +    };
-> +    int ret;
-> +
-> +    switch (env->mp_state) {
-> +    case MSHV_MP_STATE_HALTED:
-> +        activity.halt_suspend = 1;
-> +        break;
-> +    case MSHV_MP_STATE_UNINITIALIZED:
-> +    case MSHV_MP_STATE_INIT_RECEIVED:
-> +        activity.startup_suspend = 1;
-> +        break;
-> +    case MSHV_MP_STATE_RUNNABLE:
-> +    default:
-> +        break;
-> +    }
-> +
-> +    assoc.value.reg64 = activity.as_uint64;
-> +
-> +    ret = mshv_set_generic_regs(cpu, &assoc, 1);
-> +    if (ret < 0) {
-> +        error_report("failed to set internal activity state");
-> +        return -1;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
->  static int update_hflags(CPUState *cpu)
->  {
->      X86CPU *x86cpu = X86_CPU(cpu);
-> @@ -1012,6 +1087,11 @@ int mshv_arch_load_vcpu_state(CPUState *cpu)
+> @@ -1057,7 +1057,7 @@ int mshv_arch_load_vcpu_state(CPUState *cpu)
 >          return ret;
 >      }
 >  
-> +    ret = get_mp_state(cpu);
-> +    if (ret < 0) {
-> +        return ret;
-> +    }
-> +
->      return 0;
->  }
+> -    ret = get_fpu(cpu);
+> +    ret = get_xsave_state(cpu);
+>      if (ret < 0) {
+>          return ret;
+>      }
+> @@ -1072,7 +1072,7 @@ int mshv_arch_load_vcpu_state(CPUState *cpu)
+>          return ret;
+>      }
 >  
+> -    ret = get_xsave_state(cpu);
+> +    ret = get_fpu(cpu);
+>      if (ret < 0) {
+>          return ret;
+>      }
+> @@ -1551,7 +1551,7 @@ int mshv_arch_store_vcpu_state(const CPUState *cpu)
+>          return ret;
+>      }
+>  
+> -    ret = set_fpu(cpu);
+> +    ret = set_xsave_state(cpu);
+>      if (ret < 0) {
+>          return ret;
+>      }
+> @@ -1567,7 +1567,8 @@ int mshv_arch_store_vcpu_state(const CPUState *cpu)
+>          return ret;
+>      }
+>  
+> -    ret = set_xsave_state(cpu);
+> +    /* INVARIANT: legacy FPU state must be restored after XSAVE */
+> +    ret = set_fpu(cpu);
+>      if (ret < 0) {
+>          return ret;
+>      }
 > -- 
 > 2.34.1
 
