@@ -4,60 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F034C531F7
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 15:58:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70E5AC531F7
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 16:02:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmvog-0003up-PA; Thu, 23 Jul 2026 11:58:34 -0400
+	id 1wmvrU-0006Vt-Hn; Thu, 23 Jul 2026 12:01:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <conor@kernel.org>)
- id 1wmvof-0003pl-Ae; Thu, 23 Jul 2026 11:58:33 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1wmvr8-0006Gm-OJ; Thu, 23 Jul 2026 12:01:11 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <conor@kernel.org>)
- id 1wmvod-0006UW-O3; Thu, 23 Jul 2026 11:58:33 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id BD12D60A66;
- Thu, 23 Jul 2026 15:58:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB491F000E9;
- Thu, 23 Jul 2026 15:58:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1784822309;
- bh=5+r86mwRtRBoR1e4DF4VtATXVn2bxOtWXeyyEnuB9ZI=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=lIm2CKD2N7sayKP91IjSeJ1SxSvVB3q7/Slrc6QZSwL5gnL7ytZfisHFx3aLzpEPR
- o39d9Y2+NuLbk0iOCR3p90i5MoYAv+L2diknUuzf4cgofaF5X3l92PyMRXurNNDlEm
- WgxAv67g0ucRwsreMpIP799INOiC2OCVkU+jkjGNGgLiXkjEMkhmh8dEH7PzQoPQnr
- Vm7MXRPZ3xg51/PT+ShKLnrmE8gxi3v4LeeOj6qfNJdhPkTwu/n9TNTbCvwi76Dvzm
- BdTiD8/I33Z3TGqXXqMpxflBUAZwRs8o4hxqHqvjPDFMJIvduQO6KvO5vmcXIQCPda
- rZHYJ5aFbWZvQ==
-Date: Thu, 23 Jul 2026 16:58:26 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Bin Meng <bmeng.cn@gmail.com>
-Cc: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Sebastian Huber <sebastian.huber@embedded-brains.de>, qemu-riscv@nongnu.org
-Subject: Re: [PATCH 16/26] hw/rtc: Add PolarFire SoC RTC model
-Message-ID: <20260723-sliding-plural-bf980dc1e567@spud>
-References: <20260723151853.2143177-1-bin.meng@processmission.com>
- <20260723151853.2143177-17-bin.meng@processmission.com>
- <20260723-seducing-plunging-ef7d4c60d917@spud>
- <CAEUhbmVYdwUbp_y8TKZggoz7oNRWo7+sfe1Q+vbqApawp7jEmg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1wmvr7-0006oD-3J; Thu, 23 Jul 2026 12:01:06 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66NDBuCb3106596; Thu, 23 Jul 2026 16:00:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=korN2Y
+ Hqsh8pT9F7lctEfcYhU6wnH85Xri/gBWLMa6Y=; b=OdaYgiUvF5VsUFv0ntdGo9
+ 23s1sdFL9q2oGZiCtz8rSTBder/AqwvN81qoR53QrHvjD2LDugnJZlrQ73NcgG62
+ lyV2gguCoQM6o5aJ9yivOZMB9QjgSK5JkAV6JbVRj8lgj6MNKMSNZDKNi6fvLK5f
+ RXBWFgUGwSp9EXcJ9fOOumnrZT+FSfK7R2V8EjQAn68IMa3IL3OXwGGSwhPr40am
+ YR/oMfW5X4EM6fZ2dlP+Ygu7ag9aQ9aotNCuRVwhASAoKfaAErFA/i80jJ87kw/m
+ 12WiwcbV3wWIv8O8R6Afn5x74Zl7iMsRyc7w7/G9IvdD7YWSVMnbGtXVk1ZdHATQ
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fg7918e9h-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Jul 2026 16:00:41 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66NFnd1n027646;
+ Thu, 23 Jul 2026 16:00:40 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fgmtk4x5t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Jul 2026 16:00:40 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66NG0eXY47710556
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 23 Jul 2026 16:00:40 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E18AB58063;
+ Thu, 23 Jul 2026 16:00:39 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9C1DA58043;
+ Thu, 23 Jul 2026 16:00:37 +0000 (GMT)
+Received: from [9.47.158.153] (unknown [9.47.158.153])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 23 Jul 2026 16:00:37 +0000 (GMT)
+Message-ID: <925af65e-89ac-4ba6-a4f6-316b97d209ef@linux.ibm.com>
+Date: Thu, 23 Jul 2026 12:00:37 -0400
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="+KMWyXSMzKPNP2Xv"
-Content-Disposition: inline
-In-Reply-To: <CAEUhbmVYdwUbp_y8TKZggoz7oNRWo7+sfe1Q+vbqApawp7jEmg@mail.gmail.com>
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=conor@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.951,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 17/44] qapi: convert intro sections for tpm.json
+To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Lukas Straub <lukasstraub2@web.de>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Zhao Liu <zhao1.liu@intel.com>, Laurent Vivier <laurent@vivier.eu>,
+ Markus Armbruster <armbru@redhat.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Alex Williamson <alex@shazbot.org>, zhenwei pi <zhenwei.pi@linux.dev>,
+ Hanna Reitz <hreitz@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ linux-cxl@vger.kernel.org, Jiri Pirko <jiri@resnulli.us>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Fabiano Rosas <farosas@suse.de>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>, Igor Mammedov <imammedo@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ linux-edac@vger.kernel.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, qemu-trivial@nongnu.org,
+ Jonathan Cameron <jic23@kernel.org>
+References: <20260723044805.527643-1-jsnow@redhat.com>
+ <20260723044805.527643-18-jsnow@redhat.com>
+Content-Language: en-US
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <20260723044805.527643-18-jsnow@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: VBysymmx7-i_vvoDQTZTlhWT_AiBBj7E
+X-Authority-Analysis: v=2.4 cv=V6RNF+ni c=1 sm=1 tr=0 ts=6a623aaa cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=20KFwNOVAAAA:8
+ a=VnNF1IyMAAAA:8 a=1mmTJrKIPDxWdWRvuakA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIzMDE1NSBTYWx0ZWRfX26QsPcGnl7QE
+ GVxy+PE+Ap4ev68RtrJ7IF7lXyJ5SNBScFL5Jst0WkDEhYr9R36c7PunE2UcWp+cPZ3pEaTmfD6
+ Q8+ZgNTJ6vI89jzGejZ/NZItpw96UH4=
+X-Proofpoint-GUID: i_T5eeGgDnNzwNRIS0Bk3XBBlhInfrK4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIzMDE1NSBTYWx0ZWRfXyf0iTDBlWwf6
+ UFO+Oj1cDYZS7ZXgTvjjXMazIzluHC9IMwT5cjvkJYk/S1TKNka7cy4XMr30tVLaCP63J1DC6at
+ ffj10/ly4a5s+733G0sTsW2Kg3Di0MjATLgfqUTkeYB3OHLovE3TNurX5bKcbFgXlCuWprWVEw0
+ 8xp+CYWXDH1bT5r1I/nddFvJ0Cd3WNjKaA+zQcuahrGMOizYxKA+cMshKcoHp6j/xMxgsB2x+Fi
+ MPwdMGlbOeeeyTgULmmD+rU/CQ3vA1Cm3Qrrds1B6UfVxb+/89Q+3X9W+yJu7gP0BiYdMG9QKqK
+ niCIDWrSuyv76sGvw3t2OPLoe60qkfJsxZAB+4mdSwZiasuHTE++KT1ehV2gKMeTLLR2b4anOWA
+ Hwk2hmy2SP8Z2I4l7BIitDMIIrJO1deCcwtsL68g6T9TFZ14yKYnUfTrxquhRR91glYOclypUC8
+ Pt9ZUYtT1d/BWvOY33A==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-23_04,2026-07-22_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1011
+ spamscore=0 impostorscore=0 phishscore=0 priorityscore=1501 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607230155
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,67 +148,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---+KMWyXSMzKPNP2Xv
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jul 23, 2026 at 11:55:03PM +0800, Bin Meng wrote:
-> On Thu, Jul 23, 2026 at 11:29=E2=80=AFPM Conor Dooley <conor@kernel.org> =
-wrote:
-> >
-> > On Thu, Jul 23, 2026 at 11:18:43PM +0800, Bin Meng wrote:
-> > > The PolarFire SoC exposes an RTC with binary and calendar modes,
-> > > programmable prescaling, alarms, and wakeup and match interrupts.
-> > >
-> > > Add a standalone device model with explicit MMIO handling for time,
-> > > commands, alarms, interrupt state, reset, and migration. Add its
-> > > Kconfig and Meson entries and list it under the PolarFire SoC
-> > > maintainer section.
-> > >
-> > > Signed-off-by: Bin Meng <bin.meng@processmission.com>
-> > > +
-> > > +#define RTC_REG(offset) ((offset) / sizeof(uint32_t))
-> > > +
-> > > +static uint64_t mchp_pfsoc_rtc_get_count(MchpPfSoCRtcState *s)
-> > > +{
-> > > +    if (!s->running) {
-> > > +        return s->frozen_count;
-> > > +    }
-> > > +
-> > > +    return s->tick_offset +
-> > > +           qemu_clock_get_ns(rtc_clock) / NANOSECONDS_PER_SECOND;
-> > > +}
-> >
-> > Just to be sure, this is done to match the hardware's behaviour of
-> > resetting the count when the device is power cycled?
-> >
->=20
-> Yes, the rtc_clock + tick_offset scheme is commonly used by other QEMU
-> RTC models, such as PL031, etc. It is not specifically intended to
 
-You say "yes" here, but the rest of the sentence is addressing something
-I did not ask so it is not clear if you actually mean that this matches
-the hardware's behaviour.
-Could you clarify please?
+On 7/23/26 12:47 AM, John Snow wrote:
+> (Trivial)
+> 
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
+>   qapi/tpm.json | 29 ++++++++++-------------------
+>   1 file changed, 10 insertions(+), 19 deletions(-)
+> 
+> diff --git a/qapi/tpm.json b/qapi/tpm.json
+> index 3f2850a5733..6d94be656ae 100644
+> --- a/qapi/tpm.json
+> +++ b/qapi/tpm.json
+> @@ -10,8 +10,7 @@
+>   
+>   ##
+>   # @TpmModel:
+> -#
+> -# An enumeration of TPM models
+> +#     An enumeration of TPM models
+>   #
+>   # @tpm-tis: TPM TIS model
+>   #
+> @@ -26,8 +25,7 @@
+>   
+>   ##
+>   # @query-tpm-models:
+> -#
+> -# Return a list of supported TPM models
+> +#     Return a list of supported TPM models
+>   #
+>   # Since: 1.5
+>   #
+> @@ -41,8 +39,7 @@
+>   
+>   ##
+>   # @TpmType:
+> -#
+> -# An enumeration of TPM types
+> +#     An enumeration of TPM types
+>   #
+>   # @passthrough: TPM passthrough type
+>   #
+> @@ -55,8 +52,7 @@
+>   
+>   ##
+>   # @query-tpm-types:
+> -#
+> -# Return a list of supported TPM types
+> +#     Return a list of supported TPM types
+>   #
+>   # Since: 1.5
+>   #
+> @@ -70,8 +66,7 @@
+>   
+>   ##
+>   # @TPMPassthroughOptions:
+> -#
+> -# Information about the TPM passthrough type
+> +#     Information about the TPM passthrough type
+>   #
+>   # @path: string describing the path used for accessing the TPM device
+>   #
+> @@ -87,8 +82,7 @@
+>   
+>   ##
+>   # @TPMEmulatorOptions:
+> -#
+> -# Information about the TPM emulator type
+> +#     Information about the TPM emulator type
+>   #
+>   # @chardev: Name of a unix socket chardev
+>   #
+> @@ -121,9 +115,8 @@
+>   
+>   ##
+>   # @TpmTypeOptions:
+> -#
+> -# A union referencing different TPM backend types' configuration
+> -# options
+> +#     A union referencing different TPM backend types' configuration
+> +#     options
+>   #
+>   # @type:
+>   #     - 'passthrough' The configuration options for the TPM
+> @@ -142,8 +135,7 @@
+>   
+>   ##
+>   # @TPMInfo:
+> -#
+> -# Information about the TPM
+> +#     Information about the TPM
+>   #
+>   # @id: The Id of the TPM
+>   #
+> @@ -161,8 +153,7 @@
+>   
+>   ##
+>   # @query-tpm:
+> -#
+> -# Return information about the TPM device
+> +#     Return information about the TPM device
+>   #
+>   # Since: 1.5
+>   #
 
-> model the counter being reset on a power cycle. Instead, it maps
-> QEMU's clock source to the guest-programmable RTC counter value.
->=20
-> Regards,
-> Bin
->=20
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
 
---+KMWyXSMzKPNP2Xv
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCamI6IgAKCRB4tDGHoIJi
-0tQSAPkBDcUlHvJpXleX/zYOnK6+52FioWK645Z5igetS1KjrgD/cZXV/XuZ2uFK
-JsvOG7XbKI8E0D+FEDV0DRK2KwVlCQI=
-=CWBX
------END PGP SIGNATURE-----
-
---+KMWyXSMzKPNP2Xv--
 
