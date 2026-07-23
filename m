@@ -4,104 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80E5FC531CA
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 11:59:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93989C531CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 11:59:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wms4Q-0003Kc-5E; Thu, 23 Jul 2026 07:58:34 -0400
+	id 1wms4r-0003ND-Or; Thu, 23 Jul 2026 07:59:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wms4O-0003K3-JW; Thu, 23 Jul 2026 07:58:32 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wms4n-0003Me-U1
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 07:58:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wms4L-0002Dj-PH; Thu, 23 Jul 2026 07:58:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784807884; bh=QsNMZJHNc2ceYr1TfC5doTgTVnhK29Ropx+1xw+V1Kg=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=JC2l1ko45ZGTHkb/9BW3qyJBgdxEE+3pI/BqamfcSHG4HPWGtfbaNdNhhpLIlNHKJ
- 3M+yoMSpF+sjD6LiUEqKxVdxkHXAp7huLQJFjlbNrGY1SY25DY+kdmA1CHH86lKPCo
- vLnQId3KatGnT1DtwzYPq/vxh+PKzyGIJLE8ocD+WaGeUN8Bu/YunIa6iUE/rRbJY9
- qXdrTH6AeMD34YeqSrtJg+92aHIxvuycoHbothXStmb5qBiyfHI4YeYAZcCeYleget
- sq3iZgzCu4ViseL6wNRAx8ArSqZpV1fAzHh+/tAVeUO9j3eFyRhKiE/Zn//D4dPWFt
- bQp9dnE2udA8Q==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6897B1C3FDA;
- Thu, 23 Jul 2026 14:58:04 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 896603F3FFB;
- Thu, 23 Jul 2026 14:58:23 +0300 (MSK)
-Message-ID: <8813c947-00ca-4425-bfa1-f7d3d699102e@tls.msk.ru>
-Date: Thu, 23 Jul 2026 14:58:13 +0300
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wms4l-0002F9-GC
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 07:58:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784807933;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=k3hR2LKB54KqVvBl0oK91dbaFADAaXEYoFZ/tG2rZFM=;
+ b=D/pp9VowPp/c7Zm84ikI9Bvyou1wlqj9/hu+7tmxTuc2M55UsRTnkrjaAO/GRqkQEuwAnd
+ SqsbHDM/ltFHvXiFcMEkXrmLlKise/ZqNgieLS5sJ15MJLo2x3YIwbqC0zZ1MPl9Zr7l1u
+ nQ8x7SL6rjgRbyoUe7YbZAt/TqeDAQ8=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-670-pgTA8m24OiSVahpK2mMM0w-1; Thu, 23 Jul 2026 07:58:48 -0400
+X-MC-Unique: pgTA8m24OiSVahpK2mMM0w-1
+X-Mimecast-MFC-AGG-ID: pgTA8m24OiSVahpK2mMM0w_1784807927
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4955edc851aso3699285e9.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 04:58:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1784807927; x=1785412727; darn=nongnu.org;
+ h=content-disposition:content-type:mime-version:message-id:subject:cc
+ :to:from:date:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=k3hR2LKB54KqVvBl0oK91dbaFADAaXEYoFZ/tG2rZFM=;
+ b=MceKa0flfiC8sGKtR9G0W7X8FQF7Rluqj/NzHwlbvcYc0leW6bmg+ZfCX9rD6RqTwD
+ LgXgMQIziAKjsroT9cD0HWBiLw6A5+khZRHONmu162FsmSTYR+AD+SnY3NE9ngf2MJrF
+ UnYGJaFUMqSi623Xp3CJOoFQl8o3tJ4SEhaf27f0JScE0wDanA/osBSBf8xFsqnGGdUL
+ Y5xubZ/3X7x38yyGaNIFYPdlRf8GQMH4l4VDiRKwscLjVbU+DxgToFjJaibABJgZDTs6
+ wr8ttd77dp97lxoLkPbNYMWnMjfYFJdvi3bu6qZlTeQwSPZHQG3LbEbqbFFJeeOkapoC
+ oOrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784807927; x=1785412727;
+ h=content-disposition:content-type:mime-version:message-id:subject:cc
+ :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=k3hR2LKB54KqVvBl0oK91dbaFADAaXEYoFZ/tG2rZFM=;
+ b=Rag9YME6YjDFPUPtMWZFHS1hO8GxWzUEg+ght5bRqqSf2ckjZ9LmTXBmYA/qqRFlEZ
+ yvSMl79IxCOb64994l2Rx17SjWwlOgcoP9x8SjupN9Lyj3hidGr7mBRmjKvpLPj9gGMz
+ HIH7i3/zVRFk/pL7o/r8qjpR4AxgPRuz/Nv21dN/ufywxmV15DnW0hRJ7gYH/DFvMP40
+ xOXqv3ED9ojzxlp+Ll1AlAH87elM31OV8rmLH4LJIcTQWrmK4qqHoA8DfojkT8TE88ND
+ zhFkDnTQAnAVLeLDuvCZsGC7jC6RfHpBk+aBoDyfigVqOcayaAT1W9t48rzWA7nVH7iq
+ l5iA==
+X-Gm-Message-State: AOJu0YzScDuBs1+qH6n67gFe3KM3KCi1Mcqdmm2jiNnZ3jzTzcRrMHpZ
+ dUQ8Q75oPKEqVF6lO0x2WtKYhXWZh3mVOaUqftUpizaPXNTGzD/kTsWzP6nvgAEEHstSRsZqzdi
+ GQgizYTlvyaezjzLC7JWkKmS+r2LmzVn1jzTA1iFICXrcKxU78FBgnd2M/UfKvhqImm05WCwlsu
+ Hcrk0uHPBSR3DVodCsfZUQU42lf3qv7sQDkQ==
+X-Gm-Gg: AR+sD12EsXbMQlFLkP4L3z0dpw7mIgs47txC2YdIbdgk/eslOc/2PHczfzhksHYIwTg
+ GyTMS+G881xNBwxFOeocb+5wZXAHPBn4FRJpVf7CYZ8iWroK408qQpEbVJnsWl7hBH750oQkq5I
+ fL6qMJX6rfHn8ZOkFdMAKeUeiITudHeqvH9Yl9YPw33Z7158VBelASkUa4m//l7XkEA0Yj+x3Pk
+ cY3k07Vf/7QruQn+HL8hT7/MVBCv3NOn39nMLfxsoowu0CY7qxeDY9YxkicXY667c53p4yiIqoG
+ NVkAvAhgbMgJ1cwU41jccoNtgiytE6k4nvshibqYl6BzGXuDX78Xxtg3WFPtpYYr+60Qvkl0Ew4
+ T7rPbhLFEw/bJ4WWShrX7mw==
+X-Received: by 2002:a05:600c:5489:b0:495:40aa:d982 with SMTP id
+ 5b1f17b1804b1-49573c8c272mr28724995e9.6.1784807926946; 
+ Thu, 23 Jul 2026 04:58:46 -0700 (PDT)
+X-Received: by 2002:a05:600c:5489:b0:495:40aa:d982 with SMTP id
+ 5b1f17b1804b1-49573c8c272mr28724665e9.6.1784807926297; 
+ Thu, 23 Jul 2026 04:58:46 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f85c531afsm14445673f8f.24.2026.07.23.04.58.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 23 Jul 2026 04:58:44 -0700 (PDT)
+Date: Thu, 23 Jul 2026 07:58:43 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Eric Auger <eric.auger@redhat.com>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
+Subject: [PATCH] virtio-iommu: fix OOM due to unbounded call_rcu
+Message-ID: <eb46ab360dbe28c29cfa78812a7440dcb7444d59.1784807826.git.mst@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/display/qxl: validate monitors_config heads[] in
- phys2virt
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, QEMU Stable <qemu-stable@nongnu.org>
-References: <20260715072722.1643289-1-marcandre.lureau@redhat.com>
- <05b2e507-0c87-4f9c-9a1a-846a44bd396a@tls.msk.ru>
- <29875880-d0f8-4bb9-9688-c1d0368cc4d9@oss.qualcomm.com>
- <CAJ+F1CJ4jeBpC-U4otG6X2+PWKDG9teicsMbNSaOEmrpQRu0Zg@mail.gmail.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <CAJ+F1CJ4jeBpC-U4otG6X2+PWKDG9teicsMbNSaOEmrpQRu0Zg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
+X-Mutt-Fcc: =sent
+Received-SPF: permerror client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.951,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,67 +116,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/22/26 13:09, Marc-André Lureau wrote:
-> On Wed, Jul 22, 2026 at 2:01 PM Philippe Mathieu-Daudé <philmd@oss.qualcomm.com> wrote:
->>
->> On 22/7/26 11:38, Michael Tokarev wrote:
-...
->>> It would be nice if changes which should be picked up,
->>> had Cc: qemu-stable@ in the first place, to avoid this
->>> extra round-trip.  I'm trying to keep it as simple as
->>> possible, only asking to reply if I should not pick it
->>> up, but it is more work for everyone still.
->>
->> Indeed this patch should had a 'Cc: qemu-stable@' tag.
-> 
-> It could. That said, properly testing fixes on older releases takes
-> additional time and effort, and I prefer not to add Cc: qemu-stable@
-> unless I've verified the fix against those versions myself. I
-> appreciate you taking care of the stable evaluation, but I prefer to
-> keep my focus on master. Imho, we should not rush backports before
-> they have received a little bit more testing, it could introduce
-> regressions - the opposite of what I'd expect from -stable...
+Currently, within virtio-iommu, handle_command processes the command vq
+without any limits on the number of entries processed.
+This can easily and repeatedly enable/disable multiple memory regions.
+Within the memory code, this causes an accumulation of an
+unbounded number of RCU-deferred FlatViews - each of these
+is supposed to be freed with call_rcu, but that never happens
+because the main thread never returns to the main loop.
 
-I understand your concerns well (hopefully anyway).  However, I don't
-really expect you to test things on older branches or to change your
-focus, - it's not about that at all.
+Given FlatView is big, it's easy to have this balloon out to multiple
+Gigabytes of memory.
 
-It is about just *marking* things which you, as the author of changes,
-*think* might be good to fix/have in stable branches, so it gets some
-attention later.
+Limit the loop defer any remaining work to a timer.
 
-We can arrange "delayed stable queue" of sorts, we can wait for the
-changes to prove themselves in the master branch, we can even try
-to test the suggested changes in the stable branches - sometimes I
-can do that too.  But without having such attention in the first
-place, none of this can happen, ever.
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3930
+Cc: Eric Auger <eric.auger@redhat.com>
+Cc: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+---
+ include/hw/virtio/virtio-iommu.h |  1 +
+ hw/virtio/virtio-iommu.c         | 29 +++++++++++++++++++++++++++++
+ 3 files changed, 35 insertions(+), 1 deletion(-)
 
-Right now I have to ask for every change which looks like a candidate,
-whenever it is a candidate or not.  This makes more work for you too,
-by reading my emails and by cursing me making so much noise :)
+diff --git a/include/hw/virtio/virtio-iommu.h b/include/hw/virtio/virtio-iommu.h
+index 3b86050f2c..1f265540ad 100644
+--- a/include/hw/virtio/virtio-iommu.h
++++ b/include/hw/virtio/virtio-iommu.h
+@@ -65,6 +65,7 @@ struct VirtIOIOMMU {
+     GTree *domains;
+     QemuRecMutex mutex;
+     GTree *endpoints;
++    QEMUTimer *cmd_timer;
+     bool boot_bypass;
+     Notifier machine_done;
+     bool granule_frozen;
+diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+index 08f7e8b783..533bd5073f 100644
+--- a/hw/virtio/virtio-iommu.c
++++ b/hw/virtio/virtio-iommu.c
+@@ -993,6 +993,18 @@ static int virtio_iommu_handle_probe(VirtIOIOMMU *s,
+     return ret ? ret : virtio_iommu_probe(s, &req, buf);
+ }
+ 
++static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq);
++
++static void virtio_iommu_handle_command_timer(void *opaque)
++{
++    VirtIOIOMMU *s = opaque;
++    VirtIODevice *vdev = VIRTIO_DEVICE(s);
++
++    if (virtio_device_started(vdev, vdev->status) && !vdev->broken) {
++        virtio_iommu_handle_command(vdev, s->req_vq);
++    }
++}
++
+ static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq)
+ {
+     VirtIOIOMMU *s = VIRTIO_IOMMU(vdev);
+@@ -1003,10 +1015,17 @@ static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq)
+     struct iovec *iov;
+     void *buf = NULL;
+     size_t sz;
++    unsigned int batch = 0;
+ 
+     for (;;) {
+         size_t output_size = sizeof(tail);
+ 
++        if (++batch > virtio_queue_get_num(vdev, virtio_get_queue_index(vq))) {
++            timer_mod(s->cmd_timer,
++                      qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL_RT) + 1);
++            break;
++        }
++
+         elem = virtqueue_pop(vq, sizeof(VirtQueueElement));
+         if (!elem) {
+             return;
+@@ -1416,6 +1435,8 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
+     s->req_vq = virtio_add_queue(vdev, VIOMMU_DEFAULT_QUEUE_SIZE,
+                              virtio_iommu_handle_command);
+     s->event_vq = virtio_add_queue(vdev, VIOMMU_DEFAULT_QUEUE_SIZE, NULL);
++    s->cmd_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL_RT,
++                                virtio_iommu_handle_command_timer, s);
+ 
+     /*
+      * config.bypass is needed to get initial address space early, such as
+@@ -1498,6 +1519,7 @@ static void virtio_iommu_device_unrealize(DeviceState *dev)
+ 
+     qemu_rec_mutex_destroy(&s->mutex);
+ 
++    timer_free(s->cmd_timer);
+     virtio_delete_queue(s->req_vq);
+     virtio_delete_queue(s->event_vq);
+     virtio_cleanup(vdev);
+@@ -1509,6 +1531,8 @@ static void virtio_iommu_device_reset_exit(Object *obj, ResetType type)
+ 
+     trace_virtio_iommu_device_reset_exit();
+ 
++    timer_del(s->cmd_timer);
++
+     if (s->domains) {
+         g_tree_destroy(s->domains);
+     }
+@@ -1628,6 +1652,11 @@ static int iommu_post_load(void *opaque, int version_id)
+      * still correct.
+      */
+     virtio_iommu_switch_address_space_all(s);
++
++    if (virtio_device_started(VIRTIO_DEVICE(s), VIRTIO_DEVICE(s)->status)) {
++        timer_mod(s->cmd_timer,
++                  qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL_RT) + 1);
++    }
+     return 0;
+ }
+ 
+-- 
+MST
 
-Besides, with stable releases being not every second day but with some
-delay, most stuff in there do have some minimal testing in the master
-branch first, at the very least.  It is just before the stable series
-freeze things might look as rushing for stable.  Also, a few years of
-the stable series done this way already, kind of proves we're doing a
-good job here.  There was one regression in migration code which was
-a tricky case by its own (it was broken either way), and one or two
-more regressions fixed by a quick follow-up update, and that's all.
-With so many changes in there, I think it's a rather good result.
-Yes there's always risk to introduce a regression.  Not doing any
-fixing, on the other hand, ensures we stay with our bugs forever -
-that would be the most stable stability :)
-
-So, to make it explicit: I'm not asking your for more work -
-especially not the extra testing of the changes in stable branches.
-I only want to reduce your own work by not requiring to read my
-questions when I feel something is a good candidate.  Tagging the
-change as "for-stable" does not mean it must be applied, it is
-more about marking it as a to-do item, or some sort - for you
-or for someone else.  Just not to lose it.
-
-Thanks,
-
-/mjt
 
