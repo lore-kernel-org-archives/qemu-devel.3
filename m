@@ -4,142 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2625EC531F8
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 16:06:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD0B9C531F8
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 16:08:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmvw9-0003TW-NK; Thu, 23 Jul 2026 12:06:18 -0400
+	id 1wmvxv-0004IP-Lr; Thu, 23 Jul 2026 12:08:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wmvw3-0003PB-6C
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 12:06:13 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wmvw0-0007Nr-0D
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 12:06:09 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66NF9Nu6162109
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 16:06:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 7etjDyNUcjho5Z9i5TV5RUKQPZqHBwzJskbPD7GFUu4=; b=TnM2OG0VjVqJEd5s
- /NM4+iNenAtsNlBWviQru9ZpeaLmpUcAmSnJg9tVA23J0CzfLZhOXy1YKhqdZDAq
- zm3Xh+OGXTJmCGFpR356V6dxreEJUMcPXTEpbSXgrjeFcZduUgKlUX5UMeagRGX/
- zIptHp/v/Qb6Q7kg5LaMq+43NxiS6RFBdUAtQn1ghhcGr27A42x7pScflus5mQ8K
- GE7P7RBC1296mZS4i/2SjzwnVI0jfrZaOLeF23cCaGx71XCWp7O1iuTllc9KFsRX
- lYj9cXTZtXkAA0kKqT7+uLEfWDMF35OKRbis1A+i+YbTWq8EHvK17ToiOv3DJdZ7
- wPLqUA==
-Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com
- [209.85.217.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fknbmgcek-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 16:06:05 +0000 (GMT)
-Received: by mail-vs1-f70.google.com with SMTP id
- ada2fe7eead31-74ab744f2c2so219119137.2
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 09:06:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1wmvxt-0004Hy-EE
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 12:08:05 -0400
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1wmvxr-0007WH-F1
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 12:08:04 -0400
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-6689f36ae56so996299d50.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 09:08:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784822882; cv=none;
+ d=google.com; s=arc-20260327;
+ b=dErpwYfkLk73PRjhK4h+8+NJbI4HzEBGNqV7IXIeg+15P/VsHuTOKo6LBgmkAmxW1I
+ MBkXAJroFrmMyYhD1m+AaCZJEPTm4yMJLaZW0k4RhBwtwCsPQJAKt1NAgqX9EKUe60tW
+ qNPK31guYsw68anbjL/BDTRiO60gz3Xhgt8eGZiJR35KocEcPCcxCT6Q+rTIuM5Kf0s+
+ UJzewEcnSUpiBaDzzjx8qqpsHTywm2gCvrtRGcolGoNCAaXKcz0s+6fI/v9pWMulMbKc
+ xAuA9Nr5U91lIsGRnHHZPAYjHIBIHJoSwv3siEOz9FEwu3H+DWh+mFWZwx9Zw/7m66+p
+ kuVg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Vp/UAfBxtrNkqiFGWr8HdOUPysHpaod4R8kEC8Gjb40=;
+ fh=gcwxmYuefGfJFGwl4Y4QoHgJrREB0HMtrQNy8AVp0Uk=;
+ b=I0xPYHDaGkaavP5RT3qbmGh+0tqALDF6rJz9c6RCn5aiUM+5ilX9bjv5z+Uqb5+C6f
+ uPg+3hauoUi7BG5+ypnmLhokeLPJG9yjm8rmTPUtw3moPPLGUBmMT7dWc+M9MMLDkEGs
+ 1vGbALMY31shpjpgOjr/dFlfE+mEoYx4C6uVou6ShqNS+35UFZQze/qWMfUn3u+dJCTa
+ iP92UuIBZErI7jR2QFw1GH9wuCgZNkPznkdnFAkXK6dd1sZyIn+2XVYmBanmUuPTnY/I
+ oEl5eEU+07aYHFuiD/q1TYS3R3PsKVLBGYZhG+K6YvYTz8kUbSfuUIVpmis+Sj1c7pMO
+ TSVQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784822765; x=1785427565; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=7etjDyNUcjho5Z9i5TV5RUKQPZqHBwzJskbPD7GFUu4=;
- b=iQ4t3smOHyVSZ50C3YiqjOCCFIHVGS56/4mmRt4uTeS/mSifflBCGIgpRm8wX6TC4P
- wMYVHGXH8X02eM63UoRkSXU/MP/U6HLDHsnBWiAwTFSIxnoDL6kbt4PjJlcW+PVJF5Wz
- iPTANzmIvKCOU9Wlj42XRkAf1Ke2rI9/7szoyZn6lcrR94NbofJaHrLESHO/NFY9H3+g
- Qa0kRgKA7X1je/wtflzuoNfAcqTmeSlpMyXOW9bSjqYake3dl1h6Y+6kQMbXb2iUCQMa
- 9BjtT/szEoD0mRGU5CX22pq6L44m/yy15+gaG+Au0RtY3YsCTBbFH2HWMmJ3bLpe3QcI
- 2RkQ==
+ d=gmail.com; s=20251104; t=1784822882; x=1785427682; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Vp/UAfBxtrNkqiFGWr8HdOUPysHpaod4R8kEC8Gjb40=;
+ b=BMMgzEHem2ZR4VM+CGt+ZK9keLlzVzKSXs1wiLRL2zK0t0cP4VL3y1FtdKsfrxZ43o
+ vWAiLnHFYoFodz0U+Bb1sjlqI4LKtZwpTBi+LEZG3hxzwvYWZ3K5mUY4uRZUCf/+gEzS
+ z64eCk5+4yMGauFlF7/znd30P1RiMwkN+/xosrNrAV01/LiIRu620qcxsIkmZDYVjzZg
+ cB70Zv1I6wbPk2LMAri7WmcVD+SaLw7RUitkSAgvsiyhw3ErwX416l+/NwND4IszGuCi
+ /B81mDyMLlw8pchxZgkn9CLSzOOPmMUqEiWw7pKN8ugO4iKBbHwdqThov3CjwV+jlhzz
+ 4gig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784822765; x=1785427565;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=7etjDyNUcjho5Z9i5TV5RUKQPZqHBwzJskbPD7GFUu4=;
- b=KHuN50fHDxFfvn3s6bgxtn0CrOqbyzOtPOusYdKgA2nbxEOfoxQj1q6ZpJPvsXgzfE
- q+LhNHmqU+wZQbYnt+3J/y68fkYqsYT4vBJ4Cf4D/KKMIEXZw8zH/WIPJhpEHaWIZKzf
- Io18ktzyhmEvAQ4GD8j4ITD2975DROFr8yOvy1GEw/KAnDHqGohsE/OXJYXyCseA/zu0
- y/C6rzCtwoA58tjxSmjarcwz5fbPo+UWs5EyqefhTPOn0QqyXTmP8GQjRnvHcqfOw5i1
- blmCNEEzKF3sMzUz9dEG/8DJTzlw+DFExjJTKa1ijbIfTrBek3+G3n5pwdH1KTrYV8Kt
- 79MA==
+ d=1e100.net; s=20251104; t=1784822882; x=1785427682;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Vp/UAfBxtrNkqiFGWr8HdOUPysHpaod4R8kEC8Gjb40=;
+ b=Uqc/efv6xa3rql5xwWQtxm/0LnaqFQaXKNQcqFSNyV5kj8WrCHRNLcHbYh6X6KDlCo
+ uiE/NvFKcsf5JNg5kTUPGsSOGPqpE3HwSJPG3J9u3p+Ee/NSPBOxtYYEMETsDmc9cm9f
+ /9DD5Nu/gLWwqLgl32xOomjps00xqcfsr0PtSE901qQHwv/9HILIev6hlK5Ss8l9/3dm
+ svPNLdDuZ+RmrjxLcbgCU/rG57Vui6KpT01S6i/qduT7y49dauO7bS74ZbMOQcPMsiCD
+ 78YWRfhQn92g087j3Rn7Mklw5dFjGECJ1IVKZ1MPtnReWZcvw1JY456wpLR5ZQIUXyFC
+ 4TvQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RoyJGvtW6Fw2QTDPrQqGUgICUVqRWtBS5Fz54M0F2zjbv4gOplXZ1KK5oY0SdSjgYAfvkG7tecVpfHJ@nongnu.org
-X-Gm-Message-State: AOJu0YxE/vs/R0Zwwh7RThA/LmsSIrxSNxxw71MS2l7Qxo8jOGl3c5Mn
- IvDXxAuWOQ2a/dEL0Gm5TEJiRcUSWVRqU1ooGsKcy7RfBOopQKBB6ihRTA/eWardgsYaCnzosps
- oSc5TsCu1gW+nSKbRqDQVlOqD3s3qQFuOum47DeEHZ6i4kb0OBUp2KCLGeA==
-X-Gm-Gg: AR+sD10LK3+HyABPl203oYJEbXBbRcyE+7FsJzIkgMEF6gwPvXCbKI3gVQy1UJ6Y7UL
- Ch4Yl/u2w/T7ZLAyTXiq/ahsBOFFoIkkwWVWstp38oK0DuhLelvA9w4e30DF5SKMc8hpW3W+Sx/
- grFQ6bVLWVWXqSKo2uyE2+naSQaySEVyyxvdOlXiLFKhWP6I/VyoGPhpq6PEk6ILpOlAAAVnrBE
- x0mykDH8LF1wBNLFPkonTp5HiuV90P7LyW1/GcGDYa5+k/2sDcpYl0ylEVKDCKk9DQEMWcHLaZG
- 7hpCd3Jnagtib5B79tGL7JiC2C/u2gwKWv2o9T40dS3WN8PMp6nQko4U+SxgrT8TScjBpNzumnG
- See50n8krPha1LxbWH+Bc03TfrNEKH/h3D4VfFAOGKkvavgcdNrU=
-X-Received: by 2002:a05:6102:4bcc:b0:744:cb59:d6e0 with SMTP id
- ada2fe7eead31-74d5ad4147amr1545377137.0.1784822765238; 
- Thu, 23 Jul 2026 09:06:05 -0700 (PDT)
-X-Received: by 2002:a05:6102:4bcc:b0:744:cb59:d6e0 with SMTP id
- ada2fe7eead31-74d5ad4147amr1545329137.0.1784822764685; 
- Thu, 23 Jul 2026 09:06:04 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4957afb4da8sm2762255e9.12.2026.07.23.09.06.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Jul 2026 09:06:03 -0700 (PDT)
-Message-ID: <dc629f33-1d9c-4e1a-a925-384e8cd1e9fe@oss.qualcomm.com>
-Date: Thu, 23 Jul 2026 18:06:02 +0200
+ AHgh+Rqj2HbRQs1lTxvblEQ+y8kJXpx3xtmlrrKDejhipt8oMnN0O3/2YHoGZoR/zJNmiePb+WZPHqtrYWu6@nongnu.org
+X-Gm-Message-State: AOJu0Yw/bvkoteCGHSSV+k/ZQ4eJE3Dm90/k5cLDwGNWKdeOj6CxTVZV
+ GxT/MODgw0MmdXVtDW9bqnPAAgZGOw453F4GZ3798ZRDtXbRFbf1lPDlFzxNwnfXD9ojowZxcOz
+ gUfkuwEHKgy/nl4aWygr2Bilpki0D0Xc=
+X-Gm-Gg: AR+sD11PyEfvOPjtsxn3QByyoZUpUcRCFX6V0u/Owh+doyJaNkq56ZKcyXQHGyg4PZs
+ p8WxnQMQfG+K21mh2QZ9teVgieHHic1LWyNym4qOmlaVQxwaGDt7dYUzLDY6RrYNxCwYZ5w3bv6
+ hRCR3eCupzi/C0h+abStlpqQl4fd2zAY950AgGngJ31WVTUXe6q//sLMn1CZHk0JOiVsu5GBifx
+ iLGvfEAoljSfU9KVp4fnaktlix/agH6eFNQb21ZLFAS80aqsRnpBQ6S24hN9V97aUsJGziY
+X-Received: by 2002:a05:690e:1583:20b0:667:d808:af7d with SMTP id
+ 956f58d0204a3-668a4bae19fmr849846d50.14.1784822881671; Thu, 23 Jul 2026
+ 09:08:01 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] include/hw: defend against weird elf headers
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20260723125310.33707-1-alex.bennee@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260723125310.33707-1-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=e742j6p/ c=1 sm=1 tr=0 ts=6a623bed cx=c_pps
- a=N1BjEkVkxJi3uNfLdpvX3g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=p0WdMEafAAAA:8 a=KKAkSRfTAAAA:8 a=69wJf7TsAAAA:8 a=t668wg_bggP6ZPi5WjgA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=crWF4MFLhNY0qMRaF8an:22
- a=cvBusfyB2V15izCimMoJ:22 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-ORIG-GUID: h1WVqBrb4mKs6JQhPvvw_ZxNzxNUIccs
-X-Proofpoint-GUID: h1WVqBrb4mKs6JQhPvvw_ZxNzxNUIccs
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIzMDE1OCBTYWx0ZWRfX2WeooDn0F/l/
- 6VZlonewlvHE5nQ9yDag5/qHt2VOBls1PNZR/Mb+cpgFyoj6SHq+tYF95ai0NdxzQ0ecCZrzDb2
- TtZbkr+Ah+9nHFfM+MgiRHHxJcAwnOg=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIzMDE1OCBTYWx0ZWRfX+j7isDM28QTl
- 7vCKntutvxGMbXW8PFmXwPEP/Cpsemn3LgYNkpjhfInGacVITizZVs3Ny5Ph+Yzrjni684J+ZZF
- ymYKn/CpNa7OcZ/rPyjgmvxBkLyshT7iv2/IO8552Lx2dMz3LDcDxS8Pi3ZHgzoXs9iPilWsY13
- NmzjlNQciynYQi8dO9xQKcNimlEfBhlxurokoO/c1/ueiMNbaeEgA6D0N6DY9tQXsJ7Mt9hXzkG
- TKWRI18Aa1zp3tEA1WKh0FEJxUOhZHz7QSgLM5nJBTUMJl5mpxRfFZ38yJmYSy1ZUijbyqYP2Hj
- B9OQ5ib6qNBZHSxOxuUkh/ui1QRvErPMhhE0zgywNlNwFfV+bL6XSzjHh8Z+ZZBZu6G/+nrLn/r
- EAtm4MzOw/k5nf11vx15wVS5hP6ZgCWBVPMcEGNSMvSTMiZiBAGXe3F6T5g2o4KwKfHSP4fWenh
- KHQfUmSxK8ojhNf3zmw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-23_04,2026-07-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
- impostorscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607230158
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260723151853.2143177-1-bin.meng@processmission.com>
+ <20260723151853.2143177-17-bin.meng@processmission.com>
+ <20260723-seducing-plunging-ef7d4c60d917@spud>
+ <CAEUhbmVYdwUbp_y8TKZggoz7oNRWo7+sfe1Q+vbqApawp7jEmg@mail.gmail.com>
+ <20260723-sliding-plural-bf980dc1e567@spud>
+In-Reply-To: <20260723-sliding-plural-bf980dc1e567@spud>
+From: Bin Meng <bmeng.cn@gmail.com>
+Date: Fri, 24 Jul 2026 00:07:49 +0800
+X-Gm-Features: AUfX_mx_3-qV5-6YKA0203tBzlND2xWQFxjH3QqwMXHNVbrbPC2l9RaiC5nat74
+Message-ID: <CAEUhbmUVQ5M4Gw_viYq3BShCYCuA1HCDufKy9xV+TmfWKbpv8w@mail.gmail.com>
+Subject: Re: [PATCH 16/26] hw/rtc: Add PolarFire SoC RTC model
+To: Conor Dooley <conor@kernel.org>
+Cc: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Sebastian Huber <sebastian.huber@embedded-brains.de>, 
+ qemu-riscv@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=bmeng.cn@gmail.com; helo=mail-yx1-xb129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,71 +124,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/7/26 14:53, Alex BennÃ©e wrote:
-> According to the ELF spec:
-> 
->    PT_LOAD
-> 
->    The array element specifies a loadable segment, described by
->    p_filesz and p_memsz. The bytes from the file are mapped to the
->    beginning of the memory segment. If the segment's memory
->    size (p_memsz) is larger than the file size (p_filesz), the
->    ``extra'' bytes are defined to hold the value 0 and to follow the
->    segment's initialized area. The file size may not be larger than the
->    memory size. Loadable segment entries in the program header table
->    appear in ascending order, sorted on the p_vaddr member.
-> 
-> which implies while both p_filesz and p_memsz can be zero we should
-> never see a case where p_filesz is greater than the in memory size.
-> Indeed it has been reported such a hand crafted ELF can blow up, for
-> example during rom_reset():
-> 
->    address_space_set(rom->as, rom->addr + rom->datasize, 0,
->                      rom->romsize - rom->datasize,
->                      MEMTXATTRS_UNSPECIFIED);
-> 
-> which could trigger and underflow leaving QEMU slowly filling a very
-> large buffer.
-> 
-> Fixes: https://gitlab.com/qemu-project/qemu/-/work_items/4056
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> Cc: qemu-stable@nongnu.org
-> ---
->   include/hw/elf_ops.h.inc | 4 ++++
->   1 file changed, 4 insertions(+)
-> 
-> diff --git a/include/hw/elf_ops.h.inc b/include/hw/elf_ops.h.inc
-> index 9c35d1b9da6..c6d94ef760c 100644
-> --- a/include/hw/elf_ops.h.inc
-> +++ b/include/hw/elf_ops.h.inc
-> @@ -427,6 +427,10 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
->               file_size = ph->p_filesz; /* Size of the allocated data */
->               data_offset = ph->p_offset; /* Offset where the data is located */
->   
-> +            if (file_size > mem_size) {
+On Thu, Jul 23, 2026 at 11:58=E2=80=AFPM Conor Dooley <conor@kernel.org> wr=
+ote:
+>
+> On Thu, Jul 23, 2026 at 11:55:03PM +0800, Bin Meng wrote:
+> > On Thu, Jul 23, 2026 at 11:29=E2=80=AFPM Conor Dooley <conor@kernel.org=
+> wrote:
+> > >
+> > > On Thu, Jul 23, 2026 at 11:18:43PM +0800, Bin Meng wrote:
+> > > > The PolarFire SoC exposes an RTC with binary and calendar modes,
+> > > > programmable prescaling, alarms, and wakeup and match interrupts.
+> > > >
+> > > > Add a standalone device model with explicit MMIO handling for time,
+> > > > commands, alarms, interrupt state, reset, and migration. Add its
+> > > > Kconfig and Meson entries and list it under the PolarFire SoC
+> > > > maintainer section.
+> > > >
+> > > > Signed-off-by: Bin Meng <bin.meng@processmission.com>
+> > > > +
+> > > > +#define RTC_REG(offset) ((offset) / sizeof(uint32_t))
+> > > > +
+> > > > +static uint64_t mchp_pfsoc_rtc_get_count(MchpPfSoCRtcState *s)
+> > > > +{
+> > > > +    if (!s->running) {
+> > > > +        return s->frozen_count;
+> > > > +    }
+> > > > +
+> > > > +    return s->tick_offset +
+> > > > +           qemu_clock_get_ns(rtc_clock) / NANOSECONDS_PER_SECOND;
+> > > > +}
+> > >
+> > > Just to be sure, this is done to match the hardware's behaviour of
+> > > resetting the count when the device is power cycled?
+> > >
+> >
+> > Yes, the rtc_clock + tick_offset scheme is commonly used by other QEMU
+> > RTC models, such as PL031, etc. It is not specifically intended to
+>
+> You say "yes" here, but the rest of the sentence is addressing something
+> I did not ask so it is not clear if you actually mean that this matches
+> the hardware's behaviour.
+> Could you clarify please?
 
-Maybe use 'ret = ELF_LOAD_TOO_BIG;' or add ELF_LOAD_TOO_SMALL = -6 and
-update load_elf_strerror() to return a more useful string?
+I mean yes this formula is commonly seen across all other RTC models.
+The resetting of the RTC model is not controlled in this routine here
+but in mchp_pfsoc_rtc_reset(). Currently the counter is reloaded but
+maybe it should be left as it is and just initialize once.
 
-$ git log --oneline |fgrep hw/elf
-159fb790e48 hw/elf_ops: Rename elf_ops.h -> elf_ops.h.inc
-1fed4cd04d8 Revert "hw/elf_ops: Ignore loadable segments with zero size"
-62570f14341 hw/elf_ops: Ignore loadable segments with zero size
-e1fee58fea3 include/hw/elf: Remove truncating signed casts
-b4c4c1f1129 hw/elf_ops: clear uninitialized segment space
-8975eb891fb hw/elf_ops.h: switch to ssize_t for elf loader return type
-f413e514a91 hw/elf_ops: Fix a typo
-5579b524b0d hw/elf_ops: Do not ignore write failures when loading ELF
+>
+> > model the counter being reset on a power cycle. Instead, it maps
+> > QEMU's clock source to the guest-programmable RTC counter value.
+> >
 
-"hw/elf_ops" in subject is more precise than "include/hw".
-
-The fix LGTM but the error path could be easily improved :)
-
-> +                goto fail;
-> +            }
-> +
->               if (file_size > 0) {
->                   if (g_mapped_file_get_length(mapped_file) <
->                       file_size + data_offset) {
-
+Regards,
+Bin
 
