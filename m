@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B071C531CC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 22:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24718C531CC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 22:33:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wn1xp-0005vw-0l; Thu, 23 Jul 2026 18:32:25 -0400
+	id 1wn1xq-00061w-KA; Thu, 23 Jul 2026 18:32:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wn1x0-00058q-F7
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 18:31:35 -0400
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ id 1wn1wy-000576-6P
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 18:31:34 -0400
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wn1wy-0001VW-Jv
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 18:31:34 -0400
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-80dc4a68e4aso9925727b3.0
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 15:31:32 -0700 (PDT)
+ id 1wn1wv-0001UT-DL
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 18:31:30 -0400
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-667b0ced2d3so1083336d50.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 15:31:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784845892; x=1785450692; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1784845888; x=1785450688; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=GKRiouieuWI1DwlbrQ7+GSIDGiapIP1YbqHrv02aXj4=;
- b=HLW7l4FJ2kR3iH/wuj4vjGvkn3+7elKixqrxiwtSr4THGWO72KEq/bGk3IRuJxNdKR
- hfkqeKZ7UXGJJfJ3Z4L7BDwrVglIH/0bUCDBj2p1S/9+0w6bK7PP9526RtCj+CDJ7G/I
- Q8fvjn3HWAQrJaaZlwawxLhM4//nzrcB32Q94vvtXQUQbdwbg2kTdh0Q/HqysuIiWipS
- ZDF8y1C5qKeazPCNOlWeLGLyKzLUXgtnsA2xxrGKiOV/winQIYeK1D74qbAZDrMPiG1t
- U/mjaPAtzbN3Nw8mK7wZBq4jh399Cs5xmQ/hUdFEVclh3XSM2lGR+R1XZy6H6OoFm5qA
- 42qQ==
+ bh=1QFQi4UgZC12C/rG3wGbIoCAr9m0fHFGugO6XfGTbqc=;
+ b=iHhzpPp19foWlaW/RPcFyhJP7lN1NHu2qPUuLWFitN4DVYP4zrSC3XqNHFTcXR1hQs
+ jV1owfGCpPnvGusKiAEn7dnd6MyVMqiFcKo+6datBEtQ2Pk5xIPmO1PptkPyCMbvVBpq
+ htfdVtfUCxqFQRgnKqp9bwFDYN9ryHwni3TRqqqke2OaalF1AfjVLM8vy1H+ntZJ6Gmq
+ DOb6sjIGlJPUHFVj1YJeyPpbivHOTwtCk3/pbxRPOqgXgIWvGQ+tbmCgSIL2MhHuZKHL
+ tGYctitxSKndOQ7QNO0oMTG+SAKW1eLjecyjjUhWVDxl9Lbk4uRcBBdEzzo1h1mu1tC1
+ j0LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784845892; x=1785450692;
+ d=1e100.net; s=20251104; t=1784845888; x=1785450688;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=GKRiouieuWI1DwlbrQ7+GSIDGiapIP1YbqHrv02aXj4=;
- b=CY22VIe8qeI3aLKcZhkANLH859RsGBYdTImqbHKSNMFwTugG1mm+Yz31iz4ev8UNxN
- QHN0uQYjtCwTAbhQcKcC1dqzbQvB4pcQwe85Tf9i5FJBETE3/QYajxMSTMleVzMqunIR
- CI9Mq6LyIWY9TEXWVnWgRtLoIh5hrGfOk/0FbL6Ni7j0BG0wWwzBHjXs8DYi3BiWkOhZ
- W+R4FrAjxivRZ8nQDYtdu47boNaJaDOI2k4TGBWBXBEc/WeFeHdTnm3Dg8uxVT46/nuA
- p27tdkLuIw9uGQB5iy3kB5EURHLVjXQBG8+U4nJBj0xB74O0yNfzST/HxpwiOWv9u+KA
- YhWA==
-X-Gm-Message-State: AOJu0Yyyg4G0SiAahZgJDSOoLu5l1MbY5LFqdtKlwTpi/J1ekAUoqgpC
- K4S0thV9KxG8dS6Cdihf1bw8SL7m3x2xJ5YSDvS2xMwdv5kO2qWAAigW
-X-Gm-Gg: AR+sD11gCDlFz9NXSY1GcfuK7RHmmuT738yiSFYVQq0cmfPPvfI36ZT5RFdFQlZ+NZX
- LyxJt+aKCS84L82N/A/7gxfxNrheS/rWBNabMW57xIGNTTzP/3adfYsuDZ5mF4TQrGl9IYM+xBs
- mapPjaiTSktAarmdE+V5X+4jzClS5D3Z70BPbIWQU6BDjdWkp0p82tLqmjcfMJId3zCiEHbV2Ev
- tD4d6QVyKhIvOVM5rrsBHOa4BUCfFLbM4OfPedw1/JIx3PSfz/ynyu4pbKnLYF3y3LcXqJkKR9b
- x+Q3kjeq9Z0IHmubquidI6FEYML8DJqOM61PibX7o44JW1xaU64EgSl8hy8poKza+0o2tlaFvAg
- e+WmstwrLpXAWL7leb3cJ5dizNrOKzYgSCoVqz0XxpiQ5qhsupuFrFILvH02os1YR9qGDAFWy+N
- JD0g0/djw=
-X-Received: by 2002:a05:690c:9a13:b0:80c:85c6:898f with SMTP id
- 00721157ae682-81f4c385c3cmr17699887b3.62.1784845891600; 
- Thu, 23 Jul 2026 15:31:31 -0700 (PDT)
+ bh=1QFQi4UgZC12C/rG3wGbIoCAr9m0fHFGugO6XfGTbqc=;
+ b=XRSqwTUqHdSbF09vuOe3SQq3P1RmaKpGQ0ywff3b5blNtiBwyAPBewFC1uN63LsUY7
+ gtwttqTR2eHb1FNpSmg01v1RHEyYHkwZNBm1oA+6dXNA1gIG0Uja6caVoe6LGZLF0Aah
+ Uck+TLMMaqB7vhWfCu8Jm4AXXGiqsGmgKsAfM4OyU8WZwdv2k5kJo7d1p1+qi3pcSz5K
+ 6q4GjdiEvl8t2cEI244siw6HcAXY2TPlDMdJhWoIF0rBxRvUkj7lJ9HqyjOPXLwzM9/U
+ UF47VjSzdP6gJKXt2zmbOen30o1/Cq3RBy4i39ugnB9aRyx1kJy9CoIVSldsHRKOSPik
+ 2xcQ==
+X-Gm-Message-State: AOJu0YyG7MZyNdi/jiNFAfRNfaWZ/YxBjurLhr1UPsq6oNV1/IH2eT/D
+ mvse08Gad8kcwhE5bgGG7pEzc6l+WDbXe82rE8Z6thSmAPD/LHzo8xAdz6nU2xbY
+X-Gm-Gg: AR+sD13mh9CgzKro+XlcUvlg+aI0VDqx1H68knwIJmN4mHAUx8G8W1vyeRozW+y1Rh0
+ RGRD907BiLaMqurjlfciNylKoQzEYgdSzFz1PAvJjIXq/fe48xjPGnwtgjOyC3twPFXYV/8vdux
+ FTljMXv9gmhNIevqgGE3/jIz1F9Qv1SaHWtLCoUIcbjl9wz5avBoC+/+WxWOkoxerJY7Rm76YHe
+ AR+FDbpbPmDoAaNuojJt6GQ2R/PnOklgTbHfR1gl8E7sj3gVRj298ssKnIHIo+t57zBBAbNIHUv
+ 6VwL6hOmYayzJG3cpcWi4nVoykyHDpFHgJwsqFjkLTPmMOAU1FfZXOH/Gi4yYF5SznMmz26oeMS
+ ZU/PCOEsY5otAj2wdfrL7ypblIwPAtGakI+gP9o6SefU/tSnPgDGWBfjNELFPFzv41Zrjy3ZL/r
+ 5MVupEjII=
+X-Received: by 2002:a05:690e:440d:b0:667:8b90:3577 with SMTP id
+ 956f58d0204a3-668a503789dmr898097d50.105.1784845888389; 
+ Thu, 23 Jul 2026 15:31:28 -0700 (PDT)
 Received: from [127.0.1.1] ([2600:1700:e140:14d0:446f:49ff:37bd:d45a])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-81f33c3c1c5sm35766777b3.17.2026.07.23.15.31.28
+ 00721157ae682-81f33c3c1c5sm35766777b3.17.2026.07.23.15.31.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Jul 2026 15:31:31 -0700 (PDT)
+ Thu, 23 Jul 2026 15:31:27 -0700 (PDT)
 From: Connor Kite <connorkite@gmail.com>
-Date: Thu, 23 Jul 2026 15:30:13 -0700
-Subject: [PATCH RFC 14/15] hw/virtio/vhost-user: handle data movement with
- shadow vqs
+Date: Thu, 23 Jul 2026 15:30:12 -0700
+Subject: [PATCH RFC 13/15] hw/virtio/vhost-user: add shadow virtqueues and
+ eventfd intercepts
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260723-vhost-user-isolated-memory-v1-14-6b97c439eb28@gmail.com>
+Message-Id: <20260723-vhost-user-isolated-memory-v1-13-6b97c439eb28@gmail.com>
 References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
 In-Reply-To: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
 To: qemu-devel@nongnu.org
@@ -98,15 +98,15 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>, 
  Connor Kite <connorkite@gmail.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1784845839; l=7740;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1784845839; l=4076;
  i=connorkite@gmail.com; s=20260723; h=from:subject:message-id;
- bh=xEeRhGfcKFx4bZNfrfgaBAeG54f3UIPcnr2JwcHSaLI=;
- b=VzOWwZdOmRpBpOwUSyJ1rwROwiQiEWqNy3EW+u9gkPrYwZlbAlRWoUYraUqQK9Fn3BTl94e7d
- hzYa7doD71DA7T+oDrfN0eQ5QP9hEWzssolfhzJrOpyjbl88vMHSY2j
+ bh=0C4OJBARAj4ugns9dH114UzMJ3emOVC06QOHSGg7dNA=;
+ b=7Cr+Jh0PFvuHJMvhUkVdgwIL9XxTyQhNW5PzLn4DD5mzQ22Oj5OWhm8yQ2gn2Pvw9DNYMooA8
+ kVNl3CHuhXLDYIjyQp9zQdrRK2hiNrOOX2s3bPryNXpCM6/k9kMzka3
 X-Developer-Key: i=connorkite@gmail.com; a=ed25519;
  pk=xg/3N8AntFCYogaIgN5NC/KkT7UlZB6ktPIRliJ3hv4=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=connorkite@gmail.com; helo=mail-yw1-x1132.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=connorkite@gmail.com; helo=mail-yx1-xb12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -129,233 +129,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-- Add start logic for shadow virtqueues, which sets vring addresses.
-- Update logic for sending vring addresses to backend to point
-  to the shadow vrings when isolation mode is active.
-- Implement handlers for intercepted avail and used descriptors. These
-  handlers copy buffer contents between bounce buffers in the isolation
-  region and the buffers made available by the guest
-- Implement logic to stop svqs
+Adds shadow virtqueues that will eventually be used to transfer data
+between device and host via bounce buffers when isolation mode is
+active.  The svqs are initalized, and eventfd assignments are
+intercepted so that notifications come to svqs first before
+the guest or backend receive them.
 
 Signed-off-by: Connor Kite <connorkite@gmail.com>
 ---
- hw/virtio/vhost-user.c | 167 ++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 166 insertions(+), 1 deletion(-)
+ hw/virtio/vhost-user.c | 54 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 54 insertions(+)
 
 diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 75858289a2..e65f877f9a 100644
+index acabfb7f1c..75858289a2 100644
 --- a/hw/virtio/vhost-user.c
 +++ b/hw/virtio/vhost-user.c
-@@ -1299,6 +1299,97 @@ static int init_isolation_regions(struct vhost_dev *dev,
-     return 0;
- }
+@@ -18,6 +18,7 @@
+ #include "hw/virtio/vhost-backend.h"
+ #include "hw/virtio/virtio.h"
+ #include "hw/virtio/virtio-net.h"
++#include "hw/virtio/vhost-shadow-virtqueue.h"
+ #include "hw/virtio/vhost-iova-tree.h"
+ #include "chardev/char-fe.h"
+ #include "io/channel-socket.h"
+@@ -365,7 +366,9 @@ struct vhost_user {
  
-+static int vhost_user_memory_lookup(struct vhost_dev *dev, hwaddr gpa,
-+                                    hwaddr *hva)
-+{
-+    int i;
-+    hwaddr offset;
-+
-+    for (i = 0; i < dev->mem->nregions; i++) {
-+        struct vhost_memory_region *reg = dev->mem->regions + i;
-+
-+        if (gpa >= reg->guest_phys_addr &&
-+            reg->guest_phys_addr + reg->memory_size > gpa) {
-+            offset = gpa - reg->guest_phys_addr;
-+            *hva = reg->userspace_addr + offset;
-+            return 0;
-+        }
-+    }
-+
-+    return -EFAULT;
-+}
-+
-+static int vhost_user_svq_handle_used(VhostShadowVirtqueue *svq,
-+                                      VirtQueueElement *elem,
-+                                      void *opaque)
-+{
-+    hwaddr hva;
-+    int r;
-+    struct vhost_dev *dev = opaque;
-+
-+    for (int i = 0; i < elem->in_num; i++) {
-+        r = vhost_user_memory_lookup(dev, elem->in_addr[i], &hva);
-+        if (r < 0) {
-+            return r;
-+        }
-+
-+        memcpy((void *) hva, elem->in_sg[i].iov_base, elem->in_sg[i].iov_len);
-+        elem->in_sg[i].iov_base = (void *) hva;
-+    }
-+
-+    for (int i = 0; i < elem->out_num; i++) {
-+        r = vhost_user_memory_lookup(dev, elem->out_addr[i], &hva);
-+        if (r < 0) {
-+            return r;
-+        }
-+
-+        memcpy((void *) hva, elem->out_sg[i].iov_base, elem->out_sg[i].iov_len);
-+        elem->out_sg[i].iov_base = (void *) hva;
-+    }
-+
-+    return 0;
-+}
-+
-+static int vhost_user_svq_handle_avail(VhostShadowVirtqueue *svq,
-+                                       VirtQueueElement *elem,
-+                                       void *opaque)
-+{
-+    hwaddr offset;
-+    const DMAMap *map;
-+    DMAMap needle;
-+    hwaddr *iova_base;
-+
-+    for (int i = 0; i < elem->out_num; i++) {
-+        needle.translated_addr = elem->out_addr[i];
-+        needle.size = elem->out_sg[i].iov_len - 1;
-+        map = vhost_iova_tree_find_gpa(svq->iova_tree, &needle);
-+        offset = needle.translated_addr - map->translated_addr;
-+        iova_base = (void *)(map->iova + offset);
-+
-+        elem->out_sg[i].iov_base = iova_base;
-+        memcpy(iova_base, elem->out_sg[i].iov_base, needle.size + 1);
-+    }
-+
-+    for (int i = 0; i < elem->in_num; i++) {
-+        needle.translated_addr = elem->in_addr[i];
-+        needle.size = elem->in_sg[i].iov_len - 1;
-+        map = vhost_iova_tree_find_gpa(svq->iova_tree, &needle);
-+        offset = needle.translated_addr - map->translated_addr;
-+        iova_base = (void *)(map->iova + offset);
-+
-+        elem->in_sg[i].iov_base = iova_base;
-+        memcpy(iova_base, elem->in_sg[i].iov_base, needle.size + 1);
-+    }
-+
-+    vhost_svq_add(svq, elem->out_sg, elem->out_num, elem->out_addr,
-+                  elem->in_sg, elem->in_num, elem->in_addr, elem);
-+
-+    return 0;
-+}
-+
-+
-+
-+
- static int vhost_user_set_mem_table(struct vhost_dev *dev,
-                                     struct vhost_memory *mem)
- {
-@@ -1772,6 +1863,8 @@ static int vhost_user_set_vring_err(struct vhost_dev *dev,
- static int vhost_user_set_vring_addr(struct vhost_dev *dev,
-                                      struct vhost_vring_addr *addr)
+     /* Isolated memory data*/
+     struct IsolationRegion iso_memory;
++    GPtrArray *shadow_vqs;
+     VhostIOVATree *iso_iova_tree;
++    bool svqs_allocated;
+ };
+ 
+ struct scrub_regions {
+@@ -1693,6 +1696,24 @@ static int vhost_set_vring_file(struct vhost_dev *dev,
+ static int vhost_user_set_vring_kick(struct vhost_dev *dev,
+                                      struct vhost_vring_file *file)
  {
 +    struct vhost_user *u = dev->opaque;
-+
-     VhostUserMsg msg = {
-         .hdr.request = VHOST_USER_SET_VRING_ADDR,
-         .hdr.flags = VHOST_USER_VERSION,
-@@ -1779,6 +1872,25 @@ static int vhost_user_set_vring_addr(struct vhost_dev *dev,
-         .hdr.size = sizeof(msg.payload.addr),
-     };
- 
++    int svq_idx = file->index - dev->vq_index;
 +    if (u->user->memory_isolation) {
-+        if (!u->svqs_allocated) {
-+            return 0;
-+        }
-+
-+        int svq_idx = addr->index - dev->vq_index;
 +        VhostShadowVirtqueue *svq = g_ptr_array_index(u->shadow_vqs,
 +                                                      svq_idx);
++        vhost_svq_set_svq_kick_fd(svq, file->fd);
 +
-+        struct vhost_vring_addr svq_addr = {
-+            .avail_user_addr = (uint64_t)(uintptr_t)svq->vring.avail,
-+            .desc_user_addr = (uint64_t)(uintptr_t)svq->vring.desc,
-+            .used_user_addr = (uint64_t)(uintptr_t)svq->vring.used,
-+            .index = addr->index,
-+        };
++        if (svq->hdev_kick.initialized == false) {
++            int r = event_notifier_init(&svq->hdev_kick, 0);
++            if (r) {
++                error_report("Failed to create kick event notifier");
++                return r;
++            }
++        }
 +
-+        msg.payload.addr = svq_addr;
++        file->fd = event_notifier_get_fd(&svq->hdev_kick);
 +    }
 +
-     /*
-      * wait for a reply if logging is enabled to make sure
-      * backend is actually logging changes
-@@ -2754,13 +2866,18 @@ static int vhost_user_postcopy_notifier(NotifierWithReturn *notifier,
+     int ret = vhost_set_vring_file(dev, VHOST_USER_SET_VRING_KICK, file);
+     if (ret < 0) {
+         return ret;
+@@ -1721,6 +1742,24 @@ static int vhost_user_set_vring_kick(struct vhost_dev *dev,
+ static int vhost_user_set_vring_call(struct vhost_dev *dev,
+                                      struct vhost_vring_file *file)
+ {
++    struct vhost_user *u = dev->opaque;
++    int svq_idx = file->index - dev->vq_index;
++    if (u->user->memory_isolation) {
++        VhostShadowVirtqueue *svq = g_ptr_array_index(u->shadow_vqs,
++                                                      svq_idx);
++        vhost_svq_set_svq_call_fd(svq, file->fd);
++
++        if (svq->hdev_call.initialized == false) {
++            int r = event_notifier_init(&svq->hdev_call, 0);
++            if (r) {
++                error_report("Failed to create call event notifier");
++                return r;
++            }
++        }
++
++        file->fd = event_notifier_get_fd(&svq->hdev_call);
++    }
++
+     return vhost_set_vring_file(dev, VHOST_USER_SET_VRING_CALL, file);
+ }
+ 
+@@ -2715,6 +2754,17 @@ static int vhost_user_postcopy_notifier(NotifierWithReturn *notifier,
      return 0;
  }
  
-+static const VhostShadowVirtqueueOps vhost_user_svq_ops = {
-+    .avail_handler = vhost_user_svq_handle_avail,
-+    .used_handler = vhost_user_svq_handle_used
-+};
++static void vhost_user_init_svq(struct vhost_dev *dev, struct vhost_user *u)
++{
++    /*Modified from vhost-vdpa*/
++    u->shadow_vqs = g_ptr_array_new_full(dev->nvqs, vhost_svq_free);
++    for (int i = 0; i < dev->nvqs; i++) {
++        VhostShadowVirtqueue *svq;
++        svq = vhost_svq_new(NULL, NULL);
++        g_ptr_array_add(u->shadow_vqs, svq);
++    }
++}
 +
- static void vhost_user_init_svq(struct vhost_dev *dev, struct vhost_user *u)
+ static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
+                                    Error **errp)
  {
-     /*Modified from vhost-vdpa*/
-     u->shadow_vqs = g_ptr_array_new_full(dev->nvqs, vhost_svq_free);
-     for (int i = 0; i < dev->nvqs; i++) {
-         VhostShadowVirtqueue *svq;
--        svq = vhost_svq_new(NULL, NULL);
-+        svq = vhost_svq_new(&vhost_user_svq_ops, dev);
-         g_ptr_array_add(u->shadow_vqs, svq);
-     }
- }
-@@ -3466,8 +3583,56 @@ void vhost_user_async_close(DeviceState *d,
-     }
+@@ -2859,6 +2909,10 @@ static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
+     u->postcopy_notifier.notify = vhost_user_postcopy_notifier;
+     postcopy_add_notifier(&u->postcopy_notifier);
+ 
++    if (vus->memory_isolation) {
++        vhost_user_init_svq(dev, u);
++    }
++
+     return 0;
  }
  
-+static bool vhost_user_svqs_start(struct vhost_dev *dev)
-+{
-+    struct vhost_user *u = dev->opaque;
-+    uint64_t vring_base = u->iso_memory.vring_base_addr;
-+    u->svqs_allocated = true;
-+
-+    for (int i = 0; i < u->shadow_vqs->len; i++) {
-+        VirtQueue *vq = virtio_get_queue(dev->vdev, dev->vq_index + i);
-+        VhostShadowVirtqueue *svq = g_ptr_array_index(u->shadow_vqs, i);
-+        svq->base_addr = (hwaddr *) vring_base;
-+        vhost_svq_start(svq, dev->vdev, vq, u->iso_iova_tree);
-+
-+        struct vhost_vring_addr addr = {
-+            .index = dev->vq_index + i,
-+            .desc_user_addr = vring_base,
-+            .avail_user_addr = vring_base + sizeof(vring_desc_t) *
-+                svq->vring.num,
-+            .used_user_addr = vring_base + vhost_svq_driver_area_size(svq)
-+        };
-+
-+        vhost_user_set_vring_addr(dev, &addr);
-+
-+        vring_base += vhost_svq_device_area_size(svq) +
-+                      vhost_svq_driver_area_size(svq);
-+    }
-+
-+    return false;
-+}
-+
-+static void vhost_user_svqs_stop(struct vhost_dev *dev)
-+{
-+    struct vhost_user *u = dev->opaque;
-+
-+    for (int i = 0; i < u->shadow_vqs->len; i++) {
-+        vhost_svq_stop(g_ptr_array_index(u->shadow_vqs, i));
-+    }
-+}
-+
-+
- static int vhost_user_dev_start(struct vhost_dev *dev, bool started)
- {
-+    struct vhost_user *u = dev->opaque;
-+    if (u->user->memory_isolation) {
-+        if (started) {
-+            vhost_user_svqs_start(dev);
-+        } else {
-+            vhost_user_svqs_stop(dev);
-+        }
-+    }
-+
-     if (!vhost_user_has_protocol_feature(dev, VHOST_USER_PROTOCOL_F_STATUS)) {
-         return 0;
-     }
 
 -- 
 2.43.0
