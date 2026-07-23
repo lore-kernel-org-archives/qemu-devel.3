@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62F5AC531D1
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 22:32:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE847C531CC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 22:32:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wn1wU-0004cZ-4Q; Thu, 23 Jul 2026 18:31:02 -0400
+	id 1wn1xr-000629-CR; Thu, 23 Jul 2026 18:32:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wn1wR-0004Z5-R5
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 18:31:00 -0400
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
+ id 1wn1wy-000579-6m
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 18:31:34 -0400
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wn1wQ-0001Qm-8e
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 18:30:59 -0400
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-80c5cb9a888so8517987b3.3
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 15:30:57 -0700 (PDT)
+ id 1wn1wt-0001Tx-Nv
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 18:31:30 -0400
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-81ec29f1d07so9905927b3.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 15:31:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784845857; x=1785450657; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1784845885; x=1785450685; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=RRQE/saYJaaESTpo7p1Xp5FIXQbHxoLdzskT04Eqn0k=;
- b=gzl5LaV9yA7687TEQpsBYeyM6sS/UAEcPF7+agjykjzV3NPH+mHwDNurVPZmwzTL2J
- Qz4hvJ3xlOU5A/mv28eUdmyABUqc+FJvNfjWlmVQLV/2yGIQ4/TUz21nDJysmEfvpoCO
- oPxQiPVGms3nVtog0uOTx2Itg9jDOaHksEI/g95Salhq0r8XwhSRUcy38fd4J3sDHE2s
- JYCi5//IC7PeVl39/sR1tzrBVM3YXeagbg2pKzKeheqOmsPJnEgLZQtyNpQIw8Qnc+ZP
- X+J1dpvbPnDdCzVBl7EBLBb2mVp0DOo9MnT91RG+eKJqa17hIvw0bVG8fgEtc+ICM86N
- XtCA==
+ bh=7g695DoaNeoeNqj+3zVdxB0K+XyGWJGyI59c0QJ8p1g=;
+ b=dq7XHKfua4R+QgGcx8uZ1Z1HQKdwA2Zgunh7lBqwonIgtF63viIsHuInqQwBobac4x
+ Ooh9RdH0kg4rvt8aaR6m5p76vZ+PANyj00Ywg1N+5ncBFJLevPMWKUbcsqXPoPH6ZCa0
+ eWdicdum757OfqRQnVlDBC6uY5YJT5u4DhJHH7ngix6TiGAwPvVo+X0aW76eSiKRxg0K
+ YJjoxmSxleZlwwsVlBzQBoemThc11M3S9MiZr32HDBOvyqNfCOIQwS8XU+6u+iRezB8z
+ Wfv3Pk6fBxsN0/7XfwARn/O9dnSYRa1NChlvGaXIVWTLkdXe+2M8KFCzrPodTGk4D9xs
+ E7ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784845857; x=1785450657;
+ d=1e100.net; s=20251104; t=1784845885; x=1785450685;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=RRQE/saYJaaESTpo7p1Xp5FIXQbHxoLdzskT04Eqn0k=;
- b=kokchDB3cdYzKfn6Kil/MhJDPH+Ec0lCNSJSMQmZrRgerd+kQWXq+a93dxceJk/laJ
- vXpUa8pKL2hTP00ghRg1Khwdp3M3MJ1xwi2IW995Q924qXqlQBHvRDtmd4RgAQFaHAvf
- PiI9Y4NjC5FUfLyGiZGw3v5Sutastcz2M5B5BRUsEtADjybSf2r6SY/34ycOQ7wbE2Ff
- k6tfHqMnhgzhE4khJxnZZ6DssbWDJ76upEN98Owe9z1uyAu8mhB1J3Bb40baBwNaQlC6
- bzfWJhlWkbGpJ6ayrd2gIH80y8qWsBPsoc5JzVpfs4oVmDLNxv6zwJMWDKlbw0xhR2jr
- aC2w==
-X-Gm-Message-State: AOJu0YwTU3bQ1boDlw9RZcm63a7p0R7r9JTxyXBA28WrZCWSfCnTTv57
- ezg3V+PoG/rG1TNcKuitMAKkMpAxe7lMG79b31a1V2XiOBWiVScHSXht
-X-Gm-Gg: AR+sD12hwf9rsmwHhL/lE/Xpcv9xq5CIS5DkEMVX0B2zQb4OPGTArxgh0GTp/q3Y/bI
- xm2TTg2RT1NMY4bwV/GZ75owPl9a1rSzB4ZzO/LUgxqBBAz4f7VATcIcBHUCzd8nD70SkEXaHJQ
- 2KtpjBY/QfQdkZBS3dIaq1EhcLEP6lyP6z90AD6BtCL/JIfw9O5DrwueiQaD5x7nz+S0T3z830k
- UeQ3gY3tYo+gBlvyU9aD8XqGA7H6OL3p9Grh3td1X5wt+se/VtnNxHekngrSjaCUcrmZGn4A2RT
- xsKJuhu7B+QxGjhlFTE0Ky3Z2kbuPhV+m5X48qIym4HHdzWPtVAlD9Cy07FBXHtlmyS0FA5/Jv0
- OBt9ZnZSocSn/knCdkHZm0Epk1/tbZ3i3rvG2qAL3SHcr4Aq0cMfbFKD9kJ0HcsmHTxnBMcEZTa
- f70UMxayc=
-X-Received: by 2002:a05:690c:3182:b0:81e:782b:72dd with SMTP id
- 00721157ae682-81f4c13eca6mr16234977b3.13.1784845857145; 
- Thu, 23 Jul 2026 15:30:57 -0700 (PDT)
+ bh=7g695DoaNeoeNqj+3zVdxB0K+XyGWJGyI59c0QJ8p1g=;
+ b=IqQXl+luTO3uxWVEaSlD5aEOVICgqd+ghvs9cyKxH2zZhRSr6AMdOE3h6lIHvel2q4
+ g8lje6yY/acthjliKZvAhCImBF0HHcudS73U96gFdE+Jjl5ua75k2U5podI2YvJiYjrS
+ kAgDowG7U0bA+Yi/x39UURlQLUOTBwXIa5PwT+fFfEaFd/vfFI94yQso8eOv6C6A2kw7
+ a7DABZTTQoha5nufAj2dTElDHiZiwLiYe9WUNTQoZRfDmt+uScKw0X8/77PGZ5EIrA3g
+ oHIDuT7cjtUQK1ZZgdfT/bzAhWGJ9fr/QyY/MB31huPWhJr6Lk176a1lXYAIvARuwqoZ
+ UwXA==
+X-Gm-Message-State: AOJu0Yy7+goBaV8hOB0wSyKrSJIB7vIPBY+A3J9kD8b2nkFPpJZM+yV6
+ A/DaFj8If3zuJiA7qttBWtQXqb5SpLw6RcE8MRPnVuvyGLwujJpgK2IK
+X-Gm-Gg: AR+sD10UJM/pXSd455Q4N6e+Zb7xLRmUBNoA3qfka7JU2M/XFMzir84JhpLlyzBZRKZ
+ WrB31OFvjfnUw7WGa3E9wXIwg16dZT4rSnNS7xXZ0XpjRfc4n6Zet6OlsNrotpZe36G/R4EGq5S
+ jfccd5DKpAmdGsjD0b3hfPbQPCRJ+VvYtPFTJhMYxiojNzkwTCfuM9GxDCOH72T5OWRDQFcn8uo
+ ydGhZf8AsgB3H4KH+3rk8lxqaYiZHsW+URllwGyMXSN1syrq5OgW1eO5+x4WvS+AtXjwDW9LLTP
+ Cd0caKuev0AED59dkzRXyTpiZj88LBm+TsPtfANL6vqe3PQPM0sjbSWtKXq0uXqR2bOJDbyjcGC
+ fU0+KE6kxL7bqG4gaJbCwDOc3E4dTnKCDz2qcaIy8zXH8vo7GsqXMcDLdBUWFE3AOU0h7bbht+C
+ ntxUJZ/Zw=
+X-Received: by 2002:a05:690c:278a:b0:81f:2825:dfe with SMTP id
+ 00721157ae682-81f4c2f355emr15747807b3.36.1784845884775; 
+ Thu, 23 Jul 2026 15:31:24 -0700 (PDT)
 Received: from [127.0.1.1] ([2600:1700:e140:14d0:446f:49ff:37bd:d45a])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-81f33c3c1c5sm35766777b3.17.2026.07.23.15.30.54
+ 00721157ae682-81f33c3c1c5sm35766777b3.17.2026.07.23.15.31.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Jul 2026 15:30:56 -0700 (PDT)
+ Thu, 23 Jul 2026 15:31:24 -0700 (PDT)
 From: Connor Kite <connorkite@gmail.com>
-Date: Thu, 23 Jul 2026 15:30:03 -0700
-Subject: [PATCH RFC 04/15] net/vhost-user: add memory isolation
+Date: Thu, 23 Jul 2026 15:30:11 -0700
+Subject: [PATCH RFC 12/15] hw/virtio/vhost-user: send isolation regions to
+ device
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260723-vhost-user-isolated-memory-v1-4-6b97c439eb28@gmail.com>
+Message-Id: <20260723-vhost-user-isolated-memory-v1-12-6b97c439eb28@gmail.com>
 References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
 In-Reply-To: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
 To: qemu-devel@nongnu.org
@@ -97,22 +98,22 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>, 
  Connor Kite <connorkite@gmail.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1784845839; l=3194;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1784845839; l=4517;
  i=connorkite@gmail.com; s=20260723; h=from:subject:message-id;
- bh=kCaV9zgYB27gebvzRUkQdZHWZmFFifXRqsrHtdiCBbU=;
- b=0rwPPZPPdLUldxXIPlmWzZZKsluRInnn0dnYpM4AJ/dOhHa4yxaSxJ4BSpQYjWCEEu9du1NIy
- NSRYlfAYsUBD2crLSqh5DlOL9rL4m+ACeFxCaFF7hB2iYgq71VY6upj
+ bh=z+Lm2PsZk3LkweDB1zsNiYheTgHWbAa+oQgnW46zMuo=;
+ b=pAp4Enx1zJP2EmdbaCYBM7rhebwhPIOXdD1Yc0E2HneL3odB9pvotznN3IuY7YEaMfZ6Z4Xvw
+ SENASOV6t7FB6hpNXkSnX5kK1VCIllzRwx1gCdT9gw6vMRQYk77jHMP
 X-Developer-Key: i=connorkite@gmail.com; a=ed25519;
  pk=xg/3N8AntFCYogaIgN5NC/KkT7UlZB6ktPIRliJ3hv4=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=connorkite@gmail.com; helo=mail-yw1-x1129.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=connorkite@gmail.com; helo=mail-yw1-x1136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,103 +129,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a memory-isolation property to NetdevPassOptions and
-NetDevVhostUserOptions in net.json.  This property will
-be used for vhost-user devices to disable access to guest
-memory from devices.
-
-It will be passed into vhost_user_init() in a future patch.
+Adds features to fill a vhost_user_set_mem_table message with the
+addresses of isolation memory regions corresponding to bounce buffers
+and vrings.
 
 Signed-off-by: Connor Kite <connorkite@gmail.com>
 ---
- net/passt.c      |  7 +++++++
- net/vhost-user.c |  4 ++++
- qapi/net.json    | 15 +++++++++++----
- 3 files changed, 22 insertions(+), 4 deletions(-)
+ hw/virtio/vhost-user.c | 80 +++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 79 insertions(+), 1 deletion(-)
 
-diff --git a/net/passt.c b/net/passt.c
-index 45440c399b..ce80186883 100644
---- a/net/passt.c
-+++ b/net/passt.c
-@@ -735,6 +735,13 @@ int net_init_passt(const Netdev *netdev, const char *name,
-     s->pidfile = pidfile;
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index 710cf966f8..acabfb7f1c 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -625,6 +625,21 @@ static void vhost_user_fill_msg_region(struct vhost_dev *dev,
+     dst->mmap_offset = mmap_offset;
+ }
  
-     if (netdev->u.passt.has_vhost_user && netdev->u.passt.vhost_user) {
-+        bool memory_isolation G_GNUC_UNUSED = false;
++static void vhost_user_fill_msg_region_iso(VhostUserMemoryRegion *dst,
++                                           const struct vhost_user *u,
++                                           const struct vhost_memory_region
++                                           *iova_reg)
++{
++    assert(u != NULL && dst != NULL && iova_reg != NULL);
++    uint64_t offset;
 +
-+        if (netdev->u.passt.has_memory_isolation &&
-+           netdev->u.passt.memory_isolation) {
-+            memory_isolation = true;
-+        }
++    offset = iova_reg->userspace_addr - u->iso_memory.base_addr;
++    dst->userspace_addr = iova_reg->userspace_addr;
++    dst->memory_size = iova_reg->memory_size;
++    dst->guest_phys_addr = iova_reg->userspace_addr;
++    dst->mmap_offset = offset;
++}
 +
-         if (net_passt_vhost_user_init(s, errp) == -1) {
-             qemu_del_net_client(nc);
-             return -1;
-diff --git a/net/vhost-user.c b/net/vhost-user.c
-index 2d0fc49b4d..8fa303f901 100644
---- a/net/vhost-user.c
-+++ b/net/vhost-user.c
-@@ -459,6 +459,7 @@ int net_init_vhost_user(const Netdev *netdev, const char *name,
-     int queues;
-     const NetdevVhostUserOptions *vhost_user_opts;
-     Chardev *chr;
-+    bool memory_isolation G_GNUC_UNUSED;
+ static int vhost_user_fill_set_mem_table_msg(struct vhost_user *u,
+                                              struct vhost_dev *dev,
+                                              VhostUserMsg *msg,
+@@ -1136,7 +1151,33 @@ static void cleanup_isolation_regions(struct vhost_dev *dev)
+     }
+ }
  
-     assert(netdev->type == NET_CLIENT_DRIVER_VHOST_USER);
-     vhost_user_opts = &netdev->u.vhost_user;
-@@ -476,5 +477,8 @@ int net_init_vhost_user(const Netdev *netdev, const char *name,
-         return -1;
+-__attribute__((unused))
++struct iova_tree_traversal_args {
++    VhostUserMsg *msg;
++    struct vhost_user *u;
++    int *fds;
++    size_t *fd_num;
++};
++
++static gboolean vhost_user_iova_tree_traverse_funct(gpointer key,
++                                                    gpointer value,
++                                                    gpointer data)
++{
++    struct iova_tree_traversal_args *args = data;
++    struct vhost_memory_region msg_region;
++    VhostUserMemoryRegion region_buffer;
++    DMAMap *map = key;
++    args->fds[*args->fd_num] = args->u->iso_memory.iso_fd;
++
++    msg_region.guest_phys_addr = map->iova;
++    msg_region.memory_size = map->size + 1;
++    msg_region.userspace_addr = map->iova;
++    vhost_user_fill_msg_region_iso(&region_buffer, args->u, &msg_region);
++    args->msg->payload.memory.regions[*args->fd_num] = region_buffer;
++    (*args->fd_num)++;
++
++    return false;
++}
++
+ static int init_isolation_regions(struct vhost_dev *dev,
+                                   VhostUserMsg *msg,
+                                   int *fds, size_t *fd_num)
+@@ -1234,6 +1275,24 @@ static int init_isolation_regions(struct vhost_dev *dev,
+                                       map->translated_addr);
      }
  
-+    memory_isolation = vhost_user_opts->has_memory_isolation ?
-+                       vhost_user_opts->memory_isolation : false;
++    struct iova_tree_traversal_args args = {
++        .fd_num = fd_num,
++        .fds = fds,
++        .msg = msg,
++        .u = u
++    };
 +
-     return net_vhost_user_init(peer, "vhost_user", name, chr, queues);
++    vhost_iova_tree_foreach(u->iso_iova_tree,
++                            vhost_user_iova_tree_traverse_funct, &args);
++
++    msg->payload.memory.nregions = *fd_num;
++
++    assert(*fd_num != 0);
++
++    msg->hdr.size = sizeof(msg->payload.memory.nregions);
++    msg->hdr.size += sizeof(msg->payload.memory.padding);
++    msg->hdr.size += *fd_num * sizeof(VhostUserMemoryRegion);
++
+     return 0;
  }
-diff --git a/qapi/net.json b/qapi/net.json
-index 1a6382825c..4588c7014b 100644
---- a/qapi/net.json
-+++ b/qapi/net.json
-@@ -213,6 +213,9 @@
- #
- # @param: parameter to pass to passt command
- #
-+# @memory-isolation: enable memory isolation.  Only has effect if
-+#     using vhost-user.  (default: false)
-+#
- # Since: 10.1
- ##
- { 'struct': 'NetdevPasstOptions',
-@@ -250,7 +253,8 @@
-     '*ipv6':               'bool',
-     '*tcp-ports':          ['PasstPortForward'],
-     '*udp-ports':          ['PasstPortForward'],
--    '*param':              ['PasstParameter'] },
-+    '*param':              ['PasstParameter'],
-+    '*memory-isolation':   'bool'},
-     'if': 'CONFIG_PASST' }
  
- ##
-@@ -685,13 +689,16 @@
- # @queues: number of queues to be created for multiqueue vhost-user
- #     (default: 1) (Since 2.5)
- #
-+# @memory-isolation: isolate guest memory from device (default: false)
-+#
- # Since: 2.1
- ##
- { 'struct': 'NetdevVhostUserOptions',
-   'data': {
--    'chardev':        'str',
--    '*vhostforce':    'bool',
--    '*queues':        'int' } }
-+    'chardev':              'str',
-+    '*vhostforce':          'bool',
-+    '*queues':              'int',
-+    '*memory-isolation':    'bool' } }
+@@ -1241,6 +1300,7 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
+                                     struct vhost_memory *mem)
+ {
+     struct vhost_user *u = dev->opaque;
++    bool memory_isolation = u->user->memory_isolation;
+     int fds[VHOST_MEMORY_BASELINE_NREGIONS];
+     size_t fd_num = 0;
+     bool do_postcopy = u->postcopy_listen && u->postcopy_fd.handler;
+@@ -1268,6 +1328,24 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
+         msg.hdr.flags |= VHOST_USER_NEED_REPLY_MASK;
+     }
  
- ##
- # @NetdevVhostVDPAOptions:
++    if (memory_isolation) {
++        ret = init_isolation_regions(dev, &msg, fds, &fd_num);
++        if (ret < 0) {
++            return ret;
++        }
++
++        ret = vhost_user_write(dev, &msg, fds, fd_num);
++        if (ret < 0) {
++            return ret;
++        }
++
++        if (reply_supported) {
++            return process_message_reply(dev, &msg);
++        }
++
++        return 0;
++    }
++
+     if (config_mem_slots) {
+         ret = vhost_user_add_remove_regions(dev, &msg, reply_supported, false);
+         if (ret < 0) {
 
 -- 
 2.43.0
