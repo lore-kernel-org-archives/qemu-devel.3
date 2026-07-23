@@ -4,99 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA8B2C531F8
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 16:13:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEF48C531F8
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 16:19:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmw2P-0007g8-V9; Thu, 23 Jul 2026 12:12:46 -0400
+	id 1wmw87-0007ez-Bk; Thu, 23 Jul 2026 12:18:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wmw2N-0007f5-V4
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 12:12:43 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wmw85-0007e3-32
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 12:18:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wmw2L-00084P-S3
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 12:12:43 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wmw83-0000vA-3b
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 12:18:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784823160;
+ s=mimecast20190719; t=1784823513;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=pWhu3qOg8oOBvZ9z+l+p9QVAdExRDXlYKijg9fGFw/U=;
- b=ROxH+2uc12ZKgq3NkTxWboV2YTzYC4DeedjR5EacXPCzbb2q2oMzFgnNxnKQjOjfZ/m+vJ
- nmAWI+4CGpbkEAO+zwJQx2gykAZ1zw4SQJbiMib4eh6d/SUMpVKNNhVy98LN0qseWS+jyz
- 4h+eXRGdFKmROFwwQHziGMznGz2DesY=
+ bh=oIXb05T2uMaoZDdf/OzMSGPkJtBIojpzvQcM57s4b9Q=;
+ b=c/+51nciVer3QSJKCOZjDrjF7QwFsvh2/cC3Wz+8B/aoEtF1fnavKLeCOOrbI6ilJTz9Rx
+ tf3mDDz0avedlKyjDgEnV3VcnVjKKjd95zLMW5/VW4mq7+nA8q7eBnMfkcFcSWZ+UTuGxt
+ oqn/cGJO/5aKfz30gUOi1UFZycXmlCw=
 Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
  [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-584-tLQbRuHQO0mo7tzqHE_5nA-1; Thu, 23 Jul 2026 12:12:39 -0400
-X-MC-Unique: tLQbRuHQO0mo7tzqHE_5nA-1
-X-Mimecast-MFC-AGG-ID: tLQbRuHQO0mo7tzqHE_5nA_1784823158
+ us-mta-428-kODe5rC1PM60g-cKU7B78A-1; Thu, 23 Jul 2026 12:18:32 -0400
+X-MC-Unique: kODe5rC1PM60g-cKU7B78A-1
+X-Mimecast-MFC-AGG-ID: kODe5rC1PM60g-cKU7B78A_1784823511
 Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-47f6e658363so613664f8f.3
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 09:12:38 -0700 (PDT)
+ ffacd0b85a97d-47f90dbaf84so696723f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 09:18:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784823158; x=1785427958; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=pWhu3qOg8oOBvZ9z+l+p9QVAdExRDXlYKijg9fGFw/U=;
- b=PxZ5a+1VrS7jQt8xbkT2UhuD8ZHpUxORl8qORpsKj8x0ykP+CiEYmV5GeOfGiFzWBa
- 0K6LsDVdRHY3IrXZIK1s6y9JLBnDSuLFIUdDP8AWnfutQCfPv18KPSoP+ztOpiIV/IQh
- RKKGLnOFg+sDIxmi2WJWUAddPrhRGV+ywhm+dpir6zgieizy99e3b5nzUX5ImQ7LDjba
- U6JdabPDgwjYGAgmzR2tHEEGL2ixpKy3JvPJg1V+LwBDFqbJ8qo+S/foRwSvkhfFWqz1
- B9xvJJ32AtHttgj/Wgg9jDnT3sDCFTGBn91UBcZfZifESrn7zUXBZjHFQeQa9gwP4X6s
- RPcg==
+ d=redhat.com; s=google; t=1784823511; x=1785428311; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=oIXb05T2uMaoZDdf/OzMSGPkJtBIojpzvQcM57s4b9Q=;
+ b=LjKbW37iC8+oyhrR1N7M0wDjpObMfbRlt0Uz9MIUECjCU8yrFuCuafUjFZJSCKSdMX
+ 7UDGWIZSSNgzetol/OPDIiacEhtImff1aoT726aHvrwC45EsNv9jD4gMvPbJZNdzEBxM
+ /uphdFcW5D7donT1Ho/5QyG3yhmEFpUaoEDMoP4PxJ9Pmrb3pIxl11d0KLW6la0GiHaP
+ GgQJZOtQsKfonsQ72LuA6GlNF7gSrhAJPDGAcM5ZxURh/r86gK0IpErHRG5pOHk5aUTf
+ prhmC3HNQhieOoX8+85G/SjZP8gZP+3lboVT1tdUk/4bfE7Vmmc4a2627iRmopCHNZU+
+ qccA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784823158; x=1785427958;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=pWhu3qOg8oOBvZ9z+l+p9QVAdExRDXlYKijg9fGFw/U=;
- b=D38qs+zNWRn3vlEcaNdibD9HCjZx5NCahVynPl8goy3GDdkw/uMy6MFDeLqWyfuoc6
- XgsZYU2VwOzv3EVlzGN+FXWHJDfBCZ7sxUNMYaTU9/HmxhSmkrTgGd6dkXP31DkctpJ8
- QwUISheUBAfBkAWlLVWwylxiPGOBmxO3UQjLYsq4+g3AXKmhn+jpLHx3TQGis7ovRdMh
- QGS1Sl7YI80VWrfY+iT+YnDqdegs8kHUbb8ZEug6/BPc06URhktf10ORfzzjr6q7CMMy
- Nn0xh6Dq7IKSfyMyu8w5xDs3Ag+LG3WY+qIrbXR1U4XpBN6E2VX1OweMazQyqyVQRjJE
- gaSQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rr1maedwA8LCx1NbAa3bsiuCkmyF9DLUmNGs9CN62NlYqqTloWousy4cOMNxHQ/jMnq5jlNpkecq7hy@nongnu.org
-X-Gm-Message-State: AOJu0YyJKn1LD0sao1xSNrnm1wJ/RmgQ97PIRX/dFvPs3EG6rDiWi03n
- BHQhkAu3ulHQHEnaOCd0ORjBBlX6naOP4klldtHCIpr52CbeP3r/oQ9adin2t5OtVAUA9hpC0BG
- IthXXGhWt4DbnpjyMAXa/8Zbu0HD703ou/3MgFaTGTaDKKkF9j6sXm4R5
-X-Gm-Gg: AR+sD10bm6Z/VsOAybKwIkTx0B8G5VA/6czjZ7Isn+xEJ6uzjNlCzFItcu0uFod0Hsb
- Ais2ge2LjFsRvcnsZccOBMoAIewhbxB5VGFWDST4oV2f8Nr28pjn4w5LYbI7DrmOUJRET4XQfQv
- Z2Qj3ipjJI2Q62zUMi1LPq/rGpIQ6rD4OSRl6sBZDn4mCSVPQ+j61+sqWaqSksujaboEEypEAII
- HoG0kxImCekZeCs0YihsA+vpXVJP3S9yAH6LuSqm1psHonPxZephG+le6mDShmL5bHJ7FAk/ukz
- 34Yzz10E7mLEImdFprzH6ea26Q5VQowRZBzLMoQ/jbM8/h/10/SKRePbpQm+iQql1iqAlSW0YQ=
+ d=1e100.net; s=20251104; t=1784823511; x=1785428311;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=oIXb05T2uMaoZDdf/OzMSGPkJtBIojpzvQcM57s4b9Q=;
+ b=Ac78KCig4oja26UUb9XSiZJzwnLp0bKjvWXGZr/eyvVGWnzQeMab6jwctT7iCTAF2w
+ eIfTcJG334tZYr583DAGlOIOdQhsDbEoM23PH4mpHC02QmePDlXwKYVNIm8VUlMN8ww2
+ na5CIIO0G8XJCp89A31PKL3X0FwldkUEl2FPggqfdksVip5nsSkSbwvRoWk8US6if0Hk
+ kiE+YefZkdIAemELHZjx8eHkyjNMFyaXbTiyrL/pNYV7BGBmxCZjd3o96tdyB8p7EAci
+ GiqW0c1ZtWTBFsCKybuOU+jE8UWLn4x50SC5EFQk5aRPEWoz4fy6gnEcMwqCtevh0I0Z
+ YSSw==
+X-Gm-Message-State: AOJu0Yzy5e37rVyunIPJS+y6yqhQ5NFnKCOKWTrN3+1vG/6guCzhsjn3
+ G5eXB6UUre4tF+HN5QpB/DptlxUqaKrMF/wBOLQDodaJPtXiNGogmRmRaQ9PmA+z2J1PXRjlAxJ
+ LCTfViHFMikC0vyppE/506i7/1faZNkG9Ln1UVQJUOw4ywcNLUerY4N+5
+X-Gm-Gg: AR+sD10BmAmCGlA3mxmnuIVtYWMkL9qwRNFqiGXGK/ASraONAB3SpETqMfjdX4WH35p
+ CMsHwFocAkyk6UZIvXz5HsLyFgZnsiVB8Gy84rHfT0p/IyGPf/h56JFQbCIZshObi/W7ihT4/RW
+ iq9QqMqtlbaKAvs6Z2V6x2AHy88rkKxkwZXM5ITb7qhAkLXX/EeDv0Hmia7SAcB3RS7KiX4mfNY
+ 2rnVSC5lAMi3qHOwvO0GZYRmk93XKDNZCwXybi+4OGlfCn4XHab07yp7mLbdEi6dqxKXur0BOhe
+ JqvGfV488UlvCd9UY22wL2rnHu/FRsiKYXlFnSfbyLL5aOKkxobjqXRd8jJf1JN734YaCUaP9Q=
  =
-X-Received: by 2002:a05:6000:2999:10b0:47f:934a:3029 with SMTP id
- ffacd0b85a97d-47f934a314dmr1634277f8f.60.1784823157808; 
- Thu, 23 Jul 2026 09:12:37 -0700 (PDT)
-X-Received: by 2002:a05:6000:2999:10b0:47f:934a:3029 with SMTP id
- ffacd0b85a97d-47f934a314dmr1634247f8f.60.1784823157323; 
- Thu, 23 Jul 2026 09:12:37 -0700 (PDT)
+X-Received: by 2002:adf:e00c:0:10b0:47f:93b4:2def with SMTP id
+ ffacd0b85a97d-47f93b42e57mr1431935f8f.28.1784823510905; 
+ Thu, 23 Jul 2026 09:18:30 -0700 (PDT)
+X-Received: by 2002:adf:e00c:0:10b0:47f:93b4:2def with SMTP id
+ ffacd0b85a97d-47f93b42e57mr1431898f8f.28.1784823510496; 
+ Thu, 23 Jul 2026 09:18:30 -0700 (PDT)
 Received: from [192.168.0.9] ([47.64.113.188])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85b9a64dsm18043165f8f.1.2026.07.23.09.12.36
+ ffacd0b85a97d-47f85c66cebsm15901652f8f.30.2026.07.23.09.18.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Jul 2026 09:12:36 -0700 (PDT)
-Message-ID: <60e0eac0-ddd6-4194-8bac-60e0fb93bcce@redhat.com>
-Date: Thu, 23 Jul 2026 18:12:35 +0200
+ Thu, 23 Jul 2026 09:18:29 -0700 (PDT)
+Message-ID: <7f8e11c2-f7ea-4362-9840-a295a7def315@redhat.com>
+Date: Thu, 23 Jul 2026 18:18:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2] hw/display/vmware_vga: Don't allow guest to trigger
  long running loop in host
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>
-Cc: qemu-trivial@nongnu.org, qemu-stable@nongnu.org
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ qemu-trivial@nongnu.org, qemu-stable@nongnu.org
 References: <20260723124432.353969-1-thuth@redhat.com>
- <23cd2e91-a7ce-4943-b0d5-0f3597e675c0@tls.msk.ru>
-Content-Language: en-US
+ <28b3741f-3cab-4e7c-b830-01fad0d80d35@oss.qualcomm.com>
+ <amIwSvAAv-LWbmYT@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -139,7 +140,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <23cd2e91-a7ce-4943-b0d5-0f3597e675c0@tls.msk.ru>
+In-Reply-To: <amIwSvAAv-LWbmYT@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -166,63 +167,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/07/2026 17.05, Michael Tokarev wrote:
-> On 7/23/26 15:44, Thomas Huth wrote:
->> From: Thomas Huth <thuth@redhat.com>
+On 23/07/2026 17.16, Daniel P. Berrangé wrote:
+> On Thu, Jul 23, 2026 at 03:54:41PM +0200, Philippe Mathieu-Daudé wrote:
+>> On 23/7/26 14:44, Thomas Huth wrote:
+>>> From: Thomas Huth <thuth@redhat.com>
+>>>
+>>> The code in the SVGA_CMD_DEFINE_ALPHA_CURSOR handler in vmsvga_fifo_run()
+>>> basically does:
+>>>
+>>>               x = vmsvga_fifo_read(s);
+>>>               y = vmsvga_fifo_read(s);
+>>>               args = x * y;
+>>>               goto badcmd;
+>>>               ...
+>>> badcmd:
+>>>               len -= args;
+>>>               if (len < 0) {
+>>>                   goto rewind;
+>>>               }
+>>>               while (args--) {
+>>>                   vmsvga_fifo_read(s);
+>>>               }
+>>>
+>>> Thus by supplying huge values for x and y that overflow the result of
+>>> the multiplication, the guest can trigger a long-running loop here
+>>> that burns the host's CPU cycles.
+>>>
+>>> Add some sanity checks so that this cannot happen anymore.
+>>>
+>>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3782
+>>> Reported-by: Feifan Qian <bea1e@proton.me>
+>>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4026
+>>> Reported-by: Tristan Madani <tristan@talencesecurity.com>
+>>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4076
+>>> Reported-by: Sunday Jiang
+>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>> ---
+>>>    v2: Use SVGA_MAX_WIDTH and SVGA_MAX_HEIGHT instead of an arbitrary value
+>>>
+>>>    hw/display/vmware_vga.c | 6 +++++-
+>>>    1 file changed, 5 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/hw/display/vmware_vga.c b/hw/display/vmware_vga.c
+>>> index f6f9edfd1d9..567806f0e47 100644
+>>> --- a/hw/display/vmware_vga.c
+>>> +++ b/hw/display/vmware_vga.c
+>>> @@ -737,6 +737,10 @@ static void vmsvga_fifo_run(struct vmsvga_state_s *s)
+>>>                vmsvga_fifo_read(s);
+>>>                x = vmsvga_fifo_read(s);
+>>>                y = vmsvga_fifo_read(s);
+>>> +            if (x < 0 || x >= SVGA_MAX_WIDTH ||
+>>> +                y < 0 || y >= SVGA_MAX_HEIGHT) {
 >>
->> The code in the SVGA_CMD_DEFINE_ALPHA_CURSOR handler in vmsvga_fifo_run()
->> basically does:
->>
->>              x = vmsvga_fifo_read(s);
->>              y = vmsvga_fifo_read(s);
->>              args = x * y;
->>              goto badcmd;
->>              ...
->> badcmd:
->>              len -= args;
->>              if (len < 0) {
->>                  goto rewind;
->>              }
->>              while (args--) {
->>                  vmsvga_fifo_read(s);
->>              }
->>
->> Thus by supplying huge values for x and y that overflow the result of
->> the multiplication, the guest can trigger a long-running loop here
->> that burns the host's CPU cycles.
->>
->> Add some sanity checks so that this cannot happen anymore.
->>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3782
->> Reported-by: Feifan Qian <bea1e@proton.me>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4026
->> Reported-by: Tristan Madani <tristan@talencesecurity.com>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4076
->> Reported-by: Sunday Jiang
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   v2: Use SVGA_MAX_WIDTH and SVGA_MAX_HEIGHT instead of an arbitrary value
->>
->>   hw/display/vmware_vga.c | 6 +++++-
->>   1 file changed, 5 insertions(+), 1 deletion(-)
->>
->> diff --git a/hw/display/vmware_vga.c b/hw/display/vmware_vga.c
->> index f6f9edfd1d9..567806f0e47 100644
->> --- a/hw/display/vmware_vga.c
->> +++ b/hw/display/vmware_vga.c
->> @@ -737,6 +737,10 @@ static void vmsvga_fifo_run(struct vmsvga_state_s *s)
->>               vmsvga_fifo_read(s);
->>               x = vmsvga_fifo_read(s);
->>               y = vmsvga_fifo_read(s);
->> +            if (x < 0 || x >= SVGA_MAX_WIDTH ||
->> +                y < 0 || y >= SVGA_MAX_HEIGHT) {
+>> vmsvga_fifo_read() returns unsigned... otherwise:
 > 
-> Applied to the trivial-patches tree, dropping <0 conditions here.
+> But x & y  are declared 'int', so at least on 32-bit builds
+> a large uint32_t value would wrap and become negative.
+> Although we dropped support for 32-bit platforms, IMHO it would
+> be better to use uint32_t for 'x' and 'y' too rather than
+> assuming the 'int' value won't be negative.
+x and y are used as signed int all over the place here ... so reworking that 
+goes way beyond fixing this problem. Could we please get this patch merged 
+first for 11.1, and if someone then still feels like reworking the code, 
+this could be done for 11.2 ?
 
-Please don't drop the "< 0" ! x and y are signed variables, so we should 
-better check this here.
-
-  Thanks,
-   Thomas
+  Thomas
 
 
