@@ -4,68 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E49F8C44536
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0A78C44532
 	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 01:18:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmi44-0004Zw-UD; Wed, 22 Jul 2026 21:17:34 -0400
+	id 1wmi4E-0004cT-1W; Wed, 22 Jul 2026 21:17:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wmi3y-0004ZJ-9D; Wed, 22 Jul 2026 21:17:26 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1wmi44-0004Zz-Hx; Wed, 22 Jul 2026 21:17:32 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wmi3v-0002xZ-FN; Wed, 22 Jul 2026 21:17:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1784769443; x=1816305443;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=/QW+6bMVfdc3+/VQ5V93oBga9b/YPL0PkvFyIV5avEA=;
- b=fs0k7MYh5UJItd3U6xYeMY8cx869RiGxL6dWG1M2z2m6EymOO0MP7WFV
- nUKfuAkHgB72uWyWDAptVYI+DUc0nV8xql09u1otKffEXp/Bz9bQCsvzE
- Scix8ROt3Zf2Z9ukFcSbejcThqpziCuV2kjXJ85U8vTB118gO08crJL/i
- 8uT9i9aqdyLTkJ0VaO+mOquuN0qPzR+lDGEfOUJu4s6TmRtdf32Qq4Hqi
- d3F0wlp2SCIDUWBXPf3rV3/VtimFZN8Z456EdIOELQOsCSiArWsLNty9s
- ei1Dff7BFMz+FC1dQrzGzDDeKdkgixBPx4MUEu/TDXWeCVdjIGTlKUE47 Q==;
-X-CSE-ConnectionGUID: MvoRaanWTFOHiTEbLtC+fA==
-X-CSE-MsgGUID: Asq6tt/WTwe/kV7kGF+nSA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11854"; a="96074842"
-X-IronPort-AV: E=Sophos;i="6.25,179,1779174000"; d="scan'208";a="96074842"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Jul 2026 18:17:22 -0700
-X-CSE-ConnectionGUID: cj7CMRtFSOqmc9+SVmQkLQ==
-X-CSE-MsgGUID: c1A9hUpoTTC97+e0urPpmw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,179,1779174000"; d="scan'208";a="251943350"
-Received: from junjie-desk-dev.bj.intel.com (HELO
- junjie-desk-dev.tail2c02c1.ts.net) ([10.238.152.71])
- by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Jul 2026 18:17:21 -0700
-From: Junjie Cao <junjie.cao@intel.com>
-To: Jonathan Cameron <jic23@kernel.org>
-Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org, qemu-stable@nongnu.org
-Subject: [PATCH v2 3/6] hw/cxl: convert cxl-type3 to three-phase reset
-Date: Thu, 23 Jul 2026 09:16:22 +0800
-Message-ID: <20260723011625.1117034-4-junjie.cao@intel.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260723011625.1117034-1-junjie.cao@intel.com>
-References: <20260723011625.1117034-1-junjie.cao@intel.com>
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1wmi41-0002xb-UF; Wed, 22 Jul 2026 21:17:31 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id BAE86600AB;
+ Thu, 23 Jul 2026 01:17:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 341781F00A3A;
+ Thu, 23 Jul 2026 01:17:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1784769439;
+ bh=7OoojlQ7zf5LlLfLK095v9w5Vh9e3y6NwiF/hoQhbY8=;
+ h=Date:From:To:cc:Subject:In-Reply-To:References;
+ b=mlw79mHXD7nOAaHOQgTrqOQ/7DtQ7jT1TENmwqKIyMUfgmM7P96irTgtufuWRHt+q
+ 4oCNUjAyuaHi7I1xnQoFSlh28lEs4Nrg7ud/sy0MistmnUAMQxFViPbRb/Zv10Mt6X
+ sF5kvoS7oGm4AvkaDRSKQZ1gLM+WoX3LrX9q0G2KqllpdKgOTAA1K2BZbGtrTCmEk4
+ 1zwnsmUN1hJg9bW4az2+DH9wT2EDnCTSrQDGEXFC/Wz9oAnULN68V0wAd3fsTm9epv
+ sjyqa44xsiMGzbkbZ9rSNjqjzicCRy4l7u7bBMDgc2wQhgHQqmzmto4zHu7eS4iEE4
+ Hbsz7hm3FeiDw==
+Date: Wed, 22 Jul 2026 18:17:12 -0700 (PDT)
+From: Stefano Stabellini <sstabellini@kernel.org>
+X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+cc: Stefano Stabellini <sstabellini@kernel.org>, qemu-devel@nongnu.org, 
+ qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>, 
+ Anthony PERARD <anthony@xenproject.org>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: Re: [PATCH v2 2/2] hw/9pfs/xen: drain in-flight PDUs before xen-9p
+ disconnect
+In-Reply-To: <6012362.DvuYhMxLoT@weasel>
+Message-ID: <alpine.DEB.2.22.394.2607221815520.5295@ubuntu-linux-20-04-desktop>
+References: <cover.1784392605.git.qemu_oss@crudebyte.com>
+ <afbe101f9fef3110d79023c604be0b28006cfb60.1784392605.git.qemu_oss@crudebyte.com>
+ <6012362.DvuYhMxLoT@weasel>
+User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.9; envelope-from=junjie.cao@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=US-ASCII
+Received-SPF: pass client-ip=172.105.4.254;
+ envelope-from=sstabellini@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,86 +74,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the deprecated device_class_set_legacy_reset() registration
-with the three-phase resettable interface, following the pattern
-already established by the CXL root port (cxl_rp_reset_hold).
+On Wed, 22 Jul 2026, Christian Schoenebeck wrote:
+> Hi Stefano,
+> 
+> chance that you might be looking at this v2 Xen patch soon? If not, just let 
+> me know, then I'll send out a PR with other fixes piled up on my side in the 
+> meantime, as QEMU release window narrows.
 
-Only the hold phase is needed; enter and exit are left NULL.  The
-parent hold phase is chained for correctness: TYPE_PCI_DEVICE installs
-no hold phase today, so parent_phases.hold is currently NULL and the
-chained call is a no-op, but capturing and invoking it is the correct
-forward-compatible pattern and mirrors cxl_rp_reset_hold().
+This is better but I think there is still an issue
 
-No functional change — the reset body is identical; only the
-registration path and function signature change.
+ 
+> On Saturday, 18 July 2026 18:50:06 CEST Christian Schoenebeck wrote:
+> > The xen-9p disconnect path has two issues:
+> > 
+> > 1. It frees the Xen9pfsRing structures while in-flight PDUs may still
+> >    reference them via pdu->tag to index rings[]. This causes a UAF
+> >    in xen_9pfs_push_and_notify() when worker threads resume after
+> >    completing filesystem operations.
+> > 
+> > 2. It never calls v9fs_device_unrealize_common(), which means server
+> >    state (struct LocalData, mountfd, FIDs) is never cleaned up on
+> >    disconnect, causing a resource leak on every guest-initiated
+> >    disconnect.
+> > 
+> > Fix both by draining in-flight PDUs via v9fs_reset() before tearing
+> > down rings, and calling v9fs_device_unrealize_common() to clean up
+> > server state.
+> > 
+> > Additionally, explicit calls of xen_9pfs_disconnect() in the error
+> > paths of xen_9pfs_pdu_vmarshal() and xen_9pfs_pdu_vunmarshal() must
+> > be deferred (via aio_bh_schedule_oneshot()), because
+> > xen_9pfs_pdu_v(un)marshal() are running within a coroutine context
+> > which makes them unsafe [1] for calling v9fs_reset() directly, as
+> > the latter e.g. has a loop like:
+> > 
+> >     while (!QLIST_EMPTY(&s->active_list)) {
+> >         aio_poll(qemu_get_aio_context(), true);
+> >     }
+> > 
+> > which would a) never terminate (as the coroutine is on the
+> > active_list) and b) aio_poll() is marked as no_coroutine_fn.
+> > 
+> > [1] https://lore.kernel.org/qemu-devel/3351181.5fSG56mABF@weasel/
+> > 
+> > And finally, add an idempotent guard to xen_9pfs_disconnect(),
+> > just for the case.
+> > 
+> > Fixes: b37eeb0201 ("xen/9pfs: introduce Xen 9pfs backend")
+> > Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> > ---
+> >  hw/9pfs/xen-9p-backend.c | 19 +++++++++++++++++--
+> >  1 file changed, 17 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
+> > index 24c90d97ec..edb65a7afc 100644
+> > --- a/hw/9pfs/xen-9p-backend.c
+> > +++ b/hw/9pfs/xen-9p-backend.c
+> > @@ -68,6 +68,11 @@ typedef struct Xen9pfsDev {
+> > 
+> >  static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev);
+> > 
+> > +static void xen_9pfs_disconnect_bh(void *opaque)
+> > +{
+> > +    xen_9pfs_disconnect(opaque);
+> > +}
+> > +
+> >  static void xen_9pfs_in_sg(Xen9pfsRing *ring,
+> >                             struct iovec *in_sg,
+> >                             int *num,
+> > @@ -150,7 +155,8 @@ static ssize_t xen_9pfs_pdu_vmarshal(V9fsPDU *pdu,
+> >                        "Failed to encode VirtFS reply type %d\n",
+> >                        pdu->id + 1);
+> >          xen_be_set_state(&xen_9pfs->xendev, XenbusStateClosing);
+> > -        xen_9pfs_disconnect(&xen_9pfs->xendev);
+> > +        aio_bh_schedule_oneshot(qemu_get_aio_context(),
+> > +                                xen_9pfs_disconnect_bh, &xen_9pfs->xendev);
+> > }
+> >      return ret;
+> >  }
+> > @@ -173,7 +179,8 @@ static ssize_t xen_9pfs_pdu_vunmarshal(V9fsPDU *pdu,
+> >          xen_pv_printf(&xen_9pfs->xendev, 0,
+> >                        "Failed to decode VirtFS request type %d\n",
+> > pdu->id); xen_be_set_state(&xen_9pfs->xendev, XenbusStateClosing);
+> > -        xen_9pfs_disconnect(&xen_9pfs->xendev);
+> > +        aio_bh_schedule_oneshot(qemu_get_aio_context(),
+> > +                                xen_9pfs_disconnect_bh, &xen_9pfs->xendev);
+> > }
+> >      return ret;
+> >  }
+> > @@ -368,10 +375,18 @@ static void xen_9pfs_evtchn_event(void *opaque)
+> >  static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev)
+> >  {
+> >      Xen9pfsDev *xen_9pdev = container_of(xendev, Xen9pfsDev, xendev);
+> > +    V9fsState *s = &xen_9pdev->state;
+> >      int i;
+> > 
+> > +    if (!xen_9pdev->rings) {
 
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
----
- hw/mem/cxl_type3.c          | 16 ++++++++++++----
- include/hw/cxl/cxl_device.h |  2 ++
- 2 files changed, 14 insertions(+), 4 deletions(-)
+specifically this check is not sufficient are there can be cases where
+rings != NULL but transport is not set and v9fs_reset should not be
+called. For instance xen_be_map_grant_ref() returns NULL,
+xen_9pfs_connect() go out without calling v9fs_device_realize_common().
+s->transport == NULL and also s->fids == NULL but rings != NULL. Later
+v9fs_reset calls g_hash_table_get_values(s->fids)
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 4ac6eaa950..b842e71c66 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -1326,13 +1326,18 @@ MemTxResult cxl_type3_write(PCIDevice *d, hwaddr host_addr, uint64_t data,
-     return address_space_write(as, dpa_offset, attrs, &data, size);
+
+
+> > +        return;
+> > +    }
+> > +
+> >      trace_xen_9pfs_disconnect(xendev->name);
+> > 
+> > +    v9fs_reset(s);
+> > +    v9fs_device_unrealize_common(s);
+> > +
+> >      for (i = 0; i < xen_9pdev->num_rings; i++) {
+> >          if (xen_9pdev->rings[i].evtchndev != NULL) {
+> >             
+> > qemu_set_fd_handler(qemu_xen_evtchn_fd(xen_9pdev->rings[i].evtchndev),
+
+See this below. If you agree and add the below to this patch you can add
+my Reviewed-by.
+
+
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 3119f01117..fc01791830 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -4530,6 +4530,7 @@ void v9fs_device_unrealize_common(V9fsState *s)
+     qp_table_destroy(&s->qpp_table);
+     qp_table_destroy(&s->qpf_table);
+     g_free(s->ctx.fs_root);
++    s->transport = NULL;
  }
  
--static void ct3d_reset(DeviceState *dev)
-+static void ct3d_reset_hold(Object *obj, ResetType type)
- {
--    CXLType3Dev *ct3d = CXL_TYPE3(dev);
-+    CXLType3Dev *ct3d = CXL_TYPE3(obj);
-+    CXLType3Class *cvc = CXL_TYPE3_GET_CLASS(obj);
-     uint32_t *reg_state = ct3d->cxl_cstate.crb.cache_mem_registers;
-     uint32_t *write_msk = ct3d->cxl_cstate.crb.cache_mem_regs_write_mask;
+ typedef struct VirtfsCoResetData {
+diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
+index edb65a7afc..f0791f9e97 100644
+--- a/hw/9pfs/xen-9p-backend.c
++++ b/hw/9pfs/xen-9p-backend.c
+@@ -384,8 +384,10 @@ static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev)
  
--    pcie_cap_fill_link_ep_usp(PCI_DEVICE(dev), ct3d->width, ct3d->speed,
-+    if (cvc->parent_phases.hold) {
-+        cvc->parent_phases.hold(obj, type);
+     trace_xen_9pfs_disconnect(xendev->name);
+ 
+-    v9fs_reset(s);
+-    v9fs_device_unrealize_common(s);
++    if (s->transport) {
++        v9fs_reset(s);
++        v9fs_device_unrealize_common(s);
 +    }
-+
-+    pcie_cap_fill_link_ep_usp(PCI_DEVICE(obj), ct3d->width, ct3d->speed,
-                               ct3d->flitmode);
-     cxl_component_register_init_common(reg_state, write_msk,
-                                        CXL2_TYPE3_DEVICE, ct3d->hdmdb);
-@@ -2464,6 +2469,7 @@ static void ct3_class_init(ObjectClass *oc, const void *data)
-     DeviceClass *dc = DEVICE_CLASS(oc);
-     PCIDeviceClass *pc = PCI_DEVICE_CLASS(oc);
-     CXLType3Class *cvc = CXL_TYPE3_CLASS(oc);
-+    ResettableClass *rc = RESETTABLE_CLASS(oc);
  
-     pc->realize = ct3_realize;
-     pc->exit = ct3_exit;
-@@ -2477,9 +2483,11 @@ static void ct3_class_init(ObjectClass *oc, const void *data)
- 
-     set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
-     dc->desc = "CXL Memory Device (Type 3)";
--    device_class_set_legacy_reset(dc, ct3d_reset);
-     device_class_set_props(dc, ct3_props);
- 
-+    resettable_class_set_parent_phases(rc, NULL, ct3d_reset_hold, NULL,
-+                                       &cvc->parent_phases);
-+
-     cvc->get_lsa_size = get_lsa_size;
-     cvc->get_lsa = get_lsa;
-     cvc->set_lsa = set_lsa;
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index ba551fa5f9..b7e20e3fe4 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -805,6 +805,8 @@ struct CXLType3Class {
-     /* Private */
-     PCIDeviceClass parent_class;
- 
-+    ResettablePhases parent_phases;
-+
-     /* public */
-     uint64_t (*get_lsa_size)(CXLType3Dev *ct3d);
- 
--- 
-2.43.0
-
+     for (i = 0; i < xen_9pdev->num_rings; i++) {
+         if (xen_9pdev->rings[i].evtchndev != NULL) {
 
