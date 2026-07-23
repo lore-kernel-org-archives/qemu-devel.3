@@ -4,107 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4688DC531F8
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 16:02:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2625EC531F8
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 16:06:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmvrV-0006aK-EJ; Thu, 23 Jul 2026 12:01:29 -0400
+	id 1wmvw9-0003TW-NK; Thu, 23 Jul 2026 12:06:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wmvrJ-0006Ni-SI
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 12:01:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wmvw3-0003PB-6C
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 12:06:13 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wmvrG-0006om-FY
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 12:01:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784822471;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0JRemlS41+9KXLA3WnK0nzBLgkObM084kzCwYu9I5kA=;
- b=badIsUQgCrTYxZCHuTU7vaI9IQG8UbSkhzIkL7ThkqJzc+r+DliZlOgoZJIBgSEBmuY+AC
- McTBDnlwu98QSwQaMkaEyghFwrrgKEy0Q4A3IbHyW4AtzQEY8zUfb3t361Nd0W+o8koew0
- TAEduJSFR2C6ck+s2ntIU5SVZMDGja0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-363-Ky5KoZlePKSlxdKnfePC5Q-1; Thu, 23 Jul 2026 12:01:09 -0400
-X-MC-Unique: Ky5KoZlePKSlxdKnfePC5Q-1
-X-Mimecast-MFC-AGG-ID: Ky5KoZlePKSlxdKnfePC5Q_1784822469
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-49554715277so8687555e9.1
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 09:01:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wmvw0-0007Nr-0D
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 12:06:09 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66NF9Nu6162109
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 16:06:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 7etjDyNUcjho5Z9i5TV5RUKQPZqHBwzJskbPD7GFUu4=; b=TnM2OG0VjVqJEd5s
+ /NM4+iNenAtsNlBWviQru9ZpeaLmpUcAmSnJg9tVA23J0CzfLZhOXy1YKhqdZDAq
+ zm3Xh+OGXTJmCGFpR356V6dxreEJUMcPXTEpbSXgrjeFcZduUgKlUX5UMeagRGX/
+ zIptHp/v/Qb6Q7kg5LaMq+43NxiS6RFBdUAtQn1ghhcGr27A42x7pScflus5mQ8K
+ GE7P7RBC1296mZS4i/2SjzwnVI0jfrZaOLeF23cCaGx71XCWp7O1iuTllc9KFsRX
+ lYj9cXTZtXkAA0kKqT7+uLEfWDMF35OKRbis1A+i+YbTWq8EHvK17ToiOv3DJdZ7
+ wPLqUA==
+Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com
+ [209.85.217.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fknbmgcek-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 16:06:05 +0000 (GMT)
+Received: by mail-vs1-f70.google.com with SMTP id
+ ada2fe7eead31-74ab744f2c2so219119137.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 09:06:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784822469; x=1785427269; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=0JRemlS41+9KXLA3WnK0nzBLgkObM084kzCwYu9I5kA=;
- b=ZQevVxhSft17v01odNB/JZITvz5tevkqtPToUtNBzN3BDQSZPZq7hCD+rHOEOlgUKD
- iJGZYtcMyL9of5q5K3fqPEhVP2KDa1Rg2/HuNfTMvMavw7xS7AnOpi/onpXIuV8kQigm
- lxyHNMgb03Aj+UOZok0tRQLbKot3nW5y5MQkvcnAI+szo3OG92WmxEjiI+nirg++h3NM
- qjjwAAT+VISqm1b+ZN1ckik4PQrQJZj3kE/ja0fHfW8DqevT2BidhGg/0/a8rmNwiirj
- QQWvGDV/gkkclz+wutaDSRfPTipKwTu0WvMZj5jCOvgspkNVvoacII+DO85SDs5wjuNx
- 5K0A==
+ d=oss.qualcomm.com; s=google; t=1784822765; x=1785427565; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=7etjDyNUcjho5Z9i5TV5RUKQPZqHBwzJskbPD7GFUu4=;
+ b=iQ4t3smOHyVSZ50C3YiqjOCCFIHVGS56/4mmRt4uTeS/mSifflBCGIgpRm8wX6TC4P
+ wMYVHGXH8X02eM63UoRkSXU/MP/U6HLDHsnBWiAwTFSIxnoDL6kbt4PjJlcW+PVJF5Wz
+ iPTANzmIvKCOU9Wlj42XRkAf1Ke2rI9/7szoyZn6lcrR94NbofJaHrLESHO/NFY9H3+g
+ Qa0kRgKA7X1je/wtflzuoNfAcqTmeSlpMyXOW9bSjqYake3dl1h6Y+6kQMbXb2iUCQMa
+ 9BjtT/szEoD0mRGU5CX22pq6L44m/yy15+gaG+Au0RtY3YsCTBbFH2HWMmJ3bLpe3QcI
+ 2RkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784822469; x=1785427269;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=0JRemlS41+9KXLA3WnK0nzBLgkObM084kzCwYu9I5kA=;
- b=COZUi3MAdA0d4D7pQI8z3OFMEjQEsQEyKSCilJ2TYvRxiuXZeW+D1Yy0SR94NbUrkk
- ccEL6ngLRyahkaqKDvRTJL5LYYWqcAYww/l3C4Q+kEEJbmkXrUuarvAUzRyprcd1KodS
- wToTq3CYtkIBwfoR1KM1O0k8yt4Qx+Cp0VxK4/Bhwplf+1xcm63WAayikN3isDknMQCO
- Tep+SToE1lVMag7beyM9MPPBGYxulOK8YgTiXtXSrho6lj4365L7tm1FjlPRhhcNvBP/
- Tj8bBQU8dhOjb+/Vhp9g5AxIhnMDBqj7PZqvY2EGj3Fn+XqZ4TEUodDjwTqoKz/QNw0I
- ly3A==
-X-Gm-Message-State: AOJu0Yy1jx3efjyswV9rZPIZFwLJK46NqAqXfVEkNA0rdloux3XRDnAg
- Sgg7qqNrYfAlbinZaqiqe4xQ4VsyKb9xx4EYob7cMhLwQi7Nra/GJDY/cpOVYzh50g6Bp8Ho+nt
- YaMaUjiI9b0Tw11ZOFLQpzNOOOgUfFLrcVF9dR+IE5VkSOiS+qNDKP9bV
-X-Gm-Gg: AR+sD10PqDgZHMNaUbWHKj8f7rVB4QSIBCyxQrIcpP5HayuwWxEKMIS/CVXYxp6XOtj
- VDqROluAWQLNHRWTwXshZ24t3uKYUe5kTiwPJfFmgTxpbDRHY/fZ0VoaCv34vdv6rAcJGq4RDTj
- s03DFiwqnwVVYeblqjA2Ao8qi+bBUNivrgR5HQGpWruBaBvri2ghmNiFX+HIA/8NKNdfCdePaPm
- xsuTduugCIo+xo7W1W9KjjfmO8uViBGMxLMsRjvQcVIlJ0ovJyt+7nYd5/SU0ilx7fZuKoubU9Y
- 8Cjthpmlu5NskoZZBeHrVJxo+ynbxt5KOEmEWgmy7f+6Hvw8F0hhQQXmVBCLP24ugetUDVKaP6O
- RaEMpPlRIg1tS5H3rU21gGw==
-X-Received: by 2002:a05:600c:350c:b0:493:ece1:86b9 with SMTP id
- 5b1f17b1804b1-49573cc1222mr42940055e9.8.1784822468551; 
- Thu, 23 Jul 2026 09:01:08 -0700 (PDT)
-X-Received: by 2002:a05:600c:350c:b0:493:ece1:86b9 with SMTP id
- 5b1f17b1804b1-49573cc1222mr42939405e9.8.1784822467851; 
- Thu, 23 Jul 2026 09:01:07 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4957afb9b29sm2827715e9.14.2026.07.23.09.01.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Jul 2026 09:01:07 -0700 (PDT)
-Date: Thu, 23 Jul 2026 12:01:02 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>
-Cc: qemu-devel@nongnu.org, Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
-Subject: Re: [PATCH] virtio-iommu: fix OOM due to unbounded call_rcu
-Message-ID: <20260723115707-mutt-send-email-mst@kernel.org>
-References: <eb46ab360dbe28c29cfa78812a7440dcb7444d59.1784807826.git.mst@redhat.com>
- <587f8a83-7d2e-4683-8992-380b494dcdd0@redhat.com>
+ d=1e100.net; s=20251104; t=1784822765; x=1785427565;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=7etjDyNUcjho5Z9i5TV5RUKQPZqHBwzJskbPD7GFUu4=;
+ b=KHuN50fHDxFfvn3s6bgxtn0CrOqbyzOtPOusYdKgA2nbxEOfoxQj1q6ZpJPvsXgzfE
+ q+LhNHmqU+wZQbYnt+3J/y68fkYqsYT4vBJ4Cf4D/KKMIEXZw8zH/WIPJhpEHaWIZKzf
+ Io18ktzyhmEvAQ4GD8j4ITD2975DROFr8yOvy1GEw/KAnDHqGohsE/OXJYXyCseA/zu0
+ y/C6rzCtwoA58tjxSmjarcwz5fbPo+UWs5EyqefhTPOn0QqyXTmP8GQjRnvHcqfOw5i1
+ blmCNEEzKF3sMzUz9dEG/8DJTzlw+DFExjJTKa1ijbIfTrBek3+G3n5pwdH1KTrYV8Kt
+ 79MA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoyJGvtW6Fw2QTDPrQqGUgICUVqRWtBS5Fz54M0F2zjbv4gOplXZ1KK5oY0SdSjgYAfvkG7tecVpfHJ@nongnu.org
+X-Gm-Message-State: AOJu0YxE/vs/R0Zwwh7RThA/LmsSIrxSNxxw71MS2l7Qxo8jOGl3c5Mn
+ IvDXxAuWOQ2a/dEL0Gm5TEJiRcUSWVRqU1ooGsKcy7RfBOopQKBB6ihRTA/eWardgsYaCnzosps
+ oSc5TsCu1gW+nSKbRqDQVlOqD3s3qQFuOum47DeEHZ6i4kb0OBUp2KCLGeA==
+X-Gm-Gg: AR+sD10LK3+HyABPl203oYJEbXBbRcyE+7FsJzIkgMEF6gwPvXCbKI3gVQy1UJ6Y7UL
+ Ch4Yl/u2w/T7ZLAyTXiq/ahsBOFFoIkkwWVWstp38oK0DuhLelvA9w4e30DF5SKMc8hpW3W+Sx/
+ grFQ6bVLWVWXqSKo2uyE2+naSQaySEVyyxvdOlXiLFKhWP6I/VyoGPhpq6PEk6ILpOlAAAVnrBE
+ x0mykDH8LF1wBNLFPkonTp5HiuV90P7LyW1/GcGDYa5+k/2sDcpYl0ylEVKDCKk9DQEMWcHLaZG
+ 7hpCd3Jnagtib5B79tGL7JiC2C/u2gwKWv2o9T40dS3WN8PMp6nQko4U+SxgrT8TScjBpNzumnG
+ See50n8krPha1LxbWH+Bc03TfrNEKH/h3D4VfFAOGKkvavgcdNrU=
+X-Received: by 2002:a05:6102:4bcc:b0:744:cb59:d6e0 with SMTP id
+ ada2fe7eead31-74d5ad4147amr1545377137.0.1784822765238; 
+ Thu, 23 Jul 2026 09:06:05 -0700 (PDT)
+X-Received: by 2002:a05:6102:4bcc:b0:744:cb59:d6e0 with SMTP id
+ ada2fe7eead31-74d5ad4147amr1545329137.0.1784822764685; 
+ Thu, 23 Jul 2026 09:06:04 -0700 (PDT)
+Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4957afb4da8sm2762255e9.12.2026.07.23.09.06.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 23 Jul 2026 09:06:03 -0700 (PDT)
+Message-ID: <dc629f33-1d9c-4e1a-a925-384e8cd1e9fe@oss.qualcomm.com>
+Date: Thu, 23 Jul 2026 18:06:02 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] include/hw: defend against weird elf headers
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+References: <20260723125310.33707-1-alex.bennee@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260723125310.33707-1-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <587f8a83-7d2e-4683-8992-380b494dcdd0@redhat.com>
-Received-SPF: permerror client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.951,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Authority-Analysis: v=2.4 cv=e742j6p/ c=1 sm=1 tr=0 ts=6a623bed cx=c_pps
+ a=N1BjEkVkxJi3uNfLdpvX3g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=p0WdMEafAAAA:8 a=KKAkSRfTAAAA:8 a=69wJf7TsAAAA:8 a=t668wg_bggP6ZPi5WjgA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=crWF4MFLhNY0qMRaF8an:22
+ a=cvBusfyB2V15izCimMoJ:22 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-ORIG-GUID: h1WVqBrb4mKs6JQhPvvw_ZxNzxNUIccs
+X-Proofpoint-GUID: h1WVqBrb4mKs6JQhPvvw_ZxNzxNUIccs
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIzMDE1OCBTYWx0ZWRfX2WeooDn0F/l/
+ 6VZlonewlvHE5nQ9yDag5/qHt2VOBls1PNZR/Mb+cpgFyoj6SHq+tYF95ai0NdxzQ0ecCZrzDb2
+ TtZbkr+Ah+9nHFfM+MgiRHHxJcAwnOg=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIzMDE1OCBTYWx0ZWRfX+j7isDM28QTl
+ 7vCKntutvxGMbXW8PFmXwPEP/Cpsemn3LgYNkpjhfInGacVITizZVs3Ny5Ph+Yzrjni684J+ZZF
+ ymYKn/CpNa7OcZ/rPyjgmvxBkLyshT7iv2/IO8552Lx2dMz3LDcDxS8Pi3ZHgzoXs9iPilWsY13
+ NmzjlNQciynYQi8dO9xQKcNimlEfBhlxurokoO/c1/ueiMNbaeEgA6D0N6DY9tQXsJ7Mt9hXzkG
+ TKWRI18Aa1zp3tEA1WKh0FEJxUOhZHz7QSgLM5nJBTUMJl5mpxRfFZ38yJmYSy1ZUijbyqYP2Hj
+ B9OQ5ib6qNBZHSxOxuUkh/ui1QRvErPMhhE0zgywNlNwFfV+bL6XSzjHh8Z+ZZBZu6G/+nrLn/r
+ EAtm4MzOw/k5nf11vx15wVS5hP6ZgCWBVPMcEGNSMvSTMiZiBAGXe3F6T5g2o4KwKfHSP4fWenh
+ KHQfUmSxK8ojhNf3zmw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-23_04,2026-07-22_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
+ impostorscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607230158
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,145 +155,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 23, 2026 at 05:42:02PM +0200, Eric Auger wrote:
-> Hi Michael,
+On 23/7/26 14:53, Alex BennÃ©e wrote:
+> According to the ELF spec:
 > 
-> On 7/23/26 1:58 PM, Michael S. Tsirkin wrote:
-> > Currently, within virtio-iommu, handle_command processes the command vq
-> > without any limits on the number of entries processed.
-> > This can easily and repeatedly enable/disable multiple memory regions.
-> > Within the memory code, this causes an accumulation of an
-> > unbounded number of RCU-deferred FlatViews - each of these
-> > is supposed to be freed with call_rcu, but that never happens
-> > because the main thread never returns to the main loop.
-> >
-> > Given FlatView is big, it's easy to have this balloon out to multiple
-> > Gigabytes of memory.
-> >
-> > Limit the loop defer any remaining work to a timer.
-> >
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3930
-> > Cc: Eric Auger <eric.auger@redhat.com>
-> > Cc: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> > ---
-> >  include/hw/virtio/virtio-iommu.h |  1 +
-> >  hw/virtio/virtio-iommu.c         | 29 +++++++++++++++++++++++++++++
-> >  3 files changed, 35 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/include/hw/virtio/virtio-iommu.h b/include/hw/virtio/virtio-iommu.h
-> > index 3b86050f2c..1f265540ad 100644
-> > --- a/include/hw/virtio/virtio-iommu.h
-> > +++ b/include/hw/virtio/virtio-iommu.h
-> > @@ -65,6 +65,7 @@ struct VirtIOIOMMU {
-> >      GTree *domains;
-> >      QemuRecMutex mutex;
-> >      GTree *endpoints;
-> > +    QEMUTimer *cmd_timer;
-> >      bool boot_bypass;
-> >      Notifier machine_done;
-> >      bool granule_frozen;
-> > diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-> > index 08f7e8b783..533bd5073f 100644
-> > --- a/hw/virtio/virtio-iommu.c
-> > +++ b/hw/virtio/virtio-iommu.c
-> > @@ -993,6 +993,18 @@ static int virtio_iommu_handle_probe(VirtIOIOMMU *s,
-> >      return ret ? ret : virtio_iommu_probe(s, &req, buf);
-> >  }
-> >  
-> > +static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq);
-> > +
-> > +static void virtio_iommu_handle_command_timer(void *opaque)
-> > +{
-> > +    VirtIOIOMMU *s = opaque;
-> > +    VirtIODevice *vdev = VIRTIO_DEVICE(s);
-> > +
-> > +    if (virtio_device_started(vdev, vdev->status) && !vdev->broken) {
-> > +        virtio_iommu_handle_command(vdev, s->req_vq);
-> So what does happen in terms of scheduling. Can't this run concurrently
-> with the usual direct virtio_iommu_handle_command() path?�
-
-BQL prevents that.
-
-
-> > +    }
-> > +}
-> > +
-> >  static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq)
-> >  {
-> >      VirtIOIOMMU *s = VIRTIO_IOMMU(vdev);
-> > @@ -1003,10 +1015,17 @@ static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq)
-> >      struct iovec *iov;
-> >      void *buf = NULL;
-> >      size_t sz;
-> > +    unsigned int batch = 0;
-> >  
-> >      for (;;) {
-> >          size_t output_size = sizeof(tail);
-> >  
-> > +        if (++batch > virtio_queue_get_num(vdev, virtio_get_queue_index(vq))) {
-> how did you chose that condition? is it always safe wrt oom situation?
-
-It's kinda random, but the idea is that queue size already gives us
-a point on the memory/speed curve.
-
-There's nothing that is "safe wrt oom" in all configs - qemu makes
-no promises and even a single allocation can in theory push you
-into oom if memory is tight.
-
-But what this prevents is unbounded memory allocations which will trigger
-oom at some point for sure.
-
-
-
-> > +            timer_mod(s->cmd_timer,
-> > +                      qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL_RT) + 1);
-> > +            break;
-> > +        }
-> > +
-> >          elem = virtqueue_pop(vq, sizeof(VirtQueueElement));
-> >          if (!elem) {
-> >              return;
-> > @@ -1416,6 +1435,8 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
-> >      s->req_vq = virtio_add_queue(vdev, VIOMMU_DEFAULT_QUEUE_SIZE,
-> >                               virtio_iommu_handle_command);
-> >      s->event_vq = virtio_add_queue(vdev, VIOMMU_DEFAULT_QUEUE_SIZE, NULL);
-> > +    s->cmd_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL_RT,
-> > +                                virtio_iommu_handle_command_timer, s);
-> >  
-> >      /*
-> >       * config.bypass is needed to get initial address space early, such as
-> > @@ -1498,6 +1519,7 @@ static void virtio_iommu_device_unrealize(DeviceState *dev)
-> >  
-> >      qemu_rec_mutex_destroy(&s->mutex);
-> >  
-> > +    timer_free(s->cmd_timer);
-> >      virtio_delete_queue(s->req_vq);
-> >      virtio_delete_queue(s->event_vq);
-> >      virtio_cleanup(vdev);
-> > @@ -1509,6 +1531,8 @@ static void virtio_iommu_device_reset_exit(Object *obj, ResetType type)
-> >  
-> >      trace_virtio_iommu_device_reset_exit();
-> >  
-> > +    timer_del(s->cmd_timer);
-> > +
-> >      if (s->domains) {
-> >          g_tree_destroy(s->domains);
-> >      }
-> > @@ -1628,6 +1652,11 @@ static int iommu_post_load(void *opaque, int version_id)
-> >       * still correct.
-> >       */
-> >      virtio_iommu_switch_address_space_all(s);
-> > +
-> > +    if (virtio_device_started(VIRTIO_DEVICE(s), VIRTIO_DEVICE(s)->status)) {
-> > +        timer_mod(s->cmd_timer,
-> > +                  qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL_RT) + 1);
-> > +    }
-> >      return 0;
-> >  }
-> >  
-> Thanks
+>    PT_LOAD
 > 
-> Eric
+>    The array element specifies a loadable segment, described by
+>    p_filesz and p_memsz. The bytes from the file are mapped to the
+>    beginning of the memory segment. If the segment's memory
+>    size (p_memsz) is larger than the file size (p_filesz), the
+>    ``extra'' bytes are defined to hold the value 0 and to follow the
+>    segment's initialized area. The file size may not be larger than the
+>    memory size. Loadable segment entries in the program header table
+>    appear in ascending order, sorted on the p_vaddr member.
+> 
+> which implies while both p_filesz and p_memsz can be zero we should
+> never see a case where p_filesz is greater than the in memory size.
+> Indeed it has been reported such a hand crafted ELF can blow up, for
+> example during rom_reset():
+> 
+>    address_space_set(rom->as, rom->addr + rom->datasize, 0,
+>                      rom->romsize - rom->datasize,
+>                      MEMTXATTRS_UNSPECIFIED);
+> 
+> which could trigger and underflow leaving QEMU slowly filling a very
+> large buffer.
+> 
+> Fixes: https://gitlab.com/qemu-project/qemu/-/work_items/4056
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Cc: qemu-stable@nongnu.org
+> ---
+>   include/hw/elf_ops.h.inc | 4 ++++
+>   1 file changed, 4 insertions(+)
+> 
+> diff --git a/include/hw/elf_ops.h.inc b/include/hw/elf_ops.h.inc
+> index 9c35d1b9da6..c6d94ef760c 100644
+> --- a/include/hw/elf_ops.h.inc
+> +++ b/include/hw/elf_ops.h.inc
+> @@ -427,6 +427,10 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
+>               file_size = ph->p_filesz; /* Size of the allocated data */
+>               data_offset = ph->p_offset; /* Offset where the data is located */
+>   
+> +            if (file_size > mem_size) {
+
+Maybe use 'ret = ELF_LOAD_TOO_BIG;' or add ELF_LOAD_TOO_SMALL = -6 and
+update load_elf_strerror() to return a more useful string?
+
+$ git log --oneline |fgrep hw/elf
+159fb790e48 hw/elf_ops: Rename elf_ops.h -> elf_ops.h.inc
+1fed4cd04d8 Revert "hw/elf_ops: Ignore loadable segments with zero size"
+62570f14341 hw/elf_ops: Ignore loadable segments with zero size
+e1fee58fea3 include/hw/elf: Remove truncating signed casts
+b4c4c1f1129 hw/elf_ops: clear uninitialized segment space
+8975eb891fb hw/elf_ops.h: switch to ssize_t for elf loader return type
+f413e514a91 hw/elf_ops: Fix a typo
+5579b524b0d hw/elf_ops: Do not ignore write failures when loading ELF
+
+"hw/elf_ops" in subject is more precise than "include/hw".
+
+The fix LGTM but the error path could be easily improved :)
+
+> +                goto fail;
+> +            }
+> +
+>               if (file_size > 0) {
+>                   if (g_mapped_file_get_length(mapped_file) <
+>                       file_size + data_offset) {
 
 
