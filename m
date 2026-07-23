@@ -4,92 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C61FC531CC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 17:42:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C760C531CC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 18:03:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmxQg-0007ue-VV; Thu, 23 Jul 2026 13:41:54 -0400
+	id 1wmxl3-00080q-EM; Thu, 23 Jul 2026 14:02:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mike.malyshev@gmail.com>)
- id 1wmxQf-0007uN-SP
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 13:41:53 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wmxl2-00080g-1m
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 14:02:56 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mike.malyshev@gmail.com>)
- id 1wmxQd-0005gK-So
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 13:41:53 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-47f93b2fe4cso432427f8f.0
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 10:41:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wmxl0-00006q-7m
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 14:02:55 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4955158f26aso6694255e9.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 11:02:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784828510; x=1785433310; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=C/cf6kQIx7implXn1s6QI7Mman3N6ab3laLzvURomzM=;
- b=HYzIc7XGkRr8tf/p3AGRVx0aI7/Wk7QsgYB/LuGU8R3OC9o5NmNjQochgDpybAyZuH
- SPbjvTGpZ8J6F767coM9QRLFiPRU64/sXSB2aDPo/ySCWMV81WnMPs6LN1bRGuwlVxQO
- 4QKbxSz2gQTT3lmcgpbLHJFABqmj5TAMUvddckoXFbfcvF8cWOQTISZGlRbDYboFbinS
- xGdEkrMTl+CMkbbOzax/JVV2shpOoZ9AZFo6kFijB2oojSnvVPeR85mGa3hG5KGkpYBK
- ADC60U8FTLlA+OBqM0Zl40STumZrkWCCh/KxU2KM2jZLUDJuPbll6Cqa9qxHKuvIkgJq
- 5Kjg==
+ d=linaro.org; s=google; t=1784829771; x=1785434571; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=ikQe1U6KlmcryjT6GmKPLhZl9M9JWji221reG0KAI+g=;
+ b=QWsUWLzomRqzryyEw2mzdR7mdgBaTt6TIn251XH9Nnm/xO5UCUf6R9bnizfLGApn84
+ jXo0g8kb30R7BCqhWAOAH3V/WE43A5lkFWifUllTARWTl0Fu4wOWDTdPpfUfsivNd5Sc
+ f6uZLu5WBZiB44mNIz/tdj+iRczvJZxNzG5zLKAWfIYWoaxbexcZ2XTcI/g2jeQYolo1
+ ya1FIrjsXT4z+UJrSRe5YmyX113bg+04A/AHwjBpbwcX05OBXmJ4YVjCTsVRPudlfxh7
+ xooS55O9wYw4A98YDUsUWLPkw6rD8KbonY0mK2xJnXvctnYeoDwmFM7krzBhdBNG11+p
+ Vobw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784828510; x=1785433310;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ d=1e100.net; s=20251104; t=1784829771; x=1785434571;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=C/cf6kQIx7implXn1s6QI7Mman3N6ab3laLzvURomzM=;
- b=NzCtPuswvRU/Q8WHsQxD+WZPeGKLT2wkDIkJMMLR12PADXLo6GoI5I0F0Kdd2BmwKR
- GBPej3xYqBxbcT/EaMJ71bCtMvYEi/KDEsFpPiVYnhuiZPX/lfFKguKBU8Qz8LE48+p0
- SovNu7Lc3gDxYYgVRupl1VO9kuQekqh32XQcSwyTCdgDZ8pI9NVh2Pj51o9zNIau2QSC
- E7dfgjwJcXHwOGDj+Gj6wqfZah5dw84kcVenS5K7sp0i6ZlHYCQ2+NNMw2QD2Rxtxate
- 3ubMDa1oUOaHpFwkj4yORE5AzVQgSG9enm/D2rigj2+FPKUnQZZfxBASqr5aWOzulla5
- byzg==
-X-Gm-Message-State: AOJu0Yz2DZXHI6gjEvW45NEKOEPMkx2xZTSfVNtoiUDu+2Ip9YbR96nK
- z0Q8BecocQpZczyh4CXyQ2sunkanicxxz0XPcHK55+0v59wiK7g0NFSnAsahKA4i+oo=
-X-Gm-Gg: AR+sD11vZDCrRPCWe5UD5HB2GA29GO/baXA27va2c1lMFSCZwpOsB0dtw9+ZlfxBeot
- P9wFRbMkcYYr53dQ3KK2e9XXdSz8oHWrGQccCAaMUKWL+RuQ5wHc7f6KEeoTp3laUNYuwRBVpy2
- iBsEG/dqIcD6/3dRWCUB8PJ/mkFNGKTEQ/Tka9CANjqS5NcGSDZpIs8Wmy8zOpiw4Y5YmSNexUy
- 6byh+lPJ5bD08lfJq8TS/nHJ0rvqiOZlKpPi8I82c36fTt213Kh7d5GH59OmjJ7qTyty/7YjY++
- IAXicHAb/fJsXO25vBVqLj+Z6NuawmIqpfuXvl7WJ5e3xmMrm5l3AJwfSyf8FanH2eP1Cuj61LP
- dCo90pBnFkDeBmexW2LC8Yw0tjXfqgc6HoNVEg+0oYM2Gu6JMTcdTziqB/LELju82/uiTTO+MG4
- 0O1kfv1J0=
-X-Received: by 2002:a05:600c:4e89:b0:495:63e4:7f78 with SMTP id
- 5b1f17b1804b1-49573ccd115mr51286885e9.10.1784828509277; 
- Thu, 23 Jul 2026 10:41:49 -0700 (PDT)
-Received: from build-server.. ([62.96.37.222])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49571c4b664sm68460735e9.4.2026.07.23.10.41.48
+ bh=ikQe1U6KlmcryjT6GmKPLhZl9M9JWji221reG0KAI+g=;
+ b=PJMESs50VdAJgN1XbuokqKp4ixaqzHnsUrWQ+zH6B5yrzcbniQduIWFBYWqruJK4R1
+ XKQxBTCvrdnkH5QaN+MFIGLGnQUpUPx14ib+9rR3ggAYrQO/IiY0+rWCquPwB07tm03X
+ GaYX2OVjIgo/NjynyoA4/nphJyma74D6s+GXMfabAmpTzg7jZPwhGr1c6goFA/4dGdAK
+ JdErch6h7VODs1xnEe2lH9Tq+XnCg4JdYniG5fVsc23RO3KuXcZD3CU2yZgL9b1jZ5hU
+ Uvyg+K+Cw4JKCqvYxRdL/apAoaYGW0lEmhHBGDyuRM1K7kFIuZGrjD9N7w4BYuG02/c1
+ RzmQ==
+X-Gm-Message-State: AOJu0YwrWgDVXyP235ZbQcMRIAnHYCD7XJ685vsc2LetFCoxjuhG0XJc
+ GlmM8fDpDpUqjS2HzUttLyFWjo5dSt3OTxS2wIjr9CmAggJ44KW4DUan1Gg66S5i3d0=
+X-Gm-Gg: AR+sD10eHgTdmXpTvWWCxRdETT5bxa1YgLjD23YtOWKo6tMM8f95AzEw6Pd2ha3Pn6l
+ PF2IZKCEmtNSpFI5Z0mIvVFNz2iElwze5YZL5gDuLTJywEiWmoRchz2uZXdQlrZvt3BiJDr2CHr
+ b0ocxUw3odPxqZWlGc/ayJ0R8FaK6MQemlErfaEqa7E5PpqGMFKPd62jSBOkgGQdC0CAzjiBfo4
+ dtfOTwEW3HtgRgLofvSKBb/i5JCIRmz/8i0iZQkUFwh/Lldl8srFP92BayuxBNJz8QzqI8nKtOE
+ L4HQJmeSZi6q+IPbyeZ/e68BBigJvBI0IsWIOekDYqnfaqi0TFF5f3nrDJTGZQnQ4ZqqEUrnCWB
+ k0Fg5UtpAr1otqdXF78s6I1HidTdBi2bTqrcLz69pwq76sbeVw3unYJ3sYolhcTfFeb0N3sDf4O
+ l/sg==
+X-Received: by 2002:a05:600c:654b:b0:492:437a:a653 with SMTP id
+ 5b1f17b1804b1-49573cff7c9mr32860895e9.26.1784829770399; 
+ Thu, 23 Jul 2026 11:02:50 -0700 (PDT)
+Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4957b5f3665sm4300015e9.2.2026.07.23.11.02.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Jul 2026 10:41:48 -0700 (PDT)
-From: mike.malyshev@gmail.com
-To: qemu-devel@nongnu.org, Tomita Moeko <tomitamoeko@gmail.com>,
- alex@shazbot.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
-Subject: Re: [PATCH] vfio/igd: sanitize DBUF_CTL POWER_STATE for iGPU
- passthrough
-Date: Thu, 23 Jul 2026 17:41:47 +0000
-Message-ID: <20260723174147.479506-1-mike.malyshev@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <e7b38b86-fde1-400d-ae5f-5b2ad0b4cb6e@gmail.com>
-References: <20260717084942.1555442-1-mike.malyshev@gmail.com>
- <e7b38b86-fde1-400d-ae5f-5b2ad0b4cb6e@gmail.com>
+ Thu, 23 Jul 2026 11:02:48 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 7138F5F7C2;
+ Thu, 23 Jul 2026 19:02:47 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,  Brian Cain <brian.cain@oss.qualcomm.com>,  Peter
+ Maydell <peter.maydell@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?=
+ <philmd@oss.qualcomm.com>,  Daniel =?utf-8?Q?P=2EBerrang=C3=A9?=
+ <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,  Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,  Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>,  Laurent Vivier <laurent@vivier.eu>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Gustavo Romero
+ <gustavo.romero@linaro.org>,  Helge Deller <deller@gmx.de>
+Subject: Re: [PATCH v5 97/98] configure: remove --cross-cc* options
+In-Reply-To: <c16b4480-06fd-4d96-b628-5c423d300988@oss.qualcomm.com> (Pierrick
+ Bouvier's message of "Thu, 23 Jul 2026 09:33:19 -0700")
+References: <20260710214343.2065491-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260710214343.2065491-98-pierrick.bouvier@oss.qualcomm.com>
+ <87wlupst0e.fsf@draig.linaro.org>
+ <0ed09a8f-2de8-4910-b853-cd717dbf3317@oss.qualcomm.com>
+ <87se59r999.fsf@draig.linaro.org>
+ <c16b4480-06fd-4d96-b628-5c423d300988@oss.qualcomm.com>
+User-Agent: mu4e 1.14.3-pre1; emacs 30.1
+Date: Thu, 23 Jul 2026 19:02:47 +0100
+Message-ID: <87mrvhr3co.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=mike.malyshev@gmail.com; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- NEW_PRODUCTS=1.249, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,67 +118,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mikhail Malyshev <mike.malyshev@gmail.com>
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
-Hi Moeko,
-
-Thanks for the review.
-
-> Just wondering if this aimed to solve some kind of "CPU pipe A FIFO
-> underrun" error. If possible, could you please paste some log? The i915
-> driver seems to only read POWER_STATE in gen9_dbuf_slice_set(), and a
-> warning should be printed if there is an inconsisitency.
-
-Worth clarifying up front: the guest here is Windows (Intel KMD), not
-Linux/i915, so there is no i915 dmesg or gen9_dbuf_slice_set() WARN to
-paste. The visible symptom is corrupted scanout (~128px vertical stripes)
-from a plane FIFO underrun, not a logged kernel error. I have not run a
-Linux/i915 guest on this platform, so I can't show it hitting or not
-hitting the bug -- and per your point about the WARN, i915 may well flag
-or avoid it, which is consistent with us only observing this on Windows.
-
-The trigger is a single inconsistent read on the first-boot modeset.
-Captured with x-no-mmap=on so BAR0 is trapped and every access is visible,
-the DBUF_CTL programming is a read-modify-write that never sets
-POWER_REQUEST:
-
-  vfio_region_read  index=0x0 addr=0x45008 data=0x4040c000  # STATE(30)=1, REQUEST(31)=0 (stale POST leftover)
-  vfio_region_write index=0x0 addr=0x45008 data=0x4043c000  # RMW: tracker bits only; REQUEST still 0
-  vfio_region_read  index=0x0 addr=0x45008 data=0x0043c000  # DBUF now powered down (STATE=0) -> underrun
-
-The driver sees STATE=1, assumes the slice is already powered, and leaves
-REQUEST clear. Only after a display sleep/wake does it actually request
-power, which is exactly why sleep/wake "repairs" the display:
-
-  vfio_region_write index=0x0 addr=0x45008 data=0x8043c000  # REQUEST=1
-  vfio_region_read  index=0x0 addr=0x45008 data=0xc043c000  # STATE follows -> powered, scanout clean
-
-Same pattern on 0x44fe8/0x44300/0x44304. This was originally reproduced,
-and the fix hardware-validated, on QEMU 9.1; this patch is the forward-port
-to current master.
-
-I'm happy to share the full trace event log (~400 MB) -- where would you
-prefer it? I can drop it on Google Drive and link it here if that's
-acceptable, or attach a trimmed excerpt inline.
-
-> Here GVT means the GVT-g (kvmgt) driver under drivers/gpu/drm/i915/gvt,
-> right? Please correct me if I am wrong.
-
-Yes, GVT-g (kvmgt). It emulates STATE-follows-REQUEST for this class of
-inconsistency; this quirk is the read-side equivalent for full passthrough.
-
-> IGDDbufCtlQuirk *dq = g_malloc0(sizeof(*dq));
-> dquirk->data = dq;
-> would have better readability.
+> On 7/23/2026 8:55 AM, Alex Benn=C3=A9e wrote:
+>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>=20
+>>> On 7/20/2026 6:14 AM, Alex Benn=C3=A9e wrote:
+>>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>>>
+>>>>> Those options were useful a few years ago, before containers were
+>>>>> available as an alternative for missing cross compilers. Simplify the
+>>>>> workflow by removing those options and maintaining only the container
+>>>>> based approach.
+>>>>
+>>>
+>>> I was expecting some discussion around this patch, and to start it when
+>>> the comment comes. Question is "Should we provide this feature or not?".
+>>> I totally agree with you that we need to support other configurations we
+>>> have in our CI, like MacOS and compilers from homebrew.
+>>>
+<snip>
 >
-> A `vfio_quirk_alloc(nslices)` might also be better here?
+> The way I see it is that we offer native cross compilers (with a focus
+> on debian at the moment), and the containerized ones: people have a choic=
+e.
+> We can add any additional compiler name for other distros.
+> Also, as Ilya mentioned before, cross compiler on fedora, for instance,
+> are not providing any sysroot. So it makes them unusable in our case.
 
-Both make sense -- I'll split the allocation and use a single
-vfio_quirk_alloc(nslices) with one mem[] entry per slice.
+No sysroot at all - even for compiler headers? We don't need the linux
+sysroot for building softmmu tests.
 
-Let me know if the patch looks acceptable in general and I'll proceed with
-a v2 folding in the above.
+> So I'm not sure which other distro you would like to support that is not
+> (alpine, arch, slack, other?).
+>
+> In all cases, just let me know what are your exact requirements (distro
+> list and set of compilers) and I would be happy to make it work just as
+> you expect on all those platforms.
 
-Thanks,
-Mike
+That's not really the point. I use Debian, partly because its range of
+supported cross compilers is so great. But we don't have a
+comprehensive survey of all the systems potential developers could have
+and with this change we now say they have to jump through hoops to be
+able to compile something when they likely have a cross-compiler
+available.
+
+And of course non-Linux systems are far less likely to have podman or
+docker available. MacOS doesn't by default, Windows? BSDs? BeOS?
+
+>
+>>> I think it's a saner choice, because one problem with --cross-* is that
+>>> it allows people and maintainers to have their "own" setup, that are not
+>>> documented anywhere. By forcing compilers to be added to dockerfiles and
+>>> paths to be explicit in arch files, we make sure the same CI is
+>>> reproducible for everyone.
+>>=20
+>> I agree the ideal is everything is dockerised for CI but there are times
+>> its not practical:
+>>=20
+>>   - working with very new features on bleeding edge compilers
+>>   - binary only toolchains for the more niche architectures
+>>   - unable to run any containers
+>>   - running the test inside containers (this is why
+>>     debian-all-test-cross has qemu-minimal pre-reqs)
+>>
+>
+> The point of containerization is to hide those details in a reproducible
+> recipe. For instance, we could definitely provide bleeding edge gcc to
+> have the latest features.
+>
+> If test relies on a specific machine setup, it's basically dead code: CI
+> and other devs can't run it. That's why containerization is important.
+
+For CI yes - but not for someone developing something and writing tests
+they may never even upstream.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
