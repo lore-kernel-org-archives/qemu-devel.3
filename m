@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 314C8C531CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 09:27:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0AE4C531C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 09:28:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmpi8-0003Ej-3S; Thu, 23 Jul 2026 05:27:24 -0400
+	id 1wmpj9-00042C-M3; Thu, 23 Jul 2026 05:28:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
- id 1wmpi6-0003EF-9X
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 05:27:22 -0400
+ id 1wmpj8-00041n-3i
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 05:28:26 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wmpi5-0006Vg-1V
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 05:27:22 -0400
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wmpj6-0006XQ-Rg
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 05:28:25 -0400
 Received: from linux.microsoft.com (unknown [167.220.196.63])
- by linux.microsoft.com (Postfix) with ESMTPSA id C0CD020B7167;
- Thu, 23 Jul 2026 02:27:04 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C0CD020B7167
+ by linux.microsoft.com (Postfix) with ESMTPSA id 44BDF20B7167;
+ Thu, 23 Jul 2026 02:28:08 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 44BDF20B7167
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1784798826;
- bh=1gOzmpVAqSgzWUE84XMa6pD2RbOi+/qfej1C/0CfGq4=;
+ s=default; t=1784798890;
+ bh=/wSBCRKU/EQhWR7uOBKd/KEVsp0s4887FPUQa5ML1ZY=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=Str5L8uMggZIiBzlWrsdzvcofVHqvKpFx8kpYD5rjl31Qd/hEYT54Z1w8MW40Y1p0
- XzqEB+C+DidDiyYNjdgK0Blr3LMsqalPj5aiPLhpJCRtlZg+uX9YiQUX7Vvx5tAs+j
- DNuZX5UGOz7bbBM/SGS3bK4EEGk2hgMZYEU33BzU=
-Date: Thu, 23 Jul 2026 12:27:09 +0300
+ b=ZducHQWpJ0FrTh58bekejuTFqGyp5PycLqHcvbjw6v1QPlaEkxT59775b/Z6fS2mj
+ 0E7uE8TFYyYot8c7yx+KJ/edkg3CaQx9pSmSYmJZUIS0kXyGl+PihbYNjsjtsykO+D
+ hZm/O5zRSYKwfoMzyVINR5yUpP1n4+SHaAvWCKq0=
+Date: Thu, 23 Jul 2026 12:28:17 +0300
 From: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
 To: Magnus Kulke <magnuskulke@linux.microsoft.com>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
@@ -40,15 +40,15 @@ Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
  Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <doru.blanzeanu@microsoft.com>,
  Wei Liu <liuwe@microsoft.com>
-Subject: Re: [PATCH 11/12] target/i386/mshv: toggle fpu/xsave migration
-Message-ID: <amHebfR_qVUyBAK1@linux.microsoft.com>
+Subject: Re: [PATCH 12/12] hw/i386/mshv: drop initial msi vector 0
+Message-ID: <amHesdOJPThW0EAo@linux.microsoft.com>
 References: <20260710101534.664604-1-magnuskulke@linux.microsoft.com>
- <20260710101534.664604-12-magnuskulke@linux.microsoft.com>
+ <20260710101534.664604-13-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260710101534.664604-12-magnuskulke@linux.microsoft.com>
+In-Reply-To: <20260710101534.664604-13-magnuskulke@linux.microsoft.com>
 Received-SPF: pass client-ip=13.77.154.182;
  envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
 X-Spam_score_int: -19
@@ -72,58 +72,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 10, 2026 at 12:15:33PM +0200, Magnus Kulke wrote:
-> MSHV exposes overlapping legacy FP/SSE state through two paths:
-> explicit Hyper-V FPU/XMM + registers and VP XSAVE state. There can
-> be subtle inconsistencies across migrations when XSAVE is written after
-> FPU state.
+On Fri, Jul 10, 2026 at 12:15:34PM +0200, Magnus Kulke wrote:
+> This has been a warning before that was always raised if the machine has
+> a hpet. hpet_reset() will eventually result in mshv_send_msi called w/
+> vector 0, which we can safely drop.
 > 
 > Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 > ---
->  target/i386/mshv/mshv-cpu.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
+>  hw/i386/mshv/apic.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
 > 
-> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-> index bff1ac9d17..f528dd2b9a 100644
-> --- a/target/i386/mshv/mshv-cpu.c
-> +++ b/target/i386/mshv/mshv-cpu.c
-> @@ -1057,7 +1057,7 @@ int mshv_arch_load_vcpu_state(CPUState *cpu)
->          return ret;
->      }
+> diff --git a/hw/i386/mshv/apic.c b/hw/i386/mshv/apic.c
+> index 9188a93b2f..ad326030bf 100644
+> --- a/hw/i386/mshv/apic.c
+> +++ b/hw/i386/mshv/apic.c
+> @@ -293,6 +293,16 @@ static void mshv_send_msi(MSIMessage *msi)
+>      delivery     = (data >> MSI_DATA_DELIVERY_MODE_SHIFT) &
+>                     MSI_DATA_DELIVERY_MODE_MASK;
 >  
-> -    ret = get_fpu(cpu);
-> +    ret = get_xsave_state(cpu);
->      if (ret < 0) {
->          return ret;
->      }
-> @@ -1072,7 +1072,7 @@ int mshv_arch_load_vcpu_state(CPUState *cpu)
->          return ret;
->      }
->  
-> -    ret = get_xsave_state(cpu);
-> +    ret = get_fpu(cpu);
->      if (ret < 0) {
->          return ret;
->      }
-> @@ -1551,7 +1551,7 @@ int mshv_arch_store_vcpu_state(const CPUState *cpu)
->          return ret;
->      }
->  
-> -    ret = set_fpu(cpu);
-> +    ret = set_xsave_state(cpu);
->      if (ret < 0) {
->          return ret;
->      }
-> @@ -1567,7 +1567,8 @@ int mshv_arch_store_vcpu_state(const CPUState *cpu)
->          return ret;
->      }
->  
-> -    ret = set_xsave_state(cpu);
-> +    /* INVARIANT: legacy FPU state must be restored after XSAVE */
-> +    ret = set_fpu(cpu);
->      if (ret < 0) {
->          return ret;
->      }
+> +    /*
+> +     * Vector 0 is not a valid interrupt vector (0-15 are reserved for CPU
+> +     * exceptions). This can trigger during machine reset, if hpet_reset()
+> +     * forces the PIT to pulse GSI 2 before IOAPIC's own reset has masked its
+> +     * redirection entries.
+> +     */
+> +    if (vector == 0) {
+> +        return;
+> +    }
+> +
+>      mshv_request_interrupt(mshv_state, delivery, vector, dest, dest_mode,
+>                             trigger_mode);
+>  }
 > -- 
 > 2.34.1
 
