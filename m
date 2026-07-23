@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D18D8C531CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 12:53:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25DF8C531D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 12:55:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmsvU-0003ec-Ky; Thu, 23 Jul 2026 08:53:24 -0400
+	id 1wmswf-0004tp-43; Thu, 23 Jul 2026 08:54:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wmsvS-0003dx-RF
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 08:53:22 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wmsvQ-00025l-VD
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 08:53:22 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4954aff6088so5175925e9.3
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 05:53:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784811199; x=1785415999; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=30Od0+huaCJZdt8piWFpgBuQnTP9aC9UoilTDQya/kA=;
- b=KfNKiOynQDKbXCen3WHQL46H6xncqb1Zw6NI+UTtFBP6GIEDNXhzjWfe4D3iJDUQ/x
- fhl+d4L4f00tWacn1wnDMBlXAGY3P0dJ6WPBpXBk630STjm20OMi8oil212b6Z+1jpIa
- JBCBj2ROyVNIXNL/ITiMVsvlQYsw+0oXo69BO/fsIoraLqUFQkHRLWXVVmZ/pynODuWr
- xsnjz7Wg3W9tan5K2zULqgjxwde43rXQrc3Yar061uUR0Qnh2r0O/RHIEjfIZk06bsEN
- 16sMJ3WBBSH7YBkhF1gIGZYjeCImpBGRFAIEbfycBV0lgeNST2X39o9MwkwZb5QvjAcA
- 4B2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784811199; x=1785415999;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=30Od0+huaCJZdt8piWFpgBuQnTP9aC9UoilTDQya/kA=;
- b=H1zegI2Q5Hu9zSULWUdi4pK4/wOo4/2yQ+YLCWbrGMV1tXSpfdEtqyYHX9izat1xAj
- rdUHubQWa4bLsYpWr8Dob1cKzYAL/09tiRU7kTW0bj8zhsvgGM1K9k1LjBUFw3GGbWl3
- nX8lJlzor5YL5jfoD+TYkG+sZ2QV2fztH6USlONNfnFjskTOqBvT2bOFV8jdr1scVf3R
- ppbveJKkAqb3FpOC4B7UtkZvdxalC6ViX977/SBeAA8R62wEQSOq7NYDYFZTKtTtF9fZ
- dVuKr5W8eehMgRTe4WUUNMyAf7ZpAAQKMw4ArGPMHtAZ6vkV71ZXWxDc8YX29OkZDyF4
- 2ADg==
-X-Gm-Message-State: AOJu0YwRqN2zN5VlxJj70xh2XICD80dhdFksdUzME2Lf7qwZ2CkJ0MTO
- etlqKU5ArxYuJcpK947t6QjGOyaQDiP81/MnXyg0ddsza/Dmi+2BoV+CVhMM06o2yNU=
-X-Gm-Gg: AR+sD13AqrEvCzTVc0WgV7qrZTQJfuUjJAFH8VH2NKi/Ys5UNq4GpajnOyrbexpqLri
- X2IXbCdD6kk5Adv2Qi/xAdZ8lKFobafS0poqC/H1WxfaJ5455KlD1Uxd5iglg7TqyV2nvCMkDI7
- IDUi1UFW0tvdM5IrR0X1zWw2Pp6Z/iGrlQyJGvTwpatULuKcKT+ZxxS3sPn+/L8x3AZG8k14US5
- lPwfp+KLQhWw7YlhViJCVOam3uoXikFJhCzNjwLhduCYgi9RwQylt9Sd+U4gy1zc8SLV2A4pnDb
- W1qKbaMk9eFM+uMlct2gWBYf4/jxFM0cEt8MXHqMXMewXlHZq1WK72xmkyupoeG3LUiP3vF8qqx
- bRuQ0vfeF0/h2Cj8Jckx9IBwnyK5JpLFAg+kBDeunbrJNJTMY3puYuTjlGHnwbXolM5wa9eOUmm
- E1aQ==
-X-Received: by 2002:a05:600c:1393:b0:495:6a50:3fb8 with SMTP id
- 5b1f17b1804b1-49573c8c2b2mr31564375e9.1.1784811198848; 
- Thu, 23 Jul 2026 05:53:18 -0700 (PDT)
-Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-495653698bcsm200261835e9.2.2026.07.23.05.53.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Jul 2026 05:53:17 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id BA3EB5F7C2;
- Thu, 23 Jul 2026 13:53:16 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-stable@nongnu.org
-Subject: [PATCH] include/hw: defend against weird elf headers
-Date: Thu, 23 Jul 2026 13:53:10 +0100
-Message-ID: <20260723125310.33707-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wmswS-0004hC-8D
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 08:54:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wmswN-0002EG-GV
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 08:54:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784811257;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OhnukckyjUTtZRplsRD3KUYOcApispTBtT9cuXI06RQ=;
+ b=PatkVhOYAZBCUy2ldyywIfz1jalw9I/anBG8B42carCFRRr2cvFxKzX+AzeK+Rk0s1D2PA
+ TyhSBroPmiYzHVQeq/38NlSQp4ip7LSarfIYckY4kFqwlcTtyDaONP5XVSHNLe5nE1PURH
+ lPYawZAfOx8rWVShITtzOo7bCEcxv1g=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-652-6vTOhhfGMJyN4DXmtOgCwQ-1; Thu,
+ 23 Jul 2026 08:54:13 -0400
+X-MC-Unique: 6vTOhhfGMJyN4DXmtOgCwQ-1
+X-Mimecast-MFC-AGG-ID: 6vTOhhfGMJyN4DXmtOgCwQ_1784811252
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A3D5D1945CAA; Thu, 23 Jul 2026 12:54:11 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.32.196])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A26C7180034C; Thu, 23 Jul 2026 12:54:06 +0000 (UTC)
+Date: Thu, 23 Jul 2026 13:54:02 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Jamin Lin <jamin_lin@aspeedtech.com>
+Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>,
+ Troy Lee <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ Troy Lee <troy_lee@aspeedtech.com>
+Subject: Re: [PATCH v2 12/17] tests/unit/test-crypto-cipher: Test AES-GCM mode
+Message-ID: <amIO6npcvmD4rGCn@redhat.com>
+References: <20260715033311.1648424-1-jamin_lin@aspeedtech.com>
+ <20260715033311.1648424-13-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+In-Reply-To: <20260715033311.1648424-13-jamin_lin@aspeedtech.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: permerror client-ip=170.10.133.124;
+ envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 3
+X-Spam_score: 0.3
+X-Spam_bar: /
+X-Spam_report: (0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.951,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,57 +95,31 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the ELF spec:
+On Wed, Jul 15, 2026 at 03:33:32AM +0000, Jamin Lin wrote:
+> Exercise the new GCM mode and the setaad/gettag helpers with the
+> canonical AES-GCM test vectors from the GCM specification (McGrew &
+> Viega, also NIST SP 800-38D): AES-128 and AES-256, with and without
+> associated data. Each vector is run through encrypt (checking the
+> ciphertext and the generated tag) and decrypt (checking the recovered
+> plaintext and the recomputed tag).
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>  tests/unit/test-crypto-cipher.c | 240 ++++++++++++++++++++++++++++++++
+>  1 file changed, 240 insertions(+)
 
-  PT_LOAD
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-  The array element specifies a loadable segment, described by
-  p_filesz and p_memsz. The bytes from the file are mapped to the
-  beginning of the memory segment. If the segment's memory
-  size (p_memsz) is larger than the file size (p_filesz), the
-  ``extra'' bytes are defined to hold the value 0 and to follow the
-  segment's initialized area. The file size may not be larger than the
-  memory size. Loadable segment entries in the program header table
-  appear in ascending order, sorted on the p_vaddr member.
 
-which implies while both p_filesz and p_memsz can be zero we should
-never see a case where p_filesz is greater than the in memory size.
-Indeed it has been reported such a hand crafted ELF can blow up, for
-example during rom_reset():
-
-  address_space_set(rom->as, rom->addr + rom->datasize, 0,
-                    rom->romsize - rom->datasize,
-                    MEMTXATTRS_UNSPECIFIED);
-
-which could trigger and underflow leaving QEMU slowly filling a very
-large buffer.
-
-Fixes: https://gitlab.com/qemu-project/qemu/-/work_items/4056
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Cc: qemu-stable@nongnu.org
----
- include/hw/elf_ops.h.inc | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/include/hw/elf_ops.h.inc b/include/hw/elf_ops.h.inc
-index 9c35d1b9da6..c6d94ef760c 100644
---- a/include/hw/elf_ops.h.inc
-+++ b/include/hw/elf_ops.h.inc
-@@ -427,6 +427,10 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
-             file_size = ph->p_filesz; /* Size of the allocated data */
-             data_offset = ph->p_offset; /* Offset where the data is located */
- 
-+            if (file_size > mem_size) {
-+                goto fail;
-+            }
-+
-             if (file_size > 0) {
-                 if (g_mapped_file_get_length(mapped_file) <
-                     file_size + data_offset) {
+With regards,
+Daniel
 -- 
-2.47.3
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
