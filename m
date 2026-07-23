@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AF10C531CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 12:51:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9AE4C531CF
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Jul 2026 12:52:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wmstN-0002P9-Q7; Thu, 23 Jul 2026 08:51:14 -0400
+	id 1wmsuD-00036k-Sx; Thu, 23 Jul 2026 08:52:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wmstE-0002KJ-45
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 08:51:04 -0400
+ id 1wmsu9-000365-Qd
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 08:52:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wmstB-0001g6-1s
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 08:51:02 -0400
+ id 1wmsu6-0001wK-J4
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 08:52:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784811060;
+ s=mimecast20190719; t=1784811117;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ffIfXEmsa5r3UEVywYBh6JvLIE+u+rYPr4mB0bAHg/I=;
- b=LPpH+dWodQcK/a/2QhlnoSNPKgWa9VV+g0mKRsMLOwvSWb29FYm5QezjU3iKuC57Q/wwsT
- nUn82O471q2PO8OpMz4Q1pO6syCv3vVvvlP1YbVgSux5Q7dit8ya5FAxSiX2Q3b2WBgzxX
- Dms8D9/+0ZS9Mux5RGpm8OfQLKFTXQc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=hS0QQVb+AmKrtXaf4OONJq1GZcT/OLtISFOX3B1+mUM=;
+ b=NsBbe2gxEEPfVy5DJzpLVeAYjaTU8G+EIZbItfy0/PjrrunkGsfnkYCE2PS/w5lyLYoHUL
+ rsgJSdiWTBY0bLDgOo7Y4VGK1SoH+i9qtWiBegumQ+PSHLiNd/zRsp2c6R7A/zrE5kBQJk
+ VpHTYFHgyh0uZhwgkaLZz+Vf5wXRgWw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-618-ADMGRIgCNs2-Rtjr3NEXLw-1; Thu,
- 23 Jul 2026 08:50:57 -0400
-X-MC-Unique: ADMGRIgCNs2-Rtjr3NEXLw-1
-X-Mimecast-MFC-AGG-ID: ADMGRIgCNs2-Rtjr3NEXLw_1784811055
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-382-9t47T_E_PGaraZiHluNK3w-1; Thu,
+ 23 Jul 2026 08:51:55 -0400
+X-MC-Unique: 9t47T_E_PGaraZiHluNK3w-1
+X-Mimecast-MFC-AGG-ID: 9t47T_E_PGaraZiHluNK3w_1784811114
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8A1F0195FE30; Thu, 23 Jul 2026 12:50:54 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 940451805F3A; Thu, 23 Jul 2026 12:51:53 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.32.196])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 861EE18002A0; Thu, 23 Jul 2026 12:50:49 +0000 (UTC)
-Date: Thu, 23 Jul 2026 13:50:45 +0100
+ id 4D3151800361; Thu, 23 Jul 2026 12:51:48 +0000 (UTC)
+Date: Thu, 23 Jul 2026 13:51:44 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Jamin Lin <jamin_lin@aspeedtech.com>
 Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
@@ -62,27 +62,26 @@ Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  Troy Lee <troy_lee@aspeedtech.com>
-Subject: Re: [PATCH v2 10/17] crypto/cipher-nettle: Implement AES-GCM
-Message-ID: <amIOJQavoyH8kLjL@redhat.com>
+Subject: Re: [PATCH v2 11/17] crypto/cipher-gnutls: Implement AES-GCM
+Message-ID: <amIOYFnxrnFHIsFz@redhat.com>
 References: <20260715033311.1648424-1-jamin_lin@aspeedtech.com>
- <20260715033311.1648424-11-jamin_lin@aspeedtech.com>
+ <20260715033311.1648424-12-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260715033311.1648424-11-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260715033311.1648424-12-jamin_lin@aspeedtech.com>
 User-Agent: Mutt/2.4.0 (2026-06-19)
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: permerror client-ip=170.10.133.124;
  envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 3
-X-Spam_score: 0.3
-X-Spam_bar: /
-X-Spam_report: (0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.951,
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.951,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,18 +98,18 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 15, 2026 at 03:33:29AM +0000, Jamin Lin wrote:
-> Add the AES-GCM AEAD mode to the nettle backend so it is available when
-> QEMU is built with nettle instead of gcrypt. GCM is driven through
-> nettle's generic gcm_* interface, using the AES encrypt function for both
-> directions: gcm_set_iv() sets the (typically 96-bit) nonce, gcm_update()
-> feeds the associated data, gcm_encrypt()/gcm_decrypt() need not be block
-> aligned, and gcm_digest() produces the authentication tag.
+On Wed, Jul 15, 2026 at 03:33:31AM +0000, Jamin Lin wrote:
+> Add the AES-GCM AEAD mode to the gnutls backend so it is available when
+> QEMU is built with gnutls (neither gcrypt nor nettle). GCM uses the
+> incremental gnutls_cipher_* API with the GNUTLS_CIPHER_AES_*_GCM
+> algorithms: gnutls_cipher_set_iv() sets the nonce, gnutls_cipher_add_auth()
+> feeds the associated data, gnutls_cipher_encrypt2()/decrypt2() process the
+> message, and gnutls_cipher_tag() reads back the authentication tag.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->  crypto/cipher-nettle.c.inc | 128 +++++++++++++++++++++++++++++++++++++
->  1 file changed, 128 insertions(+)
+>  crypto/cipher-gnutls.c.inc | 154 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 154 insertions(+)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
