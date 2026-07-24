@@ -4,101 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63CABC531C9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94682C531FA
 	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 10:30:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnDAA-0000LC-OX; Fri, 24 Jul 2026 06:29:54 -0400
+	id 1wnDAM-0000MY-9c; Fri, 24 Jul 2026 06:30:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wnDA8-0000Kd-JI
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 06:29:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wnDA6-0002oy-MQ
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 06:29:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784888989;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=iSs6CPp552YxV/2AsV+6koEA1wJ+b55ymEdPdU+1CIM=;
- b=e8RAKM9kZTtQKVc6N9b+NB1aNiJzjGQ2aTBLBUilbZJbuoN3peS49MSBgVWJf9tLaASY6+
- GvHBHAMrxOseGHBfUxQyZm1pk181LuerIRtclYojn9e9maToHMVVJvobHNNitEbhXyHupF
- eIsBuWOOezFZafKoIKu3URxCWQRTni8=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-222-t-DhUI8SOIeKWWAHNvRHhg-1; Fri, 24 Jul 2026 06:29:47 -0400
-X-MC-Unique: t-DhUI8SOIeKWWAHNvRHhg-1
-X-Mimecast-MFC-AGG-ID: t-DhUI8SOIeKWWAHNvRHhg_1784888986
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4955ce558d8so2844595e9.3
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 03:29:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mike.malyshev@gmail.com>)
+ id 1wnDAK-0000ME-TA
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 06:30:04 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mike.malyshev@gmail.com>)
+ id 1wnDAI-0002pZ-NE
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 06:30:04 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4954c0833b4so2532205e9.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 03:30:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784888986; x=1785493786; darn=nongnu.org;
- h=content-disposition:content-type:mime-version:message-id:subject:cc
- :to:from:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=iSs6CPp552YxV/2AsV+6koEA1wJ+b55ymEdPdU+1CIM=;
- b=QMWERzTb7jidNAzLGkmVYsERML3XhzaaEZjaap1pmRQwoL9bzfohf2uM2LLzkRfzE9
- hbELQRBoD2irh785V7FOJrHtWllEUbctfAdHYMriGfDxfWMPzvpp3wVRn1RStvnjYxj2
- f6THzJIXHD6XM56rwpQDv8/jCJwCo0v1zFfXzXCLa4OpyJSR4rL1CArr28wGipJ4eGp2
- blA6nAZMwZ3keRpK86ZmOLlTqaCzRrYdGpyShcIhbKd4KeO9nwGVT0iQbTX9Cw6iPGDT
- 2949cihvemgV+G2DU9rze1GIRdTkBnKFJTHLXgLtAXEXTxVhF7WDpIHkSfwRKOZqtDh6
- jfMA==
+ d=gmail.com; s=20251104; t=1784889001; x=1785493801; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=OAjAgnPYD2WaOu663GkkWsCmQkeSlXjK0w493DiVgow=;
+ b=AVrrxNDAVCmJep/bIeeawZvLhuuj3oI7GvSRM8zFBWMgVDrAzXk05owQUnCfv5OXfQ
+ hS7XAIXVQ2SzsFK9XzRsG3Zlm0Ae4wiTFlOgM9xDk6EleQ6CaizsakbLXQ7/vMLnPeXc
+ 8s3RCbIJDup4vOARf7OZvClxevwE1jgz/N3cGH/rTDifxgrSGMuxipOYCgKSd62WF9ts
+ hm4Cg0MDXJY9GJhH0X0aFCP6ctiR6uEqDM4OQaqOkn761a6zmwSlqEeHwJI+G8vxt9xx
+ An1j/7XOvZ5w3NEszoprtbZiKi2yJvQb+nsRxO44k2oXJ80zk5jhxZZ/cwp/MprRET7A
+ SXow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784888986; x=1785493786;
- h=content-disposition:content-type:mime-version:message-id:subject:cc
- :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=iSs6CPp552YxV/2AsV+6koEA1wJ+b55ymEdPdU+1CIM=;
- b=ZNMXTRw75pg48qZl/cm/95ktI/0GKt4eHunrncCkKRX9H2UM4Xx1OZYbSRzg+7eSdc
- iEw7KiCiUJ1Xoa8dJLqwpWN0S0O/Iw+jNzHseTENl/c1IsjaaWLOR8ni6CzWtAkxFxxU
- zQ/bO/vNh5GeRrKu89Y2N5oqQHqW+SiA9/LW01Ie2agRhI54C3gZaoCGIk5UYeM1Jzhk
- KhmC6L8ifNpq9iQZT1lT8yz0bYBBSnlObi9ARxlPD6hba4NHHFesrt8Wrt0s9CEVS+1X
- c6sxTFIm6rPTe8f4NnqOLs36WZJBXS89b+vy687pFhQKTaiEBZpDEKDy8LHgES/hrQJb
- S28w==
-X-Gm-Message-State: AOJu0Yzmi4qklYR5D2oPFR2tQBPKwJjF0QqkisTAIYX3SuV21PaHunSN
- oIeiDh1b9Eqk6cwvfZaJMA19EhZzpcb4O85ZJ+qzTolU3rJDUt3KorDM7gotJkNoZoL4KQY7VaH
- mDvKS+2Mq1vjKRXkeps9YY7zpi+sBVXJ136yZHhCsBfzP/i8ZbJXeda0obeutymRxEh/+IbqQ5C
- Jv8Qg0wqL1mjzS54NZ0ouJvNJJ9RGfRB64lw==
-X-Gm-Gg: AR+sD12TAx9a2p7mVGF6jHgS8a0oJ/wVGzHq/2ZLjOxCrDmxcFhzbpAB0le8zwhE3Q8
- jh/F6zOxN7H1/+Tiih9xRUEZDnte4mBbyHlz+fnNk8G42NncnbzNsRkLsVshsBcb4UCkMj2fMFt
- mL6Q2u+b/NkQvitA5g8PGNbNwLvDvenm1GK4qx/BaSvEauIMIhI+Q9S8uNN5nTh7fiVL+wVxFIm
- Bd2+65nVoxOrsOSTQcSSu4RzzrN/FSY6E90t2JqKSlKx+aZICd+nFRPlIQXhVaTPKOewe0V4LH2
- 6u/XU3k9DdlswWYY0qqonSb0one7am61VX5DNMbRUOplVobj02NvoSD5ApdtI3qTKGPt4+a4N1N
- /bG8UtJn2zv613znlL9PCrA==
-X-Received: by 2002:a05:600c:1914:b0:495:4d00:2fc0 with SMTP id
- 5b1f17b1804b1-49573ccb598mr81711805e9.12.1784888986176; 
- Fri, 24 Jul 2026 03:29:46 -0700 (PDT)
-X-Received: by 2002:a05:600c:1914:b0:495:4d00:2fc0 with SMTP id
- 5b1f17b1804b1-49573ccb598mr81711275e9.12.1784888985536; 
- Fri, 24 Jul 2026 03:29:45 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
+ d=1e100.net; s=20251104; t=1784889001; x=1785493801;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=OAjAgnPYD2WaOu663GkkWsCmQkeSlXjK0w493DiVgow=;
+ b=LQ3xx7NxDrzsubqfT/gQZTjJtMm6QIVlTG0fj+2WGbHCV7m+b/q8PVZLti3YP8w7Wq
+ PXHiHpnMxhlIH/+EqdSB9tqfNlTILoMIOo5NXBbtKDyKF3TgsPxx59E4bK3Ot1USNEft
+ f70MMoIP3wtdrInDSBMoiCyAyv2wLX0s56L2/kXCwgtPpt60prqt6Zr9icxENjtF4cfv
+ EkdH9MmQxaDN5ItToIYoRSp3QKtzqOEqFYu3xbg1ZAG57SrtsHzz9OAYf7UKdVL/eSh2
+ PmQegWpgGYUPDcigs+Bm3TxqatboCen83syMG44OUkm802lnpCMZm4fIsDzUcx3kop/5
+ Edhw==
+X-Gm-Message-State: AOJu0Ywjtj8Kf4Z3wAhcckWbYS6jrHObay3QJMELRm78UOVZ274YpkRH
+ StwjM3p3IvbHl7hrDTxV2LbNPRJ8hvKuT7p6tMDcedbv+NA2g6dMVnJCWBlkKyru
+X-Gm-Gg: AR+sD12rjCIUdUVHIh5uJhCUeI1aeQrPGpnwPZL+32Mvn6bst7FzbWKekBrM5zECMUZ
+ VwvCEGPE2oihrmLhJwW8LFcYqRuPPbWcB57l/2WOxKBtv5/V8qmAsHyohL4OTCckaCYk4CKy7Yq
+ J/IMRahmDm3LgzE5G6pLGctVvYcBM67cqMnkrMgsFufGeWb0tSNVSSwesNAvRd2qtrt9UvJL8NL
+ Bwv7+QPRTfiCnphL2EQoMbHSqZuX1iAF6FeXvoaNBWJEOwtVbnRUHtQFbonz0OyDsGTJe4AtoSH
+ 5TYnFZRF6dcM2wqW/yMLB4tNglgpnP2BwkbXKj3bthz5si0SDY/qv8xE+aHbN1MekW0uEfQJeGo
+ le9J3EE1gleKdWQ1SNblFdWTycflw/8dyp9Zd7zfV4T45SG+veFVo43SyFDLYEWMqinUcfCC8Wq
+ QGFESLZM8=
+X-Received: by 2002:a05:600c:4687:b0:495:5dcc:52ae with SMTP id
+ 5b1f17b1804b1-49573cc2eb8mr82062105e9.3.1784889000608; 
+ Fri, 24 Jul 2026 03:30:00 -0700 (PDT)
+Received: from build-server.. ([62.96.37.222])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4957af16f72sm66489215e9.0.2026.07.24.03.29.44
+ ffacd0b85a97d-47f85bb57cfsm22658750f8f.11.2026.07.24.03.29.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jul 2026 03:29:45 -0700 (PDT)
-Date: Fri, 24 Jul 2026 06:29:43 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Jia Jia <physicalmtea@gmail.com>, Xie Yongji <xieyongji@bytedance.com>
-Subject: [PATCH] libvduse: validate vq size
-Message-ID: <bf7e71b3139875e5e00fd53970c772d6c90dc2a1.1784888961.git.mst@redhat.com>
+ Fri, 24 Jul 2026 03:30:00 -0700 (PDT)
+From: mike.malyshev@gmail.com
+To: qemu-devel@nongnu.org, Tomita Moeko <tomitamoeko@gmail.com>,
+ alex@shazbot.org
+Subject: [PATCH v2] vfio/igd: sanitize DBUF_CTL POWER_STATE for iGPU
+ passthrough
+Date: Fri, 24 Jul 2026 10:29:58 +0000
+Message-ID: <20260724102959.1043264-1-mike.malyshev@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20027e4f-5a4d-4842-a60d-cd83a5755cff@gmail.com>
+References: <20027e4f-5a4d-4842-a60d-cd83a5755cff@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.951,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=mike.malyshev@gmail.com; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,46 +100,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-libvduse assumes that vq size (aka vq num) is below VIRTQUEUE_MAX_SIZE
-and maps logs large enough based on this assumption.
+From: Mikhail Malyshev <mike.malyshev@gmail.com>
 
-However, vduse_queue_enable() accepts the vq size returned through
-VDUSE_VQ_GET_INFO without validation, so a value above
-VIRTQUEUE_MAX_SIZE (1024) overruns the inflight log and causes
-out-of-bounds writes in vduse_queue_inflight_get().
+On some hosts the firmware POST modeset leaves the display data buffer
+(DBUF) powered, so the passed-through iGPU's DBUF_CTL registers read
+back POWER_STATE=1 while POWER_REQUEST=0 -- an inconsistent leftover that
+never occurs under GVT-g, which emulates the register so POWER_STATE
+follows POWER_REQUEST.
 
-According to the virtio spec, vq size can only be reduced, not
-increased, so vq size must not exceed the previously configured
-max_size, but the kernel vduse module does not validate this for us, and
-we should not trust another process to follow the spec.
+This was observed with a Windows guest (Intel KMD) on QEMU 9.1; a
+Linux/i915 guest was not tested.  On the first-boot modeset the guest
+driver samples POWER_STATE to decide which DBUF slices are already
+enabled, sees the stale "powered" bit, and therefore never issues
+POWER_REQUEST.  DBUF then powers down, the plane FIFO underruns, and
+scanout is corrupted (vertical stripes) until a full modeset (e.g. a
+display sleep/wake) re-requests power.
 
-Validate and reject vq size values above VIRTQUEUE_MAX_SIZE.
+The programming is a single inconsistent read-modify-write.  Traced with
+x-no-mmap=on so every BAR0 access is visible:
 
-Fixes: CVE-2026-61402
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3652
-Reported-by: Jia Jia <physicalmtea@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+  read  0x45008 = 0x4040c000   STATE=1, REQUEST=0 (stale leftover)
+  write 0x45008 = 0x4043c000   RMW: tracker bits only; REQUEST still 0
+  read  0x45008 = 0x0043c000   STATE=0: DBUF powered down -> underrun
+
+The driver sees STATE=1, assumes the slice is already powered, and leaves
+REQUEST clear.  Only after a display sleep/wake does it set REQUEST, which
+is why sleep/wake repairs the display:
+
+  write 0x45008 = 0x8043c000   REQUEST=1
+  read  0x45008 = 0xc043c000   STATE follows -> powered, scanout clean
+
+The same pattern occurs on the other slice registers (0x44fe8, 0x44300,
+0x44304).
+
+Present a consistent view like GVT-g: trap the DBUF_CTL slice registers
+(S1..S4, only as many as the generation exposes) in BAR0 and clear
+POWER_STATE on read whenever POWER_REQUEST is not set.  Writes pass
+straight through to the device.
+
+Signed-off-by: Mikhail Malyshev <mike.malyshev@gmail.com>
 ---
- subprojects/libvduse/libvduse.c | 5 +++++
- 1 file changed, 5 insertions(+)
 
-diff --git a/subprojects/libvduse/libvduse.c b/subprojects/libvduse/libvduse.c
-index df9ca5e56f..712b97b4c3 100644
---- a/subprojects/libvduse/libvduse.c
-+++ b/subprojects/libvduse/libvduse.c
-@@ -902,6 +902,11 @@ static void vduse_queue_enable(VduseVirtq *vq)
-         return;
-     }
+Changes in v2:
+- Expand the commit message with the traced read-modify-write sequence
+  that shows POWER_REQUEST is never set on first boot (Tomita Moeko).
+- Collapse the per-slice quirk allocations into a single
+  vfio_quirk_alloc(nslices) with one mem[] entry per slice, backed by a
+  single IGDDbufCtlQuirk array (Tomita Moeko).
+- Split the quirk allocation onto its own line for readability (Tomita
+  Moeko).
+ hw/vfio/igd.c | 119 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 119 insertions(+)
+
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index 413a49aae9..5e6160763c 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -455,6 +455,96 @@ static bool vfio_pci_igd_override_gms(int gen, uint32_t gms, uint32_t *gmch)
+ #define IGD_GGC_MMIO_OFFSET     0x108040
+ #define IGD_BDSM_MMIO_OFFSET    0x1080C0
  
-+    if (vq_info.num > VIRTQUEUE_MAX_SIZE) {
-+        fprintf(stderr, "vq[%d] vring num %u exceeds max %u\n",
-+                vq->index, vq_info.num, VIRTQUEUE_MAX_SIZE);
-+        return;
++/*
++ * IGD BAR0 DBUF_CTL sanitize quirk.
++ *
++ * On hosts where the firmware POST modeset left the display engine powered,
++ * DBUF_CTL reads back POWER_STATE=1 while POWER_REQUEST=0 -- an inconsistent
++ * leftover that never occurs under GVT-g (which emulates the register so
++ * STATE follows REQUEST).  A passed-through guest driver samples POWER_STATE
++ * to decide which DBUF slices are already enabled, sees this stale "powered"
++ * bit, and therefore never issues POWER_REQUEST.  DBUF then powers down, the
++ * plane FIFO underruns, and scanout is corrupted until a full modeset (e.g.
++ * a display sleep/wake) re-requests power.
++ *
++ * Present a consistent view like GVT-g: intercept DBUF_CTL reads and clear
++ * POWER_STATE whenever POWER_REQUEST is not set.  Writes pass straight
++ * through to the device.
++ */
++#define IGD_DBUF_POWER_REQUEST  (1u << 31)
++#define IGD_DBUF_POWER_STATE    (1u << 30)
++
++/*
++ * DBUF_CTL slice registers within BAR0, in slice order (i915 numbers these
++ * S1..S4).  How many slices exist is generation-dependent, so only the first
++ * igd_dbuf_ctl_nslices(gen) entries are real DBUF_CTL registers on a given
++ * part; the rest are unrelated registers and must not be trapped.
++ */
++static const uint32_t igd_dbuf_ctl_offsets[] = {
++    0x45008, /* S1 */ 0x44FE8, /* S2 */ 0x44300, /* S3 */ 0x44304, /* S4 */
++};
++
++/*
++ * DBUF slice count by generation, matching i915 dbuf.slice_mask:
++ * gen9/10 = 1 (S1), gen11 = 2 (S1-S2), gen12+ = 4 (S1-S4).
++ *
++ * Within gen12 the slice count is actually per-platform, not per-gen: ADL-P /
++ * RPL-P / DG2 expose 4 slices, but TGL / RKL / ADL-S have only 2.  We return 4
++ * for all gen12+ (igd_gen() can't distinguish them), so on a <4-slice gen12
++ * part S3/S4 (0x44300/0x44304) are over-trapped.  This is harmless in practice:
++ * the read handler only mutates a value when POWER_REQUEST=0 && POWER_STATE=1,
++ * which whatever register lives at those offsets is very unlikely to present.
++ * A fully-correct count would have to key off the PCI device ID.
++ */
++static int igd_dbuf_ctl_nslices(int gen)
++{
++    if (gen <= 10) {
++        return 1;
 +    }
-     vq->vring.num = vq_info.num;
-     vq->vring.desc_addr = vq_info.desc_addr;
-     vq->vring.avail_addr = vq_info.driver_addr;
++    if (gen == 11) {
++        return 2;
++    }
++    return 4;
++}
++
++typedef struct IGDDbufCtlQuirk {
++    VFIOPCIDevice *vdev;
++    uint32_t bar_offset;    /* offset within BAR0 MMIO */
++    uint8_t bar;
++} IGDDbufCtlQuirk;
++
++static uint64_t igd_dbuf_ctl_read(void *opaque, hwaddr addr, unsigned size)
++{
++    IGDDbufCtlQuirk *q = opaque;
++    VFIOPCIDevice *vdev = q->vdev;
++    uint64_t val = vfio_region_read(&vdev->bars[q->bar].region,
++                                    addr + q->bar_offset, size);
++
++    if (size == 4 && !(val & IGD_DBUF_POWER_REQUEST) &&
++        (val & IGD_DBUF_POWER_STATE)) {
++        val &= ~(uint64_t)IGD_DBUF_POWER_STATE;
++        error_report_once("IGD quirk: DBUF_CTL@0x%x cleared stale "
++                          "POWER_STATE (POWER_REQUEST=0)", q->bar_offset);
++    }
++    return val;
++}
++
++static void igd_dbuf_ctl_write(void *opaque, hwaddr addr,
++                               uint64_t data, unsigned size)
++{
++    IGDDbufCtlQuirk *q = opaque;
++    VFIOPCIDevice *vdev = q->vdev;
++
++    vfio_region_write(&vdev->bars[q->bar].region,
++                      addr + q->bar_offset, data, size);
++}
++
++static const MemoryRegionOps igd_dbuf_ctl_ops = {
++    .read = igd_dbuf_ctl_read,
++    .write = igd_dbuf_ctl_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++};
++
+ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+ {
+     VFIOQuirk *ggc_quirk, *bdsm_quirk;
+@@ -507,6 +597,35 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+                                         1);
+ 
+     QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, bdsm_quirk, next);
++
++    /*
++     * DBUF_CTL sanitize quirk (gen9+): trap the DBUF_CTL slice registers so
++     * POWER_STATE is reported consistently with POWER_REQUEST (see
++     * igd_dbuf_ctl_read()).  Only trap slices that actually exist on this
++     * generation -- the remaining offsets are unrelated registers.
++     */
++    if (gen >= 9) {
++        int i, nslices = igd_dbuf_ctl_nslices(gen);
++        VFIOQuirk *dbuf_quirk = vfio_quirk_alloc(nslices);
++        IGDDbufCtlQuirk *dq;
++
++        dq = g_new0(IGDDbufCtlQuirk, nslices);
++        dbuf_quirk->data = dq;
++
++        for (i = 0; i < nslices; i++) {
++            dq[i].vdev = vdev;
++            dq[i].bar = nr;
++            dq[i].bar_offset = igd_dbuf_ctl_offsets[i];
++            memory_region_init_io(&dbuf_quirk->mem[i], OBJECT(vdev),
++                                  &igd_dbuf_ctl_ops, &dq[i],
++                                  "vfio-igd-dbuf-ctl-quirk", 4);
++            memory_region_add_subregion_overlap(vdev->bars[nr].region.mem,
++                                                igd_dbuf_ctl_offsets[i],
++                                                &dbuf_quirk->mem[i], 1);
++        }
++
++        QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, dbuf_quirk, next);
++    }
+ }
+ 
+ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
 -- 
-MST
+2.43.0
 
 
