@@ -4,142 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 165FAC531FC
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 08:32:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E18F5C531FA
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 08:33:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnBJf-00088t-Gb; Fri, 24 Jul 2026 04:31:35 -0400
+	id 1wnBLY-0001gI-FK; Fri, 24 Jul 2026 04:33:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wnBJZ-00088Q-RC
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 04:31:29 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wnBLT-0001f9-N9; Fri, 24 Jul 2026 04:33:29 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wnBJY-0002aX-1W
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 04:31:29 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66O4lbkT2125326
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 08:31:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 9Ot0MV2DOB3SDCktdaHIXtOFbygRud+AUo2veWfWkOc=; b=gK8ak+qCZQRadFqP
- ooLPqrCnqhfzFP0O0NWbbiL30y6QSkhOF9PwIOuu4iVo/+e9sfnesXaKQ3dA7DkE
- 9seqXhcjBQBs3/2Lfe9CMOwgcCQ7C3/yHPRr6RPCU3BVxGNi872yTjgor/G94aA0
- Koc6o8rasD9h19jd9Hpucrm43blh+IynQJNeNLzE27bSQNVssxGs/u7FUo57b9wm
- mLmBdn5o3XplQqeqv1sqPrtBdVf/+PCoXqftwvHhl4fGCIXWb0GMKqna0BuKGjoy
- Kw3Yiq/BEg2Ta9uBRPRgLfDRQfnrbQ5QaL/nbrsjXPyq21ydV4B+vOBfxbKLqGMw
- O2FwYg==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fkqamttkj-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 08:31:25 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51c26012cd0so2307601cf.0
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 01:31:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784881885; x=1785486685; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=9Ot0MV2DOB3SDCktdaHIXtOFbygRud+AUo2veWfWkOc=;
- b=UmZ2i+jAR8az9dDveMeAjIOsLuwA8noN7vIa83RWV6j5DwHV18gXmYkOvSVJwKuSXM
- YF2f5BmJl/Z3gVCqOhRiSNGKyxwJlyETEJKEUwYsoDRyhCK3vdax1OEBSWPW9116WQe5
- 43qW3h6U4OIVZrqqPo7U/eAnqF8fTpZvMZS20FqO2PsTNgET7h2Jgs6ltMA71emwO4Ug
- dpdTT2QUJYaD7Gmy6cebWlegx9JmgqMrCB+xCR/7/pMOnsDOy8LM2Pi461rvcbzLADOs
- uoDgVh/rhjTBStHh6i+ntEoXlIkQuTwAKjqXrM57anWDPf5yifcZKPKT08U7OEF30+LW
- btSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784881885; x=1785486685;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=9Ot0MV2DOB3SDCktdaHIXtOFbygRud+AUo2veWfWkOc=;
- b=ggXwdjS29L/35QLitFzmM/0VSTP8qFsEDtcJ03Qoz6XvH8VzbhEZTMDZf7UddVuE3X
- VyU83Y2iEI5NA8vYNt5V6/qay1Syex07rDroTQweEd4J1thcYriZAxgfPPh4HILZbp6s
- uP08erJa5U3isJ6nddtnLt5odeQP4/i20j5mJsKCcXy5/Dk2fkc6jDHFWppi9EFRs2eh
- Y1DZ087wrCyzboZ4uuqw6MNXU39+d0yNmk8duxfqntmeFiuSTDSaDnP/V4x8Mok41wFH
- bCHo9sEgcqSSPaYVmPhcB595s4VknA5QSQ3Y60I0dcfk5WVZ4nO3sbWuRTcKFOzOtvbf
- lAcg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpCWrMYymKYXS1FC93BK7bi7P+Tb5cWZQLPLESLr5WAf2iGH+Wet+JDBnvz1k9Z6lGBE9+Ixv0tcfmz@nongnu.org
-X-Gm-Message-State: AOJu0YwoD5MlaaQZYmxGZfBWHIsE+01WRh05FFPZQu2hkALqtpcPIFhV
- ZYCWHhDR9sIid9gQAxKKjCFl+m5lUXg+4hfGfImE6wuPZ1Cb4lecn7O3EI75WfDVc0KhDYoase0
- LZ8TKKCbnB7a6d5x8zCkclmBRKaerM8ZZPlObGauR9qzrk9/33IcPbsMCqw==
-X-Gm-Gg: AR+sD10Aoe0QdF/uB661NXu2o4RHDY6ki2za2/RI6L3lnhM8K3AlaLXFGFUhttAXvr/
- q+WGVLk79Pkb/u5HCAzSsh/cN5cn6m3CylH+cjWRdl+fB+TzlwHmVrDZMHIRZw91aOYclVaFEvH
- sTf6KbGL4A18qQ7GK51CkAWMpMIPdxCZLBIcaQiLrYtIo4J44xY5YhrOAeLHwGGtSOz1NascAkF
- TabeeXhL7I1qgZq0xjgYWnbKOiqkUV58paR5I1ZJ8t7O3aq3KgN1teQWHxtL8MWdBg0NvcXnWKq
- Yk3tKeq5GRA4xlT4mKFqN2IJh4NXBf//6/M61YBKkcZLOeFhmHwyDeXHNAgxEZ+4chH9iHAprS0
- yNJvxskVyX38Wc2NXwl51VA==
-X-Received: by 2002:ac8:5a41:0:b0:528:22:8c61 with SMTP id
- d75a77b69052e-5283de53bbbmr60592331cf.38.1784881885267; 
- Fri, 24 Jul 2026 01:31:25 -0700 (PDT)
-X-Received: by 2002:ac8:5a41:0:b0:528:22:8c61 with SMTP id
- d75a77b69052e-5283de53bbbmr60592101cf.38.1784881884773; 
- Fri, 24 Jul 2026 01:31:24 -0700 (PDT)
-Received: from [192.168.1.138] ([176.176.154.185])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4957af9128fsm49599305e9.13.2026.07.24.01.31.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Jul 2026 01:31:24 -0700 (PDT)
-Message-ID: <9ce8bdaa-70a3-4b8b-bb26-8cb84c5da857@oss.qualcomm.com>
-Date: Fri, 24 Jul 2026 10:31:22 +0200
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wnBLP-0002dR-Ky; Fri, 24 Jul 2026 04:33:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1784881977; bh=jy1XtVP7DvgYSDbEHyyI3lTHo0kusW7uGWgXRVFAWU4=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=GSCU0wcVJsY5hGr5m4PwYYOSXfOA28R/bC+H+8nmgd80QA+NaZm2WrfzbOXVBUkXC
+ AhS2vE7IZ4DLkfepME6OfYMnR3Gvs+IaKRBNwkaSSBd8ZiwWOrcm3s8ml8Jq3fgyCK
+ mBnNgSwfFlOySRyVFJzfr6ZUZDWvB5dCuNcXvRpaq/2Ym7ORm2PI4b1hanwio/poOM
+ TNymnVfeH27tiZvOvRlN4l18JTyFyfqy8EG+PUVeILK/Ca+OJKU1qFYBUMy4b6ZmHj
+ DaxKR7nSnUIXa8irk2xKXvRmngKh++cm5x3iOVNKQfOAwSkLWn9AZzp4JgqCDWxkWE
+ WYJnc3Q7mYC/g==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 60D0F1C450B;
+ Fri, 24 Jul 2026 11:32:57 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1B24A3F464F;
+ Fri, 24 Jul 2026 11:33:18 +0300 (MSK)
+Message-ID: <9e9a526d-e54e-402c-8f78-958e4ee514d5@tls.msk.ru>
+Date: Fri, 24 Jul 2026 11:33:08 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/virtio-rng: Fix host use-after-free (CVE-2026-50624)
-Content-Language: en-US
-To: Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Amit Shah <amit@kernel.org>,
- Jia Jia <physicalmtea@gmail.com>, qemu-ppc <qemu-ppc@nongnu.org>
-References: <20260708063944.1788243-1-lvivier@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260708063944.1788243-1-lvivier@redhat.com>
+Subject: Re: [PULL 01/13] vfio/igd: Clear saved BDSM in legacy VBIOS ROM at
+ load time
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Tomita Moeko <tomitamoeko@gmail.com>, K S Maan
+ <kirandeepmaan45@gmail.com>, qemu-stable@nongnu.org,
+ Alex Williamson <alex@shazbot.org>, Mario Casquero <mcasquer@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20260721170518.4160785-1-clg@redhat.com>
+ <20260721170518.4160785-2-clg@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260721170518.4160785-2-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDA3NyBTYWx0ZWRfX4LAUg7kfZ+YV
- zMJb+e/PGuFFyM4KTL5XUqlHhgCxObLCG8D+H50F7ws8ydjywG5P0UqypVoDv1KoW9CDI8hHoJ+
- vJD8ophiocv4WAW0KVFc2eKWT+VOci6Z14+u8HEO2hEFKIPISZz1ULTeEcj6sjdfmmFr5GORvzQ
- swUjMftFo3UTe+DqP7bCJkO1bpNj0EzzjzarYAEb6qotluwLSO2ffy7Cf+vEEUVyM0uwchWqddn
- jbn7AXPjz3VTFrolWbwgktqa+DKQWJGsrTAqs6FEaLTKyoX5pwhDzalqbyFBd04ghPksM2Gte5B
- MwZ0xUyC8yDrY7K31oYe0TXheJgiu9kAlG040i69yu1ArQJRj9+tKsq9xzklq/poc+arElpLc/H
- Cy/Sro9HEKqfAUKaWs1+e7Z8NtL0eJFD0R6UAlKRC0Bl/iUyrAf2I4WM87IkdQukyS1Hvu35Dsp
- 0odxTIfeHTRiQnp8V/Q==
-X-Proofpoint-GUID: y5AhbzaGa3rJ9OfjgBD5X9WxwDfycI0j
-X-Authority-Analysis: v=2.4 cv=DfAnbPtW c=1 sm=1 tr=0 ts=6a6322dd cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=uVRRv9AK2fddTnT+2a2/4A==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=p0WdMEafAAAA:8 a=pGLkceISAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8
- a=ehhAyVRAbGlrGaafr0sA:9 a=0bXxn9q0MV6snEgNplNhOjQmxlI=:19 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDA3NyBTYWx0ZWRfX6Kp+nkh6PIlF
- t8/FE1VOQfQprNL9Pi6rFtPAKZOHl77SiUh1dfM+VuqR1D0bIXvGGrfYeqGrSlmxrXPy6F4q5+w
- 95EHfpPMfIkxyFth81rjOJTeqgQ0ml0=
-X-Proofpoint-ORIG-GUID: y5AhbzaGa3rJ9OfjgBD5X9WxwDfycI0j
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-24_01,2026-07-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 clxscore=1015 suspectscore=0 spamscore=0
- priorityscore=1501 impostorscore=0 bulkscore=0 adultscore=0 malwarescore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607240077
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,95 +117,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/7/26 08:39, Laurent Vivier wrote:
-> Fix a heap-use-after-free in the virtio-rng frontend when a delayed
-> rng-random backend completion arrives after the virtio-rng device has been
-> hot-unplugged.
+On 7/21/26 20:05, Cédric Le Goater wrote:
+> From: Tomita Moeko <tomitamoeko@gmail.com>
 > 
-> Fixes: CVE-2026-50624
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3917
-> Reported-by: Jia Jia <physicalmtea@gmail.com>
-> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+> IGD does not come with a ROM BAR [1], the ROM BAR read by default from
+> kernel is actually the host VBIOS shadow RAM region that contains host
+> modifications on boot. With AI-assisted reverse engineering on VBIOS
+> binaries, it is observed that VBIOS saves BDSM register value on first
+> access and uses saved value if present.
+> 
+> When the image is executed in guest, since there is already a saved HPA
+> in VBIOS, it keeps using that value instead of the GPA programmed by
+> SeaBIOS in BDSM register in PCI config space, causing VBIOS to program
+> GTT entries with wrong address, resulting in garbled output in BIOS
+> POST and the error below detected by i915 driver.
+> 
+> i915 0000:00:02.0: [drm] *ERROR* Initial plane programming using invalid range, dma_addr=0x00000000db200000 ((null) [0x00000000baf00000-0x00000000beefffff])
+> 
+> The previous solution, c4c45e943e51 ("vfio/pci: Intel graphics legacy
+> mode assignment"), adjusts GTT entry addresses to (addr - host BDSM +
+> guest BDSM) to workaround that. But it is removed in 5aed8b0f0be2
+> ("vfio/igd: Remove GTT write quirk in IO BAR 4") due to inconsistent
+> values in MMIO BAR0 and IO BAR4.
+> 
+> Since it was a value latched into the VBIOS that breaks virtualization
+> (QEMU does not map the GTT at the same address in the VM), a ROM quirk
+> clearing the saved value in VBIOS image is introduced. It searches the
+> BDSM accessor routine by matching a 19-byte signature anchored on the
+> unique `mov $0x105e,%ax` instruction, then locates the offset of saved
+> BDSM and clears it. This makes the routine fall through to the PCI
+> config read on the first call inside the guest.
+> 
+> [1] 3.5.15, 4th Generation Intel Core Processor Family Datasheet Vol. 2
+>      https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/4th-gen-core-family-desktop-vol-2-datasheet.pdf
+> 
+> Fixes: 5aed8b0f0be2 ("vfio/igd: Remove GTT write quirk in IO BAR 4")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3093
+> Reported-by: K S Maan <kirandeepmaan45@gmail.com>
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+> Reviewed-by: Alex Williamson <alex@shazbot.org>
+> Link: https://lore.kernel.org/qemu-devel/20260708103100.23127-1-tomitamoeko@gmail.com
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+
+
 > ---
->   backends/rng.c         | 16 ++++++++++++++++
->   hw/virtio/virtio-rng.c |  2 ++
->   include/system/rng.h   | 14 ++++++++++++++
->   3 files changed, 32 insertions(+)
-> 
-> diff --git a/backends/rng.c b/backends/rng.c
-> index ab94dfea850a..182269be4a83 100644
-> --- a/backends/rng.c
-> +++ b/backends/rng.c
-> @@ -68,6 +68,22 @@ static void rng_backend_free_request(RngRequest *req)
->       g_free(req);
->   }
->   
-> +void rng_backend_cancel_request_entropy(RngBackend *s,
-> +                                        EntropyReceiveFunc *receive_entropy,
-> +                                        void *opaque)
-> +{
-> +    RngRequest *req, *next;
-> +
-> +    QSIMPLEQ_FOREACH_SAFE(req, &s->requests, next, next) {
-> +        if (req->receive_entropy != receive_entropy ||
-> +            req->opaque != opaque) {
-> +            continue;
-> +        }
-> +        QSIMPLEQ_REMOVE(&s->requests, req, RngRequest, next);
-> +        rng_backend_free_request(req);
-> +    }
-> +}
-> +
->   static void rng_backend_free_requests(RngBackend *s)
->   {
->       RngRequest *req, *next;
-> diff --git a/hw/virtio/virtio-rng.c b/hw/virtio/virtio-rng.c
-> index 66690a34dc97..a77ea5ab1385 100644
-> --- a/hw/virtio/virtio-rng.c
-> +++ b/hw/virtio/virtio-rng.c
-> @@ -234,6 +234,8 @@ static void virtio_rng_device_unrealize(DeviceState *dev)
->       VirtIODevice *vdev = VIRTIO_DEVICE(dev);
->       VirtIORNG *vrng = VIRTIO_RNG(dev);
->   
-> +    rng_backend_cancel_request_entropy(vrng->rng, chr_read, vrng);
-> +
->       qemu_del_vm_change_state_handler(vrng->vmstate);
->       timer_free(vrng->rate_limit_timer);
->       virtio_del_queue(vdev, 0);
-> diff --git a/include/system/rng.h b/include/system/rng.h
-> index e383f87d20b2..5b0893eb2bd5 100644
-> --- a/include/system/rng.h
-> +++ b/include/system/rng.h
-> @@ -86,4 +86,18 @@ void rng_backend_request_entropy(RngBackend *s, size_t size,
->    * deleted.
->    */
->   void rng_backend_finalize_request(RngBackend *s, RngRequest *req);
-> +
-> +/**
-> + * rng_backend_cancel_request_entropy:
-> + * @s: the backend that created the request
-> + * @receive_entropy: the function invoked when entropy is available
-> + * @opaque: data passed to @receive_entropy
-> + *
-> + * This function is used by the front-end to cancel all requests to a
-> + * given backend. Requests to cancel are identified by the receive_entropy
-> + * function and the data passed to the function.
-> + */
-> +void rng_backend_cancel_request_entropy(RngBackend *s,
-> +                                        EntropyReceiveFunc *receive_entropy,
-> +                                        void *opaque);
+>   hw/vfio/pci.h        |   3 ++
+>   hw/vfio/igd-stubs.c  |   5 ++
+>   hw/vfio/igd.c        | 115 +++++++++++++++++++++++++++++++++++++++++++
+>   hw/vfio/pci-quirks.c |   5 ++
+>   hw/vfio/pci.c        |   2 +
+>   hw/vfio/trace-events |   1 +
+>   6 files changed, 131 insertions(+)
 
-I'd simply name it rng_backend_cancel_requests(), and make the argument 
-const:
+I'm picking this up for currently active stable qemu series.  Since this
+change touches several files, including new file since last release
+(hw/vfio/igd-stubs.c), I'm also picking a few other changes to the
+stable series, namely, for 11.0.x:
 
-   void rng_backend_cancel_requests(RngBackend *s,
-                                    const EntropyReceiveFunc 
-*receive_entropy,
-                                    const void *opaque);
+v11.0.0-2776-gc822ecd8066 vfio/pci: Initialize rom_read_failed in vfio_pci_load_rom()
+   this is a little bugfix by its own, so it's okay to pick up
 
-I suppose we should implement spapr_rng_unrealize() calling this helper.
+v11.0.0-3-g55e25958aa1 hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD,
+   Add stubs for needed functions.  This changes quite a few things,
+   but not much.  I can adjust this change (Clear saved BDSM) for the
+   context before CONFIG_VFIO_IGD removal, but it feels like it would
+   be better to pick up CONFIG_VFIO_IGD removal too, to make the branches
+   more similar.
 
-For this patch (preferably renamed):
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+For 10.0.x, things are a bit more complex here.  In particular, 10.0.x
+lacks
 
+  v10.0.0-290-ge218ccf0c94 vfio: Rename VFIODevice related services
+  v10.0.0-756-g2e27becf17b vfio: consistently handle return value for helpers
+  v10.2.0-2365-g988499515da "hw/display: Build stubs once"
+
+and these are more troublesome to pick up, including "CONFIG_VFIO_IGD
+removal", so I'm picking up "Initialize rom_read_failed", and adjusting
+"Clear saved BDSM" for the lack of "CONFIG_VFIO_IGD removal" (it's
+stright-forward, with #ifdef CONFIG_VFIO_IGD instead of empty stub).
+
+I'm not very comfortable with the different approach to 10.0.x and 11.0.x,
+maybe I should omit "CONFIG_VFIO_IGD removal" from 11.0.x too.
+
+What do you think?
+
+Maybe this whole thing doesn't need so much attention to begin with :)
+
+Thanks,
+
+/mjt
 
