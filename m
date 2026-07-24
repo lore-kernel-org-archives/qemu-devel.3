@@ -4,87 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E098C531CC
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 03:12:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7BF8C4453D
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 03:58:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wn6Jx-0004ZT-1b; Thu, 23 Jul 2026 23:11:33 -0400
+	id 1wn72T-0007Zp-9l; Thu, 23 Jul 2026 23:57:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wn6Jv-0004Vn-Rn
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 23:11:31 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wn6Jt-0000U6-KF
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 23:11:31 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-c9e0b89e228so997522a12.1
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 20:11:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784862688; x=1785467488; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=d4ymIqCqxq1PLCOb909nXPImc42YibJwInzctDWldOk=;
- b=PzyHL7n0A/T1A4FiCDLZ85+YCMXwgAoghemJrjHT0K6EGxh4N2IY5NHwo16aqAzeX7
- zPxyl2EuPRtsLJELwrznT0DanEX5yeK9cO8c7HAAi9PvQckXaibUMDZbUlX4QNownwfq
- BH/E/8xNl6WdLkhZLJdQ8PHHPCGS2D+Em2EdcGtieBjDbAIW7b0IKXDEnupgjEsQRFAo
- tBkhTHaOk3cbGRORBxzwEF8rccZJR+isGMSjTtcBvI8BPvrrEf4IiFLtxPmhEIBmRWw0
- ocNNbTjqnRk2l3CWXSPrmJBV5GVzf4pYTjN/q1SUg3db+5I01WtP9/EnYrVTrAJFWKyC
- xlZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784862688; x=1785467488;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=d4ymIqCqxq1PLCOb909nXPImc42YibJwInzctDWldOk=;
- b=J0SXx5hRFtzrtfe/tTlRH5UpiZAUmqLdD08dVerzGi3NbpkThy81ug4s/65Qv236Fl
- 7a8XVXQt64kvDW9ZlNdr7JN4zj1ur+lotQYP1XmEo0YY88g8fEUKBGmvoZ0opGglJohv
- 75mdXZPE9QAP+VGs71rJRLtElLNC7z6g/5eCoc8aZ9zyRtGVXN6bFIywL8DSAV1p3z51
- XMzoZCsXNEvAdUkfvtCGKI5cv+V7clfXlvbchIt50Y8b2WBHymSe2CV2CSZAJyENtwXt
- llWm66PJgIl+Op0ejZe+vVbPB2mMEmQvTb11f+Wp3DtPwlP6s/jDMoEbQtSbMC5Ww/2t
- tf+Q==
-X-Gm-Message-State: AOJu0YwfTCv2tXLXq1TA0SsYLMSx+54C9G2Jjd56xLY4q6kXNVY9iQZ8
- k85NfL+S4EHIOW8Xt8jm6cFTpy5b+O5R1aJtLUzXXDAqKkFYGAZwuYJ0IAVn0FChr5NobNBhzy4
- OdNvQ
-X-Gm-Gg: AR+sD11GxRqm3l2hiEj8kkUTukDgJ5/GG8Lq5zeLNqLIZiIOvMhpqdq36zzS0zO92Ks
- 8vMQNE8tkkdQjgpic4f1+koRUG9l/iBuP6Oitdr7sr1OKQELT+FMnZbFBAhAGKLcFKhTVWMP8jb
- ETJ7KePSXzFdn+TtwVCgY9N/aVd+1j0hlIHP60rA7nIKm0Y4D1F2aEpwOFyRijhHA+SPFgfFBgh
- yASHvpwReOeqDfgpkhZw8K9P7bUnXPKK4CEKbhBqPmHU2SpLLTTTntWtkfpMGBlvoxhDPhRgqKq
- WDNSONV9Ks0uNNvIVLwss4zOZaa5AUXKcYHSSFXrNZgWqqB0VV7BraNTm0RyNSBJEcM/LtFw3p0
- eJusRM+E1uumZ6XKBFANgklFbf8pPh+JlttLsBCsGlJaaPdHuEcvfX+IWFfWlx6jji/KhCbJO5T
- TZtq3RTR4DyIrb8vVtH1nnKG8IwuSmfF5IDA==
-X-Received: by 2002:a05:6a20:3d82:b0:3bf:a0e5:999f with SMTP id
- adf61e73a8af0-3c44afd5fcdmr5948989637.22.1784862688022; 
- Thu, 23 Jul 2026 20:11:28 -0700 (PDT)
-Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cbb8f0d872bsm3617697a12.7.2026.07.23.20.11.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Jul 2026 20:11:27 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wn72R-0007Zc-Tv
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 23:57:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wn72P-0007In-7X
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 23:57:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784865447;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=naIx8vuJNZwvieRfVQ5Og0LBIoNq1IaWbSfegzpuSmA=;
+ b=GJB50hgMC69/z8OPy070FLbxCNFcVAVIckwQOkw6CyeGNpoFqm/Q/mNu3Ay1ZeWZco9BmR
+ JSD8uGnwfXv3BnD/+WwxH3BeofucfxmUIyg6tjWMTvpgoV1YpD7ZNn0grChc79QhP78L3K
+ b1Ugr5l/koeZ29yeai366Or/Z9syylM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-573-BPllQCQdNG-iWOUJ528AMA-1; Thu,
+ 23 Jul 2026 23:57:23 -0400
+X-MC-Unique: BPllQCQdNG-iWOUJ528AMA-1
+X-Mimecast-MFC-AGG-ID: BPllQCQdNG-iWOUJ528AMA_1784865442
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 25ACA182F568; Fri, 24 Jul 2026 03:57:22 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.7])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 59C3130002CE; Fri, 24 Jul 2026 03:57:19 +0000 (UTC)
+From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH 4/6] target/arm: Implement SCR_EL3.TID3
-Date: Thu, 23 Jul 2026 20:11:21 -0700
-Message-ID: <20260724031123.76597-5-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260724031123.76597-1-richard.henderson@linaro.org>
-References: <20260724031123.76597-1-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [PATCH] hw/display/virtio-gpu: validate blob iov size in create_blob
+Date: Fri, 24 Jul 2026 07:57:12 +0400
+Message-ID: <20260724035712.856636-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.951,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,57 +85,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/helper.c        | 18 ++++++++++++++++--
- target/arm/tcg/op_helper.c |  4 +++-
- 2 files changed, 19 insertions(+), 3 deletions(-)
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 971f0fbc08..022a63a511 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -5894,8 +5894,22 @@ static CPAccessResult access_v7a_tid3(CPUARMState *env, const ARMCPRegInfo *ri,
-      * Any other registers in the TID3 trap space should use access_tid3(),
-      * so that they trap on v8 and above, but not on v7.
-      */
--    if ((arm_current_el(env) < 2) && (arm_hcr_el2_eff(env) & HCR_TID3)) {
--        return CP_ACCESS_TRAP_EL2;
-+    switch (arm_current_el(env)) {
-+    case 1:
-+        if (arm_hcr_el2_eff(env) & HCR_TID3) {
-+            return CP_ACCESS_TRAP_EL2;
-+        }
-+        /* fall through */
-+    case 2:
-+        /* Note FEAT_IDTE3 does not trap AArch32 sysregs. */
-+        if (ri->state == ARM_CP_STATE_AA64 && (env->cp15.scr_el3 & SCR_TID3)) {
-+            return CP_ACCESS_TRAP_EL3;
-+        }
-+        break;
-+    case 3:
-+        break;
-+    default:
-+        g_assert_not_reached();
+virtio_gpu_resource_create_blob() stores the guest-controlled blob_size
+without checking it against the total size of the iov backing entries.
+Since both values are independently guest-controlled, a malicious guest
+can set blob_size much larger than the actual iov backing. Subsequent
+SET_SCANOUT_BLOB checks bounds against the inflated blob_size, allowing
+a pixman surface to be created over the undersized buffer. Any display
+refresh then reads past the actual allocation, potentially crashing
+QEMU or leaking host memory contents depending on the backing type.
+
+Reject the resource early when the iov backing is smaller than the
+declared blob_size.
+
+Fixes: CVE-2026-66021
+Fixes: e0933d91b1cd ("virtio-gpu: Add virtio_gpu_resource_create_blob")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3945
+Reported-by: "sundayjiang(蒋浩天)" <sundayjiang@tencent.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ hw/display/virtio-gpu.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index eac039c3c366..cc6dbd116618 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -372,6 +372,16 @@ static void virtio_gpu_resource_create_blob(VirtIOGPU *g,
+         return;
      }
  
-     return CP_ACCESS_OK;
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 93336daf53..9b651104a7 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -1197,7 +1197,9 @@ void HELPER(tid3_udef_el1)(CPUARMState *env, uint32_t syndrome)
-         target_el = 2;
-         excp = EXCP_HYP_TRAP;
-     } else if (is_a64(env)) {
--        if (!cpu_isar_feature(aa64_idst, env_archcpu(env))) {
-+        if (env->cp15.scr_el3 & SCR_TID3) {
-+            target_el = 3;
-+        } else if (!cpu_isar_feature(aa64_idst, env_archcpu(env))) {
-             syndrome = syn_uncategorized();
-         }
-     } else {
++    if (iov_size(res->iov, res->iov_cnt) < res->blob_size) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: backing storage smaller than blob size\n",
++                      __func__);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        virtio_gpu_cleanup_mapping(g, res);
++        g_free(res);
++        return;
++    }
++
+     virtio_gpu_init_udmabuf(res);
+     QTAILQ_INSERT_HEAD(&g->reslist, res, next);
+ }
 -- 
-2.43.0
+2.55.0
 
 
