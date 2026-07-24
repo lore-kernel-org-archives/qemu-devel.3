@@ -4,111 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0802DC531C9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 11:42:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 314E1C531F9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 11:45:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnEHp-0007vc-UY; Fri, 24 Jul 2026 07:41:55 -0400
+	id 1wnEKJ-0000u4-Dr; Fri, 24 Jul 2026 07:44:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wnEHX-0007nS-QX
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 07:41:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wnEKB-0000tY-Ah
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 07:44:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wnEHW-0005OX-3K
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 07:41:35 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wnEK9-0005aj-KK
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 07:44:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784893293;
+ s=mimecast20190719; t=1784893456;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xDRpoZmK0+wEMfWR8I+z16InGfMrkgjF0WYJPvGqlv4=;
- b=iNTzy09XzMXj9dOGPJyhNeEHoVxJrer+4EONQjXwVaXPo+5kGVuB6pa2Mn6PQH62Ldklrr
- whKnWyVxOJDFiTpiqX7xp5Lsq9hULfw770pWpl52/YaWogLvblWhlhqtxwGGp7udQfNr1b
- gJJq8yqOIzcDbhRggZ5M+x1TI8Pi5fY=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-423-3UFmwv6cMYWAzvhJNvf_Ow-1; Fri, 24 Jul 2026 07:41:31 -0400
-X-MC-Unique: 3UFmwv6cMYWAzvhJNvf_Ow-1
-X-Mimecast-MFC-AGG-ID: 3UFmwv6cMYWAzvhJNvf_Ow_1784893290
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-47f6e8b5996so404818f8f.2
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 04:41:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784893290; x=1785498090; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=xDRpoZmK0+wEMfWR8I+z16InGfMrkgjF0WYJPvGqlv4=;
- b=bYkDNrLeenggTcoftc2SjXZ7Ie+SgbN9OIPy3CcMLQjCJ4xeUzOrJCpH4q7QhhF+w3
- 3YxsQM7bRSR6t8U4nqqk4KMfmn+G/4F1uebcq/uXMLASWThwMUChyDXI4IkWIQTviI9V
- xo6N+jgNF9soODqVdK3RXA1D49oK5lCW88hFXTUM+0RtosEspeSZrCW4DRBBBEH6wVCK
- wP2y+aNUOGBBFFQvMZZ7wP/SKYrY5pcLwMYGCKFRdtuRO1D1XrU/zfgetQ17Ph6CjA4u
- n0KUvctYP6DDMLpNT3y93jHC2spFoWTJHOJRLOsDO+ETDt+Cqx0VFV9TekBqyEvshsRo
- VTbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784893290; x=1785498090;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=xDRpoZmK0+wEMfWR8I+z16InGfMrkgjF0WYJPvGqlv4=;
- b=ogqP3bqIKQMNj530KT1AbDlLNFjBv736wG13b0o9fpATKfCCvgG5TH70umEvCVLfHM
- ue7grcReFwpCR9nijQeW1NuVBeMLqIsmY/AKi8gKmIDBI/+nQdlMmzCH6zqXfYKIENi9
- x6ENBhtPv/J5/nw48zjkjILbmYDaW5fFYLVOzL3LntFi2lV+E/MgTHSTCz6YHhElIYoc
- 0TK7RP3qEu+ZBtM+5LntQfJHd94yKWOlaGMzseeg6imPFJz8zQHya7pqsFIc5b18rCjP
- V6iCBEctOiE1jKUqeYS4Vao5pE/UOjD6Af8Aa2SljXrK/qyevBLOB6xpyDm0PfafRD9L
- nbkA==
-X-Gm-Message-State: AOJu0YzrK5N8IVdd1wqRCecZLiJphariUBVrmTImVPb8S+c/68+wqCS2
- vfuO36Fhycf7lZmlqIfLXJmIEFK8n5w004wKDrY8Ij3YIp3sXUMnN4iIvhbCBv18VhoYw3j/o9K
- zx3vc0igA5nZ/oe4jeCa1lHswSmpoOyonbSBF7xvQcuYpwbxcVT05NlBI
-X-Gm-Gg: AR+sD11hb3ipY3133ysBtsYRlUs3NzW94SZzA4JviRm5W/QJ3m4tVswzA8Hfdf8tg/v
- rn43K1eNh6FSdMXczGt88scywV2UmBNFU2TgbPwzG4p798DhIvX+SsK7DjYskVJaR4gobgpfUhZ
- IKt0WUh73HqIvyW9cpzRtBU+jNnTRm1EdsfEMi0i48wxXfnpLxRHSyqtDdqaeXG+Hw15BJu8pWi
- +3Y7xHSNaVWFWljbry/JCsN10rvmNX9RmtIFMu5jugDbsvdXzrpE51bRsOCbttspfbNWcPTYZb+
- caxM44W6E37ghup7KkNoha7Yq/fzBNILZ0saDEOFFH8qnaqpDz9OAZvqrDaG44DhGTNAeiXmagW
- v1WUSVhgipKAoNtnLSOdG+w==
-X-Received: by 2002:a05:600c:4445:b0:495:f31:7340 with SMTP id
- 5b1f17b1804b1-495d9de662amr15550595e9.5.1784893289691; 
- Fri, 24 Jul 2026 04:41:29 -0700 (PDT)
-X-Received: by 2002:a05:600c:4445:b0:495:f31:7340 with SMTP id
- 5b1f17b1804b1-495d9de662amr15550055e9.5.1784893289106; 
- Fri, 24 Jul 2026 04:41:29 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c53052sm23224069f8f.18.2026.07.24.04.41.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jul 2026 04:41:28 -0700 (PDT)
-Date: Fri, 24 Jul 2026 07:41:26 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: =?iso-8859-1?Q?Cl=E9ment?= MATHIEU--DRIF <clement.mathieu--drif@bull.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "kevin.tian@intel.com" <kevin.tian@intel.com>,
- "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
- "philmd@oss.qualcomm.com" <philmd@oss.qualcomm.com>
-Subject: Re: [PATCH v2] intel_iommu: Check address mask before using it in
- pasid-based iotlb invalidation
-Message-ID: <20260724073954-mutt-send-email-mst@kernel.org>
-References: <20260724111424.376680-1-clement.mathieu--drif@bull.com>
+ bh=Dp493WtKFn5mgmc6KbXPZLg0UXYbOXpnjuZlb6co53U=;
+ b=UP9wKPy7SHEm/579n/Mf0dWk52NMmctkmZK2KQKQxCjdNl+YYH32tQ2NWFC1el0U/hlAWq
+ /IU1P1RJm6cPGU8CdoxlcVY+JOev2fd/XDoVVprbpZQBICkhoFVliPZZ21WOzBtPEikVha
+ 3OW0JcLFO8bs2gc+lVp9tgZCvqvPPlA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-674-G1w6RvC6Oyug3rwL1J0T1Q-1; Fri,
+ 24 Jul 2026 07:44:12 -0400
+X-MC-Unique: G1w6RvC6Oyug3rwL1J0T1Q-1
+X-Mimecast-MFC-AGG-ID: G1w6RvC6Oyug3rwL1J0T1Q_1784893448
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 02F2C195DE08; Fri, 24 Jul 2026 11:44:06 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7DE1F30002DE; Fri, 24 Jul 2026 11:44:03 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id D56AA21E6920; Fri, 24 Jul 2026 13:44:00 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org,  BALATON Zoltan <balaton@eik.bme.hu>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,  "Maciej S. Szmigiero"
+ <maciej.szmigiero@oracle.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
+ David Hildenbrand <david@kernel.org>,  Igor Mammedov
+ <imammedo@redhat.com>,  FangSheng Huang <FangSheng.Huang@amd.com>,
+ Alistair Francis <alistair@alistair23.me>,  "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>,  Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org,  Nicholas Piggin <npiggin@gmail.com>,  Aditya Gupta
+ <adityag@linux.ibm.com>,  Glenn Miles <milesg@linux.ibm.com>,  Harsh
+ Prateek Bora <harshpb@linux.ibm.com>,  qemu-ppc@nongnu.org,  Alex
+ Williamson <alex@shazbot.org>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>,  Zhao
+ Liu <zhao1.liu@intel.com>,  Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,  Ilya Leoshkevich
+ <iii@linux.ibm.com>,  Cornelia Huck <cohuck@redhat.com>,  Eric Farman
+ <farman@linux.ibm.com>,  Matthew Rosato <mjrosato@linux.ibm.com>,
+ qemu-s390x@nongnu.org,  Luc Michel <luc@lmichel.fr>,  Fam Zheng
+ <fam@euphon.net>,  Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH for-11.2 v3 00/15] qdev: Clarify and enforce the device
+ realization lifecycle
+In-Reply-To: <20260721-qdev-v3-0-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp> (Akihiko
+ Odaki's message of "Tue, 21 Jul 2026 17:16:50 +0900")
+References: <20260721-qdev-v3-0-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 24 Jul 2026 13:44:00 +0200
+Message-ID: <874ihoa9z3.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260724111424.376680-1-clement.mathieu--drif@bull.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.419,
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.419,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,51 +104,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 24, 2026 at 11:15:32AM +0000, Clément MATHIEU--DRIF wrote:
-> Prevent a buggy driver to execute malformed invalidation operations.
-> 
-> Add the same assert as in vtd_iotlb_page_invalidate.
-> 
-> Link: https://gitlab.com/qemu-project/qemu/-/work_items/3619
-> Fixes: 6ebe6cf2a066 ("intel_iommu: Process PASID-based iotlb invalidation")
-> Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> writes:
 
-changelog in the future pls.
+> qdev currently represents a device's realization state with a single
+> boolean. This cannot distinguish a device that has never been realized
+> from one whose realization has failed or that has been unrealized, nor
+> can it represent realization in progress. Consequently, the same device
+> can enter DeviceClass::realize() reentrantly or more than once.
 
->  hw/i386/intel_iommu.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index bf4f0f2f6b..8245452d89 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -3021,6 +3021,8 @@ static void vtd_piotlb_page_invalidate(IntelIOMMUState *s, uint16_t domain_id,
->  {
->      VTDIOTLBPageInvInfo info;
->  
-> +    assert(am <= VTD_MAMV);
-> +
->      info.domain_id = domain_id;
->      info.pasid = pasid;
->      info.addr = addr;
-> @@ -3060,6 +3062,13 @@ static bool vtd_process_piotlb_desc(IntelIOMMUState *s,
->  
->      case VTD_INV_DESC_PIOTLB_PSI_IN_PASID:
->          am = VTD_INV_DESC_PIOTLB_AM(inv_desc->val[1]);
-> +        if (am > VTD_MAMV) {
-> +            error_report_once("%s: invalid piotlb inv desc: hi=0x%"PRIx64
-> +                              ", lo=0x%"PRIx64" (am=%u > VTD_MAMV=%llu)",
-> +                              __func__, inv_desc->val[1], inv_desc->val[0],
-> +                              am, VTD_MAMV);
-> +            return false;
-> +        }
->          addr = (hwaddr) VTD_INV_DESC_PIOTLB_ADDR(inv_desc->val[1]);
->          vtd_piotlb_page_invalidate(s, domain_id, pasid, addr, am,
->                                     VTD_INV_DESC_PIOTLB_IH(inv_desc));
-> -- 
-> 2.54.0
+.realized is initially false.  It is only ever modified in
+device_set_realized(), which is the setter of QOM property "realized" of
+"device" and its subtypes.  device_set_realized() is only called when
+the property is set.  It does nothing when the new value is the same as
+the old value.
+
+Code changes property "realized" only in qdev_realize() and
+qdev_unrealize().
+
+Implementations of .realize may call qdev_realize() for their
+components.  Having this loop back would be a bug.
+
+If your claim "can enter reentrantly" is correct, we have bugs to fix.
+I believe it is incorrect.
+
+There are two kinds of devices, onboard and user-created.
+
+User-created devices go through qdev_device_add_from_qdict().  If
+qdev_realize() fails, the device is immediately destroyed.
+
+Onboard devices get created and realized by board code.  It commonly
+treats qdev_realize() failure as fatal error.  Trying again instead
+would be a bug.
+
+If your claim "can enter more than once" is correct, we have bugs to
+fix.  I believe it is incorrect.
+
+Exception, sort of: users can manipulate properties with QMP command
+qom-set.  This is generally unsupported and a Very Bad Idea[*].  There
+might be supported exceptions (I don't know), but "realized" is
+definitely not among them.  Unsurprisingly, it's a fast path to grief:
+
+    $ qemu-system-x86_64 -S -display none -monitor stdio -nodefaults
+    QEMU 11.0.90 monitor - type 'help' for more information
+    (qemu) qom-set /machine/i440fx realized false
+    (qemu) qom-set /machine/i440fx realized true
+    qemu-system-x86_64: ../system/memory.c:2585: memory_region_add_subregion_common: Assertion `!subregion->container' failed.
+
+I figure your series rejects the second qom-set.  I'm pretty sure the
+first qom-set already wounds the VM fatally[**].  Same as for a
+multitude of other properties that aren't prepared to be qom-set at
+arbitrary times.
+
+Mind, I'm not objecting to adding additional guards against .realize()
+getting called more than exactly once.  I'm only challenging your cover
+letter, and probably your commit messages (which I haven't read).
+
+[...]
+
+
+[*] One could argue that having command qom-set is a Very Bad Idea.
+
+[**] It just doesn't crash a stopped VM right away for me.
 
 
