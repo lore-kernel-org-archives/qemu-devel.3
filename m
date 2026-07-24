@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73193C531FA
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 11:13:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4365C531F9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 11:14:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnDqG-0001Vx-FJ; Fri, 24 Jul 2026 07:13:24 -0400
+	id 1wnDqD-0001Te-Hz; Fri, 24 Jul 2026 07:13:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wnDqE-0001UV-4A
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 07:13:22 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wnDqB-0001SR-JA
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 07:13:19 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wnDqC-0001m2-A4
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 07:13:21 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-47f64ca1c2dso136228f8f.2
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 04:13:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wnDq9-0001lT-AY
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 07:13:19 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-49555a0e68bso1967255e9.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 04:13:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1784891599; x=1785496399; darn=nongnu.org;
+ d=openvz.org; s=google; t=1784891596; x=1785496396; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=k8OM4Z+eBoFlDD0mCdq/zvHBMpMffPjuoO6NeF18+/M=;
- b=hj5UUFnX5/ykPF1fmrcOoIOqkEg3fkB0KJu1gxxPfSbgySiUyO2WVymhg3Lwz3RVHn
- gl182zAyiAhgkYH+qf2TDuIm5Dv+fPJc6YfVp19CWtnbYfymttv2Lw5U9h1Q6Y5q+N6B
- LT2K/thwX0XHyNJvM1ei4M6CwHOBD4C0uPgfx2I2C709OsmHhsbNOMIZZYDMJeBIyQzA
- CfzG4vUn6WQBdNK4bAtlm4X12JRffdkYv0u0uta8ZqoQAC8o1QxuwysVQr5driiYJ2xm
- /oKGQk8BsaVRB/7El1PdJR9cZ1qLUZpRp+1KzLWOjVcXHmlI7k/+ASDrWozIHxRwuq7M
- FAAg==
+ bh=QSz9ULdBhCoTeM0qoNiUS/2WEzeqnZtRmE889KhJ2pc=;
+ b=t3Bi/phtXkRmBzqX/DvIal3j6aK4res6N1QGSoLz6YoGjgLFbtzzbG4Eh7+u7s0fHU
+ A2TZ1PNU99Q4Z40evrVkrpVfXW6BRh3Cf9EqRqcnXfRgxKreuHzeQ6t8fR8qDQJfxYji
+ ZGZ394CsXUhf4wnDNwu2m4rz25o8PJZuEGj00zrQiVu67ruxUfFvsdXTDZjXVi/s6RCu
+ kjayRiPnZRop3C6ilNkWk08ifCcXJGh73cl8eL4BEQ2fUibday6Vfo3aFWBtV3IrfIcA
+ NLFDzWqBFNK0WeFnYCs424VSvUcgPMqDY7z9BG5ObIrRloAQHtedxb3BuIY0G+PEJLhZ
+ VNRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784891599; x=1785496399;
+ d=1e100.net; s=20251104; t=1784891596; x=1785496396;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=k8OM4Z+eBoFlDD0mCdq/zvHBMpMffPjuoO6NeF18+/M=;
- b=WZasa2Oi0aLD5mRH6zwRG1xG1/OwuM9Z7HIpV6HdpF+2aQUpfGB8xoG3lYhpS4Yum9
- vwLEypsiK2kClld2cmX+Kxxo4kwenGlF1f0DLVXugSrc2lpbUwx9e4BsFyPhxni29Dtp
- IoazL7nN3XcAdKGg2eb2hbP9J6uVU5zmKRxrZn/DoMkDEdHH0GDgUknjeg3uopKInVme
- /bHfS6GDBVVRiGAOgXvyOdX/Y5BeDod9DLDNJjC7c5NV4Q/0Ex8S2Iy09vU0dZ586bfl
- xgcsNShn0iUvWvi9u+duxbCqH6dpEQd5nk3KxN8qQJ9FKALltv5ORvMANHf/JHOkML/m
- Uisw==
+ bh=QSz9ULdBhCoTeM0qoNiUS/2WEzeqnZtRmE889KhJ2pc=;
+ b=bA1B8Z9qDVmQmPna0y9A/wnpr1zzp9O7ndPv9Sntiil5hnNSUStZcIzR+JF6cKJrIp
+ mCy4pjjopQ8SlK++bDXiS9PwQHuF1yx085BR3Ozu3iCKwtH9HvCqcLulHb2Wf954x8Z2
+ HuD0YqVWwCaMOm+xLjuevCdRbRE2nju0nnfCfliGFotVh1kFQeKSptaqTyg70PBp+Hf8
+ 5T9Bo72x8CRJFM3ryqbsFLrhyecvE5atceEb0klXtO6/le5Wdy+kfEOs7udWRxVMgS4w
+ EnJHIEKmqNz5XL3VbDk+1gCGr0Bsuf+PGuTbrdyryiUhVqp5eMaa7mhAGUv+8O9fKStM
+ anow==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpJy4DYuorZU/3OKNPIv/ifLlD8huqD6qjC5FhRC7qQQw7hIQ1gBoMpF3a1R/s4FR5kS6yrNj1oFkku@nongnu.org
-X-Gm-Message-State: AOJu0Yy+YPi/pNCHsG9ddoPU6QfRlg4aQVQ2izy7dMDjI3OaGIzqJIB0
- uwFJV4bMrKnsLaIUFAdoJVwQkIFxkvDE9LXOZLZe+bA3AzME8gRF6WFsQ9vqGfd6lMs=
-X-Gm-Gg: AR+sD11ykdXb154tNJdCVnpUiocinopr3WtExQH44U9DqjjIK0k7Z9xDEqw5redPUA7
- DHhzKYGLMFfQkJXLWpKTHugv7f/7UFrkpx8pBsOebO0pSFthHreOQdioxuGLst43YUX97sfYU5m
- CEHWMKqU01SZWFgHLO+1FCCPQPKoqHLIZRWEo24YKZtdteByLZ8ourclftptFH2G0/YqRSdGV5K
- fO1vHwFP67/T5K4QzAOQ7STL0hJ3t3seUc8CrytRssa3P5chdDIsFIbIlp+ndHRPuLYjn/xE03X
- sNE5RE/urVewfHyYpPTDN3BisyDxq7hZ0gUNo+PSLWWa12z5FMYMtme7G+ieidcftlx2mBkH6IS
- kSl42sIkmNwzS3QL9oiEiQD/XEypNI0P0ZcVHAM2T5U6f2X4tHvMkUNhx0gUs/+I62gSFVENoni
- 4=
-X-Received: by 2002:a05:6000:2506:b0:47f:95ce:6f48 with SMTP id
- ffacd0b85a97d-47f95ce6f84mr3768506f8f.11.1784891598629; 
- Fri, 24 Jul 2026 04:13:18 -0700 (PDT)
+ AHgh+RroQUIY6WRCpbwmv8P1b9/BPQDGhedwplhk4nRtmBYvepa/8oCMYfCjYUaLyuoVpGaIkejLlB/SILgr@nongnu.org
+X-Gm-Message-State: AOJu0Yzn9mJr5xuEMMoNP9CXil3fM01eOFDz5CLwItDggMWFWJ0yjdKf
+ CNJ8WKSx2gPgWXjHlHp7l3XXnZ3DVQpi70zxVCTxfj2djEoBWA3orZKl8kBvhwnphWE=
+X-Gm-Gg: AR+sD13D0tTr+ZGSqDyAsO2atFC3ZN7jnnzqJVwrKbC+GJ++ZqnA5asNtGNz8Fi8Mxh
+ R61+0xY5bN40LaiMHfV3O7A3wvFSBkTmao074Pvw62361OSwytiLkdplIoWkpoWDGKfnz8PcsKn
+ UHxSvcl+W0esICi+Ul8zVBE6eovtz/A6GavY+zm6mBkkPcBm0iByOAbI/wDtHcEzB9DLTB3OgSB
+ 7DDQJ45nW22BPPH/UwB6g3teVB/CaTJ1bDT5idELNv35J8iDkOFMuOQMac0rrga7IcO3IgLU2DO
+ +nAakErdX4qqxQWvk/cbYxcCMLHxzn7f+aMI6Q0vP3CUae12LDmDrsSioeavxAdlODwbSFNdZrt
+ oAw1uWy9dwxwStlUD7+NMo4Ha+Nb5/ITFjdYbgpAciejoFp6yy1SEYfqYpSqAg42vlN9t2f12bh
+ I=
+X-Received: by 2002:a05:600c:6b6a:b0:495:3f0f:d515 with SMTP id
+ 5b1f17b1804b1-49573cf4d25mr57614815e9.36.1784891595808; 
+ Fri, 24 Jul 2026 04:13:15 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:4f7d:7b60:9d07:3a1b])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c531basm23792473f8f.19.2026.07.24.04.13.17
+ ffacd0b85a97d-47f85c531basm23792473f8f.19.2026.07.24.04.13.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jul 2026 04:13:18 -0700 (PDT)
+ Fri, 24 Jul 2026 04:13:15 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-block@nongnu.org,
 	qemu-devel@nongnu.org
@@ -71,17 +71,17 @@ Cc: den@openvz.org, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Subject: [PATCH v2 3/3] tests/unit: add reproducer for BlockAcctStats
- histogram locking race
-Date: Fri, 24 Jul 2026 13:13:11 +0200
-Message-ID: <20260724111311.4086859-4-den@openvz.org>
+Subject: [PATCH v2 1/3] block/accounting: take stats->lock in latency
+ histogram setters
+Date: Fri, 24 Jul 2026 13:13:09 +0200
+Message-ID: <20260724111311.4086859-2-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260724111311.4086859-1-den@openvz.org>
 References: <20260724111311.4086859-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=den@openvz.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,14 +107,11 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 block_latency_histogram_set() and block_latency_histograms_clear()
 replace BlockLatencyHistogram's nbins/boundaries/bins without taking
 stats->lock, while block_account_one_io() reads those same fields
-under that lock from whatever iothread completes the I/O.
+under that lock from whatever iothread completes the I/O. The result
+is usual use-after-free and qemu crash.
 
-Add a test that races two real threads against
-block_latency_histogram_set() and
-block_acct_start()/block_acct_done() on the same BlockAcctStats.
-Applied here it passes, since the previous two commits already take
-the lock; reverting them locally reproduces the abort this series
-fixes, in about a second.
+Take stats->lock in both setters, matching the lock already held by
+the reader.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 CC: Kevin Wolf <kwolf@redhat.com>
@@ -122,144 +119,48 @@ CC: Hanna Reitz <hreitz@redhat.com>
 CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- tests/unit/meson.build             |   1 +
- tests/unit/test-block-accounting.c | 115 +++++++++++++++++++++++++++++
- 2 files changed, 116 insertions(+)
- create mode 100644 tests/unit/test-block-accounting.c
+ block/accounting.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index 5ba6b1a230..dc3fb954c0 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -75,6 +75,7 @@ if have_block
-     'test-blockjob': [testblock],
-     'test-blockjob-txn': [testblock],
-     'test-block-backend': [testblock],
-+    'test-block-accounting': [testblock],
-     'test-block-iothread': [testblock],
-     'test-write-threshold': [testblock],
-     'test-crypto-hash': [crypto],
-diff --git a/tests/unit/test-block-accounting.c b/tests/unit/test-block-accounting.c
-new file mode 100644
-index 0000000000..7aae491cfc
---- /dev/null
-+++ b/tests/unit/test-block-accounting.c
-@@ -0,0 +1,115 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * BlockAcctStats latency histogram locking regression test
-+ *
-+ * Copyright (c) 2026 Virtuozzo International GmbH.
-+ *
-+ * Regression test for missing stats->lock in
-+ * block_latency_histogram_set()/block_latency_histograms_clear(),
-+ * racing block_account_one_io() reading the same fields from an
-+ * iothread. Aborts reliably before the fix, passes after it.
-+ */
+diff --git a/block/accounting.c b/block/accounting.c
+index f00fe99740..6e06c7609e 100644
+--- a/block/accounting.c
++++ b/block/accounting.c
+@@ -194,6 +194,8 @@ int block_latency_histogram_set(BlockAcctStats *stats, enum BlockAcctType type,
+         return -EINVAL;
+     }
+ 
++    qemu_mutex_lock(&stats->lock);
 +
-+#include "qemu/osdep.h"
-+#include "block/block.h"
-+#include "block/accounting.h"
-+#include "system/block-backend.h"
-+#include "system/block-backend-io.h"
-+#include "qapi/error.h"
-+#include "qemu/main-loop.h"
-+#include "qemu/thread.h"
+     hist->nbins = new_nbins;
+     g_free(hist->boundaries);
+     hist->boundaries = g_new(uint64_t, hist->nbins - 1);
+@@ -206,6 +208,8 @@ int block_latency_histogram_set(BlockAcctStats *stats, enum BlockAcctType type,
+     g_free(hist->bins);
+     hist->bins = g_new0(uint64_t, hist->nbins);
+ 
++    qemu_mutex_unlock(&stats->lock);
 +
-+#define RACE_DURATION_MS 2000
-+#define NUM_READER_THREADS 8
+     return 0;
+ }
+ 
+@@ -213,12 +217,16 @@ void block_latency_histograms_clear(BlockAcctStats *stats)
+ {
+     int i;
+ 
++    qemu_mutex_lock(&stats->lock);
 +
-+static bool stop_workers;
+     for (i = 0; i < BLOCK_MAX_IOTYPE; i++) {
+         BlockLatencyHistogram *hist = &stats->latency_histogram[i];
+         g_free(hist->bins);
+         g_free(hist->boundaries);
+         memset(hist, 0, sizeof(*hist));
+     }
 +
-+/*
-+ * Different bin counts, so the writer's g_free()/g_new() churn can be
-+ * caught mid-update. Values are small enough (nanoseconds) that plain
-+ * back-to-back start/done calls exercise every bin without sleeping.
-+ */
-+static uint64List boundaries_a[] = {
-+    { .next = &boundaries_a[1], .value = 1000 },
-+    { .next = &boundaries_a[2], .value = 5000 },
-+    { .next = NULL,             .value = 50000 },
-+};
-+
-+static uint64List boundaries_b[] = {
-+    { .next = &boundaries_b[1], .value = 800 },
-+    { .next = &boundaries_b[2], .value = 3000 },
-+    { .next = &boundaries_b[3], .value = 20000 },
-+    { .next = NULL,             .value = 200000 },
-+};
-+
-+static void *writer_thread(void *opaque)
-+{
-+    BlockAcctStats *stats = opaque;
-+
-+    while (!qatomic_read(&stop_workers)) {
-+        block_latency_histogram_set(stats, BLOCK_ACCT_READ, boundaries_a);
-+        block_latency_histogram_set(stats, BLOCK_ACCT_READ, boundaries_b);
-+        block_latency_histograms_clear(stats);
-+    }
-+
-+    return NULL;
-+}
-+
-+static void *reader_thread(void *opaque)
-+{
-+    BlockAcctStats *stats = opaque;
-+
-+    while (!qatomic_read(&stop_workers)) {
-+        BlockAcctCookie cookie;
-+
-+        block_acct_start(stats, &cookie, 4096, BLOCK_ACCT_READ);
-+        block_acct_done(stats, &cookie);
-+    }
-+
-+    return NULL;
-+}
-+
-+static void test_latency_histogram_race(void)
-+{
-+    BlockBackend *blk = blk_new(qemu_get_aio_context(),
-+                                BLK_PERM_ALL, BLK_PERM_ALL);
-+    BlockAcctStats *stats = blk_get_stats(blk);
-+    QemuThread writer, readers[NUM_READER_THREADS];
-+    int i;
-+
-+    /* Histogram has to be enabled (bins != NULL) before racing it. */
-+    g_assert(block_latency_histogram_set(stats, BLOCK_ACCT_READ,
-+                                         boundaries_a) == 0);
-+
-+    stop_workers = false;
-+    qemu_thread_create(&writer, "hist-writer", writer_thread, stats,
-+                       QEMU_THREAD_JOINABLE);
-+    for (i = 0; i < NUM_READER_THREADS; i++) {
-+        qemu_thread_create(&readers[i], "hist-reader", reader_thread, stats,
-+                           QEMU_THREAD_JOINABLE);
-+    }
-+
-+    g_usleep(RACE_DURATION_MS * 1000);
-+    qatomic_set(&stop_workers, true);
-+
-+    qemu_thread_join(&writer);
-+    for (i = 0; i < NUM_READER_THREADS; i++) {
-+        qemu_thread_join(&readers[i]);
-+    }
-+
-+    blk_unref(blk);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    bdrv_init();
-+    qemu_init_main_loop(&error_abort);
-+
-+    g_test_init(&argc, &argv, NULL);
-+
-+    g_test_add_func("/block-accounting/latency_histogram_race",
-+                    test_latency_histogram_race);
-+
-+    return g_test_run();
-+}
++    qemu_mutex_unlock(&stats->lock);
+ }
+ 
+ static void block_account_one_io(BlockAcctStats *stats, BlockAcctCookie *cookie,
 -- 
 2.53.0
 
