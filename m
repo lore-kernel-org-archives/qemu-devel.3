@@ -4,151 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B79B7C531FA
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 15:25:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87649C531C9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 15:26:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnHmA-0005hu-Hh; Fri, 24 Jul 2026 11:25:26 -0400
+	id 1wnHmn-00070U-Kk; Fri, 24 Jul 2026 11:26:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wnHm9-0005fJ-1W
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 11:25:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wnHmk-0006zU-OU; Fri, 24 Jul 2026 11:26:02 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wnHm7-0008VG-6j
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 11:25:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784906722;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=nZLsHEnq5zIsiLNX9NFStEFLnzFOXt5WKQii4g+GlPo=;
- b=hphYwZq6lrgcyREy63P/Ir3fHGoeapS0Fetfv7QKcaf8NoxTRGx9ef0ESeuLoeWnq5S35s
- ho+2eNZmX4DyH9pheveXstiDqnlWb/gG0VzWGue8qEeycfA3sRk9xSIWa7XNP9P801amVN
- yMJSjuibHYFurvLqBxm45mcexpFci6c=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-484-9pRk-9BvMC6lMtU9EzYt7w-1; Fri, 24 Jul 2026 11:25:20 -0400
-X-MC-Unique: 9pRk-9BvMC6lMtU9EzYt7w-1
-X-Mimecast-MFC-AGG-ID: 9pRk-9BvMC6lMtU9EzYt7w_1784906720
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-49561facb1dso5254605e9.3
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 08:25:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784906719; x=1785511519; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=nZLsHEnq5zIsiLNX9NFStEFLnzFOXt5WKQii4g+GlPo=;
- b=B4Ah66P2S75/w0/qv1Fl2a1Dxw+2xPhLAxbZcWzKm/3PhRgxZTEUJUIEuuQFMmaVts
- lSFdfxVgUlLUw/XRkNcTtQWRMXoH1SYUBlMYsyqD9IWIOf1eGIJ9vFL0a7FGjPPGLrX5
- Z66oEBzFdqTyrhuHrck105Ji2nLAkjsQ8TU6bgNsXlzkH9EqMMg/uw5276cMVUdDa5wv
- 84Y2vHlk45l1I8WAGNnRkJaMJcXExKKEfunsbUU7GWg9L+cE12H46DvvlraXl30IdbfH
- YR1qpBV+HiT/D+tVzfnQ1ORtwAKrLJS+97z3ydAwLl8Bury34jXNdMAj+znuQD3jNInN
- h/7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784906719; x=1785511519;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=nZLsHEnq5zIsiLNX9NFStEFLnzFOXt5WKQii4g+GlPo=;
- b=ZilUxngFjlywEoPzWEbFAuU3BV+YwaQsTGX/ryHpIA12s+RK7Fmv62mjquEDF2hQCV
- DWVFK0PLzyLGydyN9FRt1NKmA4jlR8nHN0hBfIJ25mws64V3p7YHVV0/vaH1+kb3iTIb
- vs6SsRNCmFJfVYdfnsgRxj7Ca7OVjpg0dSCtVlJWmXoharDXPpEi5IiuhBs/MvYIkMuY
- iSBRIV0ZpeJEjov1qhPCIMGy89HWu2Xwu0vYM9Iwmos/iI00hj1ZOOCP4tCCna5xIp9h
- sndi2OolYPJrCGUtBrznBPOZtRtVc0ppKdiXy2EpzH/vLNCt73aRxLk4ECGA+PPpQqpu
- h/lA==
-X-Gm-Message-State: AOJu0Yynt7Ee3D6T4nlm73guSqI5ihwYCk3QN0/Ygf1bUBEGCRM+kMo+
- I0BjNaMXYJu7C3Z5RVzYxFBVoPy6IGF6vkjWjKcrQKZ7PfvOLgjNtQ4pPm4g+GjhoVHgEYE74La
- QAbqKmo0oT5juMuNv0e3fkflfXBWP0Krk4CJ08DJl9jyh1RBBIbbR1Dm6DBgn6ynd
-X-Gm-Gg: AR+sD122CTc/yXdiTsH+fgkbCnML5SzvuPD3nA9q8JzVSurjwlN6jwHHpWhcVqlI82D
- AgOSlLrVbUK5xYTR+qNEKodoZnoh+OEmBO2CtUuCnfR/XrbAgjkS20XR5Z43ikVy5kkm671DOZA
- 65hSVCJDnJqedMk/YD7TrJVBnkgKtYCsHWB6ozJJsZ0rBiqL3HhTjVMz3CMiOmYOQ9aonsgLpuj
- iyHW+RC4f+G1YdN7G18I2I/LubqLNNd/ud2EdRgZzMrrvx1WtNb4UQbgYJzyCOP3IiwiwUW2T61
- Fr5vrKtR+a3S2Z0V5cNoh/BcB5JLBDVWBRmyDrMJkbol1D8O3iFh4pnlnyhZa0DcnTIsUYubKTB
- CJwaK79UvnvtNrhBYKQUTn/7QT6b/518/Mx+OGwEBt4qV
-X-Received: by 2002:a05:600c:55d0:b0:493:b811:e549 with SMTP id
- 5b1f17b1804b1-49573cff4d8mr68527445e9.29.1784906719432; 
- Fri, 24 Jul 2026 08:25:19 -0700 (PDT)
-X-Received: by 2002:a05:600c:55d0:b0:493:b811:e549 with SMTP id
- 5b1f17b1804b1-49573cff4d8mr68527055e9.29.1784906718929; 
- Fri, 24 Jul 2026 08:25:18 -0700 (PDT)
-Received: from ?IPV6:2a01:cb19:8426:ae00:670b:f6b9:3441:1a72?
- ([2a01:cb19:8426:ae00:670b:f6b9:3441:1a72])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85b9a5c4sm24260780f8f.8.2026.07.24.08.25.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Jul 2026 08:25:18 -0700 (PDT)
-Message-ID: <829cb692-f33c-4283-a7f4-8206ece9a560@redhat.com>
-Date: Fri, 24 Jul 2026 17:25:17 +0200
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wnHmi-0000KT-Dk; Fri, 24 Jul 2026 11:26:02 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66OFKKNe024502
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sat, 25 Jul 2026 00:20:20 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=v9jb6MXjdqiitUs9vf7WlucRR0zCjgf/OJRk0j6f00M=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1784906420; v=1;
+ b=OOZpcYtZonav/f+jUmPa7zJX9Pk1rkxj0nfLqJTH0+nzQE+ZU4MiVB/XEH1Z5l6A
+ z0UfkbV0Wizx8fvk3S4mMkAcX5vXbtTyqM9xIGgqjA3zNlIZK6iRHvq5pOp9eTEb
+ o5XvGfN7LxEjOobhpGGAN/jmghoCgaqgh+/RJMB28GDz5IVFXvyV9dIUNl8YG6+X
+ rZyrcMB2UJbJIsi4OCOAaxOLmYO+FAh/Qhenv1bmnOiIqPAmNpM/COvpSs14/QDn
+ 1tw1+n0YIRuz8g1iu7D+EbUuL2F/XrawM/m61B4VSpg6csT1x2L0mKoc/q/ZKYRq
+ vt38dzN0XW3EuJRlMayrWw==
+Message-ID: <f3ff63d6-6e88-4c82-9455-ca250aa42170@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sat, 25 Jul 2026 00:20:20 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio/pci: Fix ROM load failure handling in vfio_rom_read()
-To: Alex Williamson <alex@shazbot.org>
-Cc: qemu-devel@nongnu.org, mcasquer@redhat.com
-References: <20260724092413.348354-1-clg@redhat.com>
- <20260724081750.65449051@shazbot.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260724081750.65449051@shazbot.org>
+Subject: Re: [PATCH RFC 14/15] hw/virtio/vhost-user: handle data movement with
+ shadow vqs
+To: Connor Kite <connorkite@gmail.com>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Haixu Cui <quic_haixcui@quicinc.com>,
+ Raphael Norwitz <rnorwitz@nvidia.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org,
+ virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>,
+ Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
+References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
+ <20260723-vhost-user-isolated-memory-v1-14-6b97c439eb28@gmail.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260723-vhost-user-isolated-memory-v1-14-6b97c439eb28@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.419,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,55 +91,274 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/24/26 16:17, Alex Williamson wrote:
-> On Fri, 24 Jul 2026 11:24:13 +0200
-> Cédric Le Goater <clg@redhat.com> wrote:
+On 2026/07/24 7:30, Connor Kite wrote:
+> - Add start logic for shadow virtqueues, which sets vring addresses.
+> - Update logic for sending vring addresses to backend to point
+>    to the shadow vrings when isolation mode is active.
+> - Implement handlers for intercepted avail and used descriptors. These
+>    handlers copy buffer contents between bounce buffers in the isolation
+>    region and the buffers made available by the guest
+> - Implement logic to stop svqs
 > 
->> When vfio_pci_load_rom() fails, vdev->rom is NULL but the memcpy
->> still computes a source pointer from it, which is undefined behavior.
->> Guard the access and return a 0xff pattern instead, which is what
->> hardware returns for an absent ROM.
->>
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->> ---
->>   hw/vfio/pci.c | 9 +++++++--
->>   1 file changed, 7 insertions(+), 2 deletions(-)
->>
->> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->> index a3147d28665abd29fd804bd08bdffc3c7440033c..16d4f70ea58c9e5b174dd57950df55dc2ab91f6f 100644
->> --- a/hw/vfio/pci.c
->> +++ b/hw/vfio/pci.c
->> @@ -1176,8 +1176,13 @@ static uint64_t vfio_rom_read(void *opaque, hwaddr addr, unsigned size)
->>           }
->>       }
->>   
->> -    memcpy(&val, vdev->rom + addr,
->> -           (addr < vdev->rom_size) ? MIN(size, vdev->rom_size - addr) : 0);
->> +    /* If ROM loading failed, return 0xff pattern */
->> +    if (vdev->rom_read_failed) {
->> +        memset(&val, 0xff, sizeof(val));
->> +    } else {
->> +        memcpy(&val, vdev->rom + addr,
->> +               (addr < vdev->rom_size) ? MIN(size, vdev->rom_size - addr) : 0);
->> +    }
->>   
->>       switch (size) {
->>       case 1:
+> Signed-off-by: Connor Kite <connorkite@gmail.com>
+> ---
+>   hw/virtio/vhost-user.c | 167 ++++++++++++++++++++++++++++++++++++++++++++++++-
+>   1 file changed, 166 insertions(+), 1 deletion(-)
 > 
-> I thought we guaranteed that when (vdev->rom == NULL) that
-> (vdev->rom_size == 0), thus we end up with a harmless zero-sized memcpy
-> here.  Also val is pre-initialized to ~0 so the memset() is redundant.
-> 
-> Does this actually change any behavior or is it only meant to sanitize
-> the undefined (NULL + addr) pointer that's never dereferenced?  If the
-> latter, I'd drop the memset and note it explicitly as a sanitization,
-> not a fix.  Thanks,
-Right. the memcpy is a no-op because the size is 0 and val stays ~0.
-I had that patch in my tree for a while, but Mario's recent fixes made
-it useless. Let's drop it.
+> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> index 75858289a2..e65f877f9a 100644
+> --- a/hw/virtio/vhost-user.c
+> +++ b/hw/virtio/vhost-user.c
+> @@ -1299,6 +1299,97 @@ static int init_isolation_regions(struct vhost_dev *dev,
+>       return 0;
+>   }
+>   
+> +static int vhost_user_memory_lookup(struct vhost_dev *dev, hwaddr gpa,
+> +                                    hwaddr *hva)
+> +{
+> +    int i;
+> +    hwaddr offset;
+> +
+> +    for (i = 0; i < dev->mem->nregions; i++) {
+> +        struct vhost_memory_region *reg = dev->mem->regions + i;
+> +
+> +        if (gpa >= reg->guest_phys_addr &&
+> +            reg->guest_phys_addr + reg->memory_size > gpa) {
+> +            offset = gpa - reg->guest_phys_addr;
+> +            *hva = reg->userspace_addr + offset;
+> +            return 0;
+> +        }
+> +    }
+> +
+> +    return -EFAULT;
+> +}
+> +
+> +static int vhost_user_svq_handle_used(VhostShadowVirtqueue *svq,
+> +                                      VirtQueueElement *elem,
+> +                                      void *opaque)
+> +{
+> +    hwaddr hva;
+> +    int r;
+> +    struct vhost_dev *dev = opaque;
+> +
+> +    for (int i = 0; i < elem->in_num; i++) {
+> +        r = vhost_user_memory_lookup(dev, elem->in_addr[i], &hva);
+> +        if (r < 0) {
+> +            return r;
+> +        }
+> +
+> +        memcpy((void *) hva, elem->in_sg[i].iov_base, elem->in_sg[i].iov_len);
+> +        elem->in_sg[i].iov_base = (void *) hva;
+> +    }
+> +
+> +    for (int i = 0; i < elem->out_num; i++) {
+> +        r = vhost_user_memory_lookup(dev, elem->out_addr[i], &hva);
+> +        if (r < 0) {
+> +            return r;
+> +        }
+> +
+> +        memcpy((void *) hva, elem->out_sg[i].iov_base, elem->out_sg[i].iov_len);
+> +        elem->out_sg[i].iov_base = (void *) hva;
+> +    }
 
-Thanks,
+This copies data in the reversed direction.
 
-C.
+> +
+> +    return 0;
+> +}
+> +
+> +static int vhost_user_svq_handle_avail(VhostShadowVirtqueue *svq,
+> +                                       VirtQueueElement *elem,
+> +                                       void *opaque)
+> +{
+> +    hwaddr offset;
+> +    const DMAMap *map;
+> +    DMAMap needle;
+> +    hwaddr *iova_base;
+
+Please make it void *.
+
+> +
+> +    for (int i = 0; i < elem->out_num; i++) {
+> +        needle.translated_addr = elem->out_addr[i];
+> +        needle.size = elem->out_sg[i].iov_len - 1;
+> +        map = vhost_iova_tree_find_gpa(svq->iova_tree, &needle);
+
+An error check is missing here. This translation does not seem to 
+support IOMMU.
+
+> +        offset = needle.translated_addr - map->translated_addr;
+> +        iova_base = (void *)(map->iova + offset);
+> +
+> +        elem->out_sg[i].iov_base = iova_base;
+
+elem->out_sg shouldn't be overwritten since virtqueue_unpop() will use 
+it to unmap the element.
+
+> +        memcpy(iova_base, elem->out_sg[i].iov_base, needle.size + 1);
+
+This memcpy() is no-op. elem->out_sg[i].iov_base is already set to 
+iova_base, so it's copying from iova_base to iova_base.
+
+> +    }
+> +
+> +    for (int i = 0; i < elem->in_num; i++) {
+> +        needle.translated_addr = elem->in_addr[i];
+> +        needle.size = elem->in_sg[i].iov_len - 1;
+> +        map = vhost_iova_tree_find_gpa(svq->iova_tree, &needle);
+> +        offset = needle.translated_addr - map->translated_addr;
+> +        iova_base = (void *)(map->iova + offset);
+> +
+> +        elem->in_sg[i].iov_base = iova_base;
+> +        memcpy(iova_base, elem->in_sg[i].iov_base, needle.size + 1);
+> +    }
+> +
+> +    vhost_svq_add(svq, elem->out_sg, elem->out_num, elem->out_addr,
+> +                  elem->in_sg, elem->in_num, elem->in_addr, elem);
+
+An error is ignored here too.
+
+> +
+> +    return 0;
+> +}
+> +
+> +
+> +
+> +
+>   static int vhost_user_set_mem_table(struct vhost_dev *dev,
+>                                       struct vhost_memory *mem)
+>   {
+> @@ -1772,6 +1863,8 @@ static int vhost_user_set_vring_err(struct vhost_dev *dev,
+>   static int vhost_user_set_vring_addr(struct vhost_dev *dev,
+>                                        struct vhost_vring_addr *addr)
+>   {
+> +    struct vhost_user *u = dev->opaque;
+> +
+>       VhostUserMsg msg = {
+>           .hdr.request = VHOST_USER_SET_VRING_ADDR,
+>           .hdr.flags = VHOST_USER_VERSION,
+> @@ -1779,6 +1872,25 @@ static int vhost_user_set_vring_addr(struct vhost_dev *dev,
+>           .hdr.size = sizeof(msg.payload.addr),
+>       };
+>   
+> +    if (u->user->memory_isolation) {
+> +        if (!u->svqs_allocated) {
+> +            return 0;
+> +        }
+> +
+> +        int svq_idx = addr->index - dev->vq_index;
+> +        VhostShadowVirtqueue *svq = g_ptr_array_index(u->shadow_vqs,
+> +                                                      svq_idx);
+> +
+> +        struct vhost_vring_addr svq_addr = {
+> +            .avail_user_addr = (uint64_t)(uintptr_t)svq->vring.avail,
+> +            .desc_user_addr = (uint64_t)(uintptr_t)svq->vring.desc,
+> +            .used_user_addr = (uint64_t)(uintptr_t)svq->vring.used,
+> +            .index = addr->index,
+> +        };
+> +
+> +        msg.payload.addr = svq_addr;
+> +    }
+> +
+>       /*
+>        * wait for a reply if logging is enabled to make sure
+>        * backend is actually logging changes
+> @@ -2754,13 +2866,18 @@ static int vhost_user_postcopy_notifier(NotifierWithReturn *notifier,
+>       return 0;
+>   }
+>   
+> +static const VhostShadowVirtqueueOps vhost_user_svq_ops = {
+> +    .avail_handler = vhost_user_svq_handle_avail,
+> +    .used_handler = vhost_user_svq_handle_used
+> +};
+> +
+>   static void vhost_user_init_svq(struct vhost_dev *dev, struct vhost_user *u)
+>   {
+>       /*Modified from vhost-vdpa*/
+>       u->shadow_vqs = g_ptr_array_new_full(dev->nvqs, vhost_svq_free);
+>       for (int i = 0; i < dev->nvqs; i++) {
+>           VhostShadowVirtqueue *svq;
+> -        svq = vhost_svq_new(NULL, NULL);
+> +        svq = vhost_svq_new(&vhost_user_svq_ops, dev);
+>           g_ptr_array_add(u->shadow_vqs, svq);
+>       }
+>   }
+> @@ -3466,8 +3583,56 @@ void vhost_user_async_close(DeviceState *d,
+>       }
+>   }
+>   
+> +static bool vhost_user_svqs_start(struct vhost_dev *dev)
+> +{
+> +    struct vhost_user *u = dev->opaque;
+> +    uint64_t vring_base = u->iso_memory.vring_base_addr;
+> +    u->svqs_allocated = true;
+> +
+> +    for (int i = 0; i < u->shadow_vqs->len; i++) {
+> +        VirtQueue *vq = virtio_get_queue(dev->vdev, dev->vq_index + i);
+> +        VhostShadowVirtqueue *svq = g_ptr_array_index(u->shadow_vqs, i);
+> +        svq->base_addr = (hwaddr *) vring_base;
+> +        vhost_svq_start(svq, dev->vdev, vq, u->iso_iova_tree);
+
+Calling vhost_svq_start() here overwrites the shadow vring index 
+configured in vhost_virtqueue_start().
+
+> +
+> +        struct vhost_vring_addr addr = {
+> +            .index = dev->vq_index + i,
+> +            .desc_user_addr = vring_base,
+> +            .avail_user_addr = vring_base + sizeof(vring_desc_t) *
+> +                svq->vring.num,
+
+This assumes the ring is split, but VIRTIO_F_RING_PACKED is not rejected.
+
+> +            .used_user_addr = vring_base + vhost_svq_driver_area_size(svq)
+> +        };
+> +
+> +        vhost_user_set_vring_addr(dev, &addr);
+
+
+The initial ring startup is ordered incorrectly. Generic startup 
+suppresses SET_VRING_ADDR, installs SET_VRING_KICK, and injects a kick; 
+only the later backend-start hook creates the shadow ring and sends its 
+address. SET_VRING_KICK starts the ring, so the backend can process 
+before receiving valid addresses. The late SET_VRING_ADDR result is also 
+ignored.
+
+Regards,
+Akihiko Odaki
+
+> +
+> +        vring_base += vhost_svq_device_area_size(svq) +
+> +                      vhost_svq_driver_area_size(svq);
+> +    }
+> +
+> +    return false;
+> +}
+> +
+> +static void vhost_user_svqs_stop(struct vhost_dev *dev)
+> +{
+> +    struct vhost_user *u = dev->opaque;
+> +
+> +    for (int i = 0; i < u->shadow_vqs->len; i++) {
+> +        vhost_svq_stop(g_ptr_array_index(u->shadow_vqs, i));
+> +    }
+> +}
+> +
+> +
+>   static int vhost_user_dev_start(struct vhost_dev *dev, bool started)
+>   {
+> +    struct vhost_user *u = dev->opaque;
+> +    if (u->user->memory_isolation) {
+> +        if (started) {
+> +            vhost_user_svqs_start(dev);
+> +        } else {
+> +            vhost_user_svqs_stop(dev);
+> +        }
+> +    }
+> +
+>       if (!vhost_user_has_protocol_feature(dev, VHOST_USER_PROTOCOL_F_STATUS)) {
+>           return 0;
+>       }
+> 
 
 
