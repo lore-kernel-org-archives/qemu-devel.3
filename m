@@ -4,83 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5B76C531F9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 20:03:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2FD6C531FC
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 20:13:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnM5t-0001wQ-V2; Fri, 24 Jul 2026 16:02:06 -0400
+	id 1wnMGY-0004Jb-6I; Fri, 24 Jul 2026 16:13:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wnM5q-0001ux-GY
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 16:02:02 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wnM5o-0005lp-Ci
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 16:02:02 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-383b4a3755fso777431a91.3
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 13:01:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784923318; x=1785528118; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=rWnTAiXSmPWa5RxmfVberE8PVE3I2Vb9TfspGKFpiJ8=;
- b=RqvYNA839UmimtcEKW8Qm4w1vAhLd3Tsh3e+GOEJg52s1/N9NGMTZfxDeTJUMql/Pm
- /YXLVjJ52fbI72saGgdLC7XMM0kT0HJRLhT7HfJ2a0d7ytw+UJRsoA8auC+nMo2PGK59
- rLzK0QFFS7JVBRsRKTTJHimYdRLSmFeFioL5ZFDKBIQByluUNIa07Ui6OhasTt3azvtl
- OCTiCZqP8AmQIMef7dR4Orc62JiqPDpeoMwnb8eHvjHr6QeQ/7o1iFxUxqxxreEyP+eD
- dKVSHm4JDLW4rKb8++x7jZpfzw0aLutxhTiTSlRjB5UEsBN/v+3i/Xrb5jl1B/9RB/Z0
- sU7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784923318; x=1785528118;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=rWnTAiXSmPWa5RxmfVberE8PVE3I2Vb9TfspGKFpiJ8=;
- b=qM7KBqrIPJCzroxaujYs43nRnBm9H5siCz8+7xkBdLT7FMnI8MDYS10qym9RAuBjk2
- IayXYsm8aaEoTWa4j5EdGByNi9v3Nd6EcL84h4oNYv0/7OALQCzxHlEIlsdTbxHfGP/Z
- RioxuhicFckzigdsbji8OTW1lfZ0m+vW5Kxbii6M3OTfGfMRnR/pG+L40SC1ZTu1vlDF
- d07vSiGj/1Fr8r5vgql+CfLeV1efqIrIrb0eAYzYdJLnplQ3dF6/LtdWkme097Oxsfgo
- 86tjaOuzfxVq+iJ6vZBq2uGV0ClDmvFFKWUHQ6hlSKP4ccUqRdcBPciBL9pLEHk1T+cr
- 4D3w==
-X-Gm-Message-State: AOJu0Ywxwkae7lOCQVV7fLaMOcqyhBjeNzFI5VSiJH/tbw1XhP7SU6Jf
- //0Dr6hq4nqscfkN15uN3CiAS6IAN55vUrSvD+uGGNJrUBvdmE469+J3tk4awqw6qRy6NiC8dZG
- 7eIhc
-X-Gm-Gg: AR+sD116mLOROgnKYGehotjrnnWFPaW3I+L8UjLpj7ksaLeE7yu/GYUziZmN8S1Z1z5
- /5qVeWTMgTqrmWfjfOaUltK/CrzvrDxcqSbZ2TpZKFkmpl6N4HFAtwmKta5EqZo95xld8L+lrCU
- TgwiTzY4jTmCdG1orbxYKT67IVQgnadUMDaZ988qctNGuKbJAaXoB3pzMweUPlULSnkvxAv2Uxr
- K6Qq4eUPi8dguXMBLqZDZLnplPCpBrGqWavhHEWlCrRxdS1zapNe5/nfI0cYbNQAD1c2hKDv9gT
- eF236WYKgA7W62WrtP+7A9DEv2Sl4MGJ9nvuYh0Ms+dYCMEYhCaCNPeEW2C3Ijjn9XhR1Pyq9Iz
- Dd32mMxFdhdm/FoM02drRwtntLW19ym8qN6oFdQo4HdNxnvnen9CeKL/Dfgq7Qy43DeBOjLNRVF
- xGNZdSupF0aBst70FzuNs55JnGc/yZD6oY9C9DPLgrcqkA
-X-Received: by 2002:a17:90b:48c2:b0:38e:a205:c84b with SMTP id
- 98e67ed59e1d1-38ec6660452mr9257544a91.28.1784923317927; 
- Fri, 24 Jul 2026 13:01:57 -0700 (PDT)
-Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38f05665ff9sm1260049a91.0.2026.07.24.13.01.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jul 2026 13:01:57 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: yujun <yujun@kylinos.cn>
-Subject: [PATCH] tcg/aarch64: Use tgen_brcondi in tcg_out_qemu_ldst_i128
-Date: Fri, 24 Jul 2026 13:01:56 -0700
-Message-ID: <20260724200156.88695-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <Shivansh.Dhiman@amd.com>)
+ id 1wnMGV-0004GW-71
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 16:13:03 -0400
+Received: from mail-northcentralusazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::5] helo=CH5PR02CU005.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Shivansh.Dhiman@amd.com>)
+ id 1wnMGS-0007Tm-J0
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 16:13:02 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=mI/xeQHnglRjlCvblv3MYP/ZJBOhsSERXb8MdB8tHEgLUWlWwemO1JqFNzwujRd+C1Jq+ynOPp3Vz7Av2wAIfhwkNjCz2oK1SoF+Vz369HJ1P6eZGwJ+y3hvqLrArEG7PGx0zy4UpFchZ4aj+pXTxRM8NeFAryxPxYS8Q4/o7YtV4RUC6O2lNxM1OS7X4OzoHye9nzaLVHUIBZk2WY6IYBOluw3IQsspXWW1ksenjXvG8plYFxX+joWvBqahiIBbXLfZOMXNWze5zmU0zJt+a8O3QbfAS6tGAg2tuuF98MwFgibWft5D3DCO8zyPAdSTjPY/JFK1gg57g/uNvbuAsw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=w8A0H0k1RPQG5U9jdaS7rbZeu+b4IH4ZA0GID29tXDY=;
+ b=xYJmRLyWGTTgcGUmBfRkddy2RAuYgfYL0Ag0UQQYXgeujah9iDPq59OPovWJEHT/M/XlGezMxUuguE1a630EL1SFvdNsgd0++suksIwtnjIdHCI9G8eJo/cbCP3YyO2BNyodYdLWl/OlZsn+HWSgyKQOKrGUlA338jXxpJ2dOSx+pa7ilFB0A31FWrAkoHNHC3G1nJaw+ivKSBm4u+wXe8QOT7alo7zTmBduLnXjaAT2rl/iEJMo66zR9Y4YpPlv+raFVZixoMsEhz/DONkrl/T2K/xppvqJ8JjSWvYaYI8rs27RlB1BR71N087eGykFu6H0s7x1wkbBLtZRi39BbA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=w8A0H0k1RPQG5U9jdaS7rbZeu+b4IH4ZA0GID29tXDY=;
+ b=DzAKLxyC9aHd2XJihXbMEMCz6INMJArgn1xUumQgh+lW1gEYunfRgf0MvFSxZMTwlXP5i4SFWmkLYMW5KtCxX2n2VkWZYFSqWTKKIgQsIhcJM/A/ovH85Tc6oUzdrZsf2ARCpumhNo+iC1Lmut4S7Yet32N+4Y4AnHRbooHZBPs=
+Received: from SA9PR03CA0002.namprd03.prod.outlook.com (2603:10b6:806:20::7)
+ by PH8PR12MB6961.namprd12.prod.outlook.com (2603:10b6:510:1bc::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.12; Fri, 24 Jul
+ 2026 20:12:52 +0000
+Received: from SN1PEPF00036F3C.namprd05.prod.outlook.com
+ (2603:10b6:806:20:cafe::a8) by SA9PR03CA0002.outlook.office365.com
+ (2603:10b6:806:20::7) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.245.12 via Frontend Transport; Fri,
+ 24 Jul 2026 20:12:52 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SN1PEPF00036F3C.mail.protection.outlook.com (10.167.248.20) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.270.5 via Frontend Transport; Fri, 24 Jul 2026 20:12:52 +0000
+Received: from purico-abeahost.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Fri, 24 Jul
+ 2026 15:12:48 -0500
+From: Shivansh Dhiman <shivansh.dhiman@amd.com>
+To: <pbonzini@redhat.com>, <mtosatti@redhat.com>
+CC: <zhao1.liu@intel.com>, <seanjc@google.com>, <kvm@vger.kernel.org>,
+ <qemu-devel@nongnu.org>, <yosry@kernel.org>, <thomas.lendacky@amd.com>,
+ <nikunj.dadhania@amd.com>, <sandipan.das@amd.com>, <santosh.shukla@amd.com>,
+ <shivansh.dhiman@amd.com>
+Subject: [PATCH 1/2] target/i386: Add support for AMD LbrExtV2
+Date: Fri, 24 Jul 2026 20:12:02 +0000
+Message-ID: <20260724201203.633799-2-shivansh.dhiman@amd.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260724201203.633799-1-shivansh.dhiman@amd.com>
+References: <20260724201203.633799-1-shivansh.dhiman@amd.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN1PEPF00036F3C:EE_|PH8PR12MB6961:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8759b72b-ef37-4c48-4093-08dee9bff0ea
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|23010399003|36860700016|82310400026|1800799024|10067099003|56012099006|11063799006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: SV7XEBttXvTTZpSJONxxpj6KKbIPEzCy4aXCsvRZpHKsARO5ASzVVHRCvJqsFs6A7ZJeVoBItt1vmPPtUYVYWhdSYPM+XWehpj11nKoLu2xz8yE7ynF+XSma1veXpbnWXEgPNtx2eb63HRPNglTtgGbxu8gDdvY1FSId3RtWma+o/SM7Qz4DyRr9dtjdg3MeV6zrzf7ERDAgtSlI1Fjq1JcLMz+KJ1RJJv53F0VzNQgCri6UK6aGv6n5cFlUp5YNDSWI6ugyxFIDu0lRhjTlNCgoQ1InBW21XSRRRD92553ZELYcW4HT5zhSAuyT+lejC9lOXmUCo3C5qO564+hVl1eBykGV7t7i5igIFxjSMco/6w24rgUO65KOLPNhzRLe7B8gVzv6/W49j0Cw2E/HgKQBqgDMJjVbsn9xz9RMX+ABTt7+cUkuPF0MFH4++nFpQABQFCUL1h3KqGVVHRXxUvbif6mgPhByPG3gHp9wieJVOk37FZgs40saQdortTGblYCzr7HtgtPNwzSSZy31QQzXWCamMaYpCIPNY/8EieL8mTiL6r9JQ+9SHYv6CdWnV2mnS/SxQjxBHwlfUsCxo3GkV+FlS2BeZuoZr+UJh1/WgB/AD9BnZGmlqpW11G67k9jou6V5Bj2ADtZdl0Gewb/YTJocZPZtpuCovvY4AM2bzrixlygWunEe3owTVTbqWeW7f4QxpfCbfdMs5Czhkg==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(23010399003)(36860700016)(82310400026)(1800799024)(10067099003)(56012099006)(11063799006)(22082099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: ltwMe6g6UpLJjL/u2or/X7yLz0CJAGl7I0WR4v53w4MAs3gjyS1hRXJNCiLKzve0BwX39g1Q8XjWM7ocIxTS5/5Mgy5kvRne0pQhzLrxdGyRELgb40Igo69Sj0N3u0eMJ0rcFUBFBeFhfLwclXdqYyUCz7Ri6UxPRvRILA6HKIwCSmwhapuaHOcXYFpSn5W8qfmhEzbjVhyhZS+fdT2sG3b0fO4RLPLqed4GVT6dnqSoUFNWq0IYuJht+ytHlmBPGz6gPb4gHb/rzGzg5fMSAvyRGux5eejE1OV/BRoKgler7f8Pt4M7bbFdisBBPUsGehYCLtFkY/ECZAyXNXpWE3pwUCy05arlMqqJJy8wxf8Gh6YgaQ37kCWSrhhyU5Cc42PjD1+cLHrruB2qUOKc8KK9hNfp4Nib7hQcsiLI3mB6r8hE/axXyd1HFZeNn1Fq
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jul 2026 20:12:52.2348 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8759b72b-ef37-4c48-4093-08dee9bff0ea
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF00036F3C.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6961
+Received-SPF: permerror client-ip=2a01:111:f403:c105::5;
+ envelope-from=Shivansh.Dhiman@amd.com;
+ helo=CH5PR02CU005.outbound.protection.outlook.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.419,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,68 +128,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow tgen_brcondi to choose between TBNZ and TST+B.cond for
-implementing a particular mask.
+Add the "lbrext-v2" CPU feature (CPUID 0x80000022.EAX[1]) and report the
+16-entry LBR stack size in EBX[9:4], allowing guests to use AMD's Last
+Branch Record Extension v2 when KVM virtualizes it.
 
-Suggested-by: yujun <yujun@kylinos.cn>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Shivansh Dhiman <shivansh.dhiman@amd.com>
 ---
-Supercedes: 20260629111602.282742-1-yujun@kylinos.cn
-("[PATCH] tcg/aarch64: Use TBNZ for 16-byte alignment check on i128 ld/st")
+ target/i386/cpu.c | 18 +++++++++++++++---
+ target/i386/cpu.h |  1 +
+ 2 files changed, 16 insertions(+), 3 deletions(-)
 
-Let tgen_brcondi do the heavy lifting, rather than open-coding it all.
-
-r~
----
- tcg/aarch64/tcg-target.c.inc | 25 ++++++++++---------------
- 1 file changed, 10 insertions(+), 15 deletions(-)
-
-diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
-index cc9c2a5158..1f9678438d 100644
---- a/tcg/aarch64/tcg-target.c.inc
-+++ b/tcg/aarch64/tcg-target.c.inc
-@@ -1889,23 +1889,18 @@ static void tcg_out_qemu_ldst_i128(TCGContext *s, TCGReg datalo, TCGReg datahi,
-     use_pair = h.aa.atom < MO_128 || have_lse2;
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 9d126600c057..678863de68d5 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -1464,7 +1464,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+     [FEAT_8000_0022_EAX] = {
+         .type = CPUID_FEATURE_WORD,
+         .feat_names = {
+-            "perfmon-v2", NULL, NULL, NULL,
++            "perfmon-v2", "lbrext-v2", NULL, NULL,
+             NULL, NULL, NULL, NULL,
+             NULL, NULL, NULL, NULL,
+             NULL, NULL, NULL, NULL,
+@@ -2044,6 +2044,10 @@ static FeatureDep feature_dependencies[] = {
+         .from = { FEAT_7_1_EAX,             CPUID_7_1_EAX_FRED },
+         .to = { FEAT_VMX_ENTRY_CTLS,        VMX_VM_ENTRY_LOAD_IA32_FRED },
+     },
++    {
++        .from = { FEAT_8000_0022_EAX,       CPUID_8000_0022_EAX_PERFMON_V2 },
++        .to = { FEAT_8000_0022_EAX,         CPUID_8000_0022_EAX_LBREXT_V2 },
++    },
+ };
  
-     if (!use_pair) {
--        tcg_insn_unit *branch = NULL;
-+        TCGLabel *label = NULL;
-         TCGReg ll, lh, sl, sh;
--
-         /*
--         * If we have already checked for 16-byte alignment, that's all
--         * we need. Otherwise we have determined that misaligned atomicity
--         * may be handled with two 8-byte loads.
-+         * Check for 16-byte alignment, taking into consideration the
-+         * alignment that has already been checked.
-          */
--        if (h.aa.align < MO_128) {
--            /*
--             * TODO: align should be MO_64, so we only need test bit 3,
--             * which means we could use TBNZ instead of ANDS+B_C.
--             */
--            tcg_out_logicali(s, Ilogic_imm_ANDSI, 0, TCG_REG_XZR, addr_reg,
--                             15);
--            branch = s->code_ptr;
--            tcg_out_insn(s, bcond_imm, B_C, TCG_COND_NE, 0);
-+        int a_mask = 16 - (1 << h.aa.align);
-+
-+        if (a_mask > 0) {
-+            label = gen_new_label();
-+            tgen_brcondi(s, TCG_TYPE_I32, TCG_COND_TSTNE,
-+                         addr_reg, a_mask, label);
-             use_pair = true;
+ typedef struct X86RegisterInfo32 {
+@@ -9138,12 +9142,20 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+     case 0x80000022:
+         *eax = *ebx = *ecx = *edx = 0;
+         /* AMD Extended Performance Monitoring and Debug */
+-        if (kvm_enabled() && cpu->enable_pmu &&
+-            (env->features[FEAT_8000_0022_EAX] & CPUID_8000_0022_EAX_PERFMON_V2)) {
++        if (!kvm_enabled() || !cpu->enable_pmu) {
++            break;
++        }
++        if (env->features[FEAT_8000_0022_EAX] & CPUID_8000_0022_EAX_PERFMON_V2) {
+             *eax |= CPUID_8000_0022_EAX_PERFMON_V2;
+             *ebx |= kvm_arch_get_supported_cpuid(cs->kvm_state, index, count,
+                                                  R_EBX) & 0xf;
          }
++        /* Dependency PERFMON_V2 => LBREXT_V2 enforced via feature_dependencies[] */
++        if (env->features[FEAT_8000_0022_EAX] & CPUID_8000_0022_EAX_LBREXT_V2) {
++            *eax |= CPUID_8000_0022_EAX_LBREXT_V2;
++            *ebx |= kvm_arch_get_supported_cpuid(cs->kvm_state, index, count,
++                                                 R_EBX) & 0x3f0; /* EBX[9:4] */
++        }
+         break;
+     case 0xC0000000:
+         *eax = env->cpuid_xlevel2;
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 0b539155c409..64e40a654260 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -1221,6 +1221,7 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
  
-@@ -1944,7 +1939,7 @@ static void tcg_out_qemu_ldst_i128(TCGContext *s, TCGReg datalo, TCGReg datahi,
-         if (use_pair) {
-             /* "b .+8", branching across the one insn of use_pair. */
-             tcg_out_insn(s, branch, B, 2);
--            reloc_pc19(branch, tcg_splitwx_to_rx(s->code_ptr));
-+            tcg_out_label(s, label);
-         }
-     }
+ /* Performance Monitoring Version 2 */
+ #define CPUID_8000_0022_EAX_PERFMON_V2  (1U << 0)
++#define CPUID_8000_0022_EAX_LBREXT_V2   (1U << 1)
  
+ #define CPUID_XSAVE_XSAVEOPT   (1U << 0)
+ #define CPUID_XSAVE_XSAVEC     (1U << 1)
 -- 
 2.43.0
 
