@@ -4,77 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F4E2C531FA
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 15:23:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90AEDC531C9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 15:25:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnHkJ-0003Xu-SQ; Fri, 24 Jul 2026 11:23:31 -0400
+	id 1wnHlT-0004Ub-VJ; Fri, 24 Jul 2026 11:24:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wnHk4-0003Sy-SM; Fri, 24 Jul 2026 11:23:17 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wnHlR-0004Qu-UB
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 11:24:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wnHk1-0008JZ-Ng; Fri, 24 Jul 2026 11:23:16 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66OFMNiB025117
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 25 Jul 2026 00:22:24 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=JE6nwoBnuIB4oWlTX9bpmIpvGlRAzyit7mewtK4+Yec=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1784906544; v=1;
- b=EJAFR0+aq9Ea/nijyPcpfRPwe004E2nIzesoXnWABFNG5k6Dq8zJcwN5w5V5ST08
- SygPzj44ygxomvCfUlc6aoE9XfIOIi2IjG00ozU1eW/tIUzFN0Shxc+PdNKkleed
- rB4RdTwPxQoweM5U36yfZ5NY4bCoFoHzyJT6mKrjkNx3FmTGxD4+KRHrtjHaN2DZ
- mGD6k+wqnXOjX/4kNbNjM89oJDC47rCubuf1s8IVQ8p7kPXIR4ZOVXyErWSJAp+m
- dt8Wc9QhRo1bA81YwujAs2VxBEuAEggRP0EW6RUS9HOWyLK5lG0bGKxPSMxEkOb0
- 2LSELc8rrGM0G8A+6X27vg==
-Message-ID: <1257210f-15f9-47ab-b5e9-05a3ee4ef8ba@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 25 Jul 2026 00:22:23 +0900
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wnHlQ-0008Rq-C5
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 11:24:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784906679;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+Ay04XcglQ+BYq8kOxs/s7bi2XnPNmC1IOwCeeW4oP0=;
+ b=Z7vd16ssOU9aKhZr2D2pL3FI5H4SwqLtFTFSDmDelYfKpSS95ypbQvmtW8FItKB2oZB1Hd
+ a9hPnv8V49vHeHrkMlZ05pB23iedPgKZi53vQ/SCgoMhEynlFDGrsNCdosEgF7uOeMwClm
+ 8IVKAiBPtzg7z7IE2ecL78quKQoHaqM=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-657-0v9iGQURN9CiJ0IzGD3EYw-1; Fri, 24 Jul 2026 11:23:31 -0400
+X-MC-Unique: 0v9iGQURN9CiJ0IzGD3EYw-1
+X-Mimecast-MFC-AGG-ID: 0v9iGQURN9CiJ0IzGD3EYw_1784906610
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-47eaa4006a1so298328f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 08:23:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1784906610; x=1785511410; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=+Ay04XcglQ+BYq8kOxs/s7bi2XnPNmC1IOwCeeW4oP0=;
+ b=nyVEAXZXYj4Jx8dxDYyH0O+DPua58uTvX7IZA4It3Q8d5k1b9vYl+E2mKQVf0wDqGU
+ FsHQtc4WjLPKDpp9PRIwFnyrfz94fTb/HJ8xcGc5LwAczq/e6meRZXTI4sbA6eJIC+Cx
+ Pl1GIDubIwP0UcdhK3ppxVUHd9Hub2+2MYnTifqUKgydnbPX4QF2hxbudtc3GBWEpauV
+ n15/V7pL/jc7U8gCGE1gMfHbZ/pT92PIP3LzgXN7k5IPg8vOqtGR7r9TF35im+ICDVIb
+ JHJm04bAzzz8n9JuuwQqveOELc9HlYHhps/UXweHIsg6hs3fL6ZpItun1ktnjbRUJcxB
+ 01yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784906610; x=1785511410;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=+Ay04XcglQ+BYq8kOxs/s7bi2XnPNmC1IOwCeeW4oP0=;
+ b=hb1II0buPSkB0kk21FJSTVH+8AXc/IVqSRm4jU/0q/lXLVeJ2oNaGP93K0MjcFhi79
+ nQWo1b/vws2uDoPVhrK8b59fIVEJYQof3hEVRu4ELNtJzFjXlLruaYvCG73fXlVVz0FN
+ moI6Ar6UuGW1K9mhnayFfzDH2kffD+EEoE0wZtXzGwnKr6vjmnQfVTSGtpC5hw7DoLPE
+ Zq15JNC/O+Vc/yKcmpb2wBnd+vLlzdBf0EW8MjoolzIhaag6zr4fdkiPNwixmaCgi3Lr
+ +svC2ToEoldI4S5EywcUzjhGbzN2H2rksE6j+g599wAMd4eNV2ZnvxYl9ynxJl5KRTJS
+ kcuw==
+X-Gm-Message-State: AOJu0Yw6gAvVt0q8FTlbOS7Dyi+eGTko9b/rKYV6Z9fCHQsQRIaDp/Lu
+ /8FB20FFGn4t/Hn+Yt4iCx0LP30JDdIshsSE5cJvSG+oU3AapvHVnrYvzcSSX6/Bi/bT16G8E3A
+ NGzSscPApCVpAnTyVaDmqhN/Vdnr2/Wmb0HsFHxQ0lqAxTzZ6XFkR7vLx
+X-Gm-Gg: AR+sD11xPzXQReyjEI3Auipo0O7Zza9CTTh3ZpXdLEjXdCMuV6MR75z0HjLS6uIhnVQ
+ I6KVMqA3xwahLKbqk67mjzeiNLD+WD6xA8RX6KgMWqRkxN7f3Q2H7/+ZZjTbArWnprZ3MC8lAjb
+ DF3Wly27pQyJQVSd/rTxYwz2qN3OVXIZ2qKaBtvlAK0hM0FOp5YOD15RtYhC/LSmd+0Mozkb010
+ abz87xMwQstNBB7Y7f2+KhC5vOjG8BAc1esnEDCQhhprhIggJIZ/9M5zrd98lZi7+cVLZvnyaYI
+ qMj8/5HiC1JK3+SeWcY05B6ymJuZl4BtuvYHBCVp8Jq1T9Emy4+zvu1sELssMqJRxJPULHh4KI4
+ qgFnpc6va312D7PG9tuDgvMK6121azXc8qnhwferPSn3VeVsotQKsapXrVN4=
+X-Received: by 2002:a05:6000:2304:b0:47f:8fda:1af0 with SMTP id
+ ffacd0b85a97d-47f9cdaf475mr1436038f8f.4.1784906610369; 
+ Fri, 24 Jul 2026 08:23:30 -0700 (PDT)
+X-Received: by 2002:a05:6000:2304:b0:47f:8fda:1af0 with SMTP id
+ ffacd0b85a97d-47f9cdaf475mr1436002f8f.4.1784906609981; 
+ Fri, 24 Jul 2026 08:23:29 -0700 (PDT)
+Received: from localhost
+ (p200300cfd7075d8bc03b74903e90fa9c.dip0.t-ipconnect.de.
+ [2003:cf:d707:5d8b:c03b:7490:3e90:fa9c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f85b9a5a2sm27143970f8f.7.2026.07.24.08.23.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 24 Jul 2026 08:23:29 -0700 (PDT)
+From: Hanna Czenczek <hreitz@redhat.com>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ John Snow <jsnow@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>
+Subject: [PATCH 5/6] hw/ide: Have ide_dma_cb() complete accounting
+Date: Fri, 24 Jul 2026 17:23:14 +0200
+Message-ID: <20260724152315.234183-6-hreitz@redhat.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260724152315.234183-1-hreitz@redhat.com>
+References: <20260724152315.234183-1-hreitz@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 15/15] hw/virtio/vhost-user: shadow vq cleanup
-To: Connor Kite <connorkite@gmail.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Haixu Cui <quic_haixcui@quicinc.com>,
- Raphael Norwitz <rnorwitz@nvidia.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org,
- virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- zhenwei pi <zhenwei.pi@linux.dev>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>,
- Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
-References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
- <20260723-vhost-user-isolated-memory-v1-15-6b97c439eb28@gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260723-vhost-user-isolated-memory-v1-15-6b97c439eb28@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.419,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,51 +125,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/24 7:30, Connor Kite wrote:
-> Implements functionality to cleanup svqs on cleanup of isolation
-> regions.
-> 
-> Signed-off-by: Connor Kite <connorkite@gmail.com>
-> ---
->   hw/virtio/vhost-user.c | 10 ++++++++++
->   1 file changed, 10 insertions(+)
-> 
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index e65f877f9a..bb4de78b95 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -1140,6 +1140,15 @@ static int vhost_user_set_mem_table_postcopy(struct vhost_dev *dev,
->       return 0;
->   }
->   
-> +static void vhost_user_svq_cleanup(struct vhost_user *u)
-> +{
-> +    for (int i = 0; i < u->shadow_vqs->len; i++) {
-> +        vhost_svq_stop(g_ptr_array_index(u->shadow_vqs, i));
-> +    }
-> +
-> +    g_ptr_array_free(u->shadow_vqs, true);
-> +}
-> +
->   /* TODO: Is there any notifier cleanup required here?*/
->   static void cleanup_isolation_regions(struct vhost_dev *dev)
->   {
-> @@ -1147,6 +1156,7 @@ static void cleanup_isolation_regions(struct vhost_dev *dev)
->       if (u->iso_memory.base_addr) {
->           vhost_iova_tree_delete(u->iso_iova_tree);
->           u->iso_iova_tree = NULL;
-> +        vhost_user_svq_cleanup(u);
+ide_sector_start_dma() starts accounting for reading and writing, and
+ide_dma_cb() is supposed to complete it, but currently does not always:
+In one case, it just forgets it altogether, in the other, it uses
+block_acct_invalid(), which should not be used after a cookie has
+already been created.
 
-Memory-table refresh frees live SVQs permanently. 
-init_isolation_regions() uses cleanup for refreshes, but cleanup frees 
-shadow_vqs; they are created only once during backend initialization.
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+---
+ hw/ide/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Regards,
-Akihiko Odaki
-
->           memset(&u->iso_memory, 0, sizeof(IsolationRegion));
->           qemu_memfd_free((gpointer) u->iso_memory.base_addr, u->iso_memory.size,
->                            u->iso_memory.iso_fd);
-> 
+diff --git a/hw/ide/core.c b/hw/ide/core.c
+index f78b00220b8..d18adceffc0 100644
+--- a/hw/ide/core.c
++++ b/hw/ide/core.c
+@@ -878,6 +878,7 @@ static void ide_dma_cb(void *opaque, int ret)
+ 
+     if (ret == -EINVAL) {
+         ide_dma_error(s);
++        block_acct_failed(blk_get_stats(s->blk), &s->acct);
+         return;
+     }
+ 
+@@ -944,7 +945,7 @@ static void ide_dma_cb(void *opaque, int ret)
+     if ((s->dma_cmd == IDE_DMA_READ || s->dma_cmd == IDE_DMA_WRITE) &&
+         !ide_sect_range_ok(s, sector_num, n)) {
+         ide_dma_error(s);
+-        block_acct_invalid(blk_get_stats(s->blk), s->acct.type);
++        block_acct_failed(blk_get_stats(s->blk), &s->acct);
+         return;
+     }
+ 
+-- 
+2.55.0
 
 
