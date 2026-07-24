@@ -4,113 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CADDC531F9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 19:42:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5B76C531F9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 20:03:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnLnD-0008Ii-To; Fri, 24 Jul 2026 15:42:47 -0400
+	id 1wnM5t-0001wQ-V2; Fri, 24 Jul 2026 16:02:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1wnLnB-0008Hb-2m; Fri, 24 Jul 2026 15:42:45 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1wnLn9-0003JQ-I7; Fri, 24 Jul 2026 15:42:44 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66OHBkN7556002; Fri, 24 Jul 2026 19:42:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=aaR94Y
- ocVMr3Zfd/G229OFh58aEvNtjo8rK3FdxsWGw=; b=l+9GAicyhtFOObAWcGfFDB
- 62MwJ8zU0S69CNcS6HYbZbGdUBFJPs1f+q5Lt0uMOU3VER9s7kwM9zsWFTefh8hV
- mJX8q1buU4g/TGMkkOJNv+piVM1AuTh4qXzQw5+tuClrCFfSJtVYB5yIr/lBYxyK
- 2ogzpyEvlszk3R+3gl9gQGMqq+SrJPZCG0KOvu7R1bTUupK0ZimyzAqnsRIQvOpi
- bze0MZh444hUoZgi9oGst+RVcPLsyTStocf/p7SfKPIV498ai9ZeoFREK6AvVPBO
- S8o8RYzc+q3i82kWUEUmDVzWL0AlmKTqXjaQiI2X0yve26ySXmV4IbveM4O5GlSQ
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fm8gs9nt1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Jul 2026 19:42:39 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66OJYfK3017180;
- Fri, 24 Jul 2026 19:42:38 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fgpgyt4db-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Jul 2026 19:42:38 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66OJgbwV65470770
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 24 Jul 2026 19:42:37 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1AA9158056;
- Fri, 24 Jul 2026 19:42:37 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 69B8058052;
- Fri, 24 Jul 2026 19:42:36 +0000 (GMT)
-Received: from [9.61.253.58] (unknown [9.61.253.58])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 24 Jul 2026 19:42:36 +0000 (GMT)
-Message-ID: <3430e017-88c1-45e3-a5aa-1a7a1ad5dd8c@linux.ibm.com>
-Date: Fri, 24 Jul 2026 12:42:36 -0700
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wnM5q-0001ux-GY
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 16:02:02 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wnM5o-0005lp-Ci
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 16:02:02 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-383b4a3755fso777431a91.3
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 13:01:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1784923318; x=1785528118; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=rWnTAiXSmPWa5RxmfVberE8PVE3I2Vb9TfspGKFpiJ8=;
+ b=RqvYNA839UmimtcEKW8Qm4w1vAhLd3Tsh3e+GOEJg52s1/N9NGMTZfxDeTJUMql/Pm
+ /YXLVjJ52fbI72saGgdLC7XMM0kT0HJRLhT7HfJ2a0d7ytw+UJRsoA8auC+nMo2PGK59
+ rLzK0QFFS7JVBRsRKTTJHimYdRLSmFeFioL5ZFDKBIQByluUNIa07Ui6OhasTt3azvtl
+ OCTiCZqP8AmQIMef7dR4Orc62JiqPDpeoMwnb8eHvjHr6QeQ/7o1iFxUxqxxreEyP+eD
+ dKVSHm4JDLW4rKb8++x7jZpfzw0aLutxhTiTSlRjB5UEsBN/v+3i/Xrb5jl1B/9RB/Z0
+ sU7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784923318; x=1785528118;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=rWnTAiXSmPWa5RxmfVberE8PVE3I2Vb9TfspGKFpiJ8=;
+ b=qM7KBqrIPJCzroxaujYs43nRnBm9H5siCz8+7xkBdLT7FMnI8MDYS10qym9RAuBjk2
+ IayXYsm8aaEoTWa4j5EdGByNi9v3Nd6EcL84h4oNYv0/7OALQCzxHlEIlsdTbxHfGP/Z
+ RioxuhicFckzigdsbji8OTW1lfZ0m+vW5Kxbii6M3OTfGfMRnR/pG+L40SC1ZTu1vlDF
+ d07vSiGj/1Fr8r5vgql+CfLeV1efqIrIrb0eAYzYdJLnplQ3dF6/LtdWkme097Oxsfgo
+ 86tjaOuzfxVq+iJ6vZBq2uGV0ClDmvFFKWUHQ6hlSKP4ccUqRdcBPciBL9pLEHk1T+cr
+ 4D3w==
+X-Gm-Message-State: AOJu0Ywxwkae7lOCQVV7fLaMOcqyhBjeNzFI5VSiJH/tbw1XhP7SU6Jf
+ //0Dr6hq4nqscfkN15uN3CiAS6IAN55vUrSvD+uGGNJrUBvdmE469+J3tk4awqw6qRy6NiC8dZG
+ 7eIhc
+X-Gm-Gg: AR+sD116mLOROgnKYGehotjrnnWFPaW3I+L8UjLpj7ksaLeE7yu/GYUziZmN8S1Z1z5
+ /5qVeWTMgTqrmWfjfOaUltK/CrzvrDxcqSbZ2TpZKFkmpl6N4HFAtwmKta5EqZo95xld8L+lrCU
+ TgwiTzY4jTmCdG1orbxYKT67IVQgnadUMDaZ988qctNGuKbJAaXoB3pzMweUPlULSnkvxAv2Uxr
+ K6Qq4eUPi8dguXMBLqZDZLnplPCpBrGqWavhHEWlCrRxdS1zapNe5/nfI0cYbNQAD1c2hKDv9gT
+ eF236WYKgA7W62WrtP+7A9DEv2Sl4MGJ9nvuYh0Ms+dYCMEYhCaCNPeEW2C3Ijjn9XhR1Pyq9Iz
+ Dd32mMxFdhdm/FoM02drRwtntLW19ym8qN6oFdQo4HdNxnvnen9CeKL/Dfgq7Qy43DeBOjLNRVF
+ xGNZdSupF0aBst70FzuNs55JnGc/yZD6oY9C9DPLgrcqkA
+X-Received: by 2002:a17:90b:48c2:b0:38e:a205:c84b with SMTP id
+ 98e67ed59e1d1-38ec6660452mr9257544a91.28.1784923317927; 
+ Fri, 24 Jul 2026 13:01:57 -0700 (PDT)
+Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-38f05665ff9sm1260049a91.0.2026.07.24.13.01.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 24 Jul 2026 13:01:57 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: yujun <yujun@kylinos.cn>
+Subject: [PATCH] tcg/aarch64: Use tgen_brcondi in tcg_out_qemu_ldst_i128
+Date: Fri, 24 Jul 2026 13:01:56 -0700
+Message-ID: <20260724200156.88695-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 04/15] s390x/pci: Move dm_mr from S390PCIIOMMU to
- S390PCIBusDevice
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>, mjrosato@linux.ibm.com
-Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- cohuck@redhat.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20260724030919.123733-1-kshk@linux.ibm.com>
- <20260724030919.123733-5-kshk@linux.ibm.com>
-Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <20260724030919.123733-5-kshk@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDE3NyBTYWx0ZWRfXx9zzOB6Q98mP
- qVg/iOypA7DjuvHoUQKlsJY1WYDvYrkrnmMR8WWpXi8wbQuAjDOcM6ozoUa+XisybCdF3Ppeway
- ni3DJVSVDJRb3H9VihtWVuemafZl098=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDE3NyBTYWx0ZWRfX//YbksnzGbRg
- XMzrouAQgR1uR+iN0ZRjtggj5ZAN6qEbQFnWx+HyJn5theMA9Hu9xTuLFD2KFBYi+VjCOV0AqSC
- 554pHteNIrn71RXfPSnLNjMVLg1DiGn6tRFK3xnAPEv4w1nz9350SXc7TX6ToEaL17iuK6ROuvh
- CxvlAa5/e1gk7bsb/WaC1i+2kJLskLn3+lCY0MEwsnKqwifrleVlQu/kY0Xwyj6DKAt3zrsbIAo
- OvREzFB5GLXmFtv1oHv+LH5Ghi2C54ElN/zNkLyuE+okmkpfwrFa/5erz7roB0nCd90IgkwIva4
- CEln4RwCsLe2CV1v+2IuJmPi6BAgZY2CUz4JEB5DQWO0xD1XpCygS+5CoR+JcKiTDfhbb+biWZB
- kQi2N92SLcqaAI7EDDnKumEOGU/BVNwzi7IuFB1yWAI+ENshcJTmei5xRtjyIBfHTzSK72Aq1HP
- 6EDftR+C2smL2BUkS0w==
-X-Authority-Analysis: v=2.4 cv=Q9LiJY2a c=1 sm=1 tr=0 ts=6a63c02f cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=Z_9tqueNEkMZuojxhz4A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: 43hrohClHDTpKU8Kyrti_3vHe7lktu1A
-X-Proofpoint-GUID: 43hrohClHDTpKU8Kyrti_3vHe7lktu1A
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-24_04,2026-07-24_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 adultscore=0 phishscore=0 bulkscore=0
- spamscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607240177
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,20 +97,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Allow tgen_brcondi to choose between TBNZ and TST+B.cond for
+implementing a particular mask.
 
-On 7/23/2026 8:09 PM, Konstantin Shkolnyy wrote:
-> This field is only used when S390PCIBusDevice exists, so it can be moved
-> there to simplify S390PCIIOMMU which purpose is just to store the "root"
-> AddressSpace.
->
-> Signed-off-by: Konstantin Shkolnyy<kshk@linux.ibm.com>
-> ---
->   hw/s390x/s390-pci-bus.c         | 21 +++++++++++----------
->   hw/s390x/s390-pci-inst.c        |  2 +-
->   include/hw/s390x/s390-pci-bus.h |  4 ++--
->   3 files changed, 14 insertions(+), 13 deletions(-)
+Suggested-by: yujun <yujun@kylinos.cn>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+Supercedes: 20260629111602.282742-1-yujun@kylinos.cn
+("[PATCH] tcg/aarch64: Use TBNZ for 16-byte alignment check on i128 ld/st")
 
-Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
+Let tgen_brcondi do the heavy lifting, rather than open-coding it all.
 
+r~
+---
+ tcg/aarch64/tcg-target.c.inc | 25 ++++++++++---------------
+ 1 file changed, 10 insertions(+), 15 deletions(-)
+
+diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
+index cc9c2a5158..1f9678438d 100644
+--- a/tcg/aarch64/tcg-target.c.inc
++++ b/tcg/aarch64/tcg-target.c.inc
+@@ -1889,23 +1889,18 @@ static void tcg_out_qemu_ldst_i128(TCGContext *s, TCGReg datalo, TCGReg datahi,
+     use_pair = h.aa.atom < MO_128 || have_lse2;
+ 
+     if (!use_pair) {
+-        tcg_insn_unit *branch = NULL;
++        TCGLabel *label = NULL;
+         TCGReg ll, lh, sl, sh;
+-
+         /*
+-         * If we have already checked for 16-byte alignment, that's all
+-         * we need. Otherwise we have determined that misaligned atomicity
+-         * may be handled with two 8-byte loads.
++         * Check for 16-byte alignment, taking into consideration the
++         * alignment that has already been checked.
+          */
+-        if (h.aa.align < MO_128) {
+-            /*
+-             * TODO: align should be MO_64, so we only need test bit 3,
+-             * which means we could use TBNZ instead of ANDS+B_C.
+-             */
+-            tcg_out_logicali(s, Ilogic_imm_ANDSI, 0, TCG_REG_XZR, addr_reg,
+-                             15);
+-            branch = s->code_ptr;
+-            tcg_out_insn(s, bcond_imm, B_C, TCG_COND_NE, 0);
++        int a_mask = 16 - (1 << h.aa.align);
++
++        if (a_mask > 0) {
++            label = gen_new_label();
++            tgen_brcondi(s, TCG_TYPE_I32, TCG_COND_TSTNE,
++                         addr_reg, a_mask, label);
+             use_pair = true;
+         }
+ 
+@@ -1944,7 +1939,7 @@ static void tcg_out_qemu_ldst_i128(TCGContext *s, TCGReg datalo, TCGReg datahi,
+         if (use_pair) {
+             /* "b .+8", branching across the one insn of use_pair. */
+             tcg_out_insn(s, branch, B, 2);
+-            reloc_pc19(branch, tcg_splitwx_to_rx(s->code_ptr));
++            tcg_out_label(s, label);
+         }
+     }
+ 
+-- 
+2.43.0
 
 
