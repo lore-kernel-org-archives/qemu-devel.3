@@ -4,79 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91F9CC531C9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 16:12:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA1CDC531FA
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 16:16:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnIVN-0001Et-TZ; Fri, 24 Jul 2026 12:12:09 -0400
+	id 1wnIZa-00024z-OT; Fri, 24 Jul 2026 12:16:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wnIVM-0001EV-Rz
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 12:12:08 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wnIZY-00024k-8O
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 12:16:28 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wnIVK-0000SG-Gc
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 12:12:08 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-69c20ba892eso2577732a12.1
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 09:12:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wnIZW-0000xT-No
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 12:16:28 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2cad4170e8eso9274245ad.3
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 09:16:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1784909524; x=1785514324; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=EPPZCjJMQ21CQWHkaW7tkwX2xR7f0vAQARhPJw47Wn0=;
- b=ZG6IrreTCRsMPfhRUzmBo3v3l8yj5pGJeZK9bJ1Cxex95jRiqAvXaRGT9hlytY6H4V
- PGJcTgw227hVAa4JJwJ8gDlZx96gwJwtFZN/ncHD6bAhOdkHSxyoAhMgdYWhWkgl71Tg
- y++QzAMxraXRMGILG7mTETv9lbEOb2VLPGj7Zcg39+GeTD5D+TKroB6WLFjLjJYnJfmf
- OznXERwIvwE/WE09ZypLHmHiaS0CvH2efGDTEdvRkE8wXN7hUkdKoNTwhRhPfodSO34u
- 346qffokFa/wVH25GVuAs8yWl3x43yGRBxwSG5/IyF4wszl732WeVFfERks/RXDtH1lr
- WTww==
+ d=linaro.org; s=google; t=1784909784; x=1785514584; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=vSg7Y6SBHwLd3VA9VQJSVm4AMcGRZOjivGHNc4tgrZw=;
+ b=dbD9j7pBkvYZ8sdy7K5lXrKKDM97XQwdvoKkzhplMHIFUTeHzFyU2fo/oaICyCOynN
+ AwoDdv6WpnQfmmYFsn7jMZZ995lBdeTe+eg47uGkx3ZKDtqvrXdnuqrRl5o1Qtb5rGpA
+ 7jCHVk7QOArDU1NBXxQbMOv0QzT+IhqNlQwyo0xUAbY2NnKqsGccdC79iXLlkmi1mqhE
+ sM2ZYo/czIu1cxZCHD1RV6JCGaUvhWS2tfctO5zq6K8tk1FucHsmmGD+sPxmsXc8vAQC
+ w6ylLCOI2xcWVzfjao97eK6z6jVlLGHf5PnJ+dnXe2Ye4XNNagvtttW3ER2YkxoAgOC1
+ njNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784909524; x=1785514324;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=EPPZCjJMQ21CQWHkaW7tkwX2xR7f0vAQARhPJw47Wn0=;
- b=DniJHyOenBPZv4u8JtHYko6bLsT4nyXscb6jxp1zUaZmgiKWhnTu3d8BCOfazTjuOu
- IXjbedpuaAqmPV2f2B4e/sryfwud2qktNvSDzXJZEm0peW63rWqh+wXY8rGsNghNkztr
- ace7cZsFj1uxBvpB8vm7w6rFxQThVi064+xeXLY2cOP3hg/XzjAcSZ6IDu/3Bz/1kH99
- YXP6/JN8sZHw9V8cTaRC+O9sl5yqxAJQHWWMMghVx2/w4FS+tjwMuuN+5nF28pOZYunA
- zB4Rhq3IZDkK4ApOkopz0+1zFFz5JwXp+yyOrcqaaxg7pkQIHR9RD5I0iIuGZ1dwkiRy
- j7CA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RomIGFg5l1c15PAcRrxlhKCvfxZft6cG0EVPN/v3JAe0eHDCFdTFmgZrgKS5NwMA2lYB1fV9zfFVbef@nongnu.org
-X-Gm-Message-State: AOJu0YyGi9gWiMeMJjrLTyQoTP40ovjQTxyG6FCbQFkMlxK39ZL0M9QN
- DRJo5KvwHVRNZrDJ4iOMby3GZJKFkkEJ563HLEgadEyZkwYpVy06LBxsm0fV2lhxccUBv2t2M/o
- 7YtLz
-X-Gm-Gg: AR+sD12ODR2E+VLlmCuZs+x6/0+rKaJXDw/8iJmDJIyEkSw6Z276d1/KtUc5XV8lmbG
- kyR0FqivD+zBc7m6qREIRjHIxTRKw87WnFAO7GOJBPtHv6MizbnkIgwdb9xaU6qNmCLaUvH6zgX
- bCyYhQZc3wfLPD+xuoZIw/dKblyV51UDReBw1f7m+b3jOQMf+grVwtk3ZztfLegEHSharZTmwJi
- wgMoR8AGRNnZdR6I4aRuugft9V+aftRVAqGb78rAQxwNyAru+KM4306DPUwOAgQN+Epi7lHfUXK
- p1yKI27Vsig99/s271W7Y3UO6Mbp5k1j2Xa5iO1dQ9BHEHidQE7jDJk/Nb1ycFKcDiqSGXHF5kS
- ZbxCYsFoOH+MOKNioZ+YXfB/UlVj8/SbVT1+LitEXbR7NiW+FcVyKYfHZU1kkd1n6bOE=
-X-Received: by 2002:a17:907:84d:b0:c1c:4b2f:797c with SMTP id
- a640c23a62f3a-c1f134c2882mr71386966b.14.1784909522761; 
- Fri, 24 Jul 2026 09:12:02 -0700 (PDT)
-Received: from athena ([2a06:5b06:b600:300:4f7d:7b60:9d07:3a1b])
+ d=1e100.net; s=20251104; t=1784909784; x=1785514584;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=vSg7Y6SBHwLd3VA9VQJSVm4AMcGRZOjivGHNc4tgrZw=;
+ b=Z1Pfy5MuvIXfgAQf+YKCfqqdFiAor33gWu3Tg4wnDPMB2pjmCV42FLb4FIB3RBVBZc
+ CxXcprUf0/EIO7WxiUEM7Nc5sNchfuSxE8EDaVAwa0PtKGh4U6SDVgtiL8tjHwS1c+il
+ eQel9kEoVjhysMyRAZRMEmtgw3MOLyYjJqewRpYq9AwgicULWpyXSqH8H1wxrWPjbi44
+ oi6ujkQDWxTi9gMHT2c5Pg2ipcKeoW5YTY/lbe7za2ZArmr1pUQAwt0/h+FJ065XTFGB
+ 5/LnCRbkjI+3VAU6K5ENsCmuGFkUi535wkAyBOAhKYm+CACJ65JGX04dc3FESZBAqqRw
+ GtOw==
+X-Gm-Message-State: AOJu0Yy3CGb7DlSiIREAwKG9U/SKNGrNC2gxfg1GIeD2REwbE9uizWK+
+ +h3KNR7SSTMql0NbyeXCZ7eGDav5+Evp6oODt/QP5VTSasAgf6U3yg1tivYgej4oi/bRiY3iGIe
+ h4v8+
+X-Gm-Gg: AR+sD10UmAHNqQuLHq6dVbtFmSrCCPvzjjMrzNkQDSbCN4H01UHVBLat382BDS9Uaij
+ vIPstSkNsMJDiRQEDTjRKol1SqFDdls+TWr5wFVXQOcjOf8i6NcBNz00sAiewmgb4xhrkfPxiSj
+ 3pRYsMlOEWgdePYQwZu/7tva34SqeAOQwaMHibZAVqAvuyCmB2w9ei1/DK8z3BmcaOoILsghJZU
+ tKA7nXMkP92fMJhaTkDHVUu5px9HSVtOQFYvOdArbrjpSU3HckXXGdKJsfbV3wt/HpgcsM/47ul
+ xDXIuupm8VfO54zRIXVVdDcGSfXj7So739eCjwSIGGHgHnFJQYvhIPwCG+gvjSfyk1CMiUwtAbD
+ B3fI6lvhCzf/w6Wc54P5h/dfMtoCaZZLstKSCxku/aY4SdN+xdYYcvoOLlWKst/1Yor/us6o5Np
+ QLy3i15K1SNjjCqmgL1r/2qmNOyDzpN8mEBYZDtj3s3A==
+X-Received: by 2002:a17:903:2385:b0:2cc:6329:b7ba with SMTP id
+ d9443c01a7336-2cfa6b6fda8mr94100595ad.16.1784909783994; 
+ Fri, 24 Jul 2026 09:16:23 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-69fb50bd30fsm215764a12.5.2026.07.24.09.12.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jul 2026 09:12:01 -0700 (PDT)
-From: "Denis V. Lunev" <den@openvz.org>
-To: qemu-block@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: den@openvz.org, Eric Blake <eblake@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH 1/1] block-common: fix BDRV_WANT_PRECISE duplicating
- BDRV_WANT_OFFSET_VALID
-Date: Fri, 24 Jul 2026 18:11:58 +0200
-Message-ID: <20260724161158.445561-1-den@openvz.org>
-X-Mailer: git-send-email 2.53.0
+ d9443c01a7336-2cf8f350475sm53780435ad.70.2026.07.24.09.16.23
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 24 Jul 2026 09:16:23 -0700 (PDT)
+Message-ID: <8cdd73f7-919e-4817-ae00-7076be9716ad@linaro.org>
+Date: Fri, 24 Jul 2026 09:16:20 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=den@openvz.org; helo=mail-ed1-x532.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] hw/misc/mps2-scc.c: fix scc_partno and cfg7 write
+To: qemu-devel@nongnu.org
+References: <20260724160943.52509-1-simonxhy0404@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260724160943.52509-1-simonxhy0404@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,37 +103,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Should OR in BDRV_WANT_ALLOCATED instead.
+On 7/24/26 09:09, Simon Xu wrote:
+> Split commit from v1 into 2 as they are unrelated.
+> 
+> Signed-off-by: Simon Xu <simonxhy0404@gmail.com>
+> 
+> Simon Xu (2):
+>    hw/misc/mps2-scc.c: fix cfg7 write
+>    hw/misc/mps2-scc.c: fix scc_partno field width
+> 
+>   hw/misc/mps2-scc.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
 
-Actually there is not problem within the code right now as the value is
-used as enum rather than flags but that is for now. Let us stay on the
-safe side.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Fixes: c33159dec790 ("block: Expand block status mode from bool to flags")
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Eric Blake <eblake@redhat.com>
-CC: Stefan Hajnoczi <stefanha@redhat.com>
----
-NOTE: technically we can just remove extra BDRV_WANT_OFFSET_VALID but for me
-      proposed change seems more logically correct.
-
- include/block/block-common.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/include/block/block-common.h b/include/block/block-common.h
-index 895ea17541..3932ff8615 100644
---- a/include/block/block-common.h
-+++ b/include/block/block-common.h
-@@ -351,7 +351,7 @@ typedef enum {
- #define BDRV_WANT_OFFSET_VALID  BDRV_BLOCK_OFFSET_VALID
- #define BDRV_WANT_ALLOCATED     BDRV_BLOCK_ALLOCATED
- #define BDRV_WANT_PRECISE       (BDRV_WANT_ZERO | BDRV_WANT_OFFSET_VALID | \
--                                 BDRV_WANT_OFFSET_VALID)
-+                                 BDRV_WANT_ALLOCATED)
- 
- typedef QTAILQ_HEAD(BlockReopenQueue, BlockReopenQueueEntry) BlockReopenQueue;
- 
--- 
-2.53.0
-
+r~
 
