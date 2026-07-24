@@ -4,93 +4,190 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C216EC531C9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 21:35:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A00FC531C9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 21:43:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnNXT-0004lZ-Cw; Fri, 24 Jul 2026 17:34:39 -0400
+	id 1wnNfX-00073s-88; Fri, 24 Jul 2026 17:42:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wnNXR-0004lF-NV
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 17:34:37 -0400
-Received: from fhigh-b8-smtp.messagingengine.com ([202.12.124.159])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wnNfT-00073F-II
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 17:42:57 -0400
+Received: from mout.gmx.net ([212.227.15.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wnNXO-0002Eq-GJ
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 17:34:36 -0400
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
- by mailfhigh.stl.internal (Postfix) with ESMTP id A9BB97A01F0;
- Fri, 24 Jul 2026 17:34:32 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-08.internal (MEProxy); Fri, 24 Jul 2026 17:34:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm1; t=1784928872;
- x=1785015272; bh=5BH7SlBv6Eda0kwguNCiZ6NheZ94jrFydpBjKikr9gw=; b=
- F28kF31SFTqWApuIXvqpSQcbg0EpbHRZr4vkJeYwXSDuTRKAHT10RWcSGdDUkN/g
- 8FEqYnHjrKgV9DMLwX0RsY2yesGewc0Sulrsc59f5+c2V3G4NJscHFhU3yv5FA4/
- AJ2z5pCfr6/npHSGI3McnivGRzT9B9ze42L6NWPITfFqGlJMPCXXUKgt3T/CCsV4
- mzhMziV7nKjiO3UcHJKapo+5Jp9AaRo750734q5FMFEO7mL5Z08gLl6gbPV0/msD
- p84pv68XZhRu9a1agKSJvnI+msMTjhgE2GUKu1k8rOg33yi2CIEugC4v5PKWF3OE
- 1Lp30/PnCW3cAHa7EtMKAg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784928872; x=
- 1785015272; bh=5BH7SlBv6Eda0kwguNCiZ6NheZ94jrFydpBjKikr9gw=; b=Y
- sJKCcYhx/rrewaKcdoI6S8OCKicybZ50SatzeP6/uHaEQt3CMepw7MxhHy2z6eXl
- L6m4Z6+CpuGOT/RPKfbRtkE+zIyQw1jkJooo3r8svhoD4Iy6xNvRzsAg3r6xMbDz
- QE4xCAESYWzZrUhSKy4i1xwpOZfK/O05TELEccA29EZ4gaSk15bC8qfOHsBT2THg
- gUcwb39QycfA1nTthu4STQBcXoxrHw1pVL3Zyg4xYVdhbXHNMZxjyjYx2OfuCEt9
- B1S4Eal6ZyiJA4hy12LgD7jSVZdnT+Um9fix+3sHZvBHufr/CVj83gRATEbLfA21
- 5LgA4AHxhry4I8plkvaQw==
-X-ME-Sender: <xms:Z9pjarSyDB9WFNBJ37K33ZBZKX5bpZsH0NiqjUagTPzqXB1NAYFQ0Q>
- <xme:Z9pjajq1EpIYKXwlIUoVtsbqg7CDPE2mpO3QuxG9xyLxxI7AFY-A-vdRaGBbxjs7-
- 0T2UsszqlrdX1TWMDxnS-R7IOY9QvXrTgmT67V4rWBPuCis05HjapU>
-X-ME-Received: <xmr:Z9pjapLYUwH2Xgs7IIKeinPOxabyK98G9C464EO2pPvb1ZC2_mMZervJ-ddo9w>
-X-ME-Proxy-Cause: dmFkZTGYDePFYvNCrayhackMFBoi/8yNtSBeU3odj03pe66Nw+Jj0+ieC9YEidUOWnlB21
- nuLYrckES9ubMDkN0vCy34IxnwTIbQK0MktiVq9yLIiJc13lwF+mJkw7yed1pT3HeJdZnF
- tcKbO2rsdbIdYAsknTE1yb7EM+3TwzXB3Arn0Sohkm0FUT7lM7Ivv44FGKHp4+Wind/4Pg
- mmuf9cCuWqb64HKF+PceGTojoet2dOtT2dKAoup6LXk/xJFqIg4RCPVopn5xtdoB+TCdBs
- RGhLYQwStOsgPmGozAPNqS28FOwJI/9Y1Z3TN4QjFOjuugnlWxDdU3Z/tkwWjeGYooESsF
- Kp9bG0TSBDUPNRGFnUu64bqdzw10ReiyNUKJcmtKi6tejuYMOmJam5B0KNmSWjnzE9sABv
- VaBChBK1j57RkP6AvD31018xqRt9eys3SKy2+0rhY8DqIJOUPlFX4p/0ywqUMZRv1JQy4r
- LHZ+fkZtGXxGeLGHd/QQGjTO1RJhPtXedpP/Kq4aCACpRGgRN7iPSaRss+zlkz7nnp+m01
- BBhtnBxkHlVGMXzCpjSqLaAp264Nrf3Bu6dq4s2reDVWqbDaA9gROGtt4aAjKpqR3ogy2f
- Hcm0pusZhNy1/ZOTA4QDZTmcUaP7O/eCAqeTeQqTO50owEy1kOgrdevTNeyQ
-X-ME-Proxy: <xmx:Z9pjamqMf601W-B2ERbYcMJmoXmm8OeTApkGucGa8IbvnaxFQG2DPw>
- <xmx:aNpjahzCQwqeytQyU9nrxV3EvT1SsqUl2ewf6fN4ydMHuzuuK8IAbg>
- <xmx:aNpjaqMnC33Brl-fFJ0EoKMszdsFhMo3FOINFQKpRQKRFa_QMw6nig>
- <xmx:aNpjam6a2X0HyT0P9ggEm1yVMGYjvrL4UlOYOpKRRbpnhsFwZ0j0IA>
- <xmx:aNpjarVIrtmzNbGyxI3jdOj2H2YOYxTk7SgA95x5TT5tAVSEIZBxXiHS>
-Feedback-ID: i03f14258:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 Jul 2026 17:34:31 -0400 (EDT)
-Date: Fri, 24 Jul 2026 15:34:28 -0600
-From: Alex Williamson <alex@shazbot.org>
-To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@oss.qualcomm.com>
-Cc: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>,
- qemu-devel@nongnu.org, mcasquer@redhat.com, alex@shazbot.org
-Subject: Re: [PATCH] vfio/pci: Fix ROM load failure handling in vfio_rom_read()
-Message-ID: <20260724153428.35f5c108@shazbot.org>
-In-Reply-To: <fb57df9c-66aa-4671-80a2-a5e98a0fa7f7@oss.qualcomm.com>
-References: <20260724092413.348354-1-clg@redhat.com>
- <fb57df9c-66aa-4671-80a2-a5e98a0fa7f7@oss.qualcomm.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wnNfR-0002v1-BD
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 17:42:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1784929369; x=1785534169; i=deller@gmx.de;
+ bh=9aJK5l50SKlSWAzLTsOUYhgFPWToIjQbaOlJcbe2Ff4=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=Zx5O18NT4himmqoU2zLoSE/VxAAbvFFP2v90MQiCtueX7lt0RbvMe1iGfAPpndy9
+ thVGE9/SNe+JXyTmpSU5iHhztsZP0txnDGutqeqnVDv6NTbyxyEKRJyzXkNH20WGD
+ 9k+jwfvLKHtmZ/DScLTNKxn/yavlPSn2P8sOuGpR+EjjZJz8pbVeKav3zX94jLYiu
+ 9SGFbZ6Mt27HnINxy+syBWhsfSRFSmKucrVxL4s1OSVPYqBF5bsfmH5HZQtd/3B1n
+ M4MksIEFp6dNHuapS3Fc+hWiD4kKHaELcN5rI57nPAPlbkAlYmqy+qlyfDcaAOLwv
+ stJMJl8beiqzkd9JEQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M3UUy-1wmphb1uXi-00F7yr; Fri, 24
+ Jul 2026 23:42:49 +0200
+Message-ID: <a0adc88a-4405-46cc-b46c-6981f310db8f@gmx.de>
+Date: Fri, 24 Jul 2026 23:42:47 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] linux-user: fix incorrect msg_l[sr]pid members of
+ target_msqid_ds
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ no92 <leo@managarm.org>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>
+References: <20260724160105.3787888-1-leo@managarm.org>
+ <9c278046-3b5a-4d0b-ac55-76a304f1109a@oss.qualcomm.com>
+Content-Language: en-US
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ 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
+In-Reply-To: <9c278046-3b5a-4d0b-ac55-76a304f1109a@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=202.12.124.159; envelope-from=alex@shazbot.org;
- helo=fhigh-b8-smtp.messagingengine.com
+X-Provags-ID: V03:K1:an1uPd1SY/Bp8ZGAbLoJmCWQkHA2Uvz7/fmyu7/E0MvQxAyM8Sz
+ jVETS4YujXGT7SxaInufTlc9O63gsgIRaZryJTWx3doUaP8pdgIbz34ib62D+KiBBLx48Hv
+ BA6iya82FY43hm6yRbo5ZFszsuQ+6Zb+Hu/iyhYyVZUaMANt5VjNDqCDpR6uAYS92A+VOme
+ CGeXqdIdp9mNz4ighQUGw==
+UI-OutboundReport: notjunk:1;M01:P0:MGD2aTEiZvY=;H0974tpUtckZ+hFD3D8ZGS/Hjv0
+ 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
+Received-SPF: pass client-ip=212.227.15.18; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,159 +204,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 24 Jul 2026 17:41:45 +0200
-Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> wrote:
+On 7/24/26 18:48, Pierrick Bouvier wrote:
+> On 7/24/2026 9:01 AM, no92 via qemu development wrote:
+>> The members are declared as __kernel_pid_t in Linux UAPI headers.
+>> Analogous members in struct target_shmid_ds (shm_[cl]pid) are also
+>> declared as abi_int.
+>>
+>> Fixes: 1c54ff97bbde ("linux-user: fix and cleanup IPCOP_msg* ipc calls =
+handling")
+>> Signed-off-by: no92 <leo@managarm.org>
+>> ---
+>>   linux-user/syscall.c | 12 ++++++------
+>>   1 file changed, 6 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+>> index 3da5530d42..616d543c7f 100644
+>> --- a/linux-user/syscall.c
+>> +++ b/linux-user/syscall.c
+>> @@ -4234,8 +4234,8 @@ struct target_msqid_ds
+>>       abi_ulong __msg_cbytes;
+>>       abi_ulong msg_qnum;
+>>       abi_ulong msg_qbytes;
+>> -    abi_ulong msg_lspid;
+>> -    abi_ulong msg_lrpid;
+>> +    abi_int msg_lspid;
+>> +    abi_int msg_lrpid;
+>...
+>=20
+> The change looks correct in itself.
 
-> On 24/7/26 11:24, C=C3=83=C2=A9dric Le Goater wrote:
-> > When vfio_pci_load_rom() fails, vdev->rom is NULL but the memcpy
-> > still computes a source pointer from it, which is undefined behavior.
-> > Guard the access and return a 0xff pattern instead, which is what
-> > hardware returns for an absent ROM.
-> >=20
-> > Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
-> > ---
-> >   hw/vfio/pci.c | 9 +++++++--
-> >   1 file changed, 7 insertions(+), 2 deletions(-)
-> >=20
-> > diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> > index a3147d28665abd29fd804bd08bdffc3c7440033c..16d4f70ea58c9e5b174dd57=
-950df55dc2ab91f6f 100644
-> > --- a/hw/vfio/pci.c
-> > +++ b/hw/vfio/pci.c
-> > @@ -1176,8 +1176,13 @@ static uint64_t vfio_rom_read(void *opaque, hwad=
-dr addr, unsigned size)
-> >           }
-> >       }
-> >  =20
-> > -    memcpy(&val, vdev->rom + addr,
-> > -           (addr < vdev->rom_size) ? MIN(size, vdev->rom_size - addr) =
-: 0);
-> > +    /* If ROM loading failed, return 0xff pattern */
-> > +    if (vdev->rom_read_failed) {
-> > +        memset(&val, 0xff, sizeof(val));
-> > +    } else {
-> > +        memcpy(&val, vdev->rom + addr,
-> > +               (addr < vdev->rom_size) ? MIN(size, vdev->rom_size - ad=
-dr) : 0);
-> > +    }
-> >  =20
-> >       switch (size) {
-> >       case 1: =20
->=20
-> Maybe simpler:
->=20
-> -- >8 -- =20
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index c204706e630..d06a2d76523 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -1151,13 +1151,18 @@ static uint64_t vfio_rom_read(void *opaque,=20
-> hwaddr addr, unsigned size)
->       } val =3D { .qword =3D ~0ULL };
->       uint64_t data =3D 0;
->=20
-> +    if (unlikely(vdev->rom_read_failed)) {
-> +        return -1;
-> +    }
-> +
->       /* Load the ROM lazily when the guest tries to read it */
-> -    if (unlikely(!vdev->rom && !vdev->rom_read_failed)) {
-> +    if (unlikely(!vdev->rom)) {
->           Error *local_err =3D NULL;
->=20
->           vdev->rom_read_failed =3D !vfio_pci_load_rom(vdev, &local_err);
->           if (vdev->rom_read_failed) {
->               error_report_err(local_err);
-> +            return -1;
->           }
->       }
-> ---
+No.
+abi_ulong is wrong, but abi_int isn't much better either if you look at th=
+e kernel sources:
 
-Loses tracing, introduces more return paths, uses implicit -1 handling
-to fill return value... not simpler, imo.
+grep -r __kernel_ipc_pid_t arch/
 
->=20
-> But we can also rewrite into a more readable code using ld/st
-> (also avoiding memcpy zero-sized):
->=20
-> -- >8 -- =20
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index c204706e630..af51c898f50 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -33,6 +33,7 @@
->   #include "migration/vmstate.h"
->   #include "migration/cpr.h"
->   #include "qobject/qdict.h"
-> +#include "qemu/bswap.h"
->   #include "qemu/error-report.h"
->   #include "qemu/main-loop.h"
->   #include "qemu/module.h"
-> @@ -1143,42 +1144,30 @@ static int=20
-> vfio_pci_config_space_write(VFIOPCIDevice *vdev, off_t offset,
->   static uint64_t vfio_rom_read(void *opaque, hwaddr addr, unsigned size)
->   {
->       VFIOPCIDevice *vdev =3D opaque;
-> -    union {
-> -        uint8_t byte;
-> -        uint16_t word;
-> -        uint32_t dword;
-> -        uint64_t qword;
-> -    } val =3D { .qword =3D ~0ULL };
-> -    uint64_t data =3D 0;
-> +    uint64_t data =3D -1;
-> +
-> +    if (unlikely(vdev->rom_read_failed)) {
-> +        goto out;
-> +    }
->=20
->       /* Load the ROM lazily when the guest tries to read it */
-> -    if (unlikely(!vdev->rom && !vdev->rom_read_failed)) {
-> +    if (unlikely(!vdev->rom)) {
->           Error *local_err =3D NULL;
->=20
->           vdev->rom_read_failed =3D !vfio_pci_load_rom(vdev, &local_err);
->           if (vdev->rom_read_failed) {
->               error_report_err(local_err);
-> +            goto out;
->           }
->       }
->=20
-> -    memcpy(&val, vdev->rom + addr,
-> -           (addr < vdev->rom_size) ? MIN(size, vdev->rom_size - addr) : =
-0);
-> -
-> -    switch (size) {
-> -    case 1:
-> -        data =3D val.byte;
-> -        break;
-> -    case 2:
-> -        data =3D le16_to_cpu(val.word);
-> -        break;
-> -    case 4:
-> -        data =3D le32_to_cpu(val.dword);
-> -        break;
-> -    default:
-> -        hw_error("vfio: unsupported read size, %d bytes\n", size);
-> -        break;
-> +    if (addr < vdev->rom_size) {
-> +        memcpy(&val, vdev->rom + addr, MIN(size, vdev->rom_size - addr));
->       }
->=20
-> +    data =3D ldn_le_p(&val, size);
+arch/sparc/include/uapi/asm/posix_types.h:typedef unsigned short         _=
+_kernel_ipc_pid_t;
+arch/sparc/include/uapi/asm/posix_types.h:#define __kernel_ipc_pid_t __ker=
+nel_ipc_pid_t
+arch/m68k/include/uapi/asm/posix_types.h:typedef unsigned short __kernel_i=
+pc_pid_t;
+arch/m68k/include/uapi/asm/posix_types.h:#define __kernel_ipc_pid_t __kern=
+el_ipc_pid_t
+arch/parisc/include/uapi/asm/posix_types.h:typedef unsigned short         =
+      __kernel_ipc_pid_t;
+arch/parisc/include/uapi/asm/posix_types.h:#define __kernel_ipc_pid_t __ke=
+rnel_ipc_pid_t
+arch/arm/include/uapi/asm/posix_types.h:typedef unsigned short          __=
+kernel_ipc_pid_t;
+arch/arm/include/uapi/asm/posix_types.h:#define __kernel_ipc_pid_t __kerne=
+l_ipc_pid_t
+arch/s390/include/uapi/asm/posix_types.h:typedef int             __kernel_=
+ipc_pid_t;
+arch/s390/include/uapi/asm/posix_types.h:#define __kernel_ipc_pid_t __kern=
+el_ipc_pid_t
+arch/xtensa/include/uapi/asm/posix_types.h:typedef unsigned short       __=
+kernel_ipc_pid_t;
+arch/xtensa/include/uapi/asm/posix_types.h:#define __kernel_ipc_pid_t __ke=
+rnel_ipc_pid_t
+arch/x86/include/uapi/asm/posix_types_32.h:typedef unsigned short       __=
+kernel_ipc_pid_t;
+arch/x86/include/uapi/asm/posix_types_32.h:#define __kernel_ipc_pid_t __ke=
+rnel_ipc_pid_t
+arch/sh/include/uapi/asm/posix_types_32.h:typedef unsigned short        __=
+kernel_ipc_pid_t;
+arch/sh/include/uapi/asm/posix_types_32.h:#define __kernel_ipc_pid_t __ker=
+nel_ipc_pid_t
+arch/powerpc/include/uapi/asm/posix_types.h:typedef short               __=
+kernel_ipc_pid_t;
+arch/powerpc/include/uapi/asm/posix_types.h:#define __kernel_ipc_pid_t __k=
+ernel_ipc_pid_t
 
-val is undeclared.
+So, we probably need to differntiate between platforms and use either abi_=
+int or abi_short.
 
-> +
-> +out:
->       trace_vfio_rom_read(vdev->vbasedev.name, addr, size, data);
->=20
->       return data;
-> ---
-
-As described in my previous reply, there's not actually a bug to fix
-here.  The code behaves as intended and, in this respect, always has.
-I don't really see a need for the churn.  Thanks,
-
-Alex
+Helge
 
