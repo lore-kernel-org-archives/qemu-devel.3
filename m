@@ -4,146 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A685C531F9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 06:22:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64D96C531F9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 06:27:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wn9Hm-0003Og-S5; Fri, 24 Jul 2026 02:21:30 -0400
+	id 1wn9Mw-0004u8-SS; Fri, 24 Jul 2026 02:26:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wn9Hk-0003OH-O6
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 02:21:28 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wn9Mp-0004tP-MD
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 02:26:43 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wn9Hi-0001NZ-TJ
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 02:21:28 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66O4l9EB3139468
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 06:21:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Hc65AQfaTqFXdqmrKBgkjBdMdAgzM5w/Qxcp3RAW/iM=; b=V7wz/jkIza7hfPKS
- VoR2C2rx37a8i0IkBzMf9ZZnwMiAPrD6x/Ko0U4aYjPa25FD12JnAbfyX6FltJTw
- 7fjUSJeVmcLumOeT7PuvwJBYsEnoUX75v0HK89Z9Flhhfqz3+sXDU6l/9/juCjSN
- G4DYNpNhhCSLsj3U7OgKxGvC2lVjhr7DOhFLFn3DGX3gQ8MJs6GOsBes8u5VdR6I
- M9g35n8bCqDsilBB6j+WGUAF4ZSYYaT/e39Wy3cIs+WalooLPm50NMTHW+HvHWtd
- /DMZdPA2lEdSfbl0KJqdniBLXFdmQmcdnbHo1mrWqCxQI/CodwCy7qPiRKID+cvP
- 7HCa3w==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fkn9a33pr-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 06:21:17 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51c26012cd0so1094221cf.0
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 23:21:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784874076; x=1785478876; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Hc65AQfaTqFXdqmrKBgkjBdMdAgzM5w/Qxcp3RAW/iM=;
- b=PadjB8PyguoKOGe76pPtLP7vTBvd2PY336T0OSWLgAVpK0adlkrGnMGueqH1EjefOt
- EenlTQI+J1kBn6f3R8oOMzvnmDquTr8OGUY5NZK/EGuM2olHQzACCLQ4eWWFngOnNP6P
- nDuhg72xzUjOCPqMQDKn+RhknQHa7QkvtSawRmGXImVr09GMgcgprEHtJ/MkmaisJINt
- mb2Efc4i7rd7YpmnW33DhdJuFTYvEIRILtEVzyfuKkVVoW5tM6zh8FitoEDpjd5shRru
- otej81d5S+dK9r1LGrjob5OOTLTibolObFE8XuWPUNyeEjNLHfaizE5DIKnUJWzZ/aAi
- Zvgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784874076; x=1785478876;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Hc65AQfaTqFXdqmrKBgkjBdMdAgzM5w/Qxcp3RAW/iM=;
- b=g+05udjp4hoRuNS5EL4IfOau9/WwlzjMnN+CXMWklBunxdUUjagJyBRa+lITOoOXKF
- +1oqNLhOgugJClX+Bt4Wx6C6iVG+Nm/jdeN0P6i2C6vRr6yxJTDOImyG5VfQKRPsGuIt
- nKUv7jCshbg5EKhM0arDGP0iwoPrMiyI+70enVeM8QeKW6qU7YHwBZCi+rs5BxlDIWTE
- J24W9Kh6Cfg5TITsA3bpOrvN4RGqtszEfNVuJ/4Udv7PlmMkQ1jzpxoswSJL9C4qw6kL
- 2sIqB+4dyiBcDV0WTakPeM3igeSwXilAjR3Qt2wTFXEFoqVE8763hzG2wQQocD6viWHJ
- 3mwQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqpJm5QFc7iOBTUu9PPQXcwv3PXwEnBOMnoY4hcG5Su0sT7yISGZfFyA+aO12G14W8OqK8sApGBUuRR@nongnu.org
-X-Gm-Message-State: AOJu0YwWh/he952IwCIMFYn17O/AhJG85r2RmSt//wvND2ysTgJFzg/N
- 8dl0PXCo23IJoo7IoLJ1S56PMaTmdkya+zSWROlPWvTz44GhdOkay4OrZA5CgvJepbAMtdWOFoz
- SWHmeFWHu1rPloIa8W8IRjHIjqS82XAxXZcqPXdeazdVGEHowcLrwCAtUZQ==
-X-Gm-Gg: AR+sD12KbE0ESu+6se8SY9JuUG/3eZwhTp06ZT4EGA70m/o9+wngmoG7XviJQW1a559
- 2JOudX9ui8xexx/DNMIzBgRCFw8wz95wHnkdlOxOFuJmnJoM1HullRFeuS4vUQI4BtiwPVbbRND
- XiYBt3tleLSPz2xNCeQgy13YH+trxhvihSb30jSDycV14lsESvEBAO9QH+JXCO6ciNDfhXbdIAO
- D3mL60FvjuC/L+S95NiREyiL4O/Z8GkRthT28VIvkP8salKEdWej/KqFirIeCw5pGbGeHInvgYB
- wMZ1br77cDMfjFPI25eOi215w5+Pgfe7LqstKH7j9uTTZrvY17iEiGqIp8QeTjFq9BgjWz579HG
- 7P6F0qCmvVAFK7dyWCKpKo4BJjWI=
-X-Received: by 2002:a05:622a:283:b0:51c:1408:6c13 with SMTP id
- d75a77b69052e-5283def0605mr56266411cf.44.1784874075950; 
- Thu, 23 Jul 2026 23:21:15 -0700 (PDT)
-X-Received: by 2002:a05:622a:283:b0:51c:1408:6c13 with SMTP id
- d75a77b69052e-5283def0605mr56266191cf.44.1784874075464; 
- Thu, 23 Jul 2026 23:21:15 -0700 (PDT)
-Received: from [192.168.1.138] ([176.176.154.185])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c7880dsm22306900f8f.37.2026.07.23.23.21.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Jul 2026 23:21:14 -0700 (PDT)
-Message-ID: <e310e5d1-8419-4087-a967-68f806c67fa9@oss.qualcomm.com>
-Date: Fri, 24 Jul 2026 08:21:13 +0200
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wn9Mm-0002EH-F0
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 02:26:43 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66O6QSCs077960
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 24 Jul 2026 15:26:29 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=fcYH53rt/BPJ/6PyjOjDklVXhg6WNtKkxKpvhuTKWUY=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1784874389; v=1;
+ b=RYLOEKFnukPwF8ZeiLqoSMF+rLl7HnbDOoWtNhX+A+LdSZRCEv8ZwITv1ReF4oLi
+ gYCx3g1YzmLnrXF+VeYnM542yiizEvqgrNoI2AB2c7pt4pAa/i5Fyz9cBMrQ02bs
+ 2wWbDLJPN8MFOBrD0y4cPKmROKNkxp4GibJCnPq2So5ybJJKhmxIpoL6wiTnJZDr
+ XC9IrJvAbgfc9jwoKEAuJymZvSlvaZKdRhV7NCCrRm4bpn0R/0a939d1VckS+/cO
+ ogk9oJSSS38gU6yj4abJIQKQrohirO99/1N35ffEGhxEBDnk5bKthDt2o8WSeRk1
+ /Pi19V74/EEiqgBEnJtZmw==
+Message-ID: <bfcab7d8-c7ae-4c2a-be79-6bdc5c8faaf7@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 24 Jul 2026 15:26:28 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/27] include/qemu/target-info-qom.h: declare
- TYPE_TARGET_SPECIFIC interface
+Subject: Re: [PATCH] hw/display/virtio-gpu: validate blob iov size in
+ create_blob
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+References: <20260724035712.856636-1-marcandre.lureau@redhat.com>
 Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Bernhard Beschow <shentey@gmail.com>, Anton Johansson <anjo@rev.ng>,
- Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-References: <20260724000948.234657-1-pierrick.bouvier@oss.qualcomm.com>
- <20260724000948.234657-2-pierrick.bouvier@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260724000948.234657-2-pierrick.bouvier@oss.qualcomm.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260724035712.856636-1-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDA1NSBTYWx0ZWRfX6xLLzghSTw/y
- WHK1in73Pk268SsW/mnbCQTlzzf3RdX94R3lYCrDgtaBt/7hnnDA6uUjBSJnXeYr4gtx2EWkl3z
- Jubd37DE8HMHQyABrDY36HJufdip4PvAsDUHnD0dRY+BRGMF9MAjqG9iNqXwK6QJwXEZl/KJsis
- sxyoOn9ytvLXRwtH2V1RdmH3wHEnhREUQ8hxDwp3lW/sg9wIk97a8uwKRTx4rfTuXUZF0juiexQ
- RU2ZAG5MCHQ7R5/Wp+ILv16sRBzS85nG/8EaYfIb7SSFwCSe/ufuhZLMlRN5VPzEQN7mfk1P0RN
- mQ4luX5ufNT77DEVOut60fLdjRYKOXqRwj32Dxux+yMq25hHKOpcHm3A0hNXlnGAfA6YnRpA9Yz
- zsyqus1X/9lDb0sKIvFZUzF9nDWUWkE+GElw8lZJ12mQdLCwZs7Pf8yDPk+wp5EEZfbea6qpmiL
- ETmkbUXOTPHgUHvDGUA==
-X-Proofpoint-ORIG-GUID: 4yCEtZ5HsiudI4XZ35Sk-1MmyfIEW4iv
-X-Proofpoint-GUID: 4yCEtZ5HsiudI4XZ35Sk-1MmyfIEW4iv
-X-Authority-Analysis: v=2.4 cv=WOdPmHsR c=1 sm=1 tr=0 ts=6a63045d cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=uVRRv9AK2fddTnT+2a2/4A==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=LfsA7Cq2GQzuzbZ-N0YA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDA1NSBTYWx0ZWRfX2RJlU89XEy94
- d86jbmYN57sbYAXZhHS0ME2+TnhrxQaq5XuNPWNH/t4yVTKdmdLPm8g9Jn1AqgkzQpAOo3Pa+lu
- gnudReq9ox4SC1E/wqa2rNHWEXQGKAo=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-24_01,2026-07-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 suspectscore=0 lowpriorityscore=0 adultscore=0
- clxscore=1015 impostorscore=0 bulkscore=0 priorityscore=1501 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607240055
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -160,51 +75,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/7/26 02:09, Pierrick Bouvier wrote:
-> In the next commits, We'll replace the logic to filter QOM types per
-> target from a static one (based on INTERFACES) to a runtime one, based
-> on is_available() function, that can be overriden per class.
+On 2026/07/24 12:57, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> Introduce the new interface we'll use for that.
+> virtio_gpu_resource_create_blob() stores the guest-controlled blob_size
+> without checking it against the total size of the iov backing entries.
+> Since both values are independently guest-controlled, a malicious guest
+> can set blob_size much larger than the actual iov backing. Subsequent
+> SET_SCANOUT_BLOB checks bounds against the inflated blob_size, allowing
+> a pixman surface to be created over the undersized buffer. Any display
+> refresh then reads past the actual allocation, potentially crashing
+> QEMU or leaking host memory contents depending on the backing type.
 > 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> Reject the resource early when the iov backing is smaller than the
+> declared blob_size.
+
+The same invariant also needs to be enforced when backing is supplied
+by VIRTIO_GPU_CMD_RESOURCE_ATTACH_BACKING and when blob migration state
+is loaded. Otherwise, newly attached backing or state received from an
+older source can bypass this fix.
+
+The check cannot be unconditional at resource creation, however. The
+specification permits nr_entries == 0 so that backing can be attached
+later for swap-in/swap-out. As written, this patch rejects that valid
+request:
+
+ > To facilitate drivers that support swap-in and swap-out, nr_entries
+ > may be zero and VIRTIO_GPU_CMD_RESOURCE_ATTACH_BACKING may be
+ > subsequently used. VIRTIO_GPU_CMD_RESOURCE_DETACH_BACKING may be
+ > used to unassign memory entries.
+
+https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html#x1-4120008
+
+Regards,
+Akihiko Odaki
+
+> 
+> Fixes: CVE-2026-66021
+> Fixes: e0933d91b1cd ("virtio-gpu: Add virtio_gpu_resource_create_blob")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3945
+> Reported-by: "sundayjiang(蒋浩天)" <sundayjiang@tencent.com>
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   include/qemu/target-info-qom.h | 15 +++++++++++++++
->   target-info-qom.c              |  5 +++++
->   2 files changed, 20 insertions(+)
+>   hw/display/virtio-gpu.c | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
 > 
-> diff --git a/include/qemu/target-info-qom.h b/include/qemu/target-info-qom.h
-> index 91be415ed33..83eb537333b 100644
-> --- a/include/qemu/target-info-qom.h
-> +++ b/include/qemu/target-info-qom.h
-> @@ -14,6 +14,21 @@
+> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+> index eac039c3c366..cc6dbd116618 100644
+> --- a/hw/display/virtio-gpu.c
+> +++ b/hw/display/virtio-gpu.c
+> @@ -372,6 +372,16 @@ static void virtio_gpu_resource_create_blob(VirtIOGPU *g,
+>           return;
+>       }
 >   
->   #define TYPE_TARGET_INFO "target-info"
->   
-> +#define TYPE_TARGET_SPECIFIC "target-specific"
+> +    if (iov_size(res->iov, res->iov_cnt) < res->blob_size) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: backing storage smaller than blob size\n",
+> +                      __func__);
+> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
+> +        virtio_gpu_cleanup_mapping(g, res);
+> +        g_free(res);
+> +        return;
+> +    }
 > +
-> +typedef struct TargetSpecific TargetSpecific;
-> +
-> +typedef struct TargetSpecificClass {
-> +    InterfaceClass parent_class;
-> +
-> +    bool (*is_available)(void);
-
-Hopefully we won't have to call this with heterogeneous machines.
-Otherwise we might have to add another helper:
-
-        bool (*is_available_ti)(const TargetInfo *ti);
-
-> +} TargetSpecificClass;
-> +
-> +#define TARGET_SPECIFIC(obj) \
-> +    INTERFACE_CHECK(TargetSpecific, (obj), TYPE_TARGET_SPECIFIC)
-> +DECLARE_CLASS_CHECKERS(TargetSpecificClass, TARGET_SPECIFIC,
-> +                       TYPE_TARGET_SPECIFIC)
-> +
->   typedef struct TargetInfoQom {
->       Object parent_obj;
->   } TargetInfoQom;
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+>       virtio_gpu_init_udmabuf(res);
+>       QTAILQ_INSERT_HEAD(&g->reslist, res, next);
+>   }
 
 
