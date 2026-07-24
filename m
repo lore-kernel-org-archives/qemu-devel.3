@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06D14C531FA
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 09:48:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E19DAC531FA
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 09:49:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnCVw-0003Jh-Uq; Fri, 24 Jul 2026 05:48:21 -0400
+	id 1wnCVn-0003EK-Fm; Fri, 24 Jul 2026 05:48:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wnCVu-0003Ie-Qz; Fri, 24 Jul 2026 05:48:18 -0400
+ id 1wnCVl-0003DS-TD; Fri, 24 Jul 2026 05:48:09 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wnCVt-00059x-9s; Fri, 24 Jul 2026 05:48:18 -0400
+ id 1wnCVk-00058W-1g; Fri, 24 Jul 2026 05:48:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784886463; bh=7yxIdw9pIhOAMkkgE7ZM1Jdt4fCXj6Y2Rbh5xcT6uyI=;
+ t=1784886463; bh=7DKwXLqoNYSCKItdII5a3Fp4ks2eieikV51uYNMU7dc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=jm3XILG0O4kOq/FVDS8bLkepz1GWC6lwnbKA8zI7vx/CSMLx0nVlN3jVG1fD8n1hs
- qSB2PJgMa34qotQMkF0esnPVO1TFJuFd0Zb7NxZB8ITy/ZTsKKUdAqja9PRVKG/A5I
- MpyyU3CcMRU5pPQRqXeov1HxlcFJW5ORuN86mMUPTal2XeHo+ba24J2AsdC+wDOPJ7
- KyXSOOoby4gO8UTm9Te3FxKvQoyfnBcPbdyb7enPX9Un1dCG9M0Rv/+vqWsbFWnscv
- KEjJdoFGvrDlgCcm3PO9oMoPrOZ94bjOaIRX5EHqdDjdXIGeeTaY9/G5oTvBI5nelQ
- HyisIPHELdh4w==
+ b=tDqeU4qiisSSG5eXhqJdDSDHnfSiKkuCM646mWHwCaZI2ni1KE3KOGCO7O48AN4mR
+ wmrafXzqQlftPFtxwvXvqIHwMVDRAD5lZBcB0gufHwfGi5OEf4FFolBRkz3Dd7acbH
+ pfucrDQ25gWeZMvlosVvQi4iiZNf86J9YJ7F25Bz3iLMRQA24HdaXkfY+Ggu/9BOwt
+ q5ojss6nq/1qngGO2fUDC49tCrWUBV/fwp6nolVhgtqFXTKgP74uYqRvDHIM0+twHF
+ cERsRKxdAsvzigsXWrsY+O0fKyH8FJnBjk56LaCy2mftJGrZ52UG0V0QbRrneiT7RP
+ M0PL+nhnlY1OQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6B5A51C4577;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4B35F1C4572;
  Fri, 24 Jul 2026 12:47:43 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 664A93F46B6;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 45F783F46B1;
  Fri, 24 Jul 2026 12:48:04 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 4E28F1854C; Fri, 24 Jul 2026 12:47:54 +0300 (MSK)
+ id 42DC518542; Fri, 24 Jul 2026 12:47:54 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Ziyi Fu <ziyi.fu@cyberus-technology.de>, qemu-trivial@nongnu.org,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 6/7] hw/usb: record async control completion for parameter
- transfers
-Date: Fri, 24 Jul 2026 12:47:48 +0300
-Message-ID: <20260724094754.1053970-7-mjt@tls.msk.ru>
+Cc: Michael Tokarev <mjt@tls.msk.ru>,
+	qemu-trivial@nongnu.org
+Subject: [PULL 1/7] spelling: happend
+Date: Fri, 24 Jul 2026 12:47:43 +0300
+Message-ID: <20260724094754.1053970-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260724094754.1053970-1-mjt@tls.msk.ru>
 References: <20260724094754.1053970-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,36 +70,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ziyi Fu <ziyi.fu@cyberus-technology.de>
-
-Record the completion side of parameter-based control transfers when they
-complete asynchronously. This lets pcap captures include descriptor
-response data for requests such as GET_DESCRIPTOR from usb-host devices.
-
-The synchronous path already recorded the completion, but the async
-SETUP_STATE_PARAM path was missing it.
-
-Signed-off-by: Ziyi Fu <ziyi.fu@cyberus-technology.de>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Fixes: 0f6dba145a4b ("usb: add pcap support.")
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Fixes: 44adb5fcc20d "target/riscv: Remove spike as default machine"
+Fixes: 48814111366b "migration: Always set DEVICE state"
+Fixes: 3345fb3b6d7f "migration/postcopy: Add latency distribution report for blocktime"
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/usb/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ docs/about/removed-features.rst | 2 +-
+ migration/migration.c           | 2 +-
+ qapi/migration.json             | 4 ++--
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/hw/usb/core.c b/hw/usb/core.c
-index 9572a870cc0..d71204c5c80 100644
---- a/hw/usb/core.c
-+++ b/hw/usb/core.c
-@@ -345,6 +345,7 @@ void usb_generic_async_ctrl_complete(USBDevice *s, USBPacket *p)
-             p->actual_length = 0;
-             usb_packet_copy(p, s->data_buf, s->setup_len);
-         }
-+        usb_pcap_ctrl(p, false);
-         break;
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index f7a2aa326de..0735b4ea1d5 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -1241,7 +1241,7 @@ RISC-V default machine (removed in 11.1)
+ ''''''''''''''''''''''''''''''''''''''''
  
-     default:
+ RISC-V used to define ``spike`` as the default machine if no machine option
+-was given via the command line.  This happend because ``spike`` was the first
++was given via the command line.  This happened because ``spike`` was the first
+ RISC-V machine implemented in QEMU and setting it as default was
+ convenient at that time.  Now we have 7 riscv64 and 6 riscv32 machines
+ and having ``spike`` as a default is no longer justified.
+diff --git a/migration/migration.c b/migration/migration.c
+index 9736c14458b..9df6da131ce 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -2806,7 +2806,7 @@ static bool migration_switchover_prepare(MigrationState *s)
+     bql_lock();
+     /*
+      * After BQL released and retaken, the state can be CANCELLING if it
+-     * happend during sem_wait().. Only change the state if it's still
++     * happened during sem_wait().. Only change the state if it's still
+      * pre-switchover.
+      */
+     migrate_set_state(&s->state, MIGRATION_STATUS_PRE_SWITCHOVER,
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 66bd900465a..b1eaf7b0545 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -270,8 +270,8 @@
+ #     (Since 10.1)
+ #
+ # @postcopy-non-vcpu-latency: average remote page fault latency for
+-#     all faults happend in non-vCPU threads (in ns).  It has the same
+-#     definition of @postcopy-latency but this only provides
++#     all faults happened in non-vCPU threads (in ns).  It has the
++#     same definition of @postcopy-latency but this only provides
+ #     statistics to non-vCPU faults.  This is only present when the
+ #     postcopy-blocktime migration capability is enabled.
+ #     (Since 10.1)
 -- 
 2.47.3
 
