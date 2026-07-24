@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2F6EC531D0
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 00:11:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A06C5C531D0
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 00:11:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wn3Uv-0004yp-Ho; Thu, 23 Jul 2026 20:10:41 -0400
+	id 1wn3V7-0005DC-SO; Thu, 23 Jul 2026 20:10:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wn3Ut-0004yS-0c
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 20:10:39 -0400
+ id 1wn3Ux-0004z6-QU
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 20:10:48 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wn3Uq-0006AJ-B7
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 20:10:38 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1wn3Uv-0006Au-9G
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 20:10:43 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66NLeYJH1237337
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 00:10:25 GMT
+ 66NLeIM21201913
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 00:10:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=CCDJhB4Rbzu
- gTnuj4BwwhurHLzaxe2H/PnELOpRjzXQ=; b=Nu/KsZhaS3rRKQHjV9odkDOWBew
- Y23Gtv3eCQD1z4eLkU0cwNPBFBCzpP6ASlX01Z031UtEC5S6eOKkS/ZL3FTEu0Hy
- cocpic7BvxRZQM/Sgailtgpqn+9I55eZkMGxPElNe+tmi2N1P6rgcOUWByrI1nLA
- VtVeut3fcXr7mzHFQY+dFoXoRfHkt22FELiDPn6iTUsiO9T67YiOT5lKgSui4Bi1
- 0NfTQdlUOEn/5zE7smE8+fRAkZbADAr5laoiomHETb7k7aGzd1KKUDKlE/xdXq6u
- Tn1PZS3vBUkm0DbHBGJCkcbJg9oUJXm8lWhakBVnQjbu7jUg2uNz2Q8fkBQ==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fkp5vhqn7-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=fhBk8IytR3C
+ EIIJ4CAfFbWjAvmdS4YSZYbwibsbfG8A=; b=Zuzzkj+aSzQzLN41Z3eJt4KblW2
+ 4AnZ8uDf6zpcsmKbBTNEvzCHEspppmPmPCaJp8e9t82ZQVGRRqTJTpTCSD2fHXvw
+ 1sos1kaUaicgrsF3+tDpkSA9y7tKREFDg7SAP4qdKwo3TiStilyey6/l3aUMdE0g
+ ss1UVmk2z8wlXsz8TV20qHz3h2/NqS7qYBZcY4s+h6qurv5hJcHBi255rBNRGujm
+ ISS2VJ7JMtuNu+DJ+xXowJSGqnJz/Dd8VjIevnpC3B949VsPDDmXkJk/zFe6+2Zd
+ pMSaoCoatuJZ5du/Dse5nOQQJ6Lk4uPozFvxAjY9GaAWFUOgIVt6jheF2Ug==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fkqams9wt-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 00:10:25 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-c892143db7fso1185599a12.1
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 17:10:25 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 00:10:30 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-cb7d6ba548eso1698374a12.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 17:10:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784851824; x=1785456624; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1784851829; x=1785456629; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=CCDJhB4RbzugTnuj4BwwhurHLzaxe2H/PnELOpRjzXQ=;
- b=GOHOUpIUGMBYulJebKKsBkXHijBZ1RnAbexaCX2qySr6vss/IfdhG88x00ZrDnGIH5
- CfTX/kbEU31Th/1AgOQ5tJce1ulEl9VHo7k/X+330EkI8G/jmIqMDyyG+wMALAuIJGh0
- t0JGSerS04T4Z+F7w8iHdI7M5Ty6me0kbK1i2oNrFQQ6RQPt42YS9H6FWO9EuVhH9VZN
- pEwxFo5WrxEoTnYWz1SGrkfpvOgqHfg44QY0gjnfoJHv8u5Eaza10ncxaC4+NulK+GKR
- QJrS72qV9pugy2x8EMDbLtgtNi6Pwa/UsPsahw8+7fYkdPLoV2X+4FYLCDtBLasrvfgl
- Xsdg==
+ bh=fhBk8IytR3CEIIJ4CAfFbWjAvmdS4YSZYbwibsbfG8A=;
+ b=K2x2cIU0Yq7mlQJK++DYoFe6Ha8ywzesT1nTgzv9ar0TrGVS6/kcOqTRA6z13GIdmw
+ OYku9jlrxBQNeSM71spO8zXyd5Tx60s6YCir66T4UdHvAXOZLKunjH1gl19CZeS/NZKZ
+ PEUvGQwwG1KGYMw2rPqogRUv1OLxNIaCUAvB6UKk82LTMUj4Pa5vNApd472MlYL+8215
+ yhJYHsXbz1ehwJ7CEKmJ4ycaPJ6I7E+uFN1pY2MGyJZUYO1ZGkIJFAuS4osA0pN310sB
+ FBHKj3unX8FxWQxukxakqxSslRV11FMeJMSVKqiyPUm1n9SLkC+x1jNgicfYAzhJqZGD
+ n93Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784851824; x=1785456624;
+ d=1e100.net; s=20251104; t=1784851829; x=1785456629;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=CCDJhB4RbzugTnuj4BwwhurHLzaxe2H/PnELOpRjzXQ=;
- b=ciIpIvitlBL33wiGcmys0rpjCBcBA0W93pVQsKu7zxJGw/x4mXeJ/C0Xfo5rVfOZkM
- cPB0kBrigrLtYiTgzxp+73G+dcDwYzf30/OJxORH97ACjCER8NY6yWLRmPdFwxFz4FXz
- iZkBGj1INi92DdSTEU4HBsSwqKkiEpfzhCazWbKl22WItZGhKEx2Zn0oeSf4VUj8YJ6G
- zm9hIVdcsHzXrJetprLNSNodFBMS8y1X/gFdgYLH9jYWlBPa8uV/cdOTTFKV36s5xESq
- DTp5OZLFPpPJMcoTvWIUAD4dw5vs/Bhhz0CNLll5iiP/FWV3vSRukEW1IrY1bgR+yN5b
- Tfcg==
-X-Gm-Message-State: AOJu0YzEj5vMKtVubK/tjCgsSg6MsJXLOhvWataOtrS7kXAtoiQf+olF
- f2Q2JoM5X16VOB9rwDHOW1ydnr1NcW3KeEFkkskssGepV1DRoOVl0hIa6yfPo4IMGXbNWEnp7zu
- dKq/b4L55JbEkdw6om35tEzwZM/9mmq7HR1rRtHbq5CdjM0y4sMv5e4HZWGrL6n6pLQ==
-X-Gm-Gg: AR+sD10h0ueOTL+puk1NgaTlFp89vxBTdF160Az2dV9Z4KnMKM6tFvL/nn3pkaKBM0k
- EviDM0DIFsY4z3Y1espNFHFSkHGlVsTiXlzbrQlMnhE62Lr+P+EezjUPukj/VblMOqV1aMHTPAg
- IdVeIWSo5F3iQ87Vu5PQc5ITcyw/o6JlYqE8WabEi0SoucB2USL3e9aWofKdcen/xWTALt6y+B7
- ZvpCVaaCBzRroknAZt/vwInRAq5+llORNIqyxmuCPtneiLwVG2j8N+uoi6LMF7Cvg2P4EjSFcOi
- OmvLvP+QTK3NNIRwTTa/0JmIyW/hFAnEciwmDwXgBdFwES26s+jngSSt2x7PvcFEQo99h/2l54R
- +zs/hBC/79zah0nwiNpcUQpDAlAKwP1oU4SKONueJeh9Gz9V3UGD5xRz59OAJgMFeUhyk+jk=
-X-Received: by 2002:a05:6a20:6716:b0:3c6:3c5b:f301 with SMTP id
- adf61e73a8af0-3c63c5c1916mr1984007637.68.1784851824255; 
- Thu, 23 Jul 2026 17:10:24 -0700 (PDT)
-X-Received: by 2002:a05:6a20:6716:b0:3c6:3c5b:f301 with SMTP id
- adf61e73a8af0-3c63c5c1916mr1983982637.68.1784851823758; 
- Thu, 23 Jul 2026 17:10:23 -0700 (PDT)
+ bh=fhBk8IytR3CEIIJ4CAfFbWjAvmdS4YSZYbwibsbfG8A=;
+ b=eG2Dfe+ITGn6ds9j0qdsa5iQHIQhcyHMS+b77ZzCSwRDmh+uvxQuTS01wXAV71+l8s
+ 3TBYdDouyf4SvpiQp1gyfgIjjNvnw1U4cc0fEFbBWf3kwDAKJEITpOt6gvzpHTGtSt+Y
+ 6I/e7cEKb3vWjBlzExG9DY60RN3WCsT8N5/zUClnvRQ+tHFlBG1zREm1JCXAg7lu138u
+ 9IyR/Y8/1HMxVbwcl+/vU+uM0KeavLS4mB0cmSoKMPx9fOU7m0IX4EX06SOPUJS2sGo+
+ EDoTt+bE0QOek18rIIGeisXcDjmaxT+OCawLYn1S1uqPV/XdeeaoDt4P7bl3A3Uv0TTI
+ s8SQ==
+X-Gm-Message-State: AOJu0YwH97A5i2sWWf6sGK2mRw5eJjcYOzpj/Tc+DCV4Inhn1pSUmjQM
+ j83M1hEE2pIFkC8xNKnif283GkrSvf6HDuc2WWWJvz6LOi3TzIN5TxGknjL4tyP+y7ubd9fwoYE
+ 1pCq6Le8Nuz2+/efKTi2Bfd/U+DVOQ8LFnCcY1FNUPCzs3PssPLXE5pyJS1mHleYjSQ==
+X-Gm-Gg: AR+sD10bJU6XfUPBQ/RBCfIPM6bkzpYobio3fEImlj4xvWa3ogxrenuA6GAb1AOfeJr
+ Qh3aET/z9Zwlb/vL660sdIIXivu+uBoZTKYbrHZqu5f7Bx7kogIdUa3fnY6pTz38YBfbnsA4Je7
+ PspC3SF66d0Cli+U7Q865FYUS6mu9NMoYivQ2XlUn5rCB0hnL6WoUlPIxnDvNSXQECOmCLVoYm2
+ sUzc9J/aZYTzN4DDQ26aU/4xz0GtVEkju9l9eVFOXYkmR/W7HnFgLBpJrHU+JBRbnUtiWtjUqsN
+ cafIZGQ35KhQ6PfuMbTbeTaDd72ZL/9hZqKYZZDLHWQcSwQFN5s7w2IPGyXrcgtHhxo+nrN3Zs7
+ /mQ9nidZXoLfTjhNx1JwiRJoG8M661dKx88+eUtnxAia94TKouqclDuy32BaXIOUWPIOxeK0=
+X-Received: by 2002:a05:6a20:d10f:b0:3c3:b57b:6291 with SMTP id
+ adf61e73a8af0-3c44afde4c0mr5793913637.18.1784851829189; 
+ Thu, 23 Jul 2026 17:10:29 -0700 (PDT)
+X-Received: by 2002:a05:6a20:d10f:b0:3c3:b57b:6291 with SMTP id
+ adf61e73a8af0-3c44afde4c0mr5793873637.18.1784851828750; 
+ Thu, 23 Jul 2026 17:10:28 -0700 (PDT)
 Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3147e1bc886sm24359478eec.26.2026.07.23.17.10.22
+ 5a478bee46e88-3147e1bc886sm24359478eec.26.2026.07.23.17.10.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Jul 2026 17:10:23 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+ Thu, 23 Jul 2026 17:10:27 -0700 (PDT)
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -95,40 +94,42 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Alistair Francis <alistair@alistair23.me>,
  Peter Maydell <peter.maydell@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH 20/27] hw/arm: remove DEFINE_MACHINE_{AARCH64,ARM}
-Date: Fri, 24 Jul 2026 00:09:40 +0000
-Message-ID: <20260724000948.234657-21-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH 23/27] hw/riscv: remove {riscv32, riscv32_64,
+ riscv64}_machine_interfaces
+Date: Fri, 24 Jul 2026 00:09:43 +0000
+Message-ID: <20260724000948.234657-24-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260724000948.234657-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260724000948.234657-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIzMDIzMyBTYWx0ZWRfX2k5lPx6adSFE
- j01ek4s3eO3zisWk3A9lYUBHldfZ2ZKig6ZxTX+AnIwraCxc4UKvklLTXIOjJVsguuvKiR+brRg
- Vvdf9KNPQ20kHvQyJi+6skxxqLm7nQ8=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIzMDIzMyBTYWx0ZWRfX7qGAQXnww3Jy
- GtUXvEuL8eScwZz7fYHYFYg/RpzIchoAI6zXTErNucPZN+oCj5RdRtQTJ/PqXpjFs+yWZrGlhD7
- Ip0JBS/f7pHGX4vMJSuoB+6q1sNtSE9+EThfHySeiUL4hkgG6ayDinr7v7XbaTHpkAznucrv6XI
- A90+fuzFJjRVdA/cq6KAgWrrmPkgXFhPHCDcZ328/sn0y0dZUanIri6jZAIfSNVF/9J7VKtHRi3
- H8Tc+qN60mbgnLmy0Rj4XjRN4Nf7TIPV9TwPr9M5aqk2nTG1CFxYJhNnhL/a82t5f47QxZ42eBA
- qPQBH60dR3bLJ2bxvhAoVejOwN9MdiWpuU/JkHOye/YSzrn0Y/Ej5e0+M2faoTNZI9GXup98OUz
- LVhsbfA7BWdUzZHZBvJ2xnEx2ZgMzN/sn7ZVAp4mwQbuI/WzwvjOd5/xeulaWswGcA5GK9UXrE/
- j1tgx/kEevbbSyNqMGg==
-X-Authority-Analysis: v=2.4 cv=Z9Dc2nRA c=1 sm=1 tr=0 ts=6a62ad71 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIzMDIzMyBTYWx0ZWRfX492psaHUhGdv
+ HQ/slzB4GOWXc7PsYDL3rJmhnDzENarIH/yr8FSbdq6XHtcLda9azXtSThF6eKKAirQG0T2dGn/
+ +nxH9+aBBEGbVGA6vDbYGnPif6n/NQzCLLLrA7buKLfQCpdHjktD81ln1DQHOP/bW0rIvn+JXaK
+ l8vz6bzamdWa4XRZzmCzLOOekQ1wrycb3gNwS7eJrNjtGq5O1su6FtCmthU/4/jHeeoZQLMBBcl
+ YFqS7+fb8FBoBToo6HivalAFc0cPLDmYB04Nl2kk372jXCGfSrXeSHUEYq9r8E9pNjuMyuVwzW2
+ OMWeHgnX6K2D/0E41w14EH4A1xam6FZ76gOgM5e5oLy2X7hbEBCw20m8TSA9dItbOn3TBRLOuHp
+ kQ0xqj/+rm4c4P+RcbdCOHCP31hLwsYk/NLexGg7k5Skbx9+Nc0BFsDMaBMznyI7qF+DOVsm/Wv
+ iK/nfE6qjiGcVNKVMFQ==
+X-Proofpoint-GUID: ou84H6ssxZPBeC8cDN1t8ALNOFDL4QN8
+X-Authority-Analysis: v=2.4 cv=DfAnbPtW c=1 sm=1 tr=0 ts=6a62ad76 cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=EUspDBNiAAAA:8
- a=0dbhwdPUfnL-ij2kYaIA:9 a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-GUID: jvxRekdVkU4clNZsE7_4DLnBpPpZGOfs
-X-Proofpoint-ORIG-GUID: jvxRekdVkU4clNZsE7_4DLnBpPpZGOfs
+ a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=EUspDBNiAAAA:8
+ a=mr8hG0Pkp8B8-MtDLVEA:9 a=_Vgx9l1VpLgwpw_dHYaR:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIzMDIzMyBTYWx0ZWRfX1ZKofuuvcOEB
+ rL8n5qK/u3rrvmsAwJizzA+0Wc26kMnYS6oNl/ATg9W24/KFnkUKwgkrsl33SijQRbBdhvetGxb
+ LR3m1AiDPCvwCnhjZjehnidcwjaw0OY=
+X-Proofpoint-ORIG-GUID: ou84H6ssxZPBeC8cDN1t8ALNOFDL4QN8
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-23_07,2026-07-22_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 phishscore=0 impostorscore=0 lowpriorityscore=0
- adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607230233
+ lowpriorityscore=0 clxscore=1015 suspectscore=0 spamscore=0
+ priorityscore=1501 impostorscore=0 bulkscore=0 adultscore=0 malwarescore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607230233
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0b-0031df01.pphosted.com
@@ -151,230 +152,205 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+From:  Pierrick Bouvier via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+We can now remove those arrays, and use type_target_specific instead.
+
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- hw/arm/bananapi_m2u.c         |  2 +-
- hw/arm/cubieboard.c           |  2 +-
- hw/arm/digic_boards.c         |  2 +-
- hw/arm/imx25_pdk.c            |  2 +-
- hw/arm/imx8mm-evk.c           |  2 +-
- hw/arm/integratorcp.c         |  2 +-
- hw/arm/kzm.c                  |  2 +-
- hw/arm/max78000fthr.c         |  2 +-
- hw/arm/mcimx6ul-evk.c         |  2 +-
- hw/arm/mcimx7d-sabre.c        |  2 +-
- hw/arm/msf2-som.c             |  2 +-
- hw/arm/musicpal.c             |  2 +-
- hw/arm/netduino2.c            |  2 +-
- hw/arm/netduinoplus2.c        |  2 +-
- hw/arm/olimex-stm32-h405.c    |  2 +-
- hw/arm/orangepi.c             |  2 +-
- hw/arm/stm32vldiscovery.c     |  2 +-
- include/hw/arm/machines-qom.h | 14 --------------
- 18 files changed, 17 insertions(+), 31 deletions(-)
+ hw/riscv/k230.c                 |  2 +-
+ hw/riscv/microchip_pfsoc.c      |  2 +-
+ hw/riscv/opentitan.c            |  2 +-
+ hw/riscv/shakti_c.c             |  2 +-
+ hw/riscv/sifive_e.c             |  2 +-
+ hw/riscv/sifive_u.c             |  2 +-
+ hw/riscv/spike.c                |  2 +-
+ hw/riscv/tt_atlantis.c          |  2 +-
+ hw/riscv/xiangshan_kmh.c        |  2 +-
+ include/hw/riscv/machines-qom.h | 15 +++------------
+ target/riscv/machine.c          | 14 --------------
+ 11 files changed, 12 insertions(+), 35 deletions(-)
 
-diff --git a/hw/arm/bananapi_m2u.c b/hw/arm/bananapi_m2u.c
-index 4fb19a83657..b96268ef0f3 100644
---- a/hw/arm/bananapi_m2u.c
-+++ b/hw/arm/bananapi_m2u.c
-@@ -146,4 +146,4 @@ static void bpim2u_machine_init(MachineClass *mc)
-     mc->auto_create_sdcard = true;
- }
+diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
+index 0eb1bede222..631ea71c441 100644
+--- a/hw/riscv/k230.c
++++ b/hw/riscv/k230.c
+@@ -520,7 +520,7 @@ static const TypeInfo k230_machine_typeinfo = {
+     .class_init = k230_machine_class_init,
+     .instance_init = k230_machine_instance_init,
+     .instance_size = sizeof(K230MachineState),
+-    .interfaces = riscv64_machine_interfaces,
++    .interfaces = type_target_specific,
+ };
  
--DEFINE_MACHINE_ARM("bpim2u", bpim2u_machine_init)
-+DEFINE_MACHINE_TARGET_SPECIFIC("bpim2u", bpim2u_machine_init)
-diff --git a/hw/arm/cubieboard.c b/hw/arm/cubieboard.c
-index 234c1ea37fc..b80cd4ade7a 100644
---- a/hw/arm/cubieboard.c
-+++ b/hw/arm/cubieboard.c
-@@ -127,4 +127,4 @@ static void cubieboard_machine_init(MachineClass *mc)
-     mc->auto_create_sdcard = true;
- }
+ static void k230_machine_init_register_types(void)
+diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+index 520d1fd4d11..cd0c8ca5f36 100644
+--- a/hw/riscv/microchip_pfsoc.c
++++ b/hw/riscv/microchip_pfsoc.c
+@@ -757,7 +757,7 @@ static const TypeInfo microchip_icicle_kit_machine_typeinfo = {
+     .class_init = microchip_icicle_kit_machine_class_init,
+     .instance_init = microchip_icicle_kit_machine_instance_init,
+     .instance_size = sizeof(MicrochipIcicleKitState),
+-    .interfaces = riscv64_machine_interfaces,
++    .interfaces = type_target_specific,
+ };
  
--DEFINE_MACHINE_ARM("cubieboard", cubieboard_machine_init)
-+DEFINE_MACHINE_TARGET_SPECIFIC("cubieboard", cubieboard_machine_init)
-diff --git a/hw/arm/digic_boards.c b/hw/arm/digic_boards.c
-index fbcabaa3362..1210a6a888e 100644
---- a/hw/arm/digic_boards.c
-+++ b/hw/arm/digic_boards.c
-@@ -147,4 +147,4 @@ static void canon_a1100_machine_init(MachineClass *mc)
-     mc->default_ram_id = "ram";
- }
+ static void microchip_icicle_kit_machine_init_register_types(void)
+diff --git a/hw/riscv/opentitan.c b/hw/riscv/opentitan.c
+index 5c50b1c423d..0b3e02415ad 100644
+--- a/hw/riscv/opentitan.c
++++ b/hw/riscv/opentitan.c
+@@ -339,7 +339,7 @@ static const TypeInfo open_titan_types[] = {
+         .parent         = TYPE_MACHINE,
+         .instance_size  = sizeof(OpenTitanState),
+         .class_init     = opentitan_machine_class_init,
+-        .interfaces     = riscv32_machine_interfaces,
++        .interfaces     = type_target_specific,
+     }
+ };
  
--DEFINE_MACHINE_ARM("canon-a1100", canon_a1100_machine_init)
-+DEFINE_MACHINE_TARGET_SPECIFIC("canon-a1100", canon_a1100_machine_init)
-diff --git a/hw/arm/imx25_pdk.c b/hw/arm/imx25_pdk.c
-index e60a7e672a4..b9113ee983a 100644
---- a/hw/arm/imx25_pdk.c
-+++ b/hw/arm/imx25_pdk.c
-@@ -152,4 +152,4 @@ static void imx25_pdk_machine_init(MachineClass *mc)
-     mc->auto_create_sdcard = true;
- }
+diff --git a/hw/riscv/shakti_c.c b/hw/riscv/shakti_c.c
+index 7556fd8c854..b59c4035929 100644
+--- a/hw/riscv/shakti_c.c
++++ b/hw/riscv/shakti_c.c
+@@ -99,7 +99,7 @@ static const TypeInfo shakti_c_machine_type_info = {
+     .class_init = shakti_c_machine_class_init,
+     .instance_init = shakti_c_machine_instance_init,
+     .instance_size = sizeof(ShaktiCMachineState),
+-    .interfaces = riscv64_machine_interfaces,
++    .interfaces = type_target_specific,
+ };
  
--DEFINE_MACHINE_ARM("imx25-pdk", imx25_pdk_machine_init)
-+DEFINE_MACHINE_TARGET_SPECIFIC("imx25-pdk", imx25_pdk_machine_init)
-diff --git a/hw/arm/imx8mm-evk.c b/hw/arm/imx8mm-evk.c
-index 031f9348626..f660015e207 100644
---- a/hw/arm/imx8mm-evk.c
-+++ b/hw/arm/imx8mm-evk.c
-@@ -128,4 +128,4 @@ static void imx8mm_evk_machine_init(MachineClass *mc)
-     mc->get_default_cpu_type = imx8mm_evk_get_default_cpu_type;
- }
+ static void shakti_c_machine_type_info_register(void)
+diff --git a/hw/riscv/sifive_e.c b/hw/riscv/sifive_e.c
+index 657f6ecad25..5b5dc812b27 100644
+--- a/hw/riscv/sifive_e.c
++++ b/hw/riscv/sifive_e.c
+@@ -169,7 +169,7 @@ static const TypeInfo sifive_e_machine_typeinfo = {
+     .class_init = sifive_e_machine_class_init,
+     .instance_init = sifive_e_machine_instance_init,
+     .instance_size = sizeof(SiFiveEState),
+-    .interfaces = riscv32_64_machine_interfaces,
++    .interfaces = type_target_specific,
+ };
  
--DEFINE_MACHINE_AARCH64("imx8mm-evk", imx8mm_evk_machine_init)
-+DEFINE_MACHINE_TARGET_SPECIFIC("imx8mm-evk", imx8mm_evk_machine_init)
-diff --git a/hw/arm/integratorcp.c b/hw/arm/integratorcp.c
-index cf95c3f57d4..489afdaf163 100644
---- a/hw/arm/integratorcp.c
-+++ b/hw/arm/integratorcp.c
-@@ -697,7 +697,7 @@ static void integratorcp_machine_init(MachineClass *mc)
-     machine_add_audiodev_property(mc);
- }
+ static void sifive_e_machine_init_register_types(void)
+diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+index 33f1af2cdf1..1fd752dfa2a 100644
+--- a/hw/riscv/sifive_u.c
++++ b/hw/riscv/sifive_u.c
+@@ -680,7 +680,7 @@ static const TypeInfo sifive_u_machine_typeinfo = {
+     .class_init = sifive_u_machine_class_init,
+     .instance_init = sifive_u_machine_instance_init,
+     .instance_size = sizeof(SiFiveUState),
+-    .interfaces = riscv32_64_machine_interfaces,
++    .interfaces = type_target_specific,
+ };
  
--DEFINE_MACHINE_ARM("integratorcp", integratorcp_machine_init)
-+DEFINE_MACHINE_TARGET_SPECIFIC("integratorcp", integratorcp_machine_init)
+ static void sifive_u_machine_init_register_types(void)
+diff --git a/hw/riscv/spike.c b/hw/riscv/spike.c
+index 1f706f4dcc1..450f5679110 100644
+--- a/hw/riscv/spike.c
++++ b/hw/riscv/spike.c
+@@ -292,7 +292,7 @@ static const TypeInfo spike_machine_typeinfo = {
+     .class_init = spike_machine_class_init,
+     .instance_init = spike_machine_instance_init,
+     .instance_size = sizeof(SpikeState),
+-    .interfaces = riscv32_64_machine_interfaces,
++    .interfaces = type_target_specific,
+ };
  
- static const Property core_properties[] = {
-     DEFINE_PROP_UINT32("memsz", IntegratorCMState, memsz, 0),
-diff --git a/hw/arm/kzm.c b/hw/arm/kzm.c
-index b49841ca87a..b97ef4c932c 100644
---- a/hw/arm/kzm.c
-+++ b/hw/arm/kzm.c
-@@ -141,4 +141,4 @@ static void kzm_machine_init(MachineClass *mc)
-     mc->default_ram_id = "kzm.ram";
- }
+ static void spike_machine_init_register_types(void)
+diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
+index ceaa88d5238..896dfb1afde 100644
+--- a/hw/riscv/tt_atlantis.c
++++ b/hw/riscv/tt_atlantis.c
+@@ -610,7 +610,7 @@ static const TypeInfo tt_atlantis_types[] = {
+         .parent     = TYPE_MACHINE,
+         .class_init = tt_atlantis_machine_class_init,
+         .instance_size = sizeof(TTAtlantisState),
+-        .interfaces = riscv64_machine_interfaces,
++        .interfaces = type_target_specific,
+     },
+ };
  
--DEFINE_MACHINE_ARM("kzm", kzm_machine_init)
-+DEFINE_MACHINE_TARGET_SPECIFIC("kzm", kzm_machine_init)
-diff --git a/hw/arm/max78000fthr.c b/hw/arm/max78000fthr.c
-index 4453868e562..a39cb001ce2 100644
---- a/hw/arm/max78000fthr.c
-+++ b/hw/arm/max78000fthr.c
-@@ -49,4 +49,4 @@ static void max78000_machine_init(MachineClass *mc)
-     mc->valid_cpu_types = valid_cpu_types;
- }
+diff --git a/hw/riscv/xiangshan_kmh.c b/hw/riscv/xiangshan_kmh.c
+index d8ee1dfa15e..101b441a441 100644
+--- a/hw/riscv/xiangshan_kmh.c
++++ b/hw/riscv/xiangshan_kmh.c
+@@ -217,7 +217,7 @@ static const TypeInfo xiangshan_kmh_machine_info = {
+     .parent = TYPE_MACHINE,
+     .instance_size = sizeof(XiangshanKmhState),
+     .class_init = xiangshan_kmh_machine_class_init,
+-    .interfaces = riscv64_machine_interfaces,
++    .interfaces = type_target_specific,
+ };
  
--DEFINE_MACHINE_ARM("max78000fthr", max78000_machine_init)
-+DEFINE_MACHINE_TARGET_SPECIFIC("max78000fthr", max78000_machine_init)
-diff --git a/hw/arm/mcimx6ul-evk.c b/hw/arm/mcimx6ul-evk.c
-index 299e797fd48..cbd41056522 100644
---- a/hw/arm/mcimx6ul-evk.c
-+++ b/hw/arm/mcimx6ul-evk.c
-@@ -79,4 +79,4 @@ static void mcimx6ul_evk_machine_init(MachineClass *mc)
-     mc->auto_create_sdcard = true;
- }
- 
--DEFINE_MACHINE_ARM("mcimx6ul-evk", mcimx6ul_evk_machine_init)
-+DEFINE_MACHINE_TARGET_SPECIFIC("mcimx6ul-evk", mcimx6ul_evk_machine_init)
-diff --git a/hw/arm/mcimx7d-sabre.c b/hw/arm/mcimx7d-sabre.c
-index a94218ac1b1..f4e31407fe5 100644
---- a/hw/arm/mcimx7d-sabre.c
-+++ b/hw/arm/mcimx7d-sabre.c
-@@ -79,4 +79,4 @@ static void mcimx7d_sabre_machine_init(MachineClass *mc)
-     mc->auto_create_sdcard = true;
- }
- 
--DEFINE_MACHINE_ARM("mcimx7d-sabre", mcimx7d_sabre_machine_init)
-+DEFINE_MACHINE_TARGET_SPECIFIC("mcimx7d-sabre", mcimx7d_sabre_machine_init)
-diff --git a/hw/arm/msf2-som.c b/hw/arm/msf2-som.c
-index 44c68bffac6..67d7a8d00de 100644
---- a/hw/arm/msf2-som.c
-+++ b/hw/arm/msf2-som.c
-@@ -110,4 +110,4 @@ static void emcraft_sf2_machine_init(MachineClass *mc)
-     mc->valid_cpu_types = valid_cpu_types;
- }
- 
--DEFINE_MACHINE_ARM("emcraft-sf2", emcraft_sf2_machine_init)
-+DEFINE_MACHINE_TARGET_SPECIFIC("emcraft-sf2", emcraft_sf2_machine_init)
-diff --git a/hw/arm/musicpal.c b/hw/arm/musicpal.c
-index d9aeb98b6f0..a3f98ca95a2 100644
---- a/hw/arm/musicpal.c
-+++ b/hw/arm/musicpal.c
-@@ -1358,7 +1358,7 @@ static void musicpal_machine_init(MachineClass *mc)
-     machine_add_audiodev_property(mc);
- }
- 
--DEFINE_MACHINE_ARM("musicpal", musicpal_machine_init)
-+DEFINE_MACHINE_TARGET_SPECIFIC("musicpal", musicpal_machine_init)
- 
- static void mv88w8618_wlan_class_init(ObjectClass *klass, const void *data)
- {
-diff --git a/hw/arm/netduino2.c b/hw/arm/netduino2.c
-index a721da02ce0..d9b74b9065a 100644
---- a/hw/arm/netduino2.c
-+++ b/hw/arm/netduino2.c
-@@ -67,4 +67,4 @@ static void netduino2_machine_init(MachineClass *mc)
-     mc->ignore_memory_transaction_failures = true;
- }
- 
--DEFINE_MACHINE_ARM("netduino2", netduino2_machine_init)
-+DEFINE_MACHINE_TARGET_SPECIFIC("netduino2", netduino2_machine_init)
-diff --git a/hw/arm/netduinoplus2.c b/hw/arm/netduinoplus2.c
-index ee5f1679426..c0ef997184c 100644
---- a/hw/arm/netduinoplus2.c
-+++ b/hw/arm/netduinoplus2.c
-@@ -67,4 +67,4 @@ static void netduinoplus2_machine_init(MachineClass *mc)
-     mc->valid_cpu_types = valid_cpu_types;
- }
- 
--DEFINE_MACHINE_ARM("netduinoplus2", netduinoplus2_machine_init)
-+DEFINE_MACHINE_TARGET_SPECIFIC("netduinoplus2", netduinoplus2_machine_init)
-diff --git a/hw/arm/olimex-stm32-h405.c b/hw/arm/olimex-stm32-h405.c
-index 58a124d3c06..9dbae8238b3 100644
---- a/hw/arm/olimex-stm32-h405.c
-+++ b/hw/arm/olimex-stm32-h405.c
-@@ -73,4 +73,4 @@ static void olimex_stm32_h405_machine_init(MachineClass *mc)
-     mc->default_ram_size = 0;
- }
- 
--DEFINE_MACHINE_ARM("olimex-stm32-h405", olimex_stm32_h405_machine_init)
-+DEFINE_MACHINE_TARGET_SPECIFIC("olimex-stm32-h405", olimex_stm32_h405_machine_init)
-diff --git a/hw/arm/orangepi.c b/hw/arm/orangepi.c
-index 53366a76334..9cfc1e077e9 100644
---- a/hw/arm/orangepi.c
-+++ b/hw/arm/orangepi.c
-@@ -126,4 +126,4 @@ static void orangepi_machine_init(MachineClass *mc)
-     mc->auto_create_sdcard = true;
- }
- 
--DEFINE_MACHINE_ARM("orangepi-pc", orangepi_machine_init)
-+DEFINE_MACHINE_TARGET_SPECIFIC("orangepi-pc", orangepi_machine_init)
-diff --git a/hw/arm/stm32vldiscovery.c b/hw/arm/stm32vldiscovery.c
-index 53b4632c013..b87b57da61c 100644
---- a/hw/arm/stm32vldiscovery.c
-+++ b/hw/arm/stm32vldiscovery.c
-@@ -70,4 +70,4 @@ static void stm32vldiscovery_machine_init(MachineClass *mc)
-     mc->valid_cpu_types = valid_cpu_types;
- }
- 
--DEFINE_MACHINE_ARM("stm32vldiscovery", stm32vldiscovery_machine_init)
-+DEFINE_MACHINE_TARGET_SPECIFIC("stm32vldiscovery", stm32vldiscovery_machine_init)
-diff --git a/include/hw/arm/machines-qom.h b/include/hw/arm/machines-qom.h
-index f4d9a163220..f64de7bfc8d 100644
---- a/include/hw/arm/machines-qom.h
-+++ b/include/hw/arm/machines-qom.h
-@@ -13,18 +13,4 @@
+ static void xiangshan_kmh_machine_register_types(void)
+diff --git a/include/hw/riscv/machines-qom.h b/include/hw/riscv/machines-qom.h
+index 0f9f3b94eac..57da218d959 100644
+--- a/include/hw/riscv/machines-qom.h
++++ b/include/hw/riscv/machines-qom.h
+@@ -13,15 +13,6 @@
  #include "qemu/target-info.h"
  #include "qemu/target-info-qom.h"
  
 -/*
-- * A machine defined with the DEFINE_MACHINE_ARM() macro will be
-- * available in both qemu-system-arm and qemu-system-aarch64 binaries.
-- *
-- * One defined with DEFINE_MACHINE_AARCH64() will only be available in
-- * the qemu-system-aarch64 binary.
+- * Interfaces specifying whether a given QOM object is available in
+- * qemu-system-riscv32, qemu-system-riscv64, or both.
 - */
--#define DEFINE_MACHINE_ARM(namestr, machine_initfn) \
--        DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, \
--                                            type_target_specific)
--#define DEFINE_MACHINE_AARCH64(namestr, machine_initfn) \
--        DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, \
--                                            type_target_specific)
 -
+-extern const InterfaceInfo riscv32_machine_interfaces[];
+-extern const InterfaceInfo riscv64_machine_interfaces[];
+-extern const InterfaceInfo riscv32_64_machine_interfaces[];
+-
+ /*
+  * Helper macros for defining machines available in qemu-system-riscv32,
+  * qemu-system-riscv64, or both.
+@@ -29,14 +20,14 @@ extern const InterfaceInfo riscv32_64_machine_interfaces[];
+ 
+ #define DEFINE_MACHINE_RISCV32(namestr, machine_initfn) \
+         DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, \
+-                                            riscv32_machine_interfaces)
++                                            type_target_specific)
+ 
+ #define DEFINE_MACHINE_RISCV64(namestr, machine_initfn) \
+         DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, \
+-                                            riscv64_machine_interfaces)
++                                            type_target_specific)
+ 
+ #define DEFINE_MACHINE_RISCV32_64(namestr, machine_initfn) \
+         DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, \
+-                                            riscv32_64_machine_interfaces)
++                                            type_target_specific)
+ 
  #endif
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 484a3730ef4..555a1f3c881 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -536,17 +536,3 @@ const VMStateDescription vmstate_riscv_cpu = {
+         NULL
+     }
+ };
+-
+-const InterfaceInfo riscv32_machine_interfaces[] = {
+-    { TYPE_TARGET_SPECIFIC },
+-    { }
+-};
+-
+-const InterfaceInfo riscv64_machine_interfaces[] = {
+-    { TYPE_TARGET_SPECIFIC },
+-    { }
+-};
+-
+-const InterfaceInfo riscv32_64_machine_interfaces[] = {
+-    { }
+-};
 -- 
 2.43.0
 
