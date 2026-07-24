@@ -4,114 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4E3BC531C9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 14:21:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3281CC531C9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 14:28:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnGlu-0005YG-BH; Fri, 24 Jul 2026 10:21:06 -0400
+	id 1wnGsb-0000Fx-I5; Fri, 24 Jul 2026 10:28:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1wnGln-0005Uq-1r; Fri, 24 Jul 2026 10:20:59 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wnGsY-0000C8-I7
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 10:27:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1wnGll-00076r-AW; Fri, 24 Jul 2026 10:20:58 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66ODfcl21992724; Fri, 24 Jul 2026 14:20:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=XWiIGbnVfPOt+SKvoxLq4ZMYODnhezOXCFteePNGcbM=; b=adLm6/bcU5Tz
- 3qj+WCsyGJKFNh6Mh24nHw6YZeAalAnOexErYLjFiPgYNgS3Q1FbfqdKSEyQOKC9
- 1Ei+PMOb883JNXALeCZavbCLcWXH4v6kajNGQWmSrmcewrHJaRgg3rSSUIV1iOMC
- GtQBT4A0rQs051M1KV/Ynxdiez0F9kPSC2SEtPusAugZsZmf7EPlw0kmDFGsKy31
- l8RbX5/sWQtZkOTVq0Aqv0U1G2Qmz/Zamyz4ZmGiSvCLKXmuLtweFzTS1FYSG4nk
- Jny3g9i4I+G/QBFaarF0KdAuahzTZmOXcWVu9/LlJUKBbM5dqTbcVFu+N4v6Orwo
- TJc5KDAYMg==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fm8h00bmk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Jul 2026 14:20:53 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66OEJg2l026947;
- Fri, 24 Jul 2026 14:20:52 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fgpgyrywd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Jul 2026 14:20:52 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66OEKp6U33161972
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 24 Jul 2026 14:20:51 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9274958055;
- Fri, 24 Jul 2026 14:20:51 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ECA6158043;
- Fri, 24 Jul 2026 14:20:50 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 24 Jul 2026 14:20:50 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wnGsW-0007xo-CZ
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 10:27:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784903273;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=PZnu0Fk6qsH48lVP9kgYEiY6q8J4zd7E5hKp/LfN3qo=;
+ b=CPowYEXkUfOXcXgEJAm1lpo8a9OvSdR1vciEnmUEOyS2Sk5xkxRIDsVA7lpw/Ry9rWFM8J
+ S1a/g0/14MRugxmJDoq6jMksO9sYTaV8xIg/fIFGbSHqejYRCGVoVNM2V3S2pqfZRhNwFJ
+ CgUnRD8anV78udZLNa5ABSCTi07PzcQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-573-eH5h0mFbPUiz0x8Ujj8h5g-1; Fri,
+ 24 Jul 2026 10:27:52 -0400
+X-MC-Unique: eH5h0mFbPUiz0x8Ujj8h5g-1
+X-Mimecast-MFC-AGG-ID: eH5h0mFbPUiz0x8Ujj8h5g_1784903271
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A616518011FD; Fri, 24 Jul 2026 14:27:50 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.93])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 475261800902; Fri, 24 Jul 2026 14:27:47 +0000 (UTC)
+Date: Fri, 24 Jul 2026 16:27:45 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Hanna Reitz <hreitz@redhat.com>, boy juju <agx1657748706@gmail.com>,
+ Tristan Madani <tristan@talencesecurity.com>
+Subject: Re: [PATCH for-11.1 1/3] dmg: fix out-of-bounds load in
+ search_chunk() (CVE-2026-65929)
+Message-ID: <amN2YcIgQuUsrFOa@redhat.com>
+References: <20260723144519.364701-1-stefanha@redhat.com>
+ <20260723144519.364701-2-stefanha@redhat.com>
 MIME-Version: 1.0
-Date: Fri, 24 Jul 2026 16:20:50 +0200
-From: Harald Freudenberger <freude@linux.ibm.com>
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- thuth@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- linux-s390@vger.kernel.org, dengler@linux.ibm.com,
- borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
-Subject: Re: [PATCH v12 04/17] crypto: Add aes-helpers file to support some
- AES modes
-Mail-Reply-To: freude@linux.ibm.com
-In-Reply-To: <alZEqU-d7NTHI1ZF@redhat.com>
-References: <20260710152906.80207-1-freude@linux.ibm.com>
- <20260710152906.80207-5-freude@linux.ibm.com> <alZEqU-d7NTHI1ZF@redhat.com>
-Message-ID: <1c487081a366a59f4e6762979f5b15b9@linux.ibm.com>
-X-Sender: freude@linux.ibm.com
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=LdcMLDfi c=1 sm=1 tr=0 ts=6a6374c5 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=20KFwNOVAAAA:8 a=LCagy2Ma_--e8QgrMPEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: Jw45BPo2p4PPc_FwVTXZl2J-IUupo0gh
-X-Proofpoint-GUID: Jw45BPo2p4PPc_FwVTXZl2J-IUupo0gh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDEyOCBTYWx0ZWRfX/JYNW6Dksb2o
- XzC5kkRlQ5vppqxNOYV8ZW/XDBxXMKIUSvELgFll9Urlmd9kMW39OSdVl0jzcXobguiUkDZrvZu
- 8CS25nzBCSYT3CzTsBmHXRTjH+ojF2oa6PlkW6bVNH46Oq3gAOiwW7quGeQQeuOLLfKwarWfzFd
- PzC9qGSruWXFjtPSPICFYs7ePpQC8a7VhE7wYPQkuQXB3uu3p14kY8eL6rYUoDsiTsvuE6XJU+H
- 66+6UB9MDm1f9wgjyygPSkcbQjKzGbPy42gSAkCZmVxSx6hZkJ+YH6NliPBisfAXPsvtPYJjUeT
- BRKj/YeKgOifuQlqRi24eiml15PeSKt9Kt94ZZGAe+WQIwg+hI9UJ4jue/Zr1VzhCwvEneUIS5K
- H1F+NVqWmiq9jlX8UlFzA4u5e/GYn3CfDumtqaL6LNHYLlVmZpfj7PngxKTo3YojaWcC7V0Ed3h
- ARgESsaY7Ln82w3XUCw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDEyOCBTYWx0ZWRfX36TdDY0jV5ZD
- hOyCA4QoRCWo0EX7KFZLxgtjtaX69cqAPLlOIuaEDLnKWsqHq4aqcedsUZ2AzZcQxpIWB2Ahbr8
- 2frKwRUzDMsi8faQlGmer+RYOEODvlQ=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-24_03,2026-07-24_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
- clxscore=1015 adultscore=0 priorityscore=1501 phishscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607240128
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=freude@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260723144519.364701-2-stefanha@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.419,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,75 +81,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: freude@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-07-14 16:16, Daniel P. Berrangé wrote:
-> On Fri, Jul 10, 2026 at 05:28:50PM +0200, Harald Freudenberger wrote:
->> Add a new file crypto/aes-helpers.c with simple functions
->> to support some AES modes:
->> - AES cbc: AES_cbc_encrypt() AES_cbc_decrypt()
->> - AES ctr: AES_ctr_encrypt()
->> - AES xts: AES_xts_encrypt() AES_xts_decrypt()
->> and some AES related helpers:
->> - AES_xor()
->> - AES_xts_prep_next_tweak()
->> Add header file include/crypto/aes-helpers.h for these functions
->> 
->> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
->> Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
->> ---
->>  crypto/aes-helpers.c         | 106 ++++++++++++++++++++++++++++++++
->>  crypto/meson.build           |   1 +
->>  include/crypto/aes-helpers.h | 116 
->> +++++++++++++++++++++++++++++++++++
->>  3 files changed, 223 insertions(+)
->>  create mode 100644 crypto/aes-helpers.c
->>  create mode 100644 include/crypto/aes-helpers.h
+Am 23.07.2026 um 16:45 hat Stefan Hajnoczi geschrieben:
+> The binary search in search_chunk() uses s->n_chunks as the (inclusive)
+> upper bound. Chunk indices are in the right-open interval [0,
+> s->n_chunks) so it is wrong to search all the way up to s->n_chunks
+> rather than s->n_chunks - 1.
 > 
->> diff --git a/include/crypto/aes-helpers.h 
->> b/include/crypto/aes-helpers.h
->> new file mode 100644
->> index 0000000000..c1552b0e8f
->> --- /dev/null
->> +++ b/include/crypto/aes-helpers.h
->> @@ -0,0 +1,116 @@
->> +/*
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + *
->> + * AES helper functions and modes
->> + */
->> +
->> +#ifndef QEMU_AES_HELPERS_H
->> +#define QEMU_AES_HELPERS_H
->> +
->> +/**
->> + * AES_xor:
->> + *
->> + * Bitwise XOR operation between two AES blocks.
->> + *
->> + * @src1: first source buffer of AES_BLOCK_SIZE bytes
->> + * @src2: second source buffer of AES_BLOCK_SIZE bytes
->> + * @dst: destination buffer of AES_BLOCK_SIZE bytes
+> The worst case security scenario I can see is convincing a victim to
+> hotplug a malicious DMG file to a running guest, potentially causing
+> QEMU to crash when loading from memory beyond the end of s->sectors[] or
+> s->sectorscounts[]. This could be a denial of service.
 > 
-> nit-picking - the list of parameters should normally be at the
-> start of the docs comment, immediately after the function name,
-> and then the description follows
+> Fixes: CVE-2026-65929
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3844
+> Reported-by: boy juju <agx1657748706@gmail.com>
+> Reported-by: Tristan Madani <tristan@talencesecurity.com>
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
+>  block/dmg.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/block/dmg.c b/block/dmg.c
+> index 33dcb3a3498..e325127d144 100644
+> --- a/block/dmg.c
+> +++ b/block/dmg.c
+> @@ -609,7 +609,10 @@ static inline int is_sector_in_chunk(BDRVDMGState *s,
+>  static inline uint32_t search_chunk(BDRVDMGState *s, uint64_t sector_num)
+>  {
+>      /* binary search */
+> -    uint32_t chunk1 = 0, chunk2 = s->n_chunks, chunk3;
+> +    uint32_t chunk1 = 0, chunk2 = s->n_chunks - 1, chunk3;
+> +    if (s->n_chunks == 0) {
+> +        goto err; /* should never happen */
+> +    }
+>      while (chunk1 <= chunk2) {
+>          chunk3 = (chunk1 + chunk2) / 2;
+>          if (s->sectors[chunk3] > sector_num) {
 
-Ok, done -> see v13
+Fair enough to keep the fix minimal here, but is there any justification
+for manually implementing binary search instead of using bsearch()? If
+not, this could be a follow-up cleanup.
 
-> 
-> With that change made:
-> 
->   Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
->   Acked-by: Daniel P. Berrangé <berrange@redhat.com>
-> 
+Kevin
 
-Thanks for your review.
-
-> 
-> 
-> With regards,
-> Daniel
 
