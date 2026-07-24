@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D058C531F9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 08:45:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7BFAC531F9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 08:46:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnBWT-0007nm-SD; Fri, 24 Jul 2026 04:44:50 -0400
+	id 1wnBYD-00005Z-Ai; Fri, 24 Jul 2026 04:46:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wnBWR-0007na-WD; Fri, 24 Jul 2026 04:44:48 -0400
+ id 1wnBY9-00004s-I2; Fri, 24 Jul 2026 04:46:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wnBWP-0004D8-GS; Fri, 24 Jul 2026 04:44:47 -0400
+ id 1wnBY7-0004UN-Qa; Fri, 24 Jul 2026 04:46:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784882661; bh=B8cLTH1j0w9fPdVAMJZ6NA713y+3cyfLGfrN9dt99K4=;
+ t=1784882768; bh=mFuS0ZDiSWMSaUx4jNmxMfhjnlp4tPJ9fzsV26oVSVg=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=VJtsc41iLKYrvWEJ4nZ9JDx3wb52B7FIOMTGLDGHx2AbVnsibzsrm02dPu667KugM
- x6LNyRx1Ng/8hENqsyHyj6lxWyRUnIGwOrFzhTyfnAHvEoqKyCyJDLGJcR0WcRRnv3
- Vk7QfT1siRAWWn9fbnOUGnIcrNmhcQtZ/umbTovB8Uwk01NjiKI6mgFXeF80nQQr4K
- LLVlGPnBU97isPS3Y0ypbc2VBqPw8WjfINYY26t+9sglTa8iln2X3WvU2F9Bois3Vu
- xN1mZhghmTCeRlBeVCOMvOGT7TERL3jVYuzxLTqRnF0HK8qJK3RdJQkXNMjIyiP7Dc
- 3Aeu1x6Xs/hPw==
+ b=bScN7lnE9G+utnpCqHsmR3R/lGdhhse2G8hf/kD6tiVp4NSzBw3PXyupPW98dVMxg
+ 7Qa0GTIq/HZFTp3AHYKNpf6MgRGLnAN2c2miDk5nIj3y8y25xkOiEUlBO2yyPmxkbX
+ /6b5RvWcFZyDV372hcaf+FCiqg7Mg+h2fll5f+Ijd921EJ8xOzMfQJ6NSJaUmH3C0M
+ zsytj6uqDfhHHHiExfCq++LSYKKxzF9suagYMLBJFgCej9q/DkX6sUPAU+VTIosCJu
+ RdLRfdFiHxKyXG5ekEKTuI0R1PN8V6gGRgYyDM+rEnNQrndQoZmIqkX6SDfEgqAam1
+ jPH5riZDlqlUA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B9DC21C451C;
- Fri, 24 Jul 2026 11:44:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8165A1C4520;
+ Fri, 24 Jul 2026 11:46:08 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 918983F4664;
- Fri, 24 Jul 2026 11:44:42 +0300 (MSK)
-Message-ID: <a9ec828c-8023-4354-8c2d-def46c4681eb@tls.msk.ru>
-Date: Fri, 24 Jul 2026 11:44:32 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 59A843F4669;
+ Fri, 24 Jul 2026 11:46:29 +0300 (MSK)
+Message-ID: <19779728-6298-4d06-b4b4-d4788467e2ee@tls.msk.ru>
+Date: Fri, 24 Jul 2026 11:46:19 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] vfio/pci: don't narrow a failed config read to a
- plausible value
+Subject: Re: [PATCH v2 2/2] vfio/pci: reject invalid PCI_INTERRUPT_PIN values
 To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
 Cc: Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
  <clg@redhat.com>, QEMU Stable <qemu-stable@nongnu.org>
 References: <20260715191735.2454719-1-den@openvz.org>
- <20260717122232.468955-2-den@openvz.org>
+ <20260717122232.468955-3-den@openvz.org>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -89,7 +88,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260717122232.468955-2-den@openvz.org>
+In-Reply-To: <20260717122232.468955-3-den@openvz.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -116,24 +115,26 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/17/26 15:22, Denis V. Lunev wrote:
-> vfio_pci_read_config() signals a failed host-side read by returning
-> (uint32_t)-1, regardless of the requested length. vfio_intx_enable()
-> and vfio_pci_pre_reset() both narrowed that return value straight
-> into a uint8_t/uint16_t local before checking anything, which
-> truncates -1 into 0xff or 0xffff - values a real 1- or 2-byte
-> register read can legitimately produce. From that point on, a
-> failed read and real all-ones content are indistinguishable.
+> qemu-kvm aborts a few seconds after starting a VM with a
+> passed-through GPU whose PCI_INTERRUPT_PIN comes back as an
+> out-of-range value: vfio_intx_enable() only guards against pin == 0
+> and stores vdev->intx.pin = pin - 1 with no upper-bound check. That
+> value later reaches pci_irq_handler()'s
+> assert(0 <= irq_num && irq_num < PCI_NUM_PINS) via
+> pci_irq_deassert() -> pci_set_irq(), aborting the process.
 > 
-> Keep the full uint32_t result and check it against (uint32_t)-1
-> before narrowing. In vfio_pci_pre_reset(), skip the corresponding
-> write-back on a failed read instead of writing back constructed
-> garbage to the device.
+> Legal PCI_INTERRUPT_PIN values are 0 (no legacy interrupt) or
+> 1-PCI_NUM_PINS (INTA-INTD); reject anything else before it reaches
+> vdev->intx.pin, whether the out-of-range value came from a read
+> failure (now caught by the previous commit) or was handed back as
+> data by the device itself.
 > 
 > Signed-off-by: Denis V. Lunev <den@openvz.org>
 > CC: Alex Williamson <alex@shazbot.org>
 > CC: "Cédric Le Goater" <clg@redhat.com>
 
-This feels like qemu-stable material too.  I'm picking it up,
+And this one too, feels like it should go to qemu-stable.
+I'm picking it up (with context fixup for 10.0.x),
 please let me know if I should not.
 
 Thanks,
