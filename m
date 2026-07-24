@@ -4,59 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7111C531C9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 05:26:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 418DAC531F9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 06:08:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wn8Pl-0008Mb-LU; Fri, 24 Jul 2026 01:25:42 -0400
+	id 1wn94h-00026i-8j; Fri, 24 Jul 2026 02:07:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wn8Pj-0008MF-6R
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 01:25:39 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wn94f-00025G-4i
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 02:07:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wn8Pf-0001Mw-N2
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 01:25:38 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66O5PPYW053096
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 24 Jul 2026 14:25:25 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=dkjhLPwJiBVIgLYWat4RUH+y85/fQfYFQrV/Ghph1oo=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1784870725; v=1;
- b=rN+I4V6JZIhs8LYAu3ixYzKvLE1BczS9CJ4Qknb4hs5Np4/kQo3prO4WNkAWbsC6
- 0jEvrzmMlzdKRyNxWLTYGbZJG6PXWkz0k+Fyp/iU1cQPY+3ZfdoSaNpyLkBiq8D/
- e9wd3D6ozK3AlEND66iIPAV3B9Jh4eRoHKfgY2gxblrEqjC9dGgOgItEB1BNXcEc
- IB4SsKGDwIvjWJ4iRRMCPwyKLwRz47/Qt0CL0d4DH/L6vZ+wLuGCFM3yqmn5b7tG
- zfZk9MIauLsB/zV7Rg9S44wfQEKPlbFdyJ9LfyeGBzjqM84M+LO9W3KQyuQeC+H2
- Y/7DmrFDgC6tMKh2ywmuVw==
-Message-ID: <55a8dba5-a0f5-4a8d-8d3f-e9433a963960@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 24 Jul 2026 14:25:24 +0900
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wn94d-00086F-Ib
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 02:07:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784873274;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=w9O6KyIWmVVPSWAdn3TWrQGghYaE/eWA8y4KU2yeK80=;
+ b=H4+MiRZDzFTPU1MbFiu3TnWDLJnzHlbMFaXrPFa0Qb3k9XbOvDoSxfdc9I+IoDnlDrqXHT
+ pPs61Yp6XpMBEr3BPi7m3Up+UG+k3gx0ORi0H2DPWadzshb5tv+MCAI/5MWmXpevpgzOLt
+ gWwLqfhJ8EK0sVpjM4Z0v7DP0JoM3a0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-447-5sbwfBJYPbyh3dkZPeYbrg-1; Fri,
+ 24 Jul 2026 02:06:45 -0400
+X-MC-Unique: 5sbwfBJYPbyh3dkZPeYbrg-1
+X-Mimecast-MFC-AGG-ID: 5sbwfBJYPbyh3dkZPeYbrg_1784873202
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3861319540E9; Fri, 24 Jul 2026 06:06:41 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 18FA21954221; Fri, 24 Jul 2026 06:06:38 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 5554521E6920; Fri, 24 Jul 2026 08:06:36 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Connor Kite <connorkite@gmail.com>
+Cc: qemu-devel@nongnu.org,  "Michael S. Tsirkin" <mst@redhat.com>,  Stefano
+ Garzarella <sgarzare@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>,  Gerd Hoffmann
+ <kraxel@redhat.com>,  Mathieu Poirier <mathieu.poirier@linaro.org>,  Manos
+ Pitsidianakis <manos.pitsidianakis@linaro.org>,  Haixu Cui
+ <quic_haixcui@quicinc.com>,  Raphael Norwitz <rnorwitz@nvidia.com>,  Kevin
+ Wolf <kwolf@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  =?utf-8?Q?Mar?=
+ =?utf-8?Q?c-Andr=C3=A9?=
+ Lureau <marcandre.lureau@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Fam Zheng <fam@euphon.net>,  Stefan Hajnoczi
+ <stefanha@redhat.com>,  Milan Zamazal <mzamazal@redhat.com>,  Akihiko
+ Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,  Dmitry Osipenko
+ <dmitry.osipenko@collabora.com>,  qemu-block@nongnu.org,
+ virtio-fs@lists.linux.dev,  "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Eric Blake <eblake@redhat.com>,  Jason Wang
+ <jasowangio@gmail.com>,  Peter Xu <peterx@redhat.com>,  Eugenio
+ =?utf-8?Q?P=C3=A9rez?=
+ <eperezma@redhat.com>,  Alyssa Ross <hi@alyssa.is>,  Demi Marie Obenour
+ <demiobenour@gmail.com>
+Subject: Re: [PATCH RFC 03/15] backends/cryptodev-vhost-user: add memory
+ isolation bool
+In-Reply-To: <20260723-vhost-user-isolated-memory-v1-3-6b97c439eb28@gmail.com>
+ (Connor Kite's message of "Thu, 23 Jul 2026 15:30:02 -0700")
+References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
+ <20260723-vhost-user-isolated-memory-v1-3-6b97c439eb28@gmail.com>
+Date: Fri, 24 Jul 2026 08:06:36 +0200
+Message-ID: <87fr18diqb.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/display/qxl: validate primary surface stride
- against width
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-References: <20260723135909.429714-1-marcandre.lureau@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260723135909.429714-1-marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 3
+X-Spam_score: 0.3
+X-Spam_bar: /
+X-Spam_report: (0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.951,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,151 +106,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/23 22:59, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> The existing validation in qxl_create_guest_primary() checks that
-> abs(stride) * height fits in vgamem_size and that stride is 4-byte
-> aligned, but never checks that abs(stride) is large enough to hold one
-> row of pixels for the declared width and format.
-> 
-> A malicious guest can create a primary surface with a stride much
-> smaller than width * bytes_per_pixel (e.g. stride=4 for a 64-wide 32bpp
-> surface). The spice server rejects this via red_validate_surface(), but
-> the return is void and QEMU unconditionally proceeds to set up the local
-> rendering state. On the next display refresh, VNC or SDL reads width *
-> bytes_pp per scanline from a region backed by only stride bytes per
-> row, causing a host-side out-of-bounds read.
-> 
-> Add three checks in qxl_create_guest_primary() before creating the
-> surface:
->   - reject unknown surface formats
->   - reject zero width or height
->   - reject surfaces where abs(stride) < width * bytes_per_pixel
-> 
-> Also fix two related issues in qxl-render.c:
->   - qxl_blit() used abs_stride to advance the dst pointer into the
->     DisplaySurface, but when stride is negative the DisplaySurface is a
->     packed buffer whose stride may be smaller. Use surface_stride()
->     instead.
->   - qxl_render_update_area_unlocked() uses guest_head0_width (set via
->     QXL_IO_MONITORS_CONFIG_ASYNC) without validating it against
->     abs_stride, bypassing the new validation. Clamp the effective width
->     to abs_stride / bytes_pp to prevent out-of-bounds access while
->     tolerating the normal transient where the monitor config arrives
->     before the primary surface is resized to match.
+Connor Kite <connorkite@gmail.com> writes:
 
-The height is also problematic. For the same reason, guest_head0_height 
-can bypass the check in qxl_create_guest_primary(), overrunning vgamem_size.
+> Add a memory_isolation property to CryptoDevBackendVhostUser and
+> add add it as an optional member of CryptodevVhostUserProperties
+> in qapi.
+>
+> This is needed to be able to specify memory isolation for
+> cryptodev-vhost-user objects, and the bool will eventually be
+> passed to vhost_user_init() in a future patch.
+>
+> Signed-off-by: Connor Kite <connorkite@gmail.com>
 
-qxl_phys2virt(), called in qxl_render_update_area_unlocked(), is meant 
-to prevent overrunning the containing MemoryRegion, but it is also 
-ineffective because the size parameter passed to the function may have 
-overflowed; the value is calculated as abs_stride * height, so it will 
-overflow when abs_stride == 16 MiB and height == 256.
+[...]
 
-Regards,
-Akihiko Odaki
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index c55776af7d..d7ca1b4203 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -350,11 +350,15 @@
+>  # @chardev: the name of a Unix domain socket character device that
+>  #     connects to the vhost-user server
+>  #
+> +# @memory-isolation: disables access from cryptodev to guest memory.
+> +#     (default: false)
 
-> 
-> Fixes: CVE-2026-16271
-> Fixes: 3761abb16784 ("hw/display/qxl: fix signed to unsigned comparison")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3637
-> Reported-by: huntr bubble
-> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
-> ---
->   hw/display/qxl-render.c | 11 +++++++++--
->   hw/display/qxl.c        | 29 +++++++++++++++++++++++++++++
->   2 files changed, 38 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
-> index 4799c9e8befd..231cad17ee3e 100644
-> --- a/hw/display/qxl-render.c
-> +++ b/hw/display/qxl-render.c
-> @@ -27,6 +27,7 @@
->   static void qxl_blit(PCIQXLDevice *qxl, QXLRect *rect)
->   {
->       DisplaySurface *surface = qemu_console_surface(qxl->vga.con);
-> +    int dst_stride = surface_stride(surface);
->       uint8_t *dst = surface_data(surface);
->       uint8_t *src;
->       int len, i;
-> @@ -45,14 +46,14 @@ static void qxl_blit(PCIQXLDevice *qxl, QXLRect *rect)
->       } else {
->           src += rect->top * qxl->guest_primary.abs_stride;
->       }
-> -    dst += rect->top  * qxl->guest_primary.abs_stride;
-> +    dst += rect->top  * dst_stride;
->       src += rect->left * qxl->guest_primary.bytes_pp;
->       dst += rect->left * qxl->guest_primary.bytes_pp;
->       len  = (rect->right - rect->left) * qxl->guest_primary.bytes_pp;
->   
->       for (i = rect->top; i < rect->bottom; i++) {
->           memcpy(dst, src, len);
-> -        dst += qxl->guest_primary.abs_stride;
-> +        dst += dst_stride;
->           src += qxl->guest_primary.qxl_stride;
->       }
->   }
-> @@ -103,6 +104,12 @@ static void qxl_render_update_area_unlocked(PCIQXLDevice *qxl)
->       int height = qxl->guest_head0_height ?: qxl->guest_primary.surface.height;
->       int i;
->   
-> +    if (qxl->guest_primary.bytes_pp > 0) {
-> +        int max_width = qxl->guest_primary.abs_stride
-> +                        / qxl->guest_primary.bytes_pp;
-> +        width = MIN(width, max_width);
-> +    }
-> +
->       if (qxl->guest_primary.resized) {
->           qxl->guest_primary.resized = 0;
->           qxl->guest_primary.data = qxl_phys2virt(qxl,
-> diff --git a/hw/display/qxl.c b/hw/display/qxl.c
-> index b7d871b9ee33..41673c369bca 100644
-> --- a/hw/display/qxl.c
-> +++ b/hw/display/qxl.c
-> @@ -1496,6 +1496,7 @@ static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
->       QXLSurfaceCreate *sc = &qxl->guest_primary.surface;
->       uint32_t requested_height = le32_to_cpu(sc->height);
->       int requested_stride = le32_to_cpu(sc->stride);
-> +    uint32_t bytes_pp;
->   
->       if (requested_stride == INT32_MIN ||
->           abs(requested_stride) * (uint64_t)requested_height
-> @@ -1532,6 +1533,34 @@ static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
->           return;
->       }
->   
-> +    switch (surface.format) {
-> +    case SPICE_SURFACE_FMT_16_555:
-> +    case SPICE_SURFACE_FMT_16_565:
-> +        bytes_pp = 2;
-> +        break;
-> +    case SPICE_SURFACE_FMT_32_xRGB:
-> +    case SPICE_SURFACE_FMT_32_ARGB:
-> +        bytes_pp = 4;
-> +        break;
-> +    default:
-> +        qxl_set_guest_bug(qxl, "%s: unhandled format %d",
-> +                          __func__, surface.format);
-> +        return;
-> +    }
-> +
-> +    if (surface.width == 0 || surface.height == 0) {
-> +        qxl_set_guest_bug(qxl, "%s: zero dimension %ux%u",
-> +                          __func__, surface.width, surface.height);
-> +        return;
-> +    }
-> +
-> +    if ((uint64_t)surface.width * bytes_pp > abs(surface.stride)) {
-> +        qxl_set_guest_bug(qxl, "%s: stride too small for width:"
-> +                          " stride %d width %u bpp %u",
-> +                          __func__, surface.stride, surface.width, bytes_pp);
-> +        return;
-> +    }
-> +
->       surface.mouse_mode = true;
->       surface.group_id   = MEMSLOT_GROUP_GUEST;
->       if (loadvm) {
+Want imperative mood and need "since", like this:
+
+   # @memory-isolation: disable access from cryptodev to guest memory.
+   #     (default: false) (since 11.2)
+
+Pardon my ignorance...  What exactly is "cryptodev" here?  Is it code
+running in another process?
+
+Should the description answer my question?  Perhaps like this:
+
+  # @memory-isolation: isolate guest memory.  Isolated guest memory
+  #     cannot be accessed from uh, what exactly?
+
+Fill in the blank.
+
+> +#
+>  # Since: 2.12
+>  ##
+>  { 'struct': 'CryptodevVhostUserProperties',
+>    'base': 'CryptodevBackendProperties',
+> -  'data': { 'chardev': 'str' },
+> +  'data': { 'chardev': 'str',
+> +            '*memory-isolation': 'bool' },
+>    'if': 'CONFIG_VHOST_CRYPTO' }
+>  
+>  ##
 
 
