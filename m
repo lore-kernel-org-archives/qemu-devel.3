@@ -4,141 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D6ABC531C9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 06:46:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 721A5C531FA
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 07:07:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wn9fL-00035N-7X; Fri, 24 Jul 2026 02:45:51 -0400
+	id 1wn9zO-0004Gj-Q1; Fri, 24 Jul 2026 03:06:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wn9fC-00034l-M6
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 02:45:43 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wn9zK-0004GR-NK
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 03:06:31 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wn9f8-0005FV-NG
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 02:45:40 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66O4lHZR1869015
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 06:45:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ZYiRoENtHDmhA59nWTSdMz0yUv0EPN2TefBu2Y5tbKI=; b=fvP7j8L/o7M/O+QY
- +ImCTBWLJc5TPfqMO6RAhn0tcYQWClE3MrYtoAyq2hzUu8RW276MpMcaF+ES9hLB
- zVzM35T9rYRFtyPP+VZvh2GqEe5wxdPhr9XOe3eRuJo4uiRNCnLQzL82F3NVK5Xp
- YOU3NVT1XjmxzTJPOwShqJymkZn2TZx05Vpvyldu14L4oZeTHH12+iTOz6dHW2X0
- 0EnbJ4tbV80a3tIhJ1Axez04Qfwy/E92m9d/mrQBgL0KieS0UTxSnpHsPJyZvQCb
- HhzacnRf4fQsiq4DD7JoMcKTy/rNn+qj6uPr6Bh9JPqlO8cqUpFlOQTiTEqn8cUI
- tBzqEQ==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fm0pw8gue-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 06:45:36 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-51c1e6f602cso1320501cf.3
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 23:45:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784875536; x=1785480336; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ZYiRoENtHDmhA59nWTSdMz0yUv0EPN2TefBu2Y5tbKI=;
- b=Y9+XWMFRjjjjl4wNx96u8VD0LbiX+uzbWiBdW7UfVf8mIov2JhgNsodU12Yau4I5wN
- I4A/rziPCQZ2HE0/jhG2XgEkaOq9T1kb1pyB3MT4duHd16Z0Z9P5BO/q8P1MAgAqRtT0
- 1khk52/qcpzke5i42uwfwAbkYsBwZD46cjJ0aeLi5EKSWL1G+UkbZW8VWYN7zu/RF0Jd
- WCgL4wOAf4feyzHrYRC5LuA7WitqTHAOFM7QUP/qNwLarm0W2QQFYUQtjFOZdt6UW4vj
- kjlu+7hk0SsftXl86vVnOrbJJuaCbd00FoKxypGzazWskq1jYeLde5/NOBns2yFCChea
- gIGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784875536; x=1785480336;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ZYiRoENtHDmhA59nWTSdMz0yUv0EPN2TefBu2Y5tbKI=;
- b=WAcK0xiW3HkAcCoO8QE9Ij3W5ARKj0EhZpyhYjrYU7REbED8HeE4vV5xuwgNht6pSL
- riMUa0YgF8PZJPtSaJLUEA3tjDiEbGsy8LF27IaCqz0NwVzrq+PjDRVO761pOILXaYkq
- nCs29BSH0w8tUk4Sk87tXIfzXRKmSlQlsp544IIdkkiGbq/gzxpJqU0qOErFh/kSOUGZ
- jIVhxnR/zyE2Sg/zJ39VmpU22FrYASTaKMwct77EaHxhw0Emu6J35oRMtILhvDMa8+tX
- nNzK8z3wQ38WOjj1ZHu5b0P2pUmjro5ZtKjCu8HQVw2Fv7TJJJht7I2DHARDndilaqr8
- jThg==
-X-Gm-Message-State: AOJu0YwZLpH7M+oL40j+X4YF9nJRzdH84fbnnlBwF9svq7ufeHn9ctIs
- j4n7rWZ1J95aAKxcfmF7kQRmlu7dpQ4/KGHjCwEKXGa9Yn8+DctFhCTRNg0Mfd9kY33a6RLCkGT
- 0Y7bMdIJX7XyxpUKSq2QQ1gfHudTOWkuH8Mj0bfvkB+xd75zRPMM6N5/aUA==
-X-Gm-Gg: AR+sD11vJAQlq0R4OQGhvW/GwVxq9KyMAMhH6Ku52pYUpkRj6b3R1AS6pIlTm7G1dg9
- ZVptzu080d9jqWzrNn6wVkw0yq/Zi3xVB7cDRR7MNiGWnr8EHPRnavNdFgSgRuZGlzGQY2+k/sl
- HcDyPO27LUgeIFPAlE1ZHbSy8LKt0iGy+o/Ux8by6DMlZ4ShdCntQ87fGjiluO1Bahj2NOL0Fdx
- EBADOmJVItyhLYOCCm6PR4MYLwLvO8Zbi3Sm2FZKyinHbD/Al4k8DxOIuEthAN5Y6A5cVdIM1ZV
- lIJZbup9NdWgdSpR0a6stUt+9W5R8p8zL6XpTKhcTdB+Vg6eaDiFlcur1Kq/8Xgw7YJbfUpYe5r
- D2OCudeKQy7hWfupDEwWFClKV9S0=
-X-Received: by 2002:ac8:5dc8:0:b0:51c:fc4:a144 with SMTP id
- d75a77b69052e-5283ddfc1b2mr59535581cf.4.1784875536378; 
- Thu, 23 Jul 2026 23:45:36 -0700 (PDT)
-X-Received: by 2002:ac8:5dc8:0:b0:51c:fc4:a144 with SMTP id
- d75a77b69052e-5283ddfc1b2mr59535381cf.4.1784875535761; 
- Thu, 23 Jul 2026 23:45:35 -0700 (PDT)
-Received: from [192.168.1.138] ([176.176.154.185])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c531afsm21564811f8f.24.2026.07.23.23.45.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Jul 2026 23:45:35 -0700 (PDT)
-Message-ID: <8030c6a1-c389-46e3-b81e-f61cd95f1fe8@oss.qualcomm.com>
-Date: Fri, 24 Jul 2026 08:45:33 +0200
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wn9zG-00075s-Ti
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 03:06:30 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66O76Fxv095775
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 24 Jul 2026 16:06:16 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=/4t+p15nfPS5DfRhhv266CIuP+GDAfLxPajoDrklBUw=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1784876776; v=1;
+ b=pwVrE9oW2w9lLt65J2OkddrbbNeUlPwmWlQsv5/f0yXOBeYzaGF1umJ2fDv7Chlo
+ ZIsPGLWRc1woD5v6a4MPmhMU4DsIIaOuK5DJoSHFkLr5wm8Q4jOxuWbHfbvBfq5N
+ +rOOsaEGGSQ7YjZNXK+VgXmEQnM9xrC9gQgwKTt3O27ymxjUkT/Nc9MEZDsiQl3H
+ VHcC4mLC4KaHmbTtzT+yc9ATMSm/LXP2/2dXMUtGmzOv/1k+2MYwUFLonPpkwj2o
+ 9wCz5EwO6o+5dRgws38LUrR9V2CUz1OhiX+bzHHd3L7fkjPBl4xnp0uXeV1+hGbU
+ fQfbHRS1b48urkBsF8R7aA==
+Message-ID: <1c0a3f6f-8af5-463f-9542-794f41199e80@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 24 Jul 2026 16:06:15 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/riscv: Fix memory leak in
- riscv_trigger_unrealize()
+Subject: Re: [PATCH] hw/display/virtio-gpu: clear res->blob after detaching
+ backing
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+References: <20260724035949.862331-1-marcandre.lureau@redhat.com>
 Content-Language: en-US
-To: Zeng Chi <zeng_chi911@163.com>, alistair.francis@wdc.com,
- chao.liu@processmission.com, daniel.barboza@oss.qualcomm.com,
- liwei1518@gmail.com, palmer@dabbelt.com, zhiwei_liu@linux.alibaba.com
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, zengchi@kylinos.cn
-References: <9882f9e7-5c05-4a76-95f0-eb8ae8366f62@oss.qualcomm.com>
- <20260724063927.3360599-1-zeng_chi911@163.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260724063927.3360599-1-zeng_chi911@163.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260724035949.862331-1-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDA1OSBTYWx0ZWRfX/vv3kDYCmVgY
- n0Bie+Q6aB6eLVVy7tjS0xagxEmAs2HxjtekmqLzhq4o+MzP0Xk4KiXIwy2WmaRKbP/ajEpnx/9
- 1iy7KCeIR/NBPvSiUInPmmPJDiVjno9CmT7T45IC7DkbEj8Mrjt2a2/J4uEoA+on3edDJTzyy1a
- kgL0hhJkWi9prHtd5oFTd23iyFutP4GRCY+xHeFEL9SjleB9S8qZi1Kcy7USBe/5eF40rSWJdJP
- zp5fd9x/GB3Y5Zrx6B1vxJvh1tZU/Nd0euKmxiWX6PA8/qMIFXlqD9YdJ4C/OShyrd/NYVf/zqe
- 8Bj61N7KSank43A0dHwwbueJCHcxofeZjMr7uSfZQbo5vN0mVTfS50II6f4cG9KQDLh4zcNzw9G
- 7clpEC0P+c/TiTPW2RMFPzImon8sSntcr98Q+uVXSu0ZnRSepdHTHDEsWyAE+3Cx8x/u3b8aafb
- +8/36zJ88wqbVj89itg==
-X-Authority-Analysis: v=2.4 cv=RJeD2Yi+ c=1 sm=1 tr=0 ts=6a630a11 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=uVRRv9AK2fddTnT+2a2/4A==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-ORIG-GUID: ty0rOP7l-teg23e8E30IkoKZFAP7A4WX
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDA1OSBTYWx0ZWRfX+Qi3ZrgmSsRf
- mLD61+VrjtyTmN9vkHbQGouKNF7bsTQp0YGZVNHGTSliswdqU8cWh+A24+T5o97UxKDRfxSbP+X
- QEL7dI+6r3sRS3sjK1japKeoSIpabY0=
-X-Proofpoint-GUID: ty0rOP7l-teg23e8E30IkoKZFAP7A4WX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-24_01,2026-07-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 spamscore=0 phishscore=0 bulkscore=0
- impostorscore=0 clxscore=1015 adultscore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607240059
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,25 +75,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/7/26 08:39, Zeng Chi wrote:
-> From: Zeng Chi <zengchi@kylinos.cn>
+On 2026/07/24 12:59, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> In riscv_trigger_unrealize(), the per-trigger QEMUTimer objects are
-> created in riscv_trigger_realize() using timer_new_ns().  However,
-> unrealize only calls timer_del() to cancel them, but never frees the
-> timer objects themselves. This results in a memory leak every time a
-> CPU instance is unrealized (e.g., during hot-unplug or machine teardown).
+> virtio_gpu_cleanup_mapping() tears down the udmabuf mapping (or, for the
+> small-iov case, the guest memory mapping) via virtio_gpu_fini_udmabuf(),
+> but leaves res->blob pointing at it afterwards. Once a blob resource
+> goes through RESOURCE_DETACH_BACKING, res->blob is left dangling while
+> res->blob_size is still non-zero.
 > 
-> Fix it by replacing timer_del() with timer_free(), which internally
-> cancels the timer and frees its memory.  The separate timer_del() call
-> is no longer needed.
+> virtio_gpu_update_cursor_data() only checks res->blob_size before
+> copying from res->blob, so UPDATE_CURSOR on a detached blob resource
+> makes QEMU memcpy from freed memory.
 > 
-> Fixes: 820552a92e32 ("target/riscv: dynamic alloc of debug trigger arrays")
-> Signed-off-by: Zeng Chi <zengchi@kylinos.cn>
-> ---
->   target/riscv/tcg/debug.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> Clear res->blob once its backing is torn down, and check it before
+> dereferencing in virtio_gpu_update_cursor_data(), logging both invalid
+> conditions.
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com> 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+virtio_gpu_do_set_scanout() also creates scanout->ds over
+res->blob + fb->offset. RESOURCE_DETACH_BACKING leaves that surface
+installed, so a subsequent display refresh can still read the backing
+after virtio_gpu_fini_udmabuf() has unmapped it. Clearing res->blob
+alone therefore does not remove every dangling reference.
+
+> 
+> Fixes: CVE-2026-66020
+> Fixes: bdd53f739273 ("virtio-gpu: Update cursor data using blob")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3881
+> Reported-by: 章鱼哥@aipy (www.aipyaipy.com) and swing (swing@mail.exp.sh)
+
+This format deviates from the usual email address notation and confuses 
+b4. More conventionally, it should be:
+
+Reported-by: 章鱼哥@aipy (www.aipyaipy.com)
+Reported-by: swing <swing@mail.exp.sh>
+
+Regards,
+Akihiko Odaki
+
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   hw/display/virtio-gpu.c | 9 +++++++++
+>   1 file changed, 9 insertions(+)
+> 
+> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+> index cc6dbd116618..36d2bd9edee6 100644
+> --- a/hw/display/virtio-gpu.c
+> +++ b/hw/display/virtio-gpu.c
+> @@ -57,8 +57,16 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
+>       }
+>   
+>       if (res->blob_size) {
+> +        if (!res->blob) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: resource %d has no blob\n",
+> +                          __func__, resource_id);
+> +            return;
+> +        }
+>           if (res->blob_size < (s->current_cursor->width *
+>                                 s->current_cursor->height * 4)) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "%s: blob size too small for resource %d\n",
+> +                          __func__, resource_id);
+>               return;
+>           }
+>           data = res->blob;
+> @@ -968,6 +976,7 @@ void virtio_gpu_cleanup_mapping(VirtIOGPU *g,
+>   
+>       if (res->blob) {
+>           virtio_gpu_fini_udmabuf(g, res);
+> +        res->blob = NULL;
+>       }
+>   }
+>   
+
 
