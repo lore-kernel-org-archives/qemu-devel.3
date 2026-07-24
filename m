@@ -4,47 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91B3AC531F9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 08:58:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 423B8C531F9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 09:01:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnBjJ-0007y4-3C; Fri, 24 Jul 2026 04:58:08 -0400
+	id 1wnBlg-00029G-3K; Fri, 24 Jul 2026 05:00:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wnBjG-0007xo-Aa; Fri, 24 Jul 2026 04:58:02 -0400
+ id 1wnBlW-00028P-8e; Fri, 24 Jul 2026 05:00:23 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wnBjD-0006PZ-M9; Fri, 24 Jul 2026 04:58:02 -0400
+ id 1wnBlT-00078t-8e; Fri, 24 Jul 2026 05:00:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784883456; bh=5oiWkV2EOJxeHtDDTVtQeBJ+P4S9mtBecJDapvOZh28=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=ZUlQ57w8CQqsGPd51FMxuIh4lOeIS06X8Qoq7q5tFq7c9vwEwh5r1IlINCABnpiTu
- fIUI/cvxAaM5XwGHyNwdz5SbsRq6dKmooq1Kn0NwJ/nNNND/sAX/vQqBKF7bkP7f/G
- 6Yw7tF8xSRjJFEMV3kdggSVnnWtl6MX1tjHsjVvHZC09kb0XQVCUb20FAm6hS69dFT
- VFZ0SN+92ASUpGSqt96OEptLEIGihCuvm2vgv88ArIutwCY9EseSnPiYcEhJWrG8LG
- NoJD8E8je4xbj4Lq54FnW+uzfYyMFD32ejOIZB15OKUpfCrVU+oAMS91pc2JF12DRZ
- zGzG1nXR9FL7w==
+ t=1784883595; bh=+dGGgZcomi7UbNEaKo3g5JzrgmdKf/Lpd2Bkpx4k3NI=;
+ h=Date:Subject:To:References:Cc:From:In-Reply-To;
+ b=neSHHJSTwWuLkpYeEeqDXEVEYl4lygKue34ljcJPCfcOu3MLg5bZ5WMiQZypJ0/td
+ UNL86jMVDE1NRaHLRzVVgEUwhgWo1/V69smcgw8A/YujryNej/ryciqBCxaD/pJQ+g
+ aBMUEGTYQRisz17sVaPNUaFdXFhsMGzA9HP2nM9DB8LzLxa/TSu0bl0NETocjJJNDJ
+ gHtKDnD7WkSc8eGFgvyP0SwTHUvGPx/zGS7V5RDXohuh0JG2X86N2p4buDTlWx0sFW
+ ipIM2lCMZoHXPs0gr+JhOLAyZIe8aGU2IO70Lku6UtLTSLlQesHQ0CNpfp2mKSIa9H
+ 9VS9/c0X1J0fw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0DBA71C4534;
- Fri, 24 Jul 2026 11:57:36 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3C4061C453B;
+ Fri, 24 Jul 2026 11:59:55 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E18BB3F4676;
- Fri, 24 Jul 2026 11:57:56 +0300 (MSK)
-Message-ID: <6cbeff32-cced-4b50-b898-13302525f576@tls.msk.ru>
-Date: Fri, 24 Jul 2026 11:57:47 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1A9613F467C;
+ Fri, 24 Jul 2026 12:00:16 +0300 (MSK)
+Message-ID: <2a93b410-1d6a-42af-a9da-4d5fbee5960d@tls.msk.ru>
+Date: Fri, 24 Jul 2026 12:00:06 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/i386: helper_sysret(): Check that RCX contains
- a canonical address when emulating an Intel CPU
-To: Andrey Polivoda <apolivodaa433@gmail.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- QEMU Stable <qemu-stable@nongnu.org>
-References: <20260608091815.31303-1-apolivodaa433@gmail.com>
+Subject: Re: [PATCH] scsi-disk: protect against guest sending truncated data
+ for MODE SELECT commands
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20260721161904.363367-1-pbonzini@redhat.com>
 Content-Language: en-US, ru-RU
+Cc: QEMU Stable <qemu-stable@nongnu.org>
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
@@ -89,7 +87,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260608091815.31303-1-apolivodaa433@gmail.com>
+In-Reply-To: <20260721161904.363367-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -115,31 +113,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/8/26 12:18, Andrey Polivoda wrote:
-> Intel and AMD CPUs implement SYSRETQ instruction differently.
-> One of these differences is whether a canonicality check of the address that
-> will be loaded to RIP is performed: Intel CPUs do this check, AMD CPUs don't.
+On 7/21/26 19:19, Paolo Bonzini wrote:
+> scsi-disk has a MODE SELECT path where a truncated mode page can be
+> allowed by a compatibility quirk, but the parser continues to use the
+> page's declared length rather than the number of bytes actually remaining
+> in the request buffer.  This means that scsi_disk_check_mode_select() and
+> scsi_disk_apply_mode_select() can read beyond the valid part of inbuf[],
+> potentially up to the emulated age's length.
 > 
-> Currently, QEMU does not perform this check when emulating Intel CPUs.
-> This patch corrects this by implementing the canonlicality check on a new RIP
-> value from RCX and performing it only when emulating Intel CPUs.
+> Clamping page_len (the size of the page) to len (whatever the
+> guest provided) ensures that scsi_disk_check_mode_select() and
+> scsi_disk_apply_mode_select() do not access anything beyond bounds;
+> however, this requires care to accept and handle truncated input in
+> those two functions.
 > 
-> Flags and segment registers' caches are updated only after checking the new RIP
-> value to ensure that CPU state is not modified in case the #GP(0) exception
-> is raised due to the check failure.
+> In particular, until scsi_disk_check_mode_select()'s first call to
+> mode_sense_page() the number of bytes to be cleared in mode_current[] is
+> unknown, so zero it completely.  And for everything else, be conservative
+> and use len when providing inputs to other functions; but at the same time,
+> ensure all accesses to inbuf[] are bound by expected_len.
 > 
-> Cc: qemu-devel@nongnu.org
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Richard Henderson <richard.henderson@linaro.org>
-> Fixes: 14ce26e75513 ("x86_64 target support")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3223
-> Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
+> Note that pages longer than the emulated one are still rejected.
+> 
+> Fixes: 389e18eb9aa4 ("scsi-disk: add SCSI_DISK_QUIRK_MODE_PAGE_TRUNCATED quirk for Macintosh")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4051
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   hw/scsi/scsi-disk.c | 21 +++++++++++++--------
+>   1 file changed, 13 insertions(+), 8 deletions(-)
 
-I'm picking it up for the stable series.  This issue has been with us since
-the day one, but since there's a bug/issue filed about it, it bothers
-people.
-
-Please let me know if I shouldn't pick it up.
+I'm picking this up for qemu-stable.
+Please let me know if I shoudn't.
 
 Thanks,
 
