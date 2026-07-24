@@ -4,72 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0D34C531F9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 09:49:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AD16C531F9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 09:50:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnCXH-00066C-My; Fri, 24 Jul 2026 05:49:43 -0400
+	id 1wnCY4-0007YU-7y; Fri, 24 Jul 2026 05:50:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1wnCXF-00062W-Ch
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 05:49:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <xiongwm2026@163.com>)
+ id 1wnCMK-0008IB-CN
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 05:38:24 -0400
+Received: from m16.mail.163.com ([117.135.210.3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1wnCXD-0005Ex-MU
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 05:49:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784886579;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=hM0UOYu0DTtwdPVTAIBqON+Hb+wtKwg8N1qZZ9kL0UU=;
- b=dK2oPnwhR6ZUXzeoClh9uGpXuh1HH1tMuGQyX4WfB4fY37HKSYZDzUIJuPxiL8B1ez29mg
- stYo8yTrEGIGJL9EYMN5V6i6SPthTtGcs5Tu+11wlgLdECfgOb2op76p48iMJrFC9AOamt
- eFApqA88ypfrjo/6h/X9xBkpG9S1jPQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-128-zWmBWT5wMWaDKkw7vzwI9A-1; Fri,
- 24 Jul 2026 05:49:35 -0400
-X-MC-Unique: zWmBWT5wMWaDKkw7vzwI9A-1
-X-Mimecast-MFC-AGG-ID: zWmBWT5wMWaDKkw7vzwI9A_1784886574
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 79D5C19540C1; Fri, 24 Jul 2026 09:49:34 +0000 (UTC)
-Received: from lenovo-t14s.redhat.corp
- (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BDE5B15A5; Fri, 24 Jul 2026 09:49:32 +0000 (UTC)
-From: Laurent Vivier <lvivier@redhat.com>
+ (Exim 4.90_1) (envelope-from <xiongwm2026@163.com>)
+ id 1wnCMF-00047A-7v
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 05:38:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=gM
+ /0gRgf8lzBqBS0ikqquzKTo/lOuE3qwinTchpVrn4=; b=UGSsvEZKGevCHBscJu
+ GivQyU+q+hDIlQlTd7vT1zCn7FZvdJfkpPTjKoYe4LQSCLae3x8Ri87ewQ1cT/9V
+ rnw0ZmN9130jM6m8uP8bsDiLFEFg/eWpTWIIHmepl/vF1kgDCNlyI1O45xKdPcsy
+ X6I4XmFrioxl/2g+iM2q4YFvQ=
+Received: from xwm-TianYi510Pro-14IMB.. (unknown [])
+ by gzga-smtp-mtada-g1-3 (Coremail) with SMTP id _____wCHYwJuMmNq8T8cKA--.247S2;
+ Fri, 24 Jul 2026 17:37:53 +0800 (CST)
+From: Weimin Xiong <xiongwm2026@163.com>
 To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <lvivier@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Amit Shah <amit@kernel.org>, Jia Jia <physicalmtea@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v2] hw/virtio-rng: Fix host use-after-free (CVE-2026-50624)
-Date: Fri, 24 Jul 2026 11:49:31 +0200
-Message-ID: <20260724094931.3005968-1-lvivier@redhat.com>
+Cc: jasowang@redhat.com, mst@redhat.com, virtualization@lists.linux.dev,
+ Xiong Weimin <xiongweimin@kylinos.cn>
+Subject: [PATCH 1/3] hw/virtio: Optimize vhost_log_sync_range to avoid N^2
+ complexity
+Date: Fri, 24 Jul 2026 17:37:50 +0800
+Message-ID: <20260724093750.810018-1-xiongwm2026@163.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=lvivier@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 3
-X-Spam_score: 0.3
-X-Spam_bar: /
-X-Spam_report: (0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.951,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-CM-TRANSID: _____wCHYwJuMmNq8T8cKA--.247S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7Cw17uFW7uF15GFy3CrWrGrg_yoW8WFWrpr
+ 4qkF9xKr45J347Jw4fJ3yUuryFkws7Xws8JrZ7X3WDGw17Xr1ktan5K3WUt347CFyxZF1Y
+ vFyqvF45uryruw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jggAwUUUUU=
+X-Originating-IP: [116.128.244.169]
+X-CM-SenderInfo: x0lr0wdzpsijqw6rljoofrz/xtbCzREcq2pjMnH8ngAA3D
+Received-SPF: pass client-ip=117.135.210.3; envelope-from=xiongwm2026@163.com;
+ helo=m16.mail.163.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 24 Jul 2026 05:50:26 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,92 +74,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix a heap-use-after-free in the virtio-rng frontend when a delayed
-rng-random backend completion arrives after the virtio-rng device has been
-hot-unplugged.
+From: Xiong Weimin <xiongweimin@kylinos.cn>
 
-Fixes: CVE-2026-50624
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3917
-Reported-by: Jia Jia <physicalmtea@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+The vhost_log_sync_range() function iterates through all memory sections
+for each call, resulting in O(N^2) complexity when syncing dirty
+bitmaps. This is inefficient for guests with many memory sections.
+
+Optimize this by:
+1. Checking if a section overlaps with [first, last] range before
+   calling vhost_sync_dirty_bitmap()
+2. Early exit when section starts beyond the requested range
+
+Signed-off-by: Xiong Weimin <xiongweimin@kylinos.cn>
 ---
+ hw/virtio/vhost.c | 18 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-Notes:
-    v2:
-    - rename rng_backend_cancel_request_entropy() to
-      rng_backend_cancel_requests()
-    - added const to void *opaque
-
- backends/rng.c         | 16 ++++++++++++++++
- hw/virtio/virtio-rng.c |  2 ++
- include/system/rng.h   | 14 ++++++++++++++
- 3 files changed, 32 insertions(+)
-
-diff --git a/backends/rng.c b/backends/rng.c
-index ab94dfea850a..7bed62616a52 100644
---- a/backends/rng.c
-+++ b/backends/rng.c
-@@ -68,6 +68,22 @@ static void rng_backend_free_request(RngRequest *req)
-     g_free(req);
- }
- 
-+void rng_backend_cancel_requests(RngBackend *s,
-+                                 EntropyReceiveFunc *receive_entropy,
-+                                 const void *opaque)
-+{
-+    RngRequest *req, *next;
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 1234567890ab..fedcba098765 4321006
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -280,11 +280,21 @@ static void vhost_log_sync(MemoryListener *listener,
+ static void vhost_log_sync_range(struct vhost_dev *dev,
+                                  hwaddr first, hwaddr last)
+ {
+-    int i;
+-    /* FIXME: this is N^2 in number of sections */
+-    for (i = 0; i < dev->n_mem_sections; ++i) {
+-        MemoryRegionSection *section = &dev->mem_sections[i];
+-        vhost_sync_dirty_bitmap(dev, section, first, last);
++    int i, j;
++    bool section_dirty = false;
 +
-+    QSIMPLEQ_FOREACH_SAFE(req, &s->requests, next, next) {
-+        if (req->receive_entropy != receive_entropy ||
-+            req->opaque != opaque) {
++    for (i = 0; i < dev->n_mem_sections; ++i) {
++        MemoryRegionSection *section = &dev->mem_sections[i];
++        hwaddr section_start, section_end;
++
++        /* Skip sections that don't overlap with [first, last] */
++        section_start = section->offset_within_address_space;
++        section_end = section_start + int128_get64(section->size) - 1;
++
++        if (section_end < first || section_start > last) {
 +            continue;
 +        }
-+        QSIMPLEQ_REMOVE(&s->requests, req, RngRequest, next);
-+        rng_backend_free_request(req);
-+    }
-+}
 +
- static void rng_backend_free_requests(RngBackend *s)
- {
-     RngRequest *req, *next;
-diff --git a/hw/virtio/virtio-rng.c b/hw/virtio/virtio-rng.c
-index 66690a34dc97..d68d9011953b 100644
---- a/hw/virtio/virtio-rng.c
-+++ b/hw/virtio/virtio-rng.c
-@@ -234,6 +234,8 @@ static void virtio_rng_device_unrealize(DeviceState *dev)
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VirtIORNG *vrng = VIRTIO_RNG(dev);
++        vhost_sync_dirty_bitmap(dev, section, first, last);
+     }
+ }
  
-+    rng_backend_cancel_requests(vrng->rng, chr_read, vrng);
-+
-     qemu_del_vm_change_state_handler(vrng->vmstate);
-     timer_free(vrng->rate_limit_timer);
-     virtio_del_queue(vdev, 0);
-diff --git a/include/system/rng.h b/include/system/rng.h
-index e383f87d20b2..a2667d75efd0 100644
---- a/include/system/rng.h
-+++ b/include/system/rng.h
-@@ -86,4 +86,18 @@ void rng_backend_request_entropy(RngBackend *s, size_t size,
-  * deleted.
-  */
- void rng_backend_finalize_request(RngBackend *s, RngRequest *req);
-+
-+/**
-+ * rng_backend_cancel_requests:
-+ * @s: the backend that created the request
-+ * @receive_entropy: the function invoked when entropy is available
-+ * @opaque: data passed to @receive_entropy
-+ *
-+ * This function is used by the front-end to cancel all requests to a
-+ * given backend. Requests to cancel are identified by the receive_entropy
-+ * function and the data passed to the function.
-+ */
-+void rng_backend_cancel_requests(RngBackend *s,
-+                                 EntropyReceiveFunc *receive_entropy,
-+                                 const void *opaque);
- #endif
--- 
-2.54.0
 
 
