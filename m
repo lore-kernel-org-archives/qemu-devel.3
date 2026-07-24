@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B27FEC531FA
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 08:51:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 062EFC531F9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 08:52:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnBct-0002iF-1R; Fri, 24 Jul 2026 04:51:27 -0400
+	id 1wnBdW-0003f6-4d; Fri, 24 Jul 2026 04:52:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wnBcn-0002fo-Fh; Fri, 24 Jul 2026 04:51:21 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wnBdV-0003dA-3H
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 04:52:05 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wnBcj-0004yK-CI; Fri, 24 Jul 2026 04:51:20 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wnBdT-00051P-Li
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 04:52:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784883053; bh=lmYlPeF2ncWMNMkF1jLhFDgZqORmCI+CUvuOfK/b0Mw=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=Wo4J9hXoEGOojbS1UMc/OowKcQ/xqFORzOEOMn5V2liGs4UlHKE1jueZtt7J1cJqA
- AIy4CPaIb6b4yl7DJFnC1Z3IkhwoyFFR5HghI9gdiRI5qVknrC5JPb9hm+vHsrHmBt
- Uji2jvxvbL8s3kZlXuyuO1EzjbS0ljUoL6zOzJx+iibynuv30W6F778act4m5D+nkC
- oRqF+Wu1hIf//T5lWdJwxZ0TANhw1WURtpziFIk7cg5YeXMC57UMusBKfzPr01YbRQ
- rIBzScTejphB46kaewSU3PrrfP2jcukbTZdO5qkVtbYKvVHlDKmS0pT91K4aOASlYN
- EYPi/DUeu2SFg==
+ t=1784883100; bh=uz2Pn6uj7YupoGlyWDrBYHE6fjvE9hHU0C6s7YU5Hug=;
+ h=Date:Subject:To:References:From:In-Reply-To;
+ b=GgTze3gsTNSYZg6XOTFwrSbivXgWYo0XeJH294qrheY4Sg7LvodzMWVEAJe/THy5X
+ D6z/haFzrap5yW5if8tlrwG4EsD75hNEMmxJks5df5hJ30+RBDQ9MEvWeeVMWLdwwf
+ 3m7vdKUo6sIrEX/nIzdDpKre3s63qc7np6He4HsCAUJFxFZjd20a+GBJvzEe4AMYxz
+ X2TtM0Ct3a5QcH3AQ9AP0QgOgmruD1POHazjhbAzskug4W2ZaDJr/6nyqn85jd+38O
+ OLdVSIgSAZYBjm+w3ai9ox0bMzSV/On9v1+UqpvHxgeTLxnEcF7Zal/Iz3tfsYI6vq
+ 3y3qoaOpV357A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 61D501C4528;
- Fri, 24 Jul 2026 11:50:53 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B864F1C452B;
+ Fri, 24 Jul 2026 11:51:40 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3C48D3F466E;
- Fri, 24 Jul 2026 11:51:14 +0300 (MSK)
-Message-ID: <5828b987-9b58-4f44-b942-322399b99c6a@tls.msk.ru>
-Date: Fri, 24 Jul 2026 11:51:04 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9D0863F466F;
+ Fri, 24 Jul 2026 11:52:01 +0300 (MSK)
+Message-ID: <ab0a39c0-ee38-4483-9b3b-eb7699a584ee@tls.msk.ru>
+Date: Fri, 24 Jul 2026 11:51:51 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/6] vfio-user: validate server responses
+Subject: Re: [PATCH v2 6/6] vfio-user: vfio_user_device_io_device_feature:
+ prevent buffer overflow
 To: Thanos Makatos <thanos.makatos@nutanix.com>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: John Levon <john.levon@nutanix.com>, "clg@redhat.com" <clg@redhat.com>,
- QEMU Stable <qemu-stable@nongnu.org>
 References: <20260720091718.2642-1-thanos.makatos@nutanix.com>
  <20260720135823.21070-1-thanos.makatos@nutanix.com>
+ <20260720135823.21070-7-thanos.makatos@nutanix.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -89,7 +89,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260720135823.21070-1-thanos.makatos@nutanix.com>
+In-Reply-To: <20260720135823.21070-7-thanos.makatos@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -116,25 +116,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/20/26 16:58, Thanos Makatos wrote:
-> This patch series fixes some bugs where the vfio-user client doesn't
-> properly validate information returned by the vfio-user server.
-> 
-> Thanos Makatos (6):
->    vfio-user: vfio_user_get_region_info: prevent buffer overflow
->    vfio-user: vfio_user_get_region_info: respect max_xfer_size
->    vfio-user: vfio_user_get_region_info: reject unreasonably short struct
->    vfio-user: vfio_user_get_region_info: prevent excessive malloc
->    vfio-user: vfio_user_device_io_get_region_info: fix capability check
->    vfio-user: vfio_user_device_io_device_feature: prevent buffer overflow
-> 
->   hw/vfio-user/device.c | 40 +++++++++++++++++++++++++++++++++++++---
->   1 file changed, 37 insertions(+), 3 deletions(-)
+> This isn't in practise a problem since feature->argsz is not
+> externally provided, it's a good hardening step nonetheless.
 
-I'm picking this patch set for the stable-11.0 branch, except of the
-last change which fixes a problem introduced after v11.0.0.
-Please let me know if I shouldn't.
+"In practiCe", fwiw (it's applied already).
 
 Thanks,
 
 /mjt
+
 
