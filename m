@@ -4,123 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C35F6C531C9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 13:57:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A31F9C531F9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 13:59:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnGP2-0001A9-GW; Fri, 24 Jul 2026 09:57:28 -0400
+	id 1wnGR9-0002P0-Rl; Fri, 24 Jul 2026 09:59:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wnGOq-00017n-ON
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 09:57:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <1640586082@qq.com>)
+ id 1wnGR1-0002Js-Og; Fri, 24 Jul 2026 09:59:36 -0400
+Received: from out162-62-57-87.mail.qq.com ([162.62.57.87])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wnGOn-0003DF-HD
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 09:57:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784901432;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1dQOBuMI9sXL4Mip3rFFIvGFdtw19KvQOKzFVyGg/DE=;
- b=PCbncmcWzwYvZzYnk35LrMDusbSvVdrnfWIummmL13LkLVGYAXefDYxrEnNLtEN/4fstlI
- CEyRkmQeUT8c4baBQ3T6jNYbfUcjtbsmEQ8zOQDng0jw1kszRvMWEcGpTSl62vvlVN7vwW
- a6c6ufmyKvwfEEc1na+mEKAS7ZdwWo0=
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-6-yrl9JPKfNXy707gX65ymEw-1; Fri, 24 Jul 2026 09:57:09 -0400
-X-MC-Unique: yrl9JPKfNXy707gX65ymEw-1
-X-Mimecast-MFC-AGG-ID: yrl9JPKfNXy707gX65ymEw_1784901428
-Received: by mail-lf1-f69.google.com with SMTP id
- 2adb3069b0e04-5aeb72bda2aso319822e87.2
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 06:57:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784901428; x=1785506228; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=1dQOBuMI9sXL4Mip3rFFIvGFdtw19KvQOKzFVyGg/DE=;
- b=Zm2mlDf9yrHhEjSkYJmM4R5x2LMRp9cQLgnH9gkDeXaN4BMzgXktPuGNk9z/JOFiUE
- 8TFyvJbHGkgR6oKP9Ecn5Ggl5zWdxaPEAnuGFsLNIGyVW0cWViHITWiSd8wumPhKhkda
- OSzCEpYOwTm89XrMZrpwXuDZS16zGPEpzYxfJPpWJQ96Jk1Unh0T/CEB3bcSsehXqZOp
- yZcHmNb8UvzqF7ltf5wSJi6TXWlr+fIJpjecsFi7WDf3RE9U2QQp4UBAlcJi+6J14Iyf
- el+7bFe51jRsQ7nevQxZYu76udPWIouikqC/HOdEiW/rraIg5kAZSas6if1qDZ6YhSy4
- GECQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784901428; x=1785506228;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=1dQOBuMI9sXL4Mip3rFFIvGFdtw19KvQOKzFVyGg/DE=;
- b=epuOfnUtz7gN0MA4OQ7sgh1go4Cb7T1TaK4LJXWDokLB66tDwvmbb8vcpxpOcnDTXu
- 31jXeHyk0t9i11QhHO76XZ22Ar8lT+KaDrCr0lTzITQKT6fNQe0M4pNBkkpEte9n14oO
- 4VLy5nvc7PP1eKK3+GD6GZ6MroTpUWm+ZHnqTxkr2/etODed2IJzEWOs/4Nuc6/In560
- 6tq0/R8SapzhtwxeZL1z6ZNUSTzchz/PtJ9YzUnXTwUzbdqrQqhROi06IxzuTcpArfSX
- w3TT8hSaL3vfDC8DD2fjaSl7Wgq5n59VWEyovPYpXEq68PwkwVpE1znG8J2teH8paqE8
- ybHg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqXxq+B6xWum9MviRaZM1Ef+X2JSEmhx9nBl3iYGEiQpaPDNwLMAm9JEhrhvHHHw2t44OoUb44577UC@nongnu.org
-X-Gm-Message-State: AOJu0YzqxErmq25AiPFLmuqODS6J+BBYBiRanHUibG4jbTBO7C/j5vu0
- cfZWypgx8ST0mTqN+PqDnFX3OWURiX5Cw965FdFFiLIc2MG8JYkSb3yGXcoQiw/iFxXOAas5M3a
- BKjexda4ewXhRIxYlrFjO7V/8KmwxVew2qQsOzAtwq52IYGBueK0EhHIq
-X-Gm-Gg: AR+sD12wzBxlDvwZw/bjX6ib17PAgtOF5X7FtWlEXQ+3LDCF8Xk70xa5MHbzDlJ/UcG
- wmTr4L7UhS7Q774/vSSCq8BHGOoiT4KxAsAHmC0HL9Md1XHOMVKGoZLI2arF9+2HfLH9APENS8Q
- snYWSn+w2A0LIbTsdNt9U7d3alFnhjrQ4/V6nunNob2138/epC/3uYoyMbhl9Txc98hsazYp0+I
- lRrSMP1C4Q8duJQSSQ5voR4OpuDe4r7FsQ/vJFRqjvQmCW9KIxtZRDSTyAVeUPsry8AHJMCxsnY
- 6v+n6o9yeTennbpnZgHlAaG/3jFOmZTI8TJA5RhRbtSlsP2+oorDdLMKF+wdXKdbTQaf
-X-Received: by 2002:a05:6512:23d8:b0:5b0:eda:de25 with SMTP id
- 2adb3069b0e04-5b2b2e53023mr953351e87.6.1784901427577; 
- Fri, 24 Jul 2026 06:57:07 -0700 (PDT)
-X-Received: by 2002:a05:6512:23d8:b0:5b0:eda:de25 with SMTP id
- 2adb3069b0e04-5b2b2e53023mr953338e87.6.1784901427003; 
- Fri, 24 Jul 2026 06:57:07 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5b2a9f5361bsm1536264e87.84.2026.07.24.06.57.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jul 2026 06:57:05 -0700 (PDT)
-Date: Fri, 24 Jul 2026 09:56:48 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Gavin Shan <gshan@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, alex@shazbot.org,
- richard.henderson@linaro.org, berrange@redhat.com, philmd@mailo.com,
- david@kernel.org, clg@redhat.com, pbonzini@redhat.com,
- phrdina@redhat.com, jugraham@redhat.com,
- liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn,
- shan.gavin@gmail.com, qemu-s390x <qemu-s390x@nongnu.org>
-Subject: Re: [PATCH v3 1/2] system/memory: Use qemu_ram_{copy, move}() in ram
- device region accessors
-Message-ID: <amNvIMizFp7Au2c3@x1.local>
-References: <59882c5b-545d-4768-8bf4-723fed97a801@redhat.com>
- <al-eCtxGjG4HHEbl@x1.local>
- <6210e178-a93f-4411-810a-41edb1fb656e@redhat.com>
- <20260722015422-mutt-send-email-mst@kernel.org>
- <amDyvgR09OJssENX@x1.local>
- <20260723015708-mutt-send-email-mst@kernel.org>
- <71d88d00-5b41-49d2-b649-8a6ea47abc4d@oss.qualcomm.com>
- <20260723045428-mutt-send-email-mst@kernel.org>
- <amIbUYN3teCLXTh-@x1.local>
- <b05b40b1-fffd-4be5-9289-b5bc92c16cd2@redhat.com>
+ (Exim 4.90_1) (envelope-from <1640586082@qq.com>)
+ id 1wnGQt-0003Q7-JJ; Fri, 24 Jul 2026 09:59:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1784901554; bh=7I0Ko9ijW0DwZ6SwMqv5K/3awc0sv8+a5ZwtdkNpRgE=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc;
+ b=xlyuInB0Z0JjxFvXtROunMI44FNf8bUO4zdERjkE0N+ZzhBLHf961Up4JWW2+vuWA
+ 4PTT9dSpzhJTEhYAbUg1ZjqTxsb9wiL1W/eX94AhZubrlsXIrLHOJ5wD7GKQHHyaRy
+ HG6cCQGaa66wP7ICxYhWNe6hd/w29Kwryf5vXFCo=
+Received: from [127.0.1.1] ([240e:3bb:a98:9fe1:fbb4:4428:c3bc:a339])
+ by newxmesmtplogicsvrszb51-1.qq.com (NewEsmtp) with SMTP
+ id EC68C209; Fri, 24 Jul 2026 21:59:06 +0800
+X-QQ-mid: xmsmtpt1784901550tdvy6alle
+Message-ID: <tencent_E2BAF42CFD13BEF8575DFE5D7F98B1431406@qq.com>
+X-QQ-XMAILINFO: ON4Otgf7Gr7tvN0dZOZCVhRjUZe+Bhl1uZ4gTYAzsl1njbZXqg4Ofml0nsOAqm
+ XPPwCXlaMYAUn6yP/BZKlRXa/vjH/Opjmnr7fbyPSy6Fs25S9noI+PaQ4cO+tUB03m8Qylzb44kb
+ gYrh3Mc8/OgdkULoBw3SMGS5+J4QJbHacXybczBw/+8yYmDCaeHvtkc1UIRTNRBoQRhGHXNPhbl8
+ vwIvVkvUjept//1h8zJwedhBP7T+nxpB5ozR5WE5zCR4blJE4KbVtR51T69TvuEniYp2HJPNKtDB
+ DbJ+mmn+nUwam/tSyYrVFyH0+csMEsBd2xHmGi9P8CaSYJZ1cHCFtGc6txfT8WfoGhxCMlHSIxzU
+ QI5x7p37IGP0nnsUJYAhBWJdAcVqLNssJjhcEdZBVySHCCuCs8EasOe2VWWZYBnV56SMv+nNIxTo
+ D7B55TC3r0sbuV7nL5bMfnGL3o+5YqVmAr41oZzqyXwUpfyi1eHsFT55qRyI7TeRXQjW8f62sLaX
+ Sbd767iqSMRrE5g2vk23Dh1HK69q2XwW3oUK6HyjgGsBLOQQn2Fe8JmLt4lOENqCjtR43hsdl07v
+ Fld7nv05Ep/crRcYoZkOUhPat4Y0HeZOqOYnGoKAQto0B2zdw6QyBsrVPXmzsEt4yIPIOjs+PNu/
+ SrjWVPUyBSwkZratsNvHwRNcTGG1FLmBpiydWjqA7GioZXlVz2ZvBf0pCAQWM7q5TqfsPL60G7St
+ k5vo6ioCuDCNfLm4f4IhJbEj70KfP6dJP2ACD2D09+s695h7wrpy1NdiwUpC682UbAEAjWJRW3Rs
+ c6+p2LPkuNVJzh5V4zOjVxUi/tgamwF/5jwscRIC1GHPZ8QN2m3YdVmX+Ei04h2EJm8EVYw2rh/7
+ Sii5SFTAvCACxF4sM0fEO7JLGi6NbBL49Xj9WlSV6w284RA5GZ0LZzA0hjkytk88BAQxEHWAUfM+
+ KQ1UzPDvvmtwHfOnuEBsLG4BJwgGNybCDE1KvJfuhyoaMqdE8m7Rj0U6NDkoumV8iJuRKfAfgnSe
+ qsYbKv2kGJGZXpmQFIsbF+ZaWw46IPcyttl7+Sk2/nfXQP74KhVQzs4zOUYIFbVSoE7rNMNOIxGB
+ FXxBuRbX81GAc6peoqd6uGD/2XMhvLRN0g2oTf1fmNXMQKbmxJrVP5CHPqZHxgYcLLtmEHg8UGGt
+ W9te12oY/d9VQse1xb2/SHlLQVIwJA9Kc/cHZmwe2SpLxqp3Mr0EoGVCKezQKYT+k2efE=
+X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
+From: zhenbaii <1640586082@qq.com>
+Date: Fri, 24 Jul 2026 21:58:59 +0800
+Subject: [PATCH 1/3] hw/char: add K230 DW 8250-compatible UART
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <b05b40b1-fffd-4be5-9289-b5bc92c16cd2@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.419,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-OQ-MSGID: <20260724-k230-uart-v2-v1-1-4c0657a703e5@qq.com>
+References: <20260724-k230-uart-v2-v1-0-4c0657a703e5@qq.com>
+In-Reply-To: <20260724-k230-uart-v2-v1-0-4c0657a703e5@qq.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Chao Liu <chao.liu.zevorn@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ zhenbaii <1640586082@qq.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1784901547; l=36908;
+ i=1640586082@qq.com; s=20260721; h=from:subject:message-id;
+ bh=hB2HLWR8A+ZEsdwyM1vJmst7Tv2nNaHUuWdnAeavC4I=;
+ b=OPNcWe7HVfu33wFmsYjBiRkaW1baDuEcte2OAmLUvq5r0uzrDny7NivL8oa6bcBAo1JwNZKVB
+ /stVMaBrGR8C5D7XdwhA0KJVzD194GQUdj/o6amZxIz0R5yt9KmbBkx
+X-Developer-Key: i=1640586082@qq.com; a=ed25519;
+ pk=AjRy6i+I/zX9djX87K/xR2OQ2Myy7s7j7bDdi9Qz3zw=
+Received-SPF: pass client-ip=162.62.57.87; envelope-from=1640586082@qq.com;
+ helo=out162-62-57-87.mail.qq.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HELO_STATIC_HOST=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,203 +99,1105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 24, 2026 at 11:42:09AM +1000, Gavin Shan wrote:
-> On 7/23/26 11:46 PM, Peter Xu wrote:
-> > On Thu, Jul 23, 2026 at 05:05:08AM -0400, Michael S. Tsirkin wrote:
-> > > On Thu, Jul 23, 2026 at 10:52:11AM +0200, Philippe Mathieu-Daudé wrote:
-> > > > On 23/7/26 08:04, Michael S. Tsirkin wrote:
-> > > > > On Wed, Jul 22, 2026 at 12:41:34PM -0400, Peter Xu wrote:
-> > > > > > On Wed, Jul 22, 2026 at 01:58:18AM -0400, Michael S. Tsirkin wrote:
-> > > > > > > On Wed, Jul 22, 2026 at 10:53:27AM +1000, Gavin Shan wrote:
-> > > > > > > > On 7/22/26 2:27 AM, Peter Xu wrote:
-> > > > > > > > > On Tue, Jul 21, 2026 at 03:37:53PM +1000, Gavin Shan wrote:
-> > > > > > > > > > If Peter is fine with two variants for x86 and non-x86 architectures.
-> > > > > > > > > > I can post (v4) for further review. That will be something like below
-> > > > > > > > > > and let me know if there are any other improvements are needed.
-> > > > > > > > > 
-> > > > > > > > > I have a generic question on the "unaligned access for x86": I think the
-> > > > > > > > > question is about the one Michael raised here on unaligned access may break
-> > > > > > > > > x86 here:
-> > > > > > > > > 
-> > > > > > > > >      https://lore.kernel.org/qemu-devel/20260617022330-mutt-send-email-mst@kernel.org/
-> > > > > > > > > 
-> > > > > > > > >      3. (theoretical concern) also on x86, unaligned accesses are
-> > > > > > > > >      possible on guest and host, so converting an unaligned access to a
-> > > > > > > > >      series of aligned ones can in theory break devices.
-> > > > > > > > > 
-> > > > > > > > > Is that a real problem we need to consider, or can we start with unified
-> > > > > > > > > approach and leave it for later?
-> > > > > > > > > 
-> > > > > > > > 
-> > > > > > > > I'm leaving this question to Michael.
-> > > > > > > 
-> > > > > > > Knowing what I know about hardware designers, it's something someone
-> > > > > > > somewhere does)
-> > > > > > > It can be made a separate patch, just to show - it should be all of
-> > > > > > > ~10LOC.
-> > > > > > 
-> > > > > > It's only about removal of anything that might be controversial for now,
-> > > > > > thanks.  I also wonder if anything would break, then it's more solid proof
-> > > > > > that per-arch change is required.
-> > > > > 
-> > > > > Repeating:
-> > > > > 	I think there is exactly 1 kinda reasonable case. A 2 byte read/write at
-> > > > > 	offset 0x1 within a dword. This maps nicely to even classical PCI byte
-> > > > > 	enable mechanism and so yes it works if your CPU can initiate these
-> > > > > 	things, and it's atomic.
-> > > > 
-> > > > Isn't this out of the CPU arch, dealt with at the bus level?
-> > > > 
-> > > > It looks we try to be clever with modern PCI code by optimizing this
-> > > > access -- not saying we can change that, I know it is too late after
-> > > > 20+ years -- relying on hw behavior that was done that way to support
-> > > > legacy hw, in particular broken I/O accesses.
-> > > 
-> > > Not sure what the question is.  We were dicussing how to emulate unaligned
-> > > accesses from x86 guests if they happen.
-> > > On an x86 host we can do that easily, and it's just a couple of LOC.
-> > > Though Peter Maydell dislikes host arch specific code. But I hope
-> > > if it's a separate patch on top and it is visible how small it is,
-> > > he will reconsider)
-> > 
-> > Yes, if we still want x86 specific change, it would be better to be put
-> > separately.
-> > 
-> > Said so, I don't think the e1000e LEDCTL test illustrated what might
-> > break..  Isn't that only an exmaple showing unaligned access is
-> > "supported", however nothing breaks even if we use 1B*2?
-> > 
-> > My question was more about a real breakage, hence whenever it happened
-> > "it's more solid proof that per-arch change is required".
-> > 
-> > > On other hosts we can't emulate them 100%, we either need to split
-> > > to byte accesses or over-access and mask. Byte accesses feel safer.
-> > > What qemu currently does with memmove is clearly not safe in the
-> > > general case.
-> > 
-> > We should have another option that is not arch-dependent but keep the
-> > unaligned behavior.
-> > 
-> > For current master, AFAIU we do unaligned access for both ram_device and
-> > rest. Say, even with ram_device_mem_ops, it has both .unaligned=true for
-> > both .valid & .impl.  I think it means indeed we have unaligned behavior
-> > even for ram_device.  It also means what matters in regards to the Realtek
-> > bug was only about aligned access (with subpage presence).
-> > 
-> > I think it means we can always keep unaligned to stick with
-> > memcpy()/memmove(), but only use atomic ops for the aligned cases of
-> > 1/2/4/8.  With that, I think we can also remove ram_device_mem_ops and fix
-> > the bounce buffer issue.
-> > 
-> > I think it means we'll stick with memcpy()/memmove() for all archs for
-> > unaligned, which is again not safe... but that can be an existing but
-> > separate problem to solve too.
-> > 
-> 
-> Lets see if Peter Maydell and Michael are happy with this option. At least,
-> we will have unified qemu_ram_move() for all architectures with this option.
-> Note that qemu_ram_copy() won't be needed.
-> 
-> I'm putting note on what's to be done in (v4) if this option is to be picked
-> up. Let me know if there are missed points. It's basically combing what's done
-> by ram_device_mem_ops to upper layer (e.g. in qemu_ram_move()).
-> 
->   address_space_write
->     address_space_to_flatview
->     flatview_write
->       flatview_translate
->       flatview_write_continue
->         flatview_write_continue_step
->           memmove                     // (A) to replace it with qemu_ram_move()
-> 
-> /**
->  * qemu_ram_move: move data to ramblock
->  *
->  * @dst: destination where the data is moved to
->  * @src: source where the data is moved from
->  * @n: length of data to be moved
->  *
->  * Move @n bytes from @src to @dst with the assumption that @src and @dst
->  * can overlap. The access is atomic if the source and destination buffer
->  * aren't overlapped for a well aligned and small-sized access. Otherwise,
->  * fall back to the standard memmove().
->  */
-> static void qemu_ram_move(void *dst, const void *src, size_t n)
-> {
->     uintptr_t test, len;
-> 
->     if (src == dst || n == 0) {
->         return;
->     }
-> 
->     /* Overlapped buffers */
->     if (src < (dst + n) && dst < (src + n)) {
+Implement a K230 SoC DesignWare 8250-compatible UART controller model for
+QEMU, capable of running the Linux 8250_dw driver and providing an
+interactive shell.
 
-s/&&/||/?
+Implemented:
+  - Standard 16550 registers (RBR/THR/DLL, IER/DLH, IIR/FCR, LCR, MCR,
+    LSR, MSR, SCR) and DesignWare-specific registers (USR, TFL, RFL, SRR,
+    SRTS, SBCR, SDMAM, SFE, SRT, STET, HTX, CPR, UCV, CTR)
+  - DLAB switching; 32-byte TX/RX FIFO; synchronous transmit with
+    backpressure handling
+  - Loopback mode; chardev BREAK routed to LSR.BI/FE via CHR_EVENT_BREAK
+  - Four-level prioritized interrupt scheme (ELSI / RX Data / Timeout /
+    THRE), with edge-triggered THRE
+  - RX Character Timeout interrupt (IID=0xc) with 4-char-time timer that
+    tracks the programmed divisor latch
+  - Busy Detect interrupt (IID=0x7): LCR (and its shadow SBCR) writes
+    while USR.BUSY=1 are rejected and raise IID=0x7, cleared by reading
+    USR; USR.BUSY reflects TX-not-empty / RX-data-ready
+  - Shadow registers alias their underlying fields
+  - SRR (UR/RFR/XFR) self-clearing software reset
 
-It's a bit weird to request memmove() for overlapped, e.g. I don't know if
-P2P can overlap too when some fuzzer fills in some MMIO address shifted for
-src/dst.. but I think I get what you want to simplify and it looks fine.
+Not implemented:
+  - RS485 transceiver control (TCR/DE_EN/RE_EN/DET/TAT)
+  - 9-bit multidrop (LCR_EXT/RAR/TAR)
+  - Fractional baud rate (DLF)
+  - Auto Flow Control (MCR.AFCE)
+  - IrDA SIR mode (MCR.SIRE)
+  - Low-power divisor latch (LPDLL/LPDLH)
+  - FIFO access test mode (FAR/TFR/RFW)
+  - DMA Software Acknowledge (DMASA)
 
-Otherwise it looks good.
+Signed-off-by: zhenbaii <1640586082@qq.com>
+---
+ hw/char/Kconfig             |   3 +
+ hw/char/k230_uart.c         | 840 ++++++++++++++++++++++++++++++++++++++++++++
+ hw/char/meson.build         |   1 +
+ include/hw/char/k230_uart.h | 180 ++++++++++
+ 4 files changed, 1024 insertions(+)
 
->         memmove(dst, src, n);
->         return;
->     }
-> 
->     test = (uintptr_t)src | (uintptr_t)dst | n;
->     len = test & -test;
-> 
->     /* Unaligned or oversized access */
->     if (n > 8 || len != n) {
->         memmove(dst, src, n);
->         return;
->     }
-> 
->     switch (len) {
->     case 1:
->         qatomic_set((uint8_t *)dst, qatomic_read((uint8_t *)src));
->         break;
->     case 2:
->         qatomic_set((uint16_t *)dst, qatomic_read((uint16_t *)src));
->         break;
->     case 4:
->         qatomic_set((uint32_t *)dst, qatomic_read((uint32_t *)src));
->         break;
->     case 8:
->         qatomic_set((uint64_t *)dst, qatomic_read((uint64_t *)src));
->         break;
->     default:
->         g_assert_not_reached();
->     }
-> }
-
-[...]
-
-> Yes, I think one preparatory patch can added in (v4) to replace memcpy() with
-> memmove() in the following paths, extending commit 4a73aee8814 ("softmmu: Use
-> memmove in flatview_write_continue"). With this replacement, qemu_ram_copy()
-> won't be needed in (v4).
-> 
->     hw/remote/vfio-user-obj.c::vfu_object_mr_rw
->     include/system/memory.h::address_space_read
->     system/physmem.c::flatview_read_continue_step
->     system/physmem.c::address_space_write_rom
-
-Now after a second look, I think it's safe to drop
-address_space_write_rom() in the change list because it always directly
-manipulates the real RAM (that plays the ROM role).  I recall it was used
-to be used in debugging path, but at least now when I look at master branch
-it's not.  So we can drop.
-
-I see you already ruled out address_space_read(), I'm not sure if it's
-about having that __builtin_constant_p() early check: I think it's still
-better to switch that to the new API too, then we get rid of implicit
-assumptions of memcpy() over builtin constants.
-
-Thanks,
+diff --git a/hw/char/Kconfig b/hw/char/Kconfig
+index 020c0a84bb6e5f11cc7d532a7999ade23505a1ba..bd000f7127e7881dabac191c81b2bcf66f549250 100644
+--- a/hw/char/Kconfig
++++ b/hw/char/Kconfig
+@@ -91,6 +91,9 @@ config GOLDFISH_TTY
+ config SHAKTI_UART
+     bool
+ 
++config K230_UART
++    bool
++
+ config IP_OCTAL_232
+     bool
+     default y
+diff --git a/hw/char/k230_uart.c b/hw/char/k230_uart.c
+new file mode 100644
+index 0000000000000000000000000000000000000000..358c8ff8d5ab0b265e7d7f429860ac6dc3186e31
+--- /dev/null
++++ b/hw/char/k230_uart.c
+@@ -0,0 +1,840 @@
++/*
++ * K230 UART
++ *
++ * Copyright (c) 2026 zhenbaii <1640586082@qq.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/char/k230_uart.h"
++#include "hw/core/irq.h"
++#include "hw/core/qdev-properties-system.h"
++#include "migration/vmstate.h"
++#include "qemu/module.h"
++#include "qemu/timer.h"
++#include "qemu/host-utils.h"
++#include "system/memory.h"
++
++/* Serial clock from the K230 DT "clock-frequency" property (50 MHz). */
++#define K230_UART_SCLK_HZ   50000000ull
++
++static void k230_uart_xmit(K230UartState *s);
++static void k230_uart_update_all(K230UartState *s);
++static uint64_t k230_uart_read_rbr(K230UartState *s);
++static void k230_uart_push_rx_byte(K230UartState *s, uint8_t ch);
++static void k230_uart_reset_hold(Object *obj, ResetType type);
++
++/* ---- interrupt line ---- */
++
++/*
++ * RX FIFO trigger level. When rx_count reaches this,
++ * the RX Data Available interrupt (IID=0x4) fires.
++ */
++static uint32_t k230_uart_rx_trigger_level(const K230UartState *s)
++{
++    if (!FIELD_EX32(s->fcr, FCR, FIFOE)) {
++        return 1;  /* non-FIFO mode: 1 byte */
++    }
++    switch (FIELD_EX32(s->fcr, FCR, RT)) {
++    case 0:  return 1;
++    case 1:  return K230_UART_FIFO_DEPTH / 4;
++    case 2:  return K230_UART_FIFO_DEPTH / 2;
++    case 3:  return K230_UART_FIFO_DEPTH - 2;
++    default: return 1;
++    }
++}
++
++static void k230_uart_update_irq(K230UartState *s)
++{
++    bool irq = false;
++    uint32_t rx_itl = k230_uart_rx_trigger_level(s);
++
++    /* RX trigger level > 1 */
++    if (FIELD_EX32(s->ier, IER, ERBFI) &&
++        (s->rx_count >= rx_itl || s->timeout_ipending)) {
++        irq = true;
++    }
++    /* Transmit Holding Register Empty Interrupt */
++    if (FIELD_EX32(s->ier, IER, ETBEI) && s->thr_ipending) {
++        irq = true;
++    }
++    /* Receiver Line Status Interrupt */
++    if (FIELD_EX32(s->ier, IER, ELSI) &&
++        (FIELD_EX32(s->lsr, LSR, OE) || FIELD_EX32(s->lsr, LSR, PE) ||
++         FIELD_EX32(s->lsr, LSR, FE) || FIELD_EX32(s->lsr, LSR, BI))) {
++        irq = true;
++    }
++    /* Busy detect interrupt (DW-specific, no IER gate). */
++    if (s->busy_ipending) {
++        irq = true;
++    }
++    qemu_set_irq(s->irq, irq ? 1 : 0);
++}
++
++/* ---- FIFO reset ---- */
++
++static void k230_uart_fifo_reset(K230UartState *s, bool rx, bool tx)
++{
++    if (rx) {
++        s->rx_head = s->rx_tail = s->rx_count = 0;
++        s->lsr = FIELD_DP32(s->lsr, LSR, DR, 0);
++        s->timeout_ipending = 0;
++        timer_del(&s->rx_timeout);
++    }
++    if (tx) {
++        s->tx_head = s->tx_tail = s->tx_count = 0;
++        s->lsr = FIELD_DP32(s->lsr, LSR, THRE, 1);
++        s->lsr = FIELD_DP32(s->lsr, LSR, TEMT, 1);
++        s->thr_ipending = 1;
++    }
++    k230_uart_update_all(s);
++}
++
++/* ---- transmit ---- */
++
++static gboolean k230_uart_chr_can_write(void *do_not_use, GIOCondition cond,
++                                        void *opaque)
++{
++    K230UartState *s = K230_UART(opaque);
++    if (!s->htx) {
++        k230_uart_xmit(s);
++    }
++    return G_SOURCE_REMOVE;
++}
++
++/* ---- baud / char-transmit time ---- */
++
++/*
++ * Recompute the per-character transmit time from the current divisor latch:
++ *
++ *   baud    = sclk / (16 * divisor)
++ *   char_ns = 10 * 16 * divisor * 1e9 / sclk     (10 = 8N1 start+data+stop)
++ *
++ * Drives the RX timeout interrupt (IID=0xc), which fires after 4 char times.
++ * divisor == 0 means "unprogrammed": keep the previous (reset default) value.
++ */
++static void k230_uart_update_char_time(K230UartState *s)
++{
++    uint32_t divisor = ((uint32_t)s->dlh << 8) | s->dll;
++    if (divisor == 0) {
++        return;
++    }
++    s->char_transmit_time = muldiv64(10ull * 16 * divisor,
++                                     NANOSECONDS_PER_SECOND,
++                                     K230_UART_SCLK_HZ);
++}
++
++/* Send all characters in THR or TX-FIFO into char backend */
++static void k230_uart_xmit(K230UartState *s)
++{
++    int ret;
++
++    if (s->tx_count == 0 || s->htx) {
++        return;
++    }
++
++    while (s->tx_count > 0) {
++        uint8_t ch = (uint8_t)s->tx_fifo[s->tx_tail];
++
++        if (FIELD_EX32(s->mcr, MCR, LOOPBACK)) {
++            /* Go to RX fifo */
++            k230_uart_push_rx_byte(s, ch);
++            ret = 1;
++        } else {
++            /* Go to char backend */
++            ret = qemu_chr_fe_write(&s->chr, &ch, 1);
++        }
++        if (ret < 0) {
++            /* Wait for backend to be accessible then call the callback */
++            qemu_chr_fe_add_watch(&s->chr, G_IO_OUT,
++                                  k230_uart_chr_can_write, s);
++            break;
++        }
++
++        s->tx_tail = (s->tx_tail + 1) % K230_UART_FIFO_DEPTH;
++        s->tx_count--;
++    }
++
++    s->lsr = FIELD_DP32(s->lsr, LSR, TEMT, (s->tx_count == 0) ? 1 : 0);
++    k230_uart_update_all(s);
++}
++
++/* ---- RX timeout ---- */
++
++/* Character timeout callback */
++static void k230_uart_rx_timeout(void *opaque)
++{
++    K230UartState *s = K230_UART(opaque);
++    if (s->rx_count > 0) {
++        s->timeout_ipending = 1;
++        k230_uart_update_all(s);
++    }
++}
++
++/* ---- receive ---- */
++
++/* Push a byte to rxfifo(when FIFO_EN is set) or RBR(FIFO_EN not set). */
++static void k230_uart_push_rx_byte(K230UartState *s, uint8_t ch)
++{
++    bool fifo_en = FIELD_EX32(s->fcr, FCR, FIFOE);
++    uint16_t capacity = fifo_en ? K230_UART_FIFO_DEPTH : 1;
++
++    if (s->rx_count < capacity) {
++        s->rx_fifo[s->rx_head] = ch;
++        s->rx_head = (s->rx_head + 1) % K230_UART_FIFO_DEPTH;
++        s->rx_count++;
++        s->lsr = FIELD_DP32(s->lsr, LSR, DR, 1);
++        timer_mod(&s->rx_timeout,
++                  qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL)
++                  + 4 * s->char_transmit_time);
++    } else {
++        s->lsr = FIELD_DP32(s->lsr, LSR, OE, 1);
++    }
++    k230_uart_update_all(s);
++}
++
++/* ---- derived register recomputation ---- */
++
++static void k230_uart_update_thre(K230UartState *s)
++{
++    bool should_set = (s->tx_count == 0);
++#if K230_UART_THRE_MODE
++    if (FIELD_EX32(s->ier, IER, PTIME)
++        && FIELD_EX32(s->fcr, FCR, FIFOE)) {
++        uint8_t tet = FIELD_EX32(s->fcr, FCR, TET);
++        uint16_t threshold;
++        switch (tet) {
++        case 0x0:
++            threshold = 0;
++            break;
++        case 0x1:
++            threshold = 2;
++            break;
++        case 0x2:
++            threshold = K230_UART_FIFO_DEPTH / 4;
++            break;
++        case 0x3:
++            threshold = K230_UART_FIFO_DEPTH / 2;
++            break;
++        default:
++            threshold = 0;
++            break;
++        }
++        should_set = (s->tx_count <= threshold);
++    }
++#endif
++
++    uint8_t old_thre = FIELD_EX32(s->lsr, LSR, THRE);
++    s->lsr = FIELD_DP32(s->lsr, LSR, THRE, should_set ? 1 : 0);
++
++    /* Edge trigger */
++    if (should_set && !old_thre) {
++        s->thr_ipending = 1;
++    }
++}
++
++static bool k230_uart_is_busy(const K230UartState *s)
++{
++    return !FIELD_EX32(s->lsr, LSR, TEMT) || FIELD_EX32(s->lsr, LSR, DR);
++}
++
++static void k230_uart_update_usr(K230UartState *s)
++{
++    bool fifo_en = FIELD_EX32(s->fcr, FCR, FIFOE);
++    uint16_t capacity = fifo_en ? K230_UART_FIFO_DEPTH : 1;
++
++    s->usr = 0;
++#if !K230_UART_16550_COMPATIBLE
++    if (k230_uart_is_busy(s)) {
++        s->usr = FIELD_DP32(s->usr, USR, BUSY, 1);
++    }
++#endif
++#if K230_UART_FIFO_STAT && K230_UART_FIFO_MODE
++    s->usr = FIELD_DP32(s->usr, USR, TFNF, s->tx_count < capacity ? 1 : 0);
++    s->usr = FIELD_DP32(s->usr, USR, TFE, s->tx_count == 0 ? 1 : 0);
++    s->usr = FIELD_DP32(s->usr, USR, RFNE, s->rx_count != 0 ? 1 : 0);
++    s->usr = FIELD_DP32(s->usr, USR, RFF, s->rx_count == capacity ? 1 : 0);
++#endif
++}
++
++static void k230_uart_update_iir(K230UartState *s)
++{
++    s->iir = 0;
++    /* Indicate whether FIFO is enabled or not */
++    if (FIELD_EX32(s->fcr, FCR, FIFOE)) {
++        s->iir = FIELD_DP32(s->iir, IIR, FIFOSE, 0x3);
++    }
++
++    if (FIELD_EX32(s->ier, IER, ELSI) &&
++        (FIELD_EX32(s->lsr, LSR, OE) || FIELD_EX32(s->lsr, LSR, PE) ||
++         FIELD_EX32(s->lsr, LSR, FE) || FIELD_EX32(s->lsr, LSR, BI))) {
++        /* Receiver Line Status Interrupt */
++        s->iir = FIELD_DP32(s->iir, IIR, IID, 0x6);
++    } else if (FIELD_EX32(s->ier, IER, ERBFI) &&
++               (s->rx_count >= k230_uart_rx_trigger_level(s))) {
++        /* Receiver Data Available Interrupt */
++        s->iir = FIELD_DP32(s->iir, IIR, IID, 0x4);
++    } else if (FIELD_EX32(s->ier, IER, ERBFI) && s->timeout_ipending) {
++        /* Character timeout interrupt */
++        s->iir = FIELD_DP32(s->iir, IIR, IID, 0xc);
++    } else if (FIELD_EX32(s->ier, IER, ETBEI) && s->thr_ipending) {
++        /* THR Empty Interrupt */
++        s->iir = FIELD_DP32(s->iir, IIR, IID, 0x2);
++    } else if (s->busy_ipending) {
++        /* Busy detect: LCR written while USR.BUSY=1 (DW-specific) */
++        s->iir = FIELD_DP32(s->iir, IIR, IID, 0x7);
++    } else {
++        s->iir = FIELD_DP32(s->iir, IIR, IID, 0x1);
++    }
++}
++
++
++static void k230_uart_update_msr(K230UartState *s)
++{
++    uint8_t old_status = s->msr & 0xf0;
++    uint8_t new_status;
++
++    if (FIELD_EX32(s->mcr, MCR, LOOPBACK)) {
++        /*
++         * Standard 16550 loopback mapping:
++         * DTR -> DSR, RTS -> CTS, OUT1 -> RI, OUT2 -> DCD
++         */
++        new_status = 0;
++        if (FIELD_EX32(s->mcr, MCR, RTS)) {
++            new_status |= 0x10; /* CTS */
++        }
++        if (FIELD_EX32(s->mcr, MCR, DTR)) {
++            new_status |= 0x20; /* DSR */
++        }
++        if (FIELD_EX32(s->mcr, MCR, OUT1)) {
++            new_status |= 0x40; /* RI  */
++        }
++        if (FIELD_EX32(s->mcr, MCR, OUT2)) {
++            new_status |= 0x80; /* DCD */
++        }
++    } else {
++        /* No real modem: report CTS/DSR/DCD as active (ready) */
++        new_status = 0xb0; /* CTS | DSR | DCD */
++    }
++
++    /* Accumulate delta bits on status changes */
++    uint8_t deltas = s->msr & 0x0f;
++    uint8_t changes = old_status ^ new_status;
++    if (changes & 0x10) {
++        deltas |= 0x01; /* DCTS */
++    }
++    if (changes & 0x20) {
++        deltas |= 0x02; /* DDSR */
++    }
++    if ((old_status & 0x40) && !(new_status & 0x40)) {
++        deltas |= 0x04; /* TERI */
++    }
++    if (changes & 0x80) {
++        deltas |= 0x08; /* DDCD */
++    }
++
++    s->msr = new_status | deltas;
++}
++
++static void k230_uart_update_all(K230UartState *s)
++{
++    k230_uart_update_thre(s);
++    k230_uart_update_usr(s);
++    k230_uart_update_iir(s);
++    k230_uart_update_irq(s);
++}
++
++/* ---- MMIO read ---- */
++
++static uint64_t k230_uart_read_rbr(K230UartState *s)
++{
++    uint64_t ret = 0;
++
++    if (s->rx_count > 0) {
++        ret = s->rx_fifo[s->rx_tail];
++        s->rx_tail = (s->rx_tail + 1) % K230_UART_FIFO_DEPTH;
++        s->rx_count--;
++        s->timeout_ipending = 0;
++        if (s->rx_count == 0) {
++            s->lsr = FIELD_DP32(s->lsr, LSR, DR, 0);
++            timer_del(&s->rx_timeout);
++        } else {
++            timer_mod(&s->rx_timeout,
++                      qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL)
++                      + 4 * s->char_transmit_time);
++        }
++        qemu_chr_fe_accept_input(&s->chr);
++    }
++
++    if (!FIELD_EX32(s->ier, IER, ELCOLR)) {
++        s->lsr = FIELD_DP32(s->lsr, LSR, OE, 0);
++        s->lsr = FIELD_DP32(s->lsr, LSR, PE, 0);
++        s->lsr = FIELD_DP32(s->lsr, LSR, FE, 0);
++        s->lsr = FIELD_DP32(s->lsr, LSR, BI, 0);
++    }
++
++    k230_uart_update_all(s);
++    return ret;
++}
++
++static uint64_t k230_uart_read(void *opaque, hwaddr addr, unsigned int size)
++{
++    K230UartState *s = K230_UART(opaque);
++    uint64_t ret = 0;
++
++    switch (addr >> 2) {
++    case R_RBR_DLL_THR:
++        if (FIELD_EX32(s->lcr, LCR, DLAB)) {
++            /* DLL accessible only when not busy. */
++            ret = (K230_UART_16550_COMPATIBLE || !k230_uart_is_busy(s))
++                  ? s->dll : 0;
++        } else {
++            ret = k230_uart_read_rbr(s);
++        }
++        break;
++    case R_IER_DLH:
++        if (FIELD_EX32(s->lcr, LCR, DLAB)) {
++            /* DLH accessible only when not busy. */
++            ret = (K230_UART_16550_COMPATIBLE || !k230_uart_is_busy(s))
++                  ? s->dlh : 0;
++        } else {
++            /* IER */
++            ret = s->ier;
++        }
++        break;
++    case R_IIR:
++        ret = s->iir;
++        if (FIELD_EX32(s->iir, IIR, IID) == 0x2) {
++            s->thr_ipending = 0;
++            k230_uart_update_all(s);
++        }
++        break;
++    case R_LCR:
++        ret = s->lcr;
++        break;
++    case R_LSR:
++        ret = s->lsr;
++        /* Clear OE PE FE and Break Interrupt status bits */
++        s->lsr = FIELD_DP32(s->lsr, LSR, OE, 0);
++        s->lsr = FIELD_DP32(s->lsr, LSR, PE, 0);
++        s->lsr = FIELD_DP32(s->lsr, LSR, FE, 0);
++        s->lsr = FIELD_DP32(s->lsr, LSR, BI, 0);
++        k230_uart_update_all(s);
++        break;
++    case R_MCR:
++        ret = s->mcr;
++        break;
++    case R_MSR:
++        ret = s->msr;
++        s->msr &= 0xf0; /* clear delta bits on read */
++        break;
++    case R_SCR:
++        ret = s->scr;
++        break;
++
++    /* Shadow registers: aliases of standard registers. */
++    case R_SRTS:
++        ret = FIELD_EX32(s->mcr, MCR, RTS);
++        break;
++    case R_SBCR:
++        ret = FIELD_EX32(s->lcr, LCR, BC);
++        break;
++    case R_SDMAM:
++        ret = FIELD_EX32(s->fcr, FCR, DMAM);
++        break;
++    case R_SFE:
++        ret = FIELD_EX32(s->fcr, FCR, FIFOE);
++        break;
++    case R_SRT:
++        ret = FIELD_EX32(s->fcr, FCR, RT);
++        break;
++    case R_STET:
++        ret = FIELD_EX32(s->fcr, FCR, TET);
++        break;
++    case R_HTX:
++        ret = s->htx;
++        break;
++
++    case R_CPR:
++        ret = (K230_UART_APB_DATA_WIDTH          << 0)   |
++                   (K230_UART_AFCE_MODE               << 4)   |
++                   (K230_UART_THRE_MODE                << 5)   |
++                   (K230_UART_SIR_MODE                 << 6)   |
++                   (K230_UART_SIR_LP_MODE              << 7)   |
++                   (K230_UART_ADDITIONAL_FEATURES      << 8)   |
++                   (K230_UART_FIFO_ACCESS              << 9)   |
++                   (K230_UART_FIFO_STAT                << 10)  |
++                   (K230_UART_SHADOW                   << 11)  |
++                   (K230_UART_ADD_ENCODED_PARAMS       << 12)  |
++                   (K230_UART_DMA_EXTRA                << 13)  |
++                   (K230_UART_FIFO_MODE                << 16);
++        break;
++    case R_UCV:
++        /* Version */
++        ret = 0x342e3061;
++        break;
++    case R_DLF:
++        ret = 0;
++        break;
++    case R_USR:
++        ret = s->usr;
++        /* Reading USR clears the busy-detect interrupt. */
++        if (s->busy_ipending) {
++            s->busy_ipending = 0;
++            k230_uart_update_all(s);
++        }
++        break;
++    case R_TFL:
++        /* Transmit FIFO Level: number of bytes in TX FIFO. */
++        ret = s->tx_count;
++        break;
++    case R_RFL:
++        /* Receive FIFO Level: number of bytes in RX FIFO. */
++        ret = s->rx_count;
++        break;
++    case R_CTR:
++        /* Component Type Register: fixed ID. */
++        ret = K230_UART_CTR_VALUE;
++        break;
++    default:
++        ret = 0;
++        break;
++    }
++    return ret;
++}
++
++/* ---- MMIO write ---- */
++
++static void k230_uart_write(void *opaque, hwaddr addr,
++                                uint64_t val64, unsigned int size)
++{
++    K230UartState *s = K230_UART(opaque);
++    uint32_t val = (uint32_t)val64;
++    uint32_t offset = addr >> 2;
++
++    switch (offset) {
++    case R_RBR_DLL_THR:
++        if (FIELD_EX32(s->lcr, LCR, DLAB)) {
++            /* DLL writable only when not busy. */
++            if (K230_UART_16550_COMPATIBLE || !k230_uart_is_busy(s)) {
++                s->dll = val & 0xff;
++                k230_uart_update_char_time(s);
++            }
++        } else {
++            bool fifo_en = FIELD_EX32(s->fcr, FCR, FIFOE);
++            uint16_t capacity = fifo_en ? K230_UART_FIFO_DEPTH : 1;
++            if (s->tx_count < capacity) {
++                s->tx_fifo[s->tx_head] = val & 0xff;
++                s->tx_head = (s->tx_head + 1) % K230_UART_FIFO_DEPTH;
++                s->tx_count++;
++            } else if (!fifo_en) {
++                s->tx_fifo[s->tx_tail] = val & 0xff;
++            }
++            s->lsr = FIELD_DP32(s->lsr, LSR, THRE, 0);
++            s->thr_ipending = 0;
++            s->lsr = FIELD_DP32(s->lsr, LSR, TEMT, 0);
++            k230_uart_xmit(s);
++        }
++        break;
++    case R_IER_DLH:
++        if (FIELD_EX32(s->lcr, LCR, DLAB)) {
++            /* DLH writable only when not busy. */
++            if (K230_UART_16550_COMPATIBLE || !k230_uart_is_busy(s)) {
++                s->dlh = val & 0xff;
++                k230_uart_update_char_time(s);
++            }
++        } else {
++            uint8_t old_etbei = FIELD_EX32(s->ier, IER, ETBEI);
++            s->ier = FIELD_DP32(s->ier, IER, ERBFI,
++                                FIELD_EX32(val, IER, ERBFI));
++            s->ier = FIELD_DP32(s->ier, IER, ETBEI,
++                                FIELD_EX32(val, IER, ETBEI));
++            s->ier = FIELD_DP32(s->ier, IER, ELSI,
++                                FIELD_EX32(val, IER, ELSI));
++            s->ier = FIELD_DP32(s->ier, IER, EDSSI,
++                                FIELD_EX32(val, IER, EDSSI));
++            s->ier = FIELD_DP32(s->ier, IER, ELCOLR,
++                                FIELD_EX32(val, IER, ELCOLR));
++#if K230_UART_THRE_MODE
++            s->ier = FIELD_DP32(s->ier, IER, PTIME,
++                                FIELD_EX32(val, IER, PTIME));
++#endif
++            if (!old_etbei && FIELD_EX32(s->ier, IER, ETBEI)
++                && FIELD_EX32(s->lsr, LSR, THRE)) {
++                s->thr_ipending = 1;
++            }
++        }
++        break;
++    case R_FCR:
++        if ((val ^ s->fcr) & R_FCR_FIFOE_MASK) {
++            val |= R_FCR_RFIFOR_MASK | R_FCR_XFIFOR_MASK;
++        }
++        s->fcr = FIELD_DP32(s->fcr, FCR, FIFOE,
++                            FIELD_EX32(val, FCR, FIFOE));
++        s->fcr = FIELD_DP32(s->fcr, FCR, DMAM,
++                            FIELD_EX32(val, FCR, DMAM));
++        s->fcr = FIELD_DP32(s->fcr, FCR, RT,
++                            FIELD_EX32(val, FCR, RT));
++#if K230_UART_THRE_MODE
++        s->fcr = FIELD_DP32(s->fcr, FCR, TET,
++                            FIELD_EX32(val, FCR, TET));
++#endif
++        if (FIELD_EX32(val, FCR, RFIFOR)) {
++            k230_uart_fifo_reset(s, true, false);
++        }
++        if (FIELD_EX32(val, FCR, XFIFOR)) {
++            k230_uart_fifo_reset(s, false, true);
++        }
++        break;
++    case R_LCR:
++        /*
++         * When UART_16550_COMPATIBLE == NO (the K230 case),
++         * LCR is writable only when USR.BUSY == 0.  A write while busy is
++         * ignored and triggers the busy-detect interrupt (IID=0x7), which is
++         * cleared by reading USR.  The 8250_dw driver detects this via
++         * dw8250_check_lcr() and retries after draining the FIFOs.
++         */
++        if (!K230_UART_16550_COMPATIBLE && k230_uart_is_busy(s)) {
++            s->busy_ipending = 1;
++        } else {
++            s->lcr = val & 0xff;
++        }
++        break;
++    case R_MCR:
++        /*
++         * K230 advertises AFCE_MODE=0 and SIR_MODE=0 in CPR, so MCR[5:6]
++         * (AFCE/SIRE) are read-only 0.  MCR[7] is reserved and also 0.
++         */
++        s->mcr = val & 0x1f;
++        k230_uart_update_msr(s);
++        break;
++    case R_SCR:
++        s->scr = val & 0xff;
++        break;
++
++    /*
++     * Shadow registers: aliases of standard register fields.
++     * They let software update a single bit without read-modify-write on the
++     * original register.  SBCR shadows LCR[6] (BC), which is gated by the
++     * busy-detect logic just like a direct LCR write.
++     */
++    case R_SRTS:
++        s->mcr = FIELD_DP32(s->mcr, MCR, RTS, val & 0x1);
++        k230_uart_update_msr(s);
++        break;
++    case R_SBCR:
++        if (!K230_UART_16550_COMPATIBLE && k230_uart_is_busy(s)) {
++            s->busy_ipending = 1;
++        } else {
++            s->lcr = FIELD_DP32(s->lcr, LCR, BC, val & 0x1);
++        }
++        break;
++    case R_SDMAM:
++        s->fcr = FIELD_DP32(s->fcr, FCR, DMAM, val & 0x1);
++        break;
++    case R_SFE:
++        /* Shadow of FCR[0]; changing FIFOE resets both FIFOs */
++        if ((s->fcr ^ val) & R_FCR_FIFOE_MASK) {
++            k230_uart_fifo_reset(s, true, true);
++        }
++        s->fcr = FIELD_DP32(s->fcr, FCR, FIFOE, val & 0x1);
++        break;
++    case R_SRT:
++        s->fcr = FIELD_DP32(s->fcr, FCR, RT, val & 0x3);
++        break;
++    case R_STET:
++#if K230_UART_THRE_MODE
++        s->fcr = FIELD_DP32(s->fcr, FCR, TET, val & 0x3);
++#endif
++        break;
++    case R_HTX:
++        s->htx = val & 0x1;
++        /* Clearing HTX resumes transmission of any buffered TX data. */
++        if (!s->htx) {
++            k230_uart_xmit(s);
++        }
++        break;
++
++    case R_SRR:
++        if (FIELD_EX32(val, SRR, UR)) {
++            device_cold_reset(DEVICE(s));
++            return;
++        }
++        if (FIELD_EX32(val, SRR, RFR)) {
++            k230_uart_fifo_reset(s, true, false);
++        }
++        if (FIELD_EX32(val, SRR, XFR)) {
++            k230_uart_fifo_reset(s, false, true);
++        }
++        break;
++
++    default:
++        break;
++    }
++    k230_uart_update_all(s);
++}
++
++/* ---- device lifecycle ---- */
++
++static const MemoryRegionOps k230_uart_ops = {
++    .read = k230_uart_read,
++    .write = k230_uart_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .impl.min_access_size = 4,
++    .impl.max_access_size = 4,
++};
++
++static void k230_uart_init(Object *obj)
++{
++    K230UartState *s = K230_UART(obj);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
++
++    memory_region_init_io(&s->mmio, OBJECT(s), &k230_uart_ops, s,
++                          TYPE_K230_UART, 0x100);
++    sysbus_init_mmio(sbd, &s->mmio);
++    sysbus_init_irq(sbd, &s->irq);
++}
++
++static int k230_uart_can_receive(void *opaque)
++{
++    K230UartState *s = K230_UART(opaque);
++    return K230_UART_FIFO_DEPTH - s->rx_count;
++}
++
++static void k230_uart_receive(void *opaque, const uint8_t *buf, int size)
++{
++    K230UartState *s = K230_UART(opaque);
++    for (int i = 0; i < size; i++) {
++        k230_uart_push_rx_byte(s, buf[i]);
++    }
++}
++
++static void k230_uart_event(void *opaque, QEMUChrEvent event)
++{
++    K230UartState *s = K230_UART(opaque);
++
++    if (event == CHR_EVENT_BREAK) {
++        k230_uart_push_rx_byte(s, 0);
++        s->lsr = FIELD_DP32(s->lsr, LSR, BI, 1);
++        s->lsr = FIELD_DP32(s->lsr, LSR, FE, 1);
++        k230_uart_update_all(s);
++    }
++}
++
++static void k230_uart_reset_hold(Object *obj, ResetType type)
++{
++    K230UartState *s = K230_UART(obj);
++    s->lcr = 0;
++    s->fcr = 0;
++    s->ier = 0;
++    s->mcr = 0;
++    s->scr = 0;
++    s->dll = 0;
++    s->dlh = 0;
++    s->lsr = 0x60;
++    s->msr = 0xb0;
++
++    s->rx_head = s->rx_tail = s->rx_count = 0;
++    s->tx_head = s->tx_tail = s->tx_count = 0;
++    s->htx = 0;
++
++    qemu_set_irq(s->irq, 0);
++
++    s->thr_ipending = 0;
++    s->timeout_ipending = 0;
++    s->busy_ipending = 0;
++    timer_del(&s->rx_timeout);
++    /* Default to 115200 baud until the driver programs the divisor latch. */
++    s->char_transmit_time = (NANOSECONDS_PER_SECOND / 115200) * 10;
++
++    k230_uart_update_all(s);
++}
++
++static void k230_uart_realize(DeviceState *dev, Error **errp)
++{
++    K230UartState *s = K230_UART(dev);
++    qemu_chr_fe_set_handlers(&s->chr, k230_uart_can_receive,
++                             k230_uart_receive, k230_uart_event,
++                             NULL, s, NULL, true);
++
++    timer_init_ns(&s->rx_timeout, QEMU_CLOCK_VIRTUAL,
++                  k230_uart_rx_timeout, s);
++}
++
++static int k230_uart_post_load(void *opaque, int version_id)
++{
++    K230UartState *s = K230_UART(opaque);
++
++    /*
++     * iir and usr are derived from the saved state; recompute them after
++     * migration so the device is consistent.
++     */
++    k230_uart_update_all(s);
++    return 0;
++}
++
++static const VMStateDescription vmstate_k230_uart = {
++    .name = "k230.uart",
++    .version_id = 2,
++    .minimum_version_id = 1,
++    .post_load = k230_uart_post_load,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT8(lcr,   K230UartState),
++        VMSTATE_UINT8(fcr,   K230UartState),
++        VMSTATE_UINT8(ier,   K230UartState),
++        VMSTATE_UINT8(dll,   K230UartState),
++        VMSTATE_UINT8(dlh,   K230UartState),
++        VMSTATE_UINT8(mcr,   K230UartState),
++        VMSTATE_UINT8(lsr,   K230UartState),
++        VMSTATE_UINT8(msr,   K230UartState),
++        VMSTATE_UINT8(scr,   K230UartState),
++        VMSTATE_UINT8(htx,   K230UartState),
++        VMSTATE_UINT16_ARRAY(rx_fifo, K230UartState,
++                             K230_UART_FIFO_DEPTH),
++        VMSTATE_UINT16_ARRAY(tx_fifo, K230UartState,
++                             K230_UART_FIFO_DEPTH),
++        VMSTATE_UINT32(rx_head, K230UartState),
++        VMSTATE_UINT32(rx_tail, K230UartState),
++        VMSTATE_UINT32(rx_count, K230UartState),
++        VMSTATE_UINT32(tx_head, K230UartState),
++        VMSTATE_UINT32(tx_tail, K230UartState),
++        VMSTATE_UINT32(tx_count, K230UartState),
++        VMSTATE_UINT8(thr_ipending, K230UartState),
++        VMSTATE_UINT8(timeout_ipending, K230UartState),
++        VMSTATE_UINT8(busy_ipending, K230UartState),
++        VMSTATE_UINT64(char_transmit_time, K230UartState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static const Property k230_uart_properties[] = {
++    DEFINE_PROP_CHR("chardev", K230UartState, chr),
++};
++
++static void k230_uart_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    dc->realize = k230_uart_realize;
++    rc->phases.hold = k230_uart_reset_hold;
++    dc->vmsd = &vmstate_k230_uart;
++    dc->desc = "K230 UART (16550-compatible)";
++    device_class_set_props(dc, k230_uart_properties);
++}
++
++static const TypeInfo k230_uart_info = {
++    .name = TYPE_K230_UART,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(K230UartState),
++    .instance_init = k230_uart_init,
++    .class_init = k230_uart_class_init
++};
++
++static void k230_uart_register_types(void)
++{
++    type_register_static(&k230_uart_info);
++}
++
++type_init(k230_uart_register_types)
+diff --git a/hw/char/meson.build b/hw/char/meson.build
+index fc3d7ee506fcf8eb1219f6af9689fd90573861c9..23d8ede3f031f80d1b519bf49beac9d23502e2cb 100644
+--- a/hw/char/meson.build
++++ b/hw/char/meson.build
+@@ -38,6 +38,7 @@ system_ss.add(when: 'CONFIG_STM32L4X5_USART', if_true: files('stm32l4x5_usart.c'
+ system_ss.add(when: 'CONFIG_MCHP_PFSOC_MMUART', if_true: files('mchp_pfsoc_mmuart.c'))
+ system_ss.add(when: 'CONFIG_HTIF', if_true: files('riscv_htif.c'))
+ system_ss.add(when: 'CONFIG_GOLDFISH_TTY', if_true: files('goldfish_tty.c'))
++system_ss.add(when: 'CONFIG_K230', if_true: files('k230_uart.c'))
+ 
+ specific_ss.add(when: 'CONFIG_TERMINAL3270', if_true: files('terminal3270.c'))
+ specific_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr_vty.c'))
+diff --git a/include/hw/char/k230_uart.h b/include/hw/char/k230_uart.h
+new file mode 100644
+index 0000000000000000000000000000000000000000..60e39101c00c73d0167fcff47bc1e56fe4cf0b19
+--- /dev/null
++++ b/include/hw/char/k230_uart.h
+@@ -0,0 +1,180 @@
++/*
++ * K230 UART device
++ *
++ * K230 Technical Reference Manual V0.3.1 (2024-11-18):
++ * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
++ *
++ * Register semantics cross-checked against the SDK Linux driver
++ * src/little/linux/drivers/tty/serial/8250/8250_dw.c in
++ * https://github.com/kendryte/k230_sdk (compatible "snps,dw-apb-uart").
++ *
++ * Copyright (c) 2026 zhenbaii <1640586082@qq.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_K230_UART_H
++#define HW_K230_UART_H
++
++#include "hw/core/sysbus.h"
++#include "chardev/char-fe.h"
++#include "hw/core/registerfields.h"
++#include "qom/object.h"
++
++REG32(RBR_DLL_THR, 0x00)
++REG32(IER_DLH, 0x04)
++REG32(IER, 0x04)
++    FIELD(IER, ERBFI, 0, 1)
++    FIELD(IER, ETBEI, 1, 1)
++    FIELD(IER, ELSI, 2, 1)
++    FIELD(IER, EDSSI, 3, 1)
++    FIELD(IER, ELCOLR, 4, 1)
++    FIELD(IER, PTIME, 7, 1)
++REG32(FCR, 0x08)
++    FIELD(FCR, FIFOE, 0, 1)
++    FIELD(FCR, RFIFOR, 1, 1)
++    FIELD(FCR, XFIFOR, 2, 1)
++    FIELD(FCR, DMAM, 3, 1)
++    FIELD(FCR, TET, 4, 2)
++    FIELD(FCR, RT, 6, 2)
++REG32(IIR, 0x08)
++    FIELD(IIR, IID, 0, 4)
++    FIELD(IIR, FIFOSE, 6, 2)
++REG32(LCR, 0x0c)
++    FIELD(LCR, DLS, 0, 2)
++    FIELD(LCR, STOP, 2, 1)
++    FIELD(LCR, PEN, 3, 1)
++    FIELD(LCR, EPS, 4, 1)
++    FIELD(LCR, SP, 5, 1)
++    FIELD(LCR, BC, 6, 1)
++    FIELD(LCR, DLAB, 7, 1)
++REG32(MCR, 0x10)
++    FIELD(MCR, DTR, 0, 1)
++    FIELD(MCR, RTS, 1, 1)
++    FIELD(MCR, OUT1, 2, 1)
++    FIELD(MCR, OUT2, 3, 1)
++    FIELD(MCR, LOOPBACK, 4, 1)
++    FIELD(MCR, AFCE, 5, 1)
++    FIELD(MCR, SIRE, 6, 1)
++REG32(LSR, 0x14)
++    FIELD(LSR, DR, 0, 1)
++    FIELD(LSR, OE, 1, 1)
++    FIELD(LSR, PE, 2, 1)
++    FIELD(LSR, FE, 3, 1)
++    FIELD(LSR, BI, 4, 1)
++    FIELD(LSR, THRE, 5, 1)
++    FIELD(LSR, TEMT, 6, 1)
++    FIELD(LSR, RFE, 7, 1)
++    FIELD(LSR, ADDR_RSVD, 8, 1)
++REG32(MSR, 0x18)
++    FIELD(MSR, DCTS, 0, 1)
++    FIELD(MSR, DDSR, 1, 1)
++    FIELD(MSR, TERI, 2, 1)
++    FIELD(MSR, DDCD, 3, 1)
++    FIELD(MSR, CTS, 4, 1)
++    FIELD(MSR, DSR, 5, 1)
++    FIELD(MSR, RI, 6, 1)
++    FIELD(MSR, DCD, 7, 1)
++REG32(RFW, 0x78)
++    FIELD(RFW, RFWD, 0, 8)
++    FIELD(RFW, RFPE, 8, 1)
++    FIELD(RFW, RFFE, 9, 1)
++REG32(USR, 0x7c)
++    FIELD(USR, BUSY, 0, 1)
++    FIELD(USR, TFNF, 1, 1)
++    FIELD(USR, TFE, 2, 1)
++    FIELD(USR, RFNE, 3, 1)
++    FIELD(USR, RFF, 4, 1)
++REG32(TFL, 0x80)
++    FIELD(TFL, TFL, 0, 5)
++REG32(RFL, 0x84)
++    FIELD(RFL, RFL, 0, 5)
++REG32(SRR, 0x88)
++    FIELD(SRR, UR, 0, 1)
++    FIELD(SRR, RFR, 1, 1)
++    FIELD(SRR, XFR, 2, 1)
++REG32(SRTS, 0x8c)
++    FIELD(SRTS, SRTS, 0, 1)
++REG32(SBCR, 0x90)
++    FIELD(SBCR, SBCB, 0, 1)
++REG32(SDMAM, 0x94)
++    FIELD(SDMAM, SDMAM, 0, 1)
++REG32(SFE, 0x98)
++    FIELD(SFE, SFE, 0, 1)
++REG32(SRT, 0x9c)
++    FIELD(SRT, SRT, 0, 2)
++REG32(STET, 0xa0)
++    FIELD(STET, STET, 0, 2)
++REG32(HTX, 0xa4)
++    FIELD(HTX, HTX, 0, 1)
++REG32(TCR, 0xac)
++    FIELD(TCR, RS485_EN, 0, 1)
++    FIELD(TCR, RE_POL, 1, 1)
++    FIELD(TCR, DE_POL, 2, 1)
++    FIELD(TCR, XFER_MODE, 3, 2)
++REG32(SCR, 0x1c)
++REG32(DLF, 0xc0)
++REG32(CPR, 0xf4)
++REG32(UCV, 0xf8)
++REG32(CTR, 0xfc)
++
++/* peripheral ID 0x44570110 ("DW\x01\x10").  Read-only. */
++#define K230_UART_CTR_VALUE  0x44570110u
++#define K230_UART_16550_COMPATIBLE    0
++#define K230_UART_FIFO_DEPTH          32
++
++/* CPR */
++#define K230_UART_APB_DATA_WIDTH      2      /* CPR[1:0]  - 32-bit APB       */
++#define K230_UART_AFCE_MODE           0      /* CPR[4]    - not implemented */
++#define K230_UART_THRE_MODE           1      /* CPR[5]    - implemented     */
++#define K230_UART_SIR_MODE            0      /* CPR[6]    - not implemented */
++#define K230_UART_SIR_LP_MODE         0      /* CPR[7]    - not implemented */
++#define K230_UART_ADDITIONAL_FEATURES 1      /* CPR[8]    - UCV/CTR present */
++#define K230_UART_FIFO_ACCESS         0      /* CPR[9]    - not implemented */
++#define K230_UART_FIFO_STAT           1      /* CPR[10]   - TFL/RFL present */
++#define K230_UART_SHADOW              1      /* CPR[11]   - shadow regs     */
++#define K230_UART_ADD_ENCODED_PARAMS  1      /* CPR[12]   - CPR present     */
++#define K230_UART_DMA_EXTRA           0      /* CPR[13]   - not implemented */
++#define K230_UART_FIFO_MODE           0x2    /* CPR[23:16] - 32-byte FIFO   */
++
++#define TYPE_K230_UART "k230-uart"
++OBJECT_DECLARE_SIMPLE_TYPE(K230UartState, K230_UART)
++struct K230UartState {
++    SysBusDevice parent_obj;
++    MemoryRegion mmio;
++
++    /* Standard 16550 registers */
++    uint8_t  dll;       /* Divisor Latch Low,               offset 0x00 */
++    uint8_t  ier;       /* Interrupt Enable,                offset 0x04 */
++    uint8_t  dlh;       /* Divisor Latch High,              offset 0x04 */
++    uint8_t  fcr;       /* FIFO Control,                    offset 0x08 */
++    uint8_t  iir;       /* Interrupt Identification,        offset 0x08 */
++    uint8_t  lcr;       /* Line Control,                    offset 0x0c */
++    uint8_t  mcr;       /* Modem Control,                   offset 0x10 */
++    uint8_t  lsr;       /* Line Status,                     offset 0x14 */
++    uint8_t  msr;       /* Modem Status,                    offset 0x18 */
++    uint8_t  scr;       /* Scratchpad,                      offset 0x1c */
++
++    /* DesignWare-specific registers */
++    uint8_t  usr;       /* UART Status,                     offset 0x7c */
++    uint8_t  htx;       /* Halt TX,                         offset 0xa4 */
++
++    /* Internal interrupt state. */
++    uint8_t  thr_ipending;       /* THR empty (IID=0x2) pending     */
++    uint8_t  timeout_ipending;   /* RX FIFO timeout (IID=0xc)       */
++    uint8_t  busy_ipending;      /* busy detect (IID=0x7) pending   */
++
++    /* FIFO */
++    uint16_t rx_fifo[K230_UART_FIFO_DEPTH];
++    uint32_t rx_head, rx_tail, rx_count;
++    uint16_t tx_fifo[K230_UART_FIFO_DEPTH];
++    uint32_t tx_head, tx_tail, tx_count;
++
++    uint64_t char_transmit_time;
++
++    CharFrontend chr;
++    qemu_irq    irq;
++    QEMUTimer rx_timeout;
++};
++
++#endif
 
 -- 
-Peter Xu
+2.48.1
 
 
