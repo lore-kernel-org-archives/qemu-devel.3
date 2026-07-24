@@ -4,141 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 132BCC531C9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 15:42:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8FFAC531C9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 15:55:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnI28-0000rO-1K; Fri, 24 Jul 2026 11:41:56 -0400
+	id 1wnIEM-0005Yq-DC; Fri, 24 Jul 2026 11:54:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wnI26-0000r9-AF
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 11:41:54 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wnIEH-0005Xt-9s
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 11:54:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wnI24-0003eL-FE
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 11:41:54 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66ODbNtu3335787
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 15:41:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- xs+x57VaTtvQntEpQdo24DOQ9c6PH4+cdlVgZZDfWOk=; b=mjC49spADEFKAqcu
- AMvyZZ+qoD92D4h2pNb4w5w46AJZLSO6R2IDDoLp/wkmCISM3/hKdR3o+ar4NeRA
- INFuLCwH+B74fcznwl4im7E3eZ36VNv1E/Dr7IUi0IModOlXcZ+CqEwstuN4kmcc
- oXPPb8EjH246k/IFpBo7tVgHWXPqTO7BdZJycEZ+62z2mrD/Ai9yniqVlq+vNmRd
- 4HJ6bC42AOI7oWmSXZjUH+klXpyYyhrt2c3WtZR42eKKQPG54CITEV1dsKZDJ1Kr
- IstkKf3KQzOgfvsw/bQeufI3TidsB+QpZb8eTUlU0MmRpxhW8rQVAu/R2z8YTAoq
- Eopz3w==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fm5bysd0n-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 15:41:48 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51c26012cd0so7637511cf.0
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 08:41:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wnIEF-00053Q-49
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 11:54:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784908464;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rpBLduXIbVgc1kr/XPshxc9Bgw6om1b+VeMiROGQBGk=;
+ b=Hv4+4TciUXqdrIMwhyS0uErPFTjY3ual2chlICsiveL970PZ16W7kBtO7qjOEBDszf/0Bb
+ pu80TVU7pzO1FBv8uOjHBXa5vaHoaXS5SsUavRy27BuVdLzD5I+WaEZecRm7Ap90MxVU6v
+ xFxURkTDaRoQgUxEHF4BN+yc6Vee16w=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-511-la054TKyP66_Xx1oPvo55w-1; Fri, 24 Jul 2026 11:23:26 -0400
+X-MC-Unique: la054TKyP66_Xx1oPvo55w-1
+X-Mimecast-MFC-AGG-ID: la054TKyP66_Xx1oPvo55w_1784906605
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4955edc851aso3736115e9.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 08:23:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784907708; x=1785512508; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=xs+x57VaTtvQntEpQdo24DOQ9c6PH4+cdlVgZZDfWOk=;
- b=TeIOncCJIK75qn3r2Ga+zPokb9Hdt1BMS1XUjN2BAd+i2xDVAqKuYWsku69/3Ssy5T
- RgggIwykWrEgwWu6ani+PaVgV+WfPDrb4ELaVmcGuJ8ciwkfuQfPOPrcY8cpGs7L1Ihd
- g5nkuxvbwulvJ5liMByeMJiny5opJmMZdguAFO8hCD9VkjH3ZLadbiOFdUAAFFHLeLN2
- NJj0WjlFDDklw/ZnYYSieOSrNxvRhEWfdGSTPd0tVM8EPS0QjrN71LRtoXtEdErMe5FG
- F6/mwFoEg33nM9Sho53WXdmnHW9McVjLAmNQJ7HSc9tOg8hS15eL1QK+wXE7VelMI2xt
- ZvNA==
+ d=redhat.com; s=google; t=1784906605; x=1785511405; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=rpBLduXIbVgc1kr/XPshxc9Bgw6om1b+VeMiROGQBGk=;
+ b=nDH2RMN15uglLtNwbmecnRD3o9ZcLXknrv6zAxuHCa9LhI0Z3C6GDFjhksY8XyOvX7
+ NynyudUt4CE1NRJify4bv9bT5R6oHnJclUPQZokaEN70H5TT/MyTCbrnudDzCClsswcE
+ rJCn2nz2zrOSjJvpN1yNBFAhrBasBGh9ruTlZ6sL0R8+aXELQZuZtIohY4/fp65E/WcY
+ GjTIheJ0U3TTDZZfAjnw5Kp9hzR/6x0Pb910VI42TJ046G96PryMEeJ6d6BQuNN9oywl
+ SDgndXz58wzcW3poqjeTcZd88YXloryUAFRscQDdnwTiW+P36FpR6VymE+BsbZUAta4G
+ c9CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784907708; x=1785512508;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=xs+x57VaTtvQntEpQdo24DOQ9c6PH4+cdlVgZZDfWOk=;
- b=fL5igwyKLY5+y7ZH0FjCqMk9hv+WDI1mwdJO2rZ4SNPXvYJ0iZV3LdY3C159+2m+62
- 8PIxtRJyH/0rS1DTk//RXxsKGog0VBemUGMiWJcBlX/UP9XO/CXJGHbjxnmAui8k9bxa
- wiZgNAVbNW5zyj/laxxYc4W1dwjDYAYZrJhREEEg5fLRs+MSbDjmPd8UT95JnpWOW1WU
- QeShjdukZfaPeeZJ4+4nDKDhc5ryGEKXe2dp7kc0ZKiS0bVXIg1rU1nFZpOpsBbD2oe8
- I++DSvr8cG1nqMKQV862gwj9cS0pNA9SX2aq4LLTDZv1+ZoIeKG61IFS5ighBcQH5YsA
- SxVA==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rr9dql5O8OaEnyhWDkaJljEIhlAwK7x/24RYWB6ckTuCOHglvlNc9TMalD5doPZtPx280Ogsj4w7jKb@nongnu.org
-X-Gm-Message-State: AOJu0YzA+gkrHSEQO9EdLxeufrytvSGTrEY4mmJyC9e4zA0vYR5zTVxr
- NdtGoM8gSr99EiMS0DRS8B2nG0eBe6DmzlAF/Ip6KJ/0qxLe3+XMAb7b7NbExTNgJpp7P01XrjT
- 02VMru7GuTuT6JyynJMwDhiQRb5BwjNXwX39D6HnDuJC2mhIvnwNsnWY92Q==
-X-Gm-Gg: AR+sD10U63P1RhR2r4emO+T6/RZwqlEBDj/9ORGqVmUo7XzhJ7My0RgrRe6B9tMSWbT
- rN4JVxrbTqoyJW1dlOqukbR2qoTgKSEtYJDx0bdyMCNem1Q2CyOq5j0INdo5iQU++SQJQ56Rl8b
- EbV3fy9CXGaXvYJHU6urLnFwDlwO6dS07Gc6W1o48koH2EdpiJbhlVyUSpKQVAhVOBNU5KS4QkG
- 5lhvaKw4rXKPC3Dr72SnauzDz9YGTWmwg81pqTFs4qelhRsxTQHycqT6FjXEdaTzfsU6ZyNuixk
- boX4l28mkR7D6sdBJ4UBYmg5lxfSwU8BIC5rpQTGdfy9qhlrCLjq6Cv2M9aHqNKfWG7pDj+o7dJ
- D3I3FePBYPFnC0MqGGKgHSEYXp/Uq8NC2zi4hK1Wf76b0srttOoM=
-X-Received: by 2002:ac8:58d2:0:b0:517:6508:e1f4 with SMTP id
- d75a77b69052e-5283deef172mr73103071cf.42.1784907708180; 
- Fri, 24 Jul 2026 08:41:48 -0700 (PDT)
-X-Received: by 2002:ac8:58d2:0:b0:517:6508:e1f4 with SMTP id
- d75a77b69052e-5283deef172mr73102671cf.42.1784907707588; 
- Fri, 24 Jul 2026 08:41:47 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c6dc25sm25466665f8f.33.2026.07.24.08.41.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Jul 2026 08:41:46 -0700 (PDT)
-Message-ID: <fb57df9c-66aa-4671-80a2-a5e98a0fa7f7@oss.qualcomm.com>
-Date: Fri, 24 Jul 2026 17:41:45 +0200
+ d=1e100.net; s=20251104; t=1784906605; x=1785511405;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=rpBLduXIbVgc1kr/XPshxc9Bgw6om1b+VeMiROGQBGk=;
+ b=Y3zEQPyPcSHM7FhJJmpDM8IrsxNxMVyN4pvFgy79/HOdSlby0ABaVMlQji9whZF+qS
+ 9C3st1U7UCPrB0xbnMbz3sB/u9Gjg+ATyppF+Pk0mDBEoeHW70vJm6yBFkF+PBIeDJ8C
+ Q7xQdam4aRfuVcYRzysNaQCq2CxbAXdiEyUac/6toHrlSaZFsrf4T3ToKrnW1iZ5kSpr
+ HQjOLv8I2dOvk43cA9oGL5jbNLUDgtZUP/boUAO283UNy9aBVG3ElYz8aaACUsJjAkDi
+ BVlwTZZgSX2a50YLwVQRc/mzyyytmvPrkmvY1mSMAXq24i/ibcMi9y4F5f2qP6M6BEMj
+ BANA==
+X-Gm-Message-State: AOJu0YyR486ZEZ6PlOUcXoffXhLqzJFntmRQPlajwOCnzE2EuBEAgxrJ
+ RWjeS4/IW82KpjkdISapgh+YIcCAgNEhJg6rlLKvfB6evJ1l0BQp+pqj/ZeIBMkguflquAo25B3
+ DA2EWKhMP8tSV6LtdP1fVkmBzY/nR6Bj+Cio85l1aNLZIBa/icMQ2ndcWSEGMVPwU
+X-Gm-Gg: AR+sD12ObpKvSfjg0wm+qlusIZ1lXpjBXCPuQv6Hgc3sw/2Do1dRY+T3TuWwl5sImbP
+ wXvIpvDuQNcGMl2XDujyDy4cF4AfEeGZnBDzEd6GkWEsiWiWS2vwYlXtn/v0sOJqUNz1AdGQSVq
+ vnfKhiuQqArjlXt9LOdMpofQ+IGsDdpxZvbDesUBD/grLoSK4uE7FdQp3n8Paau9Zpv2GyjY+48
+ 338kxR5mC5uyAA5ELUrcmR5i/BXpUUY7FoLT3D/Lm1pgzmZBuwZBF3DlJknjzSgzWVpc3jmz8ed
+ QrBBtDvydN4WFpB8jzV9Stogl7qaTfl5AVVi5a1BhQqCGY1K3a2XHLxBer3VdGXTnpc64Y8Gl9W
+ kC2lrKhQk5OIR8w6S1rJuxVtyqMK7aj7Xs71QXWxxV9gBYSfv/4NfK7WkmCE=
+X-Received: by 2002:a05:600c:3107:b0:495:6338:1453 with SMTP id
+ 5b1f17b1804b1-49573ca9945mr83365595e9.16.1784906605124; 
+ Fri, 24 Jul 2026 08:23:25 -0700 (PDT)
+X-Received: by 2002:a05:600c:3107:b0:495:6338:1453 with SMTP id
+ 5b1f17b1804b1-49573ca9945mr83365335e9.16.1784906604792; 
+ Fri, 24 Jul 2026 08:23:24 -0700 (PDT)
+Received: from localhost
+ (p200300cfd7075d8bc03b74903e90fa9c.dip0.t-ipconnect.de.
+ [2003:cf:d707:5d8b:c03b:7490:3e90:fa9c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f85b9a6d7sm26167782f8f.2.2026.07.24.08.23.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 24 Jul 2026 08:23:24 -0700 (PDT)
+From: Hanna Czenczek <hreitz@redhat.com>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ John Snow <jsnow@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>
+Subject: [PATCH 2/6] hw/virtio-blk: Complete zone-append cookies
+Date: Fri, 24 Jul 2026 17:23:11 +0200
+Message-ID: <20260724152315.234183-3-hreitz@redhat.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260724152315.234183-1-hreitz@redhat.com>
+References: <20260724152315.234183-1-hreitz@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio/pci: Fix ROM load failure handling in vfio_rom_read()
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex@shazbot.org>, mcasquer@redhat.com
-References: <20260724092413.348354-1-clg@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260724092413.348354-1-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: na-6L8BZmZabdamAw8X7l7cHQNR61Kzu
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDE0MSBTYWx0ZWRfXyT8DH5+wQvnH
- poL/kZMSFFBfYvuvXwvnbnqlKwygmv/okMy94QW3WZcefT7wOszG3he2jcYoUI1biB6nxek8GJC
- m4lhW7msjBEi+0GTVu0xyFrL+b/M3cU=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDE0MSBTYWx0ZWRfXwimLQICzb4U3
- BVwJ/WwNEH9yq5PBNiQ6wQfDb0JUIRk76zokvRs6cAz3XJ28TKF3UtWwKQb4BKvK1BQSQneRRcI
- zDxYamKlxxXwDk2vBBNEZf31TltBKJAlUIaCMgwhl96zoUoJOjK0sjMPoJktWDAnLvH3btkGQjU
- cUfyWD+8UeGE5HwbR3X5t68zv21Z3Xg1oNbHxQY+KOdxfT7Qr3IoISTpqPjRFCvFbzKu4Adkx8c
- ECV7B13Qi60jE1abaQGD8W1JBQqAEwbeuOkAGioeLrhsg23mWk26Ty+Os6AbJ78Dp4+oP2nNLhh
- 03akeQPhNZ/6xZqOexrD+apLFN74MK9auHR+tOteLuPknXdlq1n3Cm+TUi1xdK06pe+eORbJqmG
- srJwDTk7sbU2uHShCiHykkQEKJw4UwdIinM5BLIIhSxVTSUK4YdZZLPYh8Q2I3WBcVfxnI4qwSh
- JN+bQ6JM1T5nusQsRFg==
-X-Proofpoint-GUID: na-6L8BZmZabdamAw8X7l7cHQNR61Kzu
-X-Authority-Analysis: v=2.4 cv=GMA41ONK c=1 sm=1 tr=0 ts=6a6387bc cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=20KFwNOVAAAA:8 a=3uXI8EjjiLU3y-OuUB4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-24_03,2026-07-24_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 phishscore=0 lowpriorityscore=0
- priorityscore=1501 suspectscore=0 bulkscore=0 adultscore=0 malwarescore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607240141
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.419,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,140 +125,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/7/26 11:24, CÃ©dric Le Goater wrote:
-> When vfio_pci_load_rom() fails, vdev->rom is NULL but the memcpy
-> still computes a source pointer from it, which is undefined behavior.
-> Guard the access and return a 0xff pattern instead, which is what
-> hardware returns for an absent ROM.
-> 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   hw/vfio/pci.c | 9 +++++++--
->   1 file changed, 7 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index a3147d28665abd29fd804bd08bdffc3c7440033c..16d4f70ea58c9e5b174dd57950df55dc2ab91f6f 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -1176,8 +1176,13 @@ static uint64_t vfio_rom_read(void *opaque, hwaddr addr, unsigned size)
->           }
->       }
->   
-> -    memcpy(&val, vdev->rom + addr,
-> -           (addr < vdev->rom_size) ? MIN(size, vdev->rom_size - addr) : 0);
-> +    /* If ROM loading failed, return 0xff pattern */
-> +    if (vdev->rom_read_failed) {
-> +        memset(&val, 0xff, sizeof(val));
-> +    } else {
-> +        memcpy(&val, vdev->rom + addr,
-> +               (addr < vdev->rom_size) ? MIN(size, vdev->rom_size - addr) : 0);
-> +    }
->   
->       switch (size) {
->       case 1:
+virtio_blk_handle_zone_append() starts accounting via
+block_acct_start(), but this is actually never completed.  Do so.
 
-Maybe simpler:
-
--- >8 --
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index c204706e630..d06a2d76523 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -1151,13 +1151,18 @@ static uint64_t vfio_rom_read(void *opaque, 
-hwaddr addr, unsigned size)
-      } val = { .qword = ~0ULL };
-      uint64_t data = 0;
-
-+    if (unlikely(vdev->rom_read_failed)) {
-+        return -1;
-+    }
-+
-      /* Load the ROM lazily when the guest tries to read it */
--    if (unlikely(!vdev->rom && !vdev->rom_read_failed)) {
-+    if (unlikely(!vdev->rom)) {
-          Error *local_err = NULL;
-
-          vdev->rom_read_failed = !vfio_pci_load_rom(vdev, &local_err);
-          if (vdev->rom_read_failed) {
-              error_report_err(local_err);
-+            return -1;
-          }
-      }
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
+ hw/block/virtio-blk.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-But we can also rewrite into a more readable code using ld/st
-(also avoiding memcpy zero-sized):
-
--- >8 --
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index c204706e630..af51c898f50 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -33,6 +33,7 @@
-  #include "migration/vmstate.h"
-  #include "migration/cpr.h"
-  #include "qobject/qdict.h"
-+#include "qemu/bswap.h"
-  #include "qemu/error-report.h"
-  #include "qemu/main-loop.h"
-  #include "qemu/module.h"
-@@ -1143,42 +1144,30 @@ static int 
-vfio_pci_config_space_write(VFIOPCIDevice *vdev, off_t offset,
-  static uint64_t vfio_rom_read(void *opaque, hwaddr addr, unsigned size)
-  {
-      VFIOPCIDevice *vdev = opaque;
--    union {
--        uint8_t byte;
--        uint16_t word;
--        uint32_t dword;
--        uint64_t qword;
--    } val = { .qword = ~0ULL };
--    uint64_t data = 0;
-+    uint64_t data = -1;
-+
-+    if (unlikely(vdev->rom_read_failed)) {
-+        goto out;
+diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+index 56bfe1840c4..384a5ee3f1c 100644
+--- a/hw/block/virtio-blk.c
++++ b/hw/block/virtio-blk.c
+@@ -755,7 +755,8 @@ static void virtio_blk_zone_append_complete(void *opaque, int ret)
+ {
+     ZoneCmdData *data = opaque;
+     VirtIOBlockReq *req = data->req;
+-    VirtIODevice *vdev = VIRTIO_DEVICE(req->dev);
++    VirtIOBlock *s = req->dev;
++    VirtIODevice *vdev = VIRTIO_DEVICE(s);
+     int64_t append_sector, n;
+     uint8_t err_status = VIRTIO_BLK_S_OK;
+ 
+@@ -778,6 +779,11 @@ static void virtio_blk_zone_append_complete(void *opaque, int ret)
+ 
+ out:
+     virtio_blk_req_complete(req, err_status);
++    if (err_status == VIRTIO_BLK_S_OK) {
++        block_acct_done(blk_get_stats(s->blk), &req->acct);
++    } else {
++        block_acct_failed(blk_get_stats(s->blk), &req->acct);
 +    }
+     g_free(req);
+     g_free(data);
+ }
+-- 
+2.55.0
 
-      /* Load the ROM lazily when the guest tries to read it */
--    if (unlikely(!vdev->rom && !vdev->rom_read_failed)) {
-+    if (unlikely(!vdev->rom)) {
-          Error *local_err = NULL;
-
-          vdev->rom_read_failed = !vfio_pci_load_rom(vdev, &local_err);
-          if (vdev->rom_read_failed) {
-              error_report_err(local_err);
-+            goto out;
-          }
-      }
-
--    memcpy(&val, vdev->rom + addr,
--           (addr < vdev->rom_size) ? MIN(size, vdev->rom_size - addr) : 0);
--
--    switch (size) {
--    case 1:
--        data = val.byte;
--        break;
--    case 2:
--        data = le16_to_cpu(val.word);
--        break;
--    case 4:
--        data = le32_to_cpu(val.dword);
--        break;
--    default:
--        hw_error("vfio: unsupported read size, %d bytes\n", size);
--        break;
-+    if (addr < vdev->rom_size) {
-+        memcpy(&val, vdev->rom + addr, MIN(size, vdev->rom_size - addr));
-      }
-
-+    data = ldn_le_p(&val, size);
-+
-+out:
-      trace_vfio_rom_read(vdev->vbasedev.name, addr, size, data);
-
-      return data;
----
-
-(untested).
 
