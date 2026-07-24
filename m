@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32E3CC531FA
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 09:50:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E657C531FA
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 09:50:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnCY8-0007cF-VF; Fri, 24 Jul 2026 05:50:36 -0400
+	id 1wnCY9-0007cY-91; Fri, 24 Jul 2026 05:50:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiongwm2026@163.com>)
- id 1wnCMN-0008Ia-HG
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 05:38:27 -0400
-Received: from m16.mail.163.com ([117.135.210.5])
+ id 1wnCQ6-0000Vw-4E; Fri, 24 Jul 2026 05:42:18 -0400
+Received: from m16.mail.163.com ([117.135.210.3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiongwm2026@163.com>)
- id 1wnCML-00047e-6x
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 05:38:27 -0400
+ id 1wnCQ4-0004WQ-0M; Fri, 24 Jul 2026 05:42:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=4y
- j940qjx+FeltU9fph5m0Y6GNN8PcoIDW2zyosnPjg=; b=gj9yO5cfTDLSRJiI84
- Eru/s8yvTVCWU2KONQ3DUe82+oYxAjtBBp0iv5q0C26/xyjgrAU8bGoDQ06xLT1b
- mp4h/KOjfYJmNI5T+f7wLEAn1HPopX8vk1XknUhid58l3V74GTagHAyvrG6shvRo
- 1rq7s/wwzqYKpt7IYLD1+Q1TQ=
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=5o
+ diKTEYP96PYJJPtf+ye9/k/HR9XGpqES/NlSSmGIA=; b=lkfJ8tM/6EREUwBzd9
+ /3Rmmkcv13BdmnmA2Yeustyn7m4PeSjYthnm21aq2igfa51wHMHg09wLnTbvO+Ef
+ lzQhWbVkSegnlYFhIprz3X41RJqVW5+a1Zzeo9eUUma3h6bg9y4qng1SS3JBOnD9
+ yBx+3C8Cm4oIf7TrF4tXvcjf0=
 Received: from xwm-TianYi510Pro-14IMB.. (unknown [])
- by gzga-smtp-mtada-g1-4 (Coremail) with SMTP id
- _____wB3tZ+BMmNqFvnbLg--.65177S2; 
- Fri, 24 Jul 2026 17:38:10 +0800 (CST)
+ by gzga-smtp-mtada-g0-0 (Coremail) with SMTP id
+ _____wBXwJKBMmNqfihcKQ--.58639S2; 
+ Fri, 24 Jul 2026 17:38:09 +0800 (CST)
 From: Weimin Xiong <xiongwm2026@163.com>
 To: qemu-devel@nongnu.org
-Cc: jasowang@redhat.com, mst@redhat.com, virtualization@lists.linux.dev,
+Cc: jasowang@redhat.com, mst@redhat.com, qemu-trivial@nongnu.org,
  Xiong Weimin <xiongweimin@kylinos.cn>
-Subject: [PATCH] hw/net/virtio-net: Remove dangerous cast in receive_header
+Subject: [PATCH] net/tap-solaris: Fix resource leaks on error paths
 Date: Fri, 24 Jul 2026 17:38:09 +0800
-Message-ID: <20260724093809.810263-1-xiongwm2026@163.com>
+Message-ID: <20260724093809.810220-1-xiongwm2026@163.com>
 X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wB3tZ+BMmNqFvnbLg--.65177S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7Zr17CFWkJw4fZry3CrW3KFg_yoW8GFyxpF
- n0gF4Iqr4rXF13Ga1rAFs5X34jy3Zaka43CrWqq345uFZ8Ar1DtryY93W8t3WakFWkAF1I
- 9rWFqFy5JF1Du3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+X-CM-TRANSID: _____wBXwJKBMmNqfihcKQ--.58639S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxCr18Ar4UGw43CF4rJry7Jrb_yoWruFy3pF
+ Wjq39rKryFqry2y3WrZwnrW390vr95tF47Gryayw1fJryDur1vqF4xKr1qqrW3uFs5tayv
+ 93Z3Xa4UG34ktrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
  9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jAl19UUUUU=
 X-Originating-IP: [116.128.244.169]
-X-CM-SenderInfo: x0lr0wdzpsijqw6rljoofrz/xtbCzgIgr2pjMoLlmQAA3G
-Received-SPF: pass client-ip=117.135.210.5; envelope-from=xiongwm2026@163.com;
+X-CM-SenderInfo: x0lr0wdzpsijqw6rljoofrz/xtbCzQEgr2pjMoH9ywAA3P
+Received-SPF: pass client-ip=117.135.210.3; envelope-from=xiongwm2026@163.com;
  helo=m16.mail.163.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
@@ -76,42 +74,167 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Xiong Weimin <xiongweimin@kylinos.cn>
 
-The receive_header() function contains a "FIXME this cast is evil"
-comment. The code does:
-    void *wbuf = (void *)buf;
+The tap_alloc() function has multiple error paths where opened file
+descriptors (tap_fd, if_fd, ip_fd) are not closed before returning
+error. This leads to resource leaks.
 
-This cast from 'const void *' to 'void *' removes const qualifier which
-could lead to unintended modifications. Instead, use a properly typed
-pointer and pass it correctly to work_around_broken_dhclient().
+Fix this by properly closing file descriptors before returning error
+in all error paths.
 
 Signed-off-by: Xiong Weimin <xiongweimin@kylinos.cn>
 ---
- hw/net/virtio-net.c | 12 +++++++----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ net/tap-solaris.c | 47 +++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 37 insertions(+), 10 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+diff --git a/net/tap-solaris.c b/net/tap-solaris.c
 index 1234567890ab..fedcba098765 4321006
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -1716,12 +1716,14 @@ static void receive_header(VirtIONet *n, const struct iovec *iov, int iov_cnt,
-                            const void *buf, size_t size)
+--- a/net/tap-solaris.c
++++ b/net/tap-solaris.c
+@@ -60,8 +60,6 @@
+  */
+ static int tap_alloc(char *dev, size_t dev_size, Error **errp)
  {
-     if (n->has_vnet_hdr) {
--        /* FIXME this cast is evil */
--        void *wbuf = (void *)buf;
--        work_around_broken_dhclient(wbuf, wbuf + n->host_hdr_len,
--                                    size - n->host_hdr_len);
-+        const uint8_t *wbuf = buf;
-+        uint8_t *payload = (uint8_t *)(wbuf + n->host_hdr_len);
-+
-+        work_around_broken_dhclient(wbuf, payload,
-+                                    size - n->host_hdr_len);
+-    /* FIXME leaks like a sieve on error paths */
+-    /* FIXME suspicious: many errors are reported, then ignored */
+     int tap_fd, if_fd, ppa = -1;
+     static int ip_fd = 0;
+     char *ptr;
+@@ -102,18 +100,30 @@ static int tap_alloc(char *dev, size_t dev_size, Error **errp)
+     strioc_ppa.ic_dp = (char *)&ppa;
+     if ((ppa = ioctl (tap_fd, I_STR, &strioc_ppa)) < 0) {
+         error_report("Can't assign new interface");
+-        return -1;
++        goto fail_tap_fd;
+     }
  
-         if (n->needs_vnet_hdr_swap) {
--            virtio_net_hdr_swap(VIRTIO_DEVICE(n), wbuf);
-+            virtio_net_hdr_swap(VIRTIO_DEVICE(n), (void *)wbuf);
-         }
-         iov_from_buf(iov, iov_cnt, 0, buf, sizeof(struct virtio_net_hdr));
-     } else {
+     if_fd = RETRY_ON_EINTR(open("/dev/tap", O_RDWR, 0));
+     if (if_fd < 0) {
+         error_setg_file_open(errp, errno, "/dev/tap");
+-        return -1;
++        goto fail_tap_fd;
+     }
+     if(ioctl(if_fd, I_PUSH, "ip") < 0){
+         error_setg(errp, "Can't push IP module");
+-        return -1;
++        goto fail_if_fd;
++    }
++
++    if (ioctl(if_fd, SIOCGLIFFLAGS, &ifr) < 0) {
++        error_report("Can't get flags");
++        goto fail_if_fd;
++    }
++
++    snprintf(actual_name, 32, "tap%d", ppa);
++    pstrcpy(ifr.lifr_name, sizeof(ifr.lifr_name), actual_name);
++
++    ifr.lifr_ppa = ppa;
++    if (ioctl(if_fd, SIOCSLIFNAME, &ifr) < 0) {
++        error_report("Can't set PPA %d", ppa);
++        goto fail_if_fd;
+     }
+ 
+-    if (ioctl(if_fd, SIOCGLIFFLAGS, &ifr) < 0)
+-        error_report("Can't get flags");
++    if (ioctl(if_fd, SIOCGLIFFLAGS, &ifr) < 0) {
++        error_report("Can't get flags");
++        goto fail_if_fd;
++    }
+ 
+-    snprintf (actual_name, 32, "tap%d", ppa);
+-    pstrcpy(ifr.lifr_name, sizeof(ifr.lifr_name), actual_name);
+-
+-    ifr.lifr_ppa = ppa;
+-    /* Assign ppa according to the unit number returned by tun device */
+-
+-    if (ioctl (if_fd, SIOCSLIFNAME, &ifr) < 0)
+-        error_report("Can't set PPA %d", ppa);
+-    if (ioctl(if_fd, SIOCGLIFFLAGS, &ifr) <0)
+-        error_report("Can't get flags");
+     /* Push arp module to if_fd */
+-    if (ioctl (if_fd, I_PUSH, "arp") < 0)
++    if (ioctl(if_fd, I_PUSH, "arp") < 0) {
+         error_report("Can't push ARP module (2)");
++        goto fail_if_fd;
++    }
+ 
+     /* Push arp module to ip_fd */
+-    if (ioctl (ip_fd, I_POP, NULL) < 0)
++    if (ioctl(ip_fd, I_POP, NULL) < 0) {
+         error_report("I_POP failed");
+-    if (ioctl (ip_fd, I_PUSH, "arp") < 0)
++        goto fail_if_fd;
++    }
++    if (ioctl(ip_fd, I_PUSH, "arp") < 0) {
+         error_report("Can't push ARP module (3)");
++        goto fail_if_fd;
++    }
+     /* Open arp_fd */
+     arp_fd = RETRY_ON_EINTR(open("/dev/tap", O_RDWR, 0));
+-    if (arp_fd < 0)
++    if (arp_fd < 0) {
+         error_report("Can't open %s", "/dev/tap");
++        goto fail_if_fd;
++    }
+ 
+     /* Set ifname to arp */
+     strioc_if.ic_cmd = SIOCSLIFNAME;
+@@ -147,21 +172,37 @@ static int tap_alloc(char *dev, size_t dev_size, Error **errp)
+     strioc_if.ic_dp = (char *)&ifr;
+     if (ioctl(arp_fd, I_STR, &strioc_if) < 0){
+         error_report("Can't set ifname to arp");
++        goto fail_arp_fd;
+     }
+ 
+     if((ip_muxid = ioctl(ip_fd, I_LINK, if_fd)) < 0){
+         error_setg(errp, "Can't link TAP device to IP");
+-        return -1;
++        goto fail_arp_fd;
+     }
+ 
+-    if ((arp_muxid = ioctl (ip_fd, link_type, arp_fd)) < 0)
++    if ((arp_muxid = ioctl(ip_fd, link_type, arp_fd)) < 0) {
+         error_report("Can't link TAP device to ARP");
++        goto fail_ip_muxid;
++    }
+ 
+     close (if_fd);
++    close(ip_fd);
+ 
+     memset(&ifr, 0x0, sizeof(ifr));
+     pstrcpy(ifr.lifr_name, sizeof(ifr.lifr_name), actual_name);
+     ifr.lifr_ip_muxid  = ip_muxid;
+     ifr.lifr_arp_muxid = arp_muxid;
+ 
+-    if (ioctl (ip_fd, SIOCSLIFMUXID, &ifr) < 0)
+-    {
+-      ioctl (ip_fd, I_PUNLINK , arp_muxid);
+-      ioctl (ip_fd, I_PUNLINK, ip_muxid);
+-      error_report("Can't set multiplexor id");
++    if (ioctl(ip_fd, SIOCSLIFMUXID, &ifr) < 0) {
++        ioctl(ip_fd, I_PUNLINK, arp_muxid);
++        ioctl(ip_fd, I_PUNLINK, ip_muxid);
++        error_report("Can't set multiplexor id");
++        goto fail_arp_muxid;
+     }
+ 
+     snprintf(dev, dev_size, "tap%d", ppa);
+     return tap_fd;
++
++fail_arp_muxid:
++    close(arp_fd);
++fail_ip_muxid:
++    ioctl(ip_fd, I_PUNLINK, ip_muxid);
++fail_arp_fd:
++    close(arp_fd);
++fail_if_fd:
++    close(if_fd);
++fail_tap_fd:
++    close(tap_fd);
++    if (ip_fd > 0) {
++        close(ip_fd);
++        ip_fd = 0;
++    }
++    return -1;
+ }
 
 
