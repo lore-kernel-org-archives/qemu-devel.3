@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 423B8C531F9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 09:01:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FA51C531FA
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 09:02:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnBlg-00029G-3K; Fri, 24 Jul 2026 05:00:32 -0400
+	id 1wnBnA-0002f8-62; Fri, 24 Jul 2026 05:02:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wnBlW-00028P-8e; Fri, 24 Jul 2026 05:00:23 -0400
+ id 1wnBn5-0002ci-NJ; Fri, 24 Jul 2026 05:02:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wnBlT-00078t-8e; Fri, 24 Jul 2026 05:00:21 -0400
+ id 1wnBn4-0007Oy-6U; Fri, 24 Jul 2026 05:01:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784883595; bh=+dGGgZcomi7UbNEaKo3g5JzrgmdKf/Lpd2Bkpx4k3NI=;
+ t=1784883695; bh=K3OzEiGd3LV8O69gEGeS2Eo4vsnVUvR3XHWqktsKPCM=;
  h=Date:Subject:To:References:Cc:From:In-Reply-To;
- b=neSHHJSTwWuLkpYeEeqDXEVEYl4lygKue34ljcJPCfcOu3MLg5bZ5WMiQZypJ0/td
- UNL86jMVDE1NRaHLRzVVgEUwhgWo1/V69smcgw8A/YujryNej/ryciqBCxaD/pJQ+g
- aBMUEGTYQRisz17sVaPNUaFdXFhsMGzA9HP2nM9DB8LzLxa/TSu0bl0NETocjJJNDJ
- gHtKDnD7WkSc8eGFgvyP0SwTHUvGPx/zGS7V5RDXohuh0JG2X86N2p4buDTlWx0sFW
- ipIM2lCMZoHXPs0gr+JhOLAyZIe8aGU2IO70Lku6UtLTSLlQesHQ0CNpfp2mKSIa9H
- 9VS9/c0X1J0fw==
+ b=X2563BBM068DwSdVLYN5i3hrP290kACUxPnQPH6hZC9Pp1sMjitfIoKkx5mVaO5GA
+ yH6ZdBb5b8/x1+DGEcR46T5hIIWZUN0lICRjSOxYHliBE4Xz6rGPxasQh+8VW3CWpN
+ uOjUbNQG24OLJsOWWE7PMwA5LOOcYGx6lah37XNt+ysKgM4378DHr3da8F9BY3RWAp
+ bQ5HV59TY1NJfKvr7DmV92WMd77DsXqqce++rxfBJl6qI4c7+tSEqpbJOMS4IBQOkK
+ sCj4vhoFMYhmvI0kKTGC4MAGAM1j3YhFk9GedL7YgmSFepf58xkqwY9EAGXNP13RCV
+ TptO/gZW4wFxA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3C4061C453B;
- Fri, 24 Jul 2026 11:59:55 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 31E561C453E;
+ Fri, 24 Jul 2026 12:01:35 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1A9613F467C;
- Fri, 24 Jul 2026 12:00:16 +0300 (MSK)
-Message-ID: <2a93b410-1d6a-42af-a9da-4d5fbee5960d@tls.msk.ru>
-Date: Fri, 24 Jul 2026 12:00:06 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 11C0C3F467D;
+ Fri, 24 Jul 2026 12:01:56 +0300 (MSK)
+Message-ID: <e34b0236-f489-4512-a3c6-6dab712b2f38@tls.msk.ru>
+Date: Fri, 24 Jul 2026 12:01:46 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] scsi-disk: protect against guest sending truncated data
- for MODE SELECT commands
+Subject: Re: [PATCH] scsi-disk: fix off by one in assertion
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20260721161904.363367-1-pbonzini@redhat.com>
+References: <20260721161907.363392-1-pbonzini@redhat.com>
 Content-Language: en-US, ru-RU
 Cc: QEMU Stable <qemu-stable@nongnu.org>
 From: Michael Tokarev <mjt@tls.msk.ru>
@@ -87,7 +86,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260721161904.363367-1-pbonzini@redhat.com>
+In-Reply-To: <20260721161907.363392-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -114,34 +113,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/21/26 19:19, Paolo Bonzini wrote:
-> scsi-disk has a MODE SELECT path where a truncated mode page can be
-> allowed by a compatibility quirk, but the parser continues to use the
-> page's declared length rather than the number of bytes actually remaining
-> in the request buffer.  This means that scsi_disk_check_mode_select() and
-> scsi_disk_apply_mode_select() can read beyond the valid part of inbuf[],
-> potentially up to the emulated age's length.
+> When documenting the invariant that mode pages need to fit the smallest
+> output buffer of all callers (which is SCSI_MAX_MODE_LEN), the expression
+> used by the assertion was incorrect.
 > 
-> Clamping page_len (the size of the page) to len (whatever the
-> guest provided) ensures that scsi_disk_check_mode_select() and
-> scsi_disk_apply_mode_select() do not access anything beyond bounds;
-> however, this requires care to accept and handle truncated input in
-> those two functions.
+> Even though SCSI_MAX_MODE_LEN is indeed 256, using "length < 256" had
+> two issues: 1) it used the wrong operator, since "length < ..." is more
+> related to having room for extra data; 2) it missed the extra two bytes
+> for page number and length.
 > 
-> In particular, until scsi_disk_check_mode_select()'s first call to
-> mode_sense_page() the number of bytes to be cleared in mode_current[] is
-> unknown, so zero it completely.  And for everything else, be conservative
-> and use len when providing inputs to other functions; but at the same time,
-> ensure all accesses to inbuf[] are bound by expected_len.
-> 
-> Note that pages longer than the emulated one are still rejected.
-> 
-> Fixes: 389e18eb9aa4 ("scsi-disk: add SCSI_DISK_QUIRK_MODE_PAGE_TRUNCATED quirk for Macintosh")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4051
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   hw/scsi/scsi-disk.c | 21 +++++++++++++--------
->   1 file changed, 13 insertions(+), 8 deletions(-)
+>   hw/scsi/scsi-disk.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
+It hitting this assert possible during normal operations?
 I'm picking this up for qemu-stable.
 Please let me know if I shoudn't.
 
