@@ -4,155 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BF13C53200
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 13:01:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37CBEC531C9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 13:01:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnFWH-0001xP-91; Fri, 24 Jul 2026 09:00:53 -0400
+	id 1wnFWO-0002a0-18; Fri, 24 Jul 2026 09:01:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wnFWE-0001ga-Nf; Fri, 24 Jul 2026 09:00:50 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wnFWL-0002SP-HJ
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 09:00:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wnFWC-0002VC-6M; Fri, 24 Jul 2026 09:00:49 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66OCwHsG1776399; Fri, 24 Jul 2026 13:00:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=sfkpfo
- g9JJGCTMiphptCAQyegQQV1gtIXbxsybLyhQg=; b=oMfpH3Cwb1j2JG3HR8nrNR
- VT7XZW8Ok8NtztvQHebpw4jguGUpo83x0Mw3BunQNzsZLMcx/+Zu2efnaunz4ve/
- PntKs2OoV6yLQSNZB/a3V05PuOywKwnj/yt6NwbjTae2bWLgjz/fScIPtBAen6ER
- ayPJ29OsXVLFK/VmS801fuGB2Sd2YrJ1k+QbVAC7JysnCeEABT4tuEvXbFIykGGb
- QN+wb6aTzjamm5EUsXOtmC4i520KRSSxmhMHzzSlFfTSvA3FfLa6t4djZV04oaQl
- Y23nt3Mif7EALolm8qK2Z30lo5m41AQiy8mj00puRhHsHpH+0u/3RdY7ERl+140w
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fg78gm2ce-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Jul 2026 13:00:29 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66OCoY37004285;
- Fri, 24 Jul 2026 13:00:29 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fgp1grs3g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Jul 2026 13:00:29 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66OD0RBv52560242
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 24 Jul 2026 13:00:27 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 47A2258058;
- Fri, 24 Jul 2026 13:00:27 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 08F3E5805E;
- Fri, 24 Jul 2026 13:00:26 +0000 (GMT)
-Received: from [9.61.19.212] (unknown [9.61.19.212])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 24 Jul 2026 13:00:25 +0000 (GMT)
-Message-ID: <c7f5bb1b-4943-4f53-aa1f-fb30260a5edc@linux.ibm.com>
-Date: Fri, 24 Jul 2026 09:00:25 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wnFWJ-0002gG-Ck
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 09:00:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784898054;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Am04rAViHBWH56STMMt95NmhR4rS6t7b5I/fYOQuq1I=;
+ b=NKghtqI8PyM1Yo8TRZ9YZ0XKjGfbc8lctLyczTlbfD/uaZ9qijW4PICMvWEmyE64HkdCip
+ whpI7zy5sU5f9gVs9J5s1mIjnGaD624nEpujn28S7NgkupMkTrmwQvQPqFsL0pe/xIq+sx
+ yPjeH97KBMPtbiQLU7n0gYhSNrzFFrY=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-437-4m6AP_2NOG25_DfFxg0Mvw-1; Fri, 24 Jul 2026 09:00:53 -0400
+X-MC-Unique: 4m6AP_2NOG25_DfFxg0Mvw-1
+X-Mimecast-MFC-AGG-ID: 4m6AP_2NOG25_DfFxg0Mvw_1784898052
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-49571407d1dso3445095e9.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 06:00:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1784898052; x=1785502852; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Am04rAViHBWH56STMMt95NmhR4rS6t7b5I/fYOQuq1I=;
+ b=gzb3yP9DoIG+rpUxRbQvDRHyIFXgS9VmPlpAWXOLgW6VMMcgRO0OFS8VaoZKF19Ixb
+ cho0ZAI1xjFZNo5261vE3xAlD3gptHGtmnUJTmgj69alMUH4oogz5cyoGYNGDF1p34dF
+ dWplO1fzUbEnx0X0rGYg3BCVwcnioCJh0fin+aUCMDVctQN28foy9KZZypuGWmm0o1Zi
+ o7B3e7QIPF8mVGColvSzaX8xq1fmjK27kKELf9FmqzN/e4UEAc/ZOA8fHfzAcBNV2ouj
+ x9z5VvX7OaZq2gPTTbcm6GHh56wH5KuB65FviVkCuJS8DQ2PKbVljth34YaLkfWzn6NZ
+ 9bxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784898052; x=1785502852;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Am04rAViHBWH56STMMt95NmhR4rS6t7b5I/fYOQuq1I=;
+ b=hvmIoffo5o5Cun6YF5dR6KVC2ZCytFB7ammBpc6BqvpGgtPQ3E2grgoA7OpKQgYozF
+ /rgLIRl0iA28hDeCaDWGDlvP2/uHDrfCH+vIGn4GwUAnKNoFMO9EuoZfw1dWRhEL5o4F
+ jJaJEyTf9tkLhxbixjxIlFcSgv2toH2Q7KWAzbNJZcgI+Fy9dqqZlCFJqmWt/1IntN+A
+ x0HCmuhVtytG4ugUvM1wB0gNUDj0RbRZtdfgwVtTA01eLr0ZOxWmZ3UhKMdoUalkCn10
+ +70U9Se8jeZtmh3JBKBAFTLQkS0jhGCWyfPX/3FNYvr6giAsdfVAhWf7PsrrERXeP0FY
+ YEEA==
+X-Gm-Message-State: AOJu0YzOOAiXidqk8d2231Cn++08NMzuGKos5j4mDJktQlxPPqdlTpTr
+ 1lOjPAopTysO5WvrCFY6Z3rSsTbI01c7MiApMj4bd+mfQUnK02TgWpYGOaDkAI48hnKWbPd59yl
+ XT+n6pViXuXsQBPQ6jnFgBG7p8MZ5gwni9ykyU0zwyBCD+94SaHUMzonwEABBdne131P7JO5BZT
+ yobzj2s78J9RXE0AbrOqKdRDMkdCQK2ImMNCfILttE
+X-Gm-Gg: AR+sD13phGCwtaaDDkHvAPPZFy/iyeqnxM5j4Ac7zmDFb16GXnOZSTzSOCNaShNxZkD
+ subhVw5UIbn2S2LUWO7Zt1XPVQFykgWVC0kqnt6LVgRIeb9UqUmQGWN15TSLn77hamMcwDKB7Ip
+ 3YrhyNXmXWvTiknd5t+5zAns5++9Wi75SpTZs1svHIjNqgEg55dvkutfrt4uwrvtfuCA87L2Aw6
+ xMw7J+rMotqJ+x+BENulNvXxtY2j8H93CvCDE+zlsfck6K3K0OBtjWVbV0IBUb1TU0Z9lYsJkSw
+ l+1jRP2ZtOTugPhdP+Cuc9QWOFhHLZwTZsZDmekyXEJeb7fqpPrZoyl3WW/hyvjeEjYhvdEyTZy
+ /Op3s4jeNNs42nvtL3VwVMZCurobWVKoz+eywBni2e549gG/D9Q3FZbp6JISoxF7vALVuk2iHd0
+ vsJrI/
+X-Received: by 2002:a05:600c:35cb:b0:495:4fd4:619b with SMTP id
+ 5b1f17b1804b1-49573cc1305mr103003755e9.1.1784898051366; 
+ Fri, 24 Jul 2026 06:00:51 -0700 (PDT)
+X-Received: by 2002:a05:600c:35cb:b0:495:4fd4:619b with SMTP id
+ 5b1f17b1804b1-49573cc1305mr103002805e9.1.1784898050650; 
+ Fri, 24 Jul 2026 06:00:50 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.94.110])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4957b5f35a1sm47388715e9.0.2026.07.24.06.00.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 24 Jul 2026 06:00:49 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: armbru@redhat.com
+Subject: [PATCH 2/3] scripts/qapi: reject empty enums
+Date: Fri, 24 Jul 2026 15:00:42 +0200
+Message-ID: <20260724130044.1369843-3-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260724130044.1369843-1-pbonzini@redhat.com>
+References: <20260724130044.1369843-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/1] target/s390x: Allow 2G hugepages guest backing
-To: Claudio Imbrenda <imbrenda@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, borntraeger@de.ibm.com, frankja@linux.ibm.com,
- pasic@linux.ibm.com, mhartmay@linux.ibm.com, david@kernel.org,
- mjrosato@linux.ibm.com, richard.henderson@linaro.org,
- iii@linux.ibm.com, cohuck@redhat.com
-References: <20260713155212.287444-1-imbrenda@linux.ibm.com>
-Content-Language: en-US
-From: Eric Farman <farman@linux.ibm.com>
-Autocrypt: addr=farman@linux.ibm.com; keydata=
- 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
- y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20260713155212.287444-1-imbrenda@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDExNSBTYWx0ZWRfX6biFxRJJZo4E
- AsDGYkUEtJFDccjQB1kAGpc2HyXoDzkzaMM36y33paHPFo3cvMzXrHIEB5+WLfGU87CKYQCXzLz
- jRXWbEX51EyoqcszSwZ9p5Mk9HoqbOXKBjSr9vxkey8N9pBKfl9e6C42cmhfU1E78ig7UVoMA/K
- xGo3roJ0m8tEqD2uTUFxU0O4JD998kP5YU927++xmKi6bF3jV54IhAKFyzJA+WhvDuyaup3Sq9F
- Ni+nuMt2+ppIQWGk9Dxh2pKqAz5mI3Oq5DUifTRX6i4Rh49MaD/R++y1eEwcKlqy7q1aRw6R+Sy
- MHV/E86mkCjxNvpjnDHpECAe1JWH/Ng/8nP8qU/zwHmz6qA3Megq0wByMMWSMs9iqM+PJdax9lx
- GSXPaFRYQjnB14rCoPho0b1RQ1Fp3GjF40ZtXyndn6pl7QtE0jGCjxhQgQJUN2qoVfZ0tmPnooL
- 3a4beeXKVmAvpNRM4tQ==
-X-Proofpoint-GUID: wJp1GbmVGblzLucerz2-8GjzYlryYqC2
-X-Authority-Analysis: v=2.4 cv=MelcfZ/f c=1 sm=1 tr=0 ts=6a6361ee cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=y5kb3azYzRo2SqOjEfwA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDExNSBTYWx0ZWRfX4bF/Ujn65Cea
- 2ySHUI7zdEE6IeiJ5fp/ypmV15x93UI5RS457DsZd7a/vaDZiXD9yBJpu19yz40lRDdN/HyU/5Q
- UPN7/8+v+RRH//1e9hcuuXxNqV2gKjU=
-X-Proofpoint-ORIG-GUID: wJp1GbmVGblzLucerz2-8GjzYlryYqC2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-24_02,2026-07-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0 spamscore=0
- clxscore=1015 malwarescore=0 phishscore=0 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607240115
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.419,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -169,15 +120,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Raise an error if an enum has no members.  Such enums cannot be populated
+with a valid value, and therefore they can only be used as optional
+members.  But QAPI leaves out optional members from the serialization
+protocol, and therefore the existence of the enum is completely pointless.
 
+The same limitation is not extended to an enum whose members are all
+compiled out; these can still be useful as optional members.  However they
+cannot implicitly block usage of parent structures because, by virtue
+of having only conditional members, they are "enums with conditional
+first item" and must therefore be optional.
 
-On 7/13/26 11:52 AM, Claudio Imbrenda wrote:
-> Allow mapping guest with 2G hugepages on hosts that support it.
-> 
-> Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-> ---
->   target/s390x/kvm/kvm.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ scripts/qapi/schema.py                  | 4 ++++
+ tests/qapi-schema/enum-empty.err        | 2 ++
+ tests/qapi-schema/enum-empty.json       | 2 ++
+ tests/qapi-schema/enum-empty.out        | 0
+ tests/qapi-schema/meson.build           | 1 +
+ tests/qapi-schema/qapi-schema-test.json | 3 ---
+ tests/qapi-schema/qapi-schema-test.out  | 1 -
+ tests/qapi-schema/union-empty-if.err    | 2 ++
+ tests/qapi-schema/union-empty-if.json   | 6 ++++++
+ tests/qapi-schema/union-empty-if.out    | 0
+ tests/qapi-schema/union-empty.err       | 4 ++--
+ 11 files changed, 19 insertions(+), 6 deletions(-)
+ create mode 100644 tests/qapi-schema/enum-empty.err
+ create mode 100644 tests/qapi-schema/enum-empty.json
+ create mode 100644 tests/qapi-schema/enum-empty.out
+ create mode 100644 tests/qapi-schema/union-empty-if.err
+ create mode 100644 tests/qapi-schema/union-empty-if.json
+ create mode 100644 tests/qapi-schema/union-empty-if.out
 
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
+index 71296b15de2..a5a11298817 100644
+--- a/scripts/qapi/schema.py
++++ b/scripts/qapi/schema.py
+@@ -428,6 +428,10 @@ def __init__(
+ 
+     def check(self, schema: QAPISchema) -> None:
+         super().check(schema)
++        if not self.members:
++            raise QAPISemError(
++                self.info,
++                "enum '%s' must have at least one value" % self.name)
+         seen: Dict[str, QAPISchemaMember] = {}
+         for m in self.members:
+             m.check_clash(self.info, seen)
+diff --git a/tests/qapi-schema/enum-empty.err b/tests/qapi-schema/enum-empty.err
+new file mode 100644
+index 00000000000..6070bf62cbd
+--- /dev/null
++++ b/tests/qapi-schema/enum-empty.err
+@@ -0,0 +1,2 @@
++enum-empty.json: In enum 'TestEmpty':
++enum-empty.json:2: enum 'TestEmpty' must have at least one value
+diff --git a/tests/qapi-schema/enum-empty.json b/tests/qapi-schema/enum-empty.json
+new file mode 100644
+index 00000000000..3b3dfb2e3d8
+--- /dev/null
++++ b/tests/qapi-schema/enum-empty.json
+@@ -0,0 +1,2 @@
++# An enum must have at least one value
++{ 'enum': 'TestEmpty', 'data': [] }
+diff --git a/tests/qapi-schema/enum-empty.out b/tests/qapi-schema/enum-empty.out
+new file mode 100644
+index 00000000000..e69de29bb2d
+diff --git a/tests/qapi-schema/meson.build b/tests/qapi-schema/meson.build
+index 3b0c16a8b67..1058b7ecfae 100644
+--- a/tests/qapi-schema/meson.build
++++ b/tests/qapi-schema/meson.build
+@@ -196,6 +196,7 @@ schemas = [
+   'union-clash-member.json',
+   'union-discriminator-bad-name.json',
+   'union-empty.json',
++  'union-empty-if.json',
+   'union-inline-invalid-dict.json',
+   'union-int-branch.json',
+   'union-invalid-base.json',
+diff --git a/tests/qapi-schema/qapi-schema-test.json b/tests/qapi-schema/qapi-schema-test.json
+index 8ca977c49d2..195f1c4847b 100644
+--- a/tests/qapi-schema/qapi-schema-test.json
++++ b/tests/qapi-schema/qapi-schema-test.json
+@@ -23,9 +23,6 @@
+   'data': { 'enum1': 'EnumOne',   # Intentional forward reference
+             '*enum2': 'EnumOne', 'enum3': 'EnumOne', '*enum4': 'EnumOne' } }
+ 
+-# An empty enum, although unusual, is currently acceptable
+-{ 'enum': 'MyEnum', 'data': [ ] }
+-
+ # Likewise for an empty struct, including an empty base
+ { 'struct': 'Empty1', 'data': { } }
+ { 'struct': 'Empty2', 'base': 'Empty1', 'data': { } }
+diff --git a/tests/qapi-schema/qapi-schema-test.out b/tests/qapi-schema/qapi-schema-test.out
+index 4617eb4e98a..ddd8bf80d66 100644
+--- a/tests/qapi-schema/qapi-schema-test.out
++++ b/tests/qapi-schema/qapi-schema-test.out
+@@ -18,7 +18,6 @@ object NestedEnumsOne
+     member enum2: EnumOne optional=True
+     member enum3: EnumOne optional=False
+     member enum4: EnumOne optional=True
+-enum MyEnum
+ object Empty1
+ object Empty2
+     base Empty1
+diff --git a/tests/qapi-schema/union-empty-if.err b/tests/qapi-schema/union-empty-if.err
+new file mode 100644
+index 00000000000..2b8691ab2f5
+--- /dev/null
++++ b/tests/qapi-schema/union-empty-if.err
+@@ -0,0 +1,2 @@
++union-empty-if.json: In struct 'Base':
++union-empty-if.json:5: enum type 'Empty' of member 'type' has a conditional first value and must be optional
+diff --git a/tests/qapi-schema/union-empty-if.json b/tests/qapi-schema/union-empty-if.json
+new file mode 100644
+index 00000000000..36625dc4a89
+--- /dev/null
++++ b/tests/qapi-schema/union-empty-if.json
+@@ -0,0 +1,6 @@
++# union discriminator enum cannot have only conditional items
++{ 'enum': 'Empty',
++  'data': [ { 'name' : 'bar', 'if': { 'all': ['FOO'] } } ] }
++
++{ 'struct': 'Base', 'data': { 'type': 'Empty' } }
++{ 'union': 'Union', 'base': 'Base', 'discriminator': 'type', 'data': { } }
+diff --git a/tests/qapi-schema/union-empty-if.out b/tests/qapi-schema/union-empty-if.out
+new file mode 100644
+index 00000000000..e69de29bb2d
+diff --git a/tests/qapi-schema/union-empty.err b/tests/qapi-schema/union-empty.err
+index d4284399621..c07dcf32a5a 100644
+--- a/tests/qapi-schema/union-empty.err
++++ b/tests/qapi-schema/union-empty.err
+@@ -1,2 +1,2 @@
+-union-empty.json: In union 'Union':
+-union-empty.json:4: union has no branches
++union-empty.json: In enum 'Empty':
++union-empty.json:2: enum 'Empty' must have at least one value
+-- 
+2.55.0
+
 
