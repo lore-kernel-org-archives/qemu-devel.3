@@ -4,105 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 469CAC531FA
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 09:07:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11452C531F9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 09:09:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnBsT-0003fN-LS; Fri, 24 Jul 2026 05:07:33 -0400
+	id 1wnBuY-00050k-Tg; Fri, 24 Jul 2026 05:09:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wnBsR-0003eC-C9
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 05:07:31 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wnBsP-0007vv-WE
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 05:07:31 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-668005ba03cso123875d50.2
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 02:07:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784884049; cv=none;
- d=google.com; s=arc-20260327;
- b=osNwex37Rxu1xrvcXnaSN+TsYeXaji3xl3OftkqBY0+bq+oCTwSJ3YnUqfvdMJrWMs
- 30FvDlb/Y3fsw3rjTnIHe+/U+zr2HtSYQ4d6l99ZY8GEgrHhyiwP76WgDx8QE2ifU5C5
- 3qt3pp9YNuT2GYRr9D7mF+0aM+nLE1zAS3/zd0i6At2PkQL51NoGhUN3oH0PYtkXRUjp
- fgziJiPI/izpbXf/usHPqjmsYqtqc7zhtvQ7JYQ9mIroFg/lvT2qVq4JrKCGeU8LJrAT
- 20JQ6QnudgypgsnQbxvhuZ2cV6eEMewWqj60CYBcvK6J7zv84sQOIy1yxDDKlbasIOSA
- JbWg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=LauGjjERVGP66mSGFWM9+Sn5NLza1Y16yjeJN83goe0=;
- fh=ns1eua24zC30J2klOKMkH/VZ1UXy0fV6hkSq8hW1g9k=;
- b=QUeBIbjEx37Jjv9ysLvHEwzCzucgHJPDDscC1ez+VFf3tirWkMR3oZbqf5hAufxwc1
- kvua45wasN0ERdsbrTvNdIM2u/XXsfmQ35yyLxpskhjZTThhxxHvHSgzSNXDdhDgp6as
- rn/2GH0evlwfG3O5fGBkDMR+sBw42ppSS53eI06CFsTOCnKtVfe3d3tZU+QjZhldUneg
- 3czIApVd5YC5BeXhZcYudgxJE22x5BsF/YuWc0Lw7eE7jWovGN/0NPJHRLnL2FzC6pAp
- 8bpFs/10j67IVB4b/5vYVyRxC3Zsu96Vp7YFotZb49BYgF7MRAKpLkFJUSfCAnUeU4OU
- KIpA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784884048; x=1785488848; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=LauGjjERVGP66mSGFWM9+Sn5NLza1Y16yjeJN83goe0=;
- b=orT8QgeDLfS13qfTiDXMIVDUwljo2nQV+ghTgmeevdY6CltNdpYjM4YuyhrJ2JU8pf
- mH/JWXu1KU9SZF0QBF7U9tSsK8PiAUmD+wA4iFxRFqJcd4nP985v3x21j/3Fx7ADHjRw
- 9M0fNGFpophW1lVxw+9YV6qClbzEjvL8NwvtjLNyjblo+Z0lefgdYSIOkWTOt6aGu7kB
- r53WD+YXq+Ym4TaD+tmp1HoLIThCPaKpnN6PPV1S2/CYtJzcILPtHwVwvZB53kdhwnXD
- QoTroZh8yGqpGEv7hrZvIKKKmlkjTVqEdrprNSKZ0xG2plGANUvtm/ldX3dXtfVkVN3T
- RqwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784884048; x=1785488848;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=LauGjjERVGP66mSGFWM9+Sn5NLza1Y16yjeJN83goe0=;
- b=po+j3YhwRf4CMmC2LfRnFy4sywGd4YBATHcV8OPMvd2++nvRu2ZFxKWV2UF4pSv2hc
- IttB/aJtyVuM+Uk1zxVxYzZKwDYS6Ak4AruI/UY6+GvKqYLxO5H29U0dCf/bxfLxEODI
- 1wLapggWgk0/I18+pgB5/RonXNhPlPHjVOdyqYQhgFfWy28ytobGjOJMkePOzuGMgb23
- LnpTx4Yt5bWUDebWEZSvq75tT7wGY09RCo9G5ru5COIZwzTUPOv4dQM8fngAhefFEi68
- b+RpZsIJj/9joJHulYdTgvRtX8l9mkxv47/CfbD33SvOh2Pc3Ho9FxHhNFYhVJ4D+/iv
- 1MnA==
-X-Gm-Message-State: AOJu0YyWk6RGeph+uTy8Bj4lQzuy66qnrsiycjX//wTlF3Jk6gLdVfkd
- /ce7WEw7vKqAYPQrgkRh4W9TGZ+ETxT2MkPl36L31Pj+drVqtpofKG4PJkSgXDciPFruuTEWoMF
- fFYfs2nIE/C+RM8X/bJb3j2/KDKBZY/eyekTfkIxqFg==
-X-Gm-Gg: AR+sD106AfRghkflwZSGJ9Ltkpjs0AoeCor1Z6Zmrpa9Q/U8FmgFOtQGijy4x8rYrWw
- GDB8GMHgUBG6WKrtlRO5MptfiZnjULe7P1VJLps4zpzVC7FE5JmiXHnJZSZh0CzmCw9Hj63krUe
- 58Cmt+bin+XjAn1zMo2M3AaXFSwOA+lxJyp84a8IrC+VVL2D4FcTqfj11oRVyypfl+qzvDl56JA
- kocgrTbUWfxCfQF72MPRscxtq8XKBkzlw9D7ekGpTjpEV/TfHkrMK84cSnTc+Sk0UElMFMY6P54
- sCT1dGd0BU1QQZHYVgoAXr5ezeH4tWBvcWsra1pGcfUIVQ==
-X-Received: by 2002:a05:690e:1343:b0:668:a57:2b0f with SMTP id
- 956f58d0204a3-668a4d0a1c7mr1772200d50.45.1784884048573; Fri, 24 Jul 2026
- 02:07:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wnBuX-00050V-Bh; Fri, 24 Jul 2026 05:09:41 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wnBuV-00084b-9K; Fri, 24 Jul 2026 05:09:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=4oLR3ct1SOUCbNc1Rj4wITWK9NuFxu4Fe8dyKwfXhdY=; b=tZo3fQGIBcDcwr0E6/8ZttCIHl
+ N9I+bw5Cjxp/W6agFtGbmiNt7y0DiY5Lb+kotlyVWjI//tU3Y+1c6Dl3u6PiqUdMBHahGOdImI1Vr
+ igSd1/tqeh9GcWY5aG4A5h8Wfxn+aslym5yvMXal/AtPoinRYIIqG8Uw8vhL6kqB7RqhcpdOiDQmd
+ Fgs7Pmmn3TCvzpELcqhG6BQd3dwYA4uhbIpINMUXV+tcHPobOUjQ0ziuwzOPiEPn0Ygd437HZvw5W
+ xEzQ1kwqmGUJDXxsUMVCif/6bqZmIsurT62/Yt6kPx6ilgBVd2kQBjd53AM7RQRaFuBk6YpeFUAiU
+ kbsGHj+5hVzEX6/AuMTgmFPdJ2a8+2D6KftA8L7j/sQXBECLuyo71PX9OBmY+KFziuz09+IcGJ98j
+ Ys4rCOOcXDBhNZ8C6zixxRGQsyXAMXTvVKfS80x4hqxjXeskFsvhSHc66haxyvgbx/JFbp1fG3T9Y
+ lWxz/iC3sw8yxOkzuAQBGgELZPP7ZDletauulWDkBAX5bfRUkCqDOKCcx/BTN/gBGPUGO6zxnmeWr
+ Z3Hvl7uVJ0sPVFZUTezFMfFYvwUJjxM2pRElegardbR23AGJGFCDGrAFS2cIbMDRv3I5Do/GR06XO
+ L7xr7JIBfXO1OxC7AwSPeM5kbs/8BsYnl17cTXy20=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: Stefano Stabellini <sstabellini@kernel.org>,
+ Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>, 
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: Re: [PATCH v3 2/2] hw/9pfs/xen: drain in-flight PDUs before xen-9p
+ disconnect
+Date: Fri, 24 Jul 2026 11:09:33 +0200
+Message-ID: <118995374.nniJfEyVGO@weasel>
+In-Reply-To: <52b6e2f7-6b44-4d6c-b69d-090deaffda13@oss.qualcomm.com>
+References: <cover.1784809978.git.qemu_oss@crudebyte.com>
+ <82bc736158e827e05d4b55da27c39d42e2062e96.1784809978.git.qemu_oss@crudebyte.com>
+ <52b6e2f7-6b44-4d6c-b69d-090deaffda13@oss.qualcomm.com>
 MIME-Version: 1.0
-References: <20260723070059.6332-1-shentey@gmail.com>
- <20260723070059.6332-4-shentey@gmail.com>
-In-Reply-To: <20260723070059.6332-4-shentey@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 24 Jul 2026 10:07:16 +0100
-X-Gm-Features: AUfX_mzkt9RqUaqW_FJqiWy5A4eCLGrbZlTnR38pLSe2zu3bcOYndffxmc1LA4U
-Message-ID: <CAFEAcA9r2rYg0+FochoxMNeOtECPnMMaRCGq-imb6JDmGR4x=g@mail.gmail.com>
-Subject: Re: [PATCH 3/9] hw/net/can/flexcan: Fix out-of-bounds access in
- flexcan_mx_rx()
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, Pavel Pisa <pisa@cmp.felk.cvut.cz>, 
- Matyas Bobek <matyas.bobek@gmail.com>,
- Francisco Iglesias <francisco.iglesias@amd.com>, 
- Jason Wang <jasowangio@gmail.com>,
- Vikram Garhwal <vikram.garhwal@bytedance.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,36 +72,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 23 Jul 2026 at 08:01, Bernhard Beschow <shentey@gmail.com> wrote:
->
-> Require `last_not_free_to_receive_mbid >= 0` before indexing `mbs[]`.
-> This prevents a possible `-1` array index and fixes Coverity CID
-> 1662790.
->
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> ---
->  hw/net/can/flexcan.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/hw/net/can/flexcan.c b/hw/net/can/flexcan.c
-> index 3a97edf7a4..dd92a38337 100644
-> --- a/hw/net/can/flexcan.c
-> +++ b/hw/net/can/flexcan.c
-> @@ -1075,7 +1075,7 @@ static enum FlexcanRx flexcan_mb_rx(FlexcanState *s, const qemu_can_frame *buf)
->          }
->      }
->
-> -    if (last_not_free_to_receive_mbid >= -1) {
-> +    if (last_not_free_to_receive_mbid >= 0) {
->          if (last_not_free_to_receive_locked) {
->              /*
->               * copy to temporary mailbox (SMB)
-> --
-> 2.55.0
+On Friday, 24 July 2026 09:49:57 CEST Philippe Mathieu-Daud=C3=A9 wrote:
+> On 23/7/26 14:43, Christian Schoenebeck wrote:
+> > The xen-9p disconnect path has two issues:
+> >=20
+> > 1. It frees the Xen9pfsRing structures while in-flight PDUs may still
+> >=20
+> >     reference them via pdu->tag to index rings[]. This causes a UAF
+> >     in xen_9pfs_push_and_notify() when worker threads resume after
+> >     completing filesystem operations.
+> >=20
+> > 2. It never calls v9fs_device_unrealize_common(), which means server
+> >=20
+> >     state (struct LocalData, mountfd, FIDs) is never cleaned up on
+> >     disconnect, causing a resource leak on every guest-initiated
+> >     disconnect.
+> >=20
+> > Fix both by draining in-flight PDUs via v9fs_reset() before tearing
+> > down rings, and calling v9fs_device_unrealize_common() to clean up
+> > server state.
+> >=20
+> > Additionally, explicit calls of xen_9pfs_disconnect() in the error
+> > paths of xen_9pfs_pdu_vmarshal() and xen_9pfs_pdu_vunmarshal() must
+> > be deferred (via aio_bh_schedule_oneshot()), because
+> > xen_9pfs_pdu_v(un)marshal() are running within a coroutine context
+> > which makes them unsafe [1] for calling v9fs_reset() directly, as
+> >=20
+> > the latter e.g. has a loop like:
+> >      while (!QLIST_EMPTY(&s->active_list)) {
+> >     =20
+> >          aio_poll(qemu_get_aio_context(), true);
+> >     =20
+> >      }
+> >=20
+> > which would a) never terminate (as the coroutine is on the
+> > active_list) and b) aio_poll() is marked as no_coroutine_fn.
+> >=20
+> > [1] https://lore.kernel.org/qemu-devel/3351181.5fSG56mABF@weasel/
+> >=20
+> > And finally, add an idempotent guard to xen_9pfs_disconnect()
+> > for the v9fs_reset(s) and v9fs_device_unrealize_common(s) calls
+> > specifically [2], just to be sure.
+> >=20
+> > [2]
+> > https://lore.kernel.org/qemu-devel/alpine.DEB.2.22.394.2607221815520.52=
+95
+> > @ubuntu-linux-20-04-desktop/
+> >=20
+> > Fixes: b37eeb0201 ("xen/9pfs: introduce Xen 9pfs backend")
+> > Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> > Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+> > ---
+> >=20
+> >   hw/9pfs/9p.c             |  1 +
+> >   hw/9pfs/xen-9p-backend.c | 17 +++++++++++++++--
+> >   2 files changed, 16 insertions(+), 2 deletions(-)
+> >=20
+> > diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+> > index 3119f01117..fc01791830 100644
+> > --- a/hw/9pfs/9p.c
+> > +++ b/hw/9pfs/9p.c
+> > @@ -4530,6 +4530,7 @@ void v9fs_device_unrealize_common(V9fsState *s)
+> >=20
+> >       qp_table_destroy(&s->qpp_table);
+> >       qp_table_destroy(&s->qpf_table);
+> >       g_free(s->ctx.fs_root);
+> >=20
+> > +    s->transport =3D NULL;
+> >=20
+> >   }
+> >  =20
+> >   typedef struct VirtfsCoResetData {
+> >=20
+> > diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
+> > index 24c90d97ec..a2f118d2ca 100644
+> > --- a/hw/9pfs/xen-9p-backend.c
+> > +++ b/hw/9pfs/xen-9p-backend.c
+> > @@ -68,6 +68,11 @@ typedef struct Xen9pfsDev {
+> >=20
+> >   static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev);
+> >=20
+> > +static void xen_9pfs_disconnect_bh(void *opaque)
+> > +{
+> > +    xen_9pfs_disconnect(opaque);
+> > +}
+> > +
+> >=20
+> >   static void xen_9pfs_in_sg(Xen9pfsRing *ring,
+> >  =20
+> >                              struct iovec *in_sg,
+> >                              int *num,
+> >=20
+> > @@ -150,7 +155,8 @@ static ssize_t xen_9pfs_pdu_vmarshal(V9fsPDU *pdu,
+> >=20
+> >                         "Failed to encode VirtFS reply type %d\n",
+> >                         pdu->id + 1);
+> >          =20
+> >           xen_be_set_state(&xen_9pfs->xendev, XenbusStateClosing);
+> >=20
+> > -        xen_9pfs_disconnect(&xen_9pfs->xendev);
+> > +        aio_bh_schedule_oneshot(qemu_get_aio_context(),
+> > +                                xen_9pfs_disconnect_bh,
+> > &xen_9pfs->xendev);>=20
+> >       }
+> >       return ret;
+> >  =20
+> >   }
+> >=20
+> > @@ -173,7 +179,8 @@ static ssize_t xen_9pfs_pdu_vunmarshal(V9fsPDU *pdu,
+> >=20
+> >           xen_pv_printf(&xen_9pfs->xendev, 0,
+> >          =20
+> >                         "Failed to decode VirtFS request type %d\n",
+> >                         pdu->id);
+> >          =20
+> >           xen_be_set_state(&xen_9pfs->xendev, XenbusStateClosing);
+> >=20
+> > -        xen_9pfs_disconnect(&xen_9pfs->xendev);
+> > +        aio_bh_schedule_oneshot(qemu_get_aio_context(),
+> > +                                xen_9pfs_disconnect_bh,
+> > &xen_9pfs->xendev);>=20
+> >       }
+> >       return ret;
+> >  =20
+> >   }
+> >=20
+> > @@ -368,10 +375,16 @@ static void xen_9pfs_evtchn_event(void *opaque)
+> >=20
+> >   static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev)
+> >   {
+> >  =20
+> >       Xen9pfsDev *xen_9pdev =3D container_of(xendev, Xen9pfsDev, xendev=
+);
+> >=20
+> > +    V9fsState *s =3D &xen_9pdev->state;
+> >=20
+> >       int i;
+> >      =20
+> >       trace_xen_9pfs_disconnect(xendev->name);
+> >=20
+> > +    if (s->transport) {
+> > +        v9fs_reset(s);
+>=20
+> Maybe v9fs_reset() is misnamed.
+>=20
+> What about v9fs_cancel_in_flight()?
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+The name v9fs_cancel_in_flight() would be too narrow. v9fs_reset() does two=
+=20
+things:
 
-thanks
--- PMM
+  1. draining all in-flight PDUs
+
+  2. freeing all FIDs (and their associated hash table)
+
+Therefore IMO v9fs_reset() more appropriately describes a reset of server=20
+state. v9fs_reset() already exists for almost 10 years:
+
+  commit 0e44a0fd3f28cccb8963fdfc05c53c546b3f46b6
+  Author: Greg Kurz <groug@kaod.org>
+  Date:   Mon Oct 17 14:13:58 2016 +0200
+
+      virtio-9p: add reset handler
+   =20
+      Virtio devices should implement the VirtIODevice->reset() function to
+      perform necessary cleanup actions and to bring the device to a quiesc=
+ent
+      state.
+   =20
+      In the case of the virtio-9p device, this means:
+      - emptying the list of active PDUs (i.e. draining all in-flight I/O)
+      - freeing all fids (i.e. close open file descriptors and free memory)
+
+      ...
+
+And even though the aspect of draining in-flight PDUs is focused and releva=
+nt=20
+for this particular security patch to prevent the mentioned UAF, it is stil=
+l=20
+correct and expected to do a full server reset here.
+
+>=20
+> > +        v9fs_device_unrealize_common(s);
+>=20
+> IIUC xen_9pfs_disconnect() is mixing XenDevOps::disconnect()
+> and XenDevOps::free()?
+
+While you are correct with your observation that it does mix the two things=
+, I=20
+fear this is required right now. Separating them would be cleaner and=20
+possible, but it would require significant changes. And if you review my=20
+discussions with Stefano in the previous versions of this series, you might=
+=20
+realize that this code is somewhat tricky and not trivial.
+
+And finally:
+
+1. These patches are addressing real security issues.
+
+2. Your concerns are pure code organizational issues, no behaviour issues.
+
+3. These structural issues exist for many (9?) years.
+
+4. Changing this struture might introduce new issues.
+
+5. We are already very close to release.
+
+6. This series (v1) was posted already 3 weeks ago.
+
+7. I have a bunch of other important fixes in my queue that I should send a=
+ PR
+
+So we can probably agree that this should not be within the scope of these=
+=20
+security patches?
+=20
+> > +    }
+> > +
+> >=20
+> >       for (i =3D 0; i < xen_9pdev->num_rings; i++) {
+> >      =20
+> >           if (xen_9pdev->rings[i].evtchndev !=3D NULL) {
+> >          =20
+> >               qemu_set_fd_handler(qemu_xen_evtchn_fd(xen_9pdev->rings[i=
+].e
+> >               vtchndev),
+
+
+
+
 
