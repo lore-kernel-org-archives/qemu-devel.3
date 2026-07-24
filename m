@@ -4,102 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D722C531F9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 22:14:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50830C531C9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 22:27:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnO9C-0004tK-Kz; Fri, 24 Jul 2026 18:13:38 -0400
+	id 1wnOMG-0007x4-0a; Fri, 24 Jul 2026 18:27:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wnO95-0004sA-DU
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 18:13:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wnOME-0007wr-QP
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 18:27:06 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wnO93-0007EP-6h
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 18:13:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784931207;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=u1Cm+qfOAAHo9M4KiTd71sdAhsgdzF9PbNatD46kC0Q=;
- b=fyNF3HnWUI7zXYeW4LExWvejwK+gjy6OqODs448nLKR0k2pPPpuQJfZHqrAGzhV5Nbv+d0
- a/QxtzowOOMYDgmV2u4wAnLiIbKXwC219Jx/WoFmioav7TKewrPi89jXEuJPyPi6w1VOsY
- vC3y1/XVBaAdhWqeDLcTrie42RHOuPg=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-675-iNV0yUtpNNChHT5S4ULzZA-1; Fri, 24 Jul 2026 18:13:26 -0400
-X-MC-Unique: iNV0yUtpNNChHT5S4ULzZA-1
-X-Mimecast-MFC-AGG-ID: iNV0yUtpNNChHT5S4ULzZA_1784931205
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-493bfc3b84aso5266705e9.0
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 15:13:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wnOMC-0000dj-L5
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 18:27:06 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66OKwDgM102710
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 22:27:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 0D/Er6rfPpVF1f020LjV06DR8jWdcTpmH/thZoHYXw8=; b=Le0RPQaleO5Uedn4
+ HUTCDegi1d6lUlKHeybdzHNMrgLNKasHhrBjtI2Yz4Jg+XFQH9uXqUI/54Z8Jfbh
+ IiThRF9jN0qlNySpn4/PyYeiiw5mEbwwzh9dtBfKCia+37kghQn1F13padX0tjNR
+ 54AlXwwZX5/G/oJSGj3BCCpkuqAff3l9I038SjqE0wEH+RsmlcjeqNgNSPUMaVf4
+ t3R+V5zGk8pbN4TSou1OqNs5XyH3/VIrV8FV4StgLLgIG/1sO+bQ1SPuRKz3REJq
+ WoRUUfVcffay+fZBNmOGLtZ/FAn2hNVe9A3y6ZMMEUXw8sYpRqzBXknrGmMAJu3W
+ Kln1tQ==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fmb9nsfe8-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 22:27:02 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-38e1118e4abso1318222a91.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 15:27:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784931205; x=1785536005; darn=nongnu.org;
- h=content-disposition:content-type:mime-version:message-id:subject:cc
- :to:from:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=u1Cm+qfOAAHo9M4KiTd71sdAhsgdzF9PbNatD46kC0Q=;
- b=AGodGJ2ygRAUqNXbqh6p4N5TozTjF5fUrDvqZPsVM9eQh4HCjrxb6cWEC4PjL7zB/P
- 4KjlkYtDbkJYOKJsLFkCesikZ/dCTkLufBj6iAupn4V1CjNygJMZtFjHhKIif3S0hgFg
- 4JttbDavmXI/YWId9lSoNl+of6drsDr3NnkwxhLOAi4ichE1uCvLkq5pm+KpXMgJH9y3
- f0T3JV20oO1HBQfPJ2M5Fw3v5UmvBZGvm/gWJAec0L4Zf5/m/sswd8zcQJHyTIMiySbv
- ZjmvUkS8FB1f/4lKxg5IT36WG+k88f5iJxv9GYS0+Ij+WPO5i/cRi8E5jTsK6I0K9APP
- lqhA==
+ d=oss.qualcomm.com; s=google; t=1784932021; x=1785536821; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=0D/Er6rfPpVF1f020LjV06DR8jWdcTpmH/thZoHYXw8=;
+ b=L3nBYpWCruhd2EbizLMUIDV0VuhOZAeahFDwx/5lWapDyGyiEEycW+zObpbzYJZ/zR
+ uhxCmhPk7wv7Pa1fwoSsHtBxGrpuE6y5H7z2Rr6OvQZS1BOqYLBUWBKajJTNcYen2QB/
+ FxQm/TH2rXHDZHlukUW0FHZgOzqBMOOAPcdN7o4AuTAM44374ylHnHOuDm5Fa3CaDqiO
+ 0wDkQY52/of0T5mjl3DDq8KApfqNk2ZrXL3j3BIIot2y/GhUj4hBYIoc6QvepRHTTNdc
+ Ug1hUm6BV/zihDcFzTYHXEFqnPaCasB4RyU+CrRLHlEWUHnLzcuVnWM6GXH8wgDbtmtK
+ 66Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784931205; x=1785536005;
- h=content-disposition:content-type:mime-version:message-id:subject:cc
- :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1784932021; x=1785536821;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=u1Cm+qfOAAHo9M4KiTd71sdAhsgdzF9PbNatD46kC0Q=;
- b=PNRPOpNo4bgfdVgE1yYN5gK9PcijNMsGMmylVkL+TSBVtTc3Pgb7LiFNf06JwIYSqC
- adJhKoBbX9wT2XOLz6j7Lo0gehGVrMfGp3DZJCa+HvI3D754WuEb5aH7aNRDJH389dWO
- M2tWn6yqC1cmdZrTQqZXf47nevrKW3avBEicaTZ7OBNV38c8MwlemXCJMjLVYYjscSz5
- aFe+4Busy2VnJucwx/QQ9ET5vo5f+h+vRGbY7BDgCme/PNEpzVPZ4ZnZwYg/biJ3Lvjs
- fwQ2HT+YCJSr+QnFVeKjwWwP/SIfDDeXfcRCwbAcB6Lr8m0Tw8n0yVahlCK2MImDfnLh
- keRQ==
-X-Gm-Message-State: AOJu0YyJWqVFki9PfsPDj2t10Z0m+g0o+prylq6lgjlQ4UiwlRURv0W7
- a9w5RNbFwKnQneSWXD0Un9lZr96bJTdvLHrohD8snwpNDnA4wRDrSe3bxBCaFMVBk+EwloJWhxt
- gP8obMAWAntQbmkN0OMNrQQ0NOATpajBnpV6ffCn+RCBJhOlj0F+GRl3AhvXaT5Wp+oW1ipCjVc
- d6zZw64ZLZwj9aw5SFk2Jw+Sw1lQoqF082jw==
-X-Gm-Gg: AR+sD11Nb/FJMURZTxF985KpIRopmRJ5LQZx7lRh60jy5fOnwuJODS3uBlK9WUs9oWv
- qFCW3HExg1v33+YsAqZfiIBzkFoeLeGGIW2t2I0hyfqUs/WjU4vHbxqmnnyVhP9aYy8CuHmB5VM
- jWwSMCtxIWki/UE+cBt5qg5oYxobDXa8KfotmB/C1G86tx3paubeKeC6WQO3JreFppyLgsySw/3
- wgIr5Rm9B+qzrOrsImevIMVNmyliqhlJYsnO+7nGjJziw4RXaYuhLGk+oBTq283qa+EsV/Qoso4
- revjZ1cn+4E6wsAfz7w2NDudab6PMczNh2A/4QyCOwFdcdG2b+h+Fzm78v+YfIrvN+FNgBj4B9b
- FBtObFVaz/xMectI7zWgLGp3fenS/9EA=
-X-Received: by 2002:a05:600c:48a3:b0:495:6bc9:62b0 with SMTP id
- 5b1f17b1804b1-496b56f14ecmr939275e9.17.1784931205277; 
- Fri, 24 Jul 2026 15:13:25 -0700 (PDT)
-X-Received: by 2002:a05:600c:48a3:b0:495:6bc9:62b0 with SMTP id
- 5b1f17b1804b1-496b56f14ecmr939015e9.17.1784931204742; 
- Fri, 24 Jul 2026 15:13:24 -0700 (PDT)
-Received: from redhat.com (bzq-79-177-145-168.red.bezeqint.net.
- [79.177.145.168]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c63bd3sm26141651f8f.27.2026.07.24.15.13.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jul 2026 15:13:23 -0700 (PDT)
-Date: Fri, 24 Jul 2026 18:13:21 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH] virtio-mmio: fix QUEUE_NUM_MAX
-Message-ID: <8715acbb9516e67e2a776cda6f9edf105343f788.1784930765.git.mst@redhat.com>
+ bh=0D/Er6rfPpVF1f020LjV06DR8jWdcTpmH/thZoHYXw8=;
+ b=Vzjy+KaXpl24SqyzYXA1d73CZPnzSyocf8kNgZQ3JKXCsoimG9syro6v2R3lJGt51u
+ 9wgj5p41fNU0Fk0r9jiTYtfMmguJXr6+ScGmhzx8WfOEVxGAFx8q1YzDv+4q+g7t0lrZ
+ ZXf+tB68ADTpWI+DZeLU52xhcomyjG1iW5E/GiVViGiwgLgPrRwmL2uOL1dLtUsr7hZg
+ 6cfEwPZL77mtM2mES/xB8WwYJAmvQweLBmFwxACQyJQn9LzIKlq67ax8CcVArKMgD6TR
+ D/r/0egX2ijvnh5agw3dyJDFWdjbPpM/Ccnp5V9upTH3+8rSUlXEPUzJ+yVN65o1nOC2
+ lnBw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpwutoU3+fbMRPbWzph60TTzEMgk2DXXlkHm+Nf9OxKweWEMZZOH0i8l91rOpVzBR6D5LiDabiSg8iP@nongnu.org
+X-Gm-Message-State: AOJu0YwncIy+PcGMjT2TGXja/A3KtGFZ4tOcHXoWJ0TWh3IDet5O6+xI
+ B8C7se9qRxGYX6Q7TOGlslrW5cgI9jd19/0jnLmQhdTuTTbzXZc4e7rLPMQvOAX3QjPEEVWf3jU
+ iBmmSOfhWGc5ZYqUmD4JbCQ0vabTJ2QcTqZK4Ymq7k4a0j0L+B3LPr4Hnjw==
+X-Gm-Gg: AR+sD11OlqfXWw59hIftXAo4tBNg/mwNdDwStd3R5fIvtLbbVCwc9W6k9bwqM8alIst
+ tCFyjlLsrmb1rD1sQR85//V92MRvo/+U/eDZNxwSfhvmLyb6X6R9+CZBdtdhsEpXQMTykSLHkub
+ knqp/8EyzV9eqUF4e1f/9F8XtYIZETglrDjauJtC7edV4E5CLfugRaYQQoc+6Vuns4UIh07sFvU
+ +Wd+XQzywbjKYIIJRmHaq4uLwRbxwO6YOn/RdXmrzjuaG+ZIIp8EWrc9opv6BuZYhoaRqAeN4ej
+ jD4h9DLlOE7Z/ZM7EK/pLOTgyP9zTX9wY+7MjP+rh8HlnXCZBtRfWf2I2UzTH7rguanxonkjYeo
+ ecONT1/Wz/J63ARfVx8ygw96PArXmACPg10Q+ljdiRIhVvvITSPdxKMWPnDquBwiqFOgy
+X-Received: by 2002:a17:90b:4a51:b0:380:105f:8ffd with SMTP id
+ 98e67ed59e1d1-38f295145c9mr288741a91.16.1784932021636; 
+ Fri, 24 Jul 2026 15:27:01 -0700 (PDT)
+X-Received: by 2002:a17:90b:4a51:b0:380:105f:8ffd with SMTP id
+ 98e67ed59e1d1-38f295145c9mr288720a91.16.1784932021152; 
+ Fri, 24 Jul 2026 15:27:01 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-13d130a8421sm26659176c88.10.2026.07.24.15.27.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 24 Jul 2026 15:27:00 -0700 (PDT)
+Message-ID: <0207e5f3-3029-4f14-81ed-fb469a02e6fe@oss.qualcomm.com>
+Date: Fri, 24 Jul 2026 15:26:59 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.419,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] linux-user: fix incorrect msg_l[sr]pid members of
+ target_msqid_ds
+To: Helge Deller <deller@gmx.de>, no92 <leo@managarm.org>,
+ qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>
+References: <20260724160105.3787888-1-leo@managarm.org>
+ <9c278046-3b5a-4d0b-ac55-76a304f1109a@oss.qualcomm.com>
+ <a0adc88a-4405-46cc-b46c-6981f310db8f@gmx.de>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <a0adc88a-4405-46cc-b46c-6981f310db8f@gmx.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=XeS5Co55 c=1 sm=1 tr=0 ts=6a63e6b6 cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=QqsuZDsxAAAA:8 a=zASSHvuyDF9LSEAwRFkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=mQ_c8vxmzFEMiUWkPHU9:22 a=L0GjJRv8sWY0dH8UTALY:22
+X-Proofpoint-GUID: E62WomXd0hGOjm2fE2Z1piQ7IQvfCzlo
+X-Proofpoint-ORIG-GUID: E62WomXd0hGOjm2fE2Z1piQ7IQvfCzlo
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDIwMiBTYWx0ZWRfX78qdzJJlYLh3
+ 6zffeTPSQfiYV9DSq0dtR6IEtSP31t9vAUMVBKbFfglrsa3Ua7VGpNKd8xZkLepLOmM6xD6UXwe
+ YLRDRnGFAu14TzfSVWHZcbXbQ6M8wdo=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDIwMiBTYWx0ZWRfXwf8TvKuhv5HM
+ 7w+zn4OusgwMgTimdNmUtwurJR1rcgS563jAaW7Aj9+x78+ys2gWGJKFA6Kt+yfMu1s54qXycj/
+ SnDi6+CP/FFGInNGWUVjj9BcILXwN1IrbDSCCwZ5h5NA3gybm0SLDGpI+TSM68bQx5VdwAd3S2D
+ 3XaNHw4cEiT5lV29eQRUdBNdwncT4EScE+WFeSzXL7AqXGKWOUZCYx2l0kKIE7xZGw+DWYPk9X9
+ C4yg7VKLdjElSFDHlCsm9c7qSLhxCKtf7cfRq+N+l2LE/i03f1zLNi3QNDoicxycqkWCwavqvDf
+ DtZUJCeXeh59Ns9NGYGssTGlvZhc2sJtJFX+TCJpKtCqO8T+JomszTAktnWk/keXr8tR/lUfa9v
+ KyaMPW4EmX7wvK108PS18GvXqQjgr62f2GhDSFrDQ/JdvR32hf3O0AW9jpWO8ZCAwTGtZ4mi5rf
+ 5ft8VNQj1gMpjoQGxCw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-24_05,2026-07-24_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 bulkscore=0 suspectscore=0 adultscore=0 malwarescore=0
+ clxscore=1015 priorityscore=1501 impostorscore=0 lowpriorityscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607240202
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,116 +159,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio-mmio reports VIRTQUEUE_MAX_SIZE (1024) as QUEUE_NUM_MAX for every
-queue, regardless of the size the device passes to virtio_add_queue().
+On 7/24/2026 2:42 PM, Helge Deller wrote:
+> On 7/24/26 18:48, Pierrick Bouvier wrote:
+>> On 7/24/2026 9:01 AM, no92 via qemu development wrote:
+>>> The members are declared as __kernel_pid_t in Linux UAPI headers.
+>>> Analogous members in struct target_shmid_ds (shm_[cl]pid) are also
+>>> declared as abi_int.
+>>>
+>>> Fixes: 1c54ff97bbde ("linux-user: fix and cleanup IPCOP_msg* ipc
+>>> calls handling")
+>>> Signed-off-by: no92 <leo@managarm.org>
+>>> ---
+>>>   linux-user/syscall.c | 12 ++++++------
+>>>   1 file changed, 6 insertions(+), 6 deletions(-)
+>>>
+>>> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+>>> index 3da5530d42..616d543c7f 100644
+>>> --- a/linux-user/syscall.c
+>>> +++ b/linux-user/syscall.c
+>>> @@ -4234,8 +4234,8 @@ struct target_msqid_ds
+>>>       abi_ulong __msg_cbytes;
+>>>       abi_ulong msg_qnum;
+>>>       abi_ulong msg_qbytes;
+>>> -    abi_ulong msg_lspid;
+>>> -    abi_ulong msg_lrpid;
+>>> +    abi_int msg_lspid;
+>>> +    abi_int msg_lrpid;
+>> ...
+>>
+>> The change looks correct in itself.
+> 
+> No.
+> abi_ulong is wrong, but abi_int isn't much better either if you look at
+> the kernel sources:
+>
 
-This works by accident because QEMU mostly does not care about the ring
-size - the guest is the one allocating memory here.  But this changes
-with in-order vqs where qemu is the one allocating resources.
-Now, specifying a larger vq than allocated causes an OOB memory access.
+I wrongly assumed the definition we had on bsd-user side was correct,
+but didn't really think about checking it in linux sources, sorry.
 
-To fix:
-- for new machine types, report the actual max queue size to guest
-- for old machine types, use a compat property to allocate 1k sized
-  queues
-
-Fixes: 525d82e323 ("virtio: fix queue size validation against allocated maximum")
-Fixes: CVE-2026-50626
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3882
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- include/hw/virtio/virtio-bus.h  |  1 +
- include/hw/virtio/virtio-mmio.h |  1 +
- hw/core/machine.c               |  1 +
- hw/virtio/virtio-mmio.c         |  7 +++----
- hw/virtio/virtio.c              | 11 +++++++++++
- 5 files changed, 17 insertions(+), 4 deletions(-)
-
-diff --git a/include/hw/virtio/virtio-bus.h b/include/hw/virtio/virtio-bus.h
-index 1a2d396156..f80fd71424 100644
---- a/include/hw/virtio/virtio-bus.h
-+++ b/include/hw/virtio/virtio-bus.h
-@@ -30,6 +30,7 @@
- #include "qom/object.h"
- 
- #define TYPE_VIRTIO_BUS "virtio-bus"
-+#define VIRTIO_QUEUE_SIZE_OVERRIDE "x-override-queue-size"
- typedef struct VirtioBusClass VirtioBusClass;
- typedef struct VirtioBusState VirtioBusState;
- DECLARE_OBJ_CHECKERS(VirtioBusState, VirtioBusClass,
-diff --git a/include/hw/virtio/virtio-mmio.h b/include/hw/virtio/virtio-mmio.h
-index 1644d09810..0a9069868c 100644
---- a/include/hw/virtio/virtio-mmio.h
-+++ b/include/hw/virtio/virtio-mmio.h
-@@ -69,6 +69,7 @@ struct VirtIOMMIOProxy {
-     /* Fields only used for non-legacy (v2) devices */
-     uint32_t guest_features[2];
-     VirtIOMMIOQueue vqs[VIRTIO_QUEUE_MAX];
-+    uint16_t override_queue_size;
- };
- 
- #endif
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 805148678d..73b4d82b4a 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -41,6 +41,7 @@
- #include "hw/arm/smmuv3.h"
- 
- GlobalProperty hw_compat_11_0[] = {
-+    { "virtio-mmio", VIRTIO_QUEUE_SIZE_OVERRIDE, "1024" },
-     { "chardev-vc", "encoding", "cp437" },
-     { "tpm-crb", "cap-chunk", "off" },
-     { "tpm-crb", "x-allow-chunk-migration", "off" },
-diff --git a/hw/virtio/virtio-mmio.c b/hw/virtio/virtio-mmio.c
-index 58c6d46aab..55ceaeef5f 100644
---- a/hw/virtio/virtio-mmio.c
-+++ b/hw/virtio/virtio-mmio.c
-@@ -172,10 +172,7 @@ static uint64_t virtio_mmio_read(void *opaque, hwaddr offset, unsigned size)
-                 >> (32 * proxy->host_features_sel);
-         }
-     case VIRTIO_MMIO_QUEUE_NUM_MAX:
--        if (!virtio_queue_get_num(vdev, vdev->queue_sel)) {
--            return 0;
--        }
--        return VIRTQUEUE_MAX_SIZE;
-+        return virtio_queue_get_max_num(vdev, vdev->queue_sel);
-     case VIRTIO_MMIO_QUEUE_PFN:
-         if (!proxy->legacy) {
-             qemu_log_mask(LOG_GUEST_ERROR,
-@@ -738,6 +735,8 @@ static const Property virtio_mmio_properties[] = {
-     DEFINE_PROP_BOOL("force-legacy", VirtIOMMIOProxy, legacy, true),
-     DEFINE_PROP_BIT("ioeventfd", VirtIOMMIOProxy, flags,
-                     VIRTIO_IOMMIO_FLAG_USE_IOEVENTFD_BIT, true),
-+    DEFINE_PROP_UINT16(VIRTIO_QUEUE_SIZE_OVERRIDE, VirtIOMMIOProxy,
-+                       override_queue_size, 0),
- };
- 
- static void virtio_mmio_realizefn(DeviceState *d, Error **errp)
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 340bac2607..35f2a50ddb 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -2590,6 +2590,17 @@ VirtQueue *virtio_add_queue(VirtIODevice *vdev, int queue_size,
-     if (i == VIRTIO_QUEUE_MAX || queue_size > VIRTQUEUE_MAX_SIZE)
-         abort();
- 
-+    BusState *qbus = qdev_get_parent_bus(DEVICE(vdev));
-+    if (qbus && qbus->parent &&
-+        object_property_find(OBJECT(qbus->parent), VIRTIO_QUEUE_SIZE_OVERRIDE)) {
-+        int override = object_property_get_int(OBJECT(qbus->parent),
-+                                               VIRTIO_QUEUE_SIZE_OVERRIDE,
-+                                               &error_abort);
-+        if (override) {
-+            queue_size = override;
-+        }
-+    }
-+
-     vdev->vq[i].vring.num = queue_size;
-     vdev->vq[i].vring.num_default = queue_size;
-     vdev->vq[i].vring.align = VIRTIO_PCI_VRING_ALIGN;
--- 
-MST
+> grep -r __kernel_ipc_pid_t arch/
+> 
+> arch/sparc/include/uapi/asm/posix_types.h:typedef unsigned short        
+> __kernel_ipc_pid_t;
+> arch/sparc/include/uapi/asm/posix_types.h:#define __kernel_ipc_pid_t
+> __kernel_ipc_pid_t
+> arch/m68k/include/uapi/asm/posix_types.h:typedef unsigned short
+> __kernel_ipc_pid_t;
+> arch/m68k/include/uapi/asm/posix_types.h:#define __kernel_ipc_pid_t
+> __kernel_ipc_pid_t
+> arch/parisc/include/uapi/asm/posix_types.h:typedef unsigned
+> short               __kernel_ipc_pid_t;
+> arch/parisc/include/uapi/asm/posix_types.h:#define __kernel_ipc_pid_t
+> __kernel_ipc_pid_t
+> arch/arm/include/uapi/asm/posix_types.h:typedef unsigned short         
+> __kernel_ipc_pid_t;
+> arch/arm/include/uapi/asm/posix_types.h:#define __kernel_ipc_pid_t
+> __kernel_ipc_pid_t
+> arch/s390/include/uapi/asm/posix_types.h:typedef int            
+> __kernel_ipc_pid_t;
+> arch/s390/include/uapi/asm/posix_types.h:#define __kernel_ipc_pid_t
+> __kernel_ipc_pid_t
+> arch/xtensa/include/uapi/asm/posix_types.h:typedef unsigned short      
+> __kernel_ipc_pid_t;
+> arch/xtensa/include/uapi/asm/posix_types.h:#define __kernel_ipc_pid_t
+> __kernel_ipc_pid_t
+> arch/x86/include/uapi/asm/posix_types_32.h:typedef unsigned short      
+> __kernel_ipc_pid_t;
+> arch/x86/include/uapi/asm/posix_types_32.h:#define __kernel_ipc_pid_t
+> __kernel_ipc_pid_t
+> arch/sh/include/uapi/asm/posix_types_32.h:typedef unsigned short       
+> __kernel_ipc_pid_t;
+> arch/sh/include/uapi/asm/posix_types_32.h:#define __kernel_ipc_pid_t
+> __kernel_ipc_pid_t
+> arch/powerpc/include/uapi/asm/posix_types.h:typedef short              
+> __kernel_ipc_pid_t;
+> arch/powerpc/include/uapi/asm/posix_types.h:#define __kernel_ipc_pid_t
+> __kernel_ipc_pid_t
+> 
+> So, we probably need to differntiate between platforms and use either
+> abi_int or abi_short.
+> 
+> Helge
 
 
