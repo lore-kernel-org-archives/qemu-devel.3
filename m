@@ -4,113 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A55F3C531F9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 13:12:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F35EC531F9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 13:12:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnFgR-0002mF-V7; Fri, 24 Jul 2026 09:11:24 -0400
+	id 1wnFhb-0004K6-0H; Fri, 24 Jul 2026 09:12:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wnFgB-0002il-LH; Fri, 24 Jul 2026 09:11:10 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wnFhX-0004EY-BZ
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 09:12:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wnFg3-0004HR-3v; Fri, 24 Jul 2026 09:11:06 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66OCwZiO007673; Fri, 24 Jul 2026 13:10:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=JIIbSd
- 4A/gLdRKAyNrmNK8XXhRXzdNuJjCwBcPz+tCI=; b=suMj2AXjOtgx6hC7TzNDxe
- IY5TFbb62IAmBvM/KA1gPjVhkVZD27XvYA8PXckx2CTyk4fokJi2K+PFXkZEnUj8
- D28bc1r0HqeG3g1RCLH2iBEUzwIlDQmOWCSp6AKBacsy8LP7bJUziinYIhb+F1rk
- q/v6MjX35m5dz01/p7X/OPAjQ+R4b5LnkYl7WqOQBVogQdvrzG9uwhzudXIC9JTa
- lbXhQjw6ynobkWQDoCh4MHQB+N8bwna3vCHlz4j9fTYiKSdRuthitrAdBSXZDgEU
- n+xFX3F/p9N/YtNTHT9FFkjI+IY5zt4aJ8israNvQVGZh8h0tdN6MM+SBTA7I8SA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fm8gs81w1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Jul 2026 13:10:54 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66OD4eOE003238;
- Fri, 24 Jul 2026 13:10:53 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fgnahgy60-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Jul 2026 13:10:53 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66ODApAS14287414
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 24 Jul 2026 13:10:52 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B3C1658045;
- Fri, 24 Jul 2026 13:10:51 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7548E58050;
- Fri, 24 Jul 2026 13:10:50 +0000 (GMT)
-Received: from [9.61.177.4] (unknown [9.61.177.4])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 24 Jul 2026 13:10:50 +0000 (GMT)
-Message-ID: <e0ff56b0-42dd-4075-8f36-edf877cf777b@linux.ibm.com>
-Date: Fri, 24 Jul 2026 09:10:49 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wnFhV-0004NM-P1
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 09:12:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784898748;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=5X+mTeeJR0+JokeGLSCySUN+MNDPHWYMbx0g9Ygmp4g=;
+ b=gtUNwblNvs3MzvYUxocPznR9lv9nLNP7/E5fVlJioqEAoIOHwkaHgYHtGoNV15sSOUjPKB
+ wTzlZHsHxFzOFnJ+uTwiwIGRdm8Vt4XVXA5ppTqxj3LQZFLu6JbypFlDN+rKYFPSi5GjwA
+ tBENuXdMAFvtJtIfZ7Fo4G/ElDEjU0k=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-214-DSsZjNy_MNGy7YFUlmgUyQ-1; Fri, 24 Jul 2026 09:12:27 -0400
+X-MC-Unique: DSsZjNy_MNGy7YFUlmgUyQ-1
+X-Mimecast-MFC-AGG-ID: DSsZjNy_MNGy7YFUlmgUyQ_1784898746
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-47f9ae25143so381219f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 06:12:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1784898746; x=1785503546; darn=nongnu.org;
+ h=content-disposition:content-type:mime-version:message-id:subject:cc
+ :to:from:date:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=5X+mTeeJR0+JokeGLSCySUN+MNDPHWYMbx0g9Ygmp4g=;
+ b=ZT1M5gpcUw7xBpmVb4FM2GthKyv3e9YJtFkR7rleSYfyJucGmtmcFBeLjlUrSma//Z
+ N78kayuydKapnr/i6xJcAhE8b8C8mwYZFvGZagaJeyxcH/VqrmjsMleiMNgl5SS85fJg
+ rfqjzBXvavAbME0G/yvlEZDUDQh5Ki/C1OsYWLn35VsQKCjUH9gyi18DNsmRcJXILYZT
+ cvlR351KdWl0s9wBaksCs0ryoZ3/4wXRKOzcXEEIRWg3cgd31w3uUiFoD0SuzSIG9D7x
+ yQmXhX22jtAxvgwnPX74QWha2Cduq5NblATJXQ0LQgReEV0a9IV8LRU5OsV6rpDGUnov
+ SO0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784898746; x=1785503546;
+ h=content-disposition:content-type:mime-version:message-id:subject:cc
+ :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=5X+mTeeJR0+JokeGLSCySUN+MNDPHWYMbx0g9Ygmp4g=;
+ b=IQZITxW8Nvzzng6AJXtouUtZy95CuLJeZRNM7549MwOJdpwbz+5hZTS4cPysgoQapt
+ DGNK1XkXKz7yyC1XlxM+s3e/NTCIvGPMazkoCibN5iew4kBKxhLs0VUVm67zVp6whjKR
+ 60hjTocvaV6+Tn+agghgS4wDsBdaOC6L74K8HPHxrHvGzMMbET6L0cm2ODbNgtGTaAqn
+ LF+YzK4zpfrhbPsRlm3FnGxAgmhJ4gj/lXjpMY8vum/q5ZXVb/qXlG+4ivRZq4hf9Kya
+ ibcvmxwRSH+OChA7AQoblby61aqz4AM0w8xSOZ9Ltpwv5FTZZXJuumWS3Xk7opjKY5j3
+ jnFg==
+X-Gm-Message-State: AOJu0Yw88L7llOCNhSjtSprC4JDr+12TH+04j2vECjTtszLZObkAHkQD
+ xCrkfnlX2fLXb//y9kJnHPL1gU97DdwSu0uFLuUxcbOFwBSLKlPm1Knd6AbFwNR5DhciMYCwKZG
+ 5U9truxQ8cNVJfcY/rUHnyHwWCuy5I5CRmYG9KkOWq9BrRJfR+1OfAK1D3LU1LRkDqYXvsuGuRS
+ 7vlEvlEbbDlSSKh0PWHCe+HbTFa7rR4QPb7w==
+X-Gm-Gg: AR+sD12EsYxxqtnbdW0Za3/HtXN5cQGdt6FXm7+OV+uPmYXCBQA/HhqdHpWhBzcS2dt
+ +TnmMZwppwCn3dg9HISIC2Aw1okWMbf6ZB8hEh/pshUlCks+y3aSFHurinf6p1RO56iCLrz7X1e
+ egzW6UnfLOvyvr1Z649RGSj4WX2Pu8zZKnuoLgRnrg1uQAIb42l9LzSxEwvDfCT5lfxdIrr7spL
+ +uR8cMdWNcL+lADFRmgPD1t0as7LuzRdwzZs43pFAUBq5d2loLcJqBe3hwjLTojxhARxJqrSv+U
+ mi3q/gIZPuduI6IK+AwtxioqD+aYC1O4Ogr9K9f+Di8T2+JQsrMVQIYYFZCzPhqEMvZ84BbD4yS
+ c/i9baTlCjMKG0WK9Psp+/Q==
+X-Received: by 2002:a05:600c:529b:b0:493:e404:3727 with SMTP id
+ 5b1f17b1804b1-49573cf6d94mr85376275e9.23.1784898745834; 
+ Fri, 24 Jul 2026 06:12:25 -0700 (PDT)
+X-Received: by 2002:a05:600c:529b:b0:493:e404:3727 with SMTP id
+ 5b1f17b1804b1-49573cf6d94mr85375795e9.23.1784898745297; 
+ Fri, 24 Jul 2026 06:12:25 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4957f5665f0sm33864465e9.0.2026.07.24.06.12.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 24 Jul 2026 06:12:24 -0700 (PDT)
+Date: Fri, 24 Jul 2026 09:12:23 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Jason Wang <jasowangio@gmail.com>
+Subject: [PATCH] virtio: reject zero-length indirect packed descriptors
+Message-ID: <04768f1e9a9f1329fe89631f2d8df9aa7b10bd09.1784898728.git.mst@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/1] target/s390x: Allow 2G hugepages guest backing
-To: Claudio Imbrenda <imbrenda@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, borntraeger@de.ibm.com, frankja@linux.ibm.com,
- pasic@linux.ibm.com, mhartmay@linux.ibm.com, david@kernel.org,
- farman@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
- cohuck@redhat.com
-References: <20260713155212.287444-1-imbrenda@linux.ibm.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260713155212.287444-1-imbrenda@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDExNSBTYWx0ZWRfX/QGLJau4cMD/
- CzGo8V6XWtaW4kwRwDJm9y5VU0ppJTfftToIKGxCvoLeowoJsZRBSTtdOEa9wwvIbRJXYb5PlxP
- NiMVJ41aywXATv55UAcp+iZQWrg3ZSg=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDExNSBTYWx0ZWRfXwwGOCKDeuEZi
- +LbbA6jIM8wmQEQQ6N9Jc44S/rIP9l7BRye5ryIOhkxzwhkqgOZhjyLj9GeaSbKWj4+CfSZG6nm
- XCvbyEPbC/x2+xG6aHC3vzIabbrapreNHWcY56Ve0Y/MpUZQv85DFa7WIPqQQd+pd5OaBnAKF9y
- Y+udxRWSPtqpQeZtn7x0Cf/4garhAJsuOlbMCcLjcNpNMEx+A1pY+9kTRyjaWMrXB35XWzEQGJd
- VfJZDXei5Fep+L0T7fShbG3U+tQnfrObVNM0wf9S4NMOLJmnGwwyYLJm2UCjVxuofZ+MbcRLA65
- k9qPpIGWGcKpue9AKOLN9syM+DMSjJGt93IfLShAb2noy10iGHn7yyxMnBHATVHR68/FKJR8vMI
- tCm5x0YH+0fFXA90t+Mcm87LWaL/WUxDjVy/GolEUl2oHLywBlsWa5bZ8EpPtZw0JF3T4L6lZ/O
- gQdkvL74O1YEQrTaXkw==
-X-Authority-Analysis: v=2.4 cv=Q9LiJY2a c=1 sm=1 tr=0 ts=6a63645e cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=V0VQRYasDu0-N0VjWjgA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: uMYAuRcUUEoGQNJ_5ysXoPc45Nc7nz7G
-X-Proofpoint-GUID: uMYAuRcUUEoGQNJ_5ysXoPc45Nc7nz7G
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-24_02,2026-07-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 adultscore=0 phishscore=0 bulkscore=0
- spamscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607240115
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.419,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,44 +114,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/13/26 11:52 AM, Claudio Imbrenda wrote:
-> Allow mapping guest with 2G hugepages on hosts that support it.
-> 
-> Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-> ---
->  target/s390x/kvm/kvm.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-> index 72031a5714..23fa714b69 100644
-> --- a/target/s390x/kvm/kvm.c
-> +++ b/target/s390x/kvm/kvm.c
-> @@ -298,13 +298,13 @@ void kvm_s390_set_max_pagesize(uint64_t pagesize, Error **errp)
->          return;
->      }
->  
-> -    if (pagesize != 1 * MiB) {
-> +    if ((pagesize == 2 * GiB) &&
-> +        kvm_vm_enable_cap(kvm_state, KVM_CAP_S390_HPAGE_2G, 0)) {
->          error_setg(errp, "Memory backing with 2G pages was specified, "
->                     "but KVM does not support this memory backing");
->          return;
-> -    }
-> -
-> -    if (kvm_vm_enable_cap(kvm_state, KVM_CAP_S390_HPAGE_1M, 0)) {
-> +    } else if ((pagesize == MiB) &&
-> +               kvm_vm_enable_cap(kvm_state, KVM_CAP_S390_HPAGE_1M, 0)) {
->          error_setg(errp, "Memory backing with 1M pages was specified, "
->                     "but KVM does not support this memory backing");
->          return;
+The packed-ring indirect descriptor handling in
+virtqueue_packed_get_avail_bytes() and virtqueue_packed_pop() accepts
+desc.len == 0, so a zero-length indirect descriptor reaches
+address_space_cache_init(), triggers its len > 0 assertion, and aborts
+QEMU.
 
-Just double-checking -- If you successfully take the 2G path here you
-will still set cap_hpage_1m = 1;
+Harmless except if the driver is in guest userspace, then it's a DoS
+attack on the guest.
 
-I suspect it's intentional to fence diag 308?  But then IMO
+Check and reject desc.len == 0 - also matches the split-ring behaviour.
 
-s/kvm_s390_get_hpage_1m/kvm_s390_get_hpage/
-and
-s/ cap_hpage_1m/ cap_hpage_any/
-or something like that
+Fixes: CVE-2026-63324
+Fixes: 86044b24e8 ("virtio: basic packed virtqueue support")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3754
+Cc: Jason Wang <jasowangio@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+---
+ hw/virtio/virtio.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 7c19080db5..2d33622daf 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -1475,7 +1475,7 @@ static void virtqueue_packed_get_avail_bytes(VirtQueue *vq,
+         }
+ 
+         if (desc.flags & VRING_DESC_F_INDIRECT) {
+-            if (desc.len % sizeof(VRingPackedDesc)) {
++            if (!desc.len || (desc.len % sizeof(VRingPackedDesc))) {
+                 virtio_error(vdev, "Invalid size for indirect buffer table");
+                 goto err;
+             }
+@@ -1927,7 +1927,7 @@ static void *virtqueue_packed_pop(VirtQueue *vq, size_t sz)
+     vring_packed_desc_read(vdev, &desc, desc_cache, i, true);
+     id = desc.id;
+     if (desc.flags & VRING_DESC_F_INDIRECT) {
+-        if (desc.len % sizeof(VRingPackedDesc)) {
++        if (!desc.len || (desc.len % sizeof(VRingPackedDesc))) {
+             virtio_error(vdev, "Invalid size for indirect buffer table");
+             goto done;
+         }
+-- 
+MST
+
 
