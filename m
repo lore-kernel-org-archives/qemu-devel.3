@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF0D0C531D0
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 00:11:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28754C531D0
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 00:11:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wn3UP-0004iW-Hk; Thu, 23 Jul 2026 20:10:09 -0400
+	id 1wn3UI-0004gd-SQ; Thu, 23 Jul 2026 20:10:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wn3UM-0004hX-7Q
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 20:10:06 -0400
+ id 1wn3UG-0004gC-Rg
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 20:10:01 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wn3UK-00065F-Cx
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 20:10:05 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1wn3UE-0005tU-Ig
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 20:10:00 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66NLeWGe1237289
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 00:10:03 GMT
+ 66NLeMZL1069288
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 00:09:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=1yF1HZu2RxA
- z00Hbv58/KOfLT4/PgEXjUJidYIaoYto=; b=MHOKByyLWvEQXsfsbohqPM6XWky
- Q0E0OUbzgR7jQFv9rbLtpew8aU4FpVm0+l1IMRUg0VQfVQQRi5fYiHDX+tsYFY/5
- yMIzlQj1KLG5bUo3hdnV0Deii9LXvXV5F14kcKP32AhRtUI2TVicFHYgapD2HF9O
- mL7coHaxcaR8KwG3bUt2Ob6N6cNyQLNw9K0rnuob3qGigBjconRbgHsYCPwZZ0ZZ
- emTgKPRbbSyFrIOiuA+7RhooMaCkYBK+XsClzTKCW2lP+g+STSaMdbig17iInjVV
- FlJjsypqlZdO/SSGaF7FviAKg2zKal8rWJJ5c+pC0pykT23Xb764ssFz8sw==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fkp5vhqkk-1
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=YQg2WzwRxNHDU12QYDoHdK
+ fk7830UI6D6q/FsnmPz+M=; b=pYDImRQiKxIBHqK9HQ1qWAMGqVORUOCZmZWeH6
+ 3yi6wgfg3nHMfjJtZHEg1J2UqeeiBfuuhNSAUHB54gI9N37BIJfWRqMQx7w5FGbX
+ So4I0YTkkvQZYgWuYF2DWzEMrqIZ1YMNkdc2EaKzi6MY8jdli/UcB6rH/kUzwOn5
+ uCrnevflSX75AO28rsRAtE7+oR8GOCy7uMTjdDymwJLM55xefjLiPtrJuAZQMDOL
+ 9TNrVPi9MTyNok/mxuHyUI1Cwuj0hs/2iSy9QxTAYnuhARNa8UJcCq9ygx01ZzZf
+ OWxrMmYPzw0hOjPljRfvxmyYPxd7FG0/jBt7OUSTsAhTNBkA==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fkg523f21-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 00:10:03 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2cca5e0a0c9so22879245ad.1
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 17:10:03 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 00:09:55 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-cb5cc1e13f8so1497310a12.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 17:09:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784851802; x=1785456602; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=1yF1HZu2RxAz00Hbv58/KOfLT4/PgEXjUJidYIaoYto=;
- b=RVbo8J/vFy/7b/pfPUu6IwF2VDivM1fpd+42yhtLGeIMQEbDszKlwiOc3UzqcFhn/v
- fwGctX+xkYerrl1me534YWt7P73dD8eyQJppJhkEA3epUu+mcXFA+vNzM4UX0W8pxBVn
- ktsFCiGu2P18UTZIOfu7DYoCmOcjVYTiA0PobYGZgHQ2w5aV83JFH8Yii2tuX1cZBSis
- BoRbSxBXfZFogN+5doxbSa5Vwf21RDxT4X6nRvIjnjKBNDlGNM5pc2AN2F7Mq4S4KC4L
- GHaiduG6TALTGWcCV5PhmrHnWJkjmJnqNTY/p6NxEH0kFYD5KXizunUDUwOxBC0cqJtw
- 3TJQ==
+ d=oss.qualcomm.com; s=google; t=1784851794; x=1785456594; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=YQg2WzwRxNHDU12QYDoHdKfk7830UI6D6q/FsnmPz+M=;
+ b=He57wb9Aq/QIDA+G85UI5eKPVQuoCros9cibdedt9fTrkN0eZiL3KCGwilZfW1PQvr
+ qVFU+k+CeNL+OCrkkatnDdtUIpPia4VKjZLvvPPqIK+unpX1uGvznzqPS2ZJBL9pUsa3
+ YDfDnxuhDWfQ9tagiDnSCaZszDO5y6p3V3HHgOK1RqVxOO5X/hTJta9nhwX7AwRpSTjR
+ Zmpl4Gm4YKkh7dn4wq0fRmZ58csvNvBSSm4HYUyuhVYVX0Rsh+XqlxVrUSBm9Zf2I8Os
+ p3YZLIpDqEm3d6ahzcZKz+mdUibxmYPxClwfYU1Exu+ZK3rpPigOdnVh1BiuLLQ7bMqL
+ DSHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784851802; x=1785456602;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=1yF1HZu2RxAz00Hbv58/KOfLT4/PgEXjUJidYIaoYto=;
- b=tBcIz4UENdHEcADsOMw4FRGDb+7SItZSb3ufUNr6f+PwI+V/AJvTfYjtHKdSDdEZJ8
- qmzEk7B8EOWyyecQ4I6CXs7DD8uTCSeC68X4EsmENqXrmzWV4PQZ08vXHclqICdJ6S/8
- HmghbVrTxQQH3v+MExpID1MCuqyg6wTAinx/qLRFxo5xwwA2teRzcdRSTiXEIVwACcnq
- VW8ieIfT/ekekQZtMXFZeqieUuAV5uij5Iq5vieZ5UXhVyrCfL5zq6HMG0cIOgy+a0eW
- y+dg1QLZPu/BiWO8n0ERsilJMZ3SE4kfz+G/CfOph458NY49ZFeQnisgyaznnamvSvba
- N5WQ==
-X-Gm-Message-State: AOJu0YxgZdbxpyXtAgzPnG7hcn5FcKskKwEfewxVhMCNzhpMLLW6jkBB
- DH8ZceEeqQkyjaz0BiLQ9J8rqX++vI0tnGpn46hG8Tb4ToHFZlBDXRAGhFqqB1H7AXisALwOD/P
- 1PzC9M1LbaKWV1DJFMIuswlFCpLn4Wh+nZMwZv1POOPIICGZTpoSt8Vr4WEg6NDZ+5w==
-X-Gm-Gg: AR+sD10o4qdDvjxfU+bVrxVNM8HUsvwQK88Z5pPJHGiomJ7Yr2pg1JdvXSDuZX6xyMc
- 58QS8O770JxwvohtDjP+ilN0AiqXFhxRorFvkh+5YyLUitmKrUNvM956Gg1pnN0LmVSQVWe7KOz
- R8iqUahL5o4ShdtE+uCRPEUgYPFN76ONRLfuEugbUe9fj/wwKv+mkRv29r6rUXY7o1gjvzZKQj/
- KWYDbFTsEFBD+kpBKgq8rpOG4HsNLoG3epVKnuIVkUjzKab/Dt7DNaWCdSpZ6YKoZyB0DL3SId4
- NOg7jKwE7+vYLvuh3tqTH5+tDBycJkmMFbNHgCrJwgL4s6ygW6z9Xu2jZfIRuB/musb75ud+9cY
- E7rhNamXL5FKRFDNF801qNWh1m7ijq8h7OTqiySbfULfZm5JSWKB9Xy2oiLlKvQY9m97iXuY=
-X-Received: by 2002:a17:903:2acb:b0:2c9:cb1b:64d6 with SMTP id
- d9443c01a7336-2cfa6bbfb56mr63368005ad.19.1784851802324; 
- Thu, 23 Jul 2026 17:10:02 -0700 (PDT)
-X-Received: by 2002:a17:903:2acb:b0:2c9:cb1b:64d6 with SMTP id
- d9443c01a7336-2cfa6bbfb56mr63367775ad.19.1784851801872; 
- Thu, 23 Jul 2026 17:10:01 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1784851794; x=1785456594;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=YQg2WzwRxNHDU12QYDoHdKfk7830UI6D6q/FsnmPz+M=;
+ b=aKn6fBdNQm51/FaaFu4g50nq73IL8wqPzphk9nBir7REr2VUHxxRZ56N7V5KR2VNE9
+ 0gAOLoaeaPx/JjS041rdjJHBfNnq9sszt/BPuDg8wbLcocEZ1xDyQEGgpFnpcZSDP7/5
+ quJA8YRAPHDFHoGErhmhZkzSJccfbryab5yC6YGZOk8fCCfJaEOC07Iy4y/r1AzbLscd
+ bFfmM/bCfE29dB0OgVfS9W0s70L/3ILGLu+z8UiEMMxKiszIXe22Tb9IbHPIcIVZ/uSo
+ 4ApOVBctgkF/9YrHetS6ATlJr51nN0r/OO0aE82dwdfXHzufLsm47mvcCxRUuYWxQXCh
+ a1qw==
+X-Gm-Message-State: AOJu0Yxfoml88cPZZqh6Kl9F/gjmnFaZPf8M4YZWhvsm8wnsCH7/ZZZ7
+ 6qDA4UIUG0ibSL4UFe80Kradhc8ilV2STXwusmDaUwpq4Xw83VbKvQ7FN436UWi6Las0wsY3IoJ
+ JnV/jfSNYpLw2C/Z33ZNBMX9dzrj8D4on8K3FauV0PJLggShXMs7BQ6hzJQWFqolLFA==
+X-Gm-Gg: AR+sD103al0dRFa0hcfSucTlzyflIndqjwNzAs29NqAWlMlTHIL80zI/sg3Rr22NuWC
+ ObHaCUu3RMV9teG/Gxx9cMu1TvHn+QVz1EP3jFDXH37WWHrv7C+l7QYK8aorjQPz+XTHDxrAhKG
+ I5NCquRrGD11deBALMerG+7UIiVw8N3KVSZ6PqYg8/offx80Fr7wz66fwLi43i7ZWsXyyMa6bqN
+ DQgXN8IyOPiRjlTMPRfhEOSiLKqMIDZkSCNrW9d3bGkFQ+5KWqpzqkHb0INpKDE9dak2V0jj2Tj
+ 7nlWlpkaeF1iKQ+71eOihSNesszEVpi6t944IbodLDHxPudkfTdE0Ul/rOcub5vX8Bw068yXmdJ
+ d83dGHVM3t4e6ivCnOahseorYtNLHCp0e3oJQq0G+J1XW9B43KFLr+mTrMrkFtrl4RhXaHy0=
+X-Received: by 2002:a05:6a20:c784:b0:3c3:ac9c:9a66 with SMTP id
+ adf61e73a8af0-3c44b25089bmr5634326637.69.1784851794160; 
+ Thu, 23 Jul 2026 17:09:54 -0700 (PDT)
+X-Received: by 2002:a05:6a20:c784:b0:3c3:ac9c:9a66 with SMTP id
+ adf61e73a8af0-3c44b25089bmr5634289637.69.1784851793628; 
+ Thu, 23 Jul 2026 17:09:53 -0700 (PDT)
 Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3147e1bc886sm24359478eec.26.2026.07.23.17.10.00
+ 5a478bee46e88-3147e1bc886sm24359478eec.26.2026.07.23.17.09.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Jul 2026 17:10:01 -0700 (PDT)
+ Thu, 23 Jul 2026 17:09:53 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
@@ -95,38 +94,38 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Alistair Francis <alistair@alistair23.me>,
  Peter Maydell <peter.maydell@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH 05/27] target-info: add target_config_multiprocess
-Date: Fri, 24 Jul 2026 00:09:25 +0000
-Message-ID: <20260724000948.234657-6-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH 00/27] single-binary: implement dynamic filtering for machine
+ types
+Date: Fri, 24 Jul 2026 00:09:20 +0000
+Message-ID: <20260724000948.234657-1-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260724000948.234657-1-pierrick.bouvier@oss.qualcomm.com>
-References: <20260724000948.234657-1-pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIzMDIzMyBTYWx0ZWRfXwXoKrMiRl7rV
- zkHD/u+QSsDtBVxEJT4v+m3Tu8eH0aweDIsUA3PiL0hYN2/oVISyc+ODflbFbpkz59MeryEcjOL
- LdUAKvNhzAfrXD8XP/hGK+gC1IhVXCI=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIzMDIzMyBTYWx0ZWRfX3gAZQFYqXViY
- Byo0lWByrwspHdp2RowWleenbcP/x9p8CtSAqmokuDN3FhN6AEiJdmCXw9WTn3zXkbOvWuXyMMu
- fhk+Ho4/OhmSD7NMgu+WeUhak8LdH2KIRtpWoG6DEOcajQFFFxzVeORu7g/073v8uQBUSMQipgA
- uG+zRVaSSlIa3Paaz2upLBLowCoER5bzbk1jecBA8uJuvd81muIv95ZXA70ohLkROa6vX0Wmv2B
- mI/fADFA7XUOTXUSxc0cAZ0nF3md02mHHhlcwH6p1y4E+S+RUitNfuJoz7SWyCpX0HRAoMcMdeu
- kmVCP7A+1/6aJHQa+GvFc8LjxyeBjwlu1Rbb2zG+UBEYJMmS7A4hVVpu7sZnuup6fzxcXelqhJm
- qP52m7Vb1mcF9oJVBjgtLmz53VoteCbYSyezpMe9uqlrr0aTN9VtPkDeWRlhjMRxNsKHf28SPA7
- 73n2V4v8/w4UReeXEcw==
-X-Authority-Analysis: v=2.4 cv=Z9Dc2nRA c=1 sm=1 tr=0 ts=6a62ad5b cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=EUspDBNiAAAA:8
- a=jw_St5dA-TTCRLJR15QA:9 a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-GUID: Yko8gOo66BrjNST88GSOGnVstM2ddOG2
-X-Proofpoint-ORIG-GUID: Yko8gOo66BrjNST88GSOGnVstM2ddOG2
+X-Authority-Analysis: v=2.4 cv=DtZmPm/+ c=1 sm=1 tr=0 ts=6a62ad53 cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=7WQIUGgTjQZxjCxQNFYA:9 a=QEXdDO2ut3YA:10 a=x9snwWr2DeNwDh03kgHS:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIzMDIzMyBTYWx0ZWRfXww4Za1L4TuFC
+ cDLdLLbr/JR2hVg8m5MfaV5uFtbneecrpbQ5k7j0+xYR4ARstm2YCwJQQLHoZKbH+Z613swJcxO
+ xyED+xyKa4qn+nj/yjd89PaO3H8YdxI=
+X-Proofpoint-GUID: rWNRP57PlTLzyY54vWg0XmEC1WugQTkW
+X-Proofpoint-ORIG-GUID: rWNRP57PlTLzyY54vWg0XmEC1WugQTkW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIzMDIzMyBTYWx0ZWRfXwvTmIyyJdqyT
+ l0IiKZ769bHDXVsPJ0SQnIPlx0Qn27wDZh0SilpOzLIZOpXuSwId0OhHXbvYVlmDF6r2++bD8MG
+ 6o9+ekdnjjjWapEE3rGi+ELIw7a3JfMlZsdcm1Ne4AVTrRQUEi4uVIrd2WiUL5J1ADDlIH7dT2E
+ a+1XoY2s3vwv09yKEsj2zdJhnvBK42ltK/zCYU5SCYCT+SP6SuYh8OIemMrbqxOfZHfm6WGUcT2
+ Sh3EMmrOjS1OynU8oVVGpdcTSLVLb081yJHec4E7ySBmSpQDKGTj6d1GW760RErlG9/06FWdOA9
+ f3qprGYbwe4hAjmp+W8p1QXn/GsN2oqp9Np2Bj7YO04Dv5AK0eVMBXscVaKiimbZfFbiS1mCYoP
+ l+fhw3IQh7nsvUB4prFGNwULBfJQ78wM/mXjLGvGqSfRgw3XLDRI0jNAVL0ulEIghYd7b8IAsJp
+ 4bSK+xuVs1Rvvfb9nxg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-23_07,2026-07-22_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 phishscore=0 impostorscore=0 lowpriorityscore=0
- adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 clxscore=1015
+ spamscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1015 bulkscore=0
+ adultscore=0 suspectscore=0 malwarescore=0 phishscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607230233
 Received-SPF: pass client-ip=205.220.180.131;
@@ -154,229 +153,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For some devices/machines, we'll need to access target configuration,
-but without relying to target headers. Thus, we'll add the needed
-information in target-info.
+Now that we can link a single-binary with at least two targets (arm, aarch64),
+we want to make sure that we expose the same set of machines (later devices and
+cpus) than target binaries. For that, we implemented a static filtering based on
+target interfaces that each machine will implement to declare which targets have
+this machine.
 
-At this moment, we duplicate code between all configs/targets/*.c and
-target-info-stub.c but we will clean up this before the end of this
-series.
+However, we discovered that this static filtering is not enough. Indeed, some
+machines and devices do not depend only on target, and their presence can depend
+on Kconfig or host/target combination. Thus, our static approach can't work, and
+we need something more flexible.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
----
- configs/targets/aarch64-softmmu.c | 11 +++++++++++
- configs/targets/arm-softmmu.c     | 11 +++++++++++
- configs/targets/riscv32-softmmu.c | 11 +++++++++++
- configs/targets/riscv64-softmmu.c | 11 +++++++++++
- include/qemu/target-info-impl.h   |  3 +++
- include/qemu/target-info.h        |  7 +++++++
- meson.build                       |  2 +-
- target-info-stub.c                | 12 ++++++++++++
- target-info.c                     |  5 +++++
- 9 files changed, 72 insertions(+), 1 deletion(-)
+This series adds a new TYPE_TARGET_SPECIFIC, that declare a single function
+bool is_available(void). From there, any machine type (and later devices and
+cpus) can implement it to override their presence for each target.
+We first replace the existing static mechanism with this, and once done, we
+cleanup all the old interface. One nice benefit is that we can get rid of
+config/targets/*.c files, which saves duplication.
 
-diff --git a/configs/targets/aarch64-softmmu.c b/configs/targets/aarch64-softmmu.c
-index 75d95b0e743..af65da80d04 100644
---- a/configs/targets/aarch64-softmmu.c
-+++ b/configs/targets/aarch64-softmmu.c
-@@ -12,6 +12,9 @@
- #include "hw/arm/machines-qom.h"
- #include "target/arm/cpu-qom.h"
- #include "target/arm/cpu-param.h"
-+#ifndef CONFIG_USER_ONLY
-+#include CONFIG_DEVICES
-+#endif
- 
- static const TargetInfo target_info_aarch64_system = {
-     .target_name = "aarch64",
-@@ -22,6 +25,14 @@ static const TargetInfo target_info_aarch64_system = {
-     .endianness = ENDIAN_MODE_LITTLE,
-     .page_bits_vary = true,
-     .page_bits_init = TARGET_PAGE_BITS_LEGACY,
-+
-+#ifndef CONFIG_USER_ONLY
-+# ifdef CONFIG_MULTIPROCESS
-+    .config_multiprocess = true,
-+# else
-+    .config_multiprocess = false,
-+# endif
-+#endif
- };
- 
- target_info_init(target_info_aarch64_system)
-diff --git a/configs/targets/arm-softmmu.c b/configs/targets/arm-softmmu.c
-index 73546fa5737..501956403cc 100644
---- a/configs/targets/arm-softmmu.c
-+++ b/configs/targets/arm-softmmu.c
-@@ -12,6 +12,9 @@
- #include "hw/arm/machines-qom.h"
- #include "target/arm/cpu-qom.h"
- #include "target/arm/cpu-param.h"
-+#ifndef CONFIG_USER_ONLY
-+#include CONFIG_DEVICES
-+#endif
- 
- static const TargetInfo target_info_arm_system = {
-     .target_name = "arm",
-@@ -22,6 +25,14 @@ static const TargetInfo target_info_arm_system = {
-     .endianness = ENDIAN_MODE_LITTLE,
-     .page_bits_vary = true,
-     .page_bits_init = TARGET_PAGE_BITS_LEGACY,
-+
-+#ifndef CONFIG_USER_ONLY
-+# ifdef CONFIG_MULTIPROCESS
-+    .config_multiprocess = true,
-+# else
-+    .config_multiprocess = false,
-+# endif
-+#endif
- };
- 
- target_info_init(target_info_arm_system)
-diff --git a/configs/targets/riscv32-softmmu.c b/configs/targets/riscv32-softmmu.c
-index 752c813077e..69053f3945e 100644
---- a/configs/targets/riscv32-softmmu.c
-+++ b/configs/targets/riscv32-softmmu.c
-@@ -12,6 +12,9 @@
- #include "hw/riscv/machines-qom.h"
- #include "target/riscv/cpu-qom.h"
- #include "target/riscv/cpu-param.h"
-+#ifndef CONFIG_USER_ONLY
-+#include CONFIG_DEVICES
-+#endif
- 
- static const TargetInfo target_info_riscv32_system = {
-     .target_name = "riscv32",
-@@ -21,6 +24,14 @@ static const TargetInfo target_info_riscv32_system = {
-     .machine_typename = TYPE_TARGET_RISCV32_MACHINE,
-     .endianness = ENDIAN_MODE_LITTLE,
-     .page_bits_init = TARGET_PAGE_BITS,
-+
-+#ifndef CONFIG_USER_ONLY
-+# ifdef CONFIG_MULTIPROCESS
-+    .config_multiprocess = true,
-+# else
-+    .config_multiprocess = false,
-+# endif
-+#endif
- };
- 
- target_info_init(target_info_riscv32_system)
-diff --git a/configs/targets/riscv64-softmmu.c b/configs/targets/riscv64-softmmu.c
-index 5150f0fe9d9..cd0fb555986 100644
---- a/configs/targets/riscv64-softmmu.c
-+++ b/configs/targets/riscv64-softmmu.c
-@@ -12,6 +12,9 @@
- #include "hw/riscv/machines-qom.h"
- #include "target/riscv/cpu-qom.h"
- #include "target/riscv/cpu-param.h"
-+#ifndef CONFIG_USER_ONLY
-+#include CONFIG_DEVICES
-+#endif
- 
- static const TargetInfo target_info_riscv64_system = {
-     .target_name = "riscv64",
-@@ -21,6 +24,14 @@ static const TargetInfo target_info_riscv64_system = {
-     .machine_typename = TYPE_TARGET_RISCV64_MACHINE,
-     .endianness = ENDIAN_MODE_LITTLE,
-     .page_bits_init = TARGET_PAGE_BITS,
-+
-+#ifndef CONFIG_USER_ONLY
-+# ifdef CONFIG_MULTIPROCESS
-+    .config_multiprocess = true,
-+# else
-+    .config_multiprocess = false,
-+# endif
-+#endif
- };
- 
- target_info_init(target_info_riscv64_system)
-diff --git a/include/qemu/target-info-impl.h b/include/qemu/target-info-impl.h
-index c917d546eab..0496eeac046 100644
---- a/include/qemu/target-info-impl.h
-+++ b/include/qemu/target-info-impl.h
-@@ -32,6 +32,9 @@ typedef struct TargetInfo {
-     unsigned page_bits_init;
-     /* runtime equivalent of TARGET_PAGE_BITS_VARY definition */
-     bool page_bits_vary;
-+
-+    /* CONFIG_MULTIPROCESS */
-+    bool config_multiprocess;
- } TargetInfo;
- 
- /**
-diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-index 88ccef2a988..996780150a0 100644
---- a/include/qemu/target-info.h
-+++ b/include/qemu/target-info.h
-@@ -120,4 +120,11 @@ bool target_riscv32(void);
-  */
- bool target_riscv64(void);
- 
-+/**
-+ * target_config_multiprocess:
-+ *
-+ * Returns true if target defines CONFIG_MULTIPROCESS.
-+ */
-+bool target_config_multiprocess(void);
-+
- #endif
-diff --git a/meson.build b/meson.build
-index 49a5baf5b52..2b5db0d096a 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4259,7 +4259,7 @@ foreach target : target_dirs
-   arch_deps = []
-   c_args = ['-DCOMPILING_PER_TARGET',
-             '-DCONFIG_TARGET="@0@-config-target.h"'.format(target),
--  ]
-+            '-DCONFIG_DEVICES="@0@-config-devices.h"'.format(target)]
-   link_args = emulator_link_args
- 
-   target_inc = [include_directories('target' / config_target['TARGET_BASE_ARCH'])]
-diff --git a/target-info-stub.c b/target-info-stub.c
-index 22b7911201c..99c1b1cd7ef 100644
---- a/target-info-stub.c
-+++ b/target-info-stub.c
-@@ -14,6 +14,10 @@
- #include "cpu.h"
- #include "exec/cpu-defs.h"
- #include "exec/page-vary.h"
-+#ifndef CONFIG_USER_ONLY
-+#include CONFIG_DEVICES
-+#endif
-+#include CONFIG_TARGET
- 
- /* Validate correct placement of CPUArchState. */
- QEMU_BUILD_BUG_ON(offsetof(ArchCPU, parent_obj) != 0);
-@@ -40,6 +44,14 @@ static const TargetInfo target_info_stub = {
-     .page_bits_vary = false,
-     .page_bits_init = TARGET_PAGE_BITS,
- #endif
-+
-+#ifndef CONFIG_USER_ONLY
-+# ifdef CONFIG_MULTIPROCESS
-+    .config_multiprocess = true,
-+# else
-+    .config_multiprocess = false,
-+# endif
-+#endif
- };
- 
- target_info_init(target_info_stub)
-diff --git a/target-info.c b/target-info.c
-index 7ac2260b182..07fde91b1ec 100644
---- a/target-info.c
-+++ b/target-info.c
-@@ -114,3 +114,8 @@ bool target_riscv64(void)
- {
-     return target_arch() == SYS_EMU_TARGET_RISCV64;
- }
-+
-+bool target_config_multiprocess(void)
-+{
-+    return target_info()->config_multiprocess;
-+}
+This series was tested by comparing list of machines for all qemu system
+binaries, before and after this change, to make sure we don't introduce a
+regression.
+
+Pierrick Bouvier (27):
+  include/qemu/target-info-qom.h: declare TYPE_TARGET_SPECIFIC interface
+  hw/arm: implement TYPE_TARGET_SPECIFIC
+  target-info: add target_riscv32 and target_base_riscv
+  hw/riscv: implement TYPE_TARGET_SPECIFIC
+  target-info: add target_config_multiprocess
+  hw/remote/machine: remove unsupported arm target
+  hw/remote/machine: implement TYPE_TARGET_SPECIFIC
+  target-info: add target_config_xen
+  hw/arm/xen-pvh: implement TYPE_TARGET_SPECIFIC
+  hw/xenpv/xen_machine_pv: implement TYPE_TARGET_SPECIFIC
+  target-info: add target_config_nitro
+  hw/nitro/machine: implement TYPE_TARGET_SPECIFIC
+  target-info-qom: implement new machine filtering per target
+  target-info-qom: use TYPE_MACHINE instead of target_machine_typename
+  target-info: remove target_machine_typename
+  target-info-qom: add type_target_specific
+  hw/arm: remove TYPE_TARGET_{AARCH64,ARM}_MACHINE
+  hw/arm: remove {arm,arm_aarch64,aarch64}_machine_interfaces
+  include/hw/core/boards.h: add DEFINE_MACHINE_TARGET_SPECIFIC
+  hw/arm: remove DEFINE_MACHINE_{AARCH64,ARM}
+  hw/arm: remove machines-qom.h
+  hw/riscv: remove TYPE_TARGET_{RISCV32,RISCV64}_MACHINE
+  hw/riscv: remove {riscv32,riscv32_64,riscv64}_machine_interfaces
+  hw/riscv: remove DEFINE_MACHINE_{RISCV32,RISCV64}
+  hw/riscv: remove machines-qom.h
+  configs/targets: remove target info definitions
+  target-info: rename target-info-stub.c in target-info-def.c
+
+ configs/targets/aarch64-softmmu.c         | 27 ------------
+ configs/targets/arm-softmmu.c             | 27 ------------
+ configs/targets/meson.build               |  6 ---
+ configs/targets/riscv32-softmmu.c         | 26 -----------
+ configs/targets/riscv64-softmmu.c         | 26 -----------
+ hw/arm/aspeed.c                           |  1 -
+ hw/arm/aspeed_ast1040_evb.c               |  4 +-
+ hw/arm/aspeed_ast10x0_evb.c               |  7 +--
+ hw/arm/aspeed_ast2400_palmetto.c          |  4 +-
+ hw/arm/aspeed_ast2400_quanta-q71l.c       |  4 +-
+ hw/arm/aspeed_ast2400_supermicrox11.c     |  4 +-
+ hw/arm/aspeed_ast2500_evb.c               |  4 +-
+ hw/arm/aspeed_ast2500_g220a.c             |  4 +-
+ hw/arm/aspeed_ast2500_romulus.c           |  4 +-
+ hw/arm/aspeed_ast2500_supermicro-x11spi.c |  4 +-
+ hw/arm/aspeed_ast2500_tiogapass.c         |  4 +-
+ hw/arm/aspeed_ast2500_witherspoon.c       |  4 +-
+ hw/arm/aspeed_ast2500_yosemitev2.c        |  4 +-
+ hw/arm/aspeed_ast2600_anacapa.c           |  4 +-
+ hw/arm/aspeed_ast2600_bletchley.c         |  4 +-
+ hw/arm/aspeed_ast2600_catalina.c          |  4 +-
+ hw/arm/aspeed_ast2600_evb.c               |  4 +-
+ hw/arm/aspeed_ast2600_fby35.c             |  4 +-
+ hw/arm/aspeed_ast2600_fuji.c              |  4 +-
+ hw/arm/aspeed_ast2600_gb200nvl.c          |  4 +-
+ hw/arm/aspeed_ast2600_rainier.c           |  4 +-
+ hw/arm/aspeed_ast27x0-fc.c                |  4 +-
+ hw/arm/aspeed_ast27x0_evb.c               |  7 +--
+ hw/arm/b-l475e-iot01a.c                   |  4 +-
+ hw/arm/bananapi_m2u.c                     |  4 +-
+ hw/arm/collie.c                           |  4 +-
+ hw/arm/cubieboard.c                       |  4 +-
+ hw/arm/digic_boards.c                     |  4 +-
+ hw/arm/exynos4_boards.c                   |  7 +--
+ hw/arm/imx25_pdk.c                        |  4 +-
+ hw/arm/imx8mm-evk.c                       |  4 +-
+ hw/arm/imx8mp-evk.c                       |  4 +-
+ hw/arm/integratorcp.c                     |  4 +-
+ hw/arm/kzm.c                              |  4 +-
+ hw/arm/max78000fthr.c                     |  4 +-
+ hw/arm/mcimx6ul-evk.c                     |  4 +-
+ hw/arm/mcimx7d-sabre.c                    |  4 +-
+ hw/arm/microbit.c                         |  4 +-
+ hw/arm/mps2-tz.c                          | 13 +++---
+ hw/arm/mps2.c                             | 13 +++---
+ hw/arm/mps3r.c                            |  4 +-
+ hw/arm/msf2-som.c                         |  4 +-
+ hw/arm/musca.c                            |  7 +--
+ hw/arm/musicpal.c                         |  4 +-
+ hw/arm/netduino2.c                        |  4 +-
+ hw/arm/netduinoplus2.c                    |  4 +-
+ hw/arm/npcm7xx_boards.c                   | 16 ++++---
+ hw/arm/npcm8xx_boards.c                   |  4 +-
+ hw/arm/olimex-stm32-h405.c                |  4 +-
+ hw/arm/omap_sx1.c                         |  7 +--
+ hw/arm/orangepi.c                         |  4 +-
+ hw/arm/raspi.c                            | 16 ++++---
+ hw/arm/raspi4b.c                          |  4 +-
+ hw/arm/realview.c                         | 13 +++---
+ hw/arm/sabrelite.c                        |  4 +-
+ hw/arm/sbsa-ref.c                         |  4 +-
+ hw/arm/stellaris.c                        |  7 +--
+ hw/arm/stm32vldiscovery.c                 |  4 +-
+ hw/arm/versatilepb.c                      |  7 +--
+ hw/arm/vexpress.c                         |  7 +--
+ hw/arm/virt.c                             |  4 +-
+ hw/arm/xen-pvh.c                          |  4 +-
+ hw/arm/xilinx_zynq.c                      |  4 +-
+ hw/arm/xlnx-versal-virt.c                 |  7 +--
+ hw/arm/xlnx-zcu102.c                      |  4 +-
+ hw/core/machine-qmp-cmds.c                |  3 +-
+ hw/core/null-machine.c                    |  9 +---
+ hw/nitro/machine.c                        |  4 +-
+ hw/remote/machine.c                       |  5 +--
+ hw/riscv/boston-aia.c                     |  4 +-
+ hw/riscv/k230.c                           |  4 +-
+ hw/riscv/microblaze-v-generic.c           |  4 +-
+ hw/riscv/microchip_pfsoc.c                |  4 +-
+ hw/riscv/opentitan.c                      |  4 +-
+ hw/riscv/shakti_c.c                       |  4 +-
+ hw/riscv/sifive_e.c                       |  4 +-
+ hw/riscv/sifive_u.c                       |  4 +-
+ hw/riscv/spike.c                          |  4 +-
+ hw/riscv/tt_atlantis.c                    |  4 +-
+ hw/riscv/virt.c                           |  3 --
+ hw/riscv/xiangshan_kmh.c                  |  4 +-
+ hw/xenpv/xen_machine_pv.c                 |  3 +-
+ include/hw/arm/machines-qom.h             | 46 -------------------
+ include/hw/core/boards.h                  |  4 ++
+ include/hw/riscv/machines-qom.h           | 46 -------------------
+ include/qemu/target-info-impl.h           |  9 +++-
+ include/qemu/target-info-qom.h            | 24 ++++++++++
+ include/qemu/target-info.h                | 45 +++++++++++++++----
+ meson.build                               |  9 +---
+ monitor/qemu-config-qmp.c                 |  4 +-
+ system/vl.c                               |  5 +--
+ target-info-stub.c => target-info-def.c   | 29 ++++++++++--
+ target-info-qom.c                         | 54 ++++++++++++++++-------
+ target-info.c                             | 36 ++++++++++++---
+ target/arm/machine.c                      | 19 +-------
+ target/riscv/machine.c                    | 18 +-------
+ 101 files changed, 385 insertions(+), 481 deletions(-)
+ delete mode 100644 configs/targets/aarch64-softmmu.c
+ delete mode 100644 configs/targets/arm-softmmu.c
+ delete mode 100644 configs/targets/meson.build
+ delete mode 100644 configs/targets/riscv32-softmmu.c
+ delete mode 100644 configs/targets/riscv64-softmmu.c
+ delete mode 100644 include/hw/arm/machines-qom.h
+ delete mode 100644 include/hw/riscv/machines-qom.h
+ rename target-info-stub.c => target-info-def.c (67%)
+
 -- 
 2.43.0
 
