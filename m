@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AD16C531F9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 09:50:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32E3CC531FA
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 09:50:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnCY4-0007YU-7y; Fri, 24 Jul 2026 05:50:32 -0400
+	id 1wnCY8-0007cF-VF; Fri, 24 Jul 2026 05:50:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiongwm2026@163.com>)
- id 1wnCMK-0008IB-CN
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 05:38:24 -0400
-Received: from m16.mail.163.com ([117.135.210.3])
+ id 1wnCMN-0008Ia-HG
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 05:38:27 -0400
+Received: from m16.mail.163.com ([117.135.210.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiongwm2026@163.com>)
- id 1wnCMF-00047A-7v
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 05:38:24 -0400
+ id 1wnCML-00047e-6x
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 05:38:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=gM
- /0gRgf8lzBqBS0ikqquzKTo/lOuE3qwinTchpVrn4=; b=UGSsvEZKGevCHBscJu
- GivQyU+q+hDIlQlTd7vT1zCn7FZvdJfkpPTjKoYe4LQSCLae3x8Ri87ewQ1cT/9V
- rnw0ZmN9130jM6m8uP8bsDiLFEFg/eWpTWIIHmepl/vF1kgDCNlyI1O45xKdPcsy
- X6I4XmFrioxl/2g+iM2q4YFvQ=
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=4y
+ j940qjx+FeltU9fph5m0Y6GNN8PcoIDW2zyosnPjg=; b=gj9yO5cfTDLSRJiI84
+ Eru/s8yvTVCWU2KONQ3DUe82+oYxAjtBBp0iv5q0C26/xyjgrAU8bGoDQ06xLT1b
+ mp4h/KOjfYJmNI5T+f7wLEAn1HPopX8vk1XknUhid58l3V74GTagHAyvrG6shvRo
+ 1rq7s/wwzqYKpt7IYLD1+Q1TQ=
 Received: from xwm-TianYi510Pro-14IMB.. (unknown [])
- by gzga-smtp-mtada-g1-3 (Coremail) with SMTP id _____wCHYwJuMmNq8T8cKA--.247S2;
- Fri, 24 Jul 2026 17:37:53 +0800 (CST)
+ by gzga-smtp-mtada-g1-4 (Coremail) with SMTP id
+ _____wB3tZ+BMmNqFvnbLg--.65177S2; 
+ Fri, 24 Jul 2026 17:38:10 +0800 (CST)
 From: Weimin Xiong <xiongwm2026@163.com>
 To: qemu-devel@nongnu.org
 Cc: jasowang@redhat.com, mst@redhat.com, virtualization@lists.linux.dev,
  Xiong Weimin <xiongweimin@kylinos.cn>
-Subject: [PATCH 1/3] hw/virtio: Optimize vhost_log_sync_range to avoid N^2
- complexity
-Date: Fri, 24 Jul 2026 17:37:50 +0800
-Message-ID: <20260724093750.810018-1-xiongwm2026@163.com>
+Subject: [PATCH] hw/net/virtio-net: Remove dangerous cast in receive_header
+Date: Fri, 24 Jul 2026 17:38:09 +0800
+Message-ID: <20260724093809.810263-1-xiongwm2026@163.com>
 X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wCHYwJuMmNq8T8cKA--.247S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7Cw17uFW7uF15GFy3CrWrGrg_yoW8WFWrpr
- 4qkF9xKr45J347Jw4fJ3yUuryFkws7Xws8JrZ7X3WDGw17Xr1ktan5K3WUt347CFyxZF1Y
- vFyqvF45uryruw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jggAwUUUUU=
+X-CM-TRANSID: _____wB3tZ+BMmNqFvnbLg--.65177S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7Zr17CFWkJw4fZry3CrW3KFg_yoW8GFyxpF
+ n0gF4Iqr4rXF13Ga1rAFs5X34jy3Zaka43CrWqq345uFZ8Ar1DtryY93W8t3WakFWkAF1I
+ 9rWFqFy5JF1Du3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jAl19UUUUU=
 X-Originating-IP: [116.128.244.169]
-X-CM-SenderInfo: x0lr0wdzpsijqw6rljoofrz/xtbCzREcq2pjMnH8ngAA3D
-Received-SPF: pass client-ip=117.135.210.3; envelope-from=xiongwm2026@163.com;
+X-CM-SenderInfo: x0lr0wdzpsijqw6rljoofrz/xtbCzgIgr2pjMoLlmQAA3G
+Received-SPF: pass client-ip=117.135.210.5; envelope-from=xiongwm2026@163.com;
  helo=m16.mail.163.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
@@ -59,7 +59,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 24 Jul 2026 05:50:26 -0400
+X-Mailman-Approved-At: Fri, 24 Jul 2026 05:50:27 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,51 +76,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Xiong Weimin <xiongweimin@kylinos.cn>
 
-The vhost_log_sync_range() function iterates through all memory sections
-for each call, resulting in O(N^2) complexity when syncing dirty
-bitmaps. This is inefficient for guests with many memory sections.
+The receive_header() function contains a "FIXME this cast is evil"
+comment. The code does:
+    void *wbuf = (void *)buf;
 
-Optimize this by:
-1. Checking if a section overlaps with [first, last] range before
-   calling vhost_sync_dirty_bitmap()
-2. Early exit when section starts beyond the requested range
+This cast from 'const void *' to 'void *' removes const qualifier which
+could lead to unintended modifications. Instead, use a properly typed
+pointer and pass it correctly to work_around_broken_dhclient().
 
 Signed-off-by: Xiong Weimin <xiongweimin@kylinos.cn>
 ---
- hw/virtio/vhost.c | 18 +++++++++++++++--
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ hw/net/virtio-net.c | 12 +++++++----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
 index 1234567890ab..fedcba098765 4321006
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -280,11 +280,21 @@ static void vhost_log_sync(MemoryListener *listener,
- static void vhost_log_sync_range(struct vhost_dev *dev,
-                                  hwaddr first, hwaddr last)
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -1716,12 +1716,14 @@ static void receive_header(VirtIONet *n, const struct iovec *iov, int iov_cnt,
+                            const void *buf, size_t size)
  {
--    int i;
--    /* FIXME: this is N^2 in number of sections */
--    for (i = 0; i < dev->n_mem_sections; ++i) {
--        MemoryRegionSection *section = &dev->mem_sections[i];
--        vhost_sync_dirty_bitmap(dev, section, first, last);
-+    int i, j;
-+    bool section_dirty = false;
+     if (n->has_vnet_hdr) {
+-        /* FIXME this cast is evil */
+-        void *wbuf = (void *)buf;
+-        work_around_broken_dhclient(wbuf, wbuf + n->host_hdr_len,
+-                                    size - n->host_hdr_len);
++        const uint8_t *wbuf = buf;
++        uint8_t *payload = (uint8_t *)(wbuf + n->host_hdr_len);
 +
-+    for (i = 0; i < dev->n_mem_sections; ++i) {
-+        MemoryRegionSection *section = &dev->mem_sections[i];
-+        hwaddr section_start, section_end;
-+
-+        /* Skip sections that don't overlap with [first, last] */
-+        section_start = section->offset_within_address_space;
-+        section_end = section_start + int128_get64(section->size) - 1;
-+
-+        if (section_end < first || section_start > last) {
-+            continue;
-+        }
-+
-+        vhost_sync_dirty_bitmap(dev, section, first, last);
-     }
- }
++        work_around_broken_dhclient(wbuf, payload,
++                                    size - n->host_hdr_len);
  
+         if (n->needs_vnet_hdr_swap) {
+-            virtio_net_hdr_swap(VIRTIO_DEVICE(n), wbuf);
++            virtio_net_hdr_swap(VIRTIO_DEVICE(n), (void *)wbuf);
+         }
+         iov_from_buf(iov, iov_cnt, 0, buf, sizeof(struct virtio_net_hdr));
+     } else {
 
 
