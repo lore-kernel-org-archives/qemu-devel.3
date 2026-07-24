@@ -4,108 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D3E5C531C9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BF13C53200
 	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 13:01:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnFWP-0002dA-Qn; Fri, 24 Jul 2026 09:01:01 -0400
+	id 1wnFWH-0001xP-91; Fri, 24 Jul 2026 09:00:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wnFWN-0002YR-6q
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 09:00:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wnFWE-0001ga-Nf; Fri, 24 Jul 2026 09:00:50 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wnFWL-0002ig-Ha
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 09:00:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784898056;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=50gT1BbEkOffJdXKR8tsxDkoo+2x5EtDK0ypy8SAMVQ=;
- b=fXsu/dCaZ3TudKOQOI/Bq4ilWZkmuEZoQRrKGnKOPS57psCKR5HDNtrhPfqKJ2ASkUJL+I
- HAFWP/f+rWlILBfvmIfwY98cFrOliCzzB1r/dBDghgWC4Wyd+LygH2KVl4DzI+48WO6zkt
- Y5ikZVtjbrLD/C/gUmz7HAO53BwYhrM=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-204-Ql5UdiykOFqKEhbslUX9Gw-1; Fri, 24 Jul 2026 09:00:55 -0400
-X-MC-Unique: Ql5UdiykOFqKEhbslUX9Gw-1
-X-Mimecast-MFC-AGG-ID: Ql5UdiykOFqKEhbslUX9Gw_1784898054
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-496b370b089so185965e9.1
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 06:00:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784898054; x=1785502854; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=50gT1BbEkOffJdXKR8tsxDkoo+2x5EtDK0ypy8SAMVQ=;
- b=k6lFyoct0UCnHYO0cjENgMxTQaNV6hyiu5jC30679r7/iN/WopaNsHCR6pQeYzYExv
- fVS+LEFqk8eGij5cP6HN+p7LY2sANbn79O7JkmS2x5vMjHnmmMGApPLe9868P9yBKZ9L
- LllWmiXPaZpinslRZavtYZ3X6WKXrpIQF295FEpMn1AgWvKYHFWZSDdwjn4q0ZzgAMKL
- 5g6UztezYo8kn5kmr6Na+Tpqrd6RVHeGG9vm5M6C+4wnqdr5JhGrB4cnZrW0Mao0xWBZ
- J4tcwrzCZ47gMGnc0sVCuxKG3h7l2Ro0zphe+3Mt50D+2m+0CWMQlcrvmpc05k3d/Rrv
- nhwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784898054; x=1785502854;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=50gT1BbEkOffJdXKR8tsxDkoo+2x5EtDK0ypy8SAMVQ=;
- b=JyzuDk/IYPHVZ2/DfdVEGL8FKLTpJWgkdpknhGQmrB+h7vgCgZph9xwQzJDyenS6no
- dZUtKWA6mnQGz2A1wA4MgF/lqXRTqJM0b9BUi43NjtHn8vfHWT8wqiUj4fLV3MHVQ2fT
- A25kyadZ0nB5C8DvNwC4gUnFaN6tLHCeicVjJx1E5Rvzxt7be55r5MQbvwrVnL7XsQh1
- g5YCQ87zcVImPHIgy40M8l8V5twCiaZqHyOlm4zs+Itk5oiUQAdePbsx8odfS6EWKOsr
- cuDEhdcIf/aEPB4tzRiCCNe1IVJvGpAKiN0yeqrbQdZIWN/+TDOSD4Gdhn0/MceQZkuB
- s/2Q==
-X-Gm-Message-State: AOJu0Yzjj8Slp+eSSuEKc6cX7cRDKqGahJWqJxnTni4MBOHrhy4czG1T
- HHu5PyMWkaE9tJu/IysLpyiBr7zkxkhBUHHIfFgmz0nv+YxzV58SwWRzVBGPYD05sC1s8hmn3oC
- d8dqQ36CXIvChjr77RD5ooNbt2z0Het8vxDGN1kY2k3z2SjlaHHGxMZSrK4hHBiT5XDgik82RmK
- 6WuJZGVzoF6I6d4W8+Ot2/yNJOnAFpTgItvuQjQjFR
-X-Gm-Gg: AR+sD11ufWyYi6+3kqrjA00JjREkP5AwATzOr2ZQmYiH/sqvHx34yAypGiQ1rHsZuH3
- hrLO/vIUV3wyWVJ4p7uIg7NgtR1wnJ2HZqVNrVDuRQHbg+mNMJBT7GLKvzUaO5U5Twil7gZLQ+7
- MqjHrLy/2hUHTYBBL6wx1Z3DcnDF0RDhbsouInYCRIfD54Mj7aGPHlKRluXsv+F6TDXEcUJkDGr
- Ewdi9PU0qhNsmtDhlZHU7bZdji6oNs1KEIn1jT8/QuNXCFFN5mBSk35wFny+mFAg7Oohuw6j7f0
- FS5B50f68W8NkT4Lo98++9tift8K0jym7q/5Xk5uVf8I574zEx1ydt+NrhDql93YRAB2+OsuLnn
- ONVcW5TukvNgMpspZaY+pnRYYEhvOCiYM1YUocWQG1n2tOwNxwI+r3Ux3ne3smmghI+qb8ryAWg
- hGqaEr
-X-Received: by 2002:a05:600c:8714:b0:493:f478:4c71 with SMTP id
- 5b1f17b1804b1-496997235cemr6082645e9.7.1784898053950; 
- Fri, 24 Jul 2026 06:00:53 -0700 (PDT)
-X-Received: by 2002:a05:600c:8714:b0:493:f478:4c71 with SMTP id
- 5b1f17b1804b1-496997235cemr6082065e9.7.1784898053448; 
- Fri, 24 Jul 2026 06:00:53 -0700 (PDT)
-Received: from [192.168.10.48] ([151.49.94.110])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4957afac1cbsm64499025e9.10.2026.07.24.06.00.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jul 2026 06:00:52 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: armbru@redhat.com
-Subject: [PATCH 3/3] scripts/qapi: pull c_name and lstrip from camel_to_upper
- to caller
-Date: Fri, 24 Jul 2026 15:00:43 +0200
-Message-ID: <20260724130044.1369843-4-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260724130044.1369843-1-pbonzini@redhat.com>
-References: <20260724130044.1369843-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wnFWC-0002VC-6M; Fri, 24 Jul 2026 09:00:49 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66OCwHsG1776399; Fri, 24 Jul 2026 13:00:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=sfkpfo
+ g9JJGCTMiphptCAQyegQQV1gtIXbxsybLyhQg=; b=oMfpH3Cwb1j2JG3HR8nrNR
+ VT7XZW8Ok8NtztvQHebpw4jguGUpo83x0Mw3BunQNzsZLMcx/+Zu2efnaunz4ve/
+ PntKs2OoV6yLQSNZB/a3V05PuOywKwnj/yt6NwbjTae2bWLgjz/fScIPtBAen6ER
+ ayPJ29OsXVLFK/VmS801fuGB2Sd2YrJ1k+QbVAC7JysnCeEABT4tuEvXbFIykGGb
+ QN+wb6aTzjamm5EUsXOtmC4i520KRSSxmhMHzzSlFfTSvA3FfLa6t4djZV04oaQl
+ Y23nt3Mif7EALolm8qK2Z30lo5m41AQiy8mj00puRhHsHpH+0u/3RdY7ERl+140w
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fg78gm2ce-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 24 Jul 2026 13:00:29 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66OCoY37004285;
+ Fri, 24 Jul 2026 13:00:29 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fgp1grs3g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 24 Jul 2026 13:00:29 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66OD0RBv52560242
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 24 Jul 2026 13:00:27 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 47A2258058;
+ Fri, 24 Jul 2026 13:00:27 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 08F3E5805E;
+ Fri, 24 Jul 2026 13:00:26 +0000 (GMT)
+Received: from [9.61.19.212] (unknown [9.61.19.212])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 24 Jul 2026 13:00:25 +0000 (GMT)
+Message-ID: <c7f5bb1b-4943-4f53-aa1f-fb30260a5edc@linux.ibm.com>
+Date: Fri, 24 Jul 2026 09:00:25 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.419,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/1] target/s390x: Allow 2G hugepages guest backing
+To: Claudio Imbrenda <imbrenda@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, borntraeger@de.ibm.com, frankja@linux.ibm.com,
+ pasic@linux.ibm.com, mhartmay@linux.ibm.com, david@kernel.org,
+ mjrosato@linux.ibm.com, richard.henderson@linaro.org,
+ iii@linux.ibm.com, cohuck@redhat.com
+References: <20260713155212.287444-1-imbrenda@linux.ibm.com>
+Content-Language: en-US
+From: Eric Farman <farman@linux.ibm.com>
+Autocrypt: addr=farman@linux.ibm.com; keydata=
+ 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
+ y8m0x6unNti2MZIUMy0m2gcE
+In-Reply-To: <20260713155212.287444-1-imbrenda@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDExNSBTYWx0ZWRfX6biFxRJJZo4E
+ AsDGYkUEtJFDccjQB1kAGpc2HyXoDzkzaMM36y33paHPFo3cvMzXrHIEB5+WLfGU87CKYQCXzLz
+ jRXWbEX51EyoqcszSwZ9p5Mk9HoqbOXKBjSr9vxkey8N9pBKfl9e6C42cmhfU1E78ig7UVoMA/K
+ xGo3roJ0m8tEqD2uTUFxU0O4JD998kP5YU927++xmKi6bF3jV54IhAKFyzJA+WhvDuyaup3Sq9F
+ Ni+nuMt2+ppIQWGk9Dxh2pKqAz5mI3Oq5DUifTRX6i4Rh49MaD/R++y1eEwcKlqy7q1aRw6R+Sy
+ MHV/E86mkCjxNvpjnDHpECAe1JWH/Ng/8nP8qU/zwHmz6qA3Megq0wByMMWSMs9iqM+PJdax9lx
+ GSXPaFRYQjnB14rCoPho0b1RQ1Fp3GjF40ZtXyndn6pl7QtE0jGCjxhQgQJUN2qoVfZ0tmPnooL
+ 3a4beeXKVmAvpNRM4tQ==
+X-Proofpoint-GUID: wJp1GbmVGblzLucerz2-8GjzYlryYqC2
+X-Authority-Analysis: v=2.4 cv=MelcfZ/f c=1 sm=1 tr=0 ts=6a6361ee cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=y5kb3azYzRo2SqOjEfwA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDExNSBTYWx0ZWRfX4bF/Ujn65Cea
+ 2ySHUI7zdEE6IeiJ5fp/ypmV15x93UI5RS457DsZd7a/vaDZiXD9yBJpu19yz40lRDdN/HyU/5Q
+ UPN7/8+v+RRH//1e9hcuuXxNqV2gKjU=
+X-Proofpoint-ORIG-GUID: wJp1GbmVGblzLucerz2-8GjzYlryYqC2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-24_02,2026-07-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0 spamscore=0
+ clxscore=1015 malwarescore=0 phishscore=0 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607240115
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,47 +169,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow using camel_to_upper for other languages too.
 
-In particular, the lstrip() is needed to avoid reserved C identifiers,
-for example:
 
-    typedef enum __org_qemu_x_Enum {
-        __ORG_QEMU_X_ENUM___ORG_QEMU_X_VALUE,
-        __ORG_QEMU_X_ENUM__MAX,
-    } __org_qemu_x_Enum;
+On 7/13/26 11:52 AM, Claudio Imbrenda wrote:
+> Allow mapping guest with 2G hugepages on hosts that support it.
+> 
+> Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+> ---
+>   target/s390x/kvm/kvm.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
 
-Insulate Rust from this, since underscores have a different meaning
-in Rust (though only for the sake of warnings).
-
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- scripts/qapi/common.py | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/scripts/qapi/common.py b/scripts/qapi/common.py
-index d7c8aa3365c..43a0be5f97f 100644
---- a/scripts/qapi/common.py
-+++ b/scripts/qapi/common.py
-@@ -61,7 +61,7 @@ def camel_to_upper(value: str) -> str:
-         ret += ch
-         upc = ch.isupper()
- 
--    return c_name(ret.upper()).lstrip('_')
-+    return ret.upper()
- 
- 
- def c_enum_const(type_name: str,
-@@ -75,7 +75,7 @@ def c_enum_const(type_name: str,
-     :param prefix: Optional, prefix that overrides the type_name.
-     """
-     if prefix is None:
--        prefix = camel_to_upper(type_name)
-+        prefix = c_name(camel_to_upper(type_name)).lstrip('_')
-     return prefix + '_' + c_name(const_name, False).upper()
- 
- 
--- 
-2.55.0
-
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
