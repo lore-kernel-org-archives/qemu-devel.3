@@ -4,103 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90152C531FA
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 08:51:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B27FEC531FA
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 08:51:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnBcp-0002fz-5p; Fri, 24 Jul 2026 04:51:23 -0400
+	id 1wnBct-0002iF-1R; Fri, 24 Jul 2026 04:51:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wnBcl-0002fJ-Kb
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 04:51:19 -0400
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wnBcj-0004yM-3e
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 04:51:18 -0400
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-6688acd1a51so116733d50.3
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 01:51:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784883075; cv=none;
- d=google.com; s=arc-20260327;
- b=hRYkEu/o3hRi9Uv+5tbxQY0opYHEGXhyEuVCFu5SncjGTqvcGQtePp/uAjehllLn6o
- i4Kipjd+89otrjweCHwdVzmrAV/zOwpUHVqFt+siy9at0eIiBTE4tBSYZdsZrme6Vrns
- +uLi68gWtqCY2fXtND1qWEzqyiu6Gih4uirlUuy/vLk/Bj5MF+fKufRl2qiZiCJE/SEp
- Flqdf1LYCWnomTgQ8MiOwgGxaHX2J2SsTJSrCDzBM6wWF73QKXQ04kuFssqJ1mGsUzRJ
- Uu/lqEkyzk9MX6Qi0S1HFMrZ5TIgY6+Jz47Q0RDaNYyboTa3Iwxj3YHRBZa0GeRXxwdl
- Bj9Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=83DBOW8oqGPBXm4HlQaeqeZrwMM6Oa9NcxRXyxiT6dg=;
- fh=xChv7ieWS1sj6jE9IHpGYXOFSuW+3i48YUpPGYmP/DA=;
- b=U9ybxRu5k6m+6atlHJPlhjeyVQBe707GDeBwTomlVq+8YRv8Vis0DdTVwh3ztDY/Dl
- 8ySDf4slbZ2JZ1EJnMDnYzESJgmrgvNoeNtJPr/0fFOUXjatwlbRCSrrArI9P8Uu0r/f
- xtTk6DSMDJ89GN98YLwTF6MG5W4hYq3eIDx0aN48GRNYFG4CAH/kSBTN/J4LIb206veq
- ipTzd0h+624+Mvz2dIJUfmWQTqhh4SWXBPIGWHQg7Tl6HaWAq0BblRZO36919R86F6o/
- AmRWU4Q2mJR7Jvn0blUaOJziPvFOF5T55lu3l/1aopPRvhWM2VgRDofd4nf1Cu8GatOv
- H1tg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784883075; x=1785487875; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=83DBOW8oqGPBXm4HlQaeqeZrwMM6Oa9NcxRXyxiT6dg=;
- b=EKt1ppgFmsdU8czLtVcvZBeZ+Nhcef+c1NUxNHM8kT3QAftV+AoU46tRz2YFNEJhZk
- juKQntTdynTreIdlftR8A0r5LeJSjjZ4BVq5VUQJJzbKjc2Qxix9SRNJzLbsPCKGOPqK
- ci+I/Dz4fQMDxulHHwnKY7tRl6vY58XrEiY8JCbq9TxdIAxJWL6cHjsRRanN4lZ4FAMQ
- T7b6n2gMERUdDClkQeWqxIXCGxmnrg/NWGURtBzLgJ/9T4OhThfR1WD9GK+xNWOfqiZR
- dICH+SPwWALNviJe050VPzZvizQGrZuOBD6OBuzTIpGMPA9p/qMCmsRaXiEMP+LPYnFW
- 8P4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784883075; x=1785487875;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=83DBOW8oqGPBXm4HlQaeqeZrwMM6Oa9NcxRXyxiT6dg=;
- b=ivRLoOfBM+qiPyYsL4ykFiy1eZKOc7UALDffeKr0oXoNFVetmY78/v4PggK6N7NuG9
- PpgseXYq66uqGXULts59oxw2Ock5fKwiOAh4Dxld/dmFfT1XBrmo8P+4WQ/lh6wOXsmA
- EGEMq4/FJARP32XpLA3X/H3IO/oa36npTq+1oXWEpA6VZHXtTQixMa0T6jlXzfmiVpuj
- FCm/INSaimYuN8np4zHl4oPnUHTu+ZrXL1fiIdX7Yq8Fo0vxRMu2Gv+D6G1vXKn94rdh
- QY5+R1t4smx5xRxazyvEcqbdTaOOgu8hC51A+J8iumSEMn2KY7c6BCndwcUADiuvI9Yt
- yL+w==
-X-Gm-Message-State: AOJu0YycFKakgVdKIU4NxbehdFGBDUiwf0i/JBcYChrbV0bfzae28r47
- cxzFrZiVO/tti1omekaY8Rb9BzO9FL9B/zKHGCEJWbvr0hEd+2cDcp4WsMUSt0njdqZ6tEC5wx8
- qAdKdWQYFD+TdXrTsKSJBokewcwYURJfEFmYMMz2GfA==
-X-Gm-Gg: AR+sD12V4jXkp/WtnhlVcX0B+Lma9ScfaDpOH+JKtZjwT0mIf/Iu/FAiW2+QDAlIIF7
- ZqEWUcUbPZWj/I/iX4nYgIDfWhuJ3h0oAWs3pQxIwGNYOx2Q0xlFPYIDsFu4irPaMYzM/GnXrbf
- xeS2snvV6PiNP0d3tnW1vZ1SqWog1s06qV5i2uGq5qP0KOJL+Dgfi46tndBs6t0HgHzUMJ4NxHH
- dxmYjVA967D1z+zgfKXTaK3jVIL+1opqV0FXCoP2sAdeilT51mJmEZAILAuksXgqb6qRDM1LfY9
- LGfu8+/sUBtKagaiJ8TFvErtdbrCanXiJW8Z8ZOyAZn7b5qvx5iek8Lk
-X-Received: by 2002:a05:690e:2504:10b0:667:f20a:4cc8 with SMTP id
- 956f58d0204a3-668a4fa438fmr1410038d50.51.1784883075505; Fri, 24 Jul 2026
- 01:51:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wnBcn-0002fo-Fh; Fri, 24 Jul 2026 04:51:21 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wnBcj-0004yK-CI; Fri, 24 Jul 2026 04:51:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1784883053; bh=lmYlPeF2ncWMNMkF1jLhFDgZqORmCI+CUvuOfK/b0Mw=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=Wo4J9hXoEGOojbS1UMc/OowKcQ/xqFORzOEOMn5V2liGs4UlHKE1jueZtt7J1cJqA
+ AIy4CPaIb6b4yl7DJFnC1Z3IkhwoyFFR5HghI9gdiRI5qVknrC5JPb9hm+vHsrHmBt
+ Uji2jvxvbL8s3kZlXuyuO1EzjbS0ljUoL6zOzJx+iibynuv30W6F778act4m5D+nkC
+ oRqF+Wu1hIf//T5lWdJwxZ0TANhw1WURtpziFIk7cg5YeXMC57UMusBKfzPr01YbRQ
+ rIBzScTejphB46kaewSU3PrrfP2jcukbTZdO5qkVtbYKvVHlDKmS0pT91K4aOASlYN
+ EYPi/DUeu2SFg==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 61D501C4528;
+ Fri, 24 Jul 2026 11:50:53 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3C48D3F466E;
+ Fri, 24 Jul 2026 11:51:14 +0300 (MSK)
+Message-ID: <5828b987-9b58-4f44-b942-322399b99c6a@tls.msk.ru>
+Date: Fri, 24 Jul 2026 11:51:04 +0300
 MIME-Version: 1.0
-References: <20260723233605.805-1-simonxhy0404@gmail.com>
- <20260723233605.805-2-simonxhy0404@gmail.com>
-In-Reply-To: <20260723233605.805-2-simonxhy0404@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 24 Jul 2026 09:51:04 +0100
-X-Gm-Features: AUfX_myKoo3QaeYZUQ_jABz2gDQLLlgmCQErJTkBCf0s2CX3tFqr9yU4rGlaXGs
-Message-ID: <CAFEAcA_Ybrqb0g-cZYf6yL2eHRUZ6PfeWQMiVrVVeFJFp3q8KA@mail.gmail.com>
-Subject: Re: [PATCH 1/4] target/arm/tcg/cpu-v7m.c: add cortex-m85 model
-To: Simon Xu <simonxhy0404@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Owen Giles <owen.giles@hpe.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Robert Elliott <elliott@hpe.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/6] vfio-user: validate server responses
+To: Thanos Makatos <thanos.makatos@nutanix.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: John Levon <john.levon@nutanix.com>, "clg@redhat.com" <clg@redhat.com>,
+ QEMU Stable <qemu-stable@nongnu.org>
+References: <20260720091718.2642-1-thanos.makatos@nutanix.com>
+ <20260720135823.21070-1-thanos.makatos@nutanix.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260720135823.21070-1-thanos.makatos@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,17 +115,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 24 Jul 2026 at 00:36, Simon Xu <simonxhy0404@gmail.com> wrote:
->
-> Add Arm Cortex-M85 CPU, modeld after the existing M55 CPU.
-> The new M85 feature PACBTI is not implemented in QEMU and the midr value
-> is based off the r1p1 product revision identifier.
+On 7/20/26 16:58, Thanos Makatos wrote:
+> This patch series fixes some bugs where the vfio-user client doesn't
+> properly validate information returned by the vfio-user server.
+> 
+> Thanos Makatos (6):
+>    vfio-user: vfio_user_get_region_info: prevent buffer overflow
+>    vfio-user: vfio_user_get_region_info: respect max_xfer_size
+>    vfio-user: vfio_user_get_region_info: reject unreasonably short struct
+>    vfio-user: vfio_user_get_region_info: prevent excessive malloc
+>    vfio-user: vfio_user_device_io_get_region_info: fix capability check
+>    vfio-user: vfio_user_device_io_device_feature: prevent buffer overflow
+> 
+>   hw/vfio-user/device.c | 40 +++++++++++++++++++++++++++++++++++++---
+>   1 file changed, 37 insertions(+), 3 deletions(-)
 
-The major reason IMHO to add a Cortex-M85 model would be to
-have a CPU that supports M-profile PACBTI, so wouldn't
-it be better to implement the feature first and then
-add the CPU and the board model that uses it ?
+I'm picking this patch set for the stable-11.0 branch, except of the
+last change which fixes a problem introduced after v11.0.0.
+Please let me know if I shouldn't.
 
-thanks
--- PMM
+Thanks,
+
+/mjt
 
