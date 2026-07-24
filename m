@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0F49C531F9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 09:48:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA82BC531FA
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 09:48:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnCVs-0003HT-Vn; Fri, 24 Jul 2026 05:48:17 -0400
+	id 1wnCVn-0003Du-60; Fri, 24 Jul 2026 05:48:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wnCVr-0003GR-Rb; Fri, 24 Jul 2026 05:48:15 -0400
+ id 1wnCVl-0003DR-RC; Fri, 24 Jul 2026 05:48:09 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wnCVq-00059U-B3; Fri, 24 Jul 2026 05:48:15 -0400
+ id 1wnCVj-00058X-IO; Fri, 24 Jul 2026 05:48:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784886463; bh=Ed7IB/Ssxjee4lM+vHXFTzTBO/kOLZPEpfJwG/DnMVs=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=n0u3Dgt4+Sr0PSrJlgH0T48Ujt6fBweSt3+73NCcqyzz+FtEfYe7+MUpWuUprDhSR
- 9/VhtiwNOgL5yTi+0jFabpbkVM0HBW01SaZ91Bq8jxIIS9pT+7l1d/aknBCjGzdPWp
- pcZaExeTX1TtjzVlxU8pqdwt7K3YYl4VB42hJ5Hk+DpMUxo9F2V+HGe5SqOTN6xMfv
- dLYNycVPzkGyC79XMrEpDlAls8yCIe+WfGUpUkRcEpEyCtnmGws+1LlF99bReKDX7a
- QQHIGX7OH4Em6IuLStDti6qCvERHp1wyAP/LmFK3sCwXDkZ+GhW0aOAzuF8IsXihYd
- +sEi9pRFlQllw==
+ t=1784886463; bh=kEVf5jWqvNxySi76U3fA2znzRYltajvYlaWRcMqJ6Ps=;
+ h=From:To:Cc:Subject:Date;
+ b=pkAcTepYzg5cWenpT695EYEOh8IlFJW3Vu0ASnkL5OxGuqJsN1Fp7Z7DmaSMDKK2D
+ IY55Id4UweruxlpOs16ardn6g/lZyg58M5BQw5kBwVEb2+8iPnSjmIQ9Pb8fJ0oonY
+ hDSlgiae9m18fi5SD9OqNmwTkD/mHiJhhucbpMft34j0vYtL9sKQrtaqwOk4hUGjLv
+ s9rbr8mfY3YFt4vv/VAeWtCKW1K9dpbNU5vRYlEtPSatYFqEjbrigLd4iCxH+2O4OA
+ We10gHob6/qn/wBFLIBuZKxYr0fmNMPvasphAaXQRdzitqCbCRXfamPl4SOkJNnDcC
+ r7ufZAgzj+VCg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 657501C4576;
+ by isrv.corpit.ru (Postfix) with ESMTP id 404591C4571;
  Fri, 24 Jul 2026 12:47:43 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5FAB23F46B5;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3B1BD3F46B0;
  Fri, 24 Jul 2026 12:48:04 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 4BF401854A; Fri, 24 Jul 2026 12:47:54 +0300 (MSK)
+ id 4167E18540; Fri, 24 Jul 2026 12:47:54 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Evgeny Kolmakov <randomjack94dev@gmail.com>, qemu-trivial@nongnu.org,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 5/7] hw/hyperv/vmbus: Use QEMU_LOCK_GUARD()
-Date: Fri, 24 Jul 2026 12:47:47 +0300
-Message-ID: <20260724094754.1053970-6-mjt@tls.msk.ru>
+Cc: Michael Tokarev <mjt@tls.msk.ru>,
+	qemu-trivial@nongnu.org
+Subject: [PULL 0/7] Trivial patches for 2026-07-24
+Date: Fri, 24 Jul 2026 12:47:42 +0300
+Message-ID: <20260724094754.1053970-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260724094754.1053970-1-mjt@tls.msk.ru>
-References: <20260724094754.1053970-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,74 +69,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Evgeny Kolmakov <randomjack94dev@gmail.com>
+The following changes since commit 006a22cb26998998385b104db1ff9466ef2f3153:
 
-Replace manual qemu_mutex_(un)lock() calls with
-QEMU_LOCK_GUARD() to remove 'goto out' code
+  Merge tag 'firmware-20260722-pull-request' of https://gitlab.com/kraxel/qemu into staging (2026-07-22 11:17:49 -0400)
 
-Signed-off-by: Evgeny Kolmakov <randomjack94dev@gmail.com>
-Reviewed-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
- hw/hyperv/vmbus.c | 16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+are available in the Git repository at:
 
-diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
-index c5259d1a764..ab99f082d10 100644
---- a/hw/hyperv/vmbus.c
-+++ b/hw/hyperv/vmbus.c
-@@ -1525,14 +1525,12 @@ static VMBusChannel *find_channel(VMBus *vmbus, uint32_t id)
- static int enqueue_incoming_message(VMBus *vmbus,
-                                     const struct hyperv_post_message_input *msg)
- {
--    int ret = 0;
-     uint8_t idx, prev_size;
- 
--    qemu_mutex_lock(&vmbus->rx_queue_lock);
-+    QEMU_LOCK_GUARD(&vmbus->rx_queue_lock);
- 
-     if (vmbus->rx_queue_size == HV_MSG_QUEUE_LEN) {
--        ret = -ENOBUFS;
--        goto out;
-+        return -ENOBUFS;
-     }
- 
-     prev_size = vmbus->rx_queue_size;
-@@ -1544,9 +1542,7 @@ static int enqueue_incoming_message(VMBus *vmbus,
-     if (!prev_size) {
-         vmbus_resched(vmbus);
-     }
--out:
--    qemu_mutex_unlock(&vmbus->rx_queue_lock);
--    return ret;
-+    return 0;
- }
- 
- static uint16_t vmbus_recv_message(const struct hyperv_post_message_input *msg,
-@@ -2097,10 +2093,10 @@ static void process_message(VMBus *vmbus)
-     void *msgdata;
-     uint32_t msglen;
- 
--    qemu_mutex_lock(&vmbus->rx_queue_lock);
-+    QEMU_LOCK_GUARD(&vmbus->rx_queue_lock);
- 
-     if (!vmbus->rx_queue_size) {
--        goto unlock;
-+        return;
-     }
- 
-     hv_msg = &vmbus->rx_queue[vmbus->rx_queue_head];
-@@ -2149,8 +2145,6 @@ out:
-     vmbus->rx_queue_head %= HV_MSG_QUEUE_LEN;
- 
-     vmbus_resched(vmbus);
--unlock:
--    qemu_mutex_unlock(&vmbus->rx_queue_lock);
- }
- 
- static const struct {
--- 
-2.47.3
+  https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
 
+for you to fetch changes up to 443e02410695b35a27fad18217424b6370358be7:
+
+  hw/ide: replace assert with proper error handling (2026-07-24 12:42:11 +0300)
+
+----------------------------------------------------------------
+trivial patches for 2026-07-24
+
+Nothing fancy, a few fixups here and there, some were
+queued for a long time.
+
+----------------------------------------------------------------
+Artem Nasonov (1):
+      hw/ide: replace assert with proper error handling
+
+Evgeny Kolmakov (1):
+      hw/hyperv/vmbus: Use QEMU_LOCK_GUARD()
+
+Filip Hejsek (1):
+      char-win-stdio: fix typo in spelling of 'stdio'
+
+Michael Tokarev (1):
+      spelling: happend
+
+Thomas Huth (1):
+      hw/display/vmware_vga: Don't allow guest to trigger long running loop in host
+
+Vladimir Lobanov (1):
+      block/curl: set User-Agent header
+
+Ziyi Fu (1):
+      hw/usb: record async control completion for parameter transfers
+
+ block/curl.c                    |  2 ++
+ chardev/char-win-stdio.c        |  6 +++---
+ docs/about/removed-features.rst |  2 +-
+ hw/display/vmware_vga.c         |  6 +++++-
+ hw/hyperv/vmbus.c               | 16 +++++-----------
+ hw/ide/core.c                   |  8 ++++++--
+ hw/usb/core.c                   |  1 +
+ migration/migration.c           |  2 +-
+ qapi/migration.json             |  4 ++--
+ 9 files changed, 26 insertions(+), 21 deletions(-)
 
