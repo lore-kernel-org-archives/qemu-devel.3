@@ -4,98 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8ADCC531FA
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 09:43:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4660AC531F9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 09:45:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnCQc-0000v4-FO; Fri, 24 Jul 2026 05:42:50 -0400
+	id 1wnCSj-0001j6-Hg; Fri, 24 Jul 2026 05:45:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1wnCQa-0000tV-AD
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 05:42:48 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wnCSc-0001hi-Ki
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 05:44:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1wnCQV-0004YB-OY
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 05:42:48 -0400
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66O3mEq32464259; Fri, 24 Jul 2026 09:42:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=corp-2025-04-25; bh=tRpDYrC+oQTmcopvJC++rXfQYIpHd
- W0JU5lZAru6IY4=; b=Uq+00YLgWqNmNIW2tckkC0453c5zUEsKgkcW6+LxFsFF3
- HpkFMHZhDnqQc9wMiKlECa3/ChlzbY5Ug5aywwVHD66eb1dRyfDo5YbS6JoxzaRZ
- gIi1ro6vxj6vcgPs477hsy8unRCjjViZE6FR48X7O0fpaExVYN4x9JtpVg4QQ817
- HbPjvvFhO47xCOK01bPTgs/VBb3ETB5SyBMPA5Ct3ihUGgwt0kdM1R3mPC6Dxvhe
- 67Sfv2jgbO19rOhQhSFrsgidVfmJY3ROvNcz5qdGG5HXpqwW13evWuPmOAw+R/Yu
- kJnalxAvf5pqtV/cHjqf/FAXuKoZu7f9z2MNnJYDg==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4fg1n3r9pb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 24 Jul 2026 09:42:38 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
- with ESMTP id 66O9c0l7013343; Fri, 24 Jul 2026 09:42:37 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 4fgts23m4t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 24 Jul 2026 09:42:37 +0000 (GMT)
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 66O9gaYI029170;
- Fri, 24 Jul 2026 09:42:36 GMT
-Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 4fgts23m4f-1; Fri, 24 Jul 2026 09:42:36 +0000 (GMT)
-From: Dongli Zhang <dongli.zhang@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: dave@treblig.org, peterx@redhat.com, farosas@suse.de,
- maciej.szmigiero@oracle.com, mark.kanda@oracle.com, bchaney@akamai.com
-Subject: [PATCH v2 1/1] migration/cpr: Add HMP support for cpr-transfer
-Date: Fri, 24 Jul 2026 02:41:19 -0700
-Message-ID: <20260724094119.90581-1-dongli.zhang@oracle.com>
-X-Mailer: git-send-email 2.43.5
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wnCSV-0004dc-Ne
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 05:44:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784886278;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=TL1dpV09gXHXK6xRcsFV3muEnvSe+yt82N35mULst6g=;
+ b=UMNlAH/O3LNBcbMekUFM9+zWXQt929awSeN+LOuzCOOHkW7cUbvKvRW+b2tiZEYdr3ho7w
+ Jk7PwmU74lZNmjfaSDyOnHbl9VefYP8/eo3FXde3YxSI9tMAULOM0hkV7nxRcDOcq/Dutj
+ 93mfD0JVhD/YySKt6f0c82O949/PSLs=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-7-MO06fY8tPV2ZzlelFl4L2A-1; Fri, 24 Jul 2026 05:44:37 -0400
+X-MC-Unique: MO06fY8tPV2ZzlelFl4L2A-1
+X-Mimecast-MFC-AGG-ID: MO06fY8tPV2ZzlelFl4L2A_1784886276
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-474170b59dfso216310f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 02:44:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1784886276; x=1785491076; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=TL1dpV09gXHXK6xRcsFV3muEnvSe+yt82N35mULst6g=;
+ b=JxfDCCoEjS7xjB1j/UDpE89KddboeMP3Df+PgWD46z2ZM/F8G3Dr+KbRDwSbjb5sAv
+ dMX4NEM8x6AnMQzxJ1rqybne2Gi/epCL9yvxNjjGcK2B89/Y5Sh3xmZBSKyGjyuZf7NN
+ z0sppetpjESgaOwuNE3pX54JqzhrK7k+Um7LFvSQYAw4Q0osOUl0pQ5Es5saM0rm9TL7
+ 7xVfReCypmihmioOgkIpJv3ESvmviVyFbxb8SUPam2ccMeDt4TD1SXzLJjz+kPpsCPT+
+ zroc29dzRXwd7JOd7fVR2xX9M7Nj7QQffNEGdDBVDWjfnEcCJSeY4pEXFJhOZr3bsfhA
+ 5CBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784886276; x=1785491076;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=TL1dpV09gXHXK6xRcsFV3muEnvSe+yt82N35mULst6g=;
+ b=nCSojSLu6bs1Dn2JcBYDemNCln1nGmde9ONy/uE7a13lUn7PXnWbGin+hJc77Jdayb
+ WjfMdmvBq5lZHPYjnDoKN0lzY2GkhHGEFY678lr0G7weDDCS9TAINpJEl9eTztiMn7Dv
+ BRw3/RlhD03S86WasF4o4zVfVGGSiHU5uMAgVroPnS8ew/QQDdw4GgMmzrYo4KRAaOY1
+ tyiMbNXPRO9nunSFs8/MavcYAKMdsSc8wU3N3NpOWSZQSSk/gVMzyr2cYu92wL/Jk9wb
+ X1DUI716cDU3k85T6fqoPhQE04j/rrM5XXXvX8FBfPg7YHADUI9/ffMTRaJjJigny9ys
+ S5FQ==
+X-Gm-Message-State: AOJu0YwH/M5FeHNOR1kTFITs+QPNcDY0zpxjFMELO2eUWI+xoEV8rLNj
+ xMMTZBogDNBD/qvoF/iqyUjuhQ8IUK5REIRk59JCLqdiG59NCCGaSDfSi8CPduXtKKQFntsz703
+ itVsTz3IaHA7ZXih51y0VmrrsSaAUTrL+yi3bvfNXUX+VYFsBtHiQG0/s
+X-Gm-Gg: AR+sD12/4Wd0WvOZK0lFrx3XBUePTh/l5oyWll/spWT1z+ZxlQM01Et5mVbPWeFFqhA
+ nezQp5Krqtmw5/yhExZcXrM9YqK4VdFU1/8dGzyJi0hcK2IjJy+tuvNxX+C35lfgbD0hediEfPC
+ YEmm7G8fNegdiMc6CAMU3n39x4TXr0AU+OH2ugofHqVw2jqu3ylgun8n+1mtfqkhgcS4u4WpbAJ
+ 7Lz+KqZrCb0odLAq3GBJwTn6WedqlDv2z5Q5skqAcA466aelaxgBiLEoY7aBzh5NkOPhGV4P3mH
+ MOMMRj2GVAM3hAORfWj0IxO1HmAcidJQGoqwWenBI95lIYfVAYDwHMmM0CL0PaBjJRMX2QT2We3
+ a9noxZaVU6iaqyh6l8XfSTw==
+X-Received: by 2002:a05:6000:2904:b0:46e:624e:3c2f with SMTP id
+ ffacd0b85a97d-47f8dc8565cmr8118747f8f.47.1784886275801; 
+ Fri, 24 Jul 2026 02:44:35 -0700 (PDT)
+X-Received: by 2002:a05:6000:2904:b0:46e:624e:3c2f with SMTP id
+ ffacd0b85a97d-47f8dc8565cmr8118706f8f.47.1784886275279; 
+ Fri, 24 Jul 2026 02:44:35 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f96d4656bsm4931053f8f.21.2026.07.24.02.44.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 24 Jul 2026 02:44:34 -0700 (PDT)
+Date: Fri, 24 Jul 2026 05:44:32 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Weimin Xiong <xiongwm2026@163.com>
+Cc: qemu-devel@nongnu.org, jasowang@redhat.com, virtualization@lists.linux.dev,
+ Xiong Weimin <xiongweimin@kylinos.cn>
+Subject: Re: [PATCH] hw/net/virtio-net: Remove dangerous cast in receive_header
+Message-ID: <20260724054210-mutt-send-email-mst@kernel.org>
+References: <20260724093809.810263-1-xiongwm2026@163.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-24_01,2026-07-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- mlxlogscore=999 spamscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
- suspectscore=0 phishscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2606160000 definitions=main-2607240088
-X-Proofpoint-GUID: 5EFRpQdGgWgTTs1SxVYT7zcombaFLgEs
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDA4OCBTYWx0ZWRfX1FOCXfYyYYq3
- wQuNUuXw+G9NSaVyqvaTOJLPFKLqEaBjVZok2OiXwpdDi3mEKx/Fr9mo3KF64CP01CHaFoPperw
- nmuR22Cefyo96r0wxAcT7DyZHVgOj+z2i0EKwiMBIAXh+DqDRmIl
-X-Proofpoint-ORIG-GUID: 5EFRpQdGgWgTTs1SxVYT7zcombaFLgEs
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDA4OCBTYWx0ZWRfX+t/vn/EMwDcP
- NUQrqitHY6qJG3yvzrXciQTHaBC+Lb6EW2yX5azKDJkJLIM6+JyvTkuOQ2sg6iAXrGPce7yXBXt
- 8+8PZF49x866KY1ySuBmA4xkvJ93bWysho8Wf2ji5neKCLXeB9U+EJpJd3YlmQa4iMbHiaqjpvN
- Z8exM5wTNUUS5S+/jV4F5FcR4lLySFfoxCrShxRfOYLKcSOr8/e3k6haXQsfw8tM8Ta+LUT3bG6
- UYQdb9mAUbMfoAYZ/1p3uZmU0ogDhEzh3iFMiSDDJvLh8UogjsGgq8A5pe/GoRBQ3yRqYwiYvZv
- Ybl4NehqIiWMmk61zsx1mgG/HDhuKMRGl5c/JfSshDwEpvmc7JTkFYxgjmlRlepJvdveVLjRNRK
- bN7Fje/xnywDsjfrDyBfpuJ77hQ8ye3vfSMyi//L/Boant79wTRjUNDjMZw9lYVHY82OvwhUR0K
- Xl1sVWDWqAssZuBCDcw==
-X-Authority-Analysis: v=2.4 cv=PryjqQM3 c=1 sm=1 tr=0 ts=6a63338e cx=c_pps
- a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=o5oIOnhZENCTenyL_yNV:22 a=yPCof4ZbAAAA:8 a=UmWCymfRQi47eAz9EPkA:9
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260724093809.810263-1-xiongwm2026@163.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.951,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,110 +117,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently the cpr-transfer source QEMU instance cannot be driven entirely
-via HMP.  The source must use QMP in order to specify both the
-main migration channel and the CPR channel.
+On Fri, Jul 24, 2026 at 05:38:09PM +0800, Weimin Xiong wrote:
+> From: Xiong Weimin <xiongweimin@kylinos.cn>
+> 
+> The receive_header() function contains a "FIXME this cast is evil"
+> comment. The code does:
+>     void *wbuf = (void *)buf;
+> 
+> This cast from 'const void *' to 'void *' removes const qualifier which
+> could lead to unintended modifications.
 
-Extend the HMP migrate command with an optional CPR channel URI. When the
-migration mode is cpr-transfer, HMP uses this URI to build a
-CPR MigrationChannel in addition to the main migration channel. The new
-option is rejected unless the migration mode is cpr-transfer, so existing
-HMP migrate usage is unchanged.
+... and so you cast to uint8_t * instead, removing const qualifier.
 
-For example, source QEMU HMP commands can be something like below. The
-"-c unix:/tmp/cpr.sock" is for CPR URI.
+> Instead, use a properly typed
+> pointer and pass it correctly to work_around_broken_dhclient().
+> 
+> Signed-off-by: Xiong Weimin <xiongweimin@kylinos.cn>
+> ---
+>  hw/net/virtio-net.c | 12 +++++++----
+>  1 file changed, 7 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index 1234567890ab..fedcba098765 4321006
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -1716,12 +1716,14 @@ static void receive_header(VirtIONet *n, const struct iovec *iov, int iov_cnt,
+>                             const void *buf, size_t size)
+>  {
+>      if (n->has_vnet_hdr) {
+> -        /* FIXME this cast is evil */
+> -        void *wbuf = (void *)buf;
+> -        work_around_broken_dhclient(wbuf, wbuf + n->host_hdr_len,
+> -                                    size - n->host_hdr_len);
+> +        const uint8_t *wbuf = buf;
+> +        uint8_t *payload = (uint8_t *)(wbuf + n->host_hdr_len);
+> +
 
-(qemu) migrate_set_parameter mode cpr-transfer
-(qemu) migrate -c unix:/tmp/cpr.sock tcp:0:50002
+Forgive me how is this better?
+what is properly typed and correctly about casting to uint8_t *?
+As far as I can see all you did is remove a comment.
 
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
----
-v1->v2:
-  - Use the '-c' option in the HMP command reference.
-  - Use "a second uri can only be used in cpr-transfer mode" as error
-    message.
-
- hmp-commands.hx                | 12 ++++++++----
- migration/migration-hmp-cmds.c | 19 +++++++++++++++++++
- 2 files changed, 27 insertions(+), 4 deletions(-)
-
-diff --git a/hmp-commands.hx b/hmp-commands.hx
-index 7ae2468a3d..7f43cf537f 100644
---- a/hmp-commands.hx
-+++ b/hmp-commands.hx
-@@ -928,16 +928,17 @@ ERST
- 
-     {
-         .name       = "migrate",
--        .args_type  = "detach:-d,resume:-r,uri:s",
--        .params     = "[-d] [-r] uri",
-+        .args_type  = "detach:-d,resume:-r,uri-cpr:-cs,uri:s",
-+        .params     = "[-d] [-r] [-c uri-cpr] uri",
-         .help       = "migrate to URI (using -d to not wait for completion)"
--		      "\n\t\t\t -r to resume a paused postcopy migration",
-+		      "\n\t\t\t -r to resume a paused postcopy migration"
-+		      "\n\t\t\t -c to specify a CPR URI for cpr-transfer mode",
-         .cmd        = hmp_migrate,
-     },
- 
- 
- SRST
--``migrate [-d] [-r]`` *uri*
-+``migrate [-d] [-r] [-c uri-cpr]`` *uri*
-   Migrate the VM to *uri*.
- 
-   ``-d``
-@@ -945,6 +946,9 @@ SRST
-     query an ongoing migration process, use "info migrate".
-   ``-r``
-     Resume a paused postcopy migration.
-+  ``-c`` *uri-cpr*
-+    Specify the CPR URI for cpr-transfer mode. It must be a UNIX domain
-+    socket.
- ERST
- 
-     {
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index b04fc4489f..4ca2c962c2 100644
---- a/migration/migration-hmp-cmds.c
-+++ b/migration/migration-hmp-cmds.c
-@@ -837,9 +837,11 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
-     bool detach = qdict_get_try_bool(qdict, "detach", false);
-     bool resume = qdict_get_try_bool(qdict, "resume", false);
-     const char *uri = qdict_get_str(qdict, "uri");
-+    const char *uri_cpr = qdict_get_try_str(qdict, "uri-cpr");
-     Error *err = NULL;
-     g_autoptr(MigrationChannelList) caps = NULL;
-     g_autoptr(MigrationChannel) channel = NULL;
-+    g_autoptr(MigrationChannel) channel_cpr = NULL;
- 
-     if (!migrate_uri_parse(uri, &channel, &err)) {
-         hmp_handle_error(mon, err);
-@@ -847,6 +849,23 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
-     }
-     QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel));
- 
-+    if (uri_cpr) {
-+        if (migrate_mode() != MIG_MODE_CPR_TRANSFER) {
-+            error_setg(&err,
-+                       "a second uri can only be used in cpr-transfer mode");
-+            hmp_handle_error(mon, err);
-+            return;
-+        }
-+
-+        if (!migrate_uri_parse(uri_cpr, &channel_cpr, &err)) {
-+            hmp_handle_error(mon, err);
-+            return;
-+        }
-+
-+        channel_cpr->channel_type = MIGRATION_CHANNEL_TYPE_CPR;
-+        QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel_cpr));
-+    }
-+
-     qmp_migrate(NULL, true, caps, true, resume, &err);
-     if (hmp_handle_error(mon, err)) {
-         return;
--- 
-2.43.5
+> +        work_around_broken_dhclient(wbuf, payload,
+> +                                    size - n->host_hdr_len);
+>  
+>          if (n->needs_vnet_hdr_swap) {
+> -            virtio_net_hdr_swap(VIRTIO_DEVICE(n), wbuf);
+> +            virtio_net_hdr_swap(VIRTIO_DEVICE(n), (void *)wbuf);
+>          }
+>          iov_from_buf(iov, iov_cnt, 0, buf, sizeof(struct virtio_net_hdr));
+>      } else {
 
 
