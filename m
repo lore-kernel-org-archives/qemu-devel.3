@@ -4,78 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87649C531C9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 15:26:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27B4AC531C9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 15:30:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnHmn-00070U-Kk; Fri, 24 Jul 2026 11:26:05 -0400
+	id 1wnHqp-0001PT-Sa; Fri, 24 Jul 2026 11:30:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wnHmk-0006zU-OU; Fri, 24 Jul 2026 11:26:02 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wnHqh-0001On-Kj
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 11:30:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wnHmi-0000KT-Dk; Fri, 24 Jul 2026 11:26:02 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66OFKKNe024502
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 25 Jul 2026 00:20:20 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=v9jb6MXjdqiitUs9vf7WlucRR0zCjgf/OJRk0j6f00M=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1784906420; v=1;
- b=OOZpcYtZonav/f+jUmPa7zJX9Pk1rkxj0nfLqJTH0+nzQE+ZU4MiVB/XEH1Z5l6A
- z0UfkbV0Wizx8fvk3S4mMkAcX5vXbtTyqM9xIGgqjA3zNlIZK6iRHvq5pOp9eTEb
- o5XvGfN7LxEjOobhpGGAN/jmghoCgaqgh+/RJMB28GDz5IVFXvyV9dIUNl8YG6+X
- rZyrcMB2UJbJIsi4OCOAaxOLmYO+FAh/Qhenv1bmnOiIqPAmNpM/COvpSs14/QDn
- 1tw1+n0YIRuz8g1iu7D+EbUuL2F/XrawM/m61B4VSpg6csT1x2L0mKoc/q/ZKYRq
- vt38dzN0XW3EuJRlMayrWw==
-Message-ID: <f3ff63d6-6e88-4c82-9455-ca250aa42170@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 25 Jul 2026 00:20:20 +0900
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wnHqe-0001fz-W4
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 11:30:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784907004;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=t72qd/5MMeISsDYxcEFSV8VQkDzS+BmegPPiwhmLeO8=;
+ b=BqLOW8CNlSWAL6wiJ1tyKLDK8w4CW4qQHDbTkF0ZukXN1BjVVUAc60mXlC//vTmmeJq2La
+ pRc9PTAzdhAnt0KJQbDxnhwonBLX6OozpQmLrxeJASfiKF7isj4OXppsklx61Gj0L6Ig2q
+ 0HRvYDlU1cmQihjUpAbUWUKJcehLP3U=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-665-Kgkep8pyOgmLwPhwjnP6ug-1; Fri, 24 Jul 2026 11:23:33 -0400
+X-MC-Unique: Kgkep8pyOgmLwPhwjnP6ug-1
+X-Mimecast-MFC-AGG-ID: Kgkep8pyOgmLwPhwjnP6ug_1784906612
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4956b4cfe19so5399735e9.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 08:23:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1784906612; x=1785511412; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=t72qd/5MMeISsDYxcEFSV8VQkDzS+BmegPPiwhmLeO8=;
+ b=HloEUnrWVae4EVmzjBARdRYJL9yN52fmqDYHnl/93RJB5x4sYArwgUB+MrfngvrAXa
+ TmlcxxdMqcIWHeGX2uZD4ifMnUoYEiU/ZsgnLq56GITXtO1fYMg3XQwaJzFy7Rdhjtbn
+ bmRElbsH9d2IOGHRe3b1J/7S36Tcs6q+xKD7NI5+AZ3rCCluguNUYZ3nNwB6WseYxvao
+ keaREodNA4hl4g/XZUK+Zo2yYnjtZ1rwVcborGjEmC6BJesQluvEF4Wuk8J7nuz7pi7a
+ Cu//mk9aLNczcgbsoYLvR1/0WhW4mqEcM5ZLom99VuPVgAC6zHH/tIXw18TXnnYMXlog
+ vmzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784906612; x=1785511412;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=t72qd/5MMeISsDYxcEFSV8VQkDzS+BmegPPiwhmLeO8=;
+ b=qtrQccqQQwtZBjs8Gi6kj8kSouW0i4yY1R3+rgl0WkMwxkJ0owVjiNS58K2thJF8Lx
+ 76Up6cEx+EuEnysfXro5aML95CB+KeqaQzQlTxbzvqm5QbhGeGSmGlwBDCJhG1PJxPxL
+ B6fFp43IWaRaTXqxpwFEBbjJcAEMGIPX1L939TnsG5Q7qiOvZmkJ+8bP7Z4+kCZBoeup
+ UUVtFWbpPQ2aC8394Z042BX7m5YRo9UfBeQfxrAgzB6yRvfA9dnCMs4Iv3gUEuSTzSNs
+ NSAzWHC1/yHiqcPEow69zbE8Q+ugOYlDMM75PMGmgLOPUnoHJZZIjxiqNVKM40sMSJ0a
+ aghw==
+X-Gm-Message-State: AOJu0Yxc8gEcbSX8EK0L5g9eTQDnXQ1/ktSWsu21frJqg13fyE2zhTf3
+ NTg9z3HdeNcEKp1La84FA3amAyoVbCalCsKeLk+HYwJje6Jh2mcxilLgIlOKeF/Nbw4X1jnCc5G
+ UOGAO49Z4fGeyZ9rXjCdQk8GVidvoIN41Ou4tW9x+FABFZlT3fBITrCl6
+X-Gm-Gg: AR+sD129KD1ts/fWaqmxav48Uk422hSW8zo+/F7vBaHXF8PNTV5Qw/JgKeBoz/pdvxP
+ WIylQNFH050lh3TO2cTQawcc2Iv32NJyO5pM1sWdNhSsNbj8VAiUqpS2/CY/62BxqHFikIzr0di
+ 4URWQ3B9BzHW9ufV/nUN+Rjs+Ssf9Nr6D1eYoht0wb4smz0LSpqJwHDw5yjxgg6/bQCkpLLnuRA
+ 1t8L7+O3S3aFl14mWfSiGp7L+JqyZGYJhXdvGMksGHg7LZ6so63rKtt3JDq0U1HhUSI/zMuBHzL
+ n89lFp8TLZEsSQ9jZKQvPallfBvUCeQo+84IBiyOdTmTm+q5oihzyJVnEq7PQNxjqZWr8hFj+gx
+ 2ggi13HWU/m0PRQT9511L6L02QDhJcTAwDqyhPj6d9WPFISJZbAS/pHNl2qQ=
+X-Received: by 2002:a05:600c:6dd6:b0:493:eed4:7210 with SMTP id
+ 5b1f17b1804b1-49573cc97c2mr64644985e9.11.1784906612040; 
+ Fri, 24 Jul 2026 08:23:32 -0700 (PDT)
+X-Received: by 2002:a05:600c:6dd6:b0:493:eed4:7210 with SMTP id
+ 5b1f17b1804b1-49573cc97c2mr64644815e9.11.1784906611695; 
+ Fri, 24 Jul 2026 08:23:31 -0700 (PDT)
+Received: from localhost
+ (p200300cfd7075d8bc03b74903e90fa9c.dip0.t-ipconnect.de.
+ [2003:cf:d707:5d8b:c03b:7490:3e90:fa9c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4957b842691sm60213175e9.1.2026.07.24.08.23.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 24 Jul 2026 08:23:31 -0700 (PDT)
+From: Hanna Czenczek <hreitz@redhat.com>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ John Snow <jsnow@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>
+Subject: [PATCH 6/6] hw/scsi-disk: Fix accounting for IGNORE, ret > 0
+Date: Fri, 24 Jul 2026 17:23:15 +0200
+Message-ID: <20260724152315.234183-7-hreitz@redhat.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260724152315.234183-1-hreitz@redhat.com>
+References: <20260724152315.234183-1-hreitz@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 14/15] hw/virtio/vhost-user: handle data movement with
- shadow vqs
-To: Connor Kite <connorkite@gmail.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Haixu Cui <quic_haixcui@quicinc.com>,
- Raphael Norwitz <rnorwitz@nvidia.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org,
- virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- zhenwei pi <zhenwei.pi@linux.dev>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>,
- Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
-References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
- <20260723-vhost-user-isolated-memory-v1-14-6b97c439eb28@gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260723-vhost-user-isolated-memory-v1-14-6b97c439eb28@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.419,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,274 +125,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/24 7:30, Connor Kite wrote:
-> - Add start logic for shadow virtqueues, which sets vring addresses.
-> - Update logic for sending vring addresses to backend to point
->    to the shadow vrings when isolation mode is active.
-> - Implement handlers for intercepted avail and used descriptors. These
->    handlers copy buffer contents between bounce buffers in the isolation
->    region and the buffers made available by the guest
-> - Implement logic to stop svqs
-> 
-> Signed-off-by: Connor Kite <connorkite@gmail.com>
-> ---
->   hw/virtio/vhost-user.c | 167 ++++++++++++++++++++++++++++++++++++++++++++++++-
->   1 file changed, 166 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index 75858289a2..e65f877f9a 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -1299,6 +1299,97 @@ static int init_isolation_regions(struct vhost_dev *dev,
->       return 0;
->   }
->   
-> +static int vhost_user_memory_lookup(struct vhost_dev *dev, hwaddr gpa,
-> +                                    hwaddr *hva)
-> +{
-> +    int i;
-> +    hwaddr offset;
-> +
-> +    for (i = 0; i < dev->mem->nregions; i++) {
-> +        struct vhost_memory_region *reg = dev->mem->regions + i;
-> +
-> +        if (gpa >= reg->guest_phys_addr &&
-> +            reg->guest_phys_addr + reg->memory_size > gpa) {
-> +            offset = gpa - reg->guest_phys_addr;
-> +            *hva = reg->userspace_addr + offset;
-> +            return 0;
-> +        }
-> +    }
-> +
-> +    return -EFAULT;
-> +}
-> +
-> +static int vhost_user_svq_handle_used(VhostShadowVirtqueue *svq,
-> +                                      VirtQueueElement *elem,
-> +                                      void *opaque)
-> +{
-> +    hwaddr hva;
-> +    int r;
-> +    struct vhost_dev *dev = opaque;
-> +
-> +    for (int i = 0; i < elem->in_num; i++) {
-> +        r = vhost_user_memory_lookup(dev, elem->in_addr[i], &hva);
-> +        if (r < 0) {
-> +            return r;
-> +        }
-> +
-> +        memcpy((void *) hva, elem->in_sg[i].iov_base, elem->in_sg[i].iov_len);
-> +        elem->in_sg[i].iov_base = (void *) hva;
-> +    }
-> +
-> +    for (int i = 0; i < elem->out_num; i++) {
-> +        r = vhost_user_memory_lookup(dev, elem->out_addr[i], &hva);
-> +        if (r < 0) {
-> +            return r;
-> +        }
-> +
-> +        memcpy((void *) hva, elem->out_sg[i].iov_base, elem->out_sg[i].iov_len);
-> +        elem->out_sg[i].iov_base = (void *) hva;
-> +    }
+When encountering SCSI error status (ret > 0), accounting is left to
+scsi_handle_rw_error(), but the BLOCK_ERROR_ACTION_IGNORE path in turn
+leaves accounting (block_acct_done()) to the caller, so neither side
+does it.  Fix this by unconditionally calling block_acct_done() in the
+IGNORE path.  Yes, this will often result in it being called twice, but
+that is a no-op, as block_acct_done() resets the cookie type to
+BLOCK_ACCT_NONE, and will only do accounting if the type is not
+BLOCK_ACCT_NONE.
 
-This copies data in the reversed direction.
+(And given that the conditions on who does what accounting are quite
+confusing in scsi-disk, for me at least, I prefer this unconditional
+call rather than guard it with a condition that has no obvious reason.)
 
-> +
-> +    return 0;
-> +}
-> +
-> +static int vhost_user_svq_handle_avail(VhostShadowVirtqueue *svq,
-> +                                       VirtQueueElement *elem,
-> +                                       void *opaque)
-> +{
-> +    hwaddr offset;
-> +    const DMAMap *map;
-> +    DMAMap needle;
-> +    hwaddr *iova_base;
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+---
+ hw/scsi/scsi-disk.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-Please make it void *.
-
-> +
-> +    for (int i = 0; i < elem->out_num; i++) {
-> +        needle.translated_addr = elem->out_addr[i];
-> +        needle.size = elem->out_sg[i].iov_len - 1;
-> +        map = vhost_iova_tree_find_gpa(svq->iova_tree, &needle);
-
-An error check is missing here. This translation does not seem to 
-support IOMMU.
-
-> +        offset = needle.translated_addr - map->translated_addr;
-> +        iova_base = (void *)(map->iova + offset);
-> +
-> +        elem->out_sg[i].iov_base = iova_base;
-
-elem->out_sg shouldn't be overwritten since virtqueue_unpop() will use 
-it to unmap the element.
-
-> +        memcpy(iova_base, elem->out_sg[i].iov_base, needle.size + 1);
-
-This memcpy() is no-op. elem->out_sg[i].iov_base is already set to 
-iova_base, so it's copying from iova_base to iova_base.
-
-> +    }
-> +
-> +    for (int i = 0; i < elem->in_num; i++) {
-> +        needle.translated_addr = elem->in_addr[i];
-> +        needle.size = elem->in_sg[i].iov_len - 1;
-> +        map = vhost_iova_tree_find_gpa(svq->iova_tree, &needle);
-> +        offset = needle.translated_addr - map->translated_addr;
-> +        iova_base = (void *)(map->iova + offset);
-> +
-> +        elem->in_sg[i].iov_base = iova_base;
-> +        memcpy(iova_base, elem->in_sg[i].iov_base, needle.size + 1);
-> +    }
-> +
-> +    vhost_svq_add(svq, elem->out_sg, elem->out_num, elem->out_addr,
-> +                  elem->in_sg, elem->in_num, elem->in_addr, elem);
-
-An error is ignored here too.
-
-> +
-> +    return 0;
-> +}
-> +
-> +
-> +
-> +
->   static int vhost_user_set_mem_table(struct vhost_dev *dev,
->                                       struct vhost_memory *mem)
->   {
-> @@ -1772,6 +1863,8 @@ static int vhost_user_set_vring_err(struct vhost_dev *dev,
->   static int vhost_user_set_vring_addr(struct vhost_dev *dev,
->                                        struct vhost_vring_addr *addr)
->   {
-> +    struct vhost_user *u = dev->opaque;
-> +
->       VhostUserMsg msg = {
->           .hdr.request = VHOST_USER_SET_VRING_ADDR,
->           .hdr.flags = VHOST_USER_VERSION,
-> @@ -1779,6 +1872,25 @@ static int vhost_user_set_vring_addr(struct vhost_dev *dev,
->           .hdr.size = sizeof(msg.payload.addr),
->       };
->   
-> +    if (u->user->memory_isolation) {
-> +        if (!u->svqs_allocated) {
-> +            return 0;
-> +        }
-> +
-> +        int svq_idx = addr->index - dev->vq_index;
-> +        VhostShadowVirtqueue *svq = g_ptr_array_index(u->shadow_vqs,
-> +                                                      svq_idx);
-> +
-> +        struct vhost_vring_addr svq_addr = {
-> +            .avail_user_addr = (uint64_t)(uintptr_t)svq->vring.avail,
-> +            .desc_user_addr = (uint64_t)(uintptr_t)svq->vring.desc,
-> +            .used_user_addr = (uint64_t)(uintptr_t)svq->vring.used,
-> +            .index = addr->index,
-> +        };
-> +
-> +        msg.payload.addr = svq_addr;
-> +    }
-> +
->       /*
->        * wait for a reply if logging is enabled to make sure
->        * backend is actually logging changes
-> @@ -2754,13 +2866,18 @@ static int vhost_user_postcopy_notifier(NotifierWithReturn *notifier,
->       return 0;
->   }
->   
-> +static const VhostShadowVirtqueueOps vhost_user_svq_ops = {
-> +    .avail_handler = vhost_user_svq_handle_avail,
-> +    .used_handler = vhost_user_svq_handle_used
-> +};
-> +
->   static void vhost_user_init_svq(struct vhost_dev *dev, struct vhost_user *u)
->   {
->       /*Modified from vhost-vdpa*/
->       u->shadow_vqs = g_ptr_array_new_full(dev->nvqs, vhost_svq_free);
->       for (int i = 0; i < dev->nvqs; i++) {
->           VhostShadowVirtqueue *svq;
-> -        svq = vhost_svq_new(NULL, NULL);
-> +        svq = vhost_svq_new(&vhost_user_svq_ops, dev);
->           g_ptr_array_add(u->shadow_vqs, svq);
->       }
->   }
-> @@ -3466,8 +3583,56 @@ void vhost_user_async_close(DeviceState *d,
->       }
->   }
->   
-> +static bool vhost_user_svqs_start(struct vhost_dev *dev)
-> +{
-> +    struct vhost_user *u = dev->opaque;
-> +    uint64_t vring_base = u->iso_memory.vring_base_addr;
-> +    u->svqs_allocated = true;
-> +
-> +    for (int i = 0; i < u->shadow_vqs->len; i++) {
-> +        VirtQueue *vq = virtio_get_queue(dev->vdev, dev->vq_index + i);
-> +        VhostShadowVirtqueue *svq = g_ptr_array_index(u->shadow_vqs, i);
-> +        svq->base_addr = (hwaddr *) vring_base;
-> +        vhost_svq_start(svq, dev->vdev, vq, u->iso_iova_tree);
-
-Calling vhost_svq_start() here overwrites the shadow vring index 
-configured in vhost_virtqueue_start().
-
-> +
-> +        struct vhost_vring_addr addr = {
-> +            .index = dev->vq_index + i,
-> +            .desc_user_addr = vring_base,
-> +            .avail_user_addr = vring_base + sizeof(vring_desc_t) *
-> +                svq->vring.num,
-
-This assumes the ring is split, but VIRTIO_F_RING_PACKED is not rejected.
-
-> +            .used_user_addr = vring_base + vhost_svq_driver_area_size(svq)
-> +        };
-> +
-> +        vhost_user_set_vring_addr(dev, &addr);
-
-
-The initial ring startup is ordered incorrectly. Generic startup 
-suppresses SET_VRING_ADDR, installs SET_VRING_KICK, and injects a kick; 
-only the later backend-start hook creates the shadow ring and sends its 
-address. SET_VRING_KICK starts the ring, so the backend can process 
-before receiving valid addresses. The late SET_VRING_ADDR result is also 
-ignored.
-
-Regards,
-Akihiko Odaki
-
-> +
-> +        vring_base += vhost_svq_device_area_size(svq) +
-> +                      vhost_svq_driver_area_size(svq);
-> +    }
-> +
-> +    return false;
-> +}
-> +
-> +static void vhost_user_svqs_stop(struct vhost_dev *dev)
-> +{
-> +    struct vhost_user *u = dev->opaque;
-> +
-> +    for (int i = 0; i < u->shadow_vqs->len; i++) {
-> +        vhost_svq_stop(g_ptr_array_index(u->shadow_vqs, i));
-> +    }
-> +}
-> +
-> +
->   static int vhost_user_dev_start(struct vhost_dev *dev, bool started)
->   {
-> +    struct vhost_user *u = dev->opaque;
-> +    if (u->user->memory_isolation) {
-> +        if (started) {
-> +            vhost_user_svqs_start(dev);
-> +        } else {
-> +            vhost_user_svqs_stop(dev);
-> +        }
-> +    }
-> +
->       if (!vhost_user_has_protocol_feature(dev, VHOST_USER_PROTOCOL_F_STATUS)) {
->           return 0;
->       }
-> 
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index 1b0cce128c5..92b63b64d56 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -318,6 +318,13 @@ static bool scsi_handle_rw_error(SCSIDiskReq *r, int ret, bool acct_failed)
+         return true;
+ 
+     case BLOCK_ERROR_ACTION_IGNORE:
++        /*
++         * The caller may have already finalized the accounting cookie
++         * (e.g. scsi_dma_complete() for ret < 0), but calling
++         * block_acct_done() afterwards is fine (just a no-op).  Just
++         * make sure all cookies are indeed accounted at some point.
++         */
++        block_acct_done(blk_get_stats(s->qdev.conf.blk), &r->acct);
+         return false;
+ 
+     case BLOCK_ERROR_ACTION_STOP:
+-- 
+2.55.0
 
 
