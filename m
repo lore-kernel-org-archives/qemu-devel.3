@@ -4,106 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 658C7C531C9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 19:38:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CADDC531F9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 19:42:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnLiU-0006wV-9k; Fri, 24 Jul 2026 15:37:54 -0400
+	id 1wnLnD-0008Ii-To; Fri, 24 Jul 2026 15:42:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wnLiP-0006vZ-21; Fri, 24 Jul 2026 15:37:49 -0400
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1wnLnB-0008Hb-2m; Fri, 24 Jul 2026 15:42:45 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wnLiN-0002iP-4W; Fri, 24 Jul 2026 15:37:48 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1wnLn9-0003JQ-I7; Fri, 24 Jul 2026 15:42:44 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66OHBpkZ2448951; Fri, 24 Jul 2026 19:37:43 GMT
+ 66OHBkN7556002; Fri, 24 Jul 2026 19:42:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=c+lxGg
- SW6GS8GbBIdMUmwjkj+SuNRo5PBhhJSPx0ZJE=; b=BJAKVGhzpo7mydE/I5O9yy
- OKExSLFs6CDNjezYy0NsAzGt/NbYemBsuhu9Uk4sFATitH+VPDCSYHzPB7hMrYgv
- ecQWoV1hecYFBUIaIsP/NtHHFghUIPZdPcPlJSvEQe6xVSTJnWunwOCVTZP55lga
- d0L/Q9zNCkgWt8blzHkToSAaGUUN8q88ibAo5sXtXIjTtOcylbwSuixQ0iZRxb3F
- J/EMYI0XbRftdITUbXwQKqMMpoM5Ujo2Tb4lU4GdPP3l1J/f43+IseR4ZcxhyakA
- KlUXlW7ZgA3Mn+MchahpPbDR4ElPKejVwjEJfNk0nz5L3V1RP52Z/kyXlFFytlQQ
+ :message-id:mime-version:references:subject:to; s=pp1; bh=aaR94Y
+ ocVMr3Zfd/G229OFh58aEvNtjo8rK3FdxsWGw=; b=l+9GAicyhtFOObAWcGfFDB
+ 62MwJ8zU0S69CNcS6HYbZbGdUBFJPs1f+q5Lt0uMOU3VER9s7kwM9zsWFTefh8hV
+ mJX8q1buU4g/TGMkkOJNv+piVM1AuTh4qXzQw5+tuClrCFfSJtVYB5yIr/lBYxyK
+ 2ogzpyEvlszk3R+3gl9gQGMqq+SrJPZCG0KOvu7R1bTUupK0ZimyzAqnsRIQvOpi
+ bze0MZh444hUoZgi9oGst+RVcPLsyTStocf/p7SfKPIV498ai9ZeoFREK6AvVPBO
+ S8o8RYzc+q3i82kWUEUmDVzWL0AlmKTqXjaQiI2X0yve26ySXmV4IbveM4O5GlSQ
  ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fm8h01n18-1
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fm8gs9nt1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Jul 2026 19:37:42 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66OJYkS4026283;
- Fri, 24 Jul 2026 19:37:41 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fgnahjb36-1
+ Fri, 24 Jul 2026 19:42:39 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66OJYfK3017180;
+ Fri, 24 Jul 2026 19:42:38 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fgpgyt4db-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Jul 2026 19:37:41 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66OJbeM63146416
+ Fri, 24 Jul 2026 19:42:38 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66OJgbwV65470770
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 24 Jul 2026 19:37:40 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4DE6558050;
- Fri, 24 Jul 2026 19:37:40 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3EDC558045;
- Fri, 24 Jul 2026 19:37:39 +0000 (GMT)
-Received: from [9.61.177.4] (unknown [9.61.177.4])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 24 Jul 2026 19:37:39 +0000 (GMT)
-Message-ID: <ac601753-088a-4412-bc4f-ef6e38dc381e@linux.ibm.com>
-Date: Fri, 24 Jul 2026 15:37:38 -0400
+ Fri, 24 Jul 2026 19:42:37 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1AA9158056;
+ Fri, 24 Jul 2026 19:42:37 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 69B8058052;
+ Fri, 24 Jul 2026 19:42:36 +0000 (GMT)
+Received: from [9.61.253.58] (unknown [9.61.253.58])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 24 Jul 2026 19:42:36 +0000 (GMT)
+Message-ID: <3430e017-88c1-45e3-a5aa-1a7a1ad5dd8c@linux.ibm.com>
+Date: Fri, 24 Jul 2026 12:42:36 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 01/15] s390x/pci: implement IOMMU replay
-To: Farhan Ali <alifm@linux.ibm.com>, Konstantin Shkolnyy <kshk@linux.ibm.com>
+Subject: Re: [PATCH v4 04/15] s390x/pci: Move dm_mr from S390PCIIOMMU to
+ S390PCIBusDevice
+To: Konstantin Shkolnyy <kshk@linux.ibm.com>, mjrosato@linux.ibm.com
 Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
  cohuck@redhat.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
  qemu-s390x@nongnu.org, qemu-devel@nongnu.org
 References: <20260724030919.123733-1-kshk@linux.ibm.com>
- <20260724030919.123733-2-kshk@linux.ibm.com>
- <74c3efe9-41e4-4db1-a1b3-f0ceb48809a3@linux.ibm.com>
+ <20260724030919.123733-5-kshk@linux.ibm.com>
 Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <74c3efe9-41e4-4db1-a1b3-f0ceb48809a3@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <20260724030919.123733-5-kshk@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=LdcMLDfi c=1 sm=1 tr=0 ts=6a63bf06 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDE3NyBTYWx0ZWRfXx9zzOB6Q98mP
+ qVg/iOypA7DjuvHoUQKlsJY1WYDvYrkrnmMR8WWpXi8wbQuAjDOcM6ozoUa+XisybCdF3Ppeway
+ ni3DJVSVDJRb3H9VihtWVuemafZl098=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDE3NyBTYWx0ZWRfX//YbksnzGbRg
+ XMzrouAQgR1uR+iN0ZRjtggj5ZAN6qEbQFnWx+HyJn5theMA9Hu9xTuLFD2KFBYi+VjCOV0AqSC
+ 554pHteNIrn71RXfPSnLNjMVLg1DiGn6tRFK3xnAPEv4w1nz9350SXc7TX6ToEaL17iuK6ROuvh
+ CxvlAa5/e1gk7bsb/WaC1i+2kJLskLn3+lCY0MEwsnKqwifrleVlQu/kY0Xwyj6DKAt3zrsbIAo
+ OvREzFB5GLXmFtv1oHv+LH5Ghi2C54ElN/zNkLyuE+okmkpfwrFa/5erz7roB0nCd90IgkwIva4
+ CEln4RwCsLe2CV1v+2IuJmPi6BAgZY2CUz4JEB5DQWO0xD1XpCygS+5CoR+JcKiTDfhbb+biWZB
+ kQi2N92SLcqaAI7EDDnKumEOGU/BVNwzi7IuFB1yWAI+ENshcJTmei5xRtjyIBfHTzSK72Aq1HP
+ 6EDftR+C2smL2BUkS0w==
+X-Authority-Analysis: v=2.4 cv=Q9LiJY2a c=1 sm=1 tr=0 ts=6a63c02f cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=wPmpbpISL6QTYvSmE8QA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: jxjP4_iQ4zbv9cgNLc6-JCM1y4sTMGOE
-X-Proofpoint-GUID: jxjP4_iQ4zbv9cgNLc6-JCM1y4sTMGOE
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDE3MyBTYWx0ZWRfXzuSbfxG+RGJb
- XRSR4VF6HeCcuygW2PpsESD/tZNwruj6T1Pz/1TtdvzXo7u0HIpD1M7iQOSjRw3g9CqTNGCxaSJ
- pLnbFRUKAIKp3RfZ+pBEJ0xulfvEvjaLasA0GV3cA8mi80bEEalSiLzOUvsp5z9H8AjH+UKWEi+
- wSDqJO77MP883TSqEAnO38qiD3LjCCTdnK1XCs3IhQGbl6yDa6DYFp10Wwk3av+//pkhOfVpMaA
- 2yMrt8Fg0SPYnPgI5in+WE8iq0iBOjrDzEdfvR9Y9FItXFRI8NSAVM1bYn0HDvqv+RCE+gFXLsE
- NCj7cT9Z2USsDXd0VfiMvVE0ILQ9TGXmpALgwRA843n0x0setxqinDApCQ97C9inqxE4/79Ybh+
- uJZteo3NVoOTvw5CJLjOJFfigP3Fg7V2EV0b7sgriIildlm+G14cjpiN3FN5IcQltpJPir7BuBM
- F7qqIcFhma7pVB+R+tQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDE3MyBTYWx0ZWRfX6NGELaU9j7UH
- 6YmM/FnTXqIzAi/HKZSRWUJSp6zqzOGTdChU9dI4BvTDK1lQY571ILuF580Lx+Ko6kNxyyQ5mFz
- gdks/+/GnQ0fekqWKIWWN1nIARKLo2g=
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=Z_9tqueNEkMZuojxhz4A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: 43hrohClHDTpKU8Kyrti_3vHe7lktu1A
+X-Proofpoint-GUID: 43hrohClHDTpKU8Kyrti_3vHe7lktu1A
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-24_04,2026-07-24_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
- clxscore=1015 adultscore=0 priorityscore=1501 phishscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607240173
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+ clxscore=1015 malwarescore=0 adultscore=0 phishscore=0 bulkscore=0
+ spamscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607240177
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -126,115 +127,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/24/26 3:10 PM, Farhan Ali wrote:
-> 
-> On 7/23/2026 8:09 PM, Konstantin Shkolnyy wrote:
->> From: Matthew Rosato <mjrosato@linux.ibm.com>
->>
->> There are a few scenarios where IOMMU replay can potentially be needed
->> for zPCI device, namely VFIO device reset scenarios where the guest
->> continues running and expects the contents of its IOMMU to be replayed
->> upon IOAT re-registration and migration scenarios where the destination
->> must reconstruct the IOMMU on the destination.
->>
->> zPCI migration is not supported yet, but the IOMMU replay function is
->> implemented so that it can be called both from IOMMUMemoryRegionClass
->> now and migration post_load later.
->>
->> Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
->> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
->> ---
->>   hw/s390x/s390-pci-bus.c          | 62 ++++++++++++++++++++++++++++----
->>   hw/s390x/s390-pci-inst.c         |  4 +--
->>   include/hw/s390x/s390-pci-inst.h |  1 +
->>   3 files changed, 59 insertions(+), 8 deletions(-)
->>
->> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
->> index eff980fdfe..511926c151 100644
->> --- a/hw/s390x/s390-pci-bus.c
->> +++ b/hw/s390x/s390-pci-bus.c
->> @@ -593,14 +593,64 @@ err:
->>       return ret;
->>   }
->>   -static void s390_pci_iommu_replay(IOMMUMemoryRegion *iommu,
->> +static void s390_pci_ioat_replay(S390PCIIOMMU *iommu)
->> +{
->> +    S390IOTLBEntry entry;
->> +    uint16_t error = 0;
->> +    uint32_t dma_avail;
->> +    hwaddr curr, end;
->> +
->> +    curr = iommu->pba;
->> +    end = iommu->pal;
->> +
->> +    if (iommu->dm_mr) {
->> +        /* If direct mapping is used, there are no guest tables to
->> replay */
->> +        return;
->> +    }
->> +
->> +    if (iommu->dma_limit) {
->> +        dma_avail = iommu->dma_limit->avail;
->> +    } else {
->> +        dma_avail = 1;
->> +    }
->> +
->> +    while (curr < end) {
->> +        error = s390_guest_io_table_walk(iommu->g_iota, curr, &entry);
->> +        if (error) {
->> +            pbdev->state = ZPCI_FS_ERROR;
-> 
-> This patch doesn't compile on its own. Trying to compile with just this
-> patch gives the error:
-> 
-> i-bus.c.o -c ../hw/s390x/s390-pci-bus.c
-> ../hw/s390x/s390-pci-bus.c: In function ‘s390_pci_ioat_replay’:
-> ../hw/s390x/s390-pci-bus.c:620:13: error: ‘pbdev’ undeclared (first use
-> in this function)
->   620 |             pbdev->state = ZPCI_FS_ERROR;
->       |             ^~~~~
-> ../hw/s390x/s390-pci-bus.c:620:13: note: each undeclared identifier is
-> reported only once for each function it appears in
-> 
-> This should be fixed to avoid breaking git bisectability.
-> 
-Oh, thanks for pointing this out.  Not sure what happened here, I
-thought I wrote the new version and tested it independent of this
-series, but maybe I did it on top where we get pbdev as an input to
-s390_pci_ioat_replay() and then botched the rebase.  That sounds most
-likely, but I can't find my working branch at this point.
 
-In any event, doing a S390PCIBusDevice *pbdev = iommu->pbdev; upfront
-would be the most straightforward solution, and then it will go away in
-patch 3 to instead be replaced by S390PCIIOMMU *iommu = pbdev->iommu;
+On 7/23/2026 8:09 PM, Konstantin Shkolnyy wrote:
+> This field is only used when S390PCIBusDevice exists, so it can be moved
+> there to simplify S390PCIIOMMU which purpose is just to store the "root"
+> AddressSpace.
+>
+> Signed-off-by: Konstantin Shkolnyy<kshk@linux.ibm.com>
+> ---
+>   hw/s390x/s390-pci-bus.c         | 21 +++++++++++----------
+>   hw/s390x/s390-pci-inst.c        |  2 +-
+>   include/hw/s390x/s390-pci-bus.h |  4 ++--
+>   3 files changed, 14 insertions(+), 13 deletions(-)
 
-Konstantin, I can send you another version or you can do that yourself,
-up to you.
+Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
 
-Here's a diff against this patch of what I mean, with a little extra
-defensive programming:
-
-diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index 511926c151..21bca4d787 100644
---- a/hw/s390x/s390-pci-bus.c
-+++ b/hw/s390x/s390-pci-bus.c
-@@ -595,6 +595,7 @@ err:
-
- static void s390_pci_ioat_replay(S390PCIIOMMU *iommu)
- {
-+    S390PCIBusDevice *pbdev = iommu->pbdev;
-     S390IOTLBEntry entry;
-     uint16_t error = 0;
-     uint32_t dma_avail;
-@@ -603,7 +604,7 @@ static void s390_pci_ioat_replay(S390PCIIOMMU *iommu)
-     curr = iommu->pba;
-     end = iommu->pal;
-
--    if (iommu->dm_mr) {
-+    if (iommu->dm_mr || !pbdev) {
-         /* If direct mapping is used, there are no guest tables to
-replay */
-         return;
-     }
 
 
