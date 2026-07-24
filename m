@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7BF8C4453D
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 03:58:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C4C0C4453D
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 04:00:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wn72T-0007Zp-9l; Thu, 23 Jul 2026 23:57:33 -0400
+	id 1wn74u-00008K-Ki; Fri, 24 Jul 2026 00:00:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wn72R-0007Zc-Tv
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 23:57:31 -0400
+ id 1wn74s-00007L-MJ
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 00:00:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wn72P-0007In-7X
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 23:57:31 -0400
+ id 1wn74q-0007Md-KK
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 00:00:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784865447;
+ s=mimecast20190719; t=1784865599;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding;
- bh=naIx8vuJNZwvieRfVQ5Og0LBIoNq1IaWbSfegzpuSmA=;
- b=GJB50hgMC69/z8OPy070FLbxCNFcVAVIckwQOkw6CyeGNpoFqm/Q/mNu3Ay1ZeWZco9BmR
- JSD8uGnwfXv3BnD/+WwxH3BeofucfxmUIyg6tjWMTvpgoV1YpD7ZNn0grChc79QhP78L3K
- b1Ugr5l/koeZ29yeai366Or/Z9syylM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=DlFgiOgz3MpAX3lOOIcBo19JybVEA6Ma0tK0ZBICvQ0=;
+ b=Ct0FEyVYBnCEfFlNPB4HE1e5LMNJwUfdrJRboXSeuvWIgBNqTbtzulZGpnH3DMnrctS/PM
+ Asq3lWxZo2ExzA3WNYnww1A5mvHF7BJmuASAIV5O3f+O1AWEVZ/7qoGDXVNhsOD2PKRZnZ
+ He0ULR0TeHLvGqnl362dHPSPBw+ESWM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-573-BPllQCQdNG-iWOUJ528AMA-1; Thu,
- 23 Jul 2026 23:57:23 -0400
-X-MC-Unique: BPllQCQdNG-iWOUJ528AMA-1
-X-Mimecast-MFC-AGG-ID: BPllQCQdNG-iWOUJ528AMA_1784865442
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-C4aeSseDPle2TuW8Ss4WkQ-1; Thu,
+ 23 Jul 2026 23:59:56 -0400
+X-MC-Unique: C4aeSseDPle2TuW8Ss4WkQ-1
+X-Mimecast-MFC-AGG-ID: C4aeSseDPle2TuW8Ss4WkQ_1784865595
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 25ACA182F568; Fri, 24 Jul 2026 03:57:22 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A27B919560BC; Fri, 24 Jul 2026 03:59:54 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.7])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 59C3130002CE; Fri, 24 Jul 2026 03:57:19 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BC2AB1800259; Fri, 24 Jul 2026 03:59:52 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -53,23 +53,23 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Subject: [PATCH] hw/display/virtio-gpu: validate blob iov size in create_blob
-Date: Fri, 24 Jul 2026 07:57:12 +0400
-Message-ID: <20260724035712.856636-1-marcandre.lureau@redhat.com>
+Subject: [PATCH] hw/display/virtio-gpu: clear res->blob after detaching backing
+Date: Fri, 24 Jul 2026 07:59:49 +0400
+Message-ID: <20260724035949.862331-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.951,
+X-Spam_score_int: 3
+X-Spam_score: 0.3
+X-Spam_bar: /
+X-Spam_report: (0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.951,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,48 +87,58 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-virtio_gpu_resource_create_blob() stores the guest-controlled blob_size
-without checking it against the total size of the iov backing entries.
-Since both values are independently guest-controlled, a malicious guest
-can set blob_size much larger than the actual iov backing. Subsequent
-SET_SCANOUT_BLOB checks bounds against the inflated blob_size, allowing
-a pixman surface to be created over the undersized buffer. Any display
-refresh then reads past the actual allocation, potentially crashing
-QEMU or leaking host memory contents depending on the backing type.
+virtio_gpu_cleanup_mapping() tears down the udmabuf mapping (or, for the
+small-iov case, the guest memory mapping) via virtio_gpu_fini_udmabuf(),
+but leaves res->blob pointing at it afterwards. Once a blob resource
+goes through RESOURCE_DETACH_BACKING, res->blob is left dangling while
+res->blob_size is still non-zero.
 
-Reject the resource early when the iov backing is smaller than the
-declared blob_size.
+virtio_gpu_update_cursor_data() only checks res->blob_size before
+copying from res->blob, so UPDATE_CURSOR on a detached blob resource
+makes QEMU memcpy from freed memory.
 
-Fixes: CVE-2026-66021
-Fixes: e0933d91b1cd ("virtio-gpu: Add virtio_gpu_resource_create_blob")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3945
-Reported-by: "sundayjiang(蒋浩天)" <sundayjiang@tencent.com>
+Clear res->blob once its backing is torn down, and check it before
+dereferencing in virtio_gpu_update_cursor_data(), logging both invalid
+conditions.
+
+Fixes: CVE-2026-66020
+Fixes: bdd53f739273 ("virtio-gpu: Update cursor data using blob")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3881
+Reported-by: 章鱼哥@aipy (www.aipyaipy.com) and swing (swing@mail.exp.sh)
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/display/virtio-gpu.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ hw/display/virtio-gpu.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index eac039c3c366..cc6dbd116618 100644
+index cc6dbd116618..36d2bd9edee6 100644
 --- a/hw/display/virtio-gpu.c
 +++ b/hw/display/virtio-gpu.c
-@@ -372,6 +372,16 @@ static void virtio_gpu_resource_create_blob(VirtIOGPU *g,
-         return;
+@@ -57,8 +57,16 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
      }
  
-+    if (iov_size(res->iov, res->iov_cnt) < res->blob_size) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: backing storage smaller than blob size\n",
-+                      __func__);
-+        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-+        virtio_gpu_cleanup_mapping(g, res);
-+        g_free(res);
-+        return;
-+    }
-+
-     virtio_gpu_init_udmabuf(res);
-     QTAILQ_INSERT_HEAD(&g->reslist, res, next);
+     if (res->blob_size) {
++        if (!res->blob) {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: resource %d has no blob\n",
++                          __func__, resource_id);
++            return;
++        }
+         if (res->blob_size < (s->current_cursor->width *
+                               s->current_cursor->height * 4)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: blob size too small for resource %d\n",
++                          __func__, resource_id);
+             return;
+         }
+         data = res->blob;
+@@ -968,6 +976,7 @@ void virtio_gpu_cleanup_mapping(VirtIOGPU *g,
+ 
+     if (res->blob) {
+         virtio_gpu_fini_udmabuf(g, res);
++        res->blob = NULL;
+     }
  }
+ 
 -- 
 2.55.0
 
