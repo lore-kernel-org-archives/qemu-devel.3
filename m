@@ -4,88 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3161AC53200
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 16:10:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D715EC531C9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 16:11:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnITV-0007fp-PB; Fri, 24 Jul 2026 12:10:13 -0400
+	id 1wnIUK-0008HI-Ss; Fri, 24 Jul 2026 12:11:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <simonxhy0404@gmail.com>)
- id 1wnITA-0007XF-6C
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 12:09:53 -0400
-Received: from mail-oa1-x35.google.com ([2001:4860:4864:20::35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <simonxhy0404@gmail.com>)
- id 1wnIT8-0007li-Ng
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 12:09:51 -0400
-Received: by mail-oa1-x35.google.com with SMTP id
- 586e51a60fabf-45133d2974fso357948fac.1
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 09:09:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784909389; x=1785514189; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=OprY1AZR7pEP7mUfERpFrHmAnUlh+1+Ut0hJzuaj/tE=;
- b=UxevhewfUf4YggYwDsUbQ1hoifXdsvGn+LA70fHGp9U2MPz1dvaNwM8qcF0aBc4jJq
- QeRU2c4TkEQZNSf4o/nRc84j2zqQrjqZJQo0zUqG8FLzqkG4vEvh2u0ZSPgv9CUuoVz/
- eSCx4lCs2/cD8HeBqGfcHXW6Ca8LRaFkNlQ4JwVNybitO0KUi1EzZZ0V8pxGgF5iogP0
- OEOdZdFwEoTVlRw18JUdFAYw1IEubYHqK9Rh8PuMP3+pBIrM/HqT4X0jTKBNv+VlcNxR
- bokUIW6VuzZEfXq4BsZs1nSgzrlCjhS0WOc93FlyVekGuw4quZxmA+4vEslhdfJH179y
- dw/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784909389; x=1785514189;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=OprY1AZR7pEP7mUfERpFrHmAnUlh+1+Ut0hJzuaj/tE=;
- b=YAjuAq5lloo0Z94UE0ZZkwIN7lggEq1cBdA/vZw8xFae4JIrR3TcPWPXTqnjscW+vB
- VDKLM7zcHzwkNSx4CrhsdNrWEqIF8nWl356yqyxtG9uNSd700NwkDRXLo1sGZUzprjTB
- cbLyiU4AJnHRq9QL1BjuIYqjm+g71Y4ONBestHcX+13kBBwVGbjw3IUDc92UD6r3k6jI
- ngeaeXl98/vV1Bisvcs5kUcQqhyZVrKg16isG1ZGBUmec/OU730hs2dnzzlukgTljmL7
- Tah13lnZ1bRNGNbsRNLX4xF1hLNdpnx6MNI+nFFy8N+Lh7qzp+lGJj/AvA1hJiETwXn4
- CmYQ==
-X-Gm-Message-State: AOJu0YxaKgh1wiCr3U7GCtwvuBPIDQtZmU4J66EnJoTo3xsY1bRMvsqr
- xgtpjT0V2wCKsYwBoXMqh3WB2Z5zO36Eq0I+j5WRrsDmSwAbmn5mlumR3EHhgPdE
-X-Gm-Gg: AR+sD119Y96EajxGSnbp/iDaLL4H6QMa9mEiOIqvHJ+uGIXy4ayPJ6udWse3TlNqJoT
- EESc2oRm9I7RSlABz87pvTB3kfeCCQM+L9i1Sdo3tfgIbvftUjoGceAEKi6IrAegnhUvMETWmA4
- Mcy2nTWyZ4gFWMPoaS3EjF9HtXAYDDhE96JF1C2wt2BEYcnFHjZbsnsgZgPmVPsFmjJ4L9XVjpa
- ztTy1g3Q2ejoJxByIwkKM0delKWGMVNDwuAZysYy9ERTbJnvQpumT9L/YSiONYDfCviAY5zQAaD
- P6SZFqlgjBsfxJN5kYlOA+ppd2los23bBcl9u2weZNJ4cMXAOoIURqyR0GLj1ltCUPN+tRJ8kCo
- ryXr9jx9UZ6VteiXnAnjSKKGQfQGfS0oeJ6denx4BQz7NWJW9c8dZzPxwcVO+Ql5QMtY08gJQiS
- qEny1lXCb7Fj4Wphxo+ibeXWwTUUgAIHBydg==
-X-Received: by 2002:a05:6871:299:b0:448:604c:bc63 with SMTP id
- 586e51a60fabf-457a0cca1famr5405611fac.18.1784909389439; 
- Fri, 24 Jul 2026 09:09:49 -0700 (PDT)
-Received: from HPE-2MQ6131DV6.home.local ([23.124.244.239])
- by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-457ab7405a9sm4542753fac.18.2026.07.24.09.09.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jul 2026 09:09:48 -0700 (PDT)
-From: Simon Xu <simonxhy0404@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Simon Xu <simonxhy0404@gmail.com>
-Subject: [PATCH 2/2] hw/misc/mps2-scc.c: fix scc_partno field width
-Date: Fri, 24 Jul 2026 11:09:43 -0500
-Message-ID: <20260724160943.52509-3-simonxhy0404@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260724160943.52509-1-simonxhy0404@gmail.com>
-References: <20260724160943.52509-1-simonxhy0404@gmail.com>
+ (Exim 4.90_1) (envelope-from <imbrenda@linux.ibm.com>)
+ id 1wnIUI-0008Ge-S3; Fri, 24 Jul 2026 12:11:02 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imbrenda@linux.ibm.com>)
+ id 1wnIUH-0008Ph-03; Fri, 24 Jul 2026 12:11:02 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66ODfdtb1992733; Fri, 24 Jul 2026 16:10:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=YXujBu
+ ApX5Cv8RXvJONYW+viPftekUMlczig0pdN/gg=; b=X5z1VOBXbbkRvmGipoIDqh
+ ye0vJe09wZo6gshK+vRxyhTkYssy53fFY1W7ZCE/Ugs2+NS3TpecuUeyCeJsn9oz
+ DJk8DZpMazLiovNNyxD1p966gaP4NKadKu9OatPxQrgDtquGygc8Iq8VCQnwQw58
+ 6egl2zvFxY6XfVSlP0/dU6Hp100Y73DfXEOETf9Mg2hrcdjNKodP9COt2oHWzLMJ
+ Y6SLv1TcHyEItvO6AckQadFG0iCJb3AcreF6Hdr8fKGyBGIMcQnH8kvyPC+mRrnw
+ VBXMCyeyE1RJ4ZqAWOnzdDOA5uTPpKS6nQ6QXKvtJ4Y82S9S/BW/l5ZysK4jaBQg
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fm8h00tg6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 24 Jul 2026 16:10:56 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66OG4h6k026045;
+ Fri, 24 Jul 2026 16:10:55 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fgm6whqq5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 24 Jul 2026 16:10:54 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66OGAmVT47579486
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 24 Jul 2026 16:10:48 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 84C8B201F7;
+ Fri, 24 Jul 2026 16:10:48 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4EA54201F6;
+ Fri, 24 Jul 2026 16:10:48 +0000 (GMT)
+Received: from p-imbrenda (unknown [9.224.75.30])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with SMTP;
+ Fri, 24 Jul 2026 16:10:48 +0000 (GMT)
+Date: Fri, 24 Jul 2026 18:10:46 +0200
+From: Claudio Imbrenda <imbrenda@linux.ibm.com>
+To: Matthew Rosato <mjrosato@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, borntraeger@de.ibm.com,
+ frankja@linux.ibm.com, pasic@linux.ibm.com, mhartmay@linux.ibm.com,
+ david@kernel.org, farman@linux.ibm.com, richard.henderson@linaro.org,
+ iii@linux.ibm.com, cohuck@redhat.com
+Subject: Re: [PATCH v1 1/1] target/s390x: Allow 2G hugepages guest backing
+Message-ID: <20260724181046.3f8466a3@p-imbrenda>
+In-Reply-To: <e0ff56b0-42dd-4075-8f36-edf877cf777b@linux.ibm.com>
+References: <20260713155212.287444-1-imbrenda@linux.ibm.com>
+ <e0ff56b0-42dd-4075-8f36-edf877cf777b@linux.ibm.com>
+Organization: IBM
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::35;
- envelope-from=simonxhy0404@gmail.com; helo=mail-oa1-x35.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=LdcMLDfi c=1 sm=1 tr=0 ts=6a638e90 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=mnLLtHRCtmUpyWjtGDAA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-ORIG-GUID: rCb332niPWqGPXpZ-_gLtwia5Yg6m2u0
+X-Proofpoint-GUID: rCb332niPWqGPXpZ-_gLtwia5Yg6m2u0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDE0MSBTYWx0ZWRfX1JgmSlDoht38
+ 6P+/d5fVFAeq4uZXNWFCJom7e+Lu9w05b81An7u6jX2XWy7AjojocHHqAuPzun7LhxS3U3BRpzc
+ ZgQOc+O2wX4hV5BBpdMjnk1mQdHx/kcU739d9MVMK5u7oOpg5zxpOw5DbSTbO9Zvo9hJh7kNNwd
+ rpI6JOYcrKXfp6jwJnJ2WVY0dTMSvXPyvzkQh03yL6sO1dVcBt1JBNdnrv9lABwPeuRfNRByy4y
+ +r6a8AfajwLl2Ep3u2LyknJAOLgy9Qrx3dzkJwvLtB8jxxVQY3ysgT+GJCNTSXzPa2oXRS/Z/VA
+ FCUkGbJzCJb5Nug1jxZgZNfGng0cZm2RvpD75V3SuOTo3Ufcb5pmC9yJEwEC8oGUSqZXzoevwZH
+ p+XNMJJBOxv6gUV3igKu548TMGIQsWSXmOOvd3Og4//H0LMVuPt5bOa+xNgYtW9/eaPfe9YQ0IS
+ m9ytTFZRzGcqFmq1WEA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDE0MSBTYWx0ZWRfXxE00PULv4nUe
+ eaVcvzcTnuhAUITkQB+BMt+1o8qdEDFPbokj3TLD8xXGGZgUsVU54s3J/AwUJUSNpJer6Bc+o6G
+ ZgJeXFtgYAZXi2VBE0RybDV+Fyeeags=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-24_03,2026-07-24_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
+ clxscore=1015 adultscore=0 priorityscore=1501 phishscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607240141
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=imbrenda@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,30 +126,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Increase the extract32 length from 8 to 12. The Primary part number is
-defined as bits[15:4] by the "SSE-310 with M85 and U55 FPGA"
-documentation. For example for the mps3-an547, 0x547 is 12 bits but we
-only return 8 bits right now.
+On Fri, 24 Jul 2026 09:10:49 -0400
+Matthew Rosato <mjrosato@linux.ibm.com> wrote:
 
-Signed-off-by: Simon Xu <simonxhy0404@gmail.com>
----
- hw/misc/mps2-scc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> On 7/13/26 11:52 AM, Claudio Imbrenda wrote:
+> > Allow mapping guest with 2G hugepages on hosts that support it.
+> > 
+> > Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+> > ---
+> >  target/s390x/kvm/kvm.c | 8 ++++----
+> >  1 file changed, 4 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
+> > index 72031a5714..23fa714b69 100644
+> > --- a/target/s390x/kvm/kvm.c
+> > +++ b/target/s390x/kvm/kvm.c
+> > @@ -298,13 +298,13 @@ void kvm_s390_set_max_pagesize(uint64_t pagesize, Error **errp)
+> >          return;
+> >      }
+> >  
+> > -    if (pagesize != 1 * MiB) {
+> > +    if ((pagesize == 2 * GiB) &&
+> > +        kvm_vm_enable_cap(kvm_state, KVM_CAP_S390_HPAGE_2G, 0)) {
+> >          error_setg(errp, "Memory backing with 2G pages was specified, "
+> >                     "but KVM does not support this memory backing");
+> >          return;
+> > -    }
+> > -
+> > -    if (kvm_vm_enable_cap(kvm_state, KVM_CAP_S390_HPAGE_1M, 0)) {
+> > +    } else if ((pagesize == MiB) &&
+> > +               kvm_vm_enable_cap(kvm_state, KVM_CAP_S390_HPAGE_1M, 0)) {
+> >          error_setg(errp, "Memory backing with 1M pages was specified, "
+> >                     "but KVM does not support this memory backing");
+> >          return;  
+> 
+> Just double-checking -- If you successfully take the 2G path here you
+> will still set cap_hpage_1m = 1;
+> 
+> I suspect it's intentional to fence diag 308?  But then IMO
 
-diff --git a/hw/misc/mps2-scc.c b/hw/misc/mps2-scc.c
-index 1ecb2879e3..554b504c72 100644
---- a/hw/misc/mps2-scc.c
-+++ b/hw/misc/mps2-scc.c
-@@ -57,7 +57,7 @@ REG32(ID, 0xFFC)
- static int scc_partno(MPS2SCC *s)
- {
-     /* Return the partno field of the SCC_ID (0x524, 0x511, etc) */
--    return extract32(s->id, 4, 8);
-+    return extract32(s->id, 4, 12);
- }
- 
- /* Is CFG_REG2 present? */
--- 
-2.53.0
+I was more thinking of cmma and similar, but yes it's intentional
+
+> 
+> s/kvm_s390_get_hpage_1m/kvm_s390_get_hpage/
+> and
+> s/ cap_hpage_1m/ cap_hpage_any/
+> or something like that
+
+Yeah, makes sense. I wanted to keep my changes minimal, hence why I
+left the old names.
+
+
 
 
