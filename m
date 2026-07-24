@@ -4,106 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFF79C531FA
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 07:23:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04564C531FA
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 07:36:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnAFE-0004Cx-Jo; Fri, 24 Jul 2026 03:22:56 -0400
+	id 1wnARN-0000dP-WE; Fri, 24 Jul 2026 03:35:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wnAFC-00048h-GC; Fri, 24 Jul 2026 03:22:55 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wnARM-0000cL-98; Fri, 24 Jul 2026 03:35:28 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wnAF7-0001bW-Pc; Fri, 24 Jul 2026 03:22:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784877737; bh=jT/v0/Y702bDq2+MgBQuI4JS3Ljrc0hhOJ4T7O+38jI=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=jD05k5Xozq2qZF8K49bQp4mdWSA2vaDraQNwVcQDMXQVCYdnJ+KofM2WXIoekXxpx
- zn0xLT+fyUxWD5FV07gPcaaC3n+KydY3u/6xcZDINtVbVp8JDelxUlrBigKTow2BzF
- wNrSXctfaZ1ISMb7gupvorIf19Kdcc6w0AuxFIKkvLui9H/i9PCQrlBngfJv5UYyIU
- e1tLh0QOHC2/EsfBzJqxnZwE2TwM16dgVDqnh8TpEM7lGEfeqo4hte5DgWgeDgrnaK
- UO0b8Z6jzPyp2dlhgUI2P1227IZ6n8xu6OyJ86EORw1vER05xc+aRPJ7vQPRS2XYNk
- CjjospYpN0/ig==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9F59E1C44D4;
- Fri, 24 Jul 2026 10:22:17 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 51EAC3F45FA;
- Fri, 24 Jul 2026 10:22:38 +0300 (MSK)
-Message-ID: <53d5fe02-fcc5-4089-a64c-720c7b324c81@tls.msk.ru>
-Date: Fri, 24 Jul 2026 10:22:28 +0300
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wnARK-0003Xi-Jg; Fri, 24 Jul 2026 03:35:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=7440bwLdBu5aInfxm6Skx/8EERF/lLkHI8z5y7lI2H0=; b=oFDVesDLz9wRtQ7/0VrpbJoS5q
+ T+k1TIbsyWqPIJtpl+uxTYc1L18AZsg0vQrkQA1pW/YMDOJkafrtN5U3LG99Lc2d+z/SrnDKIrVoV
+ BwgrGWBg2JHSq0xMMZpJiV2dTDTx8OL5PB1eJB+5tvhJVvkdV1AVQfEM6fn+KTfoLylQdykcHAf+3
+ Lk8Ojn/WA7Mc1iVYdtJM0USj0ye+ixGlEaZK31ylVF0Pm7NLasajTZ9O1Q6Kk9HfKXXOg4gRz3Kbe
+ lC5vNKnaTwfnqA82EV8eL/mkCx/iBaNTlm0mC2xS5HOdpnErBZtlUctipnswtc9rtWY6jTr9bhY/s
+ kA8cYDLmFVI6t/IasnGhWdQTWfND2XWlEHC0lZW2C7Pxg5kq2BOfCyEchnYtW2r09atosRp4QmsRd
+ 0ubcV2A7C53XoKNZk618iQ2qluF3cnhNHpXFVc/md61uLRc7BaDNx/uOBqWUpcyaN5YopW8DDw53c
+ VB5CqFFrAsfQNyIT9y1nRRRFdSuHONX2VyGtIEYdA3eEPplvMirrYYLM3qFHSkVvDRymgXwWsyAI+
+ FpnoNbxDzjux2ehOj4GC0dDUQcZXo7DzOSd9w+J4Lg08L6hy5AA5K6aG+amVyrdiaO6tSIKRapZte
+ 81HXXffYOe+7U0GHYRmSIOjHXi3TSpSBEhq2Eu3Xc=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Jia Jia <physicalmtea@gmail.com>
+Subject: Re: [PATCH v3 0/2] 9p: fix guest-triggered Treaddir/ACPI eject UAF
+Date: Fri, 24 Jul 2026 09:35:22 +0200
+Message-ID: <3960698.kQq0lBPeGt@weasel>
+In-Reply-To: <cover.1784809978.git.qemu_oss@crudebyte.com>
+References: <cover.1784809978.git.qemu_oss@crudebyte.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] meson.build: re-add explicit gcrypt/nettle request
- check
-To: Luc Michel <luc.michel@amd.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Francisco Iglesias <francisco.iglesias@amd.com>,
- Frederic Konrad <frederic.konrad@amd.com>,
- QEMU Stable <qemu-stable@nongnu.org>
-References: <20260710132531.97844-1-luc.michel@amd.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260710132531.97844-1-luc.michel@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,29 +70,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/10/26 16:25, Luc Michel wrote:
-> c4b3d0074 removed the check that nettle or gcrypt were explicitly
-> requested as the crypto library to use, breaking the --enable-nettle and
-> --enable-gcrypt options. Re-add the logic to force usage of nettle or
-> gcrypt for crypto operations, while still keeping gnutls for TLS.
+On Thursday, 23 July 2026 14:43:24 CEST Christian Schoenebeck wrote:
+> A guest can trigger unplugging 9pfs server's virtio-pci device via ACPI
+> eject. As a consequence the device is unrealized, server's internal state
+> is freed while pending coroutines would still have access to them, causing
+> a potential heap-use-after-free.
 > 
-> Fixes: c4b3d0074 (crypto: bump min gnutls to 3.7.5)
-> Signed-off-by: Luc Michel <luc.michel@amd.com>
-> ---
-> v2:
->     - Revert more of c4b3d0074 to restore the gnutls_crypto logic to
->       disable gnutls only for crypto ops but keep it for TLS [Daniel]
-> ---
->   meson.build                    | 11 ++++++++++-
->   crypto/cipher.c                |  2 +-
->   tests/unit/test-crypto-block.c |  3 ++-
->   crypto/meson.build             |  2 +-
->   4 files changed, 14 insertions(+), 4 deletions(-)
+> Overview Patches:
+> 
+>  - Patch 1: this is the core fix, that drains all PDUs (i.e. coroutines
+>    that handle individual pending requests in parallel) before freeing
+>    server state.
+> 
+>  - Patch 2: fixes a similar identified issue with the Xen transport, even
+>    though not triggered via ACPI, it is also prone to UAF, plus a resource
+>    leak.
+> 
+> v3:
+>   - Patch 2: set s->transport = NULL in v9fs_device_unrealize_common()
+>     and make the idempotent check just guard the v9fs_reset(s) and
+>     v9fs_device_unrealize_common(s) calls in xen_9pfs_disconnect() to
+>     prevent a NULL pointer dereference.
+> 
+> v2: [
+> https://lore.kernel.org/qemu-devel/cover.1784392605.git.qemu_oss@crudebyte.
+> com/ ] - Patch 1: Make Jia the official author of this patch.
+>   - Drop prev. patch 2 ("hw/9pfs/virtio: disable hotpluggable property...")
+>   - Patch 2: defer explict xen_9pfs_disconnect() call from error paths of
+>     xen_9pfs_pdu_vmarshal() and xen_9pfs_pdu_vunmarshal().
+> 
+> Christian Schoenebeck (1):
+>   hw/9pfs/xen: drain in-flight PDUs before xen-9p disconnect
+> 
+> Jia Jia (1):
+>   hw/9pfs/virtio: drain in-flight PDUs before virtio-9p unrealize
+> 
+>  hw/9pfs/9p.c               |  1 +
+>  hw/9pfs/virtio-9p-device.c |  1 +
+>  hw/9pfs/xen-9p-backend.c   | 17 +++++++++++++++--
+>  3 files changed, 17 insertions(+), 2 deletions(-)
 
-I'm picking this up for 11.0.x stable series.
-Please let me know if I shouldn't.
+Queued on 9p.next:
+https://github.com/cschoenebeck/qemu/commits/9p.next
 
-Thanks,
+Thanks!
 
-/mjt
+/Christian
+
+
 
