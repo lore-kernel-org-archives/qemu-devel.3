@@ -4,102 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 471CAC531C9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 13:08:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18EEEC531F9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 13:12:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnFd9-0001fe-A8; Fri, 24 Jul 2026 09:07:59 -0400
+	id 1wnFgR-0002mC-G3; Fri, 24 Jul 2026 09:11:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wnFd7-0001fQ-2Y
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 09:07:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
+ id 1wnFgB-0002im-LI; Fri, 24 Jul 2026 09:11:09 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wnFd4-0003hm-Qk
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 09:07:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784898473;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=RaWPHqEvLynkkdiUEbV5IxgCfLZEr7aZFRXddkARyTI=;
- b=JZtNts0x1KvZ+YPhJXF6QqLan/zqZSM3At+VQUgmYwdaOdbtXLjYyGmnSrlBhwmXKriKB8
- CXfJYwFhlV3sCsmc5NH/1FCVlE+2wGXDEVV16/XYJi97Igo0ayYKh8YovrHvWc1Ts5XVM0
- zRl6r4ECLldR/s44Qcsn3qrcMLyF2e0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-588-QlZNen4sPk2fT-6BhiFt2A-1; Fri, 24 Jul 2026 09:07:52 -0400
-X-MC-Unique: QlZNen4sPk2fT-6BhiFt2A-1
-X-Mimecast-MFC-AGG-ID: QlZNen4sPk2fT-6BhiFt2A_1784898471
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-49561facb1dso4120875e9.3
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 06:07:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784898470; x=1785503270; darn=nongnu.org;
- h=content-disposition:content-type:mime-version:message-id:subject:cc
- :to:from:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=RaWPHqEvLynkkdiUEbV5IxgCfLZEr7aZFRXddkARyTI=;
- b=Nzv/sdr99ZMki93E22tYB8AYLeSADY4Etjb5kKFTVOSZCHNk6RFp9+1q7Jf62H47A8
- aOcW4QYm3/q+y1dvXzYiDmfcvsVNMsZ3c1a+sBlMFzXueXxPDzLT1CsCrwe4VF/z/NmK
- 6A3L/FeoF6FjuBacV5kOAnH1Zr6XjQf68Ns+Vk4CDRF7C7SvvyoNH1TaShmI3GP331/F
- gRrTsJR4x6j7pDwR/6EbKf2KYITc2nq6IQknmOVzibPAOf+Ha91B3nyu/dg8kOnaT1qA
- e4aca21wxjDrz4AVLw9w/VTUG34Sd05Ka5D5D/LJOl0aTahVH2q//mRpdSRxMb/ZGhJy
- 3Zhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784898470; x=1785503270;
- h=content-disposition:content-type:mime-version:message-id:subject:cc
- :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=RaWPHqEvLynkkdiUEbV5IxgCfLZEr7aZFRXddkARyTI=;
- b=r7MANJSJatrxLyB+IOD279M1umjojkpBJ0XNfL9dtbXrT1hIdrWsulojrU/tJJ+zyE
- CnnM5caGCaAOCk2FAGIQFoAgdfrR/mL65kR4BpkkulwsTnlOpEc7731J1cKSRCBmrPni
- UpoEC07sUXMzndFBn1OhFckf/Tf+0/sEp0obOajue1g5DCl7FLvcu4mEj1q/kVNRy5h6
- FiS+b02vjWkROcqu2tSHzumCS8b1SIKLxmZTrviCYuU2tHZ67rlSTlF3GMt4XUz7lKd7
- Gya9frasQCTlKa051gDZguSC0T5fvzCqVNKPffWmQOQXPCq57oFEQ/sBgrKa/IgCTi58
- kusg==
-X-Gm-Message-State: AOJu0YzcE2FW46eXLUXv/hTPkOTnjXU0VEMzyyRWA42BPa9XQuSA1nCQ
- uy/wnDniXid+Gc/+vgddp/RuM2N1DxByrBDZ36sxIXyq3Q9iWugw2BwaWiuGJYo7vbfRBNsMXFA
- 2vFQz6TLh2nDE/7lsdubC1IQ7GgW/ycGacu3ic3/xUrvkgFOFqHixbQv2Vr+b7m9UKSZncJXKbY
- a7TPJ7CaMI/dLahGws3ee1FfIycmNvqWnFlA==
-X-Gm-Gg: AR+sD11nfoT5kG3PDAdSkjgXe6qPUWEn+mVColJ8W9T6JtIysfC3LGZdb0V+tfqpoki
- 5HvxaI7u7IfeNXZiceI8mxX4uT3waxeBJCeTvbsGCz4oQmj5zzUNF/oTDaaMxfj2u6C3/uITgK6
- 44LSGa1bAJDta4oAtt9Lu836UQori4xF8W8UiOicvT5C1CFFGJJ2DfDC1v9FeEev7o4e9W6CXVu
- hiihUycgPxuVdpylNM1b1nrFtRPVPgrGM9iKLA7cv0qZFuUzbP7NmYcPGg4nQ60sgSXnJSCnQkx
- GQzLKQxibfqssF8bbNLBcuXGUD6aUCHFD1Ge9HOo4c/vVYoXwwCbi7uvq7L4Vp7WlnSPXB4GQA7
- de/uTmr70qJXiIjBg9z2S7g==
-X-Received: by 2002:a7b:c84c:0:b0:495:3b8a:bf11 with SMTP id
- 5b1f17b1804b1-49573cff52bmr58967745e9.26.1784898470376; 
- Fri, 24 Jul 2026 06:07:50 -0700 (PDT)
-X-Received: by 2002:a7b:c84c:0:b0:495:3b8a:bf11 with SMTP id
- 5b1f17b1804b1-49573cff52bmr58966805e9.26.1784898469436; 
- Fri, 24 Jul 2026 06:07:49 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85bdac28sm22807366f8f.16.2026.07.24.06.07.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jul 2026 06:07:48 -0700 (PDT)
-Date: Fri, 24 Jul 2026 09:07:47 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Stefano Garzarella <sgarzare@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH] vhost: do not crash on ring map failure
-Message-ID: <71961a7dc157f552303aeea8c99a75c5e1ce904e.1784898432.git.mst@redhat.com>
+ (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
+ id 1wnFg2-0004HJ-8J; Fri, 24 Jul 2026 09:10:59 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66OCwHwS1776391; Fri, 24 Jul 2026 13:10:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:sender:subject:to; s=pp1; bh=8ZS5A67c7mqNInoNm+MkRDu
+ pvqU+eN8i4bm4ZTCpfcQ=; b=G4yf/mMiaPi3fjsn5QCSUCqMJKHsuarfjYtMke9
+ OZJKeNtC9/+bBrYnMj88+MRInY5aTZXoOo4ngpIV3HhMMj7E2P+dlv7ivE6CFkmd
+ AwcBkfpSFVMkAq1f+m+2DMi+HEbSSSVHdOBUD+VLWlDnGjwjv+JRRsJuyc2R/h5X
+ vVUa2MKXyIIv32E4SfW/Wmrs9CWsl1xOMqMLDrEOBEZgE/Vksvm+QsHzUKS0yFXk
+ JPMFVPmnw7f7+Y1O9pY0wnf5r0and4APGojKQg4eX19Ppbjd6S3XWyHQQ3pbUFpe
+ OCu6/RvQKcuw2VkYXzwENBCCH2vPiHEZ9gaqHJNpR8aEmtA==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fg78gm3uc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 24 Jul 2026 13:10:52 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66OD4fGh003261;
+ Fri, 24 Jul 2026 13:10:52 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fgnahgy5q-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 24 Jul 2026 13:10:52 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66ODAmbc44564738
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 24 Jul 2026 13:10:48 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1BBD220578;
+ Fri, 24 Jul 2026 13:10:48 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 00E3E2056E;
+ Fri, 24 Jul 2026 13:10:40 +0000 (GMT)
+Received: from vela (unknown [9.87.134.102])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Fri, 24 Jul 2026 13:10:39 +0000 (GMT)
+Received: from brueckner by vela with local (Exim 4.99.4)
+ (envelope-from <brueckner@linux.ibm.com>) id 1wnFfj-00000003x9p-2Cm7;
+ Fri, 24 Jul 2026 15:10:39 +0200
+Date: Fri, 24 Jul 2026 15:10:39 +0200
+From: Hendrik Brueckner <brueckner@linux.ibm.com>
+To: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, borntraeger@de.ibm.com,
+ frankja@linux.ibm.com, pasic@linux.ibm.com, mhartmay@linux.ibm.com,
+ david@kernel.org, farman@linux.ibm.com, mjrosato@linux.ibm.com,
+ richard.henderson@linaro.org, iii@linux.ibm.com, cohuck@redhat.com
+Subject: Re: [PATCH v1 1/1] target/s390x: Allow 2G hugepages guest backing
+Message-ID: <amNkT9AjGbPwgXpO@linux.ibm.com>
+References: <20260713155212.287444-1-imbrenda@linux.ibm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.419,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20260713155212.287444-1-imbrenda@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDExNSBTYWx0ZWRfX077ZjE66KVsf
+ gQ6CNpz5KtBdX/zc7hTkuGykELJcQZAR4UR8y7NIgQrLgwEVuTHeuPStCwXkIwMa6HwjK6+NT7G
+ 1rL8G6NCMvz9ezitmBUGr43t9HuuM6oHVdI4IMjHU8j8IFAXeA3NJ3sswCv3if0OfeM7BDSGXd9
+ PCAHKV9VL+2Al1fA7Zox+2Jcz+vE2GLDwfucBF17m6CLQRexOFqABeP7b5z5KJYaAXm+0QIjhMm
+ 3rIHEUoryliqMg8Hzy/vY7yUskDuTCc/a21Ju7yTRsvwPuWGCz5J/+nv2L+yyHqzTsTFGkkafMS
+ 5bZMVs7JBPK2IuUqLC0YkpKHEMJcKBorC10Fi53NDkuTH3ECaSxyQR4zrfsIYI9LQ/V84wrvUgr
+ 94sGmyX0xrSBnQfcGfY+ZQ1ozl1zAZ6Cf7EMkSZkPsClnrNOoVE5NWOQskbtT3n00dFg4qQU86f
+ sCNrMjzr//p0sb0jYrQ==
+X-Proofpoint-GUID: Nt-NP926F0OsLFV6_oQM94G4P2X7fkJB
+X-Authority-Analysis: v=2.4 cv=MelcfZ/f c=1 sm=1 tr=0 ts=6a63645d cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=y5kb3azYzRo2SqOjEfwA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDExNSBTYWx0ZWRfX0lTb9SM3erCA
+ k1pFmGYJTKsJNI8CoFJb/XOADzotnpwUjxEpcG8VdLj3R5o9frbpPc6AZG5gBhnmj9zhI4SJEGh
+ Xo5lvu3MVsGC4Yn2lgcTNyT6MP4Rb70=
+X-Proofpoint-ORIG-GUID: Nt-NP926F0OsLFV6_oQM94G4P2X7fkJB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-24_02,2026-07-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0 spamscore=0
+ clxscore=1015 malwarescore=0 phishscore=0 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607240115
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=brueckner@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,41 +125,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When vhost_commit() rebuilds the memory region table after a flatview
-change, it revalidates cached host virtual addresses for active vring
-parts. If a mapping is stale, QEMU abort().
+On Mon, Jul 13, 2026 at 05:52:12PM +0200, Claudio Imbrenda wrote:
+> Allow mapping guest with 2G hugepages on hosts that support it.
+> 
+> Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
 
-This is not a security problem - only the priviledged guest
-can control make it invalid - but not nice e.g. for driver debugging.
-
-Let's call virtio_error() instead, marking the device as broken.
-
-Fixes: 0ca1fd2d68 ("vhost: Simplify ring verification checks")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3783
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Cc: Dr. David Alan Gilbert <dave@treblig.org>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- hw/virtio/vhost.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index af41841b52..371dca17dd 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -755,8 +755,9 @@ static void vhost_commit(MemoryListener *listener)
-                        (void *)(uintptr_t)dev->mem->regions[i].userspace_addr,
-                        dev->mem->regions[i].guest_phys_addr,
-                        dev->mem->regions[i].memory_size)) {
--            error_report("Verify ring failure on region %d", i);
--            abort();
-+            virtio_error(dev->vdev,
-+                         "Verify ring failure on region %d", i);
-+            goto out;
-         }
-     }
- 
--- 
-MST
-
+Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
 
