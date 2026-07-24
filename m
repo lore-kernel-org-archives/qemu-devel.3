@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E19DAC531FA
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 09:49:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58C29C531F9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 09:49:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnCVn-0003EK-Fm; Fri, 24 Jul 2026 05:48:11 -0400
+	id 1wnCVs-0003GS-0Q; Fri, 24 Jul 2026 05:48:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wnCVl-0003DS-TD; Fri, 24 Jul 2026 05:48:09 -0400
+ id 1wnCVo-0003Ey-SQ; Fri, 24 Jul 2026 05:48:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wnCVk-00058W-1g; Fri, 24 Jul 2026 05:48:09 -0400
+ id 1wnCVn-000590-Ar; Fri, 24 Jul 2026 05:48:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784886463; bh=7DKwXLqoNYSCKItdII5a3Fp4ks2eieikV51uYNMU7dc=;
+ t=1784886463; bh=XNT16mHos7Uw+RJumfGsNuq2H7pOdc57nzpxpskiNe4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=tDqeU4qiisSSG5eXhqJdDSDHnfSiKkuCM646mWHwCaZI2ni1KE3KOGCO7O48AN4mR
- wmrafXzqQlftPFtxwvXvqIHwMVDRAD5lZBcB0gufHwfGi5OEf4FFolBRkz3Dd7acbH
- pfucrDQ25gWeZMvlosVvQi4iiZNf86J9YJ7F25Bz3iLMRQA24HdaXkfY+Ggu/9BOwt
- q5ojss6nq/1qngGO2fUDC49tCrWUBV/fwp6nolVhgtqFXTKgP74uYqRvDHIM0+twHF
- cERsRKxdAsvzigsXWrsY+O0fKyH8FJnBjk56LaCy2mftJGrZ52UG0V0QbRrneiT7RP
- M0PL+nhnlY1OQ==
+ b=sjvsksSnYdXDSXAG6bFRtVzV60GMHYUR0cMq+eKljsHNBzmU6jnjOa72vHvoh+neb
+ 8cCRG6nIj6R/A3lA5OZbfDjJ7wrNtnJsZVf4wbdP/a53jfKicHbvp0cE5nrW/+BhLT
+ CgA9+y9BnD+skMlSM3sJktY9AN+lE64Y4BMeSmiRdQXX6U5P0eAvHa4sNU0/hu+C4m
+ gg//2AD8ZXx09ivn/TdEjyM22sKGPeBpnU7xJRfb7QFuK3R8LcJQQR0zMU8gZufStY
+ gras+QxSnG7qWaw/ja0u/ZysimMyZeEEfuOwJfFHo+gWAn0sXpm3VsyuTRPySq7FZ2
+ LpUS7ONUbzpZg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4B35F1C4572;
+ by isrv.corpit.ru (Postfix) with ESMTP id 592DD1C4574;
  Fri, 24 Jul 2026 12:47:43 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 45F783F46B1;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5454E3F46B3;
  Fri, 24 Jul 2026 12:48:04 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 42DC518542; Fri, 24 Jul 2026 12:47:54 +0300 (MSK)
+ id 4777C18546; Fri, 24 Jul 2026 12:47:54 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
-	qemu-trivial@nongnu.org
-Subject: [PULL 1/7] spelling: happend
-Date: Fri, 24 Jul 2026 12:47:43 +0300
-Message-ID: <20260724094754.1053970-2-mjt@tls.msk.ru>
+Cc: Vladimir Lobanov <lobanov-vla@yandex.ru>, qemu-trivial@nongnu.org,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 3/7] block/curl: set User-Agent header
+Date: Fri, 24 Jul 2026 12:47:45 +0300
+Message-ID: <20260724094754.1053970-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260724094754.1053970-1-mjt@tls.msk.ru>
 References: <20260724094754.1053970-1-mjt@tls.msk.ru>
@@ -70,57 +70,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fixes: 44adb5fcc20d "target/riscv: Remove spike as default machine"
-Fixes: 48814111366b "migration: Always set DEVICE state"
-Fixes: 3345fb3b6d7f "migration/postcopy: Add latency distribution report for blocktime"
+From: Vladimir Lobanov <lobanov-vla@yandex.ru>
+
+Some HTTP servers and WAFs (e.g. Amazon CloudFront) reject
+requests without a User-Agent header with 403 Forbidden. This
+makes qemu-img info and other curl-based operations fail on
+such URLs without any obvious indication of the root cause.
+
+Set a "QEMU/<version>" User-Agent string on all curl handles
+to ensure compatibility with these endpoints.
+
+Signed-off-by: Vladimir Lobanov <lobanov-vla@yandex.ru>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- docs/about/removed-features.rst | 2 +-
- migration/migration.c           | 2 +-
- qapi/migration.json             | 4 ++--
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ block/curl.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index f7a2aa326de..0735b4ea1d5 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -1241,7 +1241,7 @@ RISC-V default machine (removed in 11.1)
- ''''''''''''''''''''''''''''''''''''''''
- 
- RISC-V used to define ``spike`` as the default machine if no machine option
--was given via the command line.  This happend because ``spike`` was the first
-+was given via the command line.  This happened because ``spike`` was the first
- RISC-V machine implemented in QEMU and setting it as default was
- convenient at that time.  Now we have 7 riscv64 and 6 riscv32 machines
- and having ``spike`` as a default is no longer justified.
-diff --git a/migration/migration.c b/migration/migration.c
-index 9736c14458b..9df6da131ce 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -2806,7 +2806,7 @@ static bool migration_switchover_prepare(MigrationState *s)
-     bql_lock();
-     /*
-      * After BQL released and retaken, the state can be CANCELLING if it
--     * happend during sem_wait().. Only change the state if it's still
-+     * happened during sem_wait().. Only change the state if it's still
-      * pre-switchover.
-      */
-     migrate_set_state(&s->state, MIGRATION_STATUS_PRE_SWITCHOVER,
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 66bd900465a..b1eaf7b0545 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -270,8 +270,8 @@
- #     (Since 10.1)
- #
- # @postcopy-non-vcpu-latency: average remote page fault latency for
--#     all faults happend in non-vCPU threads (in ns).  It has the same
--#     definition of @postcopy-latency but this only provides
-+#     all faults happened in non-vCPU threads (in ns).  It has the
-+#     same definition of @postcopy-latency but this only provides
- #     statistics to non-vCPU faults.  This is only present when the
- #     postcopy-blocktime migration capability is enabled.
- #     (Since 10.1)
+diff --git a/block/curl.c b/block/curl.c
+index 684c677ef71..1958eb80d12 100644
+--- a/block/curl.c
++++ b/block/curl.c
+@@ -482,6 +482,8 @@ static int curl_init_state(BDRVCURLState *s, CURLState *state)
+             }
+         }
+         if (curl_easy_setopt(state->curl, CURLOPT_TIMEOUT, (long)s->timeout) ||
++            curl_easy_setopt(state->curl, CURLOPT_USERAGENT,
++                             "QEMU/" QEMU_VERSION) ||
+             curl_easy_setopt(state->curl, CURLOPT_WRITEFUNCTION,
+                              (void *)curl_read_cb) ||
+             curl_easy_setopt(state->curl, CURLOPT_WRITEDATA, (void *)state) ||
 -- 
 2.47.3
 
