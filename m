@@ -4,92 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC23FC531C9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 13:04:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FD88C531F9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 13:05:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnFZ4-0006GS-Mi; Fri, 24 Jul 2026 09:03:47 -0400
+	id 1wnFaO-0006v1-HB; Fri, 24 Jul 2026 09:05:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <huang.botsz@gmail.com>)
- id 1wnFMq-0002kI-VR
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 08:51:19 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <huang.botsz@gmail.com>)
- id 1wnFMp-0001KI-CI
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 08:51:08 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-38e08baf860so345274a91.2
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 05:51:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wnFaE-0006qA-KQ
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 09:05:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wnFaC-0003Iu-UU
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 09:04:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784898296;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=FYF+BHzatNj4VDz/AEhP3zZClolFFtxwJ2La99QqSZU=;
+ b=FYciGUKw0mIqhnv3SRvhY0rJ2t1F3KcBLpSpqegsJUkN4dD5p0NDoWumlMuhlMeAakinYf
+ Ch1m9MU2JOPsF4Dw6nZRVsNz0CBQiX3DaEZk6hiFk+uIKxRqzimKGqXy2n3AWXe55xSY3f
+ rnh8I2PMr2ezp+IHH55Ri2zxKWXApHg=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-5-L8PqMfX2MZuvYW15fhwK0g-1; Fri, 24 Jul 2026 09:04:54 -0400
+X-MC-Unique: L8PqMfX2MZuvYW15fhwK0g-1
+X-Mimecast-MFC-AGG-ID: L8PqMfX2MZuvYW15fhwK0g_1784898293
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4956c1655c3so2805845e9.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 06:04:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784897461; x=1785502261; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=/NYB5VPamLxRl003Nr1YAoItm9vYqHIxFyNoTTbDu5k=;
- b=Cm75Dhio4Ijm2AjNQPIAMHB+q/a2KwNRCQaWYcw5wBV4Ldulou3sTlgGh009Sa2bq+
- DqUxv6HbjpVO04lka1yNI/jV4i+HyU5znBluD/Rjre1rRItRwkymNgJWLoJR6Wz8MUp9
- pXtfMLMWsXp7Gzf5WzCYu2jhUV2vI0KvtCpYYK4wivz7UYafkHMyp4/ldAEglPhOzE7d
- +GZYn1OT+gFwd6EjjK6YNYxwjmGyDYBroJ8nrQh/OegY6eIexE5CbR0YhSYZ5W3jkl0u
- FViRhtWqL55CvRAz7hH9tRH17zjFZuXdvSS2HxFKdiqUyrkgbH8PpR2ByddvV8EfBD+H
- DXag==
+ d=redhat.com; s=google; t=1784898293; x=1785503093; darn=nongnu.org;
+ h=content-disposition:content-type:mime-version:message-id:subject:cc
+ :to:from:date:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=FYF+BHzatNj4VDz/AEhP3zZClolFFtxwJ2La99QqSZU=;
+ b=OSlNZ6qp3FM2/tgl2SA1iIHYiZB9Sf7qHVF+Zvds5YbnOeVjFmDPJ+q4ZwrNIWQnPS
+ M4BYBdv2x9vWIJkRkH3IG+1xaJCDPjAXsfIVLENLLOjbHb9wNb3qgdrHrbOoYxG+boET
+ PUaPXst+AhBIvqWJnMftuuUhdTTpKZQ6xT3INEV/biovD9bkzjFaBXkDyR7i1umAkgWG
+ 1yMYHUSqCG1OXXWCfSmgpx2PWWSYwRlnN9X0Li/6U5jSH5OCRW8WKh3YlUhK5XC8QWuU
+ 44rwgUalwHQSHac60EnGlWP0rhm8tMN+hSSG2gI9oVPUftGSJ19955MziHfrYXJPtXAn
+ RhqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784897461; x=1785502261;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1784898293; x=1785503093;
+ h=content-disposition:content-type:mime-version:message-id:subject:cc
+ :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=/NYB5VPamLxRl003Nr1YAoItm9vYqHIxFyNoTTbDu5k=;
- b=XmR1Rr3YGR9MhcIC82BsdwU3X8wRuCmX3+QpWLLCtdewgGproqkT0ZZBRbe8hri0vp
- OoWyjvHDFOciTnPYE0kMUbjXKe3Ppo+4JhjeMlpBAeVsexrACYuNQmZF1h5UJUw14uoe
- SSly6FjRr2ddhvKEW/sGB3JSoFtJByY3Jv+NJoa2fJMoqH6trZ1ZMKXzhQhI6mdryVll
- Itj1BS9MbvPs4NXCjow6kfn0ktaGB5EznddNAgOLYS2BR2IlD8nlbrQjnpVWzanyyWiZ
- 60YkvDX495+dOeKbk6UYUxiHyUNc/NMWiSTWARPQUcIpkwBYsYD6TCTQ9G2b3jJaztmm
- uHhA==
-X-Gm-Message-State: AOJu0YxTHBX01gUsVw3LXvSmcvkaXBDipfHmfyyele+mC6i31AiraDTS
- pfP0fOyZ0ApBogzixA/At27jr/iINcdWrwH8Qc/TLyGUvgvFdPKFdqqMBxCSUvZE
-X-Gm-Gg: AR+sD121wUAxubCYK3lEk2Zovgrm238T8iqPkwPqt8F3lTvEkLPmhL4uXwYzIUph9+U
- EXlrwFDZ04Exep5rDOqSNRuKzt4Q3pJpbxEeHozogeR5g6j6ZS1zMvC8sfOEMYQYeZHBtf0kbTe
- pRIFUfgnJglZzyNUu3hA2TysZwbC4KOu/5kx2NM+tcEqRGjqu3Qs0vetKlYnZD9hmqGK0Hinz5f
- Zey9lNEx9NGZL0iO/QAWtPKR+zbkLPqVDzilwiSAe7YabJIepygQ9hlj9cZXXPV9OFAihpN5gof
- Tyu1ImcVqKP8OvtiIAb19Nhf17dx68Tk0+V5e8/EPKKHzXvf+4TuTzjj26Kbe6FLaS7BqvQcD6F
- yVvmkJRY/UrFN0zCvbMIcgva8yMnHiOnT9m9fKbaRYjklZzMKiL19R3uvhWgnaVsSz3UChcbDPN
- 4nIm5wyHowFfxzbldsu51EiVXkOTrnbjLQyxS2hdi0ISRd1HxzPjpUQnFLsoge84Lj4TU1yrNqb
- K6FzoFOOO3Sa71fh+bWHsxEFRgmZb46mVVHGmPLEPUqlbQXVkv/iWPLMhU+R2SPmwMB/bhfjr5L
- v0y+yzv51LbPjTdWBw==
-X-Received: by 2002:a17:90b:2b47:b0:36a:5d1f:7b6 with SMTP id
- 98e67ed59e1d1-38ec6453e68mr6966372a91.2.1784897461185; 
- Fri, 24 Jul 2026 05:51:01 -0700 (PDT)
-Received: from botszhome.. (118-171-20-196.dynamic-ip.hinet.net.
- [118.171.20.196]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38f03adb224sm1449004a91.2.2026.07.24.05.50.59
+ bh=FYF+BHzatNj4VDz/AEhP3zZClolFFtxwJ2La99QqSZU=;
+ b=EeD6Ny6KJBV6D2flfZQ177FPxrROFnrv/NmZuI6iDpb9Dj5TNkKi0hxbkHRv3h+phf
+ 4VKk++Z3xd4um8SOaoS+mhgxIxIlWpyxikx4bQXeCPPh59nPKdhNroj9NvbXKpJh056j
+ F9lxTIUilJlnZfrdSDlFkGpj/Zu9/EwzaOkRfD7IfaUbPdJ7xIw33Z+y7OsAVxC9jx4o
+ RwTlFFnf+h6g2Tt6T2bxnuMenlilCtedRljgmQlz68uimp4x+C2ljbLmbzdlmmfiMgL2
+ PIlOJU+o22+UZ/ARXGECYSjwewE4vcjhifEjE7keRhLj7qoHDc190/O1qb52CQbIEMKw
+ 4FIw==
+X-Gm-Message-State: AOJu0Yz3Ecs4ezojhdOwNaRIPDWGtl+b96cWqc4+2Trto5vHSI9eXZSL
+ c1y2Um1doddKxsGYGTjUOwkuu3aPuXbBH4LzCWc8F82mCaIeKn1wT3UZ24OsJKPJprE3CQGaHNA
+ rBprbCBlgpIzsAfKJqaocI3q21nx+ZvO0hhQmlKZTHnzq2fvG+VOZ9R0nv9Qf2jduhs3RROdplv
+ Di5CTFYT6ADyZpsBTbiSpLAs3Z7mjdupJFsQ==
+X-Gm-Gg: AR+sD12i56+mV5T7BT0aXLLmnO2V1EzK5RtbPma3LrvCiNu5KzyUXrkTqaewTiDYaUH
+ xTbia91qB9QPCH6miL/cQl2/1F7qADsUIznPebxqsKncpM1NbSHReWxQPJIhfn9uAernEZXCYy5
+ 5Yq/Km5K2UqCwNLpaKrp95lcd4zqmoico985E97hFCfXRfULpBtNhUpX5CBahQZxbjcvME3fClw
+ oax/DN54342cIWwBaP4ZPbEoAG6Ld6p7TAAROvFk3UVEi9DKQzRDPHLEOkkArciAetVm0zNyzHx
+ N9cyWkuqpVgcQeLZo05dryIFsZoNgCwppO9+yOJpspXgjR6LUkn+bk+9gZm7y/qDiSFXRZBX/nQ
+ p6+74oAIqAvFn0te9zq+0Ww==
+X-Received: by 2002:a05:600c:5250:b0:495:4d5c:903e with SMTP id
+ 5b1f17b1804b1-49573cb9159mr85283635e9.7.1784898293104; 
+ Fri, 24 Jul 2026 06:04:53 -0700 (PDT)
+X-Received: by 2002:a05:600c:5250:b0:495:4d5c:903e with SMTP id
+ 5b1f17b1804b1-49573cb9159mr85282855e9.7.1784898292321; 
+ Fri, 24 Jul 2026 06:04:52 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4957af885b5sm67757575e9.11.2026.07.24.06.04.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jul 2026 05:51:00 -0700 (PDT)
-From: botszhuang <huang.botsz@gmail.com>
-X-Google-Original-From: botszhuang
- <22925483+botszhuang@users.noreply.github.com>
+ Fri, 24 Jul 2026 06:04:51 -0700 (PDT)
+Date: Fri, 24 Jul 2026 09:04:49 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, philmd@mailo.com, qemu-arm@nongnu.org,
- sef1548@gmail.com,
- botszhuang <22925483+botszhuang@users.noreply.github.com>,
- botszhuang <botszhuang@gmail.com>
-Subject: [PATCH] fix BCM2835_I2C_CLKT
-Date: Fri, 24 Jul 2026 20:42:20 +0800
-Message-ID: <20260724124220.24152-1-22925483+botszhuang@users.noreply.github.com>
-X-Mailer: git-send-email 2.43.0
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
+Subject: [PATCH 1/3] scsi: handle NULL from load_request on migration
+Message-ID: <3777347521a12252e228e4a6243c75250bf76626.1784898250.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=huang.botsz@gmail.com; helo=mail-pj1-x1030.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.419,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 24 Jul 2026 09:03:41 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,33 +114,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-hw/i2c/bcm2835_i2c: Correct CLKT register offset
+On migration, scsi does not check for NULL from load_request, and just
+does a NULL deref if that fails.
 
-The Clock Stretch Timeout (CLKT) register for the BCM2835 I2C controller is actually located at offset 0x1c, not 0x20.
+spapr_vscsi already returns NULL on failure, and follow up
+patches will add more.
 
-The previous incorrect value caused the guest OS to read from and write to the wrong memory address when configuring the I2C timeout, which could lead to unexpected controller behavior.
+Fail migration gracefully instead.
 
-Update the BCM2835_I2C_CLKT macro to match the hardware specification.
-
-Signed-off-by: botszhuang <botszhuang@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3888
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/i2c/bcm2835_i2c.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/scsi/scsi-bus.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/hw/i2c/bcm2835_i2c.h b/include/hw/i2c/bcm2835_i2c.h
-index 45f876df22..519c65f765 100644
---- a/include/hw/i2c/bcm2835_i2c.h
-+++ b/include/hw/i2c/bcm2835_i2c.h
-@@ -38,7 +38,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(BCM2835I2CState, BCM2835_I2C)
- #define BCM2835_I2C_FIFO    0x10                  /* FIFO */
- #define BCM2835_I2C_DIV     0x14                  /* Clock Divider */
- #define BCM2835_I2C_DEL     0x18                  /* Data Delay */
--#define BCM2835_I2C_CLKT    0x20                  /* Clock Stretch Timeout */
-+#define BCM2835_I2C_CLKT    0x1c                  /* Clock Stretch Timeout */
- 
- #define BCM2835_I2C_C_I2CEN     BIT(15)           /* I2C enable */
- #define BCM2835_I2C_C_INTR      BIT(10)           /* Interrupt on RXR */
+diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
+index deb43d5560..fa7ac415e4 100644
+--- a/hw/scsi/scsi-bus.c
++++ b/hw/scsi/scsi-bus.c
+@@ -1922,6 +1922,10 @@ static int get_scsi_requests(QEMUFile *f, void *pv, size_t size,
+         req->retry = (sbyte == 1);
+         if (bus->info->load_request) {
+             req->hba_private = bus->info->load_request(f, req);
++            if (!req->hba_private && qemu_file_get_error(f)) {
++                scsi_req_unref(req);
++                return -1;
++            }
+         }
+         if (req->ops->load_request) {
+             req->ops->load_request(f, req);
 -- 
-2.43.0
+MST
 
 
