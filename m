@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94695C531F9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 03:07:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDDD9C531CC
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 03:07:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wn6Ey-0003k6-Qu; Thu, 23 Jul 2026 23:06:24 -0400
+	id 1wn6F3-0003mr-1H; Thu, 23 Jul 2026 23:06:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wn6Ew-0003ip-An
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 23:06:22 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1wn6Ez-0003kR-Cx
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 23:06:25 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wn6Eu-000848-47
- for qemu-devel@nongnu.org; Thu, 23 Jul 2026 23:06:22 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-38e08baf860so1450353a91.2
- for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 20:06:19 -0700 (PDT)
+ id 1wn6Ex-00085V-TR
+ for qemu-devel@nongnu.org; Thu, 23 Jul 2026 23:06:25 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-384930ca5e2so1387960a91.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Jul 2026 20:06:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784862378; x=1785467178; darn=nongnu.org;
+ d=linaro.org; s=google; t=1784862382; x=1785467182; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=XTEJryM2mS5sdwgtms25LDwrZ2fdC0GJ9Y4cXSQ9TQg=;
- b=ewTnCndQ5Dwy/X9IFOtsuI2e8L9y7BGIIT1ZpkrEiyr9HM5ZT7a0bAQWGoEAqN/N8K
- uVaoETCmlVgziKp/bCByyf3hngFlfr4H1yge9S9xwjLrLKzhxxgkHU+HwfOzUs0hIXmX
- 4S42Af0naTVVUuAMwz/0IQUCkt91UemgzZH9MLIMBqupAFLJBi5f/9tJ6mbojb3YGXFV
- 230EELxGZIS+U7cmEpmkjWx9YKMd0OV7qbn2A+tRIwseSJw72vKQkeStmC2YRhkJRWgq
- X97DZbTqhHJXZnZEffL5HopriIoBLBySpR6SbDYuoGKW5AQCUQJ1Bm98hzEmFKlpyDQm
- LHPQ==
+ bh=vZ3wJDJYBL3Ih5BppqGHeGHu7Wqrcj0x1UTiHapnNLU=;
+ b=CIZoLbS+7WnxJkQ5tEOLmRvCDEbceyn1YyuG+OGlH79ZaGeWlKMo+aO7diXvQFJr+W
+ g7ALZ/EpfIgrBo2hr59NFYCs9YAoIWu1cmr6syCRcPE8mVHNkq8pIlpdGy+2kgqp5oAJ
+ vZPXXm2sbjXjVg2qrQpja/noqii/MdcjOdc9jPTPacBPAWvt1Tn043BpXUMuKiFzfLME
+ uoCfNkndrV6DvGfC2uG+agK0LarXcKiAerNnnKvJ3HnYLBNSgvXjTsH/PX1jTNzePlQp
+ AF0S9Bhq/9MGGOgdI9vjsiJTUsWIhye2YnvNzcbn/uRKd1WTB18hHKu8Z0io3xJ695BE
+ g0YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784862378; x=1785467178;
+ d=1e100.net; s=20251104; t=1784862382; x=1785467182;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=XTEJryM2mS5sdwgtms25LDwrZ2fdC0GJ9Y4cXSQ9TQg=;
- b=ppec0CG3mC+8Qbg0Saz1bw+8zhd6FkCpfe6HjNcbPsAwWmz+BnngqvAwUMptbLiZzN
- bEGFA+53qdOE/2v0+RJWhX3nSlJ8mNpJOqmD3JivSSH8sHFoJlayFz4HzKrf+CjJyJwF
- FopL6dLpcrcQKgT5nXBogNoWt9T9bfmh0UGs5oHEhd5mKKao5yqAtE8elEqweQYvge1P
- rB9rAjsXi7QCVPU/2Ff46NNOE3gFLy/gTLgFBinBMYObNEEZ4fgwQ5i5EbCJb8qdh0J3
- dymxyJY48Bv0+wbg2f/24AcZnFB49SKp0m6jMd7afFaVNge6//5Cr8O4rUnvzVxW6gA7
- PQgQ==
-X-Gm-Message-State: AOJu0Ywjnd5L+0m2MDOAfik8Zm7ohrbS5V2KrFSnHdkb80zFSNII3Qdn
- Mk9FCMi+ol4V9pmtccbNfVJUFtSdZy9DlE0XSzRTQ7f8mixmarg+1fJq20usIWiDAGnSddmBQLr
- eOX+O
-X-Gm-Gg: AR+sD10soYltBCuJPyucZYdiS2atPR7q/IkZW7R3Jq8bl2MM3sf5XnTry+Ler7q1xjG
- 0uYa1Q0/iCryibARsvQzyeoevrJFmwaUQqk5Mdunr1At2Ru5VB+1MIzwMGh96fpziATjODnJPng
- eLfAFH+o83krTuiEnqyP9vqUwcMZehEmoyA7Y6nYJgZMBIdTOR+iFbZ2p0UshZuVRbvWoLueVAQ
- MDMgx7ud5zyca3YX8nkeQd17z1G+CXh2zAGlrYfaJUWc7m/a0BYMiFd1XkbET7KcW/OUdA3vMbY
- RZZsq/ipPoPpfronjLsRoqWeQnUrDEcax9yEdoAXU1nWK7jD5XbsDaz2y5y6eqILDkj7y6XEPS1
- 3yWtrK9FA9B/Zl00lb1uKkFSFa46xUrHQX47MCrLzb0Uqx9tS6Ci3DvT+yZwY3Hb9D+QPl9mE7O
- L3pDXVceluFTL7kpzzwhjT1njHc1V7ta9aYQ==
-X-Received: by 2002:a17:90b:5241:b0:38d:858c:834d with SMTP id
- 98e67ed59e1d1-38ec650c9d7mr5939554a91.17.1784862378516; 
- Thu, 23 Jul 2026 20:06:18 -0700 (PDT)
+ bh=vZ3wJDJYBL3Ih5BppqGHeGHu7Wqrcj0x1UTiHapnNLU=;
+ b=Q1/goeZsH3bxPvO/7xZrA7Xvqe3/yU6LCnVMxlZiit1+mCTp/kFneIDl1ljm6l1Zi2
+ M4QgBXwlJTAnMm+Lm2Pn1YFhhCforfq+eajPsbOhbLXgmO+XYSrQjuBfAvsVQT0qcbCb
+ 8tunmOxGOkKoeNq1uFZD05iacYKN9eG4/CGuz+yfX9BW3MstrZRw82Vxp2IupUKp3K0Z
+ dJsyQXiay3C42KPS2xUpxPdM+1npOxnAMISGs1/LusLlxBr1lboGGS+uugQVFso619Vk
+ oVNZUndfQP7oL2+q9BwNxxpGbSFqhV3CGctdmHZqnClIpKZH9gsZyN9p9dJRVd5WmYgO
+ GIEA==
+X-Gm-Message-State: AOJu0YztLFgmYw08N1jlTJoXxBd1AEL9NZpdDH/DeUzepmDQBXQwIusc
+ o0VbHfFi+Bpcb7DEOspP2vJMtPxYRUdXRIwBvvTt6gbYQ4f95U8Eta4Tn86XGtKulOYpnxJj0YT
+ xckEi
+X-Gm-Gg: AR+sD10NOtvt8vgbBX+TZcf5T1Z/xhYI4HqLugqgh7dhlNjyug75MGHFTHzAAal5lmb
+ Npvfnmj7cJs75s9Zt7z4T3iITrASFz7A5D+EAzrIMrJKbpR8W4nJ8AAXlcZwizR7XGMm7iw8YTm
+ PR2TfQLwEBy8Dw+K7HKeDkUt1YWYieQ72rjaRFuq8NmBd/s2Aj2Hfqgsnm4u/yNDTPNrwBY6qZd
+ yQC6vmxglitcXEO7GJy4H8zzEL1Yl8zwB6VuDVLHYaRRnlHwIRgLiLUx5uZS9EbuzHEpHPtxQOJ
+ nYFXXMuF7/XcPi4HZm6VAB0xkic3DWclhBPbxOdwUe8zJeoxprMVcbQKST1H3+f8e3y+D2YR/rD
+ 2r4vVJTPY8pP65RQYCoqHA4lzL0unJq1xgDIVVDHlGw2tmgkxSbEZXOuc8P/2SbMiXsB8c1sxZ5
+ pmVxWCFAR7He/g2A3JVa+ZrrRCWGOeYehvdg==
+X-Received: by 2002:a17:90b:4ad1:b0:38e:11ba:992e with SMTP id
+ 98e67ed59e1d1-38ec663d91emr5507518a91.35.1784862382578; 
+ Thu, 23 Jul 2026 20:06:22 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38f03ad0e0csm750777a91.7.2026.07.23.20.06.17
+ 98e67ed59e1d1-38f03ad0e0csm750777a91.7.2026.07.23.20.06.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Jul 2026 20:06:18 -0700 (PDT)
+ Thu, 23 Jul 2026 20:06:22 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 1/6] target/arm: Add FGWTE3_EL3
-Date: Thu, 23 Jul 2026 20:06:11 -0700
-Message-ID: <20260724030616.76180-2-richard.henderson@linaro.org>
+Subject: [PATCH 6/6] target/arm: Enable FEAT_FGWTE3 for -cpu max
+Date: Thu, 23 Jul 2026 20:06:16 -0700
+Message-ID: <20260724030616.76180-7-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260724030616.76180-1-richard.henderson@linaro.org>
 References: <20260724030616.76180-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,90 +102,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpregs.h       |  1 +
- target/arm/cpu-features.h |  5 +++++
- target/arm/cpu.h          |  2 +-
- target/arm/helper.c       | 19 +++++++++++++++++++
- 4 files changed, 26 insertions(+), 1 deletion(-)
+ target/arm/tcg/cpu64.c        | 1 +
+ docs/system/arm/emulation.rst | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
-index 391c0e322b..34592679e4 100644
---- a/target/arm/cpregs.h
-+++ b/target/arm/cpregs.h
-@@ -385,6 +385,7 @@ typedef enum CPAccessResult {
- /* Indexes into fgt_write[] */
- #define FGTREG_HFGWTR 0
- #define FGTREG_HDFGWTR 1
-+#define FGTREG_FGWTE3 2
- /* Indexes into fgt_exec[] */
- #define FGTREG_HFGITR 0
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 8a3ebf6321..a0d8d0bac8 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1362,6 +1362,7 @@ void aarch64_max_tcg_initfn(Object *obj)
  
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index fb5ed25ad0..75f0fc4169 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -1467,6 +1467,11 @@ static inline bool isar_feature_aa64_asid2(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64MMFR4, ASID2) != 0;
- }
+     t = GET_IDREG(isar, ID_AA64MMFR4);
+     t = FIELD_DP64(t, ID_AA64MMFR4, ASID2, 1);    /* FEAT_ASID2 */
++    t = FIELD_DP64(t, ID_AA64MMFR4, FGWTE3, 1);   /* FEAT_FGWTE3 */
+     SET_IDREG(isar, ID_AA64MMFR4, t);
  
-+static inline bool isar_feature_aa64_fgwte3(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR4, FGWTE3) != 0;
-+}
-+
- /*
-  * Note the E2H0 ID fields is signed, increasingly negative as more
-  * isn't implemented.
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 03a30afcbe..ca75e379eb 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -553,7 +553,7 @@ typedef struct CPUArchState {
-          * FEAT_FGT2 will add more elements to these arrays.
-          */
-         uint64_t fgt_read[2]; /* HFGRTR, HDFGRTR */
--        uint64_t fgt_write[2]; /* HFGWTR, HDFGWTR */
-+        uint64_t fgt_write[3]; /* HFGWTR, HDFGWTR, FGWTE3 */
-         uint64_t fgt_exec[1]; /* HFGITR */
- 
-         /* RME registers */
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index af45234ad2..d410a9a1ec 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -6331,6 +6331,21 @@ static const ARMCPRegInfo fpmr_reginfo[] = {
-     }
- };
- 
-+static void fgwte3_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                         uint64_t value)
-+{
-+    env->cp15.fgt_write[FGTREG_FGWTE3] |= value;
-+}
-+
-+static const ARMCPRegInfo fgwte3_reginfo[] = {
-+    { .name = "FGWTE3_EL3", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 3, .opc1 = 6, .crn = 1, .crm = 1, .opc2 = 5,
-+      .access = PL3_RW, .resetvalue = 0,
-+      .writefn = fgwte3_write, .raw_writefn = raw_write,
-+      .fieldoffset = offsetof(CPUARMState, cp15.fgt_write[FGTREG_FGWTE3])
-+    },
-+};
-+
- void register_cp_regs_for_features(ARMCPU *cpu)
- {
-     /* Register all the coprocessor registers based on feature bits */
-@@ -7642,6 +7657,10 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-         define_arm_cp_regs(cpu, ccsidr2_reginfo);
-     }
- 
-+    if (cpu_isar_feature(aa64_fgwte3, cpu)) {
-+        define_arm_cp_regs(cpu, fgwte3_reginfo);
-+    }
-+
-     define_pm_cpregs(cpu);
-     define_gcs_cpregs(cpu);
- }
+     t = GET_IDREG(isar, ID_AA64ZFR0);
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index 9930974a50..9528afbb18 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -78,6 +78,7 @@ the following architecture extensions:
+ - FEAT_FAMINMAX (Floating-point maximum and minimum absolute value instructions)
+ - FEAT_FCMA (Floating-point complex number instructions)
+ - FEAT_FGT (Fine-Grained Traps)
++- FEAT_FGWTE3 (Fine-Grained Write Trap EL3)
+ - FEAT_FHM (Floating-point half-precision multiplication instructions)
+ - FEAT_FP (Floating Point extensions)
+ - FEAT_FP16 (Half-precision floating-point data processing)
 -- 
 2.43.0
 
