@@ -4,95 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42DDDC531F9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 08:38:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D058C531F9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 08:45:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnBQX-00051k-Bl; Fri, 24 Jul 2026 04:38:41 -0400
+	id 1wnBWT-0007nm-SD; Fri, 24 Jul 2026 04:44:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wnBQP-0004sA-8L
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 04:38:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wnBWR-0007na-WD; Fri, 24 Jul 2026 04:44:48 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wnBQN-0003N7-3i
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 04:38:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784882305;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dgIBRmicN9h4bBiDRn0VGIqHOycUo/puoDIVi8avihQ=;
- b=ayChqkQ/D24tIlojjUYKb7CgfCwxUeS35/NhTWsOkTHPVXhNVsdscR1n8f88nmn7C6hHXm
- 4fSgo8c1hVj4W5SVuZWZH+PsRkIiv1kTjp1MpIWeGfytRBSXepqgbZdECCy4eAK41gahBt
- 0Joar8hYLvOs0QJIwQZBkmH/OlBIpL8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-547-VOcuL-kPNjCLML9EkW7tAw-1; Fri,
- 24 Jul 2026 04:38:21 -0400
-X-MC-Unique: VOcuL-kPNjCLML9EkW7tAw-1
-X-Mimecast-MFC-AGG-ID: VOcuL-kPNjCLML9EkW7tAw_1784882299
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A6393195DBA3; Fri, 24 Jul 2026 08:38:17 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 071A815A5; Fri, 24 Jul 2026 08:38:15 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 98ED021E6920; Fri, 24 Jul 2026 10:38:12 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  Lukas
- Straub <lukasstraub2@web.de>,  Vladimir Sementsov-Ogievskiy
- <vsementsov@yandex-team.ru>,  Zhao Liu <zhao1.liu@intel.com>,  Laurent
- Vivier <laurent@vivier.eu>,  "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,  Alex
- Williamson
- <alex@shazbot.org>,  zhenwei pi <zhenwei.pi@linux.dev>,  Hanna Reitz
- <hreitz@redhat.com>,  Ani Sinha <anisinha@redhat.com>,
- qemu-block@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Peter Xu
- <peterx@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,
- linux-cxl@vger.kernel.org,  Jiri Pirko <jiri@resnulli.us>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Stefan Berger
- <stefanb@linux.vnet.ibm.com>,  Fabiano Rosas <farosas@suse.de>,  Stefan
- Hajnoczi <stefanha@redhat.com>,  Michael Tokarev <mjt@tls.msk.ru>,  Igor
- Mammedov <imammedo@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,  Mauro Carvalho Chehab
- <mchehab+huawei@kernel.org>,  linux-edac@vger.kernel.org,  =?utf-8?Q?Marc?=
- =?utf-8?Q?-Andr=C3=A9?=
- Lureau <marcandre.lureau@redhat.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Eric Blake <eblake@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?=
- Le Goater <clg@redhat.com>,  Jason Wang <jasowangio@gmail.com>,
- qemu-trivial@nongnu.org,  Jonathan Cameron <jic23@kernel.org>
-Subject: Re: [PATCH v2 44/44] qapi: convert trivial intro sections for
- block-core.json
-In-Reply-To: <20260723044805.527643-45-jsnow@redhat.com> (John Snow's message
- of "Thu, 23 Jul 2026 00:48:05 -0400")
-References: <20260723044805.527643-1-jsnow@redhat.com>
- <20260723044805.527643-45-jsnow@redhat.com>
-Date: Fri, 24 Jul 2026 10:38:12 +0200
-Message-ID: <87y0f0aikr.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wnBWP-0004D8-GS; Fri, 24 Jul 2026 04:44:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1784882661; bh=B8cLTH1j0w9fPdVAMJZ6NA713y+3cyfLGfrN9dt99K4=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=VJtsc41iLKYrvWEJ4nZ9JDx3wb52B7FIOMTGLDGHx2AbVnsibzsrm02dPu667KugM
+ x6LNyRx1Ng/8hENqsyHyj6lxWyRUnIGwOrFzhTyfnAHvEoqKyCyJDLGJcR0WcRRnv3
+ Vk7QfT1siRAWWn9fbnOUGnIcrNmhcQtZ/umbTovB8Uwk01NjiKI6mgFXeF80nQQr4K
+ LLVlGPnBU97isPS3Y0ypbc2VBqPw8WjfINYY26t+9sglTa8iln2X3WvU2F9Bois3Vu
+ xN1mZhghmTCeRlBeVCOMvOGT7TERL3jVYuzxLTqRnF0HK8qJK3RdJQkXNMjIyiP7Dc
+ 3Aeu1x6Xs/hPw==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id B9DC21C451C;
+ Fri, 24 Jul 2026 11:44:21 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 918983F4664;
+ Fri, 24 Jul 2026 11:44:42 +0300 (MSK)
+Message-ID: <a9ec828c-8023-4354-8c2d-def46c4681eb@tls.msk.ru>
+Date: Fri, 24 Jul 2026 11:44:32 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 3
-X-Spam_score: 0.3
-X-Spam_bar: /
-X-Spam_report: (0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.951,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] vfio/pci: don't narrow a failed config read to a
+ plausible value
+To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, QEMU Stable <qemu-stable@nongnu.org>
+References: <20260715191735.2454719-1-den@openvz.org>
+ <20260717122232.468955-2-den@openvz.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260717122232.468955-2-den@openvz.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,312 +115,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+On 7/17/26 15:22, Denis V. Lunev wrote:
+> vfio_pci_read_config() signals a failed host-side read by returning
+> (uint32_t)-1, regardless of the requested length. vfio_intx_enable()
+> and vfio_pci_pre_reset() both narrowed that return value straight
+> into a uint8_t/uint16_t local before checking anything, which
+> truncates -1 into 0xff or 0xffff - values a real 1- or 2-byte
+> register read can legitimately produce. From that point on, a
+> failed read and real all-ones content are indistinguishable.
+> 
+> Keep the full uint32_t result and check it against (uint32_t)-1
+> before narrowing. In vfio_pci_pre_reset(), skip the corresponding
+> write-back on a failed read instead of writing back constructed
+> garbage to the device.
+> 
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> CC: Alex Williamson <alex@shazbot.org>
+> CC: "Cédric Le Goater" <clg@redhat.com>
 
-> (Trivial)
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->  qapi/block-core.json | 646 +++++++++++++++++--------------------------
->  1 file changed, 255 insertions(+), 391 deletions(-)
->
-> diff --git a/qapi/block-core.json b/qapi/block-core.json
-> index 1f87b078505..bd98af2f298 100644
-> --- a/qapi/block-core.json
-> +++ b/qapi/block-core.json
+This feels like qemu-stable material too.  I'm picking it up,
+please let me know if I should not.
 
-[...]
+Thanks,
 
-> @@ -422,10 +417,9 @@
->  
->  ##
->  # @BlockGraphInfo:
-> -#
-> -# Information about all nodes in a block (sub)graph in the form of
-> -# `BlockNodeInfo` data.  The base `BlockNodeInfo` struct contains the
-> -# information for the (sub)graph's root node.
-> +#     Information about all nodes in a block (sub)graph in the form of
-> +#     `BlockNodeInfo` data.  The base `BlockNodeInfo` struct contains
-> +#     the information for the (sub)graph's root node.
->  #
->  # @children: Array of links to this node's child nodes' information
->  #
-
-The first sentence is clearly overview, but the second caught my eye.
-What would we want the inliner to do with it?
-
-Looks like the inliner isn't going to do anything with it right now,
-because BlockGraphInfo is only used as member type.
-
-[...]
-
-> @@ -1378,10 +1355,9 @@
->  
->  ##
->  # @BlockdevOnError:
-> -#
-> -# An enumeration of possible behaviors for errors on I/O operations.
-> -# The exact meaning depends on whether the I/O was initiated by a
-> -# guest or by a block job
-> +#     An enumeration of possible behaviors for errors on I/O
-> +#     operations.  The exact meaning depends on whether the I/O was
-> +#     initiated by a guest or by a block job
->  #
->  # @report: for guest operations, report the error to the guest; for
->  #     jobs, cancel the job
-
-The first sentence is clearly overview, but the second caught my eye.
-
-Because this is an enum type, and we're not going to inline these, we
-can leave it as is.
-
-[...]
-
-> @@ -1636,9 +1605,8 @@
->  
->  ##
->  # @BackupPerf:
-> -#
-> -# Optional parameters for backup.  These parameters don't affect
-> -# functionality, but may significantly affect performance.
-> +#     Optional parameters for backup.  These parameters don't affect
-> +#     functionality, but may significantly affect performance.
-
-The first sentence is clearly overview.  What would we want the inliner
-to do with the second?
-
-Looks like the inliner isn't going to do anything with it right now,
-because BackupPerf is only used as member type.
-
-Aside: this only user BackupCommon member x-perf has been @unstable for
-more than five years.  That's a long time to sit on a fence.
-
->  #
->  # @use-copy-range: Use copy offloading.  Default false.
->  #
-
-[...]
-
-> @@ -1845,12 +1812,12 @@
->  
->  ##
->  # @change-backing-file:
-> -#
-> -# Change the backing file in the image file metadata.  This does not
-> -# cause QEMU to reopen the image file to reparse the backing filename
-> -# (it may, however, perform a reopen to change permissions from r/o ->
-> -# r/w -> r/o, if needed).  The new backing file string is written into
-> -# the image file metadata, and the QEMU internal strings are updated.
-> +#     Change the backing file in the image file metadata.  This does
-> +#     not cause QEMU to reopen the image file to reparse the backing
-> +#     filename (it may, however, perform a reopen to change
-> +#     permissions from r/o -> r/w -> r/o, if needed).  The new backing
-> +#     file string is written into the image file metadata, and the
-> +#     QEMU internal strings are updated.
-
-This is an example of a first paragraph I might flag for review if it
-was a struct or union type.
-
->  #
->  # @image-node-name: The name of the block driver state node of the
->  #     image to modify.  The "device" argument is used to verify
-
-[...]
-
-> @@ -2746,11 +2700,10 @@
->  
->  ##
->  # @ThrottleLimits:
-> -#
-> -# Limit parameters for throttling.  Since some limit combinations are
-> -# illegal, limits should always be set in one transaction.  All fields
-> -# are optional.  When setting limits, if a field is missing the
-> -# current value is not changed.
-> +#     Limit parameters for throttling.  Since some limit combinations
-> +#     are illegal, limits should always be set in one transaction.
-> +#     All fields are optional.  When setting limits, if a field is
-> +#     missing the current value is not changed.
-
-The first sentence is clearly overview, but what would we want the
-inliner to do with the remainder?
-
-Looks like the inliner isn't going to do anything with it right now,
-because ThrottleLimits is only used as member type.
-
->  #
->  # @iops-total: limit total I/O operations per second
->  #
-
-[...]
-
-> @@ -3548,12 +3486,11 @@
->  
->  ##
->  # @Qcow2OverlapCheckFlags:
-> -#
-> -# Structure of flags for each metadata structure.  Setting a field to
-> -# 'true' makes QEMU guard that Qcow2 format structure against
-> -# unintended overwriting.  See Qcow2 format specification for detailed
-> -# information on these structures.  The default value is chosen
-> -# according to the template given.
-> +#     Structure of flags for each metadata structure.  Setting a field
-> +#     to 'true' makes QEMU guard that Qcow2 format structure against
-> +#     unintended overwriting.  See Qcow2 format specification for
-> +#     detailed information on these structures.  The default value is
-> +#     chosen according to the template given.
->  #
->  # @template: Specifies a template mode which can be adjusted using the
->  #     other flags, defaults to 'cached'
-
-The first sentence is clearly overview, but what would we want the
-inliner to do with the remainder?
-
-Looks like the inliner isn't going to do anything with it right now,
-because Qcow2OverlapCheckFlags is only used as member type.
-
-
-[...]
-
-> @@ -4550,9 +4460,8 @@
->  
->  ##
->  # @BlockdevOptionsCurlHttp:
-> -#
-> -# Driver specific block device options for HTTP connections over the
-> -# curl backend.  URLs must start with "http://".
-> +#     Driver specific block device options for HTTP connections over
-> +#     the curl backend.  URLs must start with "http://".
->  #
->  # @cookie: List of cookies to set; format is "name1=content1;
->  #     name2=content2;" as explained by CURLOPT_COOKIE(3).  Defaults to
-
-The first sentence is clearly overview, but what about the second?
-"URLs" are actually member @url of base type BlockdevOptionsCurlBase.
-What would we want the inliner to do with it?
-
-BlockdevOptionsCurlBase is the base type of BlockdevOptionsCurlHttps and
-a branch type of BlockdevOptions, where this will get inlined.
-
-> @@ -4576,9 +4485,8 @@
->  
->  ##
->  # @BlockdevOptionsCurlHttps:
-> -#
-> -# Driver specific block device options for HTTPS connections over the
-> -# curl backend.  URLs must start with "https://".
-> +#     Driver specific block device options for HTTPS connections over
-> +#     the curl backend.  URLs must start with "https://".
->  #
->  # @sslverify: Whether to verify the SSL certificate's validity
->  #     (defaults to true)
-
-Likewise.
-
-> @@ -4591,9 +4499,8 @@
->  
->  ##
->  # @BlockdevOptionsCurlFtp:
-> -#
-> -# Driver specific block device options for FTP connections over the
-> -# curl backend.  URLs must start with "ftp://".
-> +#     Driver specific block device options for FTP connections over
-> +#     the curl backend.  URLs must start with "ftp://".
->  #
->  # Since: 2.9
->  ##
-
-Likewise.
-
-> @@ -4603,9 +4510,8 @@
->  
->  ##
->  # @BlockdevOptionsCurlFtps:
-> -#
-> -# Driver specific block device options for FTPS connections over the
-> -# curl backend.  URLs must start with "ftps://".
-> +#     Driver specific block device options for FTPS connections over
-> +#     the curl backend.  URLs must start with "ftps://".
->  #
->  # @sslverify: Whether to verify the SSL certificate's validity
->  #     (defaults to true)
-
-Likewise.
-
-
-[...]
-
-> @@ -4735,14 +4637,13 @@
->  
->  ##
->  # @BlockdevOptionsCbw:
-> -#
-> -# Driver specific block device options for the copy-before-write
-> -# driver, which does so called copy-before-write operations: when data
-> -# is written to the filter, the filter first reads corresponding
-> -# blocks from its file child and copies them to @target child.  After
-> -# successfully copying, the write request is propagated to file child.
-> -# If copying fails, the original write request is failed too and no
-> -# data is written to file child.
-> +#     Driver specific block device options for the copy-before-write
-> +#     driver, which does so called copy-before-write operations: when
-> +#     data is written to the filter, the filter first reads
-> +#     corresponding blocks from its file child and copies them to
-> +#     @target child.  After successfully copying, the write request is
-> +#     propagated to file child.  If copying fails, the original write
-> +#     request is failed too and no data is written to file child.
->  #
->  # @target: The target for copy-before-write operations.
->  #
-
-What would we want the inliner to do with this one?
-
-BlockdevOptionsCbw is a branch type of BlockdevOptions, where this will
-get inlined.
-
-> @@ -4778,9 +4679,8 @@
->  
->  ##
->  # @BlockdevOptions:
-> -#
-> -# Options for creating a block device.  Many options are available for
-> -# all block devices, independent of the block driver:
-> +#     Options for creating a block device.  Many options are available
-> +#     for all block devices, independent of the block driver:
->  #
->  # @driver: block driver name
->  #
-
-What would we want the inliner to do with this one?
-
-BlockdevOptions is used as argument of blockdev-add, where it will be
-inlined.
-
-
-[...]
-
-> @@ -5587,9 +5465,8 @@
->  
->  ##
->  # @BlockdevAmendOptionsQcow2:
-> -#
-> -# Driver specific image amend options for qcow2.  For now, only
-> -# encryption options can be amended
-> +#     Driver specific image amend options for qcow2.  For now, only
-> +#     encryption options can be amended
->  #
->  # @encrypt: Encryption options to be amended
->  #
-
-What would we want the inliner to do with this one?
-
-BlockdevAmendOptionsQcow2 is used as branch of BlockdevAmendOptions,
-where it will be inlined.
-
-[...]
-
-I believe all the problematic first paragraphs consist of more than one
-sentence.  What about splitting "trivial" into "very trivial" (just one
-paragraph, no sentence-ending punctuation in the middle) and "hopefully
-trivial" (just one paragraph, remainder)?
-
+/mjt
 
