@@ -4,147 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 269FFC531FA
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 16:39:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C021FC531C9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 16:46:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnIvp-0001TC-MG; Fri, 24 Jul 2026 12:39:29 -0400
+	id 1wnJ1s-0003cV-Sf; Fri, 24 Jul 2026 12:45:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wnIvo-0001T4-7q
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 12:39:28 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wnJ1r-0003c6-5E
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 12:45:43 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wnIvl-00050q-ML
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 12:39:27 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1wnJ1o-0006Dj-UX
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 12:45:42 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66ODbGC53178246
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 16:39:22 GMT
+ 66ODbZVY3090677
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 16:45:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- abwVVKFMUkeLGRYSRUrW/g85Rlg2Lsw5qKY7Y4NmFsg=; b=Pz8jQSxxXiHNkT3l
- MJsWuV7ZIdxa33mXjlRF6R3bpHgnLMjN3cAFOxLQ8+a1fbWd+o+kQkw8CwQUn6TU
- iudcgeXAaYCMWuv4yLAtVa6DXklt1MHZUYtbk+n9WDZngRG+hJYxJwHOjWhymjcB
- r+KPi5oNXDaA8P7G84ndLuz6ulZUd+abrMd5hY/9+lhayO3vDhKFj5Jo7oAQpF0k
- KfNBmeuweBlnBg1eOPUAEwdX0RV7HaK+g682OagED9qdiUewyfSdSZddZ/LK34nO
- TC42afNi25ZDUEaCWSoRfMBgOjIf3u3rC514aoBRQXT9GcJpZnYRBpR6ZePHya6Z
- MjIJAQ==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fm5yahesq-1
+ Er9UYAn43nIvyipemIGAIRDrNGe1X2GkurCZ3sGKTNg=; b=HGe7xiFmajkpY4sY
+ aImzv41cUHaupTp+6RH1cG5iixXEXE29XrdlK8G4GJp0funHA2yJ4F2Ge0DA8wAr
+ jeeGcrzqvk2tyzeU+dcNJ7lI5ZOETygeWqHvusgxRaWAZyg7EwrBFnewiB25eEYN
+ I3jtaXMdZoqwf2y5PtOQ+I7RBDcL/h9U6kH+Y19xNSCrCrqGNHTN+T6v1GlhnsSs
+ puIANUx4hXbFlRnnsPq1jji74z1IyMXsCiriLPVmoNWnwuNOBfPnASwiERXEr4LK
+ nvEViicV/ewlLG+Yxm5gXC1n11Fm2KRkl0b76g+mXMcMLVwnYVjt3PUliKCtV6mZ
+ j+ivJw==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fm8cggv8n-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 16:39:22 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2cc6dd43737so11685315ad.2
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 09:39:22 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 16:45:38 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-cb711c88f2eso384210a12.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 09:45:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784911161; x=1785515961; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1784911538; x=1785516338; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=abwVVKFMUkeLGRYSRUrW/g85Rlg2Lsw5qKY7Y4NmFsg=;
- b=L/tq/bibBp13U67BodqgR7pjmH0OtgsYbleOZAg6ad0F8IcWdr1hGzTBBxK1h8MlsK
- ICXHhhWO0AMG8+gDWjU2/NqHb9j185Jmf7i1yI0PJkmy5GBPkiNN/NEIAoIyDuN6iDdo
- PVSP8w847jqVJ1O8T/xtVIbSR7cNSqsHKpRPdpvwl0P7nHfR/+2uDTlKcOnvnpaj3q4x
- z6yXEvKcKW/mvBi8P6ZJ0bY/mlQ0BK17Lsg4acgf59wHifSlNKNhkAgv/+nk/hjpYTT5
- 5AP/QQ9xnAPyW7n4A0Caf2kJoXoXtpLVwZtBtUaNvj0Ui61KZ28BlQQpCM1XClwMqfhG
- NZFQ==
+ bh=Er9UYAn43nIvyipemIGAIRDrNGe1X2GkurCZ3sGKTNg=;
+ b=MNzQhOJSWNZBVcni5kZxfzjoII+RU0ZtyqY75TDVuT8NjCq/b+q/SYAasZEsnLtVuH
+ sJRazekz/OuckgHzCbaQuzfzOnvGBQaDs+fCrOZvQOOB9JayxcxSYIHWxM68kOFRYlvf
+ +yOFpxG35A88EzwOifcrA2yf3NWWhVlAADvs+bdo9F7R98w9r/c3KbCrMupbp7OZu7tX
+ LErcIv7y6niOBjzxbfifldXyQPWss83tjffUnTmuF5HNsVdOq733lDIVy2P6AtAQlTB/
+ GpykuILrjEgQUfoSbsatw6ORzEerltmRFNDC/0bDKnAs97PxTRsN8/H/TQwEJm/LMk0P
+ IVow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784911161; x=1785515961;
+ d=1e100.net; s=20251104; t=1784911538; x=1785516338;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=abwVVKFMUkeLGRYSRUrW/g85Rlg2Lsw5qKY7Y4NmFsg=;
- b=NgNlzU6uuTEnCpl6Ei2CF/OFoTy3wh0tfTyT0Y3iv1D9urS+YbshFk2N6qpJp7Hoy8
- GguegEgvEK/R1EDEnu4W0d0eeUkfBKh0U0ui3PzScQ4k7Yq+KrBC7H0dqQnzAYHLERes
- kjw8FDAhv0VVnGh8ipZG4NJMRKXsS/dM42ibk9jEI7VM+LEO3P0qlP/zBgTtoCIZ8Tjk
- +QcHYGHZRn7FtMsDq7L9rjvSzyD2X4UB72gh9hIbC2EJYfyxZYk680K6CUarDDb6YA9o
- xSll+krzLvQGyPmG1gASjRKPj0EccHs1sIuqG2VM0zsHor5M/Jp8E05HfVE9D8oMUalj
- hoMQ==
-X-Gm-Message-State: AOJu0Yw4qlRM3k6x/VLy4P45uhpSfxj1iT9yN0GqfaGbejIjWU4GTM52
- hAk574JY6CCuagz0ZWuwqz8kx9+sYzuOUqFV2tRM+EcgRaO5+6bDS+Eg1/+Ez421OqHQLTVyKGi
- 3d3iAx4D6UdJr4wEe12cr5x5rtBsD6GrIQcffexWmJTT3puISdLfvGuVJSw==
-X-Gm-Gg: AR+sD13r3m+vj3kzXjGetiBXwZLcnMCHAtN/OqJT0WylWDscXNKm8WKq/LLdaU2OWNm
- mZ3OKzEA6Bnd3MTDlLdQKjgLq4kKdcucHFXjm5fPLMVZFZIrRcb2CHl5Gp+0hE1BNAgahq444SH
- mDO978SQLEIQdwWoZP4PwE9I+UacVDbOI4H47TcNFw5ppsVlZJ4Yq1bPVcg+O7b3k5BrYUR5CtW
- e/XgaYvB/O0MINyJv26e4F2AXQxPjcbNXhfZLbfWx00hnV5m6pEIwmGnMu5mIE6VtHBHlWNnq0n
- JJsizaLnDMudm+/hrjAXArHmr1zj89G3cWtQeBrpopdhn0OKdN2JNnhY0IrAgnBoEpM6017Hc4L
- secmJFaxCSVtnhIar4gwMw8qL5+2F/SGlSqMsSqgmNGWa7XCr+1H6Dhf+pk+l9tEwTNoI
-X-Received: by 2002:a05:6a21:6b87:b0:3c3:9ed1:2549 with SMTP id
- adf61e73a8af0-3c44b1c8696mr8729304637.41.1784911161418; 
- Fri, 24 Jul 2026 09:39:21 -0700 (PDT)
-X-Received: by 2002:a05:6a21:6b87:b0:3c3:9ed1:2549 with SMTP id
- adf61e73a8af0-3c44b1c8696mr8729249637.41.1784911160917; 
- Fri, 24 Jul 2026 09:39:20 -0700 (PDT)
+ bh=Er9UYAn43nIvyipemIGAIRDrNGe1X2GkurCZ3sGKTNg=;
+ b=aXG3r7/Nc+gVhCpGNLJLrCtQ+TfJUe9c6rbV2C2SI0GGQJO7iLFwpYxivJf2S9Wfjz
+ Pi7a4opEUIaNEx/lGUXR2dVYP500/qQoWBlf/LwVkZI7TSCy51OMlIdYRQ+hg1yKKIlC
+ bPA2TmmljS8cuJOdT1ODxT3lHD801Y9mK0XHLOv6dGkyaSaFb1O9nnDEJeGcNYfLLSyk
+ /XzZGGuIWhGP3gnL901A3GjehfEn28eFp6XHUtDo0ZB3CalChMP3LokFaWVjhXwpnJGx
+ IStHzemoksfYDi0UzQaX0PiKrme5bw5g/OlMLGNjnddhaj+94nwKTB25zyk7+KfYt7BC
+ dFnw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rp3tgof+YJaIy/gdYniUa15Le2AtQRbztnGs0zfVGbIlc6C9in8g4LIaH4Iu6q/W0ZZQs2JWfO+DGSw@nongnu.org
+X-Gm-Message-State: AOJu0Yy5nddIXcIQHdniCLuGHnFNNx4NrrODrxax3xfvy3GqoUtwXYAb
+ djAVanupvz++NO/N9eJ3fb5BqFhwCV9XZpEPvSJuwzLGdL0YxAZCUrqaoji6bXYQNZYNPYykLJY
+ RuCDoOAEcOU5egMrZVJ+OeIJCdV4nVPPY21FUuvXjN/mJXVUQUF8fTBVApg==
+X-Gm-Gg: AR+sD12YTUTDN2CigBDLwCWcJYtD4eWNDIQHP0MpZWYF3ls1HNFtNzkhTsngwpbyI9z
+ xiOXO6xemPnOfc9vyqa8FtrCEoRcEn+aFVUnAvKW0FGAmRU1uNdFwSCPtnPaVwFK6eWvEreVI2C
+ /FvU0uZPQFFM2wqzX/4gaonmkyA9sZ3DwFmfOz6Or88PxBWQZIoyXQEAgdTZBBxCDLsFi6QfwGi
+ aCyLeG8K0MPjK/tRbcePgaU5EoJOuq7SSGeComn6NRjorUbgZmzWyKik0ajGtpCs8EM8RQmc/6L
+ elLGmGApYV5Z+tE9wpG7vgexbd/TTPO+OYVATxzTbnKiscfQvcSmOiKvXUyP5ZWOyaZJNzYs5RS
+ EL0+gNvNiepUWkaF98EM5EnT1H4RbMHsenCSYKa3OOI5GAOnVEPj0rKy8CyhP1UFVwxqD
+X-Received: by 2002:a05:6a21:6f07:b0:3c4:3321:4fe9 with SMTP id
+ adf61e73a8af0-3c44afd2b84mr9342027637.7.1784911537526; 
+ Fri, 24 Jul 2026 09:45:37 -0700 (PDT)
+X-Received: by 2002:a05:6a21:6f07:b0:3c4:3321:4fe9 with SMTP id
+ adf61e73a8af0-3c44afd2b84mr9341992637.7.1784911536939; 
+ Fri, 24 Jul 2026 09:45:36 -0700 (PDT)
 Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-314bc3e127asm1822384eec.2.2026.07.24.09.39.19
+ 5a478bee46e88-314bc288a79sm1081297eec.0.2026.07.24.09.45.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Jul 2026 09:39:20 -0700 (PDT)
-Message-ID: <2e27ef8e-a9fb-4275-9a51-6e88b63563d0@oss.qualcomm.com>
-Date: Fri, 24 Jul 2026 09:39:18 -0700
+ Fri, 24 Jul 2026 09:45:36 -0700 (PDT)
+Message-ID: <708798a8-3d43-48d9-a4f6-210eb88a88cb@oss.qualcomm.com>
+Date: Fri, 24 Jul 2026 09:45:34 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 97/98] configure: remove --cross-cc* options
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Brian Cain <brian.cain@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Thomas Huth <thuth@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
- Gustavo Romero <gustavo.romero@linaro.org>, Helge Deller <deller@gmx.de>
-References: <20260710214343.2065491-1-pierrick.bouvier@oss.qualcomm.com>
- <20260710214343.2065491-98-pierrick.bouvier@oss.qualcomm.com>
- <87wlupst0e.fsf@draig.linaro.org>
- <0ed09a8f-2de8-4910-b853-cd717dbf3317@oss.qualcomm.com>
- <87se59r999.fsf@draig.linaro.org>
- <c16b4480-06fd-4d96-b628-5c423d300988@oss.qualcomm.com>
- <87mrvhr3co.fsf@draig.linaro.org> <amMnKWlFFi56kFdQ@redhat.com>
+Subject: Re: [PATCH] Add option to disable building tests
+To: Florian Schmidt <flosch@nutanix.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20260724135413.1716872-1-flosch@nutanix.com>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <amMnKWlFFi56kFdQ@redhat.com>
+In-Reply-To: <20260724135413.1716872-1-flosch@nutanix.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDE0OSBTYWx0ZWRfXwwWYpfP2xXfD
- JEaO2gGfTVQeCy9P4krCQXvuU8pBai/rIl7z56mR0qB0wDFzj5jBry3w4QJAIJCAtNa262Q1b+G
- DjNMJ65HXNGA8emSi2VfmMAwJ/F5VuM=
-X-Authority-Analysis: v=2.4 cv=Rtz16imK c=1 sm=1 tr=0 ts=6a63953a cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDE1MCBTYWx0ZWRfX4olG4nzUuZeX
+ xi3aDAIIMfiZN3FWHtsPi6yjve16py0/sQdz1PAwy21zM2QOnBwY4RIhJxkaL0GtM+JEX3d46Mk
+ GmVPBtEHpv3Qfl77FBcho3DuWtAX6UMaM1jJlcPGTS924P4arml66bjeAY2xctKqr2UL0turRWd
+ 1VUR1bYuNTiw80qBMrdtxushbj4Ma3AzT9DjIERV6RCjOYs7ddK5yIJDwBI4GSJy9P+vVsCtkzE
+ 5pS/2PQU2YJ3DykiLFp0CVcY7ard7Xg8+j9iYJEkBGcmyzUzmPdybip4doiHGGvQ8IDLbU78vX0
+ K7tR8JrGn/jmr72WQM9CXUSYxv+R2NGs/pXM9WXTLPgAyToqEMSz5u7RPaUGgCxvM0LmUzHFDih
+ WPPWpeqatlCGiziqd4j1xWza57+dwmw/B1qbEKVPWkA+8PTDiBbYFBcg3pf0k1bwlirEdso/WCr
+ WhQpjLErinx1lFukEMA==
+X-Proofpoint-GUID: Pf00LC7q6ypC2qjJu6RNUzFTso89uJop
+X-Proofpoint-ORIG-GUID: Pf00LC7q6ypC2qjJu6RNUzFTso89uJop
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDE1MCBTYWx0ZWRfX9r99fPIWqMi5
+ ejs5uY4/r/9oI+IcxCNM3LbaYWhUxIXQSve0mbDcmspHs4hvYboOYjPNzR2C1wEqwMqT6ZrSXsr
+ SUVe6ZpCKH3z2YRM1fYGfVAf5Cx1Ias=
+X-Authority-Analysis: v=2.4 cv=P9sKQCAu c=1 sm=1 tr=0 ts=6a6396b2 cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=vTr9H3xdAAAA:8 a=EUspDBNiAAAA:8 a=_u7hgyyAXYC7x8ToJSsA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-GUID: O9cHS1jm9kJhGJeQxsuy8Cc_5iSFW_hq
-X-Proofpoint-ORIG-GUID: O9cHS1jm9kJhGJeQxsuy8Cc_5iSFW_hq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDE0OSBTYWx0ZWRfX/9ZT1OPvYRdA
- 1/qA6Z2b2ytEVcNcKvsbbbk4b2NBRk4u9r7g93+cRo8jiabQyV/1YZSwcn7UcoOD7FioJHQq6R5
- BJd7IeWOjYgGVsjELuhBWMdCiOCcBqRMeCrLFGJpuYYxt2AxAlHeEWXcM2+gILPT27KUlzwvJ+z
- RW+q8amVgf2bdoeFKe+Nz+QFSgnaf+zDjabQR4ryePlCGNXyqvZQcsyjd7XcCO/I/2KrguGK8e8
- BaiNmnPS3NTApM4/0FGzheOiBNSbNCMid354ZalZiJa+ciBVmWxqZFpoZ8cXnJDChK0je8yw4x+
- 3Ek7Y2kdFSwUxK2Qu1vfWO2ddVLNSl+T1Y7RGJolYnqvZuXZOr13T3+0xbt+S7mj9BPdg+lpNR5
- AWg2vqgNm4wkbUonnh1TmGKsorWEZO0LL0QIOXxNgLGQGJrGxU50rgHhoRUA2tuWj+b2g8/TwSb
- N13VKhCyPkUMFml1fXg==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=64Cc0HZtAAAA:8 a=EUspDBNiAAAA:8 a=B7KNsiDRLG0zOIzK5J8A:9 a=QEXdDO2ut3YA:10
+ a=x9snwWr2DeNwDh03kgHS:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-24_03,2026-07-24_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0 priorityscore=1501 suspectscore=0
- lowpriorityscore=0 bulkscore=0 spamscore=0 malwarescore=0 clxscore=1015
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607240149
-Received-SPF: pass client-ip=205.220.180.131;
+ suspectscore=0 spamscore=0 priorityscore=1501 phishscore=0 bulkscore=0
+ lowpriorityscore=0 adultscore=0 impostorscore=0 malwarescore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607240150
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -167,61 +158,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/24/2026 1:49 AM, Daniel P. Berrangé wrote:
-> On Thu, Jul 23, 2026 at 07:02:47PM +0100, Alex Bennée wrote:
->> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->>
->>> On 7/23/2026 8:55 AM, Alex Bennée wrote:
->>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->>>>
->>>>> On 7/20/2026 6:14 AM, Alex Bennée wrote:
->>>>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->>>>>>
->>>>>>> Those options were useful a few years ago, before containers were
->>>>>>> available as an alternative for missing cross compilers. Simplify the
->>>>>>> workflow by removing those options and maintaining only the container
->>>>>>> based approach.
->>>>>>
->>>>>
->>>>> I was expecting some discussion around this patch, and to start it when
->>>>> the comment comes. Question is "Should we provide this feature or not?".
->>>>> I totally agree with you that we need to support other configurations we
->>>>> have in our CI, like MacOS and compilers from homebrew.
->>>>>
->> <snip>
->>>
->>> The way I see it is that we offer native cross compilers (with a focus
->>> on debian at the moment), and the containerized ones: people have a choice.
->>> We can add any additional compiler name for other distros.
->>> Also, as Ilya mentioned before, cross compiler on fedora, for instance,
->>> are not providing any sysroot. So it makes them unusable in our case.
->>
->> No sysroot at all - even for compiler headers? We don't need the linux
->> sysroot for building softmmu tests.
+On 7/24/2026 6:54 AM, Florian Schmidt wrote:
+> There are situations in which you might want to build QEMU without
+> building the full test suite, which in some configurations can take a
+> considerable amount of time to build. This is especially true when using
+> LTO with clang. For example:
 > 
-> Historically that was the case, as the cross compilers primary use case
-> was kernel / firmware builds, which could be done with "freestanding"
-> mode and thus no dep on C library.
+> $ ../configure --cc=clang '--extra-ldflags=-flto=thin -ffat-lto-objects' '--extra-cflags=-flto=thin -ffat-lto-objects' --target-list=x86_64-softmmu
+> [...]
+> $ time make -j8
+> [...]
+> [3078/3078] Linking target tests/qtest/qos-test
+> real    6m43.250s
+> user    101m15.967s
+> sys     4m3.813s
 > 
-> Since Fedora 40, it appears that in addition to glibc & binutil packages,
-> there are now sysroot packages shipped for glibc for each Fedora arch:
+> $ ../configure --cc=clang '--extra-ldflags=-flto=thin -ffat-lto-objects' '--extra-cflags=-flto=thin -ffat-lto-objects' --target-list=x86_64-softmmu --disable-tests
+> [...]
+> $ time make -j8
+> [...]
+> [2024/2024] Linking target qemu-system-x86_64
 > 
->   https://kojipkgs.fedoraproject.org/packages/glibc/2.39/8.fc40/noarch/
+> real    3m14.277s
+> user    33m13.174s
+> sys     1m36.642s
 > 
-> Note those package names change in each release, so latest would be
+> Add a toggle to optionally disable building tests.
 > 
->   sysroot-s390x-fc44-glibc
+> Signed-off-by: Florian Schmidt <flosch@nutanix.com>
+> ---
+>  meson.build                   | 2 +-
+>  meson_options.txt             | 2 ++
+>  scripts/meson-buildoptions.sh | 3 +++
+>  3 files changed, 6 insertions(+), 1 deletion(-)
 > 
-> NB. I've not tried actually using this myself
->
+> diff --git a/meson.build b/meson.build
+> index 49a5baf5b5..ad728c26ec 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -4605,7 +4605,7 @@ subdir('docs')
+>  subdir('pyvenv')
+>  # Tests are disabled on emscripten because they rely on host features that aren't
+>  # supported by emscripten (e.g. fork and unix socket).
+> -if host_os != 'emscripten'
+> +if get_option('tests').allowed() and host_os != 'emscripten'
+>    subdir('tests')
+>  endif
+>  if gtk.found()
+> diff --git a/meson_options.txt b/meson_options.txt
+> index a07cb47d35..68333ca402 100644
+> --- a/meson_options.txt
+> +++ b/meson_options.txt
+> @@ -43,6 +43,8 @@ option('gdb', type: 'string', value: '',
+>  # on the configure script command line.  After adding an option
+>  # here make sure to run "make update-buildoptions".
+>  
+> +option('tests', type: 'feature', value: 'auto',
+> +       description: 'Build the test suite')
+>  option('docs', type : 'feature', value : 'auto',
+>         description: 'Documentations build support')
+>  option('fuzzing', type : 'boolean', value: false,
+> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+> index c003985047..3fec13a336 100644
+> --- a/scripts/meson-buildoptions.sh
+> +++ b/scripts/meson-buildoptions.sh
+> @@ -194,6 +194,7 @@ meson_options_help() {
+>    printf "%s\n" '  spice-protocol  Spice protocol support'
+>    printf "%s\n" '  stack-protector compiler-provided stack protection'
+>    printf "%s\n" '  tcg             TCG support'
+> +  printf "%s\n" '  tests           build test suite'
+>    printf "%s\n" '  tools           build support utilities that come with QEMU'
+>    printf "%s\n" '  tpm             TPM support'
+>    printf "%s\n" '  u2f             U2F emulation support'
+> @@ -515,6 +516,8 @@ _meson_option_parse() {
+>      --enable-tcg-interpreter) printf "%s" -Dtcg_interpreter=true ;;
+>      --disable-tcg-interpreter) printf "%s" -Dtcg_interpreter=false ;;
+>      --tls-priority=*) quote_sh "-Dtls_priority=$2" ;;
+> +    --enable-tests) printf "%s" -Dtests=enabled ;;
+> +    --disable-tests) printf "%s" -Dtests=disabled ;;
+>      --enable-tools) printf "%s" -Dtools=enabled ;;
+>      --disable-tools) printf "%s" -Dtools=disabled ;;
+>      --enable-tpm) printf "%s" -Dtpm=enabled ;;
 
-Thanks for sharing it Daniel. In all cases, it's handled in next version
-of series (current one has the cc test, but I added a typo so it's
-broken) to detect is cc works or not.
+That's a great addition, including just for speeding up normal builds.
 
-> With regards,
-> Daniel
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Tested-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-Thanks,
+If we want to overengineer the thing, it could be possible to still
+declare all tests, but not build them by default. However, it's probably
+too error prone and much less simple than this patch. So I don't think
+it's a good idea.
+
+Regards,
 Pierrick
 
