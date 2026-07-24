@@ -4,113 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5249AC531C9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 14:08:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE3B8C531C9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Jul 2026 14:13:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnGYU-0007nM-CJ; Fri, 24 Jul 2026 10:07:14 -0400
+	id 1wnGdS-0001K3-MF; Fri, 24 Jul 2026 10:12:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <east.moutain.yang@gmail.com>)
- id 1wnGYS-0007ms-T7
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 10:07:13 -0400
-Received: from mail-qt1-x82a.google.com ([2607:f8b0:4864:20::82a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <east.moutain.yang@gmail.com>)
- id 1wnGYQ-0004eE-A1
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 10:07:12 -0400
-Received: by mail-qt1-x82a.google.com with SMTP id
- d75a77b69052e-5276d598b96so3392811cf.3
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 07:07:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784902029; cv=none;
- d=google.com; s=arc-20260327;
- b=IJ7eSc10dOR82NOO91EnwJKdwpns2Qqw0UOMHS+aQq55XWVS/aOTsEdN1gDv7vjSZt
- YXQ26sEyjANljb1EctmmSnD5xkx0NCDOBzo1WnR32ucHMOOgdVyVrDI6Ec06QWLtplb1
- xqRwn4EdORaTlmZ6h9MIh//npfmUtYQGO+7UMJy+9PPjhYTWG+TU/yGYNQQaTE2dQ/sU
- 676Nk+V1JKMji4wUoU+ICy3B9ufbqPyLky3InIWXrTI2xa9YSeY7mcCJqSoyP2ddJQmH
- 3m0cCRxAio2yIUAUWi4IaZg6l0LiXJW/wmrAquMrubNGDdnN4RpWRmqX7AWfYulmWURO
- QvTA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=d4nnTSs7cP5y+TXVuHuHvzatoX5QCB3VvyJwAoOqyxE=;
- fh=yjXAfW90bFVi1Y/+7+tQzctjot22u0BagFzYyY/wRko=;
- b=WTLV0KNbDY5oVRx2P5ZjR08/1/kqcU4VFk+DnAB4IxInrxxvwqhKdq3YbOwTPXMMX0
- 7Z6v2aVpmWi2tsy0lRJsu0zSr0fCKxT1ijLQ+CBiD0YjEozG19IdD4jmO2/IeLBNfdiO
- uhaFOeqSO1lGzM5bygl0Z6A3V0FkVXOXgbOwz7T7K+CGHV/MAXMfh9sO99mT5h4CIdtz
- Nu8cKtR+gZF0OBILmHYJWeuE5ZoFCmGlwhJS3LhyaszDlhr4ZAE0fZCFRWKI0C66tLT1
- nAl7/VpOrh7x2bRSNrcWwhblW18G+KLyrtpU7YMUQC/Mf5nEepKIqGNnFYPuFy3zUWEZ
- 4VSQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784902029; x=1785506829; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=d4nnTSs7cP5y+TXVuHuHvzatoX5QCB3VvyJwAoOqyxE=;
- b=Naec2wkLmLbs/mgBqiPJwT7+EziTlgxh/BmNAP0MraNTwogZklai7HHHwqu+ppy0mP
- RzZKD+p6SI+x5258/0/Vq6P0Kn9qewh1YXZRfoTKKmD8g5S6Au7jG1TMHP3eeFaRoZyE
- GDmP4xi7+9cKOGUkNWRFN5RLnP0bJrGqbLr1sy/x4qDG11Ou9pfii8sxP18qX/yA8Uau
- FhZjJnU8fq02d1IoM3J5WJlZ/qmlKwb5e3WzB23VJs8amhaFy5TC9exG8IeLlxQptlwh
- vATBJpcGb5wK4y37RyHMhiLPdssKBw0yPrA4gDNyl8HJKTeQ9Sa1p/Y1DSMaotgtsg0J
- xHiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784902029; x=1785506829;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=d4nnTSs7cP5y+TXVuHuHvzatoX5QCB3VvyJwAoOqyxE=;
- b=TLIfg/Y0ccqsgbSS5ETcy6a1/BllBfpR1w3Dgr5KjY05VZuRdTolDRfC9rkshELVO8
- qYY1hxy8qeGW/1EU7f1+mg6S6IExXJRRvUrx5aWIgeYFzYCe4wVPW4vLlXjKRG9ttszt
- 2MobbwEqLXvsMZy0S9hTEWSP34XUyaAitloh/gbhWzs/MFVtwFaDOq/32k0P3oKlZwTg
- XqOkwDqTjtDUshestez75qfPEag8k0q1QM3nrKFu/j2BIuo92SlH4XdYPdZndxBEp9cC
- 99QNeGFH+h+oMDMG+JRM4mV0tvw9OtUH3mHhEDGqAt9NfyJDkFoAppfaL7m2Lkq8XQPo
- jmuQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrSzdhbFUtSgR+yxNESgTDpNBhQ4aDR2HTsJ9MntLmUIQJy9RqtrpEeztBxhF25VnFTzdkpH7tJae+o@nongnu.org
-X-Gm-Message-State: AOJu0YxChKkCrJt+vlCpoybKZ2jAxILXvEZgTrgtv/4dLMhuu4EJcvtV
- H7LZEaYB7h3I6vf8ID8zBLFjgfSnoqtAyKp1THCwgdTOlnujeo7+UsT1QTaNQ2e99uNVRVffk9D
- KjrP6NGzqRp3LW7PYQEJByQGBe68RutQ=
-X-Gm-Gg: AR+sD13fwIO3RRHTyOtUyYuuatFnQvfw8feo7oMIesF+MIFrjyfdX/ySMonV6rBmXeQ
- seBdmqokrGHFuW+CJLEjGE03udPdzP50uIxYHy4gYGKvANX4rvDGvnvAR3SMH8gtXUrb3XPbt9I
- eBT6s8G5RdLU19vJjIy4hSBS7iSwD08uec/WJWMmnZDnALt0vrwAK3oePmKyfH8ij4OWsTRvA9B
- kC9j4AHM/Lt67LrhRluyZhd8OCkvRAx2EFGhPZT4kIB/X/KgjbvWIMGRTQ9R+I=
-X-Received: by 2002:a05:622a:28c:b0:51c:25da:903e with SMTP id
- d75a77b69052e-5283df1c625mr73766391cf.58.1784902028636; Fri, 24 Jul 2026
- 07:07:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wnGdG-0001Iu-MI
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 10:12:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wnGdC-0005A1-PJ
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 10:12:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784902325;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=J9J4MHzM57N752ks+CwctURJGdX1Fla09GttYCJG9Xs=;
+ b=YKZ2KXlrxZFEgh+uOjxfQnGpOu5eK2KMCgsw557csazTAI7zz5/c7aW1KPrJfVoHpzKay9
+ qN7NDmpvZROV5aPKGt81BDqiNDDQEtmiVy6yg+RCcyCYmEknnagth5M1X4WerxJxEduDqv
+ pW1AEXQ6/Jse/xXA5rMHrt91Fxd0IGU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-xgSEA0krPV6d4nUpXPMkUg-1; Fri,
+ 24 Jul 2026 10:12:02 -0400
+X-MC-Unique: xgSEA0krPV6d4nUpXPMkUg-1
+X-Mimecast-MFC-AGG-ID: xgSEA0krPV6d4nUpXPMkUg_1784902321
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AF6191944B01; Fri, 24 Jul 2026 14:12:00 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.93])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1EE2A1800986; Fri, 24 Jul 2026 14:11:56 +0000 (UTC)
+Date: Fri, 24 Jul 2026 16:11:54 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH 2/3] virtio: do not crash QEMU on migration errors
+Message-ID: <amNyqrHGW3yAjl2j@redhat.com>
+References: <3777347521a12252e228e4a6243c75250bf76626.1784898250.git.mst@redhat.com>
+ <a0afc9ea82d68f3447c9f58d89c9b46fa074d6c3.1784898250.git.mst@redhat.com>
 MIME-Version: 1.0
-References: <20260721130611.539089-1-east.moutain.yang@gmail.com>
- <38865e6b-6e80-4581-9aaf-257a53dfb972@app.fastmail.com>
- <20260721110247-mutt-send-email-mst@kernel.org>
- <20260721230004.2c03fede@shazbot.org>
- <CALrP2iVwJqufzvjOdiEiE0FPTHkMjMjhA4H0siaLAuAHmw2wLQ@mail.gmail.com>
- <c3b5a5f5-0c3a-4793-9dd6-206ba0b6ed72@redhat.com>
- <CALrP2iVpdgxARSOtCOAj54tiy_+YrNBTu_DS=e_5HVGfC_-ffg@mail.gmail.com>
- <20260723081201.37e8f70b@shazbot.org>
-In-Reply-To: <20260723081201.37e8f70b@shazbot.org>
-From: Wencheng Yang <east.moutain.yang@gmail.com>
-Date: Fri, 24 Jul 2026 22:06:56 +0800
-X-Gm-Features: AUfX_mzVUf3-WbgDYJMz55JuU3qN2YLvVTS8B6MLe7KDoKzFXOcSlGVuOL-2PaU
-Message-ID: <CALrP2iVCjJKNTHoLFgSwht684o+ta4-BY98kaS0O6gzMaCYgLA@mail.gmail.com>
-Subject: Re: [PATCH] hw/vfio: Coalesce repeated PCI_COMMAND memory-decode DMA
- (re)map for passthrough BARs
-To: Alex Williamson <alex@shazbot.org>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Yangwencheng <yangwencheng@gmail.com>
-Content-Type: multipart/alternative; boundary="00000000000060353d06575be3ec"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82a;
- envelope-from=east.moutain.yang@gmail.com; helo=mail-qt1-x82a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a0afc9ea82d68f3447c9f58d89c9b46fa074d6c3.1784898250.git.mst@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.419,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,455 +86,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000060353d06575be3ec
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Am 24.07.2026 um 15:04 hat Michael S. Tsirkin geschrieben:
+> Currently virtio-blk, virtio-serial and virtio-scsi all crash on invalid
+> migration streams because qemu_get_virtqueue_element has no way to
+> detect and report mapping failures.
+> 
+> Not nice.
+> 
+> Let's propagate mapping errors through qemu_get_virtqueue_element and
+> fail migration instead.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3888
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> ---
+>  include/hw/virtio/virtio.h  |  2 +-
+>  hw/block/virtio-blk.c       |  4 ++++
+>  hw/char/virtio-serial-bus.c |  4 ++++
+>  hw/scsi/virtio-scsi.c       |  6 +++++
+>  hw/virtio/virtio.c          | 48 +++++++++++++++++++++++++++----------
+>  5 files changed, 50 insertions(+), 14 deletions(-)
+> 
+> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+> index c99cb19d88..27c5fe3a6b 100644
+> --- a/include/hw/virtio/virtio.h
+> +++ b/include/hw/virtio/virtio.h
+> @@ -320,7 +320,7 @@ bool virtqueue_rewind(VirtQueue *vq, unsigned int num);
+>  void virtqueue_fill(VirtQueue *vq, const VirtQueueElement *elem,
+>                      unsigned int len, unsigned int idx);
+>  
+> -void virtqueue_map(VirtIODevice *vdev, VirtQueueElement *elem);
+> +bool virtqueue_map(VirtIODevice *vdev, VirtQueueElement *elem);
+>  void *virtqueue_pop(VirtQueue *vq, size_t sz);
+>  unsigned int virtqueue_drop_all(VirtQueue *vq);
+>  void *qemu_get_virtqueue_element(VirtIODevice *vdev, QEMUFile *f, size_t sz);
+> diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+> index 6b92066aff..cb6a276a82 100644
+> --- a/hw/block/virtio-blk.c
+> +++ b/hw/block/virtio-blk.c
+> @@ -1384,6 +1384,10 @@ static int virtio_blk_load_device(VirtIODevice *vdev, QEMUFile *f,
+>          }
+>  
+>          req = qemu_get_virtqueue_element(vdev, f, sizeof(VirtIOBlockReq));
+> +        if (!req) {
+> +            error_report("Failed to restore virtio-blk request");
+> +            return -EINVAL;
+> +        }
+>          virtio_blk_init_request(s, virtio_get_queue(vdev, vq_idx), req);
+
+Instead of having error_report() calls deep down in device code, could
+we just pass an Error **errp VirtioDeviceClass.load/save() and print the
+error in virtio_load/save()?
+
+And the next step would then be to change virtio_load/save() to take an
+Error **errp and to switch virtio_vmstate_info from .get/.put to
+.load/.save that actually allow returning an error.
+
+>          WITH_QEMU_LOCK_GUARD(&s->rq_lock) {
+> diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
+> index c1973f0248..0f56321cc7 100644
+> --- a/hw/char/virtio-serial-bus.c
+> +++ b/hw/char/virtio-serial-bus.c
+> @@ -763,6 +763,10 @@ static int fetch_active_ports_list(QEMUFile *f,
+>  
+>              port->elem =
+>                  qemu_get_virtqueue_element(vdev, f, sizeof(VirtQueueElement));
+> +            if (!port->elem) {
+> +                error_report("Failed to restore virtio-serial element");
+> +                return -EINVAL;
+> +            }
+>  
+>              /*
+>               *  Port was throttled on source machine.  Let's
+> diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
+> index 53c3c88460..8675afc6e1 100644
+> --- a/hw/scsi/virtio-scsi.c
+> +++ b/hw/scsi/virtio-scsi.c
+> @@ -18,6 +18,7 @@
+>  #include "standard-headers/linux/virtio_ids.h"
+>  #include "hw/virtio/virtio-scsi.h"
+>  #include "migration/qemu-file-types.h"
+> +#include "migration/qemu-file.h"
+>  #include "qemu/defer-call.h"
+>  #include "qemu/error-report.h"
+>  #include "qemu/iov.h"
+> @@ -273,6 +274,11 @@ static void *virtio_scsi_load_request(QEMUFile *f, SCSIRequest *sreq)
+>      assert(n < vs->conf.num_queues);
+>      req = qemu_get_virtqueue_element(vdev, f,
+>                                       sizeof(VirtIOSCSIReq) + vs->cdb_size);
+> +    if (!req) {
+> +        error_report("Failed to restore virtio-scsi request");
+> +        qemu_file_set_error(f, -EINVAL);
+
+Is this to break the loop in get_scsi_requests() instead of silently
+ignoring the error? Wouldn't it be better to actually use the return
+value from this function there (and to pass errors up instead of always
+returning 0)?
+
+> +        return NULL;
+> +    }
+>      virtio_scsi_init_req(s, vs->cmd_vqs[n], req);
+>  
+>      if (virtio_scsi_parse_req(req, sizeof(VirtIOSCSICmdReq) + vs->cdb_size,
 
-On 2026/7/23 22:12, Alex Williamson wrote:
+More context:
 
-On Thu, 23 Jul 2026 21:44:47 +0800
-Wencheng Yang <east.moutain.yang@gmail.com> <east.moutain.yang@gmail.com> w=
-rote:
+    if (virtio_scsi_parse_req(req, sizeof(VirtIOSCSICmdReq) + vs->cdb_size,
+                              sizeof(VirtIOSCSICmdResp) + vs->sense_size) < 0) {
+        error_report("invalid SCSI request migration data");
+        exit(1);
+    }
 
+I think if you want to avoid crashes, you'll also want to avoid exit(1)
+calls? Though maybe that's a separate patch because it's unrelated to
+qemu_get_virtqueue_element().
 
-On 2026/7/23 15:37, C=C3=A9dric Le Goater wrote:
+Kevin
 
-Hello,
-
-On 7/23/26 05:50, Wencheng Yang wrote:
-
-__
-
-
-On 2026/7/22 13:00, Alex Williamson wrote:
-
-On Tue, 21 Jul 2026 11:03:39 -0400
-"Michael S. Tsirkin"<mst@redhat.com> <mst@redhat.com> <mst@redhat.com>
-<mst@redhat.com><mailto:mst@redhat.com> <mst@redhat.com>
-<mst@redhat.com> <mst@redhat.com> wrote:
-
-On Tue, Jul 21, 2026 at 08:41:04AM -0600, Alex Williamson wrote:
-
-On Tue, Jul 21, 2026, at 7:06 AM, Yang Wencheng wrote:
-
-From: YangWencheng<east.moutain.yang@gmail.com>
-<east.moutain.yang@gmail.com><east.moutain.yang@gmail.com>
-<east.moutain.yang@gmail.com> <mailto:east.moutain.yang@gmail.com>
-<east.moutain.yang@gmail.com><east.moutain.yang@gmail.com>
-<east.moutain.yang@gmail.com>
-
-A passthrough device's own MMIO/BAR range is registered with the IOMMU
-(VFIO_IOMMU_MAP_DMA) when its memory region becomes part of the guest
-address space, to support peer-to-peer DMA into that BAR from other
-devices. Toggling the guest's PCI_COMMAND memory-decode-enable bit off
-and back on -- something PCI enumeration/attribute code does routinely,
-sometimes several times for the same device (e.g. disable before
-reprogramming a BAR then re-enable, or generic driver probing during
-guest OS boot) -- currently tears down and rebuilds this mapping every
-single time via vfio_listener_region_del()/region_add(), unconditionally.
-
-For devices with very large BARs this is expensive: mapping a 64GB BAR
-into IOMMU page tables measured at ~8.5s per call on this hardware, and
-was observed being repeated 3-5 times for the same BAR during a single
-guest boot, because nothing changed about the underlying mapping between
-the disable and the following re-enable.
-
-Defer the actual VFIO_IOMMU_UNMAP_DMA for "ram device" regions (i.e.
-passthrough device BARs used for P2P DMA -- explicitly not regular guest
-RAM or RamDiscardManager-backed regions, so migration/ballooning/
-virtio-mem are unaffected) instead of issuing it immediately in
-region_del(). If a matching region_add() for the exact same region
-(same MemoryRegion pointer, iova, size, vaddr, readonly) follows, cancel
-the deferred unmap and skip the VFIO_IOMMU_MAP_DMA entirely -- the
-host-side mapping was never actually removed, so there is nothing to
-redo. A region_add() for anything that doesn't match maps normally, as
-before.
-
-Nothing is leaked: any mapping still on the pending list is flushed with
-a real unmap in two places -- vfio_container_instance_finalize(), before
-the container's fd is closed (VM shutdown / last device in a group
-removed),
-and vfio_bars_finalize(), matched by MemoryRegion pointer to just that
-device's own BARs, so a device hot-unplugged while the container stays
-alive for other devices can't leave a dangling deferred entry either.
-
-This does not weaken the PCI_COMMAND memory-decode security boundary:
-every guest write to PCI_COMMAND is still forwarded synchronously and
-unconditionally to the real device's config space in
-vfio_pci_write_config() (an entirely separate code path, untouched by
-this change), which is what actually gates whether the physical device
-claims/responds to transactions targeting its BAR, independent of
-whatever the IOMMU's routing table still contains. This change only
-avoids redundant bookkeeping of that routing table when nothing about
-the mapping has changed.
-
-Seems like you should focus on huge pfnmap support on your platform
-rather than hack the VMM to not behave like bare metal.  Thanks,
-
-But bare metal does not tweak an iommu during pci enumeration?
-
-Bare metal is not using the IOMMU to map the device into a guest
-physical address space, so no, an equivalent operation does not occur
-there.  The proposal here is intentionally leaving stale gpa mappings
-to avoid the unmap/remap overhead, where we've essentially eliminated
-that overhead on other platforms with huge pfnmap support.  The
-specific platform that's being optimized here is also omitted, which
-makes it impossible to determine the ongoing need for this code.
-
-The scheme here effectively assumes that a region_del() will either be
-followed by a region_add() that cancels the deferred unmap, or the
-deferral will be executed on finalize.  It does not actually account
-for cases where the guest might remap the BAR to a different address,
-ex. pci=3Drealloc, leaving a stale mapping in place.  The finalize also
-appears to be using a different MR from the one deferred, such that the
-IOMMU is actually only unmapped due to close().
-
-More importantly though, this entire scheme is relying on a gap in the
-vfio type1 IOMMU backend, where clearing the memory enable bit of the
-command register zaps the CPU mappings and errors faults while cleared,
-but does not generate unmaps in the IOMMU.  IOMMUFD resolves that gap,
-generating a move-notify/invalidate on the dma-buf, which results in an
-IOMMU unmap.  IOW, the premise of this workaround is broken in the
-direction that VFIO is headed.
-
-Therefore, I'd once again suggest that effort is better redirected to
-implement huge pfnmap support for whatever platform this might be in
-order to follow a proven solution to this problem for type1.  Huge
-pfnmap is used both in the CPU fault path as well as the DMA mapping
-path, by virtue of generating user faults in the pfnmap.  Alternatively,
-iommufd may provide better p2p DMA mapping performance than type1
-without huge pfnmap, but CPU faults would lag without such support
-anyway.  Thanks,
-
-Alex
-
-
-I noticed you provided a kernel patch "PCI: Batch BAR sizing operations",
-
-the patch eliminates the overhead of IOMMU map/unmap operations from
-
-guest kernel. I found OVMF has the same issue, I tried to fix it in edk2
-source
-
-code, but the PCI commands are scattered, it's hard to handle it like
-kernel.
-
-I think it's reasonable to handle it qemu, as the overhead is introduced by
-
-qemu to support PCIe device passthrough.
-
-
-"we've essentially eliminated that overhead on other platforms with huge
-  pfnmap support."
-
-Can you provide some key references about this approach?
-
-Check these related commits.
-
-Linux :
-
-  commit f9e54c3a2f5b ("vfio/pci: implement huge_fault support")
-
-QEMU:
-
-  commit 00b519c0bca0 ("vfio/helpers: Align mmaps")
-
-Thanks,
-
-C.
-
-Thanks a lot.
-
-The two patches above establish huge-page mappings for the CPU,
-saving memory allocated for page tables, and using huge pages also
-reduces TLB entry consumption. However, the issue I'm running into
-is that OVMF's frequent PCI_COMMAND operations cause QEMU
-to repeatedly invoke VFIO_IOMMU_MAP_DMA. While huge pages
-can certainly reduce the time spent resolving the PFN corresponding
-to an IOVA, they do not eliminate these repeated calls themselves.
-
-Reducing the number of map/unmap cycles turns out to be only an
-incremental improvement while implementing huge pfnmap, depending on
-the available huge page sizes, can reduce operations by a factor of
-256k (ex. 4K -> 1G).
-
-
-For a GPU with a relatively large VRAM =E2=80=94 say, 64GB =E2=80=94 the cu=
-mulative
-overhead from these frequent invocations is substantial. In my testing,
-passing through a 64GB VRAM GPU to a VM shows that a single
-ioctl(container->fd, VFIO_IOMMU_MAP_DMA, &map) call takes roughly
-8 seconds.
-
-See:
-https://lore.kernel.org/all/20250218222209.1382449-1-alex.williamson@redhat=
-.com/
-
-for the IOMMU backend integration.
-
-
-Applying the two patches above might help reduce this time. I'm currently
-running QEMU 8.2 with kernel 5.10, and directly cherry-picking these two
-patches results in conflicts. I'll spend some time backporting them and
-see how the results look.
-
-It's generally recommended to test with recent kernel and QEMU,
-backporting as necessary to match upstream performance and driving
-improvements from an upstream perspective.  Optimizing QEMU for an
-older kernel where those changes are redundant upstream, or
-dis-recommended, is a downstream problem.  Thanks,
-
-Alex
-
-Yes, with the full patch set of huge pfn for CPU page table and IOMMU page
-table,
-I think my patch is redundant. I dived into those related patches,
-backporting to
- kernel 6.6 requires numerous patches, let alone kernel 5.10.
-
-best regards,
-YangWencheng
-
---00000000000060353d06575be3ec
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><u></u>
-
- =20
-   =20
- =20
-  <div>
-    <br>
-    <br>
-    <div>On 2026/7/23 22:12, Alex Williamson
-      wrote:<br>
-    </div>
-    <blockquote type=3D"cite">
-      <pre>On Thu, 23 Jul 2026 21:44:47 +0800
-Wencheng Yang <a href=3D"mailto:east.moutain.yang@gmail.com" target=3D"_bla=
-nk">&lt;east.moutain.yang@gmail.com&gt;</a> wrote:
-
-</pre>
-      <blockquote type=3D"cite">
-        <pre>On 2026/7/23 15:37, C=C3=A9dric Le Goater wrote:
-
-Hello,
-
-On 7/23/26 05:50, Wencheng Yang wrote:
-
-__
-
-
-On 2026/7/22 13:00, Alex Williamson wrote:
-
-On Tue, 21 Jul 2026 11:03:39 -0400
-&quot;Michael S. Tsirkin&quot;<a href=3D"mailto:mst@redhat.com" target=3D"_=
-blank">&lt;mst@redhat.com&gt;</a> <a href=3D"mailto:mst@redhat.com" target=
-=3D"_blank">&lt;mst@redhat.com&gt;</a>
-<a href=3D"mailto:mst@redhat.com" target=3D"_blank">&lt;mailto:mst@redhat.c=
-om&gt;</a> <a href=3D"mailto:mst@redhat.com" target=3D"_blank">&lt;mst@redh=
-at.com&gt;</a> wrote:
-
-On Tue, Jul 21, 2026 at 08:41:04AM -0600, Alex Williamson wrote:
-
-On Tue, Jul 21, 2026, at 7:06 AM, Yang Wencheng wrote:
-
-From: YangWencheng<a href=3D"mailto:east.moutain.yang@gmail.com" target=3D"=
-_blank">&lt;east.moutain.yang@gmail.com&gt;</a>
-<a href=3D"mailto:east.moutain.yang@gmail.com" target=3D"_blank">&lt;east.m=
-outain.yang@gmail.com&gt;</a> <a href=3D"mailto:east.moutain.yang@gmail.com=
-" target=3D"_blank">&lt;mailto:east.moutain.yang@gmail.com&gt;</a>
-<a href=3D"mailto:east.moutain.yang@gmail.com" target=3D"_blank">&lt;east.m=
-outain.yang@gmail.com&gt;</a>
-
-A passthrough device&#39;s own MMIO/BAR range is registered with the IOMMU
-(VFIO_IOMMU_MAP_DMA) when its memory region becomes part of the guest
-address space, to support peer-to-peer DMA into that BAR from other
-devices. Toggling the guest&#39;s PCI_COMMAND memory-decode-enable bit off
-and back on -- something PCI enumeration/attribute code does routinely,
-sometimes several times for the same device (e.g. disable before
-reprogramming a BAR then re-enable, or generic driver probing during
-guest OS boot) -- currently tears down and rebuilds this mapping every
-single time via vfio_listener_region_del()/region_add(), unconditionally.
-
-For devices with very large BARs this is expensive: mapping a 64GB BAR
-into IOMMU page tables measured at ~8.5s per call on this hardware, and
-was observed being repeated 3-5 times for the same BAR during a single
-guest boot, because nothing changed about the underlying mapping between
-the disable and the following re-enable.
-
-Defer the actual VFIO_IOMMU_UNMAP_DMA for &quot;ram device&quot; regions (i=
-.e.
-passthrough device BARs used for P2P DMA -- explicitly not regular guest
-RAM or RamDiscardManager-backed regions, so migration/ballooning/
-virtio-mem are unaffected) instead of issuing it immediately in
-region_del(). If a matching region_add() for the exact same region
-(same MemoryRegion pointer, iova, size, vaddr, readonly) follows, cancel
-the deferred unmap and skip the VFIO_IOMMU_MAP_DMA entirely -- the
-host-side mapping was never actually removed, so there is nothing to
-redo. A region_add() for anything that doesn&#39;t match maps normally, as
-before.
-
-Nothing is leaked: any mapping still on the pending list is flushed with
-a real unmap in two places -- vfio_container_instance_finalize(), before
-the container&#39;s fd is closed (VM shutdown / last device in a group
-removed),
-and vfio_bars_finalize(), matched by MemoryRegion pointer to just that
-device&#39;s own BARs, so a device hot-unplugged while the container stays
-alive for other devices can&#39;t leave a dangling deferred entry either.
-
-This does not weaken the PCI_COMMAND memory-decode security boundary:
-every guest write to PCI_COMMAND is still forwarded synchronously and
-unconditionally to the real device&#39;s config space in
-vfio_pci_write_config() (an entirely separate code path, untouched by
-this change), which is what actually gates whether the physical device
-claims/responds to transactions targeting its BAR, independent of
-whatever the IOMMU&#39;s routing table still contains. This change only
-avoids redundant bookkeeping of that routing table when nothing about
-the mapping has changed.
-
-Seems like you should focus on huge pfnmap support on your platform
-rather than hack the VMM to not behave like bare metal.  Thanks,
-
-But bare metal does not tweak an iommu during pci enumeration?
-
-Bare metal is not using the IOMMU to map the device into a guest
-physical address space, so no, an equivalent operation does not occur
-there.  The proposal here is intentionally leaving stale gpa mappings
-to avoid the unmap/remap overhead, where we&#39;ve essentially eliminated
-that overhead on other platforms with huge pfnmap support.  The
-specific platform that&#39;s being optimized here is also omitted, which
-makes it impossible to determine the ongoing need for this code.
-
-The scheme here effectively assumes that a region_del() will either be
-followed by a region_add() that cancels the deferred unmap, or the
-deferral will be executed on finalize.  It does not actually account
-for cases where the guest might remap the BAR to a different address,
-ex. pci=3Drealloc, leaving a stale mapping in place.  The finalize also
-appears to be using a different MR from the one deferred, such that the
-IOMMU is actually only unmapped due to close().
-
-More importantly though, this entire scheme is relying on a gap in the
-vfio type1 IOMMU backend, where clearing the memory enable bit of the
-command register zaps the CPU mappings and errors faults while cleared,
-but does not generate unmaps in the IOMMU.  IOMMUFD resolves that gap,
-generating a move-notify/invalidate on the dma-buf, which results in an
-IOMMU unmap.  IOW, the premise of this workaround is broken in the
-direction that VFIO is headed.
-
-Therefore, I&#39;d once again suggest that effort is better redirected to
-implement huge pfnmap support for whatever platform this might be in
-order to follow a proven solution to this problem for type1.  Huge
-pfnmap is used both in the CPU fault path as well as the DMA mapping
-path, by virtue of generating user faults in the pfnmap.  Alternatively,
-iommufd may provide better p2p DMA mapping performance than type1
-without huge pfnmap, but CPU faults would lag without such support
-anyway.  Thanks,
-
-Alex
-
-
-I noticed you provided a kernel patch &quot;PCI: Batch BAR sizing operation=
-s&quot;,
-
-the patch eliminates the overhead of IOMMU map/unmap operations from
-
-guest kernel. I found OVMF has the same issue, I tried to fix it in edk2
-source
-
-code, but the PCI commands are scattered, it&#39;s hard to handle it like
-kernel.
-
-I think it&#39;s reasonable to handle it qemu, as the overhead is introduce=
-d by
-
-qemu to support PCIe device passthrough.
-
-
-&quot;we&#39;ve essentially eliminated that overhead on other platforms wit=
-h huge
-  pfnmap support.&quot;
-
-Can you provide some key references about this approach?
-
-Check these related commits.
-
-Linux :
-
-  commit f9e54c3a2f5b (&quot;vfio/pci: implement huge_fault support&quot;)
-
-QEMU:
-
-  commit 00b519c0bca0 (&quot;vfio/helpers: Align mmaps&quot;)
-
-Thanks,
-
-C.
-
-Thanks a lot.
-
-The two patches above establish huge-page mappings for the CPU,
-saving memory allocated for page tables, and using huge pages also
-reduces TLB entry consumption. However, the issue I&#39;m running into
-is that OVMF&#39;s frequent PCI_COMMAND operations cause QEMU
-to repeatedly invoke VFIO_IOMMU_MAP_DMA. While huge pages
-can certainly reduce the time spent resolving the PFN corresponding
-to an IOVA, they do not eliminate these repeated calls themselves.
-</pre>
-      </blockquote>
-      <pre>Reducing the number of map/unmap cycles turns out to be only an
-incremental improvement while implementing huge pfnmap, depending on
-the available huge page sizes, can reduce operations by a factor of
-256k (ex. 4K -&gt; 1G).
-=20
-</pre>
-      <blockquote type=3D"cite">
-        <pre>For a GPU with a relatively large VRAM =E2=80=94 say, 64GB =E2=
-=80=94 the cumulative
-overhead from these frequent invocations is substantial. In my testing,
-passing through a 64GB VRAM GPU to a VM shows that a single
-ioctl(container-&gt;fd, VFIO_IOMMU_MAP_DMA, &amp;map) call takes roughly
-8 seconds.
-</pre>
-      </blockquote>
-      <pre>See:
-
-<a href=3D"https://lore.kernel.org/all/20250218222209.1382449-1-alex.willia=
-mson@redhat.com/" target=3D"_blank">https://lore.kernel.org/all/20250218222=
-209.1382449-1-alex.williamson@redhat.com/</a>
-
-for the IOMMU backend integration.
-=20
-</pre>
-      <blockquote type=3D"cite">
-        <pre>Applying the two patches above might help reduce this time. I&=
-#39;m currently
-running QEMU 8.2 with kernel 5.10, and directly cherry-picking these two
-patches results in conflicts. I&#39;ll spend some time backporting them and
-see how the results look.
-</pre>
-      </blockquote>
-      <pre>It&#39;s generally recommended to test with recent kernel and QE=
-MU,
-backporting as necessary to match upstream performance and driving
-improvements from an upstream perspective.  Optimizing QEMU for an
-older kernel where those changes are redundant upstream, or
-dis-recommended, is a downstream problem.  Thanks,
-
-Alex
-</pre>
-    </blockquote>
-    Yes, with the full patch set of huge pfn for CPU page table and
-    IOMMU page table,<br>
-    I think my patch is redundant. I dived into those related patches,
-    backporting to<br>
-    =C2=A0kernel 6.6 requires numerous patches, let alone kernel 5.10.</div=
-><div><br>
-best regards,<br>
-YangWencheng</div>
-
-</div>
-
---00000000000060353d06575be3ec--
 
