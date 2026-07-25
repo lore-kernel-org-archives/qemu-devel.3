@@ -4,105 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1525C531D0
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 12:52:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D36A1C531C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 12:57:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnbrh-00058o-Jr; Sat, 25 Jul 2026 08:52:29 -0400
+	id 1wnbwB-0006bn-6h; Sat, 25 Jul 2026 08:57:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wnbra-000585-H7
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 08:52:22 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wnbrU-0004sZ-Ka
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 08:52:19 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2ce87c7e3bbso14703745ad.1
- for <qemu-devel@nongnu.org>; Sat, 25 Jul 2026 05:52:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784983934; cv=none;
- d=google.com; s=arc-20260327;
- b=iOdRZmhfo40bOxdyQ1U3HGXZ+4RmcbaAiKTRumDT3X94/bMFEIeQ6fDK2R/j0VSxb2
- SwCTFj9Q20FHWPyLFTVk70SfFAMmmqyfSNU5ZvuWzkjzzxDUVYQ4ByyZFUf2dQmhOcLj
- xHsff44Dr/77NjxPUNjDxHN3+Pa6deHLj4LamPSP2qnlVUBz0/l5Omx/DJXqBL+fZmP5
- o1q4X2jrwd9AhMeqkyXgADcFCV3AQ6rUEb4TYeVmJNUmWV2omLlS4Y6ybBfsv5CwdQBy
- ugRudpnF2/7GJ6o/LYUgumt4IXFFHNkSMXDW9GZcvSuELtLu4AXVYOraIwjz6uW7EBX5
- gMMQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=zRNjUib7c2a6hq6rs2SK9nrbYkRKK7rhN44oQNQubgc=;
- fh=KnxVq+/dNMGR5XtbHr3cm7WMCtMcRbEU6z8PkW8LG2I=;
- b=GgbimTe8ggjQ7jFRQglG0QxHN+DoiYcZzix9mVg3P8NZqWRnLq6OMYH34SbyyfSHu9
- HbWV6+Yfkc029waoDSiUxlf/wjI/kZ9fIB175wnkEL0skbsxTnzHRec7ORxdsaqw6Mw+
- W2nPx1gxuaEndnE4ND9OGwEU+1P1TOaM/iEiky02J/MJ7LtFlo1OMTo8U+b2zTiqLbr5
- lQcEWmMYmrOxmKUWQOmAaieZ1BjIwZH+4z9FDdXBvWYbHsE5lZdOSPKzDSrVX0+GY9Ei
- veGXye5PqSeayK1DYY92pLHXJ+kjnbpK0eapL51AjmwW+yyXAYAc+WmU15SYab5TtXyS
- rnqQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784983934; x=1785588734; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=zRNjUib7c2a6hq6rs2SK9nrbYkRKK7rhN44oQNQubgc=;
- b=leBRJdyZZGKCmKWuvwmFhWQJiXWWSca6HB0WjWrl+/DevrEZylfuZ81ydDoPPG83ZZ
- 9r8fcgl1HUwiiuTcAibgW3LDvQhugWavxYQQnlqZ2TxouDep3Vv0EwbxWihnkdD8w/KK
- P8KYR0lwcgLj76wu52gT5H34/NOZKPwBHRxLa8+Whem9N+sQVrPYIssl2L/eFt+eSYTI
- WXAy9mcMTZ9vmvj9NE5pxRtJt/RZCCL+Z1EPlEsIEvSVFoBj1E1EMO5l1jHy9VkN1QyG
- /MENavtOjEIN5d95+lRhzEIgAClHt0fDgnORF0KigZEe6G8/7fQYCbY0c3KyO6Q4m5TW
- gkaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784983934; x=1785588734;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=zRNjUib7c2a6hq6rs2SK9nrbYkRKK7rhN44oQNQubgc=;
- b=H6tWWf5SoV+L+uPTlGu96QrLP1rbQa5nt/wBXrQ6E0RPBojTrvN4oP3Wjj6wXzVsEg
- 3RwDrQ5FdRscF8k/9eL5UrJ8H4iN8CqRsXg3swXmhjgfptczWvJ7lI+XxBHUMXCIMOvO
- tAHkHpELzLu7nIgHRgd224c9rVrERmbVdUjJDqYKeCIP7x/efQvgqbu0TZrl2Qb/DPff
- 2W4eBQK1IwO76yMLlGDPfKZxDUR6l/6lRkOG9jk5EULZeWofazCJVi6Y6wdXS6kU0Z7R
- qWrSGpfozfVYxMEasdLFWieKkA6/cuyHAfJHUsBg+UkNBGlyG9JmI/obe2aKh4dBfYAI
- 8TSQ==
-X-Gm-Message-State: AOJu0YxeYAJbiSJis3AhNRQxKUNHAwWfq4v6XKwtkxlBP7fbjXM7Bu5c
- MpP9vI3oRqMaiGaS/ETdA6qcK6ieiJTmdX+oMOQW3BBxe9aNKpK7kOptK/TMJJ2sX6N7Y5ydBS3
- tW2aJo4uQShrOmrgvB7iM4/TTeCx+UEM=
-X-Gm-Gg: AR+sD118daodulJ3mMP5bUi0RXBaidyUgnfrECOVf652BnZXRPSefFjriKtChw5xgoX
- fUMJuBtSgaypWBlLcuxQzEOTlrReLdZUf8kx4jo6+ZtLgNGo5l0JB66v/H4c+HYe/6a9+E8+Da4
- 7A+dA3rJhenYfouQHNMN6gMfpPPjK3cNyla/EGGYNGsBY8qjEXU8gxk1QlgjJ6VNqLrdWZuCcir
- Uu9xJHMO8+/X61qwafXH+fVxllsKzTWBxfgtafs56APatHZcFdQi8Jv8oUMH8Sy4GljHhRW+5Pl
- gHv7D5rdrNkIL+7DBA==
-X-Received: by 2002:a17:903:46c3:b0:2cf:bfbb:61e2 with SMTP id
- d9443c01a7336-2cfde8778b0mr19642485ad.39.1784983933682; Sat, 25 Jul 2026
- 05:52:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wnbw6-0006aK-Ez; Sat, 25 Jul 2026 08:57:02 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wnbw3-0005ZC-R6; Sat, 25 Jul 2026 08:57:02 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66PBA58T508629; Sat, 25 Jul 2026 12:56:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=9KPy9EfBxNR34+ruxRuXz7KsalU/ZtFe3CEorS4mD
+ IU=; b=qlTep1iObNVQmniagepa1+Tj0+3uqxuuQSvz76yHEZRag2smzWF4jIbyv
+ 5zN/J6fpzkgG40Bk5ZMasvvFpGrijE7Lw7OwyJvk4Wp52H6dJyT48MgAgUcujUnG
+ 4V4ziIqAigGXy+u4xXcWbqfYmwDHza6jV+nqXUQcaXNd2H7aAnTQHK8zpGPBQqj9
+ C5bigiM7vzctnaEEM8WdeHeZT6J+C/k/wDSF9YxHxnI+KA8bEacPy3Z2bu9Drxh/
+ LwOo/f+hxdPphh+djgMLtfTDSvvDyRzW4N+r3ChZR5+oTtjpgBJwhnRZs/Xk5dwT
+ rEdqJ2mUbL0nKPEt4xTcovt4V9qUA==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0x8842-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 25 Jul 2026 12:56:57 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66PCuFZk028235;
+ Sat, 25 Jul 2026 12:56:56 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fmn2c1an2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 25 Jul 2026 12:56:56 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66PCuq7h42271210
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sat, 25 Jul 2026 12:56:52 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 94766200E4;
+ Sat, 25 Jul 2026 12:56:52 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7563F200E1;
+ Sat, 25 Jul 2026 12:56:52 +0000 (GMT)
+Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with SMTP;
+ Sat, 25 Jul 2026 12:56:52 +0000 (GMT)
+Received: by tuxmaker.boeblingen.de.ibm.com (Postfix, from userid 4958)
+ id 5A11416267D; Sat, 25 Jul 2026 14:56:52 +0200 (CEST)
+From: Eric Farman <farman@linux.ibm.com>
+To: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>
+Subject: [PATCH v1 0/3] io_tests fuse fixes
+Date: Sat, 25 Jul 2026 14:56:48 +0200
+Message-ID: <20260725125651.3896151-1-farman@linux.ibm.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-References: <20260725-blob-v1-1-f643fbd76398@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260725-blob-v1-1-f643fbd76398@rsg.ci.i.u-tokyo.ac.jp>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Sat, 25 Jul 2026 16:51:59 +0400
-X-Gm-Features: AUfX_mw4XwgFeRKsL8gAocp0u8J-CO1yybH-Syf_oLKLHypE9-MtPodgVbAwLU4
-Message-ID: <CAJ+F1CLHMXaStvi67ruFKJ74bELf1ir5hCwS23S+5f+EDLMAEQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/display/virtio-gpu: Reject non-migratable large blobs
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 0cjmQq4DW-J9uT6POW65dJynN6aqkCgr
+X-Proofpoint-ORIG-GUID: 0cjmQq4DW-J9uT6POW65dJynN6aqkCgr
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI1MDEyMCBTYWx0ZWRfX6imRwW05VBLZ
+ INSXHLxco9kHdf+LuT0NdZ5JR14SJrGrQrwPpib8FLJaSEPWbYrODw5/e/r2ye54CIyzBf1mD+u
+ LnmMKZvRVIXyf112o2Nl9YbqXNNoM18=
+X-Authority-Analysis: v=2.4 cv=dYuwG3Xe c=1 sm=1 tr=0 ts=6a64b29a cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=U7nrCbtTmkRpXpFmAIza:22 a=WCoifLCfz-S1XxkA7B8A:9 a=zZCYzV9kfG8A:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI1MDEyMCBTYWx0ZWRfX1zW1OUzTzxCo
+ CnxDGG0SXyNS0hY9p8BsP1/AJIfoNztBSBl5yG3vp3dHxjQ1nBevn4wF4JlxuJGMoIl7/FtWxg5
+ KyB3ePFPDiBG/2ErLOZWEhmruMhAvsTmtLFlotg3qIv0WNn/SDhiDTwyJZr53HniY0wInfFqt7I
+ Gd2OufMCD6KfiuUePNhBdIZzE1QD2klS+7MXjB7dtqumr1fjk9QVj4INBBu+5f51yVJ6pjyj004
+ 1MloWSzYKqQDXAW7FwJ4C4mSQEMdwNxcRQq4+FkrMKTTAxKIXQzZWiPHns7aQeAwN2gSuDEHiTS
+ fyI/PjKQzj0ta1lR+ijLtqCqMJ70+Sw2imS6HnwUc++wdbc2FMM3UAAPV9JvdFmB6ouKg8XOuta
+ W0ioki5ghtuUn3vesjtvA9xDvjGZ6ZYZepOiKzkDGbRGFfUjSruv5zF4Hw4MgHxYvEDZps659UP
+ kp6aKg2qraovXXe7sGA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-25_03,2026-07-24_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 clxscore=1015 phishscore=0 malwarescore=0
+ spamscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607250120
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,64 +119,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Hi,
 
-On Sat, Jul 25, 2026 at 11:14=E2=80=AFAM Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> The blob size is encoded as a 64-bit integer in the virtio protocol, but
-> it is encoded as a 32-bit integer in the migration stream, and
-> a large blob whose size cannot be expressed in a 32-bit integer will
-> be corrupted after migration. Deny creating such large blobs.
->
-> Fixes: 10b9ddbc83b9 ("Revert "virtio-gpu: block migration of VMs with blo=
-b=3Dtrue"")
+The following are three small fixes against some of the qemu iotests
+to avoid some errors that should prevent the tests from running in
+the first place. We noticed these on an s390 host, but I don't
+believe that to be relevant. My hunch is the messages are slightly
+different based on distro, because the tests (correctly) skip for
+me running Fedora on s390 or x86_64 while they fail under Ubuntu 26.04.
 
-also
-Fixes: f66767f75c9c ("virtio-gpu: add virtio-gpu/blob vmstate subsection")
+Eric Farman (3):
+  iotests/108: skip test if cannot access /dev/fuse
+  iotests/file-io-error: complete permission denied check
+  iotests/fuse-mmap-shared: complete permission denied check
 
-Damn, my bad.. I wish C didn't silently accept this...
-
-It may be worth adding a TODO for the v2 version.
-
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> ---
->  hw/display/virtio-gpu.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
->
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index 718ba3039290..a5aa37aebd0e 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -352,6 +352,14 @@ static void virtio_gpu_resource_create_blob(VirtIOGP=
-U *g,
->          return;
->      }
->
-> +    if (cblob.size > UINT32_MAX) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: blob too large (%" PRIu64 "> %" PRIu32 ")\n",
-> +                      __func__, cblob.size, UINT32_MAX);
-> +        cmd->error =3D VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-> +        return;
-> +    }
-> +
->      if (virtio_gpu_find_resource(g, cblob.resource_id)) {
->          qemu_log_mask(LOG_GUEST_ERROR, "%s: resource already exists %d\n=
-",
->                        __func__, cblob.resource_id);
->
-> ---
-> base-commit: 006a22cb26998998385b104db1ff9466ef2f3153
-> change-id: 20260725-blob-8a6a1a85601a
->
-> Best regards,
-> --
-> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->
->
-
+ tests/qemu-iotests/108                    | 2 +-
+ tests/qemu-iotests/tests/file-io-error    | 3 +++
+ tests/qemu-iotests/tests/fuse-mmap-shared | 7 +++++--
+ 3 files changed, 9 insertions(+), 3 deletions(-)
 
 --=20
-Marc-Andr=C3=A9 Lureau
+2.53.0
+
 
