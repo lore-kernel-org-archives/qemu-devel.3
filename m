@@ -4,98 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A40C7C531C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 09:24:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4192EC53219
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 09:49:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnYc9-0004Yb-8U; Sat, 25 Jul 2026 05:24:13 -0400
+	id 1wnZ0U-0000fq-Si; Sat, 25 Jul 2026 05:49:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wnYc3-0004Y0-GI; Sat, 25 Jul 2026 05:24:07 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wnZ0F-0000dr-GU
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 05:49:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wnYc1-0001tZ-Pa; Sat, 25 Jul 2026 05:24:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=mjU2PvTRVuCoR3KcEKhn5dModOBxiK2ItqfG9ux+1UA=; b=I6wRcUU/OdNBhL4wkA5hjgbKGB
- s6pC3wvLCENrbXg0ITIUF1HuInV09K1620tWXURXO+4zNYu1OMYyED/IO3sJonoKmsfdh1hMtsNOz
- AYqV6o/x1fU3IVU35Y3japAaPnEEj1omZ6HktKDVXmtzj52OKufIjaDPWRFHqFgdC5DnDxYVMhERW
- pnNcjYuXu9p7jsl+h8aW4WjOgAh+P1BW8usvH+7YcrGvFAmiOpkBU1Va/CwXaB2cLp2BkfTQp7xaT
- lgkPhMXPxfZWX6LfaNmsJ+OnAASNdKLnPjvdL6w2NxesuOgoV77YL8T/NPgKWZrDHOVvEOlZGp/jW
- 3qE8TMSdYby9q8Ym7dU+7v2dy6NM8G/3I4FD/luOR4nYjHUvtMHsCAVTJ5HtEqQBhq1p8a5aZ+KMi
- z6BlugjbQn/IF+iKsiV1sRsoHFldHg1LMOfKoBtwDzwWOkozRFssspcxNEl2MLpFLMKSER/7k4bkK
- tuLOjnkZtsgVQtoN0JCi7UE5FDtrXe3A0Zt1M3lumniIadejQo0vMrhcsJLa3bkLSGBeb9/LtFtas
- lTtoAfF78W5qkLtk3avu0JnnxZPqi2OV1CpZjaLZ16P6GL8r46ZsTSpsB0tcxCpMyBMjupqtHOb+u
- 7MJ/d9RsCSbaLXtL/dKVp/027frGA7rZegoG8shwI=;
-Received: from [2a02:8012:2f01:0:34a6:6cc:a7a8:2b1e]
- by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wnYbo-004Un7-KT; Sat, 25 Jul 2026 10:23:53 +0100
-Message-ID: <ddea23d0-0371-4836-8b2f-5facef24e0fc@ilande.co.uk>
-Date: Sat, 25 Jul 2026 10:23:56 +0100
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wnZ0D-0004Tq-6j
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 05:49:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784972944;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=om5CIye3i6lrnEkPPfiq+UulgaM6eC6H/1XHPK2zRuA=;
+ b=Kitw1uPwupgTTphcYwpi53xO6uRP74/xirhLgZ//Xv22tJ1Wkrxta2PzxIZxTC1nfzFFYc
+ dguKspLgH5+mEPHKPArkj/lKfm/5pT9nd8XwSF4ayzcBwVPHTkHfwtiJmQVUGOXg6Tig/0
+ V/aLLp0rxwXnHMCPYSMplUVpparv0J4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-433-8qtqlocdObSmloqw3eCJ0w-1; Sat,
+ 25 Jul 2026 05:49:01 -0400
+X-MC-Unique: 8qtqlocdObSmloqw3eCJ0w-1
+X-Mimecast-MFC-AGG-ID: 8qtqlocdObSmloqw3eCJ0w_1784972939
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9624B1800C35; Sat, 25 Jul 2026 09:48:58 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.7])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0837E15AD; Sat, 25 Jul 2026 09:48:56 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Sat, 25 Jul 2026 13:48:34 +0400
+Subject: [PATCH v2 3/8] io: add missing coroutine annotation
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>,
- qemu-stable@nongnu.org
-References: <20260313170938.449538-1-peter.maydell@linaro.org>
- <48fdece2-5b98-4785-9b47-9eb2528803e2@ilande.co.uk>
- <CAFEAcA_zf5joZKeiU=c5qP+PzbkrPEVOBZ0nMrOhidiywi_s8w@mail.gmail.com>
- <CAFEAcA-MQ8tObH=9j-O-bqfGMLc2oTwaM1xEzv__GU2qrncmgw@mail.gmail.com>
- <CAFEAcA_boBOkNAaUgX=QEQvm3Mgy2ewkSNtx8zR9e=P58aWmmQ@mail.gmail.com>
- <CAFEAcA-VF47TGkRQBh_phZVvZ36tN5OJepbb1z=t=O=R3CwZDg@mail.gmail.com>
- <db7478f3-3cfa-43bc-901c-01842f180a92@ilande.co.uk>
- <CAFEAcA8j+W7eqJqBj-3Rq5ZBkOTapOKHSZFf+7ds4==5kKk-Tg@mail.gmail.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <CAFEAcA8j+W7eqJqBj-3Rq5ZBkOTapOKHSZFf+7ds4==5kKk-Tg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:34a6:6cc:a7a8:2b1e
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH] target/sparc: Set reg window data structures currently
- after vmstate load
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260725-co-v2-3-d3552ddb3931@redhat.com>
+References: <20260725-co-v2-0-d3552ddb3931@redhat.com>
+In-Reply-To: <20260725-co-v2-0-d3552ddb3931@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>, Peter Xu <peterx@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ John Snow <jsnow@redhat.com>, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Fam Zheng <fam@euphon.net>, "Denis V. Lunev" <den@openvz.org>, 
+ Christian Schoenebeck <qemu_oss@crudebyte.com>, Greg Kurz <groug@kaod.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Stabellini <sstabellini@kernel.org>, 
+ Anthony PERARD <anthony@xenproject.org>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ xen-devel@lists.xenproject.org, Li Zhijian <lizhijian@fujitsu.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1443;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=hhK3avKdImCgAXvIB7NvRmE1p7D0COK7cwqKnWNle/g=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZIZzeDY3v/u02EPWgKg8h2Y9qqMbxC8tbSZol
+ 9UFxg2JA6uJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamSGcwAKCRDa6OEJdZac
+ 5W9FEACkxbRuybsgqPhJFHRnyhXpFxZMy1BAcH9DcOHSozjWSSJYfgx5mkUyJlAbcOTwlJaKt/P
+ goJB5UinVDym73+x4ZLqQcaLfe4+Qsz9X58MyAVlc/xRwKrK/oQTONTXjBHZ0L8dlKVohTUwwlY
+ NjyeKe/UZ0T/hXnLniERWlQujHe7UrBUqRTaq5166SsYU5fpF8hQ+IexJHTDEuGEPBtp1BkccU0
+ Kk660LTATwk4GWKKxgie5DK6ZdmfThGclqIWhrqawLAAmAR0jvDt/ZhK3c5H+hvsOTwWoY2BbuY
+ X4k2NyX/ePC45gBMuY+PaqQxflVaj27p9fjhNKMTdkVIPMv2DENrL8A/oyubDt/ovY+Dc9OT5z0
+ 9BwLOQITCf4RjXQ+Ipz1C18tx6WbS3rF0zepzqzi2brZbgGXgyAl+ZqEvYwqf34MryBUNxn+GDf
+ z6onnYQYYWoksNmYaxC3UlO64Ix0jkZ6kNhn4C2S4cv4JRnBIG+isbEM7yuww31MgtzmP1rrAgV
+ A3FUUZ4MqLqMvCRKxnz0UTdduLlZD1ugwQj2XNeS9Q+i4L579CFAE3mSocap6EvglQlxo8Aty6x
+ kSmtLTyMbTMCYazOXfesBncXAAj7sXDGZSmMUs4xKEjI0dz6frEKpFUwqwjj2DKMpqVHxf8XW0K
+ qlcmZvYuZkm9liQ==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.419,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,47 +116,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/07/2026 09:48, Peter Maydell wrote:
+Fixes: 1edf0df28409 ("io: Add qio_channel_wait_cond() helper")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ include/io/channel.h | 4 ++--
+ io/channel.c         | 5 +++--
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-> On Tue, 21 Jul 2026 at 22:01, Mark Cave-Ayland
-> <mark.cave-ayland@ilande.co.uk> wrote:
->>
->> On 18/07/2026 09:46, Peter Maydell wrote:
->>>>>> Are you OK with this patch as it stands, or would you like me to
->>>>>> change it?
->>
->> Sorry about the long delay getting to this one. Looking through the migration code,
->> the current approach uses get/put handlers for registers that need to do more than
->> just update value in the state. Longer term that code could do with an update to use
->> .post_load, but for now I think it makes sense to use the existing pattern,
->> particularly as it keeps the separation between 32-bit and 64-bit.
->>
->> The following diff gives the same output in analyze-migration.py and I think should
->> solve the issue based upon your analysis:
-> 
-> Yes, that should also work. There's a minor bug in it, though:
-> 
->> +static int put_cwp(QEMUFile *f, void *opaque, size_t size,
->> +                   const VMStateField *field, JSONWriter *vmdesc)
->> +{
->> +    SPARCCPU *cpu = opaque;
->> +    CPUSPARCState *env = &cpu->env;
->> +    uint32_t val = cpu_get_cwp64(env);
-> 
-> This should be "val = env->cwp;" (cpu_get_cwp64() returns
-> "env->nwindows - 1 - env->cwp", but we just want the plain env->cwp
-> value because that's what we used to migrate and what the get_cwp()
-> function wants to see.)
-> 
-> With that change, the sanitizer is happy with the migration-test.
-> 
-> Do you plan to send your version as a proper patch?
+diff --git a/include/io/channel.h b/include/io/channel.h
+index 98485c9280a6..c90ace20d535 100644
+--- a/include/io/channel.h
++++ b/include/io/channel.h
+@@ -1016,8 +1016,8 @@ void qio_channel_wait(QIOChannel *ioc,
+  * This will work with/without a coroutine context, by automatically select
+  * the proper API to wait.
+  */
+-void qio_channel_wait_cond(QIOChannel *ioc,
+-                           GIOCondition condition);
++void coroutine_mixed_fn qio_channel_wait_cond(QIOChannel *ioc,
++                        GIOCondition condition);
+ 
+ /**
+  * qio_channel_set_aio_fd_handler:
+diff --git a/io/channel.c b/io/channel.c
+index 2853dadb684e..620256f310db 100644
+--- a/io/channel.c
++++ b/io/channel.c
+@@ -905,8 +905,9 @@ void qio_channel_wait(QIOChannel *ioc,
+     g_main_context_unref(ctxt);
+ }
+ 
+-void qio_channel_wait_cond(QIOChannel *ioc,
+-                           GIOCondition condition)
++void coroutine_mixed_fn
++qio_channel_wait_cond(QIOChannel *ioc,
++                      GIOCondition condition)
+ {
+     if (qemu_in_coroutine()) {
+         qio_channel_yield(ioc, condition);
 
-Thanks for confirming. I'll tidy it up and send it through as a proper patch later.
-
-
-ATB,
-
-Mark.
+-- 
+2.55.0
 
 
