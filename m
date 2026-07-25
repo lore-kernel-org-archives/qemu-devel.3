@@ -4,73 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81C37C531F9
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 06:15:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A91F3C531FA
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 07:13:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnVfN-0005qI-Uw; Sat, 25 Jul 2026 02:15:21 -0400
+	id 1wnWZI-0000nx-R5; Sat, 25 Jul 2026 03:13:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wnVfM-0005pR-1u
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 02:15:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wnWZH-0000nX-KQ
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 03:13:07 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wnVfJ-0004nk-O1
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 02:15:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784960116;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2I2zg7Ae0GUf/scpj+6ADfbcr/SEYXcN3uE3rIbpecQ=;
- b=Y+ug24B3mK4/xbiVHofDx8tOmyV8M2/VhSCsRvPxHc/xO3J0Hu1CKJPTmXMmMi3PESGu33
- vWaVYsagTog6YS9ssRqldALIkiuKxAo4Rdmyh0poOxrr8hm+xyX0pL1KD+U24rwzGuXJpc
- /6JR6GmJZPXuURaGJbc7bYh4dSkBYao=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-355-IgV9ceqTMfaCGKIHveVlOQ-1; Sat,
- 25 Jul 2026 02:15:14 -0400
-X-MC-Unique: IgV9ceqTMfaCGKIHveVlOQ-1
-X-Mimecast-MFC-AGG-ID: IgV9ceqTMfaCGKIHveVlOQ_1784960113
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5A8AF1800260
- for <qemu-devel@nongnu.org>; Sat, 25 Jul 2026 06:15:13 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 142A915B0
- for <qemu-devel@nongnu.org>; Sat, 25 Jul 2026 06:15:12 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 899A521E6920; Sat, 25 Jul 2026 08:15:10 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 1/3] scripts/qapi: enum with conditional first item must
- be optional
-In-Reply-To: <20260724130044.1369843-2-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Fri, 24 Jul 2026 15:00:41 +0200")
-References: <20260724130044.1369843-1-pbonzini@redhat.com>
- <20260724130044.1369843-2-pbonzini@redhat.com>
-Date: Sat, 25 Jul 2026 08:15:10 +0200
-Message-ID: <87a4rf61e9.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wnWZF-0002L5-Sd
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 03:13:07 -0400
+Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.183]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66P7CpxK072899
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sat, 25 Jul 2026 16:12:57 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=vRvrLScJdPAR0GchgnULs5QQyUZjxsc0NNPjWRm/ulc=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-Id:To:Subject:Date;
+ s=rs20250326; t=1784963577; v=1;
+ b=HLi4bIWEralpavy74wZL3EgfzM5ycWPBhJ0FhCDdd5oDKZbxQBlwYu/iY8BxiMWk
+ Fahn5ITjeOxXuOfW05TypjBXVloSjR8GuXwZXWNlMSsMzEsjrMVEJw6OdUOzQKWh
+ x9Z1918bNdVnon7u9uKV4YOTK++P2E0GzUZjykeUgv3ITXyRXU8Yuct6OWe3XD8+
+ 7SBC+uCNyH7cIWbrIHMb53a/JWkW0BVrC6HaE7bkYbU4PV6TVcnOPS9r6i+SlD6c
+ cxvVxlil7pGDBqD8ti4JIDvtk6ssOcn6EJN+QXGirmRDIESBLenoFccTmEd9xmw7
+ 3OENbJ3c0QpgH+b8c72Lhg==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sat, 25 Jul 2026 16:12:51 +0900
+Subject: [PATCH] hw/display/virtio-gpu: Fix empty blob discrimination
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.419,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260725-image-v1-1-4698a805afde@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDcyNT3czcRKCgWbKFqZlZWpKhkamxElBtQVFqWmYF2JzoWAi/uDQpKzW
+ 5BKRZqbYWAFZbFuRpAAAA
+X-Change-ID: 20260725-image-6c8566fb1253
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.16-dev-925f5
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2309;
+ i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
+ bh=rv35K+1UHqKxm3Q6RjhDIj+vD7Yt/ozd4azyoZoLebo=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ1ZK4o9Mx4NH9LZbrej/2Hoja9XDJz375UpKGk63mLz/5
+ fo07NrOjlIWBjEuBlkxRZaUot3cGtG1nwoT4ltg5rAygQxh4OIUgIn0pzP8Zvte1f9wvktRUHzy
+ gfrFE3bINF7avd7G+iBHxh+WmFyztwz/8yPPF28rbFr6pPdo+ouafn3mDy9cHDUMY1on+KS8ueL
+ OAwA=
+X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
+ fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,116 +85,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+Discriminating blobs by checking whether blob_size is nonzero fails for
+empty blobs. Identify 2D resources by their non-NULL image instead.
 
-> Prevent an all-zero struct from having different meanings with
-> different configurations or builds of QEMU.
+Fixes: bdd53f739273 ("virtio-gpu: Update cursor data using blob")
+Fixes: f66767f75c9c ("virtio-gpu: add virtio-gpu/blob vmstate subsection")
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+ hw/display/virtio-gpu.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-This is a bit terse.  What *exactly* is broken?  Spelling this out
-matters, because it can expose holes in the argument, if any.  Let me
-try.
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 718ba3039290..6413df029b8e 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -56,18 +56,18 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
+         return;
+     }
+ 
+-    if (res->blob_size) {
+-        if (res->blob_size < (s->current_cursor->width *
+-                              s->current_cursor->height * 4)) {
+-            return;
+-        }
+-        data = res->blob;
+-    } else {
++    if (res->image) {
+         if (pixman_image_get_width(res->image)  != s->current_cursor->width ||
+             pixman_image_get_height(res->image) != s->current_cursor->height) {
+             return;
+         }
+         data = pixman_image_get_data(res->image);
++    } else {
++        if (res->blob_size < (s->current_cursor->width *
++                              s->current_cursor->height * 4)) {
++            return;
++        }
++        data = res->blob;
+     }
+ 
+     pixels = s->current_cursor->width * s->current_cursor->height;
+@@ -1279,7 +1279,7 @@ static int virtio_gpu_save(QEMUFile *f, void *opaque, size_t size,
+     assert(QTAILQ_EMPTY(&g->cmdq));
+ 
+     QTAILQ_FOREACH(res, &g->reslist, next) {
+-        if (res->blob_size) {
++        if (!res->image) {
+             continue;
+         }
+         qemu_put_be32(f, res->resource_id);
+@@ -1430,7 +1430,7 @@ static int virtio_gpu_blob_save(QEMUFile *f, void *opaque, size_t size,
+     assert(QTAILQ_EMPTY(&g->cmdq));
+ 
+     QTAILQ_FOREACH(res, &g->reslist, next) {
+-        if (!res->blob_size) {
++        if (res->image) {
+             continue;
+         }
+         assert(!res->image);
 
-The numeric encoding of enum values is irrelevant except for zero,
-because we actually use numeric zero via zero initialization.  If the
-enum's first value is conditional, the meaning of zero depends on build
-configuration.  We don't want such a default at the external interface.
-It could conceivably lead to purely internal bugs, too.
+---
+base-commit: 006a22cb26998998385b104db1ff9466ef2f3153
+change-id: 20260725-image-6c8566fb1253
 
-However, I'm not sure your solution fixes this problem completely.
-
-Consider type Arg with a mandatory member @mand and an optional enum
-member @opt, both of enum type ENUM_TYPE.
-
-QMP input gets converted to native C like this:
-
-    if (!visit_type_Arg(v, NULL, &arg, errp)) {
-        return;
-    }
-
-For members present in the input, there is no zero initialization
-problem.
-
-@mand is always present, so arg.mand is whatever the user said.
-
-If @opt is present, arg.has_opt is true and arg.opt is whatever the user
-said.
-
-If @opt is absent, then arg.has_opt and arg.opt are both zero.
-
-Code providing an explicit default then is still fine:
-
-    if (!arg.has_opt) {
-        arg.opt = ENUM_TYPE_MUMBLE;
-    }
-
-But we often use arg.opt without checking arg.has_opt for brevity.  This
-is an implicit default to zero, whatever zero may mean.
-
-If the the optional enum's first member is conditional, this default
-depends on build configuration.
-
-Stupidest solution that could possibly work: an enum's first member
-cannot be conditional.
-
-Thoughts?
-
-> This needs some changes to doc-good.json, which used unwittingly
-> such an enum.
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  scripts/qapi/schema.py                        |  8 ++++++++
->  tests/qapi-schema/doc-good.json               | 16 ++++++++--------
->  tests/qapi-schema/doc-good.out                | 12 ++++++------
->  tests/qapi-schema/doc-good.txt                |  8 ++++----
->  tests/qapi-schema/enum-if-first-required.err  |  2 ++
->  tests/qapi-schema/enum-if-first-required.json |  6 ++++++
->  tests/qapi-schema/enum-if-first-required.out  |  0
->  tests/qapi-schema/meson.build                 |  1 +
->  8 files changed, 35 insertions(+), 18 deletions(-)
->  create mode 100644 tests/qapi-schema/enum-if-first-required.err
->  create mode 100644 tests/qapi-schema/enum-if-first-required.json
->  create mode 100644 tests/qapi-schema/enum-if-first-required.out
-
-Thanks for the negative test.
-
-docs/devel/qapi-code-gen.rst section "Enumeration types" could perhaps
-use an update.
-
-It's less than clear even before the patch:
-
-    The generated C enumeration constants have values 0, 1, ..., N-1 (in
-    QAPI schema order), where N is the number of values.  There is an
-    additional enumeration constant PREFIX__MAX with value N.
-
-    Do not use string or an integer type when an enumeration type can do
-    the job satisfactorily.
-
-    The optional 'if' member specifies a conditional.  See `Configuring the
-    schema`_ below for more on this.
-
-The first paragraph can lead readers to assume we generate something
-like
-
-    typedef enum Example {
-        EXAMPLE_FOO = 0,
-    #if defined(COND)
-        EXAMPLE_BAR = 1,
-    #endif
-        EXAMPLE__MAX = 2,
-    } Example;
-
-We don't, because we'd have to deal with a "hole" in the value range
-when COND is not defined.
-
-Instead, we do
-        
-    typedef enum Example {
-        EXAMPLE_FOO,
-    #if defined(COND)
-        EXAMPLE_BAR,
-    #endif
-        EXAMPLE__MAX,
-    } Example;
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
 
