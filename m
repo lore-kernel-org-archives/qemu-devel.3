@@ -4,54 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35A7CC531C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 21:04:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40C13C531C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 23:12:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnjXE-0007ES-7a; Sat, 25 Jul 2026 17:03:52 -0400
+	id 1wnlXE-0003j6-Cn; Sat, 25 Jul 2026 19:12:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wnjX9-0007Dv-Cs
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 17:03:49 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wnjX6-0000su-Ug
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 17:03:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=itAxkon9PfxLo88l12vGQtk5dAiJWPC8MrbGcMfD36g=; b=fI7mvBZ0feoCtZ+n
- V+kK/oo0OVaVCgUYuRflnDQeDsuQARgf5793AT6qQi57Q3/CNkoB+SC0/o+sRpl962oAY4s7qx8Di
- Lt4r5GbleXqmS3tFtbv1dcpme9TgZjKz+wUJrI0EhOAkbG7GYcNdMe5hvmLUFiGO93uiKj+/hph79
- hCoV2IP/8maMo0qLLvwq5riQBEhgfFjKtDZUrMafAcGD/FuqAXAsOAAshm5ONrUH++o9LwHuMxhB0
- 9ap17Zqs+CHClyv5aZpxuYLEo074RmpFva6vebqzOeEUJxR9/FMl+C4oSji4UGuiu4Gncbyu+8f7t
- 4ZWApY9EessFyU9aUg==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1wnjX5-00000005UtS-0Lsy;
- Sat, 25 Jul 2026 21:03:43 +0000
-Date: Sat, 25 Jul 2026 21:03:43 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>
-Subject: Re: [PATCH] vhost: do not crash on ring map failure
-Message-ID: <amUkr5wi1inale8r@gallifrey>
-References: <71961a7dc157f552303aeea8c99a75c5e1ce904e.1784898432.git.mst@redhat.com>
+ (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
+ id 1wnlX3-0003h2-01
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 19:11:49 -0400
+Received: from mail-vk1-xa33.google.com ([2607:f8b0:4864:20::a33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
+ id 1wnlX0-0005j6-QL
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 19:11:48 -0400
+Received: by mail-vk1-xa33.google.com with SMTP id
+ 71dfb90a1353d-5c2dbaf828eso576109e0c.0
+ for <qemu-devel@nongnu.org>; Sat, 25 Jul 2026 16:11:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785021105; x=1785625905; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Rww7YfQ1WxkCJQmecJPYaSnIoUwIyure2gI4fgprYWc=;
+ b=segqUeNxQXJYi0Yn7UEznANjGF31pdDQ0bwAQU99Cp3ZrSOdeVdE/hQ5OynesqJMLj
+ znWw1EtlD51Wp4mVIO3ZTpm3OwsCw3VEqBgk8eMH6Y0Hq177ClStl/pU3jovgJOJIyTg
+ lRGNtC2ceBJhvcXCDVHj0r9UT2tID6qErdnl9CyebvzxYzF74b+mlQExyuAtC0sGmeb/
+ je9cyvKL3pXIqLsrcFy1KRkpvl/ZSbUihwtIphkAtSKrffkf6vYilPYxsjyFf1sjet6h
+ 1Ycc58wimnumqC970KjhG5I7U2j9wXDzzCR/KzBC4oKDC5hdbvIKQRrtiTexE5UViDRj
+ 3JLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785021105; x=1785625905;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Rww7YfQ1WxkCJQmecJPYaSnIoUwIyure2gI4fgprYWc=;
+ b=ICLAwvOkAOwdRRpGnMjnb1r69/8RpBdAOASSqyyB6E6FKl+4ngR2oioS7HSFVKHgpa
+ LDK1BExhGJISB4lJycvPdGuowp5dKwYWDMs6ZFHHspUILV3qa562yCD6+c5RH04DrJkL
+ /1LC6dIMWNp6sUvjbC0vLFt7YN/JBkOGJJAzEspeXewuduaCRktvmgni/GQW/KRGtyzC
+ /HJ9H1GkJmn0pFaxEkLYZQhy00jm34y4EZl7t85xuTj6d63kxCpIjKK2FQXlnSDJS82c
+ crbeKUb51uyhDH3HLxUsc39tGALDfnafWiY+7uhXRGM6MMlqZp/sp1EUwkN1LXXlQyc9
+ nPFQ==
+X-Gm-Message-State: AOJu0YzFHU0MGPDD9FAbxDspprhMC4arG0w3Tl8NFwCBORfDxLJp63Vf
+ zblYxTOKU4AuwxA4wBDN4Wezhr0bZwA5CzCrg1X6VBQMdxu0ouPIkJuAAIDGAA==
+X-Gm-Gg: AR+sD11ItI0VelG7E5Ks/gp2YOjfN1L1L3EYbfBubxg1Gf9eJxmJbThxtlQbZuIez5W
+ DvZ0tEr+O0JZfEji05SjaZTj796a6J7PWatYpfzSPsDTWtQ4i4fwq1yuBNQNDJDByQcJc/He5sx
+ gjPHzmFCXftF018ihQdA5gDd4bqUC4GxWQi4XWRCnLOe72q7Qq0Q9qieGA+gGHncIS+y25aTEKc
+ RyJ0gNdI8ZNxMw6ch11//VX5TEAlKxX/F5Uu+H+raCXQLPCTzZ2ef97RZgjxPUp+0GS9YfsttPq
+ gn1Xfmuw/wd89gTfL6vh3OUiM5elj3CD9qAkt2Rn6cLSydfyB2VQHUuygdcg3uFxBpjcY4egGmD
+ Lf8NwmFIC0OgfNuJ2v9I1rYCfyphtkBIlgijz6Yy6AX4hxhTq0Ajf2PXgQ5vs/ZMz6umhEBBPlR
+ rSBtm2M+ZBBfrQAZV9RNyqmHVdiWq3DBBf
+X-Received: by 2002:a05:6122:65a4:b0:5bf:b500:c4f4 with SMTP id
+ 71dfb90a1353d-5c306bb3b3amr1528561e0c.2.1785021105607; 
+ Sat, 25 Jul 2026 16:11:45 -0700 (PDT)
+Received: from localhost.localdomain ([146.71.8.128])
+ by smtp.gmail.com with ESMTPSA id
+ 71dfb90a1353d-5c30549516csm2907015e0c.6.2026.07.25.16.11.44
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sat, 25 Jul 2026 16:11:44 -0700 (PDT)
+From: Marcelo Manzo <marcelomanzo@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Jason Wang <jasowangio@gmail.com>, Marcelo Manzo <marcelomanzo@gmail.com>
+Subject: [PATCH 1/2] hw/misc/bcm2835_powermgt: implement a real watchdog timer
+Date: Sat, 25 Jul 2026 19:11:41 -0400
+Message-ID: <20260725231142.61663-2-marcelomanzo@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20260725231142.61663-1-marcelomanzo@gmail.com>
+References: <20260725231142.61663-1-marcelomanzo@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <71961a7dc157f552303aeea8c99a75c5e1ce904e.1784898432.git.mst@redhat.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.95+deb13-amd64 (x86_64)
-X-Uptime: 21:03:37 up 19 days, 20:44,  2 users,  load average: 0.04, 0.01, 0.00
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a33;
+ envelope-from=marcelomanzo@gmail.com; helo=mail-vk1-xa33.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -68,50 +101,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Michael S. Tsirkin (mst@redhat.com) wrote:
-> When vhost_commit() rebuilds the memory region table after a flatview
-> change, it revalidates cached host virtual addresses for active vring
-> parts. If a mapping is stale, QEMU abort().
-> 
-> This is not a security problem - only the priviledged guest
-> can control make it invalid - but not nice e.g. for driver debugging.
-> 
-> Let's call virtio_error() instead, marking the device as broken.
-> 
-> Fixes: 0ca1fd2d68 ("vhost: Simplify ring verification checks")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3783
-> Cc: Stefano Garzarella <sgarzare@redhat.com>
-> Cc: Dr. David Alan Gilbert <dave@treblig.org>
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+The RSTC register's write-config bits (0x30) being set to the
+"full reset" value (0x20) does not mean "reset now" -- it arms the
+hardware watchdog so that a reset happens if the WDOG countdown
+register is not refreshed before it expires. The previous
+implementation treated any such RSTC write as an immediate reset,
+regardless of the WDOG value.
 
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+This is dormant on older/lighter userspace (nothing in Bullseye's
+default boot touches these registers this way), but modern systemd
+(observed with Debian 13/Trixie's systemd 257) writes to RSTC as part
+of routine early-boot watchdog probing. With the old code, this fires
+an immediate reset a few seconds into boot; combined with -no-reboot
+this looks exactly like a QEMU crash (clean exit, no panic, no guest
+reboot message) with the last log line being the RSTC/WDOG write.
 
-> ---
->  hw/virtio/vhost.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> index af41841b52..371dca17dd 100644
-> --- a/hw/virtio/vhost.c
-> +++ b/hw/virtio/vhost.c
-> @@ -755,8 +755,9 @@ static void vhost_commit(MemoryListener *listener)
->                         (void *)(uintptr_t)dev->mem->regions[i].userspace_addr,
->                         dev->mem->regions[i].guest_phys_addr,
->                         dev->mem->regions[i].memory_size)) {
-> -            error_report("Verify ring failure on region %d", i);
-> -            abort();
-> +            virtio_error(dev->vdev,
-> +                         "Verify ring failure on region %d", i);
-> +            goto out;
->          }
->      }
->  
-> -- 
-> MST
-> 
+Fix this by actually implementing the watchdog as a QEMUTimer: writes
+to RSTC/WDOG (re)compute the timeout from the WDOG register (in units
+of 1/65536 s, per the real hardware) and arm a timer for that many
+nanoseconds out; only when the timer actually fires do we request a
+system reset or shutdown, matching real hardware behavior. Clearing
+the write-config bits or the WDOG value disarms the timer, and reset
+disarms it too.
+
+Verified against real Raspberry Pi OS images under the patched
+raspi4b machine: Bullseye (5.15) and Bookworm (6.12) never exercised
+this path either way; Trixie (6.18, systemd 257) no longer crashes at
+boot and reaches a working login/SSH state.
+
+Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
+---
+ hw/misc/bcm2835_powermgt.c         | 49 +++++++++++++++++++++++-------
+ include/hw/misc/bcm2835_powermgt.h |  2 ++
+ 2 files changed, 40 insertions(+), 11 deletions(-)
+
+diff --git a/hw/misc/bcm2835_powermgt.c b/hw/misc/bcm2835_powermgt.c
+index 3ec7abad0e..d90b9a0c3e 100644
+--- a/hw/misc/bcm2835_powermgt.c
++++ b/hw/misc/bcm2835_powermgt.c
+@@ -19,10 +19,40 @@
+ #define PASSWORD_MASK 0xff000000
+ 
+ #define R_RSTC 0x1c
+-#define V_RSTC_RESET 0x20
++#define V_RSTC_WRCFG_MASK 0x30
++#define V_RSTC_FULL_RESET 0x20
+ #define R_RSTS 0x20
+ #define V_RSTS_POWEROFF 0x555 /* Linux uses partition 63 to indicate halt. */
+ #define R_WDOG 0x24
++#define V_WDOG_TIME_MASK 0xfffff
++#define WDOG_TICKS_PER_SECOND 65536
++
++static void bcm2835_powermgt_expire(void *opaque)
++{
++    BCM2835PowerMgtState *s = opaque;
++
++    if ((s->rsts & 0xfff) == V_RSTS_POWEROFF) {
++        qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
++    } else {
++        qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
++    }
++}
++
++static void bcm2835_powermgt_update_wdog(BCM2835PowerMgtState *s)
++{
++    uint64_t timeout_ns;
++
++    if ((s->rstc & V_RSTC_WRCFG_MASK) != V_RSTC_FULL_RESET ||
++        s->wdog == 0) {
++        timer_del(s->wdog_timer);
++        return;
++    }
++
++    timeout_ns = muldiv64(s->wdog, NANOSECONDS_PER_SECOND,
++                          WDOG_TICKS_PER_SECOND);
++    timer_mod(s->wdog_timer,
++              qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + timeout_ns);
++}
+ 
+ static uint64_t bcm2835_powermgt_read(void *opaque, hwaddr offset,
+                                       unsigned size)
+@@ -70,13 +100,7 @@ static void bcm2835_powermgt_write(void *opaque, hwaddr offset,
+     switch (offset) {
+     case R_RSTC:
+         s->rstc = value;
+-        if (value & V_RSTC_RESET) {
+-            if ((s->rsts & 0xfff) == V_RSTS_POWEROFF) {
+-                qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
+-            } else {
+-                qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
+-            }
+-        }
++        bcm2835_powermgt_update_wdog(s);
+         break;
+     case R_RSTS:
+         qemu_log_mask(LOG_UNIMP,
+@@ -84,9 +108,8 @@ static void bcm2835_powermgt_write(void *opaque, hwaddr offset,
+         s->rsts = value;
+         break;
+     case R_WDOG:
+-        qemu_log_mask(LOG_UNIMP,
+-                      "bcm2835_powermgt_write: WDOG\n");
+-        s->wdog = value;
++        s->wdog = value & V_WDOG_TIME_MASK;
++        bcm2835_powermgt_update_wdog(s);
+         break;
+ 
+     default:
+@@ -113,6 +136,7 @@ static const VMStateDescription vmstate_bcm2835_powermgt = {
+         VMSTATE_UINT32(rstc, BCM2835PowerMgtState),
+         VMSTATE_UINT32(rsts, BCM2835PowerMgtState),
+         VMSTATE_UINT32(wdog, BCM2835PowerMgtState),
++        VMSTATE_TIMER_PTR(wdog_timer, BCM2835PowerMgtState),
+         VMSTATE_END_OF_LIST()
+     }
+ };
+@@ -124,6 +148,8 @@ static void bcm2835_powermgt_init(Object *obj)
+     memory_region_init_io(&s->iomem, obj, &bcm2835_powermgt_ops, s,
+                           TYPE_BCM2835_POWERMGT, 0x200);
+     sysbus_init_mmio(SYS_BUS_DEVICE(s), &s->iomem);
++    s->wdog_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
++                                 bcm2835_powermgt_expire, s);
+ }
+ 
+ static void bcm2835_powermgt_reset(DeviceState *dev)
+@@ -134,6 +160,7 @@ static void bcm2835_powermgt_reset(DeviceState *dev)
+     s->rstc = 0x00000102;
+     s->rsts = 0x00001000;
+     s->wdog = 0x00000000;
++    timer_del(s->wdog_timer);
+ }
+ 
+ static void bcm2835_powermgt_class_init(ObjectClass *klass, const void *data)
+diff --git a/include/hw/misc/bcm2835_powermgt.h b/include/hw/misc/bcm2835_powermgt.h
+index fb0740c01e..d1903a9cce 100644
+--- a/include/hw/misc/bcm2835_powermgt.h
++++ b/include/hw/misc/bcm2835_powermgt.h
+@@ -12,6 +12,7 @@
+ #define BCM2835_POWERMGT_H
+ 
+ #include "hw/core/sysbus.h"
++#include "qemu/timer.h"
+ #include "qom/object.h"
+ 
+ #define TYPE_BCM2835_POWERMGT "bcm2835-powermgt"
+@@ -24,6 +25,7 @@ struct BCM2835PowerMgtState {
+     uint32_t rstc;
+     uint32_t rsts;
+     uint32_t wdog;
++    QEMUTimer *wdog_timer;
+ };
+ 
+ #endif
 -- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+2.47.1
+
 
