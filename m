@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40C13C531C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 23:12:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCCD0C531D0
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 23:12:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnlXE-0003j6-Cn; Sat, 25 Jul 2026 19:12:02 -0400
+	id 1wnlXK-0003kz-9t; Sat, 25 Jul 2026 19:12:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1wnlX3-0003h2-01
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 19:11:49 -0400
-Received: from mail-vk1-xa33.google.com ([2607:f8b0:4864:20::a33])
+ id 1wnlX4-0003hH-EI
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 19:11:50 -0400
+Received: from mail-vk1-xa36.google.com ([2607:f8b0:4864:20::a36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1wnlX0-0005j6-QL
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 19:11:48 -0400
-Received: by mail-vk1-xa33.google.com with SMTP id
- 71dfb90a1353d-5c2dbaf828eso576109e0c.0
- for <qemu-devel@nongnu.org>; Sat, 25 Jul 2026 16:11:46 -0700 (PDT)
+ id 1wnlX2-0005jL-OL
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 19:11:50 -0400
+Received: by mail-vk1-xa36.google.com with SMTP id
+ 71dfb90a1353d-5c11362f67eso1026513e0c.1
+ for <qemu-devel@nongnu.org>; Sat, 25 Jul 2026 16:11:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785021105; x=1785625905; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1785021107; x=1785625907; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Rww7YfQ1WxkCJQmecJPYaSnIoUwIyure2gI4fgprYWc=;
- b=segqUeNxQXJYi0Yn7UEznANjGF31pdDQ0bwAQU99Cp3ZrSOdeVdE/hQ5OynesqJMLj
- znWw1EtlD51Wp4mVIO3ZTpm3OwsCw3VEqBgk8eMH6Y0Hq177ClStl/pU3jovgJOJIyTg
- lRGNtC2ceBJhvcXCDVHj0r9UT2tID6qErdnl9CyebvzxYzF74b+mlQExyuAtC0sGmeb/
- je9cyvKL3pXIqLsrcFy1KRkpvl/ZSbUihwtIphkAtSKrffkf6vYilPYxsjyFf1sjet6h
- 1Ycc58wimnumqC970KjhG5I7U2j9wXDzzCR/KzBC4oKDC5hdbvIKQRrtiTexE5UViDRj
- 3JLg==
+ bh=9/DrSP3MDIUcGpUWTKODc5NEMP8Qerb9nXStJq3dMzc=;
+ b=RFFbsPLrQI13VV7zyMZzmuhJVfH75CZqSxEWVsg3jC4VvaHVy7mUijSzSEQw5tzulu
+ S820c+zo6rXr08UIzB51NueWJU3FQv3sIWWvtSFGKLd9TzdNZbjPRXlVgSVe8mtFEDX+
+ BEofWq/RevJBnMtkbNG/Nr/TpQTcIbyoYMfcl3GGd/YzNTM+t6fFPSP/VuT5QokZK7bM
+ JEwfrgEGTlfVCQcDlWsYwcf/koXGwwBxkor1FJwGKI16SQA+54UjIxXuZKpwhe9l7llq
+ jfJkvoGSkjq8peA7nsfPyBDRY1CIJ3XuFTLUP2hZW9m50j8FA29qey4ZrNORLp1Etvtk
+ 6ZLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785021105; x=1785625905;
+ d=1e100.net; s=20251104; t=1785021107; x=1785625907;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Rww7YfQ1WxkCJQmecJPYaSnIoUwIyure2gI4fgprYWc=;
- b=ICLAwvOkAOwdRRpGnMjnb1r69/8RpBdAOASSqyyB6E6FKl+4ngR2oioS7HSFVKHgpa
- LDK1BExhGJISB4lJycvPdGuowp5dKwYWDMs6ZFHHspUILV3qa562yCD6+c5RH04DrJkL
- /1LC6dIMWNp6sUvjbC0vLFt7YN/JBkOGJJAzEspeXewuduaCRktvmgni/GQW/KRGtyzC
- /HJ9H1GkJmn0pFaxEkLYZQhy00jm34y4EZl7t85xuTj6d63kxCpIjKK2FQXlnSDJS82c
- crbeKUb51uyhDH3HLxUsc39tGALDfnafWiY+7uhXRGM6MMlqZp/sp1EUwkN1LXXlQyc9
- nPFQ==
-X-Gm-Message-State: AOJu0YzFHU0MGPDD9FAbxDspprhMC4arG0w3Tl8NFwCBORfDxLJp63Vf
- zblYxTOKU4AuwxA4wBDN4Wezhr0bZwA5CzCrg1X6VBQMdxu0ouPIkJuAAIDGAA==
-X-Gm-Gg: AR+sD11ItI0VelG7E5Ks/gp2YOjfN1L1L3EYbfBubxg1Gf9eJxmJbThxtlQbZuIez5W
- DvZ0tEr+O0JZfEji05SjaZTj796a6J7PWatYpfzSPsDTWtQ4i4fwq1yuBNQNDJDByQcJc/He5sx
- gjPHzmFCXftF018ihQdA5gDd4bqUC4GxWQi4XWRCnLOe72q7Qq0Q9qieGA+gGHncIS+y25aTEKc
- RyJ0gNdI8ZNxMw6ch11//VX5TEAlKxX/F5Uu+H+raCXQLPCTzZ2ef97RZgjxPUp+0GS9YfsttPq
- gn1Xfmuw/wd89gTfL6vh3OUiM5elj3CD9qAkt2Rn6cLSydfyB2VQHUuygdcg3uFxBpjcY4egGmD
- Lf8NwmFIC0OgfNuJ2v9I1rYCfyphtkBIlgijz6Yy6AX4hxhTq0Ajf2PXgQ5vs/ZMz6umhEBBPlR
- rSBtm2M+ZBBfrQAZV9RNyqmHVdiWq3DBBf
-X-Received: by 2002:a05:6122:65a4:b0:5bf:b500:c4f4 with SMTP id
- 71dfb90a1353d-5c306bb3b3amr1528561e0c.2.1785021105607; 
- Sat, 25 Jul 2026 16:11:45 -0700 (PDT)
+ bh=9/DrSP3MDIUcGpUWTKODc5NEMP8Qerb9nXStJq3dMzc=;
+ b=jn47qr0rypBTV86eDZseWeee9XD0LuBajpLqggwKtGmZzAaselk7dxOHAz1RcrdLCi
+ LpxOJaBSIsPY/v/ajj/PzkTRZ2xwEjQxQgbTIZ3geIx1LE61abXxAcSy8AzrUkRCJpbp
+ lhiXkEEzL6Q0ZGXdxddD0eOuA16cTaf6WslgjQqGh+jvmke+XeywY+SbfRFFEsJv1Ug8
+ cFtl8B8i7pHSVcQTmPVcRoTtJ6tozsWT4sJ2WI5iL/DgnhRnwCfYEWOt4cfmvvnUuC3F
+ ytAmAamgkpwueEhwnfr6aiCm2zc1DCGMJixxXSFAFUbLVtSfPl41rfU9BNeArJMt8B0c
+ OtDw==
+X-Gm-Message-State: AOJu0YzGKF/2PWmkAqdwWakQyVdC3QSeH/vJINYXYuLsQSJOXWsl8ZYZ
+ SMcWHbGa2xcsuDrK10e/rXi+M2rvbJPiDUQRMfAG9riEsHUr+LrND7a0mDTiYQ==
+X-Gm-Gg: AR+sD10t4gA2jr4Ah6JzI0BYfEyAcnRhu2AeNc6vJWMPYICY0l6FMefr70hXCUOxYgp
+ OIRr9jZ2k9/eCdScX7A1DHX4bOIpHBvXwjSqYVQDkKvNR1IQi6jBaewo36g4EXvbhnc4qcdVFw0
+ TU8iue/E5naxvV+qIuLNe85d1fvMDR9nvXtZ9o6OUihcRfcJTwPDW78tXTU3sP5+QHsK5ZCKcH7
+ cLnmi5OMtAeRB8BmfPxiD69KyJZaNQjvJf8GHw9CcKZdXaImGWZjWB5Nq6j57k8zeAOZmPMTaXO
+ gw/NLetDepF2Iv+21Z/RORCsl66q83QjmSHAYw5COOTwV973lkq6/viD0BE6ypV4m2ch6dIngAT
+ AOrWc5w1TaLtw2xgQKRR3ja0jaUpELIU1GlN42Ekq2SZHdMMNZ891DcGqt9+ecY7X3jV12wUsks
+ Wva2yeD7dq8ZbPnbt6We1GAvKkbotaiZDh0A1dOw/j4nk=
+X-Received: by 2002:a05:6122:8b11:b0:5bb:eebe:7ffd with SMTP id
+ 71dfb90a1353d-5c306c7e7ffmr1617920e0c.8.1785021107237; 
+ Sat, 25 Jul 2026 16:11:47 -0700 (PDT)
 Received: from localhost.localdomain ([146.71.8.128])
  by smtp.gmail.com with ESMTPSA id
- 71dfb90a1353d-5c30549516csm2907015e0c.6.2026.07.25.16.11.44
+ 71dfb90a1353d-5c30549516csm2907015e0c.6.2026.07.25.16.11.45
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 25 Jul 2026 16:11:44 -0700 (PDT)
+ Sat, 25 Jul 2026 16:11:46 -0700 (PDT)
 From: Marcelo Manzo <marcelomanzo@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Jason Wang <jasowangio@gmail.com>, Marcelo Manzo <marcelomanzo@gmail.com>
-Subject: [PATCH 1/2] hw/misc/bcm2835_powermgt: implement a real watchdog timer
-Date: Sat, 25 Jul 2026 19:11:41 -0400
-Message-ID: <20260725231142.61663-2-marcelomanzo@gmail.com>
+Subject: [PATCH 2/2] hw/net/bcm2838_genet: fix per-ring DMA status and RX ring
+ selection
+Date: Sat, 25 Jul 2026 19:11:42 -0400
+Message-ID: <20260725231142.61663-3-marcelomanzo@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260725231142.61663-1-marcelomanzo@gmail.com>
 References: <20260725231142.61663-1-marcelomanzo@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a33;
- envelope-from=marcelomanzo@gmail.com; helo=mail-vk1-xa33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a36;
+ envelope-from=marcelomanzo@gmail.com; helo=mail-vk1-xa36.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,158 +102,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The RSTC register's write-config bits (0x30) being set to the
-"full reset" value (0x20) does not mean "reset now" -- it arms the
-hardware watchdog so that a reset happens if the WDOG countdown
-register is not refreshed before it expires. The previous
-implementation treated any such RSTC write as an immediate reset,
-regardless of the WDOG value.
+Three related GENET DMA-ring bugs, all hit by newer guest drivers that
+actually use multiple RX/TX rings instead of relying on the single
+default ring:
 
-This is dormant on older/lighter userspace (nothing in Bullseye's
-default boot touches these registers this way), but modern systemd
-(observed with Debian 13/Trixie's systemd 257) writes to RSTC as part
-of routine early-boot watchdog probing. With the old code, this fires
-an immediate reset a few seconds into boot; combined with -no-reboot
-this looks exactly like a QEMU crash (clean exit, no panic, no guest
-reboot message) with the last log line being the RSTC/WDOG write.
+- BCM2838_GENET_RDMA_CTRL writes never updated the RDMA status
+  register at all (only TDMA_CTRL updated a status field, and only a
+  single overall DISABLED bit, not per-ring state). Track a proper
+  per-ring enable bitmask (bits 0-17, one per ring plus the default
+  ring) for both RDMA and TDMA, computed directly from the ctrl
+  register's enable bits on every write.
 
-Fix this by actually implementing the watchdog as a QEMUTimer: writes
-to RSTC/WDOG (re)compute the timeout from the WDOG register (in units
-of 1/65536 s, per the real hardware) and arm a timer for that many
-nanoseconds out; only when the timer actually fires do we request a
-system reset or shutdown, matching real hardware behavior. Clearing
-the write-config bits or the WDOG value disarms the timer, and reset
-disarms it too.
+- Enabling a ring via RDMA_CTRL didn't flush any packets that had been
+  queued while the ring was disabled, so traffic arriving in the
+  window before a ring was enabled was silently dropped instead of
+  delivered once it came up. Call qemu_flush_queued_packets() when the
+  EN bit is set.
+
+- bcm2838_genet_receive()'s fallback path hardcoded ring
+  BCM2838_GENET_DMA_RING_CNT - 1 (the last/default ring) whenever a
+  packet didn't match a specific filter, with no check that this ring
+  was actually active. Older guest kernels default to this ring, but
+  newer ones (observed: Debian 13/Trixie's 6.18 kernel) actively use
+  rings 0-4 and never enable the default ring at all, so every
+  unfiltered packet was silently dropped. Fall back to scanning for
+  the first actually-active ring instead of assuming the last one.
+
+Reset now initializes both status registers to "all rings enabled"
+to match real hardware defaults.
 
 Verified against real Raspberry Pi OS images under the patched
-raspi4b machine: Bullseye (5.15) and Bookworm (6.12) never exercised
-this path either way; Trixie (6.18, systemd 257) no longer crashes at
-boot and reaches a working login/SSH state.
+raspi4b machine: Bullseye (5.15) and Bookworm (6.12) worked with the
+old code (they use the default ring); Trixie (6.18) did not get a
+working DHCP lease over GENET without this fix and does with it.
 
 Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
 ---
- hw/misc/bcm2835_powermgt.c         | 49 +++++++++++++++++++++++-------
- include/hw/misc/bcm2835_powermgt.h |  2 ++
- 2 files changed, 40 insertions(+), 11 deletions(-)
+ hw/net/bcm2838_genet.c         | 24 +++++++++++++++++++++---
+ include/hw/net/bcm2838_genet.h |  2 ++
+ 2 files changed, 23 insertions(+), 3 deletions(-)
 
-diff --git a/hw/misc/bcm2835_powermgt.c b/hw/misc/bcm2835_powermgt.c
-index 3ec7abad0e..d90b9a0c3e 100644
---- a/hw/misc/bcm2835_powermgt.c
-+++ b/hw/misc/bcm2835_powermgt.c
-@@ -19,10 +19,40 @@
- #define PASSWORD_MASK 0xff000000
+diff --git a/hw/net/bcm2838_genet.c b/hw/net/bcm2838_genet.c
+index 43583aba64..a9798073dc 100644
+--- a/hw/net/bcm2838_genet.c
++++ b/hw/net/bcm2838_genet.c
+@@ -132,6 +132,8 @@ FIELD(GENET_DMA_STATUS, DISABLED,           0, 1)
+ FIELD(GENET_DMA_STATUS, DESC_RAM_INIT_BUSY, 1, 1)
+ FIELD(GENET_DMA_STATUS, RSVD_2_31,          2, 30)
  
- #define R_RSTC 0x1c
--#define V_RSTC_RESET 0x20
-+#define V_RSTC_WRCFG_MASK 0x30
-+#define V_RSTC_FULL_RESET 0x20
- #define R_RSTS 0x20
- #define V_RSTS_POWEROFF 0x555 /* Linux uses partition 63 to indicate halt. */
- #define R_WDOG 0x24
-+#define V_WDOG_TIME_MASK 0xfffff
-+#define WDOG_TICKS_PER_SECOND 65536
++#define GENET_DMA_ENABLE_MASK ((1U << 18) - 1)
 +
-+static void bcm2835_powermgt_expire(void *opaque)
-+{
-+    BCM2835PowerMgtState *s = opaque;
-+
-+    if ((s->rsts & 0xfff) == V_RSTS_POWEROFF) {
-+        qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
-+    } else {
-+        qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-+    }
-+}
-+
-+static void bcm2835_powermgt_update_wdog(BCM2835PowerMgtState *s)
-+{
-+    uint64_t timeout_ns;
-+
-+    if ((s->rstc & V_RSTC_WRCFG_MASK) != V_RSTC_FULL_RESET ||
-+        s->wdog == 0) {
-+        timer_del(s->wdog_timer);
-+        return;
-+    }
-+
-+    timeout_ns = muldiv64(s->wdog, NANOSECONDS_PER_SECOND,
-+                          WDOG_TICKS_PER_SECOND);
-+    timer_mod(s->wdog_timer,
-+              qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + timeout_ns);
-+}
- 
- static uint64_t bcm2835_powermgt_read(void *opaque, hwaddr offset,
-                                       unsigned size)
-@@ -70,13 +100,7 @@ static void bcm2835_powermgt_write(void *opaque, hwaddr offset,
-     switch (offset) {
-     case R_RSTC:
-         s->rstc = value;
--        if (value & V_RSTC_RESET) {
--            if ((s->rsts & 0xfff) == V_RSTS_POWEROFF) {
--                qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
--            } else {
--                qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
--            }
--        }
-+        bcm2835_powermgt_update_wdog(s);
+ REG32(GENET_RDMA_LENGTH_STATUS,             0)
+ FIELD(GENET_RDMA_LENGTH_STATUS, OVERRUN,    0, 1)
+ FIELD(GENET_RDMA_LENGTH_STATUS, CRC_ERROR,  1, 1)
+@@ -622,10 +624,8 @@ static void bcm2838_genet_tdma(BCM2838GenetState *s, hwaddr offset,
+         }
          break;
-     case R_RSTS:
-         qemu_log_mask(LOG_UNIMP,
-@@ -84,9 +108,8 @@ static void bcm2835_powermgt_write(void *opaque, hwaddr offset,
-         s->rsts = value;
-         break;
-     case R_WDOG:
--        qemu_log_mask(LOG_UNIMP,
--                      "bcm2835_powermgt_write: WDOG\n");
--        s->wdog = value;
-+        s->wdog = value & V_WDOG_TIME_MASK;
-+        bcm2835_powermgt_update_wdog(s);
-         break;
+     case BCM2838_GENET_TDMA_CTRL:
++        s->regs.tdma.status = (~dma_ctrl) & GENET_DMA_ENABLE_MASK;
+         if (exst_tdma_en != incm_tdma_en) {
+-            s->regs.tdma.status = FIELD_DP32(s->regs.tdma.status,
+-                                             GENET_DMA_STATUS,
+-                                             DISABLED, !exst_tdma_en);
+             trace_bcm2838_genet_tx_dma(incm_tdma_en == 1
+                                        ? "enabled"
+                                        : "disabled");
+@@ -727,6 +727,9 @@ static void bcm2838_genet_write(void *opaque, hwaddr offset, uint64_t value,
+             s->regs.intrl0.stat = FIELD_DP32(s->regs.intrl0.stat,
+                                              GENET_INTRL_0, MDIO_DONE, 1);
+             break;
++        case BCM2838_GENET_RDMA_CTRL:
++            s->regs.rdma.status = (~value) & GENET_DMA_ENABLE_MASK;
++            break;
+         case BCM2838_GENET_TDMA_REGS
+             ... BCM2838_GENET_TDMA_REGS + sizeof(BCM2838GenetRegsTdma) - 1:
+             bcm2838_genet_tdma(s, offset, value);
+@@ -736,6 +739,10 @@ static void bcm2838_genet_write(void *opaque, hwaddr offset, uint64_t value,
+         }
  
-     default:
-@@ -113,6 +136,7 @@ static const VMStateDescription vmstate_bcm2835_powermgt = {
-         VMSTATE_UINT32(rstc, BCM2835PowerMgtState),
-         VMSTATE_UINT32(rsts, BCM2835PowerMgtState),
-         VMSTATE_UINT32(wdog, BCM2835PowerMgtState),
-+        VMSTATE_TIMER_PTR(wdog_timer, BCM2835PowerMgtState),
-         VMSTATE_END_OF_LIST()
-     }
- };
-@@ -124,6 +148,8 @@ static void bcm2835_powermgt_init(Object *obj)
-     memory_region_init_io(&s->iomem, obj, &bcm2835_powermgt_ops, s,
-                           TYPE_BCM2835_POWERMGT, 0x200);
-     sysbus_init_mmio(SYS_BUS_DEVICE(s), &s->iomem);
-+    s->wdog_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-+                                 bcm2835_powermgt_expire, s);
- }
+         memcpy((uint8_t *)&s->regs + offset, &value, size);
++        if (offset == BCM2838_GENET_RDMA_CTRL &&
++            FIELD_EX32(value, GENET_DMA_CTRL, EN)) {
++            qemu_flush_queued_packets(ncs);
++        }
+         bcm2838_genet_set_irq_default(s);
+         bcm2838_genet_set_irq_prio(s);
+     } else {
+@@ -927,6 +934,15 @@ static ssize_t bcm2838_genet_receive(NetClientState *nc, const uint8_t *buf,
+             ring_index = bcm2838_genet_filter2ring(s, filter_index);
+         } else {
+             ring_index = BCM2838_GENET_DMA_RING_CNT - 1;
++            if (!bcm2838_genet_rdma_ring_active(s, ring_index)) {
++                for (ring_index = 0;
++                     ring_index < BCM2838_GENET_DMA_RING_CNT - 1;
++                     ring_index++) {
++                    if (bcm2838_genet_rdma_ring_active(s, ring_index)) {
++                        break;
++                    }
++                }
++            }
+         }
  
- static void bcm2835_powermgt_reset(DeviceState *dev)
-@@ -134,6 +160,7 @@ static void bcm2835_powermgt_reset(DeviceState *dev)
-     s->rstc = 0x00000102;
-     s->rsts = 0x00001000;
-     s->wdog = 0x00000000;
-+    timer_del(s->wdog_timer);
- }
+         if (size <= MAX_PACKET_SIZE) {
+@@ -1063,6 +1079,8 @@ static void bcm2838_genet_reset(Object *obj, ResetType type)
+                                       MAJOR_REV, BCM2838_GENET_REV_MAJOR);
+     s->regs.sys.rev_ctrl = FIELD_DP32(s->regs.sys.rev_ctrl, GENET_SYS_REV_CTRL,
+                                       MINOR_REV, BCM2838_GENET_REV_MINOR);
++    s->regs.rdma.status = GENET_DMA_ENABLE_MASK;
++    s->regs.tdma.status = GENET_DMA_ENABLE_MASK;
  
- static void bcm2835_powermgt_class_init(ObjectClass *klass, const void *data)
-diff --git a/include/hw/misc/bcm2835_powermgt.h b/include/hw/misc/bcm2835_powermgt.h
-index fb0740c01e..d1903a9cce 100644
---- a/include/hw/misc/bcm2835_powermgt.h
-+++ b/include/hw/misc/bcm2835_powermgt.h
-@@ -12,6 +12,7 @@
- #define BCM2835_POWERMGT_H
+     trace_bcm2838_genet_reset("done");
  
- #include "hw/core/sysbus.h"
-+#include "qemu/timer.h"
- #include "qom/object.h"
+diff --git a/include/hw/net/bcm2838_genet.h b/include/hw/net/bcm2838_genet.h
+index 5944e0cef9..960042f6f4 100644
+--- a/include/hw/net/bcm2838_genet.h
++++ b/include/hw/net/bcm2838_genet.h
+@@ -55,6 +55,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(BCM2838GenetState, BCM2838_GENET)
+ #define BCM2838_GENET_TDMA_RINGS        BCM2838_GENET_TDMA_REG(rings)
+ #define BCM2838_GENET_TDMA_RING_CFG     BCM2838_GENET_TDMA_REG(ring_cfg)
+ #define BCM2838_GENET_TDMA_CTRL         BCM2838_GENET_TDMA_REG(ctrl)
++#define BCM2838_GENET_TDMA_STATUS       BCM2838_GENET_TDMA_REG(status)
  
- #define TYPE_BCM2835_POWERMGT "bcm2835-powermgt"
-@@ -24,6 +25,7 @@ struct BCM2835PowerMgtState {
-     uint32_t rstc;
-     uint32_t rsts;
-     uint32_t wdog;
-+    QEMUTimer *wdog_timer;
- };
+ #define BCM2838_GENET_RDMA_REGS         offsetof(BCM2838GenetRegs, rdma)
+ #define BCM2838_GENET_RDMA_REG(reg)     (BCM2838_GENET_RDMA_REGS \
+@@ -62,6 +63,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(BCM2838GenetState, BCM2838_GENET)
+ #define BCM2838_GENET_RDMA_RINGS        BCM2838_GENET_RDMA_REG(rings)
+ #define BCM2838_GENET_RDMA_RING_CFG     BCM2838_GENET_RDMA_REG(ring_cfg)
+ #define BCM2838_GENET_RDMA_CTRL         BCM2838_GENET_RDMA_REG(ctrl)
++#define BCM2838_GENET_RDMA_STATUS       BCM2838_GENET_RDMA_REG(status)
  
- #endif
+ #define BCM2838_GENET_TRING_REG(reg)    offsetof(BCM2838GenetTdmaRing, reg)
+ #define BCM2838_GENET_TRING_WRITE_PTR BCM2838_GENET_TRING_REG(write_ptr)
 -- 
 2.47.1
 
