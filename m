@@ -4,50 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A10E4C531F9
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 11:17:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EF9EC531F9
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 11:17:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnaMX-0007Zv-9O; Sat, 25 Jul 2026 07:16:13 -0400
+	id 1wnaMH-0007WW-3J; Sat, 25 Jul 2026 07:15:57 -0400
 Received: from eggs.gnu.org ([209.51.188.92])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <210701c82e304622818989028e75192013cb81d8@kylie.crudebyte.com>)
- id 1wnaMK-0007X2-Tv; Sat, 25 Jul 2026 07:16:02 -0400
+ (envelope-from <1de8aea061b9d5bc7aaed182e2eebe9554debd68@kylie.crudebyte.com>)
+ id 1wnaLq-0007Ti-BB; Sat, 25 Jul 2026 07:15:30 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <210701c82e304622818989028e75192013cb81d8@kylie.crudebyte.com>)
- id 1wnaMJ-0006S2-A6; Sat, 25 Jul 2026 07:16:00 -0400
+ (envelope-from <1de8aea061b9d5bc7aaed182e2eebe9554debd68@kylie.crudebyte.com>)
+ id 1wnaLo-0006Pv-Qa; Sat, 25 Jul 2026 07:15:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
- Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=7e8LVU/rsCT7MMw3bX47FbjQLU6TBQu/kiitDZjF+u4=; b=AOTrW
- Y7E2Vbv1TA4fJi20yxXTsIhTCdSrsl8uARABsOFQzAkvKDdB/tohrYRPWECucmLbEj/l3NNwmLShj
- 48w//xYAgcoIg2OtLfekxdf9fJf1NjGNrkVJLUFVVsj3vYNX1NwKlP2HMWCj+BU7hnz9T8O2ec41C
- A8JZBVjcSz9nm/2xkNvMP8AgJ5i7khohUSlyN5BxfEmK6RCYWGrWSUkvKCoJn6weIxJaq5mlZAwh8
- k6v6FEjqpsyC5feFdxRnNifzGWUVoW4wIdy3wLkV10i/ejYh3UtPlcbTyxSVN6cNeO2+AVNnsXgoS
- mH9UASwGKXp/cRlau7EASvAluOUFI6BenCFT003OajW8P7qUfdVOGJyEV9LMadUoa/3OxbtBeYiKE
- hMcvl9EN3NjJuV+6iSisISvAhkcZlpzEdklnVm9OnXNGpbHOWMg0yOl2w/IxARM1Xik5BWVL1sdCv
- EkVFwhHV+6iCBrUEM75PtWwXvAFuJjUdUS5d7Vg9qtk4tLCo+GkrVOhaxyKXdH1fjan0n5PHs9KGC
- 8AjYoPJrgGQueyS9/Ep/LujIsEXUXYVinoKr9ZMgtJtDNllCQpWK3yNJkWZPC45c0EgFyJesKGS0w
- d3TzZpSjvN1f7XVYYj5Kq9GaJ2erCMULpsgkZ+d9G0IFrdx1P+dlHh5EpqS5uU=;
-Message-ID: <210701c82e304622818989028e75192013cb81d8.1784977523.git.qemu_oss@crudebyte.com>
-In-Reply-To: <cover.1784977523.git.qemu_oss@crudebyte.com>
-References: <cover.1784977523.git.qemu_oss@crudebyte.com>
+ d=crudebyte.com; s=kylie; h=Cc:To:Content-Transfer-Encoding:Content-Type:
+ MIME-Version:Subject:Date:From:Message-ID:References:In-Reply-To:Content-ID:
+ Content-Description; bh=MOLPgPjIWHDT04FWcBJ5JBy2d2RH8x/WCrU8sQaCPj4=; b=i+3GD
+ hEdWVvIj3BaCfM/b5jTAzFIHI2qVkwcjKdCwkMTtpEY0A1aYapNjms7NeergieaDzo7p5MYUwlQsf
+ B/UBuWUVv+3IvV9rok3MCpFRB/xuNI7BMlD8T6i2djH1cIm/m1Q1Ty/ozdpmqirvkWUTSFlRqaPHE
+ //6DYvQsmsvQXWfshse9UbAxMFNtO67KQpG/VHixT3a4XYf1eQEZ/ngWqfOKjNNuUUTMVJybZvA6U
+ j++itVVVGYc63ucqRzE6njg/ZLzOsMMcb08IQx08zeXkIkmqWSVRaH3GdjKcOPdjWfmR3fbcSl+n/
+ 0y3iR2k8Ecrj3J6TWvDsOwQlvQfOVLCtLPiTvB5W1v5Ju0/44NnFXgJSIOrsn8WtH2UvsbqKPHcXh
+ 7kZMS0YzSAvLFKOze6VCdmMGDKNLh3MCau/mqzK3S07vQ6Ah0hQQLK8BOiCPGrHtfMQwMp8H+5psp
+ 0JyqjizikuxqmYPgZkx0oCb1Lxcc4VgGWbwopMFHNGLtWEa4ujbuLsbl6He9CHftlegwc1tGL4hhL
+ upCDg6RZJCkNSZOdQqyVM+/OqH6OxO5pITXoXJQIqSbns6rLJaHYgoY3R6PLdOhT2a+68ozHZJ2WE
+ eTWKW9YShDE1X/cTsCcSO8V7/lrKh33/+E1gT3BcVzxNawn56UeP1XlpqADUs4=;
+Message-ID: <cover.1784977523.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Sat, 25 Jul 2026 13:05:24 +0200
-Subject: [PULL 4/5] hw/9pfs/virtio: drain in-flight PDUs before virtio-9p
- unrealize
+Subject: [PULL 0/5] 9p queue 2026-07-25
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
     Greg Kurz <groug@kaod.org>,
     Peter Maydell <peter.maydell@linaro.org>,
     Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>,
-    Jia Jia <physicalmtea@gmail.com>
+    Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+    Daniel P. Berrangé <berrange@redhat.com>,
+    Jia Jia <physicalmtea@gmail.com>,
+    Stefano Stabellini <sstabellini@kernel.org>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=210701c82e304622818989028e75192013cb81d8@kylie.crudebyte.com;
+ envelope-from=1de8aea061b9d5bc7aaed182e2eebe9554debd68@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -70,42 +73,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jia Jia <physicalmtea@gmail.com>
+The following changes since commit 300438ffbb8d9430cac2fcc15cba6f482b2c0587:
 
-A guest can trigger a heap-use-after-free in the virtio transport
-unrealize path by submitting a Treaddir request and immediately
-ejecting the device via ACPI PCI hotplug. The unrealize path frees
-struct LocalData while a worker thread still holds a reference
-on it, causing a UAF in local_open_nofollow().
+  Merge tag 'pull-trivial-patches' of https://gitlab.com/mjt0k/qemu into staging (2026-07-24 09:13:49 -0400)
 
-Fix this by draining all in-flight 9p PDUs by calling v9fs_reset()
-before final server cleanup. This ensures all coroutines completed,
-all FIDs are closed, and no worker thread still holds references
-on 9p server state when it is freed.
+are available in the Git repository at:
 
-Fixes: 6cecf09373 ("virtio-9p-device: add minimal unrealize handler")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3937
-Signed-off-by: Jia Jia <physicalmtea@gmail.com>
-[ Christian Schoenebeck: add commit log message. ]
-Link: https://lore.kernel.org/qemu-devel/bc503aefffd20b1806941b3ef708afbd92f0aef2.1784809978.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
----
- hw/9pfs/virtio-9p-device.c | 1 +
- 1 file changed, 1 insertion(+)
+  https://github.com/cschoenebeck/qemu.git tags/pull-9p-20260725
 
-diff --git a/hw/9pfs/virtio-9p-device.c b/hw/9pfs/virtio-9p-device.c
-index 50dc93091d..576a794ea4 100644
---- a/hw/9pfs/virtio-9p-device.c
-+++ b/hw/9pfs/virtio-9p-device.c
-@@ -243,6 +243,7 @@ static void virtio_9p_device_unrealize(DeviceState *dev)
-     V9fsVirtioState *v = VIRTIO_9P(dev);
-     V9fsState *s = &v->state;
- 
-+    v9fs_reset(s); /* cancel all in-flight PDUs to prevent UAF */
-     virtio_delete_queue(v->vq);
-     virtio_cleanup(vdev);
-     v9fs_device_unrealize_common(s);
--- 
-2.47.3
+for you to fetch changes up to 1de8aea061b9d5bc7aaed182e2eebe9554debd68:
 
+  hw/9pfs/xen: drain in-flight PDUs before xen-9p disconnect (2026-07-25 12:35:25 +0200)
+
+----------------------------------------------------------------
+9pfs changes:
+
+- Fix O_TRUNC bypass on read-only export (CVE-2026-63318).
+
+- Fix guest-triggered Treaddir/ACPI eject UAF (#3937).
+
+- Tests: fix "slow" type test errors on certain host systems.
+
+- Tests: fix CID 1660926.
+
+----------------------------------------------------------------
+Christian Schoenebeck (4):
+      tests/9p: prevent potential error in do_local_xattr_limit()
+      tests/9p: reduce xattr size to 1k
+      hw/9pfs: fix O_TRUNC bypass on read-only export
+      hw/9pfs/xen: drain in-flight PDUs before xen-9p disconnect
+
+Jia Jia (1):
+      hw/9pfs/virtio: drain in-flight PDUs before virtio-9p unrealize
+
+ hw/9pfs/9p.c                 |  5 +++--
+ hw/9pfs/virtio-9p-device.c   |  1 +
+ hw/9pfs/xen-9p-backend.c     | 17 +++++++++++++++--
+ tests/qtest/virtio-9p-test.c | 16 +++++++++++-----
+ 4 files changed, 30 insertions(+), 9 deletions(-)
 
