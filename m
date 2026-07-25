@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC4EDC531FC
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 01:03:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81F64C53200
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 01:03:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnQms-00024j-NR; Fri, 24 Jul 2026 21:02:46 -0400
+	id 1wnQmw-00025y-Iu; Fri, 24 Jul 2026 21:02:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1wnQTP-00070u-LV
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 20:42:39 -0400
-Received: from mail-vs1-xe35.google.com ([2607:f8b0:4864:20::e35])
+ id 1wnQTU-00073j-8P
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 20:42:45 -0400
+Received: from mail-vs1-xe2c.google.com ([2607:f8b0:4864:20::e2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1wnQTO-0000r3-02
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 20:42:39 -0400
-Received: by mail-vs1-xe35.google.com with SMTP id
- ada2fe7eead31-74d55dac06dso252876137.1
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 17:42:37 -0700 (PDT)
+ id 1wnQTS-0000tQ-Nz
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 20:42:43 -0400
+Received: by mail-vs1-xe2c.google.com with SMTP id
+ ada2fe7eead31-73a8ac9cd52so688681137.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 17:42:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784940157; x=1785544957; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1784940162; x=1785544962; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=1U3fZj9dgRgALDfDMiL9lvcCJHyc0ghvPvHqdJct8fQ=;
- b=Bw5Fn5Rh22FyRjT++bjqUHZVLfazzf0yytVolvYz0lJN2yXKbIre6yFVlJjgcx8uMv
- 0ZZYwZAZ8eQXp8AcABkGqNPa8p3IRPpvDJ8WSW1N+Tle8P7QJATpmyMcs3YWIyrhVqfd
- TOVVH3rp8I6YGh8fcJmGmo6giaySdV41/3enVzO2yEVpl5JbRAH34GBCROvLU+jJtIZn
- nAa4Pe6H6+sG0cLnHYOBdGtcKOvUHoIe/44Y/GBi8emS9XRsln5clT3QZypyBjji8Yyh
- VFYqoyaJPHmbSr2CYs0/beJBHEoddiWkZbhJp9ASxRovD0VRF7S0nOb8ZMuuhGy1KRr3
- iiZQ==
+ bh=HnQ7gxsV8OdqblNm0oJhx5jgthosF7mosNZcLoe2o7k=;
+ b=LAVKsSlTyqSNiXURUPMXXvKMonZ+8KENuAyu3ACHS8fymxD2xPboBzVTLfYZnz7pfq
+ zl0qOcPQ45I5OxWfhI+heqSFyiqliWTsISSeAULtsCsLKQZtjK5JWcyTIDg9CejZYr0b
+ EEM38bgtEsmKKP60A2WcfFb9tTDZCDqkhe/NtXo0vnhk7C5gWTg2LCUjzHiHw5PyYPRV
+ Ik2gz08xlLneEi1Ziqx9R2DJpSLGTT8sG8bFT3lBht1iYGc5nJsZsf1+zYWvxFvKndOK
+ 6fBn3+9b7MG1uoi9HotUmpeVvRR3AsEeDVKNnxvXvq/DO2l7KM/GocfHK9Rtwt4oYp92
+ F8Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784940157; x=1785544957;
+ d=1e100.net; s=20251104; t=1784940162; x=1785544962;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=1U3fZj9dgRgALDfDMiL9lvcCJHyc0ghvPvHqdJct8fQ=;
- b=dPqpenMafskdBCD+FqN8UOB3/TJ/pz8lrkVSwAlIo6qC59sJG+nnqxzhdOV89Maol7
- /OBMikOpmTTfqi/OyMlS4UIvSPTxVA1UgsoHxgLVV0y8PHCpT/wV3JUak467OTc+M8Rf
- kFyl8InEmNvN9KRjNKNMDrG2BU1+JxF7L/aQTWm03jNwICltjtMNU0/ht03BtSZLn2s2
- wGsZEQxBpvsxg8LAQrXpN4KFR7G2h9kAGPlZeNAI3ShTPMWaMlWIReTyEJf4WhYyKOmt
- HvO+cLet/NpCtWgGqR6x7SU4TeJYff99aEzqkRF9sGUnD+wKZCLawuDGZNBuC8illsM/
- DVLA==
-X-Gm-Message-State: AOJu0YygN4QjEUXGOIybVfYtiyiEeGYt4hkQKmWWUXqDMxUa/7qSaDH+
- Bi7SlIIRNKBDgwP21hfCF+4FXoJ6EInrkX6zaETnqIWevwAU6whHPSKHbXtnOIJ2
-X-Gm-Gg: AR+sD12bWVACRJpL8jt6hEBVZwo58CKGcir8TyMhZLTdqNfQ5cBjCtjVi7x/QSl4ySv
- 1KqEtWIjZREBYL9yp7CaLCFx5mFoPmFpAXBhEHd1eiQyClUp60pPKNshbC5iX8m3fF2mOWm9gNF
- mxFhSF3KZKQPjkdEGaULg8xvjg7Irt4+bvMvxqNo+FJxcVnQx6qTsmq5eayQkIV+bG0uPwyaUsM
- GDNmNmmknUP03ELztFb+pSa46WAmYvwWulebFyGHIr+8Do/Xinatq1WbbFizCAh514CU0Eu9X1S
- Bl4s1cNxjJYbzj15vY5LpwhJRiybtJhhgFj6iOFi2sFQ/aXuduJInvrVfUUUif1Sa6uQ+b0jIR1
- zRSJojmLVT92E8ug0S34m60bA5taNj9nSBR19XrHwZw9h2YCWyPozD/ufhH28sS7LTGrqXjkPJ4
- USnxZvIvifkwcVZUYcPpWuDwi9k885KBfX
-X-Received: by 2002:a05:6102:149a:b0:745:6721:8c2e with SMTP id
- ada2fe7eead31-7503df5cc2dmr710793137.2.1784940156893; 
- Fri, 24 Jul 2026 17:42:36 -0700 (PDT)
+ bh=HnQ7gxsV8OdqblNm0oJhx5jgthosF7mosNZcLoe2o7k=;
+ b=aINrUM8wgdq5x0eInKHA5687Z6orjR2KRq16OfuCg99KtxJH6W0VAOZUdOODZ+i5p5
+ 8QUZOxZLqrgA98sy1tj9LIooJ1w00S4R/QNj8y+nxfXJAiXodKMYNYtBgh3LOJE/LfjD
+ /6nYCE7oV8fPO28ZSHDK2edwx3MO44JAejAxbaSfUxgOmgFw716EaAeVXn67m3pHX7Dz
+ +j5WKL7huI/QoPssXfU6swE1/WoLk/8XzUCdKUB52YCpRikPR/Qm50Kz4hpG3HiCS7Nu
+ H73jbA/Szsjlhf+nPIfd9shKQtiog+gKaN7mSQOHGhPmAr/sZOmLW9Tl3hnDWXp14omS
+ OqPg==
+X-Gm-Message-State: AOJu0YxIfOy5EibkGyWWb0nWUHYBuVOT6za6xhdeYU18vbX5WuM2yHhh
+ 495/NWU5AUHIrUsoVCnprYqrfcEefglQGWsYX4PIC4ziICObOrsA1k+51HztImiY
+X-Gm-Gg: AR+sD11JfEXGChNe1k28z19Yra2McMDQmjq/F0ThvvPgo3sLzuBb+SwA7/AT0sBJuqM
+ Ue8oSrbGK3avJ94+cMKWwxvM5h2xq+jPI5S59mBWoxTx+IZ4VoeuYCgCcIrz/50uj33I4HWZ/x9
+ eNq77WU+15Cd47dteoKv9t1zUbDbuHyHQOC1E/bTlZqwhlRPLO5d6T95UYfVIrrtOoZMbsjMA4q
+ s42TgmXDPyTWWnXwobxIKQ+TaRCv4AWm/AjNk3PV5qJYMa7Iu+aqyuhYevY3qyd5rcUcI5R5tbc
+ Eb6J9+zfdlQY9/nPf3nxBEERwVnDs1VzWrn7ufb4muoiRufD3JbaGsgNa9BjNwK6rGwk3AmcUgX
+ LTkVa4rMl4hDEw7NX/U1bZ506LeU/Sk5tPOSkRlxPJHLXxtwMuyH8Dr+dHzNhD2hfIpn0EbYweI
+ mjf0niqTwrAzN0adgepBdTNlvrSJR6BHIs
+X-Received: by 2002:a05:6102:a210:10b0:6cd:b43f:72fd with SMTP id
+ ada2fe7eead31-74f9fc68fb5mr1307052137.22.1784940161607; 
+ Fri, 24 Jul 2026 17:42:41 -0700 (PDT)
 Received: from localhost.localdomain ([146.71.8.128])
  by smtp.gmail.com with ESMTPSA id
- a1e0cc1a2514c-97774f12690sm930591241.12.2026.07.24.17.42.36
+ a1e0cc1a2514c-97774f12690sm930591241.12.2026.07.24.17.42.40
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 24 Jul 2026 17:42:36 -0700 (PDT)
+ Fri, 24 Jul 2026 17:42:41 -0700 (PDT)
 From: Marcelo Manzo <marcelomanzo@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -71,16 +71,17 @@ Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Jason Wang <jasowangio@gmail.com>,
  Sergey Kambalin <sergey.kambalin@auriga.com>,
  Marcelo Manzo <marcelomanzo@gmail.com>
-Subject: [PATCH 14/19] hw/arm/bcm2838: enable BCM2838 GENET controller
-Date: Fri, 24 Jul 2026 20:42:13 -0400
-Message-ID: <20260725004219.66222-15-marcelomanzo@gmail.com>
+Subject: [PATCH 19/19] tests/functional/aarch64: add raspi4b GENET networking
+ test
+Date: Fri, 24 Jul 2026 20:42:18 -0400
+Message-ID: <20260725004219.66222-20-marcelomanzo@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260725004219.66222-1-marcelomanzo@gmail.com>
 References: <20260725004219.66222-1-marcelomanzo@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e35;
- envelope-from=marcelomanzo@gmail.com; helo=mail-vs1-xe35.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2c;
+ envelope-from=marcelomanzo@gmail.com; helo=mail-vs1-xe2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,103 +105,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Wire the BCM2838 GENET device (added in the previous patches) into
-the SoC: instantiate it in the peripherals block with
-qemu_configure_nic_device() so it picks up a -nic/-netdev from the
-command line, map its register region at the real BCM2711 physical
-offset, and route its two interrupt lines through the GIC. Also stop
-raspi4b from masking out the "brcm,bcm2711-genet-v5" device-tree
-node, now that the controller it describes is actually implemented.
+Add test_arm_raspi4_genet, exercising the raspi4b GENET controller
+end to end: boot with a -nic bcm2838-genet device attached, confirm
+the guest driver probes it ("GENET 5.0 EPHY" in the kernel log),
+reach a shell, and confirm the link actually comes up
+("ip link show eth0" reports LOWER_UP) rather than just that the
+device exists.
 
-Adapted from patches 19-29/41 of Sergey Kambalin's Raspberry Pi 4B
-series (patchwork series 829638) against current QEMU master.
+Verified locally against this series with the exact kernel/initrd
+assets this file already pins (raspberrypi-kernel_1.20230106-1 /
+groeck linux-build-test rootfs): without the "fix PHY
+autonegotiation-restart deadlock" patch earlier in this series, the
+link never comes up and this test would hang at the "ip link show
+eth0" step, so it also serves as a regression test for that fix.
 
 Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
 ---
- hw/arm/bcm2838.c                     |  6 ++++++
- hw/arm/bcm2838_peripherals.c         | 11 +++++++++++
- hw/arm/raspi4b.c                     |  1 -
- include/hw/arm/bcm2838_peripherals.h |  2 ++
- 4 files changed, 19 insertions(+), 1 deletion(-)
+ tests/functional/aarch64/test_raspi4.py | 30 +++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/hw/arm/bcm2838.c b/hw/arm/bcm2838.c
-index fc56f879..f47b96c3 100644
---- a/hw/arm/bcm2838.c
-+++ b/hw/arm/bcm2838.c
-@@ -239,6 +239,12 @@ static void bcm2838_realize(DeviceState *dev, Error **errp)
-                                       int_n);
-     }
+diff --git a/tests/functional/aarch64/test_raspi4.py b/tests/functional/aarch64/test_raspi4.py
+index 7a4302b0..0e254a20 100755
+--- a/tests/functional/aarch64/test_raspi4.py
++++ b/tests/functional/aarch64/test_raspi4.py
+@@ -92,5 +92,35 @@ def test_arm_raspi4_initrd(self):
+         #self.vm.wait()
  
-+    /* Connect Gigabit Ethernet controller to the interrupt controller */
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&ps->genet), 0,
-+                       qdev_get_gpio_in(gicdev, GIC_SPI_INTERRUPT_GENET_A));
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&ps->genet), 1,
-+                       qdev_get_gpio_in(gicdev, GIC_SPI_INTERRUPT_GENET_B));
+ 
++    def test_arm_raspi4_genet(self):
++        kernel_path = self.archive_extract(self.ASSET_KERNEL_20190215,
++                                           member='boot/kernel8.img')
++        dtb_path = self.archive_extract(self.ASSET_KERNEL_20190215,
++                                        member='boot/bcm2711-rpi-4-b.dtb')
++        initrd_path = self.uncompress(self.ASSET_INITRD)
 +
-     /* Pass through inbound GPIO lines to the GIC */
-     qdev_init_gpio_in(dev, bcm2838_gic_set_irq, GIC_NUM_IRQS);
- 
-diff --git a/hw/arm/bcm2838_peripherals.c b/hw/arm/bcm2838_peripherals.c
-index f71937ae..de49f48b 100644
---- a/hw/arm/bcm2838_peripherals.c
-+++ b/hw/arm/bcm2838_peripherals.c
-@@ -44,6 +44,10 @@ static void bcm2838_peripherals_init(Object *obj)
-     object_initialize_child(obj, "pcie-host", &s->pcie_host,
-                             TYPE_BCM2838_PCIE_HOST);
- 
-+    /* Gigabit Ethernet */
-+    object_initialize_child(obj, "genet", &s->genet, TYPE_BCM2838_GENET);
-+    qemu_configure_nic_device(DEVICE(&s->genet), true, NULL);
++        self.set_machine('raspi4b')
++        self.vm.set_console()
++        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
++                               'earlycon=pl011,mmio32,0xfe201000 ' +
++                               'console=ttyAMA0,115200 ' +
++                               'panic=-1 noreboot ' +
++                               'dwc_otg.fiq_fsm_enable=0')
++        self.vm.add_args('-kernel', kernel_path,
++                         '-dtb', dtb_path,
++                         '-initrd', initrd_path,
++                         '-append', kernel_command_line,
++                         '-no-reboot',
++                         '-nic', 'user,model=bcm2838-genet')
++        self.vm.launch()
++        self.wait_for_console_pattern(
++            'bcmgenet fd580000.ethernet: GENET 5.0 EPHY')
++        self.wait_for_console_pattern('Boot successful.')
 +
-     /* GPIO */
-     object_initialize_child(obj, "gpio", &s->gpio, TYPE_BCM2838_GPIO);
- 
-@@ -205,6 +209,13 @@ static void bcm2838_peripherals_realize(DeviceState *dev, Error **errp)
-     memory_region_add_subregion(get_system_memory(), PCIE_MMIO_ARM_OFFSET,
-                                 mmio_mr);
- 
-+    /* Gigabit Ethernet */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->genet), errp)) {
-+        return;
-+    }
-+    regs_mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->genet), 0);
-+    memory_region_add_subregion(&s->peri_low_mr, GENET_OFFSET, regs_mr);
++        exec_command_and_wait_for_pattern(self, 'ip link show eth0',
++                                                'LOWER_UP')
++        exec_command_and_wait_for_pattern(self, 'halt', 'reboot: System halted')
 +
-     /* GPIO */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio), errp)) {
-         return;
-diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
-index 038eefb2..79f60932 100644
---- a/hw/arm/raspi4b.c
-+++ b/hw/arm/raspi4b.c
-@@ -66,7 +66,6 @@ static void raspi4_modify_dtb(const struct arm_boot_info *info, void *fdt)
-     const char *nodes_to_remove[] = {
-         "brcm,bcm2711-rng200",
-         "brcm,bcm2711-thermal",
--        "brcm,bcm2711-genet-v5",
-     };
- 
-     for (int i = 0; i < ARRAY_SIZE(nodes_to_remove); i++) {
-diff --git a/include/hw/arm/bcm2838_peripherals.h b/include/hw/arm/bcm2838_peripherals.h
-index 903970a3..5da340f2 100644
---- a/include/hw/arm/bcm2838_peripherals.h
-+++ b/include/hw/arm/bcm2838_peripherals.h
-@@ -11,6 +11,7 @@
- 
- #include "hw/arm/bcm2835_peripherals.h"
- #include "hw/arm/bcm2838_pcie.h"
-+#include "hw/net/bcm2838_genet.h"
- #include "hw/sd/sdhci.h"
- #include "hw/gpio/bcm2838_gpio.h"
- 
-@@ -69,6 +70,7 @@ struct BCM2838PeripheralState {
- 
-     SDHCIState emmc2;
-     BCM2838PcieHostState pcie_host;
-+    BCM2838GenetState genet;
-     BCM2838GpioState gpio;
- 
-     OrIRQState mmc_irq_orgate;
++
+ if __name__ == '__main__':
+     LinuxKernelTest.main()
 -- 
 2.47.1
 
