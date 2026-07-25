@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CB4CC531C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 12:04:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88697C531D0
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 12:04:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnb5V-0005zl-OX; Sat, 25 Jul 2026 08:02:41 -0400
+	id 1wnb5V-0005zS-3x; Sat, 25 Jul 2026 08:02:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wxchen0913@gmail.com>)
- id 1wnTQz-00054k-GS
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 23:52:21 -0400
+ id 1wnTQq-0004qg-29
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 23:52:12 -0400
 Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <wxchen0913@gmail.com>)
- id 1wnTQw-0005zI-OA
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 23:52:21 -0400
+ id 1wnTQo-0005xT-Fo
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 23:52:11 -0400
 Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2ca64c3ce5fso12466845ad.3
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 20:52:18 -0700 (PDT)
+ d9443c01a7336-2cf52d15d88so10949235ad.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 20:52:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784951537; x=1785556337; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Ayrv9KOlmMCYHw6G8uVmOcbEgILQkAfO1hlEgsaxiK8=;
- b=ql1zsLUCp/Wp1/JfQTXgNr1ioPATxTy5/Np8rysPll2GxX/ibHbgi48RfoYrMSVXp+
- 9UNrZouwuPVW3kHN+VhhEOpwju3YFfYBG1qgpC4hVM/1BMQgFQDEeDhvL4Nfy+qq5LS4
- UHeCwm+r8iGTgnjONlF2NsuUydB6mfkZHVIYAANc5MahDDW4uGh6J+XQ3YBMM7iBLGou
- j+KMBmbRSqylc2Y6lpuE5LsqYyQMMwm9Y8FND/6bGIOlAB0mn7HfZcGwFwwX+OHAGtI6
- LmswLbfs3PVpdn/2zIAFLnhj+bB2GIvJjAtLMGlR4yLAmRHeoOMuFsdTDAs2lmhGz8HX
- KWLA==
+ d=gmail.com; s=20251104; t=1784951529; x=1785556329; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=6dFRLJCIuK8K51JYGTHe5j8n8fDntlIRsDnj9x+IWW4=;
+ b=dpGLs6efZGgD57A/1rWuZtqWZ1eNBMeu6Ckcix8FMEwInEkbmsNm4QQZLsZwm6YciU
+ RnCTt62tRVQ27LxKWKhInhGVs4WlKB1YhxH2GHFfOW+8vF7H73bEqhtCXPA0x8uaSH7a
+ 7VH2d7oLjgBF17Tb7WiIS5zEtq1q5ypCq77wKf+WflGfbb007nlSWKgoJ0vAS9Q7dnL6
+ 4oVGfB11sf1b1KXhMjbpRrZ+/fTMaotwohPYMLi9SCE3058SZKP7Uk58EgTCghuTb21M
+ ez1oDXDK8ZQ5SrwqC1bihYw176liXm3JeY3+fhS3Mzh74NQNsr0r+ZqC7MrQZxI7CL18
+ rK7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784951537; x=1785556337;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Ayrv9KOlmMCYHw6G8uVmOcbEgILQkAfO1hlEgsaxiK8=;
- b=rt6jMebSEdA7ZCyGZb2LoAC7McV6x3kvvJF2VPymjivQt0qygLAx3efjdN5uSiyiMe
- VEzC6L+2zVsuS4OLpEnYD9PcBXrigJ1wD1kx3yA6i5xpq5+Rcb+apAevyETQRIfF3fkd
- izp2J35+BvslFmEHrXweffEqQTUw7NCMU4ue2ngWCAGhLFHJZ2mbAZVqXAPhPm2iZyhk
- VUQgx6nrg0Qz1HCMHeOT309bqKYb64mgVbtpm8KGJdCqAeFuJ5Qx3K+V1mZjE4om6Vpg
- f8lH3S4EwiCZafO2SOzYIFqphX0gZYQpYkxbA13ICdzI9Noea2+MRDLhgKaW+7eiMEH4
- fJhQ==
-X-Gm-Message-State: AOJu0YzB2+AphHbiaZPcj+16PqbS22NOTqvZv4DK2KYeUZ6iScoCiEC7
- PnTDINUOo5ZYicBHlsxBX4j+y+DVDfPNfGufDajy1A+/YYiMvmL6RJsL
-X-Gm-Gg: AR+sD10JNUnWHqdPlCvtEyZJ9sATZhiF4vbrsXzYbU/Qpg9SntAyoSTDM2w2etgyLif
- uSrj4DviyvdOGfQAcPrlj0/LoXQykAWA6xUYupPknZ9YotZdKZkR8/B3hUH7nn5LbKYoiEPkPSV
- Dv/eqmWwIAhYqflG4hWOcdDOiEn7mZkQ3EJy4ACh1kkhIf4ds4NmlxDaM0fwRzECVuuOz79PgKM
- wKR1I3+tS5mjLocrreSUYi2BLvD4GKy1M3cpSqc4At6nC+ra7ryeTLxCClyvekP8tx+VmrVjaRW
- aN3BRyupcGV1IGZtdJBzTRCAqzkrEsiE0+zx9OvtZs3X7n33ScLN/xK1x2WKzbIcBfdVz0sMqN1
- tGmrCeVWkr4lnXoZ02GGxd+xrEcbrLxw482SWJbSL0lGVn72Rg3lTqZLAf8p7X/RVWqeKy90wqn
- ZB
-X-Received: by 2002:a17:903:17c8:b0:2ca:ea56:7a58 with SMTP id
- d9443c01a7336-2cfde851e69mr9220345ad.37.1784951537412; 
- Fri, 24 Jul 2026 20:52:17 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1784951529; x=1785556329;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=6dFRLJCIuK8K51JYGTHe5j8n8fDntlIRsDnj9x+IWW4=;
+ b=jFxqkcbP9RkBU8tdk4tLrE2JXh1BKM2+75+VMbOPcWgFystgVIvSAh3K3ZQmi5OEhL
+ o5IF4Dp8Qy/fXcmG308h59a4+5cRrBUr0TgJQAHFEkJ8pYWNXIGQgNZ7HxvBsfY6v8YP
+ hnWzFO8grWLWccmMSmvbILzuNFmKh09da4VlJ6GdnZnyAHOM940qJlIlnhi6rKPDblhr
+ L+CAYfYyWOziJnshwQ38RhBQM16LTtN4QOU2+SVdkzvp+8gj+7qbG/AbRgTkW16FGhdW
+ sXKw2Sgs+WRA30mubwryrLHbs6ykJB1r7gTEL9p2VkWnfdSZLpHjIq5pKo1B7eDcTDL9
+ LXyQ==
+X-Gm-Message-State: AOJu0YyhrefmF2pn6nYzr/JQxUbq8rtPAZyj2HtRN4tBHIY8kS+y7s04
+ /IUGSJ6Ui3P8rYnBhZmDjim0Ev0HQm/H9VN5Flj4i8kARLoxTrVpIpd+
+X-Gm-Gg: AR+sD1167XOjSLODiyzdR7s3yqfiN/jE1GkItIl1F5SZZgJyDA9LGD11ZxbPla98xbl
+ YtxMNvsN7SKS/6bmO5Ls02VD3RLgdCosSRPXgKCcdYyemaoyUHHS1Ob1UeYClwf/L3MeH0g4qUC
+ 7km0S9Rv00F8CbHr9Ed5gC05buF+2e3TzM7FmXfE/9c601OUQAU5iTuzwnBBm9do6RXT3Tw9BLz
+ HdW8eGWVp4Oynf8uzuubWb5TBn6qg2phvbQQPUnXcQ8bCjHCekiL/08uhLGUa+ClUOrxSBPiaUJ
+ 52wZ9hCGNZWH8qqgLFyGohrafIvYLyy5lszaK7IdoLmuOZJvzz0xLsulCWCHOpMFEwztC/7M22D
+ MSWt5GkUxBI87VNwARDG2Sxl4zw3GoUf4GWSjfWad5HVz1yuTPQ7WTiZ05P+e6WP61WJmSxFw//
+ CR
+X-Received: by 2002:a17:903:2446:b0:2c9:97a8:afef with SMTP id
+ d9443c01a7336-2cfde8673a4mr9628515ad.40.1784951528612; 
+ Fri, 24 Jul 2026 20:52:08 -0700 (PDT)
 Received: from [127.0.1.1] ([183.6.125.102]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2cfde5c8337sm4109975ad.20.2026.07.24.20.52.13
+ d9443c01a7336-2cfde5c8337sm4109975ad.20.2026.07.24.20.52.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jul 2026 20:52:16 -0700 (PDT)
+ Fri, 24 Jul 2026 20:52:08 -0700 (PDT)
 From: WX Chen <wxchen0913@gmail.com>
-Date: Sat, 25 Jul 2026 11:52:04 +0800
-Subject: [PATCH RESEND v2 2/3] hw/riscv: k230: connect DW 8250 UART
+Subject: [PATCH RESEND v2 0/3] riscv: Add K230 DW 8250-compatible UART
+Date: Sat, 25 Jul 2026 11:52:02 +0800
+Message-Id: <20260725-feat-k230-uart-v2-v2-0-d5fe82c47c28@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260725-feat-k230-uart-v2-v2-2-d5fe82c47c28@gmail.com>
-References: <20260725-feat-k230-uart-v2-v2-0-d5fe82c47c28@gmail.com>
-In-Reply-To: <20260725-feat-k230-uart-v2-v2-0-d5fe82c47c28@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAOIyZGoC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyjHQUlJIzE
+ vPSU3UzU4B8JSMDIzMDcyNT3bTUxBLdbCNjA93SxKIS3TIjXcO0pMRUAzPLtCQzMyWgvoKi1LT
+ MCrCZ0UpBrsGufi5KsbW1AFi9RG9rAAAA
+X-Change-ID: 20260725-feat-k230-uart-v2-1fbae069fb66
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
@@ -84,11 +85,11 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
  WX Chen <wxchen0913@gmail.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1784951524; l=4379;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1784951524; l=1598;
  i=wxchen0913@gmail.com; s=20260725; h=from:subject:message-id;
- bh=wTtU9/wv9XY+zL7PXDpOxalw5XS6oOWy8XhPBbBdXLg=;
- b=fdMX+5kqzEiBTu+2L5LdGLaYVekk9z0xQQVtsBvhiYgHj6JW4AJYhzQLPD+OOQmbxSWcG2N7e
- 67wvZxo0C+YBswo/Sasa7PlFVdGUs4Q4F2Wc9OmVsr9LfcafaZpjwA4
+ bh=t3s0n52K6syGOckb8m4qMRqobLTZd+klY3EaiVPmOnc=;
+ b=cj4xcfgGow95m/qHLDIBs0UiJOxdl7PSB8VeXAlVMJke9mbivPiyLbP9cysJml+SXfbKffC4p
+ LEpxOUYXqp4DUI7HrlCvcPoTJTAXH7QGwiYtUWVPpuYl6elC5n0K98t
 X-Developer-Key: i=wxchen0913@gmail.com; a=ed25519;
  pk=FX63IRxmtz1BCNzHxOOWDPTo8L/D0YUxlIKc1WKi7wo=
 Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
@@ -117,121 +118,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the generic serial-mm device with the K230 DW 8250-compatible
-UART model added in the previous patch.
+This series adds a QEMU model for the K230 SoC DesignWare 8250-compatible
+UART controller, wires it into the K230 SoC, and adds qtest coverage.
+
+The implementation supports the registers and features required by the
+Linux 8250_dw driver, providing an interactive shell over the serial port.
+
+Changes since v1 [1]:
+  - Split into a 3-patch series.
+  - Fixed indentation of preprocessing macros.
+
+Resend with a new sender address due to unexpected issues with the
+previous email setup.
+
+Testing: 8 qtest cases pass.  With the k230-boot-assets image from
+https://github.com/zevorn/k230-boot-assets, the driver probes
+successfully and the shell works bidirectionally over pty.
+
+[1] https://lore.kernel.org/qemu-devel/tencent_FE5823EA5F7A9EDE163FEDCB3DBFBE1FD905@qq.com/
 
 Signed-off-by: WX Chen <wxchen0913@gmail.com>
 ---
- hw/riscv/k230.c         | 33 ++++++++++++++++++++++-----------
- include/hw/riscv/k230.h |  6 ++++--
- 2 files changed, 26 insertions(+), 13 deletions(-)
+WX Chen (3):
+      hw/char: add K230 DW 8250-compatible UART
+      hw/riscv: k230: connect DW 8250 UART
+      tests/qtest: add K230 UART test
 
-diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
-index 502281c52cff1dce6febb7487dfdefefe6363e9c..d49fa23448f38dfed45a570eb5bece64519bfe27 100644
---- a/hw/riscv/k230.c
-+++ b/hw/riscv/k230.c
-@@ -29,7 +29,6 @@
- #include "hw/riscv/machines-qom.h"
- #include "hw/intc/riscv_aclint.h"
- #include "hw/intc/sifive_plic.h"
--#include "hw/char/serial-mm.h"
- #include "hw/misc/unimp.h"
- 
- /* Align K230_SDK k230_canmv_defconfig */
-@@ -111,6 +110,11 @@ static void k230_soc_init(Object *obj)
-     object_initialize_child(obj, "k230-wdt0", &s->wdt[0], TYPE_K230_WDT);
-     object_initialize_child(obj, "k230-wdt1", &s->wdt[1], TYPE_K230_WDT);
- 
-+    for (int i = 0; i < K230_UART_COUNT; i++) {
-+        g_autofree char *name = g_strdup_printf("k230-uart%d", i);
-+        object_initialize_child(obj, name, &s->uart[i], TYPE_K230_UART);
-+    }
-+
-     qdev_prop_set_uint32(DEVICE(cpu0), "hartid-base", 0);
-     qdev_prop_set_string(DEVICE(cpu0), "cpu-type", TYPE_RISCV_CPU_THEAD_C908);
-     qdev_prop_set_uint64(DEVICE(cpu0), "resetvec",
-@@ -136,19 +140,26 @@ static DeviceState *k230_create_plic(int base_hartid, int hartid_count)
-                               memmap[K230_DEV_PLIC].size);
- }
- 
--static void k230_create_uart(MemoryRegion *sys_mem, DeviceState *plic,
--                             int index)
-+static void k230_create_uart(K230SoCState *s, DeviceState *plic, int index)
- {
-     int uart_dev = K230_DEV_UART0 + index;
--    g_autofree char *name = g_strdup_printf("uart%d", index);
-+    g_autofree char *unimpl_name = g_strdup_printf("uart%d", index);
-+    DeviceState *dev = DEVICE(&s->uart[index]);
- 
--    /* Cover the non-16550 part of the SDK's 0x1000 UART window. */
--    create_unimplemented_device(name, memmap[uart_dev].base,
--                                memmap[uart_dev].size);
-+    qdev_prop_set_chr(dev, "chardev", serial_hd(index));
- 
--    serial_mm_init(sys_mem, memmap[uart_dev].base, 2,
--                   qdev_get_gpio_in(plic, K230_UART0_IRQ + index),
--                   399193, serial_hd(index), DEVICE_LITTLE_ENDIAN);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal)) {
-+        return;
-+    }
-+
-+    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, memmap[uart_dev].base);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
-+                       qdev_get_gpio_in(plic, K230_UART0_IRQ + index));
-+
-+    /* Cover the non-16550 part of the SDK's 0x1000 UART window. */
-+    create_unimplemented_device(unimpl_name,
-+                                memmap[uart_dev].base + 0x100,
-+                                memmap[uart_dev].size - 0x100);
- }
- 
- static void k230_soc_realize(DeviceState *dev, Error **errp)
-@@ -188,7 +199,7 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
- 
-     /* UART */
-     for (int i = 0; i < K230_UART_COUNT; i++) {
--        k230_create_uart(sys_mem, DEVICE(s->c908_plic), i);
-+        k230_create_uart(s, DEVICE(s->c908_plic), i);
-     }
- 
-     /* Watchdog */
-diff --git a/include/hw/riscv/k230.h b/include/hw/riscv/k230.h
-index 592e1c26bf8a8f8a1c66653ff9b568fbfe98a3ea..fed0357c2b9e1f5254cb157e0cd4d75d4946d1a1 100644
---- a/include/hw/riscv/k230.h
-+++ b/include/hw/riscv/k230.h
-@@ -17,10 +17,13 @@
- 
- #include "hw/core/boards.h"
- #include "hw/riscv/riscv_hart.h"
-+#include "hw/char/k230_uart.h"
- #include "hw/watchdog/k230_wdt.h"
- 
- #define C908_CPU_HARTID   (0)
- 
-+#define K230_UART_COUNT 5
-+
- #define TYPE_RISCV_K230_SOC "riscv.k230.soc"
- #define RISCV_K230_SOC(obj) \
-     OBJECT_CHECK(K230SoCState, (obj), TYPE_RISCV_K230_SOC)
-@@ -32,6 +35,7 @@ typedef struct K230SoCState {
-     /*< public >*/
-     RISCVHartArrayState c908_cpu; /* Small core */
- 
-+    K230UartState uart[K230_UART_COUNT];
-     K230WdtState wdt[2];
-     MemoryRegion sram;
-     MemoryRegion bootrom;
-@@ -131,8 +135,6 @@ enum {
-     K230_WDT1_IRQ   = 108,
- };
- 
--#define K230_UART_COUNT 5
--
- /*
-  * Integrates with the interrupt controller (PLIC),
-  * which can process 208 interrupt external sources
+ hw/char/Kconfig              |   3 +
+ hw/char/k230_uart.c          | 840 +++++++++++++++++++++++++++++++++++++++++++
+ hw/char/meson.build          |   1 +
+ hw/riscv/k230.c              |  33 +-
+ include/hw/char/k230_uart.h  | 180 ++++++++++
+ include/hw/riscv/k230.h      |   6 +-
+ tests/qtest/k230-uart-test.c | 514 ++++++++++++++++++++++++++
+ tests/qtest/meson.build      |   2 +-
+ 8 files changed, 1565 insertions(+), 14 deletions(-)
+---
+base-commit: 30e8a06b64aa58a3990ba39cb5d09531e7d265e0
+change-id: 20260725-feat-k230-uart-v2-1fbae069fb66
 
+Best regards,
 -- 
-2.48.1
+WX Chen <wxchen0913@gmail.com>
 
 
