@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7B95C531FC
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 01:04:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5D23C531C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 01:04:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnQmr-00023a-IP; Fri, 24 Jul 2026 21:02:45 -0400
+	id 1wnQmq-00022n-HP; Fri, 24 Jul 2026 21:02:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1wnQTS-00072e-FT
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 20:42:42 -0400
-Received: from mail-ua1-x92f.google.com ([2607:f8b0:4864:20::92f])
+ id 1wnQTQ-00071P-N8
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 20:42:40 -0400
+Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1wnQTQ-0000sQ-Ro
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 20:42:42 -0400
-Received: by mail-ua1-x92f.google.com with SMTP id
- a1e0cc1a2514c-9770e900464so722891241.0
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 17:42:40 -0700 (PDT)
+ id 1wnQTO-0000rU-VF
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 20:42:40 -0400
+Received: by mail-vk1-xa30.google.com with SMTP id
+ 71dfb90a1353d-5bfaa014978so320717e0c.3
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 17:42:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784940160; x=1785544960; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1784940158; x=1785544958; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=KEFI7uy+xvGQzuX9qXCJxcKIBc3o6R22/Dt7nV8b50A=;
- b=Mzv4OzdldbjZWEano/RtN4FPiLBYAu7N/kMNxaBnmZ6FMj5xuwND24b90V+OxO3OJE
- bzlWP0zAgO6gRWxqIg+tr8k+RmMolG/ipYyyZnBQ1X8Lw4LMcZda8kRszMPOAkiOAD3j
- U1xgYBSZqakDe30kiUoVtr/cGDHh+SRpcTMIf1UrsKr/1NHTEedKcf4o9s2cHH/pS0tk
- WP6ScKlstPZPoXe+KtKgWVySMiKOXpcIHK/STUZSJ9vjTQyLmBm8Ck6buVZt/RAptpS3
- cLkwFcdLDU20k61aOCOxd01tfHnaP27xWoIdKs7d9IN9qKd08XPb0XqcHspt3X8G6Zmt
- +Fww==
+ bh=5QfvYo5UsCuRurXk863Eme2dB9OKCaPHtZCuOSVqbkQ=;
+ b=QYdWYdWMYPLxaHb+sLnvwVTeo92+QBQa5389acBYcd5T2KQWJp+9K4LfKrceqBg3mZ
+ WJm0A4sY9tDvKbsHtd/TwwG5rbeJRw2D7c0FOEZdxb14DoXX7580NbM8sDCVm/lzFWdh
+ IMGheC+hITos3ku1K6P5s/oBhmCMqsYDupaFNxY6BB0LRgWnrv7kVO0RRAUr/yhv7Gkl
+ P8/sp99gb+Dg65WaY6kNPmOOMpIGHEmfg7VCkQRAcTZ4IYZTD7UNp1rrkxbzpd7CFukz
+ P2061YKwO2rRIlhWakwQRAhEI043iOQear0IRng0XBRITyw2R1ERnCNDnj0ZgXMRJtrd
+ nVvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784940160; x=1785544960;
+ d=1e100.net; s=20251104; t=1784940158; x=1785544958;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=KEFI7uy+xvGQzuX9qXCJxcKIBc3o6R22/Dt7nV8b50A=;
- b=Nhg6bVUqD5nnnxqe2BiEAvspuY9cb1f958QHVrInP9OjS1fgHKUA7wnrupKgkQ4cMW
- H1KaQhUjX/BllQ1odJZsJ83vBXMZLIkjg3gWfqkmPONAEY82rDD0fqfPwh9Uhd1eCkzt
- KsNMcapumIAWnEWOLSsEYKSbLx6u/BrbX6dz4pr8CrVKFL8CzZFxSsSN5cWNH6ggkvs9
- bOhyyInH6PnvHA/qI97J2AkyLl5rbGNhhQljnj0/mx+CxShuh2WYyAw1zwJfSt5qxLEn
- 1oWGue0geyRRj4CURAU6IJl9B9PclSgs0WgcpZRSZGUlDzI/RT9xhNrYZwQuKQq6OAHF
- 8g3g==
-X-Gm-Message-State: AOJu0Yy74xQMVxA6mL0Auqcoe3LtJNeMeoDfw7EUmNZ+J3l9B4q0JDur
- wDbntvUYeCw5slmhrQ6RX/KpvqSLAva9o/VdKdwBvBBiSfAusWEn+WpC+EWDy3sM
-X-Gm-Gg: AR+sD11KB8I5kS4k025+JNapHXWdlp8YKLViqsvqWsBsipQ75dIUxRBat2zmUz9t0Dh
- je+fxOai68/f59EFxkdcB9hdN+F4zVHrGJ2LyWO1wiprDG+eremtvgiwd+ZJ9ILUVVi0VnnOSrc
- edWQrxRMeFncpip+CguWoXgpBmWjNqkUap2eyHXhF7vV/0pjfxtI2YkXwC9R05wUmrkCji2xHaj
- 6A8kWpKer05qkl9H4wSvIXR1SITsVcPSieqBsStohGwjzNi8PMrjUHYpv4Of1J0wsLdefd+FKe5
- TX3kfEwDedywwP2oJvEn3BJGNT8eRBhDGmN4mqzscptbq9sjVMJT1ByCP6s6PjkyOwM8hCZEkeo
- DyyVcACJQ24Ki/WDVn/Y6FzPVQZ8lrqG6jEr21on4bX/S6wQaJu1Hp3kmTLfkBlgI6isctIxNzk
- MVBIb9dXXQ19hJHq+tk0VEey0KUjkCvgZo
-X-Received: by 2002:a05:6102:7b0:b0:734:54fa:971d with SMTP id
- ada2fe7eead31-74f9d69ead8mr1654729137.7.1784940159768; 
- Fri, 24 Jul 2026 17:42:39 -0700 (PDT)
+ bh=5QfvYo5UsCuRurXk863Eme2dB9OKCaPHtZCuOSVqbkQ=;
+ b=bHu3EOkPi5KSN+bJxRWrU0Pcv+veYoRZe/BygUaS12fMfen/fip+0noOpRxOJ7UY8f
+ yz6Z1Iaz3OmI1WGXZz3i3ghOt7iGTOvIbwlx6DF3yHRtveZn6TQwQgya6QAwxDevMCZa
+ j+7GGAQkAjpijwDOYZMzkkWlDORgoXGtFlsO1vjFfNWptNy9LOXqyW16htVaIjXZQlN6
+ nWSXl/W2qgVNjAuPOV5lq2p5ySfv1a1bm3cWcsXanJjyxPqHGBtQxcK0GfMkpKDtDX69
+ GwAhCTRl6GfOVjawDCpalPeaXfpSXGrLZhduyNyhA43s9Phz72VxXiRdSdad+KwS0zdr
+ Z7Nw==
+X-Gm-Message-State: AOJu0YysqA+7JyKjiWwwaRr2x7c4qVE/+6D7U6PVTNlA1AZocunrZOaV
+ jqNJdCnpfqTS+fk9w89zQQnnqFVfIHaHiLiptTkMzLSI8vlAsXa4Dowt5U4eCA9d
+X-Gm-Gg: AR+sD10DbPSupfZV/mtVMIvLRC7rwvTzbKWIn8bEAKujICL5Kox3Wb9W5XTnZ5zjIXV
+ SHy6TrNkHfIZ9bEB3IIFKS4nb6F+2nelnEKQr2HNfUnm0abVeGfzil+xOR1e9VMi1rZATcEi1d6
+ todZHePSuqNhTPtcdixHjGViXqqU4dHSaGybdVpwOPfbhpPc1/UcYK1i8OGgJVdPZf1WoD7NuPM
+ 5fe4AGurxa51NvMaxACu2XeVj6vT6deAr0PQFbjDJX8TKExA4tpS6DoWxKapYnRR+Fx1i/njYMg
+ 86fA+dsydtMLcz+vGv60MxCUAaS/GNxHj39e2cERTpx89wJovO00F5p8tagc0a6L12hWsuYh3ch
+ DwhC0lG+ws/JLKOdEWHcYu9Bo5hzb0s+/qPhETHB0FRNMVrRCSb69qei6EUrL0HKp6eC92tWKze
+ kjlrGegoTfR1sv7L/639SBvrbfHuOm9y3T
+X-Received: by 2002:a05:6102:6441:b0:738:9dd5:9b03 with SMTP id
+ ada2fe7eead31-750400a8bdamr601594137.20.1784940157831; 
+ Fri, 24 Jul 2026 17:42:37 -0700 (PDT)
 Received: from localhost.localdomain ([146.71.8.128])
  by smtp.gmail.com with ESMTPSA id
- a1e0cc1a2514c-97774f12690sm930591241.12.2026.07.24.17.42.39
+ a1e0cc1a2514c-97774f12690sm930591241.12.2026.07.24.17.42.37
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 24 Jul 2026 17:42:39 -0700 (PDT)
+ Fri, 24 Jul 2026 17:42:37 -0700 (PDT)
 From: Marcelo Manzo <marcelomanzo@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -71,23 +71,24 @@ Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Jason Wang <jasowangio@gmail.com>,
  Sergey Kambalin <sergey.kambalin@auriga.com>,
  Marcelo Manzo <marcelomanzo@gmail.com>
-Subject: [PATCH 17/19] hw/net/bcm2838_genet: fix TX ring activation check
-Date: Fri, 24 Jul 2026 20:42:16 -0400
-Message-ID: <20260725004219.66222-18-marcelomanzo@gmail.com>
+Subject: [PATCH 15/19] hw/net/bcm2838_genet: fix PHY autonegotiation-restart
+ deadlock
+Date: Fri, 24 Jul 2026 20:42:14 -0400
+Message-ID: <20260725004219.66222-16-marcelomanzo@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260725004219.66222-1-marcelomanzo@gmail.com>
 References: <20260725004219.66222-1-marcelomanzo@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92f;
- envelope-from=marcelomanzo@gmail.com; helo=mail-ua1-x92f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
+ envelope-from=marcelomanzo@gmail.com; helo=mail-vk1-xa30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Fri, 24 Jul 2026 21:02:41 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,43 +105,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-bcm2838_genet_tdma_ring_active() extracted the per-ring enable bit
-from ring_cfg_reg using the GENET_DMA_CTRL register's EN field
-definition (1 bit wide, at bit 0) instead of GENET_DMA_RING_CFG's
-own EN field (17 bits wide, one bit per ring). Since a 1-bit
-extraction at bit 0 only ever reflects ring 0's enable bit, every
-other ring (1-15, and the default ring 16) was silently treated as
-inactive regardless of whether the driver had actually enabled it.
-TX traffic hashed onto those queues was dropped with no error,
-eventually tripping the guest's qdisc watchdog ("NETDEV WATCHDOG:
-transmit queue N timed out") and causing intermittent DHCP failure /
-link-local address fallback.
+The guest PHY driver requests an autonegotiation restart by setting
+BMCR.ANRESTART, then polls BMCR waiting for the hardware to clear
+that bit as an acknowledgment. bcm2838_genet_mdio_cmd() called
+FIELD_DP16() to clear ANRESTART in phy_reg_data but discarded its
+return value -- FIELD_DP16() does not modify its argument in place,
+it returns a new value -- so the bit was never actually cleared in
+the register the guest reads back. The guest driver then spun
+forever waiting for an acknowledgment that would never come,
+appearing to hang the whole boot.
 
-bcm2838_genet_rdma_ring_active(), the RX equivalent, already used
-the correct field, confirming this was a copy-paste error isolated
-to the TX path.
+Assign the FIELD_DP16() result back to phy_reg_data, and also call
+bcm2838_genet_phy_update_link() once the restart is handled so link
+status actually gets refreshed, matching the surrounding code's own
+comment ("Initiate auto-negotiation once it has been restarted").
 
-Confirmed fixed across repeated boots: real DHCP lease every time,
-0% ping loss, no more checksum or watchdog messages in dmesg.
+Found by booting a real guest against this series and tracing the
+MDIO command register with targeted debug prints: the guest was
+observed polling BMCR indefinitely, always reading back the
+ANRESTART bit still set. Confirmed fixed across repeated boots: link
+comes up and autonegotiation completes every time.
 
 Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
 ---
- hw/net/bcm2838_genet.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/net/bcm2838_genet.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/hw/net/bcm2838_genet.c b/hw/net/bcm2838_genet.c
-index 6f8f4e5b..43583aba 100644
+index 59393d89..e34c1810 100644
 --- a/hw/net/bcm2838_genet.c
 +++ b/hw/net/bcm2838_genet.c
-@@ -515,7 +515,7 @@ static bool bcm2838_genet_tdma_ring_active(BCM2838GenetState *s,
-     uint32_t ring_mask = 1 << ring_index;
-     bool dma_en = FIELD_EX32(ctrl_reg, GENET_DMA_CTRL, EN) != 0;
-     bool ring_en =
--        (FIELD_EX32(ring_cfg_reg, GENET_DMA_CTRL, EN) & ring_mask) != 0;
-+        (FIELD_EX32(ring_cfg_reg, GENET_DMA_RING_CFG, EN) & ring_mask) != 0;
-     bool ring_buf_en =
-         (FIELD_EX32(ctrl_reg, GENET_DMA_CTRL, RING_BUF_EN) & ring_mask) != 0;
-     bool active = dma_en && ring_en && ring_buf_en;
+@@ -20,6 +20,8 @@
+ #include "hw/net/bcm2838_genet.h"
+ #include "trace.h"
+ 
++static void bcm2838_genet_phy_update_link(BCM2838GenetState *s);
++
+ /* GENET layouts */
+ REG32(GENET_SYS_REV_CTRL,              0)
+ FIELD(GENET_SYS_REV_CTRL, GPHY_REV,    0, 16)
+@@ -390,10 +392,15 @@ static uint64_t bcm2838_genet_mdio_cmd(BCM2838GenetState *s, uint64_t cmd)
+                 if (phy_reg_id == BCM2838_GENET_PHY_BMCR) {
+                     /* Initiate auto-negotiation once it has been restarted */
+                     if (anrestart == 1) {
+-                        FIELD_DP16(phy_reg_data, GENET_PHY_BMCR, ANRESTART, 0);
++                        phy_reg_data = FIELD_DP16(phy_reg_data,
++                                                  GENET_PHY_BMCR,
++                                                  ANRESTART, 0);
+                     }
+                 }
+                 *phy_reg = phy_reg_data;
++                if (phy_reg_id == BCM2838_GENET_PHY_BMCR && anrestart == 1) {
++                    bcm2838_genet_phy_update_link(s);
++                }
+             }
+         }
+     }
 -- 
 2.47.1
 
