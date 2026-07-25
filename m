@@ -4,105 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 553B6C531D0
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 17:19:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48397C531C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 17:47:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wng1A-0005OV-Mc; Sat, 25 Jul 2026 13:18:32 -0400
+	id 1wngS5-0005bd-4o; Sat, 25 Jul 2026 13:46:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wng17-0005OA-92
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 13:18:29 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wng15-0001vp-7v
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 13:18:28 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2cedda2ce6fso12314285ad.1
- for <qemu-devel@nongnu.org>; Sat, 25 Jul 2026 10:18:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784999906; cv=none;
- d=google.com; s=arc-20260327;
- b=CR7/LxYQH44gpL4xsXWFcgNJdv+AJHaCnX2wDGaYf358KcyyL53WAEzEY4NRepF+h1
- m/KnK7na5wyEr1XUf7IK33TGaT6RnkR871wkwI0A1lrSm3s4drpg7EFPk3YUDZ2t9LY3
- OCBdLmXTjdPmFI9ZgNldau9h/JtFj5Y+G4vT7ZUaAA3S9qNie+1rGQdeKC6p69zn03x7
- xI0LsnhHVq7sRaCLIe3+B9x+BviS2K1fH4CwZH7TcY8WWvmrJhNCq/hGsuoPVX0b9CFe
- jjlx1Opsm8DAs9o3YN4V3kEDlAzZ/+DvE/oH61ML/oiSv+xmAijZ+wburhBT8Gjmogt8
- Xlyw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=qMCVj187Lp7SNs9TkitO9UnQkLLIX6iObbec67t5aYs=;
- fh=X9A6eY/ija5Ujfbh81uH1b2L+MC6vvRonNCW8EmVA0k=;
- b=GObO2wAkEI6lNHdQyENyjvjn5iJgCY9qae34LXlGKFKutCfdfSl1930ENgPauDBBPu
- jy2R4K7LRaSThcYHF5WCKO+J+Am4ME4yzlV4kJAa60991Oi9sEPDLYIpBpgiot+e+So0
- DczCaL2oJNdAiK+v5XbUjBe+XFISJrIOkY0MJAWSnnRLdcVV6KcEPtGfJ22r9GIM5Jfp
- NuSxQB6NMLogQdYd5MoNPsvc5pRtaZqpIuTeVIbbEF7r0qq7T9EUKhx3MjPwhXn9CHWJ
- 95hmeMHGccClwu1YG0dZx298AW9zdI0Jsgp8b1iPJR0sOo9gqr90fxMWsf0j0M7W7/0D
- nZgw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784999906; x=1785604706; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=qMCVj187Lp7SNs9TkitO9UnQkLLIX6iObbec67t5aYs=;
- b=PsgCyc+ZuzwRCidq6eR+DnadPHa2SqDoMGv2k1mJy+eewaZ4hc4kVOcOR58+3FaNHE
- v3caBfdwcBq3XkPNrpINtUOMx0n2fXchmlcOPooFIbrsw79DHCGteZGZMwNv9XhIePjl
- 7DH7tWejAuwg77lkjqmFfSkcAkLe2psim3hNR3ZrZvOJD4e4q3TFpCYm9z8vcN2b2sL7
- uD1DGJ/21mmUGddMMxTDvNexGaNSHEQsOxJOyCJNLzWQupUWT0ctj8DmpydYsbhLI425
- HTpqFu+zKwappDUwb2pzAqyDTNWVMuUMgqmkhuhBgMF5HAd+9BQi+kYVxl5PkP0IE3t1
- cadQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784999906; x=1785604706;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=qMCVj187Lp7SNs9TkitO9UnQkLLIX6iObbec67t5aYs=;
- b=VfD5I34nFDMMFz14mJ0/gzpJLipmuBD5kCz40RYLNdE3FuFZDv4tZYu+j947cVRrNH
- 4dZHQST9P1tCpqFDt9su0dw1r37bJLdps7anX8xj+3h3GEdmCEU2DxQca7dG6Blfdm9C
- dD4KKIiq6FSe0HxCG/+8W/9YYFTJuZ7iX6ECqysjZAekNMzLBfD9AaYmo+LnrBdsXyGp
- Kzy70McR7mNsBiGBfDnaEKW1aSWjojpiNWntibBLJW8/cNe7+3lzW9YPh3O76O3ahn6W
- +ANR3wX3f+DusPS2KEKK2Z/08ctcZQhHn1oZ2obV7zb+bA3AhMw2ychl6U1FXKYCnigG
- Fs8Q==
-X-Gm-Message-State: AOJu0Yx3onxsFa9y8NRDex42XEeD1zQ/kde6QKa/zxdpcJZRpDIVe94h
- Gg2Qf3HghhjKm3j9p+pGhduEo95yrdLa53S66wrzLDHzQ4F2PUWFF4aWpD7sP4BMwkXEBcZdFEs
- K+mVttSxzliP3KxMvKIxz0vUwHJyWuUk=
-X-Gm-Gg: AR+sD12HA5I4T5+TihZZQ0yHHgzwynqFOPvqXf9qgTRisr5D0/EkvpgKAqDwm8/NLaZ
- xY7Tkoya86gfDVi24+ydIJU7zvW+dy1EMQp8uWVb9Oz9LisrCuQcUmiz04doldTQzJ2+ivl5OFc
- usnjrTwx89hzlH0JnZqv0R1KjxT5dfhyoOpJHjpiPosEDuYwV5K0EhOnZOK98x0RHMTopftkDf9
- 4hV8BDWs3R/Qxf0SI/kFX47Di5QU/emoR883GJLlPHC5mnEdPmQNBDQfdBXL0ofMk9Z5shPMT3O
- ZUZFmUqiBoDMPiR4Sg==
-X-Received: by 2002:a05:6a21:310e:b0:3bf:83f3:b810 with SMTP id
- adf61e73a8af0-3c67da8d608mr2714366637.29.1784999905508; Sat, 25 Jul 2026
- 10:18:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1wngS1-0005b0-O0; Sat, 25 Jul 2026 13:46:18 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1wngRz-00050w-Tk; Sat, 25 Jul 2026 13:46:17 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66PHHTkP1204107; Sat, 25 Jul 2026 17:46:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=8RmqUsUuRO8MM4gzk
+ tlbgDkhwAKrXz1lTjRFPcImv1E=; b=IKMg+/kCblgETcrwcygo4MmQ7sxZLLX3q
+ tH33LyMQrw4sZnErauif+drUbVTpXt5V9en1M5YcOa/NtCxX/fEf7Btb1iVhuNzm
+ t3KZZ0emDQfO3bO8hJX80xJgkgsIfhUuaFQb49IFDE23Bj1M5DmJIKb75Ts07Utc
+ ZB/xfVwopuFGnKjugpbhh2hzOnj8QnCiq1IgzIf1jdKnzk2UtlNOQCOkduBGX1Ay
+ P9drzcsHxYMPdkaof4oeuKe3DskkuluqmETJqTgjNNdwJsyezte5mw1xwKqloYiu
+ nBpN1UlxnNICnX9KhNjI3/VoZFrBKhLjCMkxgGmLvOqreoCdQGPFw==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuw70xvd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 25 Jul 2026 17:46:11 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66PHfGc0032556;
+ Sat, 25 Jul 2026 17:46:10 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fmn59t0v8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 25 Jul 2026 17:46:10 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66PHk6Kd38601102
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sat, 25 Jul 2026 17:46:06 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 425CA200EB;
+ Sat, 25 Jul 2026 17:46:06 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8F084200EA;
+ Sat, 25 Jul 2026 17:46:03 +0000 (GMT)
+Received: from shivang.com (unknown [9.124.222.170])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Sat, 25 Jul 2026 17:46:03 +0000 (GMT)
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Cc: shivangu@linux.ibm.com, thuth@redhat.com, adityag@linux.ibm.com,
+ amachhiw@linux.ibm.com, harshpb@linux.ibm.com, milesg@linux.ibm.com,
+ npiggin@gmail.com
+Subject: [PATCH v2] tests/functional/ppc: skip remote interrupts test if -net
+ user not built
+Date: Sat, 25 Jul 2026 23:16:00 +0530
+Message-ID: <20260725174600.17683-1-shivangu@linux.ibm.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260724085440.520125-1-shivangu@linux.ibm.com>
+References: <20260724085440.520125-1-shivangu@linux.ibm.com>
 MIME-Version: 1.0
-References: <20260710134720.2317856-1-marcandre.lureau@redhat.com>
- <20260725114028-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20260725114028-mutt-send-email-mst@kernel.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Sat, 25 Jul 2026 21:18:13 +0400
-X-Gm-Features: AUfX_mxrgU14Tt_PaKPAR8YFuOQcydp7SsOolL2A6F_-dis6HQKJ40nzJjjlcW4
-Message-ID: <CAJ+F1C+aozL0FBehhKQ-e3tMr3JBDR4DoiC4GLahRtHou0VUWQ@mail.gmail.com>
-Subject: Re: [PATCH] vhost-user-gpu: fix integer overflow in buffer allocation
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: xMelhbwi7u0Qv9SZ64-Z-os9PeSGrSq0
+X-Proofpoint-ORIG-GUID: IPc7x92us0FC9OtoaUHSX_cYacNlIFWc
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI1MDE2NCBTYWx0ZWRfX9brArngusFyj
+ oyqYdcXiplw47LAD1aFuC7ukoj3EifbzX7qzwUZLhmmVxwu/XVxTswZ2Jzh0//Az4hrwQbeaHN8
+ SbB7YjXrhJWNjqb4SMgzdjpKWEDPQFI0EOBObtiVz24Ly1j7PptGQ378+xbQQIDw05BC/og80dZ
+ sQpSZKVAXXuw/CmrdB0aBeXib24gKVksQ94lp3SVe+SYEL23U2tbZhqGWrOtsEGE2PVfz2zH2h9
+ WfhujZUs4o21jkmq9O65w1cnxo3acFCCZlsUluxQ7r5e/3vR4OXuByQ8xpqGUSCP/Jr4RsfFIOS
+ yNsWZJTTaG/ka//fA7KNFSGE0Pr1I9sQ2XtshNvJFDiFH/eN1xNPKJJvLmOM1//Z4aA7zXKAMUV
+ UiXGkOkLF9x+9JCUTmYp/hKZ7KT3R6tADjinia6bpmj1x5Wi4hy8wDup5TTGfU/Cf56cbPGu6F5
+ 5w5F/+OH0XLSWv98CuA==
+X-Authority-Analysis: v=2.4 cv=SKFykuvH c=1 sm=1 tr=0 ts=6a64f663 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=_mrNEnGEA0-oycTHUFkA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI1MDE2NCBTYWx0ZWRfXxfAOoKS+vB9V
+ bbWA5K9q3eI5CL4OZYIyIjy72KL91Fe3WR0IRVMeF+DcGz9vt734StESc0YiBB/rf1ddrfCCtqq
+ TpHAhfCvEHgqo1RF7mB3r9b+YU4sgKY=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-25_05,2026-07-24_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607250164
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,135 +124,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+While running remote interrupts test, without libslirp-devel installed,
+facing the following panic logs.
 
-On Sat, Jul 25, 2026 at 7:46=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
- wrote:
->
-> On Fri, Jul 10, 2026 at 05:47:19PM +0400, marcandre.lureau@redhat.com wro=
-te:
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > A malicious guest can trigger a heap buffer overflow in the
-> > vhost-user-gpu backend by sending a VIRTIO_GPU_CMD_RESOURCE_CREATE_2D
-> > with large width and height values (e.g. 65537x65537). The allocation
-> > size width * height * 4 silently wraps in uint32_t arithmetic,
-> > resulting in a much smaller allocation than expected. Subsequent
-> > VIRTIO_GPU_CMD_TRANSFER_TO_HOST_2D writes past the heap buffer.
-> >
-> > The in-tree virtio-gpu device (hw/display/virtio-gpu.c) already handles
-> > this via calc_image_hostmem() with uint64_t arithmetic and an overflow
-> > check. Apply the same approach to the vhost-user-gpu contrib backend:
-> >
-> > - Add an overflow check in vugbm_buffer_create() rejecting dimensions
-> >   where width * height * 4 exceeds UINT32_MAX
-> > - Promote the size arithmetic to uint64_t in mem_alloc_bo() and
-> >   udmabuf_get_size()
-> > - Check the return value of vugbm_buffer_create() in
-> >   vg_resource_create_2d(), which was previously ignored
-> >
-> > Fixes: CVE-2026-15264
-> > Reported-by: "Vulnerability Report" <vr@darknavy.com>
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3940
-> > Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >  contrib/vhost-user-gpu/vhost-user-gpu.c |  8 +++++++-
-> >  contrib/vhost-user-gpu/vugbm.c          | 11 +++++++++--
-> >  2 files changed, 16 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/vhost-us=
-er-gpu/vhost-user-gpu.c
-> > index bb41758e345..ee9858c397c 100644
-> > --- a/contrib/vhost-user-gpu/vhost-user-gpu.c
-> > +++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
-> > @@ -388,7 +388,13 @@ vg_resource_create_2d(VuGpu *g,
-> >          cmd->error =3D VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-> >          return;
-> >      }
-> > -    vugbm_buffer_create(&res->buffer, &g->gdev, c2d.width, c2d.height)=
-;
-> > +    if (!vugbm_buffer_create(&res->buffer, &g->gdev, c2d.width, c2d.he=
-ight)) {
-> > +        g_critical("%s: buffer creation failed %d %d %d",
-> > +                   __func__, c2d.resource_id, c2d.width, c2d.height);
-> > +        g_free(res);
-> > +        cmd->error =3D VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-> > +        return;
-> > +    }
-> >      res->image =3D pixman_image_create_bits(pformat,
-> >                                            c2d.width,
-> >                                            c2d.height,
-> > diff --git a/contrib/vhost-user-gpu/vugbm.c b/contrib/vhost-user-gpu/vu=
-gbm.c
-> > index 503d0a4566f..710d5452977 100644
-> > --- a/contrib/vhost-user-gpu/vugbm.c
-> > +++ b/contrib/vhost-user-gpu/vugbm.c
-> > @@ -13,7 +13,7 @@
-> >  static bool
-> >  mem_alloc_bo(struct vugbm_buffer *buf)
-> >  {
-> > -    buf->mmap =3D g_malloc(buf->width * buf->height * 4);
-> > +    buf->mmap =3D g_malloc((uint64_t)buf->width * buf->height * 4);
-> >      buf->stride =3D buf->width * 4;
-> >      return true;
-> >  }
->
->
-> I apologise but we are still allocating up to 2Gbytes is that really
-> sane? Isn't there a limit on these things? Like the size of the screen?
->
-> And width * 4 can still wrap around and then will it really behave
-> correctly?
->
+  File
+    ...
+    raise VMLaunchFailure(
+    ...<3 lines>...
+    ) from exc
+    ...
+        Output: qemu-system-ppc64: -netdev user,id=net0: network backend
+'user' is not compiled into this binary
 
-By default, builtin-in virtio-gpu has a cumulative max hostmem=3D256mb
-(https://www.qemu.org/docs/master/system/devices/virtio/virtio-gpu.html#vir=
-tio-gpu-virglrenderer).
-For 3d/gpu resources this may be considered very low in today's
-usages.
+Adding netdev user requirement for this test.
 
-Vulkan 1.4+ requires 8192 in dimensions and has
-VK_FORMAT_R64G64B64A64_SFLOAT =3D 256bpp
-https://docs.vulkan.org/refpages/latest/refpages/source/Required_Limits.htm=
-l#limits-required
+Suggested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Suggested-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+---
+ tests/functional/ppc64/test_powernv.py | 1 +
+ 1 file changed, 1 insertion(+)
 
-So pretty much vulkan 1.4+ requires that a graphics card "accepts" 4Gb
-allocations.
+diff --git a/tests/functional/ppc64/test_powernv.py b/tests/functional/ppc64/test_powernv.py
+index bac2017e18..9a95b6011d 100755
+--- a/tests/functional/ppc64/test_powernv.py
++++ b/tests/functional/ppc64/test_powernv.py
+@@ -91,6 +91,7 @@ def test_linux_smt_boot(self):
+     def test_linux_remote_interrupts(self):
+         self.require_accelerator("tcg")
+         self.set_machine('powernv')
++        self.require_netdev('user')
+ 
+         # Have below setup in this test:
+         # 1. e1000e attached to pcie.6, which is from 7th PHB, belonging to 2nd
+-- 
+2.54.0
 
-I don't think the virtio-gpu spec should impose a maximum limit.
-
-The qemu vhost-user-gpu implementation could benefit from having a
-hostmem tracking, similar to the built-in device.
-
->
-> > @@ -53,7 +53,8 @@ struct udmabuf_create {
-> >  static size_t
-> >  udmabuf_get_size(struct vugbm_buffer *buf)
-> >  {
-> > -    return ROUND_UP(buf->width * buf->height * 4, qemu_real_host_page_=
-size());
-> > +    return ROUND_UP((uint64_t)buf->width * buf->height * 4,
-> > +                    qemu_real_host_page_size());
-> >  }
-> >
-> >  static bool
-> > @@ -293,6 +294,12 @@ bool
-> >  vugbm_buffer_create(struct vugbm_buffer *buffer, struct vugbm_device *=
-dev,
-> >                      uint32_t width, uint32_t height)
-> >  {
-> > +    uint64_t size =3D (uint64_t)width * height * 4;
-> > +    if (size > UINT32_MAX) {
-> > +        g_warning("buffer dimensions too large: %ux%u", width, height)=
-;
-> > +        return false;
-> > +    }
-> > +
-> >      buffer->dev =3D dev;
-> >      buffer->width =3D width;
-> >      buffer->height =3D height;
-> > --
-> > 2.55.0
->
->
 
