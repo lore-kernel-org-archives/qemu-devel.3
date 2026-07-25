@@ -4,108 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50C0CC531D0
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 12:58:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D57BFC531D0
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 13:17:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnbwG-0006ix-HU; Sat, 25 Jul 2026 08:57:12 -0400
+	id 1wncFd-0005RH-26; Sat, 25 Jul 2026 09:17:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wnbwE-0006hv-Hx; Sat, 25 Jul 2026 08:57:10 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wncFb-0005Qc-BL; Sat, 25 Jul 2026 09:17:11 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wnbwD-0005Zj-14; Sat, 25 Jul 2026 08:57:10 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1wncFZ-00084J-Q2; Sat, 25 Jul 2026 09:17:11 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66PB1JhW472452; Sat, 25 Jul 2026 12:57:07 GMT
+ 66PB1mYd504578; Sat, 25 Jul 2026 13:17:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=r6J3+hb7P/Ye2JgKJ
- 9BxXWaQp9ZIod5G3VC8zNJDNj8=; b=l5mewY86gq9TTx1NCasM95qo1GsCiIUAE
- JcseVSamta4Tj3tepZAckzrt2i0ns530hmTVze+5Io7EwcXH7zgLlNwpOPB6vfHA
- q0f3OzRp1hB3JhBxVs8wsUxxLGp0fTaXE/ilEzhZSo0cRXpXTpaB/KC1DltMOgu7
- zPQ+mD5r5D3/lsZMJRevm8bUzbx5Ez7y/74A5ny5DVTx+auhWXmCGxbT2n1iS9jk
- WhtE7LtaZHAoc9OYhPGe/PbmJa/hNT4bDBczfQQr9nPNXDl73jlAiEuIOmiRic2a
- VkJRu1CqMXSuyi19uQrftsRZrHitPuoXiUa7I/O8gUZvBHWVImv6g==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuw708p2-1
+ :mime-version:references:subject:to; s=pp1; bh=vQ3Iu2ocwAcAVC1ad
+ UnZsR3HYKveZkv34EC5f2TeF2Q=; b=P8CqE7SmQu8oK+o2a/OOlZNYBMWFTqcnR
+ roeBIpXBHtm2qsPaN1tJPGEwyCI+B1Ot8HZjPLsA+AbUKYsNXY9kCIEv3PiNSqR0
+ Vop9aG6PK+RF2h07w5V+UnnuVawP5h/AmGJ0Qa6rm+EFE1ocQGzEoot09j0MQENK
+ 5xffh2zC91e1riZb34O5rZlD/SMd1xZFIMj5KgT2aFEvRHsiQpXw6s+FUwjMFl4r
+ CpbKnQWkzWkz7sF++vJgQSA1sEN4eAFIhGRQDbXr8IKgr0EH+C8xi5VHudeBuSsG
+ MSvhgbjnCpxExuZ3BF0gov/Rt3skJqLPwxrg52i+KNb/ZfWs0GzJg==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuwcg9gj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 25 Jul 2026 12:57:07 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66PCuFlF028517;
- Sat, 25 Jul 2026 12:57:06 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fmn12hb34-1
+ Sat, 25 Jul 2026 13:17:06 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66PDBKlu029828;
+ Sat, 25 Jul 2026 13:17:05 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fmn5h9bqc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 25 Jul 2026 12:57:06 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66PCv2Ja29884880
+ Sat, 25 Jul 2026 13:17:05 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66PDH1nv7143686
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 25 Jul 2026 12:57:02 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9284F2004E;
- Sat, 25 Jul 2026 12:57:02 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 77D002004B;
- Sat, 25 Jul 2026 12:57:02 +0000 (GMT)
+ Sat, 25 Jul 2026 13:17:01 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 965B5200F6;
+ Sat, 25 Jul 2026 12:56:52 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 785D9200F3;
+ Sat, 25 Jul 2026 12:56:52 +0000 (GMT)
 Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with SMTP;
- Sat, 25 Jul 2026 12:57:02 +0000 (GMT)
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with SMTP;
+ Sat, 25 Jul 2026 12:56:52 +0000 (GMT)
 Received: by tuxmaker.boeblingen.de.ibm.com (Postfix, from userid 4958)
- id 5D53516280A; Sat, 25 Jul 2026 14:56:52 +0200 (CEST)
+ id 5F99016280D; Sat, 25 Jul 2026 14:56:52 +0200 (CEST)
 From: Eric Farman <farman@linux.ibm.com>
 To: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
 Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
  Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>
-Subject: [PATCH v1 2/3] iotests/file-io-error: complete permission denied check
-Date: Sat, 25 Jul 2026 14:56:50 +0200
-Message-ID: <20260725125651.3896151-3-farman@linux.ibm.com>
+Subject: [PATCH v1 3/3] iotests/fuse-mmap-shared: complete permission denied
+ check
+Date: Sat, 25 Jul 2026 14:56:51 +0200
+Message-ID: <20260725125651.3896151-4-farman@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260725125651.3896151-1-farman@linux.ibm.com>
 References: <20260725125651.3896151-1-farman@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 22Y1YeSZUlaIE0iYYMRHnZ1LwgpkZLzW
-X-Proofpoint-ORIG-GUID: 22Y1YeSZUlaIE0iYYMRHnZ1LwgpkZLzW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI1MDEyMCBTYWx0ZWRfXx4OAMa2hlYvR
- 3PSmR7dUI2kMuBJeqk9AcVVo6sHw0pWHWOaOqsHhRUHOgyfFAM96BWrF67T2DrhwKrilDmpzfcb
- 8h/8k3MFhMm0iZorHz/WugHivSAiUmRVcRcRS+XPYtasbiXw4OiNWDT2mZ3+vXqEThN9Tzybfo5
- ZeHmIX45z6SKSe8/I/QOXtj94dTr/+YGJO4NY7MjImrXAZUM7ncFC1mMGaCZ9tFBOWETg0Rf8Dj
- x7DfwqH551+Xxv4mU90wg4pQ2VpDNWO3m46O9tBxpFh/8PNoJCW9syBI9CqRtpNmj75wB3pzJC1
- 9LXo2+5bLizeZ2JnWvxG7Gw4jalj4qjoC71oaH/se4UkQKL+Dzq4JGYgpyii4MJ97+IwcoLCL4Y
- 2vcfTbwxVvTDJPYCas9qN/0r6HNdn8KEAUF/N5//LlZseEvOw5IpmkID4nF6Qo8Qt8mc3uqlsI+
- bV7bSB9nkfe5fa4WINQ==
-X-Authority-Analysis: v=2.4 cv=SKFykuvH c=1 sm=1 tr=0 ts=6a64b2a3 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Proofpoint-ORIG-GUID: rRTLB0GoUBwyM5HqLNCcFz0359J6KEvF
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI1MDEyMCBTYWx0ZWRfX+/gl2FTG6zL8
+ bwMrODWkCnQxdEcgVMRmqFUVs6UlY8VB3XOBPgyrNYFy36U4mxPb6b8kbmqSaa5D7K6SXYyJinD
+ uCSu7Bq14ybFrT53y3Lv8IxynL3vYFY=
+X-Authority-Analysis: v=2.4 cv=E/z9Y6dl c=1 sm=1 tr=0 ts=6a64b752 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=4wrIhZiHZY6pnxtr8DIA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI1MDEyMCBTYWx0ZWRfXyhCHIeQhi+1d
- D0AWkifv11HLUbwa7sgHyTbdJaRRuBph7nxDTq1qbx6Jua/2rikNOtzSKbULtuOUHgJnifsn7xK
- w/C3uCo+Au0XInkPb8a4IDEvx4Hzpw8=
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=wYm8ukeX07llxbEcVw4A:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI1MDEyMCBTYWx0ZWRfX0G2cLqcKMfK6
+ aZea/WmhlVx1x8Wfj7sIbbtXSL8rHFdcSX6E6dVqxeOH5Buwx7JFYt83PICtHiBpWvcYJU3fu3M
+ j+cptE1CI2dpB+AulNBtufQas89TYeQxT28SgNW216sdBiz5CcHcbYD0G4595ZOSuzwwjaruq5t
+ VZ0ZhakXY9qUzB6Cc8J686RKRb50p0FYe/f/AK4VQ1zgzU3Q8+zEQtjXcYnYzs7YJzxwai7Ms1/
+ 9ZbYSYYKNacGuUdqBji5jjHG/KkefLkOow2eeeGJXiViuccdXZm7xQIIqym/3+S4mhafoeFDZia
+ srMkaY4nEgieQbIghtNeUUW8gW6E+a7WTahDp9/PjKibn9mu3dESdJJMKlaobZUd8B55U3oDe6j
+ +Fsdm24EfXhaLptUwogVGAuDkRQRU4sj15UzJjUrY1bMwbTNCB61ZveT6mq0iqQows5QYB6IJQj
+ j7MxoQPH5DgyU5Q2qxA==
+X-Proofpoint-GUID: rRTLB0GoUBwyM5HqLNCcFz0359J6KEvF
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-25_03,2026-07-24_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0
- lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607250120
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ adultscore=0 priorityscore=1501 spamscore=0 clxscore=1015 phishscore=0
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607250120
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,35 +122,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As with iotests/108, there are multiple potential error messages
-returned to the user. Add a 'notrun' exit for another possible
-error that would otherwise cause this test to fail:
+As with iotests/108, there exists multiple messages that would
+signal a permission error when accessing the fuse tests:
 
-  fusermount3: failed to open TEST_DIR/fuse-export: Permission denied
+  fusermount3: failed to open .../scratch/qcow2-file-fuse-mmap-shared/exp=
+ort.fuse: Permission denied
 
-Fixes: 380448464d ("tests/file-io-error: New test")
+Incorporate an additional potential error message to cause the
+test to be skipped rather than failed.
+
+Fixes: ba20257d9b ("iotests: test shared mmap for fuse export")
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 ---
- tests/qemu-iotests/tests/file-io-error | 3 +++
- 1 file changed, 3 insertions(+)
+ tests/qemu-iotests/tests/fuse-mmap-shared | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/tests/qemu-iotests/tests/file-io-error b/tests/qemu-iotests/=
-tests/file-io-error
-index fb8db73b31..86f8e1b6a6 100755
---- a/tests/qemu-iotests/tests/file-io-error
-+++ b/tests/qemu-iotests/tests/file-io-error
-@@ -92,6 +92,9 @@ output=3D$(_send_qemu_cmd $QEMU_HANDLE \
- if echo "$output" | grep -q "Parameter 'type' does not accept value 'fus=
-e'"; then
-     _notrun 'No FUSE support'
- fi
-+if echo "$output" | grep -q "failed to open TEST_DIR/fuse-export: Permis=
-sion denied"; then
-+    _notrun 'No FUSE support'
-+fi
- echo "$output"
+diff --git a/tests/qemu-iotests/tests/fuse-mmap-shared b/tests/qemu-iotes=
+ts/tests/fuse-mmap-shared
+index 52941a3bb6..faa302e4db 100755
+--- a/tests/qemu-iotests/tests/fuse-mmap-shared
++++ b/tests/qemu-iotests/tests/fuse-mmap-shared
+@@ -28,8 +28,11 @@ def test_fuse_support(mount_point):
+     })
+     test_qsd.stop()
+     if 'error' in res:
+-        assert (res['error']['desc'] =3D=3D
+-                "Parameter 'type' does not accept value 'fuse'")
++        print(res)
++        assert ((res['error']['desc'] =3D=3D
++                "Parameter 'type' does not accept value 'fuse'") or
++                (res['error']['desc'] =3D=3D
++                "Failed to mount FUSE session to export"))
+         iotests.notrun('No FUSE support')
 =20
- echo
+ # Shared mmap when using direct IO is only supported for Linux kernels >=
+=3D 6.6
 --=20
 2.53.0
 
