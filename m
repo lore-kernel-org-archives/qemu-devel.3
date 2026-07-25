@@ -4,51 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDBA7C531C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 11:16:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C250C53209
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 11:16:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnaMT-0007Z2-Ve; Sat, 25 Jul 2026 07:16:10 -0400
+	id 1wnaMU-0007ZY-FU; Sat, 25 Jul 2026 07:16:10 -0400
 Received: from eggs.gnu.org ([209.51.188.92])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <a0414545a212e27058fab7b057b018e75b8c4b13@kylie.crudebyte.com>)
- id 1wnaMJ-0007Wl-7T; Sat, 25 Jul 2026 07:16:00 -0400
+ (envelope-from <1de8aea061b9d5bc7aaed182e2eebe9554debd68@kylie.crudebyte.com>)
+ id 1wnaMM-0007XP-Ac; Sat, 25 Jul 2026 07:16:02 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <a0414545a212e27058fab7b057b018e75b8c4b13@kylie.crudebyte.com>)
- id 1wnaM7-0006RV-K1; Sat, 25 Jul 2026 07:15:58 -0400
+ (envelope-from <1de8aea061b9d5bc7aaed182e2eebe9554debd68@kylie.crudebyte.com>)
+ id 1wnaMJ-0006SP-BB; Sat, 25 Jul 2026 07:16:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Content-Transfer-Encoding:Content-Type:
- MIME-Version:Subject:Date:From:References:In-Reply-To:Message-ID:Content-ID:
- Content-Description; bh=3V6OFWjKWMNdEgXvrT0O9LnloRaUB2VVmbg60TB5Eow=; b=vv1LZ
- QvOztaCd4bs1MkTl/HUR5s/pfhPsTENtMf/kC1ZzBJUQB6WALAWW0hu2dJCxI0HWUSYcHXoRo58Jz
- Q6jjBsVBoc6npD+M6qos5WE0NqSwHOnojbxQdY5dvsIdL9mDPlfAXfbg8KbXjNNrPjWTTMBWlL2re
- SaFAC4yITsKt1AGxFPjI01W4jSMDBhyT1HgIew5QpZTIL5lV/PSQp0ppJr9Dp5NA877Fax7d2/g+j
- dBr5VV9N9v8Qv2swRGBA8J7l3E+v2Hvsl0XAfG/pzd6CNLAh+I9Imt1Z6Mq1ZZ9JIVVp5AAeCvgHm
- wT/aXDVE28Uwywggk97mxdCofVgqnXY3Bpri9Y/eJeZRtf5gYibEL218ppkmveaUiUCyGdkeEKE5F
- /2H+kqLFoSMNhY65L5fZDSyLA7CqAwT0wqrjc1CiDeDK7vmUEjaFDbyi3CjFda87LeIEWQbL1Myy7
- f2LBU9LHAl9zocohcQMMvw5FPSftvzcBJlCnJxlc6zreBQzCuMpN2SQLMlNbBXAeofWrXsQ0r+AZh
- EMVZSt8rgfUzeAU0lkzy5BhqercD3Gyn+q88M5q+29mbrPvtqFy7FYnVXsHOlRBurHGi9Nmf9AguB
- yZHIHWfUimofx9dgttV4mfulIn6Ia1r7RKIH8LONooFFdPbQDIVqoMdTyRVZrs=;
-Message-ID: <a0414545a212e27058fab7b057b018e75b8c4b13.1784977523.git.qemu_oss@crudebyte.com>
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
+ Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
+ Content-Description; bh=1vC+bHh8UMGJp8ZnL35HxFgcrOaz8bb0STjQEiYLIic=; b=TBOhY
+ krE8JKFZAFkMUvVfO4YHiCOs2P9fUy6kR1N+w0kZ6kpZhCjv+ONvhYNXsqABoS75oPYk0VAuigLpt
+ 02FA6X0Lj5hXGy+Oz8gb+OZAoCPE5hpFzDi/geyLAUxtfRtfIHitWCYYdMihnWpFDFLGIsxTh69Nr
+ FVg6i2iFcR8yFvnTo8Sr9HZJ81fdxjLgT2YRCiGycCl4Vzp8XMzVyPVz3YFHfEcMIARlfhKW01U4+
+ 5jNHPebBcu8pLxDrOuRGLi7B4i+ATDqH6Vzt+4wWKgnOhvzOgyLgsDOb5Vi44Z13BthbxCY1w8Tpt
+ e8wFOkb4w7t3HdJ+OUMaLDogM9LRJOSjCTXpzWoeqsjKa0LIldFa+gxiPaQb9UqR3qhp85jxXQu1k
+ BHLtdVLNVMfEb/QaWGeA9YkKQGJ+4Cctsx61MhiVDhh9WjWOtK+BwjKULNLCKPtYBSfy6CA5Revmb
+ rqAZHBDM3ncPV1y6ZK1PSRs6SHspy13gCNrNBZAfu8PpgiJeB0dhtRYbXQFmWp3URRvI7VV9bQ4Rf
+ tOt7urZGKO+RcqgjR0nSC/B/41D7cpSeRc1Dpo+S/5r9RHvXU9d7YZz//GhLrdafLC4u+mBYNAi4G
+ Su5YMQJGuveuzC1nCp2OeuA1oLHyQh/Hfddq976X8yrXsq7aajZzpZ7ovRyIO0=;
+Message-ID: <1de8aea061b9d5bc7aaed182e2eebe9554debd68.1784977523.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1784977523.git.qemu_oss@crudebyte.com>
 References: <cover.1784977523.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Sat, 25 Jul 2026 13:05:24 +0200
-Subject: [PULL 3/5] hw/9pfs: fix O_TRUNC bypass on read-only export
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Subject: [PULL 5/5] hw/9pfs/xen: drain in-flight PDUs before xen-9p disconnect
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
     Greg Kurz <groug@kaod.org>,
     Peter Maydell <peter.maydell@linaro.org>,
-    Daniel P. Berrangé <berrange@redhat.com>
+    Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>,
+    Stefano Stabellini <sstabellini@kernel.org>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=a0414545a212e27058fab7b057b018e75b8c4b13@kylie.crudebyte.com;
+ envelope-from=1de8aea061b9d5bc7aaed182e2eebe9554debd68@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -71,49 +69,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Guest 9p client opening a file with O_TRUNC on a read-only 9p file
-system using 9p2000.u protocol version, allowed to bypass 9p
-server's read-only check, eventually causing file(s) being
-truncated to empty file(s) on host's read-only export.
+The xen-9p disconnect path has two issues:
 
-Root cause is that 9p server's read-only check is using Linux open
-flags like O_WRONLY, O_RDWR, O_TRUNC, but checking them against
-the 9p Topen request's "mode" parameter, which has a different
-encoding (Otrunc = 0x10 vs. O_TRUNC = 0x200).
+1. It frees the Xen9pfsRing structures while in-flight PDUs may still
+   reference them via pdu->tag to index rings[]. This causes a UAF
+   in xen_9pfs_push_and_notify() when worker threads resume after
+   completing filesystem operations.
 
-Fix this by checking against the "flags" variable instead of the
-protocol's "mode" option. Because the "flags" variable is already
-converted to Linux encoding by omode_to_uflags() for 9p2000.u and
-by get_dotl_openflags() for 9p2000.L protocol version.
+2. It never calls v9fs_device_unrealize_common(), which means server
+   state (struct LocalData, mountfd, FIDs) is never cleaned up on
+   disconnect, causing a resource leak on every guest-initiated
+   disconnect.
 
-Only 9p2000.u was affected by this bypass, 9p2000.L uses the Linux
-format on protocol level already.
+Fix both by draining in-flight PDUs via v9fs_reset() before tearing
+down rings, and calling v9fs_device_unrealize_common() to clean up
+server state.
 
-Fixes: 2c74c2cb4b ("hw/9pfs: Read-only support for 9p export")
-Fixes: CVE-2026-63318
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4000
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/E1wk2Dq-0019kY-JK@kylie.crudebyte.com
+Additionally, explicit calls of xen_9pfs_disconnect() in the error
+paths of xen_9pfs_pdu_vmarshal() and xen_9pfs_pdu_vunmarshal() must
+be deferred (via aio_bh_schedule_oneshot()), because
+xen_9pfs_pdu_v(un)marshal() are running within a coroutine context
+which makes them unsafe [1] for calling v9fs_reset() directly, as
+the latter e.g. has a loop like:
+
+    while (!QLIST_EMPTY(&s->active_list)) {
+        aio_poll(qemu_get_aio_context(), true);
+    }
+
+which would a) never terminate (as the coroutine is on the
+active_list) and b) aio_poll() is marked as no_coroutine_fn.
+
+[1] https://lore.kernel.org/qemu-devel/3351181.5fSG56mABF@weasel/
+
+And finally, add an idempotent guard to xen_9pfs_disconnect()
+for the v9fs_reset(s) and v9fs_device_unrealize_common(s) calls
+specifically [2], just to be sure.
+
+[2] https://lore.kernel.org/qemu-devel/alpine.DEB.2.22.394.2607221815520.5295@ubuntu-linux-20-04-desktop/
+
+Fixes: b37eeb0201 ("xen/9pfs: introduce Xen 9pfs backend")
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Link: https://lore.kernel.org/qemu-devel/82bc736158e827e05d4b55da27c39d42e2062e96.1784809978.git.qemu_oss@crudebyte.com
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- hw/9pfs/9p.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/9pfs/9p.c             |  1 +
+ hw/9pfs/xen-9p-backend.c | 17 +++++++++++++++--
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
 diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 3119f01117..474ac6cc40 100644
+index 474ac6cc40..1c61e6b3e7 100644
 --- a/hw/9pfs/9p.c
 +++ b/hw/9pfs/9p.c
-@@ -2181,8 +2181,8 @@ static void coroutine_fn v9fs_open(void *opaque)
-             flags = omode_to_uflags(mode);
-         }
-         if (is_ro_export(&s->ctx)) {
--            if (mode & O_WRONLY || mode & O_RDWR ||
--                mode & O_APPEND || mode & O_TRUNC) {
-+            if (flags & O_WRONLY || flags & O_RDWR ||
-+                flags & O_APPEND || flags & O_TRUNC) {
-                 err = -EROFS;
-                 goto out;
-             }
+@@ -4530,6 +4530,7 @@ void v9fs_device_unrealize_common(V9fsState *s)
+     qp_table_destroy(&s->qpp_table);
+     qp_table_destroy(&s->qpf_table);
+     g_free(s->ctx.fs_root);
++    s->transport = NULL;
+ }
+ 
+ typedef struct VirtfsCoResetData {
+diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
+index 24c90d97ec..d44fa8d61e 100644
+--- a/hw/9pfs/xen-9p-backend.c
++++ b/hw/9pfs/xen-9p-backend.c
+@@ -68,6 +68,11 @@ typedef struct Xen9pfsDev {
+ 
+ static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev);
+ 
++static void xen_9pfs_disconnect_bh(void *opaque)
++{
++    xen_9pfs_disconnect(opaque);
++}
++
+ static void xen_9pfs_in_sg(Xen9pfsRing *ring,
+                            struct iovec *in_sg,
+                            int *num,
+@@ -150,7 +155,8 @@ static ssize_t xen_9pfs_pdu_vmarshal(V9fsPDU *pdu,
+                       "Failed to encode VirtFS reply type %d\n",
+                       pdu->id + 1);
+         xen_be_set_state(&xen_9pfs->xendev, XenbusStateClosing);
+-        xen_9pfs_disconnect(&xen_9pfs->xendev);
++        aio_bh_schedule_oneshot(qemu_get_aio_context(),
++                                xen_9pfs_disconnect_bh, &xen_9pfs->xendev);
+     }
+     return ret;
+ }
+@@ -173,7 +179,8 @@ static ssize_t xen_9pfs_pdu_vunmarshal(V9fsPDU *pdu,
+         xen_pv_printf(&xen_9pfs->xendev, 0,
+                       "Failed to decode VirtFS request type %d\n", pdu->id);
+         xen_be_set_state(&xen_9pfs->xendev, XenbusStateClosing);
+-        xen_9pfs_disconnect(&xen_9pfs->xendev);
++        aio_bh_schedule_oneshot(qemu_get_aio_context(),
++                                xen_9pfs_disconnect_bh, &xen_9pfs->xendev);
+     }
+     return ret;
+ }
+@@ -368,10 +375,16 @@ static void xen_9pfs_evtchn_event(void *opaque)
+ static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev)
+ {
+     Xen9pfsDev *xen_9pdev = container_of(xendev, Xen9pfsDev, xendev);
++    V9fsState *s = &xen_9pdev->state;
+     int i;
+ 
+     trace_xen_9pfs_disconnect(xendev->name);
+ 
++    if (s->transport) {
++        v9fs_reset(s); /* cancel all in-flight PDUs to prevent UAF */
++        v9fs_device_unrealize_common(s);
++    }
++
+     for (i = 0; i < xen_9pdev->num_rings; i++) {
+         if (xen_9pdev->rings[i].evtchndev != NULL) {
+             qemu_set_fd_handler(qemu_xen_evtchn_fd(xen_9pdev->rings[i].evtchndev),
 -- 
 2.47.3
 
