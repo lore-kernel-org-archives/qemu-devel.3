@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D72CC531C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 09:50:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC19AC5321C
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 09:50:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnZ0Z-0000lB-4V; Sat, 25 Jul 2026 05:49:27 -0400
+	id 1wnZ05-0000ct-Tc; Sat, 25 Jul 2026 05:48:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wnZ0M-0000fD-M3
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 05:49:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wnZ04-0000ce-Ai
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 05:48:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wnZ0L-0004UW-8B
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 05:49:14 -0400
+ id 1wnZ02-0004TE-VV
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 05:48:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784972952;
+ s=mimecast20190719; t=1784972934;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HBzav5r/PRxvX7B889078bhSww2+z17xh67+UFrqARc=;
- b=SuSivA7/HKQ4+24PKwqbYEw+t7YFhMN1q6VO13ZsB3V9861eKG0rV+onXH95QpahdaK7gE
- TyxVygE1lDZoa92IeOGJw8SY9uFP5KrpemcKn0+u3CsA7AlljqGUcW/78iSUp0jIKiwJm/
- sXlXTSq68y0J5ZhLCSU90RVLbd22fG4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=dPp6/Iz6emP9faagVMHidtrIEEZa8zoC+YjDWgEts3k=;
+ b=WZAjdlbIX9qW/vnhIMoVW8P1fbgxdtlfEzwOiSL0U1iC24U/zlhK4fbMv3ygS5zf7Io6x3
+ EXVu8OM9qB0NrXtM0sA9UmXHkhvRjK6kVXPJ/5brpVvt7ktvrcmEECssfuKWycqte98+Ik
+ ah/12j/60crB9zabXgyUqWrSuF5rfmQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-258-KQRq2d8_MVSDC6JQEZgt4Q-1; Sat,
- 25 Jul 2026 05:49:07 -0400
-X-MC-Unique: KQRq2d8_MVSDC6JQEZgt4Q-1
-X-Mimecast-MFC-AGG-ID: KQRq2d8_MVSDC6JQEZgt4Q_1784972946
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-481-hS19_nqnPV-v5GQmSfJy_w-1; Sat,
+ 25 Jul 2026 05:48:50 -0400
+X-MC-Unique: hS19_nqnPV-v5GQmSfJy_w-1
+X-Mimecast-MFC-AGG-ID: hS19_nqnPV-v5GQmSfJy_w_1784972928
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 809991955DB5; Sat, 25 Jul 2026 09:49:05 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 61DA919540CA; Sat, 25 Jul 2026 09:48:47 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.7])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 81503300019F; Sat, 25 Jul 2026 09:49:02 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9ED03180049F; Sat, 25 Jul 2026 09:48:45 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sat, 25 Jul 2026 13:48:35 +0400
-Subject: [PATCH v2 4/8] block: add missing coroutine annotation
+Date: Sat, 25 Jul 2026 13:48:32 +0400
+Subject: [PATCH v2 1/8] monitor: annotate monitor_qmp_dispatcher_pop_any()
+ as coroutine
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260725-co-v2-4-d3552ddb3931@redhat.com>
+Message-Id: <20260725-co-v2-1-d3552ddb3931@redhat.com>
 References: <20260725-co-v2-0-d3552ddb3931@redhat.com>
 In-Reply-To: <20260725-co-v2-0-d3552ddb3931@redhat.com>
 To: qemu-devel@nongnu.org
@@ -73,25 +74,25 @@ Cc: Markus Armbruster <armbru@redhat.com>, Peter Xu <peterx@redhat.com>,
  xen-devel@lists.xenproject.org, Li Zhijian <lizhijian@fujitsu.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=971;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=859;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=abdp1jnclsipbx9mt5zdr1x5wsYMVTEvTXCKXSBolV8=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZIZz9grl3rujFFr0nC5HACNLTbHVapJE30Tmf
- AxKPYXjJrKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamSGcwAKCRDa6OEJdZac
- 5b19D/9DHwTT2RdkS9aJSCsfO+Q/NGFEh9JrYG5r24XOrgePClcjmV6TX6TPmooLrmYjGYUxepw
- MS1Q/eR46z0qBQZjFcnkKGCNcmTDAezrz02GCkl0hx34GcbFD39HfIAtMBuQ1rcnsMh0QZYqVcJ
- 6fwbJdczYk7txUDhNzcNggOrBEgxw4Nv3dlib8ml/eS5+Q+8gTcaPAlsnn5NRKJ8uU+Ug+LrJme
- uuhte+vOvucePU8FIfb6xLmBvizXiujdEfxytHNMT7zNW7jv2zUk0A1brsZv2lNEiCEUtaLbSQK
- W42RevaVr/PbVh7K+ZMD4EABp+13+qwcvlzfeKihasmbFrbA7KK6P/2/WaHW3+q78BeDyJdI7uw
- TzVPZT87QQFcT0U3Ie/+8z5JpDYd5G4ntBrW32oNIMc+eKVFH9a/8+9XKw+yYZZSvfbagLllckw
- OypJubbbIDZxk6TkQEcMyMZk8UvH+2N3U0OeeFn4DY7LTTW5gM8zwjHqDMDUXArkaPjnySvgB7F
- oEgFoj9skf+OzmtyuOhYCVTwErqMi+RslzhIDu5/Hy6FR6zIyA4epj3pQWfwtuUS6ek2iMw+JxD
- qmDqWeFF56u5d/lccsQqUcchkfXxlWrYfADVWRzD9om998gZ6CWAghc/uwUCzFsC2DhLTX9Cx1f
- Ejr+wyhOvjIwxQw==
+ bh=u5SYt6HOlXpoYkBe8zmUhNbcCVIM7I1SQQWsPqoY/1g=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZIZyN05xG4NXEjp7mfqsDyp6EpYKKkClYQD6/
+ vLFKlVVeWKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamSGcgAKCRDa6OEJdZac
+ 5bmAD/0etydKiTihIbMRuX/QQ9wrH5bzVGnC+3T31ACvjR4qTcz/43bEIlxz5UP6OLL+J8FdHoY
+ /COMIj4ImeEQTd8X6VM6tIgL0lP0Ix3JBRw585jIfUcBtcbe9WBYp8GuBQ/J70zcai5YSbBjqHM
+ YcJDYDb0fupMLYz7uMfjEYEt+LMRExfvUZowMek7pLggUHuObZ6PBcMo2KiLk/9BkxYXmfh1Py0
+ 1VL9qz9VJyrx/9mKA6AMfZAlO7X6w8Uhb4OvPQdS9yaheMGMMNof3XXs/7rMEJp8yu5hw2yGwKV
+ tUsWdgRxcW9oikYq1xs8FJGEQuxJcWevVMUKgtOMxvcog53d3aqqDPPxbODdQqaoJh77uUWtx1D
+ yj4W1GWLrjNuNMWfW52mst+gwenpI7ERZPzJyjqyKIGq64C1D8hoRUe9SZBfMDvW88CYeoJy6Ox
+ AwaNB5CM37R71NilBZZJ8H5kI/MUtOfRopA2tI1rzxTYPuk+2s8SRyajUOzEobyjYVzzJah7xnl
+ Fj5LczdvoJoLDlx1Sg4jKKJgUd40UBCFw2k1dmKZAIeGgMP9qHpQl+7Nzu4E4QnzYqRcDNMlZ4Y
+ mFu0qczXin1ELgN8KEVORoq5zbeou4KrGwVpb6sgnQGCa2zrR7zGbbLdFpOc3+fxpACvCzuNLVv
+ yY86AryIhC9/2WA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -1
@@ -99,9 +100,8 @@ X-Spam_score: -0.2
 X-Spam_bar: /
 X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.419,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,32 +117,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The function was extracted without carrying the annotation.
+The function calls qemu_coroutine_yield(), and is called from
+monitor_qmp_dispatcher_co().
 
-Fixes: 23743ab282af ("block: move commit_run loop to separate function")
+Fixes: 60f4f62efeb ("monitor: extract request dequeuing to a new function")
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- block/commit.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ monitor/qmp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/block/commit.c b/block/commit.c
-index c5e3ef03a21b..2d52c39594cd 100644
---- a/block/commit.c
-+++ b/block/commit.c
-@@ -128,8 +128,9 @@ static void commit_clean(Job *job)
-     blk_unref(s->top);
+diff --git a/monitor/qmp.c b/monitor/qmp.c
+index 223e0643c2ad..338d37cb7e5a 100644
+--- a/monitor/qmp.c
++++ b/monitor/qmp.c
+@@ -342,7 +342,8 @@ static QMPRequest *monitor_qmp_requests_pop_any_with_lock(void)
+     return req_obj;
  }
  
--static int commit_iteration(CommitBlockJob *s, int64_t offset,
--                            int64_t *requested_bytes, void *buf)
-+static int coroutine_fn
-+commit_iteration(CommitBlockJob *s, int64_t offset,
-+                 int64_t *requested_bytes, void *buf)
+-static QMPRequest *monitor_qmp_dispatcher_pop_any(void)
++static QMPRequest * coroutine_fn
++monitor_qmp_dispatcher_pop_any(void)
  {
-     BlockErrorAction action;
-     int64_t bytes = *requested_bytes;
+     while (true) {
+         /*
 
 -- 
 2.55.0
