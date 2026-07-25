@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BCB6C531C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 14:02:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76855C53200
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 14:02:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wncvX-0003Xz-G2; Sat, 25 Jul 2026 10:00:31 -0400
+	id 1wncw5-0003mX-LB; Sat, 25 Jul 2026 10:01:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wncvV-0003Xb-Eg
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 10:00:29 -0400
+ id 1wncw3-0003jw-GT
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 10:01:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wncvU-00051h-2M
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 10:00:29 -0400
+ id 1wncw1-00054e-VJ
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 10:01:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784988027;
+ s=mimecast20190719; t=1784988061;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+2QvmsMbZq6HxVKl0q+cNVQuSts58ffZqW4LJ1FpBXw=;
- b=UqGbzuhDK8CuOaIKfsxOGpRhU4WIDasGozZreeaRUI958bseDJXPldhuQ/cTMcfFePCtrp
- Ya4b+TWCPHs/DkN0GOsT01eSTdh3HJ43LgqY81z443LQBiAH1BtgpzERrnCiPkh7IQLUix
- B1Rm5sorr71Nqy3jnFbXD/bRuUMWOHA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=ayGYuMqLtdZ4tO4DWqG//BYWp/04yuY/5uhQAQdO2WU=;
+ b=c0Kq6RyMB5GygXemYIIR8lN25GM+dd670Lucc21gXtSg1RRzlmwfLe67RKS9unAqiiiGCO
+ KgV6KgrSAdpkpvKnWZKNeP682FssFwqGY0IMSIQ4m8fGEyM7bNCHdrcBhc8cqVggYIok6F
+ pcIv4dpWpmuBaPUI4AntPGPbN+O3PaE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-411-UzdeTn1GNI61I7j9eW2ppw-1; Sat,
- 25 Jul 2026 10:00:23 -0400
-X-MC-Unique: UzdeTn1GNI61I7j9eW2ppw-1
-X-Mimecast-MFC-AGG-ID: UzdeTn1GNI61I7j9eW2ppw_1784988021
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-263-UIgTjnWwPw-WTRys6eze3Q-1; Sat,
+ 25 Jul 2026 10:00:59 -0400
+X-MC-Unique: UIgTjnWwPw-WTRys6eze3Q-1
+X-Mimecast-MFC-AGG-ID: UIgTjnWwPw-WTRys6eze3Q_1784988057
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EFFE319560BF; Sat, 25 Jul 2026 14:00:19 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4366E1800366; Sat, 25 Jul 2026 14:00:57 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.7])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6E67D180058C; Sat, 25 Jul 2026 14:00:16 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9723B300019F; Sat, 25 Jul 2026 14:00:55 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sat, 25 Jul 2026 18:00:02 +0400
-Subject: [PATCH 1/7] hw/display/virtio-gpu-rutabaga: zero-init capset info
- response
+Date: Sat, 25 Jul 2026 18:00:08 +0400
+Subject: [PATCH 7/7] qdev-monitor: drain RCU callbacks in
+ qdev_device_add_from_qdict
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260725-fix2-v1-1-5c9a6ce7b96a@redhat.com>
+Message-Id: <20260725-fix2-v1-7-5c9a6ce7b96a@redhat.com>
 References: <20260725-fix2-v1-0-5c9a6ce7b96a@redhat.com>
 In-Reply-To: <20260725-fix2-v1-0-5c9a6ce7b96a@redhat.com>
 To: qemu-devel@nongnu.org
@@ -73,36 +73,35 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Haotian Jiang <jianghaotian.sunday@gmail.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1461;
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2906;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=i6aG/+m9MW1saa93R8BeXUCOlYyxsLU70+4agx0S76E=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZMFl6n3FXGeka2GqVWAr7DfN3yU1cJsO+7fyG
- ZCXBCbeNSqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamTBZQAKCRDa6OEJdZac
- 5TQNEAC5lnm/WyMGw3mTaHRhojYRmDb8uhNbmYbgBkqHeUv2WmoN/gszPoL7+u0gtJZ8Hl15Sjr
- zj90sK1yghWmWEQ+7+eMB/bLoU2rtYGmba6QJ9UevBGIjx4Cy0n2UXjr4naa1T4zCXDNa93Qt5w
- Ebjiks3mliMcjA50OHg4HfJtPr54eXPM6eWtLnFxx/wrvR6qCCAo3dxcy6GFsx/iBP6H61DT0EN
- PiqtIqgaN58UEC2ouYpcEyaxW9BcDwRj4MIAx8W2gu9iHhUZSmjhCHpY/Vu8uuUPdBSN8sOiMwt
- WzalKhKY5FWgD26ZQdy7UhksxSVAlIEytj+cd1ArTwsp7hYYYcbE+Y3Y1U8npYOndfey9oz+YU4
- CrK7Gkz4wDHoFqvSk0otXOiOnDjXBmv4ma2EbardiBYqwTrXBmnjqroWjiqAJvcBEQfVKYlvjph
- hMH7TVO1IcGnbWPHtktoG1yKWy46bJ73vHIhJnW+/lCEj4bES7p5oDevwSL6BjFUD2u99b+duHq
- BH0wSpvZAP+ZykceZlfHfg4o96sj+spXrDdW1CcoLzpl2pjnm7abvM+P8UG7E6yTOyRp3fawqo8
- 3kGT3he1dKmZlcxitCW1h7aLM+/1LhMHJwu/iYmz7LZPvBd2FMTCYiSbPh0ggzoSkde6YqPbx/c
- foJ/baWu3fdsvsg==
+ bh=tc59tpUIOnJATfZj0Ow9IZihAQ/ju8XXCdAihZfGr0Q=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZMFmg2IQSzXLgb1HeD4VQxrb08w/yBiPzE55j
+ 2UdhTQdlO+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamTBZgAKCRDa6OEJdZac
+ 5RgpD/46Kwqoedezh17/7AwZORHSgHU7hKbFErb7X4Ikhq1/dLQSkXBtm5abklnGQO7N8TO4sS8
+ OfbbNBDS/aeA+btHMl5bLz/O7y3tWsqLYR76CbHnw+iWqxre97mP4BVZzLr1YyhxzsGM6xMQndb
+ zV+npve/xAPguVU5RtwD4l9qK3BQAhLagSqG5zWC0otLwxithRDCHnVRVtDGpiO0i3QkmlzLTjq
+ HHuCMUOKjJZNHFuCej8YbXh78jDonklWR/aBbeONo2zlTo9k5vGjOp2unuKBB+SftjxALcevMGu
+ e4ivmu6IKX83FV9zzfo8M3bshxBabng6IzOITBfuDh7KTAdHyC0F+H9CuS5aCIk3eHXJebdYcDK
+ fi51MqFwAukd/0ePcpgm8loFqF6gJGoeiaA7n6SmkYtdV6mlkpyzw3BWftmoxMWob+6QU2OIszu
+ LHsbC3TBB/suz8NCRQLpuLIf6f3HmO7pcUW6FLP5S4UvKX73xCwh+wuJCz1Db50DpTvwbiPJfEH
+ S8S9v0H9tD1SNUuPILRTVH6U7iSfQ+6zUXRBfKDebGFmsgypyReuwWpSODYgP/qEJdet3krd74m
+ GHVq0aVf0YH7DTRUU1zmpI6q3tLCdRl9XlD+PZAVfuFqiSonRAF9X5dJ6qwv2bvDia/Dx+5FmJ/
+ GijtQUiJ8r6cJCg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.419,
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.419,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,38 +117,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-rutabaga_cmd_get_capset_info() only fills in capset_id,
-capset_max_version and capset_max_size before sending the response to
-the guest. The remaining fields of struct virtio_gpu_resp_capset_info,
-including hdr.fence_id, hdr.ctx_id and hdr.ring_idx, are left with
-stack garbage and leaked to the guest, including host pointers useful
-for an ASLR bypass.
+qmp_device_add() and hmp_device_add() drain pending RCU callbacks after
+a failed device_add, since some bus teardown (e.g. bus_remove_child())
+is deferred to call_rcu(). -device on the command line reaches the same
+qdev_device_add_from_qdict() with errp pointing at error_fatal, whose
+ERRP_GUARD() exits before control returns to the caller, so the caller's
+drain_call_rcu() never runs.
 
-Zero the response first, matching virgl_cmd_get_capset_info().
+Move the drain into qdev_device_add_from_qdict()'s own err_del_dev path
+so it always runs, and drop the now-redundant calls in qmp_device_add()
+and hmp_device_add().
 
-Not a real risk thanks to -ftrivial-auto-var-init=zero.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3609
-Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for gfxstream")
-Reported-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/display/virtio-gpu-rutabaga.c | 2 ++
- 1 file changed, 2 insertions(+)
+ system/qdev-monitor.c | 33 ++++++++++-----------------------
+ 1 file changed, 10 insertions(+), 23 deletions(-)
 
-diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-index 4d7d7b245929..95a19eed7eda 100644
---- a/hw/display/virtio-gpu-rutabaga.c
-+++ b/hw/display/virtio-gpu-rutabaga.c
-@@ -555,6 +555,8 @@ rutabaga_cmd_get_capset_info(VirtIOGPU *g, struct virtio_gpu_ctrl_command *cmd)
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index 00fed791cce1..884d407d60d4 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -746,6 +746,16 @@ err_del_dev:
+     object_unparent(OBJECT(dev));
+     object_unref(OBJECT(dev));
  
-     VIRTIO_GPU_FILL_CMD(info);
- 
-+    memset(&resp, 0, sizeof(resp));
++    /*
++     * Drain all pending RCU callbacks. This is done because some bus
++     * related operations can delay a device removal (in this case this
++     * can happen if device is added and then removed due to a
++     * configuration error) to a RCU callback, but a caller might expect
++     * the failed device to be fully torn down once this function
++     * returns.
++     */
++    drain_call_rcu();
 +
-     result = rutabaga_get_capset_info(vr->rutabaga, info.capset_index,
-                                       &resp.capset_id, &resp.capset_max_version,
-                                       &resp.capset_max_size);
+     return NULL;
+ }
+ 
+@@ -870,18 +880,6 @@ void qmp_device_add(QDict *qdict, QObject **ret_data, Error **errp)
+     DeviceState *dev;
+ 
+     dev = qdev_device_add_from_qdict(qdict, true, errp);
+-    if (!dev) {
+-        /*
+-         * Drain all pending RCU callbacks. This is done because
+-         * some bus related operations can delay a device removal
+-         * (in this case this can happen if device is added and then
+-         * removed due to a configuration error)
+-         * to a RCU callback, but user might expect that this interface
+-         * will finish its job completely once qmp command returns result
+-         * to the user
+-         */
+-        drain_call_rcu();
+-    }
+     object_unref(OBJECT(dev));
+ }
+ 
+@@ -1017,17 +1015,6 @@ void hmp_device_add(Monitor *mon, const QDict *qdict)
+     }
+     dev = qdev_device_add(opts, &err);
+     if (!dev) {
+-        /*
+-         * Drain all pending RCU callbacks. This is done because
+-         * some bus related operations can delay a device removal
+-         * (in this case this can happen if device is added and then
+-         * removed due to a configuration error)
+-         * to a RCU callback, but user might expect that this interface
+-         * will finish its job completely once qmp command returns result
+-         * to the user
+-         */
+-        drain_call_rcu();
+-
+         qemu_opts_del(opts);
+     }
+     object_unref(dev);
 
 -- 
 2.55.0
