@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DFBBC531D0
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 14:01:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0233EC531C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 14:01:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wncvk-0003Zv-4J; Sat, 25 Jul 2026 10:00:44 -0400
+	id 1wncw4-0003jy-1j; Sat, 25 Jul 2026 10:01:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wncvi-0003ZN-2j
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 10:00:42 -0400
+ id 1wncvz-0003el-4k
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 10:00:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wncvg-00052c-FA
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 10:00:41 -0400
+ id 1wncvx-00054I-T7
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 10:00:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784988039;
+ s=mimecast20190719; t=1784988057;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AtLVIwc0ChM1DAVD/TK9Kdk+EW2zZ0ZeWIrt7VGyKwA=;
- b=O0in+3H7CQBE7qr/QZYsCuGOJS4EkwmPUNunF/vawxNFt/cQdt8AgHx26GJBwq/X+O2Oti
- gQKvJcrxtZs1gg3bf4Y2DXaVI/CTQB1QfYRQkMe48RoWJINmGw+uaGKUWIhW4I8O4Qw0IO
- ISJ7h58v/arkk7KT3m8EhxCViGqXXRU=
+ bh=sgwF7jkNJLhj6j+139aaPY14IWX2xoRAqge3G7njsEU=;
+ b=XaZyYOo/g6i+grb2CSczgfC5dgP36YDMsR7iAQqASh3OdNDw2M1Tkj+Lr/aQweMnAoL7Hv
+ 6tz0Ft7lKHmDTdP59lp+ikFvCWz6zDRcq4jjahHUJxU56DHJWAKWEAG06AuZGV48nu8jPA
+ ExQb7svlezwRxs3kk1KFoO5elB/6kJc=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-73-x8aZ-dWwN-uPiL_crLLRfA-1; Sat,
- 25 Jul 2026 10:00:35 -0400
-X-MC-Unique: x8aZ-dWwN-uPiL_crLLRfA-1
-X-Mimecast-MFC-AGG-ID: x8aZ-dWwN-uPiL_crLLRfA_1784988033
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-37-sxELkOo0Nxm4eGyza9UWKA-1; Sat,
+ 25 Jul 2026 10:00:53 -0400
+X-MC-Unique: sxELkOo0Nxm4eGyza9UWKA-1
+X-Mimecast-MFC-AGG-ID: sxELkOo0Nxm4eGyza9UWKA_1784988051
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 324E919560B3; Sat, 25 Jul 2026 14:00:33 +0000 (UTC)
+ id 60D4319560AD; Sat, 25 Jul 2026 14:00:51 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.7])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2D23D180057F; Sat, 25 Jul 2026 14:00:30 +0000 (UTC)
+ id C102018001DA; Sat, 25 Jul 2026 14:00:49 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sat, 25 Jul 2026 18:00:04 +0400
-Subject: [PATCH 3/7] Fix many -Werror=maybe-uninitialized
+Date: Sat, 25 Jul 2026 18:00:07 +0400
+Subject: [PATCH 6/7] migration/multifd: fix Error leak in
+ multifd_recv_terminate_threads()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260725-fix2-v1-3-5c9a6ce7b96a@redhat.com>
+Message-Id: <20260725-fix2-v1-6-5c9a6ce7b96a@redhat.com>
 References: <20260725-fix2-v1-0-5c9a6ce7b96a@redhat.com>
 In-Reply-To: <20260725-fix2-v1-0-5c9a6ce7b96a@redhat.com>
 To: qemu-devel@nongnu.org
@@ -73,21 +74,21 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6067;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=654;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=cHf62MM7xs8MyYaKCneLSpmy1ZQnYtBo02wawGmze8I=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZMFlCWxHn7jIomyURmJuovkpyjcBlkf/N5odt
- oLz9/9EtPmJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamTBZQAKCRDa6OEJdZac
- 5Y0vD/0SR5HxF/C+Z0FR/NpAEwtvAKL/to877Y2j6riXG+XLJGlctWPOti3dSsJ2We4/6N0phS4
- jX+SrUb7I3yTddkVQJ1ANziFWaCtAefJazJHT2ZPzH9fELWM+6q4oSOBUREBowYo/KiMHqBSbmA
- eyNjbN7xd+t5AV8oQ2/Ldl6zRx24TovNrqCWGRLd0ebp78O+Mqq6S41tyYa/z0e1U9CFxtIb3Ue
- Y9rRJ6b+Be4JkfgFD9RQKCxcS3m/6ENa41I5NRRVZzNsTqC8lIMGDmtpaXqQGrkOPb1oY/Dg1YM
- +qp4kZFfOU0fRkGsXYrCbjP7QXJ5FXpOC0+9KId/cPH4pDq7Q1MoApbO9f3C2SrF0JVBqAGd6/P
- 6tAyz2TFDbqEBCo5Uzoff/5Z7GhrMejYrCkE/6291iWv1fw5pyPJDOXiW6YdQPH85YcWHazzwpC
- 6Ca5rg2yEZehVMQwsRPUrf8SSQvI3XcijEsIbEcVjO/hrQOb5RJFwFBJvT5NPJ8aVVvQouzKel0
- 2YABqudcIlWwGFtVCExjnY31NZpAxLjxHD6VUqT6JUsoi3hwKAXX36+jPYIumVPTy+/yWCNASAB
- 9vuz22kVOruymo1ap02Nu86OIC0N4AnDW/sIQ3wEAM/mOnJDWzuL0/1i/NDwnHcbCdt4JRGbs+t
- 3DEggiEc3Vykt+A==
+ bh=8V4SbETfqA20e58q6VCGWaqhSb6JTXgkzFqcys/62CY=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZMFmNAkgl2xEbUo9EDHoKtnbnGWWKiCA9f1c7
+ w/JnJfJ58CJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamTBZgAKCRDa6OEJdZac
+ 5QEfEACXyaWaIRPdYyDbzJF90W4hI7CRu9vhXtTaIGGqKUdpKEw1dDd+TxowUq8CqLugHr6cK3q
+ +uwLO9+gCkfgquQzkACO3h8Wwp++W5hOiHyahV2wpaupJMcGtxax0YfPcwRv4D6yU7AjOggAyOg
+ YSbepCIij7JVEY8iMrfWA/sPc5mBOM0xYAg1rFk6EckJi94w/AAmVxi/gMcEELYvCm9r4eQxakA
+ H35K21T38uvL4CmSCr0U//Dcvojofk4oDD4hfp+/5lheKFdqHB5kp1xqnxTJaAgdjXXlg/OgYHa
+ QvtUMXERNQzTLKni1pUFJ2rt00UCs3MZjroibopQ5kzmJii0v78wVUiwML3wiqnAdV4hcwe0165
+ PNpUKm8kTpb9Hq7rkYJe0rbUkcuJH8eATFR7zOJUHfhWIRBrux9acLWCX6fWYHWdPg6HHQMwrAu
+ Rb1g2ZUo5vHsldTRZReSywB5opuObrjrBBTPI1DjFZYO9m+L7z7+Q+JJp2St8S3S6IzTCQ8O/Js
+ p9tleZPkzskXqY5eoko5AZJqhTAKIM4XTZrIXEYy4tAl1Z/p5uWzolvN5WhASqgXG3J4h/CbMmX
+ BlC6MjnuqcL2393G5ry/ylUOV3O1xvMlxSS16o80yn8/2hfmPJcOLfmtDTRmw4ldy0dvQ1ORtTY
+ /G2CvnqnmyOd28w==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
@@ -116,169 +117,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When compiled with -Og, gcc produces many false-positives
-gcc (GCC) 16.1.1 20260515 (Red Hat 16.1.1-2).
+If err != NULL, free it.
 
-We already use auto-var-init=zero, but better be explicit.
-
+Fixes: 11dd7be57524 ("migration/multifd: Remove p->quit from recv side")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- block/blkio.c                 |  4 ++--
- block/qcow2.c                 |  2 +-
- hw/cxl/cxl-host.c             |  2 +-
- hw/scsi/scsi-disk.c           |  2 +-
- hw/scsi/scsi-generic.c        |  4 ++--
- hw/scsi/virtio-scsi.c         |  2 +-
- io/net-listener.c             | 10 +++++-----
- target/i386/cpu.c             |  3 ++-
- target/i386/emulate/x86_mmu.c |  4 ++--
- 9 files changed, 17 insertions(+), 16 deletions(-)
+ migration/multifd.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/block/blkio.c b/block/blkio.c
-index d2ba2a4d58dc..f7cb6e0b57d4 100644
---- a/block/blkio.c
-+++ b/block/blkio.c
-@@ -278,7 +278,7 @@ static bool blkio_completion_fd_poll(void *opaque)
- {
-     BlockDriverState *bs = opaque;
-     BDRVBlkioState *s = bs->opaque;
--    int ret;
-+    int ret = -1;
+diff --git a/migration/multifd.c b/migration/multifd.c
+index dbad525d2a28..503014f76ba5 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -1056,6 +1056,7 @@ static void multifd_recv_terminate_threads(Error *err)
+     trace_multifd_recv_terminate_threads(err != NULL);
  
-     /* Just in case we already fetched a completion */
-     if (s->poll_completion.user_data != NULL) {
-@@ -559,7 +559,7 @@ static bool blkio_register_buf(BlockDriverState *bs, void *host, size_t size,
-     BDRVBlkioState *s = bs->opaque;
-     struct blkio_mem_region region;
-     BlkioMemRegionResult region_result;
--    int ret;
-+    int ret = -1;
- 
-     /*
-      * Mapping memory regions conflicts with RAM discard (virtio-mem) when
-diff --git a/block/qcow2.c b/block/qcow2.c
-index 19271b10a49f..639593d737c8 100644
---- a/block/qcow2.c
-+++ b/block/qcow2.c
-@@ -838,7 +838,7 @@ static const char *overlap_bool_option_names[QCOW2_OL_MAX_BITNR] = {
- static void coroutine_fn cache_clean_timer(void *opaque)
- {
-     BDRVQcow2State *s = opaque;
--    uint64_t wait_ns;
-+    uint64_t wait_ns = 0;
- 
-     WITH_QEMU_LOCK_GUARD(&s->lock) {
-         wait_ns = s->cache_clean_interval * NANOSECONDS_PER_SECOND;
-diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
-index 7e744312f1d8..eba13c9e7cba 100644
---- a/hw/cxl/cxl-host.c
-+++ b/hw/cxl/cxl-host.c
-@@ -279,7 +279,7 @@ static void cxl_fmws_direct_passthrough_setup(CXLDirectPTState *state,
-     MemoryRegion *mr = NULL;
-     uint64_t vmr_size = 0, pmr_size = 0, offset = 0;
-     MemoryRegion *direct_mr;
--    g_autofree char *direct_mr_name;
-+    g_autofree char *direct_mr_name = NULL;
-     unsigned int idx = state->hdm_decoder_idx;
- 
-     if (ct3d->hostvmem) {
-diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index 1b0cce128c5e..82dc75cb7d10 100644
---- a/hw/scsi/scsi-disk.c
-+++ b/hw/scsi/scsi-disk.c
-@@ -3263,7 +3263,7 @@ static bool scsi_disk_pr_state_needed(void *opaque)
- {
-     SCSIDiskState *s = opaque;
-     SCSIPRState *pr_state = &s->qdev.pr_state;
--    bool ret;
-+    bool ret = false;
- 
-     if (!s->qdev.migrate_pr) {
-         return false;
-diff --git a/hw/scsi/scsi-generic.c b/hw/scsi/scsi-generic.c
-index 8999f3b72006..b044561ae2dd 100644
---- a/hw/scsi/scsi-generic.c
-+++ b/hw/scsi/scsi-generic.c
-@@ -553,8 +553,8 @@ bool scsi_generic_pr_state_preempt(SCSIDevice *s, Error **errp)
-     SCSIPRState *pr_state = &s->pr_state;
-     Error *local_err = NULL;
-     bool check_stale_key = true;
--    uint64_t key;
--    uint8_t resv_type;
-+    uint64_t key = 0;
-+    uint8_t resv_type = 0;
- 
-     /* Get the migrated PR state */
-     WITH_QEMU_LOCK_GUARD(&pr_state->mutex) {
-diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
-index 6c7376801190..833f773d7f6c 100644
---- a/hw/scsi/virtio-scsi.c
-+++ b/hw/scsi/virtio-scsi.c
-@@ -1093,7 +1093,7 @@ static void virtio_scsi_push_event(VirtIOSCSI *s,
- 
- static void virtio_scsi_handle_event_vq(VirtIOSCSI *s, VirtQueue *vq)
- {
--    bool events_dropped;
-+    bool events_dropped = false;
- 
-     WITH_QEMU_LOCK_GUARD(&s->event_lock) {
-         events_dropped = s->events_dropped;
-diff --git a/io/net-listener.c b/io/net-listener.c
-index 1fd0f6cb5ab8..8df19c35bd8f 100644
---- a/io/net-listener.c
-+++ b/io/net-listener.c
-@@ -54,11 +54,11 @@ static gboolean qio_net_listener_channel_func(QIOChannel *ioc,
-                                               gpointer opaque)
- {
-     QIONetListener *listener = QIO_NET_LISTENER(opaque);
--    QIOChannelSocket *sioc;
--    QIONetListenerClientFunc io_func;
--    gpointer io_data;
--    GMainContext *context;
--    AioContext *aio_context;
-+    QIOChannelSocket *sioc = NULL;
-+    QIONetListenerClientFunc io_func = NULL;
-+    gpointer io_data = NULL;
-+    GMainContext *context = NULL;
-+    AioContext *aio_context = NULL;
- 
-     sioc = qio_channel_socket_accept(QIO_CHANNEL_SOCKET(ioc),
-                                      NULL);
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 5805d33ab92d..e9759ab25077 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -7734,7 +7734,7 @@ static void x86_cpuid_get_avx10_version(Object *obj, Visitor *v,
- static bool x86_cpu_apply_avx10_features(X86CPU *cpu, uint8_t version,
-                                          Error **errp)
- {
--    const AVX10VersionDefinition *def;
-+    const AVX10VersionDefinition *def = NULL;
-     CPUX86State *env = &cpu->env;
- 
-     if (!version) {
-@@ -7758,6 +7758,7 @@ static bool x86_cpu_apply_avx10_features(X86CPU *cpu, uint8_t version,
-         }
+     if (qatomic_xchg(&multifd_recv_state->exiting, 1)) {
++        error_free(err);
+         return;
      }
- 
-+    assert(def != NULL);
-     if (def->version < version) {
-         error_setg(errp, "avx10-version can be at most %d", def->version);
-         return false;
-diff --git a/target/i386/emulate/x86_mmu.c b/target/i386/emulate/x86_mmu.c
-index 8d4371467fd7..c1cb385b3228 100644
---- a/target/i386/emulate/x86_mmu.c
-+++ b/target/i386/emulate/x86_mmu.c
-@@ -185,8 +185,8 @@ static MMUTranslateResult walk_gpt(CPUState *cpu, target_ulong addr, MMUTranslat
-     int largeness = 0;
-     target_ulong cr3 = x86_read_cr(cpu, 3);
-     uint64_t page_mask = pae ? PAE_PTE_PAGE_MASK : LEGACY_PTE_PAGE_MASK;
--    MMUTranslateResult res;
--    
-+    MMUTranslateResult res = 0;
-+
-     memset(pt, 0, sizeof(*pt));
-     top_level = gpt_top_level(cpu, pae);
  
 
 -- 
