@@ -4,104 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 875CDC531C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 11:53:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8292BC531C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 11:53:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnavW-0002Ii-Lw; Sat, 25 Jul 2026 07:52:22 -0400
+	id 1wnawF-0002a3-RB; Sat, 25 Jul 2026 07:53:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wnavO-0002Hx-9G
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 07:52:14 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wnawE-0002Zk-Nt
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 07:53:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wnavL-0003Xl-VJ
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 07:52:14 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wnawD-0003c0-ES
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 07:53:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784980330;
+ s=mimecast20190719; t=1784980384;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jUicF8+0PQzjkNPpqUYxV6sqKjt7zQAlA9KYujX4b2M=;
- b=ZtpkP/gbyQeEFGfNJw6g8AxVzdgEFIvIpunt62h4juITbPVB9dGPumR3+ItOEIqo31tCPP
- K6vnYaCsvq6hH4aff8ACD5eOBaD/elw4iBUC5PHyy2gl8TU+CYpOM3g0e+Ev3KEVWHoFsV
- //+7DJm4oPU6pNKIYXwuEDhQS3D+3b0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pooy1komK3HiWfIILm8XPYtq9kz4EhuEd9krvRuamg8=;
+ b=dfQWV/9wc4KQOXSsFVdqBgEANMb0PckK4s35UBjJze3CQS1Q8N09cETWJi0+NAb3gFL4bs
+ ZQ4L74xMAWpYOD4k8ZiBeULJUCjWDomprsyPg9iB3dOwrwgFTLtXUtTUO5dLKOZsAvkbqf
+ al3d3/FG7VUrMef6RkhudKdZZbsYt0U=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-683-Z7mgohPgNwK4DzsklFqA2g-1; Sat, 25 Jul 2026 07:52:08 -0400
-X-MC-Unique: Z7mgohPgNwK4DzsklFqA2g-1
-X-Mimecast-MFC-AGG-ID: Z7mgohPgNwK4DzsklFqA2g_1784980327
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-495569acf8dso8384275e9.1
- for <qemu-devel@nongnu.org>; Sat, 25 Jul 2026 04:52:08 -0700 (PDT)
+ us-mta-519-E4edOzmXNlyFuUevz6uuKQ-1; Sat, 25 Jul 2026 07:53:03 -0400
+X-MC-Unique: E4edOzmXNlyFuUevz6uuKQ-1
+X-Mimecast-MFC-AGG-ID: E4edOzmXNlyFuUevz6uuKQ_1784980382
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4955843c6cdso13504505e9.1
+ for <qemu-devel@nongnu.org>; Sat, 25 Jul 2026 04:53:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784980327; x=1785585127; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=jUicF8+0PQzjkNPpqUYxV6sqKjt7zQAlA9KYujX4b2M=;
- b=l9mj8FWmtU9C+gvOmIXEAEGPVwCrddDb7ys7hG409WgJfjbFwiiPpe6v4aOcFKxoL7
- HlOS+v5D4iePRAkULu9MxYE1BUnvfUcx4z6tqksol8jRqbC4hlA6etK69SSL3gGJAJxl
- cARaOcxh9Rd22Ot+miIsCog9R2ai6xDldqHaU3RxXJ/fQoZj/3WsZrg9CK9FWJTQppD6
- M8L6cPyEIiXbg2Am+O7AT5GEsv8Fa/VSpwvOsdLghUbi41zGuaW2it3nJfpUDhp4rnFg
- 2GJtYlcDIk7LLnGeikAObbZGm1I5XmYQtxpS9qbtiYGYFdvTawcXf9+Ve9fVJgSdSsDH
- nnpA==
+ d=redhat.com; s=google; t=1784980382; x=1785585182; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=pooy1komK3HiWfIILm8XPYtq9kz4EhuEd9krvRuamg8=;
+ b=m1JqUsC5Jm2gObRVhBdbjh2iXF4quCHA64Hh67tek0ZEFP3HY3E+S/17+utoMBIGWi
+ Y/QElfzEH+eiZbrWVr6Yp2keKLC6PWL+VUlil/p/54do/iF0UEdtdlTJ4QHHo4qBIxDH
+ eZh5nsaACjZ8yq+Mr+GUr5zo81SkLTIRVV8gtlnOtCl/rULHMAEpZ73tpsSkmhvMRrnD
+ Z/TIW5lMdup1wNu2EM9Jao8ZwWqMbX0cZMGsOLdcxK3YxFqOMe9WgH+ANBMfUlhsE0KD
+ U+yG4G2UGdI8KiLOao57AU39NkN3l1LexFFvg37qtybn94+s4DL+Ay2vso6bLpSzhzZt
+ SErg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784980327; x=1785585127;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=jUicF8+0PQzjkNPpqUYxV6sqKjt7zQAlA9KYujX4b2M=;
- b=SOlULMPfppy1HT7a1cyc2GHDS7vCzovybYjnMvDN/HrWvTEn7gBqxM2ryo5/LbeNdz
- JPDmjjoY9hEyZrjQyuXPHhJZROcny7uITjy73EUu9NgzqXYJQA4jRm3XaOiiVmSZiNjK
- dshCsr33+joGJm2p6AKmRSDXBIp3QvWNaBTXS/HW79+8foyTxPBae++qK96ESCrWSPBz
- guj6ibVMCBATnQofRGreZSgHXNezKJyBtbK2NoxZzLz0iMljdWHxd8IVGWVA8qxitZyP
- X6dvphiybw1LSCgb3JI0Kwgi7HzctIYOmCXfW1KvlF425zyPn0yja1g0ZPCTokaa1kIZ
- n1iw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqxwFafbeDUNrN27fsd7wkhuGfDkjBV65L3hnYeltFtfjdOKDxRCwZfzdxtxaMYSz8ECtK3hQpzePt6@nongnu.org
-X-Gm-Message-State: AOJu0YypbX9QslmPESV7dCMQ7k4ZSvBByw9O8Hvf6FXL1UianFW4DdmC
- Zg5/8ea9l327EmLRN18I0LaxDFH5sWH4PdAPTfPKoefUV5Ee4MwHou3KEzIRbi77ld1YWKqeN5i
- XQqtUfWYUw3mOJ5PRr064OEJSyS4sl7CGuAYJjizzU5TY6d9hOoxx/NrL
-X-Gm-Gg: AR+sD11ic9uo/x99xn6alsmYo8LdfueQqBFqmclflzUzH4sfKtRXrznmlRsHw+oeOLo
- AkDeA7V9YIpnpwg8mF9gsLQewKS61jgejgAPZEQFPBE9S+6D4eDkwIWPHi3uopTGY/EbulJ2p/g
- qLvl3Mj4i7Ld0o6SVkOPKPdbr5ss2NQz26R2K8MrOetxPuKyCiO9YiRY8NkWIPF9zmDXzpNxxGM
- 6grNaFABJ2GmDq6wqIHR4JEgt2EZ5KU98LOicW3b4SR36hvAHMzETAGU47mGeFRszco0Gl9X+1Y
- LEcqAGhMHQXVk/AHVmd8IdOlQ2L5MQnhgxJTd4Ma9TMG4vSC5KaR14ldd4YWd0benL5dGWOe4G+
- fQy1LJ6+XiKhXvszh4cMcb2PnDa2nqBM=
-X-Received: by 2002:a05:600c:b4e:b0:495:641a:fffe with SMTP id
- 5b1f17b1804b1-496b573a1a8mr16566775e9.39.1784980326846; 
- Sat, 25 Jul 2026 04:52:06 -0700 (PDT)
-X-Received: by 2002:a05:600c:b4e:b0:495:641a:fffe with SMTP id
- 5b1f17b1804b1-496b573a1a8mr16566545e9.39.1784980326321; 
- Sat, 25 Jul 2026 04:52:06 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1784980382; x=1785585182;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=pooy1komK3HiWfIILm8XPYtq9kz4EhuEd9krvRuamg8=;
+ b=qjg0N7umt/3agNRynOPFS8qFXG9ZjFaVHeFNEoVWtlPkTWLd5qCnpd3pT9KypYLRem
+ AtM1ArvNrKrpqrig8qHZP8UYeDPd192VKT5L4/SzMCe1GyyJFnNFiqcqNGs/POQBZaK0
+ sHk/XBfM966J1pSP1PsiGYVqf87/SZOwBC0125fvNT+4FL2iNaoyOpG5PhZMOcTWeZZ9
+ +AjFkYUp51Mjhi/d32LCmUGgHy3lBIiCu4SJ5SnlpjspxJh4wgWddIRZfIWiAM4ivRwg
+ qI2nE0fP/O87Z6owBpeWzouRBA3sfUyavZwkCFx4ZLdwJpgpdxd+97AY9sIkK6qKbSM8
+ b1xw==
+X-Gm-Message-State: AOJu0YwRlh6sxbqqQ752DIxASQ6unuJsRyj53q0D4nUR2E0exnElJk6F
+ rBB9BOxWwIFQ+QHzCV7pHNw6O5w13PaEP9/99EohdWeks1YoXqdzoJ5K19pueTviMOD3woPdT/m
+ Mx7tYNutautK3pmDk9X0W7buACArjhQxeLxfPBeNLxl3INl62a+NrPhnG
+X-Gm-Gg: AR+sD13rsG5hpOW9c7VX8AvxwFDGZHMl+0fbRjcMPruI7Tzab7fhKhjltc4j6mF0v5R
+ X3qbQ2DlU+JU0aFoMJpy87ez0341UNFgBtg0cA8ei7Smm7uR2uF0lR1uO9t9TdQg7N1G4Olvv97
+ I6T6evWIEN6kuuDJ8By9C4m+0FFe/uoFOalgXwMphg9BAF0Ja2DXSlEgSAZvzzonlNy8/OcuQOF
+ ZOgObdvfu5qJ1p7ruExuC90KDt7R7dOSy+pcrYxtvio8czUJYBSHK6DpXIrVXuViJCEpMq0fqfm
+ ao4y1Np3iENe8A0Rqx1XVagivfKYO60cpenszZ4AKVgLLIV++hQZnY4boFIRuB79gkEuKnUKxxt
+ u6SBPzb5kHKPxDYNe4k0gF365rSb1Wjk=
+X-Received: by 2002:a05:600c:530c:b0:495:62bc:a022 with SMTP id
+ 5b1f17b1804b1-496b56f99a7mr26330025e9.13.1784980382012; 
+ Sat, 25 Jul 2026 04:53:02 -0700 (PDT)
+X-Received: by 2002:a05:600c:530c:b0:495:62bc:a022 with SMTP id
+ 5b1f17b1804b1-496b56f99a7mr26329725e9.13.1784980381403; 
+ Sat, 25 Jul 2026 04:53:01 -0700 (PDT)
 Received: from redhat.com (bzq-79-177-145-168.red.bezeqint.net.
  [79.177.145.168]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-496b4f33b73sm60840475e9.14.2026.07.25.04.52.04
+ ffacd0b85a97d-47f85bb57cfsm32454427f8f.11.2026.07.25.04.52.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 25 Jul 2026 04:52:05 -0700 (PDT)
-Date: Sat, 25 Jul 2026 07:52:02 -0400
+ Sat, 25 Jul 2026 04:53:00 -0700 (PDT)
+Date: Sat, 25 Jul 2026 07:52:57 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
- Gerd Hoffmann <kraxel@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-stable@nongnu.org
-Subject: Re: [PATCH v3 0/2] More virtio-snd fortifications/coverity fixes
-Message-ID: <20260725074851-mutt-send-email-mst@kernel.org>
-References: <20260420-virtio-fixups-v3-0-07aef1eff9d2@linaro.org>
- <99126226-5f73-4853-869f-0fcdc30c13a4@tls.msk.ru>
- <CAAjaMXagdexkBXM8acCq7d+N51BG1qLGs-J7Ctz+ZFe2zzSOFg@mail.gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Michael Tokarev <mjt@tls.msk.ru>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Isaku Yamahata <isaku.yamahata@linux.intel.com>,
+ Sean Christopherson <seanjc@google.com>
+Subject: Re: [PATCH 0/3] hw/pci-host/q35: Fix blank screen for VGA when SMM
+ is disabled
+Message-ID: <20260725075245-mutt-send-email-mst@kernel.org>
+References: <20260708121011.1653365-1-peter.maydell@linaro.org>
+ <CAFEAcA8WDKBMQhQELQrMzW2LatpQdmr0qJgak64B5S3rnsRk=Q@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAAjaMXagdexkBXM8acCq7d+N51BG1qLGs-J7Ctz+ZFe2zzSOFg@mail.gmail.com>
+In-Reply-To: <CAFEAcA8WDKBMQhQELQrMzW2LatpQdmr0qJgak64B5S3rnsRk=Q@mail.gmail.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
@@ -126,55 +124,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 08, 2026 at 03:01:19PM +0300, Manos Pitsidianakis wrote:
-> On Wed, Jul 8, 2026 at 12:09 PM Michael Tokarev <mjt@tls.msk.ru> wrote:
+On Tue, Jul 21, 2026 at 09:55:23AM +0100, Peter Maydell wrote:
+> On Wed, 8 Jul 2026 at 13:10, Peter Maydell <peter.maydell@linaro.org> wrote:
 > >
-> > On 20.04.2026 08:07, Manos Pitsidianakis wrote:
-> > > Added checks for stuff coverity pointed out (CID 1547527).
-> > >
-> > > Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> > > ---
-> > > Changes in v3:
-> > > - Added Coverity CID in patch message (thanks Alex)
-> > > - Link to v2: https://lore.kernel.org/qemu-devel/20260417-virtio-fixups-v2-0-4a0d8636a628@linaro.org
-> > >
-> > > Changes in v2:
-> > > - Use g_size_checked_add (thanks rth)
-> > > - Link to v1: https://lore.kernel.org/qemu-devel/20260416-virtio-fixups-v1-0-ec14e2de0852@linaro.org
-> >
-> > Hi!
-> >
-> > It looks like this patchset has been lost somehow.  Is it still needed?
-> >
-> > /mjt
+> > This patchset is another attempt at fixing a regression that's been
+> > around since v9.0.0, where
+> >  qemu-system-x86_64 -machine q35,accel=kvm,smm=off
+> > stopped showing graphics output from the BIOS since commit b07bf7b7
+> > ("q35: Introduce smm_ranges property for q35-pci-host"). This is
+> > most obvious and bad for accelerators which have no SMM support
+> > (e.g. NVMM, HVF, WHPX) because there smm=off is the default and
+> > so you always see the bug.
 > 
-> Patch 2 is still unreviewed it seems. I might send a new series with
-> more patches soon. Thanks for the reminder!
-
-I think a bigger problem is that we allocate as much as guest wants
-in the 1st place. Want to look into this?
-
-
-> >
-> > > ---
-> > > Manos Pitsidianakis (2):
-> > >        virtio-snd: check rx buffer descriptor size
-> > >        virtio-snd: check for overflow before g_malloc0
-> > >
-> > >   hw/audio/virtio-snd.c | 24 +++++++++++++++++-------
-> > >   1 file changed, 17 insertions(+), 7 deletions(-)
-> > > ---
-> > > base-commit: da6c4fe60fee30dd77267764d55b38af9cb89d4b
-> > > change-id: 20260415-virtio-fixups-3bc3a1a1cd27
-> > >
-> > > --
-> > > γαῖα πυρί μιχθήτω
-> > >
-> > >
-> >
+> Is somebody going to pick this patchset up? MST ?
 > 
-> -- 
-> Manos Pitsidianakis
-> Emulation and Virtualization Engineer at Linaro Ltd
+> thanks
+> -- PMM
+
+I took it, thanks!
 
 
