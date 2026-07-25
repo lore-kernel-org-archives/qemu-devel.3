@@ -4,98 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16601C531D0
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 04:20:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E285C531D0
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 04:25:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnTrd-00007R-Eg; Sat, 25 Jul 2026 00:19:53 -0400
+	id 1wnTwM-0000tY-6u; Sat, 25 Jul 2026 00:24:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brchuckz@netscape.net>)
- id 1wnTra-00005a-5c
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 00:19:50 -0400
-Received: from sonic304-23.consmr.mail.gq1.yahoo.com ([98.137.68.204])
+ id 1wnTwL-0000tJ-LC
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 00:24:45 -0400
+Received: from sonic309-22.consmr.mail.gq1.yahoo.com ([98.137.65.148])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <brchuckz@netscape.net>)
- id 1wnTrW-0000m8-8c
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 00:19:48 -0400
+ id 1wnTwJ-0001JO-UN
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 00:24:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=netscape.net; s=a2048;
- t=1784953182; bh=5d+TOFMpht5NNDS9biKMtmdNpshrH9FMk1WSBz5DJDE=;
+ t=1784953481; bh=ekKaIobZZ1Xy/FIfQt3Y4wffbq3XwiaTedgBPMjLcto=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To:From:Subject:Reply-To;
- b=JQgPy4k8R61WFgnGeYvVny5lIXTI7j3nsAgKJg++iF0x9N3q8xNn4FU+ZsGbhLVdTnrS+D7rRmfxqaC0RbAI5yQOP6f95MsK1qYuECtxzKXynF9P0Eapmo3FBbPzGOA3GsfYN3NQv66jarvD3t+lKH1kV7eVK1+hLpzaP0Yv7f2FnOrpCO3Vo2ix8H9VMODv8UeJfIK/IX4OShipimazDKAEpiUfxExk4kZxk7gW6j1pNui3zNeJBlSdk0UqpV2OJZT+w/NFcsg95bsvhHHr1cHzuN3NQO9u/uU9FPMqE40Yh2oJxWDRQZQMGXBt2D2tjyS2nvGyYNwvjyPLPL1l1Q==
+ b=MX93i5P0OrhWMRJGeo4/rtNiQxODYr3f8Aew6yij87XCBYZdY+PgIdmEFfkjD+B8oIOVC6qwFvOvPulcrrUSLWV5bp0qirKdb+AEv6eRyvcv0hR+kr/Nqs1CWE5x+tkt6fjWuPrTvKdHdakLRK+uOPI/85C+MjuYy0kKFymJ41cawU+zgWTRgYit7LFrG7aKRkLRnUbyhkgXxO8gemHXMmzPDBMV1IoPlA9mW7H+/p+X+BjmwHkuQVE7ekY2fWWmvsuBNYOlzW85fbulKZ/0NCsTWRoPjWFJMF12uUXKv1J9U5xD3Nh5986crmsVRpFbVTlPC1AsQWNx0v1sEIy9qQ==
 X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1784953182; bh=JMp2hksYC9h2iMxPZiI2LMkkn+DKmGrYKmdRUNp0ANc=;
+ t=1784953481; bh=SkWIsgEEniKXmvwCUlzMrO7W7V9Wmkp4O+XJ1oxvU3Q=;
  h=X-Sonic-MF:Date:Subject:To:From:From:Subject;
- b=Fa45ZLi2Suk2MyAeE4H4oafQfoZa3oEGSZtWPmq4dFkYoBIrNLFxx5eq6+/NtdYV6xmxfRCxK1G1A5ZNfiZecrUS06uwKtLgH1w5VL0VzGd+iJl9OrMXt34pteTHIaqL7QtxEDEPITaNlGB7XFH6NjKfx/o5wCFAAQVjkbgEk16OYpCH47/MlK6+gYq+uhQWSnz4bk28AUsBiBA3oALejzZGxdaQMYCDUAPQ7ldXn02CVd43NmucAUGf2JxNfcY2ptPPvGoMKezZpGRKFjmxLjoSJkWsK3mrhASabpMaL+qVGjMec/q9yur6ZHgsAo2L1Ql4ckaamw663z7/VJeSCg==
-X-YMail-OSG: rJYxrYUVM1nRXt3Qy7zIx.eZM2TW6z4DM2fg9rM5f_dNAHHDjeGqMF.gLEN5ZOF
- 5VbTCmeathxj2nXzLUERWxS.waw5oOOJ5MW.4acgGFvPE6K8ml8i4f4dBgDpfF8d5yHGxfJnyiou
- CxwscuO446c8eiABZoFyHUX13GZ8kiQjZb2GxjZf3WsrzUKcQBmC.0uVfnyBObld6Bb9PUaNU9Pt
- QAahuLiWRRWSXdl9IIBtBPDy_pfpHo1lcKJHBGQdj6eIBZ0RIW4lXwARimTQdJdiSHSql3lAidkK
- rcTIyYkE3m356QTnnspR34qHaPWnJIK.ugF656XkQ6vUutLFtXa82bF4z2Hcr.7_cTQ21l90zD7G
- .WUFANtXjhJd7.LAxNJwWpOJrUqCsvRWa1bXKhfac53ej6QR2oYgBam9Qun79ndbL79NdjXeF3Qi
- JvvJULCmXR9tBydQju0_Y8Pu06XvnkyxerFUbQfONnvnWS4hfgobXsX0H8UuyHY5zYMcDd_fNops
- DGXA0HdKWHY.WGViDhW9yWSKxptBvheqCyae3QuFA.hgVXgnKG0vOjy2BjKgJakhar5fqhBe6stc
- 7xi_NWuQWqVzmr.jrCpk5PzlDCGCBJY9.teJiueZMFMWjeLgCAjZvdhkdUC5eoNB1LPnEaf.Np7X
- oFl3.PLMN3J6USmu5E8NZ2Ez9ozBHBOX1Kbu3fQpVmeMLZGLCXXQes0ZxOZbR3DuA4h1pi9iL3jx
- 8Gy5L8UgrIQmwc1MS99QUYTqTp5BmsDiPqgdsOVJoIy0AEQoZ2XsbWRQojmuNMkFS5ySszlC5U8N
- fVJfPGrsSAY_5CIdOq6vZXi4ddq_lrB_s0OE.tg1jXLdldiCdxuwT7Sr18lmOreTsDN4jbHOS.eA
- hFZW4vI8BjDKXS5duiX9C58eghMDH7w9brgmIstQb6i3vXwMCDx1mWdBe73T5O9b4m4zvgYEdj_b
- jRX35EJ4JpHBO5IMX279YljdJ1ihcQJwRvOkiQ07QcLKnrooIN8P.fXKm8xT0wkRMaxH8OrZs0RK
- n_dS3cb1eHcztY2xg6MTkHBDyinJwaIBCvFUtufquoOxtdr6qTa4iMfWgV3B9sQ8kqgOxBZuvsIk
- bum_W.mSNIurwVSwgANb0XA2SALU9aOJojqYyuPZGZbaiE7CJGdci8GVrghnv9fN_ZhPDtR7oqxL
- p09bGsxp1Qw7bYvAgLTFb9tCxVelA6TMSfUiGb50EVqASUuCtFWQ37lBA4Th8auLD1LXpKmhzIkD
- 0W0gamQWvlX0_URxDk.pLt4j025tY.CBsQD6HiH540QnVcR6r5yQiT2eqR2nQ4WKWTMu5U4mKMUN
- O0Kec6Maj1aBMIv3SQWuHWtHJOxy1y2nwEmjJbYlNC6EPFGlFn9ov8XHyCjXPrHg5ZlThnpmtSR9
- AOuZ8Ow.YvZWG_pfuKRgKqMljGDIPk1NgQ9oj3PhNpYn84YPx3JdeK0LVZlzej0SxHhTns4YVV6X
- pH0ejD4yqdOvFMCs5TX.B0KgCxm7wZPsX9bwkbEicl7V1XYVY.SXzW5MsTgAUsZ.XAumg5GHrG.y
- TehNZ_TJnClE.p4Q_SJEkMA75GNQJATh38PlomTo.3hFT.5icYuI_BNXDcs3affkxMPHceV2CCsk
- l6seX69fu0Qvj9M4H4bkE8ynoDcE_8ImDPZ5pZTonHsxuVbrRfT83m5Rt4siqG2J9af8gvjEKzCI
- wmrDjzaAT3QvebJxzJIX0Fxl3Hs8xVuYedtMQgI5On1FNblhWjYgBxgEgpyEXpbLIqQ3dTID7.9t
- wRFjNTNR_aI_uVTQvbK61STvpb4BNdAbKqFxJAbGRDEcg8cFyI3I65P.t_mX_xUfvgNYmbOEylcq
- ZGTbGz05WO0TIEQ2XUS.jhEnSUSUlYjerHWk7LzBWTYXZFYDwNZrF21.hBZjXizN24ejVdtw_ez5
- jrpQziMTUuezzioaV6mkK_V_7fWW1yv0f9P_CinhsIUpWhEqL.FqC5eA8NPs4AXAQDg7viLs9c62
- Yzsb97Xi08MSmAgUVYQHaA264sS1aVASbSM1BadgdtfmwQ9ZTZAL6cxVTBw23t_1iIL.hBBzaLEa
- O_YWYy.nz7BTz1pSKqeiPkKcu1fzv6DexsKvV4T17LgGQdiu8x0lH5mzOJU7bh8LqG6ohBI7n7uF
- pEEpQj8T_VeIq5c6DxHj7bLXzJHJPuhQIkN8Fn0oB7HlqPus0A_WYSv7VWJm.D6HoRu86ZoARL_h
- feOaT8yZdZdQXr_Tby6CaDqnsJpbVFvcmhjP1NqooH3aXfA--
+ b=Y9+Zd59zrlfoOe5ABgd2oiJidlwuaAZs7attgyO1QK7X5Unl6VS2l39u4hOGAwa8xWRTFvYKjfw4nVqB4PnrwF1Cyf3qDumau4cquUhoq0fXPRRmAzKOYsK2Q5BSgEXsY5U3TCjdehG/HONb/lbsWVcwqBsi8Dy1u88z3Xa1wGNmVfqicJ8/RtzDnUSVGmc1u9BYEZdo6cuyysGRzg+/3ldpDcjG7TGwpnmh1o4L3UvY4/1YpOOgEA3qEhQoK5+R6oS8aio4VtO6vcUYCjh0Be+iBebpIxSArecQwGvCzU6EzfUid0rl17fGlYLDlLJySpK0crLxNkEmTiKTYgS0qA==
+X-YMail-OSG: qgbLQ4MVM1k1k0GI7kIMV_xPiXb6JuoT6.zw7s0zPowEUl3OfvoaFD4XjjONRRS
+ z2UzyZ_YWeO7k_csSdHhgWABg0PCtyF0dDOq3QqjM0mDVcUoiCZcM7yVV7TX0uF8FnBI79UAawQi
+ 49.LImtRDVheoJPnhSI3y8F3mC2T6wx1KphjtL75.HlI8cR3Y5zVdoBCxD43fYNbdVFsvajxO8uP
+ VWNc_Ti21pxtCJdffFjAro0ZZsiz0P7YVa2laB0OrkfWH2va7zSr8BxmFBGsmW3qUl5b0LeS4PYd
+ bFbRopTplqPHCneXdm_wbKCyPXg7vXo0rkBkge1iDmWY0b6dvDXZAvV56c7NAubrLBEdeEXcjkCS
+ wIjyopuZHst_N9HWyE7eJQZ707AjliJR73jZmdA9lfQewxsw3hVu53GvrxpJEfxrifD0oIfOo9w2
+ gADJ81AlmhzFfbNAzjCZMidKqCgNwwluKTTKR3m866mFQbdpKZpJ5xJ5s22STmBw2LTRrAoyKYv7
+ EMtBYDhZs3JeGnd5DC2cZ7x20uDEYOUxYFZTfIwDQmQj1yG9GzLiN1gY5ZB_rv5y24rzjTt67mKL
+ ZNsV.w8tLGL_FNtHFYmvquP8FZ5UVY7ngtjWEkaB6Jm._YN9R3ikKaMycot3ngk8AxHVMOVHCnH9
+ JIGe7Ip9rfvFsH23FBs..in3n41_PecgDOg8baqfoB812jpNpH6q4wv7tSjENigaKMeKGY48Vtnt
+ 4jZK5WAycVCenqZRH7b.uwHML.Ww3_G7HgSZSQ4jj8wnqyqBfpLecBaK4c55V.bJf5ylgCaa1hin
+ gNwIROYLSqrSxNh_RRiZPWisuJTGIPDjFQ2CWWVz3602wj2oNqmFQlrHd6Sl_lOKwI3rn6evxN_M
+ jKIHXuXR9GRUQooglKYg.tU7SMhD2U6XAF6ucf1vl0m718xDQDZzgqtF08PQCgta98rmd9EPkHzx
+ 6ON.IWN1HmdLj0DamX.79zq6asmYgjqOLsdNRCUFpPMVNqi.98_UggLgx6NibQA7s1iX5kSlBXHu
+ 3_0THJVZ.o0w8WZ7KsGBGb2kn.ttZsH70MSgsgQOPKVBjpbp28r8t1ISyPkA2N3GDc.k.HngPQ44
+ jHgtJ4nxRZmrGYKYYT2IkHU8zAEpMlQF8uoNrcnMkfyC5Ehi4SZOGXxuM1dukAMGL1JGK4dB6MyY
+ .qrpoMe1B0gmV8W5uEJH9P25jK0N3_bfPKgtZRoJEnB_goBFJOzsUboZyqBPI016c4a3QEUsL5Am
+ cFXUlVLmmST.kaiep1zwBlgzrKJE5_kVxMe1DxT5qWubag5RleUyM3W9_5gqj1Yr4ds2iRqmwFu6
+ aonJyEglsXXrDec60BhUHsA6piw4LZ88mOr9EIcVgSrHRCu5qUoFmBWu5076UHwiNXZ1qLK9w08S
+ I2NjLqvXmQhC5gijNOyDS_LzKP8eb_oo92xOu5HwtWkyjqAqaje0ufQEGWw4pZoM7mnMi93hmPIS
+ 5zTYIEjPUVZHd3WJTQAjJKhUSthYNcrpcZp1uEGlWFoYWZla2Yoxb1GE8xHnbjVj2NFph0xbwowH
+ tG3GWo0g23wJJPPCEPC.19sDy7AZHoOfiRcdkSdzQZwJMVWvADzZbli9zdcUmCffdnxfsmOhvF7g
+ 7JKttS01RTClwVPbyExLz5dbVYJv4NnCmJUrMyBFR8JAP.2dp1NusYn31kCJOtqrgYEbXdZFOQ36
+ .3lVC9.7cOnIcxsDza39TNZlXW1aXRSrYwGIfQlQZ5ThAR2l0QC9GLVFnwDGjcAHmJrW76tv_zyh
+ B49BkQMU2.l1T9zBPQZGmoQ3.HaXHu7IMLaTZCQo1xRKGZ8BgnchYpOmcMSAQl7EZZ04q27IoCfy
+ cQMTKpzSuAvMvmnBSYpWWDNDxTG0aoL8HQfWB0rKGUplqFAtql68AkJYJNzH_snzVIdkl.T6TBhS
+ FZttmumqEvm4Kn21_mC.iAa08Cwcr78vu4ffx.rX29wi4l.zkG9ryret6Y1DaJXsTOr7DIMXMPHu
+ H1tsiaTLdGEl5R5ORDnlkS2dPL8hVy0NJVYrXxLAATisrFDZKChHuJvETNhfNZakCclXIF9w5fIK
+ WaMyWbaqtwc.GBz7EDaqWmH1thLI5.yjURnu0foguEJ8Ub9NJGYQ4TmpkphtegHlX8tIszrvY1bN
+ F6xrGR27BD8YiC1PCrF75nhJfLxfgsWkmYUw6RtNr1WXAVD58r9YJYSdiIk7x9swVF4T.j5N5UJt
+ STKNyC.WGnAuv7r0_0mmPYIEYtUDW7dHz3wNwk4XoCcxOpv.lkQ--
 X-Sonic-MF: <brchuckz@netscape.net>
-X-Sonic-ID: 40bad8fe-313d-4605-86de-681a2fcb2c82
+X-Sonic-ID: 901bdd82-b497-4685-bfe1-b677888aac6d
 Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic304.consmr.mail.gq1.yahoo.com with HTTP; Sat, 25 Jul 2026 04:19:42 +0000
-Received: by hermes--production-bf1-5f4bf6454b-bxwbj (Yahoo Inc. Hermes SMTP
- Server) with ESMTPA ID b62fd084875c6d5e774985d82c647b03; 
- Sat, 25 Jul 2026 04:19:41 +0000 (UTC)
-Message-ID: <dda25bc4-6d3c-4f36-94e0-ffdc8b9bc81d@netscape.net>
-Date: Sat, 25 Jul 2026 00:19:40 -0400
+ sonic309.consmr.mail.gq1.yahoo.com with HTTP; Sat, 25 Jul 2026 04:24:41 +0000
+Received: by hermes--production-bf1-5f4bf6454b-lrr4g (Yahoo Inc. Hermes SMTP
+ Server) with ESMTPA ID b3f7f8e4b62955cf6d54d4688d9d61da; 
+ Sat, 25 Jul 2026 04:24:40 +0000 (UTC)
+Message-ID: <8340528e-1683-44d7-8014-937fdb9852df@netscape.net>
+Date: Sat, 25 Jul 2026 00:24:40 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] xen/igd: get PCH info from host sysfs
-To: Tomita Moeko <tomitamoeko@gmail.com>, Chuck Zmudzinski
- <brchuckz@aol.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 2/3] xen/igd: don't register rom bar twice
+To: Tomita Moeko <tomitamoeko@gmail.com>, qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, xen-devel@lists.xenproject.org,
  Stefano Stabellini <sstabellini@kernel.org>,
  Anthony PERARD <anthony@xenproject.org>,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>
 References: <20260709183517.25866-1-brchuckz@aol.com>
- <20260709183517.25866-2-brchuckz@aol.com>
- <5cb8d286-f013-4400-aef4-baddaa775995@gmail.com>
+ <20260709183517.25866-3-brchuckz@aol.com>
+ <f722320f-205b-40d3-a727-753506ba5473@gmail.com>
 Content-Language: en-US
 From: Chuck Zmudzinski <brchuckz@netscape.net>
-In-Reply-To: <5cb8d286-f013-4400-aef4-baddaa775995@gmail.com>
+In-Reply-To: <f722320f-205b-40d3-a727-753506ba5473@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Mailer: WebService/1.1.26215
  mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.aol
-Received-SPF: pass client-ip=98.137.68.204; envelope-from=brchuckz@netscape.net;
- helo=sonic304-23.consmr.mail.gq1.yahoo.com
+Received-SPF: pass client-ip=98.137.65.148; envelope-from=brchuckz@netscape.net;
+ helo=sonic309-22.consmr.mail.gq1.yahoo.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,74 +110,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/23/2026 9:09 AM, Tomita Moeko wrote:
->> ...
->> Also, use errp in xen_igd_passthrough_isa_bridge_create
->> to set errors from xen_pt_get_host_pch_info.
->> 
->> Signed-off-by: Chuck Zmudzinski <brchuckz@aol.com>
->> ---
->> Changes in v2:
->>   - call error_setg* after closing files instead of before closing
->>     files
->>   - in last line of commit message change "to propagate errors" to
->>     "to set errors"
->>   - add stable to Cc list
->> 
->> Changes in v3:
->>   - whitespace fix at line 380 of xen_pt_graphics.c
->>   - fix Cc address for qemu-stable
->> 
->>  hw/xen/xen_pt.c          |  2 +-
->>  hw/xen/xen_pt_graphics.c | 82 ++++++++++++++++++++++++++++++++++++++--
->>  include/hw/xen/xen_igd.h |  3 +-
->>  3 files changed, 82 insertions(+), 5 deletions(-)
->> 
->> diff --git a/hw/xen/xen_pt.c b/hw/xen/xen_pt.c
->> index 0fe9c0a..474606e 100644
->> --- a/hw/xen/xen_pt.c
->> +++ b/hw/xen/xen_pt.c
->> @@ -867,7 +867,7 @@ static void xen_pt_realize(PCIDevice *d, Error **errp)
->>          }
->>  
->>          /* Register ISA bridge for passthrough GFX. */
->> -        xen_igd_passthrough_isa_bridge_create(s, &s->real_device);
->> +        xen_igd_passthrough_isa_bridge_create(s, &s->real_device, errp);
+On 7/23/2026 9:12 AM, Tomita Moeko wrote:
 > 
-> The `errp` need to be handled here if any error occurs.
+> On 2026-07-10 02:35, Chuck Zmudzinski wrote:
+>> This also fixes a failed assertion in pci [1] for Qemu
+>> version 10 and higher when passing through an Intel
+>> IGD with an option ROM to the guest.
+>> 
+>> [1] f6fc01c ("hw/pci: Assert a bar is not registered multiple times")
+>> 
+>> Fixes: 881213f ("xen, gfx passthrough: retrieve VGA BIOS to work")
+> 
+> Please follow the QEMU standard way to reference a commit
+> `<at-least-12-digits-of-SHA-commit-id> (“Fixed commit subject”)`
 
-Do you mean calling it like this as a supported way to handle an error:
-
-    xen_igd_passthrough_isa_bridge_create(s, &s->real_device, &error_fatal);
-
-IIUC, that would cause Qemu to exit(1) here if there was any error.
-
-I didn't do that because I thought if there was an error one of the
-parents (pci or qdev) would handle the error appropriately since we
-are passing 'errp' from xen_pt_realize which I think comes from pci
-and qdev, but maybe not. I have not tested how an error is handled
-with this version of the patch and I am certainly no expert in how
-error handling should be done here, so thanks for alerting me to this
-question.
-
-I have also seen in the Qemu source the use of local_err and maybe
-using &error_fatal is something like using a local_err instead of the
-errp from xen_pt_realize.
-
-I will accept any suggestions from more knowledgeable people about
-how best to handle the errors here. I can also do some tests by
-faking an error here and make sure the the error does get handled.
-I do think if the LPC bridge creation fails it should be a fatal error
-and if am reading the current code we have correctly, we currently
-just print a message to stderr if bridge creation fails without doing
-anything about that error. I also think maybe if for some reason we
-can't get a revision number for the LPC bridge, maybe that should
-not be a fatal error.
-
-I will make sure the next version of the patch will not be posted until
-I have verified the errors are handled appropriately.
-
-Cheers,
+OK, I will do that for the next version. Thanks,
 
 Chuck
 
