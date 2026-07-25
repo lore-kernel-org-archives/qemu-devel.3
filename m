@@ -4,64 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02406C531F9
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 07:15:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30519C531F9
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 08:22:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnWbq-0002QS-8l; Sat, 25 Jul 2026 03:15:46 -0400
+	id 1wnXdi-0007x9-LD; Sat, 25 Jul 2026 04:21:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wnWbp-0002QJ-Cv
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 03:15:45 -0400
+ id 1wnXdg-0007vg-99; Sat, 25 Jul 2026 04:21:44 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wnWbn-0002c2-LI
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 03:15:45 -0400
-Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
- [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66P7FXhs073576
+ id 1wnXdd-0002EK-30; Sat, 25 Jul 2026 04:21:44 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66P8KYKv094736
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 25 Jul 2026 16:15:37 +0900 (JST)
+ Sat, 25 Jul 2026 17:20:34 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=4aLEExcc6yK+XaErgg6fexWkIdPrOKquOnl9wE+gv1w=; 
+DKIM-Signature: a=rsa-sha256; bh=WQYS/xI8RrPJl491thw/TlxkgIKItmOqVyaGKFsbaa0=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1784963738; v=1;
- b=jUBjOzamIHZn9mfIEOM49uIFeBSNhlsG5Tm3L/13mfxeDe2gocwjSm7II9zQzGTw
- HKUbDCVUlG07eDsCPKpsUrhxJoD7/iKxVv5gpnHsZKwXTLsygMqaKMkj7MI0Ma5R
- I4FoabsECVG9hU3/3fAq8VIGMq6VJmkWqTyNzBfuP06GAqI0NU4gqYlBsgtEDleB
- 8rs0RbW9d6v3+Zjlx5R73yvxmLZXCrl1LJi2CGoCBR2i/AZuPrJru+9LEPWJp/Hf
- ZgabSvdXcjXK2wwnoxGyZZOGVYBUVw/t4DOSIZO7SxzDwNqkQiZgESFYCT6+b+Q5
- jRIzFdqIpMHCq5YUiibHGQ==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 25 Jul 2026 16:15:32 +0900
-Subject: [PATCH] hw/display/virtio-gpu: Block Rutabaga migration
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1784967634; v=1;
+ b=Ge7+55X62ajyD1RiTmHCAWDd2BuLMVIpT2zhbl40EjLObKaUQk0m/XubkkY2emDs
+ liPW9MLfy19VooMOiGwtZ1/gIpYYzzkKBKkxcRj4nTm3aIVzzvuyJVuHnwITnie9
+ 36ymyyoRIoadCRUaKwy4uxoVJJB1UI0DikJFowu3hIKz0LFdYiEHHFRwKLUSj5wu
+ lY5Mt6wpDpEy3lfBbvHeEqij3N79o2fd+1b/jz9yK5Doc0L66Cdn4L56Yl2t3w7R
+ QW4yG3dlAnaoxcT6j5+u7hYQy9+/K7P9SZBuaGYaejzvdQ1n1OzYit4EjveVt/cP
+ qgoEojKdLXt0VXYoLIDSGA==
+Message-ID: <ae547323-1df0-436c-80a8-4681ecbbf2ea@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sat, 25 Jul 2026 17:20:34 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260725-rutabaga-v1-1-4832b56e679d@rsg.ci.i.u-tokyo.ac.jp>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQ5AMBCF4avIrDVpGxRXEYvBYCyQFpE0vbti+
- SX/ex4cWSYHdeLB0sWOtzVCpQn0M64TCR6iQUtdSKNzYc8DO5xQyErikCmjS2Ug5rulke/vqml
- /u7NbqD/ePYTwAGBIb7RsAAAA
-X-Change-ID: 20260725-rutabaga-090ad4172817
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-11.2 v3 00/15] qdev: Clarify and enforce the device
+ realization lifecycle
+To: Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, BALATON Zoltan <balaton@eik.bme.hu>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.16-dev-925f5
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2277;
- i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=UFlRF7PzOF1AQspXs/Q2Y6Ym9dmaDSrRI3UWfK5XTFQ=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ1ZK0sz3uYErI/fbOmeLTLf/8PFLsVpJ8JH8nduffdtYf
- OzhpbuWHaUsDGJcDLJiiiwpRbu5NaJrPxUmxLfAzGFlAhnCwMUpABOxXsTw3/W34U4zPo+G63Pv
- xM68nLd8ZoOBau2GWqnf9r7MSi9zrjH8Tzo/Nzn62W52Nd9rDd1ijzNtb8xWy5vZvv6vHcP8Qxd
- /cQEA
-X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
- fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
+ David Hildenbrand <david@kernel.org>,
+ FangSheng Huang <FangSheng.Huang@amd.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>, Aditya Gupta <adityag@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org,
+ Luc Michel <luc@lmichel.fr>, Fam Zheng <fam@euphon.net>,
+ Eric Blake <eblake@redhat.com>
+References: <20260721-qdev-v3-0-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
+ <874ihoa9z3.fsf@pond.sub.org>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <874ihoa9z3.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
  envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-Spam_score_int: -19
@@ -85,74 +95,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The migration stream encoding is not defined for Rutabaga yet.
+On 2026/07/24 20:44, Markus Armbruster wrote:
+> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> writes:
+> 
+>> qdev currently represents a device's realization state with a single
+>> boolean. This cannot distinguish a device that has never been realized
+>> from one whose realization has failed or that has been unrealized, nor
+>> can it represent realization in progress. Consequently, the same device
+>> can enter DeviceClass::realize() reentrantly or more than once.
+> 
+> .realized is initially false.  It is only ever modified in
+> device_set_realized(), which is the setter of QOM property "realized" of
+> "device" and its subtypes.  device_set_realized() is only called when
+> the property is set.  It does nothing when the new value is the same as
+> the old value.
+> 
+> Code changes property "realized" only in qdev_realize() and
+> qdev_unrealize().
+> 
+> Implementations of .realize may call qdev_realize() for their
+> components.  Having this loop back would be a bug.
+> 
+> If your claim "can enter reentrantly" is correct, we have bugs to fix.
+> I believe it is incorrect.
+> 
+> There are two kinds of devices, onboard and user-created.
+> 
+> User-created devices go through qdev_device_add_from_qdict().  If
+> qdev_realize() fails, the device is immediately destroyed.
+> 
+> Onboard devices get created and realized by board code.  It commonly
+> treats qdev_realize() failure as fatal error.  Trying again instead
+> would be a bug.
+> 
+> If your claim "can enter more than once" is correct, we have bugs to
+> fix.  I believe it is incorrect.
+> 
+> Exception, sort of: users can manipulate properties with QMP command
+> qom-set.  This is generally unsupported and a Very Bad Idea[*].  There
+> might be supported exceptions (I don't know), but "realized" is
+> definitely not among them.  Unsurprisingly, it's a fast path to grief:
+> 
+>      $ qemu-system-x86_64 -S -display none -monitor stdio -nodefaults
+>      QEMU 11.0.90 monitor - type 'help' for more information
+>      (qemu) qom-set /machine/i440fx realized false
+>      (qemu) qom-set /machine/i440fx realized true
+>      qemu-system-x86_64: ../system/memory.c:2585: memory_region_add_subregion_common: Assertion `!subregion->container' failed.
+> 
+> I figure your series rejects the second qom-set.  I'm pretty sure the
+> first qom-set already wounds the VM fatally[**].  Same as for a
+> multitude of other properties that aren't prepared to be qom-set at
+> arbitrary times.
+> 
+> Mind, I'm not objecting to adding additional guards against .realize()
+> getting called more than exactly once.  I'm only challenging your cover
+> letter, and probably your commit messages (which I haven't read).
+> 
+> [...]
+> 
+> 
+> [*] One could argue that having command qom-set is a Very Bad Idea.
+> 
+> [**] It just doesn't crash a stopped VM right away for me.
+> 
 
-Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for gfxstream")
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
- hw/display/virtio-gpu-rutabaga.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+You are right. The change assumes that the same device enters realize() 
+twice in no supported scenario; otherwise it will break a real use case, 
+so Philippe has requested confirmation from Igor [1].
 
-diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-index 4d7d7b245929..ad5cfabf4ee9 100644
---- a/hw/display/virtio-gpu-rutabaga.c
-+++ b/hw/display/virtio-gpu-rutabaga.c
-@@ -9,6 +9,7 @@
- #include "hw/virtio/virtio-gpu.h"
- #include "hw/virtio/virtio-gpu-pixman.h"
- #include "hw/virtio/virtio-iommu.h"
-+#include "migration/blocker.h"
- 
- #include <glib/gmem.h>
- #include <rutabaga_gfx/rutabaga_gfx_ffi.h>
-@@ -1078,6 +1079,7 @@ static void virtio_gpu_rutabaga_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
- 
- static void virtio_gpu_rutabaga_realize(DeviceState *qdev, Error **errp)
- {
-+    ERRP_GUARD();
-     uint32_t num_capsets;
-     VirtIOGPUBase *bdev = VIRTIO_GPU_BASE(qdev);
-     VirtIOGPU *gpudev = VIRTIO_GPU(qdev);
-@@ -1087,12 +1089,17 @@ static void virtio_gpu_rutabaga_realize(DeviceState *qdev, Error **errp)
-     return;
- #endif
- 
--    if (!virtio_gpu_rutabaga_init(gpudev, errp)) {
-+    error_setg(&bdev->migration_blocker, "rutabaga is not yet migratable");
-+    if (migrate_add_blocker(&bdev->migration_blocker, errp) < 0) {
-         return;
-     }
- 
-+    if (!virtio_gpu_rutabaga_init(gpudev, errp)) {
-+        goto fail;
-+    }
-+
-     if (!virtio_gpu_rutabaga_get_num_capsets(gpudev, &num_capsets, errp)) {
--        return;
-+        goto fail;
-     }
- 
-     bdev->conf.flags |= (1 << VIRTIO_GPU_FLAG_RUTABAGA_ENABLED);
-@@ -1101,6 +1108,12 @@ static void virtio_gpu_rutabaga_realize(DeviceState *qdev, Error **errp)
- 
-     bdev->virtio_config.num_capsets = num_capsets;
-     virtio_gpu_device_realize(qdev, errp);
-+    if (!*errp) {
-+        return;
-+    }
-+
-+fail:
-+    migrate_del_blocker(&bdev->migration_blocker);
- }
- 
- static const Property virtio_gpu_rutabaga_properties[] = {
+The primary point the cover letter meant to convey is that the current 
+QOM property itself does not actively prevent the "realized" state from 
+being incorrectly toggled, as your qom-set example clearly demonstrates. 
+This change is meant to align the setter's explicit checks with our 
+actual assumption.
 
----
-base-commit: 006a22cb26998998385b104db1ff9466ef2f3153
-change-id: 20260725-rutabaga-090ad4172817
+Since the cover letter omitted this explicit assumption, it 
+inadvertently sounded like I was challenging it. Commit messages have 
+the same issue. I will fix the wording in both the cover letter and the 
+commit messages for the next version.
 
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+[1] 
+https://lore.kernel.org/qemu-devel/a79f2ad8-d1ad-4536-85d1-0a01ad2f9513@oss.qualcomm.com/
 
+Regards,
+Akihiko Odaki
 
