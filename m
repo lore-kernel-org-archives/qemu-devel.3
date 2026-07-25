@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81F64C53200
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 01:03:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7B95C531FC
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 01:04:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnQmw-00025y-Iu; Fri, 24 Jul 2026 21:02:50 -0400
+	id 1wnQmr-00023a-IP; Fri, 24 Jul 2026 21:02:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1wnQTU-00073j-8P
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 20:42:45 -0400
-Received: from mail-vs1-xe2c.google.com ([2607:f8b0:4864:20::e2c])
+ id 1wnQTS-00072e-FT
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 20:42:42 -0400
+Received: from mail-ua1-x92f.google.com ([2607:f8b0:4864:20::92f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1wnQTS-0000tQ-Nz
- for qemu-devel@nongnu.org; Fri, 24 Jul 2026 20:42:43 -0400
-Received: by mail-vs1-xe2c.google.com with SMTP id
- ada2fe7eead31-73a8ac9cd52so688681137.0
- for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 17:42:42 -0700 (PDT)
+ id 1wnQTQ-0000sQ-Ro
+ for qemu-devel@nongnu.org; Fri, 24 Jul 2026 20:42:42 -0400
+Received: by mail-ua1-x92f.google.com with SMTP id
+ a1e0cc1a2514c-9770e900464so722891241.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Jul 2026 17:42:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784940162; x=1785544962; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1784940160; x=1785544960; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=HnQ7gxsV8OdqblNm0oJhx5jgthosF7mosNZcLoe2o7k=;
- b=LAVKsSlTyqSNiXURUPMXXvKMonZ+8KENuAyu3ACHS8fymxD2xPboBzVTLfYZnz7pfq
- zl0qOcPQ45I5OxWfhI+heqSFyiqliWTsISSeAULtsCsLKQZtjK5JWcyTIDg9CejZYr0b
- EEM38bgtEsmKKP60A2WcfFb9tTDZCDqkhe/NtXo0vnhk7C5gWTg2LCUjzHiHw5PyYPRV
- Ik2gz08xlLneEi1Ziqx9R2DJpSLGTT8sG8bFT3lBht1iYGc5nJsZsf1+zYWvxFvKndOK
- 6fBn3+9b7MG1uoi9HotUmpeVvRR3AsEeDVKNnxvXvq/DO2l7KM/GocfHK9Rtwt4oYp92
- F8Aw==
+ bh=KEFI7uy+xvGQzuX9qXCJxcKIBc3o6R22/Dt7nV8b50A=;
+ b=Mzv4OzdldbjZWEano/RtN4FPiLBYAu7N/kMNxaBnmZ6FMj5xuwND24b90V+OxO3OJE
+ bzlWP0zAgO6gRWxqIg+tr8k+RmMolG/ipYyyZnBQ1X8Lw4LMcZda8kRszMPOAkiOAD3j
+ U1xgYBSZqakDe30kiUoVtr/cGDHh+SRpcTMIf1UrsKr/1NHTEedKcf4o9s2cHH/pS0tk
+ WP6ScKlstPZPoXe+KtKgWVySMiKOXpcIHK/STUZSJ9vjTQyLmBm8Ck6buVZt/RAptpS3
+ cLkwFcdLDU20k61aOCOxd01tfHnaP27xWoIdKs7d9IN9qKd08XPb0XqcHspt3X8G6Zmt
+ +Fww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784940162; x=1785544962;
+ d=1e100.net; s=20251104; t=1784940160; x=1785544960;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=HnQ7gxsV8OdqblNm0oJhx5jgthosF7mosNZcLoe2o7k=;
- b=aINrUM8wgdq5x0eInKHA5687Z6orjR2KRq16OfuCg99KtxJH6W0VAOZUdOODZ+i5p5
- 8QUZOxZLqrgA98sy1tj9LIooJ1w00S4R/QNj8y+nxfXJAiXodKMYNYtBgh3LOJE/LfjD
- /6nYCE7oV8fPO28ZSHDK2edwx3MO44JAejAxbaSfUxgOmgFw716EaAeVXn67m3pHX7Dz
- +j5WKL7huI/QoPssXfU6swE1/WoLk/8XzUCdKUB52YCpRikPR/Qm50Kz4hpG3HiCS7Nu
- H73jbA/Szsjlhf+nPIfd9shKQtiog+gKaN7mSQOHGhPmAr/sZOmLW9Tl3hnDWXp14omS
- OqPg==
-X-Gm-Message-State: AOJu0YxIfOy5EibkGyWWb0nWUHYBuVOT6za6xhdeYU18vbX5WuM2yHhh
- 495/NWU5AUHIrUsoVCnprYqrfcEefglQGWsYX4PIC4ziICObOrsA1k+51HztImiY
-X-Gm-Gg: AR+sD11JfEXGChNe1k28z19Yra2McMDQmjq/F0ThvvPgo3sLzuBb+SwA7/AT0sBJuqM
- Ue8oSrbGK3avJ94+cMKWwxvM5h2xq+jPI5S59mBWoxTx+IZ4VoeuYCgCcIrz/50uj33I4HWZ/x9
- eNq77WU+15Cd47dteoKv9t1zUbDbuHyHQOC1E/bTlZqwhlRPLO5d6T95UYfVIrrtOoZMbsjMA4q
- s42TgmXDPyTWWnXwobxIKQ+TaRCv4AWm/AjNk3PV5qJYMa7Iu+aqyuhYevY3qyd5rcUcI5R5tbc
- Eb6J9+zfdlQY9/nPf3nxBEERwVnDs1VzWrn7ufb4muoiRufD3JbaGsgNa9BjNwK6rGwk3AmcUgX
- LTkVa4rMl4hDEw7NX/U1bZ506LeU/Sk5tPOSkRlxPJHLXxtwMuyH8Dr+dHzNhD2hfIpn0EbYweI
- mjf0niqTwrAzN0adgepBdTNlvrSJR6BHIs
-X-Received: by 2002:a05:6102:a210:10b0:6cd:b43f:72fd with SMTP id
- ada2fe7eead31-74f9fc68fb5mr1307052137.22.1784940161607; 
- Fri, 24 Jul 2026 17:42:41 -0700 (PDT)
+ bh=KEFI7uy+xvGQzuX9qXCJxcKIBc3o6R22/Dt7nV8b50A=;
+ b=Nhg6bVUqD5nnnxqe2BiEAvspuY9cb1f958QHVrInP9OjS1fgHKUA7wnrupKgkQ4cMW
+ H1KaQhUjX/BllQ1odJZsJ83vBXMZLIkjg3gWfqkmPONAEY82rDD0fqfPwh9Uhd1eCkzt
+ KsNMcapumIAWnEWOLSsEYKSbLx6u/BrbX6dz4pr8CrVKFL8CzZFxSsSN5cWNH6ggkvs9
+ bOhyyInH6PnvHA/qI97J2AkyLl5rbGNhhQljnj0/mx+CxShuh2WYyAw1zwJfSt5qxLEn
+ 1oWGue0geyRRj4CURAU6IJl9B9PclSgs0WgcpZRSZGUlDzI/RT9xhNrYZwQuKQq6OAHF
+ 8g3g==
+X-Gm-Message-State: AOJu0Yy74xQMVxA6mL0Auqcoe3LtJNeMeoDfw7EUmNZ+J3l9B4q0JDur
+ wDbntvUYeCw5slmhrQ6RX/KpvqSLAva9o/VdKdwBvBBiSfAusWEn+WpC+EWDy3sM
+X-Gm-Gg: AR+sD11KB8I5kS4k025+JNapHXWdlp8YKLViqsvqWsBsipQ75dIUxRBat2zmUz9t0Dh
+ je+fxOai68/f59EFxkdcB9hdN+F4zVHrGJ2LyWO1wiprDG+eremtvgiwd+ZJ9ILUVVi0VnnOSrc
+ edWQrxRMeFncpip+CguWoXgpBmWjNqkUap2eyHXhF7vV/0pjfxtI2YkXwC9R05wUmrkCji2xHaj
+ 6A8kWpKer05qkl9H4wSvIXR1SITsVcPSieqBsStohGwjzNi8PMrjUHYpv4Of1J0wsLdefd+FKe5
+ TX3kfEwDedywwP2oJvEn3BJGNT8eRBhDGmN4mqzscptbq9sjVMJT1ByCP6s6PjkyOwM8hCZEkeo
+ DyyVcACJQ24Ki/WDVn/Y6FzPVQZ8lrqG6jEr21on4bX/S6wQaJu1Hp3kmTLfkBlgI6isctIxNzk
+ MVBIb9dXXQ19hJHq+tk0VEey0KUjkCvgZo
+X-Received: by 2002:a05:6102:7b0:b0:734:54fa:971d with SMTP id
+ ada2fe7eead31-74f9d69ead8mr1654729137.7.1784940159768; 
+ Fri, 24 Jul 2026 17:42:39 -0700 (PDT)
 Received: from localhost.localdomain ([146.71.8.128])
  by smtp.gmail.com with ESMTPSA id
- a1e0cc1a2514c-97774f12690sm930591241.12.2026.07.24.17.42.40
+ a1e0cc1a2514c-97774f12690sm930591241.12.2026.07.24.17.42.39
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 24 Jul 2026 17:42:41 -0700 (PDT)
+ Fri, 24 Jul 2026 17:42:39 -0700 (PDT)
 From: Marcelo Manzo <marcelomanzo@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -71,17 +71,16 @@ Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Jason Wang <jasowangio@gmail.com>,
  Sergey Kambalin <sergey.kambalin@auriga.com>,
  Marcelo Manzo <marcelomanzo@gmail.com>
-Subject: [PATCH 19/19] tests/functional/aarch64: add raspi4b GENET networking
- test
-Date: Fri, 24 Jul 2026 20:42:18 -0400
-Message-ID: <20260725004219.66222-20-marcelomanzo@gmail.com>
+Subject: [PATCH 17/19] hw/net/bcm2838_genet: fix TX ring activation check
+Date: Fri, 24 Jul 2026 20:42:16 -0400
+Message-ID: <20260725004219.66222-18-marcelomanzo@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260725004219.66222-1-marcelomanzo@gmail.com>
 References: <20260725004219.66222-1-marcelomanzo@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2c;
- envelope-from=marcelomanzo@gmail.com; helo=mail-vs1-xe2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92f;
+ envelope-from=marcelomanzo@gmail.com; helo=mail-ua1-x92f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,65 +104,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add test_arm_raspi4_genet, exercising the raspi4b GENET controller
-end to end: boot with a -nic bcm2838-genet device attached, confirm
-the guest driver probes it ("GENET 5.0 EPHY" in the kernel log),
-reach a shell, and confirm the link actually comes up
-("ip link show eth0" reports LOWER_UP) rather than just that the
-device exists.
+bcm2838_genet_tdma_ring_active() extracted the per-ring enable bit
+from ring_cfg_reg using the GENET_DMA_CTRL register's EN field
+definition (1 bit wide, at bit 0) instead of GENET_DMA_RING_CFG's
+own EN field (17 bits wide, one bit per ring). Since a 1-bit
+extraction at bit 0 only ever reflects ring 0's enable bit, every
+other ring (1-15, and the default ring 16) was silently treated as
+inactive regardless of whether the driver had actually enabled it.
+TX traffic hashed onto those queues was dropped with no error,
+eventually tripping the guest's qdisc watchdog ("NETDEV WATCHDOG:
+transmit queue N timed out") and causing intermittent DHCP failure /
+link-local address fallback.
 
-Verified locally against this series with the exact kernel/initrd
-assets this file already pins (raspberrypi-kernel_1.20230106-1 /
-groeck linux-build-test rootfs): without the "fix PHY
-autonegotiation-restart deadlock" patch earlier in this series, the
-link never comes up and this test would hang at the "ip link show
-eth0" step, so it also serves as a regression test for that fix.
+bcm2838_genet_rdma_ring_active(), the RX equivalent, already used
+the correct field, confirming this was a copy-paste error isolated
+to the TX path.
+
+Confirmed fixed across repeated boots: real DHCP lease every time,
+0% ping loss, no more checksum or watchdog messages in dmesg.
 
 Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
 ---
- tests/functional/aarch64/test_raspi4.py | 30 +++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ hw/net/bcm2838_genet.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/functional/aarch64/test_raspi4.py b/tests/functional/aarch64/test_raspi4.py
-index 7a4302b0..0e254a20 100755
---- a/tests/functional/aarch64/test_raspi4.py
-+++ b/tests/functional/aarch64/test_raspi4.py
-@@ -92,5 +92,35 @@ def test_arm_raspi4_initrd(self):
-         #self.vm.wait()
- 
- 
-+    def test_arm_raspi4_genet(self):
-+        kernel_path = self.archive_extract(self.ASSET_KERNEL_20190215,
-+                                           member='boot/kernel8.img')
-+        dtb_path = self.archive_extract(self.ASSET_KERNEL_20190215,
-+                                        member='boot/bcm2711-rpi-4-b.dtb')
-+        initrd_path = self.uncompress(self.ASSET_INITRD)
-+
-+        self.set_machine('raspi4b')
-+        self.vm.set_console()
-+        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-+                               'earlycon=pl011,mmio32,0xfe201000 ' +
-+                               'console=ttyAMA0,115200 ' +
-+                               'panic=-1 noreboot ' +
-+                               'dwc_otg.fiq_fsm_enable=0')
-+        self.vm.add_args('-kernel', kernel_path,
-+                         '-dtb', dtb_path,
-+                         '-initrd', initrd_path,
-+                         '-append', kernel_command_line,
-+                         '-no-reboot',
-+                         '-nic', 'user,model=bcm2838-genet')
-+        self.vm.launch()
-+        self.wait_for_console_pattern(
-+            'bcmgenet fd580000.ethernet: GENET 5.0 EPHY')
-+        self.wait_for_console_pattern('Boot successful.')
-+
-+        exec_command_and_wait_for_pattern(self, 'ip link show eth0',
-+                                                'LOWER_UP')
-+        exec_command_and_wait_for_pattern(self, 'halt', 'reboot: System halted')
-+
-+
- if __name__ == '__main__':
-     LinuxKernelTest.main()
+diff --git a/hw/net/bcm2838_genet.c b/hw/net/bcm2838_genet.c
+index 6f8f4e5b..43583aba 100644
+--- a/hw/net/bcm2838_genet.c
++++ b/hw/net/bcm2838_genet.c
+@@ -515,7 +515,7 @@ static bool bcm2838_genet_tdma_ring_active(BCM2838GenetState *s,
+     uint32_t ring_mask = 1 << ring_index;
+     bool dma_en = FIELD_EX32(ctrl_reg, GENET_DMA_CTRL, EN) != 0;
+     bool ring_en =
+-        (FIELD_EX32(ring_cfg_reg, GENET_DMA_CTRL, EN) & ring_mask) != 0;
++        (FIELD_EX32(ring_cfg_reg, GENET_DMA_RING_CFG, EN) & ring_mask) != 0;
+     bool ring_buf_en =
+         (FIELD_EX32(ctrl_reg, GENET_DMA_CTRL, RING_BUF_EN) & ring_mask) != 0;
+     bool active = dma_en && ring_en && ring_buf_en;
 -- 
 2.47.1
 
