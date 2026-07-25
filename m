@@ -4,50 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6DF3C531F9
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 09:21:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A40C7C531C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 09:24:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnYYq-0003wG-P3; Sat, 25 Jul 2026 05:20:48 -0400
+	id 1wnYc9-0004Yb-8U; Sat, 25 Jul 2026 05:24:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wnYYk-0003vx-5r
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 05:20:42 -0400
+ id 1wnYc3-0004Y0-GI; Sat, 25 Jul 2026 05:24:07 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wnYYh-0001fm-9x
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 05:20:40 -0400
+ id 1wnYc1-0001tZ-Pa; Sat, 25 Jul 2026 05:24:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=dG83efNC3hmSzmXmoLmEgJZX0pGJFpgGwZEumYJk4/8=; b=xSwYtIiAHU+ofOFFCUCZ7rq8nB
- 2nky7mKFXyqQJpjW1quWirQmO1LANZNJQHbMvkZxYUzq6eMIEpRqYs+FNgKqa3hkP57Z2cMgbi4Qo
- Jrlay81NHveYwXI8ZVEsZjGlEt7JD1ww5BDWJxGIOSJNCO8KrCkKJekNbNpYo7cLmQcWIWsEL+0FT
- 5JpweuvCxFOvA4qomYHxXQaOywEA0s0Nj9SIENvjE1TXU0ByVpA9krZojyS96hRczHdwocIKggqSo
- /7evEZGyMd+SrPk1h+f9CQrPl6v/e7IrXVsePElT5efHPm2TgllCHhN51PAlypKy0e/tRbKFZW7W5
- EquxSvGGJKLyJ9RZ/lNRVLWRmN8gzD10R//8Yo3isvXVRgM3j6vfdpTt/n0ELMTc2kgfmL3mgc4gd
- mkymUtqjsGTnzllsqY/rEknxptXH6CdAeZdTbfcHxtP1PD8c8LdE4IBsiQXqNQBSiCqzM6alRiz/0
- EqEgNuEv1N01fzWpyQX/MhUMwuaprjvWsMApvOys5ha53fdv2LPC0eGUvOzRRGUYQSeYV79FLt+oa
- hJ1s9ue35HNI+IGEtfPWp8JNCcE68nCueTz5rolXVwhh7gDgRmkNeuWcRJd01bRDyNJMDx8c/Ilj5
- l2qMQRrtc9/6GS0XXQzH1zAGb63sIPNrUsgBF5/9c=;
+ bh=mjU2PvTRVuCoR3KcEKhn5dModOBxiK2ItqfG9ux+1UA=; b=I6wRcUU/OdNBhL4wkA5hjgbKGB
+ s6pC3wvLCENrbXg0ITIUF1HuInV09K1620tWXURXO+4zNYu1OMYyED/IO3sJonoKmsfdh1hMtsNOz
+ AYqV6o/x1fU3IVU35Y3japAaPnEEj1omZ6HktKDVXmtzj52OKufIjaDPWRFHqFgdC5DnDxYVMhERW
+ pnNcjYuXu9p7jsl+h8aW4WjOgAh+P1BW8usvH+7YcrGvFAmiOpkBU1Va/CwXaB2cLp2BkfTQp7xaT
+ lgkPhMXPxfZWX6LfaNmsJ+OnAASNdKLnPjvdL6w2NxesuOgoV77YL8T/NPgKWZrDHOVvEOlZGp/jW
+ 3qE8TMSdYby9q8Ym7dU+7v2dy6NM8G/3I4FD/luOR4nYjHUvtMHsCAVTJ5HtEqQBhq1p8a5aZ+KMi
+ z6BlugjbQn/IF+iKsiV1sRsoHFldHg1LMOfKoBtwDzwWOkozRFssspcxNEl2MLpFLMKSER/7k4bkK
+ tuLOjnkZtsgVQtoN0JCi7UE5FDtrXe3A0Zt1M3lumniIadejQo0vMrhcsJLa3bkLSGBeb9/LtFtas
+ lTtoAfF78W5qkLtk3avu0JnnxZPqi2OV1CpZjaLZ16P6GL8r46ZsTSpsB0tcxCpMyBMjupqtHOb+u
+ 7MJ/d9RsCSbaLXtL/dKVp/027frGA7rZegoG8shwI=;
 Received: from [2a02:8012:2f01:0:34a6:6cc:a7a8:2b1e]
  by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wnYYV-004Ula-1p; Sat, 25 Jul 2026 10:20:27 +0100
-Message-ID: <f4be0cc9-68ae-4f83-a40b-9af84109c54f@ilande.co.uk>
-Date: Sat, 25 Jul 2026 10:20:31 +0100
+ id 1wnYbo-004Un7-KT; Sat, 25 Jul 2026 10:23:53 +0100
+Message-ID: <ddea23d0-0371-4836-8b2f-5facef24e0fc@ilande.co.uk>
+Date: Sat, 25 Jul 2026 10:23:56 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: qemu-devel@nongnu.org
-References: <20260707213237.494636-1-mark.cave-ayland@ilande.co.uk>
- <20260722011530.GA2116566@ax162>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>,
+ qemu-stable@nongnu.org
+References: <20260313170938.449538-1-peter.maydell@linaro.org>
+ <48fdece2-5b98-4785-9b47-9eb2528803e2@ilande.co.uk>
+ <CAFEAcA_zf5joZKeiU=c5qP+PzbkrPEVOBZ0nMrOhidiywi_s8w@mail.gmail.com>
+ <CAFEAcA-MQ8tObH=9j-O-bqfGMLc2oTwaM1xEzv__GU2qrncmgw@mail.gmail.com>
+ <CAFEAcA_boBOkNAaUgX=QEQvm3Mgy2ewkSNtx8zR9e=P58aWmmQ@mail.gmail.com>
+ <CAFEAcA-VF47TGkRQBh_phZVvZ36tN5OJepbb1z=t=O=R3CwZDg@mail.gmail.com>
+ <db7478f3-3cfa-43bc-901c-01842f180a92@ilande.co.uk>
+ <CAFEAcA8j+W7eqJqBj-3Rq5ZBkOTapOKHSZFf+7ds4==5kKk-Tg@mail.gmail.com>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -74,12 +79,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20260722011530.GA2116566@ax162>
+In-Reply-To: <CAFEAcA8j+W7eqJqBj-3Rq5ZBkOTapOKHSZFf+7ds4==5kKk-Tg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:34a6:6cc:a7a8:2b1e
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PULL 0/1] qemu-openbios queue 20260707
+Subject: Re: [PATCH] target/sparc: Set reg window data structures currently
+ after vmstate load
 X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -105,133 +111,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/07/2026 02:15, Nathan Chancellor wrote:
+On 24/07/2026 09:48, Peter Maydell wrote:
 
-> Hi Mark,
-> 
-> On Tue, Jul 07, 2026 at 10:32:05PM +0100, Mark Cave-Ayland wrote:
->> The following changes since commit 916ab315cc2b3a3825ebb399d83339660144d5bd:
+> On Tue, 21 Jul 2026 at 22:01, Mark Cave-Ayland
+> <mark.cave-ayland@ilande.co.uk> wrote:
 >>
->>    Merge tag 'pull-nvme-20260707' of https://gitlab.com/birkelund/qemu into staging (2026-07-07 07:09:38 +0200)
+>> On 18/07/2026 09:46, Peter Maydell wrote:
+>>>>>> Are you OK with this patch as it stands, or would you like me to
+>>>>>> change it?
 >>
->> are available in the Git repository at:
+>> Sorry about the long delay getting to this one. Looking through the migration code,
+>> the current approach uses get/put handlers for registers that need to do more than
+>> just update value in the state. Longer term that code could do with an update to use
+>> .post_load, but for now I think it makes sense to use the existing pattern,
+>> particularly as it keeps the separation between 32-bit and 64-bit.
 >>
->>    https://github.com/mcayland/qemu.git tags/qemu-openbios-20260707
->>
->> for you to fetch changes up to 9e3508dce0045de26ec8cab064443c92fdd15288:
->>
->>    Update OpenBIOS images to e5ac46dd built from submodule. (2026-07-07 22:07:16 +0100)
->>
->> ----------------------------------------------------------------
->> qemu-openbios queue
->>
->> ----------------------------------------------------------------
->> Mark Cave-Ayland (1):
->>        Update OpenBIOS images to e5ac46dd built from submodule.
->>
->>   pc-bios/openbios-ppc     | Bin 677200 -> 673104 bytes
->>   pc-bios/openbios-sparc32 | Bin 382080 -> 382048 bytes
->>   pc-bios/openbios-sparc64 | Bin 1593408 -> 1593408 bytes
->>   roms/openbios            |   2 +-
->>   4 files changed, 1 insertion(+), 1 deletion(-)
+>> The following diff gives the same output in analyze-migration.py and I think should
+>> solve the issue based upon your analysis:
 > 
-> I bisected a hang that I see when trying to boot a Linux kernel built
-> from pmac32_defconfig to this change.
+> Yes, that should also work. There's a minor bug in it, though:
 > 
->    $ git show 9e3508dce0045de26ec8cab064443c92fdd15288:pc-bios/openbios-ppc >openbios-ppc-bad
+>> +static int put_cwp(QEMUFile *f, void *opaque, size_t size,
+>> +                   const VMStateField *field, JSONWriter *vmdesc)
+>> +{
+>> +    SPARCCPU *cpu = opaque;
+>> +    CPUSPARCState *env = &cpu->env;
+>> +    uint32_t val = cpu_get_cwp64(env);
 > 
->    $ git show 9e3508dce0045de26ec8cab064443c92fdd15288^:pc-bios/openbios-ppc >openbios-ppc-good
+> This should be "val = env->cwp;" (cpu_get_cwp64() returns
+> "env->nwindows - 1 - env->cwp", but we just want the plain env->cwp
+> value because that's what we used to migrate and what the get_cwp()
+> function wants to see.)
 > 
->    $ curl -LSs https://github.com/nathanchance/bug-files/raw/main/qemu-9e3508dce0045de26ec8cab064443c92fdd15288/rootfs.cpio.zst | zstd -d >rootfs.cpio
+> With that change, the sanitizer is happy with the migration-test.
 > 
->    $ curl -LSs https://github.com/nathanchance/bug-files/raw/main/qemu-9e3508dce0045de26ec8cab064443c92fdd15288/vmlinux.zst | zstd -d >vmlinux
-> 
->    $ qemu-system-ppc \
->        -display none \
->        -nodefaults \
->        -no-reboot \
->        -machine mac99 \
->        -append console=ttyS0 \
->        -kernel ./vmlinux \
->        -initrd ./rootfs.cpio \
->        -m 128m \
->        -serial mon:stdio \
->        -bios ./openbios-ppc-good
-> 
->    >> =============================================================
->    >> OpenBIOS 1.1 [Sep 24 2024 19:56]
->    >> Configuration device id QEMU version 1 machine id 1
->    >> CPUs: 1
->    >> Memory: 128M
->    >> UUID: 00000000-0000-0000-0000-000000000000
->    >> CPU type PowerPC,G4
->    milliseconds isn't unique.
->    Output device screen not found.
->    Output device screen not found.
->    >> [ppc] Kernel already loaded (0x01000000 + 0x00ed2410) (initrd 0x01fd3000 + 0x004fb000)
->    >> [ppc] Kernel command line: console=ttyS0
->    >> switching to new context:
->    NULL ihandle
->    Unexpected client interface exception: -2
->    printk: legacy console [ttyS0] enabled
->    printk: legacy bootconsole [udbg0] disabled
->    pid_max: default: 32768 minimum: 301
->    Mount-cache hash table entries: 1024 (order: 0, 4096 bytes, linear)
->    Mountpoint-cache hash table entries: 1024 (order: 0, 4096 bytes, linear)
->    VFS: Finished mounting rootfs on nullfs
->    Memory: 108176K/131072K available (10508K kernel code, 1004K rwdata, 2180K rodata, 1232K init, 178K bss, 21680K reserved, 0K cma-reserved, 0K highmem)
->    Found UniNorth PCI host bridge at 0x00000000f2000000. Firmware bus number: 0->0
->    ...
->    Starting network: OK
->    Linux version 7.2.0-rc4+ (nathan@ax162) (powerpc-linux-gcc (GCC) 16.1.0, GNU ld (GNU Binutils) 2.46) #1 PREEMPT Tue Jul 21 16:59:50 MST 2026
->    Stopping network:OK
->    Stopping klogd: OK
->    Stopping syslogd: OK
->    Seeding 256 bits without crediting
->    seedrng: can't open '/dev/urandom': No such file or directory
->    The system is going down NOW!
->    Sent SIGTERM to all processes
->    Sent SIGKILL to all processes
->    Requesting system reboot
->    reboot: Restarting system
-> 
->    $ qemu-system-ppc \
->        -display none \
->        -nodefaults \
->        -no-reboot \
->        -machine mac99 \
->        -append console=ttyS0 \
->        -kernel ./vmlinux \
->        -initrd ./rootfs.cpio \
->        -m 128m \
->        -serial mon:stdio \
->        -bios ./openbios-ppc-bad
-> 
->    >> =============================================================
->    >> OpenBIOS 1.1 [Jun 29 2026 21:11]
->    >> Configuration device id QEMU version 1 machine id 1
->    >> CPUs: 1
->    >> Memory: 128M
->    >> UUID: 00000000-0000-0000-0000-000000000000
->    >> CPU type PowerPC,G4
->    milliseconds isn't unique.
->    Output device screen not found.
->    Output device screen not found.
->    >> [ppc] Kernel already loaded (0x01000000 + 0x00ed2410) (initrd 0x01fd3000 + 0x004fb000)
->    >> [ppc] Kernel command line: console=ttyS0
->    >> switching to new context:
->    <hangs with no additional output>
-> 
-> Presumably this is due to OpenBIOS commit b0267d5 ("ppc: bump SAVE_SPACE
-> to include enough space to store all registers"), as this appears to be
-> the only actual source change to OpenBIOS? I have not had time to try
-> running under gdb to get more information about where it is hanging but
-> I wanted to get this report out sooner rather than later.
+> Do you plan to send your version as a proper patch?
 
-Hi Nathan,
-
-Thanks for the heads-up: nothing showed up in my local tests before committing, so I 
-will take a look over the next few days.
+Thanks for confirming. I'll tidy it up and send it through as a proper patch later.
 
 
 ATB,
