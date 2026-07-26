@@ -4,92 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4E83C531C9
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 21:33:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FC46C53209
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 21:33:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wo6Pt-0007g2-Vy; Sun, 26 Jul 2026 17:29:50 -0400
+	id 1wo6QI-0008H2-71; Sun, 26 Jul 2026 17:30:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6Pj-0007Ws-My
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:29:39 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6QF-0008AP-E2
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:30:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6Pi-0004I4-9z
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:29:39 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6QD-0004aH-R2
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:30:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785101377;
+ s=mimecast20190719; t=1785101409;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=tBhvi6iK9ugBioYiD5qlfoI4y5iguLdNdfdNzLHaa9U=;
- b=LOZcpX6AG+geHWB1hXE0Rvg+w7gYpLskDqkCpyzjlJFOA6xCV6YpdLGvQ1b/7SHbHbvUaY
- 0rvdjd+Gb8le+/H9/D5ATdh4Zb/7Aw4aMziwyajDyX9l0EHapa/sxh8R1JVVttoUjGdY9M
- hLJABowunQ0IbPKP2YcXRrSyhJruFB0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SmGEwUN6ZoBQwWGEsj9lWjkAqkITIK5CY/izBuC1F/k=;
+ b=cdW+5xKlD9v7il1ri7cMTKp1rQ3S1rCJXpuGdWi/C5M6TcS/xgPA4SnbKh8OssYPiG/zVy
+ VcZNfUhd/1jDGunsic0vjsMElDJ+yQgnQ0a9uzCQ6Ye/JKBthc9UGxmigF+Zdjco0Dg2le
+ 1f8edlJJKekSG/OnXbdctzs2DRv/CkI=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-284-lFBvKJ1YOtOA7ZmQ_mLKAw-1; Sun, 26 Jul 2026 17:29:36 -0400
-X-MC-Unique: lFBvKJ1YOtOA7ZmQ_mLKAw-1
-X-Mimecast-MFC-AGG-ID: lFBvKJ1YOtOA7ZmQ_mLKAw_1785101375
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-49561facb1dso17528205e9.3
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 14:29:35 -0700 (PDT)
+ us-mta-650-USpN8eZAN46054SPriKJEQ-1; Sun, 26 Jul 2026 17:30:07 -0400
+X-MC-Unique: USpN8eZAN46054SPriKJEQ-1
+X-Mimecast-MFC-AGG-ID: USpN8eZAN46054SPriKJEQ_1785101407
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4955b84e25eso15079655e9.1
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 14:30:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785101375; x=1785706175; darn=nongnu.org;
+ d=redhat.com; s=google; t=1785101406; x=1785706206; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=tBhvi6iK9ugBioYiD5qlfoI4y5iguLdNdfdNzLHaa9U=;
- b=Xq9+s9fyWj53DVPx+36rVCqMRd9yqnlF3emGCevcUqblC8UMMSpcb8QWh5zyGMIE8A
- gUcVGxUyzhO5UPLUHVCm9wvcWOlE1YDCO+Upyc7kKkE72FVnLy3ITjAHRxYzvfZIdG+L
- 6l0ZOVpmkGiaS4ZTwUjVQNQqySvVOXelY6713QF0b6wmEYp322S2IqyVerhWWzhka8TP
- UNoVqP50qnwfolWHpSVxywseEFY6Ytc5a9zLCw3fNuDcoMLAlNyifCuIKf6Q2vLQ7Ywt
- ocpNQAmB/rCLKgjV6EviaZO5SUrKQ54muye65Jqt+NFXp2Wm9uV9sE/ZqiqKi8h7YLIx
- niPQ==
+ bh=SmGEwUN6ZoBQwWGEsj9lWjkAqkITIK5CY/izBuC1F/k=;
+ b=czR3MQhBQ4Ym8NwxsN9EwLO8v7BjjwnEE4sBKDT2luZDEeX2b6YS0G1al73DPnEuTz
+ mSMQbfK3oB0+wBRv5J4wx9dxV3SwBUz3tgp79slbAErlrrkruIFoUh3/wCGQiUHbAznu
+ /ByzZoQZh+JG/rvx9fI+hX0uF8wNNB31oJj29XkjOMrFjybJrqUKDYPU2XSn1jCx/rRn
+ fqQFW4DSzN/+txaEIypDUbEVgzCGttNbZ9DqyG+lzjJQBmfljZyzWOJkdk2Nj/vgOJEP
+ 6UJ9DwKzgHgTJ/Fg9QkE3YjOxyJKEFBa9FNLHWVY4Gjrq9DQbKj7khpeon49C/TXze/6
+ oTjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785101375; x=1785706175;
+ d=1e100.net; s=20251104; t=1785101406; x=1785706206;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=tBhvi6iK9ugBioYiD5qlfoI4y5iguLdNdfdNzLHaa9U=;
- b=kVEZOf68e+wGQ384qLK3yUHKwiiK3+5kH7WViLT4ppyBrH4Hu0v4X62iMD8vqKj4JX
- KpKj2jPW2wUSsfwKyT+IcEa0wf+pnqwq1YNRn5nhmc6om8oHhJufqSiGupbeBzo7htDr
- 0z3sbNhZsM8GYQjBWHP4pu/iGP/F6AbDFgtrHTJPFouzl/GzNO8SY4CUCfQXpy3Sivie
- 2FLqFLeM5gaO/29Jz09i9ti7snzRW5lj3jYcRujUd7/2KlaQkR1FeApP7cXA44Yj955O
- SSmqvrBUSI6d5NFuckO7gl1N/iSjzMxgLk0hyr9Jz9Of7TwsiN9e4DY30+Ds2m6z7mAi
- fufQ==
-X-Gm-Message-State: AOJu0YxX4gof8YU5ZmS9yM22yxDSEFCgLuiXZDYWDs4EmEJ/RkOx4fP6
- 2je0GXU4CsdCtWLdghV7FkQTpuq9Cl5fPUpDAVG8VrDXMkIY4829kYGyBC9MnWrGefigoqCXG7K
- I9EWZo9aXuSVKJ24ZCAmP4tTjgLTIvylRm3U6NTJfUBKe8pTS4DNChJ9b7R7AIS75wMICr793we
- agyTUuB4UjzdREvIulMHbHYzdszFWCOGV6sg==
-X-Gm-Gg: AR+sD12ru14eo1H7NtnTv8+Fxrror0cMFg9xLrESrLFvG1IDwD113QK324ucJu64lMV
- LSWqwduokulkrYi6wFQxOSnGV7jkfXr1nb34yKAWpDeKlZB83S0OLdRffLh19AZ+ptI4Zq6nLx6
- ByROCId7SMpiC5NqLfa/iZdyT13NAOVivubllJ/e17zAsR54MA+E4Q1JR+DGPZ4VfoIpyUI2n6j
- fk13oFr0Dk+3vn9HernjLOof+86OWTiQAereKtN0wGvklZ4HCn8QW2NANjYJWY7YNZQlRK8d2yf
- RQO+QI0PqQTrlCV4yNdwhhGLIw4QOUU7hLzBau0DqJPe/Q3bEivk2UAPpAbgKdW7TjicvPHuf+9
- WuvLMU4vcwAP8NH7Z+GTbrg==
-X-Received: by 2002:a05:600c:1395:b0:495:6b8f:7e7a with SMTP id
- 5b1f17b1804b1-496b564afa3mr71376675e9.0.1785101374605; 
- Sun, 26 Jul 2026 14:29:34 -0700 (PDT)
-X-Received: by 2002:a05:600c:1395:b0:495:6b8f:7e7a with SMTP id
- 5b1f17b1804b1-496b564afa3mr71376525e9.0.1785101373988; 
- Sun, 26 Jul 2026 14:29:33 -0700 (PDT)
+ bh=SmGEwUN6ZoBQwWGEsj9lWjkAqkITIK5CY/izBuC1F/k=;
+ b=PcZGT2yblE7QXE7VGMO2YQ7/fClVYO1CIa7Tjq4j1EueTQqM7sTOIUH6pVTURMlocz
+ +dK3DoRo9ahMozS3xVAOfIhTaBJ3EXO5TZLME9rQpzznOhiigKPbBRo1yEKzjqG4NdMD
+ 3KcdbrXifXmFDL9omUiR3ZD/XwlzIpOBGisfYxzYW9Kgz0MaYj8Wf0EaalzTue74+2OV
+ +Akuopq8DwjjnijmlW40NlzEphLdtIvNVp//UeImnl1tnQiKhX8EW9tBw4KI0mqvFWqy
+ HKYkqux0hE5Hve3eFb9LkKAUXSjFf/1G65VgLPNxs0LuwuiEGxD3KFZygOIACiUT2vgg
+ +gtQ==
+X-Gm-Message-State: AOJu0YwSOM0ggDCnwY2153rek3YmxxEEv70PjNGBrm7AZNo/E+rjbH4X
+ V0QIZiZO8KupPB0YkX88P/tOdZn7Vua9RJkO6xmiQmhPtUNHpofkGh96Tgh7qChIFngyNAGUytC
+ Qyt/Lj5ohrnNbo+p7rq1q9SH8hkpMjzpG58VnoeCW4VkDysKvN7nVxm2XpWzvh9RzD3e2gLu/pu
+ aWshSn0n68SpA4jNeKTXTv/u43ohlrGu7mrQ==
+X-Gm-Gg: AR+sD13Aeqx0+jE9cGKrAJvBvlPASrZX459o66Na0QSsG38R6uPgXZyv/HE0PggsT5M
+ rxhWOfMNQyCZid95OBDJM9y2/TSJ2jjzhO4gd5q7pmOuaETbSzScEOC696RZJYRcsdpr6t5ia97
+ WZQX6AsekessR6g9NxRXByCEIz8mVgXdvAzz6faBlGcIN/KFbGmRhcleTCWFnFDtyhJ02GRKuvY
+ IewZTEMJxmnxV6lvG0ACB6IGryXIopH9nYm7Vjlbw+H37gvDwgknao7eF/DmZGlD649FPM+d0KD
+ T4o+f1VXuR7ZCcYYAU2u50Oe4hiL7/vT5ZNz08GlqO6hy4KXoWE2v2OHypAlALswJRyiaHAZsto
+ IXagHwY9lDt9lUVLrFu6Xig==
+X-Received: by 2002:a05:600c:4688:b0:496:bba5:33a7 with SMTP id
+ 5b1f17b1804b1-496bba53519mr42463555e9.27.1785101406449; 
+ Sun, 26 Jul 2026 14:30:06 -0700 (PDT)
+X-Received: by 2002:a05:600c:4688:b0:496:bba5:33a7 with SMTP id
+ 5b1f17b1804b1-496bba53519mr42462825e9.27.1785101405693; 
+ Sun, 26 Jul 2026 14:30:05 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85bb5a46sm41983877f8f.9.2026.07.26.14.29.32
+ 5b1f17b1804b1-496ba82468bsm109682065e9.4.2026.07.26.14.30.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 Jul 2026 14:29:33 -0700 (PDT)
-Date: Sun, 26 Jul 2026 17:29:31 -0400
+ Sun, 26 Jul 2026 14:30:04 -0700 (PDT)
+Date: Sun, 26 Jul 2026 17:30:02 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Raphael Norwitz <raphael.norwitz@nutanix.com>
-Subject: [PULL 13/30] vhost-user: assert nregions within limit
-Message-ID: <98f24e6bf2ad437d779fe36eeec87b89a3cb8c56.1785101237.git.mst@redhat.com>
+ Haotian Jiang <jianghaotian.sunday@gmail.com>,
+ qemu-stable@nongnu.org, Jonathan Cameron <jic23@kernel.org>,
+ linux-cxl@vger.kernel.org
+Subject: [PULL 26/30] hw/cxl: fix OOB access in cxl_doe_cdat_rsp via
+ entry_handle
+Message-ID: <19b566d397e382892af337e8b19e5676b9d36ac4.1785101237.git.mst@redhat.com>
 References: <cover.1785101237.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -121,37 +123,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-scrub_shadow_regions() and vhost_user_add_remove_regions() use
-fixed-size stack arrays sized to VHOST_USER_MAX_RAM_SLOTS and index them
-with dev->mem->nregions.
+From: Haotian Jiang <jianghaotian.sunday@gmail.com>
 
-nregions is calculated to never overrun these, but let's add an assert
-to make sure we don't get a stack overflow if there's a bug.
+cxl_doe_cdat_rsp() takes ent = req->entry_handle (uint16_t, fully
+guest-controlled, 0..0xFFFF) and directly indexes cdat->entry[ent]
+without checking ent < cdat->entry_len. For a default cxl-type3 with
+one volatile memory region, entry_len = 1 + CT3_CDAT_NUM_ENTRIES = 7,
+so any entry_handle >= 7 reads past the CDATEntry array into host heap.
 
-Fixes: f1aeb14b08 ("Transmit vhost-user memory regions individually")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3910
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Cc: Raphael Norwitz <raphael.norwitz@nutanix.com>
+The OOB-read base/length are then used in
+memcpy(read_mbox + offset, base, len) at cxl_type3.c:298-299, leaking
+host heap memory to the guest via PCI_EXP_DOE_RD_DATA_MBOX, and
+potentially overflowing the 1 MiB read_mbox heap buffer when the OOB
+length field is large.
+
+The same bug exists in the cxl-upstream implementation.
+
+Existing checks do not bound ent: assert(cdat->entry_len) only ensures
+the table is loaded; the minimum-length check only guards against a
+truncated CDATReq; the entry_handle ternary at line 293 only decides
+the next-handle echo, not the current access; pcie_doe_get_obj_len
+reads header.length, not entry_handle.
+
+Reproduce: build QEMU with CONFIG_CXL, boot
+  -M q35,cxl=on -device pxb-cxl,bus_nr=52 ... -device cxl-type3,...
+then send a CDATReq with entry_handle=0xFFFF via the DOE mailbox at
+config offset 0x190. Under ASAN this reports SEGV in cxl_doe_cdat_rsp
+at cxl_type3.c:281.
+
+Fixes: f5ee7413d5 ("hw/mem/cxl-type3: Add CXL CDAT Data Object Exchange")
+Fixes: 882877fc35 ("hw/pci-bridge/cxl-upstream: Add a CDAT table access DOE")
+Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Jonathan Cameron <jic23@kernel.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <48fb8411f67e525872fb19618a886e52b670ab7f.1784896199.git.mst@redhat.com>
+Message-ID: <20260713072336.623604-2-jianghaotian.sunday@gmail.com>
 ---
- hw/virtio/vhost-user.c | 3 +++
- 1 file changed, 3 insertions(+)
+ hw/mem/cxl_type3.c           | 3 +++
+ hw/pci-bridge/cxl_upstream.c | 3 +++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 517cc4ca71..2881cec72d 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -946,6 +946,9 @@ static int vhost_user_add_remove_regions(struct vhost_dev *dev,
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index cba05ec57d..28f41fa623 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -278,6 +278,9 @@ static bool cxl_doe_cdat_rsp(DOECap *doe_cap)
+     }
  
-     msg->hdr.size = sizeof(msg->payload.mem_reg);
+     ent = req->entry_handle;
++    if (ent >= cdat->entry_len) {
++        return false;
++    }
+     base = cdat->entry[ent].base;
+     len = cdat->entry[ent].length;
  
-+    /* Ensure nregions fits the fixed-size arrays used below. */
-+    assert(dev->mem->nregions <= VHOST_USER_MAX_RAM_SLOTS);
-+
-     /* Find the regions which need to be removed or added. */
-     scrub_shadow_regions(dev, add_reg, &nr_add_reg, rem_reg, &nr_rem_reg,
-                          shadow_pcb, track_ramblocks);
+diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
+index b6281cbd4c..69773ff163 100644
+--- a/hw/pci-bridge/cxl_upstream.c
++++ b/hw/pci-bridge/cxl_upstream.c
+@@ -158,6 +158,9 @@ static bool cxl_doe_cdat_rsp(DOECap *doe_cap)
+     }
+ 
+     ent = req->entry_handle;
++    if (ent >= cdat->entry_len) {
++        return false;
++    }
+     base = cdat->entry[ent].base;
+     len = cdat->entry[ent].length;
+ 
 -- 
 MST
 
