@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A607C531D0
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 00:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 284E1C531D0
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 00:56:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnn9U-0003i9-4b; Sat, 25 Jul 2026 20:55:36 -0400
+	id 1wnnA3-00049X-NS; Sat, 25 Jul 2026 20:56:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wnn9R-0003hO-Na
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 20:55:33 -0400
-Received: from mail-qk1-x72d.google.com ([2607:f8b0:4864:20::72d])
+ id 1wnnA0-000462-EQ
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 20:56:08 -0400
+Received: from mail-qt1-x833.google.com ([2607:f8b0:4864:20::833])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wnn9Q-0007ZL-3w
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 20:55:33 -0400
-Received: by mail-qk1-x72d.google.com with SMTP id
- af79cd13be357-92e533aacf2so83204485a.2
- for <qemu-devel@nongnu.org>; Sat, 25 Jul 2026 17:55:31 -0700 (PDT)
+ id 1wnn9y-0007a1-Ep
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 20:56:08 -0400
+Received: by mail-qt1-x833.google.com with SMTP id
+ d75a77b69052e-51c2b2c9eccso12863921cf.2
+ for <qemu-devel@nongnu.org>; Sat, 25 Jul 2026 17:56:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785027331; x=1785632131; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1785027365; x=1785632165; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=pVwlgtmgEc3axuYS6KKLOPY8UyUmHfC6AB1k/zPj/1o=;
- b=BxSpWb40E2gLCt5J9yD/LrFAaqyfRSMtWdI23Qo+aW2Kv0N0fYdfSRmwNQJCjmFleD
- 49CBxPQSbT1adEXV/vUmJ35JRvIETuyql7wW1IcJYIA50y5bxB0S/XbJPh5KDCnUnqzP
- osS2Z+Ut9mpnsF0TMP9TeYK/sFR1oIcdMO7Qr0B0wv+tavlYtyet/253zvlTgxtcquya
- 0KVJPl57DbUwwOFL3bjfq6R/fVNHDmbiDl7qaThYsqsG9HEO6yU3aBtqqEBO9iFNoI7I
- snPRfe6vWvhVjTpQS/4SStEq22XEOtaivd3Nqte+UqOtdvI32U6M3R8fexbXJnkTpVvl
- wYYA==
+ bh=hTG9Vq5yx09S4tHVZ2AcJ8c9fwuynIWNBzHmdt64gAE=;
+ b=h6yIWKmyXkj1TnlkwCh0yZYtJEqpXHCnEa+R1y/TKpreZjQcpy4FE4zA6P2MOhpGOy
+ eLH+YTXSp4NaXpBxwumKCXwuRTW+cu0m+ieCgUKJGRfz8ZEScZQKghqp8jQWR5X1ZA2+
+ rsath+s1gmK6v3VAChBS6eVV39gMhqV7cuuTpS6pIsuUzki08tBhhE9AMskDA7Cd/c6V
+ iG/VOdBTDbA8J9fKWZjISkV5OTw5BGEHwKZvYa79RDI3gwkrMUrrcF5S0szrgV5hQWl7
+ HMTZER46ku1zzujZFUmv7QyS/L8EG7PT+cCQa5X1x47eONVnWTAunb9LTBS5LE6qU9EG
+ kTXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785027331; x=1785632131;
+ d=1e100.net; s=20251104; t=1785027365; x=1785632165;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=pVwlgtmgEc3axuYS6KKLOPY8UyUmHfC6AB1k/zPj/1o=;
- b=NT74jaZ0xo714mjcVhBeDwSZlvZxOY/kd3uxiUmWwTJmJipDtSxkZ11ubbSwPtIUkm
- X4tlSWyEF4ITiC8l0RvvADYQPxw/VScvy1MtEFzsyEu3Kw4Hr4/TTQAZ5+5C2HAhkCU8
- 00NQFJCSLbokdmW8tg7U1wqYQhZOSmc4cjZoCKIWlvcGPu8YNd091PZ1rRMmEMdvyn35
- /sNWtWoQrGUe2+dfGZq3NulJuCh3Lh7Gbbm4cp7ufnDr1Rr2MnsoOYvgs/vY2COcr5j7
- sb5GD85IJwXyD5rU7Ld4O5nTdyolrtwFPy+2MOX7uZcIEI081YZpxkuNqJDoXHAllk/S
- qm7A==
-X-Gm-Message-State: AOJu0YxnXo/6WQYiapSVxtzAJkZ7ZWcKjTgi8bOCDYy5EhVj9eVw1wKC
- ZKDC32vZEbXzSRT6DV5hAZkyX5hzWZbMlt5JR8kixdBM0rXrCYO16qgZGCe1Hg==
-X-Gm-Gg: AR+sD11f7vT7KbCZ8h1WHohmtA1PPPjR6/lNt37rBGiud//smgDfQPLnFkEPuGXg5dg
- r+5LCcVvlh9ap2ibB1QNuYd2t466embYH7B/j+xW8slzwCgs7aXDioHtxMeXM0rnMbBl3TObkAc
- A7v5OMDchJEc+BszX7WaVqxk+ojAGTW60GwPKitQMmXvnwkfWwegrb1J21VprSwVh+B5uSn9QsR
- O6rqaZLRY0La/AT4dCdXoh2JwBmGhU6MUsTWmCj9cG9sc93IqQvY2cXv05zI/R2JTzImfuYKEJo
- UNTEqc9uG5YFpFYl51wz8UeJlhVUeG1742n/c6+rtI7Jrxt35Mt2dm2TYcarSg/ReJgLenOJAqP
- s2huSZrLtuwL9fyy8Q13XBdUERovUBsSRq2hnRD4Egx6PIAJH1mr6ugI55QIXmiSxv6y18/xAyg
- NaEvnpW3ZQna5M/bzTmwIKYU5Kz8UmVrPndWBoMpCQlVP+SRQZLpW2vg==
-X-Received: by 2002:a05:620a:2913:b0:92e:c116:bef1 with SMTP id
- af79cd13be357-932df730002mr402730685a.78.1785027330825; 
- Sat, 25 Jul 2026 17:55:30 -0700 (PDT)
+ bh=hTG9Vq5yx09S4tHVZ2AcJ8c9fwuynIWNBzHmdt64gAE=;
+ b=hlA6it6Y3ctCb6x2/ftej2g88nVBx6KSbGi73UpvgtD3LwHHlWAA9v73xWjtb3kHJp
+ fd/UJX8E008DKPN/1l+ued2V4aMgseHaVKElRv0Hvi/9bPNSF0vKMAclcn2FhlrCCbsy
+ n4MRbInysapNrvdsQyWkL7tHpHZ6badWhKMeHoDi4hD3g67ajmp1HJhyJblBzwx+iCrm
+ khrlcojfqSvf+oSg0t2WPlm2/Kq785IrpTpj2nbcJ2r4aecxeLINdU8NTqA/j+7FFH8d
+ Ih9ipx4pAX4wNwaaspDGtmiw8SWgV0j0X4tY60Bx6tG/tiY833AceRfwqXF5IaMdx3g8
+ EgJA==
+X-Gm-Message-State: AOJu0Yz5QXbbORPTOc+EqpTpQw745O78UVF7pSk2ZpRLqMuiapmYwqby
+ bfcHtIWnhUgJ0vIZtAtyw0uuDtYlJkNnjnXa4jecYofujvg9zkRkDoSaiIImUQ==
+X-Gm-Gg: AR+sD12h9L6NDvT5xSHy6qkQatnwJTJQLQRo1YKXzLlYDFJXUZTLDGMqs3TQX7okd9E
+ e5TCW0tpeKW+i8CFNDNosCwEnmH7oHp4AynaBvn7WDAT0zCGqFIjoqnwzuik/W9e3fszVP/chBr
+ b1grWtKrqxrq/NrhVw7cRvzpzCoinF8RuDCGlZjlhQTunLj7+Dm+hC7qkRVADjQ/JYIr/3xtMFy
+ iQ/z8euvFxtdwHSQoo49TdHehS9vQ1wgkRsOMY9WeeyZ3tNCee1ibWfRByCcEVFs2qX8Lbpt+2J
+ s/2bQY0Shgc9VISak7EwympF0guKhmVQTtmzAvzmvQeIcas6mZH3/7Peq8adDQzPrZqHhVdf609
+ i6sWIgygo33CWJN/psCnz5iJ03rfAk9qt3VJl3uddTT+FW8we8DhfRhYljMF+QYcAr5oAussEPi
+ GSh+yfOxzJNCA+njPnCUnJdwvhBVVNPNf5Z2eyOq3EC2E=
+X-Received: by 2002:ac8:7c44:0:b0:51c:12bf:d4a7 with SMTP id
+ d75a77b69052e-529a86ac0a5mr38479141cf.45.1785027365303; 
+ Sat, 25 Jul 2026 17:56:05 -0700 (PDT)
 Received: from localhost (host05.distrikthotelips2.d.subnet.rcn.com.
  [207.96.107.85]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-932de1dcef6sm255457285a.0.2026.07.25.17.55.29
+ d75a77b69052e-529a27cedccsm26413951cf.4.2026.07.25.17.56.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 25 Jul 2026 17:55:30 -0700 (PDT)
+ Sat, 25 Jul 2026 17:56:04 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Matt Turner <mattst88@gmail.com>
-Subject: [PATCH] linux-user: fix guards for the fsmount(2) syscall series
-Date: Sat, 25 Jul 2026 20:55:27 -0400
-Message-ID: <20260726005527.2513254-1-mattst88@gmail.com>
+ Helge Deller <deller@gmx.de>, Matt Turner <mattst88@gmail.com>
+Subject: [PATCH] target/alpha: do not trap on Inf inputs to bare FP arithmetic
+Date: Sat, 25 Jul 2026 20:56:01 -0400
+Message-ID: <20260726005601.2513662-1-mattst88@gmail.com>
 X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72d;
- envelope-from=mattst88@gmail.com; helo=mail-qk1-x72d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::833;
+ envelope-from=mattst88@gmail.com; helo=mail-qt1-x833.google.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,71 +98,249 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The fsopen(), fsconfig(), fsmount() and fspick() implementations are
-guarded by defined(NR_fsopen) rather than defined(__NR_fsopen). No such
-macro exists, so the guard is never true and the entire series compiles
-out. Guests calling any of the four get -ENOSYS, which for example makes
-systemd's credential setup fail with EXIT_CREDENTIALS for most units.
+helper_ieee_input is called for each operand of bare (non-/S) T-floating
+arithmetic instructions.  It was raising EXC_M_INV for any value with
+exp == 0x7ff, which covers both NaN and Infinity.
 
-The strace bits for fsconfig() have the same typo.
+This is wrong for Infinity.  Infinity is a valid arithmetic operand;
+operations like Inf + finite, Inf + Inf, or Inf * finite produce well-
+defined IEEE results with no invalid-operation exception.  Only NaN
+inputs and indeterminate forms (Inf - Inf, 0 * Inf) are invalid.
 
-Fixes: 767c32fe6983 ("linux-user: implement fsmount(2) series of syscalls")
-Fixes: 6e0aa9f6c731 ("linux-user/strace: add fsmount series of syscalls")
+Indeterminate forms are already handled: the softfloat helpers set
+float_flag_invalid in those cases, which soft_to_fpcr_exc converts to
+FPCR_INV in env->error_code, and helper_fp_exc_raise then raises the
+trap.  No pre-operation check for Inf is needed.
+
+Change the exp == 0x7ff check to also require frac != 0, matching the
+existing behavior of helper_ieee_input_cmp.
+
+Fixes: b99e80694cc6 ("target-alpha: Raise EXC_M_INV properly for fp inputs")
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 ---
- linux-user/strace.c    | 2 +-
- linux-user/strace.list | 2 +-
- linux-user/syscall.c   | 4 ++--
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ target/alpha/fpu_helper.c       |   7 +-
+ tests/tcg/alpha/Makefile.target |   2 +-
+ tests/tcg/alpha/test-fp-ieee.c  | 173 ++++++++++++++++++++++++++++++++
+ 3 files changed, 177 insertions(+), 5 deletions(-)
+ create mode 100644 tests/tcg/alpha/test-fp-ieee.c
 
-diff --git ./linux-user/strace.c ./linux-user/strace.c
-index 3a81cc95f4..d861f311f6 100644
---- ./linux-user/strace.c
-+++ ./linux-user/strace.c
-@@ -4344,7 +4344,7 @@ print_statx(CPUArchState *cpu_env, const struct syscallname *name,
+diff --git ./target/alpha/fpu_helper.c ./target/alpha/fpu_helper.c
+index 5b7e4bd5eb..6c26e3349f 100644
+--- ./target/alpha/fpu_helper.c
++++ ./target/alpha/fpu_helper.c
+@@ -105,8 +105,7 @@ void helper_fp_exc_raise_s(CPUAlphaState *env, uint32_t ignore, uint32_t regno)
+     }
  }
- #endif
  
--#if defined(TARGET_NR_fsconfig) && defined(NR_fsconfig)
-+#ifdef TARGET_NR_fsconfig
- static void
- print_fsconfig_cmd_name(int cmd)
+-/* Input handing without software completion.  Trap for all
+-   non-finite numbers.  */
++/* Input handling without software completion.  Trap for NaN and denormals.  */
+ void helper_ieee_input(CPUAlphaState *env, uint64_t val)
  {
-diff --git ./linux-user/strace.list ./linux-user/strace.list
-index e363892e0a..3a366b8cac 100644
---- ./linux-user/strace.list
-+++ ./linux-user/strace.list
-@@ -1725,7 +1725,7 @@
- #ifdef TARGET_NR_fsopen
- { TARGET_NR_fsopen, "fsopen", "%s(%s,%d)", NULL, NULL },
- #endif
--#if defined(TARGET_NR_fsconfig) && defined(NR_fsconfig)
-+#ifdef TARGET_NR_fsconfig
- { TARGET_NR_fsconfig, "fsconfig", NULL, print_fsconfig, NULL },
- #endif
- #ifdef TARGET_NR_fsmount
-diff --git ./linux-user/syscall.c ./linux-user/syscall.c
-index 3da5530d42..740142825d 100644
---- ./linux-user/syscall.c
-+++ ./linux-user/syscall.c
-@@ -9740,7 +9740,7 @@ _syscall5(int, sys_move_mount, int, __from_dfd, const char *, __from_pathname,
-            int, __to_dfd, const char *, __to_pathname, unsigned int, flag)
- #endif
+     uint32_t exp = (uint32_t)(val >> 52) & 0x7ff;
+@@ -117,8 +116,8 @@ void helper_ieee_input(CPUAlphaState *env, uint64_t val)
+         if (frac != 0) {
+             arith_excp(env, GETPC(), EXC_M_INV, 0);
+         }
+-    } else if (exp == 0x7ff) {
+-        /* Infinity or NaN.  */
++    } else if (exp == 0x7ff && frac) {
++        /* NaN.  */
+         env->fpcr |= FPCR_INV;
+         arith_excp(env, GETPC(), EXC_M_INV, 0);
+     }
+diff --git ./tests/tcg/alpha/Makefile.target ./tests/tcg/alpha/Makefile.target
+index 36d8ed1eae..2636921aeb 100644
+--- ./tests/tcg/alpha/Makefile.target
++++ ./tests/tcg/alpha/Makefile.target
+@@ -5,7 +5,7 @@
+ ALPHA_SRC=$(SRC_PATH)/tests/tcg/alpha
+ VPATH+=$(ALPHA_SRC)
  
--#if defined(TARGET_NR_fsopen) && defined(NR_fsopen)
-+#if defined(TARGET_NR_fsopen) && defined(__NR_fsopen)
- #define __NR_sys_fsopen __NR_fsopen
- _syscall2(int, sys_fsopen, const char *, fs_name, unsigned int, flags);
- #define __NR_sys_fsconfig __NR_fsconfig
-@@ -14485,7 +14485,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         return do_map_shadow_stack(cpu_env, arg1, arg2, arg3);
- #endif
+-ALPHA_TESTS=hello-alpha test-cond test-cmov test-ovf test-cvttq
++ALPHA_TESTS=hello-alpha test-cond test-cmov test-ovf test-cvttq test-fp-ieee
+ TESTS+=$(ALPHA_TESTS)
  
--#if defined(TARGET_NR_fsopen) && defined(NR_fsopen)
-+#if defined(TARGET_NR_fsopen) && defined(__NR_fsopen)
-     case TARGET_NR_fsopen:
-         {
-             p = lock_user_string(arg1);
+ test-cmov: EXTRA_CFLAGS=-DTEST_CMOV
+diff --git ./tests/tcg/alpha/test-fp-ieee.c ./tests/tcg/alpha/test-fp-ieee.c
+new file mode 100644
+index 0000000000..caeeaea7a3
+--- /dev/null
++++ ./tests/tcg/alpha/test-fp-ieee.c
+@@ -0,0 +1,173 @@
++/*
++ * Test IEEE T-floating (double) arithmetic exception behavior.
++ */
++#include <signal.h>
++#include <setjmp.h>
++#include <stdio.h>
++
++#define FPCR_INED       (1UL << 62)
++#define FPCR_UNFD       (1UL << 61)
++#define FPCR_DYN_NORMAL (2UL << 58)
++#define FPCR_IOV        (1UL << 57)
++#define FPCR_INE        (1UL << 56)
++#define FPCR_UNF        (1UL << 55)
++#define FPCR_OVF        (1UL << 54)
++#define FPCR_DZE        (1UL << 53)
++#define FPCR_INV        (1UL << 52)
++#define FPCR_OVFD       (1UL << 51)
++#define FPCR_DZED       (1UL << 50)
++#define FPCR_INVD       (1UL << 49)
++#define FPCR_STATUS_MASK (FPCR_IOV | FPCR_INE | FPCR_UNF \
++                          | FPCR_OVF | FPCR_DZE | FPCR_INV)
++
++static long run_addt_su(long *exc_out, double a, double b)
++{
++    unsigned long reset = FPCR_INED | FPCR_UNFD | FPCR_OVFD | FPCR_DZED
++                          | FPCR_INVD | FPCR_DYN_NORMAL;
++    double r;
++    long e;
++
++    asm ("excb\n\t"
++         "mt_fpcr %4\n\t"
++         "excb\n\t"
++         "addt/su %2,%3,%0\n\t"
++         "excb\n\t"
++         "mf_fpcr %1\n\t"
++         "excb\n\t"
++         : "=f"(r), "=f"(e)
++         : "f"(a), "f"(b), "f"(reset));
++
++    *exc_out = e & FPCR_STATUS_MASK;
++    long ri;
++    __builtin_memcpy(&ri, &r, 8);
++    return ri;
++}
++
++static long run_mult_su(long *exc_out, double a, double b)
++{
++    unsigned long reset = FPCR_INED | FPCR_UNFD | FPCR_OVFD | FPCR_DZED
++                          | FPCR_INVD | FPCR_DYN_NORMAL;
++    double r;
++    long e;
++
++    asm ("excb\n\t"
++         "mt_fpcr %4\n\t"
++         "excb\n\t"
++         "mult/su %2,%3,%0\n\t"
++         "excb\n\t"
++         "mf_fpcr %1\n\t"
++         "excb\n\t"
++         : "=f"(r), "=f"(e)
++         : "f"(a), "f"(b), "f"(reset));
++
++    *exc_out = e & FPCR_STATUS_MASK;
++    long ri;
++    __builtin_memcpy(&ri, &r, 8);
++    return ri;
++}
++
++static sigjmp_buf jmpbuf;
++static volatile int got_sigfpe;
++
++static void sigfpe_handler(int sig)
++{
++    got_sigfpe = 1;
++    siglongjmp(jmpbuf, 1);
++}
++
++static int test_bare_inf_add_finite(void)
++{
++    double a = __builtin_inf();
++    double b = 1.0;
++    double r = 0.0;
++
++    got_sigfpe = 0;
++    signal(SIGFPE, sigfpe_handler);
++    if (sigsetjmp(jmpbuf, 1) == 0) {
++        asm volatile ("addt %1,%2,%0" : "=f"(r) : "f"(a), "f"(b));
++    }
++    signal(SIGFPE, SIG_DFL);
++
++    if (got_sigfpe) {
++        printf("FAIL bare addt Inf+1.0: spurious SIGFPE\n");
++        return 1;
++    }
++    unsigned long ri;
++    __builtin_memcpy(&ri, &r, 8);
++    if (ri != 0x7ff0000000000000ul) {
++        printf("FAIL bare addt Inf+1.0: result %016lx (expected 7ff0000000000000)\n", ri);
++        return 1;
++    }
++    return 0;
++}
++
++static int test_su_inf_add_finite(void)
++{
++    double a = __builtin_inf();
++    double b = 1.0;
++    double r = 0.0;
++
++    got_sigfpe = 0;
++    signal(SIGFPE, sigfpe_handler);
++    if (sigsetjmp(jmpbuf, 1) == 0) {
++        asm volatile ("addt/su %1,%2,%0" : "=f"(r) : "f"(a), "f"(b));
++    }
++    signal(SIGFPE, SIG_DFL);
++
++    if (got_sigfpe) {
++        printf("FAIL addt/su Inf+1.0: spurious SIGFPE\n");
++        return 1;
++    }
++    unsigned long ri;
++    __builtin_memcpy(&ri, &r, 8);
++    if (ri != 0x7ff0000000000000ul) {
++        printf("FAIL addt/su Inf+1.0: result %016lx (expected 7ff0000000000000)\n", ri);
++        return 1;
++    }
++    return 0;
++}
++
++int main(void)
++{
++    static const struct {
++        double a, b;
++        long r;           /* expected result bit pattern; 0 when result is NaN */
++        long e;           /* expected FPCR exception bits */
++        long (*func)(long *, double, double);
++    } T[] = {
++        /* addt/su: Inf + finite = Inf, no exception */
++        { __builtin_inf(),  1.0,             0x7ff0000000000000l, 0,        run_addt_su },
++        /* addt/su: Inf + Inf = Inf, no exception */
++        { __builtin_inf(),  __builtin_inf(), 0x7ff0000000000000l, 0,        run_addt_su },
++        /* addt/su: Inf + (-Inf) = NaN, invalid operation */
++        { __builtin_inf(), -__builtin_inf(), 0,                   FPCR_INV, run_addt_su },
++        /* mult/su: Inf * finite = Inf, no exception */
++        { __builtin_inf(),  2.0,             0x7ff0000000000000l, 0,        run_mult_su },
++        /* mult/su: 0 * Inf = NaN, invalid operation */
++        { 0.0,              __builtin_inf(), 0,                   FPCR_INV, run_mult_su },
++    };
++
++    int i, err = 0;
++
++    err |= test_bare_inf_add_finite();
++    err |= test_su_inf_add_finite();
++
++    for (i = 0; i < sizeof(T) / sizeof(T[0]); i++) {
++        long e, r = T[i].func(&e, T[i].a, T[i].b);
++
++        /* NaN payload is implementation-defined; skip result check. */
++        int result_ok = (T[i].e & FPCR_INV) ? 1 : (r == T[i].r);
++        if (!result_ok || e != T[i].e) {
++            printf("Fail %a %a: expect (%016lx : %04lx) got (%016lx : %04lx)\n",
++                   T[i].a, T[i].b,
++                   T[i].r, T[i].e >> 48,
++                   r, e >> 48);
++            err = 1;
++        }
++    }
++
++    if (!err) {
++        puts("OK");
++    }
++    return err;
++}
 -- 
 2.54.0
 
