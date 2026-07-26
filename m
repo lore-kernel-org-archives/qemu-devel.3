@@ -4,87 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A671BC531F9
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 08:09:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0312C531CC
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 08:25:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wntuR-0006yr-Ml; Sun, 26 Jul 2026 04:08:31 -0400
+	id 1wnuAb-0001mN-6G; Sun, 26 Jul 2026 04:25:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ahshehab24@gmail.com>)
- id 1wntuP-0006wq-OM
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 04:08:29 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ahshehab24@gmail.com>)
- id 1wntuN-0007Dy-NW
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 04:08:29 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-476a130c138so1735086f8f.0
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 01:08:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wnuAZ-0001lo-U1
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 04:25:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wnuAX-0000Dh-MI
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 04:25:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785054307;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=59Uybs0g6O/CDfAjukMQvmYRMAOMU/3wHIKQ8fqpR7U=;
+ b=S0C7D8h84Vlyq+10ZEhze9pMJvEuYqU31gN2eoItpnt6SWtco9BvtASS7+oDJnDgPskdTD
+ +tRkRfVfSZC3vxNu+FU4DrfSPFObHub7DjbbNDZS+jc7fYa4uvwiLymColqHFPRzUHwYeP
+ Bm4mMt9Q4wkIZ5mFsijvajxp+CKV5FQ=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-459-r7gL70pWP4iZIBhCSsK_Gw-1; Sun, 26 Jul 2026 04:25:05 -0400
+X-MC-Unique: r7gL70pWP4iZIBhCSsK_Gw-1
+X-Mimecast-MFC-AGG-ID: r7gL70pWP4iZIBhCSsK_Gw_1785054304
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-2cca3673560so32112265ad.1
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 01:25:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785054304; cv=none;
+ d=google.com; s=arc-20260327;
+ b=jvvO1AMA4iejtKUllT0WRNlxNiZTP8Je1VpCCJuem6DQmkgZNDrYYPkeUfRLBVpVoV
+ 20m79Q7ov3HrBHhTdAtqdedmOzIqZxhwAQ3+5x5HnEeJvbsBx0uwVTAySPzfX2Kl1ATE
+ J8kF2gyN1hEuQJa86lFB3CocTne4MCIMNIDn+w+u/80VpmnjjBGHw09IzT+OpGPbAr2I
+ CFNeS1QydwQaK1ITQ+GlrsSSEhRjdhZHIU9bR01zkteX0/zNK9F8NmiALdwF5JD7Xdfj
+ DtGPt/utnZ3yoJlpm1tnaAm3rksj6ZAQl6MV4UB+nNa/op8KVcMuqwebF8YTHQ64KooM
+ XWbg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=59Uybs0g6O/CDfAjukMQvmYRMAOMU/3wHIKQ8fqpR7U=;
+ fh=odcGUGGhxK45HNuOmghblDVi8aACbtIGjUKVKZXP2tw=;
+ b=Youa77WsdtCVVWrePfIp5fNb0I00nptyucntHpGVeLbu3tMRbcQwdkcPMpcfCc6OZ6
+ wvJSYJtpH/RgVILudGSpK0YLFaPR8GzylT6LdUYGCdCh8c3kmQFYsIeoFSAfGB6nNt/y
+ jgzMOoDjgqm+wLAdzkDGdss7CDL/Q5q0mP/LG4XlHRq/3pAJwiWgwjLlxzpBdakvMKEQ
+ 6g6vfWQ8hCXBdPrJ6Rgb1juqM+fzJhpwCd/vDxsdzDxccgb1OteJ198vz2Z5zoh964NJ
+ y3Jm4Z5VT3ZA13UQtfwZO9Z/k9AYvopZPbaslunlNrGJJAeRYMwWncZU7qGf16bswStS
+ +tww==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785053305; x=1785658105; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=yBhga8BoD8LBHCthuK5Q4biQb8UnlAKLeKghegcYlOY=;
- b=NueBCi9+1iZfdpIiXPaOubLz8ZJGPvRuadrrPUmxUG/7Zna5xJC4kXxYoBGjO6uk5s
- s1bCebsn6rPUpXsuA4Qa8lLRVkaNlMjCQmy1MsZRvkUIRrmIy5aJrWdsZuXQFngUv9Ue
- g1sP2vqPEUJXTgyPYErdB0lbnIHv2rofEZPZNOJYRXQiTM7IRA3PJ+JWKpJZTlPpqPZj
- uyyzbzlPA0M9QO9DAbUJsFfUuo0MXIDl6wR6fsCU05eZD1dlvHl/HFzVDAtvcSgpfiIE
- zqGMcU9kN1w0zc/hz69cXAhmRAgj1jsv73BQmDhv5GRjThz20RK2Tr/vo7OwdAYpyhyr
- WAJQ==
+ d=redhat.com; s=google; t=1785054304; x=1785659104; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=59Uybs0g6O/CDfAjukMQvmYRMAOMU/3wHIKQ8fqpR7U=;
+ b=NBSaowMZhoqxiJkGFv1FlnAC6j3CR+Rg6baTy+7/aTaA65obRhj191RbeV/9WV54ae
+ TwLUiae859UbxaOebTiJyrVa833oBLaGoBfeTSS08TkKYN1w+GlvMo9v1QH4Dj1Qaowg
+ Ou5aOQUR8C54lgzZFbohHgUmZ9UXbGQhAsB5orDEkpUaeW/PHGwUkUA2/5q5S7I8UScj
+ aK1Q+Zv7em+numBMI8C5nKo+0QI157DHmqvHnoU9o3qYEcae75cQFrbdIu8NujbLNP1A
+ xpkOdq96Wb+ILd+kDL6VK6yHqiDQIaMC1J1mmbeVifyaq/QTSqZSaFL4YzUNZYbbA0Xl
+ z9IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785053305; x=1785658105;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=yBhga8BoD8LBHCthuK5Q4biQb8UnlAKLeKghegcYlOY=;
- b=nJhlea5iPZXiU7MDRMOoUeud6kzL07To2sM2yWjnXDfTwarKgY1TYZAZG/YrxgFuyb
- uAnXlCM67Pj0WWaET/qKjdhjVnbxLRTR/yFX1neQ64Nf1kV57lgkBx+3MXaVWZbvReiK
- fc1Q2V7iNhvnsTobfP7mddmHQRt1W+95ECmpi0oHmlpfnMlcTmqR0IRRq611CPXMg9bv
- ncetAINc0NgC+sI9xCY4tmL0pEIntP+CWS7tcDSfeuNEvn7yWS8bHVi5wKKRGG8rwIEj
- 757nDgvF2XDCMGWYw5rpfSFHWDYKOmNIus20/h+mmgF6emYzODYnDiIDCFmpzVHjkLad
- TuAw==
-X-Gm-Message-State: AOJu0YxtwhWFY3DudTzDw6htWsIq+KXHU56OLcvU8lxAX9QASoiUuQlB
- JpqWY1s3PSABp7ElnvZfa76eBmswteFshzaNN1LfVSUpBHHx7eICXNGtfZHcjGspJWI=
-X-Gm-Gg: AR+sD12BNcAE1NBIGAdhmtPj0ehZ6YkGs+WE/cE6Z4FmcGaGAAiVzHViYIDZc31l5+M
- z+jog1Yp3VmaYKDvFK4ZeJZduPaSwEXuUxsrhIjyYBcl39B7zYG+JUWDM5hspZjStjCL8p36FwI
- ztCNzmL+0XC9iroACsJKcpUKNPigmyvRVrceLphJBZgH0Yrr3yW7YJONESaPoFfhdAFkJtOCnjV
- r6lsCitnmf9qIlLnqGHven7nysrmDoS+NwgS6uYQfIIi+/vEySWBaWvZtJT1NcytX7RdSlz84PV
- aEYP4smCC4itWGyQ+MbxxnNQPOLWvCqFWEo6wnGhz3FYfX09hcXpPDPO+ixX5I/4FZYizcwcQBX
- CDLCI2sDYro/AniR2dMHCX2Vz8wSgNAsVv6ca9eD+LM8/8978EDzzM5D5Af/VWHJGsbgBwTo86e
- ou1OK8vOiaeZf78bfbHfXEzwPQ
-X-Received: by 2002:a05:6000:184e:b0:47f:9220:3d with SMTP id
- ffacd0b85a97d-47f9feaa5bbmr5342261f8f.58.1785053304801; 
- Sun, 26 Jul 2026 01:08:24 -0700 (PDT)
-Received: from 5520-BMRXQ93.eg.si-vision.com ([41.33.244.227])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c6dc25sm37896516f8f.33.2026.07.26.01.08.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 Jul 2026 01:08:24 -0700 (PDT)
-From: A-Shehab <ahshehab24@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, daniel.barboza@oss.qualcomm.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
- debug@rivosinc.com, A-Shehab <ahshehab24@gmail.com>
-Subject: [PATCH v2] target/riscv: allow menvcfg/henvcfg LPE and SSE bits on
- RV32
-Date: Sun, 26 Jul 2026 11:05:37 +0300
-Message-ID: <20260726080537.13913-1-ahshehab24@gmail.com>
-X-Mailer: git-send-email 2.53.0
+ d=1e100.net; s=20251104; t=1785054304; x=1785659104;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=59Uybs0g6O/CDfAjukMQvmYRMAOMU/3wHIKQ8fqpR7U=;
+ b=qQoP+6qfCm9Yqb21j5UUtJ9yV9skiZFObWmAEAQ4sYGihH2JacMa4jFVUlzVwdAiPc
+ 4yq7mAxidCCBh6lUO7kiecUeslATbwRk4h0KJmNGgU/Z1WPzLXlWMizcnjVo4D23suWg
+ Hd7oacYWOAX3PdNisNfzSOwLUBpH91N7lES+wKf9yoOJJ7kA4E0rmu/vZcB6rhYglLoO
+ ESKBusX6letCVFl/1Ix9+WnxKhadTpe3Sq2Pmh1ngbPdewjWumBhW5MJUoZ/q7q9vDWd
+ SHBIyA6wWmlM7gko45GXxZhKBbMjB66VG9EhXPgZzw0Pv9F7SYnezd68V/rD6tXHjJCd
+ GKkg==
+X-Gm-Message-State: AOJu0Yzhs/BOc1I4TRRaid67Nwbs+CgStb43RUYw3nDigvYeEJTlYvYC
+ NvO17nC3U6nLS4R4Z/BBgFWlpwcjl/QzyFmkh9EnXLt8ebZHpkPwOlPL7HLWcI/yb0NFg5mySS6
+ 0sfvnELH8KeVPm8XppNr+l20hOWp6Z/HWPmeklHcy378pbNpqAY6Wbl/6s1nmoZxSJG6Ovx44WK
+ hHLHtLlrLK/1Ms6IBtlsO5dafBb2j6Jsw=
+X-Gm-Gg: AR+sD10uaIqpuRfh134sDVlT3MVOYdS/egVSUkkQPLvL1RRo5PXiBr0s+fccfv+3Jom
+ mcUbLaHenBqky8So5UVqKRJ46d1bFIBnVcUfDM51+RODej9NWUbQ1kFDIJKI3iydYCIl9JKz/Y1
+ uuZpDWhcicVflza4tbI+prbGG3nOguViVsEycuzm4OQL33ENnYqNTDhtzri1kCpb9tVDScf09lf
+ t6kMY34nf36eULjT/QhL9tQFooLyefVI/FF5ql/Gg2hDokg0W6GxmAaPhroGhgXbemslxtHRQx1
+ fQ==
+X-Received: by 2002:a17:903:2f4d:b0:2cb:3f5b:6663 with SMTP id
+ d9443c01a7336-2cfde78b5ecmr43282335ad.11.1785054304159; 
+ Sun, 26 Jul 2026 01:25:04 -0700 (PDT)
+X-Received: by 2002:a17:903:2f4d:b0:2cb:3f5b:6663 with SMTP id
+ d9443c01a7336-2cfde78b5ecmr43282045ad.11.1785054303714; Sun, 26 Jul 2026
+ 01:25:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=ahshehab24@gmail.com; helo=mail-wr1-x42f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+References: <20260725-fix2-v1-0-5c9a6ce7b96a@redhat.com>
+ <20260725-fix2-v1-1-5c9a6ce7b96a@redhat.com>
+ <d6876e8f-1414-4e7d-b6e2-1b59a18e8288@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <d6876e8f-1414-4e7d-b6e2-1b59a18e8288@rsg.ci.i.u-tokyo.ac.jp>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Sun, 26 Jul 2026 12:24:52 +0400
+X-Gm-Features: AUfX_mxsuLpmI5MChTjzmAUkWas6IA0ZKyKEPoJZBwiBSb22LoL6dZfqqD3Ui-U
+Message-ID: <CAMxuvawR=TiF4r+wdVCDF3Hyu-ND9neFHjUEZn5_YnSbxweXhg@mail.gmail.com>
+Subject: Re: [PATCH 1/7] hw/display/virtio-gpu-rutabaga: zero-init capset info
+ response
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ "P. Berrange, Daniel" <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, 
+ Jonathan Cameron <jic23@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>, 
+ Zhao Liu <zhao1.liu@intel.com>, Roman Bolshakov <rbolshakov@ddn.com>, 
+ Phil Dennis-Jordan <phil@philjordan.eu>, Wei Liu <wei.liu@kernel.org>,
+ linux-cxl@vger.kernel.org, Brian Cain <brian.cain@oss.qualcomm.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Haotian Jiang <jianghaotian.sunday@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.419,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,114 +154,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Zicfilp landing-pad enable (LPE, bit 2) and Zicfiss shadow-stack
-enable (SSE, bit 3) controls live in the low 32 bits of menvcfg and
-henvcfg, and the CFI specification defines them for both RV32 and RV64.
+Hi
 
-QEMU only adds MENVCFG_LPE/MENVCFG_SSE (and the henvcfg equivalents) to
-the writable mask inside the "riscv_cpu_mxl(env) == MXL_RV64" block, so
-on RV32 these bits are silently dropped and the features cannot be
-enabled. This is inconsistent with write_senvcfg(), which already
-handles SENVCFG_LPE/SENVCFG_SSE regardless of MXLEN.
+On Sun, Jul 26, 2026 at 11:33=E2=80=AFAM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>
+> On 2026/07/25 23:00, Marc-Andr=C3=A9 Lureau wrote:
+> > rutabaga_cmd_get_capset_info() only fills in capset_id,
+> > capset_max_version and capset_max_size before sending the response to
+> > the guest. The remaining fields of struct virtio_gpu_resp_capset_info,
+> > including hdr.fence_id, hdr.ctx_id and hdr.ring_idx, are left with
+> > stack garbage and leaked to the guest, including host pointers useful
+> > for an ASLR bypass.
+> >
+> > Zero the response first, matching virgl_cmd_get_capset_info().
+> >
+> > Not a real risk thanks to -ftrivial-auto-var-init=3Dzero.
+>
+> GCC only added -ftrivial-auto-var-init=3Dzero in GCC 12, while QEMU still
+> supports GCC 10.4/11.
+>
 
-Hoist the LPE/SSE mask handling out of the RV64-only block in
-write_menvcfg() and write_henvcfg() so the bits become writable on RV32
-as well. The upper-half writers (write_menvcfgh/write_henvcfgh) are
-unaffected because these bits reside in the low 32 bits.
+Good point, may be we should update:
+https://patchew.org/QEMU/20260723094622.1515831-1-berrange@redhat.com/
 
-Reproducible on qemu-system-riscv32 -cpu rv32,zicfilp=true,zicfiss=true:
-an M-mode write of menvcfg.{LPE,SSE} reads back as zero, while the same
-program on rv64 keeps the bits set.
+ack otherwise?
 
-Fixes: 4923f672e3d7 ("target/riscv: Introduce elp state and enabling controls for zicfilp")
-Fixes: 8205bc127a83 ("target/riscv: introduce ssp and enabling controls for zicfiss")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4045
-Signed-off-by: A-Shehab <ahshehab24@gmail.com>
----
-v2: Rebase on current master; the file moved from target/riscv/csr.c to
-    target/riscv/tcg/csr.c (noted by Daniel Henrique Barboza). No
-    functional change.
-
-v1: https://lore.kernel.org/qemu-devel/20260719111749.23777-1-ahshehab24@gmail.com/
-
- target/riscv/tcg/csr.c | 45 +++++++++++++++++++++++++-----------------
- 1 file changed, 27 insertions(+), 18 deletions(-)
-
-diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-index 36f2004bc5..0182e4c408 100644
---- a/target/riscv/tcg/csr.c
-+++ b/target/riscv/tcg/csr.c
-@@ -3216,6 +3216,19 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
-                     MENVCFG_CBZE;
-     bool stce_changed = false;
- 
-+    /*
-+     * menvcfg.LPE (Zicfilp) and menvcfg.SSE (Zicfiss) reside in the low
-+     * 32 bits and are defined for both RV32 and RV64, so they must be
-+     * writable regardless of MXLEN.
-+     */
-+    if (cfg->ext_zicfilp) {
-+        mask |= MENVCFG_LPE;
-+    }
-+
-+    if (cfg->ext_zicfiss) {
-+        mask |= MENVCFG_SSE;
-+    }
-+
-     if (riscv_cpu_mxl(env) == MXL_RV64) {
-         mask |= (cfg->ext_svpbmt ? MENVCFG_PBMTE : 0) |
-                 (cfg->ext_sstc ? MENVCFG_STCE : 0) |
-@@ -3223,14 +3236,6 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
-                 (cfg->ext_svadu ? MENVCFG_ADUE : 0) |
-                 (cfg->ext_ssdbltrp ? MENVCFG_DTE : 0);
- 
--        if (env_archcpu(env)->cfg.ext_zicfilp) {
--            mask |= MENVCFG_LPE;
--        }
--
--        if (env_archcpu(env)->cfg.ext_zicfiss) {
--            mask |= MENVCFG_SSE;
--        }
--
-         /* Update PMM field only if the value is valid according to Zjpm v1.0 */
-         if (env_archcpu(env)->cfg.ext_smnpm &&
-             get_field(val, MENVCFG_PMM) != PMM_FIELD_RESERVED) {
-@@ -3378,20 +3383,24 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
-         return ret;
-     }
- 
-+    /*
-+     * henvcfg.LPE (Zicfilp) and henvcfg.SSE (Zicfiss) reside in the low
-+     * 32 bits and are defined for both RV32 and RV64, so they must be
-+     * writable regardless of MXLEN.
-+     */
-+    if (cfg->ext_zicfilp) {
-+        mask |= HENVCFG_LPE;
-+    }
-+
-+    /* H can light up SSE for VS only if HS had it from menvcfg */
-+    if (cfg->ext_zicfiss && get_field(env->menvcfg, MENVCFG_SSE)) {
-+        mask |= HENVCFG_SSE;
-+    }
-+
-     if (riscv_cpu_mxl(env) == MXL_RV64) {
-         mask |= env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE |
-                                 HENVCFG_DTE);
- 
--        if (env_archcpu(env)->cfg.ext_zicfilp) {
--            mask |= HENVCFG_LPE;
--        }
--
--        /* H can light up SSE for VS only if HS had it from menvcfg */
--        if (env_archcpu(env)->cfg.ext_zicfiss &&
--            get_field(env->menvcfg, MENVCFG_SSE)) {
--            mask |= HENVCFG_SSE;
--        }
--
-         /* Update PMM field only if the value is valid according to Zjpm v1.0 */
-         if (env_archcpu(env)->cfg.ext_ssnpm &&
-             get_field(val, HENVCFG_PMM) != PMM_FIELD_RESERVED) {
--- 
-2.53.0
+> Regards,
+> Akihiko Odaki
+>
+> >
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3609
+> > Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for gfx=
+stream")
+> > Reported-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > ---
+> >   hw/display/virtio-gpu-rutabaga.c | 2 ++
+> >   1 file changed, 2 insertions(+)
+> >
+> > diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-r=
+utabaga.c
+> > index 4d7d7b245929..95a19eed7eda 100644
+> > --- a/hw/display/virtio-gpu-rutabaga.c
+> > +++ b/hw/display/virtio-gpu-rutabaga.c
+> > @@ -555,6 +555,8 @@ rutabaga_cmd_get_capset_info(VirtIOGPU *g, struct v=
+irtio_gpu_ctrl_command *cmd)
+> >
+> >       VIRTIO_GPU_FILL_CMD(info);
+> >
+> > +    memset(&resp, 0, sizeof(resp));
+> > +
+> >       result =3D rutabaga_get_capset_info(vr->rutabaga, info.capset_ind=
+ex,
+> >                                         &resp.capset_id, &resp.capset_m=
+ax_version,
+> >                                         &resp.capset_max_size);
+> >
+>
 
 
