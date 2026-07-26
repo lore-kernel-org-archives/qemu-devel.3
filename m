@@ -4,103 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50540C531C9
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 17:15:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A035C531C9
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 17:45:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wo2R7-0007Bx-LN; Sun, 26 Jul 2026 13:14:50 -0400
+	id 1wo2u5-0004Sf-2U; Sun, 26 Jul 2026 13:44:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wo2Qx-0007BH-9K
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 13:14:39 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wo2Qu-0006V0-6w
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 13:14:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1785086069; bh=z18gRscikF207p6zoZddn2HcQJFdNna+1nrMv0fDO/M=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=XyAwLkif9lBjyNFdyPGUEnllE6i3srLIWwLN5Wl07lX9ruYdBhninFPtb/RlHdrhb
- 1kQijht5cLv8M/TK8FDB/BjE/mHOUFQJCryIkk0AXlom57FdonUE9XEUGILi5yhMUX
- +RuET8VvA4UEiC96nakQx00ZNGyqTnoTgfLTuEQSzm5+bRYqHgWhhNskYJqaXWwfa9
- 2vnx+5lNwKjQEhJHtcNZT7orm7WYMx6XLj1fQ9PeJ1CvAMTOUFp+xfA/up404UTdNv
- UPXd84nZgDZejgBbCnVPRK1KP9QpJeWRltyFn+bBsnQ7ktXSXeait+k/yjvGq1x2pZ
- E6kAlkslWNLOQ==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E83471C4E0B;
- Sun, 26 Jul 2026 20:14:29 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A26273F6AA4;
- Sun, 26 Jul 2026 20:14:30 +0300 (MSK)
-Message-ID: <0b2bf915-d2d5-4a21-8ee1-d11427476d40@tls.msk.ru>
-Date: Sun, 26 Jul 2026 20:14:17 +0300
+ (Exim 4.90_1) (envelope-from <anderson@allelesecurity.com>)
+ id 1wo2u3-0004S0-IO
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 13:44:43 -0400
+Received: from mail-vk1-xa35.google.com ([2607:f8b0:4864:20::a35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <anderson@allelesecurity.com>)
+ id 1wo2u1-0001fX-SX
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 13:44:43 -0400
+Received: by mail-vk1-xa35.google.com with SMTP id
+ 71dfb90a1353d-5bfb5e20a90so1228937e0c.2
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 10:44:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785087880; cv=none;
+ d=google.com; s=arc-20260327;
+ b=TZ1dEUgooeKKj+VgLD9VcWhm38Mj8Gg4h0oMdrnsfYFP/0oqB/yTRKvB6RV12xhWZx
+ e0FvT39SoIT51WZHPAyNo0vus0Z1A8Jz5MplJF4V/o6pQai7ZU1WCe924eFzZMm5B19H
+ Ag4ygh76rA7jip84UuYh8cDX8oPf1ag14awGKKrhrUpAY+G39GiJoE1TUzCWgtE2AgB3
+ UVeyep2FAEGkPTE0wg+U/6BG6rp0jM/6I69V1ia+5T0zKk0sCjDDCBt1xuv2hhbExtHS
+ g3xCtoB9hUDy+jd7mQFC3tlz97kCcxsCp7Ld9nryjWFHeVrywSCDplPpO7Syos3T7H/D
+ l+jA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=lBazFeGPDjya1ziFJmG/VIjSjBZuYkaa8woZCk5IgWU=;
+ fh=OOeWHJ/xqCQ/wRKDZ2GW2bb3k16C/567Xdpz2E+GssY=;
+ b=deDwv8WKIXPoAtlzt82CZf2/3Z+AznPuMkJnzvxXttWfe/QnXez8f/ITVaMLrm/853
+ axmmxAPanx6w8lhGkeRuSV6360c6McPuHQoVFrxfmTneKnQ8iAPc5EQjLtt53kzXPBG1
+ VGPHo+JJOAxbedzYDCHqAhxSKWrq1LZTMn4mnqGiSNB2WQLfRiwKOVY/Pcsz4qBw8spD
+ 25x23CiOt4B7l6XSvHoGqGCfXlUmm0Ji02wkAqVyqN+uTMW5nfsb+COnJ4yYxM/LdIrP
+ wDEAZaKGYwRymIiK4nfWzBFPXZEwB9JnMxXpM0EUpPsXHS6VR1NYmrKbwfyRZ2xPhtAx
+ bhYA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=allelesecurity.com; s=google; t=1785087880; x=1785692680; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=lBazFeGPDjya1ziFJmG/VIjSjBZuYkaa8woZCk5IgWU=;
+ b=eEpMs5rph6zd8WHDxuoY6kHAuDLhWgc2ICpIzbyC1SeEIGmC2jXnOjWTA29t1fM7LT
+ A+tjmP0VOqJI6ut88Oa5wD1QVLLa0C4vL2s+eZF3nuEtjlejx40q8mnIb59Nfr53Zq5t
+ lWmXw6ODLT4wXD1xkcFtkqGrUU3F2jGFejR2w=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785087880; x=1785692680;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=lBazFeGPDjya1ziFJmG/VIjSjBZuYkaa8woZCk5IgWU=;
+ b=Na8Hlup0hIdUpZ58Gx//ndqPXCWkF0TFGawp47MfsmTKJDQlFKmRw5+IJzilctGJRj
+ /BjwwDEpvR18YacRZgMZhdJtO42YDi2+5Tvln0V47p3Zl5kDt5t2r0xSbHZ79m3/A6+0
+ Hn7/A+HCCll0R2Z1bikWtq8L/8q7RGcrdOqgxM8X+5oc5V+SzRGLpmC3W0dT7oWa0X1c
+ An5YPeGUtCR0GrsJuoR6tpulng3dYsUGoWwkRH92mgpX5tM/kENkSq/qFT8Oc79yb4do
+ VhYfqcyUhjl7mvWM0Y4nc9+plijuy1qBo5gurEgdbvZGcrmOfitlAo9OZpD0LKUBSWST
+ So7Q==
+X-Gm-Message-State: AOJu0YyV++ncQtN4GkdbkcT7FXtehBqMLd57zSafS0o9KEYwQLzk5OOM
+ n6X0qFM28u3R2rqff3j3Rg6nDvOxTG0kjGIV+mf1JaWZZQ/O1oXSUSyAUWMn2YWbXBGEhXocsng
+ PHdoQOM2Oa/3JDH3SApm4bobCJ4t8UBUTXINl80tYPA==
+X-Gm-Gg: AR+sD136TL4sxcqU5uw7QWzdDUXTMvtZ+vcFZnUlzcxycsLPqHHJLtszEJxhJtUxUkB
+ /EA4NQD3zpTUShP009dwWAbwjJ+Yt+aXPcOurIQeugJYETMgy3XVuelaLloXwJfNXs+StuPt94+
+ Jze7nYn5+DDsemimYvqjqHgvH6u2Z/LEqwGyNn95Tux1D7aienHUb021wot3tp6YcJN9LW54q7w
+ DYKRKbXk+bnxv6EX9suOF8ZGfJvEJ/WcYC0O3QIN1kmTrUCmq5iRQHO3jMMpUNT
+X-Received: by 2002:a05:6122:e146:b0:5c2:c0de:d291 with SMTP id
+ 71dfb90a1353d-5c306d29141mr2758869e0c.9.1785087880421; Sun, 26 Jul 2026
+ 10:44:40 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] ui/vnc: fix OOB write in vnc_refresh_lossy_rect
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20260706-fix-v1-0-4b83a70e9f3b@redhat.com>
- <20260706-fix-v1-2-4b83a70e9f3b@redhat.com>
- <f83491f5-6ef7-45ba-bb84-26341835cb25@tls.msk.ru>
- <CAMxuvaxUWc=Qr9pQQ6wW6XnAzp4mf77aYpcFuXvret1KL_W9kA@mail.gmail.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <CAMxuvaxUWc=Qr9pQQ6wW6XnAzp4mf77aYpcFuXvret1KL_W9kA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20260602140348.774203-1-anderson@allelesecurity.com>
+ <20260602140348.774203-2-anderson@allelesecurity.com>
+ <amHVTvcDeQXdrIbg@intel.com>
+In-Reply-To: <amHVTvcDeQXdrIbg@intel.com>
+From: Anderson Nascimento <anderson@allelesecurity.com>
+Date: Sun, 26 Jul 2026 14:44:29 -0300
+X-Gm-Features: AUfX_mwEM1sAVwfqQ9KFEyeMfXQrvaiScXIYhW_fw1yntHE0S9k3iwwVP-VnFrA
+Message-ID: <CAPhRvkze0VmWDZb2+w0ZiDvT6rzkb6j3+sZe_tUM3p1-DRrk0Q@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] target/i386: Add support for KVM APERF/MPERF
+ passthrough
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com, 
+ mtosatti@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a35;
+ envelope-from=anderson@allelesecurity.com; helo=mail-vk1-xa35.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,37 +116,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/26/26 20:07, Marc-André Lureau wrote:
-...>> Unfortunately this (additional) fix does not mention the
->> previous fix, so there's some confusion about which commit
->> actually fixed this issue.  It looks like the first fix was
->> incomplete and this additional fix were needed.
-> 
-> That's correct, we reused the same CVE
-> 
-> Daniel P. Berrangé said on the issue:
-> We didn't release master yet. As long as we also didn't release any
-> stable branches that claimed to fix it, we could re-use it IMHO.
+Hi Zhao,
 
-Heh.  This is exactly what actually happened - there were
-2 stable releases on Jun-25 (v10.0.11 and v11.0.2) which
-contained the first half.  Now there are 2 more stable
-releases from Jul-24 which contains the second half.
+On Thu, Jul 23, 2026 at 5:48=E2=80=AFAM Zhao Liu <zhao1.liu@intel.com> wrot=
+e:
+>
+> Hi Anderson,
+>
+> > +    [FEAT_6_ECX] =3D {
+> > +        .type =3D CPUID_FEATURE_WORD,
+> > +        .feat_names =3D {
+> > +            "aperfmperf", NULL, NULL, NULL,
+> > +            NULL, NULL, NULL, NULL,
+> > +            NULL, NULL, NULL, NULL,
+> > +            NULL, NULL, NULL, NULL,
+> > +            NULL, NULL, NULL, NULL,
+> > +            NULL, NULL, NULL, NULL,
+> > +            NULL, NULL, NULL, NULL,
+> > +            NULL, NULL, NULL, NULL,
+> > +        },
+> > +        .cpuid =3D { .eax =3D 6, .reg =3D R_ECX, },
+> > +        .tcg_features =3D 0,
+> > +        .unmigratable_flags =3D CPUID_6_ECX_APERFMPERF,
+>
+> Considerring APER/MPERF passthrough have many specific restrictions
+> (listed in KVM's api.rst, "7.13 KVM_CAP_X86_DISABLE_EXITS"), I think
+> we also need not to enable it by default for max/host CPUs:
+>
+> .no_autoenable_flags =3D CPUID_6_ECX_APERFMPERF
+>
+> This indicates that users must manually enable this feature, and it is
+> assumed that they are aware of its limitations and have implemented
+> appropriate policies (such as no preemption, vCPU affinity, no idle or
+> C state in the guest, etc.).
+>
 
-Unfortunately I haven't noticed this duplicated CVE#,
-or else I'd add a note to the second half in the stable
-pick-ups.
+It makes sense! I didn't know that, thanks.
 
-I know you don't like me rushing things to the stable
-series, and this is an example why this might be bad.
-Fortunately this is not a regression, at least.  And
-usually security fixes come in faster anyway.  Ohwell..
-I'm sorry to disappoint you further.
+> > +    },
+>
+> ...
+>
+> >  /* CPUID[0x80000007].EDX flags: */
+> >  #define CPUID_APM_INVTSC       (1U << 8)
+> > diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> > index 9e352882c8..ca722ff9e9 100644
+> > --- a/target/i386/kvm/kvm.c
+> > +++ b/target/i386/kvm/kvm.c
+> > @@ -498,6 +498,8 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, =
+uint32_t function,
+> >          }
+> >      } else if (function =3D=3D 6 && reg =3D=3D R_EAX) {
+> >          ret |=3D CPUID_6_EAX_ARAT; /* safe to allow because of emulate=
+d APIC */
+> > +    } else if (function =3D=3D 6 && reg =3D=3D R_ECX) {
+> > +        ret |=3D CPUID_6_ECX_APERFMPERF;
+>
+> if we bind this feature to cpu-pm, then we should check enable_cpu_pm
+> before setting CPUID. Otherwise, if this CPUID is present but
+> cpu-pm=3Doff, Guest may try to access related MSRs and triggers #GP.
+>
+>         if (enable_cpu_pm) {
+>             int disable_exits =3D kvm_check_extension(s,
+>                                                     KVM_CAP_X86_DISABLE_E=
+XITS);
+>
+>             if (disable_exits & KVM_X86_DISABLE_EXITS_APERFMPERF) {
+>                 ret |=3D CPUID_6_ECX_APERFMPERF;
+>             }
+>         }
+>
+> But on the other hande, maybe we don't need to bind this feature to
+> cpu-pm?
+>
+> For example, a compute-intensive workload doesn't allow the Guest to
+> enter idle, then it still seems make sense to estimate performance
+> using aperf and mperf?
+>
 
-Anyway, thank you for the clarification - everything's
-clear now, the confusion is no-more.
+I had put it under the cpu-pm option because it seemed like the
+easiest step to enable that feature, as it already talks to KVM to do
+a few pass-throughs (MWAIT, PAUSE, and so on). But re-checking this
+now, I agree that the aperf/mperf feature doesn't have much to do with
+the other cpu-pm options. I'll try a v3 with it as a standalone
+feature as soon as possible. If there's anything else, please let me
+know. Thanks again!
 
-Thank you!
+> Thanks,
+> Zhao
+>
 
-/mjt
+--
+Anderson Nascimento
+Allele Security Intelligence
+https://www.allelesecurity.com
 
