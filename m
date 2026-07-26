@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7D4FC531FA
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 00:54:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A607C531D0
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 00:55:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnn7c-00036X-RN; Sat, 25 Jul 2026 20:53:40 -0400
+	id 1wnn9U-0003i9-4b; Sat, 25 Jul 2026 20:55:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wnn7a-000369-1c
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 20:53:39 -0400
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ id 1wnn9R-0003hO-Na
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 20:55:33 -0400
+Received: from mail-qk1-x72d.google.com ([2607:f8b0:4864:20::72d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wnn7Y-0007Cz-EG
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 20:53:37 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-66804667af2so1131998d50.0
- for <qemu-devel@nongnu.org>; Sat, 25 Jul 2026 17:53:35 -0700 (PDT)
+ id 1wnn9Q-0007ZL-3w
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 20:55:33 -0400
+Received: by mail-qk1-x72d.google.com with SMTP id
+ af79cd13be357-92e533aacf2so83204485a.2
+ for <qemu-devel@nongnu.org>; Sat, 25 Jul 2026 17:55:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785027215; x=1785632015; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1785027331; x=1785632131; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
  bh=pVwlgtmgEc3axuYS6KKLOPY8UyUmHfC6AB1k/zPj/1o=;
- b=aRbPvq2xDmNjDuc4PpgOFXvtg4xz0dPGRcVdrGEsVuSWgxHN6+HR6vpFw7IEsPAHWH
- lsZqFuH8rVQARAaQtKSqChJHBGflkGwvAf07N2KunnYQYhJgwxcDViod6yNd329pURtG
- 66FyG9CsElZ9xYyqbgeQehtThdZ2k+m2Ldp8TLIwY2PxUayYCuIYRKDghM7LS9nJo57V
- OsN9mOJqfQBIp8H+nBuQ2/3OUBTPOVZ/SmbBLDSrblcI4IetuPvt2+oZi8kKnY62j6cE
- 86c574/jyvOFY6Md/pTrcXj//qXuEry2QXkQkhEI5USQENIhoA25Ow+cABlQvc+SbMBs
- lBmA==
+ b=BxSpWb40E2gLCt5J9yD/LrFAaqyfRSMtWdI23Qo+aW2Kv0N0fYdfSRmwNQJCjmFleD
+ 49CBxPQSbT1adEXV/vUmJ35JRvIETuyql7wW1IcJYIA50y5bxB0S/XbJPh5KDCnUnqzP
+ osS2Z+Ut9mpnsF0TMP9TeYK/sFR1oIcdMO7Qr0B0wv+tavlYtyet/253zvlTgxtcquya
+ 0KVJPl57DbUwwOFL3bjfq6R/fVNHDmbiDl7qaThYsqsG9HEO6yU3aBtqqEBO9iFNoI7I
+ snPRfe6vWvhVjTpQS/4SStEq22XEOtaivd3Nqte+UqOtdvI32U6M3R8fexbXJnkTpVvl
+ wYYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785027215; x=1785632015;
+ d=1e100.net; s=20251104; t=1785027331; x=1785632131;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
  bh=pVwlgtmgEc3axuYS6KKLOPY8UyUmHfC6AB1k/zPj/1o=;
- b=EvZDOSUkONx0dcpQP/lBbUPUt/hRB0tT3fYijqeaOxJmvtXOhvbYDEh02PRrglxibf
- p1pKvEo4IdZgwLaGem45hJeEA1yrRrKZkOgf5jM45YJVEOpAZCE7d/dY11bbEv/br1pv
- mDVn8JKXWkfy/8sOQweN2I4TmYgxm9kal5xlYW97gH8A3cXyL2YY23a9JfsBKGnFDd5X
- A2sTnHkFhGLtUBazabOLtdabbiEASRAcErxMZMyhYaqY9c+/M+ykh+CGz8tv7KWuZ06A
- TTMaOJyJJ9/n9OSIzNqptVDMCP+DRkNGA18PEt8iRVAuLWeRwLRBl1hdW2EgBAiJj/rK
- qBlQ==
-X-Gm-Message-State: AOJu0YwcIQFllA6GnqCSdsnerLsjjZjJc8VVeRa6oi2TWgTiPBmOHitq
- Fw7r+yMkb++bw0MY2RVEsL7iZ6/6a9lXkA/vTGhHudnlOU0jMDw/FXIia/t0mA==
-X-Gm-Gg: AR+sD11j+vB6EvXYkBd1BMkT2JG9H7qpt9KVvhoEB5VosDmH8tZ3gA5CqLWZwK8NYGT
- LTO+WhRDvSPZA7t5V+G11/vOjnwt1RqDI++eap/18PrZ87Ziz1vkLTuNUhgGjYdD7A11VeE0Wwy
- fL0sesTwZoLdIHghLvWKtUwahrEKfYSEFY1dHIBXaGBffztYfFIZMX/Ro84QAEgF1H7afNYdl6A
- 3S+x+fDZA7ksCf4hskotI40AMac9wEwO+rfVx639n5DzM9JxClAExBdr6VBgSBOctFvOZ+j5P3F
- +pkd5Um1hUO5WyA8xGrkfdfnj+OGPryxvIjRkA0+wVO3lK5F0H+DezseLGYQVoQsh3efEjUQ51v
- pIQoi/wGdD1MEBAFvu942V3Kj9UEeT1lNZghOirEJq6RFqS3R07POSaTmGc4N/uPnhLcYS2KaD/
- PiJlHLtbr/5MNj+g4LVqU/lyLYKIoWgGegtjzm/RnfG58qJx0aVcZNTA==
-X-Received: by 2002:a05:690e:4093:b0:668:11e1:1709 with SMTP id
- 956f58d0204a3-668c7b58223mr1238758d50.98.1785027214803; 
- Sat, 25 Jul 2026 17:53:34 -0700 (PDT)
+ b=NT74jaZ0xo714mjcVhBeDwSZlvZxOY/kd3uxiUmWwTJmJipDtSxkZ11ubbSwPtIUkm
+ X4tlSWyEF4ITiC8l0RvvADYQPxw/VScvy1MtEFzsyEu3Kw4Hr4/TTQAZ5+5C2HAhkCU8
+ 00NQFJCSLbokdmW8tg7U1wqYQhZOSmc4cjZoCKIWlvcGPu8YNd091PZ1rRMmEMdvyn35
+ /sNWtWoQrGUe2+dfGZq3NulJuCh3Lh7Gbbm4cp7ufnDr1Rr2MnsoOYvgs/vY2COcr5j7
+ sb5GD85IJwXyD5rU7Ld4O5nTdyolrtwFPy+2MOX7uZcIEI081YZpxkuNqJDoXHAllk/S
+ qm7A==
+X-Gm-Message-State: AOJu0YxnXo/6WQYiapSVxtzAJkZ7ZWcKjTgi8bOCDYy5EhVj9eVw1wKC
+ ZKDC32vZEbXzSRT6DV5hAZkyX5hzWZbMlt5JR8kixdBM0rXrCYO16qgZGCe1Hg==
+X-Gm-Gg: AR+sD11f7vT7KbCZ8h1WHohmtA1PPPjR6/lNt37rBGiud//smgDfQPLnFkEPuGXg5dg
+ r+5LCcVvlh9ap2ibB1QNuYd2t466embYH7B/j+xW8slzwCgs7aXDioHtxMeXM0rnMbBl3TObkAc
+ A7v5OMDchJEc+BszX7WaVqxk+ojAGTW60GwPKitQMmXvnwkfWwegrb1J21VprSwVh+B5uSn9QsR
+ O6rqaZLRY0La/AT4dCdXoh2JwBmGhU6MUsTWmCj9cG9sc93IqQvY2cXv05zI/R2JTzImfuYKEJo
+ UNTEqc9uG5YFpFYl51wz8UeJlhVUeG1742n/c6+rtI7Jrxt35Mt2dm2TYcarSg/ReJgLenOJAqP
+ s2huSZrLtuwL9fyy8Q13XBdUERovUBsSRq2hnRD4Egx6PIAJH1mr6ugI55QIXmiSxv6y18/xAyg
+ NaEvnpW3ZQna5M/bzTmwIKYU5Kz8UmVrPndWBoMpCQlVP+SRQZLpW2vg==
+X-Received: by 2002:a05:620a:2913:b0:92e:c116:bef1 with SMTP id
+ af79cd13be357-932df730002mr402730685a.78.1785027330825; 
+ Sat, 25 Jul 2026 17:55:30 -0700 (PDT)
 Received: from localhost (host05.distrikthotelips2.d.subnet.rcn.com.
  [207.96.107.85]) by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-668c6f696f7sm1373041d50.11.2026.07.25.17.53.32
+ af79cd13be357-932de1dcef6sm255457285a.0.2026.07.25.17.55.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 25 Jul 2026 17:53:33 -0700 (PDT)
+ Sat, 25 Jul 2026 17:55:30 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -70,13 +70,13 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Matt Turner <mattst88@gmail.com>
 Subject: [PATCH] linux-user: fix guards for the fsmount(2) syscall series
-Date: Sat, 25 Jul 2026 20:53:28 -0400
-Message-ID: <20260726005328.2511963-1-mattst88@gmail.com>
+Date: Sat, 25 Jul 2026 20:55:27 -0400
+Message-ID: <20260726005527.2513254-1-mattst88@gmail.com>
 X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=mattst88@gmail.com; helo=mail-yx1-xb136.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72d;
+ envelope-from=mattst88@gmail.com; helo=mail-qk1-x72d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
