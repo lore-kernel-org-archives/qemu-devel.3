@@ -4,62 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D463AC531C9
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 12:13:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4A44C531C9
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 12:29:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnxj8-0005In-24; Sun, 26 Jul 2026 08:13:06 -0400
+	id 1wnxyB-0000fI-HW; Sun, 26 Jul 2026 08:28:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wnxj2-0005IR-8R
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 08:13:00 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wnxiy-0000bp-Tn
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 08:13:00 -0400
-Received: from [192.168.10.145] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66QCCovB095596
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sun, 26 Jul 2026 21:12:50 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=sjl6dtlSnz6pbipWRE4dFYBIPRdzMzplHIEkRrb4YtM=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1785067971; v=1;
- b=k4leSQ4QnOqJwaRWunaBBptckvDJzmnSh6RFtjJbhnJ+bRZEHpHJXxP3TqEzviM9
- uOVaMIk5SquUCkU4S9YU+8VfjmikfSuLHjK1UvmsuJLSsMa7/plDD/3m6bw0Ezlk
- +ddCemaIDWJFsvqgxKNCFKZ9vpgd8in6d4UBgI4Q5xr2hulIlcTsyB6VAOCu7P2s
- l1qAPM5CsHyD/SYBiIuKbF2BGUWfG/IdrsnETKAJnNA4QVbPJZVaq4f2kKbZfSe/
- Pt7/0oGKx3KIfLJWyUe2hWCaaKxY0TH/ji88OJvRBEM/7kQG9+KtdpgubhJr5Y1u
- 6Pnngxh6OIQxwP3SALI+kg==
-Message-ID: <a68ce753-da97-470f-b1df-4baf53079b54@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sun, 26 Jul 2026 21:12:50 +0900
+ (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
+ id 1wnxy9-0000dJ-3f
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 08:28:37 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
+ id 1wnxy4-0002tI-M8
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 08:28:36 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-848d21bbaffso1927561b3a.0
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 05:28:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785068908; x=1785673708; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=g/XAcSm17QqKQ9ETpqNQkH3Hsms2HSSgWJglT/dAeR0=;
+ b=qGwvbEoOvjwKT70A1wiISoYhv7o6G4IETgCSMfLrmcGoqn88EPIUR/RSVX2G/U6+Cv
+ 8cHviXpKhW+QZPIlHK5eGoXwZq/z5uig3mREaZqBbX7LxDgL8K0EAJ39+6k65eiJYM6+
+ +t7kxCYf3lE9sOpcg9cpqie1TIY1mZWmtacsBfScc2kVWpKCfyWHrgRMPdJ1YWw8qLvz
+ r8QeeVmhQut1oDf4wOETQinybxZY+2JkCWoOIZuhT5ForAPB3hHzoMNAIfkyJ7GdDCww
+ ZPKcK4um1KQqkmoioez2QtKpJwxa3OC4x0TPEMidIfHkEyPrsu2oM4UHkRr2PW0lbwPg
+ fwKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785068908; x=1785673708;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=g/XAcSm17QqKQ9ETpqNQkH3Hsms2HSSgWJglT/dAeR0=;
+ b=Dl5OQfzppeB9hxrlPmt5XSr/am5DA0WJkLGBG91NNlhpVoAEoe0qVfSNxlt8qUmTXG
+ /HbkN5j//frU06UFC5TP0p+uOXLHsq79MyhLZHYGspM/duOAropsduVo4ZIEOi/FmtVY
+ cIh+9QpXoJXHIc0MGahOmBl/2B/9UGZnNAF7DrrL2Fa/Klaqv+5g+oJvsJzRtnWA8V1s
+ ++canEwMzwJ4s1YifZ+qA9ex/55ia1ItHoRQR1SNAIScs+CcXjxuLSxfwlT+HALIrRo7
+ 63V02dwaT9yuGUMYJ/cDvuYgS9WyO/vZWDf1bGp5pTybcKT25BaZ0IHW9RSTxHhrTTTV
+ brDQ==
+X-Gm-Message-State: AOJu0YwF/w0Z6whm3BaDkfMj3gxY1IG0NU/JTXq4Qoc3CInI+y4Vai75
+ fiYXC7tOr1xCC/GIZIBC3FgvM7N4x5EiL8cpsTjNHiBd7ijuU63XBz3hteXr66jYkKw=
+X-Gm-Gg: AR+sD12hjdtiY6OWKSLqlXaCECmAqUVnK1ExweNci3AoXZIcfdrgNzpjk5cVINRQR4/
+ wSX/BPqaxb8wSuNP8Jfrjsm0tlfHmeMjwZsINuyaNYJ6l8dVg4d0nZ/4fyadnRpbUWZDDM/CwZ7
+ L1r/kgMyzJ36ThfKgq/T5FGOP3wPbhviL2byHEr/kp2h4L8ILTMKdNvJD4F5o89trIccGVtHbIp
+ SlK7eO//F5zY6gTSCIMXppK0LDgOxd/xHkrnYZknlu2siVyuNAXdaTD26tSAoMRhwQ7HdeY/fGm
+ f2IqgrspviiB4P78UP5AoqAIcGa6PhSHz7+llppnZZHT7fQi88VmXwsTyung9TiBnCJJvm3V57X
+ u3p5urVcvUm+n/nMDtoOF8F4vVivdeZ1TkpCf6ma5iy14YclVljoZ3vBD6dqhTUQrxGT+b6a0fi
+ S843PwgEAXcMgaRErAf8od
+X-Received: by 2002:a05:6a00:b42:b0:84e:2722:5d9e with SMTP id
+ d2e1a72fcca58-84e593ff2e6mr3917400b3a.1.1785068908246; 
+ Sun, 26 Jul 2026 05:28:28 -0700 (PDT)
+Received: from localhost.localdomain ([111.201.4.215])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-84e533d13f0sm1836751b3a.35.2026.07.26.05.28.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 26 Jul 2026 05:28:27 -0700 (PDT)
+From: Kangjie Huang <flamboyant.h.01@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Kangjie Huang <flamboyant.h.01@gmail.com>, qemu-riscv@nongnu.org,
+ Chao Liu <chao.liu@processmission.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>
+Subject: [PATCH 00/11] hw/riscv: Add K230 SPI, QSPI, IDMA and XIP support
+Date: Sun, 26 Jul 2026 20:27:57 +0800
+Message-ID: <cover.1785064312.git.flamboyant.h.01@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] virtio-gpu: use g_try_malloc to avoid guest-triggered
- abort
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: akihiko.odaki@gmail.com, mst@redhat.com,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-References: <20260725192116.291685-1-marcandre.lureau@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260725192116.291685-1-marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=flamboyant.h.01@gmail.com; helo=mail-pf1-x433.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,219 +106,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/26 4:21, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> Use g_try_malloc/g_try_new0 for guest-controlled allocation, so failure
-> returns an error to the guest rather than crashing the host (glib
-> behaviour).
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3898
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
+Hi,
 
-This is:
+The k230 machine currently models the C908 core, CLINT, PLIC, watchdogs
+and UARTs, but cannot yet model the real boot path. This series adds the
+Kendryte K230 DesignWare SSI controllers and their machine integration
+as groundwork for full boot support, enabling U-Boot to boot from SPI
+NOR through standard PIO, QSPI IDMA, and the XIP read window.
 
-Based-on: <20260710134720.2317856-1-marcandre.lureau@redhat.com>
-("[PATCH] vhost-user-gpu: fix integer overflow in buffer allocation")
+K230 contains three SSI instances with different capabilities. The SDK
+numbers them according to the address map: spi0 is the SPI-OPI instance,
+while spi1 and spi2 are QSPI0 and QSPI1. The series models the register
+contract documented in the K230 Technical Reference Manual V0.3.1
+(2024-11-18), standard FIFO-backed SPI transfers, interrupt routing,
+Dual/Quad SDR transfers, SPI NOR attachment, synchronous internal DMA,
+the HI_SYS SSI_CTRL wrapper, and the spi0 XIP read window.
 
-This series lacks handling of NULL pointers returned for empty 
-allocations, yet another C quirk.
+The implementation is split so that the register model and machine
+integration come first, followed by the PIO data path, interrupt support,
+enhanced transfers, flash integration, IDMA, HI_SYS, and XIP. A single
+K230 SSI qtest binary grows with the series and exercises each layer when
+it becomes available.
 
->   contrib/vhost-user-gpu/vhost-user-gpu.c | 25 +++++++++++++++++--------
->   contrib/vhost-user-gpu/virgl.c          |  6 +++++-
->   contrib/vhost-user-gpu/vugbm.c          |  5 ++++-
->   hw/display/virtio-gpu-rutabaga.c        | 14 ++++++++++++--
->   hw/display/virtio-gpu-virgl.c           |  6 +++++-
->   hw/display/virtio-gpu.c                 |  5 ++++-
->   6 files changed, 47 insertions(+), 14 deletions(-)
-> 
-> diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/vhost-user-gpu/vhost-user-gpu.c
-> index ee9858c397ce..3d9c103ff88f 100644
-> --- a/contrib/vhost-user-gpu/vhost-user-gpu.c
-> +++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
-> @@ -487,7 +487,7 @@ vg_create_mapping_iov(VuGpu *g,
->                         struct virtio_gpu_ctrl_command *cmd,
->                         struct iovec **iov)
->   {
-> -    struct virtio_gpu_mem_entry *ents;
-> +    g_autofree struct virtio_gpu_mem_entry *ents = NULL;
->       size_t esize, s;
->       int i;
->   
-> @@ -498,17 +498,22 @@ vg_create_mapping_iov(VuGpu *g,
->       }
->   
->       esize = sizeof(*ents) * ab->nr_entries;
-> -    ents = g_malloc(esize);
-> +    ents = g_try_malloc(esize);
-> +    if (!ents) {
-> +        return -1;
-> +    }
+The final patch adds trace events covering register accesses (excluding
+DR, whose per-frame traffic would drown out everything else during U-Boot
+and Linux SPI NOR transfers), transaction boundaries, interrupt levels,
+IDMA start/completion/error, and XIP reads. The trace points are placed
+in a dedicated patch at the end of the series so that the functional
+patches stay focused on behaviour and the trace surface can be reviewed
+in one place. The events only observe model behaviour and do not change
+it.
 
-This will reject ne_entries == 0, which was previously accepted.
+Testing:
 
->       s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
->                      sizeof(*ab), ents, esize);
->       if (s != esize) {
->           g_critical("%s: command data size incorrect %zu vs %zu",
->                      __func__, s, esize);
-> -        g_free(ents);
->           return -1;
->       }
->   
-> -    *iov = g_new0(struct iovec, ab->nr_entries);
-> +    *iov = g_try_new0(struct iovec, ab->nr_entries);
-> +    if (!*iov) {
-> +        return -1;
-> +    }
->       for (i = 0; i < ab->nr_entries; i++) {
->           uint64_t len = ents[i].length;
->           (*iov)[i].iov_len = ents[i].length;
-> @@ -517,12 +522,10 @@ vg_create_mapping_iov(VuGpu *g,
->               g_critical("%s: resource %d element %d",
->                          __func__, ab->resource_id, i);
->               g_free(*iov);
-> -            g_free(ents);
->               *iov = NULL;
->               return -1;
->           }
->       }
-> -    g_free(ents);
->       return 0;
->   }
->   
-> @@ -828,8 +831,14 @@ vg_resource_flush(VuGpu *g,
->                   PIXMAN_FORMAT_BPP(pixman_image_get_format(res->image)) / 8;
->               size_t size = width * height * bpp;
->   
-> -            void *p = g_malloc(VHOST_USER_GPU_HDR_SIZE +
-> -                               sizeof(VhostUserGpuUpdate) + size);
-> +            void *p = g_try_malloc(VHOST_USER_GPU_HDR_SIZE +
-> +                                   sizeof(VhostUserGpuUpdate) + size);
-> +            if (!p) {
-> +                pixman_region_fini(&region);
-> +                pixman_region_fini(&finalregion);
-> +                cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-> +                break;
-> +            }
->               VhostUserGpuMsg *msg = p;
->               msg->request = VHOST_USER_GPU_UPDATE;
->               msg->size = sizeof(VhostUserGpuUpdate) + size;
-> diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
-> index 550fd03bf5c4..a9d22bb0fdd9 100644
-> --- a/contrib/vhost-user-gpu/virgl.c
-> +++ b/contrib/vhost-user-gpu/virgl.c
-> @@ -209,7 +209,11 @@ virgl_cmd_submit_3d(VuGpu *g,
->           return;
->       }
->   
-> -    buf = g_malloc(cs.size);
-> +    buf = g_try_malloc(cs.size);
-> +    if (!buf) {
-> +        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-> +        return;
-> +    }
+* Built qemu-system-riscv64 at every commit with the riscv64-softmmu
+  configuration.
+* Ran the cumulative K230 SSI qtest after every commit that provides the
+  test target. The final revision passes all ten scenarios:
+  register-contract, pio-data-path, interrupt-controller, plic-routing,
+  qspi-config, spi-nor, qspi-sdr, idma, hi-sys, and xip-read-window.
+* Standard SPI: U-Boot detected W25Q256, loaded OpenSBI, Linux, initrd,
+  and DTB with sf read, and reached the Linux initramfs shell.
+* Quad SPI: with spi0 configured for 4-bit transfers, U-Boot erased a
+  64 KiB sector, wrote and read back 256 bytes successfully, loaded all
+  boot payloads from QSPI flash, and reached the Linux initramfs shell.
+* XIP: U-Boot read the OpenSBI uImage header from 0xc0000000, verified
+  its checksum, and reached the Linux initramfs shell through bootm.
+* git diff --check reports no whitespace errors.
+* checkpatch reports no errors.
 
-Valid empty commands will be rejected and reported as 
-VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY.
+Kangjie Huang (11):
+  hw/ssi: Add K230 DesignWare SSI register model
+  hw/riscv/k230: Instantiate K230 SSI controllers
+  hw/ssi: Implement K230 SSI FIFO and standard PIO transfers
+  hw/ssi: Add K230 SSI interrupt controller
+  hw/riscv: Route K230 SSI IRQs to the PLIC
+  hw/ssi: Implement K230 enhanced QSPI transfers
+  hw/riscv/k230: Attach SPI NOR flash to spi0
+  hw/ssi: Implement K230 SSI internal DMA transfers
+  hw/misc: Add K230 HI_SYS SSI control
+  hw/ssi: Add K230 SSI XIP read window
+  hw/ssi: Add trace events for K230 DesignWare SSI
 
->       s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
->                      sizeof(cs), buf, cs.size);
->       if (s != cs.size) {
-> diff --git a/contrib/vhost-user-gpu/vugbm.c b/contrib/vhost-user-gpu/vugbm.c
-> index 710d54529779..c05e3fd31746 100644
-> --- a/contrib/vhost-user-gpu/vugbm.c
-> +++ b/contrib/vhost-user-gpu/vugbm.c
-> @@ -13,7 +13,10 @@
->   static bool
->   mem_alloc_bo(struct vugbm_buffer *buf)
->   {
-> -    buf->mmap = g_malloc((uint64_t)buf->width * buf->height * 4);
-> +    buf->mmap = g_try_malloc((uint64_t)buf->width * buf->height * 4);
-> +    if (!buf->mmap) {
-> +        return false;
-> +    }
+ docs/system/riscv/k230.rst     |    4 +
+ hw/misc/k230_hi_sys.c          |  169 +++
+ hw/misc/meson.build            |    1 +
+ hw/riscv/Kconfig               |    2 +
+ hw/riscv/k230.c                |  165 ++-
+ hw/ssi/Kconfig                 |    4 +
+ hw/ssi/k230_dw_ssi.c           | 1754 ++++++++++++++++++++++++++++++++
+ hw/ssi/meson.build             |    1 +
+ hw/ssi/trace-events            |   11 +
+ include/hw/misc/k230_hi_sys.h  |   55 +
+ include/hw/riscv/k230.h        |    9 +
+ include/hw/ssi/k230_dw_ssi.h   |  111 ++
+ tests/qtest/k230-dw-ssi-test.c |  917 +++++++++++++++++
+ tests/qtest/meson.build        |    4 +-
+ 14 files changed, 3191 insertions(+), 16 deletions(-)
+ create mode 100644 hw/misc/k230_hi_sys.c
+ create mode 100644 hw/ssi/k230_dw_ssi.c
+ create mode 100644 include/hw/misc/k230_hi_sys.h
+ create mode 100644 include/hw/ssi/k230_dw_ssi.h
+ create mode 100644 tests/qtest/k230-dw-ssi-test.c
 
-An empty dimension will be an error and reported as 
-VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY.
 
->       buf->stride = buf->width * 4;
->       return true;
->   }
-> diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-> index e28aad94eead..c2a0babd47bf 100644
-> --- a/hw/display/virtio-gpu-rutabaga.c
-> +++ b/hw/display/virtio-gpu-rutabaga.c
-> @@ -360,10 +360,20 @@ rutabaga_cmd_submit_3d(VirtIOGPU *g,
->           return;
->       }
->   
-> -    buf = g_new0(uint8_t, cs.size);
-> +    buf = g_try_new0(uint8_t, cs.size);
-> +    if (!buf) {
-> +        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-> +        return;
-> +    }
-
-Valid empty commands will be rejected and reported as 
-VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY.
-
->       s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
->                      sizeof(cs), buf, cs.size);
-> -    CHECK(s == cs.size, cmd);
-> +    if (s != cs.size) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: size mismatch (%zu/%u)\n",
-> +                      __func__, s, cs.size);
-> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-> +        return;
-> +    }
->   
->       rutabaga_cmd.ctx_id = cs.hdr.ctx_id;
->       rutabaga_cmd.cmd = buf;
-> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-> index d9e5b0110497..52f6dcf5d24a 100644
-> --- a/hw/display/virtio-gpu-virgl.c
-> +++ b/hw/display/virtio-gpu-virgl.c
-> @@ -615,7 +615,11 @@ static void virgl_cmd_submit_3d(VirtIOGPU *g,
->           return;
->       }
->   
-> -    buf = g_malloc(cs.size);
-> +    buf = g_try_malloc(cs.size);
-> +    if (!buf) {
-> +        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-> +        return;
-> +    }
-
-Valid empty commands will be rejected and reported as 
-VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY.
-
->       s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
->                      sizeof(cs), buf, cs.size);
->       if (s != cs.size) {
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index 4582444893bf..fed71131f346 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -892,7 +892,10 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
->       }
->   
->       esize = sizeof(*ents) * nr_entries;
-> -    ents = g_malloc(esize);
-> +    ents = g_try_malloc(esize);
-> +    if (!ents) {
-> +        return -1;
-> +    }
-
-A blob without the backing storage attached will be rejected.
-
-Regards,
-Akihiko Odaki
-
->       s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
->                      offset, ents, esize);
->       if (s != esize) {
-
+base-commit: f893c46c3931b3684d235d221bf8b7844ddbf1d7
+-- 
+2.43.0
 
