@@ -4,60 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75FDFC531CC
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 05:42:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3EC9C531FA
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 05:55:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnrcV-0001BS-My; Sun, 26 Jul 2026 01:41:53 -0400
+	id 1wnrpQ-0005Cn-4W; Sun, 26 Jul 2026 01:55:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wnrcL-0001AG-Fa
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 01:41:43 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wnrcG-0007IA-Bb
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 01:41:39 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66Q5fNid080542
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sun, 26 Jul 2026 14:41:23 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=d+zoJn2Kq0jcjePZeoZ51t6sm4OCpDbmMketADHJpls=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1785044483; v=1;
- b=Fh7PjRLlFyQxToPCby+zTtGjk7dk2AkaDE55N2rVfV9VwI6yCC4a285gEfCmEZ3c
- 7IQUTGjjOFYcHrXT98kgRHiAwwFapiiC6+B9xY80+Y3cH21w5d17uyxTWr2oImMm
- m8HsSdxrCIJRJ/s4ETD1M0/yF+O01TbFZD95uCkzb8qBLp54gUK6/O4FYWalo/Fk
- X3iYh8Otp4i3+gZ8OFF04JTeNoUfzT+UfT7wHZVBfS6sQsw2McGti6a4+0anq2xD
- ycGuap8K8WZuwQLvasnJ1yyVKCKRcZ+ReF2TdTXEDWyKxsZ5RNcyaRkTukKX1uvf
- FOvJzlxQvlGJK3b+MoQKYA==
-Message-ID: <42417ff6-5f79-4dac-b38d-ae4d772964aa@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sun, 26 Jul 2026 14:41:23 +0900
+ (Exim 4.90_1) (envelope-from <caojunze424@gmail.com>)
+ id 1wnrpO-0005CS-Qq
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 01:55:10 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <caojunze424@gmail.com>)
+ id 1wnrpN-0000VH-CI
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 01:55:10 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-cb20b0a387bso252469a12.0
+ for <qemu-devel@nongnu.org>; Sat, 25 Jul 2026 22:55:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785045308; x=1785650108; darn=nongnu.org;
+ h=message-id:date:references:in-reply-to:cc:to:from:subject
+ :content-transfer-encoding:content-type:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=xUM5ZXHD/oLWvFDoO+hHlLuSDfgeblRNtAYDQvQBs2Q=;
+ b=sgov9Tjv9Yj6zjeTZu0VLlIow6chFznAFOdob0xo0F8Pytj/FZ9Ipp57+/DrKLr21D
+ 83+rwPKizxLEnd6ygj33d0K4YcbxtOReDWn8bsk6a/FPbbUmo/3NUF/+MaXK1LBtPG3l
+ RDQDbfaj7za7hjmZmZdrAcZqfzop2xbXOMAbL5sePl7hfFWtX10XkfovMqFdtaBfDZhI
+ eNRpmoAn/m6q+IccDIeX92VSDfFIdooYDg44XM9n9MjbSjHFCoL9nearmExni9zc5kaC
+ UExagu5DPHtZW1UD7GNwAw1+ohqZKXbDt0z5GqAhKpF9StJ2Cg9tYUDSklOIyqLTNfSc
+ EUkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785045308; x=1785650108;
+ h=message-id:date:references:in-reply-to:cc:to:from:subject
+ :content-transfer-encoding:content-type:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=xUM5ZXHD/oLWvFDoO+hHlLuSDfgeblRNtAYDQvQBs2Q=;
+ b=cUfrLfYY8qg4n4+SBIQVF0Ow6Z5kmXH8wlc3l9umDiBH0EaXL40+WeMM2TQPkSrvs5
+ UlN2FkhPcSOsh49m+3wQcybCOK0tAlaUVzL/5lEMwQ3N6aegknG/GhHlOBw/PAi/xRo/
+ v1ZtFYFygcBpregQmnspL8Nzk2ks+zTf5sHgCCHVvhWZCJlCrLjOy1yHcawLk8TqUF2e
+ i/21fGXdAxzAIO+WQ5GIaReRPpNxjrt5ful7qN5SW8R6/Q1qjvtm57OzXRtvipMAERiR
+ 46OBcaxzcN0A3jp0GnFkJMTVTlOimG4YD1BRdEJmY9g98AtZF6zTutry4ceFb3NNWD52
+ pz9g==
+X-Gm-Message-State: AOJu0YxxzFvqeL84AW/Ck5vdLdeEZoBmvM7iSYLl5kkU32NEEm1PGv+s
+ VFd2meYudPN70AzZYzkKFr+oAQvF8181I/UlawWIJx04bPVGt0Ir2ghW
+X-Gm-Gg: AR+sD10rzX+MvEWjpAu+Y6bHDmzNv9sGknSs/mjPq9Woq3qDm114g8bYkwT83WlZuXZ
+ yvgL9JHGbLmPG888pjstz1nc5VNT4Kfb+paulIPpADWuSiCJUVzdBbjf2NYG1jKOQINEqCalZAt
+ N0KOgFcVuL4KU4+NiH+UGmvQdyFR9aEv+WZqr/7DWDAX51KJuYhXGJW2/9IRJP6nvGJFl+5DZ5z
+ 1SwNyJ6+b4eTRNtpl2dTj2xjwEJ7HHjMA2Yn3tYIBqx87+jU5OOhcDth8GvDZXFscrGSCaioOBT
+ Ye/n3ndz6k6+OrOWBe3QeX2ytfDtpzwq2JKb1y/XsfnQs77fVriQYtQXeSogK8Wn2r3VuszFNBq
+ gbmyvNt4Kfs5Ojbtxr+G+DbkF7yWXUM1vms1A3YmMayT12I1ASo4aqY0zMXrVBMXGise9zk9tsz
+ FgVmMXPRgOPA0zP9xAo7qJdTxikzMDNmk=
+X-Received: by 2002:a17:903:1843:b0:2cf:7dfa:7f56 with SMTP id
+ d9443c01a7336-2cfde792b83mr33341805ad.2.1785045307775; 
+ Sat, 25 Jul 2026 22:55:07 -0700 (PDT)
+Received: from DESKTOP-7HME356.localdomain ([38.34.7.236])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-314bc447f6bsm19200010eec.12.2026.07.25.22.55.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 25 Jul 2026 22:55:07 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/display/virtio-gpu: validate blob iov size
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: akihiko.odaki@gmail.com, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-References: <20260725111333.1659833-1-marcandre.lureau@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260725111333.1659833-1-marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH 3/7] tests/qtest: add test for K230 gsdma
+From: Junze Cao <caojunze424@gmail.com>
+To: Tao Ding <dingtao0430@163.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com, 
+ palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com, 
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com, 
+ chao.liu@processmission.com, farosas@suse.de, lvivier@redhat.com
+In-Reply-To: <20260721161335.73872-4-dingtao0430@163.com>
+References: <20260721161335.73872-1-dingtao0430@163.com>
+ <20260721161335.73872-4-dingtao0430@163.com>
+Date: Sun, 26 Jul 2026 13:54:57 +0800
+Message-Id: <178504529704.906524.5128555664916138089.b4-review@b4>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1785045302; l=848;
+ i=caojunze424@gmail.com; s=junze-gmail; h=from:subject:message-id;
+ bh=7MpjXv6qCPx3zXPy801wbS7gVS/EmtI8CjqujWNQ8dE=;
+ b=IDNd01fXNgki4OaXfz0inGNKABsxmcRzS+rWwxc5ClbiPA5jmN4gBKwSo2j0e1Ip8js8zvmVU
+ DxOqd0kPPR2DTicKxWVyWWwjuLfu3rh2zkEFERGpLnM4b0DAxj+/tB8
+X-Developer-Key: i=caojunze424@gmail.com; a=ed25519;
+ pk=lnFIWNw+6CoDrHFIKUJKdgrRbvgAbQGcEFiVsIigOJ8=
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=caojunze424@gmail.com; helo=mail-pg1-x536.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,99 +113,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/25 20:13, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> virtio_gpu_resource_create_blob() stores the guest-controlled blob_size
-> without checking it against the total size of the iov backing entries.
-> Since both values are independently guest-controlled, a malicious guest
-> can set blob_size much larger than the actual iov backing. Subsequent
-> SET_SCANOUT_BLOB checks bounds against the inflated blob_size, allowing
-> a pixman surface to be created over the undersized buffer. Any display
-> refresh then reads past the actual allocation, potentially crashing
-> QEMU or leaking host memory contents depending on the backing type.
-> 
-> Validate that the iov backing is at least as large as the declared
-> blob_size in create_blob (when nr_entries > 0, since the spec permits
-> deferred backing), attach_backing (when attaching to a blob resource),
-> and the blob migration load path.
-> 
-> Fixes: CVE-2026-66021
-> Fixes: e0933d91b1cd ("virtio-gpu: Add virtio_gpu_resource_create_blob")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3945
-> Reported-by: "sundayjiang(蒋浩天)" <sundayjiang@tencent.com>
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
-> v2:
->   - moved validation to attach_backing()
->   - added validation during blob_load()
->   - accept nr_entries == 0 during create_blob()
-> ---
->   hw/display/virtio-gpu.c | 28 ++++++++++++++++++++++++++++
->   1 file changed, 28 insertions(+)
-> 
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index eac039c3c366..211a529ed720 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -372,6 +372,17 @@ static void virtio_gpu_resource_create_blob(VirtIOGPU *g,
->           return;
->       }
->   
-> +    if (res->iov_cnt > 0 &&
-> +        iov_size(res->iov, res->iov_cnt) < res->blob_size) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: backing storage smaller than blob size\n",
-> +                      __func__);
-> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-> +        virtio_gpu_cleanup_mapping(g, res);
-> +        g_free(res);
-> +        return;
-> +    }
-> +
->       virtio_gpu_init_udmabuf(res);
->       QTAILQ_INSERT_HEAD(&g->reslist, res, next);
->   }
-> @@ -992,6 +1003,16 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
->           cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
->           return;
->       }
-> +
-> +    if (res->blob_size &&
+On Wed, 22 Jul 2026 00:13:31 +0800, Tao Ding <dingtao0430@163.com> wrote:
+> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> index 56ff860e21..1b13a777c9 100644
+> --- a/tests/qtest/meson.build
+> +++ b/tests/qtest/meson.build
+> @@ -297,7 +297,7 @@ qtests_riscv64 = ['riscv-csr-test'] + \
+>    (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
+>     config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
+>     ['iommu-riscv-test'] : []) + \
+> -  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test'] : [])
+> +  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test', 'k230-gsdma-test'] : [])
+>  
+>  qtests_hexagon = ['boot-serial-test']
+>  
 
-This check of res->blob_size is redundant.
+The new source files haven't been added to the MAINTAINERS.
+Please update.
+Other than that, there are no issues.
 
-> +        iov_size(res->iov, res->iov_cnt) < res->blob_size) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: backing storage smaller than blob size\n",
-> +                      __func__);
-> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-> +        virtio_gpu_cleanup_mapping(g, res);
-> +        return;
-> +    }
->   }
->   
->   static void
-> @@ -1489,6 +1510,13 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
->               res->iov[i].iov_len = qemu_get_be32(f);
->           }
->   
-> +        if (iov_size(res->iov, res->iov_cnt) < res->blob_size) {
-
-This check should be applied only when res->iov_cnt > 0, matching the 
-create path.
-
-Regards,
-Akihiko Odaki
-
-> +            g_free(res->addrs);
-> +            g_free(res->iov);
-> +            g_free(res);
-> +            return -EINVAL;
-> +        }
-> +
->           if (!virtio_gpu_load_restore_mapping(g, res)) {
->               g_free(res);
->               return -EINVAL;
+-- 
+Junze Cao <caojunze424@gmail.com>
 
 
