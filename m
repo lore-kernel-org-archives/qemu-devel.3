@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B83F0C53209
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 21:30:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D94E4C531C9
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 21:30:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wo6PN-0007Nc-22; Sun, 26 Jul 2026 17:29:17 -0400
+	id 1wo6QC-00082C-ND; Sun, 26 Jul 2026 17:30:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6PL-0007My-AI
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:29:15 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6Q7-0007v4-Oi
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:30:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6PJ-0004Dq-Pr
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:29:15 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6Q5-0004M8-SA
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:30:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785101353;
+ s=mimecast20190719; t=1785101401;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=xnGxe0jkG1lNShK18kxOqzqH8UEJGkWTyew4MAy9aKU=;
- b=Av6EeHCYOvr8M5LKGUcIH1wwaw1jEF3LFtnj3aXYoltTcPiJUrUWeD7qCa7wWIWM5qen+9
- WksnpKl7cXBLCgsn4wi8e+W9eLep2+x9jdJ2eRwdW88/1YnUooxCduL1+CEiRzZmdOhnMM
- /PVJfL9FYpVJLwVG2rvmd/B2K/G/RgA=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=myr2FfCTdeCEuGnVsWMQ9NAAavu++eEZIA6gyuM1QZg=;
+ b=GgJWfja1ZnzX46I3aaUNKu1nrWUEyjhRLabaPLYjaEnpDwAhgbmC6SzaDl0LSpN8EriD2y
+ 29aPA5jD6BGBnibC6YRzb2Kr9SoDnQ2F7qU6WVGmlm7Gj0AhaW/1vwibYAt3s7vgCiAszG
+ 2XpG9Pan1M7B+d9jODGOpayEyyYzXVM=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-39-2qRKdKmcO9y1UEt61NT9UQ-1; Sun, 26 Jul 2026 17:29:11 -0400
-X-MC-Unique: 2qRKdKmcO9y1UEt61NT9UQ-1
-X-Mimecast-MFC-AGG-ID: 2qRKdKmcO9y1UEt61NT9UQ_1785101350
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-472a798fc7cso1344596f8f.1
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 14:29:11 -0700 (PDT)
+ us-mta-473-GK_8LeQDM0uUAqeZgV-PXQ-1; Sun, 26 Jul 2026 17:29:59 -0400
+X-MC-Unique: GK_8LeQDM0uUAqeZgV-PXQ-1
+X-Mimecast-MFC-AGG-ID: GK_8LeQDM0uUAqeZgV-PXQ_1785101398
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-47f8580ed9eso1795586f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 14:29:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785101350; x=1785706150; darn=nongnu.org;
+ d=redhat.com; s=google; t=1785101398; x=1785706198; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=xnGxe0jkG1lNShK18kxOqzqH8UEJGkWTyew4MAy9aKU=;
- b=alIdRRakaq+43FFuCnAkgxtS4quolIf6wsymqF/OwstZQwq9BxAOdwqSoJhL18hkZE
- pfZCM+RMjgNDQyDNa8Y+jN6aEKRiqIJLHbqcXBIrUj1CmsPTF41Yftatz+ImPG7ByQnv
- 1fiRYnWZYp+9Phzs0MlE5W6fgF2g67xV0Ql2SSO6Kn7mcJX1MoH9TyQHUUV1b6foX5fb
- +uHsTyEzA0QKiq063jEgIh5oAkb/faLGm4rocRbd+UVQ0LCDU2TwDxFCk504YO+XyHEK
- SQ7d8GPhKEMBzLwMBgdosXP99MtcQ2iGx0TUBx5tHWAVndgqNHPqhJd9IdFqQyFH1tZX
- P3tA==
+ bh=myr2FfCTdeCEuGnVsWMQ9NAAavu++eEZIA6gyuM1QZg=;
+ b=dvBg2rVAvIlwpuNFCGeyUin1NPR3wnL3f2bbsTAtRviPWsX7qHHj3YqO8VeBSZWpJf
+ uvQGDqK07GhneTKrMKCs5D37Sc62YwcFO4HZK5uNoJvWh6IvhUeQLI5KzYka9Mw4rwXb
+ LzajUpUYmjLpnpMUEOck8tCaPcSRQzuEqC8ao9kavnUr9+j8Mjp6jUXgPAWvlTovv1kJ
+ bOAfaJQbNJXmE5hARcTkZeGuOlQKGpYrGGHZN5MZfUft9ssN9dnms1kalD5Hw/Fjio3X
+ XT1J/ZbV2eco5Qq1L555zMkmaRE9/LDkmggtisHDhBooDTnFeuuxQwQBLzl5gX+mUbTY
+ 6f+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785101350; x=1785706150;
+ d=1e100.net; s=20251104; t=1785101398; x=1785706198;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=xnGxe0jkG1lNShK18kxOqzqH8UEJGkWTyew4MAy9aKU=;
- b=hNOvpaZEI5Zztt2ah/tlCN1DPO4ZDGd0XFLzCJWzY60DrtiX0eD9IF3O/znTt5NV0o
- gycls0rjFD8HXhuXOD1HwzibxbAjQweITdGuBmhFCs9aRCEdsQswjlV65jF+AEy2JOHU
- FI+OLxqb5hkUzp25+nLVOD8reXl8pzqKq4rWFq2ewObzh08/gbeseFhhNCnDtXxXsaJT
- 4yWe5jrVkPko+cbVTxBLLsRyyVq7srJ6uIdft87dMBEa+/FxPdZ79z3nunEYSMAd9xbg
- jIhV5uric80FPZw1dxKLKllqmVAW+lxvvBJxVMot858Epj+NV8sxpGBMoeg0Hn1ls7hm
- 9sBA==
-X-Gm-Message-State: AOJu0YzdDgO7+GMH6IcDoCBQB1zWFDgWHZfJWO/OYEmzAS5wSyvFu+uR
- 1fQGXF6yES8E554RZIJgEfq+1VGR5sXp+nCIKfEELQmsfftgmnbFK9ik/4KR7yNjl5PYX43CmNo
- KW4uRLnJOPOG0Gcqf+Dnlm1AakwfShUsugU1wJRbApSokfereNMCJpQp0hGivFubAF4FGkpakKQ
- cJms+pNnbUmpDeD+sNoBNWGUGEFzUCgnd4IA==
-X-Gm-Gg: AR+sD11HT/ruTymxp8t+ZHJSnWYRoTLZ7yG8xxqnt+unkPfFm09YOE+EtN7x/HROfcX
- /kvCKQW5S7xdnGtT2C/YIM1KK7v17CyT1LLTAMBu9D+QnN44KvjuyudszVlFvHSgIhmzDvAmVUz
- NW0aJXAoY7QNqcdHi4UOedhjWGnHyT6MN3xK4/5GVxIoUDqQuPyjNWDHd2AyR2tiGTDargYrnBw
- aUbtBNc/lyBo4l0Ws1DaAOiM/moPlikQM4nNiCLDzcYs/ZnTXI7RNMUldnhCd9cwJEl15efIXjZ
- Hw1mnah45S+K3R1O2k4b/6kcHahY6NgfGF0L9JbO/NjrkoXpRV2fT7fnM+hAu4AV1cKKEOnRbsB
- ZIMl9v6Nj6fXLY51h0ghRIA==
-X-Received: by 2002:a05:6000:41ec:b0:47f:97e9:fe54 with SMTP id
- ffacd0b85a97d-47f9feb7c17mr7635376f8f.58.1785101350350; 
- Sun, 26 Jul 2026 14:29:10 -0700 (PDT)
-X-Received: by 2002:a05:6000:41ec:b0:47f:97e9:fe54 with SMTP id
- ffacd0b85a97d-47f9feb7c17mr7635364f8f.58.1785101349785; 
- Sun, 26 Jul 2026 14:29:09 -0700 (PDT)
+ bh=myr2FfCTdeCEuGnVsWMQ9NAAavu++eEZIA6gyuM1QZg=;
+ b=VkpGiH2yF8mVzYAhGUV9Dj1KFafnAMyZMtNAXhzYpO90r/mCIaW+VR3U3Vm3EJp9sQ
+ XKeqaZD0QkYG6H86W5ZRvPOvSDRTquj5l7vgWPmo2M2Mk9c1u8PaUPjRVcudmRx/LzhT
+ c81946TVy8IaSs7nG20MRnie3FXXi0W05474cC8pziTY4asxNm6x5AuQKGAD1peG6aD3
+ cGWRcjJvMkxLZOaN3IYuu6czNR/35nlfOx2p84FM/59IrWR3kYt4EDZedvtvV/uBYQVE
+ 84XyiCvqNXBCxbd0Z6HpjGSBbvMwcXdzbrSjFMdpEtdr8c4DIEys3YYunl4NH3qOtfvI
+ nNOA==
+X-Gm-Message-State: AOJu0YxWTS8x0H9IxPoGOFDbDqpYtYbfq48HmZWyCLTBY+CyoDbQDgS0
+ V3CcpRsBi4RA7D6YRBBvuOWqc0OFQG1eqTPBoMEfonYHipIImZsWG5qc+r8cusVU9i/yICLp/DF
+ VUnniLVBsXqg+NRMZuklF9FX4FW2qIHLO+yZWWNqDPrbmxrKpFrMBr7feyBUwcggooHqF0sNQse
+ cSr6zOrE/01z+bYKixFNcIDCqdEhqG8pf4Pw==
+X-Gm-Gg: AR+sD107QsNA13LVSdurtxcTIiXBwU94NAx8JWp+TPR5VkA5izLJrGn/e7inoMn3bY4
+ 9HgEvR6VmyM6z3872nsZgomphqM5FtRnqJgQlwMEmHea3dwkJNK+ckb2rFf3pper/fWbWKIm+y3
+ pnzouH2JZDr+/ReVQW7FA/SfluvOHQdE9EdVe8wuJKHyx3BRIReV93wasb8NzXuxs2TWznoZ7vi
+ guRfrO4bpw4LAgof/SQwXOPq9N/2GAS8zHkEVmJRsAPcMGY4w9I7L1B/G6va5nt9/5ehjtwG+Od
+ gMmYSvtR69WgJlKLkuDGjvh6HuQdBEtAkr01kiESuHwU8bC9r5CQfJLQMWhd2QNvLu6NtIjOjDq
+ t+lgrgt7SVCt0GYxGEaqycg==
+X-Received: by 2002:a5d:64e4:0:b0:47f:93a1:116a with SMTP id
+ ffacd0b85a97d-47f9fc92ec4mr7933613f8f.17.1785101398246; 
+ Sun, 26 Jul 2026 14:29:58 -0700 (PDT)
+X-Received: by 2002:a5d:64e4:0:b0:47f:93a1:116a with SMTP id
+ ffacd0b85a97d-47f9fc92ec4mr7933590f8f.17.1785101397644; 
+ Sun, 26 Jul 2026 14:29:57 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c6dc25sm42026184f8f.33.2026.07.26.14.29.08
+ ffacd0b85a97d-47f864305f5sm41832093f8f.17.2026.07.26.14.29.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 Jul 2026 14:29:09 -0700 (PDT)
-Date: Sun, 26 Jul 2026 17:29:07 -0400
+ Sun, 26 Jul 2026 14:29:57 -0700 (PDT)
+Date: Sun, 26 Jul 2026 17:29:55 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>
-Subject: [PULL 03/30] virtio-net: fix short frame OOB read in receive_filter()
-Message-ID: <9cb58c11d505ebfbc32a71b84578f617c0c1947f.1785101237.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 23/30] hw/pci-host/q35.c: Factor out creation of SMRAM MRs
+Message-ID: <394b11b87123a1730019b7df9def2c00e6cb28e0.1785101237.git.mst@redhat.com>
 References: <cover.1785101237.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -120,54 +119,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Within virtio-net, receive_filter() reads Ethernet header fields without
-any length checks.
+From: Peter Maydell <peter.maydell@linaro.org>
 
-But virtio-net sets do_not_pad in NetClientState, so backends such as
-socket forward frames at the size supplied by the peer without padding
-to the Ethernet minimum. A short frame thus causes an out-of-bounds
-read.
+mch_realize has a large section that deals with initializing the
+SMRAM-specific MemoryRegions.  Currently we do an early return from
+the realize function if mch->has_smm_ranges is false, but this has
+the potential for bugs if somebody adds new code at the end of the
+function that isn't SMM-specific.  Pull the MR init code out into its
+own function, so we can do the smm-ranges specific handling in the
+realize function in a more obvious way.
 
-Add size checks in receive_filter() and drop the truncated frames.
+This commit shouldn't change behaviour at all.
 
-Fixes: CVE-2026-63320
-Fixes: 3831ab2094 ("qemu:virtio-net: Enable filtering based on MAC, promisc, broadcast and allmulti (Alex Williamson)")
-Cc: Jason Wang <jasowangio@gmail.com>
-Cc: Alex Williamson <alex@shazbot.org>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3626
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <ee5c77b96ab66b2dd518f146def8727216a5c495.1784895727.git.mst@redhat.com>
+Message-ID: <20260708121011.1653365-3-peter.maydell@linaro.org>
 ---
- hw/net/virtio-net.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ hw/pci-host/q35.c | 91 ++++++++++++++++++++++++-----------------------
+ 1 file changed, 47 insertions(+), 44 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 2761644dfd..7e0c984ec6 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -1744,10 +1744,21 @@ static int receive_filter(VirtIONet *n, const uint8_t *buf, int size)
-     if (n->promisc)
-         return 1;
+diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+index 47e726c41d..e42b84b978 100644
+--- a/hw/pci-host/q35.c
++++ b/hw/pci-host/q35.c
+@@ -572,49 +572,9 @@ static void mch_reset(DeviceState *qdev)
+     mch_update(mch);
+ }
  
-+    if (size < n->host_hdr_len + 14) {
-+        /* Truncated ethernet packet */
-+        return 0;
+-static void mch_realize(PCIDevice *d, Error **errp)
++static void mch_init_smram_regions(MCHPCIState *mch)
+ {
+-    int i;
+-    MCHPCIState *mch = MCH_PCI_DEVICE(d);
+-
+-    if (mch->ext_tseg_mbytes > MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_MAX) {
+-        error_setg(errp, "invalid extended-tseg-mbytes value: %" PRIu16,
+-                   mch->ext_tseg_mbytes);
+-        return;
+-    }
+-
+-    /* setup pci memory mapping */
+-    pc_pci_as_mapping_init(mch->system_memory, mch->pci_address_space);
+-
+-    /* PAM */
+-    init_pam(&mch->pam_regions[0], OBJECT(mch), mch->ram_memory,
+-             mch->system_memory, mch->pci_address_space,
+-             PAM_BIOS_BASE, PAM_BIOS_SIZE);
+-    for (i = 0; i < ARRAY_SIZE(mch->pam_regions) - 1; ++i) {
+-        init_pam(&mch->pam_regions[i + 1], OBJECT(mch), mch->ram_memory,
+-                 mch->system_memory, mch->pci_address_space,
+-                 PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
+-    }
+-
+-    /*
+-     * This memory region looks like it's SMM specific, but it is not.
+-     * It's an alias that makes the pci_address_space appear in system
+-     * memory at the SMRAM_C_BASE address. The alias is enabled when the
+-     * CPU should not see SMRAM, and *disabled* when the low SMRAM should be
+-     * visible. So for non-SMM configs we need to create the alias, and
+-     * leave it permanently enabled.
+-     */
+-    memory_region_init_alias(&mch->smram_region, OBJECT(mch), "smram-region",
+-                             mch->pci_address_space, MCH_HOST_BRIDGE_SMRAM_C_BASE,
+-                             MCH_HOST_BRIDGE_SMRAM_C_SIZE);
+-    memory_region_add_subregion_overlap(mch->system_memory, MCH_HOST_BRIDGE_SMRAM_C_BASE,
+-                                        &mch->smram_region, 1);
+-    memory_region_set_enabled(&mch->smram_region, true);
+-
+-    if (!mch->has_smm_ranges) {
+-        return;
+-    }
+-
++    /* Initialize all the SMRAM specific MemoryRegions */
+     memory_region_init_alias(&mch->open_high_smram, OBJECT(mch), "smram-open-high",
+                              mch->ram_memory, MCH_HOST_BRIDGE_SMRAM_C_BASE,
+                              MCH_HOST_BRIDGE_SMRAM_C_SIZE);
+@@ -670,9 +630,52 @@ static void mch_realize(PCIDevice *d, Error **errp)
+     memory_region_set_enabled(&mch->smbase_window, false);
+     memory_region_add_subregion(&mch->smram, MCH_HOST_BRIDGE_SMBASE_ADDR,
+                                 &mch->smbase_window);
++}
+ 
+-    object_property_add_const_link(qdev_get_machine(), "smram",
+-                                   OBJECT(&mch->smram));
++static void mch_realize(PCIDevice *d, Error **errp)
++{
++    int i;
++    MCHPCIState *mch = MCH_PCI_DEVICE(d);
++
++    if (mch->ext_tseg_mbytes > MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_MAX) {
++        error_setg(errp, "invalid extended-tseg-mbytes value: %" PRIu16,
++                   mch->ext_tseg_mbytes);
++        return;
 +    }
 +
-     ptr += n->host_hdr_len;
- 
-     if (!memcmp(&ptr[12], vlan, sizeof(vlan))) {
--        int vid = lduw_be_p(ptr + 14) & 0xfff;
-+        int vid;
++    /* setup pci memory mapping */
++    pc_pci_as_mapping_init(mch->system_memory, mch->pci_address_space);
 +
-+        /* Truncated vlan packet */
-+        if (size < n->host_hdr_len + 16) {
-+            return 0;
-+        }
-+        vid = lduw_be_p(ptr + 14) & 0xfff;
-         if (!(n->vlans[vid >> 5] & (1U << (vid & 0x1f))))
-             return 0;
-     }
++    /* PAM */
++    init_pam(&mch->pam_regions[0], OBJECT(mch), mch->ram_memory,
++             mch->system_memory, mch->pci_address_space,
++             PAM_BIOS_BASE, PAM_BIOS_SIZE);
++    for (i = 0; i < ARRAY_SIZE(mch->pam_regions) - 1; ++i) {
++        init_pam(&mch->pam_regions[i + 1], OBJECT(mch), mch->ram_memory,
++                 mch->system_memory, mch->pci_address_space,
++                 PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
++    }
++
++    /*
++     * This memory region looks like it's SMM specific, but it is not.
++     * It's an alias that makes the pci_address_space appear in system
++     * memory at the SMRAM_C_BASE address. The alias is enabled when the
++     * CPU should not see SMRAM, and *disabled* when the low SMRAM should be
++     * visible. So for non-SMM configs we need to create the alias, and
++     * leave it permanently enabled.
++     */
++    memory_region_init_alias(&mch->smram_region, OBJECT(mch), "smram-region",
++                             mch->pci_address_space, MCH_HOST_BRIDGE_SMRAM_C_BASE,
++                             MCH_HOST_BRIDGE_SMRAM_C_SIZE);
++    memory_region_add_subregion_overlap(mch->system_memory, MCH_HOST_BRIDGE_SMRAM_C_BASE,
++                                        &mch->smram_region, 1);
++    memory_region_set_enabled(&mch->smram_region, true);
++
++    if (mch->has_smm_ranges) {
++        mch_init_smram_regions(mch);
++        object_property_add_const_link(qdev_get_machine(), "smram",
++                                       OBJECT(&mch->smram));
++    }
+ }
+ 
+ static const Property mch_props[] = {
 -- 
 MST
 
