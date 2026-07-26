@@ -4,98 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 216EAC531CC
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 09:17:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78CA4C531F9
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 10:18:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnuyq-0002Y7-KA; Sun, 26 Jul 2026 05:17:10 -0400
+	id 1wnvvG-0003tI-FF; Sun, 26 Jul 2026 06:17:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1wnuyg-0002WR-ST
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 05:17:00 -0400
-Received: from mail-pj2-x0a.google.com ([2607:f8b0:4864:39::a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1wnuye-0005Pk-49
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 05:16:57 -0400
-Received: by mail-pj2-x0a.google.com with SMTP id
- d9443c01a7336-2cf49dc298bso19722525ad.0
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 02:16:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785057414; x=1785662214; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=EAE+jyqEL9oR8OfraxbI5YKeewSRrwjZxO3fH6CCJTg=;
- b=U/vmM34ZB/45PegzugXLV38uP2PLeGwAR2Y6CMSWqUg82+EbLt/Kcr2pY+iyHnCWNU
- Izxuq+ilNu2tjhNfG3pYpioUCdSapydBPDZmkkkd9Ug9zv2jSvu0F1UTiL+kh0PT/pXb
- BJKAEz1icVqzuywqxCm+pQHiZWha6GxUBuZ6W+U6cshJk3m0TEsu2OJEJCILasBuXbrq
- SQJTDjmAVrHM68ZpE34aALbj4E3ZE8HsGrVUDXjHNRWZgD1D7440iK0rYDaspCOCxrH0
- k6MpLlbrveGHcV0ndQfDgwrv+tOi1hOU7UgV05uwoTI8QtcH8ZRKnNj1gyCYmm4zCwRA
- yBig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785057414; x=1785662214;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:subject:user-agent:mime-version:date:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=EAE+jyqEL9oR8OfraxbI5YKeewSRrwjZxO3fH6CCJTg=;
- b=UoHC1PWXOY5X9IoApXm3KN8igEh9a3nRcbDi3xkevzS/wRLS7TegLhq/rZn/jI1QNA
- wqbUSzum3HNmswnMtFinh9Vo8hUTifbG6wnkJu45JxTHRf/yT1SrYVJ93iDI+305gQsh
- JY21YvMSx57/Xqfhg8DY2Dd8SJNtjeIU6vl1ggrM3mNx2icxjd8yQj18Jduyhf6ZlAgq
- g38mnyFW9p8SZ3IKIZt9HRzd8g6J6bTqu5GNkZ4Og0h+UOT+UFW++n54HIwUXrAmOMQd
- 6Qz2NP8gyADntp6yCWwiYvpD1it2OpMa4JP4PvAX2qI1pEG3Q9fiFoc+fRpgDQfk5uy3
- Q6Zg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpPvmrDruBKxYhOKc1cVJrwZfgNLmQDl7zLJgVcyDvdwaBs5G0tAm1+qpa8GmLCcedvzaoN1glJa1MV@nongnu.org
-X-Gm-Message-State: AOJu0Yzfqvqgo2mk+E/WhWWjBzr/PSncGcoHutvuEK7kwyOviDgQWV/N
- ouiF5ykGIrh/O8bJzvjh5Tr4hnTheEqU+B6sBqZ5pcf7XpBLyVhvyrU=
-X-Gm-Gg: AR+sD13ZY873MczSJmVdO31oEQSz2CCkxK1AnyKwxvwTpTPehKwoelhMcv2vwYNgmwx
- +aNIRoI2J9sevjEGqYgOn2npJmETY3bHct2gltWGdwm6E3Xzr2aNSGdatdmjyUQ5ujilPsq11Cn
- wxuoSi4h2cY7dY+3+7UKN4cURl+2dOsflGzfYs6RnjPkA9qyJ6pCFf18H2RgSGoQTisbHOKnQGu
- 9rQLVofUFefps5ek+kIrg1Mz40FpBeuGud9dKp4VmwWpVBJPpuyvk8U2/v2aKOvH1ncO86mOMq4
- D5ZYJctR0e1BmxLEyjzbZbQTZDFPM4icw6+hUiBrB4Qn8gazGBQQOaWeovNsRSeyNa+sHqPEcY9
- zjmO3ts6z2GR2e15Nr/thu7yKBppa2VnNESYhea5eZnFkdEFnKAlCOWz9QKh6Vq8oDeG5IEPCLQ
- Fc/F+fYQrPBigTBdeA0h0H3N7xV4QYYKR1wPmCnLSOkIGB6GBkmI8yXwmKGw==
-X-Received: by 2002:a05:6a20:c5aa:b0:3c0:9c1b:d0b3 with SMTP id
- adf61e73a8af0-3c67e026f9dmr4396021637.62.1785057414063; 
- Sun, 26 Jul 2026 02:16:54 -0700 (PDT)
-Received: from ?IPV6:2408:820c:8ffa:c0f0:38f6:5714:f0df:99c3?
- ([2408:820c:8ffa:c0f0:38f6:5714:f0df:99c3])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-314bc415eafsm19055702eec.7.2026.07.26.02.16.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 26 Jul 2026 02:16:53 -0700 (PDT)
-Message-ID: <5bb70c1f-d4c7-4361-b93c-acd2d0616b2e@gmail.com>
-Date: Sun, 26 Jul 2026 17:16:49 +0800
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wnvvC-0003t8-AR
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 06:17:26 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wnvv9-0002re-Ut
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 06:17:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1785061030; bh=M3oLx3L8Pxy3r42IpcQIBXX+hZOyZKy1aOWCSqq+IuI=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=F5mPwAFp14eVxMSF0IHBCr/IY7VespBefCyVAe63lTISPJf00S/z3zd2NnhE4Z/i2
+ wcwAul6bQCsDi22auFkz58EuNJrAU1dAE/45dJ3KK10Lj3+urqxKYtpGxehNxGzRrv
+ s+itYreQVt71Q123Jzcma0LgMgLqtU5FSBwoxE7Koc15Qeq3x7yWj8IfgdVTjkihCa
+ sB4jkSOeV9YvQRr9WZxOOjBTrvS5U2+4QN5iOsH/awfx1k5ZdTcIgjiwYb89RWPP7s
+ dLvBmTCdUoiM//Z0tEFwYmJZ7JLGvjD4/a3AqA/S62ZWTRTMX8u+fAvLB8ODIsD8Sk
+ 48u23gzdHx5Ew==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id A1E461C4D62;
+ Sun, 26 Jul 2026 13:17:10 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id D6AF73F68CF;
+ Sun, 26 Jul 2026 13:17:10 +0300 (MSK)
+Message-ID: <7e4a2ca1-c930-408f-a39d-d926bd8ba788@tls.msk.ru>
+Date: Sun, 26 Jul 2026 13:16:58 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] xen/igd: get PCH info from host sysfs
-To: Chuck Zmudzinski <brchuckz@netscape.net>,
- Chuck Zmudzinski <brchuckz@aol.com>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, xen-devel@lists.xenproject.org,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>
-References: <20260709183517.25866-1-brchuckz@aol.com>
- <20260709183517.25866-2-brchuckz@aol.com>
- <5cb8d286-f013-4400-aef4-baddaa775995@gmail.com>
- <dda25bc4-6d3c-4f36-94e0-ffdc8b9bc81d@netscape.net>
-From: Tomita Moeko <tomitamoeko@gmail.com>
-In-Reply-To: <dda25bc4-6d3c-4f36-94e0-ffdc8b9bc81d@netscape.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::a;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pj2-x0a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Subject: Re: [PATCH] scripts/checkpatch: validate Fixes: tag format and commit
+ ancestry
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Chao Liu <chao.liu@processmission.com>
+References: <20260723065320.1314072-1-clg@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260723065320.1314072-1-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_MSPIKE_H2=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,105 +113,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2026-07-25 12:19, Chuck Zmudzinski wrote:
-> On 7/23/2026 9:09 AM, Tomita Moeko wrote:
->>> ...
->>> Also, use errp in xen_igd_passthrough_isa_bridge_create
->>> to set errors from xen_pt_get_host_pch_info.
->>>
->>> Signed-off-by: Chuck Zmudzinski <brchuckz@aol.com>
->>> ---
->>> Changes in v2:
->>>   - call error_setg* after closing files instead of before closing
->>>     files
->>>   - in last line of commit message change "to propagate errors" to
->>>     "to set errors"
->>>   - add stable to Cc list
->>>
->>> Changes in v3:
->>>   - whitespace fix at line 380 of xen_pt_graphics.c
->>>   - fix Cc address for qemu-stable
->>>
->>>  hw/xen/xen_pt.c          |  2 +-
->>>  hw/xen/xen_pt_graphics.c | 82 ++++++++++++++++++++++++++++++++++++++--
->>>  include/hw/xen/xen_igd.h |  3 +-
->>>  3 files changed, 82 insertions(+), 5 deletions(-)
->>>
->>> diff --git a/hw/xen/xen_pt.c b/hw/xen/xen_pt.c
->>> index 0fe9c0a..474606e 100644
->>> --- a/hw/xen/xen_pt.c
->>> +++ b/hw/xen/xen_pt.c
->>> @@ -867,7 +867,7 @@ static void xen_pt_realize(PCIDevice *d, Error **errp)
->>>          }
->>>  
->>>          /* Register ISA bridge for passthrough GFX. */
->>> -        xen_igd_passthrough_isa_bridge_create(s, &s->real_device);
->>> +        xen_igd_passthrough_isa_bridge_create(s, &s->real_device, errp);
->>
->> The `errp` need to be handled here if any error occurs.
+On 7/23/26 09:53, Cédric Le Goater wrote:
+> Adapt the kernel's checkpatch Fixes: tag validation for QEMU.
 > 
-> Do you mean calling it like this as a supported way to handle an error:
+> Add a git_commit_info() helper to resolve commit hashes and validate
+> the Fixes: tag in commit messages. The canonical form is:
 > 
->     xen_igd_passthrough_isa_bridge_create(s, &s->real_device, &error_fatal);
+>    Fixes: <12+ chars of sha1> ("<title line>")
 > 
-> IIUC, that would cause Qemu to exit(1) here if there was any error.
->
-> I didn't do that because I thought if there was an error one of the
-> parents (pci or qdev) would handle the error appropriately since we
-> are passing 'errp' from xen_pt_realize which I think comes from pci
-> and qdev, but maybe not. I have not tested how an error is handled
-> with this version of the patch and I am certainly no expert in how
-> error handling should be done here, so thanks for alerting me to this
-> question.
+> The check validates capitalization, spacing, hash length, lowercase
+> hex, and quoted title. When the format is wrong and the commit can
+> be resolved, suggest the corrected Fixes: line.
 > 
-> I have also seen in the Qemu source the use of local_err and maybe
-> using &error_fatal is something like using a local_err instead of the
-> errp from xen_pt_realize.
->
-> I will accept any suggestions from more knowledgeable people about
-> how best to handle the errors here. I can also do some tests by
-> faking an error here and make sure the the error does get handled.
-> I do think if the LPC bridge creation fails it should be a fatal error
-> and if am reading the current code we have correctly, we currently
-> just print a message to stderr if bridge creation fails without doing
-> anything about that error. I also think maybe if for some reason we
-> can't get a revision number for the LPC bridge, maybe that should
-> not be a fatal error.
+> When running inside a git repository, also verify that the referenced
+> commit is an ancestor of master.
+> 
+> Lines matching "Fixes: CVE-*" are skipped. The check can be disabled
+> with --no-fixes-tag.
 
-Here I mean, since you've changed the function to use errp, then it should be
-handled as other function calls in xen_pt_realize() like
+Thank you for introducing this!
 
-    xen_igd_passthrough_isa_bridge_create(s, &s->real_device, errp);
-    if (errp) {
-        xen_host_pci_device_put(&s->real_device);  // cleanup
-        return;
-    }
+A comment below.
 
-The realized function is called in device_set_realized() with
+> +sub git_commit_info {
+> +	my ($commit, $id, $desc) = @_;
+> +
+> +	return ($id, $desc) if ((which("git") eq "") || !(-e "$gitroot"));
+> +
+> +	my $output = `git log --no-color --format='%H %s' -1 $commit 2>&1`;
+> +	$output =~ s/^\s*//gm;
+> +	my @lines = split("\n", $output);
+> +
+> +	return ($id, $desc) if ($#lines < 0);
+> +
+> +	if ($lines[0] =~ /^fatal: ambiguous argument '$commit': unknown revision or path not in the working tree\./ ||
+> +	    $lines[0] =~ /^fatal: bad object $commit/) {
 
-    dc->realize(dev, &local_err);
-    if (local_err != NULL) {
-        goto fail;
-    }
-    
-In your code, if any error occurs, though it contiunes, it would be still
-treated as a failure. I'm not sure if this failure would have any impact
-to further steps in xen_pt_realize(), but since it ultimately fails, fail
-fast is always preferred.
+This is the first place in this script which depends on the C/EN
+locale being in effect.  With different locales, git will produce
+different messages here.
 
-If you think the error can be ignored, then keep using current fprintf()
-or error_report() would be the best choice.
+Instead of relying on the exact wording, I think it's okay to check
+for the exit status of git command, and only assume we found the
+reference if git command finished successfully.
+
+An alternative would be to export LC_ALL=C, but I think relying on
+the git exit code is more reliable.
 
 Thanks,
-Moeko
 
-> I will make sure the next version of the patch will not be posted until
-> I have verified the errors are handled appropriately.
-> 
-> Cheers,
-> 
-> Chuck
+/mjt
+
+> +		$id = undef;
+> +	} else {
+> +		$id = substr($lines[0], 0, 12);
+> +		$desc = substr($lines[0], 41);
+> +	}
+> +
+> +	return ($id, $desc);
+> +}
+> +
 
 
