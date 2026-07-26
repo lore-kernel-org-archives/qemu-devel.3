@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 803DDC53219
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 21:29:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB6D6C531C9
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 21:29:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wo6PW-0007Rj-3K; Sun, 26 Jul 2026 17:29:26 -0400
+	id 1wo6PP-0007Oe-Jf; Sun, 26 Jul 2026 17:29:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6PT-0007Qz-T9
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:29:23 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6PN-0007Nr-G2
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:29:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6PS-0004FZ-EQ
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:29:23 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6PL-0004E5-Sv
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:29:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785101361;
+ s=mimecast20190719; t=1785101355;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=K16jKduEuMv24m8AFbyJxmAvPDg0GFdoPSEFWNEBbj0=;
- b=Yum2K0iMJBTn7qItMfMSQGxiHSjs9I1vxa7+teCI/tE1l5infPfYTotJbj/hKgJEUN5D/0
- K1s5uovUrsIL5cHTVTtJaye/VrlMVcvl8ZdgPwVy0QvpSsbnUZwJl2OdLVgorqHAN4XeXB
- 04wxrwv3xSk4p9uZT+0+LhRYR1PMo2U=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=r45wChfey+YMaGkZvIj2En9JXXbAk4e6Oy0sdusJVLQ=;
+ b=BMuZ4AinRMyjrlL5gw4fRv5xdP9D/Cg61T8UsOTrohHZXxglESl6TH3jDqyybjmPcx87bn
+ 416t16X3NTVFpRuE2BziAQsVrPQFlIS/v45EliDPrAYoOhL2I7NytoZobV1RCIshO8cil5
+ 5Tvhcf/cke7jhjgjlwxGpHTfZ0hVWGE=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-79-XutG-HD1NgKutT28m5CaZQ-1; Sun, 26 Jul 2026 17:29:20 -0400
-X-MC-Unique: XutG-HD1NgKutT28m5CaZQ-1
-X-Mimecast-MFC-AGG-ID: XutG-HD1NgKutT28m5CaZQ_1785101359
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-496b408a5c0so7738045e9.0
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 14:29:20 -0700 (PDT)
+ us-mta-643-VVJ-yFwDPaqOwaJudO4Vqg-1; Sun, 26 Jul 2026 17:29:13 -0400
+X-MC-Unique: VVJ-yFwDPaqOwaJudO4Vqg-1
+X-Mimecast-MFC-AGG-ID: VVJ-yFwDPaqOwaJudO4Vqg_1785101352
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-47407691804so1422234f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 14:29:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785101359; x=1785706159; darn=nongnu.org;
+ d=redhat.com; s=google; t=1785101352; x=1785706152; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=K16jKduEuMv24m8AFbyJxmAvPDg0GFdoPSEFWNEBbj0=;
- b=hENkZsQmfi8+rf4nWfHvuK6lyJ3L0lLl8AkhmyCo29sxN+TVnNlWfIK6yC+aKWE8WL
- ZrEmdHqsVjx//2WiEYznXP5/dBw0vW88O05RW1ZpNliWi+oIAzkNQeeG57psjnFK6HhN
- mXMFfV9vU65INwPG4bffY3hZBrDLXyzMt7OGGMX4W0FqRY5H43EfAxoJzSt3P51Bzn0x
- GiNYjacucvRunCV0fNpw9/RRQjBI+udK693oBSg1BkRbtBXqkOZAYRWrYLqQna3VkglA
- CJQI8+dxcnIxXq+PptQny6JXktCXeehO9FCkgJeR9Tb5n6DvbY+nQZWzxvTHfev9/XeM
- LDeQ==
+ bh=r45wChfey+YMaGkZvIj2En9JXXbAk4e6Oy0sdusJVLQ=;
+ b=jgqokeEZmuqzoWFRjKVFLg6jjPWgyJZ5x1OfnlxLHH3TbxvaL76QFrZygfqauAS4AD
+ iz+n5ixYamnEEzQD05raMfLGIr19whossumag4IV6dKARn6X3IPOxYhN20Kjano/F2H/
+ 2UhQqRrNgJQ2yAu1ANvHZQV0SZLlXynTVom+cZRNfWNaW9PsmkUd0D1pXCmSkwI7FxIq
+ KDArL46lego5h76lYifVNULeZTfs71DymzKYU8laEeE9fcn5Fm3NsOKoN7R4LjEDWPj1
+ Edf3IUvOQaJjD4rgUyjdrNZ7KyqbqBl9vtN6TYDegqQeH9FwXgrlQ46SFVJNtGQuwyP0
+ SkKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785101359; x=1785706159;
+ d=1e100.net; s=20251104; t=1785101352; x=1785706152;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=K16jKduEuMv24m8AFbyJxmAvPDg0GFdoPSEFWNEBbj0=;
- b=ioTSS6odMPbk5SOckGF32zGTRFfWvu8pokYXN2V2h676l17dbz/I2OJyQZ4j6OtnBX
- 9fwkCAAqb5Gs6r4kEXjfDycR1jfz3/ksQkwffzPdilIcNeoUj53Jlzam3t1+s5klR3mw
- uRCQNlSWJg1iIPSPysmFHIio18HQY7jGMip8rt1qljw3AHSx3n0kwPzBQ2TdCUzi2VmB
- /+bi/rV7ZmTDdHSGySuYq429iqptvFEYsM4jXm/uatp84Q1vpyUiZhcRzg0wiCSKcHFg
- U9LSwBhNXdH7zFHADbcN41NWLbihMyZ5fZ6V8DFrnD1IechFRFVsmNepGR+1nmoXR9zh
- 23zA==
-X-Gm-Message-State: AOJu0YwJ/AstLx3PLLtgXGK+UrBaeRMRLLQIFpiGUZC9kwQ8ZSx7bJuc
- 7GUOCrIBFMa4Fs+zwvRWDUsNT0IAbmyZPp4yCVl3V+L1yjzCAqX3G1elWwBQXvBYck8C3yCxgoq
- PVamnXkRFxmT+/OWOgoOWw6P8gpkRoc/bZHRFkP7MbQl0Znox71VXIWXZ97KcNKyyhIPF+OVutO
- dFxIFQ9aUwFUbW+pBkHsssu92lZeCt1Z1owQ==
-X-Gm-Gg: AR+sD132Ik+Inz/mdrRNQN/QKWGa58GJyJXR7DtDckhquK4gv43P6QzAM0isICz5lW1
- Hj7EJ+cZwZ3oFLLL3Sfx9Mi1jm8pbL7LlEDypShsmD34DU0r56c4j9cTuF4yw3PXI6fAEhX+Trs
- mePz1IMHUgdFBQShySUtBUZrS+l//gCbbvEDHo2FuRnI3YjFZvXQOcK+N8COZxh6C+m+CtYppiS
- nB3fMQMjIxUfSHDmTCBmq80rusKbR1E3bnIC/nPfFQfAeXeXVqToaTOQVhK+OGfoKbFj3d1cNcc
- 05230XNUlEbIFn7BjXLw1Asmz7M5C35N21RLAP2DiSPwYO4OObExNvgXYE7TqdZaa0YzVofvRor
- MmbGesPPXHJBN9v7I6R/Y9w==
-X-Received: by 2002:a05:600c:a20b:b0:495:5d6d:d4f7 with SMTP id
- 5b1f17b1804b1-496b571a00cmr49549825e9.24.1785101359099; 
- Sun, 26 Jul 2026 14:29:19 -0700 (PDT)
-X-Received: by 2002:a05:600c:a20b:b0:495:5d6d:d4f7 with SMTP id
- 5b1f17b1804b1-496b571a00cmr49549725e9.24.1785101358626; 
- Sun, 26 Jul 2026 14:29:18 -0700 (PDT)
+ bh=r45wChfey+YMaGkZvIj2En9JXXbAk4e6Oy0sdusJVLQ=;
+ b=eMX2Mj/9xueeKm3Z8KoGIIlgzXa+pLhLLvWLeXQZnVzOrJAjHJFkqyuy8fjwL/0G82
+ 3kL3vHg4U8O2Hmbzzxo9Wma/uceTOKGxkJ6tDJkBWajbqtsqYFmI8AFFHQbVOslkp9dX
+ JFsjPAMV2cPOmyvF6Ecw3lJRm/1lL20IBfQf59C/FTssOCC+Stj9mmGPUDr1fCnaBrHQ
+ SiW0iF1pLOPGIxD3uJSVZHoa4bluLL3frS6Q5hL+RJsmNdY2ldJlbAyyIRHewUUaHp7+
+ au1snJy5jQURwyqRqB2bsU1k2WfeN43tWlypUjuhIc1s1rqJaBN+7jxWOJ5v4h0aitxe
+ w+JA==
+X-Gm-Message-State: AOJu0YzClzfeFZ90mmuviu6ezXaGW4CwXPAFhtcxlkeFLNe532n7bpI8
+ xCopClwRgd/u5S+LcVcaBBCXw2rLKEedbwWfd+u0mQ/hxnsBX62XrhuWp6pCJC+Avp7RmOmZfqS
+ ns9p78k4NblSPMRiVEnpTd+ZDuinrMtKDDAXzcr3acA//cQhzBIE2yYpXqS+00PSBxIzty2Jw3k
+ cfk5Wm37Z/G10iMI6n5uRtlyJ0mYREhUeVuA==
+X-Gm-Gg: AR+sD12FtnZfCG+26l3Hw5m/GEfSny6C3ADYUFf85d69Re4P+atvSK4M9mo29RyT/eB
+ mekKhd7BffEPpb8fsx+Tl1CxZ2shxQ9QWgMeH9YS9yQFBfv3Ubq60ABcdJ+ITABddGoT3DILD+m
+ jsPISsEFq2pk4VkAKbJUdxu8AG5lFWyib5w2lX8ouVaDRP6PQcNmbZWqwgtCxh5/TgBFvYHhWRp
+ taGfbXgttaefpT7jtWLye/+YbahHfj5EBU8PnpnVpMrr5qGDx4tFVZL+nsb8fyWumpaTON+ORcl
+ eHvEE5yMfPSarlJvwwYiWwAVsz9c62ewSzvEAlNW8yA9LBolEytM6hYVQ3Yavly/Kv+CMacmbBW
+ UquctO/RXwBFmcmEC6vIbWg==
+X-Received: by 2002:a5d:6f0e:0:b0:47f:97ee:f1d4 with SMTP id
+ ffacd0b85a97d-47f9fc9d186mr6853251f8f.9.1785101352427; 
+ Sun, 26 Jul 2026 14:29:12 -0700 (PDT)
+X-Received: by 2002:a5d:6f0e:0:b0:47f:97ee:f1d4 with SMTP id
+ ffacd0b85a97d-47f9fc9d186mr6853236f8f.9.1785101351927; 
+ Sun, 26 Jul 2026 14:29:11 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-496b4858e28sm185801245e9.2.2026.07.26.14.29.17
+ ffacd0b85a97d-47f85bc62basm45447168f8f.13.2026.07.26.14.29.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 Jul 2026 14:29:18 -0700 (PDT)
-Date: Sun, 26 Jul 2026 17:29:16 -0400
+ Sun, 26 Jul 2026 14:29:11 -0700 (PDT)
+Date: Sun, 26 Jul 2026 17:29:09 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PULL 07/30] vhost: do not crash on ring map failure
-Message-ID: <a502996a2faedf1130d3bae1cf31573083ec2ac9.1785101237.git.mst@redhat.com>
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PULL 04/30] libvhost-user: protect against OOB writes in
+ vu_set_inflight_fd
+Message-ID: <d5e3ec5f7dc5bd9979874d174778f42355f34222.1785101237.git.mst@redhat.com>
 References: <cover.1785101237.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -121,42 +121,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When vhost_commit() rebuilds the memory region table after a flatview
-change, it revalidates cached host virtual addresses for active vring
-parts. If a mapping is stale, QEMU abort().
+vu_set_inflight_fd() trusts the num_queues value from the
+VHOST_USER_SET_INFLIGHT_FD message without checking it against
+dev->max_queues, so an oversized value causes out-of-bounds writes to
+dev->vq.
 
-This is not a security problem - only the priviledged guest
-can control make it invalid - but not nice e.g. for driver debugging.
+Front end is generally trusted so not a security problem, but OOB isn't
+a nice way to handle frontend bugs.  Let's harden this a bit:
+check num_queues and panic if it's invalid.
 
-Let's call virtio_error() instead, marking the device as broken.
-
-Fixes: 0ca1fd2d68 ("vhost: Simplify ring verification checks")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3783
+Fixes: 5f9ff1eff3 ("libvhost-user: Support tracking inflight I/O in shared memory")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3740
 Cc: Stefano Garzarella <sgarzare@redhat.com>
-Cc: Dr. David Alan Gilbert <dave@treblig.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <71961a7dc157f552303aeea8c99a75c5e1ce904e.1784898432.git.mst@redhat.com>
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <23b3f12388c1035f208550df9de9944c22d8d534.1784899127.git.mst@redhat.com>
 ---
- hw/virtio/vhost.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ subprojects/libvhost-user/libvhost-user.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index af41841b52..371dca17dd 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -755,8 +755,9 @@ static void vhost_commit(MemoryListener *listener)
-                        (void *)(uintptr_t)dev->mem->regions[i].userspace_addr,
-                        dev->mem->regions[i].guest_phys_addr,
-                        dev->mem->regions[i].memory_size)) {
--            error_report("Verify ring failure on region %d", i);
--            abort();
-+            virtio_error(dev->vdev,
-+                         "Verify ring failure on region %d", i);
-+            goto out;
-         }
+diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+index 2c35bddd6f..8208265588 100644
+--- a/subprojects/libvhost-user/libvhost-user.c
++++ b/subprojects/libvhost-user/libvhost-user.c
+@@ -1998,6 +1998,8 @@ vu_get_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
+ 
+     if (vmsg->size != sizeof(vmsg->payload.inflight)) {
+         vu_panic(dev, "Invalid get_inflight_fd message:%d", vmsg->size);
++        vmsg_close_fds(vmsg);
++        vmsg->fd_num = 0;
+         vmsg->payload.inflight.mmap_size = 0;
+         return true;
+     }
+@@ -2005,6 +2007,15 @@ vu_get_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
+     num_queues = vmsg->payload.inflight.num_queues;
+     queue_size = vmsg->payload.inflight.queue_size;
+ 
++    if (num_queues > dev->max_queues) {
++        vu_panic(dev, "Invalid get_inflight_fd num_queues: %"PRId16,
++                 num_queues);
++        vmsg_close_fds(vmsg);
++        vmsg->fd_num = 0;
++        vmsg->payload.inflight.mmap_size = 0;
++        return true;
++    }
++
+     DPRINT("set_inflight_fd num_queues: %"PRId16"\n", num_queues);
+     DPRINT("set_inflight_fd queue_size: %"PRId16"\n", queue_size);
+ 
+@@ -2052,6 +2063,7 @@ vu_set_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
+         vmsg->size != sizeof(vmsg->payload.inflight)) {
+         vu_panic(dev, "Invalid set_inflight_fd message size:%d fds:%d",
+                  vmsg->size, vmsg->fd_num);
++        vmsg_close_fds(vmsg);
+         return false;
+     }
+ 
+@@ -2061,6 +2073,13 @@ vu_set_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
+     num_queues = vmsg->payload.inflight.num_queues;
+     queue_size = vmsg->payload.inflight.queue_size;
+ 
++    if (num_queues > dev->max_queues) {
++        vu_panic(dev, "Invalid set_inflight_fd num_queues: %"PRId16,
++                 num_queues);
++        close(fd);
++        return false;
++    }
++
+     DPRINT("set_inflight_fd mmap_size: %"PRId64"\n", mmap_size);
+     DPRINT("set_inflight_fd mmap_offset: %"PRId64"\n", mmap_offset);
+     DPRINT("set_inflight_fd num_queues: %"PRId16"\n", num_queues);
+@@ -2071,6 +2090,7 @@ vu_set_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
+ 
+     if (rc == MAP_FAILED) {
+         vu_panic(dev, "set_inflight_fd mmap error: %s", strerror(errno));
++        close(fd);
+         return false;
      }
  
 -- 
