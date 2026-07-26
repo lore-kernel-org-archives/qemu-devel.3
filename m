@@ -4,109 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A167BC531C9
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 21:30:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C06E0C53219
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 21:30:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wo6PU-0007RZ-7U; Sun, 26 Jul 2026 17:29:24 -0400
+	id 1wo6QQ-0000LQ-Rh; Sun, 26 Jul 2026 17:30:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6PS-0007QO-93
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:29:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6QI-0008IQ-H6
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:30:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6PQ-0004FA-Qp
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:29:22 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6QG-0004au-47
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:30:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785101360;
+ s=mimecast20190719; t=1785101411;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=c37H+cVsWU95dXfBSHlCP7JcB8M26liRnR+yG2Z3eog=;
- b=b8K9zaOEZSiaQ8C52kESe6KY31rRG+CG69W2H81sLVwiLWNTHWlXTxXY4zPwZn1/WPahnU
- gIPqDi+8vS2aOOQtN1E1NXs5MeK5z5Qvhu43yazHJpfGsBwbaT67L7UORZh994QHCDhUsO
- 6b2ivtk1VQEhv6lzfWh9dhZ6ZJPEwxE=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=s2B+8XrjK5nGScQeDmJaNHYJ46KW3Hmc7jfhpCVdjBg=;
+ b=PuJH6LuuY3SYSFNlHvlyXNcIKfaQM6Rt+FYVerF8hhRTDQGKloM21OkiCiz93IZFVQx++L
+ 3MhzMCLohdr32oW0qpcRUqY9FU2QMhEI2Y6TluHhiuI0HFxNXq7akxnYYomO8Tvyb99eqD
+ 15IA/wrkm9aw+YtIBylLCxj5IEZzA00=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-185-eEiXX3TlNyijSt5i1zVIPA-1; Sun, 26 Jul 2026 17:29:18 -0400
-X-MC-Unique: eEiXX3TlNyijSt5i1zVIPA-1
-X-Mimecast-MFC-AGG-ID: eEiXX3TlNyijSt5i1zVIPA_1785101357
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-47f24a50f0cso1561167f8f.3
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 14:29:18 -0700 (PDT)
+ us-mta-634-G7617JLKMuOdw0qaPhO90g-1; Sun, 26 Jul 2026 17:30:10 -0400
+X-MC-Unique: G7617JLKMuOdw0qaPhO90g-1
+X-Mimecast-MFC-AGG-ID: G7617JLKMuOdw0qaPhO90g_1785101409
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-495517d39fbso11733765e9.2
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 14:30:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785101357; x=1785706157; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=c37H+cVsWU95dXfBSHlCP7JcB8M26liRnR+yG2Z3eog=;
- b=Nm3KCZJ+oQ/baG7LZTLPsQZX4/KilzLLVohAgfWs8LTrER2cc665WgkRmnHU4gZ5Gi
- iHI5fAqiN+tDSuNYfpt317TlkVv9uKUWcPuB2EJrh/GGJkelm55glpkIipXBX9G5wQL2
- DxQbdH62NlBr6i7FOpRvjhFDzWGMVNw4zp5V2i2aRaKaqfrSvU3knWQpHcbG3g1nB+8n
- F2SvlLyjxPIsxud2AVmHRt9Rtp2pr8wFrrKVrqeuBo5Tq2xO2efiLk5PH7nigFhp/TeV
- 8NgPszTGn3GtZ1VccvHiGfRr03se2I8FyrjXFicpdD7vM0OTasIBYrSutaLXIy8FTm1F
- DIjg==
+ d=redhat.com; s=google; t=1785101409; x=1785706209; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=s2B+8XrjK5nGScQeDmJaNHYJ46KW3Hmc7jfhpCVdjBg=;
+ b=XEXC5j6aw8LaFNVI8VerXYzJ9mejl/o5H+77Y8LP/XKe7p1GWbiyQdVicnwi3J+APp
+ uzvd9WPmrk+lKA1LjvE3ODAmlWqdjf4oao2XxzHYkb6v0Q91UjyXWdzRSMKEDOYJmFMC
+ itoxr5lTvCl1Mmd0O8cXT9ilH8J5Issnng4CvFgRDzV/ti7j+9/lGB29b1qeTSOehVSC
+ mgbQOZGTYJYZpDI9PaGNpFB9mgaQe2cq+yaF2VPrFXkrC9a7diXTpEtPwMzgg9BEqslV
+ jU+sbA3hR0e0zgVZUozndQSpLI4TKt5DLxHLHo+nrJZyokxdEHPQwuP76E5Djy/n5AbE
+ L6Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785101357; x=1785706157;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=c37H+cVsWU95dXfBSHlCP7JcB8M26liRnR+yG2Z3eog=;
- b=GwNMDtFSqZuOOteRdHg4XClPXP5J021RGfDQvPwdvv40MMlaCFVOHuqBTN+vSO/ZmN
- rEtd8jqNG8M8riNOTbnpvsDdqE3QhijPY5RnsadCbPNNAj6UcryURsszrHjPEkDT4mqI
- LseGl4PcPGtTkegbJcqimhLX2DeN5ZFlF72uSsRNyIqUHAyiRqfTLJyCKnJFeHQM2y/o
- 4vaJujHqqBusSTqi/jHCP13jE96Sw7DJsUiju27DnRQCBCd8O+7zsD7Q3ewxkfpbIZjL
- 9KpCwwrtqOiX9wfz/3veWY2T7noYR2FmWDGOYAlhLcrcn36S1I+wETY9rJa9dpBIsFf0
- QynA==
-X-Gm-Message-State: AOJu0YxjWKvjgWzacsEYNL2KibooLHQOI2WgxNcjn8nWqSNr5qN3taJu
- 91+y3Hf8neJ2owwmAplZpVv/Oi8Gbtx4+cAG3eD8OXGtLpjwUHl4DuLibL3CHlnaA31cUdK4Wkp
- jr8pdNb2NuGlyJIqWkHzXKa73UaG6j0qSSJmSe3BUDDN75EVwOyZXdr90AaKfnfIOilMxffvmeb
- J/u++iK1JFxZ2VY6kgeZRs5LiNHSpztTgS4A==
-X-Gm-Gg: AR+sD11VDOcK3nLm36Kad3Jo7WA3ft2H6ETDs5/UdxjUEbO5HAHk3xCFWunv2m2AHQY
- z1P62qjeGnyWKYlH1J5NTcFUh9py1wwO+0aewBQHdd95zVxkhSD4RcztlzhIpNUsMioEHasFWCK
- 5BJtL6TA28HMe8uwkiZ/vz7gQL0HdODyDWAVGDQvidfzJadqvjrO8WpZAKuPRBE+wqx/2bfgvnk
- 6Z3n0hsv+qLk1tldKxRdQpJNSpezKDvmlnyBdE6dlWSSbvdAZ+jo3SMsuwXxmpwGMHqNeIGzrVy
- vPDuuQVzYvZzAm3y9uwvULMBYSQdVpnhZyRvqs90anBZOcS20aTiH+cVFEO2CftSU/H5ZpLMqZs
- +OLI7j8j3tHEj26RsMtD8Ow==
-X-Received: by 2002:a5d:5d86:0:b0:46e:8226:96ba with SMTP id
- ffacd0b85a97d-47f9fc90743mr6779592f8f.13.1785101356962; 
- Sun, 26 Jul 2026 14:29:16 -0700 (PDT)
-X-Received: by 2002:a5d:5d86:0:b0:46e:8226:96ba with SMTP id
- ffacd0b85a97d-47f9fc90743mr6779566f8f.13.1785101356404; 
- Sun, 26 Jul 2026 14:29:16 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785101409; x=1785706209;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=s2B+8XrjK5nGScQeDmJaNHYJ46KW3Hmc7jfhpCVdjBg=;
+ b=OJLjqhDvCh17MAR/h0o/B9IyloMYbAzhXO+V1W0xLL+XI+Us2KdnR4QWUu6dbSmr7I
+ 0JXBomyNYpmiN43dt7zVdE78Fq+uVHKXIUzXshTitMhBciwhQQ4ssT8E2UzXwLYHSV7N
+ DB4YCbQvyKbPbLguBWgzeOWjGVIK0+BRPK/QdWN+t3NVs7GSjVkNyLc1MBX8rOoygQ4Y
+ a+susPUyUjqs1zXeDxjqsvknTT9eSJWatx7kBrXwFrTy9Yu0B5KFWyiPnF8FE2BzyGss
+ HoKo4sSz/rwIFAzwSMiflQdX/Rp7dvf3Rp95VDKx07miIeuLkPwDrGTUXhD9cdFGxYlF
+ mrtQ==
+X-Gm-Message-State: AOJu0YwSM0R/XYXH2CA5ndejEzvnlHgwmMJlKDtfKYugMShscSoWFaFu
+ YWIMkd8Z6sl8R574ld2ycRo/76gy7mNY7xctS+SasHDXBU8GK2q+9go/jIOpjuwnu4ZTo4xcPBG
+ zTM93h/WjMs4GppA4+s2NBgdEv1l+qHidUsVksZAmSm20BcGLyX/p1DbC+FNjQ5T4uJWx8sue7k
+ 2/et5lPc1+7OMieaxUYix3wA4LGP3qylCMbw==
+X-Gm-Gg: AR+sD13kzscsTsp3FJ1dbw3yEBCf8usXHFlTJmsTS7DANrNCOOGH/Km77DhIuKyn75q
+ pb37ETstJiZwSkb0pwmNZqRK80MnvOvQz3D9AIc2y26MSOmNXRBZEKiMY6ZUkXL2+qFS1p5LWQo
+ Zr01l/ZeNMS5RmrIMQpoHlxahlRyU3oKaEneiNwyEjffSLsJ/BByk8vgh3nimUFUw5qMXJKvWJJ
+ tTr9dm+EaEpMlpVwYS7x8Uys9ZuUQ1eSp8Jz8MtH9oxNvBIHSHskPafLP3fDSGYEMIeFUhob1cI
+ KovGzBB+t9uR1ZTJ6iCYWWKe2tCdjfGEUhy0UGlFe8ZGjTE74VnTG7H8xDpecxd3vfZms71wXNe
+ 9J90rSsg8vfxRGfrVrBhAMQ==
+X-Received: by 2002:a05:600c:198b:b0:495:48d7:f178 with SMTP id
+ 5b1f17b1804b1-496b899db56mr63019595e9.11.1785101408799; 
+ Sun, 26 Jul 2026 14:30:08 -0700 (PDT)
+X-Received: by 2002:a05:600c:198b:b0:495:48d7:f178 with SMTP id
+ 5b1f17b1804b1-496b899db56mr63019255e9.11.1785101408202; 
+ Sun, 26 Jul 2026 14:30:08 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c631fdsm41353279f8f.28.2026.07.26.14.29.15
+ 5b1f17b1804b1-4957b816ef8sm173906485e9.1.2026.07.26.14.30.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 Jul 2026 14:29:15 -0700 (PDT)
-Date: Sun, 26 Jul 2026 17:29:14 -0400
+ Sun, 26 Jul 2026 14:30:07 -0700 (PDT)
+Date: Sun, 26 Jul 2026 17:30:05 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, jasowangio@gmail.com,
- qemu-stable@nongnu.org
-Subject: [PULL 06/30] hw/virtio: reject zero-length packed indirect
- descriptor table
-Message-ID: <ca94a10f025b2da0cd9100176eea16cddcf6bd06.1785101237.git.mst@redhat.com>
+ =?utf-8?Q?Cl=C3=A9ment?= MATHIEU--DRIF <clement.mathieu--drif@bull.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Jason Wang <jasowangio@gmail.com>, Yi Liu <yi.l.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 27/30] intel_iommu: Check address mask before using it in
+ pasid-based iotlb invalidation
+Message-ID: <ef9798ed9d1913010b42670dc6ff094d3cfea81e.1785101237.git.mst@redhat.com>
 References: <cover.1785101237.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1785101237.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
 X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,51 +128,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Clément MATHIEU--DRIF <clement.mathieu--drif@bull.com>
 
-The split-ring path already rejects a zero-length indirect descriptor
-table since commit 7423192912af ("virtio: add checks for the size of
-the indirect table"). The packed-ring path is missing the same check,
-allowing a guest to trigger an assertion in address_space_cache_init()
-with a packed indirect descriptor that has len=0.
+Prevent a buggy driver to execute malformed invalidation operations.
 
-Add the same !desc.len check to the packed-ring indirect validation
-in both virtqueue_packed_get_avail_bytes() and virtqueue_packed_pop().
+Add the same assert as in vtd_iotlb_page_invalidate.
 
-Fixes: 86044b24e865 ("virtio: basic packed virtqueue support")
-Cc: jasowangio@gmail.com
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3984
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Link: https://gitlab.com/qemu-project/qemu/-/work_items/3619
+Fixes: 6ebe6cf2a066 ("intel_iommu: Process PASID-based iotlb invalidation")
+Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260715115040.2186274-1-lvivier@redhat.com>
+Message-ID: <20260724111424.376680-1-clement.mathieu--drif@bull.com>
 ---
- hw/virtio/virtio.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/i386/intel_iommu.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 7c19080db5..2d33622daf 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -1475,7 +1475,7 @@ static void virtqueue_packed_get_avail_bytes(VirtQueue *vq,
-         }
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index d1af7a3135..82c3c3b2c3 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -3021,6 +3021,8 @@ static void vtd_piotlb_page_invalidate(IntelIOMMUState *s, uint16_t domain_id,
+ {
+     VTDIOTLBPageInvInfo info;
  
-         if (desc.flags & VRING_DESC_F_INDIRECT) {
--            if (desc.len % sizeof(VRingPackedDesc)) {
-+            if (!desc.len || (desc.len % sizeof(VRingPackedDesc))) {
-                 virtio_error(vdev, "Invalid size for indirect buffer table");
-                 goto err;
-             }
-@@ -1927,7 +1927,7 @@ static void *virtqueue_packed_pop(VirtQueue *vq, size_t sz)
-     vring_packed_desc_read(vdev, &desc, desc_cache, i, true);
-     id = desc.id;
-     if (desc.flags & VRING_DESC_F_INDIRECT) {
--        if (desc.len % sizeof(VRingPackedDesc)) {
-+        if (!desc.len || (desc.len % sizeof(VRingPackedDesc))) {
-             virtio_error(vdev, "Invalid size for indirect buffer table");
-             goto done;
-         }
++    assert(am <= VTD_MAMV);
++
+     info.domain_id = domain_id;
+     info.pasid = pasid;
+     info.addr = addr;
+@@ -3060,6 +3062,13 @@ static bool vtd_process_piotlb_desc(IntelIOMMUState *s,
+ 
+     case VTD_INV_DESC_PIOTLB_PSI_IN_PASID:
+         am = VTD_INV_DESC_PIOTLB_AM(inv_desc->val[1]);
++        if (am > VTD_MAMV) {
++            error_report_once("%s: invalid piotlb inv desc: hi=0x%"PRIx64
++                              ", lo=0x%"PRIx64" (am=%u > VTD_MAMV=%llu)",
++                              __func__, inv_desc->val[1], inv_desc->val[0],
++                              am, VTD_MAMV);
++            return false;
++        }
+         addr = (hwaddr) VTD_INV_DESC_PIOTLB_ADDR(inv_desc->val[1]);
+         vtd_piotlb_page_invalidate(s, domain_id, pasid, addr, am,
+                                    VTD_INV_DESC_PIOTLB_IH(inv_desc));
 -- 
 MST
 
