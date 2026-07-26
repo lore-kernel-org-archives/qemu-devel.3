@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D5AFC531C9
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 21:09:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC256C531C9
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 21:09:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wo65W-0002ez-Ex; Sun, 26 Jul 2026 17:08:46 -0400
+	id 1wo66C-0003J3-V2; Sun, 26 Jul 2026 17:09:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wo65U-0002Xp-P1
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:08:44 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1wo66A-0003Hf-S2
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:09:26 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wo65T-00016m-4A
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:08:44 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-38dcbade417so2155714a91.1
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 14:08:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785100122; cv=none;
+ id 1wo669-0001DO-Fe
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:09:26 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-38de840f2f0so1528584a91.0
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 14:09:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785100164; cv=none;
  d=google.com; s=arc-20260327;
- b=irYOb4iphkFGZbgPS3If305WsVPBuPuRVABzyPUG2YwoKXz0meZmxhprM+x/+z7Dzg
- EZVKHdWvJZVjmKb6qFJZD6nwdGGcAeWDdbRKVGNQTuSWVgebWHscYcEywQskoZLrzFas
- gizTzuPKSkCj+J6niVwsbRv3KtKorXE8/N8BbeB0IBRt4KjPzF007LuTDdbWeszFVAnx
- InzJwScyq69dz15bYutNy1QLCehPa/g7OLYON+FtTf0Ao34jwNVsBZbJ/cWuSyb8tjlf
- Rgv8+6s8O8NjEIIhCADR/vt5KaWB8cKACpQK/vE3AHs62CmheLY/XRjrjqOTO+M09UMr
- H8zg==
+ b=D7O/9Ccp9bEWrttZigdxDon21rpjouAxitUWfk3JWGKzH3X+ckO+lPzWC3yZiNkFUY
+ cYLuiOjNx2yvkuu8BLlR7As5rki4YuYtW0fOgtbmh4MIyROfU5ewCUCLwepesbK/SHbZ
+ ZiB+rJq8c8xQiW0SkH/dHr74Pln4l+VJdud4cKTKLWPm/hM2D4RaZ4W7Qqv1mPZYVJ6A
+ o+7wG8b0q3Ou+eaLH2kVS+ebNEtIQxSCQxfYUEYhzbHIjaJTFYsgnE1bHggW2y2pdJJ3
+ XTAx/W6iyoZmlabtX9sqCB6toskfmhxkqZjDfDH8GD6Lczdsf9Xi+SyUvKp/7umQL4uL
+ oyOg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=3Rp8HAAPCsWVJammpH6MnWmCqSIAb+JYc0EJRNZOl2c=;
- fh=weY2TEjmKIbsVcG7wp3Anr5zAfL0qvgeHuZddlkNhXI=;
- b=f0QdPU2doOpXz/pjT+DcG97nv41UGXMd98P5Azf/tbtWHaLkvagtcOy+TqvmBCZ7Ic
- Uzm7w08lvtPWnHaXI1Ek0eCIZ26OhnpUkTan2iRXWiJyjmQyCJaUB/ehD5aWy9Z8cGjn
- MrW5S4VTTrmcd6Cd3tjdl5vFN0MaKrfje4ybnOuaxnQV1X7/eZlS6x1vzPIxf5tz92/r
- cI2kXBQt/wadzKID36w7OUfOYKYDIQLipztUD2/Uq3w5JZHFZgq1Va+viYwTeHJDbbbW
- iqgyWWeVOdYZcOMMIVh/jlATt8QdW+o+0EY4UzM4Edf7sx7kvAMfE/FDi3lC5b/7orHS
- cF4A==; darn=nongnu.org
+ bh=Bz/pGK+nVp1qpiG4hRbY18Z0nbHtZZMZr2fR6jF7H8k=;
+ fh=uKI3ggVMJgYhH8K+/qh700OBsmBzXMzFdzBcQOaZbl0=;
+ b=aj24GE/zgIIxDoJdrvEypmWPtwQecn2oTKCcH18qwKUhCY5EPrMCT/Ov3p0b5chz8p
+ gP/tUN22eTK7A+ka9sqaATrOMaIXiaLs8VijSbP3ekKZfovAD5NgrAGGXFZCI5RFrgLE
+ A8xvFas5RDN1wJLQCLv6bFEUhstGHjP5wN9mPoIhI4bXNE7RRjDKJraXBDa4PXMv3cm7
+ A56VMZ0F0PWwEDYxaCnF7OAIYDcKaon+mPlsfCfwJ4jrCF8k4VD+2RtwIexqifBAq7LZ
+ K/BzMkqhOWBA6zwbDGfBl+Xi9YFdW2oHR/OKS3jU8hxvf6oY/2JR1o2/XFhFhu/wkaLa
+ bvdw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785100122; x=1785704922; darn=nongnu.org;
+ d=redhat.com; s=google; t=1785100164; x=1785704964; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=3Rp8HAAPCsWVJammpH6MnWmCqSIAb+JYc0EJRNZOl2c=;
- b=m/wYaMcKbydbcqmEGlx2JRvFFU+XptuJKiYySFW7ggtYEPlax0Tt5h0/TWOVkIa/sh
- fyDf+thVQSu893XnXbgccW8B0WgWMjHySyMw1ggpdNl6VHdwRDajkJtYq2W0DUQZ7Toc
- jv11FFUfJB47wPL1+c30B8XZw+5j/nUS3P43W1aRXCcaOchymxBUCYk+xWTpwNnCOJvp
- YZ3IGWz/s9C8JACgLbS6K8zL/4mVNwdSJ7lpSwKJ7fs02LnRpnQ2p8covmBhDpVBe3QI
- jLaV/1RQlb24nmKVulw9Yzr7B1ZresHihmg41WCh/fZKxcBtQZMPbFYsgfh7RKQtP6Rc
- 7aJw==
+ bh=Bz/pGK+nVp1qpiG4hRbY18Z0nbHtZZMZr2fR6jF7H8k=;
+ b=q6jWedFQKEwNooNGshwNoIq1gVSUP5JO31FTCHgyf3jhyqrtN0tYb0Ra6Czrt4dRCQ
+ FzEEAq2mZQDKbxkQn/7P+TW53ExKWTT84EFOCymmQjwkxXBPIgoihdwgk3LgAyoe5Mjm
+ pDXuRuI9Z/K/O22iMTo7f1RsIXTZncrvlQRLO4j1bR+OjLlotz0Z4Mhnx4dqZ6BPEMwv
+ CTzHP+iHsRyGAjCxOc0VI61z0Q4ggb3U0c+XSq4DnwlxWo7oj1lRmZstOoSWOIrY18ee
+ idqp/4hKk38UPiovRp4mm5H3Xzg602pnBE5FTyoXCuVGCZTHLE/IO522Tu4PRBEJWKAU
+ piwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785100122; x=1785704922;
+ d=1e100.net; s=20251104; t=1785100164; x=1785704964;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=3Rp8HAAPCsWVJammpH6MnWmCqSIAb+JYc0EJRNZOl2c=;
- b=XmXPd+snIj2M23dG+I0sv2dSFNGlnBjfSBs/een/ihQ3KKbyq9/T0aiV/PXqIXiQOM
- UGOMaRSG6uc257dgRkOWZUaMVTSmzSRdp2kOKlIO2LnqjQ+cmbyvKz7KtCOr+MlnJAV3
- maJjgGkrosupqXO/OUrf4yfyYIE2i0qq7TE3FkLztIe/qa0tC98l5Jxk4wmNljuIeYUH
- 4bxySgYAKz28nvyrIhySfiCgj7aUG2B0hQPwKdzLbi5jfu28JqFS8oPyCaKtbbZ/Vf0B
- tK06zdZJVNVKdO16W43zU41unKDpKS9a3o0PeWXyBC98UK3ncb6B8r0HKWvzAWaRgPWT
- 9lxA==
-X-Gm-Message-State: AOJu0YxGD1PyKMNrgv+ali7f226XApLBQzioG1rC/XPV0GLYt6oq7oaJ
- Oa2QPWpv6afkpiyZEqjwUvTs2dEczU+pqPehVtfX3yv+oFfBdT8HEQ0/8BgmmVhyppYcYJsq95H
- PJcbLGgHgquza8ltDRjQ3LcS3MYrdURcsWTBAwswVtg==
-X-Gm-Gg: AR+sD11fQGxJZRlgtrWAWJpCZ9zlAHzGbjei+7uzp2TFoUwp4aY6Yavr//Drbt28lKA
- e9RK6UOzg4D6Ik98JszxW8wjsd1JBWohvv2Hd/gN9aGbGc/MbSP5OzmQqcOyHG6TqXutjNTl6bl
- MxiMjnf1nGueevMZBxd+chMTU+c++f8jxiErlmLVpvvh+eI+b8OIPCl+WLrjJm+tpiluGQoKjLm
- YzuX28XJ16AR87J9CENBMAg//ViSvIt81YUqsGCfBp32W+rMk63+CaGCl5zMqvWd5rAaiPrAReM
- JP2ImJsrAQpUjJ/43Q==
-X-Received: by 2002:a17:90b:2701:b0:38d:e658:5959 with SMTP id
- 98e67ed59e1d1-38f293cff43mr5572450a91.5.1785100121685; Sun, 26 Jul 2026
- 14:08:41 -0700 (PDT)
+ bh=Bz/pGK+nVp1qpiG4hRbY18Z0nbHtZZMZr2fR6jF7H8k=;
+ b=maygcB2+VwDsvCQ1jNzIQLlLA8ArM+Vh39dVroEJ7Me0Ncq4Bdwl+RgCaNdRRJpw2y
+ USOIvTDrQcH5eRfkaLPm33EZKVmS54eVjldPH+bulohZCvKOl0AquASEqZc0zjaGiSCg
+ ZfeEcdZiznLvr9zH72pV4MHQ/xrGasa371WYylncV4JOO6zm8YuU8S8M1l3+s2KDAcNd
+ wkPIOYVgSet2SPfTqdC7586+UifRiSZoLiwc3YeEIgwRB7/+a4j2Cgz5RA/aKdl2B0m3
+ GFGyKizAY703m8fEp1ONDgecCjSupylaWiOi0LjFTFogEDuc9mdrZZ4YgvNuWq+qoXjY
+ fFDg==
+X-Gm-Message-State: AOJu0YyPAxWrkM0IKf65qlTdMnHliN/AtCGmuS87SS+DI5jibRweYqKW
+ 3x3fYcZ5yEWBexo3SwDeeunxPYQ+8/u64GDTS2v37quzX4tWkqkEqeYMzHTs0ipHZBEbY2L+o17
+ n4fQMrdMmXgekwNwSXpJ7dOMs9wzcJNc=
+X-Gm-Gg: AR+sD1228KDSN0PlRhNcBZhnedEiTciqCJNu9l+b4UiSsy40m/BugBz9usrvQEHgIzz
+ DZTT11mHQ3ElB+OntKLd8RJLJfNxpRmBbff468uhhYc1rDNZOXO5ER/fHfaa4B9u2VMOKmma01+
+ 68orAx70lQumtmsxOQCkb+6CNylx2STxiYIWt5MtLofpy/L2Z/WVHx4P+gvOEHxRAAyVmzMVEK+
+ /pbctv40FMUIaxU9uhh+Y7UhJX905L0OzNuTtCE4mJAHg7p4/fjJSlWyuo40wbEHKaXe8j61+ZC
+ M/3MxhORq/ko6xm0lw==
+X-Received: by 2002:a17:90b:3810:b0:366:10f1:3d91 with SMTP id
+ 98e67ed59e1d1-38f293cd15emr5801529a91.1.1785100163960; Sun, 26 Jul 2026
+ 14:09:23 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260727-fix2-v2-0-d0c4831ed7ea@redhat.com>
- <20260726164912-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20260726164912-mutt-send-email-mst@kernel.org>
+ <20260727-fix2-v2-5-d0c4831ed7ea@redhat.com>
+ <20260726164738-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20260726164738-mutt-send-email-mst@kernel.org>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 27 Jul 2026 01:08:28 +0400
-X-Gm-Features: AUfX_mwdOjQjgAriyvr_4G-3RpsS6Vdo9nLW5Pzqi6pYb1OWJfbiy3twwqvDpWM
-Message-ID: <CAJ+F1CKGxeSiRR6YWvYNUHYhO9kgfASUTPsA9HC4QBDhm_TZQw@mail.gmail.com>
-Subject: Re: [PATCH v2 00/12] Fixes for 11.1
+Date: Mon, 27 Jul 2026 01:09:12 +0400
+X-Gm-Features: AUfX_mylOzHtLX1B5pdeb_u2WgbX2EqX4Pr6UFlRNQstCQqi_x-D3pds_NHf1lg
+Message-ID: <CAJ+F1C+fCyazpGfof9H0_n54FMy3LX6ujdmTcW=gAmhFz8Lk-w@mail.gmail.com>
+Subject: Re: [PATCH v2 05/12] hw/cxl: fix invalid free on early return
 To: "Michael S. Tsirkin" <mst@redhat.com>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
@@ -105,12 +106,11 @@ Cc: qemu-devel@nongnu.org,
  linux-cxl@vger.kernel.org, Brian Cain <brian.cain@oss.qualcomm.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Haotian Jiang <jianghaotian.sunday@gmail.com>
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -134,83 +134,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Mon, Jul 27, 2026 at 12:50=E2=80=AFAM Michael S. Tsirkin <mst@redhat.com=
+On Mon, Jul 27, 2026 at 12:49=E2=80=AFAM Michael S. Tsirkin <mst@redhat.com=
 > wrote:
 >
-> On Mon, Jul 27, 2026 at 12:43:59AM +0400, Marc-Andr=C3=A9 Lureau wrote:
-> > Hi
-> >
-> > Here are some assorted patches worth considering for the 11.1 freeze
-> > bug-fix period.
->
-> why are these in a single patchset? who is expected to merge it?
-
-Given that they are kind of general coding fixes, I think I can send a
-PR once the patch are reviewed.
-
->
+> On Mon, Jul 27, 2026 at 12:44:04AM +0400, Marc-Andr=C3=A9 Lureau wrote:
+> > Fixes: 680935c9a6ff ("hw/cxl: Add a performant (and correct) path for t=
+he non interleaved cases")
 > > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> Not commit log really?
+
+SSIA, but I can make it longer if it helps.
+
+>
 > > ---
-> > Changes in v2, after Akihiko comments:
-> > - split the "Fix many -Werror=3Dmaybe-uninitialized" patch
-> > - qdev-monitor: add drain_rcu parameter to avoid deadlock from virtio-n=
-et
-> > - rewrite WITH_QEMU_LOCK_GUARD/WITH_RCU_READ_LOCK_GUARD macros to suppr=
-ess
-> >   GCC false-positive warnings (new patch)
-> > - block/blkio: use QEMU_LOCK_GUARD instead of WITH_QEMU_LOCK_GUARD in
-> >   getlength() to avoid false-positive (new patch)
-> > - hw/cxl: split invalid-free fix into its own patch
-> > - hw/i3c: fix default return value of d2_i3c_send() (new patch)
-> > - hw/ppc: fix dangling machine->fdt reference after spapr fdt updates (=
-new patch)
-> > - Link to v1: https://lore.kernel.org/qemu-devel/20260725-fix2-v1-0-5c9=
-a6ce7b96a@redhat.com
+> >  hw/cxl/cxl-host.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
 > >
-> > ---
-> > Marc-Andr=C3=A9 Lureau (12):
-> >       hw/display/virtio-gpu-rutabaga: zero-init capset info response
-> >       block/blkio: fix error return value on getlength()
-> >       block/blkio: fix compiler false-positive warning
-> >       include/qemu: adjust LOCK_GUARD macros to avoid potential warning
-> >       hw/cxl: fix invalid free on early return
-> >       hw/i3c: fix default return value of d2_i3c_send()
-> >       Fix some -Werror=3Dmaybe-uninitialized
-> >       hw/hexagon: fix machine->fdt leak in qom-test
-> >       hw/ppc: fix dangling fdt reference
-> >       hw/core/machine: free machine->fdt in machine_finalize()
-> >       migration/multifd: fix Error leak in multifd_recv_terminate_threa=
-ds()
-> >       qdev-monitor: drain RCU callbacks in qdev_device_add_from_qdict
+> > diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+> > index 7e744312f1d8..eba13c9e7cba 100644
+> > --- a/hw/cxl/cxl-host.c
+> > +++ b/hw/cxl/cxl-host.c
+> > @@ -279,7 +279,7 @@ static void cxl_fmws_direct_passthrough_setup(CXLDi=
+rectPTState *state,
+> >      MemoryRegion *mr =3D NULL;
+> >      uint64_t vmr_size =3D 0, pmr_size =3D 0, offset =3D 0;
+> >      MemoryRegion *direct_mr;
+> > -    g_autofree char *direct_mr_name;
+> > +    g_autofree char *direct_mr_name =3D NULL;
+> >      unsigned int idx =3D state->hdm_decoder_idx;
 > >
-> >  include/monitor/qdev.h           |  3 ++-
-> >  include/qemu/lockable.h          | 19 +++++++++++-------
-> >  include/qemu/rcu.h               | 17 ++++++++++------
-> >  block/blkio.c                    |  7 +++----
-> >  hw/audio/intel-hda.c             |  2 +-
-> >  hw/core/machine.c                |  1 +
-> >  hw/cxl/cxl-host.c                |  2 +-
-> >  hw/display/virtio-gpu-rutabaga.c |  2 ++
-> >  hw/hexagon/virt.c                |  9 +--------
-> >  hw/i3c/dw-i3c.c                  |  2 +-
-> >  hw/net/virtio-net.c              |  2 +-
-> >  hw/ppc/spapr.c                   |  1 +
-> >  hw/ppc/spapr_hcall.c             |  1 +
-> >  migration/multifd.c              |  1 +
-> >  system/qdev-monitor.c            | 42 +++++++++++++++-----------------=
---------
-> >  target/i386/cpu.c                |  3 ++-
-> >  target/i386/emulate/x86_mmu.c    |  4 ++--
-> >  17 files changed, 59 insertions(+), 59 deletions(-)
-> > ---
-> > base-commit: 300438ffbb8d9430cac2fcc15cba6f482b2c0587
-> > change-id: 20260725-fix2-6e51d231794b
+> >      if (ct3d->hostvmem) {
 > >
-> > Best regards,
 > > --
-> > Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > 2.55.0
 >
 >
 
