@@ -4,56 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66C6AC531C9
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 15:53:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A7A8C531C9
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 16:54:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wo19k-0005Fv-3C; Sun, 26 Jul 2026 11:52:48 -0400
+	id 1wo27C-0003E7-Dk; Sun, 26 Jul 2026 12:54:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1wo19c-0005FO-Fh; Sun, 26 Jul 2026 11:52:41 -0400
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1wo19Z-00068S-Uz; Sun, 26 Jul 2026 11:52:40 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with UTF8SMTP id AQAAfwDn7ho7LWZqVfrfAQ--.17943S2; 
- Sun, 26 Jul 2026 23:52:27 +0800 (CST)
-Received: from [198.18.0.1] (unknown [113.246.117.150])
- by mail (Coremail) with SMTP id AQAAf8DwwXM6LWZqGCccAA--.45248S2;
- Sun, 26 Jul 2026 23:52:27 +0800 (CST)
-Message-ID: <fbc0bd8c-1aaa-4193-8e56-89388eb83a55@phytium.com.cn>
-Date: Sun, 26 Jul 2026 23:52:25 +0800
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wo278-0003Dh-DX
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 12:54:11 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wo275-0003zn-U1
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 12:54:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1785084840; bh=dd26KHGRumg4Z8iN1g6o1QhUtU2UzjLh4Q+nianAlXk=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=CLVPurm6lF+sbR1BLHNf+9VDLeAM+AhxO9xwwMIi5fEF+q/WXu4n07ZQU2o/SzV6j
+ dwZGXTQLICnecoIDO/8pBLstJMG1+J+fvIH6Kr/dDbDo/o0JIJPEovUjdivt9LzdZN
+ XjgvmZhW2qL/i027j6rvd6XXk8B+hW0AFkjB91xc4N5KmKN0bi7ruPMCxJp90mpp5a
+ /lu4DOwKqLCwosfegZX0Nwq7rQ5kng+ly/P+A0yNy3CdEZWXF3qX/vhIUzR2ALBwd8
+ 1O5waEhmhztjn+vuljGFAqt7t13D567GzBoBSOF+Wmng6QKSmP1CWrR8iZKgJh4fu6
+ DMNdkANMGqBcQ==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 672631C4E05;
+ Sun, 26 Jul 2026 19:54:00 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6BE9F3F6A8E;
+ Sun, 26 Jul 2026 19:54:00 +0300 (MSK)
+Message-ID: <f83491f5-6ef7-45ba-bb84-26341835cb25@tls.msk.ru>
+Date: Sun, 26 Jul 2026 19:53:44 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] hw/misc/iommu-testdev: support PCI MSI test writes
-To: flavien.solt97@gmail.com, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Andrew Jones <andrew.jones@oss.qualcomm.com>
-References: <CANVUYGtOgMnNRkfU=zs=jvtg7yKOHXZVb8k5oVnp+D2=U4xeWA@mail.gmail.com>
- <CANVUYGtm19xCpqACSv2FYb7=BP05Av9oOxU5q-WiP4D-T6fA0w@mail.gmail.com>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <CANVUYGtm19xCpqACSv2FYb7=BP05Av9oOxU5q-WiP4D-T6fA0w@mail.gmail.com>
+Subject: Re: [PATCH 2/5] ui/vnc: fix OOB write in vnc_refresh_lossy_rect
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, kvm@vger.kernel.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20260706-fix-v1-0-4b83a70e9f3b@redhat.com>
+ <20260706-fix-v1-2-4b83a70e9f3b@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260706-fix-v1-2-4b83a70e9f3b@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID: AQAAf8DwwXM6LWZqGCccAA--.45248S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAGBWpiankYLgAEsr
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxJw4fXFy3Gry8tF43WF1UAwb_yoWrtr1fp3
- 4DGF1YyF4FyrsxJr4Ska1IkF1UXrZ5JFya9w18Ar4rZ3yayayDJFy7KFy2yryUJ397ZF1x
- Zw4j9ry5WanavFDanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,156 +116,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Flavien,
+On 7/6/26 15:53, Marc-André Lureau wrote:
+> vnc_refresh_lossy_rect() always marks a full VNC_STAT_RECT (64) rows
+> as dirty when refreshing a lossy tile. When the display height is not
+> a multiple of VNC_STAT_RECT (e.g. VNC_MAX_HEIGHT = 2160), the bottom
+> tile is partial -- the last tile at y=2112 has only 48 valid rows.
+> The unclamped loop writes to vs->dirty[2160..2175], past the end of
+> the VNC_MAX_HEIGHT-sized array.
+> 
+> Clamp the row count to the actual surface height so partial bottom
+> tiles only mark valid dirty bitmap entries.
+> 
+> Fixes: CVE-2026-48002
+> Fixes: 7d964c9d2fc6 ("vnc: refresh lossy rect after a given timeout")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3950
+> Reported-by: huntr bubble
+> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
 
-On 7/26/2026 8:21 PM, flavien.solt97@gmail.com wrote:
-> iommu-testdev writes ITD_DMA_WRITE_VAL with unspecified requester
-> attributes. RISC-V MSI remapping tests need to select an interrupt
-> identity in the payload. The MSI trap also identifies the device through
-> MemTxAttrs.requester_id.
->
-> Add a write-value register with the existing constant as its reset
-> default. Populate the requester ID from the PCI function. Existing
-> translation tests retain their payload while interrupt-remapping tests
-> can issue a valid MSI for the test device.
->
-> Signed-off-by: Flavien Solt <flavien.solt97@gmail.com>
-> ---
->   hw/misc/iommu-testdev.c         | 14 ++++++++++++--
->   include/hw/misc/iommu-testdev.h |  1 +
->   2 files changed, 13 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/misc/iommu-testdev.c b/hw/misc/iommu-testdev.c
-> index 15eb6de..6428a57 100644
-> --- a/hw/misc/iommu-testdev.c
-> +++ b/hw/misc/iommu-testdev.c
-> @@ -28,6 +28,7 @@ struct IOMMUTestDevState {
->       uint64_t dma_paddr;
->       uint32_t dma_len;
->       uint32_t dma_result;
-> +    uint32_t dma_write_val;
->       bool dma_armed; /* armed until a trigger consumes the request */
->
->       AddressSpace *dma_as;   /* IOMMU-mediated DMA AS for this device */
-> @@ -80,6 +81,7 @@ static void iommu_testdev_maybe_run_dma(IOMMUTestDevState *s)
->
->       /* Initialize MemTxAttrs from generic register. */
->       attrs.secure = ITD_ATTRS_GET_SECURE(s->dma_attrs_cfg);
-> +    attrs.requester_id = pci_requester_id(&s->parent_obj);
->
->       space_valid = ITD_ATTRS_GET_SPACE_VALID(s->dma_attrs_cfg);
->       if (space_valid) {
-> @@ -97,12 +99,12 @@ static void
-> iommu_testdev_maybe_run_dma(IOMMUTestDevState *s)
+This patch has already been merged to the qemu master branch
+(as commit 3543c2b855c), but it seems it's important to mention
+still.
 
+There already was a fix for CVE-2026-48002 earlier:
 
-hard-wrapped # 1
+commit 46ee49034d26d04d95ba8f3183d4fbfa9d2b89b4
+Author: Daniel P. Berrangé <berrange@redhat.com>
+Date:   Thu May 21 11:33:52 2026 +0100
 
+     ui/vnc: fix OOB write in lossy rect worker code
 
->
->       as = s->dma_as;
->
-> -    /* Step 1: Write ITD_DMA_WRITE_VAL to DMA address */
-> +    /* Step 1: Write the configured test value to DMA address */
->       trace_iommu_testdev_dma_write(s->dma_vaddr, s->dma_len);
->
->       for (int i = 0; i < s->dma_len; i++) {
->           /* Data is written in little-endian order */
-> -        write_buf[i] = (ITD_DMA_WRITE_VAL >> ((i % 4) * 8)) & 0xff;
-> +        write_buf[i] = (s->dma_write_val >> ((i % 4) * 8)) & 0xff;
->       }
->       write_res = dma_memory_write(as, s->dma_vaddr, write_buf,
->                                    s->dma_len, attrs);
-> @@ -186,6 +188,9 @@ static uint64_t iommu_testdev_mmio_read(void
-> *opaque, hwaddr addr,
+which touched the same code.  Now this one, with a
+very similar subject.
 
+Unfortunately this (additional) fix does not mention the
+previous fix, so there's some confusion about which commit
+actually fixed this issue.  It looks like the first fix was
+incomplete and this additional fix were needed.
 
-hard-wrapped # 2
+Thanks,
 
-
->       case ITD_REG_DMA_ATTRS:
->           value = s->dma_attrs_cfg;
->           break;
-> +    case ITD_REG_DMA_WRITE_VAL:
-> +        value = s->dma_write_val;
-> +        break;
->       default:
->           value = 0;
->           break;
-> @@ -240,6 +245,9 @@ static void iommu_testdev_mmio_write(void *opaque,
-> hwaddr addr, uint64_t val,
-
-
-hard-wrapped # 3
-
-
->       case ITD_REG_DMA_ATTRS:
->           s->dma_attrs_cfg = data;
->           break;
-> +    case ITD_REG_DMA_WRITE_VAL:
-> +        s->dma_write_val = data;
-> +        break;
->       default:
->           break;
->       }
-> @@ -263,6 +271,7 @@ static void iommu_testdev_realize(PCIDevice *pdev,
-> Error **errp)
-
-
-hard-wrapped # 4
-
-
-I found four hard-wrapped hunk headers. As a result, git cannot parse 
-the diff:
-
-```
-
-git am 0001-hw-misc-iommu-testdev-support-pci-msi-test-writes.patch
-Applying: hw/misc/iommu-testdev: support PCI MSI test writes
-error: corrupt patch at line 27
-Patch failed at 0001 hw/misc/iommu-testdev: support PCI MSI test writes
-hint: Use 'git am --show-current-patch=diff' to see the failed patch
-When you have resolved this problem, run "git am --continue".
-If you prefer to skip this patch, run "git am --skip" instead.
-To restore the original branch and stop patching, run "git am --abort".
-
-```
-
-
-Could you please help check this?
-
-
-Otherwise, looks good.
-
-Reviewed-by: Tao Tang <tangtao1634@phytium.com.cn>
-
-
->       s->dma_paddr = 0;
->       s->dma_len = 0;
->       s->dma_result = ITD_DMA_RESULT_IDLE;
-> +    s->dma_write_val = ITD_DMA_WRITE_VAL;
->       s->dma_armed = false;
->       s->dma_attrs_cfg = ITD_ATTRS_SET_SPACE(0, ITD_ATTRS_SPACE_NONSECURE);
->       s->dma_as = pci_device_iommu_address_space(pdev);
-> @@ -280,6 +289,7 @@ static void iommu_testdev_reset(DeviceState *dev)
->       s->dma_paddr = 0;
->       s->dma_len = 0;
->       s->dma_result = ITD_DMA_RESULT_IDLE;
-> +    s->dma_write_val = ITD_DMA_WRITE_VAL;
->       s->dma_armed = false;
->       s->dma_attrs_cfg = ITD_ATTRS_SET_SPACE(0, ITD_ATTRS_SPACE_NONSECURE);
->   }
-> diff --git a/include/hw/misc/iommu-testdev.h b/include/hw/misc/iommu-testdev.h
-> index 3383659..2f4e931 100644
-> --- a/include/hw/misc/iommu-testdev.h
-> +++ b/include/hw/misc/iommu-testdev.h
-> @@ -81,6 +81,7 @@ enum {
->       ITD_REG_DMA_ATTRS       = 0x18,
->       ITD_REG_DMA_GPA_LO      = 0x1c,
->       ITD_REG_DMA_GPA_HI      = 0x20,
-> +    ITD_REG_DMA_WRITE_VAL   = 0x24,
->       BAR0_SIZE               = 0x1000,
->   };
->
-
+/mjt
 
