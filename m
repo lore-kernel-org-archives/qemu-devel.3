@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21A5AC531C9
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 21:33:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4E83C531C9
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 21:33:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wo6Pn-0007XG-MT; Sun, 26 Jul 2026 17:29:45 -0400
+	id 1wo6Pt-0007g2-Vy; Sun, 26 Jul 2026 17:29:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6Ph-0007W7-3s
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:29:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6Pj-0007Ws-My
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:29:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6Pf-0004HU-KQ
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:29:36 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6Pi-0004I4-9z
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:29:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785101375;
+ s=mimecast20190719; t=1785101377;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=fg8BZFP7bTHoLtlaI8nWkzIx9BkmGgJuYaup0Yedmwg=;
- b=LfZ63z5r16lZUAJKGiQ44Av0zgQJDQXGKSqKhKg06VkvZnNC20bnnIbhdbs8Rvk6cNUwV0
- FRbmlUYAfIGkdJQ07CylXUd3kYlZ5qczCU/megPlT+JgxRqX1K87+U/5/sMgYJAcmoG+Y1
- AQ6Z/gLyNZ+F/d6pL01P648hWAFV/2E=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tBhvi6iK9ugBioYiD5qlfoI4y5iguLdNdfdNzLHaa9U=;
+ b=LOZcpX6AG+geHWB1hXE0Rvg+w7gYpLskDqkCpyzjlJFOA6xCV6YpdLGvQ1b/7SHbHbvUaY
+ 0rvdjd+Gb8le+/H9/D5ATdh4Zb/7Aw4aMziwyajDyX9l0EHapa/sxh8R1JVVttoUjGdY9M
+ hLJABowunQ0IbPKP2YcXRrSyhJruFB0=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-331-pMH06LIWPFS_0wM8N6jIqg-1; Sun, 26 Jul 2026 17:29:33 -0400
-X-MC-Unique: pMH06LIWPFS_0wM8N6jIqg-1
-X-Mimecast-MFC-AGG-ID: pMH06LIWPFS_0wM8N6jIqg_1785101372
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-47f81362fb1so1358597f8f.1
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 14:29:33 -0700 (PDT)
+ us-mta-284-lFBvKJ1YOtOA7ZmQ_mLKAw-1; Sun, 26 Jul 2026 17:29:36 -0400
+X-MC-Unique: lFBvKJ1YOtOA7ZmQ_mLKAw-1
+X-Mimecast-MFC-AGG-ID: lFBvKJ1YOtOA7ZmQ_mLKAw_1785101375
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-49561facb1dso17528205e9.3
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 14:29:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785101372; x=1785706172; darn=nongnu.org;
+ d=redhat.com; s=google; t=1785101375; x=1785706175; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=fg8BZFP7bTHoLtlaI8nWkzIx9BkmGgJuYaup0Yedmwg=;
- b=HSCZmDLPYT39q78/GGiBsdXhPYXqVNEHlCI8krxNxkpwLXw3hJqLbzVpq0QSRRVkDx
- p3SPFMLrb0IcDoF4DtQQjnhgj+RfyFsJtuDxOcyAygMe5CRjaf+j0a9hkB9/nSpmQAhT
- Am1qqo2B3sthQ6/1PrUJB8RC6GO0bhREApD9DiV06wOyFmXZCy+eA+X3arUQcLZVrBgW
- UUcM5b/jAE1R+vYVEyWYY4Cs8glo3L6961pCv4Es6RR0Fe3aXLrwXgTI1m13M+uKugUq
- UlkJ/K/+CCRXyI46Guf0fEIflT3WDRwq/1GKFG8i/g2A3QLeleY3tsU169quhDu47Mrl
- Zajw==
+ bh=tBhvi6iK9ugBioYiD5qlfoI4y5iguLdNdfdNzLHaa9U=;
+ b=Xq9+s9fyWj53DVPx+36rVCqMRd9yqnlF3emGCevcUqblC8UMMSpcb8QWh5zyGMIE8A
+ gUcVGxUyzhO5UPLUHVCm9wvcWOlE1YDCO+Upyc7kKkE72FVnLy3ITjAHRxYzvfZIdG+L
+ 6l0ZOVpmkGiaS4ZTwUjVQNQqySvVOXelY6713QF0b6wmEYp322S2IqyVerhWWzhka8TP
+ UNoVqP50qnwfolWHpSVxywseEFY6Ytc5a9zLCw3fNuDcoMLAlNyifCuIKf6Q2vLQ7Ywt
+ ocpNQAmB/rCLKgjV6EviaZO5SUrKQ54muye65Jqt+NFXp2Wm9uV9sE/ZqiqKi8h7YLIx
+ niPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785101372; x=1785706172;
+ d=1e100.net; s=20251104; t=1785101375; x=1785706175;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=fg8BZFP7bTHoLtlaI8nWkzIx9BkmGgJuYaup0Yedmwg=;
- b=BKu8gTTFj/VkgQzLAAU56k1PgZBWWacHJD4VKsTqu709VR8w6Pz6XH/Pdtfkm7e6qQ
- 1oAE06aWU/Wb0bUYe4sO0h8BLx+/nVI+kZUoEVpDk1UZYga3Ehnkf0QpsGrUzE29Secg
- SubcPH+m8o2lEgxB8YPyI3UuJ+bbR9Lq7PsYIhusDVbceRJ3D/gUShoWpSbMhIBTGJDO
- tpWeIhlytlP2mvqLpxGOOSDSsxqqjBCnIskzj3+GYDjynkZy55REJ9/0kpk5XkCboIZL
- QkId0/W1grpY65gCnHv+7sK9+aAPn2I9LVsnRw6ZJ0h36s7Kl5ZPNtzwZHmalhH7+KwI
- u8EQ==
-X-Gm-Message-State: AOJu0YzGc+JzSY+n0bnQU/ucveXaURb58AksO95z+ZNuG67j95BSFM2p
- VAs53AnQ+mNINm7MBKwT+ciiUz7Yti4zqbsVFxBcVmOKOTYtFdNjWUw246vqQGKyMVNbdTqm5nU
- 3eJtC4mAltRlGxe8dBQSCLNjfqahRfsJb8NzbP4S60hVCRFzQ78K5ISFTejpTDyCct5hmuTFeY5
- bkTZssjX3NzTK2aYTF5NQuy5fBf5e84Z8ayA==
-X-Gm-Gg: AR+sD12niyaJAJ5MKf+C3cHcO2SNYfYIvO7phQ5sMUJxAzw3FOfILUpz/f7TyYWrWQv
- i7Snbv6O4lLd+QpXrByNIJOrHemUK3j60YjaXWVf2QLj0+Knh+s4NDa9IRLzzsHbVeFITeHpLlk
- CTlvz5y+QcV8F3pU86GOOuUBu+y7mxJcYHZOk73GXzbQDcELMugo8YUVcy8i1EnwgEsRtvALk2i
- Qhfzfcjz7x6KKfHK/IXTTE9PoUZBrVPK22gK/nt86riyS49BUyUSQjVHYsRVxlNxNsUqzQ8d6qD
- S753nJwV7DMmlJULkGjKsdWS+J7EJvDgO6xZT+hQWHaQXAhkR/bb+C11C0vUctERnvNs0jSFnfy
- 9S+Gx6qCV/rtN+ytJj0UJRQ==
-X-Received: by 2002:a05:6000:178e:b0:47f:97d1:4fea with SMTP id
- ffacd0b85a97d-47f9fea53acmr7786846f8f.38.1785101372285; 
- Sun, 26 Jul 2026 14:29:32 -0700 (PDT)
-X-Received: by 2002:a05:6000:178e:b0:47f:97d1:4fea with SMTP id
- ffacd0b85a97d-47f9fea53acmr7786833f8f.38.1785101371671; 
- Sun, 26 Jul 2026 14:29:31 -0700 (PDT)
+ bh=tBhvi6iK9ugBioYiD5qlfoI4y5iguLdNdfdNzLHaa9U=;
+ b=kVEZOf68e+wGQ384qLK3yUHKwiiK3+5kH7WViLT4ppyBrH4Hu0v4X62iMD8vqKj4JX
+ KpKj2jPW2wUSsfwKyT+IcEa0wf+pnqwq1YNRn5nhmc6om8oHhJufqSiGupbeBzo7htDr
+ 0z3sbNhZsM8GYQjBWHP4pu/iGP/F6AbDFgtrHTJPFouzl/GzNO8SY4CUCfQXpy3Sivie
+ 2FLqFLeM5gaO/29Jz09i9ti7snzRW5lj3jYcRujUd7/2KlaQkR1FeApP7cXA44Yj955O
+ SSmqvrBUSI6d5NFuckO7gl1N/iSjzMxgLk0hyr9Jz9Of7TwsiN9e4DY30+Ds2m6z7mAi
+ fufQ==
+X-Gm-Message-State: AOJu0YxX4gof8YU5ZmS9yM22yxDSEFCgLuiXZDYWDs4EmEJ/RkOx4fP6
+ 2je0GXU4CsdCtWLdghV7FkQTpuq9Cl5fPUpDAVG8VrDXMkIY4829kYGyBC9MnWrGefigoqCXG7K
+ I9EWZo9aXuSVKJ24ZCAmP4tTjgLTIvylRm3U6NTJfUBKe8pTS4DNChJ9b7R7AIS75wMICr793we
+ agyTUuB4UjzdREvIulMHbHYzdszFWCOGV6sg==
+X-Gm-Gg: AR+sD12ru14eo1H7NtnTv8+Fxrror0cMFg9xLrESrLFvG1IDwD113QK324ucJu64lMV
+ LSWqwduokulkrYi6wFQxOSnGV7jkfXr1nb34yKAWpDeKlZB83S0OLdRffLh19AZ+ptI4Zq6nLx6
+ ByROCId7SMpiC5NqLfa/iZdyT13NAOVivubllJ/e17zAsR54MA+E4Q1JR+DGPZ4VfoIpyUI2n6j
+ fk13oFr0Dk+3vn9HernjLOof+86OWTiQAereKtN0wGvklZ4HCn8QW2NANjYJWY7YNZQlRK8d2yf
+ RQO+QI0PqQTrlCV4yNdwhhGLIw4QOUU7hLzBau0DqJPe/Q3bEivk2UAPpAbgKdW7TjicvPHuf+9
+ WuvLMU4vcwAP8NH7Z+GTbrg==
+X-Received: by 2002:a05:600c:1395:b0:495:6b8f:7e7a with SMTP id
+ 5b1f17b1804b1-496b564afa3mr71376675e9.0.1785101374605; 
+ Sun, 26 Jul 2026 14:29:34 -0700 (PDT)
+X-Received: by 2002:a05:600c:1395:b0:495:6b8f:7e7a with SMTP id
+ 5b1f17b1804b1-496b564afa3mr71376525e9.0.1785101373988; 
+ Sun, 26 Jul 2026 14:29:33 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85b9a5c4sm43206628f8f.8.2026.07.26.14.29.30
+ ffacd0b85a97d-47f85bb5a46sm41983877f8f.9.2026.07.26.14.29.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 Jul 2026 14:29:31 -0700 (PDT)
-Date: Sun, 26 Jul 2026 17:29:29 -0400
+ Sun, 26 Jul 2026 14:29:33 -0700 (PDT)
+Date: Sun, 26 Jul 2026 17:29:31 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PULL 12/30] virtio: fail early on bad config_len in migration
-Message-ID: <b7fa4bcd589284aaa24222ba6065a3af4ba39a02.1785101237.git.mst@redhat.com>
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Raphael Norwitz <raphael.norwitz@nutanix.com>
+Subject: [PULL 13/30] vhost-user: assert nregions within limit
+Message-ID: <98f24e6bf2ad437d779fe36eeec87b89a3cb8c56.1785101237.git.mst@redhat.com>
 References: <cover.1785101237.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -96,15 +97,15 @@ Content-Disposition: inline
 In-Reply-To: <cover.1785101237.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
 X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,49 +121,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio_load() attempts to load config_len bytes from the migration
-stream. If that's huge (e.g. 4g) this will uselessly spin
-beyond the end of the stream for seconds. Not nice.
-Check qemu_file_get_error() and bail out early, instead.
+scrub_shadow_regions() and vhost_user_add_remove_regions() use
+fixed-size stack arrays sized to VHOST_USER_MAX_RAM_SLOTS and index them
+with dev->mem->nregions.
 
-Also note that config_len is int32_t but is coerced to unsigned when
-used. Switch it to uint32_t to make this clearer.
+nregions is calculated to never overrun these, but let's add an assert
+to make sure we don't get a stack overflow if there's a bug.
 
-Fixes: 2f5732e964 ("Allow mismatched virtio config-len")
-Cc: Dr. David Alan Gilbert <dave@treblig.org>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3891
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: f1aeb14b08 ("Transmit vhost-user memory regions individually")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3910
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+Cc: Raphael Norwitz <raphael.norwitz@nutanix.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <cfbefa358af5885eb386637216552bfeba5e7bbc.1784898922.git.mst@redhat.com>
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <48fb8411f67e525872fb19618a886e52b670ab7f.1784896199.git.mst@redhat.com>
 ---
- hw/virtio/virtio.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ hw/virtio/vhost-user.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 2766217ddd..979c4065b7 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -3505,7 +3505,7 @@ int coroutine_mixed_fn
- virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
- {
-     int i, ret;
--    int32_t config_len;
-+    uint32_t config_len;
-     uint32_t num;
-     uint32_t features;
-     BusState *qbus = qdev_get_parent_bus(DEVICE(vdev));
-@@ -3553,6 +3553,9 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
-     qemu_get_buffer(f, vdev->config, MIN(config_len, vdev->config_len));
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index 517cc4ca71..2881cec72d 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -946,6 +946,9 @@ static int vhost_user_add_remove_regions(struct vhost_dev *dev,
  
-     while (config_len > vdev->config_len) {
-+        if (qemu_file_get_error(f)) {
-+            return -1;
-+        }
-         qemu_get_byte(f);
-         config_len--;
-     }
+     msg->hdr.size = sizeof(msg->payload.mem_reg);
+ 
++    /* Ensure nregions fits the fixed-size arrays used below. */
++    assert(dev->mem->nregions <= VHOST_USER_MAX_RAM_SLOTS);
++
+     /* Find the regions which need to be removed or added. */
+     scrub_shadow_regions(dev, add_reg, &nr_add_reg, rem_reg, &nr_rem_reg,
+                          shadow_pcb, track_ramblocks);
 -- 
 MST
 
