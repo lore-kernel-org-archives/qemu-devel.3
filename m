@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 475B1C53209
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 20:12:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFA5CC531C9
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 20:13:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wo5CF-0000qs-Mo; Sun, 26 Jul 2026 16:11:39 -0400
+	id 1wo5E0-0001Ge-5G; Sun, 26 Jul 2026 16:13:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wo5CD-0000qg-6G
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 16:11:37 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wo5Dy-0001GW-Tl
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 16:13:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wo5CA-0000KO-AX
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 16:11:36 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wo5Dx-0000NG-6e
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 16:13:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1785096688; bh=CyO2knOwGjDDxnOoT6Wn+Yd/AxCN3v8nruqmnubJUis=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=jgHn16AT/bWyNjYNSxaVLeYSZldLzHHYY3aCQVUO3ykft1Vd5ZyuK3pXehMQU84GV
- 99Y/guGh/rLj53P7kvumpBYhRFPn7jX2Y/SUVCZ7Xfx2V+N1td94M7/36+1rL1kdb/
- BQko1o3gB8k7IRr0YHkMiO/v2RqBnQgC9aJIZHkHaDioT6OS/UOkVaZBXLQffMHEzf
- XXxldciDP7XjaJCNM2jrXyqbtX89C6TtvSBHLchDMODxl9ebQUk9yBvugG/V5bRu5b
- ZAojlmBk/B5RjK8Rbcpj2CFX46tBQrjf3SPMBozCyH1lEa6ZF2VUyrmlLP/nEV0+9+
- NPQCC0iNCQdrg==
+ t=1785096801; bh=yASBYfP4hWB6G3SpR0ZcKi7RgPfIzJMNeOjBxXWhMrU=;
+ h=Date:Subject:From:To:Cc:References:In-Reply-To;
+ b=TEU6uz++VdoTcNv0X/VkfVPCdYJjpknASzugm3UylKle3po5hmcGZYmIJIiUdaWWl
+ 4i6Iukc+Ov1ox3QwWrRwtJOuJX/ijMgCu1mbMV7OysHku+j/0mHs+rU5h7Ri+H+81l
+ 6FAXktO27vedCUSPWLPH1g9rHFBIzqv3CuTTsX1ydzaHQUTBHX1pDpOVAdw2hTzRV2
+ gOdwmsvWL11Cw31XAV0ji9JeAfqKCa0tzP6vwfzQhA/bN35uJ9pXegwu15iaN+g9v4
+ 4MxhgNCddDVn3cnxHS5RvLiBLwJX3Kzxw+FaO0SFsqpLn09zFELG5K3bi/eB3yHge4
+ Fp1/XLZ8dUNLw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0CCDD1C4E33;
- Sun, 26 Jul 2026 23:11:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 53B0C1C4E35;
+ Sun, 26 Jul 2026 23:13:21 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id F3DEB3F6B59;
- Sun, 26 Jul 2026 23:11:28 +0300 (MSK)
-Message-ID: <e481f911-1f01-450f-821a-6d63cb4bbec4@tls.msk.ru>
-Date: Sun, 26 Jul 2026 23:11:15 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 57F2B3F6B5A;
+ Sun, 26 Jul 2026 23:13:22 +0300 (MSK)
+Message-ID: <51290ff7-847e-41ed-b197-4e6032692e81@tls.msk.ru>
+Date: Sun, 26 Jul 2026 23:13:09 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2] linux-user: Guard local FUTEX_CMD_MASK definition
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Richard Henderson <richard.henderson@linaro.org>
 References: <20260722123545.743792-1-clg@redhat.com>
+ <e481f911-1f01-450f-821a-6d63cb4bbec4@tls.msk.ru>
 Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -88,7 +89,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260722123545.743792-1-clg@redhat.com>
+In-Reply-To: <e481f911-1f01-450f-821a-6d63cb4bbec4@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -114,43 +115,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/22/26 15:35, Cédric Le Goater wrote:
-> Building linux-user on a host with Linux 7.2 kernel headers fails with
-> a macro redefinition error for FUTEX_CMD_MASK. The kernel commit
-> 3ca9595d9fb6 ("futex: Add support for unlocking robust futexes")
-> expanded the mask to include the new FUTEX_ROBUST_UNLOCK and
-> FUTEX_ROBUST_LIST32 flags, which conflicts with QEMU's local
-> definition.
-> 
-> Add a #ifndef guard so the host definition takes precedence when
-> available. The local fallback is kept for older kernel headers
-> (pre-2.6.29) that lack FUTEX_CMD_MASK or define a mask without
-> FUTEX_CLOCK_REALTIME.
-> 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   linux-user/syscall_defs.h | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-> index 5799769f832fd953fe731a33ad7746113dff9957..e033c7db341622e825da6457b1539dd2682b711f 100644
-> --- a/linux-user/syscall_defs.h
-> +++ b/linux-user/syscall_defs.h
-> @@ -2593,7 +2593,9 @@ struct target_drm_i915_getparam {
->   
->   #define FUTEX_PRIVATE_FLAG      128
->   #define FUTEX_CLOCK_REALTIME    256
-> +#ifndef FUTEX_CMD_MASK
+On 7/26/26 23:11, Michael Tokarev wrote:
 
-It would be nice to have /* since linux 2.6.29 */ here.
+>>   #define FUTEX_CLOCK_REALTIME    256
+>> +#ifndef FUTEX_CMD_MASK
+> 
+> It would be nice to have /* since linux 2.6.29 */ here.
 
-But I wonder - if we really should care about such old kernels?
-Quite a few qemu-user internals require more recent host kernel.
-I guess it wont even compile with 3.x kernel headers :)
-(this is why a comment like this is useful).
-
-Thanks,
+(I can follow-up with such comment later, fwiw).
 
 /mjt
-
 
