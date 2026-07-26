@@ -4,128 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 260C7C531C9
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 17:54:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEE88C531C9
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 18:22:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wo32V-00068p-5J; Sun, 26 Jul 2026 13:53:27 -0400
+	id 1wo3TM-0001YZ-RD; Sun, 26 Jul 2026 14:21:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wo32T-00068O-0d
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 13:53:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wo32R-0002hI-HY
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 13:53:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785088402;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jIi4J1lETdJXnYiMKEJJBoPZhci+fIKHPnY2NG53otA=;
- b=QxqMC+IQfp9WXtshhSehozTDaBSV5bfPBTssJ1QKfG6W0N3OtUnH1P2cbWl4hJdunUaDLH
- NWGqZQqrsl4tdghBIzvUMEGLurYsXMEMJ6DiyE6WJ7FoHxUvglBZyrxwXahHO+aH3Ct/Yf
- IeoDpOU0Koi6yC5O8895dHKcp9Hs5pw=
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
- [209.85.210.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-187-Zr4urT9ePyOviCne02CSbA-1; Sun, 26 Jul 2026 13:53:18 -0400
-X-MC-Unique: Zr4urT9ePyOviCne02CSbA-1
-X-Mimecast-MFC-AGG-ID: Zr4urT9ePyOviCne02CSbA_1785088398
-Received: by mail-pf1-f197.google.com with SMTP id
- d2e1a72fcca58-84842381150so3366623b3a.3
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 10:53:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785088398; cv=none;
- d=google.com; s=arc-20260327;
- b=Tta7xB2jESJZfUnQMt+Iht5OPaUNEFkeLeuIHaPYQGYFpWHm5qERUurD+nSjGwy6Kq
- HgUpD+yFrSTbHjin0jR81ArAl5e75OXksbaUyqxNHERYSjC3KCumBVf8opvY2chugesh
- V+RT56+SGgLayZRr2gS5Vvx3417p0xcHw5GQXPJGB7yqvYn1pDizNSCQQzzfNPUNoRE6
- 1gcq7zYBNJK8HZJ08cB6rWyS9Ha1z9nym5LF/OTGVV5ukgNUmnYuv7Jc1FwB/S+3Sdgo
- 3Qn0yNgA3rDnHnEEGoqRs5W4odfGzoLJfm4Px2TlAFR1drVlqG7pJef6zIrDcxxSnvtb
- UGHw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=jIi4J1lETdJXnYiMKEJJBoPZhci+fIKHPnY2NG53otA=;
- fh=H43sBeeAJt7YELhQKIaki7qmlCjYtNabp1Cv/0P75oA=;
- b=rfAiqFtk7cuC3V5jgcgvYrfIHpu/3YNM8tkxL9yBGMIPuJmLYG8ayiE60pdOh297f3
- 1AAVKahkt6JnGyXzZLP3dwzug3UHPfZ5D96ET11SMew+B96unrtT2jrLcwHJwB6fhdmu
- TTAos32FFi9dVPD9CQ/vCbNVZjlQsGg99kQ/f5rQH/0tGNOSRqJBqt4+KLlxm7ooWTmR
- nJA1c/ZKOonYp1KmhOzudPPYawsbArV1YLLnpJiQoLzEJqATu9Z+tUug0uMZxVka+/XX
- MGGUERC6Eb/wJL6Sza8AP+ZTiV3t4n38r3nEl2PyHDK/Xoaf4vINSM3b8ejTGY9ceQSD
- W8Dw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wo3TK-0001Y8-Sa
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 14:21:10 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wo3TI-0005cK-5Z
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 14:21:09 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-84e0688b859so1080494b3a.0
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 11:21:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785088398; x=1785693198; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=jIi4J1lETdJXnYiMKEJJBoPZhci+fIKHPnY2NG53otA=;
- b=V3A8ONicnDCjPcdAD2xIRDMytStD8c2NFpK4oVQCNvm1HVhB8a7lp3IEme/29c8MLf
- ulWd3yMxMpUE57TMrmqdyC1IzPNW2iDxpQYML0iChFnJPY1Jg0EjFSOC0VEYQYSulHSG
- FrWd+af/+vkOm1YWbpK5/0wcKSBWFLSHzlGJ+TQX1D/9xzBtj/0NgKTmSsT+9TFhavLA
- vL49qpI/YEbP8NQi+DInrme9zdBe9dpySqd6a/Yk53lcmt6CuqGTN+hvvRBI0aHOyKcX
- N+zqzehroSi2ieWsJ0Tq5Z5deLS/V56n8WB5Kf4287lr8j8PVtv9ZFUGYhvwMGkHaf0q
- s4IA==
+ d=linaro.org; s=google; t=1785090063; x=1785694863; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=QDU+ZHNO7rWwr1cOhbdM2Jjjk98f1gVA6Xi2z07i7yo=;
+ b=kHc1DeM9Y+Z5J5int+Aw/AgI58WRaPfk4kkIXiniOsSd3Jjf7XW4FxkejBGcvgD4nk
+ G/RYtTHTfEavAW3VZpnz09EBqNiNa6amFZCBE/H/t8gpy0gbsj3CdoibkDgou4H+rRiO
+ l5H7Y1T1QHtqQJtdYlOJjr0Xs9aPsf2Pb5DU3/V2Qs0gq5oJUEzl/QP1RxEg0qSS+jPS
+ F/gzNS4Tmr56n+EAm+yGs4hqQI6v9zoQIPKS/OAZb61xfQ2i6fYbKogRZl4Meukrt5qq
+ SOsJ9RmfCa8fwzfIUglrVWotu0qnORKuMu+xI7l0+LSFUmenX3fvAMx8WbIuOUVPJPU/
+ Zb3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785088398; x=1785693198;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=jIi4J1lETdJXnYiMKEJJBoPZhci+fIKHPnY2NG53otA=;
- b=DoZs/OKORcfTMXT3D8Kh7y2rNM5v21VHQRbXTKF0wD7fH2XUq7WY9B9kAXOczhQY0+
- /Q12daWbaIrDIUIjBZEdAlj/QP2ixM1a7q8I9KisDP6HEgl9CeVSsUHmAsuY61FrOSTv
- Mg+fmB3lvD4fnjUAD7gWjnIxMCclZQds0ggMXfT6mTBo0eklO8A1HP/4Jg4I+rhpCT2l
- v61qcz/PEmJLCnkKIhQYJLQXYaMc7ipdTk81+TLaQiiq7VOHcd/Bkfnd1zwv2CNZ2C5E
- 2zB18p3QXeOcEpu1ZzFHBhQt/YQB6i5rFPS8xv5WxyyL6Q2cutFYuvaNe5OCky6mq3/F
- 5QKQ==
-X-Gm-Message-State: AOJu0Yw8sKnoTnBj/js/vg7lJJDle7GDu5VFS3Edmy9CXF2lHimMCTV3
- /q0t34ILlXWVu+xEgRWZkAtOuPY/0ANdTAvA0KjIs9EslFbzogcwoFD61wcQzoa8C6t2z3bxgrQ
- 4FoBqepcm6zg/vwndsG8Wz9oYnWUMTNYObuZL3PlloD3wUKAlCD63F27QSySRlFZWNntexH1wnz
- r9CwsN6gND1BfTSoYPo+i2ZcKNkJdYsB8=
-X-Gm-Gg: AR+sD10UkYlaEY1Ih3CxvV61Xph8qehePDkf/JlrpAyZQMi2e11KMhnbGXMbf2wDxWx
- Of95jub8Goj8O+Zm1yWtWVfH9ho6conrmwlz0x5xv7w2zdIreHLuAndS+AO/uP2sPxfwRYnvvio
- 0+T2JQvRmwYg6JOYaWj4B0WNkHzjdYfB2Tw6K5VBXXznswFXQCSW1KN3/L8vimDV1w8oJi6DWzL
- O83rQYSEFK4d+HRwV5+dw+kBwP+L0Jb1lxuCbSuE0P7f4YX1LdoLvh6BiLkhJctHAw7KtXzgY8w
- 7Q==
-X-Received: by 2002:a05:6a00:99e:b0:847:7ece:3426 with SMTP id
- d2e1a72fcca58-84e595b6f99mr4490080b3a.58.1785088397760; 
- Sun, 26 Jul 2026 10:53:17 -0700 (PDT)
-X-Received: by 2002:a05:6a00:99e:b0:847:7ece:3426 with SMTP id
- d2e1a72fcca58-84e595b6f99mr4490059b3a.58.1785088397248; Sun, 26 Jul 2026
- 10:53:17 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785090063; x=1785694863;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=QDU+ZHNO7rWwr1cOhbdM2Jjjk98f1gVA6Xi2z07i7yo=;
+ b=lbx1oyeLzq63rj0XP1/39XpDWQtBI40kimvpyf3BO1CIq90MmkN7CrjdPRs//xq5tE
+ iSdSpWknk+z1tc0xFN93vf+ZChPzmmNvcjwH1WX7ngFU5Xa+kiJXzD8m7OeCJqRqR4Sx
+ M/+8cMrj5UIQZooXSnVJ6OnCVSsY6Z8qjKK3eUlEpzrRkctKlWmbdSo45HT0XK5oMT8g
+ LhkpgE5+qeD4lxbhUWVhCPX2eWtsgoUqZqTdyZf134WbyWLWp5Q7caMqf6ysaGLovu0l
+ 7w8xKMlJSnyj9r66iHf5GK0m9KX7nvwENP+PrortgmNRG+NSOVSOiI1AI+W974HhtS94
+ BAnQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RppNdUGJfM9e8/8hx6Lx6AQueBGbBlMi03Czy1/oJP0rBO0KFwSnYBuANvP2lGN3kbIwjBbKtEGwT1m@nongnu.org
+X-Gm-Message-State: AOJu0YxBaooY3t4GGb89XY0IgIU8DNu2V+bkzH92PanYUjInlmYFoIy1
+ /xnzvh3lZb8T+u6+2AnJkYBuz/marlpTZ9KKcd9Zq8ZA6OVQgLucMZ3g2GOGC5e5A/s=
+X-Gm-Gg: AR+sD10DRbAgGdzs5dD23Gr8VPl1txvioL1aTaC4DbzoXpxcs1+ubo7JDckW5SYDE5g
+ LgMJW8lQr68RWHVve03OAyFGBJkRAYWuJ8fghv3XOfIo1k1CINhjUc2q17mXFqqsC0qplGxE3Lj
+ 4kjwE8yxAc8XCprx2AqD7oFTdOvB65GaTVz77VlezqTVVvmsIkhwhJNkgbSuSLQJXz1g3vHcHbN
+ dVQXIMWy1vKKD/s74WPLJr86+9JVHXEHpWGlxFjK4Q8Hqh24VOYc9xOfksK8Qe2ECWpxRAzRcRl
+ KSG5BnDDiuz+o6bi4nvOX/oCUQAJ1IwYAMOhRAr0Nnz6J6efteE7iN5pCdexjq9Hm5qoiOJkIT9
+ rrHR9LPVluR1kfm9TUqmiDfm/dsTENZWc7UulszG6u5B05mz40fnyv1KtXlec5Jn1T2lruL2eFQ
+ Kdw5BvWVoMXK/3+GCh7hJhiQX1zI/b0gn+Sx6Ke29TTQ==
+X-Received: by 2002:a05:6a00:852:b0:848:2c6c:dfc0 with SMTP id
+ d2e1a72fcca58-84e59443916mr4435550b3a.24.1785090062991; 
+ Sun, 26 Jul 2026 11:21:02 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-84e5327f54esm1987311b3a.20.2026.07.26.11.21.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 26 Jul 2026 11:21:02 -0700 (PDT)
+Message-ID: <484d9db5-7602-4f1f-b323-0ba0e5c86219@linaro.org>
+Date: Sun, 26 Jul 2026 11:20:58 -0700
 MIME-Version: 1.0
-References: <20260706-fix-v1-0-4b83a70e9f3b@redhat.com>
- <20260706-fix-v1-2-4b83a70e9f3b@redhat.com>
- <f83491f5-6ef7-45ba-bb84-26341835cb25@tls.msk.ru>
- <CAMxuvaxUWc=Qr9pQQ6wW6XnAzp4mf77aYpcFuXvret1KL_W9kA@mail.gmail.com>
- <0b2bf915-d2d5-4a21-8ee1-d11427476d40@tls.msk.ru>
-In-Reply-To: <0b2bf915-d2d5-4a21-8ee1-d11427476d40@tls.msk.ru>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Sun, 26 Jul 2026 21:53:05 +0400
-X-Gm-Features: AUfX_mzdyOTg7oGlxIx6xGY_PtSWre_pu099X_1m5CsN4Ftnt1xnlq8cov7GDHA
-Message-ID: <CAMxuvaxU3HJwkyvD0WtifFCMfcivNiUTK4U9Yg0j7cpc5LXLaw@mail.gmail.com>
-Subject: Re: [PATCH 2/5] ui/vnc: fix OOB write in vnc_refresh_lossy_rect
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/alpha: do not trap on Inf inputs to bare FP
+ arithmetic
+To: Matt Turner <mattst88@gmail.com>, qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>
+References: <20260726005601.2513662-1-mattst88@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260726005601.2513662-1-mattst88@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -142,39 +105,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On 7/25/26 17:56, Matt Turner wrote:
+> helper_ieee_input is called for each operand of bare (non-/S) T-floating
+> arithmetic instructions.  It was raising EXC_M_INV for any value with
+> exp == 0x7ff, which covers both NaN and Infinity.
+> 
+> This is wrong for Infinity.  Infinity is a valid arithmetic operand;
+> operations like Inf + finite, Inf + Inf, or Inf * finite produce well-
+> defined IEEE results with no invalid-operation exception.  Only NaN
+> inputs and indeterminate forms (Inf - Inf, 0 * Inf) are invalid.
 
-On Sun, Jul 26, 2026 at 9:14=E2=80=AFPM Michael Tokarev <mjt@tls.msk.ru> wr=
-ote:
->
-> On 7/26/26 20:07, Marc-Andr=C3=A9 Lureau wrote:
-> ...>> Unfortunately this (additional) fix does not mention the
-> >> previous fix, so there's some confusion about which commit
-> >> actually fixed this issue.  It looks like the first fix was
-> >> incomplete and this additional fix were needed.
-> >
-> > That's correct, we reused the same CVE
-> >
-> > Daniel P. Berrang=C3=A9 said on the issue:
-> > We didn't release master yet. As long as we also didn't release any
-> > stable branches that claimed to fix it, we could re-use it IMHO.
->
-> Heh.  This is exactly what actually happened - there were
-> 2 stable releases on Jun-25 (v10.0.11 and v11.0.2) which
-> contained the first half.  Now there are 2 more stable
-> releases from Jul-24 which contains the second half.
->
-> Unfortunately I haven't noticed this duplicated CVE#,
-> or else I'd add a note to the second half in the stable
-> pick-ups.
->
-> I know you don't like me rushing things to the stable
-> series, and this is an example why this might be bad.
-> Fortunately this is not a regression, at least.  And
-> usually security fixes come in faster anyway.  Ohwell..
-> I'm sorry to disappoint you further.
+No, this is modeling actual Alpha floating-point, not IEEE arithmetic.
+Only normal finites are handled in hardware; everything else needs software assitance.
 
-for the record, I do appreciate your work, and I make mistake too :)
-Next time I'll check if a release was made already with the CVE#
 
+r~
+
+
+> 
+> Indeterminate forms are already handled: the softfloat helpers set
+> float_flag_invalid in those cases, which soft_to_fpcr_exc converts to
+> FPCR_INV in env->error_code, and helper_fp_exc_raise then raises the
+> trap.  No pre-operation check for Inf is needed.
+> 
+> Change the exp == 0x7ff check to also require frac != 0, matching the
+> existing behavior of helper_ieee_input_cmp.
+> 
+> Fixes: b99e80694cc6 ("target-alpha: Raise EXC_M_INV properly for fp inputs")
+> Signed-off-by: Matt Turner <mattst88@gmail.com>
 
