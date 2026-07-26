@@ -4,98 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2F34C531F9
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 10:19:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D463AC531C9
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 12:13:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnvwU-0004GB-N9; Sun, 26 Jul 2026 06:18:46 -0400
+	id 1wnxj8-0005In-24; Sun, 26 Jul 2026 08:13:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <randomjack94dev@gmail.com>)
- id 1wnvwQ-0004Ec-Bo
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 06:18:42 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <randomjack94dev@gmail.com>)
- id 1wnvwM-00032l-R3
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 06:18:40 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-667923d86a7so2359325d50.0
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 03:18:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785061117; cv=none;
- d=google.com; s=arc-20260327;
- b=V+5aXlGZLTeJ8I4Orvn3wJeL29KlCGASHqMwrs0nZMAo0MxkJzxZryisAX5K4cuD2+
- 3y3CLgoSw7TRtiNr51fQGPn2xHw9LL+a3lGSobjoe9A3chP5GxLuAl45zpg77Bj7itVi
- R5y14bZ8sisDyK675wZy9CbegjxfRY5ErWpQOLXaZIBeU5PPyM5PWGd2CuvQNZKScAbZ
- cmK7miJBscN7MBcN2Hgi8k9ndhxhX1RB8gXCv7z2mXn56UQ4bMsCajeNE1PWE2zaA6d3
- vvLkHYqZ965yztW+00hnlXpD8PofJ4FYHKu70AaSb+HD8PxhlPZnccsLEoqmv3M3IGRo
- gpzQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=EBjlcfDfIu3z/AJpw8nsv9CjirNhmFFiLD6FknCXBqg=;
- fh=w8E0DUJP32rtZI6BueBvqUbEMj+LBV/APR6eSOdi2ww=;
- b=YBr+sZp7FmlwA6SfjXBkg021rjCjZ9oBjKnSKXnbFvNF2PY74NSsek+gMrsPpv1nl4
- WFX6bYRFlH3wFo9oIWCzFwPqGx0QW9fPNkejKCS5ENyVWdr37baSDqKnoPjySJqmCCvv
- I5K6VFOR3cjxaIxFc02aaWM/hEmvBi6HGH9VTRMlGcnJJreFLltQRMIUHDdVrpRCt0+Q
- sKei8AMh08CRWF9I3C+Xh/dTo74WCEqmX5Uf9f6kjA5lrpy/R0uQJubnUQo8U3Msq8CY
- N8Qt8UWfIWPWrCQlWqzJOY7XXnGRgiDoZplHNTQvEQPtvgwD0OI1OFFh1wCrMquQhePb
- 2qdw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785061117; x=1785665917; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=EBjlcfDfIu3z/AJpw8nsv9CjirNhmFFiLD6FknCXBqg=;
- b=HlqlalY5C23Ulo5QBDMstv1upkRpR2vOa3zHD7C5dJykjZnJ0Fm7wEj50ahCTRT8HX
- RgBP1kPqqdCOIu8CkrqQUu/QLreYUigp+uLaiQmQLV0dZvJurE+xkSuXy/cemErwxlhy
- oN/s+0NLlqAISZjCW1yHhZF3p5OwfYQLzRTKgUxRAWhVp8P5PcTCXb691kWA/Ldvd9E3
- uklGjuHxW7tZwUOemfB1i1hwl/TNKqvro1NIjnS1l74A6jj9vi/hcAiPtrQofBe9CGOl
- z/Ipx+tqOVhDc9exYlwSO3zo4aLUlgQVvVTcGnPChb5km4heE0lcYJEgiKZ+qu1J/frR
- n7EQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785061117; x=1785665917;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=EBjlcfDfIu3z/AJpw8nsv9CjirNhmFFiLD6FknCXBqg=;
- b=PQwW+VTKkMYNId7zAHyHoXKcpgq10OIOLqOnm9uSXt/fu9Bc3CsPitgZ++z2kKSXJi
- BAu+mfDVjUDm7dQ0b2NuLDAB2fHQzO4wUnuTaUm9J9nsZnXACSFoT5GhmeaxN0RKJqQW
- cUlBIkePTfYDHG9pSf5lHzWLYoeTh4fFipYOBoXUeIZaZMmSgFwBHPIvWlCVN5TCM/WP
- IiNDckl7nuayCs5MJFzOV4MERLSHunOwa1OpOB58NGYspZC8QjlzTtgbjBWUn60Xhwl7
- 3tJ4MADzt7J6wMl0NSqVoYGRsafiFBMS+04PALqRF4Jnm9tasAyXaAKZVCYRvRVjBY4R
- PyhA==
-X-Gm-Message-State: AOJu0YzNaRpH9QfsSXK5Ya5Y3ZFkLMkpG898mgZ1E3FDj6GUi7FhtA+l
- 7ylfAl8gO361JXWabPRZfOf8oZTUsPMcgYj1EEr4Qbk3dgF7O1Fa42+GjiVLdNl69RPeLt+3P4U
- VFtkb3D5dATHKjS8PGg75+13J6rh4IuuCfUh7
-X-Gm-Gg: AR+sD13IhlQwgqNYki9Z2sjUnRGCBtSCoZAXLnSRpzsBqCCF5A8GiKDvakMMkU/7kME
- XdTTIFdpk4T1dH8iIvEuTGU7cW0S7EoJU056Q3QB1TefLi85qtyOAtgjf+s4c9mSExCMgCWQIfw
- ZF43wCpa/jAbxEtCjkq3KbP6A/H9CnO9hZWdHi1XVTCGSk4IMXoJEGol14GlQUpa9/NVzfzkUhX
- B1ZP0s51jNkxtSDOnZVIzFP9Mv/KDGM+CC51LEJ0TMyvUNLf3phjlEV/MufTG4=
-X-Received: by 2002:a05:690e:c4f:b0:660:6e93:1958 with SMTP id
- 956f58d0204a3-668c77a5de9mr1031044d50.0.1785061116962; Sun, 26 Jul 2026
- 03:18:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wnxj2-0005IR-8R
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 08:13:00 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wnxiy-0000bp-Tn
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 08:13:00 -0400
+Received: from [192.168.10.145] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66QCCovB095596
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sun, 26 Jul 2026 21:12:50 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=sjl6dtlSnz6pbipWRE4dFYBIPRdzMzplHIEkRrb4YtM=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1785067971; v=1;
+ b=k4leSQ4QnOqJwaRWunaBBptckvDJzmnSh6RFtjJbhnJ+bRZEHpHJXxP3TqEzviM9
+ uOVaMIk5SquUCkU4S9YU+8VfjmikfSuLHjK1UvmsuJLSsMa7/plDD/3m6bw0Ezlk
+ +ddCemaIDWJFsvqgxKNCFKZ9vpgd8in6d4UBgI4Q5xr2hulIlcTsyB6VAOCu7P2s
+ l1qAPM5CsHyD/SYBiIuKbF2BGUWfG/IdrsnETKAJnNA4QVbPJZVaq4f2kKbZfSe/
+ Pt7/0oGKx3KIfLJWyUe2hWCaaKxY0TH/ji88OJvRBEM/7kQG9+KtdpgubhJr5Y1u
+ 6Pnngxh6OIQxwP3SALI+kg==
+Message-ID: <a68ce753-da97-470f-b1df-4baf53079b54@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sun, 26 Jul 2026 21:12:50 +0900
 MIME-Version: 1.0
-References: <20260621130626.19073-1-randomjack94dev@gmail.com>
-In-Reply-To: <20260621130626.19073-1-randomjack94dev@gmail.com>
-From: Evgeny <randomjack94dev@gmail.com>
-Date: Sun, 26 Jul 2026 13:18:25 +0300
-X-Gm-Features: AUfX_mxV2vda-b72waRc3wykuOXWTVQJv31SzDsbGRv951ImIx3_0Y6U-iaIKbg
-Message-ID: <CAFvcSaTjtztrJvc72e8i3gaGcfhkBVEVURJZxvSsHtpuA987kw@mail.gmail.com>
-Subject: Re: [PATCH] util/oslib-win32: Implement qemu_get_pid_name()
-To: qemu-devel@nongnu.org
-Cc: sw@weilnetz.de
-Content-Type: multipart/alternative; boundary="000000000000c76cb8065780edb4"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=randomjack94dev@gmail.com; helo=mail-yx1-xb135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] virtio-gpu: use g_try_malloc to avoid guest-triggered
+ abort
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: akihiko.odaki@gmail.com, mst@redhat.com,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+References: <20260725192116.291685-1-marcandre.lureau@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260725192116.291685-1-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,129 +76,219 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000c76cb8065780edb4
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-ping
-
-https://patchew.org/QEMU/20260621130626.19073-1-randomjack94dev@gmail.com/
-https://lists.gnu.org/archive/html/qemu-devel/2026-06/msg05258.html
-
-On Sun, Jun 21, 2026 at 4:08=E2=80=AFPM Evgeny Kolmakov <randomjack94dev@gm=
-ail.com>
-wrote:
-
-> Replace the abort() stub with a proper implementation using
-> QueryFullProcessImageNameW() and g_utf16_to_utf8() to retrieve
-> the process executable name on Windows. Returns NULL on error
-> to match POSIX behavior.
->
-> Signed-off-by: Evgeny Kolmakov <randomjack94dev@gmail.com>
+On 2026/07/26 4:21, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> Use g_try_malloc/g_try_new0 for guest-controlled allocation, so failure
+> returns an error to the guest rather than crashing the host (glib
+> behaviour).
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3898
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  util/oslib-win32.c | 19 +++++++++++++++++--
->  1 file changed, 17 insertions(+), 2 deletions(-)
->
-> diff --git a/util/oslib-win32.c b/util/oslib-win32.c
-> index 5f3e8f4d98..2b083b5d7a 100644
-> --- a/util/oslib-win32.c
-> +++ b/util/oslib-win32.c
-> @@ -287,8 +287,23 @@ bool qemu_finish_async_prealloc_mem(Error **errp)
->
->  char *qemu_get_pid_name(pid_t pid)
->  {
-> -    /* XXX Implement me */
-> -    abort();
-> +    HANDLE hProcess;
-> +    WCHAR path[4096];
-> +    DWORD size =3D G_N_ELEMENTS(path);
-> +    char *name =3D NULL;
-> +
-> +    hProcess =3D OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE,
-> (DWORD)pid);
-> +    if (!hProcess) {
-> +        return NULL;
+
+This is:
+
+Based-on: <20260710134720.2317856-1-marcandre.lureau@redhat.com>
+("[PATCH] vhost-user-gpu: fix integer overflow in buffer allocation")
+
+This series lacks handling of NULL pointers returned for empty 
+allocations, yet another C quirk.
+
+>   contrib/vhost-user-gpu/vhost-user-gpu.c | 25 +++++++++++++++++--------
+>   contrib/vhost-user-gpu/virgl.c          |  6 +++++-
+>   contrib/vhost-user-gpu/vugbm.c          |  5 ++++-
+>   hw/display/virtio-gpu-rutabaga.c        | 14 ++++++++++++--
+>   hw/display/virtio-gpu-virgl.c           |  6 +++++-
+>   hw/display/virtio-gpu.c                 |  5 ++++-
+>   6 files changed, 47 insertions(+), 14 deletions(-)
+> 
+> diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/vhost-user-gpu/vhost-user-gpu.c
+> index ee9858c397ce..3d9c103ff88f 100644
+> --- a/contrib/vhost-user-gpu/vhost-user-gpu.c
+> +++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
+> @@ -487,7 +487,7 @@ vg_create_mapping_iov(VuGpu *g,
+>                         struct virtio_gpu_ctrl_command *cmd,
+>                         struct iovec **iov)
+>   {
+> -    struct virtio_gpu_mem_entry *ents;
+> +    g_autofree struct virtio_gpu_mem_entry *ents = NULL;
+>       size_t esize, s;
+>       int i;
+>   
+> @@ -498,17 +498,22 @@ vg_create_mapping_iov(VuGpu *g,
+>       }
+>   
+>       esize = sizeof(*ents) * ab->nr_entries;
+> -    ents = g_malloc(esize);
+> +    ents = g_try_malloc(esize);
+> +    if (!ents) {
+> +        return -1;
 > +    }
-> +
-> +    if (QueryFullProcessImageNameW(hProcess, 0, path, &size)) {
-> +        const WCHAR *base =3D wcsrchr(path, L'\\');
-> +        name =3D g_utf16_to_utf8(base ? base + 1 : path, -1, NULL, NULL,
-> NULL);
+
+This will reject ne_entries == 0, which was previously accepted.
+
+>       s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+>                      sizeof(*ab), ents, esize);
+>       if (s != esize) {
+>           g_critical("%s: command data size incorrect %zu vs %zu",
+>                      __func__, s, esize);
+> -        g_free(ents);
+>           return -1;
+>       }
+>   
+> -    *iov = g_new0(struct iovec, ab->nr_entries);
+> +    *iov = g_try_new0(struct iovec, ab->nr_entries);
+> +    if (!*iov) {
+> +        return -1;
 > +    }
-> +
-> +    CloseHandle(hProcess);
-> +    return name;
->  }
->
->
-> --
-> 2.43.0
->
->
+>       for (i = 0; i < ab->nr_entries; i++) {
+>           uint64_t len = ents[i].length;
+>           (*iov)[i].iov_len = ents[i].length;
+> @@ -517,12 +522,10 @@ vg_create_mapping_iov(VuGpu *g,
+>               g_critical("%s: resource %d element %d",
+>                          __func__, ab->resource_id, i);
+>               g_free(*iov);
+> -            g_free(ents);
+>               *iov = NULL;
+>               return -1;
+>           }
+>       }
+> -    g_free(ents);
+>       return 0;
+>   }
+>   
+> @@ -828,8 +831,14 @@ vg_resource_flush(VuGpu *g,
+>                   PIXMAN_FORMAT_BPP(pixman_image_get_format(res->image)) / 8;
+>               size_t size = width * height * bpp;
+>   
+> -            void *p = g_malloc(VHOST_USER_GPU_HDR_SIZE +
+> -                               sizeof(VhostUserGpuUpdate) + size);
+> +            void *p = g_try_malloc(VHOST_USER_GPU_HDR_SIZE +
+> +                                   sizeof(VhostUserGpuUpdate) + size);
+> +            if (!p) {
+> +                pixman_region_fini(&region);
+> +                pixman_region_fini(&finalregion);
+> +                cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
+> +                break;
+> +            }
+>               VhostUserGpuMsg *msg = p;
+>               msg->request = VHOST_USER_GPU_UPDATE;
+>               msg->size = sizeof(VhostUserGpuUpdate) + size;
+> diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
+> index 550fd03bf5c4..a9d22bb0fdd9 100644
+> --- a/contrib/vhost-user-gpu/virgl.c
+> +++ b/contrib/vhost-user-gpu/virgl.c
+> @@ -209,7 +209,11 @@ virgl_cmd_submit_3d(VuGpu *g,
+>           return;
+>       }
+>   
+> -    buf = g_malloc(cs.size);
+> +    buf = g_try_malloc(cs.size);
+> +    if (!buf) {
+> +        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
+> +        return;
+> +    }
 
---000000000000c76cb8065780edb4
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Valid empty commands will be rejected and reported as 
+VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY.
 
-<div dir=3D"ltr">ping<br><br><a href=3D"https://patchew.org/QEMU/2026062113=
-0626.19073-1-randomjack94dev@gmail.com/">https://patchew.org/QEMU/202606211=
-30626.19073-1-randomjack94dev@gmail.com/</a><br><a href=3D"https://lists.gn=
-u.org/archive/html/qemu-devel/2026-06/msg05258.html">https://lists.gnu.org/=
-archive/html/qemu-devel/2026-06/msg05258.html</a></div><br><div class=3D"gm=
-ail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On S=
-un, Jun 21, 2026 at 4:08=E2=80=AFPM Evgeny Kolmakov &lt;<a href=3D"mailto:r=
-andomjack94dev@gmail.com">randomjack94dev@gmail.com</a>&gt; wrote:<br></div=
-><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
--left:1px solid rgb(204,204,204);padding-left:1ex">Replace the abort() stub=
- with a proper implementation using<br>
-QueryFullProcessImageNameW() and g_utf16_to_utf8() to retrieve<br>
-the process executable name on Windows. Returns NULL on error<br>
-to match POSIX behavior.<br>
-<br>
-Signed-off-by: Evgeny Kolmakov &lt;<a href=3D"mailto:randomjack94dev@gmail.=
-com" target=3D"_blank">randomjack94dev@gmail.com</a>&gt;<br>
----<br>
-=C2=A0util/oslib-win32.c | 19 +++++++++++++++++--<br>
-=C2=A01 file changed, 17 insertions(+), 2 deletions(-)<br>
-<br>
-diff --git a/util/oslib-win32.c b/util/oslib-win32.c<br>
-index 5f3e8f4d98..2b083b5d7a 100644<br>
---- a/util/oslib-win32.c<br>
-+++ b/util/oslib-win32.c<br>
-@@ -287,8 +287,23 @@ bool qemu_finish_async_prealloc_mem(Error **errp)<br>
-<br>
-=C2=A0char *qemu_get_pid_name(pid_t pid)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 /* XXX Implement me */<br>
--=C2=A0 =C2=A0 abort();<br>
-+=C2=A0 =C2=A0 HANDLE hProcess;<br>
-+=C2=A0 =C2=A0 WCHAR path[4096];<br>
-+=C2=A0 =C2=A0 DWORD size =3D G_N_ELEMENTS(path);<br>
-+=C2=A0 =C2=A0 char *name =3D NULL;<br>
-+<br>
-+=C2=A0 =C2=A0 hProcess =3D OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, =
-FALSE, (DWORD)pid);<br>
-+=C2=A0 =C2=A0 if (!hProcess) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return NULL;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 if (QueryFullProcessImageNameW(hProcess, 0, path, &amp;size)=
-) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 const WCHAR *base =3D wcsrchr(path, L&#39;\\&#=
-39;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 name =3D g_utf16_to_utf8(base ? base + 1 : pat=
-h, -1, NULL, NULL, NULL);<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 CloseHandle(hProcess);<br>
-+=C2=A0 =C2=A0 return name;<br>
-=C2=A0}<br>
-<br>
-<br>
--- <br>
-2.43.0<br>
-<br>
-</blockquote></div>
+>       s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+>                      sizeof(cs), buf, cs.size);
+>       if (s != cs.size) {
+> diff --git a/contrib/vhost-user-gpu/vugbm.c b/contrib/vhost-user-gpu/vugbm.c
+> index 710d54529779..c05e3fd31746 100644
+> --- a/contrib/vhost-user-gpu/vugbm.c
+> +++ b/contrib/vhost-user-gpu/vugbm.c
+> @@ -13,7 +13,10 @@
+>   static bool
+>   mem_alloc_bo(struct vugbm_buffer *buf)
+>   {
+> -    buf->mmap = g_malloc((uint64_t)buf->width * buf->height * 4);
+> +    buf->mmap = g_try_malloc((uint64_t)buf->width * buf->height * 4);
+> +    if (!buf->mmap) {
+> +        return false;
+> +    }
 
---000000000000c76cb8065780edb4--
+An empty dimension will be an error and reported as 
+VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY.
+
+>       buf->stride = buf->width * 4;
+>       return true;
+>   }
+> diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
+> index e28aad94eead..c2a0babd47bf 100644
+> --- a/hw/display/virtio-gpu-rutabaga.c
+> +++ b/hw/display/virtio-gpu-rutabaga.c
+> @@ -360,10 +360,20 @@ rutabaga_cmd_submit_3d(VirtIOGPU *g,
+>           return;
+>       }
+>   
+> -    buf = g_new0(uint8_t, cs.size);
+> +    buf = g_try_new0(uint8_t, cs.size);
+> +    if (!buf) {
+> +        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
+> +        return;
+> +    }
+
+Valid empty commands will be rejected and reported as 
+VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY.
+
+>       s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+>                      sizeof(cs), buf, cs.size);
+> -    CHECK(s == cs.size, cmd);
+> +    if (s != cs.size) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: size mismatch (%zu/%u)\n",
+> +                      __func__, s, cs.size);
+> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
+> +        return;
+> +    }
+>   
+>       rutabaga_cmd.ctx_id = cs.hdr.ctx_id;
+>       rutabaga_cmd.cmd = buf;
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index d9e5b0110497..52f6dcf5d24a 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -615,7 +615,11 @@ static void virgl_cmd_submit_3d(VirtIOGPU *g,
+>           return;
+>       }
+>   
+> -    buf = g_malloc(cs.size);
+> +    buf = g_try_malloc(cs.size);
+> +    if (!buf) {
+> +        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
+> +        return;
+> +    }
+
+Valid empty commands will be rejected and reported as 
+VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY.
+
+>       s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+>                      sizeof(cs), buf, cs.size);
+>       if (s != cs.size) {
+> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+> index 4582444893bf..fed71131f346 100644
+> --- a/hw/display/virtio-gpu.c
+> +++ b/hw/display/virtio-gpu.c
+> @@ -892,7 +892,10 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+>       }
+>   
+>       esize = sizeof(*ents) * nr_entries;
+> -    ents = g_malloc(esize);
+> +    ents = g_try_malloc(esize);
+> +    if (!ents) {
+> +        return -1;
+> +    }
+
+A blob without the backing storage attached will be rejected.
+
+Regards,
+Akihiko Odaki
+
+>       s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+>                      offset, ents, esize);
+>       if (s != esize) {
+
 
