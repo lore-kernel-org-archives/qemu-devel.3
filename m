@@ -4,121 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2168C53209
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 20:53:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81561C531C9
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 20:53:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wo5q0-0006Qk-2U; Sun, 26 Jul 2026 16:52:44 -0400
+	id 1wo5qe-0006rR-F1; Sun, 26 Jul 2026 16:53:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo5py-0006Of-Kg
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 16:52:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1wo5qb-0006r1-JB
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 16:53:21 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo5px-0005dt-8a
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 16:52:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785099160;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Wt7wCGr/kWh/rgRmz0sqXsHGnxZnqsHOsUrRjkkQJfY=;
- b=HPl00+wYCKrIhZgSgrrSo5QQgu6lKc5xqotyhDAIxPpwshtPRL+AaIDcuL+53LWqY9muHe
- 3MmFvcW0Yrwfoke9AMlCrI4+mEA3da8hR7QSICr/d0nlKgQCA79N6qx23yVdQgeBvFeZal
- UtwXRw7fopQY0N1IQ3nBruhJ8KYSZIE=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-349-QhGb7yfZNNex7Uz63X69_g-1; Sun, 26 Jul 2026 16:52:37 -0400
-X-MC-Unique: QhGb7yfZNNex7Uz63X69_g-1
-X-Mimecast-MFC-AGG-ID: QhGb7yfZNNex7Uz63X69_g_1785099156
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4954c2d4081so15437055e9.2
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 13:52:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785099156; x=1785703956; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Wt7wCGr/kWh/rgRmz0sqXsHGnxZnqsHOsUrRjkkQJfY=;
- b=OSrfIz/hqmJxr39xyONK1O/vDm52+7p+EX2sXyl3FagcsWgM5GYfdXreGAUoXlcSdl
- B/1NGvvTyoKPeUdNF5HSuLh+eVRjiiTudhwpDdZz652n4UFG+QMmAz61dTvn0Rq5TFCk
- hkc9ToBae7eQVF1/NU3IF9bt4NU7wfbgy6gOdFTGNRUIiGTMXFzi1IvFqodPwAadOZEt
- VwK8rP281WFGcnOBTAau30DWbASnVT5ECDUb7Bodw477RKXecaKSgeY4SxCYlX7I4D2h
- qyEsc2bELsag+B6ho8Fl1vIDWoaP8tTbUghz+Elk9MpcoYzNzeb/XKLEb+fv2l63n+js
- zfug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785099156; x=1785703956;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=Wt7wCGr/kWh/rgRmz0sqXsHGnxZnqsHOsUrRjkkQJfY=;
- b=hF9tn2HaT/UZR9b8+ygWv9wXSsbp2sz2eV8cQT2lK1a2n+gROsPz75I5zVk5IAm/08
- CBPqQj2jf7MdTG7KY4+OLz6FwVlBr7wCSJKj1kLiaH+m1y8WiD9SQ58eeBT23REzu6BP
- kGF4XraIqcyFol9vS33xods/jr3Yghfu+vdT+Jd0IimO1JV8wjq0/ZM9Z+jU5sfFJ7vb
- aY5an8IWAk8R+KpxbghmiKei/78MwCkxvliWlSa1t52DyIT7HDwAuxGnFoGqwmlqQVaO
- ibdCblnp25TUyYuSB+Kj4UFbAs1gUcLgdOV7fFtuCRsZ8shhsSvnJC/1vEW5+bZDXhqs
- zB+g==
-X-Gm-Message-State: AOJu0YzT38TnJ/91xL3QG6TP5EqQCsCbjXhKZSGRAsfFOjfy4yMtlzlV
- lInntJ5PynwWnx5KLNKSB2dF/EErMxheUgXT+4pYfYyW6wrJ5AgkbTnRepBK3wKtBgxlvJGk9Kp
- vlCUKO/hqQ6k8Z2B1rLsq/EQnQxTdw9fQLnSCLCI+fg6G26Cg99Cg16qe
-X-Gm-Gg: AR+sD10VEyR7b8/UqlJTL6ZJWktMjMbJ7qrIBAmvIXQPTsM5/vmBCcuAD/c7C2hBeax
- xdLwX8bhsOfb/GQZsPjO0So1leKroQcLgz8esILMj9b6hhhp0viQvOLsCH4+3oJalzEuPwZXNt3
- BLEtNStCWiBW6z+tB9xV0rLp+9SGSw7XZe30vR5rvLqiKbkQUQ+AZD9x6oAjWhsPS1dGBcuqcR0
- vZTxoxE4tNeHhcH+7H877EjB6FLE8A3mLhEbobxhg8Ip5OM6pG2J2GPUoNdwkWW36XbCm97k7Wc
- 200o2w3yq/pEXrr57JjbRLxkF4qV13mPtqhxKgeovebkqxHhAFhljucnxbsj3vSJvMJiH8AYdN6
- reGcDEhSp6hA5ysAK1cAqCA==
-X-Received: by 2002:a05:600c:1906:b0:495:3a52:cd7e with SMTP id
- 5b1f17b1804b1-496b5700144mr88493915e9.25.1785099156263; 
- Sun, 26 Jul 2026 13:52:36 -0700 (PDT)
-X-Received: by 2002:a05:600c:1906:b0:495:3a52:cd7e with SMTP id
- 5b1f17b1804b1-496b5700144mr88493725e9.25.1785099155846; 
- Sun, 26 Jul 2026 13:52:35 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4957bd9e980sm192229905e9.0.2026.07.26.13.52.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 Jul 2026 13:52:35 -0700 (PDT)
-Date: Sun, 26 Jul 2026 16:52:30 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, Jonathan Cameron <jic23@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Wei Liu <wei.liu@kernel.org>, linux-cxl@vger.kernel.org,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH v2 07/12] Fix some -Werror=maybe-uninitialized
-Message-ID: <20260726165049-mutt-send-email-mst@kernel.org>
-References: <20260727-fix2-v2-0-d0c4831ed7ea@redhat.com>
- <20260727-fix2-v2-7-d0c4831ed7ea@redhat.com>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1wo5qZ-0005sS-FA
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 16:53:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:References:Cc:To:From:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=XjNFehtKTJKdm6vs8roXQTZv4jBMDx2x6joMN+TcOZI=; b=w4h2MbENx4xKyrhsgASGzl3uib
+ jv6LFfToPLPtmlGlxBZBkX+OQsQJZkkGYLBPXdUqnRhDl04aefsT8Qr7mzFogtsEc22d+iSJw8iW3
+ 53SvkKJZqL+5mSm85mOO33nVp4QkipSIewrKKiJcQoo+BT+DrZttDfRRhvWMSfYGBkhXj1kbvt/rm
+ ntXJqdtfuV3nLz2dqAQiql1bIwyIHx3pBxltO4fygqHLS/LuE8usmYlNHZZwybPpBEsyYwCY81OpN
+ klFDI9jv1aDQpy5iz2Z7x0cfB2JvB/6vBMWE/yqORdb9gQlLJn1wyq4SKFItFI4HswR5Tv6sIN2DB
+ ZyVeTJdcc1bIJbX/HNJ5h0VxN68JSBDeTuthLPkUF4nc4AWA6n+cQwaEpmb14Y2Vegw3JwaNq9zmf
+ CobvqeIwISoGYfMnwyNk+MdliMvo4MANEb2Byx87o46edoJ+7qZJFu6CrhyN943wOlIK3xbzpEr57
+ Cq3787HAzVh76Oh1UKt15x02u2A2R2lfm5mfFnEOHXkSLU093vzxC13n0TpRPUTsRB1uMy4rOaRPe
+ usFAQsI08Knn2JbaCJcrtLqQ5Uvub4+JFEUlp9fQnvwFWx+vy7+1oexGlrdM0UV7H7m7GYggdsuY5
+ Fw6yMq1HwigqN2f9HOYXtDs32uFz2Mdra1oA81cqg=;
+Received: from [2a02:8012:2f01:0:d527:7a5c:938e:d16d]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1wo5qL-004iw2-K5; Sun, 26 Jul 2026 21:53:06 +0100
+Message-ID: <4b6f6450-74ce-497f-b487-71fadf97dc3c@ilande.co.uk>
+Date: Sun, 26 Jul 2026 21:53:13 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: qemu-devel@nongnu.org
+References: <20260707213237.494636-1-mark.cave-ayland@ilande.co.uk>
+ <20260722011530.GA2116566@ax162>
+ <f4be0cc9-68ae-4f83-a40b-9af84109c54f@ilande.co.uk>
+Content-Language: en-US
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <f4be0cc9-68ae-4f83-a40b-9af84109c54f@ilande.co.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260727-fix2-v2-7-d0c4831ed7ea@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:d527:7a5c:938e:d16d
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PULL 0/1] qemu-openbios queue 20260707
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,70 +106,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 27, 2026 at 12:44:06AM +0400, Marc-Andr� Lureau wrote:
-> When compiled with -Og, gcc produces many false-positives
-> gcc (GCC) 16.1.1 20260515 (Red Hat 16.1.1-2).
+On 25/07/2026 10:20, Mark Cave-Ayland wrote:
 
-it hurts if you do it? so don't do it then?
-
-> We already use auto-var-init=zero, but better be explicit.
-
-explicit about false positives?
-
-> Signed-off-by: Marc-Andr� Lureau <marcandre.lureau@redhat.com>
-> ---
->  target/i386/cpu.c             | 3 ++-
->  target/i386/emulate/x86_mmu.c | 4 ++--
->  2 files changed, 4 insertions(+), 3 deletions(-)
+> On 22/07/2026 02:15, Nathan Chancellor wrote:
 > 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 5805d33ab92d..28e4435df23f 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -7734,7 +7734,7 @@ static void x86_cpuid_get_avx10_version(Object *obj, Visitor *v,
->  static bool x86_cpu_apply_avx10_features(X86CPU *cpu, uint8_t version,
->                                           Error **errp)
->  {
-> -    const AVX10VersionDefinition *def;
-> +    const AVX10VersionDefinition *def = NULL;
->      CPUX86State *env = &cpu->env;
->  
->      if (!version) {
-> @@ -7757,6 +7757,7 @@ static bool x86_cpu_apply_avx10_features(X86CPU *cpu, uint8_t version,
->              break;
->          }
->      }
-> +    assert(def != NULL);
->  
->      if (def->version < version) {
->          error_setg(errp, "avx10-version can be at most %d", def->version);
-
-
-what does assert have to do with gcc warnings?
-
-> diff --git a/target/i386/emulate/x86_mmu.c b/target/i386/emulate/x86_mmu.c
-> index 8d4371467fd7..65bcccd4751e 100644
-> --- a/target/i386/emulate/x86_mmu.c
-> +++ b/target/i386/emulate/x86_mmu.c
-> @@ -185,8 +185,8 @@ static MMUTranslateResult walk_gpt(CPUState *cpu, target_ulong addr, MMUTranslat
->      int largeness = 0;
->      target_ulong cr3 = x86_read_cr(cpu, 3);
->      uint64_t page_mask = pae ? PAE_PTE_PAGE_MASK : LEGACY_PTE_PAGE_MASK;
-> -    MMUTranslateResult res;
-> -    
-> +    MMUTranslateResult res = MMU_TRANSLATE_PAGE_NOT_MAPPED;
-> +
-
-
-This is not 0 as the commit log implies.
-
-
-
->      memset(pt, 0, sizeof(*pt));
->      top_level = gpt_top_level(cpu, pae);
->  
+>> Hi Mark,
+>>
+>> On Tue, Jul 07, 2026 at 10:32:05PM +0100, Mark Cave-Ayland wrote:
+>>> The following changes since commit 916ab315cc2b3a3825ebb399d83339660144d5bd:
+>>>
+>>>    Merge tag 'pull-nvme-20260707' of https://gitlab.com/birkelund/qemu into 
+>>> staging (2026-07-07 07:09:38 +0200)
+>>>
+>>> are available in the Git repository at:
+>>>
+>>>    https://github.com/mcayland/qemu.git tags/qemu-openbios-20260707
+>>>
+>>> for you to fetch changes up to 9e3508dce0045de26ec8cab064443c92fdd15288:
+>>>
+>>>    Update OpenBIOS images to e5ac46dd built from submodule. (2026-07-07 22:07:16 
+>>> +0100)
+>>>
+>>> ----------------------------------------------------------------
+>>> qemu-openbios queue
+>>>
+>>> ----------------------------------------------------------------
+>>> Mark Cave-Ayland (1):
+>>>        Update OpenBIOS images to e5ac46dd built from submodule.
+>>>
+>>>   pc-bios/openbios-ppc     | Bin 677200 -> 673104 bytes
+>>>   pc-bios/openbios-sparc32 | Bin 382080 -> 382048 bytes
+>>>   pc-bios/openbios-sparc64 | Bin 1593408 -> 1593408 bytes
+>>>   roms/openbios            |   2 +-
+>>>   4 files changed, 1 insertion(+), 1 deletion(-)
+>>
+>> I bisected a hang that I see when trying to boot a Linux kernel built
+>> from pmac32_defconfig to this change.
+>>
+>>    $ git show 9e3508dce0045de26ec8cab064443c92fdd15288:pc-bios/openbios-ppc 
+>> >openbios-ppc-bad
+>>
+>>    $ git show 9e3508dce0045de26ec8cab064443c92fdd15288^:pc-bios/openbios-ppc 
+>> >openbios-ppc-good
+>>
+>>    $ curl -LSs https://github.com/nathanchance/bug-files/raw/main/ 
+>> qemu-9e3508dce0045de26ec8cab064443c92fdd15288/rootfs.cpio.zst | zstd -d >rootfs.cpio
+>>
+>>    $ curl -LSs https://github.com/nathanchance/bug-files/raw/main/ 
+>> qemu-9e3508dce0045de26ec8cab064443c92fdd15288/vmlinux.zst | zstd -d >vmlinux
+>>
+>>    $ qemu-system-ppc \
+>>        -display none \
+>>        -nodefaults \
+>>        -no-reboot \
+>>        -machine mac99 \
+>>        -append console=ttyS0 \
+>>        -kernel ./vmlinux \
+>>        -initrd ./rootfs.cpio \
+>>        -m 128m \
+>>        -serial mon:stdio \
+>>        -bios ./openbios-ppc-good
+>>
+>>    >> =============================================================
+>>    >> OpenBIOS 1.1 [Sep 24 2024 19:56]
+>>    >> Configuration device id QEMU version 1 machine id 1
+>>    >> CPUs: 1
+>>    >> Memory: 128M
+>>    >> UUID: 00000000-0000-0000-0000-000000000000
+>>    >> CPU type PowerPC,G4
+>>    milliseconds isn't unique.
+>>    Output device screen not found.
+>>    Output device screen not found.
+>>    >> [ppc] Kernel already loaded (0x01000000 + 0x00ed2410) (initrd 0x01fd3000 + 
+>> 0x004fb000)
+>>    >> [ppc] Kernel command line: console=ttyS0
+>>    >> switching to new context:
+>>    NULL ihandle
+>>    Unexpected client interface exception: -2
+>>    printk: legacy console [ttyS0] enabled
+>>    printk: legacy bootconsole [udbg0] disabled
+>>    pid_max: default: 32768 minimum: 301
+>>    Mount-cache hash table entries: 1024 (order: 0, 4096 bytes, linear)
+>>    Mountpoint-cache hash table entries: 1024 (order: 0, 4096 bytes, linear)
+>>    VFS: Finished mounting rootfs on nullfs
+>>    Memory: 108176K/131072K available (10508K kernel code, 1004K rwdata, 2180K 
+>> rodata, 1232K init, 178K bss, 21680K reserved, 0K cma-reserved, 0K highmem)
+>>    Found UniNorth PCI host bridge at 0x00000000f2000000. Firmware bus number: 0->0
+>>    ...
+>>    Starting network: OK
+>>    Linux version 7.2.0-rc4+ (nathan@ax162) (powerpc-linux-gcc (GCC) 16.1.0, GNU ld 
+>> (GNU Binutils) 2.46) #1 PREEMPT Tue Jul 21 16:59:50 MST 2026
+>>    Stopping network:OK
+>>    Stopping klogd: OK
+>>    Stopping syslogd: OK
+>>    Seeding 256 bits without crediting
+>>    seedrng: can't open '/dev/urandom': No such file or directory
+>>    The system is going down NOW!
+>>    Sent SIGTERM to all processes
+>>    Sent SIGKILL to all processes
+>>    Requesting system reboot
+>>    reboot: Restarting system
+>>
+>>    $ qemu-system-ppc \
+>>        -display none \
+>>        -nodefaults \
+>>        -no-reboot \
+>>        -machine mac99 \
+>>        -append console=ttyS0 \
+>>        -kernel ./vmlinux \
+>>        -initrd ./rootfs.cpio \
+>>        -m 128m \
+>>        -serial mon:stdio \
+>>        -bios ./openbios-ppc-bad
+>>
+>>    >> =============================================================
+>>    >> OpenBIOS 1.1 [Jun 29 2026 21:11]
+>>    >> Configuration device id QEMU version 1 machine id 1
+>>    >> CPUs: 1
+>>    >> Memory: 128M
+>>    >> UUID: 00000000-0000-0000-0000-000000000000
+>>    >> CPU type PowerPC,G4
+>>    milliseconds isn't unique.
+>>    Output device screen not found.
+>>    Output device screen not found.
+>>    >> [ppc] Kernel already loaded (0x01000000 + 0x00ed2410) (initrd 0x01fd3000 + 
+>> 0x004fb000)
+>>    >> [ppc] Kernel command line: console=ttyS0
+>>    >> switching to new context:
+>>    <hangs with no additional output>
+>>
+>> Presumably this is due to OpenBIOS commit b0267d5 ("ppc: bump SAVE_SPACE
+>> to include enough space to store all registers"), as this appears to be
+>> the only actual source change to OpenBIOS? I have not had time to try
+>> running under gdb to get more information about where it is hanging but
+>> I wanted to get this report out sooner rather than later.
 > 
-> -- 
-> 2.55.0
+> Hi Nathan,
+> 
+> Thanks for the heads-up: nothing showed up in my local tests before committing, so I 
+> will take a look over the next few days.
+
+I've tried to reproduce this, however I cannot get your vmlinux above to work here 
+with either the old or new OpenBIOS. Is there anything else about your environment 
+needed to reproduce this?
+
+I have seen some recent-ish updates to the Linux open firmware APIs so I'm wondering 
+if this is exposing another bug somewhere?
+
+
+ATB,
+
+Mark.
 
 
