@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E758C53209
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 21:31:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01475C53209
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 21:31:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wo6QX-0000yW-1J; Sun, 26 Jul 2026 17:30:29 -0400
+	id 1wo6QE-00089h-Vg; Sun, 26 Jul 2026 17:30:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6QR-0000V9-JC
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:30:23 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6QC-000824-KS
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:30:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6QP-0004dW-Dr
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:30:23 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6QA-0004Z0-Ps
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:30:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785101420;
+ s=mimecast20190719; t=1785101406;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=HTWgk7EXa34p1tk+4HvPhCGo4PcXqBHU3O7qJ9slsjo=;
- b=HCL1axSUL7R9ZAVBecYWoPIzWKtBRdTUByqgqoxJifdoz3oc6IcXMAGkFx+Y9MDXekoMoV
- 4pvKJZ26bGkKvDZpIx4LEM1juUZBgNQOREs6YbgjqMddAaeIjci4rTeuzrByqqX9Sg5fCp
- O6gNK5QUHaOHg0o/XVxt4BGyi9Uxb/0=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qGDDGWT38pNxOONe007eUvij33uws6GbrZoTgh2JBM8=;
+ b=fKLpm4L6gFkwtwTeeaADz4AMTa9phM/idowdOLGO64qzTowMEbmyazgbVDKI3vMqG3uuul
+ vKP42Xa5IcGSOYwZ0oeWswRtC5CSNyK+W7TPFfRmx9FM+0GyfSfNvZ7zu7ZXkKhkDsj1nw
+ EmdtaIu8OTKgtyiaX4dRS9y3rpgcDyY=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-607-5bkbU6k7MSuTpPpvi_ziGw-1; Sun, 26 Jul 2026 17:30:18 -0400
-X-MC-Unique: 5bkbU6k7MSuTpPpvi_ziGw-1
-X-Mimecast-MFC-AGG-ID: 5bkbU6k7MSuTpPpvi_ziGw_1785101418
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-4729d2a64efso1757319f8f.0
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 14:30:18 -0700 (PDT)
+ us-mta-359-Fj98fVvcNlmvvVdB-BOC_A-1; Sun, 26 Jul 2026 17:30:04 -0400
+X-MC-Unique: Fj98fVvcNlmvvVdB-BOC_A-1
+X-Mimecast-MFC-AGG-ID: Fj98fVvcNlmvvVdB-BOC_A_1785101403
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4954a93c565so9469025e9.2
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 14:30:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785101417; x=1785706217; darn=nongnu.org;
+ d=redhat.com; s=google; t=1785101403; x=1785706203; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=HTWgk7EXa34p1tk+4HvPhCGo4PcXqBHU3O7qJ9slsjo=;
- b=H2wvD6mRfddENQ8989RzTxIuOzgPa0RH4kfBXzaPdzgvNmZhL3/2lJzp5LqQdr8c6j
- MHCo3yKiWjlXCwOS7vNtuzAY6k6kTBx9xZHn7RGw9r5UOosAvo41WpQQVX2peK95NyBx
- KxOgzyyrWtDV1C3NTEUHyj8yjxViTLUzL/1X65LlbLcUnz3eDxypBaomciRBNG0PEcH8
- c/rYK5Py+q2WX2u7QW63CoXltVYFQqkL4SMAU4EJ4JBlWQ84Xlr7nq0fGoKyCFevpfzi
- OcwxIw41/avC7p09sAXlAsz38PLHs5joFRTKZ2JYhCqGa/Evv8quK1Ye2w6ZYB9bdjd1
- kS+A==
+ bh=qGDDGWT38pNxOONe007eUvij33uws6GbrZoTgh2JBM8=;
+ b=nCzNRmwu0Yj5QbMDR6aeUXtJ3UXHklmPaTNKeV1PceSkCn84tKEW3qAwAFpMJyl6Eb
+ 7PKxhKkYvAyCXQVtH27Z3f63qecMvKc5ehko8oGlrcqdOXpe+qa8kd4ztfqBdB/OZfwu
+ ipx4YvXmu5L5jVnVFXKt3oW9M/SVTUr+kYNeAr0e/lirc9a03+OmVQ336ZgOri3NbajV
+ xaNAw6UPsEcD5jSKsw3pBJhNPK11wlSwH/2PkeeoDj5z+exBKpFZLv14pngRPb/IEuRk
+ kH76v/FaRJCOMSm5g7a78kaAov8PZBR/PhU0R0lSKm+gQkP7n+9Y+FPrRyg7OyS3+mRW
+ Va7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785101417; x=1785706217;
+ d=1e100.net; s=20251104; t=1785101403; x=1785706203;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=HTWgk7EXa34p1tk+4HvPhCGo4PcXqBHU3O7qJ9slsjo=;
- b=EsgdigqCF56R1jl6STnBQWM1wYW3r33atHQDsQIRL1jDdPNvYDKhJhvWRlMGKFFSWc
- D+vdlqDqVgKPLcjMW5kPNFADOrwTIinKQk8PhvKtwr/UiT208JT7ZezfsMOotLm3FPY4
- 8EP1kupALYnSoKKYCMEchhCByeAFuoAF4W3GGWoi5OakSSADBey5AbvXBQJ70bw5NIDS
- 0FgL5i3DwhUmijmYuCNkaF6vzu0EQLsKBW/rfuMwOxW8n7JyAnEeVZWk6s4q7Rbe7pr7
- ayqzWt6xx5e5O01xhlBSm8yDEEgN+i01OIOKi79HnZlKstkVmfxPtVGUVFOS/e5b15DT
- uJPQ==
-X-Gm-Message-State: AOJu0Yz00tbVXeNOw8uVcpEV/mV4TsPjyPZFxZHNyeKSupC69juXuypu
- /aPUPYCE6Of8l/boDK2cIvz5wXYeI2wU6MyE8lKlJ7CQcNUyGKuawRPh0gyC0udyNqFHSGase/K
- huYsqbGoiSAq3COkkhdbP+Wd2YbLQfUXCBVzL/Gf2OgMOGricD1TIAPOiZxYR9sZdSVypuRNUC7
- Rdpgw2hvck22JZ6KyITrZdEXCOIkUJsZW9vQ==
-X-Gm-Gg: AR+sD10NsgIdXXw8ZTMAO6sjXDYwWg0CtgqnPaLdLKdW8z2MDXd86LxY4yOEjfoFtHK
- Q1uEpa/+qyMDX6LrwBPi3OxjEVKgkQv4++jPtJI7OjsButFHoIUhUo84RU5IXb23Qaz93n3M+0b
- pFrD0P+3H1hXb11rdDyqY2N6qUl3nxMQlXHlm1yRG9as4hJ2/lP48Ab8f+t6p59tk2T4K0PT2FK
- ziXYxamBFC2Xl79FepufeSkenYJk5a5VT2+dVGssoNGR2h1FDt1QcluTWA9fu6sBenACCWxUrdz
- Gg4xatqZDOJpBHb6kIVsAJlOGAmABA/dhflDX4OQnR7ySLJPl51Ba2C/aOJED+1u4toOT6dXPpd
- V1UvkLdI3TptRxzRXprP71w==
-X-Received: by 2002:a05:6000:4a06:b0:47f:9159:f1f3 with SMTP id
- ffacd0b85a97d-47f9d018716mr10851261f8f.29.1785101417518; 
- Sun, 26 Jul 2026 14:30:17 -0700 (PDT)
-X-Received: by 2002:a05:6000:4a06:b0:47f:9159:f1f3 with SMTP id
- ffacd0b85a97d-47f9d018716mr10851229f8f.29.1785101416933; 
- Sun, 26 Jul 2026 14:30:16 -0700 (PDT)
+ bh=qGDDGWT38pNxOONe007eUvij33uws6GbrZoTgh2JBM8=;
+ b=Y8DEhaX2snTXF6m89mZZPAcm08mh1edxCXSQBS9UBm45a1GbeXCcFmKdZ3Cm0c56V5
+ hOY1WCU01Nh9/G9BZtweXbFGir3maqYfI/FZzTSTTA16wj4Edp+Hl5+WdQF1ZLIjpiJn
+ prq1y+GHhQvKrygQEra3Q9UiWia0HGsTQu0O24MYSeu8RiBI8i9W6ovtD0a3Y88l8Tm6
+ AaRsvYrFXGGW4xoN9ED9X9S/gE2+FUqObCQFMeDYDBK6sm+jdcicv7K0ucJZx1fSHnl8
+ TSY6eSRwuiQQX1JGayc9wQ9KO0XaR2+zHTV6A4XATjfpZ0q+5+AGQgZHk/k8fEqqC+gF
+ PF0Q==
+X-Gm-Message-State: AOJu0YxR3xZuqRPIT4eKymh4HTubTW73RiZGVMWjEqdOyvdXmqkATbJe
+ fp9J7gZWIGalVEUGDJUI6LQQXfSSBi4xu2qjgjR/gAfhacx7Ng1OHkT2pZJBfvfIVV5rovmQjGb
+ whYL9qeTG2DMUEdgDCVtXuVbfVVepSJgnVeD+6tjKWsrSkrZkXDRSTO0SoZ2duqOCrA+G0OTnYP
+ W3htTQLPSAkmp8jtyZvcZ3Sj1k6v9hKWAdWw==
+X-Gm-Gg: AR+sD126jBHgvo9aKsz75jsslBia/GUyObO+B/uPlrklfB8eGX5Rrz/amjalCzgIprr
+ 1oILELKw8nw5UI8Kn9KeJhgv0eIJbbWnbElh6yDShSA+JMMWGrNEBe90f4lQH/YQAdXBOG0Kkje
+ MfGngUD43e/stS9TeOA1LpiNPzIcYaYMeMLklNbEectxf69GoGD3NuqXhD6GKskpEMEWF7QaY39
+ 2cOGsvZTbIPK2ff57VsJxj8OBBcHQ9egUIDFugZN3ReAFllnkMPEUpzetdNX4zvZu1q00QO7Cyk
+ 6FSB8kqmZyfGWUNuKoRGqLl56NJ0Mg6k8t+PBypx02EO2K7u7ZXFWUq6F6r9KM6n/t7tPPdvnGK
+ qLlBgvxRJOScxzKcJgH8Tkw==
+X-Received: by 2002:a05:600c:8b4c:b0:493:aa0a:45ad with SMTP id
+ 5b1f17b1804b1-496b56e6f9dmr82243165e9.2.1785101403162; 
+ Sun, 26 Jul 2026 14:30:03 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b4c:b0:493:aa0a:45ad with SMTP id
+ 5b1f17b1804b1-496b56e6f9dmr82242905e9.2.1785101402620; 
+ Sun, 26 Jul 2026 14:30:02 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c531basm46661600f8f.19.2026.07.26.14.30.14
+ 5b1f17b1804b1-496b4f33b73sm164778245e9.14.2026.07.26.14.30.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 Jul 2026 14:30:15 -0700 (PDT)
-Date: Sun, 26 Jul 2026 17:30:13 -0400
+ Sun, 26 Jul 2026 14:30:02 -0700 (PDT)
+Date: Sun, 26 Jul 2026 17:30:00 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, qemu-stable@nongnu.org,
- Thomas Huth <thuth@redhat.com>, Amit Shah <amit@kernel.org>
-Subject: [PULL 30/30] backends/rng: cap request size to avoid oversized
- allocation
-Message-ID: <13342b9c4104f3bf93c2e52e7de4b383971d7bd6.1785101237.git.mst@redhat.com>
+ GuoHan Zhao <zhaoguohan@kylinos.cn>, Paolo Bonzini <pbonzini@redhat.com>,
+ Li Zhaoxin <lizhaoxin04@baidu.com>,
+ Daniil Tatianin <d-tatianin@yandex-team.ru>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: [PULL 25/30] hw/virtio/vdpa-dev: pass set_config buffer to vhost
+ backend
+Message-ID: <2fac08ccceeeb57132584af6e06aae5dfdff87fa.1785101237.git.mst@redhat.com>
 References: <cover.1785101237.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -106,7 +108,7 @@ X-Spam_bar: ---
 X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,61 +124,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 
-rng_backend_request_entropy() uses the requested size to allocate
-a buffer with g_malloc(). With virtio-rng, this size comes from
-guest-supplied descriptor lengths. A malicious guest can set a very
-large descriptor length, causing QEMU to attempt a multi-gigabyte
-allocation and abort.
+vhost_vdpa_device_set_config() receives the updated config buffer, but
+forwards s->config to the vhost backend. Since s->config is refreshed by
+get_config(), it may contain stale backend state.
 
-Cap the allocation to 64 KiB. The virtio-rng queue size is
-hardcoded to 8 entries, the EGD backend protocol limits requests
-to 255 bytes, the Linux kernel hwrng framework requests at most
-SMP_CACHE_BYTES per call (64 bytes on x86_64), and the Windows
-viorng driver uses a 4 KiB buffer. The worst legitimate case is
-8 x 4 KiB = 32 KiB, so 64 KiB is well above any legitimate use.
+Pass the supplied config buffer to vhost_dev_set_config() instead.
 
-Fixes: 14417039653d ("virtio-rng: use virtqueue_get_avail_bytes, fix migration")
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3983
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Fixes: b430a2bd2303 ("vdpa: add vdpa-dev support")
+Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260715141300.2295392-1-lvivier@redhat.com>
+Message-ID: <20260709073225.2341642-1-zhaoguohan@kylinos.cn>
 ---
- backends/rng.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ hw/virtio/vdpa-dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/backends/rng.c b/backends/rng.c
-index 7bed62616a..bc9c7a5ab3 100644
---- a/backends/rng.c
-+++ b/backends/rng.c
-@@ -11,11 +11,14 @@
-  */
+diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
+index 089a77f4d0..6dc684ab09 100644
+--- a/hw/virtio/vdpa-dev.c
++++ b/hw/virtio/vdpa-dev.c
+@@ -212,7 +212,7 @@ vhost_vdpa_device_set_config(VirtIODevice *vdev, const uint8_t *config)
+     VhostVdpaDevice *s = VHOST_VDPA_DEVICE(vdev);
+     int ret;
  
- #include "qemu/osdep.h"
-+#include "qemu/units.h"
- #include "system/rng.h"
- #include "qapi/error.h"
- #include "qemu/module.h"
- #include "qom/object_interfaces.h"
- 
-+#define RNG_MAX_REQUEST_SIZE (64 * KiB)
-+
- void rng_backend_request_entropy(RngBackend *s, size_t size,
-                                  EntropyReceiveFunc *receive_entropy,
-                                  void *opaque)
-@@ -27,7 +30,7 @@ void rng_backend_request_entropy(RngBackend *s, size_t size,
-         req = g_malloc(sizeof(*req));
- 
-         req->offset = 0;
--        req->size = size;
-+        req->size = MIN(size, RNG_MAX_REQUEST_SIZE);
-         req->receive_entropy = receive_entropy;
-         req->opaque = opaque;
-         req->data = g_malloc(req->size);
+-    ret = vhost_dev_set_config(&s->dev, s->config, 0, s->config_size,
++    ret = vhost_dev_set_config(&s->dev, config, 0, s->config_size,
+                                VHOST_SET_CONFIG_TYPE_FRONTEND);
+     if (ret) {
+         error_report("set device config space failed");
 -- 
 MST
 
