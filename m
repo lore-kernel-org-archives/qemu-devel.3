@@ -4,63 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B89D2C531CC
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 06:14:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD2D3C531CC
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 06:49:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wns7Q-0000a8-OG; Sun, 26 Jul 2026 02:13:49 -0400
+	id 1wnsfJ-0006tn-Uo; Sun, 26 Jul 2026 02:48:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wns7M-0000Vu-3K
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 02:13:44 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wns7H-0002UL-8V
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 02:13:42 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66Q6DQQJ089195
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sun, 26 Jul 2026 15:13:26 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=C81TAyb0C5fG96oalaZLYMjXyLFfmLJkBvqT21PdQVQ=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1785046407; v=1;
- b=tkxNkT8xT5D4vklzFEup0LlJC8luuL07MMwyo/EdWBS5cCefwXpRNhjvTkW4kO67
- pxHwfBE27Xa/hF9OoGQL64Z1Tukjt2fBZSizWn8xDx507FIyqkclPWNFibug3kP/
- tBGZkZB96aLnaGdrN/cBMHnFoi/6O0CZPfspz+9TaPKoOWZJrfHf9LqBIlJU7xql
- M8vTxottpxLFOOwO9krE8ezGD8KpTQw8Y6ViFMbtoeRv2e71jFwZNV534HjOhnRk
- F9RINQfj2sJCLgggXeRF5wluCkAQwxkeAdvNX3fYuo2OG18cZmpsBH0GRE4UTfiC
- MMaDarZ7ucxlgWNDQ7cB0A==
-Message-ID: <93be053e-6c71-4f7c-8aa8-eedbb06b588b@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sun, 26 Jul 2026 15:13:26 +0900
+ (Exim 4.90_1) (envelope-from <tripprobins@gmail.com>)
+ id 1wnqop-00064b-UJ
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 00:50:32 -0400
+Received: from mail-qk1-x72c.google.com ([2607:f8b0:4864:20::72c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tripprobins@gmail.com>)
+ id 1wnqoo-0001of-Ec
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 00:50:31 -0400
+Received: by mail-qk1-x72c.google.com with SMTP id
+ af79cd13be357-92e533aacf2so88006385a.2
+ for <qemu-devel@nongnu.org>; Sat, 25 Jul 2026 21:50:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785041429; x=1785646229; darn=nongnu.org;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=MCR9rqx+DA5+S1U5xN9tVj6ZdwR/9XiG2O1a1CRj1wo=;
+ b=OZj2AgNPgG/OekxmlBl/lY27bSIUOC+UmT8LDvMThFOkurUFYS9rDtPhOh/Bjl3Ayf
+ WpEv80FSDIp0vHszIgyEMeAYOq5h6NVfXUGhya9Egg0NeQ5x5HzWH6uWkWAcO5HFSq+q
+ bAmMQdhuAGi9neD7HJuUDlo3U9MGkIbGrX3g8NhE0pUhf3b6UtiMMkbC+N/slrE1ynCp
+ B7K6xyH1dYWv4aeuwvzyX234oLvBXc0CtJkEU8Mreh3VoLsbMEU+//LjWE/lcaJo431k
+ js6rIAs6K1jgKPACrVnurFDzX4xMwlQXqWSDITjDLSpw262OUSFtxamHad/W7JkVmw4G
+ 0pRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785041429; x=1785646229;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=MCR9rqx+DA5+S1U5xN9tVj6ZdwR/9XiG2O1a1CRj1wo=;
+ b=OCpM4Az9yv0Zbrl0CbMPF9fiAqlTLdfS/xuBDDOnjmmBZUBzNW0rgrJjB1Lv6vPjg7
+ pocw8Jw4uUxIXQN2PVTEQbsiN0VBRKYeh+GH46Dy6L0fiBWHmlolUcEBl2hk2Bhv8c9j
+ h3TnBuCAbfT2hb4WgCm7N8yLPWza3VswpENerNYXADZO6vHaKqcbpWXHR/tVCqLJl8L4
+ SbdrTe7hd9BOWiLiRI9kaoGpk7mgCM6dGNkR2ueiFJqkvV7o9SUWhjsTq8I0HZGBlnRx
+ C5z6f2ietx3wn9j2ZIAUfplBffb61fOShyyZk2FhDfeelpYWFY12VhgrRExTXY9MJtGb
+ cvEg==
+X-Gm-Message-State: AOJu0YznmRrGbErX2eWq0SBrHWZzYPu6nCBk0ygCW1CI0qidkd5nA3T5
+ KiPWu47dHTXyvX2HQv4BD3EWhOmgmxUDcBe8icbGVFt64bLLPRnoyPZ2
+X-Gm-Gg: AR+sD12srh6VeJTouSdI7ma09YV/f/9d8o4V5i4Hpa2FDiKdss1ixkFMTJ6iLjYV25N
+ 7xPvQ7rZZKGEYEtm8Lvmco+Hf08nhB0+DZMoaQ6iWKhfmfqT90+sne/LPuoDOu/ip4rwWvMd33v
+ zg7v4NZSbBcKOyfE4qo0bggI+tC82FAJgf/rO353CZMNdx9OKa6krIlDMmN2Bl87UhbKKcI2UV9
+ ClDwZnM6eigDV0NcLzLFWPlFk+4p4/ecGN4DhNExf1MmTDdFrVQDw1qRThQQJ8AUl/BZ2xVKcFH
+ 5pkmxrXKpHVMZBEzO02SypFw/DWXVmt7MB3nplH9tK0ZMpMVkmzNDNQ2P/xWVuSMzrpBHBs3bhc
+ 00Ut3wMhNtfRE6RmaB4EkC7VK9KvHkU89VlUVAOrE0IMtzSWfOIg/l8qiFrysnqEPXToQBE+oDR
+ 4eQ/dfhYU=
+X-Received: by 2002:a05:620a:450f:b0:92b:67e6:8ac7 with SMTP id
+ af79cd13be357-932df7169bamr405219785a.65.1785041428967; 
+ Sat, 25 Jul 2026 21:50:28 -0700 (PDT)
+Received: from [127.0.1.1] ([2600:4040:5aa1:a000:518c:a25b:44d3:2a05])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-932de66ae46sm289853585a.40.2026.07.25.21.50.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 25 Jul 2026 21:50:28 -0700 (PDT)
+From: Tripp R <tripprobins@gmail.com>
+Date: Sun, 26 Jul 2026 00:48:12 -0400
+Subject: [PATCH] clarify address type in 'xb' cmd
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/display/virtio-gpu: fix use-after-free on blob
- detach backing
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: akihiko.odaki@gmail.com, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <20260725113727.1692271-1-marcandre.lureau@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260725113727.1692271-1-marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260726-xbhmpcmd-v1-1-45d79d0f28b4@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAIuRZWoC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDcyMz3YqkjNyC5NwU3VSLZAsjIwvzRANjUyWg8oKi1LTMCrBR0bG1tQB
+ LjGwjWgAAAA==
+To: qemu-devel@nongnu.org
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, 
+ Tripp R <tripprobins@gmail.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1785041427; l=1113;
+ i=tripprobins@gmail.com; h=from:subject:message-id;
+ bh=NkSDZQxL4cR5i8rPLB0sxyfP8xpY/oAREp7aCXYfGzM=;
+ b=8uB2OM/KHi6XZMR4B3bzdv1Q8rsiPQ93kkZXxqEep1hO1Vd2sEzI66WuARtYFuNyXnMwCG8CP
+ 74neP7ekouHDZeFj16eoTiu4iwIYlVhoQttFbVoAa3kqpoQYP/yD5RM
+X-Developer-Key: i=tripprobins@gmail.com; a=ed25519;
+ pk=qwr69xU8AQT+ZZ9TxMEd/Vlg8k8ovtJrkXWQKAiMMNw=
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72c;
+ envelope-from=tripprobins@gmail.com; helo=mail-qk1-x72c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sun, 26 Jul 2026 02:48:46 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,101 +110,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/25 20:37, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> virtio_gpu_cleanup_mapping() tears down the udmabuf mapping (or, for the
-> small-iov case, the guest memory mapping) via virtio_gpu_fini_udmabuf(),
-> but leaves res->blob pointing at it afterwards. Once a blob resource
-> goes through RESOURCE_DETACH_BACKING, res->blob is left dangling while
-> res->blob_size is still non-zero.
-> 
-> virtio_gpu_update_cursor_data() only checks res->blob_size before
-> copying from res->blob, so UPDATE_CURSOR on a detached blob resource
-> makes QEMU memcpy from freed memory.
-> 
-> virtio_gpu_do_set_scanout() also creates scanout->ds over
-> res->blob + fb->offset. RESOURCE_DETACH_BACKING leaves that surface
-> installed, so a subsequent display refresh can still read the backing
-> after virtio_gpu_fini_udmabuf() has unmapped it.
-> 
-> Disable any active scanouts referencing the resource before tearing down
-> its backing, clear res->blob afterwards, and check it before
-> dereferencing in virtio_gpu_update_cursor_data().
-> 
-> Fixes: CVE-2026-66020
-> Fixes: bdd53f739273 ("virtio-gpu: Update cursor data using blob")
 
-This should also have:
-Fixes: 32db3c63ae11 ("virtio-gpu: Add virtio_gpu_set_scanout_blob")
 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3881
-> Reported-by: 章鱼哥@aipy (www.aipyaipy.com)
-> Reported-by: swing <swing@mail.exp.sh>
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
-> v2:
->   - disable active scanouts referencing the resource before tearing
->     down its backing, fixing a second use-after-free through the
->     display refresh path
->   - add LOG_GUEST_ERROR for the blob-size-too-small early return
-> ---
->   hw/display/virtio-gpu.c | 18 ++++++++++++++++++
->   1 file changed, 18 insertions(+)
-> 
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index 211a529ed720..b21ac8dace08 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -57,8 +57,16 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
->       }
->   
->       if (res->blob_size) {
-> +        if (!res->blob) {
-> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: resource %d has no blob\n",
-> +                          __func__, resource_id);
-> +            return;
-> +        }
->           if (res->blob_size < (s->current_cursor->width *
->                                 s->current_cursor->height * 4)) {
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                          "%s: blob size too small for resource %d\n",
-> +                          __func__, resource_id);
->               return;
->           }
->           data = res->blob;
-> @@ -969,6 +977,7 @@ void virtio_gpu_cleanup_mapping(VirtIOGPU *g,
->   
->       if (res->blob) {
->           virtio_gpu_fini_udmabuf(g, res);
-> +        res->blob = NULL;
->       }
->   }
->   
-> @@ -1031,6 +1040,15 @@ virtio_gpu_resource_detach_backing(VirtIOGPU *g,
->       if (!res) {
->           return;
->       }
-> +
-> +    if (res->scanout_bitmask) {
+---
+Implemented the xb (examine block) command to print the contents of a block     device to the console.
+  
+It is effectively a clone of the x/xp commands (examine memory / examine        physical memory), having the same arguments for those commands, albeit preceded by the name of a block driver. 
 
-I feel this is a premature optimization.
+e.g. usage
+	 xd floppy0 /510c 0
 
-Perhaps this should not affect a non-blob scanout that doesn't use the 
-backing storage, so we should have if (res->blob).
+Signed-off-by: Tripp R <tripprobins@gmail.com>
+---
+ hmp-commands.hx | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Regards,
-Akihiko Odaki
+diff --git a/hmp-commands.hx b/hmp-commands.hx
+index db63b58a47..26b7cadcf2 100644
+--- a/hmp-commands.hx
++++ b/hmp-commands.hx
+@@ -481,7 +481,7 @@ ERST
+         .name       = "xb",
+         .args_type  = "device:s, fmt:/,addr:l",
+         .params     = "device /fmt addr",
+-        .help       = "block memory dump starting at 'addr'",
++        .help       = "block memory dump starting at 'addr', in units of bytes.",
+         .cmd        = hmp_block_dump,
+     },
+ 
 
-> +        for (int i = 0; i < g->parent_obj.conf.max_outputs; i++) {
-> +            if (res->scanout_bitmask & (1 << i)) {
-> +                virtio_gpu_disable_scanout(g, i);
-> +            }
-> +        }
-> +    }
-> +
->       virtio_gpu_cleanup_mapping(g, res);
->   }
->   
+---
+base-commit: bcc42fe49f7aae8982604900e307d783615bc79c
+change-id: 20260726-xbhmpcmd-e8c82287a035
+
+Best regards,
+-- 
+Tripp R <tripprobins@gmail.com>
 
 
