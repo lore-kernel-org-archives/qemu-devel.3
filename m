@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB260C53209
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 20:50:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2168C53209
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 20:53:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wo5nD-0005Op-JJ; Sun, 26 Jul 2026 16:49:51 -0400
+	id 1wo5q0-0006Qk-2U; Sun, 26 Jul 2026 16:52:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo5nC-0005ON-4t
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 16:49:50 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo5py-0006Of-Kg
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 16:52:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo5nA-00053P-PT
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 16:49:49 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo5px-0005dt-8a
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 16:52:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785098988;
+ s=mimecast20190719; t=1785099160;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=O/Tm9yhkqwWEhTtYSumLxou7IC247EQO+9etCC0bbB4=;
- b=X8ewM5iaXEQcMGCcHOqY+n9pagdHAOyyRRhaWzgtyXBoSy6lWbBQQuGGlhfgtCLCmIl6ke
- YSjwyyhc482AJSFqGVVPht7iunbrWG73/WSog3buOghqo/X469oZbvwnjsVPBpi2J8ZUX1
- mftZZd8wI7cV9iZmFig4YP9kMkptXiQ=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Wt7wCGr/kWh/rgRmz0sqXsHGnxZnqsHOsUrRjkkQJfY=;
+ b=HPl00+wYCKrIhZgSgrrSo5QQgu6lKc5xqotyhDAIxPpwshtPRL+AaIDcuL+53LWqY9muHe
+ 3MmFvcW0Yrwfoke9AMlCrI4+mEA3da8hR7QSICr/d0nlKgQCA79N6qx23yVdQgeBvFeZal
+ UtwXRw7fopQY0N1IQ3nBruhJ8KYSZIE=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-479-UsWtF6mrMIyAkNOrm5wR2Q-1; Sun, 26 Jul 2026 16:49:44 -0400
-X-MC-Unique: UsWtF6mrMIyAkNOrm5wR2Q-1
-X-Mimecast-MFC-AGG-ID: UsWtF6mrMIyAkNOrm5wR2Q_1785098983
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4956c1655c3so9679965e9.0
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 13:49:44 -0700 (PDT)
+ us-mta-349-QhGb7yfZNNex7Uz63X69_g-1; Sun, 26 Jul 2026 16:52:37 -0400
+X-MC-Unique: QhGb7yfZNNex7Uz63X69_g-1
+X-Mimecast-MFC-AGG-ID: QhGb7yfZNNex7Uz63X69_g_1785099156
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4954c2d4081so15437055e9.2
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 13:52:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785098983; x=1785703783; darn=nongnu.org;
+ d=redhat.com; s=google; t=1785099156; x=1785703956; darn=nongnu.org;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :content-type:mime-version:references:message-id:subject:cc:to:from
  :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=O/Tm9yhkqwWEhTtYSumLxou7IC247EQO+9etCC0bbB4=;
- b=fQyYCOYOm25PIlL2nHlCaI578Iddu/d1AnYNlvnFsH2XxoVoJKODGOmy3iHh2vR0xy
- flE8v+mfX1p4+C7EjspMSDeMZlO17b59r9J+L3LHxh2f+oY4KsyGh9cBtamwHvIBJS0F
- fqiCmiMC4MWyNTKyTAqAqhyYNxwxr8PlKXfs5DxDV4IdtceZreXfNg+kXSf3ZZK5GcKo
- smtj0Jlva9Jz9X2XaboZy2J3Lnno/E6YsTVCdYVPSAYlx7FRetyjk0z7+22Uv4Miy6IZ
- 4X5BX+VWntW7vcM1kKj02AhXXC9joG+4GJI1vcMAqvGWrrBagpu5Gld1fwMQ4MDS8lMq
- RBUw==
+ bh=Wt7wCGr/kWh/rgRmz0sqXsHGnxZnqsHOsUrRjkkQJfY=;
+ b=OSrfIz/hqmJxr39xyONK1O/vDm52+7p+EX2sXyl3FagcsWgM5GYfdXreGAUoXlcSdl
+ B/1NGvvTyoKPeUdNF5HSuLh+eVRjiiTudhwpDdZz652n4UFG+QMmAz61dTvn0Rq5TFCk
+ hkc9ToBae7eQVF1/NU3IF9bt4NU7wfbgy6gOdFTGNRUIiGTMXFzi1IvFqodPwAadOZEt
+ VwK8rP281WFGcnOBTAau30DWbASnVT5ECDUb7Bodw477RKXecaKSgeY4SxCYlX7I4D2h
+ qyEsc2bELsag+B6ho8Fl1vIDWoaP8tTbUghz+Elk9MpcoYzNzeb/XKLEb+fv2l63n+js
+ zfug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785098983; x=1785703783;
+ d=1e100.net; s=20251104; t=1785099156; x=1785703956;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :content-type:mime-version:references:message-id:subject:cc:to:from
  :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=O/Tm9yhkqwWEhTtYSumLxou7IC247EQO+9etCC0bbB4=;
- b=ftykQz6UxCon1E5+MEXVBbB431PTZ/Wb4dq7UMRJttnsj7XGU1d41vC08zsauPr+VZ
- gQImBl6yeKBgphH/HKn39+cZGCnadVsLuZs6JL0HLgnmZnAQ0qgbbgBku9oWd6Yrhb4k
- oKdKJg9Jwi3unAGBLiCsK1btvBV9Kkz4qyd6nhL/nSu3vP0qq4XJuB/RDI6FsMxEXzFH
- ksel2twBOORLAvQrwJh+taSwZDuvd+ZXLL2hqgk4t9VfZVNlvcV+uQOHfjwwxsV9rXDC
- wndK65TfnnLBZqGOo4yLUp9vgVTfVKROASyIl9Gbm3GFVSv+y5aOQjcWtLMFgLVFQHcm
- +w5A==
-X-Gm-Message-State: AOJu0Yx+T77ahuZNaw1V3IPxb0PIG7tqVWnLzJfpi/ZZk4xZwhN7DBjx
- NxzyNp/TylSyMCG0eHtBu+4t/PUgaPxnTuBaU1tw3E/zn9w9vjNhd0pFXmkZOMNfOcfN4VrwMVe
- vuCGvwQYoY20Z3sAAb7C2FfJUrlVosq7ZP89+DEYO8Jn+XRgbRUCVwvVx
-X-Gm-Gg: AR+sD100KJJkxADkl9tzD1m4460kLJ5YBajY/hnL8IbuUx5iFFZRW5otxvlbGFF0R4X
- dZg/OelKrMMjeGH13VzyFQfdWTeg91SHfI3iWIKQxETYEbTYCMn4D7MQHexxKeBkr0whvCVivtk
- 2Amuuahme7AOZWIz6SKn8fM/89mv/2O7bJ2yoF4/U2v/hCi3K4Bq9m+LvuIzpEUDBqPwX/EsKsI
- qW8JLgCyfbK9dkPh9YyhXsmT9xnd6tpotrwmR62HYFgB7G14vhTYAVro4ZZo49LUEHiFWP3fVEK
- mnWovAHR3YCpIDV5DKSnIf1XhhxGXvbuYZIymLi4hdzdhNqrImXkOn8dF1fHA6lye7TbU9IV8C1
- KyU3MyHx2NGyJg+MkoGHcQQ==
-X-Received: by 2002:a05:600c:5487:b0:495:641a:fffe with SMTP id
- 5b1f17b1804b1-496ba3b1b10mr45832465e9.39.1785098983381; 
- Sun, 26 Jul 2026 13:49:43 -0700 (PDT)
-X-Received: by 2002:a05:600c:5487:b0:495:641a:fffe with SMTP id
- 5b1f17b1804b1-496ba3b1b10mr45832185e9.39.1785098982899; 
- Sun, 26 Jul 2026 13:49:42 -0700 (PDT)
+ bh=Wt7wCGr/kWh/rgRmz0sqXsHGnxZnqsHOsUrRjkkQJfY=;
+ b=hF9tn2HaT/UZR9b8+ygWv9wXSsbp2sz2eV8cQT2lK1a2n+gROsPz75I5zVk5IAm/08
+ CBPqQj2jf7MdTG7KY4+OLz6FwVlBr7wCSJKj1kLiaH+m1y8WiD9SQ58eeBT23REzu6BP
+ kGF4XraIqcyFol9vS33xods/jr3Yghfu+vdT+Jd0IimO1JV8wjq0/ZM9Z+jU5sfFJ7vb
+ aY5an8IWAk8R+KpxbghmiKei/78MwCkxvliWlSa1t52DyIT7HDwAuxGnFoGqwmlqQVaO
+ ibdCblnp25TUyYuSB+Kj4UFbAs1gUcLgdOV7fFtuCRsZ8shhsSvnJC/1vEW5+bZDXhqs
+ zB+g==
+X-Gm-Message-State: AOJu0YzT38TnJ/91xL3QG6TP5EqQCsCbjXhKZSGRAsfFOjfy4yMtlzlV
+ lInntJ5PynwWnx5KLNKSB2dF/EErMxheUgXT+4pYfYyW6wrJ5AgkbTnRepBK3wKtBgxlvJGk9Kp
+ vlCUKO/hqQ6k8Z2B1rLsq/EQnQxTdw9fQLnSCLCI+fg6G26Cg99Cg16qe
+X-Gm-Gg: AR+sD10VEyR7b8/UqlJTL6ZJWktMjMbJ7qrIBAmvIXQPTsM5/vmBCcuAD/c7C2hBeax
+ xdLwX8bhsOfb/GQZsPjO0So1leKroQcLgz8esILMj9b6hhhp0viQvOLsCH4+3oJalzEuPwZXNt3
+ BLEtNStCWiBW6z+tB9xV0rLp+9SGSw7XZe30vR5rvLqiKbkQUQ+AZD9x6oAjWhsPS1dGBcuqcR0
+ vZTxoxE4tNeHhcH+7H877EjB6FLE8A3mLhEbobxhg8Ip5OM6pG2J2GPUoNdwkWW36XbCm97k7Wc
+ 200o2w3yq/pEXrr57JjbRLxkF4qV13mPtqhxKgeovebkqxHhAFhljucnxbsj3vSJvMJiH8AYdN6
+ reGcDEhSp6hA5ysAK1cAqCA==
+X-Received: by 2002:a05:600c:1906:b0:495:3a52:cd7e with SMTP id
+ 5b1f17b1804b1-496b5700144mr88493915e9.25.1785099156263; 
+ Sun, 26 Jul 2026 13:52:36 -0700 (PDT)
+X-Received: by 2002:a05:600c:1906:b0:495:3a52:cd7e with SMTP id
+ 5b1f17b1804b1-496b5700144mr88493725e9.25.1785099155846; 
+ Sun, 26 Jul 2026 13:52:35 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4957b5f35a1sm179200355e9.0.2026.07.26.13.49.39
+ 5b1f17b1804b1-4957bd9e980sm192229905e9.0.2026.07.26.13.52.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 Jul 2026 13:49:42 -0700 (PDT)
-Date: Sun, 26 Jul 2026 16:49:37 -0400
+ Sun, 26 Jul 2026 13:52:35 -0700 (PDT)
+Date: Sun, 26 Jul 2026 16:52:30 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org,
@@ -100,16 +100,16 @@ Cc: qemu-devel@nongnu.org,
  Brian Cain <brian.cain@oss.qualcomm.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Haotian Jiang <jianghaotian.sunday@gmail.com>
-Subject: Re: [PATCH v2 00/12] Fixes for 11.1
-Message-ID: <20260726164912-mutt-send-email-mst@kernel.org>
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH v2 07/12] Fix some -Werror=maybe-uninitialized
+Message-ID: <20260726165049-mutt-send-email-mst@kernel.org>
 References: <20260727-fix2-v2-0-d0c4831ed7ea@redhat.com>
+ <20260727-fix2-v2-7-d0c4831ed7ea@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260727-fix2-v2-0-d0c4831ed7ea@redhat.com>
+In-Reply-To: <20260727-fix2-v2-7-d0c4831ed7ea@redhat.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -36
@@ -134,67 +134,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 27, 2026 at 12:43:59AM +0400, Marc-André Lureau wrote:
-> Hi
-> 
-> Here are some assorted patches worth considering for the 11.1 freeze
-> bug-fix period.
+On Mon, Jul 27, 2026 at 12:44:06AM +0400, Marc-André Lureau wrote:
+> When compiled with -Og, gcc produces many false-positives
+> gcc (GCC) 16.1.1 20260515 (Red Hat 16.1.1-2).
 
-why are these in a single patchset? who is expected to merge it?
+it hurts if you do it? so don't do it then?
+
+> We already use auto-var-init=zero, but better be explicit.
+
+explicit about false positives?
 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
-> Changes in v2, after Akihiko comments:
-> - split the "Fix many -Werror=maybe-uninitialized" patch
-> - qdev-monitor: add drain_rcu parameter to avoid deadlock from virtio-net
-> - rewrite WITH_QEMU_LOCK_GUARD/WITH_RCU_READ_LOCK_GUARD macros to suppress
->   GCC false-positive warnings (new patch)
-> - block/blkio: use QEMU_LOCK_GUARD instead of WITH_QEMU_LOCK_GUARD in
->   getlength() to avoid false-positive (new patch)
-> - hw/cxl: split invalid-free fix into its own patch
-> - hw/i3c: fix default return value of d2_i3c_send() (new patch)
-> - hw/ppc: fix dangling machine->fdt reference after spapr fdt updates (new patch)
-> - Link to v1: https://lore.kernel.org/qemu-devel/20260725-fix2-v1-0-5c9a6ce7b96a@redhat.com
+>  target/i386/cpu.c             | 3 ++-
+>  target/i386/emulate/x86_mmu.c | 4 ++--
+>  2 files changed, 4 insertions(+), 3 deletions(-)
 > 
-> ---
-> Marc-André Lureau (12):
->       hw/display/virtio-gpu-rutabaga: zero-init capset info response
->       block/blkio: fix error return value on getlength()
->       block/blkio: fix compiler false-positive warning
->       include/qemu: adjust LOCK_GUARD macros to avoid potential warning
->       hw/cxl: fix invalid free on early return
->       hw/i3c: fix default return value of d2_i3c_send()
->       Fix some -Werror=maybe-uninitialized
->       hw/hexagon: fix machine->fdt leak in qom-test
->       hw/ppc: fix dangling fdt reference
->       hw/core/machine: free machine->fdt in machine_finalize()
->       migration/multifd: fix Error leak in multifd_recv_terminate_threads()
->       qdev-monitor: drain RCU callbacks in qdev_device_add_from_qdict
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 5805d33ab92d..28e4435df23f 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -7734,7 +7734,7 @@ static void x86_cpuid_get_avx10_version(Object *obj, Visitor *v,
+>  static bool x86_cpu_apply_avx10_features(X86CPU *cpu, uint8_t version,
+>                                           Error **errp)
+>  {
+> -    const AVX10VersionDefinition *def;
+> +    const AVX10VersionDefinition *def = NULL;
+>      CPUX86State *env = &cpu->env;
+>  
+>      if (!version) {
+> @@ -7757,6 +7757,7 @@ static bool x86_cpu_apply_avx10_features(X86CPU *cpu, uint8_t version,
+>              break;
+>          }
+>      }
+> +    assert(def != NULL);
+>  
+>      if (def->version < version) {
+>          error_setg(errp, "avx10-version can be at most %d", def->version);
+
+
+what does assert have to do with gcc warnings?
+
+> diff --git a/target/i386/emulate/x86_mmu.c b/target/i386/emulate/x86_mmu.c
+> index 8d4371467fd7..65bcccd4751e 100644
+> --- a/target/i386/emulate/x86_mmu.c
+> +++ b/target/i386/emulate/x86_mmu.c
+> @@ -185,8 +185,8 @@ static MMUTranslateResult walk_gpt(CPUState *cpu, target_ulong addr, MMUTranslat
+>      int largeness = 0;
+>      target_ulong cr3 = x86_read_cr(cpu, 3);
+>      uint64_t page_mask = pae ? PAE_PTE_PAGE_MASK : LEGACY_PTE_PAGE_MASK;
+> -    MMUTranslateResult res;
+> -    
+> +    MMUTranslateResult res = MMU_TRANSLATE_PAGE_NOT_MAPPED;
+> +
+
+
+This is not 0 as the commit log implies.
+
+
+
+>      memset(pt, 0, sizeof(*pt));
+>      top_level = gpt_top_level(cpu, pae);
+>  
 > 
->  include/monitor/qdev.h           |  3 ++-
->  include/qemu/lockable.h          | 19 +++++++++++-------
->  include/qemu/rcu.h               | 17 ++++++++++------
->  block/blkio.c                    |  7 +++----
->  hw/audio/intel-hda.c             |  2 +-
->  hw/core/machine.c                |  1 +
->  hw/cxl/cxl-host.c                |  2 +-
->  hw/display/virtio-gpu-rutabaga.c |  2 ++
->  hw/hexagon/virt.c                |  9 +--------
->  hw/i3c/dw-i3c.c                  |  2 +-
->  hw/net/virtio-net.c              |  2 +-
->  hw/ppc/spapr.c                   |  1 +
->  hw/ppc/spapr_hcall.c             |  1 +
->  migration/multifd.c              |  1 +
->  system/qdev-monitor.c            | 42 +++++++++++++++-------------------------
->  target/i386/cpu.c                |  3 ++-
->  target/i386/emulate/x86_mmu.c    |  4 ++--
->  17 files changed, 59 insertions(+), 59 deletions(-)
-> ---
-> base-commit: 300438ffbb8d9430cac2fcc15cba6f482b2c0587
-> change-id: 20260725-fix2-6e51d231794b
-> 
-> Best regards,
-> --  
-> Marc-André Lureau <marcandre.lureau@redhat.com>
+> -- 
+> 2.55.0
 
 
