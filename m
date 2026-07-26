@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E3F0C531C9
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 12:30:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A13E8C531C9
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 12:30:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnxym-0001Bh-DN; Sun, 26 Jul 2026 08:29:16 -0400
+	id 1wnxyX-0000sd-RS; Sun, 26 Jul 2026 08:29:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
- id 1wnxyg-00019n-8B
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 08:29:10 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1wnxyL-0000lB-5c
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 08:28:49 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
- id 1wnxyd-0003HR-W0
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 08:29:09 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-848643382fcso1938240b3a.1
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 05:29:07 -0700 (PDT)
+ id 1wnxyJ-0002uY-AY
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 08:28:48 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-84e27035206so1775919b3a.3
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 05:28:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785068946; x=1785673746; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=HjFRlm+7Pma7rC3OyN70J41dQ5x7B6INTRW4EeE9d/E=;
- b=b2p37hLsafLVdOwx5oDuIFmP/m5eAZFym1p7IQaV7H/xbVexJt2Od9vYXCVxBllNj7
- 2qGjNwYwzUQ/rewyFBZ9ocYHBF9kz8XgT8GksXBJ5sek58qp2tE0X8KJlqpCH9DbYK79
- Y+566no9GHAn3gL6Js7xaMA4vO3Aw89Sa8vHZ71DKSjr6sygYel+X0VXlM3wy+P+P4NR
- QoN3WOY+egso58+cLPzzd768dwaVCbifvSP5/GwVU/htJHzSHSzZRf9T5nw3nZTowKEl
- rJW7wTkVgjP32KLiM/Sl4l0KbaejKjg0nNj3btUWSBaQMn1jrCtWU0tRA6lyCsjT1YFk
- ERcg==
+ d=gmail.com; s=20251104; t=1785068926; x=1785673726; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=g/XAcSm17QqKQ9ETpqNQkH3Hsms2HSSgWJglT/dAeR0=;
+ b=ZxHFhf0+gZe1bag8nmIA97wknhcefYqB3L65fBZyJuZdV1QgTfQGcDomlBC+g7upqu
+ ikogm1u2YvmqfGWG8YEcWdpMXnOFz0xNgCN52AiaRSL/h3NRVHUZn7ofMPJuEWaNTHOe
+ xKPH+kxqQbNkw5DDhnhg3FzXoZ43b4cjbH+IAfeUe1iCBGTsxFCf0kKLdSOENcSl7phm
+ idfcCQFxNnwpYny1UKYJjm6V7HoEF+FIZOxjSlKv06MKZwt2Azw2213dqnuY1U9lHSzb
+ zb1Uy4p5G/KLHk3KzmkSy9ZLxR6kaLR1eSorJJgBzxb+qDRpRzvpXtXECnXOcm3p0bsW
+ mDxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785068946; x=1785673746;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=HjFRlm+7Pma7rC3OyN70J41dQ5x7B6INTRW4EeE9d/E=;
- b=JDN57YxXKWNOsOVo9O1yZZDW5u2OXUuXVcFf7y3xdzn/tvQ06DLD09Tp15pBXCbOD9
- 1pHPV5g0f0faSARRitXEkoz++n8lIvFlz+gfl31BYRjSTXV/UD2SjlXezVP/FLWnKuRb
- sZDr1hEsRLrY34aibDb/6eS0assRCGE9zZkiTBib7zZI4MS5oLp6TnQ4sFmElMrwn4r6
- +JpFWudLmJmZMOKmhE6hnArXPRDUDgt+Uw58in4mDH3G2gZdAE6DuDtSVnTT2Ku0PWV7
- uc1pe/P8Cbsx43kUDJMrbHzrqyTTEhvAc1Rl+z3FHRgjDtipgGP8DrRqbeHblVm63Old
- FAfA==
-X-Gm-Message-State: AOJu0Ywf+g9nIasA/zmASf0e+ZHWMNt3EtK/+PHVYCvGfzVVpL4wXR1p
- 7bZ7IJT4Ff/UnCS3ZAV8fP92DAGw/WXIoxWFhFQKjJdORnn8xa0CTIzadOnMBqJyFcY=
-X-Gm-Gg: AR+sD1210enQnZ4G1oE3fgEK27d3Ma2M1P9MfGmKQeoKi60MW5K+KkdLeqWxtQP64lz
- iVFM+0HAzxZ/xPpTrmOTZ8h9nGJl/MTRIITV6LDymSWtQ6cN6JOgNWGF+MJzNuWsAhBTBCrXVNx
- jBJu7IFChPBLuGlV51OBlOSd7RpDsRscizK8EQXP1pyYwspmPGIaW2iQX0RtVLzfTHC5BZEvaN3
- o+QONsmkTJe/6gotDq/oQrZGrW54Sx9KxB+MWRf6HGjHzNxW1cHwv3K/ADZygzxas7NEKZubKp3
- 4XFoDg8pfV8gn5rRgawRyZ1iOcMonFt5+pMCfk4d0WCVngbvk2fgsHYLe3ugARKWSh9esfimWAP
- DE5B2jNWPeCsfxKIYc5zBkcXMbZTuSOlm/vu4rAGcjju3yBxz6rnWtezyDoF8WtslOOmwyLwhiO
- gywve1bCWf/+8JlZCHWYwSqzN5goGWgjI=
-X-Received: by 2002:a05:6a00:6c95:b0:848:63c9:ee39 with SMTP id
- d2e1a72fcca58-84e5942e856mr3781574b3a.12.1785068946465; 
- Sun, 26 Jul 2026 05:29:06 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785068926; x=1785673726;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=g/XAcSm17QqKQ9ETpqNQkH3Hsms2HSSgWJglT/dAeR0=;
+ b=bTvOopBXIXBz0HyVGb5wod60bJOu+d18jgjQe1IrqNsptZpPbE/ghGWp7+tpjWl0N2
+ KFNYsdLn7sAQ8MiV27vrtoyEvIIfKXgjRBTUrxzI7rT6wlfVMQ0GyFc6M9x8JPUblW12
+ QC8cUSmVaTDFezE+4K+dxXhhuFPw40Dm0rodHQIFzpEwoooQ0Ypi8uuCMqYBW0owD9Wy
+ qUbeQKi6xOomCs/IYWQ+gepavkt2Ok4kQAijXIN6TgYe246e8F19aSMq0/OKNLA3mkfV
+ vpKZNnkdkHBPNJPQemoCw/lUmI9Yl95sW9FnqB/hZZbcFlZcrtDLv6UD/JEc4DSsUA8f
+ xVhg==
+X-Gm-Message-State: AOJu0YyKnoAtdZS1WNpOXoRB9y1T+J1lHwSwe8WsrbZvbOcUP9MishQ8
+ jKC5uuyu7pUUzXN8ac+0CEigg8uzxyEZsDlI/QlFyHLUV+XiqAhx5aQtagAZpvMBAzQ=
+X-Gm-Gg: AR+sD10MJIgRMuD5y3oVCOdrScn1HdkFNceRmlza1roti9tWeJjm3yQ0lPTSYCxEp/2
+ 8gaLyYBo17aPmqeDr7k1jV7mSXUrtihl5vZHGBP1a9OAm/rxoM3PGh9T38kdU8xpPussbN4q9rM
+ 3Ijq25KWQPxabh7+msqU9nNmX3IP9A+9SHY6dj1l5Pko3XrGClOwH8dB1A/dq6dcRVflh3VdD8w
+ bXTvZOZezb2+v/htme+JF3cEGjRc1XzJnbtjw6v+9nXvuuoS+ui2h9MVC8XThL0LKCEJl0LUH+T
+ rjjs2sNUksEZbS4lI+lNk6R6eHhfZczRN1GWft/xOmlUvVglWnJdy7PxfBQ5HObcE2O+Z1VGBHr
+ 8J0cSzw0OF3weVTkQiM9FDtLAaXAfKUeN+Jb4Z4wkTvOYr348c25jO42Vwx1dSR/gQVtJw4dEOB
+ WHmqgnXGvbsFSypje5EUSm
+X-Received: by 2002:a05:6a00:3687:b0:848:4b49:27fb with SMTP id
+ d2e1a72fcca58-84e595a45aamr3681036b3a.78.1785068925835; 
+ Sun, 26 Jul 2026 05:28:45 -0700 (PDT)
 Received: from localhost.localdomain ([111.201.4.215])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-84e53426628sm1861647b3a.49.2026.07.26.05.29.01
+ d2e1a72fcca58-84e53426628sm1861647b3a.49.2026.07.26.05.28.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 Jul 2026 05:29:05 -0700 (PDT)
+ Sun, 26 Jul 2026 05:28:45 -0700 (PDT)
 From: Kangjie Huang <flamboyant.h.01@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Kangjie Huang <flamboyant.h.01@gmail.com>, qemu-riscv@nongnu.org,
@@ -76,16 +75,14 @@ Cc: Kangjie Huang <flamboyant.h.01@gmail.com>, qemu-riscv@nongnu.org,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH 02/11] hw/riscv/k230: Instantiate K230 SSI controllers
-Date: Sun, 26 Jul 2026 20:28:20 +0800
-Message-ID: <41750ee3b9b96b8f6caf234b0855f4cae79b761c.1785064313.git.flamboyant.h.01@gmail.com>
+Subject: [PATCH 00/11] hw/riscv: Add K230 SPI, QSPI, IDMA and XIP support
+Date: Sun, 26 Jul 2026 20:28:18 +0800
+Message-ID: <cover.1785064312.git.flamboyant.h.01@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1785064312.git.flamboyant.h.01@gmail.com>
-References: <cover.1785064312.git.flamboyant.h.01@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=flamboyant.h.01@gmail.com; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=flamboyant.h.01@gmail.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -108,340 +105,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
+Message-ID: <20260726122818.FPPhfGLusCVQ4rUo__kx4COWlEzqkGhS9SuZOqeBU5E@z>
 
-Instantiate the three SSI controller profiles used by K230 and map their
-MMIO regions at the documented addresses.
+Hi,
 
-Add the K230 SSI qtest target. Cover the three instance profiles, reset
-state, chip-select masks, representative register masks, and system
-reset behaviour.
+The k230 machine currently models the C908 core, CLINT, PLIC, watchdogs
+and UARTs, but cannot yet model the real boot path. This series adds the
+Kendryte K230 DesignWare SSI controllers and their machine integration
+as groundwork for full boot support, enabling U-Boot to boot from SPI
+NOR through standard PIO, QSPI IDMA, and the XIP read window.
 
-Signed-off-by: Kangjie Huang <flamboyant.h.01@gmail.com>
----
- docs/system/riscv/k230.rst     |   1 +
- hw/riscv/Kconfig               |   1 +
- hw/riscv/k230.c                |  35 +++++--
- include/hw/riscv/k230.h        |   2 +
- tests/qtest/k230-dw-ssi-test.c | 178 +++++++++++++++++++++++++++++++++
- tests/qtest/meson.build        |   4 +-
- 6 files changed, 211 insertions(+), 10 deletions(-)
+K230 contains three SSI instances with different capabilities. The SDK
+numbers them according to the address map: spi0 is the SPI-OPI instance,
+while spi1 and spi2 are QSPI0 and QSPI1. The series models the register
+contract documented in the K230 Technical Reference Manual V0.3.1
+(2024-11-18), standard FIFO-backed SPI transfers, interrupt routing,
+Dual/Quad SDR transfers, SPI NOR attachment, synchronous internal DMA,
+the HI_SYS SSI_CTRL wrapper, and the spi0 XIP read window.
+
+The implementation is split so that the register model and machine
+integration come first, followed by the PIO data path, interrupt support,
+enhanced transfers, flash integration, IDMA, HI_SYS, and XIP. A single
+K230 SSI qtest binary grows with the series and exercises each layer when
+it becomes available.
+
+The final patch adds trace events covering register accesses (excluding
+DR, whose per-frame traffic would drown out everything else during U-Boot
+and Linux SPI NOR transfers), transaction boundaries, interrupt levels,
+IDMA start/completion/error, and XIP reads. The trace points are placed
+in a dedicated patch at the end of the series so that the functional
+patches stay focused on behaviour and the trace surface can be reviewed
+in one place. The events only observe model behaviour and do not change
+it.
+
+Testing:
+
+* Built qemu-system-riscv64 at every commit with the riscv64-softmmu
+  configuration.
+* Ran the cumulative K230 SSI qtest after every commit that provides the
+  test target. The final revision passes all ten scenarios:
+  register-contract, pio-data-path, interrupt-controller, plic-routing,
+  qspi-config, spi-nor, qspi-sdr, idma, hi-sys, and xip-read-window.
+* Standard SPI: U-Boot detected W25Q256, loaded OpenSBI, Linux, initrd,
+  and DTB with sf read, and reached the Linux initramfs shell.
+* Quad SPI: with spi0 configured for 4-bit transfers, U-Boot erased a
+  64 KiB sector, wrote and read back 256 bytes successfully, loaded all
+  boot payloads from QSPI flash, and reached the Linux initramfs shell.
+* XIP: U-Boot read the OpenSBI uImage header from 0xc0000000, verified
+  its checksum, and reached the Linux initramfs shell through bootm.
+* git diff --check reports no whitespace errors.
+* checkpatch reports no errors.
+
+Kangjie Huang (11):
+  hw/ssi: Add K230 DesignWare SSI register model
+  hw/riscv/k230: Instantiate K230 SSI controllers
+  hw/ssi: Implement K230 SSI FIFO and standard PIO transfers
+  hw/ssi: Add K230 SSI interrupt controller
+  hw/riscv: Route K230 SSI IRQs to the PLIC
+  hw/ssi: Implement K230 enhanced QSPI transfers
+  hw/riscv/k230: Attach SPI NOR flash to spi0
+  hw/ssi: Implement K230 SSI internal DMA transfers
+  hw/misc: Add K230 HI_SYS SSI control
+  hw/ssi: Add K230 SSI XIP read window
+  hw/ssi: Add trace events for K230 DesignWare SSI
+
+ docs/system/riscv/k230.rst     |    4 +
+ hw/misc/k230_hi_sys.c          |  169 +++
+ hw/misc/meson.build            |    1 +
+ hw/riscv/Kconfig               |    2 +
+ hw/riscv/k230.c                |  165 ++-
+ hw/ssi/Kconfig                 |    4 +
+ hw/ssi/k230_dw_ssi.c           | 1754 ++++++++++++++++++++++++++++++++
+ hw/ssi/meson.build             |    1 +
+ hw/ssi/trace-events            |   11 +
+ include/hw/misc/k230_hi_sys.h  |   55 +
+ include/hw/riscv/k230.h        |    9 +
+ include/hw/ssi/k230_dw_ssi.h   |  111 ++
+ tests/qtest/k230-dw-ssi-test.c |  917 +++++++++++++++++
+ tests/qtest/meson.build        |    4 +-
+ 14 files changed, 3191 insertions(+), 16 deletions(-)
+ create mode 100644 hw/misc/k230_hi_sys.c
+ create mode 100644 hw/ssi/k230_dw_ssi.c
+ create mode 100644 include/hw/misc/k230_hi_sys.h
+ create mode 100644 include/hw/ssi/k230_dw_ssi.h
  create mode 100644 tests/qtest/k230-dw-ssi-test.c
 
-diff --git a/docs/system/riscv/k230.rst b/docs/system/riscv/k230.rst
-index cea8202e55..0358709d2c 100644
---- a/docs/system/riscv/k230.rst
-+++ b/docs/system/riscv/k230.rst
-@@ -20,6 +20,7 @@ The ``k230`` machine supports the following devices:
- * Platform-Level Interrupt Controller (PLIC)
- * 2 K230 Watchdog Timer
- * 5 UART
-+* 3 K230 SSI controllers for SPI and QSPI
- 
- Boot options
- ------------
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index de37c08cae..69059ae044 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -162,3 +162,4 @@ config K230
-     select SERIAL_MM
-     select UNIMP
-     select K230_WDT
-+    select K230_DW_SSI
-diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
-index 656f28190c..acd5445b31 100644
---- a/hw/riscv/k230.c
-+++ b/hw/riscv/k230.c
-@@ -110,6 +110,12 @@ static void k230_soc_init(Object *obj)
-     object_initialize_child(obj, "c908-cpu", cpu0, TYPE_RISCV_HART_ARRAY);
-     object_initialize_child(obj, "k230-wdt0", &s->wdt[0], TYPE_K230_WDT);
-     object_initialize_child(obj, "k230-wdt1", &s->wdt[1], TYPE_K230_WDT);
-+    object_initialize_child(obj, "k230-qspi0", &s->dw_ssi[0],
-+                            TYPE_K230_DW_SSI);
-+    object_initialize_child(obj, "k230-qspi1", &s->dw_ssi[1],
-+                            TYPE_K230_DW_SSI);
-+    object_initialize_child(obj, "k230-spi-opi", &s->dw_ssi[2],
-+                            TYPE_K230_DW_SSI);
- 
-     qdev_prop_set_uint32(DEVICE(cpu0), "hartid-base", 0);
-     qdev_prop_set_string(DEVICE(cpu0), "cpu-type", TYPE_RISCV_CPU_THEAD_C908);
-@@ -198,6 +204,19 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
-         }
-     }
- 
-+    qdev_prop_set_uint32(DEVICE(&s->dw_ssi[0]), "num-cs", 5);
-+    qdev_prop_set_uint32(DEVICE(&s->dw_ssi[1]), "num-cs", 5);
-+    qdev_prop_set_uint32(DEVICE(&s->dw_ssi[2]), "num-cs", 1);
-+    qdev_prop_set_uint32(DEVICE(&s->dw_ssi[0]), "max-lines", 4);
-+    qdev_prop_set_uint32(DEVICE(&s->dw_ssi[1]), "max-lines", 4);
-+    qdev_prop_set_uint32(DEVICE(&s->dw_ssi[2]), "max-lines", 8);
-+
-+    for (int i = 0; i < ARRAY_SIZE(s->dw_ssi); i++) {
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->dw_ssi[i]), errp)) {
-+            return;
-+        }
-+    }
-+
-     sysbus_mmio_map(SYS_BUS_DEVICE(&s->wdt[0]), 0, memmap[K230_DEV_WDT0].base);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->wdt[0]), 0,
-                        qdev_get_gpio_in(DEVICE(s->c908_plic), K230_WDT0_IRQ));
-@@ -206,6 +225,13 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->wdt[1]), 0,
-                        qdev_get_gpio_in(DEVICE(s->c908_plic), K230_WDT1_IRQ));
- 
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->dw_ssi[0]), 0,
-+                    memmap[K230_DEV_QSPI0].base);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->dw_ssi[1]), 0,
-+                    memmap[K230_DEV_QSPI1].base);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->dw_ssi[2]), 0,
-+                    memmap[K230_DEV_SPI].base);
-+
-     /* unimplemented devices */
-     create_unimplemented_device("kpu.l2-cache",
-                                 memmap[K230_DEV_KPU_L2_CACHE].base,
-@@ -349,15 +375,6 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
-     create_unimplemented_device("sd1", memmap[K230_DEV_SD1].base,
-                                 memmap[K230_DEV_SD1].size);
- 
--    create_unimplemented_device("qspi0", memmap[K230_DEV_QSPI0].base,
--                                memmap[K230_DEV_QSPI0].size);
--
--    create_unimplemented_device("qspi1", memmap[K230_DEV_QSPI1].base,
--                                memmap[K230_DEV_QSPI1].size);
--
--    create_unimplemented_device("spi", memmap[K230_DEV_SPI].base,
--                                memmap[K230_DEV_SPI].size);
--
-     create_unimplemented_device("hi_sys_cfg", memmap[K230_DEV_HI_SYS_CFG].base,
-                                 memmap[K230_DEV_HI_SYS_CFG].size);
- 
-diff --git a/include/hw/riscv/k230.h b/include/hw/riscv/k230.h
-index 592e1c26bf..4a79b7ed45 100644
---- a/include/hw/riscv/k230.h
-+++ b/include/hw/riscv/k230.h
-@@ -17,6 +17,7 @@
- 
- #include "hw/core/boards.h"
- #include "hw/riscv/riscv_hart.h"
-+#include "hw/ssi/k230_dw_ssi.h"
- #include "hw/watchdog/k230_wdt.h"
- 
- #define C908_CPU_HARTID   (0)
-@@ -33,6 +34,7 @@ typedef struct K230SoCState {
-     RISCVHartArrayState c908_cpu; /* Small core */
- 
-     K230WdtState wdt[2];
-+    K230DwSsiState dw_ssi[3];
-     MemoryRegion sram;
-     MemoryRegion bootrom;
- 
-diff --git a/tests/qtest/k230-dw-ssi-test.c b/tests/qtest/k230-dw-ssi-test.c
-new file mode 100644
-index 0000000000..dcd6cb1d6e
---- /dev/null
-+++ b/tests/qtest/k230-dw-ssi-test.c
-@@ -0,0 +1,178 @@
-+/*
-+ * QTest for the Kendryte K230 DesignWare SSI
-+ *
-+ * Copyright (c) 2026 Kangjie Huang <flamboyant.h.01@gmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+#include "qemu/bitops.h"
-+
-+#define K230_SPI0_BASE          0x91584000ULL
-+#define K230_SPI1_BASE          0x91582000ULL
-+#define K230_SPI2_BASE          0x91583000ULL
-+#define K230_SSI_CTRLR0          0x000
-+#define K230_SSI_CTRLR1          0x004
-+#define K230_SSI_SSIENR          0x008
-+#define K230_SSI_SER             0x010
-+#define K230_SSI_BAUDR           0x014
-+#define K230_SSI_TXFTLR          0x018
-+#define K230_SSI_TXFLR           0x020
-+#define K230_SSI_RXFLR           0x024
-+#define K230_SSI_SR              0x028
-+#define K230_SSI_IMR             0x02c
-+#define K230_SSI_ISR             0x030
-+#define K230_SSI_RISR            0x034
-+#define K230_SSI_DMACR           0x04c
-+#define K230_SSI_IDR             0x058
-+#define K230_SSI_VERSION_ID      0x05c
-+#define K230_SSI_SPI_CTRLR0      0x0f4
-+#define K230_SSI_XIP_MODE_BITS   0x0fc
-+#define K230_SSI_XIP_INCR_INST   0x100
-+#define K230_SSI_SPIDR           0x120
-+#define K230_SSI_SPIAR           0x124
-+#define K230_SSI_AXIAR0          0x128
-+#define K230_SSI_AXIAR1          0x12c
-+#define K230_SSI_AXIECR          0x130
-+#define K230_SSI_DONECR          0x134
-+
-+#define K230_SSI_CTRLR0_RESET           0x00004007U
-+#define K230_SSI_SPI_CTRLR0_SPI_RESET   0x04000200U
-+#define K230_SSI_SPI_CTRLR0_FMC_RESET   0x28000200U
-+#define K230_SSI_IMR_RESET              0x0000003fU
-+#define K230_SSI_IDR_RESET              0xa1b2c3d5U
-+#define K230_SSI_VERSION_RESET          0x3130332aU
-+
-+#define K230_SSI_CTRLR0_WRITABLE_MASK   0x01cf7f1fU
-+#define K230_SSI_BAUDR_WRITABLE_MASK    0x0000fffeU
-+
-+#define K230_SSI_CTRLR0_DFS_MASK        0x1fU
-+#define K230_SSI_CTRLR0_TMOD_SHIFT      10
-+
-+#define K230_SSI_TMOD_TR                0
-+#define K230_SSI_TMOD_EEPROM_READ       3
-+
-+#define K230_SSI_SR_BUSY                BIT(0)
-+#define K230_SSI_SR_TFNF                BIT(1)
-+#define K230_SSI_SR_TFE                 BIT(2)
-+#define K230_SSI_SR_RFNE                BIT(3)
-+
-+#define K230_SSI_INT_AXIE               BIT(8)
-+#define K230_SSI_INT_DONE               BIT(11)
-+
-+typedef struct K230SsiInstance {
-+    uint64_t base;
-+    uint32_t num_cs;
-+    uint32_t spi_ctrlr0_reset;
-+} K230SsiInstance;
-+
-+static const K230SsiInstance k230_ssi_instances[3] = {
-+    {
-+        .base = K230_SPI0_BASE,
-+        .num_cs = 1,
-+        .spi_ctrlr0_reset = K230_SSI_SPI_CTRLR0_FMC_RESET,
-+    }, {
-+        .base = K230_SPI1_BASE,
-+        .num_cs = 5,
-+        .spi_ctrlr0_reset = K230_SSI_SPI_CTRLR0_SPI_RESET,
-+    }, {
-+        .base = K230_SPI2_BASE,
-+        .num_cs = 5,
-+        .spi_ctrlr0_reset = K230_SSI_SPI_CTRLR0_SPI_RESET,
-+    },
-+};
-+
-+static QTestState *k230_ssi_start(void)
-+{
-+    return qtest_init("-machine k230");
-+}
-+
-+static uint32_t k230_ssi_readl(QTestState *qts, uint64_t base,
-+                               uint32_t offset)
-+{
-+    return qtest_readl(qts, base + offset);
-+}
-+
-+static void k230_ssi_writel(QTestState *qts, uint64_t base,
-+                            uint32_t offset, uint32_t value)
-+{
-+    qtest_writel(qts, base + offset, value);
-+}
-+
-+static void k230_ssi_disable(QTestState *qts, uint64_t base)
-+{
-+    k230_ssi_writel(qts, base, K230_SSI_SSIENR, 0);
-+}
-+
-+static void k230_ssi_configure(QTestState *qts, uint64_t base,
-+                               uint32_t tmod, uint32_t dfs_bits,
-+                               uint32_t ndf)
-+{
-+    uint32_t ctrlr0;
-+
-+    g_assert_cmpuint(dfs_bits, >=, 4);
-+    g_assert_cmpuint(dfs_bits, <=, 32);
-+    g_assert_cmpuint(tmod, <=, K230_SSI_TMOD_EEPROM_READ);
-+
-+    k230_ssi_disable(qts, base);
-+    ctrlr0 = (dfs_bits - 1) & K230_SSI_CTRLR0_DFS_MASK;
-+    ctrlr0 |= tmod << K230_SSI_CTRLR0_TMOD_SHIFT;
-+    k230_ssi_writel(qts, base, K230_SSI_CTRLR0, ctrlr0);
-+    k230_ssi_writel(qts, base, K230_SSI_CTRLR1, ndf);
-+    k230_ssi_writel(qts, base, K230_SSI_BAUDR, 2);
-+}
-+
-+static void k230_ssi_enable_cs(QTestState *qts, uint64_t base, uint32_t ser)
-+{
-+    k230_ssi_writel(qts, base, K230_SSI_SER, ser);
-+    k230_ssi_writel(qts, base, K230_SSI_SSIENR, 1);
-+}
-+
-+static void test_register_contract(void)
-+{
-+    QTestState *qts = k230_ssi_start();
-+
-+    for (int i = 0; i < ARRAY_SIZE(k230_ssi_instances); i++) {
-+        const K230SsiInstance *inst = &k230_ssi_instances[i];
-+
-+        g_assert_cmphex(k230_ssi_readl(qts, inst->base, K230_SSI_CTRLR0),
-+                        ==, K230_SSI_CTRLR0_RESET);
-+        g_assert_cmphex(k230_ssi_readl(qts, inst->base, K230_SSI_SSIENR),
-+                        ==, 0);
-+        g_assert_cmphex(k230_ssi_readl(qts, inst->base,
-+                                      K230_SSI_SPI_CTRLR0),
-+                        ==, inst->spi_ctrlr0_reset);
-+        k230_ssi_writel(qts, inst->base, K230_SSI_SER, UINT32_MAX);
-+        g_assert_cmphex(k230_ssi_readl(qts, inst->base, K230_SSI_SER),
-+                        ==, MAKE_64BIT_MASK(0, inst->num_cs));
-+    }
-+
-+    g_assert_cmphex(k230_ssi_readl(qts, K230_SPI0_BASE, K230_SSI_IDR),
-+                    ==, K230_SSI_IDR_RESET);
-+    g_assert_cmphex(k230_ssi_readl(qts, K230_SPI0_BASE,
-+                                  K230_SSI_VERSION_ID),
-+                    ==, K230_SSI_VERSION_RESET);
-+    k230_ssi_writel(qts, K230_SPI1_BASE, K230_SSI_CTRLR0, UINT32_MAX);
-+    g_assert_cmphex(k230_ssi_readl(qts, K230_SPI1_BASE, K230_SSI_CTRLR0),
-+                    ==, K230_SSI_CTRLR0_WRITABLE_MASK);
-+    k230_ssi_writel(qts, K230_SPI1_BASE, K230_SSI_BAUDR, UINT32_MAX);
-+    g_assert_cmphex(k230_ssi_readl(qts, K230_SPI1_BASE, K230_SSI_BAUDR),
-+                    ==, K230_SSI_BAUDR_WRITABLE_MASK);
-+
-+    qtest_system_reset(qts);
-+    g_assert_cmphex(k230_ssi_readl(qts, K230_SPI0_BASE, K230_SSI_CTRLR0),
-+                    ==, K230_SSI_CTRLR0_RESET);
-+    g_assert_cmphex(k230_ssi_readl(qts, K230_SPI0_BASE, K230_SSI_IMR),
-+                    ==, K230_SSI_IMR_RESET);
-+    qtest_quit(qts);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("/k230-dw-ssi/register-contract", test_register_contract);
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 56ff860e21..f5bcc7bece 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -297,7 +297,8 @@ qtests_riscv64 = ['riscv-csr-test'] + \
-   (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
-    config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
-    ['iommu-riscv-test'] : []) + \
--  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test'] : [])
-+  (config_all_devices.has_key('CONFIG_K230') ?
-+   ['k230-wdt-test', 'k230-dw-ssi-test'] : [])
- 
- qtests_hexagon = ['boot-serial-test']
- 
-@@ -400,6 +401,7 @@ qtests = {
-                        [gio],
-   'erst-test': files('erst-test.c'),
-   'ivshmem-test': [rt, '../../contrib/ivshmem-server/ivshmem-server.c'],
-+  'k230-dw-ssi-test': files('k230-dw-ssi-test.c'),
-   'migration-test': test_migration_files + migration_tls_files + migration_colo_files,
-   'pxe-test': files('boot-sector.c'),
-   'pnv-xive2-test': files('pnv-xive2-common.c', 'pnv-xive2-flush-sync.c',
+
+base-commit: f893c46c3931b3684d235d221bf8b7844ddbf1d7
 -- 
 2.43.0
-
 
