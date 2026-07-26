@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE9FAC5321C
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 14:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6907EC531C9
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 14:53:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wo0DB-0005yj-F6; Sun, 26 Jul 2026 10:52:17 -0400
+	id 1wo0DJ-000649-GJ; Sun, 26 Jul 2026 10:52:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
- id 1wo0Cr-0005v0-Vm
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 10:51:58 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1wo0D3-0005yY-2F
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 10:52:11 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
- id 1wo0Cq-000616-6J
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 10:51:57 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2ca64c3ce5fso22786685ad.3
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 07:51:55 -0700 (PDT)
+ id 1wo0Cz-00062G-4A
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 10:52:08 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2cc61541f8cso32295795ad.0
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 07:52:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785077514; x=1785682314; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1785077524; x=1785682324; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=IjwguSNnxaa5a5wI2q+FKJUSG7PlKND5S7DmrRXF5ds=;
- b=g2r/mpo+SbAutMyp/LnCUBxAqXIwMkjeaFFUhL+OMUJOAs+HQ1nF54SpP0CP3gagdN
- m2XbzJ3DLd6NAw3QxnGoCA8S2OavFSEqUIbG+x4NjucoUXwBsNgdJbpZ06gQbjS3hsCU
- lwO9sINGntRSAzbXJlMPN87FHzP/y+TEqGprAqHdoJtFDNReegyd+IndDLUSABr2XtwN
- 0EUHlExvsDUh6SVx8uiqzSFYR+fuhDiXXV73G99jloUo/4vco3wkcbxhNetH4m3zogys
- QgxCNUGzW9cI+SzNN32u5IYpt/dwqCz1rHahzcjh3tJ6c7POI7WNr/wZcvcCEfVXHIrH
- pCYg==
+ bh=ZnuUzF0dJIBznvvjx9kVt4TXwDvHfe0DU2pEHtYFjzE=;
+ b=jTp8PVG01HB7mgsj2TPgmWmjM/01brADE1qkizvUjZDqrbUsas50aRZfZObsYxFlJQ
+ G5oLZLyBaHKHWfYU/QeCxJC7o+3rQQzSHFdAGmt8q1eJ079WhQAEGmqfCFq9tXI7MmBj
+ 2TC8QWOlBT6Q+HbxD9cQgCAcfKvycYqPplzLN9VWmhGzilcBaxrrC1ys2cOjfuord2iV
+ LAiRHNY434pbLJ2vQUyFPjY7tw9VtJeD9+lv8JEyk+5xmaLPZQ0LGECEBdkfANt7/46M
+ EpD3kCN/CMyv7+iSoqTV3n5y07OCtjSkPJHYpm5RkiNXNbFGrab72Q4Cxg/A0TKY82ec
+ MJ4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785077514; x=1785682314;
+ d=1e100.net; s=20251104; t=1785077524; x=1785682324;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=IjwguSNnxaa5a5wI2q+FKJUSG7PlKND5S7DmrRXF5ds=;
- b=OoySREznCJMlyUCidVVDJyxkueVpSn7McivjKb974CFioE8TF8FopCAN06BwE0tGv8
- odtF+JIAuV23FI36NKQS3mx82g97K12XQ+va0VNMu/2ArtFhLzZ0qitxAKGRQrhIbrOw
- frsYEnov9kdJ7dqOr2R3oKpT9lApc1KCWbHvjYvMtrCXlHLWwkcgbj6MKNxBpm9s83Cf
- rAX6+Rdla0Z+FFL9Uf4TncHmQhM0xxZUq5HDT96Il7KFEfoCH7+c2wQcrO5lGhAAaTjw
- jUVtxwu6xrCv5Q1Fz/IVwcg9FfTCW4XIoRwAzSv63cDVHauR3ET/VTfMZjGEgr5Hu98G
- Hbjw==
-X-Gm-Message-State: AOJu0YyPszeF3qrPLWEV++DdEaq0TyZ+Or0MhvIlABbM8/EDhixq7r/f
- ughigY7QF4Jht0b8kYJdvH57ryUzZHHnG23Gto/4/Yr4OprlRWcSMdXolzlZOw==
-X-Gm-Gg: AR+sD12ZbX8hrNN4MIBd9wjJRqAwTkGF/M404Hpz+al2TyeUt3vT8kLv3tfLtQXv2sL
- /0FhBbfsVw1q1h29aV4O3GrbjNf5Y1FHIuFaLvyWXvAXLxohS1L5cW0ZScVQFiqgZPvg/zql+AS
- vHL0lr4R4O8pB0O6A3J+ab9l3qdzP4kTdeEH2QtPlcsQcGgXgkiVWujypCnTNBfrc/I4SqEq/FY
- p61Cg87qfrZh4wQNUTeX/SeoMR9jsjegMgXO0VeGBLK9TroqLOLjbZs8eobaor0gthGUPLem44u
- 9AwmGvbIx1hLrkoVFVuMMLeB97t813qw979MK/VI/Fbgt/sg/SU3NETerKqLe6R24PeCzTMwMav
- KaNWDC/1ghxps/KVuGQFUUsvOaOc6l2TyuWDLxGghdeGzt9Q5Ysm52xJPcKx4s4vmcu+E9UBF8d
- yVWwc5L4FRyQdc3A==
-X-Received: by 2002:a17:903:2c0e:b0:2ca:ef16:8e8 with SMTP id
- d9443c01a7336-2cfde825055mr53974475ad.29.1785077514288; 
- Sun, 26 Jul 2026 07:51:54 -0700 (PDT)
+ bh=ZnuUzF0dJIBznvvjx9kVt4TXwDvHfe0DU2pEHtYFjzE=;
+ b=iZVdQvIwKseRohPD28m9R5Ueut2Z/8a/5UVU0+CFVZ6N13dNwrilShfWr19Y73Klee
+ 0r1kHdx8aaKqspGNsVV3SJbIG/RiPniUw2HPc/sq9h7YjsbtjsFKYJ/HmzqHYP8tJr6f
+ M0dJFy0Qsf1HUCSUZ/eqHL3tHJmoJ8mndtL2ucWiiMhaBvwgga3JylDx0/cSIkj306DK
+ W4LKOAl2T+mAVYKiza8psatZKM8LGV4AOf+Y78yFdGeI7gR44vQaEoyO5DdmRkUuzRQ3
+ CIdFEthqNnErkeMw90BYPOt0AJG3MU+sIr5g2g0ZuNYzlmb/dvY0TkB0SA5dbak+vrd7
+ nO1Q==
+X-Gm-Message-State: AOJu0YyyP8BpZAtH8y+/+H/+gv6pl6hSrjTdbRNQIOI4wPfPQbCio6tz
+ A2c+F8rZJvMTqA3gYfvBLyqFxRlzxPstEd0QjvmPzYMhLhtoWcUcT09b805qEg==
+X-Gm-Gg: AR+sD11S+MFX6zZNVAgTvvo+fOLxIr4I54rXo6lr/jE/WOMnX4dBB6CrnuVzlw4j79g
+ GlgYFEw4LsACQ46gpzHCaC3m69vK1w9mKq7dSOv2pnjKT6e+9is3lZOPzcgyUBaWdcv26wo9ZT7
+ IAUtaf6Ygx9gBztoVgh6eyjEjiPRdAs2jBgTCqeJd6XaD64bQgwyiOHYbw3si3A/EJwg9lOcIUI
+ ZEArF5+YsNbJnBc+e0sBiPKEAHlUMpOCLZTrRZSl0YO5r8qntKwQCHqdG33npbgTUlzcgW2fWUQ
+ gthwYF46VukLUwctJRX+MDMAmDbsmN3wXXFX6C7zc+/eDQiN+laNPZe9NzdbMvB/nSwTNebKmZF
+ tyCi2DnKS46qgfWbdHeVxxKJ2HgzXGdJWnIipgD7/xEUHNqvWMNdlf9HhsOccKnlSY4L3s7OhNd
+ 4IkFOf0sY6REsG9gNg1P/cNBx1
+X-Received: by 2002:a17:902:d2c6:b0:2cf:7de1:4a00 with SMTP id
+ d9443c01a7336-2cfd70c0f61mr70085545ad.1.1785077523444; 
+ Sun, 26 Jul 2026 07:52:03 -0700 (PDT)
 Received: from localhost.localdomain ([82.40.42.115])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2cfde81d7f5sm20934195ad.83.2026.07.26.07.51.50
+ d9443c01a7336-2cfde81d7f5sm20934195ad.83.2026.07.26.07.51.54
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 26 Jul 2026 07:51:53 -0700 (PDT)
+ Sun, 26 Jul 2026 07:52:01 -0700 (PDT)
 From: Jack Wang <163wangjack@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -72,16 +72,16 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>, qemu-arm@nongnu.org,
  qemu-rust@nongnu.org, caojunze424@gmail.com,
  Jack Wang <163wangjack@gmail.com>
-Subject: [RFC PATCH v1 3/5] hw/arm/stm32f103: instantiate and map GPIO ports
-Date: Sun, 26 Jul 2026 22:51:17 +0800
-Message-ID: <20260726145119.19881-4-163wangjack@gmail.com>
+Subject: [RFC PATCH v1 4/5] tests/qtest: add stm32f103 GPIO test
+Date: Sun, 26 Jul 2026 22:51:18 +0800
+Message-ID: <20260726145119.19881-5-163wangjack@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260726145119.19881-1-163wangjack@gmail.com>
 References: <20260726145119.19881-1-163wangjack@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=163wangjack@gmail.com; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=163wangjack@gmail.com; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -13
 X-Spam_score: -1.4
 X-Spam_bar: -
@@ -104,166 +104,373 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Create the seven GPIO ports GPIOA..GPIOG by name via qdev_new() and map
-them at their APB2 base addresses, removing the corresponding
-unimplemented-device stubs so the real devices back that range.
-
-The Rust GPIO type is only present in a Rust-enabled build, so the ports
-are created behind an object_class_by_name() check; with --disable-rust
-the type is absent and the range is simply left unbacked.
+Add a qtest that drives the STM32F103 GPIO ports over the qtest socket,
+covering the RM0008 reset state, BSRR/BRR set/reset semantics and the
+output-line behaviour for push-pull and open-drain configurations.
 
 Signed-off-by: Jack Wang <163wangjack@gmail.com>
 ---
- hw/arm/Kconfig                 |  1 +
- hw/arm/stm32f103_board.c       |  2 +-
- hw/arm/stm32f103_soc.c         | 54 +++++++++++++++++++++++++++++-----
- include/hw/arm/stm32f103_soc.h |  9 ++++++
- 4 files changed, 58 insertions(+), 8 deletions(-)
+ tests/qtest/meson.build           |   4 +
+ tests/qtest/stm32f103_gpio-test.c | 328 ++++++++++++++++++++++++++++++
+ 2 files changed, 332 insertions(+)
+ create mode 100644 tests/qtest/stm32f103_gpio-test.c
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 66aed6edd7..7aa194c64a 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -410,6 +410,7 @@ config STM32F103_SOC
-     select STM32F2XX_USART
-     select STM32F2XX_SPI
-     select STM32F1XX_ADC
-+    select STM32F1XX_GPIO if HAVE_RUST
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index e154abb05d..4f407b68fe 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -235,6 +235,9 @@ qtests_stm32l4x5 = \
+    'stm32l4x5_gpio-test',
+    'stm32l4x5_usart-test']
  
- config B_L475E_IOT01A
-     bool
-diff --git a/hw/arm/stm32f103_board.c b/hw/arm/stm32f103_board.c
-index a740483575..fb5041e484 100644
---- a/hw/arm/stm32f103_board.c
-+++ b/hw/arm/stm32f103_board.c
-@@ -26,7 +26,7 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
--#include "hw/boards.h"
-+#include "hw/core/boards.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/core/qdev-clock.h"
- #include "qemu/error-report.h"
-diff --git a/hw/arm/stm32f103_soc.c b/hw/arm/stm32f103_soc.c
-index e76640ec03..75fc99a554 100644
---- a/hw/arm/stm32f103_soc.c
-+++ b/hw/arm/stm32f103_soc.c
-@@ -24,12 +24,16 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
-+#include "qom/object.h"
- #include "system/address-spaces.h"
- #include "system/system.h"
- #include "hw/arm/stm32f103_soc.h"
- #include "hw/core/qdev-clock.h"
- #include "hw/misc/unimp.h"
- 
-+/* QOM type name of the Rust GPIO device (rust/hw/gpio/src/gpio.rs) */
-+#define TYPE_STM32F1XX_GPIO_RUST "stm32f1xx-gpio-rust"
++qtests_stm32f103 = \
++  ['stm32f103_gpio-test']
 +
- #define RCC_ADDR 0x40021000
- 
- /* USART addresses: USART1, USART2, USART3, UART4, UART5 */
-@@ -47,6 +51,12 @@ static const uint32_t adc_addr[] = {
-     0x40012400, 0x40012800, 0x40013C00
- };
- 
-+/* GPIO addresses: GPIOA, GPIOB, GPIOC, GPIOD, GPIOE, GPIOF, GPIOG */
-+static const uint32_t gpio_addr[] = {
-+    0x40010800, 0x40010C00, 0x40011000, 0x40011400, 0x40011800, 0x40011C00,
-+    0x40012000
-+};
+ qtests_arm = \
+   (config_all_devices.has_key('CONFIG_MPS2') ? ['sse-timer-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_CMSDK_APB_DUALTIMER') ? ['cmsdk-apb-dualtimer-test'] : []) + \
+@@ -250,6 +253,7 @@ qtests_arm = \
+   (config_all_devices.has_key('CONFIG_VEXPRESS') ? ['test-arm-mptimer'] : []) + \
+   (config_all_devices.has_key('CONFIG_MICROBIT') ? ['microbit-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') ? qtests_stm32l4x5 : []) + \
++  (config_all_devices.has_key('CONFIG_STM32F103_SOC') ? qtests_stm32f103 : []) + \
+   (config_all_devices.has_key('CONFIG_FSI_APB2OPB_ASPEED') ? ['aspeed_fsi-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') and
+    config_all_devices.has_key('CONFIG_DM163')? ['dm163-test'] : []) + \
+diff --git a/tests/qtest/stm32f103_gpio-test.c b/tests/qtest/stm32f103_gpio-test.c
+new file mode 100644
+index 0000000000..97ef7dd3e8
+--- /dev/null
++++ b/tests/qtest/stm32f103_gpio-test.c
+@@ -0,0 +1,328 @@
++/*
++ * QTest testcase for STM32F103 GPIO (Rust device "stm32f1xx-gpio-rust")
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * Copyright (c) 2026 QEMU contributors
++ *
++ * The STM32F1 GPIO differs from the L4 family: each pin is configured by a
++ * 4-bit field MODE[1:0]+CNF[1:0] packed into CRL (pins 0-7) and CRH (pins
++ * 8-15), instead of the separate MODER/OTYPER/PUPDR registers of the L4.
++ * See ST RM0008 for the register map and reset values.
++ */
 +
- static const int usart_irq[] = { 37, 38, 39, 52, 53 };
- static const int spi_irq[]   = { 35, 36, 51 };
- #define ADC_IRQ 18
-@@ -199,6 +209,37 @@ static void stm32f103_soc_realize(DeviceState *dev_soc, Error **errp)
-                            qdev_get_gpio_in(DEVICE(&s->adc_irqs), i));
-     }
- 
++#include "qemu/osdep.h"
++#include "libqtest-single.h"
++
++#define GPIO_BASE_ADDR 0x40010800
++#define GPIO_SIZE      0x400
++#define NUM_GPIOS      7
++#define NUM_GPIO_PINS  16
++
++#define GPIO_A 0x40010800
++#define GPIO_B 0x40010C00
++#define GPIO_C 0x40011000
++#define GPIO_D 0x40011400
++#define GPIO_E 0x40011800
++#define GPIO_F 0x40011C00
++#define GPIO_G 0x40012000
++
++/* Register offsets (RM0008). */
++#define CRL  0x00
++#define CRH  0x04
++#define IDR  0x08
++#define ODR  0x0C
++#define BSRR 0x10
++#define BRR  0x14
++#define LCKR 0x18
++
++/* 4-bit MODE[1:0]+CNF[1:0] pin configurations. */
++#define CFG_INPUT_FLOATING   0x4  /* MODE=00 CNF=01 (reset default) */
++#define CFG_INPUT_PULL       0x8  /* MODE=00 CNF=10, ODR selects up/down */
++#define CFG_OUTPUT_PP        0x1  /* MODE=01 CNF=00, general push-pull */
++#define CFG_OUTPUT_OD        0x5  /* MODE=01 CNF=01, general open-drain */
++
++/* CRL/CRH reset value: every pin floating input. */
++#define CR_RESET 0x44444444
++
++static uint32_t gpio_readl(unsigned int gpio, unsigned int offset)
++{
++    return readl(gpio + offset);
++}
++
++static void gpio_writel(unsigned int gpio, unsigned int offset, uint32_t value)
++{
++    writel(gpio + offset, value);
++}
++
++/* Set the 4-bit config nibble for `pin` in CRL/CRH. */
++static void gpio_set_config(unsigned int gpio, unsigned int pin, uint8_t cfg)
++{
++    unsigned int reg = (pin < 8) ? CRL : CRH;
++    unsigned int shift = (pin % 8) * 4;
++    uint32_t mask = ~(0xFu << shift);
++    uint32_t val = (gpio_readl(gpio, reg) & mask) | ((uint32_t)cfg << shift);
++    gpio_writel(gpio, reg, val);
++}
++
++static void gpio_set_odr_bit(unsigned int gpio, unsigned int pin,
++                             uint32_t value)
++{
++    uint32_t mask = ~(0x1u << pin);
++    gpio_writel(gpio, ODR, (gpio_readl(gpio, ODR) & mask) | (value << pin));
++}
++
++static unsigned int get_gpio_id(uint32_t gpio_addr)
++{
++    return (gpio_addr - GPIO_BASE_ADDR) / GPIO_SIZE;
++}
++
++static const char *gpio_path(uint32_t gpio)
++{
++    static char buf[32];
++    snprintf(buf, sizeof(buf), "/machine/soc/gpio%c", 'a' + get_gpio_id(gpio));
++    return buf;
++}
++
++/* Drive pin `num` of `gpio` to `level` from an external source. */
++static void gpio_set_irq(unsigned int gpio, int num, int level)
++{
++    qtest_set_irq_in(global_qtest, gpio_path(gpio), NULL, num, level);
++}
++
++/*
++ * Intercept this port's own gpio-out lines so get_irq(pin) observes them.
++ *
++ * qtest only supports intercepting one device's out-GPIOs per session (the
++ * interception device is global), so every test that observes gpio-out via
++ * get_irq() must target the SAME port. We use GPIO_A for all of them. Tests
++ * that only read IDR/ODR over MMIO can use any port and skip interception.
++ */
++static void intercept_out(unsigned int gpio)
++{
++    qtest_irq_intercept_out(global_qtest, gpio_path(gpio));
++}
++
++static void reset_gpio(unsigned int gpio)
++{
++    gpio_writel(gpio, CRL, CR_RESET);
++    gpio_writel(gpio, CRH, CR_RESET);
++    gpio_writel(gpio, ODR, 0);
++}
++
++static void test_reset_values(void)
++{
 +    /*
-+     * GPIO ports GPIOA..GPIOG.
-+     *
-+     * These are implemented by the Rust device "stm32f1xx-gpio-rust", created
-+     * by name with qdev_new() and mapped at its APB2 base address.  On STM32F1
-+     * a GPIO port has no dedicated NVIC line of its own: pin-change interrupts
-+     * are delivered through the EXTI controller (not yet modelled), so no
-+     * sysbus_connect_irq() to the NVIC is done here.
-+     *
-+     * The GPIO port is only provided by the Rust build; when QEMU is built
-+     * with --disable-rust the type is not registered, so skip creating the
-+     * ports and leave the address range unbacked.
++     * Scribble over the config/data registers, issue a system reset, and
++     * check the RM0008 documented reset state is restored: CRL/CRH back to
++     * 0x44444444 (floating input) and IDR/ODR back to 0.
 +     */
-+    if (object_class_by_name(TYPE_STM32F1XX_GPIO_RUST)) {
-+        for (i = 0; i < STM32F103_NUM_GPIOS; i++) {
-+            g_autofree char *name = g_strdup_printf("gpio%c", 'a' + i);
-+            s->gpio[i] = qdev_new(TYPE_STM32F1XX_GPIO_RUST);
-+            /*
-+             * Give each port a stable QOM name ("/machine/soc/gpioa"..) so
-+             * tests and the monitor can reach it and its gpio-out lines by
-+             * path.
-+             */
-+            object_property_add_child(OBJECT(s), name, OBJECT(s->gpio[i]));
-+            busdev = SYS_BUS_DEVICE(s->gpio[i]);
-+            if (!sysbus_realize_and_unref(busdev, errp)) {
-+                return;
-+            }
-+            sysbus_mmio_map(busdev, 0, gpio_addr[i]);
-+        }
++    gpio_writel(GPIO_A, CRL, 0xDEADBEEF);
++    gpio_writel(GPIO_A, CRH, 0xDEADBEEF);
++    gpio_writel(GPIO_A, ODR, 0xDEADBEEF);
++
++    gpio_writel(GPIO_C, CRL, 0x12345678);
++    gpio_writel(GPIO_C, ODR, 0x0000FFFF);
++
++    qtest_system_reset(global_qtest);
++
++    g_assert_cmphex(gpio_readl(GPIO_A, CRL), ==, CR_RESET);
++    g_assert_cmphex(gpio_readl(GPIO_A, CRH), ==, CR_RESET);
++    g_assert_cmphex(gpio_readl(GPIO_A, IDR), ==, 0);
++    g_assert_cmphex(gpio_readl(GPIO_A, ODR), ==, 0);
++
++    g_assert_cmphex(gpio_readl(GPIO_C, CRL), ==, CR_RESET);
++    g_assert_cmphex(gpio_readl(GPIO_C, IDR), ==, 0);
++    g_assert_cmphex(gpio_readl(GPIO_C, ODR), ==, 0);
++}
++
++static void test_output_mode(const void *data)
++{
++    /*
++     * Configure a pin as push-pull output and check ODR drives IDR and the
++     * gpio-out line. Also check ODR writes made while the pin is still an
++     * input are latched (not discarded), taking effect once switched.
++     */
++    unsigned int pin = (uintptr_t)data & 0xF;
++    uint32_t gpio = (uintptr_t)data & ~(GPIO_SIZE - 1);
++    bool observe = (gpio == GPIO_A);
++
++    reset_gpio(gpio);
++    if (observe) {
++        intercept_out(gpio);
 +    }
 +
-     /*
-      * Unimplemented peripherals -- STM32F103 devices that do not yet
-      * have QEMU models.
-@@ -231,13 +272,12 @@ static void stm32f103_soc_realize(DeviceState *dev_soc, Error **errp)
-     /* APB2 peripherals */
-     create_unimplemented_device("AFIO",        0x40010000, 0x400);
-     create_unimplemented_device("EXTI",        0x40010400, 0x400);
--    create_unimplemented_device("GPIOA",       0x40010800, 0x400);
--    create_unimplemented_device("GPIOB",       0x40010C00, 0x400);
--    create_unimplemented_device("GPIOC",       0x40011000, 0x400);
--    create_unimplemented_device("GPIOD",       0x40011400, 0x400);
--    create_unimplemented_device("GPIOE",       0x40011800, 0x400);
--    create_unimplemented_device("GPIOF",       0x40011C00, 0x400);
--    create_unimplemented_device("GPIOG",       0x40012000, 0x400);
-+    /*
-+     * GPIOA..GPIOG (0x40010800..0x40012000) are real devices mapped in the
-+     * GPIO loop above when the Rust build is used, so they must NOT be
-+     * registered as unimplemented devices here: overlapping MemoryRegions at
-+     * the same address abort at runtime.
-+     */
-     create_unimplemented_device("timer[1]",    0x40012C00, 0x400);
-     create_unimplemented_device("timer[8]",    0x40013400, 0x400);
-     create_unimplemented_device("timer[9]",    0x40014C00, 0x400);
-diff --git a/include/hw/arm/stm32f103_soc.h b/include/hw/arm/stm32f103_soc.h
-index 260f3695c0..8d78360ce0 100644
---- a/include/hw/arm/stm32f103_soc.h
-+++ b/include/hw/arm/stm32f103_soc.h
-@@ -40,6 +40,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(STM32F103State, STM32F103_SOC)
- #define STM32F103_NUM_USARTS 5
- #define STM32F103_NUM_SPIS 3
- #define STM32F103_NUM_ADCS 3
-+#define STM32F103_NUM_GPIOS 7
- 
- /* High-density STM32F103: 512 KB Flash, 64 KB SRAM */
- #define STM32F103_FLASH_BASE_ADDRESS 0x08000000
-@@ -58,6 +59,14 @@ struct STM32F103State {
-     OrIRQState adc_irqs;
-     STM32F1XXADCState adc[STM32F103_NUM_ADCS];
- 
-+    /*
-+     * GPIOA..GPIOG are implemented by the Rust device "stm32f1xx-gpio-rust".
-+     * That device is created by name via qdev_new() (pointer-based mounting)
-+     * rather than embedded by value, so no C struct definition is required
-+     * here and no struct-size coupling with the Rust side is needed.
-+     */
-+    DeviceState *gpio[STM32F103_NUM_GPIOS];
++    /* Set ODR while floating input: IDR unaffected, no output edge. */
++    gpio_set_odr_bit(gpio, pin, 1);
++    g_assert_cmphex(gpio_readl(gpio, IDR), ==, 0);
++    if (observe) {
++        g_assert_false(get_irq(pin));
++    }
 +
-     MemoryRegion sram;
-     MemoryRegion flash;
-     MemoryRegion flash_alias;
++    /* Switch to push-pull output: pin now follows ODR (high). */
++    gpio_set_config(gpio, pin, CFG_OUTPUT_PP);
++    g_assert_cmphex(gpio_readl(gpio, IDR), ==, (1u << pin));
++    if (observe) {
++        g_assert_true(get_irq(pin));
++    }
++
++    /* Clear ODR bit: pin goes low. */
++    gpio_set_odr_bit(gpio, pin, 0);
++    g_assert_cmphex(gpio_readl(gpio, IDR), ==, 0);
++    if (observe) {
++        g_assert_false(get_irq(pin));
++    }
++
++    reset_gpio(gpio);
++}
++
++static void test_input_mode(const void *data)
++{
++    /*
++     * Configure a pin as floating input and check that an external drive
++     * (via the gpio-in line) is reflected in IDR and on the gpio-out line.
++     */
++    unsigned int pin = (uintptr_t)data & 0xF;
++    uint32_t gpio = (uintptr_t)data & ~(GPIO_SIZE - 1);
++    bool observe = (gpio == GPIO_A);
++
++    reset_gpio(gpio);
++    if (observe) {
++        intercept_out(gpio);
++    }
++
++    gpio_set_config(gpio, pin, CFG_INPUT_FLOATING);
++
++    gpio_set_irq(gpio, pin, 1);
++    g_assert_cmphex(gpio_readl(gpio, IDR), ==, (1u << pin));
++    if (observe) {
++        g_assert_true(get_irq(pin));
++    }
++
++    gpio_set_irq(gpio, pin, 0);
++    g_assert_cmphex(gpio_readl(gpio, IDR), ==, 0);
++    if (observe) {
++        g_assert_false(get_irq(pin));
++    }
++
++    reset_gpio(gpio);
++}
++
++static void test_pull_up_down(const void *data)
++{
++    /*
++     * In input pull mode (CNF=10), ODR selects the resistor: ODR=1 pulls the
++     * pin up (IDR=1) and ODR=0 pulls it down (IDR=0), even with no external
++     * driver connected.
++     */
++    unsigned int pin = (uintptr_t)data & 0xF;
++    uint32_t gpio = (uintptr_t)data & ~(GPIO_SIZE - 1);
++
++    reset_gpio(gpio);
++    intercept_out(gpio);
++
++    /* Pull-up. */
++    gpio_set_odr_bit(gpio, pin, 1);
++    gpio_set_config(gpio, pin, CFG_INPUT_PULL);
++    g_assert_cmphex(gpio_readl(gpio, IDR), ==, (1u << pin));
++    g_assert_true(get_irq(pin));
++
++    /* Pull-down. */
++    gpio_set_odr_bit(gpio, pin, 0);
++    g_assert_cmphex(gpio_readl(gpio, IDR), ==, 0);
++    g_assert_false(get_irq(pin));
++
++    reset_gpio(gpio);
++}
++
++static void test_bsrr_brr(const void *data)
++{
++    /*
++     * BSRR: low 16 bits set ODR bits, high 16 bits reset them, with set
++     * taking priority. BRR resets ODR bits.
++     */
++    unsigned int pin = (uintptr_t)data & 0xF;
++    uint32_t gpio = (uintptr_t)data & ~(GPIO_SIZE - 1);
++
++    reset_gpio(gpio);
++
++    gpio_writel(gpio, BSRR, (1u << pin));
++    g_assert_cmphex(gpio_readl(gpio, ODR), ==, (1u << pin));
++
++    gpio_writel(gpio, BSRR, (1u << (pin + 16)));
++    g_assert_cmphex(gpio_readl(gpio, ODR), ==, 0);
++
++    gpio_writel(gpio, BSRR, (1u << pin));
++    g_assert_cmphex(gpio_readl(gpio, ODR), ==, (1u << pin));
++
++    gpio_writel(gpio, BRR, (1u << pin));
++    g_assert_cmphex(gpio_readl(gpio, ODR), ==, 0);
++
++    /* Set has priority over reset in BSRR. */
++    gpio_writel(gpio, BSRR, (1u << pin) | (1u << (pin + 16)));
++    g_assert_cmphex(gpio_readl(gpio, ODR), ==, (1u << pin));
++
++    reset_gpio(gpio);
++}
++
++static void test_push_pull_disconnect(const void *data)
++{
++    /*
++     * A pin driven externally, then reconfigured as push-pull output, must be
++     * disconnected from the external driver: its IDR follows ODR, not the
++     * stale external level.
++     */
++    unsigned int pin = (uintptr_t)data & 0xF;
++    uint32_t gpio = (uintptr_t)data & ~(GPIO_SIZE - 1);
++
++    reset_gpio(gpio);
++
++    /* Drive high externally as input. */
++    gpio_set_config(gpio, pin, CFG_INPUT_FLOATING);
++    gpio_set_irq(gpio, pin, 1);
++    g_assert_cmphex(gpio_readl(gpio, IDR), ==, (1u << pin));
++
++    /* Reconfigure as push-pull output with ODR=0: pin must drop to 0. */
++    gpio_set_odr_bit(gpio, pin, 0);
++    gpio_set_config(gpio, pin, CFG_OUTPUT_PP);
++    g_assert_cmphex(gpio_readl(gpio, IDR), ==, 0);
++
++    /* Further external drives are ignored while output push-pull. */
++    gpio_set_irq(gpio, pin, 1);
++    g_assert_cmphex(gpio_readl(gpio, IDR), ==, 0);
++
++    reset_gpio(gpio);
++}
++
++int main(int argc, char **argv)
++{
++    int ret;
++
++    g_test_init(&argc, &argv, NULL);
++    g_test_set_nonfatal_assertions();
++
++    qtest_add_func("stm32f103/gpio/reset_values", test_reset_values);
++    qtest_add_data_func("stm32f103/gpio/output_mode_a5",
++                        (void *)(uintptr_t)(GPIO_A | 5), test_output_mode);
++    qtest_add_data_func("stm32f103/gpio/output_mode_c13",
++                        (void *)(uintptr_t)(GPIO_C | 13), test_output_mode);
++    qtest_add_data_func("stm32f103/gpio/input_mode_b6",
++                        (void *)(uintptr_t)(GPIO_B | 6), test_input_mode);
++    qtest_add_data_func("stm32f103/gpio/input_mode_d10",
++                        (void *)(uintptr_t)(GPIO_D | 10), test_input_mode);
++    qtest_add_data_func("stm32f103/gpio/pull_up_down_a0",
++                        (void *)(uintptr_t)(GPIO_A | 0), test_pull_up_down);
++    qtest_add_data_func("stm32f103/gpio/bsrr_brr_a1",
++                        (void *)(uintptr_t)(GPIO_A | 1), test_bsrr_brr);
++    qtest_add_data_func("stm32f103/gpio/bsrr_brr_e12",
++                        (void *)(uintptr_t)(GPIO_E | 12), test_bsrr_brr);
++    qtest_add_data_func("stm32f103/gpio/push_pull_disconnect_g7",
++                        (void *)(uintptr_t)(GPIO_G | 7),
++                        test_push_pull_disconnect);
++
++    qtest_start("-machine stm32f103");
++    ret = g_test_run();
++    qtest_end();
++
++    return ret;
++}
 -- 
 2.53.0
 
