@@ -4,52 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2BAAC531C9
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 19:37:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0DBDC53209
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 19:37:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wo4eq-0000Vm-IF; Sun, 26 Jul 2026 15:37:10 -0400
+	id 1wo4ed-0000Qt-Jf; Sun, 26 Jul 2026 15:36:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wo4ed-0000RR-P4
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 15:36:56 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wo4eZ-0000Pz-My
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 15:36:51 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wo4ea-0004wQ-Rn
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 15:36:54 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wo4eY-0004wG-4F
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 15:36:51 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id A17E941486;
- Sun, 26 Jul 2026 19:36:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE6B1F000E9;
+ by sea.source.kernel.org (Postfix) with ESMTP id 8C4F74166B;
  Sun, 26 Jul 2026 19:36:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A90C11F000E9;
+ Sun, 26 Jul 2026 19:36:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1785094604;
- bh=1nYPUnCmRctA+8mRGdBAjqYzc65CjhDmTnIvHCvhOMw=;
+ s=k20260515; t=1785094602;
+ bh=bkZ2H5TuZE7h4EbnfmA/D810yCl1zvvzvVMjl14NPlY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=IOFkFGDAVd2qDCn1AMzIHInk7OzSLOd51NwEjcRP4VYovmKgQrfRwK6MIL5Ik3NCG
- 5SMttojSu96X+2gNoWxct01CE3IL7XORQ6ihjiy9YFyLT+JDUOMXpsD6Dh/u0BgXwn
- bQQUYbfW8gOavwI+ijvufZNVLjTDEAN2kiBieYbN9OunAjr1/s32Z1KLBw5z+k3uNO
- rH1V45WdHfjSfcIuke+BIn2fDNYQRha6k+T+RLXF8rkH7E2ZFnS4WRiD9HurBkiwQW
- b0gyvjQwFyeWni1K3FzRW6Btk8BUvQR3OJdPd5fowGBa0D2E6kBFCJDO44WID+f2rG
- IhIp6rwcR0yUg==
+ b=Z+bRai80MQ0XeCpyOl/680yX0VlUVzjSizekqWa7el0mS4AEl5+JmIgUnryblInC3
+ CRBSUm3s72MQkw448giogMc0YlaWI1jT1kNwhIeqRaaQuMKRblzktpYmRY8qslF/Py
+ +tU7gv5bEU4RtPtEUp6NfK7zRtUMX7edjBXh93/NzPwM1oEePI0kezzjM+7i4M8qiK
+ 3VJQmcfL25RM+sZDAEbVLXF6GW1KC9uhNp5tl/7S8ipZPvnueY6kPMT69/35g0HifC
+ N3oTfxstZ7QuRBYeM6DEIOpEFQb984atfERE0rSJQv611TnaYnjuOfYQgmhyMV/0be
+ 1beymGqV21GkQ==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org,
 	Stefan Hajnoczi <stefanha@gmail.com>
 Cc: Helge Deller <deller@gmx.de>, Laurent Vivier <laurent@vivier.eu>,
  Matt Turner <mattst88@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 2/2] linux-user: fix guards for the fsmount(2) syscall series
-Date: Sun, 26 Jul 2026 21:36:36 +0200
-Message-ID: <20260726193636.110586-3-deller@kernel.org>
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 1/2] linux-user: Guard local FUTEX_CMD_MASK definition
+Date: Sun, 26 Jul 2026 21:36:35 +0200
+Message-ID: <20260726193636.110586-2-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260726193636.110586-1-deller@kernel.org>
 References: <20260726193636.110586-1-deller@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
@@ -71,75 +73,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Cédric Le Goater <clg@redhat.com>
 
-The fsopen(), fsconfig(), fsmount() and fspick() implementations are
-guarded by defined(NR_fsopen) rather than defined(__NR_fsopen). No such
-macro exists, so the guard is never true and the entire series compiles
-out. Guests calling any of the four get -ENOSYS, which for example makes
-systemd's credential setup fail with EXIT_CREDENTIALS for most units.
+Building linux-user on a host with Linux 7.2 kernel headers fails with
+a macro redefinition error for FUTEX_CMD_MASK. The kernel commit
+3ca9595d9fb6 ("futex: Add support for unlocking robust futexes")
+expanded the mask to include the new FUTEX_ROBUST_UNLOCK and
+FUTEX_ROBUST_LIST32 flags, which conflicts with QEMU's local
+definition.
 
-The strace bits for fsconfig() have the same typo.
+Add a #ifndef guard so the host definition takes precedence when
+available. The local fallback is kept for older kernel headers
+(pre-2.6.29) that lack FUTEX_CMD_MASK or define a mask without
+FUTEX_CLOCK_REALTIME.
 
-Fixes: 767c32fe6983 ("linux-user: implement fsmount(2) series of syscalls")
-Fixes: 6e0aa9f6c731 ("linux-user/strace: add fsmount series of syscalls")
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/strace.c    | 2 +-
- linux-user/strace.list | 2 +-
- linux-user/syscall.c   | 4 ++--
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ linux-user/syscall_defs.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index 3a81cc95f4..af1cf9548a 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -4344,7 +4344,7 @@ print_statx(CPUArchState *cpu_env, const struct syscallname *name,
- }
- #endif
+diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
+index 5799769f83..e033c7db34 100644
+--- a/linux-user/syscall_defs.h
++++ b/linux-user/syscall_defs.h
+@@ -2593,7 +2593,9 @@ struct target_drm_i915_getparam {
  
--#if defined(TARGET_NR_fsconfig) && defined(NR_fsconfig)
-+#if defined(TARGET_NR_fsconfig) && defined(__NR_fsconfig)
- static void
- print_fsconfig_cmd_name(int cmd)
- {
-diff --git a/linux-user/strace.list b/linux-user/strace.list
-index e363892e0a..ba1c1dc0ae 100644
---- a/linux-user/strace.list
-+++ b/linux-user/strace.list
-@@ -1725,7 +1725,7 @@
- #ifdef TARGET_NR_fsopen
- { TARGET_NR_fsopen, "fsopen", "%s(%s,%d)", NULL, NULL },
- #endif
--#if defined(TARGET_NR_fsconfig) && defined(NR_fsconfig)
-+#if defined(TARGET_NR_fsconfig) && defined(__NR_fsconfig)
- { TARGET_NR_fsconfig, "fsconfig", NULL, print_fsconfig, NULL },
- #endif
- #ifdef TARGET_NR_fsmount
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 3da5530d42..740142825d 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -9740,7 +9740,7 @@ _syscall5(int, sys_move_mount, int, __from_dfd, const char *, __from_pathname,
-            int, __to_dfd, const char *, __to_pathname, unsigned int, flag)
- #endif
+ #define FUTEX_PRIVATE_FLAG      128
+ #define FUTEX_CLOCK_REALTIME    256
++#ifndef FUTEX_CMD_MASK
+ #define FUTEX_CMD_MASK          ~(FUTEX_PRIVATE_FLAG | FUTEX_CLOCK_REALTIME)
++#endif
  
--#if defined(TARGET_NR_fsopen) && defined(NR_fsopen)
-+#if defined(TARGET_NR_fsopen) && defined(__NR_fsopen)
- #define __NR_sys_fsopen __NR_fsopen
- _syscall2(int, sys_fsopen, const char *, fs_name, unsigned int, flags);
- #define __NR_sys_fsconfig __NR_fsconfig
-@@ -14485,7 +14485,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         return do_map_shadow_stack(cpu_env, arg1, arg2, arg3);
- #endif
- 
--#if defined(TARGET_NR_fsopen) && defined(NR_fsopen)
-+#if defined(TARGET_NR_fsopen) && defined(__NR_fsopen)
-     case TARGET_NR_fsopen:
-         {
-             p = lock_user_string(arg1);
+ #if defined(TARGET_X86_64)
+ #define TARGET_EPOLL_PACKED QEMU_PACKED
 -- 
 2.54.0
 
