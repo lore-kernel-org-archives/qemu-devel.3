@@ -4,76 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D34FC531FA
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 15:37:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66C6AC531C9
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 15:53:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wo0sm-0002sg-0s; Sun, 26 Jul 2026 11:35:16 -0400
+	id 1wo19k-0005Fv-3C; Sun, 26 Jul 2026 11:52:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wo0sH-0002A4-WE
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 11:34:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wo0sG-0003cq-B7
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 11:34:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785080083;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mQHLeVMn7NrSzcX11wqfgCH1LPJI923k+J+9n3UK0dE=;
- b=Fwk6OAn7xlU73ZI3oz3Oc1b/uD0T+M5SsqzB4y3Bz/8biS5GZU7J4l5197HS9XVGqZ+y44
- rdR3zLRmIExE5ANtcWa8Z0OjYOCHdnX60PaRWNjEV+s3yjWRj6mDIxXTzcycZBEP5O32ve
- 18Uszu/Il6C7e4l5chWvpExA5nCoAtc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-477-q77xvTpnOhikINefXlHZGw-1; Sun,
- 26 Jul 2026 11:34:38 -0400
-X-MC-Unique: q77xvTpnOhikINefXlHZGw-1
-X-Mimecast-MFC-AGG-ID: q77xvTpnOhikINefXlHZGw_1785080076
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1FD40195604D; Sun, 26 Jul 2026 15:34:36 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.44.32.63])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 515771800613; Sun, 26 Jul 2026 15:34:27 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
- shaju.abraham@nutanix.com, khushit.shah@nutanix.com,
- yangjinqian1@huawei.com, cohuck@redhat.com, richard.henderson@linaro.org,
- sebott@redhat.com, skolothumtho@nvidia.com, philmd@oss.qualcomm.com
-Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
- armbru@redhat.com, berrange@redhat.com, abologna@redhat.com,
- jdenemar@redhat.com
-Subject: [RFC PATCH v7 11/18] arm/kvm: Initialize all writable ID registers
- from host
-Date: Sun, 26 Jul 2026 17:29:49 +0200
-Message-ID: <20260726153221.24773-12-eric.auger@redhat.com>
-In-Reply-To: <20260726153221.24773-1-eric.auger@redhat.com>
-References: <20260726153221.24773-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1wo19c-0005FO-Fh; Sun, 26 Jul 2026 11:52:41 -0400
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1wo19Z-00068S-Uz; Sun, 26 Jul 2026 11:52:40 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-7 (Coremail) with UTF8SMTP id AQAAfwDn7ho7LWZqVfrfAQ--.17943S2; 
+ Sun, 26 Jul 2026 23:52:27 +0800 (CST)
+Received: from [198.18.0.1] (unknown [113.246.117.150])
+ by mail (Coremail) with SMTP id AQAAf8DwwXM6LWZqGCccAA--.45248S2;
+ Sun, 26 Jul 2026 23:52:27 +0800 (CST)
+Message-ID: <fbc0bd8c-1aaa-4193-8e56-89388eb83a55@phytium.com.cn>
+Date: Sun, 26 Jul 2026 23:52:25 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] hw/misc/iommu-testdev: support PCI MSI test writes
+To: flavien.solt97@gmail.com, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Andrew Jones <andrew.jones@oss.qualcomm.com>
+References: <CANVUYGtOgMnNRkfU=zs=jvtg7yKOHXZVb8k5oVnp+D2=U4xeWA@mail.gmail.com>
+ <CANVUYGtm19xCpqACSv2FYb7=BP05Av9oOxU5q-WiP4D-T6fA0w@mail.gmail.com>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <CANVUYGtm19xCpqACSv2FYb7=BP05Av9oOxU5q-WiP4D-T6fA0w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID: AQAAf8DwwXM6LWZqGCccAA--.45248S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAGBWpiankYLgAEsr
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoWxJw4fXFy3Gry8tF43WF1UAwb_yoWrtr1fp3
+ 4DGF1YyF4FyrsxJr4Ska1IkF1UXrZ5JFya9w18Ar4rZ3yayayDJFy7KFy2yryUJ397ZF1x
+ Zw4j9ry5WanavFDanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=162.243.164.118;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,181 +70,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We want to allow overwriting writable fields of some ID registers.
-However currently some of them are never touched, neither read nor
-w. Examples are CLIDR_EL1, CTR_EL0, REVIDR_EL1, MIDR_EL1.
+Hi Flavien,
 
-We want to initialize them from the host value, allow overwrite
-and write back for kvm afterwards. This patch implements the
-initialization.
+On 7/26/2026 8:21 PM, flavien.solt97@gmail.com wrote:
+> iommu-testdev writes ITD_DMA_WRITE_VAL with unspecified requester
+> attributes. RISC-V MSI remapping tests need to select an interrupt
+> identity in the payload. The MSI trap also identifies the device through
+> MemTxAttrs.requester_id.
+>
+> Add a write-value register with the existing constant as its reset
+> default. Populate the requester ID from the PCI function. Existing
+> translation tests retain their payload while interrupt-remapping tests
+> can issue a valid MSI for the test device.
+>
+> Signed-off-by: Flavien Solt <flavien.solt97@gmail.com>
+> ---
+>   hw/misc/iommu-testdev.c         | 14 ++++++++++++--
+>   include/hw/misc/iommu-testdev.h |  1 +
+>   2 files changed, 13 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/misc/iommu-testdev.c b/hw/misc/iommu-testdev.c
+> index 15eb6de..6428a57 100644
+> --- a/hw/misc/iommu-testdev.c
+> +++ b/hw/misc/iommu-testdev.c
+> @@ -28,6 +28,7 @@ struct IOMMUTestDevState {
+>       uint64_t dma_paddr;
+>       uint32_t dma_len;
+>       uint32_t dma_result;
+> +    uint32_t dma_write_val;
+>       bool dma_armed; /* armed until a trigger consumes the request */
+>
+>       AddressSpace *dma_as;   /* IOMMU-mediated DMA AS for this device */
+> @@ -80,6 +81,7 @@ static void iommu_testdev_maybe_run_dma(IOMMUTestDevState *s)
+>
+>       /* Initialize MemTxAttrs from generic register. */
+>       attrs.secure = ITD_ATTRS_GET_SECURE(s->dma_attrs_cfg);
+> +    attrs.requester_id = pci_requester_id(&s->parent_obj);
+>
+>       space_valid = ITD_ATTRS_GET_SPACE_VALID(s->dma_attrs_cfg);
+>       if (space_valid) {
+> @@ -97,12 +99,12 @@ static void
+> iommu_testdev_maybe_run_dma(IOMMUTestDevState *s)
 
-Introduce a new get_host_cpu_idregs() helper that gets the host
-values for all writable ID regs and store them in isar.idregs[].
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+hard-wrapped # 1
 
----
 
-v6 -> v7
-- remove vcpu from prototypes (Khushit)
+>
+>       as = s->dma_as;
+>
+> -    /* Step 1: Write ITD_DMA_WRITE_VAL to DMA address */
+> +    /* Step 1: Write the configured test value to DMA address */
+>       trace_iommu_testdev_dma_write(s->dma_vaddr, s->dma_len);
+>
+>       for (int i = 0; i < s->dma_len; i++) {
+>           /* Data is written in little-endian order */
+> -        write_buf[i] = (ITD_DMA_WRITE_VAL >> ((i % 4) * 8)) & 0xff;
+> +        write_buf[i] = (s->dma_write_val >> ((i % 4) * 8)) & 0xff;
+>       }
+>       write_res = dma_memory_write(as, s->dma_vaddr, write_buf,
+>                                    s->dma_len, attrs);
+> @@ -186,6 +188,9 @@ static uint64_t iommu_testdev_mmio_read(void
+> *opaque, hwaddr addr,
 
-v5 -> v6
-- do not check writable_map anymore
----
- target/arm/kvm.c        | 96 ++++++++++++++++++++++++++++++++++++++++-
- target/arm/trace-events |  2 +
- 2 files changed, 96 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index d270f9870e..4f9b0a559d 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -43,6 +43,7 @@
- #include "hw/acpi/ghes.h"
- #include "target/arm/gtimer.h"
- #include "migration/blocker.h"
-+#include "cpu-idregs.h"
- 
- const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
-     KVM_CAP_INFO(DEVICE_CTRL),
-@@ -290,7 +291,44 @@ static int kvm_feature_idx_to_idregs_idx(int kidx)
-     return get_sysreg_idx(sysreg);
- }
- 
--static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-+/*
-+ * get_host_cpu_idregs: Read all the writable ID reg host values
-+ *
-+ * Need to be called once the writable mask has been populated
-+ * Note we may want to read all the known id regs but some of them are not
-+ * writable and return an error, hence the choice of reading only those which
-+ * are writable. Those are also readable!
-+ */
-+static int get_host_cpu_idregs(int fd, ARMHostCPUFeatures *ahcf)
-+{
-+    int err = 0;
-+    int i;
-+
-+    for (i = 0; i < NUM_ID_IDX; i++) {
-+        ARM64SysReg *sysregdesc = &arm64_id_regs[i];
-+        ARMSysRegs sysreg = id_register_sysreg[i];
-+        uint64_t *reg;
-+        int ret;
-+
-+        if (!sysregdesc->writable_mask) {
-+            continue;
-+        }
-+
-+        reg = &ahcf->isar.idregs[i];
-+        ret = read_sys_reg64(fd, reg, idregs_sysreg_to_kvm_reg(sysreg));
-+        trace_get_host_cpu_idregs(sysregdesc->name, *reg);
-+        if (ret) {
-+            error_report("%s error reading value of host %s register (%m)",
-+                         __func__, sysregdesc->name);
-+
-+            err = ret;
-+        }
-+    }
-+    return err;
-+}
-+
-+static void
-+kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
- {
-     /* Identify the feature bits corresponding to the host CPU, and
-      * fill out the ARMHostCPUClass fields accordingly. To do this
-@@ -376,6 +414,16 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-         SET_IDREG(&ahcf->isar, ID_AA64PFR0, 0x00000011); /* EL1&0, AArch64 only */
-         err = 0;
-     } else {
-+        /* Make sure all writable ID reg values are initialized */
-+        err |= get_host_cpu_idregs(fd, ahcf);
-+
-+        /*
-+         * temporarily override the CLIDR_EL1 value since some host values
-+         * trigger "Unified type is not implemented at level n" error in
-+         * fdt_add_cpu_nodes()
-+         */
-+        SET_IDREG(&ahcf->isar, CLIDR, 0x0);
-+
-         err |= get_host_cpu_reg(fd, ahcf, ID_AA64PFR1_EL1_IDX);
-         err |= get_host_cpu_reg(fd, ahcf, ID_AA64PFR2_EL1_IDX);
-         err |= get_host_cpu_reg(fd, ahcf, ID_AA64SMFR0_EL1_IDX);
-@@ -1161,6 +1209,34 @@ bool kvm_arm_cpu_post_load(ARMCPU *cpu)
-     return true;
- }
- 
-+/*
-+ * Copy writable ID regs from isar.idregs[] to cpreg_list
-+ * in case their value differs from the original init cpreg value
-+ */
-+static void kvm_arm_writable_idregs_to_cpreg_list(ARMCPU *cpu)
-+{
-+    for (int i = 0; i < NUM_ID_IDX; i++) {
-+        ARM64SysReg *sysregdesc = &arm64_id_regs[i];
-+        ARMSysRegs sysreg = id_register_sysreg[i];
-+        uint64_t previous, new;
-+        uint64_t *cpreg;
-+
-+        if (!sysregdesc->writable_mask) {
-+            continue;
-+        }
-+
-+        cpreg = kvm_arm_get_cpreg_ptr(cpu, idregs_sysreg_to_kvm_reg(sysreg));
-+        previous = *cpreg;
-+        new = cpu->isar.idregs[i];
-+
-+        if (previous != new) {
-+            *cpreg = new;
-+            trace_kvm_arm_writable_idregs_to_cpreg_list(sysregdesc->name,
-+                                                        previous, new);
-+         }
-+    }
-+}
-+
- void kvm_arm_reset_vcpu(ARMCPU *cpu)
- {
-     int ret;
-@@ -2115,7 +2191,23 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     }
-     cpu->mp_affinity = mpidr & ARM64_AFFINITY_MASK;
- 
--    return kvm_arm_init_cpreg_list(cpu);
-+    ret = kvm_arm_init_cpreg_list(cpu);
-+    if (ret) {
-+        return ret;
-+    }
-+    /* overwrite writable ID regs with their updated property values */
-+    kvm_arm_writable_idregs_to_cpreg_list(cpu);
-+    ret = write_list_to_kvmstate(cpu, KVM_PUT_FULL_STATE);
-+    if (!ret) {
-+        return -1;
-+    }
-+    /*
-+     * modified values may have changed the visibility of some regs,
-+     * reinitialize the cpreg_list accordingly
-+     */
-+     ret = kvm_arm_init_cpreg_list(cpu);
-+
-+    return ret;
- }
- 
- int kvm_arch_destroy_vcpu(CPUState *cs)
-diff --git a/target/arm/trace-events b/target/arm/trace-events
-index 8502fb3265..c25d2a1191 100644
---- a/target/arm/trace-events
-+++ b/target/arm/trace-events
-@@ -13,6 +13,8 @@ arm_gt_update_irq(int timer, int irqstate) "gt_update_irq: timer %d irqstate %d"
- 
- # kvm.c
- kvm_arm_fixup_msi_route(uint64_t iova, uint64_t gpa) "MSI iova = 0x%"PRIx64" is translated into 0x%"PRIx64
-+get_host_cpu_idregs(const char *name, uint64_t value) "scratch vcpu host value for %s is 0x%"PRIx64
-+kvm_arm_writable_idregs_to_cpreg_list(const char *name, uint64_t previous, uint64_t new) "%s overwrite default 0x%"PRIx64" with 0x%"PRIx64
- 
- # cpu.c
- arm_cpu_reset(uint64_t mp_aff) "cpu %" PRIu64
--- 
-2.53.0
+hard-wrapped # 2
+
+
+>       case ITD_REG_DMA_ATTRS:
+>           value = s->dma_attrs_cfg;
+>           break;
+> +    case ITD_REG_DMA_WRITE_VAL:
+> +        value = s->dma_write_val;
+> +        break;
+>       default:
+>           value = 0;
+>           break;
+> @@ -240,6 +245,9 @@ static void iommu_testdev_mmio_write(void *opaque,
+> hwaddr addr, uint64_t val,
+
+
+hard-wrapped # 3
+
+
+>       case ITD_REG_DMA_ATTRS:
+>           s->dma_attrs_cfg = data;
+>           break;
+> +    case ITD_REG_DMA_WRITE_VAL:
+> +        s->dma_write_val = data;
+> +        break;
+>       default:
+>           break;
+>       }
+> @@ -263,6 +271,7 @@ static void iommu_testdev_realize(PCIDevice *pdev,
+> Error **errp)
+
+
+hard-wrapped # 4
+
+
+I found four hard-wrapped hunk headers. As a result, git cannot parse 
+the diff:
+
+```
+
+git am 0001-hw-misc-iommu-testdev-support-pci-msi-test-writes.patch
+Applying: hw/misc/iommu-testdev: support PCI MSI test writes
+error: corrupt patch at line 27
+Patch failed at 0001 hw/misc/iommu-testdev: support PCI MSI test writes
+hint: Use 'git am --show-current-patch=diff' to see the failed patch
+When you have resolved this problem, run "git am --continue".
+If you prefer to skip this patch, run "git am --skip" instead.
+To restore the original branch and stop patching, run "git am --abort".
+
+```
+
+
+Could you please help check this?
+
+
+Otherwise, looks good.
+
+Reviewed-by: Tao Tang <tangtao1634@phytium.com.cn>
+
+
+>       s->dma_paddr = 0;
+>       s->dma_len = 0;
+>       s->dma_result = ITD_DMA_RESULT_IDLE;
+> +    s->dma_write_val = ITD_DMA_WRITE_VAL;
+>       s->dma_armed = false;
+>       s->dma_attrs_cfg = ITD_ATTRS_SET_SPACE(0, ITD_ATTRS_SPACE_NONSECURE);
+>       s->dma_as = pci_device_iommu_address_space(pdev);
+> @@ -280,6 +289,7 @@ static void iommu_testdev_reset(DeviceState *dev)
+>       s->dma_paddr = 0;
+>       s->dma_len = 0;
+>       s->dma_result = ITD_DMA_RESULT_IDLE;
+> +    s->dma_write_val = ITD_DMA_WRITE_VAL;
+>       s->dma_armed = false;
+>       s->dma_attrs_cfg = ITD_ATTRS_SET_SPACE(0, ITD_ATTRS_SPACE_NONSECURE);
+>   }
+> diff --git a/include/hw/misc/iommu-testdev.h b/include/hw/misc/iommu-testdev.h
+> index 3383659..2f4e931 100644
+> --- a/include/hw/misc/iommu-testdev.h
+> +++ b/include/hw/misc/iommu-testdev.h
+> @@ -81,6 +81,7 @@ enum {
+>       ITD_REG_DMA_ATTRS       = 0x18,
+>       ITD_REG_DMA_GPA_LO      = 0x1c,
+>       ITD_REG_DMA_GPA_HI      = 0x20,
+> +    ITD_REG_DMA_WRITE_VAL   = 0x24,
+>       BAR0_SIZE               = 0x1000,
+>   };
+>
 
 
