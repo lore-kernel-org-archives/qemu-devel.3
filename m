@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98A43C53209
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 20:46:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F4F0C53209
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 20:46:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wo5jF-0000C3-R8; Sun, 26 Jul 2026 16:45:45 -0400
+	id 1wo5ja-0000GZ-Qd; Sun, 26 Jul 2026 16:46:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wo5ix-00005a-DV
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 16:45:31 -0400
+ id 1wo5j5-0000AK-Ea
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 16:45:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wo5iv-0004RC-RV
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 16:45:26 -0400
+ id 1wo5j3-0004Rv-8F
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 16:45:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785098725;
+ s=mimecast20190719; t=1785098732;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+TTlcmViaW/jr0GgH0ehJXptanXZXliFPnYWOw9ddzY=;
- b=aZFHpBTZgq50zpH5AKfpj5Jm1PaWEs5zovfkTt44vEozHCzzsSCAmNZFhWFdpX+h9QemUP
- iWsb3G6gT9o/klLfGonHtFGBht4gfxNi43q0HI+pw1PQcMgs/1tRF5yan5dezuKO3AlgQx
- VxQKAZ5QGNawzMnSsOZPTLbyCjAte2c=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=sgwF7jkNJLhj6j+139aaPY14IWX2xoRAqge3G7njsEU=;
+ b=h19dBEail9vSgwe7Pq4oQaQ+hx5+oEnykJ7nCXHio2FenbETqRySouA/FoMf94kcIMxkSx
+ uc5xsKTw85G11vPtzI1V8pvS0Rlv+AHSXzQkdJF9xF+buKyKiVf+WKEQWZM8RoYhqm56He
+ ZiQwxcCjGqsq/ezfxRmntsNCVxyoB/8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-4FWo0WPTPb6Hu_l50vZDeA-1; Sun,
- 26 Jul 2026 16:45:21 -0400
-X-MC-Unique: 4FWo0WPTPb6Hu_l50vZDeA-1
-X-Mimecast-MFC-AGG-ID: 4FWo0WPTPb6Hu_l50vZDeA_1785098719
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-672-4NpKxJpOMJKlDubQtrOMeg-1; Sun,
+ 26 Jul 2026 16:45:27 -0400
+X-MC-Unique: 4NpKxJpOMJKlDubQtrOMeg-1
+X-Mimecast-MFC-AGG-ID: 4NpKxJpOMJKlDubQtrOMeg_1785098725
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AA331195607B; Sun, 26 Jul 2026 20:45:19 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7AB091800590; Sun, 26 Jul 2026 20:45:25 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.5])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A9A3630001BE; Sun, 26 Jul 2026 20:45:17 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id AEE531956047; Sun, 26 Jul 2026 20:45:23 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 27 Jul 2026 00:44:09 +0400
-Subject: [PATCH v2 10/12] hw/core/machine: free machine->fdt in
- machine_finalize()
+Date: Mon, 27 Jul 2026 00:44:10 +0400
+Subject: [PATCH v2 11/12] migration/multifd: fix Error leak in
+ multifd_recv_terminate_threads()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260727-fix2-v2-10-d0c4831ed7ea@redhat.com>
+Message-Id: <20260727-fix2-v2-11-d0c4831ed7ea@redhat.com>
 References: <20260727-fix2-v2-0-d0c4831ed7ea@redhat.com>
 In-Reply-To: <20260727-fix2-v2-0-d0c4831ed7ea@redhat.com>
 To: qemu-devel@nongnu.org
@@ -74,35 +74,34 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=816;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=654;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=sIBVNLsGCOna3Hd2Wy4wJ32pRVDvMFiol07f6gVUCMU=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZnGXv6fr/VusynUuJj+7991gNH6KtKVK0aAzQ
- YHC1MBl1J2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamZxlwAKCRDa6OEJdZac
- 5Z5QD/4wWnnfTAOKE1y1toBi/3+xqSlAbzCU1yNo25LhIFeg6ovEG7WRWFtpS1JS40df1o4yInL
- u7AWArOtmKtK4+t8eahOiXoYNo/xoE1P9MGX1pPIv8knrfCrNS2WLr/4mTy+gZVdWJDYkKMNxPc
- 0wpRzr/a8VT9Mkmb03NFoPR8sNFYq0KpQmd26ItLvA39hBxcpzZjM02PRtg3tUH4EsQnoiv971g
- u+438RwibEet6RdZXNsaYn0/kzo3D1a6tKguF8mrk9q4zaP54UblrAbgl2jhtBYSunT+IFKlCDj
- fe3aRKKtNYYKXQEQ26YaoYAJVaupRiRUUNqqcdI4t/fvg/nFfwDsIrQcndIXyafN6DFn++DPnJC
- hBZILSGXx2rZoYC77dlYghbp53qgYPGzYB8O1R/OHhVUs5MJM2dA4wgoGwlDrrrTCPLzFMZI0fv
- Yjt/vtrDAjj0Q4NNVnWDnC/OOTcG4dRqBf07sXJS0EFFXN/kWUKVFIfDm4AavoxS+mTs4J91pUH
- yjQTnw5zTcpdVOldmjZm8Wzcujc2xZyovTdxEuhGkMlH/S3zvWcUSxE6kJLCZNYOjeTpSR+Uc9J
- hYDXC/aSs6wA/G9M7O8pc/ahqo98Y/BhIT7FozEnQ73laditARDQoPio9M2pSW1Q6SsjdtucKKD
- yUIrMAEUkf0q+UQ==
+ bh=8V4SbETfqA20e58q6VCGWaqhSb6JTXgkzFqcys/62CY=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZnGXqtL4DYX9fMBDVrhGbWRZ/5vbN92kSAgN+
+ 0aizcq2HCSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamZxlwAKCRDa6OEJdZac
+ 5Y+tD/9qjL26Hwgig0DMmnbLIrFIqE27KE226meUw/u9RE0E3MUY18KW3AcEYHjr6JwdPCQx9oL
+ TkTOszT0vzToFQHDuoPcQZ7zm4YERQxTOtNFEmqbN6LOMSOWG8KhcexF2uga1FsAAQA8daRiDxD
+ eLmnhu4k0JPgSZWsqyLeL+PL4TCLXTDulglfPg4SN44JBsTysPvnKwFbhQFjeMx6OzEbVw+ipb3
+ sumjSr2mkyEc5UpMu0hS0JUvwLvarPtH6cByPFWnYYBs1yAzkRu1m86r9I9s67tt6VoDGQdBBPn
+ cXqNQiJKfgAUGPuLY6QmugdGhCu4xKR78l0q7zRuCOuNwrjAkXZUESKPlSlAOHhvpCBvzp7ADg7
+ BpPHvf2gnVKdaAUggS57RD6eCtb2D5QMjsA3dfHvuGVaIJsi9PZov1L+GPbiPR6Dlh+pxdvqnfe
+ MhzchAgRmakbAH6ipHQTy7axxsvHY0LHVnQMW2gDQBzDNpXFaQ6yTCJeMuoua9XvCR1EyDGtRtQ
+ JhLJmfQ3dqV5MMhRDfgoYe8scj0IkgK2luKnkZ3vo441ydpBzfH6rrxfJH7zbLZVrOdd0gE/+Ll
+ wytmCWs74YesvP9HH5uqVTmL6ADR5upoh9OlTKLwZEPBqKEDx6xG5jx5za/B4XH1Tdz/8cD8mCG
+ UAdVFiWx3U0E41g==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,28 +117,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-machine->fdt is a plain g_malloc0() buffer (see create_device_tree())
-that boards populate during MachineClass::init, but machine_finalize()
-never freed it, unlike the other boot-time buffers (dtb, dumpdtb,
-kernel_filename, ...). Free it for consistency.
+If err != NULL, free it.
 
+Fixes: 11dd7be57524 ("migration/multifd: Remove p->quit from recv side")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/core/machine.c | 1 +
+ migration/multifd.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 805148678d57..2b24d711d76f 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -1301,6 +1301,7 @@ static void machine_finalize(Object *obj)
-     g_free(ms->kernel_cmdline);
-     g_free(ms->dtb);
-     g_free(ms->dumpdtb);
-+    g_free(ms->fdt);
-     g_free(ms->dt_compatible);
-     g_free(ms->firmware);
-     g_free(ms->device_memory);
+diff --git a/migration/multifd.c b/migration/multifd.c
+index dbad525d2a28..503014f76ba5 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -1056,6 +1056,7 @@ static void multifd_recv_terminate_threads(Error *err)
+     trace_multifd_recv_terminate_threads(err != NULL);
+ 
+     if (qatomic_xchg(&multifd_recv_state->exiting, 1)) {
++        error_free(err);
+         return;
+     }
+ 
 
 -- 
 2.55.0
