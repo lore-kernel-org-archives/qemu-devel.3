@@ -4,100 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78CA4C531F9
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 10:18:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2F34C531F9
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 10:19:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnvvG-0003tI-FF; Sun, 26 Jul 2026 06:17:30 -0400
+	id 1wnvwU-0004GB-N9; Sun, 26 Jul 2026 06:18:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wnvvC-0003t8-AR
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 06:17:26 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wnvv9-0002re-Ut
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 06:17:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1785061030; bh=M3oLx3L8Pxy3r42IpcQIBXX+hZOyZKy1aOWCSqq+IuI=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=F5mPwAFp14eVxMSF0IHBCr/IY7VespBefCyVAe63lTISPJf00S/z3zd2NnhE4Z/i2
- wcwAul6bQCsDi22auFkz58EuNJrAU1dAE/45dJ3KK10Lj3+urqxKYtpGxehNxGzRrv
- s+itYreQVt71Q123Jzcma0LgMgLqtU5FSBwoxE7Koc15Qeq3x7yWj8IfgdVTjkihCa
- sB4jkSOeV9YvQRr9WZxOOjBTrvS5U2+4QN5iOsH/awfx1k5ZdTcIgjiwYb89RWPP7s
- dLvBmTCdUoiM//Z0tEFwYmJZ7JLGvjD4/a3AqA/S62ZWTRTMX8u+fAvLB8ODIsD8Sk
- 48u23gzdHx5Ew==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A1E461C4D62;
- Sun, 26 Jul 2026 13:17:10 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D6AF73F68CF;
- Sun, 26 Jul 2026 13:17:10 +0300 (MSK)
-Message-ID: <7e4a2ca1-c930-408f-a39d-d926bd8ba788@tls.msk.ru>
-Date: Sun, 26 Jul 2026 13:16:58 +0300
+ (Exim 4.90_1) (envelope-from <randomjack94dev@gmail.com>)
+ id 1wnvwQ-0004Ec-Bo
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 06:18:42 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <randomjack94dev@gmail.com>)
+ id 1wnvwM-00032l-R3
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 06:18:40 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-667923d86a7so2359325d50.0
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 03:18:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785061117; cv=none;
+ d=google.com; s=arc-20260327;
+ b=V+5aXlGZLTeJ8I4Orvn3wJeL29KlCGASHqMwrs0nZMAo0MxkJzxZryisAX5K4cuD2+
+ 3y3CLgoSw7TRtiNr51fQGPn2xHw9LL+a3lGSobjoe9A3chP5GxLuAl45zpg77Bj7itVi
+ R5y14bZ8sisDyK675wZy9CbegjxfRY5ErWpQOLXaZIBeU5PPyM5PWGd2CuvQNZKScAbZ
+ cmK7miJBscN7MBcN2Hgi8k9ndhxhX1RB8gXCv7z2mXn56UQ4bMsCajeNE1PWE2zaA6d3
+ vvLkHYqZ965yztW+00hnlXpD8PofJ4FYHKu70AaSb+HD8PxhlPZnccsLEoqmv3M3IGRo
+ gpzQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=EBjlcfDfIu3z/AJpw8nsv9CjirNhmFFiLD6FknCXBqg=;
+ fh=w8E0DUJP32rtZI6BueBvqUbEMj+LBV/APR6eSOdi2ww=;
+ b=YBr+sZp7FmlwA6SfjXBkg021rjCjZ9oBjKnSKXnbFvNF2PY74NSsek+gMrsPpv1nl4
+ WFX6bYRFlH3wFo9oIWCzFwPqGx0QW9fPNkejKCS5ENyVWdr37baSDqKnoPjySJqmCCvv
+ I5K6VFOR3cjxaIxFc02aaWM/hEmvBi6HGH9VTRMlGcnJJreFLltQRMIUHDdVrpRCt0+Q
+ sKei8AMh08CRWF9I3C+Xh/dTo74WCEqmX5Uf9f6kjA5lrpy/R0uQJubnUQo8U3Msq8CY
+ N8Qt8UWfIWPWrCQlWqzJOY7XXnGRgiDoZplHNTQvEQPtvgwD0OI1OFFh1wCrMquQhePb
+ 2qdw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785061117; x=1785665917; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=EBjlcfDfIu3z/AJpw8nsv9CjirNhmFFiLD6FknCXBqg=;
+ b=HlqlalY5C23Ulo5QBDMstv1upkRpR2vOa3zHD7C5dJykjZnJ0Fm7wEj50ahCTRT8HX
+ RgBP1kPqqdCOIu8CkrqQUu/QLreYUigp+uLaiQmQLV0dZvJurE+xkSuXy/cemErwxlhy
+ oN/s+0NLlqAISZjCW1yHhZF3p5OwfYQLzRTKgUxRAWhVp8P5PcTCXb691kWA/Ldvd9E3
+ uklGjuHxW7tZwUOemfB1i1hwl/TNKqvro1NIjnS1l74A6jj9vi/hcAiPtrQofBe9CGOl
+ z/Ipx+tqOVhDc9exYlwSO3zo4aLUlgQVvVTcGnPChb5km4heE0lcYJEgiKZ+qu1J/frR
+ n7EQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785061117; x=1785665917;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=EBjlcfDfIu3z/AJpw8nsv9CjirNhmFFiLD6FknCXBqg=;
+ b=PQwW+VTKkMYNId7zAHyHoXKcpgq10OIOLqOnm9uSXt/fu9Bc3CsPitgZ++z2kKSXJi
+ BAu+mfDVjUDm7dQ0b2NuLDAB2fHQzO4wUnuTaUm9J9nsZnXACSFoT5GhmeaxN0RKJqQW
+ cUlBIkePTfYDHG9pSf5lHzWLYoeTh4fFipYOBoXUeIZaZMmSgFwBHPIvWlCVN5TCM/WP
+ IiNDckl7nuayCs5MJFzOV4MERLSHunOwa1OpOB58NGYspZC8QjlzTtgbjBWUn60Xhwl7
+ 3tJ4MADzt7J6wMl0NSqVoYGRsafiFBMS+04PALqRF4Jnm9tasAyXaAKZVCYRvRVjBY4R
+ PyhA==
+X-Gm-Message-State: AOJu0YzNaRpH9QfsSXK5Ya5Y3ZFkLMkpG898mgZ1E3FDj6GUi7FhtA+l
+ 7ylfAl8gO361JXWabPRZfOf8oZTUsPMcgYj1EEr4Qbk3dgF7O1Fa42+GjiVLdNl69RPeLt+3P4U
+ VFtkb3D5dATHKjS8PGg75+13J6rh4IuuCfUh7
+X-Gm-Gg: AR+sD13IhlQwgqNYki9Z2sjUnRGCBtSCoZAXLnSRpzsBqCCF5A8GiKDvakMMkU/7kME
+ XdTTIFdpk4T1dH8iIvEuTGU7cW0S7EoJU056Q3QB1TefLi85qtyOAtgjf+s4c9mSExCMgCWQIfw
+ ZF43wCpa/jAbxEtCjkq3KbP6A/H9CnO9hZWdHi1XVTCGSk4IMXoJEGol14GlQUpa9/NVzfzkUhX
+ B1ZP0s51jNkxtSDOnZVIzFP9Mv/KDGM+CC51LEJ0TMyvUNLf3phjlEV/MufTG4=
+X-Received: by 2002:a05:690e:c4f:b0:660:6e93:1958 with SMTP id
+ 956f58d0204a3-668c77a5de9mr1031044d50.0.1785061116962; Sun, 26 Jul 2026
+ 03:18:36 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] scripts/checkpatch: validate Fixes: tag format and commit
- ancestry
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Chao Liu <chao.liu@processmission.com>
-References: <20260723065320.1314072-1-clg@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260723065320.1314072-1-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20260621130626.19073-1-randomjack94dev@gmail.com>
+In-Reply-To: <20260621130626.19073-1-randomjack94dev@gmail.com>
+From: Evgeny <randomjack94dev@gmail.com>
+Date: Sun, 26 Jul 2026 13:18:25 +0300
+X-Gm-Features: AUfX_mxV2vda-b72waRc3wykuOXWTVQJv31SzDsbGRv951ImIx3_0Y6U-iaIKbg
+Message-ID: <CAFvcSaTjtztrJvc72e8i3gaGcfhkBVEVURJZxvSsHtpuA987kw@mail.gmail.com>
+Subject: Re: [PATCH] util/oslib-win32: Implement qemu_get_pid_name()
+To: qemu-devel@nongnu.org
+Cc: sw@weilnetz.de
+Content-Type: multipart/alternative; boundary="000000000000c76cb8065780edb4"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=randomjack94dev@gmail.com; helo=mail-yx1-xb135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_MSPIKE_H2=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,65 +112,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/23/26 09:53, Cédric Le Goater wrote:
-> Adapt the kernel's checkpatch Fixes: tag validation for QEMU.
-> 
-> Add a git_commit_info() helper to resolve commit hashes and validate
-> the Fixes: tag in commit messages. The canonical form is:
-> 
->    Fixes: <12+ chars of sha1> ("<title line>")
-> 
-> The check validates capitalization, spacing, hash length, lowercase
-> hex, and quoted title. When the format is wrong and the commit can
-> be resolved, suggest the corrected Fixes: line.
-> 
-> When running inside a git repository, also verify that the referenced
-> commit is an ancestor of master.
-> 
-> Lines matching "Fixes: CVE-*" are skipped. The check can be disabled
-> with --no-fixes-tag.
+--000000000000c76cb8065780edb4
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thank you for introducing this!
+ping
 
-A comment below.
+https://patchew.org/QEMU/20260621130626.19073-1-randomjack94dev@gmail.com/
+https://lists.gnu.org/archive/html/qemu-devel/2026-06/msg05258.html
 
-> +sub git_commit_info {
-> +	my ($commit, $id, $desc) = @_;
+On Sun, Jun 21, 2026 at 4:08=E2=80=AFPM Evgeny Kolmakov <randomjack94dev@gm=
+ail.com>
+wrote:
+
+> Replace the abort() stub with a proper implementation using
+> QueryFullProcessImageNameW() and g_utf16_to_utf8() to retrieve
+> the process executable name on Windows. Returns NULL on error
+> to match POSIX behavior.
+>
+> Signed-off-by: Evgeny Kolmakov <randomjack94dev@gmail.com>
+> ---
+>  util/oslib-win32.c | 19 +++++++++++++++++--
+>  1 file changed, 17 insertions(+), 2 deletions(-)
+>
+> diff --git a/util/oslib-win32.c b/util/oslib-win32.c
+> index 5f3e8f4d98..2b083b5d7a 100644
+> --- a/util/oslib-win32.c
+> +++ b/util/oslib-win32.c
+> @@ -287,8 +287,23 @@ bool qemu_finish_async_prealloc_mem(Error **errp)
+>
+>  char *qemu_get_pid_name(pid_t pid)
+>  {
+> -    /* XXX Implement me */
+> -    abort();
+> +    HANDLE hProcess;
+> +    WCHAR path[4096];
+> +    DWORD size =3D G_N_ELEMENTS(path);
+> +    char *name =3D NULL;
 > +
-> +	return ($id, $desc) if ((which("git") eq "") || !(-e "$gitroot"));
+> +    hProcess =3D OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE,
+> (DWORD)pid);
+> +    if (!hProcess) {
+> +        return NULL;
+> +    }
 > +
-> +	my $output = `git log --no-color --format='%H %s' -1 $commit 2>&1`;
-> +	$output =~ s/^\s*//gm;
-> +	my @lines = split("\n", $output);
+> +    if (QueryFullProcessImageNameW(hProcess, 0, path, &size)) {
+> +        const WCHAR *base =3D wcsrchr(path, L'\\');
+> +        name =3D g_utf16_to_utf8(base ? base + 1 : path, -1, NULL, NULL,
+> NULL);
+> +    }
 > +
-> +	return ($id, $desc) if ($#lines < 0);
-> +
-> +	if ($lines[0] =~ /^fatal: ambiguous argument '$commit': unknown revision or path not in the working tree\./ ||
-> +	    $lines[0] =~ /^fatal: bad object $commit/) {
+> +    CloseHandle(hProcess);
+> +    return name;
+>  }
+>
+>
+> --
+> 2.43.0
+>
+>
 
-This is the first place in this script which depends on the C/EN
-locale being in effect.  With different locales, git will produce
-different messages here.
+--000000000000c76cb8065780edb4
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Instead of relying on the exact wording, I think it's okay to check
-for the exit status of git command, and only assume we found the
-reference if git command finished successfully.
+<div dir=3D"ltr">ping<br><br><a href=3D"https://patchew.org/QEMU/2026062113=
+0626.19073-1-randomjack94dev@gmail.com/">https://patchew.org/QEMU/202606211=
+30626.19073-1-randomjack94dev@gmail.com/</a><br><a href=3D"https://lists.gn=
+u.org/archive/html/qemu-devel/2026-06/msg05258.html">https://lists.gnu.org/=
+archive/html/qemu-devel/2026-06/msg05258.html</a></div><br><div class=3D"gm=
+ail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On S=
+un, Jun 21, 2026 at 4:08=E2=80=AFPM Evgeny Kolmakov &lt;<a href=3D"mailto:r=
+andomjack94dev@gmail.com">randomjack94dev@gmail.com</a>&gt; wrote:<br></div=
+><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
+-left:1px solid rgb(204,204,204);padding-left:1ex">Replace the abort() stub=
+ with a proper implementation using<br>
+QueryFullProcessImageNameW() and g_utf16_to_utf8() to retrieve<br>
+the process executable name on Windows. Returns NULL on error<br>
+to match POSIX behavior.<br>
+<br>
+Signed-off-by: Evgeny Kolmakov &lt;<a href=3D"mailto:randomjack94dev@gmail.=
+com" target=3D"_blank">randomjack94dev@gmail.com</a>&gt;<br>
+---<br>
+=C2=A0util/oslib-win32.c | 19 +++++++++++++++++--<br>
+=C2=A01 file changed, 17 insertions(+), 2 deletions(-)<br>
+<br>
+diff --git a/util/oslib-win32.c b/util/oslib-win32.c<br>
+index 5f3e8f4d98..2b083b5d7a 100644<br>
+--- a/util/oslib-win32.c<br>
++++ b/util/oslib-win32.c<br>
+@@ -287,8 +287,23 @@ bool qemu_finish_async_prealloc_mem(Error **errp)<br>
+<br>
+=C2=A0char *qemu_get_pid_name(pid_t pid)<br>
+=C2=A0{<br>
+-=C2=A0 =C2=A0 /* XXX Implement me */<br>
+-=C2=A0 =C2=A0 abort();<br>
++=C2=A0 =C2=A0 HANDLE hProcess;<br>
++=C2=A0 =C2=A0 WCHAR path[4096];<br>
++=C2=A0 =C2=A0 DWORD size =3D G_N_ELEMENTS(path);<br>
++=C2=A0 =C2=A0 char *name =3D NULL;<br>
++<br>
++=C2=A0 =C2=A0 hProcess =3D OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, =
+FALSE, (DWORD)pid);<br>
++=C2=A0 =C2=A0 if (!hProcess) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return NULL;<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 if (QueryFullProcessImageNameW(hProcess, 0, path, &amp;size)=
+) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 const WCHAR *base =3D wcsrchr(path, L&#39;\\&#=
+39;);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 name =3D g_utf16_to_utf8(base ? base + 1 : pat=
+h, -1, NULL, NULL, NULL);<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 CloseHandle(hProcess);<br>
++=C2=A0 =C2=A0 return name;<br>
+=C2=A0}<br>
+<br>
+<br>
+-- <br>
+2.43.0<br>
+<br>
+</blockquote></div>
 
-An alternative would be to export LC_ALL=C, but I think relying on
-the git exit code is more reliable.
-
-Thanks,
-
-/mjt
-
-> +		$id = undef;
-> +	} else {
-> +		$id = substr($lines[0], 0, 12);
-> +		$desc = substr($lines[0], 41);
-> +	}
-> +
-> +	return ($id, $desc);
-> +}
-> +
-
+--000000000000c76cb8065780edb4--
 
