@@ -4,90 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3BD1C53200
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8220BC531C9
 	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 14:41:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wo02b-0003Bh-Ej; Sun, 26 Jul 2026 10:41:21 -0400
+	id 1wo02Z-00038Z-VI; Sun, 26 Jul 2026 10:41:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1wo02Z-00035q-4P
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 10:41:19 -0400
-Received: from mail-vs1-xe2a.google.com ([2607:f8b0:4864:20::e2a])
+ id 1wo02X-00035a-VJ
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 10:41:17 -0400
+Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1wo02W-00050t-IT
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 10:41:18 -0400
-Received: by mail-vs1-xe2a.google.com with SMTP id
- ada2fe7eead31-737f6e70678so1299328137.0
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 07:41:16 -0700 (PDT)
+ id 1wo02W-00050k-9M
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 10:41:17 -0400
+Received: by mail-ua1-x92e.google.com with SMTP id
+ a1e0cc1a2514c-966eabad303so360295241.1
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 07:41:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785076875; x=1785681675; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=euPvdh95iQPl9fiq2XC5We3plNW5BhTWufPyosLAmNM=;
- b=MUMRiyDRYc3k2h5InpHNlVlkv65zYgBiQmdCvCUSWpG3yR/ejF86k99RvTHNsk6TFE
- cFy1YRZwHqC8+hpGrwxnQuQwJi4ajLpvSzchvJSRGUHEKVx6eh1AcYviTdyEKzIFSGR4
- OQDphPKHIQPTD13rSlKeLSKPLg7mjCBQb2n0qu0/u+NMvBDJ0Vcv1gJVbEUscIR1pUEb
- wWwWcpvLzEyxlh3+uA7P3h9rBJ0W5k7L1dvYqEBlNe21sS9UE1YdvocP2R0V/3VJq9jK
- RgH5lkgrWBn4mtcHFF3AIemtfaZerzmMVMpJb89Vr9PLWV2ttxiigaxvrOWqh8xCviji
- 2/pg==
+ d=gmail.com; s=20251104; t=1785076874; x=1785681674; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=G4V9XY94ovym+5Cnyt49gIvgAQYwYCxslJfMeTimWUY=;
+ b=Ofa7WY+tAeXvmQYmUswicnGeml6NcPSl+cMVJe/4tN4o3XEu05+z7aX9kwHAXBFZpP
+ FrOgyIJewbcjGWNhfPvOr8uLc1reXTrzbQQveeFmK8o4qcIdNd6BY/yvTIvKde20rOoG
+ 0WMVY+/J3wf8YFHF1iZ4bOQqcWhVfiI7JDdKqxvLBjNcGWWS+eSjtTYrXm0a0ze/bcTd
+ jlvKxBhgtL3SoI81iBnBVq4+L6nnNfKGpCG5QvMbSJ2vaVRuoP6JcUqVTXSQSWRZvuGE
+ XW5ZvD6XRH8CSTEzvCYPdlaBwJiQefm0jpxNRaZFd2gfTIvopATcJe0K1d4LxI86S29X
+ Rslw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785076875; x=1785681675;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=euPvdh95iQPl9fiq2XC5We3plNW5BhTWufPyosLAmNM=;
- b=FX9OL2RHC2vKUlgImpZw85obImNQvlHgDBMnzWvA2Qu4LOwdVZjScU4RWBRq7pVwwO
- hhXa4ZbE21TlKckzvru27Di4OVR3EzJzGohaTn4LSyaPbHN8L0g3PMLBuHDxCa6cCpAf
- V2iDxqt+jSAeWY1zTRjbVG0KC0q8El2ePnlYqtIiq69fPuHD3cymCkQ4zhuO/nD77B81
- 96mcZdbguIk6A4hKfkZzfo0wtOydYe7tuMHWx5+d2c+EARe3L2/zt8KFZ84t4y7dvCiX
- JtrsefxgsfZ46OX97pvPQAeJ7m5Af9n9YmZAzVcLGQLEnxCBRcz76zSbbv2eQnS7aNE2
- pTyw==
-X-Gm-Message-State: AOJu0Yzp3/QiQM12YufG2CLtsBU667uwZtzlBFqMQNCQFb6eMXsfiySP
- 7Rr0isUwjemi5MVK9PwjZHIhzsPeqdK9O/EjRCwfqoFSryPmnhCdtRUD6WzDgw==
-X-Gm-Gg: AR+sD12kymhC0r4F7lOGNzV2D5Hl8k1377zT8h4oTkVmo0a4ASKoKWznJ6QPXP0ysWO
- 2SW7LgvvU8QeaZrfz4idMhgc2xcnkL+rDd/UZQTc0+0n5GK6uF5NwBudiSjFtPy8C00xTJXAC8+
- JqNneddJpdQ799slV8jTxyOft/DAdHs7JQTZeRzQUwQGLM1x+JCHC72VXEQ6h2EArhjLDQgjdPl
- Euit4rb0thFEOxOvO2A8EikW04eIrFRcR5TPR7QjNvkTnO6SHU3e+pm3c6Ld4OS0OJKZu965rCd
- XZETeL4a3rVrg3MTjxaC51Trzpga0OQ7/aEHRJquwvF1mLTpOdOeCSxYyek5ZW3m2Fuvv2d27cV
- 62RGXVvEffOXDbd8FjGdQdHfS35Uj/s4eAwZasFSfRR7vyXLluIrD5ImGJ2L6wl7DluYAeULfhk
- RAAWjyhYEQo5Zjox4MNIu+taTtPmRAJVyc
-X-Received: by 2002:a05:6102:3ec8:b0:738:bf0f:d0c6 with SMTP id
- ada2fe7eead31-7503acf2e29mr3795651137.0.1785076875417; 
- Sun, 26 Jul 2026 07:41:15 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785076874; x=1785681674;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=G4V9XY94ovym+5Cnyt49gIvgAQYwYCxslJfMeTimWUY=;
+ b=Zbh2MY3FK08Z70mMGaiXHmhQnxHT8b5abiBF9Xlfgkd1CbTMkEzLh01hXrtkfFfH+c
+ J8NA+aLVdtOoAXNmxUZSXSmcw0qjTujpO/pqEsXLvBQ5cKZiabUForw2KdC/+qpY7Flk
+ JlOGcFUK9qIGN4fvz1k4wF/jMba9MMYEWLyIBzLfkNgWyuydoNm72yVfaUyKEcj+1Nb/
+ 14bg6ZjXM4AmamM4Y3ehHrjeCKMxCFFgQgU9ba+rfGXq6MWXs8xfcsZxUp8f3VUmMxmJ
+ axqonNT/GFxS5qrTRhQpZGXgY3QUiWLgdXsrA92FuwrJKqBksPj3SJyKqXPYbCpHLAFA
+ +tbg==
+X-Gm-Message-State: AOJu0YzdUAsh1RV9VMFg/A6iDwObgbOzf8OEUvaKu+sHRyE6KSLSW6ag
+ 8FgVcCxrnEUk5RL3E6wWsORIcE+SFkTntyBdITtTBnTo7QUJp9fSr4IWLXV8TA==
+X-Gm-Gg: AR+sD12S1yf2CqXmbGwoRMGnpSARu6lCnNqjxpErHfhp7DRYqWEWBr3+aA0/n7x0a/D
+ Uh7fdYJnAa1o+euwJ17sXgkzlf7+NxVqiB/czMJjWLx4nWImTjv7X5cQGZ8wHV6sRnZ1F1Qm8Ln
+ z6RDcxH7264TFrMBRggOum1YQRUAeh72qkPNgr2W81qXsusFadQYFVCGlXN+rcMZ0YzX0L5U/AC
+ DBsjhWo2LZyiqr9A6ds51rcGz9MPJqNq+Ny3PPZc12RdBU98rlYtXgNWHaGU08MfYfCTjgOSWuv
+ NXr+ig4y2XBIco4IVgz5x9+C/ar9gqH0kHICaMIQTsH7w/fNhnM2WeNEn+GUdBXJYoNhdYNhxYU
+ ZCW6YTTKYHgkPsd2U+wjTWzrPG2d8ARRXOgBKUo2KoK9cKFR+yd8tpVumlBeSwRhd74kEmXCEwA
+ Bo2t9oVfZ9sv04VVOX1DNpJdzLt6oVLk6A
+X-Received: by 2002:a05:6102:54ac:b0:73e:605c:405c with SMTP id
+ ada2fe7eead31-7503e874670mr2844892137.12.1785076874400; 
+ Sun, 26 Jul 2026 07:41:14 -0700 (PDT)
 Received: from localhost.localdomain ([146.71.8.128])
  by smtp.gmail.com with ESMTPSA id
- ada2fe7eead31-7503436f542sm3682735137.4.2026.07.26.07.41.14
+ ada2fe7eead31-7503436f542sm3682735137.4.2026.07.26.07.41.13
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 26 Jul 2026 07:41:15 -0700 (PDT)
+ Sun, 26 Jul 2026 07:41:13 -0700 (PDT)
 From: Marcelo Manzo <marcelomanzo@gmail.com>
 To: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Marcelo Manzo <marcelomanzo@gmail.com>
-Subject: [PATCH 1/2] hw/arm/raspi4b: fix guest never seeing more than ~1 GiB
- of RAM
-Date: Sun, 26 Jul 2026 10:41:11 -0400
-Message-ID: <20260726144112.56321-2-marcelomanzo@gmail.com>
+Subject: [PATCH 0/2] hw/arm/raspi4b: fix guest RAM capped at ~1 GiB regardless
+ of machine size
+Date: Sun, 26 Jul 2026 10:41:10 -0400
+Message-ID: <20260726144112.56321-1-marcelomanzo@gmail.com>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20260726144112.56321-1-marcelomanzo@gmail.com>
-References: <20260726144112.56321-1-marcelomanzo@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2a;
- envelope-from=marcelomanzo@gmail.com; helo=mail-vs1-xe2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
+ envelope-from=marcelomanzo@gmail.com; helo=mail-ua1-x92e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,24 +100,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-raspi4_modify_dtb() decides whether to add a second memory node above
-the 1 GiB peripheral hole by checking info->ram_size -- but that field
-is the boot loader's RAM budget for loading the kernel/initrd/dtb
-image, itself always capped to at most UPPER_RAM_BASE - vcram_size by
+While working on unrelated raspi4b issues, I noticed the guest never
+seemed to have as much RAM as I'd given it and tracked it down to
+hw/arm/raspi4b.c's raspi4_modify_dtb(): it decides whether to add a
+second memory node above the 1 GiB peripheral hole by checking
+info->ram_size, but that field is the boot loader's RAM budget for
+where it's allowed to place the kernel/initrd/dtb image, itself always
+capped to at most UPPER_RAM_BASE - vcram_size by
 raspi_base_machine_init(). Since that capped value can never exceed
 UPPER_RAM_BASE by construction, the condition was never true for any
-raspi4b configuration, and the second node was never added: the guest
-never saw more than ~1 GiB of its nominal RAM, regardless of the
-machine's actual size.
+raspi4b configuration -- the second node was never added, and the
+guest never saw more than ~1 GiB of RAM regardless of the machine's
+nominal size. board_ram_size(info->board_id), computed one line above
+in the same function, is the value that was actually needed.
 
-board_ram_size(info->board_id), computed one line above in the same
-function, is the value that was actually needed -- the board's real
-total RAM, not the boot loader's own budget for where it's allowed to
-place the kernel image.
+Patch 1 fixes it (one line); patch 2 adds a regression test.
 
 Confirmed via direct measurement inside the guest ("free -h" /
-/proc/meminfo) on raspi4b's default 2 GiB configuration, before and
-after:
+/proc/meminfo) on raspi4b's default 2 GiB configuration:
 
     before: MemTotal:  943524 kB (~921 MiB)
     after:  MemTotal: 1905824 kB (~1861 MiB)
@@ -130,36 +127,33 @@ Also verified against two real, unmodified Raspberry Pi OS releases
 usable RAM instead of ~900 MiB, with clean boots, working SSH, and no
 kernel errors on either.
 
-Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
----
- hw/arm/raspi4b.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+I also looked into extending this to raspi4b's real 4 GiB and 8 GiB
+hardware variants (real boards exist in 1/2/4/8 GiB configurations),
+since board_ram_size()'s encoding already supports arbitrary sizes and
+this same bug meant the necessary split-memory-node path had never
+actually been exercised at any size, ever. 2 GiB now works cleanly
+with this fix (tested above); 4 GiB hits a real kernel panic
+(`kernel BUG at arch/arm64/mm/mmu.c:192!` in early page-table setup,
+addresses landing in the BCM2711 peripheral region around 0xfc000000)
+that looks like it needs the "high peripheral alias" real BCM2711
+firmware sets up for boards with enough RAM to otherwise collide with
+that region -- out of scope for this series, so I'm leaving 4/8 GiB
+support for later and keeping this fix minimal.
 
-diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
-index b92840e1b6..ca246ebb35 100644
---- a/hw/arm/raspi4b.c
-+++ b/hw/arm/raspi4b.c
-@@ -64,7 +64,19 @@ static void raspi4_modify_dtb(const struct arm_boot_info *info, void *fdt)
- 
-     ram_size = board_ram_size(info->board_id);
- 
--    if (info->ram_size > UPPER_RAM_BASE) {
-+    /*
-+     * Bug: this used to compare info->ram_size (the boot-loader's RAM
-+     * budget for loading the kernel/initrd/dtb, itself capped to at most
-+     * UPPER_RAM_BASE - vcram_size by raspi_base_machine_init()) rather
-+     * than the board's actual total RAM computed just above. Since that
-+     * capped value can never exceed UPPER_RAM_BASE by construction, this
-+     * condition was never true for any raspi4b configuration -- the
-+     * second memory node was never added, and the guest never saw more
-+     * than ~1 GiB regardless of the machine's nominal RAM size. Confirmed
-+     * via direct measurement: default -m 2G returns ~916 MiB from
-+     * "free -h" inside the guest, not 2 GiB.
-+     */
-+    if (ram_size > UPPER_RAM_BASE) {
-         raspi_add_memory_node(fdt, UPPER_RAM_BASE, ram_size - UPPER_RAM_BASE);
-     }
- }
+checkpatch.pl is clean (0 errors, 0 warnings) on both patches, and the
+series builds standalone from a clean worktree
+(--target-list=aarch64-softmmu). All 6 tests in
+tests/functional/aarch64/test_raspi4.py pass, including the 5
+pre-existing ones (no regression) and the new one added here.
+
+Marcelo Manzo (2):
+  hw/arm/raspi4b: fix guest never seeing more than ~1 GiB of RAM
+  tests/functional/aarch64: add raspi4b full-RAM regression test
+
+ hw/arm/raspi4b.c                        | 14 ++++++-
+ tests/functional/aarch64/test_raspi4.py | 51 +++++++++++++++++++++++++
+ 2 files changed, 64 insertions(+), 1 deletion(-)
+
 -- 
 2.47.1
 
