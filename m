@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A1E4C53209
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 21:31:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86777C53209
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 21:31:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wo6QS-0000ZC-84; Sun, 26 Jul 2026 17:30:24 -0400
+	id 1wo6Q4-0007qc-G3; Sun, 26 Jul 2026 17:30:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6QN-0000Ay-Jl
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:30:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6Q1-0007n3-BM
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:29:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6QL-0004cR-Eu
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:30:19 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6Pz-0004LE-GO
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:29:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785101416;
+ s=mimecast20190719; t=1785101394;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yZu81sJRfUDJ7gSNX62NjmG3vC2DfnNRoaluf11vifQ=;
- b=H4SpHDYwFByirFqqyPh22RDHSifVbWudNEQZgnrgEov076PFhIW00TLhXQTS8Qf1CK82qd
- M2Aw4tbT8pZ8Za62K7Y+riwtp09TmBKZU+7X6MKHj/nJyugzSt+oBo6S5zOFKa6AGyjqoz
- 60TeiiIJWeF42OdBMZyJzXBnxW34Joc=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2g6MMmyPKzZozOuhiPXxtJVxbTcTWv7RFySNngDrOZ4=;
+ b=TE0+iSXkuEZA3a1IePHNAVXMNZgQ+uFyzV9OeLIwEfLSv9BdEsjW4839CAfCiyKRH3l3/Z
+ lq76lpa+gCcSJ/YdgPA9NbxE3xkTTghBB5a4pQxlfnjprznTd5dWZmcYV7UUTLlyrpIOKA
+ RVp1h+LM1OQtPDxLo2/mcAXQTtv03jw=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-269-cNS95mLlM8Cc7KmI9ta1WA-1; Sun, 26 Jul 2026 17:30:15 -0400
-X-MC-Unique: cNS95mLlM8Cc7KmI9ta1WA-1
-X-Mimecast-MFC-AGG-ID: cNS95mLlM8Cc7KmI9ta1WA_1785101414
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-496b61bd846so11640875e9.2
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 14:30:14 -0700 (PDT)
+ us-mta-224-F6pb_JbxOXWvp5Abp6Bafw-1; Sun, 26 Jul 2026 17:29:53 -0400
+X-MC-Unique: F6pb_JbxOXWvp5Abp6Bafw-1
+X-Mimecast-MFC-AGG-ID: F6pb_JbxOXWvp5Abp6Bafw_1785101392
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-47f8158485eso1669242f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 14:29:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785101414; x=1785706214; darn=nongnu.org;
+ d=redhat.com; s=google; t=1785101392; x=1785706192; darn=nongnu.org;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :content-type:mime-version:references:message-id:subject:cc:to:from
  :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=yZu81sJRfUDJ7gSNX62NjmG3vC2DfnNRoaluf11vifQ=;
- b=Kb1qDsCS/RQ4s5EOu/y8NV509rL4hoSWtU6pawtJNd3GoRi5/bLva7MFFUObx4Gvx1
- rc9AzFrRhnfNXPySURo/5zZzx/aepRLda0uJoBSRK264Qtun2+xLxutg9RVktIQ9ftXK
- Nq6niN2paA9Ybgjwcm+YBUrrZEJT299HcEj2opk/WLlxJJRAlUDMKRY1onafy/2uZ9u6
- M+XIa0/1zY+x8UQvEL+ABMjSTMosM9/3I/Ki/CCH276pNUip3gpxr1iF/itz25Z4hpFH
- HaDrMJq7hN91DWfYKpOQOFf/PKjDZNtGQ3DUlTk2lazDb9fO4tMyTCyvkUNCQDBN3ZV0
- PO+A==
+ bh=2g6MMmyPKzZozOuhiPXxtJVxbTcTWv7RFySNngDrOZ4=;
+ b=gc/uNyhH1h+N3KvXAAHRHV26tA8DawflWNRn2P1942thaTztJ1F0Obq8SEWPjgcEsT
+ pov/6+wP17w3+4DoIhyBjMwQt8MOCtPT0INUnqHxR8fLuCnUySsX3KOncFA+Lg6akT+K
+ Q+dNw4ICCyvATIC8h0rUdENpC1gSxSnXF6p7QuHXMP1TvTMZFo5hod1+/WdAPm1pEb31
+ 2oENO3Yk7jzzoGZ9AxLOo7RtpJ8hqeeJ2ohYsdOJeiqOBjKJnDcbqSvz29qZV3GzrV/S
+ E55Ag0jmnot7qYf6/LL/lG/L0qrorbDs7lByl0Ll6XX99/3P8wongEnzkz+qVURfKMWb
+ wYMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785101414; x=1785706214;
+ d=1e100.net; s=20251104; t=1785101392; x=1785706192;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :content-type:mime-version:references:message-id:subject:cc:to:from
  :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=yZu81sJRfUDJ7gSNX62NjmG3vC2DfnNRoaluf11vifQ=;
- b=DRc4Lb/NKwV73jauDdrpKpxbsmXCKao+HW4kkGymwyIsbTxDDc5EdMSD5MPlDmdOCV
- Q9CiLqXJ0hBiYh+WgpVzpgrovbsSbNECJREz+2p+m64zAw3pRo+i6iz+eG1pxvlFa1N/
- ydRsyIE9yVoDnskEdYecD92nQadBf/aOMulTOoq927QuisDhmsckhgK+pof/Sue8gvlV
- SUq94hL+QAxuK1pplret4pm0WOZtOImiTxWwY4fC8Cx/sBrkMbJ+iMUOTOt+l73rnSup
- t6T7v/2vmDObfVq7zBx3+9oDValpd8NPVXa0OLYu9L20Ebj1VTomZlCSKPWcSOIMMQt/
- rxPQ==
-X-Gm-Message-State: AOJu0YxozGwdkaBNL5egPm0Q2uwl91Qy/1aNF7U57lEQXAlIDBLLWYUM
- 3R5ZY2hnLpWs4QAO08SFIhKja7Ez3Jn8rV3zVwCYiLLjTr06EI1pxu9bAIL289gGTKsJ2vMRhMc
- O9NIOPo40dXgrHC+yX2FftuIllGPv17NdP+qFgbEPv5sS8YOa5GukvCTad/EjCSbiFqh+xRPI8A
- uF1KkyLtTNvcDvwDeK69P9rOXevPrHXJ52IQ==
-X-Gm-Gg: AR+sD102uMOVgjiuxxBXhLe57xhvlI3YoqFxehBMiemIkct2G6A57OIusYm3OTDTj2g
- 5dKoyf+UmgtH8O7mzhaTaJXx2eatY8d4dFW/U7C3UvF+eegKvWWZkz05WfIDG9ue2byg5w2R8dq
- bQTQ+0aH4svjSbn8fwjiaM9e9D5hMiBzPOWBhdflTlBjdBn1SOzBhH98jWGz7IuhW6XkkzgxhcF
- RRtKsgwYgUSpLIOIjssC5vHjiDW30hFn9kNZEzk27lEv3K8ajPUCXG9PMzamreodD+luKQUxRyl
- /7dsrF02cTvzzpYKRatyczoIypkW8jEdJPPXoQRf2RAiqge3dQQcJSk97b3j1CCQUrKCwMxsGOv
- INHnc9wUOfDCVpp5wfIlzzA==
-X-Received: by 2002:a05:600c:4fc4:b0:495:5022:71b9 with SMTP id
- 5b1f17b1804b1-496b572485cmr73763825e9.33.1785101413805; 
- Sun, 26 Jul 2026 14:30:13 -0700 (PDT)
-X-Received: by 2002:a05:600c:4fc4:b0:495:5022:71b9 with SMTP id
- 5b1f17b1804b1-496b572485cmr73763575e9.33.1785101413353; 
- Sun, 26 Jul 2026 14:30:13 -0700 (PDT)
+ bh=2g6MMmyPKzZozOuhiPXxtJVxbTcTWv7RFySNngDrOZ4=;
+ b=U9bhJ6smRvnZKtXbjCBUBt5sD9yn16uFAI9Fnu1OZEVJpq1d/3vrOUty91yFXXm6n6
+ t1f1DtlS3QRnHQHUk6nCmafB6huoahcr9owLvwJs52LW5IVIedNrjOolPLCHCPWgHC1a
+ zJCrJPmzWV1mPHKv7PqqZqmALa1PeIjUParBMnyS7GJrvnGZWh5QbGeL1qGFYVhr7PDO
+ PVbv8rteR5i+OTp1f3tWLRxd+dk2waf4hpXNDiF2BbZPeTculWH7RJW3Qqg564VyM6sZ
+ 1CNxZAfFIEMxyHf9OQmMG3sdCe+dPQi3CiTfz11GQr1W0qbm//w8YmPRZ25WobJuOAUZ
+ e64Q==
+X-Gm-Message-State: AOJu0YxnrtQLBSfPtuSx8q7mphcy7lKwvpJNR6kKYb0lcyNU4zcujmHt
+ GRvWBgguulEw5O4/Pgtol713qcWi5gz0/LPlBC3ONEWXMu/pJ2FEk9oCcj9NWUkxP3+/GaeIQpr
+ QoCCwKlFTjLBQ4UlVnvgfu8AUeUwSAqbpxnhNzo9GiuyuLzt+IBc0bm2LWSZNYvdcakYbI8mw2J
+ 0RPb/m5BozgY/n2t5qrh7anBEnh1D/3urrCw==
+X-Gm-Gg: AR+sD11haOUdro0nRa78j7Knfgx3Q4t4gBw271T1tsudB5ABsE5rkv6l5Ij2QPJz17Y
+ nzT9MYUl+ZqLA9Be6XsFEtS5JCL+UbC1BwHD9X4ASsjTcQLH8MWGUHWqxTbf6VAtixGuDSpSSEy
+ m8pcfTkudKmGpqw0fk5/qaYS2glsY+SQFvRzoqCfi3fV+kvT7T/tjKgr3dHXjykPNAqJHfTaPHL
+ NLTjpcFnzthodfWcMiNn8NSoAqKElM3WYGII/gCgMJ/JvEk5f86krgjseswYasXb0KyUK6u1t7D
+ gPXDMsh4HlWRin1VPSlKl6wqOmW1DA4M9E8ZGQSQM2i8C4vLhPmVXkAfm1LZe1sKILYIlpRz8sc
+ jY/uRDp5WE53IWFlPwJ4bXA==
+X-Received: by 2002:a05:6000:2610:b0:47e:4379:a4fd with SMTP id
+ ffacd0b85a97d-47f9fc954ffmr7769424f8f.19.1785101392067; 
+ Sun, 26 Jul 2026 14:29:52 -0700 (PDT)
+X-Received: by 2002:a05:6000:2610:b0:47e:4379:a4fd with SMTP id
+ ffacd0b85a97d-47f9fc954ffmr7769397f8f.19.1785101391435; 
+ Sun, 26 Jul 2026 14:29:51 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-496b485ff2csm213158315e9.6.2026.07.26.14.30.11
+ ffacd0b85a97d-47f85c7880dsm43656314f8f.37.2026.07.26.14.29.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 Jul 2026 14:30:12 -0700 (PDT)
-Date: Sun, 26 Jul 2026 17:30:10 -0400
+ Sun, 26 Jul 2026 14:29:50 -0700 (PDT)
+Date: Sun, 26 Jul 2026 17:29:48 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Jia Jia <physicalmtea@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Amit Shah <amit@kernel.org>
-Subject: [PULL 29/30] hw/virtio-rng: Fix host use-after-free (CVE-2026-50624)
-Message-ID: <10c27280beb13e41f3d3309d0985912002ce3bf2.1785101237.git.mst@redhat.com>
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PULL 20/30] virtio-snd: check rx buffer descriptor size
+Message-ID: <13426f6520ab657046efa9c5e547dd5b188348f1.1785101237.git.mst@redhat.com>
 References: <cover.1785101237.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -100,15 +100,15 @@ Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1785101237.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
 X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,89 +124,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-Fix a heap-use-after-free in the virtio-rng frontend when a delayed
-rng-random backend completion arrives after the virtio-rng device has been
-hot-unplugged.
+It must be at least sizeof(virtio_snd_pcm_status).
 
-Fixes: CVE-2026-50624
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3917
-Reported-by: Jia Jia <physicalmtea@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+I haven't verified if it's possible to get an underflow, but coverity
+points it out in CID 1547527 so add a check.
+
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260724094931.3005968-1-lvivier@redhat.com>
+Message-ID: <20260420-virtio-fixups-v3-1-07aef1eff9d2@linaro.org>
 ---
- include/system/rng.h   | 14 ++++++++++++++
- backends/rng.c         | 16 ++++++++++++++++
- hw/virtio/virtio-rng.c |  2 ++
- 3 files changed, 32 insertions(+)
+ hw/audio/virtio-snd.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/include/system/rng.h b/include/system/rng.h
-index e383f87d20..a2667d75ef 100644
---- a/include/system/rng.h
-+++ b/include/system/rng.h
-@@ -86,4 +86,18 @@ void rng_backend_request_entropy(RngBackend *s, size_t size,
-  * deleted.
-  */
- void rng_backend_finalize_request(RngBackend *s, RngRequest *req);
-+
-+/**
-+ * rng_backend_cancel_requests:
-+ * @s: the backend that created the request
-+ * @receive_entropy: the function invoked when entropy is available
-+ * @opaque: data passed to @receive_entropy
-+ *
-+ * This function is used by the front-end to cancel all requests to a
-+ * given backend. Requests to cancel are identified by the receive_entropy
-+ * function and the data passed to the function.
-+ */
-+void rng_backend_cancel_requests(RngBackend *s,
-+                                 EntropyReceiveFunc *receive_entropy,
-+                                 const void *opaque);
- #endif
-diff --git a/backends/rng.c b/backends/rng.c
-index ab94dfea85..7bed62616a 100644
---- a/backends/rng.c
-+++ b/backends/rng.c
-@@ -68,6 +68,22 @@ static void rng_backend_free_request(RngRequest *req)
-     g_free(req);
- }
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index fb5cff3866..93fbcfb43f 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -970,12 +970,14 @@ static void virtio_snd_handle_rx_xfer(VirtIODevice *vdev, VirtQueue *vq)
+         }
  
-+void rng_backend_cancel_requests(RngBackend *s,
-+                                 EntropyReceiveFunc *receive_entropy,
-+                                 const void *opaque)
-+{
-+    RngRequest *req, *next;
-+
-+    QSIMPLEQ_FOREACH_SAFE(req, &s->requests, next, next) {
-+        if (req->receive_entropy != receive_entropy ||
-+            req->opaque != opaque) {
-+            continue;
-+        }
-+        QSIMPLEQ_REMOVE(&s->requests, req, RngRequest, next);
-+        rng_backend_free_request(req);
-+    }
-+}
-+
- static void rng_backend_free_requests(RngBackend *s)
- {
-     RngRequest *req, *next;
-diff --git a/hw/virtio/virtio-rng.c b/hw/virtio/virtio-rng.c
-index 66690a34dc..d68d901195 100644
---- a/hw/virtio/virtio-rng.c
-+++ b/hw/virtio/virtio-rng.c
-@@ -234,6 +234,8 @@ static void virtio_rng_device_unrealize(DeviceState *dev)
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VirtIORNG *vrng = VIRTIO_RNG(dev);
- 
-+    rng_backend_cancel_requests(vrng->rng, chr_read, vrng);
-+
-     qemu_del_vm_change_state_handler(vrng->vmstate);
-     timer_free(vrng->rate_limit_timer);
-     virtio_del_queue(vdev, 0);
+         stream = vsnd->pcm.streams[stream_id];
+-        if (stream == NULL || stream->info.direction != VIRTIO_SND_D_INPUT) {
++        size = iov_size(elem->in_sg, elem->in_num);
++        if (stream == NULL
++            || stream->info.direction != VIRTIO_SND_D_INPUT
++            || size < sizeof(virtio_snd_pcm_status)) {
+             goto rx_err;
+         }
++        size -= sizeof(virtio_snd_pcm_status);
+         WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
+-            size = iov_size(elem->in_sg, elem->in_num) -
+-                sizeof(virtio_snd_pcm_status);
+             buffer = g_malloc0(sizeof(VirtIOSoundPCMBuffer) + size);
+             buffer->elem = elem;
+             buffer->vq = vq;
 -- 
 MST
 
