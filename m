@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C171FC53209
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C43AEC53219
 	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 21:29:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wo6PH-0007M5-JJ; Sun, 26 Jul 2026 17:29:11 -0400
+	id 1wo6PY-0007SI-RT; Sun, 26 Jul 2026 17:29:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6PG-0007LU-9U
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:29:10 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6PX-0007S1-Bf
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:29:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6PE-0004D0-Jp
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:29:10 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wo6PV-0004Fs-LI
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 17:29:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785101348;
+ s=mimecast20190719; t=1785101364;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=gW9s1lR17IVFUJV1LaaI+57WsD9Xozg6230WVloM/ho=;
- b=ifnqz4qn+G7Q4Xzc5kXcgqZXnX0BcJhr9zLP5NqIZf+8PTwSQQELg5tLYmtet1/GekfZIn
- HJuBzfBVUo1nvasWqQmtp82cJJkyGdUeoMUozA2oNR9jjYJvGhvI4ECxYRNv9A7zM3BxDp
- k0sWWsmEQwN+nB+yhhmaDAsqY/Vl7EM=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=WdSec36BDLH9Gy0oNCLm0aOkohBfV5HZSgkei1K1dVc=;
+ b=cT50MFyZtExhGyytxnEZeG+VOZ9+P0uZpGg7eEK7tJQFQ7cDKiSafrcYuiSSyxvriEaIUu
+ feAhO2hZau719Elru8uPw1blnSdQFrk2qUpPYHxE+mDQWJeQXNg/wFd2Zw83Kq1OQUBCEd
+ n6rYN9gZ6rGPEjFRh8CJKCObgLdKeio=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-35-a1WKhg2_Pm6Gn9GQ4E2hOg-1; Sun, 26 Jul 2026 17:29:06 -0400
-X-MC-Unique: a1WKhg2_Pm6Gn9GQ4E2hOg-1
-X-Mimecast-MFC-AGG-ID: a1WKhg2_Pm6Gn9GQ4E2hOg_1785101345
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-47f84ac1990so1064463f8f.2
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 14:29:06 -0700 (PDT)
+ us-mta-677-vXgyOLHrMAqecHL3y0pMWg-1; Sun, 26 Jul 2026 17:29:23 -0400
+X-MC-Unique: vXgyOLHrMAqecHL3y0pMWg-1
+X-Mimecast-MFC-AGG-ID: vXgyOLHrMAqecHL3y0pMWg_1785101362
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49560dddaa4so11504215e9.3
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 14:29:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785101345; x=1785706145; darn=nongnu.org;
+ d=redhat.com; s=google; t=1785101362; x=1785706162; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=gW9s1lR17IVFUJV1LaaI+57WsD9Xozg6230WVloM/ho=;
- b=h14BSZMfaLifl6OSiRhWUYE0D0H+HwSZhsvuRDMPP2wmwRG9U6NYTMt7mNTT8SLSJZ
- g+zWLAXafwEqVMIcbY3MtcnoLnV/jQOdXMWbgk3REszhJlGAJKPLwrS6Ndpyb3XkiTFN
- vaYbqy2TfqNOyHAp00LCjHCsY5eayU5pX16lbvN1xZctlGb/BVABVbsR2jCfNqvuf+5r
- QwcMckziVJMUowwPqeYXPi96Y2xyf121QsTxYBZWVrkrVpbGsLxqj52XWKGZkfQdk3YR
- jLypuo1GKg85Qp854LLy87CQaWTzoB2Opq75LTmEOweTZlGRuL9yD3B9l4H232Fz8u8E
- EZ7w==
+ bh=WdSec36BDLH9Gy0oNCLm0aOkohBfV5HZSgkei1K1dVc=;
+ b=JA27wOLabV9r9kQ4VZeg1uwjkrAvPB0ueluehf/rx7GJrnK36faQEPMFRlaVCCuHz9
+ oK0qWshZJwnjwo4JG1Vk67402RdtSd4N/8u6+ii/4u6G6dHutn+Zfbm8BGL2u54nSPqU
+ LNEwQ7EYAe1lLawlwZyFz/m+kXgDQkvnfNFQhGrmGDyk4Aa9JFe6qPr+Oglm9wK44aHW
+ ux5yLtfkp/IIWToBRW+2Kpao1QhWuXhYg8PyWGmyTIYVqjiVgN+NgT/fKV9ipIkADrhz
+ 9wVpy2BEu8adbrtVzanR8EyAk0th0o3RoH9iCf2yNS7bnXLzz9hJTYQTSesIRekJcyua
+ b0xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785101345; x=1785706145;
+ d=1e100.net; s=20251104; t=1785101362; x=1785706162;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=gW9s1lR17IVFUJV1LaaI+57WsD9Xozg6230WVloM/ho=;
- b=lCluFaAz5wW0s4Kj2N/49L6AO4NFNKODoCnkMoenSJYOMWbLutwl7zPWp/Evl/AG1I
- n4KBkT1tb6wAu28hg9bRN/tEyZj37grdxUZdLhAmGplToquaMz+6QDJac+A7QkQ8Z8p3
- dL4XxSge2FHkIW3PAnxFWRHAwfLdVkz1N58rl6YwupZoIRqTe/xdVuoeJEnFaq6G43Ef
- rYwQnxuRGDYJ6rtHWx60ZnKroKWj8xjx6Ngu2qrz469nllNkvWYs2T4BwFF9HoTwHjMd
- 6H/xm12NNQRrfhY6zPMZMEIC7fuF3F+gVe7NsPtMuUWVi+gsxzJ8k5vj4LAJJwZYXye9
- jOlQ==
-X-Gm-Message-State: AOJu0YwYLYRARUqmoIWA9cS9r1MK5tNtX6F85N4Dmk32J8/8W8KfJm+y
- zBB+Myvd/4gzhMac8nPXZwo+JgSA/OcEOUOGapXAyQYbJZOPuRDm2g5NjIeM9kGGzwZ4C06cUd9
- ocwMkWhP6rTMWO0nTWCCvo0/5As20cJt3ovq8s6d4ibso6X39y+hOT0imxCmnkAagbSruWWIb9m
- JWOsX5bLrLcbFgOIAhN277iC+niZgN5W8rWA==
-X-Gm-Gg: AR+sD107lD0JzsqM3hKsqgEnlvDVsBhEudioTxHi/Ct6IA1+L0MEogxyf8aXbaZCPhq
- h7LtFgzlGfubbi3/4rFZLBIYrJ/n6QlmOYqJknoQG/1bPfHK9+Fy4zlEgy/aIxLJVsBdDItizgw
- 0lqjR0vfGpJfO0GYwbpsj0q1vvG21bNYS1MpgZIYivXfKUoylq+yA0DgsdV8Twif+R2pgNz/msw
- SOL+sNcQG9UENba3VZlrmFG7FMUfb7Jmh9a1Ii6q+ksdDeUFX7ymLs7d/0s9zHFajSq1QhXlItF
- J0+lQDvjVzNAj/lULArpG8X5PSFwhtsEgUHqfveZhK3vFQAHet4UIU2IwUFDrpBd9iCfJQeTC2o
- Y/TgoFeXIKEv1pC6IHPTEjA==
-X-Received: by 2002:a05:6000:1ac5:b0:47f:8fc8:a8b1 with SMTP id
- ffacd0b85a97d-47f9fc901afmr8541738f8f.14.1785101345049; 
- Sun, 26 Jul 2026 14:29:05 -0700 (PDT)
-X-Received: by 2002:a05:6000:1ac5:b0:47f:8fc8:a8b1 with SMTP id
- ffacd0b85a97d-47f9fc901afmr8541721f8f.14.1785101344560; 
- Sun, 26 Jul 2026 14:29:04 -0700 (PDT)
+ bh=WdSec36BDLH9Gy0oNCLm0aOkohBfV5HZSgkei1K1dVc=;
+ b=BlH0SEfcyscowWHqqi78RDOqmuQF66WFQ3qmxUEwThoMqh9BEqC9Kz7S7VDXdZlPjY
+ TY5osWQdHksDytLokv9zMw98WWzeq9Vm0wZ1RqYdmB9W+cbxYu2RBaQ38ukAK6mmbHLc
+ U7286dHlV7mIb326hfONEEFKDuTf9W/hnf1g/cGGL+P/9AnwsuuIhrbWPTFU8U0925jV
+ fN7yIe/n9E66r3Ia8jIK1A9y7vB0AU0CJMrC0MFizQanLo+iPFFyuqtV6K4K57/EwdgE
+ LFyt1PhelfHUrUmn2aON4sFcnyxF7yZF2FsXJ/gb1RqmaeIQaRWq0708rNMYgs4jaM5c
+ dqPw==
+X-Gm-Message-State: AOJu0YyC+T3L9ktA3WaUB3ppZnAfwf3SooF/wPrreBt1Z2gUF3Z1cl7j
+ Iu5zJ4dMmajnSOLVY9F1grogJ0aQbG+ah3i7vtj08mPZW3GvneFaysi46mZrTfYptBBaplUKgXQ
+ NLts+asa9ylM2feLq02sXok5ItmmQecYcjfbbERavH7TOF3vm4quEhwft8ERekRB7wf5gRfqMcU
+ Cr0v0XUEO9OkDv4GdZxhnAIngiHXi12+CL4w==
+X-Gm-Gg: AR+sD134jEFtpQT8uIHBpxLjBbsXODG2YWobkVC/Zs27J1jtRoYjydia+0d9agbhQsz
+ DG01dKDD7UTJw/jj4Z/E7SdPiQQvxKmbEKdXY1zEj9dgp6GzASJfo9LJshYG5njymCNXgsT2Yl/
+ jWwIlsAoZbT9JoJbVFIn7lj87txZXbNQrGKr0DxgEbS/HAwYTt+eoeTwSeX3dHbn0vGBSmBMQDR
+ vrxcLR89na8qqrbuCaKjQaAefcumbamGRF4gXSWnZa+uQ5Ge4BYf1hKvjknX/cHVaANPwOF0NtG
+ AXnf6mrJuRRd4eSD9XHbGog7/6hFt+jOZK2xZ+/1JFDapEaNN3jMN2ckcRf5mRf+rZrCefEHEsi
+ 5fMw5UO2jtB8hHt/2MoefDA==
+X-Received: by 2002:a05:600c:500d:b0:493:e583:7053 with SMTP id
+ 5b1f17b1804b1-496b5728b27mr77586885e9.35.1785101362207; 
+ Sun, 26 Jul 2026 14:29:22 -0700 (PDT)
+X-Received: by 2002:a05:600c:500d:b0:493:e583:7053 with SMTP id
+ 5b1f17b1804b1-496b5728b27mr77586735e9.35.1785101361577; 
+ Sun, 26 Jul 2026 14:29:21 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85b9a5a2sm46992658f8f.7.2026.07.26.14.29.02
+ 5b1f17b1804b1-496b4f24a93sm193530135e9.11.2026.07.26.14.29.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 Jul 2026 14:29:03 -0700 (PDT)
-Date: Sun, 26 Jul 2026 17:29:01 -0400
+ Sun, 26 Jul 2026 14:29:21 -0700 (PDT)
+Date: Sun, 26 Jul 2026 17:29:18 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jason Wang <jasowangio@gmail.com>, Yuri Benditovich <ybendito@redhat.com>,
- Paolo Abeni <pabeni@redhat.com>
-Subject: [PULL 01/30] virtio: use masked features with set_features_ex
-Message-ID: <f847a46051e614dd8843d38a9fde6174037ac15f.1785101237.git.mst@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Greg Kurz <groug@kaod.org>
+Subject: [PULL 08/30] virtio-scsi: fix SCSIRequest leak on a bad request
+Message-ID: <219bdfa113a75868d038b0b10abaeafad90c1704.1785101237.git.mst@redhat.com>
 References: <cover.1785101237.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -121,45 +121,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio_set_features_nocheck() calls set_features_ex
-with guest-supplied feature bits, without masking the value
-with host features (unlike set_features which gets the
-correct val & host_features).
+When virtio_scsi_handle_cmd_vq() cleans up prepared requests after a
+malformed element in the same batch, it drops only one reference even
+though virtio_scsi_handle_cmd_req_prepare() leaves each unsubmitted
+SCSIRequest with two references. This leaks the request and allows
+repeated bad batches to cause unbounded host memory growth.
 
-This does not matter if the driver matches spec, but drivers
-can be malicious or buggy and set bit outside the host mask.
+Add a second scsi_req_unref() and clear hba_private first.
 
-Devices don't expect this, so unsupported guest feature bits getting set
-can break the host. In virtio-net, this can enable RSC without vnet
-header support and cause out-of-bounds reads from short packets.
-
-Pass the masked features to set_features_ex, consistent with set_features.
-
-Fixes: CVE-2026-63321
-Fixes: 64a6a336f4 ("virtio: add support for negotiating extended features")
-Cc: Jason Wang <jasowangio@gmail.com>
-Cc: Yuri Benditovich <ybendito@redhat.com>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3623
+Fixes: CVE-2026-61476
+Fixes: 661e32fb3c ("virtio-scsi: convert virtio_scsi_bad_req() to use virtio_error()")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3875
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Fam Zheng <fam@euphon.net>
+Cc: Greg Kurz <groug@kaod.org>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <dfd27c9b26e442a2076f6ddc9bb3d38363d9b2da.1784891251.git.mst@redhat.com>
+Message-ID: <5092cd4716e08d29731bfe85eea82a732b837ff4.1784895264.git.mst@redhat.com>
 ---
- hw/virtio/virtio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/hw/scsi/scsi.h | 1 +
+ hw/scsi/scsi-bus.c     | 7 +++++++
+ hw/scsi/virtio-scsi.c  | 2 ++
+ 3 files changed, 10 insertions(+)
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index f4d86a3655..7c19080db5 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -3320,7 +3320,7 @@ static int virtio_set_features_nocheck(VirtIODevice *vdev, const uint64_t *val)
-     virtio_features_and(tmp, val, vdev->host_features_ex);
+diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
+index 5f83e58d1d..c60c6e8810 100644
+--- a/include/hw/scsi/scsi.h
++++ b/include/hw/scsi/scsi.h
+@@ -221,6 +221,7 @@ SCSIRequest *scsi_req_new(SCSIDevice *d, uint32_t tag, uint32_t lun,
+ int32_t scsi_req_enqueue(SCSIRequest *req);
+ SCSIRequest *scsi_req_ref(SCSIRequest *req);
+ void scsi_req_unref(SCSIRequest *req);
++void scsi_req_unref_detach_hba(SCSIRequest *req);
  
-     if (k->set_features_ex) {
--        k->set_features_ex(vdev, val);
-+        k->set_features_ex(vdev, tmp);
-     } else if (k->set_features) {
-         bad = bad || virtio_features_use_ex(tmp);
-         k->set_features(vdev, tmp[0]);
+ int scsi_bus_parse_cdb(SCSIDevice *dev, SCSICommand *cmd, uint8_t *buf,
+                        size_t buf_len, void *hba_private);
+diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
+index dccb2f25b2..deb43d5560 100644
+--- a/hw/scsi/scsi-bus.c
++++ b/hw/scsi/scsi-bus.c
+@@ -1513,6 +1513,13 @@ void scsi_req_unref(SCSIRequest *req)
+     }
+ }
+ 
++void scsi_req_unref_detach_hba(SCSIRequest *req)
++{
++    /* Unref when the HBA frees hba_private separately (e.g. virtio_scsi_free_req) */
++    req->hba_private = NULL;
++    scsi_req_unref(req);
++}
++
+ /* Tell the device that we finished processing this chunk of I/O.  It
+    will start the next chunk or complete the command.  */
+ void scsi_req_continue(SCSIRequest *req)
+diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
+index 6c73768011..bf64d1231a 100644
+--- a/hw/scsi/virtio-scsi.c
++++ b/hw/scsi/virtio-scsi.c
+@@ -931,7 +931,9 @@ static void virtio_scsi_handle_cmd_vq(VirtIOSCSI *s, VirtQueue *vq)
+                     req = QTAILQ_FIRST(&reqs);
+                     QTAILQ_REMOVE(&reqs, req, next);
+                     defer_call_end();
++                    /* Drop both the ref from _prepare and the initial ref */
+                     scsi_req_unref(req->sreq);
++                    scsi_req_unref_detach_hba(req->sreq);
+                     virtqueue_detach_element(req->vq, &req->elem, 0);
+                     virtio_scsi_free_req(req);
+                 }
 -- 
 MST
 
