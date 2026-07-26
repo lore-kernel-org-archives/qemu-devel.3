@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4F55C531D0
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Jul 2026 23:13:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7D4FC531FA
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 00:54:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnlXI-0003kA-5G; Sat, 25 Jul 2026 19:12:04 -0400
+	id 1wnn7c-00036X-RN; Sat, 25 Jul 2026 20:53:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1wnlX3-0003h3-00
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 19:11:49 -0400
-Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1wnn7a-000369-1c
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 20:53:39 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1wnlWz-0005ix-L5
- for qemu-devel@nongnu.org; Sat, 25 Jul 2026 19:11:47 -0400
-Received: by mail-vk1-xa2d.google.com with SMTP id
- 71dfb90a1353d-5c2ae02f69eso1027592e0c.2
- for <qemu-devel@nongnu.org>; Sat, 25 Jul 2026 16:11:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1wnn7Y-0007Cz-EG
+ for qemu-devel@nongnu.org; Sat, 25 Jul 2026 20:53:37 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-66804667af2so1131998d50.0
+ for <qemu-devel@nongnu.org>; Sat, 25 Jul 2026 17:53:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785021104; x=1785625904; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1785027215; x=1785632015; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=w2ZMmkRhdQd7wygfGjNjQl2Q7y//RixNLAYn7fQ+oYA=;
- b=E0fJjLz6U+o/JR2RFnxakw1uZEHuA1ErBz78X7NJ9oI1mnjPvNr18M5VsNevXwduKF
- rdXgPbU7UMlkg8CKQCzacF1lIKVDZe1IzKtYa7kyLj2nkT4pj9Dr2dE80gBbB3LCN16V
- txZmRAUErbkMx1I5IX1e+TwMEVHintHSMHeBryyjc1YtUwBaFV9vdK19rWks2ilSQmhF
- jRsLVm2s2uVhgFftp28+9nE5yaKlOQzycM4iSUZeZfu+WfFwpHONOOOvUxCYD8MgZV89
- LrRPlDqjDBcuC0n6bn1huZpu5WUBzhQ/+3v57mY2AYEjkWsdNdacg7pHoccAMUA8yJQ/
- FBOQ==
+ bh=pVwlgtmgEc3axuYS6KKLOPY8UyUmHfC6AB1k/zPj/1o=;
+ b=aRbPvq2xDmNjDuc4PpgOFXvtg4xz0dPGRcVdrGEsVuSWgxHN6+HR6vpFw7IEsPAHWH
+ lsZqFuH8rVQARAaQtKSqChJHBGflkGwvAf07N2KunnYQYhJgwxcDViod6yNd329pURtG
+ 66FyG9CsElZ9xYyqbgeQehtThdZ2k+m2Ldp8TLIwY2PxUayYCuIYRKDghM7LS9nJo57V
+ OsN9mOJqfQBIp8H+nBuQ2/3OUBTPOVZ/SmbBLDSrblcI4IetuPvt2+oZi8kKnY62j6cE
+ 86c574/jyvOFY6Md/pTrcXj//qXuEry2QXkQkhEI5USQENIhoA25Ow+cABlQvc+SbMBs
+ lBmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785021104; x=1785625904;
+ d=1e100.net; s=20251104; t=1785027215; x=1785632015;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=w2ZMmkRhdQd7wygfGjNjQl2Q7y//RixNLAYn7fQ+oYA=;
- b=V+Zc07zvuAKYY2NsIMJxhu80DWBSa4lYdLsbZbuNq/XhTayjuFYEC3seTzt8P08At7
- advU3rUzto3XXucvyqpFPGhKpTAn/A7ZHX/4KdAuReXJcB5I479ZC6fAUqie2MaBmJ7v
- FI66ru/tIWu+ipv/jeTgtbMtYatKZEVAnBlR5FROgU7ThpKqdbDp9dDcfh7GLHFcgyPX
- 8vldBow32hlZm/RUjfLniJi5OwRnycM3fA4yNKhHJFhFgqEDAwiGMnAG2G8szh1FIj9n
- nJr3E5NiTbYqOJKS3bVB/QTsmHBlIyrxFvlYZrAi4enWKHfsc+cM39BBZoXFV22ht2wa
- 2X3w==
-X-Gm-Message-State: AOJu0Yy2OnpazzxBjdc99XwxLCo4FJe7SfbwRzPZXLbjInOAsPrgCxvL
- fv2dj4EhoJM322c32TB3QpcakgUVkT880brDLSQRMBPmZWKU4k7MoU3eCUIm1A==
-X-Gm-Gg: AR+sD11sS5dY5c7k2ZapOlDb2wO1Po+t1+AEK37qPdjaLueMTbGl7+nWKq1SQFUFw87
- lhhWHLwCbydDF2uCprxxf3IKF4J8WGdf6pjElSdJmS8urdy2a5OiEm/lF8LZ/ZJhcYTlUFm01EQ
- L2WRBny15WzroG3CsnSc/2og3XeCgAoiCxtipGIQPbTGFAjqALRUNud7Sp6FUzDNDs36sWD8ddP
- G2cQxvdfK48Aw7EECa+YfiFHYIBwk4OBa9abBR7Rzr6JSokoR3lyRjQ2cmkn1LuNvoX9Km/jXNB
- Zw8bE8W2opI8pHduZ+70LGvV3AvP1W/+XKAc+nmxyOgDI9+xSqVSJgZe7yfCf+szZPf19Zf3qfG
- ohmySC0+yFRrp/dd34NnPpr8njHmagmdgdzJMhnd7tFYsEfYC0iVHQgfAninNXKlnM+W+fQWJm+
- TkqaeVQhJ7mk/wvazneEV+1q/o35kmnTS0
-X-Received: by 2002:a05:6122:3a12:b0:567:4e8a:fb13 with SMTP id
- 71dfb90a1353d-5c306c8f990mr1749847e0c.8.1785021104312; 
- Sat, 25 Jul 2026 16:11:44 -0700 (PDT)
-Received: from localhost.localdomain ([146.71.8.128])
- by smtp.gmail.com with ESMTPSA id
- 71dfb90a1353d-5c30549516csm2907015e0c.6.2026.07.25.16.11.43
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 25 Jul 2026 16:11:43 -0700 (PDT)
-From: Marcelo Manzo <marcelomanzo@gmail.com>
+ bh=pVwlgtmgEc3axuYS6KKLOPY8UyUmHfC6AB1k/zPj/1o=;
+ b=EvZDOSUkONx0dcpQP/lBbUPUt/hRB0tT3fYijqeaOxJmvtXOhvbYDEh02PRrglxibf
+ p1pKvEo4IdZgwLaGem45hJeEA1yrRrKZkOgf5jM45YJVEOpAZCE7d/dY11bbEv/br1pv
+ mDVn8JKXWkfy/8sOQweN2I4TmYgxm9kal5xlYW97gH8A3cXyL2YY23a9JfsBKGnFDd5X
+ A2sTnHkFhGLtUBazabOLtdabbiEASRAcErxMZMyhYaqY9c+/M+ykh+CGz8tv7KWuZ06A
+ TTMaOJyJJ9/n9OSIzNqptVDMCP+DRkNGA18PEt8iRVAuLWeRwLRBl1hdW2EgBAiJj/rK
+ qBlQ==
+X-Gm-Message-State: AOJu0YwcIQFllA6GnqCSdsnerLsjjZjJc8VVeRa6oi2TWgTiPBmOHitq
+ Fw7r+yMkb++bw0MY2RVEsL7iZ6/6a9lXkA/vTGhHudnlOU0jMDw/FXIia/t0mA==
+X-Gm-Gg: AR+sD11j+vB6EvXYkBd1BMkT2JG9H7qpt9KVvhoEB5VosDmH8tZ3gA5CqLWZwK8NYGT
+ LTO+WhRDvSPZA7t5V+G11/vOjnwt1RqDI++eap/18PrZ87Ziz1vkLTuNUhgGjYdD7A11VeE0Wwy
+ fL0sesTwZoLdIHghLvWKtUwahrEKfYSEFY1dHIBXaGBffztYfFIZMX/Ro84QAEgF1H7afNYdl6A
+ 3S+x+fDZA7ksCf4hskotI40AMac9wEwO+rfVx639n5DzM9JxClAExBdr6VBgSBOctFvOZ+j5P3F
+ +pkd5Um1hUO5WyA8xGrkfdfnj+OGPryxvIjRkA0+wVO3lK5F0H+DezseLGYQVoQsh3efEjUQ51v
+ pIQoi/wGdD1MEBAFvu942V3Kj9UEeT1lNZghOirEJq6RFqS3R07POSaTmGc4N/uPnhLcYS2KaD/
+ PiJlHLtbr/5MNj+g4LVqU/lyLYKIoWgGegtjzm/RnfG58qJx0aVcZNTA==
+X-Received: by 2002:a05:690e:4093:b0:668:11e1:1709 with SMTP id
+ 956f58d0204a3-668c7b58223mr1238758d50.98.1785027214803; 
+ Sat, 25 Jul 2026 17:53:34 -0700 (PDT)
+Received: from localhost (host05.distrikthotelips2.d.subnet.rcn.com.
+ [207.96.107.85]) by smtp.gmail.com with ESMTPSA id
+ 956f58d0204a3-668c6f696f7sm1373041d50.11.2026.07.25.17.53.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 25 Jul 2026 17:53:33 -0700 (PDT)
+From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Jason Wang <jasowangio@gmail.com>, Marcelo Manzo <marcelomanzo@gmail.com>
-Subject: [PATCH 0/2] hw/arm/raspi4b: fix watchdog and GENET bugs hit by modern
- distro kernels
-Date: Sat, 25 Jul 2026 19:11:40 -0400
-Message-ID: <20260725231142.61663-1-marcelomanzo@gmail.com>
-X-Mailer: git-send-email 2.47.1
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Matt Turner <mattst88@gmail.com>
+Subject: [PATCH] linux-user: fix guards for the fsmount(2) syscall series
+Date: Sat, 25 Jul 2026 20:53:28 -0400
+Message-ID: <20260726005328.2511963-1-mattst88@gmail.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
- envelope-from=marcelomanzo@gmail.com; helo=mail-vk1-xa2d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=mattst88@gmail.com; helo=mail-yx1-xb136.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,83 +100,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Follow-up to "hw/arm/bcm2838_pcie: make PCI device enumeration actually
-work" [1]. That series (plus the GENET/RNG200/thermal work before it)
-got a real Raspberry Pi 4 SoC far enough to boot official, unmodified
-Raspberry Pi OS releases end to end under raspi4b -- not just the
-functional-test suite's minimal 2019-era kernel+initrd. Doing that
-surfaced two further bugs that only show up with a modern distro's
-systemd actually driving the hardware, both on paths the existing
-tests don't exercise:
+The fsopen(), fsconfig(), fsmount() and fspick() implementations are
+guarded by defined(NR_fsopen) rather than defined(__NR_fsopen). No such
+macro exists, so the guard is never true and the entire series compiles
+out. Guests calling any of the four get -ENOSYS, which for example makes
+systemd's credential setup fail with EXIT_CREDENTIALS for most units.
 
-1. hw/misc/bcm2835_powermgt: the RSTC register's write-config bits
-   (0x30) being set to the "full reset" value (0x20) does not mean
-   "reset now" on real hardware -- it arms the watchdog so a reset
-   happens only if the WDOG countdown register is not refreshed
-   before it expires. QEMU's model treated any such RSTC write as an
-   immediate reset. This is dormant on lighter userspace, but
-   Debian 13/Trixie's systemd (257) writes to RSTC during routine
-   early-boot watchdog probing, causing an immediate spurious reset a
-   few seconds into boot. Combined with -no-reboot this looks exactly
-   like a QEMU crash from the outside: clean exit, no panic, no guest
-   reboot message, the last log line being the RSTC/WDOG write itself.
-   Fixed by actually implementing the watchdog as a QEMUTimer that
-   only fires -- and only then requests a reset/shutdown -- after the
-   real timeout computed from the WDOG register.
+The strace bits for fsconfig() have the same typo.
 
-2. hw/net/bcm2838_genet: three related per-ring DMA bugs. RDMA_CTRL
-   writes never updated any per-ring status at all (only TDMA_CTRL
-   updated a single overall DISABLED bit); enabling a ring didn't
-   flush packets queued while it was disabled; and the RX fallback
-   path hardcoded the last/default ring with no check that it was
-   actually active. Bullseye and Bookworm's kernels default to that
-   last ring, so this was invisible with them, but Trixie's 6.18
-   kernel actively uses rings 0-4 and never enables the default ring,
-   so every unfiltered packet was silently dropped -- no DHCP lease,
-   no usable networking. Fixed by tracking a real per-ring enable
-   bitmask for both directions, flushing queued packets when a ring
-   is enabled, and falling back to scanning for the first actually-
-   active ring instead of assuming the last one.
+Fixes: 767c32fe6983 ("linux-user: implement fsmount(2) series of syscalls")
+Fixes: 6e0aa9f6c731 ("linux-user/strace: add fsmount series of syscalls")
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+---
+ linux-user/strace.c    | 2 +-
+ linux-user/strace.list | 2 +-
+ linux-user/syscall.c   | 4 ++--
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-Testing: rather than only the functional-test kernel, I booted three
-official Raspberry Pi OS Lite arm64 releases end to end against the
-patched raspi4b machine -- Bullseye (5.15.61-v8+), Bookworm
-(6.12.25+rpt-rpi-v8), and Trixie (6.18.34+rpt-rpi-v8) -- each with a
-clean boot (no crash/reboot loop), a DHCP lease obtained over GENET,
-working SSH login, and an error log containing nothing beyond the
-expected "hardware QEMU doesn't emulate" noise (VideoCore/VCHI,
-camera/codec/audio probes, GPIO regulators, Bluetooth UART, EEPROM
-check) on all three. Before patch 1, Trixie reset within seconds of
-boot; before patch 2, Trixie booted but never got a network address.
-Bullseye and Bookworm were unaffected either way, which is exactly
-why these bugs went unnoticed until a newer kernel exercised these
-specific paths.
-
-I did not add a functional test for either fix: reliably triggering
-them needs a real systemd doing real early-boot watchdog/network
-setup, which the existing test kernel/initrd (a minimal 2019 busybox
-environment) doesn't exercise, and downloading a full modern distro
-image isn't practical for the functional-test asset infrastructure.
-Happy to take suggestions on a lighter-weight way to cover this if
-one exists.
-
-checkpatch.pl is clean (0 errors, 0 warnings) on both patches, and the
-series builds standalone from a clean worktree
-(--target-list=aarch64-softmmu).
-
-[1] https://patchwork.kernel.org/project/qemu-devel/cover/20260725124231.86233-1-marcelomanzo@gmail.com/
-
-Marcelo Manzo (2):
-  hw/misc/bcm2835_powermgt: implement a real watchdog timer
-  hw/net/bcm2838_genet: fix per-ring DMA status and RX ring selection
-
- hw/misc/bcm2835_powermgt.c         | 49 +++++++++++++++++++++++-------
- hw/net/bcm2838_genet.c             | 24 +++++++++++++--
- include/hw/misc/bcm2835_powermgt.h |  2 ++
- include/hw/net/bcm2838_genet.h     |  2 ++
- 4 files changed, 63 insertions(+), 14 deletions(-)
-
+diff --git ./linux-user/strace.c ./linux-user/strace.c
+index 3a81cc95f4..d861f311f6 100644
+--- ./linux-user/strace.c
++++ ./linux-user/strace.c
+@@ -4344,7 +4344,7 @@ print_statx(CPUArchState *cpu_env, const struct syscallname *name,
+ }
+ #endif
+ 
+-#if defined(TARGET_NR_fsconfig) && defined(NR_fsconfig)
++#ifdef TARGET_NR_fsconfig
+ static void
+ print_fsconfig_cmd_name(int cmd)
+ {
+diff --git ./linux-user/strace.list ./linux-user/strace.list
+index e363892e0a..3a366b8cac 100644
+--- ./linux-user/strace.list
++++ ./linux-user/strace.list
+@@ -1725,7 +1725,7 @@
+ #ifdef TARGET_NR_fsopen
+ { TARGET_NR_fsopen, "fsopen", "%s(%s,%d)", NULL, NULL },
+ #endif
+-#if defined(TARGET_NR_fsconfig) && defined(NR_fsconfig)
++#ifdef TARGET_NR_fsconfig
+ { TARGET_NR_fsconfig, "fsconfig", NULL, print_fsconfig, NULL },
+ #endif
+ #ifdef TARGET_NR_fsmount
+diff --git ./linux-user/syscall.c ./linux-user/syscall.c
+index 3da5530d42..740142825d 100644
+--- ./linux-user/syscall.c
++++ ./linux-user/syscall.c
+@@ -9740,7 +9740,7 @@ _syscall5(int, sys_move_mount, int, __from_dfd, const char *, __from_pathname,
+            int, __to_dfd, const char *, __to_pathname, unsigned int, flag)
+ #endif
+ 
+-#if defined(TARGET_NR_fsopen) && defined(NR_fsopen)
++#if defined(TARGET_NR_fsopen) && defined(__NR_fsopen)
+ #define __NR_sys_fsopen __NR_fsopen
+ _syscall2(int, sys_fsopen, const char *, fs_name, unsigned int, flags);
+ #define __NR_sys_fsconfig __NR_fsconfig
+@@ -14485,7 +14485,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+         return do_map_shadow_stack(cpu_env, arg1, arg2, arg3);
+ #endif
+ 
+-#if defined(TARGET_NR_fsopen) && defined(NR_fsopen)
++#if defined(TARGET_NR_fsopen) && defined(__NR_fsopen)
+     case TARGET_NR_fsopen:
+         {
+             p = lock_user_string(arg1);
 -- 
-2.47.1
+2.54.0
 
 
