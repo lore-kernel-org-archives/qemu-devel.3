@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36E70C531C9
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 15:36:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 845F6C531C9
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 15:36:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wo0tZ-0005Xm-6n; Sun, 26 Jul 2026 11:36:08 -0400
+	id 1wo0sl-0002qM-86; Sun, 26 Jul 2026 11:35:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wo0tF-00057o-5n
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 11:35:45 -0400
+ id 1wo0s0-0001s3-Qn
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 11:34:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wo0tD-0003yv-4A
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 11:35:44 -0400
+ id 1wo0rx-0003Xc-Je
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 11:34:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785080142;
+ s=mimecast20190719; t=1785080065;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=79eEWr7h105UKSTdAp9opu785TSxRcomqCfmPZNgqg0=;
- b=MlZ1jet5O29jOlRAPdeN80pq6JVSAW7Lp/Qr4qAbpHQObpbGgv/dtdNYIC6jM6hOKjBTvF
- 0+3NlJUVXdIWYUHTaTqwF8msiYogAC9+wc+a8elDzG/OWH/KEDZmcrm5FxcX5My0DE/HVm
- UZ7NA5vDpvzHZMyGX8iMuusTrgnW7eE=
+ bh=DWqDgY6YptJE+OeZiINF/nTpYHVswL+HXXlWl6zC+ZM=;
+ b=M7T5eA6Gyc0MoBObku+ydWq4nh57NQoGuHj/vrQNiY/zGd8mibvO2GasP1j6dFjrMTeneO
+ BlHqamZKIwFtmUBWc7t9t22hb6TTJLyIAhi7pR1H9d0MyEbTtPDBjEiM497rmHPNUm/ko4
+ JNrX9R/KyhzgxIz07h5I1h8vurN6x/o=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-106-MrQKXpiNMw2e1TN2IE5_Ow-1; Sun,
- 26 Jul 2026 11:35:37 -0400
-X-MC-Unique: MrQKXpiNMw2e1TN2IE5_Ow-1
-X-Mimecast-MFC-AGG-ID: MrQKXpiNMw2e1TN2IE5_Ow_1785080135
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-126-gtxqsPlHNEeHQJGt6T9sZQ-1; Sun,
+ 26 Jul 2026 11:34:21 -0400
+X-MC-Unique: gtxqsPlHNEeHQJGt6T9sZQ-1
+X-Mimecast-MFC-AGG-ID: gtxqsPlHNEeHQJGt6T9sZQ_1785080059
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A00DC1955F22; Sun, 26 Jul 2026 15:35:35 +0000 (UTC)
+ id B34AB1955F73; Sun, 26 Jul 2026 15:34:19 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.44.32.63])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 027CD180044F; Sun, 26 Jul 2026 15:35:26 +0000 (UTC)
+ id 5179D180044F; Sun, 26 Jul 2026 15:34:11 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
@@ -56,9 +56,10 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
  armbru@redhat.com, berrange@redhat.com, abologna@redhat.com,
  jdenemar@redhat.com
-Subject: [RFC PATCH v7 18/18] arm-qmp-cmds: introspection for ID register props
-Date: Sun, 26 Jul 2026 17:29:56 +0200
-Message-ID: <20260726153221.24773-19-eric.auger@redhat.com>
+Subject: [RFC PATCH v7 09/18] target/arm/cpu_idregs: generate tables for Arm64
+ ID registers and fields
+Date: Sun, 26 Jul 2026 17:29:47 +0200
+Message-ID: <20260726153221.24773-10-eric.auger@redhat.com>
 In-Reply-To: <20260726153221.24773-1-eric.auger@redhat.com>
 References: <20260726153221.24773-1-eric.auger@redhat.com>
 MIME-Version: 1.0
@@ -89,205 +90,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cornelia Huck <cohuck@redhat.com>
+From: Shaju Abraham <shaju.abraham@nutanix.com>
 
-Implement the capability to query available ID register values by
-adding SYSREG_* options and values to the cpu model expansion for the
-host model, if available.
+Include cpu-idregs.h.inc multiple times with different definitions for the
+X-macros. This will generate tables for all Arm64 ID registers and their
+fields. Additionally, initialize the tables with all architecturally defined
+values. These tables will be consumed by the property layer in future
+patches.
 
-Excerpt:
-(QEMU) query-cpu-model-expansion type=full model={"name":"host"}
-{"return": {"model": {"name": "host", "props": {"SYSREG_ID_AA64PFR0_EL1_EL3": 1,
-"SYSREG_ID_AA64ISAR2_EL1_CLRBHB": 0, "SYSREG_CTR_EL0_L1Ip": 3,
-"SYSREG_MIDR_EL1_PartNum": 3407, "SYSREG_CTR_EL0_DminLine": 4,
-"SYSREG_ID_AA64MMFR0_EL1_PARange": 5, "SYSREG_ID_AA64MMFR1_EL1_ECBHB": 0
-../..
-
-This allows the upper stack to detect available writable ID regs and
-the "host passthrough model" values.
-
-It also allows to test some ID reg field values:
-(QEMU) query-cpu-model-expansion type=full model={"name":"host","props":{"SYSREG_ID_AA64ISAR0_EL1_DP":0x13}}
-{"error": {"class": "GenericError", "desc": "idreg SYSREG_ID_AA64ISAR0_EL1_DP set value (0x13) exceeds length of field (4)!"}}
-
-(QEMU) query-cpu-model-expansion type=full model={"name":"host","props":{"SYSREG_ID_AA64ISAR0_EL1_DP":0x2}}
-{"error": {"class": "GenericError", "desc": "idreg SYSREG_ID_AA64ISAR0_EL1_DP set value (0x2) does not match any arch valid enum value!"}}
-
-The following checks are performed:
-- the value does not exceed the field size
-- if the field is associated to enum values, the set value must be one
-  of those enum values
-- the value is applied against a scratch vcpu making sure the setting is
-  not rejected for this host
-
+Co-authored-by: Khushit Shah <khushit.shah@nutanix.com>
+Signed-off-by: Shaju Abraham <shaju.abraham@nutanix.com>
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
 
 ---
 
-v5 -> v6:
-- add the write capability
+v5 -> v6
+- restored support of enum values
 ---
- target/arm/arm-qmp-cmds.c | 98 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 98 insertions(+)
+ target/arm/cpu-idregs.c | 96 +++++++++++++++++++++++++++++++++++++++++
+ target/arm/meson.build  |  1 +
+ 2 files changed, 97 insertions(+)
+ create mode 100644 target/arm/cpu-idregs.c
 
-diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
-index 83ec95c290..41fefadcea 100644
---- a/target/arm/arm-qmp-cmds.c
-+++ b/target/arm/arm-qmp-cmds.c
-@@ -21,6 +21,7 @@
-  */
- 
- #include "qemu/osdep.h"
+diff --git a/target/arm/cpu-idregs.c b/target/arm/cpu-idregs.c
+new file mode 100644
+index 0000000000..c41d0ab0c4
+--- /dev/null
++++ b/target/arm/cpu-idregs.c
+@@ -0,0 +1,96 @@
++/*
++ *   ARM ID register field table.
++ *
++ *   Builds the per-id-register field descriptor arrays and the global
++ *   arm_idregs[] table.
++ *
++ *  SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include "qemu/osdep.h"
 +#include "qemu/error-report.h"
- #include "qemu/target-info.h"
- #include "hw/core/boards.h"
- #include "kvm_arm.h"
-@@ -30,7 +31,10 @@
- #include "qapi/qapi-commands-machine.h"
- #include "qapi/qapi-commands-misc-arm.h"
- #include "qobject/qdict.h"
-+#include "qobject/qnum.h"
- #include "qom/qom-qobject.h"
-+#include <linux/kvm.h>
-+#include "system/kvm.h"
- #include "cpu.h"
++#include "qapi/error.h"
++#include "cpu.h"
++#include "cpu-idregs.h"
++
++/*
++ * Generate an array of architecturely defined values for each field
++ * associated with enum values
++ */
++
++#define IDREG_START(reg)
++#define IDREG_END(reg)
++#define IDREG_FIELD(reg, field, shift, length)
++#define IDREG_FIELD_START(reg, field, shift, length) \
++    static const ArmIdRegArchVal reg##_##field##_arch_vals[] = {
++#define IDREG_FIELD_ARCH_VAL(v) { (v), "" },
++#define IDREG_FIELD_END(reg, field) \
++    };
++
++#include "cpu-idregs.h.inc"
++
++#undef IDREG_START
++#undef IDREG_END
++#undef IDREG_FIELD
++#undef IDREG_FIELD_START
++#undef IDREG_FIELD_END
++#undef IDREG_FIELD_ARCH_VAL
++
++/* generate an array of per-register ArmIdRegField[] descriptors */
++
++#define IDREG_START(reg) \
++    static ARM64SysRegField reg##_fields[] = {
++
++#define IDREG_END(reg) \
++    };
++
++#define IDREG_FIELD_START(reg, field, _shift, _length)  \
++    {                                                                 \
++        .name = #field, \
++        .index = reg##_IDX, \
++        .shift = (_shift),                                            \
++        .length = (_length),                                          \
++        .arch_vals = (ArmIdRegArchVal *)reg##_##field##_arch_vals,    \
++        .arch_vals_count = ARRAY_SIZE(reg##_##field##_arch_vals),     \
++    },
++
++#define IDREG_FIELD(reg, field, _shift, _length) \
++    { \
++        .name = #field, \
++        .index = reg##_IDX, \
++        .shift = (_shift), \
++        .length = (_length), \
++    },
++
++#define IDREG_FIELD_ARCH_VAL(v)
++
++#define IDREG_FIELD_END(reg, field)
++
++#include "cpu-idregs.h.inc"
++
++#undef IDREG_START
++#undef IDREG_END
++#undef IDREG_FIELD
++#undef IDREG_FIELD_START
++#undef IDREG_FIELD_END
++#undef IDREG_FIELD_ARCH_VAL
++
++/* generate an array of top level ID registers */
++
++#define IDREG_END(reg)
++#define IDREG_FIELD(reg, field, shift, length)
++#define IDREG_FIELD_START(reg, field, shift, length)
++#define IDREG_FIELD_ARCH_VAL(v)
++#define IDREG_FIELD_END(reg, field)
++
++#define IDREG_START(reg) \
++    [reg##_IDX] = { \
++        .name = #reg, \
++        .index = reg##_IDX, \
++        .fields = reg##_fields, \
++        .fields_count = ARRAY_SIZE(reg##_fields), \
++    },
++
++ARM64SysReg arm64_id_regs[NUM_ID_IDX] = {
++#include "cpu-idregs.h.inc"
++};
++
+diff --git a/target/arm/meson.build b/target/arm/meson.build
+index 4412fde065..ed8535192c 100644
+--- a/target/arm/meson.build
++++ b/target/arm/meson.build
+@@ -30,6 +30,7 @@ arm_common_user_system_ss.add(when: 'TARGET_AARCH64', if_true: files(
  
- static GICCapability *gic_cap_new(int version)
-@@ -84,11 +88,14 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
-                                                      Error **errp)
- {
-     CpuModelExpansionInfo *expansion_info;
-+    ObjectPropertyIterator iter;
-     const QDict *qdict_in;
-+    ObjectProperty *idregprop;
-     QDict *qdict_out;
-     ObjectClass *oc;
-     Object *obj;
-     const char *name;
-+    int fdarray[3];
-     int i;
- 
-     if (type != CPU_MODEL_EXPANSION_TYPE_FULL) {
-@@ -133,6 +140,38 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
- 
-     obj = object_new(object_class_get_name(oc));
- 
-+    if (kvm_enabled()) {
-+        bool pmuv3_supported = kvm_check_extension(kvm_state, KVM_CAP_ARM_PMU_V3);
-+        bool sve_supported = kvm_check_extension(kvm_state, KVM_CAP_ARM_SVE);
-+        struct kvm_vcpu_init init = { .target = -1, };
-+        bool el2_supported = kvm_arm_el2_supported();
-+        bool pauth_supported;
-+        int ret;
-+
-+        pauth_supported = kvm_check_extension(kvm_state, KVM_CAP_ARM_PTRAUTH_ADDRESS) &&
-+                          kvm_check_extension(kvm_state, KVM_CAP_ARM_PTRAUTH_GENERIC);
-+
-+        if (sve_supported) {
-+            init.features[0] |= 1 << KVM_ARM_VCPU_SVE;
-+        }
-+        if (el2_supported) {
-+            init.features[0] |= 1 << KVM_ARM_VCPU_HAS_EL2;
-+        }
-+        if (pauth_supported) {
-+            init.features[0] |= (1 << KVM_ARM_VCPU_PTRAUTH_ADDRESS |
-+                             1 << KVM_ARM_VCPU_PTRAUTH_GENERIC);
-+        }
-+        if (pmuv3_supported) {
-+            init.features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
-+        }
-+
-+        ret = kvm_arm_create_scratch_host_vcpu(fdarray, &init);
-+        if (!ret) {
-+            error_setg(errp, "failing creating a scratch vcpu");
-+            return NULL;
-+        }
-+    }
-+
-     if (model->props) {
-         Visitor *visitor;
-         Error *err = NULL;
-@@ -145,6 +184,49 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
-         }
- 
-         qdict_in = qobject_to(QDict, model->props);
-+
-+        for (const QDictEntry *entry = qdict_first(qdict_in);
-+                 entry != NULL; entry = qdict_next(qdict_in, entry)) {
-+            const char *key = qdict_entry_key(entry);
-+            QObject *val_obj = qdict_entry_value(entry);
-+            ObjectProperty *prop;
-+            Visitor *v;
-+            bool success;
-+            uint64_t val;
-+
-+            prop = object_property_find(obj, key);
-+            if (!prop) {
-+                error_setg(errp, "%s does not exist!", key);
-+                return NULL;
-+            }
-+
-+            if (!g_str_has_prefix(key, "SYSREG_")) {
-+                continue;
-+            }
-+
-+            /* consume the prop to avoid unexpected parameter */
-+            if (!visit_type_uint64(visitor, key, &val, errp)) {
-+                return NULL;
-+            }
-+
-+            v = qobject_input_visitor_new(val_obj);
-+
-+            if (!object_property_set(obj, key, v, &err)) {
-+                error_propagate(errp, err);
-+                visit_free(v);
-+                return NULL;
-+            }
-+
-+            success = kvm_idreg_write_scratch_vcpu(fdarray[2], v, key,
-+                                                   prop->opaque, &err);
-+            if (!success) {
-+                error_propagate(errp, err);
-+                visit_free(v);
-+                return NULL;
-+            }
-+            visit_free(v);
-+        }
-+
-         i = 0;
-         while ((name = cpu_model_advertised_features[i++]) != NULL) {
-             if (qdict_get(qdict_in, name)) {
-@@ -160,6 +242,10 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
-         if (!err) {
-             arm_cpu_finalize_features(ARM_CPU(obj), &err);
-         }
-+
-+        if (kvm_enabled()) {
-+            kvm_arm_destroy_scratch_host_vcpu(fdarray);
-+        }
-         visit_end_struct(visitor, NULL);
-         visit_free(visitor);
-         if (err) {
-@@ -190,6 +276,18 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
-         }
-     }
- 
-+    object_property_iter_init(&iter, obj);
-+
-+    while ((idregprop = object_property_iter_next(&iter))) {
-+        QObject *value;
-+
-+        if (!g_str_has_prefix(idregprop->name, "SYSREG_")) {
-+            continue;
-+        }
-+        value = object_property_get_qobject(obj, idregprop->name, &error_abort);
-+        qdict_put_obj(qdict_out, idregprop->name, value);
-+    }
-+
-     if (!qdict_size(qdict_out)) {
-         qobject_unref(qdict_out);
-     } else {
+ arm_common_system_ss.add(files(
+   'arm-qmp-cmds.c',
++  'cpu-idregs.c',
+ ))
+ arm_system_ss.add(when: 'CONFIG_KVM', if_true: files('hyp_gdbstub.c', 'kvm.c'))
+ arm_system_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
 -- 
 2.53.0
 
