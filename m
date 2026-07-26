@@ -4,71 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B43BC531CC
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 07:37:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A197DC531CC
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 07:43:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wntQN-0002lv-2s; Sun, 26 Jul 2026 03:37:27 -0400
+	id 1wntW6-00044d-Rv; Sun, 26 Jul 2026 03:43:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wntQL-0002lY-Fv; Sun, 26 Jul 2026 03:37:25 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wntQJ-0003wp-Nv; Sun, 26 Jul 2026 03:37:25 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66Q7asJp017140
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sun, 26 Jul 2026 16:36:54 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=6BJYXjq4E/mraJBzuA/SBz5lQcftOsixHYEkg4LE2BI=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1785051415; v=1;
- b=DymS5woP9pjja5iVcgJijDg2BORXKSyfZq6OCjrGoTvcs7fLUamp5pRqz08YwE0+
- rkgmbQNdywjWZTOT8Yd8/DUqPEI3b3S7SLojXokNZMraTrQinmClpF9e79V4yPvE
- jpbv7B57KZ2JFV2+tpST8ZydZ+fZ/EGfpix1PMlV4Vr2Dk70IpmMCQ8KUzAq7MT6
- B4NLZVMeGOJDtqI6NT3QR9GucNrGurV/uGvWBKT2S65B/YYxI8DxVI5RQtqkym8o
- A+Bt/SbnUwrUomP+OahbGhr5R+rmzPconhMhPg5oqjrNIuMou94J57WOpkDrO5Xa
- Ho8KQrkN8jvuwJ+fJe8Zxg==
-Message-ID: <c1bcbefe-d2fb-4db5-a1ed-afebd0c74213@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sun, 26 Jul 2026 16:36:54 +0900
+ (Exim 4.90_1) (envelope-from <caojunze424@gmail.com>)
+ id 1wntW5-00044M-6a
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 03:43:21 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <caojunze424@gmail.com>)
+ id 1wntW3-0004kd-I7
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 03:43:20 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2cf110997efso4177615ad.2
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 00:43:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785051798; x=1785656598; darn=nongnu.org;
+ h=message-id:date:references:in-reply-to:cc:to:from:subject
+ :content-transfer-encoding:content-type:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=b9KU7z4y4buiVrgRcV1hklRK/bdxHz8ig1mbBaIdLeQ=;
+ b=UC3RfyjqCT9ZDU0bgzS8mpTAnnMCO1n64ZpdV1bkzk6O/QfzoMC/HrYDIbd44R/kK+
+ 8WWONbtLO5QkCZeBF5qyMKF2FML/BJfkvz3mvs4uea9MeatH86itNznD8VoToEM2IbR1
+ IJAsGpkST5UZynQEv4Hw2NAUfe9OeljH8Fy9FKYKo8l6j/FCtvpP6oZpARfuDdZqml7P
+ KiQI/a+cNMG3QJ3jFetYtPo/1zt9tExoCRvt5h5LE3OW/aNrawyfS8rst22LSwXumUDB
+ l1gBL5LPu6gOfMAfVUSL/PdddSFYXxiNEDXXHgQ+mVc4YnsWp/IEPx81zpc7TrB2EBYh
+ i/GQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785051798; x=1785656598;
+ h=message-id:date:references:in-reply-to:cc:to:from:subject
+ :content-transfer-encoding:content-type:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=b9KU7z4y4buiVrgRcV1hklRK/bdxHz8ig1mbBaIdLeQ=;
+ b=R7noAfSg73oL/FZdgcsDFfkOvd7yEY+6HcSUkp8F0owF4SlAA26+An0m/ScfAOf+mD
+ u7N/1vFUUvTzWblLQuJXkNwYmx3Fa9oURWyqhdUo0qzhBwQ63oMiXlidC3FShsTZgScZ
+ Eki364zeUe7V8jHSM0YfZ4UT6yG28pAZHXqAMaBBqgL3i4ewdpQNye7b/j8fkSQTq3/p
+ SXwaInu+XDjXb8sJEifp1BY8P4NBtUangV0LlY4bjeXn7fcBEWYg0RsnAzMBZiZ8wLBc
+ lXWFr73pk9tokx3vZZStfqMb6VDGSFdSy4lBY+ViA1twa+Y7GvOFu2BYsmEUTshLNozD
+ C67A==
+X-Gm-Message-State: AOJu0YwqCodsEwi2nAwWb0p8iaeRf74DNDt3lkPs8PaE11aw9dO4gTDL
+ 7eXwnfoP6Qcfo/V5j6ByI/FZ1NnTOo9K4WXgDtREPBbEKlqKMXOY/WPG
+X-Gm-Gg: AR+sD11jjq37zpC8nr+u7U0Lk5be+Z2LO8Z2k6kTfx12Mto86hWPT41vz/wyjzsf7ye
+ ZbsMbn25UGLd0ZaQMxXpjHgOXxo3Oa2pN7Xhux3oCo6Ky/tyDejozyoS0Y/Cu1gk5gYNoVwF8L4
+ zGk8Rg/BOC+hJzSdPkKgPwZe5NP6CbC6MXV3gqb3SwWRz8j7BPjzgiRmk8p81leBsJeDUy1Y6wR
+ geJUVn25R9KLwPeCglU4BM2GQmD+LciOy1G3BfXBFMFqmZkBLv1DlLidV9M42nZa8bcllIaXiQz
+ Kh13PC/jNM05tjo47hn6HBzWUJH7RwIVcUnEv5iV5R+/DcC+QXgfpAYr9WRNa0nHi27zbfAmg57
+ RqqE5WxHLtkPJ+We3RO19KugdIyAvc/rGxdGdQPfgMPUSjlCJJNCyDNVDu7BLaXIP39olCHdtIO
+ 3vgmXTaG/h5IrzIMH77JSm
+X-Received: by 2002:a17:903:390c:b0:2c9:fbde:ab68 with SMTP id
+ d9443c01a7336-2cfde844f2bmr58129325ad.3.1785051797884; 
+ Sun, 26 Jul 2026 00:43:17 -0700 (PDT)
+Received: from DESKTOP-7HME356.localdomain ([38.34.7.236])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-314bc548e63sm18236602eec.19.2026.07.26.00.43.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 26 Jul 2026 00:43:17 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/7] block/blkio: fix error return value on getlength()
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
- Jonathan Cameron <jic23@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Wei Liu <wei.liu@kernel.org>,
- linux-cxl@vger.kernel.org, Brian Cain <brian.cain@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-References: <20260725-fix2-v1-0-5c9a6ce7b96a@redhat.com>
- <20260725-fix2-v1-2-5c9a6ce7b96a@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260725-fix2-v1-2-5c9a6ce7b96a@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH 5/7] hw/riscv: k230: add decomp gzip in K230 board
+From: Junze Cao <caojunze424@gmail.com>
+To: Tao Ding <dingtao0430@163.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com, 
+ palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com, 
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com, 
+ chao.liu@processmission.com, farosas@suse.de, lvivier@redhat.com
+In-Reply-To: <20260721161335.73872-6-dingtao0430@163.com>
+References: <20260721161335.73872-1-dingtao0430@163.com>
+ <20260721161335.73872-6-dingtao0430@163.com>
+Date: Sun, 26 Jul 2026 15:43:12 +0800
+Message-Id: <178505179207.940286.1406120293278713894.b4-review@b4>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1785051795; l=681;
+ i=caojunze424@gmail.com; s=junze-gmail; h=from:subject:message-id;
+ bh=Y5S6DlMXNN8pl1AoHZnUuI7INPc9wZud/rupcev/3Rs=;
+ b=5z7ih+Aeci4FPuUU04aRDEFMgtxG+gmmsviP1d43oWTCr0IWgY+XJs+CkK+KTApw+Qb1ZLl8h
+ l4TjOQaBBIKCJ1J2eooX+PaWnoulavGjOI+t0mChgaduhdJ9jfD/Pw1
+X-Developer-Key: i=caojunze424@gmail.com; a=ed25519;
+ pk=lnFIWNw+6CoDrHFIKUJKdgrRbvgAbQGcEFiVsIigOJ8=
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=caojunze424@gmail.com; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,53 +113,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/25 23:00, Marc-André Lureau wrote:
-> Negative values should be return for errors.
+On Wed, 22 Jul 2026 00:13:33 +0800, Tao Ding <dingtao0430@163.com> wrote:
+> diff --git a/include/hw/riscv/k230.h b/include/hw/riscv/k230.h
+> index 156a386edc..a12d36965a 100644
+> --- a/include/hw/riscv/k230.h
+> +++ b/include/hw/riscv/k230.h
+> @@ -35,6 +36,7 @@ typedef struct K230SoCState {
+>  
+>      K230WdtState wdt[2];
+>      K230GSDMAState gsdma;
+> +    K230DecompGzipState decomp_gzip;
+>      MemoryRegion sram;
+>      MemoryRegion bootrom;
+>  
 
-Nit: s/return/returned/
+Please disregard the Reviewed-by tag in my previous reply; it used an
+obsolete identity. The review itself is unchanged.
 
-> 
-> It also helps with GCC false-positives:
-> ../block/blkio.c: In function ‘blkio_co_getlength’:
-> ../block/blkio.c:943:8: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
->    943 |     if (ret < 0) {
->        |        ^
-> 
-> Fixes: fd66dbd424 ("blkio: add libblkio block driver")
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   block/blkio.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/block/blkio.c b/block/blkio.c
-> index fb8bec27d71a..d2ba2a4d58dc 100644
-> --- a/block/blkio.c
-> +++ b/block/blkio.c
-> @@ -935,13 +935,13 @@ static int64_t coroutine_fn blkio_co_getlength(BlockDriverState *bs)
->   {
->       BDRVBlkioState *s = bs->opaque;
->       uint64_t capacity;
-> -    int ret;
-> +    int ret = -1;
+Reviewed-by: Junze Cao <caojunze424@gmail.com>
 
-Initializing a variable with a dummy value can suppress a useful 
-warning. Replacing WITH_QEMU_LOCK_GUARD() with QEMU_LOCK_GUARD() will 
-fix it without introducing a dummy value and also result in a bit 
-simpler code.
-
-Regards,
-Akihiko Odaki
-
->   
->       WITH_QEMU_LOCK_GUARD(&s->blkio_lock) {
->           ret = blkio_get_uint64(s->blkio, "capacity", &capacity);
->       }
->       if (ret < 0) {
-> -        return -ret;
-> +        return ret;
->       }
->   
->       return capacity;
-> 
+-- 
+Junze Cao <caojunze424@gmail.com>
 
 
