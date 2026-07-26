@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 500BEC531FA
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 13:57:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AD08C531FA
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Jul 2026 14:23:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wnzLs-0000Tr-BZ; Sun, 26 Jul 2026 09:57:12 -0400
+	id 1wnzkU-0004t3-48; Sun, 26 Jul 2026 10:22:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wnzLp-0000TE-TN
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 09:57:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wnzkS-0004si-MN
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 10:22:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wnzLn-0007VC-4f
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 09:57:09 -0400
+ id 1wnzkQ-0002Vu-SV
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 10:22:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785074225;
+ s=mimecast20190719; t=1785075753;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LTDKPT3VQAV53tCUW7gPrXEyb5gqnxN4RZCXgIUNRUk=;
- b=glVHfroew7CVYHq+rpwu7y5CS+y2HwuQIziRZ5TGC30Lnyesdd2nDLZRLBV3O6i4TZ2Lg0
- 0eGXHZk9IAotBTyKVhWMYZbfOCDikLl1bnIQvS3ROCKi+Uos9UhjK8ja+Kl5wDZL7oP0zm
- 2XD0tGCwqGnhY4L5Tr0lVRzkj7EG7iA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=F9onKOvuadw2ucT1LclFaSpJKEsgm8Ez+YxGJOnocJ4=;
+ b=aTujde8ahoibV2j7EdnMNc3NriHCOV3FDZw9BWFbQybmhBSz/hX/mvkKdPfqqbi+2z1Ii9
+ xRkvViStrJIK2KI6iJOFv9HJkG7TrMMzgrJ3j5oQScKYwfVB4EJo6gT48BmxYQtLI6YP0F
+ GFX8+RsvHmUNmYLunefQ4IstixKGOIk=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-520-h9V45xOHPymoQGsSsLuOTg-1; Sun, 26 Jul 2026 09:57:03 -0400
-X-MC-Unique: h9V45xOHPymoQGsSsLuOTg-1
-X-Mimecast-MFC-AGG-ID: h9V45xOHPymoQGsSsLuOTg_1785074223
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-493a7fa8481so18011525e9.1
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 06:57:03 -0700 (PDT)
+ us-mta-397-E7TbRcG8PIOQA_DC1v5D5Q-1; Sun, 26 Jul 2026 10:22:31 -0400
+X-MC-Unique: E7TbRcG8PIOQA_DC1v5D5Q-1
+X-Mimecast-MFC-AGG-ID: E7TbRcG8PIOQA_DC1v5D5Q_1785075750
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-47f6d70223dso1175907f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 07:22:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785074222; x=1785679022;
- h=content-transfer-encoding:content-type:in-reply-to:references
- :reply-to:cc:to:from:content-language:subject:user-agent
- :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=LTDKPT3VQAV53tCUW7gPrXEyb5gqnxN4RZCXgIUNRUk=;
- b=Bncx7bXSb1vWQrBnhV5YX3+1HgGealh5dXYHBmDukiAX4D/fDSpNxOBi1RHs0GSdaP
- AV3zr/wJg+Qq3Lis8OeQVwn/5PW3YRJQ5kx4Fz1/2HWoeEt2edX+Zb/IbWjqBr/dU5Q0
- ARBlFKIWnbEJxy8oowSsZjq0friqwuVsC0y6LtU8m0nzpTqfZ0kfMAys2+vAXlKGxpO8
- tQYqk/sm3a5ejtOGD9/yb5JCcgHSI4OzFhO30tsZzL+kasisUI6xtGooWEHkKvF1G/Kk
- laYd87OkvVjz0N1xvPeSoD+vCF2sNkD4t2MhPOL6b4icNUTM5vT+wBNJeMwgBzSOddzU
- Hu3A==
+ d=1e100.net; s=20251104; t=1785075750; x=1785680550;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:reply-to:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=F9onKOvuadw2ucT1LclFaSpJKEsgm8Ez+YxGJOnocJ4=;
+ b=YiGaZGwj6h523onkJf1hPgUkHFAKtP1ky2AMjqbckJMSyqi14J3PjsTaj7tyLbx5iW
+ dDS4QcWCyz1RPSTck2l48X735+Xh7b5hkh61+LeGox5vfY0zgpPDL8zuk0pfeLTbivLV
+ 6qlfvdE5w1LBIzSNCgYuE3dTLP/1yNp0JZx7YeQAaD9xDAd+nPWPYzxL2+GFyWljwqfC
+ Vr1Cux+QruWxyEMyQHDr0WRpSNd3CnWioxPaolJOdtVU6amDzztOq9W39lhhQF+sGUi3
+ hK7Yi59tq14R7nSpd4XMmCdQh59Qj97/aLxGFwTbXYL4iiM0xxTqZU1I9ffDsp7CWv9m
+ 5PUA==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpGWBxgoK4v5yX5RyPwbnW5mW7lp5xMy1iXkUNTdC5u8ePmNZkn4B57BKwtvk2NtHZKvMU7tR0s+FcU@nongnu.org
-X-Gm-Message-State: AOJu0YwOlBu9LLpjahQ9V5Dhnkb1aWjcObRe+Z03hgg2NoXdyvLCsjez
- DTUcilK1Vgf6ikj/V3Y5/19bMBIK0f5pcqBplfgG5KJVTi4rtMR66q6ftSq+P/kAUtNd1e9JOzN
- zh2o5beFyz2P6iX/DuXrlXpTUVyoPd8Q+PHq9K/AZa+U/Ah/9fnW+b+o2
-X-Gm-Gg: AR+sD10Msi/EMJofqL9e93RM9PLG2Fzzq0E78rfcsoN502ZMiFm0okpureMmUXgXfkL
- xqdAo6lZj/wAkcAqEJR6p6YEPOeVnSRaJJp8tu8AsXsgzIXLTk5G3EnM1eip6Ri9HmjyxGetLoa
- Xk5Oh87rfKjcXuZSkWeinCFV3xbNH3L1yuLYA6/ATqQZJz0y9A7je7ksNyfhkd3dayRgf9rz4cX
- y7EH9oHuJifuR1dvqwrs6ZjhVTd8omfjrySZp7v/JoKh5p1ZDaKCwoTHl3yR99bSI1seygaEO2z
- VgfAud+qA/+nOf+RL9ZEukuMMiplCFVoBV/Pan9hTiq+iT4IpTX7Kax/i0Jfb/w8X4URCjy9mcG
- o0Xw4iirU9hYA4V0FR1VVtatWnEtzftilkUc=
-X-Received: by 2002:a05:600c:4704:b0:495:6022:5a23 with SMTP id
- 5b1f17b1804b1-496b5c92ebfmr63134635e9.19.1785074222588; 
- Sun, 26 Jul 2026 06:57:02 -0700 (PDT)
-X-Received: by 2002:a05:600c:4704:b0:495:6022:5a23 with SMTP id
- 5b1f17b1804b1-496b5c92ebfmr63134215e9.19.1785074222111; 
- Sun, 26 Jul 2026 06:57:02 -0700 (PDT)
+ AHgh+RpsJlgcAMxNMbHLMkXZcX56D554rOQxS/eHXhAlM8o80N9I7NvehhFW+rcEp52xxLTH1KcHXhZJrm0L@nongnu.org
+X-Gm-Message-State: AOJu0YzawuYmYrdJPYvBD2RprqO9nrUgY5hgigxDrPWTg+esAS8w/yAH
+ B3HqgFRgxh08DsZRi7lY6EbGiFk1gQJlJBOjaCZFsmWTQCcapdqCMIrEmLz9iT5p9K6VLvW9wBH
+ ue0s5s2oxBYh5zlCb0f1Itud4gYkRm/XCY3wgoOIyA7LQoVXhNyUsIfYk
+X-Gm-Gg: AR+sD12/YqMTDBNtoWsB6IwC8fDx9AiA0ciUph10VaqDbKodaA0AGEC39hOkT74gtWX
+ Sof0FHa2sleO9zVcMvY3oMdsIO79OBOsmS8PiV4Dtqh2JCRdYpkLXT4TlQB2sD8L/xUm8JeO959
+ hahs0+ADh7P3vIju8rrfjPKlSNhamkEPILFmINkkv5/3WSL1li2ROKVKv7Vs/okQLAm5tij2i/C
+ 4Zubxa5O+iHOmN50gKZZTTMpRNyFEezVRpBZ2I/q9UdDmJ1L8YNmJj2c0jfizkL/XGPWm9kSoaL
+ wq5uVElnxjwODYlAujooiEzadqcSjpwEWvgnhnWltlR+ql0RaD8LDJsFH9jjpF3Wn4bl0kPZfmL
+ Gvca37WdasRRY5fum2d2UdAzZcM7MqRtCbGM=
+X-Received: by 2002:a05:600c:4445:b0:495:4fd4:144b with SMTP id
+ 5b1f17b1804b1-496b5719f73mr62370485e9.21.1785075750381; 
+ Sun, 26 Jul 2026 07:22:30 -0700 (PDT)
+X-Received: by 2002:a05:600c:4445:b0:495:4fd4:144b with SMTP id
+ 5b1f17b1804b1-496b5719f73mr62370005e9.21.1785075749875; 
+ Sun, 26 Jul 2026 07:22:29 -0700 (PDT)
 Received: from [192.168.3.191] (228.246.150.77.rev.sfr.net. [77.150.246.228])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-496b4858e28sm153279405e9.2.2026.07.26.06.56.58
+ ffacd0b85a97d-47f939c1465sm25982791f8f.26.2026.07.26.07.22.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 26 Jul 2026 06:57:01 -0700 (PDT)
-Message-ID: <a842eeb4-801c-4d42-825e-b5ecf581da31@redhat.com>
-Date: Sun, 26 Jul 2026 15:56:57 +0200
+ Sun, 26 Jul 2026 07:22:29 -0700 (PDT)
+Message-ID: <fe76f638-81aa-43cf-aafb-c774ab1902f8@redhat.com>
+Date: Sun, 26 Jul 2026 16:22:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 08/19] target/arm/kvm: Handle writeback for special
+Subject: Re: [RFC PATCH v3 14/19] target/arm/kvm: compute supported values for
  ID register fields
 Content-Language: en-US
 To: Khushit Shah <khushit.shah@nutanix.com>, qemu-devel@nongnu.org,
@@ -92,20 +92,20 @@ Cc: cohuck@redhat.com, peter.maydell@linaro.org,
  shaju.abraham@nutanix.com, mark.caveayland@nutanix.com,
  prerna.saxena@nutanix.com
 References: <20260716213858.609699-1-khushit.shah@nutanix.com>
- <20260716213858.609699-9-khushit.shah@nutanix.com>
- <9fe4814a-5479-4180-9a61-7d2d5d2fbb92@redhat.com>
-In-Reply-To: <9fe4814a-5479-4180-9a61-7d2d5d2fbb92@redhat.com>
+ <20260716213858.609699-15-khushit.shah@nutanix.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260716213858.609699-15-khushit.shah@nutanix.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
 X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,276 +118,191 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  eric.auger@redhat.com
-X-ACL-Warn: ,  Eric Auger <eric.auger@redhat.com>
-From:  Eric Auger via qemu development <qemu-devel@nongnu.org>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Khushit,
 
+On 7/16/26 11:38 PM, Khushit Shah wrote:
+> Add arm_field_get_supported_values() which, for a given ID register
+> field, builds the set of values KVM allows it to take on the live host.
+>
+> Non-writable fields are pinned to the host value. Writable fields follow
+> their per field constraints. This function likely needs change when
+> KVM starts exposing a new writable field that is not lower-safe, hence,
+> the special handling of TGranX_2/SpecSEI/L1Ip/MIDR/REVIDR/AIDR.
+so this looks quite risky. 
+>
+> Cross-field constraints are not modelled; for example ID_AA64ZFR0_EL1
+> is gated by SVE. Reproducing every inter-field dependency in QEMU
+> would only duplicate KVM's logic and drift out of sync with it.
 
-On 7/22/26 2:05 PM, Eric Auger wrote:
-> Hi Khushit,
-> On 7/16/26 11:38 PM, Khushit Shah wrote:
->> Some fields should not be written back to KVM for various reasons:
->>  - ID_AA64PFR0_EL1.GIC / ID_PFR1_EL1.GIC are fabricated by KVM based on
->>    the gic-version property.
-> so this is part of the overall handling of legacy composite options
-> versus sysreg settings. To be the fact they both are consistent should
-> be enforced upfront.
->>  - KVM does not allow writing 0 to ID_DFR0_EL1.CopDbg, which breaks
->>    booting an AArch64-only guest on a host that also supports AArch32.
->>  - ID_DFR0_EL1.PerfMon is populated by KVM even for AArch64-only guests
->>    but is not writable there.
->>  - MPIDR_EL1 is managed by KVM based on vCPU index.
->>  - Hold off writing back CLIDR_EL1 until we properly support exposing
->>    cache topology to a KVM guest.
-> Sounds this deserves a prerequisite fix. I also have this hack in my
-> series but this should be dealt with separately I think.
->>
->> Some registers such as DCZID_EL0 are not exposed through the KVM cpreg
->> list at all, but guest still sees the host value, we verify that vCPU's
->> ID regs values match the host value.
-> why isn't it cpreg then? Shouldn't we add it instead?
->>
->> To do this, refactor kvm_arm_writable_idregs_to_cpreg_list to
->> kvm_arm_write_idregs_to_cpregs_list, which operates per field and now
->> returns an error if a non-writable field mismatches with the host value.
->>
->> Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
->> ---
->>  target/arm/cpu-idregs.c |  19 +++++++
->>  target/arm/cpu-idregs.h |   4 ++
->>  target/arm/kvm.c        | 116 ++++++++++++++++++++++++++++++++++------
->>  target/arm/trace-events |   2 +-
->>  4 files changed, 125 insertions(+), 16 deletions(-)
->>
->> diff --git a/target/arm/cpu-idregs.c b/target/arm/cpu-idregs.c
->> index c41d0ab0c4..6fa02af0f3 100644
->> --- a/target/arm/cpu-idregs.c
->> +++ b/target/arm/cpu-idregs.c
->> @@ -7,6 +7,7 @@
->>   *  SPDX-License-Identifier: GPL-2.0-or-later
->>   */
->>  #include "qemu/osdep.h"
->> +#include "qemu/bitops.h"
->>  #include "qemu/error-report.h"
->>  #include "qapi/error.h"
->>  #include "cpu.h"
->> @@ -94,3 +95,21 @@ ARM64SysReg arm64_id_regs[NUM_ID_IDX] = {
->>  #include "cpu-idregs.h.inc"
->>  };
->>  
->> +uint64_t arm_get_field_mask(const ARM64SysRegField *field)
->> +{
->> +    return MAKE_64BIT_MASK(field->shift, field->length);
->> +}
->> +
->> +bool arm_field_is_writable(const ARM64SysRegField *field)
->> +{
->> +    uint64_t field_mask = arm_get_field_mask(field);
->> +
->> +    return (arm64_id_regs[field->index].writable_mask & field_mask)
->> +           == field_mask;
->> +}
->> +
->> +bool field_matches(const ARM64SysRegField *field, ARMIDRegisterIdx index,
->> +                   const char *name)
->> +{
->> +    return field->index == index && !strcmp(field->name, name);
-> why do you need to check both index and name. Only checking index should
-> be sufficient.
-forget this, index refers to the reg while name corresponds to the field
-name. Thought name was the prop name ...
+Isn't qmp_query_cpu_model_expansion sufficient? In general upper layers
+will try to apply raw named models. If ajustements are needed between
+source and destination, we know field candidate values (either the
+source or dest one) and this latter can be directly tried using
+qmp_query_cpu_model_expansion write. On top of that
+qmp_query_cpu_model_expansion can be directly checked against a scratch
+vcpu reusing the logic implemented at kernel level.
+>
+> Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
+> ---
+>  target/arm/kvm.c     | 99 ++++++++++++++++++++++++++++++++++++++++++++
+>  target/arm/kvm_arm.h | 26 ++++++++++++
+>  2 files changed, 125 insertions(+)
+>
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index c38b99cfce..8f452f9570 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -1262,6 +1262,105 @@ bool kvm_arm_cpu_post_load(ARMCPU *cpu)
+>      return true;
+>  }
+>  
+> +static bool arm_field_is_signed(const ARM64SysRegField *field)
+> +{
+> +    return field_matches(field, ID_AA64MMFR0_EL1_IDX, "TGran4")    ||
+> +           field_matches(field, ID_AA64MMFR0_EL1_IDX, "TGran64")   ||
+> +           field_matches(field, ID_MMFR0_EL1_IDX, "InnerShr")      ||
+> +           field_matches(field, ID_MMFR0_EL1_IDX, "OuterShr")      ||
+> +           field_matches(field, ID_AA64DFR0_EL1_IDX, "DoubleLock") ||
+> +           field_matches(field, ID_AA64DFR0_EL1_IDX, "PMUVer")     ||
+> +           field_matches(field, ID_DFR0_EL1_IDX, "PerfMon")        ||
+> +           field_matches(field, ID_AA64PFR1_EL1_IDX, "MTE_frac")   ||
+> +           field_matches(field, ID_AA64MMFR4_EL1_IDX, "E2H0")      ||
+> +           field_matches(field, ID_DFR1_EL1_IDX, "MTPMU")          ||
+> +           field_matches(field, ID_AA64PFR0_EL1_IDX, "FP")         ||
+> +           field_matches(field, ID_AA64PFR0_EL1_IDX, "AdvSIMD");
+Can't we extract this from Register.json instead?
+> +}
+> +
+> +static void ranges_add(GArray *ranges, uint64_t min, uint64_t max)
+> +{
+> +    ArmFieldRange r = { .min = min, .max = max };
+> +    g_array_append_val(ranges, r);
+> +}
+> +
+> +void arm_field_get_supported_values(const ARM64SysRegField *field,
+> +                                    const ARMISARegisters *host_isar,
+> +                                    ArmFieldValueSet **value_set)
+> +{
+> +    bool is_signed = arm_field_is_signed(field);
+> +    uint64_t host = extract64(host_isar->idregs[field->index],
+> +                              field->shift, field->length);
+> +    GArray *ranges = g_array_new(false, false, sizeof(ArmFieldRange));
+> +
+> +    /* A non-writable field can only ever hold the host value. */
+> +    if (!arm_field_is_writable(field)) {
+> +        ranges_add(ranges, host, host);
+> +        goto done;
+you already get this info from qmp_query_cpu_model_expansion
+> +    }
+> +
+> +    if (field_matches(field, ID_AA64MMFR0_EL1_IDX, "TGran4_2")  ||
+> +        field_matches(field, ID_AA64MMFR0_EL1_IDX, "TGran16_2") ||
+> +        field_matches(field, ID_AA64MMFR0_EL1_IDX, "TGran64_2")) {
+> +        /* Either support the host value or the "off" value */
+> +        ranges_add(ranges, host, host);
+> +        if (host != 1) { /* 1 = "off" */
+> +            ranges_add(ranges, 1, 1);
+> +        }
+> +    } else if (field_matches(field, CTR_EL0_IDX, "L1Ip")) {
+> +        /* Only safe to downgrade to VIPT, other values are reserved. */
+> +        ranges_add(ranges, host, host);
+> +        if (host != 2) { /* 2 = "VIPT" */
+> +            ranges_add(ranges, 2, 2);
+> +        }
+> +    } else if (field_matches(field, ID_AA64MMFR1_EL1_IDX, "SpecSEI") ||
+> +               field_matches(field, ID_MMFR4_EL1_IDX, "SpecSEI")) {
+> +        /* It is safe to upgrade SpecSEI to 1, other values are reserved. */
+> +        ranges_add(ranges, host, host);
+> +        if (host != 1) {
+> +            ranges_add(ranges, 1, 1);
+> +        }
+> +    } else if (field->index == MIDR_EL1_IDX ||
+> +               field->index == REVIDR_EL1_IDX ||
+> +               field->index == AIDR_EL1_IDX) {
+> +        /*
+> +         * No restriction on value that can be set for implementation ID
+> +         * registers fields.
+> +         */
+> +        uint64_t max = 0;
+> +        if (field->length == 64) {
+> +            max = ~0ULL;
+> +        } else {
+> +            max = (1ULL << field->length) - 1;
+> +        }
+> +        ranges_add(ranges, 0, max);
+> +    } else {
+> +        /*
+> +         * After handling the special cases, other writable fields are
+> +         * either lower-safe or signed lower-safe.
+> +         */
+> +        if (field->arch_vals_count) {
+> +            for (uint32_t i = 0; i < field->arch_vals_count; i++) {
+> +                uint64_t av = field->arch_vals[i].value;
+> +                int64_t v = is_signed ?
+> +                    sextract64(av, 0, field->length) : (int64_t)av;
+> +                int64_t hv = is_signed ?
+> +                    sextract64(host, 0, field->length) : (int64_t)host;
+> +                if (v <= hv) {
+> +                    ranges_add(ranges, av, av);
+> +                }
+> +            }
+> +        } else {
+> +            g_assert(!is_signed); /* No signed field with no arch vals */
+> +            ranges_add(ranges, 0, host);
+> +        }
+> +    }
+> +done:
+> +    *value_set = g_new0(ArmFieldValueSet, 1);
+> +    (*value_set)->n_ranges = ranges->len;
+> +    (*value_set)->ranges = (ArmFieldRange *)g_array_free(ranges, false);
+> +}
+> +
+>  static bool arm_field_skip_writeback_always(const ARM64SysRegField *field)
+>  {
+>      /*
+> diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+> index 133a026036..9f15c91c4e 100644
+> --- a/target/arm/kvm_arm.h
+> +++ b/target/arm/kvm_arm.h
+> @@ -143,6 +143,32 @@ void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu);
+>  void kvm_arm_add_vcpu_properties(ARMCPU *cpu);
+>  
+>  typedef struct ARM64SysReg ARM64SysReg;
+> +typedef struct ARM64SysRegField ARM64SysRegField;
+> +typedef struct ARMISARegisters ARMISARegisters;
+> +
+> +typedef struct ArmFieldRange {
+> +    uint64_t min;
+> +    uint64_t max;
+> +} ArmFieldRange;
+> +
+> +typedef struct ArmFieldValueSet {
+> +    ArmFieldRange *ranges;
+> +    size_t n_ranges;
+> +} ArmFieldValueSet;
+> +
+> +/**
+> + * arm_field_get_supported_values:
+> + * @field: The field to get the supported values for
+> + * @host_isar: The host ISAR registers
+> + * @value_set: The set of supported values for the @field
+> + *
+> + * Will be allocated and filled in with the supported values for the @field
+> + * based on the host_isar and whether the field is writable or not.
+> + * The caller must free the value_set.
+> + */
+> +void arm_field_get_supported_values(const ARM64SysRegField *field,
+> +                                    const ARMISARegisters *host_isar,
+> +                                    ArmFieldValueSet **value_set);
+>  
+>  /**
+>   * kvm_arm_steal_time_finalize:
+Thanks
 
 Eric
-
-
->> +}
->> diff --git a/target/arm/cpu-idregs.h b/target/arm/cpu-idregs.h
->> index 245f1c8103..d866bd9e0a 100644
->> --- a/target/arm/cpu-idregs.h
->> +++ b/target/arm/cpu-idregs.h
->> @@ -38,4 +38,8 @@ typedef struct ARM64SysReg {
->>   */
->>  extern ARM64SysReg arm64_id_regs[NUM_ID_IDX];
->>  
->> +uint64_t arm_get_field_mask(const ARM64SysRegField *field);
->> +bool arm_field_is_writable(const ARM64SysRegField *field);
->> +bool field_matches(const ARM64SysRegField *field, ARMIDRegisterIdx index,
->> +                   const char *name);
->>  #endif
->> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
->> index 6974e5c551..c38b99cfce 100644
->> --- a/target/arm/kvm.c
->> +++ b/target/arm/kvm.c
->> @@ -951,6 +951,16 @@ static uint64_t *kvm_arm_get_cpreg_ptr(ARMCPU *cpu, uint64_t regidx)
->>      return &cpu->cpreg_values[res - cpu->cpreg_indexes];
->>  }
->>  
->> +/* Like kvm_arm_get_cpreg_ptr, but returns NULL if the register is not found. */
->> +static uint64_t *kvm_arm_find_cpreg_ptr(ARMCPU *cpu, uint64_t regidx)
->> +{
->> +    uint64_t *res;
->> +    res = bsearch(&regidx, cpu->cpreg_indexes, cpu->cpreg_array_len,
->> +                  sizeof(uint64_t), compare_u64);
->> +
->> +    return res ? &cpu->cpreg_values[res - cpu->cpreg_indexes] : NULL;
->> +}
->> +
->>  /**
->>   * kvm_arm_reg_syncs_via_cpreg_list:
->>   * @regidx: KVM register index
->> @@ -1252,32 +1262,105 @@ bool kvm_arm_cpu_post_load(ARMCPU *cpu)
->>      return true;
->>  }
->>  
->> +static bool arm_field_skip_writeback_always(const ARM64SysRegField *field)
->> +{
->> +    /*
->> +     * GIC is controlled by the gic-version property and fabricated by KVM
->> +     * when the vGIC device is created, so a named CPU model must not touch
->> +     * it. KVM also rejects writing 0 to ID_DFR0_EL1.CopDbg, which breaks
->> +     * booting a model that lacks AArch32 support on a host that supports
->> +     * it. MPIDR_EL1 is managed by KVM based on number of vCPUs, skip
->> +     * writing it back. Similarly, skip writing back CLIDR_EL1 till we
->> +     * properly support exposing cache for KVM guest.
->> +     */
->> +    return field_matches(field, ID_AA64PFR0_EL1_IDX, "GIC")
->> +        || field_matches(field, ID_PFR1_EL1_IDX, "GIC")
->> +        || field_matches(field, ID_DFR0_EL1_IDX, "CopDbg")
->> +        || field->index == MPIDR_EL1_IDX
->> +        || field->index == CLIDR_EL1_IDX;
->> +}
->> +
->> +static bool arm_field_skip_writeback_if_not_writable(const ARM64SysRegField *field)
->> +{
->> +    /*
->> +     * KVM populates ID_DFR0_EL1.PerfMon even for AArch64-only guests but
->> +     * does not expose it as writable there, so skip it when it is not
->> +     * writable.
->> +     */
->> +    return field_matches(field, ID_DFR0_EL1_IDX, "PerfMon");
->> +}
->> +
->>  /*
->> - * Copy writable ID regs from isar.idregs[] to cpreg_list
->> - * in case their value differs from the original init cpreg value
->> + * Copy writable ID reg fields from isar.idregs[] into the KVM cpreg list,
->> + * so the subsequent write_list_to_kvmstate() pushes them to KVM.
->> + * Only writable fields are copied; fields that must not be written back
->> + * (see arm_field_skip_writeback_*) are skipped.
->> + * Returns -1 if any vCPU's ID reg value differs from the host value and the
->> + * field is not writable.
->>   */
->> -static void kvm_arm_writable_idregs_to_cpreg_list(ARMCPU *cpu)
->> +static int kvm_arm_write_idregs_to_cpreg_list(ARMCPU *cpu)
->>  {
->>      for (int i = 0; i < NUM_ID_IDX; i++) {
->>          ARM64SysReg *sysregdesc = &arm64_id_regs[i];
->>          ARMSysRegs sysreg = id_register_sysreg[i];
->> -        uint64_t previous, new;
->> +        uint64_t writable_mask = sysregdesc->writable_mask;
->> +        uint64_t desired = cpu->isar.idregs[i];
->> +        uint64_t previous, updated;
->>          uint64_t *cpreg;
->>  
->> -        if (!sysregdesc->writable_mask) {
->> +        cpreg = kvm_arm_find_cpreg_ptr(cpu, idregs_sysreg_to_kvm_reg(sysreg));
->> +        /*
->> +         * Registers such as DCZID_EL0 are not exposed through the cpreg
->> +         * list and are therefore not writable. Use the host value
->> +         * snapshotted at probe time as the reference to check the vCPU ID
->> +         * regs have the same value.
->> +         */
->> +        previous = cpreg ? *cpreg : arm_host_cpu_features.isar.idregs[i];
->> +
->> +        if (previous == desired) {
->>              continue;
->>          }
-> while at it you could also test all reserved fields here, RAZ, RES0/1
-> and make sure host value complies with the description.
->>  
->> -        cpreg = kvm_arm_get_cpreg_ptr(cpu, idregs_sysreg_to_kvm_reg(sysreg));
->> -        previous = *cpreg;
->> -        new = cpu->isar.idregs[i];
->> +        for (int j = 0; j < sysregdesc->fields_count; j++) {
->> +            const ARM64SysRegField *field = &sysregdesc->fields[j];
->> +            uint64_t field_mask = arm_get_field_mask(field);
->> +            uint64_t prev_val = previous & field_mask;
->> +            uint64_t new_val = desired & field_mask;
->> +
->> +            if (prev_val == new_val) {
->> +                continue;
->> +            }
->> +
->> +            if (arm_field_skip_writeback_always(field) ||
->> +                (!arm_field_is_writable(field) &&
->> +                 arm_field_skip_writeback_if_not_writable(field))) {
->> +                /* Never write this field back; keep KVM's value. */
->> +                writable_mask &= ~field_mask;
->> +                continue;
->> +            }
->> +
->> +            if (!arm_field_is_writable(field)) {
->> +                error_report("%s.%s is not writable: host=0x%" PRIx64
->> +                             ", requested=0x%" PRIx64,
->> +                             sysregdesc->name, field->name,
->> +                             prev_val >> field->shift, new_val >> field->shift);
->> +                return -1;
->> +            }
->> +        }
->> +
->> +        if (!cpreg || !writable_mask) {
->> +            continue;
->> +        }
->>  
->> -        if (previous != new) {
->> -            *cpreg = new;
->> -            trace_kvm_arm_writable_idregs_to_cpreg_list(sysregdesc->name,
->> -                                                        previous, new);
->> -         }
->> +        updated = (previous & ~writable_mask) | (desired & writable_mask);
->> +        if (updated != previous) {
->> +            *cpreg = updated;
->> +            trace_kvm_arm_write_idregs_to_cpreg_list(sysregdesc->name,
->> +                                                        previous, updated);
->> +        }
->>      }
->> +
->> +    return 0;
->>  }
->>  
->>  void kvm_arm_reset_vcpu(ARMCPU *cpu)
->> @@ -2235,8 +2318,11 @@ int kvm_arch_init_vcpu(CPUState *cs)
->>      if (ret) {
->>          return ret;
->>      }
->> -    /* overwrite writable ID regs with their updated property values */
->> -    kvm_arm_writable_idregs_to_cpreg_list(cpu);
->> +    /* overwrite ID reg fields with their updated property values */
->> +    ret = kvm_arm_write_idregs_to_cpreg_list(cpu);
->> +    if (ret) {
->> +        return ret;
->> +    }
->>      ret = write_list_to_kvmstate(cpu, KVM_PUT_FULL_STATE);
->>      if (!ret) {
->>          return -1;
->> diff --git a/target/arm/trace-events b/target/arm/trace-events
->> index f33b0d821d..f042ab59b8 100644
->> --- a/target/arm/trace-events
->> +++ b/target/arm/trace-events
->> @@ -14,7 +14,7 @@ arm_gt_update_irq(int timer, int irqstate) "gt_update_irq: timer %d irqstate %d"
->>  # kvm.c
->>  kvm_arm_fixup_msi_route(uint64_t iova, uint64_t gpa) "MSI iova = 0x%"PRIx64" is translated into 0x%"PRIx64
->>  get_host_cpu_idregs(const char *name, uint64_t value) "scratch vcpu host value for %s is 0x%"PRIx64
->> -kvm_arm_writable_idregs_to_cpreg_list(const char *name, uint64_t previous, uint64_t new) "%s overwrite default 0x%"PRIx64" with 0x%"PRIx64
->> +kvm_arm_write_idregs_to_cpreg_list(const char *name, uint64_t previous, uint64_t new) "%s overwrite default 0x%"PRIx64" with 0x%"PRIx64
->>  
->>  # cpu64.c
->>  get_sysreg_prop(const char *name, uint64_t value) "%s 0x%"PRIx64
-> Thanks
-> 
-> Eric
 
 
