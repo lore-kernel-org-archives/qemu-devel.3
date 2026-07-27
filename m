@@ -4,155 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ED51C531FC
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 15:14:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F60BC531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 15:16:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woN2X-0001S9-88; Mon, 27 Jul 2026 11:14:49 -0400
+	id 1woN3m-0001zo-2c; Mon, 27 Jul 2026 11:16:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1woN2U-0001Re-80
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 11:14:46 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1woN2S-000080-Hj
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 11:14:45 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66RDldek3895621
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 15:14:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- DDlh4kO1/iCNr1/HlzAm1sRq4HaEw6b8LhHFtObuOf8=; b=kdTh3e9QBqGfC39t
- weg2EiJ20AnIjsMJBCm4htHOyBOyQHPnhChquumqDbsZpObbfQ+1SrJMx0Ar+5hd
- pcaa2jTyXTLrbO4JAXp5zWtgc9x5/8OnJ/uUds+pbpArKCegLryKVZ9S7chf5aii
- nGIDU3+S6soFEz6YrqfNaj30FlPTHmbY9wb17vG0kYdGpfOrFg5zdnrzuI0lY7WL
- nnOqg4VfQwShEnhBzPHzDNB2G62+UMEVB2VGEyEpApIhjliujmNCcpAWUfVnDugi
- KyWOIlqQFImgE590v+ya6Sh2yUeRRptPMF3coheMSACVmqXOr+NdEbuaZZ9LofdB
- ugsMOg==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fnsxs38f7-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 15:14:36 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-520a00c7a03so51035941cf.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 08:14:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1785165276; x=1785770076; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=DDlh4kO1/iCNr1/HlzAm1sRq4HaEw6b8LhHFtObuOf8=;
- b=Lm3LVg+XeWqBfkMQGuUYwZollpQUuvJ6ejbMyixfCfr52k1f197Qm9eLDQSkyULYi5
- +74eIcl40ljv1CXGyBKoJ2AB+ueGOhaFpoboKyQIe5rMPCSKYLy/gShOTU4jHgGRz0JM
- 8lhtVFi911/j7YJIoX8QJFI2qCSgIbYqXrrYNYDzjeJHvaRENq2I3k4iP1umWZ1O5Iwt
- nwcphyq7iR0dbbEpOxrbRzHvTAkqwt/4Pr7WMU49B8AsPVmbCfWOR5tZ7Tji8k0yDkqO
- ul3yXGiRnhx+O4Ibg/suaSd7z6KmCSQTXTP0G+EU0QFCjRBWkAKjpBwccvVpx5DfCoFJ
- xhvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785165276; x=1785770076;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=DDlh4kO1/iCNr1/HlzAm1sRq4HaEw6b8LhHFtObuOf8=;
- b=bQZmdPhE1I3PxUs8z5RxGBNpWIqd+1SsbkbjrFCa5eQqQLW9Pl9JSgsNN8QvR44wT5
- ECufvDSTA80d97U2CyDLdeY7qffECxohl+cc6U8o4oz6Nr4N7+ZZbOcg/3hUMEF9vuBy
- diWITdaefrn5fQCFHvfiCm5DvflErpIfKvwUmoPFp+mM0yL9egFPMBPauCdQInn3lyLK
- FGEYmx+SJUGYfGap7tGW6b17axKe5eCB5l+4Oa/wC+FGslCPlDkASsnl6Qed4CwDC3S2
- 4K2TCDP0KdCMF1Wehbln97wIsaoKnr8OganHnAXHHBNA2tvXGlzjEOQaHSh3NksPnmqg
- w6qw==
-X-Forwarded-Encrypted: i=1;
- AHgh+Roc9VHNJY2CG60wKB3bzTbVHDde2tpcb+v6JvTGtMX0Y4gUedWGIXT4dqpXigDsSJI24Ci6u+OtTgsa@nongnu.org
-X-Gm-Message-State: AOJu0Yw55aeSNo9wwtVHq0BET5LGsr3eHdvwYo/LZHw06Gjm35I+EsSh
- aym2wmAG3Xxr2cH6965fj9QzNGkhvPhWC/Um003Kv5iwdF0N1BTzOQ1gV6Zkr9k8nVB9iZn4K5v
- gVG6EOi/wePz9hLEHae12XqzaJ+u8JvsBVuUjTfg6bYSF0kxAMa5lalDqDQ==
-X-Gm-Gg: AR+sD12TUyqM4eGl4/CK3+DJKjfRwORiqKWAUMESRUJyGV0Y0+5UFcCW5zJt26XHcOW
- neMT39TN7060fHA+FPhxtsbZEp+Y7fZ0tY1ueeUVyW7GIvwk3s4zOxAH9jLj110RR8xmvNLOt/a
- e0jojykpkso0uGsNSCqlcLvDmy59mGPXi8KEqvCgMD4TyZYeGwV2vVi6Yp9bBOMSci91KMinTdW
- rG4HBLXwh3gILrcWdkFodJX3Ve1g4WM5hNqX82FqYDNMugRg5y4ZJx+1jZMKAifNS2SLdiICoqu
- GOdnMrq3R7gyX51AUtn5R7SMLNeHYhQyS0QLT7/KmQeJ/WkZk3XoiGi6QMuFsmu2cgB6Y2d9wDS
- zVxbhZ4AsaD+bM/84xDvU4iZHoTvEj7n6pplpojMk7ydseLjVXyfu14XD4IOvi7D9
-X-Received: by 2002:ac8:7c4c:0:b0:528:223c:9649 with SMTP id
- d75a77b69052e-529a888587amr92406131cf.74.1785165275723; 
- Mon, 27 Jul 2026 08:14:35 -0700 (PDT)
-X-Received: by 2002:ac8:7c4c:0:b0:528:223c:9649 with SMTP id
- d75a77b69052e-529a888587amr92405731cf.74.1785165275206; 
- Mon, 27 Jul 2026 08:14:35 -0700 (PDT)
-Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
- [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-529a27f68f3sm56829801cf.9.2026.07.27.08.14.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Jul 2026 08:14:34 -0700 (PDT)
-Message-ID: <ca200df0-1f09-4ab4-be20-351286be0cbb@oss.qualcomm.com>
-Date: Mon, 27 Jul 2026 10:14:31 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1woN3W-0001sC-AT
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 11:15:58 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1woN3K-0000Oo-0y
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 11:15:49 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 27D6D7BC89;
+ Mon, 27 Jul 2026 15:15:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1785165329; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+Z1tU7YA2oQeCt6K4oDpOZ7+jb7KYPpv16Eo+KL6jHU=;
+ b=Rw3wtXo/jZoRcbMTpM24XE8Aoclfp7nbtER9muwvVstbM7JCb2+4DGM00MKJHKZ4v7lL9k
+ Mq/XV/9kW3fxmrS0mN/EKmTemgb+1hnbf6EBXPLX8iqciotv/xfbsQtxn64eI4eJYvOWn1
+ pXY/oPMpATvNfNgKVXTnUqpcpWxffyU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1785165329;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+Z1tU7YA2oQeCt6K4oDpOZ7+jb7KYPpv16Eo+KL6jHU=;
+ b=cH7UioFXJZBLm99Dr85qWqjr7JcDk8O4NU5GoUCs6rcatm22lD/lc93pIRuUbPjOl3bdrO
+ jUN5eGT2ey+3JzBA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1785165325; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+Z1tU7YA2oQeCt6K4oDpOZ7+jb7KYPpv16Eo+KL6jHU=;
+ b=OaUD7xiq4Dvl1cGFBCo2ULVBzZDQxicLtsbnBCdhq+4RMWrQf2B1nAyXbkPy8ZnJvAlvwr
+ GPfzshau7VummlUhOplnu8/ayNmCIt+YBD2xKQSSI89axxYHW1fB1sgPqrX4mIdXXe2Vi3
+ nc3s8Ci7XXufse0+DYM5yncsM8cot9s=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1785165325;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+Z1tU7YA2oQeCt6K4oDpOZ7+jb7KYPpv16Eo+KL6jHU=;
+ b=FP1akH2H//AnYxpQaWIgEQtvld/pJBstMjocO2eK9u33Tzqj9zDX1ic1GYR+6FL4Jd+ZFi
+ kw2FimqbDMHnXVCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B372E779B9;
+ Mon, 27 Jul 2026 15:15:24 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id hE8VIQx2Z2oXcAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 27 Jul 2026 15:15:24 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Thomas Huth <thuth@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, Florian Schmidt
+ <flosch@nutanix.com>, Paolo Bonzini <pbonzini@redhat.com>, =?utf-8?Q?Marc?=
+ =?utf-8?Q?-Andr=C3=A9?=
+ Lureau <marcandre.lureau@redhat.com>, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>, Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] Add option to disable building tests
+In-Reply-To: <3677fd2b-64fc-45fe-8bb7-04f84773c77e@oss.qualcomm.com>
+References: <20260724135413.1716872-1-flosch@nutanix.com>
+ <708798a8-3d43-48d9-a4f6-210eb88a88cb@oss.qualcomm.com>
+ <92358092-080b-4b1d-82e5-733d2531ff38@oss.qualcomm.com>
+ <c68be7c9-113d-4de1-8ab5-bee142e8db15@redhat.com>
+ <6b432df2-b318-75ec-e26d-e1134baa06ca@eik.bme.hu>
+ <3677fd2b-64fc-45fe-8bb7-04f84773c77e@oss.qualcomm.com>
+Date: Mon, 27 Jul 2026 12:15:18 -0300
+Message-ID: <87bjbspipl.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/7] hw/hexagon: fix machine->fdt leak in qom-test
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
- Jonathan Cameron <jic23@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Wei Liu <wei.liu@kernel.org>,
- linux-cxl@vger.kernel.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-References: <20260725-fix2-v1-0-5c9a6ce7b96a@redhat.com>
- <20260725-fix2-v1-4-5c9a6ce7b96a@redhat.com>
-Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260725-fix2-v1-4-5c9a6ce7b96a@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDE0MyBTYWx0ZWRfX3wMJf09M3Mdx
- BjrZ/nnIUnn+wksY5ChIqlX4Y2WB23On1JDSXKY5Ltp3vSVRzSfT2amvqA8gnVXhx4BlOgv2Ga+
- eHiYcz17XNSixCBk4/HILdSUXKjidVo1OAssnQnKHm8CeOQgExWjZL/mb2zaWbC3CtmkS18NMWz
- lgN1eL1A5EZoNF9YFNY2OzXmGGdBRbHTKED0tWkDVJXOzWv3CXem3aKdOhdXhPR+abK/vCCYgCC
- HGAobEcHQzTg/Di+eyIl0CVSG1vbcfAR9MTyCJjpqnxBaodWJwJ71B6D2V7F1br/e58MHhsoyfT
- A2BF40yr5BWl/oZmlEmNGqCkDy2TbU0eN/YJ5AxnaSMelKEDiBRCOFV4cWPQ9CrrMZ4ZZUevF9h
- rFKF5CpH/vWsCaQKiOEY008XjJaqdkP/sQO6uHq/6pyckYqgjtItwB5izEVlEDadfPG4NyVCkd8
- Kh4AtjrRRPjyCK7zoGg==
-X-Authority-Analysis: v=2.4 cv=EYr4hvmC c=1 sm=1 tr=0 ts=6a6775dc cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=vonYgpfw9pO0NH89MCAA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-ORIG-GUID: RcGYNu7aQUCOhUE8TTe-FL8WVaOD5RP1
-X-Proofpoint-GUID: RcGYNu7aQUCOhUE8TTe-FL8WVaOD5RP1
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDE0MyBTYWx0ZWRfXz+YMx+q8XXLs
- ckxsLSzPMAtgb42dIgkV07/l9UThUPyj/WXdA0bEyVOCD1SBrKi0R9AqOQy2wftbzrsZZ1YWfZ6
- KblsXbeT5HME+Zsdmwt2/U5/d+tFWSw=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-27_04,2026-07-24_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 suspectscore=0 clxscore=1015 priorityscore=1501
- bulkscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607270143
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[11]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
+ qualcomm.com:email]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -169,61 +131,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> writes:
 
-On 7/25/2026 9:00 AM, Marc-André Lureau wrote:
-> virt_instance_init() built the FDT unconditionally at QOM
-> instance-init time, so simply instantiating the object (e.g. via
-> qom-test's introspection, without ever realizing the machine) leaked
-> the 1MB FDT blob: machine_finalize() does not free machine->fdt.
+> On 27/7/26 13:19, BALATON Zoltan wrote:
+>> On Mon, 27 Jul 2026, Thomas Huth wrote:
+>>> On 27/07/2026 10.12, Philippe Mathieu-Daud=C3=A9 wrote:
+>>>> On 24/7/26 18:45, Pierrick Bouvier wrote:
+>>>>> On 7/24/2026 6:54 AM, Florian Schmidt wrote:
+>>>>>> There are situations in which you might want to build QEMU without
+>>>>>> building the full test suite, which in some configurations can take a
+>>>>>> considerable amount of time to build. This is especially true when=20
+>>>>>> using
+>>>>>> LTO with clang. For example:
+>>>>>>
+>>>>>> $ ../configure --cc=3Dclang '--extra-ldflags=3D-flto=3Dthin -ffat-lt=
+o-=20
+>>>>>> objects' '--extra-cflags=3D-flto=3Dthin -ffat-lto-objects' --target-=
+=20
+>>>>>> list=3Dx86_64-softmmu
+>>>>>> [...]
+>>>>>> $ time make -j8
+>>>>>> [...]
+>>>>>> [3078/3078] Linking target tests/qtest/qos-test
+>>>>>> real=C2=A0=C2=A0=C2=A0 6m43.250s
+>>>>>> user=C2=A0=C2=A0=C2=A0 101m15.967s
+>>>>>> sys=C2=A0=C2=A0=C2=A0=C2=A0 4m3.813s
+>>>>>>
+>>>>>> $ ../configure --cc=3Dclang '--extra-ldflags=3D-flto=3Dthin -ffat-lt=
+o-=20
+>>>>>> objects' '--extra-cflags=3D-flto=3Dthin -ffat-lto-objects' --target-=
+=20
+>>>>>> list=3Dx86_64- softmmu --disable-tests
+>>>>>> [...]
+>>>>>> $ time make -j8
+>>>>>> [...]
+>>>>>> [2024/2024] Linking target qemu-system-x86_64
+>>>>>>
+>>>>>> real=C2=A0=C2=A0=C2=A0 3m14.277s
+>>>>>> user=C2=A0=C2=A0=C2=A0 33m13.174s
+>>>>>> sys=C2=A0=C2=A0=C2=A0=C2=A0 1m36.642s
+>>>>>>
+>>>>>> Add a toggle to optionally disable building tests.
+>>>>>>
+>>>>>> Signed-off-by: Florian Schmidt <flosch@nutanix.com>
+>>>>>> ---
+>>>>>> =C2=A0 meson.build=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2 +-
+>>>>>> =C2=A0 meson_options.txt=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2 ++
+>>>>>> =C2=A0 scripts/meson-buildoptions.sh | 3 +++
+>>>>>> =C2=A0 3 files changed, 6 insertions(+), 1 deletion(-)
+>>>>>>
+>>>>>> diff --git a/meson.build b/meson.build
+>>>>>> index 49a5baf5b5..ad728c26ec 100644
+>>>>>> --- a/meson.build
+>>>>>> +++ b/meson.build
+>>>>>> @@ -4605,7 +4605,7 @@ subdir('docs')
+>>>>>> =C2=A0 subdir('pyvenv')
+>>>>>> =C2=A0 # Tests are disabled on emscripten because they rely on host=
+=20
+>>>>>> features that aren't
+>>>>>> =C2=A0 # supported by emscripten (e.g. fork and unix socket).
+>>>>>> -if host_os !=3D 'emscripten'
+>>>>>> +if get_option('tests').allowed() and host_os !=3D 'emscripten'
+>>>>>> =C2=A0=C2=A0=C2=A0 subdir('tests')
+>>>>>> =C2=A0 endif
+>>>>>> =C2=A0 if gtk.found()
+>>>>>> diff --git a/meson_options.txt b/meson_options.txt
+>>>>>> index a07cb47d35..68333ca402 100644
+>>>>>> --- a/meson_options.txt
+>>>>>> +++ b/meson_options.txt
+>>>>>> @@ -43,6 +43,8 @@ option('gdb', type: 'string', value: '',
+>>>>>> =C2=A0 # on the configure script command line.=C2=A0 After adding an=
+ option
+>>>>>> =C2=A0 # here make sure to run "make update-buildoptions".
+>>>>>> +option('tests', type: 'feature', value: 'auto',
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 description: 'Build the test s=
+uite')
+>>>>>> =C2=A0 option('docs', type : 'feature', value : 'auto',
+>>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 description: 'Docum=
+entations build support')
+>>>>>> =C2=A0 option('fuzzing', type : 'boolean', value: false,
+>>>>>> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-=20
+>>>>>> buildoptions.sh
+>>>>>> index c003985047..3fec13a336 100644
+>>>>>> --- a/scripts/meson-buildoptions.sh
+>>>>>> +++ b/scripts/meson-buildoptions.sh
+>>>>>> @@ -194,6 +194,7 @@ meson_options_help() {
+>>>>>> =C2=A0=C2=A0=C2=A0 printf "%s\n" '=C2=A0 spice-protocol=C2=A0 Spice =
+protocol support'
+>>>>>> =C2=A0=C2=A0=C2=A0 printf "%s\n" '=C2=A0 stack-protector compiler-pr=
+ovided stack=20
+>>>>>> protection'
+>>>>>> =C2=A0=C2=A0=C2=A0 printf "%s\n" '=C2=A0 tcg=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 TCG support'
+>>>>>> +=C2=A0 printf "%s\n" '=C2=A0 tests=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 build test suite'
+>>>>>> =C2=A0=C2=A0=C2=A0 printf "%s\n" '=C2=A0 tools=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 build support utilities that=20
+>>>>>> come with QEMU'
+>>>>>> =C2=A0=C2=A0=C2=A0 printf "%s\n" '=C2=A0 tpm=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 TPM support'
+>>>>>> =C2=A0=C2=A0=C2=A0 printf "%s\n" '=C2=A0 u2f=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 U2F emulation support'
+>>>>>> @@ -515,6 +516,8 @@ _meson_option_parse() {
+>>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 --enable-tcg-interpreter) printf "%s"=
+ -Dtcg_interpreter=3Dtrue ;;
+>>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 --disable-tcg-interpreter) printf "%s=
+" -=20
+>>>>>> Dtcg_interpreter=3Dfalse ;;
+>>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 --tls-priority=3D*) quote_sh "-Dtls_p=
+riority=3D$2" ;;
+>>>>>> +=C2=A0=C2=A0=C2=A0 --enable-tests) printf "%s" -Dtests=3Denabled ;;
+>>>>>> +=C2=A0=C2=A0=C2=A0 --disable-tests) printf "%s" -Dtests=3Ddisabled =
+;;
+>>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 --enable-tools) printf "%s" -Dtools=
+=3Denabled ;;
+>>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 --disable-tools) printf "%s" -Dtools=
+=3Ddisabled ;;
+>>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 --enable-tpm) printf "%s" -Dtpm=3Dena=
+bled ;;
+>>>>>
+>>>>> That's a great addition, including just for speeding up normal builds.
+>>>>>
+>>>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>>>> Tested-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>>>>
+>>>>> If we want to overengineer the thing, it could be possible to still
+>>>>> declare all tests, but not build them by default. However, it's=20
+>>>>> probably
+>>>>> too error prone and much less simple than this patch. So I don't think
+>>>>> it's a good idea.
+>>>>>
+>>>>> Regards,
+>>>>> Pierrick
+>>>>>
+>>>>
+>>>> When is it useful to build without the provided test suite?
+>>> I sometimes wished indeed for a --disable-tests switch in the past=20
+>>> already (was just too lazy to contribute a patch): I'm sometimes=20
+>>> building QEMU in a separate directory, just for a very special case=20
+>>> like testing a patch with an --enable-asan build, or for doing a "git=20
+>>> bisect". In such cases, I never want to run the normal tests since=20
+>>> it's simply not necessary. I run the tests from my main build=20
+>>> directory instead once I have a final patch and want to contribute it=20
+>>> to upstream. So IMHO this patch is a good idea.
+>>=20
+>> I similarly have a local patch for this for such usage, that I never=20
+>> cleaned up to submit but I think it's a good idea.
 >
-> Other boards (arm/virt, riscv/virt, ...) build the FDT lazily from
-> their MachineClass::init callback, which only runs when the machine
-> is actually selected to boot. Do the same here by moving create_fdt()
-> into virt_init().
->
-> Fixes: 88a8bc7f43ff ("hw/hexagon: Define hexagon "virt" machine")
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
+> I'm not saying this patch is a bad idea, I'll likely use it too;
+> I want to clarify what are the valid use cases the community sees
+> here. Building pointless things clearly has a negative impact on
+> resources and our time, but not testing changes also has.
 
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Perhaps we could add something to checkpatch that emits an error if
+config-status has --disable-tests.
 
+> IOW in somes cases this change is acceptable, but I'm a little wary
+> on massive use by default.
+>
+> Anyway I didn't wanted to start yet another endless discussion so I
+> won't intervene further in this thread, sorry for the usual noise.
 
->   hw/hexagon/virt.c | 9 +--------
->   1 file changed, 1 insertion(+), 8 deletions(-)
->
-> diff --git a/hw/hexagon/virt.c b/hw/hexagon/virt.c
-> index a3638998b873..b75047250260 100644
-> --- a/hw/hexagon/virt.c
-> +++ b/hw/hexagon/virt.c
-> @@ -175,13 +175,6 @@ static void fdt_add_cpu_nodes(const HexagonVirtMachineState *vms)
->   
->   
->   
-> -static void virt_instance_init(Object *obj)
-> -{
-> -    HexagonVirtMachineState *vms = HEXAGON_VIRT_MACHINE(obj);
-> -
-> -    create_fdt(vms);
-> -}
-> -
->   void hexagon_load_fdt(const HexagonVirtMachineState *vms)
->   {
->       MachineState *ms = MACHINE(vms);
-> @@ -242,6 +235,7 @@ static void virt_init(MachineState *ms)
->       DeviceState *cpu0;
->       int32_t clk_phandle;
->   
-> +    create_fdt(vms);
->       qemu_fdt_setprop_string(ms->fdt, "/chosen", "bootargs", ms->kernel_cmdline);
->   
->       vms->sys = get_system_memory();
-> @@ -341,7 +335,6 @@ static const TypeInfo virt_machine_types[] = { {
->       .parent = TYPE_HEXAGON_COMMON_MACHINE,
->       .instance_size = sizeof(HexagonVirtMachineState),
->       .class_init = virt_class_init,
-> -    .instance_init = virt_instance_init,
->   } };
->   
->   DEFINE_TYPES(virt_machine_types)
->
+I think we'd rather have your comments and everyone else's, there's no
+deadline for anything.
 
