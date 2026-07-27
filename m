@@ -4,123 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07E9AC531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 17:33:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E540FC531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 17:36:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woPC6-0000oU-OZ; Mon, 27 Jul 2026 13:32:50 -0400
+	id 1woPF4-0001SU-SF; Mon, 27 Jul 2026 13:35:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jdaley@linux.ibm.com>)
- id 1woPBr-0000k8-Vk; Mon, 27 Jul 2026 13:32:40 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1woPEt-0001S2-RS
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 13:35:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jdaley@linux.ibm.com>)
- id 1woPBq-00036I-1p; Mon, 27 Jul 2026 13:32:35 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66RDnSJx2292084; Mon, 27 Jul 2026 17:32:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=GiD9IP
- VREX/OtmYGnuyfd6RgG83S5c4iTmRc/y8CC5o=; b=QMWcHR/8eJn7Qp8ZSAAclt
- Thc1FLmM/0z+mKvd1nsEE75ls2ibCsKMUS3JwRML95rzWFFRFJCMx1M/dmJn/6Q/
- qe6CUGZKvnZhz29RhJUb20DsVsaDZDxSHaigyicfm84OcueO1uAFpOnj0BCNn267
- BJPNh1MGNp0s9wkPA0EKIW9Xw9h57eRkk8oVusd1L15GMQ2pVfnVxhEaLXqcaOQG
- GZdv2TCLffOSW6O0LegW91MhjwtJU2zzOupCuDEnw9HZHzu8tkZjwE4na5KxIr4p
- Pa9Fn4pEQsTq06klHlYgHv0dyI/jE52hGdQpdCjQB7t89M7u0JEhRVx4YNMidnYg
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0ngu01-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Jul 2026 17:32:28 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66RHQFvO026653;
- Mon, 27 Jul 2026 17:32:27 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fn7fq6gtt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Jul 2026 17:32:27 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66RHWQ3N30474770
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 27 Jul 2026 17:32:26 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 57FFC58043;
- Mon, 27 Jul 2026 17:32:26 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2ABEC58059;
- Mon, 27 Jul 2026 17:32:25 +0000 (GMT)
-Received: from [9.61.245.60] (unknown [9.61.245.60])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 27 Jul 2026 17:32:25 +0000 (GMT)
-Message-ID: <2b6fe910-9b7d-4174-bdc5-ae5fb12c327c@linux.ibm.com>
-Date: Mon, 27 Jul 2026 13:32:28 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1woPEr-0003iL-H0
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 13:35:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785173740;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=AUgExyhfsCw38P4tG6J27CMxDFNXJXw8wj+sjyMXnJk=;
+ b=D4m1OeERHJUaUozToOTN1wQs37zymMFT33hboXcMr/zatYlb+Nb7FntzKOg85SAxkXRhI7
+ QffyEF8TRK/842SufvlG02SkBjIE5omcAT9Ki+HeY0Ko/l6ibTznsRY9BqrZz0JrRQ6cQ0
+ Nfu0/AAdUOuZPKP2tGWDwYza3i95s7M=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-170-O_L1OnR7Nlu5o07j20ZQPA-1; Mon, 27 Jul 2026 13:35:38 -0400
+X-MC-Unique: O_L1OnR7Nlu5o07j20ZQPA-1
+X-Mimecast-MFC-AGG-ID: O_L1OnR7Nlu5o07j20ZQPA_1785173737
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49544a639e9so15795155e9.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 10:35:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1785173737; x=1785778537; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=AUgExyhfsCw38P4tG6J27CMxDFNXJXw8wj+sjyMXnJk=;
+ b=AKaiu/UpIns7ugSsZMDKXO7MbmbeAxm907c6si7Gz+vy5bv0kIcIeRxo+UtzSMaeHo
+ 6Lm5WF0hBU7XLqb1cF/LYjNekNfFCjZGryR7ijH4jme5+IuNjbH2bTrpkWYZ4fO5gw3Y
+ /8bne4wDVqdnxeYekExcI4KmSRkfKdehrZUIyZngHeHBRGyf/hOqCZyz7CaMLXPPTNZs
+ W03scR+BvdxqjvY7bAOmcPen1vhoDW81V9N9BULnd8X76PmR1DxakEMk21MSKlgrUmht
+ yRZoYj/VVzFHnvHnJ6eZaXfg8pHsYbKR565rBoeFLPvKB3B1fIEN/1zxwwQMOOGYb9VD
+ ww+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785173737; x=1785778537;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=AUgExyhfsCw38P4tG6J27CMxDFNXJXw8wj+sjyMXnJk=;
+ b=OZpHAjeo3mPdtgDrrYuWRKPju/+hcRcXwwLAUSWSbvIFQLo9kcpNfFJIeqHu58Ud3E
+ GA3L430YCBPN9HFdKu6q+JvBa8lza8goNc0lPf5Cd7LmtIPEzF4WYXm/+i8fwQUXN5h0
+ eyBJYeEjoimrMnvSG5a6VpcOavb6Xjxz5vl2XgZWwyf5RsOgU0FcHIv1H2sH05YyH9P7
+ neix6thVcTPwljVkEt3ibc2nVq9o6NWW+x5/oLNt5Nd93mXwnQdaLHMGhLBRCbGef3z3
+ 9p5B/aMrDiM/KmRUV6cDJalTZwnmJMsN1YX1/XT0AujSOy2N20I6xfOYlxhYKaJ8uRqf
+ 7nXw==
+X-Gm-Message-State: AOJu0YxAJBWJoi/A+h5vjl8agaGon0D11a7mbHkBkkBsH6AKt/ZW6EDp
+ dveXLEb3qkt6tsXMKhgbQIjK3apuD1SVpXacMJ7aJBpszXk9b5btaPaGOoa22LBYY7c9jJAw0Tm
+ 5g9ouFdryStMoIm36eNdVHiZ4MDPuTUR9oBfb5sEKBaTkZk1S74cj7mNjCRDyd0riFRwv2mV8sP
+ 8RhLOU6lCCGhxRqYtNPnyygBof4u6udFHzUQ==
+X-Gm-Gg: AR+sD13f187OVpq9SJsJXNqMO7bT8xG0GltK+xLJmSqd25XAewJZHCHGXrO9W2zXFD1
+ ECgoN0CKablmTuXj2x+f7b9TyNgHPrI5DrPngCC7hklvHJ1iQEJ563fGkvVIysQcXfdVM4Qeqe+
+ Dvdgc6TYF9VoABcxtJJbMF53lcZdCQYoenPx+AmvU2aWFI4FTgFp/XUxslsP5Nl6eNJPlByxYfy
+ V6ZLSlefy6d0dAHwqGK7H2Xri9N9mXgXhu8W0n5nQhMsPsUOQSoJDyj1nl7qC4G2p8BQ4HCnfrF
+ wC3EUScnzCIslTNYrK5bzC8tlJuDnLqhZWi9rrM8CVWByd07UNonhTdIC/BRRbw/Bs8S00+NZ/2
+ oRDRNZuYT5s5tylLXHP1Okt5m4zaEykBXPpiJz18=
+X-Received: by 2002:a05:600c:a46:b0:495:5858:8101 with SMTP id
+ 5b1f17b1804b1-496b5717865mr127412065e9.15.1785173737393; 
+ Mon, 27 Jul 2026 10:35:37 -0700 (PDT)
+X-Received: by 2002:a05:600c:a46:b0:495:5858:8101 with SMTP id
+ 5b1f17b1804b1-496b5717865mr127411645e9.15.1785173736837; 
+ Mon, 27 Jul 2026 10:35:36 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-496c45b1c76sm7586075e9.6.2026.07.27.10.35.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 Jul 2026 10:35:36 -0700 (PDT)
+Message-ID: <ad1d1648-9bfa-4539-9bbc-86577ccff2c3@redhat.com>
+Date: Mon, 27 Jul 2026 19:35:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] pc-bios/s390-ccw: bound zipl menu strlen and replace
- VLA in zipl_print_entry
-To: Matthew Rosato <mjrosato@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
- Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Hendrik Brueckner <brueckner@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Jared Rossi <jrossi@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20260727115052.24289-1-borntraeger@linux.ibm.com>
- <20260727115052.24289-6-borntraeger@linux.ibm.com>
- <91d5f2b9-2b32-4b62-95c7-4526261d1326@linux.ibm.com>
- <1b3104c9-fd26-4730-a148-a5e5f13beed9@linux.ibm.com>
-Content-Language: en-US
-From: Joshua Daley <jdaley@linux.ibm.com>
-In-Reply-To: <1b3104c9-fd26-4730-a148-a5e5f13beed9@linux.ibm.com>
+Subject: Re: [RFC PATCH 00/11] igb: Add experimental VF live migration support
+To: qemu-devel@nongnu.org
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>
+References: <20260727053935.1392269-1-clg@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260727053935.1392269-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDE2MCBTYWx0ZWRfX8hhp6AMW7HE+
- Rch1JqSOhHjRxMg4PI88GyXynVcXnJSOgjZMZnvkNHOyM2ZapFLAmG55votjrEi4cneqOVBfn/Y
- QHJaCqreOkl+c803dpsHhj48Ik4pyMM=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDE2MCBTYWx0ZWRfX686aNX4IkE3v
- N1DTfArHCbaSJiyVmn2dp4Dsig3FQrROB93hAJ1VnByzFHuko+jvbqskKFQl03pZMU8Z/vqscH9
- I2riz7q4jXU1uwgZhvAVR1sWmP8LWP7d1wItRxPf0c+DlknS0t1qI2s/yI+1YmF1e8y2Hzf7sYF
- NCCTUx/YkgEGdb/reqP2I7aJu7qrhAB5n44NJC29MS9r9sObJnQ4MvBK7aesYZb9O1y8y4IMllp
- q5eoPIlgB68FIDKdpV3zJcohtyYk/HQ02oS9ME21LTjC53bwHpuEfeYLOHhq5VNfwvMPeMru84W
- JaqMIBfszt85GR0eH7B/ruD1qZXKbEqaRwfxtGg0DgQNQf6+9ME4+RVmC683vTo5mFan88I56CW
- k7RpTozswRCJDbn8ZFO0RO3y7Li0Bktbz4wlirJZ+1HhlHyKRVNGudgZ8g1ONWKizMVVCj/IGg1
- oUu3jtF+ulS9JaaIh/g==
-X-Authority-Analysis: v=2.4 cv=b5WCJNGx c=1 sm=1 tr=0 ts=6a67962c cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=wJQADOalA8wbFj7LChAA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: 3wkBfDXZSXLQhyg2oXHTJH-7fpBgOgkD
-X-Proofpoint-ORIG-GUID: 3wkBfDXZSXLQhyg2oXHTJH-7fpBgOgkD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-27_04,2026-07-24_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0 impostorscore=0
- bulkscore=0 phishscore=0 suspectscore=0 clxscore=1011 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607270160
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jdaley@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,218 +168,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/27/2026 12:02 PM, Matthew Rosato wrote:
-> On 7/27/26 11:51 AM, Matthew Rosato wrote:
->> On 7/27/26 7:50 AM, Christian Borntraeger wrote:
->>> From: Joshua Daley <jdaley@linux.ibm.com>
->>>
->>> menu_get_zipl_boot_index() calls strlen() on a pointer into the middle
->>> of _s2 with no upper bound, so a stage-2 image whose blocks contain no
->>> NUL bytes causes strlen() to walk beyond _s2. The resulting length
->>> is then used to size a stack VLA in zipl_print_entry(), risking a stack
->>> overflow.
->>>
->>> Fix by:
->>>
->>> - Implementing strnlen(), a bounded version of strlen().
->>>
->>> - Adding a menu_data_end parameter to menu_get_zipl_boot_index() and
->>>    replacing both strlen() calls with strnlen() bounded by the remaining
->>>    buffer space. The loop guard also checks that the pointer has not
->>>    reached menu_data_end. For robustness, the function returns 0
->>>    (boot default) if somehow menu_data is initially >= menu_data_end.
->>>
->>> - Replacing the VLA char buf[len + 2] in zipl_print_entry() with a fixed
->>>    ZIPL_ENTRY_MAX + 2 (82-byte) buffer and truncating len before use.
->>>
->>> - Passing s2_end (_s2 + sizeof(_s2)) as menu_data_end at the one call
->>>    site in eckd_get_boot_menu_index(), so the bound is exactly the end of
->>>    the buffer.
->>>
->>> Fixes: f7178910845a ("s390-ccw: print zipl boot menu")
->>> Signed-off-by: Joshua Daley <jdaley@linux.ibm.com>
->>> ---
->>>   pc-bios/s390-ccw/bootmap.c  |  4 +++-
->>>   pc-bios/s390-ccw/helper.h   | 10 ++++++++++
->>>   pc-bios/s390-ccw/menu.c     | 23 ++++++++++++++++++-----
->>>   pc-bios/s390-ccw/s390-ccw.h |  2 +-
->>>   4 files changed, 32 insertions(+), 7 deletions(-)
->>>
->>> diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
->>> index ed6e8cbbc7..81512265ce 100644
->>> --- a/pc-bios/s390-ccw/bootmap.c
->>> +++ b/pc-bios/s390-ccw/bootmap.c
->>> @@ -61,6 +61,7 @@ static uint8_t _s2[MAX_SECTOR_SIZE * 3] __attribute__((__aligned__(PAGE_SIZE)));
->>>   static void *s2_prev_blk = _s2;
->>>   static void *s2_cur_blk = _s2 + MAX_SECTOR_SIZE;
->>>   static void *s2_next_blk = _s2 + MAX_SECTOR_SIZE * 2;
->>> +static void *s2_end = _s2 + sizeof(_s2);
->>>   
->>>   static inline int verify_boot_info(BootInfo *bip)
->>>   {
->>> @@ -308,7 +309,8 @@ static int eckd_get_boot_menu_index(block_number_t s1b_block_nr)
->>>                   }
->>>               }
->>>   
->>> -            return menu_get_zipl_boot_index(s2_cur_blk + banner_offset);
->>> +            return menu_get_zipl_boot_index(s2_cur_blk + banner_offset,
->>> +                                            s2_end);
->>>           }
->>>   
->>>           prev_block_nr = cur_block_nr;
->>> diff --git a/pc-bios/s390-ccw/helper.h b/pc-bios/s390-ccw/helper.h
->>> index 8e3dfcb6d6..d9b7da444a 100644
->>> --- a/pc-bios/s390-ccw/helper.h
->>> +++ b/pc-bios/s390-ccw/helper.h
->>> @@ -45,4 +45,14 @@ static inline void sleep(unsigned int seconds)
->>>       }
->>>   }
->>>   
->>> +static inline size_t strnlen(const char *s, size_t maxlen)
->>> +{
->>> +    size_t len = 0;
->>> +
->>> +    while (len < maxlen && s[len]) {
->>> +        len++;
->>> +    }
->>> +    return len;
->>> +}
->>> +
->>>   #endif
->>> diff --git a/pc-bios/s390-ccw/menu.c b/pc-bios/s390-ccw/menu.c
->>> index b6a9a56d46..af96a83de9 100644
->>> --- a/pc-bios/s390-ccw/menu.c
->>> +++ b/pc-bios/s390-ccw/menu.c
->>> @@ -16,6 +16,7 @@
->>>   #include "s390-ccw.h"
->>>   #include "sclp.h"
->>>   #include "s390-time.h"
->>> +#include "helper.h"
->>>   
->>>   #define KEYCODE_NO_INP '\0'
->>>   #define KEYCODE_ESCAPE '\033'
->>> @@ -26,6 +27,9 @@
->>>   #define ZIPL_TIMEOUT_OFFSET 138
->>>   #define ZIPL_FLAG_OFFSET    140
->>>   
->>> +/* Max printable chars for a zipl boot menu entry */
->>> +#define ZIPL_ENTRY_MAX 80
->>> +
->>>   #define TOD_CLOCK_MILLISECOND   0x3e8000
->>>   
->>>   #define LOW_CORE_EXTERNAL_INT_ADDR   0x86
->>> @@ -179,9 +183,13 @@ int menu_get_boot_index(bool *valid_entries)
->>>   /* Returns the entry number that was printed, or -1 on invalid entry */
->>>   static int zipl_print_entry(const char *data, size_t len)
->>>   {
->>> -    char buf[len + 2];
->>> +    char buf[ZIPL_ENTRY_MAX + 2];
->>>       const char *p;
->>>   
->>> +    if (len > ZIPL_ENTRY_MAX) {
->>> +        len = ZIPL_ENTRY_MAX;
->>> +    }
->>> +
->>>       ebcdic_to_ascii(data, buf, len);
->>>       buf[len] = '\n';
->>>       buf[len + 1] = '\0';
->>> @@ -196,7 +204,7 @@ static int zipl_print_entry(const char *data, size_t len)
->>>       return atoi(p);
->>>   }
->>>   
->>> -int menu_get_zipl_boot_index(const char *menu_data)
->>> +int menu_get_zipl_boot_index(const char *menu_data, const char *menu_data_end)
->>>   {
->>>       size_t len;
->>>       int entry;
->>> @@ -212,13 +220,18 @@ int menu_get_zipl_boot_index(const char *menu_data)
->>>           timeout = zipl_timeout * 1000;
->>>       }
->>>   
->>> +    if (menu_data >= menu_data_end) {
->>> +        return 0;
->>> +    }
->>> +
->>>       /* Print banner */
->>>       puts("s390-ccw zIPL Boot Menu\n");
->>> -    menu_data += strlen(menu_data) + 1;
->>> +    len = strnlen(menu_data, menu_data_end - menu_data);
->>> +    menu_data += len + 1;
->>
->> If we've already hit menu_data_end at this point should we bail rather
->> than skipping the while() loop and immediately proceeding into
->> menu_get_boot_index(valid_entries); with an all-false array?
->>
->> AFAICT the current implementation would print no options and wait for
->> user input.
-Right.
+Akihiko,
 
->>
->> e.g. something like
->>
->>      if (menu_data >= menu_data_end)
->>          return 0;
+On 7/27/26 07:39, Cédric Le Goater wrote:
+> Hello,
 > 
-> Hm, well, my proposal would still print the s390-ccw zIPL Boot Menu\n
-> message but then quietly use the default boot option.
+> Live migration of VFIO-passthrough devices - SR-IOV VFs, vGPUs - is a
+> growing requirement, but real hardware with migration support is
+> scarce and hard to debug. An emulated device provides a fully
+> controlled testbed for developing and validating the entire software
+> stack - vfio-pci variant drivers, VFIO core migration v2 framework,
+> QEMU, libvirt - and for tuning complex migration policies such as
+> downtime convergence. It also serves as an educational reference for
+> understanding VFIO migration end-to-end, from device state
+> serialization to dirty page tracking.
 > 
-> Maybe it would be better to move the
-> +    len = strnlen(menu_data, menu_data_end - menu_data);
-> +    menu_data += len + 1;
+> This series adds an experimental VF live migration interface to the
+> emulated igb (82576) device. It enables a vfio-pci variant driver
+> (igb-vfio-pci) to migrate VFs using the standard VFIO migration v2
+> protocol with stop-copy and pre-copy support.
 > 
-> up a few lines before the puts and combine it with the menu_data >=
-> menu_data_end check you already added?  That way in both cases we
-> silently take the default option without printing anything?
+> The target scenario is nested virtualization:
+> 
+>    L0 QEMU (these patches)
+>      igb PF with x-vf-migration=on
+>      └── VFs with migration BAR + vendor cap
+> 
+>    L1 kernel
+>      igb-vfio-pci variant driver [1]
+>      translates VFIO migration v2 ioctls → BAR2 MMIO
+> 
+>    L1 QEMU (stock, unmodified)
+>      vfio-pci device model, standard migration fd
+> 
+>    L2 guest
+>      standard igbvf driver, unaware of migration
+> 
+> The L1 QEMU is completely unmodified -- it sees a standard VFIO
+> migratable device and uses the normal migration fd path.
+> 
+> * Design
+> 
+> The migration interface is exposed through a hidden 64KB PCI BAR
+> (BAR2) on each VF, discovered via a vendor-specific PCI capability
+> ("MIGB", PCI_CAP_ID_VNDR). The BAR exposes a register-based state
+> machine that mirrors VFIO migration states (RUNNING, STOP, STOP_COPY,
+> RESUMING, PRE_COPY).
+> 
+> Device state is serialized as a versioned blob of per-VF register
+> (offset, value) pairs covering control, interrupt, RX/TX queue,
+> receive address (RA/RA2), etc. plus TX context descriptors and
+> VFRE/VFTE enable bits. The blob is transferred via DMA through the PF
+> device, since VFIO owns the VF's IOMMU domain and the variant driver
+> maps its DMA buffers through the PF.
+> 
+> Dirty page tracking is implemented with per-range bitmaps maintained
+> in IGBCore. All VF DMA paths in igb_core.c (TX data, RX data,
+> descriptor writeback) are instrumented to record touched pages. The
+> variant driver registers tracked IOVA ranges and queries dirty bitmaps
+> through a DMA shared buffer, using a single MMIO doorbell
+> (DIRTY_CTRL=QUERY) per iteration.
+> 
+> * Caveats
+> 
+> Patch 1 introduces PCI_BASE_ADDRESS_MEM_ALWAYS_ON, a QEMU-internal
+> BAR flag that keeps the migration BAR mapped even after VFIO's
+> Function Level Reset clears PCI_COMMAND_MEMORY.
+> 
+> The x-vf-migration property is experimental (x- prefix, default off)
+> and the migration BAR register interface may change.
+> 
+> The dirty bitmaps are maintained inside the device, which is not
+> realistic for discrete NICs without on-chip DRAM.
+> 
+> * Testing
+> 
+> The target scenario is nested virtualization: L0 runs QEMU with an
+> igb PF (x-vf-migration=on), L1 runs the igb-vfio-pci variant driver
+> and an unmodified QEMU, and L2 runs a standard igbvf driver.
+> 
+> Migration under iperf3 load works correctly: dirty page tracking
+> converges (from ~2000 pages per PRE_COPY iteration down to ~280 at
+> STOP_COPY), and STOP_COPY stays under 250ms.
+> 
+> * Todo/Ideas
+> 
+>    1. Add migration blocker when x-vf-migration=on (no VMState yet) or
+>       add VMState support for L0 migration (dirty bitmaps, tracking
+>       engines, migration BAR registers, stats)
+>       
+>    2. Add PRE_COPY match data validation (magic, version, caps)
+>    
+>    3. Support driver-provided DMA bitmaps per dirty range
+>       (DIRTY_RANGE_ADDR_LO/HI)
+>       
+>    4. Add QMP/HMP knobs for error injection and capability tuning:
+>    
+>      . Dirty rate throttling: artificial delay or rate limit on DMA
+>        dirty tracking to simulate different convergence scenarios
+>      . State blob size inflation: pad the migration blob to stress
+>        large-state transfers and test DATA_SIZE limits
+>      . Migration phase timing: expose per-VF counters for time spent
+>        in each state (PRE_COPY duration, STOP_COPY latency)
+>      . Hot page simulation: mark specific page ranges as always-dirty
+>        to test worst-case convergence
+>      . Error injection: force STATUS error codes, fail DMA transfers,
+>        corrupt state blobs, mask CAPS bits, etc.
+>        
+>    5. Add qtests for migration state machine transitions, dirty page
+>       tracking ?
+> 
+> * Credits
+> 
+> Alex Williamson suggested the overall approach: a hidden migration BAR
+> discovered via a vendor-specific PCI capability, the "vf-migration"
+> device property to gate the feature. Thanks for the ever ongoing
+> support and valuable discussions throughout these years.
+> 
+> * AI disclaimer
+> 
+> The lack of a migration-capable device has been a recurring pain point
+> for VFIO development over the years, and we hope this proposal
+> demonstrates the value of having one.
+> 
+> Claude was used to analyze the IGB PF and VF internal state and
+> identify the pain points of a working live migration of such devices.
+> The generated code served as a starting point but *significant* time
+> was then spent cleaning up, reworking, and shaping it into a clear,
+> reviewable proposal. As QEMU does not yet accept AI-assisted
+> contributions, this series is submitted as an RFC.
+> 
+> Thanks,
+> 
+> C.
+> 
+> [1] https://github.com/legoater/vfio-pci-extras
+> 
+> Cédric Le Goater (11):
+>    pci: Add PCI_BASE_ADDRESS_MEM_ALWAYS_ON BAR flag
+>    igb: Add x-vf-migration property and vendor-specific capability for
+>      IGBVF
+>    igb: Add migration BAR with state machine
+>    igb: Add VF state serialization for live migration
+>    igb: Add VF post-load fixups for live migration
+>    igb: Add dirty page tracking for IGBVF migration
+>    igb: Quiesce VFs on STOP and include PF enable state in migration blob
+>    igb: Fix post-migration RX ring deadlock
+>    igb: Send RARP after VF migration to update bridge FDB
+>    docs: Add igb VF migration testing setup guide
+>    igb: Add migration statistics registers to VF migration BAR
+> 
+>   MAINTAINERS                           |    6 +
+>   docs/system/device-emulation.rst      |    1 +
+>   docs/system/devices/igb-migration.rst |  313 +++++++
+>   docs/system/devices/igb.rst           |    6 +
+>   hw/net/igb_common.h                   |   11 +
+>   hw/net/igb_core.h                     |    8 +
+>   hw/net/igb_migration.h                |  201 +++++
+>   include/hw/pci/pci.h                  |    6 +
+>   hw/net/igb.c                          |   18 +
+>   hw/net/igb_core.c                     |  144 ++-
+>   hw/net/igb_migration.c                | 1194 +++++++++++++++++++++++++
+>   hw/net/igbvf.c                        |   29 +-
+>   hw/pci/pci.c                          |    6 +-
+>   hw/net/meson.build                    |    2 +-
+>   hw/net/trace-events                   |   20 +
+>   15 files changed, 1939 insertions(+), 26 deletions(-)
+>   create mode 100644 docs/system/devices/igb-migration.rst
+>   create mode 100644 hw/net/igb_migration.h
+>   create mode 100644 hw/net/igb_migration.c
 > 
 
-I agree with your assessment. Need another check after the "banner skip" and
-before the puts().
+First thanks for the quick review ! I will recap here :
 
+* bisectability, will improve the first patches.
+* state serialization, the blob management is awful. I was expecting
+   flames. Yes. it needs a rework. I lack a qbuf-style put/get API. The
+   contents of the blob need a review. Seems feasible.
+* relocation between VFs, on my TODO. The code already checks the vfn but
+   needs tightening and better support.
+* interrupts bits: will look into it. hopefully, the model "only" needs
+   to be more precise. This was a difficult aspect of the igb to understand
+   and I am still learning.
+* dirty tracking, I worked on 2 different interfaces and some of the code
+   fell through the cracks. DMA failures, bitmap clearing, size validation,
+   all need improvements. Mostly addressed already, remaining items are code
+   reorg. should be fine.
+* quiesce: looks like a bug in the model. Will check.
+* RARP : I got inspiration from the tests. you are right saying it belongs
+   to the management layer. Keeping it for now as it simplifies testing, but
+   will move it out.
+* Stats: the addition is from yesterday. Needs fixes indeed.
 
-if (menu_data >= menu_data_end) {
-     return 0; /* Boot default */
-}
+Thanks,
 
-/* Skip banner */
-len = strnlen(menu_data, menu_data_end - menu_data);
-menu_data += len + 1;
-
-if (menu_data >= menu_data_end || !(*menu_data)) {
-     return 0; /* No entries, boot default */
-}
-
-/* Print banner */
-puts("s390-ccw zIPL Boot Menu\n");
-
-/* Print entries */
-while (menu_data < menu_data_end && *menu_data) {
-...
-
-> 
->>
->>>   
->>>       /* Print entries */
->>> -    while (*menu_data) {
->>> -        len = strlen(menu_data);
->>> +    while (menu_data < menu_data_end && *menu_data) {
->>> +        len = strnlen(menu_data, menu_data_end - menu_data);
->>>           entry = zipl_print_entry(menu_data, len);
->>>           menu_data += len + 1;
->>>   
->>> diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
->>> index 1e1f71775e..f6030a6071 100644
->>> --- a/pc-bios/s390-ccw/s390-ccw.h
->>> +++ b/pc-bios/s390-ccw/s390-ccw.h
->>> @@ -76,7 +76,7 @@ void jump_to_low_kernel(void);
->>>   
->>>   /* menu.c */
->>>   void menu_set_parms(uint8_t boot_menu_flag, uint32_t boot_menu_timeout);
->>> -int menu_get_zipl_boot_index(const char *menu_data);
->>> +int menu_get_zipl_boot_index(const char *menu_data, const char *menu_data_end);
->>>   bool menu_is_enabled_zipl(void);
->>>   int menu_get_enum_boot_index(bool *valid_entries);
->>>   bool menu_is_enabled_enum(void);
->>
-> 
+C.
 
 
