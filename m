@@ -4,90 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40E76C531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:55:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ED5BC53219
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:55:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woJtq-0002uL-18; Mon, 27 Jul 2026 07:53:38 -0400
+	id 1woJv7-00065V-1Q; Mon, 27 Jul 2026 07:54:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1woJto-0002tY-VT
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:53:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1woJv5-00064v-7y
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:54:55 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1woJtn-00042Y-Iy
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:53:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785153215;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=w9P2W4JHcW8gHi5z7gIDq25C1oCq7ThbiMkHET5NoPI=;
- b=XAACt6uQiilraPGtPcQfq4IiLwOoLEWNA6tlbwzpr3Q9p4dhi69ZIuC+CW6jaLmRw3CncS
- SUiM0ZDSwfqPH/Gh4rA0zDLqnwdov6r2r7CehvrZbeEaBjqkElW0gp0VicljKkNSLj/mk9
- elrCzYE1j4NlRYdlv56krl60xTMXpr4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-280-flTmZKK5O-yU4SrRfAWnrA-1; Mon,
- 27 Jul 2026 07:53:32 -0400
-X-MC-Unique: flTmZKK5O-yU4SrRfAWnrA-1
-X-Mimecast-MFC-AGG-ID: flTmZKK5O-yU4SrRfAWnrA_1785153211
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 29143195C27F; Mon, 27 Jul 2026 11:53:31 +0000 (UTC)
-Received: from localhost (unknown [10.44.24.5])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CA1521954B01; Mon, 27 Jul 2026 11:53:28 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 27 Jul 2026 15:51:30 +0400
-Subject: [GIT PULL 21/23] qcow2: remove invalid qcow2_check_refcounts calls
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1woJv3-00048y-Aq
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:54:54 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66RAM4O93647763
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 11:54:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ MjpLSH/2+fydhNy2psqhlGT5vqzfdqQcuqsCt78TKJc=; b=lKJhR/x0wP/rKxAV
+ Not+KgAF9VQ31w9ZQAVLPUUJiW/KvbZsJR3UeWJk2Fvsd2Py2WTclwEHqB9hSudA
+ ZZzpBTSEiK8ErtFqR/Vp9GSAW77S2UcK7dTQmbGkxq/zmbyH558mAQeXwwjqlXr5
+ 1dyM+njVScvNOPWN4RyJ0DDt3Hi5OMygHG9mMFY7CnMdg9s3MU3qNcm1hitswg7i
+ LX7yZtiAPWinLjzEpxNaKtuYLfQDz5Db8QIKImDbWf6UfNVqqqm+iLOul43bOQ95
+ ge+x2VTsVDHXlnH8VT+/ic7znSYSO+RcbJAbFzOAI+1rp5+vi5sfC0wSsv0SIrKT
+ mLgFWw==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fp4mrrj0u-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 11:54:51 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51c1d7886cdso51308301cf.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 04:54:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1785153291; x=1785758091; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=MjpLSH/2+fydhNy2psqhlGT5vqzfdqQcuqsCt78TKJc=;
+ b=FYqshLI7/rryWcfAHHBUczIOGGRr/pCDeJ1TufOt3YnEylPwj20Wqca5MvDagbfm3v
+ HY4uSG8CkY237pYEdF2aRZRXgJvswvdhdw44EjwQlFwRu3TtxI6QCcVBQJKQqe/EgsIg
+ HN/QbrrUdgLGfbKRAm+a+UL4M4ISMUlRvbQzLluQKkr/7LDkF9MWPp6m3HX2QvHoP9m7
+ XdAW9wXl5zlUXh4XuGvVaLBPcBbLZFn6uq1spX2visIdKauWli78m8Nujs748l4/DM1y
+ Sq6OVz/huahh5+xdyL2ywYIhhpBK6QuzA4Y2Xr6N3ScZl+5tRGoHT5pKGdM8QEFZ2DrT
+ aH4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785153291; x=1785758091;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=MjpLSH/2+fydhNy2psqhlGT5vqzfdqQcuqsCt78TKJc=;
+ b=WtekDqDl71uXXH7H4ymy0RHYmGCrrO+fbl321ocn4zIMskWHZRp/bH3HgexaMoYvnR
+ Jx2eYBUtqEo0GWnWGdtADmZvDp24krBXKOurO6B6MAUJYl90PNVEAcGZXjqydvyfoaJ2
+ PmZZGzgbERYby0MnQbZQz/3hhDr4n+73jyZR9UNa62tVS0cti8AcamEBHax5egpER4MV
+ Zf5/Aj6csbmLmPK5lK+klXsm8S/pPyp+lHGBV4xczJ1K6UGufeFsvw33fmsFgHSDePoR
+ NTo51wYjsw8+NK3OE6cSBbC6hUPyk4w6AeunU2CuT6pTEfktD8vMmBeUbI3f39sZP5JR
+ TLAA==
+X-Gm-Message-State: AOJu0YwxjweEuchF+7mAbhosgJi0aUzGp4NknRbyTkqyrUOPpH7GgJ/l
+ BrCNpK9oiEV9XdRzyrsDE7bM5o7a2hCJgYU7O+6PHFxR0cENxRy2lDbGzvdn+R8E9hrtIs7jnao
+ 8f5Wj+2uKc6gN7apWKUKGmbUdK46OGZ1tEhqJCYvrFQ01eBadkMfW7Ep1pw==
+X-Gm-Gg: AR+sD11zPypB5bp4BK1iHVhPAyPdj0hy4OXvNfrEQS14cQlUpDJTjETqCvj+o+b3wxs
+ Q64H5Kanef+1IWwHwhdDsKKAVTJpy9h7w54p767Z+QC2P3xalLJd1IMUKMiZ/y0EPG930s5RbyV
+ DdLqydHlUBFAsPkOFWcFJqF4jPrA14aywAE4VIc6rV8eSQQewrfSfdtoedbTwi93Hl52/ARGIU5
+ O1EX0VkNM3u65WdOkEoO+JEF8k6HIT3PwLjMYkyK5oy6YOvOTB4zLjNiSGfaqVY1oPAGuq1x6P3
+ LaO1C4xWirU075dp7tay65rTr4wSOyb6xoYGpYLxcq6HrFaK4ZAyr3imHbXbzBDG5MKZFEEcvqF
+ n83j0xIxz2YL/2rGPBWeVonHdO9B/AjQArazODEhuX1j5Ag5GIOg=
+X-Received: by 2002:a05:622a:3d0:b0:517:7188:c47a with SMTP id
+ d75a77b69052e-529a8381bafmr80802461cf.2.1785153291451; 
+ Mon, 27 Jul 2026 04:54:51 -0700 (PDT)
+X-Received: by 2002:a05:622a:3d0:b0:517:7188:c47a with SMTP id
+ d75a77b69052e-529a8381bafmr80802201cf.2.1785153291051; 
+ Mon, 27 Jul 2026 04:54:51 -0700 (PDT)
+Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-69fb51c9eb1sm2547975a12.10.2026.07.27.04.54.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 Jul 2026 04:54:50 -0700 (PDT)
+Message-ID: <a9ad33dc-b487-4ce7-9b8e-d437b6cc5d12@oss.qualcomm.com>
+Date: Mon, 27 Jul 2026 13:54:49 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260727-fix-v1-21-ca3fa3851347@redhat.com>
-References: <20260727-fix-v1-0-ca3fa3851347@redhat.com>
-In-Reply-To: <20260727-fix-v1-0-ca3fa3851347@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1528;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=OO6u4jc/oE85ygnu76Eff+BQJm9qaSylokab/TrhS7g=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZ0Y/VJqW0pBGn/XLy87cE7C+CmRbkAfc464rT
- ATUd1fk4j6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamdGPwAKCRDa6OEJdZac
- 5dD2D/468ErqfxB6+H7woPdWXH6K4/sBdwOdEkuKVFfURcms4jXsYTixCz2O3rXXRAqyqOPnOWH
- eATcu9luqcY2ZkOVbzJeNV5MUBPiDQVxoICefWnkM4cCLjmTZU2WXWm685A40DI88z/XfLBFTp3
- J47nttxegS3t7ZbzEUNuDpT4s2mt4/0IJL/FlQChxlQQL3NfLvE89LKzWYqx8gDFgl0YeMPgrbV
- ebfZi7j0lKug6A5X4Xi1rhytu7SBaWPEZE3yOXnqobDN0XX7KQYcYdd9BA+Li4droWpsQjyQm8h
- wWcneqo9wjHcmX2BdnPt4HXL7pnoTJj9UspcydeVw1S+uFk1pw7GCAnb+GAX8I8n2rHmiCgakA8
- YP3q9HS5w0VJhiB4CJauZ4AQGV6lb0VgaZADh7lxJ0a2UR3uzvNtmhap/l3I3hIPW2xR3hOKZzs
- EoTu7mIBOrGjkhvSci/NWT9xVprrIQgpjiSzXo9XiTsqPKn1PPmIVQOFvLTi7ThmIkj28T0+GMn
- pXkXq79yfgk1uypSl1opS0FyryzBm3MIefSdE/ABm+QwEkQxx3nWq7oSlQP3n9GlOZz0OoV5qbA
- JXhT52LTfR8ETn0tnKf1x3s7zao27LplS+24XGmeK7sApvpwCwUD+F1zdWmP4+947m9P3JoyT+T
- S803MfjiBL6MV5A==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] fix BCM2835_I2C_CLKT
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>,
+ botszhuang <huang.botsz@gmail.com>
+Cc: qemu-devel@nongnu.org, philmd@mailo.com, qemu-arm@nongnu.org,
+ sef1548@gmail.com, botszhuang
+ <22925483+botszhuang@users.noreply.github.com>,
+ botszhuang <botszhuang@gmail.com>
+References: <20260724124220.24152-1-22925483+botszhuang@users.noreply.github.com>
+ <CAFEAcA-q5ihYpgYtEosQ3+SgbMdw7e7=xk4motLFL-A==g1k0w@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <CAFEAcA-q5ihYpgYtEosQ3+SgbMdw7e7=xk4motLFL-A==g1k0w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDExNiBTYWx0ZWRfXwew/SBcvSg5g
+ BJ2p7DwOzrQbwMuwz931Xq2ZjeZ02H5zT2/gcDAN9FdtC+1cIygNfZ14kMtjOvnIuk0XeyGsuer
+ YEQtxjYkupHeEXQGzN6P/6nvIBo50l8=
+X-Authority-Analysis: v=2.4 cv=UYBhjqSN c=1 sm=1 tr=0 ts=6a67470c cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=pGLkceISAAAA:8 a=t2M2atKBCKvtHhSlAyoA:9 a=QEXdDO2ut3YA:10
+ a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-GUID: rn6pt4pFDKEa4kG5979pHfJyjuXehdmX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDExNiBTYWx0ZWRfX1wCmqLv+VT23
+ mh97rnpNEYhfgSKkJ7Th+AzGjTqIixjrM4WSSdsshWhPHBMVgUvEBhQpoK8x5gj4m8OneSdOHAj
+ x0fMNcsbARpZkxBkiMeKLRnIKClJDnabNHFaPJX2pGMVThlARCCvEJrySSaH0OC+qgt2lOXc92h
+ 9DMrVjCsnvjn09vT60/kGqueUaRa7/4db/hAey4z4WDL0OdSklPoD8QASorvvoyo4pzumaszdi+
+ 9ydp3lEzY5pEsDjWpsfG1vwhg7ZonB6vLMp2XG3h+IyO0OSsZr5W66xXRqZXHjXJjRgtJH6txgC
+ RZ9bc7ZaLtTunpsCzkaqnIa3zMtTpOqzk6VOXxQXntt0nA+YIlbJ45EelXR0vWKAUNomSf9G/gu
+ U2plVMZfAzvNpVBsNPPJ4JT1wqLiZA/GtvAi2o4yhPku2hOu9juWeJMTvNeWd4rfVF+FPSPSdCX
+ eVq/UI69eq/LrWPO/kA==
+X-Proofpoint-ORIG-GUID: rn6pt4pFDKEa4kG5979pHfJyjuXehdmX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-27_03,2026-07-24_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0 clxscore=1015
+ priorityscore=1501 phishscore=0 adultscore=0 impostorscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607270116
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,61 +156,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Those DEBUG_ALLOC-guarded are dead code incorrectly calling coroutine fn
-from non-coroutine. Remove it.
+On 27/7/26 12:04, Peter Maydell wrote:
+> On Fri, 24 Jul 2026 at 13:51, botszhuang <huang.botsz@gmail.com> wrote:
+>>
+>> hw/i2c/bcm2835_i2c: Correct CLKT register offset
+>>
+>> The Clock Stretch Timeout (CLKT) register for the BCM2835 I2C controller is actually located at offset 0x1c, not 0x20.
+>>
+>> The previous incorrect value caused the guest OS to read from and write to the wrong memory address when configuring the I2C timeout, which could lead to unexpected controller behavior.
+>>
+>> Update the BCM2835_I2C_CLKT macro to match the hardware specification.
+> 
+> Checking the datasheet, this is definitely the wrong value,
+> so the fix is correct. I'm a bit confused by your commit message,
+> though. The value here in QEMU can't cause the guest OS to write
+> to the wrong memory address, because the guest OS doesn't ever
+> see what we have defined here. It has the offset hardcoded into
+> its own source code.
+> 
+> It looks to me like the effect of getting this wrong is that when
+> the guest writes to CLKT (at its actual 0x1c offset) we will log
+> a guest error and give read-as-zero behaviour. That's not correct,
+> but I expect for most guest OSes it'll be pretty harmless because
+> the guest probably doesn't write the value it wants to configure
+> and then read it back to check. (QEMU ignores the value written
+> anyway.)
+> 
+> I've applied this to target-arm.next.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Fixes: 70bacc44532 ("qcow2: mark more functions as coroutine_fns and  GRAPH_RDLOCK")
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Should we also reduce the region size?
+
+-- >8 --
+diff --git a/hw/i2c/bcm2835_i2c.c b/hw/i2c/bcm2835_i2c.c
+index 34de1f36e5b..5f6093087dd 100644
+--- a/hw/i2c/bcm2835_i2c.c
++++ b/hw/i2c/bcm2835_i2c.c
+@@ -222,7 +222,7 @@ static void bcm2835_i2c_realize(DeviceState *dev, 
+Error **errp)
+      s->bus = i2c_init_bus(dev, NULL);
+
+      memory_region_init_io(&s->iomem, OBJECT(dev), &bcm2835_i2c_ops, s,
+-                          TYPE_BCM2835_I2C, 0x24);
++                          TYPE_BCM2835_I2C, 0x20);
+      sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iomem);
+      sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);
+  }
 ---
- block/qcow2-snapshot.c | 18 ------------------
- 1 file changed, 18 deletions(-)
-
-diff --git a/block/qcow2-snapshot.c b/block/qcow2-snapshot.c
-index 1e8dc48be1c5..8453ad73d10f 100644
---- a/block/qcow2-snapshot.c
-+++ b/block/qcow2-snapshot.c
-@@ -740,12 +740,6 @@ int qcow2_snapshot_create(BlockDriverState *bs, QEMUSnapshotInfo *sn_info)
-                           ROUND_UP(sn->vm_state_size, s->cluster_size),
-                           QCOW2_DISCARD_NEVER, false);
- 
--#ifdef DEBUG_ALLOC
--    {
--      BdrvCheckResult result = {0};
--      qcow2_check_refcounts(bs, &result, 0);
--    }
--#endif
-     return 0;
- 
- fail:
-@@ -893,12 +887,6 @@ int qcow2_snapshot_goto(BlockDriverState *bs, const char *snapshot_id)
-         goto fail;
-     }
- 
--#ifdef DEBUG_ALLOC
--    {
--        BdrvCheckResult result = {0};
--        qcow2_check_refcounts(bs, &result, 0);
--    }
--#endif
-     return 0;
- 
- fail:
-@@ -975,12 +963,6 @@ int qcow2_snapshot_delete(BlockDriverState *bs,
-         return ret;
-     }
- 
--#ifdef DEBUG_ALLOC
--    {
--        BdrvCheckResult result = {0};
--        qcow2_check_refcounts(bs, &result, 0);
--    }
--#endif
-     return 0;
- }
- 
-
--- 
-2.55.0
-
 
