@@ -4,93 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9340C531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:22:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BEB5C53209
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:22:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woQrh-0008WT-2S; Mon, 27 Jul 2026 15:19:53 -0400
+	id 1woQs0-0000BX-SK; Mon, 27 Jul 2026 15:20:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQrf-0008W8-02
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:19:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQrw-0000AS-3c
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQrd-0000LI-Aq
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:19:50 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQru-0000Oo-Hl
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785179987;
+ s=mimecast20190719; t=1785180005;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=RTWKwepcbjdvvt957sT6DX6W7SqARwm9zXL6of/Nhm0=;
- b=PjEpoGcsT4ibhfcJWtPc4kUDs05DAuDsZEeTd2Uej2YWxcfl8oc8rX0xU42i7zjJx+bXBg
- Tdi8VH9O1pZNIKhD6OkOJJEXuoJiGeEXD3R2Nm8psY0Z4Umz5/824nYZElwFYUKitQ22i9
- XOhwVjan5mUqn6oRMi/QI2HjqbMffSY=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=mkXR+qyvrRlYakP6hofO/xvu4cSKGYwGmHafizZSjXg=;
+ b=ThDhtQTlxphtwcxBpDdNEVkyHgZoMuNHLP5AjLAuD+rSoRU3D1/8EN3JJAVMqdAAKcoEgH
+ EHePLn6Y6p0s64JNl3nIKS1d/m+mTrVHJpI9AmpDNfvEL3ecRBQdmuwhuVJBJZAXCcaZki
+ yRLJIDxJNtnWif2JH4z5or3sW9odC8c=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-333-FSvOhKQAP76g0MVkvvrRnw-1; Mon, 27 Jul 2026 15:19:46 -0400
-X-MC-Unique: FSvOhKQAP76g0MVkvvrRnw-1
-X-Mimecast-MFC-AGG-ID: FSvOhKQAP76g0MVkvvrRnw_1785179985
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-495474a5fbcso27835775e9.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:19:46 -0700 (PDT)
+ us-mta-222-v2anLifKNqKaE-_oxGzEHg-1; Mon, 27 Jul 2026 15:20:04 -0400
+X-MC-Unique: v2anLifKNqKaE-_oxGzEHg-1
+X-Mimecast-MFC-AGG-ID: v2anLifKNqKaE-_oxGzEHg_1785180003
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-47f6db77430so2110896f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:20:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785179985; x=1785784785; darn=nongnu.org;
+ d=redhat.com; s=google; t=1785180003; x=1785784803; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=RTWKwepcbjdvvt957sT6DX6W7SqARwm9zXL6of/Nhm0=;
- b=l0O5wjW9Y1IYUh97oy1K9VWSAfldUAJLwjroCF9BWiiDlcf/RtLxuwdYuxTs1mUFO+
- 8++CWw/bDHgNHE+XCM9Zsz6lZahqvSBsAGKdgNqzExHnyyvL13JxZWUEjPDTavc8X056
- LOMAQkQ4qFvwC1mZiqCfz1Q6Mx7xsK+c5Ph3XBaY31yJhyVpW59PkCE989mvNt8HBl98
- LcBkFyhBx05mYGQb/B727kgWpohdaHG42oGkpzcDXuwyVAw/2rhrwjYJhNJczMMnZPnJ
- X48i+m39GcG+Hl2zQ+dD9WraNy+t1zIBtfBC5izZkKU99KwUVArLRkBRagXoDRQWxIbp
- 5odg==
+ bh=mkXR+qyvrRlYakP6hofO/xvu4cSKGYwGmHafizZSjXg=;
+ b=Nb2fizN+K5HiYjXEiy/vu/paOukp+mBIwmDmA+qtWA1ph1nQGgmPOJkYc+HDwlrrLT
+ e/fwXRcvEBsJbQVNmRgHk17f1mxQI6hmw/eNqk14vBNaSdZVLxOv5k95DYhP4XlaWFBp
+ 6Uv1gGhL7w0mJft1cXZB/EN9ItYhS9ir9u49Lyw3ohBDTlTXmjogUzdDC2WSxFqfRqAe
+ MRFPd6ZiH6Ww53/cuc0WAGdevJER1xGw9jSLawO8afviZ65/2fXciZ1gg/Zl7gLhUWmM
+ xoTbKr0Dfdyd9+hTQC1B5XYasYsC8IR2GbJ3QnDB+hC7JYHASaAp5Kr7Mbp1CZ+FJ+it
+ O55g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785179985; x=1785784785;
+ d=1e100.net; s=20251104; t=1785180003; x=1785784803;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=RTWKwepcbjdvvt957sT6DX6W7SqARwm9zXL6of/Nhm0=;
- b=eExaOy+z0WsLdWYWms8Ntu48WGh050wj/Kjq39vOdnfBYK4HghdesRyur/YrQpPVC0
- G2hlV7Lk1ZT0n7ritrjy3Eu2aay+oY4HHRUdGjTGjZvnKzz4KchSFYLKff6v3di5LQMc
- UVnunmzLThvgaYiZFYP839LAzdq2fLoT/8FhyaA+Uu+kU8fuxckCfHagkwepZTGE2fcC
- jMF1nLSl1coPoHr64IpGOQGRpcbnEhq8y+RS6nHcjDCnbx0WED5TAWrizqy4bR3t5OZH
- sYUrWk+/pj+xkaXTDCnI+15G47bHRnLTMFgF+G4Vm2RjiDMks9fMT4NnRxEodNSykwvW
- 4VxQ==
-X-Gm-Message-State: AOJu0YzsCYsLN8DHMVXl2P/RHF7Hjkz0+8Lk1G1C8KP+t7gV1DPC5qhA
- JNp3B3knhdwfP7XW398H9rjtWnfXXR9A+l35Z4JDjjz+2j+3veb1Xt1mKmLKDlMJO8RO/mgkxbO
- W1l+lR9TgclPOO+YP3mB7ZQg1/zp8GJQBZByFtRbTq+RsP9fnqwDpj1j+ySH5YYO3J/YnuKdeWd
- TQycd5b3O0rDnuu8JoZSfYArqnbjj2AEqdmQ==
-X-Gm-Gg: AR+sD13cJ4Aiz6b6UPsQ85pKHriNTai7s7qwyLEcrsmB5IEtDApPK/GtDVl9lV4WEeV
- HcACHBVuPCs5cZ2f9Ny97EHtUKbJoMF/iR3THqwpiMddJQftG9gS7xYJYzg/UWmzY7CeIKp2PHY
- ovX1fDAiyIdUOUV7YHIiFrKO9RYV4UZO9o8nmHbmsGdOOC3z5U20IZkNFOLV+1d3o3kyoccN4eb
- eveiLpkX9+KPWpKPlKBQhPGRo76OXfgGMA59z7L7anoMtrcT7YbZ0zFurmGBkhF743/23WCjJ4j
- b4YskphVGCDQl7okaHvOFRiVThCOWC3wQsY8sveUyYr9BF/GwWS9+IVfbmhiJ9u0rvtkUQzkJH7
- OHYS4FoOYQO/AGHg6FQ1VgQ==
-X-Received: by 2002:a05:600c:1387:b0:495:5b4a:53b7 with SMTP id
- 5b1f17b1804b1-496bd695ff4mr79303905e9.19.1785179984933; 
- Mon, 27 Jul 2026 12:19:44 -0700 (PDT)
-X-Received: by 2002:a05:600c:1387:b0:495:5b4a:53b7 with SMTP id
- 5b1f17b1804b1-496bd695ff4mr79303645e9.19.1785179984446; 
- Mon, 27 Jul 2026 12:19:44 -0700 (PDT)
+ bh=mkXR+qyvrRlYakP6hofO/xvu4cSKGYwGmHafizZSjXg=;
+ b=fzJh3Dv03TvvZL7ulJ1tOo9mt4BphYCl4ENQqL0ykQOjrNGViLLWziVRBDmykSL6sG
+ JySO8v6Fq9ua2Azyjty1skBfI153cr+9g3HqJcN1KUIJPIHAm/mKoAH9Ps2NTQJBn5jA
+ jPAEzt40kZnvlhj98IoqNsmp4QLg2t35JRJ2lrBB1L20JVZj/PUh2k/CaqZLmQ9DM7V6
+ cPBY3FRCDaFFeTZ9biidpr6rtNyGWG7ZvtYZsrdCbhx5n4ipoGLZcR7KeJ1kNqXI+4SY
+ fW6C4aAxrx/3IO3IJ4oHL2oHA+DhiRuLwQgIpNiCZlKSfAN6u/jBJzeExcnNYYGkgPWc
+ ZRxA==
+X-Gm-Message-State: AOJu0YxCoD7uGXTmh9Kz6Bn8QTxnet8NOtOTmeqIG2R3bD9UjFDWORS1
+ 8CUDJNAYyuaT3p+NCQbhbiGbCNDDc9hUbmtAIVKKqtgryS4EzuDR1O/llkfeDVV6g00CsW0MGiy
+ 7eZs+JfWkKhrGGl193CTjJE2ck1xj+c0uhcIkmYZKLkz8xs/Sufk1RatHiCFl6Y/8+cIa6hrpNt
+ zYOSQa+ROLRd9W70lH/5VtBXKAQzvP9Fi36A==
+X-Gm-Gg: AR+sD12lD1EmtwXBHFI/0MerXvQ3cAt5O2ztq7PTfywlJcVBuDUCnR7xYPJHiLdjr51
+ MkO7m18TGOprSGCOiXgZBulQa8Guxenk76Yw/FdMWZuU5rd2wCZ0697a7uEWnDSbHsREcyeW2mc
+ LU8fzhx6lyOQjjeOuCwJs+fHYcGw1M66sg3PIbGn09lGxImi0GvFwGNhzx4173DKIh1upBi9rBl
+ EiGFByeNpi7H4J2hPjAihWHIeSZsfyYtw2YUyWoet0X3GpqTyO+I7xXFY4zBLMou987A++UVOG9
+ HZ1CpUnsj7OP49/TOK9sNdh34g4TbeS/51TZnm3XF96EnvhrnQe1Ak3SNXJAiigUVIyaHqf4fye
+ /R4NXxTRwjxOsA0gXhcb0QA==
+X-Received: by 2002:a05:6000:26d3:b0:47f:920b:7fad with SMTP id
+ ffacd0b85a97d-47fafa9ead1mr459578f8f.51.1785180002918; 
+ Mon, 27 Jul 2026 12:20:02 -0700 (PDT)
+X-Received: by 2002:a05:6000:26d3:b0:47f:920b:7fad with SMTP id
+ ffacd0b85a97d-47fafa9ead1mr459543f8f.51.1785180002351; 
+ Mon, 27 Jul 2026 12:20:02 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-28-14.inter.net.il. [80.230.28.14])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4957e334f63sm205542965e9.1.2026.07.27.12.19.43
+ ffacd0b85a97d-47f85b9a6d7sm50768176f8f.2.2026.07.27.12.20.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 12:19:44 -0700 (PDT)
-Date: Mon, 27 Jul 2026 15:19:42 -0400
+ Mon, 27 Jul 2026 12:20:01 -0700 (PDT)
+Date: Mon, 27 Jul 2026 15:20:00 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
- huntr bubble <bubblehuntr@gmail.com>
-Subject: [PULL v2 03/30] virtio-net: fix short frame OOB read in
- receive_filter()
-Message-ID: <772488562053c1299fc3667a49b3ff1858f83979.1785179875.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Cornelia Huck <cohuck@redhat.com>
+Subject: [PULL v2 11/30] virtio: stop migrating num_default, validate
+ vring.num on load
+Message-ID: <d6384ad1c15962092c2281efedc118152de6a794.1785179875.git.mst@redhat.com>
 References: <cover.1785179875.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -98,15 +96,15 @@ Content-Disposition: inline
 In-Reply-To: <cover.1785179875.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
 X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,55 +120,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Within virtio-net, receive_filter() reads Ethernet header fields without
-any length checks.
+num_default tracks the allocation size of used_elems, set by
+virtio_add_queue(). Migrating it via the ringsize subsection is
+wrong: a migration stream (malicious or simply from a different
+configuration) can inflate num_default so that
+virtio_queue_set_num() accepts oversized values, leading to OOB
+access on the used_elems array.
 
-But virtio-net sets do_not_pad in NetClientState, so backends such as
-socket forward frames at the size supplied by the peer without padding
-to the Ethernet minimum. A short frame thus causes an out-of-bounds
-read.
+It is not even migrated consistently: a configuration with a
+smaller num_default could thinkably migrate and work but in the
+common case of num == num_default the value is not actually sent.
 
-Add size checks in receive_filter() and drop the truncated frames.
+Stop migrating num_default: make virtio_ringsize_needed() return
+false so the subsection is never sent, and use VMSTATE_UNUSED to
+consume the field from old streams without applying it. The
+destination keeps its local num_default from virtio_add_queue(),
+which matches the actual allocation.
 
-Fixes: CVE-2026-63320
-Fixes: 3831ab2094 ("qemu:virtio-net: Enable filtering based on MAC, promisc, broadcast and allmulti (Alex Williamson)")
-Cc: Jason Wang <jasowangio@gmail.com>
-Cc: Alex Williamson <alex@shazbot.org>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3626
-Reported-by: huntr bubble <bubblehuntr@gmail.com>
+Also validate vring.num against num_default when loading the core
+virtio state, rejecting streams that supply a queue size larger
+than the locally allocated maximum.
+
+Fixes: 46c5d0823d ("virtio: ring sizes vs. reset")
+Fixes: 50e5ae4dc3 ("migration/virtio: Remove simple .get/.put use")
+Cc: Cornelia Huck <cohuck@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <ee5c77b96ab66b2dd518f146def8727216a5c495.1784895727.git.mst@redhat.com>
+Message-ID: <3e6a7c403f93acc37af6a6332fdc65049ae218fb.1784894327.git.mst@redhat.com>
 ---
- hw/net/virtio-net.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ hw/virtio/virtio.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 2761644dfd..7e0c984ec6 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -1744,10 +1744,21 @@ static int receive_filter(VirtIONet *n, const uint8_t *buf, int size)
-     if (n->promisc)
-         return 1;
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 4a6430c31c..2766217ddd 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -2805,14 +2805,6 @@ static bool virtio_packed_virtqueue_needed(void *opaque)
  
-+    if (size < n->host_hdr_len + 14) {
-+        /* Truncated ethernet packet */
-+        return 0;
-+    }
-+
-     ptr += n->host_hdr_len;
+ static bool virtio_ringsize_needed(void *opaque)
+ {
+-    VirtIODevice *vdev = opaque;
+-    int i;
+-
+-    for (i = 0; i < VIRTIO_QUEUE_MAX; i++) {
+-        if (vdev->vq[i].vring.num != vdev->vq[i].vring.num_default) {
+-            return true;
+-        }
+-    }
+     return false;
+ }
  
-     if (!memcmp(&ptr[12], vlan, sizeof(vlan))) {
--        int vid = lduw_be_p(ptr + 14) & 0xfff;
-+        int vid;
-+
-+        /* Truncated vlan packet */
-+        if (size < n->host_hdr_len + 16) {
-+            return 0;
-+        }
-+        vid = lduw_be_p(ptr + 14) & 0xfff;
-         if (!(n->vlans[vid >> 5] & (1U << (vid & 0x1f))))
-             return 0;
+@@ -2901,7 +2893,7 @@ static const VMStateDescription vmstate_ringsize = {
+     .version_id = 1,
+     .minimum_version_id = 1,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_UINT32(vring.num_default, struct VirtQueue),
++        VMSTATE_UNUSED(sizeof(uint32_t)),
+         VMSTATE_END_OF_LIST()
      }
+ };
+@@ -3581,6 +3573,12 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
+ 
+     for (i = 0; i < num; i++) {
+         vdev->vq[i].vring.num = qemu_get_be32(f);
++        if (vdev->vq[i].vring.num > vdev->vq[i].vring.num_default) {
++            error_report("VQ %d vring.num %u exceeds allocated max %u",
++                         i, vdev->vq[i].vring.num,
++                         vdev->vq[i].vring.num_default);
++            return -1;
++        }
+         if (k->has_variable_vring_alignment) {
+             vdev->vq[i].vring.align = qemu_get_be32(f);
+         }
 -- 
 MST
 
