@@ -4,142 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ED5BC53219
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:55:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1DFEC531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:56:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woJv7-00065V-1Q; Mon, 27 Jul 2026 07:54:57 -0400
+	id 1woJwd-0007qj-Gt; Mon, 27 Jul 2026 07:56:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1woJv5-00064v-7y
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:54:55 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1woJwb-0007kr-VF
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:56:29 -0400
+Received: from mout.kundenserver.de ([212.227.17.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1woJv3-00048y-Aq
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:54:54 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66RAM4O93647763
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 11:54:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- MjpLSH/2+fydhNy2psqhlGT5vqzfdqQcuqsCt78TKJc=; b=lKJhR/x0wP/rKxAV
- Not+KgAF9VQ31w9ZQAVLPUUJiW/KvbZsJR3UeWJk2Fvsd2Py2WTclwEHqB9hSudA
- ZZzpBTSEiK8ErtFqR/Vp9GSAW77S2UcK7dTQmbGkxq/zmbyH558mAQeXwwjqlXr5
- 1dyM+njVScvNOPWN4RyJ0DDt3Hi5OMygHG9mMFY7CnMdg9s3MU3qNcm1hitswg7i
- LX7yZtiAPWinLjzEpxNaKtuYLfQDz5Db8QIKImDbWf6UfNVqqqm+iLOul43bOQ95
- ge+x2VTsVDHXlnH8VT+/ic7znSYSO+RcbJAbFzOAI+1rp5+vi5sfC0wSsv0SIrKT
- mLgFWw==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fp4mrrj0u-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 11:54:51 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51c1d7886cdso51308301cf.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 04:54:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1785153291; x=1785758091; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=MjpLSH/2+fydhNy2psqhlGT5vqzfdqQcuqsCt78TKJc=;
- b=FYqshLI7/rryWcfAHHBUczIOGGRr/pCDeJ1TufOt3YnEylPwj20Wqca5MvDagbfm3v
- HY4uSG8CkY237pYEdF2aRZRXgJvswvdhdw44EjwQlFwRu3TtxI6QCcVBQJKQqe/EgsIg
- HN/QbrrUdgLGfbKRAm+a+UL4M4ISMUlRvbQzLluQKkr/7LDkF9MWPp6m3HX2QvHoP9m7
- XdAW9wXl5zlUXh4XuGvVaLBPcBbLZFn6uq1spX2visIdKauWli78m8Nujs748l4/DM1y
- Sq6OVz/huahh5+xdyL2ywYIhhpBK6QuzA4Y2Xr6N3ScZl+5tRGoHT5pKGdM8QEFZ2DrT
- aH4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785153291; x=1785758091;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=MjpLSH/2+fydhNy2psqhlGT5vqzfdqQcuqsCt78TKJc=;
- b=WtekDqDl71uXXH7H4ymy0RHYmGCrrO+fbl321ocn4zIMskWHZRp/bH3HgexaMoYvnR
- Jx2eYBUtqEo0GWnWGdtADmZvDp24krBXKOurO6B6MAUJYl90PNVEAcGZXjqydvyfoaJ2
- PmZZGzgbERYby0MnQbZQz/3hhDr4n+73jyZR9UNa62tVS0cti8AcamEBHax5egpER4MV
- Zf5/Aj6csbmLmPK5lK+klXsm8S/pPyp+lHGBV4xczJ1K6UGufeFsvw33fmsFgHSDePoR
- NTo51wYjsw8+NK3OE6cSBbC6hUPyk4w6AeunU2CuT6pTEfktD8vMmBeUbI3f39sZP5JR
- TLAA==
-X-Gm-Message-State: AOJu0YwxjweEuchF+7mAbhosgJi0aUzGp4NknRbyTkqyrUOPpH7GgJ/l
- BrCNpK9oiEV9XdRzyrsDE7bM5o7a2hCJgYU7O+6PHFxR0cENxRy2lDbGzvdn+R8E9hrtIs7jnao
- 8f5Wj+2uKc6gN7apWKUKGmbUdK46OGZ1tEhqJCYvrFQ01eBadkMfW7Ep1pw==
-X-Gm-Gg: AR+sD11zPypB5bp4BK1iHVhPAyPdj0hy4OXvNfrEQS14cQlUpDJTjETqCvj+o+b3wxs
- Q64H5Kanef+1IWwHwhdDsKKAVTJpy9h7w54p767Z+QC2P3xalLJd1IMUKMiZ/y0EPG930s5RbyV
- DdLqydHlUBFAsPkOFWcFJqF4jPrA14aywAE4VIc6rV8eSQQewrfSfdtoedbTwi93Hl52/ARGIU5
- O1EX0VkNM3u65WdOkEoO+JEF8k6HIT3PwLjMYkyK5oy6YOvOTB4zLjNiSGfaqVY1oPAGuq1x6P3
- LaO1C4xWirU075dp7tay65rTr4wSOyb6xoYGpYLxcq6HrFaK4ZAyr3imHbXbzBDG5MKZFEEcvqF
- n83j0xIxz2YL/2rGPBWeVonHdO9B/AjQArazODEhuX1j5Ag5GIOg=
-X-Received: by 2002:a05:622a:3d0:b0:517:7188:c47a with SMTP id
- d75a77b69052e-529a8381bafmr80802461cf.2.1785153291451; 
- Mon, 27 Jul 2026 04:54:51 -0700 (PDT)
-X-Received: by 2002:a05:622a:3d0:b0:517:7188:c47a with SMTP id
- d75a77b69052e-529a8381bafmr80802201cf.2.1785153291051; 
- Mon, 27 Jul 2026 04:54:51 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-69fb51c9eb1sm2547975a12.10.2026.07.27.04.54.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Jul 2026 04:54:50 -0700 (PDT)
-Message-ID: <a9ad33dc-b487-4ce7-9b8e-d437b6cc5d12@oss.qualcomm.com>
-Date: Mon, 27 Jul 2026 13:54:49 +0200
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1woJwa-0004Qd-4T
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:56:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivier.eu;
+ s=s1-ionos; t=1785153378; x=1785758178; i=laurent@vivier.eu;
+ bh=vUH4lnqviwU9EowIFtNCFHWQ5B/XRfsIsDhh7db17iE=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=woioXPFMXM5PAqnMpQinFe8lExlAebrDrn17RXYtxwviYV4CHVwgU1kEjxQfnPTU
+ VosftTybmpxKqz3EfOzCxaath7hG52icVVimT+AX7yPMKsYYQkQfiWCd1iixplpCu
+ G92vrlDi6cJP9k02ypE0d9o71S9o5Pe0UWVxIFa/yrg1/+YBrRzSjfkVKT6MbUjmW
+ GkwKRurjgFGRjwwgQu9Ox2iaFR75HW0VhmpxjIbB+ubje9MiSG6l2mVWsV1sTk5QT
+ BaE8L5ahKn42O7i/atBysDpSOZbjaxuzy0D/+oi3yP1cuSHkrdpll8crCfSMZEx7b
+ HJSdWYwV+Zg46fz1Yg==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from client.hidden.invalid by mrelayeu.kundenserver.de (mreue107
+ [213.165.67.119]) with ESMTPSA (Nemesis) id 1MkIAB-1xGp7z16RF-00cZvU; Mon, 27
+ Jul 2026 13:56:18 +0200
+Message-ID: <cb98e6fd-d343-4c45-b4a8-78b92fef8d66@vivier.eu>
+Date: Mon, 27 Jul 2026 13:56:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] fix BCM2835_I2C_CLKT
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>,
- botszhuang <huang.botsz@gmail.com>
-Cc: qemu-devel@nongnu.org, philmd@mailo.com, qemu-arm@nongnu.org,
- sef1548@gmail.com, botszhuang
- <22925483+botszhuang@users.noreply.github.com>,
- botszhuang <botszhuang@gmail.com>
-References: <20260724124220.24152-1-22925483+botszhuang@users.noreply.github.com>
- <CAFEAcA-q5ihYpgYtEosQ3+SgbMdw7e7=xk4motLFL-A==g1k0w@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <CAFEAcA-q5ihYpgYtEosQ3+SgbMdw7e7=xk4motLFL-A==g1k0w@mail.gmail.com>
+Subject: Re: [PATCH] linux-user/sh4: allow full 32-bit address space
+To: qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+References: <20260727114848.1041856-1-laurent@vivier.eu>
+Content-Language: fr
+From: Laurent Vivier <laurent@vivier.eu>
+Autocrypt: addr=laurent@vivier.eu; keydata=
+ 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
+In-Reply-To: <20260727114848.1041856-1-laurent@vivier.eu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDExNiBTYWx0ZWRfXwew/SBcvSg5g
- BJ2p7DwOzrQbwMuwz931Xq2ZjeZ02H5zT2/gcDAN9FdtC+1cIygNfZ14kMtjOvnIuk0XeyGsuer
- YEQtxjYkupHeEXQGzN6P/6nvIBo50l8=
-X-Authority-Analysis: v=2.4 cv=UYBhjqSN c=1 sm=1 tr=0 ts=6a67470c cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=pGLkceISAAAA:8 a=t2M2atKBCKvtHhSlAyoA:9 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-GUID: rn6pt4pFDKEa4kG5979pHfJyjuXehdmX
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDExNiBTYWx0ZWRfX1wCmqLv+VT23
- mh97rnpNEYhfgSKkJ7Th+AzGjTqIixjrM4WSSdsshWhPHBMVgUvEBhQpoK8x5gj4m8OneSdOHAj
- x0fMNcsbARpZkxBkiMeKLRnIKClJDnabNHFaPJX2pGMVThlARCCvEJrySSaH0OC+qgt2lOXc92h
- 9DMrVjCsnvjn09vT60/kGqueUaRa7/4db/hAey4z4WDL0OdSklPoD8QASorvvoyo4pzumaszdi+
- 9ydp3lEzY5pEsDjWpsfG1vwhg7ZonB6vLMp2XG3h+IyO0OSsZr5W66xXRqZXHjXJjRgtJH6txgC
- RZ9bc7ZaLtTunpsCzkaqnIa3zMtTpOqzk6VOXxQXntt0nA+YIlbJ45EelXR0vWKAUNomSf9G/gu
- U2plVMZfAzvNpVBsNPPJ4JT1wqLiZA/GtvAi2o4yhPku2hOu9juWeJMTvNeWd4rfVF+FPSPSdCX
- eVq/UI69eq/LrWPO/kA==
-X-Proofpoint-ORIG-GUID: rn6pt4pFDKEa4kG5979pHfJyjuXehdmX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-27_03,2026-07-24_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0 clxscore=1015
- priorityscore=1501 phishscore=0 adultscore=0 impostorscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607270116
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:ZYvlaY9uVrlPw/ggaMtY0bf+DFJ2vTqd01IMEifcMrcm+TsVaI5
+ um5BLWkkfthNetJGH2y9MWyiIWSYaBeIyNt5kqAG7ep+hLR+lWuzTqa4qkhcVN7cT4QDNQe
+ 7qhr4SuYAG3GmAaJh5CpPuf/noikhHpsRSkDlY5aSWdm0S6rwNk8koWh5KdApX/YjuMMn5g
+ drdnpYL00Wo9A0cd+6FGg==
+UI-OutboundReport: notjunk:1;M01:P0:Ns1D2vDdcPE=;TB4ZU8OExopYU8bcNJluVP6waWV
+ P6V48UNxEWvYomZNW7PGgcbomcbJOAh+kMhjow4nNtSLl/juRyyyljZzWP0os83W9g10A191R
+ 5UuXFL9IeI4f/yyVuSlaJ3kMJGyStbJlP5Dz4n09UGjb7Y2rnBxSXuySAn1QaxMuhgI6k/gW2
+ a/HiPw251Qy2GbpHiNaDW1SPjUqazkg0a+Nn0ygUa8CzkJvgUCgp+D+UT5npdu399TraJXRw1
+ 8tzX4LI/xvrwDktYOMmBoycOastoH4/ci4KJwGga4SGWpWQYZa1koEwj2rXw/ur2ow/VHN+L0
+ 19dYAllRbt5GKEeLClCxbWkMkZ5LZs5nqxeHfZF/L0pPFJN1Mg/m+81Rewy2BwW8fW9s6PWeA
+ N8MuonxsnO0VWaVIsduc9PSEBK0B+XEIWDpsluK5dsX+MflnhH6g4o6HqrfULY98m0mbm2U1c
+ ktsEN9lphN9xHSk39r20mSrCwFZuEeRCaEOrzM6ZjWh2KNo7upcw9sICY24n6qKCldtx6dzUt
+ CGhLTGtyvNNOpSd9hw1Ki8EMnKzXgNi0PzthtkgTXqP8O54XuB4QB4L1Pnm2DSxhWQGopHK5+
+ 4YAe+qfSwWF9mepS0Mkn1FFjoaGVeCX0z474NVIzVioPITPOa3ry4o6vmixg0LA/JWg9SwjCC
+ RFjiCp6jjWke7H44K+1MQ9oG3oqAlfLgZxjjeDtzf3GjmhxGVCDZJo5gSyJIOQnRACK+FUjxU
+ PoQS5HRfbQKiSi0S6RuQQLdpI93LhGY73uFiqaFs5wUnqCPfB4I6U+ksxcsSwTmymHvhzlh6G
+ f2P5fMQnB8e//F+DNu2PfjTaGZUOvfVP5tN/YpA8rt7lygYkgyprPMjyXAZGsCgvaBv6WFLiP
+ sUKGZKBZ0WHSwLFjGegGB5LHxrG0mN1PLZbKShpDBCnECChXHEIqlZy/F+xf2DgetnzLk9Y/j
+ 1Aa745lkCsm9LmAP4BEYK3MRIBus7Uc6N8i6gN1bdYrWbyhyJ+Uept0YR8GBfRPcHBvAzvh9f
+ /v1vx/SBCIwLW/8Tt2vae9EpmTnqvgcMLUBda48NNdrcZzH9NhscoyBBATb5qrqoAP955Ofld
+ eMvDRbN60mpJXzO4wqc0GZ+yTP9Huud48jsceZzQWAcalFpN6lrEP6xzAh9DpRZC9+BhoMcSk
+ dL0cqSK6wxOmEtOGXAZgjnvfVbEH4STRFGRzQtYoRDkhHOuioyiLsAPAGvxAqfwbNE+CcyNr/
+ utSI/pRxKI/4PWJNYqLqxE2Z19yXrl+F/Ubk+kk/3EedMjEc6DQ4y/8zBN+pnKNlWq1YQXQIX
+ g2QtYysHHA/i6EGLhaTgQ6HJr0M+DiXkPiU68bwyK4WiJuwfDlq/9XGxCiGnbizS6kZf5/vzN
+ riFlQze4HRieK6x7dipWvhjl4u8Hny6G1oyss8b7yjUwBs/0zT60orIC1J6pl4Q1wfHPY+Wu9
+ dDYd8GAjJVyQvDrX1YKOcrFKpDXjbFWcBYOSmzTq2D+0fwAMm7L6q4Fk9bRor6B2uWSJzw8Ru
+ oz3TaPPZ6OXL0dEK0fxZkslT4qrgwJkoYXN6AZ14GHkMCf3JF0JsNGy+cqZkyvz/gehILY7J7
+ emvkwGdVmwhF5CYVUZJrs0IAAs6qbK27QIVcDeGAs9k0AbcMbBE5X/qhGVcFEFE61FxCDRd/i
+ JmAULeFbhg2Nw3SnrYGNOhBra8WfVITxk98pTxWK+h7HtVS1v8XftPgcJ1mA1OE0fAASaLcUa
+ W/vY1aWmyAOC3DwqWbzlzps0VlO3x9kpeTSeo5Zowp9KHQbUxW52dcMXgVIiNmawX0WLV+wX5
+ Pv9sHNSxQtRaOtJtKK749QgAp2o/mGGBYQeYSBrla/WgAqoS/eW+rEOV2ZS/IgAeJHF7W5IrK
+ utEXNE1GNukiCoDtb0QvYfqX5GjVmMDT/Dw1+kLIcgmzFjeP4HyeZd9kcFRXRspwJM8s9/4Ic
+ zXN12gqBhP3C4v19nvc/LvxYkeNbGnLPV1XtJ7o4wxJu/w9uMx
+Received-SPF: pass client-ip=212.227.17.13; envelope-from=laurent@vivier.eu;
+ helo=mout.kundenserver.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,50 +151,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/7/26 12:04, Peter Maydell wrote:
-> On Fri, 24 Jul 2026 at 13:51, botszhuang <huang.botsz@gmail.com> wrote:
->>
->> hw/i2c/bcm2835_i2c: Correct CLKT register offset
->>
->> The Clock Stretch Timeout (CLKT) register for the BCM2835 I2C controller is actually located at offset 0x1c, not 0x20.
->>
->> The previous incorrect value caused the guest OS to read from and write to the wrong memory address when configuring the I2C timeout, which could lead to unexpected controller behavior.
->>
->> Update the BCM2835_I2C_CLKT macro to match the hardware specification.
-> 
-> Checking the datasheet, this is definitely the wrong value,
-> so the fix is correct. I'm a bit confused by your commit message,
-> though. The value here in QEMU can't cause the guest OS to write
-> to the wrong memory address, because the guest OS doesn't ever
-> see what we have defined here. It has the offset hardcoded into
-> its own source code.
-> 
-> It looks to me like the effect of getting this wrong is that when
-> the guest writes to CLKT (at its actual 0x1c offset) we will log
-> a guest error and give read-as-zero behaviour. That's not correct,
-> but I expect for most guest OSes it'll be pretty harmless because
-> the guest probably doesn't write the value it wants to configure
-> and then read it back to check. (QEMU ignores the value written
-> anyway.)
-> 
-> I've applied this to target-arm.next.
+Le 27/07/2026 =C3=A0 13:48, Laurent Vivier a =C3=A9crit=C2=A0:
+> On real SH4 hardware, the address space is split between user mode
+> (U0, 0x00000000-0x7fffffff) and kernel mode (P1-P4, 0x80000000-0xfffffff=
+f),
+> so TARGET_VIRT_ADDR_SPACE_BITS was set to 31 for CONFIG_USER_ONLY.
+>=20
+> However, qemu-user does not emulate the MMU, so this limit is not needed=
+.
+> The only effect is to restrict reserved_va to 2 GB, causing OOM failures
+> for memory-intensive builds (e.g. webkit2gtk on Debian sh4 buildds).
+>=20
+> Set TARGET_VIRT_ADDR_SPACE_BITS to 32 unconditionally, like most other
+> 32-bit targets. Also fix the TASK_UNMAPPED_BASE macro to use 1ull instea=
+d
+> of 1u to avoid undefined behavior when shifting by 32.
+>=20
 
-Should we also reduce the region size?
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4093
 
--- >8 --
-diff --git a/hw/i2c/bcm2835_i2c.c b/hw/i2c/bcm2835_i2c.c
-index 34de1f36e5b..5f6093087dd 100644
---- a/hw/i2c/bcm2835_i2c.c
-+++ b/hw/i2c/bcm2835_i2c.c
-@@ -222,7 +222,7 @@ static void bcm2835_i2c_realize(DeviceState *dev, 
-Error **errp)
-      s->bus = i2c_init_bus(dev, NULL);
+> Reported-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+> Signed-off-by: Laurent Vivier <laurent@vivier.eu>
+> ---
+>   linux-user/sh4/target_mman.h | 2 +-
+>   target/sh4/cpu-param.h       | 6 +-----
+>   2 files changed, 2 insertions(+), 6 deletions(-)
+>=20
+> diff --git a/linux-user/sh4/target_mman.h b/linux-user/sh4/target_mman.h
+> index dd9016081e9f..2d05837c2f36 100644
+> --- a/linux-user/sh4/target_mman.h
+> +++ b/linux-user/sh4/target_mman.h
+> @@ -1,6 +1,6 @@
+>   /* arch/sh/include/asm/processor_32.h */
+>   #define TASK_UNMAPPED_BASE \
+> -    TARGET_PAGE_ALIGN((1u << TARGET_VIRT_ADDR_SPACE_BITS) / 3)
+> +    TARGET_PAGE_ALIGN((1ull << TARGET_VIRT_ADDR_SPACE_BITS) / 3)
+>  =20
+>   /* arch/sh/include/asm/elf.h */
+>   #define ELF_ET_DYN_BASE       (TASK_UNMAPPED_BASE * 2)
+> diff --git a/target/sh4/cpu-param.h b/target/sh4/cpu-param.h
+> index c3b8114e538b..d95827078260 100644
+> --- a/target/sh4/cpu-param.h
+> +++ b/target/sh4/cpu-param.h
+> @@ -9,10 +9,6 @@
+>   #define SH4_CPU_PARAM_H
+>  =20
+>   #define TARGET_PAGE_BITS 12  /* 4k */
+> -#ifdef CONFIG_USER_ONLY
+> -# define TARGET_VIRT_ADDR_SPACE_BITS 31
+> -#else
+> -# define TARGET_VIRT_ADDR_SPACE_BITS 32
+> -#endif
+> +#define TARGET_VIRT_ADDR_SPACE_BITS 32
+>  =20
+>   #endif
 
-      memory_region_init_io(&s->iomem, OBJECT(dev), &bcm2835_i2c_ops, s,
--                          TYPE_BCM2835_I2C, 0x24);
-+                          TYPE_BCM2835_I2C, 0x20);
-      sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iomem);
-      sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);
-  }
----
 
