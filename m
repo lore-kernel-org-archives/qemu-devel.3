@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 251B3C53219
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:53:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C355C54EFC
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:53:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woJtR-0001Yb-DM; Mon, 27 Jul 2026 07:53:13 -0400
+	id 1woJtK-0000eH-LP; Mon, 27 Jul 2026 07:53:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1woJtQ-0001Sp-6E
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:53:12 -0400
+ id 1woJtH-0000LM-37
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:53:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1woJtO-0003yl-JD
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:53:11 -0400
+ id 1woJtF-0003wt-Fd
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:53:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785153189;
+ s=mimecast20190719; t=1785153180;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dPp6/Iz6emP9faagVMHidtrIEEZa8zoC+YjDWgEts3k=;
- b=D8kowrS6ptXwXuNoaszFODlwDddIfJPcH8zx3HBwHzpz5R+SsINgD1zR+27bNen/FTxn3u
- WxKhjRZE4Fjj8E4AT65Uz7RiLVUCllDxf1la02XFPMNPofRaZ6SFoXrt/budHRUYYjvenn
- 7WTHMoXT8Xde7uk/RsWJF6EVuuKxcV4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=nPm8Vf4l9uf9AJqUVHnAtIZ7hNE28mt3apZFpqXO+vQ=;
+ b=LLui4kVudOeMZTGDr+XPlq1IYJCf9YdaVCM5Er3jnvLZKMeyGBC/ZlktsHwPH9oraww+BN
+ yEyLaMt0Ri98+JoAd4eDH6innjzn5/Bp1hDF1KbF+k3OWoUUOigpJO85NELF16tXFHONnR
+ fDCz7yWMyLOOnQWWH+DO7TIR5CTr5yc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-671-9i4V26UuOVKA4FY5nNPMlw-1; Mon,
- 27 Jul 2026 07:53:07 -0400
-X-MC-Unique: 9i4V26UuOVKA4FY5nNPMlw-1
-X-Mimecast-MFC-AGG-ID: 9i4V26UuOVKA4FY5nNPMlw_1785153186
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-189-2z9ByVa8NCuiHHV5dT-OnA-1; Mon,
+ 27 Jul 2026 07:52:57 -0400
+X-MC-Unique: 2z9ByVa8NCuiHHV5dT-OnA-1
+X-Mimecast-MFC-AGG-ID: 2z9ByVa8NCuiHHV5dT-OnA_1785153176
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C2645180264B
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 11:53:06 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 56EF81955E86; Mon, 27 Jul 2026 11:52:56 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.5])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 825C2180029F; Mon, 27 Jul 2026 11:53:05 +0000 (UTC)
+ id 3C77D180034F; Mon, 27 Jul 2026 11:52:54 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 27 Jul 2026 15:51:26 +0400
-Subject: [GIT PULL 17/23] monitor: annotate
- monitor_qmp_dispatcher_pop_any() as coroutine
+Date: Mon, 27 Jul 2026 15:51:24 +0400
+Subject: [GIT PULL 15/23] hw/hexagon: fix machine->fdt leak in qom-test
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260727-fix-v1-17-ca3fa3851347@redhat.com>
+Message-Id: <20260727-fix-v1-15-ca3fa3851347@redhat.com>
 References: <20260727-fix-v1-0-ca3fa3851347@redhat.com>
 In-Reply-To: <20260727-fix-v1-0-ca3fa3851347@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=859;
+ Brian Cain <brian.cain@oss.qualcomm.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1842;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=u5SYt6HOlXpoYkBe8zmUhNbcCVIM7I1SQQWsPqoY/1g=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZ0Y/5QPEg5KL1rJsLnNf6I+DP6f6zidKuoF4k
- S/QEJZ0Ue2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamdGPwAKCRDa6OEJdZac
- 5fU0D/40NwzjMKD1q6N8CBeO/Xb5jvVU2qMLbmccD4x4ASQB/D7byAYGcjuQs+QwJv+CBPWwft1
- AsjWYwmm4itFyzhKPvSprP4BVr3eRZmsmZI0UwarHvLgg5Yl35JUISPsVHfXrT6Ozqo+682CiKC
- ls1ZLGNAqqocgkTWtOpr9Kj063uiE2Bgzgt36+TtUVmj/D1M6d4Y/eay8jkr5XnxEvbberGgFoc
- K+BzCaPpdGGHkpkUDlwL1GckKm5ZNgTm0w772pd4LGvzt87o6VI5/w0hodjTLKdu/OQbHP3+ayg
- mFMKU+5ubTMRmvfxMjntGtxD8jgnyD3CXwu4P/b9Vv89m2tzXRtN4LdLKJ44j9ZC3mwLwQGnoBL
- V5Q01HUDPTr2G+AdNFpXi3o/dN3mDjXxYgWv+yfGLpuUFYgdCNjF34cVvc3x6jXTyTLNtpTWh0h
- gkSAtqfibR0MKMASNAm7myG/xroXIlaQ+13v9++u3yG2LD3oP71JwShU9NNd/KCnqXgBBjCAYaz
- wSpLQAm364LYZR9gb27HpCPqU9WwGHYwjNBiV0ZNrIYZcRxhP3Z2J7vX0/iQ3OzkFuKS87WJ7xR
- M0gFTqoAQ2yHpMT1m61Q4SEDOe07l/k+NzNO4417V3uqIr8tkDOYk8pbfBtQUe3gQCoMJTDGze6
- RtcCQrVxAzdl38Q==
+ bh=qAXGTuubxIbIhkEEcJPIbjJTilc1xDRew6qMQFBSIOw=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZ0Y/IQB/oLY+UazuWcsrdZKA1Z4N/KK6M3M9I
+ trjt2Z81c6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamdGPwAKCRDa6OEJdZac
+ 5XQ0D/4pL6JgDTn9gkeyu7gyqQ5IYVlns+ITsjzsD4auFQ5oOejo2zKW5l1sAA5AyL4wzBXqrkn
+ Zs7EJcWjAXqr/dyc836QzrgKNlz3ucmZmseChk/4Zr95DgsD0kdh4lvc0N08km/7wQM/mrkOzOn
+ IVT6t3a0XxCSGCvYNfPSTtHaXvvZa9K8+NOPt8Jbvf9XQhiXf5DvYSHTCFQFwev4gls5EKPDaqj
+ om4SbubzboTwxlWG1DmTAxRqGUJAbZCrckLFGEnKXsRiHTMQcWr/g9i2yrUWacs60Oq5B0JRQH0
+ mm5xs8TbQFLIpOvrIIRSq1F8MvTKp5M5ERsU7tvFP4zXUI/nfRVFtXvmcohGW3i1GKmSf5L/Azq
+ qgSnudvxpK2uE7F+e6ZqhUQ4m8gvzXqBENwUoX5T7lAPStg7oUpZzCpX3ZumzOCVDxknNzrFGJE
+ fqe+pJhoSjPHAct4cFVAzuLRVHzVdHv7skoaKMsVtTD+gUc8P55qajhgDLp0Pa0C/avYKH9bxBv
+ lUsQdVSQg/rZK9RRY6ZqLpPAKRI1KrJOjQQeyELHlqLMAo1f0gjVfC/7RCP4cmOwBJPAY5g57D9
+ h6djO/x9QxJ5SKEqboyK2ZN+lz7D6nfnp6nAK8cPXI37MrGkT3LTr7tpuhL9Hfp0ifhITO1gos2
+ o3lAhl8R2h18+hg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,31 +103,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The function calls qemu_coroutine_yield(), and is called from
-monitor_qmp_dispatcher_co().
+virt_instance_init() built the FDT unconditionally at QOM
+instance-init time, so simply instantiating the object (e.g. via
+qom-test's introspection, without ever realizing the machine) leaked
+the 1MB FDT blob: machine_finalize() does not free machine->fdt.
 
-Fixes: 60f4f62efeb ("monitor: extract request dequeuing to a new function")
+Other boards (arm/virt, riscv/virt, ...) build the FDT lazily from
+their MachineClass::init callback, which only runs when the machine
+is actually selected to boot. Do the same here by moving create_fdt()
+into virt_init().
+
+Fixes: 88a8bc7f43ff ("hw/hexagon: Define hexagon "virt" machine")
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- monitor/qmp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/hexagon/virt.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/monitor/qmp.c b/monitor/qmp.c
-index 223e0643c2ad..338d37cb7e5a 100644
---- a/monitor/qmp.c
-+++ b/monitor/qmp.c
-@@ -342,7 +342,8 @@ static QMPRequest *monitor_qmp_requests_pop_any_with_lock(void)
-     return req_obj;
- }
+diff --git a/hw/hexagon/virt.c b/hw/hexagon/virt.c
+index a3638998b873..b75047250260 100644
+--- a/hw/hexagon/virt.c
++++ b/hw/hexagon/virt.c
+@@ -175,13 +175,6 @@ static void fdt_add_cpu_nodes(const HexagonVirtMachineState *vms)
  
--static QMPRequest *monitor_qmp_dispatcher_pop_any(void)
-+static QMPRequest * coroutine_fn
-+monitor_qmp_dispatcher_pop_any(void)
+ 
+ 
+-static void virt_instance_init(Object *obj)
+-{
+-    HexagonVirtMachineState *vms = HEXAGON_VIRT_MACHINE(obj);
+-
+-    create_fdt(vms);
+-}
+-
+ void hexagon_load_fdt(const HexagonVirtMachineState *vms)
  {
-     while (true) {
-         /*
+     MachineState *ms = MACHINE(vms);
+@@ -242,6 +235,7 @@ static void virt_init(MachineState *ms)
+     DeviceState *cpu0;
+     int32_t clk_phandle;
+ 
++    create_fdt(vms);
+     qemu_fdt_setprop_string(ms->fdt, "/chosen", "bootargs", ms->kernel_cmdline);
+ 
+     vms->sys = get_system_memory();
+@@ -341,7 +335,6 @@ static const TypeInfo virt_machine_types[] = { {
+     .parent = TYPE_HEXAGON_COMMON_MACHINE,
+     .instance_size = sizeof(HexagonVirtMachineState),
+     .class_init = virt_class_init,
+-    .instance_init = virt_instance_init,
+ } };
+ 
+ DEFINE_TYPES(virt_machine_types)
 
 -- 
 2.55.0
