@@ -4,97 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD920C531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:21:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DD16C53219
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:21:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woQri-00005a-J5; Mon, 27 Jul 2026 15:19:54 -0400
+	id 1woQrf-0008WA-8H; Mon, 27 Jul 2026 15:19:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQrg-0008WR-Gp
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:19:53 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQrY-0008Vg-Iq
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:19:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQre-0000LY-MT
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:19:52 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQrW-0000Kn-GT
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:19:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785179990;
+ s=mimecast20190719; t=1785179981;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=5xEgcXduIKUS+efKpR6fC7s/haat8kW+FyLhnuY1/MM=;
- b=AzYI2kv4XwmqttRp2hZ1WU/3zBj4Afd3v70vDaglFKNXQpQP+17yD6W+LFfIvmUoUIvnx8
- Gzje4xMsEBCJR1e1+l7Gtsk2lBd/gp9ZbU2Rpw0RW8kHeC2nqvlVBphHdutD8af5QCWmi1
- LxPrjQT8aSaH/kbKmOwBKLY1BJC3XbU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=G//nuxmSO865h0x1JAyl73ncMcHKB0EKw7W4t5Qiie8=;
+ b=TZYnbG3Wl5LKOSjDfSKnJefpGH26EFLDtJljHFJwg/Awa2SmJaEsVkMUAyVJmpcoJAFj+b
+ DwmYdnIFF3jorthM1AVAG9q14lh2v/UH5g0HUNWVsvk3H6NWitcE9n+9LRaMiS7cm/PA0B
+ ITbG6uZ1h7R3eFEpTg2JcfeHHkM7PNU=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-527-zb2lgnO_PACqcGKH2tVlbA-1; Mon, 27 Jul 2026 15:19:48 -0400
-X-MC-Unique: zb2lgnO_PACqcGKH2tVlbA-1
-X-Mimecast-MFC-AGG-ID: zb2lgnO_PACqcGKH2tVlbA_1785179987
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-493bfc3b84aso17325845e9.0
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:19:48 -0700 (PDT)
+ us-mta-35-vXDNQwObMsSxSEwoQk6pvw-1; Mon, 27 Jul 2026 15:19:39 -0400
+X-MC-Unique: vXDNQwObMsSxSEwoQk6pvw-1
+X-Mimecast-MFC-AGG-ID: vXDNQwObMsSxSEwoQk6pvw_1785179978
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-47f83999cceso2655591f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:19:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785179987; x=1785784787; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ d=redhat.com; s=google; t=1785179978; x=1785784778; darn=nongnu.org;
+ h=content-transfer-encoding:content-disposition:content-type
+ :mime-version:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=5xEgcXduIKUS+efKpR6fC7s/haat8kW+FyLhnuY1/MM=;
- b=m/Iv13VPjDXTLs5sYE5PGtPIujZM4twMoNPYswpYK3DdNSHbb4hBjIY7RorfRJo4Vk
- 7YYTuiiK35sK+WKINxwQ8uNoGgAWBMEd1ozb4Lq7nYO6CekStgCZKygC9notqcPYy4Eb
- LiZx1Jp9deLC7yRsXHkprLGOw75lurgOB4HtmKRHy3GaTnOIdipSMNJp8Tke0+/Ypt6E
- idmTFaT5cNPJTVP7cVghtRq1fUy6bSh4X+99MebDBFz1X4c3d0oMkE3hjfWPv3kI9RTd
- j/cMxuuvf4jBIPsW149ywupRLxFHjLZGRzYGLIDGbZyfwbtqOVp7npzDJCnVDvVCHjlr
- ndxA==
+ bh=G//nuxmSO865h0x1JAyl73ncMcHKB0EKw7W4t5Qiie8=;
+ b=QsQFF6YppZOqbc4wWSYNOosqhbyOrpPsT+P+t2lptmwnzMdOqOSIR8e/z1gFXRwgiP
+ 1AfhSHF4gHnDCmbtLc1EXasObJs/RnL2WkJzFJVpCKbTbytukLxcezuyUCJUdf/tHR/s
+ DQLhsIFU/3ws2AsADJEgr9jhrIaJCDwfnkEScZ4FcrgpJcjGqvyLLvnzxyBQBc5pki8g
+ +7jZIe2QMie5ET19xYOMpg2rGCvh0avJVqJfxptnPDQtWToJfDrVGKBPqPE5RFtVZ3q+
+ 2VMufui1s59ORr5vDkpC7Pgq8A74Hu7LQcN+DMeUTB2UioiNiC2Zv93KMljFe9mo+EvU
+ helw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785179987; x=1785784787;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
+ d=1e100.net; s=20251104; t=1785179978; x=1785784778;
+ h=content-transfer-encoding:content-disposition:content-type
+ :mime-version:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=5xEgcXduIKUS+efKpR6fC7s/haat8kW+FyLhnuY1/MM=;
- b=YCsaF2urI1bnTxDoMJzz3bMDHneFQOLQbQX+xubh/zKRwWA9OFVoz0t4NTJA9im5U/
- 7XLOjk4eeXKwSw2jlwkDHbdsKoi+5GheYAPoIAVirPdb5aayGWcg1vdGFeewO6dv/+sO
- DomOESW1sKkNRQy+wRohqaSzaeml8JVRQ3CvvHT+ES4xAEkheKczG4Wqdc4D2fp5PZ2/
- czZKDdOwSebUEOXbziawvePCfc/LdRHPmPEkh/2si2eyrvriAxg3nHhxtJ/YEzeLP8LX
- WjKbxzb/HhW4M+FezqOicdh78kSBER4h+GM/x11I+9Tcs61uGbatAyBs0fMtFn3J388+
- IFsw==
-X-Gm-Message-State: AOJu0YxV1EEuNOCMNoiSu+Q6rYzam93tkp4KKyX2QHsdKcZZTFNP9Ssd
- Lacms2wM2qPK+HgQt4RZ9b4gnGUwiBkAgBe95FJWz2h6klO1XsYzy57yr7Sdjxo2j36n4cvbhR/
- fgSQAYz7RjroXqPJA09Lw4VBm+9tCNlA/2fApP5v4CCK83fvGyjVn2YfVctxuT9xZmrEKQdSc3r
- /CfzSlaQKkhqCJq1QzELBQkyeVF8uWFuGFTA==
-X-Gm-Gg: AR+sD12VZn6kTm3cSFWnpfjncH0n8RH6OKufyWy1mWLjeHCzXBuk5i1SSb9avAyRRNO
- pbW5fQ1mIHcIUR2X0jnVWAcdEEHTGCNv+Z7lZo0JOyUYJKGOHViL93Uy6s7PvorhqB0A+4CPFkY
- x9c1ccKViASX+CNhnXyVmh44Z4Q1nEIEebZUMl4IWcj933pgQ1ElEKp+tvgshYpOQivJp13wvjQ
- MJt+VUebjfqvUUNW+rb3FOsO74BopNm1TW+TU2xQHjhrBRWfFvDO4iXNM36BJMYVxipB4dfJM/u
- 2deyo4vrbsYwaQ8upyLh6JNU7xf/4RNqEZrT6TD/JH+++HR6GizF8Jo/30tI9jvynhdZlsIYJIi
- x7bLfgs+PkGRAQc4F4ODHLg==
-X-Received: by 2002:a05:600c:5253:b0:495:4732:1eb9 with SMTP id
- 5b1f17b1804b1-496c4fce74dmr4251295e9.21.1785179987343; 
- Mon, 27 Jul 2026 12:19:47 -0700 (PDT)
-X-Received: by 2002:a05:600c:5253:b0:495:4732:1eb9 with SMTP id
- 5b1f17b1804b1-496c4fce74dmr4250865e9.21.1785179986671; 
- Mon, 27 Jul 2026 12:19:46 -0700 (PDT)
+ bh=G//nuxmSO865h0x1JAyl73ncMcHKB0EKw7W4t5Qiie8=;
+ b=Bb51/wRukQJCbh5HOANgMqUWjheCiGO0nl4/veDtzEz8hQEx2Qdqrhrj8TbAbe0nbA
+ sh2Zqh1Um0vvT7H0LgwxFdEK0xJNRvZI+SssL/gFtmglqJtAXgcu3tSgMSvmDbQBXgbF
+ lCXOHqVMIhfZGfgcMQNt0W942RsiwOz+RjNXbQcAEKDAR3PLeqG/YqNBb68w0dRleWjO
+ 5gJpzYsD+MKe9wJm6Eis3oIxo8JqtylgmTIfMab6KULdXH4h4xGyfhn0BMhmJM+dRZrl
+ uK2+X/nvTGH1E2ODTz+JEme7g53kaNhxL7NHfniT6pfCOaB5ewlvh5B+Y9yi7pIZDypT
+ XYDg==
+X-Gm-Message-State: AOJu0YxaKABu/cQWXDuZQJ7IVO/Q0H+Ag3HweUkPCglQ6eEe6snP5sMX
+ jrkAho2vdCdPLR1XVHgzpg2nQdJ60wcYoeZ+EM8aOvNpzmACg2D0CyvUFPazTEfP9cyEjvVOy6Z
+ EBNduUn11FUM5aUcbcYl/7UTa9Tyer4vC0Rw5BtmI9sHZstIXyH/lk/WfrJea1mi6yTgMyM+is9
+ rh5T0ciuwMn+5HymNEAhnruwDC5oZHKeSpkA==
+X-Gm-Gg: AR+sD10xkGUIyMlCf2xE+o9KCJUvXJonCjsV5pJgh5Gryw6iQOOlcppALO/L/GZAK9E
+ gSk0VO+i62vdSJy9RkNs2axid2zfSvcnVqN0f79cX+RV/HUplPiYfdt8WmkuxNhgMmGmhRWmKy6
+ kGzuGlPJew1Ba2Q5LfvpFl1eq/XBqb+IclxV0IsYItv5qJVadPOxG5Gn8qntbQg3paqRkIwEHIy
+ /bZILULvu/I2wZ6xLQp0PyMvYqQ/RVa/uR7ty7S8ctloabltYboueBt/jKbU/5l0t5/lZpV/EGq
+ o/61QdMNWaS0+k13TsvgfalbGfOatiNoMG7QMk0DQ/g06MtLVtH52vat8ARQOYbhp9OAZuzGDNk
+ NXQUmpKTJRWB57qsmxt5ISA==
+X-Received: by 2002:a05:6000:2287:b0:47f:95d3:6ff7 with SMTP id
+ ffacd0b85a97d-47f9fc92d0amr13043879f8f.14.1785179978402; 
+ Mon, 27 Jul 2026 12:19:38 -0700 (PDT)
+X-Received: by 2002:a05:6000:2287:b0:47f:95d3:6ff7 with SMTP id
+ ffacd0b85a97d-47f9fc92d0amr13043839f8f.14.1785179977824; 
+ Mon, 27 Jul 2026 12:19:37 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-28-14.inter.net.il. [80.230.28.14])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-496b388d5b4sm178961985e9.3.2026.07.27.12.19.45
+ ffacd0b85a97d-47f85c531afsm56667211f8f.24.2026.07.27.12.19.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 12:19:46 -0700 (PDT)
-Date: Mon, 27 Jul 2026 15:19:44 -0400
+ Mon, 27 Jul 2026 12:19:37 -0700 (PDT)
+Date: Mon, 27 Jul 2026 15:19:35 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>, xlabai <xlabai@tencent.com>
-Subject: [PULL v2 04/30] libvhost-user: protect against OOB writes in
- vu_set_inflight_fd
-Message-ID: <fbdfdbb9920cb69408d53cb86a8e079a2054581e.1785179875.git.mst@redhat.com>
-References: <cover.1785179875.git.mst@redhat.com>
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL v2 00/30] pci, vhost, virtio, iommu: bugfixes
+Message-ID: <cover.1785179875.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1785179875.git.mst@redhat.com>
+Content-Transfer-Encoding: 8bit
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
@@ -121,85 +119,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-vu_set_inflight_fd() trusts the num_queues value from the
-VHOST_USER_SET_INFLIGHT_FD message without checking it against
-dev->max_queues, so an oversized value causes out-of-bounds writes to
-dev->vq.
+changes from v1:
+- added a patch by Stefan
+- attribution tag tweaks
 
-Front end is generally trusted so not a security problem, but OOB isn't
-a nice way to handle frontend bugs.  Let's harden this a bit:
-check num_queues and panic if it's invalid.
+The following changes since commit 300438ffbb8d9430cac2fcc15cba6f482b2c0587:
 
-Fixes: 5f9ff1eff3 ("libvhost-user: Support tracking inflight I/O in shared memory")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3740
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Reported-by: xlabai <xlabai@tencent.com>
+  Merge tag 'pull-trivial-patches' of https://gitlab.com/mjt0k/qemu into staging (2026-07-24 09:13:49 -0400)
+
+are available in the Git repository at:
+
+  https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+
+for you to fetch changes up to 6682ea3391277e732a6d74c5758206ba834e1615:
+
+  virtio: avoid packed vring virtio_queue_empty() infinite loops (CVE-2026-16457) (2026-07-27 15:14:16 -0400)
+
+----------------------------------------------------------------
+pci, vhost, virtio, iommu: bugfixes
+
+Fixes all over the place, including a bunch of CVE fixes.
+
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <23b3f12388c1035f208550df9de9944c22d8d534.1784899127.git.mst@redhat.com>
----
- subprojects/libvhost-user/libvhost-user.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index 2c35bddd6f..8208265588 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -1998,6 +1998,8 @@ vu_get_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
- 
-     if (vmsg->size != sizeof(vmsg->payload.inflight)) {
-         vu_panic(dev, "Invalid get_inflight_fd message:%d", vmsg->size);
-+        vmsg_close_fds(vmsg);
-+        vmsg->fd_num = 0;
-         vmsg->payload.inflight.mmap_size = 0;
-         return true;
-     }
-@@ -2005,6 +2007,15 @@ vu_get_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
-     num_queues = vmsg->payload.inflight.num_queues;
-     queue_size = vmsg->payload.inflight.queue_size;
- 
-+    if (num_queues > dev->max_queues) {
-+        vu_panic(dev, "Invalid get_inflight_fd num_queues: %"PRId16,
-+                 num_queues);
-+        vmsg_close_fds(vmsg);
-+        vmsg->fd_num = 0;
-+        vmsg->payload.inflight.mmap_size = 0;
-+        return true;
-+    }
-+
-     DPRINT("set_inflight_fd num_queues: %"PRId16"\n", num_queues);
-     DPRINT("set_inflight_fd queue_size: %"PRId16"\n", queue_size);
- 
-@@ -2052,6 +2063,7 @@ vu_set_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
-         vmsg->size != sizeof(vmsg->payload.inflight)) {
-         vu_panic(dev, "Invalid set_inflight_fd message size:%d fds:%d",
-                  vmsg->size, vmsg->fd_num);
-+        vmsg_close_fds(vmsg);
-         return false;
-     }
- 
-@@ -2061,6 +2073,13 @@ vu_set_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
-     num_queues = vmsg->payload.inflight.num_queues;
-     queue_size = vmsg->payload.inflight.queue_size;
- 
-+    if (num_queues > dev->max_queues) {
-+        vu_panic(dev, "Invalid set_inflight_fd num_queues: %"PRId16,
-+                 num_queues);
-+        close(fd);
-+        return false;
-+    }
-+
-     DPRINT("set_inflight_fd mmap_size: %"PRId64"\n", mmap_size);
-     DPRINT("set_inflight_fd mmap_offset: %"PRId64"\n", mmap_offset);
-     DPRINT("set_inflight_fd num_queues: %"PRId16"\n", num_queues);
-@@ -2071,6 +2090,7 @@ vu_set_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
- 
-     if (rc == MAP_FAILED) {
-         vu_panic(dev, "set_inflight_fd mmap error: %s", strerror(errno));
-+        close(fd);
-         return false;
-     }
- 
--- 
-MST
+----------------------------------------------------------------
+Clément MATHIEU--DRIF (1):
+      intel_iommu: Check address mask before using it in pasid-based iotlb invalidation
+
+GuoHan Zhao (1):
+      hw/virtio/vdpa-dev: pass set_config buffer to vhost backend
+
+Haotian Jiang (1):
+      hw/cxl: fix OOB access in cxl_doe_cdat_rsp via entry_handle
+
+Laurent Vivier (4):
+      hw/virtio: reject zero-length packed indirect descriptor table
+      hw/net/virtio-net: Protect from DMA re-entrancy bugs
+      hw/virtio-rng: Fix host use-after-free (CVE-2026-50624)
+      backends/rng: cap request size to avoid oversized allocation
+
+Manos Pitsidianakis (2):
+      virtio-snd: check rx buffer descriptor size
+      virtio-snd: check for overflow before g_malloc0
+
+Michael S. Tsirkin (17):
+      virtio: use masked features with set_features_ex
+      virtio-net: fix OOB read in RSC receive path
+      virtio-net: fix short frame OOB read in receive_filter()
+      libvhost-user: protect against OOB writes in vu_set_inflight_fd
+      libvhost-user: protect against OOB vring queue access
+      vhost: do not crash on ring map failure
+      virtio-scsi: fix SCSIRequest leak on a bad request
+      virtio-mmio: fix QUEUE_NUM_MAX
+      virtio: fix queue size validation against allocated maximum
+      virtio: stop migrating num_default, validate vring.num on load
+      virtio: fail early on bad config_len in migration
+      vhost-user: assert nregions within limit
+      virtio-pmem: wait for flush requests on unrealize
+      libvhost-user: validate last_batch_head in vu_check_queue_inflights
+      libvhost-user: fix heap overflow in vu_check_queue_inflights
+      libvduse: validate vq size
+      virtio-iommu: fix OOM due to unbounded call_rcu
+
+Peter Maydell (3):
+      hw/pci-host/q35.c: Always initialize smram-region even if SMM disabled
+      hw/pci-host/q35.c: Factor out creation of SMRAM MRs
+      hw/pci-host/q35.c: Avoid early return in mch_write_config()
+
+Stefan Hajnoczi (1):
+      virtio: avoid packed vring virtio_queue_empty() infinite loops (CVE-2026-16457)
+
+ include/hw/scsi/scsi.h                    |   1 +
+ include/hw/virtio/virtio-bus.h            |   1 +
+ include/hw/virtio/virtio-iommu.h          |   1 +
+ include/hw/virtio/virtio-mmio.h           |   1 +
+ include/hw/virtio/virtio-pmem.h           |   1 +
+ include/system/rng.h                      |  14 ++++
+ backends/rng.c                            |  21 +++++-
+ hw/audio/virtio-snd.c                     |  24 +++++--
+ hw/core/machine.c                         |   1 +
+ hw/i386/intel_iommu.c                     |   9 +++
+ hw/mem/cxl_type3.c                        |   3 +
+ hw/net/virtio-net.c                       |  25 ++++++-
+ hw/pci-bridge/cxl_upstream.c              |   3 +
+ hw/pci-host/q35.c                         | 110 ++++++++++++++++--------------
+ hw/scsi/scsi-bus.c                        |   7 ++
+ hw/scsi/virtio-scsi.c                     |   2 +
+ hw/virtio/vdpa-dev.c                      |   2 +-
+ hw/virtio/vhost-user.c                    |   3 +
+ hw/virtio/vhost.c                         |   5 +-
+ hw/virtio/virtio-iommu.c                  |  29 ++++++++
+ hw/virtio/virtio-mmio.c                   |   7 +-
+ hw/virtio/virtio-pmem.c                   |  17 ++++-
+ hw/virtio/virtio-rng.c                    |   2 +
+ hw/virtio/virtio.c                        |  47 +++++++++----
+ subprojects/libvduse/libvduse.c           |   5 ++
+ subprojects/libvhost-user/libvhost-user.c |  61 ++++++++++++++++-
+ 26 files changed, 317 insertions(+), 85 deletions(-)
 
 
