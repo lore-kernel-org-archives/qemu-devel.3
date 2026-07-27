@@ -4,103 +4,186 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FECFC5321C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EC1FC53219
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 09:07:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woHHr-0003WJ-Eu; Mon, 27 Jul 2026 05:06:15 -0400
+	id 1woHIG-0003Z2-7b; Mon, 27 Jul 2026 05:06:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1woHHB-0003R9-Td
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 05:05:44 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1woHHA-0008OQ-1K
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 05:05:33 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2ceaf8a1265so29232505ad.2
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 02:05:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785143130; cv=none;
- d=google.com; s=arc-20260327;
- b=XuVeFDa9BULlGRMRsI1BBUKuURBOgw2cm5cG825ejBLg6sRBVYBazflF54vl2veo0c
- M+h7/CNBYUTOvi2OzSD2+l9N/CDvqK+qhDbpKI9Rxu/fYyDVLt0vl6DjnOKA1XB17qMz
- xO84+ExVZUQVjYGfvPSJ3jFeabKIsEbFavTMzgPe2pS/WvuOeVZscbSmoiz9BpOeLh7/
- 81IyeICXuRp4/tDCd81FDNXVebNjev5cIgaNppjsajZQqZPW/cj/HQE+Wuz528kk7wlH
- mGdEHvq25NkIowzKs1dSlaId7faQhsQ9M9KYViUOKd04xNolnx1tiLd6kVams2oQtxUJ
- +3ww==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=7vT+xOlLjYuwkWGIEf2srARPM9q5qEwRRnN1rquqV+0=;
- fh=NslLSXajYw6/fhaduPFA3iYcwKcIqwkl+hWoUZd07+o=;
- b=rtuBj1cmdCdOARx+82PxopN0OltexqB1CLcEQ6rIvGDp/afhyzNWiRz5udXlXWhVJb
- Gnmj3oEDe/l6XG//Xy6+zklxwtw1i7plcaYRIgLyUedWNo6x084l0ViT0cODEbwEyyvj
- PvBQOYdss9PMx+uXcy4imY30rXyz+jL40pIiwbYFCt19dQ0NZp9ecxW21vIrbVl6AZjj
- eVEsmuXmyrbHyCEx1/fT2OuNfLdJ0WCDDREWV6eBE0qYlKiOb34R81kcjfouc13KhMDU
- xTqQU8EuhSSQcfXGTxRw45UbhLZgtZFWJRc0+PaApBOjmWhdEyW7Y3OvDGFJgoyt+OBU
- QvCg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785143130; x=1785747930; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=7vT+xOlLjYuwkWGIEf2srARPM9q5qEwRRnN1rquqV+0=;
- b=YE48oXTMgcw/Zg7HoKCy7COQwQ+6jR1VNe8OHe1CUslFrVROBMZxc02ECp0LEiXlhz
- AR9ewpBxv6ZdhGkfKHu/WoN2fnJhfInvIaEAF8CBJPztqR2+5bzV3ow9F9rFE+u0n69Z
- C/xRjwnFQHCHVOYkoHLv4edZWJmQnuIjcWkpKbJt7qSPSa62X3Bqr2sEMP1ki6Wbabre
- UkbqgzK75wUDzvtpJpzVbOyjUoDhSlofkq40A7cwISKip944Jk/lEI0E/+cqJxYkz5FF
- BOXca1RUamweOQvvh22X5arzP0CRYm3sngFcP8lCyNN38isBkGqHzMl83TEFMISsQc8r
- Ssug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785143130; x=1785747930;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=7vT+xOlLjYuwkWGIEf2srARPM9q5qEwRRnN1rquqV+0=;
- b=It0ow4xOeHiSq0kSHdfeRAUM4lGZUqOBEP8Pzj65RH9LEN105LpFPoHUXz29bDLwlF
- nxwqppxJYa13+h5/G2/gpQXcXZEidd969S3412LB3dDJeTO9ZBVBsU3U75OC3Lb8nE/4
- hnmXyO0mZfwJs70HrbUO4PE/ry7dpjc4ZC1OtvtIHVdAjbFiBNPlFiC/5n3kKMs4q5uv
- GkB7Z2OX+piMGvLKrAggB0YRE+HD7CO4BrAd0+joKezdyGy94NQKiw4JWe03EoQApJbz
- E/6coKttNZN5oATYo15c6XMZBPguIv+TPnuLeUCI0MXKeA6X7MvO36eA0B0C4jnze1OH
- 59nA==
-X-Gm-Message-State: AOJu0Yy9TzqAVJJlT76JD8qOg+kdaACL6nUt/B8JBE+XLTBgEykubvlw
- MnIqSVyf1jEn5eaAbIJ5bLTMRgjflhsdqVCflh858HsQRoV0wSoalTQEiBSvldugLcnbq6QRiYF
- MAB5HZWSf+rFd9+N3bNyLf2fwYS48/ZM=
-X-Gm-Gg: AR+sD13kEDNBjjemXhkLHv2mOg9bjx3W7CsKoeA5brt7y6Chdj7JQPooQHiqqffih0Q
- l9ZxOVMnUhHAq+A+PS/8d+o/jq6ar8af8xol1ZjbEOtD7BcsfGgrMUWgwOQZ5/Of0QcvjPL5Er1
- HHx4yid5qmcd6pFkA8qrmtmrOvY68qcasq4PMzk3Ehp3RzU72UG2ia/34QWrKaWDsbmOvJwqgjO
- NgZQttgYAqzYoD62/1EJ5b/rPfyYQ6KjDnrHPBcY2B+sqhF8k56ysYv5ez1LItra+2jj+SVktse
- BKDxs3PuOvo3l1u9Y1g9VG7/fgvV
-X-Received: by 2002:a17:903:244c:b0:2cf:477f:57c5 with SMTP id
- d9443c01a7336-2cfde67c4d2mr72292055ad.1.1785143130072; Mon, 27 Jul 2026
- 02:05:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <flosch@nutanix.com>)
+ id 1woHHc-0003Vc-AG
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 05:06:03 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <flosch@nutanix.com>)
+ id 1woHHX-0008Pg-1X
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 05:05:57 -0400
+Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66R7RZYt244002; Mon, 27 Jul 2026 02:05:49 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=6nKnpHJhkzwlLbUtH+omzupiMGh83Qjx0I4QICyef
+ z0=; b=hrpaHbjWKSFYXSrpZFmHdsDYJ4BtV0S8PXcldjgqeQTbynD1vaPLyzLDu
+ ps53JB/pTmqgZZOie/149qVTwJ+1fWFqOvWzWP6+MJ9U8se9Jz8TgiY0TDFBrPpU
+ iNo8eJYRskdYcTzj8TocZjOZIOBjgul3+bwgHE2aO7ZPUKjePhk5wRgSc8HXsE5h
+ KMGfdExQAQnJqRZe8eO3YRSxE6aXZpZy4B6T4wKHkXqC02CE60vtR+0mHFWJFRTD
+ lzZNRf5R9yRS+mR1++mCXpVU+wbGJwUuDj231V6lGO+IHmRnTfEXR7l+EohEfeu6
+ DgqLOMf+O51R20QfFjebXmjof7vbA==
+Received: from dm1pr04cu001.outbound.protection.outlook.com
+ (mail-centralusazon11020095.outbound.protection.outlook.com [52.101.61.95])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4fmvp0js7e-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 27 Jul 2026 02:05:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=F8uBFHu0n9Qbmp7twM85KYH27IYQL5G5DSOQXQ9nb6VIKVtvjhvmqGQIjSsF99HZQwFspA81Y9suNXfYwFMXSdg5w14hxxLZlDAE7Z2q1vCoONojFNse8D6QIIH7jjIROiBX3RuwpP7lLYaIp8HE2DsspYz+e7fXedklmVvWDQs/9Y/YsO+hnS4vIWI0+tsrUNczBag2jBBiWkI4c73wZng5irOo1fTq9vzDlsJPTw5bVxyXw+pFhBoIHvfys66OZSTiKJBR1fxAws8kdDu05nCEeM7Dl5sHEn8Pk6NFeg4GMUTRWUpGslHmBMb7aF/7xeY1T7reP/xAmi08BtZkGg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=6nKnpHJhkzwlLbUtH+omzupiMGh83Qjx0I4QICyefz0=;
+ b=BgVG3g5RGOCdJoSSwDPMAIzi3wg5llHEHJLS+UUEj2NqpsZSvaQf39LmxqCWC6PQ7gyq2UsJ93ykw8/F+zQcx6KA7eEjueQ16oK2uOSGbxE+foeh5Qj0wD+b0an906ddL3swuEXDRnMfasELGV/duwr5cd5e7Vc09D1obkdj+fpBRRN97MEwlSHJAu3Ml4W2vcYIrj2H5v6xOB+3YBOBU16G1gqNRUKTsv0RNG66FfRSpNoKJklSUjEfhnqPZEqc4/D9Co+fIg16ZMiGtXTMsq0Uj/rPZLKz/TlbpPAL8Wsch5kVBB3g2/7+bfNZ8TmLSDWlh0ELNAx/mWo+2JrDwg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=6nKnpHJhkzwlLbUtH+omzupiMGh83Qjx0I4QICyefz0=;
+ b=LINsArHlWnLxYDcVvONnuNdjRvuzJB6WnvGFEUsymzAz5jMJrBmXKenXxiW/7QHVUfr4vSKirU37Gr6Q/C2eZrSIfgSzc2xa51fK3OBo8T399gwVqhc6b5rACPlpJXiOMkh9l6gwTbKmt96765P+GiCKBnfZ+wd/Htgi+nBXcwyGGYdOaOtWAAfkFcWm+CbII9kzHK0N2wAT8kgwX3E8qEy8etxNOqrpEWieG9nogCY35MPe0LONag+hBm1Vi7kY3Up7H69dnKY7c6ldkoVpdtcDc8AzbSjANcQTz0rijTmyKsNg5zTJXTSK15AC1motFbZu3LlvaAyZips022EoJg==
+Received: from CH2PR02MB6197.namprd02.prod.outlook.com (2603:10b6:610:4::25)
+ by CH8PR02MB10840.namprd02.prod.outlook.com (2603:10b6:610:26b::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Mon, 27 Jul
+ 2026 09:05:46 +0000
+Received: from CH2PR02MB6197.namprd02.prod.outlook.com
+ ([fe80::90e9:29cb:631d:9ab]) by CH2PR02MB6197.namprd02.prod.outlook.com
+ ([fe80::90e9:29cb:631d:9ab%4]) with mapi id 15.21.0245.012; Mon, 27 Jul 2026
+ 09:05:46 +0000
+Message-ID: <939dd72d-80cd-4cd7-b9d2-e245afbaefeb@nutanix.com>
+Date: Mon, 27 Jul 2026 10:05:40 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Add option to disable building tests
+Content-Language: en-GB
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20260724135413.1716872-1-flosch@nutanix.com>
+ <708798a8-3d43-48d9-a4f6-210eb88a88cb@oss.qualcomm.com>
+ <92358092-080b-4b1d-82e5-733d2531ff38@oss.qualcomm.com>
+ <6c79c79f-1bff-4914-9e42-dc077885f718@nutanix.com>
+ <amcbxTQXOwIJPPpo@redhat.com>
+From: Florian Schmidt <flosch@nutanix.com>
+In-Reply-To: <amcbxTQXOwIJPPpo@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: AM8P189CA0026.EURP189.PROD.OUTLOOK.COM
+ (2603:10a6:20b:218::31) To CH2PR02MB6197.namprd02.prod.outlook.com
+ (2603:10b6:610:4::25)
 MIME-Version: 1.0
-References: <cover.1785101237.git.mst@redhat.com>
- <20260727045453-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20260727045453-mutt-send-email-mst@kernel.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Mon, 27 Jul 2026 13:05:17 +0400
-X-Gm-Features: AUfX_mw1T7FhwsFMiN8KLqj46jPoaY1tU294MB7_jTJKEnzJMsZ8cL_fsAF4evs
-Message-ID: <CAJ+F1C+MR4J5Unu5xOXPO+Kj5V5XC8pVOA-WzqqBO3bW4mvrJQ@mail.gmail.com>
-Subject: Re: [PULL 00/30] pci, vhost, virtio, iommu: bugfixes
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PR02MB6197:EE_|CH8PR02MB10840:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4dc510a6-dd89-4f2b-7235-08deebbe3e93
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|366016|23010399003|1800799024|18002099003|22082099003|56012099006|4143699003|10067099003;
+X-Microsoft-Antispam-Message-Info: fJwfqDqvfLKgTHFpXkCLDvYuDKIHy6RrogIyBrQGopcVnrL0Q0tZfYpqNT7XWuytHk5YXc3KEB2uPftj21ucSHQGocyn4SK1+VT0eKdzAwirCfLH/auctyp7ZH44/xBKH2I7jyFlEAcvKzloCKOYeuUYbvRvw4W7v3K0o13jhx8/PhB7w6EQE0bXalqVdB7faLjyPEvkBCoxWSxjImuAzg61PLfFw6OpuzpupWYHUaaT6jWJZvSnyCGbj0aPcfj9xHw2bJ2W8SIgQKNR7tkKFsdfdvkyTt8Ty777E6z9loaVdkjP2P4Blcjp/QGaLj4QdmK24n5YV2bQDibSV006ngilSU2cxYzH+etWXz8YjL7W6DGm+pAKRze/qs3GCS1IeCyx9IeDGD6O0x7HqMpwcrL37OAXc9LHZw6tPskX3wCznrXaR9VoGWLV+fcF31Ae3DZKRx0IYVmNQSpOSXPcb5pqC/nDg/fi37TjFUs9U/TctFKnYa9BAdFLpb4bUNKuaBVzW5syAZhOQbgs54QAXNps/CQZ3rkf5uQliQhUqfgf5hBAlJkRf13fH+fatLlWvHw++w45Cdtk+3cs1npuVhIl2mKMKR7sRawcvpjMG7tzsThnqcXWk1YhMr8Rpjy5hSH3FMOkgA3BuvOK/44S+kpYJav5a9ySJq8kM0BqENA=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH2PR02MB6197.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(18002099003)(22082099003)(56012099006)(4143699003)(10067099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SERWYlY5R210MFAzeDFOZFNIc253UkxzMjdjUlA1aVRveFpIUHl5U0l5d0xP?=
+ =?utf-8?B?dFBMS2VCeFY2ZW9QM29uZTVtTGxCVjBnWm5DZGZSeDFMN21IVjRua2VtMi9D?=
+ =?utf-8?B?OEc5Qlk4UXY5eDFYb2wycThQQXhlYXdHNnhXcTFJb2g5a3crKzVzbVFkUlFK?=
+ =?utf-8?B?U2Y2QVNaMlhxNEVwVjFrdXI1Z0JlUFJxRVhIODFFMlZyZGJpeEpQTGlWeUl0?=
+ =?utf-8?B?dFl5YXdMb3BhNnFYTVhVdUQ0SS9Fa1VWc1ZsVXlkSHJ2ZXNXanZ5a1hkMmxW?=
+ =?utf-8?B?b2puWkxEZ2N6OUhtSDZZaC83Vkx6emJZeDJxK2xKN2hvWS9pMUFCNDNOOWQ3?=
+ =?utf-8?B?YUl6TVVwMFdTY2d2UkRMVWZ5WEs1aDkxaS9xTnJQOWNGendGODRZa0k3bTl6?=
+ =?utf-8?B?RTlZY29RUitnYWU4V0d5RDhaMHZOdUc2dXZibVZPNFREOGxBV1BVc2lRYVo0?=
+ =?utf-8?B?SjdabUhqOTJYeEM0QkpiUUpQOG01WXhOUUFYWkhBTGZYd0htSFlPdUtWV2V1?=
+ =?utf-8?B?SkdlaTB1T2EzVGpWdlRweWZGVGNiYmkva1RBTDVRdldTS1ZCM3l4ZVEzSW84?=
+ =?utf-8?B?aklaZUE4M0s3QXdwNzd2bUROR0xkVGluY2p1dEFOcjUxSTZCOFJWalNpOTdS?=
+ =?utf-8?B?WGk5bkhVc0I4aXQvZGtpb2l1bDlXc28ycERKNU91eHNvTjRuNWovMGxtZnk1?=
+ =?utf-8?B?UHE1eHdiRUlzMTc2YWh2L21YdjZXOHB0dmtpUkgrRHZmTlVtT056TC92Ny93?=
+ =?utf-8?B?ZnZIVjQ2aE9OVEt1SUdQZlRTV0FzU3h3TlNvNkV0OVhJdzNTelRuTzN2TWhk?=
+ =?utf-8?B?RjhPUjd0VFlZdlNCSHVpTG94VDZJWFN6WHFSSTlrQkNZSmppQ0VVUHVBUkQw?=
+ =?utf-8?B?K3c4ekdMRm1SbjBNTitZS2RUYUdBc2Y2Z2ZVUVdlVHFKMjJlMncxNlF5ZElH?=
+ =?utf-8?B?a3RxUXhCTDUxVkpUOW5tVFBkSm95c0crZmZOUUhDTHpBd28zejlxQXJZTEJp?=
+ =?utf-8?B?QzFQa3IyWXBDdjZPMXZGZ1RMMU1CaS9CZ0ljVmc0dHFlT2JodFBMQVY4SG9K?=
+ =?utf-8?B?NFp1dWh4KzZMZk1pRXhrV1RlMDZ0NVNMMTZ1TzYyWTM1aWRLWXp6MGxVLzVq?=
+ =?utf-8?B?ckhBL2UzS2JpSlY5bVpjM0s4UGdiZVVZYzNPdEwwVW1NNWVDTlU3ZDdtSW9W?=
+ =?utf-8?B?dXhmS1FsQU5QL0RyVWFlZW1tL1ArM1JoME0zZVlaTG9VRjYrU1RFaE1QUy9O?=
+ =?utf-8?B?ekdEZ3Z1RVdrUU9MRElhNVh3clQ5ZTlBVkZBREtMTEMzbitteVhZUENac0lP?=
+ =?utf-8?B?RHhUZ1B3TU9ZVVdKdE1mY2dyOHBwRFVjc3dPWG5mUVZSNDBKbTJDV25NbHJK?=
+ =?utf-8?B?MEE4anRwQytFWGpRSlduQS9GSzF2UEFUZkxid3lKUzRueHZSSFJienJTaXBy?=
+ =?utf-8?B?SHNWSjhwSTlreXJOL1ZZdGJPdWtJQmlEZHB1K1g1My9ORTRGd0FTbk5pMUJh?=
+ =?utf-8?B?NUNGNFBYV0o1YnlzQlQ1UDJ4amdpek5pNEhVdmhmRmJQK1A5Q2NRZWR6VEp4?=
+ =?utf-8?B?Q2VXOHpBRGJ0bWlPSXYwUXZGWFQ4cDFLbXVJbm5jaE5FTmJocyswbWE1UElG?=
+ =?utf-8?B?a0t2ZC8yWVZFcDhOUUpBU1BCRFFJVTV1REZqR3FXWExjV3JjdTE2c3RDdjlM?=
+ =?utf-8?B?eHVNam9pSW10UVR1U1loRGJnVzJNR0N6a3FMaHRKMHUvclBPeEFjMTVuaVhE?=
+ =?utf-8?B?bWZjaENxMDAvMWx6ZU1TOTBjZVQzTytid0pLN1lXODlQS1d6K1lSbC9oNmxF?=
+ =?utf-8?B?NHltTDFPN2NRekJ3MXpWYTZ5L25sL2RJV2RyVnZuM1AyeHB1L25xTllYc3NB?=
+ =?utf-8?B?UFlTWFpLdmF3MmhERkluUzR2eEZhRFpteGdrT0JXUXFqR2pGSUpoeVdvdnFS?=
+ =?utf-8?B?RlJFUW9sUHhvSWFNcWxpNDJwbWMxTnFvY3RzVmFTU2luNmRtdUNJSGJsNHhD?=
+ =?utf-8?B?WjJBUzVoY3FKdUtUZlI0MUVOYWNtUXhCZkNEdlNlVmwxYnpMbWJDSllIdFhT?=
+ =?utf-8?B?M081YllRek83WXRTWTU5WHQ5Y0dSUnRHcXFvZnhDbXl3OUJ4WkM5dGJyZTdq?=
+ =?utf-8?B?MVhWUmxDMDhEQXhIWFh1dCtid3dQYXMzTWZvcUlCY0lpRUd5dDNTNGdRTUt3?=
+ =?utf-8?B?bHVJTlgrY0VJUWlWbEFJSFFxMTFGMjduakJ3MHhPbi9lV3VpazZ2WTNhRkFI?=
+ =?utf-8?B?THlqY0gyNDhwRHZLNGFBd0RXZWQyaGF1QnJOOGZwZ0tSZnRYK3dYaEt1S2gw?=
+ =?utf-8?B?SHpPV3NtdjF4Rzl5SUM2Q3Z4bDV4WUxBMmdBVDFRTjUrM1JtSXFQTlRnQzVk?=
+ =?utf-8?Q?OIYfxY1rqES1M/q0=3D?=
+X-Exchange-RoutingPolicyChecked: I4wh8Vhkh0kSYcQmnF6yVOs1zuf2fxEVd0Ik2G9/B16Zmwm3N0//VSxnWlKpxQGBzO1C+D7wzS7TmLZUx4kfvgvamBA0MBYTHyChZBq9BUgF5eajdfdibxXRa6jr/L/eYHdydaNyvHs6TAGiv5Fl5tGWmcRdj2JQ0sTZITGzHBJT31PgiOFyH4jA1TA/TwS6/HKWYhsXs5MsmZON9B7vAZ0VETUUFQUUTQeZyd7WbYvYHKQZJfOKSB0xCDhmUrOCKAHig3CMgrUc/ctw+d27UVHE6QQuRMbeq1lXXNkr+RWhVH1U6cbZxndPE49JNXoft4vzNLi60gQ6o6F7I6FPzg==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4dc510a6-dd89-4f2b-7235-08deebbe3e93
+X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6197.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 09:05:46.1499 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ukH2KIcUJD9BWtFGIE0EHLQEtsQn3UsA9zsUMSoBwTzfoLwN7nYnSLwJT87f3ovu9ZNuirZT7ajD6zWSHnS/+8uVtsd2sxod7IJFE1vrjxs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH8PR02MB10840
+X-Authority-Analysis: v=2.4 cv=btl8wkai c=1 sm=1 tr=0 ts=6a671f6c cx=c_pps
+ a=5EyciH11kPx6gLClVK4sKg==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=0LlEyIVc8U2lsR7dKhuH:22
+ a=OBAOrx_FVqGdsqcXfSMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: s69jfO5grT6YAGMpoNucOD9_j5lpJrD_
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDA4OSBTYWx0ZWRfX7qlhvogIxA2I
+ flHHW2HbL3o988N2oz9a6DwFSjPyZsff5Feq9alrDrKkE+LWx5UDhdKJsfmJgnbsgK+8MKGdic7
+ xgb8ysXj8DZUupIxfr/SrWWT/indzXw=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDA4OSBTYWx0ZWRfXy2s9RKvsFFyB
+ 9GAf1aZShua18eUdOE+QuABN484+3kkM9JkM/PVDbUGcBB2V4kickgoOeZy7LYewrcDfo2V9DaF
+ KICMtg4uJprquqAfKR4r9DYVfydWsiw2DbwAWLrFhpT1y0c5RjwYxga1F9ptr3nbH5jwC3ifbgX
+ SJZYk6wuWL3zLBa5ke+eskJhRVqUwnTlU1X7Y7T0Jc7AWRpuHOgab9OMxnD2A4PDZPNmofUAESi
+ y7ZIi+hvQjO8Ec3rY9OhqftSvkq3PYsEopR2LtwqzTYcZTbtcfR7HeaCFtXMWgB79Xt2Bedr2hZ
+ rfnQa1bf0a4dXjtmLWBicJ+7FFqHgecbniNcX6ikl/jTMgZPMb/xbfvGMxDDOU9kB24X+WlXFNk
+ j0iZhIqAMWpNVj1spxfoe7Jz3ZWTElSTxx55ZmEcBJQzK/2soTZCF0N2Jni8XFOcHCb891TOh2u
+ ErE2KnDEqn8/lN81P3Q==
+X-Proofpoint-ORIG-GUID: s69jfO5grT6YAGMpoNucOD9_j5lpJrD_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-27_02,2026-07-24_02,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12; envelope-from=flosch@nutanix.com;
+ helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,133 +200,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michael
-
-On Mon, Jul 27, 2026 at 12:57=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com=
-> wrote:
->
-> On Sun, Jul 26, 2026 at 05:29:01PM -0400, Michael S. Tsirkin wrote:
-> > The following changes since commit cbd42e2b75b23953a9bdb073c8531518b1bd=
-6163:
-> >
-> >   Update version for v11.1.0-rc1 release (2026-07-21 13:18:25 -0400)
-> >
-> > are available in the Git repository at:
-> >
-> >   https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstrea=
-m
-> >
-> > for you to fetch changes up to 13342b9c4104f3bf93c2e52e7de4b383971d7bd6=
-:
->
->
-> moved to f2fe2afd27ddf93b49a16a29e8224d16b9888953 now:
-> I dropped
->        vmstate: fix type confusion in vmstate_size() for VMSTATE_VBUFFER_=
-UINT64
-> will go in through the migration tree.
->
-
-Some of the commits have duplicate Signed-off lines. It's also strange
-to be both the Author and Reviewed-by (and some did not receive
-external review)
-
-I guess we could teach checkpatch about those quirks
-
-> >   backends/rng: cap request size to avoid oversized allocation (2026-07=
--26 17:26:41 -0400)
-> >
-> > ----------------------------------------------------------------
-> > pci, vhost, virtio, iommu: bugfixes
-> >
-> > Fixes all over the place, including a bunch of CVE fixes.
-> >
-> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> >
-> > ----------------------------------------------------------------
-> > Cl=C3=A9ment MATHIEU--DRIF (1):
-> >       intel_iommu: Check address mask before using it in pasid-based io=
-tlb invalidation
-> >
-> > GuoHan Zhao (1):
-> >       hw/virtio/vdpa-dev: pass set_config buffer to vhost backend
-> >
-> > Haotian Jiang (1):
-> >       hw/cxl: fix OOB access in cxl_doe_cdat_rsp via entry_handle
-> >
-> > Laurent Vivier (4):
-> >       hw/virtio: reject zero-length packed indirect descriptor table
-> >       hw/net/virtio-net: Protect from DMA re-entrancy bugs
-> >       hw/virtio-rng: Fix host use-after-free (CVE-2026-50624)
-> >       backends/rng: cap request size to avoid oversized allocation
-> >
-> > Manos Pitsidianakis (2):
-> >       virtio-snd: check rx buffer descriptor size
-> >       virtio-snd: check for overflow before g_malloc0
-> >
-> > Michael S. Tsirkin (18):
-> >       virtio: use masked features with set_features_ex
-> >       virtio-net: fix OOB read in RSC receive path
-> >       virtio-net: fix short frame OOB read in receive_filter()
-> >       libvhost-user: protect against OOB writes in vu_set_inflight_fd
-> >       libvhost-user: protect against OOB vring queue access
-> >       vhost: do not crash on ring map failure
-> >       virtio-scsi: fix SCSIRequest leak on a bad request
-> >       virtio-mmio: fix QUEUE_NUM_MAX
-> >       virtio: fix queue size validation against allocated maximum
-> >       virtio: stop migrating num_default, validate vring.num on load
-> >       virtio: fail early on bad config_len in migration
-> >       vhost-user: assert nregions within limit
-> >       virtio-pmem: wait for flush requests on unrealize
-> >       libvhost-user: validate last_batch_head in vu_check_queue_infligh=
-ts
-> >       libvhost-user: fix heap overflow in vu_check_queue_inflights
-> >       vmstate: fix type confusion in vmstate_size() for VMSTATE_VBUFFER=
-_UINT64
-> >       libvduse: validate vq size
-> >       virtio-iommu: fix OOM due to unbounded call_rcu
-> >
-> > Peter Maydell (3):
-> >       hw/pci-host/q35.c: Always initialize smram-region even if SMM dis=
-abled
-> >       hw/pci-host/q35.c: Factor out creation of SMRAM MRs
-> >       hw/pci-host/q35.c: Avoid early return in mch_write_config()
-> >
-> >  include/hw/scsi/scsi.h                    |   1 +
-> >  include/hw/virtio/virtio-bus.h            |   1 +
-> >  include/hw/virtio/virtio-iommu.h          |   1 +
-> >  include/hw/virtio/virtio-mmio.h           |   1 +
-> >  include/hw/virtio/virtio-pmem.h           |   1 +
-> >  include/migration/vmstate.h               |   5 +-
-> >  include/system/rng.h                      |  14 ++++
-> >  backends/rng.c                            |  21 +++++-
-> >  hw/audio/virtio-snd.c                     |  24 +++++--
-> >  hw/core/machine.c                         |   1 +
-> >  hw/i386/intel_iommu.c                     |   9 +++
-> >  hw/mem/cxl_type3.c                        |   3 +
-> >  hw/net/virtio-net.c                       |  25 ++++++-
-> >  hw/pci-bridge/cxl_upstream.c              |   3 +
-> >  hw/pci-host/q35.c                         | 110 ++++++++++++++++------=
---------
-> >  hw/scsi/scsi-bus.c                        |   7 ++
-> >  hw/scsi/virtio-scsi.c                     |   2 +
-> >  hw/virtio/vdpa-dev.c                      |   2 +-
-> >  hw/virtio/vhost-user.c                    |   3 +
-> >  hw/virtio/vhost.c                         |   5 +-
-> >  hw/virtio/virtio-iommu.c                  |  29 ++++++++
-> >  hw/virtio/virtio-mmio.c                   |   7 +-
-> >  hw/virtio/virtio-pmem.c                   |  17 ++++-
-> >  hw/virtio/virtio-rng.c                    |   2 +
-> >  hw/virtio/virtio.c                        |  43 ++++++++----
-> >  migration/vmstate.c                       |  31 ++++++++-
-> >  subprojects/libvduse/libvduse.c           |   5 ++
-> >  subprojects/libvhost-user/libvhost-user.c |  61 ++++++++++++++++-
-> >  28 files changed, 345 insertions(+), 89 deletions(-)
-> >
->
->
 
 
---=20
-Marc-Andr=C3=A9 Lureau
+On 2026-07-27 09:50, Daniel P. Berrangé wrote:
+> I would suggest that building a second time is wasted effort too. If
+> the 2nd build is byte-for-byte identical to the 1st build, then it is
+> pointless. If it is not byte-for-byte identical, then you'll be taking
+> binaries that have not been tested.
+
+You're absolutely right. They are bit-to-bit-identical, and it is wasted 
+effort, too. That is something we'll look at internally.
+
+However, it felt like a genuinely useful feature to split build and test 
+phase more strongly, by having the ability to only build the product 
+binaries if desired.
+
+There are other options, of course. A new build target such as "make 
+bin" or similar could only build the product binaries, and a following 
+"make test" would then build + run the tests. This could be combined 
+with Philippe's idea to run (and not only build) the tests by default, 
+though I'm always wary of changing the behaviour of default targets. 
+That's obviously a maintainers' decision.
+
+Cheers,
+Florian
 
