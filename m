@@ -4,122 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F17B7C53200
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 03:39:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E32AC531FC
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 03:53:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woCAw-0003kc-Dc; Sun, 26 Jul 2026 23:38:46 -0400
+	id 1woCOI-00066p-JX; Sun, 26 Jul 2026 23:52:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1woCAu-0003k8-Kn
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 23:38:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
+ id 1woCOG-00066X-EZ; Sun, 26 Jul 2026 23:52:32 -0400
+Received: from mail-japanwestazolkn190120001.outbound.protection.outlook.com
+ ([2a01:111:f403:d406::1] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1woCAs-0007gr-SK
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 23:38:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785123522;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jndRUkDoyH4ei88MUf2FDkYiemr+D9R56UoNodJWPjM=;
- b=P+VRvNMEOu4/2SmrtXAci7QUbOwqJkpeD5SvAxHZe295SFWWHspgj2pvLT6ucyNSTdBBlD
- wpGeqhzR9sCuhC2Dv3KYRtbC5jRrcfB/YR119bebfwc6Lre6BQXcdSM1aFXk+YRHrLCAVo
- RS9vpv1zjPoNprOv3oHeOwTvVykoQho=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-8-cxhEwmwyMEaEyjflqDeLRQ-1; Sun, 26 Jul 2026 23:38:40 -0400
-X-MC-Unique: cxhEwmwyMEaEyjflqDeLRQ-1
-X-Mimecast-MFC-AGG-ID: cxhEwmwyMEaEyjflqDeLRQ_1785123520
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-2cf6acd760cso27196915ad.3
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 20:38:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785123519; x=1785728319; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=jndRUkDoyH4ei88MUf2FDkYiemr+D9R56UoNodJWPjM=;
- b=CRVS9gF9U38rL/kYjFPjrelP+XuX/1Fu7lQBHjwEHgAyZAQEc4FcGE5k+/Sbtfnd9+
- p4CTFfyc/BmM0Md+tMOngCTVtGDl/cOKfZMtN8+XH2D40oNGIlkgLIqzMNCKyqQiP4I8
- N6qLb8XhBusHqoeoNrratc1WeSmu4B077Om+TfGHyj41naYIIWfxyr8y62kv/z0++lVe
- xVYqWkSW5iXsTA96QeuJiAz/FWq+4gJQKhvIpiYLh/WRiN1EVhYKR55JeKzj5OX+5+fu
- S7mFzbyw6lY/Lo7FUr+kTytN1II6x3HcjPNYTzGXmVezk6HuoBkysUKGZtNMoo8I8e1M
- YwMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785123519; x=1785728319;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=jndRUkDoyH4ei88MUf2FDkYiemr+D9R56UoNodJWPjM=;
- b=C+FAafhadSX/W9+e3VN1w82KnU/X/RI6btCHDYpnfIiqGKDvWOvGCnzuAop9YIePje
- TyifQ4vSe/5D9M2ApMNhn3S0Hzo7snYDjoYGJ6AvqMu/g1qtrF1SwjoRhzlBWliLY79b
- 5oLDrypbI2L65VXHDLdLqV+3UASNnu9likszivJKeAWxJWnN9uwNN+SLma1Osf1LQMi6
- jtMygoCV9j+/w+JAFnLCRvCgdXWSY6QrbezFFC1wEUW05rSLwFOcQL5m2pHhRaMhwp0D
- o1CdAoc8nvMya5v9oBcqebWX74BS+tIZv+Z6f1nZfTBHJBieCfZMgCJgPqzZNkNYiFpd
- sdlQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rpo6y9P3zifLZARqzT6K3z7k+wK3NR7O9+ucua0Utrm3orWuxZKZnHjFP98jmumtazMZbgUGVWyzSwp@nongnu.org
-X-Gm-Message-State: AOJu0YzMwKRdBrfOmR84JQ3ZzddiOB4o0lIoxIEdoNc+qTJA9pQdcKxX
- I+ynCl92cjEdltv/2JFev5/67+vGjYzWnoxSzwq8REABiyOjKmBnrBNSxL6pV/sJ2IuZL5NMbZk
- O4pcGJehxd8tjIda/EVPpWr3khIfD1SJwPq2MP2cZxmYZhXGlMwgiq4WU
-X-Gm-Gg: AR+sD126bP/XVHqA1UF3bpsY8SeySuydEfZ4HDs1mOrUCVaiiL0S8eMTueueahJGSlI
- z8CvF6faArrVZgtJrJxppCQtyH+im5uDiRyNlDdDYJF9aPO/6uHpMbkTFIXFMdH+XvT50xcIYvQ
- x1VOC089WP0N7uPc6y90Ppt3wSykEuka+Hi07a3dGOON2xXyBID4gukV+qd6ahMZTCT7NgEQr0+
- JwlhOEMZldCAzg61q9s6LwExOfXmI4ekWINU+S/bn9KtpKXGI2TJQp+SMGQOiVd9Bj4//dWvErn
- Te26vmQKUYJjhnoVC0HvTq98PkhehrohxBUInWTQ7v0nPHDyjuCjbYGOuMTOhZJEIh9/dmG2xGv
- jqOreVN7LPLbrarRqApAeLUz1OqRjyMeXr0cRX7TOT/w=
-X-Received: by 2002:a17:90b:4d0c:b0:38e:11ba:992c with SMTP id
- 98e67ed59e1d1-38f293cd1dbmr6678631a91.12.1785123519549; 
- Sun, 26 Jul 2026 20:38:39 -0700 (PDT)
-X-Received: by 2002:a17:90b:4d0c:b0:38e:11ba:992c with SMTP id
- 98e67ed59e1d1-38f293cd1dbmr6678618a91.12.1785123519083; 
- Sun, 26 Jul 2026 20:38:39 -0700 (PDT)
-Received: from [192.168.68.51] (n175-34-8-244.mrk21.qld.optusnet.com.au.
- [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38f0563c369sm2768251a91.0.2026.07.26.20.38.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 26 Jul 2026 20:38:38 -0700 (PDT)
-Message-ID: <c69250a2-e461-4484-ae66-80767744e6fb@redhat.com>
-Date: Mon, 27 Jul 2026 13:38:29 +1000
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
+ id 1woCOE-0000ZV-QE; Sun, 26 Jul 2026 23:52:32 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=jCwMcMFZ08jKTe3gUQv0GwJzKs98QaTaZNPGJAthSQcq6mA3q0kZl90SL/jNHp8C3RBjl0uioLNCe7TtzBDzREFTf/Obg0GPKOo4ic20O9gJQ1w8oBHXCq+Emv6SyOteEzKtcGGLCsdoD7o5L8t0lNqse9o0dtqwQtfw2SZadSv8BpeoBfiRQkxn82i2EkU6GmvyD7pGBfPMSejuCQdfY9Uf6bX1pRmrvCoMHYbeW4uf7vK38secwI6jpGNYGIy91pgXvc3Zje5TRfJNNi9pd+ZBQakOBafCgE/mEncqlH3RHEL8ynmH/Y7P0NiTfJIZx6M17nUTWY4VRjTe5w9vaA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=59rn4/HxPViq0PRiUWvMljxTcj3/l2hLx2emwgN2HyE=;
+ b=xX6d7mp2L+7YWfd2K8FGNtz+qVSt+WeQX6546QJ2vZHIu3WbaNzr8PSKGN3GfWKoq6Z5oWDauyj3f2S39Kta8jNvUW1X1CgKyPShnv4Hvo5TQmlz+JI6U/G9sZ5huBhxlF3CQ4cIOwh8X8kVWdib9Rl3OUIUzLJpg9zEgpL8h8Cvtgewfq2UGL6y/jE70Y5hBnvjYRObonZnH8cSm5A0OiFsSEKIiQ9Bj7DLqdo8c1nvmMf1cd5QWZXzPjGHD9mhQ7ESZPqjMPWSikL+EzYBH266H7N9OqhI2s4/Se/oyY7sGXLm0gnqmvqCRNfnO4/+qPcsFGF+gKwT8xh99RfcAg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=59rn4/HxPViq0PRiUWvMljxTcj3/l2hLx2emwgN2HyE=;
+ b=Gpj4udfLsoRlvJ8B52heTLWlna1e6ZT7dMMEcePNg1OY3nv0hI4M2uCHVrrYi8mBl14W9OuqVWwCTCbxalFbE6NrQmRcmCocVZZWN3cJoLQlWObDbgSoAn8Ku5zODSjHYowZQ3bSQJWpBnjvyshhI70GNMf57Llur6nRNl7xWZNKQC7n2fhX7uiYLOtAwUT0JKtxwcHrosG9LYwppaVhXKKDPummMCyHtXeemijigRtc3t6E2b++QkAs48siubzw0i7iS5UjIa4hs9nIKb/53W4hguKj7k2Tc0fYj1tnyaSLPvDqe+YKJUnODK8IwF5n7QOCNDMl2L5+s90TcmUvow==
+Received: from SE3PR04MB8922.apcprd04.prod.outlook.com (2603:1096:101:2e9::7)
+ by TYPPR04MB9016.apcprd04.prod.outlook.com (2603:1096:405:315::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.9; Mon, 27 Jul
+ 2026 03:52:23 +0000
+Received: from SE3PR04MB8922.apcprd04.prod.outlook.com
+ ([fe80::3450:f139:5238:8f58]) by SE3PR04MB8922.apcprd04.prod.outlook.com
+ ([fe80::3450:f139:5238:8f58%5]) with mapi id 15.21.0270.006; Mon, 27 Jul 2026
+ 03:52:23 +0000
+Message-ID: <SE3PR04MB892268FDDECD4F751F11DF52F3CC2@SE3PR04MB8922.apcprd04.prod.outlook.com>
+Date: Mon, 27 Jul 2026 11:52:11 +0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] system/memory: Use qemu_ram_{copy, move}() in ram
- device region accessors
-To: "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, alex@shazbot.org, richard.henderson@linaro.org,
- berrange@redhat.com, philmd@mailo.com, david@kernel.org, clg@redhat.com,
- pbonzini@redhat.com, phrdina@redhat.com, jugraham@redhat.com,
- liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn, shan.gavin@gmail.com,
- qemu-s390x <qemu-s390x@nongnu.org>
-References: <al-eCtxGjG4HHEbl@x1.local>
- <6210e178-a93f-4411-810a-41edb1fb656e@redhat.com>
- <20260722015422-mutt-send-email-mst@kernel.org> <amDyvgR09OJssENX@x1.local>
- <20260723015708-mutt-send-email-mst@kernel.org>
- <71d88d00-5b41-49d2-b649-8a6ea47abc4d@oss.qualcomm.com>
- <20260723045428-mutt-send-email-mst@kernel.org> <amIbUYN3teCLXTh-@x1.local>
- <b05b40b1-fffd-4be5-9289-b5bc92c16cd2@redhat.com> <amNvIMizFp7Au2c3@x1.local>
- <20260724122956-mutt-send-email-mst@kernel.org>
+Subject: Re: [PATCH v3 2/3] hw/riscv/riscv-iommu.c: always send MRIF notice MSI
+To: flavien.solt97@gmail.com, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, qemu-stable@nongnu.org,
+ Andrew Jones <andrew.jones@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>
+References: <CANVUYGvOyZdCwXOtDkS7bXY3Z2HGK1b6QWKttCVUjhnpH65g5A@mail.gmail.com>
+ <CANVUYGvtuMbxE6TCkO98G1rCadb0psdn8HQM+6T8v0KE+QVr5g@mail.gmail.com>
 Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20260724122956-mutt-send-email-mst@kernel.org>
+From: "Nutty.Liu" <nutty.liu@hotmail.com>
+In-Reply-To: <CANVUYGvtuMbxE6TCkO98G1rCadb0psdn8HQM+6T8v0KE+QVr5g@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-ClientProxiedBy: SI1PR02CA0009.apcprd02.prod.outlook.com
+ (2603:1096:4:1f7::10) To SE3PR04MB8922.apcprd04.prod.outlook.com
+ (2603:1096:101:2e9::7)
+X-Microsoft-Original-Message-ID: <7c41b904-9e34-4e3b-a702-0ae78d35e469@hotmail.com>
+MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SE3PR04MB8922:EE_|TYPPR04MB9016:EE_
+X-MS-Office365-Filtering-Correlation-Id: 71365f6e-1a7f-42d6-b67f-08deeb927697
+X-Microsoft-Antispam: BCL:0;
+ ARA:14566002|6090799003|15080799012|41001999006|19110799012|8060799015|5072599009|23021999003|55001999006|24121999003|19101099003|4140399003|22091999003|25010399006|40105399003|52005399003|26121999007|440099028|3412199025;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?UkZJM2M4YW1EdTM0aXpwblc2U0tMMHJ5alBXUDV1ZFpFL3p4bm9aeTJoekRk?=
+ =?utf-8?B?K2MrTkJnL3pqUkRORVV3azBaNGIvVzFxb3RaY1QrUVFaREltbUxvV0FqTnJH?=
+ =?utf-8?B?MDA5bWYwMjlDVzhuYjdTSnR5S0dIUUxFbjNFRElDWmN3SWtOZEk4UzhFUTFG?=
+ =?utf-8?B?SXo5RHdYYlBERXpUMU95dXY2UXJ4Yy9odkszNU9Ybkl1NlhSWXIxaG5oSEFz?=
+ =?utf-8?B?TEhkVVJVT0pnK0ZNYVNvQWlJa01FTzFXbGYzV0J3cWI3a2ZEQnBQV1RxeTN3?=
+ =?utf-8?B?Y1h2eFdIc2tpOERndWRmcTdDeVlPUkNsN0ZPa2tabVE0cURCSkp0VmsxQzcr?=
+ =?utf-8?B?ekhNbFlMblRqRFZaemp6SEVpN0laeTAzTThsTjN0NlNJNWVOalRDeEpQZlJm?=
+ =?utf-8?B?WnZnb28rdnZzVVZTNTYrK1k4NXFYKzVKOTE4dlFteC81M1ZpZzZ3bFlFUjFC?=
+ =?utf-8?B?T2F6UUczMjlZd3F3N3dyeWQyVlpWbGxSd0wwU2FsNWxKdXdLQllpL3podGVN?=
+ =?utf-8?B?MlJ4TTZrM29KTDJvTUJNU2Q4U2tTa1FvNnFaSStoT2FLdnlCTWlNRHVnSU9t?=
+ =?utf-8?B?bmpwT0c2cUhZL2pCU2pSZVZxU3prT3NBT0QzQjh5aTJOWUhiN29OUnlsd2FI?=
+ =?utf-8?B?U3RnQnhtR3lQU3JqeDQ3Zk1TcU1KTjdvUGJheFBPUEZncFQ2SFRIOXFOTzI3?=
+ =?utf-8?B?RDk1dW1FYjh4bk9YYlg0bFk3VzZSS0VJVjZVMG9qcE1xeEdyWkpzNmFTWndZ?=
+ =?utf-8?B?ZEZ3YlB3N0twYURwckRhRjhEQWhZQkZZN0czNldEYmtzQzJ2M25lem1qVlFX?=
+ =?utf-8?B?TlRaN1Y5Tm0wcmlldDBHUTJHeGVTS29Xak9ObVVnNzY3NEQvMHdCeS91VW54?=
+ =?utf-8?B?V3Y1NUZQQVdma1ZLN3VObjFSSDBUWmNjVHdtc3pSNnZZRkdRNTRYTGdyU3dR?=
+ =?utf-8?B?Mk5FOUNoQytEWWY5bUJ1aXpzN0JLUHlWT3d2eUJycGtGazRkZCtIa2s5eHBU?=
+ =?utf-8?B?MUtzUm1zVE9MZ0FZZ3l3UmVtYnRmT090aENsQVgxYTZqS08vNUEvajRSQ1hn?=
+ =?utf-8?B?WU5WZEs3STlVRDFBSUl4R2dtWi9ZS01CZ0lxd0Z4Z01ObndFV1Q5eGdGR0o4?=
+ =?utf-8?B?YVc5dFIybEZ5ZjBuNnduelNoYkUweVJyeXQvbmk2UnplYzJaTmdEZWhtWmZV?=
+ =?utf-8?B?dzQ1RHhhbXVOcjd2WE9JSWNrV05MQjRWanVzNHNBODQxQUg1cnJsVkNnS2N6?=
+ =?utf-8?B?N0QvWFMrTjhadlpTd0xTMWZPZVpFeEJ0Y1I1VDJkdkFoazVFd3IzenNKVEx5?=
+ =?utf-8?B?ckJieTNSRmhaay9GbGd1REF0dXZ4cndreGJSemlzaHhoK3dIdVN1Y3ZzblI3?=
+ =?utf-8?B?QUtmM3YxWk5OOU9XeW5mT29sYmdtYTBEcm9BTWZ2dFVRTTVPSjU1VFk4ai81?=
+ =?utf-8?B?N2E3LzB3Q3lrZmdFOG5Vd3pISm1ISXBNNkk5YkQ3WVVjbENUMks3VDdOL2tB?=
+ =?utf-8?Q?jtcQ19rP5Uj0u1uldkKSAjGcMzQ?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aGFuQU5aN25xN2h4c3MvQ25FcW9oRndWNXY5UlRFeW5aWUFuMWtYWVplbTZv?=
+ =?utf-8?B?MDFSU2UvN3JyQUdZY1NFYTZxTlhtT1dyNHJ5aEkwRFFjQ2svSE1aTmphaitZ?=
+ =?utf-8?B?SGJsN1p3NFF5cWtpZ0cvdHJPZVRubVNZRW1SKzlDems2UU12SGU5NGhJNk1T?=
+ =?utf-8?B?N01xMm1oZjM3QzFsSDFuVCtmd2ViYjNTZWhUNjI3WkpMaXZVRFJxcWFpVHpu?=
+ =?utf-8?B?b2VnWGh6bVVmNnltYUhVUW8vK05zcWN5eUJDOGhaRjJvZXpxUUFTbGJNbnNt?=
+ =?utf-8?B?L0o1NGNOTFlVdzlRb1V4emFCT0xhb1pqUXk1cVR6WDBlT2tkODR5Z2VOa1ha?=
+ =?utf-8?B?SVFMaUVSMVZkRHJEWC9WTmR6L3FvTmdUN2x0SjBLNE9iSG5CK09Tcit5WVJn?=
+ =?utf-8?B?UnRtQXBhYkQ4Wi9MUmsvSWtnWHd3QWdYMFVNTXZIMHZnVFNWaTAzQStvR1RC?=
+ =?utf-8?B?bEhYMHo2VktOQzd4S2tGOW9LVDVFemluczBpeUVzZEdnRWc1SkxVMjNRQkxL?=
+ =?utf-8?B?Qyt0a0M4WWJlSmtkTUpESUVxeHpTb0V2UmtwRnNVV2Z3NkVMMjNHYUVwTk5P?=
+ =?utf-8?B?cGl4NHRmZnRRRDhrd2VrQzYvbEhGTkEvZ252dVhNSHl5Y0hrT3NnN1VIU1Rz?=
+ =?utf-8?B?NVR6V2xRd09mSU1IdStFaEYrQ21qTVhpOVVsTWdPMU8za21lMVlhbE1GYkFC?=
+ =?utf-8?B?NXlwSzM1S3lGblhJNzJGRUlIUWx4ZUV4eWdWV1RxaE1tRXlkanVCNHNwclp3?=
+ =?utf-8?B?NVd6L0VkTFBvbEF6YmJ4Yk1UTUZreWUwL1h2WmJ2aUVFMDMyUGQ0TUs5Qm53?=
+ =?utf-8?B?UEpxeDNmTHVSdlQ2dzFBVXovTktFbXdMTGlMNjEwQ2RqYi8rZWVjL3FMakNr?=
+ =?utf-8?B?Y2JTTm1IcXdGV0h4R2h4SUk2QS9aR2ludFJOUlhCMXF0Q0ZpYUFVUGE4S1py?=
+ =?utf-8?B?ZVZVR0NPUzZpM3IrV0lsR1JPbGZRbzAxejJEWlpzS2JIbHArRGRhcFcxdW5F?=
+ =?utf-8?B?OGMxU1FPVVl6YWVwWjNvK0pOOW94NlZHUjU2VzcvL0NkeUw2dXhzZk41eXM1?=
+ =?utf-8?B?QkptTnIvVm5SU05Ha3ZZc2MyK1Y3L2pQUVdVTEd4SFFHbXowOCtVbUJWbXJq?=
+ =?utf-8?B?U3NZcVRORnJMdzNvVUUwbjFDRFRNbC9CRnBmellUVG9qdmFaZU9qWFhuVDV4?=
+ =?utf-8?B?SGdCRURvU3NXQkFCMFUwdVFSS3pheTY0OFMvTVIvZnRvamxjT09wRUJpcE5s?=
+ =?utf-8?B?YXgxTlJ3ZEZwbFRxUHdvWDhGR0dKZVJPeERIUmRWUGJZeVZpbi9oR0FKMWtt?=
+ =?utf-8?B?N2c4aktCTjkwc1hFTXNpZXFrVmVvdTh5ZFB6OU91TDlBT0F3MzhuZDF1dzda?=
+ =?utf-8?B?TEl0NjR1S0JkSmwrY0t4S1VVZy9jM0E0UzNxSTlPN29yWGZvYjJMdUgwUVh5?=
+ =?utf-8?B?Zk9hVU80UThBUWlyRDRnZ3dtRmxiekg5TmVETmhORTVEOVhiVVBaSTNRazVY?=
+ =?utf-8?B?NWZRWXdZVmNsaGVFNVNBQzhZbHlZUC9XUnUvNFV5d3RJaW9wcmlQWGUycWVm?=
+ =?utf-8?B?djdWRUNzbE5nM2pqR0FkWDgrd2M2a3ZWcTlocExIMmdGWmNnTzNZeEZEVTVB?=
+ =?utf-8?B?aitoQ256MUMyYXA0U2tjNEJNK2lrQjBnLzhWeXoreU9LQkt5eVQ5UEhIT1NS?=
+ =?utf-8?B?V2xMazBzV2h6UWp3OGU5cWk4ZE42Nnk0bnFRdERqK0s1aFo4MEdKUDRPZ2Fv?=
+ =?utf-8?B?R0dKRW9iaDYraHRYOTYzZWFUcXh1NW5wV1pNbDBjanAyc2ZtMnlVNExNQWxm?=
+ =?utf-8?B?OG5tWlVFY3EyLy9jSFVBV25nUjlnKzV2U3VMNExFOUZsMlEwMHpCSjFZRnNk?=
+ =?utf-8?Q?i0A7ytNtNoyvV?=
+X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-c3e7a.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 71365f6e-1a7f-42d6-b67f-08deeb927697
+X-MS-Exchange-CrossTenant-AuthSource: SE3PR04MB8922.apcprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 03:52:22.8079 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYPPR04MB9016
+Received-SPF: pass client-ip=2a01:111:f403:d406::1;
+ envelope-from=nutty.liu@hotmail.com;
+ helo=OS8PR02CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,131 +166,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/25/26 2:31 AM, Michael S. Tsirkin wrote:
-> On Fri, Jul 24, 2026 at 09:56:48AM -0400, Peter Xu wrote:
->> On Fri, Jul 24, 2026 at 11:42:09AM +1000, Gavin Shan wrote:
->>> On 7/23/26 11:46 PM, Peter Xu wrote:
->>>> On Thu, Jul 23, 2026 at 05:05:08AM -0400, Michael S. Tsirkin wrote:
 
-[...]
-
->>>> We should have another option that is not arch-dependent but keep the
->>>> unaligned behavior.
->>>>
->>>> For current master, AFAIU we do unaligned access for both ram_device and
->>>> rest. Say, even with ram_device_mem_ops, it has both .unaligned=true for
->>>> both .valid & .impl.  I think it means indeed we have unaligned behavior
->>>> even for ram_device.  It also means what matters in regards to the Realtek
->>>> bug was only about aligned access (with subpage presence).
->>>>
->>>> I think it means we can always keep unaligned to stick with
->>>> memcpy()/memmove(), but only use atomic ops for the aligned cases of
->>>> 1/2/4/8.  With that, I think we can also remove ram_device_mem_ops and fix
->>>> the bounce buffer issue.
->>>>
->>>> I think it means we'll stick with memcpy()/memmove() for all archs for
->>>> unaligned, which is again not safe... but that can be an existing but
->>>> separate problem to solve too.
->>>>
->>>
->>> Lets see if Peter Maydell and Michael are happy with this option. At least,
->>> we will have unified qemu_ram_move() for all architectures with this option.
->>> Note that qemu_ram_copy() won't be needed.
->>>
->>> I'm putting note on what's to be done in (v4) if this option is to be picked
->>> up. Let me know if there are missed points. It's basically combing what's done
->>> by ram_device_mem_ops to upper layer (e.g. in qemu_ram_move()).
->>>
->>>    address_space_write
->>>      address_space_to_flatview
->>>      flatview_write
->>>        flatview_translate
->>>        flatview_write_continue
->>>          flatview_write_continue_step
->>>            memmove                     // (A) to replace it with qemu_ram_move()
->>>
->>> /**
->>>   * qemu_ram_move: move data to ramblock
->>>   *
->>>   * @dst: destination where the data is moved to
->>>   * @src: source where the data is moved from
->>>   * @n: length of data to be moved
->>>   *
->>>   * Move @n bytes from @src to @dst with the assumption that @src and @dst
->>>   * can overlap. The access is atomic if the source and destination buffer
->>>   * aren't overlapped for a well aligned and small-sized access. Otherwise,
->>>   * fall back to the standard memmove().
->>>   */
->>> static void qemu_ram_move(void *dst, const void *src, size_t n)
->>> {
->>>      uintptr_t test, len;
->>>
->>>      if (src == dst || n == 0) {
->>>          return;
->>>      }
->>>
->>>      /* Overlapped buffers */
-> 
-> 
-> overlapping
-> 
-
-Corrected in v4.
-
-https://lore.kernel.org/qemu-arm/20260727032649.145381-1-gshan@redhat.com/
-
->>>      if (src < (dst + n) && dst < (src + n)) {
->>
->> s/&&/||/?
->>
->> It's a bit weird to request memmove() for overlapped, e.g. I don't know if
->> P2P can overlap too when some fuzzer fills in some MMIO address shifted for
->> src/dst.. but I think I get what you want to simplify and it looks fine.
->>
->> Otherwise it looks good.
-> 
-> Why do we bother special casing overlapping buffers though?
-> I do not get it, looks like rest of logic works exactly
-> the same for overlapping and non.
-> 
-
-Indeed. The explicit check if src/dst are overlapping has been dropped in v4.
-
->>>          memmove(dst, src, n);
->>>          return;
->>>      }
->>>
->>>      test = (uintptr_t)src | (uintptr_t)dst | n;
->>>      len = test & -test;
->>>
->>>      /* Unaligned or oversized access */
->>>      if (n > 8 || len != n) {
->>>          memmove(dst, src, n);
->>>          return;
->>>      }
->>>
->>>      switch (len) {
->>>      case 1:
->>>          qatomic_set((uint8_t *)dst, qatomic_read((uint8_t *)src));
->>>          break;
->>>      case 2:
->>>          qatomic_set((uint16_t *)dst, qatomic_read((uint16_t *)src));
->>>          break;
->>>      case 4:
->>>          qatomic_set((uint32_t *)dst, qatomic_read((uint32_t *)src));
->>>          break;
->>>      case 8:
->>>          qatomic_set((uint64_t *)dst, qatomic_read((uint64_t *)src));
->>>          break;
->>>      default:
->>>          g_assert_not_reached();
->>>      }
->>> }
->>
-
-[...]
+On 7/27/2026 10:28 AM, flavien.solt97@gmail.com wrote:
+>  From 42f759d7e7f4eca064638622d52aa38be11b956b Mon Sep 17 00:00:00 2001
+> From: Flavien Solt <flavien.solt97@gmail.com>
+> Date: Sun, 26 Jul 2026 17:52:03 +0800
+> Subject: [PATCH v3 2/3] hw/riscv/riscv-iommu.c: always send MRIF notice MSI
+>
+> The AIA specification requires an IOMMU to send the configured notice
+> MSI after storing an MSI to an MRIF, even when the corresponding
+> interrupt-enable bit is clear.
+>
+> riscv_iommu_msi_write() currently reads the MRIF interrupt-enable
+> doubleword and suppresses the notice MSI when the matching bit is zero.
+> This makes notice delivery depend on a bit that AIA requires the IOMMU
+> to ignore.
+>
+> Remove the enable-word read and send the notice MSI unconditionally
+> after updating the MRIF pending bit.
+>
+> Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+> Cc: qemu-stable@nongnu.org
+> Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+> Signed-off-by: Flavien Solt <flavien.solt97@gmail.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
 
 Thanks,
-Gavin
-
+Nutty
+> ---
+>   hw/riscv/riscv-iommu.c | 13 -------------
+>   1 file changed, 13 deletions(-)
+>
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index f6865d1..2bbac30 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -788,19 +788,6 @@ static MemTxResult
+> riscv_iommu_msi_write(RISCVIOMMUState *s,
+>           goto err;
+>       }
+>
+> -    /* Get MRIF enable bits */
+> -    addr = addr + sizeof(intn);
+> -    res = dma_memory_read(s->target_as, addr, &intn, sizeof(intn), attrs);
+> -    if (res != MEMTX_OK) {
+> -        cause = RISCV_IOMMU_FQ_CAUSE_MSI_LOAD_FAULT;
+> -        goto err;
+> -    }
+> -
+> -    if (!(intn & data)) {
+> -        /* notification disabled, MRIF update completed. */
+> -        return MEMTX_OK;
+> -    }
+> -
+>       /* Send notification message */
+>       addr = PPN_PHYS(get_field(pte[1], RISCV_IOMMU_MSI_MRIF_NPPN));
+>       n190 = get_field(pte[1], RISCV_IOMMU_MSI_MRIF_NID) |
 
