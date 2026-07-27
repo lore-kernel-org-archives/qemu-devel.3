@@ -4,120 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6167EC531FC
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 14:25:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 412C8C531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 14:28:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woMGv-0005Dx-GB; Mon, 27 Jul 2026 10:25:37 -0400
+	id 1woMJX-0006Ft-Oh; Mon, 27 Jul 2026 10:28:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1woMGT-00055H-BF
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 10:25:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1woMGR-0001YS-G5
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 10:25:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785162306;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=H7VzblEml9Z5dIxjHzOxhK5vkTx7quxbYMHxe0etLbE=;
- b=XiTvM3vigNnovlCb2ggikC8XfOL7GCDEzImM9S1u/82VZIln9quohuRFlfl7taNremhVRV
- sZNqNywSXJb8jrKLwRgBOb4kpB2CqEYKC4QTzXi/M8YSuebwwZLHbt2AJzCybbN4ksMVTi
- /6lXRcpVf8h0+AvSg1OUHxUR/vYjoyQ=
-Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
- [209.85.222.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-519-tEPbbAuaMTWId3HaaOmHig-1; Mon, 27 Jul 2026 10:25:05 -0400
-X-MC-Unique: tEPbbAuaMTWId3HaaOmHig-1
-X-Mimecast-MFC-AGG-ID: tEPbbAuaMTWId3HaaOmHig_1785162304
-Received: by mail-ua1-f72.google.com with SMTP id
- a1e0cc1a2514c-9772fe08326so1970081241.0
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 07:25:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785162304; x=1785767104; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=H7VzblEml9Z5dIxjHzOxhK5vkTx7quxbYMHxe0etLbE=;
- b=kR0VmNuZvO2J6TnXpylDsfkErXGCI5PADmCqn/20CgTXibYsLzvRxpFdcUsWFuz0iR
- NCxnpKM0wVbDp8gYNotjHc8fyyDjaCVF/iH3Sssk4ve02zjs7QVl+ha3TTxTU+mVvQY5
- Ugde5aBw5VJjtY2PfKVCBZ3yjOG4zzCk8qKwYeeavuBWETtWOFFDEL8XTm1vkYSG2nPu
- ZJlcR6HG4w0U6XtdgFyTPKsMj3VHJne3/gBeDNyi7T4CFZZND1TvCaWjhECcOLh3Syhp
- 7ywyUmmzHbmzqj+O/0gYiFxAPD/ubDNnbJTAsugRXFkC3cwNN8ySZMPO1vPRxZYxrK2h
- R+DA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785162304; x=1785767104;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=H7VzblEml9Z5dIxjHzOxhK5vkTx7quxbYMHxe0etLbE=;
- b=OOFgXDlWUUKhgvj8/3P/2EULxfLQIXfXwGBkzNOl9mzqyKsq6MjPHUovORVpmIG9tF
- PxnYCyZ3d0DI4peBYrx5y8JATmqCQrJHKrsGAqqh3XhjylQGlWxD5sXzzRVWbO5tv4XM
- C+3wg7G0FlMUlsiRCbjwXALJ3VvkWuD04WhYd4yCQqhjY2ch8MFEZDVwlGUK++dagXDx
- /7ScmJGwItFMSABNqNF3QbbIxCCo7oDuQJlok6OEFAiHJWyG2J0TGCsa67DXXdy+4svn
- 1Wvu2i7x8YAdb4Wjhgoka3g2gIDti+4AFqVYQ4b1HTdGz/0pykSgK0FhNiLS/ZxDsYOy
- Usng==
-X-Gm-Message-State: AOJu0YyeZv6j/4d9rnOUoR4z8P4PktZ49BEp6W3ED+Hrb9/0ou/QeX6S
- Kxr1wCRVSggoNlhTlvPrna7BGmdIMFB8jwj/OElszfqmxVy/4H1w/RMv9s8JnnOTnETRmcKC3G4
- 0UayRimK496BjmR8ze++4l9JL8XAb0QypdpFpHEEK6DTZGzB9kT06w9/2
-X-Gm-Gg: AR+sD13fybetKYlJzvituyRNeUkJp4YpJ/sI8xF3fau1t8ti0TREuT5KUFg7sJQglpp
- XOeBTuxGb0iPBPZk203uMH4MvhMpxK1Zyw4K3GCOIIsROU0qngAiXys9hYm6LvP0oDT2yJP+HdV
- k0g+sqw3HAAo5reO15gmvSg0Q/gLB06blx8TPzmHTF9Qr69ge4uMytKbmPczKWeKPueMbqMPIDH
- TQPDwoGk9zC7BSMA5DfZIYpkmSldX394u/kXiDjG61RTDdVdouHJr+4Folbz44L5rXH2IqvkpRD
- FUZqUC+Yaj79zdWUYfC4L78g0JTeLWSEXM4kVLYtOy3W2+iZJuWXEZtpXuJkil0pW2vGmgDs
-X-Received: by 2002:a05:6102:2150:b0:74c:8ba2:3e90 with SMTP id
- ada2fe7eead31-74f9d08d0a9mr4042719137.3.1785162304332; 
- Mon, 27 Jul 2026 07:25:04 -0700 (PDT)
-X-Received: by 2002:a05:6102:2150:b0:74c:8ba2:3e90 with SMTP id
- ada2fe7eead31-74f9d08d0a9mr4042686137.3.1785162303735; 
- Mon, 27 Jul 2026 07:25:03 -0700 (PDT)
-Received: from x1.local ([2605:8d80:6c21:6818:c87e:c65f:8297:5636])
- by smtp.gmail.com with ESMTPSA id
- ada2fe7eead31-75033d6a692sm5507243137.1.2026.07.27.07.25.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 07:25:03 -0700 (PDT)
-Date: Mon, 27 Jul 2026 10:24:59 -0400
-From: Peter Xu <peterx@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, Jonathan Cameron <jic23@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Wei Liu <wei.liu@kernel.org>, linux-cxl@vger.kernel.org,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH v2 11/12] migration/multifd: fix Error leak in
- multifd_recv_terminate_threads()
-Message-ID: <amdqOwtJi-6UTbgw@x1.local>
-References: <20260727-fix2-v2-0-d0c4831ed7ea@redhat.com>
- <20260727-fix2-v2-11-d0c4831ed7ea@redhat.com>
+ (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
+ id 1woMJW-0006FP-K0
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 10:28:18 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1woMJV-0001vS-3J
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 10:28:18 -0400
+Received: from laptop.localdomain (unknown [86.121.140.206])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 8529120B7167;
+ Mon, 27 Jul 2026 07:27:58 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 8529120B7167
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1785162480;
+ bh=1xQViwwRbTfUwL4or9CH3iqmCMINBdRcqoXMVtitYvw=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=Jj927Rlq2NFFhMZcmAgzJ8MoYgNeIJuvs9TdNV7+YwhFy+pexQz86bitAuqDV2KDJ
+ hxPH1Nxuf2lBB7p7/2afUBv2GLR39h8WqVIKNOBx+wO9eUr1MigbPFu+OqkS/Hz6NW
+ yV7H5F0nqbkiTgi731G8Oy5P67ArTBN46JeRE73o=
+From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
+To: qemu-devel@nongnu.org
+Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
+ =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@microsoft.com>,
+ Wei Liu <liuwe@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
+ Magnus Kulke <magnuskulke@microsoft.com>
+Subject: [PATCH 1/3] include/hw/hyperv: add ABI for exception intercepts and
+ pending events
+Date: Mon, 27 Jul 2026 17:28:05 +0300
+Message-ID: <20260727142807.84269-2-dblanzeanu@linux.microsoft.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260727142807.84269-1-dblanzeanu@linux.microsoft.com>
+References: <20260727142807.84269-1-dblanzeanu@linux.microsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260727-fix2-v2-11-d0c4831ed7ea@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -134,15 +70,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 27, 2026 at 12:44:10AM +0400, Marc-André Lureau wrote:
-> If err != NULL, free it.
-> 
-> Fixes: 11dd7be57524 ("migration/multifd: Remove p->quit from recv side")
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Import the hypervisor definitions needed to intercept guest exceptions
+and to inject events back into a guest, in preparation for gdbstub
+debugging support in the MSHV accelerator.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Add:
+  - union hv_intercept_parameters, struct hv_input_install_intercept and
+    HVCALL_INSTALL_INTERCEPT, used to install an exception intercept on
+    the partition;
+  - struct hv_x64_exception_intercept_message, the message delivered on
+    an intercepted exception, carrying the faulting RIP, the exception
+    vector and the instruction bytes;
+  - HV_X64_PENDING_EVENT_EXCEPTION, the pending-event type for an
+    exception.
 
+These definitions mirror the hypervisor headers and have no functional
+effect on their own.
+
+Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+---
+ include/hw/hyperv/hvgdk_mini.h | 56 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
+
+diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+index f8838a31bb..c81928d0c2 100644
+--- a/include/hw/hyperv/hvgdk_mini.h
++++ b/include/hw/hyperv/hvgdk_mini.h
+@@ -22,6 +22,9 @@
+ #define HV_X64_MSR_TSC_FREQUENCY    0x40000022
+ #define HV_X64_MSR_APIC_FREQUENCY   0x40000023
+ 
++/* event_type values for hv_x64_pending_exception_event */
++#define HV_X64_PENDING_EVENT_EXCEPTION 0
++
+ typedef enum hv_register_name {
+     /* Pending Interruption Register */
+     HV_REGISTER_PENDING_INTERRUPTION = 0x00010002,
+@@ -236,6 +239,29 @@ enum hv_intercept_type {
+     HV_INTERCEPT_TYPE_INVALID               = 0XFFFFFFFF,
+ };
+ 
++union hv_intercept_parameters {
++    /* HV_INTERCEPT_PARAMETERS is defined to be an 8-byte field. */
++    uint64_t as_uint64;
++    /* HV_INTERCEPT_TYPE_X64_IO_PORT */
++    uint16_t io_port;
++    /* HV_INTERCEPT_TYPE_X64_CPUID */
++    uint32_t cpuid_index;
++    /* HV_INTERCEPT_TYPE_X64_APIC_WRITE */
++    uint32_t apic_write_mask;
++    /* HV_INTERCEPT_TYPE_EXCEPTION */
++    uint16_t exception_vector;
++    /* HV_INTERCEPT_TYPE_X64_MSR_INDEX */
++    uint32_t msr_index;
++    /* N.B. Other intercept types do not have any parameters. */
++};
++
++struct hv_input_install_intercept {
++    uint64_t partition_id;
++    uint32_t access_type; /* mask */
++    uint32_t intercept_type; /* enum hv_intercept_type */
++    union hv_intercept_parameters intercept_parameter;
++} QEMU_PACKED;
++
+ struct hv_u128 {
+     uint64_t low_part;
+     uint64_t high_part;
+@@ -836,6 +862,35 @@ struct hv_x64_memory_intercept_message {
+     uint8_t instruction_bytes[16];
+ } QEMU_PACKED;
+ 
++struct hv_x64_exception_intercept_message {
++    struct hv_x64_intercept_message_header header;
++    uint16_t exception_vector;
++    uint8_t exception_info;
++    uint8_t instruction_byte_count;
++    uint32_t error_code;
++    uint64_t exception_parameter; /* DR6 for #DB, CR2 for #PF */
++    uint64_t reserved;
++    uint8_t instruction_bytes[16];
++    struct hv_x64_segment_register ds_segment;
++    struct hv_x64_segment_register ss_segment;
++    uint64_t rax;
++    uint64_t rcx;
++    uint64_t rdx;
++    uint64_t rbx;
++    uint64_t rsp;
++    uint64_t rbp;
++    uint64_t rsi;
++    uint64_t rdi;
++    uint64_t r8;
++    uint64_t r9;
++    uint64_t r10;
++    uint64_t r11;
++    uint64_t r12;
++    uint64_t r13;
++    uint64_t r14;
++    uint64_t r15;
++} QEMU_PACKED;
++
+ union hv_message_flags {
+     uint8_t asu8;
+     struct {
+@@ -943,6 +998,7 @@ struct hv_cpuid {
+ 
+ #define HVCALL_GET_PARTITION_PROPERTY    0x0044
+ #define HVCALL_SET_PARTITION_PROPERTY    0x0045
++#define HVCALL_INSTALL_INTERCEPT         0x004d
+ #define HVCALL_GET_VP_REGISTERS          0x0050
+ #define HVCALL_SET_VP_REGISTERS          0x0051
+ #define HVCALL_TRANSLATE_VIRTUAL_ADDRESS 0x0052
 -- 
-Peter Xu
+2.53.0
 
 
