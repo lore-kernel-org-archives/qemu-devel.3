@@ -4,113 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64B99C531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 08:25:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4649AC53219
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 08:31:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woGea-0008R4-GO; Mon, 27 Jul 2026 04:25:40 -0400
+	id 1woGje-0000xh-4h; Mon, 27 Jul 2026 04:30:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1woGeZ-0008Qq-82; Mon, 27 Jul 2026 04:25:39 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woGjP-0000wP-Jh
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 04:30:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1woGeX-00041p-Nh; Mon, 27 Jul 2026 04:25:38 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66R7m8BN1633043; Mon, 27 Jul 2026 08:25:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=ULXUt2
- yI7wva5oY28LiMI9igmMCQh0iwFI9qtds8Ezc=; b=KnkrPeVXqBxMOZ/VKZQCLJ
- pHoDHnbIVTNBRJHAwyy8VLQEsJOUOlcXICMSulj7LkMSRkk16zrTknnBEhdOdW/R
- 84OOC+D8QqStPs6+E0pS8H87FzfBTaDWO9zCNIixfWWt5gBFjQ8apCWInuu8i7EO
- WpCRDkzsv3gGTZ3dZKo0QqYX59W+sIDgn6oDi0WCNFW0JHunjbkgHsklwi6AkdSx
- SuyV81Ojg6MJi8OSW/49cvg4bGWbYsmp5wPE64yByb34TtnuvA5Qjsrm4N7FB0Xj
- Oth9Hd/WPDkyLJiY0tNS22QPDXhGIgy6EtoPd01WovBaHzXXDqYXTA8KcxVj9fcQ
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0xf03u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Jul 2026 08:25:33 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66R8BIWo028251;
- Mon, 27 Jul 2026 08:25:32 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fn9pg4bd5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Jul 2026 08:25:32 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66R8PS6240042886
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 27 Jul 2026 08:25:28 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C870A20095;
- Mon, 27 Jul 2026 08:25:28 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 54107200A2;
- Mon, 27 Jul 2026 08:25:27 +0000 (GMT)
-Received: from shivang.upadyay (unknown [9.123.12.247])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 27 Jul 2026 08:25:27 +0000 (GMT)
-Message-ID: <07ef3c9c6910c8076a563d90b537d0dcf83065c7.camel@linux.ibm.com>
-Subject: Re: [PATCH v2] tests/functional/ppc: skip remote interrupts test if
- -net user not built
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, thuth@redhat.com,
- adityag@linux.ibm.com, harshpb@linux.ibm.com, milesg@linux.ibm.com,
- npiggin@gmail.com
-Date: Mon, 27 Jul 2026 13:55:24 +0530
-In-Reply-To: <20260727110516.c62eed78-ec-amachhiw@linux.ibm.com>
-References: <20260724085440.520125-1-shivangu@linux.ibm.com>
- <20260725174600.17683-1-shivangu@linux.ibm.com>
- <20260727110516.c62eed78-ec-amachhiw@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woGjJ-0004aY-LW
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 04:30:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785141031;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gEY32oBjPDEGLInOOJ3xLmZYuzAbeEx9u84r6JKPpA0=;
+ b=EX4+hVuA11FUOzWrcwRnhs8L1EvrFg1Je1Kr6/j4oyxibtTh6f9mFj420+gCjVTWT/ew2Q
+ DA7Tb+rqhW937dS5UVRv7ec9HduCeyZMU7YiWcZ6SBj+GniYXzwYJiIsz1ZZCkdix4BVdH
+ 5sXHkQ+vb0SfPPVNL+LB42c31xClwBA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-208-TWN8L7Q9OnS4ONgp9Osntg-1; Mon, 27 Jul 2026 04:30:29 -0400
+X-MC-Unique: TWN8L7Q9OnS4ONgp9Osntg-1
+X-Mimecast-MFC-AGG-ID: TWN8L7Q9OnS4ONgp9Osntg_1785141028
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-473ac08a6a4so1826521f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 01:30:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1785141028; x=1785745828; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=gEY32oBjPDEGLInOOJ3xLmZYuzAbeEx9u84r6JKPpA0=;
+ b=n73XM55kOsCa72cYbR81JvQkPVGdBBrhhB2eeyFv5M9DUlyG7kxr2tF8XWa4CAwQo+
+ vHryRXQjmLtoeGEy1vtgZNVNO+O3Jsq1RwWRCFT2kD2U8X9kIj4G8iPEtRn/po40aX2N
+ 5rxHZGFy8zQZeBmMy1O3E6eL7OV6z7tTPIVfsnpJQzRl0lYjQMvNUhmNfPDXN3MmSDNb
+ UTSeGYoSLd0/rqtyS72WtDgxA9xx0mDgkjA742Oh7aD6KJkh9kfOt65UNHbJ6SpCqKCE
+ e0885NyjZ/lXLDafNXOxNbbjoQ4TakOzyC9AOv+2I8h45ByVDwSOMbA5a/PSRfEKkhzn
+ 1E9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785141028; x=1785745828;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=gEY32oBjPDEGLInOOJ3xLmZYuzAbeEx9u84r6JKPpA0=;
+ b=RqmW0DDKPH+SBLWYF+Y4wviZw7FfO8ugNY7t0A7Mr9iyiqt49XD5bPfVmm290W0Gjg
+ /a9klq28DDrdd03GRxidtHg8NBsbIezPlu3tkAP9WujUJdrzPn2EbgyrO57SFuCoJ3mE
+ 0XMOBkMxVx0LNp1ZliVsmXzU1i/MxV0UiZk1dUhhh5wvO1rb8jWT2IxmioQhYmtH2Rdy
+ 8qDYkixLtXp4sqJ8UN9NTFtEBg83TundEfndOqTwFnApg//3JePVNsAW36qN6FQ74nfq
+ /8CTmqLKX1VDoLKAROo8wcxzk42/a0hBdxHYzDjmjUqf10MLFu+MEnbt+4ZqY+ATAhMo
+ /boA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpmZHaoqmpy05DmaN82eVu7biAsnwDrb+0BjtLYgQlbbysqM3BjvzdQkhCCADyIwnRmYP2gbKc0ss+r@nongnu.org
+X-Gm-Message-State: AOJu0YwLs1vfvm+w54p3XqdSf/ilXzmiKa8nSZE+T5QIqb1Ma9xlyzjK
+ atV5vzvBzviq0DzjLGo/6YFeJG3VcTvaBh2brsivCCbhUUn9qDLTiMRV3Rny0C7PI82lVDx6zAu
+ LreHKLpwLY7iboIBc59a0wskgyYzfpLJjBv8qFlcNpeIia1o429DqIvRs
+X-Gm-Gg: AR+sD10Jceq/KBFrWDXVnNU792Mbi2n4CXdCxG49Nnn7qFTKgUqH8ARJUeeZMhL3d7V
+ Iw5AzFDQDyQflseOOoxD9v0PaoDTrZ7UNuceuZIFDZlPWMB3gOSwxF/r6V4HjgEv7eX9BW4FMV0
+ RSjWOFP/1H42PQq3ZbY3RB33VgmuKN0GTv2UArjr3+J9lSWQTN4/ei5WyaUxEGYANZ7JC9kzs09
+ j3mQNIlGWofBE/33ARpd3yI7uZMbc0irxFY3urp8bBjFxRE5ZkY8Xm+ruTdaqmCDbC4v70DVnNs
+ HJWRbSkaHaZfuwtRGxCt3WSxZ9p9ypcfU4AyxrRBj5kjzMe9Mum4DFYxUylr9yxGsiyoaC+WFT+
+ w9A00OkfDNj5DRbQK9KfO6w==
+X-Received: by 2002:a05:6000:1867:b0:475:f100:3607 with SMTP id
+ ffacd0b85a97d-47f9feb79fbmr9749579f8f.54.1785141027528; 
+ Mon, 27 Jul 2026 01:30:27 -0700 (PDT)
+X-Received: by 2002:a05:6000:1867:b0:475:f100:3607 with SMTP id
+ ffacd0b85a97d-47f9feb79fbmr9749082f8f.54.1785141022877; 
+ Mon, 27 Jul 2026 01:30:22 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f85bb5127sm44005943f8f.10.2026.07.27.01.30.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 27 Jul 2026 01:30:22 -0700 (PDT)
+Date: Mon, 27 Jul 2026 04:30:18 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, Jonathan Cameron <jic23@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Wei Liu <wei.liu@kernel.org>, linux-cxl@vger.kernel.org,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH v2 05/12] hw/cxl: fix invalid free on early return
+Message-ID: <20260727042804-mutt-send-email-mst@kernel.org>
+References: <20260727-fix2-v2-0-d0c4831ed7ea@redhat.com>
+ <20260727-fix2-v2-5-d0c4831ed7ea@redhat.com>
+ <20260726164738-mutt-send-email-mst@kernel.org>
+ <CAJ+F1C+fCyazpGfof9H0_n54FMy3LX6ujdmTcW=gAmhFz8Lk-w@mail.gmail.com>
+ <70e1a2db-472d-46f4-ae27-ea8fb4af6cc0@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: o4Z64zYdm_9kDHFn_gspVtcZJO-iud8_
-X-Proofpoint-ORIG-GUID: 2W3QdtvtFKKECBl__96HxF8PhZ6X-KHF
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDA4MiBTYWx0ZWRfX9Al2Iq3dkWT5
- 709ZMwjeX5sdyAI651Ifo2gULJn5p+LMMdlhXtJlbUK4Uvon1SL7LvYLiHxmfKGSBJ61x5Cdmow
- HM/keZgudZIW4fe9CUB+u1wBp1QrWCg=
-X-Authority-Analysis: v=2.4 cv=dYuwG3Xe c=1 sm=1 tr=0 ts=6a6715fd cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=EqrdExaTOsCVLBqOS-8A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDA4MiBTYWx0ZWRfX+JtQQTfh4XOR
- eRtpBnDsuxqAl8kVTB2PwsK0ctbdh2mhXpfjE30ndx3P9OanDTENkNE5IkVV5JNU+j+UHJ7iCpM
- HLuJZCZzKwDokbdDL3ogzX1mRR41hINTIebzPEX1XhQFnK5fBKzeW6YOGwh6ZwlSzkGCZO4Chyl
- uysi0EFuJdTa7amhX1QNn8aPOq5j8nth+ttYaMGYo1J5BaCS9Fqz2hY3dBllHDxNi98wly8Frjk
- cmZAkYGuM4OlC59IG2CwrpJtZeK7ChG6I29ThzOo9IC2a+pq3IiEad9Rha/mDen/c4y23l0jxV5
- msmwYJUqcxUHJumdz+6uOFL9XuyZY4lyfYJ66g+qYF5xLWFOCRodisai3QjHH/JDBrsWYLGWXV2
- AwqKJvHYNamH2A7tLCJdbnCQL+Mje2GVPCxGxkO+XZ8As9ufXUF5pIRjMAwKCeV8SSyk2ZL2GgA
- Wz4eSLRkrG50iAh8v7A==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-27_02,2026-07-24_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 clxscore=1015 phishscore=0 malwarescore=0
- spamscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607270082
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <70e1a2db-472d-46f4-ae27-ea8fb4af6cc0@rsg.ci.i.u-tokyo.ac.jp>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,26 +139,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2026-07-27 at 11:18 +0530, Amit Machhiwal wrote:
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 self.require_acc=
-elerator("tcg")
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 self.set_machine=
-('powernv')
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 self.require_netdev('user')
->=20
-> One minor nit: require_netdev('user') is placed after set_machine().
-> Though it's not necessary, I would prefer to group all require_*
-> guards
-> together at the top before any setup, so it's immediately clear what
-> preconditions the test has. Either way:
->=20
-> Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
->=20
-> ~Amit
+On Mon, Jul 27, 2026 at 01:40:48PM +0900, Akihiko Odaki wrote:
+> On 2026/07/27 6:09, Marc-André Lureau wrote:
+> > On Mon, Jul 27, 2026 at 12:49 AM Michael S. Tsirkin <mst@redhat.com> wrote:
+> > > 
+> > > On Mon, Jul 27, 2026 at 12:44:04AM +0400, Marc-André Lureau wrote:
+> > > > Fixes: 680935c9a6ff ("hw/cxl: Add a performant (and correct) path for the non interleaved cases")
+> > > > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> > > 
+> > > Not commit log really?
+> > 
+> > SSIA, but I can make it longer if it helps.
+> 
+> I agree the subject is sufficient so:
+> 
+> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> 
+> That said, we can quote docs/devel/style.rst if desired:
+> 
+> > * Variables declared with g_auto* MUST always be initialized,
+> >   otherwise the cleanup function will use uninitialized stack memory
 
-Sure Amit, I'll send v3 with the suggested change, and Keep your review
-tag.
+I like that. But the question is not just whether it's required by
+the coding style. The question is if there's a bug and how is it
+reacheable, which can guide things like backporting decisions.
+Thanks!
 
-Thanks
-~Shivang.
+> Regards,
+> Akihiko Odaki
+> 
+> > 
+> > > 
+> > > > ---
+> > > >   hw/cxl/cxl-host.c | 2 +-
+> > > >   1 file changed, 1 insertion(+), 1 deletion(-)
+> > > > 
+> > > > diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+> > > > index 7e744312f1d8..eba13c9e7cba 100644
+> > > > --- a/hw/cxl/cxl-host.c
+> > > > +++ b/hw/cxl/cxl-host.c
+> > > > @@ -279,7 +279,7 @@ static void cxl_fmws_direct_passthrough_setup(CXLDirectPTState *state,
+> > > >       MemoryRegion *mr = NULL;
+> > > >       uint64_t vmr_size = 0, pmr_size = 0, offset = 0;
+> > > >       MemoryRegion *direct_mr;
+> > > > -    g_autofree char *direct_mr_name;
+> > > > +    g_autofree char *direct_mr_name = NULL;
+> > > >       unsigned int idx = state->hdm_decoder_idx;
+> > > > 
+> > > >       if (ct3d->hostvmem) {
+> > > > 
+> > > > --
+> > > > 2.55.0
+> > > 
+> > > 
+
 
