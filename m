@@ -4,123 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3386EC53219
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 08:52:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90A9EC531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 08:53:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woH4Q-0006Jx-Qb; Mon, 27 Jul 2026 04:52:22 -0400
+	id 1woH5T-0006k7-R8; Mon, 27 Jul 2026 04:53:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woH4G-0006J8-0I
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 04:52:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woH5Q-0006jr-O9
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 04:53:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woH4D-0006jq-Ii
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 04:52:11 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woH5O-0006x6-Kv
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 04:53:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785142325;
+ s=mimecast20190719; t=1785142401;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EGmPWZb+BE6aa3oUZZXhdk8ZQlf6vpMUZMjM2NnD8uc=;
- b=bwqPa7+XjsOtUT8Q3D0OikAAT2Wd40PiDgpcpVFEA9tePK4FfRJkuCY6ggOvXyInWQabbv
- LpMygh3xlLqhDtW9PoRnIbedUHjxXk6EM6hf3tAYMfC+pZohER8ZR+Ze2KEwzHgTU3JamI
- 8sK5MjxNRTSciGMOYY6jN3ndOlmPNak=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Q1WEkqg5egxDJ9Hhler2x297dJFyG/VESplriVmoqqE=;
+ b=XOQA1DFezkql+Y6szKu2F+zXMNbgZmchV7D+w0tJB7dFUXe2/ktJf14EchnFtD6AoI+8iU
+ 8zoRyhjM3tgJHVHSx4OFqbz/e3XeITI8ckMJ2i6+T9n1QW3YEPkF7sjQYhY6sifFYQ0Yjy
+ 8O+eTfik4FlYJzFxVnvz7hH27d5yvR8=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-360-C69BCP4qPqGqVjY28h2uDg-1; Mon, 27 Jul 2026 04:52:03 -0400
-X-MC-Unique: C69BCP4qPqGqVjY28h2uDg-1
-X-Mimecast-MFC-AGG-ID: C69BCP4qPqGqVjY28h2uDg_1785142322
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-47f753a0aa0so1503734f8f.3
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 01:52:03 -0700 (PDT)
+ us-mta-81-bL2QspB0OvGeHy3brfrWUw-1; Mon, 27 Jul 2026 04:53:19 -0400
+X-MC-Unique: bL2QspB0OvGeHy3brfrWUw-1
+X-Mimecast-MFC-AGG-ID: bL2QspB0OvGeHy3brfrWUw_1785142399
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4955d314945so17402595e9.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 01:53:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785142322; x=1785747122; darn=nongnu.org;
+ d=redhat.com; s=google; t=1785142399; x=1785747199; darn=nongnu.org;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :content-type:mime-version:references:message-id:subject:cc:to:from
  :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=EGmPWZb+BE6aa3oUZZXhdk8ZQlf6vpMUZMjM2NnD8uc=;
- b=C7DH8TGgOoNluhcHXlWwkmwBwVD1GIoXeT5DX6xtAQvdpQF1vnx/FHOSJ52SSMD+ZN
- BQ/umEpQT4oAzJ+o1fglID8X6jPzfP1FLntvb+va1TtIsWh1wSUgG+68rdGzrFSeDQ2E
- 032rf7DBkRJbMXL32+cQbRmf0CwrYfBARxDa6c+XJwYWP9rhyJdfSZBfR7ng4h+rF4bS
- 6jBhEJh4m4HezQe8OayA16jAtqNkVbM7E2qE6ISnyMdsj9mDrrQgiJR8PvrEZ4zZ28kM
- BzzvENR4vYUJJIh97Hj92F9Sd3kTFC7C+1pOxbfH43DyfKdPHzmhU0k12E3IE6ho9b+S
- 7lAg==
+ bh=Q1WEkqg5egxDJ9Hhler2x297dJFyG/VESplriVmoqqE=;
+ b=JL+4YKI+Caidacml4nNQO3MNoLAPzPJ9z/0r63tQTLBEkN/5jEd46daW8oCfVvTmA+
+ Ds/NqriIIFR0qeopCWKZgQBhd9oi9CLo0nwHlBEzQN0snV8YvDlLMLq8rK6KitjOQAt7
+ NKTKfcXMtpGP7OWu5sXrlQKRsBBY+Slnhr+uF+ZRdeiQQsy/BvWSYgOfvFySbugDUAbv
+ 4oODg1oKIoVUYPLEneqjrY/ys/+jdV+73aQSs4YE6TIJAszecnImvnGDAcoJ1haOMQF2
+ 1jh2ab/nv12IQQ1DCIFiOW4KaTnp6ddhzAy+YxqH3zn2Rjw2TmBF5g55omCx+k9NoPl3
+ MxlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785142322; x=1785747122;
+ d=1e100.net; s=20251104; t=1785142399; x=1785747199;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :content-type:mime-version:references:message-id:subject:cc:to:from
  :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=EGmPWZb+BE6aa3oUZZXhdk8ZQlf6vpMUZMjM2NnD8uc=;
- b=bSgEnEO1XxYACy+KueFrG5WHc7rB0DaKMi3WSvKdRYxPB3Y0s0cFnnsJkUmttWvbZ4
- z09AxvIbEjeWeof+m9G7bcLEvOq/64I4SLNuVU71TrA4d98GhmVXbn1erImWipmZRqrY
- rICkTvGWVlzcISjvJlxvofjsZboskBzRE0fLmtT4+x3c8iY3/VfJWxP4k9cYqaLTROtN
- +wGrluPV8uUYAYdCeRsbJOmhkh6umD7NG2Tgv6Oc6uTqHJltNvE7HxHO9blgPUuIgMtz
- 13Th09/tlEolPnLhEbSejES1fACAJITDPhpawGboC4c+a4YczCjppB5MwIgpvakKsXra
- 6lCA==
-X-Gm-Message-State: AOJu0Yy2JqlzQDFX7ffsHhYY7dBjDPYS1PZmqxyV/3d4sCBEvbMxG4Hl
- iIJnFbObnlds1Fg+r7tjS0rORoPn6+GxTE1GcYeXA4ac5SI6VFSe2H0iZSJ3D3w654829DEA5oF
- 0JuB4yzGShZooda/hK4vST1OVJZX9re7uqzTKE/+d4TgD9+90TAyBwgwX
-X-Gm-Gg: AR+sD12OI0HZuSHHDLaaezoD+k0Z2hIj8qEYhHP2akQdIBJyPUGlpcGtXJ4m4svrS85
- d8Pn3yTlBvOiZLQAwJToeutVe/IhL/hePiMUjyKNpFmT6WKENS/05VYWFRe77bzCCcN9QFqhA97
- w8aj9FDINdOfoD746g9cLmipCcuIebyNVJ2UIMt21UXaCe87fbREJ5H+KzA8YPwz9OBkHkjKJNe
- JO7uc6zqfN8ULFHJn6kZ7nkVPWVd65cKm8bM+s7poQ5sHG/b0g5E6QOg+2nLTte3E63g6b7RW/k
- gdbYAT5ePGGZHziFa/ubPgaq90TYEI6pwah8MDiuRSmyKoWA2rdONkrBLjN2/Gtb3D1qSzEKqzR
- dBq2TteFU1rYYkfR60GPUKw==
-X-Received: by 2002:a05:6000:1883:b0:47f:9447:62bf with SMTP id
- ffacd0b85a97d-47f9fc8665bmr9304575f8f.2.1785142322460; 
- Mon, 27 Jul 2026 01:52:02 -0700 (PDT)
-X-Received: by 2002:a05:6000:1883:b0:47f:9447:62bf with SMTP id
- ffacd0b85a97d-47f9fc8665bmr9304504f8f.2.1785142321791; 
- Mon, 27 Jul 2026 01:52:01 -0700 (PDT)
+ bh=Q1WEkqg5egxDJ9Hhler2x297dJFyG/VESplriVmoqqE=;
+ b=mkvlbFq3vZXems9F/jd7BQ+3DJOxytQ1F1/FvpLZgiandGpjoQ35Buqd54xUKuViB3
+ Juo8gS+azkZMaIdbcVIaY/rCF7EGa1lSfCfo3091+jGnUQfqT/MTz1vlzk9F5qNIAiYC
+ 4fbQ7CcmOvISPKRH42C1huPB+LWQ6ky2zAUylTiKtyejwfAOo9dLxpIOh3yir0MiKUZJ
+ B9An7BwKzld30P98ICe+WN/ZzKiLX34yaYHBkwBuUJ9I1+ejavbMud0/Sp1hVN6eaNHh
+ Ydbv/To/gHnYqKArr6hWnG6n8OYoj8zDec78lzw5LLpurxM4Dblg0DysCWXL1yHYPkRe
+ g9oQ==
+X-Gm-Message-State: AOJu0YwrNEfIe9AAm6/ePSyftSWgpXKzk3EXhMKZx2lzynN0uxlkQhCl
+ 6llHnuPdMKph8Zz2MTIZk1XnU5sB54UCVBrSBAqNExdGy/9z1gTsxjN2icAS4EW1mQTkjdK4Qeq
+ yEBwtPp/3jby5VkUo6/sG0adcFDfHS02qfQIMKQ5LE6SNyb0Z1crpvN46
+X-Gm-Gg: AR+sD10mcZGyNMqGbiaROI2kerIFBqmljcY7sk/wd3Q/b3BcNCAy5zC5DQtvfSrguoq
+ PlTV3QP+Pi8RCGJLbLuOBJY95jlbxeJWUv/0N053tZXWLlVQT3jt8TVurq4z+jPwb+odECCD7iH
+ RMcLZzsWXOQgIMsYolvKxtDKY9FllIQ3U85gHYDmWzsjSs31Fhamnb6LhE9gKzbWn5q6yaKHgfH
+ /lPFdVrCEOL/YYG0d0QF0uzVRfOX15Lw9hbqxefkSmPIxJTaII6so4exb2VLmEqqz4uv1uiK9F+
+ zmJhVA/n2UXrLwWch71sTlTT5v3b0garcEGYB58nN3k6SubT9oaj3ozhw0gLja36IjjC1QISayF
+ YHjJvTaADl0owd0escSpPDg==
+X-Received: by 2002:a05:600c:45d5:b0:495:4cb6:71cc with SMTP id
+ 5b1f17b1804b1-496b570fc0cmr87243045e9.5.1785142398539; 
+ Mon, 27 Jul 2026 01:53:18 -0700 (PDT)
+X-Received: by 2002:a05:600c:45d5:b0:495:4cb6:71cc with SMTP id
+ 5b1f17b1804b1-496b570fc0cmr87242785e9.5.1785142398057; 
+ Mon, 27 Jul 2026 01:53:18 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c6e9a2sm49073219f8f.35.2026.07.27.01.51.59
+ 5b1f17b1804b1-4957f9ae5c3sm302357375e9.3.2026.07.27.01.53.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 01:52:01 -0700 (PDT)
-Date: Mon, 27 Jul 2026 04:51:57 -0400
+ Mon, 27 Jul 2026 01:53:17 -0700 (PDT)
+Date: Mon, 27 Jul 2026 04:53:15 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, Jonathan Cameron <jic23@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Wei Liu <wei.liu@kernel.org>, linux-cxl@vger.kernel.org,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Haotian Jiang <jianghaotian.sunday@gmail.com>
-Subject: Re: [PATCH v2 00/12] Fixes for 11.1
-Message-ID: <20260727045129-mutt-send-email-mst@kernel.org>
-References: <20260727-fix2-v2-0-d0c4831ed7ea@redhat.com>
- <20260726164912-mutt-send-email-mst@kernel.org>
- <CAJ+F1CKGxeSiRR6YWvYNUHYhO9kgfASUTPsA9HC4QBDhm_TZQw@mail.gmail.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: QEMU Developers <qemu-devel@nongnu.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PULL 17/30] vmstate: fix type confusion in vmstate_size() for
+ VMSTATE_VBUFFER_UINT64
+Message-ID: <20260727045220-mutt-send-email-mst@kernel.org>
+References: <cover.1785101237.git.mst@redhat.com>
+ <9e2d0b03a60642236e6df8edde7b3562f5f9849f.1785101237.git.mst@redhat.com>
+ <CADLectmKQT+hU_3TG2Popan8f5QphEEpwsR+Ps=+WTZo-Z_M_Q@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJ+F1CKGxeSiRR6YWvYNUHYhO9kgfASUTPsA9HC4QBDhm_TZQw@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+In-Reply-To: <CADLectmKQT+hU_3TG2Popan8f5QphEEpwsR+Ps=+WTZo-Z_M_Q@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
 X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,81 +124,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 27, 2026 at 01:08:28AM +0400, Marc-André Lureau wrote:
-> Hi
+On Sun, Jul 26, 2026 at 08:31:57PM -0400, Peter Xu wrote:
+> This patch is migration only change and hasn't been reviewed.  Give us a few
+> days to review it?
+> Can't do it now because it is on cellphone and I just bathed my son.
 > 
-> On Mon, Jul 27, 2026 at 12:50 AM Michael S. Tsirkin <mst@redhat.com> wrote:
-> >
-> > On Mon, Jul 27, 2026 at 12:43:59AM +0400, Marc-André Lureau wrote:
-> > > Hi
-> > >
-> > > Here are some assorted patches worth considering for the 11.1 freeze
-> > > bug-fix period.
-> >
-> > why are these in a single patchset? who is expected to merge it?
+> Please hold off merging.
 > 
-> Given that they are kind of general coding fixes, I think I can send a
-> PR once the patch are reviewed.
+> Thanks.
 
-I have no problem with that just pls mention this down the road
-when it's ready.
+OK.  I'll drop this and you will merge it through the migration tree
+as appropriate?
 
-> >
-> > > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> > > ---
-> > > Changes in v2, after Akihiko comments:
-> > > - split the "Fix many -Werror=maybe-uninitialized" patch
-> > > - qdev-monitor: add drain_rcu parameter to avoid deadlock from virtio-net
-> > > - rewrite WITH_QEMU_LOCK_GUARD/WITH_RCU_READ_LOCK_GUARD macros to suppress
-> > >   GCC false-positive warnings (new patch)
-> > > - block/blkio: use QEMU_LOCK_GUARD instead of WITH_QEMU_LOCK_GUARD in
-> > >   getlength() to avoid false-positive (new patch)
-> > > - hw/cxl: split invalid-free fix into its own patch
-> > > - hw/i3c: fix default return value of d2_i3c_send() (new patch)
-> > > - hw/ppc: fix dangling machine->fdt reference after spapr fdt updates (new patch)
-> > > - Link to v1: https://lore.kernel.org/qemu-devel/20260725-fix2-v1-0-5c9a6ce7b96a@redhat.com
-> > >
-> > > ---
-> > > Marc-André Lureau (12):
-> > >       hw/display/virtio-gpu-rutabaga: zero-init capset info response
-> > >       block/blkio: fix error return value on getlength()
-> > >       block/blkio: fix compiler false-positive warning
-> > >       include/qemu: adjust LOCK_GUARD macros to avoid potential warning
-> > >       hw/cxl: fix invalid free on early return
-> > >       hw/i3c: fix default return value of d2_i3c_send()
-> > >       Fix some -Werror=maybe-uninitialized
-> > >       hw/hexagon: fix machine->fdt leak in qom-test
-> > >       hw/ppc: fix dangling fdt reference
-> > >       hw/core/machine: free machine->fdt in machine_finalize()
-> > >       migration/multifd: fix Error leak in multifd_recv_terminate_threads()
-> > >       qdev-monitor: drain RCU callbacks in qdev_device_add_from_qdict
-> > >
-> > >  include/monitor/qdev.h           |  3 ++-
-> > >  include/qemu/lockable.h          | 19 +++++++++++-------
-> > >  include/qemu/rcu.h               | 17 ++++++++++------
-> > >  block/blkio.c                    |  7 +++----
-> > >  hw/audio/intel-hda.c             |  2 +-
-> > >  hw/core/machine.c                |  1 +
-> > >  hw/cxl/cxl-host.c                |  2 +-
-> > >  hw/display/virtio-gpu-rutabaga.c |  2 ++
-> > >  hw/hexagon/virt.c                |  9 +--------
-> > >  hw/i3c/dw-i3c.c                  |  2 +-
-> > >  hw/net/virtio-net.c              |  2 +-
-> > >  hw/ppc/spapr.c                   |  1 +
-> > >  hw/ppc/spapr_hcall.c             |  1 +
-> > >  migration/multifd.c              |  1 +
-> > >  system/qdev-monitor.c            | 42 +++++++++++++++-------------------------
-> > >  target/i386/cpu.c                |  3 ++-
-> > >  target/i386/emulate/x86_mmu.c    |  4 ++--
-> > >  17 files changed, 59 insertions(+), 59 deletions(-)
-> > > ---
-> > > base-commit: 300438ffbb8d9430cac2fcc15cba6f482b2c0587
-> > > change-id: 20260725-fix2-6e51d231794b
-> > >
-> > > Best regards,
-> > > --
-> > > Marc-André Lureau <marcandre.lureau@redhat.com>
-> >
-> >
+> On Sun, Jul 26, 2026, 5:29 p.m. Michael S. Tsirkin <mst@redhat.com> wrote:
+> 
+>     vhost user currently saves the inflight buffer to the migration stream
+>     using VMSTATE_VBUFFER_UINT64. The size is controlled by the vhost-user
+>     backend.
+> 
+>     But the implementation of that is broken if size is >2G: it stores the
+>     buffer size in a uint64_t field, but vmstate_size() always reads the
+>     size field as int32_t regardless of the macro used. This, in turn,
+>     causes negative or truncated lengths on load, leading to undersized
+>     allocations and down the road out-of-bounds buffer access.
+> 
+>     There's no practical reason to support such large sizes, so it's enough
+>     to validate: read the field as uint64_t when VMS_VBUFFER_UINT64 is set,
+>     reject negative or oversized values, and propagate errors to
+>     vmstate_load_vmsd().
+> 
+>     Note: the large value is coming from the backend, not guest, so this
+>     shouldn't be considered a security issue. The CVE was assigned before
+>     the qemu security policy was updated to exclude this class of bugs.
+> 
+>     Fixes: CVE-2026-6426
+>     Fixes: f6fdd8b2bd ("vmstate: introduce VMSTATE_VBUFFER_UINT64")
+>     Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+>     Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3675
+>     Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+>     Message-ID: <
+>     801b1501ee10241f7ac49a10570d548352b36347.1784890517.git.mst@redhat.com>
+>     ---
+>      include/migration/vmstate.h |  5 ++++-
+>      migration/vmstate.c         | 31 ++++++++++++++++++++++++++++---
+>      2 files changed, 32 insertions(+), 4 deletions(-)
+> 
+>     diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+>     index 1b7f295417..e7095cd977 100644
+>     --- a/include/migration/vmstate.h
+>     +++ b/include/migration/vmstate.h
+>     @@ -168,6 +168,9 @@ enum VMStateFlags {
+>           */
+>          VMS_ARRAY_OF_POINTER_AUTO_ALLOC = 0x10000,
+> 
+>     +    /* Use a uint64_t size field for VMS_VBUFFER instead of int32_t. */
+>     +    VMS_VBUFFER_UINT64              = 0x40000,
+>     +
+>          /* Marker for end of list */
+>          VMS_END                         = 0x20000,
+>      };
+>     @@ -788,7 +791,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>          .field_exists = (_test),                                         \
+>          .size_offset  = vmstate_offset_value(_state, _field_size, uint64_t),\
+>          .info         = &vmstate_info_buffer,                            \
+>     -    .flags        = VMS_VBUFFER | VMS_POINTER,                       \
+>     +    .flags        = VMS_VBUFFER | VMS_VBUFFER_UINT64 | VMS_POINTER,  \
+>          .offset       = offsetof(_state, _field),                        \
+>      }
+> 
+>     diff --git a/migration/vmstate.c b/migration/vmstate.c
+>     index 50ebe37845..d7f03a9f5b 100644
+>     --- a/migration/vmstate.c
+>     +++ b/migration/vmstate.c
+>     @@ -103,10 +103,24 @@ static int vmstate_size(void *opaque, const
+>     VMStateField *field)
+>          int size;
+> 
+>          if (field->flags & VMS_VBUFFER) {
+>     -        size = *(int32_t *)(opaque + field->size_offset);
+>     -        if (field->flags & VMS_MULTIPLY) {
+>     -            size *= field->size;
+>     +        uint64_t usize64;
+>     +
+>     +        if (field->flags & VMS_VBUFFER_UINT64) {
+>     +            usize64 = *(uint64_t *)(opaque + field->size_offset);
+>     +        } else {
+>     +            int32_t ssize32 = *(int32_t *)(opaque + field->size_offset);
+>     +            if (ssize32 < 0) {
+>     +                return -1;
+>     +            }
+>     +            usize64 = ssize32;
+>              }
+>     +        if (field->flags & VMS_MULTIPLY) {
+>     +            usize64 *= field->size;
+>     +        }
+>     +        if (usize64 > INT_MAX) {
+>     +            return -1;
+>     +        }
+>     +        size = usize64;
+>          } else if (field->flags & VMS_ARRAY_OF_POINTER) {
+>              /*
+>               * For an array of pointer, the each element is always size of a
+>     @@ -337,6 +351,11 @@ bool vmstate_load_vmsd(QEMUFile *f, const
+>     VMStateDescription *vmsd,
+>                  void *first_elem = opaque + field->offset;
+>                  int i, n_elems = vmstate_n_elems(opaque, field);
+>                  int size = vmstate_size(opaque, field);
+>     +            if (size < 0) {
+>     +                error_setg(errp, "VMState field '%s': invalid size",
+>     +                           field->name);
+>     +                return false;
+>     +            }
+> 
+>                  vmstate_handle_alloc(first_elem, field, opaque);
+>                  if (field->flags & VMS_POINTER) {
+>     @@ -661,6 +680,12 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const
+>     VMStateDescription *vmsd,
+>                  bool use_dynamic_array =
+>                      field->flags & VMS_ARRAY_OF_POINTER_AUTO_ALLOC;
+> 
+>     +            if (size < 0) {
+>     +                error_setg(errp, "VMState field '%s': invalid size",
+>     +                           field->name);
+>     +                ok = false;
+>     +                goto out;
+>     +            }
+>                  trace_vmstate_save_state_loop(vmsd->name, field->name,
+>     n_elems);
+>                  if (field->flags & VMS_POINTER) {
+>                      first_elem = *(void **)first_elem;
+>     --
+>     MST
+> 
+> 
 
 
