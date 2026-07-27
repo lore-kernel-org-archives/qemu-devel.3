@@ -4,73 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 526C6C53219
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 09:24:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D616BC531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 09:25:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woHZ5-0007pb-Ca; Mon, 27 Jul 2026 05:24:04 -0400
+	id 1woHa8-0008Ds-8T; Mon, 27 Jul 2026 05:25:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1woHYx-0007ow-KJ
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 05:23:56 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1woHYv-0001gt-2c
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 05:23:55 -0400
-Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
- [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66R9NPiV087705
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 27 Jul 2026 18:23:39 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=MBT75aVp88xpVWTDqvkufgi643mzSeszVzLsGEi2twY=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1785144219; v=1;
- b=BT/VHibgYEJqb2YiQhrz9dIU241Y2h4f2FW6YPhWKpqTwhWpKWMIXkysr1XKKDkx
- NyIiGQ6COxrUMrtXbs4Nc65ZbHNP50amEOi/p/BoOcGJInk/M/h1yuxATp/oJa/U
- dhohIfwM3t4jMhS/7954InijjVGFc1gSNp0dfye4aNMwL5N79TbOtS8YY7XWlcKj
- Ytk1wNwPxdOZro9JMEpYttf0cX6BWpsLtS4gdWREmnN+YuwWJbf7hkfDKncpufbl
- Y+Jj/M57pMEUczL5CfmDt6+iM8/CLoE9lB+LIPkFqj6KtevNy9LggzRaGOrdbMIY
- kVba4+/CVvAEwRz6+VfjWQ==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 27 Jul 2026 18:23:25 +0900
-Subject: [PATCH v2] hw/display/virtio-gpu: Reject non-migratable large
- blobs
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1woHZv-00089B-Hr
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 05:24:55 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1woHZt-0001p7-FX
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 05:24:55 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-81eaf3709b4so25441947b3.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 02:24:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785144292; cv=none;
+ d=google.com; s=arc-20260327;
+ b=mbrYX0/DYG6fdHriuMKelSRdyO+lpUzXUj4KOsxXQAPc9AwKuwjye8br9rrJ/a11Zy
+ vtCvKV/btMQhSRCWoDQwaBuJDD1amRgloierEi9PiE2Km0xma9NJMoHWCJBALZY0n8C0
+ 6jwaEGaLJ0maXlis8bSy9149HB1L0qcGrx+3UlltMXWya3FmnsV9apO8NpcQ6I+WvJFA
+ XJBf1BXYW0iMhgJCKqgvfR+yKa1nzEftWdeJ3Ujym2FXWMQWp67i6BB36AO8SJv1DlsU
+ XOSf9N/3xYuu+uKmoySAssSeAlpB738RgQygJBjvAEPrHXlh7Ot5Md+7s225QRVaSx1G
+ eKtQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=f/pvHRyl96uTa3Z0GhAVxmp+JRzUxt8s2J7Y12ag6/4=;
+ fh=8B4lXkDaKU8Hu7MP52jJmGXpjXI9QItJ0o6HZHTuCWg=;
+ b=Ny9lZYB3uKmvuIFkazdMsDTu34A79FPrZQXAzoAN08HXWEM7yaDHEFbvtl3qrUx5vY
+ Rf55LrLERR917f58EaFBUboNeCcCOQGctII2C37wyWaNEhEQr8+1/0QkpQtECCVx7SMs
+ OD6CbQ3eGNY8t3RRNvj1dzS5ifjhJX0vqtV7jOsh+R/StK+7dKQIGRDWfTPWCzE9eXV4
+ qqTZwdLDgo9ja++LXm3A8qJo0E6tgdUVgeDRnrOkjCW5m1zVdlY6XHVzn6lhMAdZtuUD
+ NzbddgKuCwppk6Xm+rmp2obqC9Ww3XbowTzwMMZuoBEQnEu7SQN/Zas614ULGfG/17De
+ 9OnQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1785144292; x=1785749092; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=f/pvHRyl96uTa3Z0GhAVxmp+JRzUxt8s2J7Y12ag6/4=;
+ b=aFqW1C/o7XuqZmaVXA4f5bXcFfdZ17zGxkY7Mt47lsP9LEogJBtmrWTS1dgKJoA3Bx
+ L5/GpTIlX/ue05caos0Lu6HNMPDRvFzpZlJs2mw/rC/Z2N4aHc4lWZV/nnJeOb0BFtlK
+ jcHvQpD7XZnn+QAEIlnPxnY43IfRkG91hwTyxkfD0HGvAVCN8SH+IjC3MnPEitQewHr4
+ sRey9UJ72P/jo0peSCPVdeavEwd90eVLgNcmK7ZJZlLW1XAUAPG/neFi4tSgs0C7f9FO
+ FCH7IfQE2u4j/kZY0LnUHs7dbIXbq54fVcVsTDW1jH+Lbbmo178kgEnCUEB2UnRXFOFj
+ Lz7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785144292; x=1785749092;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=f/pvHRyl96uTa3Z0GhAVxmp+JRzUxt8s2J7Y12ag6/4=;
+ b=RhGlhmrhOpJnlmYdbptmJ4IIrqRBLQU1yWkXvCaoNVnGADT4d+ikctHtVRasEvEY1J
+ EumPEzJpf19spM29PSYh5dkAOCeuRA2gRWykTfilX1Bmiv1oOoWj+HJ+akHrVFtC+Z0F
+ KP4wnhH9oTGOYIWteuVodz9SV0PChQDGyYurxFtDnEP2pVge3feRD/Z+H0nxjuKo92JT
+ hARzwsPmEMLa369QJTDmNERtD5Irqstr2mYVIgLEXgb0ExSkWlyDUVWRmVBw9fhjt/nX
+ 6wNp2+y8nCLA4XeAN/MJFc9Q2UmFgDvJmtPWChR/lMOPjuUsuNtTRgyV+XKNUdfn6JIY
+ fKmA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoxCWA/ptSWBPVDfgX0ZcjJU+TtwU8XGTXko9gnp76bfTEk5SoHkaQya/NR/1O3uVdilSGAsrOCZUnU@nongnu.org
+X-Gm-Message-State: AOJu0YxoC8BIpaZUjP1Rai6ki5rEYzN4FOqEwnU3fxPNZczendomSd7h
+ 62QjCGINmob29WElQGX1bbNcIe7E9dn9o++tl5NBeJMf02ywTazH7ruEye3V7RPcb07+0zWsJdz
+ /i9e4WnJIZF2N4F/DlpWtC16n6/LLWSIdciOEQgDcBIUhhf/UZFG/
+X-Gm-Gg: AR+sD12dSZVjJLphUcWKvOFqBHUkhj4JmQ+ojPWPrBTSkI8qrZsdyTMlJsCzTGOX5dD
+ vvv3i6n0Kh8z9dbEjGG9/CCEnK6UMbV99OUcI7pBClwJfL245rfyFKGFvPmJCDSl46SPe1JtZmn
+ j1E3ZxehubOuPWQtLRWZLzLlKfaoM4J9bdh30neYXtoSDSwUYVXakDbpMaEPH9HT8tbEMKd0M5D
+ V2ungUgHGayPFS+5OyOXXcEGv4MXcJn2Ee73BcO30oamf4FSpo+e6DESk4+4gBOa9jBsDtPtuE+
+ 5wdSu+NMZ/kr+9qPe6rAJhlmRcUislltZTZx9LyWU88bBw==
+X-Received: by 2002:a05:690c:690d:b0:80d:c24f:b790 with SMTP id
+ 00721157ae682-81f69cd9014mr26183567b3.5.1785144291794; Mon, 27 Jul 2026
+ 02:24:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260727-blob-v2-1-d0b9af38a975@rsg.ci.i.u-tokyo.ac.jp>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/12NQQ6DIBQFr2L+uhDAirar3qNxAYj6bSMG1NQY7
- 16wuy4nmTdvh2A92gD3bAdvVwzoxgjikoHp1dhZgk1kEExIVoqC6LfTpFJScVUVknEFUZ28bfF
- zZp71j8OiB2vmtE1Gj2F2fjt/Vp68v+TKCSetvOatbkqZ36qHDx01SJEuZHavzVFl6DBBfRzHF
- 6me4N63AAAA
-X-Change-ID: 20260725-blob-8a6a1a85601a
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.16-dev-925f5
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2409;
- i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=nmKZXOqfiSM/kWDWP3DAqOQdGaIABzlQIr5cdGI2cHc=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ1a68qw/k91sFvZPLJ8w4cy+m+dPmPdPybxmI/kyzN1vY
- 3yrwJ7ajlIWBjEuBlkxRZaUot3cGtG1nwoT4ltg5rAygQxh4OIUgImErWJk+H3Mev2/1xP2yiwM
- 0K6P3melsvjqjfUHrj9Q/SLPJvdJo5WR4TR7/BSjQ5FuKoHLk67OO+9468eFhiW+iydHn4m+bK0
- tywcA
-X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
- fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20260723065320.1314072-1-clg@redhat.com>
+ <7e4a2ca1-c930-408f-a39d-d926bd8ba788@tls.msk.ru>
+ <6e54009f-2e84-4a22-9316-b0db8f9a1d1f@redhat.com>
+In-Reply-To: <6e54009f-2e84-4a22-9316-b0db8f9a1d1f@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 27 Jul 2026 10:24:40 +0100
+X-Gm-Features: AUfX_myVZvr5zIp_bqWi-kSdVGKi_3jSaR62UAlqoGpF3ofcHaO0r0NyUGw6ES8
+Message-ID: <CAFEAcA8SyaLgY1boJMcemOdGqArktkmZJiNugi4PuP5Kd5ZHRg@mail.gmail.com>
+Subject: Re: [PATCH] scripts/checkpatch: validate Fixes: tag format and commit
+ ancestry
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org, 
+ Chao Liu <chao.liu@processmission.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,65 +122,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The blob size is encoded as a 64-bit integer in the virtio protocol, but
-it is encoded as a 32-bit integer in the migration stream, and
-a large blob whose size cannot be expressed in a 32-bit integer will
-be corrupted after migration. Deny creating such large blobs.
+On Mon, 27 Jul 2026 at 07:14, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
+> Linux uses:
+>
+>    my $git_command =3D'export LANGUAGE=3Den_US.UTF-8; git';
 
-Fixes: f66767f75c9c ("virtio-gpu: add virtio-gpu/blob vmstate subsection")
-Fixes: 10b9ddbc83b9 ("Revert "virtio-gpu: block migration of VMs with blob=true"")
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
-Changes in v2:
-- Add the Fixes: tag for f66767f75c9c.
-- Add a TODO to encode blob_size as 64 bits in virtio-gpu/blob
-  VMState version 2.
-- Link to v1: https://lore.kernel.org/qemu-devel/20260725-blob-v1-1-f643fbd76398@rsg.ci.i.u-tokyo.ac.jp
----
- hw/display/virtio-gpu.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+Does that work if your system doesn't have that locale configured?
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 718ba3039290..987b1b3ea860 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -352,6 +352,14 @@ static void virtio_gpu_resource_create_blob(VirtIOGPU *g,
-         return;
-     }
- 
-+    if (cblob.size > UINT32_MAX) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: blob too large (%" PRIu64 "> %" PRIu32 ")\n",
-+                      __func__, cblob.size, UINT32_MAX);
-+        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-+        return;
-+    }
-+
-     if (virtio_gpu_find_resource(g, cblob.resource_id)) {
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: resource already exists %d\n",
-                       __func__, cblob.resource_id);
-@@ -1435,7 +1443,14 @@ static int virtio_gpu_blob_save(QEMUFile *f, void *opaque, size_t size,
-         }
-         assert(!res->image);
-         qemu_put_be32(f, res->resource_id);
-+
-+        /*
-+         * The migration stream encodes blob_size as a 32-bit integer for
-+         * compatibility though virtio encodes it as a 64-bit integer. A newer
-+         * version of the migration stream should encode it as a 64-bit integer.
-+         */
-         qemu_put_be32(f, res->blob_size);
-+
-         qemu_put_be32(f, res->iov_cnt);
-         for (i = 0; i < res->iov_cnt; i++) {
-             qemu_put_be64(f, res->addrs[i]);
-
----
-base-commit: 006a22cb26998998385b104db1ff9466ef2f3153
-change-id: 20260725-blob-8a6a1a85601a
-
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-
+-- PMM
 
