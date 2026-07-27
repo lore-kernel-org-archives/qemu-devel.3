@@ -4,153 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA7B2C531FC
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 06:14:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 191E6C531FC
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 06:17:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woEbb-0004oG-3p; Mon, 27 Jul 2026 02:14:27 -0400
+	id 1woEeM-0006gV-BR; Mon, 27 Jul 2026 02:17:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1woEbZ-0004n8-7S
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 02:14:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
+ id 1woEeJ-0006fa-GO; Mon, 27 Jul 2026 02:17:15 -0400
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1woEbX-0006un-IK
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 02:14:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785132861;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=MnAIMqZorQZZLw9Hg9T577/7zW2ncI93rgQQ5xqAneU=;
- b=gbSXNx7u8Gf9VEQIWLHRT4B1zxsSITde5+Q+TyMmilK/fkr20VBYy6cbKy/P2KoQJf6hP3
- D/u2dynxNbUVKqbitOEwOgi4c1KdF47rwIDSIT0WQhae6ZqvRI9HJoYJ3stEwl8X9gu+Nf
- K19HPa61It19IEIXO9U7BzgFH376Oz4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-343-A0m2PiXrN3W1BfXuoj_n_g-1; Mon, 27 Jul 2026 02:14:19 -0400
-X-MC-Unique: A0m2PiXrN3W1BfXuoj_n_g-1
-X-Mimecast-MFC-AGG-ID: A0m2PiXrN3W1BfXuoj_n_g_1785132858
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4954dcd6131so25436345e9.3
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 23:14:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785132858; x=1785737658; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=MnAIMqZorQZZLw9Hg9T577/7zW2ncI93rgQQ5xqAneU=;
- b=nWR6K/szZnZh6A5VnRHiR/+dtCh3+s4Axj2EVBpV9PQBofLCruek66fRgBuCJLBKQB
- W0WrcmLoEE3mxN/9nDljFjy+t4twwPF+8KkVcMJoXBL/MPrqmmLq1/na3QseVL9GWuWE
- 8IGx83w1oUrZLWaHHE/vMDT8qOKFjzIARVMpSGFLp4fPXYwlIuv12OXKVOPeRzf0a4u8
- ZZbQpl3LAo+5wg4bAW+pHnEmOl1zv0o/L3tupgLia6W5ZpyPPWjhnFRs8SfBPCugkqLq
- ioU2mZDaYvr/ka7rtcV0PraEY5EsN5c7+UoGv5GjVaUF4m3bC8BtK1Hx7KL5Eh3q6Y+T
- eTFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785132858; x=1785737658;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=MnAIMqZorQZZLw9Hg9T577/7zW2ncI93rgQQ5xqAneU=;
- b=qncYiQ+fvgWvIzL56eh3W2IJtc9FLrJwhmti2/Hu9pSyK+80h4Fs3PaaDZfbzpwKn2
- zR5DNCAWNdUoTweTbTx5J//JB0E7oNGm7AdhmU0kdHbMg7ZDDhGwAuQLHWExmvpD9WSH
- O5959H7frMdOUJkLY/KXRgm16Sk0bgFIXZ6SrWV2sOROhDytIlemJt9K0hBxeUFNTfrv
- wFgpjAVn0IIPdZtCbJbNIMFZX8wdfHV5PojtPN4SooTr0GEw2CMPZOUJ+N2aOsYliddQ
- X0eKZzLzMLNYEc2gX5QUMHSeAy8R212nyfvFDOxk+oOwQBkcW42jcMYlRULQ6SlolfOS
- gRvA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrIpppfypQf8yrgI3zJV3IL64l8s7Nce8oJt04njDLi+wJgGGPENgDroq3qiWbjOPIuXlxdWgkoSSl3@nongnu.org
-X-Gm-Message-State: AOJu0YxDxdmOTdhU99yTiKPw+aHyD9LOvgdImswX+8+cyFo4/T7NEBZ/
- +0+VSBLEam4lShNeAh4/ZCs0uxkAHA4rj+0GS+MoZmhdw+lSXJ2SDmWm5OuvwH3g10Q1dVf8Zmy
- pK8vMZpVcAsXuWsQcJoyyRjtv8KI0btBaSpfXUjvfAT1pktNAQuxjmbwEYX03vico
-X-Gm-Gg: AR+sD13nLwW/LNzpIgJ0nOhRdGg4O/Ba57n2BTpwm2+vTriYTHxQCDSBDOTLfEIQEEe
- lF6aEMhOyXQY0vZC2w2xm+iIdfQHa3X1sch6QMVixDXb+msH9Fe1Bt3g9nzMkQz4Rz/sLL2e5+w
- nAO3rUyf3qFAMoayFdsQaToJJyWtxH7L33osn5zkeXjCUMH3yRrT4YSnEDLztG2PGkvr6/oW//E
- wIRoqJAG8j8gk8dRMU8D+IkvpyUoJ353oDsiZ0uRGsisx/2M9YmMBKDQbDaCeUVk5QShiKwU5lS
- sUDUIBTaTmoH9z/lc1m7VoisTNp/D/tdmNvd506QItJljrU/RaS0F70ZVJmsYeg/QfN94oV2GU/
- TP3sb/5ta1wZdIc1I4wdbgnkYOF3kOEgeuEKWJNA=
-X-Received: by 2002:a05:600c:3b27:b0:495:3c6d:f294 with SMTP id
- 5b1f17b1804b1-496b5717d1bmr90008965e9.23.1785132858015; 
- Sun, 26 Jul 2026 23:14:18 -0700 (PDT)
-X-Received: by 2002:a05:600c:3b27:b0:495:3c6d:f294 with SMTP id
- 5b1f17b1804b1-496b5717d1bmr90008635e9.23.1785132857544; 
- Sun, 26 Jul 2026 23:14:17 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-496b4858e86sm201784515e9.1.2026.07.26.23.14.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 26 Jul 2026 23:14:16 -0700 (PDT)
-Message-ID: <6e54009f-2e84-4a22-9316-b0db8f9a1d1f@redhat.com>
-Date: Mon, 27 Jul 2026 08:14:16 +0200
+ (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
+ id 1woEeH-0007FI-Dd; Mon, 27 Jul 2026 02:17:14 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cZ5TI5bjUKW+8rckZsmJcp/gM2uxy/t5CfUbAmVwVR9ElWdj/MJf2zEEGKy1Khy/lYJcYhS8a4ArVD9grOvDAOiITbciDGwAkCKBBj/qW/19Ltd2xqSd+D+2rIUozTvb866DqZdXlG6Xct9je88+unuBpbH67pmoL0SulGRiCN9S6y2drGDMyeinjVaUMK16RNiQRH+D8BtaChwy9ktAhz1GRHxN4kicNzjYQcVgxx3z/BInMP3sWQGE23hxBE9kOZqYb+buymX+fpO9NYl4EM4en3i0FP0627Fqocauqb9S0BPUf+UzzDwDcvtGn+Wa96eLM2UMbFJM51QrytWQCw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=TYlCFF/Np5ce6S+l6WERs7Xwb6a59CknK/wVYwm37u4=;
+ b=BzZdUeNqEm7idhVsIhqL0cllR7JrINnsJImxfbX64+YoQm+tB1SLPlGu5xuIl+XaI4UDr8EOEcQY3jxtUSYEJmbQH428fvUgz5QxsGADOCoaS+CECENT0VtEw+0O3t5oKHudqydptzI+5O/x3u8cqjJU0shsl6xKK3QaFa8za8GHq8h+DkH1E6BuQHjssbmXwC92YIRNcb4D99GbsQR5N9Uz66bp2/p32BhfRnEKCqN1gksaupKeWVShbJp+QzMiyxBZiv7VR467nXieh/NsrFHGT0VHn9CbMb8HBiIqn4zKPiHWj1ITTxf80WPanlOzqFnOs3NgJwxVYAsqJMNhAg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=processmission.com; dmarc=pass action=none
+ header.from=processmission.com; dkim=pass header.d=processmission.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=TYlCFF/Np5ce6S+l6WERs7Xwb6a59CknK/wVYwm37u4=;
+ b=M90cmpshBasEdfJqifjmNBsCFOSDAzFbV2J8cMw1PKr1+wnBMLw1Y86rZVmElUdmh0hRFGGIkYYnLwjjQiw3lEM3r1H7OfImBJ8JBHML4m3zMOp/jiLItmYk//JuVID8/vfh1jdeKoQpTPs0EsHmtt/LVlTDOss7JkuO+jJYWzZ5LIwRx1uEu38YNHi8J9bMFGgySrgwIraybpHd5FCJQTgNsZ7izEFFilgXXpFs9BW8qm/qeb/tOCG88vBPyRvP7ghU+SpeC1pvkzz+3P0xuKCwgT+eAOOA5sChA5LqI+nt4avOz+ctnPr9oHe1sPjtzYIhd4WeB5ITJ1TRP7u5Ew==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=processmission.com;
+Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
+ by TY0PR02MB5624.apcprd02.prod.outlook.com (2603:1096:400:1b0::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Mon, 27 Jul
+ 2026 06:17:06 +0000
+Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
+ ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
+ ([fe80::e5f3:5fb7:3d29:5934%4]) with mapi id 15.21.0245.012; Mon, 27 Jul 2026
+ 06:17:06 +0000
+Date: Mon, 27 Jul 2026 14:16:59 +0800
+From: Chao Liu <chao.liu@processmission.com>
+To: Flavien Solt <flavien.solt97@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, qemu-stable@nongnu.org, 
+ Andrew Jones <andrew.jones@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: Re: [PATCH v3 2/3] hw/riscv/riscv-iommu.c: always send MRIF notice MSI
+Message-ID: <amb320e7s03aKBlQ@ChaodeMacBook-Pro.local>
+References: <CANVUYGvOyZdCwXOtDkS7bXY3Z2HGK1b6QWKttCVUjhnpH65g5A@mail.gmail.com>
+ <CANVUYGvtuMbxE6TCkO98G1rCadb0psdn8HQM+6T8v0KE+QVr5g@mail.gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CANVUYGvtuMbxE6TCkO98G1rCadb0psdn8HQM+6T8v0KE+QVr5g@mail.gmail.com>
+X-ClientProxiedBy: BLAPR03CA0050.namprd03.prod.outlook.com
+ (2603:10b6:208:32d::25) To TYNPR02MB9351.apcprd02.prod.outlook.com
+ (2603:1096:405:3d0::15)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] scripts/checkpatch: validate Fixes: tag format and commit
- ancestry
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: Chao Liu <chao.liu@processmission.com>
-References: <20260723065320.1314072-1-clg@redhat.com>
- <7e4a2ca1-c930-408f-a39d-d926bd8ba788@tls.msk.ru>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <7e4a2ca1-c930-408f-a39d-d926bd8ba788@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|TY0PR02MB5624:EE_
+X-MS-Office365-Filtering-Correlation-Id: a591d19e-0700-40a7-b037-08deeba6ae9b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|34096008|376014|7416014|366016|23010399003|1800799024|4143699003|56012099006|10067099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: lg6Y43QqUw5HkWjDiFJKe43mXP4eDUaKDIrSl7bEq64kb+Il3I4zJb5KtEHqaP9gLwg+ucRlzucjNiMobOb/2+p+WEM2WtsJUnVJ8Kty46ssGN5CsQdh4n65qx9rDZLM6/7SmL10GY+bk94OrCvQt+OIjAKY6yyxPf5h7mAXZS+6+P17dVIUjqQQgOrjytuCyU2tjLaarT9OaodoUAp/g+7xaCNl2oUL3BPKRl0HZFV7zAClxQVIBZ3KXf/2bacMnFybCZNpu6eQUFYWz1mBpUEpQzOCvs4VGnsZg2UQ4izZOAZwbT0cuQgCJef4uqVWUcB1VP4MvKSmzBxQ+vAnQSVeDGH6W23xct75L0Vm9Slm3EUX6v4GA0UcKjoYSx4nGIqUAeS44XHPD8lTHPeLasL07G5n1xZtGHLIfTZhzWbj8KWCdmWYXru/g2JfA1wJ1GSgH57p6/Wo7iJ90pg4z60GMlCLJfaQvz49PuVJ1otthmE478kL9c5dQ1QnQRdMnCXUDS5kkgp7YWBFjEVuLzPQJ9ZxIXkA9v25BGYCbnHIFScq/mXCoMCTPccxXBWhLsQ7mEuL1SI4QspMJWWpZOkhe7T4TmvX5udeXSb8juwhELf9D4oNC1CB/rFfGF9QP4RWayv2kdSAw2de9V026xn+T0XXL8TKH7H+WiEAMcM=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(34096008)(376014)(7416014)(366016)(23010399003)(1800799024)(4143699003)(56012099006)(10067099003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?mRqEORf++H37c4AhEpQQXOtOeOSBycsMaVibdBaIYir1yblO5DyflRPDs7je?=
+ =?us-ascii?Q?xNfut4TV6juYnM62AkN1WrV3uJ1MFkRiMoR/Um/m5yxmnU9HmqqfNx1MEnIm?=
+ =?us-ascii?Q?0ZObAdgN8+GclpvxOkLxfULYFNEw4nL7dvou3FoDmwLmad15V8yTHki9+poW?=
+ =?us-ascii?Q?nncNh7K6ykM7CI9w9K4mad6kxtxlHigtpi+4gOB8GIuLwZ26HnzRLLU7rN5W?=
+ =?us-ascii?Q?5C6SMFKTGrcM148bWrguS9XLzCh7OCXJpGt4TjLHu43475U5682fXS0WFbQw?=
+ =?us-ascii?Q?95OOBV3UoT4YV/VS4hJIUVJzTKXc/Iox0np7M4TomujJ63DS6LrOtrvhBDPz?=
+ =?us-ascii?Q?lqYT1kPMyDe6k8aAxOOmHSf8BOESATKhWGJrHul20djFQq6IU07OZUI6t+9J?=
+ =?us-ascii?Q?S1RNmc2WG9AV9Wl7PeO//c/xrB8hgmW4zjDSefOsT8Wl8ZOE0v+JuQ9R/xru?=
+ =?us-ascii?Q?uPK1sogcNlsBk1NU1RHFbcd9SBY+4GVPhzJsayGzzw2Mpa7HIkJJMS4sTCV8?=
+ =?us-ascii?Q?H+AFLu54tCFClOlvN4cLBZoBHhyrE46cWn30sfVXtNNYYbT5cmk+V75p9qDk?=
+ =?us-ascii?Q?p+UBLF62Kaqv0ClEYj/BS3wfjCD4/Oxw/4q0swqn3+3qZJB7uDQZn+0o3Kbv?=
+ =?us-ascii?Q?kAJ6BOJ6EsrlUK/0j0BfUBvmdgk4MhojAXQhGIegU4yevqRKo4rcFNCbD32I?=
+ =?us-ascii?Q?K8J1fWs5tFYWULOrqLgeQKK7tPGTGBFp7PeKyPx3zDF9wVs/HhDf4a6LW7Fb?=
+ =?us-ascii?Q?7EpTHiu6DNfjT+WFhz0y0Z76sELSqVKVfKKRZtBUxafmyldgw0Lc4Ddc9GXw?=
+ =?us-ascii?Q?V5uTEE1Fac6spbz/PbbEMlf54KSNEO6PI/GgqX1slbk+l9NIHMjvYFtVIHpP?=
+ =?us-ascii?Q?+Z6cE4vPFstsrjUQ4aaRW3JYhwj/TO+w3v2wWDaMk+8Br9I878PS3oMSFWhz?=
+ =?us-ascii?Q?HGFr8QXNi9/otvdn20mpneDK/VgtveLDDcdpD5OBGB3We/IXB67auWtO12qm?=
+ =?us-ascii?Q?0q5V6taydPtiqS59O7FdhvsBDmO8ZJEXPhACAwVpKCMKN/U40klhoKFEr2jc?=
+ =?us-ascii?Q?aWTEtefmR290SRQRWRVJUO/AkEs9aueFwGIRBTBuTsHZxlx8Fr6JWnDGRjVJ?=
+ =?us-ascii?Q?0TyRBt/of0k7ZbAoNoawQGr9TEAhqZ61gNFUu6DAdSH458nFw9X+l83lszWD?=
+ =?us-ascii?Q?Ia4hwv5RmImxFPOlZwHy3gVojcUPUZLgdkGDvtqRBaNokGSUjvnC7mvv00H/?=
+ =?us-ascii?Q?LO957BprOofkpcmGLNN1sVEnRZuQgMS9TQl79soLWZiO7S2CtUIvUdwbYhjt?=
+ =?us-ascii?Q?BVkWUwL91aovndhbQmySbj6ToN085kVFLf/qSTn66FUWrewIUJ8OXAegQ9jX?=
+ =?us-ascii?Q?yHdIIpMGXsW0OIfGWz0yVw41deV6tR5wsvVRvKE0rrCUbCZOh8elCb614rZn?=
+ =?us-ascii?Q?tf/aCauBC5C/H4nTAnxb4W/QprM3K/QRDG3FTfq35DnZdRS9zwKsw52CdCfY?=
+ =?us-ascii?Q?HQhg3SiicRA6y+QdoC9k6V7E7wwNJNmR2H8sPjAI3XB/T59ybL4UQ09C368Y?=
+ =?us-ascii?Q?NgVQYkqlQeHWPvilwMZWgSjSW07yefLe9Z1nqRf8tvd61GJ66/V6wNEY+dFK?=
+ =?us-ascii?Q?KcOTj/WAL0LL/89k6TWbBz28Zb8hUdiCe87l7Mdq5PEuK6o/aO0FzcVIW2KH?=
+ =?us-ascii?Q?j6pghTuqMQPl+tavrDQ0TLWLe9iXU3C04clH0cDejHgLxt0MsvmSk5mthqgX?=
+ =?us-ascii?Q?cykrObf2QhrUotFDmd0Iufw7xo8QjlY=3D?=
+X-OriginatorOrg: processmission.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a591d19e-0700-40a7-b037-08deeba6ae9b
+X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 06:17:06.0187 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: rsiG0FdAhoKcskF24vNzUj4FQkPA4fgT5VVqIT0b7vL6wLGwyV6y3wdM5+M+4WBaxt8H+ldGxWypGggHR9APStaNmx+Xj4xob/O+HDjZdb8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY0PR02MB5624
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+ envelope-from=chao.liu@processmission.com;
+ helo=TYPPR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -167,66 +144,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/26/26 12:16, Michael Tokarev wrote:
-> On 7/23/26 09:53, Cédric Le Goater wrote:
->> Adapt the kernel's checkpatch Fixes: tag validation for QEMU.
->>
->> Add a git_commit_info() helper to resolve commit hashes and validate
->> the Fixes: tag in commit messages. The canonical form is:
->>
->>    Fixes: <12+ chars of sha1> ("<title line>")
->>
->> The check validates capitalization, spacing, hash length, lowercase
->> hex, and quoted title. When the format is wrong and the commit can
->> be resolved, suggest the corrected Fixes: line.
->>
->> When running inside a git repository, also verify that the referenced
->> commit is an ancestor of master.
->>
->> Lines matching "Fixes: CVE-*" are skipped. The check can be disabled
->> with --no-fixes-tag.
-> 
-> Thank you for introducing this!
-> 
-> A comment below.
-> 
->> +sub git_commit_info {
->> +    my ($commit, $id, $desc) = @_;
->> +
->> +    return ($id, $desc) if ((which("git") eq "") || !(-e "$gitroot"));
->> +
->> +    my $output = `git log --no-color --format='%H %s' -1 $commit 2>&1`;
->> +    $output =~ s/^\s*//gm;
->> +    my @lines = split("\n", $output);
->> +
->> +    return ($id, $desc) if ($#lines < 0);
->> +
->> +    if ($lines[0] =~ /^fatal: ambiguous argument '$commit': unknown revision or path not in the working tree\./ ||
->> +        $lines[0] =~ /^fatal: bad object $commit/) {
-> 
-> This is the first place in this script which depends on the C/EN
-> locale being in effect.  With different locales, git will produce
-> different messages here.
+Hi Flavien,
 
-Linux uses:
+The code change matches the current AIA requirement: the notice MSI must
+be sent after the MRIF update regardless of the interrupt-enable bit.
+Andrew's v1 requests to wrap the commit message, retain the notification
+comment, and add tests are addressed in v3.
 
-   my $git_command ='export LANGUAGE=en_US.UTF-8; git';
+However, the transport corruption reported on v2 is still present in v3.
+`b4 am` retrieves 2/3 with this hunk header split:
 
-Something this patch could do too.
+    @@ -788,19 +788,6 @@ static MemTxResult
+    riscv_iommu_msi_write(RISCVIOMMUState *s,
 
-> Instead of relying on the exact wording, I think it's okay to check
-> for the exit status of git command, and only assume we found the
-> reference if git command finished successfully.
-> 
-> An alternative would be to export LC_ALL=C, but I think relying on
-> the git exit code is more reliable.
+The continuation has no diff prefix, so both `git apply --check` and
+`checkpatch.pl` report a corrupt/line-wrapped patch. Patch 1/3 also has
+four similarly wrapped hunk headers, so the posted series cannot be
+applied.
 
-I'd rather minimize the differences from the Linux version.
+For review, I mechanically joined only those five hunk headers. After
+that, all three patches pass checkpatch, the riscv64-softmmu build
+succeeds, and qtest-riscv64/iommu-riscv-test passes all six subtests,
+including both new MRIF notice cases.
 
-I will add a $git_command in v2 and use it in the git_commit_info() helper.
+Please resend without body reflow (for example with git send-email or
+b4 send), and verify the posted copy from lore using `b4 am`. You may
+also want to restore Daniel's Reviewed-by from v1, which is missing from
+2/3.
 
-Thanks,
+With the transport issue fixed, for this patch:
 
-C.
-
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
+Tested-by: Chao Liu <chao.liu@processmission.com>
 
