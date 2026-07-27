@@ -4,97 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E355C53209
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:21:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FA0DC53209
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:21:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woQry-0000AR-Um; Mon, 27 Jul 2026 15:20:10 -0400
+	id 1woQt4-0001i5-Mt; Mon, 27 Jul 2026 15:21:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQru-0000AF-9W
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:06 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsT-0000j4-3S
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQrs-0000OQ-Hn
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:06 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsR-0000fI-5Y
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785180003;
+ s=mimecast20190719; t=1785180038;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aQNDpvgz0cKq2YM7qNFjDFk+WeGlgzmqudnvc9cyDME=;
- b=CehgnfGT5YnwOqkd7P3sVRdO5uRakF1cLTRVxGIcR7xBWXPNhxs3IK/Z5vaLoIdMVpbmW5
- qwNWn+abPYiJ7TOm+Dh1f0Xtqxq01US6H0+ECWrj+J6fEwPD3MGG/3OS1QjYlsNd7mWFPB
- b61MTvx8Yu85kqxSOYi9HY96AZcczP8=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0MxmzfN26C9n4Ays3a2bCnXLUUqqhyEZkzXAkW/X4jw=;
+ b=HgwBKSlmoxv4UtKWg2JbAVcnGHeoZApSFRfGJideSciMYs1Ya2YZdTJkekFnSReqJY+drn
+ HkSk9wR1+Aao5TpRe/SH47Ab8xihr4e0PU7sktICeeivSDgbKXbpBA7jdPPUsmnzoItn1X
+ qBsa2lfFiYfWuEUszveurgnj5L3fGp0=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-651-ySRMCvDKP-afaofyvw8kfQ-1; Mon, 27 Jul 2026 15:20:02 -0400
-X-MC-Unique: ySRMCvDKP-afaofyvw8kfQ-1
-X-Mimecast-MFC-AGG-ID: ySRMCvDKP-afaofyvw8kfQ_1785180001
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4955ce558d8so28960805e9.3
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:20:02 -0700 (PDT)
+ us-mta-311-qDStU4weNZy075WgB2o-TA-1; Mon, 27 Jul 2026 15:20:36 -0400
+X-MC-Unique: qDStU4weNZy075WgB2o-TA-1
+X-Mimecast-MFC-AGG-ID: qDStU4weNZy075WgB2o-TA_1785180036
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-47f6d70223dso1995948f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:20:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785180001; x=1785784801; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=aQNDpvgz0cKq2YM7qNFjDFk+WeGlgzmqudnvc9cyDME=;
- b=gmqxoxOiCWz19lcufIVVUVVXHT+NEXsuIn/2+MyqpLqtubFkZfwG8bGYX0YJYvlrpZ
- RnH+v+qncejE2Iww/hlHKRBD4B7UQtDq8dQJ3/t/oMsL2VCzgbo2ugATsuEkvsL1q97s
- 3VzOPg6CgcAHBg8PZt3iH5tRFK+C5o7bYaghZlq8lOmcsfycvx8btENQHeihdfnkW8S3
- VLZ8KjwwZBfItBwVbKwNxvgft+R9BVIT87dPYOgEQJYCHkSOme6k4iftDuTSdy5GfWup
- qLUd7vxJ4ia79Hdpd5Jkf7ONYZW9MUTuzSYnc5flczokrY+y8Y1ojHKptp/n9ZxAGRFh
- WVHA==
+ d=redhat.com; s=google; t=1785180036; x=1785784836; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=0MxmzfN26C9n4Ays3a2bCnXLUUqqhyEZkzXAkW/X4jw=;
+ b=Lvn6MGnZmH7W04TBlh+tVyhhk2xNdEwWNe/9hCTRAn0IDtvoF25Bd6TLMLFEqhKKZv
+ 46f39CxakpQDh+hInYOYg586hpPqfM0nIa39a+KBV6/5wV3XqfyyehtU/qfOnD/ih4z6
+ yvweUBBBBuwN6tzl4S1Yxeum+U/oD0qWCqCg8QJArT4RxnvDTCQyR8Hg7A+4xsqdtsxX
+ KlVZGoQjke30Z2NHDbQkwW2JXZTVcYIYl7iU6n/CrB8L5VTf1w8EQJ0i86+HosIX00dM
+ dl4cJBLWwwGK3wvwXiLRqJsQ9GgpvtyycSbDDphWa87/xMvqWHLIRlEmO8yyJUlqNXBh
+ 0yYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785180001; x=1785784801;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=aQNDpvgz0cKq2YM7qNFjDFk+WeGlgzmqudnvc9cyDME=;
- b=FdGsK4NS6dLgzISCAixQO2n7hCq7lcAThCXZzYGiWInwpRlqawOv/Dw4w6wwMcKO6y
- 85dnxzlFeNKy7dCmF7R0NWQSauWAGL3g7r0ZNj2mNbHbPmqD9CQ13eIM/CRObGFLCHxZ
- PYGUJDzw55sdEntHYSIWg8TgBBwO7YLIjwJCwk4luuq4bXHPHnHyNqx2RYN4XGFJhpcH
- XEwaOCFN+Lk+24yAGUq/Xpp68WDT8Add6LaRWBXqAvoFxR+pj80iGTAK7BUWlnXORCeg
- De5UTKdZGoKPlZaUBQZlH3vqNx9aTXOwxAg9AHKac3XvAQzoE4RsBev7ju5Sx1jbzGS6
- PVEw==
-X-Gm-Message-State: AOJu0YzerTzEcsR2OxNqnERMJdIH2fRO99ySQLwujRwlQLQpy6gh0UPS
- OnqhaQGfCM6xlMpksBg0MyqjSIHZdfw87MuLhQUqifnUqcdGs6dfXM7b6JU+RRRc9yb1woy5aZA
- eLtq9DuLYw8cmYGDdHEsVKdW3n56nW0KOjZC35uFIJNu1n5MpLItsnDpvH9U98vFEwGXs+RqWXa
- d9yT34XLjEFihpsZjQVtjhwbF6VOtpQumHZg==
-X-Gm-Gg: AR+sD12VTQBTmXLcCaIvwzJFmB8rymzpcHU0t/ljLQHgygxN0l8+Ze0wKVB0Svc5MfQ
- nlUduqfrSP7S7dPSY2sV3MmEiNb7I9+VgWtayl4WlPHHt2iSc3Jruda6CFlKW3s8qUAIBbej6pg
- /c8do25UKK17mb8WqVXoB29s6OJkSiXmJg26UEuw+MjEhyl+M8k+5b++vJCCWAblPSjJ8RwB/fg
- up33AEamfMxzcp90TJPsi5/cKzHTVxDVNt5NVD7r79Y3y59bnRCf08R+p9LzBrcx/iNwxWZNTAh
- QZ3Ys8unS14sY8W50pjWKk6BscinCPnBiFBecACW3Qstoi9MJm32CWaIpHiskmzcvNVBqIaJVnw
- Gr+X1WX9nxlqumQ1OdWRalw==
-X-Received: by 2002:a05:600c:1549:b0:495:4749:16a7 with SMTP id
- 5b1f17b1804b1-496b6a31b65mr123243475e9.14.1785180000878; 
- Mon, 27 Jul 2026 12:20:00 -0700 (PDT)
-X-Received: by 2002:a05:600c:1549:b0:495:4749:16a7 with SMTP id
- 5b1f17b1804b1-496b6a31b65mr123243085e9.14.1785180000302; 
- Mon, 27 Jul 2026 12:20:00 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785180036; x=1785784836;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=0MxmzfN26C9n4Ays3a2bCnXLUUqqhyEZkzXAkW/X4jw=;
+ b=gAyWFGrU43tFUeMHbYWwYtdyqsxJOv6rGJQTcxzPScFebB1w6aAzZCGoIoJivFJWP3
+ WM6jLgR+CpHfi8cNeSpmawcnw9emEXR2tUAfHaqrptK6JEXuyu7m28V5mjUPVvNvhzzK
+ vgYBJLoXByYyR5mgdu+m2cz7rDCx+YeMWJQJKos1BipkNGdiouB527XXNpTQpsa6hrrT
+ OQY9UO4rtEJtY8SeIRCbUwqzdJKJlgvUAfVIw/DWNOrm9nOH3iX7kOTlE+jnMcSyQqcF
+ FKXTq2zwNS6HcY2mcILDWPTkn8kMhqntFIr+cQpk8GTZBZa7oSUXeJ6bllmKBOjiayIW
+ cueA==
+X-Gm-Message-State: AOJu0Yz8x9b7KTWhvCXCs5a05ZgW3SGidlbSwHJ1UxPqnaSs8vf/6L1E
+ uQUQOhT0E9lv/gP+skYpSKc85TEaPhuWNVp7zP5o8R86aMmFW2sWiUbuAHvVETdtQ5CKyu9J6PL
+ S0wQ6ALsfZVk7w09WUACdiiB5/5V8fiIbJ67+Y01KMSM+XQCG/BTzZTCSAJkd4fjzCt598fnMKI
+ dVwaIkJ0Mh0C73cnaRRueQ+RsQRqIVcxvgQA==
+X-Gm-Gg: AR+sD13wmsFY0GGSeuYAN859iQgxT0IgpZvxSZmvbclhfHbI3sZTOjf0gW29v3EfsG5
+ a5l15qrRSVUS/SV16qLNZ+xXRbRw93xYwGs+NYiOTarO0JKZCF82gi7rxEn8JDEmgRVJRuEPU5t
+ IQf+c09UjNsoCRgACr0JAklWSqLlr9h5ZP6sju1j2poVLq0lJ1xCW+0YtBHnUFofHnLWYusGOdB
+ rvwDJcO8VgwEpDMKjO+sIfROWXZPRRmDaAYFTIl5JtYPTyazf18Z1pP8dZFmzHd/KzEG2aMGTfX
+ G73L8lOuRXWHlGTfXhPayPlPVep82UiJCzCqcmNg3JNP+8bp/AajjppPAqdz1x9lla+uPsGl2fx
+ AoMW3Gjuyx4jnpK6vXPZVfg==
+X-Received: by 2002:a5d:5888:0:b0:47f:9cc2:ddd2 with SMTP id
+ ffacd0b85a97d-47fafa88458mr441437f8f.35.1785180035504; 
+ Mon, 27 Jul 2026 12:20:35 -0700 (PDT)
+X-Received: by 2002:a5d:5888:0:b0:47f:9cc2:ddd2 with SMTP id
+ ffacd0b85a97d-47fafa88458mr441395f8f.35.1785180034799; 
+ Mon, 27 Jul 2026 12:20:34 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-28-14.inter.net.il. [80.230.28.14])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-496c45e0424sm14774085e9.13.2026.07.27.12.19.59
+ ffacd0b85a97d-47f85bb5127sm48274196f8f.10.2026.07.27.12.20.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 12:19:59 -0700 (PDT)
-Date: Mon, 27 Jul 2026 15:19:58 -0400
+ Mon, 27 Jul 2026 12:20:34 -0700 (PDT)
+Date: Mon, 27 Jul 2026 15:20:32 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?utf-8?Q?Cl=C3=A9ment?= MATHIEU--DRIF <clement.mathieu--drif@bull.com>,
  huntr bubble <bubblehuntr@gmail.com>,
- Jia Jia <physicalmtea@gmail.com>, Miku Hatsune <anznu1l@gmail.com>
-Subject: [PULL v2 10/30] virtio: fix queue size validation against allocated
- maximum
-Message-ID: <d530f2dfbd2d973b17a6d0ffbfe2afb692bdd69c.1785179875.git.mst@redhat.com>
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Jason Wang <jasowangio@gmail.com>, Yi Liu <yi.l.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL v2 26/30] intel_iommu: Check address mask before using it in
+ pasid-based iotlb invalidation
+Message-ID: <0691bb257a7cbfd62127208b49988705bfa2dfe8.1785179875.git.mst@redhat.com>
 References: <cover.1785179875.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1785179875.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -122,47 +129,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio_add_queue() allocates used_elems for num_default entries, but
-virtio_queue_set_num() accepts larger guest-supplied queue sizes up to
-VIRTQUEUE_MAX_SIZE. With VIRTIO_F_IN_ORDER, this lets the guest drive
-used_elems accesses past the allocation and cause out-of-bounds reads
-and writes.
+From: Clément MATHIEU--DRIF <clement.mathieu--drif@bull.com>
 
-Reject queue sizes larger than num_default in virtio_queue_set_num()
-and mark the device broken.
+Prevent a buggy driver to execute malformed invalidation operations.
 
-Fixes: e63c0ba1bc ("virtio: Add support for guest setting of queue size")
-Fixes: CVE-2026-50626
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3882
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3921
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3923
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3613
+Add the same assert as in vtd_iotlb_page_invalidate.
+
+Link: https://gitlab.com/qemu-project/qemu/-/work_items/3619
+Fixes: 6ebe6cf2a066 ("intel_iommu: Process PASID-based iotlb invalidation")
 Reported-by: huntr bubble <bubblehuntr@gmail.com>
-Reported-by: Jia Jia <physicalmtea@gmail.com>
-Reported-by: Miku Hatsune <anznu1l@gmail.com>
+Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <eb7cc3672a20db392f577edbece2300aa6754dd3.1784898967.git.mst@redhat.com>
+Message-ID: <20260724111424.376680-1-clement.mathieu--drif@bull.com>
 ---
- hw/virtio/virtio.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ hw/i386/intel_iommu.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index cdc8ba76f1..4a6430c31c 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -2418,6 +2418,11 @@ void virtio_queue_set_num(VirtIODevice *vdev, int n, int num)
-         num < 0) {
-         return;
-     }
-+    if (num > vdev->vq[n].vring.num_default) {
-+        virtio_error(vdev, "virtio: queue %d size %d exceeds max size %u",
-+                     n, num, vdev->vq[n].vring.num_default);
-+        return;
-+    }
-     vdev->vq[n].vring.num = num;
- }
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index d1af7a3135..82c3c3b2c3 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -3021,6 +3021,8 @@ static void vtd_piotlb_page_invalidate(IntelIOMMUState *s, uint16_t domain_id,
+ {
+     VTDIOTLBPageInvInfo info;
  
++    assert(am <= VTD_MAMV);
++
+     info.domain_id = domain_id;
+     info.pasid = pasid;
+     info.addr = addr;
+@@ -3060,6 +3062,13 @@ static bool vtd_process_piotlb_desc(IntelIOMMUState *s,
+ 
+     case VTD_INV_DESC_PIOTLB_PSI_IN_PASID:
+         am = VTD_INV_DESC_PIOTLB_AM(inv_desc->val[1]);
++        if (am > VTD_MAMV) {
++            error_report_once("%s: invalid piotlb inv desc: hi=0x%"PRIx64
++                              ", lo=0x%"PRIx64" (am=%u > VTD_MAMV=%llu)",
++                              __func__, inv_desc->val[1], inv_desc->val[0],
++                              am, VTD_MAMV);
++            return false;
++        }
+         addr = (hwaddr) VTD_INV_DESC_PIOTLB_ADDR(inv_desc->val[1]);
+         vtd_piotlb_page_invalidate(s, domain_id, pasid, addr, am,
+                                    VTD_INV_DESC_PIOTLB_IH(inv_desc));
 -- 
 MST
 
