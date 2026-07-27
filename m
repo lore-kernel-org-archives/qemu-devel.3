@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76A9CC531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:20:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2420EC531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:21:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woQsJ-0000PR-Sl; Mon, 27 Jul 2026 15:20:31 -0400
+	id 1woQsC-0000Et-IC; Mon, 27 Jul 2026 15:20:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsI-0000LB-5H
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsA-0000E6-Hw
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsF-0000cs-Lh
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:29 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQs8-0000bh-U7
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785180027;
+ s=mimecast20190719; t=1785180020;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=+eny6P5tLUQtN84z7M0HhWHftjc2+DzRoUO9tgnIanU=;
- b=PFn38BDdomAcrXoOqwSyn41DAlmF76OkepcsOcC4fwCUDY7bccSbb3OhH6PtaEavBkq0dC
- whgBRrzN/ibNMc9EJiLnplw5FvqfiEA7e8P7K8+DZeVibWJqFahQvA+0nPan34yOjxmu4F
- hQZVOuVWOCqRhTjIhwj8miraAYkmYkk=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KIzOAIfM1reEGtLuVwKSJi5MtWyPECzNtg489klcaAk=;
+ b=YmU59zWgqS8VrLZEgHvG4qp6tbsIQ+Ieh2zCKMcs5mmB/LDa89hBbMNTuWAsDYpuSYVkwA
+ JUVRxrfCE1WPex70dowlmgpF6l7jGNF1mUN22CREFAyn6IIVbgBR4mMdF587J5OTNXSvZn
+ /K4HCQ0nZTQbUF/tONfuDzpgCbKqEA0=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-563-J7g7tbBFOp6no4JI3sYBfQ-1; Mon, 27 Jul 2026 15:20:25 -0400
-X-MC-Unique: J7g7tbBFOp6no4JI3sYBfQ-1
-X-Mimecast-MFC-AGG-ID: J7g7tbBFOp6no4JI3sYBfQ_1785180024
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-493bfc3b84aso17328045e9.0
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:20:25 -0700 (PDT)
+ us-mta-616-ByBTP5jnOHqcW_uO1JPJCw-1; Mon, 27 Jul 2026 15:20:16 -0400
+X-MC-Unique: ByBTP5jnOHqcW_uO1JPJCw-1
+X-Mimecast-MFC-AGG-ID: ByBTP5jnOHqcW_uO1JPJCw_1785180016
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-47407691804so2231215f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:20:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785180024; x=1785784824; darn=nongnu.org;
+ d=redhat.com; s=google; t=1785180016; x=1785784816; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=+eny6P5tLUQtN84z7M0HhWHftjc2+DzRoUO9tgnIanU=;
- b=cSIgxlvj5RJwIu3iGi7JVca2YrQEp4bUsfp1tInEOAx5qbppVpZFSxKV6yLb9m4fAS
- 8RKjowlgr2bYrgBjks7zr30P4dSNbw4AwbUYjz//IpHn5nmyCJpiZSntUs8ZesFjv5R9
- OS03YNldCYN/0Sy1d0OY3Qj9C4y94Aju47xE9p08rdZCtJvMaLf7a2moxZYbOhOQs+5J
- iYQuBvYKQdzoZPMGfVmTP1/8dky/nlsv4BlYSXo65JCE2E8FxQ8F0DFLSbfp70lxNA/v
- w5pP4XfIdyXmfLjvlb8w5o9/WUR1n3WQ4jDDhJ3Dn4QhyQOPbXLN1CCXpA/69zFK47UF
- E94A==
+ bh=KIzOAIfM1reEGtLuVwKSJi5MtWyPECzNtg489klcaAk=;
+ b=GeWCE+03ESFMJmjYBU0V9jtz4xViYmqwe5WQA6B/COtEihdh8WD3admAxQbCLTnTGl
+ aRFs3gL/GvfthtC3Yo6avw5MeTePgObSsilovzLL4Dk27BDTndLxDtRuJa8C+W08ZXrj
+ bclRaGdb0yBHevLytUTYHjih7C3aXtI0nwh/qRuMYk0RifWsmbzSuA+pQNA9F1uwA1Hx
+ yBIlemD4IljwObVbilRwVN3VdOxYm8MfKDMP12cIzhqWjTobQuc+iNZ105wG7Ab0wKqO
+ drRF6PKhEyVaMXoziPk3FMCZcwt0FCVCqk8VWN/Tyxnbm9KWzKwRMPfDPLcuxkSBxLHk
+ R8cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785180024; x=1785784824;
+ d=1e100.net; s=20251104; t=1785180016; x=1785784816;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=+eny6P5tLUQtN84z7M0HhWHftjc2+DzRoUO9tgnIanU=;
- b=DsHvO6Ewzmjdude8jVLbog9u8OM1vxStXQZ3ghIRiaxoehpXFFELVQFNAhsWj+gWpb
- 3R9K+JgBp1WqTKlkU2BbeZ2So0zbmhf9V3YNewq5NT9bVX+1P9lSxOkFjZI9AIkkMAH0
- Gk0LVDxhNipBPAPOogmyDRn8DTrGcjshvZrVHOfbPES4aRD3UXXkBhZAMFZlopEJbiwN
- 4Hr84AB0nhegcxYCDslkNvJIC4iSUl26ZF3ymsgCetIP6AqxnEOKcmUAcf7esR9Mo1nQ
- NxkWuTsLJtH9Wt7RMbblFowrMOnFSACo6TeuyiMwHI5qmI/a/MPsKmg6m8rQVQjQCxuQ
- HoWQ==
-X-Gm-Message-State: AOJu0YwSzZIgxLYHYal8/GK5qgr2B9xmCBA+zoe/LXGVWMBIM/LMCoq4
- lRiJLaHdhU4FkOS/BLUxmpDbBHPN3r4QfNzd4AWG78aEv1l5zK6g/7Y1V5JVjIw3FWGB0cVlDby
- A1RAQbF19wXDRsgDGJoUWucneQHwfBKfj20LDQVP3Phv72JGcbio31xPRcLcsoI9Nfz/tbOT2Ly
- CVfIv731ldMy6lAxfoX9PqkDdl65ymSIZpKg==
-X-Gm-Gg: AR+sD12owjQ+JjDhU2HivBTHeDGAr9IUF6PJKDQrynNxhpJuQrXBaBcXmHoVTfjqkMy
- kDMlGoyk2sMb7OUfkxvnGVIyFOITeYokg3CVPPBABhAyJLxRGkt9QgDuInLB8x7OYL6bYyu0u9/
- 3l6c7D/qbdGIL5Yux8jl9+b0cIkfdh4u2ml9H6/XTZrlQIRzj9rWPo0F38yxkwRlETYTGRR5qzu
- QvyDSZRPv1C/Wzjg4I8nAHbGAY2K8RmmD612CyySogeu08WUB+0kEgUiW9QHfylJVxTqk+yLukj
- RlsR7L5Ap44xrDPWSixoO/0lWQplqusfPCp5DMRjMzXp5H9RyYthz8ZGtt6cXo4SHdy0EHgqnFi
- Q4GI6/stb4jhtvCYZTSC4UA==
-X-Received: by 2002:a05:600c:c3db:10b0:495:607e:5ed6 with SMTP id
- 5b1f17b1804b1-496c4fd965bmr2975285e9.31.1785180024084; 
- Mon, 27 Jul 2026 12:20:24 -0700 (PDT)
-X-Received: by 2002:a05:600c:c3db:10b0:495:607e:5ed6 with SMTP id
- 5b1f17b1804b1-496c4fd965bmr2974925e9.31.1785180023567; 
- Mon, 27 Jul 2026 12:20:23 -0700 (PDT)
+ bh=KIzOAIfM1reEGtLuVwKSJi5MtWyPECzNtg489klcaAk=;
+ b=ZYq3xmWtCqpWN3/fYkaO6lYnXNtiPEKqOp90uy073lJgrTXp8+vfWWpSmQX5opeuw1
+ 5uN0ggWLQ+9hY4yeJ9uravIE0NkO6EZtFZSFC6kq8sqbUKwdeohcVOwFSUqohGV5jg5T
+ xBdRv6jGnzkfyZ40UBlIO5N40GPeN9Dl97sw4jzgnwz+jW8bctXiYywnDYnx6iPOVurk
+ fIGOlKokVKBvGgoEr7uW09FAIjvi7TSfYvoyyA2VNAROymxsdLwJMi3/BwChAVKcFoLl
+ a5nK4GQbTZGmeE0MnhxOcHtpGhbXgGQcgx3N63wOWd9eSZ6/gPNHEZUIQO0+LhdNVWU9
+ zXbQ==
+X-Gm-Message-State: AOJu0YwLS1jM0FYyFSn9FqTVz2Pvps7hMRSYhB2MBN+NeuX0IX0exZds
+ OdLeewlqRZqYOJyREakmdQD/gOshz0G802RNuoqVMWrrmFyR5BNEbJCV5wO7yIdWwUEb8plTH+J
+ TfzX8On8jbcDfNlKLzIexKJ9FItNYbcrFv2s+O19nVypS2qAXy5ifYaoOwSszf7+0Zmd2tAZpD5
+ nc+dSmjsivlGb2e4LHxpKjekCAF0BXeu4aUA==
+X-Gm-Gg: AR+sD13tCny7KhmCfM/iqouvWAMCuw78BpzaIUw7cAf95djEBtPz4/Tv+pIKEnd/UH9
+ smnAfKDFfFr/1fYcr6ceEjtfDJAlZkOUtoMkWQRvU/2AepqwTps39oQSbvDg62Lm9loRm71uac6
+ +doIu3h/rYXMdksjf6jIfT4J23CPmS2y0PVv2dzXkGR8iWzNhlu5iTAPZ5PgEw9hMrI2eusPYTT
+ d++Wk/Gj3NR4eS2YHiJJ/XJp3+8rWZK/b4mxn8GUtbo4rrjrWypELIB0lwqqRTTvq1/L0GJlILX
+ mQuryDhRjabtvhFr6H7LAL7RiEKC5P9QoqtX3Qk22VlQ5HXQ/IXyZspfnTu3cI7KlLY0HPqv1uD
+ wlPNKoq8HlszXvi9B+l9Liw==
+X-Received: by 2002:a05:6000:220e:b0:47a:e342:373e with SMTP id
+ ffacd0b85a97d-47fafa8d34fmr441021f8f.58.1785180015479; 
+ Mon, 27 Jul 2026 12:20:15 -0700 (PDT)
+X-Received: by 2002:a05:6000:220e:b0:47a:e342:373e with SMTP id
+ ffacd0b85a97d-47fafa8d34fmr440972f8f.58.1785180014837; 
+ Mon, 27 Jul 2026 12:20:14 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-28-14.inter.net.il. [80.230.28.14])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-496c45cb960sm13504705e9.9.2026.07.27.12.20.22
+ ffacd0b85a97d-47f864305f5sm50322446f8f.17.2026.07.27.12.20.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 12:20:23 -0700 (PDT)
-Date: Mon, 27 Jul 2026 15:20:21 -0400
+ Mon, 27 Jul 2026 12:20:14 -0700 (PDT)
+Date: Mon, 27 Jul 2026 15:20:13 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-stable@nongnu.org,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL v2 21/30] hw/pci-host/q35.c: Always initialize smram-region
- even if SMM disabled
-Message-ID: <7ea56dcc9406b1588699e510439f782da7067d3e.1785179875.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Jia Jia <physicalmtea@gmail.com>,
+ Xie Yongji <xieyongji@bytedance.com>
+Subject: [PULL v2 17/30] libvduse: validate vq size
+Message-ID: <733a98a552e4bd68932de1f58bd6ea39b57b261c.1785179875.git.mst@redhat.com>
 References: <cover.1785179875.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -97,15 +96,15 @@ Content-Disposition: inline
 In-Reply-To: <cover.1785179875.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
 X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,86 +120,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+libvduse assumes that vq size (aka vq num) is below VIRTQUEUE_MAX_SIZE
+and maps logs large enough based on this assumption.
 
-The MCHPCIState::smram_region looks like it ought to be SMM-specific,
-but it isn't, because its behaviour is "alias the PCI address space
-into system memory at the SMRAM_C_BASE offset", and it must be
-enabled for "hide SMRAM", and disabled for "show SMRAM".  If the
-SMRAM regions are disabled, we want "hide SMRAM", so we need to
-initialize and place this MR.  Do this in the minimal way, by moving
-the "bail out of realize if has_smm_ranges is false" check down below
-the initialization code.
+However, vduse_queue_enable() accepts the vq size returned through
+VDUSE_VQ_GET_INFO without validation, so a value above
+VIRTQUEUE_MAX_SIZE (1024) overruns the inflight log and causes
+out-of-bounds writes in vduse_queue_inflight_get().
 
-This fixes a bug where disabling SMM causes the VGA screen to be
-blank during seabios output, until the OS graphics driver is
-initialized.  This is most obvious for accelerators which have no SMM
-support (e.g.  NVMM, HVF, WHPX) as there smm=off is the default, but
-you can also see it on KVM and TCG if you explicitly pass smm=off:
- qemu-system-x86_64 -machine q35,accel=kvm,smm=off
+According to the virtio spec, vq size can only be reduced, not
+increased, so vq size must not exceed the previously configured
+max_size, but the kernel vduse module does not validate this for us, and
+we should not trust another process to follow the spec.
 
-The early return is bug-prone, so we can refactor the code to clean
-it up, but this is the minimal bug fix for backports, and is what
-Debian used to work around this:
- https://salsa.debian.org/qemu-team/qemu/-/commit/6e0766f0f897dc2b75ab87dd59da0d4639bb37ee
+Validate and reject vq size values above VIRTQUEUE_MAX_SIZE.
 
-Another proposed fix for this:
- https://patchew.org/QEMU/20260413170407.57574-1-mohamed@unpredictable.fr/
-also moves an early return in mch_update-smram() and tweaks
-mch_update_smram() accordingly.  This shouldn't be necessary, because
-in the no-SMM case smram_region should always be enabled and we don't
-want to allow the guest to make it disabled.
-
-NetBSD bug: https://gnats.NetBSD.org/59721
-
-Cc: qemu-stable@nongnu.org
-Fixes: b07bf7b7 ("q35: Introduce smm_ranges property for q35-pci-host")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2608
-Reported-by: Kroese (gitlab @kroese)
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: CVE-2026-61402
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3652
+Reported-by: Jia Jia <physicalmtea@gmail.com>
+Message-ID: <bf7e71b3139875e5e00fd53970c772d6c90dc2a1.1784888961.git.mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260708121011.1653365-2-peter.maydell@linaro.org>
 ---
- hw/pci-host/q35.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ subprojects/libvduse/libvduse.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
-index 4784b8f59b..47e726c41d 100644
---- a/hw/pci-host/q35.c
-+++ b/hw/pci-host/q35.c
-@@ -596,11 +596,14 @@ static void mch_realize(PCIDevice *d, Error **errp)
-                  PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
+diff --git a/subprojects/libvduse/libvduse.c b/subprojects/libvduse/libvduse.c
+index df9ca5e56f..712b97b4c3 100644
+--- a/subprojects/libvduse/libvduse.c
++++ b/subprojects/libvduse/libvduse.c
+@@ -902,6 +902,11 @@ static void vduse_queue_enable(VduseVirtq *vq)
+         return;
      }
  
--    if (!mch->has_smm_ranges) {
--        return;
--    }
--
--    /* if *disabled* show SMRAM to all CPUs */
-+    /*
-+     * This memory region looks like it's SMM specific, but it is not.
-+     * It's an alias that makes the pci_address_space appear in system
-+     * memory at the SMRAM_C_BASE address. The alias is enabled when the
-+     * CPU should not see SMRAM, and *disabled* when the low SMRAM should be
-+     * visible. So for non-SMM configs we need to create the alias, and
-+     * leave it permanently enabled.
-+     */
-     memory_region_init_alias(&mch->smram_region, OBJECT(mch), "smram-region",
-                              mch->pci_address_space, MCH_HOST_BRIDGE_SMRAM_C_BASE,
-                              MCH_HOST_BRIDGE_SMRAM_C_SIZE);
-@@ -608,6 +611,10 @@ static void mch_realize(PCIDevice *d, Error **errp)
-                                         &mch->smram_region, 1);
-     memory_region_set_enabled(&mch->smram_region, true);
- 
-+    if (!mch->has_smm_ranges) {
++    if (vq_info.num > VIRTQUEUE_MAX_SIZE) {
++        fprintf(stderr, "vq[%d] vring num %u exceeds max %u\n",
++                vq->index, vq_info.num, VIRTQUEUE_MAX_SIZE);
 +        return;
 +    }
-+
-     memory_region_init_alias(&mch->open_high_smram, OBJECT(mch), "smram-open-high",
-                              mch->ram_memory, MCH_HOST_BRIDGE_SMRAM_C_BASE,
-                              MCH_HOST_BRIDGE_SMRAM_C_SIZE);
+     vq->vring.num = vq_info.num;
+     vq->vring.desc_addr = vq_info.desc_addr;
+     vq->vring.avail_addr = vq_info.driver_addr;
 -- 
 MST
 
