@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09937C531D0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6318DC531FC
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 14:29:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woMJW-0006FN-G5; Mon, 27 Jul 2026 10:28:18 -0400
+	id 1woMJd-0006JU-LK; Mon, 27 Jul 2026 10:28:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
- id 1woMJV-0006F8-DL
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 10:28:17 -0400
+ id 1woMJc-0006Iy-7K
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 10:28:24 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dblanzeanu@linux.microsoft.com>) id 1woMJT-0001ux-NL
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 10:28:17 -0400
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1woMJa-0001wP-Kv
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 10:28:23 -0400
 Received: from laptop.localdomain (unknown [86.121.140.206])
- by linux.microsoft.com (Postfix) with ESMTPSA id 0D84E20B7166;
- Mon, 27 Jul 2026 07:27:55 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 0D84E20B7166
+ by linux.microsoft.com (Postfix) with ESMTPSA id 1ABB520B7166;
+ Mon, 27 Jul 2026 07:28:03 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 1ABB520B7166
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1785162477;
- bh=cS+DN9S1IKbmDp5FlngmhKjMoaRiWpIagRObg/Utd7M=;
- h=From:To:Cc:Subject:Date:From;
- b=o4ifJ1peuwjv9gAuNcctMbt4VD6I6+gADPUrdZoQfbILnXl4PNE1str8B7GeCBdPB
- LKl97z8LhIux8jPLLf2XHPjNfX7xGynJU8w8Ik+jwu0Oe2fciVYizsR+yzH5q2PVlH
- I0vnX9e4HgqWv+fkcHsQb//cqSsWxnLvmUubUoWg=
+ s=default; t=1785162485;
+ bh=fNVjvriP0t/laKOyNrPh+sOOPL1e470U26tG5t2dlJ4=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=oFAhXIONtzDOk3yzDqNcoeYJ/mFOh86Pp2LlrePX7+IH7+6DCVRlN7OGHO2xHd8X1
+ j0GT4ouMbHaHMYKX/aXyiU9NEiThTiv+3soGl/rF744Xtdd4cHHit9CfjpM6RahUJO
+ k36F5/OS40fmnSy/GyMARjphD5KV1R8NcM2AlxQY=
 From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>,
@@ -37,12 +37,14 @@ Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>,
  =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@microsoft.com>,
  Wei Liu <liuwe@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
  Magnus Kulke <magnuskulke@microsoft.com>
-Subject: [PATCH 0/3] accel/mshv: add gdbstub guest debugging support
-Date: Mon, 27 Jul 2026 17:28:04 +0300
-Message-ID: <20260727142807.84269-1-dblanzeanu@linux.microsoft.com>
+Subject: [PATCH 3/3] target/i386/mshv: support single-stepping
+Date: Mon, 27 Jul 2026 17:28:07 +0300
+Message-ID: <20260727142807.84269-4-dblanzeanu@linux.microsoft.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260727142807.84269-1-dblanzeanu@linux.microsoft.com>
+References: <20260727142807.84269-1-dblanzeanu@linux.microsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=13.77.154.182;
  envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
@@ -67,82 +69,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series brings guest debugging to the MSHV accelerator by
-implementing software breakpoints and single-stepping, so that gdb can
-attach to an MSHV guest through QEMU's gdbstub.
+Single-step by toggling RFLAGS.TF around the vCPU run, as WHPX does.
+TF is set only on the live register, never in env->eflags, so it is not read
+back and re-applied by a later register store.
+The resulting #DB is reported to gdb by mshv_handle_debug() whenever the vCPU
+is single-stepping.
 
-It follows the KVM gdbstub implementation closely, and borrows the WHPX
-approach where the MSHV interface differs from KVM:
+Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+---
+ target/i386/mshv/mshv-cpu.c | 50 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
 
-  - it installs a partition-wide intercept for the #DB exception
-    (HVCALL_INSTALL_INTERCEPT). #BP (INT3) is deliberately left to the
-    guest's own IDT and is never intercepted, as WHPX does.
-
-  - only software breakpoints are supported. A breakpoint is an INT1
-    (opcode 0xf1) patched into guest memory, which raises a #DB when
-    executed. Hardware breakpoints and watchpoints are not supported.
-
-  - it never touches the guest debug registers (DR0-DR7), so guest state
-    is not clobbered. The only guest register used is RFLAGS.TF, toggled
-    around the vCPU run for single-stepping and kept out of env->eflags
-    so it cannot be read back and re-armed.
-
-  - it re-injects the #DB back into the guest (via
-    HV_REGISTER_PENDING_EVENT0) when the faulting RIP does not match a
-    debugger breakpoint, so a guest-owned #DB is delivered through the
-    guest's own IDT.
-
-When a vCPU is created we register the accel ops that gdb drives once it
-is attached:
-
-  - mshv_update_guest_debug
-  - mshv_insert_gdbstub_breakpoint
-  - mshv_remove_gdbstub_breakpoint
-  - mshv_remove_all_gdbstub_breakpoints
-
-For each insert request from gdb the ops save the original byte at the
-target address and patch in 0xf1; on a remove request the saved byte is
-restored, after which gdb single-steps over the original instruction and
-re-inserts the breakpoint. When the vCPU executes the 0xf1 byte a #DB
-vmexits to QEMU. mshv_handle_debug() then checks whether the RIP where
-the vCPU stopped matches a breakpoint installed by gdb, or whether
-single-stepping is active, and if so reports the stop to gdb. If the RIP
-does not match any debugger breakpoint the #DB is assumed to be
-guest-owned and is re-injected so the guest can handle it.
-
-Known limitations:
-
-  - Once installed, the #DB intercept stays for the lifetime
-    of the VM and every #DB - including those the guest raises itself -
-    vmexits to QEMU.
-
-  - Because attribution relies on matching the faulting RIP against the
-    debugger's breakpoint list, a guest that legitimately executes INT1 or
-    raises its own #DB at an address that also holds a debugger breakpoint
-    cannot be disambiguated; such overlaps are not expected in practice.
-
-The series is organised as:
-
-  1. include/hw/hyperv: add ABI for exception intercepts and pending
-     events
-  2. accel/mshv: add gdbstub software breakpoint support
-  3. target/i386/mshv: support single-stepping
-
-I have tested this patch series by using both a guest that doesn't use debugging
-and one that triggers the #DB and #BP exceptions (#DB is re-injected and #BP is
-not intercepted at all).
-
-Doru Blânzeanu (3):
-  include/hw/hyperv: add ABI for exception intercepts and pending events
-  accel/mshv: add gdbstub software breakpoint support
-  target/i386/mshv: support single-stepping
-
- accel/mshv/mshv-all.c          | 165 ++++++++++++++++++++++++++++++++-
- include/hw/hyperv/hvgdk_mini.h |  56 +++++++++++
- include/system/mshv_int.h      |  14 +++
- target/i386/mshv/mshv-cpu.c    | 136 +++++++++++++++++++++++++++
- 4 files changed, 370 insertions(+), 1 deletion(-)
-
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 2333d3304a..036b142113 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -1974,17 +1974,67 @@ static int handle_debug(CPUState *cpu, hv_message *msg)
+     return 0;
+ }
+ 
++/*
++ * Flip RFLAGS.TF like WHPX. Set it only on the live register, not env->eflags,
++ * so a later store won't put it back.
++ */
++static int arch_set_single_step(CPUState *cpu, bool enable)
++{
++    X86CPU *x86cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86cpu->env;
++    hv_register_assoc assoc = { .name = HV_X64_REGISTER_RFLAGS };
++    uint64_t rflags;
++    int ret;
++
++    if (env->regs_page && env->regs_page->isvalid != 0) {
++        rflags = env->regs_page->rflags;
++        rflags = enable ? (rflags | TF_MASK) : (rflags & ~TF_MASK);
++        env->regs_page->rflags = rflags;
++        env->regs_page->dirty |= (1u << HV_X64_REGISTER_CLASS_FLAGS);
++        return 0;
++    }
++
++    ret = mshv_get_generic_regs(cpu, &assoc, 1);
++    if (ret < 0) {
++        return ret;
++    }
++    rflags = assoc.value.reg64;
++    rflags = enable ? (rflags | TF_MASK) : (rflags & ~TF_MASK);
++    assoc.value.reg64 = rflags;
++    return mshv_set_generic_regs(cpu, &assoc, 1);
++}
++
+ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
+ {
+     int ret;
+     enum MshvVmExit exit_reason;
+     int cpu_fd = mshv_vcpufd(cpu);
++    bool single_step;
++
++    /* enable single stepping by flipping RFLAGS.TF */
++    single_step = cpu_single_stepping(cpu);
++    if (single_step) {
++        ret = arch_set_single_step(cpu, true);
++        if (ret < 0) {
++            error_report("Failed to arm single-step (TF) on vcpu %d: %s",
++                         cpu->cpu_index, strerror(-ret));
++            *exit = MshvVmExitShutdown;
++            return -1;
++        }
++    }
+ 
+     ret = ioctl(cpu_fd, MSHV_RUN_VP, msg);
+     if (ret < 0) {
+         return MshvVmExitShutdown;
+     }
+ 
++    /* disable single stepping by flipping RFLAGS.TF */
++    if (single_step && arch_set_single_step(cpu, false) < 0) {
++        error_report("Failed to clear single-step (TF) on vcpu %d",
++                     cpu->cpu_index);
++        return -1;
++    }
++
+     switch (msg->header.message_type) {
+     case HVMSG_UNRECOVERABLE_EXCEPTION:
+         return MshvVmExitShutdown;
 -- 
 2.53.0
 
