@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3950DC531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 16:02:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBFE2C531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 16:03:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woNmk-0006C2-Hs; Mon, 27 Jul 2026 12:02:36 -0400
+	id 1woNmc-00062I-Ur; Mon, 27 Jul 2026 12:02:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
- id 1woNm1-0005Ya-GH; Mon, 27 Jul 2026 12:01:54 -0400
-Received: from m16.mail.163.com ([220.197.31.4])
+ id 1woNla-0005Mv-9Y; Mon, 27 Jul 2026 12:01:27 -0400
+Received: from m16.mail.163.com ([220.197.31.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
- id 1woNlx-0006sM-IX; Mon, 27 Jul 2026 12:01:49 -0400
+ id 1woNlR-0006pd-Je; Mon, 27 Jul 2026 12:01:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=g6
- nLoSynZdw14E1z2vZQ2tge52znbsreEEqZbjbIq10=; b=SwJsMHAqgWyEjTLbZT
- M35YMaacTADV7KGz1vwy5/MPGdTFtCXQdIwWNEgjfLJsuTotuxlbuB33G4vU2n6Z
- y4NAAHvkgq5Ro/bkggLubibtnFA2Dy/HwN13TbpEc92brWJEzgH1iNc0axWqzlVf
- 4frfuVIo03au3/AXzI4K3vAEI=
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=u6
+ eFJ0EQeygvSjog+IH3mA+a0FFwH80Mmy92RXc1GaM=; b=CHXpffEpeLL98MfXHR
+ EVJ7uT7qO9QVq+Ec8WB1yBpoUGgfBPdL7iF6/ylOHI6tHYgmz34tBNA7+9+IEXMP
+ 77uqySyyitN2kszVhGpKMuZV1QMYS6KmuSF5dMmsNYoIcgIxh/znmgQ5wKRSjVCN
+ nkZ97AokkHNRo303c5hQbyt7Y=
 Received: from dt-VM.localdomain (unknown [])
  by gzga-smtp-mtada-g0-0 (Coremail) with SMTP id
- _____wC3HpHQf2dqJpF_Kw--.27173S3; 
- Mon, 27 Jul 2026 23:57:05 +0800 (CST)
+ _____wC3HpHQf2dqJpF_Kw--.27173S5; 
+ Mon, 27 Jul 2026 23:57:07 +0800 (CST)
 From: Tao Ding <dingtao0430@163.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, pbonzini@redhat.com, palmer@dabbelt.com,
@@ -36,22 +36,22 @@ Cc: qemu-riscv@nongnu.org, pbonzini@redhat.com, palmer@dabbelt.com,
  chao.liu@processmission.com, farosas@suse.de, lvivier@redhat.com,
  pierrick.bouvier@oss.qualcomm.com, caojunze424@gmail.com,
  Tao Ding <dingtao0430@163.com>
-Subject: [PATCH v2 1/7] hw/dma: add K230 gsdma
-Date: Mon, 27 Jul 2026 23:56:56 +0800
-Message-ID: <20260727155702.36484-2-dingtao0430@163.com>
+Subject: [PATCH v2 3/7] tests/qtest: add test for K230 gsdma
+Date: Mon, 27 Jul 2026 23:56:58 +0800
+Message-ID: <20260727155702.36484-4-dingtao0430@163.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260727155702.36484-1-dingtao0430@163.com>
 References: <20260727155702.36484-1-dingtao0430@163.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wC3HpHQf2dqJpF_Kw--.27173S3
-X-Coremail-Antispam: 1Uf129KBjvAXoWfXry8Gr48AryxAFWkZrWkJFb_yoW8tF4UCo
- Z0q3Wjy3WrJw47urs3GF12qF17t3yYgrsxXan5t390gFZrCr1v9a4jvrs8Za15Jrs0kF45
- WwnFqr1IvFWayF95n29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7v73VFW2AGmfu7bjvjm3
- AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjTRt3kuUUUUU
+X-CM-TRANSID: _____wC3HpHQf2dqJpF_Kw--.27173S5
+X-Coremail-Antispam: 1Uf129KBjvJXoWxKw4DtF47Cw1DCFyxJF4rAFb_yoWfur47pa
+ yFkryayr12kF1rWan7GF1UA3Z8Wrn3Ga48C3y5Wry8uw1xX3s8tFnIg34UW3s8JrWkZryF
+ 93WDKFn8uF1kJaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zMsjj-UUUUU=
 X-Originating-IP: [119.4.23.14]
-X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC-RKIxmpnf9ILtAAA3+
-Received-SPF: pass client-ip=220.197.31.4; envelope-from=dingtao0430@163.com;
+X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC-hOIxmpnf9MPtAAA35
+Received-SPF: pass client-ip=220.197.31.5; envelope-from=dingtao0430@163.com;
  helo=m16.mail.163.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
@@ -59,8 +59,9 @@ X-Spam_bar: -
 X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,799 +77,256 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-K230 GSDMA includes SDMA (System Direct Memory Access) and GDMA (Graphic Direct Memory Access).
-In this patch, add SDMA for k230 board. The following features have not been implemented:
-1. axi protocol related
-2. channel arbitration
-3. lower power mode
+This commit adds test cases for GSDMA.
+Imitate the behavior of the driver, set LLT and sdma registers.
+After the data transmission is completed, check the destination address data.
 
-SDMA supports transfer data between memory, in which case SDMA is the controller.
-It also supports transfer data to decomp_gzip and caching it through SRAM. 
-In this case, decomp_gzip is the controller, which controls SDMA through handshake signals.
+Update MAINTAINERS for this test.
 
-According to "K230 Technical Reference Manual v0.3.1" section 2.5.2.
-https://download.kendryte.com/developer/k230/HDK/K230%E7%A1%AC%E4%BB%B6%E6%96%87%E6%A1%A3/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
-
-This commit includes:
-- K230 SDMA (System Direct Memory Access) model (k230_gsdma.c, k230_gsdma.h)
-- GSDMA trace log (trace-events)
-- Kconfig and meson.build
-- update MAINTAINERS
+Run this qtest:
+    $ mkdir build && cd build && ../configure --target-list="riscv64-softmmu"
+    $ QTEST_QEMU_BINARY=./qemu-system-riscv64   tests/qtest/k230-gsdma-test
 
 Signed-off-by: Tao Ding <dingtao0430@163.com>
 ---
-In patchv1, the reviewer identified some missing features and bugs, which have been fixed.
-bug: 
-    src_addr should not increment in 2d-mode and src_fixed
-feature:
-    data endian conversion
-enhance:
-    use new reset interface
-
- MAINTAINERS                 |   2 +
- hw/dma/Kconfig              |   3 +
- hw/dma/k230_gsdma.c         | 562 ++++++++++++++++++++++++++++++++++++
- hw/dma/meson.build          |   1 +
- hw/dma/trace-events         |   6 +
- include/hw/dma/k230_gsdma.h | 130 +++++++++
- 6 files changed, 704 insertions(+)
- create mode 100644 hw/dma/k230_gsdma.c
- create mode 100644 include/hw/dma/k230_gsdma.h
+ MAINTAINERS                   |   1 +
+ tests/qtest/k230-gsdma-test.c | 201 ++++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build       |   2 +-
+ 3 files changed, 203 insertions(+), 1 deletion(-)
+ create mode 100644 tests/qtest/k230-gsdma-test.c
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index a28935c898..49c8013d5f 100644
+index 49c8013d5f..9c546596e7 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1829,8 +1829,10 @@ S: Maintained
- F: docs/system/riscv/k230.rst
- F: hw/riscv/k230.c
- F: hw/watchdog/k230_wdt.c
-+F: hw/dma/k230_gsdma.c
- F: include/hw/riscv/k230.h
- F: include/hw/watchdog/k230_wdt.h
-+F: include/hw/dma/k230_gsdma.h
+@@ -1835,6 +1835,7 @@ F: include/hw/watchdog/k230_wdt.h
+ F: include/hw/dma/k230_gsdma.h
  F: tests/functional/riscv64/test_k230.py
  F: tests/qtest/k230-wdt-test.c
++F: tests/qtest/k230-gsdma-test.c
  
-diff --git a/hw/dma/Kconfig b/hw/dma/Kconfig
-index 98fbb1bb04..0a23e7d7b8 100644
---- a/hw/dma/Kconfig
-+++ b/hw/dma/Kconfig
-@@ -30,3 +30,6 @@ config SIFIVE_PDMA
- config XLNX_CSU_DMA
-     bool
-     select REGISTER
-+
-+config K230_GSDMA
-+    bool
-\ No newline at end of file
-diff --git a/hw/dma/k230_gsdma.c b/hw/dma/k230_gsdma.c
+ RX Machines
+ -----------
+diff --git a/tests/qtest/k230-gsdma-test.c b/tests/qtest/k230-gsdma-test.c
 new file mode 100644
-index 0000000000..032733047c
+index 0000000000..44d4248739
 --- /dev/null
-+++ b/hw/dma/k230_gsdma.c
-@@ -0,0 +1,562 @@
++++ b/tests/qtest/k230-gsdma-test.c
+@@ -0,0 +1,201 @@
 +/*
-+ * Kendryte K230 GSDMA
++ * QTest testcase for K230 GSDMA
 + *
 + * Copyright (c) 2026 Tao Ding <dingtao0430@163.com>
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * GSDMA includes SDMA (System Direct Memory Access, K230 TRM section 10.2) and
-+ * GDMA (Graphic Direct Memory Access, K230 TRM section 2.5.2).
 + */
 +
 +#include "qemu/osdep.h"
 +#include "qemu/bitops.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "migration/vmstate.h"
-+#include "system/address-spaces.h"
++#include "exec/hwaddr.h"
 +#include "hw/dma/k230_gsdma.h"
-+#include "hw/core/irq.h"
-+#include "trace.h"
++#include "libqtest.h"
 +
-+static void k230_gsdma_update_irq(K230GSDMAState *s)
++#define K230_GSDMA_BASE              0x80800000
++#define TEST_LLT_ADDR0               0x10000
++#define TEST_LLT_ADDR1               0x10040
++#define TEST_LLT_ADDR2               0x10080
++
++#define TEST_SRC_ADDR0               0x20000
++#define TEST_SRC_ADDR1               0x22000
++#define TEST_SRC_ADDR2               0x23000
++#define TEST_DST_ADDR0               0x30000
++#define TEST_DST_ADDR1               0x32000
++#define TEST_DST_ADDR2               0x33000
++
++static inline uint64_t gsdma_reg(hwaddr off)
 +{
-+    qemu_set_irq(s->irq, !!(s->dma_int_stat & ~s->dma_int_mask));
++    return K230_GSDMA_BASE + off;
 +}
 +
-+static bool k230_gsdma_decomp_enabled(K230GSDMAState *s)
++static inline uint64_t gsdma_ch_reg(unsigned int ch, hwaddr off)
 +{
-+    /* Only sdma channel 0 has decomp enable flag */
-+    return !!(s->channels[0].cfg & K230_GSDMA_CH0_CFG_DECOMP_CTRL_EN);
++    return K230_GSDMA_BASE + K230_GSDMA_CH_BASE +
++           ch * K230_GSDMA_CH_STRIDE + off;
 +}
 +
-+static bool k230_gsdma_read_sdma_llt(hwaddr addr, K230GSDMALLT *llt)
++static void write_sdma_llt_node_full(QTestState *qts, hwaddr addr,
++                                     uint32_t cfg, hwaddr src,
++                                     uint32_t size, hwaddr dst,
++                                     hwaddr next)
 +{
-+    bool ok = address_space_read(&address_space_memory, addr,
-+                                 MEMTXATTRS_UNSPECIFIED, llt,
-+                                 sizeof(*llt)) == MEMTX_OK;
-+
-+    if (ok) {
-+        trace_k230_gsdma_read_sdma_llt(addr, le32_to_cpu(llt->cfg),
-+                                       le32_to_cpu(llt->src_addr),
-+                                       le32_to_cpu(llt->line_size),
-+                                       le32_to_cpu(llt->line_cfg),
-+                                       le32_to_cpu(llt->dst_addr),
-+                                       le32_to_cpu(llt->next_llt_addr));
-+    } else {
-+        trace_k230_gsdma_read_sdma_llt_failed(addr);
-+    }
-+
-+    return ok;
++    qtest_writel(qts, addr + offsetof(K230GSDMALLT, cfg), cfg);
++    qtest_writel(qts, addr + offsetof(K230GSDMALLT, src_addr), src);
++    qtest_writel(qts, addr + offsetof(K230GSDMALLT, line_size), size);
++    qtest_writel(qts, addr + offsetof(K230GSDMALLT, line_cfg), 0x1);
++    qtest_writel(qts, addr + offsetof(K230GSDMALLT, dst_addr), dst);
++    qtest_writel(qts, addr + offsetof(K230GSDMALLT, next_llt_addr), next);
 +}
 +
-+static unsigned int k230_gsdma_usr_data_size(uint32_t cfg)
++static void write_sdma_llt_node(QTestState *qts, hwaddr addr, uint32_t cfg,
++                                uint32_t next)
 +{
-+    /* decode usr_dat_size in CH_CFG register */
-+    switch (extract32(cfg, K230_GSDMA_CH_CFG_USR_DATA_SIZE_SHIFT, 2)) {
-+    case 0:
-+        return 1;
-+    case 1:
-+        return 2;
-+    default:
-+        return 4;
-+    }
++    write_sdma_llt_node_full(qts, addr, cfg, 0x11110000, 0x200,
++                             0x22220000, next);
 +}
 +
-+static void k230_gsdma_convert_endian(uint8_t *buf, uint32_t len, uint32_t cfg)
++static void fill_pattern(uint8_t *buf, size_t size, uint8_t seed)
 +{
-+    unsigned int mode = extract32(cfg,
-+                                  K230_GSDMA_CH_CFG_DAT_ENDIAN_SHIFT, 2);
-+    unsigned int unit_size;
-+    unsigned int offset;
-+
-+    if (mode == 0) {
-+        return;
-+    }
-+
-+    unit_size = 1U << mode;
-+    for (offset = 0; offset + unit_size <= len; offset += unit_size) {
-+        unsigned int i;
-+
-+        for (i = 0; i < unit_size / 2; i++) {
-+            uint8_t tmp = buf[offset + i];
-+
-+            buf[offset + i] = buf[offset + unit_size - i - 1];
-+            buf[offset + unit_size - i - 1] = tmp;
-+        }
++    for (size_t i = 0; i < size; i++) {
++        buf[i] = seed + i * 37;
 +    }
 +}
 +
-+static bool k230_gsdma_transfer_llt(K230GSDMAChannel *c, const K230GSDMALLT *llt)
++static void test_global_registers(void)
 +{
-+    uint32_t llt_cfg = le32_to_cpu(llt->cfg);
-+    hwaddr src = le32_to_cpu(llt->src_addr);
-+    hwaddr dst = le32_to_cpu(llt->dst_addr);
-+    uint32_t line_size = le32_to_cpu(llt->line_size);
-+    uint32_t line_cfg = le32_to_cpu(llt->line_cfg);
-+    /* Number of lines required for 2d mode */
-+    uint32_t line_num =
-+            (llt_cfg & K230_GSDMA_LLT_2D_MODE) ? extract32(line_cfg, 0, 16) : 1;
-+    /* Stride line size required for 2d mode */
-+    uint32_t line_space = extract32(line_cfg, 16, 16);
++    QTestState *qts = qtest_init("-machine k230");
 +
-+    bool dat_mode = c->cfg & K230_GSDMA_CH_CFG_DAT_MODE;
-+    bool src_fixed = c->cfg & K230_GSDMA_CH_CFG_SRC_FIXED;
-+    bool dst_fixed = c->cfg & K230_GSDMA_CH_CFG_DST_FIXED;
++    g_assert_cmphex(qtest_readl(qts, gsdma_reg(K230_GSDMA_DMA_CFG)), ==,
++                    K230_GSDMA_DMA_CFG_RESET);
 +
-+    uint8_t buf[8]; /* K230 sdma axi data width is 64-bit */
-+    uint8_t fill[4];    /* Usr data is 32-bit*/
-+    unsigned int fill_len = k230_gsdma_usr_data_size(c->cfg);
-+    uint32_t i;
++    qtest_writel(qts, gsdma_reg(K230_GSDMA_DMA_CH_EN), 0xff);
++    g_assert_cmphex(qtest_readl(qts, gsdma_reg(K230_GSDMA_DMA_CH_EN)), ==,
++                    K230_GSDMA_DMA_CH_EN_MASK);
 +
-+    memcpy(fill, &c->usr_data, sizeof(fill));
++    qtest_writel(qts, gsdma_reg(K230_GSDMA_DMA_INT_MASK), 0x12345);
++    g_assert_cmphex(qtest_readl(qts, gsdma_reg(K230_GSDMA_DMA_INT_MASK)), ==,
++                    0x12345);
 +
-+    for (i = 0; i < line_num; i++) {
-+        uint32_t remaining = line_size;
-+        hwaddr line_src = src;
-+        hwaddr line_dst = dst;
++    qtest_writel(qts, gsdma_reg(K230_GSDMA_DMA_CFG), 0xa5a5a5a5);
++    g_assert_cmphex(qtest_readl(qts, gsdma_reg(K230_GSDMA_DMA_CFG)), ==,
++                    0xa5a5a5a5);
 +
-+        while (remaining) {
-+            uint32_t chunk = MIN(remaining, (uint32_t)sizeof(buf));
++    qtest_writel(qts, gsdma_reg(K230_GSDMA_DMA_WEIGHT), 0xff55aa55);
++    g_assert_cmphex(qtest_readl(qts, gsdma_reg(K230_GSDMA_DMA_WEIGHT)), ==,
++                    0x55aa55);
 +
-+            if (dat_mode) {
-+                uint32_t j;
-+
-+                for (j = 0; j < chunk; j++) {
-+                    buf[j] = fill[j % fill_len];
-+                }
-+            } else if (address_space_read(&address_space_memory, line_src,
-+                                          MEMTXATTRS_UNSPECIFIED, buf,
-+                                          chunk) != MEMTX_OK) {
-+                return false;
-+            }
-+
-+            k230_gsdma_convert_endian(buf, chunk, c->cfg);
-+
-+            if (address_space_write(&address_space_memory, line_dst,
-+                                    MEMTXATTRS_UNSPECIFIED, buf,
-+                                    chunk) != MEMTX_OK) {
-+                return false;
-+            }
-+
-+            if (!dat_mode && !src_fixed) {
-+                line_src += chunk;
-+            }
-+            if (!dst_fixed) {
-+                line_dst += chunk;
-+            }
-+            remaining -= chunk;
-+        }
-+
-+        if (!dat_mode && !src_fixed) {
-+            if (llt_cfg & K230_GSDMA_LLT_2D_MODE) { /* 2d mode */
-+                src += line_size + line_space;
-+            } else {
-+                src += line_size;
-+            }
-+        }
-+
-+        if (!dst_fixed) {
-+            dst += line_size;
-+        }
-+    }
-+
-+    return true;
++    qtest_quit(qts);
 +}
 +
-+static void k230_gsdma_sdma_set_idle(K230GSDMAChannel *c)
++static void test_sdma_pause_resume(void)
 +{
-+    c->status &= ~(K230_GSDMA_SDMA_STATUS_BUSY | K230_GSDMA_SDMA_STATUS_PAUSE);
-+    c->next_llt = 0;
++    uint32_t int_stat;
++    QTestState *qts = qtest_init("-machine k230");
++
++    write_sdma_llt_node(qts, TEST_LLT_ADDR0, K230_GSDMA_LLT_PAUSE,
++                        TEST_LLT_ADDR1);
++    write_sdma_llt_node(qts, TEST_LLT_ADDR1, K230_GSDMA_LLT_NODE_INTR, 0);
++
++    qtest_writel(qts, gsdma_reg(K230_GSDMA_DMA_CH_EN), BIT(0));
++    qtest_writel(qts, gsdma_ch_reg(0, K230_GSDMA_CH_LLT_SADDR), TEST_LLT_ADDR0);
++    qtest_writel(qts, gsdma_ch_reg(0, K230_GSDMA_CH_CTL), K230_GSDMA_CTL_START);
++
++    g_assert_cmphex(qtest_readl(qts, gsdma_ch_reg(0, K230_GSDMA_CH_STATUS)), ==,
++                    K230_GSDMA_SDMA_STATUS_PAUSE);
++    g_assert_cmphex(qtest_readl(qts, gsdma_ch_reg(0, K230_GSDMA_CH_CURRENT_LLT)),
++                    ==, TEST_LLT_ADDR0);
++
++    int_stat = qtest_readl(qts, gsdma_reg(K230_GSDMA_DMA_INT_STAT));
++    g_assert_cmphex(int_stat & K230_GSDMA_SDMA_PAUSE_INT(0), ==,
++                    K230_GSDMA_SDMA_PAUSE_INT(0));
++    g_assert_cmphex(int_stat & K230_GSDMA_SDMA_DONE_INT(0), ==, 0);
++
++    qtest_writel(qts, gsdma_reg(K230_GSDMA_DMA_INT_STAT), int_stat);
++    qtest_writel(qts, gsdma_ch_reg(0, K230_GSDMA_CH_CTL), K230_GSDMA_CTL_RESUME);
++
++    g_assert_cmphex(qtest_readl(qts, gsdma_ch_reg(0, K230_GSDMA_CH_STATUS)), ==,
++                    0);
++    g_assert_cmphex(qtest_readl(qts, gsdma_ch_reg(0, K230_GSDMA_CH_CURRENT_LLT)),
++                    ==, TEST_LLT_ADDR1);
++
++    int_stat = qtest_readl(qts, gsdma_reg(K230_GSDMA_DMA_INT_STAT));
++    g_assert_cmphex(int_stat & K230_GSDMA_SDMA_DONE_INT(0), ==,
++                    K230_GSDMA_SDMA_DONE_INT(0));
++    g_assert_cmphex(int_stat & K230_GSDMA_SDMA_ITEM_INT(0), ==,
++                    K230_GSDMA_SDMA_ITEM_INT(0));
++
++    qtest_quit(qts);
 +}
 +
-+static void k230_gsdma_sdma_set_paused(K230GSDMAChannel *c, hwaddr next_llt)
++static void test_sdma_three_llt_copy(void)
 +{
-+    c->status &= ~K230_GSDMA_SDMA_STATUS_BUSY;
-+    c->status |= K230_GSDMA_SDMA_STATUS_PAUSE;
-+    c->next_llt = next_llt;
++    uint8_t src0[0x1000];
++    uint8_t src1[1];
++    uint8_t src2[511];
++    uint8_t dst0[sizeof(src0)];
++    uint8_t dst1[sizeof(src1)];
++    uint8_t dst2[sizeof(src2)];
++    uint32_t int_stat;
++    QTestState *qts = qtest_init("-machine k230");
++
++    fill_pattern(src0, sizeof(src0), 0x10);
++    fill_pattern(src1, sizeof(src1), 0x31);
++    fill_pattern(src2, sizeof(src2), 0x52);
++    memset(dst0, 0xa5, sizeof(dst0));
++    memset(dst1, 0xa5, sizeof(dst1));
++    memset(dst2, 0xa5, sizeof(dst2));
++
++    qtest_memwrite(qts, TEST_SRC_ADDR0, src0, sizeof(src0));
++    qtest_memwrite(qts, TEST_SRC_ADDR1, src1, sizeof(src1));
++    qtest_memwrite(qts, TEST_SRC_ADDR2, src2, sizeof(src2));
++    qtest_memwrite(qts, TEST_DST_ADDR0, dst0, sizeof(dst0));
++    qtest_memwrite(qts, TEST_DST_ADDR1, dst1, sizeof(dst1));
++    qtest_memwrite(qts, TEST_DST_ADDR2, dst2, sizeof(dst2));
++
++    write_sdma_llt_node_full(qts, TEST_LLT_ADDR0, 0, TEST_SRC_ADDR0,
++                             sizeof(src0), TEST_DST_ADDR0, TEST_LLT_ADDR1);
++    write_sdma_llt_node_full(qts, TEST_LLT_ADDR1, 0, TEST_SRC_ADDR1,
++                             sizeof(src1), TEST_DST_ADDR1, TEST_LLT_ADDR2);
++    write_sdma_llt_node_full(qts, TEST_LLT_ADDR2, 0, TEST_SRC_ADDR2,
++                             sizeof(src2), TEST_DST_ADDR2, 0);
++
++    qtest_writel(qts, gsdma_reg(K230_GSDMA_DMA_CH_EN), BIT(0));
++    qtest_writel(qts, gsdma_ch_reg(0, K230_GSDMA_CH_LLT_SADDR), TEST_LLT_ADDR0);
++    qtest_writel(qts, gsdma_ch_reg(0, K230_GSDMA_CH_CTL), K230_GSDMA_CTL_START);
++
++    g_assert_cmphex(qtest_readl(qts, gsdma_ch_reg(0, K230_GSDMA_CH_STATUS)), ==,
++                    0);
++    g_assert_cmphex(qtest_readl(qts, gsdma_ch_reg(0, K230_GSDMA_CH_CURRENT_LLT)),
++                    ==, TEST_LLT_ADDR2);
++
++    int_stat = qtest_readl(qts, gsdma_reg(K230_GSDMA_DMA_INT_STAT));
++    g_assert_cmphex(int_stat & K230_GSDMA_SDMA_DONE_INT(0), ==,
++                    K230_GSDMA_SDMA_DONE_INT(0));
++    g_assert_cmphex(int_stat & K230_GSDMA_SDMA_PAUSE_INT(0), ==, 0);
++
++    memset(dst0, 0, sizeof(dst0));
++    memset(dst1, 0, sizeof(dst1));
++    memset(dst2, 0, sizeof(dst2));
++    qtest_memread(qts, TEST_DST_ADDR0, dst0, sizeof(dst0));
++    qtest_memread(qts, TEST_DST_ADDR1, dst1, sizeof(dst1));
++    qtest_memread(qts, TEST_DST_ADDR2, dst2, sizeof(dst2));
++
++    g_assert_cmpmem(dst0, sizeof(dst0), src0, sizeof(src0));
++    g_assert_cmpmem(dst1, sizeof(dst1), src1, sizeof(src1));
++    g_assert_cmpmem(dst2, sizeof(dst2), src2, sizeof(src2));
++
++    qtest_quit(qts);
 +}
 +
-+static void k230_gsdma_run_sdma(K230GSDMAState *s, unsigned int ch, hwaddr addr)
++int main(int argc, char **argv)
 +{
-+    K230GSDMAChannel *c = &s->channels[ch];
++    g_test_init(&argc, &argv, NULL);
 +
-+    c->status &= ~K230_GSDMA_SDMA_STATUS_PAUSE;
-+    c->status |= K230_GSDMA_SDMA_STATUS_BUSY;
-+    c->next_llt = 0;
-+    c->current_llt = addr;
++    qtest_add_func("/k230-gsdma/global-registers", test_global_registers);
++    qtest_add_func("/k230-gsdma/sdma-pause-resume", test_sdma_pause_resume);
++    qtest_add_func("/k230-gsdma/sdma-three-llt-copy",
++                   test_sdma_three_llt_copy);
 +
-+    while (addr) {
-+        K230GSDMALLT llt;
-+        uint32_t cfg;
-+        hwaddr next;
-+
-+        if (!k230_gsdma_read_sdma_llt(addr, &llt)) {
-+            k230_gsdma_sdma_set_idle(c);
-+            return;
-+        }
-+
-+        cfg = le32_to_cpu(llt.cfg);
-+        next = le32_to_cpu(llt.next_llt_addr);
-+        c->current_llt = addr;
-+
-+        if (!k230_gsdma_transfer_llt(c, &llt)) {
-+            k230_gsdma_sdma_set_idle(c);
-+            return;
-+        }
-+
-+        if (cfg & K230_GSDMA_LLT_NODE_INTR) {
-+            s->dma_int_stat |= K230_GSDMA_SDMA_ITEM_INT(ch);
-+        }
-+
-+        if (cfg & K230_GSDMA_LLT_PAUSE) {
-+            s->dma_int_stat |= K230_GSDMA_SDMA_PAUSE_INT(ch);
-+            k230_gsdma_sdma_set_paused(c, next);
-+            k230_gsdma_update_irq(s);
-+            return;
-+        }
-+
-+        addr = next;
-+    }
-+
-+    s->dma_int_stat |= K230_GSDMA_SDMA_DONE_INT(ch);
-+    s->dma_ch_en &= ~BIT(ch);
-+    k230_gsdma_sdma_set_idle(c);
-+    k230_gsdma_update_irq(s);
++    return g_test_run();
 +}
-+
-+/* Decomp gzip request step sdma */
-+static void k230_gsdma_step_sdma(K230GSDMAState *s, unsigned int ch, hwaddr addr)
-+{
-+    K230GSDMAChannel *c = &s->channels[ch];
-+    K230GSDMALLT llt;
-+    uint32_t cfg;
-+    hwaddr next;
-+
-+    if (!addr || !k230_gsdma_read_sdma_llt(addr, &llt)) {
-+        k230_gsdma_sdma_set_idle(c);
-+        return;
-+    }
-+
-+    cfg = le32_to_cpu(llt.cfg);
-+    next = le32_to_cpu(llt.next_llt_addr);
-+
-+    c->status |= K230_GSDMA_SDMA_STATUS_BUSY;
-+    c->status &= ~K230_GSDMA_SDMA_STATUS_PAUSE;
-+    c->current_llt = addr;
-+
-+    if (!k230_gsdma_transfer_llt(c, &llt)) {
-+        k230_gsdma_sdma_set_idle(c);
-+        return;
-+    }
-+
-+    if (cfg & K230_GSDMA_LLT_NODE_INTR) {
-+        s->dma_int_stat |= K230_GSDMA_SDMA_ITEM_INT(ch);
-+    }
-+
-+    c->status &= ~K230_GSDMA_SDMA_STATUS_BUSY;
-+    c->next_llt = next;
-+    if (next == 0) {
-+        s->dma_int_stat |= K230_GSDMA_SDMA_DONE_INT(ch);
-+        s->dma_ch_en &= ~BIT(ch);
-+    }
-+
-+    k230_gsdma_update_irq(s);
-+}
-+
-+static const VMStateDescription vmstate_k230_gsdma_channel = {
-+    .name = "k230.gsdma.channel",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(ctl, K230GSDMAChannel),
-+        VMSTATE_UINT32(status, K230GSDMAChannel),
-+        VMSTATE_UINT32(cfg, K230GSDMAChannel),
-+        VMSTATE_UINT32(usr_data, K230GSDMAChannel),
-+        VMSTATE_UINT32(llt_saddr, K230GSDMAChannel),
-+        VMSTATE_UINT32(current_llt, K230GSDMAChannel),
-+        VMSTATE_UINT32(next_llt, K230GSDMAChannel),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static const VMStateDescription vmstate_k230_gsdma = {
-+    .name = "k230.gsdma",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(dma_ch_en, K230GSDMAState),
-+        VMSTATE_UINT32(dma_int_mask, K230GSDMAState),
-+        VMSTATE_UINT32(dma_int_stat, K230GSDMAState),
-+        VMSTATE_UINT32(dma_cfg, K230GSDMAState),
-+        VMSTATE_UINT32(dma_weight, K230GSDMAState),
-+        VMSTATE_STRUCT_ARRAY(channels, K230GSDMAState,
-+                             K230_GSDMA_NUM_SDMA_CHANNELS, 2,
-+                             vmstate_k230_gsdma_channel, K230GSDMAChannel),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static uint64_t k230_gsdma_read(void *opaque, hwaddr addr, unsigned int size)
-+{
-+    K230GSDMAState *s = K230_GSDMA(opaque);
-+    unsigned int ch;
-+    hwaddr ch_off;
-+    uint64_t ret = 0;
-+
-+    switch (addr) {
-+    case K230_GSDMA_DMA_CH_EN:
-+        ret = s->dma_ch_en;
-+        break;
-+    case K230_GSDMA_DMA_INT_MASK:
-+        ret = s->dma_int_mask;
-+        break;
-+    case K230_GSDMA_DMA_INT_STAT:
-+        ret = s->dma_int_stat;
-+        break;
-+    case K230_GSDMA_DMA_CFG:
-+        ret = s->dma_cfg;
-+        break;
-+    case K230_GSDMA_GDMA_CTRL:
-+    case K230_GSDMA_GDMA_LLI_BASE:
-+    case K230_GSDMA_GDMA_CURRENT_LLT:
-+    case K230_GSDMA_GDMA_CH_CNT0 ... K230_GSDMA_GDMA_CH_CNT_LAST:
-+        break;
-+    case K230_GSDMA_DMA_WEIGHT:
-+        ret = s->dma_weight;
-+        break;
-+    default:
-+        break;
-+    }
-+
-+    ch = (addr - K230_GSDMA_CH_BASE) / K230_GSDMA_CH_STRIDE;
-+    ch_off = (addr - K230_GSDMA_CH_BASE) % K230_GSDMA_CH_STRIDE;
-+    if (ch < K230_GSDMA_NUM_SDMA_CHANNELS) {
-+        switch (ch_off) {
-+        case K230_GSDMA_CH_CTL:
-+            break;
-+        case K230_GSDMA_CH_STATUS:
-+            ret = s->channels[ch].status;
-+            break;
-+        case K230_GSDMA_CH_CFG:
-+            ret = s->channels[ch].cfg;
-+            break;
-+        case K230_GSDMA_CH_USR_DATA:
-+            ret = s->channels[ch].usr_data;
-+            break;
-+        case K230_GSDMA_CH_LLT_SADDR:
-+            ret = s->channels[ch].llt_saddr;
-+            break;
-+        case K230_GSDMA_CH_CURRENT_LLT:
-+            ret = s->channels[ch].current_llt;
-+            break;
-+        default:
-+            break;
-+        }
-+    }
-+
-+    trace_k230_gsdma_read(addr, size, ret);
-+    return ret;
-+}
-+
-+static void k230_gsdma_write_gdma(K230GSDMAState *s, hwaddr addr, uint32_t value)
-+{
-+    switch (addr) {
-+    case K230_GSDMA_GDMA_CTRL:
-+    case K230_GSDMA_GDMA_LLI_BASE:
-+    case K230_GSDMA_GDMA_CURRENT_LLT:
-+    case K230_GSDMA_GDMA_CH_CNT0 ... K230_GSDMA_GDMA_CH_CNT_LAST:
-+        return;
-+    default:
-+        return;
-+    }
-+}
-+
-+static void k230_gsdma_write_channel(K230GSDMAState *s, unsigned int ch,
-+                                     hwaddr ch_off, uint32_t value)
-+{
-+    K230GSDMAChannel *c = &s->channels[ch];
-+    bool handshake_mode = ch < 2 && k230_gsdma_decomp_enabled(s);
-+
-+    switch (ch_off) {
-+    case K230_GSDMA_CH_CTL:
-+        c->ctl = value;
-+        if ((value & K230_GSDMA_CTL_STOP) != 0) {
-+            c->started = false;
-+            k230_gsdma_sdma_set_idle(c);
-+            break;
-+        }
-+        if ((value & K230_GSDMA_CTL_RESUME) != 0 &&
-+            (c->status & K230_GSDMA_SDMA_STATUS_PAUSE) && c->next_llt != 0) {
-+            k230_gsdma_run_sdma(s, ch, c->next_llt);
-+            break;
-+        }
-+        if (handshake_mode && (value & K230_GSDMA_CTL_START) != 0) {
-+            c->started = true;
-+            c->status &= ~(K230_GSDMA_SDMA_STATUS_BUSY |
-+                           K230_GSDMA_SDMA_STATUS_PAUSE);
-+            c->current_llt = 0;
-+            c->next_llt = 0;
-+            break;
-+        }
-+        if ((value & K230_GSDMA_CTL_START) != 0 &&
-+            (s->dma_ch_en & BIT(ch)) && c->llt_saddr != 0) {
-+            c->started = true;
-+            k230_gsdma_run_sdma(s, ch, c->llt_saddr);
-+        }
-+        break;
-+    case K230_GSDMA_CH_CFG:
-+        c->cfg = value;
-+        break;
-+    case K230_GSDMA_CH_USR_DATA:
-+        c->usr_data = value;
-+        break;
-+    case K230_GSDMA_CH_LLT_SADDR:
-+        c->llt_saddr = value;
-+        break;
-+    case K230_GSDMA_CH_CURRENT_LLT:
-+        break;
-+    default:
-+        break;
-+    }
-+}
-+
-+static void k230_gsdma_write(void *opaque, hwaddr addr,
-+                             uint64_t value, unsigned int size)
-+{
-+    K230GSDMAState *s = K230_GSDMA(opaque);
-+    unsigned int ch;
-+    hwaddr ch_off;
-+    uint32_t v = value;
-+
-+    trace_k230_gsdma_write(addr, size, value);
-+
-+    switch (addr) {
-+    case K230_GSDMA_DMA_CH_EN:
-+        s->dma_ch_en = v & K230_GSDMA_DMA_CH_EN_MASK;
-+        return;
-+    case K230_GSDMA_DMA_INT_MASK:
-+        s->dma_int_mask = v;
-+        k230_gsdma_update_irq(s);
-+        return;
-+    case K230_GSDMA_DMA_INT_STAT:
-+        s->dma_int_stat &= ~v;
-+        k230_gsdma_update_irq(s);
-+        return;
-+    case K230_GSDMA_DMA_CFG:
-+        s->dma_cfg = v;
-+        return;
-+    case K230_GSDMA_DMA_WEIGHT:
-+        s->dma_weight = v & 0x00ffffff;
-+        return;
-+    default:
-+        break;
-+    }
-+
-+    if (addr < K230_GSDMA_CH_BASE) {
-+        k230_gsdma_write_gdma(s, addr, v);
-+        return;
-+    }
-+
-+    ch = (addr - K230_GSDMA_CH_BASE) / K230_GSDMA_CH_STRIDE;
-+    ch_off = (addr - K230_GSDMA_CH_BASE) % K230_GSDMA_CH_STRIDE;
-+    if (ch >= K230_GSDMA_NUM_SDMA_CHANNELS) {
-+        return;
-+    }
-+
-+    k230_gsdma_write_channel(s, ch, ch_off, v);
-+}
-+
-+static void k230_gsdma_handle_signal(void *opaque, int n, int level)
-+{
-+    K230GSDMAState *s = opaque;
-+    K230GSDMAChannel *c;
-+    hwaddr addr;
-+    unsigned int ch;
-+
-+    if (!level || n == K230_GSDMA_GPIO_DECOMP_CTRL_EN) {
-+        return;
-+    }
-+
-+    ch = n - 1;
-+
-+    c = &s->channels[ch];
-+    if (!k230_gsdma_decomp_enabled(s) || !(s->dma_ch_en & BIT(ch)) || !c->started) {
-+        return;
-+    }
-+
-+    if (c->current_llt == 0) {
-+        addr = c->llt_saddr;
-+    } else {
-+        addr = c->next_llt;
-+    }
-+    if (!addr) {
-+        return;
-+    }
-+
-+    k230_gsdma_step_sdma(s, ch, addr);
-+    qemu_set_irq(s->handshake_out[n - 1], 1);
-+    qemu_set_irq(s->handshake_out[n - 1], 0);
-+}
-+
-+static const MemoryRegionOps k230_gsdma_ops = {
-+    .read = k230_gsdma_read,
-+    .write = k230_gsdma_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .impl.min_access_size = 4,
-+    .impl.max_access_size = 4,
-+    .valid.min_access_size = 4,
-+    .valid.max_access_size = 4,
-+};
-+
-+static void k230_gsdma_reset_hold(Object *obj, ResetType type)
-+{
-+    K230GSDMAState *s = K230_GSDMA(obj);
-+
-+    memset(s->channels, 0, sizeof(s->channels));
-+    s->dma_ch_en = 0;
-+    s->dma_int_mask = 0;
-+    s->dma_int_stat = 0;
-+    s->dma_cfg = K230_GSDMA_DMA_CFG_RESET;
-+    s->dma_weight = 0;
-+}
-+
-+static void k230_gsdma_realize(DeviceState *dev, Error **errp)
-+{
-+    K230GSDMAState *s = K230_GSDMA(dev);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+
-+    memory_region_init_io(&s->iomem, OBJECT(dev), &k230_gsdma_ops, s,
-+                          TYPE_K230_GSDMA, K230_GSDMA_MMIO_SIZE);
-+    sysbus_init_mmio(sbd, &s->iomem);
-+    sysbus_init_irq(sbd, &s->irq);
-+    qdev_init_gpio_in(DEVICE(dev), k230_gsdma_handle_signal,
-+                      K230_GSDMA_NUM_GPIOS_IN);
-+    qdev_init_gpio_out(DEVICE(dev), s->handshake_out,
-+                       K230_GSDMA_NUM_GPIOS_OUT);
-+}
-+
-+static void k230_gsdma_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+
-+    dc->realize = k230_gsdma_realize;
-+    rc->phases.hold = k230_gsdma_reset_hold;
-+    dc->vmsd = &vmstate_k230_gsdma;
-+    dc->desc = "Kendryte K230 GSDMA";
-+}
-+
-+static const TypeInfo k230_gsdma_info = {
-+    .name = TYPE_K230_GSDMA,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(K230GSDMAState),
-+    .class_init = k230_gsdma_class_init,
-+};
-+
-+static void k230_gsdma_register_types(void)
-+{
-+    type_register_static(&k230_gsdma_info);
-+}
-+
-+type_init(k230_gsdma_register_types)
-diff --git a/hw/dma/meson.build b/hw/dma/meson.build
-index cc7810beb8..45db5e7357 100644
---- a/hw/dma/meson.build
-+++ b/hw/dma/meson.build
-@@ -12,3 +12,4 @@ system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_dma.c', 'soc_dma.c'))
- system_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_dma.c'))
- system_ss.add(when: 'CONFIG_SIFIVE_PDMA', if_true: files('sifive_pdma.c'))
- system_ss.add(when: 'CONFIG_XLNX_CSU_DMA', if_true: files('xlnx_csu_dma.c'))
-+system_ss.add(when: 'CONFIG_K230_GSDMA', if_true: files('k230_gsdma.c'))
-diff --git a/hw/dma/trace-events b/hw/dma/trace-events
-index 4c09790f9a..a494755b5a 100644
---- a/hw/dma/trace-events
-+++ b/hw/dma/trace-events
-@@ -47,3 +47,9 @@ pl330_iomem_read(uint32_t addr, uint32_t data) "addr: 0x%08"PRIx32" data: 0x%08"
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 56ff860e21..1b13a777c9 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -297,7 +297,7 @@ qtests_riscv64 = ['riscv-csr-test'] + \
+   (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
+    config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
+    ['iommu-riscv-test'] : []) + \
+-  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test'] : [])
++  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test', 'k230-gsdma-test'] : [])
  
- # xilinx_axidma.c
- xilinx_axidma_loading_desc_fail(uint32_t res) "error:%u"
-+
-+# k230_gsdma.c
-+k230_gsdma_read(uint64_t addr, unsigned int size, uint64_t data) "K230 GSDMA read: [0x%"PRIx64"] size %u -> 0x%"PRIx64
-+k230_gsdma_write(uint64_t addr, unsigned int size, uint64_t data) "K230 GSDMA write: [0x%"PRIx64"] size %u <- 0x%"PRIx64
-+k230_gsdma_read_sdma_llt(uint64_t addr, uint32_t cfg, uint32_t src_addr, uint32_t line_size, uint32_t line_cfg, uint32_t dst_addr, uint32_t next_llt_addr) "K230 GSDMA read SDMA LLT: addr=0x%"PRIx64" cfg=0x%"PRIx32" src=0x%"PRIx32" line_size=0x%"PRIx32" line_cfg=0x%"PRIx32" dst=0x%"PRIx32" next=0x%"PRIx32
-+k230_gsdma_read_sdma_llt_failed(uint64_t addr) "K230 GSDMA read SDMA LLT failed: addr=0x%"PRIx64
-diff --git a/include/hw/dma/k230_gsdma.h b/include/hw/dma/k230_gsdma.h
-new file mode 100644
-index 0000000000..629cce29f8
---- /dev/null
-+++ b/include/hw/dma/k230_gsdma.h
-@@ -0,0 +1,130 @@
-+/*
-+ * K230 GSDMA
-+ *
-+ * Copyright (c) 2026 Tao Ding <dingtao0430@163.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_DMA_K230_GSDMA_H
-+#define HW_DMA_K230_GSDMA_H
-+
-+#include "hw/core/sysbus.h"
-+
-+#define TYPE_K230_GSDMA "riscv.k230.gsdma"
-+OBJECT_DECLARE_SIMPLE_TYPE(K230GSDMAState, K230_GSDMA)
-+
-+#define K230_GSDMA_MMIO_SIZE          0x4000
-+#define K230_GSDMA_NUM_SDMA_CHANNELS  4
-+
-+#define K230_GSDMA_CH_STRIDE          0x30
-+#define K230_GSDMA_CH_BASE            0x50
-+
-+/* K230 SDMA request input */
-+enum {
-+    K230_GSDMA_GPIO_DECOMP_CTRL_EN,
-+    K230_GSDMA_GPIO_DMA_WRITE_REQ,
-+    K230_GSDMA_GPIO_DMA_READ_REQ,
-+    K230_GSDMA_NUM_GPIOS_IN,
-+};
-+
-+/* K230 SDMA ACK output */
-+enum {
-+    K230_GSDMA_GPIO_DMA_WRITE_ACK,
-+    K230_GSDMA_GPIO_DMA_READ_ACK,
-+    K230_GSDMA_NUM_GPIOS_OUT,
-+};
-+
-+/* K230 GSDMA Registers Map */
-+#define K230_GSDMA_DMA_CH_EN          0x00
-+#define K230_GSDMA_DMA_INT_MASK       0x04
-+#define K230_GSDMA_DMA_INT_STAT       0x08
-+#define K230_GSDMA_DMA_CFG            0x0c
-+#define K230_GSDMA_GDMA_CTRL          0x10
-+#define K230_GSDMA_GDMA_LLI_BASE      0x14
-+#define K230_GSDMA_GDMA_CH_CNT0       0x18
-+#define K230_GSDMA_GDMA_CH_CNT_LAST   0x34
-+#define K230_GSDMA_GDMA_CURRENT_LLT   0x38
-+#define K230_GSDMA_DMA_WEIGHT         0x48
-+
-+/* K230 GSDMA SDMA Channel Register Map */
-+#define K230_GSDMA_CH_CTL             0x00
-+#define K230_GSDMA_CH_STATUS          0x04
-+#define K230_GSDMA_CH_CFG             0x08
-+#define K230_GSDMA_CH_USR_DATA        0x0c
-+#define K230_GSDMA_CH_LLT_SADDR       0x10
-+#define K230_GSDMA_CH_CURRENT_LLT     0x14
-+
-+/* K230 SDMA Control bit */
-+#define K230_GSDMA_CTL_START          BIT(0)
-+#define K230_GSDMA_CTL_STOP           BIT(1)
-+#define K230_GSDMA_CTL_RESUME         BIT(2)
-+
-+/* K230 SDMA States bit */
-+#define K230_GSDMA_SDMA_STATUS_BUSY   BIT(0)
-+#define K230_GSDMA_SDMA_STATUS_PAUSE  BIT(1)
-+
-+/* K230 SDMA Interrupt bit */
-+#define K230_GSDMA_SDMA_DONE_INT(ch)  BIT(ch)
-+#define K230_GSDMA_SDMA_ITEM_INT(ch)  BIT((ch) + 4)
-+#define K230_GSDMA_SDMA_PAUSE_INT(ch) BIT((ch) + 8)
-+
-+
-+#define K230_GSDMA_DMA_CH_EN_MASK     MAKE_64BIT_MASK(0, 5)
-+#define K230_GSDMA_DMA_CFG_RESET      0x000007ff
-+
-+/* K230 SDMA Linked List bit */
-+#define K230_GSDMA_LLT_2D_MODE        BIT(28)
-+#define K230_GSDMA_LLT_PAUSE          BIT(29)
-+#define K230_GSDMA_LLT_NODE_INTR      BIT(30)
-+#define K230_GSDMA_GDMA_LLT_GCH_SHIFT 16
-+#define K230_GSDMA_GDMA_LLT_GCH_MASK  0x7
-+#define K230_GSDMA_CH_CFG_DAT_MODE    BIT(0)
-+#define K230_GSDMA_CH_CFG_USR_DATA_SIZE_SHIFT 1
-+#define K230_GSDMA_CH_CFG_USR_DATA_SIZE_MASK  0x3
-+#define K230_GSDMA_CH_CFG_DAT_ENDIAN_SHIFT 4
-+#define K230_GSDMA_CH_CFG_DAT_ENDIAN_MASK  0x3
-+#define K230_GSDMA_CH_CFG_SRC_FIXED   BIT(8)
-+#define K230_GSDMA_CH_CFG_DST_FIXED   BIT(9)
-+#define K230_GSDMA_CH0_CFG_DECOMP_CTRL_EN BIT(10)
-+
-+/* K230 SDMA channel state */
-+typedef struct K230GSDMAChannel {
-+    uint32_t ctl;
-+    uint32_t status;
-+    uint32_t cfg;
-+    uint32_t usr_data;
-+    uint32_t llt_saddr;
-+    uint32_t current_llt;
-+    uint32_t next_llt;
-+    bool started;
-+} K230GSDMAChannel;
-+
-+/* K230 SDMA Linked List */
-+typedef struct K230GSDMALLT {
-+    uint32_t cfg;
-+    uint32_t src_addr;
-+    uint32_t line_size;
-+    uint32_t line_cfg;
-+    uint32_t dst_addr;
-+    uint32_t next_llt_addr;
-+} K230GSDMALLT;
-+
-+/* K230 GSDMA state */
-+struct K230GSDMAState {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion iomem;
-+    qemu_irq irq;
-+    qemu_irq handshake_out[K230_GSDMA_NUM_GPIOS_OUT];
-+
-+    uint32_t dma_ch_en;
-+    uint32_t dma_int_mask;
-+    uint32_t dma_int_stat;
-+    uint32_t dma_cfg;
-+    uint32_t dma_weight;
-+
-+    K230GSDMAChannel channels[K230_GSDMA_NUM_SDMA_CHANNELS];
-+};
-+
-+#endif
+ qtests_hexagon = ['boot-serial-test']
+ 
 -- 
 2.43.0
 
