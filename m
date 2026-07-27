@@ -4,85 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4620C53219
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E923FC53219
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:54:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woJu1-0003Hf-7V; Mon, 27 Jul 2026 07:53:49 -0400
+	id 1woJu6-0003ee-Av; Mon, 27 Jul 2026 07:53:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1woJtw-000376-Nt
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:53:46 -0400
+ id 1woJu3-0003Xu-V3
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:53:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1woJtu-000437-Pv
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:53:44 -0400
+ id 1woJu2-000448-I0
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:53:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785153222;
+ s=mimecast20190719; t=1785153229;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9oYIu6ucbeyhcRhj8yqHtduIC8JKpxj/ZV2BhttSk7M=;
- b=JT7KXMGvFEH5M1TYyQDxWmC15gBYj8udHvC5CQZP/+3s6In7swhYblkTEHWInjQRGxblJy
- 6zXi/+wcGjpzox/62eCLU3kAGDpKbgtK/I0BF/qC+IpuCPISxWvg46kxvqhsp/YHtT5/kr
- CMq4HlwwUnAhTwdRdOjCPjrJZYCqILQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=3otxHHzF848aWH4w40n6EBe3Am3b5Xd5NRbN2eJgj1c=;
+ b=ht7pUOhHWnZhFaQGuq4RckyYgDc2PxZbKoVxyhriijqTZXI+NIvRhqxaMV6uHLU0Tlbsb4
+ Q8GneFHeSQhVNxF38jtF9o78uD1bXISh/3o7cbzmALPzWqrtOf+r7LiY+hWbjE21e8pBB1
+ a1++HXWSgxIq0lcVBesr70YuqSwL/mQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-308-7mzw_8iXNTqT0Td6tTII9Q-1; Mon,
- 27 Jul 2026 07:53:38 -0400
-X-MC-Unique: 7mzw_8iXNTqT0Td6tTII9Q-1
-X-Mimecast-MFC-AGG-ID: 7mzw_8iXNTqT0Td6tTII9Q_1785153217
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-500-o6EfhtJnOzyPJvRzVXbY4g-1; Mon,
+ 27 Jul 2026 07:53:43 -0400
+X-MC-Unique: o6EfhtJnOzyPJvRzVXbY4g-1
+X-Mimecast-MFC-AGG-ID: o6EfhtJnOzyPJvRzVXbY4g_1785153222
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 097571955F3D; Mon, 27 Jul 2026 11:53:37 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 60A341956056; Mon, 27 Jul 2026 11:53:42 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.5])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6C8E5180025A; Mon, 27 Jul 2026 11:53:34 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3BBE618001E1; Mon, 27 Jul 2026 11:53:40 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 27 Jul 2026 15:51:31 +0400
-Subject: [GIT PULL 22/23] hw/9pfs: annotate V9fsTransport callbacks as
- coroutine_fn
+Date: Mon, 27 Jul 2026 15:51:32 +0400
+Subject: [GIT PULL 23/23] migration/rdma: annotate and simplify
+ wait_comp_channel()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260727-fix-v1-22-ca3fa3851347@redhat.com>
+Message-Id: <20260727-fix-v1-23-ca3fa3851347@redhat.com>
 References: <20260727-fix-v1-0-ca3fa3851347@redhat.com>
 In-Reply-To: <20260727-fix-v1-0-ca3fa3851347@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, 
- Christian Schoenebeck <qemu_oss@crudebyte.com>, Greg Kurz <groug@kaod.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Stabellini <sstabellini@kernel.org>, 
- Anthony PERARD <anthony@xenproject.org>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- xen-devel@lists.xenproject.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=12210;
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Peter Xu <peterx@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Li Zhijian <lizhijian@fujitsu.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1623;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=kIVXvSiYvzjRZ5/GpYFflICxn39LG3s3JicrtUIOOKw=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZ0Y/InBqkiqgdux+2VziZo11jHAPJh08la6E6
- AaTlKt6htqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamdGPwAKCRDa6OEJdZac
- 5cQ0EACCWlZ8GGsTXxQvK81AsXtdlhpWUKq7GI/rQlpxXM+XuTBJKER+BlIWnLNaPdhWA2he5Db
- SJPMVkVXaTDunQv3RGE0K+PByfftg0GI3T1QgpxfUz9sBe2R7oDBX7wLWnkafpgHDaJOCJbcr1M
- SGn8iH2iiBEqyB8XhtHVvK6OiNtrIjtW152yRdvYK1cFoCUUPHNcnWNyyk9kRW71KyP1t876Zu4
- Iv+rBW/nHlfva796PBdFwqkCuRtX5YlM/v1zH5SHHQ3+z9pyolNnHz8meigEIC1L+N1hm7Cuu5c
- ke4YbEwLgB1wj/71vug9qOt9MGYnPxekE6osZxMjGMStxxpd/AvK1sWlg4xZFTv0C3cpPUpXbz3
- kjrILkbAdDsj9gOpiwVzD73/3O+PBIvXKT4Ua6ht0uQSVIPCuqVbOuKIDw0ZUXkVj8ocsA/5NRq
- DbclLmil8vvfU6VXfPjAvZksKQuyJTJ6tSPYd9Wyv6g05g3zRfuu0nbvGRnA5BTXZrhbDmZ3VFW
- qjQDj9wuInuNtdPDBWHlAeDiQzWklxLgbePNxypQDefIV+h/7NfMPxIM58mPD3E7pD5kiXVdA48
- 1/4plEo+L6eqUmR32H15UrgymlrklgclH2ym4VVDkYX6/uR6PqejQAPka7Ld0+CNejMAlVA/9W9
- TiypcFk/ky/YTbQ==
+ bh=2C5ZqBaQBwSshXxXMaaT5VaLMkO28qyCe2lqnv2+Heg=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZ0ZAIQzm3kTQNC9rWFyTB1HJNrd6AgNFE2EUz
+ 1zMv2gd1Q2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamdGQAAKCRDa6OEJdZac
+ 5cYWD/9oQ1KhBgsluzazVr8IK3k15uxTcBqtPzz2rVuPl8xFStnREmPbVfPSFgllO7DMCoNfnG2
+ nD4GScVszxzTtRlRuxGxNnhqa5ehvdTBpNAKocpoV3l3Qzvaho+bWYlOQKkhyw+FTqQBMwFdzat
+ 8nHZiLhHZYo8ek/zN/t2vVkb41qxJIK+3OxX8WlivniI+7HoNe74wk92TgGxIlmu+2Fo/Dk7bxZ
+ 9iSrrx5F5wS68/1QAncTlr+/zUpanX1QJQAXrSMTMW3VbPxlsJg8yToSVtBqVj17TAmHmCw9LGA
+ ysAb8HMc1TP3OjQduMaCJSxv9DOuwdgxedNmfQMB7mUyVLw74VcPEe1GHsDvRI7cTS7a4zZ0SUz
+ ah0Xhg/efsYseyXJz2kvQG6mK0Ol91GI4GG8akQoKXAT2zRCdx9XcSe8MVHn6a/vk1pzR/d/IRx
+ nqNlRbVLeiWWOt3XHYCG+uBzK8eX/dyrDC9PA0sLzJ1dcFOL8QxGVyNOJ+6+gHaWN8OjRqp4A6Y
+ KW/MnXYSBsbzN4m1rMcbTrRflS6ib64deCK2jHDo/Q2CWwEu5xDYco0Dqdy+v720x3y1IzZjB3N
+ 3KE4kifKdnvpovW1iGdtw0QIB/PxIlSNpiGNnrZMO161lN/hVb4xw5zXUpW+O3lZ+Xgwzxbrxol
+ 2NUNHhdm3XeEVYw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -109,290 +104,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All V9fsTransport callbacks are invoked exclusively from coroutine
-context (the v9fs_* PDU handlers). Annotate the function pointer
-types in V9fsTransport and all implementations (virtio and xen
-backends), as well as intermediate callers in 9p.c (pdu_marshal,
-pdu_unmarshal, v9fs_init_qiov_from_pdu, etc.).
+The function calls yield_until_fd_readable() (coroutine_fn) when in
+coroutine context, and polls with qemu_poll_ns() otherwise.
 
-Acked-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Replace the migration-state proxy check with qemu_in_coroutine(),
+which directly tests what matters.
+
+Fixes: 2da776db4846 ("rdma: core logic")
+Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/9pfs/9p.h               | 26 +++++++++++++++-----------
- hw/9pfs/9p.c               | 31 +++++++++++++++++++------------
- hw/9pfs/virtio-9p-device.c | 24 +++++++++++++-----------
- hw/9pfs/xen-9p-backend.c   | 34 +++++++++++++++++-----------------
- 4 files changed, 64 insertions(+), 51 deletions(-)
+ migration/rdma.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/hw/9pfs/9p.h b/hw/9pfs/9p.h
-index 1a309664f6e3..0e52ffbdf38b 100644
---- a/hw/9pfs/9p.h
-+++ b/hw/9pfs/9p.h
-@@ -472,17 +472,21 @@ void pdu_submit(V9fsPDU *pdu, P9MsgHeader *hdr);
- void v9fs_reset(V9fsState *s);
- 
- struct V9fsTransport {
--    ssize_t     (*pdu_vmarshal)(V9fsPDU *pdu, size_t offset, const char *fmt,
--                                va_list ap);
--    ssize_t     (*pdu_vunmarshal)(V9fsPDU *pdu, size_t offset, const char *fmt,
--                                  va_list ap);
--    void        (*init_in_iov_from_pdu)(V9fsPDU *pdu, struct iovec **piov,
--                                        unsigned int *pniov, size_t size);
--    void        (*init_out_iov_from_pdu)(V9fsPDU *pdu, struct iovec **piov,
--                                         unsigned int *pniov, size_t size);
--    void        (*push_and_notify)(V9fsPDU *pdu);
--    size_t      (*msize_limit)(V9fsState *s);
--    size_t      (*response_buffer_size)(V9fsPDU *pdu);
-+    ssize_t     coroutine_fn (*pdu_vmarshal)(V9fsPDU *pdu, size_t offset,
-+                                             const char *fmt, va_list ap);
-+    ssize_t     coroutine_fn (*pdu_vunmarshal)(V9fsPDU *pdu, size_t offset,
-+                                               const char *fmt, va_list ap);
-+    void        coroutine_fn (*init_in_iov_from_pdu)(V9fsPDU *pdu,
-+                                                     struct iovec **piov,
-+                                                     unsigned int *pniov,
-+                                                     size_t size);
-+    void        coroutine_fn (*init_out_iov_from_pdu)(V9fsPDU *pdu,
-+                                                      struct iovec **piov,
-+                                                      unsigned int *pniov,
-+                                                      size_t size);
-+    void        coroutine_fn (*push_and_notify)(V9fsPDU *pdu);
-+    size_t      coroutine_fn (*msize_limit)(V9fsState *s);
-+    size_t      coroutine_fn (*response_buffer_size)(V9fsPDU *pdu);
- };
- 
- #endif
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 1c61e6b3e773..4764d9db13b1 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -55,7 +55,8 @@ enum {
- 
- P9ARRAY_DEFINE_TYPE(V9fsPath, v9fs_path_free);
- 
--static ssize_t pdu_marshal(V9fsPDU *pdu, size_t offset, const char *fmt, ...)
-+static ssize_t coroutine_fn
-+pdu_marshal(V9fsPDU *pdu, size_t offset, const char *fmt, ...)
- {
-     ssize_t ret;
-     va_list ap;
-@@ -67,7 +68,8 @@ static ssize_t pdu_marshal(V9fsPDU *pdu, size_t offset, const char *fmt, ...)
-     return ret;
- }
- 
--static ssize_t pdu_unmarshal(V9fsPDU *pdu, size_t offset, const char *fmt, ...)
-+static ssize_t coroutine_fn
-+pdu_unmarshal(V9fsPDU *pdu, size_t offset, const char *fmt, ...)
- {
-     ssize_t ret;
-     va_list ap;
-@@ -1841,7 +1843,8 @@ out_nofid:
-     pdu_complete(pdu, err);
- }
- 
--static int v9fs_walk_marshal(V9fsPDU *pdu, uint16_t nwnames, V9fsQID *qids)
-+static int coroutine_fn
-+v9fs_walk_marshal(V9fsPDU *pdu, uint16_t nwnames, V9fsQID *qids)
- {
-     int i;
-     ssize_t err;
-@@ -2363,9 +2366,10 @@ out_nofid:
-  * The resulting QEMUIOVector has heap-allocated iovecs and must be cleaned up
-  * with qemu_iovec_destroy().
+diff --git a/migration/rdma.c b/migration/rdma.c
+index 3e37a1d44013..438419d18943 100644
+--- a/migration/rdma.c
++++ b/migration/rdma.c
+@@ -1348,17 +1348,13 @@ static int qemu_rdma_poll(RDMAContext *rdma, struct ibv_cq *cq,
+ /* Wait for activity on the completion channel.
+  * Returns 0 on success, none-0 on error.
   */
--static void v9fs_init_qiov_from_pdu(QEMUIOVector *qiov, V9fsPDU *pdu,
--                                    size_t skip, size_t size,
--                                    bool is_write)
-+static void coroutine_fn
-+v9fs_init_qiov_from_pdu(QEMUIOVector *qiov, V9fsPDU *pdu,
-+                        size_t skip, size_t size,
-+                        bool is_write)
+-static int qemu_rdma_wait_comp_channel(RDMAContext *rdma,
+-                                       struct ibv_comp_channel *comp_channel)
++static int coroutine_mixed_fn
++qemu_rdma_wait_comp_channel(RDMAContext *rdma,
++                            struct ibv_comp_channel *comp_channel)
  {
-     QEMUIOVector elem;
-     struct iovec *iov;
-@@ -2382,8 +2386,9 @@ static void v9fs_init_qiov_from_pdu(QEMUIOVector *qiov, V9fsPDU *pdu,
-     qemu_iovec_concat(qiov, &elem, skip, size);
- }
+     struct rdma_cm_event *cm_event;
  
--static int v9fs_xattr_read(V9fsState *s, V9fsPDU *pdu, V9fsFidState *fidp,
--                           uint64_t off, uint32_t max_count)
-+static int coroutine_fn
-+v9fs_xattr_read(V9fsState *s, V9fsPDU *pdu, V9fsFidState *fidp,
-+                uint64_t off, uint32_t max_count)
- {
-     ssize_t err;
-     size_t offset = 7;
-@@ -2793,9 +2798,10 @@ out_nofid:
-     pdu_complete(pdu, retval);
- }
- 
--static int v9fs_xattr_write(V9fsState *s, V9fsPDU *pdu, V9fsFidState *fidp,
--                            uint64_t off, uint32_t count,
--                            struct iovec *sg, int cnt)
-+static int coroutine_fn
-+v9fs_xattr_write(V9fsState *s, V9fsPDU *pdu, V9fsFidState *fidp,
-+                 uint64_t off, uint32_t count,
-+                 struct iovec *sg, int cnt)
- {
-     int i, to_copy;
-     ssize_t err = 0;
-@@ -3729,7 +3735,8 @@ out_nofid:
-     pdu_complete(pdu, err);
- }
- 
--static int v9fs_fill_statfs(V9fsState *s, V9fsPDU *pdu, struct statfs *stbuf)
-+static int coroutine_fn
-+v9fs_fill_statfs(V9fsState *s, V9fsPDU *pdu, struct statfs *stbuf)
- {
-     uint32_t f_type;
-     uint32_t f_bsize;
-diff --git a/hw/9pfs/virtio-9p-device.c b/hw/9pfs/virtio-9p-device.c
-index 576a794ea434..2774fc2290a8 100644
---- a/hw/9pfs/virtio-9p-device.c
-+++ b/hw/9pfs/virtio-9p-device.c
-@@ -28,7 +28,7 @@
- #include "qemu/module.h"
- #include "system/qtest.h"
- 
--static void virtio_9p_push_and_notify(V9fsPDU *pdu)
-+static void coroutine_fn virtio_9p_push_and_notify(V9fsPDU *pdu)
- {
-     V9fsState *s = pdu->s;
-     V9fsVirtioState *v = container_of(s, V9fsVirtioState, state);
-@@ -117,8 +117,8 @@ static void virtio_9p_reset(VirtIODevice *vdev)
-     v9fs_reset(&v->state);
- }
- 
--static ssize_t virtio_pdu_vmarshal(V9fsPDU *pdu, size_t offset,
--                                   const char *fmt, va_list ap)
-+static ssize_t coroutine_fn
-+virtio_pdu_vmarshal(V9fsPDU *pdu, size_t offset, const char *fmt, va_list ap)
- {
-     V9fsState *s = pdu->s;
-     V9fsVirtioState *v = container_of(s, V9fsVirtioState, state);
-@@ -135,8 +135,8 @@ static ssize_t virtio_pdu_vmarshal(V9fsPDU *pdu, size_t offset,
-     return ret;
- }
- 
--static ssize_t virtio_pdu_vunmarshal(V9fsPDU *pdu, size_t offset,
--                                     const char *fmt, va_list ap)
-+static ssize_t coroutine_fn
-+virtio_pdu_vunmarshal(V9fsPDU *pdu, size_t offset, const char *fmt, va_list ap)
- {
-     V9fsState *s = pdu->s;
-     V9fsVirtioState *v = container_of(s, V9fsVirtioState, state);
-@@ -152,8 +152,9 @@ static ssize_t virtio_pdu_vunmarshal(V9fsPDU *pdu, size_t offset,
-     return ret;
- }
- 
--static void virtio_init_in_iov_from_pdu(V9fsPDU *pdu, struct iovec **piov,
--                                        unsigned int *pniov, size_t size)
-+static void coroutine_fn
-+virtio_init_in_iov_from_pdu(V9fsPDU *pdu, struct iovec **piov,
-+                            unsigned int *pniov, size_t size)
- {
-     V9fsState *s = pdu->s;
-     V9fsVirtioState *v = container_of(s, V9fsVirtioState, state);
-@@ -172,8 +173,9 @@ static void virtio_init_in_iov_from_pdu(V9fsPDU *pdu, struct iovec **piov,
-     *pniov = elem->in_num;
- }
- 
--static void virtio_init_out_iov_from_pdu(V9fsPDU *pdu, struct iovec **piov,
--                                         unsigned int *pniov, size_t size)
-+static void coroutine_fn
-+virtio_init_out_iov_from_pdu(V9fsPDU *pdu, struct iovec **piov,
-+                             unsigned int *pniov, size_t size)
- {
-     V9fsState *s = pdu->s;
-     V9fsVirtioState *v = container_of(s, V9fsVirtioState, state);
-@@ -192,13 +194,13 @@ static void virtio_init_out_iov_from_pdu(V9fsPDU *pdu, struct iovec **piov,
-     *pniov = elem->out_num;
- }
- 
--static size_t virtio_9p_msize_limit(V9fsState *s)
-+static size_t coroutine_fn virtio_9p_msize_limit(V9fsState *s)
- {
-     const size_t guestPageSize = 4096;
-     return (VIRTQUEUE_MAX_SIZE - 2) * guestPageSize;
- }
- 
--static size_t virtio_9p_response_buffer_size(V9fsPDU *pdu)
-+static size_t coroutine_fn virtio_9p_response_buffer_size(V9fsPDU *pdu)
- {
-     V9fsState *s = pdu->s;
-     V9fsVirtioState *v = container_of(s, V9fsVirtioState, state);
-diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
-index d44fa8d61e2e..06709d54084b 100644
---- a/hw/9pfs/xen-9p-backend.c
-+++ b/hw/9pfs/xen-9p-backend.c
-@@ -136,10 +136,10 @@ static void xen_9pfs_out_sg(Xen9pfsRing *ring,
-     }
- }
- 
--static ssize_t xen_9pfs_pdu_vmarshal(V9fsPDU *pdu,
--                                     size_t offset,
--                                     const char *fmt,
--                                     va_list ap)
-+static ssize_t coroutine_fn xen_9pfs_pdu_vmarshal(V9fsPDU *pdu,
-+                                                  size_t offset,
-+                                                  const char *fmt,
-+                                                  va_list ap)
- {
-     Xen9pfsDev *xen_9pfs = container_of(pdu->s, Xen9pfsDev, state);
-     struct iovec in_sg[2];
-@@ -161,10 +161,10 @@ static ssize_t xen_9pfs_pdu_vmarshal(V9fsPDU *pdu,
-     return ret;
- }
- 
--static ssize_t xen_9pfs_pdu_vunmarshal(V9fsPDU *pdu,
--                                       size_t offset,
--                                       const char *fmt,
--                                       va_list ap)
-+static ssize_t coroutine_fn xen_9pfs_pdu_vunmarshal(V9fsPDU *pdu,
-+                                                    size_t offset,
-+                                                    const char *fmt,
-+                                                    va_list ap)
- {
-     Xen9pfsDev *xen_9pfs = container_of(pdu->s, Xen9pfsDev, state);
-     struct iovec out_sg[2];
-@@ -185,10 +185,10 @@ static ssize_t xen_9pfs_pdu_vunmarshal(V9fsPDU *pdu,
-     return ret;
- }
- 
--static void xen_9pfs_init_out_iov_from_pdu(V9fsPDU *pdu,
--                                           struct iovec **piov,
--                                           unsigned int *pniov,
--                                           size_t size)
-+static void coroutine_fn xen_9pfs_init_out_iov_from_pdu(V9fsPDU *pdu,
-+                                                        struct iovec **piov,
-+                                                        unsigned int *pniov,
-+                                                        size_t size)
- {
-     Xen9pfsDev *xen_9pfs = container_of(pdu->s, Xen9pfsDev, state);
-     Xen9pfsRing *ring = &xen_9pfs->rings[pdu->tag % xen_9pfs->num_rings];
-@@ -202,10 +202,10 @@ static void xen_9pfs_init_out_iov_from_pdu(V9fsPDU *pdu,
-     *pniov = num;
- }
- 
--static void xen_9pfs_init_in_iov_from_pdu(V9fsPDU *pdu,
--                                          struct iovec **piov,
--                                          unsigned int *pniov,
--                                          size_t size)
-+static void coroutine_fn xen_9pfs_init_in_iov_from_pdu(V9fsPDU *pdu,
-+                                                       struct iovec **piov,
-+                                                       unsigned int *pniov,
-+                                                       size_t size)
- {
-     Xen9pfsDev *xen_9pfs = container_of(pdu->s, Xen9pfsDev, state);
-     Xen9pfsRing *ring = &xen_9pfs->rings[pdu->tag % xen_9pfs->num_rings];
-@@ -234,7 +234,7 @@ again:
-     *pniov = num;
- }
- 
--static void xen_9pfs_push_and_notify(V9fsPDU *pdu)
-+static void coroutine_fn xen_9pfs_push_and_notify(V9fsPDU *pdu)
- {
-     RING_IDX prod;
-     Xen9pfsDev *priv = container_of(pdu->s, Xen9pfsDev, state);
+-    /*
+-     * Coroutine doesn't start until migration_fd_process_incoming()
+-     * so don't yield unless we know we're running inside of a coroutine.
+-     */
+-    if (rdma->migration_started_on_destination &&
+-        migration_incoming_get_current()->state == MIGRATION_STATUS_ACTIVE) {
++    if (qemu_in_coroutine()) {
+         yield_until_fd_readable(comp_channel->fd);
+     } else {
+         /* This is the source side, we're in a separate thread
 
 -- 
 2.55.0
