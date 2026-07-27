@@ -4,156 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 660C8C531FC
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 07:22:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9ADDC531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 07:23:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woFep-0007yp-Mn; Mon, 27 Jul 2026 03:21:51 -0400
+	id 1woFgW-0008St-OW; Mon, 27 Jul 2026 03:23:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1woFef-0007xv-EW
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 03:21:42 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1woFec-0005kP-7E
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 03:21:40 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66R1fcqD2416949
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 07:21:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- n9Aos/jywAp1KiMqxdiE8FS02FkmBZsX9G9dQPrcuvQ=; b=EL2iPqfyrvykxEZa
- MFiIQ+lSCqpY0dq6MTGp18qPgDTC82WXawL2HenxIA5MlUO15NozzHXVbLLpfkvi
- 8MaMguk/OOYpkbFmN9yrJcWP8M/m1PPSkii9gtLTmd42ol9mQ5LbcCsUK+ekAkPQ
- 3t5bwh/Wd1sUOXBgzyjN2jCMYKUzkrYOSeKHliskf/RBkUf311JSJ8L24A2wqtYx
- NstW3BXVnO3J3WCVZAJ3Uf/u8y8gwxHjwzVueiJo2/l3rMYbZQE/Tm+Q31ppiT5M
- tUHFcoJ/2m4xoN5b7sSEf+I3PoOFP37DRL5e1qbqGVZj0WNjZr1pstUTxXUOeOqE
- l4M3QQ==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fngyst6c5-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 07:21:35 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-5174a236220so27540011cf.3
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 00:21:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <flavien.solt97@gmail.com>)
+ id 1woFgF-0008Ps-LZ
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 03:23:19 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <flavien.solt97@gmail.com>)
+ id 1woFgD-0005pD-16
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 03:23:19 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-38e58034d05so2566002a91.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 00:23:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1785136894; x=1785741694; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=n9Aos/jywAp1KiMqxdiE8FS02FkmBZsX9G9dQPrcuvQ=;
- b=gGHRlqeublu2dvm7U8ha5HLwqUNuOnX5COqKkicGx/08GvRhoG7C/hYokJzFyUnkF/
- CFQ84PzxY/9TrWsatKfb+8xB4ZcXrYoo5qSnbLZ61G0OgJNcAC8OkQTHSrCjmmsw/Zl6
- +Nx4utuJyAwN5W7TBpSLznBPE2GlK6Ggn8gaxAOYybrGdnXcjhRmTT7BFvhW+Nck7U82
- leCqVjjhT5LLlHseW5ZQIemI1sF0hM5gj1jOfJNeYj14DtiGhaUCZb1GkkHvYm0q/YhN
- bSprPqscE3L+LyXxlVq95BKgfAJv8r8EQatSNbL1wbTtVBa8n84Ns4foONDVxzGB5fQl
- y5QQ==
+ d=gmail.com; s=20251104; t=1785136995; x=1785741795; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=TogoSyYAqnOGicRD5tBvpYtkzJNUZYg4OhNGGBdHjPw=;
+ b=khbg9IzcXi3FIhU8FqBK6nHqIdpYlken4kHDvuK/hnMQ8PDzFStxthCv93+qyUyfEV
+ nnFEdwYszIZRimTdCgEm2Bs/TCowmFiDks0MkzF5iGOq/81DfAcvK1oVwdKgVtIV2OXY
+ LKU2DFgc2O4V04gXfL5sVGuCs35seivHjmSBCTYZscVImjpGlzq981kyaf7hq/uaF9H1
+ hvChz64kXTFd2ldA36wNoQ5YsMsFsR3KL4kzDzXOULZQAtyLu3p3sWLrr2q9WJTjWMKo
+ Uwfc7nNL0w3rQBH3M6cREi0fI7gleC2BA+eEeM727BJClXK/O6Tlh/1bKDzVl6ro1jTM
+ bjLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785136895; x=1785741695;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=n9Aos/jywAp1KiMqxdiE8FS02FkmBZsX9G9dQPrcuvQ=;
- b=I6DktzVRgu7oUxFSV6hNlFl+VzGPnP3BHOfXI0Qw5Y99RpOa5oGljZJVckDyjF/Dfk
- q8IwLrD1Yw3iyptI9u07JU8xYggRDQu6zygQCAjVZaRLMF2OoBC1Ahg2KEroto7+b1GA
- /SLzGhBiBTxNKHhbzmDT25kxg0OWWuzVBj0FQJXBgBIX30LfxEGYC1UN5kzGjuEdnNsr
- 0GBxSywbkq7ayWvHnE/Mn52rn4MbRhHuH/22wMtxUuDiDUmm1+SNmHA9T92+fBPdBoEr
- P5ZN1PisMNTXiCuX74pUMYq1axxKh8F+yWeVtz7I4XrLThmtnPA+S+1vzIAyAqRNRqIw
- GPEg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrzNZxuJEleIt3kXZ5kkGPyyb2I5O6Z1rJ85i0JTR1WjXSGLen1G2Wofc5UW0HwpHk/vAGgFV5I2arP@nongnu.org
-X-Gm-Message-State: AOJu0Yx3Qvla/tWy7eS0Uu0NEm4aRT9q2AKKucZJH/lW2Jvxd7h2Zp26
- bot0C9vModyY2yADiq3LfFRCapK4PJ6YJhwRu9Z7k0eR433rwkAWdPLzbgIdJ7qTRq9oHfLiYqj
- WjAmnwjwJIwcNDu4bCcjp0M1I2nFxyfASqEBhLRRZaFMtapiS4Z2DFCbU5A==
-X-Gm-Gg: AR+sD122G/X1oZ4KrI/09eSEf/hgAPp0ZDEgEd8MPAwFKvJBEcQPn2jc10fyZ4HEz8I
- bd3hAO1J4yNTBX6xYQdUQgqYZVZfksdW8rFwFGFlH3ju49jAJ/NcXeFLbcQK818Dr2AsIOsA/c7
- t56mr1LTWhA3gLPyW/WELk5I9aUPSSQA24sP/rtWgb6z8IE9h9HvfvsXM67h9hCvbpeoqvZHolw
- n58NWvOOevi5HnicAfyLOeEzgiRXlkKtUk0bZzKR5OkEDoLMY8UYMvTWl9s2adbuNsCaycwnDPq
- RXdnB8YUvHU1s6IV7KL8246orbtz8yG5XS9gD9nowsjyUhEK3v4gOCxTBO2/IbD6CIkNySrapfB
- +KMtC7JlMhtL9QwjdxJgmQMqgi8f0HPyQIuS/9RMnaYy/kCQb3R8=
-X-Received: by 2002:ac8:7d16:0:b0:51c:92a0:b2cb with SMTP id
- d75a77b69052e-529a84cd3d2mr70090321cf.26.1785136894607; 
- Mon, 27 Jul 2026 00:21:34 -0700 (PDT)
-X-Received: by 2002:ac8:7d16:0:b0:51c:92a0:b2cb with SMTP id
- d75a77b69052e-529a84cd3d2mr70090121cf.26.1785136894171; 
- Mon, 27 Jul 2026 00:21:34 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-496b4ee0e91sm201630615e9.4.2026.07.27.00.21.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Jul 2026 00:21:33 -0700 (PDT)
-Message-ID: <d5f540ee-0d6b-46f7-b3d0-6405bc826eba@oss.qualcomm.com>
-Date: Mon, 27 Jul 2026 09:21:31 +0200
+ d=1e100.net; s=20251104; t=1785136995; x=1785741795;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=TogoSyYAqnOGicRD5tBvpYtkzJNUZYg4OhNGGBdHjPw=;
+ b=LT5UxuOE9KXysPBUQs0WwbC2RXmlGLLvScx1NSNMT8Q4jDpCN+iaMoWl4RTdxVwrOt
+ 09at20732/W/PXxdXWRPaP9m+cLKg8VO2a25QaHN6yE9hR+zz5mqC693jxyn+8eXQRYO
+ RqBcwXY4zOuPHV3cK1qzizSvMtz3OC1r9JPTJ0PpPB8DX85ISYSSyciqz0zh5J7pevXD
+ OFwVDzpwTK/OfaLV9NKONKNec08DGxw74lKUnI8s26uyjBM+mWSuEFynet3qucnxkCvv
+ 1Hvv4e04fNsYnWaigvUV6N+fOizp5nUBECnaSTsmUATT15ZIliYa1EgEprCz5Ap0T6cE
+ 4eHQ==
+X-Gm-Message-State: AOJu0YyOOkV/Qz3z6sV8/GtZ79VfA2BkAqLEZhT6kLn7UsD5nPjgRH0b
+ 3ZxeQrUo+j5xwuWs3cwCvFYV01/4JQhK6lF48cDBTsijVAv7i0u+B61Z
+X-Gm-Gg: AR+sD100KdE09XBUuWpR4/RGbTC69LnciZYbx9Vvon51G3Vj/WUaOAEukeBgx2IoZBu
+ TxYj1xC3PNmSP3LuUM+LnC5kDx/NyccjqdWWrog4p5vtnuxUAs/0Nd/Ce8YpAVdJ30IeAj3NyQN
+ t4I7f7PH3brZyjIU/mzAWXixT+xxACTjd6lkWPoPm5SwGxOPr0JTlfr5aV2UgOP/dV8QbZuiDLC
+ DA4L9h7GD2F2375mP0v0YN3b2M4Q1LIM2IvZMfBjVeoEY6CZ0VkxLEo0WhMYfct4CgHrHovQKm2
+ EM/MGl+hH2MeQfJDOgeN36NlbiN0C3Xwcrmw0ft1iLLL3nVuOlMArhUUadLClz6Y4OQK+ttTy2V
+ WSt183MvlJpg7QwuluCBljSFMAecghmjCzlJ+cYPjvMmpF+DFvEvzbj1CpjlU7CQerwB3q7ODJy
+ FzzvpDLiqziIz6C54ZrIp8dYcmmsoAW+wXfNjk7rGchqE86D2SFunwZIlJxwTqZ5KvHEBpzCglh
+ x8OF6imtcaaAIPnxog4o1auyQ==
+X-Received: by 2002:a05:6a20:729c:b0:3bf:b6e3:fbe1 with SMTP id
+ adf61e73a8af0-3c67dfae843mr7512416637.55.1785136995221; 
+ Mon, 27 Jul 2026 00:23:15 -0700 (PDT)
+Received: from flavien-macm3.ddns.comp.nus.edu.sg ([137.132.220.135])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-314bc419c52sm28481032eec.10.2026.07.27.00.23.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 27 Jul 2026 00:23:14 -0700 (PDT)
+From: Flavien Solt <flavien.solt97@gmail.com>
+Subject: [PATCH v4 0/3] riscv-iommu: always send MRIF notice MSI
+Date: Mon, 27 Jul 2026 15:22:56 +0800
+Message-Id: <20260727-qemu-mrif-v4-v4-0-73e0890ad395@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/12] hw/hexagon: fix machine->fdt leak in qom-test
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
- Jonathan Cameron <jic23@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Wei Liu <wei.liu@kernel.org>,
- linux-cxl@vger.kernel.org, Brian Cain <brian.cain@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-References: <20260727-fix2-v2-0-d0c4831ed7ea@redhat.com>
- <20260727-fix2-v2-8-d0c4831ed7ea@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260727-fix2-v2-8-d0c4831ed7ea@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDA3MiBTYWx0ZWRfXxyg1laA1BpoZ
- YKRAsHqlIX0eKrLIiprGCNLa4za8jgxXJ/H9xjLmfaV5ed6Fq7YMsni4LLltjHGkfBaDNZU4qAy
- zqBhfCVaWaso/6PO3ZuR0uU34Mky7cUG4QtSBwjt+XCWPIojArwY2tOzpxUXA/QgcM2xF24uMFP
- nRueIorzqvMiAoxGVVrMarHhruIefe09eyjUWNgbWPXakiWDXLyXwIKNoXE0OWzC5VsOXNCMTaY
- +KGvJHuiQjr5stS8pX3DSDJMUwLiUuB3K6xW2W+gbyedavVcFJMoGc6r/MsjNa2QViF3MQJxMJm
- hySstcCNpd7Y75+7BK9LIeq8lR0uS7zpSExjhw7QQvHZhBJRlwTQbn6aaG/f6A6MpPBCtZQaLdY
- 5KMlaWD0Ha015ZPizn4W9yAFAJkCP7d/8z17x1WnUyUg71r2CiIC4IvCQO8ktRE3/Qykoe6eS/j
- iVRrz+An4EUxdwyb15A==
-X-Proofpoint-GUID: tGb5uolCEjvZ_8OqummJqlI6DvCd62ul
-X-Authority-Analysis: v=2.4 cv=DNG/JSNb c=1 sm=1 tr=0 ts=6a6706ff cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=CN8BiiQClkPCgTBgyyEA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDA3MiBTYWx0ZWRfX7rRx+dJ7NxJe
- nrYwqihAD26KvX61HT1/5VVe2yRN+Gjs49XEVieTdQHO0dWGuKD1RvSy/T4uXhWckY5xH4u/l5w
- HACf48Haz8h1lehaTTNbGlTh2ETkDQ0=
-X-Proofpoint-ORIG-GUID: tGb5uolCEjvZ_8OqummJqlI6DvCd62ul
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-27_01,2026-07-24_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 malwarescore=0 bulkscore=0 adultscore=0
- suspectscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607270072
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWM0Q6CMAxFf4X02SZkLIL+ivFhK0VqwtRWiAnh3
+ 9nw8Zzce1YwVmGDa7WC8iImr5TBnyqgMaQHo/SZwdXuXLeuxQ9PM04qAy4eqeOGmuC7eCHIl7f
+ yIL8jd7v/2eb4ZPqWRlnEYIxRQ6KxqKOWQ0XDtu239ijrjwAAAA==
+X-Change-ID: 20260727-qemu-mrif-v4-c8e3c3a48b9c
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Andrew Jones <andrew.jones@oss.qualcomm.com>, 
+ Tao Tang <tangtao1634@phytium.com.cn>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Nutty Liu <nutty.liu@hotmail.com>, Flavien Solt <flavien.solt97@gmail.com>, 
+ qemu-stable@nongnu.org
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1785136991; l=2062;
+ i=flavien.solt97@gmail.com; s=qemu-mrif-v4-gmail; h=from:subject:message-id;
+ bh=ZybOj1O2n/iMaiUtLO7CVeo51mOtVb7T1dr8njt9H+c=;
+ b=v55VSux4NAkRWFcaah0qsnr3O9xJBXlZBXL37EI3O4qRJkBrtEnxDBmoPLgYq/cpv9/zm8ELq
+ 56i4jdYXU1wAe1D/fY56Jx0EBOOlF6+udwS5k1Bfc5L+pSyt5jt7fgl
+X-Developer-Key: i=flavien.solt97@gmail.com; a=ed25519;
+ pk=wEVvqF5SMWVnTyKNb8WAo78S30Q6giJmU/VisghJRtI=
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=flavien.solt97@gmail.com; helo=mail-pj1-x102f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,22 +120,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/7/26 22:44, Marc-AndrÃ© Lureau wrote:
-> virt_instance_init() built the FDT unconditionally at QOM
-> instance-init time, so simply instantiating the object (e.g. via
-> qom-test's introspection, without ever realizing the machine) leaked
-> the 1MB FDT blob: machine_finalize() does not free machine->fdt.
-> 
-> Other boards (arm/virt, riscv/virt, ...) build the FDT lazily from
-> their MachineClass::init callback, which only runs when the machine
-> is actually selected to boot. Do the same here by moving create_fdt()
-> into virt_init().
-> 
-> Fixes: 88a8bc7f43ff ("hw/hexagon: Define hexagon "virt" machine")
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   hw/hexagon/virt.c | 9 +--------
->   1 file changed, 1 insertion(+), 8 deletions(-)
+The AIA specification requires an IOMMU to send the configured notice
+MSI after storing an MSI to an MRIF even when the destination interrupt
+is disabled. QEMU currently reads the MRIF interrupt-enable word and
+returns without sending the notice when the matching bit is clear.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Patch 1 lets iommu-testdev select an MSI payload and supplies its PCI
+requester ID. Patch 2 removes the invalid enable-bit gate. Patch 3 checks
+both enable states through qemu-system-riscv64.
+
+The complete RISC-V IOMMU qtest suite passes:
+
+  MRIF notice: enable=0 pending=0x20 notice=0x12d
+  MRIF notice: enable=1 pending=0x20 notice=0x12d
+  6/6 tests passed
+
+V3 used MIME transfer encoding to protect the patch body, but lore still
+received five hard-wrapped hunk headers. This revision resends unchanged
+code through b4 and carries the review tags received on v1 and v3.
+
+Changes in v4:
+  - Resend through b4 after the v3 lore copy remained line-wrapped.
+  - Restore Daniel Henrique Barboza's Reviewed-by tag on patch 2.
+  - Add review and test tags from Nutty Liu and Chao Liu.
+
+Changes in v3:
+  - Attempt to protect the patch body with MIME transfer encoding.
+  - Add Tao Tang's Reviewed-by tag to patch 1.
+
+Changes in v2:
+  - Wrap the fix commit message.
+  - Keep the existing notification comment.
+  - Add deterministic IE-clear and IE-set qtests.
+
+Signed-off-by: Flavien Solt <flavien.solt97@gmail.com>
+---
+Flavien Solt (3):
+      hw/misc/iommu-testdev: support PCI MSI test writes
+      hw/riscv/riscv-iommu.c: always send MRIF notice MSI
+      tests/qtest: add RISC-V IOMMU MRIF notice tests
+
+ hw/misc/iommu-testdev.c         |  14 +++++-
+ hw/riscv/riscv-iommu.c          |  13 -----
+ include/hw/misc/iommu-testdev.h |   1 +
+ tests/qtest/iommu-riscv-test.c  | 102 ++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 115 insertions(+), 15 deletions(-)
+---
+base-commit: 499039798cdad7d86b787fec0eaf1da4151c0f05
+change-id: 20260727-qemu-mrif-v4-c8e3c3a48b9c
+
+Best regards,
+--  
+Flavien Solt <flavien.solt97@gmail.com>
+
 
