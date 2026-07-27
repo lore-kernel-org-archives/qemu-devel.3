@@ -4,115 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E978CC531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 18:23:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07CF6C53209
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 18:24:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woPyg-0003qd-JA; Mon, 27 Jul 2026 14:23:02 -0400
+	id 1woPzH-0003tf-0K; Mon, 27 Jul 2026 14:23:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1woPyc-0003qL-RM
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 14:22:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1woPzF-0003t0-KL
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 14:23:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1woPyY-0001Bh-66
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 14:22:57 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1woPzE-0001Dz-7s
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 14:23:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785176573;
+ s=mimecast20190719; t=1785176615;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=COI8CypffPnNAc2Gjm6Y9N3Y9Zf0EEhSZTu2BDw+xDw=;
- b=AU0owCekUjr2QOj4k4Gwf45Fx4PZpl7KwqGa3Na22RGVWmruS9G4YrjuTJWCTNEaZS5eML
- OJ72B4m4iUG5OmAUptanS0r4PPfn01msEYJfExv/tWIM53K+Bt3oECNoG/bzZDcZrJfl5t
- FQGX2JDWFK/088Trqyh6RDh14lFvGTY=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-569-vNja6Ph4OkujF-5H-G8meA-1; Mon, 27 Jul 2026 14:22:51 -0400
-X-MC-Unique: vNja6Ph4OkujF-5H-G8meA-1
-X-Mimecast-MFC-AGG-ID: vNja6Ph4OkujF-5H-G8meA_1785176571
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-8ef18406878so39965786d6.2
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 11:22:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785176571; x=1785781371; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=COI8CypffPnNAc2Gjm6Y9N3Y9Zf0EEhSZTu2BDw+xDw=;
- b=SAI4jamdvP7lRSYYXoCGKOYxWrymd/1LcRcBNYHgjmwMZelQHIG+k+6OQMK5uEIa1g
- xFHl5ICAnqc2juBI+rGmNUOT0tioaSfWmgGLn1+dXI4uqkfSb0RVtONDZiMILq8Bn9bv
- k6mQru7q/9mWbl4N+YcNyt6QF/BZunk+PilTLtgkgQhmu1dVMupOSk/2dHwvRIcAP4RJ
- wf4EPE4dntUK7pR/SkhQCQJHosjEh5kSpZAWdX+weTIOsXTcTzcr6BaEPOtgdteU6zhf
- d2SW21+bk2I2m1PPWAx29ipZSZ3XuWeHp0HwHPB85fMRIr1PHjT8PKBdjn6ozIPUtVk2
- ckaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785176571; x=1785781371;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=COI8CypffPnNAc2Gjm6Y9N3Y9Zf0EEhSZTu2BDw+xDw=;
- b=JBhIMREPNl7I3lLKH46aGcdTkUMir9peLnruz4ipurUGzPBATRVXrVZQ1kLoWB90XA
- k9foElAEWqCccMtaqzZyDSB62sgsxUjS0Djr4IK0xqSQovtYlwuBNp04e7EnN0Zz+KdE
- Uz5rMx8i9rAnYSt+YjVVk+2e9hs7XOWu+5v0zOlbhI9slZHfPt633+UIC9FCi9Xm3z4b
- wYvRkF0s8Y/NC7atmfrrk53vJU+Ha//bZMwmr2kKg2oKCUebfw7qE+P9LxwDGLMg4Mk/
- eZrWd/cFBfo33dHjNaG7Xxicyv0Ah+HTCOACn5R5862hrWLByNHS0xJ8ji/kZ2sjEKhi
- Otjw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrtzgM0NBdEfl+t48iQWljAQm0VMUC0J+etdFH6dXfOzgRTx6FPy10ZyE1ppRQTHUN1Iwsohz1Nlhgd@nongnu.org
-X-Gm-Message-State: AOJu0Yz7tcZvruIlbNRBjtolxGoVoCQKB1K4lkBLSt+uzaLUGKT86Yph
- k54atsJ9Hvi01YWvcOLS80OanH14+aYvFpfxZMGELNNQO70ScVASJizuR9RqLdjO/v+spZDpg/k
- QHBgvxmVr/KdgF/2IJ8IRGgXMhxKKH74DyiAAJQ7ZBeoVqbWuhxF61f4B
-X-Gm-Gg: AR+sD114XevIYmc/On8M1n/UDMnc5tQaoMYUHoxnOneTyRMzdjAHeDpTZdKVwiNOoIM
- fPS8dEfjnJDnScL24kNVzUl2mLCLxy45rQ6G/yFWgBK0X5FvOC8URh1e2CDJd6tY+LPX2ga/l5I
- ChRPBkdJ5U/tkZ48TwAZEeAdKWves3F/trfNIeYEXKLtY6fQaa0UjZAik6ucxxs0g7ieAb/rL3r
- 6BHrA0Sm9ItAwskb7m+QphqNc02qY3FuBH0IhpKLRKJcGSoRfmhTTe79iTu5TtfH82jXJxOLQqn
- 28wRvNnpZ4RurLO3ezy5VPer4nnNT3rzuTVT+Yi9O/aEHVN4OnJE2uEQoSTsCQSNc7Ue
-X-Received: by 2002:a05:6214:3988:b0:8fd:6de3:dd7c with SMTP id
- 6a1803df08f44-908128e320dmr8521606d6.62.1785176570539; 
- Mon, 27 Jul 2026 11:22:50 -0700 (PDT)
-X-Received: by 2002:a05:6214:3988:b0:8fd:6de3:dd7c with SMTP id
- 6a1803df08f44-908128e320dmr8520936d6.62.1785176569652; 
- Mon, 27 Jul 2026 11:22:49 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-907e871ef16sm72050916d6.48.2026.07.27.11.22.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 11:22:49 -0700 (PDT)
-Date: Mon, 27 Jul 2026 14:22:36 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Fabiano Rosas <farosas@suse.de>, Alex Williamson <alex@shazbot.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/2] vfio/migration: Parallelize device state transitions
-Message-ID: <ameh7JBQX9yGk86M@x1.local>
-References: <alenmdWqD-x3bYll@x1.local>
- <5513c20b-0f5c-4bf2-93fc-d1619e3319c1@maciej.szmigiero.name>
- <aljc2-4XfpSkX_ay@x1.local>
- <cb1bdf37-58e8-4498-bc56-d65c4fcc3fa0@maciej.szmigiero.name>
- <al42_qzCLAjE-Mch@x1.local>
- <b83e940e-554f-491e-a6ce-db990c4166bc@maciej.szmigiero.name>
- <al-4mtSxvaaY5PDH@x1.local>
- <5d745423-c4a1-4d99-a10c-18c5a0cdac43@maciej.szmigiero.name>
- <amJv85p7LKmBMyK9@x1.local>
- <34766fe7-987b-4564-8ef3-20e11cffecf0@maciej.szmigiero.name>
+ bh=ZXDlJ8n3xPDBjhT4EY3xq+fK/7i5VAnTGhoZVp2UdkA=;
+ b=IjTQOBE9Wx5HnHfdk0Tc+vu2UILsL/Zu1VhlYV0mSsZaRaTEkn5DzF2OCuPx/1uNhDydef
+ AW+1SWTyWYC27/P/X5sVeDLSiP2GwN/8LnorqRSFSkiwkfJDO2R1rBuRSCqMqFOH7EAC22
+ pvusbyZAbzT0PRUAM6S1V928np6vM+k=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-290-LVGBbTrvN66hTohZ7yIYHQ-1; Mon,
+ 27 Jul 2026 14:23:32 -0400
+X-MC-Unique: LVGBbTrvN66hTohZ7yIYHQ-1
+X-Mimecast-MFC-AGG-ID: LVGBbTrvN66hTohZ7yIYHQ_1785176609
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3AE5A195E909; Mon, 27 Jul 2026 18:23:28 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.116])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A7A5530010D0; Mon, 27 Jul 2026 18:23:25 +0000 (UTC)
+Date: Mon, 27 Jul 2026 14:23:24 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: ConKite <connorkite@gmail.com>, qemu-devel@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Haixu Cui <quic_haixcui@quicinc.com>,
+ Raphael Norwitz <rnorwitz@nvidia.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Milan Zamazal <mzamazal@redhat.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ qemu-block@nongnu.org, virtio-fs@lists.linux.dev,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Eugenio =?iso-8859-1?Q?P=E9rez?= <eperezma@redhat.com>,
+ Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
+Subject: Re: [PATCH RFC 00/15] vhost-user: isolated memory
+Message-ID: <20260727182324.GA371693@fedora>
+References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
+ <a45f108c-f897-40b7-a996-9e55150c09c8@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="7gZyb6NXvQiWaoF9"
 Content-Disposition: inline
-In-Reply-To: <34766fe7-987b-4564-8ef3-20e11cffecf0@maciej.szmigiero.name>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <a45f108c-f897-40b7-a996-9e55150c09c8@rsg.ci.i.u-tokyo.ac.jp>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,410 +106,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 27, 2026 at 06:40:09PM +0200, Maciej S. Szmigiero wrote:
-> On 23.07.2026 21:48, Peter Xu wrote:
-> > On Thu, Jul 23, 2026 at 12:11:30PM +0200, Maciej S. Szmigiero wrote:
-> > > On 21.07.2026 20:21, Peter Xu wrote:
-> > > > On Tue, Jul 21, 2026 at 05:07:53PM +0200, Maciej S. Szmigiero wrote:
-> > > > > On 20.07.2026 16:55, Peter Xu wrote:
-> > > > > > On Fri, Jul 17, 2026 at 04:31:32PM +0200, Maciej S. Szmigiero wrote:
-> > > > > > > Inside the VFIO code such sync point for VFIO devices could/should indeed
-> > > > > > > be created, but then it's not available for these other (non-VFIO) devices
-> > > > > > > for the purpose of avoiding the regression from the previous paragraph.
-> > > > > > > 
-> > > > > > > However, replacing the order priority/adjustment mechanism from patch 1
-> > > > > > > with the "pre" and "post" handlers I described above would avoid having
-> > > > > > > that regression (and help fix the vhost-net case too).
-> > > > > > 
-> > > > > > I'm not sure I fully get the pre/post handlers idea, I think it sounds
-> > > > > > working, but in all cases I want to decouple it with patch 1: I don't think
-> > > > > > it requires patch 1, am I right?
-> > > > > 
-> > > > > It wouldn't require the *current* patch 1 but it would need to be implemented
-> > > > > in some preparatory patch so it would effectively be a new patch 1 (or a set
-> > > > > of patches replacing patch 1).
-> > > > > 
-> > > > > Assuming that we would go this route instead of the one you described below.
-> > > > > 
-> > > > > > Now if we want to avoid this "theoretical regression" and solve both things
-> > > > > > together.. I think we may need to refactor the notifiers mechanism.
-> > > > > > 
-> > > > > > Firstly, I hope we're on the same page that essentially prepare_cb() is the
-> > > > > > priority mechanism here, we only have HIGH and NORMAL priority, where cb()
-> > > > > > is the NORMAL priority.
-> > > > > 
-> > > > > Yeah, I think the current situation could be described this way.
-> > > > > 
-> > > > > > We also need to persist depth concept per-notifier, I think we should start
-> > > > > > by renaming VMChangeStateEntry.priority to depth, add a comment explaining
-> > > > > > it (on different order of invokations on VM start/shutdown).
-> > > > > > 
-> > > > > > But then, I don't think we need anything as complex as pre/post hooks with
-> > > > > > hashes.  I think you're right then we need SYNC point which can be
-> > > > > > essentially a priority notifier that is in the middle of HIGH and NORMAL.
-> > > > > > 
-> > > > > > Hence, I want to see if below should be the easiest:
-> > > > > > 
-> > > > > >      - Rename VMChangeStateEntry.priority to depth
-> > > > > > 
-> > > > > >      - Normalize prepare_cb() into VM_CHANGE_NOTIFY_PRI_HIGH, making cb() to
-> > > > > >        be NORMAL, OTOH.  With this, prepare_cb() needs to be registered
-> > > > > >        separately with qemu_add_vm_change_state_handler_prio_full().  The
-> > > > > >        function now should drop prepare_cb() but instead take a real
-> > > > > >        "priority" value of VM_CHANGE_NOTIFY_PRI_*.
-> > > > > 
-> > > > > And where the qdev tree depth will go in a call to
-> > > > > qemu_add_vm_change_state_handler_prio_full() - as an additional "depth"
-> > > > > parameter?
-> > > > 
-> > > > Yes.  The rename change I mentioned above should have done so.
-> > > > 
-> > > > > 
-> > > > > > 
-> > > > > >      - Introduce VM_CHANGE_NOTIFY_PRI_SYNC, in the middle of PREPARE / NORMAL.
-> > > > > > 
-> > > > > >      - VFIO can now register its 3rd notifier against SYNC.
-> > > > > > 
-> > > > > > All rest devices will need to shift part of its logic into PRI_HIGH to
-> > > > > > either quiesce DMA or enable the backend to accept DMA (when on dest QEMU).
-> > > > > > None of them will need SYNC only if they'll also switch to an async thread
-> > > > > > model.
-> > > > > 
-> > > > > In principle, this *should* work but with some caveats:
-> > > > > * vhost-net would need the DMA-stopping part of its cb() handler separated
-> > > > > and moved into prepare_cb(),
-> > > > 
-> > > > I thought this is required with whatever priority impl we will have, even
-> > > > if I don't think we need to fix it right now unless you wanted to..
-> > > 
-> > > Theoretically this depends on VM's PCI topology but indeed one can argue
-> > > it's a "pre-existing condition".
-> > > 
-> > > > > 
-> > > > > * There's some restore code in "PowerPC sPAPR XIVE interrupt controller"
-> > > > > running from cb() at prio 0, so originally always completing before VFIO device
-> > > > > was switched into RUNNING state.
-> > > > > I'm not 100% sure if it's okay to make VFIO device reach this state before
-> > > > > that interrupt controller restore code finishes,
-> > > > 
-> > > > Is anyone using VFIO migration on PPC that you're aware of?
-> > > 
-> > > No, but at the other hand it's hard to be sure of that.
-> > > 
-> > > Also, see the next paragraphs about one or two additional possibly
-> > > affected interrupt controllers.
-> > > 
-> > > > If not, maybe
-> > > > we don't need to worry too much for now.  Meanwhile, this looks like an
-> > > > existing issue as well.
-> > > 
-> > > It's an existing issue *on the target* but for a slightly different reason:
-> > > reading VFIO uAPI it seems that a device is allowed to generate interrupts
-> > > already in RUNNING_P2P state.
-> > > And this state is/was reached already after prepare_cb() handlers, so before
-> > > that PPC interrupt controller handler running from cb() had chance to restore
-> > > it.
-> > > 
-> > > However, it does not seem to be an existing issue *on the source* since
-> > > there INTC cb() callback are currently always guaranteed to run after the
-> > > VFIO device has already reached STOP_COPY and so was prevented from
-> > > generating  further interrupts.
-> > 
-> > If we rely on intc have very small (or, 0 by default) depth, then yes.
-> 
-> These interrupt controllers don't use the vm state change handler
-> registration functions that account for depth -
-> qdev_add_vm_change_state_handler*().
-> 
-> Instead, they use qemu_add_vm_change_state_handler(), which explicitly
-> uses/forces priority of 0.
-> 
-> I presume that's intentional to guarantee correct ordering - the commit
-> that added ability to specify other priority values (60dbc5a1c517 - "add
-> qemu_add_vm_change_state_handler_prio()") even said that this new priority
-> value is "necessary when handlers depend on each other".
+--7gZyb6NXvQiWaoF9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It was for ordering scsi bus and virtio device only at that point:
+On Sat, Jul 25, 2026 at 12:45:08PM +0900, Akihiko Odaki wrote:
+> I also hope this could fix vhost-user for TCG:
+> https://gitlab.com/qemu-project/qemu/-/work_items/2092
+>=20
+> Perhaps the memory isolation should be enabled by default for TCG.
 
-https://lore.kernel.org/qemu-devel/20190620173709.14753-4-stefanha@redhat.com/
+If I understand the bug correctly, TCG needs the dirty bitmap to be
+up-to-date and vhost-user's dirty logging mechanism does not suffice.
+Memory isolation would keep the dirty bitmap up-to-date but copying data
+between guest RAM and the isolated memory would add overhead.
 
-> 
-> > > 
-> > > Here, it would be a (at least theoretical) regression.
-> > 
-> > I don't yet get what is referred as "regression" here.  If what you said is
-> > correct (which it seems true, that IRQ can be generated during PRECOPY_P2P
-> > and RUNNING_P2P), then dest QEMU should be broken already with VFIO being
-> > able to prepare_cb() converting devices to RUNNING_P2P.
-> > 
-> > That's not a regression by either your current patch or what I proposed
-> > previously. This is then a bug existed since prepare_cb().
-> 
-> By "regression" above I meant the situation that was described in the above
-> paragraph, that is *on the source*.
-> 
-> I think there's confusion here because the situation with respect to
-> prepare_cb() that you are describing above happens *on the target*:
-> as I wrote above on the target one can argue it's indeed a "pre-existing
-> condition" - so *not* a regression.
-> Not so much on the source where the current code *guarantees* the correct
-> ordering.
-> 
-> Also, the registered handler code is obviously doing very different thing
-> on start vs stop so having no ordering requirements/issues on start does
-> *not* imply there aren't any on stop.
-> A trivial example: the ARM GICv3 controllers handlers are even NOP on
-> start/target but they still do certain sync on stop/source.
-> 
-> > Meanwhile, it was also an accident if it wasn't a bug even before it,
-> > after all intr chips are still using qemu_* helpers to register,
-> > where depth isn't accounted.
-> 
-> But "depth" in the current code is a qdev thing, the core system/runstate.c
-> only know "priority" and the priority of these INTC *stop* handlers
-> guarantees they are run after all VFIO devices are in STOP_COPY state.
-> 
-> In other words, not using "depth" for registration does *not* mean unordered
-> with respect to qdev handlers - actually quite the opposite.
+For the TCG use case it should be possible to use just
+vhost-shadow-virtqueue.c without isolated memory so that
+vhost_svq_flush() -> virtqueue_fill() -> virtqueue_unmap_sg() ->
+dma_memory_unmap() keeps the dirty bitmap updated. There is still an
+overhead because the virtqueue kick/call is intercepted by QEMU, but
+there is no memcpy.
 
-IIUC if irq chips want to order against any device that uses irqs, it
-should at least have all of them registered via qdev API to provide such
-depth info.  My feeling is the irq chip order isn't intentional, but I
-didn't check further.
+The TCG use case is something that could be tackled once memory
+isolation is finished. If no one has time to implement the pure svq
+solution for TCG, then memory isolation could be used in any case.
 
-> 
-> > In reality maybe we should have done that; in case of an irq controller we
-> > should make sure the depth should be very small, at least smaller than the
-> > rest / normal devices to make sure its order of operation, otherwise even
-> > emulated devices seem to be prone to irq lost during vm start/stop or
-> > migration.
-> 
-> The ordering is already correct on *on the source*, but as you wrote above,
-> due to the existence of prepare_cb() handlers it might not be *on the target*.
-> 
-> > > 
-> > > What's more, there seem to be one more interrupt controller in two
-> > > variants/implementations that also do similar things on the source from their
-> > > cb() handlers: ARM GICv3 basic flavor and ITS flavor.
-> > > 
-> > > > For the fix whenever wanted, IIUC the intr controller should register both
-> > > > HIGH and NORMAL priority notifiers, then when VM stop, disable the
-> > > > controller only in NORMAL notifier, and when VM starts, enable the
-> > > > controller only in HIGH notifier (we could think about better names for the
-> > > > three steps, maybe it shouldn't be called as "priority" as well even if the
-> > > > executions will be strictly ordered).
-> > > 
-> > > As I wrote above, it looks like a device is already allowed to generate
-> > > interrupts once it reaches RUNNING_P2P state.
-> > > Correspondingly, PRE_COPY_P2P only quiesces *peer-to-peer* DMA, there's no
-> > > mention in the specs that it prevents MSI DMA traffic, let alone INTx
-> > > interrupt generation.
-> > > 
-> > > In other words, to implement this properly an interrupt controller would need
-> > > to have its start/restore handler called at some VERY_HIGH priority (called before
-> > 
-> > IIUC, my solution proposed should be fine as long as the INTR chip will
-> > split its vm state handler into two, "running" handler inserted into HIGH
-> > prority,
-> 
-> This needs this INTC handler to be run before VFIO launches its device state
-> changing threads so INTC handler should be registered with what will in the
-> new code be called "depth" = 0 (or what is called "priority" in the old code)
-> at HIGH priority, while VFIO threads will be launched at their qdev tree depth.
-> So far so good.
-> 
-> > but "!running" handler inserted into NORMAL priority, as I
-> > discussed above.
-> 
-> This needs this INTC handler to be run after VFIO collects its device state
-> changing threads so again with "depth" = 0.
-> 
-> This would be fine - as long as VFIO thread collection *on stop/source*
-> happens at some "depth" > 0 - see the caveat down below.
-> 
-> > This also depends on that we will notify each queue (one
-> > for each priority) with the depth in mind, so we will make sure to disable
-> > / quiesce the irq chip last (NORMAL, depth=0) when stop, and enable it
-> > first (HIGH, depth=0) when start.
-> 
-> Yeah.
-> 
-> > 
-> > NOTE: we have HIGH/SYNC/NORMAL, so NORMAL is the lowest priority, if we
-> > call it like that.  We can rename them..
-> > 
-> > > VFIO device state change threads are launched) and have its stop/suspend handler
-> > > called at a VERY_LOW priority (called after VFIO threads are collected) -
-> > > this would be the equivalent of running these INTC cb() at prio 0 during VM stop now.
-> > > 
-> > > Assuming, of course that the interrupt controller actually needs to do some work
-> > > on VM start to be able to accept interrupts and that it needs to do some
-> > > saving work on VM stop which can't be done until no new interrupts could came.
-> > 
-> > Yes, I also didn't read into all irq chip code yet.
-> > 
-> > > 
-> > > > 
-> > > > > 
-> > > > > * The postponed dirty memory logging stop handler also runs from cb() at
-> > > > > prio 0, so currently always finishes before VFIO device was switched into
-> > > > > RUNNING state.
-> > > > > This handler also stops DMA logging for VFIO device or its container,
-> > > > > but here I presume it should be safe to do so while the VFIO device has already
-> > > > > started dirtying memory even though this couldn't happen in the existing code?
-> > > > 
-> > > > It's only stopping the tracking, results of the tracking shouldn't matter
-> > > > anymore on whether some DMA was trapped.  It looks safe no matter where we
-> > > > put it.
-> > > > 
-> > > > > 
-> > > > > * There's some sync/setup of x86 vAPIC state (for 32-bit guests?) also running
-> > > > > from cb() at prio 0.
-> > > > > Not sure if this needs to finish before VFIO device gets switched into
-> > > > > RUNNING state.
-> > > > 
-> > > > Doesn't look relevant.  IIUC, only anything that is DMA capable can be
-> > > > relevant.
-> > > 
-> > > It's relevant since a VFIO device could generate interrupts as soon as it
-> > > is in RUNNING_P2P state.
-> > > 
-> > > However, this one here is start-side so it would be an existing issue rather
-> > > than a regression.
-> > > 
-> > > > > 
-> > > > > These 3 possible issues above (besides vhost-net move/refactor) could be
-> > > > > theoretically worked around by moving these callbacks from cb() to a new
-> > > > > priority *before* VM_CHANGE_NOTIFY_PRI_SYNC (maybe called
-> > > > > VM_CHANGE_NOTIFY_PRI_SYNC_BEFORE or similar) as I presume they won't need the
-> > > > > VFIO device to reach DMA-accepting state but at the same time they shouldn't
-> > > > > delay the launch of VFIO device state changing threads from VM_CHANGE_NOTIFY_PRI_HIGH.
-> > > > 
-> > > > IIUC we don't need a 4th step here, correct me otherwise,
-> > > 
-> > > Depends whether we want to fix the existing issues or not.
-> > > If not, then we don't need the extra priority level on the target.
-> > > 
-> > > However, I think we still need a possible extra level (VERY_LOW or similar) on
-> > > the source to prevent possible regression with respect to the current code.
-> > 
-> > I'll re-comment after you read above.  In short, we have 3 priorities
-> > (HIGH/SYNC/NORMAL, but again, prone to be renamed) but that's not the only
-> > way we order things: for each priority we will still notify with "depth"
-> > order, it's just that we will revert the depth order depending on running
-> > or not.  irq chip issue is better solved with "depth" setting right all
-> > over the places, because it has a semantic of "depth" not real "priority"
-> > (e.g. turns off last, turns on first).
-> 
-> As I wrote above, if we do INTC at "depth" = 0 then we'll want to collect
-> VFIO threads *on stop/source* at "depth" > 0.
-> 
-> At the same time, we want to have these threads running in parallel with
-> other cb() handlers at NORMAL priority for as long as possible.
-> 
-> Here, it seems that just using "depth" of 1 for VFIO threads collection
-> *on stop/source* seems to work since every other existing cb() handler
-> seems to sit at a minimum "depth" of 2-3.
+Stefan
 
-Why VFIO needs to adjust "depth"?  Can't it always be the depth of qdev
-tree?
+--7gZyb6NXvQiWaoF9
+Content-Type: application/pgp-signature; name=signature.asc
 
-On source side:
+-----BEGIN PGP SIGNATURE-----
 
-- Phase 1 HIGH should turn all devices (VFIO or emulated) to be into P2P
-  state.  Things like buses or irq chip not included; they need to
-  be ordered hierachically / properly.  Other that that I don't see why
-  VFIO cares about other devices if it's only about "do not initiate any
-  more DMA at this stage".
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmpnohwACgkQnKSrs4Gr
+c8jIxQgAuhwfSxCzUAdPtmkhQFxI+8GOr3btP712SYvxsAHGWWd4zJ53QTx8uue5
+ElpE2sc3AGz1CX++E+AcyrOI2Ut1wnsiAF42M3Zx5eHfpi7X4MEjf2uDUcxcAiEb
+RMjgfDl7gOBll5xnICbtouc3N+5PL9KyFXhLV4/kVsS8EamcCfO+X+N82jDxVhFG
+gDUUuBWNk2kqla8RffqOO63ccVkWTDwUYnfWWBAC+urVi8E+QGh8RgnW6NS0hXPU
+ElgGeB0pRrbfow60Rbd8tQxeF3mLifE3dd9AJTonR7Ivf3CrSvhv7EgdOCiczEQr
+Sx+vK5c7gHAJizeupduM8aZCfV9S2g==
+=3WQy
+-----END PGP SIGNATURE-----
 
-- Phase 2 SYNC vfio should be the only user sync with HIGH's threads
-  making sure P2P conversions complete for vfios, then kick off the 2nd
-  phase for all vfio devices.
-
-- Phase 3 NORMAL should turn all devices STOPPED.  Again, I don't see why
-  we need specific ordering here amoung all the normal devices.
-
-> 
-> However, on the *target/start* the call order vs "depth" is inverted,
-> so ordering VFIO threads collection after every other existing cb()
-> handler needs them registered at INT_MAX or other very high depth.
-> > 
-> > > 
-> > > But that's a minor detail as I presume adding additional level would be essentially
-> > > only a small data addition in some array and/or enum.
-> > > 
-> > > > while the 3rd
-> > > > SYNC was only needed for VFIO's threaded approach.
-> > > 
-> > > I assume that we're designing the "plumbing" that allows doing async/threaded
-> > > VFIO state change safely here.
-> > > 
-> > > > > 
-> > > > > Also, the final VFIO thread joining/collection does *not* need to be ordered
-> > > > > with exiting cb() handlers, so it should really run at VM_CHANGE_NOTIFY_PRI_LOW
-> > > > > (below PRI_NORMAL) for best parallelism.
-> > > > 
-> > > > Yes. VFIO device only need its SYNC / MEDIUM priority notifier be ordered
-> > > > with NORMAL notifiers, to make sure all VFIO devices switched to P2P state
-> > > > before the NORMAL notifiers.
-> > > > 
-> > > > > 
-> > > > > The disadvantages of this overall design are that it would need coordination
-> > > > > between different sub-maintainers, increase the "blast radius" of the patch
-> > > > > set to different parts of QEMU code, and so obviously would be more
-> > > > > regression-risky than the aforementioned "pre" and "post" handlers design.
-> > > > > 
-> > > > > Especially that probably few people would be able to test, for example,
-> > > > > the PPC XIVE case with VFIO.
-> > > > 
-> > > > We shouldn't justify a solution by "how many subsystems it touches".
-> > > > 
-> > > > I was suggesting to solve one problem at a time, but then prepare_cb()
-> > > > already does it.  You pointed out there might be real regression on VM
-> > > > start path, I agreed.
-> > > > 
-> > > > I thought you wanted to fix all things, which I'm ok with and agree it is
-> > > > better, then it's unavoidable to touch all modules.  But yes, we need to
-> > > > reproduce the problems and verify the fix.
-> > > > 
-> > > > The middle ground is we define the notifiers to suite for the solution we
-> > > > think will fix everything, but you only need to fix VFIO and leave the rest
-> > > > for later. We can discuss the problems in the cover letter or commit logs
-> > > > for future works on top.  After all, in this case of VFIO to do the right
-> > > > things it does need three steps / notifiers.
-> > > 
-> > > I think if there are existing issues then it's probably okay just to document
-> > > these for future reference.
-> > > 
-> > > However, I would be vary of creating any clear regression, especially on
-> > > a hardware that I can't test.
-> > 
-> > Understood, I have no good idea on testing.  IIUC what needs to be tested
-> > for irq chips do not need VFIO involvement, maybe some regression test
-> > should be enough on either migration or even stop/cont.  May need some help
-> > from arch developers indeed if we want some better coverage.
-> > 
-> > If you can think of anything that doesn't need to mess up the depth as
-> > patch 1 does (so if you want to reuse depth, make it a real "depth" would
-> > be fine, not a mixture of depth+prio), then maybe we can check that. I just
-> > can't think of anything else yet.
-> 
-> Overall, I think that the design that we discussed above is workable,
-> barring some unforeseen troubles with its implementation or runtime testing
-> issues.
-> 
-> I also feel that at this point it will be much better to prepare a v2
-> and then tweak it as/if necessary.
-> Agree?
-
-I always prefer having some code and do some real tests to support
-discussions, rather than pure discussions.  Please send it whenever you
-feel comfortable. E.g. I treat the irq issues still theoretical until we
-can provide a reproducer.
-
-Thanks,
-
--- 
-Peter Xu
+--7gZyb6NXvQiWaoF9--
 
 
