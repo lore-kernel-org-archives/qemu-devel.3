@@ -4,162 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AEE2C531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 12:01:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C511C531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 12:05:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woK0f-0001uR-II; Mon, 27 Jul 2026 08:00:41 -0400
+	id 1woK4T-0003Se-Rc; Mon, 27 Jul 2026 08:04:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1woK0X-0001ld-9p; Mon, 27 Jul 2026 08:00:35 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1woK4T-0003SK-0q; Mon, 27 Jul 2026 08:04:37 -0400
+Received: from mail-westeuropeazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::6] helo=AM0PR02CU008.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1woK0V-0004wI-GK; Mon, 27 Jul 2026 08:00:33 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66RAIXMq1959888; Mon, 27 Jul 2026 12:00:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=ZiRXFb
- lLyNSz2PxnE6FGB8GKCWmnNpOTvC/T3Wcpv6w=; b=dnPgeoSRwGvDkbXa/aWNFK
- qWOwvdt3FTod7Ve9NOz9dhPkHQdRWMrRtVGOQuDG40L9w2WUlQg7pvSdt22ywT9K
- Ir7gJygugCvNf3O0PfHFfnVn+jjd+b7c2PpnOO5JkAuJaYWv1S9XUo16E8+hKRk/
- gct1TASi5dpUQ6yQ6sZvmYJF1KI4gWEzWybzn2fFHcf2S3ooWJJjVc0yj4E7J6ft
- sZz6Ik3g/uccVJvVfVb+W5AWfN746+WT+IVfL83ErSXW0QMyYDdAkrgJzzDoTu9e
- iTEVxmc/MdZVA3HInu9DVNo0YI2rIQdZ8yTQnNGBe3dhbB8HwpZ1DmbfpEcbe4jw
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuwcqeem-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Jul 2026 12:00:25 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66RBuH2n022451;
- Mon, 27 Jul 2026 12:00:24 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn7uvwc9b-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Jul 2026 12:00:24 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66RC0ND129032724
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 27 Jul 2026 12:00:23 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0869358060;
- Mon, 27 Jul 2026 12:00:23 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 164F95806C;
- Mon, 27 Jul 2026 12:00:22 +0000 (GMT)
-Received: from [9.61.50.224] (unknown [9.61.50.224])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 27 Jul 2026 12:00:21 +0000 (GMT)
-Message-ID: <0b7ce291-b12b-4c4c-93b7-e7945bdd622b@linux.ibm.com>
-Date: Mon, 27 Jul 2026 08:00:21 -0400
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1woK4R-0005Rr-2h; Mon, 27 Jul 2026 08:04:36 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CIyQC9UAN16L5jGW3z3k9z3/DKAdfQlkGiPx+AjKeOpy/4gwP/dZn2inVx0UMYeSJqLtDZ/KjGz7VhAiTCEDRQqGIz2Wq+m5mwRqgi7Bf7nliou6Vc6E1gG0UvqYx6kmoNtqrktY5kVwI8fXQkdrbugtxJGbB9rhpIUfQSUeOSQX5itELTM8Z3XKCPYCgbfT+6qyzgSJzgMbQfx/Gm4BjFyW9sRgFg1iD5uJS8datGBAGf/OOXDyF76J1TB8kHJmIYEUIwm31Dixfr2AjtODEguwZ6+hBBurfqMBi84E7T0r1vN9Ac6zMpdQhVZHyk0ODu+ehQ6AOKeFPGP6k59YvQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HG0WF/UGObF/yo+mOAr6MnboAUYVLow/UmIY/H17jzE=;
+ b=qDoLg/i+MFw2mkGXo4s25ZV/4Tk1DJRNzPVPUmb4t2QvEOkQn1ciC1gPli2x70ooBZMxS0Ku8P0vu4g0ipccTdJN6kadTNwvqBFUlcnmjCPgVSo9zSjg0fZXuyis0h/qeBvHxI/TTRxr0r8by/WvEP4altyYJOlSjWFKBrafSTjQrcaRxhO2WFlUmKOJfO22cVycaBSmiwUDbJL3bdE5rIbmHuOnuSpiXafdCY39t64RRxP5tqO84tOLyUJgBo4yok3ieBoIu/v4OahU3plwtq39lHMciD+IoIDSnxUELpy/q+4whhpsDYyTtX8gvZvOmHuocCBlyTVsNcr50YIKOg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=HG0WF/UGObF/yo+mOAr6MnboAUYVLow/UmIY/H17jzE=;
+ b=pHqNfVCx7FRMsHzbkM6iwnr2CSbFenDislds6YnkT2SJ12XAvexvbEShs0PUttXDXVruTKf0lYcxYgRozYFezHV/i+7XBOkeisQSyL1pw4jl+6mbYCQV+2tRViXhbj+LJXCuEeG9BXpyqlwWH1vxJZwSrxqAk8d9QvDCJI9PSosgfIYMME4ztaNVOxO4xtUxJ1S3n+ehebq/uRQshf2DVZmfS6UAOOUYz4F4Dw4sNoNvD9Kb1XjdACThDQ7S5+qJr481rmFzsgBGoxW0cw6xal7ZmVfUZ//8Vf1Tk/NPeNFvpHhmoXt0qDU7Zar/uTBGHfOLJH27STlH5qBMYGPhGg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by AS4PR08MB7831.eurprd08.prod.outlook.com (2603:10a6:20b:51b::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Mon, 27 Jul
+ 2026 12:04:27 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0245.012; Mon, 27 Jul 2026
+ 12:04:27 +0000
+Message-ID: <89b586fc-4fe9-4378-8098-7d0215a61d5f@virtuozzo.com>
+Date: Mon, 27 Jul 2026 14:04:25 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] more hardening fixes for s390
-To: Christian Borntraeger <borntraeger@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
- Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Hendrik Brueckner <brueckner@linux.ibm.com>,
- Joshua Daley <jdaley@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Jared Rossi <jrossi@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20260727115052.24289-1-borntraeger@linux.ibm.com>
+Subject: Re: [PATCH v3 0/1] coroutine: fix lost wakeup in qemu_co_sleep_wake()
+To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>
+References: <20260610115850.2410566-1-den@openvz.org>
 Content-Language: en-US
-From: Eric Farman <farman@linux.ibm.com>
-Autocrypt: addr=farman@linux.ibm.com; keydata=
- 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
- y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20260727115052.24289-1-borntraeger@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <20260610115850.2410566-1-den@openvz.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: y-H4b3GEBAIOdj2JwXhMTy3SQQCATJVl
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDExNiBTYWx0ZWRfX0Iioop3ymwg8
- /c5fvbho6lX1CMgoIyO1rwAfL/EXB8vJ3ezUoseI+//CFRO2ivpzJNpV7ISQQvmwbpO4suzLAUO
- Qof9LggQxRFiTKr+iIpl+7wXyMuEIwc=
-X-Authority-Analysis: v=2.4 cv=E/z9Y6dl c=1 sm=1 tr=0 ts=6a674859 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=NLiCwHATAAAA:8
- a=VnNF1IyMAAAA:8 a=5lzg20ZYiTl3fW5vGnQA:9 a=QEXdDO2ut3YA:10
- a=F9tHCgz3TLBaZgltkx5D:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDExNiBTYWx0ZWRfX9k6+5laFwW2D
- CgbU+94VAHmGZlpkB9n2hBWXJdNM70G63wmXlJGI91oEPx7nZd8ODOKK6APktok0y3ohzPP/Wy/
- ikELMDMGjfFfDGuff3nuXNEEOgxXwp/z22imlIBu/PeJb5pjF8tJ7Dq9qsDCZGwkfDGx5jUGm4Y
- 8qZO7CpkBUwR/PwC/yX0us9bc8XdDho6r5VUZ1HGV199+JElFC3fA7hFLvZ0QOYVJQr9UJ5iFgZ
- 1wkiiBQa43DdFUsUQlSaI8zi7oMz03iPxir+h2nrc3HqcBh1Z33qhcifUcYp6Sk1mVnU+c0cAv3
- cIEkQ5KTzhfT1nlTIOQT1apgzWkLSbFYSFl4wqONMsnvvnRVnrPjRmZU3OVkzqQAI14FPnBcJXR
- VvGEMSRimk13/FDvmtMy/kmhSwKmRFOUdWAya8HgavtxoDTSqesfgZvVgp4qd18l/4e5U6amhUn
- cf3r2iTyEAe8UgWunDg==
-X-Proofpoint-GUID: y-H4b3GEBAIOdj2JwXhMTy3SQQCATJVl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-27_03,2026-07-24_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 spamscore=0 clxscore=1015 phishscore=0
- lowpriorityscore=0 bulkscore=0 malwarescore=0 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607270116
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-ClientProxiedBy: VI1PR04CA0088.eurprd04.prod.outlook.com
+ (2603:10a6:803:64::23) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|AS4PR08MB7831:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2b69ec85-9eb7-466c-f087-08deebd734b4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|1800799024|10070799003|23010399003|376014|6133799003|56012099006|10067099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: M4VxtRnXEfL4S8UBUgvU3S5iQygyPDdJEdx9We7yiF7iHPtmjsk9aUrS+OoltxsMb9+FwGmOhTXAB9HMfbMbxRdtjRaMshShCNRgSrK43DWOlfGwlGDdzOcqAvk/VxltHnTRnLsYbxutYL9wZKNeiKTS0q3D9XrZNEMhO1VFKVE/MgZFtOqiq1fwQJzVQ96IdH04mS/6sVwuKHY1RKcKriBeKZr/hsEGBOSvwO74hfbpPH+8Um/CMwpO9e+6gEYNytpQWBLIPP8tfTWU9Pjpp/fsf6gMukYmea1dCbsSSacwlbBrzz3HWVZNAGlEvWkd3qggVgzuUxMY8Sg8/LaYLVjvcNBMw1e0GNHWwQpGZStLeIHOPqiIdDHw5TElqRqImpCBDaDdlhU+KoooaHl/2YEDxnvVnxdNy+JqYqUQsQq22jY8aTRkPqbz9vZfmgMc+PQrRKYlipfAaOjjUJZfYalhnjl+YSSCQhH6J+NHCIdVZNMMlYFWl02ON53ZnVKzwx83g6YYo0U8Z+0Yx7O+dbQsfGz4zgch+3BDWHRLuZIEGS/77KDQGOYGJpK0aGj5wQ6eSPRSb3PYFtcJHOIY3fODD5p/iB1jEyii5YLPfXn+5PMVWu7dyDZf9JYP6pJpSd6sdMZ876BZVKcGEwx27IBe5GpJX3TCXLpQ2qhjSvw=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(10070799003)(23010399003)(376014)(6133799003)(56012099006)(10067099003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MlA3UWc4NVZkSEZBaWJTZ2pVQ0RQWjNxTXcrcnd5ZThnSi9tMEpkWHd1ZHFs?=
+ =?utf-8?B?M2Frb2pwSU10ZEtDN3BzYWRoN1NLckZRQVR0Y0ErZGR5MHNycXlWQ0Qrd3BO?=
+ =?utf-8?B?L0RUNmVhdXpPYzhkZFRBS0tuMGwxL0pwSFJpQzlLeTdXb0xSN3Ivc29iWThu?=
+ =?utf-8?B?eWQ4ZnRNby9LVGhlOWJwcTY0TXRxUUVqd1MwQ1ZsNU9DZU5DYkRLRmlOSGFW?=
+ =?utf-8?B?QmRLWFliM2ZDK3djRWdzcnpPOE43MXF5dmRFUDBjaVVKbW9PZC9UMG5Xa21z?=
+ =?utf-8?B?cGdWR2x1TmYvK2hZM1JzWWtvWnpETzZZRDU4bUV2L3RGZVRKeGpVdTZOcGRs?=
+ =?utf-8?B?a2FISXg4RVB0azhsVnozZU9QdWQ3N3lvdlFHdmYrU1FEalExODVLblM4dHNs?=
+ =?utf-8?B?RnVOaUJxbE9CWHZWallWdmRCZFo4S3VPajFpblgwTFhLYmR4Q2l1QjFLMlR5?=
+ =?utf-8?B?WEl6V3BZYnVHdEN4Nld0ckpLS1h3UmcyRXZ1eDUrc0xLNDdUYU1qNG9rVENp?=
+ =?utf-8?B?K2RVbGJ3d21wWGFrMHp3YjU3NEtGSUtqbUFEamUyRkFoc3d5S25MZ28wcGww?=
+ =?utf-8?B?dFhsOG9xSjZvRUVsSzlTQmU4L29pVjA4ZWNEMjkxNWlnRVdtSngrZ2c2d2F1?=
+ =?utf-8?B?NUpFWWpGOTF1NWZJV0RJdGVyRDlIaEdWK052YWRzaTNKQmJxMHhSYXhGa3Vp?=
+ =?utf-8?B?TU5pd3g1aTQrRXpQUzR1Mk9HaU9lQ054SWVKREVtbEhuYmkrZEU1ZitCQUFI?=
+ =?utf-8?B?M1BkSSthL05qcXBZcVA1eGZYY1hOVzhRbU1RVEVrMnVQUlVmNmIrd1ZOUUhB?=
+ =?utf-8?B?Rkl5c29ldWxDSVNDMCtPMDEvdExEUW5pK1RJZlNMSGU2YnpEMFNURDlDYVc1?=
+ =?utf-8?B?RWJBQmRibUNWbXBiaEdkWXNZcVlkY01JVnB4bk5XbjhabVgxeXBQZ3VGd0RP?=
+ =?utf-8?B?TUdqU0NTMDVsMW1ZUUhrN2luK20wNERBNFpEV1VRT3F3YjkvVWtJK3puWUJU?=
+ =?utf-8?B?c0RLR0lvMW8rU01VY3FaWVY0UVlMVkFBUTJOd1VEV2ZlUWl1cDE2REN2V0dp?=
+ =?utf-8?B?ZlhBUFhZbHZHNUtHR0kwZFAyUllBdFFIanhnUllBc2lZbUxVQS9vR3k2YXVk?=
+ =?utf-8?B?TU8yV0I1OHkxZ0hyZXVMaXhndHlKdm9sb0dzQ1hTUXB1MXcwNFN3b3BaSDU3?=
+ =?utf-8?B?Mk15YjYyNk8wUEVKRGM2M3ZUWmhrRlllajRia2VucTQ2Y0NQZHdOMnIzUjRw?=
+ =?utf-8?B?cFJUN25rWmxNT3IxQ1lGcTBveXB3MFQyUkJDaFh4TXUzNjM0RDd0aS9YMEhq?=
+ =?utf-8?B?OTU0T1pkaTViZHNTR1FZcmJWUWRLTS82K1ppQnp3dmdIczdxd0VrVnl0cWt3?=
+ =?utf-8?B?dmlkekVIdG9DYW5GTXBSQzZwYjNpL0JXVHRnQ1hPbGtUcWxpdkNKZisyWEcw?=
+ =?utf-8?B?bDdPdjNCelNPK3Nyc2F3QkYyc3BXbkdwL0VQR0NZQ0Z0Z3BIRkcrWmZnT21P?=
+ =?utf-8?B?ekJUV1B5dVYzT3hqN1BUNXZTbVNYdEovMFNCNE8rT21lWVM3elhxWXN0cnFW?=
+ =?utf-8?B?aUM0bnJRQXZhY3hjVldkNDMvbXFFaHZjeTZVUElNQ1kzMEMvSEFnOS9KOTJu?=
+ =?utf-8?B?TFM5RmN3QmxRUGNZMzhQMlF6U2EzazQzVEdmOHlJNzZxWnRrazVvbTd0ditk?=
+ =?utf-8?B?OU1sYklpWHRjUGNPakVrUDdjdjVJUDhWNWc5TmdZK1REQU92QnMwQnY2b1N4?=
+ =?utf-8?B?MVBiNGdXL0laSitIbWNsUndHMHBJL0hoQ2ljN2pTSEllS0tyQy93Q3BTbmxa?=
+ =?utf-8?B?Y0FYSGZjUlRUOXIyY3E5RS8vS0NsbUNqS0swdjZIbm40dFhNK2l6VGlKYzdX?=
+ =?utf-8?B?QVhUdFlTV0pFZFUwdm9JN1dEcE96WUJRa0tPcS9jSUhxNzhybWhJcnZvQWlK?=
+ =?utf-8?B?SkFLdDR3dm5aZWIyTFViOEUrZkNaTnc3OWk3VGRnbGpWRkVxL3hnbk1DemhV?=
+ =?utf-8?B?ZnhwUUFFL2hoNmZpUWZnZWxGTEZHWkxqdXhEcTJlT1lFUGpWZ08xa1Z1ejZn?=
+ =?utf-8?B?T3FFSE9sRHhsWU5oczRkcHFrNi8zQmlRTUFZa3N0NzZXdjhRaUNybGJveGFp?=
+ =?utf-8?B?bEo2ZkRmRkt6WWFhZWV4RGRVWHFDMnBuRUJVRS9KMjEwZXR4VjBMRHp5V3Vu?=
+ =?utf-8?B?U0NpVFplOEJ0NWhxclpPTHpUNy9MR3FxVHpHdVB2OGFKbDVGZzJMWGJDNUNV?=
+ =?utf-8?B?MFBXU05SdUdTR05NVjhiV3hkVDM5N09yWXRrZnJlVGhpejlzY3BBWXFXbGxS?=
+ =?utf-8?B?R2hlcWxxM1p5U29TSThvRjJGSVRnU3RUMW90Z0dkdDVPSUp6TThpWHQxMzJQ?=
+ =?utf-8?Q?Ctb2qJtCtMvAeULHsLUwzv5RN+BrpjQZTNL9Ufdd1dA3B?=
+X-MS-Exchange-AntiSpam-MessageData-1: 8IE26ufYH3zCFQ==
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2b69ec85-9eb7-466c-f087-08deebd734b4
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 12:04:26.9369 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: okP9GpMZI+c8s7aE3Xydfud7E6RUF057ygeWZDCS7kWfu7nWgbhDmYLgytFgVFoV/8FB8jeMxh/72IA7i+qH/g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS4PR08MB7831
+Received-SPF: pass client-ip=2a01:111:f403:c201::6;
+ envelope-from=den@virtuozzo.com;
+ helo=AM0PR02CU008.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -176,46 +152,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 7/27/26 7:50 AM, Christian Borntraeger wrote:
-> Cornelia, Eric, Matt,
-> 
-> here are 5 more fixes for hardening QEMU against invalid input. Nothing
-> is strictly a security issues as defined in the policy. For example
-> https://qemu-project.gitlab.io/qemu/system/security.html says assert /
-> abort: If triggering the code path requires kernel privileges (or root
-> account access) in the guest, asserts/aborts in QEMU are a self
-> inflicted denial of service. These will not be treated as security
-> flaws, at most hardening bugs.
-> And if anyone can provide invalid boot loader content it can provide
-> anything to boot if secure boot is not available.
-> We should fix those anyway, probably even for 11.1
-> 
-> Conny, I did not rebuild the s390-ccw, I assume you will do that?
-> 
-> Christian Borntraeger (1):
->    hw/char/sclpconsole-lm: avoid guest triggerable assert
-> 
-> Joshua Daley (4):
->    s390x/ipl: validate num_comp against iplb length before iterating
->    pc-bios/s390-ccw: fix out-of-bounds read in iso_get_file_size()
->    pc-bios/s390-ccw: bounds-check zipl menu entry index before array
->      write
->    pc-bios/s390-ccw: bound zipl menu strlen and replace VLA in
->      zipl_print_entry
-> 
->   hw/char/sclpconsole-lm.c    |  3 ++-
->   hw/s390x/ipl.h              |  6 ++++++
->   pc-bios/s390-ccw/bootmap.c  |  6 ++++--
->   pc-bios/s390-ccw/helper.h   | 10 ++++++++++
->   pc-bios/s390-ccw/menu.c     | 36 +++++++++++++++++++++++++++++-------
->   pc-bios/s390-ccw/s390-ccw.h |  2 +-
->   6 files changed, 52 insertions(+), 11 deletions(-)
-> 
-
-These have been running on our systems the last few days.
-For the series:
-
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+On 6/10/26 13:58, Denis V. Lunev wrote:
+> Changes since v2
+> ----------------
+>   * Drop the redundant fast-path check in qemu_co_sleep(); the publish
+>     cmpxchg already consumes a pending wake (Kevin).
+>   * Add a deterministic regression test, no threads or timers needed.
+>
+> Changes since v1
+> ----------------
+>   * Patch 1 (graph-lock) applied as e3082ab3b3, dropped here.
+>   * Fix the qemu_co_sleep_wake() primitive instead of working around
+>     it in qcow2 (Kevin).
+>
+> Problem
+> -------
+>
+> The qemu shutdown / blockdev-close path can deadlock permanently on
+> upstream master. The main thread enters ppoll(timeout=-1) holding
+> BQL, no other thread has a wake source that points back at it, and
+> qemu has to be SIGKILLed. The hang has no timeout -- it is a hard
+> deadlock, not a slow operation; behind BQL, RCU, VCPUs and every
+> iothread path that needs BQL stall with it.
+>
+> The race exposed in qcow2's cache_clean_timer cancellation path:
+>
+>   ppoll -> aio_poll -> cache_clean_timer_del_and_wait -> qcow2_close
+>
+> The race diagram and the exact stale-state read are in the patch's
+> commit message.
+>
+> Reproducer
+> ----------
+>
+> Environment: 4-vCPU VM guest, kernel 6.12.x, upstream master at
+> de5d8bfd61. On modern bare-metal the window is narrow enough that the
+> hang rarely reproduces without a VM -- a VM guest under full CPU
+> saturation is what makes the timing reliable.
+>
+>     # reproducer
+>     stress-ng --cpu "$(nproc)" --timeout 0 &
+>     for r in $(seq 20); do
+>         timeout 120 ./build/tests/qemu-iotests/check -qcow2 iothreads-create
+>     done
+>     kill %1
+>
+> With `stress-ng --cpu $(nproc)` the race surfaces. With
+> `stress-ng --cpu $(($(nproc) - 1))` or without a stressor it does
+> not reproduce reliably across 20 iterations.
+>
+> The new unit test reproduces the same lost wakeup deterministically,
+> without a VM or a stressor.
+>
+> Results
+> -------
+>
+> Same guest, 20 iterations of the loop above, master at de5d8bfd61:
+>
+>   without this patch:  reproduces reliably (qcow2_close in ppoll)
+>   with this patch:     20/20 PASS
+>
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> Cc: Kevin Wolf <kwolf@redhat.com>
+> Cc: Hanna Reitz <hreitz@redhat.com>
+>
+> Denis V. Lunev (1):
+>   coroutine: fix lost wakeup in qemu_co_sleep_wake()
+>
+>  include/qemu/coroutine.h    | 17 +++++++++---
+>  tests/unit/test-coroutine.c | 53 +++++++++++++++++++++++++++++++++++++
+>  util/qemu-coroutine-sleep.c | 53 ++++++++++++++++++++++++++-----------
+>  3 files changed, 104 insertions(+), 19 deletions(-)
+>
+ping v6
 
