@@ -4,50 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43137C531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 14:33:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D82D9C531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 14:48:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woMOD-0000G9-TH; Mon, 27 Jul 2026 10:33:09 -0400
+	id 1woMbh-0003m2-KE; Mon, 27 Jul 2026 10:47:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@jiesong.me>)
- id 1woMO3-0000FN-2L; Mon, 27 Jul 2026 10:32:59 -0400
-Received: from [115.124.28.45] (helo=out28-45.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1woMbf-0003lP-PY; Mon, 27 Jul 2026 10:47:03 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@jiesong.me>)
- id 1woMNy-0001xA-RJ; Mon, 27 Jul 2026 10:32:58 -0400
-X-Alimail-AntiSpam: AC=CONTINUE; BC=0.07183095|-1; CH=green;
- DM=|CONTINUE|false|;
- DS=CONTINUE|ham_system_inform|0.00530952-0.00409479-0.990596;
- FP=11345540682718118353|0|0|0|0|-1|-1|-1;
- HT=maildocker-contentspam011083013073; MF=mail@jiesong.me; NM=1; PH=DS; RN=7;
- RT=7; SR=0; TI=SMTPD_---.iWYIJgj_1785162500; 
-Received: from Moon.localdomain(mailfrom:mail@jiesong.me
- fp:SMTPD_---.iWYIJgj_1785162500 cluster:ay29) by smtp.aliyun-inc.com;
- Mon, 27 Jul 2026 22:28:26 +0800
-From: Jie Song <mail@jiesong.me>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, fam@euphon.net, kwolf@redhat.com, farosas@suse.de,
- qemu-stable@nongnu.org, songjie_yewu@cmss.chinamobile.com
-Subject: [PATCH v2] scsi-disk: Fix UNMAP drain race with migration
-Date: Mon, 27 Jul 2026 22:28:15 +0800
-Message-ID: <20260727142815.6869-1-mail@jiesong.me>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20260707152037.11352-1-mail@jiesong.me>
-References: <20260707152037.11352-1-mail@jiesong.me>
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1woMbe-0004V8-7d; Mon, 27 Jul 2026 10:47:03 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66RDnTan513836; Mon, 27 Jul 2026 14:46:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=BCsiq9
+ IaedngDUaUGjjbjiJsJ3OWquMhqxqs6BC1858=; b=i8/aRWlG4JVdJaLtlstdyg
+ bAdAD9puoYYH6BupQ09vKhGMP+akZo4YKmDmM7r52Fdp/Q2fewfFtdO9KP902u4z
+ I+hGVG1Agv+b7+FgOz1JDm6lzh0G/+C5SbeEz64uQv9IdvKa4uJ0uecxCe6/QU1h
+ 7DAqscED45k8n17diN5C1ujPtn1emGlE6mJgW4chnlEl2gqVyi2z10YwjPLT7tvS
+ 5cbhKB0F3ayH4wxnOXoZVhTcmheAdh8BIuD3qalCcAV+EV8HhNSOnJ2Wa9BkZm9Z
+ hXRXXEwPbm4HH5lDzu0+W0USsQsQkQ9sSOBEKbKVA9NpZcdnDDKKhU3O571qfvKA
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuyc8j3r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Jul 2026 14:46:55 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66REQJBl004083;
+ Mon, 27 Jul 2026 14:46:54 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn7uvwwf7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Jul 2026 14:46:54 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66REkrwm525050
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 27 Jul 2026 14:46:53 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 818DD58056;
+ Mon, 27 Jul 2026 14:46:53 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7EBDF58052;
+ Mon, 27 Jul 2026 14:46:52 +0000 (GMT)
+Received: from [9.61.157.32] (unknown [9.61.157.32])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 27 Jul 2026 14:46:52 +0000 (GMT)
+Message-ID: <2b2a79db-30d4-41bd-bd72-d86c58ff534d@linux.ibm.com>
+Date: Mon, 27 Jul 2026 10:46:52 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.45 (deferred)
-Received-SPF: pass client-ip=115.124.28.45; envelope-from=mail@jiesong.me;
- helo=out28-45.mail.aliyun.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/5] hw/char/sclpconsole-lm: avoid guest triggerable assert
+To: Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Joshua Daley <jdaley@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Jared Rossi <jrossi@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20260727115052.24289-1-borntraeger@linux.ibm.com>
+ <20260727115052.24289-2-borntraeger@linux.ibm.com>
+Content-Language: en-US
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <20260727115052.24289-2-borntraeger@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: ntW710vVpebQB6iJs5Qu7lqcwyDnLqJk
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDEzNiBTYWx0ZWRfX6YRkSysxxQqr
+ uIp3lNYy8zSNlOl2emAstH2pb4RZMQ1WzXPpuSGsEluCdkg2ROi/O3QtLrNjMAtvM1GM31PIKrm
+ 4jkrrLccv7sdU5kJZEasG9c1gxtHpQqoLUsk58o4xwViyD1PU7dV9pTbhIwOtKUjXMWfwQx8G33
+ oN85Y00mU2Keyi4GtqAUXidZ9YOojy7Gs1jyx8TGCWqDnJi0Kdh8b+4zol3bea7NXJKSScmB+xB
+ xS7KoGUIUzOTi3tAd61P0HcA3SGoD385qHluVizviq9RVY4fn1bX6hYyNT+2yqG6lSEhCuLCqdo
+ gxEFHR0Ch8IDxSZWJzntNK5zjD7Z16q4nujIkX3x3096w570m6Ja4SjfY+T0orVNwQKGfIU6pc+
+ 0BZe9Hd4mT1RFqxzYMsC7SEigM7BbMlhiRapsynTyJc5jcJt/aPTWhcsLHInIKQOGILxDUQC9Ou
+ uhaoSyu06JMj+ntO4Xg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDEzNiBTYWx0ZWRfX1HvWERdkApQk
+ UZ2InV4jyI7LzaYbm5gG9l6bGIb1VXpTtmZEca3b6FuOeZL2DzcEQTZp5NylVxqPXZ0kEr3SAxJ
+ RtIjIGP6swmyGZPSAVe8TSMeyB80fzE=
+X-Authority-Analysis: v=2.4 cv=AZeB2XXG c=1 sm=1 tr=0 ts=6a676f5f cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=s3Oye56dAB-iQekpRjoA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: ntW710vVpebQB6iJs5Qu7lqcwyDnLqJk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-27_04,2026-07-24_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 priorityscore=1501 phishscore=0 adultscore=0 impostorscore=0
+ clxscore=1015 malwarescore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607270136
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,219 +132,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jie Song <songjie_yewu@cmss.chinamobile.com>
+On 7/27/26 7:50 AM, Christian Borntraeger wrote:
+> If a guest uses incorrect message length it can trigger an assert in
+> process_mbd which kills the guest instead of reporting an error.  Fix
 
-Windows guests can send SCSI UNMAP requests with many descriptors when
-running ReTrim.  scsi-disk currently submits one blk_aio_pdiscard()
-request per descriptor and chains the next descriptor from the completion
-callback.
+Typo, s/process_mbd/process_mdb/
 
-If migration stops the VM while this chain is running, the next discard
-can enter blk_wait_while_drained() with flags == 0 and be queued as a new
-BlockBackend request.  This can make the BlockBackend look drained before
-the whole UNMAP command has completed.  The migration completion path can
-then inactivate block nodes, and the queued discard later resumes and hits
-this assertion in bdrv_co_write_req_prepare():
+Maybe can just be fixed when applying?
 
-    qemu-system-x86_64: ../block/io.c:1986:
-    bdrv_co_write_req_prepare: Assertion
-    `!(bs->open_flags & BDRV_O_INACTIVE)' failed.
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 
-The corresponding backtrace is:
+> this by adding the correct length check.
+> 
+> Fixes: 6a444f8507 ("s390/sclplmconsole: Add support for SCLP line-mode console")
+> Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+> ---
+>  hw/char/sclpconsole-lm.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/char/sclpconsole-lm.c b/hw/char/sclpconsole-lm.c
+> index 9a16896d22..f6ed282f1b 100644
+> --- a/hw/char/sclpconsole-lm.c
+> +++ b/hw/char/sclpconsole-lm.c
+> @@ -243,7 +243,8 @@ static int write_event_data(SCLPEvent *event, EventBufferHeader *ebh)
+>      SCLPConsoleLM *scon = SCLPLM_CONSOLE(event);
+>  
+>      len = be16_to_cpu(data->mdb.header.length);
+> -    if (len < sizeof(data->mdb.header)) {
+> +    if (len < sizeof(data->mdb.header) ||
+> +        len > be16_to_cpu(data->header.length) - sizeof(EventBufferHeader)) {
+>          return SCLP_RC_INCONSISTENT_LENGTHS;
+>      }
+>      len -= sizeof(data->mdb.header);
 
-    bdrv_co_write_req_prepare
-    bdrv_co_pdiscard
-    blk_co_do_pdiscard
-    blk_aio_pdiscard_entry
-    coroutine_trampoline
-
-Process the whole UNMAP descriptor list as a single BlockBackend macro
-request instead.  Use blk_co_start_request()/blk_end_request() around the
-whole descriptor loop and submit the internal discards with
-BDRV_REQ_NO_QUEUE.  This follows the same block-layer model used by commit
-095c08a7ba68 ("ide: Minimal fix for deadlock between TRIM and drain"),
-which fixed chained IDE TRIM discards by running them from a coroutine and
-using BDRV_REQ_NO_QUEUE under blk_co_start_request().
-
-Because blk_co_pdiscard() does not return a BlockAIOCB, keep an outer
-UnmapAIOCB attached to the SCSI request while the coroutine is running.
-This preserves SCSI reset/TMF cancellation semantics: cancellation marks
-the outer AIOCB as canceled, and the coroutine completes cancellation at a
-safe point instead of letting the SCSI layer complete the request early.
-
-In two stress-test runs with Windows ReTrim active, unpatched QEMU crashed
-on the 15th and 18th live migration.  With this change, corresponding runs
-completed 100 and 50 consecutive migrations without a crash.  GDB analysis
-of the QEMU core dump from current master showed that the crashing discard
-AIO had scsi_unmap_complete registered as its completion callback, with 26
-UNMAP descriptors still pending, while the block node receiving the discard
-had already been marked BDRV_O_INACTIVE.
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Jie Song <songjie_yewu@cmss.chinamobile.com>
----
-Changes in v2:
-- Drop the multiple-descriptor qtest because it did not exercise the
-  drain/inactivation race.
-- Add stress-test results and core dump evidence to the commit message.
-- Rebase onto QEMU master at 6333226c2a.
-
-v1: https://lists.gnu.org/archive/html/qemu-devel/2026-07/msg02176.html
-
- hw/scsi/scsi-disk.c | 90 ++++++++++++++++++++++++++-------------------
- 1 file changed, 53 insertions(+), 37 deletions(-)
-
-diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index 1b0cce128c..e24b61f186 100644
---- a/hw/scsi/scsi-disk.c
-+++ b/hw/scsi/scsi-disk.c
-@@ -1741,70 +1741,82 @@ static inline bool check_lba_range(SCSIDiskState *s,
-             sector_num + nb_sectors <= s->qdev.max_lba + 1);
- }
- 
--typedef struct UnmapCBData {
-+typedef struct UnmapAIOCB {
-+    BlockAIOCB common;
-     SCSIDiskReq *r;
-     uint8_t *inbuf;
-     int count;
--} UnmapCBData;
-+    bool canceled;
-+} UnmapAIOCB;
- 
--static void scsi_unmap_complete(void *opaque, int ret);
-+static void scsi_unmap_cancel(BlockAIOCB *acb)
-+{
-+    UnmapAIOCB *data = container_of(acb, UnmapAIOCB, common);
-+
-+    data->canceled = true;
-+}
-+
-+static const AIOCBInfo scsi_unmap_aiocb_info = {
-+    .aiocb_size = sizeof(UnmapAIOCB),
-+    .cancel_async = scsi_unmap_cancel,
-+};
- 
--static void scsi_unmap_complete_noio(UnmapCBData *data, int ret)
-+static void coroutine_fn scsi_unmap_co_entry(void *opaque)
- {
-+    UnmapAIOCB *data = opaque;
-     SCSIDiskReq *r = data->r;
-     SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
-+    BlockBackend *blk = s->qdev.conf.blk;
- 
--    assert(r->req.aiocb == NULL);
-+    /* Paired with blk_end_request() below. */
-+    blk_co_start_request(blk);
- 
--    if (data->count > 0) {
-+    while (data->count > 0) {
-         uint64_t sector_num = ldq_be_p(&data->inbuf[0]);
-         uint32_t nb_sectors = ldl_be_p(&data->inbuf[8]) & 0xffffffffULL;
-+        int ret;
-+
-+        if (data->canceled) {
-+            r->req.aiocb = NULL;
-+            scsi_req_cancel_complete(&r->req);
-+            goto done;
-+        }
-+
-         r->sector = sector_num * (s->qdev.blocksize / BDRV_SECTOR_SIZE);
-         r->sector_count = nb_sectors * (s->qdev.blocksize / BDRV_SECTOR_SIZE);
- 
-         if (!check_lba_range(s, sector_num, nb_sectors)) {
--            block_acct_invalid(blk_get_stats(s->qdev.conf.blk),
--                               BLOCK_ACCT_UNMAP);
-+            r->req.aiocb = NULL;
-+            block_acct_invalid(blk_get_stats(blk), BLOCK_ACCT_UNMAP);
-             scsi_check_condition(r, SENSE_CODE(LBA_OUT_OF_RANGE));
-             goto done;
-         }
- 
--        block_acct_start(blk_get_stats(s->qdev.conf.blk), &r->acct,
-+        block_acct_start(blk_get_stats(blk), &r->acct,
-                          r->sector_count * BDRV_SECTOR_SIZE,
-                          BLOCK_ACCT_UNMAP);
- 
--        r->req.aiocb = blk_aio_pdiscard(s->qdev.conf.blk,
--                                        r->sector * BDRV_SECTOR_SIZE,
--                                        r->sector_count * BDRV_SECTOR_SIZE,
--                                        scsi_unmap_complete, data);
-+        ret = blk_co_pdiscard(blk, r->sector * BDRV_SECTOR_SIZE,
-+                              r->sector_count * BDRV_SECTOR_SIZE,
-+                              BDRV_REQ_NO_QUEUE);
-+        r->req.aiocb = NULL;
-+        if (scsi_disk_req_check_error(r, ret, true)) {
-+            goto done;
-+        }
-+
-+        block_acct_done(blk_get_stats(blk), &r->acct);
-         data->count--;
-         data->inbuf += 16;
--        return;
-+        r->req.aiocb = &data->common;
-     }
- 
-+    r->req.aiocb = NULL;
-     scsi_req_complete(&r->req, GOOD);
- 
- done:
-+    qemu_aio_unref(data);
-     scsi_req_unref(&r->req);
--    g_free(data);
--}
--
--static void scsi_unmap_complete(void *opaque, int ret)
--{
--    UnmapCBData *data = opaque;
--    SCSIDiskReq *r = data->r;
--    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
--
--    assert(r->req.aiocb != NULL);
--    r->req.aiocb = NULL;
--
--    if (scsi_disk_req_check_error(r, ret, true)) {
--        scsi_req_unref(&r->req);
--        g_free(data);
--    } else {
--        block_acct_done(blk_get_stats(s->qdev.conf.blk), &r->acct);
--        scsi_unmap_complete_noio(data, ret);
--    }
-+    blk_end_request(blk);
- }
- 
- static void scsi_disk_emulate_unmap(SCSIDiskReq *r, uint8_t *inbuf)
-@@ -1812,7 +1824,8 @@ static void scsi_disk_emulate_unmap(SCSIDiskReq *r, uint8_t *inbuf)
-     SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
-     uint8_t *p = inbuf;
-     int len = r->req.cmd.xfer;
--    UnmapCBData *data;
-+    UnmapAIOCB *data;
-+    Coroutine *co;
- 
-     /* Reject ANCHOR=1.  */
-     if (r->req.cmd.buf[1] & 0x1) {
-@@ -1838,14 +1851,17 @@ static void scsi_disk_emulate_unmap(SCSIDiskReq *r, uint8_t *inbuf)
-         return;
-     }
- 
--    data = g_new0(UnmapCBData, 1);
-+    data = blk_aio_get(&scsi_unmap_aiocb_info, s->qdev.conf.blk, NULL, NULL);
-     data->r = r;
-     data->inbuf = &p[8];
-     data->count = lduw_be_p(&p[2]) >> 4;
-+    data->canceled = false;
- 
--    /* The matching unref is in scsi_unmap_complete, before data is freed.  */
-+    /* The matching unref is in scsi_unmap_co_entry(). */
-     scsi_req_ref(&r->req);
--    scsi_unmap_complete_noio(data, 0);
-+    r->req.aiocb = &data->common;
-+    co = qemu_coroutine_create(scsi_unmap_co_entry, data);
-+    aio_co_enter(qemu_get_current_aio_context(), co);
-     return;
- 
- invalid_param_len:
--- 
-2.48.1
 
