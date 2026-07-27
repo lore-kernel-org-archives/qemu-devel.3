@@ -4,135 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18CE2C531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 06:32:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD1C8C54EFC
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 06:42:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woEsM-0006JG-OF; Mon, 27 Jul 2026 02:31:46 -0400
+	id 1woF1v-0008De-Bc; Mon, 27 Jul 2026 02:41:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1woEsD-0006I6-GI
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 02:31:37 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1woF1r-0008DA-7O
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 02:41:35 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1woEsB-0000Yf-Ni
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 02:31:37 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ id 1woF1p-0001TO-OL
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 02:41:34 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66R1foi32571946
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 06:31:34 GMT
+ 66R1g2MN2257280
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 06:41:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- NNxCys7olVHmFlkfyqkUO+AzLbSDBBizDcxv3gNYSzM=; b=TO6lkAJza+hvmzia
- s5SR/TVakP0wvvAnjpdFSI49LaZfzKZ4emW2JS5pTshgnTvhY8SWJNnjXDZZ9MOr
- BrHBqK/KIq01TsSoj8YVMYG1P5rkuIoA1tKO6J79aLKd1ahK9oUXfLwhqymF6LRe
- m/ZW/CA+nY90IcXNTaOgG5f0gTUqbh7Hv7y/tANEx/syJtmc2yDoCw2HA5COnqLn
- rHe3QMw6F6NYG2G9hIfDezRDeLdaEiRGG/+bHMWEOa4y9fk5nwuVk4HBuvfrlq/j
- Tkjn242JIy5lYvM8oTxF4qtAtDaCnHLwfp3INzNHxzPDVQTNzuR5Atholl/VAlou
- 5nW0Qw==
+ CLfTJ+AUmXoN1iLtFR3opWLp3SOwKPoN47tiw5eKqO4=; b=PCFChmy+O3NrZBtX
+ IYEor4aOCsQL3emlVuVJkbKWXmfEIEFrtJQYa8PkREsiq8N2TNgL7gSdaH+B5pa/
+ MVEv/cRTZ4bJuVRUDaY6c4oerwn9K8mH5KQDxxtjXhjItL0GP/ThbRrn19pIB7bI
+ YxQZz5nabGdhUPJbR3mzAjyAHTlv8cxwGNTDFRJz/AuAtDtHQBHgbdTCd3Hde/kf
+ 4Ci4HlaSzdV3WykTdPStPd3Fo0iRQ6lMXnlk+bsfdoL6+lO2Us1Tm+Xde0qFuUGb
+ /Yp+E70Pm68GkcDkByMxcMNxRCxETLsgTPIoXDVRokLELa1HuC1iVpJS1QYLLeML
+ 45EzoQ==
 Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
  [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fmm3scw4t-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fmmfgvxq7-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 06:31:33 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 06:41:30 +0000 (GMT)
 Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51c20762d21so25824251cf.0
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 23:31:33 -0700 (PDT)
+ d75a77b69052e-51c19493ac2so36644201cf.1
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 23:41:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1785133892; x=1785738692; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1785134490; x=1785739290; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=NNxCys7olVHmFlkfyqkUO+AzLbSDBBizDcxv3gNYSzM=;
- b=P1LtqwOnlo+QluR5Bnog5cWEVsw0s9Rq4suukH7Zd3r0LuerLWWnrN/JTGRXV/LHMY
- M4I3G6r8tbTPZbTVV/nIXoqiHIYrYPCcQL68Ic0192J+oV2yDrimOH0w2AhkEaIXqhg/
- jT50UGwkb1LusQQZROOeeGVicEcBEX9rrVcs8X1R06bjhc+HMEjBTscYb5afTJ8JV2LK
- 6ne6sj45RAB1gqOLwUabVay66GbgnnbYB1RTNs7UqqlcLF62BA7Zv+MnKYEkvXwgjyxs
- 22Szkw7FW0nUj+hhIeuLkjRdmy0CkbLQANr5qZ9TILlOmj5IPyJ/Idfc9GBs+kJnUzT7
- aGeA==
+ bh=CLfTJ+AUmXoN1iLtFR3opWLp3SOwKPoN47tiw5eKqO4=;
+ b=ONbl81Oa6e8O1G/mUaEcu2R+3SfrXxzZE4HCGQIpev5+G71nT1Pjjg9IvvbXjbf20W
+ Dy7pd+6t7xCNJ8X8Pv6AyzUTptddRfNoYMDpIGRGzrc+icQLIgxQOEb3Ph7iu1go7/ek
+ AI+wxoBhEHd7nLJsEbMdOVVPpzSEhPxi7jK+/Q9xgcwDcWa7Xm4VwvIwrGpq1iEYyod/
+ Y/0GvTAYgs9tGs6rwTDQ9luhAOC1+iASyQI1l+fatFeAJsV4NK2tJ6ObY1XLZmVUZiXB
+ epLGDwn/11JZ4fZJNYlQSFOosxGuCevESLjUG6wvtbMp6B3Z88o/RSeWNfIbyp1WLca/
+ Gzzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785133892; x=1785738692;
+ d=1e100.net; s=20251104; t=1785134490; x=1785739290;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=NNxCys7olVHmFlkfyqkUO+AzLbSDBBizDcxv3gNYSzM=;
- b=hwoYRO8sckeLk5ytZdAyCtmyDCnwxg1gC4GMwDC1k7j/14IEE+dW8RclQQ+72TjOsm
- tpKsSfPgQOrAlLQyr96D8HNkNguGC1/Ik59iKshZYLzLF1T558D3dCB1l+PlHEw41NX2
- sWzMGK8Z8Z3YRDQqTW0B1zmOtSXI7Dd2yeG86FNI4N3bsp/8qcGE65JL/dpNVYCs0dsE
- DFWrCS5qdg3snr/N09RyD+qct9lUpN4BtuUH77U8f3UXujkq4PBmagfsPJKUDKn7cjCR
- GnzOaC0J8iRhjTh3025HpQEfi9N7OwDmBJfXw7t42j7kpEusdJIorcqUyXaJd3P/Kg5/
- 8Bfg==
+ bh=CLfTJ+AUmXoN1iLtFR3opWLp3SOwKPoN47tiw5eKqO4=;
+ b=FYRSzj4fq/B8DyBo7Us1/6lKqaZZOKj6Y3XJUHIw1IpbmhbQhPg2IKlRRvwl+KwZ3O
+ TJS2nKhKYNGvlnH8lGyFy4/C5iaMhyH7csaMjFR6hVz5QrHaRHLLU+9+4aaBbLPUG5Od
+ 3cGtyk30Ql7fspFwV47dTeR17OMGoRuAuQtp6hoAHYthCcbdiCx5Z+MEjw/CZZEz90bg
+ 0PM04CZR4ljQNdyOrteW6vksq5NmasDIGbOhX/8dp+TOXIpMfL4wg6IeIAzSLlPf3Mtn
+ WgL1Yl6euTsS7X8ISTBcDIkRoCdu6O4uQL6Jtsc+ES+a9f35VsQlAFAqKv1q3PVUV8z0
+ QWcw==
 X-Forwarded-Encrypted: i=1;
- AHgh+RoUgWPCK7UvNOvYxi+/J2yBR8M50aTB27DT0PYeC6CTe48/8puKANxg7Qt4F7Xm7v37Z4phdi1Oz4wW@nongnu.org
-X-Gm-Message-State: AOJu0YyyKQ/wDBxcqMA6BNUoEZ/hX2mt/mjuLsszO8SfSpEi6S3svMb3
- Mk+igwz/DRspr0CWadvYKo3clSQbVXnGu1FreAzt0LKeJChfpNMGO4paQDD7IDEALOTOE+41qzY
- I/4NoECXeF5QUuPBcjG/Kqcc4uZSuc15Tz8xZyes0TtOnOS+/J86VJXo7VA==
-X-Gm-Gg: AR+sD13Twr5DyFMc4NnACRExmrqR4jhzS/dJ6hxeku68erjvcppNjXN8z+55FBkBKmE
- 3X9Er6uLlmieL1WFczgDL6LZKoCIVf98GYaeNIMFKMIHahssA0CInlS3JAdqz3c8PfzfLoDXuDP
- sVSJsKX3L6V2GEpKZmEnzdSXZYH9X7oPinrsEuasOLcKWhr++/tI0AzAt3C4UoA9sdAiln/ZAw8
- hZZJQEd8DS8BEPRyJg+vbR2585EJPKHnmO2tcxACKY4B0DvRpq6jlK5gH5WXuGdKHeTqcnftR4Y
- hyyt8xaYTXAqVrvZ4n1x9+ZKxOQ2G36y4FRCJQexq4/CWPTByTAdrvy53KlBH49AW8qejgD6lDH
- k2hniyPFrldGwHyFlQbm3CvFs4t2OsGHIMWg4lhP1pHfRVOkO7vQ=
-X-Received: by 2002:ac8:5954:0:b0:527:61:b4e8 with SMTP id
- d75a77b69052e-529a8732cdbmr70149221cf.66.1785133892527; 
- Sun, 26 Jul 2026 23:31:32 -0700 (PDT)
-X-Received: by 2002:ac8:5954:0:b0:527:61:b4e8 with SMTP id
- d75a77b69052e-529a8732cdbmr70149041cf.66.1785133892022; 
- Sun, 26 Jul 2026 23:31:32 -0700 (PDT)
+ AHgh+Rqy28oP5NW4Tr/pno5Dj+D2J3TJW8qYw81eBUN+siQJApeAD+/IPzX1GctvjBPddHzUI5qKdnl0GUJZ@nongnu.org
+X-Gm-Message-State: AOJu0Yx8eNW/CeGSw0utzcigIoS++Y6LyGaXx3+A0dsMxs5K7C1Ty//Y
+ n4j/Ws1WosIXZMl98RAj8lSHnP9sj34R/l+SOLINE4VA8QkXNV0ZX+aLs7nKW9ODSVJ7am3ea4p
+ cqbJE5FQUe5dOxxC5y+k62GgJhEX9cKyvDZV1vUO/ura2X4TJgvbmrfUKJw==
+X-Gm-Gg: AR+sD10NRxb92McXy0eoq0nz3QmBN9SnnNy3Sr1K3w02mbhO10S93r/5qymS7h53Pad
+ U3BtntLIGo6uTCRyOz44GT8niiXP8P1oQyZvqzehW1kDtt9jYjdXpvJqVJg2FjWXajIZfaE5NB1
+ lYdNIR92Kc5TOa//FJ2ZWeTHGEoIWVORa4KD7mrFx+RYLB8OR85+vblsiwCF5pV76oOtSivC96A
+ EtDQAUID30IeA715KjhAMsjEGhi56kggfOF5DmG8/pUj6GsDHf7MdGY+X2UXlWBkLGEwBFy0XaF
+ F/FDyM4EYN+zBhmetnniTdoy80ZUMB++vrdOjB1Jf30HsPMbsGSXZ7BBmZux8/sl8RsEBB/fP1O
+ 6J/HOHdFA3A2KpGWaDzWn3HCwrkBxYa07EX0fZ7HtPEAmk0rbAJI=
+X-Received: by 2002:ac8:5844:0:b0:527:2b06:2bd1 with SMTP id
+ d75a77b69052e-529a8715e81mr79406461cf.62.1785134489947; 
+ Sun, 26 Jul 2026 23:41:29 -0700 (PDT)
+X-Received: by 2002:ac8:5844:0:b0:527:2b06:2bd1 with SMTP id
+ d75a77b69052e-529a8715e81mr79406181cf.62.1785134489563; 
+ Sun, 26 Jul 2026 23:41:29 -0700 (PDT)
 Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-496b4f24a93sm223884725e9.11.2026.07.26.23.31.30
+ 5b1f17b1804b1-496b4f302f8sm192401725e9.12.2026.07.26.23.41.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 26 Jul 2026 23:31:31 -0700 (PDT)
-Message-ID: <980f519a-cc73-42a7-9938-7f07c45ffdb1@oss.qualcomm.com>
-Date: Mon, 27 Jul 2026 08:31:30 +0200
+ Sun, 26 Jul 2026 23:41:28 -0700 (PDT)
+Message-ID: <f7e2f36c-265d-4fff-8fd6-31313daaef86@oss.qualcomm.com>
+Date: Mon, 27 Jul 2026 08:41:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/nvme: cancel inflight requests on controller reset
+Subject: Re: [PATCH 4/7] hw/hexagon: fix machine->fdt leak in qom-test
 Content-Language: en-US
-To: Minwoo Im <minwoo.im.dev@gmail.com>, qemu-block@nongnu.org,
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
-Cc: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>, Minwoo Im <minwoo.im@samsung.com>
-References: <20260725170203.100051-1-minwoo.im@samsung.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
+ Jonathan Cameron <jic23@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Wei Liu <wei.liu@kernel.org>,
+ linux-cxl@vger.kernel.org, Brian Cain <brian.cain@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+References: <20260725-fix2-v1-0-5c9a6ce7b96a@redhat.com>
+ <20260725-fix2-v1-4-5c9a6ce7b96a@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260725170203.100051-1-minwoo.im@samsung.com>
+In-Reply-To: <20260725-fix2-v1-4-5c9a6ce7b96a@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDA2MiBTYWx0ZWRfX6AG/EwwCEUwx
- lWPZ/SjHc9UY0B4qErLTxgWHpz7yzRoseB/ZTdQwaEJV/HM3e99HRNlNkaekrQUPZltPiNPb4VD
- xKcmFMnfCQrpyCIxP7fGPHX6AY6Os+iffuISMJRXQi8KLnTV2eUtn6D8zjULwRVOtX+S17I9CqQ
- USlW5rFfYllVW53Td1MiJeStLgEcWP1pVM2aFdY88sDqLqQB1LYP0L0BcOKq0f8F0oulES0djjY
- /C0CisH1Se1zAyepb5bg8ySSQk5y4z0LRg4lszbC7dJGYmp8cJ8j2U+ftO3w7nVQj/ZbWta7JgM
- 1DwNojO2+JlMcsvBI7E+V7NXkr5igb32Rf1Ytsaz6PNf9CSGrxPRLrfmuqYE1PEcIiC0VvPT5JW
- jyOaIzFVJbHJMoE2ASo3P3nEQVUecM1s5W1IQ3Vv9JJUQEJKZkKNTk+BVp6+jxvcbPBjzZ61mT5
- MJxYrNN0vbafpScxOtA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDA2MiBTYWx0ZWRfX3cKQ+SIB6VH7
- peBkq7o5P2spxqIEfWBawepEBP6VihHOZo5huwo1bS3aXpRDiZMlTEj2OgPKN3IBoUq7NltFpMk
- SMKrCU7Sttp8EzgiHSUkip45awC6SO4=
-X-Proofpoint-ORIG-GUID: gCHkJGtHUfXsjNyjoJLh3Mz3dTwOJ2gN
-X-Proofpoint-GUID: gCHkJGtHUfXsjNyjoJLh3Mz3dTwOJ2gN
-X-Authority-Analysis: v=2.4 cv=KanidwYD c=1 sm=1 tr=0 ts=6a66fb45 cx=c_pps
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: iigU_Nyso0EJkpf1YIP7v40XcL1Fe4vq
+X-Proofpoint-ORIG-GUID: iigU_Nyso0EJkpf1YIP7v40XcL1Fe4vq
+X-Authority-Analysis: v=2.4 cv=GdYnWwXL c=1 sm=1 tr=0 ts=6a66fd9a cx=c_pps
  a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=hD80L64hAAAA:8 a=3XX8HzIzDEKdemMDA2cA:9 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=CN8BiiQClkPCgTBgyyEA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDA2NSBTYWx0ZWRfXzwsYY/E/1kFk
+ IEHoP3aN578c70howdGMx4Pwiz2Q01tKpLrml/aX4G2Umy9+jCj7/1zZTebRcs7aUzqlE6S57LW
+ 97j9ylaKT5h8Fm7DUSSJFCAR6FA7SdY=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDA2NSBTYWx0ZWRfXxu/AgxeAmN4u
+ de3T5L49VOp8LzCg10OjOuVDmrFUl58xTwE/i2YbsPlb4wRGd2fbamt9WU/cZTmxuL6MsVpdGhQ
+ HLP8OBxEt9S/LXZivktZhSHPi9pr2lcpLE2AU/wUHDleoh+BxfsNu6qvZvbgS/Z0lq5S6mhB0g/
+ 0zagA+IQYMeCX/QE8ja7YXMvQUfQYXWmSuU4rrSsLL4SdS36rdsvqiC3zKedY/GhgNphfJ6wxZy
+ 8ADI/zTqZ5Ueva/ZWSJ/OG5lGD4c2rzmPfVr0PyikExbambgA9vMCWrPOCQaBubTppiMG0fti1X
+ iWGTl8E7COemCTD8LqyJSkGE2tCZnTkzhCaamCYhPC9JdwQhuU/wR1oQebpbHDdjQ0/uiOg+KhP
+ Ud/B8A4//P+uPogj4BsG2W5op1lEsmK1CHQvhnFxUGtjaHD897e7AZsrt8abwKMf7pQY/wfIY+n
+ brj27zDvb1wntDq9now==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-27_01,2026-07-24_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 clxscore=1015 priorityscore=1501 phishscore=0
- bulkscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607270062
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ adultscore=0 impostorscore=0 spamscore=0 malwarescore=0 phishscore=0
+ clxscore=1015 lowpriorityscore=0 bulkscore=0 suspectscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607270065
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -155,118 +170,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-On 25/7/26 19:02, Minwoo Im wrote:
-> nvme_ctrl_reset() freed every SQ/CQ right after nvme_ns_drain(), which
-> only waits out requests on a per-namespace BlockBackend. That is safe
-> as long as the guest first tore down I/O queues gracefully (Delete
-> I/O SQ/CQ), since nvme_del_sq() already cancels and waits for
-> anything left on a queue before freeing it.
+On 25/7/26 16:00, Marc-AndrÃ© Lureau wrote:
+> virt_instance_init() built the FDT unconditionally at QOM
+> instance-init time, so simply instantiating the object (e.g. via
+> qom-test's introspection, without ever realizing the machine) leaked
+> the 1MB FDT blob: machine_finalize() does not free machine->fdt.
 > 
-> A reset that happens without that graceful sequence first (e.g. an
-> abrupt/asynchronous controller reset) can still have commands
-> inflight on blk_aio_*. Freeing sq/cq before those complete leaves
-> their completion callbacks (nvme_rw_cb() and friends) to run against
-> already-freed NvmeRequest/NvmeSQueue/NvmeCQueue memory via
-> nvme_enqueue_req_completion(), causing a use-after-free/segfault.
-
-I'm seeing multiple logical changes here. Do you mind splitting the
-patch? Generally that helps git bisections and reverts. LGTM otherwise.
-
-> Factor the cancel-and-wait loop already used by nvme_del_sq() into
-> nvme_sq_cancel_inflight(),
-
-(2)
-
-> and run it over every queue in
-> nvme_ctrl_reset() before the free loops.
-
-(3)
-
-> A pending Async Event
-> Request has no aiocb (nvme_aer() parks it without issuing any block
-> I/O), so drop it directly instead of asserting.
-
-(1)
-
+> Other boards (arm/virt, riscv/virt, ...) build the FDT lazily from
+> their MachineClass::init callback, which only runs when the machine
+> is actually selected to boot. Do the same here by moving create_fdt()
+> into virt_init().
 > 
-> Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
+> Fixes: 88a8bc7f43ff ("hw/hexagon: Define hexagon "virt" machine")
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   hw/nvme/ctrl.c | 47 +++++++++++++++++++++++++++++++++++++++--------
->   1 file changed, 39 insertions(+), 8 deletions(-)
-> 
-> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-> index a67e1598891c..1482da57e4d9 100644
-> --- a/hw/nvme/ctrl.c
-> +++ b/hw/nvme/ctrl.c
-> @@ -4822,6 +4822,32 @@ static int nvme_init_sq_ioeventfd(NvmeSQueue *sq)
->       return 0;
->   }
->   
-> +/*
-> + * Cancel every command still inflight on sq and block until each one's
-> + * completion callback has run. Safe to call regardless of how the queue is
-> + * going away (explicit Delete SQ, or a controller reset that never went
-> + * through the guest's graceful queue teardown) since it guarantees no
-> + * in-flight blk_aio_* callback can fire after sq/req memory is freed.
-> + *
-> + * A pending Async Event Request has no aiocb (nvme_aer() parks it without
-> + * issuing any block I/O), so there is nothing to cancel; just drop it.
-> + */
-> +static void nvme_sq_cancel_inflight(NvmeSQueue *sq, uint16_t status)
-> +{
-> +    NvmeRequest *r;
-> +
-> +    while (!QTAILQ_EMPTY(&sq->out_req_list)) {
-> +        r = QTAILQ_FIRST(&sq->out_req_list);
-> +        r->status = status;
-> +
-> +        if (r->aiocb) {
-> +            blk_aio_cancel(r->aiocb);
-> +        } else {
-> +            QTAILQ_REMOVE(&sq->out_req_list, r, entry);
-> +        }
-> +    }
-> +}
-> +
->   static void nvme_free_sq(NvmeSQueue *sq, NvmeCtrl *n)
->   {
->       uint16_t offset = sq->sqid << 3;
-> @@ -4856,14 +4882,7 @@ static uint16_t nvme_del_sq(NvmeCtrl *n, NvmeRequest *req)
->       trace_pci_nvme_del_sq(qid);
->   
->       sq = n->sq[qid];
-> -    while (!QTAILQ_EMPTY(&sq->out_req_list)) {
-> -        r = QTAILQ_FIRST(&sq->out_req_list);
-> -        assert(r->aiocb);
-> -        r->status = NVME_CMD_ABORT_SQ_DEL;
-> -        blk_aio_cancel(r->aiocb);
-> -    }
-> -
-> -    assert(QTAILQ_EMPTY(&sq->out_req_list));
-> +    nvme_sq_cancel_inflight(sq, NVME_CMD_ABORT_SQ_DEL);
->   
->       if (!nvme_check_cqid(n, sq->cqid)) {
->           cq = n->cq[sq->cqid];
-> @@ -8022,6 +8041,18 @@ static void nvme_ctrl_reset(NvmeCtrl *n, NvmeResetType rst)
->           nvme_ns_drain(ns);
->       }
->   
-> +    /*
-> +     * Cancel and wait out every inflight command on every queue first. A
-> +     * reset is not required to be preceded by the guest's graceful
-> +     * Delete I/O SQ/CQ sequence, so sq/cq must not be freed below while a
-> +     * blk_aio_* completion for them could still be in flight.
-> +     */
-> +    for (i = 0; i < n->num_queues; i++) {
-> +        if (n->sq[i] != NULL) {
-> +            nvme_sq_cancel_inflight(n->sq[i], NVME_CMD_ABORT_SQ_DEL);
-> +        }
-> +    }
-> +
->       for (i = 0; i < n->num_queues; i++) {
->           if (n->sq[i] != NULL) {
->               nvme_free_sq(n->sq[i], n);
+>   hw/hexagon/virt.c | 9 +--------
+>   1 file changed, 1 insertion(+), 8 deletions(-)
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
