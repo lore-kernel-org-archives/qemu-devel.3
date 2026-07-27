@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2CD4C531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 16:05:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B052C531C9
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 16:05:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woNmi-0006BB-0Z; Mon, 27 Jul 2026 12:02:32 -0400
+	id 1woNmg-00068d-F5; Mon, 27 Jul 2026 12:02:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
- id 1woNlf-0005Nf-LV; Mon, 27 Jul 2026 12:01:40 -0400
-Received: from m16.mail.163.com ([117.135.210.3])
+ id 1woNlf-0005Nd-Km; Mon, 27 Jul 2026 12:01:40 -0400
+Received: from m16.mail.163.com ([117.135.210.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
- id 1woNlY-0006pa-55; Mon, 27 Jul 2026 12:01:23 -0400
+ id 1woNlY-0006pb-5U; Mon, 27 Jul 2026 12:01:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=8/
- YZf40nC2msbdSrN9cH8EGQEjyzbtKeHjYLcE+ogSE=; b=D3zhCBXTWTuxHeZ9qr
- mSsB/d5bSxiWusvlPhfFKdQOtnlrf7Dq1RV3998oANzcR6Hhd/YV6cjsRB5saxPi
- +MbKpdNXcAEQ/EJQLpaTNK8YLgETcfC1Lkdt1D50J1o2+BG7p3/VnAezRpj+M6Wv
- ZwXYkwih+w2Y7dA3Gk8BL3kqE=
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=rk
+ xilSbIb7k0r60CgyCr//gdT8F9V6YtUS+o+8zYRqM=; b=RnL5KNaGGpsJdgTIW4
+ j5HymtSql8+7/2FLWqwOeUoCufZFb6OxR8igod0E0byt4fW02/JajsKQgxfaAaa6
+ vUYYYaGN37y9DZkdnkSoJfQSfCi3KdPDRbArfDqSMWe2Nxd8lvHUaO55wTFOku11
+ 3rP6NAu4Eztf6KY7yYtuAWB+8=
 Received: from dt-VM.localdomain (unknown [])
  by gzga-smtp-mtada-g0-0 (Coremail) with SMTP id
- _____wC3HpHQf2dqJpF_Kw--.27173S4; 
- Mon, 27 Jul 2026 23:57:06 +0800 (CST)
+ _____wC3HpHQf2dqJpF_Kw--.27173S7; 
+ Mon, 27 Jul 2026 23:57:07 +0800 (CST)
 From: Tao Ding <dingtao0430@163.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, pbonzini@redhat.com, palmer@dabbelt.com,
@@ -36,22 +36,22 @@ Cc: qemu-riscv@nongnu.org, pbonzini@redhat.com, palmer@dabbelt.com,
  chao.liu@processmission.com, farosas@suse.de, lvivier@redhat.com,
  pierrick.bouvier@oss.qualcomm.com, caojunze424@gmail.com,
  Tao Ding <dingtao0430@163.com>
-Subject: [PATCH v2 2/7] hw/riscv: k230: add gsdma in K230 board
-Date: Mon, 27 Jul 2026 23:56:57 +0800
-Message-ID: <20260727155702.36484-3-dingtao0430@163.com>
+Subject: [PATCH v2 5/7] hw/riscv: k230: add decomp gzip in K230 board
+Date: Mon, 27 Jul 2026 23:57:00 +0800
+Message-ID: <20260727155702.36484-6-dingtao0430@163.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260727155702.36484-1-dingtao0430@163.com>
 References: <20260727155702.36484-1-dingtao0430@163.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wC3HpHQf2dqJpF_Kw--.27173S4
-X-Coremail-Antispam: 1Uf129KBjvJXoWxZry3XFW3WryxArW7ZFWfuFg_yoW5tFWkpF
- sxWrsFyrWrGrn3Aa1fKrsxurykWa1kuF15Cw43u34rGrW7ArZ8tFsxu3WIv348JFWkA345
- uFyIka1Sv3W5Xw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pR8-BtUUUUU=
+X-CM-TRANSID: _____wC3HpHQf2dqJpF_Kw--.27173S7
+X-Coremail-Antispam: 1Uf129KBjvJXoWxCFWfAr15CrWUXFyrWr4kJFb_yoW5uFW3pF
+ sxWr4qyrWxWFyfA3Wftrs7Gryjg3ykKF9xJw1Sv34rKrW7ArZ8tFsIya1Svr18JFWDAa45
+ uFy0ya1S9w17XaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pELvtLUUUUU=
 X-Originating-IP: [119.4.23.14]
-X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC-RKIxmpnf9ILugAA3w
-Received-SPF: pass client-ip=117.135.210.3; envelope-from=dingtao0430@163.com;
+X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC-ROIxmpnf9MLzQAA3H
+Received-SPF: pass client-ip=117.135.210.5; envelope-from=dingtao0430@163.com;
  helo=m16.mail.163.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
@@ -77,105 +77,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit replaces the unimplemented part of GSDMA in K230. And connect the interrupt to plic.
-
-Update K230.rst.
+This commit replaces the unimplemented part of Decomp_gzip in K230.
+Connect to the handshake interface of GSDMA.
 
 Signed-off-by: Tao Ding <dingtao0430@163.com>
 Reviewed-by: Junze Cao <caojunze424@gmail.com>
 ---
- docs/system/riscv/k230.rst |  1 +
- hw/riscv/Kconfig           |  1 +
- hw/riscv/k230.c            | 12 +++++++++---
- include/hw/riscv/k230.h    |  3 +++
- 4 files changed, 14 insertions(+), 3 deletions(-)
+ hw/riscv/Kconfig        |  1 +
+ hw/riscv/k230.c         | 23 +++++++++++++++++++----
+ include/hw/riscv/k230.h |  2 ++
+ 3 files changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/docs/system/riscv/k230.rst b/docs/system/riscv/k230.rst
-index cea8202e55..a426a1d776 100644
---- a/docs/system/riscv/k230.rst
-+++ b/docs/system/riscv/k230.rst
-@@ -20,6 +20,7 @@ The ``k230`` machine supports the following devices:
- * Platform-Level Interrupt Controller (PLIC)
- * 2 K230 Watchdog Timer
- * 5 UART
-+* System Direct Memory Access (SDMA)
- 
- Boot options
- ------------
 diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index de37c08cae..d28ac06043 100644
+index d28ac06043..d06ac26648 100644
 --- a/hw/riscv/Kconfig
 +++ b/hw/riscv/Kconfig
-@@ -162,3 +162,4 @@ config K230
-     select SERIAL_MM
+@@ -163,3 +163,4 @@ config K230
      select UNIMP
      select K230_WDT
-+    select K230_GSDMA
+     select K230_GSDMA
++    select K230_DECOMP_GZIP
 diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
-index 656f28190c..c80bd65694 100644
+index c80bd65694..7fd1ec4c25 100644
 --- a/hw/riscv/k230.c
 +++ b/hw/riscv/k230.c
-@@ -110,6 +110,7 @@ static void k230_soc_init(Object *obj)
-     object_initialize_child(obj, "c908-cpu", cpu0, TYPE_RISCV_HART_ARRAY);
+@@ -111,6 +111,8 @@ static void k230_soc_init(Object *obj)
      object_initialize_child(obj, "k230-wdt0", &s->wdt[0], TYPE_K230_WDT);
      object_initialize_child(obj, "k230-wdt1", &s->wdt[1], TYPE_K230_WDT);
-+    object_initialize_child(obj, "k230-gsdma", &s->gsdma, TYPE_K230_GSDMA);
+     object_initialize_child(obj, "k230-gsdma", &s->gsdma, TYPE_K230_GSDMA);
++    object_initialize_child(obj, "k230-decomp-gzip", &s->decomp_gzip,
++                            TYPE_K230_DECOMP_GZIP);
  
      qdev_prop_set_uint32(DEVICE(cpu0), "hartid-base", 0);
      qdev_prop_set_string(DEVICE(cpu0), "cpu-type", TYPE_RISCV_CPU_THEAD_C908);
-@@ -206,6 +207,14 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->wdt[1]), 0,
-                        qdev_get_gpio_in(DEVICE(s->c908_plic), K230_WDT1_IRQ));
+@@ -215,6 +217,23 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->gsdma), 0,
+                        qdev_get_gpio_in(DEVICE(s->c908_plic), K230_GSDMA_IRQ));
  
-+    /* Gsdma */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->gsdma), errp)) {
++    /* Decomp gzip */
++    qdev_prop_set_uint64(DEVICE(&s->decomp_gzip), "sram-base",
++                         memmap[K230_DEV_SRAM].base);
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->decomp_gzip), errp)) {
 +        return;
 +    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->gsdma), 0, memmap[K230_DEV_GSDMA].base);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->gsdma), 0,
-+                       qdev_get_gpio_in(DEVICE(s->c908_plic), K230_GSDMA_IRQ));
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->decomp_gzip), 0,
++                    memmap[K230_DEV_DECOMP_GZIP].base);
++    for (int i = 0; i < K230_DECOMP_GZIP_NUM_GPIOS_OUT; i++) {
++        qdev_connect_gpio_out(DEVICE(&s->decomp_gzip), i,
++                              qdev_get_gpio_in(DEVICE(&s->gsdma), i));
++    }
++    for (int i = 0; i < K230_DECOMP_GZIP_NUM_GPIOS_IN; i++) {
++        qdev_connect_gpio_out(DEVICE(&s->gsdma), i,
++                              qdev_get_gpio_in(DEVICE(&s->decomp_gzip), i));
++    }
 +
      /* unimplemented devices */
      create_unimplemented_device("kpu.l2-cache",
                                  memmap[K230_DEV_KPU_L2_CACHE].base,
-@@ -221,9 +230,6 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
-                                 memmap[K230_DEV_AI_2D_ENGINE].base,
-                                 memmap[K230_DEV_AI_2D_ENGINE].size);
- 
--    create_unimplemented_device("gsdma", memmap[K230_DEV_GSDMA].base,
--                                memmap[K230_DEV_GSDMA].size);
--
+@@ -233,10 +252,6 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
      create_unimplemented_device("dma", memmap[K230_DEV_DMA].base,
                                  memmap[K230_DEV_DMA].size);
  
+-    create_unimplemented_device("decomp-gzip",
+-                                memmap[K230_DEV_DECOMP_GZIP].base,
+-                                memmap[K230_DEV_DECOMP_GZIP].size);
+-
+     create_unimplemented_device("2d-engine.non-ai",
+                                 memmap[K230_DEV_NON_AI_2D].base,
+                                 memmap[K230_DEV_NON_AI_2D].size);
 diff --git a/include/hw/riscv/k230.h b/include/hw/riscv/k230.h
-index 592e1c26bf..156a386edc 100644
+index 156a386edc..a12d36965a 100644
 --- a/include/hw/riscv/k230.h
 +++ b/include/hw/riscv/k230.h
-@@ -18,6 +18,7 @@
- #include "hw/core/boards.h"
+@@ -19,6 +19,7 @@
  #include "hw/riscv/riscv_hart.h"
  #include "hw/watchdog/k230_wdt.h"
-+#include "hw/dma/k230_gsdma.h"
+ #include "hw/dma/k230_gsdma.h"
++#include "hw/misc/k230_decomp_gzip.h"
  
  #define C908_CPU_HARTID   (0)
  
-@@ -33,6 +34,7 @@ typedef struct K230SoCState {
-     RISCVHartArrayState c908_cpu; /* Small core */
+@@ -35,6 +36,7 @@ typedef struct K230SoCState {
  
      K230WdtState wdt[2];
-+    K230GSDMAState gsdma;
+     K230GSDMAState gsdma;
++    K230DecompGzipState decomp_gzip;
      MemoryRegion sram;
      MemoryRegion bootrom;
  
-@@ -129,6 +131,7 @@ enum {
-     K230_UART4_IRQ  = 20,
-     K230_WDT0_IRQ   = 107,
-     K230_WDT1_IRQ   = 108,
-+    K230_GSDMA_IRQ  = 140,
- };
- 
- #define K230_UART_COUNT 5
 -- 
 2.43.0
 
