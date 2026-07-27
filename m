@@ -4,108 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCE2CC531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 17:17:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B6D2C53209
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 17:22:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woOwU-00053F-9H; Mon, 27 Jul 2026 13:16:42 -0400
+	id 1woP1D-0006ON-8K; Mon, 27 Jul 2026 13:21:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1woOwM-00052S-N1
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 13:16:36 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1woP0F-0006Hb-81
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 13:20:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1woOwI-0000eN-Mp
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 13:16:33 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1woP04-0001MH-4n
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 13:20:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785172587;
+ s=mimecast20190719; t=1785172823;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=W3mGFXZevARNc878mJv43Auua4IFTv4YphZThywYfhE=;
- b=CJR5dYLnLcVYHErYGDBAts50/28pD1j53NHXhOjNr0YjdgdiW+5BegcnE86/woW6///wjg
- Yw4YySq5GFUL/NlQXEvHLNc6FvwdMUDzTjsIOFIqr8D+pcEHFfwiI3JoDkurzhYzTF617q
- mVmO33KF7lGhUElBOU50gkRefwxvcqU=
-Received: from mail-yx1-f69.google.com (mail-yx1-f69.google.com
- [74.125.224.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=u6afx08wKd6RvWFzCzuO54Zssef71NPh6fis+puWjoE=;
+ b=FgaTBWG7La4lT30taEHJM2wg08h+fCHNaln4XfUim37AlG5n0kIplfXW/YhjuJkZUTVgdI
+ QjtW+c4Eq/7c0N2istFuDAY9h7CIn2+EKSwOdYlinUD8qiCof+Ubr3W0MJdpQpAJcE85E+
+ 0OhKPuNMJOFOykY/jst0pb0regn8z80=
+Received: from mail-yx1-f71.google.com (mail-yx1-f71.google.com
+ [74.125.224.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-637-3N6dTpZSM2e48zAsCXn3Vw-1; Mon, 27 Jul 2026 13:16:25 -0400
-X-MC-Unique: 3N6dTpZSM2e48zAsCXn3Vw-1
-X-Mimecast-MFC-AGG-ID: 3N6dTpZSM2e48zAsCXn3Vw_1785172585
-Received: by mail-yx1-f69.google.com with SMTP id
- 956f58d0204a3-6648d902a6eso8552766d50.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 10:16:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785172585; cv=none;
+ us-mta-277-HRH3vx25MFWt9LNrluDuOg-1; Mon, 27 Jul 2026 13:20:22 -0400
+X-MC-Unique: HRH3vx25MFWt9LNrluDuOg-1
+X-Mimecast-MFC-AGG-ID: HRH3vx25MFWt9LNrluDuOg_1785172821
+Received: by mail-yx1-f71.google.com with SMTP id
+ 956f58d0204a3-668841f9af1so4879110d50.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 10:20:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785172821; cv=none;
  d=google.com; s=arc-20260327;
- b=WI1aOgabNR9S2kntLrsMHSDiZCbpXvS/wRH0ycykQB6G6d4yEgz7UF7OJnsgPbCGep
- WgYNey96aFKc+j0XK1G24R+ntHXDZBSWGXGIyBOqlNL1DhR9eWnG+u+cAv4OLWoqkdhH
- w/KfjdR+byW+PVrJPIGE+/SesC3KPxYNPEp5SpZomniferACP2Fp2lFgMXZK1oqhU4dg
- J/Q+uQFXlRfRN/Mg/OAYCur4d9PZvjQ+AaYmZ/9ipVFsTs+d9ssIrc28omy7miKa3MY2
- fzFGWFmuKyexyMVvadbgkugyMPIRyDYpNUiXCyeTy93FdapkajQOPC59Q3jXDjBXdXF7
- 8tFg==
+ b=LUVTdaZ0ikVydJ2NCbSV+vE3b3kxQEjs3Ii660LZMlOYY7+pUR0TBaulUBUDeANjcg
+ DKYsDTrplquLFaOC0G9ZaZqVca7RtUHLtNBRWY8+My1zGYhHxbiJKJrfj+hnK6ICfN+2
+ nSDOvWCwqz0N2/QqiPlIppVPa5NBDYJ8+CNsPobwOIpgn/kli5fPChZZiuOexa0EuI9d
+ u2rGu0Di1u87AsGUcB7vFKf1N3zMX9QNZp7YBrm8dYcjWWj37oX4LBt3eL2ihLOm1VDO
+ 2xD3vDvdD+XwJ2M9VWWSbCFLN1H+IBQvqXSsZHRwy/VLDaniGhuhK0hkz+U/ntmZjbwf
+ XYkQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=W3mGFXZevARNc878mJv43Auua4IFTv4YphZThywYfhE=;
+ bh=u6afx08wKd6RvWFzCzuO54Zssef71NPh6fis+puWjoE=;
  fh=0c5lhis1tI0Xv2/4xfQOO5bCANYWd25ch3LVSXcjlLc=;
- b=g2Ond8PXMiSKn3ewgOd9yZoO5K5MRCIHWplbl4JOaHwuaJI6HI4oBX2KPLsjUuXb5p
- XJI3UVqXXROltibblFsPSeGB1yMGCPSDN1kzaYxSXBeBQlfnt0qvoTut+c1hcid9ZUMT
- F6OrCj2sEKxN+G94TJF//9arqmjJg4WV/UAnAQSggynPCR8VsSNJlfsuI52PIqBceE5J
- p8n6ZxjQCs3jax/kT7RovnT+7/hUTMLOQF54d7tYGC2cDNZZC1LD5hwQbXzxtHyV0uBM
- YEj9cC06kIYZ+LHx7fjJRR9V5rbcIpkJDZFsS6oyrPu9fwLVe6HtN0vPvtqoIrjdrjvI
- ED9w==; darn=nongnu.org
+ b=GdrU4L84FqUv4gK79fcoM/SQ6d8Ai0TA17i2fAn3n/RuOIaIE65G/H761P9P1d/7jB
+ 0BKTRw23JXQ1qa0zzgIdgl+Fl/YiEllsqS0XGuGFDD87zZqTxvQntXlVoTSJGU/Xwh84
+ vtLzsPRJxskaglHJhPZkOKDSl/lVkaCruh23eJmbWMTqJuupngLVrcpHJ+Z6Lrf6dcjx
+ OiG0a/XofY6hI+84YT7c4Jk64xMURLiNuyC2hG1q7pTAgSWDk2Lzxp3bsl4fhDkXQpPO
+ XwLCOl4cTxuHr7oa52zziTp7RRUtkTbOF25WdLljt02SwWWR7tiTcMh0/SnLXJXb3i7h
+ q8hw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785172585; x=1785777385; darn=nongnu.org;
+ d=redhat.com; s=google; t=1785172821; x=1785777621; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=W3mGFXZevARNc878mJv43Auua4IFTv4YphZThywYfhE=;
- b=bPccjd4HyMgixWnk5x73/Qw0rrcioiouISU62MfdfSiPONWkoDhAduUZwMB5UnIGMA
- xwciDNac5PYuOw8MLMNgiRFuP7nkF3/inMf0Wt/rIguUxoWDDPW70kRcAty81P0PlBuL
- lf/fAgZpWXWceiME3Fr36fEQXTi6DQtd5fhnFTyurwJA9/xSDCUawVxCBAEMo2aGzziL
- l24Jc4vnr0pvWKrDmlo9uHtquC84D/jL/H8jqOSxJPl3sN2DrGdkF20LAz1RNW5T58lg
- +HGV5TvYst8M3U1I0Mc+mVQRjklaTZBpvePFCuoi/a2K0jMFjL2uIePY7OPwzG3SHjj0
- K/hw==
+ bh=u6afx08wKd6RvWFzCzuO54Zssef71NPh6fis+puWjoE=;
+ b=IGL5Ythnfpj9t7bpF6zzh/t17xlfpljMpQIUEzltgdB6TqME8YvwPxUepQIRtOwZnR
+ P0Pdt986dUBalmP+wZjtgTXqppPqzFASl1JLAOep/xSAQcAUXNSnsk4Svgtb1Psk1iqh
+ hlXgJrbuIju5pDUJXWs+436X4/kri2Tj/Hp/n+3i8u1ohMj3M6vDGWwLYUa5OnoxJt5t
+ 869B23aTd0H+OTDE46+6TwrfBBlHXS/Nyb7bdnsKUeg3joCMYNn9onPdNpOCG+obmPIA
+ PrRUCkQx/bcihtefIB31nh2Gq4GH/9T6xZPwHzfFc1Ym6oZh7d/3+P/GV76iOzgnbO2C
+ jHWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785172585; x=1785777385;
+ d=1e100.net; s=20251104; t=1785172821; x=1785777621;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=W3mGFXZevARNc878mJv43Auua4IFTv4YphZThywYfhE=;
- b=a9LlH6Z9dQk31HVL7IJcQDnu/QfFqZmGbOPkbKCcg0WY0kVXMeYtVsBjncP1eAfQK1
- XCT3ZCZc7KiuGtGzFAGJ5uMaE87jwxFzy25mpb3IFqq3yeokPYuq8ieCCzAhRH87W0nA
- 6ezLrzlwqlUJVp6vAMDwMmhmLxV9iqwDjqXwCEvipbRfqQ57UwBtMC9yEfarvviJkWGS
- Hm4GHATQZ1VxH6LIpN4s+yrvLVB1hhyg4Qv2f5MUvoY1R+sLu9rPzf6/BjjnB4lt/jBv
- 6WM57UfJ/bIfkP3fen5vaV9YfmSoaBpcQdlf5FOj1tK51Jy+HAAQ+p+Fe4a2Uy5ng8Tc
- ni8A==
-X-Gm-Message-State: AOJu0YyswMk+Oi34mGLJspRqBz3r1nyqs6Je0B1hgOuZJ9tIuiiG49IN
- EqS9p1u2B+d2Jror82fR+jDKtfVoYsydXdjFTxup86i40WU7WFMR+pIRxnffrAY7NuELijV7AUW
- OWeTvXbyZGTFsxzafJNRnvxlsVmKltY928HSCIcxjFULhqT2LEKJs6ikCTAXNkwl5dO4broAfS+
- 0Qfk4DeTlqTvyCf/j/ojFJYpFYpUiCUxY=
-X-Gm-Gg: AR+sD13/caPWhe2u61yYqA7VIdpQZnguNKciHzEjiSUucalnckEZpS2J1prBDO2oF45
- 8kJTzIu5hj48lsQrbB6URdK6ZlP1RqPRKgzESnu4Iy3StjTT691r8fq1jVrWeD3JCh4ryHfEAOK
- PHhTqYOuIlZThuK+Uu0tC5XPP18wODYEWuGqQyAUBTfxV5Aj01k2XQCNdbNd+yc3ek1Ba1ERVkU
- ig4vScNef6ZPedy
-X-Received: by 2002:a53:d94e:0:b0:667:af58:8d68 with SMTP id
- 956f58d0204a3-668ffdf6f05mr48372d50.61.1785172584871; 
- Mon, 27 Jul 2026 10:16:24 -0700 (PDT)
-X-Received: by 2002:a53:d94e:0:b0:667:af58:8d68 with SMTP id
- 956f58d0204a3-668ffdf6f05mr48336d50.61.1785172584382; Mon, 27 Jul 2026
- 10:16:24 -0700 (PDT)
+ bh=u6afx08wKd6RvWFzCzuO54Zssef71NPh6fis+puWjoE=;
+ b=nMP+WPenyO9RLmGlUUT3uwjNcYBh4oPLET/AGEBG98Mjpjpj8MK+Y5nsG3zlf1A/s7
+ mFG2WOmxLot0nIcFSKk9Z45jLJMFiuDE4r4lyKJcOj1PY0zvw7P3NGFXcxPa7N9UDYcD
+ 1ZDWYJf5CmqCD5lGBtC3Q1uW74XbV1A5904src6Z9/1jXZdrscyxJ11M6aST6UmktUvF
+ Qltr4WzqcZ3uLkwPxV/N64k8bxIUSndxWSShARhXc2zCQqbUT8s3qwAj+E5x0H/29ww8
+ MO6O9EfzCElxfW9usF61vzu+AhtHGGbupXeR5YZKWAQ+JBjczthZDGpPIvstYfUJaVrR
+ GEJw==
+X-Gm-Message-State: AOJu0YwYckYXBMTV4QvU+CseQvyVFlynUCQgPAATW2YJk91Imp1a+7iG
+ dAVVCMHVeC/UIS7gEIz6t17+RMN8m2Wes99he79JFVZcAn/JcWntgqyiz+zY97h2DfN9mwJwWni
+ hx4NDVN9ypiIoQXqCKKGhVZNW1ZTF15nNacl9KX2syZYELfLP4us+JxwWN/qOiMjP0i0UnqfAhX
+ biD9+m1+bE2J1ScjaHdcGOj8KTWft4XHs=
+X-Gm-Gg: AR+sD10VLNMu5x3S3GTAq70DzyZFlsMuylGyKzHUqVwTIssdZtAfo21COgcMgQWb9Fh
+ +t5buE0hK1GGAfeGlbyLurFJsmsfDzjCfk1z0eya17vDRc+GKifOU4lYr4yUvcqc2g+Qsj/A683
+ bbXSRAW4msjLRmQ+8KymkVpvFOF+3ceDROH+2I7VpE+BSVsTH38yUxtsmWzQqGwwIjncpkv2a0b
+ u+UJ4RN4Ta8qktA
+X-Received: by 2002:a53:cac1:0:b0:667:d5e0:1c69 with SMTP id
+ 956f58d0204a3-668c7a13057mr1982217d50.31.1785172821146; 
+ Mon, 27 Jul 2026 10:20:21 -0700 (PDT)
+X-Received: by 2002:a53:cac1:0:b0:667:d5e0:1c69 with SMTP id
+ 956f58d0204a3-668c7a13057mr1982197d50.31.1785172820614; Mon, 27 Jul 2026
+ 10:20:20 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260723044805.527643-1-jsnow@redhat.com>
- <87ik65g8xm.fsf@pond.sub.org> <87h5lobypc.fsf@pond.sub.org>
-In-Reply-To: <87h5lobypc.fsf@pond.sub.org>
+ <20260723044805.527643-45-jsnow@redhat.com>
+ <87y0f0aikr.fsf@pond.sub.org>
+In-Reply-To: <87y0f0aikr.fsf@pond.sub.org>
 From: John Snow <jsnow@redhat.com>
-Date: Mon, 27 Jul 2026 13:16:13 -0400
-X-Gm-Features: AUfX_mxQww8G_sDN4rPtGqGYLANzGPwYtpBIHqm73aQVX56k63-nE7PKd7bUCQA
-Message-ID: <CAFn=p-Z0Ys6FoUqRPY7d5CaN4YfHE4DUN6VLtMeWRJgUk3Khkg@mail.gmail.com>
-Subject: Re: [PATCH v2 00/44] qapi: convert trivial intro sections
+Date: Mon, 27 Jul 2026 13:20:09 -0400
+X-Gm-Features: AUfX_mz_Ii50MiumBfvXVZr6OIQ9ljsx38tHDtxPXG0jyiKi4V8B_BK1TGjrT7g
+Message-ID: <CAFn=p-axhB-ezhfD2F8EoFhWT0h92d6oWP6Li1-JdhiXUGbsdA@mail.gmail.com>
+Subject: Re: [PATCH v2 44/44] qapi: convert trivial intro sections for
+ block-core.json
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
@@ -136,14 +138,13 @@ Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,54 +160,322 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 24, 2026 at 4:04=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+On Fri, Jul 24, 2026 at 4:38=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
 m> wrote:
 >
-> Markus Armbruster <armbru@redhat.com> writes:
+> John Snow <jsnow@redhat.com> writes:
+>
+> > (Trivial)
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > ---
+> >  qapi/block-core.json | 646 +++++++++++++++++--------------------------
+> >  1 file changed, 255 insertions(+), 391 deletions(-)
+> >
+> > diff --git a/qapi/block-core.json b/qapi/block-core.json
+> > index 1f87b078505..bd98af2f298 100644
+> > --- a/qapi/block-core.json
+> > +++ b/qapi/block-core.json
 >
 > [...]
 >
-> > Converting single first paragraps is mechanical.  For it to be correct,
-> > this single paragraph must actually be the overview, and not some other
-> > crap.  I expect it to be almost always overview.  Not sure how to best
-> > look for the exceptions.
+> > @@ -422,10 +417,9 @@
+> >
+> >  ##
+> >  # @BlockGraphInfo:
+> > -#
+> > -# Information about all nodes in a block (sub)graph in the form of
+> > -# `BlockNodeInfo` data.  The base `BlockNodeInfo` struct contains the
+> > -# information for the (sub)graph's root node.
+> > +#     Information about all nodes in a block (sub)graph in the form of
+> > +#     `BlockNodeInfo` data.  The base `BlockNodeInfo` struct contains
+> > +#     the information for the (sub)graph's root node.
+> >  #
+> >  # @children: Array of links to this node's child nodes' information
+> >  #
 >
-> The separation truly matters only when the inliner inlines the doc
-> comment.  It potentially matters when it would inline it if the type was
-> used differently.
-
-It also (potentially) matters for auto-generated docs, such as
-undocumented members, return types, features*, errors*. The break
-point is where these fields get inserted.
-
-(*Not currently performed. Not asserting that it will be performed, or
-that it is necessarily valuable to do so. Just fleshing out the
-category.)
-
+> The first sentence is clearly overview, but the second caught my eye.
+> What would we want the inliner to do with it?
 >
-> If I remember correctly, the inliner inlines doc of struct / union base
-> type, union branch type, command / event argument type.
->
-> Argument can only be struct or union.  Base and branch can only be
-> struct.
->
-> We talked about maybe inlining return types some day.  This would be
-> struct, union, or array of struct or union.
->
-> So, for anything other than struct and union, the inliner doesn't get
-> involved, and separating the overview cleanly is just a matter of
-> writing style.  I'm not sure we care.  Even if we elect to care,
-> cleaning it up is hardly this series' business.  In short, your
-> mechanical conversion of single first paragraphs to overview syntax
-> should be fine even where a paragraph's contents isn't clearly overview.
-
-Except in cases where stub positioning matters, see also the former
-"TODO:" syntax used to delineate intro/details.
-
->
-> Structs and unions, however, could use an eye-over.
+> Looks like the inliner isn't going to do anything with it right now,
+> because BlockGraphInfo is only used as member type.
 >
 > [...]
 >
+> > @@ -1378,10 +1355,9 @@
+> >
+> >  ##
+> >  # @BlockdevOnError:
+> > -#
+> > -# An enumeration of possible behaviors for errors on I/O operations.
+> > -# The exact meaning depends on whether the I/O was initiated by a
+> > -# guest or by a block job
+> > +#     An enumeration of possible behaviors for errors on I/O
+> > +#     operations.  The exact meaning depends on whether the I/O was
+> > +#     initiated by a guest or by a block job
+> >  #
+> >  # @report: for guest operations, report the error to the guest; for
+> >  #     jobs, cancel the job
+>
+> The first sentence is clearly overview, but the second caught my eye.
+>
+> Because this is an enum type, and we're not going to inline these, we
+> can leave it as is.
+>
+> [...]
+>
+> > @@ -1636,9 +1605,8 @@
+> >
+> >  ##
+> >  # @BackupPerf:
+> > -#
+> > -# Optional parameters for backup.  These parameters don't affect
+> > -# functionality, but may significantly affect performance.
+> > +#     Optional parameters for backup.  These parameters don't affect
+> > +#     functionality, but may significantly affect performance.
+>
+> The first sentence is clearly overview.  What would we want the inliner
+> to do with the second?
+>
+> Looks like the inliner isn't going to do anything with it right now,
+> because BackupPerf is only used as member type.
+>
+> Aside: this only user BackupCommon member x-perf has been @unstable for
+> more than five years.  That's a long time to sit on a fence.
+>
+> >  #
+> >  # @use-copy-range: Use copy offloading.  Default false.
+> >  #
+>
+> [...]
+>
+> > @@ -1845,12 +1812,12 @@
+> >
+> >  ##
+> >  # @change-backing-file:
+> > -#
+> > -# Change the backing file in the image file metadata.  This does not
+> > -# cause QEMU to reopen the image file to reparse the backing filename
+> > -# (it may, however, perform a reopen to change permissions from r/o ->
+> > -# r/w -> r/o, if needed).  The new backing file string is written into
+> > -# the image file metadata, and the QEMU internal strings are updated.
+> > +#     Change the backing file in the image file metadata.  This does
+> > +#     not cause QEMU to reopen the image file to reparse the backing
+> > +#     filename (it may, however, perform a reopen to change
+> > +#     permissions from r/o -> r/w -> r/o, if needed).  The new backing
+> > +#     file string is written into the image file metadata, and the
+> > +#     QEMU internal strings are updated.
+>
+> This is an example of a first paragraph I might flag for review if it
+> was a struct or union type.
+>
+> >  #
+> >  # @image-node-name: The name of the block driver state node of the
+> >  #     image to modify.  The "device" argument is used to verify
+>
+> [...]
+>
+> > @@ -2746,11 +2700,10 @@
+> >
+> >  ##
+> >  # @ThrottleLimits:
+> > -#
+> > -# Limit parameters for throttling.  Since some limit combinations are
+> > -# illegal, limits should always be set in one transaction.  All fields
+> > -# are optional.  When setting limits, if a field is missing the
+> > -# current value is not changed.
+> > +#     Limit parameters for throttling.  Since some limit combinations
+> > +#     are illegal, limits should always be set in one transaction.
+> > +#     All fields are optional.  When setting limits, if a field is
+> > +#     missing the current value is not changed.
+>
+> The first sentence is clearly overview, but what would we want the
+> inliner to do with the remainder?
+>
+> Looks like the inliner isn't going to do anything with it right now,
+> because ThrottleLimits is only used as member type.
+>
+> >  #
+> >  # @iops-total: limit total I/O operations per second
+> >  #
+>
+> [...]
+>
+> > @@ -3548,12 +3486,11 @@
+> >
+> >  ##
+> >  # @Qcow2OverlapCheckFlags:
+> > -#
+> > -# Structure of flags for each metadata structure.  Setting a field to
+> > -# 'true' makes QEMU guard that Qcow2 format structure against
+> > -# unintended overwriting.  See Qcow2 format specification for detailed
+> > -# information on these structures.  The default value is chosen
+> > -# according to the template given.
+> > +#     Structure of flags for each metadata structure.  Setting a field
+> > +#     to 'true' makes QEMU guard that Qcow2 format structure against
+> > +#     unintended overwriting.  See Qcow2 format specification for
+> > +#     detailed information on these structures.  The default value is
+> > +#     chosen according to the template given.
+> >  #
+> >  # @template: Specifies a template mode which can be adjusted using the
+> >  #     other flags, defaults to 'cached'
+>
+> The first sentence is clearly overview, but what would we want the
+> inliner to do with the remainder?
+>
+> Looks like the inliner isn't going to do anything with it right now,
+> because Qcow2OverlapCheckFlags is only used as member type.
+>
+>
+> [...]
+>
+> > @@ -4550,9 +4460,8 @@
+> >
+> >  ##
+> >  # @BlockdevOptionsCurlHttp:
+> > -#
+> > -# Driver specific block device options for HTTP connections over the
+> > -# curl backend.  URLs must start with "http://".
+> > +#     Driver specific block device options for HTTP connections over
+> > +#     the curl backend.  URLs must start with "http://".
+> >  #
+> >  # @cookie: List of cookies to set; format is "name1=3Dcontent1;
+> >  #     name2=3Dcontent2;" as explained by CURLOPT_COOKIE(3).  Defaults =
+to
+>
+> The first sentence is clearly overview, but what about the second?
+> "URLs" are actually member @url of base type BlockdevOptionsCurlBase.
+> What would we want the inliner to do with it?
+>
+> BlockdevOptionsCurlBase is the base type of BlockdevOptionsCurlHttps and
+> a branch type of BlockdevOptions, where this will get inlined.
+>
+> > @@ -4576,9 +4485,8 @@
+> >
+> >  ##
+> >  # @BlockdevOptionsCurlHttps:
+> > -#
+> > -# Driver specific block device options for HTTPS connections over the
+> > -# curl backend.  URLs must start with "https://".
+> > +#     Driver specific block device options for HTTPS connections over
+> > +#     the curl backend.  URLs must start with "https://".
+> >  #
+> >  # @sslverify: Whether to verify the SSL certificate's validity
+> >  #     (defaults to true)
+>
+> Likewise.
+>
+> > @@ -4591,9 +4499,8 @@
+> >
+> >  ##
+> >  # @BlockdevOptionsCurlFtp:
+> > -#
+> > -# Driver specific block device options for FTP connections over the
+> > -# curl backend.  URLs must start with "ftp://".
+> > +#     Driver specific block device options for FTP connections over
+> > +#     the curl backend.  URLs must start with "ftp://".
+> >  #
+> >  # Since: 2.9
+> >  ##
+>
+> Likewise.
+>
+> > @@ -4603,9 +4510,8 @@
+> >
+> >  ##
+> >  # @BlockdevOptionsCurlFtps:
+> > -#
+> > -# Driver specific block device options for FTPS connections over the
+> > -# curl backend.  URLs must start with "ftps://".
+> > +#     Driver specific block device options for FTPS connections over
+> > +#     the curl backend.  URLs must start with "ftps://".
+> >  #
+> >  # @sslverify: Whether to verify the SSL certificate's validity
+> >  #     (defaults to true)
+>
+> Likewise.
+>
+>
+> [...]
+>
+> > @@ -4735,14 +4637,13 @@
+> >
+> >  ##
+> >  # @BlockdevOptionsCbw:
+> > -#
+> > -# Driver specific block device options for the copy-before-write
+> > -# driver, which does so called copy-before-write operations: when data
+> > -# is written to the filter, the filter first reads corresponding
+> > -# blocks from its file child and copies them to @target child.  After
+> > -# successfully copying, the write request is propagated to file child.
+> > -# If copying fails, the original write request is failed too and no
+> > -# data is written to file child.
+> > +#     Driver specific block device options for the copy-before-write
+> > +#     driver, which does so called copy-before-write operations: when
+> > +#     data is written to the filter, the filter first reads
+> > +#     corresponding blocks from its file child and copies them to
+> > +#     @target child.  After successfully copying, the write request is
+> > +#     propagated to file child.  If copying fails, the original write
+> > +#     request is failed too and no data is written to file child.
+> >  #
+> >  # @target: The target for copy-before-write operations.
+> >  #
+>
+> What would we want the inliner to do with this one?
+>
+> BlockdevOptionsCbw is a branch type of BlockdevOptions, where this will
+> get inlined.
+>
+> > @@ -4778,9 +4679,8 @@
+> >
+> >  ##
+> >  # @BlockdevOptions:
+> > -#
+> > -# Options for creating a block device.  Many options are available for
+> > -# all block devices, independent of the block driver:
+> > +#     Options for creating a block device.  Many options are available
+> > +#     for all block devices, independent of the block driver:
+> >  #
+> >  # @driver: block driver name
+> >  #
+>
+> What would we want the inliner to do with this one?
+>
+> BlockdevOptions is used as argument of blockdev-add, where it will be
+> inlined.
+>
+>
+> [...]
+>
+> > @@ -5587,9 +5465,8 @@
+> >
+> >  ##
+> >  # @BlockdevAmendOptionsQcow2:
+> > -#
+> > -# Driver specific image amend options for qcow2.  For now, only
+> > -# encryption options can be amended
+> > +#     Driver specific image amend options for qcow2.  For now, only
+> > +#     encryption options can be amended
+> >  #
+> >  # @encrypt: Encryption options to be amended
+> >  #
+>
+> What would we want the inliner to do with this one?
+>
+> BlockdevAmendOptionsQcow2 is used as branch of BlockdevAmendOptions,
+> where it will be inlined.
+>
+> [...]
+>
+> I believe all the problematic first paragraphs consist of more than one
+> sentence.  What about splitting "trivial" into "very trivial" (just one
+> paragraph, no sentence-ending punctuation in the middle) and "hopefully
+> trivial" (just one paragraph, remainder)?
+
+That's tricky to automate, and doing it by hand doesn't sound much fun
+either... can we just power through one-by-one?
+
+Unless you have a script or a trick you believe will help, and then I
+am happy to oblige.
 
 
