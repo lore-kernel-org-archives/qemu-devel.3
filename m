@@ -4,100 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09B82C531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:24:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AE5CC53209
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:24:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woQt7-00024T-Ei; Mon, 27 Jul 2026 15:21:21 -0400
+	id 1woQrt-00009t-BF; Mon, 27 Jul 2026 15:20:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsc-0000uP-0k
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:55 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQrs-00009f-61
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsa-0000hE-0M
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:49 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQrq-0000N6-DV
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785180047;
+ s=mimecast20190719; t=1785180001;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XYF0DkjUHUea+23rjlBko6Uu+m8zVNRGqc1kXP54qOc=;
- b=C47koQP5zwCvwYsdPA7b3utyTvY4QjG+a29vaU4MjjfjolPPJR4Ycfysq7YogiIMVae3fn
- +5uMVFZsXOj9bbDcDZO4TRk4yPNNISL1fb5tjc92L78R/YcmVpzKQZLzOgiLH25e5yO1o9
- ImfSk+WADCeN92oI7WO/qyS9rnzt+E4=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ztveMvOf8dhfMuHF5jnMCpMJC+TJBMbMVVTXwok/3LQ=;
+ b=Sl/0h0AO2J2So7YZ7GGZlv2mi8pO1kNkmx28r7jakHuFs3duA0ejArYip2qUFRs2bT1qYh
+ IEDja5oVSqmxSxvo5IRUS6Z0EDsjb0BYEXummJvDtvbAQwGW6RitKv8gP33qDHOquD7I5M
+ kfXsnZrKN6CQR8DGccpVUD/c4m5Sv9g=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-133-YJqvQHDYMIWRkw5t6DwmUQ-1; Mon, 27 Jul 2026 15:20:45 -0400
-X-MC-Unique: YJqvQHDYMIWRkw5t6DwmUQ-1
-X-Mimecast-MFC-AGG-ID: YJqvQHDYMIWRkw5t6DwmUQ_1785180044
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-495569acf8dso20983155e9.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:20:45 -0700 (PDT)
+ us-mta-563-PErsgzd4MDGw7jDveE4F9w-1; Mon, 27 Jul 2026 15:20:00 -0400
+X-MC-Unique: PErsgzd4MDGw7jDveE4F9w-1
+X-Mimecast-MFC-AGG-ID: PErsgzd4MDGw7jDveE4F9w_1785179999
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-47f7700ffdeso1224830f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:19:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785180044; x=1785784844; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=XYF0DkjUHUea+23rjlBko6Uu+m8zVNRGqc1kXP54qOc=;
- b=tUl8R1PZTPs++8J43oxjgJxPOcMFM+w3x9cmJY0Bhh2D7DzfuzsuWN6xBel3ZzIgpb
- Rl3wnykyfLGtFE2t1hCjCfZnq00DSAIMn8g/QNM002ErrYPBekJ/QML51W6hhKpra8tn
- QgPsKNzwxTYMjNeUKcGfas6iyFrppr63LfW4IjF8bwivJfr1Du6N5Uj/VsJ5vMU+qpHP
- UUC337WDddvrz0KCwjiWeoXI0Cq5zhK+s8jcUR9k0CeMlWMiPnCT+WChic4Aj86YRpEz
- /q623YPLuB24/Qg5mCSkQOysPlyR/aeueFjWxP9J0C+V1uMujhlObw6t7Q3xPCfNeaR7
- tpWw==
+ d=redhat.com; s=google; t=1785179999; x=1785784799; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=ztveMvOf8dhfMuHF5jnMCpMJC+TJBMbMVVTXwok/3LQ=;
+ b=RTi0AJSSXqwsBHbbLYszVkqZxwQT+h95qWVJ+zCCZag+7TBkzpv9WX79F6vj6ZTTqB
+ xZJmFzvQaS7SGjHBWoQ/pcEkOPykH0/TQeMSn5gkrg5wCpi0AOkOMBsu/pbopEXSykoI
+ uWZ56e7/cnYTVJR5RZRywZLumIPZK9vBBC8EG6jkna+hYYbspzb35bheMxF7GYCtBoGT
+ UaGmVl3e0JxKwUWybDjF0p2pk+SwQvtFJGWN05E8TBPJy7urIWlucey5x/9qbfFDk4d8
+ pHNsYpRTlCgrU6dNbR2SwWliLhWf9DIRsfZ4NY9qgg/PFXD9EFc+Zq4i97ZVVx8OiZZo
+ quhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785180044; x=1785784844;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=XYF0DkjUHUea+23rjlBko6Uu+m8zVNRGqc1kXP54qOc=;
- b=JL5tRIDH4vy+8dKW0YgPrh9OS6VarmkuSc/6hqP29Go7oHSE9M2pTTB4jsRVhhejEG
- y39paf7xXx2dimdr6y7obdsN0QtyAuV6eIGFiLSP1TDj4MmTV1HuAQeOItqKNB/B01cq
- 6hdHCVdc8XVpKwAlCG3ZVIQ7btJUmztAsT9xhja5Z8eyE2gwA3QTqLhW+X+JYgCxIhOK
- Au71tyoDn0sigJMJN0116eRafMHOs3y+QJ0bxEtC+HY9jzPiRGoRdBojKmq+QN/maLv1
- ec+mEZxPk9FqT4TUse17sY1NuEP/w/pj/tjNdxwvE69hYzyfligjKo04CjOCM7jpBDTS
- cilg==
-X-Gm-Message-State: AOJu0YxZIf2dtseSeONTvan4YNgLz7hfK1Qd/e4u9pNK3MKzePuAwmPo
- OP6xRC1H9MJXMRgY9N3IaKHCdfJCTJSt0rsi+PEtOgiqd9r/TstAf7uDj4tY3i7qCLaypjCySty
- cY5RJ2utydkl93H1/OeJPM4nzw2vBr1Y9TNn1xPjbTzQq3VbiEKLkygefx15TgC3vjO3fxk/Bjy
- 7NAKJ1XBpl/stt9FLBHxhyDY+VFhN/nhr3/w==
-X-Gm-Gg: AR+sD12THZ79AWEOW37VJ9fYP3I8V+5KSnZJcIN8VD2dvzx3ertegASpc/Co3XHZFRa
- aSOG56kMTk1Omgx6xqCcmZ2ELOmpREAQ1PuJmGZSYoQKXAshYXcWLlNr/6l+ZpaMabvsh3KzNcZ
- eqwDac9CLyK9TWB/fx6e3PAP14fX/H2wMW2f40LlopZQeSkMEI1XDh/FEaHXMfhfuLFm3YW+WSB
- tl45/xK/ZtGE+GBzOKlQERwqcjfYh9ujrn1wSw+RxUXck0ixGys2RM/y4WVCj5BKmJ42567IGqx
- DAiSainvKXSlxcS0jxwnf6KGOWufiUmP1EMkT97us5rHeaJ0m4RgnkX64EpM5eA39FmaoO5B5v/
- 29+yieaLlF1r/GCuya9rI1g==
-X-Received: by 2002:a05:600c:3595:b0:495:7379:17b1 with SMTP id
- 5b1f17b1804b1-496c4fcc80fmr3941375e9.30.1785180044381; 
- Mon, 27 Jul 2026 12:20:44 -0700 (PDT)
-X-Received: by 2002:a05:600c:3595:b0:495:7379:17b1 with SMTP id
- 5b1f17b1804b1-496c4fcc80fmr3941115e9.30.1785180043838; 
- Mon, 27 Jul 2026 12:20:43 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785179999; x=1785784799;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=ztveMvOf8dhfMuHF5jnMCpMJC+TJBMbMVVTXwok/3LQ=;
+ b=cKDrmkf54F45ixfTEay34GvgHT3aJQkugrABsRPh23MCN3SKWzYvGtB7Z2K7rPAih0
+ GO2T1HNF/zwwfNuSyDI7Wc3gH8Y3rg49tUCEYV8CrZt6g3cpg4+KYGxPEehWvhxUMqP7
+ XGDz8Z8eyAo/IlBvTvQNsc6vcSh3umKxuosp615kfomOQWcrcsVGJxsNgI3Y3yUYsYv9
+ WcfuSMSaByz6PW+HnEL71m9IN56G8u9J5Iz5ExIEkSAe5C4v2ZMX7FFT0oxjq4vsOiXX
+ I8QgfNybL2FpkWBghMpDPZZ5QAcvtZ5e9JatT/wCDmVor+HQZWIt4XBIn4xuXcU4+gJI
+ dE9Q==
+X-Gm-Message-State: AOJu0Yy+Eg+kpYBiUv0fiI7NJB6ptJwvpqgBr/W11PxUzP0lCXCfMSqH
+ LeHPtM5lHQuQXCR+FnSUoSCALuuxiak8pVPj6YfIGMzgZmmfDYHqRudAYVyaTmbG7TWWc0/3yCy
+ XVzSgWQkYvavcfAuV+8VzYdWmXfAhi9thjBLT33gmhZzSwICAJT3nWbThbIJ+6zJOJHnL5Gj2OJ
+ zyeM57H0R4S4Mb5ILuUtNEKjNqfss8oceLHQ==
+X-Gm-Gg: AR+sD12d7NgN4HxRUuJRp/Mkfd9vsGlyfwKKH9RBXE3gm6YF3+WiAwe6fC2emuR2P2d
+ Pf7IqL33xS1XKDOiCoCe3B7OQcHAkyobYp0QF3FQjrbdnsGrCZHX/09DZjgwBjWtMk4dm05RNoH
+ q3ReAFX6F4MXuG77bf63bL7wVMgAspuVM+KZNTAJS+zX7ohrj4HqIXEYei5Pep2S5Hk28USUgZ1
+ oeIGvsOZ4ls0vQjqeYtv1GDy0Ti3X19mjnooOEIZtmmpedG/17V55+9G9syEyjM58A9QMaSaioL
+ DAr6ZLfexnkBo7N++VSZO/QUaBrRJlpuC3/bM3JbzdLQY3YGZ6TLJj8tEEu4gm2qa2RxprSUkOo
+ L9+HV7FHP+f8jYBCZ4MYIQg==
+X-Received: by 2002:a5d:584c:0:b0:47f:8866:bd6a with SMTP id
+ ffacd0b85a97d-47f9fc9255bmr12593714f8f.19.1785179998720; 
+ Mon, 27 Jul 2026 12:19:58 -0700 (PDT)
+X-Received: by 2002:a5d:584c:0:b0:47f:8866:bd6a with SMTP id
+ ffacd0b85a97d-47f9fc9255bmr12593682f8f.19.1785179998106; 
+ Mon, 27 Jul 2026 12:19:58 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-28-14.inter.net.il. [80.230.28.14])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-496c45b1c2asm15362255e9.5.2026.07.27.12.20.42
+ ffacd0b85a97d-47f96b9abc0sm30687523f8f.32.2026.07.27.12.19.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 12:20:43 -0700 (PDT)
-Date: Mon, 27 Jul 2026 15:20:41 -0400
+ Mon, 27 Jul 2026 12:19:57 -0700 (PDT)
+Date: Mon, 27 Jul 2026 15:19:56 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Anatol Belski <anbelski@linux.microsoft.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL v2 30/30] virtio: avoid packed vring virtio_queue_empty()
- infinite loops (CVE-2026-16457)
-Message-ID: <6682ea3391277e732a6d74c5758206ba834e1615.1785179875.git.mst@redhat.com>
+ Yonggang Luo <luoyonggang@gmail.com>, Miku Hatsune <anznu1l@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL v2 09/30] virtio-mmio: fix QUEUE_NUM_MAX
+Message-ID: <a5cff318f06cd06b37224e15ee74d64d1df8b12b.1785179875.git.mst@redhat.com>
 References: <cover.1785179875.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1785179875.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -125,52 +122,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+virtio-mmio reports VIRTQUEUE_MAX_SIZE (1024) as QUEUE_NUM_MAX for every
+queue, regardless of the size the device passes to virtio_add_queue().
 
-Virtqueue handler functions in device emulation code often look
-something like this:
+This works by accident because QEMU mostly does not care about the ring
+size - the guest is the one allocating memory here.  But this changes
+with in-order vqs where qemu is the one allocating resources.
+Now, specifying a larger vq than allocated causes an OOB memory access.
 
-  while (!virtio_queue_empty(vq)) {
-      ...pop and process virtqueue element...
-  }
+To fix:
+- for new machine types, report the actual max queue size to guest
+- for old machine types, use a compat property to allocate 1k sized
+  queues
 
-virtio-blk, virtio-scsi, virtio-crypto, and vhost-shadow-virtqueue use
-this pattern.
-
-The device may break (i.e. hit an error that requires device reset)
-during the loop. virtio_queue_empty() returns 1 for broken split vrings
-but not for broken packed vrings, leading to an infinite loop.
-
-Adjust the packed vring behavior to match split vrings and avoid
-infinite loops.
-
-Fixes: CVE-2026-16457
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3968
-Reported-by: Anatol Belski <anbelski@linux.microsoft.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: 525d82e323 ("virtio: fix queue size validation against allocated maximum")
+Fixes: CVE-2026-50626
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3882
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <8715acbb9516e67e2a776cda6f9edf105343f788.1784930765.git.mst@redhat.com>
+Acked-by: Yonggang Luo <luoyonggang@gmail.com>
+Reported-by: Miku Hatsune <anznu1l@gmail.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260721134424.196337-1-stefanha@redhat.com>
 ---
- hw/virtio/virtio.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/hw/virtio/virtio-bus.h  |  1 +
+ include/hw/virtio/virtio-mmio.h |  1 +
+ hw/core/machine.c               |  1 +
+ hw/virtio/virtio-mmio.c         |  7 +++----
+ hw/virtio/virtio.c              | 11 +++++++++++
+ 5 files changed, 17 insertions(+), 4 deletions(-)
 
+diff --git a/include/hw/virtio/virtio-bus.h b/include/hw/virtio/virtio-bus.h
+index 1a2d396156..f80fd71424 100644
+--- a/include/hw/virtio/virtio-bus.h
++++ b/include/hw/virtio/virtio-bus.h
+@@ -30,6 +30,7 @@
+ #include "qom/object.h"
+ 
+ #define TYPE_VIRTIO_BUS "virtio-bus"
++#define VIRTIO_QUEUE_SIZE_OVERRIDE "x-override-queue-size"
+ typedef struct VirtioBusClass VirtioBusClass;
+ typedef struct VirtioBusState VirtioBusState;
+ DECLARE_OBJ_CHECKERS(VirtioBusState, VirtioBusClass,
+diff --git a/include/hw/virtio/virtio-mmio.h b/include/hw/virtio/virtio-mmio.h
+index 1644d09810..0a9069868c 100644
+--- a/include/hw/virtio/virtio-mmio.h
++++ b/include/hw/virtio/virtio-mmio.h
+@@ -69,6 +69,7 @@ struct VirtIOMMIOProxy {
+     /* Fields only used for non-legacy (v2) devices */
+     uint32_t guest_features[2];
+     VirtIOMMIOQueue vqs[VIRTIO_QUEUE_MAX];
++    uint16_t override_queue_size;
+ };
+ 
+ #endif
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 805148678d..73b4d82b4a 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -41,6 +41,7 @@
+ #include "hw/arm/smmuv3.h"
+ 
+ GlobalProperty hw_compat_11_0[] = {
++    { "virtio-mmio", VIRTIO_QUEUE_SIZE_OVERRIDE, "1024" },
+     { "chardev-vc", "encoding", "cp437" },
+     { "tpm-crb", "cap-chunk", "off" },
+     { "tpm-crb", "x-allow-chunk-migration", "off" },
+diff --git a/hw/virtio/virtio-mmio.c b/hw/virtio/virtio-mmio.c
+index 58c6d46aab..55ceaeef5f 100644
+--- a/hw/virtio/virtio-mmio.c
++++ b/hw/virtio/virtio-mmio.c
+@@ -172,10 +172,7 @@ static uint64_t virtio_mmio_read(void *opaque, hwaddr offset, unsigned size)
+                 >> (32 * proxy->host_features_sel);
+         }
+     case VIRTIO_MMIO_QUEUE_NUM_MAX:
+-        if (!virtio_queue_get_num(vdev, vdev->queue_sel)) {
+-            return 0;
+-        }
+-        return VIRTQUEUE_MAX_SIZE;
++        return virtio_queue_get_max_num(vdev, vdev->queue_sel);
+     case VIRTIO_MMIO_QUEUE_PFN:
+         if (!proxy->legacy) {
+             qemu_log_mask(LOG_GUEST_ERROR,
+@@ -738,6 +735,8 @@ static const Property virtio_mmio_properties[] = {
+     DEFINE_PROP_BOOL("force-legacy", VirtIOMMIOProxy, legacy, true),
+     DEFINE_PROP_BIT("ioeventfd", VirtIOMMIOProxy, flags,
+                     VIRTIO_IOMMIO_FLAG_USE_IOEVENTFD_BIT, true),
++    DEFINE_PROP_UINT16(VIRTIO_QUEUE_SIZE_OVERRIDE, VirtIOMMIOProxy,
++                       override_queue_size, 0),
+ };
+ 
+ static void virtio_mmio_realizefn(DeviceState *d, Error **errp)
 diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 979c4065b7..daa5607338 100644
+index 2d33622daf..cdc8ba76f1 100644
 --- a/hw/virtio/virtio.c
 +++ b/hw/virtio/virtio.c
-@@ -763,6 +763,10 @@ static int virtio_queue_packed_empty_rcu(VirtQueue *vq)
-     struct VRingPackedDesc desc;
-     VRingMemoryRegionCaches *cache;
+@@ -2568,6 +2568,17 @@ VirtQueue *virtio_add_queue(VirtIODevice *vdev, int queue_size,
+     if (i == VIRTIO_QUEUE_MAX || queue_size > VIRTQUEUE_MAX_SIZE)
+         abort();
  
-+    if (virtio_device_disabled(vq->vdev)) {
-+        return 1;
++    BusState *qbus = qdev_get_parent_bus(DEVICE(vdev));
++    if (qbus && qbus->parent &&
++        object_property_find(OBJECT(qbus->parent), VIRTIO_QUEUE_SIZE_OVERRIDE)) {
++        int override = object_property_get_int(OBJECT(qbus->parent),
++                                               VIRTIO_QUEUE_SIZE_OVERRIDE,
++                                               &error_abort);
++        if (override) {
++            queue_size = override;
++        }
 +    }
 +
-     if (unlikely(!vq->vring.desc)) {
-         return 1;
-     }
+     vdev->vq[i].vring.num = queue_size;
+     vdev->vq[i].vring.num_default = queue_size;
+     vdev->vq[i].vring.align = VIRTIO_PCI_VRING_ALIGN;
 -- 
 MST
 
