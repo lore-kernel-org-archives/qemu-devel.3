@@ -4,186 +4,157 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EC1FC53219
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 09:07:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61F6CC531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 09:11:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woHIG-0003Z2-7b; Mon, 27 Jul 2026 05:06:41 -0400
+	id 1woHMt-00058I-HP; Mon, 27 Jul 2026 05:11:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <flosch@nutanix.com>)
- id 1woHHc-0003Vc-AG
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 05:06:03 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1woHMq-00057q-7Q
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 05:11:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <flosch@nutanix.com>)
- id 1woHHX-0008Pg-1X
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 05:05:57 -0400
-Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66R7RZYt244002; Mon, 27 Jul 2026 02:05:49 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=6nKnpHJhkzwlLbUtH+omzupiMGh83Qjx0I4QICyef
- z0=; b=hrpaHbjWKSFYXSrpZFmHdsDYJ4BtV0S8PXcldjgqeQTbynD1vaPLyzLDu
- ps53JB/pTmqgZZOie/149qVTwJ+1fWFqOvWzWP6+MJ9U8se9Jz8TgiY0TDFBrPpU
- iNo8eJYRskdYcTzj8TocZjOZIOBjgul3+bwgHE2aO7ZPUKjePhk5wRgSc8HXsE5h
- KMGfdExQAQnJqRZe8eO3YRSxE6aXZpZy4B6T4wKHkXqC02CE60vtR+0mHFWJFRTD
- lzZNRf5R9yRS+mR1++mCXpVU+wbGJwUuDj231V6lGO+IHmRnTfEXR7l+EohEfeu6
- DgqLOMf+O51R20QfFjebXmjof7vbA==
-Received: from dm1pr04cu001.outbound.protection.outlook.com
- (mail-centralusazon11020095.outbound.protection.outlook.com [52.101.61.95])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4fmvp0js7e-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 27 Jul 2026 02:05:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=F8uBFHu0n9Qbmp7twM85KYH27IYQL5G5DSOQXQ9nb6VIKVtvjhvmqGQIjSsF99HZQwFspA81Y9suNXfYwFMXSdg5w14hxxLZlDAE7Z2q1vCoONojFNse8D6QIIH7jjIROiBX3RuwpP7lLYaIp8HE2DsspYz+e7fXedklmVvWDQs/9Y/YsO+hnS4vIWI0+tsrUNczBag2jBBiWkI4c73wZng5irOo1fTq9vzDlsJPTw5bVxyXw+pFhBoIHvfys66OZSTiKJBR1fxAws8kdDu05nCEeM7Dl5sHEn8Pk6NFeg4GMUTRWUpGslHmBMb7aF/7xeY1T7reP/xAmi08BtZkGg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=6nKnpHJhkzwlLbUtH+omzupiMGh83Qjx0I4QICyefz0=;
- b=BgVG3g5RGOCdJoSSwDPMAIzi3wg5llHEHJLS+UUEj2NqpsZSvaQf39LmxqCWC6PQ7gyq2UsJ93ykw8/F+zQcx6KA7eEjueQ16oK2uOSGbxE+foeh5Qj0wD+b0an906ddL3swuEXDRnMfasELGV/duwr5cd5e7Vc09D1obkdj+fpBRRN97MEwlSHJAu3Ml4W2vcYIrj2H5v6xOB+3YBOBU16G1gqNRUKTsv0RNG66FfRSpNoKJklSUjEfhnqPZEqc4/D9Co+fIg16ZMiGtXTMsq0Uj/rPZLKz/TlbpPAL8Wsch5kVBB3g2/7+bfNZ8TmLSDWlh0ELNAx/mWo+2JrDwg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6nKnpHJhkzwlLbUtH+omzupiMGh83Qjx0I4QICyefz0=;
- b=LINsArHlWnLxYDcVvONnuNdjRvuzJB6WnvGFEUsymzAz5jMJrBmXKenXxiW/7QHVUfr4vSKirU37Gr6Q/C2eZrSIfgSzc2xa51fK3OBo8T399gwVqhc6b5rACPlpJXiOMkh9l6gwTbKmt96765P+GiCKBnfZ+wd/Htgi+nBXcwyGGYdOaOtWAAfkFcWm+CbII9kzHK0N2wAT8kgwX3E8qEy8etxNOqrpEWieG9nogCY35MPe0LONag+hBm1Vi7kY3Up7H69dnKY7c6ldkoVpdtcDc8AzbSjANcQTz0rijTmyKsNg5zTJXTSK15AC1motFbZu3LlvaAyZips022EoJg==
-Received: from CH2PR02MB6197.namprd02.prod.outlook.com (2603:10b6:610:4::25)
- by CH8PR02MB10840.namprd02.prod.outlook.com (2603:10b6:610:26b::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Mon, 27 Jul
- 2026 09:05:46 +0000
-Received: from CH2PR02MB6197.namprd02.prod.outlook.com
- ([fe80::90e9:29cb:631d:9ab]) by CH2PR02MB6197.namprd02.prod.outlook.com
- ([fe80::90e9:29cb:631d:9ab%4]) with mapi id 15.21.0245.012; Mon, 27 Jul 2026
- 09:05:46 +0000
-Message-ID: <939dd72d-80cd-4cd7-b9d2-e245afbaefeb@nutanix.com>
-Date: Mon, 27 Jul 2026 10:05:40 +0100
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1woHMo-0000Re-Do
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 05:11:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785143481;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=8slHnuVoR4TbF36t9Cc0pLXRg84WP2PGSBTAoXEKA2M=;
+ b=S2urQTVhA1uhlj/3VAGjxZS7bWkgmkzVX485dHXmKG+mfu3Jr9FdUiBeIY5SJJroO1KepR
+ l5jz3KpHJ0pnNYf6JA3jBzujQFEi7ynzslQAFL1IVgesgciBOCbZcU4C18iClrautJOAMN
+ EPI80QqbfXxd+0jFAqDpk4jd6rnGJNU=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-651-uIh2qlGrNn-9vwp_EwhZkA-1; Mon, 27 Jul 2026 05:11:19 -0400
+X-MC-Unique: uIh2qlGrNn-9vwp_EwhZkA-1
+X-Mimecast-MFC-AGG-ID: uIh2qlGrNn-9vwp_EwhZkA_1785143478
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-c16711b9473so250366966b.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 02:11:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1785143478; x=1785748278; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=8slHnuVoR4TbF36t9Cc0pLXRg84WP2PGSBTAoXEKA2M=;
+ b=bRQfSmC2NLiDSNJ0AKfnTTk1lZ/q9mjA7goixU78YVMwC9Zve/Z5Qiox1756i5ngMo
+ nuRlAr3Mo/Bg70tXlqOb8mWyBPLoTc4h/2J427bXiA7VRg0LiANp2noSl33/MT09L/dC
+ zvRR8v3ID+uHhzo202hWN8NWeL7FQBwAdDqGIUeTMx0OJnP0Vsw/D320HmmbfCsS/qhO
+ c3AQ65Ok0y2o8+3RPm+/lbEnFY/CrYk1mRaCbonuqrOZaERcGk3I6k1XyDDqlaZYxBAk
+ d/olcps6Tv3xeF+lYFWA855e2DgHrI9+GjxaIOZqOh/ibSBbobHr3aNmQFFhQFK8rnhQ
+ xvtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785143478; x=1785748278;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=8slHnuVoR4TbF36t9Cc0pLXRg84WP2PGSBTAoXEKA2M=;
+ b=P946JrnNb649FwDxO1G50ayDJ40+VBAF8o1Fdj9W+iPZF+kW3pCvw2+mZPN/WC6Dcq
+ AbpgsQpLWz1adrEtEg46KpyD7nOVGnQtYQuYAad4j0Gl+/yAf5MYAEwwVs/aeC9GPIk5
+ hnZwbedHb5rXpVvrjljUUQ1qeGEYHzf+oHyZZ2jSQiudNZDbzDHh6OJBxUcK0qiKFHko
+ vLkvoVwcljcA9Fs1q35leDE2rzrgN+NEEhUwXrO0KjJrFKPaD9XZFrhgcJWDwmvoeemX
+ MnvLZdLSsDu76ayjhzr64YyMHmuZva6CbxGahHsQbyc5bUGxVy7efGMw7KcZ14mD8Mdk
+ so4Q==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Ro3xdybp+JNqLu3wW77prX43tnPv+EOmnxtvByTcSq5s5e3rq40omNBcYj+2xboKRFoTlf9J4EOwVBK@nongnu.org
+X-Gm-Message-State: AOJu0YwUH7swXhdnO98ouJjoTeg5i4TkgVJczMI4uiu6WFnHsAX+WVJu
+ yFV8mzkUJbPfFQ2GwIwYxZpKiNKp0Zjt+HMhVQSevFa+0NisuxWBQhTYcTtarydMf5RTEYsSWsR
+ 4MJ8OdcQ6+nc78+c7joQBEBDbpDk+LCVmW/fb52Xb1yt9k2Eq1aY7DZgC
+X-Gm-Gg: AR+sD11mmpdQP+2m7wIGykpkd8C/LuLA/XER8JYbQIAYx/lyWZgNFHerynauUssvoCZ
+ DxA62eArLx5C8Qli3cM4rsSNXwSnS8fj86sptzYpNsaGO5wuyQycrfweQmp3sI0JAIb8KqVO8/e
+ tkwoTyySLJVF7uDqkNP7soeVxoyJn5Na2bVkuOywhLVGqAKQiUT320CeE2t4mjLlP0niOzrcZOS
+ NOC+0iQWOn/JwQlevePGGvn8FRH2b5iBG3EiNCxX8tKMBUpDADMjmUYrkE+hv6wEV+04/DnBuMO
+ 9EPNIgQye6qqUj3adXFscjv7bK6w53XPsErrt2UCQ06XdQwomKvD+ZzJWceqOYvlXl63UaaKpg=
+ =
+X-Received: by 2002:a17:907:9445:b0:c16:9ef6:b7ec with SMTP id
+ a640c23a62f3a-c1f1f43785amr346296966b.55.1785143478323; 
+ Mon, 27 Jul 2026 02:11:18 -0700 (PDT)
+X-Received: by 2002:a17:907:9445:b0:c16:9ef6:b7ec with SMTP id
+ a640c23a62f3a-c1f1f43785amr346295466b.55.1785143477828; 
+ Mon, 27 Jul 2026 02:11:17 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.113.188])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c1c32ebc3c0sm602963866b.51.2026.07.27.02.11.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 Jul 2026 02:11:15 -0700 (PDT)
+Message-ID: <c68be7c9-113d-4de1-8ab5-bee142e8db15@redhat.com>
+Date: Mon, 27 Jul 2026 11:11:14 +0200
+MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] Add option to disable building tests
-Content-Language: en-GB
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Florian Schmidt <flosch@nutanix.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-devel@nongnu.org
 References: <20260724135413.1716872-1-flosch@nutanix.com>
  <708798a8-3d43-48d9-a4f6-210eb88a88cb@oss.qualcomm.com>
  <92358092-080b-4b1d-82e5-733d2531ff38@oss.qualcomm.com>
- <6c79c79f-1bff-4914-9e42-dc077885f718@nutanix.com>
- <amcbxTQXOwIJPPpo@redhat.com>
-From: Florian Schmidt <flosch@nutanix.com>
-In-Reply-To: <amcbxTQXOwIJPPpo@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <92358092-080b-4b1d-82e5-733d2531ff38@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: AM8P189CA0026.EURP189.PROD.OUTLOOK.COM
- (2603:10a6:20b:218::31) To CH2PR02MB6197.namprd02.prod.outlook.com
- (2603:10b6:610:4::25)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PR02MB6197:EE_|CH8PR02MB10840:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4dc510a6-dd89-4f2b-7235-08deebbe3e93
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|366016|23010399003|1800799024|18002099003|22082099003|56012099006|4143699003|10067099003;
-X-Microsoft-Antispam-Message-Info: fJwfqDqvfLKgTHFpXkCLDvYuDKIHy6RrogIyBrQGopcVnrL0Q0tZfYpqNT7XWuytHk5YXc3KEB2uPftj21ucSHQGocyn4SK1+VT0eKdzAwirCfLH/auctyp7ZH44/xBKH2I7jyFlEAcvKzloCKOYeuUYbvRvw4W7v3K0o13jhx8/PhB7w6EQE0bXalqVdB7faLjyPEvkBCoxWSxjImuAzg61PLfFw6OpuzpupWYHUaaT6jWJZvSnyCGbj0aPcfj9xHw2bJ2W8SIgQKNR7tkKFsdfdvkyTt8Ty777E6z9loaVdkjP2P4Blcjp/QGaLj4QdmK24n5YV2bQDibSV006ngilSU2cxYzH+etWXz8YjL7W6DGm+pAKRze/qs3GCS1IeCyx9IeDGD6O0x7HqMpwcrL37OAXc9LHZw6tPskX3wCznrXaR9VoGWLV+fcF31Ae3DZKRx0IYVmNQSpOSXPcb5pqC/nDg/fi37TjFUs9U/TctFKnYa9BAdFLpb4bUNKuaBVzW5syAZhOQbgs54QAXNps/CQZ3rkf5uQliQhUqfgf5hBAlJkRf13fH+fatLlWvHw++w45Cdtk+3cs1npuVhIl2mKMKR7sRawcvpjMG7tzsThnqcXWk1YhMr8Rpjy5hSH3FMOkgA3BuvOK/44S+kpYJav5a9ySJq8kM0BqENA=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH2PR02MB6197.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(18002099003)(22082099003)(56012099006)(4143699003)(10067099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SERWYlY5R210MFAzeDFOZFNIc253UkxzMjdjUlA1aVRveFpIUHl5U0l5d0xP?=
- =?utf-8?B?dFBMS2VCeFY2ZW9QM29uZTVtTGxCVjBnWm5DZGZSeDFMN21IVjRua2VtMi9D?=
- =?utf-8?B?OEc5Qlk4UXY5eDFYb2wycThQQXhlYXdHNnhXcTFJb2g5a3crKzVzbVFkUlFK?=
- =?utf-8?B?U2Y2QVNaMlhxNEVwVjFrdXI1Z0JlUFJxRVhIODFFMlZyZGJpeEpQTGlWeUl0?=
- =?utf-8?B?dFl5YXdMb3BhNnFYTVhVdUQ0SS9Fa1VWc1ZsVXlkSHJ2ZXNXanZ5a1hkMmxW?=
- =?utf-8?B?b2puWkxEZ2N6OUhtSDZZaC83Vkx6emJZeDJxK2xKN2hvWS9pMUFCNDNOOWQ3?=
- =?utf-8?B?YUl6TVVwMFdTY2d2UkRMVWZ5WEs1aDkxaS9xTnJQOWNGendGODRZa0k3bTl6?=
- =?utf-8?B?RTlZY29RUitnYWU4V0d5RDhaMHZOdUc2dXZibVZPNFREOGxBV1BVc2lRYVo0?=
- =?utf-8?B?SjdabUhqOTJYeEM0QkpiUUpQOG01WXhOUUFYWkhBTGZYd0htSFlPdUtWV2V1?=
- =?utf-8?B?SkdlaTB1T2EzVGpWdlRweWZGVGNiYmkva1RBTDVRdldTS1ZCM3l4ZVEzSW84?=
- =?utf-8?B?aklaZUE4M0s3QXdwNzd2bUROR0xkVGluY2p1dEFOcjUxSTZCOFJWalNpOTdS?=
- =?utf-8?B?WGk5bkhVc0I4aXQvZGtpb2l1bDlXc28ycERKNU91eHNvTjRuNWovMGxtZnk1?=
- =?utf-8?B?UHE1eHdiRUlzMTc2YWh2L21YdjZXOHB0dmtpUkgrRHZmTlVtT056TC92Ny93?=
- =?utf-8?B?ZnZIVjQ2aE9OVEt1SUdQZlRTV0FzU3h3TlNvNkV0OVhJdzNTelRuTzN2TWhk?=
- =?utf-8?B?RjhPUjd0VFlZdlNCSHVpTG94VDZJWFN6WHFSSTlrQkNZSmppQ0VVUHVBUkQw?=
- =?utf-8?B?K3c4ekdMRm1SbjBNTitZS2RUYUdBc2Y2Z2ZVUVdlVHFKMjJlMncxNlF5ZElH?=
- =?utf-8?B?a3RxUXhCTDUxVkpUOW5tVFBkSm95c0crZmZOUUhDTHpBd28zejlxQXJZTEJp?=
- =?utf-8?B?QzFQa3IyWXBDdjZPMXZGZ1RMMU1CaS9CZ0ljVmc0dHFlT2JodFBMQVY4SG9K?=
- =?utf-8?B?NFp1dWh4KzZMZk1pRXhrV1RlMDZ0NVNMMTZ1TzYyWTM1aWRLWXp6MGxVLzVq?=
- =?utf-8?B?ckhBL2UzS2JpSlY5bVpjM0s4UGdiZVVZYzNPdEwwVW1NNWVDTlU3ZDdtSW9W?=
- =?utf-8?B?dXhmS1FsQU5QL0RyVWFlZW1tL1ArM1JoME0zZVlaTG9VRjYrU1RFaE1QUy9O?=
- =?utf-8?B?ekdEZ3Z1RVdrUU9MRElhNVh3clQ5ZTlBVkZBREtMTEMzbitteVhZUENac0lP?=
- =?utf-8?B?RHhUZ1B3TU9ZVVdKdE1mY2dyOHBwRFVjc3dPWG5mUVZSNDBKbTJDV25NbHJK?=
- =?utf-8?B?MEE4anRwQytFWGpRSlduQS9GSzF2UEFUZkxid3lKUzRueHZSSFJienJTaXBy?=
- =?utf-8?B?SHNWSjhwSTlreXJOL1ZZdGJPdWtJQmlEZHB1K1g1My9ORTRGd0FTbk5pMUJh?=
- =?utf-8?B?NUNGNFBYV0o1YnlzQlQ1UDJ4amdpek5pNEhVdmhmRmJQK1A5Q2NRZWR6VEp4?=
- =?utf-8?B?Q2VXOHpBRGJ0bWlPSXYwUXZGWFQ4cDFLbXVJbm5jaE5FTmJocyswbWE1UElG?=
- =?utf-8?B?a0t2ZC8yWVZFcDhOUUpBU1BCRFFJVTV1REZqR3FXWExjV3JjdTE2c3RDdjlM?=
- =?utf-8?B?eHVNam9pSW10UVR1U1loRGJnVzJNR0N6a3FMaHRKMHUvclBPeEFjMTVuaVhE?=
- =?utf-8?B?bWZjaENxMDAvMWx6ZU1TOTBjZVQzTytid0pLN1lXODlQS1d6K1lSbC9oNmxF?=
- =?utf-8?B?NHltTDFPN2NRekJ3MXpWYTZ5L25sL2RJV2RyVnZuM1AyeHB1L25xTllYc3NB?=
- =?utf-8?B?UFlTWFpLdmF3MmhERkluUzR2eEZhRFpteGdrT0JXUXFqR2pGSUpoeVdvdnFS?=
- =?utf-8?B?RlJFUW9sUHhvSWFNcWxpNDJwbWMxTnFvY3RzVmFTU2luNmRtdUNJSGJsNHhD?=
- =?utf-8?B?WjJBUzVoY3FKdUtUZlI0MUVOYWNtUXhCZkNEdlNlVmwxYnpMbWJDSllIdFhT?=
- =?utf-8?B?M081YllRek83WXRTWTU5WHQ5Y0dSUnRHcXFvZnhDbXl3OUJ4WkM5dGJyZTdq?=
- =?utf-8?B?MVhWUmxDMDhEQXhIWFh1dCtid3dQYXMzTWZvcUlCY0lpRUd5dDNTNGdRTUt3?=
- =?utf-8?B?bHVJTlgrY0VJUWlWbEFJSFFxMTFGMjduakJ3MHhPbi9lV3VpazZ2WTNhRkFI?=
- =?utf-8?B?THlqY0gyNDhwRHZLNGFBd0RXZWQyaGF1QnJOOGZwZ0tSZnRYK3dYaEt1S2gw?=
- =?utf-8?B?SHpPV3NtdjF4Rzl5SUM2Q3Z4bDV4WUxBMmdBVDFRTjUrM1JtSXFQTlRnQzVk?=
- =?utf-8?Q?OIYfxY1rqES1M/q0=3D?=
-X-Exchange-RoutingPolicyChecked: I4wh8Vhkh0kSYcQmnF6yVOs1zuf2fxEVd0Ik2G9/B16Zmwm3N0//VSxnWlKpxQGBzO1C+D7wzS7TmLZUx4kfvgvamBA0MBYTHyChZBq9BUgF5eajdfdibxXRa6jr/L/eYHdydaNyvHs6TAGiv5Fl5tGWmcRdj2JQ0sTZITGzHBJT31PgiOFyH4jA1TA/TwS6/HKWYhsXs5MsmZON9B7vAZ0VETUUFQUUTQeZyd7WbYvYHKQZJfOKSB0xCDhmUrOCKAHig3CMgrUc/ctw+d27UVHE6QQuRMbeq1lXXNkr+RWhVH1U6cbZxndPE49JNXoft4vzNLi60gQ6o6F7I6FPzg==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4dc510a6-dd89-4f2b-7235-08deebbe3e93
-X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6197.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 09:05:46.1499 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ukH2KIcUJD9BWtFGIE0EHLQEtsQn3UsA9zsUMSoBwTzfoLwN7nYnSLwJT87f3ovu9ZNuirZT7ajD6zWSHnS/+8uVtsd2sxod7IJFE1vrjxs=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH8PR02MB10840
-X-Authority-Analysis: v=2.4 cv=btl8wkai c=1 sm=1 tr=0 ts=6a671f6c cx=c_pps
- a=5EyciH11kPx6gLClVK4sKg==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=0LlEyIVc8U2lsR7dKhuH:22
- a=OBAOrx_FVqGdsqcXfSMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: s69jfO5grT6YAGMpoNucOD9_j5lpJrD_
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDA4OSBTYWx0ZWRfX7qlhvogIxA2I
- flHHW2HbL3o988N2oz9a6DwFSjPyZsff5Feq9alrDrKkE+LWx5UDhdKJsfmJgnbsgK+8MKGdic7
- xgb8ysXj8DZUupIxfr/SrWWT/indzXw=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDA4OSBTYWx0ZWRfXy2s9RKvsFFyB
- 9GAf1aZShua18eUdOE+QuABN484+3kkM9JkM/PVDbUGcBB2V4kickgoOeZy7LYewrcDfo2V9DaF
- KICMtg4uJprquqAfKR4r9DYVfydWsiw2DbwAWLrFhpT1y0c5RjwYxga1F9ptr3nbH5jwC3ifbgX
- SJZYk6wuWL3zLBa5ke+eskJhRVqUwnTlU1X7Y7T0Jc7AWRpuHOgab9OMxnD2A4PDZPNmofUAESi
- y7ZIi+hvQjO8Ec3rY9OhqftSvkq3PYsEopR2LtwqzTYcZTbtcfR7HeaCFtXMWgB79Xt2Bedr2hZ
- rfnQa1bf0a4dXjtmLWBicJ+7FFqHgecbniNcX6ikl/jTMgZPMb/xbfvGMxDDOU9kB24X+WlXFNk
- j0iZhIqAMWpNVj1spxfoe7Jz3ZWTElSTxx55ZmEcBJQzK/2soTZCF0N2Jni8XFOcHCb891TOh2u
- ErE2KnDEqn8/lN81P3Q==
-X-Proofpoint-ORIG-GUID: s69jfO5grT6YAGMpoNucOD9_j5lpJrD_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-27_02,2026-07-24_02,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12; envelope-from=flosch@nutanix.com;
- helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -200,28 +171,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 27/07/2026 10.12, Philippe Mathieu-Daudé wrote:
+> On 24/7/26 18:45, Pierrick Bouvier wrote:
+>> On 7/24/2026 6:54 AM, Florian Schmidt wrote:
+>>> There are situations in which you might want to build QEMU without
+>>> building the full test suite, which in some configurations can take a
+>>> considerable amount of time to build. This is especially true when using
+>>> LTO with clang. For example:
+>>>
+>>> $ ../configure --cc=clang '--extra-ldflags=-flto=thin -ffat-lto-objects' 
+>>> '--extra-cflags=-flto=thin -ffat-lto-objects' --target-list=x86_64-softmmu
+>>> [...]
+>>> $ time make -j8
+>>> [...]
+>>> [3078/3078] Linking target tests/qtest/qos-test
+>>> real    6m43.250s
+>>> user    101m15.967s
+>>> sys     4m3.813s
+>>>
+>>> $ ../configure --cc=clang '--extra-ldflags=-flto=thin -ffat-lto-objects' 
+>>> '--extra-cflags=-flto=thin -ffat-lto-objects' --target-list=x86_64- 
+>>> softmmu --disable-tests
+>>> [...]
+>>> $ time make -j8
+>>> [...]
+>>> [2024/2024] Linking target qemu-system-x86_64
+>>>
+>>> real    3m14.277s
+>>> user    33m13.174s
+>>> sys     1m36.642s
+>>>
+>>> Add a toggle to optionally disable building tests.
+>>>
+>>> Signed-off-by: Florian Schmidt <flosch@nutanix.com>
+>>> ---
+>>>   meson.build                   | 2 +-
+>>>   meson_options.txt             | 2 ++
+>>>   scripts/meson-buildoptions.sh | 3 +++
+>>>   3 files changed, 6 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/meson.build b/meson.build
+>>> index 49a5baf5b5..ad728c26ec 100644
+>>> --- a/meson.build
+>>> +++ b/meson.build
+>>> @@ -4605,7 +4605,7 @@ subdir('docs')
+>>>   subdir('pyvenv')
+>>>   # Tests are disabled on emscripten because they rely on host features 
+>>> that aren't
+>>>   # supported by emscripten (e.g. fork and unix socket).
+>>> -if host_os != 'emscripten'
+>>> +if get_option('tests').allowed() and host_os != 'emscripten'
+>>>     subdir('tests')
+>>>   endif
+>>>   if gtk.found()
+>>> diff --git a/meson_options.txt b/meson_options.txt
+>>> index a07cb47d35..68333ca402 100644
+>>> --- a/meson_options.txt
+>>> +++ b/meson_options.txt
+>>> @@ -43,6 +43,8 @@ option('gdb', type: 'string', value: '',
+>>>   # on the configure script command line.  After adding an option
+>>>   # here make sure to run "make update-buildoptions".
+>>> +option('tests', type: 'feature', value: 'auto',
+>>> +       description: 'Build the test suite')
+>>>   option('docs', type : 'feature', value : 'auto',
+>>>          description: 'Documentations build support')
+>>>   option('fuzzing', type : 'boolean', value: false,
+>>> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+>>> index c003985047..3fec13a336 100644
+>>> --- a/scripts/meson-buildoptions.sh
+>>> +++ b/scripts/meson-buildoptions.sh
+>>> @@ -194,6 +194,7 @@ meson_options_help() {
+>>>     printf "%s\n" '  spice-protocol  Spice protocol support'
+>>>     printf "%s\n" '  stack-protector compiler-provided stack protection'
+>>>     printf "%s\n" '  tcg             TCG support'
+>>> +  printf "%s\n" '  tests           build test suite'
+>>>     printf "%s\n" '  tools           build support utilities that come 
+>>> with QEMU'
+>>>     printf "%s\n" '  tpm             TPM support'
+>>>     printf "%s\n" '  u2f             U2F emulation support'
+>>> @@ -515,6 +516,8 @@ _meson_option_parse() {
+>>>       --enable-tcg-interpreter) printf "%s" -Dtcg_interpreter=true ;;
+>>>       --disable-tcg-interpreter) printf "%s" -Dtcg_interpreter=false ;;
+>>>       --tls-priority=*) quote_sh "-Dtls_priority=$2" ;;
+>>> +    --enable-tests) printf "%s" -Dtests=enabled ;;
+>>> +    --disable-tests) printf "%s" -Dtests=disabled ;;
+>>>       --enable-tools) printf "%s" -Dtools=enabled ;;
+>>>       --disable-tools) printf "%s" -Dtools=disabled ;;
+>>>       --enable-tpm) printf "%s" -Dtpm=enabled ;;
+>>
+>> That's a great addition, including just for speeding up normal builds.
+>>
+>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>> Tested-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>
+>> If we want to overengineer the thing, it could be possible to still
+>> declare all tests, but not build them by default. However, it's probably
+>> too error prone and much less simple than this patch. So I don't think
+>> it's a good idea.
+>>
+>> Regards,
+>> Pierrick
+>>
+> 
+> When is it useful to build without the provided test suite?
+I sometimes wished indeed for a --disable-tests switch in the past already 
+(was just too lazy to contribute a patch): I'm sometimes building QEMU in a 
+separate directory, just for a very special case like testing a patch with 
+an --enable-asan build, or for doing a "git bisect". In such cases, I never 
+want to run the normal tests since it's simply not necessary. I run the 
+tests from my main build directory instead once I have a final patch and 
+want to contribute it to upstream. So IMHO this patch is a good idea.
 
+  Thomas
 
-On 2026-07-27 09:50, Daniel P. Berrangé wrote:
-> I would suggest that building a second time is wasted effort too. If
-> the 2nd build is byte-for-byte identical to the 1st build, then it is
-> pointless. If it is not byte-for-byte identical, then you'll be taking
-> binaries that have not been tested.
-
-You're absolutely right. They are bit-to-bit-identical, and it is wasted 
-effort, too. That is something we'll look at internally.
-
-However, it felt like a genuinely useful feature to split build and test 
-phase more strongly, by having the ability to only build the product 
-binaries if desired.
-
-There are other options, of course. A new build target such as "make 
-bin" or similar could only build the product binaries, and a following 
-"make test" would then build + run the tests. This could be combined 
-with Philippe's idea to run (and not only build) the tests by default, 
-though I'm always wary of changing the behaviour of default targets. 
-That's obviously a maintainers' decision.
-
-Cheers,
-Florian
 
