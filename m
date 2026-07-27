@@ -4,88 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCD86C53219
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 08:43:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 870D1C531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 08:47:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woGv0-0002KR-8Z; Mon, 27 Jul 2026 04:42:38 -0400
+	id 1woGz9-00033X-8n; Mon, 27 Jul 2026 04:46:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
- id 1woGuy-0002K2-QD
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 04:42:36 -0400
-Received: from mail-pj2-x01.google.com ([2607:f8b0:4864:39::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
- id 1woGuw-0005dg-V7
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 04:42:36 -0400
-Received: by mail-pj2-x01.google.com with SMTP id
- d9443c01a7336-2ca4f02483cso2504335ad.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 01:42:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785141753; x=1785746553; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=7JHbtJerH3/rQGbPisECyh5JnAIvKEhV7En67m13MGo=;
- b=nWRlwCpNtpAhRZyNG6YJwiUdEuKcw4Iih20w6gNowzkr3hIXG7FOh1L2QvJ2wuI/55
- QPJ6baJQFWjydRQbnHw9MVFR7tcE4Ou3O42vDRbuK5qW7SfvVzPwNshR1xPRZXDTnm0q
- hiQYl6M9yqeBtjtv2p73vd/TwbxUP8XS6kfVePKbTJJCzTA7kIQ1hZinb9f18jLZj1sb
- wU7Ecd9OGOaL4XeoZpfkT3WyVv/gZ8wHmXZHJKaPwWqXVIqbQ/p7aKR68mKA2l1+qcgm
- kqN/SQf8oY/8vsA6Q1IAHyMAYp0YNRQ4kVh07hnrpbnIGdgeWKb5+j+UqpZCmw4g2hEy
- hlhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785141753; x=1785746553;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=7JHbtJerH3/rQGbPisECyh5JnAIvKEhV7En67m13MGo=;
- b=hgzgOMG/yoTUnWbe3mOSJjPni//QmnB6X6wZqsRvKGsVMFPSGXYJgt/E8uDTBmcTYU
- lIIA0mgNZdq2A7ZbGe1HieEymta4te5XNbykzs9l1Do40aJHWCLdojXaIH7x8heDVmRV
- pJ55q4YciFHvfCdoDAgn8vyC02DdGmtBvds7VOwU5jjhhjpPYljY4shM62Xx0Uv3nlnG
- AW2I2/udjelGAzQgu+8uNDH1tYBRH6kAYsn9LBGR2SR9sqEelfg9E8Lx6TmqOUKryBid
- vFyza83J8IEOGBg6qlK5rdPYTgvAb5kfn1qhyQwb3+B+g/4p1+tX3zMdT9vtQ3jYt1wI
- wB0g==
-X-Gm-Message-State: AOJu0YxC/PyUwuZlTOaTRIJu7zuX9zOm0uia7vsU6xGJ1CeI4HpbH/Z4
- f4NOQQca0SHtcY2A7YbKrqsEqLCEVoUlOnsyMhu5iGNoPL0I0AIJYRqM8TtuTrkLGmE=
-X-Gm-Gg: AR+sD10awEFahtuRbaXhHpi9oLs/YBre3Ro2ygzHxbtqFHhLbwIo62lLC5SkfuvE24T
- AWe6uPPoDxS4gdgbI+1GLFweW59RXw53IwZkFFNOXscrLyDFgrK3rPRmQR8FmfDY1RPyrxO3IhY
- AoGcEZGMvKevMOcUwJL0QJjffDf1eBs1MIZkuVYx2WkOcebhC8rE2b3In9VZ92qaoGY/PMjga4c
- ci0vFlZGotb4o796n/LZlAwrzQ9PiCxPEnqSFkKK34heDwQ2nivUckYY16nIWGYM0fa++QaGpcE
- rcOObijUYCihv+8DKGbPvZyLBj/bmFVEYwRgh0jI+gxIB4JG+HlLId6CDlIMdEWI0lTIvlKLBC5
- 6l4xFCzjL2WG8usczPm1E+8GkPfdzwN8Ht9HRM6hSLvu83qF/J61kYP21GDYeD+nTZxcUYZQ8R0
- VOs5HLDoaOssc/VHCPIYPQbKjmPl9TNgk=
-X-Received: by 2002:a17:902:e803:b0:2bf:13af:b077 with SMTP id
- d9443c01a7336-2cfdf3f056amr64493725ad.14.1785141752522; 
- Mon, 27 Jul 2026 01:42:32 -0700 (PDT)
-Received: from Dell-WorkStation.localdomain ([139.59.245.192])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2cfde59bc68sm30767175ad.2.2026.07.27.01.42.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 01:42:31 -0700 (PDT)
-From: Zephyr Li <fritchleybohrer@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, chao.liu@processmission.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- Zephyr Li <fritchleybohrer@gmail.com>
-Subject: [PATCH v2] target/riscv: preserve vl on element-zero fault
-Date: Mon, 27 Jul 2026 16:42:03 +0800
-Message-ID: <20260727084203.881580-1-fritchleybohrer@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260724030145.14778-1-fritchleybohrer@gmail.com>
-References: <20260724030145.14778-1-fritchleybohrer@gmail.com>
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1woGz4-00032k-5p; Mon, 27 Jul 2026 04:46:50 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1woGz0-0006Ba-1a; Mon, 27 Jul 2026 04:46:48 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66R7liup1520421; Mon, 27 Jul 2026 08:46:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=uRDcIt
+ wPm23xU/hJ49B3hGWzSZeUEau983fV44Q408g=; b=qTDpgd/xj6XxADPluRD2rz
+ bUUZHCB5/xO2BX26BvpeRYS4ReLogwX0laMqT0sUF0DBLW7FWx2KpwtjANi3v6FI
+ mKfrzoeZCxi5osZ+oeQF4WBWs0Sd/Ewug+AmzrttFCHmt87fQ1codRd03sVT2/+a
+ 3tLcRBXKB0FbXiATtgGmMBPq0kK3lg2dgztsVuec7OZvzwn/2QcFV9ltzEHexB9p
+ wfifLTY1zVFYIJWRzZEK7qSK8uhi9GDzPjtRZuC6H/pAUgHpOhCD9h60GdaQhMxm
+ CcwaXmN2yHUsPi0hbX2+44paXoKSquMQnnNiT+EXbFHl0BzowHYV4p8xF0lgBB+A
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuyhxpxq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Jul 2026 08:46:43 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66R8fJAJ024918;
+ Mon, 27 Jul 2026 08:46:42 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fn7fq4rxs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Jul 2026 08:46:42 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66R8kcrV46793048
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 27 Jul 2026 08:46:38 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8C81F2012B;
+ Mon, 27 Jul 2026 08:26:35 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D6F3720129;
+ Mon, 27 Jul 2026 08:26:33 +0000 (GMT)
+Received: from shivang.upadyay (unknown [9.123.12.247])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 27 Jul 2026 08:26:33 +0000 (GMT)
+Message-ID: <800a62ca2b2fffe46fd29321244df2027f6dda01.camel@linux.ibm.com>
+Subject: Re: [PATCH v2] tests/functional/ppc: skip remote interrupts test if
+ -net user not built
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Cc: adityag@linux.ibm.com, amachhiw@linux.ibm.com, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, npiggin@gmail.com
+Date: Mon, 27 Jul 2026 13:56:33 +0530
+In-Reply-To: <229c9cff-03f3-4404-a85a-dba831722e21@redhat.com>
+References: <20260724085440.520125-1-shivangu@linux.ibm.com>
+ <20260725174600.17683-1-shivangu@linux.ibm.com>
+ <229c9cff-03f3-4404-a85a-dba831722e21@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::1;
- envelope-from=fritchleybohrer@gmail.com; helo=mail-pj2-x01.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDA4MiBTYWx0ZWRfXwYuxYO96vSUR
+ U8kjX9nFK/+8LD9AshG7ib3O1+Ka8PU7dFC7wpAak6qvgeqlG4BfN+ittmhnT/qgKIQyt0qnz1h
+ syOrCPVsHWNfhmoHkUX+G82ZchLdfTA=
+X-Proofpoint-GUID: AoQx_n4o_5WllD_0cx0rxtZSxypjGfqK
+X-Proofpoint-ORIG-GUID: rsf-U-j_7lIlmGnK1SX18qXLGnveX-aX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDA4MiBTYWx0ZWRfX6gYVoAKXJ7NM
+ omQvVwmCl/rz3Xq/LiqETQGk7f4DXnuPoY3B3r7S9K9W8AyQ1eVQKePpFH08tAnwupIc4mWQiTa
+ w/X4+EMZliTKkUQiJ8bTgUatwQLqd/v2kXE3W/TwxHW8UhDVDmRgrvHr+b3tkvhrUcn22wddvcY
+ LG7MAoIRLSvCmS6M5GgTtAiScMBO20PzraqWO2BcsiNKC4nPKy7r573bfvFOzELNt4H8WjkjVyZ
+ lIRPu+W2KwuNSwBJOFL96jMK8l3PA/d5mgI00oGeh9V/3HPxKZ5GH5dLhnnYayKvoQzYe9BORKQ
+ AKR4E3mB1FBJC3cFu8UC4hSxNBQJ5W8Jp0fqEKZ+dejXbRq1s3OVXBq4D2IOkOUiv5gXJVb7vjP
+ 733cKVXIMsDjT475TV7fob/jn4Y8sxNr2d0o7Sd9ICPt2teIbjmg1017vV1p8h4vlILFSDLoRUd
+ XWCd5cpj5+NdPt+1j2Q==
+X-Authority-Analysis: v=2.4 cv=X5Vi7mTe c=1 sm=1 tr=0 ts=6a671af3 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=20KFwNOVAAAA:8
+ a=m5iep5103XrP8k0eQ5EA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-27_02,2026-07-24_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 lowpriorityscore=0 phishscore=0
+ priorityscore=1501 malwarescore=0 spamscore=0 suspectscore=0 bulkscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607270082
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,177 +127,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A unit-stride fault-only-first load must leave vl unchanged when element
-zero raises a synchronous exception. Keep the shortened value in a local
-bound until all loads complete, and only then update the architectural vl.
+On Mon, 2026-07-27 at 07:59 +0200, Thomas Huth wrote:
+> > =C2=A0=C2=A0=20
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 # Have bel=
+ow setup in this test:
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 # 1. e1000=
+e attached to pcie.6, which is from 7th PHB,
+> > belonging to 2nd
+>=20
+> Fixes: 63f5ba80921 ("tests/functional: Add remote interrupts test
+> ...")
+>=20
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+Thanks, I'll add these tags to v3, Along with minor reordering,
+suggested by Amit.
 
-Add a bare-metal RVV regression test which faults vle32ff.v on element zero
-and checks that vl remains unchanged in the trap handler.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3544
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
-Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
----
-Changes in v2:
-- Fix commit message formatting.
-- Enable vector state in the bare-metal test.
-- Use an aligned unmapped address and compare against the vsetvli result.
-- Express the mstatus.VS setting as a field shift.
-
- target/riscv/tcg/vector_helper.c          | 23 +++++----
- tests/tcg/riscv64/Makefile.softmmu-target |  5 ++
- tests/tcg/riscv64/test-vle32ff.S          | 57 +++++++++++++++++++++++
- 3 files changed, 76 insertions(+), 9 deletions(-)
- create mode 100644 tests/tcg/riscv64/test-vle32ff.S
-
-diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
-index e321ca2616..5a310822b7 100644
---- a/target/riscv/tcg/vector_helper.c
-+++ b/target/riscv/tcg/vector_helper.c
-@@ -686,7 +686,7 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
-           uint32_t desc, vext_ldst_elem_fn_tlb *ldst_tlb,
-           vext_ldst_elem_fn_host *ldst_host, uint32_t log2_esz, uintptr_t ra)
- {
--    uint32_t i, k, vl = 0;
-+    uint32_t i, k, vl = 0, load_vl;
-     uint32_t nf = vext_nf(desc);
-     uint32_t vm = vext_vm(desc);
-     uint32_t max_elems = vext_max_elems(desc, log2_esz);
-@@ -752,22 +752,24 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
-         }
-     }
- ProbeSuccess:
--    /* load bytes from guest memory */
--    if (vl != 0) {
--        env->vl = vl;
--    }
-+    /*
-+     * Keep a shortened vl local until all loads complete. In particular,
-+     * an exception from element zero must leave the architectural vl alone.
-+     */
-+    load_vl = vl ? vl : env->vl;
- 
--    if (env->vstart < env->vl) {
-+    if (env->vstart < load_vl) {
-         if (vm) {
-             /* Load/store elements in the first page */
-             if (likely(elems)) {
-+                elems = MIN(elems, load_vl - env->vstart);
-                 vext_page_ldst_us(env, vd, addr, elems, nf, max_elems,
-                                   log2_esz, true, mmu_index, ldst_tlb,
-                                   ldst_host, ra);
-             }
- 
-             /* Load/store elements in the second page */
--            if (unlikely(env->vstart < env->vl)) {
-+            if (unlikely(env->vstart < load_vl)) {
-                 /* Cross page element */
-                 if (unlikely(page_split % msize)) {
-                     for (k = 0; k < nf; k++) {
-@@ -780,7 +782,7 @@ ProbeSuccess:
- 
-                 addr = base + ((env->vstart * nf) << log2_esz);
-                 /* Get number of elements of second page */
--                elems = env->vl - env->vstart;
-+                elems = load_vl - env->vstart;
- 
-                 /* Load/store elements in the second page */
-                 vext_page_ldst_us(env, vd, addr, elems, nf, max_elems,
-@@ -788,7 +790,7 @@ ProbeSuccess:
-                                   ldst_host, ra);
-             }
-         } else {
--            for (i = env->vstart; i < env->vl; i++) {
-+            for (i = env->vstart; i < load_vl; i++) {
-                 k = 0;
-                 while (k < nf) {
-                     if (!vext_elem_mask(v0, i)) {
-@@ -806,6 +808,9 @@ ProbeSuccess:
-             }
-         }
-     }
-+    if (vl != 0) {
-+        env->vl = vl;
-+    }
-     env->vstart = 0;
- 
-     vext_set_tail_elems_1s(env->vl, vd, desc, nf, esz, max_elems);
-diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-index 82be8a2c91..7ae225bd73 100644
---- a/tests/tcg/riscv64/Makefile.softmmu-target
-+++ b/tests/tcg/riscv64/Makefile.softmmu-target
-@@ -41,5 +41,10 @@ comma:= ,
- run-test-crc32: test-crc32
- 	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)xlrbr=true $(QEMU_OPTS)$<)
- 
-+EXTRA_RUNS += run-test-vle32ff
-+run-test-vle32ff: test-vle32ff
-+	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)v=true $(QEMU_OPTS)$<)
-+test-vle32ff: CFLAGS += -march=rv64gcv
-+
- # We don't currently support the multiarch system tests
- undefine MULTIARCH_TESTS
-diff --git a/tests/tcg/riscv64/test-vle32ff.S b/tests/tcg/riscv64/test-vle32ff.S
-new file mode 100644
-index 0000000000..f510960c05
---- /dev/null
-+++ b/tests/tcg/riscv64/test-vle32ff.S
-@@ -0,0 +1,57 @@
-+/*
-+ * Verify that a fault-only-first load keeps vl unchanged when element zero
-+ * raises a synchronous exception.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+	.option norvc
-+
-+	.text
-+	.globl _start
-+_start:
-+	lla	t0, trap
-+	csrw	mtvec, t0
-+
-+	li	t0, (1 << 9)	/* Set mstatus.VS to Initial. */
-+	csrs	mstatus, t0
-+	li	t1, 4
-+	vsetvli	t2, t1, e32, m1, ta, ma
-+	li	t0, 0x18000000	/* Unmapped gap in the virt memory map. */
-+	vle32ff.v	v1, (t0)
-+
-+	/* Element zero did not trap. */
-+	li	a0, 1
-+	j	_exit
-+
-+trap:
-+	csrr	t0, mcause
-+	li	t1, 5		/* Load access fault. */
-+	bne	t0, t1, trap_fail
-+
-+	csrr	t0, vl
-+	bne	t0, t2, trap_fail
-+
-+	li	a0, 0
-+	j	_exit
-+
-+trap_fail:
-+	li	a0, 1
-+
-+_exit:
-+	lla	a1, semiargs
-+	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
-+	sd	t0, 0(a1)
-+	sd	a0, 8(a1)
-+	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
-+
-+	.balign	16
-+	slli	zero, zero, 0x1f
-+	ebreak
-+	srai	zero, zero, 0x7
-+	j	.
-+
-+	.data
-+	.balign	8
-+semiargs:
-+	.space	16
+~Shivang.
 
