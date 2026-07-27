@@ -4,120 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EBA6C54F4C
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 15:52:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39461C53209
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 15:58:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woNcg-0002EF-3e; Mon, 27 Jul 2026 11:52:10 -0400
+	id 1woNhx-0003I7-UB; Mon, 27 Jul 2026 11:57:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1woNce-0002Dx-Nz; Mon, 27 Jul 2026 11:52:08 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
+ id 1woNhq-0003H4-Op; Mon, 27 Jul 2026 11:57:30 -0400
+Received: from m16.mail.163.com ([220.197.31.4])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1woNcc-0005cw-Ry; Mon, 27 Jul 2026 11:52:08 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66RDmeVF2406277; Mon, 27 Jul 2026 15:52:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=1W0oSC
- pYhYUESfhvvVQT7qWNpK00SZSEOsx6Sai1STY=; b=J2XHF/kXwpjRpUyPPYRDjS
- u+HE3dmjRfeBp0VKUKh5GmzzYercEVf1ctBmWzMKIiE//i0euDsE8AojMCZOqxXc
- VExiHN5Zxnsgy3rDlJJcIIfDDZa2uSWspjscKMIBBb2fWw1WKd1XgjW7yCK1kJQn
- Rh8jxpkzvGUp0kV18aYufW0x9yQpND8bz4lhULzaSYiZxOZuGQPph7kxj8g2nkQh
- nGu1AXIMuUZQibZWqJ8NgCUfSfLoKK9QQT19dxHlCnki0zc9ygFHt5wG6Fd+Aypw
- zzF3Lg81x8bO0mgDyLd51NDMv9T1qUJahYsF5stYDNkGrwLuJhzI6wJlNNbnffhA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0xgumd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Jul 2026 15:52:02 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66RFfai4026234;
- Mon, 27 Jul 2026 15:52:01 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn8yh5wke-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Jul 2026 15:52:01 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66RFpNJB12649074
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 27 Jul 2026 15:51:23 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8318A58056;
- Mon, 27 Jul 2026 15:51:59 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 756E958052;
- Mon, 27 Jul 2026 15:51:58 +0000 (GMT)
-Received: from [9.61.157.32] (unknown [9.61.157.32])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 27 Jul 2026 15:51:58 +0000 (GMT)
-Message-ID: <91d5f2b9-2b32-4b62-95c7-4526261d1326@linux.ibm.com>
-Date: Mon, 27 Jul 2026 11:51:58 -0400
+ (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
+ id 1woNhn-0006LP-9J; Mon, 27 Jul 2026 11:57:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=3B
+ UzfiKIEVGUBA7yVe/69JKJfrGrjXUNoMyveuIFO1c=; b=ApRd7adUzeLoQZ1YSf
+ ve1Q/gqZZ1TP7HC9IP90PTK4MPdqPfD1kYY/IULIfsxXFmcT0jTLFViWGA5EDdsL
+ K/2rAh7BHtzNjbNhimqGibgI8cYyhde2ZLepU3IbiHdCL3WkdDyMTgmszhaoyxq7
+ eXBkmK4i+WRvuaBvi9yK2BOnA=
+Received: from dt-VM.localdomain (unknown [])
+ by gzga-smtp-mtada-g0-0 (Coremail) with SMTP id
+ _____wC3HpHQf2dqJpF_Kw--.27173S6; 
+ Mon, 27 Jul 2026 23:57:07 +0800 (CST)
+From: Tao Ding <dingtao0430@163.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, pbonzini@redhat.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu@processmission.com, farosas@suse.de, lvivier@redhat.com,
+ pierrick.bouvier@oss.qualcomm.com, caojunze424@gmail.com,
+ Tao Ding <dingtao0430@163.com>
+Subject: [PATCH v2 4/7] hw/misc: add K230 decomp gzip
+Date: Mon, 27 Jul 2026 23:56:59 +0800
+Message-ID: <20260727155702.36484-5-dingtao0430@163.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260727155702.36484-1-dingtao0430@163.com>
+References: <20260727155702.36484-1-dingtao0430@163.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] pc-bios/s390-ccw: bound zipl menu strlen and replace
- VLA in zipl_print_entry
-To: Christian Borntraeger <borntraeger@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
- Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Hendrik Brueckner <brueckner@linux.ibm.com>,
- Joshua Daley <jdaley@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Jared Rossi <jrossi@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20260727115052.24289-1-borntraeger@linux.ibm.com>
- <20260727115052.24289-6-borntraeger@linux.ibm.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260727115052.24289-6-borntraeger@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: XFbEBZqluv4nu_99KpisJkO6nfR4jD4z
-X-Proofpoint-ORIG-GUID: XFbEBZqluv4nu_99KpisJkO6nfR4jD4z
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDE0OCBTYWx0ZWRfX8YLdRTRQH/CX
- PTOy7gD6kg3fys0g6IsZaK2qTlkUd5dGqdCqfWjj4WKJKah8cHYJx/MjZUvZ77hJ8/LJTyhU7QM
- 7b3gm1q85qZ2Uu6Yw3U2uQkWN9wNuSg=
-X-Authority-Analysis: v=2.4 cv=dYuwG3Xe c=1 sm=1 tr=0 ts=6a677ea2 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=TmcFyS7tEBEUxEvcJu0A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDE0OCBTYWx0ZWRfX3yhtYAM8M6ri
- c9hb/yXGagCzvg6jzpKaYaq/STzhfCwMjkhww1kM0zXg84l+okG8xQKRs+RDYdz/Z1G2SJrnKjn
- vKhBoljz+xhU5XNuiDH/4/8gv8puFJVssmU+JdzYgIGuTltPsOfEsmsjv0udPZezJn14FsrWH1Q
- /ytsM8KmmrtQUrlseeLJ0PqMqzxbhtOwaq88VFrHOgnbcQUDXc/9Zfscq5LypE0zshhMGH9L2R+
- IrNhiHcg0MDP/EHpPVA/eQIycux2b0Qj2IpFpjtIZmADxDTL+nL4NZhl0x12F7VnqzowkU5IfsT
- oP9ROtvpPwPvISS40m3HcLSk3duPBg7n6zdTz1Z2OCfi3wYMHeNh0ZOIMoxMlWWdE/zFFrqdb0r
- mVQvl8I6AMMlqmMQyYZiIfhTFtCNudOPRgA+IzGI3+H23YcSJ87AAyr8sc8j74L9FNMOSjY6BLs
- osOzlptHNVFbZYlZmkQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-27_04,2026-07-24_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 clxscore=1015 phishscore=0 malwarescore=0
- spamscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607270148
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: _____wC3HpHQf2dqJpF_Kw--.27173S6
+X-Coremail-Antispam: 1Uf129KBjvAXoWfur13ur1UKF4DKFWrKFyfWFg_yoW8tr15uo
+ WavwsYq34UZFyxur4kArs29r43Xw4rGw4DWw45C3s0ga4rAr18Gw1q9wn8Wa18Grs8tF93
+ XF1Yg3s7Jayqyryxn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7v73VFW2AGmfu7bjvjm3
+ AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjTRttxhDUUUU
+X-Originating-IP: [119.4.23.14]
+X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC-ROIxmpnf9MLygAA3A
+Received-SPF: pass client-ip=220.197.31.4; envelope-from=dingtao0430@163.com;
+ helo=m16.mail.163.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,175 +76,715 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/27/26 7:50 AM, Christian Borntraeger wrote:
-> From: Joshua Daley <jdaley@linux.ibm.com>
-> 
-> menu_get_zipl_boot_index() calls strlen() on a pointer into the middle
-> of _s2 with no upper bound, so a stage-2 image whose blocks contain no
-> NUL bytes causes strlen() to walk beyond _s2. The resulting length
-> is then used to size a stack VLA in zipl_print_entry(), risking a stack
-> overflow.
-> 
-> Fix by:
-> 
-> - Implementing strnlen(), a bounded version of strlen().
-> 
-> - Adding a menu_data_end parameter to menu_get_zipl_boot_index() and
->   replacing both strlen() calls with strnlen() bounded by the remaining
->   buffer space. The loop guard also checks that the pointer has not
->   reached menu_data_end. For robustness, the function returns 0
->   (boot default) if somehow menu_data is initially >= menu_data_end.
-> 
-> - Replacing the VLA char buf[len + 2] in zipl_print_entry() with a fixed
->   ZIPL_ENTRY_MAX + 2 (82-byte) buffer and truncating len before use.
-> 
-> - Passing s2_end (_s2 + sizeof(_s2)) as menu_data_end at the one call
->   site in eckd_get_boot_menu_index(), so the bound is exactly the end of
->   the buffer.
-> 
-> Fixes: f7178910845a ("s390-ccw: print zipl boot menu")
-> Signed-off-by: Joshua Daley <jdaley@linux.ibm.com>
-> ---
->  pc-bios/s390-ccw/bootmap.c  |  4 +++-
->  pc-bios/s390-ccw/helper.h   | 10 ++++++++++
->  pc-bios/s390-ccw/menu.c     | 23 ++++++++++++++++++-----
->  pc-bios/s390-ccw/s390-ccw.h |  2 +-
->  4 files changed, 32 insertions(+), 7 deletions(-)
-> 
-> diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
-> index ed6e8cbbc7..81512265ce 100644
-> --- a/pc-bios/s390-ccw/bootmap.c
-> +++ b/pc-bios/s390-ccw/bootmap.c
-> @@ -61,6 +61,7 @@ static uint8_t _s2[MAX_SECTOR_SIZE * 3] __attribute__((__aligned__(PAGE_SIZE)));
->  static void *s2_prev_blk = _s2;
->  static void *s2_cur_blk = _s2 + MAX_SECTOR_SIZE;
->  static void *s2_next_blk = _s2 + MAX_SECTOR_SIZE * 2;
-> +static void *s2_end = _s2 + sizeof(_s2);
->  
->  static inline int verify_boot_info(BootInfo *bip)
->  {
-> @@ -308,7 +309,8 @@ static int eckd_get_boot_menu_index(block_number_t s1b_block_nr)
->                  }
->              }
->  
-> -            return menu_get_zipl_boot_index(s2_cur_blk + banner_offset);
-> +            return menu_get_zipl_boot_index(s2_cur_blk + banner_offset,
-> +                                            s2_end);
->          }
->  
->          prev_block_nr = cur_block_nr;
-> diff --git a/pc-bios/s390-ccw/helper.h b/pc-bios/s390-ccw/helper.h
-> index 8e3dfcb6d6..d9b7da444a 100644
-> --- a/pc-bios/s390-ccw/helper.h
-> +++ b/pc-bios/s390-ccw/helper.h
-> @@ -45,4 +45,14 @@ static inline void sleep(unsigned int seconds)
->      }
->  }
->  
-> +static inline size_t strnlen(const char *s, size_t maxlen)
-> +{
-> +    size_t len = 0;
-> +
-> +    while (len < maxlen && s[len]) {
-> +        len++;
-> +    }
-> +    return len;
-> +}
-> +
->  #endif
-> diff --git a/pc-bios/s390-ccw/menu.c b/pc-bios/s390-ccw/menu.c
-> index b6a9a56d46..af96a83de9 100644
-> --- a/pc-bios/s390-ccw/menu.c
-> +++ b/pc-bios/s390-ccw/menu.c
-> @@ -16,6 +16,7 @@
->  #include "s390-ccw.h"
->  #include "sclp.h"
->  #include "s390-time.h"
-> +#include "helper.h"
->  
->  #define KEYCODE_NO_INP '\0'
->  #define KEYCODE_ESCAPE '\033'
-> @@ -26,6 +27,9 @@
->  #define ZIPL_TIMEOUT_OFFSET 138
->  #define ZIPL_FLAG_OFFSET    140
->  
-> +/* Max printable chars for a zipl boot menu entry */
-> +#define ZIPL_ENTRY_MAX 80
-> +
->  #define TOD_CLOCK_MILLISECOND   0x3e8000
->  
->  #define LOW_CORE_EXTERNAL_INT_ADDR   0x86
-> @@ -179,9 +183,13 @@ int menu_get_boot_index(bool *valid_entries)
->  /* Returns the entry number that was printed, or -1 on invalid entry */
->  static int zipl_print_entry(const char *data, size_t len)
->  {
-> -    char buf[len + 2];
-> +    char buf[ZIPL_ENTRY_MAX + 2];
->      const char *p;
->  
-> +    if (len > ZIPL_ENTRY_MAX) {
-> +        len = ZIPL_ENTRY_MAX;
-> +    }
-> +
->      ebcdic_to_ascii(data, buf, len);
->      buf[len] = '\n';
->      buf[len + 1] = '\0';
-> @@ -196,7 +204,7 @@ static int zipl_print_entry(const char *data, size_t len)
->      return atoi(p);
->  }
->  
-> -int menu_get_zipl_boot_index(const char *menu_data)
-> +int menu_get_zipl_boot_index(const char *menu_data, const char *menu_data_end)
->  {
->      size_t len;
->      int entry;
-> @@ -212,13 +220,18 @@ int menu_get_zipl_boot_index(const char *menu_data)
->          timeout = zipl_timeout * 1000;
->      }
->  
-> +    if (menu_data >= menu_data_end) {
-> +        return 0;
-> +    }
-> +
->      /* Print banner */
->      puts("s390-ccw zIPL Boot Menu\n");
-> -    menu_data += strlen(menu_data) + 1;
-> +    len = strnlen(menu_data, menu_data_end - menu_data);
-> +    menu_data += len + 1;
+Decompression accelerator is mainly used to implement hardware GZIP decompression function.
+According to the k230 SDK, this hardware will be used during the uboot phase to decompress 
+compressed files. 
 
-If we've already hit menu_data_end at this point should we bail rather
-than skipping the while() loop and immediately proceeding into
-menu_get_boot_index(valid_entries); with an all-false array?
+Decomp_gzip does not have the ability to access the system bus. 
+Therefore, SDMA is required for data transmission. A typical scenario is SDMA moving compressed 
+data from DDR to SRAM, and Decomp_gzip reading data from SRAM. After decompression, decomp_gzip 
+writes the data back to SRAM, and SDMA moves the data from SRAM to DDR.
 
-AFAICT the current implementation would print no options and wait for
-user input.
+According to "K230 Technical Reference Manual v0.3.1" section 15.
+https://download.kendryte.com/developer/k230/HDK/K230%E7%A1%AC%E4%BB%B6%E6%96%87%E6%A1%A3/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
 
-e.g. something like
+Signed-off-by: Tao Ding <dingtao0430@163.com>
+---
+In patchv1, the reviewer identified some bugs, which have been fixed.
+bugs:
+    Decomp gzip only support Dynamic Huffman format
+    Bit 0 in 0x0 register is write only
+enhance:
+    ues new reset interface
 
-    if (menu_data >= menu_data_end)
-        return 0;
+ MAINTAINERS                        |   2 +
+ docs/system/riscv/k230.rst         |   1 +
+ hw/misc/Kconfig                    |   3 +
+ hw/misc/k230_decomp_gzip.c         | 508 +++++++++++++++++++++++++++++
+ hw/misc/meson.build                |   1 +
+ hw/misc/trace-events               |   4 +
+ include/hw/misc/k230_decomp_gzip.h |  92 ++++++
+ 7 files changed, 611 insertions(+)
+ create mode 100644 hw/misc/k230_decomp_gzip.c
+ create mode 100644 include/hw/misc/k230_decomp_gzip.h
 
->  
->      /* Print entries */
-> -    while (*menu_data) {
-> -        len = strlen(menu_data);
-> +    while (menu_data < menu_data_end && *menu_data) {
-> +        len = strnlen(menu_data, menu_data_end - menu_data);
->          entry = zipl_print_entry(menu_data, len);
->          menu_data += len + 1;
->  
-> diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
-> index 1e1f71775e..f6030a6071 100644
-> --- a/pc-bios/s390-ccw/s390-ccw.h
-> +++ b/pc-bios/s390-ccw/s390-ccw.h
-> @@ -76,7 +76,7 @@ void jump_to_low_kernel(void);
->  
->  /* menu.c */
->  void menu_set_parms(uint8_t boot_menu_flag, uint32_t boot_menu_timeout);
-> -int menu_get_zipl_boot_index(const char *menu_data);
-> +int menu_get_zipl_boot_index(const char *menu_data, const char *menu_data_end);
->  bool menu_is_enabled_zipl(void);
->  int menu_get_enum_boot_index(bool *valid_entries);
->  bool menu_is_enabled_enum(void);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 9c546596e7..c260199142 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1830,9 +1830,11 @@ F: docs/system/riscv/k230.rst
+ F: hw/riscv/k230.c
+ F: hw/watchdog/k230_wdt.c
+ F: hw/dma/k230_gsdma.c
++F: hw/misc/k230_decomp_gzip.c
+ F: include/hw/riscv/k230.h
+ F: include/hw/watchdog/k230_wdt.h
+ F: include/hw/dma/k230_gsdma.h
++F: include/hw/misc/k230_decomp_gzip.h
+ F: tests/functional/riscv64/test_k230.py
+ F: tests/qtest/k230-wdt-test.c
+ F: tests/qtest/k230-gsdma-test.c
+diff --git a/docs/system/riscv/k230.rst b/docs/system/riscv/k230.rst
+index a426a1d776..ebd002b62f 100644
+--- a/docs/system/riscv/k230.rst
++++ b/docs/system/riscv/k230.rst
+@@ -21,6 +21,7 @@ The ``k230`` machine supports the following devices:
+ * 2 K230 Watchdog Timer
+ * 5 UART
+ * System Direct Memory Access (SDMA)
++* GZIP Decompress Engine (Decomp_gzip)
+ 
+ Boot options
+ ------------
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index 1543ee6653..28687482f8 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -257,4 +257,7 @@ config XLNX_VERSAL_TRNG
+ config XLNX_ZYNQ_DDRC
+     bool
+ 
++config K230_DECOMP_GZIP
++    bool
++
+ source macio/Kconfig
+diff --git a/hw/misc/k230_decomp_gzip.c b/hw/misc/k230_decomp_gzip.c
+new file mode 100644
+index 0000000000..498ad488e3
+--- /dev/null
++++ b/hw/misc/k230_decomp_gzip.c
+@@ -0,0 +1,508 @@
++/*
++ * Kendryte K230 GZIP decompression engine
++ *
++ * Copyright (c) 2026 Tao Ding <dingtao0430@163.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * Decompression accelerator is mainly used to implement hardware
++ * GZIP decompression function. (K230 TRM section 15)
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "hw/core/qdev-properties.h"
++#include "migration/vmstate.h"
++#include "system/address-spaces.h"
++#include "hw/core/irq.h"
++#include "hw/misc/k230_decomp_gzip.h"
++#include "trace.h"
++
++#define GZIP_METHOD_DEFLATE    8
++#define GZIP_METHOD_VENDOR_9   9
++
++#define DEFLATE_BTYPE_DYNAMIC  2
++
++#define K230_DECOMP_GZIP_OUTPUT_SLOTS 4
++#define K230_DECOMP_GZIP_INPUT_SLOTS 2
++
++static void k230_decomp_gzip_set_output(K230DecompGzipState *s, int line,
++                                        int level)
++{
++    qemu_set_irq(s->signal_out[line], level);
++}
++
++static bool k230_decomp_gzip_read_mem(K230DecompGzipState *s, hwaddr addr,
++                                      void *buf, size_t len)
++{
++    MemTxResult ret = address_space_read(&address_space_memory,
++                                         s->sram_base + addr,
++                                         MEMTXATTRS_UNSPECIFIED, buf, len);
++
++    return ret == MEMTX_OK;
++}
++
++static bool k230_decomp_gzip_write_mem(K230DecompGzipState *s, hwaddr addr,
++                                       const void *buf, size_t len)
++{
++    return address_space_write(&address_space_memory, s->sram_base + addr,
++                               MEMTXATTRS_UNSPECIFIED, buf, len) == MEMTX_OK;
++}
++
++static hwaddr k230_decomp_gzip_output_addr(K230DecompGzipState *s)
++{
++    return K230_DECOMP_GZIP_SRAM_OUT_BASE +
++           s->output.slot * K230_DECOMP_GZIP_BLOCK_SIZE +
++           s->output.current_offset;
++}
++
++static hwaddr k230_decomp_gzip_input_addr(K230DecompGzipState *s)
++{
++    return s->input.slot * K230_DECOMP_GZIP_BLOCK_SIZE +
++           K230_DECOMP_GZIP_SRAM_IN_BASE;
++}
++
++static uint32_t k230_decomp_gzip_current_input_size(K230DecompGzipState *s)
++{
++    if (s->total_requested == 0) {
++        return 0;
++    }
++
++    return ((s->total_requested - 1) % K230_DECOMP_GZIP_BLOCK_SIZE) + 1;
++}
++
++static void k230_decomp_gzip_update_ctrl_en(K230DecompGzipState *s)
++{
++    int level = s->active && !!(s->gzip_src_size & K230_DECOMP_GZIP_CTRL_EN);
++
++    k230_decomp_gzip_set_output(s, K230_DECOMP_GZIP_GPIO_DECOMP_CTRL_EN,
++                                level);
++}
++
++static void k230_decomp_gzip_reset_stream(K230DecompGzipState *s)
++{
++    if (s->zstream_inited) {
++        inflateEnd(&s->zs);
++        s->zstream_inited = false;
++    }
++    memset(&s->zs, 0, sizeof(s->zs));
++}
++
++static void k230_decomp_gzip_finish(K230DecompGzipState *s, bool crc_ok)
++{
++    s->active = false;
++    k230_decomp_gzip_reset_stream(s);
++    k230_decomp_gzip_update_ctrl_en(s);
++    if (crc_ok) {
++        s->decomp_stat |= K230_DECOMP_GZIP_STAT_CRC_OK;
++    } else {
++        s->decomp_stat &= ~K230_DECOMP_GZIP_STAT_CRC_OK;
++    }
++}
++
++static bool k230_decomp_gzip_load_input(K230DecompGzipState *s,
++                                        uint32_t addr, uint32_t size)
++{
++    s->input.current_offset = 0;
++
++    return k230_decomp_gzip_read_mem(s, addr, s->input_buf, size);
++}
++
++static bool k230_decomp_gzip_request_input(K230DecompGzipState *s)
++{
++    uint32_t total_requested = s->total_requested;
++
++    k230_decomp_gzip_set_output(s, K230_DECOMP_GZIP_GPIO_DMA_WRITE_REQ, 1);
++    if (s->total_requested == total_requested) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: dma write request not acknowledged\n",
++                      TYPE_K230_DECOMP_GZIP);
++        return false;
++    }
++    return true;
++}
++
++static bool k230_decomp_gzip_request_output(K230DecompGzipState *s)
++{
++    uint32_t slot = s->output.slot;
++    uint32_t current_offset = s->output.current_offset;
++
++    k230_decomp_gzip_set_output(s, K230_DECOMP_GZIP_GPIO_DMA_READ_REQ, 1);
++    if (s->output.slot == slot &&
++        s->output.current_offset == current_offset) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: dma read request not acknowledged\n",
++                      TYPE_K230_DECOMP_GZIP);
++        return false;
++    }
++    return true;
++}
++
++static bool k230_decomp_gzip_init_stream(K230DecompGzipState *s)
++{
++    uint8_t btype = (s->input_buf[10] >> 1) & 0x3;
++    if (btype != DEFLATE_BTYPE_DYNAMIC) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: unsupported DEFLATE BTYPE %u\n",
++                      TYPE_K230_DECOMP_GZIP, btype);
++        return false;
++    }
++
++    /* The compression script for K230 will modify the third byte to 0x9 */
++    if (s->input_buf[2] == GZIP_METHOD_VENDOR_9) {
++        s->input_buf[2] = GZIP_METHOD_DEFLATE;
++    }
++
++    if (inflateInit2(&s->zs, 15 + 16) != Z_OK) {
++        return false;
++    }
++
++    s->zstream_inited = true;
++    return true;
++}
++
++static bool k230_decomp_gzip_run_inflate(K230DecompGzipState *s)
++{
++    uint32_t output_size = s->gzip_out_size;
++    uint32_t current_input_size = k230_decomp_gzip_current_input_size(s);
++    uint32_t avail_in;
++    uint32_t avail_out;
++    uint32_t consumed;
++    uint32_t produced;
++    int ret;
++
++    avail_in = current_input_size - s->input.current_offset;
++    avail_out = K230_DECOMP_GZIP_BLOCK_SIZE - s->output.current_offset;
++
++    s->zs.next_in = s->input_buf + s->input.current_offset;
++    s->zs.avail_in = avail_in;
++    s->zs.next_out = s->output_buf;
++    s->zs.avail_out = avail_out;
++
++    ret = inflate(&s->zs, Z_NO_FLUSH);
++    if (ret != Z_OK && ret != Z_STREAM_END && ret != Z_BUF_ERROR) {
++        return false;
++    }
++
++    consumed = avail_in - s->zs.avail_in;
++    produced = avail_out - s->zs.avail_out;
++
++    if (produced) {
++        if (s->total_produced + produced > output_size ||
++            !k230_decomp_gzip_write_mem(s, k230_decomp_gzip_output_addr(s),
++                                        s->output_buf, produced)) {
++            return false;
++        }
++        s->output.current_offset += produced;
++        s->total_produced += produced;
++    }
++
++    if (consumed) {
++        s->input.current_offset += consumed;
++    }
++
++    if (ret == Z_STREAM_END) {
++        s->stream_end = true;
++        if (s->total_produced != output_size) {
++            return false;
++        }
++    }
++
++    return true;
++}
++
++static void k230_decomp_gzip_kick(K230DecompGzipState *s)
++{
++    if (!s->active || s->in_kick) {
++        return;
++    }
++
++    uint32_t input_size = s->gzip_src_size & K230_DECOMP_GZIP_DMA_IN_MASK;
++    s->in_kick = true;
++    while (s->active) {
++        uint32_t current_input_size = k230_decomp_gzip_current_input_size(s);
++        /* Output is full or last block */
++        if (s->output.current_offset == K230_DECOMP_GZIP_BLOCK_SIZE ||
++            (s->stream_end && s->output.current_offset != 0)) {
++            if (!k230_decomp_gzip_request_output(s)) {
++                k230_decomp_gzip_finish(s, false);
++                break;
++            }
++            continue;
++        }
++
++        if (!s->zstream_inited) {
++            if (!k230_decomp_gzip_request_input(s) ||
++                !k230_decomp_gzip_init_stream(s)) {
++                k230_decomp_gzip_finish(s, false);
++                break;
++            }
++            continue;
++        }
++
++        /* Transfer finish */
++        if (s->stream_end) {
++            k230_decomp_gzip_finish(s,
++                                    s->total_produced == s->gzip_out_size);
++            break;
++        }
++
++        /* Input buf has has been fully decompreed, need request more */
++        if (s->input.current_offset == current_input_size) {
++            if (s->total_requested < input_size) {
++                if (!k230_decomp_gzip_request_input(s)) {
++                    k230_decomp_gzip_finish(s, false);
++                    break;
++                }
++                continue;
++            }
++            k230_decomp_gzip_finish(s, false);
++            break;
++        }
++
++        /* Decompress the data, input buf or output buf are consumed in one block */
++        if (!k230_decomp_gzip_run_inflate(s)) {
++            k230_decomp_gzip_finish(s, false);
++            break;
++        }
++    }
++    s->in_kick = false;
++}
++
++static void k230_decomp_gzip_handle_ack(void *opaque, int n, int level)
++{
++    K230DecompGzipState *s = opaque;
++
++    if (!level || !s->active) {
++        return;
++    }
++
++    switch (n) {
++    case K230_DECOMP_GZIP_GPIO_DMA_WRITE_ACK:
++    {
++        uint32_t input_size = s->gzip_src_size & K230_DECOMP_GZIP_DMA_IN_MASK;
++        uint32_t chunk = MIN(K230_DECOMP_GZIP_BLOCK_SIZE,
++                             input_size - s->total_requested);
++
++        if (!k230_decomp_gzip_load_input(s, k230_decomp_gzip_input_addr(s),
++                                         chunk)) {
++            k230_decomp_gzip_finish(s, false);
++            return;
++        }
++        s->total_requested += chunk;
++        s->input.slot = (s->input.slot + 1) % K230_DECOMP_GZIP_INPUT_SLOTS;
++        break;
++    }
++    case K230_DECOMP_GZIP_GPIO_DMA_READ_ACK:
++        if (s->output.current_offset == 0) {
++            k230_decomp_gzip_finish(s, false);
++            return;
++        }
++        s->output.slot = (s->output.slot + 1) % K230_DECOMP_GZIP_OUTPUT_SLOTS;
++        s->output.current_offset = 0;
++        break;
++    default:
++        return;
++    }
++
++    k230_decomp_gzip_kick(s);
++}
++
++static void k230_decomp_gzip_start(K230DecompGzipState *s)
++{
++    uint32_t input_size = s->gzip_src_size & K230_DECOMP_GZIP_DMA_IN_MASK;
++
++    k230_decomp_gzip_reset_stream(s);
++    s->decomp_stat &= ~K230_DECOMP_GZIP_STAT_CRC_OK;
++    s->total_requested = 0;
++    s->total_produced = 0;
++    s->stream_end = false;
++    memset(&s->input, 0, sizeof(s->input));
++    memset(&s->output, 0, sizeof(s->output));
++
++    if (!(s->gzip_src_size & K230_DECOMP_GZIP_CTRL_EN) ||
++        input_size == 0 || s->gzip_out_size == 0) {
++        k230_decomp_gzip_finish(s, false);
++        return;
++    }
++
++    s->active = true;
++    k230_decomp_gzip_update_ctrl_en(s);
++    k230_decomp_gzip_kick(s);
++}
++
++static uint64_t k230_decomp_gzip_read(void *opaque, hwaddr offset,
++                                      unsigned size)
++{
++    K230DecompGzipState *s = opaque;
++    uint64_t value = 0;
++
++    switch (offset) {
++    case K230_DECOMP_GZIP_DECOMP_START:
++        value = s->decomp_start & ~K230_DECOMP_GZIP_START; /* start bit is write only */
++        break;
++    case K230_DECOMP_GZIP_GZIP_SRC_SIZE:
++        value = s->gzip_src_size;
++        break;
++    case K230_DECOMP_GZIP_GZIP_OUT_SIZE:
++        value = s->gzip_out_size;
++        break;
++    case K230_DECOMP_GZIP_DECOMP_STAT:
++        value = s->decomp_stat;
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: bad read offset 0x%" HWADDR_PRIx "\n",
++                      TYPE_K230_DECOMP_GZIP, offset);
++        break;
++    }
++
++    trace_k230_decomp_gzip_read(offset, size, value);
++    return value;
++}
++
++static void k230_decomp_gzip_write(void *opaque, hwaddr offset,
++                                   uint64_t value, unsigned size)
++{
++    K230DecompGzipState *s = opaque;
++
++    trace_k230_decomp_gzip_write(offset, size, value);
++
++    switch (offset) {
++    case K230_DECOMP_GZIP_DECOMP_START:
++        s->decomp_start = value;
++        if (value & K230_DECOMP_GZIP_START) {
++            k230_decomp_gzip_start(s);
++        }
++        break;
++    case K230_DECOMP_GZIP_GZIP_SRC_SIZE:
++        s->gzip_src_size = value;
++        k230_decomp_gzip_update_ctrl_en(s);
++        break;
++    case K230_DECOMP_GZIP_GZIP_OUT_SIZE:
++        s->gzip_out_size = value;
++        break;
++    case K230_DECOMP_GZIP_DECOMP_STAT:
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: bad write offset 0x%" HWADDR_PRIx "\n",
++                      TYPE_K230_DECOMP_GZIP, offset);
++        break;
++    }
++}
++
++static const MemoryRegionOps k230_decomp_gzip_ops = {
++    .read = k230_decomp_gzip_read,
++    .write = k230_decomp_gzip_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid.min_access_size = 4,
++    .valid.max_access_size = 4,
++    .impl.min_access_size = 4,
++    .impl.max_access_size = 4,
++};
++
++static const VMStateDescription vmstate_k230_decomp_gzip_slot = {
++    .name = "k230.decomp-gzip.slot",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(slot, K230DecompGzipSlotState),
++        VMSTATE_UINT32(current_offset, K230DecompGzipSlotState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static const VMStateDescription vmstate_k230_decomp_gzip = {
++    .name = "k230.decomp-gzip",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(decomp_start, K230DecompGzipState),
++        VMSTATE_UINT32(gzip_src_size, K230DecompGzipState),
++        VMSTATE_UINT32(gzip_out_size, K230DecompGzipState),
++        VMSTATE_UINT32(decomp_stat, K230DecompGzipState),
++        VMSTATE_STRUCT(input, K230DecompGzipState, 1,
++                       vmstate_k230_decomp_gzip_slot,
++                       K230DecompGzipSlotState),
++        VMSTATE_STRUCT(output, K230DecompGzipState, 1,
++                       vmstate_k230_decomp_gzip_slot,
++                       K230DecompGzipSlotState),
++        VMSTATE_UINT32(total_requested, K230DecompGzipState),
++        VMSTATE_UINT32(total_produced, K230DecompGzipState),
++        VMSTATE_BOOL(active, K230DecompGzipState),
++        VMSTATE_BOOL(in_kick, K230DecompGzipState),
++        VMSTATE_BOOL(zstream_inited, K230DecompGzipState),
++        VMSTATE_BOOL(stream_end, K230DecompGzipState),
++        VMSTATE_UINT8_ARRAY(input_buf, K230DecompGzipState,
++                            K230_DECOMP_GZIP_BLOCK_SIZE),
++        VMSTATE_UINT8_ARRAY(output_buf, K230DecompGzipState,
++                            K230_DECOMP_GZIP_BLOCK_SIZE),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static void k230_decomp_gzip_reset_hold(Object *obj, ResetType type)
++{
++    K230DecompGzipState *s = K230_DECOMP_GZIP(obj);
++
++    k230_decomp_gzip_reset_stream(s);
++    memset(&s->zs, 0, sizeof(s->zs));
++    s->decomp_start = 0;
++    s->gzip_src_size = 0;
++    s->gzip_out_size = 0;
++    s->decomp_stat = 0;
++    memset(&s->input, 0, sizeof(s->input));
++    memset(&s->output, 0, sizeof(s->output));
++    s->total_requested = 0;
++    s->total_produced = 0;
++    s->active = false;
++    s->in_kick = false;
++    s->stream_end = false;
++}
++
++static void k230_decomp_gzip_realize(DeviceState *dev, Error **errp)
++{
++    K230DecompGzipState *s = K230_DECOMP_GZIP(dev);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++
++    memory_region_init_io(&s->iomem, OBJECT(dev), &k230_decomp_gzip_ops, s,
++                          TYPE_K230_DECOMP_GZIP,
++                          K230_DECOMP_GZIP_MMIO_SIZE);
++    sysbus_init_mmio(sbd, &s->iomem);
++    qdev_init_gpio_in(dev, k230_decomp_gzip_handle_ack,
++                      K230_DECOMP_GZIP_NUM_GPIOS_IN);
++    qdev_init_gpio_out(dev, s->signal_out,
++                       K230_DECOMP_GZIP_NUM_GPIOS_OUT);
++}
++
++static const Property k230_decomp_gzip_properties[] = {
++    DEFINE_PROP_UINT64("sram-base", K230DecompGzipState, sram_base, 0),
++};
++
++static void k230_decomp_gzip_class_init(ObjectClass *oc, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(oc);
++    ResettableClass *rc = RESETTABLE_CLASS(oc);
++
++    dc->realize = k230_decomp_gzip_realize;
++    rc->phases.hold = k230_decomp_gzip_reset_hold;
++    device_class_set_props(dc, k230_decomp_gzip_properties);
++    dc->vmsd = &vmstate_k230_decomp_gzip;
++    dc->desc = "Kendryte K230 GZIP decompression engine";
++}
++
++static const TypeInfo k230_decomp_gzip_info = {
++    .name = TYPE_K230_DECOMP_GZIP,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(K230DecompGzipState),
++    .class_init = k230_decomp_gzip_class_init,
++};
++
++static void k230_decomp_gzip_register_types(void)
++{
++    type_register_static(&k230_decomp_gzip_info);
++}
++
++type_init(k230_decomp_gzip_register_types)
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 23265f6035..6f6bf3c85c 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -36,6 +36,7 @@ system_ss.add(when: 'CONFIG_SIFIVE_E_PRCI', if_true: files('sifive_e_prci.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_E_AON', if_true: files('sifive_e_aon.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_U_OTP', if_true: files('sifive_u_otp.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_U_PRCI', if_true: files('sifive_u_prci.c'))
++system_ss.add(when: 'CONFIG_K230_DECOMP_GZIP', if_true: files('k230_decomp_gzip.c'))
+ 
+ subdir('macio')
+ 
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+index c9a868b3ef..16db4ba0cc 100644
+--- a/hw/misc/trace-events
++++ b/hw/misc/trace-events
+@@ -442,3 +442,7 @@ iommu_testdev_dma_read(uint64_t gva, uint32_t len) "gva=0x%" PRIx64 " len=%u"
+ iommu_testdev_dma_verify(uint32_t expected, uint32_t actual) "expected=0x%x actual=0x%x"
+ iommu_testdev_dma_result(uint32_t result) "DMA completed result=0x%x"
+ iommu_testdev_dma_armed(bool armed) "armed=%d"
++
++# k230_decomp_gzip.c
++k230_decomp_gzip_read(uint64_t offset, unsigned int size, uint64_t value) "K230 DECOMP GZIP read: [0x%"PRIx64"] size %u -> 0x%"PRIx64
++k230_decomp_gzip_write(uint64_t offset, unsigned int size, uint64_t value) "K230 DECOMP GZIP write: [0x%"PRIx64"] size %u <- 0x%"PRIx64
+diff --git a/include/hw/misc/k230_decomp_gzip.h b/include/hw/misc/k230_decomp_gzip.h
+new file mode 100644
+index 0000000000..9911af0095
+--- /dev/null
++++ b/include/hw/misc/k230_decomp_gzip.h
+@@ -0,0 +1,92 @@
++/*
++ * K230 Decompress Engine
++ *
++ * Copyright (c) 2026 Tao Ding <dingtao0430@163.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_MISC_K230_DECOMP_GZIP_H
++#define HW_MISC_K230_DECOMP_GZIP_H
++
++#include <zlib.h>
++#include "hw/core/sysbus.h"
++
++#define TYPE_K230_DECOMP_GZIP "riscv.k230.decomp-gzip"
++OBJECT_DECLARE_SIMPLE_TYPE(K230DecompGzipState, K230_DECOMP_GZIP)
++
++/* K230 DECOMP GZIP ACK input */
++enum {
++    K230_DECOMP_GZIP_GPIO_DMA_WRITE_ACK,
++    K230_DECOMP_GZIP_GPIO_DMA_READ_ACK,
++    K230_DECOMP_GZIP_NUM_GPIOS_IN,
++};
++
++/* K230 DECOMP GZIP REQ output */
++enum {
++    K230_DECOMP_GZIP_GPIO_DECOMP_CTRL_EN,
++    K230_DECOMP_GZIP_GPIO_DMA_WRITE_REQ,
++    K230_DECOMP_GZIP_GPIO_DMA_READ_REQ,
++    K230_DECOMP_GZIP_NUM_GPIOS_OUT,
++};
++
++#define K230_DECOMP_GZIP_MMIO_SIZE       0x4000
++
++/* K230 DECOMP GZIP Registers map */
++/* Start decompression controller */
++#define K230_DECOMP_GZIP_DECOMP_START    0x00
++/* Source data length register */
++#define K230_DECOMP_GZIP_GZIP_SRC_SIZE   0x04
++/* Output data length register */
++#define K230_DECOMP_GZIP_GZIP_OUT_SIZE   0x08
++/* Decompress status register */
++#define K230_DECOMP_GZIP_DECOMP_STAT     0x0c
++
++/* Start decompression controller */
++#define K230_DECOMP_GZIP_START           (1U << 0)
++
++#define K230_DECOMP_GZIP_CTRL_EN         (1U << 31)
++#define K230_DECOMP_GZIP_DMA_IN_MASK     0x7fffffffU
++
++#define K230_DECOMP_GZIP_STAT_CRC_OK     (1U << 10)
++#define K230_DECOMP_GZIP_STAT_STATE_MASK 0xfU
++
++#define K230_DECOMP_GZIP_BLOCK_SIZE      0x00020000
++#define K230_DECOMP_GZIP_SRAM_IN_BASE    0x80000
++#define K230_DECOMP_GZIP_SRAM_OUT_BASE   0
++
++typedef struct K230DecompGzipSlotState {
++    uint32_t slot;  /* Slot index */
++    /*
++     * Data offset in current slot.
++     * First valid data in input buffer. Last valid data in output buffer.
++     */
++    uint32_t current_offset;
++} K230DecompGzipSlotState;
++
++struct K230DecompGzipState {
++    SysBusDevice parent_obj;
++
++    MemoryRegion iomem;
++    hwaddr sram_base;
++    qemu_irq signal_out[K230_DECOMP_GZIP_NUM_GPIOS_OUT];
++    uint32_t decomp_start;
++    uint32_t gzip_src_size;
++    uint32_t gzip_out_size;
++    uint32_t decomp_stat;
++    K230DecompGzipSlotState input;  /* decomp gzip ring input */
++    K230DecompGzipSlotState output; /* decomp gzip ring output */
++    uint32_t total_requested;
++    uint32_t total_produced;
++    bool active;
++    bool in_kick;
++    bool zstream_inited;
++    bool stream_end;
++    /* Read from ring input. */
++    uint8_t input_buf[K230_DECOMP_GZIP_BLOCK_SIZE];
++    /* Write to ring output. */
++    uint8_t output_buf[K230_DECOMP_GZIP_BLOCK_SIZE];
++    z_stream zs;
++};
++
++#endif
+-- 
+2.43.0
 
 
