@@ -4,91 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2B5DC53219
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:53:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2F00C53219
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:53:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woJsj-000721-3H; Mon, 27 Jul 2026 07:52:29 -0400
+	id 1woJsy-0007eW-B1; Mon, 27 Jul 2026 07:52:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1woJse-0006tk-Qo
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:52:25 -0400
+ id 1woJso-0007SP-IP
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:52:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1woJsd-0003kv-CC
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:52:24 -0400
+ id 1woJsn-0003m1-6z
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:52:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785153142;
+ s=mimecast20190719; t=1785153152;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lUsEKDENP5KDAItOjUu9l7KMJdCOMqwDHqD2UVqTyGc=;
- b=D4Fc8ce5Mh9+biy4GgtTDCNCWj5SQreXXgZpViwW6j2oVvxUfQgjgxSyQhUzvWijPeX1/t
- kaR1ynI4zc4zG3Cv75n77YK4+e47VtqFeiWVZkM673apw7B9gq/oEwM4kz/PdF+6x+PpjZ
- JPsapEXV+wMG/eEWpcoGxFdM5+Ix3Lo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=PySdd9kmhQ4/OexigL6IUaVOmr/wGNdJk0mxf1caIFk=;
+ b=GNe9g+jbSn4L4fUDGlWcmD5tEiYsyvY/ZxN0AjVdX+eU/W+PniBi+zdtVrN8iJEYG1FG80
+ Fv/JmLYDMlw5MV11pZYAQM7zACeevQIHiPZfk44tcRBZTsNaLoV9lJN+5+mSFgzZD/eV6k
+ 5MsvGdrCspf8XkzSqR7d4nOfRzvAsT8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-644-HDEx8qiUNlmrFhWpgo0xCQ-1; Mon,
- 27 Jul 2026 07:52:17 -0400
-X-MC-Unique: HDEx8qiUNlmrFhWpgo0xCQ-1
-X-Mimecast-MFC-AGG-ID: HDEx8qiUNlmrFhWpgo0xCQ_1785153136
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-142-9WC51eO6PPqMvNj21mdIkA-1; Mon,
+ 27 Jul 2026 07:52:31 -0400
+X-MC-Unique: 9WC51eO6PPqMvNj21mdIkA-1
+X-Mimecast-MFC-AGG-ID: 9WC51eO6PPqMvNj21mdIkA_1785153150
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C91FC180135F; Mon, 27 Jul 2026 11:52:16 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 029071955EAC; Mon, 27 Jul 2026 11:52:30 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.5])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B751D30010C8; Mon, 27 Jul 2026 11:52:15 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DC36E1955F78; Mon, 27 Jul 2026 11:52:27 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 27 Jul 2026 15:51:17 +0400
-Subject: [GIT PULL 08/23] docs/hyperv: fix misleading hv-crash shutdown
- description
+Date: Mon, 27 Jul 2026 15:51:19 +0400
+Subject: [GIT PULL 10/23] hw/display/virtio-gpu: Initialize blob mapping
+ for ATTACH_BACKING
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260727-fix-v1-8-ca3fa3851347@redhat.com>
+Message-Id: <20260727-fix-v1-10-ca3fa3851347@redhat.com>
 References: <20260727-fix-v1-0-ca3fa3851347@redhat.com>
 In-Reply-To: <20260727-fix-v1-0-ca3fa3851347@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2505;
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=821;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=37ToipwIaXpMMjvpg8YSWf1licth1SjqGNKBZN8+5bE=;
- b=owEBbAKT/ZANAwAKAdro4Ql1lpzlAcsmYgBqZ0Y/pYW0pTY+5t39HHKRU2Hc46khOktK7TOrX
- 0ZI4coFs2CJAjIEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamdGPwAKCRDa6OEJdZac
- 5a8mD/MFIxGGXiFJTJzQ1r+YnfZXNk+pVyevsckdw1eOMUce84rMwC0+LOHxwZcQfZIA2uQxBzx
- kCxMnOzww2NJ6VRKXSV+TIQA7j/LVAKyEvV9nrHIlL+YPhV+wt5BZRaHJrbp8/5tmxYiIxdaDTO
- cegqOK/XX1LA9LFJuaXXbIER3GJvCYpUi/zVD95DfuzdqfZ8OdLblwUcJHvP3Yqn3skDOw9UTuD
- EoRLF88O5tgZ4S3pBC/kYfhObHfQZTBsNYEEsCsItAmPkY0JsUS1P0tgY0mcLW0QIxSMSX89HfR
- ygZo4Aca3nZ+vdLksjHqwHo47R+q6gZnW/Orm4twkp5B1Osc4TA4ydZxCKrET3vkiA7tic5r4JQ
- Vomhb1bbYHrkFAxGm59y+IokEvLUMnyInemfapm3rLke5oMigkYdbJ6s80PLCi4GTmryO5cjXJa
- gx27KxwP/YJJk/DW2B5RmZUIsK0c0O5po7MKxX5fWKrsOSzRWqvl57tTNYIGWzQ5oOvLTvmfWGX
- AgbLVuDXZTnYVvrcn/vOmtQW225XIa4CkT8bcaF/YEbOMC9rQYg26Qcs1msMVOBsQcXjrZBlIeQ
- 4uBQB140ub1A2Rhrn+nKIuE3aDFFxtu5SFmYTT+jFMKoIgsQvpmtmDWDQ3wVhlCWJdTDpPQTpx/
- uBSKwC+pQDh7e
+ bh=AphGHdMyaQx0iYaan/tu3RkN+OsCovS+ivR+la/MPzo=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZ0Y/93tOty/X0PWqOdzkFMnZVkWdNxKiji+lP
+ RDY/XAAlyOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamdGPwAKCRDa6OEJdZac
+ 5bRKD/wNUzuANEjBi2nA4dsznnKCz8DgdSGOJrgGoxgSkzuHRQ8vhuPZ/vIp1GYF0vwEY1VbMeo
+ IRSfLZ+CiH6NoCvGuogXLLHUaL7rNF/dsVGtVYm8P48wAl0lNFcy8xW8i/B5GuIOiy2LP7CUnld
+ 8nzFbO83Ln1zXQalQlsERm5wRccne2YUWxosg3nOlC5vxf/jUxmwdWVHFAgWvp5y4wlKBmOJ5Jd
+ xN1fqIRcefYHkuz9+0aigmtbHI8cYtm0HAb6T7yT4czdkW3QCvas2OM6UkKftwDyRA4mOWCqocp
+ 34Osjsda5lK6rO9GwN2PRpewZu2+b//RmZuVWxttjD80TurQdShDKc5i4tX7nI9+zFpyD5X8LV5
+ aM9aNsSeuxSV80saCrcYy9jZOcSx+498vm0vOzMiLcfLqN8OGSrzESgqyZeC7wZ+D7LW1t2T55K
+ Lx0MobfV0vu6O3s6v7JmlT88s2sDmiaUWbpzh3bAzOymtl204IE+5TSILTQ1NA42zQAgbbjrp6+
+ Jn20xi4bHQmHZhZ8wN262ob/nJ1ieH9QefEWbCstbvldUPB/2BGCH0EnvMWw2mtoQE7mEOkg8Eg
+ 9mhp6fvrVZ40kXfkiLqv0fBOdmFKX5lMULRBWvQxCGzmjSkAJ4LgHzEtwDSCmLFGZquhAhsx2UM
+ 5Dy3zdNIQ/tmg+Q==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,49 +107,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The documentation stated that writing to HV_X64_MSR_CRASH_CTL
-unconditionally causes the guest to shutdown. In reality, it triggers
-qemu_system_guest_panicked() via KVM_SYSTEM_EVENT_CRASH and the
-resulting action depends on the generic panic action policy
-(-action panic=...), which defaults to shutdown.
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260701122135.3168729-1-marcandre.lureau@redhat.com>
+It is necessary for blob cursor and scanout.
+
+Fixes: e0933d91b1cd ("virtio-gpu: Add virtio_gpu_resource_create_blob")
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260725-backing-v1-1-5b584bf7df5a@rsg.ci.i.u-tokyo.ac.jp>
 ---
- docs/system/i386/hyperv.rst | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ hw/display/virtio-gpu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/docs/system/i386/hyperv.rst b/docs/system/i386/hyperv.rst
-index 1c1de77feb65..e1babffb0f99 100644
---- a/docs/system/i386/hyperv.rst
-+++ b/docs/system/i386/hyperv.rst
-@@ -71,8 +71,11 @@ Existing enlightenments
-   by the guest when it crashes, HV_X64_MSR_CRASH_P0..HV_X64_MSR_CRASH_P5 MSRs
-   contain additional crash information. This information is outputted in QEMU log
-   and through QAPI.
--  Note: unlike under genuine Hyper-V, write to HV_X64_MSR_CRASH_CTL causes guest
--  to shutdown. This effectively blocks crash dump generation by Windows.
-+  Note: unlike under genuine Hyper-V, write to HV_X64_MSR_CRASH_CTL triggers
-+  ``qemu_system_guest_panicked()`` via ``KVM_SYSTEM_EVENT_CRASH`` and the
-+  resulting action depends on the ``-action panic=...`` policy (default:
-+  ``shutdown``). With the default action, this effectively blocks crash dump
-+  generation by Windows.
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index add60926f366..4d46a4eb10fa 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -992,6 +992,10 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
+         cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+         return;
+     }
++
++    if (!res->image) {
++        virtio_gpu_init_udmabuf(res);
++    }
+ }
  
- ``hv-time``
-   Enables two Hyper-V-specific clocksources available to the guest: MSR-based
-@@ -304,8 +307,9 @@ currently implemented Hyper-V enlightenments with the following exceptions:
-   ``hv-version-id-snumber`` can be left unchanged, guests are not supposed to
-   behave differently when different Hyper-V version is presented to them.
- - ``hv-crash`` must only be enabled if the crash information is consumed via
--  QAPI by higher levels of the virtualization stack. Enabling this feature
--  effectively prevents Windows from creating dumps upon crashes.
-+  QAPI by higher levels of the virtualization stack. With the default
-+  ``-action panic=shutdown`` policy, enabling this feature effectively
-+  prevents Windows from creating dumps upon crashes.
- - ``hv-reenlightenment`` can only be used on hardware which supports TSC
-   scaling or when guest migration is not needed.
- - ``hv-spinlocks`` should be set to e.g. 0xfff when host CPUs are overcommited
+ static void
 
 -- 
 2.55.0
