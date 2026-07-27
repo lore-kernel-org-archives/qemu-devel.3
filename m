@@ -4,63 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D441C531FC
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 07:13:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4DF0C531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 07:14:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woFWp-0005jy-90; Mon, 27 Jul 2026 03:13:35 -0400
+	id 1woFX8-0005rI-Pf; Mon, 27 Jul 2026 03:13:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1woFWc-0005jQ-W3
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 03:13:25 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1woFWZ-0004oX-SM
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 03:13:22 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66R7D73N014973
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 27 Jul 2026 16:13:07 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=RMLQG2pcGdC+QK56hRNV1b4b7Qn+6XYWsqDDG55l7AA=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1785136387; v=1;
- b=sAx18hJKPFYhoEWuK1kZWKhk4WJdcRytGHBb4/bNOAmyp0++a4392zdGYhwXFkP6
- HjrRX/T6hAOxPsMH2F6YrC1VR3w8PlLYWrpF8UpNKgDuhw8vHPafzYuisucTYse1
- rGy/GaSotRlo27qpAq60+h4MODt735yRnHoIcYVGXtLoFEl+Y9LHcEAbHFHcCMjf
- cO9Jj+WdwfBQUc95XzjDfdTxs/zk+xHnkG8DtB3VPVsl/1fuZlmXr/iwGLy1DR2I
- zNQ/gSTBdnh0GzuuJ9OIUVXu4BtXrcTDUeXBhiOYWtNTUuoIiPHUzwhDxYuK1dyg
- rkxaTiRWPvxhEIfZ1e7hng==
-Message-ID: <a2b909da-374b-4770-a7f7-182aa8f929c6@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 27 Jul 2026 16:13:06 +0900
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1woFX4-0005qj-Dg
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 03:13:50 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1woFX3-0004qM-01
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 03:13:50 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2cf27856f9cso29682095ad.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 00:13:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785136427; cv=none;
+ d=google.com; s=arc-20260327;
+ b=ZDRgvjeXPvViuwgnAzLKvYJb2oD+E82lmELRde3FeTp1+Wi6GPR92NUI95Zu0/D6KY
+ HFzMQCDCmZfDRixe04d8bjLM8XisT8Xhe0IAmqnptA/B40NHOh/3CaFXzJAK6RZ4qGxs
+ tWCC3e2DxAyCrLH8rsCpjdAejRPUfByRsA5Y+MkCA69ygq2lbdN8VhBU9GGpbpRjqtDt
+ W6i2QaOoR36xpkv7JsLVf6o44cYn4/dVNciAex6NRkQeoVSleWlWr5NnJ9w0FpI5BG3+
+ Ozk65NbFRHmPGQjsk3DlU8kQ8f8Fi288aOC3sliFZ9RqzX+XYvlo5rPLZ0mKns1ZC4oh
+ Wflw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Xyz1M2kJHz0aLucJvd64WAg72n6dkt39SnKi390eiG8=;
+ fh=KnxVq+/dNMGR5XtbHr3cm7WMCtMcRbEU6z8PkW8LG2I=;
+ b=B+ei873GA2HTpRUSrMF5p9At6LsxM5P7kPF03KENP9rXNBRwqzVdbrAdC9zhVJYuEP
+ etfPmCW1qG7vfPFb5i+mYQ0D2FhNm1O90HKXNGFK6giSvEaMXBS6mGb+JmYYhKGBiUv6
+ 7uh3XJsQrpc1NBjkAPxD3Bqri1o7LTKIM5+bpfUvllgE8FVKxi79PmvOXAsQObHQsCuG
+ lSdGx1YkEQNQDKCjSVtbr1Qk/7J5US6/Jl90uqNWVxWdjQwsx/HKW5gc+dumGHZGINIb
+ +8p8vy/CkZGxYH7zVMYZlVL40uQPJ8gggsIBu8O4yrHTUdQfZRaMSWZsuRhdVaaaTrYP
+ 2wfg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785136427; x=1785741227; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Xyz1M2kJHz0aLucJvd64WAg72n6dkt39SnKi390eiG8=;
+ b=mfQcB+0tjb1nabaxpArpY2EXF3AUCfh/cCIDtSxRllmBoMuVTTxjFRYt4Ik5SjsOS0
+ DSWD/1PUC2oJYbsvmrC9zGyOo0tl64C6YuCsMeRxyCPv3Y/a4fecaz50PCYM0AmztIAX
+ XH0xRBzankv3QEVED8ia1+VAzkKdft63+YlcfKLlRcGSpLhFUM95lpUuviv4QH1qCrHQ
+ 3sneDHF1iqx+KytLMucpdr6qxaKSqf0WyoYEI5HrckuxTmfdReHhMiU5F/enps9iLJ+u
+ TFmdRTZAC5aFOwOJ2WBPlGjqg3ZBr/ozY1qboHi+ktBGUN/Of6N6BW9qiP1esiiiRQ7J
+ Fl1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785136427; x=1785741227;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Xyz1M2kJHz0aLucJvd64WAg72n6dkt39SnKi390eiG8=;
+ b=dobVOqaXdv0a+dSYi06NHxdRgpJwvNXAheQYC7/FIL1HpEVpM2lWHSF9NtmjGh8zpk
+ F8oYPDgZg08eNZMcraQZPIkBIddDo7OvTLEVaWxG7XWhBkGGqHuFoQgK307J7IQDV6p5
+ m/p1N/Ey2hq2VxwKvSAVocvPG46qI/8rl0ImdcgAKLo4Lj49Om4OhtC8DMP0VIOG/hqh
+ P8lD8GKopK54D7t4nsVh3JOqkjXkK5an+JQ1JlTR+vUxgY5tud2uwVqDkQK8gA/X8zEG
+ wOSIyIpKpVzT/eeUwu129KMvXJ5JcJPdxqrsv1c2XL90niQQ11wWw9W6VfcuQbBJgOC3
+ x5mA==
+X-Gm-Message-State: AOJu0YzPJz9BYyo3fQ2h5KKLBpSlkfMJuxsMHZu2zuRn4xt3KvsVbrO2
+ extAIdSYOtcIBOBXraVspLKSY94sEI25a7t4GaIiT6rw00iWjn09sI5iqdzdC4XAGZvtStIH2Kg
+ zjjaH4yqG9DAx2lXXlltKlV8/mGJVbqE=
+X-Gm-Gg: AR+sD11J+VDsYbiS0fcosfxHRVAjh9Moenr6/znFWLxuWvmgzyNq4wcA4P2nMLHttHS
+ ckSj5c8fdbcIG+A0SgQ/vh8bDA19LQ4JyAmz3vfro7C18hBd6eXvXbICAYloC0NRj2EN2yGvnRG
+ oMk7D172CVaNACXzogTgGTy1OyzMGZS1NS89N9jcPsCTamfWP269qEGrqexm4TTAxgUZTeiI17a
+ O77G//66qpvu9ORDjcakQdbJ7nsCxoAOfpNbW8CLlK8g3mGyTljwBJ3Vn6kn4rMpOwbe24qH622
+ f9nZ96Ool0Fxm2gRrA==
+X-Received: by 2002:a05:6a20:9d8f:b0:3c3:9835:e75e with SMTP id
+ adf61e73a8af0-3c67e07db58mr7593152637.70.1785136427433; Mon, 27 Jul 2026
+ 00:13:47 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 02/11] igb: Add x-vf-migration property and
- vendor-specific capability for IGBVF
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
- "Michael S . Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>
-References: <20260727053935.1392269-1-clg@redhat.com>
- <20260727053935.1392269-3-clg@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260727053935.1392269-3-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20260725-rutabaga-v1-1-4832b56e679d@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260725-rutabaga-v1-1-4832b56e679d@rsg.ci.i.u-tokyo.ac.jp>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Mon, 27 Jul 2026 11:13:35 +0400
+X-Gm-Features: AUfX_myeJJ8HW1-qD7A1ZkKjk4w3hMY8v9R5Cs2X9uYKMwoNcSSg4H1FaCGKBAw
+Message-ID: <CAJ+F1CJ_+3GCHakJWbDovWq72hnRgerKMciusrsVNTv68CDVkA@mail.gmail.com>
+Subject: Re: [PATCH] hw/display/virtio-gpu: Block Rutabaga migration
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,351 +119,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The patch subject is a bit long.
+On Sat, Jul 25, 2026 at 11:17=E2=80=AFAM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>
+> The migration stream encoding is not defined for Rutabaga yet.
+>
+> Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for gfxst=
+ream")
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-On 2026/07/27 14:39, Cédric Le Goater wrote:
-> Add a PF-level "x-vf-migration" boolean property (default off) that,
-> when enabled, causes each emulated VF to advertise a vendor-specific
-> PCI capability in its config space. The variant driver igb-vfio-pci
-> probes for this capability at bind time and uses its presence to
-> enable migration support.
-> 
-> The capability is a 16-byte vendor-specific capability (PCI_CAP_ID_VNDR)
-> containing a magic value ("MIGB"), the BAR index where the migration
-> region will be mapped, and feature flags indicating which migration
-> features are supported.
-> 
-> Assisted-by: Claude
-> Suggested-by: Alex Williamson <alex@shazbot.org>
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
 > ---
->   MAINTAINERS                           |  6 +++
->   docs/system/device-emulation.rst      |  1 +
->   docs/system/devices/igb-migration.rst | 20 ++++++++
->   docs/system/devices/igb.rst           |  6 +++
->   hw/net/igb_migration.h                | 43 ++++++++++++++++
->   hw/net/igb.c                          | 12 +++++
->   hw/net/igb_migration.c                | 72 +++++++++++++++++++++++++++
->   hw/net/igbvf.c                        | 11 ++++
->   hw/net/meson.build                    |  2 +-
->   hw/net/trace-events                   |  1 +
->   10 files changed, 173 insertions(+), 1 deletion(-)
->   create mode 100644 docs/system/devices/igb-migration.rst
->   create mode 100644 hw/net/igb_migration.h
->   create mode 100644 hw/net/igb_migration.c
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index a28935c89866..6d29b905c47c 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2765,6 +2765,12 @@ F: tests/functional/x86_64/test_netdev_ethtool.py
->   F: tests/qtest/igb-test.c
->   F: tests/qtest/libqos/igb.c
->   
-> +igb VF migration
-> +M: Cédric Le Goater <clg@redhat.com>
-> +S: Maintained
-> +F: hw/net/igb_migration.*
-> +F: docs/system/devices/igb-migration.rst
-> +
->   eepro100
->   M: Stefan Weil <sw@weilnetz.de>
->   S: Maintained
-> diff --git a/docs/system/device-emulation.rst b/docs/system/device-emulation.rst
-> index 40054bb7dfcc..75f423b795cd 100644
-> --- a/docs/system/device-emulation.rst
-> +++ b/docs/system/device-emulation.rst
-> @@ -90,6 +90,7 @@ Emulated Devices
->      devices/cxl.rst
->      devices/emmc.rst
->      devices/igb.rst
-> +   devices/igb-migration.rst
->      devices/ivshmem-flat.rst
->      devices/ivshmem.rst
->      devices/keyboard.rst
-> diff --git a/docs/system/devices/igb-migration.rst b/docs/system/devices/igb-migration.rst
-> new file mode 100644
-> index 000000000000..017b47c4544e
-> --- /dev/null
-> +++ b/docs/system/devices/igb-migration.rst
-> @@ -0,0 +1,20 @@
-> +.. SPDX-License-Identifier: GPL-2.0-or-later
-> +.. _igb-migration:
-> +
-> +igb VF Migration
-> +----------------
-> +
-> +The igb device supports an experimental VF migration interface that allows
-> +the ``igb-vfio-pci`` variant driver to migrate VF state during live
-> +migration. This is enabled with the ``x-vf-migration`` property::
-> +
-> +  -device igb,x-vf-migration=on,...
-> +
-> +When enabled, each emulated VF advertises a vendor-specific PCI capability
-> +(cap id 0x09) with a magic signature (``0x4D494742`` / "MIGB") that the
-> +variant driver probes at bind time. The capability contains an interface
-> +version number, the BAR index hosting the migration register region, and
-> +feature flags indicating which migration features are supported.
-> +
-> +This feature is experimental and the ``x-`` prefix indicates the interface
-> +may change.
-> diff --git a/docs/system/devices/igb.rst b/docs/system/devices/igb.rst
-> index 50f625fd77e4..00271dbc92c3 100644
-> --- a/docs/system/devices/igb.rst
-> +++ b/docs/system/devices/igb.rst
-> @@ -64,6 +64,12 @@ command:
->   
->     pyvenv/bin/meson test --suite thorough func-x86_64-netdev_ethtool
->   
-> +VF Migration (experimental)
-> +===========================
-> +
-> +See :ref:`igb-migration` for details on the experimental VF live migration
-> +interface.
-> +
->   References
->   ==========
->   
-> diff --git a/hw/net/igb_migration.h b/hw/net/igb_migration.h
-> new file mode 100644
-> index 000000000000..e79892436b21
-> --- /dev/null
-> +++ b/hw/net/igb_migration.h
-> @@ -0,0 +1,43 @@
-> +/*
-> + * QEMU Intel 82576 SR/IOV VF Migration Support
-> + *
-> + * Copyright (c) 2026 Red Hat, Inc.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef IGB_MIGRATION_H
-> +#define IGB_MIGRATION_H
-> +
-> +#include "hw/pci/pci_device.h"
-> +
-> +/* Migration BAR definitions */
-> +#define IGB_MIG_BAR_IDX   (2)
-> +#define IGB_MIG_BAR_SIZE  (64 * 1024)
-> +
-> +/*
-> + * Vendor-specific PCI capability for migration discovery.
-> + *
-> + * The igb-vfio-pci variant driver probes for this at bind time.
-> + * If present, the driver knows the emulated VF supports migration.
-> + */
-> +#define IGB_MIG_CAP_MAGIC    0x4D494742  /* "MIGB" */
-> +#define IGB_MIG_CAP_VERSION  1
-> +
-> +#define IGB_MIG_CAP_F_STATE  (1u << 0)   /* device state serialization */
-> +#define IGB_MIG_CAP_F_DIRTY  (1u << 1)   /* dirty page tracking */
-> +
-> +#define IGB_MIG_CAP_SIZE     16
-> +#define IGB_MIG_CAP_OFF_MAGIC  4    /* offset within cap for magic field */
-> +#define IGB_MIG_CAP_OFF_BARID  8    /* offset within cap for BAR id */
-> +#define IGB_MIG_CAP_OFF_FLAGS  12   /* offset within cap for feature flags */
-> +
-> +typedef struct IgbVfMigState {
-> +    bool migration_cap;
-> +    MemoryRegion mig_bar;
-> +} IgbVfMigState;
-> +
-> +void igb_pf_init_migration_bar(PCIDevice *dev);
-> +bool igbvf_add_migration_cap(PCIDevice *dev, Error **errp);
-> +
-> +#endif
-> diff --git a/hw/net/igb.c b/hw/net/igb.c
-> index c076807e7110..b43235996db2 100644
-> --- a/hw/net/igb.c
-> +++ b/hw/net/igb.c
-> @@ -57,6 +57,7 @@
->   
->   #include "igb_common.h"
->   #include "igb_core.h"
-> +#include "igb_migration.h"
->   
->   #include "trace.h"
->   #include "qapi/error.h"
-> @@ -69,6 +70,7 @@ struct IGBState {
->       PCIDevice parent_obj;
->       NICState *nic;
->       NICConf conf;
-> +    bool vf_migration;
->   
->       MemoryRegion mmio;
->       MemoryRegion flash;
-> @@ -459,6 +461,15 @@ static void igb_pci_realize(PCIDevice *pci_dev, Error **errp)
->       pcie_sriov_pf_init_vf_bar(pci_dev, IGBVF_MSIX_BAR_IDX,
->           PCI_BASE_ADDRESS_MEM_TYPE_64 | PCI_BASE_ADDRESS_MEM_PREFETCH,
->           IGBVF_MSIX_SIZE);
-> +    /*
-> +     * When VF migration support is enabled, register an additional VF
-> +     * BAR for the migration register region. The variant driver
-> +     * discovers this via a vendor-specific PCI capability that points
-> +     * to this BAR.
-> +     */
-> +    if (s->vf_migration) {
-> +        igb_pf_init_migration_bar(pci_dev);
-> +    }
->   
->       igb_init_net_peer(s, pci_dev, macaddr);
->   
-> @@ -597,6 +608,7 @@ static const VMStateDescription igb_vmstate = {
->   static const Property igb_properties[] = {
->       DEFINE_NIC_PROPERTIES(IGBState, conf),
->       DEFINE_PROP_BOOL("x-pcie-flr-init", IGBState, has_flr, true),
-> +    DEFINE_PROP_BOOL("x-vf-migration", IGBState, vf_migration, false),
->   };
->   
->   static void igb_class_init(ObjectClass *class, const void *data)
-> diff --git a/hw/net/igb_migration.c b/hw/net/igb_migration.c
-> new file mode 100644
-> index 000000000000..794f1217d3e5
-> --- /dev/null
-> +++ b/hw/net/igb_migration.c
-> @@ -0,0 +1,72 @@
-> +/*
-> + * QEMU Intel 82576 SR/IOV VF Migration Support
-> + *
-> + * Copyright (c) 2026 Red Hat, Inc.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "hw/pci/pci_device.h"
-> +#include "hw/pci/pcie.h"
-> +#include "igb_common.h"
-> +#include "igb_migration.h"
-> +#include "trace.h"
-> +
-> +
-> +
-> +/*
-> + * 32-bit prefetchable BAR. A 64-bit BAR2 would consume BAR2+BAR3, but
-> + * BAR3 is already used for MSI-X (IGBVF_MSIX_BAR_IDX = 3).
-> + *
-> + *   BAR   Index       Type            Size   Purpose
-> + *   BAR0  0+1    64-bit prefetchable  16 KB  MMIO registers
-> + *   BAR2  2      32-bit prefetchable  64 KB  Migration
-> + *   BAR3  3+4    64-bit prefetchable  16 KB  MSI-X table + PBA
-> + *   BAR5  5      -                    -      Unused
-> + */
-> +void igb_pf_init_migration_bar(PCIDevice *dev)
-> +{
-> +    pcie_sriov_pf_init_vf_bar(dev, IGB_MIG_BAR_IDX,
-> +                              PCI_BASE_ADDRESS_MEM_PREFETCH,
-> +                              IGB_MIG_BAR_SIZE);
-> +}
-> +
-> +/*
-> + * Add vendor-specific PCI capability that the variant driver probes for.
-> + *
-> + * Layout (16 bytes):
-> + *   [0]  cap_id      (PCI_CAP_ID_VNDR = 0x09)
-> + *   [1]  next_cap
-> + *   [2]  cap_len     (16)
-> + *   [3]  version     (IGB_MIG_CAP_VERSION)
-> + *   [4-7]  magic     (IGB_MIG_CAP_MAGIC, little-endian)
-> + *   [8-11] bar_id    (IGB_MIG_BAR_IDX, little-endian)
-> + *   [12-15] flags    (feature flags, little-endian)
-> + */
-> +bool igbvf_add_migration_cap(PCIDevice *dev, Error **errp)
-> +{
-> +    int offset;
-> +
-> +    offset = pci_add_capability(dev, PCI_CAP_ID_VNDR, 0,
-> +                                IGB_MIG_CAP_SIZE, errp);
-> +    if (offset < 0) {
-> +        return false;
+>  hw/display/virtio-gpu-rutabaga.c | 17 +++++++++++++++--
+>  1 file changed, 15 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rut=
+abaga.c
+> index 4d7d7b245929..ad5cfabf4ee9 100644
+> --- a/hw/display/virtio-gpu-rutabaga.c
+> +++ b/hw/display/virtio-gpu-rutabaga.c
+> @@ -9,6 +9,7 @@
+>  #include "hw/virtio/virtio-gpu.h"
+>  #include "hw/virtio/virtio-gpu-pixman.h"
+>  #include "hw/virtio/virtio-iommu.h"
+> +#include "migration/blocker.h"
+>
+>  #include <glib/gmem.h>
+>  #include <rutabaga_gfx/rutabaga_gfx_ffi.h>
+> @@ -1078,6 +1079,7 @@ static void virtio_gpu_rutabaga_handle_ctrl(VirtIOD=
+evice *vdev, VirtQueue *vq)
+>
+>  static void virtio_gpu_rutabaga_realize(DeviceState *qdev, Error **errp)
+>  {
+> +    ERRP_GUARD();
+>      uint32_t num_capsets;
+>      VirtIOGPUBase *bdev =3D VIRTIO_GPU_BASE(qdev);
+>      VirtIOGPU *gpudev =3D VIRTIO_GPU(qdev);
+> @@ -1087,12 +1089,17 @@ static void virtio_gpu_rutabaga_realize(DeviceSta=
+te *qdev, Error **errp)
+>      return;
+>  #endif
+>
+> -    if (!virtio_gpu_rutabaga_init(gpudev, errp)) {
+> +    error_setg(&bdev->migration_blocker, "rutabaga is not yet migratable=
+");
+> +    if (migrate_add_blocker(&bdev->migration_blocker, errp) < 0) {
+>          return;
+>      }
+>
+> +    if (!virtio_gpu_rutabaga_init(gpudev, errp)) {
+> +        goto fail;
 > +    }
 > +
-> +    /* Length and version in the standard cap flags word */
-> +    pci_set_byte(dev->config + offset + PCI_CAP_FLAGS,
-> +                 IGB_MIG_CAP_SIZE);
-> +    pci_set_byte(dev->config + offset + PCI_CAP_FLAGS + 1,
-> +                 IGB_MIG_CAP_VERSION);
-> +
-> +    pci_set_long(dev->config + offset + IGB_MIG_CAP_OFF_MAGIC,
-> +                 IGB_MIG_CAP_MAGIC);
-> +    pci_set_long(dev->config + offset + IGB_MIG_CAP_OFF_BARID,
-> +                 IGB_MIG_BAR_IDX);
-> +    pci_set_long(dev->config + offset + IGB_MIG_CAP_OFF_FLAGS,
-> +                 IGB_MIG_CAP_F_STATE);
-
-It advertises IGB_MIG_CAP_F_STATE before registering BAR2’s 
-MemoryRegion. The companion driver therefore discovers migration support 
-and tries to use an unimplemented BAR. Please change the patch series to 
-publish the capability with the BAR implementation or squash the commits.
-
-Regards,
-Akihiko Odaki
-
-> +
-> +    trace_igbvf_mig_cap_add(pcie_sriov_vf_number(dev), offset);
-> +    return true;
-> +}
-> diff --git a/hw/net/igbvf.c b/hw/net/igbvf.c
-> index 9a165c7063ee..94c9739cd58c 100644
-> --- a/hw/net/igbvf.c
-> +++ b/hw/net/igbvf.c
-> @@ -47,6 +47,7 @@
->   #include "net/net.h"
->   #include "igb_common.h"
->   #include "igb_core.h"
-> +#include "igb_migration.h"
->   #include "trace.h"
->   #include "qapi/error.h"
->   
-> @@ -57,6 +58,8 @@ struct IgbVfState {
->   
->       MemoryRegion mmio;
->       MemoryRegion msix;
-> +
-> +    IgbVfMigState mig;
->   };
->   
->   static hwaddr vf_to_pf_addr(hwaddr addr, uint16_t vfn, bool write)
-> @@ -272,6 +275,14 @@ static void igbvf_pci_realize(PCIDevice *dev, Error **errp)
->           hw_error("Failed to initialize PCIe capability");
->       }
->   
-> +    s->mig.migration_cap = object_property_get_bool(OBJECT(pcie_sriov_get_pf(dev)),
-> +                                                "x-vf-migration", &error_abort);
-> +    if (s->mig.migration_cap) {
-> +        if (!igbvf_add_migration_cap(dev, errp)) {
-> +            return;
-> +        }
+>      if (!virtio_gpu_rutabaga_get_num_capsets(gpudev, &num_capsets, errp)=
+) {
+> -        return;
+> +        goto fail;
+>      }
+>
+>      bdev->conf.flags |=3D (1 << VIRTIO_GPU_FLAG_RUTABAGA_ENABLED);
+> @@ -1101,6 +1108,12 @@ static void virtio_gpu_rutabaga_realize(DeviceStat=
+e *qdev, Error **errp)
+>
+>      bdev->virtio_config.num_capsets =3D num_capsets;
+>      virtio_gpu_device_realize(qdev, errp);
+> +    if (!*errp) {
+> +        return;
 > +    }
 > +
->       if (object_property_get_bool(OBJECT(pcie_sriov_get_pf(dev)),
->                                    "x-pcie-flr-init", &error_abort)) {
->           pcie_cap_flr_init(dev);
-> diff --git a/hw/net/meson.build b/hw/net/meson.build
-> index 84f142df222a..bb4b449b25ba 100644
-> --- a/hw/net/meson.build
-> +++ b/hw/net/meson.build
-> @@ -11,7 +11,7 @@ system_ss.add(when: 'CONFIG_E1000_PCI', if_true: files('e1000.c', 'e1000x_common
->   system_ss.add(when: 'CONFIG_E1000E_PCI_EXPRESS', if_true: files('net_tx_pkt.c', 'net_rx_pkt.c'))
->   system_ss.add(when: 'CONFIG_E1000E_PCI_EXPRESS', if_true: files('e1000e.c', 'e1000e_core.c', 'e1000x_common.c'))
->   system_ss.add(when: 'CONFIG_IGB_PCI_EXPRESS', if_true: files('net_tx_pkt.c', 'net_rx_pkt.c'))
-> -system_ss.add(when: 'CONFIG_IGB_PCI_EXPRESS', if_true: files('igb.c', 'igbvf.c', 'igb_core.c'))
-> +system_ss.add(when: 'CONFIG_IGB_PCI_EXPRESS', if_true: files('igb.c', 'igbvf.c', 'igb_core.c', 'igb_migration.c'))
->   system_ss.add(when: 'CONFIG_RTL8139_PCI', if_true: files('rtl8139.c'))
->   system_ss.add(when: 'CONFIG_TULIP', if_true: files('tulip.c'))
->   system_ss.add(when: 'CONFIG_VMXNET3_PCI', if_true: files('net_tx_pkt.c', 'net_rx_pkt.c'))
-> diff --git a/hw/net/trace-events b/hw/net/trace-events
-> index 001a20b0e2ac..06d8848023e5 100644
-> --- a/hw/net/trace-events
-> +++ b/hw/net/trace-events
-> @@ -294,6 +294,7 @@ igb_wrn_rx_desc_modes_not_supp(int desc_type) "Not supported descriptor type: %d
->   
->   # igbvf.c
->   igbvf_wrn_io_addr_unknown(uint64_t addr) "IO unknown register 0x%"PRIx64
-> +igbvf_mig_cap_add(uint16_t vfn, int offset) "VF%u: added migration vendor cap at config offset 0x%x"
->   
->   # spapr_llan.c
->   spapr_vlan_get_rx_bd_from_pool_found(int pool, int32_t count, uint32_t rx_bufs) "pool=%d count=%"PRId32" rxbufs=%"PRIu32
+> +fail:
+> +    migrate_del_blocker(&bdev->migration_blocker);
+>  }
+>
+>  static const Property virtio_gpu_rutabaga_properties[] =3D {
+>
+> ---
+> base-commit: 006a22cb26998998385b104db1ff9466ef2f3153
+> change-id: 20260725-rutabaga-090ad4172817
+>
+> Best regards,
+> --
+> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>
+>
 
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
