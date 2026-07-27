@@ -4,101 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 232E9C54EFC
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 10:05:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66BC7C531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 10:35:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woICq-0000Cz-Ri; Mon, 27 Jul 2026 06:05:08 -0400
+	id 1woIf7-0005jG-Vn; Mon, 27 Jul 2026 06:34:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1woICp-0000Cb-L3
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 06:05:07 -0400
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1woICo-0006GU-32
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 06:05:07 -0400
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-664b05d408bso1927473d50.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 03:05:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785146704; cv=none;
- d=google.com; s=arc-20260327;
- b=Aqeu1CPLOaSI/UCriNM7VHoCatiZFA7WjU1rLIxiownORij4iovLSA7Skc+85pZzyq
- nw1QlYelzjGwjJyUqPltSzeFZzMlmhIwPSIFCJp4YLmsCMPHllqbqMKP5zBFPU3yuZYV
- y9LHcVlNnQpIIeKiSdZIKBKiAdLXm0+MMpP5Pb1HjdQKfwqrk6PIRqau0Msf1AYUs0lZ
- 7PSrMi3kEFkXcn1yt8ww7Xd80X6u3E0pkAfIRnnr0HmLdbh6pK7XKDHxNPG7kopn8Vd9
- OQvb+xGQhTdogMojjXfobPuXvmUI7GX5p4QVWwKe9ysDZ2bXPwe1oZla/fbrMFcs3VNo
- BUpw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Mzk1OFpsPkIMuuBU6ZG6dN6///TBASQuFccmd8wYFlM=;
- fh=q6gO72aZZuonrr2QqRsVLQkOu9+GhpRhRZHUKJhb7ho=;
- b=UOKWiEqISaR9e+RBPPVv48VzQntH1Op/zlTf/71jB/vV2ZztPhFsHpjNTnUTzy2Roz
- 1zuiIwJ/4/rAwkxdRoJ/HZqqqPCFNJIs8kY65v7hIAxFTO05MQMkPsTdxZGyGW3kEHu0
- jUoecinHKYfMPFH/WFsB4f7NjTotVss6BOrkdECVD+JMdZO5SNlPgDdqGyaKo1HeBGyv
- KHaz9cpdzlSNA/q3GFCWrasiJoxjD7PcE8CNTRWXAChKJNK7TBp3rmdl6k6KHFb/JKXi
- 2/OmX1Lk1OqTBRLzAMEAy6CUa/eauSSVrPLvGtkMg3KTRRvrmyWQxuAc2ilZBdUjCFlu
- AUyg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785146704; x=1785751504; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Mzk1OFpsPkIMuuBU6ZG6dN6///TBASQuFccmd8wYFlM=;
- b=yXuZSd0u7VBCJmhxzayqVw4gHuvC3w3plGmita8oNdHeKv8fBMZ3T1IzroAW1wOYGh
- My10t49K9j2pE0Cpb/qpfvoJ6NPxeSrvMIN6xiJaug7haOMHp5fG1BS/fkNqSz0vJ4GZ
- +wGq2+9CC9FNkiKc0fcOgEAlgr25q/zj85WUJRJwFUMbi7W3OeU+LIr4rzhjtAl8Hffo
- TezdeEpliKYgsIYKQdqz19w63GnD8az76x5bq7lzRLLijyeCShuegWSm6iE0TtRXGUl/
- cNFgnMUstfB/K+mRTFBeBx/lqXOwwUqaEdFP/+a++aS3jmDaK3VG8+B5Vd6KGb+csxGC
- OPaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785146704; x=1785751504;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=Mzk1OFpsPkIMuuBU6ZG6dN6///TBASQuFccmd8wYFlM=;
- b=UMhPoOP8giUmCjEV2hpt0qe6Y+5GCDvVenWhkI9+8Bix4gmSkBIubsfq4ECra7osoJ
- ma7sdkiB9yoOqZtVBStvNL/b55zvJbrLknyf7kXOWAoHR/hZa9u1BXL+qCV/p4147RT+
- Tcw5sL+8+nJrDpuWEzBxIdzbFvJMAXoJWbq8oZwIa1vaPI31KJWgiNUlOU9UNsw4svCt
- nnMlUj7lijD4Cj/q4i/PBivUuoiqQh1NXkyFSVh1svd9fjTfmwSW1AMFMSGY74NcLO3L
- 3IfIUtbApmQpPxwlvQvFweHqvjs6+mzaoq3GR1E1+wwJ8ThF3Exyla+DDXTq0+v8WYdv
- EWgA==
-X-Gm-Message-State: AOJu0YwVjwaC46og6B+SW8TgIVDV7nYWAZuEMbkzKed1/+L4I+7NhuBQ
- 7r5K7U4YHYyWIYfxwB4xb2jB9wX5358bXatMS0aDLqbL+X+P1IT3JV1kyLYF5DI1D7tw+2EtCC5
- UmBIn4sealV+rC6ZaJw9eAvl6IGKLLJgR6/YoGKqGwQ==
-X-Gm-Gg: AR+sD12ymfN6Hju1zJk0KNlUV1ukuDk0YwWMg1ZCIJQYwFhgwN6Tv6UZNedLMw0VSbh
- ekBXtj6RdagGp9HsoxkYs+IhV98KcvgOvKnffH8kJ3Kfxgi3WE7DLQ6FNqjw08i++q+3pK/xhjn
- mJjxkVcflNIKAemgYb9dounAcD1naHeP8QgyhNZ5qLulfIP5dC214rSDnJvtSwnXKejYAMF+hif
- g9YtLrh5S8/w3pB0Z/7K5f8ydTUw7rCOwSaVjgCFmR0vqAgNdylZaRNimFbcVghBITwjJe4GLjE
- lXax9tlM9xsPlvqiqs1v57evfmikAoU6ZVBFyBsgErI0wA==
-X-Received: by 2002:a05:690e:158f:10b0:668:9b2a:3f1 with SMTP id
- 956f58d0204a3-668c7cb9e15mr1587486d50.107.1785146704413; Mon, 27 Jul 2026
- 03:05:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1woIf0-0005ip-OS
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 06:34:15 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1woIew-00015E-Le
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 06:34:14 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66RAXsLl013061
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Mon, 27 Jul 2026 19:33:54 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=LXk5N2OizCjlLLajAN5LQRF5txmOyV7a+Q5pY/oPJoc=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1785148434; v=1;
+ b=p6P9IX8zjCMbElSKXGQWcn7OdtW1DWJxAJnl1ps43hDGP1HZVGlUUpfWXqosutLZ
+ z8KfltNbshaZ5KFsDzQXM+UsPgWkrrOOSuu7XqWtF58a19PXZU73UB2bV8crrebj
+ pLcAlD0YnMXbobvUyH7w3SQhL45f+DhUZIBz8mCrg22mMsBIVDYONXEK1fnxwUVM
+ FqonWlBsrUaimE8Ug/UF4WfqjQ/JMPRSEvYO4xWoYOoG9lpd3yj1+PTzkwXJBecZ
+ 3pZHLoFm1ebgMFScQfNrwbbNeN4TRLQxaS3goBX4AYcTG3Gt6DAsQNq5CJRmEovb
+ IMBRFNLStxyNa5I3fwl1rg==
+Message-ID: <a533ff82-60ef-428d-9e13-a0d98e669c1c@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 27 Jul 2026 19:33:54 +0900
 MIME-Version: 1.0
-References: <20260724124220.24152-1-22925483+botszhuang@users.noreply.github.com>
-In-Reply-To: <20260724124220.24152-1-22925483+botszhuang@users.noreply.github.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 27 Jul 2026 11:04:52 +0100
-X-Gm-Features: AUfX_mw0bvpRXxcQLiKs-ag9eUHn01oMQV0PoPhBGsrxZhawTxtJes092BCM1_Y
-Message-ID: <CAFEAcA-q5ihYpgYtEosQ3+SgbMdw7e7=xk4motLFL-A==g1k0w@mail.gmail.com>
-Subject: Re: [PATCH] fix BCM2835_I2C_CLKT
-To: botszhuang <huang.botsz@gmail.com>
-Cc: qemu-devel@nongnu.org, philmd@mailo.com, qemu-arm@nongnu.org, 
- sef1548@gmail.com, botszhuang <22925483+botszhuang@users.noreply.github.com>, 
- botszhuang <botszhuang@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 09/11] igb: Send RARP after VF migration to update
+ bridge FDB
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>
+References: <20260727053935.1392269-1-clg@redhat.com>
+ <20260727053935.1392269-10-clg@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260727053935.1392269-10-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,33 +77,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 24 Jul 2026 at 13:51, botszhuang <huang.botsz@gmail.com> wrote:
->
-> hw/i2c/bcm2835_i2c: Correct CLKT register offset
->
-> The Clock Stretch Timeout (CLKT) register for the BCM2835 I2C controller is actually located at offset 0x1c, not 0x20.
->
-> The previous incorrect value caused the guest OS to read from and write to the wrong memory address when configuring the I2C timeout, which could lead to unexpected controller behavior.
->
-> Update the BCM2835_I2C_CLKT macro to match the hardware specification.
+On 2026/07/27 14:39, Cédric Le Goater wrote:
+> After VF migration the L0 bridge FDB (Forwarding Database) still maps
+> the VF's MAC to the old tap port, causing a ~30 s connectivity stall
+> while peer ARP caches expire.
+> 
+> Add igb_core_vf_get_mac() to look up a VF's MAC address from the PF's
+> Receive Address registers, and use it to send a RARP broadcast from
+> the PF's network backend during VF unquiesce so the bridge relearns
+> the correct port immediately.
 
-Checking the datasheet, this is definitely the wrong value,
-so the fix is correct. I'm a bit confused by your commit message,
-though. The value here in QEMU can't cause the guest OS to write
-to the wrong memory address, because the guest OS doesn't ever
-see what we have defined here. It has the offset hardcoded into
-its own source code.
+The patch message describes the problem this patch intends to solve, but 
+it does not explain why it should be handled with the device emulation 
+code. My intuition is that this is a responsibility of a high-level 
+management layer on L1.
 
-It looks to me like the effect of getting this wrong is that when
-the guest writes to CLKT (at its actual 0x1c offset) we will log
-a guest error and give read-as-zero behaviour. That's not correct,
-but I expect for most guest OSes it'll be pretty harmless because
-the guest probably doesn't write the value it wants to configure
-and then read it back to check. (QEMU ignores the value written
-anyway.)
+> 
+> Assisted-by: Claude
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   hw/net/igb_core.h      |  1 +
+>   hw/net/igb_core.c      | 28 ++++++++++++++++++++++++++++
+>   hw/net/igb_migration.c | 33 +++++++++++++++++++++++++++++++++
+>   hw/net/trace-events    |  2 ++
+>   4 files changed, 64 insertions(+)
+> 
+> diff --git a/hw/net/igb_core.h b/hw/net/igb_core.h
+> index 3db520048732..07b4270708c4 100644
+> --- a/hw/net/igb_core.h
+> +++ b/hw/net/igb_core.h
+> @@ -149,4 +149,5 @@ IGBCore *igb_pf_get_core(void *pf);
+>   void igb_core_vf_propagate_irqs(IGBCore *core, uint16_t vfn);
+>   void igb_core_vf_rearm_irqs(IGBCore *core, uint16_t vfn);
+>   void igb_core_vf_propagate_ivar(IGBCore *core, uint16_t vfn);
+> +bool igb_core_vf_get_mac(IGBCore *core, uint16_t vfn, uint8_t *mac);
+>   #endif
+> diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
+> index 1621ee6602d5..281f3a474392 100644
+> --- a/hw/net/igb_core.c
+> +++ b/hw/net/igb_core.c
+> @@ -4634,3 +4634,31 @@ void igb_core_vf_propagate_ivar(IGBCore *core, uint16_t vfn)
+>               ((uint32_t)ent << (8 * (n % 4)));
+>       }
+>   }
+> +
+> +bool igb_core_vf_get_mac(IGBCore *core, uint16_t vfn, uint8_t *mac)
+> +{
+> +    uint32_t vf_pool_bit = E1000_RAH_POOL_1 << vfn;
+> +    static const struct {
+> +        uint32_t base;
+> +        int count;
+> +    } ra_banks[] = {
+> +        { RA,  16 },
+> +        { RA2,  8 },
+> +    };
+> +    int i, j;
+> +
+> +    for (i = 0; i < ARRAY_SIZE(ra_banks); i++) {
+> +        for (j = 0; j < ra_banks[i].count; j++) {
+> +            uint32_t ral_off = ra_banks[i].base + j * 2;
+> +            uint32_t rah_off = ra_banks[i].base + j * 2 + 1;
+> +            uint32_t rah_val = core->mac[rah_off];
+> +
+> +            if ((rah_val & E1000_RAH_AV) && (rah_val & vf_pool_bit)) {
+> +                stl_le_p(mac, core->mac[ral_off]);
+> +                stw_le_p(mac + 4, rah_val & 0xffff);
+> +                return true;
+> +            }
+> +        }
+> +    }
+> +    return false;
+> +}
+> diff --git a/hw/net/igb_migration.c b/hw/net/igb_migration.c
+> index a0b4a52c865f..fce661f68e3d 100644
+> --- a/hw/net/igb_migration.c
+> +++ b/hw/net/igb_migration.c
+> @@ -609,6 +609,36 @@ static void igb_core_vf_quiesce(IgbVfState *s)
+>       trace_igbvf_mig_quiesce(s->vfn, core->mac[VFRE], core->mac[VFTE]);
+>   }
+>   
+> +/*
+> + * Send a RARP broadcast so the network bridge relearns which port
+> + * carries this VF's MAC after migration.
+> + */
+> +static void igb_core_vf_send_rarp(IGBCore *core, uint16_t vfn)
+> +{
+> +    uint8_t mac[ETH_ALEN];
+> +    uint8_t buf[60];
+> +
+> +    if (!igb_core_vf_get_mac(core, vfn, mac)) {
+> +        trace_igbvf_mig_no_mac(vfn);
+> +        return;
+> +    }
+> +
+> +    trace_igbvf_mig_send_rarp(vfn, mac[0], mac[1], mac[2],
+> +                              mac[3], mac[4], mac[5]);
+> +
+> +    memset(buf, 0xff, ETH_ALEN);
+> +    memcpy(buf + 6, mac, ETH_ALEN);
+> +    stw_be_p(buf + 12, 0x8035);     /* ETH_P_RARP */
+> +    stw_be_p(buf + 14, 1);          /* hw addr space: ethernet */
+> +    stw_be_p(buf + 16, ETH_P_IP);   /* protocol addr space */
+> +    buf[18] = 6; buf[19] = 4;       /* hw/proto addr lengths */
+> +    stw_be_p(buf + 20, 3);          /* opcode: RARP request */
+> +    memcpy(buf + 22, mac, ETH_ALEN);
+> +    memset(buf + 28, 0, 32);
 
-I've applied this to target-arm.next.
+The target-hardware address is also zeroed rather than populated like 
+QEMU’s existing RARP builder.
 
-thanks
--- PMM
+> +
+> +    qemu_send_packet_raw(qemu_get_queue(core->owner_nic), buf, sizeof(buf));
+
+RARP is injected directly into the PF backend, bypassing normal VF TX 
+VLAN insertion. A VLAN-configured VF therefore announces itself 
+untagged, so the bridge may learn the wrong VLAN or discard it.
+
+Regards,
+Akihiko Odaki
+
+> +}
+> +
+>   static void igb_core_vf_unquiesce(IgbVfState *s)
+>   {
+>       IgbVfMigState *ms = &s->mig;
+> @@ -632,6 +662,9 @@ static void igb_core_vf_unquiesce(IgbVfState *s)
+>       if (re) {
+>           igb_core_vf_rearm_irqs(core, s->vfn);
+>       }
+> +
+> +    /* TODO : RARP should be sent only if resumed */
+> +    igb_core_vf_send_rarp(core, s->vfn);
+>   }
+>   
+>   /* ================================================================
+> diff --git a/hw/net/trace-events b/hw/net/trace-events
+> index f4940e3e176d..1e38d9ab3697 100644
+> --- a/hw/net/trace-events
+> +++ b/hw/net/trace-events
+> @@ -312,6 +312,8 @@ igb_core_dirty_track_dma(int vfn, uint64_t addr, uint64_t len) "VF%d: dirty DMA
+>   igb_core_dirty_track_dma_drop(int vfn, uint64_t addr, uint64_t len) "VF%d: dirty DMA dropped addr=0x%"PRIx64" len=%"PRIu64" no matching range"
+>   igbvf_mig_quiesce(uint16_t vfn, uint32_t vfre, uint32_t vfte) "VF%u: quiesce VFRE=0x%x VFTE=0x%x"
+>   igbvf_mig_unquiesce(uint16_t vfn, uint32_t vfre, uint32_t vfte) "VF%u: unquiesce VFRE=0x%x VFTE=0x%x"
+> +igbvf_mig_no_mac(uint16_t vfn) "VF%u: no MAC address found, skipping RARP"
+> +igbvf_mig_send_rarp(uint16_t vfn, uint8_t b0, uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t b5) "VF%u: RARP %02x:%02x:%02x:%02x:%02x:%02x"
+>   
+>   # spapr_llan.c
+>   spapr_vlan_get_rx_bd_from_pool_found(int pool, int32_t count, uint32_t rx_bufs) "pool=%d count=%"PRId32" rxbufs=%"PRIu32
+
 
