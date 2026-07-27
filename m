@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E97C1C531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 20:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62BFAC531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 20:08:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woRa6-0000bm-6r; Mon, 27 Jul 2026 16:05:46 -0400
+	id 1woRcB-000190-CR; Mon, 27 Jul 2026 16:07:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1woRa3-0000bb-A8; Mon, 27 Jul 2026 16:05:43 -0400
+ id 1woRc9-00018H-KN; Mon, 27 Jul 2026 16:07:53 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1woRa1-00075M-OY; Mon, 27 Jul 2026 16:05:43 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1woRc8-0007AY-4r; Mon, 27 Jul 2026 16:07:53 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66RIHohh2881485; Mon, 27 Jul 2026 20:05:37 GMT
+ 66RIHsmn2995122; Mon, 27 Jul 2026 20:07:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=1FufHW
- vwCjMPE5lyU4aTW2gjRXaxYm0U7or7haEkzes=; b=OQncXvqwOlKRdn225NlZtz
- W9dxkRJCu4yKXpQgM4oUySKnMFHKtlBMDOI+cVVnLU/qdMUE2ifFmpWUj1B+yXHn
- 0zlWbngyVtkesH2fxpOsdDoiSS93qdBDbeSyl7y5VXKLTbQ+tzpPxwwdCjyqvbie
- LccH96LFhVT0O7aP4mU/IHJsPVZR46mvPZtChOPad2J0X4KocMKbSUxnNYQLLOxO
- 9xq563XKufwJNZOimJRfofREDyILL6yujaeIlB1fDelBSPb8nphHLDS6uMYeFqkU
- yDE787qNRK/5zLSsQEa0As2ac2xuy6Ny5ATtQNmIiWsFaENOe6fISSuhqM63ChiA
+ :message-id:mime-version:references:subject:to; s=pp1; bh=5RIe0K
+ iBsWWW9qgeIyBt3iSgqjksftP+R9zCMnaZ2Vk=; b=L31gALkpsDns7m1TqnG7Jq
+ HrsUJMvhW3FSRStn+ypYdl3ZifgWawvMy6YsyfJlhX205/XiaRtXelWU/Zy/DJfU
+ UjCeWO+gClc9wCHz36Cf5tkNwB9xXfR0z0wEfFKssl0Rf/lYgI3NLoveQZLC8T7W
+ rOEsZuVmHHowyC53cgd2tzOAwNWQqa0N+98Oex7kpp9Kqec97bJcXbQCQZa4XCyl
+ OHgq9YRVaSZ3q4oeOy5C96jvQY79Ct1J8GvtwUX42/0K1IXmKp7gpipi3RRBD65T
+ cVBw1BtSDYEfvbzPP4/q+zVwT10aN9XUMDQJt413SOH59aBcGZe4PfwrktVm4qXw
  ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuyj1da6-1
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuwcse3g-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Jul 2026 20:05:37 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66RJuGhm014341;
- Mon, 27 Jul 2026 20:05:36 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fn9pg6mx2-1
+ Mon, 27 Jul 2026 20:07:48 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66RJuGWN004842;
+ Mon, 27 Jul 2026 20:07:47 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn7uvxysw-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Jul 2026 20:05:36 +0000 (GMT)
+ Mon, 27 Jul 2026 20:07:47 +0000 (GMT)
 Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
  [10.241.53.103])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66RK5Z2f13697658
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66RK7khM25756344
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 27 Jul 2026 20:05:35 GMT
+ Mon, 27 Jul 2026 20:07:46 GMT
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 603375805A;
- Mon, 27 Jul 2026 20:05:35 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 7603058056;
+ Mon, 27 Jul 2026 20:07:46 +0000 (GMT)
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C7CD05805E;
- Mon, 27 Jul 2026 20:05:34 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id EEEC358052;
+ Mon, 27 Jul 2026 20:07:45 +0000 (GMT)
 Received: from [9.61.67.177] (unknown [9.61.67.177])
  by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 27 Jul 2026 20:05:34 +0000 (GMT)
-Message-ID: <b5c4283e-5cdb-4594-a862-195e13e0ea56@linux.ibm.com>
-Date: Mon, 27 Jul 2026 16:05:34 -0400
+ Mon, 27 Jul 2026 20:07:45 +0000 (GMT)
+Message-ID: <b59c5391-1070-4e55-8dc2-fc5fb2f94e76@linux.ibm.com>
+Date: Mon, 27 Jul 2026 16:07:45 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] target/s390x: Make PRNO TRNG interruptible
+Subject: Re: [PATCH 0/2] target/s390x: Fix DR/D INT64_MIN / -1 host crash
 To: Ilya Leoshkevich <iii@linux.ibm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Cornelia Huck <cohuck@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>
 Cc: David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, Harald Freudenberger <freude@linux.ibm.com>
-References: <20260714191948.342204-1-iii@linux.ibm.com>
+ qemu-devel@nongnu.org
+References: <20260714190351.337923-1-iii@linux.ibm.com>
 Content-Language: en-US
 From: Eric Farman <farman@linux.ibm.com>
 Autocrypt: addr=farman@linux.ibm.com; keydata=
@@ -115,37 +115,36 @@ Autocrypt: addr=farman@linux.ibm.com; keydata=
  4HX/6RAR4Dbzry6/epWTTji+7ApzePzmJzPcuzD31ICsgT2dJ6ydxyxxXikBFJqx6BPOF+u+
  1BtKcTz1ek3I2sWvBM1V5CKaFw7iNXxS6HgS2scuAT2awKq+BQlt778/GfBWpXonfqixMvit
  y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20260714191948.342204-1-iii@linux.ibm.com>
+In-Reply-To: <20260714190351.337923-1-iii@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDE3OCBTYWx0ZWRfXxsZzizD6fga9
- +qjGY0gID/Gdu7eqS/vfb0D02wkLk14/tHM+wdQO8q20qrCFoGnHdnRr0UN2Eejp6AHmFH8gEF0
- wYTkhV1t5WZjyGyjUWdoXUA/Xuqn2Rs=
-X-Proofpoint-GUID: OewziMyDhsIrEMdv-_jMmdvD1RzHTeSa
-X-Proofpoint-ORIG-GUID: OewziMyDhsIrEMdv-_jMmdvD1RzHTeSa
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDE3OCBTYWx0ZWRfX8ATzSsE1LtDK
- 68jkfDSX3wgff8Z7JLp2YrnrSPi7GZulQcdRWnn7DzTOauzXMjxjieSRZHX/81tx6VuTBM5M2xu
- bMnrp73+Yot/RS7GxkojwzK9s6Xg8eFuGF51DaiBbb1z9ouzrP+od+0MP03rHXpTfh3FA/8T/Rl
- JgXVPilhFUsscwmXPbZiF6JzEwUEtMAM9zAIBfXZxbkN3DkHDbT6MNrj2feteNFIKa/9X9/Ak5r
- 7fBJ+Dnf+5zExhLSfl141aV/L/5nNQXAhJnK0GHKZy90bgbyD8cUwRbyQ+X/PSVGUtvKZn7mTxk
- +AOWrSZXSkRt8vcEhn9ry92x4F/PkPnppBQzpTQCwpYwkAmBjnmkYa8Gk7rWm+0Va01RFMWdqMc
- ZHm5+WE4WXKAWCUOt46QwNdbdSfR0X1VXWcSWo8OW3vsITfbQSB2X7Bbr8ql9ZTcvhrFN4zR+go
- hfMRaKZapAa8O0FCYWw==
-X-Authority-Analysis: v=2.4 cv=X5Vi7mTe c=1 sm=1 tr=0 ts=6a67ba11 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Proofpoint-ORIG-GUID: TfzpSvBfjVdwFNw8fUD6j9L1C9FEJZ0B
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDE3OCBTYWx0ZWRfXy0q162CIkFZL
+ G6M2w/+YPneN2EEmN48c2zwBJit8VL01nr0FrHZOi+2cheOGp8EW/BB+vSrj8nR3ZFrJoy/ceqf
+ LVYnUwZfP8ODF4aT4Av2HZ3dVtO75Zo=
+X-Authority-Analysis: v=2.4 cv=E/z9Y6dl c=1 sm=1 tr=0 ts=6a67ba94 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=HJKHPiU-Yrouh98TTXIA:9 a=QEXdDO2ut3YA:10
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=Ir1ACKVheVj_Ra5dIzoA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDE3OCBTYWx0ZWRfX1+vfy22ApDDK
+ yLVjuBrjIOvDfAI/CiUrgjh0QWrK9ATlW1me8JFeVOWzJO00vP8tmCcwa3xqjmbxf5BwPDD+/lO
+ y7z31DFpYYAJs9IPy7rOfwh3ilNNSLepQwZK3O5A6xt+0rBzQw04oQlX/w470BUt9E1iZXv5W5h
+ GisGcmhE1SilHsTX18+6tGRDfhetS1j099DU9z3IAj4xztlIWeaDIG11Uvg7H/Cgw1CrraXK3HT
+ uFAXpGLj1tOyZmiOMvsSirJGymbrgN6UurPdNu2tE0TFQP/jP/Iutsn71U30KDCqF8TEWAcN7d8
+ X7XE9nI8F/Ka9CJFJTvfxPrAkb2q7E4vYmRZJ1+JZhAErOKZ/364TmKsNml37B5C8VCWDaH5UJO
+ 3mC2TEwpDx0p403O/9j7bQMFaRAJXy6i8/UQlPIQM605UK0hOWe9Os20hnJGyyv3C60EeQTANRk
+ WLPjiP0kO0GQqhPVxLg==
+X-Proofpoint-GUID: TfzpSvBfjVdwFNw8fUD6j9L1C9FEJZ0B
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-27_05,2026-07-27_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 lowpriorityscore=0 phishscore=0
- priorityscore=1501 malwarescore=0 spamscore=0 suspectscore=0 bulkscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607270178
+ adultscore=0 priorityscore=1501 spamscore=0 clxscore=1015 phishscore=0
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607270178
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -172,38 +171,26 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 7/14/26 3:17 PM, Ilya Leoshkevich wrote:
-> v1: https://lore.kernel.org/qemu-devel/20260714113946.275122-1-iii@linux.ibm.com/
-> v1 -> v2: Use cpu_loop_exit_requested() (Richard).
->            Apply R-b, since the change is trivial enough.
-> 
-> 
+On 7/14/26 3:02 PM, Ilya Leoshkevich wrote:
 > Hi,
 > 
-> Christian has reported that one can make a TCG guest stuck by running
-> PRNO TRNG with a huge buffer. This series fixes this by making PRNO
-> TRNG end on cpu_loop_exit_requested().
-> 
-> Patch 1 is the fix, patch 2 is the test.
-> 
-> Cc: Harald, because this may conflict with the CPACF series.
+> Christian reported that INT64_MIN / -1 crashes the emulator itself
+> instead of the guest program. This series fixes the issue and adds a
+> test.
 > 
 > Best regards,
 > Ilya
 > 
-> 
 > Ilya Leoshkevich (2):
->    target/s390x: Make PRNO TRNG interruptible
->    tests/tcg/s390x: Test PRNO TRNG interruptibility
+>    target/s390x: Fix DR/D INT64_MIN / -1 host crash
+>    tests/tcg/s390x: Test DR overflow (INT64_MIN / -1)
 
 Thanks! Applied for 11.2
 
 > 
->   target/s390x/tcg/crypto_helper.c | 22 ++++++++---
->   tests/tcg/s390x/Makefile.target  |  1 +
->   tests/tcg/s390x/prno-trng.c      | 67 ++++++++++++++++++++++++++++++++
->   3 files changed, 85 insertions(+), 5 deletions(-)
->   create mode 100644 tests/tcg/s390x/prno-trng.c
+>   target/s390x/tcg/int_helper.c |  3 ++-
+>   tests/tcg/s390x/div.c         | 37 +++++++++++++++++++++++++++++++++++
+>   2 files changed, 39 insertions(+), 1 deletion(-)
 > 
 
 
