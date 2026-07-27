@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9ADDC531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 07:23:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EA75C531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 07:24:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woFgW-0008St-OW; Mon, 27 Jul 2026 03:23:38 -0400
+	id 1woFgn-00004z-9y; Mon, 27 Jul 2026 03:23:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <flavien.solt97@gmail.com>)
- id 1woFgF-0008Ps-LZ
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 03:23:19 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1woFgR-0008RW-6q
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 03:23:32 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <flavien.solt97@gmail.com>)
- id 1woFgD-0005pD-16
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 03:23:19 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-38e58034d05so2566002a91.2
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 00:23:16 -0700 (PDT)
+ id 1woFgO-0005rD-Gv
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 03:23:30 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-caf45fc5202so1798801a12.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 00:23:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785136995; x=1785741795; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=TogoSyYAqnOGicRD5tBvpYtkzJNUZYg4OhNGGBdHjPw=;
- b=khbg9IzcXi3FIhU8FqBK6nHqIdpYlken4kHDvuK/hnMQ8PDzFStxthCv93+qyUyfEV
- nnFEdwYszIZRimTdCgEm2Bs/TCowmFiDks0MkzF5iGOq/81DfAcvK1oVwdKgVtIV2OXY
- LKU2DFgc2O4V04gXfL5sVGuCs35seivHjmSBCTYZscVImjpGlzq981kyaf7hq/uaF9H1
- hvChz64kXTFd2ldA36wNoQ5YsMsFsR3KL4kzDzXOULZQAtyLu3p3sWLrr2q9WJTjWMKo
- Uwfc7nNL0w3rQBH3M6cREi0fI7gleC2BA+eEeM727BJClXK/O6Tlh/1bKDzVl6ro1jTM
- bjLA==
+ d=gmail.com; s=20251104; t=1785137007; x=1785741807; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Y6AE8y3sPjdOE+C6H8egNUMmPUkv1NYbHv8T3x0P4+U=;
+ b=Pnw7lSuF+FoV6AkSXW/tXQPMHBzaVLVaZuNunx8CddS858LYj4GGwsIqdo9Wle05J6
+ NK7teNXYJCTRYepEHUZNhmlBesPICEHxsLFvLT24Vf2JcxYsukFmtt89q54e+91Oo20S
+ Q2wIE3Ufx0T3ma9NPyiB/fRY+QK22h62yjEKY9zIeGX6rwlCo4n6snqRBAtRQK+G/IU2
+ SEmg5PnFMqMXKhhpJPY2h0kRk8SjZXsQpyHvfTerlbp5igz2zfVgy/BhJN6WTgxd2HxM
+ TcZgn0ihW+5NFw6XxpAtsPCWtDaFDcMi4FTmLUzeROxFSle3jXjA2XDBoqYm6RaUGGwc
+ XnyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785136995; x=1785741795;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=TogoSyYAqnOGicRD5tBvpYtkzJNUZYg4OhNGGBdHjPw=;
- b=LT5UxuOE9KXysPBUQs0WwbC2RXmlGLLvScx1NSNMT8Q4jDpCN+iaMoWl4RTdxVwrOt
- 09at20732/W/PXxdXWRPaP9m+cLKg8VO2a25QaHN6yE9hR+zz5mqC693jxyn+8eXQRYO
- RqBcwXY4zOuPHV3cK1qzizSvMtz3OC1r9JPTJ0PpPB8DX85ISYSSyciqz0zh5J7pevXD
- OFwVDzpwTK/OfaLV9NKONKNec08DGxw74lKUnI8s26uyjBM+mWSuEFynet3qucnxkCvv
- 1Hvv4e04fNsYnWaigvUV6N+fOizp5nUBECnaSTsmUATT15ZIliYa1EgEprCz5Ap0T6cE
- 4eHQ==
-X-Gm-Message-State: AOJu0YyOOkV/Qz3z6sV8/GtZ79VfA2BkAqLEZhT6kLn7UsD5nPjgRH0b
- 3ZxeQrUo+j5xwuWs3cwCvFYV01/4JQhK6lF48cDBTsijVAv7i0u+B61Z
-X-Gm-Gg: AR+sD100KdE09XBUuWpR4/RGbTC69LnciZYbx9Vvon51G3Vj/WUaOAEukeBgx2IoZBu
- TxYj1xC3PNmSP3LuUM+LnC5kDx/NyccjqdWWrog4p5vtnuxUAs/0Nd/Ce8YpAVdJ30IeAj3NyQN
- t4I7f7PH3brZyjIU/mzAWXixT+xxACTjd6lkWPoPm5SwGxOPr0JTlfr5aV2UgOP/dV8QbZuiDLC
- DA4L9h7GD2F2375mP0v0YN3b2M4Q1LIM2IvZMfBjVeoEY6CZ0VkxLEo0WhMYfct4CgHrHovQKm2
- EM/MGl+hH2MeQfJDOgeN36NlbiN0C3Xwcrmw0ft1iLLL3nVuOlMArhUUadLClz6Y4OQK+ttTy2V
- WSt183MvlJpg7QwuluCBljSFMAecghmjCzlJ+cYPjvMmpF+DFvEvzbj1CpjlU7CQerwB3q7ODJy
- FzzvpDLiqziIz6C54ZrIp8dYcmmsoAW+wXfNjk7rGchqE86D2SFunwZIlJxwTqZ5KvHEBpzCglh
- x8OF6imtcaaAIPnxog4o1auyQ==
-X-Received: by 2002:a05:6a20:729c:b0:3bf:b6e3:fbe1 with SMTP id
- adf61e73a8af0-3c67dfae843mr7512416637.55.1785136995221; 
- Mon, 27 Jul 2026 00:23:15 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785137007; x=1785741807;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Y6AE8y3sPjdOE+C6H8egNUMmPUkv1NYbHv8T3x0P4+U=;
+ b=Iv8adL5LtBUExEyEFKoD73PCRSLZ0sN3YXmNf0qaQC3LAUgoo2nQzeOdGybAAXGy5E
+ unsTumYZHMizA7mseeLrGisIXHTJBd2Eqb2c0cHTlb989OYn9sos+2BalPp7JltwJDYh
+ MZs04mgm2F0EvNmwFZMyHieLFAzwJ/BQeQ/0DiZv1YibQsSD22PYtK0SND+8taX5YMxb
+ VcQ4uU2FtRq5MkZx4Fu+uOEiniRQLuibWuhPggJXGtIJM8IiSOgjyWiyp+4SswIgubP9
+ E+6hZqI9w61t3/Xpy3IiMgV50Fc8V8Ip+s1SLwIqAubdyOQuBfEXIfpD+FloKESIUf24
+ uqvQ==
+X-Gm-Message-State: AOJu0YzxuM69JYtWcotHHB+a5nqcLaE6PflNB1QVfEZqOXRGmmkZfBhn
+ GtY879hIvTunI+i4pR9Ley5IOknX3yE5LVloAnX9jv+5kewj3jW0Rl7w
+X-Gm-Gg: AR+sD11fF1q5zuU7MfVsz4R/csUf9J4rsZ56T4ID5G50xdic9d13lP+NrjBnmHLB4YC
+ HzFfy/bpuBuCA1tsyzafRTOJ/biO87WsJUDCcNogt7IqUw0vcebi/kOgOKvc+mqninsHx6jPTHG
+ FHNsCXiIdsEVLZbcMhsJYgRztutn9lCyoA70bxocyqNHAfBY58/lusP91xxPiZ2+VBzVY5uz2FQ
+ +YRkWndXYlMrOSBsdKvS3rYjP43Fmey3SMsGu0+jpdyW/EsD3nNSL7NYm8C6n8RjCIE3bisMjwP
+ kAGI7TDNU6yUovUB0eQbHbQBpysiEuGbefKJhuMncObnAjp2UBEr2cvb5j8E2qiDpxkmnVx1lbw
+ q8IY+LdSNN6QNokuFHNePikdcoORib5E2r92QNexNK6iQJhu49lS6jVdg0iMUU9v7vet2Ko97Tq
+ qYkMOqvUYQFvwxt+CmQALQbmjf0ttVLWIfaPn/m+qY9R0zoAXo7JBrAFxGSVLBUxJRyx9Eyfy+y
+ mHi/u2asjUTMG3lt4glI4KFVA==
+X-Received: by 2002:a05:6a21:d8a:b0:3b4:9171:2573 with SMTP id
+ adf61e73a8af0-3c67df206cbmr7646964637.37.1785137007033; 
+ Mon, 27 Jul 2026 00:23:27 -0700 (PDT)
 Received: from flavien-macm3.ddns.comp.nus.edu.sg ([137.132.220.135])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-314bc419c52sm28481032eec.10.2026.07.27.00.23.11
+ 5a478bee46e88-314bc419c52sm28481032eec.10.2026.07.27.00.23.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 00:23:14 -0700 (PDT)
+ Mon, 27 Jul 2026 00:23:26 -0700 (PDT)
 From: Flavien Solt <flavien.solt97@gmail.com>
-Subject: [PATCH v4 0/3] riscv-iommu: always send MRIF notice MSI
-Date: Mon, 27 Jul 2026 15:22:56 +0800
-Message-Id: <20260727-qemu-mrif-v4-v4-0-73e0890ad395@gmail.com>
+Date: Mon, 27 Jul 2026 15:22:59 +0800
+Subject: [PATCH v4 3/3] tests/qtest: add RISC-V IOMMU MRIF notice tests
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWM0Q6CMAxFf4X02SZkLIL+ivFhK0VqwtRWiAnh3
- 9nw8Zzce1YwVmGDa7WC8iImr5TBnyqgMaQHo/SZwdXuXLeuxQ9PM04qAy4eqeOGmuC7eCHIl7f
- yIL8jd7v/2eb4ZPqWRlnEYIxRQ6KxqKOWQ0XDtu239ijrjwAAAA==
-X-Change-ID: 20260727-qemu-mrif-v4-c8e3c3a48b9c
+Message-Id: <20260727-qemu-mrif-v4-v4-3-73e0890ad395@gmail.com>
+References: <20260727-qemu-mrif-v4-v4-0-73e0890ad395@gmail.com>
+In-Reply-To: <20260727-qemu-mrif-v4-v4-0-73e0890ad395@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, Andrew Jones <andrew.jones@oss.qualcomm.com>, 
  Tao Tang <tangtao1634@phytium.com.cn>, Palmer Dabbelt <palmer@dabbelt.com>, 
@@ -85,18 +84,17 @@ Cc: qemu-riscv@nongnu.org, Andrew Jones <andrew.jones@oss.qualcomm.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
  Chao Liu <chao.liu@processmission.com>, Fabiano Rosas <farosas@suse.de>, 
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Nutty Liu <nutty.liu@hotmail.com>, Flavien Solt <flavien.solt97@gmail.com>, 
- qemu-stable@nongnu.org
+ Nutty Liu <nutty.liu@hotmail.com>, Flavien Solt <flavien.solt97@gmail.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1785136991; l=2062;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1785136991; l=5610;
  i=flavien.solt97@gmail.com; s=qemu-mrif-v4-gmail; h=from:subject:message-id;
- bh=ZybOj1O2n/iMaiUtLO7CVeo51mOtVb7T1dr8njt9H+c=;
- b=v55VSux4NAkRWFcaah0qsnr3O9xJBXlZBXL37EI3O4qRJkBrtEnxDBmoPLgYq/cpv9/zm8ELq
- 56i4jdYXU1wAe1D/fY56Jx0EBOOlF6+udwS5k1Bfc5L+pSyt5jt7fgl
+ bh=4t7hBi12kQx0si3QEEq84Twv7XWE8/6T8sOjpFerZr0=;
+ b=wzoZ0OFvX/7Vog8nEJRorFelzPdlMMrBL/w2dJX6yd+snee10vYgveoeDDoZyFnddoEx9irc8
+ vRRmXyb7ZXFCskMCjL4+W5pry8Jf4PNOA2KuenvUxX+1UdCfwXlTXW0
 X-Developer-Key: i=flavien.solt97@gmail.com; a=ed25519;
  pk=wEVvqF5SMWVnTyKNb8WAo78S30Q6giJmU/VisghJRtI=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=flavien.solt97@gmail.com; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=flavien.solt97@gmail.com; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,7 +102,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,57 +118,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The AIA specification requires an IOMMU to send the configured notice
-MSI after storing an MSI to an MRIF even when the destination interrupt
-is disabled. QEMU currently reads the MRIF interrupt-enable word and
-returns without sending the notice when the matching bit is clear.
+Exercise MRIF-mode MSI writes through iommu-testdev with the destination
+interrupt-enable bit both clear and set. Each case requires the pending
+bit to be stored plus the configured notice ID to reach guest memory.
 
-Patch 1 lets iommu-testdev select an MSI payload and supplies its PCI
-requester ID. Patch 2 removes the invalid enable-bit gate. Patch 3 checks
-both enable states through qemu-system-riscv64.
-
-The complete RISC-V IOMMU qtest suite passes:
-
-  MRIF notice: enable=0 pending=0x20 notice=0x12d
-  MRIF notice: enable=1 pending=0x20 notice=0x12d
-  6/6 tests passed
-
-V3 used MIME transfer encoding to protect the patch body, but lore still
-received five hard-wrapped hunk headers. This revision resends unchanged
-code through b4 and carries the review tags received on v1 and v3.
-
-Changes in v4:
-  - Resend through b4 after the v3 lore copy remained line-wrapped.
-  - Restore Daniel Henrique Barboza's Reviewed-by tag on patch 2.
-  - Add review and test tags from Nutty Liu and Chao Liu.
-
-Changes in v3:
-  - Attempt to protect the patch body with MIME transfer encoding.
-  - Add Tao Tang's Reviewed-by tag to patch 1.
-
-Changes in v2:
-  - Wrap the fix commit message.
-  - Keep the existing notification comment.
-  - Add deterministic IE-clear and IE-set qtests.
+The enable-clear case regresses the notice suppression fixed by the
+previous patch. The enable-set case provides a control for the existing
+path.
 
 Signed-off-by: Flavien Solt <flavien.solt97@gmail.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
 ---
-Flavien Solt (3):
-      hw/misc/iommu-testdev: support PCI MSI test writes
-      hw/riscv/riscv-iommu.c: always send MRIF notice MSI
-      tests/qtest: add RISC-V IOMMU MRIF notice tests
+ tests/qtest/iommu-riscv-test.c | 102 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 102 insertions(+)
 
- hw/misc/iommu-testdev.c         |  14 +++++-
- hw/riscv/riscv-iommu.c          |  13 -----
- include/hw/misc/iommu-testdev.h |   1 +
- tests/qtest/iommu-riscv-test.c  | 102 ++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 115 insertions(+), 15 deletions(-)
----
-base-commit: 499039798cdad7d86b787fec0eaf1da4151c0f05
-change-id: 20260727-qemu-mrif-v4-c8e3c3a48b9c
+diff --git a/tests/qtest/iommu-riscv-test.c b/tests/qtest/iommu-riscv-test.c
+index 2638024..85f79ea 100644
+--- a/tests/qtest/iommu-riscv-test.c
++++ b/tests/qtest/iommu-riscv-test.c
+@@ -14,6 +14,7 @@
+ #include "hw/pci/pci_regs.h"
+ #include "hw/misc/iommu-testdev.h"
+ #include "hw/riscv/riscv-iommu-bits.h"
++#include "libqos/qos-iommu-testdev.h"
+ #include "libqos/qos-riscv-iommu.h"
+ #include "libqos/riscv-iommu.h"
+ 
+@@ -26,6 +27,13 @@
+ #define RISCV_BUS_MMIO_LIMIT       0x80000000
+ #define RISCV_ECAM_ALLOC_PTR       0x30000000
+ 
++#define RISCV_MRIF_MSI_IOVA        0x00000000fee00000ull
++#define RISCV_MRIF_MSI_PT_GPA      (QRIOMMU_SPACE_OFFS + 0x00030000ull)
++#define RISCV_MRIF_BASE_GPA        (QRIOMMU_SPACE_OFFS + 0x00031000ull)
++#define RISCV_MRIF_NOTICE_GPA      (QRIOMMU_SPACE_OFFS + 0x00032000ull)
++#define RISCV_MRIF_INTID           5u
++#define RISCV_MRIF_NOTICE_ID       0x12du
++
+ typedef struct RiscvIommuTestState {
+     QTestState *qts;
+     QGenericPCIBus gbus;
+@@ -264,6 +272,96 @@ static void test_riscv_iommu_nested(void)
+     run_riscv_iommu_translation(&cfg);
+ }
+ 
++static void riscv_iommu_setup_mrif_context(RiscvIommuTestState *state)
++{
++    uint64_t dc_addr;
++    uint64_t msiptp;
++    uint64_t pte0;
++    uint64_t pte1;
++
++    qtest_memset(state->qts, QRIOMMU_SPACE_OFFS + QRIOMMU_DDT_BASE, 0,
++                 0x1000);
++    qtest_memset(state->qts, RISCV_MRIF_MSI_PT_GPA, 0, 0x1000);
++    qtest_memset(state->qts, RISCV_MRIF_BASE_GPA, 0, 0x1000);
++    qtest_memset(state->qts, RISCV_MRIF_NOTICE_GPA, 0, 4);
++
++    dc_addr = QRIOMMU_SPACE_OFFS + QRIOMMU_DDT_BASE +
++              state->testdev->devfn * sizeof(struct riscv_iommu_dc);
++
++    msiptp = (RISCV_MRIF_MSI_PT_GPA >> 12) |
++             ((uint64_t)RISCV_IOMMU_DC_MSIPTP_MODE_FLAT << 60);
++
++    qtest_writeq(state->qts, dc_addr + 0, RISCV_IOMMU_DC_TC_V);
++    qtest_writeq(state->qts, dc_addr + 8, 0);
++    qtest_writeq(state->qts, dc_addr + 16, 0);
++    qtest_writeq(state->qts, dc_addr + 24, 0);
++    qtest_writeq(state->qts, dc_addr + 32, msiptp);
++    qtest_writeq(state->qts, dc_addr + 40, 0);
++    qtest_writeq(state->qts, dc_addr + 48, RISCV_MRIF_MSI_IOVA >> 12);
++    qtest_writeq(state->qts, dc_addr + 56, 0);
++
++    pte0 = RISCV_IOMMU_MSI_PTE_V |
++           ((uint64_t)RISCV_IOMMU_MSI_PTE_M_MRIF << 1) |
++           ((RISCV_MRIF_BASE_GPA >> 9) << 7);
++    pte1 = ((RISCV_MRIF_NOTICE_GPA >> 12) << 10) | RISCV_MRIF_NOTICE_ID;
++
++    qtest_writeq(state->qts, RISCV_MRIF_MSI_PT_GPA, pte0);
++    qtest_writeq(state->qts, RISCV_MRIF_MSI_PT_GPA + 8, pte1);
++
++    qriommu_program_regs(state->qts, state->iommu_base);
++}
++
++static void run_riscv_iommu_mrif_notice(bool enable_bit)
++{
++    RiscvIommuTestState state = { 0 };
++    uint64_t pending;
++    uint64_t enabled;
++    uint32_t notice;
++    uint32_t dma_result;
++
++    if (!riscv_iommu_test_setup(&state)) {
++        return;
++    }
++
++    riscv_iommu_check(state.qts, state.iommu_base, QRIOMMU_TM_BARE);
++    riscv_iommu_setup_mrif_context(&state);
++
++    enabled = enable_bit ? (1ull << RISCV_MRIF_INTID) : 0;
++    qtest_writeq(state.qts, RISCV_MRIF_BASE_GPA + 8, enabled);
++    qpci_io_writel(state.testdev, state.testdev_bar, ITD_REG_DMA_WRITE_VAL,
++                   RISCV_MRIF_INTID);
++
++    dma_result = qos_iommu_testdev_trigger_dma(
++        state.testdev, state.testdev_bar, RISCV_MRIF_MSI_IOVA,
++        RISCV_MRIF_NOTICE_GPA, DMA_LEN, qriommu_build_dma_attrs());
++
++    pending = qtest_readq(state.qts, RISCV_MRIF_BASE_GPA);
++    notice = qtest_readl(state.qts, RISCV_MRIF_NOTICE_GPA);
++
++    g_test_message("MRIF notice: enable=%u pending=0x%" PRIx64
++                   " notice=0x%x", enable_bit, pending, notice);
++
++    /*
++     * Interrupt remapping consumes the original DMA write; the generic
++     * test device cannot read it back from the supplied physical address.
++     */
++    g_assert_cmpuint(dma_result, ==, ITD_DMA_ERR_MISMATCH);
++    g_assert_cmpuint(pending & (1ull << RISCV_MRIF_INTID), !=, 0);
++    g_assert_cmpuint(notice, ==, RISCV_MRIF_NOTICE_ID);
++
++    riscv_iommu_test_teardown(&state);
++}
++
++static void test_riscv_iommu_mrif_notice_enable_clear(void)
++{
++    run_riscv_iommu_mrif_notice(false);
++}
++
++static void test_riscv_iommu_mrif_notice_enable_set(void)
++{
++    run_riscv_iommu_mrif_notice(true);
++}
++
+ int main(int argc, char **argv)
+ {
+     g_test_init(&argc, &argv, NULL);
+@@ -275,5 +373,9 @@ int main(int argc, char **argv)
+                    test_riscv_iommu_g_stage_only);
+     qtest_add_func("/iommu-testdev/translation/ns-nested",
+                    test_riscv_iommu_nested);
++    qtest_add_func("/iommu-testdev/mrif-notice/enable-clear",
++                   test_riscv_iommu_mrif_notice_enable_clear);
++    qtest_add_func("/iommu-testdev/mrif-notice/enable-set",
++                   test_riscv_iommu_mrif_notice_enable_set);
+     return g_test_run();
+ }
 
-Best regards,
---  
-Flavien Solt <flavien.solt97@gmail.com>
+-- 
+2.54.0
 
 
