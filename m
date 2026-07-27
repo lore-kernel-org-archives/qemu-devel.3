@@ -4,62 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 253EFC531FC
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 07:17:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 660C8C531FC
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 07:22:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woFa7-0007B4-Kq; Mon, 27 Jul 2026 03:17:01 -0400
+	id 1woFep-0007yp-Mn; Mon, 27 Jul 2026 03:21:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1woFa4-0007AK-K6
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 03:16:57 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1woFef-0007xv-EW
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 03:21:42 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1woFa1-0005Gv-DR
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 03:16:56 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66R7GiQF016103
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 27 Jul 2026 16:16:44 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=Gw00j+Sqnm5SYOd5d7QCgko94cwJtubUF2iZbkqT2IA=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1785136604; v=1;
- b=gY3j/kWS2o2o1oI81ElHzR0g87JsR7dS6jrXIapYn7uaAFZAiTGCxN+lC9s1KZsN
- g86sWchp0O+1Loy4q6TicKfhYltrRIET/xVMFDvY3Mddsl+dwN9Zlb3dRE9AajWS
- PMVEWyxzq3/mFP7yCHufXfMHe3ZlceOcf6CPPZViWC8IDmKRDBdF2d4AFHc1f0j2
- IE61GOnyQJR7QU7CAYKJKhehMeDwTw3h+tUofB85BxKubJEWOc4Jp/4X6CCEUbPY
- EOm8d27O/lTcnfFymFHFbxwM0gIWh6N9NTxEBFg5rXCqqIpEfcTXghHUcmSz2jtP
- 0YR9ThdQBZWcYkgGhTbzAQ==
-Message-ID: <8d31459e-267b-48a9-bcc5-733078743304@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 27 Jul 2026 16:16:44 +0900
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1woFec-0005kP-7E
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 03:21:40 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66R1fcqD2416949
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 07:21:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ n9Aos/jywAp1KiMqxdiE8FS02FkmBZsX9G9dQPrcuvQ=; b=EL2iPqfyrvykxEZa
+ MFiIQ+lSCqpY0dq6MTGp18qPgDTC82WXawL2HenxIA5MlUO15NozzHXVbLLpfkvi
+ 8MaMguk/OOYpkbFmN9yrJcWP8M/m1PPSkii9gtLTmd42ol9mQ5LbcCsUK+ekAkPQ
+ 3t5bwh/Wd1sUOXBgzyjN2jCMYKUzkrYOSeKHliskf/RBkUf311JSJ8L24A2wqtYx
+ NstW3BXVnO3J3WCVZAJ3Uf/u8y8gwxHjwzVueiJo2/l3rMYbZQE/Tm+Q31ppiT5M
+ tUHFcoJ/2m4xoN5b7sSEf+I3PoOFP37DRL5e1qbqGVZj0WNjZr1pstUTxXUOeOqE
+ l4M3QQ==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fngyst6c5-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 07:21:35 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-5174a236220so27540011cf.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 00:21:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1785136894; x=1785741694; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=n9Aos/jywAp1KiMqxdiE8FS02FkmBZsX9G9dQPrcuvQ=;
+ b=gGHRlqeublu2dvm7U8ha5HLwqUNuOnX5COqKkicGx/08GvRhoG7C/hYokJzFyUnkF/
+ CFQ84PzxY/9TrWsatKfb+8xB4ZcXrYoo5qSnbLZ61G0OgJNcAC8OkQTHSrCjmmsw/Zl6
+ +Nx4utuJyAwN5W7TBpSLznBPE2GlK6Ggn8gaxAOYybrGdnXcjhRmTT7BFvhW+Nck7U82
+ leCqVjjhT5LLlHseW5ZQIemI1sF0hM5gj1jOfJNeYj14DtiGhaUCZb1GkkHvYm0q/YhN
+ bSprPqscE3L+LyXxlVq95BKgfAJv8r8EQatSNbL1wbTtVBa8n84Ns4foONDVxzGB5fQl
+ y5QQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785136895; x=1785741695;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=n9Aos/jywAp1KiMqxdiE8FS02FkmBZsX9G9dQPrcuvQ=;
+ b=I6DktzVRgu7oUxFSV6hNlFl+VzGPnP3BHOfXI0Qw5Y99RpOa5oGljZJVckDyjF/Dfk
+ q8IwLrD1Yw3iyptI9u07JU8xYggRDQu6zygQCAjVZaRLMF2OoBC1Ahg2KEroto7+b1GA
+ /SLzGhBiBTxNKHhbzmDT25kxg0OWWuzVBj0FQJXBgBIX30LfxEGYC1UN5kzGjuEdnNsr
+ 0GBxSywbkq7ayWvHnE/Mn52rn4MbRhHuH/22wMtxUuDiDUmm1+SNmHA9T92+fBPdBoEr
+ P5ZN1PisMNTXiCuX74pUMYq1axxKh8F+yWeVtz7I4XrLThmtnPA+S+1vzIAyAqRNRqIw
+ GPEg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrzNZxuJEleIt3kXZ5kkGPyyb2I5O6Z1rJ85i0JTR1WjXSGLen1G2Wofc5UW0HwpHk/vAGgFV5I2arP@nongnu.org
+X-Gm-Message-State: AOJu0Yx3Qvla/tWy7eS0Uu0NEm4aRT9q2AKKucZJH/lW2Jvxd7h2Zp26
+ bot0C9vModyY2yADiq3LfFRCapK4PJ6YJhwRu9Z7k0eR433rwkAWdPLzbgIdJ7qTRq9oHfLiYqj
+ WjAmnwjwJIwcNDu4bCcjp0M1I2nFxyfASqEBhLRRZaFMtapiS4Z2DFCbU5A==
+X-Gm-Gg: AR+sD122G/X1oZ4KrI/09eSEf/hgAPp0ZDEgEd8MPAwFKvJBEcQPn2jc10fyZ4HEz8I
+ bd3hAO1J4yNTBX6xYQdUQgqYZVZfksdW8rFwFGFlH3ju49jAJ/NcXeFLbcQK818Dr2AsIOsA/c7
+ t56mr1LTWhA3gLPyW/WELk5I9aUPSSQA24sP/rtWgb6z8IE9h9HvfvsXM67h9hCvbpeoqvZHolw
+ n58NWvOOevi5HnicAfyLOeEzgiRXlkKtUk0bZzKR5OkEDoLMY8UYMvTWl9s2adbuNsCaycwnDPq
+ RXdnB8YUvHU1s6IV7KL8246orbtz8yG5XS9gD9nowsjyUhEK3v4gOCxTBO2/IbD6CIkNySrapfB
+ +KMtC7JlMhtL9QwjdxJgmQMqgi8f0HPyQIuS/9RMnaYy/kCQb3R8=
+X-Received: by 2002:ac8:7d16:0:b0:51c:92a0:b2cb with SMTP id
+ d75a77b69052e-529a84cd3d2mr70090321cf.26.1785136894607; 
+ Mon, 27 Jul 2026 00:21:34 -0700 (PDT)
+X-Received: by 2002:ac8:7d16:0:b0:51c:92a0:b2cb with SMTP id
+ d75a77b69052e-529a84cd3d2mr70090121cf.26.1785136894171; 
+ Mon, 27 Jul 2026 00:21:34 -0700 (PDT)
+Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-496b4ee0e91sm201630615e9.4.2026.07.27.00.21.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 Jul 2026 00:21:33 -0700 (PDT)
+Message-ID: <d5f540ee-0d6b-46f7-b3d0-6405bc826eba@oss.qualcomm.com>
+Date: Mon, 27 Jul 2026 09:21:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 03/11] igb: Add migration BAR with state machine
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
- "Michael S . Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>
-References: <20260727053935.1392269-1-clg@redhat.com>
- <20260727053935.1392269-4-clg@redhat.com>
+Subject: Re: [PATCH v2 08/12] hw/hexagon: fix machine->fdt leak in qom-test
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
+ Jonathan Cameron <jic23@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Wei Liu <wei.liu@kernel.org>,
+ linux-cxl@vger.kernel.org, Brian Cain <brian.cain@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+References: <20260727-fix2-v2-0-d0c4831ed7ea@redhat.com>
+ <20260727-fix2-v2-8-d0c4831ed7ea@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260727053935.1392269-4-clg@redhat.com>
+In-Reply-To: <20260727-fix2-v2-8-d0c4831ed7ea@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDA3MiBTYWx0ZWRfXxyg1laA1BpoZ
+ YKRAsHqlIX0eKrLIiprGCNLa4za8jgxXJ/H9xjLmfaV5ed6Fq7YMsni4LLltjHGkfBaDNZU4qAy
+ zqBhfCVaWaso/6PO3ZuR0uU34Mky7cUG4QtSBwjt+XCWPIojArwY2tOzpxUXA/QgcM2xF24uMFP
+ nRueIorzqvMiAoxGVVrMarHhruIefe09eyjUWNgbWPXakiWDXLyXwIKNoXE0OWzC5VsOXNCMTaY
+ +KGvJHuiQjr5stS8pX3DSDJMUwLiUuB3K6xW2W+gbyedavVcFJMoGc6r/MsjNa2QViF3MQJxMJm
+ hySstcCNpd7Y75+7BK9LIeq8lR0uS7zpSExjhw7QQvHZhBJRlwTQbn6aaG/f6A6MpPBCtZQaLdY
+ 5KMlaWD0Ha015ZPizn4W9yAFAJkCP7d/8z17x1WnUyUg71r2CiIC4IvCQO8ktRE3/Qykoe6eS/j
+ iVRrz+An4EUxdwyb15A==
+X-Proofpoint-GUID: tGb5uolCEjvZ_8OqummJqlI6DvCd62ul
+X-Authority-Analysis: v=2.4 cv=DNG/JSNb c=1 sm=1 tr=0 ts=6a6706ff cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=CN8BiiQClkPCgTBgyyEA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDA3MiBTYWx0ZWRfX7rRx+dJ7NxJe
+ nrYwqihAD26KvX61HT1/5VVe2yRN+Gjs49XEVieTdQHO0dWGuKD1RvSy/T4uXhWckY5xH4u/l5w
+ HACf48Haz8h1lehaTTNbGlTh2ETkDQ0=
+X-Proofpoint-ORIG-GUID: tGb5uolCEjvZ_8OqummJqlI6DvCd62ul
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-27_01,2026-07-24_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 clxscore=1015 malwarescore=0 bulkscore=0 adultscore=0
+ suspectscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607270072
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,578 +169,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2026/07/27 14:39, Cédric Le Goater wrote:
-> When x-vf-migration=on, register a 64KB migration BAR (BAR2) on each
-> emulated VF. This BAR implements a VFIO-like migration state machine
-> that the igb-vfio-pci variant driver uses to serialize/deserialize VF
-> device state during live migration.
+On 26/7/26 22:44, Marc-AndrÃ© Lureau wrote:
+> virt_instance_init() built the FDT unconditionally at QOM
+> instance-init time, so simply instantiating the object (e.g. via
+> qom-test's introspection, without ever realizing the machine) leaked
+> the 1MB FDT blob: machine_finalize() does not free machine->fdt.
 > 
-> The migration register region is laid out as:
+> Other boards (arm/virt, riscv/virt, ...) build the FDT lazily from
+> their MachineClass::init callback, which only runs when the machine
+> is actually selected to boot. Do the same here by moving create_fdt()
+> into virt_init().
 > 
->    0x000  DEVICE_STATE       (RW)  - migration state machine control
->    0x004  MIG_STATUS         (RO)  - status flags (DATA_AVAIL, ERROR,
->                                      QUIESCED) + error code in [15:8]
->    0x008  MIG_CAPS           (RO)  - advertised capabilities
->    0x00C  MIG_VERSION        (RO)  - interface version
->    0x010  DATA_SIZE          (RW)  - max state size at reset, actual after save
->    0x014  DATA_XFER          (WO)  - trigger DMA save or DMA load
->    0x018  DATA_BUF_ADDR_LO   (WO)  - low 32 bits of state DMA buffer
->    0x01C  DATA_BUF_ADDR_HI   (WO)  - high 32 bits of state DMA buffer
-> 
-> State data is transferred via a driver-provided DMA buffer. The driver
-> writes its PF DMA address to DATA_BUF_ADDR_LO/HI and triggers the
-> transfer with DATA_XFER. The device DMA-writes the serialized state on
-> save and DMA-reads it on restore. DMA is performed through the PF
-> device (pcie_sriov_get_pf) because VFIO owns the VF's IOMMU domain.
-> 
-> VF state serialization is added in the next patch.
-> 
-> Assisted-by: Claude
-> Suggested-by: Alex Williamson <alex@shazbot.org>
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> Fixes: 88a8bc7f43ff ("hw/hexagon: Define hexagon "virt" machine")
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   docs/system/devices/igb-migration.rst |  43 ++++
->   hw/net/igb_common.h                   |  11 +
->   hw/net/igb_migration.h                |  52 +++++
->   hw/net/igb_migration.c                | 293 ++++++++++++++++++++++++++
->   hw/net/igbvf.c                        |  18 +-
->   hw/net/trace-events                   |   8 +
->   6 files changed, 416 insertions(+), 9 deletions(-)
-> 
-> diff --git a/docs/system/devices/igb-migration.rst b/docs/system/devices/igb-migration.rst
-> index 017b47c4544e..04c44ef072af 100644
-> --- a/docs/system/devices/igb-migration.rst
-> +++ b/docs/system/devices/igb-migration.rst
-> @@ -18,3 +18,46 @@ feature flags indicating which migration features are supported.
->   
->   This feature is experimental and the ``x-`` prefix indicates the interface
->   may change.
-> +
-> +Migration BAR layout
-> +~~~~~~~~~~~~~~~~~~~~
-> +
-> +The migration BAR (BAR2, 64 KB) implements a VFIO-like state machine with
-> +the following register layout::
-> +
-> +  Offset  Name                Access  Description
-> +  0x000   DEVICE_STATE        RW      Migration state (RUNNING=2, STOP=1,
-> +                                      STOP_COPY=3, RESUMING=4, PRE_COPY=5)
-> +  0x004   STATUS              RO      Flags[2:0]: DATA_AVAIL, ERROR, QUIESCED
-> +                                      Error code[15:8] (when ERROR is set)
-> +  0x008   CAPS                RO      F_STATE, F_DIRTY, max_ranges[11:8],
-> +                                      pgsizes[31:12]
-> +  0x00C   VERSION             RO      Interface version (1)
-> +  0x010   DATA_SIZE           RW      Max state size at reset, actual after save
-> +  0x014   DATA_XFER           WO      Trigger DMA save or DMA load
-> +  0x018   DATA_BUF_ADDR_LO    WO      Low 32 bits of state DMA buffer address
-> +  0x01C   DATA_BUF_ADDR_HI    WO      High 32 bits of state DMA buffer address
-> +
-> +State transitions follow the VFIO migration state machine: the driver
-> +writes to ``DEVICE_STATE`` to move between states and reads ``STATUS``
-> +to check for completion.
-> +
-> +State data is transferred via a driver-provided DMA buffer. The driver
-> +writes its PF DMA address to ``DATA_BUF_ADDR_LO/HI`` and triggers the
-> +transfer with ``DATA_XFER``. The device DMA-writes the serialized state
-> +on save and DMA-reads it on restore. DMA is performed through the PF
-> +device because VFIO owns the VF's IOMMU domain.
-> +
-> +The state blob is a versioned sequence of register (offset, value)
-> +pairs.
-> +
-> +When ``STATUS`` has the ``ERROR`` bit set, bits [15:8] contain an error
-> +code identifying the failure::
-> +
-> +  0  (none)          No error
-> +  1  BAD_MAGIC       State blob magic mismatch
-> +  2  BAD_VERSION     State blob version mismatch
-> +  3  BAD_SIZE        State blob too large or empty
-> +  4  BAD_VFN         VF number mismatch (source != destination)
-> +  5  DMA_FAILED      DMA transfer to/from state buffer failed
-> +  6  NO_BUFFER       DATA_XFER without buffer address set
-> diff --git a/hw/net/igb_common.h b/hw/net/igb_common.h
-> index b316a5bcfa5c..01816e002c23 100644
-> --- a/hw/net/igb_common.h
-> +++ b/hw/net/igb_common.h
-> @@ -27,6 +27,7 @@
->   #define HW_NET_IGB_COMMON_H
->   
->   #include "igb_regs.h"
-> +#include "igb_migration.h"
->   
->   #define TYPE_IGBVF "igbvf"
->   
-> @@ -36,6 +37,16 @@
->   #define IGBVF_MMIO_SIZE     (16 * 1024)
->   #define IGBVF_MSIX_SIZE     (16 * 1024)
->   
-> +struct IgbVfState {
-> +    PCIDevice parent_obj;
-> +    uint16_t vfn;
-> +
-> +    MemoryRegion mmio;
-> +    MemoryRegion msix;
-> +
-> +    IgbVfMigState mig;
-> +};
-> +
->   #define defreg(x) x = (E1000_##x >> 2)
->   #define defreg_indexed(x, i) x##i = (E1000_##x(i) >> 2)
->   #define defreg_indexeda(x, i) x##i##_A = (E1000_##x##_A(i) >> 2)
-> diff --git a/hw/net/igb_migration.h b/hw/net/igb_migration.h
-> index e79892436b21..739a189810b0 100644
-> --- a/hw/net/igb_migration.h
-> +++ b/hw/net/igb_migration.h
-> @@ -32,12 +32,64 @@
->   #define IGB_MIG_CAP_OFF_BARID  8    /* offset within cap for BAR id */
->   #define IGB_MIG_CAP_OFF_FLAGS  12   /* offset within cap for feature flags */
->   
-> +/*
-> + * Maximum serialized VF state size, sized to hold all per-VF
-> + * registers plus TX context descriptors with room to spare.
-> + */
-> +#define IGB_VF_STATE_MAX_SIZE   4096
-> +
-> +/*
-> + * Migration BAR register offsets.
-> + */
-> +#define IGB_MIG_DEVICE_STATE        0x000
-> +#define IGB_MIG_STATUS              0x004
-> +#define IGB_MIG_CAPS                0x008
-> +#define IGB_MIG_VERSION             0x00C
-> +#define IGB_MIG_DATA_SIZE           0x010
-> +#define IGB_MIG_DATA_XFER           0x014
-> +#define IGB_MIG_DATA_BUF_ADDR_LO    0x018
-> +#define IGB_MIG_DATA_BUF_ADDR_HI    0x01C
-> +
-> +/* DEVICE_STATE values - mirrors VFIO migration states */
-> +#define IGB_MIG_STATE_ERROR         0
-> +#define IGB_MIG_STATE_STOP          1
-> +#define IGB_MIG_STATE_RUNNING       2
-> +#define IGB_MIG_STATE_STOP_COPY     3
-> +#define IGB_MIG_STATE_RESUMING      4
-> +#define IGB_MIG_STATE_PRE_COPY      5
-> +
-> +/* MIG_STATUS bits */
-> +#define IGB_MIG_STATUS_DATA_AVAIL   (1u << 0)
-> +#define IGB_MIG_STATUS_ERROR        (1u << 1)
-> +
-> +/* MIG_STATUS error codes in bits [15:8], valid when ERROR bit is set */
-> +#define IGB_MIG_STATUS_ERR_SHIFT    8
-> +#define IGB_MIG_STATUS_ERR_MASK     (0xffu << IGB_MIG_STATUS_ERR_SHIFT)
-> +#define IGB_MIG_STATUS_ERR(code)    (IGB_MIG_STATUS_ERROR | \
-> +                                     ((uint32_t)(code) << IGB_MIG_STATUS_ERR_SHIFT))
-> +
-> +#define IGB_MIG_ERR_BAD_MAGIC       1
-> +#define IGB_MIG_ERR_BAD_VERSION     2
-> +#define IGB_MIG_ERR_BAD_SIZE        3
-> +#define IGB_MIG_ERR_BAD_VFN         4
-> +#define IGB_MIG_ERR_DMA_FAILED      5
-> +#define IGB_MIG_ERR_NO_BUFFER       6
-> +
->   typedef struct IgbVfMigState {
->       bool migration_cap;
->       MemoryRegion mig_bar;
-> +
-> +    uint32_t mig_state;
-> +    uint8_t mig_error;
-> +    uint8_t mig_data[IGB_VF_STATE_MAX_SIZE];
-> +    uint32_t mig_data_size;
-> +    uint64_t mig_data_buf_addr;
->   } IgbVfMigState;
->   
-> +typedef struct IgbVfState  IgbVfState;
->   void igb_pf_init_migration_bar(PCIDevice *dev);
->   bool igbvf_add_migration_cap(PCIDevice *dev, Error **errp);
-> +void igbvf_mig_bar_init(IgbVfState *s);
-> +void igbvf_mig_state_reset(IgbVfState *s);
->   
->   #endif
-> diff --git a/hw/net/igb_migration.c b/hw/net/igb_migration.c
-> index 794f1217d3e5..a0d044815fd9 100644
-> --- a/hw/net/igb_migration.c
-> +++ b/hw/net/igb_migration.c
-> @@ -7,9 +7,13 @@
->    */
->   
->   #include "qemu/osdep.h"
-> +#include "qemu/log.h"
->   #include "hw/pci/pci_device.h"
->   #include "hw/pci/pcie.h"
-> +#include "net/eth.h"
-> +#include "net/net.h"
->   #include "igb_common.h"
-> +#include "igb_core.h"
->   #include "igb_migration.h"
->   #include "trace.h"
->   
-> @@ -70,3 +74,292 @@ bool igbvf_add_migration_cap(PCIDevice *dev, Error **errp)
->       trace_igbvf_mig_cap_add(pcie_sriov_vf_number(dev), offset);
->       return true;
->   }
-> +
-> +/*
-> + * =====================================================================
-> + * Per-VF state serialization / deserialization
-> + * =====================================================================
-> + */
-> +
-> +static int igb_core_vf_save_state(IgbVfState *s,
-> +                                  void *buf, size_t buf_size)
-> +{
-> +    int size = 0;
-> +
-> +    trace_igbvf_mig_save_state(s->vfn, size);
-> +    return size;
-> +}
-> +
-> +static int igb_core_vf_max_data_size(IgbVfState *s)
-> +{
-> +    int size = igb_core_vf_save_state(s, NULL, 0);
-> +
-> +    g_assert(size > 0 && size <= IGB_VF_STATE_MAX_SIZE);
+>   hw/hexagon/virt.c | 9 +--------
+>   1 file changed, 1 insertion(+), 8 deletions(-)
 
-Enabling x-vf-migration aborts QEMU during realization: the state-save 
-stub returns zero and igb_core_vf_max_data_size() asserts that the 
-result is positive. Patch 4 happens to repair this, so patch 3 is not 
-independently usable.
-
-Regards,
-Akihiko Odaki
-
-> +    return size;
-> +}
-> +
-> +static int igb_core_vf_load_state(IgbVfState *s,
-> +                                  const void *buf, size_t size)
-> +{
-> +    trace_igbvf_mig_load_state(s->vfn, (uint32_t)size);
-> +    return 0;
-> +}
-> +
-> +static int igbvf_mig_load(IgbVfState *s, const void *buf, size_t size)
-> +{
-> +    int ret;
-> +
-> +    ret = igb_core_vf_load_state(s, buf, size);
-> +    if (ret < 0) {
-> +        return ret;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +/* ================================================================
-> + * Migration BAR register read/write handlers
-> + * ================================================================ */
-> +
-> +static bool igbvf_mig_set_state(IgbVfState *s, uint32_t new_state)
-> +{
-> +    IgbVfMigState *ms = &s->mig;
-> +    uint32_t old = ms->mig_state;
-> +    int ret;
-> +
-> +    switch (new_state) {
-> +    case IGB_MIG_STATE_STOP:
-> +        if (old != IGB_MIG_STATE_RUNNING &&
-> +            old != IGB_MIG_STATE_STOP_COPY &&
-> +            old != IGB_MIG_STATE_RESUMING &&
-> +            old != IGB_MIG_STATE_ERROR) {
-> +            return false;
-> +        }
-> +        /* Restore DATA_SIZE to max, same as at reset */
-> +        ms->mig_data_size = igb_core_vf_max_data_size(s);
-> +        break;
-> +
-> +    case IGB_MIG_STATE_RUNNING:
-> +        if (old != IGB_MIG_STATE_STOP) {
-> +            return false;
-> +        }
-> +        break;
-> +
-> +    case IGB_MIG_STATE_STOP_COPY:
-> +        if (old != IGB_MIG_STATE_STOP) {
-> +            return false;
-> +        }
-> +        ret = igb_core_vf_save_state(s, ms->mig_data, sizeof(ms->mig_data));
-> +        if (ret < 0) {
-> +            ms->mig_error = -ret;
-> +            ms->mig_state = IGB_MIG_STATE_ERROR;
-> +            return false;
-> +        }
-> +        ms->mig_data_size = ret;
-> +        break;
-> +
-> +    case IGB_MIG_STATE_RESUMING:
-> +        if (old != IGB_MIG_STATE_STOP) {
-> +            return false;
-> +        }
-> +        memset(ms->mig_data, 0, sizeof(ms->mig_data));
-> +        ms->mig_data_size = 0;
-> +        break;
-> +
-> +    default:
-> +        trace_igbvf_mig_set_state_err(s->vfn, old, new_state);
-> +        return false;
-> +    }
-> +
-> +    ms->mig_state = new_state;
-> +    trace_igbvf_mig_set_state(s->vfn, old, new_state);
-> +    return true;
-> +}
-> +
-> +static uint32_t igbvf_mig_get_status(IgbVfState *s)
-> +{
-> +    IgbVfMigState *ms = &s->mig;
-> +    uint32_t status = 0;
-> +
-> +    if (ms->mig_state == IGB_MIG_STATE_ERROR) {
-> +        status |= IGB_MIG_STATUS_ERR(ms->mig_error);
-> +    }
-> +    if (ms->mig_state == IGB_MIG_STATE_STOP_COPY && ms->mig_data_size > 0) {
-> +        status |= IGB_MIG_STATUS_DATA_AVAIL;
-> +    }
-> +
-> +    return status;
-> +}
-> +
-> +static void igbvf_mig_data_xfer(IgbVfState *s, uint32_t val)
-> +{
-> +    IgbVfMigState *ms = &s->mig;
-> +    MemTxResult r;
-> +    int ret;
-> +
-> +    if (!ms->mig_data_buf_addr) {
-> +        ms->mig_error = IGB_MIG_ERR_NO_BUFFER;
-> +        ms->mig_state = IGB_MIG_STATE_ERROR;
-> +        return;
-> +    }
-> +
-> +    switch (ms->mig_state) {
-> +    case IGB_MIG_STATE_STOP_COPY:
-> +        /* Save: DMA-write serialized state to driver buffer */
-> +        r = pci_dma_write(pcie_sriov_get_pf(PCI_DEVICE(s)),
-> +                          ms->mig_data_buf_addr,
-> +                          ms->mig_data, ms->mig_data_size);
-> +        if (r != MEMTX_OK) {
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                          "igbvf: VF%u state write failed at 0x%" PRIx64 "\n",
-> +                          s->vfn, ms->mig_data_buf_addr);
-> +            ms->mig_error = IGB_MIG_ERR_DMA_FAILED;
-> +            ms->mig_state = IGB_MIG_STATE_ERROR;
-> +        }
-> +        break;
-> +
-> +    case IGB_MIG_STATE_RESUMING:
-> +        /* Restore: DMA-read state from driver buffer and deserialize */
-> +        if (ms->mig_data_size == 0 ||
-> +            ms->mig_data_size > sizeof(ms->mig_data)) {
-> +            ms->mig_error = IGB_MIG_ERR_BAD_SIZE;
-> +            ms->mig_state = IGB_MIG_STATE_ERROR;
-> +            break;
-> +        }
-> +
-> +        r = pci_dma_read(pcie_sriov_get_pf(PCI_DEVICE(s)),
-> +                         ms->mig_data_buf_addr,
-> +                         ms->mig_data, ms->mig_data_size);
-> +        if (r != MEMTX_OK) {
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                          "igbvf: VF%u state read failed at 0x%" PRIx64 "\n",
-> +                          s->vfn, ms->mig_data_buf_addr);
-> +            ms->mig_error = IGB_MIG_ERR_DMA_FAILED;
-> +            ms->mig_state = IGB_MIG_STATE_ERROR;
-> +            break;
-> +        }
-> +
-> +        ret = igbvf_mig_load(s, ms->mig_data, ms->mig_data_size);
-> +        if (ret < 0) {
-> +            ms->mig_error = -ret;
-> +            ms->mig_state = IGB_MIG_STATE_ERROR;
-> +        }
-> +        break;
-> +
-> +    default:
-> +        break;
-> +    }
-> +}
-> +
-> +static uint64_t igbvf_mig_read(void *opaque, hwaddr addr, unsigned size)
-> +{
-> +    IgbVfState *s = opaque;
-> +    IgbVfMigState *ms = &s->mig;
-> +    uint64_t val = 0;
-> +
-> +    switch (addr) {
-> +    case IGB_MIG_DEVICE_STATE:
-> +        val = ms->mig_state;
-> +        break;
-> +    case IGB_MIG_STATUS:
-> +        val = igbvf_mig_get_status(s);
-> +        break;
-> +    case IGB_MIG_CAPS:
-> +        val = IGB_MIG_CAP_F_STATE;
-> +        break;
-> +    case IGB_MIG_VERSION:
-> +        val = IGB_MIG_CAP_VERSION;
-> +        break;
-> +    case IGB_MIG_DATA_SIZE:
-> +        val = ms->mig_data_size;
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "igbvf: VF%u bad migration BAR read at 0x%"
-> +                      HWADDR_PRIx "\n", s->vfn, addr);
-> +        break;
-> +    }
-> +
-> +    trace_igbvf_mig_bar_read(s->vfn, addr, val);
-> +
-> +    return val;
-> +}
-> +
-> +static void igbvf_mig_write(void *opaque, hwaddr addr, uint64_t val,
-> +                             unsigned size)
-> +{
-> +    IgbVfState *s = opaque;
-> +    IgbVfMigState *ms = &s->mig;
-> +
-> +    trace_igbvf_mig_bar_write(s->vfn, addr, val);
-> +
-> +    switch (addr) {
-> +    case IGB_MIG_DEVICE_STATE:
-> +        igbvf_mig_set_state(s, (uint32_t)val);
-> +        break;
-> +    case IGB_MIG_DATA_SIZE:
-> +        if (val <= sizeof(ms->mig_data)) {
-> +            ms->mig_data_size = (uint32_t)val;
-> +        } else {
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                          "igbvf: VF%u DATA_SIZE %" PRIu64 " exceeds max %zu\n",
-> +                          s->vfn, val, sizeof(ms->mig_data));
-> +        }
-> +        break;
-> +    case IGB_MIG_DATA_XFER:
-> +        igbvf_mig_data_xfer(s, (uint32_t)val);
-> +        break;
-> +    case IGB_MIG_DATA_BUF_ADDR_LO:
-> +        ms->mig_data_buf_addr =
-> +            deposit64(ms->mig_data_buf_addr, 0, 32, val);
-> +        break;
-> +    case IGB_MIG_DATA_BUF_ADDR_HI:
-> +        ms->mig_data_buf_addr =
-> +            deposit64(ms->mig_data_buf_addr, 32, 32, val);
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "igbvf: VF%u bad migration BAR write at 0x%"
-> +                      HWADDR_PRIx "\n", s->vfn, addr);
-> +        break;
-> +    }
-> +}
-> +
-> +static const MemoryRegionOps mig_bar_ops = {
-> +    .read = igbvf_mig_read,
-> +    .write = igbvf_mig_write,
-> +    .endianness = DEVICE_LITTLE_ENDIAN,
-> +    .impl = {
-> +        .min_access_size = 4,
-> +        .max_access_size = 4,
-> +    },
-> +};
-> +
-> +/*
-> + * Use the QEM-internal PCI_BASE_ADDRESS_MEM_ALWAYS_ON BAR type flag
-> + * to keep the memory BAR always mapped.
-> + */
-> +void igbvf_mig_bar_init(IgbVfState *s)
-> +{
-> +    IgbVfMigState *ms = &s->mig;
-> +
-> +    memory_region_init_io(&ms->mig_bar, OBJECT(s), &mig_bar_ops, s,
-> +                          "igbvf-mig", IGB_MIG_BAR_SIZE);
-> +    pci_register_bar(PCI_DEVICE(s), IGB_MIG_BAR_IDX,
-> +                     PCI_BASE_ADDRESS_MEM_PREFETCH |
-> +                     PCI_BASE_ADDRESS_MEM_ALWAYS_ON,
-> +                     &ms->mig_bar);
-> +    trace_igbvf_mig_bar_init(s->vfn);
-> +}
-> +
-> +void igbvf_mig_state_reset(IgbVfState *s)
-> +{
-> +    IgbVfMigState *ms = &s->mig;
-> +
-> +    ms->mig_state = IGB_MIG_STATE_RUNNING;
-> +    ms->mig_error = 0;
-> +    ms->mig_data_size = igb_core_vf_max_data_size(s);
-> +    ms->mig_data_buf_addr = 0;
-> +    memset(ms->mig_data, 0, sizeof(ms->mig_data));
-> +    trace_igbvf_mig_reset(s->vfn);
-> +}
-> diff --git a/hw/net/igbvf.c b/hw/net/igbvf.c
-> index 94c9739cd58c..e9f9fc3369d8 100644
-> --- a/hw/net/igbvf.c
-> +++ b/hw/net/igbvf.c
-> @@ -53,15 +53,6 @@
->   
->   OBJECT_DECLARE_SIMPLE_TYPE(IgbVfState, IGBVF)
->   
-> -struct IgbVfState {
-> -    PCIDevice parent_obj;
-> -
-> -    MemoryRegion mmio;
-> -    MemoryRegion msix;
-> -
-> -    IgbVfMigState mig;
-> -};
-> -
->   static hwaddr vf_to_pf_addr(hwaddr addr, uint16_t vfn, bool write)
->   {
->       switch (addr) {
-> @@ -281,6 +272,10 @@ static void igbvf_pci_realize(PCIDevice *dev, Error **errp)
->           if (!igbvf_add_migration_cap(dev, errp)) {
->               return;
->           }
-> +
-> +        s->vfn = pcie_sriov_vf_number(dev);
-> +        igbvf_mig_bar_init(s);
-> +        igbvf_mig_state_reset(s);
->       }
->   
->       if (object_property_get_bool(OBJECT(pcie_sriov_get_pf(dev)),
-> @@ -298,8 +293,13 @@ static void igbvf_pci_realize(PCIDevice *dev, Error **errp)
->   static void igbvf_qdev_reset_hold(Object *obj, ResetType type)
->   {
->       PCIDevice *vf = PCI_DEVICE(obj);
-> +    IgbVfState *s = IGBVF(obj);
->   
->       igb_vf_reset(pcie_sriov_get_pf(vf), pcie_sriov_vf_number(vf));
-> +
-> +    if (s->mig.migration_cap) {
-> +        igbvf_mig_state_reset(s);
-> +    }
->   }
->   
->   static void igbvf_pci_uninit(PCIDevice *dev)
-> diff --git a/hw/net/trace-events b/hw/net/trace-events
-> index 06d8848023e5..0b13a99b3f32 100644
-> --- a/hw/net/trace-events
-> +++ b/hw/net/trace-events
-> @@ -295,6 +295,14 @@ igb_wrn_rx_desc_modes_not_supp(int desc_type) "Not supported descriptor type: %d
->   # igbvf.c
->   igbvf_wrn_io_addr_unknown(uint64_t addr) "IO unknown register 0x%"PRIx64
->   igbvf_mig_cap_add(uint16_t vfn, int offset) "VF%u: added migration vendor cap at config offset 0x%x"
-> +igbvf_mig_bar_init(uint16_t vfn) "VF%u: migration BAR initialized"
-> +igbvf_mig_bar_read(uint16_t vfn, uint64_t addr, uint64_t val) "VF%u: BAR read addr=0x%"PRIx64" val=0x%"PRIx64
-> +igbvf_mig_bar_write(uint16_t vfn, uint64_t addr, uint64_t val) "VF%u: BAR write addr=0x%"PRIx64" val=0x%"PRIx64
-> +igbvf_mig_set_state(uint16_t vfn, uint32_t old_state, uint32_t new_state) "VF%u: state %u -> %u"
-> +igbvf_mig_set_state_err(uint16_t vfn, uint32_t old_state, uint32_t new_state) "VF%u: invalid transition %u -> %u"
-> +igbvf_mig_save_state(uint16_t vfn, uint32_t size) "VF%u: saved %u bytes of device state"
-> +igbvf_mig_load_state(uint16_t vfn, uint32_t size) "VF%u: loaded %u bytes of device state"
-> +igbvf_mig_reset(uint16_t vfn) "VF%u: migration state reset"
->   
->   # spapr_llan.c
->   spapr_vlan_get_rx_bd_from_pool_found(int pool, int32_t count, uint32_t rx_bufs) "pool=%d count=%"PRId32" rxbufs=%"PRIu32
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
