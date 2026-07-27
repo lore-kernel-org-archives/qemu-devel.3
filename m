@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AE5CC53209
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:24:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FCE7C531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:24:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woQrt-00009t-BF; Mon, 27 Jul 2026 15:20:05 -0400
+	id 1woQsI-0000Kp-35; Mon, 27 Jul 2026 15:20:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQrs-00009f-61
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsF-0000Gx-OX
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQrq-0000N6-DV
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:03 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsE-0000ca-2B
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785180001;
+ s=mimecast20190719; t=1785180025;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ztveMvOf8dhfMuHF5jnMCpMJC+TJBMbMVVTXwok/3LQ=;
- b=Sl/0h0AO2J2So7YZ7GGZlv2mi8pO1kNkmx28r7jakHuFs3duA0ejArYip2qUFRs2bT1qYh
- IEDja5oVSqmxSxvo5IRUS6Z0EDsjb0BYEXummJvDtvbAQwGW6RitKv8gP33qDHOquD7I5M
- kfXsnZrKN6CQR8DGccpVUD/c4m5Sv9g=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DrMWxqQkZCCLjgvL4EhAZA9LLZrvR9Qu3eOej5gCQYQ=;
+ b=dzfpFdmO3icl6SrASGUipYY18rEyWugoa37xsYCfRbDsiJhJ3Ss8D7TFo4/dlBeWBNi/3e
+ BZJ50lGqVbJ/Kq8DD8x518B8Ekfch5n2dIAT2nA271QVCxL0i86BrdVCs4TM6XncOWq97f
+ mi1XNqEDHY72mtmOSTvK+81RuVNBwqg=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-563-PErsgzd4MDGw7jDveE4F9w-1; Mon, 27 Jul 2026 15:20:00 -0400
-X-MC-Unique: PErsgzd4MDGw7jDveE4F9w-1
-X-Mimecast-MFC-AGG-ID: PErsgzd4MDGw7jDveE4F9w_1785179999
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-47f7700ffdeso1224830f8f.2
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:19:59 -0700 (PDT)
+ us-mta-568--hXP05yxMheJA0REtkljiQ-1; Mon, 27 Jul 2026 15:20:17 -0400
+X-MC-Unique: -hXP05yxMheJA0REtkljiQ-1
+X-Mimecast-MFC-AGG-ID: -hXP05yxMheJA0REtkljiQ_1785180012
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4956c1655c3so14807285e9.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:20:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785179999; x=1785784799; darn=nongnu.org;
+ d=redhat.com; s=google; t=1785180011; x=1785784811; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=ztveMvOf8dhfMuHF5jnMCpMJC+TJBMbMVVTXwok/3LQ=;
- b=RTi0AJSSXqwsBHbbLYszVkqZxwQT+h95qWVJ+zCCZag+7TBkzpv9WX79F6vj6ZTTqB
- xZJmFzvQaS7SGjHBWoQ/pcEkOPykH0/TQeMSn5gkrg5wCpi0AOkOMBsu/pbopEXSykoI
- uWZ56e7/cnYTVJR5RZRywZLumIPZK9vBBC8EG6jkna+hYYbspzb35bheMxF7GYCtBoGT
- UaGmVl3e0JxKwUWybDjF0p2pk+SwQvtFJGWN05E8TBPJy7urIWlucey5x/9qbfFDk4d8
- pHNsYpRTlCgrU6dNbR2SwWliLhWf9DIRsfZ4NY9qgg/PFXD9EFc+Zq4i97ZVVx8OiZZo
- quhA==
+ bh=DrMWxqQkZCCLjgvL4EhAZA9LLZrvR9Qu3eOej5gCQYQ=;
+ b=RI7ZU+B9r8o3s2mmisKjgsI3gAMn2Fs7GOL00Qz9zJyaAd6ruP7I+zBfst8olYdQ9P
+ Fj98ZPpQqSTXXU9DExn9aiDcjzaXd20yK+ps7R7h1JaGPKC4OOs56nhGOFsGhSliomzt
+ KTEHhmdpIhq4Qpbep9TZ6Y+45POe4uRYNJ5T30XB9Az6nUMqfb8G/yQZB3VGFMvuJvs2
+ G0NboTsb6+RA1/X6D/K19qLXXt9Fb9ATcacZQ8XZ2wXqv01rwlKr2SKFpcrU5Wv3cLfN
+ gmXoJMeX4zrVU/XUcD90HQe5wC93WR8IYMvHVRsILTU5c5mA38NxJ8Hm7zEAloLa4+JO
+ gljg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785179999; x=1785784799;
+ d=1e100.net; s=20251104; t=1785180011; x=1785784811;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=ztveMvOf8dhfMuHF5jnMCpMJC+TJBMbMVVTXwok/3LQ=;
- b=cKDrmkf54F45ixfTEay34GvgHT3aJQkugrABsRPh23MCN3SKWzYvGtB7Z2K7rPAih0
- GO2T1HNF/zwwfNuSyDI7Wc3gH8Y3rg49tUCEYV8CrZt6g3cpg4+KYGxPEehWvhxUMqP7
- XGDz8Z8eyAo/IlBvTvQNsc6vcSh3umKxuosp615kfomOQWcrcsVGJxsNgI3Y3yUYsYv9
- WcfuSMSaByz6PW+HnEL71m9IN56G8u9J5Iz5ExIEkSAe5C4v2ZMX7FFT0oxjq4vsOiXX
- I8QgfNybL2FpkWBghMpDPZZ5QAcvtZ5e9JatT/wCDmVor+HQZWIt4XBIn4xuXcU4+gJI
- dE9Q==
-X-Gm-Message-State: AOJu0Yy+Eg+kpYBiUv0fiI7NJB6ptJwvpqgBr/W11PxUzP0lCXCfMSqH
- LeHPtM5lHQuQXCR+FnSUoSCALuuxiak8pVPj6YfIGMzgZmmfDYHqRudAYVyaTmbG7TWWc0/3yCy
- XVzSgWQkYvavcfAuV+8VzYdWmXfAhi9thjBLT33gmhZzSwICAJT3nWbThbIJ+6zJOJHnL5Gj2OJ
- zyeM57H0R4S4Mb5ILuUtNEKjNqfss8oceLHQ==
-X-Gm-Gg: AR+sD12d7NgN4HxRUuJRp/Mkfd9vsGlyfwKKH9RBXE3gm6YF3+WiAwe6fC2emuR2P2d
- Pf7IqL33xS1XKDOiCoCe3B7OQcHAkyobYp0QF3FQjrbdnsGrCZHX/09DZjgwBjWtMk4dm05RNoH
- q3ReAFX6F4MXuG77bf63bL7wVMgAspuVM+KZNTAJS+zX7ohrj4HqIXEYei5Pep2S5Hk28USUgZ1
- oeIGvsOZ4ls0vQjqeYtv1GDy0Ti3X19mjnooOEIZtmmpedG/17V55+9G9syEyjM58A9QMaSaioL
- DAr6ZLfexnkBo7N++VSZO/QUaBrRJlpuC3/bM3JbzdLQY3YGZ6TLJj8tEEu4gm2qa2RxprSUkOo
- L9+HV7FHP+f8jYBCZ4MYIQg==
-X-Received: by 2002:a5d:584c:0:b0:47f:8866:bd6a with SMTP id
- ffacd0b85a97d-47f9fc9255bmr12593714f8f.19.1785179998720; 
- Mon, 27 Jul 2026 12:19:58 -0700 (PDT)
-X-Received: by 2002:a5d:584c:0:b0:47f:8866:bd6a with SMTP id
- ffacd0b85a97d-47f9fc9255bmr12593682f8f.19.1785179998106; 
- Mon, 27 Jul 2026 12:19:58 -0700 (PDT)
+ bh=DrMWxqQkZCCLjgvL4EhAZA9LLZrvR9Qu3eOej5gCQYQ=;
+ b=h1530Xwrs65TJe0RK5uVdTTugwpOnxqW+tsFQje0c7eADaHq4haX3E0TLbkoN+Xmwy
+ XXq8MCmO1jJUbQWeU8Pxu5m1eKMqK+PLzYCBmfjc/CqvTKrS3mDEUtaqoGb/QFs/WBs+
+ cVem15JgBqNBjbZWvXK0ImetM5a/ZM8uyBDgx6gqfR3yBAVkPBhBYf7/uUjf9Ov/BK3Y
+ MG0NpSy97pJh1fg+/N+MsevH5h/V5tDHVoC8WDbOGLHlnAI0VGLlKx/kE6QI1A1xtb0s
+ 7GcsyXuUyoZAiRCks59C+J2tFgoTkDaAyUk8b2PRtCZ4JP/a7S2BCoC7dxDLyecRgYp4
+ ieRA==
+X-Gm-Message-State: AOJu0Yw6b6Em22H4vIMY6RiuS/XJF+d+YXOMPVJCWkIXSDHYgxiy0ssv
+ 8TpSRzqxnn9P0TRo7u7HbnN3yhd12pFGP31bBF+DnWtrFiq9Jo0KrNsLbX0F5OUDoD6D+VSkDh1
+ UcT12jhgej5azfd1+DXYAODhL2d7NcMNJ/u9ztULEk22bKmqszpNHNTkhWxMeCtZ8TKL2Xh+TYV
+ z2c3JGmkHkNuKsYZYK+ShUJG2HrPcbcQI7EA==
+X-Gm-Gg: AR+sD12kzduw825bUgCn4u7mgahQM/i94Z8DSfsOuzvTYNRUX8WGJ3WAdueX8j4TUWc
+ OCPLxEWeVkWylrQwGK4kePX9WH8s62ilqIC8hsYAyo1EEI1hpjo7pD18Z9yMB0NFYxQy1d37y07
+ FspM55HxHODD+ZNk49Gv0fGJozBkiXY6gXJi79/oVH75fl5pgaWEdCv1E5W768FFp1IPvxFQEaK
+ wT+4HlqLQc+HbOgSJvCGkbhDfwbdI9tZwGlYuuOU2GIbsNb761I+g1qpDqd2VGKY0uLafCOgKuF
+ pSeYzC/5sqo51Lt2s9CnLmq8lGppiLjduquM30Sk3qDDnaRDxisVwh3+jsSKbp1RGyrGQ3Mb/t8
+ BxFc2vXQmbDofY0B8Hsp/pw==
+X-Received: by 2002:a05:600c:1987:b0:495:4a34:16e1 with SMTP id
+ 5b1f17b1804b1-496c4fc231amr4102075e9.23.1785180011367; 
+ Mon, 27 Jul 2026 12:20:11 -0700 (PDT)
+X-Received: by 2002:a05:600c:1987:b0:495:4a34:16e1 with SMTP id
+ 5b1f17b1804b1-496c4fc231amr4101765e9.23.1785180010837; 
+ Mon, 27 Jul 2026 12:20:10 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-28-14.inter.net.il. [80.230.28.14])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f96b9abc0sm30687523f8f.32.2026.07.27.12.19.56
+ 5b1f17b1804b1-496c45bb2e7sm14770675e9.7.2026.07.27.12.20.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 12:19:57 -0700 (PDT)
-Date: Mon, 27 Jul 2026 15:19:56 -0400
+ Mon, 27 Jul 2026 12:20:10 -0700 (PDT)
+Date: Mon, 27 Jul 2026 15:20:08 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Yonggang Luo <luoyonggang@gmail.com>, Miku Hatsune <anznu1l@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL v2 09/30] virtio-mmio: fix QUEUE_NUM_MAX
-Message-ID: <a5cff318f06cd06b37224e15ee74d64d1df8b12b.1785179875.git.mst@redhat.com>
+ Xie Yongji <xieyongji@bytedance.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, BB CC <wywwzjj@gmail.com>
+Subject: [PULL v2 15/30] libvhost-user: validate last_batch_head in
+ vu_check_queue_inflights
+Message-ID: <bf21298c082cc5561072bbfd79216d478861a5cd.1785179875.git.mst@redhat.com>
 References: <cover.1785179875.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -98,15 +98,15 @@ Content-Disposition: inline
 In-Reply-To: <cover.1785179875.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
 X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,118 +122,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio-mmio reports VIRTQUEUE_MAX_SIZE (1024) as QUEUE_NUM_MAX for every
-queue, regardless of the size the device passes to virtio_add_queue().
+vu_check_queue_inflights uses last_batch_head from the frontend-controlled
+inflight shared memory as an index into desc[] without bounds checking.
+A malicious or buggy frontend can set last_batch_head >= desc_num,
+causing an out-of-bounds write.
 
-This works by accident because QEMU mostly does not care about the ring
-size - the guest is the one allocating memory here.  But this changes
-with in-order vqs where qemu is the one allocating resources.
-Now, specifying a larger vq than allocated causes an OOB memory access.
+Validate last_batch_head before using it.
+Note: the value is not guest-accessible so not a security vulnerability.
 
-To fix:
-- for new machine types, report the actual max queue size to guest
-- for old machine types, use a compat property to allocate 1k sized
-  queues
-
-Fixes: 525d82e323 ("virtio: fix queue size validation against allocated maximum")
-Fixes: CVE-2026-50626
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3882
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <8715acbb9516e67e2a776cda6f9edf105343f788.1784930765.git.mst@redhat.com>
-Acked-by: Yonggang Luo <luoyonggang@gmail.com>
-Reported-by: Miku Hatsune <anznu1l@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3974
+Fixes: 5f9ff1eff3 ("libvhost-user: Support tracking inflight I/O in shared memory")
+Cc: Xie Yongji <xieyongji@bytedance.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+Reported-by: BB CC <wywwzjj@gmail.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <8133770c75c9907578dd551f4d468140a0a75cd2.1784892981.git.mst@redhat.com>
 ---
- include/hw/virtio/virtio-bus.h  |  1 +
- include/hw/virtio/virtio-mmio.h |  1 +
- hw/core/machine.c               |  1 +
- hw/virtio/virtio-mmio.c         |  7 +++----
- hw/virtio/virtio.c              | 11 +++++++++++
- 5 files changed, 17 insertions(+), 4 deletions(-)
+ subprojects/libvhost-user/libvhost-user.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/include/hw/virtio/virtio-bus.h b/include/hw/virtio/virtio-bus.h
-index 1a2d396156..f80fd71424 100644
---- a/include/hw/virtio/virtio-bus.h
-+++ b/include/hw/virtio/virtio-bus.h
-@@ -30,6 +30,7 @@
- #include "qom/object.h"
+diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+index 42a5e2f1f5..c1c13dbc90 100644
+--- a/subprojects/libvhost-user/libvhost-user.c
++++ b/subprojects/libvhost-user/libvhost-user.c
+@@ -1379,6 +1379,12 @@ vu_check_queue_inflights(VuDev *dev, VuVirtq *vq)
+     vq->counter = 0;
  
- #define TYPE_VIRTIO_BUS "virtio-bus"
-+#define VIRTIO_QUEUE_SIZE_OVERRIDE "x-override-queue-size"
- typedef struct VirtioBusClass VirtioBusClass;
- typedef struct VirtioBusState VirtioBusState;
- DECLARE_OBJ_CHECKERS(VirtioBusState, VirtioBusClass,
-diff --git a/include/hw/virtio/virtio-mmio.h b/include/hw/virtio/virtio-mmio.h
-index 1644d09810..0a9069868c 100644
---- a/include/hw/virtio/virtio-mmio.h
-+++ b/include/hw/virtio/virtio-mmio.h
-@@ -69,6 +69,7 @@ struct VirtIOMMIOProxy {
-     /* Fields only used for non-legacy (v2) devices */
-     uint32_t guest_features[2];
-     VirtIOMMIOQueue vqs[VIRTIO_QUEUE_MAX];
-+    uint16_t override_queue_size;
- };
- 
- #endif
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 805148678d..73b4d82b4a 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -41,6 +41,7 @@
- #include "hw/arm/smmuv3.h"
- 
- GlobalProperty hw_compat_11_0[] = {
-+    { "virtio-mmio", VIRTIO_QUEUE_SIZE_OVERRIDE, "1024" },
-     { "chardev-vc", "encoding", "cp437" },
-     { "tpm-crb", "cap-chunk", "off" },
-     { "tpm-crb", "x-allow-chunk-migration", "off" },
-diff --git a/hw/virtio/virtio-mmio.c b/hw/virtio/virtio-mmio.c
-index 58c6d46aab..55ceaeef5f 100644
---- a/hw/virtio/virtio-mmio.c
-+++ b/hw/virtio/virtio-mmio.c
-@@ -172,10 +172,7 @@ static uint64_t virtio_mmio_read(void *opaque, hwaddr offset, unsigned size)
-                 >> (32 * proxy->host_features_sel);
-         }
-     case VIRTIO_MMIO_QUEUE_NUM_MAX:
--        if (!virtio_queue_get_num(vdev, vdev->queue_sel)) {
--            return 0;
--        }
--        return VIRTQUEUE_MAX_SIZE;
-+        return virtio_queue_get_max_num(vdev, vdev->queue_sel);
-     case VIRTIO_MMIO_QUEUE_PFN:
-         if (!proxy->legacy) {
-             qemu_log_mask(LOG_GUEST_ERROR,
-@@ -738,6 +735,8 @@ static const Property virtio_mmio_properties[] = {
-     DEFINE_PROP_BOOL("force-legacy", VirtIOMMIOProxy, legacy, true),
-     DEFINE_PROP_BIT("ioeventfd", VirtIOMMIOProxy, flags,
-                     VIRTIO_IOMMIO_FLAG_USE_IOEVENTFD_BIT, true),
-+    DEFINE_PROP_UINT16(VIRTIO_QUEUE_SIZE_OVERRIDE, VirtIOMMIOProxy,
-+                       override_queue_size, 0),
- };
- 
- static void virtio_mmio_realizefn(DeviceState *d, Error **errp)
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 2d33622daf..cdc8ba76f1 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -2568,6 +2568,17 @@ VirtQueue *virtio_add_queue(VirtIODevice *vdev, int queue_size,
-     if (i == VIRTIO_QUEUE_MAX || queue_size > VIRTQUEUE_MAX_SIZE)
-         abort();
- 
-+    BusState *qbus = qdev_get_parent_bus(DEVICE(vdev));
-+    if (qbus && qbus->parent &&
-+        object_property_find(OBJECT(qbus->parent), VIRTIO_QUEUE_SIZE_OVERRIDE)) {
-+        int override = object_property_get_int(OBJECT(qbus->parent),
-+                                               VIRTIO_QUEUE_SIZE_OVERRIDE,
-+                                               &error_abort);
-+        if (override) {
-+            queue_size = override;
+     if (unlikely(vq->inflight->used_idx != vq->used_idx)) {
++        if (vq->inflight->last_batch_head >= vq->inflight->desc_num) {
++            vu_panic(dev, "vu_check_queue_inflights: last_batch_head %u "
++                     "out of range (desc_num %u)",
++                     vq->inflight->last_batch_head, vq->inflight->desc_num);
++            return -1;
 +        }
-+    }
-+
-     vdev->vq[i].vring.num = queue_size;
-     vdev->vq[i].vring.num_default = queue_size;
-     vdev->vq[i].vring.align = VIRTIO_PCI_VRING_ALIGN;
+         vq->inflight->desc[vq->inflight->last_batch_head].inflight = 0;
+ 
+         barrier();
 -- 
 MST
 
