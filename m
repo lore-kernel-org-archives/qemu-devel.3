@@ -4,64 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66BC7C531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 10:35:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C79CC53219
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 10:35:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woIf7-0005jG-Vn; Mon, 27 Jul 2026 06:34:23 -0400
+	id 1woIfs-0005pI-Ci; Mon, 27 Jul 2026 06:35:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1woIf0-0005ip-OS
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 06:34:15 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1woIfr-0005oe-Az
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 06:35:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1woIew-00015E-Le
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 06:34:14 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66RAXsLl013061
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 27 Jul 2026 19:33:54 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=LXk5N2OizCjlLLajAN5LQRF5txmOyV7a+Q5pY/oPJoc=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1785148434; v=1;
- b=p6P9IX8zjCMbElSKXGQWcn7OdtW1DWJxAJnl1ps43hDGP1HZVGlUUpfWXqosutLZ
- z8KfltNbshaZ5KFsDzQXM+UsPgWkrrOOSuu7XqWtF58a19PXZU73UB2bV8crrebj
- pLcAlD0YnMXbobvUyH7w3SQhL45f+DhUZIBz8mCrg22mMsBIVDYONXEK1fnxwUVM
- FqonWlBsrUaimE8Ug/UF4WfqjQ/JMPRSEvYO4xWoYOoG9lpd3yj1+PTzkwXJBecZ
- 3pZHLoFm1ebgMFScQfNrwbbNeN4TRLQxaS3goBX4AYcTG3Gt6DAsQNq5CJRmEovb
- IMBRFNLStxyNa5I3fwl1rg==
-Message-ID: <a533ff82-60ef-428d-9e13-a0d98e669c1c@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 27 Jul 2026 19:33:54 +0900
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1woIfp-00019o-IR
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 06:35:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785148501;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=BzS556thT9lSoCPvyvVhNQ1kq1C+54xht3hE+ogPc0A=;
+ b=aO3Fn0yAidqTsaXttyP76TTlodyJ9oqVrc5HWMn7wCJFzq+IX1xgfRgyemOBKuSeSejO6o
+ qs9qSTzLIr1nzJYC3xTg7AvE2PA+BinpcZnnDWlX2IHx77SFRlRQMn7t2iReIvtz8/iucw
+ g1t/G9IToaGyS0Jx3SZ9sLwTnhw1Jc4=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-688-vhHdAWBGPLKT3be1LWy4BA-1; Mon, 27 Jul 2026 06:35:00 -0400
+X-MC-Unique: vhHdAWBGPLKT3be1LWy4BA-1
+X-Mimecast-MFC-AGG-ID: vhHdAWBGPLKT3be1LWy4BA_1785148499
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4955843c6cdso29890275e9.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 03:34:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1785148499; x=1785753299; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=BzS556thT9lSoCPvyvVhNQ1kq1C+54xht3hE+ogPc0A=;
+ b=VdmPAUX6TQl+EsHvFZ+WH/WJSFb2x6obR1vPR2R3z7sHHjT4WxRT63eu0Cv3jgUD7a
+ lm2Zl2uB1MnneUqhb8VSd/t2szU3T3BXKEChi/eWcCPfPIQDEpTnaM5MZaA/yvHD33f3
+ L7VWlWhJbBEEab22RUr/SCQkYwFpYuG9paC6NQ1fEoCG+QjxhaqgNJZcHjrrNQWNSBE/
+ cwfEGpFAx/pBciZMtb5pFxb5GShf67+KVjshmYGmApT/KBC7q1hMuIXLWQq6KzSLJLf1
+ +UOb6L5VQ7akkId4yuW+xdYESOxlQI/tPz7OCjNFhZW2aUOhys6tmnU3ernh5UwYyyjA
+ d3Yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785148499; x=1785753299;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=BzS556thT9lSoCPvyvVhNQ1kq1C+54xht3hE+ogPc0A=;
+ b=qbXpOJ1ErI7glllo1XFd7eZzmJ2bFDuhtCezM4rEXm3RQWwL4CCLvRZZjNauBvy7pp
+ wmoqe1Y+71oM5E6J1sC6WAXxCZVnO+A7jDP0HN5e33M/+lm10LMpDixPLWFPjb83iaoU
+ Zm57SjdWqXmjz8dLhO6R5meB96NJcNGdhg6glOCG9jOp5gKnh2Z2Uz1rfhtKdq8vkjg1
+ 2V8XvpcsqKf7cZCT6fX7K4VlHWGrYvX4pYm5SHvwJyyjcFNvWPdfjuM7Bc1xRGGPSlFw
+ JlYHjHZwsxI7MdAjUBCz144g4oBfc6vkFsxf7a9pHg50lqVXihGujXRNxAEZjcHU6P1t
+ X10w==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqlE/4Vt3meEMadSAjteXgu5JkGQJESHHVhYY2xjmFFkTTeJ2Gsywh0f1cC2KBs8s7tCDZciqRT8hUB@nongnu.org
+X-Gm-Message-State: AOJu0YxPkqzuYGNJk0Ty9qBhiTqCoj4RYBHMIRl9scnvOS1KkXWsMx9t
+ fk57ShRRwcSVIy3Z1/xAb8q4GhN+lkvSQVJvjPrvG3B/GbCo6/TO3hrh/P0zNm9QKKWfwOxgmPT
+ mX9Y0UL/jy0HrnKDBFElsCBFs7MqVzjYd/gYpfSwv3Ksq8CL5TuBUaygQ
+X-Gm-Gg: AR+sD10x/yDOdBIpMBWruuX7ugytZMVLUGwdCeSL7aWr/tWMBtYRpq3PHHgMS2Suht4
+ SB5uqh/jpaBqRTtMKZiZwilaI4neCWeotz0yaD0pIWLgIgXMC/K8DU3HIi0dcplLw+7m97sr/E9
+ OHCus4UqG9Ry9UjKPVKHlebJ1FXeDieDWj6/75+Q+UsD3M4cv5cByphAPdjNr6KkOXkvEaaohFg
+ DIh0lcwIhmLWJsaWKEAsZUPT9NytKba8xSHeXWvlCadl2wrj9ogpxHiSp0zUfOAdeT15E5HHekI
+ isQd21oLtKcVAe0VK+ZZN8tRLRdywSsMEx23N8UqUKq1+Zd/sdqFrvT+ZG1ccnVHTihF3Zqclg=
+ =
+X-Received: by 2002:a05:600c:3113:b0:496:b39f:1a03 with SMTP id
+ 5b1f17b1804b1-496b56e6dc9mr95130385e9.5.1785148498772; 
+ Mon, 27 Jul 2026 03:34:58 -0700 (PDT)
+X-Received: by 2002:a05:600c:3113:b0:496:b39f:1a03 with SMTP id
+ 5b1f17b1804b1-496b56e6dc9mr95130075e9.5.1785148498314; 
+ Mon, 27 Jul 2026 03:34:58 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.113.188])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-496b4f33b73sm206524175e9.14.2026.07.27.03.34.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 Jul 2026 03:34:57 -0700 (PDT)
+Message-ID: <a4525b67-3e2e-488e-a7c7-0480e408bd23@redhat.com>
+Date: Mon, 27 Jul 2026 12:34:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 09/11] igb: Send RARP after VF migration to update
- bridge FDB
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
- "Michael S . Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>
-References: <20260727053935.1392269-1-clg@redhat.com>
- <20260727053935.1392269-10-clg@redhat.com>
+Subject: Re: [PATCH] hw/cxl: Validate Set Feature payload bounds
+To: Feifan Qian <bea1e@proton.me>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
+References: <lRjjre9PPucf_bjrOAOLVko0OB0QYPcKJOBHmSHGG4xmSTNr2Y_dHzRiCT5BDRWfoPma6hC4iMdI4n6X5COoum79U7Kj1JgB1B7E703GOWA=@proton.me>
 Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260727053935.1392269-10-clg@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <lRjjre9PPucf_bjrOAOLVko0OB0QYPcKJOBHmSHGG4xmSTNr2Y_dHzRiCT5BDRWfoPma6hC4iMdI4n6X5COoum79U7Kj1JgB1B7E703GOWA=@proton.me>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,152 +164,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/27 14:39, Cédric Le Goater wrote:
-> After VF migration the L0 bridge FDB (Forwarding Database) still maps
-> the VF's MAC to the old tap port, causing a ~30 s connectivity stall
-> while peer ARP caches expire.
+On 12/06/2026 17.37, Feifan Qian wrote:
+> cmd_features_set_feature() derives bytes_to_copy from the mailbox input
+> length and uses hdr->offset as the destination offset into per-feature
+> write attribute buffers.
 > 
-> Add igb_core_vf_get_mac() to look up a VF's MAC address from the PF's
-> Receive Address registers, and use it to send a RARP broadcast from
-> the PF's network backend during VF unquiesce so the bridge relearns
-> the correct port immediately.
-
-The patch message describes the problem this patch intends to solve, but 
-it does not explain why it should be handled with the device emulation 
-code. My intuition is that this is a responsibility of a high-level 
-management layer on L1.
-
+> The patrol scrub and ECS paths already reject writes where hdr->offset
+> plus bytes_to_copy exceeds the destination structure. Add the same check
+> to the soft PPR, hard PPR and memory sparing feature paths before
+> copying into their write attribute buffers.
 > 
-> Assisted-by: Claude
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> Without the check, a malformed Set Feature request can write past the
+> selected write attribute object and corrupt adjacent CXL type 3 device
+> state.
+> 
+> Fixes: 5e5a86bab830 ("hw/cxl: Add support for Maintenance command and Post Package Repair (PPR)")
+> Fixes: da5cafdc4ddd ("hw/cxl: Add emulation for memory sparing control feature")
+> Signed-off-by: Feifan Qian <bea1e@proton.me>
 > ---
->   hw/net/igb_core.h      |  1 +
->   hw/net/igb_core.c      | 28 ++++++++++++++++++++++++++++
->   hw/net/igb_migration.c | 33 +++++++++++++++++++++++++++++++++
->   hw/net/trace-events    |  2 ++
->   4 files changed, 64 insertions(+)
+> This is submitted as a regular bug fix for the CXL non-virtualization
+> use case.
 > 
-> diff --git a/hw/net/igb_core.h b/hw/net/igb_core.h
-> index 3db520048732..07b4270708c4 100644
-> --- a/hw/net/igb_core.h
-> +++ b/hw/net/igb_core.h
-> @@ -149,4 +149,5 @@ IGBCore *igb_pf_get_core(void *pf);
->   void igb_core_vf_propagate_irqs(IGBCore *core, uint16_t vfn);
->   void igb_core_vf_rearm_irqs(IGBCore *core, uint16_t vfn);
->   void igb_core_vf_propagate_ivar(IGBCore *core, uint16_t vfn);
-> +bool igb_core_vf_get_mac(IGBCore *core, uint16_t vfn, uint8_t *mac);
->   #endif
-> diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
-> index 1621ee6602d5..281f3a474392 100644
-> --- a/hw/net/igb_core.c
-> +++ b/hw/net/igb_core.c
-> @@ -4634,3 +4634,31 @@ void igb_core_vf_propagate_ivar(IGBCore *core, uint16_t vfn)
->               ((uint32_t)ent << (8 * (n % 4)));
->       }
->   }
-> +
-> +bool igb_core_vf_get_mac(IGBCore *core, uint16_t vfn, uint8_t *mac)
-> +{
-> +    uint32_t vf_pool_bit = E1000_RAH_POOL_1 << vfn;
-> +    static const struct {
-> +        uint32_t base;
-> +        int count;
-> +    } ra_banks[] = {
-> +        { RA,  16 },
-> +        { RA2,  8 },
-> +    };
-> +    int i, j;
-> +
-> +    for (i = 0; i < ARRAY_SIZE(ra_banks); i++) {
-> +        for (j = 0; j < ra_banks[i].count; j++) {
-> +            uint32_t ral_off = ra_banks[i].base + j * 2;
-> +            uint32_t rah_off = ra_banks[i].base + j * 2 + 1;
-> +            uint32_t rah_val = core->mac[rah_off];
-> +
-> +            if ((rah_val & E1000_RAH_AV) && (rah_val & vf_pool_bit)) {
-> +                stl_le_p(mac, core->mac[ral_off]);
-> +                stw_le_p(mac + 4, rah_val & 0xffff);
-> +                return true;
-> +            }
-> +        }
-> +    }
-> +    return false;
-> +}
-> diff --git a/hw/net/igb_migration.c b/hw/net/igb_migration.c
-> index a0b4a52c865f..fce661f68e3d 100644
-> --- a/hw/net/igb_migration.c
-> +++ b/hw/net/igb_migration.c
-> @@ -609,6 +609,36 @@ static void igb_core_vf_quiesce(IgbVfState *s)
->       trace_igbvf_mig_quiesce(s->vfn, core->mac[VFRE], core->mac[VFTE]);
->   }
->   
-> +/*
-> + * Send a RARP broadcast so the network bridge relearns which port
-> + * carries this VF's MAC after migration.
-> + */
-> +static void igb_core_vf_send_rarp(IGBCore *core, uint16_t vfn)
-> +{
-> +    uint8_t mac[ETH_ALEN];
-> +    uint8_t buf[60];
-> +
-> +    if (!igb_core_vf_get_mac(core, vfn, mac)) {
-> +        trace_igbvf_mig_no_mac(vfn);
-> +        return;
-> +    }
-> +
-> +    trace_igbvf_mig_send_rarp(vfn, mac[0], mac[1], mac[2],
-> +                              mac[3], mac[4], mac[5]);
-> +
-> +    memset(buf, 0xff, ETH_ALEN);
-> +    memcpy(buf + 6, mac, ETH_ALEN);
-> +    stw_be_p(buf + 12, 0x8035);     /* ETH_P_RARP */
-> +    stw_be_p(buf + 14, 1);          /* hw addr space: ethernet */
-> +    stw_be_p(buf + 16, ETH_P_IP);   /* protocol addr space */
-> +    buf[18] = 6; buf[19] = 4;       /* hw/proto addr lengths */
-> +    stw_be_p(buf + 20, 3);          /* opcode: RARP request */
-> +    memcpy(buf + 22, mac, ETH_ALEN);
-> +    memset(buf + 28, 0, 32);
+>   hw/cxl/cxl-mailbox-utils.c | 24 ++++++++++++++++++++++++
+>   1 file changed, 24 insertions(+)
+> 
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index d8ba7e8625..1724b09a6d 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -1813,6 +1813,10 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+>               return CXL_MBOX_UNSUPPORTED;
+>           }
+> 
+> +        if ((uint32_t)hdr->offset + bytes_to_copy >
+> +            sizeof(ct3d->soft_ppr_wr_attrs)) {
+> +            return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
+> +        }
+>           memcpy((uint8_t *)&ct3d->soft_ppr_wr_attrs + hdr->offset,
+>                  sppr_write_attrs, bytes_to_copy);
+>           set_feat_info->data_size += bytes_to_copy;
+> @@ -1832,6 +1836,10 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+>               return CXL_MBOX_UNSUPPORTED;
+>           }
+> 
+> +        if ((uint32_t)hdr->offset + bytes_to_copy >
+> +            sizeof(ct3d->hard_ppr_wr_attrs)) {
+> +            return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
+> +        }
+>           memcpy((uint8_t *)&ct3d->hard_ppr_wr_attrs + hdr->offset,
+>                  hppr_write_attrs, bytes_to_copy);
+>           set_feat_info->data_size += bytes_to_copy;
+> @@ -1851,6 +1859,10 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+>               return CXL_MBOX_UNSUPPORTED;
+>           }
+> 
+> +        if ((uint32_t)hdr->offset + bytes_to_copy >
+> +            sizeof(ct3d->cacheline_sparing_wr_attrs)) {
+> +            return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
+> +        }
+>           memcpy((uint8_t *)&ct3d->cacheline_sparing_wr_attrs + hdr->offset,
+>                  mem_sparing_write_attrs, bytes_to_copy);
+>           set_feat_info->data_size += bytes_to_copy;
+> @@ -1869,6 +1881,10 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+>               return CXL_MBOX_UNSUPPORTED;
+>           }
+> 
+> +        if ((uint32_t)hdr->offset + bytes_to_copy >
+> +            sizeof(ct3d->row_sparing_wr_attrs)) {
+> +            return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
+> +        }
+>           memcpy((uint8_t *)&ct3d->row_sparing_wr_attrs + hdr->offset,
+>                  mem_sparing_write_attrs, bytes_to_copy);
+>           set_feat_info->data_size += bytes_to_copy;
+> @@ -1887,6 +1903,10 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+>               return CXL_MBOX_UNSUPPORTED;
+>           }
+> 
+> +        if ((uint32_t)hdr->offset + bytes_to_copy >
+> +            sizeof(ct3d->bank_sparing_wr_attrs)) {
+> +            return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
+> +        }
+>           memcpy((uint8_t *)&ct3d->bank_sparing_wr_attrs + hdr->offset,
+>                  mem_sparing_write_attrs, bytes_to_copy);
+>           set_feat_info->data_size += bytes_to_copy;
+> @@ -1905,6 +1925,10 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+>               return CXL_MBOX_UNSUPPORTED;
+>           }
+> 
+> +        if ((uint32_t)hdr->offset + bytes_to_copy >
+> +            sizeof(ct3d->rank_sparing_wr_attrs)) {
+> +            return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
+> +        }
+>           memcpy((uint8_t *)&ct3d->rank_sparing_wr_attrs + hdr->offset,
+>                  mem_sparing_write_attrs, bytes_to_copy);
+>           set_feat_info->data_size += bytes_to_copy;
+> --
+> 2.43.0
+> 
 
-The target-hardware address is also zeroed rather than populated like 
-QEMU’s existing RARP builder.
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-> +
-> +    qemu_send_packet_raw(qemu_get_queue(core->owner_nic), buf, sizeof(buf));
-
-RARP is injected directly into the PF backend, bypassing normal VF TX 
-VLAN insertion. A VLAN-configured VF therefore announces itself 
-untagged, so the bridge may learn the wrong VLAN or discard it.
-
-Regards,
-Akihiko Odaki
-
-> +}
-> +
->   static void igb_core_vf_unquiesce(IgbVfState *s)
->   {
->       IgbVfMigState *ms = &s->mig;
-> @@ -632,6 +662,9 @@ static void igb_core_vf_unquiesce(IgbVfState *s)
->       if (re) {
->           igb_core_vf_rearm_irqs(core, s->vfn);
->       }
-> +
-> +    /* TODO : RARP should be sent only if resumed */
-> +    igb_core_vf_send_rarp(core, s->vfn);
->   }
->   
->   /* ================================================================
-> diff --git a/hw/net/trace-events b/hw/net/trace-events
-> index f4940e3e176d..1e38d9ab3697 100644
-> --- a/hw/net/trace-events
-> +++ b/hw/net/trace-events
-> @@ -312,6 +312,8 @@ igb_core_dirty_track_dma(int vfn, uint64_t addr, uint64_t len) "VF%d: dirty DMA
->   igb_core_dirty_track_dma_drop(int vfn, uint64_t addr, uint64_t len) "VF%d: dirty DMA dropped addr=0x%"PRIx64" len=%"PRIu64" no matching range"
->   igbvf_mig_quiesce(uint16_t vfn, uint32_t vfre, uint32_t vfte) "VF%u: quiesce VFRE=0x%x VFTE=0x%x"
->   igbvf_mig_unquiesce(uint16_t vfn, uint32_t vfre, uint32_t vfte) "VF%u: unquiesce VFRE=0x%x VFTE=0x%x"
-> +igbvf_mig_no_mac(uint16_t vfn) "VF%u: no MAC address found, skipping RARP"
-> +igbvf_mig_send_rarp(uint16_t vfn, uint8_t b0, uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t b5) "VF%u: RARP %02x:%02x:%02x:%02x:%02x:%02x"
->   
->   # spapr_llan.c
->   spapr_vlan_get_rx_bd_from_pool_found(int pool, int32_t count, uint32_t rx_bufs) "pool=%d count=%"PRId32" rxbufs=%"PRIu32
+I'll pick this up for my next PR if nobody minds.
 
 
