@@ -4,93 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0F57C531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:53:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CEDBC531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:53:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woJt5-0008N7-Qi; Mon, 27 Jul 2026 07:52:51 -0400
+	id 1woJrk-0004zt-4P; Mon, 27 Jul 2026 07:51:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1woJt4-0008MR-E4
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:52:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1woJrU-0004wn-2J; Mon, 27 Jul 2026 07:51:14 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1woJt2-0003oh-U8
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:52:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785153168;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=I/0isXKD3/hBm2hphOJMNjEF/saHYsIPIuvxzEaJYnA=;
- b=cKpJZ4QO1rP0/HbSVkWUmJn9sqLEwQFRCYjrMc7uf/oiNXUzbpcTI48gRLroeNm3yQPYYr
- c3ZuR0SfVohFADgBgz3uj5bEAR2i3bTgFxar1sjPaYhN978KPlfEAOFtstOGm+Ln5zp/iz
- xkWJoqe7i1oxPq9wKBWwa79wswWSBqQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-458-MhzpsPIYOlO7VgUDfH-Q9w-1; Mon,
- 27 Jul 2026 07:52:46 -0400
-X-MC-Unique: MhzpsPIYOlO7VgUDfH-Q9w-1
-X-Mimecast-MFC-AGG-ID: MhzpsPIYOlO7VgUDfH-Q9w_1785153165
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AA5B718015DF; Mon, 27 Jul 2026 11:52:45 +0000 (UTC)
-Received: from localhost (unknown [10.44.24.5])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 896B11955F78; Mon, 27 Jul 2026 11:52:43 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 27 Jul 2026 15:51:22 +0400
-Subject: [GIT PULL 13/23] hw/display/virtio-gpu-rutabaga: zero-init capset
- info response
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1woJrR-0003bY-Kw; Mon, 27 Jul 2026 07:51:11 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66RAIRon1921906; Mon, 27 Jul 2026 11:51:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=cinOn7EZUswlo4m4E
+ SBe3xqFp5wap0QF3wBx+OjvrGI=; b=sTa19WlvyAqVDrzYBs82M0xqpNpo1GSR8
+ oXD4D6o3ZfEyJkAkQ5xNZ3L4TdV+tizRM28NDY3520dOCSdLb96glnLFAy1m7c2y
+ Ez29ElygV00oD7UjhobupywobV8yHv+g8xlJPhfloa8fwNz4g8pkfn0XCY35zCJ2
+ zYcmPvmRvYZPz7Df7uRW4ziwu+CIVmpWMv/dobyskXyuI1R5Ett6YyH0KV4gnQ2M
+ m1vdhO0zAMNua8rbad8rIdS34GPMSgXVygfLRoG3BlZguIqS2pgJud4hYkhc4RwO
+ qoicNGyPjwQPfOh0K/NPNqRpLcObsN0U9Rqr6MhXN7+YmHgLpRfyw==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuw77t5y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Jul 2026 11:51:05 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66RBfJhL016262;
+ Mon, 27 Jul 2026 11:51:04 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fn9pg510x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Jul 2026 11:51:04 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66RBp2HJ31523480
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 27 Jul 2026 11:51:02 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 87E305803F;
+ Mon, 27 Jul 2026 11:51:02 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EA3CD58056;
+ Mon, 27 Jul 2026 11:50:59 +0000 (GMT)
+Received: from b35lp69.lnxne.boe (unknown [9.87.84.240])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 27 Jul 2026 11:50:59 +0000 (GMT)
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
+To: Cornelia Huck <cohuck@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Joshua Daley <jdaley@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Jared Rossi <jrossi@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH 2/5] s390x/ipl: validate num_comp against iplb length before
+ iterating
+Date: Mon, 27 Jul 2026 13:50:49 +0200
+Message-ID: <20260727115052.24289-3-borntraeger@linux.ibm.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260727115052.24289-1-borntraeger@linux.ibm.com>
+References: <20260727115052.24289-1-borntraeger@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260727-fix-v1-13-ca3fa3851347@redhat.com>
-References: <20260727-fix-v1-0-ca3fa3851347@redhat.com>
-In-Reply-To: <20260727-fix-v1-0-ca3fa3851347@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1561;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=r58tj1oUeJZbOynomaBno1bx+WtjtaCGEeJ5HQ+OHNw=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZ0Y/SUbhFSMMVsWZ4VgcsfHu1GsSztRcEwiEU
- C8qteFx+WeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamdGPwAKCRDa6OEJdZac
- 5c9hEACZttDd77GO+gOv37BXbSohLFjjY6ZJW48jFJ1RQ08txpECNV+C0iIUtVLle76dypxSSCt
- 1UR6g6RMGDooOFXM1+1CpGSAGkU0AVx7gIoX68D+ApSYdiavzD3KswD6+tZu2PmC3UtHxnJbhVV
- JKcPgbSnSjykQSqNEtSZOWls5L7uMQU9BlUKxTrOVoOBkKmzTNKRy+rV8fd3FKXZj4Lp2qoMAKm
- PyOBPvlUvtMeXulCMcewQ/yksoy6HZ1bVH4xbLGFU6CpRBZ0KE9wJbmNv7FC6umcT8pO8nNqZb+
- v4hisH+oOUasgDPG36VZkRaekdyTG4GBcDVCyObgcExhhgXFmZwwLiRNkYaoUISQpZV/AeicHnP
- uZXHvI/vOwdGro92MjDevlaHPaHLxChYkyVPZ5xbv1N7dm59TFZwsXy6RnkcN1LWrD00TrCd1rf
- XVronA/NlN6bfQiwPEJtgG89W45LFpJWfLhFp0Nt+F0MtFI1fBccC+gTlAYhq8/QhkRs+21Jt7Q
- 8h4kHT+4QU2kb/aL/1PT6t5ssxgXzIb6AhJBEYNHL9ui65xBMSNAwlodG3x+gaBIdQ3CC2gUrI/
- yMN/1mFifMHEvgRQuahn7cGUoc1+vPag1indxyaJk0JfPwRRItGJEJV5NC05sw+iChBlSTen2Ct
- ppAd6wIVOwqE1pA==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 7krlJ-0RR7aSYbWViqpd66Hih9cmGFow
+X-Proofpoint-ORIG-GUID: 7krlJ-0RR7aSYbWViqpd66Hih9cmGFow
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDExNiBTYWx0ZWRfXyOyOIC7K//E4
+ jLUvQiTPqWdlWGbU+zbe2KAb6TTcJM7J25H1C0dQBRnt0nqAXopZQTStUPRTDZlM++g5IwkFhZU
+ wsw4l45F9wCw5ZQrym4X59AlVoflklKnnN74w3u6vnpGP74M25rB1uEkcSlxeCKjFkBVkGwQZYy
+ osircfqsZT7fdMkisosRhf/fo+mJFrLOemyces2Wv7S/B+lMdMvWInA6pl/yzKyZB0dPhdHrAxO
+ rqiEDA308dFXUbPowfIrhs93qNnfkRJZYGgEhV50D6zbrxJeb5GjIiRZWEXS0/o96NIrYtscPTr
+ EzXTRr9RnEkP//T4gjnaqVgDz5hG60sPHsTQkU5oh29Xgia7uRJFpBCJ74PX8OD7xR48Mx7DbgS
+ uDJDkuyd6PEWgKcJOR+JN9yAdBkPwE4jJDG1SJe+0v2u+LAN+Xx6JFRWgFl598p2DJ0x4vTpYBY
+ DllaY9PRRuabFEg3ttw==
+X-Authority-Analysis: v=2.4 cv=SKFykuvH c=1 sm=1 tr=0 ts=6a674629 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=--xg8yz4SgT6yQT1UFEA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDExNiBTYWx0ZWRfXzUAS4Suk2KcY
+ VwK8Qliw3ifypgUupez12auWVgth7hR7TQEnSQX25hM/Gsqa8jqspB2upxMFmOLdbfmAuiOYTxY
+ 67OlP2WRGmpqZ0FDReWYHUWY9fhQ9Fk=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-27_03,2026-07-24_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607270116
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=borntraeger@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,42 +130,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-rutabaga_cmd_get_capset_info() only fills in capset_id,
-capset_max_version and capset_max_size before sending the response to
-the guest. The remaining fields of struct virtio_gpu_resp_capset_info,
-including hdr.fence_id, hdr.ctx_id and hdr.ring_idx, are left with
-stack garbage and leaked to the guest, including host pointers useful
-for an ASLR bypass.
+From: Joshua Daley <jdaley@linux.ibm.com>
 
-Zero the response first, matching virgl_cmd_get_capset_info().
+In ipl_valid_pv_components(), the upper bound of the for loop,
+ipib_pv->num_comp, is read from guest memory. Before iterating, verify
+that its value will not cause a read beyond the end of the
+IplParameterBlock.
 
-Not a real risk thanks to -ftrivial-auto-var-init=zero, but only with
-gcc >= 12 or clang >= 16.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3609
-Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for gfxstream")
-Reported-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Fixes: c3347ed0d2ee42a7 ("s390x: protvirt: Support unpack facility")
+Signed-off-by: Joshua Daley <jdaley@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 ---
- hw/display/virtio-gpu-rutabaga.c | 2 ++
- 1 file changed, 2 insertions(+)
+ hw/s390x/ipl.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-index 8e6c7a0d5ddc..e28aad94eead 100644
---- a/hw/display/virtio-gpu-rutabaga.c
-+++ b/hw/display/virtio-gpu-rutabaga.c
-@@ -556,6 +556,8 @@ rutabaga_cmd_get_capset_info(VirtIOGPU *g, struct virtio_gpu_ctrl_command *cmd)
+diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
+index fac30763df..ef9c063d90 100644
+--- a/hw/s390x/ipl.h
++++ b/hw/s390x/ipl.h
+@@ -124,6 +124,12 @@ static inline bool ipl_valid_pv_components(IplParameterBlock *iplb)
+         return false;
+     }
  
-     VIRTIO_GPU_FILL_CMD(info);
- 
-+    memset(&resp, 0, sizeof(resp));
++    if (offsetof(IplParameterBlock, pv.components) +
++        ipib_pv->num_comp * sizeof(IPLBlockPVComp) >
++        be32_to_cpu(iplb->len)) {
++        return false;
++    }
 +
-     result = rutabaga_get_capset_info(vr->rutabaga, info.capset_index,
-                                       &resp.capset_id, &resp.capset_max_version,
-                                       &resp.capset_max_size);
-
+     for (i = 0; i < ipib_pv->num_comp; i++) {
+         /* Addr must be 4k aligned */
+         if (ipib_pv->components[i].addr & ~TARGET_PAGE_MASK) {
 -- 
-2.55.0
+2.53.0
 
 
