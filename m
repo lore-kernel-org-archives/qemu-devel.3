@@ -4,66 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C0E2C53219
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 12:13:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B09BC53219
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 12:15:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woKD4-0005q3-6R; Mon, 27 Jul 2026 08:13:30 -0400
+	id 1woKEQ-0006Nd-5W; Mon, 27 Jul 2026 08:14:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikita.shubin@maquefel.me>)
- id 1woKCx-0005pC-Q3
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 08:13:23 -0400
-Received: from forward102a.mail.yandex.net ([178.154.239.85])
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1woKE0-0006MQ-HX
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 08:14:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikita.shubin@maquefel.me>)
- id 1woKCq-0007RG-KR
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 08:13:20 -0400
-Received: from mail-nwsmtp-smtp-production-main-74.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-production-main-74.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c22:d15:0:640:87c2:0])
- by forward102a.mail.yandex.net (postfix) with ESMTPS id 27EDBC0081;
- Mon, 27 Jul 2026 15:13:11 +0300 (MSK)
-Received: by mail-nwsmtp-smtp-production-main-74.vla.yp-c.yandex.net (smtp)
- with ESMTPSA id 7DbxOJxdM8c0-FsufXlFH; 
- Mon, 27 Jul 2026 15:13:09 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=maquefel.me; s=mail;
- t=1785154390; bh=xmQMygj0LNR5rsvGV9k08dwSkAmlmDJhfj6s229zhvw=;
- h=References:Date:In-Reply-To:Cc:To:From:Subject:Message-ID;
- b=Dq8Pi2sOrk661rmKlQCtgJUtAwydetjV8yzsBhj647/7l7dr+Z/SRy99nXhDTBEDR
- xvC/mplTmF9bd4RzgCtClLh6lrPo+5d+aME+FqGugg0+oD8g0zm+N92R63ouEiMuzN
- 1wVRoYNtxN9jyOgOWYAzeKCiQUrXpUdskzXLJWh4=
-Authentication-Results: mail-nwsmtp-smtp-production-main-74.vla.yp-c.yandex.net;
- dkim=pass header.i=@maquefel.me
-Message-ID: <9e4f3fc272c854f496d7c3ce8355df6d3248063f.camel@maquefel.me>
-Subject: Re: [PATCH v2 1/2] semihosting/arm-compat-semi: Fix
- =?UTF-8?Q?auto=E2=80=91strlen?= detection for =?UTF-8?Q?32=E2=80=91bit?=
- targets
-From: Nikita Shubin <nikita.shubin@maquefel.me>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Alex =?ISO-8859-1?Q?Benn=E9e?=	
- <alex.bennee@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, Alistair
- Francis	 <alistair.francis@wdc.com>
-Date: Mon, 27 Jul 2026 15:13:18 +0300
-In-Reply-To: <CAFEAcA-hKu_C9MULJ=8_jktDgujveQRBkGXvgnczPNrTWZfeQA@mail.gmail.com>
-References: <20260727-fix-sign-extended-32-bit-addresses-v2-0-6d6a01efed8a@maquefel.me>
- <20260727-fix-sign-extended-32-bit-addresses-v2-1-6d6a01efed8a@maquefel.me>
- <CAFEAcA-hKu_C9MULJ=8_jktDgujveQRBkGXvgnczPNrTWZfeQA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1woKDy-0007WM-Pq
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 08:14:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785154464;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=B7AYftsPdDtLkdlDOsXtc3pbVkUtvdzqqem7Vbzn+RE=;
+ b=EHnwBoMDvMJI7OlHv6GcCs9UCmbv+DzRuOHs+Pdi8xUZNS/nL+h8ZstQ4OeuHGGArxTpW1
+ uCEhraUqvRkn5I2zWOkgHVx4TYqvExVfYEiwp63YBoBSZv4Txb6ojkjme87xG7bLyAUpzg
+ f3IB+ihqWV+o9gHTYjHO7OJWPdaK8DU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-53-iMBCfNU6MlKdwNyh7Nv8OQ-1; Mon,
+ 27 Jul 2026 08:14:21 -0400
+X-MC-Unique: iMBCfNU6MlKdwNyh7Nv8OQ-1
+X-Mimecast-MFC-AGG-ID: iMBCfNU6MlKdwNyh7Nv8OQ_1785154457
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E0B77195609E; Mon, 27 Jul 2026 12:14:16 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DCF6B18001E0; Mon, 27 Jul 2026 12:14:15 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato
+ <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, Christian
+ Borntraeger <borntraeger@linux.ibm.com>, Jason Herne
+ <jjherne@linux.ibm.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand
+ <david@kernel.org>, Hendrik Brueckner <brueckner@linux.ibm.com>, Joshua
+ Daley <jdaley@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>, Jared
+ Rossi <jrossi@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH 0/5] more hardening fixes for s390
+In-Reply-To: <20260727115052.24289-1-borntraeger@linux.ibm.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Avril Crosse O'Flaherty"
+References: <20260727115052.24289-1-borntraeger@linux.ibm.com>
+User-Agent: Notmuch/0.40 (https://notmuchmail.org)
+Date: Mon, 27 Jul 2026 14:14:13 +0200
+Message-ID: <87ldawsk8a.fsf@redhat.com>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=178.154.239.85;
- envelope-from=nikita.shubin@maquefel.me; helo=forward102a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,71 +95,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2026-07-27 at 11:36 +0100, Peter Maydell wrote:
-> On Mon, 27 Jul 2026 at 08:46, Nikita Shubin
-> <nikita.shubin@maquefel.me> wrote:
-> >=20
-> > The switch from target_ulong to uint64_t broke the mechanism of
-> > passing -1
-> > (0xffffffff) in arg2 to signal validate_strlen() to compute the
-> > string
-> > length automatically. For 32=E2=80=91bit semihosting, detect when arg2 =
-is
-> > 0xffffffff and replace it with 0xffffffffffffffff. This causes an
-> > overflow
-> > to zero, restoring the original behavior of automatic length
-> > calculation.
->=20
-> Why do you think this is a valid thing for the guest to do? The
-> change
-> in this patch is to the SYS_OPEN semihosting call. The spec for that
-> is here:
-> https://github.com/ARM-software/abi-aa/blob/main/semihosting/semihosting.=
-rst#612sys_open-0x01
->=20
-> arg2 is the 3rd word in the argument block, which is documented as:
->=20
-> # An integer that gives the length of the string pointed to by field
-> 1.
-> # The length does not include the terminating null character that
-> must
-> be present.
->=20
-> There's nothing there about -1 being a valid value.
->=20
-> I think this is a bug introduced in commit 5b3f39cb04: it
-> added "allow length parameter to be 0" to a helper function
-> because presumably we need that in some cases where the semihosting
-> ABI passes a pointer to a string without a length. But because it
-> doesn't separate out "length is 0 because ABI doesn't provide one"
-> from "length is provided by guest", that incorrectly allowed the
-> guest to not specify a valid length and QEMU to accept it.
+On Mon, Jul 27 2026, Christian Borntraeger <borntraeger@linux.ibm.com> wrote:
 
-Seems not a bug but intended behavior. Commit 5b3f39cb04 deliberately
-added support for a zero length as a signal to invoke strlen(), as
-documented in both the code comments and the commit message.
+> Cornelia, Eric, Matt,
+>
+> here are 5 more fixes for hardening QEMU against invalid input. Nothing
+> is strictly a security issues as defined in the policy. For example
+> https://qemu-project.gitlab.io/qemu/system/security.html says assert /
+> abort: If triggering the code path requires kernel privileges (or root
+> account access) in the guest, asserts/aborts in QEMU are a self
+> inflicted denial of service. These will not be treated as security
+> flaws, at most hardening bugs.
+> And if anyone can provide invalid boot loader content it can provide
+> anything to boot if secure boot is not available.
+> We should fix those anyway, probably even for 11.1 
 
-Citation:
+Fixing: yes. For 11.1: how easy are they to trigger? For the bios fixes,
+I assume you need a broken/crafted disk image; I assume that for the
+other two, you need some buggy/misbehaving guest. Did you actually
+manage to trigger this via some kind of test case?
 
-```
-    Add helpers to validate the length of the filename string.
-    Prepare for usage by other semihosting by allowing the
-    filename length parameter to be 0, and calling strlen.
-```
+>
+> Conny, I did not rebuild the s390-ccw, I assume you will do that?
 
-So it seems like a regression bug introduced by 6dfbf9b6cfe.
+Yes, the bios rebuild will be done by whoever ends up applying the
+patches.
 
-Before that, open() simply ignored the length argument, so the current
-logic is a conscious improvement, not an error.
+>
+> Christian Borntraeger (1):
+>   hw/char/sclpconsole-lm: avoid guest triggerable assert
+>
+> Joshua Daley (4):
+>   s390x/ipl: validate num_comp against iplb length before iterating
+>   pc-bios/s390-ccw: fix out-of-bounds read in iso_get_file_size()
+>   pc-bios/s390-ccw: bounds-check zipl menu entry index before array
+>     write
+>   pc-bios/s390-ccw: bound zipl menu strlen and replace VLA in
+>     zipl_print_entry
+>
+>  hw/char/sclpconsole-lm.c    |  3 ++-
+>  hw/s390x/ipl.h              |  6 ++++++
+>  pc-bios/s390-ccw/bootmap.c  |  6 ++++--
+>  pc-bios/s390-ccw/helper.h   | 10 ++++++++++
+>  pc-bios/s390-ccw/menu.c     | 36 +++++++++++++++++++++++++++++-------
+>  pc-bios/s390-ccw/s390-ccw.h |  2 +-
+>  6 files changed, 52 insertions(+), 11 deletions(-)
 
-Still in 64=E2=80=91bit mode, passing -1 as arg2 still yields the expected
-result, so there is a bug somewhere =E2=80=94 either in the 32=E2=80=91bit =
-handling or
-in the common logic.
-
->=20
-> thanks
-> -- PMM
-
-Yours, Shubin.
 
