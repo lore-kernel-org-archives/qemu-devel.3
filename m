@@ -4,96 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBCC1C531F9
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 02:48:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77CCDC53200
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 02:49:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woBNR-00013q-0Q; Sun, 26 Jul 2026 22:47:37 -0400
+	id 1woBPO-0001Ry-2F; Sun, 26 Jul 2026 22:49:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tripprobins@gmail.com>)
- id 1woBNI-00012i-MV
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 22:47:28 -0400
-Received: from mail-qk1-x72e.google.com ([2607:f8b0:4864:20::72e])
+ id 1woBPH-0001Ri-Va
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 22:49:32 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tripprobins@gmail.com>)
- id 1woBNG-00034f-Da
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 22:47:27 -0400
-Received: by mail-qk1-x72e.google.com with SMTP id
- af79cd13be357-92e5cb052edso164352985a.2
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 19:47:25 -0700 (PDT)
+ id 1woBPC-0003AX-T1
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 22:49:29 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-c167bda216fso317430066b.2
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 19:49:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785120565; cv=none;
+ d=google.com; s=arc-20260327;
+ b=kPuIqRF1pYEEMWt0ogOTLe2fwsQ/o/vVjI2QAmaxdvue00TcljBI1uUqlu5ogUMnPB
+ TXoUDhHs29E2+sepwPwPIKmvHTyNuxhmLbXfS/KoRfPdRPsMxqw8Zndri7KyTPqg4Oc3
+ Yj2k+1Y5V58vXNZOyz1J23K1Mk+7eNz2DUw3IHfNocO0xhKPwCKxlysAMLQvUb3R7UvJ
+ JVMetF/6jjgD7bev2DgamPJ4QR3qnoW3GgWDej4FnZ453L6BafLUzbVdEXMQYSU99OPT
+ LgZ/bAxAp2MotMNJiBgCSu4NeJeULzCrOxtldtNGDMI/xRgqWWXNp7b37lCjofMbdzrs
+ QIAw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :dkim-signature;
+ bh=M+dh6ql1LDEW7dl1hWUXn2oVvkTaWOdQHRDWDj/flhE=;
+ fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
+ b=ASzAV/XWq88+Qh3zGGwFctXcUDbddZO5C4R7UgrRL+3qP9TbGV4LUcM5kRYd3eCcas
+ KNDFSGqyd5vfx9qDGLuW4hKUI4m2qe4j2JXj5oqQgSPjFRxJN8aL5IqFB/iCgIq7IcAy
+ hUVvm++BDCC+YgvxN3IMhWk9P3B+yn/O8WaTDjMb7kQLq93jDDVg1MkIebhoOhkv81MV
+ qqr5KSf+OQ21odrQo97PXoAJO2u9Wo/OxrVLOFZZ2h8SQAc47JWpFVrKDszXSzf+z97p
+ n4vqxh1cL54SW9joAsCIOXMDnUU9+6YUX1I4ldvcGgNUQ164taE9AG/gJqLvEJtnQW7r
+ 9sxg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785120445; x=1785725245; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:content-type
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=z3bq6eo0G2v8eCJGcTWAORRzCIT9S/JGm0tS1oh/lsQ=;
- b=m2x+wvUfB/KyLehgGGW+A0bs6NAxDYQ9iLndo2ncgAKF6A2/adOitoiTs5BXiHP0cC
- 3UGH7yEGLY9adg8ookr6Sla5/g64RMAKHmbxTLnpQC6cM3V1TyEi11WjUxXWaOHKMst8
- noLxHHr5ynhxC4oFj6/uhmxi8/mNv8rQCQavlmDmIYmZfFC6TCMroxrp0dBqQl5OhI0j
- 62BS+vcHERbNlhZLstkkoVsGW9KxGuK9pcP4zg5hxKVI/XxtG/Ut8i3W59FOpW6/FF8d
- +TrkO9tRLnR7FTjKqc9YxC0K4SF7y17Vy86zcU4qlGQ3F4oMkRn9pOZ04gk/aObC5Zcy
- Ifng==
+ d=gmail.com; s=20251104; t=1785120565; x=1785725365; darn=nongnu.org;
+ h=content-type:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=M+dh6ql1LDEW7dl1hWUXn2oVvkTaWOdQHRDWDj/flhE=;
+ b=qM3CAOXQp07wnxkYKxmiMGU3f5kERhZI1wrXOs8TPvzKFRTj7a8wb3EpGCRF9PkjQE
+ l9EnmCGwRZNwqipSDgnZ0UWlM3fiFPHa7W71YaUFua5nZMyTabRfYOktzX5prIUeKtqW
+ MtHin/IY1EH7OxMK/jsXW2GL0QFxLtCWDROSghYFk3Myj8OBydGvUgCfaq/+lXwEKoh8
+ 0e7PvK9/+LEIU/D4pmnm/oWE8hwrlzTB08a7tSTq6/gKMj21apLQeLiHdzj5FAfMPbEZ
+ x3nJ6sdgQk+C4jcVfsM20GlP9MFZE+QRSWYKAfv9gqaivpJwAhq3wD9vu5b81uvlJkAO
+ TCHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785120445; x=1785725245;
- h=cc:to:message-id:content-transfer-encoding:content-type
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=z3bq6eo0G2v8eCJGcTWAORRzCIT9S/JGm0tS1oh/lsQ=;
- b=oviyW7q9zg3Xpi066h5ChGRAIuGATHsoK/S7ehDQJjy6y1xg8WhAcsBFTELcA/E74Y
- CaKiQPNCgO4ziCaSjN3m2atj3NMsPrYOo3DHdFh5y4H+eNDT3+9eewn9fmsaUQJBZ2yZ
- 3MGkca2Jy5hSzcGZktJ+DRL65PXumrMICI1S397l21LNjexS820Tkat8e0mFSHvUMHDO
- CKOCEMrQIHXiO0ypWmszcIaq+rELH14MJgRde3e2cpTS/d2KasdudKD7HjcSvtECPLT0
- xVMPZMKWtqfVYkvstmtLX7MvCaaQSpHEU+xqS8Y9Q0hLoJ8SJJt0fRAklHaPQq8Vx94q
- CVlQ==
-X-Gm-Message-State: AOJu0YzmqrGY+amcR7x1/NyUeP4Nnrya+XdmXRY5xYRNL23pGU14u7H3
- qV4pEDGBVX1HHqsQps4MlOoWmad0TIwja9dYSIGrhqdpy4Ug7rw14TGBYtSPPpxk
-X-Gm-Gg: AR+sD10rNIwNd/33rqXCx66YQUXeuUrlsxlqkoGnER8ohATykJDkqAjCZut5fa+aezp
- Lvt4Jzw77wUIYBOpZL/qDdfqRdwhDfTHiZT9TkVMhmp+mpgmvTh5zl+e7mSi32r8P29SqJQT5d5
- T8rzv9NZdryEizkngzA3lNkRSnGvRYIIXiHF3ibGMyEsZ3CSbp4YHva1+cQzwMyz3scGHY69m78
- NIp9s7Yzrd3dUNPJRusSFvxhqLp76IdaYsW9/6mNvCv4c1pj5/KDOYzrAz03GbHjCxSp1ouT7F+
- jxfP24/e396EvJ6XQ3Y+7Je+to94f0gFCD4vKryblhgZygFJCjb7FhqYy76mO97s61+XMa9xw9d
- bOSQGZ/q2279m3srgTa0mU14MyXo3bQHa4TD01YtWSXG96U/UZ4j9FCUUYe8tYPkBB6D7u3PoUf
- CwFl0LJA==
-X-Received: by 2002:a05:620a:a0da:10b0:931:3d6:18fe with SMTP id
- af79cd13be357-932df751da3mr501002985a.64.1785120444923; 
- Sun, 26 Jul 2026 19:47:24 -0700 (PDT)
-Received: from [127.0.1.1] ([2600:4040:5aa1:a000:4c84:45d:753f:5a58])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-932de635f12sm510118485a.25.2026.07.26.19.47.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 Jul 2026 19:47:24 -0700 (PDT)
-From: Tripp R <tripprobins@gmail.com>
-Date: Sun, 26 Jul 2026 22:47:06 -0400
-Subject: [PATCH] added the inpsect block command ('xb') to print the
- contents within a block device to the monitor.
+ d=1e100.net; s=20251104; t=1785120565; x=1785725365;
+ h=content-type:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=M+dh6ql1LDEW7dl1hWUXn2oVvkTaWOdQHRDWDj/flhE=;
+ b=ClBAowlg/PucvLo1Am4XQhiwHeUano27I9HXnZln1qB5y858lec/bf1jARkpylFHuf
+ XWsArkJWriDYHBc30oOK3j+Lpn+a8V3vulpfux/zjL98+639Dbr44kNbY4DB8mFAD7xF
+ itvyJOj3DRVN7R7zxLvWUJSkrgAAlKVPHCwMquUoirN1AH8RLNe8ovnmx1ckOETrVWHl
+ s3z6OC+BosVUkP6VC+uNYmpxs2KOy3LGujhxR5GQKjvU/i1n2r8T0W76eFHRrzUhMP/1
+ tu3Zo6reWYJxZssAdu+4z0DXXUknjwYOeBC8Yd2aJ/HLV8O1a6eOCj39ljLbTMB/ZDfH
+ foTw==
+X-Gm-Message-State: AOJu0YxkVrgWI3QuMY953a43rNNkKUQF0WbmFKkzRg7w6FtxEB3rrKRE
+ L8OETA04ss1irLXRs8MpRn1gqErz1erVmzZqaFHze74xdO4JHg4NMnQgCBe7UtbLfw0IgTeizum
+ bhAWy9gEuHggC1R9kJCTnNGgAJ5ZjFOxdGQJ4
+X-Gm-Gg: AR+sD11NEU9n1Tvh73pTFBLdJ3rN/VulWoaXokzgjndAsX1IwSFoHAHPLGCMhP+KfLY
+ 6QYXDlcXJpCZ6TgVDe4ifgXGiNKnfiGQ2ABjRyAuO8/XMueDoHkUAWO1VokkjXkphEy6i6tjOaj
+ uWSe4C96+sAsHO4oE6xQEJJJYX7fajTqfVpqE4IwMrIDVPaQeyGUhTJ+Dy+NlWbQZgmiQgZOSJx
+ rCCqKqt0nfEgvKTlcPytJ8jExkqoRzl3h4BROmensH9IiUHi2nSqQKoMIaVyuQ=
+X-Received: by 2002:a17:906:fe4b:b0:c16:6469:3f1b with SMTP id
+ a640c23a62f3a-c1f1f159f79mr295705366b.41.1785120564433; Sun, 26 Jul 2026
+ 19:49:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260726-xbcmd-v1-1-0ddbdcf82fcb@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAKnGZmoC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDcyMz3Yqk5NwUXfO0RAsLSwMz8zRDUyWg2oKi1LTMCrA50bG1tQBrKHn
- aVwAAAA==
+References: <20260726-xbhmpcmd-v1-1-45d79d0f28b4@gmail.com>
+In-Reply-To: <20260726-xbhmpcmd-v1-1-45d79d0f28b4@gmail.com>
+From: Tripp R <tripprobins@gmail.com>
+Date: Sun, 26 Jul 2026 22:49:13 -0400
+X-Gm-Features: AUfX_mxJzMaDB72JqeOotQhv1XbTaXH1sFwNQ5MkK5I4Zg0kkKyOD6EFSk0vKvw
+Message-ID: <CAGk4qDxR-KqAVwiop1VmAjFCETvv_U0MCfH_k38nEG7c2sHU5w@mail.gmail.com>
+Subject: Re: [PATCH] clarify address type in 'xb' cmd
 To: qemu-devel@nongnu.org
-Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, 
- Tripp R <tripprobins@gmail.com>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1785120443; l=5896;
- i=tripprobins@gmail.com; h=from:subject:message-id;
- bh=ob3ODSYt/xVJwmYiVgV7i/pWEKmzO4+R5bIxGQXMiHY=;
- b=3oLrjHqaNk83J9nvFr8W4OCODmZ91/0jQEyKBSkWDkIPNtDsACg+xcAbNgbCS0dECEuMGogbc
- 1+COYCDMrCmBP1Z53mWbdHASEJh5LqoGpgnP7iwy9IalPBWyeVoypnC
-X-Developer-Key: i=tripprobins@gmail.com; a=ed25519;
- pk=qwr69xU8AQT+ZZ9TxMEd/Vlg8k8ovtJrkXWQKAiMMNw=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72e;
- envelope-from=tripprobins@gmail.com; helo=mail-qk1-x72e.google.com
+Content-Type: multipart/alternative; boundary="0000000000001fd7ee06578ec5f2"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=tripprobins@gmail.com; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,198 +111,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'xb' (examine block) is almost identical in usage to 'x' and 'xp', having the same targuments for those commands , albeit preceded by a drive name.
+--0000000000001fd7ee06578ec5f2
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
----
-Implemented the xb (examine block) command to print the contents of a block     device to the console.
+Hello David,
 
-It is effectively a clone of the x/xp commands (examine memory / examine        physical memory), having the same arguments for those commands, albeit preceded by the name of a block driver.
+Hope things are going well. Just resubmitted the patch, which should
+(hopefully) be correct this time around.
 
-e.g. usage
-         xd floppy0 /510c 0
+On another note, I noticed a minor bug in the memory_dump (x) command, is
+the procedure for opening an issue much different from that of a patch?
 
-Signed-off-by: Tripp R <tripprobins@gmail.com>
----
- hmp-commands.hx       |  14 +++++++
- include/monitor/hmp.h |   1 +
- monitor/hmp-cmds.c    | 104 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 119 insertions(+)
+Best,
+Tripp
 
-diff --git a/hmp-commands.hx b/hmp-commands.hx
-index 7ae2468a3d..db63b58a47 100644
---- a/hmp-commands.hx
-+++ b/hmp-commands.hx
-@@ -472,6 +472,20 @@ ERST
-         .cmd        = hmp_memory_dump,
-     },
- 
-+SRST
-+``xb/``\ *fmt* *addr*
-+  Block memory dump starting at *addr*.
-+ERST
-+
-+    {
-+        .name       = "xb",
-+        .args_type  = "device:s, fmt:/,addr:l",
-+        .params     = "device /fmt addr",
-+        .help       = "block memory dump starting at 'addr'",
-+        .cmd        = hmp_block_dump,
-+    },
-+
-+
- SRST
- ``x/``\ *fmt* *addr*
-   Virtual memory dump starting at *addr*.
-diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-index 9258a049bf..0c3e8a30c2 100644
---- a/include/monitor/hmp.h
-+++ b/include/monitor/hmp.h
-@@ -182,6 +182,7 @@ void hmp_info_local_apic(Monitor *mon, const QDict *qdict);
- void hmp_info_sev(Monitor *mon, const QDict *qdict);
- void hmp_info_sgx(Monitor *mon, const QDict *qdict);
- void hmp_info_via(Monitor *mon, const QDict *qdict);
-+void hmp_block_dump(Monitor *mon, const QDict *qdict);
- void hmp_memory_dump(Monitor *mon, const QDict *qdict);
- void hmp_physical_memory_dump(Monitor *mon, const QDict *qdict);
- void hmp_info_registers(Monitor *mon, const QDict *qdict);
-diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-index e9fb8d827a..5d4a6c6a78 100644
---- a/monitor/hmp-cmds.c
-+++ b/monitor/hmp-cmds.c
-@@ -39,8 +39,12 @@
- #include "system/hw_accel.h"
- #include "system/memory.h"
- #include "system/system.h"
-+#include "system/block-backend-common.h"
-+#include "system/block-backend-io.h"
-+#include "system/block-backend-global-state.h"
- #include "disas/disas.h"
- 
-+
- /* Please update hmp-commands.hx when adding or changing commands */
- static HMPCommand hmp_info_cmds[] = {
- #include "hmp-commands-info.h"
-@@ -584,6 +588,89 @@ void hmp_info_registers(Monitor *mon, const QDict *qdict)
-     }
- }
- 
-+
-+static void block_dump(Monitor *mon, BlockBackend* blk, int count, int format, 
-+    int wsize, int64_t offset)
-+{
-+    uint8_t buf[16];
-+
-+    uint16_t max_digits = 0;
-+
-+    switch (format) {
-+    case 'o':
-+        max_digits = DIV_ROUND_UP(wsize * 8, 3);
-+        break;
-+    default:
-+    case 'x':
-+        max_digits = (wsize * 8) / 4;
-+        break;
-+    case 'u':
-+    case 'd':
-+        max_digits = DIV_ROUND_UP(wsize * 8 * 10, 33);
-+        break;
-+    case 'c':
-+        wsize = 1;
-+        break;
-+    }
-+
-+
-+    while (count > 0) {
-+        int bytes = MIN(16, count * wsize);
-+
-+        if (blk_pread(blk, offset, bytes, buf, 0) < 0) {
-+            monitor_printf(mon,
-+                           "Read failed at 0x%" PRIx64 "\n",
-+                           offset);
-+            return;
-+        }
-+
-+        monitor_printf(mon, "%08" PRIx64 ": ", offset);
-+
-+        for (int i = 0; i < bytes; i += wsize) {
-+            uint64_t v;
-+
-+            switch (wsize) {
-+            case 1:
-+                v = buf[i];
-+                break;
-+            case 2:
-+                v = lduw_le_p(buf + i);
-+                break;
-+            case 4:
-+                v = ldl_le_p(buf + i);
-+                break;
-+            case 8:
-+                v = ldq_le_p(buf + i);
-+                break;
-+            default:
-+                v=0;
-+            }
-+            switch (format) {
-+            case 'o':
-+                monitor_printf(mon, "0%*" PRIo64, max_digits, v);
-+                break;
-+            case 'x':
-+                monitor_printf(mon, "0x%0*" PRIx64, max_digits, v);
-+                break;
-+            case 'u':
-+                monitor_printf(mon, "%*" PRIu64, max_digits, v);
-+                break;
-+            case 'd':
-+                monitor_printf(mon, "%*" PRId64, max_digits, v);
-+                break;
-+            case 'c':
-+                monitor_printc(mon, v);
-+                break;
-+            }
-+        }
-+
-+        monitor_printf(mon, "\n");
-+
-+        offset += bytes;
-+        count -= bytes / wsize;
-+    }
-+}
-+
- static void memory_dump(Monitor *mon, int count, int format, int wsize,
-                         uint64_t addr, bool is_physical)
- {
-@@ -692,6 +779,23 @@ static void memory_dump(Monitor *mon, int count, int format, int wsize,
-     }
- }
- 
-+void hmp_block_dump(Monitor *mon, const QDict *qdict)
-+{
-+    int count = qdict_get_int(qdict, "count");
-+    int format = qdict_get_int(qdict, "format");
-+    int size = qdict_get_int(qdict, "size");
-+    vaddr addr = qdict_get_int(qdict, "addr");
-+    const char* dblock = qdict_get_str(qdict, "device");
-+
-+    BlockBackend *blk = blk_by_name(dblock);
-+
-+    if (!blk) {
-+        monitor_printf(mon, "Invalid block device name '%s'.\n\r", dblock);
-+        return;
-+    }
-+    block_dump(mon,blk, count, format, size, addr);
-+}
-+
- void hmp_memory_dump(Monitor *mon, const QDict *qdict)
- {
-     int count = qdict_get_int(qdict, "count");
+On Sun, Jul 26, 2026 at 12:50=E2=80=AFAM Tripp R <tripprobins@gmail.com> wr=
+ote:
 
----
-base-commit: 443e02410695b35a27fad18217424b6370358be7
-change-id: 20260726-xbcmd-7fa889067f15
+>
+>
+> ---
+> Implemented the xb (examine block) command to print the contents of a
+> block     device to the console.
+>
+> It is effectively a clone of the x/xp commands (examine memory / examine
+>       physical memory), having the same arguments for those commands,
+> albeit preceded by the name of a block driver.
+>
+> e.g. usage
+>          xd floppy0 /510c 0
+>
+> Signed-off-by: Tripp R <tripprobins@gmail.com>
+> ---
+>  hmp-commands.hx | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/hmp-commands.hx b/hmp-commands.hx
+> index db63b58a47..26b7cadcf2 100644
+> --- a/hmp-commands.hx
+> +++ b/hmp-commands.hx
+> @@ -481,7 +481,7 @@ ERST
+>          .name       =3D "xb",
+>          .args_type  =3D "device:s, fmt:/,addr:l",
+>          .params     =3D "device /fmt addr",
+> -        .help       =3D "block memory dump starting at 'addr'",
+> +        .help       =3D "block memory dump starting at 'addr', in units =
+of
+> bytes.",
+>          .cmd        =3D hmp_block_dump,
+>      },
+>
+>
+> ---
+> base-commit: bcc42fe49f7aae8982604900e307d783615bc79c
+> change-id: 20260726-xbhmpcmd-e8c82287a035
+>
+> Best regards,
+> --
+> Tripp R <tripprobins@gmail.com>
+>
+>
 
-Best regards,
--- 
-Tripp R <tripprobins@gmail.com>
+--0000000000001fd7ee06578ec5f2
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr"><div><div><div><div>Hello David,<br><br></div>Hope things =
+are going well. Just resubmitted the patch, which should (hopefully) be cor=
+rect this time around.<br><br></div>On another note, I noticed a minor bug =
+in the memory_dump (x) command, is the procedure for opening an issue much =
+different from that of a patch?<br><br></div>Best,<br></div>Tripp</div><br>=
+<div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"=
+gmail_attr">On Sun, Jul 26, 2026 at 12:50=E2=80=AFAM Tripp R &lt;<a href=3D=
+"mailto:tripprobins@gmail.com">tripprobins@gmail.com</a>&gt; wrote:<br></di=
+v><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
+r-left:1px solid rgb(204,204,204);padding-left:1ex"><br>
+<br>
+---<br>
+Implemented the xb (examine block) command to print the contents of a block=
+=C2=A0 =C2=A0 =C2=A0device to the console.<br>
+<br>
+It is effectively a clone of the x/xp commands (examine memory / examine=C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 physical memory), having the same arguments for th=
+ose commands, albeit preceded by the name of a block driver. <br>
+<br>
+e.g. usage<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0xd floppy0 /510c 0<br>
+<br>
+Signed-off-by: Tripp R &lt;<a href=3D"mailto:tripprobins@gmail.com" target=
+=3D"_blank">tripprobins@gmail.com</a>&gt;<br>
+---<br>
+=C2=A0hmp-commands.hx | 2 +-<br>
+=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
+<br>
+diff --git a/hmp-commands.hx b/hmp-commands.hx<br>
+index db63b58a47..26b7cadcf2 100644<br>
+--- a/hmp-commands.hx<br>
++++ b/hmp-commands.hx<br>
+@@ -481,7 +481,7 @@ ERST<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0.name=C2=A0 =C2=A0 =C2=A0 =C2=A0=3D &quot=
+;xb&quot;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0.args_type=C2=A0 =3D &quot;device:s, fmt:=
+/,addr:l&quot;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0.params=C2=A0 =C2=A0 =C2=A0=3D &quot;devi=
+ce /fmt addr&quot;,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 .help=C2=A0 =C2=A0 =C2=A0 =C2=A0=3D &quot;bloc=
+k memory dump starting at &#39;addr&#39;&quot;,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 .help=C2=A0 =C2=A0 =C2=A0 =C2=A0=3D &quot;bloc=
+k memory dump starting at &#39;addr&#39;, in units of bytes.&quot;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0.cmd=C2=A0 =C2=A0 =C2=A0 =C2=A0 =3D hmp_b=
+lock_dump,<br>
+=C2=A0 =C2=A0 =C2=A0},<br>
+<br>
+<br>
+---<br>
+base-commit: bcc42fe49f7aae8982604900e307d783615bc79c<br>
+change-id: 20260726-xbhmpcmd-e8c82287a035<br>
+<br>
+Best regards,<br>
+-- <br>
+Tripp R &lt;<a href=3D"mailto:tripprobins@gmail.com" target=3D"_blank">trip=
+probins@gmail.com</a>&gt;<br>
+<br>
+</blockquote></div>
+
+--0000000000001fd7ee06578ec5f2--
 
