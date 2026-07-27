@@ -4,62 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71C2EC531C9
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 15:58:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AC82C531C9
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 15:59:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woNhs-0003Hw-CN; Mon, 27 Jul 2026 11:57:32 -0400
+	id 1woNjo-0004Yo-Fv; Mon, 27 Jul 2026 11:59:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
- id 1woNhq-0003Gb-CV; Mon, 27 Jul 2026 11:57:30 -0400
-Received: from m16.mail.163.com ([117.135.210.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
- id 1woNhm-0006LR-T0; Mon, 27 Jul 2026 11:57:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=zY
- 7E7E19l8gZKfs7dEt/TTZQ7d9Ks5NskwbKsi7QjsI=; b=kCO8xQGlLVF9s6FVzD
- 2nATocM1+zkVOSeZ2xVSIg7Lr+8t04c8fRK3o7Dlvj6LoS2Wjk3KTSlSaHm/IT5v
- a6aOq9FC+xHMdssHBTe8MmKEMS+MVt6AvCbJTMpjpO0Y2qImldBqMg01pksyDzNe
- 8hEL/tpbTK9dl2qqfTzK+LSfQ=
-Received: from dt-VM.localdomain (unknown [])
- by gzga-smtp-mtada-g0-0 (Coremail) with SMTP id
- _____wC3HpHQf2dqJpF_Kw--.27173S2; 
- Mon, 27 Jul 2026 23:57:04 +0800 (CST)
-From: Tao Ding <dingtao0430@163.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, pbonzini@redhat.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- chao.liu@processmission.com, farosas@suse.de, lvivier@redhat.com,
- pierrick.bouvier@oss.qualcomm.com, caojunze424@gmail.com,
- Tao Ding <dingtao0430@163.com>
-Subject: [PATCH v2 0/7] K230: add gsdma and decomp_gzip
-Date: Mon, 27 Jul 2026 23:56:55 +0800
-Message-ID: <20260727155702.36484-1-dingtao0430@163.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1woNji-0004YY-TO
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 11:59:27 -0400
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1woNjh-0006Vs-E9
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 11:59:26 -0400
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-6689f36ae56so3883598d50.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 08:59:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785167964; cv=none;
+ d=google.com; s=arc-20260327;
+ b=PPa40HoMRzs5zz6YqxIf3EZNIEh6OH+Mgtpn2wxp7waCmyrOIAISPxE+WgMVr0tuJG
+ STfOX/wTCDV8GZjd9B1TzBZbMjnvzLbjGveN4TAOoxFFixE503+yzzJphxD2hyOyksTs
+ bg8GgcZIhZUXi3wWOWMnhX+J0AFCrJpRQRVZSWK/ZpRGca6LhMF55PiKHGzpuw+mUOSQ
+ U4rHfKtWtF4Lq7fQoAkjfGmexkgApLeaNF36ygVVF1sRcbz/7eVJTwLnnRbnIF9NOxLs
+ Mz+wgSkXfhPYJnwS2pi4HczwbEzPagJQETtMgMMjsY5VF7eNMGLzkmcdi9lvbK/gfhnl
+ uIMQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :dkim-signature;
+ bh=LzCA0dcBWw9zMpBSkkCLQ5WnVwl27Gu831ToutkkOXc=;
+ fh=is0PmghpAaD8HWE2NeKY0gf5ol8lwYlrfMQpiQ6YqX8=;
+ b=gqzYmcFbPNu+MOYwM+vnFQjY04+HG2OaTb67BuYaOM1ssFKWVb/XAJugGpyZIrBcjR
+ cNd6LyVCbpdnFbA5L4Dj3KGEKURwUqIAV96At/EVqyZfFE9U+Itdpj4haFitKV2TeqSk
+ Bpg8eI84WX+9cMRCZ2H4t79VhQhnyKLe31wl3Y/6aXWx+8ZdJEUvYNX9SPqyw9b6of2O
+ /pqGg4Z8A9yDdUO6L2TdEcAiFkGp1ML1yC9se1Str3PlSfQYdvKibIwldFYPtE8eoSzH
+ crHzLQmxGJGivb+iFnTeSTO3t4qhmy9XqE9mmv7HFU56s6pr1gKYGCtMJxiLOcBPlvJd
+ UHbw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1785167964; x=1785772764; darn=nongnu.org;
+ h=content-type:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=LzCA0dcBWw9zMpBSkkCLQ5WnVwl27Gu831ToutkkOXc=;
+ b=R/9Dnue3xrj30dNVAxd0uVKHbDQBCY99W/Fjn1z32o3+YqclJ9iblt9Y5IvNvUnwz/
+ CStJTqceblWg2BWiUAkZhGVp/9JqQxCus/0VvdJ0rR+HLO4bxWfKzNpm9zluHMQfk9S8
+ 6XRMob4uqKMJltHwAJRF+lRcyQbUjU7hNkRp1jSc8jvmT1bCe8x3zMIQDibEg+TIQuBX
+ oTPZEn0vtcyG2esuFV7CaK1TYnFNX2376uTHSmnfKWQKj14GeDOy1ZcIUDD0WwJcaMrX
+ hnXRmCVKDqTkImKc8Zu9tumM7qJDgrWJWBScfjd1yJ/PY1YffYFy+26et2/PZkrEJTwk
+ aYkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785167964; x=1785772764;
+ h=content-type:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=LzCA0dcBWw9zMpBSkkCLQ5WnVwl27Gu831ToutkkOXc=;
+ b=RfmiJ3AHGi1TzBvnlNUQocU+zJcWgO7jyrmWX+ogkdMK+rpyJOm0Y9cjmOjmOxhpMw
+ rexmZWj8fw7dhLpTwi+ccEBxicxGABtzXFTfD+k5+67dakJ5nAQdePMQSXXD8ymuujP9
+ +R8QG+5rNzsJ3cxtLr5RkhL5D2b/kzRwQfAqSfl8W6MsodqmBnnOzW1v7Jw+zR2Jgzrj
+ mnIrqFKyWnNdqsD43QY1Qlffiyj4u2A4xkvIKN2ptRHrtqUsJIuhI7jyoBtFwNQ1HMyv
+ n7AaSe/ksORr06LDCjvJnl87exL3K36uok9wrUOLgUWczRV9eUcWLLYaTV//Hga85m1R
+ VIVg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoMYNOBwlfdLvqOCf+r8FnNzv0S+Ua5n/P8ZGnd1nZbXgLyOOw3C2l9Fgz3y7XtbnSrayZQX1xVJaa+@nongnu.org
+X-Gm-Message-State: AOJu0Yxhl9qlpk7irJFCDEx5TJOYVANFQi65ofA19EnWKe2104z3UdSy
+ y/LyiHGPajz2OWXZh1UqSX4Akh5DKRQKfxJAQqGZSZ/GHXxemUDASBOBzKSxQ3Y0A5ffoefOgfj
+ V5wcyeGSxdcZGbjCl/q5fH/FYjGJXKgG5Ub8FPMeEtA==
+X-Gm-Gg: AR+sD136Czs0gt7Y/Nc7b5k023WR1L3DaukEQy7U5UeZtvey0qrXeHyivl3yBqw+EhJ
+ iKO8pprNyQ9B/4eBih6uWeMTtNmxBLrxcn5o4W7TQ6y7hY7i+LahUABj+Xgl38uRLYfJMywzazG
+ fvB53QY5wTkkLzDKDsz9Ws6aPBLPZN0n7k3i4Nc5ebQacyRr/FeVRs5hy9JXjgGQ17dFtRb8kQb
+ 1Yitd/LeJDuDB4rryHcAMt2Lv4GbdWuhRgiVakymCTxA0JJ5N7X9eF8hKvTU5NZnY5/b/lYvACV
+ GWJPe/dpF8QzW8zOAN1v9vx1pgEjq2Lj6oT82OzOo7XA+g==
+X-Received: by 2002:a53:d045:0:10b0:668:311a:d444 with SMTP id
+ 956f58d0204a3-668c7c31410mr2054205d50.106.1785167963650; Mon, 27 Jul 2026
+ 08:59:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wC3HpHQf2dqJpF_Kw--.27173S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxAr15Jw1DJF4rJF48tFWxtFb_yoW5GFyxp3
- sxCrnYkr4I9r1fJrW3Gr47tryFvayrGr15GrnrW345ZrW3tF45tFs2qa4FyrW3Jw4qg34x
- uF1vkr1fur17ZaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pimsjUUUUUU=
-X-Originating-IP: [119.4.23.14]
-X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC-hCIxmpnf9APhgAA3L
-Received-SPF: pass client-ip=117.135.210.5; envelope-from=dingtao0430@163.com;
- helo=m16.mail.163.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260706173324.804340-1-peter.maydell@linaro.org>
+ <CAFEAcA-C4t+=KYiX5sk_Fj528u2MkB4AE74gC1yrWTzAxmTYew@mail.gmail.com>
+In-Reply-To: <CAFEAcA-C4t+=KYiX5sk_Fj528u2MkB4AE74gC1yrWTzAxmTYew@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 27 Jul 2026 16:59:11 +0100
+X-Gm-Features: AUfX_mw6ZDsX8z5Uy4FWAFW2YWnUqtzXC94srrSFLgVBsAoAvrNiIX6wwTpZdwc
+Message-ID: <CAFEAcA8rFv3B5r8ZjwD080NO9mpc640QLsy0_bugkADKYBPz8g@mail.gmail.com>
+Subject: Re: [PATCH 0/3] hw/display/exynos4210_find: Clamp windows to screen
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,84 +115,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all,
+ping^2?
 
-This patch series adds GSDMA and Decomp_gzip to the K230 board.
-Enable k230 to use k230_unzip to decompress files during the u-boot phase.
+-- PMM
 
-This series includes the following features:
-
-*patch1: add K230 gsdma which supports sdma, gdma is temporarily not supported
-*patch2: add gsdma to K230 board
-*patch3: add K230 gsdma qtest
-*patch4: add K230 decomp_gzip which decompress data work with sdma
-*patch5: add decomp_gzip to K230 board
-*patch6: add K230 decomp_gzip qtest
-*patch7: add a noc-stub region in K230 board
-
-patchv1 is posted in:
-https://lore.kernel.org/qemu-devel/20260721161335.73872-1-dingtao0430@163.com/
-
-Changes in v2:
-*patch1: 
-  add endian conversion
-  replace reset method
-  update MAINTAINERS
-  fixed the bug not clear enable register after dma finish
-  fixed the bug in 2d-mode and src_fixed scr_addr should not increment
-*patchv2:
-  update K230 rst
-*patch3:
-  update MAINTAINERS
-*patch4:
-  replace reset method
-  check dynamic huffman format in compressed data
-  fixed the bug of read a write only bit in DECOMP_START register
-  update MAINTAINERS
-  update K230 rst
-*patch6:
-  compressed data is re generated using dynamic Huffman method,
-  with added annotations and explanations
-  update MAINTAINERS
-
-Tao Ding (7):
-  hw/dma: add K230 gsdma
-  hw/riscv: k230: add gsdma in K230 board
-  tests/qtest: add test for K230 gsdma
-  hw/misc: add K230 decomp gzip
-  hw/riscv: k230: add decomp gzip in K230 board
-  tests/qtest: add test for K230 decomp gzip
-  hw/riscv: k230: add a noc stub region in K230 board
-
- MAINTAINERS                         |   6 +
- docs/system/riscv/k230.rst          |   2 +
- hw/dma/Kconfig                      |   3 +
- hw/dma/k230_gsdma.c                 | 562 ++++++++++++++++++++++++++++
- hw/dma/meson.build                  |   1 +
- hw/dma/trace-events                 |   6 +
- hw/misc/Kconfig                     |   3 +
- hw/misc/k230_decomp_gzip.c          | 508 +++++++++++++++++++++++++
- hw/misc/meson.build                 |   1 +
- hw/misc/trace-events                |   4 +
- hw/riscv/Kconfig                    |   2 +
- hw/riscv/k230.c                     |  38 +-
- include/hw/dma/k230_gsdma.h         | 130 +++++++
- include/hw/misc/k230_decomp_gzip.h  |  92 +++++
- include/hw/riscv/k230.h             |   5 +
- tests/qtest/k230-decomp-gzip-test.c | 200 ++++++++++
- tests/qtest/k230-gsdma-test.c       | 201 ++++++++++
- tests/qtest/meson.build             |   2 +-
- 18 files changed, 1758 insertions(+), 8 deletions(-)
- create mode 100644 hw/dma/k230_gsdma.c
- create mode 100644 hw/misc/k230_decomp_gzip.c
- create mode 100644 include/hw/dma/k230_gsdma.h
- create mode 100644 include/hw/misc/k230_decomp_gzip.h
- create mode 100644 tests/qtest/k230-decomp-gzip-test.c
- create mode 100644 tests/qtest/k230-gsdma-test.c
-
-
-base-commit: 300438ffbb8d9430cac2fcc15cba6f482b2c0587
--- 
-2.43.0
-
+On Mon, 20 Jul 2026 at 09:40, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> Ping for code review, please?
+>
+> thanks
+> -- PMM
+>
+> On Mon, 6 Jul 2026 at 18:33, Peter Maydell <peter.maydell@linaro.org> wrote:
+> >
+> > The exynos4210_fimd device has a setup where the guest can program
+> > both the overall size of the LCD screen and also the corners of
+> > "windows" that define where the guest memory should appear on that
+> > screen. The current code assumes that the guest is sensible and
+> > puts the corners of windows inside the overall screen. If it doesn't
+> > then we will try to copy data to an address that is outside the
+> > interfal framebuffer memory that we allocate to be the size of the
+> > screen.
+> >
+> > This patchset clamps the window coordinates to be within the screen
+> > size. Patches 1 and 2 are simple refactorings to make the third
+> > patch easier to read.
+> >
+> > This fixes https://gitlab.com/qemu-project/qemu/-/work_items/3795
+> >
+> > thanks
+> > -- PMM
+> >
+> > Peter Maydell (3):
+> >   hw/display/exynos4210_fimd: Factor out finding screen width/height
+> >   hw/display/exynos4210_fimd: Pass width to draw_line functions
+> >   hw/display/exynos4210_fimd: Clamp windows to screen size
+> >
+> >  hw/display/exynos4210_fimd.c | 54 ++++++++++++++++++++++++++----------
+> >  1 file changed, 39 insertions(+), 15 deletions(-)
 
