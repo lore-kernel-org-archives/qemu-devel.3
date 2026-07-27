@@ -4,120 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11A16C531FC
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 15:05:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDAD2C531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 15:07:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woMsR-0006qm-OU; Mon, 27 Jul 2026 11:04:23 -0400
+	id 1woMv2-0007cs-Jm; Mon, 27 Jul 2026 11:07:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1woMsQ-0006qY-2Y; Mon, 27 Jul 2026 11:04:22 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1woMv0-0007cQ-VR
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 11:07:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1woMsO-0007Gw-Kl; Mon, 27 Jul 2026 11:04:21 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66RDnOZl2298531; Mon, 27 Jul 2026 15:04:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=UXUCeZ
- ZE2O5H4dzJ3KnJAwNt9hYvLbh2wJM+6s74HtA=; b=LDqrCK/2VoPHbX1IHjd7kk
- 6HwaS1Y2+y5JvV4TYYJM86UUj2SaWLUiqCBjSaTe3lm43Vody4HVCRBP/MtebyKR
- v1kmWplnComHSqNgISQXdB3K9wM7Yr+M0LM7cuupsdParn83GzXcOqqIWStn4gAb
- YW7nxF6uFLZsN6tT9z1U0MORC42pfv0YJ3JAjRaPQARRr74dNo+gn5ij1SKsjYRB
- smG7QnMY33zRzgAlnBiwNVnW5D5E+ZpZk2AqSWiayZEOQxFuYwtw39BRaWWIFOtf
- MT/tTACGcUbaEkVnDnk8PqYvqlQuZby3JMvjRXSj994jpqj/AvnXPfSxBjwZ+C1A
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuyj076m-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Jul 2026 15:04:16 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66REuPIu007504;
- Mon, 27 Jul 2026 15:04:15 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fna5xwjfs-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Jul 2026 15:04:15 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66RF4EAu30671464
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 27 Jul 2026 15:04:14 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 874BA58052;
- Mon, 27 Jul 2026 15:04:14 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 84DB05805A;
- Mon, 27 Jul 2026 15:04:13 +0000 (GMT)
-Received: from [9.61.157.32] (unknown [9.61.157.32])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 27 Jul 2026 15:04:13 +0000 (GMT)
-Message-ID: <2ad0edd9-4e63-4edf-b036-ad9ed618d02b@linux.ibm.com>
-Date: Mon, 27 Jul 2026 11:04:13 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] s390x/ipl: validate num_comp against iplb length
- before iterating
-To: Christian Borntraeger <borntraeger@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1woMuz-0007lh-FJ
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 11:07:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785164819;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/Tf7TYq1TgIWCvYsC7tVfjbjBVlvuB8Mtjwxvh/hUKE=;
+ b=iAr0wc6Tg+XlLQ8+pTkh5uuu0GovLtLtySK/ltFKfKVaq1mgCN+pBlZJIkPhOKA/3/MTmv
+ Atk4OvTUajCyOqbDC7Kk8M34fCPUgVW4kQKswc8am1sYMXVPDASxSf8DIRjvYsCCMWJJ/c
+ XkGRnQkv2aGHTMj5wMs/wzdxOW4EKKQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-347-hKxtjImzOLShxkPoe50iSw-1; Mon,
+ 27 Jul 2026 11:06:57 -0400
+X-MC-Unique: hKxtjImzOLShxkPoe50iSw-1
+X-Mimecast-MFC-AGG-ID: hKxtjImzOLShxkPoe50iSw_1785164814
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D1A901801A13; Mon, 27 Jul 2026 15:06:53 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 06CE61956041; Mon, 27 Jul 2026 15:06:52 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Christian Borntraeger <borntraeger@linux.ibm.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
- Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Hendrik Brueckner <brueckner@linux.ibm.com>,
- Joshua Daley <jdaley@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Jared Rossi <jrossi@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+ Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato
+ <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, Jason Herne
+ <jjherne@linux.ibm.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand
+ <david@kernel.org>, Hendrik Brueckner <brueckner@linux.ibm.com>, Joshua
+ Daley <jdaley@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>, Jared
+ Rossi <jrossi@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH 0/5] more hardening fixes for s390
+In-Reply-To: <49089127-7189-4bdc-bbf9-5a3ecdc99659@linux.ibm.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Avril Crosse O'Flaherty"
 References: <20260727115052.24289-1-borntraeger@linux.ibm.com>
- <20260727115052.24289-3-borntraeger@linux.ibm.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260727115052.24289-3-borntraeger@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDE0MCBTYWx0ZWRfX41+erDOLSsSJ
- dWfX1PHZFbsgmELvomCz5yRjx5mcT3JTBjEXeVa/1xnZYxdwW6dK7jxZPLyRzcRUDkTM1P1L4+4
- 7bWEHn/LGx0iOrmEh3v8AnWy5NfqHnA=
-X-Proofpoint-GUID: pwolQJzhijxvHgCaGSQXXhsqqHDdjk2S
-X-Proofpoint-ORIG-GUID: pwolQJzhijxvHgCaGSQXXhsqqHDdjk2S
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDE0MCBTYWx0ZWRfX8ABUUV5VLUdO
- 6vYobZ9v9ULX7B/4PNklm9pluDZ/+KQ6jGuXe3DKgtjvKov+FHRV1/IyVvHoloLDLx+ze6JSWWs
- c1vAQQ/iXXZ+nHc1LJo1tOWI4KivZH16n7Yk3d7pvBsfl5Vh3MJAzwxaa9uJn0mqyAX0vG9QAnM
- Ee2LtOVCmJtzJ7UiIMOa/Y1mskH2Yjq6NQsZ7oVylB6rKO2avZ2B/Z5FbxuX4IG0773s7cvAknf
- Iv05OTWekPh2DfCK7UwKnQuVXwUcwNJ4nj090WO9qvupIhAHxT/h0+PFn9H9/RV8iqronanNkei
- PmCBrryrVNY2X/MdMZDAdDQgnJopH/7Qmen7azFQNYWiLxhktGq6HHgmA/1ybPnPV69bBItIftT
- UYWTuTpT7aHrcQkoMlz4GAnIOUvczahb4a+V7d2FuGB6SASw9Hk4xlhKRrG56j7M7nmE5tM5Ek3
- ECIcsDFgR2FClCjM20w==
-X-Authority-Analysis: v=2.4 cv=X5Vi7mTe c=1 sm=1 tr=0 ts=6a677370 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=hY-Focd3OprVRNE3PgAA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-27_04,2026-07-24_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 lowpriorityscore=0 phishscore=0
- priorityscore=1501 malwarescore=0 spamscore=0 suspectscore=0 bulkscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607270140
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ <87ldawsk8a.fsf@redhat.com>
+ <49089127-7189-4bdc-bbf9-5a3ecdc99659@linux.ibm.com>
+User-Agent: Notmuch/0.40 (https://notmuchmail.org)
+Date: Mon, 27 Jul 2026 17:06:50 +0200
+Message-ID: <87fr14sc8l.fsf@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -134,40 +96,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/27/26 7:50 AM, Christian Borntraeger wrote:
-> From: Joshua Daley <jdaley@linux.ibm.com>
-> 
-> In ipl_valid_pv_components(), the upper bound of the for loop,
-> ipib_pv->num_comp, is read from guest memory. Before iterating, verify
-> that its value will not cause a read beyond the end of the
-> IplParameterBlock.
-> 
-> Fixes: c3347ed0d2ee42a7 ("s390x: protvirt: Support unpack facility")
-> Signed-off-by: Joshua Daley <jdaley@linux.ibm.com>
-> Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+On Mon, Jul 27 2026, Christian Borntraeger <borntraeger@linux.ibm.com> wrote:
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+> Am 27.07.26 um 14:14 schrieb Cornelia Huck:
+>> On Mon, Jul 27 2026, Christian Borntraeger <borntraeger@linux.ibm.com> wrote:
+>> 
+>>> Cornelia, Eric, Matt,
+>>>
+>>> here are 5 more fixes for hardening QEMU against invalid input. Nothing
+>>> is strictly a security issues as defined in the policy. For example
+>>> https://qemu-project.gitlab.io/qemu/system/security.html says assert /
+>>> abort: If triggering the code path requires kernel privileges (or root
+>>> account access) in the guest, asserts/aborts in QEMU are a self
+>>> inflicted denial of service. These will not be treated as security
+>>> flaws, at most hardening bugs.
+>>> And if anyone can provide invalid boot loader content it can provide
+>>> anything to boot if secure boot is not available.
+>>> We should fix those anyway, probably even for 11.1
+>> 
+>> Fixing: yes. For 11.1: how easy are they to trigger? For the bios fixes,
+>> I assume you need a broken/crafted disk image; I assume that for the
+>> other two, you need some buggy/misbehaving guest. Did you actually
+>> manage to trigger this via some kind of test case?
+>
+> Easy to trigger, but only with modified guests or modified zipls. Normal
+> guests will not trigger those.
 
-> ---
->  hw/s390x/ipl.h | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-> index fac30763df..ef9c063d90 100644
-> --- a/hw/s390x/ipl.h
-> +++ b/hw/s390x/ipl.h
-> @@ -124,6 +124,12 @@ static inline bool ipl_valid_pv_components(IplParameterBlock *iplb)
->          return false;
->      }
->  
-> +    if (offsetof(IplParameterBlock, pv.components) +
-> +        ipib_pv->num_comp * sizeof(IPLBlockPVComp) >
-> +        be32_to_cpu(iplb->len)) {
-> +        return false;
-> +    }
-> +
->      for (i = 0; i < ipib_pv->num_comp; i++) {
->          /* Addr must be 4k aligned */
->          if (ipib_pv->components[i].addr & ~TARGET_PAGE_MASK) {
+Ok, so I think these would be suitable for the next release, but maybe
+with a cc:stable.
 
 
