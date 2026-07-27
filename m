@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEF68C53219
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:53:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6666BC531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:53:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woJs2-0005Ag-9B; Mon, 27 Jul 2026 07:51:46 -0400
+	id 1woJtH-0000QT-NA; Mon, 27 Jul 2026 07:53:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1woJrz-00057m-Q7
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:51:43 -0400
+ id 1woJtB-0008W5-Us
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:52:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1woJry-0003dz-1Y
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:51:43 -0400
+ id 1woJtA-0003rp-G8
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:52:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785153101;
+ s=mimecast20190719; t=1785153175;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dmJyhOrDhL5/20s5Y4V1M8+fG41aMSEtMEwupRxEmbE=;
- b=iMc1QffviziT7VmMpMgKFAE5vDLHp4svvYmoIQZTOVECEId9YpyY3YgqGrUhFpigrJvC3R
- qlfi+2riySBYZQh8gMuOfs4xl7ktv7DsKetklJhMcwvIvCbBa/sczjQYUjhy7k+yUJCoAd
- e3laeFAr2sy0MhypEeU7w8VDD0VCuUk=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=hg/6mZLwJawyAIaPx/2xXdNrUgeKWONDLxGhJl1XA4c=;
+ b=CZ97lTYWr4yxg1at6YJuFnBRO93TDCZKHaaUrV8jWWwoVqv8rEqcbv3qiDfWtXtYIccaNz
+ 39Daj2vZmU40SUjHLIZ61LpSIhPgf5xraQ30a93APBS++p2/+EXzTEFUZ4qc7GnPivfh4U
+ hdpUVz4nOBaWR2Fj6G2XbPqLEfqRc6o=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-527-1SpNLww6NcejNW-47Y-1mw-1; Mon,
- 27 Jul 2026 07:51:39 -0400
-X-MC-Unique: 1SpNLww6NcejNW-47Y-1mw-1
-X-Mimecast-MFC-AGG-ID: 1SpNLww6NcejNW-47Y-1mw_1785153098
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-117-ZNuW-qaZP16ddG1vwbwRcg-1; Mon,
+ 27 Jul 2026 07:52:52 -0400
+X-MC-Unique: ZNuW-qaZP16ddG1vwbwRcg-1
+X-Mimecast-MFC-AGG-ID: ZNuW-qaZP16ddG1vwbwRcg_1785153171
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9B2861955BD3; Mon, 27 Jul 2026 11:51:38 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0A0C11954122; Mon, 27 Jul 2026 11:52:51 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.5])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 74901180025F; Mon, 27 Jul 2026 11:51:36 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1B17130010C8; Mon, 27 Jul 2026 11:52:49 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 27 Jul 2026 15:51:10 +0400
-Subject: [GIT PULL 01/23] hw/display/virtio-gpu: Remove the bytes_pp field
+Date: Mon, 27 Jul 2026 15:51:23 +0400
+Subject: [GIT PULL 14/23] hw/cxl: fix invalid free on early return
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260727-fix-v1-1-ca3fa3851347@redhat.com>
+Message-Id: <20260727-fix-v1-14-ca3fa3851347@redhat.com>
 References: <20260727-fix-v1-0-ca3fa3851347@redhat.com>
 In-Reply-To: <20260727-fix-v1-0-ca3fa3851347@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6117;
+ Jonathan Cameron <jic23@kernel.org>, linux-cxl@vger.kernel.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1063;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=HMZOoVecy0u+MFFPB8kxTy0tmTSpBAwIhoNPuqyS0GA=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZ0Y++8GWwo/AL+H/hCWool9df/J/hkFir7LT8
- kJWkDWj/cKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamdGPgAKCRDa6OEJdZac
- 5ftxD/9uiAr5CVgSgzMqiuipwTkEUkIQY9I5cvioo4oK1N8+0KF3wdO5y/J3nr99cVqStKX9zbM
- NAS0R+7OtXPw1lL8KnW52MBz0JVucH9fcCEmhaDnY+hrBok0u0ENSVX11ek1m2RBy01akNwc8bm
- iX+Bfmp8S/Wl4q/mNY6IDnEWEnEEyCd1RIYBXLCw4ZIock3ULAKu9VPlocFqL69r56PS69K1uOS
- KI3X27IOUXlHDi6Y+jUn7/N/QHlmwY0842bnmCSBQKeTaPSklcuaGevW/yRdN/isqaCdHVJKqDY
- mz9vSBDNr6z9xQH57FbxdtFLEy0at68vzXVluhe44vekAjTsI2TqM/kAJiK6TE4AFtp+pQJmDn1
- r+NOiu8js0NEQzX1MPeAyrvvvpNNLg7yLlf1sPpoanqMCPaxilimg37yGZYyprMc28WyRhJgCk+
- rfLt0yv837tv+xqMt/S99S7Q4RvoD7ELxrNZ5R5mIA+aVwpVh9dDgTQjinQN4WeQ1Y4N6E/K9C1
- mvkSFsUONoOSB4bvSqn+1LEBlirKTqH3p/FbjAoS/HsvuRoPNHVzxBy3pFWFByl7kqU0m0cV5+a
- yLZwGY4DjlwBOiK57LSFsfzSFGvpwL6ZVdyInCavf4VpIOATsVAnIiUv2dH8f1q1Og46OWHmAR2
- 9k47icVAJ+jxMmw==
+ bh=fAZjMS/5LPJsdxD5l3VZWDpjLs9glFNuH9tNjnRelIg=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZ0Y/z2GfSRvUfq832eIkZAZ9baw2wDMnXXDVF
+ Ptc/4DpMi6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamdGPwAKCRDa6OEJdZac
+ 5So4EACytTrT2zL/32GNr4CYt7t+p5UsdAPXmE8zgMekfkzkHcwIDdrN1bUK+l6eIS3QTJa6Ugn
+ 46S8qnnSOOa1djm4ny4ROA9vsf13XH7MsAmGJ5PHLzbc9qOynLqkDgjd4DIttknnBrjMop7/Q6H
+ o/Y2dJ4BHhtKjoNpnD45ltCv5EzyTV8diCPoIn9zGrzOIaT18AK+Do0WV2od3W77OCDNoTl6wo+
+ CRDryNJc6mFXvyOTm8K4Yn1+ppkUlhGo0T5anCnFid68SkeOTz3CQXA87fHALz3hPv0E1C7MtcN
+ L13Me8YgGexcstDIk2WRKiwbImzrcLyqdKcbJbnW2w8ZBs4nMpOJ50qlwLUSjd1+FpA4MjD0gCs
+ AnyAwvj9epcsrV5JodelzRpi+3FEfIiUqcNgTkFLCHO/h2CT+uiqnvxg/CbMjDJTU2pIlZuehL7
+ gKSkBLKzWAbIOxbvThxfxHR1/nfui3SYUbIbKPsD6PrfaVtt5ikAgr300Vk9u5eE4+jL5DUDXFL
+ Re9/IM2IsdooC+OPHnSJhOw3Pxx3WAuDpYMNsRtAFAJTki1icR+pE4xKmLejkec56RCrZqW+nI/
+ CV7MnpDl8mqOvIV5nBbGQPDVO0XXFsn3TB7iaVxtg2zTXC80KqYdnr9MlewM2921bCCKeYRVhfF
+ 9+4mPPBLGVq/N/w==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -105,148 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+docs/devel/style.rst:
 
-virtio_gpu_do_set_scanout() validates the stride field of struct
-virtio_gpu_framebuffer against the bytes_pp field, but bytes_pp in the
-migration stream may be inconsistent with the format field, which
-pixman_image_create_bits() uses when it accesses the framebuffer.
-That validation is therefore incomplete.
+ * Variables declared with g_auto* MUST always be initialized,
+   otherwise the cleanup function will use uninitialized stack memory
 
-To avoid the trouble of synchronizing the two fields, remove bytes_pp,
-and always derive its value from format. Removing bytes_pp is safe
-because no released version of QEMU uses its migrated value.
-
-Fixes: 7b5574225429 ("hw/display: check frame buffer can hold blob")
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Fixes: 680935c9a6ff ("hw/cxl: Add a performant (and correct) path for the non interleaved cases")
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-[ Marc-André - fix rebase conflict ]
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Message-ID: <20260719-bpp-v1-1-9b91946d6cf3@rsg.ci.i.u-tokyo.ac.jp>
 ---
- include/hw/virtio/virtio-gpu.h |  1 -
- hw/display/virtio-gpu.c        | 27 +++++++++++++++++----------
- 2 files changed, 17 insertions(+), 11 deletions(-)
+ hw/cxl/cxl-host.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index b9bad27c97a8..2f60c72078b3 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -66,7 +66,6 @@ struct virtio_gpu_simple_resource {
+diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+index 7e744312f1d8..eba13c9e7cba 100644
+--- a/hw/cxl/cxl-host.c
++++ b/hw/cxl/cxl-host.c
+@@ -279,7 +279,7 @@ static void cxl_fmws_direct_passthrough_setup(CXLDirectPTState *state,
+     MemoryRegion *mr = NULL;
+     uint64_t vmr_size = 0, pmr_size = 0, offset = 0;
+     MemoryRegion *direct_mr;
+-    g_autofree char *direct_mr_name;
++    g_autofree char *direct_mr_name = NULL;
+     unsigned int idx = state->hdm_decoder_idx;
  
- struct virtio_gpu_framebuffer {
-     pixman_format_code_t format;
--    uint32_t bytes_pp;
-     uint32_t width, height;
-     uint32_t stride;
-     uint32_t offset;
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 718ba3039290..eac039c3c366 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -617,6 +617,11 @@ void virtio_gpu_update_scanout(VirtIOGPU *g,
-     scanout->fb = *fb;
- }
- 
-+static uint32_t virtio_gpu_format_bytes_pp(pixman_format_code_t format)
-+{
-+    return DIV_ROUND_UP(PIXMAN_FORMAT_BPP(format), 8);
-+}
-+
- static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
-                                       uint32_t scanout_id,
-                                       struct virtio_gpu_framebuffer *fb,
-@@ -625,6 +630,7 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
-                                       uint32_t *error)
- {
-     struct virtio_gpu_scanout *scanout;
-+    uint32_t bytes_pp = virtio_gpu_format_bytes_pp(fb->format);
-     uint8_t *data;
- 
-     scanout = &g->parent_obj.scanout[scanout_id];
-@@ -646,10 +652,10 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
-         return false;
-     }
- 
--    if (fb->stride < (uint64_t)fb->width * fb->bytes_pp) {
-+    if (fb->stride < (uint64_t)fb->width * bytes_pp) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: stride %u too small for width %u at %u bpp\n",
--                      __func__, fb->stride, fb->width, fb->bytes_pp);
-+                      __func__, fb->stride, fb->width, bytes_pp);
-         *error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-         return false;
-     }
-@@ -720,6 +726,7 @@ static void virtio_gpu_set_scanout(VirtIOGPU *g,
-     struct virtio_gpu_simple_resource *res;
-     struct virtio_gpu_framebuffer fb = { 0 };
-     struct virtio_gpu_set_scanout ss;
-+    uint32_t bytes_pp;
- 
-     VIRTIO_GPU_FILL_CMD(ss);
-     virtio_gpu_bswap_32(&ss, sizeof(ss));
-@@ -745,11 +752,11 @@ static void virtio_gpu_set_scanout(VirtIOGPU *g,
-     }
- 
-     fb.format = pixman_image_get_format(res->image);
--    fb.bytes_pp = DIV_ROUND_UP(PIXMAN_FORMAT_BPP(fb.format), 8);
-+    bytes_pp = virtio_gpu_format_bytes_pp(fb.format);
-     fb.width  = pixman_image_get_width(res->image);
-     fb.height = pixman_image_get_height(res->image);
-     fb.stride = pixman_image_get_stride(res->image);
--    fb.offset = ss.r.x * fb.bytes_pp + ss.r.y * fb.stride;
-+    fb.offset = ss.r.x * bytes_pp + ss.r.y * fb.stride;
- 
-     virtio_gpu_do_set_scanout(g, ss.scanout_id,
-                               &fb, res, &ss.r, &cmd->error);
-@@ -760,6 +767,7 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
-                                    uint64_t blob_size)
- {
-     uint64_t fbend;
-+    uint32_t bytes_pp;
- 
-     fb->format = virtio_gpu_get_pixman_format(ss->format);
-     if (!fb->format) {
-@@ -769,15 +777,15 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
-         return false;
-     }
- 
--    fb->bytes_pp = DIV_ROUND_UP(PIXMAN_FORMAT_BPP(fb->format), 8);
-+    bytes_pp = virtio_gpu_format_bytes_pp(fb->format);
-     fb->width = ss->width;
-     fb->height = ss->height;
-     fb->stride = ss->strides[0];
- 
--    if (fb->stride < (uint64_t)fb->width * fb->bytes_pp) {
-+    if (fb->stride < (uint64_t)fb->width * bytes_pp) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: stride %u too small for width %u at %u bpp\n",
--                      __func__, fb->stride, fb->width, fb->bytes_pp);
-+                      __func__, fb->stride, fb->width, bytes_pp);
-         return false;
-     }
- 
-@@ -788,7 +796,7 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
-         return false;
-     }
- 
--    fb->offset = ss->offsets[0] + ss->r.x * fb->bytes_pp + ss->r.y * fb->stride;
-+    fb->offset = ss->offsets[0] + ss->r.x * bytes_pp + ss->r.y * fb->stride;
- 
-     fbend = fb->offset;
-     fbend += (uint64_t) fb->stride * ss->r.height;
-@@ -1238,8 +1246,7 @@ static const VMStateDescription vmstate_virtio_gpu_scanout = {
-         VMSTATE_UINT32(cursor.pos.y, struct virtio_gpu_scanout),
-         VMSTATE_UINT32_TEST(fb.format, struct virtio_gpu_scanout,
-                             scanout_vmstate_after_v2),
--        VMSTATE_UINT32_TEST(fb.bytes_pp, struct virtio_gpu_scanout,
--                            scanout_vmstate_after_v2),
-+        VMSTATE_UNUSED_TEST(scanout_vmstate_after_v2, 4),
-         VMSTATE_UINT32_TEST(fb.width, struct virtio_gpu_scanout,
-                             scanout_vmstate_after_v2),
-         VMSTATE_UINT32_TEST(fb.height, struct virtio_gpu_scanout,
+     if (ct3d->hostvmem) {
 
 -- 
 2.55.0
