@@ -4,112 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E74AC531C9
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 02:29:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBCC1C531F9
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 02:48:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woB54-0006m9-Sz; Sun, 26 Jul 2026 22:28:42 -0400
+	id 1woBNR-00013q-0Q; Sun, 26 Jul 2026 22:47:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <flavien.solt97@gmail.com>)
- id 1woB4z-0006jo-FZ
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 22:28:34 -0400
-Received: from mail-qk1-x729.google.com ([2607:f8b0:4864:20::729])
+ (Exim 4.90_1) (envelope-from <tripprobins@gmail.com>)
+ id 1woBNI-00012i-MV
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 22:47:28 -0400
+Received: from mail-qk1-x72e.google.com ([2607:f8b0:4864:20::72e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <flavien.solt97@gmail.com>)
- id 1woB4w-0001FC-HX
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 22:28:33 -0400
-Received: by mail-qk1-x729.google.com with SMTP id
- af79cd13be357-92e7c6ec9dbso120760085a.0
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 19:28:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785119309; cv=none;
- d=google.com; s=arc-20260327;
- b=nPtQrew9EBRVO0gPHSo4fRlOvEKx5/oYnO/YCNZ+X7S4dH+hk46uX/LgTb6DRoaQqL
- 4tIfCLiHCRT7p6+YaaH0vIXBwnd/5qbsEslrKJ5ReYQ5vnLtWUS6c6789OK0Z+IQP65c
- oIstON5XbbhnfVDwPRGq5VTYRer9+r0Om9eU20yia0cHwKYxwYaznwHg9si5uSAur9yx
- m1xpcSYaO6yVvbetUky/fPVRfDOqVCAJ9WSo0pYq21SmzjqrF3Yh7b4rGOnwrf0/upzw
- b/iiuY47KCXwaUNIkbcQVZTciwLOr81NH++q8jKC8mARA4QH6c2E0TQQPXomnYS1YpDo
- vi9w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:references:in-reply-to:from
- :mime-version:dkim-signature;
- bh=pCWjQx4w+GCh74OHw0vbTxUBJc1a3hAacXuGwjmTCTM=;
- fh=QaT6lRC5y6lD/gWdSAGuafbdbUY/EiCC08Uj3KsmyVY=;
- b=MHDk1P+WgoAHoEIOs6LdZGzfGMov1y9arbwDf4aCWsJ5eSIcz0WYjIcV6p0rWVqvE2
- /44cNOqafiaN7UdssMYShnZ8mgMYxyvfHw05kCLHjcJPVz/BgmByhM33DIboXtZbfFMr
- jw+hCzzz9lIaWLmA2xUK1rSJPH6y+z3eKM7Is2mmkWJ8CKQwUKmHpRto5hFtxXSRPsC8
- VcVFpce2Xg27nQ68gqesnPbzpakWA/Z0hOf70sI/2BxBNvjlsCb4Vj+lZnYDtl4F2oUu
- B7ZriO4a5KgIzlb45thMQNM9WD2ooUH+57mGVd8CUFiBMWOJW/soljVV0baVXLOfHzDm
- 4nqQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <tripprobins@gmail.com>)
+ id 1woBNG-00034f-Da
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 22:47:27 -0400
+Received: by mail-qk1-x72e.google.com with SMTP id
+ af79cd13be357-92e5cb052edso164352985a.2
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 19:47:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785119309; x=1785724109; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:references:in-reply-to
- :from:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=pCWjQx4w+GCh74OHw0vbTxUBJc1a3hAacXuGwjmTCTM=;
- b=FkNItFfJuIbmDSNtomv+nnzK8RmNlkmOrWFYhzHPKBCi//TncF79fYNldmM/8hHg0j
- q+/OiGeJEUSvy81StCZfwoGWrwra1MDQGpVWoJIqllYe8eqs1WcaFvCYXtGuFmy19bJL
- NXzyz1m7/oWvUuJVTWefm3w1mEkHHjDzR1DkoXIAuBqEwAqqHWDDINfplMex+eWmGMuT
- tGj06n7YuHe7THw2S4ipBVhL9+C8uSm0pdY3oLQOucKuoeOih0zfT7K9OryfEPVimt0w
- M9tMxHKiLUubGomeKKwqEFkIUZdOx4VlsFlAQ/aSJEIie1qCQ5v0BFMO/I3D3cKQ10PH
- RX5Q==
+ d=gmail.com; s=20251104; t=1785120445; x=1785725245; darn=nongnu.org;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=z3bq6eo0G2v8eCJGcTWAORRzCIT9S/JGm0tS1oh/lsQ=;
+ b=m2x+wvUfB/KyLehgGGW+A0bs6NAxDYQ9iLndo2ncgAKF6A2/adOitoiTs5BXiHP0cC
+ 3UGH7yEGLY9adg8ookr6Sla5/g64RMAKHmbxTLnpQC6cM3V1TyEi11WjUxXWaOHKMst8
+ noLxHHr5ynhxC4oFj6/uhmxi8/mNv8rQCQavlmDmIYmZfFC6TCMroxrp0dBqQl5OhI0j
+ 62BS+vcHERbNlhZLstkkoVsGW9KxGuK9pcP4zg5hxKVI/XxtG/Ut8i3W59FOpW6/FF8d
+ +TrkO9tRLnR7FTjKqc9YxC0K4SF7y17Vy86zcU4qlGQ3F4oMkRn9pOZ04gk/aObC5Zcy
+ Ifng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785119309; x=1785724109;
- h=content-type:cc:to:subject:message-id:date:references:in-reply-to
- :from:mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=pCWjQx4w+GCh74OHw0vbTxUBJc1a3hAacXuGwjmTCTM=;
- b=V6sD95hITdjNeBRj76DKY+N3SkCt7AHx2sWSWx7uT4bfeOBb8RizF+GXZNKldJWlz7
- H0iRUNvFT3JQLDWCysedfCftLKmeLKm5aIdtRzc7V0BOduvq6LeG3JvT3YcHt0meZwim
- Com3t0QMd3rj4m4zzl/mxZ8L93EERx0jZyZxc48Ai/9pudcyOWXE76moUcXTp9nmLeTh
- +V828FNH2miF9tQIZbVwsGMrfcf7z2YLnjLi/gBasTmYv5n75aanGhYDU5XRSzLLenUE
- 3GsFQsJMnux91HxlTt2CAfmJ024Y/btL01FTBSyUPbUDg5LAiOciR/EOwR4y8Ij8EZ+V
- sSJw==
-X-Gm-Message-State: AOJu0YzpjrQ/sPnemCu0Y/hLVmY6s9mbv6U+/ebubktrdKVmRXSoW8pX
- w7Rv7Kwh6UexvjfeOgfV8/bdK8Dc2YvrJpyBZL05L7tUXuZORDQuK68bQJ6T6RnZZAJOAh/xF5J
- PQ4wYjC4F0UOmdXUhqAm88AAOEw/jQUuMEWGq
-X-Gm-Gg: AR+sD10hm6SiKAP1QNsJ8OUzQqgslcinni1YG8zGlyWozVC2++q+S1x51QPtluEpsv3
- 5FyssA9BNlYVcR1I8N1atrS277Zzwx5RH4nFvdSwxPFXa23dub2vzabgUlWj1qYDiKeOoFvdhSl
- XOjjt6TkrXRj3FUYHEJRDocSiBZZ4y/sjG0No3EdLHmDJXLR/ndBej4A+jFBp3RTWZVKezrRhN6
- zVQ01PxDd2DFiS9vh5N5JqjGejeOH6eGv6XQ8VjFVooSIM7QAWjV83/sxz7GkCWzHA83IgvQIOf
- vPdYeU1/TnaFiUfB
-X-Received: by 2002:a05:620a:2702:b0:915:e670:4021 with SMTP id
- af79cd13be357-932df674b87mr630241285a.45.1785119309459; Sun, 26 Jul 2026
- 19:28:29 -0700 (PDT)
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST; 
- Sun, 26 Jul 2026 19:28:28 -0700
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST; 
- Sun, 26 Jul 2026 19:27:49 -0700
+ d=1e100.net; s=20251104; t=1785120445; x=1785725245;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=z3bq6eo0G2v8eCJGcTWAORRzCIT9S/JGm0tS1oh/lsQ=;
+ b=oviyW7q9zg3Xpi066h5ChGRAIuGATHsoK/S7ehDQJjy6y1xg8WhAcsBFTELcA/E74Y
+ CaKiQPNCgO4ziCaSjN3m2atj3NMsPrYOo3DHdFh5y4H+eNDT3+9eewn9fmsaUQJBZ2yZ
+ 3MGkca2Jy5hSzcGZktJ+DRL65PXumrMICI1S397l21LNjexS820Tkat8e0mFSHvUMHDO
+ CKOCEMrQIHXiO0ypWmszcIaq+rELH14MJgRde3e2cpTS/d2KasdudKD7HjcSvtECPLT0
+ xVMPZMKWtqfVYkvstmtLX7MvCaaQSpHEU+xqS8Y9Q0hLoJ8SJJt0fRAklHaPQq8Vx94q
+ CVlQ==
+X-Gm-Message-State: AOJu0YzmqrGY+amcR7x1/NyUeP4Nnrya+XdmXRY5xYRNL23pGU14u7H3
+ qV4pEDGBVX1HHqsQps4MlOoWmad0TIwja9dYSIGrhqdpy4Ug7rw14TGBYtSPPpxk
+X-Gm-Gg: AR+sD10rNIwNd/33rqXCx66YQUXeuUrlsxlqkoGnER8ohATykJDkqAjCZut5fa+aezp
+ Lvt4Jzw77wUIYBOpZL/qDdfqRdwhDfTHiZT9TkVMhmp+mpgmvTh5zl+e7mSi32r8P29SqJQT5d5
+ T8rzv9NZdryEizkngzA3lNkRSnGvRYIIXiHF3ibGMyEsZ3CSbp4YHva1+cQzwMyz3scGHY69m78
+ NIp9s7Yzrd3dUNPJRusSFvxhqLp76IdaYsW9/6mNvCv4c1pj5/KDOYzrAz03GbHjCxSp1ouT7F+
+ jxfP24/e396EvJ6XQ3Y+7Je+to94f0gFCD4vKryblhgZygFJCjb7FhqYy76mO97s61+XMa9xw9d
+ bOSQGZ/q2279m3srgTa0mU14MyXo3bQHa4TD01YtWSXG96U/UZ4j9FCUUYe8tYPkBB6D7u3PoUf
+ CwFl0LJA==
+X-Received: by 2002:a05:620a:a0da:10b0:931:3d6:18fe with SMTP id
+ af79cd13be357-932df751da3mr501002985a.64.1785120444923; 
+ Sun, 26 Jul 2026 19:47:24 -0700 (PDT)
+Received: from [127.0.1.1] ([2600:4040:5aa1:a000:4c84:45d:753f:5a58])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-932de635f12sm510118485a.25.2026.07.26.19.47.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 26 Jul 2026 19:47:24 -0700 (PDT)
+From: Tripp R <tripprobins@gmail.com>
+Date: Sun, 26 Jul 2026 22:47:06 -0400
+Subject: [PATCH] added the inpsect block command ('xb') to print the
+ contents within a block device to the monitor.
 MIME-Version: 1.0
-From: flavien.solt97@gmail.com
-In-Reply-To: <CANVUYGvOyZdCwXOtDkS7bXY3Z2HGK1b6QWKttCVUjhnpH65g5A@mail.gmail.com>
-References: <CANVUYGvOyZdCwXOtDkS7bXY3Z2HGK1b6QWKttCVUjhnpH65g5A@mail.gmail.com>
-Date: Sun, 26 Jul 2026 19:28:27 -0700
-X-Gm-Features: AUfX_myA_9jgBJBZxGX_lRGMecf5ODMY1MrrSUNqkYVNZCF3gw2Rvjzd0UNMh2s
-Message-ID: <CANVUYGsmXiKSQdb_BjCVPo1dvmF0K5-B63iQpszqqYLhZsc_Zg@mail.gmail.com>
-Subject: [PATCH v3 3/3] tests/qtest: add RISC-V IOMMU MRIF notice tests
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260726-xbcmd-v1-1-0ddbdcf82fcb@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAKnGZmoC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDcyMz3Yqk5NwUXfO0RAsLSwMz8zRDUyWg2oKi1LTMCrA50bG1tQBrKHn
+ aVwAAAA==
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Andrew Jones <andrew.jones@oss.qualcomm.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu@processmission.com>, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::729;
- envelope-from=flavien.solt97@gmail.com; helo=mail-qk1-x729.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, 
+ Tripp R <tripprobins@gmail.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1785120443; l=5896;
+ i=tripprobins@gmail.com; h=from:subject:message-id;
+ bh=ob3ODSYt/xVJwmYiVgV7i/pWEKmzO4+R5bIxGQXMiHY=;
+ b=3oLrjHqaNk83J9nvFr8W4OCODmZ91/0jQEyKBSkWDkIPNtDsACg+xcAbNgbCS0dECEuMGogbc
+ 1+COYCDMrCmBP1Z53mWbdHASEJh5LqoGpgnP7iwy9IalPBWyeVoypnC
+X-Developer-Key: i=tripprobins@gmail.com; a=ed25519;
+ pk=qwr69xU8AQT+ZZ9TxMEd/Vlg8k8ovtJrkXWQKAiMMNw=
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72e;
+ envelope-from=tripprobins@gmail.com; helo=mail-qk1-x72e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,157 +110,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From a13bfa64b84ac70c9e257253616ce650fc3e794b Mon Sep 17 00:00:00 2001
-From: Flavien Solt <flavien.solt97@gmail.com>
-Date: Sun, 26 Jul 2026 17:54:04 +0800
-Subject: [PATCH v3 3/3] tests/qtest: add RISC-V IOMMU MRIF notice tests
+'xb' (examine block) is almost identical in usage to 'x' and 'xp', having the same targuments for those commands , albeit preceded by a drive name.
 
-Exercise MRIF-mode MSI writes through iommu-testdev with the destination
-interrupt-enable bit both clear and set. Each case requires the pending
-bit to be stored plus the configured notice ID to reach guest memory.
-
-The enable-clear case regresses the notice suppression fixed by the
-previous patch. The enable-set case provides a control for the existing
-path.
-
-Signed-off-by: Flavien Solt <flavien.solt97@gmail.com>
 ---
- tests/qtest/iommu-riscv-test.c | 102 +++++++++++++++++++++++++++++++++
- 1 file changed, 102 insertions(+)
+Implemented the xb (examine block) command to print the contents of a block     device to the console.
 
-diff --git a/tests/qtest/iommu-riscv-test.c b/tests/qtest/iommu-riscv-test.c
-index 2638024..85f79ea 100644
---- a/tests/qtest/iommu-riscv-test.c
-+++ b/tests/qtest/iommu-riscv-test.c
-@@ -14,6 +14,7 @@
- #include "hw/pci/pci_regs.h"
- #include "hw/misc/iommu-testdev.h"
- #include "hw/riscv/riscv-iommu-bits.h"
-+#include "libqos/qos-iommu-testdev.h"
- #include "libqos/qos-riscv-iommu.h"
- #include "libqos/riscv-iommu.h"
+It is effectively a clone of the x/xp commands (examine memory / examine        physical memory), having the same arguments for those commands, albeit preceded by the name of a block driver.
 
-@@ -26,6 +27,13 @@
- #define RISCV_BUS_MMIO_LIMIT       0x80000000
- #define RISCV_ECAM_ALLOC_PTR       0x30000000
+e.g. usage
+         xd floppy0 /510c 0
 
-+#define RISCV_MRIF_MSI_IOVA        0x00000000fee00000ull
-+#define RISCV_MRIF_MSI_PT_GPA      (QRIOMMU_SPACE_OFFS + 0x00030000ull)
-+#define RISCV_MRIF_BASE_GPA        (QRIOMMU_SPACE_OFFS + 0x00031000ull)
-+#define RISCV_MRIF_NOTICE_GPA      (QRIOMMU_SPACE_OFFS + 0x00032000ull)
-+#define RISCV_MRIF_INTID           5u
-+#define RISCV_MRIF_NOTICE_ID       0x12du
+Signed-off-by: Tripp R <tripprobins@gmail.com>
+---
+ hmp-commands.hx       |  14 +++++++
+ include/monitor/hmp.h |   1 +
+ monitor/hmp-cmds.c    | 104 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 119 insertions(+)
+
+diff --git a/hmp-commands.hx b/hmp-commands.hx
+index 7ae2468a3d..db63b58a47 100644
+--- a/hmp-commands.hx
++++ b/hmp-commands.hx
+@@ -472,6 +472,20 @@ ERST
+         .cmd        = hmp_memory_dump,
+     },
+ 
++SRST
++``xb/``\ *fmt* *addr*
++  Block memory dump starting at *addr*.
++ERST
 +
- typedef struct RiscvIommuTestState {
-     QTestState *qts;
-     QGenericPCIBus gbus;
-@@ -264,6 +272,96 @@ static void test_riscv_iommu_nested(void)
-     run_riscv_iommu_translation(&cfg);
++    {
++        .name       = "xb",
++        .args_type  = "device:s, fmt:/,addr:l",
++        .params     = "device /fmt addr",
++        .help       = "block memory dump starting at 'addr'",
++        .cmd        = hmp_block_dump,
++    },
++
++
+ SRST
+ ``x/``\ *fmt* *addr*
+   Virtual memory dump starting at *addr*.
+diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+index 9258a049bf..0c3e8a30c2 100644
+--- a/include/monitor/hmp.h
++++ b/include/monitor/hmp.h
+@@ -182,6 +182,7 @@ void hmp_info_local_apic(Monitor *mon, const QDict *qdict);
+ void hmp_info_sev(Monitor *mon, const QDict *qdict);
+ void hmp_info_sgx(Monitor *mon, const QDict *qdict);
+ void hmp_info_via(Monitor *mon, const QDict *qdict);
++void hmp_block_dump(Monitor *mon, const QDict *qdict);
+ void hmp_memory_dump(Monitor *mon, const QDict *qdict);
+ void hmp_physical_memory_dump(Monitor *mon, const QDict *qdict);
+ void hmp_info_registers(Monitor *mon, const QDict *qdict);
+diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+index e9fb8d827a..5d4a6c6a78 100644
+--- a/monitor/hmp-cmds.c
++++ b/monitor/hmp-cmds.c
+@@ -39,8 +39,12 @@
+ #include "system/hw_accel.h"
+ #include "system/memory.h"
+ #include "system/system.h"
++#include "system/block-backend-common.h"
++#include "system/block-backend-io.h"
++#include "system/block-backend-global-state.h"
+ #include "disas/disas.h"
+ 
++
+ /* Please update hmp-commands.hx when adding or changing commands */
+ static HMPCommand hmp_info_cmds[] = {
+ #include "hmp-commands-info.h"
+@@ -584,6 +588,89 @@ void hmp_info_registers(Monitor *mon, const QDict *qdict)
+     }
  }
-
-+static void riscv_iommu_setup_mrif_context(RiscvIommuTestState *state)
+ 
++
++static void block_dump(Monitor *mon, BlockBackend* blk, int count, int format, 
++    int wsize, int64_t offset)
 +{
-+    uint64_t dc_addr;
-+    uint64_t msiptp;
-+    uint64_t pte0;
-+    uint64_t pte1;
++    uint8_t buf[16];
 +
-+    qtest_memset(state->qts, QRIOMMU_SPACE_OFFS + QRIOMMU_DDT_BASE, 0,
-+                 0x1000);
-+    qtest_memset(state->qts, RISCV_MRIF_MSI_PT_GPA, 0, 0x1000);
-+    qtest_memset(state->qts, RISCV_MRIF_BASE_GPA, 0, 0x1000);
-+    qtest_memset(state->qts, RISCV_MRIF_NOTICE_GPA, 0, 4);
++    uint16_t max_digits = 0;
 +
-+    dc_addr = QRIOMMU_SPACE_OFFS + QRIOMMU_DDT_BASE +
-+              state->testdev->devfn * sizeof(struct riscv_iommu_dc);
-+
-+    msiptp = (RISCV_MRIF_MSI_PT_GPA >> 12) |
-+             ((uint64_t)RISCV_IOMMU_DC_MSIPTP_MODE_FLAT << 60);
-+
-+    qtest_writeq(state->qts, dc_addr + 0, RISCV_IOMMU_DC_TC_V);
-+    qtest_writeq(state->qts, dc_addr + 8, 0);
-+    qtest_writeq(state->qts, dc_addr + 16, 0);
-+    qtest_writeq(state->qts, dc_addr + 24, 0);
-+    qtest_writeq(state->qts, dc_addr + 32, msiptp);
-+    qtest_writeq(state->qts, dc_addr + 40, 0);
-+    qtest_writeq(state->qts, dc_addr + 48, RISCV_MRIF_MSI_IOVA >> 12);
-+    qtest_writeq(state->qts, dc_addr + 56, 0);
-+
-+    pte0 = RISCV_IOMMU_MSI_PTE_V |
-+           ((uint64_t)RISCV_IOMMU_MSI_PTE_M_MRIF << 1) |
-+           ((RISCV_MRIF_BASE_GPA >> 9) << 7);
-+    pte1 = ((RISCV_MRIF_NOTICE_GPA >> 12) << 10) | RISCV_MRIF_NOTICE_ID;
-+
-+    qtest_writeq(state->qts, RISCV_MRIF_MSI_PT_GPA, pte0);
-+    qtest_writeq(state->qts, RISCV_MRIF_MSI_PT_GPA + 8, pte1);
-+
-+    qriommu_program_regs(state->qts, state->iommu_base);
-+}
-+
-+static void run_riscv_iommu_mrif_notice(bool enable_bit)
-+{
-+    RiscvIommuTestState state = { 0 };
-+    uint64_t pending;
-+    uint64_t enabled;
-+    uint32_t notice;
-+    uint32_t dma_result;
-+
-+    if (!riscv_iommu_test_setup(&state)) {
-+        return;
++    switch (format) {
++    case 'o':
++        max_digits = DIV_ROUND_UP(wsize * 8, 3);
++        break;
++    default:
++    case 'x':
++        max_digits = (wsize * 8) / 4;
++        break;
++    case 'u':
++    case 'd':
++        max_digits = DIV_ROUND_UP(wsize * 8 * 10, 33);
++        break;
++    case 'c':
++        wsize = 1;
++        break;
 +    }
 +
-+    riscv_iommu_check(state.qts, state.iommu_base, QRIOMMU_TM_BARE);
-+    riscv_iommu_setup_mrif_context(&state);
 +
-+    enabled = enable_bit ? (1ull << RISCV_MRIF_INTID) : 0;
-+    qtest_writeq(state.qts, RISCV_MRIF_BASE_GPA + 8, enabled);
-+    qpci_io_writel(state.testdev, state.testdev_bar, ITD_REG_DMA_WRITE_VAL,
-+                   RISCV_MRIF_INTID);
++    while (count > 0) {
++        int bytes = MIN(16, count * wsize);
 +
-+    dma_result = qos_iommu_testdev_trigger_dma(
-+        state.testdev, state.testdev_bar, RISCV_MRIF_MSI_IOVA,
-+        RISCV_MRIF_NOTICE_GPA, DMA_LEN, qriommu_build_dma_attrs());
++        if (blk_pread(blk, offset, bytes, buf, 0) < 0) {
++            monitor_printf(mon,
++                           "Read failed at 0x%" PRIx64 "\n",
++                           offset);
++            return;
++        }
 +
-+    pending = qtest_readq(state.qts, RISCV_MRIF_BASE_GPA);
-+    notice = qtest_readl(state.qts, RISCV_MRIF_NOTICE_GPA);
++        monitor_printf(mon, "%08" PRIx64 ": ", offset);
 +
-+    g_test_message("MRIF notice: enable=%u pending=0x%" PRIx64
-+                   " notice=0x%x", enable_bit, pending, notice);
++        for (int i = 0; i < bytes; i += wsize) {
++            uint64_t v;
 +
-+    /*
-+     * Interrupt remapping consumes the original DMA write; the generic
-+     * test device cannot read it back from the supplied physical address.
-+     */
-+    g_assert_cmpuint(dma_result, ==, ITD_DMA_ERR_MISMATCH);
-+    g_assert_cmpuint(pending & (1ull << RISCV_MRIF_INTID), !=, 0);
-+    g_assert_cmpuint(notice, ==, RISCV_MRIF_NOTICE_ID);
++            switch (wsize) {
++            case 1:
++                v = buf[i];
++                break;
++            case 2:
++                v = lduw_le_p(buf + i);
++                break;
++            case 4:
++                v = ldl_le_p(buf + i);
++                break;
++            case 8:
++                v = ldq_le_p(buf + i);
++                break;
++            default:
++                v=0;
++            }
++            switch (format) {
++            case 'o':
++                monitor_printf(mon, "0%*" PRIo64, max_digits, v);
++                break;
++            case 'x':
++                monitor_printf(mon, "0x%0*" PRIx64, max_digits, v);
++                break;
++            case 'u':
++                monitor_printf(mon, "%*" PRIu64, max_digits, v);
++                break;
++            case 'd':
++                monitor_printf(mon, "%*" PRId64, max_digits, v);
++                break;
++            case 'c':
++                monitor_printc(mon, v);
++                break;
++            }
++        }
 +
-+    riscv_iommu_test_teardown(&state);
++        monitor_printf(mon, "\n");
++
++        offset += bytes;
++        count -= bytes / wsize;
++    }
 +}
 +
-+static void test_riscv_iommu_mrif_notice_enable_clear(void)
-+{
-+    run_riscv_iommu_mrif_notice(false);
-+}
-+
-+static void test_riscv_iommu_mrif_notice_enable_set(void)
-+{
-+    run_riscv_iommu_mrif_notice(true);
-+}
-+
- int main(int argc, char **argv)
+ static void memory_dump(Monitor *mon, int count, int format, int wsize,
+                         uint64_t addr, bool is_physical)
  {
-     g_test_init(&argc, &argv, NULL);
-@@ -275,5 +373,9 @@ int main(int argc, char **argv)
-                    test_riscv_iommu_g_stage_only);
-     qtest_add_func("/iommu-testdev/translation/ns-nested",
-                    test_riscv_iommu_nested);
-+    qtest_add_func("/iommu-testdev/mrif-notice/enable-clear",
-+                   test_riscv_iommu_mrif_notice_enable_clear);
-+    qtest_add_func("/iommu-testdev/mrif-notice/enable-set",
-+                   test_riscv_iommu_mrif_notice_enable_set);
-     return g_test_run();
+@@ -692,6 +779,23 @@ static void memory_dump(Monitor *mon, int count, int format, int wsize,
+     }
  }
+ 
++void hmp_block_dump(Monitor *mon, const QDict *qdict)
++{
++    int count = qdict_get_int(qdict, "count");
++    int format = qdict_get_int(qdict, "format");
++    int size = qdict_get_int(qdict, "size");
++    vaddr addr = qdict_get_int(qdict, "addr");
++    const char* dblock = qdict_get_str(qdict, "device");
++
++    BlockBackend *blk = blk_by_name(dblock);
++
++    if (!blk) {
++        monitor_printf(mon, "Invalid block device name '%s'.\n\r", dblock);
++        return;
++    }
++    block_dump(mon,blk, count, format, size, addr);
++}
++
+ void hmp_memory_dump(Monitor *mon, const QDict *qdict)
+ {
+     int count = qdict_get_int(qdict, "count");
+
+---
+base-commit: 443e02410695b35a27fad18217424b6370358be7
+change-id: 20260726-xbcmd-7fa889067f15
+
+Best regards,
 -- 
-2.54.0
+Tripp R <tripprobins@gmail.com>
+
 
