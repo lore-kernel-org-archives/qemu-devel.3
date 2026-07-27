@@ -4,116 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FA0DC53209
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61D28C531D0
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:21:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woQt4-0001i5-Mt; Mon, 27 Jul 2026 15:21:18 -0400
+	id 1woQsT-0000iX-Ph; Mon, 27 Jul 2026 15:20:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsT-0000j4-3S
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsN-0000ce-V8
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsR-0000fI-5Y
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:40 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsM-0000eD-BV
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785180038;
+ s=mimecast20190719; t=1785180033;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0MxmzfN26C9n4Ays3a2bCnXLUUqqhyEZkzXAkW/X4jw=;
- b=HgwBKSlmoxv4UtKWg2JbAVcnGHeoZApSFRfGJideSciMYs1Ya2YZdTJkekFnSReqJY+drn
- HkSk9wR1+Aao5TpRe/SH47Ab8xihr4e0PU7sktICeeivSDgbKXbpBA7jdPPUsmnzoItn1X
- qBsa2lfFiYfWuEUszveurgnj5L3fGp0=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qGDDGWT38pNxOONe007eUvij33uws6GbrZoTgh2JBM8=;
+ b=VE18v7zPpVjQUoEJIfI7aLUu2Yar9MaBy8Zxi1E9gNFzirG+EOHWvi1bJ3ceWYgQ0bzGIu
+ ydlffMtJkMUkmL+RmAuy1aXOJl0cXIad2iBfSYnpCSusujOUD1Xe0GxiK0pvTScJ2d3bgP
+ sb0q525MdZxJUeFWt6OASmfdiQFk9Rs=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-311-qDStU4weNZy075WgB2o-TA-1; Mon, 27 Jul 2026 15:20:36 -0400
-X-MC-Unique: qDStU4weNZy075WgB2o-TA-1
-X-Mimecast-MFC-AGG-ID: qDStU4weNZy075WgB2o-TA_1785180036
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-47f6d70223dso1995948f8f.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:20:36 -0700 (PDT)
+ us-mta-184-EMMuC_CZO1Gn2QazUjz-6A-1; Mon, 27 Jul 2026 15:20:32 -0400
+X-MC-Unique: EMMuC_CZO1Gn2QazUjz-6A-1
+X-Mimecast-MFC-AGG-ID: EMMuC_CZO1Gn2QazUjz-6A_1785180031
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4954b1c6310so28147815e9.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:20:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785180036; x=1785784836; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=0MxmzfN26C9n4Ays3a2bCnXLUUqqhyEZkzXAkW/X4jw=;
- b=Lvn6MGnZmH7W04TBlh+tVyhhk2xNdEwWNe/9hCTRAn0IDtvoF25Bd6TLMLFEqhKKZv
- 46f39CxakpQDh+hInYOYg586hpPqfM0nIa39a+KBV6/5wV3XqfyyehtU/qfOnD/ih4z6
- yvweUBBBBuwN6tzl4S1Yxeum+U/oD0qWCqCg8QJArT4RxnvDTCQyR8Hg7A+4xsqdtsxX
- KlVZGoQjke30Z2NHDbQkwW2JXZTVcYIYl7iU6n/CrB8L5VTf1w8EQJ0i86+HosIX00dM
- dl4cJBLWwwGK3wvwXiLRqJsQ9GgpvtyycSbDDphWa87/xMvqWHLIRlEmO8yyJUlqNXBh
- 0yYQ==
+ d=redhat.com; s=google; t=1785180031; x=1785784831; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=qGDDGWT38pNxOONe007eUvij33uws6GbrZoTgh2JBM8=;
+ b=iUWtshSlWc3X1gaRGrlTx4tu7Mre/4OEc+2uePoONFqZgv0zq15YYsKo07WGUrQoDs
+ LqZyadId2h6e3oQtzzYoOU1iuaV0welNiR7L7y0Rfsp/38yotU1bdMzBCf2YZhI2e5uR
+ sKjDhnyBEtd84HcvtSMyj+sPxYBb4AiJu+ItsHUCx7L/fJ29dmyA0tjZPL9lUh8AOiny
+ t3GuxxIKuQPR0uQy/AndLgeqdDoDdP/Sw2Jsocy6BKMBT9U5M8EFVyGMZEEP0QfNyjaQ
+ zb4nNvaydDn5rEUtxVx4jkbJbd3Mgl9eFUAy5q5shHS0EBKeqi7O3rmorR0P56kOxI34
+ ikKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785180036; x=1785784836;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=0MxmzfN26C9n4Ays3a2bCnXLUUqqhyEZkzXAkW/X4jw=;
- b=gAyWFGrU43tFUeMHbYWwYtdyqsxJOv6rGJQTcxzPScFebB1w6aAzZCGoIoJivFJWP3
- WM6jLgR+CpHfi8cNeSpmawcnw9emEXR2tUAfHaqrptK6JEXuyu7m28V5mjUPVvNvhzzK
- vgYBJLoXByYyR5mgdu+m2cz7rDCx+YeMWJQJKos1BipkNGdiouB527XXNpTQpsa6hrrT
- OQY9UO4rtEJtY8SeIRCbUwqzdJKJlgvUAfVIw/DWNOrm9nOH3iX7kOTlE+jnMcSyQqcF
- FKXTq2zwNS6HcY2mcILDWPTkn8kMhqntFIr+cQpk8GTZBZa7oSUXeJ6bllmKBOjiayIW
- cueA==
-X-Gm-Message-State: AOJu0Yz8x9b7KTWhvCXCs5a05ZgW3SGidlbSwHJ1UxPqnaSs8vf/6L1E
- uQUQOhT0E9lv/gP+skYpSKc85TEaPhuWNVp7zP5o8R86aMmFW2sWiUbuAHvVETdtQ5CKyu9J6PL
- S0wQ6ALsfZVk7w09WUACdiiB5/5V8fiIbJ67+Y01KMSM+XQCG/BTzZTCSAJkd4fjzCt598fnMKI
- dVwaIkJ0Mh0C73cnaRRueQ+RsQRqIVcxvgQA==
-X-Gm-Gg: AR+sD13wmsFY0GGSeuYAN859iQgxT0IgpZvxSZmvbclhfHbI3sZTOjf0gW29v3EfsG5
- a5l15qrRSVUS/SV16qLNZ+xXRbRw93xYwGs+NYiOTarO0JKZCF82gi7rxEn8JDEmgRVJRuEPU5t
- IQf+c09UjNsoCRgACr0JAklWSqLlr9h5ZP6sju1j2poVLq0lJ1xCW+0YtBHnUFofHnLWYusGOdB
- rvwDJcO8VgwEpDMKjO+sIfROWXZPRRmDaAYFTIl5JtYPTyazf18Z1pP8dZFmzHd/KzEG2aMGTfX
- G73L8lOuRXWHlGTfXhPayPlPVep82UiJCzCqcmNg3JNP+8bp/AajjppPAqdz1x9lla+uPsGl2fx
- AoMW3Gjuyx4jnpK6vXPZVfg==
-X-Received: by 2002:a5d:5888:0:b0:47f:9cc2:ddd2 with SMTP id
- ffacd0b85a97d-47fafa88458mr441437f8f.35.1785180035504; 
- Mon, 27 Jul 2026 12:20:35 -0700 (PDT)
-X-Received: by 2002:a5d:5888:0:b0:47f:9cc2:ddd2 with SMTP id
- ffacd0b85a97d-47fafa88458mr441395f8f.35.1785180034799; 
- Mon, 27 Jul 2026 12:20:34 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785180031; x=1785784831;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=qGDDGWT38pNxOONe007eUvij33uws6GbrZoTgh2JBM8=;
+ b=G60gzFCsK8uwez99IJw2AXCM+3mdq5etHBc3yAX21c8opCzNgwqAk6yukALTB7Zgur
+ jIrrTW3Jee1Cqu8owe91zoVN+rPf7sWes/F1pc5S+8edWH/n6s1j6b89ty9nAOvOvzAL
+ BxS0iY+X8TtxGt3THqp9isPmBM/O06BNDYR6tMGBtJu0aiSfTIne5SspmpMSXbhfe+Cc
+ eHJPNau/qJkXE0IyJEUBBuTafVh04JqOW3Wva54HPpQI1gyKsSWYxB/FxdA6DMiViT7n
+ hXy01EuyjIX2xDTiP0CddYX2uOeTuVMRA67CEaBPqMHo6KHEDnw5nw+f/JS1bSBG2H4z
+ yeFQ==
+X-Gm-Message-State: AOJu0YxFMi480J3EpUGchzpKVmfGxWz6WJQttg9QkamjnbgNJdEXIzGM
+ lmJk+w35jqCEVo0xYfmZgIbefaRrczaIwGyEbPE3cod0RN3VNsmMxYxfi8NVHKP9TJ7OROAkEqq
+ QApLOGUxT6hQeUK6jxjI8v1h1o7gx0nonzi45C5frsPUH3YWjqkPDRM2rFvqpHSGuGk8/h+xs1q
+ K4eYRqVkq1pmsmcSFShCM4H63ENLMsDiKaGg==
+X-Gm-Gg: AR+sD12kS57a2ycqFNcFNFGGOhSsV2TCU2swM/f5FOVqB7UhpkJSbTuymKAN0mfIwRR
+ LpUvL/qwsLtbl095S8Zgq4DtUL4GhsYWVPvBNtyO44FQo7e7hNq8VmT7CoxB5s2uc6iVfOjcO79
+ m87Je6v6xfi+99pSJmQaWIpu0L1+HR7gMR3aNG4C2O/N3qlnYiCMCVjEvCA4UJ/soV7YQIRDntc
+ u2bTDyKESzJclcY/lCQHnYJV6u/JrVErZZC2BhzzwuUIdUstknYae4tmR/iYgqkyi8aM+DRl/lk
+ 9QjkTf1+p2vqAflIyU/mYlJYgg8DnyE1VyXKV/tQvUaGiNAmFe6/AS1QgJnb6xb4wcmaHlsBMcH
+ /+VEsI/BfYZmUMtak/Hxv7Q==
+X-Received: by 2002:a05:600c:6d83:b0:495:7d78:7fb2 with SMTP id
+ 5b1f17b1804b1-496b570027amr78367455e9.27.1785180030628; 
+ Mon, 27 Jul 2026 12:20:30 -0700 (PDT)
+X-Received: by 2002:a05:600c:6d83:b0:495:7d78:7fb2 with SMTP id
+ 5b1f17b1804b1-496b570027amr78367265e9.27.1785180029976; 
+ Mon, 27 Jul 2026 12:20:29 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-28-14.inter.net.il. [80.230.28.14])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85bb5127sm48274196f8f.10.2026.07.27.12.20.33
+ 5b1f17b1804b1-496c45e92eesm14309415e9.15.2026.07.27.12.20.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 12:20:34 -0700 (PDT)
-Date: Mon, 27 Jul 2026 15:20:32 -0400
+ Mon, 27 Jul 2026 12:20:29 -0700 (PDT)
+Date: Mon, 27 Jul 2026 15:20:27 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?Q?Cl=C3=A9ment?= MATHIEU--DRIF <clement.mathieu--drif@bull.com>,
- huntr bubble <bubblehuntr@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Jason Wang <jasowangio@gmail.com>, Yi Liu <yi.l.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL v2 26/30] intel_iommu: Check address mask before using it in
- pasid-based iotlb invalidation
-Message-ID: <0691bb257a7cbfd62127208b49988705bfa2dfe8.1785179875.git.mst@redhat.com>
+ GuoHan Zhao <zhaoguohan@kylinos.cn>, Paolo Bonzini <pbonzini@redhat.com>,
+ Daniil Tatianin <d-tatianin@yandex-team.ru>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Li Zhaoxin <lizhaoxin04@baidu.com>
+Subject: [PULL v2 24/30] hw/virtio/vdpa-dev: pass set_config buffer to vhost
+ backend
+Message-ID: <421f45d03f328267ebf77fab823a7a25ab3d6c83.1785179875.git.mst@redhat.com>
 References: <cover.1785179875.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1785179875.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
 X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,52 +124,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Clément MATHIEU--DRIF <clement.mathieu--drif@bull.com>
+From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 
-Prevent a buggy driver to execute malformed invalidation operations.
+vhost_vdpa_device_set_config() receives the updated config buffer, but
+forwards s->config to the vhost backend. Since s->config is refreshed by
+get_config(), it may contain stale backend state.
 
-Add the same assert as in vtd_iotlb_page_invalidate.
+Pass the supplied config buffer to vhost_dev_set_config() instead.
 
-Link: https://gitlab.com/qemu-project/qemu/-/work_items/3619
-Fixes: 6ebe6cf2a066 ("intel_iommu: Process PASID-based iotlb invalidation")
-Reported-by: huntr bubble <bubblehuntr@gmail.com>
-Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Fixes: b430a2bd2303 ("vdpa: add vdpa-dev support")
+Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260724111424.376680-1-clement.mathieu--drif@bull.com>
+Message-ID: <20260709073225.2341642-1-zhaoguohan@kylinos.cn>
 ---
- hw/i386/intel_iommu.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ hw/virtio/vdpa-dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index d1af7a3135..82c3c3b2c3 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -3021,6 +3021,8 @@ static void vtd_piotlb_page_invalidate(IntelIOMMUState *s, uint16_t domain_id,
- {
-     VTDIOTLBPageInvInfo info;
+diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
+index 089a77f4d0..6dc684ab09 100644
+--- a/hw/virtio/vdpa-dev.c
++++ b/hw/virtio/vdpa-dev.c
+@@ -212,7 +212,7 @@ vhost_vdpa_device_set_config(VirtIODevice *vdev, const uint8_t *config)
+     VhostVdpaDevice *s = VHOST_VDPA_DEVICE(vdev);
+     int ret;
  
-+    assert(am <= VTD_MAMV);
-+
-     info.domain_id = domain_id;
-     info.pasid = pasid;
-     info.addr = addr;
-@@ -3060,6 +3062,13 @@ static bool vtd_process_piotlb_desc(IntelIOMMUState *s,
- 
-     case VTD_INV_DESC_PIOTLB_PSI_IN_PASID:
-         am = VTD_INV_DESC_PIOTLB_AM(inv_desc->val[1]);
-+        if (am > VTD_MAMV) {
-+            error_report_once("%s: invalid piotlb inv desc: hi=0x%"PRIx64
-+                              ", lo=0x%"PRIx64" (am=%u > VTD_MAMV=%llu)",
-+                              __func__, inv_desc->val[1], inv_desc->val[0],
-+                              am, VTD_MAMV);
-+            return false;
-+        }
-         addr = (hwaddr) VTD_INV_DESC_PIOTLB_ADDR(inv_desc->val[1]);
-         vtd_piotlb_page_invalidate(s, domain_id, pasid, addr, am,
-                                    VTD_INV_DESC_PIOTLB_IH(inv_desc));
+-    ret = vhost_dev_set_config(&s->dev, s->config, 0, s->config_size,
++    ret = vhost_dev_set_config(&s->dev, config, 0, s->config_size,
+                                VHOST_SET_CONFIG_TYPE_FRONTEND);
+     if (ret) {
+         error_report("set device config space failed");
 -- 
 MST
 
