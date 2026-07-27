@@ -4,87 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 562B9C53219
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:52:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C750C531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:52:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woJrv-00055c-RT; Mon, 27 Jul 2026 07:51:39 -0400
+	id 1woJsV-0006aR-Vg; Mon, 27 Jul 2026 07:52:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1woJru-00055Q-BK
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:51:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1woJsS-0006VS-6K
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:52:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1woJrs-0003dh-M4
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:51:38 -0400
+ id 1woJsQ-0003jf-K4
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:52:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785153095;
+ s=mimecast20190719; t=1785153130;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=spIwDhi84FOynyRLbA1TkwObj3vyLQCNadXo0WSRpuA=;
- b=P7BfWaLnfnxotWa3TQqR+NdefpPuKZxAAZfCYxhSdXv0PgviHejqFBoFG/+2HqQDNeCxYs
- i3yHIk37SdKoVkWUg9XL9vBYm6qfQSn6ksJ34YUtsixDcYDTq8dfnspSLgh65hENUlON7+
- pTtlQY1IPEO8k0bkfgXnf2DWJ2oEuho=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=i5UQGqeTaYi2kaAkB+026BcAjPwRZW9Yj5wzH4u9ATk=;
+ b=CIUM+vo5YvAg0esckBw1nJVNHX6Du8+BPFepo8sbPmLGJk44jIkT+F6cJlrgrRsGwnf/1d
+ XS4LmswazC3NfqR95YBhd1RnfroSfxyv2cMN/MQ36tycwU4vE+BLA3tbk08pZ6dnQ7QCxZ
+ 527LB7mc0wm6kY84nYRkUkQh7geb84E=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-630-o4OrcGVZMCiTxTpA4ChN1g-1; Mon,
- 27 Jul 2026 07:51:34 -0400
-X-MC-Unique: o4OrcGVZMCiTxTpA4ChN1g-1
-X-Mimecast-MFC-AGG-ID: o4OrcGVZMCiTxTpA4ChN1g_1785153093
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-355-BLrv8nnUN0q04OGhaR7ezw-1; Mon,
+ 27 Jul 2026 07:52:07 -0400
+X-MC-Unique: BLrv8nnUN0q04OGhaR7ezw-1
+X-Mimecast-MFC-AGG-ID: BLrv8nnUN0q04OGhaR7ezw_1785153126
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3350E195607C
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 11:51:33 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EACF8180264B; Mon, 27 Jul 2026 11:52:05 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.5])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 284F7180025A; Mon, 27 Jul 2026 11:51:31 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7B732429; Mon, 27 Jul 2026 11:52:03 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Mon, 27 Jul 2026 15:51:15 +0400
+Subject: [GIT PULL 06/23] target/i386/sev: fix MemoryRegion reference leaks
+ in gpa2hva callers
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: [GIT PULL 00/23] Fixes for 11.1-rc2
-Message-Id: <20260727-fix-v1-0-ca3fa3851347@redhat.com>
-Date: Mon, 27 Jul 2026 15:51:09 +0400
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Message-Id: <20260727-fix-v1-6-ca3fa3851347@redhat.com>
+References: <20260727-fix-v1-0-ca3fa3851347@redhat.com>
+In-Reply-To: <20260727-fix-v1-0-ca3fa3851347@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3651;
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>, 
+ kvm@vger.kernel.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1828;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=+J2SDkYbHI1yYKgMAh/vg5/8DP/melYWcisFLymsB1c=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZ0Y+UyuK7NNRrEm7fE3IAamTWJK1CvMHpLhMj
- E/y73G8lA2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamdGPgAKCRDa6OEJdZac
- 5TeDD/4t0DoLiKHGkV10EECcudpFfZPKpjg+NoehCw28mH9T3uWwTNCRzof2vSMdZP7fdWmPtVi
- 5oGwwW4k4QeK8OT5nOeBB+u13hP7zPlKOa9xamyuWrI+/UfM3pBQY+dkVjJe9iS1iHQOt8A3I7w
- LagO5VgedSyidtl2MckKN9D+KT/+ymgrNnH7dlTjxbGCuvRC9eB53H6uO/rG3TjgJXQbJ1pJaKb
- 23AUhJBAYsPkluUiJQRu0BLGjCenp5+gLQUwvvDzThUTqb4ec6HQJSiggdJasyN/U0llcHM+neO
- Xo/Vk38O8UGdka/ePTCMzAcRaFFeUH4wurEUbdI1xZZbs4LICQkoxAPCZlB0zGq6OhrGK2Ie6zD
- nu6czXBBhDvWCMsIYtY5Fi7qByrEcUoDUoRkg4btITgr8tnDlja3BA+eQgFAi+E7RSwQ8tb0c5u
- n9gZOdXXIkawb5mzY6BZG8gwc53du31WMFgwq/y8JHMMn3mJAIPI/3bibmuddS8uWlRRbO6Qn++
- PMeeAzTQF6fg9FUWJXUVJMHQ9RjH+T0V4ND6rLEMQTuKES+kDsbxtmZjcavVPphmXzjybYGl3KA
- 1igfYlzf3tOBWWJ/OrTFhfl1GhZ2XExOdb10VPoWIKRIxFzufnEoMY+3alvql6Fi9sJi/b7rPdb
- hf6ADwEj47YHDvw==
+ bh=Mhhc24sMg3/r/S38Qe+3S85s7KlVq/EDYB1GAklx+k4=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZ0Y+fGj1ciGYg3/G6BtXKbg01aMqoGrpUPrq6
+ 0Eq0DGF1/WJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamdGPgAKCRDa6OEJdZac
+ 5RgqEACKwy8dkLIU6JwSGzDKMtVXkr7DEfaFR3siAcCWRK56vUVxeOAjrGtp7g6AGSeQusDHnTK
+ JRF379tFVLKYhql12Y2sMGF9OFA+0ttIeSgzujJhqZvpcL5Tpf6EE9UUE0aEjZooDJNCsw8/dik
+ DnKcpLzXSHueyJCVcbtOQDzX+TxV3hwGaRu5NOykg1xIvJZdF0ydMrtgltiSAnpSanHNbIJ5mdQ
+ ydwHv/QXaoEVbn9qGHsdRdXs4P9fAHUvkZtJ44zXps3+MPsFsXoz6r767J17oEcpyoBjBnwQ8bA
+ y1BaM4Owwm/QPRRmlUa6DjdDrGphJ3QTfGkedTmfSuoK4vrXpK6EMeKwNs/sN/Mk6WAYGXCqkhq
+ I15cWgKFMR35c2Ye/czw9wlQK26TSRXvjmSVG8YWcM0Pwt5ZWLqQnJFaG3Cl3G9r8rJuAJPRR1d
+ 0xfD+G+RUzGAqWtn4Zd/koJjhgwN2IrYcdIe9P1Umw1IdOzVjhIKoGodZpKLQWmMQCE0q/2RIpV
+ de1L2pYHHjY+x/s9SGuqXnSHF7CrZ0udwZRsaItFM1RPaiFb3fkWnsmOCZBbcnnPKuF4tnLYZM9
+ R2rJO7r8VbuZvKGo0un507lqwc6Ob7XeUeiCqcq1kx9wND0tUae5GEY2yB5L3XvBavWFaERtzie
+ U01/X2mJUzRjcqw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,81 +106,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 6333226c2abb72f31648c251624c56e70993d625:
+gpa2hva() returns a referenced MemoryRegion via its p_mr out-parameter
+(inherited from memory_region_find()), but both SEV callers were failing
+to release it.
 
-  Merge tag 'pull-9p-20260725' of https://github.com/cschoenebeck/qemu into staging (2026-07-26 08:30:07 -0400)
-
-are available in the Git repository at:
-
-  https://gitlab.com/marcandre.lureau/qemu.git tags/fix-pr-v1
-
-for you to fetch changes up to 0e83d6894534cfe4cf071381ea8466cc689e044e:
-
-  migration/rdma: annotate and simplify wait_comp_channel() (2026-07-27 15:51:03 +0400)
-
-----------------------------------------------------------------
-Fixes for 11.1-rc2
-
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Fixes: c7f7e6970d3b ("sev: add sev-inject-launch-secret")
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260521145451.1831984-1-marcandre.lureau@redhat.com>
+---
+ include/system/memory.h | 2 ++
+ target/i386/sev.c       | 4 ++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-----------------------------------------------------------------
-Akihiko Odaki (5):
-      hw/display/virtio-gpu: Remove the bytes_pp field
-      hw/display/virtio-gpu: Fix empty blob discrimination
-      hw/display/virtio-gpu: Initialize blob mapping for ATTACH_BACKING
-      hw/display/virtio-gpu: Avoid leaking migration blocker
-      hw/display/virtio-gpu: Block Rutabaga migration
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 47a0e06fbf8a..2192fc9bdc5b 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -1085,6 +1085,8 @@ void memory_region_ref(MemoryRegion *mr);
+  */
+ void memory_region_unref(MemoryRegion *mr);
+ 
++G_DEFINE_AUTOPTR_CLEANUP_FUNC(MemoryRegion, memory_region_unref)
++
+ /**
+  * memory_region_init_io: Initialize an I/O memory region.
+  *
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index debe6344ab4d..d7dcefc8ecf5 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -1569,7 +1569,7 @@ snp_populate_metadata_pages(SevSnpGuestState *sev_snp,
+     OvmfSevMetadataDesc *desc;
+     int type, ret, i;
+     void *hva;
+-    MemoryRegion *mr = NULL;
++    g_autoptr(MemoryRegion) mr = NULL;
+ 
+     for (i = 0; i < metadata->num_desc; i++) {
+         desc = &metadata->descs[i];
+@@ -2063,7 +2063,7 @@ int sev_inject_launch_secret(const char *packet_hdr, const char *secret,
+     int error, ret = 1;
+     void *hva;
+     gsize hdr_sz = 0, data_sz = 0;
+-    MemoryRegion *mr = NULL;
++    g_autoptr(MemoryRegion) mr = NULL;
+     SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
+ 
+     if (!sev_common) {
 
-Haotian Jiang (2):
-      hw/display/qxl: unregister vm_change_state handler and BHs
-      virtio-gpu: fix NULL deref in rutabaga set_scanout
-
-Marc-André Lureau (16):
-      hw/display/vhost-user-gpu: validate message payload sizes
-      ui/vnc: remove redundant rows computation
-      net/colo: fix g_hash_table_destroy assertion on uninitialized filter
-      target/i386/sev: fix MemoryRegion reference leaks in gpa2hva callers
-      docs/hyperv: fix misleading hv-crash shutdown description
-      hw/display/virtio-gpu-rutabaga: zero-init capset info response
-      hw/cxl: fix invalid free on early return
-      hw/hexagon: fix machine->fdt leak in qom-test
-      block/blkio: fix compiler false-positive warning
-      monitor: annotate monitor_qmp_dispatcher_pop_any() as coroutine
-      migration: fix qemu_get_counted_string annotation
-      io: add missing coroutine annotation
-      block: add missing coroutine annotation
-      qcow2: remove invalid qcow2_check_refcounts calls
-      hw/9pfs: annotate V9fsTransport callbacks as coroutine_fn
-      migration/rdma: annotate and simplify wait_comp_channel()
-
- docs/system/i386/hyperv.rst      | 12 ++++++----
- hw/9pfs/9p.h                     | 26 ++++++++++++---------
- hw/display/qxl.h                 |  1 +
- include/hw/virtio/virtio-gpu.h   |  1 -
- include/io/channel.h             |  4 ++--
- include/system/memory.h          |  2 ++
- block/blkio.c                    |  5 ++--
- block/commit.c                   |  5 ++--
- block/qcow2-snapshot.c           | 18 ---------------
- hw/9pfs/9p.c                     | 31 +++++++++++++++----------
- hw/9pfs/virtio-9p-device.c       | 24 +++++++++++---------
- hw/9pfs/xen-9p-backend.c         | 34 ++++++++++++++--------------
- hw/cxl/cxl-host.c                |  2 +-
- hw/display/qxl.c                 | 16 ++++++++++++-
- hw/display/vhost-user-gpu.c      | 38 +++++++++++++++++++++++++++++++
- hw/display/virtio-gpu-base.c     | 37 +++++++++++++-----------------
- hw/display/virtio-gpu-rutabaga.c | 21 ++++++++++++++---
- hw/display/virtio-gpu.c          | 49 ++++++++++++++++++++++++----------------
- hw/hexagon/virt.c                |  9 +-------
- io/channel.c                     |  5 ++--
- migration/qemu-file.c            |  2 +-
- migration/rdma.c                 | 12 ++++------
- monitor/qmp.c                    |  3 ++-
- net/filter-rewriter.c            |  2 +-
- target/i386/sev.c                |  4 ++--
- ui/vnc.c                         |  1 -
- 26 files changed, 214 insertions(+), 150 deletions(-)
+-- 
+2.55.0
 
 
