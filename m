@@ -4,105 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 248B9C531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 13:32:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8478C53209
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 13:33:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woLQK-0003Nm-21; Mon, 27 Jul 2026 09:31:16 -0400
+	id 1woLS0-00041e-Bz; Mon, 27 Jul 2026 09:33:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woLQ7-0003LL-8r
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 09:31:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1woLRp-00040E-Be; Mon, 27 Jul 2026 09:32:49 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woLQ4-0002gC-4B
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 09:31:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785159058;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=AX7jsT9/zf/KqAg/8uhcqRDbZH5TTxg1c6I0SRHtYO0=;
- b=BfssA9zID7mS84jxZopAp6TcT/XDO1KubEO6fta0tZ3OHNA78/jErpNYkGHwbmP+Np6hR+
- 3jaTcg+oWkPbk0a2iR9RL2IPTGROyms7vnRJl4cLrLFB5F7xc7FFhSpp177eDu/fC5LzU2
- rmRJbycSJ/OyUA3+7Fa8KN3WoKQQ6zw=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-422-xhQhVINZO8yconu3BDA96w-1; Mon, 27 Jul 2026 09:30:56 -0400
-X-MC-Unique: xhQhVINZO8yconu3BDA96w-1
-X-Mimecast-MFC-AGG-ID: xhQhVINZO8yconu3BDA96w_1785159055
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-495689bfcc8so21609085e9.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 06:30:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785159055; x=1785763855; darn=nongnu.org;
- h=content-disposition:content-type:mime-version:message-id:subject:cc
- :to:from:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=AX7jsT9/zf/KqAg/8uhcqRDbZH5TTxg1c6I0SRHtYO0=;
- b=i6CFLOcIrF06OTz+ErNytPWbCOpsXQRRTAdrRQTzvDY1gBYfdGa5a8WYzirgAOwwnS
- pqb0ewu2pxloKEvB5me84+31WZYmQcLaAVRqEk7f1GSYIZWskJ8pUdZGOi4kTmJ3hLWi
- Gs/AeRCWfiiyXgTGJPKjodVOCgp+J5PRJOooYkGxKrUlp2Sf3bzEcsnOH0a4Msn4WSnJ
- Ykviu3qFilF+DMG6WqlbJOFP7kZ0Tn8wyrw+MND+69dcHTYEd/yw9nUvMFSVfEEogHz1
- Nm3FfG7mHa47zJ7SsCvvau3wXtrPm7KG48JY8aAQDxJnJMbGf9AQMJtVXhEX+VV+QIXE
- 0+8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785159055; x=1785763855;
- h=content-disposition:content-type:mime-version:message-id:subject:cc
- :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=AX7jsT9/zf/KqAg/8uhcqRDbZH5TTxg1c6I0SRHtYO0=;
- b=NFFp23tn4RFvErQzkEaDsoTXbBrFbeE9JTKxl1bgJEhkFIqbhZUZxPy2R31rgJHITH
- z3HGJCoEn1t3XrMeh6gbQ8uXnReayd9UMb8Co6ASdYuoJvBH+egAVAlCXaqZ22cSflQz
- ydME/gA/kToZVm+Cqi/vdji+MyKIIlXx6f+LWelRTMXJTzFhGZnEELbiGE/WmFDrkN9B
- v5DgVv418S/wlgPgskx9Wytq+QOH+QNGMvuDkYp2jr9sXrm1lvObhp2CUfadQwJQ+Cph
- Y3m/JqVD72Sg5dRafQcZyDNUqRr+OcmJnZLaK5csrwmSR7F15KIscPjoS6ckVeFV2PKG
- sMrQ==
-X-Gm-Message-State: AOJu0YyhWeLhFAB/FBLllkTjKtlA21TyzS4uZZWz07mQJ6eIqfU4Is53
- /CwwOGAWaDtstvSwvYPN8/SouLPG7gBXBiPjtMTWA+Ll3It79AjhIwLUg7UladRQPv6+noA4/Ho
- N0Krhh+E+pkkCoL4v7nUV/cJb5cZCa/9lD16i0kzVMOCHmiFv5q+cTbwOMjCsUQW3RPxGgmQpS5
- nuVf6qof+EEMst+o7PSnixQVKpha2nZDmNmA==
-X-Gm-Gg: AR+sD13Vupc3rQfSN4iQ3w3/jN9qe7XE1HYbAI+9lKVWMSarMjjCOI899oVKpc24lLD
- XBAczvG0ounpYSA71zLKUBjgyZ9N+K47Klcf09UsBstgdnDjnAKU8qyH6OYQIvZcxSNzIgWkPUh
- 3fEz69xfHhfQkjVq1iNQ2b4cEh5cCXv2ZOfnM24FjoRYxquXIrajDLhBdimTuyp/z29PGJOitEi
- FliCEimMruAEe6WxethjKzhuCae2N/vIaYmdXaX0LDOVbyAkDHaBwv3ZDWMoKGJVp2noHDU8Tes
- hatDRUpN2iygDmuWXQHj0xJIbVeEozohs83hi/Tl+q2JWfv1YXOrchQ76Rw9nAvVtFtORO2ElcM
- FIJ67f7TpsFVPGZX4rBlIVw==
-X-Received: by 2002:a05:600c:35d6:b0:496:bbce:fd with SMTP id
- 5b1f17b1804b1-496bc0500bemr81322005e9.6.1785159054877; 
- Mon, 27 Jul 2026 06:30:54 -0700 (PDT)
-X-Received: by 2002:a05:600c:35d6:b0:496:bbce:fd with SMTP id
- 5b1f17b1804b1-496bc0500bemr81321555e9.6.1785159054358; 
- Mon, 27 Jul 2026 06:30:54 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-496b4ee0e91sm226185675e9.4.2026.07.27.06.30.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 06:30:53 -0700 (PDT)
-Date: Mon, 27 Jul 2026 09:30:51 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH] meson: disable "maybe uninitilized" errors with -Og
-Message-ID: <f559b622eb2d1a384b4f30583a8af10531f4b032.1785144729.git.mst@redhat.com>
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1woLRi-000387-W1; Mon, 27 Jul 2026 09:32:44 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66RAJc0j1958833; Mon, 27 Jul 2026 13:32:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=QstVPY
+ XloQ9fF//s8g2nG8EFLsl3sX0dPhrFWXAPx1k=; b=S1Qv2Mw2WWssfXYk+aU6/e
+ bBYcasCfJTh0++O7VuqKXUdkSkXvRcIufq8gcEHaZin1KlyQIes9Z/5yBrGt8c53
+ BMr1TrWMLIqKShC8uIrxcbF6FSA3XA854qaernNNIss1MaumXg+vA5cmq3O6vqa8
+ 4AsS1qIqStgtdAxJITbKCN3MuRazPNIpjwKLuFaytOtHYQ7k6DTAEut5mkn6pEbb
+ KdTwjlwrah7Ezu8O/YPjXdD06j6IiZnwlgJpXpNEFyW/PuUKh9g4kcY+gm9kpLPm
+ pSjJzKPbw91CDLXanW305dfU5QCNjVBa8SH1TugZOTMjA/r72/ckcFbSNQSRrUfg
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0xg822-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Jul 2026 13:32:38 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66RDQMwj022566;
+ Mon, 27 Jul 2026 13:32:37 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn8fjwj4v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Jul 2026 13:32:37 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66RDWax531523456
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 27 Jul 2026 13:32:36 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 29E0E58056;
+ Mon, 27 Jul 2026 13:32:36 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2BE4F5804E;
+ Mon, 27 Jul 2026 13:32:31 +0000 (GMT)
+Received: from [9.39.23.56] (unknown [9.39.23.56])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 27 Jul 2026 13:32:30 +0000 (GMT)
+Message-ID: <720b6dee-23cf-427d-872a-a9ff2b61bc7a@linux.ibm.com>
+Date: Mon, 27 Jul 2026 19:02:29 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/ppc/cpu_init: make cpu listing determnistic
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>
+References: <20260720192403.66694-1-pierrick.bouvier@oss.qualcomm.com>
+ <a9766fa1-7c20-44a2-b12a-9d3455cb9198@oss.qualcomm.com>
+Content-Language: en-US
+From: Chinmay Rath <rathc@linux.ibm.com>
+In-Reply-To: <a9766fa1-7c20-44a2-b12a-9d3455cb9198@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: fTOAf-Tknhy1ePKhnBD-CuNYVORrHKBL
+X-Proofpoint-ORIG-GUID: YhkqZ6-8uTfYi8Tk49IoqgnJOcEA262e
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDEyOSBTYWx0ZWRfXx4vPOyV84wYl
+ UjewndEqeyPwKo5O1wTZinxGI9cBPrmk46aSHn2+KVqImQ1uRYfxiCXdVghcC84GHMNaVEL62Kz
+ Y0fkF4NdkPw1kEblx3L3g45YipRmHj0=
+X-Authority-Analysis: v=2.4 cv=dYuwG3Xe c=1 sm=1 tr=0 ts=6a675df7 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=EUspDBNiAAAA:8
+ a=zIbHmUs0OD_xiEY_IgQA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDEyOSBTYWx0ZWRfX2ndXx8MoYD6l
+ dO1UV93AkJpQ1jjmZ4HGCB7t3RTR8lUH27OPQpEEXKQopKWHE4lB5meu+TqPi8ynfz6ElTQszLu
+ 9QvITqQmNoe5/x6IG66U+sJlW30avWIkCGL8lwbNA/0k82YHPb3w45jC703os9SKqWyLCpYoK5q
+ zxY9fJAuGFtKAixNr0hr87fcrZfJaTSrDCJdsTDKULHmVdRfA9xVdQY3ev4Rst4OwB+PVpyGnpv
+ suBOlg5yLsvon0dkvQO0mJCibPPh0NcgKDBZ0YbP8+jdqC1U/cWfMW6gWmD+tPPaUB1OnMWvcTm
+ DVCYQK2X7GylSpGHoJ2nqSzem0Ivip+n6xsmiDHHUgEqiLERNEIzVpwatgRGh2F6kQdR+Cq1qOQ
+ TOQW3Eie65vlvMhYxuD65QGw4OrqPeewDSa6CfV/sXTAXbkh7uWe2Jl/h8cK2bSLwmR92Yp5uEf
+ v2prdYecGj4Gl7ofTYQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-27_03,2026-07-24_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 clxscore=1011 phishscore=0 malwarescore=0
+ spamscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607270129
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,32 +127,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GCC's "maybe uninitilized" warnings depend on optimizations
-for code flow analysis, and produce false positive errors
-with -Og. Default build gives us coverage with that,
-so let's just disable with -Og.
 
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- meson.build | 4 ++++
- 1 file changed, 4 insertions(+)
+On 7/22/26 21:42, Pierrick Bouvier wrote:
+> On 7/20/2026 12:24 PM, Pierrick Bouvier wrote:
+>> The existing compare function only make sure that we list cpus with PVR
+>> order. However, we never compare cpu names.
+>> As a result, while cpus are grouped per PVR, the order within a group is
+>> non deterministic. Depending on QOM type initialization order, we get
+>> different results for -cpu help.
+>>
+>> For instance, previous output could be:
+>> Available CPUs:
+>>    755_v1.0         PVR 00083100
+>>    745_v1.0         PVR 00083100
+>>    755_v1.1         PVR 00083101
+>>    745_v1.1         PVR 00083101
+>>
+>> While a sorted output should be:
+>> Available CPUs:
+>>    745_v1.0         PVR 00083100
+>>    755_v1.0         PVR 00083100
+>>    745_v1.1         PVR 00083101
+>>    755_v1.1         PVR 00083101
+>>
+>> Fix it by comparing cpu names to have a stable result.
+>> This allows us to record and compare various command line results across
+>> versions to make sure we didn't break anything while working on
+>> single-binary.
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>> ---
+>>   target/ppc/cpu_init.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+>> index f404c7e549d..3443dbeeb01 100644
+>> --- a/target/ppc/cpu_init.c
+>> +++ b/target/ppc/cpu_init.c
+>> @@ -7130,7 +7130,7 @@ static gint ppc_cpu_list_compare(gconstpointer a, gconstpointer b, gpointer d)
+>>           } else if (pcc_a->pvr > pcc_b->pvr) {
+>>               return 1;
+>>           } else {
+>> -            return 0;
+>> +            return strcmp(name_a, name_b);
+>>           }
+>>       }
+>>   }
+> Any chance one of ppc maintainer could send this for the upcoming release?
+> This would help us to compare command lines across QEMU versions to make
+> ]sure there is no regression.
+Hi Pierrick,
 
-diff --git a/meson.build b/meson.build
-index 164328ded8..a119dae6ac 100644
---- a/meson.build
-+++ b/meson.build
-@@ -742,6 +742,10 @@ warn_flags = [
-   '-Wno-typedef-redefinition',
- ]
- 
-+if get_option('optimization') == 'g'
-+  warn_flags += ['-Wno-error=maybe-uninitialized']
-+endif
-+
- if host_os != 'darwin'
-   tsa_has_cleanup = cc.compiles('''
-     struct __attribute__((capability("mutex"))) mutex {};
--- 
-MST
+Thanks for the patch. Looks good to me.
+Since this a minor user visible change and also not a regression fix, 
+IMO this would be a better candidate for 11.2 ?
 
+Regards,
+Chinmay
+
+
+>
+> Regards,
+> Pierrick
 
