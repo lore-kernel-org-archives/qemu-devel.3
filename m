@@ -4,97 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 103E7C53219
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 09:38:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5FE9C531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 09:41:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woHnL-0003wQ-Sp; Mon, 27 Jul 2026 05:38:47 -0400
+	id 1woHpE-0004WZ-36; Mon, 27 Jul 2026 05:40:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1woHnK-0003wE-HX
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 05:38:46 -0400
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ id 1woHp7-0004W4-ON
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 05:40:38 -0400
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1woHnI-0003fX-VR
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 05:38:46 -0400
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-664a09bc459so2986694d50.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 02:38:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785145124; cv=none;
+ id 1woHp6-00041J-5G
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 05:40:37 -0400
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-8114a4542b2so33482687b3.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 02:40:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785145234; cv=none;
  d=google.com; s=arc-20260327;
- b=nx0ru4FLheCf5nw/3Txsc4WjoaVvWeKBbSO7phyA+jUwiKIs98xo60GMpZAfZNe0cR
- M9LR905d8c0oy6kjsaAB41aP7YAKdaqqRtn/5wYmjBv29bmS4s0pa2Y/yOKjmHXm1Ky7
- 4LttmnpU83KsH+Q05OXceVe2v83RPN0qiZSuBF3fuX82fA8MkePro3QGFfDBVXMJfO6G
- LcaDwotiazU7G5SGMx9Gm5SfQnsfohjog85+eSu97zF6QpMQiRF7rKDLwh1mAGeJPcWc
- gtv3KMTDASn0epJ1D9Hu0p5apZWHdtLQAJZIx1mtw/Rcc+ckizewoNRMP6rBJyieGXdZ
- l81Q==
+ b=p8gu9R/UStPsH5ELGfD42HEEdpe4qV6l4QD3GI403CZQB9tOyh0OU686sp4fBjiMQY
+ S/6afFHvqJV9TVfMe3Eps5q1y3yP+sb6ui38gPk64fd3IQ7seB3jCP/DMUO3VAQHxsag
+ u+RmLb2p5krB/f1jMfaafIxeP0OB/ltQcp3XE1gn2IhULUDnurYrPU/ky3pQqZSPX9oW
+ +bLwc3DkaRHzQp6CIMKZzgXBDOvVFeUEPhDNGv6DoObyz6r4FAWTZ2YB9rwQZr54L/nc
+ Wz8ZvU/rntm29rd8QhhXGeOYphqQkUwRWs+GyRDti8sgjx9Mcls1U4flDF3JPacbD8ez
+ 2pnQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=jcyPDsA3/Jpo6SS8INy0z3VSGqWL3xEGS3/QtqDFLqQ=;
- fh=ns1eua24zC30J2klOKMkH/VZ1UXy0fV6hkSq8hW1g9k=;
- b=M0zfEehZ5TQM3M9HaihMd1/+CmHmWq1ZQq4VXLDnyAzF646EAinLqIkRLT3AFRHQDe
- 1kwc0C8H0SXWX2tDRzzetkyjQuzOW6visM/HUH6R3bcJSAPeRRKcOU0zSNxMXKWHi263
- ll5eRAU43uItuSljlvhy3n+j7W3TCJ9VwPrx2dObiyBSyxyawOvMj3PorRnAQ25Rgr0H
- GnAjMby9WLBjRM7Fj9IeuyAMm8nlocv9GzLKbJbjnEQEuOjE2wxKrqaRBxfjCE7btLB1
- VkYhe4zCPFczfuG3ElfdjgYdRqa9w3W+0oI2pu9QjbcWqBS4WHeEqpAkmZzoKjkXyZOv
- yo1w==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=PBjTSeUZsflLVbw7xBkJvO6XZnbCoCdD8ANczblZNo8=;
+ fh=pNDvVMtLDvW4cAeBaapkxV6ynVENb+aqTOIHw2UELYg=;
+ b=M2/Q7HcXqaXbgANxkFII+wbmgC02egh6z7VtsIFVOhtvfp84xLj4JhaD95CDLW7/xt
+ 4bVxQ7QQWn7iZRpG8C+EvukQGViA8bUBNmi/FaR4gVXJ28PCvV8lzZeoBMCdMGnG0zZG
+ xgMhu+SEM1yR+Ww1zAeKV0/AQlSbYrlstB1/Ogrdc0WsV1ov2WRSGM0BtKjb2uBER6zD
+ XHzMniyiSUvMNJ5MjQNOUL7v+2c7innNDgQOg9hObdGirFJLwKMf8Wb6hOjUccL00v/e
+ 1cGLlE4zWwhXhfFXjpWt956yzyGwGJWbgQNTvT4L0WlepnR9JFndfwDwwrDI7g/wF9xN
+ 6nhA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785145124; x=1785749924; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=jcyPDsA3/Jpo6SS8INy0z3VSGqWL3xEGS3/QtqDFLqQ=;
- b=McBkTmkLRSa30iMKTPBHLKrfQEcrR8A9TO0BXpQoPnYRrVuSO6SBIc3OeX++RLMuGD
- BwseY1Aj46GJjQR3YE4V2DcjGkces4kEoU8iHzOttGHWj2bx5n+vJuixkr7wZjtJywjI
- wZsCeScUBgGNVy7XzGOxt/T1v4zqIyylpcPIIqHlgLMxuGVW5G6kjwT+Mvib52X666XF
- HFlriemVSTT+ZEIICx93LI0KTSXFB/Hx5f7D1IRfQCBSUpHKtX0wxX7IT163hqcsW7C1
- DQYwYdsiPDHqx/V6k/oGlLZBW6zTGEFSmHc1CDJQRnB/e8+5PTy8pN9oGKyEvtpX/PqP
- m23w==
+ d=linaro.org; s=google; t=1785145234; x=1785750034; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=PBjTSeUZsflLVbw7xBkJvO6XZnbCoCdD8ANczblZNo8=;
+ b=auhL/E6baoMO/Arp+3G8jUsM0b6Gp72n/RVQcvycajzAlZ3rDBvdbThaSEbga0GfRt
+ 5kHaXvfHOuaL2WkF5OdgzZMopSHb9g9n1JS4h9E4DsAnYLR/YKu6JWdqlUGe9uY+JTqb
+ hW4lgqcFRcGxyfusa9/Nri1gEqaqcvKZtrxzx7vSkAXpH403NMomHxRNIF1NWIw6SwKD
+ Rr42tIIkXVo3IOkDMjGQREbYqFnSbygaGWrain8/sDXAG7CXwKN9VniHee45agEiL8kV
+ 4Yrca/EItXJuQ7ak1aASsd7vuV++3wJ+2B2IWApHExPbFmLgKViYD05DyFpZNMq1mcdB
+ UDnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785145124; x=1785749924;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=jcyPDsA3/Jpo6SS8INy0z3VSGqWL3xEGS3/QtqDFLqQ=;
- b=cmcdP/BEjSXvHL/YVe6p/7ka1ZSO7Xc2NsbL/g5x0avAhEuj53XDBPrdiCJ8ENbBaU
- hNC+gZuQhOXw9H+nrtoM8W+Ph7Y7mY1c5vAmNspkDr6JQbxRxBsiwbaGtBog4+rahCCo
- YCSDFmXHA8T/vPOwvL7YBLvg+q8GS+v1F2piFaXLlxX72yMr7eDJjJyijjqiGO1n4E5n
- WrHEKuQPK7jVU9duUrjx8/yZnTQdh6aK2YEVWAFH86b+x+lJ9IG85tyPAqezs4+7l9jg
- zJ2wNn4a6Dx8/m3QeXrDf+ZRq8FB4JLl5wwUqSR1Od4rxQsB9shQSZY7xH4NdlnmcpsT
- 1Wpg==
-X-Gm-Message-State: AOJu0YxanNfUkCmc0qJILXs2ao3dl+ZVhIsA8xG7MI5D5rVuKMEbC7h0
- DvjylgJ8h8YavZzSDLOwZV3rqSQf1NCX8nFQS/82qtaq6h0bVYBdfgZ0WfDXSVX2kWEYchqnX3o
- zg7O6eiFv5VwTcw9IMSymFNT6FLfNTz07i7lha4G0aw==
-X-Gm-Gg: AR+sD10l2rR6mLQ0sAzo1NdhCiXzo2C2RRhtWLPw4X7b6ORVHMT/c2P9iC0m8I2IRVU
- NWfYOSNx31BZ4INBvSe0ejZKowD35/Y7t7dy2bXww7CSze7JTSo/5Td/qZCRPSfVrs/t7ULReQH
- 5HItU6Q8K8GyX0K+Uf7SoDFyFXtdbVS0HWoFwqzR5mgy7Zl8DRED2ppJ7/CsyMbBAJaKyqpOqGH
- BwbGNR64nJOYkQMebon4LCPbG7GbQ0+Xtt2TsvwFZWWZ4Vzm7Vfw8/tQKDUlu56pelsReWdzDIf
- BIf5Hwltyzn/aRs2k1H6QIzjk+EQTJTYlx+Q0ZyG5VCHDw==
-X-Received: by 2002:a05:690e:812:10b0:667:b4e5:2ea6 with SMTP id
- 956f58d0204a3-668c78db2e6mr1587889d50.36.1785145123752; Mon, 27 Jul 2026
- 02:38:43 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785145234; x=1785750034;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=PBjTSeUZsflLVbw7xBkJvO6XZnbCoCdD8ANczblZNo8=;
+ b=PQJO5QKh0LkmOs4P3k1aYiKqWepSaEpjIicUx+RC4qqzRLKk5g+2deOgBDNJ7WqUc4
+ ILEtB5qLqDn0RlxUkNfNFdOJKlUAlW6wzm3894p/wkSw7IcFWTIeV2Vy4xZc6Y8056kN
+ JVnFcp2STfFAHPomR8s19YL+g5pdVZiA3fZqgJTKNkGCbY8ftxa0PWaGAuBz1PzWSO8f
+ J0ussQ++fpstE8zR1xY3HKyupBc0171iyNi5wOYoJGUdvXRSwTKjuU2sbJtIHL/jF9xc
+ Q7nlXOrdOUqzFrkeaBZfd+IG4zKoruEadM8JUyDciR6IyeHWz6IP8V0kztUMbozFTBPR
+ fW8w==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrAeE0ucEFNFgp2btQjCLd7KrX4YW/uR4SIdiGTHk+rjKTSV0GD2Pv5sVQ07DVgE6du/U8JgfStvpKa@nongnu.org
+X-Gm-Message-State: AOJu0Ywjr+rhsVrL7l2rurhUerPMiN2POet84aKOJuXt9CpXQY4ao4ae
+ CE2Z3lX8flil7cxtiigkkjuQSJGPCJG32NIBd1kwi85azp1UqPMArumxFx/a7RFLW3gRR+R5OHf
+ rCILgt8btUYgAlJQhMxm300TgkR0ig54bszoWM40tlJqMwDh4Dp+C
+X-Gm-Gg: AR+sD102oB8egV2cGBDv6Sftg7cRX6j9jNzAdUP4r6uQ7MssXsZ2rynTEpvia0erTAX
+ M6O9gpA8ZPVO23XgFw6Hre6PVC5bNLiZ0TzutfFCfwJzPuAIhnGaYsFD7VeopnrTQe9/mX9YJTr
+ QbNyDmlSww5MD2Nk780OCdWxmy4L3DnBg2BI2EOoVNWbm9y34ZcEkiTiYCofxblSaIquFVmDnm3
+ 4IZX2YE9rFTQxTyhIHUud0VHCpUl+GAJHHFMdoGsnHDasgoQ4HRylnXWwM0ucD6q2ApkSOm+IcG
+ kS0s11z8H8FICdftnbg1rQqnianIXZf1GDb/kCFHCUNsIw==
+X-Received: by 2002:a05:690c:23c3:b0:81d:6eec:fe22 with SMTP id
+ 00721157ae682-81f69e3c454mr25026727b3.44.1785145233740; Mon, 27 Jul 2026
+ 02:40:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260723070059.6332-1-shentey@gmail.com>
-In-Reply-To: <20260723070059.6332-1-shentey@gmail.com>
+References: <20260627063208.33642-1-bin.meng@processmission.com>
+ <CAEUhbmV_BfLT9_F9OPH8VvwCZ_8Th+swHu833E0sjYCkj-k_=w@mail.gmail.com>
+ <CAFEAcA_or9830t85sHAq-PJegJ4OQ1ef=1wGpfcmiHFmVO0Jkw@mail.gmail.com>
+In-Reply-To: <CAFEAcA_or9830t85sHAq-PJegJ4OQ1ef=1wGpfcmiHFmVO0Jkw@mail.gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 27 Jul 2026 10:38:30 +0100
-X-Gm-Features: AUfX_mwMzf4Hau-O8A_cHL5OC5AiMtuM18RWaKQIR6UgmXdlR065vA-1LLQUHDU
-Message-ID: <CAFEAcA8wqECZpAieijGu4bwNv_B+uObT4-NCy9q1HmmPFmr=+g@mail.gmail.com>
-Subject: Re: [PATCH 0/9] FlexCAN fixes for-11.1
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, Pavel Pisa <pisa@cmp.felk.cvut.cz>, 
- Matyas Bobek <matyas.bobek@gmail.com>,
- Francisco Iglesias <francisco.iglesias@amd.com>, 
- Jason Wang <jasowangio@gmail.com>,
- Vikram Garhwal <vikram.garhwal@bytedance.com>
+Date: Mon, 27 Jul 2026 10:40:21 +0100
+X-Gm-Features: AUfX_mzuI-g41sAHPNQBRaHlejpBAA267EXL6C-ySZodXaLZvwLAC9wcaeE1o7g
+Message-ID: <CAFEAcA-JDuWrmNcEhwT+MwKqVmhW+BWW8+CMAz4muBA9W61jSQ@mail.gmail.com>
+Subject: Re: [PATCH] docs/system/arm: Update Nuvoton OpenBMC image guidance
+To: Bin Meng <bmeng.cn@gmail.com>
+Cc: Bin Meng <bin.meng@processmission.com>, qemu-devel@nongnu.org, 
+ Hao Wu <wuhaotsh@google.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Tyrone Ting <kfting@nuvoton.com>, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,23 +123,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 23 Jul 2026 at 08:27, Bernhard Beschow <shentey@gmail.com> wrote:
+On Mon, 13 Jul 2026 at 10:20, Peter Maydell <peter.maydell@linaro.org> wrot=
+e:
 >
-> This series attempts to fix the Coveriy issues pointed out by Peter in the
-> FlexCAN emulation [1]. In addition, it fixes some reset masks to preserve
-> register contents across resets as intended. It also fixes some register
-> offsets due to a union being inadvertantly too large; this would affect
-> migration if addressed after the release. Last but not least it eliminates an
-> unneeded union.
+> On Wed, 8 Jul 2026 at 16:50, Bin Meng <bmeng.cn@gmail.com> wrote:
+> >
+> > On Sat, Jun 27, 2026 at 8:12=E2=80=AFPM Bin Meng <bin.meng@processmissi=
+on.com> wrote:
+> > >
+> > > Describe the current OpenBMC target naming and release status for
+> > > Nuvoton machines. The latest 2.18.0 release no longer includes GSJ,
+> > > so point users at older 2.14.0 sources and explain how to find
+> > > Jenkins MTD artifacts.
+> > >
+> > > Signed-off-by: Bin Meng <bin.meng@processmission.com>
+> > >
+> > > ---
+> > >
+> > >  docs/system/arm/nuvoton.rst | 54 +++++++++++++++++++++++++++++++++--=
+--
+> > >  1 file changed, 49 insertions(+), 5 deletions(-)
+> > >
+> >
+> > Ping?
 >
-> Testing done:
-> * `make check`
-> * Run `cangen` and `candump` on the host and guest in both directions
->
-> [1] https://lore.kernel.org/qemu-devel/CAFEAcA-QBiPfgN4YJXD9FQULobpBVNgeJHSqG7Eqg1CzyKTfaA@mail.gmail.com/
->
+> The docs change looks OK to me as far as formatting goes, but
+> could a Nuvoton maintainer review it, please?
 
-Thanks for fixing these; applied to target-arm.next.
+In the absence of any response from the Nuvoton maintainers,
+I'm going to take this into target-arm.next.
 
+> PS: if quanta-gsj is no longer supported by OpenBMC should we
+> consider deprecating (and eventually dropping) it in QEMU ?
+
+I think this is still an interesting question to think about
+for 11.2.
+
+thanks
 -- PMM
 
