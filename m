@@ -4,157 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD1C8C54EFC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA478C53209
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 06:42:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woF1v-0008De-Bc; Mon, 27 Jul 2026 02:41:40 -0400
+	id 1woF2H-0008Gy-MK; Mon, 27 Jul 2026 02:42:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1woF1r-0008DA-7O
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 02:41:35 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1woF2G-0008GS-50
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 02:42:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1woF1p-0001TO-OL
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 02:41:34 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66R1g2MN2257280
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 06:41:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- CLfTJ+AUmXoN1iLtFR3opWLp3SOwKPoN47tiw5eKqO4=; b=PCFChmy+O3NrZBtX
- IYEor4aOCsQL3emlVuVJkbKWXmfEIEFrtJQYa8PkREsiq8N2TNgL7gSdaH+B5pa/
- MVEv/cRTZ4bJuVRUDaY6c4oerwn9K8mH5KQDxxtjXhjItL0GP/ThbRrn19pIB7bI
- YxQZz5nabGdhUPJbR3mzAjyAHTlv8cxwGNTDFRJz/AuAtDtHQBHgbdTCd3Hde/kf
- 4Ci4HlaSzdV3WykTdPStPd3Fo0iRQ6lMXnlk+bsfdoL6+lO2Us1Tm+Xde0qFuUGb
- /Yp+E70Pm68GkcDkByMxcMNxRCxETLsgTPIoXDVRokLELa1HuC1iVpJS1QYLLeML
- 45EzoQ==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fmmfgvxq7-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 06:41:30 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51c19493ac2so36644201cf.1
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 23:41:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1785134490; x=1785739290; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=CLfTJ+AUmXoN1iLtFR3opWLp3SOwKPoN47tiw5eKqO4=;
- b=ONbl81Oa6e8O1G/mUaEcu2R+3SfrXxzZE4HCGQIpev5+G71nT1Pjjg9IvvbXjbf20W
- Dy7pd+6t7xCNJ8X8Pv6AyzUTptddRfNoYMDpIGRGzrc+icQLIgxQOEb3Ph7iu1go7/ek
- AI+wxoBhEHd7nLJsEbMdOVVPpzSEhPxi7jK+/Q9xgcwDcWa7Xm4VwvIwrGpq1iEYyod/
- Y/0GvTAYgs9tGs6rwTDQ9luhAOC1+iASyQI1l+fatFeAJsV4NK2tJ6ObY1XLZmVUZiXB
- epLGDwn/11JZ4fZJNYlQSFOosxGuCevESLjUG6wvtbMp6B3Z88o/RSeWNfIbyp1WLca/
- Gzzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785134490; x=1785739290;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=CLfTJ+AUmXoN1iLtFR3opWLp3SOwKPoN47tiw5eKqO4=;
- b=FYRSzj4fq/B8DyBo7Us1/6lKqaZZOKj6Y3XJUHIw1IpbmhbQhPg2IKlRRvwl+KwZ3O
- TJS2nKhKYNGvlnH8lGyFy4/C5iaMhyH7csaMjFR6hVz5QrHaRHLLU+9+4aaBbLPUG5Od
- 3cGtyk30Ql7fspFwV47dTeR17OMGoRuAuQtp6hoAHYthCcbdiCx5Z+MEjw/CZZEz90bg
- 0PM04CZR4ljQNdyOrteW6vksq5NmasDIGbOhX/8dp+TOXIpMfL4wg6IeIAzSLlPf3Mtn
- WgL1Yl6euTsS7X8ISTBcDIkRoCdu6O4uQL6Jtsc+ES+a9f35VsQlAFAqKv1q3PVUV8z0
- QWcw==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rqy28oP5NW4Tr/pno5Dj+D2J3TJW8qYw81eBUN+siQJApeAD+/IPzX1GctvjBPddHzUI5qKdnl0GUJZ@nongnu.org
-X-Gm-Message-State: AOJu0Yx8eNW/CeGSw0utzcigIoS++Y6LyGaXx3+A0dsMxs5K7C1Ty//Y
- n4j/Ws1WosIXZMl98RAj8lSHnP9sj34R/l+SOLINE4VA8QkXNV0ZX+aLs7nKW9ODSVJ7am3ea4p
- cqbJE5FQUe5dOxxC5y+k62GgJhEX9cKyvDZV1vUO/ura2X4TJgvbmrfUKJw==
-X-Gm-Gg: AR+sD10NRxb92McXy0eoq0nz3QmBN9SnnNy3Sr1K3w02mbhO10S93r/5qymS7h53Pad
- U3BtntLIGo6uTCRyOz44GT8niiXP8P1oQyZvqzehW1kDtt9jYjdXpvJqVJg2FjWXajIZfaE5NB1
- lYdNIR92Kc5TOa//FJ2ZWeTHGEoIWVORa4KD7mrFx+RYLB8OR85+vblsiwCF5pV76oOtSivC96A
- EtDQAUID30IeA715KjhAMsjEGhi56kggfOF5DmG8/pUj6GsDHf7MdGY+X2UXlWBkLGEwBFy0XaF
- F/FDyM4EYN+zBhmetnniTdoy80ZUMB++vrdOjB1Jf30HsPMbsGSXZ7BBmZux8/sl8RsEBB/fP1O
- 6J/HOHdFA3A2KpGWaDzWn3HCwrkBxYa07EX0fZ7HtPEAmk0rbAJI=
-X-Received: by 2002:ac8:5844:0:b0:527:2b06:2bd1 with SMTP id
- d75a77b69052e-529a8715e81mr79406461cf.62.1785134489947; 
- Sun, 26 Jul 2026 23:41:29 -0700 (PDT)
-X-Received: by 2002:ac8:5844:0:b0:527:2b06:2bd1 with SMTP id
- d75a77b69052e-529a8715e81mr79406181cf.62.1785134489563; 
- Sun, 26 Jul 2026 23:41:29 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-496b4f302f8sm192401725e9.12.2026.07.26.23.41.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 26 Jul 2026 23:41:28 -0700 (PDT)
-Message-ID: <f7e2f36c-265d-4fff-8fd6-31313daaef86@oss.qualcomm.com>
-Date: Mon, 27 Jul 2026 08:41:27 +0200
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1woF2E-0001Uy-9s
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 02:41:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785134517;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=z1vkUhFf1Ayr3m8Q/cKW2P6QHRBwZl0jJeSWAQ2RN/I=;
+ b=Zo99U+KD6NWdZeg7SDFkF9OMp56qrcOIWWnbajX6w+rWquVHX7XPWUDN6Vy1G4ZO9oUx45
+ T16fBVE9yFI6i7+d4k4hLh6bFjoWuJ41lSZsmZ83z2oWyFsFCNfHVUFRmidligxCnlNGYZ
+ 7s4tBK7vAaXTvtgvBVb6hL0twC0gvaA=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-462-9K6fiMioPUSUT271KIMs6Q-1; Mon,
+ 27 Jul 2026 02:41:55 -0400
+X-MC-Unique: 9K6fiMioPUSUT271KIMs6Q-1
+X-Mimecast-MFC-AGG-ID: 9K6fiMioPUSUT271KIMs6Q_1785134514
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 218191801358; Mon, 27 Jul 2026 06:41:54 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.44.32.30])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id F0ACE180034F; Mon, 27 Jul 2026 06:41:51 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Michael Tokarev <mjt@tls.msk.ru>, Chao Liu <chao.liu@processmission.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v2] scripts/checkpatch: validate Fixes: tag format and commit
+ ancestry
+Date: Mon, 27 Jul 2026 08:41:49 +0200
+Message-ID: <20260727064149.1469828-1-clg@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/7] hw/hexagon: fix machine->fdt leak in qom-test
-Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
- Jonathan Cameron <jic23@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Wei Liu <wei.liu@kernel.org>,
- linux-cxl@vger.kernel.org, Brian Cain <brian.cain@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-References: <20260725-fix2-v1-0-5c9a6ce7b96a@redhat.com>
- <20260725-fix2-v1-4-5c9a6ce7b96a@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260725-fix2-v1-4-5c9a6ce7b96a@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: iigU_Nyso0EJkpf1YIP7v40XcL1Fe4vq
-X-Proofpoint-ORIG-GUID: iigU_Nyso0EJkpf1YIP7v40XcL1Fe4vq
-X-Authority-Analysis: v=2.4 cv=GdYnWwXL c=1 sm=1 tr=0 ts=6a66fd9a cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=CN8BiiQClkPCgTBgyyEA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDA2NSBTYWx0ZWRfXzwsYY/E/1kFk
- IEHoP3aN578c70howdGMx4Pwiz2Q01tKpLrml/aX4G2Umy9+jCj7/1zZTebRcs7aUzqlE6S57LW
- 97j9ylaKT5h8Fm7DUSSJFCAR6FA7SdY=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDA2NSBTYWx0ZWRfXxu/AgxeAmN4u
- de3T5L49VOp8LzCg10OjOuVDmrFUl58xTwE/i2YbsPlb4wRGd2fbamt9WU/cZTmxuL6MsVpdGhQ
- HLP8OBxEt9S/LXZivktZhSHPi9pr2lcpLE2AU/wUHDleoh+BxfsNu6qvZvbgS/Z0lq5S6mhB0g/
- 0zagA+IQYMeCX/QE8ja7YXMvQUfQYXWmSuU4rrSsLL4SdS36rdsvqiC3zKedY/GhgNphfJ6wxZy
- 8ADI/zTqZ5Ueva/ZWSJ/OG5lGD4c2rzmPfVr0PyikExbambgA9vMCWrPOCQaBubTppiMG0fti1X
- iWGTl8E7COemCTD8LqyJSkGE2tCZnTkzhCaamCYhPC9JdwQhuU/wR1oQebpbHDdjQ0/uiOg+KhP
- Ud/B8A4//P+uPogj4BsG2W5op1lEsmK1CHQvhnFxUGtjaHD897e7AZsrt8abwKMf7pQY/wfIY+n
- brj27zDvb1wntDq9now==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-27_01,2026-07-24_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 spamscore=0 malwarescore=0 phishscore=0
- clxscore=1015 lowpriorityscore=0 bulkscore=0 suspectscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607270065
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,22 +80,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/7/26 16:00, Marc-AndrÃ© Lureau wrote:
-> virt_instance_init() built the FDT unconditionally at QOM
-> instance-init time, so simply instantiating the object (e.g. via
-> qom-test's introspection, without ever realizing the machine) leaked
-> the 1MB FDT blob: machine_finalize() does not free machine->fdt.
-> 
-> Other boards (arm/virt, riscv/virt, ...) build the FDT lazily from
-> their MachineClass::init callback, which only runs when the machine
-> is actually selected to boot. Do the same here by moving create_fdt()
-> into virt_init().
-> 
-> Fixes: 88a8bc7f43ff ("hw/hexagon: Define hexagon "virt" machine")
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   hw/hexagon/virt.c | 9 +--------
->   1 file changed, 1 insertion(+), 8 deletions(-)
+Adapt the kernel's checkpatch Fixes: tag validation for QEMU.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Add a git_commit_info() helper to resolve commit hashes and validate
+the Fixes: tag in commit messages. The canonical form is:
+
+  Fixes: <12+ chars of sha1> ("<title line>")
+
+The check validates capitalization, spacing, hash length, lowercase
+hex, and quoted title. When the format is wrong and the commit can
+be resolved, suggest the corrected Fixes: line.
+
+When running inside a git repository, also verify that the referenced
+commit is an ancestor of master.
+
+Lines matching "Fixes: CVE-*" are skipped. The check can be disabled
+with --no-fixes-tag.
+
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+
+ Changes in v2:
+ - Introduced $git_command
+
+ scripts/checkpatch.pl | 71 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 71 insertions(+)
+
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index 03f35e75012c8c7a00b67f036e4befb2ea162d4a..59ae3532d012f49122ea097cec1eeb2b95354f99 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -21,6 +21,7 @@ use Getopt::Long qw(:config no_auto_abbrev);
+ my $quiet = 0;
+ my $tree = 1;
+ my $chk_signoff = 1;
++my $chk_fixes_tag = 1;
+ my $chk_patch = undef;
+ my $chk_branch = undef;
+ my $tst_only;
+@@ -54,6 +55,7 @@ Options:
+   -q, --quiet                quiet
+   --no-tree                  run without a qemu tree
+   --no-signoff               do not check for 'Signed-off-by' line
++  --no-fixes-tag             do not check for 'Fixes:' tag
+   --patch                    treat FILE as patchfile
+   --branch                   treat args as GIT revision list
+   --emacs                    emacs compile window format
+@@ -94,6 +96,7 @@ GetOptions(
+ 	'q|quiet+'		=> \$quiet,
+ 	'tree!'			=> \$tree,
+ 	'signoff!'		=> \$chk_signoff,
++	'fixes-tag!'		=> \$chk_fixes_tag,
+ 	'patch!'		=> \$chk_patch,
+ 	'branch!'		=> \$chk_branch,
+ 	'emacs!'		=> \$emacs,
+@@ -441,6 +444,11 @@ sub build_types {
+ build_types();
+ 
+ $chk_signoff = 0 if ($file);
++$chk_fixes_tag = 0 if ($file);
++
++my $git_command ='export LANGUAGE=en_US.UTF-8; git';
++my $gitroot = $ENV{'GIT_DIR'};
++$gitroot = ".git" if !defined($gitroot);
+ 
+ my @rawlines = ();
+ my @lines = ();
+@@ -561,6 +569,28 @@ sub which {
+ 	return "";
+ }
+ 
++sub git_commit_info {
++	my ($commit, $id, $desc) = @_;
++
++	return ($id, $desc) if ((which("git") eq "") || !(-e "$gitroot"));
++
++	my $output = `${git_command} log --no-color --format='%H %s' -1 $commit 2>&1`;
++	$output =~ s/^\s*//gm;
++	my @lines = split("\n", $output);
++
++	return ($id, $desc) if ($#lines < 0);
++
++	if ($lines[0] =~ /^fatal: ambiguous argument '$commit': unknown revision or path not in the working tree\./ ||
++	    $lines[0] =~ /^fatal: bad object $commit/) {
++		$id = undef;
++	} else {
++		$id = substr($lines[0], 0, 12);
++		$desc = substr($lines[0], 41);
++	}
++
++	return ($id, $desc);
++}
++
+ sub expand_tabs {
+ 	my ($str) = @_;
+ 
+@@ -1811,6 +1841,47 @@ sub process {
+ 			}
+ 		}
+ 
++# Check Fixes: tag format and commit validity
++		if ($chk_fixes_tag &&
++		    $line =~ /^\s*(fixes:?)\s*(?:commit\s*)?([0-9a-f]{5,40})\s*(.*)?/i) {
++			my $tag = $1;
++			my $orig_commit = $2;
++			my $title = $3;
++
++			if ($line !~ /^\s*Fixes:\s+CVE/i) {
++				my $tag_case = not ($tag eq "Fixes:");
++				my $tag_space = not ($line =~ /^fixes:? [0-9a-f]{5,40}/i);
++				my $id_length = not ($orig_commit =~ /^[0-9a-f]{12,40}$/);
++				my $id_case = not ($orig_commit !~ /[A-F]/);
++
++				my $id = "0123456789ab";
++				my $description = "commit title";
++				my $has_quotes = 0;
++
++				if (defined $title && $title =~ /^\("(.*?)"\)$/) {
++					$description = $1 if ($1);
++					$has_quotes = 1;
++				} elsif (defined $title && $title =~ /^\(?(.*?)\)?$/) {
++					$description = $1 if ($1);
++				}
++
++				my ($cid, $ctitle) = git_commit_info($orig_commit, $id, $description);
++
++				if (defined($cid) && ($ctitle ne $description || $tag_case || $tag_space || $id_length || $id_case || !$has_quotes)) {
++					my $fixed = "Fixes: $cid (\"$ctitle\")";
++					WARN("Please use correct Fixes: style 'Fixes: <12+ chars of sha1> (\"<title line>\")'" .
++						" - ie: '$fixed'\n" . $herecurr);
++				}
++				if (which("git") ne "" && -e "$gitroot") {
++					my $hash = defined($cid) ? $cid : $orig_commit;
++					`git merge-base --is-ancestor $hash master 2>/dev/null`;
++					if ($? != 0) {
++						WARN("Fixes: commit $hash is not an ancestor of master\n" . $herecurr);
++					}
++				}
++			}
++		}
++
+ # Check SPDX-License-Identifier references a permitted license
+ 		if (($rawline =~ m,SPDX-License-Identifier: (.*?)(\*/)?\s*$,) &&
+ 			$rawline !~ /^-/) {
+-- 
+2.55.0
+
 
