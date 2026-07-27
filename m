@@ -4,100 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F642C531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:22:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15053C53209
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:23:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woQt4-0001im-QR; Mon, 27 Jul 2026 15:21:18 -0400
+	id 1woQs1-0000BZ-3u; Mon, 27 Jul 2026 15:20:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsU-0000lb-LV
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:43 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQs0-0000BC-5t
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsT-0000fw-2N
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:42 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQry-0000Pi-KE
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785180040;
+ s=mimecast20190719; t=1785180009;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EdJn1rkxxE4Yq/DoPEG7mWd+n94EmQAMEDDDrQky7J8=;
- b=MRhNOjw7Lr53k53af5Oi1W5FiuycUuZ77U4an7Qx/Kd1EYAcMOTawhTNBioA3iwESaTmWX
- 78+oX2oh6vMd1Em8b2yA4C7zm2Z5Vtk5tGXTIT6mseUhPM7OBD7MDCOZJAXUiVdGPUJ7P4
- N2wqvYgpwG6JafOKhSqouj7xBdICVqg=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XtAeMdvTIJtWG8IGUOglMiMwR5LzmhVQBRNo6kKVl5s=;
+ b=Tajm+Ut3UBQKrgapZaIfH2k7hbvC089lXb6/mKcx1BolIY0qzGdO/H4vLP0Kh4CXPFG9+I
+ LHDB/x7mz1bi4XnEqm+4puQutc4bVooJlG+GlwFvE95Vq6Oa/I/HCtlNeVfqPowANgSxmR
+ s2x2Z4HxMN+mRXp6ahJpBp5JDCWRyQc=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-447-0pa9BLCmMBaDzJoQkZ8AFQ-1; Mon, 27 Jul 2026 15:20:39 -0400
-X-MC-Unique: 0pa9BLCmMBaDzJoQkZ8AFQ-1
-X-Mimecast-MFC-AGG-ID: 0pa9BLCmMBaDzJoQkZ8AFQ_1785180038
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-472a798fc7cso2396422f8f.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:20:38 -0700 (PDT)
+ us-mta-35-JoE9lUaBMpq9DO8hnYsgcA-1; Mon, 27 Jul 2026 15:20:08 -0400
+X-MC-Unique: JoE9lUaBMpq9DO8hnYsgcA-1
+X-Mimecast-MFC-AGG-ID: JoE9lUaBMpq9DO8hnYsgcA_1785180007
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-493fa6e28a7so37481405e9.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:20:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785180038; x=1785784838; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=EdJn1rkxxE4Yq/DoPEG7mWd+n94EmQAMEDDDrQky7J8=;
- b=ZbQCoMdh20Yrh9I6prMI8/FHR0pKdbVtZZjlxWRAT5U+Gm0d4vddJHYaUiWzh3st8s
- 8PHOS9huj5P+hBJI5DSQnGUYJivgmOZjN8UMHUMI+lPo3nz/Oq96c/epUaXoyuM1r7ei
- XDwVhuObgHwqmjz1GHzo9+DpdUVEu1pDZ24vrfLO7yk59ko2qdl9rLKysdSXeoAcJjxn
- PZa78M7eQMwR1tdokkupinLiDgEMjmJoB3Rjo1I01oPI9OIFY6bE33DENR7lyl2v9MQY
- OHAYnbDh1TL+2MaB3D6T//3G7xu3sClR2HHxirTTGgllstCjiker4SAAJSDcZ+eOYFtc
- bxRQ==
+ d=redhat.com; s=google; t=1785180007; x=1785784807; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=XtAeMdvTIJtWG8IGUOglMiMwR5LzmhVQBRNo6kKVl5s=;
+ b=BTCYmSnd6F+IknvS3VE0epuNpNJJbw7L3zMpbNdyCTD69TcD9mjd+r3DDrwdfgsY9w
+ kpeYk5ZcOG22bB+3IynWY9VBgsql7JwTo1M4gMdgEfmXcFSvDjaD/VM+w47y4BfI+daA
+ B5V3P9mCwMmuCuv7S+tNON5U/omF8CQdKrpXS24w0PkkB/SNi2fUJo8k363SQ3jD+Hsa
+ Of+CQrkNO16msEOaY6A8fAEXW2INFXp6fh7k1GBgzT6q66fDDQWDZweHmequRzdBVoYC
+ vxq4EQASBWHBFz/COi/9UmsEzX46qcUpqtAvZiY8/6yuvEvGoVICowo9B/CSPR9Zbxg5
+ IbMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785180038; x=1785784838;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=EdJn1rkxxE4Yq/DoPEG7mWd+n94EmQAMEDDDrQky7J8=;
- b=ZMb3JdeerisqcXMpTQhdwKrbSNHsHJN3DVDo5NRiDa5/QU/bNzCrU6pDZFYIc0Rh01
- +3HgGK/1NcSd+cKNqHaOQEWsPE1CSWtc1VeeCQCQIpJwQ6QVYF6THEuQyrwb6o6LsXKZ
- RvUgRNerICiXJkSXrEwtbUOswr6ppngVHuUC/iciLItNGkL7xrgRZOGEjdJ5R5N8FSDl
- QiJ1EzfrkWZ+7QToIDjBghdBq2SKCaAsA/FBgEh/g9mcNZBOJH/KIVo5Q3q5YzVW5LEi
- zHeEoJrKrGh7gWO5DqrBxpTCuX5wA19WXkF+YFqRckk2lVcJH+xh39HgoJGZ2LZ1KI28
- +Pmw==
-X-Gm-Message-State: AOJu0YyWV6tYW7ty28H9HsGhAgVtN8hSb7tMk0tCW6/vMLXZvlSBfCa5
- x/TPFua2uwwJqfd8S/305Ryp10o4sgEs+WPYUZcRzaN5k+is2U/ZwQHngynB30T+LbHN9ioI1XS
- p2YH75fTO1rpt/SZWuNgO3fUe2fNyZaiYZlSH4jmDX+H/IeakfrrET9JLkptH53VKsKvbwhfZMz
- 0X0OdzuEg8aL5uM2rQmO9zEf+otOqPgZbJnA==
-X-Gm-Gg: AR+sD10JziAmvhHbx6G/b7+FHVn+3YCyOKWg/ZB3qLC4sTW67osMhXCU+xZwnINoGAl
- 9vNZuq3vCKGqI91zSPjkq5wbfsaVNxfR+d0Zg3f4kgoroXs6u9qcapgdv7xAoaxSda/6znJrAuL
- GwFrUQSAt80YFcsUP7rC5pvGfvfRu2d1fXPXimN/wkQxUUab4whTnSp9FJy0vbkLdTu9+kVmjqY
- RfCCh40bzO4wxHFi1dDTaKJacR7MDbdWjCMrjRrMutL/fm4zDCYky8D5V3IPAJOuc+xGLNf42I6
- 5RXRSOCdpziI9Psuvs1Hi9hL8pPhBoQT7VntWi3/P/HddYGK25F6kGIg6Oc52nA9nddFxXUE10O
- 5yHhmTwtewzWy21GAG2DzjA==
-X-Received: by 2002:a05:600c:4295:b0:495:7990:a1d0 with SMTP id
- 5b1f17b1804b1-496b571a0c6mr80384985e9.19.1785180037795; 
- Mon, 27 Jul 2026 12:20:37 -0700 (PDT)
-X-Received: by 2002:a05:600c:4295:b0:495:7990:a1d0 with SMTP id
- 5b1f17b1804b1-496b571a0c6mr80384665e9.19.1785180037255; 
- Mon, 27 Jul 2026 12:20:37 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785180007; x=1785784807;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=XtAeMdvTIJtWG8IGUOglMiMwR5LzmhVQBRNo6kKVl5s=;
+ b=A1L1p95gzAiGmEVjgpUw/RUWJHvLMO+PQcBhiy33hLiNMY6sni8/UIrmi9ITkjzjGo
+ QzDG5GaoiYyG0SZI/JQZ1HzswSJ2Aj5fyKr9TYk0AaddiEjoajbx5gIE27y1kpPGvYx5
+ smw4pov0BK0AJcPiFbGj41RYMdualj5yb/sItCxS5AY3MNX41FyvSp3e3zJU4fRPSv7g
+ GHI4wbH3/RyEOrmeZ9sGxVm9pnlEKIbqZtXBAVmOY3Wot35XV5LMtChhuX/gveQd8/kJ
+ WKcGiHYyYdnnDe46KUY2w0AyYF6yG59tjU/OzPMBizB0qhUD7kE/Bw3tzXd1UuQ1/EFZ
+ I17g==
+X-Gm-Message-State: AOJu0YzVU/3tQHWnJpkbBH1QdxpnkTVaHvTxiE8ALaIJ8QAEeolfBjn4
+ AsuHd5nJVk+j4ioutORYQ8Ehl8Z6/o8NlEIIpJGaWWE4JeWWu2L7jiLxVcn7Jbbu5Q+DUhm7jhm
+ f6jhLwZanw+GIhx+xzDRxTtsrsOgBlyBuv2dIecPzqAY88unYyB4lSLZFhJ7jNWOTF516TPVkWL
+ s5aJanZyhO0QYs6lzfBCTLUI+AhssZtfQeJA==
+X-Gm-Gg: AR+sD13nlE0ZkvpBg1MP2wQngr5ur52x2PjKbwoU8ydamhB0hH3uI3ZjJG6A7wHXn2K
+ uEFkg1tyzZN8D7oPkTnJO1acHzq7DZpxCc2BmoC70w1nOZmOwiVKSGoukpgFz42/1CDo4NCBXAh
+ Ig92M0p31aoXhOg/T5pZS3ADvtRejkmyk2bvnmqJV480IHwCmQqBSZkT2Jk0JuO49fUtJ7ka80E
+ gTZluep5opJmz84k1VrGRIyHE10vsYIPH0FO1v2aJxYvMdErVcQ8g++FcoIV+atcaQS8JvJM6dk
+ MJw5KQlSNnGzULOIVo7uDaPR0nVEVfLbMLQqw1GQzmQ4H45iO4A2hnrveJnjIxEMQDXHMOWtgUm
+ BB11FxMnL7QBeUpIlnmKXOg==
+X-Received: by 2002:a05:600c:210c:b0:495:4a27:483f with SMTP id
+ 5b1f17b1804b1-496b5700419mr80573275e9.29.1785180006997; 
+ Mon, 27 Jul 2026 12:20:06 -0700 (PDT)
+X-Received: by 2002:a05:600c:210c:b0:495:4a27:483f with SMTP id
+ 5b1f17b1804b1-496b5700419mr80572935e9.29.1785180006458; 
+ Mon, 27 Jul 2026 12:20:06 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-28-14.inter.net.il. [80.230.28.14])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-496c44b84edsm22071515e9.5.2026.07.27.12.20.35
+ 5b1f17b1804b1-496c44afaecsm17031125e9.2.2026.07.27.12.20.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 12:20:36 -0700 (PDT)
-Date: Mon, 27 Jul 2026 15:20:35 -0400
+ Mon, 27 Jul 2026 12:20:06 -0700 (PDT)
+Date: Mon, 27 Jul 2026 15:20:04 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, qemu-stable@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- alxndr@bu.edu, Giovanni Vignone <gio@octane.security>,
- Jason Wang <jasowangio@gmail.com>
-Subject: [PULL v2 27/30] hw/net/virtio-net: Protect from DMA re-entrancy bugs
-Message-ID: <df12999cc81339ffb252875608919c72ccc37bcd.1785179875.git.mst@redhat.com>
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Raphael Norwitz <raphael.norwitz@nutanix.com>,
+ Feifan Qian <bea1e@proton.me>
+Subject: [PULL v2 13/30] vhost-user: assert nregions within limit
+Message-ID: <cf89b769cdd1933796099706387d3b2a9a865cae.1785179875.git.mst@redhat.com>
 References: <cover.1785179875.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1785179875.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -125,45 +122,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <lvivier@redhat.com>
+scrub_shadow_regions() and vhost_user_add_remove_regions() use
+fixed-size stack arrays sized to VHOST_USER_MAX_RAM_SLOTS and index them
+with dev->mem->nregions.
 
-Replace qemu_bh_new_guarded() by virtio_bh_new_guarded()
-so the bus and device use the same guard. Otherwise the
-DMA-reentrancy protection can be bypassed.
+nregions is calculated to never overrun these, but let's add an assert
+to make sure we don't get a stack overflow if there's a bug.
 
-This update was missing in CVE-2024-3446 fix.
-
-Fixes: CVE-2026-66022
-Cc: qemu-stable@nongnu.org
-Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Cc: alxndr@bu.edu
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4073
-Reported-by: Giovanni Vignone <gio@octane.security>
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: f1aeb14b08 ("Transmit vhost-user memory regions individually")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3910
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+Cc: Raphael Norwitz <raphael.norwitz@nutanix.com>
+Reported-by: Feifan Qian <bea1e@proton.me>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260723233555.2970619-1-lvivier@redhat.com>
+Message-ID: <48fb8411f67e525872fb19618a886e52b670ab7f.1784896199.git.mst@redhat.com>
 ---
- hw/net/virtio-net.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ hw/virtio/vhost-user.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 7e0c984ec6..814b99a43d 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -3009,8 +3009,9 @@ static void virtio_net_add_queue(VirtIONet *n, int index)
-         n->vqs[index].tx_vq =
-             virtio_add_queue(vdev, n->net_conf.tx_queue_size,
-                              virtio_net_handle_tx_bh);
--        n->vqs[index].tx_bh = qemu_bh_new_guarded(virtio_net_tx_bh, &n->vqs[index],
--                                                  &DEVICE(vdev)->mem_reentrancy_guard);
-+        n->vqs[index].tx_bh = virtio_bh_new_guarded(DEVICE(vdev),
-+                                                    virtio_net_tx_bh,
-+                                                    &n->vqs[index]);
-     }
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index 517cc4ca71..2881cec72d 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -946,6 +946,9 @@ static int vhost_user_add_remove_regions(struct vhost_dev *dev,
  
-     n->vqs[index].tx_waiting = 0;
+     msg->hdr.size = sizeof(msg->payload.mem_reg);
+ 
++    /* Ensure nregions fits the fixed-size arrays used below. */
++    assert(dev->mem->nregions <= VHOST_USER_MAX_RAM_SLOTS);
++
+     /* Find the regions which need to be removed or added. */
+     scrub_shadow_regions(dev, add_reg, &nr_add_reg, rem_reg, &nr_rem_reg,
+                          shadow_pcb, track_ramblocks);
 -- 
 MST
 
