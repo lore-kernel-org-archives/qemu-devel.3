@@ -4,103 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A5C3C5321C
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 09:57:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B5FBC53219
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 09:58:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woI5B-0007Aw-0e; Mon, 27 Jul 2026 05:57:14 -0400
+	id 1woI5y-0007Oy-9D; Mon, 27 Jul 2026 05:58:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1woI55-0007Ac-Fb
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 05:57:07 -0400
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ id 1woI5v-0007OS-VJ
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 05:58:00 -0400
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1woI4y-0005e3-BM
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 05:57:04 -0400
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-6682259cb3dso3832880d50.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 02:56:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785146218; cv=none;
+ id 1woI5u-0005hM-6t
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 05:57:59 -0400
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-66804667af2so1771821d50.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 02:57:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785146276; cv=none;
  d=google.com; s=arc-20260327;
- b=rk19Sn32NNcPsKkIIuA32nmprLAXwkwBeBJt3xBEHqnE7QGnvSaaXYbSiLrBt2WGe6
- g+cc8u+PETuJpiRM4Y4BhmESVRCNq617K/Jjgfs/qRIOBaB4m9VInUbTD/3f6jzTy5lU
- e9CzrzJErGWQy8++upa/EvTAledbhgDyyqgipQqOzCs9tyJ1kheEiNZhgkzddDvyTjAR
- Gm2DebiJifxGx4f8ijpictUG6TqadIWrtD1Zcbl8T92ojutzv1cTvYPPnSJaKPuQn1Ey
- +Iogx7/XBOS33OfeKKj7A/6oGErT1NTaA8IlhWhcZzuOZMBgSDS4zuoR08aZ0xaHXg9z
- lhqA==
+ b=Mte7Xf4+FshJTA/XdRO+LLzLaGfwubrK4MU4x50FBkWfKXypAf5tYFtUhXvBJsA1jg
+ 58b9cyG/2Zh2LreWyoXYZa56N8bK5zI49Uqu4LtEOkI3ZktjsW5sy+StlD0V0FLs/Fxm
+ IeBlQWeLY0U3UkBEVpHypPWh4ULgsGndUm7zc/oFCLYtCYWQf7QO1zzTJ8x48JAJp1u9
+ s6PDLv7zzKatGEjTPyKmPIUiHm2+QpK1YeIR2yk8oAzVk8F0B5pvjSXMdp86CWCe+4Pu
+ hSrhVdar/mc1iRvvQMCGeWBYsBh23rbUnkVVR5aJncFv6t8+mYLJ0tNzdvP16nugyE46
+ /uJQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=6DZggg8Z++kZsiW9bFSUYxgoJflfU1TRkOMiNDsIkXw=;
- fh=nDTD0jckoa/dG2RhAiSu0cD5PekvlhTbGpKqj/M4jwE=;
- b=VD0vX/37ZzA1ho+7lC1h8E+jABmyKQnvgK2TfDpgX6SNMaKQc7UAw3EB0hG+xbx8KR
- qHI7huuYYlMXhsxn5OdI9rymLNoxHYvrtRnUtLWHxUrsH/MdNIkKhJqMEaBJpHHfUBeI
- MxdCiFM1jAhPuf2E5cYRKFhbT6FD716f/GIcgF51MrsamtogprRgXsj7gPslldt0DxG1
- N7H4R05lxZtppgD6W8D3WFdYIC/InP2tR5s5QcCo7ZzZUc+ErNNKTqIVJ0kzSOwwOT+H
- 8R+wsPO5sXUJ41Wy6TNw9IsfiUmqtKn5rMmatmr4gybbRAaUvc2FwfmkrWy7NZ2WJQIt
- UUmw==; darn=nongnu.org
+ bh=rADByToRfCJRBNorNgUKQmQtIhFvp2y25lBhfZHPZmw=;
+ fh=Bkm7h1qePyNu6XewviHipxJh5Gb0B/9a4YQ4WVdINBE=;
+ b=Ju9wpDjIz0jEJ5T06kCBzoAocUr1y7eT+jy/SWtPYkOavLHshu3BVIAUuOT0IqP6ur
+ YFVtufzsHSKzC4pytvDmtHV+J3DtK/OslN791hLs9Z6l/0OG+C5GbrtYjJFsqqAT74Py
+ ub1uPb634kifB5w5LSVNjrqY5VjV5mi5qpg3t70tr1dVINyRAWp1qbPbUvo76JXxVD8+
+ o6Dhc1obDZC0iXxAiCjea9ubDgq+//ewSWyZs3jSqoikUIK7G+mGccqhrGPKmMMdkuKU
+ QiJXC6jo3RwRis1NW4QU8DcLMlNNnNW5TQfP3mTH6mw+EvwAi7/xH8lu4/pUPOvpys4F
+ cHfA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785146218; x=1785751018; darn=nongnu.org;
+ d=linaro.org; s=google; t=1785146276; x=1785751076; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=6DZggg8Z++kZsiW9bFSUYxgoJflfU1TRkOMiNDsIkXw=;
- b=fvZ9ITkbq6e7lE/NakqgBeGIsZQtGLJuU+xrr+hRFZAetI+FDa6twC0JXfRjV400EF
- AEfcDtxME+3irPrKd0ThFoKWOiqq30WjMk9rTKdA4QO13gfP21XT+AcWmAk8wlh+au40
- fEGCoAaLySy2f/wTDWV0pMsD3bBj+qc3Kqs/jAc9vXoknJjVUF505/dYZP1GI75QIF+s
- DkdoA92Dbe7TocvO7LquYbLAX/uO0tjnzrh9Ocw9MP+odWuLHCM0l9TH9q8CFKfztyYh
- H+wC6XzNYNejiaw52wf+l/8p5sgHhjrs/1W3rrMtY8Whd+d+SW1skCDgEJyRlOEPJnCs
- BXAA==
+ :content-type; bh=rADByToRfCJRBNorNgUKQmQtIhFvp2y25lBhfZHPZmw=;
+ b=WXdUvNYsj40ApWm6FcLtAs5gLKX7E8KP4z16NMVUQviGTijYkNE6iCkxmtrdUZUAZ8
+ kHChwrAFilObI3PsrKp/RIxfMAexVZ7XIM2P2tBqVFKeSLosfHMECvDIZpbCHF6Jhtyl
+ bT6xv7Au6VXHfJHlS7OonNKKYfY4m5DqucWPvFewSS5TtGcOHic5JBz+IKsXE953KuPn
+ K2+xQTBFaqtxp6zeXk/sdtO74JK6ySYADp3Mh75XsA0JkD9nipgQVtdqi29TYaCA23Xd
+ Hb8xKP5C839x0GW+dtT6lbOqCLqr19MqvBVI/LOwDYEE5LjA6M9se65Q+C6MZ3SqvqwV
+ 8KVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785146218; x=1785751018;
+ d=1e100.net; s=20251104; t=1785146276; x=1785751076;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=6DZggg8Z++kZsiW9bFSUYxgoJflfU1TRkOMiNDsIkXw=;
- b=MxGIWAP/CCcPYsm/Pr4RXvjljNnVlL0f9ABT9pWGGIGu4aO5ep9UnJPYe0IxUIhqvD
- weX3vCaEMhE8O6EitjNoWRLqBurn+KU5AS/qOVrI/0YGWFkM1YtDQ3RS9pB3GcgD1GuP
- XYZH/l1K1O5oJPtAe5nsvGA/GguiduOHTEQQa0EeQg8pU+w5nUQkjdEW8bBoQO+46tvd
- DWls/Rg/3QOswziaujUcxgSH4OUHssc3KDTPKrEVasCThamIlgYLtFt2FHAZjUdBK0dt
- wA2o3ZbuG98vAd3nMQsHmCNmRSNOGXuWfx4ZQHwP+HTK/p0mWoPE1psiAbTBBUDDqlJX
- 6JMQ==
-X-Gm-Message-State: AOJu0Yxvnlr9WdjGgLlhyY/ETCflI9Al0PvQt6hbNS3k10idWdFBtKWG
- /jVOb2efm1QJzycQQDHcf/ttsTu77Kh2hLkhCud2oBRtRYJLJpDSnut106vw7dQZBebOGGXyBv9
- +AMGm0WdSQ23ItYNVNmjGIljENGphYNMb1q4xlKeyDw==
-X-Gm-Gg: AR+sD12YkmfMYh6nDaSkgrSzJvDwEwmttAXfrbHSsIMvWEGwDASMeiZ1NqdSUcUuUvT
- WTT336g9QWLNFabPcqldrrDdMizN9mJyTdGWQPUYR0E8dQ4H2Sqz+tZGwenLSypvpv+cLWkP49G
- Vq2IhT9lYFTEa2pxCxXJiWnr5mafLJywGvfgStO1500ik5sXSvuPQuvRyR9SBPtJRcuYJtt5R/r
- XRGKi9XTynURw3+fyf2DDtcBnt0lokCockj3IUzjvVFXluSmO7xKsdqfZu60YGHBP6Oe0g/yyH6
- 7OwUOyEk1o3MHiK7KM4r363QWyZV7WMgI5iB+wjEYync0Q==
-X-Received: by 2002:a05:690e:c4d:b0:668:432f:f785 with SMTP id
- 956f58d0204a3-668bfde0394mr3100893d50.22.1785146218419; Mon, 27 Jul 2026
- 02:56:58 -0700 (PDT)
+ bh=rADByToRfCJRBNorNgUKQmQtIhFvp2y25lBhfZHPZmw=;
+ b=Ri4Pyc39pA+PT98zZqMNcYJaSARc02QmedH5K7fhNuRCicA6DYZrZmXNbT9vSRsPmF
+ NPz98BeBY61AQOGsCLUYrMshtF3mu+dsZ/zqb+PX7rSE0JqWm8HP3DcGZymUnxXvEvt6
+ v2H1itA9XqhI8DBm/7lqNpZHCRDoVPIerkSxykgkacNFkhXVGXMZhlRY2djUAPr5BYyx
+ LrSq6xJX+OEAH/b7pb6DO3vij1psxyUqj+kVHVyxYnk7ja5c5snIn3CFnakQ12QGT9W9
+ +V1/2ME3VbPbyqd6M3JFQfzra1Hkx4iO+qx+Un+X1mSNPu7BSKTR4FOzoCQuQ24SeSZR
+ GOJw==
+X-Gm-Message-State: AOJu0YxkTd/swWHqCvB3oJS1axB818M1nXsZWkHGxDVPTQjCKfT/hySC
+ QCOUDwOPDyQj+dZic0lk0n8if9buQeaNSuPl6dpNdR4yfRuw3YhBxo4ZApqzG354gTGWKZs+sQK
+ s+ThKQ/CDqoRlYpvXp6O8IGSZxeAMi7y6ndSo82rdfg==
+X-Gm-Gg: AR+sD11MyABGKQ3/ZVsU0jsNZYYxKFlLhQKHud+kmG9EjnWSNENi54y5zjv7Smys9nb
+ zC4Th/CH06CXqGEJ3LgJvr78kbSQFaChJQwVaIeUSeKjrm6NsNO1OZsVpCcxGPcTgPXTbRpEneF
+ e/q8JpDz7qd+SwoYLr3FZMVfEVTYkcBGp9tf7F1mphiXSRYrWoPNpZVEE5ueCyQF06ra9puTLFz
+ 0EPEaSseOJpQ6tWtAwHXE8sTk+s3KyGpmPUsFKO6NFOeY6Tut/9SkqIzaNnW2q1wRm/mgdRmzDy
+ aeUNi25uSwahnMNFkrvBhlsPlFLCsUBasTrvTULpH//bQd+I2LDuCxwZ
+X-Received: by 2002:a05:690e:4383:b0:667:b234:d5f4 with SMTP id
+ 956f58d0204a3-668c7ab5949mr1078440d50.66.1785146275903; Mon, 27 Jul 2026
+ 02:57:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260724110933.629791-1-thuth@redhat.com>
-In-Reply-To: <20260724110933.629791-1-thuth@redhat.com>
+References: <20260724160943.52509-1-simonxhy0404@gmail.com>
+In-Reply-To: <20260724160943.52509-1-simonxhy0404@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 27 Jul 2026 10:56:46 +0100
-X-Gm-Features: AUfX_mx4at_lCYWCbKIb-vgnUZU1qSbQtXDVL1gpQjsaZvjMFL2NDjbc3AXD0Mw
-Message-ID: <CAFEAcA8C6vBF_d5VeH23cqU0OjmQNtn9YqALLD_sD+t0YvgG+g@mail.gmail.com>
-Subject: Re: [PATCH] hw/usb/hcd-xhci: Check return value of
- xhci_xfer_create_sgl() for errors
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Feifan Qian <bea1e@proton.me>, kraxel@redhat.com, 
- qemu-trivial@nongnu.org, qemu-stable@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Date: Mon, 27 Jul 2026 10:57:44 +0100
+X-Gm-Features: AUfX_mxGDRTQrSvi2zX91N-yKkiOp_k2P_0k-CJfwu7c8vXh2A3KTuowsbgDoa8
+Message-ID: <CAFEAcA-SwN3dE1vrmAP+rdEs0U815D4xz93MdC4JUBm-GaxouQ@mail.gmail.com>
+Subject: Re: [PATCH 0/2] hw/misc/mps2-scc.c: fix scc_partno and cfg7 write
+To: Simon Xu <simonxhy0404@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,30 +113,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 24 Jul 2026 at 12:10, Thomas Huth <thuth@redhat.com> wrote:
+On Fri, 24 Jul 2026 at 17:09, Simon Xu <simonxhy0404@gmail.com> wrote:
 >
-> From: Thomas Huth <thuth@redhat.com>
+> Split commit from v1 into 2 as they are unrelated.
 >
-> xhci_xfer_create_sgl() can fail if a guest programmed the XHCI in
-> a weird way. The current code ignores this error, and this triggers
-> an assert() shortly afterwards:
+> Signed-off-by: Simon Xu <simonxhy0404@gmail.com>
 >
->  hw/usb/core.c:612: usb_packet_copy:
->   Assertion `p->actual_length + bytes <= iov->size' failed.
+> Simon Xu (2):
+>   hw/misc/mps2-scc.c: fix cfg7 write
+>   hw/misc/mps2-scc.c: fix scc_partno field width
 >
-> Fix it by handling the error correctly (i.e. return with an error to
-> the caller).
+>  hw/misc/mps2-scc.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> While we're at it, change the DPRINTF statements in xhci_xfer_create_sgl()
-> into proper qemu_log_mask() statements, so we have a better way to detect
-> this situation.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3786
-> Reported-by: Feifan Qian <bea1e@proton.me>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-thanks
+
+Applied to target-arm.next, thanks.
+
 -- PMM
 
