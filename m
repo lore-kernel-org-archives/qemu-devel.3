@@ -4,91 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03024C53219
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 12:15:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28608C531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 12:18:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woKEW-0006PO-2i; Mon, 27 Jul 2026 08:15:00 -0400
+	id 1woKHK-0007kH-MJ; Mon, 27 Jul 2026 08:17:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1woKEJ-0006Nu-Tj
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 08:14:49 -0400
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1woKH3-0007jM-Sj; Mon, 27 Jul 2026 08:17:39 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1woKEH-0007YR-I2
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 08:14:47 -0400
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1woKE4-00000001OT8-1hf0; Mon, 27 Jul 2026 14:14:32 +0200
-Message-ID: <793f2d27-cf2e-4e27-ac4e-e94fa6db0e05@maciej.szmigiero.name>
-Date: Mon, 27 Jul 2026 14:14:27 +0200
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1woKH2-000814-BO; Mon, 27 Jul 2026 08:17:37 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66RAIkKR1838150; Mon, 27 Jul 2026 12:17:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=ARx8t+
+ lGncNBP6jtiC7Oo0eDEvW3qcnajzZcS03Pwsg=; b=Hv8rqZaGrFqjBvJUDD6l3L
+ nnJHj1r2HaLprvdokpRzL/e2eFx9/7CXBDZNh/e34H+0xT33UcQQPBSdgiWi6DPm
+ 46jsWViOPREn6rvcknAfBP5CyU90CAj/7S14+nsCeXu7hkI4WgDgnzMwrirLH2J5
+ PZIfaYyDsubN/unCdOIpgkzyL6B3JP2Y4VhLLU55Fnu+KxRxC1NQm6g8t19iEn7x
+ mABC2xQMN8XHnODtM9zGpOrpZ11qkVMwK9QlZVf/hzKql6vwUlQ29RNmvbh+c2Kd
+ VocYf4xm8ob6l3FJXATa+u3bFZujFG4dO/rvpAVckqDGsrSYtf/J/CA/rld8FTOw
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0nfg3h-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Jul 2026 12:17:31 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66RCBIN8010157;
+ Mon, 27 Jul 2026 12:17:30 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fna5xw1jt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Jul 2026 12:17:30 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66RCHRDo46596546
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 27 Jul 2026 12:17:27 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2F4DD200C3;
+ Mon, 27 Jul 2026 12:17:27 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E648B200C2;
+ Mon, 27 Jul 2026 12:17:26 +0000 (GMT)
+Received: from [9.224.77.173] (unknown [9.224.77.173])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 27 Jul 2026 12:17:26 +0000 (GMT)
+Message-ID: <49089127-7189-4bdc-bbf9-5a3ecdc99659@linux.ibm.com>
+Date: Mon, 27 Jul 2026 14:17:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/1] migration/cpr: Add HMP support for cpr-transfer
-To: "Dr. David Alan Gilbert" <dave@treblig.org>,
- Dongli Zhang <dongli.zhang@oracle.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de,
- mark.kanda@oracle.com, bchaney@akamai.com
-References: <20260724094119.90581-1-dongli.zhang@oracle.com>
- <amaqaePN2wAWoUCN@gallifrey>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <amaqaePN2wAWoUCN@gallifrey>
+Subject: Re: [PATCH 0/5] more hardening fixes for s390
+To: Cornelia Huck <cohuck@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Joshua Daley <jdaley@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Jared Rossi <jrossi@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20260727115052.24289-1-borntraeger@linux.ibm.com>
+ <87ldawsk8a.fsf@redhat.com>
+Content-Language: en-US
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
+In-Reply-To: <87ldawsk8a.fsf@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDExNiBTYWx0ZWRfXy+RS4D5gmX03
+ 0zUQlnOOZ8janU2BACaDk275zWcyqNxTEbMObqBEe7c8mQwwoidTaOiMJoTMiU/Ivn8WAfUtIhX
+ 9WmMBMMg7tstwHk2k87GSqqHadkxp+U=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDExNiBTYWx0ZWRfX+kjaEOGHoTNw
+ 2fVRLYE7mXqt+LnmFydfyyEtrqyAxty/rfYLy0+vr3azAREGmx2PTaAqQh0+vyfZC6iABzxyQNM
+ 0ALYaFEeJTylO1/pxXuBA2s5xVG88gnr85jJXCbpF6P9r7c8Chd3ivBATrr8G6aiQUxrl4Up/uT
+ zC9YEy64AVmP04RHDnOmFIMxuVaSM8WwedhLgah1cR0UYmjWcv6s9Y4TNeh3mokhYtSJxwIX1cK
+ v6Dj9Qm6UjbNhoDpqlqJM4MQakqkTFKnqrysqkUnIxIacqvqiD8ow/RiZthd/WIFC3D84xodRvM
+ TGH1ZaSlqz4BjhFXuN270CXwWW7h/PkY52lpM2eRctQeC6Cp+WKrqrdrk3JKo7yKzQfjT9HQcFa
+ LMsGHQqMagEOzC8CaEJ9pBSIq00YQcyu8PDC4JL4/XnpvVU9/djhYgYxhPD60xyEnIFAZeMclG+
+ J9PL/4xUFiE5+odhPFA==
+X-Authority-Analysis: v=2.4 cv=b5WCJNGx c=1 sm=1 tr=0 ts=6a674c5b cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=NLiCwHATAAAA:8
+ a=VnNF1IyMAAAA:8 a=0_scnjIuNO9bK2VfJ8sA:9 a=QEXdDO2ut3YA:10
+ a=F9tHCgz3TLBaZgltkx5D:22
+X-Proofpoint-GUID: c5g02AkdgRqq_a4G9gGQ6vcFvgg8sfmL
+X-Proofpoint-ORIG-GUID: c5g02AkdgRqq_a4G9gGQ6vcFvgg8sfmL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-27_03,2026-07-24_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0 impostorscore=0
+ bulkscore=0 phishscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607270116
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,113 +132,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27.07.2026 02:46, Dr. David Alan Gilbert wrote:
-> * Dongli Zhang (dongli.zhang@oracle.com) wrote:
->> Currently the cpr-transfer source QEMU instance cannot be driven entirely
->> via HMP.  The source must use QMP in order to specify both the
->> main migration channel and the CPR channel.
->>
->> Extend the HMP migrate command with an optional CPR channel URI. When the
->> migration mode is cpr-transfer, HMP uses this URI to build a
->> CPR MigrationChannel in addition to the main migration channel. The new
->> option is rejected unless the migration mode is cpr-transfer, so existing
->> HMP migrate usage is unchanged.
->>
->> For example, source QEMU HMP commands can be something like below. The
->> "-c unix:/tmp/cpr.sock" is for CPR URI.
->>
->> (qemu) migrate_set_parameter mode cpr-transfer
->> (qemu) migrate -c unix:/tmp/cpr.sock tcp:0:50002
->>
->> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
->> ---
->> v1->v2:
->>    - Use the '-c' option in the HMP command reference.
->>    - Use "a second uri can only be used in cpr-transfer mode" as error
->>      message.
-> 
-> Thanks for making those changes; minor note below.
-> 
->>   hmp-commands.hx                | 12 ++++++++----
->>   migration/migration-hmp-cmds.c | 19 +++++++++++++++++++
->>   2 files changed, 27 insertions(+), 4 deletions(-)
->>
->> diff --git a/hmp-commands.hx b/hmp-commands.hx
->> index 7ae2468a3d..7f43cf537f 100644
->> --- a/hmp-commands.hx
->> +++ b/hmp-commands.hx
->> @@ -928,16 +928,17 @@ ERST
->>   
->>       {
->>           .name       = "migrate",
->> -        .args_type  = "detach:-d,resume:-r,uri:s",
->> -        .params     = "[-d] [-r] uri",
->> +        .args_type  = "detach:-d,resume:-r,uri-cpr:-cs,uri:s",
->> +        .params     = "[-d] [-r] [-c uri-cpr] uri",
->>           .help       = "migrate to URI (using -d to not wait for completion)"
->> -		      "\n\t\t\t -r to resume a paused postcopy migration",
->> +		      "\n\t\t\t -r to resume a paused postcopy migration"
->> +		      "\n\t\t\t -c to specify a CPR URI for cpr-transfer mode",
->>           .cmd        = hmp_migrate,
->>       },
->>   
->>   
->>   SRST
->> -``migrate [-d] [-r]`` *uri*
->> +``migrate [-d] [-r] [-c uri-cpr]`` *uri*
->>     Migrate the VM to *uri*.
->>   
->>     ``-d``
->> @@ -945,6 +946,9 @@ SRST
->>       query an ongoing migration process, use "info migrate".
->>     ``-r``
->>       Resume a paused postcopy migration.
->> +  ``-c`` *uri-cpr*
->> +    Specify the CPR URI for cpr-transfer mode. It must be a UNIX domain
->> +    socket.
->>   ERST
->>   
->>       {
->> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
->> index b04fc4489f..4ca2c962c2 100644
->> --- a/migration/migration-hmp-cmds.c
->> +++ b/migration/migration-hmp-cmds.c
->> @@ -837,9 +837,11 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
->>       bool detach = qdict_get_try_bool(qdict, "detach", false);
->>       bool resume = qdict_get_try_bool(qdict, "resume", false);
->>       const char *uri = qdict_get_str(qdict, "uri");
->> +    const char *uri_cpr = qdict_get_try_str(qdict, "uri-cpr");
->>       Error *err = NULL;
->>       g_autoptr(MigrationChannelList) caps = NULL;
->>       g_autoptr(MigrationChannel) channel = NULL;
->> +    g_autoptr(MigrationChannel) channel_cpr = NULL;
->>   
->>       if (!migrate_uri_parse(uri, &channel, &err)) {
->>           hmp_handle_error(mon, err);
->> @@ -847,6 +849,23 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
->>       }
->>       QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel));
->>   
->> +    if (uri_cpr) {
->> +        if (migrate_mode() != MIG_MODE_CPR_TRANSFER) {
->> +            error_setg(&err,
->> +                       "a second uri can only be used in cpr-transfer mode");
-> 
-> That should probably be changed to something like
->    "-c can only be used in cpr-transfer mode"
-> 
-> but other than that,
-> 
-> Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-> (Feel free to take it via cpr or migration).
 
-Acked-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com> # for CPR
 
-I am fine with this going in through migration tree if that's not
-a problem since there's currently nothing else for CPR.
-> Dave
+Am 27.07.26 um 14:14 schrieb Cornelia Huck:
+> On Mon, Jul 27 2026, Christian Borntraeger <borntraeger@linux.ibm.com> wrote:
+> 
+>> Cornelia, Eric, Matt,
+>>
+>> here are 5 more fixes for hardening QEMU against invalid input. Nothing
+>> is strictly a security issues as defined in the policy. For example
+>> https://qemu-project.gitlab.io/qemu/system/security.html says assert /
+>> abort: If triggering the code path requires kernel privileges (or root
+>> account access) in the guest, asserts/aborts in QEMU are a self
+>> inflicted denial of service. These will not be treated as security
+>> flaws, at most hardening bugs.
+>> And if anyone can provide invalid boot loader content it can provide
+>> anything to boot if secure boot is not available.
+>> We should fix those anyway, probably even for 11.1
+> 
+> Fixing: yes. For 11.1: how easy are they to trigger? For the bios fixes,
+> I assume you need a broken/crafted disk image; I assume that for the
+> other two, you need some buggy/misbehaving guest. Did you actually
+> manage to trigger this via some kind of test case?
 
-Thanks,
-Maciej
-
+Easy to trigger, but only with modified guests or modified zipls. Normal
+guests will not trigger those.
 
