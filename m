@@ -4,130 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1085DC531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 05:24:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B002BC531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 05:26:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woDoy-0004Jx-Bo; Mon, 27 Jul 2026 01:24:12 -0400
+	id 1woDr4-0005PK-An; Mon, 27 Jul 2026 01:26:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1woDox-0004Hc-6G; Mon, 27 Jul 2026 01:24:11 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1woDqz-0005Ns-Oi; Mon, 27 Jul 2026 01:26:17 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1woDov-0001jb-N0; Mon, 27 Jul 2026 01:24:10 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xrjstxsqR2t57AGGu8VQp8b0K99HM3ZFUAiFqv15UZ64N13O3JkUme+U2d2frQkcLpuUw51wKPW3S2MYDP0mQncl1ArogJiN2qMFQl8AAt0OM/LuS7J2dXHhlyFngxu4exwfBX1moRHM3a9IEwkok3Xcc+uAkPoTTSIGxBq5dY5LcrsqW5w9nKwbhoGAaHXJw70vhcFVBrEG6tQueD+acazzYqiAfvluOOpVRQMH7wJuml9XDhXDo49QJej8UmNh89sj1am1gbakYL1IrSPSDSXBNkBjiVucqWiicZEyrUBHvZunCLXC8AJfYuRfqHS0KH8tvofrmZMkfoUTT6cVMA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lSgiqIfK9XGSxkC6Manp3ijUoj04nESnRrPlRQ/a4Ps=;
- b=eK7weAKQYi4w8FaapjzRBWLHObwgJae87slA8iMkytCTyQvjKPwCnRWioPg99CgXrYIHBYxpGwtvMWZc9Hs9GBh/bBFMRv600Ozcxcj9xVkguwLV6MoQRe2930ylRE9wUXunTSg4Hem8isG88hS4zjs0Qeh1AdwaDwR5ReVfn03MAYAx9/CljODail3Xy2rhkD0M7GjVOqCTy+wo7rTh9hy2IkchJzPPo09umMSCoB9boZYYeWPRsIYr6xjDxAmmXt5wiHQnO0FsRdkm/p1YIo3U/Fp95xeXT1JGfkAGkZvqg+972qnWubRoTCr8nfMR/JY4PUfTBaQtrPiXbEiobQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lSgiqIfK9XGSxkC6Manp3ijUoj04nESnRrPlRQ/a4Ps=;
- b=im/u7G5s9cSmumtKZ/J1oIOwDxqkkQriVZkf8ar20FX0YpHWRKuHHECKQUNvpHKuzn0Y19FqP9UgA3vwku3pTSnqADPl4ojIzt1S8BoSp/2mxLZvRzTTzaD3igNkpZcQLRDXB/fFpy3JrpOcbjh3i4yeQaXI51j2gGWRgaS2itC1aAqCnZIxUV6fR9AGvjsqJz0mMLA2VHHDQw5fb6aEx6OWCvQaD1j2JqllMCNSCiyTSw7vCWo+phvc3sHuXcqc6u2ZyeDV5TJjVuouYLs33Z5nttARLmt8ABqHVUw60IMAkeS7h9NdnN/449oXrp4x1eVLdjcL11L+UYOlLCbo3Q==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
- by JH0PR02MB7594.apcprd02.prod.outlook.com (2603:1096:990:63::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Mon, 27 Jul
- 2026 05:24:05 +0000
-Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
- ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
- ([fe80::e5f3:5fb7:3d29:5934%4]) with mapi id 15.21.0245.012; Mon, 27 Jul 2026
- 05:24:05 +0000
-Date: Mon, 27 Jul 2026 13:24:00 +0800
-From: Chao Liu <chao.liu@processmission.com>
-To: Bin Meng <bin.meng@processmission.com>
-Cc: QEMU <qemu-devel@nongnu.org>, 
- Alistair Francis <alistair.francis@wdc.com>, Conor Dooley <conor@kernel.org>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Sebastian Huber <sebastian.huber@embedded-brains.de>, 
- Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org
-Subject: Re: [PATCH 02/26] hw/riscv: pfsoc: Map the L2 zero device window
-Message-ID: <ambrZ5BsrYjIAUcP@ChaodeMacBook-Pro.local>
-References: <20260723151853.2143177-1-bin.meng@processmission.com>
- <20260723151853.2143177-3-bin.meng@processmission.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260723151853.2143177-3-bin.meng@processmission.com>
-X-ClientProxiedBy: PH7P220CA0080.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:32c::23) To TYNPR02MB9351.apcprd02.prod.outlook.com
- (2603:1096:405:3d0::15)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1woDqw-00020C-Ks; Mon, 27 Jul 2026 01:26:17 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66R5Pdqa066629
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Mon, 27 Jul 2026 14:25:39 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=GGa6R38NbVnwvhp0grawB8YYYRdUfsmOs9cyar+VFaE=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1785129940; v=1;
+ b=rbx1ddXbGRRZE2SNGmdPCWzGiOZ+rMoG1+xpTPbqkUangaPxfhO6hQVsqVvt3Hcl
+ xh3I8LY/J642FKUU3PmxrlaFwHjN5qtGtenUjgP6P6HTYfYKxU+s+JfFE5SGAXuB
+ FX5Bt+Af/FiH9pPPdjHfQ1ZyPdkTvoDyboUJ155lQJBQAXw12m1fXXMtEArcNWR6
+ +4c6ha9hya2wdfsVmSSyN5+JmypvU0nMncB2mpvt+tTn0nLm1B15DfCx2U59fg0C
+ Qyo4T5LDow7Aqr6ee6cj4jA3BziVPV9+yQwA4Pd2dzdtXL4GKDmxNkoSjh15EdXr
+ 87AYh//rXaQAXH3TdbaPbQ==
+Message-ID: <d9c4321c-ed39-4da6-926b-bae4b1491a52@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 27 Jul 2026 14:25:39 +0900
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|JH0PR02MB7594:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6a48a13d-f04d-4459-3f0d-08deeb9f46e7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|34096008|366016|376014|1800799024|23010399003|56012099006|4143699003|10067099003|6133799003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: jWeVkD5ZFwyNWoFC6M631b7SxbBSXp5PUX65ttSSKMwng93Y8rSpjJM3OvFhI6U+NyFc9q7R+xbb5lnSCqpW3+js0qgmTDDrDfWeZmBvYRDN4WApmU0/j8ZLYZcFLqeAIWrOu26OTCNdSNyRbbRkdW7ZdAe+GvrPwqhpbyNHZtM2X4yJnCQz+NDaYql3tTJDaeDxroR+hgWRJ+GifU/GHYI0yGHe4+8cGWBpoyKbonp5Q4sA3ec+4fxjfO1wpywUYinH+LC3g1ksvJLORnSrE7/t2ZKXkcVAh8qROBigJLjsFLyr+mbnpDXEw/dDh+bvt0zcZm0sm1c1errtHgmGBzMrwj4Bfkxt0Fi7wb4z+3B1Fe4H/LiFVpT4aApBoFONPMu4S4gWUmY3vA66M/zJsQuWCjFrqnOXMAqNDOIqHAJSEgfPAbMXinE9j9cjRwBHst0+6jvMt7IYyQJ7A9AById4n1aTF/tswpIjEWMIceYML0GzSBNlnA+yP767MhY1cE3SGNybBtyYmedoxbi3T+D88uyMWY3nuZO6GeXhDBWWpDPVx4QrAxsKSv1Hr2zvdbgQaDDecHdui0zPrDsUEokUxr9y63zt16UiYh286GEnTZXECcU9FOEXcLNaJTfusi3JDBGAWA7kWPCGsptcK+EesAsqYCDEE4PkTsP14Nw=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(34096008)(366016)(376014)(1800799024)(23010399003)(56012099006)(4143699003)(10067099003)(6133799003)(18002099003)(22082099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?sFaOAQ8vbhU1pw8H8jNxQcqWKDGuterCms8Npxv0wOdnXzNi4UlSZ5wE5Y8t?=
- =?us-ascii?Q?kbuO57sw33wOCp8xi50lG6UZLhm2BRv4ssZmjcIRudxYOLvma0u5hIDhCrQY?=
- =?us-ascii?Q?7mR+VZGxe0TTjO7T7JrulmlKihULSX/9f1Rp0RLm9Ey8HLPtNE5sGNhdp1be?=
- =?us-ascii?Q?tZ+dJXqIUE2iExJPE/VV4n4gKcFyJxZ31X4AB36HbcQlEgH5JH+lfPhvgMg+?=
- =?us-ascii?Q?ZeTFBDlCPtJnQqclQ4UFWVHxqGxYMGYMYqjaP1/Lv05/Y7g4g4Q+47U0dlGj?=
- =?us-ascii?Q?QpiQzQ9yqh0TsF/zBWGZlhXgwHZkXfdUHIpTrsJPcAkeYotLTUVLSdCfpV2K?=
- =?us-ascii?Q?R5BBwCnLYGmzD10+CTH3TAPnq6/zQK1WdqxTQLBZABXKwfg3HBcXZGhlulDd?=
- =?us-ascii?Q?bJyVAol/zOQWiNoYGoxOcIdnOcVShnI6L9+SB8UJgXV/LyRuZKC8FuUnXRWy?=
- =?us-ascii?Q?jZEa3RaGz1EKRiDKyDdu2BMLp3048qXqpnm2YDd/kr0aqfpzqxaeOcpIRGwN?=
- =?us-ascii?Q?q0VVc804Iq2TIrMA4YdB2QiOy5CkyyUN3WDnJN3Qe89ehnj5/I9WTafBY02i?=
- =?us-ascii?Q?/H8P48saA4Dyae9KftQa1JhMwTy0oIau47shDVXYk7cTVifpxSdqJ/yCQnDf?=
- =?us-ascii?Q?DA2H7e+pAdVfjcKLW61+pcXTKQ0fr9GiQ1Xt4JZE0FbxtT79bI/ZJm4w1/gx?=
- =?us-ascii?Q?1r5ffK4JxpXclk3YqxKSAYcrJJAtzaVL024nA7FskMJZRdhF1ldzCxKnIPzH?=
- =?us-ascii?Q?Ep/jEs7r+MakcWF/IO1dPUF3wMv2I8LQmBOhXJ0qwfb3D87Q6O2XnT4ImVNl?=
- =?us-ascii?Q?ztR7JTkBm1SNDCNQhL01Kiz7vFQ04uu6NSp21qF80syRpSZ5t+UqRIY0f0py?=
- =?us-ascii?Q?B/Gz6NDLxwqUKnsV01xn/QgFgS7wXrqCGGQLKQbLEUrsPya63AmwiCsn01CA?=
- =?us-ascii?Q?ACiUy6YkoYF7f4wpeTE4rTlFO8xO6k05QMUwaCLU4/h+Ym0BjTxCvWFm//+d?=
- =?us-ascii?Q?gssf6OFMyXC1oIBM0MFhx9+P6DclOfAgoMfvVVl2yr2okKCLHS5IboUrTWOB?=
- =?us-ascii?Q?bzmkneeUmlcrDb/XRho8GCVuEfu5WlymSCiuarssXS9Qrah3wzOpyb6A57My?=
- =?us-ascii?Q?eJNal+o9OIhdx/nB64TikzPp6f05QVg5HiXNldoFqZVtt620ct4r1hNgEAmi?=
- =?us-ascii?Q?P7AheYQGH/Zu/0paQdKRBYw5AGdSZoWTb74CET1zAL3az/hgNy+zjdXLk4XZ?=
- =?us-ascii?Q?2MDICdnEoKr8cZCPvgDbURLVXtlqG0pWzEYsjrYLGjg2UI1t1jh9kpi9sdBw?=
- =?us-ascii?Q?ysrCnh9usqHMgiJvQCRkVRoWA63/mzjDLQ1BVBoCnag77Tns//El4qsqWmyh?=
- =?us-ascii?Q?zigfRTg94l5N8CTDayBM0NXb0AIQboTTLMXHQtyjvfyiuWQw3caYf/MyT6Hv?=
- =?us-ascii?Q?QhhfJmrAOIEyx99vYDBdSpCp0l3Lx3SUDlj0HXn5fpSKvRUQBCcQ4T5hdUeV?=
- =?us-ascii?Q?YQVEm/cyg8f04V63/oPFniaJ65NPIL98fyiBPaqH7NeXf1qoRkJSrZBdJ/ok?=
- =?us-ascii?Q?UNz7IEIbvv9DEr2zvUYvJeoArEzD0kikUfrot4IRBToHTDRK/r5CseFAGp6C?=
- =?us-ascii?Q?ThyjWLZiOXLLC385AoLvdguio7z0VnFRxg7gmATwqj4r1arTe+hWfZ1RnkXw?=
- =?us-ascii?Q?B4sDKGPXO3JcDogx0PoSGii+lu4B3Z0hsSarv1xcI52dOl0V9DM2nr3gHAjw?=
- =?us-ascii?Q?hF/WAmuy/VpTTbAMddTWZTMij3GbYlM=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6a48a13d-f04d-4459-3f0d-08deeb9f46e7
-X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 05:24:05.6637 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: yzwY+qNTDybSCPDUUTH0xYB1HwKws4YU890AXs/99b9yONQl/weo9tz/SIthbBHTyloaZYdjYfvSBIOFot2qWMxtnjF6F/cXe5YnQ/9E71c=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: JH0PR02MB7594
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
- envelope-from=chao.liu@processmission.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 07/12] Fix some -Werror=maybe-uninitialized
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
+ Jonathan Cameron <jic23@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Wei Liu <wei.liu@kernel.org>,
+ linux-cxl@vger.kernel.org, Brian Cain <brian.cain@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+References: <20260727-fix2-v2-0-d0c4831ed7ea@redhat.com>
+ <20260727-fix2-v2-7-d0c4831ed7ea@redhat.com>
+ <20260726165049-mutt-send-email-mst@kernel.org>
+ <CAJ+F1C+jzxfbWbmLoU6vMobKUr0VFkpnr--FyPcy8o1=Q0vY-g@mail.gmail.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <CAJ+F1C+jzxfbWbmLoU6vMobKUr0VFkpnr--FyPcy8o1=Q0vY-g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -144,79 +86,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 23, 2026 at 11:18:29PM +0800, Bin Meng wrote:
-> HSS uses a window at 0x0a000000 while setting up the L2 cache,
-> decompressing its runtime image, and executing that image.
-> The missing mapping causes the E51 to trap before firmware can
-> initialize its UART.
+On 2026/07/27 6:07, Marc-André Lureau wrote:
+> Hi
 > 
-> Represent the window with RAM to provide its persistent read,
-> write, and execute effects without claiming to model the L2
-> cache itself.
+> On Mon, Jul 27, 2026 at 12:53 AM Michael S. Tsirkin <mst@redhat.com> wrote:
+>>
+>> On Mon, Jul 27, 2026 at 12:44:06AM +0400, Marc-André Lureau wrote:
+>>> When compiled with -Og, gcc produces many false-positives
+>>> gcc (GCC) 16.1.1 20260515 (Red Hat 16.1.1-2).
+>>
+>> it hurts if you do it? so don't do it then?
 > 
-> Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
+> We are not far from getting it working, we can accommodate a bit of
+> code while making it a bit clearer for the reader too.
+> 
+>>
+>>> We already use auto-var-init=zero, but better be explicit.
+>>
+>> explicit about false positives?
+> 
+> Explicit initialization
 
-Thanks,
-Chao
+These are the same concerns I raised in my previous review:
 
-> ---
+https://lore.kernel.org/qemu-devel/f919e684-93ed-4eca-8ddc-785e69dd8add@rsg.ci.i.u-tokyo.ac.jp/
+
+I do not think this patch make the code clearer. They add values that 
+are never consumed, which obscures rather than clarifies the data flow. 
+Leaving a variable uninitialized until its actual value is assigned 
+makes that flow more explicit.
+
+Still, I think this change makes sense. Failure with -Og shows that
+whether GCC emits the warning depends on subtle optimization details.
+Avoiding that dependency is worthwhile.
+
 > 
->  include/hw/riscv/microchip_pfsoc.h |  1 +
->  hw/riscv/microchip_pfsoc.c         | 13 +++++++++++++
->  2 files changed, 14 insertions(+)
+>>
+>>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>> ---
+>>>   target/i386/cpu.c             | 3 ++-
+>>>   target/i386/emulate/x86_mmu.c | 4 ++--
+>>>   2 files changed, 4 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+>>> index 5805d33ab92d..28e4435df23f 100644
+>>> --- a/target/i386/cpu.c
+>>> +++ b/target/i386/cpu.c
+>>> @@ -7734,7 +7734,7 @@ static void x86_cpuid_get_avx10_version(Object *obj, Visitor *v,
+>>>   static bool x86_cpu_apply_avx10_features(X86CPU *cpu, uint8_t version,
+>>>                                            Error **errp)
+>>>   {
+>>> -    const AVX10VersionDefinition *def;
+>>> +    const AVX10VersionDefinition *def = NULL;
+>>>       CPUX86State *env = &cpu->env;
+>>>
+>>>       if (!version) {
+>>> @@ -7757,6 +7757,7 @@ static bool x86_cpu_apply_avx10_features(X86CPU *cpu, uint8_t version,
+>>>               break;
+>>>           }
+>>>       }
+>>> +    assert(def != NULL);
+>>>
+>>>       if (def->version < version) {
+>>>           error_setg(errp, "avx10-version can be at most %d", def->version);
+>>
+>>
+>> what does assert have to do with gcc warnings?
 > 
-> diff --git a/include/hw/riscv/microchip_pfsoc.h b/include/hw/riscv/microchip_pfsoc.h
-> index a30b944afa..612fd2b69c 100644
-> --- a/include/hw/riscv/microchip_pfsoc.h
-> +++ b/include/hw/riscv/microchip_pfsoc.h
-> @@ -90,6 +90,7 @@ enum {
->      MICROCHIP_PFSOC_L2CC,
->      MICROCHIP_PFSOC_DMA,
->      MICROCHIP_PFSOC_L2LIM,
-> +    MICROCHIP_PFSOC_L2ZERO,
->      MICROCHIP_PFSOC_PLIC,
->      MICROCHIP_PFSOC_MMUART0,
->      MICROCHIP_PFSOC_WDOG0,
-> diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-> index 218cccab69..fd28ee75fe 100644
-> --- a/hw/riscv/microchip_pfsoc.c
-> +++ b/hw/riscv/microchip_pfsoc.c
-> @@ -97,6 +97,7 @@ static const MemMapEntry microchip_pfsoc_memmap[] = {
->      [MICROCHIP_PFSOC_L2CC] =            {  0x2010000,       0x1000 },
->      [MICROCHIP_PFSOC_DMA] =             {  0x3000000,     0x100000 },
->      [MICROCHIP_PFSOC_L2LIM] =           {  0x8000000,     0x200000 },
-> +    [MICROCHIP_PFSOC_L2ZERO] =          {  0xa000000,     0x200000 },
->      [MICROCHIP_PFSOC_PLIC] =            {  0xc000000,    0x4000000 },
->      [MICROCHIP_PFSOC_MMUART0] =         { 0x20000000,       0x1000 },
->      [MICROCHIP_PFSOC_WDOG0] =           { 0x20001000,       0x1000 },
-> @@ -201,6 +202,7 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
->      MemoryRegion *rsvd0_mem = g_new(MemoryRegion, 1);
->      MemoryRegion *e51_dtim_mem = g_new(MemoryRegion, 1);
->      MemoryRegion *l2lim_mem = g_new(MemoryRegion, 1);
-> +    MemoryRegion *l2zero_mem = g_new(MemoryRegion, 1);
->      MemoryRegion *envm_data = g_new(MemoryRegion, 1);
->      MemoryRegion *qspi_xip_mem = g_new(MemoryRegion, 1);
->      char *plic_hart_config;
-> @@ -277,6 +279,17 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
->                                  memmap[MICROCHIP_PFSOC_L2LIM].base,
->                                  l2lim_mem);
->  
-> +    /*
-> +     * HSS decompresses into the L2 zero-device window and executes there.
-> +     * Model it as RAM because QEMU does not model the backing L2 cache.
-> +     */
-> +    memory_region_init_ram(l2zero_mem, NULL, "microchip.pfsoc.l2zero",
-> +                           memmap[MICROCHIP_PFSOC_L2ZERO].size,
-> +                           &error_fatal);
-> +    memory_region_add_subregion(system_memory,
-> +                                memmap[MICROCHIP_PFSOC_L2ZERO].base,
-> +                                l2zero_mem);
-> +
->      /* create PLIC hart topology configuration string */
->      plic_hart_config = riscv_plic_hart_config_string(ms->smp.cpus);
->  
-> -- 
-> 2.34.1
+> That's what is expected at this point, unfortunately the compiler
+> doesn't care we help it here. I can drop it
+
+I would keep it. It reduces the downside of introducing an otherwise 
+unused initial value by documenting the invariant.
+
 > 
+>>> diff --git a/target/i386/emulate/x86_mmu.c b/target/i386/emulate/x86_mmu.c
+>>> index 8d4371467fd7..65bcccd4751e 100644
+>>> --- a/target/i386/emulate/x86_mmu.c
+>>> +++ b/target/i386/emulate/x86_mmu.c
+>>> @@ -185,8 +185,8 @@ static MMUTranslateResult walk_gpt(CPUState *cpu, target_ulong addr, MMUTranslat
+>>>       int largeness = 0;
+>>>       target_ulong cr3 = x86_read_cr(cpu, 3);
+>>>       uint64_t page_mask = pae ? PAE_PTE_PAGE_MASK : LEGACY_PTE_PAGE_MASK;
+>>> -    MMUTranslateResult res;
+>>> -
+>>> +    MMUTranslateResult res = MMU_TRANSLATE_PAGE_NOT_MAPPED;
+>>> +
+>>
+>>
+>> This is not 0 as the commit log implies.
+> 
+> Initializing with 0 implies defaulting to MMU_TRANSLATE_SUCCESS - not
+> the best choice here.
+
+Since the value is ultimately overwritten anyway, the specific 
+placeholder chosen doesn't strictly matter for execution, but 
+MMU_TRANSLATE_SUCCESS feels like a more natural default behavior.
+
+walk_gpt() checks each page-table level until one rejects the mapping or
+all levels have been traversed. If top_level == 0 (i.e., there is zero 
+levels to traverse), nothing would have rejected the mapping, so success 
+is more natural than MMU_TRANSLATE_PAGE_NOT_MAPPED.
+
+Regards,
+Akihiko Odaki
 
