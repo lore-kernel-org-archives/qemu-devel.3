@@ -4,95 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DD16C53219
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBF9DC53209
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:21:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woQrf-0008WA-8H; Mon, 27 Jul 2026 15:19:51 -0400
+	id 1woQrg-0008WP-Cm; Mon, 27 Jul 2026 15:19:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQrY-0008Vg-Iq
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQrZ-0008Vm-LC
  for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:19:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQrW-0000Kn-GT
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:19:44 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQrY-0000Ky-1d
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:19:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785179981;
+ s=mimecast20190719; t=1785179983;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=G//nuxmSO865h0x1JAyl73ncMcHKB0EKw7W4t5Qiie8=;
- b=TZYnbG3Wl5LKOSjDfSKnJefpGH26EFLDtJljHFJwg/Awa2SmJaEsVkMUAyVJmpcoJAFj+b
- DwmYdnIFF3jorthM1AVAG9q14lh2v/UH5g0HUNWVsvk3H6NWitcE9n+9LRaMiS7cm/PA0B
- ITbG6uZ1h7R3eFEpTg2JcfeHHkM7PNU=
+ in-reply-to:in-reply-to:references:references;
+ bh=gLoWFknB1MQPf833VKaVMeYT284G3Gy3H1HalWnTKlw=;
+ b=i+jDlNaIwCmxiFjmdYmaEMNMrZXp+ap6Q3uaqZJjDbZjP31JRedYFUUBY9L+tdiay3s+4N
+ JsRPfYBUrqFz4+kkU+irLYnedDzt/KhSV5Dg6pvdAzKNySKZnYDbOq2HINFxsHDasJk/pd
+ 1vxqSVLYqExsIIIf8rwcwOHGy80XSc8=
 Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
  [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-35-vXDNQwObMsSxSEwoQk6pvw-1; Mon, 27 Jul 2026 15:19:39 -0400
-X-MC-Unique: vXDNQwObMsSxSEwoQk6pvw-1
-X-Mimecast-MFC-AGG-ID: vXDNQwObMsSxSEwoQk6pvw_1785179978
+ us-mta-307-FXXw_jzTPWy1aXOHpckbTQ-1; Mon, 27 Jul 2026 15:19:41 -0400
+X-MC-Unique: FXXw_jzTPWy1aXOHpckbTQ-1
+X-Mimecast-MFC-AGG-ID: FXXw_jzTPWy1aXOHpckbTQ_1785179981
 Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-47f83999cceso2655591f8f.3
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:19:39 -0700 (PDT)
+ ffacd0b85a97d-47f84ac1990so1980069f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:19:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785179978; x=1785784778; darn=nongnu.org;
- h=content-transfer-encoding:content-disposition:content-type
- :mime-version:message-id:subject:cc:to:from:date:from:to:cc:subject
+ d=redhat.com; s=google; t=1785179980; x=1785784780; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=G//nuxmSO865h0x1JAyl73ncMcHKB0EKw7W4t5Qiie8=;
- b=QsQFF6YppZOqbc4wWSYNOosqhbyOrpPsT+P+t2lptmwnzMdOqOSIR8e/z1gFXRwgiP
- 1AfhSHF4gHnDCmbtLc1EXasObJs/RnL2WkJzFJVpCKbTbytukLxcezuyUCJUdf/tHR/s
- DQLhsIFU/3ws2AsADJEgr9jhrIaJCDwfnkEScZ4FcrgpJcjGqvyLLvnzxyBQBc5pki8g
- +7jZIe2QMie5ET19xYOMpg2rGCvh0avJVqJfxptnPDQtWToJfDrVGKBPqPE5RFtVZ3q+
- 2VMufui1s59ORr5vDkpC7Pgq8A74Hu7LQcN+DMeUTB2UioiNiC2Zv93KMljFe9mo+EvU
- helw==
+ bh=gLoWFknB1MQPf833VKaVMeYT284G3Gy3H1HalWnTKlw=;
+ b=OGLrFUF++/84pDl2G6IFU2+9NiIt8yFP+Rf9E9QR2n8eN1tmn1dthjLF8BFxp2ptWj
+ jzA0c+bS+uuRb6+faY0a4AQPcRMmhFaNxZWFUSQV151Qt8LY4dYrvK0dH4yN/oy/CKRb
+ 20gLoShEmgo/s9FgcvYG+NuOtGYcCizuX18Yslnbxe7Zn/d4lJmAcJS7jBSBEUPjjYn9
+ wGl/S9mFxXEjPoNe+MVwkILehsJ//sFyLLj93xwhEleD8ZdkwVhLGKg0Bpp5UbaKzYkU
+ EYBdRu45IsvOz2UN77CLaYS7NYjFNfCAPrn12yfiBPV1Ko7FuW5auECuamTmtz7N+Paj
+ /v4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785179978; x=1785784778;
- h=content-transfer-encoding:content-disposition:content-type
- :mime-version:message-id:subject:cc:to:from:date:x-gm-gg
+ d=1e100.net; s=20251104; t=1785179980; x=1785784780;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=G//nuxmSO865h0x1JAyl73ncMcHKB0EKw7W4t5Qiie8=;
- b=Bb51/wRukQJCbh5HOANgMqUWjheCiGO0nl4/veDtzEz8hQEx2Qdqrhrj8TbAbe0nbA
- sh2Zqh1Um0vvT7H0LgwxFdEK0xJNRvZI+SssL/gFtmglqJtAXgcu3tSgMSvmDbQBXgbF
- lCXOHqVMIhfZGfgcMQNt0W942RsiwOz+RjNXbQcAEKDAR3PLeqG/YqNBb68w0dRleWjO
- 5gJpzYsD+MKe9wJm6Eis3oIxo8JqtylgmTIfMab6KULdXH4h4xGyfhn0BMhmJM+dRZrl
- uK2+X/nvTGH1E2ODTz+JEme7g53kaNhxL7NHfniT6pfCOaB5ewlvh5B+Y9yi7pIZDypT
- XYDg==
-X-Gm-Message-State: AOJu0YxaKABu/cQWXDuZQJ7IVO/Q0H+Ag3HweUkPCglQ6eEe6snP5sMX
- jrkAho2vdCdPLR1XVHgzpg2nQdJ60wcYoeZ+EM8aOvNpzmACg2D0CyvUFPazTEfP9cyEjvVOy6Z
- EBNduUn11FUM5aUcbcYl/7UTa9Tyer4vC0Rw5BtmI9sHZstIXyH/lk/WfrJea1mi6yTgMyM+is9
- rh5T0ciuwMn+5HymNEAhnruwDC5oZHKeSpkA==
-X-Gm-Gg: AR+sD10xkGUIyMlCf2xE+o9KCJUvXJonCjsV5pJgh5Gryw6iQOOlcppALO/L/GZAK9E
- gSk0VO+i62vdSJy9RkNs2axid2zfSvcnVqN0f79cX+RV/HUplPiYfdt8WmkuxNhgMmGmhRWmKy6
- kGzuGlPJew1Ba2Q5LfvpFl1eq/XBqb+IclxV0IsYItv5qJVadPOxG5Gn8qntbQg3paqRkIwEHIy
- /bZILULvu/I2wZ6xLQp0PyMvYqQ/RVa/uR7ty7S8ctloabltYboueBt/jKbU/5l0t5/lZpV/EGq
- o/61QdMNWaS0+k13TsvgfalbGfOatiNoMG7QMk0DQ/g06MtLVtH52vat8ARQOYbhp9OAZuzGDNk
- NXQUmpKTJRWB57qsmxt5ISA==
-X-Received: by 2002:a05:6000:2287:b0:47f:95d3:6ff7 with SMTP id
- ffacd0b85a97d-47f9fc92d0amr13043879f8f.14.1785179978402; 
- Mon, 27 Jul 2026 12:19:38 -0700 (PDT)
-X-Received: by 2002:a05:6000:2287:b0:47f:95d3:6ff7 with SMTP id
- ffacd0b85a97d-47f9fc92d0amr13043839f8f.14.1785179977824; 
- Mon, 27 Jul 2026 12:19:37 -0700 (PDT)
+ bh=gLoWFknB1MQPf833VKaVMeYT284G3Gy3H1HalWnTKlw=;
+ b=gLxa4x6+IOY5rRXVd0uDfMonkU+JxHh0zkzlBLB2y1AOtiJzOPQU1ShDyLNCVxuQEe
+ B2Rb+T25+wyb0Ak83VFMMS2Zw3qEavla2FLpmTfMyoMY2wFHAusxiMNcgHuGFUEs1Y6e
+ IQxrsT0lH5baIUlAuTabHsalA1Bk2uMdkXP5yaxJG5vpeqnm2zMJfBbAtVO3KPtD51TL
+ jRVICKjquezerWfowRZTyAFwFQaba2jrDA0fLr/XZ7eIRwdaM1t0MfxUXlmCTKdC4sWP
+ I3EXro9dKgfYupk3ZdqMmWGEz+fa1GVsrhOYm5f16an0UnQN9ydnb4ynHBzypyJP3IIV
+ c7Dw==
+X-Gm-Message-State: AOJu0Yyyvy20xutwjX90y77JEwH/Kh/WwCQ6u8fQQLDVrx7ndbA4JzP5
+ tqQStZUDbgOsIe/Lv/ShSbbMXYp6xzN9QKb5tLoiFr10GNMWRJjG10WkfHr/nMxudJXUcEXIBXy
+ JulYp0Pb30aOqgKPKuyILQjzhOlLGbjsLGE8WQukzmhi2kUVZi6zx+PhlRw8ENX0h5wR5RA1LjM
+ gxS3ZqWWOSMD+Z1fjg0iIKlpsFvKSXSkgl0g==
+X-Gm-Gg: AR+sD13ho/QCTzK/SLuDUMHyEC+pOy4jgK3E6OuFM3sxY0OGbSGizRAhW2KLlBCaM8B
+ 0w47FNWwtjMbyo6ba/AopMXM33ceXLqAk7WiZKhlsx2BdQpQ7DfIXEGfk2ONCdb+JJaH+1lT+B+
+ kSP5wadVFTG3X+UjL8ddHtVJ1Q4ScF7e9CJCZu1Nc5uqs4RvGjGoc5xBo2ObcH7i2NDjd5S4fZx
+ YL2mNB+Wwip+SfZDWLAoP+uAJi1bSPSEeK2pD/Yym/kAjxSbGnhKXyT5ze2xLP8DPNLjclwbNBL
+ V/AL5lkVfyg4PEmhxltmUzNMTB48/z++OeskgJn5hbLfjr6MhRXNJQZFic+eyGuNLk/PxJ/kGOi
+ ROn1lYB9ZA5lq7jwBsHKP5w==
+X-Received: by 2002:a05:6000:230b:b0:475:f0f0:9ec9 with SMTP id
+ ffacd0b85a97d-47f9feb0549mr14024571f8f.52.1785179980495; 
+ Mon, 27 Jul 2026 12:19:40 -0700 (PDT)
+X-Received: by 2002:a05:6000:230b:b0:475:f0f0:9ec9 with SMTP id
+ ffacd0b85a97d-47f9feb0549mr14024542f8f.52.1785179980010; 
+ Mon, 27 Jul 2026 12:19:40 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-28-14.inter.net.il. [80.230.28.14])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c531afsm56667211f8f.24.2026.07.27.12.19.36
+ ffacd0b85a97d-47f85c6dc25sm50027694f8f.33.2026.07.27.12.19.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 12:19:37 -0700 (PDT)
-Date: Mon, 27 Jul 2026 15:19:35 -0400
+ Mon, 27 Jul 2026 12:19:39 -0700 (PDT)
+Date: Mon, 27 Jul 2026 15:19:38 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL v2 00/30] pci, vhost, virtio, iommu: bugfixes
-Message-ID: <cover.1785179875.git.mst@redhat.com>
+ Jason Wang <jasowangio@gmail.com>, Yuri Benditovich <ybendito@redhat.com>,
+ Paolo Abeni <pabeni@redhat.com>, huntr bubble <bubblehuntr@gmail.com>
+Subject: [PULL v2 01/30] virtio: use masked features with set_features_ex
+Message-ID: <a6e0519ea8ed6fc84fab9bf9ca82c7a55780f880.1785179875.git.mst@redhat.com>
+References: <cover.1785179875.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover.1785179875.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
@@ -119,102 +121,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-changes from v1:
-- added a patch by Stefan
-- attribution tag tweaks
+virtio_set_features_nocheck() calls set_features_ex
+with guest-supplied feature bits, without masking the value
+with host features (unlike set_features which gets the
+correct val & host_features).
 
-The following changes since commit 300438ffbb8d9430cac2fcc15cba6f482b2c0587:
+This does not matter if the driver matches spec, but drivers
+can be malicious or buggy and set bit outside the host mask.
 
-  Merge tag 'pull-trivial-patches' of https://gitlab.com/mjt0k/qemu into staging (2026-07-24 09:13:49 -0400)
+Devices don't expect this, so unsupported guest feature bits getting set
+can break the host. In virtio-net, this can enable RSC without vnet
+header support and cause out-of-bounds reads from short packets.
 
-are available in the Git repository at:
+Pass the masked features to set_features_ex, consistent with set_features.
 
-  https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
-
-for you to fetch changes up to 6682ea3391277e732a6d74c5758206ba834e1615:
-
-  virtio: avoid packed vring virtio_queue_empty() infinite loops (CVE-2026-16457) (2026-07-27 15:14:16 -0400)
-
-----------------------------------------------------------------
-pci, vhost, virtio, iommu: bugfixes
-
-Fixes all over the place, including a bunch of CVE fixes.
-
+Fixes: CVE-2026-63321
+Fixes: 64a6a336f4 ("virtio: add support for negotiating extended features")
+Cc: Jason Wang <jasowangio@gmail.com>
+Cc: Yuri Benditovich <ybendito@redhat.com>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3623
+Reported-by: huntr bubble <bubblehuntr@gmail.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <dfd27c9b26e442a2076f6ddc9bb3d38363d9b2da.1784891251.git.mst@redhat.com>
+---
+ hw/virtio/virtio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-----------------------------------------------------------------
-Clément MATHIEU--DRIF (1):
-      intel_iommu: Check address mask before using it in pasid-based iotlb invalidation
-
-GuoHan Zhao (1):
-      hw/virtio/vdpa-dev: pass set_config buffer to vhost backend
-
-Haotian Jiang (1):
-      hw/cxl: fix OOB access in cxl_doe_cdat_rsp via entry_handle
-
-Laurent Vivier (4):
-      hw/virtio: reject zero-length packed indirect descriptor table
-      hw/net/virtio-net: Protect from DMA re-entrancy bugs
-      hw/virtio-rng: Fix host use-after-free (CVE-2026-50624)
-      backends/rng: cap request size to avoid oversized allocation
-
-Manos Pitsidianakis (2):
-      virtio-snd: check rx buffer descriptor size
-      virtio-snd: check for overflow before g_malloc0
-
-Michael S. Tsirkin (17):
-      virtio: use masked features with set_features_ex
-      virtio-net: fix OOB read in RSC receive path
-      virtio-net: fix short frame OOB read in receive_filter()
-      libvhost-user: protect against OOB writes in vu_set_inflight_fd
-      libvhost-user: protect against OOB vring queue access
-      vhost: do not crash on ring map failure
-      virtio-scsi: fix SCSIRequest leak on a bad request
-      virtio-mmio: fix QUEUE_NUM_MAX
-      virtio: fix queue size validation against allocated maximum
-      virtio: stop migrating num_default, validate vring.num on load
-      virtio: fail early on bad config_len in migration
-      vhost-user: assert nregions within limit
-      virtio-pmem: wait for flush requests on unrealize
-      libvhost-user: validate last_batch_head in vu_check_queue_inflights
-      libvhost-user: fix heap overflow in vu_check_queue_inflights
-      libvduse: validate vq size
-      virtio-iommu: fix OOM due to unbounded call_rcu
-
-Peter Maydell (3):
-      hw/pci-host/q35.c: Always initialize smram-region even if SMM disabled
-      hw/pci-host/q35.c: Factor out creation of SMRAM MRs
-      hw/pci-host/q35.c: Avoid early return in mch_write_config()
-
-Stefan Hajnoczi (1):
-      virtio: avoid packed vring virtio_queue_empty() infinite loops (CVE-2026-16457)
-
- include/hw/scsi/scsi.h                    |   1 +
- include/hw/virtio/virtio-bus.h            |   1 +
- include/hw/virtio/virtio-iommu.h          |   1 +
- include/hw/virtio/virtio-mmio.h           |   1 +
- include/hw/virtio/virtio-pmem.h           |   1 +
- include/system/rng.h                      |  14 ++++
- backends/rng.c                            |  21 +++++-
- hw/audio/virtio-snd.c                     |  24 +++++--
- hw/core/machine.c                         |   1 +
- hw/i386/intel_iommu.c                     |   9 +++
- hw/mem/cxl_type3.c                        |   3 +
- hw/net/virtio-net.c                       |  25 ++++++-
- hw/pci-bridge/cxl_upstream.c              |   3 +
- hw/pci-host/q35.c                         | 110 ++++++++++++++++--------------
- hw/scsi/scsi-bus.c                        |   7 ++
- hw/scsi/virtio-scsi.c                     |   2 +
- hw/virtio/vdpa-dev.c                      |   2 +-
- hw/virtio/vhost-user.c                    |   3 +
- hw/virtio/vhost.c                         |   5 +-
- hw/virtio/virtio-iommu.c                  |  29 ++++++++
- hw/virtio/virtio-mmio.c                   |   7 +-
- hw/virtio/virtio-pmem.c                   |  17 ++++-
- hw/virtio/virtio-rng.c                    |   2 +
- hw/virtio/virtio.c                        |  47 +++++++++----
- subprojects/libvduse/libvduse.c           |   5 ++
- subprojects/libvhost-user/libvhost-user.c |  61 ++++++++++++++++-
- 26 files changed, 317 insertions(+), 85 deletions(-)
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index f4d86a3655..7c19080db5 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -3320,7 +3320,7 @@ static int virtio_set_features_nocheck(VirtIODevice *vdev, const uint64_t *val)
+     virtio_features_and(tmp, val, vdev->host_features_ex);
+ 
+     if (k->set_features_ex) {
+-        k->set_features_ex(vdev, val);
++        k->set_features_ex(vdev, tmp);
+     } else if (k->set_features) {
+         bad = bad || virtio_features_use_ex(tmp);
+         k->set_features(vdev, tmp[0]);
+-- 
+MST
 
 
