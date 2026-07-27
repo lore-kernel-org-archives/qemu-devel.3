@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15053C53209
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:23:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5CFCC53209
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:23:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woQs1-0000BZ-3u; Mon, 27 Jul 2026 15:20:13 -0400
+	id 1woQrr-00009d-Is; Mon, 27 Jul 2026 15:20:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQs0-0000BC-5t
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQrp-00008j-Px
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQry-0000Pi-KE
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:11 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQro-0000Mt-7Y
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785180009;
+ s=mimecast20190719; t=1785179999;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=XtAeMdvTIJtWG8IGUOglMiMwR5LzmhVQBRNo6kKVl5s=;
- b=Tajm+Ut3UBQKrgapZaIfH2k7hbvC089lXb6/mKcx1BolIY0qzGdO/H4vLP0Kh4CXPFG9+I
- LHDB/x7mz1bi4XnEqm+4puQutc4bVooJlG+GlwFvE95Vq6Oa/I/HCtlNeVfqPowANgSxmR
- s2x2Z4HxMN+mRXp6ahJpBp5JDCWRyQc=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=IVtM1kLlRrBmYYke395btEBse7H966kQnPC7NNaA2Xs=;
+ b=LpKffoFbWawA+gM8h+mD2XN8/auRLmw+hzivjPIirblIc6VSz3i8gLB6lqAOYi4RoBgc3l
+ wu1ZxUoavpEF2xHH0zuVmePg4U/TuA5RMdsEf0jyyQrN/s+zdCvtVTJndX0cOro3Gr5hA6
+ kakkJDGgngGbN3yrQii7SW4RQrw7fBU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-35-JoE9lUaBMpq9DO8hnYsgcA-1; Mon, 27 Jul 2026 15:20:08 -0400
-X-MC-Unique: JoE9lUaBMpq9DO8hnYsgcA-1
-X-Mimecast-MFC-AGG-ID: JoE9lUaBMpq9DO8hnYsgcA_1785180007
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-493fa6e28a7so37481405e9.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:20:08 -0700 (PDT)
+ us-mta-650-HcnD9D_OP1WO-Cljo-rtcA-1; Mon, 27 Jul 2026 15:19:57 -0400
+X-MC-Unique: HcnD9D_OP1WO-Cljo-rtcA-1
+X-Mimecast-MFC-AGG-ID: HcnD9D_OP1WO-Cljo-rtcA_1785179996
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-49564d4b849so13457825e9.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:19:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785180007; x=1785784807; darn=nongnu.org;
+ d=redhat.com; s=google; t=1785179996; x=1785784796; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=XtAeMdvTIJtWG8IGUOglMiMwR5LzmhVQBRNo6kKVl5s=;
- b=BTCYmSnd6F+IknvS3VE0epuNpNJJbw7L3zMpbNdyCTD69TcD9mjd+r3DDrwdfgsY9w
- kpeYk5ZcOG22bB+3IynWY9VBgsql7JwTo1M4gMdgEfmXcFSvDjaD/VM+w47y4BfI+daA
- B5V3P9mCwMmuCuv7S+tNON5U/omF8CQdKrpXS24w0PkkB/SNi2fUJo8k363SQ3jD+Hsa
- Of+CQrkNO16msEOaY6A8fAEXW2INFXp6fh7k1GBgzT6q66fDDQWDZweHmequRzdBVoYC
- vxq4EQASBWHBFz/COi/9UmsEzX46qcUpqtAvZiY8/6yuvEvGoVICowo9B/CSPR9Zbxg5
- IbMw==
+ bh=IVtM1kLlRrBmYYke395btEBse7H966kQnPC7NNaA2Xs=;
+ b=gvI/Zuq+rlunYBd1glxuBCjjF6VUbTqYtvmIOVawc3CiF+oC55CMf0JCDJMqn34kub
+ cVQSgeFde/rc7tfM/Fo/g/+xxU2ToFDXafEmFfc36ZL8UXMfGO/iRTLyp3TPNMsRpBbK
+ Fh5/+WEjEYI4w7T1Mjq0V1pNFpvJeBLi/+Y36gvVLyDzgU5OjdAB2UFcc+dSWev/hcAW
+ bMHzNaRJhSVtvWP8/xFygJ9c/r8ZpxfDXxJzRcArUx97qkNX1kc0bh1544SYim5Dwa/m
+ gHyBZuCmLKzGtmimQ2ITH8KTXu3NHtz5NxnLewP4WHU9dI1vSHlr8rnOUNMfBe7KmC4D
+ MJvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785180007; x=1785784807;
+ d=1e100.net; s=20251104; t=1785179996; x=1785784796;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=XtAeMdvTIJtWG8IGUOglMiMwR5LzmhVQBRNo6kKVl5s=;
- b=A1L1p95gzAiGmEVjgpUw/RUWJHvLMO+PQcBhiy33hLiNMY6sni8/UIrmi9ITkjzjGo
- QzDG5GaoiYyG0SZI/JQZ1HzswSJ2Aj5fyKr9TYk0AaddiEjoajbx5gIE27y1kpPGvYx5
- smw4pov0BK0AJcPiFbGj41RYMdualj5yb/sItCxS5AY3MNX41FyvSp3e3zJU4fRPSv7g
- GHI4wbH3/RyEOrmeZ9sGxVm9pnlEKIbqZtXBAVmOY3Wot35XV5LMtChhuX/gveQd8/kJ
- WKcGiHYyYdnnDe46KUY2w0AyYF6yG59tjU/OzPMBizB0qhUD7kE/Bw3tzXd1UuQ1/EFZ
- I17g==
-X-Gm-Message-State: AOJu0YzVU/3tQHWnJpkbBH1QdxpnkTVaHvTxiE8ALaIJ8QAEeolfBjn4
- AsuHd5nJVk+j4ioutORYQ8Ehl8Z6/o8NlEIIpJGaWWE4JeWWu2L7jiLxVcn7Jbbu5Q+DUhm7jhm
- f6jhLwZanw+GIhx+xzDRxTtsrsOgBlyBuv2dIecPzqAY88unYyB4lSLZFhJ7jNWOTF516TPVkWL
- s5aJanZyhO0QYs6lzfBCTLUI+AhssZtfQeJA==
-X-Gm-Gg: AR+sD13nlE0ZkvpBg1MP2wQngr5ur52x2PjKbwoU8ydamhB0hH3uI3ZjJG6A7wHXn2K
- uEFkg1tyzZN8D7oPkTnJO1acHzq7DZpxCc2BmoC70w1nOZmOwiVKSGoukpgFz42/1CDo4NCBXAh
- Ig92M0p31aoXhOg/T5pZS3ADvtRejkmyk2bvnmqJV480IHwCmQqBSZkT2Jk0JuO49fUtJ7ka80E
- gTZluep5opJmz84k1VrGRIyHE10vsYIPH0FO1v2aJxYvMdErVcQ8g++FcoIV+atcaQS8JvJM6dk
- MJw5KQlSNnGzULOIVo7uDaPR0nVEVfLbMLQqw1GQzmQ4H45iO4A2hnrveJnjIxEMQDXHMOWtgUm
- BB11FxMnL7QBeUpIlnmKXOg==
-X-Received: by 2002:a05:600c:210c:b0:495:4a27:483f with SMTP id
- 5b1f17b1804b1-496b5700419mr80573275e9.29.1785180006997; 
- Mon, 27 Jul 2026 12:20:06 -0700 (PDT)
-X-Received: by 2002:a05:600c:210c:b0:495:4a27:483f with SMTP id
- 5b1f17b1804b1-496b5700419mr80572935e9.29.1785180006458; 
- Mon, 27 Jul 2026 12:20:06 -0700 (PDT)
+ bh=IVtM1kLlRrBmYYke395btEBse7H966kQnPC7NNaA2Xs=;
+ b=sn/4kcA+VGm4YXqD6+4U4bgAl4CmGa6Rya7Hr3aGlRvYvenYKZ6R//NxLQsykh1wKG
+ DXgQ80R+ENPMUamHlBYR55I6v8qkDHMPLBeN2F6D+EgfkLSPfnnz3c3RQ7Ww/i7C9uXb
+ nBSuHtCfB/e7oGRk6Jzn4sFu2q5F8YMEzByeURwn6wKNy9+yiWgQ7eIwPUbEwAN4g9Pe
+ dHau3AJezCwoi+XITtAgf5iyNMSrTkAWzmUf/wzyt3NqZbxaq6imJtQWsS+NWbrhMWuW
+ CbnO6u9vFin6Eo1bK5vuRlBOGZ0E+5Im1omMKUcW5sASSSWKxUITdvxu+rg6o3oTzW22
+ n/eA==
+X-Gm-Message-State: AOJu0YzMzj83+ZVlOaOMr2Q2xwGbeH3MlTRwb0QJHMIlGewiLdZfOq7y
+ EcWOsIvP7M1ZdQgNfUqh1M1W7DSca4sID5yA7QmAKXU8KDwO9i49kfIaTnu44vObaSGh4a84GOd
+ u+tcfG158nkpGSseWihY5BJdLK+7a1Ebjv2QrOUjMd/jLT/IKh/YsNCfFuihWgYrtkocVMYqQVk
+ F2D0Q9r2r/9pBerW/PSefdkV2XyWvrooNfBA==
+X-Gm-Gg: AR+sD10kjn0+8zV7gj5dNzfwkfdCLtqRZ0c0KX+7ORegG+gKBZUC4kE1tZTrLw5CMNi
+ hISl1H8p7sfA+w8uYLc/GxL5ocGH9lx7EjE47N1HXT9WGpnFcJ4dcI+nUqUjBUsacIp820kJNDg
+ 3YJkOdxAxH/+Ecli0zxyDHP3lsqXBAeDVzkpUkbS2vHTmDfIvHsJChXqCIu/s2FkkpSpP+f74lB
+ DkBwK3Sos/rTRM2WGxKWSDgClPoYQMLpjcAXyYZrusXsiUYK+QWNNjP4js4XIIAhTEz4uHnCLgV
+ wYtKmlZP2+Uu3VqippUEZ+7OMj6PouffSQjcvVcvTeDIIp9E7PRFOnNyInQt64Qcei1HuFYLEDo
+ Je99Q7IvvRL8kgVDTCI2mGA==
+X-Received: by 2002:a05:600c:3b86:b0:495:665d:75df with SMTP id
+ 5b1f17b1804b1-496b5719f90mr132870685e9.23.1785179996445; 
+ Mon, 27 Jul 2026 12:19:56 -0700 (PDT)
+X-Received: by 2002:a05:600c:3b86:b0:495:665d:75df with SMTP id
+ 5b1f17b1804b1-496b5719f90mr132870355e9.23.1785179995924; 
+ Mon, 27 Jul 2026 12:19:55 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-28-14.inter.net.il. [80.230.28.14])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-496c44afaecsm17031125e9.2.2026.07.27.12.20.05
+ 5b1f17b1804b1-496c4625161sm14010865e9.14.2026.07.27.12.19.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 12:20:06 -0700 (PDT)
-Date: Mon, 27 Jul 2026 15:20:04 -0400
+ Mon, 27 Jul 2026 12:19:55 -0700 (PDT)
+Date: Mon, 27 Jul 2026 15:19:53 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Raphael Norwitz <raphael.norwitz@nutanix.com>,
- Feifan Qian <bea1e@proton.me>
-Subject: [PULL v2 13/30] vhost-user: assert nregions within limit
-Message-ID: <cf89b769cdd1933796099706387d3b2a9a865cae.1785179875.git.mst@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Greg Kurz <groug@kaod.org>, Feifan Qian <bea1e@proton.me>
+Subject: [PULL v2 08/30] virtio-scsi: fix SCSIRequest leak on a bad request
+Message-ID: <f404bf0e6504e0412a00ea64708f17d2a5e3f869.1785179875.git.mst@redhat.com>
 References: <cover.1785179875.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -98,15 +97,15 @@ Content-Disposition: inline
 In-Reply-To: <cover.1785179875.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
 X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,38 +121,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-scrub_shadow_regions() and vhost_user_add_remove_regions() use
-fixed-size stack arrays sized to VHOST_USER_MAX_RAM_SLOTS and index them
-with dev->mem->nregions.
+When virtio_scsi_handle_cmd_vq() cleans up prepared requests after a
+malformed element in the same batch, it drops only one reference even
+though virtio_scsi_handle_cmd_req_prepare() leaves each unsubmitted
+SCSIRequest with two references. This leaks the request and allows
+repeated bad batches to cause unbounded host memory growth.
 
-nregions is calculated to never overrun these, but let's add an assert
-to make sure we don't get a stack overflow if there's a bug.
+Add a second scsi_req_unref() and clear hba_private first.
 
-Fixes: f1aeb14b08 ("Transmit vhost-user memory regions individually")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3910
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Cc: Raphael Norwitz <raphael.norwitz@nutanix.com>
+Fixes: CVE-2026-61476
+Fixes: 661e32fb3c ("virtio-scsi: convert virtio_scsi_bad_req() to use virtio_error()")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3875
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Fam Zheng <fam@euphon.net>
+Cc: Greg Kurz <groug@kaod.org>
 Reported-by: Feifan Qian <bea1e@proton.me>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <48fb8411f67e525872fb19618a886e52b670ab7f.1784896199.git.mst@redhat.com>
+Message-ID: <5092cd4716e08d29731bfe85eea82a732b837ff4.1784895264.git.mst@redhat.com>
 ---
- hw/virtio/vhost-user.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/hw/scsi/scsi.h | 1 +
+ hw/scsi/scsi-bus.c     | 7 +++++++
+ hw/scsi/virtio-scsi.c  | 2 ++
+ 3 files changed, 10 insertions(+)
 
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 517cc4ca71..2881cec72d 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -946,6 +946,9 @@ static int vhost_user_add_remove_regions(struct vhost_dev *dev,
+diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
+index 5f83e58d1d..c60c6e8810 100644
+--- a/include/hw/scsi/scsi.h
++++ b/include/hw/scsi/scsi.h
+@@ -221,6 +221,7 @@ SCSIRequest *scsi_req_new(SCSIDevice *d, uint32_t tag, uint32_t lun,
+ int32_t scsi_req_enqueue(SCSIRequest *req);
+ SCSIRequest *scsi_req_ref(SCSIRequest *req);
+ void scsi_req_unref(SCSIRequest *req);
++void scsi_req_unref_detach_hba(SCSIRequest *req);
  
-     msg->hdr.size = sizeof(msg->payload.mem_reg);
+ int scsi_bus_parse_cdb(SCSIDevice *dev, SCSICommand *cmd, uint8_t *buf,
+                        size_t buf_len, void *hba_private);
+diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
+index dccb2f25b2..deb43d5560 100644
+--- a/hw/scsi/scsi-bus.c
++++ b/hw/scsi/scsi-bus.c
+@@ -1513,6 +1513,13 @@ void scsi_req_unref(SCSIRequest *req)
+     }
+ }
  
-+    /* Ensure nregions fits the fixed-size arrays used below. */
-+    assert(dev->mem->nregions <= VHOST_USER_MAX_RAM_SLOTS);
++void scsi_req_unref_detach_hba(SCSIRequest *req)
++{
++    /* Unref when the HBA frees hba_private separately (e.g. virtio_scsi_free_req) */
++    req->hba_private = NULL;
++    scsi_req_unref(req);
++}
 +
-     /* Find the regions which need to be removed or added. */
-     scrub_shadow_regions(dev, add_reg, &nr_add_reg, rem_reg, &nr_rem_reg,
-                          shadow_pcb, track_ramblocks);
+ /* Tell the device that we finished processing this chunk of I/O.  It
+    will start the next chunk or complete the command.  */
+ void scsi_req_continue(SCSIRequest *req)
+diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
+index 6c73768011..bf64d1231a 100644
+--- a/hw/scsi/virtio-scsi.c
++++ b/hw/scsi/virtio-scsi.c
+@@ -931,7 +931,9 @@ static void virtio_scsi_handle_cmd_vq(VirtIOSCSI *s, VirtQueue *vq)
+                     req = QTAILQ_FIRST(&reqs);
+                     QTAILQ_REMOVE(&reqs, req, next);
+                     defer_call_end();
++                    /* Drop both the ref from _prepare and the initial ref */
+                     scsi_req_unref(req->sreq);
++                    scsi_req_unref_detach_hba(req->sreq);
+                     virtqueue_detach_element(req->vq, &req->elem, 0);
+                     virtio_scsi_free_req(req);
+                 }
 -- 
 MST
 
