@@ -4,59 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7CF3C53219
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 07:47:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D283C53219
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 07:47:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woG2k-0005jQ-On; Mon, 27 Jul 2026 03:46:36 -0400
+	id 1woG2o-0005k7-PY; Mon, 27 Jul 2026 03:46:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nikita.shubin@maquefel.me>)
- id 1woG2d-0005ia-89
+ id 1woG2e-0005ic-4r
  for qemu-devel@nongnu.org; Mon, 27 Jul 2026 03:46:28 -0400
 Received: from forward101a.mail.yandex.net ([178.154.239.84])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nikita.shubin@maquefel.me>)
- id 1woG2a-0008WF-VU
+ id 1woG2a-0008Vy-VC
  for qemu-devel@nongnu.org; Mon, 27 Jul 2026 03:46:27 -0400
 Received: from mail-nwsmtp-smtp-production-main-95.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-production-main-95.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c15:340d:0:640:ad51:0])
- by forward101a.mail.yandex.net (postfix) with ESMTPS id 874C581354;
- Mon, 27 Jul 2026 10:46:20 +0300 (MSK)
+ by forward101a.mail.yandex.net (postfix) with ESMTPS id 9D4B581807;
+ Mon, 27 Jul 2026 10:46:17 +0300 (MSK)
 Received: by mail-nwsmtp-smtp-production-main-95.vla.yp-c.yandex.net (smtp)
- with ESMTPSA id EkWbDKvd4a60-3Dj9bU6Z; 
- Mon, 27 Jul 2026 10:46:19 +0300
+ with ESMTPSA id EkWbDKvd4a60-kwK05xpS; 
+ Mon, 27 Jul 2026 10:46:16 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=maquefel.me; s=mail;
- t=1785138380; bh=cMbHw4pzvEBKCnXgdnTqO/T7pGUylIp6OYpnQapwn9E=;
- h=Cc:In-Reply-To:Message-Id:To:Date:References:From:Subject;
- b=hZwoHzryFRh0iO1N32JJipVICbg/Eq3BPQTC6VekLCg7mG3pc5PN18Z3OQNZqawEq
- ZKdGJuFnAIpJtogMt/6SZOkax0wUVPjTeJ1x9Pu9Z08NqrEVMLSi2udnxEmSr/BgXc
- nK0KpbXg4kJLE3sQKLDdod2XjkMzzoPAIrmz7eP4=
+ t=1785138377; bh=4lMUUmv7+Co2Yl0TF+cEC1rJU0/Z+DuE+TWAeEN1VQk=;
+ h=Cc:To:Message-Id:Date:Subject:From;
+ b=hMb4G5nOgUq2xmS3e6Wd7dhiiDBf1OyacN54+UGbm97BnbuwFdqYSaYKvGN4+yfGE
+ gyQ/9ajAb5WUSvxdEA5gSsSEn+0jXcFztQVYtjFS5jS+74WH4j7x2mKJSoC7feFchz
+ HEYwUTF2go7O0yRNoBhQ1fiUQ5/Jxl9VGElGh1hE=
 Authentication-Results: mail-nwsmtp-smtp-production-main-95.vla.yp-c.yandex.net;
  dkim=pass header.i=@maquefel.me
 From: Nikita Shubin <nikita.shubin@maquefel.me>
-Date: Mon, 27 Jul 2026 10:46:20 +0300
-Subject: [PATCH v2 2/2] tests/tcg/riscv32: Add RISC-V 32-bit semihosting test
+Subject: [PATCH v2 0/2] semihosting: Fix auto-strlen for 32-bit targets +
+ add riscv32 test
+Date: Mon, 27 Jul 2026 10:46:18 +0300
+Message-Id: <20260727-fix-sign-extended-32-bit-addresses-v2-0-6d6a01efed8a@maquefel.me>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260727-fix-sign-extended-32-bit-addresses-v2-2-6d6a01efed8a@maquefel.me>
-References: <20260727-fix-sign-extended-32-bit-addresses-v2-0-6d6a01efed8a@maquefel.me>
-In-Reply-To: <20260727-fix-sign-extended-32-bit-addresses-v2-0-6d6a01efed8a@maquefel.me>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/5WNQQ6CMBREr0K69htaEcGV9zAsCh3gJ1K0HwmGc
+ HcrN3D5JjNvViUIDFHXZFUBMwuPPoI5JKrpre9A7CIrk5o8zXVJLS8k3HnCMsE7ODoZqnki61y
+ ACITyArWN5caVVkXRMyCu9pN7Fblnmcbw2T9n/Uv/0s+aUsouFjprCxTN+TbY1xstHscBqtq27
+ QvG+8Mx1gAAAA==
+X-Change-ID: 20260619-fix-sign-extended-32-bit-addresses-68eba061cd9a
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>, 
  Alistair Francis <alistair.francis@wdc.com>, 
  Nikita Shubin <nikita.shubin@maquefel.me>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1785138386; l=5487;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1785138386; l=1508;
  i=nikita.shubin@maquefel.me; s=20230718; h=from:subject:message-id;
- bh=ZnVD92lOi/fe9m39gvTMkikGxOwkymi2O8bIVEe8d2g=;
- b=ObxnJVKXT50R0QkZ0JJ8aKYk8EAUJXiBoQLHqMGp2WE9lbMf85xQFL61acrP1mEPDe8OW7jBS
- xM8XrzepBevCNXG87L7xl+zlTO7qDus3oiRr95Sk2FDjn14p2j8W51f
+ bh=NoPly3DJdsXtAH69iE5VokYSyiBDblLV0RT8xSvHpM8=;
+ b=CQVrwSm9PJY1/dEUZqVP54jkMLwkqnzUeHcCKe15w8R/HlTSqEuc6rGvQrB4MuuBkEG/xzOI+
+ lPHKs9hzbwVCOY4XhVRPrkDCLJrlZ14UT62Q/3Np1iY8y5D41ok5EPG
 X-Developer-Key: i=nikita.shubin@maquefel.me; a=ed25519;
  pk=vqf5YIUJ7BJv3EJFaNNxWZgGuMgDH6rwufTLflwU9ac=
 Received-SPF: pass client-ip=178.154.239.84;
@@ -82,189 +86,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extend the TCG test infrastructure to support 32-bit RISC-V (riscv32)
-system tests.
+This short series fixes a regression in semihosting's automatic string length
+detection for 32‑bit targets, introduced when target_ulong was replaced with
+uint64_t. The first patch restores the original behaviour where passing
+-1 (0xffffffff) in arg2 triggers the auto‑length logic by detecting the
+32‑bit sentinel and promoting it to the 64‑bit equivalent.
 
-- configure: Add riscv32 to probe_target_compiler() using the same
-  container (debian-all-test-cross) as riscv64, with cross prefix
-  riscv64-linux-gnu- (the compiler can generate 32-bit code with
-  -march=rv32imafdch -mabi=ilp32d).
-
-- tests/tcg/riscv32/: New directory with:
-  * Makefile.softmmu-target – build rules for 32-bit softmmu tests
-  * semihost.ld – linker script (same as riscv64, RAM at 0x80000000)
-  * test-semihosting-open.S – test for SYS_OPEN with auto length (-1)
-
-The semihosting test validates the fix for sign-extended 32-bit
-pointers when running riscv32 guests on qemu-system-riscv32.
-
-CFLAGS and LDFLAGS are explicitly set for rv32imafdch/ilp32d ABI,
-and LDFLAGS includes -melf32lriscv to produce 32-bit ELF.
+The second patch extends the TCG test suite with a new RISC‑V 32‑bit
+semihosting test that exercises SYS_OPEN with auto‑length, verifying that
+the fix works correctly on qemu-system-riscv32.
 
 Signed-off-by: Nikita Shubin <nikita.shubin@maquefel.me>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 ---
+Changes in v2:
+- Added tags.
+- Link to v1: https://lore.kernel.org/qemu-devel/20260619-fix-sign-extended-32-bit-addresses-v1-0-47ae14f8e8c5@maquefel.me
+
+---
+Nikita Shubin (2):
+      semihosting/arm-compat-semi: Fix auto‑strlen detection for 32‑bit targets
+      tests/tcg/riscv32: Add RISC-V 32-bit semihosting test
+
  configure                                 |  6 +++-
+ semihosting/arm-compat-semi.c             | 11 ++++++
  tests/tcg/riscv32/Makefile.softmmu-target | 30 +++++++++++++++++
  tests/tcg/riscv32/semihost.ld             | 24 +++++++++++++
  tests/tcg/riscv32/test-semihosting-open.S | 56 +++++++++++++++++++++++++++++++
- 4 files changed, 115 insertions(+), 1 deletion(-)
+ 5 files changed, 126 insertions(+), 1 deletion(-)
+---
+base-commit: 6333226c2abb72f31648c251624c56e70993d625
+change-id: 20260619-fix-sign-extended-32-bit-addresses-68eba061cd9a
 
-diff --git a/configure b/configure
-index 6ddfe4b534..d346e40e10 100755
---- a/configure
-+++ b/configure
-@@ -1405,7 +1405,7 @@ probe_target_compiler() {
-     mips) container_hosts=x86_64 ;;
-     ppc) container_hosts=x86_64 ;;
-     ppc64|ppc64le) container_hosts=x86_64 ;;
--    riscv64) container_hosts=x86_64 ;;
-+    riscv32|riscv64) container_hosts=x86_64 ;;
-     s390x) container_hosts=x86_64 ;;
-     sh4) container_hosts=x86_64 ;;
-     sparc64) container_hosts=x86_64 ;;
-@@ -1424,6 +1424,10 @@ probe_target_compiler() {
-         container_image=debian-all-test-cross
-         container_cross_prefix=aarch64-linux-gnu-
-         ;;
-+      riscv32)
-+        container_image=debian-all-test-cross
-+        container_cross_prefix=riscv64-linux-gnu-
-+        ;;
-       alpha|hppa|m68k|mips|mipsel|riscv64|sh4|sparc64)
-         container_image=debian-all-test-cross
-         ;;
-diff --git a/tests/tcg/riscv32/Makefile.softmmu-target b/tests/tcg/riscv32/Makefile.softmmu-target
-new file mode 100644
-index 0000000000..eff5b000f0
---- /dev/null
-+++ b/tests/tcg/riscv32/Makefile.softmmu-target
-@@ -0,0 +1,30 @@
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# RISC-V 32-bit system tests
-+#
-+
-+TEST_SRC = $(SRC_PATH)/tests/tcg/riscv32
-+VPATH += $(TEST_SRC)
-+
-+LINK_SCRIPT = $(TEST_SRC)/semihost.ld
-+LDFLAGS = -T $(LINK_SCRIPT)
-+CFLAGS += -g -Og
-+
-+%.o: %.S
-+	$(CC) $(CFLAGS) $< -Wa,--noexecstack -c -o $@
-+%: %.o $(LINK_SCRIPT)
-+	$(LD) $(LDFLAGS) $< -o $@
-+
-+QEMU_OPTS += -M virt -display none -semihosting -device loader,file=
-+# provide flags for riscv32 as we are using riscv64-linux-gnu-
-+CFLAGS += -march=rv32imafdch -mabi=ilp32d
-+LDFLAGS += -melf32lriscv
-+
-+EXTRA_RUNS += run-semihosting-open
-+run-semihosting-open: test-semihosting-open
-+	$(call run-test, $<, \
-+	  $(QEMU) $(QEMU_OPTS)$<)
-+
-+# We don't currently support the multiarch system tests
-+undefine MULTIARCH_TESTS
-\ No newline at end of file
-diff --git a/tests/tcg/riscv32/semihost.ld b/tests/tcg/riscv32/semihost.ld
-new file mode 100644
-index 0000000000..ff3b786481
---- /dev/null
-+++ b/tests/tcg/riscv32/semihost.ld
-@@ -0,0 +1,24 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+ENTRY(_start)
-+
-+SECTIONS
-+{
-+    /* virt machine, RAM starts at 2gb */
-+    . = 0x80000000;
-+    .text : {
-+        *(.text)
-+    }
-+    .rodata : {
-+        *(.rodata)
-+    }
-+    /* align r/w section to next 2mb */
-+    . = ALIGN(1 << 21);
-+    .data : {
-+        *(.data)
-+    }
-+    .bss : {
-+        *(.bss)
-+    }
-+}
-diff --git a/tests/tcg/riscv32/test-semihosting-open.S b/tests/tcg/riscv32/test-semihosting-open.S
-new file mode 100644
-index 0000000000..acbb31c558
---- /dev/null
-+++ b/tests/tcg/riscv32/test-semihosting-open.S
-@@ -0,0 +1,56 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+.option norvc
-+.text
-+.global _start
-+_start:
-+    # Argument block for SYS_OPEN (each arg is 4 bytes in RV32)
-+    la      a1, open_args
-+    la      t0, test_filename
-+    sw      t0, 0(a1)          # arg0: pointer to filename
-+    li      t0, 4              # arg1: "w" (write, create, truncate)
-+    sw      t0, 4(a1)
-+    li      t0, -1             # arg2: auto length (-1 = 0xffffffff)
-+    sw      t0, 8(a1)
-+
-+    # SYS_OPEN semihosting call
-+    li      a0, 0x01
-+    .balign 16
-+    slli    zero, zero, 0x1f
-+    ebreak
-+    srai    zero, zero, 0x7
-+
-+    # Check result: a0 should be a valid file descriptor (not -1)
-+    li      t0, -1
-+    beq     a0, t0, fail
-+
-+    # Success
-+    li      a0, 0
-+    j       exit
-+
-+fail:
-+    li      a0, 1
-+
-+exit:
-+    # Extended semihosting exit
-+    la      a1, semiargs
-+    li      t0, 0x20026        # ADP_Stopped_ApplicationExit
-+    sw      t0, 0(a1)
-+    sw      a0, 4(a1)
-+    li      a0, 0x20           # TARGET_SYS_EXIT_EXTENDED
-+    .balign 16
-+    slli    zero, zero, 0x1f
-+    ebreak
-+    srai    zero, zero, 0x7
-+
-+    j       .
-+
-+.data
-+.balign 16
-+test_filename:
-+    .string "testfile.txt"
-+open_args:
-+    .space 12                  # 3 * 4 bytes
-+semiargs:
-+    .space 8                   # 2 * 4 bytes
-
--- 
-2.52.0
+Best regards,
+--  
+Nikita Shubin
 
 
