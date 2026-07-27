@@ -4,102 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A300CC531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 21:37:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20A47C53209
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 22:20:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woT0c-0001E4-7c; Mon, 27 Jul 2026 17:37:14 -0400
+	id 1woTg7-0000rh-L7; Mon, 27 Jul 2026 18:20:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1woT0a-0001DX-P9; Mon, 27 Jul 2026 17:37:12 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1woT0Z-0001Cp-B9; Mon, 27 Jul 2026 17:37:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1785188226; bh=7OeeUqQvXYfcZz5evMsoZ2NWmLtotRIkkS+kW+vxs0s=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=K8xlehb/KJVQg1tn/OA0EIFO1wSrccRhVr6uf/RlGH4Da71/i/XzNAWDgMxyMEgYs
- WRi8LoL9MTQz/NjMZHdDFPyAMFKgDclM1tpfYfAQm5jd2Vm/l/7LtEK2NQOoEWYZwa
- 8Hvqhw3N57ur9vq95NhLYlvY4LdydC5TSgGd1AYGDPoXIbXRO+L75uM/DJfsufEDFK
- 5pYS4OmOMZs1EbHmvLeGlGC+SBzMhaMaojgKnDG3Ub5FbA5TC0/5AIYiew1CQ+aqxf
- VAbnM/M9oyRqXOBx9RgVXTeAT9jEKhT/ITc/fsoCGPaV5G3kh45a6e0NWDzSP9/isR
- 53dKCgT6Lw+1w==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 87C981C52A7;
- Tue, 28 Jul 2026 00:37:06 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A3CD43F8024;
- Tue, 28 Jul 2026 00:37:09 +0300 (MSK)
-Message-ID: <95cca0b3-6e94-4b31-9531-e1057804122c@tls.msk.ru>
-Date: Tue, 28 Jul 2026 00:36:54 +0300
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1woTg0-0000qj-9l
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 18:20:01 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1woTfx-0007F7-Df
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 18:20:00 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 30A0A7C36D;
+ Mon, 27 Jul 2026 22:19:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1785190790; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PtSPMEA6xX8dmLSx+t37t1p+hWXwCUgxSNTCKZ5l4Oc=;
+ b=euI6I9LdIhp4gok1O8X5SSM0Kwa5CeWnNMoladr0tbLWPOK3nQevMzFeZ32T9TstIrziuK
+ HjLrGE5SkrK1MANGGU42vjJ6TSDoJZbL8WuAZqvqZo2uLRcuMWai6zpc2iuyg2saLWYmQf
+ 32aJL2NH5n62Qn+kFTI/5caOcJ2bZJ0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1785190790;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PtSPMEA6xX8dmLSx+t37t1p+hWXwCUgxSNTCKZ5l4Oc=;
+ b=U812iQFZ6w4AkAxPqgNqymEdzeXgmWsRlAQTY8CDJKMeC+pZeMuIpYs5uO/k9xuytxhn7Q
+ N/c/LJfpd97aryCQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1785190786; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PtSPMEA6xX8dmLSx+t37t1p+hWXwCUgxSNTCKZ5l4Oc=;
+ b=Ui4z6641+WYVQEMmV8bnsVB4nscbshNXRu2mAdi+jA9YUi90YcJVtxlEwynLe8GW16kBZj
+ Y9RR58U8lTrUethISTQUWGC+34Kl2xbIPAzamsvGKoSUAf4ueX83uZuhNC52x6Gq8ob/48
+ gCY/NfR76WkxejTUU/+kMCvnACKpFJU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1785190786;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PtSPMEA6xX8dmLSx+t37t1p+hWXwCUgxSNTCKZ5l4Oc=;
+ b=5WWUAiJtUt+oIvsrbA9aKqbJaroMSBBTGrL3R1tokrGGdEJ2AqDZSSiy008/3xdqqawg2e
+ YjAGWi1hNUc3meBQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C0394779B9;
+ Mon, 27 Jul 2026 22:19:45 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id MFgrJIHZZ2qofQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 27 Jul 2026 22:19:45 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Subject: Re: [PULL 17/30] vmstate: fix type confusion in vmstate_size() for
+ VMSTATE_VBUFFER_UINT64
+In-Reply-To: <20260727164036-mutt-send-email-mst@kernel.org>
+References: <cover.1785101237.git.mst@redhat.com>
+ <9e2d0b03a60642236e6df8edde7b3562f5f9849f.1785101237.git.mst@redhat.com>
+ <CADLectmKQT+hU_3TG2Popan8f5QphEEpwsR+Ps=+WTZo-Z_M_Q@mail.gmail.com>
+ <20260727045220-mutt-send-email-mst@kernel.org>
+ <amdT6P4esRDwyRX4@x1.local>
+ <20260727150152-mutt-send-email-mst@kernel.org>
+ <ame_w-nz7mPbKfOV@x1.local>
+ <20260727164036-mutt-send-email-mst@kernel.org>
+Date: Mon, 27 Jul 2026 19:19:43 -0300
+Message-ID: <874ihkoz28.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/display/virtio-gpu: Initialize blob mapping for
- ATTACH_BACKING
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- QEMU Stable <qemu-stable@nongnu.org>
-References: <20260725-backing-v1-1-5b584bf7df5a@rsg.ci.i.u-tokyo.ac.jp>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
- HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
- 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
- /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
- DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
- /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
- 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
- a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
- z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
- y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
- a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
- BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
- /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
- cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
- G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
- b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
- LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
- JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
- 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
- 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
- CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
- k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
- OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
- XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
- tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
- zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
- jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
- xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
- K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
- t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
- +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
- eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
- GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
- Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
- RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
- S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
- wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
- VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
- FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
- YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
- ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
- 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260725-backing-v1-1-5b584bf7df5a@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_DN_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; FROM_EQ_ENVFROM(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,47 +126,365 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/25/26 10:11, Akihiko Odaki wrote:
-> It is necessary for blob cursor and scanout.
-> 
-> Fixes: e0933d91b1cd ("virtio-gpu: Add virtio_gpu_resource_create_blob")
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> ---
->   hw/display/virtio-gpu.c | 4 ++++
->   1 file changed, 4 insertions(+)
+"Michael S. Tsirkin" <mst@redhat.com> writes:
 
-Again, is this a qemu-stable material?  From the description
-it's difficult to say what's going on here, it feels like this
-change should be back-ported to the stable branches.
+> On Mon, Jul 27, 2026 at 04:29:55PM -0400, Peter Xu wrote:
+>> On Mon, Jul 27, 2026 at 03:06:38PM -0400, Michael S. Tsirkin wrote:
+>> > On Mon, Jul 27, 2026 at 08:49:44AM -0400, Peter Xu wrote:
+>> > > On Mon, Jul 27, 2026 at 04:53:15AM -0400, Michael S. Tsirkin wrote:
+>> > > > On Sun, Jul 26, 2026 at 08:31:57PM -0400, Peter Xu wrote:
+>> > > > > This patch is migration only change and hasn't been reviewed.=C2=
+=A0 Give us a few
+>> > > > > days to review it?
+>> > > > > Can't do it now because it is on cellphone and I just bathed my =
+son.
+>> > > > >=20
+>> > > > > Please hold off merging.
+>> > > > >=20
+>> > > > > Thanks.
+>> > > >=20
+>> > > > OK.  I'll drop this and you will merge it through the migration tr=
+ee
+>> > > > as appropriate?
+>> > >=20
+>> > > Let's drop it first so it won't block this pull.  I can definitely p=
+ick it
+>> > > up when ready, but I want to discuss on how to fix first.  Which tre=
+e to
+>> > > pick it up isn't a huge matter to me, but the review.
+>> > >=20
+>> > > We found a bunch of randomly introduced VMSTATE flags in the past, I=
+ used
+>> > > to remove some, at least my plan is in the future each time we intro=
+duce a
+>> > > new one (by request from other modules) we better justify it before =
+landing
+>> > > too easily, in case it needs a revert again.
+>> > >=20
+>> > > This vhost regression started 11.0 so IIUC we don't need to rush in =
+11.1.
+>> > > I just noticed I read that patch and didn't notice this, my bad to n=
+ot have
+>> > > noticed..
+>> > >=20
+>> > > For this one specifically..
+>> > >=20
+>> > > >=20
+>> > > > > On Sun, Jul 26, 2026, 5:29=E2=80=AFp.m. Michael S. Tsirkin <mst@=
+redhat.com> wrote:
+>> > > > >=20
+>> > > > >     vhost user currently saves the inflight buffer to the migrat=
+ion stream
+>> > > > >     using VMSTATE_VBUFFER_UINT64. The size is controlled by the =
+vhost-user
+>> > > > >     backend.
+>> > > > >=20
+>> > > > >     But the implementation of that is broken if size is >2G: it =
+stores the
+>> > > > >     buffer size in a uint64_t field, but vmstate_size() always r=
+eads the
+>> > > > >     size field as int32_t regardless of the macro used. This, in=
+ turn,
+>> > > > >     causes negative or truncated lengths on load, leading to und=
+ersized
+>> > > > >     allocations and down the road out-of-bounds buffer access.
+>> > > > >=20
+>> > > > >     There's no practical reason to support such large sizes, so =
+it's enough
+>> > >=20
+>> > > If there's no real demand to use 2G or more, I suggest we change siz=
+e to
+>> > > int32_t instead on the user, and revert f6fdd8b2 VMSTATE_VBUFFER_UIN=
+T64().
+>> >=20
+>> > We can't just change it we'll need some tricks to avoid breaking exist=
+ing
+>> > migration format. I don't see how it will be much simpler if you take
+>> > that into account.
+>>=20
+>> It's not part of the stream, right?
+>
+> I think it is?
+>
+> VMSTATE_UINT64(size, struct vhost_inflight) at hw/virtio/vhost.c
+> eventually leads to qemu_put_be64s / qemu_get_be64s in migration/vmstate-=
+types.c
+>
 
-Thanks,
+The point is that this "size" is already included on the stream by
+itself, changing the VMSTATE_VBUFFER_UINT64 to int32 doesn't affect
+it.
 
-/mjt
+There's a type_check that will complain during save that
+type(inflight->size) !=3D INT32 (from the macro), but we can change that.
 
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index 718ba3039290..e886298ec42f 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -984,6 +984,10 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
->           cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
->           return;
->       }
-> +
-> +    if (!res->image) {
-> +        virtio_gpu_init_udmabuf(res);
-> +    }
->   }
->   
->   static void
-> 
-> ---
-> base-commit: 006a22cb26998998385b104db1ff9466ef2f3153
-> change-id: 20260725-backing-db0e69515455
-> 
-> Best regards,
-> --
-> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> 
-> 
+#define vmstate_offset_value(_state, _field, _type)                  \
+    (offsetof(_state, _field) +                                      \
+     type_check(_type, typeof_field(_state, _field)))
 
+
+>> Here IIUC the VMSD field "size" only hard-coded the binary offset to fet=
+ch
+>> the int32_t from the object* pointer.  IIUC we can simply change it to
+>> int32_t and IIUC it will be able to recv stream from src with uint64_t.
+>> The stream shouldn't be affected when e.g. we migrate from an older QEMU.
+>
+>
+> I don't really know what you mean. Yes vmsd macros tie migration stream
+> and the storage format. it kinda makes it easy to add one but the
+> cost is issues like this.
+>
+>
+>
+>
+>> >=20
+>> > > Fabiano and I were looking at rest 20+ possible security related bug=
+s in
+>> > > the past 1-2 weeks, I've some patches to be posted for 11.2 too when=
+ we
+>> > > went through all of them. One relevant patch I haven't sent but will=
+ do
+>> > > soon:
+>> > >=20
+>> > > https://gitlab.com/peterx/qemu/-/commit/afd2cb25defdf78a4ab5279cc166=
+34884792c57a
+>> > >=20
+>> > > We encountered quite a few of possible over-allocation on destionati=
+on side
+>> > > by manipulating on-wire length field like this one, I believe Fabian=
+o is
+>> > > looking at how to further limit that from 2G if ever possible per-us=
+er.
+>> > >=20
+>> > > I'm not sure if that idea will fly, but I think anything bigger than=
+ 2G
+>> > > definitely is not suggested for now when it's only for a type match =
+not
+>> > > real demand..
+>> >=20
+>> > Frankly 2G is crazy too. I see little reason to focus specifically on =
+>2G.
+>>=20
+>> Yeah..
+>>=20
+>> >=20
+>> >=20
+>> > > I believe VMSTATE_VBUFFER_UINT32 is problematic on its own too, I'll=
+ see
+>> > > how to fix that.  That one is slightly easier, worst case is we bail=
+ out
+>> > > for 2G (hence ignore bit 31, which shouldn't be used in reality for =
+legit
+>> > > users), but I'll think about it.
+>> > >=20
+>> > > Thanks,
+>> >=20
+>> > I just do not see (almost) any case where migration destination
+>> > does not know the actual size needed, or at least
+>> > an upper bound on such.
+>>=20
+>> In many cases we transfer the length first then the array following that
+>> with the length.  That's a common trick we played like vhost here.
+>
+> we need to start specifying the cap for these.
+>
+
+I agree. Most things will have a sane cap once you think hard enough. Of
+course, there's a risk of selecting a limit too low, but currently we
+can't even do that.
+
+I think the first step is defining new macros so that every len/size/etc
+gets properly identified. The VMSTATE_VBUFFER_* are already a start, we
+can add an aditional member that doesn't go on the stream and check
+against it when loading.
+
+> The upper bound is indeed a challenge, I confess I don't know an answer,
+> and we will need to be careful on adding anything that might break a legit
+> user.  I believe Fabiano might have some better clue there, so I'd leave =
+it
+> to him until I can read his patches.
+>=20
+
+I'm also trying to look ahead into how we'll apply whatever fix we come
+up with here to the pile of unstructured qemu_put|get_byte we have all
+over the place. I'm experimenting with how much code we can convert into
+VMStateDescription/VMStateField. The QEMU_VM_* flags themselves seem to
+be easy to do (then we version the vmstate, deprecate, etc).=20
+
+>> Thanks,
+>>=20
+>> >=20
+>> >=20
+>> > > > >     to validate: read the field as uint64_t when VMS_VBUFFER_UIN=
+T64 is set,
+>> > > > >     reject negative or oversized values, and propagate errors to
+>> > > > >     vmstate_load_vmsd().
+>> > > > >=20
+>> > > > >     Note: the large value is coming from the backend, not guest,=
+ so this
+>> > > > >     shouldn't be considered a security issue. The CVE was assign=
+ed before
+>> > > > >     the qemu security policy was updated to exclude this class o=
+f bugs.
+>> > > > >=20
+>> > > > >     Fixes: CVE-2026-6426
+>> > > > >     Fixes: f6fdd8b2bd ("vmstate: introduce VMSTATE_VBUFFER_UINT6=
+4")
+>> > > > >     Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+>> > > > >     Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/=
+3675
+>> > > > >     Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+>> > > > >     Message-ID: <
+>> > > > >     801b1501ee10241f7ac49a10570d548352b36347.1784890517.git.mst@=
+redhat.com>
+>> > > > >     ---
+>> > > > >     =C2=A0include/migration/vmstate.h |=C2=A0 5 ++++-
+>> > > > >     =C2=A0migration/vmstate.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=
+ 31 ++++++++++++++++++++++++++++---
+>> > > > >     =C2=A02 files changed, 32 insertions(+), 4 deletions(-)
+>> > > > >=20
+>> > > > >     diff --git a/include/migration/vmstate.h b/include/migration=
+/vmstate.h
+>> > > > >     index 1b7f295417..e7095cd977 100644
+>> > > > >     --- a/include/migration/vmstate.h
+>> > > > >     +++ b/include/migration/vmstate.h
+>> > > > >     @@ -168,6 +168,9 @@ enum VMStateFlags {
+>> > > > >     =C2=A0 =C2=A0 =C2=A0 */
+>> > > > >     =C2=A0 =C2=A0 =C2=A0VMS_ARRAY_OF_POINTER_AUTO_ALLOC =3D 0x10=
+000,
+>> > > > >=20
+>> > > > >     +=C2=A0 =C2=A0 /* Use a uint64_t size field for VMS_VBUFFER =
+instead of int32_t. */
+>> > > > >     +=C2=A0 =C2=A0 VMS_VBUFFER_UINT64=C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =3D 0x40000,
+>> > > > >     +
+>> > > > >     =C2=A0 =C2=A0 =C2=A0/* Marker for end of list */
+>> > > > >     =C2=A0 =C2=A0 =C2=A0VMS_END=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=3D 0x20000,
+>> > > > >     =C2=A0};
+>> > > > >     @@ -788,7 +791,7 @@ extern const VMStateInfo vmstate_info_g_=
+byte_array;
+>> > > > >     =C2=A0 =C2=A0 =C2=A0.field_exists =3D (_test),=C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\
+>> > > > >     =C2=A0 =C2=A0 =C2=A0.size_offset=C2=A0 =3D vmstate_offset_va=
+lue(_state, _field_size, uint64_t),\
+>> > > > >     =C2=A0 =C2=A0 =C2=A0.info=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+=3D &vmstate_info_buffer,=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \
+>> > > > >     -=C2=A0 =C2=A0 .flags=C2=A0 =C2=A0 =C2=A0 =C2=A0 =3D VMS_VBU=
+FFER | VMS_POINTER,=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0\
+>> > > > >     +=C2=A0 =C2=A0 .flags=C2=A0 =C2=A0 =C2=A0 =C2=A0 =3D VMS_VBU=
+FFER | VMS_VBUFFER_UINT64 | VMS_POINTER,=C2=A0 \
+>> > > > >     =C2=A0 =C2=A0 =C2=A0.offset=C2=A0 =C2=A0 =C2=A0 =C2=A0=3D of=
+fsetof(_state, _field),=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \
+>> > > > >     =C2=A0}
+>> > > > >=20
+>> > > > >     diff --git a/migration/vmstate.c b/migration/vmstate.c
+>> > > > >     index 50ebe37845..d7f03a9f5b 100644
+>> > > > >     --- a/migration/vmstate.c
+>> > > > >     +++ b/migration/vmstate.c
+>> > > > >     @@ -103,10 +103,24 @@ static int vmstate_size(void *opaque, =
+const
+>> > > > >     VMStateField *field)
+>> > > > >     =C2=A0 =C2=A0 =C2=A0int size;
+>> > > > >=20
+>> > > > >     =C2=A0 =C2=A0 =C2=A0if (field->flags & VMS_VBUFFER) {
+>> > > > >     -=C2=A0 =C2=A0 =C2=A0 =C2=A0 size =3D *(int32_t *)(opaque + =
+field->size_offset);
+>> > > > >     -=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (field->flags & VMS_MULTIPLY=
+) {
+>> > > > >     -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 size *=3D field->=
+size;
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 uint64_t usize64;
+>> > > > >     +
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (field->flags & VMS_VBUFFER_=
+UINT64) {
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 usize64 =3D *(uin=
+t64_t *)(opaque + field->size_offset);
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int32_t ssize32 =
+=3D *(int32_t *)(opaque + field->size_offset);
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ssize32 < 0) {
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret=
+urn -1;
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 usize64 =3D ssize=
+32;
+>> > > > >     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (field->flags & VMS_MULTIPLY=
+) {
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 usize64 *=3D fiel=
+d->size;
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (usize64 > INT_MAX) {
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -1;
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 size =3D usize64;
+>> > > > >     =C2=A0 =C2=A0 =C2=A0} else if (field->flags & VMS_ARRAY_OF_P=
+OINTER) {
+>> > > > >     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/*
+>> > > > >     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * For an array of pointer=
+, the each element is always size of a
+>> > > > >     @@ -337,6 +351,11 @@ bool vmstate_load_vmsd(QEMUFile *f, con=
+st
+>> > > > >     VMStateDescription *vmsd,
+>> > > > >     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0void *first_=
+elem =3D opaque + field->offset;
+>> > > > >     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0int i, n_ele=
+ms =3D vmstate_n_elems(opaque, field);
+>> > > > >     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0int size =3D=
+ vmstate_size(opaque, field);
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (size < 0) {
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 err=
+or_setg(errp, "VMState field '%s': invalid size",
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0field->name);
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret=
+urn false;
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
+>> > > > >=20
+>> > > > >     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0vmstate_hand=
+le_alloc(first_elem, field, opaque);
+>> > > > >     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (field->f=
+lags & VMS_POINTER) {
+>> > > > >     @@ -661,6 +680,12 @@ static bool vmstate_save_vmsd_v(QEMUFil=
+e *f, const
+>> > > > >     VMStateDescription *vmsd,
+>> > > > >     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0bool use_dyn=
+amic_array =3D
+>> > > > >     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0field->flags & VMS_ARRAY_OF_POINTER_AUTO_ALLOC;
+>> > > > >=20
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (size < 0) {
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 err=
+or_setg(errp, "VMState field '%s': invalid size",
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0field->name);
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ok =
+=3D false;
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 got=
+o out;
+>> > > > >     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
+>> > > > >     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0trace_vmstat=
+e_save_state_loop(vmsd->name, field->name,
+>> > > > >     n_elems);
+>> > > > >     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (field->f=
+lags & VMS_POINTER) {
+>> > > > >     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0first_elem =3D *(void **)first_elem;
+>> > > > >     --
+>> > > > >     MST
+>> > > > >=20
+>> > > > >=20
+>> > > >=20
+>> > >=20
+>> > > --=20
+>> > > Peter Xu
+>> >=20
+>>=20
+>> --=20
+>> Peter Xu
 
