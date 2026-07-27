@@ -4,79 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A00C3C53219
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 08:23:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64B99C531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 08:25:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woGc3-0007oE-Nz; Mon, 27 Jul 2026 04:23:03 -0400
+	id 1woGea-0008R4-GO; Mon, 27 Jul 2026 04:25:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1woGc2-0007o3-Ty
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 04:23:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1woGeZ-0008Qq-82; Mon, 27 Jul 2026 04:25:39 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1woGc1-0003m3-7q
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 04:23:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785140579;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6lOAHrr1Dw2w/S0fTULvS6UvPR8X5P8fRAdv/0dmbxQ=;
- b=P1Gs5tIZeiaACN1dfrKsdJZlDCX/nmuFUCAafA2+Nz9JKmtvPD+1RLKyoaf0kJQaKAJF6C
- sRsz7IeLn+Jtpw2Ko6SHcq5ONfwvH6hAIN1RCl2m+yFMyjnHhdoXt3iaN1qVrOhaL0c1dy
- NfeWtM6YWVHTQRhQadACYkXtX8u857Y=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-345-K8_tC54rPRmlHLiiIGIOig-1; Mon,
- 27 Jul 2026 04:22:55 -0400
-X-MC-Unique: K8_tC54rPRmlHLiiIGIOig-1
-X-Mimecast-MFC-AGG-ID: K8_tC54rPRmlHLiiIGIOig_1785140574
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AF842180135F; Mon, 27 Jul 2026 08:22:53 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.32.196])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 16673429; Mon, 27 Jul 2026 08:22:50 +0000 (UTC)
-Date: Mon, 27 Jul 2026 09:22:47 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org
-Subject: Re: [PATCH 2/5] ui/vnc: fix OOB write in vnc_refresh_lossy_rect
-Message-ID: <amcVV5g4ENihVXpk@redhat.com>
-References: <20260706-fix-v1-0-4b83a70e9f3b@redhat.com>
- <20260706-fix-v1-2-4b83a70e9f3b@redhat.com>
- <f83491f5-6ef7-45ba-bb84-26341835cb25@tls.msk.ru>
- <CAMxuvaxUWc=Qr9pQQ6wW6XnAzp4mf77aYpcFuXvret1KL_W9kA@mail.gmail.com>
- <0b2bf915-d2d5-4a21-8ee1-d11427476d40@tls.msk.ru>
- <CAMxuvaxU3HJwkyvD0WtifFCMfcivNiUTK4U9Yg0j7cpc5LXLaw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1woGeX-00041p-Nh; Mon, 27 Jul 2026 04:25:38 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66R7m8BN1633043; Mon, 27 Jul 2026 08:25:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=ULXUt2
+ yI7wva5oY28LiMI9igmMCQh0iwFI9qtds8Ezc=; b=KnkrPeVXqBxMOZ/VKZQCLJ
+ pHoDHnbIVTNBRJHAwyy8VLQEsJOUOlcXICMSulj7LkMSRkk16zrTknnBEhdOdW/R
+ 84OOC+D8QqStPs6+E0pS8H87FzfBTaDWO9zCNIixfWWt5gBFjQ8apCWInuu8i7EO
+ WpCRDkzsv3gGTZ3dZKo0QqYX59W+sIDgn6oDi0WCNFW0JHunjbkgHsklwi6AkdSx
+ SuyV81Ojg6MJi8OSW/49cvg4bGWbYsmp5wPE64yByb34TtnuvA5Qjsrm4N7FB0Xj
+ Oth9Hd/WPDkyLJiY0tNS22QPDXhGIgy6EtoPd01WovBaHzXXDqYXTA8KcxVj9fcQ
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0xf03u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Jul 2026 08:25:33 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66R8BIWo028251;
+ Mon, 27 Jul 2026 08:25:32 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fn9pg4bd5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Jul 2026 08:25:32 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66R8PS6240042886
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 27 Jul 2026 08:25:28 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C870A20095;
+ Mon, 27 Jul 2026 08:25:28 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 54107200A2;
+ Mon, 27 Jul 2026 08:25:27 +0000 (GMT)
+Received: from shivang.upadyay (unknown [9.123.12.247])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 27 Jul 2026 08:25:27 +0000 (GMT)
+Message-ID: <07ef3c9c6910c8076a563d90b537d0dcf83065c7.camel@linux.ibm.com>
+Subject: Re: [PATCH v2] tests/functional/ppc: skip remote interrupts test if
+ -net user not built
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, thuth@redhat.com,
+ adityag@linux.ibm.com, harshpb@linux.ibm.com, milesg@linux.ibm.com,
+ npiggin@gmail.com
+Date: Mon, 27 Jul 2026 13:55:24 +0530
+In-Reply-To: <20260727110516.c62eed78-ec-amachhiw@linux.ibm.com>
+References: <20260724085440.520125-1-shivangu@linux.ibm.com>
+ <20260725174600.17683-1-shivangu@linux.ibm.com>
+ <20260727110516.c62eed78-ec-amachhiw@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMxuvaxU3HJwkyvD0WtifFCMfcivNiUTK4U9Yg0j7cpc5LXLaw@mail.gmail.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: o4Z64zYdm_9kDHFn_gspVtcZJO-iud8_
+X-Proofpoint-ORIG-GUID: 2W3QdtvtFKKECBl__96HxF8PhZ6X-KHF
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDA4MiBTYWx0ZWRfX9Al2Iq3dkWT5
+ 709ZMwjeX5sdyAI651Ifo2gULJn5p+LMMdlhXtJlbUK4Uvon1SL7LvYLiHxmfKGSBJ61x5Cdmow
+ HM/keZgudZIW4fe9CUB+u1wBp1QrWCg=
+X-Authority-Analysis: v=2.4 cv=dYuwG3Xe c=1 sm=1 tr=0 ts=6a6715fd cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=EqrdExaTOsCVLBqOS-8A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDA4MiBTYWx0ZWRfX+JtQQTfh4XOR
+ eRtpBnDsuxqAl8kVTB2PwsK0ctbdh2mhXpfjE30ndx3P9OanDTENkNE5IkVV5JNU+j+UHJ7iCpM
+ HLuJZCZzKwDokbdDL3ogzX1mRR41hINTIebzPEX1XhQFnK5fBKzeW6YOGwh6ZwlSzkGCZO4Chyl
+ uysi0EFuJdTa7amhX1QNn8aPOq5j8nth+ttYaMGYo1J5BaCS9Fqz2hY3dBllHDxNi98wly8Frjk
+ cmZAkYGuM4OlC59IG2CwrpJtZeK7ChG6I29ThzOo9IC2a+pq3IiEad9Rha/mDen/c4y23l0jxV5
+ msmwYJUqcxUHJumdz+6uOFL9XuyZY4lyfYJ66g+qYF5xLWFOCRodisai3QjHH/JDBrsWYLGWXV2
+ AwqKJvHYNamH2A7tLCJdbnCQL+Mje2GVPCxGxkO+XZ8As9ufXUF5pIRjMAwKCeV8SSyk2ZL2GgA
+ Wz4eSLRkrG50iAh8v7A==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-27_02,2026-07-24_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 clxscore=1015 phishscore=0 malwarescore=0
+ spamscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607270082
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,53 +123,29 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Jul 26, 2026 at 09:53:05PM +0400, Marc-André Lureau wrote:
-> Hi
-> 
-> On Sun, Jul 26, 2026 at 9:14 PM Michael Tokarev <mjt@tls.msk.ru> wrote:
-> >
-> > On 7/26/26 20:07, Marc-André Lureau wrote:
-> > ...>> Unfortunately this (additional) fix does not mention the
-> > >> previous fix, so there's some confusion about which commit
-> > >> actually fixed this issue.  It looks like the first fix was
-> > >> incomplete and this additional fix were needed.
-> > >
-> > > That's correct, we reused the same CVE
-> > >
-> > > Daniel P. Berrangé said on the issue:
-> > > We didn't release master yet. As long as we also didn't release any
-> > > stable branches that claimed to fix it, we could re-use it IMHO.
-> >
-> > Heh.  This is exactly what actually happened - there were
-> > 2 stable releases on Jun-25 (v10.0.11 and v11.0.2) which
-> > contained the first half.  Now there are 2 more stable
-> > releases from Jul-24 which contains the second half.
-> >
-> > Unfortunately I haven't noticed this duplicated CVE#,
-> > or else I'd add a note to the second half in the stable
-> > pick-ups.
-> >
-> > I know you don't like me rushing things to the stable
-> > series, and this is an example why this might be bad.
-> > Fortunately this is not a regression, at least.  And
-> > usually security fixes come in faster anyway.  Ohwell..
-> > I'm sorry to disappoint you further.
-> 
-> for the record, I do appreciate your work, and I make mistake too :)
-> Next time I'll check if a release was made already with the CVE#
+On Mon, 2026-07-27 at 11:18 +0530, Amit Machhiwal wrote:
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 self.require_acc=
+elerator("tcg")
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 self.set_machine=
+('powernv')
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 self.require_netdev('user')
+>=20
+> One minor nit: require_netdev('user') is placed after set_machine().
+> Though it's not necessary, I would prefer to group all require_*
+> guards
+> together at the top before any setup, so it's immediately clear what
+> preconditions the test has. Either way:
+>=20
+> Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+>=20
+> ~Amit
 
-Or we just declare a strict "never reuse a CVE once a patch is
-merged to master" rule.
+Sure Amit, I'll send v3 with the suggested change, and Keep your review
+tag.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Thanks
+~Shivang.
 
