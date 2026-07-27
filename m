@@ -4,56 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AD2EC53209
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 00:47:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59927C53200
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 02:28:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wo9UQ-0002Uq-Vl; Sun, 26 Jul 2026 20:46:43 -0400
+	id 1woB3w-0006DT-0D; Sun, 26 Jul 2026 22:27:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wo9UO-0002UZ-MQ
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 20:46:40 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wo9UM-0000Xt-M3
- for qemu-devel@nongnu.org; Sun, 26 Jul 2026 20:46:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=iZFp50d39USgUw/vwUZnvD5cW6bvMbEMKwlxHh26fII=; b=nFNX+0eS5MIhbRaP
- HI45XSLr0e5aPbaOrJV8fyKiAgQA/s8raRpbyWCDz6D1B08JWandLURZxFwSvyzNQ0TfIp8MYcWq6
- bOW5wAz4SXLtKjMhgdjr9JHUxjPKbOoUrI4c+8koNvLTWY9LxjGZq0O76YxAt+Ga/PSmM9TIO77nR
- 4GuaZ6dvTtwVWsfHOiyabuYmBhDyF+0Bt2+g7gdHAXwWpF32q4FS0TUNwKLOQpKMemZ6jBisTQO6D
- 9T5vsi0Xdf2zSDckzGCHdeY5qy27786r92R1P94IBB7CKjmlq+oAWY0NDW+JpHHBKPSr3RAyfMrQf
- eRskG4npHkon4DFUhA==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1wo9UH-00000005dCu-0Umu;
- Mon, 27 Jul 2026 00:46:33 +0000
-Date: Mon, 27 Jul 2026 00:46:33 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Dongli Zhang <dongli.zhang@oracle.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de,
- maciej.szmigiero@oracle.com, mark.kanda@oracle.com, bchaney@akamai.com
-Subject: Re: [PATCH v2 1/1] migration/cpr: Add HMP support for cpr-transfer
-Message-ID: <amaqaePN2wAWoUCN@gallifrey>
-References: <20260724094119.90581-1-dongli.zhang@oracle.com>
+ (Exim 4.90_1) (envelope-from <flavien.solt97@gmail.com>)
+ id 1woB3u-00067i-9i
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 22:27:26 -0400
+Received: from mail-qk1-x730.google.com ([2607:f8b0:4864:20::730])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <flavien.solt97@gmail.com>)
+ id 1woB3s-0001AP-SZ
+ for qemu-devel@nongnu.org; Sun, 26 Jul 2026 22:27:26 -0400
+Received: by mail-qk1-x730.google.com with SMTP id
+ af79cd13be357-92e50979c71so227649785a.3
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 19:27:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785119244; cv=none;
+ d=google.com; s=arc-20260327;
+ b=eQzwla38e021/Ym0GpOnM+ebwWWmGBTY5/gCc4M14BbrSTlHrvqD52dvVZ7K7pWwRB
+ hUsAlgN8hAx6JY6rQizYFASSK8KjcoB9Qc8ykuLEh+6nl61C0MZcMJb+k5SRbW6YHwz4
+ fBkawPv+wtWs++4zqllJGSK4p7dTz8kP+PoT34L56Z4kCyefAmHXzO38XE+tOxMWFt98
+ KcYUTd2kvnFR1XQJIlxaDR3pRn5UfiaV3aajW+i/KbHX25c70aFP/Rruve+GvIEEc9b0
+ dXvZc62HPaNltP/VS+kQ7rDSkXgZhCpAAtxaZJaTTkoxUfwQXCfxxLDSJBw5kCS+uaGn
+ RcdA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=9GfBGEHDow035OD+L8EscRp3lbwrnjiH9DkJOcGBpc4=;
+ fh=tM9uqhnisH6PlMOYdsdDavWujv1Qk2/fU/qZi5QboKo=;
+ b=pKkgW/JxHZqNgnc06Foh4tz0qUwHCh3vI3KJSjvmzbFY5xf/warSn/B6/J0MFbEGS+
+ /eohjx/t2/mHLDMs2AfJjeaiYO+e+FdWT8QRpbgMjCY8MSqS2YZsiWH0i3HJxiFHv8Fx
+ aAUOcxYZSWDe0cgpNgLioOZgFkLsJLE1k3mbEgeNCkWSs4vn3oQb7d2irTpOUeGcJTcI
+ +IQh06KSR+VxeKFxX4C90vTttcEQgXlhis0v1uIY6mOi1dxhWatqDWDQjTgsKaEC7+/1
+ cYY03auWC3r7OOtsctScI7A4Vvb+fyLzPq+7ybpWkhweHIYWdG+6pcZ4iXLuQ49NOzOM
+ Ie/g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785119244; x=1785724044; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:mime-version:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=9GfBGEHDow035OD+L8EscRp3lbwrnjiH9DkJOcGBpc4=;
+ b=rh7wBNh4eWSBI+8TeoZG68nim9wKACmVOV6yGYgMCH++Rah0P7N19InXhQrXgYIWgB
+ K5HYCLeL7KAi9e8KePNe+MXl9NX4n+W7UQlJNoVW7tPzFdJB4HlLcV0+p7YOnpk5knIj
+ FtICG+NGhUlZOTfL/U6+WnuGo0J2P6+mhOy00bn+skUyVHwML90m6td3PauzJdYbMHwW
+ 99umds6j0VbXowazK+fhX2/dRv6yyLcmHvQJ0SnJ7ooflPjIB1SccGKmi+AUM63/4pDt
+ qT+vWFSMZ0OYnywrfHTjU4QawFPvw2nVmlHUYBGz8vvQ3UplnQ1LvYtMellXfCTPyztZ
+ dAmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785119244; x=1785724044;
+ h=content-type:cc:to:subject:message-id:date:from:mime-version
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=9GfBGEHDow035OD+L8EscRp3lbwrnjiH9DkJOcGBpc4=;
+ b=L4eR1lUFSDA2+WuRklwObsfHAmICxU8ajBRLdO2EaYxerwbwuX++RjME2Dp8nv7nba
+ K5/UCa32EEhzop6Hui8p+AxrdbE3ptEaZeRb3Awd6t8wV/jsZT/Ei9SWhK2ysCAGeCZ1
+ awDkyEHo1QbvkH76tpDHnAvqoQxFgnuT6l0UxQ4qjP3hM/V8IkSKqs57al9WpYFG/UeB
+ 9eK+HVxjqBiqpKce4a3O/RNQIdb8mprX6IDGtSfYdry/m0IzXukrzaNnb9Mbft3illpE
+ b8FEptk3vI0TES+f7hl+29VTGZE63DzBXqju7MGhulq39O/ZrzUZG4h7I15gbwh8Nwk/
+ /bng==
+X-Gm-Message-State: AOJu0Yw5arVuIkOMeqhSFiYp+jX313SHawgmKKvHO7adNxvjTwX9Jfdb
+ GDZ4cajwDYC0GDJlZyaDjN4p3VPPQACi2dT/9/nQWXFgJVk512fu1vZJiSh7M0hjMQxEIcgssat
+ gbhIMbwnZCmtH0bTmlQuUvP7UCOHPhuz8Ow==
+X-Gm-Gg: AR+sD12gNgXouaLn+XxIJc0sqDLR7SWRL8P3NI/yIpVdhwTEYmNlK/xB6TzCrVG95/I
+ pG0LUnZslVtXiZooXvn5LSTgwvb8ITc0cYbM0eIn+0UsGKfc3ADqKEbW1r5SCN+GHpmwcE/eaAh
+ V4hDxV6uWwBLv0F8/L/HsB9wFdAntOwUzdemrrlwEnYxHN8mLJ9v0RnoJMFRd/ucpyEkv0CEn2N
+ KU0FDFKBqfI5cRZXg5r+tcAKVkVDdYkPz5Tn2wDppo6vFNI1+6AiHuB/WBfkR5vfSvK0XVmmQgk
+ ZVJLucBMdGS0nZU2g1wAOw9BkzA=
+X-Received: by 2002:a05:620a:371d:b0:92b:6805:9190 with SMTP id
+ af79cd13be357-932df6be119mr672460385a.72.1785119243794; Sun, 26 Jul 2026
+ 19:27:23 -0700 (PDT)
+Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST; 
+ Sun, 26 Jul 2026 19:27:23 -0700
+Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST; 
+ Sun, 26 Jul 2026 19:26:54 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <20260724094119.90581-1-dongli.zhang@oracle.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.95+deb13-amd64 (x86_64)
-X-Uptime: 00:44:49 up 21 days, 26 min,  2 users,  load average: 0.00, 0.00,
- 0.00
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+From: flavien.solt97@gmail.com
+Date: Sun, 26 Jul 2026 19:27:23 -0700
+X-Gm-Features: AUfX_mx5NsBXFPq6M4X--OaKlWR560mf-Nal1wpBiPyQEKFcV0heJ_FyOlFYcsg
+Message-ID: <CANVUYGvOyZdCwXOtDkS7bXY3Z2HGK1b6QWKttCVUjhnpH65g5A@mail.gmail.com>
+Subject: [PATCH v3 0/3] riscv-iommu: always send MRIF notice MSI
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Andrew Jones <andrew.jones@oss.qualcomm.com>, 
+ Tao Tang <tangtao1634@phytium.com.cn>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::730;
+ envelope-from=flavien.solt97@gmail.com; helo=mail-qk1-x730.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,130 +116,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Dongli Zhang (dongli.zhang@oracle.com) wrote:
-> Currently the cpr-transfer source QEMU instance cannot be driven entirely
-> via HMP.  The source must use QMP in order to specify both the
-> main migration channel and the CPR channel.
-> 
-> Extend the HMP migrate command with an optional CPR channel URI. When the
-> migration mode is cpr-transfer, HMP uses this URI to build a
-> CPR MigrationChannel in addition to the main migration channel. The new
-> option is rejected unless the migration mode is cpr-transfer, so existing
-> HMP migrate usage is unchanged.
-> 
-> For example, source QEMU HMP commands can be something like below. The
-> "-c unix:/tmp/cpr.sock" is for CPR URI.
-> 
-> (qemu) migrate_set_parameter mode cpr-transfer
-> (qemu) migrate -c unix:/tmp/cpr.sock tcp:0:50002
-> 
-> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
-> ---
-> v1->v2:
->   - Use the '-c' option in the HMP command reference.
->   - Use "a second uri can only be used in cpr-transfer mode" as error
->     message.
+From a13bfa64b84ac70c9e257253616ce650fc3e794b Mon Sep 17 00:00:00 2001
+From: Flavien Solt <flavien.solt97@gmail.com>
+Date: Mon, 27 Jul 2026 09:45:06 +0800
+Subject: [PATCH v3 0/3] riscv-iommu: always send MRIF notice MSI
 
-Thanks for making those changes; minor note below.
+The AIA specification requires an IOMMU to send the configured notice
+MSI after storing an MSI to an MRIF even when the destination interrupt
+is disabled. QEMU currently reads the MRIF interrupt-enable word and
+returns without sending the notice when the matching bit is clear.
 
->  hmp-commands.hx                | 12 ++++++++----
->  migration/migration-hmp-cmds.c | 19 +++++++++++++++++++
->  2 files changed, 27 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hmp-commands.hx b/hmp-commands.hx
-> index 7ae2468a3d..7f43cf537f 100644
-> --- a/hmp-commands.hx
-> +++ b/hmp-commands.hx
-> @@ -928,16 +928,17 @@ ERST
->  
->      {
->          .name       = "migrate",
-> -        .args_type  = "detach:-d,resume:-r,uri:s",
-> -        .params     = "[-d] [-r] uri",
-> +        .args_type  = "detach:-d,resume:-r,uri-cpr:-cs,uri:s",
-> +        .params     = "[-d] [-r] [-c uri-cpr] uri",
->          .help       = "migrate to URI (using -d to not wait for completion)"
-> -		      "\n\t\t\t -r to resume a paused postcopy migration",
-> +		      "\n\t\t\t -r to resume a paused postcopy migration"
-> +		      "\n\t\t\t -c to specify a CPR URI for cpr-transfer mode",
->          .cmd        = hmp_migrate,
->      },
->  
->  
->  SRST
-> -``migrate [-d] [-r]`` *uri*
-> +``migrate [-d] [-r] [-c uri-cpr]`` *uri*
->    Migrate the VM to *uri*.
->  
->    ``-d``
-> @@ -945,6 +946,9 @@ SRST
->      query an ongoing migration process, use "info migrate".
->    ``-r``
->      Resume a paused postcopy migration.
-> +  ``-c`` *uri-cpr*
-> +    Specify the CPR URI for cpr-transfer mode. It must be a UNIX domain
-> +    socket.
->  ERST
->  
->      {
-> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-> index b04fc4489f..4ca2c962c2 100644
-> --- a/migration/migration-hmp-cmds.c
-> +++ b/migration/migration-hmp-cmds.c
-> @@ -837,9 +837,11 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
->      bool detach = qdict_get_try_bool(qdict, "detach", false);
->      bool resume = qdict_get_try_bool(qdict, "resume", false);
->      const char *uri = qdict_get_str(qdict, "uri");
-> +    const char *uri_cpr = qdict_get_try_str(qdict, "uri-cpr");
->      Error *err = NULL;
->      g_autoptr(MigrationChannelList) caps = NULL;
->      g_autoptr(MigrationChannel) channel = NULL;
-> +    g_autoptr(MigrationChannel) channel_cpr = NULL;
->  
->      if (!migrate_uri_parse(uri, &channel, &err)) {
->          hmp_handle_error(mon, err);
-> @@ -847,6 +849,23 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
->      }
->      QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel));
->  
-> +    if (uri_cpr) {
-> +        if (migrate_mode() != MIG_MODE_CPR_TRANSFER) {
-> +            error_setg(&err,
-> +                       "a second uri can only be used in cpr-transfer mode");
+Patch 1 lets iommu-testdev select an MSI payload and supplies its PCI
+requester ID. Patch 2 removes the invalid enable-bit gate. Patch 3 checks
+both enable states through qemu-system-riscv64.
 
-That should probably be changed to something like
-  "-c can only be used in cpr-transfer mode"
+The complete RISC-V IOMMU qtest suite passes:
 
-but other than that,
+  MRIF notice: enable=0 pending=0x20 notice=0x12d
+  MRIF notice: enable=1 pending=0x20 notice=0x12d
+  6/6 tests passed
 
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-(Feel free to take it via cpr or migration).
+This revision resends unchanged code after hunk headers in v2 were
+hard-wrapped in transit. The messages use patch-safe MIME transfer
+encoding. Patch 1 now carries Tao Tang's Reviewed-by tag.
 
-Dave
+Changes in v3:
+  - Resend with patch-safe MIME transfer encoding.
+  - Add Tao Tang's Reviewed-by tag to patch 1.
+
+Changes in v2:
+  - Wrap the fix commit message.
+  - Keep the existing notification comment.
+  - Add deterministic IE-clear and IE-set qtests.
+
+Flavien Solt (3):
+  hw/misc/iommu-testdev: support PCI MSI test writes
+  hw/riscv/riscv-iommu.c: always send MRIF notice MSI
+  tests/qtest: add RISC-V IOMMU MRIF notice tests
+
+ hw/misc/iommu-testdev.c         |  14 ++++-
+ hw/riscv/riscv-iommu.c          |  13 ----
+ include/hw/misc/iommu-testdev.h |   1 +
+ tests/qtest/iommu-riscv-test.c  | 102 ++++++++++++++++++++++++++++++++
+ 4 files changed, 115 insertions(+), 15 deletions(-)
 
 
-> +            hmp_handle_error(mon, err);
-> +            return;
-> +        }
-> +
-> +        if (!migrate_uri_parse(uri_cpr, &channel_cpr, &err)) {
-> +            hmp_handle_error(mon, err);
-> +            return;
-> +        }
-> +
-> +        channel_cpr->channel_type = MIGRATION_CHANNEL_TYPE_CPR;
-> +        QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel_cpr));
-> +    }
-> +
->      qmp_migrate(NULL, true, caps, true, resume, &err);
->      if (hmp_handle_error(mon, err)) {
->          return;
-> -- 
-> 2.43.5
-> 
+base-commit: 499039798cdad7d86b787fec0eaf1da4151c0f05
 -- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+2.54.0
 
