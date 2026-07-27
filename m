@@ -4,91 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E923FC53219
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:54:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B344C5321C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:54:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woJu6-0003ee-Av; Mon, 27 Jul 2026 07:53:54 -0400
+	id 1woJtL-0000kK-E4; Mon, 27 Jul 2026 07:53:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1woJu3-0003Xu-V3
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:53:51 -0400
+ id 1woJtJ-0000dE-R9
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:53:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1woJu2-000448-I0
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:53:51 -0400
+ id 1woJtI-0003xV-EN
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:53:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785153229;
+ s=mimecast20190719; t=1785153183;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3otxHHzF848aWH4w40n6EBe3Am3b5Xd5NRbN2eJgj1c=;
- b=ht7pUOhHWnZhFaQGuq4RckyYgDc2PxZbKoVxyhriijqTZXI+NIvRhqxaMV6uHLU0Tlbsb4
- Q8GneFHeSQhVNxF38jtF9o78uD1bXISh/3o7cbzmALPzWqrtOf+r7LiY+hWbjE21e8pBB1
- a1++HXWSgxIq0lcVBesr70YuqSwL/mQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=hZKEHVo3ZzLDv/RGBdvdxXc3UPVSehiDLCN0yHal6ik=;
+ b=a3mcDB9N5vZ0Gj+qnOGA8X60IPIEkGjb9ErRre63ZX+LhVOtejoFJ5lE1GfmSktGZR9jsI
+ SuxbU81OMWppQ3oxWf6a5fYNzHMaUuCnRT1aT/JJ0dxxvv12PsoW7EuKItIG3KngFFWYOL
+ TNTndhAC4OtAkTR0639rER/ffWzw6Ac=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-500-o6EfhtJnOzyPJvRzVXbY4g-1; Mon,
- 27 Jul 2026 07:53:43 -0400
-X-MC-Unique: o6EfhtJnOzyPJvRzVXbY4g-1
-X-Mimecast-MFC-AGG-ID: o6EfhtJnOzyPJvRzVXbY4g_1785153222
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-9sHPpEkpOoaPVe6e-DGecw-1; Mon,
+ 27 Jul 2026 07:53:02 -0400
+X-MC-Unique: 9sHPpEkpOoaPVe6e-DGecw-1
+X-Mimecast-MFC-AGG-ID: 9sHPpEkpOoaPVe6e-DGecw_1785153181
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 60A341956056; Mon, 27 Jul 2026 11:53:42 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 80EAD180066E; Mon, 27 Jul 2026 11:53:01 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.5])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3BBE618001E1; Mon, 27 Jul 2026 11:53:40 +0000 (UTC)
+ id 4B29F18001DD; Mon, 27 Jul 2026 11:52:59 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 27 Jul 2026 15:51:32 +0400
-Subject: [GIT PULL 23/23] migration/rdma: annotate and simplify
- wait_comp_channel()
+Date: Mon, 27 Jul 2026 15:51:25 +0400
+Subject: [GIT PULL 16/23] block/blkio: fix compiler false-positive warning
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260727-fix-v1-23-ca3fa3851347@redhat.com>
+Message-Id: <20260727-fix-v1-16-ca3fa3851347@redhat.com>
 References: <20260727-fix-v1-0-ca3fa3851347@redhat.com>
 In-Reply-To: <20260727-fix-v1-0-ca3fa3851347@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Peter Xu <peterx@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Li Zhijian <lizhijian@fujitsu.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1623;
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1163;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=2C5ZqBaQBwSshXxXMaaT5VaLMkO28qyCe2lqnv2+Heg=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZ0ZAIQzm3kTQNC9rWFyTB1HJNrd6AgNFE2EUz
- 1zMv2gd1Q2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamdGQAAKCRDa6OEJdZac
- 5cYWD/9oQ1KhBgsluzazVr8IK3k15uxTcBqtPzz2rVuPl8xFStnREmPbVfPSFgllO7DMCoNfnG2
- nD4GScVszxzTtRlRuxGxNnhqa5ehvdTBpNAKocpoV3l3Qzvaho+bWYlOQKkhyw+FTqQBMwFdzat
- 8nHZiLhHZYo8ek/zN/t2vVkb41qxJIK+3OxX8WlivniI+7HoNe74wk92TgGxIlmu+2Fo/Dk7bxZ
- 9iSrrx5F5wS68/1QAncTlr+/zUpanX1QJQAXrSMTMW3VbPxlsJg8yToSVtBqVj17TAmHmCw9LGA
- ysAb8HMc1TP3OjQduMaCJSxv9DOuwdgxedNmfQMB7mUyVLw74VcPEe1GHsDvRI7cTS7a4zZ0SUz
- ah0Xhg/efsYseyXJz2kvQG6mK0Ol91GI4GG8akQoKXAT2zRCdx9XcSe8MVHn6a/vk1pzR/d/IRx
- nqNlRbVLeiWWOt3XHYCG+uBzK8eX/dyrDC9PA0sLzJ1dcFOL8QxGVyNOJ+6+gHaWN8OjRqp4A6Y
- KW/MnXYSBsbzN4m1rMcbTrRflS6ib64deCK2jHDo/Q2CWwEu5xDYco0Dqdy+v720x3y1IzZjB3N
- 3KE4kifKdnvpovW1iGdtw0QIB/PxIlSNpiGNnrZMO161lN/hVb4xw5zXUpW+O3lZ+Xgwzxbrxol
- 2NUNHhdm3XeEVYw==
+ bh=b4aunSxFIZR8zEd4fYoUZnkOi/BDIcfBKX/rl+ZoFfM=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZ0Y/OWtUmyokGiKzZh3nhZF19sqM3xCGP1/XM
+ b9UCgEP0cKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamdGPwAKCRDa6OEJdZac
+ 5c75D/9KHPaNrPNn05oeCu1enlACjxvLlCZ9oNDO9fbQkPlTn9iW3Np/eOh6YVcZOjYwgyEusdc
+ yoY9pypx1d37F8ckTrs+mxLGLu+qD4du5h45mSZ6gv+PJbwSuZA+/ttkXRF4DQMVtvPSWimVimC
+ vzaJzZZC0H1kfJcyfo4Yow4Cz6xPd3rbVzcWLfaACtGFhJ4iHh3NLJh9gzdU7IiFwCXdPvMLn/L
+ OD7NHKpDurSyasDLnxahaAUW0Dx8h+cD3fJOS22Curm+ZD98LswEqt4cwEaY0wsIvmR2c5kU88w
+ mCbkyMp1aP0ATOFGWz/bBXp4raEsKcz3RT3PgMXFOO7Eh05yU/D+/YspGKBg28RALRvs+a0kQYD
+ wxIJWTW5hDgy1n0VSiDfsgJQff3OjrKoPKxkbDgx9i6cuSmGNgbu0KwrHslamTPccuxLr6kon5J
+ 8EcgfDkde4g6E/xuCaFYUxMKceC02Pd5PEHI4qMqwMfxd7Ib8u694+3w2rp4pYp94jLa85K29af
+ KFQ7fsfWsf7+k2t1QMG23r6p/UsRdUljDKvEoc4h/ncnq8RKu1xJ8Kcq7USuRTdirPztSKeMY5w
+ 4zYqyfg89ViKh5H1J7AB4ncqxuLONIHtieZbNfLh3NZGBpYmMdpziFfnLFe0lokvcLqNw6m6vzP
+ aS6pjLp/E0nBabQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,45 +102,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The function calls yield_until_fd_readable() (coroutine_fn) when in
-coroutine context, and polls with qemu_poll_ns() otherwise.
+Under some optimization, gcc produces a false-positive:
+    ../block/blkio.c: In function ‘blkio_co_getlength’:
+    ../block/blkio.c:943:8: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
+      943 |     if (ret < 0) {
+          |        ^
 
-Replace the migration-state proxy check with qemu_in_coroutine(),
-which directly tests what matters.
+Replace WITH_QEMU_LOCK_GUARD with the simpler QEMU_LOCK_GUARD.
 
-Fixes: 2da776db4846 ("rdma: core logic")
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- migration/rdma.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ block/blkio.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/migration/rdma.c b/migration/rdma.c
-index 3e37a1d44013..438419d18943 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -1348,17 +1348,13 @@ static int qemu_rdma_poll(RDMAContext *rdma, struct ibv_cq *cq,
- /* Wait for activity on the completion channel.
-  * Returns 0 on success, none-0 on error.
-  */
--static int qemu_rdma_wait_comp_channel(RDMAContext *rdma,
--                                       struct ibv_comp_channel *comp_channel)
-+static int coroutine_mixed_fn
-+qemu_rdma_wait_comp_channel(RDMAContext *rdma,
-+                            struct ibv_comp_channel *comp_channel)
- {
-     struct rdma_cm_event *cm_event;
+diff --git a/block/blkio.c b/block/blkio.c
+index fb8bec27d71a..008320bf2061 100644
+--- a/block/blkio.c
++++ b/block/blkio.c
+@@ -937,9 +937,8 @@ static int64_t coroutine_fn blkio_co_getlength(BlockDriverState *bs)
+     uint64_t capacity;
+     int ret;
  
--    /*
--     * Coroutine doesn't start until migration_fd_process_incoming()
--     * so don't yield unless we know we're running inside of a coroutine.
--     */
--    if (rdma->migration_started_on_destination &&
--        migration_incoming_get_current()->state == MIGRATION_STATUS_ACTIVE) {
-+    if (qemu_in_coroutine()) {
-         yield_until_fd_readable(comp_channel->fd);
-     } else {
-         /* This is the source side, we're in a separate thread
+-    WITH_QEMU_LOCK_GUARD(&s->blkio_lock) {
+-        ret = blkio_get_uint64(s->blkio, "capacity", &capacity);
+-    }
++    QEMU_LOCK_GUARD(&s->blkio_lock);
++    ret = blkio_get_uint64(s->blkio, "capacity", &capacity);
+     if (ret < 0) {
+         return -ret;
+     }
 
 -- 
 2.55.0
