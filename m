@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85AE3C53219
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:52:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0E54C53219
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:52:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woJsZ-0006iR-Rn; Mon, 27 Jul 2026 07:52:19 -0400
+	id 1woJsH-0006Ak-V9; Mon, 27 Jul 2026 07:52:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1woJsY-0006gC-CF
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:52:18 -0400
+ id 1woJsF-00061T-KL
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:51:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1woJsW-0003kA-NY
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:52:18 -0400
+ id 1woJsD-0003ha-Kw
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:51:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785153136;
+ s=mimecast20190719; t=1785153117;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aNiaflyhGXOxa4ggjEKmuQj2KeuWOsy9yNfa0BhTzi0=;
- b=KMiOGSllG0gJGz+6KALKf/go2D3APxkFbt914jlqJBekZ1VG+F5W0FXyJoN0n6NActTy00
- yKl1UgncxYHp2H91nEGrcp/RNiqz6H3tSKXg67Q2ypdEoIKGpgGdu30CuNsmGL/xyjy0L1
- eOl5IzbdKht02aDu6LgFhhLhyzBWooE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=u2ZZmmA7la3LPIJb4HIyU9FC0Vdh1HZQjE97gHf8bEo=;
+ b=WnAl57lC0MSWvZNtbGj7NIdnDLtZgKV0uPujM//Si6uIT0p5zPpzMaOjPBUIBvO2yraSsP
+ LGsht4L10jvK68sel0UfmL7t+cvxkLjJOMjt/FhyVEx0bguFk4MfKMww/PRNIfiks83138
+ W/bP5PYIK9JvD+Rm7XaXsFEc6sbRcgI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-196-S3XMUpTWOEicrmPGYzTTTA-1; Mon,
- 27 Jul 2026 07:52:12 -0400
-X-MC-Unique: S3XMUpTWOEicrmPGYzTTTA-1
-X-Mimecast-MFC-AGG-ID: S3XMUpTWOEicrmPGYzTTTA_1785153131
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-66-fo0m1F-OPDOsi-ScUYlNBQ-1; Mon,
+ 27 Jul 2026 07:51:55 -0400
+X-MC-Unique: fo0m1F-OPDOsi-ScUYlNBQ-1
+X-Mimecast-MFC-AGG-ID: fo0m1F-OPDOsi-ScUYlNBQ_1785153115
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 724151955E9E; Mon, 27 Jul 2026 11:52:11 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BA754195E919
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 11:51:54 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.5])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6D918429; Mon, 27 Jul 2026 11:52:09 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BD97B30010CC; Mon, 27 Jul 2026 11:51:53 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 27 Jul 2026 15:51:16 +0400
-Subject: [GIT PULL 07/23] virtio-gpu: fix NULL deref in rutabaga
- set_scanout
+Date: Mon, 27 Jul 2026 15:51:13 +0400
+Subject: [GIT PULL 04/23] hw/display/qxl: unregister vm_change_state
+ handler and BHs
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260727-fix-v1-7-ca3fa3851347@redhat.com>
+Message-Id: <20260727-fix-v1-4-ca3fa3851347@redhat.com>
 References: <20260727-fix-v1-0-ca3fa3851347@redhat.com>
 In-Reply-To: <20260727-fix-v1-0-ca3fa3851347@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1811;
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3556;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=ca/+vDvzNn20KqwVuvwprKoP35ci4y5uRFaQhtejmpk=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZ0Y+doM5nxOlbjtZicvqtd1vwdcOnK3GfztKR
- +RL4GJYMiSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamdGPgAKCRDa6OEJdZac
- 5RwTD/9I7Way+E1yudIw7nrI0aZZqykRBcquIQsvy81chWMJvZuXNuevDlkpPZKc5td+8byKPKD
- Kk6o9TubM4FtLlNTUxuHgWwdufr4PPf+9wq3SpaeX4NyCHCSqWYPw60072elsobQqk8sjXe+8gu
- h4X01jRxfHNb/HVRmkGLubhJ8Np3UvpmNOvoHS4HpQYCr5vbSvt83XEYxAwNWC6tCDfg9/UgTzJ
- n6Jy1+3axkfte21bNh7SujnyS6kn3vKZcmpL4eOnAWek8tCLr53hijIERIeLIN+dxDy4UIlM66l
- tJ1555/eGYlgNfnPmKwZ3SxFjjZJqdXAOYpneM8NLtug5dUtuQEAjHIEDsbagQVA87Mwwm3b7zZ
- oSZU3qkapFBTTyqqtWyvphNuPxFaz2L5PNS+DagVpRNjNfkAnZpbzXeOywxRFsgABnp6hHcyq04
- w4Fr8BTrafh5eyhYXpBJ/O9KnGE9oBrDX92h4y6s9Ag9FocaJ4yiRjfREDIwFmmmE8+5Q/9bbi8
- kSl0/hlm32dh3pFWI+Bzuesn5CIejyjuuVYpQYGOGbpbI90m75blQ/OE3SKvhxJBjrN15CPvR1x
- 4rGGoX/0ol5GyQJGcncOjeyaKqtd5LBUQDzHG/qLZsNKBcqwqzE4ZvezumKi2wAV37jDviiSFpV
- 4TMLoLbJ7tlsTPw==
+ bh=H9fIokRleIlkTHgJZ2eUvb/iq6NOB2CFAfALJqXMA6Q=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqZ0Y+HW8m6PdkG5/CMb/0371yVzAc/23S+nLIH
+ VDLE+t1vIiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamdGPgAKCRDa6OEJdZac
+ 5V/xEACvalF74K4x19tCzcY/C7scyYjAEuBI5EJXnNAYw7xbU7SJxHmVDyEmPaGr1kYSsO0oX3f
+ 8bO/ID+FQQdCbQsDOrSBuZhTRjlwGRzQhmMahgJNsVWt08AG/gY+bgXmLfJtvhU+wUm7JQmCDyX
+ JrvI4TZOVVy6l/HEFoJqJbrpXzTUQ/Zw52pCN0K/Xrsnw1OySqJjKfJvKKuq05WVJYPykHKQxzr
+ nR+77NaNCo5w9c2obq5DzBkVTH7yXg5DyQGtZK3700pse1SoP81jtm+/zK89jBkxpik6aSOFzlL
+ Om1oJ5/ZPSAL0XFw3YhCkBTP6qYGXhGoHOK7K61L2NnXtH9rzoDIJWss5j3xw3JjY30xV75m4EP
+ 2bnCCgMW+JHsIpGNf7fKD0ozwPzjR8OrTykM+mIeWp8sCQHj7geDzJGJWTkQy5LGEgtW/J8SJDz
+ 21MKzEcuv25JBINQ4SmoIZeLg3BKshKl5kIjzGnk6OnS1pV3alBM/6m3AfMfFuJYHRHQaJyrgnB
+ S+4nLW/CLRfKd53gGF0CJNbjiOAf5zTL/e7C3ihzitORJ68Dee034gCfwhYEmk0Oorhf2bt2Ghs
+ 9odkcK+4VJ1LxknEITBtQdDqmjz3IxmcEzYV56R3B2br7pSxugNOhBtj2Bser18grepR+gehNYp
+ /wsLcmWwcL8N/wQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -107,46 +104,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Haotian Jiang <jianghaotian.sunday@gmail.com>
+From: Haotian Jiang <sundayjiang@tencent.com>
 
-rutabaga_cmd_set_scanout() checks scanout_id < VIRTIO_GPU_MAX_SCANOUTS
-(16), but does not check scanout_id < conf.max_outputs like the base
-class (virtio-gpu.c) and virgl backend (virtio-gpu-virgl.c) do.
+qxl_realize_common() registers a vm_change_state handler via
+qemu_add_vm_change_state_handler() and creates three bottom halves
+(update_irq, update_area_bh, cursor_bh), but none are ever cleaned up.
+The return value of qemu_add_vm_change_state_handler() is discarded, so
+the handler is never removed from the global list, and there is no
+PCIDeviceClass.exit callback to delete the BHs.
 
-With the default max_outputs=1, virtio_gpu_base_device_realize only
-initializes scanout[0].con. A guest submitting SET_SCANOUT with
-scanout_id >= 1 takes the con=NULL path, and
-qemu_console_set_surface(NULL, NULL) dereferences con->ds, crashing
-QEMU.
+When a secondary QXL device (hotpluggable by default) is hot-unplugged
+via device_del, the PCIQXLDevice memory is freed but the vm_state
+handler and BH entries remain with dangling opaque pointers. On the
+next VM state change (stop/cont/migrate) or BH dispatch, the callback
+dereferences freed memory, causing a use-after-free.
 
-Replace VIRTIO_GPU_MAX_SCANOUTS with vb->conf.max_outputs in the
-CHECK, since realization already ensures max_outputs <=
-VIRTIO_GPU_MAX_SCANOUTS.
+Fix this by storing the VMChangeStateEntry returned by
+qemu_add_vm_change_state_handler() and adding a qxl_exit() callback
+that deletes the vm_state handler, all three BHs, and the
+guest_surfaces.cmds allocation before the device memory is freed.
 
-Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for gfxstream")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3897
-Cc: qemu-stable@nongnu.org
-Message-ID: <20260720071556.106003-1-jianghaotian.sunday@gmail.com>
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Fixes: a19cbfb34642 ("spice: add qxl device")
+Fixes: CVE-2026-63322
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3607
 Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
+Cc: qemu-stable@nongnu.org
+[ Marc-André - tweak commit message, add TODO ]
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260720024855.3757499-1-jianghaotian.sunday@gmail.com>
 ---
- hw/display/virtio-gpu-rutabaga.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/display/qxl.h |  1 +
+ hw/display/qxl.c | 16 +++++++++++++++-
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-index 4d7d7b245929..6af5c2514d23 100644
---- a/hw/display/virtio-gpu-rutabaga.c
-+++ b/hw/display/virtio-gpu-rutabaga.c
-@@ -302,7 +302,7 @@ rutabaga_cmd_set_scanout(VirtIOGPU *g, struct virtio_gpu_ctrl_command *cmd)
-     trace_virtio_gpu_cmd_set_scanout(ss.scanout_id, ss.resource_id,
-                                      ss.r.width, ss.r.height, ss.r.x, ss.r.y);
+diff --git a/hw/display/qxl.h b/hw/display/qxl.h
+index ad8a9128785e..48d664f77736 100644
+--- a/hw/display/qxl.h
++++ b/hw/display/qxl.h
+@@ -83,6 +83,7 @@ struct PCIQXLDevice {
  
--    CHECK(ss.scanout_id < VIRTIO_GPU_MAX_SCANOUTS, cmd);
-+    CHECK(ss.scanout_id < vb->conf.max_outputs, cmd);
-     scanout = &vb->scanout[ss.scanout_id];
+     /* thread signaling */
+     QEMUBH             *update_irq;
++    VMChangeStateEntry *vmstate_handler;
  
-     if (ss.resource_id == 0) {
+     /* ram pci bar */
+     QXLRam             *ram;
+diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+index 3df796175c29..b7d871b9ee33 100644
+--- a/hw/display/qxl.c
++++ b/hw/display/qxl.c
+@@ -2203,7 +2203,8 @@ static void qxl_realize_common(PCIQXLDevice *qxl, Error **errp)
+         error_report_err(err);
+     }
+ 
+-    qemu_add_vm_change_state_handler(qxl_vm_change_state_handler, qxl);
++    qxl->vmstate_handler =
++        qemu_add_vm_change_state_handler(qxl_vm_change_state_handler, qxl);
+ 
+     qxl->update_irq = qemu_bh_new_guarded(qxl_update_irq_bh, qxl,
+                                           &DEVICE(qxl)->mem_reentrancy_guard);
+@@ -2475,6 +2476,18 @@ static const Property qxl_properties[] = {
+         DEFINE_PROP_UINT32("yres", PCIQXLDevice, yres, 0),
+ };
+ 
++static void qxl_exit(PCIDevice *dev)
++{
++    PCIQXLDevice *qxl = PCI_QXL(dev);
++
++    /* TODO: complete cleanup, error paths etc */
++    g_clear_pointer(&qxl->vmstate_handler, qemu_del_vm_change_state_handler);
++    g_clear_pointer(&qxl->update_irq, qemu_bh_delete);
++    g_clear_pointer(&qxl->update_area_bh, qemu_bh_delete);
++    g_clear_pointer(&qxl->ssd.cursor_bh, qemu_bh_delete);
++    g_clear_pointer(&qxl->guest_surfaces.cmds, g_free);
++}
++
+ static void qxl_pci_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -2482,6 +2495,7 @@ static void qxl_pci_class_init(ObjectClass *klass, const void *data)
+ 
+     k->vendor_id = REDHAT_PCI_VENDOR_ID;
+     k->device_id = QXL_DEVICE_ID_STABLE;
++    k->exit = qxl_exit;
+     set_bit(DEVICE_CATEGORY_DISPLAY, dc->categories);
+     device_class_set_legacy_reset(dc, qxl_reset_handler);
+     dc->vmsd = &qxl_vmstate;
 
 -- 
 2.55.0
