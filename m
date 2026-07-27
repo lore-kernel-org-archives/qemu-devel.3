@@ -4,102 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AC82C531C9
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 15:59:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62614C53209
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 16:02:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woNjo-0004Yo-Fv; Mon, 27 Jul 2026 11:59:32 -0400
+	id 1woNmd-00065S-Py; Mon, 27 Jul 2026 12:02:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1woNji-0004YY-TO
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 11:59:27 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1woNjh-0006Vs-E9
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 11:59:26 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-6689f36ae56so3883598d50.3
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 08:59:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785167964; cv=none;
- d=google.com; s=arc-20260327;
- b=PPa40HoMRzs5zz6YqxIf3EZNIEh6OH+Mgtpn2wxp7waCmyrOIAISPxE+WgMVr0tuJG
- STfOX/wTCDV8GZjd9B1TzBZbMjnvzLbjGveN4TAOoxFFixE503+yzzJphxD2hyOyksTs
- bg8GgcZIhZUXi3wWOWMnhX+J0AFCrJpRQRVZSWK/ZpRGca6LhMF55PiKHGzpuw+mUOSQ
- U4rHfKtWtF4Lq7fQoAkjfGmexkgApLeaNF36ygVVF1sRcbz/7eVJTwLnnRbnIF9NOxLs
- Mz+wgSkXfhPYJnwS2pi4HczwbEzPagJQETtMgMMjsY5VF7eNMGLzkmcdi9lvbK/gfhnl
- uIMQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :dkim-signature;
- bh=LzCA0dcBWw9zMpBSkkCLQ5WnVwl27Gu831ToutkkOXc=;
- fh=is0PmghpAaD8HWE2NeKY0gf5ol8lwYlrfMQpiQ6YqX8=;
- b=gqzYmcFbPNu+MOYwM+vnFQjY04+HG2OaTb67BuYaOM1ssFKWVb/XAJugGpyZIrBcjR
- cNd6LyVCbpdnFbA5L4Dj3KGEKURwUqIAV96At/EVqyZfFE9U+Itdpj4haFitKV2TeqSk
- Bpg8eI84WX+9cMRCZ2H4t79VhQhnyKLe31wl3Y/6aXWx+8ZdJEUvYNX9SPqyw9b6of2O
- /pqGg4Z8A9yDdUO6L2TdEcAiFkGp1ML1yC9se1Str3PlSfQYdvKibIwldFYPtE8eoSzH
- crHzLQmxGJGivb+iFnTeSTO3t4qhmy9XqE9mmv7HFU56s6pr1gKYGCtMJxiLOcBPlvJd
- UHbw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785167964; x=1785772764; darn=nongnu.org;
- h=content-type:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=LzCA0dcBWw9zMpBSkkCLQ5WnVwl27Gu831ToutkkOXc=;
- b=R/9Dnue3xrj30dNVAxd0uVKHbDQBCY99W/Fjn1z32o3+YqclJ9iblt9Y5IvNvUnwz/
- CStJTqceblWg2BWiUAkZhGVp/9JqQxCus/0VvdJ0rR+HLO4bxWfKzNpm9zluHMQfk9S8
- 6XRMob4uqKMJltHwAJRF+lRcyQbUjU7hNkRp1jSc8jvmT1bCe8x3zMIQDibEg+TIQuBX
- oTPZEn0vtcyG2esuFV7CaK1TYnFNX2376uTHSmnfKWQKj14GeDOy1ZcIUDD0WwJcaMrX
- hnXRmCVKDqTkImKc8Zu9tumM7qJDgrWJWBScfjd1yJ/PY1YffYFy+26et2/PZkrEJTwk
- aYkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785167964; x=1785772764;
- h=content-type:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=LzCA0dcBWw9zMpBSkkCLQ5WnVwl27Gu831ToutkkOXc=;
- b=RfmiJ3AHGi1TzBvnlNUQocU+zJcWgO7jyrmWX+ogkdMK+rpyJOm0Y9cjmOjmOxhpMw
- rexmZWj8fw7dhLpTwi+ccEBxicxGABtzXFTfD+k5+67dakJ5nAQdePMQSXXD8ymuujP9
- +R8QG+5rNzsJ3cxtLr5RkhL5D2b/kzRwQfAqSfl8W6MsodqmBnnOzW1v7Jw+zR2Jgzrj
- mnIrqFKyWnNdqsD43QY1Qlffiyj4u2A4xkvIKN2ptRHrtqUsJIuhI7jyoBtFwNQ1HMyv
- n7AaSe/ksORr06LDCjvJnl87exL3K36uok9wrUOLgUWczRV9eUcWLLYaTV//Hga85m1R
- VIVg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoMYNOBwlfdLvqOCf+r8FnNzv0S+Ua5n/P8ZGnd1nZbXgLyOOw3C2l9Fgz3y7XtbnSrayZQX1xVJaa+@nongnu.org
-X-Gm-Message-State: AOJu0Yxhl9qlpk7irJFCDEx5TJOYVANFQi65ofA19EnWKe2104z3UdSy
- y/LyiHGPajz2OWXZh1UqSX4Akh5DKRQKfxJAQqGZSZ/GHXxemUDASBOBzKSxQ3Y0A5ffoefOgfj
- V5wcyeGSxdcZGbjCl/q5fH/FYjGJXKgG5Ub8FPMeEtA==
-X-Gm-Gg: AR+sD136Czs0gt7Y/Nc7b5k023WR1L3DaukEQy7U5UeZtvey0qrXeHyivl3yBqw+EhJ
- iKO8pprNyQ9B/4eBih6uWeMTtNmxBLrxcn5o4W7TQ6y7hY7i+LahUABj+Xgl38uRLYfJMywzazG
- fvB53QY5wTkkLzDKDsz9Ws6aPBLPZN0n7k3i4Nc5ebQacyRr/FeVRs5hy9JXjgGQ17dFtRb8kQb
- 1Yitd/LeJDuDB4rryHcAMt2Lv4GbdWuhRgiVakymCTxA0JJ5N7X9eF8hKvTU5NZnY5/b/lYvACV
- GWJPe/dpF8QzW8zOAN1v9vx1pgEjq2Lj6oT82OzOo7XA+g==
-X-Received: by 2002:a53:d045:0:10b0:668:311a:d444 with SMTP id
- 956f58d0204a3-668c7c31410mr2054205d50.106.1785167963650; Mon, 27 Jul 2026
- 08:59:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
+ id 1woNm7-0005Zs-5g; Mon, 27 Jul 2026 12:01:55 -0400
+Received: from m16.mail.163.com ([220.197.31.3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
+ id 1woNm3-0006su-M5; Mon, 27 Jul 2026 12:01:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=Sm
+ 1N8ymI42HBWVI0bgf0KQkavBARsHa2ANmH89bOEvM=; b=hZh9w78HWC3Wj/BQzU
+ GAv0WnFDqFRUC70rKQjocg1bQP8oGndAaXLbGLSfqJx5K47TaOGX4HQ/QNpvQY0q
+ MMxB8RgpnfnWA5kjwbK5m0zYvUNNuegiiZN2y/sC/PhMWMJzswE/JdX9DLaafeFL
+ GL7faEW3TvzAsiFxsfIXYUxYc=
+Received: from dt-VM.localdomain (unknown [])
+ by gzga-smtp-mtada-g0-0 (Coremail) with SMTP id
+ _____wC3HpHQf2dqJpF_Kw--.27173S8; 
+ Mon, 27 Jul 2026 23:57:08 +0800 (CST)
+From: Tao Ding <dingtao0430@163.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, pbonzini@redhat.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu@processmission.com, farosas@suse.de, lvivier@redhat.com,
+ pierrick.bouvier@oss.qualcomm.com, caojunze424@gmail.com,
+ Tao Ding <dingtao0430@163.com>
+Subject: [PATCH v2 6/7] tests/qtest: add test for K230 decomp gzip
+Date: Mon, 27 Jul 2026 23:57:01 +0800
+Message-ID: <20260727155702.36484-7-dingtao0430@163.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260727155702.36484-1-dingtao0430@163.com>
+References: <20260727155702.36484-1-dingtao0430@163.com>
 MIME-Version: 1.0
-References: <20260706173324.804340-1-peter.maydell@linaro.org>
- <CAFEAcA-C4t+=KYiX5sk_Fj528u2MkB4AE74gC1yrWTzAxmTYew@mail.gmail.com>
-In-Reply-To: <CAFEAcA-C4t+=KYiX5sk_Fj528u2MkB4AE74gC1yrWTzAxmTYew@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 27 Jul 2026 16:59:11 +0100
-X-Gm-Features: AUfX_mw6ZDsX8z5Uy4FWAFW2YWnUqtzXC94srrSFLgVBsAoAvrNiIX6wwTpZdwc
-Message-ID: <CAFEAcA8rFv3B5r8ZjwD080NO9mpc640QLsy0_bugkADKYBPz8g@mail.gmail.com>
-Subject: Re: [PATCH 0/3] hw/display/exynos4210_find: Clamp windows to screen
-To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: _____wC3HpHQf2dqJpF_Kw--.27173S8
+X-Coremail-Antispam: 1Uf129KBjvJXoWxKry5Zr13Zw15ZFy3Zw4xZwb_yoWDJr43p3
+ 45Gw1Yvr10qF1ftanrXF1vkF1rWrZ3G348C3yjgry09r4kJryktF13t3y8Xwn5GrWkZF4F
+ 93s5tFn09F1xXaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pRyGQhUUUUU=
+X-Originating-IP: [119.4.23.14]
+X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC4RSJx2pnf9Q2QQAA3q
+Received-SPF: pass client-ip=220.197.31.3; envelope-from=dingtao0430@163.com;
+ helo=m16.mail.163.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,42 +77,260 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ping^2?
+This commit adds test cases for Decomp_gzip.
+A compressed data segment has been pre-set, configure GSDMA and decomp_gzip.
+Compare the decompressed data with the original data
 
--- PMM
+Update MAINTAINERS for this test.
 
-On Mon, 20 Jul 2026 at 09:40, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> Ping for code review, please?
->
-> thanks
-> -- PMM
->
-> On Mon, 6 Jul 2026 at 18:33, Peter Maydell <peter.maydell@linaro.org> wrote:
-> >
-> > The exynos4210_fimd device has a setup where the guest can program
-> > both the overall size of the LCD screen and also the corners of
-> > "windows" that define where the guest memory should appear on that
-> > screen. The current code assumes that the guest is sensible and
-> > puts the corners of windows inside the overall screen. If it doesn't
-> > then we will try to copy data to an address that is outside the
-> > interfal framebuffer memory that we allocate to be the size of the
-> > screen.
-> >
-> > This patchset clamps the window coordinates to be within the screen
-> > size. Patches 1 and 2 are simple refactorings to make the third
-> > patch easier to read.
-> >
-> > This fixes https://gitlab.com/qemu-project/qemu/-/work_items/3795
-> >
-> > thanks
-> > -- PMM
-> >
-> > Peter Maydell (3):
-> >   hw/display/exynos4210_fimd: Factor out finding screen width/height
-> >   hw/display/exynos4210_fimd: Pass width to draw_line functions
-> >   hw/display/exynos4210_fimd: Clamp windows to screen size
-> >
-> >  hw/display/exynos4210_fimd.c | 54 ++++++++++++++++++++++++++----------
-> >  1 file changed, 39 insertions(+), 15 deletions(-)
+Run this qtest:
+    $ mkdir build && cd build && ../configure --target-list="riscv64-softmmu"
+    $ QTEST_QEMU_BINARY=./qemu-system-riscv64   tests/qtest/k230-decomp-gzip-test
+
+Signed-off-by: Tao Ding <dingtao0430@163.com>
+---
+In patchv1, the reviewer pointed out issues with the data. 
+This is a bug and decomp_gzip only supports dynamic Huffman format.
+In this commit, reused the dynamic Huffman method to generate compressed data.
+
+ MAINTAINERS                         |   1 +
+ tests/qtest/k230-decomp-gzip-test.c | 200 ++++++++++++++++++++++++++++
+ tests/qtest/meson.build             |   2 +-
+ 3 files changed, 202 insertions(+), 1 deletion(-)
+ create mode 100644 tests/qtest/k230-decomp-gzip-test.c
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index c260199142..dcfcc51144 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1838,6 +1838,7 @@ F: include/hw/misc/k230_decomp_gzip.h
+ F: tests/functional/riscv64/test_k230.py
+ F: tests/qtest/k230-wdt-test.c
+ F: tests/qtest/k230-gsdma-test.c
++F: tests/qtest/k230-decomp-gzip-test.c
+ 
+ RX Machines
+ -----------
+diff --git a/tests/qtest/k230-decomp-gzip-test.c b/tests/qtest/k230-decomp-gzip-test.c
+new file mode 100644
+index 0000000000..e80113fd28
+--- /dev/null
++++ b/tests/qtest/k230-decomp-gzip-test.c
+@@ -0,0 +1,200 @@
++/*
++ * QTest testcase for K230 GZIP decompression engine
++ *
++ * Copyright (c) 2026 Tao Ding <dingtao0430@163.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/bitops.h"
++#include "libqtest.h"
++#include "hw/dma/k230_gsdma.h"
++#include "hw/misc/k230_decomp_gzip.h"
++
++#define K230_DECOMP_GZIP_BASE 0x80808000
++#define K230_GSDMA_BASE       0x80800000
++#define K230_SRAM_BASE        0x80200000
++#define TEST_LLT_ADDR0        0x01000000
++#define TEST_LLT_ADDR1        0x01000040
++#define TEST_SRC_ADDR         0x01100000
++#define TEST_DST_ADDR         0x01200000
++
++#define TEST_PAYLOAD_LEN          (sizeof(test_payload) - 1)
++
++static inline uint64_t gzip_reg(hwaddr off)
++{
++    return K230_DECOMP_GZIP_BASE + off;
++}
++
++static inline uint64_t gsdma_reg(hwaddr off)
++{
++    return K230_GSDMA_BASE + off;
++}
++
++static inline uint64_t gsdma_ch_reg(unsigned int ch, hwaddr off)
++{
++    return K230_GSDMA_BASE + K230_GSDMA_CH_BASE +
++           ch * K230_GSDMA_CH_STRIDE + off;
++}
++
++static inline hwaddr k230_sram_addr(hwaddr off)
++{
++    return K230_SRAM_BASE + off;
++}
++
++static inline hwaddr k230_sram_input_addr(unsigned int slot)
++{
++    return k230_sram_addr(K230_DECOMP_GZIP_SRAM_IN_BASE +
++                          slot * K230_DECOMP_GZIP_BLOCK_SIZE);
++}
++
++/*
++ * test_gzip_data was generated by compressing test_payload in gzip format
++ * using Dynamic Huffman coding. The compression method byte in the gzip
++ * header was then changed from the standard value 0x08 to the K230-specific
++ * value 0x09.
++ */
++static const uint8_t test_gzip_data[] = {
++    0x1f, 0x8b, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00,
++    0x04, 0x03, 0x05, 0xc1, 0xb1, 0x0d, 0x00, 0x20,
++    0x08, 0x04, 0xc0, 0x9e, 0x29, 0x7e, 0x04, 0x23,
++    0x63, 0x38, 0x85, 0x05, 0x21, 0x14, 0x10, 0x23,
++    0x5f, 0x39, 0xbd, 0x77, 0x6b, 0xea, 0x80, 0xbf,
++    0x38, 0x68, 0x5e, 0xdb, 0x19, 0xe5, 0xa0, 0x35,
++    0x65, 0x4d, 0x1d, 0xf0, 0x17, 0x07, 0xcd, 0x6b,
++    0x3b, 0xa3, 0x1c, 0xb4, 0xa6, 0xac, 0xa9, 0x03,
++    0xfe, 0xe2, 0xa0, 0x79, 0x6d, 0x67, 0x94, 0x83,
++    0xd6, 0x94, 0x35, 0x75, 0xc0, 0x5f, 0x1c, 0x34,
++    0xaf, 0xed, 0x8c, 0x72, 0xd0, 0x9a, 0xb2, 0xa6,
++    0x0e, 0xf8, 0x8b, 0x83, 0xe6, 0xb5, 0x9d, 0x51,
++    0x0e, 0x5a, 0x53, 0xd6, 0xd4, 0x01, 0x7f, 0x71,
++    0xd0, 0xbc, 0xb6, 0x33, 0xca, 0x41, 0x6b, 0xca,
++    0x9a, 0x3a, 0xe0, 0x2f, 0x0e, 0x9a, 0xd7, 0x76,
++    0x46, 0x39, 0x68, 0x4d, 0x59, 0x53, 0x07, 0xfc,
++    0xc5, 0x41, 0xf3, 0xda, 0xce, 0x28, 0x07, 0xad,
++    0x29, 0x1f, 0xdb, 0x9d, 0xbc, 0xdd, 0xc8, 0x00,
++    0x00, 0x00,
++};
++
++static const uint8_t test_payload[] =
++    "K230 gzip streaming test\n"
++    "K230 gzip streaming test\n"
++    "K230 gzip streaming test\n"
++    "K230 gzip streaming test\n"
++    "K230 gzip streaming test\n"
++    "K230 gzip streaming test\n"
++    "K230 gzip streaming test\n"
++    "K230 gzip streaming test\n";
++
++static void write_sdma_llt_node(QTestState *qts, hwaddr addr, uint32_t src,
++                                uint32_t dst, uint32_t len, uint32_t next)
++{
++    qtest_writel(qts, addr + offsetof(K230GSDMALLT, cfg), 0);
++    qtest_writel(qts, addr + offsetof(K230GSDMALLT, src_addr), src);
++    qtest_writel(qts, addr + offsetof(K230GSDMALLT, line_size), len);
++    qtest_writel(qts, addr + offsetof(K230GSDMALLT, line_cfg), 0x1);
++    qtest_writel(qts, addr + offsetof(K230GSDMALLT, dst_addr), dst);
++    qtest_writel(qts, addr + offsetof(K230GSDMALLT, next_llt_addr), next);
++}
++
++static void test_reset_and_rw(void)
++{
++    QTestState *qts = qtest_init("-machine k230");
++
++    g_assert_cmphex(qtest_readl(qts, gzip_reg(K230_DECOMP_GZIP_DECOMP_START)),
++                    ==, 0);
++    g_assert_cmphex(qtest_readl(qts, gzip_reg(K230_DECOMP_GZIP_GZIP_SRC_SIZE)),
++                    ==, 0);
++    g_assert_cmphex(qtest_readl(qts, gzip_reg(K230_DECOMP_GZIP_GZIP_OUT_SIZE)),
++                    ==, 0);
++    g_assert_cmphex(qtest_readl(qts, gzip_reg(K230_DECOMP_GZIP_DECOMP_STAT)),
++                    ==, 0);
++
++    qtest_writel(qts, gzip_reg(K230_DECOMP_GZIP_DECOMP_START),
++                 K230_DECOMP_GZIP_START);
++
++    qtest_writel(qts, gzip_reg(K230_DECOMP_GZIP_GZIP_SRC_SIZE), 0xffffffff);
++    g_assert_cmphex(qtest_readl(qts, gzip_reg(K230_DECOMP_GZIP_GZIP_SRC_SIZE)),
++                    ==, 0xffffffff);
++
++    qtest_writel(qts, gzip_reg(K230_DECOMP_GZIP_GZIP_OUT_SIZE), 0x12345678);
++    g_assert_cmphex(qtest_readl(qts, gzip_reg(K230_DECOMP_GZIP_GZIP_OUT_SIZE)),
++                    ==, 0x12345678);
++
++    qtest_quit(qts);
++}
++
++static void test_gsdma_handshake_flow(void)
++{
++    QTestState *qts = qtest_init("-machine k230");
++    uint32_t stat;
++    uint8_t output[TEST_PAYLOAD_LEN];
++
++    qtest_memwrite(qts, TEST_SRC_ADDR, test_gzip_data, sizeof(test_gzip_data));
++    write_sdma_llt_node(qts, TEST_LLT_ADDR0, TEST_SRC_ADDR,
++                        k230_sram_input_addr(0),
++                        sizeof(test_gzip_data), 0);
++    write_sdma_llt_node(qts, TEST_LLT_ADDR1,
++                        k230_sram_addr(K230_DECOMP_GZIP_SRAM_OUT_BASE),
++                        TEST_DST_ADDR, TEST_PAYLOAD_LEN, 0);
++
++    qtest_writel(qts, gsdma_reg(K230_GSDMA_DMA_CH_EN), BIT(0) | BIT(1));
++    qtest_writel(qts, gsdma_ch_reg(0, K230_GSDMA_CH_CFG),
++                 K230_GSDMA_CH0_CFG_DECOMP_CTRL_EN);
++    qtest_writel(qts, gsdma_ch_reg(1, K230_GSDMA_CH_CFG), 0);
++    qtest_writel(qts, gsdma_ch_reg(0, K230_GSDMA_CH_LLT_SADDR), TEST_LLT_ADDR0);
++    qtest_writel(qts, gsdma_ch_reg(1, K230_GSDMA_CH_LLT_SADDR), TEST_LLT_ADDR1);
++    qtest_writel(qts, gsdma_ch_reg(0, K230_GSDMA_CH_CTL), K230_GSDMA_CTL_START);
++    qtest_writel(qts, gsdma_ch_reg(1, K230_GSDMA_CH_CTL), K230_GSDMA_CTL_START);
++
++    g_assert_cmphex(qtest_readl(qts, gsdma_reg(K230_GSDMA_DMA_CH_EN)),
++                    ==, BIT(0) | BIT(1));
++    g_assert_cmphex(qtest_readl(qts, gsdma_ch_reg(0, K230_GSDMA_CH_CFG)) &
++                    K230_GSDMA_CH0_CFG_DECOMP_CTRL_EN,
++                    ==, K230_GSDMA_CH0_CFG_DECOMP_CTRL_EN);
++    g_assert_cmphex(qtest_readl(qts, gsdma_ch_reg(0, K230_GSDMA_CH_LLT_SADDR)),
++                    ==, TEST_LLT_ADDR0);
++    g_assert_cmphex(qtest_readl(qts, gsdma_ch_reg(1, K230_GSDMA_CH_LLT_SADDR)),
++                    ==, TEST_LLT_ADDR1);
++
++    qtest_writel(qts, gzip_reg(K230_DECOMP_GZIP_GZIP_SRC_SIZE),
++                 K230_DECOMP_GZIP_CTRL_EN | sizeof(test_gzip_data));
++    qtest_writel(qts, gzip_reg(K230_DECOMP_GZIP_GZIP_OUT_SIZE),
++                 TEST_PAYLOAD_LEN);
++    qtest_writel(qts, gzip_reg(K230_DECOMP_GZIP_DECOMP_START),
++                 K230_DECOMP_GZIP_START);
++
++    stat = qtest_readl(qts, gzip_reg(K230_DECOMP_GZIP_DECOMP_STAT));
++    g_assert_cmphex(stat & K230_DECOMP_GZIP_STAT_CRC_OK, ==,
++                    K230_DECOMP_GZIP_STAT_CRC_OK);
++
++    g_assert_cmphex(qtest_readl(qts,
++                                gsdma_ch_reg(0, K230_GSDMA_CH_CURRENT_LLT)),
++                    ==, TEST_LLT_ADDR0);
++    g_assert_cmphex(qtest_readl(qts,
++                                gsdma_ch_reg(1, K230_GSDMA_CH_CURRENT_LLT)),
++                    ==, TEST_LLT_ADDR1);
++
++    stat = qtest_readl(qts, gsdma_reg(K230_GSDMA_DMA_INT_STAT));
++    g_assert_cmphex(stat & K230_GSDMA_SDMA_DONE_INT(0), ==,
++                    K230_GSDMA_SDMA_DONE_INT(0));
++    g_assert_cmphex(stat & K230_GSDMA_SDMA_DONE_INT(1), ==,
++                    K230_GSDMA_SDMA_DONE_INT(1));
++
++    qtest_memread(qts, TEST_DST_ADDR, output, sizeof(output));
++    g_assert_cmpmem(output, sizeof(output), test_payload, TEST_PAYLOAD_LEN);
++
++    qtest_quit(qts);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++
++    qtest_add_func("/k230-decomp-gzip/reset-and-rw", test_reset_and_rw);
++    qtest_add_func("/k230-decomp-gzip/gsdma-handshake-flow",
++                   test_gsdma_handshake_flow);
++
++    return g_test_run();
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 1b13a777c9..7da12421af 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -297,7 +297,7 @@ qtests_riscv64 = ['riscv-csr-test'] + \
+   (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
+    config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
+    ['iommu-riscv-test'] : []) + \
+-  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test', 'k230-gsdma-test'] : [])
++  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test', 'k230-gsdma-test', 'k230-decomp-gzip-test'] : [])
+ 
+ qtests_hexagon = ['boot-serial-test']
+ 
+-- 
+2.43.0
+
 
