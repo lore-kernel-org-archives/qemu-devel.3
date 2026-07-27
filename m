@@ -4,111 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40C38C531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 04:46:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C426C531FC
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 05:24:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woDDW-00067S-ND; Mon, 27 Jul 2026 00:45:30 -0400
+	id 1woDoU-0004BY-8Q; Mon, 27 Jul 2026 01:23:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1woDDV-000657-OT
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 00:45:29 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1woDDU-0006Jo-Al
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 00:45:29 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-81ed2a00f12so26373407b3.2
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 21:45:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785127527; cv=none;
- d=google.com; s=arc-20260327;
- b=agIoEDIiCg2IWPEDX5edVXx2UMSVjOU1SBGU701dtToP/fKnBBetI1FBuiIJ7xnCm0
- zzIPyNCA4hBmge/tqU9GV5zP23ksiOq/OaTbd/zRIImh6m8Wd+xeraD4samv6RAdKRdi
- ZA2JVpQ+A7gE6MkEYY0un8/m7RSZNn+t/C6+7dNK6XPTkcn3fz/TtHgehi6w2Pe3OfY5
- rIn/dD2TJwusj44ymcy4pkJoBCpETDwhmDIa9deUr8oiwDMOrKbl8Bc3577IqSx1YquD
- U0gzEocKC4UGztxbj7Qv1ZDA2IdzSi5AOmTCh/62SNVKtwUBbBP78a83FGHLS8zGD6N6
- Ixxg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=0OUhsbKQ0/u8SCUlAqfilJ4I7sL1QRkwHHunxt6ShDM=;
- fh=c1T1+m8G2EyFNqUHo256tHQQkB3bftmoJ0qWpaHaX+4=;
- b=pHdJXGl9noVeAiTEDw2nTJCQSKu34XafQSiNSdIHBgPsjreJv9fiRzosS+Jr591DVQ
- mgWc2HXjl9BfVW+y2CmMJGeWwkiMG2i5Z449XLIfIjpF3mha15jUo2ioUZ7h3zmbmQun
- mX3fhCmH4cwNmWmOZF4G/5ZBg+Ea8pU1StaTQov6coNW3zOUFura5HK84cMmJjJc8SCB
- 9MUD61QCVqH+Kz6kUKFHpW55dFwx95gIf5NxEHRPTLppfArN1wnZHFPvq6oQ40p/j1+8
- oEKR+q5p6M6IF+dzwT7TDEnc2jwob4SUBlWcGL0pPHJVF4f6bSY16hoYLPYUWBTKhfpf
- 5BPA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785127527; x=1785732327; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=0OUhsbKQ0/u8SCUlAqfilJ4I7sL1QRkwHHunxt6ShDM=;
- b=R+Slgg3cA4pALMIf+z7gHzI0baGe9W7pqRAFeyQp3GAUtfzMKmDug3b8vlkFShrhwo
- Zh52F+lTEI4PRyggXcg2TK85k2/q2qXmWcejxN4B0Wop6332NYJwuntZaZkM6ryooCfd
- I3BkNu1ZMC1sH0qjgYFUI9MU7fGB2idaI8wXDoYaMbZJ4JTZDCbvIhKzWN4yEzNtfk+r
- ZJvz3uqfrKevlBuT5VtIjozbP5tN1pVsiniJtMaIVuBmP/ja3bq4MPxb5ZQV8HGIMGuK
- jP4V+2g+eEaVhNlLYiVW+ikQesP2M73BPfFVR1fjH2342pVnvJcx9nsitCj09DbS2Vh8
- PaHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785127527; x=1785732327;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=0OUhsbKQ0/u8SCUlAqfilJ4I7sL1QRkwHHunxt6ShDM=;
- b=s6mGe2zLgJLvFEOj5LGIxbf6uIAc6Ugb+1gENsjReFH3mBhb9eEezjrYI5DR8CAHF6
- kR3+TwXSocSxvWBPiXezwIgNvxwist+4QGaQFH+TToTNLFYlxNMxFj8Tji5wQZQQm4BT
- 9XDRJxomXRnVVfw5OZJxgu59TX39XmWYhPN2eaXlyvdH8ZqYmtR/6skyFGY/2bzQ/iNW
- R35rG1l+g06Z7nq/xWMRzsPLj6VFo9t+1LaZECVx6rL/VQRk5sRLLAI3CWH5n9F4FKUN
- zs/qMWsacwT6pF6PZ717e6g+AAGA97UpBLIVDLGWZ12T+0816aLTSm9GdECj9fYF5e9s
- INcA==
-X-Gm-Message-State: AOJu0YxYIiOwafkgVXJmJfgAPa11PI4rT3Z/OUvkrro36Rc+3lxG8wV/
- TlhfwrcAnf6/S+bqbCaJ8c95rIKus1Gs7n++qJ9xsECGmkUK4WwraUevSdPNQjhlRsympuoXE/t
- SLyuB0o+kXEVXDS2aSwpPStzEpcM9D3k=
-X-Gm-Gg: AR+sD10MLXU4SJYf9qtvboXAtJEmt1Ycr9dUPomZyAtBJi1cRI0kh1eh6q65RoeSUPR
- lx8ou++8XaikJrmJ4RKUnvm50pCU+wm8+VvVpu5qBVYOiuWKYfWnAVVLyL2vPtm+uaSeCEDRsrd
- SCQE30JepUNGIq7bH9HZ/TX8P5A9kuRg/La1+MqwOb8QXFTlRlL1/PMOquLz25YV1AYS+U7w5Zh
- fsnUmOQrMNrNskjauux/0+3D0HOesLDVnJugYjs75vpTZCpmJoKCYxj5ybAKA==
-X-Received: by 2002:a05:690c:64c2:b0:81e:9ba9:d36b with SMTP id
- 00721157ae682-81f69e9bd7amr23128037b3.63.1785127526839; Sun, 26 Jul 2026
- 21:45:26 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1785064312.git.flamboyant.h.01@gmail.com>
- <12e325190a15045cff5c429b154217814cd9e618.1785064313.git.flamboyant.h.01@gmail.com>
-In-Reply-To: <12e325190a15045cff5c429b154217814cd9e618.1785064313.git.flamboyant.h.01@gmail.com>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Mon, 27 Jul 2026 12:45:12 +0800
-X-Gm-Features: AUfX_mwYfOo15Iqvx9k9PAcrHvDVRAGZQUpU5j2HVZnvG7olLePuuxVNmCIwcPo
-Message-ID: <CAEUhbmUEF7fLEP9+HbE6mKE5OKsVm0rds+1S==BtRLArLZMbxA@mail.gmail.com>
-Subject: Re: [PATCH 01/11] hw/ssi: Add K230 DesignWare SSI register model
-To: Kangjie Huang <flamboyant.h.01@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Chao Liu <chao.liu@processmission.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Alistair Francis <alistair@alistair23.me>, Palmer Dabbelt <palmer@dabbelt.com>,
- Weiwei Li <liwei1518@gmail.com>, 
+ (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
+ id 1woDoO-0004AN-EL; Mon, 27 Jul 2026 01:23:39 -0400
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
+ id 1woDoM-0001hZ-O9; Mon, 27 Jul 2026 01:23:36 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=NZle2anD5hd5++GAfPAzUBwpCUM1rTNXa+Nb0oPnYAtFZorbst9/hk6q9rx/0Lh3qAI6ccVyQmaJR0pt/Kg++1AkrRylOgrRvrRDCF2vsyBIZq23L4JAil8HccKI7dXbBkeZf+tCjmNeXvFdq9RzgLHSMMQoNkNg9b9t5HIzfWxDWHIOtbI07odyQxDXZuI/AZHCMN76NfZSHu7UwwowpqXsCVK0Cw3SiorSTw7trUgK5Cw6zCGFDCWnzei7pQ9LhNhq0UbfpTW4aOsv6ymiCF7waZrbqzcioz7fNxUVR1EKAiiNAV51H4xxofL5K3mGDqYEJWFvN9z4cJsFeBP9rQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Ytz5v6kg2VQCW6kAJiQcIXm/aU7O1AGk3p70kPsYwUk=;
+ b=fS+GOnbgRbblMjo5uJXdepopOvQsKXqUxP7KyRGNr4SLPbM1PjJ6uo2fYLHpG+6eMv/v6FJZFOiLl15PHJtQQaTpaNqfYbUwyxCCJDShZ+bwA7HYI5YglIE7OmM7W36nKvkcw4WrNyqb1PxwZAdQzMH7a1tDWzfchablvNdvq4mRM99ZJXzu03GzRiHQqXrU2cPIOmkeY4uajOtIxJW8uhT1Y3DZp4fMkCt1yZg/zGgfsoGAGw8ft5ukCqmOAaVfJr9EDDLx5cCndfz8f4G9hbD14YDQ+9MCJkyfIe0h1m44AyssQ+vTPac6ywR5owTLoDKQtiYNmgAPI4fDhDksSQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=processmission.com; dmarc=pass action=none
+ header.from=processmission.com; dkim=pass header.d=processmission.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Ytz5v6kg2VQCW6kAJiQcIXm/aU7O1AGk3p70kPsYwUk=;
+ b=ccI8BkbZLhFGyLKVm1tsgqeOAL018r8cBVd5UYgGqvVs/LcPg63xUEWEQKHjVmrY5HtALhclyojgkyns8/55URzm/QajrrsvG+OH2SdlEOi6D0fKLWONuHJBHXqAj9vmTF9vXvXZh2b/rv31IjJyow3P36qU9wXybkpTVUUVWTsj8YG9/Tb8fjM4AAlGvR2KqS7PN0hkxrtOVOzj4UKcHdq3N6QkEtkQ63Kakqcr1hL/y0ie9FtctofFF1n4XG6jbRebGZX+AuDY1lvkcQwKQI4xFVZQV/0ZbmCzZmCyWZuzJbhGK0cWMJAoT46jqu+Gp2emkRgh6QaPgXwcIdbH4g==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=processmission.com;
+Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
+ by JH0PR02MB7594.apcprd02.prod.outlook.com (2603:1096:990:63::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Mon, 27 Jul
+ 2026 05:23:25 +0000
+Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
+ ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
+ ([fe80::e5f3:5fb7:3d29:5934%4]) with mapi id 15.21.0245.012; Mon, 27 Jul 2026
+ 05:23:24 +0000
+Date: Mon, 27 Jul 2026 13:23:19 +0800
+From: Chao Liu <chao.liu@processmission.com>
+To: Bin Meng <bin.meng@processmission.com>
+Cc: QEMU <qemu-devel@nongnu.org>, 
+ Alistair Francis <alistair.francis@wdc.com>, Conor Dooley <conor@kernel.org>, 
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yw1-x112b.google.com
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Sebastian Huber <sebastian.huber@embedded-brains.de>, 
+ Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org
+Subject: Re: [PATCH 01/26] hw/riscv: pfsoc: Correct the L2LIM maximum mapped
+ size
+Message-ID: <ambrO2_sf80l7-en@ChaodeMacBook-Pro.local>
+References: <20260723151853.2143177-1-bin.meng@processmission.com>
+ <20260723151853.2143177-2-bin.meng@processmission.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260723151853.2143177-2-bin.meng@processmission.com>
+X-ClientProxiedBy: PH8PR21CA0006.namprd21.prod.outlook.com
+ (2603:10b6:510:2ce::18) To TYNPR02MB9351.apcprd02.prod.outlook.com
+ (2603:1096:405:3d0::15)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|JH0PR02MB7594:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3d955a43-44d3-44e0-012a-08deeb9f2e6d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|34096008|366016|376014|1800799024|23010399003|56012099006|4143699003|10067099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: vfmHzUazy0URPEPVkSAvQq7+o+ouTGR3nzWWVJuGIBX1fjvfWBAnb9Gl+H9xFf16x937fZfNKqZ1ImERlyySVy5XNbkdDCJdwBzAM2ZA5vOFyRd52yNhPoTyRvZMzEkA3vsGPKmZ8diCoTh71j7s1Mgf9nHheU4qLJE7ifmsUDZbM3vSh1OEDyrJSN6oYf39/CG3rKojZlKrDS979M0McuM0MSu/hqVDjA6RHc9pCQKLLmCTILzXyHuAKAESuIdcRXBqZz88SGCG71r98oIFGz1NUXU/JgTiDK+sawfimsgYRfbIrZyzMouWSld6n4I469dAyEFfyIHVzt6LH8lo/MJYMH2lp4cfeU3lrJ7rzQWkIXHjGanH7AxnOYuHluuYZk2JqqIb5TvzCwiVl8/Gq3UowjvES0fVdf9hG1lSE/rhADFS930Q3X+thT7yJLv//a8TgE9MGn0AFYM3+Cmkh4ZGqZLPWz0M1c1iI80DgfwU7B4z/aTE4zqkg2DkgwsCsfo99IiWlQLaCrVZDkZWgAmdEUpMKBp7ltbjlmzbapF0my6WWEvGJ8V40OpsWGWPeMlh9xbJVN3kuBvcjOYCVtsdttixiRO78FmJ7o4l96L2qISXhyM70Sp9k+GbsppXREB5qGSDFrxsn3MR6BsZQw==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(34096008)(366016)(376014)(1800799024)(23010399003)(56012099006)(4143699003)(10067099003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?YXm7jri8n4wfHgrwsf+WNdvxiMaMjFaGIGErlMLWChEfWnn4S87m4h8plH8O?=
+ =?us-ascii?Q?R84aaapj0pi2i14NNoNiiVnk0JkMmXixE7i+aMfEVNDlfXsKv75+DAJK0iig?=
+ =?us-ascii?Q?uQqGUJvBkXIS3/WFTRMFnXj4nC4DlPL+PRskB4w9mCeR1vyASYu8QThbCJxE?=
+ =?us-ascii?Q?SsOi0oLA2LrW+laGCOGx5iKd9yINURFfQiPYdVDsaRl6URmiK0SJ93Gh9I1y?=
+ =?us-ascii?Q?F0qSFEcJmHYwZMkPg+JuRJWpt961r9SVwq17nOWyvwQrhoW/WIHAAaLMnKRH?=
+ =?us-ascii?Q?HFArqldPZSUQgIyqcSOfvpoVhpJeq5VrFyeciC1UAC5vPezRstu7TAPuBrYP?=
+ =?us-ascii?Q?2karM4g1cvteRVAQLT0AkhrqgS16kzH7QHadgayJ9L1nFou3feRsqPa+H+fB?=
+ =?us-ascii?Q?peV2rdJ1fn6lDWMTna7iRDcDTm6KCDOvGN1zSoPwAzzA+sUWFu2oe+WfKNmT?=
+ =?us-ascii?Q?IodhEODCKkHUvgh7jQT+FXui+j9Hq3a8Dw9/ZKPOiWPkrjD3iEGZoUUwXOch?=
+ =?us-ascii?Q?vLoG0CeF8f+W7sqy0euq12vD/LpwbwJkjORfffm6ZdoR5xGIwpbYwHMbwsd+?=
+ =?us-ascii?Q?YJnan9E2K30WRGj9+JJaTG5S1KriItbLdJTVl5qQfGGHqrxN3KQfFGYKtGPR?=
+ =?us-ascii?Q?j8NWZbej61JTUOcpZ9LuT9rfli1d/u5tcM0XhqjFnXHa1xMqewF3bLyzw26J?=
+ =?us-ascii?Q?L4Yl2zEwTFVNl0bbIwT54tvISryIENC++3y8z5WOxr5izMMKg8Bad/sx7trf?=
+ =?us-ascii?Q?i0PElv8recSIocNbUSagnnN7ddHbW00WVJUSaPsfU2kSS6nWAymANiVxSr9c?=
+ =?us-ascii?Q?qZlckV8xTlabe25/cNoCNn3EUIlcjOnbeztEAD8YC3/7HBL90ZPgmVIE54Vz?=
+ =?us-ascii?Q?6Oi9BbPIi9sRYEYBXFtt3zvAlR9qLgq7B4msR7Hlit4DI+sq3pdazkCc/szo?=
+ =?us-ascii?Q?KDYW2nYX7ySErCaGTHPTl7MXB3A+6Ce2Jh5YbnalX+9amNTdyUw+ZXaj8Xga?=
+ =?us-ascii?Q?KlOIQV2IQMKEx9r6L/KL6/Sk0b+BgdnwQ5ChhICHP/pZCB4fySexq5eXSeGF?=
+ =?us-ascii?Q?COm7loC7pEthkjzPxAWZ+KWOM+gkya+VDAtIJ2y17yF6doAX0NLnflq+yPrk?=
+ =?us-ascii?Q?coig3SRUHxE1LA3LZyog+Sr+ggcaEV9EP55phKbZ0BHkg2r7Tpu7w/NAquOV?=
+ =?us-ascii?Q?rH8ERkmMjSVrofpmG/k7ytJRTZex8Amr1sumk95DRx8fF4RDwXvGkw8DskJ6?=
+ =?us-ascii?Q?MJeD+p6BzFl2Fsf0YM0z07J5UPXz5i2wX8O3eqAxhc++yq7SVyciTKideCtw?=
+ =?us-ascii?Q?Us6uEwtjvDgft1Bk1XpRgS1jM9SV1e5d4MbTP5jJiB1RWJ/ti2hkwsFjD9Wy?=
+ =?us-ascii?Q?kwKs6F2DGE01P82G/0wP1ExDAyrnKarNEJkgxZYZ1bmdtbUVvT8rCKf6DJO0?=
+ =?us-ascii?Q?5dGubyIThWO7j4tifzUT8gDE1UQaZIbAQ3VKV07J9kg01jQDI30/7LUu2YI3?=
+ =?us-ascii?Q?BiMam+Qmsxqo32DD6ZHj+LR0zaSgNK+VlUP5k7N6Yx7GNo8XsC2n3NJtt/zc?=
+ =?us-ascii?Q?Y3oz5jXgFHulPq5A2kIVC7z+LC94rzyAXKvlEbFXQqUJHkoSZMelJbIZEnK5?=
+ =?us-ascii?Q?HtBrkzO/+2f4Vo3wdxn0SIHV/Glofe4GQnHzsVgFKz2oYNnZoEof9DocsJVG?=
+ =?us-ascii?Q?eREfLFlvR7Nu0F5gBMVqTRio+B0cw7NdHLwcV+L8GCrJTpg2ewyQqwr0jq3c?=
+ =?us-ascii?Q?W9F70yscv+gC0fahEMa9EPzTkNO/yJs=3D?=
+X-OriginatorOrg: processmission.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3d955a43-44d3-44e0-012a-08deeb9f2e6d
+X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 05:23:24.6812 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: D3aavrK7mqmjWfTv30RQY16MEZDnnqA59mZmtZIY1zmt19A98ZJkT6z2ByvAo5GdNLi8m7V/GdMK0rUHm418Y6i4dOwIHFI3WZFU6qlixTM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: JH0PR02MB7594
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+ envelope-from=chao.liu@processmission.com;
+ helo=SEYPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,40 +145,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Kangjie,
+On Thu, Jul 23, 2026 at 11:18:28PM +0800, Bin Meng wrote:
+> PolarFire SoC has a 2MiB L2 cache, so the maximum mapped size of
+> L2LIM should be set to 2MiB too.
+> 
+> Signed-off-by: Bin Meng <bin.meng@processmission.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
 
-On Sun, Jul 26, 2026 at 8:30=E2=80=AFPM Kangjie Huang <flamboyant.h.01@gmai=
-l.com> wrote:
->
-> Add a SysBus model for the K230 DesignWare SSI controllers.
->
-> Implement the register layout, reset values, writable masks, FIFO state,
-> chip-select GPIOs, and the MMIO regions needed by the K230 machine,
-> based on the K230 Technical Reference Manual. The controller is not
-> instantiated by this patch.
+Thanks,
+Chao
 
-Please split the model into 2 models:
-
-- One generic model for Synopsys DesignWare SSI controller
-- One K230 specific wrapper model on top of the Synopsys DesignWare
-SSI controller [optional, if the generic model is enough to make the
-k230 software happy]
-
-This way we can reuse the Synopsys DesignWare SSI controller model by
-other machines in the future.
-
->
-> Signed-off-by: Kangjie Huang <flamboyant.h.01@gmail.com>
 > ---
->  hw/ssi/Kconfig               |   4 +
->  hw/ssi/k230_dw_ssi.c         | 795 +++++++++++++++++++++++++++++++++++
->  hw/ssi/meson.build           |   1 +
->  include/hw/ssi/k230_dw_ssi.h |  50 +++
->  4 files changed, 850 insertions(+)
->  create mode 100644 hw/ssi/k230_dw_ssi.c
->  create mode 100644 include/hw/ssi/k230_dw_ssi.h
->
-
-Regards,
-Bin
+> 
+>  hw/riscv/microchip_pfsoc.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+> index 4017129c83..218cccab69 100644
+> --- a/hw/riscv/microchip_pfsoc.c
+> +++ b/hw/riscv/microchip_pfsoc.c
+> @@ -96,7 +96,7 @@ static const MemMapEntry microchip_pfsoc_memmap[] = {
+>      [MICROCHIP_PFSOC_CLINT] =           {  0x2000000,      0x10000 },
+>      [MICROCHIP_PFSOC_L2CC] =            {  0x2010000,       0x1000 },
+>      [MICROCHIP_PFSOC_DMA] =             {  0x3000000,     0x100000 },
+> -    [MICROCHIP_PFSOC_L2LIM] =           {  0x8000000,    0x2000000 },
+> +    [MICROCHIP_PFSOC_L2LIM] =           {  0x8000000,     0x200000 },
+>      [MICROCHIP_PFSOC_PLIC] =            {  0xc000000,    0x4000000 },
+>      [MICROCHIP_PFSOC_MMUART0] =         { 0x20000000,       0x1000 },
+>      [MICROCHIP_PFSOC_WDOG0] =           { 0x20001000,       0x1000 },
+> -- 
+> 2.34.1
+> 
 
