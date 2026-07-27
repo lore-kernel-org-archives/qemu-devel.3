@@ -4,107 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DDDBC531D0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8179FC53209
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:23:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woQsm-0000uT-6D; Mon, 27 Jul 2026 15:21:02 -0400
+	id 1woQt5-0001tU-VI; Mon, 27 Jul 2026 15:21:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsM-0000a9-Vo
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsY-0000t3-5g
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsL-0000e4-9K
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:34 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsW-0000gc-EJ
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785180032;
+ s=mimecast20190719; t=1785180043;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xTP2mrPTOCEv1S2HwfgF4Ye14Bhz50OTeDYQ5YoPY/s=;
- b=DgwFVG7Mc1yM0bGVbb2zV5hGNiay4r+mZKeYZZLj1b1eiwVMCPFwvbwJ+uwINTvPmPUeKM
- SCjJjZfzits5PMRNvPVdu7OhdNjmG2Lzpq0xiO/dlyzTTyrSkFG6N3aYuBA6m5BsXGfyxR
- RBg7nbMneqbG09yRGkbcJza8RqG9CeU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=yZu81sJRfUDJ7gSNX62NjmG3vC2DfnNRoaluf11vifQ=;
+ b=Dd/221DIwAblHUnFdbKEWQtPXmuPET19/bEZHpvFWxGVWjv2RXMwDiFe08imWimx++mAjp
+ QY+0OkLnx07wHTLO/Yz/kRrv4puCTbim60YoddUus3ZiBqS9UqsycLiCDk8PVb6JhNVaHo
+ kGibaTG+pEMfHVPIlDTW5uoxtULj6AU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-623-kHCRPHpjNwuKKHMccX49Xg-1; Mon, 27 Jul 2026 15:20:29 -0400
-X-MC-Unique: kHCRPHpjNwuKKHMccX49Xg-1
-X-Mimecast-MFC-AGG-ID: kHCRPHpjNwuKKHMccX49Xg_1785180028
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4955d314945so21666595e9.0
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:20:29 -0700 (PDT)
+ us-mta-360-7NkdR8pJNjmwNkyJpXbm4g-1; Mon, 27 Jul 2026 15:20:41 -0400
+X-MC-Unique: 7NkdR8pJNjmwNkyJpXbm4g-1
+X-Mimecast-MFC-AGG-ID: 7NkdR8pJNjmwNkyJpXbm4g_1785180040
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-495495ad5ddso17017945e9.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:20:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785180028; x=1785784828; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=xTP2mrPTOCEv1S2HwfgF4Ye14Bhz50OTeDYQ5YoPY/s=;
- b=jDbVnvgidRO9a3FoGTtygOBvo7CFpII+4N13eMbxyi+YBc7RIcsf5cJY66Z2Ps+4oR
- Jgo5d6UM2JsOUtAuxfQHdlB/ZwjBV3Yu9UQRJjz9kumZ48v0OszUBBY3njJgHhX09I2x
- zEmb2wugU37Wjn1ZK/zZtWS1hZwHHpjqFGKJ0bPS9+V2BmTTDK4qt9QUWjB4eBoYgqis
- S6K+cKIktIR0NA1lTOMFZl1uGkqRcfZIDplLhL3OTLXyAMufrcsIwTDRtd7tQyhEJBy3
- F3v1UcAlG8h9+fcAe5/6ysqk7ARy7WpEBxqIcEtZ6Bc2Mdb7h0Lg6nv8wvh5eu94nGZt
- 5lFA==
+ d=redhat.com; s=google; t=1785180040; x=1785784840; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=yZu81sJRfUDJ7gSNX62NjmG3vC2DfnNRoaluf11vifQ=;
+ b=s4mctFqx0aN9XuZZWTo3eoAXL/vSlHWa/Xu2pYD/pwIBx/RXSh7CUmWAvzwXgceFia
+ RvhfWh2s+XaD5LLErrdeOWwBIJ/PzIx9jMRl2ksRMv3lVv4Y+uOb8MqAeWpq5I9DI8QZ
+ wXSHRQVe3Gtr2pA79CU6yJd+AjqjAc6X2ZHSDPBYBpIJRCIe/gcUi7MlF2kcDSJhURnC
+ iYMdgcQ8K0o74nbS4qn833NaLJ5JfMO1kHeaAT/SDgflnUghCDP+Wf9dyNH/LpGfYCPG
+ obTGIOdB4Aeyp2rHBncEqdBU8hmB6aUEGBMrexFeikJKwoviEyGcvEMKdrr9LUem6rtL
+ FwCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785180028; x=1785784828;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=xTP2mrPTOCEv1S2HwfgF4Ye14Bhz50OTeDYQ5YoPY/s=;
- b=NOESRYASsI+LhPvXJY8472bokEZ/dQvGSSU9CrBMlrmKBJURHkCxKqtFdvnpzpld7P
- 0xfzLDZhSbSyMHb9schBNzF2lPlJP498cHnD7gVsNc1OEIEgLj1ZBrz9XDuHZr/j5+6E
- YnwOjPV/e4lUWNcnp6rzmmAEK3X1YtSRYdgSEninmJ1Az94KYUeAJxJf/vKcXWMPrkb9
- 1SB/bDAKmaGAT/N2ImqzKDB3Q9MslBUsFTWH1jFYH6eEL4Rvp0XY+VswaikpOWcebRTp
- /e/p+xiF7XGN95aS1f/1SMYG7sZjtpbZdnW+T/+JwUO3RnI8ENpb8Z19XtLXaWh3wcps
- UdXQ==
-X-Gm-Message-State: AOJu0YxxnKxDA55YituwAeMy9xkzgUD4OmDqJEt5/AgkZHfeCUjlDyOF
- WdHdMrHM7xF/2tc8rBV5lBT11tc4BoNqaY0jNWyRkgAEdOVB5dCMIkyJZEr65J2XGxaeNmH4BM5
- HmP7TgLzkvWXoFVKM7VLQE5KO4AnFAvGfhTz2iWMY2wdhrFNC8ci2wSOCuK0ls8fIvO+p2GbIf4
- UY/BJsWZfmRZFTQrtoHN7bUnOiaILQbDSNow==
-X-Gm-Gg: AR+sD11nz8flfFo6ZyOuICf5a/jUfYFCeAIfVmC1eZmbhYsq6AYuzHxtiQMydwegkXY
- 7kUYCmmrvSFK3uRuFJf8InseT8eF3DQkfiKKKSHE8FmhmuibfJQMiodAJV4OaEkAZ5mDVzMuegH
- 1T2RxIUaD0ld92x/dRb0UCQfkaJMugA0yaCXCHi4XOas2Fi6zMohHPbS2f2Zm2CGCKu/7FYikNN
- +CCmQEUqMBOdzewa6XTrXvS4TBAPRdC+HICjYKGwN4fxI/Ic7nOq9TNk24rfqyUvK0Y4n8bq5ZV
- r9C7XlMKOYvqyCP5i1FxuRLOYUnig6HB6Esr1sZXHb5dAHvF2ShuVKM4DKCbHy+5RNASMZfl09C
- vTK+WeUVECcIC4e22lcc//w==
-X-Received: by 2002:a05:600c:1d1b:b0:495:6f6b:fb75 with SMTP id
- 5b1f17b1804b1-496b57678e5mr141548675e9.38.1785180028056; 
- Mon, 27 Jul 2026 12:20:28 -0700 (PDT)
-X-Received: by 2002:a05:600c:1d1b:b0:495:6f6b:fb75 with SMTP id
- 5b1f17b1804b1-496b57678e5mr141548305e9.38.1785180027528; 
- Mon, 27 Jul 2026 12:20:27 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785180040; x=1785784840;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=yZu81sJRfUDJ7gSNX62NjmG3vC2DfnNRoaluf11vifQ=;
+ b=F9bH69tr4UniXcfoKJHhYBYJprEwoXpCQRyRVOBkaRGueq/++7h/T//hueGz6HNFfJ
+ cHu6RukIp58h0I6L2+bGTQBOfaiUnDeCgdgjNKGVfIbyIlRsGB96IJ/Bbi9QLyO5yemU
+ VuIAPL6C0cA11ZuvH0Ph9HFdPk5W+LSuE+8ngNNQ9PoTKLjeE5pViMWlj50OzPj6l3as
+ rSSQT9JhWmAdR5d/mo4r5zUrlvO6+s2bNnUYCyQYZousPDUTHmwYX37QKk7z9xUr4hZS
+ UEuxB24WlsZAiy4p05t/RrQS+i6m5MpMLa26qKXCzw3wpXVhCxwcL0SF9b16BNSvNqWS
+ cFmw==
+X-Gm-Message-State: AOJu0YzCkaFZU1zV2gCwlw5O0I5IwT4ysASndp02O3C30k2DGo03VHqP
+ j1cHO+cL4GrL2BtlujUU5MN1+RReVZ331R9oq9fuOcJXlAnheSqvfxCyN5Fs721DVv6hU1ehfzW
+ auANcWCZfP5jR9hpJt7KJsDlu+uMb4n7Gdjs2olRaC9D+mydMoK7MlxNCQo+9a1E2X05WxEi1mO
+ BvujmufvbCgBbzmn/CxfxerbtAEVfGE0ijTQ==
+X-Gm-Gg: AR+sD13Qedk9cbe2g+Hjjk5K6OstCAm2NFPQv1j9I48tW6rgGKzRuMwDMbxlgsD8qSV
+ xCcOZqjuck13gNIJYC8lPK18bYugwrGR6VYjLXEe7PFzoYu0xhZwPb21v5HuknAvwYV5cgVqvES
+ ovKhq4qh9qEVdBqbTsIHnB6lMJ0BaqxXyoS7X4gkporXTwkuygx4aZUsub3ZRfCLGR0NGZV43ke
+ DL0/y5PVPDQ7byoI7unjDeCjMwrhSj4cfx6H7xnrZ2++ZCGhWwnZJxUKFez04aky4uMoI8ULlfk
+ eU5pr740zHJrQ60iz8Og2FWIwyfLBRukD96nHWp5MOe8wQgxzM+uSOjZsfq5AUwE+Yy4Bv7dJlm
+ 6Bk+bDCwK1YlV6L9nPurB8Q==
+X-Received: by 2002:a05:600c:a4f:b0:493:d741:5d72 with SMTP id
+ 5b1f17b1804b1-496b57116e2mr154280405e9.38.1785180040001; 
+ Mon, 27 Jul 2026 12:20:40 -0700 (PDT)
+X-Received: by 2002:a05:600c:a4f:b0:493:d741:5d72 with SMTP id
+ 5b1f17b1804b1-496b57116e2mr154280075e9.38.1785180039456; 
+ Mon, 27 Jul 2026 12:20:39 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-28-14.inter.net.il. [80.230.28.14])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-496c44afaecsm17051265e9.2.2026.07.27.12.20.26
+ 5b1f17b1804b1-496c44a9451sm16951185e9.1.2026.07.27.12.20.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 12:20:27 -0700 (PDT)
-Date: Mon, 27 Jul 2026 15:20:25 -0400
+ Mon, 27 Jul 2026 12:20:39 -0700 (PDT)
+Date: Mon, 27 Jul 2026 15:20:37 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL v2 23/30] hw/pci-host/q35.c: Avoid early return in
- mch_write_config()
-Message-ID: <e07c67584c69da44a4d52df747a6fff1f411500d.1785179875.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Jia Jia <physicalmtea@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Amit Shah <amit@kernel.org>
+Subject: [PULL v2 28/30] hw/virtio-rng: Fix host use-after-free
+ (CVE-2026-50624)
+Message-ID: <0be94d8d9c28e6b7235b34133d057090fe93be6c.1785179875.git.mst@redhat.com>
 References: <cover.1785179875.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1785179875.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
 X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,64 +125,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Laurent Vivier <lvivier@redhat.com>
 
-In mch_write_config() we return early if has_smm_ranges is false.
-This is slightly bug-prone because it leaves the door open to somebody
-later adding non-SMM-specific code at the bottom of the function.
+Fix a heap-use-after-free in the virtio-rng frontend when a delayed
+rng-random backend completion arrives after the virtio-rng device has been
+hot-unplugged.
 
-This case isn't as bad as the one in realize, because the function is
-a lot shorter.  But putting the handling of the three SMM specific
-ranges into an if() rather than having an early return seems better.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Fixes: CVE-2026-50624
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3917
+Reported-by: Jia Jia <physicalmtea@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260708121011.1653365-4-peter.maydell@linaro.org>
+Message-ID: <20260724094931.3005968-1-lvivier@redhat.com>
 ---
- hw/pci-host/q35.c | 26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ include/system/rng.h   | 14 ++++++++++++++
+ backends/rng.c         | 16 ++++++++++++++++
+ hw/virtio/virtio-rng.c |  2 ++
+ 3 files changed, 32 insertions(+)
 
-diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
-index e42b84b978..f4556ad03a 100644
---- a/hw/pci-host/q35.c
-+++ b/hw/pci-host/q35.c
-@@ -485,22 +485,20 @@ static void mch_write_config(PCIDevice *d,
-         mch_update_pciexbar(mch);
-     }
- 
--    if (!mch->has_smm_ranges) {
--        return;
--    }
-+    if (mch->has_smm_ranges) {
-+        if (ranges_overlap(address, len, MCH_HOST_BRIDGE_SMRAM,
-+                           MCH_HOST_BRIDGE_SMRAM_SIZE)) {
-+            mch_update_smram(mch);
-+        }
- 
--    if (ranges_overlap(address, len, MCH_HOST_BRIDGE_SMRAM,
--                       MCH_HOST_BRIDGE_SMRAM_SIZE)) {
--        mch_update_smram(mch);
--    }
-+        if (ranges_overlap(address, len, MCH_HOST_BRIDGE_EXT_TSEG_MBYTES,
-+                           MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_SIZE)) {
-+            mch_update_ext_tseg_mbytes(mch);
-+        }
- 
--    if (ranges_overlap(address, len, MCH_HOST_BRIDGE_EXT_TSEG_MBYTES,
--                       MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_SIZE)) {
--        mch_update_ext_tseg_mbytes(mch);
--    }
--
--    if (ranges_overlap(address, len, MCH_HOST_BRIDGE_F_SMBASE, 1)) {
--        mch_update_smbase_smram(mch);
-+        if (ranges_overlap(address, len, MCH_HOST_BRIDGE_F_SMBASE, 1)) {
-+            mch_update_smbase_smram(mch);
-+        }
-     }
+diff --git a/include/system/rng.h b/include/system/rng.h
+index e383f87d20..a2667d75ef 100644
+--- a/include/system/rng.h
++++ b/include/system/rng.h
+@@ -86,4 +86,18 @@ void rng_backend_request_entropy(RngBackend *s, size_t size,
+  * deleted.
+  */
+ void rng_backend_finalize_request(RngBackend *s, RngRequest *req);
++
++/**
++ * rng_backend_cancel_requests:
++ * @s: the backend that created the request
++ * @receive_entropy: the function invoked when entropy is available
++ * @opaque: data passed to @receive_entropy
++ *
++ * This function is used by the front-end to cancel all requests to a
++ * given backend. Requests to cancel are identified by the receive_entropy
++ * function and the data passed to the function.
++ */
++void rng_backend_cancel_requests(RngBackend *s,
++                                 EntropyReceiveFunc *receive_entropy,
++                                 const void *opaque);
+ #endif
+diff --git a/backends/rng.c b/backends/rng.c
+index ab94dfea85..7bed62616a 100644
+--- a/backends/rng.c
++++ b/backends/rng.c
+@@ -68,6 +68,22 @@ static void rng_backend_free_request(RngRequest *req)
+     g_free(req);
  }
  
++void rng_backend_cancel_requests(RngBackend *s,
++                                 EntropyReceiveFunc *receive_entropy,
++                                 const void *opaque)
++{
++    RngRequest *req, *next;
++
++    QSIMPLEQ_FOREACH_SAFE(req, &s->requests, next, next) {
++        if (req->receive_entropy != receive_entropy ||
++            req->opaque != opaque) {
++            continue;
++        }
++        QSIMPLEQ_REMOVE(&s->requests, req, RngRequest, next);
++        rng_backend_free_request(req);
++    }
++}
++
+ static void rng_backend_free_requests(RngBackend *s)
+ {
+     RngRequest *req, *next;
+diff --git a/hw/virtio/virtio-rng.c b/hw/virtio/virtio-rng.c
+index 66690a34dc..d68d901195 100644
+--- a/hw/virtio/virtio-rng.c
++++ b/hw/virtio/virtio-rng.c
+@@ -234,6 +234,8 @@ static void virtio_rng_device_unrealize(DeviceState *dev)
+     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+     VirtIORNG *vrng = VIRTIO_RNG(dev);
+ 
++    rng_backend_cancel_requests(vrng->rng, chr_read, vrng);
++
+     qemu_del_vm_change_state_handler(vrng->vmstate);
+     timer_free(vrng->rate_limit_timer);
+     virtio_del_queue(vdev, 0);
 -- 
 MST
 
