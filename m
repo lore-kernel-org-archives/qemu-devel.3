@@ -4,68 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 710BAC531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 13:03:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01351C5321C
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 13:18:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woKz3-0004do-Cs; Mon, 27 Jul 2026 09:03:06 -0400
+	id 1woLCX-00085i-4h; Mon, 27 Jul 2026 09:17:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikita.shubin@maquefel.me>)
- id 1woKye-0004WA-Pu
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 09:02:46 -0400
-Received: from forward100d.mail.yandex.net ([2a02:6b8:c41:1300:1:45:d181:d100])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woLCS-00083p-En
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 09:16:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikita.shubin@maquefel.me>)
- id 1woKyX-0006GU-ER
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 09:02:40 -0400
-Received: from mail-nwsmtp-smtp-production-main-74.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-production-main-74.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:1ba6:0:640:9434:0])
- by forward100d.mail.yandex.net (postfix) with ESMTPS id 261F9C00EC;
- Mon, 27 Jul 2026 16:02:25 +0300 (MSK)
-Received: by mail-nwsmtp-smtp-production-main-74.iva.yp-c.yandex.net (smtp)
- with ESMTPSA id K2cAXGlgSW20-KLvBLIaO; 
- Mon, 27 Jul 2026 16:02:24 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=maquefel.me; s=mail;
- t=1785157344; bh=hg2jRw0/8J0N+ZT3cBUZfgogftO7rl31HNU/YIzQU4M=;
- h=References:Date:In-Reply-To:Cc:To:From:Subject:Message-ID;
- b=dP18Yc1uhrasb5a8x6iUw2rE7TUevp685tNzQgZq367m1V6M+yVzUztef381R5dfD
- liBF3aHwQ2mRtKLGyOm3ufjYXVbc/EslB/BCxggGfEmlx17wVSaYNLTtQsDs3fUUw8
- 9N1sMaPhEzVavN4Sq2Ps0PP1dWt5eCzPYtHNhQS8=
-Authentication-Results: mail-nwsmtp-smtp-production-main-74.iva.yp-c.yandex.net;
- dkim=pass header.i=@maquefel.me
-Message-ID: <140847fc9349a45194a7aaad8ab31c1a3e1463ec.camel@maquefel.me>
-Subject: Re: [PATCH v2 1/2] semihosting/arm-compat-semi: Fix
- =?UTF-8?Q?auto=E2=80=91strlen?= detection for =?UTF-8?Q?32=E2=80=91bit?=
- targets
-From: Nikita Shubin <nikita.shubin@maquefel.me>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Alex =?ISO-8859-1?Q?Benn=E9e?=	
- <alex.bennee@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, Alistair
- Francis	 <alistair.francis@wdc.com>
-Date: Mon, 27 Jul 2026 16:02:30 +0300
-In-Reply-To: <CAFEAcA-3ugXDNUncKuv6=GC9b4dkWmDpY6xRRFM5uHGRFPzk6Q@mail.gmail.com>
-References: <20260727-fix-sign-extended-32-bit-addresses-v2-0-6d6a01efed8a@maquefel.me>
- <20260727-fix-sign-extended-32-bit-addresses-v2-1-6d6a01efed8a@maquefel.me>
- <CAFEAcA-hKu_C9MULJ=8_jktDgujveQRBkGXvgnczPNrTWZfeQA@mail.gmail.com>
- <9e4f3fc272c854f496d7c3ce8355df6d3248063f.camel@maquefel.me>
- <CAFEAcA-3ugXDNUncKuv6=GC9b4dkWmDpY6xRRFM5uHGRFPzk6Q@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woLCO-0000Bd-VA
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 09:16:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785158211;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1GzRicd67PSCqJGIMiq4Ufv206kn0KFMDSLYsAkX4MM=;
+ b=dKy0iAv1s1e9sdZHlwpRBJFAJJkCplaWNPIMxWkA7Ont1cguG9D/EG+BowNNbj0Mi89EIv
+ wE6rTt3xuv7BlQ9jtldMiR++D3AUWmxo2Xv1XSkYg554/r5uOCbJDKrmBrzGOxhTodIwBR
+ 5hRBfl5YTX5/KNqzbeFHjdTVDR4hB3E=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-196-hYUftKX4MwmGRlpCf58iQg-1; Mon, 27 Jul 2026 09:16:50 -0400
+X-MC-Unique: hYUftKX4MwmGRlpCf58iQg-1
+X-Mimecast-MFC-AGG-ID: hYUftKX4MwmGRlpCf58iQg_1785158209
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-47f2de3ba47so1619289f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 06:16:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1785158209; x=1785763009; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=1GzRicd67PSCqJGIMiq4Ufv206kn0KFMDSLYsAkX4MM=;
+ b=P380GMWvhBCo2dZkIneabuF7tVHQ5jW8k5tiW1R6gbJjIWwm1+/y7vDzITSfOnXEfA
+ O2/bAZ6zgEn79r5GJFkyA7OA4pRGLtZl505p1s8JOuaGX/aDPM9Dm1g/tk7PNKh+6x2b
+ urXZRqwjzwEyyeq0/IkDWjgYoaE/NqhQzW4bhTWjw2ImEb0Xqh6z9kYhIhITVV0xNjp8
+ lnxHQRx8L6yOQIJvkdgsrKv22VFoNqLFw0lErYCcSeP3tfsOoDBLbr4bxxwXZS1PU6XX
+ TTR0zRUmZfhoVMkiHL6Uc/+YHB9YrcNiSW9D5tA4Twl5BejP9FhBIFA6tCXCTK7WcDh4
+ Y43g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785158209; x=1785763009;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=1GzRicd67PSCqJGIMiq4Ufv206kn0KFMDSLYsAkX4MM=;
+ b=M1VaoPQnh843WrXaeXY24otZjeN28niz7dtX89sw/fOP1WyPU+XcS9mr2xkXm7iERL
+ 72usF8E98929zbknEEatLZu4j31X+Xrs76KZgICwoM8IPZtyVi6Oy22nwtmD/cbO42PO
+ PllzqdHMljdLgu07Nrg/mcwC/MaIkmSQMViKhdiwj/FjY59AsPwtSZS8zmOSQNxdT2mQ
+ PJDI+6HJ8Cxbp5AjS9WE2TeiTXtbEcEfTSl1G90uV/Z2+cHLQ0E6DQhMAo5bAJiX5Asm
+ WFMmUR9A6c1D72SvuvTvgkp6wAjYBwovRlcl/+hqlaxwBF8tQ5WvZUyN+1bt7RvvgW+i
+ b9TA==
+X-Gm-Message-State: AOJu0YwT2KOj3XDwoQk89geQAzMNEJ8+mWWQSUVZHQ0qK1ctMyeYtvRD
+ nFd61XoUAa970fqXj2cb52qxmeYNUUhoSmZmZ/HYX6n6s8R4LDSm1yfmxveQFRqmcKqfduf8pQT
+ E6QLtprLjRZVvWw38N7Sni/h5cVsRmedT69gILr+W8yhzB773WWEsGu6S
+X-Gm-Gg: AR+sD13Mf7DUwJjndxfInuZgotrxM9BQ83AMldv0dnsTiDGXnxoZhNZnPGLmt+tEIz9
+ y290qQY9uyzNeDtnhapJ95Nr1Zg2t8YNMzKVuRsxK23ZHUOGXMqO2fjMm9Wbj+yehB6n16y+V3m
+ YKlUf74Lw8g1fky91AqeZFEUXjOWsnxRBSYhPeUMQIOtlaC5iFVrSWroGIx6KkVdAhKUbsr/qBY
+ 8FvDRallCKRxoabv7VxtG16hVFag3XzSu+H9tdZm8crIdSpLJA04ec/0PrQxGD9X4Sg4KJuh2Zw
+ 9pI9o0Mvj4Qjt51XEyRHzATD7b7J846eoKE+c2jOSS7SJXHdhlwp2PpxPAUy5tsVMG3ayYD3i2J
+ eahCBq+nUco5lOPO8z3w1Vg==
+X-Received: by 2002:a05:6000:178b:b0:47f:6983:c0fd with SMTP id
+ ffacd0b85a97d-47f9feaf242mr10306985f8f.48.1785158208792; 
+ Mon, 27 Jul 2026 06:16:48 -0700 (PDT)
+X-Received: by 2002:a05:6000:178b:b0:47f:6983:c0fd with SMTP id
+ ffacd0b85a97d-47f9feaf242mr10306934f8f.48.1785158208251; 
+ Mon, 27 Jul 2026 06:16:48 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f96d4656bsm32113476f8f.21.2026.07.27.06.16.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 27 Jul 2026 06:16:47 -0700 (PDT)
+Date: Mon, 27 Jul 2026 09:16:44 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: =?utf-8?B?6rmA7Iq57KSR?= <seungjung0711@gmail.com>
+Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Mauro Matteo Cascella <mcascell@redhat.com>
+Subject: Re: [PATCH] vhost: Reject oversized inflight migration buffers
+Message-ID: <20260727091628-mutt-send-email-mst@kernel.org>
+References: <CAHntc+O1jaJhj1_k6kTHDp7u_1DdPUCKZNA_AxWYh+SKraXS8A@mail.gmail.com>
+ <20260727084637-mutt-send-email-mst@kernel.org>
+ <CAHntc+OJ+KMaW_rxXCFn7RjHmBHnp7=q-9TiC_P1HbqfRBhtvA@mail.gmail.com>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:d100;
- envelope-from=nikita.shubin@maquefel.me; helo=forward100d.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAHntc+OJ+KMaW_rxXCFn7RjHmBHnp7=q-9TiC_P1HbqfRBhtvA@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,106 +122,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2026-07-27 at 13:54 +0100, Peter Maydell wrote:
-> On Mon, 27 Jul 2026 at 13:13, Nikita Shubin
-> <nikita.shubin@maquefel.me> wrote:
-> >=20
-> > On Mon, 2026-07-27 at 11:36 +0100, Peter Maydell wrote:
-> > > On Mon, 27 Jul 2026 at 08:46, Nikita Shubin
-> > > <nikita.shubin@maquefel.me> wrote:
-> > > >=20
-> > > > The switch from target_ulong to uint64_t broke the mechanism of
-> > > > passing -1
-> > > > (0xffffffff) in arg2 to signal validate_strlen() to compute the
-> > > > string
-> > > > length automatically. For 32=E2=80=91bit semihosting, detect when a=
-rg2
-> > > > is
-> > > > 0xffffffff and replace it with 0xffffffffffffffff. This causes
-> > > > an
-> > > > overflow
-> > > > to zero, restoring the original behavior of automatic length
-> > > > calculation.
-> > >=20
-> > > Why do you think this is a valid thing for the guest to do? The
-> > > change
-> > > in this patch is to the SYS_OPEN semihosting call. The spec for
-> > > that
-> > > is here:
-> > > https://github.com/ARM-software/abi-aa/blob/main/semihosting/semihost=
-ing.rst#612sys_open-0x01
-> > >=20
-> > > arg2 is the 3rd word in the argument block, which is documented
-> > > as:
-> > >=20
-> > > # An integer that gives the length of the string pointed to by
-> > > field
-> > > 1.
-> > > # The length does not include the terminating null character that
-> > > must
-> > > be present.
-> > >=20
-> > > There's nothing there about -1 being a valid value.
-> > >=20
-> > > I think this is a bug introduced in commit 5b3f39cb04: it
-> > > added "allow length parameter to be 0" to a helper function
-> > > because presumably we need that in some cases where the
-> > > semihosting
-> > > ABI passes a pointer to a string without a length. But because it
-> > > doesn't separate out "length is 0 because ABI doesn't provide
-> > > one"
-> > > from "length is provided by guest", that incorrectly allowed the
-> > > guest to not specify a valid length and QEMU to accept it.
-> >=20
-> > Seems not a bug but intended behavior. Commit 5b3f39cb04
-> > deliberately
-> > added support for a zero length as a signal to invoke strlen(), as
-> > documented in both the code comments and the commit message.
-> >=20
-> > Citation:
-> >=20
-> > ```
-> > =C2=A0=C2=A0=C2=A0 Add helpers to validate the length of the filename s=
-tring.
-> > =C2=A0=C2=A0=C2=A0 Prepare for usage by other semihosting by allowing t=
-he
-> > =C2=A0=C2=A0=C2=A0 filename length parameter to be 0, and calling strle=
-n.
-> > ```
->=20
-> I take that "by other semihosting" bit to mean that we have other
-> semihosting functions where the guest passes a string pointer
-> with no associated length, and we're going to implement those
-> by calling this function with length =3D=3D 0. I don't think it was
-> intended to make that behaviour visible to the guest.
->=20
-> > So it seems like a regression bug introduced by 6dfbf9b6cfe.
-> >=20
-> > Before that, open() simply ignored the length argument, so the
-> > current
-> > logic is a conscious improvement, not an error.
->=20
-> Semihosting has to implement the specification; we don't
-> get to "improve" on it.
->=20
-> > Still in 64=E2=80=91bit mode, passing -1 as arg2 still yields the expec=
-ted
-> > result, so there is a bug somewhere =E2=80=94 either in the 32=E2=80=91=
-bit handling
-> > or
-> > in the common logic.
->=20
-> The bug is that for both 64-bit and 32-bit passing -1 is an error,
-> and we shouldn't be making it work on 64-bit.
+On Mon, Jul 27, 2026 at 06:02:26AM -0700, 김승중 wrote:
+> Thanks Michael. Understood.
+> 
+> The pre_load check was intended as an immediate mitigation, but I see
+> that it does not address the VMSTATE_VBUFFER_UINT64 type confusion in
+> the common load and save paths. I will defer to the generic vmstate
+> fix and will not resend this patch.
+> 
+> I included "Fixes: CVE-2026-6426" because Mauro requested that exact
+> trailer when the CVE was assigned. I understand that under the current
+> QEMU security policy, vhost-user-backend-originated issues are treated
+> as hardening bugs rather than security flaws.
+> 
+> Could you please retain the following credit on the final fix?
+> 
+> Reported-by: Seungjung Kim <seungjung0711@gmail.com>
 
-That's sound reasonable, but still that's breaks behaviour introduced
-earlier and existed for quite a long period of time.
+Indeed, my apologies for missing that.
 
-Ok, i'll do the opposite.
+> Sorry about the unrelated whitespace change.
+> 
+> Thanks,
+> Seungjung
+> 
+> 
+> On Mon, 27 Jul 2026 08:48:56 -0400, "Michael S. Tsirkin" <mst@redhat.com> wrote:
+> > On Mon, Jul 27, 2026 at 05:45:47AM -0700, 김승중 wrote:
+> > > The inflight buffer size is migrated as a uint64_t, but vmstate_size()
+> > > reads VMS_VBUFFER sizes as int32_t. Values above INT32_MAX therefore
+> > > become negative and are converted to a very large size_t while loading
+> > > the buffer, allowing writes beyond the smaller memfd-backed mapping.
+> > >
+> > > Reject sizes that cannot be represented by vmstate_size() before
+> > > allocating the destination buffer.
+> > >
+> > > Fixes: CVE-2026-6426
+> >
+> > This CVE really shouldn't be there.
+> >
+> > > Reported-by: Seungjung Kim <seungjung0711@gmail.com>
+> > > Signed-off-by: Seungjung Kim <seungjung0711@gmail.com>
+> >
+> > This doen't fix it properly, it only fixes values 2g to 4g, but above 4g
+> > is still wrong.
+> >
+> > A better fix here:
+> > https://lore.kernel.org/all/9e2d0b03a60642236e6df8edde7b3562f5f9849f.1785101237.git.mst@redhat.com/
+> >
+> > >
+> > > diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> > > index af41841b52..82eb9407ae 100644
+> > > --- a/hw/virtio/vhost.c
+> > > +++ b/hw/virtio/vhost.c
+> > > @@ -2022,11 +2022,18 @@ void vhost_get_features_ex(struct vhost_dev *hdev,
+> > > static bool vhost_inflight_buffer_pre_load(void *opaque, Error **errp)
+> > > {
+> > > struct vhost_inflight *inflight = opaque;
+> > > -
+> > > int fd = -1;
+> >
+> > pls don't make unrelated changes like this.
+> >
+> > > - void *addr = qemu_memfd_alloc("vhost-inflight", inflight->size,
+> > > - F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
+> > > - &fd, errp);
+> > > + void *addr;
+> > > +
+> > > + if (inflight->size > INT32_MAX) {
+> > > + error_setg(errp, "inflight buffer size %" PRIu64
+> > > + " exceeds maximum %d", inflight->size, INT32_MAX);
+> > > + return false;
+> > > + }
+> > > +
+> > > + addr = qemu_memfd_alloc("vhost-inflight", inflight->size,
+> > > + F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
+> > > + &fd, errp);
+> > > if (!addr) {
+> > > return false;
+> > > }
+> > > --
+> > > 2.50.1 (Apple Git-155)
 
->=20
-> thanks
-> -- PMM
-
-Yours, Shubin.
 
