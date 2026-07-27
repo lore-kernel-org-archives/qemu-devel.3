@@ -4,114 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57575C53209
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 23:23:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5735EC531C9
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 23:37:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woUfM-0000qk-Qo; Mon, 27 Jul 2026 19:23:24 -0400
+	id 1woUsg-0002tx-3e; Mon, 27 Jul 2026 19:37:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1woUfF-0000p2-5R; Mon, 27 Jul 2026 19:23:18 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1woUfC-0000CG-66; Mon, 27 Jul 2026 19:23:16 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66RLm2hc3395277; Mon, 27 Jul 2026 23:23:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=qRbEdr
- 1UAa8kALwMc7PmIqWp/mi99tatGW9+l5mINSU=; b=R7LMZZl8fVGz02JrETE0Hn
- GC3xa0xhmMv6RySWlLYGG59vgyMFBec188G0XNkmL6LDHvkbpRVZ4OwIf+w+M3Fv
- FYDRQvDJiyEhEY/vMfEg9NWeo2bRIQzMurZgmmSZ9MkYBQG9br72+nh/pYHnrNW8
- 3ZTlxAqDDh6p6aWeexna59zpvgeFZ+vg2F0yUW204/vnS4j6Ki9nVmN5fQMN+5wH
- IBJisD8katXznRNiC3DzZihsf4HwnipOj7SaZIThnS1RqU6mlLNz6OCBl5lZOnTn
- Dj2nwyx7ln7+QA1K6Da02eeKEXp2oevPmCcST9RalcGSITSwPDeex6Vq/NvcUSMg
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuw7agwm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Jul 2026 23:23:06 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66RNBGLo031275;
- Mon, 27 Jul 2026 23:23:05 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn8yh7apk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Jul 2026 23:23:05 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66RNN4J825100956
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 27 Jul 2026 23:23:04 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8954F58059;
- Mon, 27 Jul 2026 23:23:04 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 039AB58058;
- Mon, 27 Jul 2026 23:23:04 +0000 (GMT)
-Received: from [9.61.255.47] (unknown [9.61.255.47])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 27 Jul 2026 23:23:03 +0000 (GMT)
-Message-ID: <403c57ad-107a-4d59-ad4a-874d2c3a5f2d@linux.ibm.com>
-Date: Mon, 27 Jul 2026 18:23:03 -0500
+ (Exim 4.90_1) (envelope-from <sun4qemu@gmail.com>)
+ id 1woUsf-0002tp-Fj
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 19:37:09 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <sun4qemu@gmail.com>)
+ id 1woUsV-0002Ql-4p
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 19:37:01 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-47f84023916so3236755f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 16:36:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785195417; x=1785800217; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=CigsiWeyA1HuSQ8GLStcze2Pv5BC6aTI0LG5dEVFdW8=;
+ b=m6Ccxi1f5yodzdr3cXVBn+ag49Aavg6scZxhfe8P58W9iT0zhPoTg0qYe+QySx15D/
+ A53PFPI+4/9r7/XLQdeDm2iHc+t+xGYnt0X1CcmY/idmtoxwx+yv3Zt3rRq66JPrGb/p
+ sX/mMC0Hzaml/FqQ3rv3/yPZDvayIuvGcU0M37iMQ+QcTirZZ3GKrO7Eq2xEeCOi63qo
+ IiRPKYfCQCYr3FPKYMA4wpgT7krslgha96QPYhQgGtzBqktg1x7q4W0zUiJqvD22E1Ut
+ LwYpCCTx9RRfmVSADZa9IUIEjOlzZ8mZirSNnwLBe4jOQ+nfDqwqdP+YxrQlwt25O8dl
+ 4+bQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785195417; x=1785800217;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=CigsiWeyA1HuSQ8GLStcze2Pv5BC6aTI0LG5dEVFdW8=;
+ b=qjX2UXbkjeQ+dI5HoNWGucJ74VOSS5VMePVaLSuMofLUYmUAUo9KBwVL8hHOdWJVkn
+ OZ5YqKC1bw48PkMD46LZuuz2jlP2WxpBJdSgYO8kzrILOx5B79yjlv+gpcGAAS8k0lGG
+ X8bD8LitWg26OZOqNNImUTC72Lsxmzv7GAnjmSww4fnTCkp9t+U+K0qDTG1J5IOPQjmc
+ rawiXV2Px5O3ON2RxJPbAyKuts5cgvS2rlXTMV0hV8UZUndq5EYIG8Cjb5sRytCknBNB
+ 8X6fCQTGCvyAmcHL/wmZOqVWz5/EclRbunELiR4iI8xuYeRsthTNXXhLltBlpshQzjHc
+ rusw==
+X-Gm-Message-State: AOJu0Yxwnnk6uEW8xgZAYSMSKDtbjMQHtb+fJf/AhN+QIBwl6V54Zb1h
+ FPAAOhgC3v0eKgyh6FYK9OIVZ53jnNmXhcIv1cqeaBio0yJ6sHN8KhOS
+X-Gm-Gg: AR+sD11DtrsZoy8msAsNwInWNS95LeN6xcqjX0bx77gHzDoWF640Dm/CuR/uRtGLSU8
+ 8yyVNQvRqaHGka3qEfSWcdOe8v/FZNhao4qSufoiHOcE656xMKCyB3JCekUaZ1+A0q4hiNAnDv9
+ dE0VgTiU7esBBe7HWF4FAKZl9foanu41gx+R/L5A3Tx16pBkliLo7YSp/zji72qihDoJvTjJYZa
+ HcJYrvwoozUl4mkUxeW1M0wjQkCx1997ORoWsudl3fEZWVAllOuPwaKYzQDWcLu+4AYXegSrNF0
+ JDBHwc9uG47g/L8eGVBJb8DS/ehE8QRuJbBf1WWmWDoFV7SmkhgAmpD1iFAUjkrOTUJzn6GN8hi
+ Quiasw4Ppn6T6jdqU3nVjCie81WhSY2V/qYL7sOswYyPGZ1mkyDZl9vPZwV4oI+1g4eMfdN8QzU
+ 73ERAIzqQ69tBhDUREqiICCFy3Wiq9japYlA==
+X-Received: by 2002:a05:6000:22c4:b0:47f:9266:7cbf with SMTP id
+ ffacd0b85a97d-47fb1ed729fmr1159f8f.20.1785195417207; 
+ Mon, 27 Jul 2026 16:36:57 -0700 (PDT)
+Received: from vmbox.lan (088156177242.warszawa.vectranet.pl. [88.156.177.242])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f85b9a60asm56317546f8f.3.2026.07.27.16.36.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 27 Jul 2026 16:36:56 -0700 (PDT)
+From: Dmitry Pimenov <sun4qemu@gmail.com>
+To: mark.cave-ayland@ilande.co.uk,
+	atar4qemu@gmail.com
+Cc: qemu-devel@nongnu.org,
+	dpim <sun4qemu@gmail.com>
+Subject: [PATCH] target/sparc: fix sun4v TTE page-size truncation (32M/256M
+ pages)
+Date: Tue, 28 Jul 2026 01:36:46 +0200
+Message-ID: <20260727233646.332875-1-sun4qemu@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 14/15] s390x/pci: Implement migration for emulated
- devices
-Content-Language: en-US
-To: Farhan Ali <alifm@linux.ibm.com>, mjrosato@linux.ibm.com
-Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- cohuck@redhat.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20260724030919.123733-1-kshk@linux.ibm.com>
- <20260724030919.123733-15-kshk@linux.ibm.com>
- <6390365c-018e-4ac9-96fd-7dba63736a2c@linux.ibm.com>
-From: Konstantin Shkolnyy <kshk@linux.ibm.com>
-In-Reply-To: <6390365c-018e-4ac9-96fd-7dba63736a2c@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: yyDU4a_i5P9hnEftk179IlU98Ya-c_WX
-X-Proofpoint-ORIG-GUID: yyDU4a_i5P9hnEftk179IlU98Ya-c_WX
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDIxMCBTYWx0ZWRfX6gEPdqTRPXkq
- NVJlfBKBq6favQ29EuUhKBf8pMxFBbAsr8p3vDG1AJAmfvN+77xjQeElmUcG6rh5z4mnix4lwAN
- foLS3Oddyc+TPuiCxk5wH+/JiZPhsMnpHn2Yoxl8HUC3qT/AQd811+F2T7Wb7lYY8zvDZjf0m71
- dVGjOeTsLSEA3IwwO1mEM173/jVn1/c/kt4SkyRZ5vaEJV0Na/tvgZLsd06fasr1eSzZYswA2yA
- oeMxbb156ITWHZfb3wMZak6kETig3p96McKjOShtlvbhJnSfHBtv/rAbzplogSuc3zEhygNqsff
- onyhJ2Jqd6s9tM8RJzOEWwge1rrzBwuOLcYmU5r47TS95T35B9P4VFL8p3V8exTR3tG3+ClJuKY
- VDNB9jq6c3/RwgemFpgjcjKDMbQNvvPfs31FHfVvpbirJaTvG+fxMfuh6XxUA8n4+RWZen8v98y
- ADSx3ngLalXCDa/e7Ow==
-X-Authority-Analysis: v=2.4 cv=SKFykuvH c=1 sm=1 tr=0 ts=6a67e85b cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=JLyWA3_62bzBDLfpJFQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDIxMCBTYWx0ZWRfXx6s4aREQPYF4
- QHhj1RNhUeCennq/uOLjyhhRzsDYh7C5qrjz2F8krSBRK197gWnqigmwtJipNr8/FEV6MqIokXb
- EqbQ8vWX01/li/r7pdk+Fq7Ft5p5t04=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-27_06,2026-07-27_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0
- lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607270210
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=kshk@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=sun4qemu@gmail.com; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,425 +99,212 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 260727 13:53, Farhan Ali wrote:
-> 
-> On 7/23/2026 8:09 PM, Konstantin Shkolnyy wrote:
->> Implement zPCI device state migration, consequently enabling migration
->> of VMs that have emulated PCI devices, whether virtio or not.
->> Migration is allowed for devices whose function handle has the
->> FH_SHM_EMUL bit set. For these devices QEMU will save and restore the
->> state of its zPCI emulator.
->>
->> This will enable emulated PCI migration starting with s390-ccw- 
->> virtio-11.1.
->>
->> Passthrough devices will continue to block migration.
->>
->> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
->> ---
->>   hw/s390x/s390-pci-bus.c         | 187 +++++++++++++++++++++++++++++++-
->>   hw/s390x/s390-pci-inst.c        |   2 +-
->>   hw/s390x/s390-virtio-ccw.c      |   4 +
->>   include/hw/s390x/s390-pci-bus.h |   4 +
->>   4 files changed, 191 insertions(+), 6 deletions(-)
->>
->> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
->> index a94e24a2ac..655667482d 100644
->> --- a/hw/s390x/s390-pci-bus.c
->> +++ b/hw/s390x/s390-pci-bus.c
->> @@ -26,6 +26,7 @@
->>   #include "hw/pci/pci_bridge.h"
->>   #include "hw/pci/msi.h"
->>   #include "exec/cpu-common.h"
->> +#include "migration/blocker.h"
->>   #include "qemu/error-report.h"
->>   #include "qemu/module.h"
->>   #include "system/physmem.h"
->> @@ -34,6 +35,11 @@
->>   #include "trace.h"
->> +static const Property phb_props[] = {
->> +    DEFINE_PROP_BOOL("x-zpci-emul-dev-migr-enabled", S390pciState,
->> +                     emul_dev_migr_enabled, true),
->> +};
->> +
->>   S390pciState *s390_get_phb(void)
->>   {
->>       static S390pciState *phb;
->> @@ -917,6 +923,23 @@ static void set_pbdev_info(S390PCIBusDevice *pbdev)
->>       pbdev->pci_group = s390_group_find(ZPCI_DEFAULT_FN_GRP);
->>   }
->> +static int s390_set_emul_dev_migration_blocker(S390pciState *s, Error 
->> **errp)
->> +{
->> +    if (s->emul_dev_migr_enabled) {
->> +        return 0;
->> +    }
->> +    error_setg(&s->emul_dev_migr_blocker,
->> +               "Migration disabled for emulated zPCI devices on this 
->> machine type");
->> +    return migrate_add_blocker(&s->emul_dev_migr_blocker, errp);
->> +}
->> +
->> +static void s390_clear_emul_dev_migration_blocker(S390pciState *s)
->> +{
->> +    if (s->emul_dev_migr_blocker) {
->> +        migrate_del_blocker(&s->emul_dev_migr_blocker);
->> +    }
->> +}
->> +
->>   static void s390_pcihost_realize(DeviceState *dev, Error **errp)
->>   {
->>       PCIBus *b;
->> @@ -952,6 +975,7 @@ static void s390_pcihost_realize(DeviceState *dev, 
->> Error **errp)
->>       css_register_io_adapters(CSS_IO_ADAPTER_PCI, true, false,
->>                                S390_ADAPTER_SUPPRESSIBLE, errp);
->>       s390_pcihost_kvm_realize();
->> +    s390_set_emul_dev_migration_blocker(s, errp);
->>   }
->>   static void s390_pcihost_unrealize(DeviceState *dev)
->> @@ -959,6 +983,8 @@ static void s390_pcihost_unrealize(DeviceState *dev)
->>       S390PCIGroup *group;
->>       S390pciState *s = S390_PCI_HOST_BRIDGE(dev);
->> +    s390_clear_emul_dev_migration_blocker(s);
->> +
->>       while (!QTAILQ_EMPTY(&s->zpci_groups)) {
->>           group = QTAILQ_FIRST(&s->zpci_groups);
->>           QTAILQ_REMOVE(&s->zpci_groups, group, link);
->> @@ -1129,6 +1155,27 @@ static int s390_pci_interp_plug(S390pciState 
->> *s, S390PCIBusDevice *pbdev)
->>       return 0;
->>   }
->> +static int s390_set_passthrough_migration_blocker(S390PCIBusDevice 
->> *pbdev,
->> +                                            Error **errp)
->> +{
->> +    pbdev->passthrough_migr_blocker = NULL;
->> +
->> +    if (pbdev->fh & FH_SHM_EMUL) {
->> +        return 0;
->> +    }
->> +    error_setg(&pbdev->passthrough_migr_blocker,
->> +               "Migration blocked by passthrough zPCI device "
->> +               "fh 0x%x uid %d fid %d", pbdev->fh, pbdev->uid, pbdev- 
->> >fid);
->> +    return migrate_add_blocker(&pbdev->passthrough_migr_blocker, errp);
->> +}
->> +
->> +static void s390_clear_passthrough_migration_blocker(S390PCIBusDevice 
->> *pbdev)
->> +{
->> +    if (pbdev->passthrough_migr_blocker) {
->> +        migrate_del_blocker(&pbdev->passthrough_migr_blocker);
->> +    }
->> +}
->> +
->>   static void s390_pcihost_plug(HotplugHandler *hotplug_dev, 
->> DeviceState *dev,
->>                                 Error **errp)
->>   {
->> @@ -1248,6 +1295,11 @@ static void s390_pcihost_plug(HotplugHandler 
->> *hotplug_dev, DeviceState *dev,
->>               return;
->>           }
->> +        if (s390_set_passthrough_migration_blocker(pbdev, errp)) {
->> +            s390_pci_msix_free(pbdev);
->> +            return;
->> +        }
-> 
-> Just curious, does this need to be after s390_pci_msix_init()? That way 
-> on error we avoid setting up the msix and subsequently freeing here.
+From: dpim <sun4qemu@gmail.com>
 
-It doesn't. I can swap them.
+sun4v_tte_to_sun4u() keeps only 2 bits of the incoming TTE page-size
+field, while TTE_PGSIZE_UA2005() in the same header defines it as 3.
+Sizes 32M (4) and 256M (5) therefore alias down to 64K (1) and 512K
+(2): a guest asking for a large page gets a TLB entry covering a
+fraction of it, and faults on the first access past that.
 
-> 
-> 
->> +
->>           if (dev->hotplugged) {
->>               s390_pci_generate_plug_event(HP_EVENT_TO_CONFIGURED ,
->>                                            pbdev->fh, pbdev->fid);
->> @@ -1284,6 +1336,8 @@ static void s390_pcihost_unplug(HotplugHandler 
->> *hotplug_dev, DeviceState *dev,
->>               return;
->>           }
->> +        s390_clear_passthrough_migration_blocker(pbdev);
->> +
->>           s390_pci_generate_plug_event(HP_EVENT_STANDBY_TO_RESERVED,
->>                                        pbdev->fh, pbdev->fid);
->>           bus = pci_get_bus(pci_dev);
->> @@ -1451,6 +1505,7 @@ static void s390_pcihost_class_init(ObjectClass 
->> *klass, const void *data)
->>       hc->unplug_request = s390_pcihost_unplug_request;
->>       hc->unplug = s390_pcihost_unplug;
->>       msi_nonbroken = true;
->> +    device_class_set_props(dc, phb_props);
->>   }
->>   static const TypeInfo s390_pcihost_info = {
->> @@ -1464,10 +1519,33 @@ static const TypeInfo s390_pcihost_info = {
->>       }
->>   };
->> +/* Return a unique bus "path" for zpci device */
->> +static char *s390_pci_bus_get_dev_path(DeviceState *dev)
->> +{
->> +    S390PCIBusDevice *pbdev = S390_PCI_DEVICE(dev);
->> +    return g_strdup_printf("uid-%04x", pbdev->uid);
->> +}
->> +
->> +static void s390_pcibus_class_init(ObjectClass *oc, const void *data)
->> +{
->> +    BusClass *bc = BUS_CLASS(oc);
->> +    bc->get_dev_path = s390_pci_bus_get_dev_path;
->> +}
->> +
->>   static const TypeInfo s390_pcibus_info = {
->>       .name = TYPE_S390_PCI_BUS,
->>       .parent = TYPE_BUS,
->>       .instance_size = sizeof(S390PCIBus),
->> +    /*
->> +     * Implement get_dev_path() to provide each zpci device with a 
->> unique
->> +     * stable UID-based bus "path". The "path" is used as part of 
->> idstr in the
->> +     ^ migration stream, making idstr unique and instance_id always 0.
-> Typo here with "^ migration stream"
+Keep all three bits, in the two pieces the hardware uses for them:
 
-OK.
+    bit 62:61   Size<1:0>
+    bit 48      Size<2>
 
-> 
->> +     * For migration to succeed, (idstr+instance_id) must match those 
->> generated
->> +     * during QEMU start. Without unique idstr, QEMU will generate 
->> variable
->> +     * instance_id to distinquish devices, and that instance_id can 
->> change
-> Typo "distinquish" -> distinguished
+That is the sun4u encoding introduced when 32M and 256M pages were
+added, so it is where the field belongs in this word rather than in an
+arbitrary spare bit:
 
-It's not a typo. This "to distiquish" is trying to say "for the purpose 
-of distinguishing".
+  Panther Implementation Supplement (SPARC V9 JPS1 Implementation
+  Supplement: Sun UltraSPARC Panther -- UltraSPARC IV+), Preliminary
+  Draft 17 Mar 2006, TABLE F-1-4 "TTE Data Field Description", p.337:
+    Size<1:0>  "Bit <62:61> represent the least significant 2 bits of
+                the page size" -- 000=8K 001=64K 010=512K 011=4M
+                100=32M 101=256M
+    Size<2>    "Bit 48 is the most significant bit of the page size and
+                is concatenated with bits <62:61>"
+  https://www.oracle.com/technetwork/server-storage/sun-sparc-enterprise/documentation/sparc4plus-usersmanual-2516673.pdf
 
->> +     * if a device is unplugged and plugged back, preventing migration.
->> +     */
->> +    .class_init = s390_pcibus_class_init,
->>   };
->>   static uint16_t s390_pci_generate_uid(S390pciState *s)
->> @@ -1613,13 +1691,112 @@ static const Property 
->> s390_pci_device_properties[] = {
->>                        true),
->>   };
->> -static const VMStateDescription s390_pci_device_vmstate = {
->> -    .name = TYPE_S390_PCI_DEVICE,
->> +static int s390_pci_device_pre_load(void *opaque)
->> +{
->> +    S390PCIBusDevice *pbdev = S390_PCI_DEVICE(opaque);
->> +    S390PCIBusDevice *found_pbdev;
->> +
->> +    /*
->> +     * Make sure pbdev is removed from the table before state load. 
->> The change
->> +     * of pbdev->idx means it needs to be moved to a different 
->> position anyway,
->> +     * and is illegal while in the table. But be careful to not remove
->> +     * instead another pbdev whose state might have been loaded 
->> earlier and
-> 
-> I think "instead" is not needed in the statement above.
-> 
-> Maybe I am missing something, but could you help me understand why do we 
-> need to remove the pbdev if we found at a particular idx? If there is a 
-> collision with idx, ie on destination we have a different device with 
-> the same idx, are we removing a valid device?
+UltraSPARC T1 keeps bit 48 for the same purpose in its sun4u-format
+TTE, where the halves are called szl and szh:
 
-I see that this is not the best comment. How about this variant:
+  UltraSPARC T1 Supplement to the UltraSPARC Architecture 2005,
+  Draft D2.1, sec. 13.1.2, TABLE 13-1, p.182
+  https://www.oracle.com/docs/tech/systems/t1-09-ust1-uasuppl-draft-hp-ext.pdf
 
-     * State loading can change pbdev->idx. Therefore, make sure pbdev 
-is removed
-     * from the table before that happens. The table type used stores a 
-pointer
-     * to pbdev->idx and becomes corrupt if idx is changed from outside. 
-But be
-     * careful to not remove instead another pbdev whose state might 
-have been
-     * loaded earlier and that got assigned this idx value and had therefore
-     * already replaced our pbdev in the table. post_load() will 
-reinsert our
-     * pbdev into the table.
+TTE_PGSIZE() is shared with the sun4u path, which is fine in both
+directions. Parts that predate the extension -- UltraSPARC III,
+SPARC64 V -- have a 2-bit size field and bit 48 reserved, reading as
+zero:
 
-> 
->> +     * that has then replaced our pbdev. (post_load() will put our 
->> pbdev back.)
->> +     */
->> +    found_pbdev = g_hash_table_lookup(s390_get_phb()->zpci_table, 
->> &pbdev->idx);
->> +    assert(found_pbdev);
->> +    if (found_pbdev == pbdev) {
->> +        g_hash_table_remove(s390_get_phb()->zpci_table, &pbdev->idx);
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->> +static int s390_pci_device_post_load(void *opaque, int version_id)
->> +{
->> +    S390PCIBusDevice *pbdev = S390_PCI_DEVICE(opaque);
->> +
->>       /*
->> -     * TODO: add state handling here, so migration works at least with
->> -     * emulated pci devices on s390x
->> +     * Now that pbdev->idx has been loaded, use it to place pbdev 
->> back into
->> +     * the table. This may replace a different not-yet-state-loaded 
->> pbdev,
->> +     * but pre_load() handles this case.
->>        */
->> -    .unmigratable = 1,
->> +    g_hash_table_replace(s390_get_phb()->zpci_table, &pbdev->idx, 
->> pbdev);
->> +
->> +    /*
->> +     * Regenerate IOMMU state, including IOTLB contents and QEMU 
->> memory regions.
->> +     */
->> +    if (pbdev->iommu_enabled) {
->> +        assert(pbdev->iommu);
->> +        if (s390_pci_is_translation_enabled(pbdev->g_iota)) {
->> +            s390_pci_iommu_enable(pbdev);
->> +            s390_pci_ioat_replay(pbdev);
->> +        } else {
->> +            s390_pci_iommu_direct_map_enable(pbdev);
->> +        }
->> +    }
->> +
->> +    /*
->> +     * Guest sets fmb_addr by mpcifc.ZPCI_MOD_FC_SET_MEASURE 
->> instruction,
->> +     * whose handler consequently starts fmb_timer. We may need to 
->> restart it.
->> +     */
->> +    if (pbdev->fmb_addr) {
->> +        assert(!pbdev->fmb_timer);
->> +        assert(pbdev->pci_group);
->> +        pbdev->fmb_timer = timer_new_ms(QEMU_CLOCK_VIRTUAL,
->> +                                        fmb_update, pbdev);
->> +        timer_mod(pbdev->fmb_timer,
->> +                  qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) +
->> +                                    pbdev->pci_group->zpci_group.mui);
->> +    }
->> +    return 0;
->> +}
->> +
->> +static const VMStateDescription s390_pci_device_vmstate = {
->> +    .name = TYPE_S390_PCI_DEVICE,
->> +    .version_id = 1,
->> +    .minimum_version_id = 1,
->> +    .pre_load = s390_pci_device_pre_load,
->> +    .post_load = s390_pci_device_post_load,
->> +    .fields = (const VMStateField[]) {
->> +        VMSTATE_UINT32(state, S390PCIBusDevice),
->> +        VMSTATE_UINT16(uid, S390PCIBusDevice),
->> +        VMSTATE_UINT32(idx, S390PCIBusDevice),
->> +        VMSTATE_UINT32(fh, S390PCIBusDevice),
->> +        VMSTATE_UINT32(fid, S390PCIBusDevice),
->> +        VMSTATE_BOOL(fid_defined, S390PCIBusDevice),
->> +        VMSTATE_UINT64(fmb_addr, S390PCIBusDevice),
->> +        VMSTATE_UINT32(fmb.format, S390PCIBusDevice),
->> +        VMSTATE_UINT32(fmb.sample, S390PCIBusDevice),
->> +        VMSTATE_UINT64(fmb.last_update, S390PCIBusDevice),
->> +        VMSTATE_UINT64_ARRAY(fmb.counter, S390PCIBusDevice,
->> +                ARRAY_SIZE(((S390PCIBusDevice *)0)->fmb.counter)),
->> +        VMSTATE_UINT64(fmb.fmt0.dma_rbytes, S390PCIBusDevice),
->> +        VMSTATE_UINT64(fmb.fmt0.dma_wbytes, S390PCIBusDevice),
->> +        VMSTATE_UINT8(isc, S390PCIBusDevice),
->> +        VMSTATE_UINT16(noi, S390PCIBusDevice),
->> +        VMSTATE_UINT8(sum, S390PCIBusDevice),
->> +        VMSTATE_UINT8(pft, S390PCIBusDevice),
->> +        VMSTATE_UINT64(routes.adapter.ind_addr, S390PCIBusDevice),
->> +        VMSTATE_UINT64(routes.adapter.summary_addr, S390PCIBusDevice),
->> +        VMSTATE_UINT64(routes.adapter.ind_offset, S390PCIBusDevice),
->> +        VMSTATE_UINT32(routes.adapter.summary_offset, S390PCIBusDevice),
->> +        VMSTATE_UINT32(routes.adapter.adapter_id, S390PCIBusDevice),
->> +        VMSTATE_BOOL(iommu_enabled, S390PCIBusDevice),
->> +        VMSTATE_UINT64(g_iota, S390PCIBusDevice),
->> +        VMSTATE_UINT64(pba, S390PCIBusDevice),
->> +        VMSTATE_UINT64(pal, S390PCIBusDevice),
->> +        VMSTATE_UINT64(max_dma_limit, S390PCIBusDevice),
->> +        VMSTATE_PTR_TO_IND_ADDR(summary_ind, S390PCIBusDevice),
->> +        VMSTATE_PTR_TO_IND_ADDR(indicator, S390PCIBusDevice),
->> +        VMSTATE_BOOL(pci_unplug_request_processed, S390PCIBusDevice),
->> +        VMSTATE_BOOL(unplug_requested, S390PCIBusDevice),
->> +        VMSTATE_BOOL(interp, S390PCIBusDevice),
->> +        VMSTATE_BOOL(forwarding_assist, S390PCIBusDevice),
->> +        VMSTATE_BOOL(aif, S390PCIBusDevice),
->> +        VMSTATE_BOOL(rtr_avail, S390PCIBusDevice),
->> +        VMSTATE_END_OF_LIST()
->> +    }
->>   };
->>   static void s390_pci_device_class_init(ObjectClass *klass, const 
->> void *data)
->> diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
->> index f93db10c81..6b0742d143 100644
->> --- a/hw/s390x/s390-pci-inst.c
->> +++ b/hw/s390x/s390-pci-inst.c
->> @@ -1122,7 +1122,7 @@ static int fmb_do_update(S390PCIBusDevice 
->> *pbdev, int offset, uint64_t val,
->>       return ret;
->>   }
->> -static void fmb_update(void *opaque)
->> +void fmb_update(void *opaque)
->>   {
->>       S390PCIBusDevice *pbdev = opaque;
->>       int64_t t = qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL);
->> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
->> index 25a9fa4955..d8975da4f1 100644
->> --- a/hw/s390x/s390-virtio-ccw.c
->> +++ b/hw/s390x/s390-virtio-ccw.c
->> @@ -931,6 +931,10 @@ static void 
->> ccw_machine_11_1_instance_options(MachineState *machine)
->>   static void ccw_machine_11_1_class_options(MachineClass *mc)
->>   {
->> +    static GlobalProperty compat[] = {
->> +        { TYPE_S390_PCI_HOST_BRIDGE, "x-zpci-emul-dev-migr-enabled", 
->> "off" },
->> +    };
->> +    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
->>   }
->>   DEFINE_CCW_MACHINE_AS_LATEST(11, 1);
->> diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390- 
->> pci-bus.h
->> index 17ecf3e0da..7386404ecc 100644
->> --- a/include/hw/s390x/s390-pci-bus.h
->> +++ b/include/hw/s390x/s390-pci-bus.h
->> @@ -340,6 +340,7 @@ struct S390PCIBusDevice {
->>       uint16_t uid;
->>       uint32_t idx;
->>       uint32_t fh;
->> +    Error *passthrough_migr_blocker;
->>       uint32_t fid;
->>       bool fid_defined;
->>       uint64_t fmb_addr;
->> @@ -393,6 +394,8 @@ struct S390pciState {
->>       QTAILQ_HEAD(, S390PCIDMACount) zpci_dma_limit;
->>       QTAILQ_HEAD(, S390PCIGroup) zpci_groups;
->>       uint8_t next_sim_grp;
->> +    bool emul_dev_migr_enabled;
->> +    Error *emul_dev_migr_blocker;
-> 
-> Nit: Maybe this should be renamed as emul_dev_migr_error?
+  JPS1 Commonality, Working Draft 1.0.5, TABLE F-1, p.441:
+    Data<49:47>  "Reserved, read as 0" (bit 48 is part of this range)
+  https://www.oracle.com/technetwork/server-storage/sun-sparc-enterprise/documentation/joint-program-spec1-2516675.pdf
 
-"_blocker" is pretty consistently used for these throughout QEMU, that's 
-why I used it too. Despite it being an "Error*", it's actually (mis)used 
-as a "handle" representing the blocker.
+so they keep decoding the same four sizes as before; parts that do
+implement Size<2> now get 32M and 256M decoded correctly.
 
-> 
-> 
->>   };
->>   S390pciState *s390_get_phb(void);
->> @@ -418,5 +421,6 @@ S390PCIBusDevice 
->> *s390_pci_find_dev_by_pci(S390pciState *s,
->>   S390PCIBusDevice *s390_pci_find_next_avail_dev(S390pciState *s,
->>                                                  S390PCIBusDevice 
->> *pbdev);
->>   void s390_pci_ism_reset(void);
->> +void fmb_update(void *opaque);
->>   #endif
+Callers computing 8192ULL << 3*TTE_PGSIZE(tte) then get 32M and 256M
+for free. Two related fixes come with it:
+
+  - demap_tlb() built its mask from the raw bits ((tte>>61)&3) rather
+    than the accessor, so large-page demaps truncated the same way.
+    It now uses TTE_PGSIZE().
+
+  - dump_mmu() gains 32M/256M labels.
+
+A QEMU_BUILD_BUG_ON guards bit 48 against a future overlapping TTE_*
+field.
+
+Tested with rebuilt machine-description blobs -- 1up-md.bin and
+1up-hv.bin, two of the six files hw/sparc64/niagara.c loads. These are
+generated with mdgen, not the pair shipped in the OpenSPARC T1
+archive, whose MD does not declare the property at all: the cpu node
+here sets mmu-page-size-list = 0x2b, so the guest actually selects
+TTE256M. kmem64_szc = 0x5 confirmed under Solaris kmdb guest at a
+breakpoint on alloc_kmem64(), and "info tlb" -- whose 32M/256M labels
+this same patch adds to dump_mmu() -- shows a live 256M entry at the
+matching kmem64_base address, e.g.:
+
+  [57] VA: 70000100000, PA: 150000000, 256M, priv, RW, unlocked, ie no, ctx 0 local
+
+confirming the kernel's kmem64 mapping is backed by an actual 256M
+TLB entry, not a 512K one truncated from the same bits.
+
+Solaris 10 3/05 HW2, 10u8, 10u10, 10u11, OpenSolaris snv_134, Solaris
+11 Express 2010.11, Solaris 11 11/11 and Solaris 11.1 boot at 4GB and
+8GB; the same configurations trapped or hung in early kernel VM setup
+before the fix.
+
+Link: https://unix0cc.github.io/md/
+AI-used-for: code, research, and result analysis.
+Signed-off-by: dpim <sun4qemu@gmail.com>
+---
+ target/sparc/cpu.h         | 38 +++++++++++++++++++++++++++++++++++++-
+ target/sparc/ldst_helper.c | 18 ++++++++++++++++--
+ target/sparc/mmu_helper.c  | 12 ++++++++++++
+ 3 files changed, 65 insertions(+), 3 deletions(-)
+
+diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
+index 5f583ed9de..17d1308101 100644
+--- a/target/sparc/cpu.h
++++ b/target/sparc/cpu.h
+@@ -307,10 +307,46 @@ enum {
+ #define TTE_SET_USED(tte)   ((tte) |= TTE_USED_BIT)
+ #define TTE_SET_UNUSED(tte) ((tte) &= ~TTE_USED_BIT)
+ 
+-#define TTE_PGSIZE(tte)     (((tte) >> 61) & 3ULL)
+ #define TTE_PGSIZE_UA2005(tte)     ((tte) & 7ULL)
+ #define TTE_PA(tte)         ((tte) & 0x1ffffffe000ULL)
+ 
++/*
++ * Internal QEMU TLB-entry page-size field: Size<1:0> at bits 62-61 plus
++ * Size<2> at bit 48, encoding the six sizes 8K/64K/512K/4M/32M/256M.
++ *
++ * That split is the sun4u encoding introduced when 32M and 256M pages were
++ * added, and it is the layout this internal word models:
++ *
++ *   Panther Implementation Supplement (SPARC V9 JPS1 Implementation
++ *   Supplement: Sun UltraSPARC Panther -- UltraSPARC IV+), Preliminary
++ *   Draft 17 Mar 2006, TABLE F-1-4 "TTE Data Field Description", p.337:
++ *     Size<1:0>  "Bit <62:61> represent the least significant 2 bits of
++ *                 the page size" -- 000=8K 001=64K 010=512K 011=4M
++ *                 100=32M 101=256M
++ *     Size<2>    "Bit 48 is the most significant bit of the page size and
++ *                 is concatenated with bits <62:61>"
++ *
++ * UltraSPARC T1 keeps bit 48 for the same purpose in its sun4u-format TTE,
++ * where the halves are called szl and szh (UltraSPARC T1 Supplement to the
++ * UltraSPARC Architecture 2005, Draft D2.1, TABLE 13-1, p.182).
++ *
++ * Earlier JPS1 parts -- UltraSPARC III, SPARC64 V -- have a 2-bit size
++ * field with bit 48 reserved, reading as zero (JPS1 Commonality, Working
++ * Draft 1.0.5, TABLE F-1, p.441), so they keep decoding the same four
++ * sizes as before.
++ *
++ * Only the low two bits used to be kept here, which truncated 32M/256M.
++ *
++ * The QEMU_BUILD_BUG_ON below fails the build if any other TTE_* field is
++ * ever defined overlapping bit 48, so a future field can never silently
++ * corrupt page-size decoding at runtime.
++ */
++#define TTE_PGSIZE_HI_BIT   (1ULL << 48)
++QEMU_BUILD_BUG_ON((TTE_PGSIZE_HI_BIT & (TTE_VALID_BIT | TTE_NFO_BIT |
++                                        TTE_USED_BIT | TTE_PA(~0ULL))) != 0);
++#define TTE_PGSIZE(tte)     ((((tte) >> 61) & 3ULL) | \
++                             (((tte) & TTE_PGSIZE_HI_BIT) >> 46))
++
+ /* UltraSPARC T1 specific */
+ #define TLB_UST1_IS_REAL_BIT   (1ULL << 9)  /* Real translation entry */
+ #define TLB_UST1_IS_SUN4V_BIT  (1ULL << 10) /* sun4u/sun4v TTE format switch */
+diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
+index 4ec8799d1f..43a7ab6b09 100644
+--- a/target/sparc/ldst_helper.c
++++ b/target/sparc/ldst_helper.c
+@@ -186,7 +186,7 @@ static void demap_tlb(SparcTLBEntry *tlb, target_ulong demap_addr,
+                 /* demap page
+                    will remove any entry matching VA */
+                 mask = 0xffffffffffffe000ULL;
+-                mask <<= 3 * ((tlb[i].tte >> 61) & 3);
++                mask <<= 3 * TTE_PGSIZE(tlb[i].tte);
+ 
+                 if (!compare_masked(demap_addr, tlb[i].tag, mask)) {
+                     continue;
+@@ -217,7 +217,21 @@ static uint64_t sun4v_tte_to_sun4u(CPUSPARCState *env, uint64_t tag,
+         return sun4v_tte;
+     }
+     sun4u_tte = TTE_PA(sun4v_tte) | (sun4v_tte & TTE_VALID_BIT);
+-    sun4u_tte |= (sun4v_tte & 3ULL) << 61; /* TTE_PGSIZE */
++    /*
++     * sun4v/UA2005 page size is a 3-bit field (TTE_PGSIZE_UA2005, values
++     * 0-5 = 8K/64K/512K/4M/32M/256M). Storing only the low 2 bits here (as
++     * this historically did) silently aliased 32M(4)/256M(5) down to
++     * 64K(1)/512K(2), so a guest asking for a large page got a real TLB
++     * entry covering a much smaller region. Preserve all three bits: the
++     * low two stay at 61-62, the high one goes to TTE_PGSIZE_HI_BIT
++     * (bit 48), which is where real UltraSPARC T1 keeps szh -- see the
++     * comment on TTE_PGSIZE_HI_BIT in cpu.h.
++     */
++    {
++        uint64_t pgsz = TTE_PGSIZE_UA2005(sun4v_tte);
++        sun4u_tte |= (pgsz & 3ULL) << 61;                 /* low 2 bits: 61-62 */
++        sun4u_tte |= (pgsz & 4ULL) ? TTE_PGSIZE_HI_BIT : 0; /* high bit */
++    }
+     sun4u_tte |= CONVERT_BIT(sun4v_tte, TTE_NFO_BIT_UA2005, TTE_NFO_BIT);
+     sun4u_tte |= CONVERT_BIT(sun4v_tte, TTE_USED_BIT_UA2005, TTE_USED_BIT);
+     sun4u_tte |= CONVERT_BIT(sun4v_tte, TTE_W_OK_BIT_UA2005, TTE_W_OK_BIT);
+diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
+index 07ba25dfce..8544de097d 100644
+--- a/target/sparc/mmu_helper.c
++++ b/target/sparc/mmu_helper.c
+@@ -830,6 +830,12 @@ void dump_mmu(CPUSPARCState *env)
+             case 0x3:
+                 mask = "  4M";
+                 break;
++            case 0x4:
++                mask = " 32M";
++                break;
++            case 0x5:
++                mask = "256M";
++                break;
+             }
+             if (TTE_IS_VALID(env->dtlb[i].tte)) {
+                 qemu_printf("[%02u] VA: %" PRIx64 ", PA: %llx"
+@@ -869,6 +875,12 @@ void dump_mmu(CPUSPARCState *env)
+             case 0x3:
+                 mask = "  4M";
+                 break;
++            case 0x4:
++                mask = " 32M";
++                break;
++            case 0x5:
++                mask = "256M";
++                break;
+             }
+             if (TTE_IS_VALID(env->itlb[i].tte)) {
+                 qemu_printf("[%02u] VA: %" PRIx64 ", PA: %llx"
+-- 
+2.43.0
 
 
