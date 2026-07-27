@@ -4,126 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4649AC53219
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 08:31:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCD86C53219
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 08:43:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woGje-0000xh-4h; Mon, 27 Jul 2026 04:30:55 -0400
+	id 1woGv0-0002KR-8Z; Mon, 27 Jul 2026 04:42:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woGjP-0000wP-Jh
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 04:30:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woGjJ-0004aY-LW
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 04:30:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785141031;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gEY32oBjPDEGLInOOJ3xLmZYuzAbeEx9u84r6JKPpA0=;
- b=EX4+hVuA11FUOzWrcwRnhs8L1EvrFg1Je1Kr6/j4oyxibtTh6f9mFj420+gCjVTWT/ew2Q
- DA7Tb+rqhW937dS5UVRv7ec9HduCeyZMU7YiWcZ6SBj+GniYXzwYJiIsz1ZZCkdix4BVdH
- 5sXHkQ+vb0SfPPVNL+LB42c31xClwBA=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-208-TWN8L7Q9OnS4ONgp9Osntg-1; Mon, 27 Jul 2026 04:30:29 -0400
-X-MC-Unique: TWN8L7Q9OnS4ONgp9Osntg-1
-X-Mimecast-MFC-AGG-ID: TWN8L7Q9OnS4ONgp9Osntg_1785141028
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-473ac08a6a4so1826521f8f.0
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 01:30:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
+ id 1woGuy-0002K2-QD
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 04:42:36 -0400
+Received: from mail-pj2-x01.google.com ([2607:f8b0:4864:39::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
+ id 1woGuw-0005dg-V7
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 04:42:36 -0400
+Received: by mail-pj2-x01.google.com with SMTP id
+ d9443c01a7336-2ca4f02483cso2504335ad.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 01:42:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785141028; x=1785745828; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=gEY32oBjPDEGLInOOJ3xLmZYuzAbeEx9u84r6JKPpA0=;
- b=n73XM55kOsCa72cYbR81JvQkPVGdBBrhhB2eeyFv5M9DUlyG7kxr2tF8XWa4CAwQo+
- vHryRXQjmLtoeGEy1vtgZNVNO+O3Jsq1RwWRCFT2kD2U8X9kIj4G8iPEtRn/po40aX2N
- 5rxHZGFy8zQZeBmMy1O3E6eL7OV6z7tTPIVfsnpJQzRl0lYjQMvNUhmNfPDXN3MmSDNb
- UTSeGYoSLd0/rqtyS72WtDgxA9xx0mDgkjA742Oh7aD6KJkh9kfOt65UNHbJ6SpCqKCE
- e0885NyjZ/lXLDafNXOxNbbjoQ4TakOzyC9AOv+2I8h45ByVDwSOMbA5a/PSRfEKkhzn
- 1E9A==
+ d=gmail.com; s=20251104; t=1785141753; x=1785746553; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=7JHbtJerH3/rQGbPisECyh5JnAIvKEhV7En67m13MGo=;
+ b=nWRlwCpNtpAhRZyNG6YJwiUdEuKcw4Iih20w6gNowzkr3hIXG7FOh1L2QvJ2wuI/55
+ QPJ6baJQFWjydRQbnHw9MVFR7tcE4Ou3O42vDRbuK5qW7SfvVzPwNshR1xPRZXDTnm0q
+ hiQYl6M9yqeBtjtv2p73vd/TwbxUP8XS6kfVePKbTJJCzTA7kIQ1hZinb9f18jLZj1sb
+ wU7Ecd9OGOaL4XeoZpfkT3WyVv/gZ8wHmXZHJKaPwWqXVIqbQ/p7aKR68mKA2l1+qcgm
+ kqN/SQf8oY/8vsA6Q1IAHyMAYp0YNRQ4kVh07hnrpbnIGdgeWKb5+j+UqpZCmw4g2hEy
+ hlhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785141028; x=1785745828;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=gEY32oBjPDEGLInOOJ3xLmZYuzAbeEx9u84r6JKPpA0=;
- b=RqmW0DDKPH+SBLWYF+Y4wviZw7FfO8ugNY7t0A7Mr9iyiqt49XD5bPfVmm290W0Gjg
- /a9klq28DDrdd03GRxidtHg8NBsbIezPlu3tkAP9WujUJdrzPn2EbgyrO57SFuCoJ3mE
- 0XMOBkMxVx0LNp1ZliVsmXzU1i/MxV0UiZk1dUhhh5wvO1rb8jWT2IxmioQhYmtH2Rdy
- 8qDYkixLtXp4sqJ8UN9NTFtEBg83TundEfndOqTwFnApg//3JePVNsAW36qN6FQ74nfq
- /8CTmqLKX1VDoLKAROo8wcxzk42/a0hBdxHYzDjmjUqf10MLFu+MEnbt+4ZqY+ATAhMo
- /boA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpmZHaoqmpy05DmaN82eVu7biAsnwDrb+0BjtLYgQlbbysqM3BjvzdQkhCCADyIwnRmYP2gbKc0ss+r@nongnu.org
-X-Gm-Message-State: AOJu0YwLs1vfvm+w54p3XqdSf/ilXzmiKa8nSZE+T5QIqb1Ma9xlyzjK
- atV5vzvBzviq0DzjLGo/6YFeJG3VcTvaBh2brsivCCbhUUn9qDLTiMRV3Rny0C7PI82lVDx6zAu
- LreHKLpwLY7iboIBc59a0wskgyYzfpLJjBv8qFlcNpeIia1o429DqIvRs
-X-Gm-Gg: AR+sD10Jceq/KBFrWDXVnNU792Mbi2n4CXdCxG49Nnn7qFTKgUqH8ARJUeeZMhL3d7V
- Iw5AzFDQDyQflseOOoxD9v0PaoDTrZ7UNuceuZIFDZlPWMB3gOSwxF/r6V4HjgEv7eX9BW4FMV0
- RSjWOFP/1H42PQq3ZbY3RB33VgmuKN0GTv2UArjr3+J9lSWQTN4/ei5WyaUxEGYANZ7JC9kzs09
- j3mQNIlGWofBE/33ARpd3yI7uZMbc0irxFY3urp8bBjFxRE5ZkY8Xm+ruTdaqmCDbC4v70DVnNs
- HJWRbSkaHaZfuwtRGxCt3WSxZ9p9ypcfU4AyxrRBj5kjzMe9Mum4DFYxUylr9yxGsiyoaC+WFT+
- w9A00OkfDNj5DRbQK9KfO6w==
-X-Received: by 2002:a05:6000:1867:b0:475:f100:3607 with SMTP id
- ffacd0b85a97d-47f9feb79fbmr9749579f8f.54.1785141027528; 
- Mon, 27 Jul 2026 01:30:27 -0700 (PDT)
-X-Received: by 2002:a05:6000:1867:b0:475:f100:3607 with SMTP id
- ffacd0b85a97d-47f9feb79fbmr9749082f8f.54.1785141022877; 
- Mon, 27 Jul 2026 01:30:22 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-37-66.inter.net.il. [80.230.37.66])
+ d=1e100.net; s=20251104; t=1785141753; x=1785746553;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=7JHbtJerH3/rQGbPisECyh5JnAIvKEhV7En67m13MGo=;
+ b=hgzgOMG/yoTUnWbe3mOSJjPni//QmnB6X6wZqsRvKGsVMFPSGXYJgt/E8uDTBmcTYU
+ lIIA0mgNZdq2A7ZbGe1HieEymta4te5XNbykzs9l1Do40aJHWCLdojXaIH7x8heDVmRV
+ pJ55q4YciFHvfCdoDAgn8vyC02DdGmtBvds7VOwU5jjhhjpPYljY4shM62Xx0Uv3nlnG
+ AW2I2/udjelGAzQgu+8uNDH1tYBRH6kAYsn9LBGR2SR9sqEelfg9E8Lx6TmqOUKryBid
+ vFyza83J8IEOGBg6qlK5rdPYTgvAb5kfn1qhyQwb3+B+g/4p1+tX3zMdT9vtQ3jYt1wI
+ wB0g==
+X-Gm-Message-State: AOJu0YxC/PyUwuZlTOaTRIJu7zuX9zOm0uia7vsU6xGJ1CeI4HpbH/Z4
+ f4NOQQca0SHtcY2A7YbKrqsEqLCEVoUlOnsyMhu5iGNoPL0I0AIJYRqM8TtuTrkLGmE=
+X-Gm-Gg: AR+sD10awEFahtuRbaXhHpi9oLs/YBre3Ro2ygzHxbtqFHhLbwIo62lLC5SkfuvE24T
+ AWe6uPPoDxS4gdgbI+1GLFweW59RXw53IwZkFFNOXscrLyDFgrK3rPRmQR8FmfDY1RPyrxO3IhY
+ AoGcEZGMvKevMOcUwJL0QJjffDf1eBs1MIZkuVYx2WkOcebhC8rE2b3In9VZ92qaoGY/PMjga4c
+ ci0vFlZGotb4o796n/LZlAwrzQ9PiCxPEnqSFkKK34heDwQ2nivUckYY16nIWGYM0fa++QaGpcE
+ rcOObijUYCihv+8DKGbPvZyLBj/bmFVEYwRgh0jI+gxIB4JG+HlLId6CDlIMdEWI0lTIvlKLBC5
+ 6l4xFCzjL2WG8usczPm1E+8GkPfdzwN8Ht9HRM6hSLvu83qF/J61kYP21GDYeD+nTZxcUYZQ8R0
+ VOs5HLDoaOssc/VHCPIYPQbKjmPl9TNgk=
+X-Received: by 2002:a17:902:e803:b0:2bf:13af:b077 with SMTP id
+ d9443c01a7336-2cfdf3f056amr64493725ad.14.1785141752522; 
+ Mon, 27 Jul 2026 01:42:32 -0700 (PDT)
+Received: from Dell-WorkStation.localdomain ([139.59.245.192])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85bb5127sm44005943f8f.10.2026.07.27.01.30.20
+ d9443c01a7336-2cfde59bc68sm30767175ad.2.2026.07.27.01.42.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 01:30:22 -0700 (PDT)
-Date: Mon, 27 Jul 2026 04:30:18 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, Jonathan Cameron <jic23@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Wei Liu <wei.liu@kernel.org>, linux-cxl@vger.kernel.org,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH v2 05/12] hw/cxl: fix invalid free on early return
-Message-ID: <20260727042804-mutt-send-email-mst@kernel.org>
-References: <20260727-fix2-v2-0-d0c4831ed7ea@redhat.com>
- <20260727-fix2-v2-5-d0c4831ed7ea@redhat.com>
- <20260726164738-mutt-send-email-mst@kernel.org>
- <CAJ+F1C+fCyazpGfof9H0_n54FMy3LX6ujdmTcW=gAmhFz8Lk-w@mail.gmail.com>
- <70e1a2db-472d-46f4-ae27-ea8fb4af6cc0@rsg.ci.i.u-tokyo.ac.jp>
+ Mon, 27 Jul 2026 01:42:31 -0700 (PDT)
+From: Zephyr Li <fritchleybohrer@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, chao.liu@processmission.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ Zephyr Li <fritchleybohrer@gmail.com>
+Subject: [PATCH v2] target/riscv: preserve vl on element-zero fault
+Date: Mon, 27 Jul 2026 16:42:03 +0800
+Message-ID: <20260727084203.881580-1-fritchleybohrer@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260724030145.14778-1-fritchleybohrer@gmail.com>
+References: <20260724030145.14778-1-fritchleybohrer@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <70e1a2db-472d-46f4-ae27-ea8fb4af6cc0@rsg.ci.i.u-tokyo.ac.jp>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:39::1;
+ envelope-from=fritchleybohrer@gmail.com; helo=mail-pj2-x01.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,58 +102,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 27, 2026 at 01:40:48PM +0900, Akihiko Odaki wrote:
-> On 2026/07/27 6:09, Marc-André Lureau wrote:
-> > On Mon, Jul 27, 2026 at 12:49 AM Michael S. Tsirkin <mst@redhat.com> wrote:
-> > > 
-> > > On Mon, Jul 27, 2026 at 12:44:04AM +0400, Marc-André Lureau wrote:
-> > > > Fixes: 680935c9a6ff ("hw/cxl: Add a performant (and correct) path for the non interleaved cases")
-> > > > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> > > 
-> > > Not commit log really?
-> > 
-> > SSIA, but I can make it longer if it helps.
-> 
-> I agree the subject is sufficient so:
-> 
-> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> 
-> That said, we can quote docs/devel/style.rst if desired:
-> 
-> > * Variables declared with g_auto* MUST always be initialized,
-> >   otherwise the cleanup function will use uninitialized stack memory
+A unit-stride fault-only-first load must leave vl unchanged when element
+zero raises a synchronous exception. Keep the shortened value in a local
+bound until all loads complete, and only then update the architectural vl.
 
-I like that. But the question is not just whether it's required by
-the coding style. The question is if there's a bug and how is it
-reacheable, which can guide things like backporting decisions.
-Thanks!
+Add a bare-metal RVV regression test which faults vle32ff.v on element zero
+and checks that vl remains unchanged in the trap handler.
 
-> Regards,
-> Akihiko Odaki
-> 
-> > 
-> > > 
-> > > > ---
-> > > >   hw/cxl/cxl-host.c | 2 +-
-> > > >   1 file changed, 1 insertion(+), 1 deletion(-)
-> > > > 
-> > > > diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
-> > > > index 7e744312f1d8..eba13c9e7cba 100644
-> > > > --- a/hw/cxl/cxl-host.c
-> > > > +++ b/hw/cxl/cxl-host.c
-> > > > @@ -279,7 +279,7 @@ static void cxl_fmws_direct_passthrough_setup(CXLDirectPTState *state,
-> > > >       MemoryRegion *mr = NULL;
-> > > >       uint64_t vmr_size = 0, pmr_size = 0, offset = 0;
-> > > >       MemoryRegion *direct_mr;
-> > > > -    g_autofree char *direct_mr_name;
-> > > > +    g_autofree char *direct_mr_name = NULL;
-> > > >       unsigned int idx = state->hdm_decoder_idx;
-> > > > 
-> > > >       if (ct3d->hostvmem) {
-> > > > 
-> > > > --
-> > > > 2.55.0
-> > > 
-> > > 
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3544
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
+Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
+---
+Changes in v2:
+- Fix commit message formatting.
+- Enable vector state in the bare-metal test.
+- Use an aligned unmapped address and compare against the vsetvli result.
+- Express the mstatus.VS setting as a field shift.
 
+ target/riscv/tcg/vector_helper.c          | 23 +++++----
+ tests/tcg/riscv64/Makefile.softmmu-target |  5 ++
+ tests/tcg/riscv64/test-vle32ff.S          | 57 +++++++++++++++++++++++
+ 3 files changed, 76 insertions(+), 9 deletions(-)
+ create mode 100644 tests/tcg/riscv64/test-vle32ff.S
+
+diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
+index e321ca2616..5a310822b7 100644
+--- a/target/riscv/tcg/vector_helper.c
++++ b/target/riscv/tcg/vector_helper.c
+@@ -686,7 +686,7 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
+           uint32_t desc, vext_ldst_elem_fn_tlb *ldst_tlb,
+           vext_ldst_elem_fn_host *ldst_host, uint32_t log2_esz, uintptr_t ra)
+ {
+-    uint32_t i, k, vl = 0;
++    uint32_t i, k, vl = 0, load_vl;
+     uint32_t nf = vext_nf(desc);
+     uint32_t vm = vext_vm(desc);
+     uint32_t max_elems = vext_max_elems(desc, log2_esz);
+@@ -752,22 +752,24 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
+         }
+     }
+ ProbeSuccess:
+-    /* load bytes from guest memory */
+-    if (vl != 0) {
+-        env->vl = vl;
+-    }
++    /*
++     * Keep a shortened vl local until all loads complete. In particular,
++     * an exception from element zero must leave the architectural vl alone.
++     */
++    load_vl = vl ? vl : env->vl;
+ 
+-    if (env->vstart < env->vl) {
++    if (env->vstart < load_vl) {
+         if (vm) {
+             /* Load/store elements in the first page */
+             if (likely(elems)) {
++                elems = MIN(elems, load_vl - env->vstart);
+                 vext_page_ldst_us(env, vd, addr, elems, nf, max_elems,
+                                   log2_esz, true, mmu_index, ldst_tlb,
+                                   ldst_host, ra);
+             }
+ 
+             /* Load/store elements in the second page */
+-            if (unlikely(env->vstart < env->vl)) {
++            if (unlikely(env->vstart < load_vl)) {
+                 /* Cross page element */
+                 if (unlikely(page_split % msize)) {
+                     for (k = 0; k < nf; k++) {
+@@ -780,7 +782,7 @@ ProbeSuccess:
+ 
+                 addr = base + ((env->vstart * nf) << log2_esz);
+                 /* Get number of elements of second page */
+-                elems = env->vl - env->vstart;
++                elems = load_vl - env->vstart;
+ 
+                 /* Load/store elements in the second page */
+                 vext_page_ldst_us(env, vd, addr, elems, nf, max_elems,
+@@ -788,7 +790,7 @@ ProbeSuccess:
+                                   ldst_host, ra);
+             }
+         } else {
+-            for (i = env->vstart; i < env->vl; i++) {
++            for (i = env->vstart; i < load_vl; i++) {
+                 k = 0;
+                 while (k < nf) {
+                     if (!vext_elem_mask(v0, i)) {
+@@ -806,6 +808,9 @@ ProbeSuccess:
+             }
+         }
+     }
++    if (vl != 0) {
++        env->vl = vl;
++    }
+     env->vstart = 0;
+ 
+     vext_set_tail_elems_1s(env->vl, vd, desc, nf, esz, max_elems);
+diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
+index 82be8a2c91..7ae225bd73 100644
+--- a/tests/tcg/riscv64/Makefile.softmmu-target
++++ b/tests/tcg/riscv64/Makefile.softmmu-target
+@@ -41,5 +41,10 @@ comma:= ,
+ run-test-crc32: test-crc32
+ 	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)xlrbr=true $(QEMU_OPTS)$<)
+ 
++EXTRA_RUNS += run-test-vle32ff
++run-test-vle32ff: test-vle32ff
++	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)v=true $(QEMU_OPTS)$<)
++test-vle32ff: CFLAGS += -march=rv64gcv
++
+ # We don't currently support the multiarch system tests
+ undefine MULTIARCH_TESTS
+diff --git a/tests/tcg/riscv64/test-vle32ff.S b/tests/tcg/riscv64/test-vle32ff.S
+new file mode 100644
+index 0000000000..f510960c05
+--- /dev/null
++++ b/tests/tcg/riscv64/test-vle32ff.S
+@@ -0,0 +1,57 @@
++/*
++ * Verify that a fault-only-first load keeps vl unchanged when element zero
++ * raises a synchronous exception.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++	.option norvc
++
++	.text
++	.globl _start
++_start:
++	lla	t0, trap
++	csrw	mtvec, t0
++
++	li	t0, (1 << 9)	/* Set mstatus.VS to Initial. */
++	csrs	mstatus, t0
++	li	t1, 4
++	vsetvli	t2, t1, e32, m1, ta, ma
++	li	t0, 0x18000000	/* Unmapped gap in the virt memory map. */
++	vle32ff.v	v1, (t0)
++
++	/* Element zero did not trap. */
++	li	a0, 1
++	j	_exit
++
++trap:
++	csrr	t0, mcause
++	li	t1, 5		/* Load access fault. */
++	bne	t0, t1, trap_fail
++
++	csrr	t0, vl
++	bne	t0, t2, trap_fail
++
++	li	a0, 0
++	j	_exit
++
++trap_fail:
++	li	a0, 1
++
++_exit:
++	lla	a1, semiargs
++	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
++
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.data
++	.balign	8
++semiargs:
++	.space	16
 
