@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DC96C531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 21:18:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7A28C531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 21:36:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woSiA-0007KC-VO; Mon, 27 Jul 2026 17:18:14 -0400
+	id 1woSzB-0000iE-0C; Mon, 27 Jul 2026 17:35:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1woSi4-0007Ju-Qs; Mon, 27 Jul 2026 17:18:04 -0400
+ id 1woSz9-0000hy-5F; Mon, 27 Jul 2026 17:35:43 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1woSi2-0007GX-C2; Mon, 27 Jul 2026 17:18:04 -0400
+ id 1woSz6-00014x-Vj; Mon, 27 Jul 2026 17:35:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1785187066; bh=D5ZQST7mU5wh8LUnIy3VLoJJHqvbCjjS6ShIxzFjVGk=;
+ t=1785188132; bh=DqKCMtHUj+4ekAps4mcuudA6gcysbCPXajoemeClU+4=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=qwvNFYfcnRzFh4XIzoj8/tbCgtWXi0pMQXJUGJMcBJcB+RSaSFzl4F/52oNmYKx+z
- 4kmg3XWeYCPy0MjSif9S4WPf63hVuYduQeE47QelbOOgmuMPICThQSFHr4oaUHIp/B
- iT8HdauNLbPeSFDVjmAeufXqMskSk6eHJRuFgejcb23cfCJ5Y4vi8U8PgJd5x/Y/0a
- IvIRO73FLu1k83EbnZ5IgZk3/K6RMu53qIOFs1uGu5Qbjcy1HAYcx8U8suK1nH+FLp
- jiUPyg71/ZmigLGHhUFmowas60oATTbNWMKHBoTPpMsCNzJoDOYbhA4vSUi4HGgo96
- vtKN9/0aI1wfA==
+ b=NYVnJeoyX25riuzJWRSV3mG0UMmZd8fL5u1orEq16tf/OYDZwiyDwgM2M1mN0PVrg
+ VuLHk63wTgpNaKdBVTD0/ziUT2l8oq8MEg5dQVkDCrlpRxoAo2BYMntzsPe6AJoMpN
+ +sNWBjQHEdHL4w2oL0hQgD0cfGUbf9dldqg2k/2Pw7uLAkHXiXgvNRQH4/cF1Ir0sJ
+ lZxydf1qCk4MqgeGb/+D2vxeUuFtkISp7EmJ/WU/C01ABofVM+X/fPvDezTl3hy6+H
+ W8fbfioBfH0Aoli+bOnC8rallE8gpIvwKA2Sv2hwlhfgbwIjnB40rF+1ou14lyVvGB
+ X+NJspI9hhTKw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9145C1C5297;
- Tue, 28 Jul 2026 00:17:46 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0EA751C52A4;
+ Tue, 28 Jul 2026 00:35:32 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 995D43F800E;
- Tue, 28 Jul 2026 00:17:49 +0300 (MSK)
-Message-ID: <67e4bd46-447d-4ed1-8e51-8583a46e8d8e@tls.msk.ru>
-Date: Tue, 28 Jul 2026 00:17:34 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 27DF53F8023;
+ Tue, 28 Jul 2026 00:35:35 +0300 (MSK)
+Message-ID: <b0951125-f714-4bdf-a178-1a7658bef43d@tls.msk.ru>
+Date: Tue, 28 Jul 2026 00:35:19 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/display/virtio-gpu: Remove the bytes_pp field
+Subject: Re: [PATCH] hw/display/virtio-gpu: Fix empty blob discrimination
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-stable@nongnu.org
-References: <20260719-bpp-v1-1-9b91946d6cf3@rsg.ci.i.u-tokyo.ac.jp>
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ QEMU Stable <qemu-stable@nongnu.org>
+References: <20260725-image-v1-1-4698a805afde@rsg.ci.i.u-tokyo.ac.jp>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -88,7 +89,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260719-bpp-v1-1-9b91946d6cf3@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260725-image-v1-1-4698a805afde@rsg.ci.i.u-tokyo.ac.jp>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -114,40 +115,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/19/26 14:35, Akihiko Odaki wrote:
-> virtio_gpu_do_set_scanout() validates the stride field of struct
-> virtio_gpu_framebuffer against the bytes_pp field, but bytes_pp in the
-> migration stream may be inconsistent with the format field, which
-> pixman_image_create_bits() uses when it accesses the framebuffer.
-> That validation is therefore incomplete.
+On 7/25/26 10:12, Akihiko Odaki wrote:
+> Discriminating blobs by checking whether blob_size is nonzero fails for
+> empty blobs. Identify 2D resources by their non-NULL image instead.
 > 
-> To avoid the trouble of synchronizing the two fields, remove bytes_pp,
-> and always derive its value from format. Removing bytes_pp is safe
-> because no released version of QEMU uses its migrated value.
-> 
-> Fixes: 7b5574225429 ("hw/display: check frame buffer can hold blob")
-> Cc: qemu-stable@nongnu.org
+> Fixes: bdd53f739273 ("virtio-gpu: Update cursor data using blob")
+> Fixes: f66767f75c9c ("virtio-gpu: add virtio-gpu/blob vmstate subsection")
 > Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 > ---
-> Based-on: <20260715201055.2465320-1-marcandre.lureau@redhat.com>
-> ("[PATCH] hw/display/virtio-gpu: validate stride against width on scanout")
-> ---
->   include/hw/virtio/virtio-gpu.h |  1 -
->   hw/display/virtio-gpu.c        | 27 +++++++++++++++++----------
->   2 files changed, 17 insertions(+), 11 deletions(-)
-...
-> @@ -1219,8 +1227,7 @@ static const VMStateDescription vmstate_virtio_gpu_scanout = {
->           VMSTATE_UINT32(cursor.pos.y, struct virtio_gpu_scanout),
->           VMSTATE_UINT32_TEST(fb.format, struct virtio_gpu_scanout,
->                               scanout_vmstate_after_v2),
-> -        VMSTATE_UINT32_TEST(fb.bytes_pp, struct virtio_gpu_scanout,
-> -                            scanout_vmstate_after_v2),
-> +        VMSTATE_UNUSED_TEST(scanout_vmstate_after_v2, 4),
+>   hw/display/virtio-gpu.c | 18 +++++++++---------
+>   1 file changed, 9 insertions(+), 9 deletions(-)
 
-Can we send this field when doing migration to an older version?
-When doing migration from older to current (with this patch), this
-field is being ignored, which is ok.  But not setting this field
-on migration in reverse direction means the older version wont work.
+Is this a qemu-stable material?  I've no idea from the description
+about the implication of the previous behavior.
+
+Thanks,
 
 /mjt
+
+> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+> index 718ba3039290..6413df029b8e 100644
+> --- a/hw/display/virtio-gpu.c
+> +++ b/hw/display/virtio-gpu.c
+> @@ -56,18 +56,18 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
+>           return;
+>       }
+>   
+> -    if (res->blob_size) {
+> -        if (res->blob_size < (s->current_cursor->width *
+> -                              s->current_cursor->height * 4)) {
+> -            return;
+> -        }
+> -        data = res->blob;
+> -    } else {
+> +    if (res->image) {
+>           if (pixman_image_get_width(res->image)  != s->current_cursor->width ||
+>               pixman_image_get_height(res->image) != s->current_cursor->height) {
+>               return;
+>           }
+>           data = pixman_image_get_data(res->image);
+> +    } else {
+> +        if (res->blob_size < (s->current_cursor->width *
+> +                              s->current_cursor->height * 4)) {
+> +            return;
+> +        }
+> +        data = res->blob;
+>       }
+>   
+>       pixels = s->current_cursor->width * s->current_cursor->height;
+> @@ -1279,7 +1279,7 @@ static int virtio_gpu_save(QEMUFile *f, void *opaque, size_t size,
+>       assert(QTAILQ_EMPTY(&g->cmdq));
+>   
+>       QTAILQ_FOREACH(res, &g->reslist, next) {
+> -        if (res->blob_size) {
+> +        if (!res->image) {
+>               continue;
+>           }
+>           qemu_put_be32(f, res->resource_id);
+> @@ -1430,7 +1430,7 @@ static int virtio_gpu_blob_save(QEMUFile *f, void *opaque, size_t size,
+>       assert(QTAILQ_EMPTY(&g->cmdq));
+>   
+>       QTAILQ_FOREACH(res, &g->reslist, next) {
+> -        if (!res->blob_size) {
+> +        if (res->image) {
+>               continue;
+>           }
+>           assert(!res->image);
+> 
+> ---
+> base-commit: 006a22cb26998998385b104db1ff9466ef2f3153
+> change-id: 20260725-image-6c8566fb1253
+> 
+> Best regards,
+> --
+> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> 
+> 
+
 
