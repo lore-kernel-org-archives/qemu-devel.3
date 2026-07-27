@@ -4,107 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E76CC53209
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 12:50:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EADFC531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 12:50:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woKm4-0006Dz-QR; Mon, 27 Jul 2026 08:49:40 -0400
+	id 1woKmy-0007PV-Qq; Mon, 27 Jul 2026 08:50:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <seungjung0711@gmail.com>)
- id 1woKiO-0005ub-4Y
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 08:45:52 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <seungjung0711@gmail.com>)
- id 1woKiM-0003gr-H5
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 08:45:51 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-381b831d535so3278181a91.0
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 05:45:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785156348; cv=none;
- d=google.com; s=arc-20260327;
- b=IU7Py3F09GXTF41UeAGrIYco75yYLKrmtXH7kwNsMrZOBOotKdLXpzEkXu48Cmhu0Z
- /AUD0W2/JIHWYRyPrct1dOH7weN80cR4tAc51/UZYt2jFI3sbm4y/OjffrbQYokZSgPE
- mf0oUiewlBiqQR6XdpdwVbPgkyxCUvlQ+WChEFxSSJTMlaYRVSGQCSBfndDOkb7PBe5c
- Qz+t5pxT5wu6WagcEc/2dUEN9c2qqzZtfCp41haRfrWSgLPQpwJC2c262w9xHWO2jt30
- jlVYkCS3/oAMfKWeqStuagS5qFu0zII5kRNviqcN+jww5UnQ6wtuk/T/cqwb2yHvtmsR
- TUJA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=wwCqdZWoKmCDiSYdlzKAqb0XbGc4aYSYnJDqLUQiyt8=;
- fh=bx5HbowjsYhp+PVwexRlaZMLSaqQzrN9uN/Ep+SDAP0=;
- b=DLGB8Iq4djGr9dG1joYWfgwmhOzVq6BJPhQf5Rg7nuw3vZl1F1iB//+/wAxMow17uy
- hjXxYJcEHQ1vtTIlEOKJ/Q6pWMkK6+tYyuCQ0tkIawvFqc6sIVeyqcb/uQ2okdy4lHKx
- ff9fD3w0HRPMtLOW6T2SH5uBt3X3/uIluZrx0wjK37ExxA+PoHrMo3Gjhe3qpFJLnW8T
- JOk7CZ5vJzJoonQqsO4KrOmQp1byq7h/a81sttFOTCbdhPOLVT86h51XkFwvZUOsiHTZ
- A/2VDNoD/CQPEr+obz+dG4loIHFwIXPaR7ms3bC21IHhaOB6WPYzf5+kGn27k8XPDiVF
- v4wg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1woKmw-0007KN-5p
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 08:50:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1woKmt-0004IX-UH
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 08:50:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785156630;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=x0rLaDAi5KlijnkCnuqS97k0mLitSR/GOJxO5gH6eys=;
+ b=cj/aJ7FPeoCwj6Ezhi/u5U0mMm0plAmTw19NgPcK17/vAozQFN/bYE8HFgJV3A37KSHzhK
+ aiEE4Q3X1d2kPg/Mug+hsjw8b6ui7bofkzM6//3JBwKTVShkcu3WaVpfQeBvZAZbFWOw3T
+ xVe9ExW04Ozf6yq2u38HOXE7TP47Vbc=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-47-bqdFRah6OHari6RDB_L5NQ-1; Mon, 27 Jul 2026 08:50:28 -0400
+X-MC-Unique: bqdFRah6OHari6RDB_L5NQ-1
+X-Mimecast-MFC-AGG-ID: bqdFRah6OHari6RDB_L5NQ_1785156628
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-92e82060977so279685685a.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 05:50:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785156348; x=1785761148; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:mime-version:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=wwCqdZWoKmCDiSYdlzKAqb0XbGc4aYSYnJDqLUQiyt8=;
- b=nRefWol2VHpIawCgOcCu5WqQfGDM/5zjGh9E6rgXnh2/P5w+DeD1vAYRkThQQqD2tZ
- +6zCOLq2OQzm8rZxTUF1BiDW0AAgQiArF9yJQTnm0WrgkHUdqFy7BfT29c8C+vMUZ60l
- KURqsk+v6bCjZ41Y3Jf6L/GsFvrW5ZoeU52XR9G8dIefnYz6eH8UtsRGY9fYMiq1mafK
- QKV9776zpiWnEnyaYwaRdsN+uq6Qqj6bn3VCr9kNaktaKMvv1dZZf+saFZNb4diwUWx7
- /ena1ZXPwDr7RGodo6RN7W/RAz/A3owa/oYeSldL0twAee1blGEAYfg+jQmKL+fx2Jox
- 7WBw==
+ d=redhat.com; s=google; t=1785156628; x=1785761428; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=x0rLaDAi5KlijnkCnuqS97k0mLitSR/GOJxO5gH6eys=;
+ b=Zp3AiSf1YFaixjyoIr1JulSasCp45HKLnGt81io2GaHH2wtH0+4u2+HN/4Y+Zo7NNb
+ E33MVlrgJmiyZJmf3+IwJ9N4brL+170gJ6YdQKjUy2q6yYo9V3W3FAYMeqCbVwuCzRf9
+ p8DqW5m0QGdFyrFyWxqCdIhd7seKin0PoJnTmtcaQnaaS8dVjdY8e3uANiwTTONN5x/Z
+ 8wfpouoASiFLEIhL535p+xK7NnzlKYPUeoNJvuEuHT59eiXW64DkVNsWTJGIgfhPK9vi
+ BpEwyqjHgTYx4ZmMPr7LCFZCcGlGowibnflxFqSK/XLoo6336atY4RMUucYgBI3/6Pi8
+ NUSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785156348; x=1785761148;
- h=content-type:cc:to:subject:message-id:date:from:mime-version
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=wwCqdZWoKmCDiSYdlzKAqb0XbGc4aYSYnJDqLUQiyt8=;
- b=ipHoztwB/mJrx2vWN7QmiXgoFxHmoUyXa5dAnq2c5PepnWw1nMvrdrnyBxsxV+nqrb
- XrgWsQknykLaOEUvCiLuWSgugkgU8hxG/uIk3JRQlcv+HV/UStQPQeF30o5tNqea5j15
- j0Kwmbl7q+U4YEmaNWQLCPr+gUHzvHqxorJ66LIBP1cMLJGidMhAaWA1qa5YxnjAzCmO
- gsR++lkmx53c49aGIkwfDtuBw93t0Xa7mOw4HA1k/JJeUXZB3zhBTWhy+aDsJPjIEszS
- qFOR5JFMnlkGZG3f8zf3ggf+R27iHIdT08P0mbYgVM8PvMEUHfz1LSXKHtles/aGSwip
- rqQQ==
-X-Gm-Message-State: AOJu0YxqUKM1goO6GzlfJ+sYjOLEBhoZUw28A/dCBTuhtr4tvkan3QlM
- opSzIAMkBtY7RShN0ISX/ETP3n9gp3QecgwmhS+Lp8lo0+WNRmTrxbDGt61WLsejZoxEWAad9nA
- 7vQmJ2r8P1Bx2rf22LglcYt3pvXCzkmOfcQ==
-X-Gm-Gg: AR+sD10ocCmOof2TrMsFDSMWbikZM19jJwOef4icY/II1Kd2XpcVEjNCYKPRFDEycVP
- UYljuFOEW7iezGxVzUHdbDu9ctRqD6hTa1PLOtYkjYqM/VUtWEDIJIS3vwPYwRHXhr6DbAKWZyb
- 6ld2JA72Yrc7pS55mIqIBE7wpiUvS0jmC2Eu/RBU/ZO2RHriCZqeK25lGn0j2vQ2s4nU29eCdIQ
- aT0dfwYH1Cvr5cl6E7lqoq12Sk5e5cHfy4xsg3zOBNxhTF2brgMKPVBpxxrN7II+AcBGdQj1H9s
- ClJM5iYFLm5mzk+y4vBrVpJMsAc=
-X-Received: by 2002:a17:90b:4c8f:b0:381:792d:f993 with SMTP id
- 98e67ed59e1d1-38f294f144fmr8321541a91.17.1785156348319; Mon, 27 Jul 2026
- 05:45:48 -0700 (PDT)
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST; 
- Mon, 27 Jul 2026 05:45:47 -0700
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST; 
- Mon, 27 Jul 2026 05:45:47 -0700
+ d=1e100.net; s=20251104; t=1785156628; x=1785761428;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=x0rLaDAi5KlijnkCnuqS97k0mLitSR/GOJxO5gH6eys=;
+ b=RxePWFciZ2mWXmc2aS/WukQNIqr/NvOWbsgKNLwjjuL/39tUD693iAR7WFIcyOr1Ut
+ 5yBvODwlbXsI+k6ZwGiVTCreb/Yk9TgJUy4zjsyjMnDcqWbkAnXFLVvz2NeG2n7AgiWg
+ zAVSyoWO4wRgMjmSOR/D6CYSk5qjHK0E30gegDWXiCHu2SOSC2zy/ICMhpYSGz/YejEV
+ z47wr+TmXyEGU6X6YY0XQ0tuDY/CSRVyVeJi3ihPCb8vsfNjjcx1mlu+YudZCIe4dAwn
+ jRBOpGGy3/xL23vEi4RoUGNkt/ylyj0C5IUS0lVpngP+KV1TyONcyJrZj324smSlIwt5
+ Bgkg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrFNpTEvzYeJBL5crbIUs8lj/0+ZgkxIFldU61CqejmMokJ2bKmMNRensA93gEeEzWCBpJGEP6YeXwV@nongnu.org
+X-Gm-Message-State: AOJu0Yxk/znsZDtILDsvVBULmDauSZI92p1uS63MiXIfT3IEV4Pi23SY
+ lgdFE2w79xW/JJHEg184QhhSGvPcM6KEQJzcYfDyevleEoaUU91LAQUAKUd69bcJU54Zz9wMWv5
+ LLlCBStcb58M5NklUHysIpuDHUbIaoiHBE4OfLzc9vUh/IEkTN6t51/Hj
+X-Gm-Gg: AR+sD11jsvPHV3DMHotqbJ/L0RGvFXk6oZA3sYhBNcfDZHEHvwW51GnaFQTUX9mkqWn
+ aDFv5xR5SVzcv85j3ZWQxizcpAnG2PMYwGMo3s3lkCQ/vw907S1eLi7XXZyju1AWxvP0Ei+WBJq
+ gXMZhnCMtC83vK+G9DyrvOY/r743z3s2yO8SEzX7MuKk0buS3xN6xg6oW89pkuhv9N7cDOI/t6o
+ QaaurDYVeAYR2gMmTc8mLChUwf4HwzhVsIKfnQ9BWuntxWwSKzGyTnkULxyJ4IpcoMkb1slKtsB
+ 6UgMxs2IpIYECbqOSRIalloSbEAPvkX2yZYngfbB6qA7oj4O+90l/RhJa+FMJp9V43zx
+X-Received: by 2002:a05:620a:2906:b0:92e:e307:5122 with SMTP id
+ af79cd13be357-932918e14aamr1118664385a.28.1785156627498; 
+ Mon, 27 Jul 2026 05:50:27 -0700 (PDT)
+X-Received: by 2002:a05:620a:2906:b0:92e:e307:5122 with SMTP id
+ af79cd13be357-932918e14aamr1118660185a.28.1785156626947; 
+ Mon, 27 Jul 2026 05:50:26 -0700 (PDT)
+Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-932de6729ebsm609880585a.42.2026.07.27.05.50.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 27 Jul 2026 05:50:26 -0700 (PDT)
+Date: Mon, 27 Jul 2026 08:50:23 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Dongli Zhang <dongli.zhang@oracle.com>, qemu-devel@nongnu.org,
+ farosas@suse.de, mark.kanda@oracle.com, bchaney@akamai.com
+Subject: Re: [PATCH v2 1/1] migration/cpr: Add HMP support for cpr-transfer
+Message-ID: <amdUD8Q2alnR4yBs@x1.local>
+References: <20260724094119.90581-1-dongli.zhang@oracle.com>
+ <amaqaePN2wAWoUCN@gallifrey>
+ <793f2d27-cf2e-4e27-ac4e-e94fa6db0e05@maciej.szmigiero.name>
 MIME-Version: 1.0
-From: =?UTF-8?B?6rmA7Iq57KSR?= <seungjung0711@gmail.com>
-Date: Mon, 27 Jul 2026 05:45:47 -0700
-X-Gm-Features: AUfX_my5o-ut9k4dhEC3yjVgW9VsV2jSTf20Cf_XqRevZvTIXHdZUy1epqKb3OQ
-Message-ID: <CAHntc+O1jaJhj1_k6kTHDp7u_1DdPUCKZNA_AxWYh+SKraXS8A@mail.gmail.com>
-Subject: [PATCH] vhost: Reject oversized inflight migration buffers
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Mauro Matteo Cascella <mcascell@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=seungjung0711@gmail.com; helo=mail-pj1-x102d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <793f2d27-cf2e-4e27-ac4e-e94fa6db0e05@maciej.szmigiero.name>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 27 Jul 2026 08:49:39 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -119,45 +120,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The inflight buffer size is migrated as a uint64_t, but vmstate_size()
-reads VMS_VBUFFER sizes as int32_t. Values above INT32_MAX therefore
-become negative and are converted to a very large size_t while loading
-the buffer, allowing writes beyond the smaller memfd-backed mapping.
+On Mon, Jul 27, 2026 at 02:14:27PM +0200, Maciej S. Szmigiero wrote:
+> On 27.07.2026 02:46, Dr. David Alan Gilbert wrote:
+> > * Dongli Zhang (dongli.zhang@oracle.com) wrote:
+> > > Currently the cpr-transfer source QEMU instance cannot be driven entirely
+> > > via HMP.  The source must use QMP in order to specify both the
+> > > main migration channel and the CPR channel.
+> > > 
+> > > Extend the HMP migrate command with an optional CPR channel URI. When the
+> > > migration mode is cpr-transfer, HMP uses this URI to build a
+> > > CPR MigrationChannel in addition to the main migration channel. The new
+> > > option is rejected unless the migration mode is cpr-transfer, so existing
+> > > HMP migrate usage is unchanged.
+> > > 
+> > > For example, source QEMU HMP commands can be something like below. The
+> > > "-c unix:/tmp/cpr.sock" is for CPR URI.
+> > > 
+> > > (qemu) migrate_set_parameter mode cpr-transfer
+> > > (qemu) migrate -c unix:/tmp/cpr.sock tcp:0:50002
+> > > 
+> > > Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+> > > ---
+> > > v1->v2:
+> > >    - Use the '-c' option in the HMP command reference.
+> > >    - Use "a second uri can only be used in cpr-transfer mode" as error
+> > >      message.
+> > 
+> > Thanks for making those changes; minor note below.
+> > 
+> > >   hmp-commands.hx                | 12 ++++++++----
+> > >   migration/migration-hmp-cmds.c | 19 +++++++++++++++++++
+> > >   2 files changed, 27 insertions(+), 4 deletions(-)
+> > > 
+> > > diff --git a/hmp-commands.hx b/hmp-commands.hx
+> > > index 7ae2468a3d..7f43cf537f 100644
+> > > --- a/hmp-commands.hx
+> > > +++ b/hmp-commands.hx
+> > > @@ -928,16 +928,17 @@ ERST
+> > >       {
+> > >           .name       = "migrate",
+> > > -        .args_type  = "detach:-d,resume:-r,uri:s",
+> > > -        .params     = "[-d] [-r] uri",
+> > > +        .args_type  = "detach:-d,resume:-r,uri-cpr:-cs,uri:s",
+> > > +        .params     = "[-d] [-r] [-c uri-cpr] uri",
+> > >           .help       = "migrate to URI (using -d to not wait for completion)"
+> > > -		      "\n\t\t\t -r to resume a paused postcopy migration",
+> > > +		      "\n\t\t\t -r to resume a paused postcopy migration"
+> > > +		      "\n\t\t\t -c to specify a CPR URI for cpr-transfer mode",
+> > >           .cmd        = hmp_migrate,
+> > >       },
+> > >   SRST
+> > > -``migrate [-d] [-r]`` *uri*
+> > > +``migrate [-d] [-r] [-c uri-cpr]`` *uri*
+> > >     Migrate the VM to *uri*.
+> > >     ``-d``
+> > > @@ -945,6 +946,9 @@ SRST
+> > >       query an ongoing migration process, use "info migrate".
+> > >     ``-r``
+> > >       Resume a paused postcopy migration.
+> > > +  ``-c`` *uri-cpr*
+> > > +    Specify the CPR URI for cpr-transfer mode. It must be a UNIX domain
+> > > +    socket.
+> > >   ERST
+> > >       {
+> > > diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+> > > index b04fc4489f..4ca2c962c2 100644
+> > > --- a/migration/migration-hmp-cmds.c
+> > > +++ b/migration/migration-hmp-cmds.c
+> > > @@ -837,9 +837,11 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
+> > >       bool detach = qdict_get_try_bool(qdict, "detach", false);
+> > >       bool resume = qdict_get_try_bool(qdict, "resume", false);
+> > >       const char *uri = qdict_get_str(qdict, "uri");
+> > > +    const char *uri_cpr = qdict_get_try_str(qdict, "uri-cpr");
+> > >       Error *err = NULL;
+> > >       g_autoptr(MigrationChannelList) caps = NULL;
+> > >       g_autoptr(MigrationChannel) channel = NULL;
+> > > +    g_autoptr(MigrationChannel) channel_cpr = NULL;
+> > >       if (!migrate_uri_parse(uri, &channel, &err)) {
+> > >           hmp_handle_error(mon, err);
+> > > @@ -847,6 +849,23 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
+> > >       }
+> > >       QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel));
+> > > +    if (uri_cpr) {
+> > > +        if (migrate_mode() != MIG_MODE_CPR_TRANSFER) {
+> > > +            error_setg(&err,
+> > > +                       "a second uri can only be used in cpr-transfer mode");
+> > 
+> > That should probably be changed to something like
+> >    "-c can only be used in cpr-transfer mode"
+> > 
+> > but other than that,
+> > 
+> > Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+> > (Feel free to take it via cpr or migration).
+> 
+> Acked-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com> # for CPR
+> 
+> I am fine with this going in through migration tree if that's not
+> a problem since there's currently nothing else for CPR.
 
-Reject sizes that cannot be represented by vmstate_size() before
-allocating the destination buffer.
+Yep I'll pick this up for 11.2, thanks all.
 
-Fixes: CVE-2026-6426
-Reported-by: Seungjung Kim <seungjung0711@gmail.com>
-Signed-off-by: Seungjung Kim <seungjung0711@gmail.com>
-
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index af41841b52..82eb9407ae 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -2022,11 +2022,18 @@ void vhost_get_features_ex(struct vhost_dev *hdev,
- static bool vhost_inflight_buffer_pre_load(void *opaque, Error **errp)
- {
-     struct vhost_inflight *inflight = opaque;
--
-     int fd = -1;
--    void *addr = qemu_memfd_alloc("vhost-inflight", inflight->size,
--                                  F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
--                                  &fd, errp);
-+    void *addr;
-+
-+    if (inflight->size > INT32_MAX) {
-+        error_setg(errp, "inflight buffer size %" PRIu64
-+                   " exceeds maximum %d", inflight->size, INT32_MAX);
-+        return false;
-+    }
-+
-+    addr = qemu_memfd_alloc("vhost-inflight", inflight->size,
-+                            F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
-+                            &fd, errp);
-     if (!addr) {
-         return false;
-     }
 -- 
-2.50.1 (Apple Git-155)
+Peter Xu
+
 
