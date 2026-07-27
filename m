@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6427AC53209
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 16:53:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 272F3C53209
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 16:59:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woOZ6-0000cq-10; Mon, 27 Jul 2026 12:52:32 -0400
+	id 1woOfe-0001cL-88; Mon, 27 Jul 2026 12:59:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1woOYg-0000b1-FO
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 12:52:12 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ (Exim 4.90_1) (envelope-from <rohit.kuma1313@gmail.com>)
+ id 1woOf6-0001XK-GV
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 12:58:44 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1woOYd-0005pF-2B
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 12:52:05 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-84e507b079dso1655064b3a.0
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 09:52:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rohit.kuma1313@gmail.com>)
+ id 1woOf4-0006ed-RJ
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 12:58:44 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4953de5be0aso19698275e9.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 09:58:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785171120; x=1785775920; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:cc
- :content-language:from:references:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=KzHFq5Pzqv5CpfdfzPORsybu6IPgnVyY4OYCl7mz+U8=;
- b=ilwY/oR/906Yp3uTJ3n8E/K2bpmfvVHX4ksE4KyTc9KvPuINTKA+3imrUqnF9F6dOJ
- S5Mg7BYQeKwQyVjbbVquL4a6DV+KbihqvDMELCwaopaaCjjwXzjPrhBRsacSngrmewpK
- JLDCOccBuiDDAUuNDhSJ+HuHcjr4nahlKT5FamY2TzrBS4WPBH4ctHoN8ZRv2FBZoowd
- OskXwO2s7103vQEenFONruF7tnJ+PBfthP7+LZ9aBa+cW/vPr5b7n/NNoMl+qq9OkHyz
- IlJThU6GBeUBMCGgKOiM0KKQ3/15+ebrrJXJFA62jiG/4q3XJVkpIRgvBBV/Fs0pLABu
- 2vfQ==
+ d=gmail.com; s=20251104; t=1785171520; x=1785776320; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=D0oNf+HlrNiDb2XUQ8Yx+LPXLSbqI3lxt5Zg1i+vczc=;
+ b=orqufW+UiEAs3XWD0+1kghmtCUt2BUgLGjuG5D7GRfqtt5o+tTaqbiw7fhqGwD6m33
+ bzXvjTpczVw5gxg7pxGWDANR8aim+H3SQCXk4KDg+zoO2IdPdBFUxeeXZfbKeJsfz5+/
+ QvDaRIdPD+1FFO+r1bC13X5jwWrLdyOUimBkt2tKdP2y6wZ2XwDXGVXj0jM/0uijr/fm
+ SFBgB1wTP+xVRdqbn43jHCOpwuUs/O3NolMER1N0ml1K2dmo7SeICdOE8O8Y1y6p2SWC
+ hqO2LSs5TVhZQ/P75QFmRCCJiKOAbDDaVmoPOTYXC+HA8g/p2+4CBKtn/dAvy2ZxmFLi
+ EbjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785171120; x=1785775920;
- h=content-transfer-encoding:content-type:in-reply-to:cc
- :content-language:from:references:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1785171520; x=1785776320;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=KzHFq5Pzqv5CpfdfzPORsybu6IPgnVyY4OYCl7mz+U8=;
- b=DKEuz3qXWDYXun2h/VsYF4hdGBlf4ID3uhnYmAZRLaQSfXrzUdERarxcazmj6TlICb
- L6/2nIpoWhV78njILghiY9iPoduUmNKPgHQ/AMlHkPJKN+vuteYyiaIR4IiIpN3fAKXv
- y6NJ32oNQRa/w+LQrK4CV7wqXN4ytyaFSjZZN4mUoGDmjsEXDUK+YB1fxDcEAOCngLEW
- 9uviJ/MoxOB67otFA0zHxJdqq6cyGcOLR4QIyJrAQ6dXpukqG5CXvtBJmUtuUYxTDFiq
- uCUeyiyOT8EuOso1bQIoCLwKXuaLqj/iY7vsAbpgR5KJLgsJHM1bDE1LY0mcmM6f4LOP
- Syvg==
-X-Gm-Message-State: AOJu0YwWoiObb44Cd9daUuXd5G0a6PlZqy9LUGm4uJm+zgyhjNIQoeFs
- zCMLSAYx6zJp3NUiM8UruIh8DERpHKGLFZkGH9mpZ2E6GzXueDS+5NJV7fQ8fhMXsCdfRQd2a2E
- uNCwr
-X-Gm-Gg: AR+sD110DygfrpfXUUirQvreAhyi9wIYKvvicCftQUdzrEDD/kxSHVbaidk1vxrQexM
- qUlI+8+IU0flA4EWkjEfojJb6w78S2K6I4kuG5vi0MMa9ltHdV731surmgh4eN8yzt5MdOLCDZU
- HpzkF63Ea/1IqKZDy5Hohca9Udx8SwT26K0+GWSKkqRWU+fN5BKRVY03Ac8hbK9UKd/maqloLhF
- XLGgo4PzXblMGY/LPGoE2rqlzKC2ltAMYAcatSz3RYZdm/hIg0vi2ZMr1GAQmIfWZUU+X65bJ9j
- zSfdOa3jjKLyS59XIQu6JKKp4zqjk01CYzTDqtcumqUcjJaHsp+he4lCre3yRW1GeW0unUxCzhq
- +VXIc77b2kzfR0vq1+1KQSbFLGOzUQX5TbvMAQI7x2QsrSE+Lg14CveRY7swqyz2ob9yvQTXxO3
- 8rQw8enFp9Ks/EQHwN8CGMWz/bNwjR45CSqAkpK9tvog==
-X-Received: by 2002:a05:6a00:22d3:b0:848:635c:5e8f with SMTP id
- d2e1a72fcca58-84e595943abmr7756989b3a.56.1785171119427; 
- Mon, 27 Jul 2026 09:51:59 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ bh=D0oNf+HlrNiDb2XUQ8Yx+LPXLSbqI3lxt5Zg1i+vczc=;
+ b=MuCqY0H5RYAXhkbpvzivaPjhoHvJKuiaQc+XbT+RMrPWi3VwpNi5eQwm0AIP6Su/EC
+ MrSyf0A9l0ILfefc54GggcevuQwCNDlJiMTZKsnOzQJE3bFK95qqL+6sSs51Lw7Wgt56
+ GbzjdFQkRycezePNZ4DhsSvVpDJFDjYNrDV++nen0U4ee2/aHsLP/vMiSDmh4g64vLr7
+ oTj7bVOfcNvfCnyumgkEUlVfUY3kwcMVF9x/ESRcrz/uPJHDV5pOHbLuYy+lgqYa4j6J
+ X9VVpOLbjfWkWjkH/ZofRHeKKjFKbrdhuMHxBBLlBoiDshTsk//OY9xcM8z6CWXHyDrJ
+ kIlg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rp1uBHiR4JAiU5rD5lYOxZygd6iImK+NzRHO6SAxK7+sVUKpjY7YdXnhjEWdhnBeHZ5yWWbX48GhfxV@nongnu.org
+X-Gm-Message-State: AOJu0Yy1ldhYL39f+8KZKBqWwbycBd68EVYWyAvDW8gN0SZdNbAhuLQv
+ UgHK42cG3SsWo6q+0+JEbMyD+oRGtFkHikN4lNYHcqoy6Y8kEe1DttTK
+X-Gm-Gg: AR+sD13v06CuawwWdMES3iaoLAq6bEKHiu7r3akHV0X4R0Kt+6FbsrMcdne4L9AubPF
+ WjVn1a/vLfZGlotbK9vA9EgJddJvt1yLTVG5Qxz2jGRI2T1sV9c0hHLTFjhr6WD6DFvI4injRPM
+ rKNPsUlJNMmLKFu33394D8UM2hyoyX7HUwwCvWvcIn7oaJBCUIMdXHALVBklsuQXUaZiZuZTX6x
+ PPO/yG66te6oTmb/uVVhiD1UwBCQTr6IR4Njug5VIZWxvKrku4WjhUv/7+z0FWekk32Rrsyxnrm
+ eAmgvxPPDaI/hYMmtQmR1X/GPttJK7qcd5LuUI2lX+8XUwI+bE4h3DxXaO9cvNVeTwdbpLO+/wG
+ duYgO8Fr6l9GEcqJM8q54EZJs+xF4wcsxjvSDfRln3d1PRkP+Jbmm+QneVkWfatmM42Hx33UG6r
+ N9YRDVHmB6TwpDeddWL0EkwpzP5TXE3IgbKnTr1DzbnV51veFZgErFpd/6wmQzQ13cD1dQcHAxF
+ a95xgfawg7H7Z8Za5/6TQEfocTXOQXMzbYNIwwiJ5Tepj3FFdT7wo+B7JhHvw==
+X-Received: by 2002:a05:600c:3113:b0:495:4811:7998 with SMTP id
+ 5b1f17b1804b1-496b57013f0mr116191045e9.17.1785171520018; 
+ Mon, 27 Jul 2026 09:58:40 -0700 (PDT)
+Received: from ip-172-31-13-20.eu-central-1.compute.internal
+ (ec2-18-198-207-175.eu-central-1.compute.amazonaws.com. [18.198.207.175])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-84e5327f116sm3338733b3a.16.2026.07.27.09.51.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Jul 2026 09:51:59 -0700 (PDT)
-Message-ID: <877be8fd-af97-4f68-b4a4-31201334c96c@linaro.org>
-Date: Mon, 27 Jul 2026 09:51:57 -0700
+ ffacd0b85a97d-47f85bd77a9sm47826602f8f.14.2026.07.27.09.58.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 27 Jul 2026 09:58:39 -0700 (PDT)
+From: Rohitashv Kumar <rohit.kuma1313@gmail.com>
+To: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org
+Cc: Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Rohitashv Kumar <roohiit@amazon.de>
+Subject: [PATCH 1/2] qapi/block-core: gate protocol block drivers behind their
+ CONFIG symbols
+Date: Mon, 27 Jul 2026 16:58:32 +0000
+Message-ID: <20260727165833.107915-1-rohit.kuma1313@gmail.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user/sh4: allow full 32-bit address space
-To: qemu-devel@nongnu.org
-References: <20260727114848.1041856-1-laurent@vivier.eu>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-Cc: Max Filippov <jcmvbkbc@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-In-Reply-To: <20260727114848.1041856-1-laurent@vivier.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=rohit.kuma1313@gmail.com; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,40 +105,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/27/26 04:48, Laurent Vivier wrote:
-> On real SH4 hardware, the address space is split between user mode
-> (U0, 0x00000000-0x7fffffff) and kernel mode (P1-P4, 0x80000000-0xffffffff),
-> so TARGET_VIRT_ADDR_SPACE_BITS was set to 31 for CONFIG_USER_ONLY.
-> 
-> However, qemu-user does not emulate the MMU, so this limit is not needed.
-> The only effect is to restrict reserved_va to 2 GB, causing OOM failures
-> for memory-intensive builds (e.g. webkit2gtk on Debian sh4 buildds).
-> 
-> Set TARGET_VIRT_ADDR_SPACE_BITS to 32 unconditionally, like most other
-> 32-bit targets. Also fix the TASK_UNMAPPED_BASE macro to use 1ull instead
-> of 1u to avoid undefined behavior when shifting by 32.
-> 
-> Reported-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-> Signed-off-by: Laurent Vivier <laurent@vivier.eu>
-> ---
->   linux-user/sh4/target_mman.h | 2 +-
->   target/sh4/cpu-param.h       | 6 +-----
->   2 files changed, 2 insertions(+), 6 deletions(-)
+From: Rohitashv Kumar <roohiit@amazon.de>
 
-So, the goal is to run things under qemu-linux-user that can't run on hardware?
+BlockdevDriver enumerates every block driver and is exposed through
+query-qmp-schema so that management tools can discover which drivers a
+QEMU binary supports.  Some members are already gated with 'if'
+conditionals (replication, the CONFIG_BLKIO virtio-blk drivers, the
+host-device drivers) so that they only appear when actually compiled in.
 
-I'm not necessarily opposed, though there have been software systems that know that the 
-upper bit is unused and reuse it for tagged pointers.  Emacs did so, sometime last 
-century.  I'm sure there were others.  Anyway that's the reason we currently limit 
-qemu-linux-user like the hardware does.
+The protocol drivers backed by an external library were not gated: ftp,
+ftps, http and https (curl), iscsi (libiscsi), nfs (libnfs), rbd (librbd)
+and ssh (libssh).  When QEMU is built without the corresponding library
+the driver is not registered -- it is absent from "-drive format=help"
+and attempts to use it fail with "Unknown driver" -- yet
+query-qmp-schema still advertises it, so management layers are told a
+driver is available when it is not.
 
-If you're going to drop that, you might do this for all targets:
+Gate these enum members, and their branches in the BlockdevOptions and
+BlockdevCreateOptions unions, with the CONFIG_* symbols that already
+control whether the drivers are built (CONFIG_CURL, CONFIG_LIBISCSI,
+CONFIG_LIBNFS, CONFIG_RBD, CONFIG_LIBSSH).  query-qmp-schema now reflects
+the protocol drivers actually present in the binary.
 
-mips/cpu-param.h:#  define TARGET_VIRT_ADDR_SPACE_BITS 31
-sh4/cpu-param.h:# define TARGET_VIRT_ADDR_SPACE_BITS 31
-xtensa/cpu-param.h:#define TARGET_VIRT_ADDR_SPACE_BITS 30
+Signed-off-by: Rohitashv Kumar <roohiit@amazon.de>
+---
+ qapi/block-core.json | 52 +++++++++++++++++++++++++++++---------------
+ 1 file changed, 35 insertions(+), 17 deletions(-)
 
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index 1f87b07850..1087c2cbd4 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -3339,18 +3339,25 @@
+ { 'enum': 'BlockdevDriver',
+   'data': [ 'blkdebug', 'blklogwrites', 'blkreplay', 'blkverify', 'bochs',
+             'cloop', 'compress', 'copy-before-write', 'copy-on-read', 'dmg',
+-            'file', 'snapshot-access', 'ftp', 'ftps',
++            'file', 'snapshot-access',
++            { 'name': 'ftp', 'if': 'CONFIG_CURL' },
++            { 'name': 'ftps', 'if': 'CONFIG_CURL' },
+             {'name': 'host_cdrom', 'if': 'HAVE_HOST_BLOCK_DEVICE' },
+             {'name': 'host_device', 'if': 'HAVE_HOST_BLOCK_DEVICE' },
+-            'http', 'https',
++            { 'name': 'http', 'if': 'CONFIG_CURL' },
++            { 'name': 'https', 'if': 'CONFIG_CURL' },
+             { 'name': 'io_uring', 'if': 'CONFIG_BLKIO' },
+-            'iscsi',
+-            'luks', 'nbd', 'nfs', 'null-aio', 'null-co', 'nvme',
++            { 'name': 'iscsi', 'if': 'CONFIG_LIBISCSI' },
++            'luks', 'nbd',
++            { 'name': 'nfs', 'if': 'CONFIG_LIBNFS' },
++            'null-aio', 'null-co', 'nvme',
+             { 'name': 'nvme-io_uring', 'if': 'CONFIG_BLKIO' },
+             'parallels', 'preallocate', 'qcow', 'qcow2', 'qed', 'quorum',
+-            'raw', 'rbd',
++            'raw',
++            { 'name': 'rbd', 'if': 'CONFIG_RBD' },
+             { 'name': 'replication', 'if': 'CONFIG_REPLICATION' },
+-            'ssh', 'throttle', 'vdi', 'vhdx',
++            { 'name': 'ssh', 'if': 'CONFIG_LIBSSH' },
++            'throttle', 'vdi', 'vhdx',
+             { 'name': 'virtio-blk-vfio-pci', 'if': 'CONFIG_BLKIO' },
+             { 'name': 'virtio-blk-vhost-user', 'if': 'CONFIG_BLKIO' },
+             { 'name': 'virtio-blk-vhost-vdpa', 'if': 'CONFIG_BLKIO' },
+@@ -4843,20 +4850,26 @@
+       'copy-on-read':'BlockdevOptionsCor',
+       'dmg':        'BlockdevOptionsGenericFormat',
+       'file':       'BlockdevOptionsFile',
+-      'ftp':        'BlockdevOptionsCurlFtp',
+-      'ftps':       'BlockdevOptionsCurlFtps',
++      'ftp':        { 'type': 'BlockdevOptionsCurlFtp',
++                      'if': 'CONFIG_CURL' },
++      'ftps':       { 'type': 'BlockdevOptionsCurlFtps',
++                      'if': 'CONFIG_CURL' },
+       'host_cdrom':  { 'type': 'BlockdevOptionsFile',
+                        'if': 'HAVE_HOST_BLOCK_DEVICE' },
+       'host_device': { 'type': 'BlockdevOptionsFile',
+                        'if': 'HAVE_HOST_BLOCK_DEVICE' },
+-      'http':       'BlockdevOptionsCurlHttp',
+-      'https':      'BlockdevOptionsCurlHttps',
++      'http':       { 'type': 'BlockdevOptionsCurlHttp',
++                      'if': 'CONFIG_CURL' },
++      'https':      { 'type': 'BlockdevOptionsCurlHttps',
++                      'if': 'CONFIG_CURL' },
+       'io_uring':   { 'type': 'BlockdevOptionsIoUring',
+                       'if': 'CONFIG_BLKIO' },
+-      'iscsi':      'BlockdevOptionsIscsi',
++      'iscsi':      { 'type': 'BlockdevOptionsIscsi',
++                      'if': 'CONFIG_LIBISCSI' },
+       'luks':       'BlockdevOptionsLUKS',
+       'nbd':        'BlockdevOptionsNbd',
+-      'nfs':        'BlockdevOptionsNfs',
++      'nfs':        { 'type': 'BlockdevOptionsNfs',
++                      'if': 'CONFIG_LIBNFS' },
+       'null-aio':   'BlockdevOptionsNull',
+       'null-co':    'BlockdevOptionsNull',
+       'nvme':       'BlockdevOptionsNVMe',
+@@ -4869,11 +4882,13 @@
+       'qed':        'BlockdevOptionsGenericCOWFormat',
+       'quorum':     'BlockdevOptionsQuorum',
+       'raw':        'BlockdevOptionsRaw',
+-      'rbd':        'BlockdevOptionsRbd',
++      'rbd':        { 'type': 'BlockdevOptionsRbd',
++                      'if': 'CONFIG_RBD' },
+       'replication': { 'type': 'BlockdevOptionsReplication',
+                        'if': 'CONFIG_REPLICATION' },
+       'snapshot-access': 'BlockdevOptionsGenericFormat',
+-      'ssh':        'BlockdevOptionsSsh',
++      'ssh':        { 'type': 'BlockdevOptionsSsh',
++                      'if': 'CONFIG_LIBSSH' },
+       'throttle':   'BlockdevOptionsThrottle',
+       'vdi':        'BlockdevOptionsGenericFormat',
+       'vhdx':       'BlockdevOptionsGenericFormat',
+@@ -5543,13 +5558,16 @@
+   'data': {
+       'file':           'BlockdevCreateOptionsFile',
+       'luks':           'BlockdevCreateOptionsLUKS',
+-      'nfs':            'BlockdevCreateOptionsNfs',
++      'nfs':            { 'type': 'BlockdevCreateOptionsNfs',
++                          'if': 'CONFIG_LIBNFS' },
+       'parallels':      'BlockdevCreateOptionsParallels',
+       'qcow':           'BlockdevCreateOptionsQcow',
+       'qcow2':          'BlockdevCreateOptionsQcow2',
+       'qed':            'BlockdevCreateOptionsQed',
+-      'rbd':            'BlockdevCreateOptionsRbd',
+-      'ssh':            'BlockdevCreateOptionsSsh',
++      'rbd':            { 'type': 'BlockdevCreateOptionsRbd',
++                          'if': 'CONFIG_RBD' },
++      'ssh':            { 'type': 'BlockdevCreateOptionsSsh',
++                          'if': 'CONFIG_LIBSSH' },
+       'vdi':            'BlockdevCreateOptionsVdi',
+       'vhdx':           'BlockdevCreateOptionsVhdx',
+       'vmdk':           'BlockdevCreateOptionsVmdk',
+-- 
+2.50.1
 
-
-r~
 
