@@ -4,111 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51409C53219
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:23:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96563C53209
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:23:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woQsE-0000GE-8n; Mon, 27 Jul 2026 15:20:26 -0400
+	id 1woQsI-0000Lv-OU; Mon, 27 Jul 2026 15:20:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsC-0000Ez-Qw
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsH-0000JJ-1m
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsB-0000c9-5u
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:24 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsF-0000cq-ET
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785180022;
+ s=mimecast20190719; t=1785180026;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2g6MMmyPKzZozOuhiPXxtJVxbTcTWv7RFySNngDrOZ4=;
- b=Uhxg2bP9CcIKWKUq3xa26BDKjbRvqdFYe98d7xrKjrPopTSB3e6lLp1DALY1aK6pddgtzF
- /CB8WW4zwL92V7x9gQ3gtijBv63fPugc3eBPPT6HBplJPCn9iEmAIjeUQKEHKdAcws/EGn
- oaXe7PnBpiqy1fK3a23QvtYvYtpDz7g=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nJ5++lDmKJE8GWzy18k6nmNQiVQ39RoIQiUYRj/hei0=;
+ b=KJA/V+XGZdhV/dsyxH2faVlmjwjVorVl9823srq+SnOtovvcCanZVM3RlqOOjNZ1nKbFik
+ k5QLFbHQDvbiATDV110CBjGS/t+D4uNOPKvG6s6P9wittAeyEzFeQkEZKhrMwsoxOk9wnP
+ fOBVRl9oFhKIn6M/abjdLhOY4VIYJcU=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-665-RatjD4wBONqPzy4kKVq86A-1; Mon, 27 Jul 2026 15:20:21 -0400
-X-MC-Unique: RatjD4wBONqPzy4kKVq86A-1
-X-Mimecast-MFC-AGG-ID: RatjD4wBONqPzy4kKVq86A_1785180020
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-496c06ba017so1247675e9.0
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:20:20 -0700 (PDT)
+ us-mta-492-Vp2TEFQAP4WkdQwsILq0bg-1; Mon, 27 Jul 2026 15:20:23 -0400
+X-MC-Unique: Vp2TEFQAP4WkdQwsILq0bg-1
+X-Mimecast-MFC-AGG-ID: Vp2TEFQAP4WkdQwsILq0bg_1785180022
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-47f83999cceso2656004f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:20:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785180020; x=1785784820; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=2g6MMmyPKzZozOuhiPXxtJVxbTcTWv7RFySNngDrOZ4=;
- b=cznLWh7brtaYz9M78iqeOXO/ihnNOxHatsOuKizRgasAnPE6Vcqbh+DwH1u51Nqqcl
- J7JDuZ8VYXf/LBb5BjjF8ccSWviVCTtAmBfblSQ848YIBGO179tjamqIbMslIxx3obJV
- /SuUifMUTrVjn60RyHq+ByXjTWvfYiUo4leFOYzsmmB/AneIMZI5SnTNXGREAQxpOxgx
- 0vNgsvJhSK1hiRKefQi5DC5p5nFZYhRzwIqoq677GuDBSY/fJIZFEhYpF/r34C063Uho
- lHO2fL35lYSq7owgtcoF2uBs/TfxVZjIkp46JaIM9lUGg1wmpxYQxM87uJS6jPxfirRw
- CNww==
+ d=redhat.com; s=google; t=1785180022; x=1785784822; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=nJ5++lDmKJE8GWzy18k6nmNQiVQ39RoIQiUYRj/hei0=;
+ b=pjyDI2okzFChCJ3l6KNW89vuEvQdU3BqE4fWeu8xD4IJl4VVngmRN82UN4HFWf3Gvp
+ C6cqS2Cbs57fQu7nFsRUYj13MZA64NFzTpNkyJwTd1EBqk2NEVSoTfTrMv/xcIFgiepf
+ YxgKGpkGRsfGAcCfT3J4dUJFOUqhDxugjon2LxD6zq33/cP3FPAk9fQ2JOGTaXKBFev2
+ s/odSq41OG8ECUSb8HX7vZak9LO3Rh0rbTpdLVbqQ9GKR9Rt3A06pkVno5Wc6uSffzBs
+ 8wRRrUmJmPE4m7Gs2Yis55D7mrnRJ6KFvwUyY7P4adEVyK1tgsfUAJ16fHcf/2WHoFiP
+ UUUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785180020; x=1785784820;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=2g6MMmyPKzZozOuhiPXxtJVxbTcTWv7RFySNngDrOZ4=;
- b=DQZu3dLeeLw2FKF1Yf7iKL4KKQ42YA/qykaCffUTgZcOYUqh+o9s1IY9KzFN8xBf3F
- S0X0DJvaPWGz2f5xkHir1AOZoh/Cy9mkxj6C2wnpXkWiNomUDxGXxfrWwPmbY0a9Qhgm
- w94BE6scWP+bf/IY79EFmVsmk3Aeo87t4qgY2ZJ5DTzROIZlt4iwlQ/JR/ZUxbq2OQxH
- bDjnXiaYfn+Z2eRENWMr6+BqNk55jLZUmej58mITm4zlzd9gRXv3LGR+nQp9NJY2N7SN
- 5zbJ9qitUutU1hxJMaMziUqR3MT182f+GEaPkqgM8MJ9tcOHx4reqsg0PqWhIdtC1cbv
- +W1w==
-X-Gm-Message-State: AOJu0Yz138OURmazte4ccdbsQyEm5nSps310yJhHW9x7cz2GvnADIoai
- szLZYgZVqZblXe4DEvoihWUEOme8D0L6hJzn/4nPj4bOesyCfitgNaNd+oNNIWrk2SQU2wa0oBd
- faAKdqImBhKVYOOkrLL7ln0LeomNdNXNGMK4NZtCdiaOY7kGextf5xf8qfC3DUbUyeEE+/pIWaD
- aZVp+F65mkXbz6i/4j238/wkKjzy5/b9lIlA==
-X-Gm-Gg: AR+sD10TKAk9qaBjOq6/C5RT58lBCoVuECBi2x4ElwJNkGoO6nf+GIrm4PiZIHIw+Xk
- gI4bbuqU1sperJXJL6A2xW0/x55WAWBSfH8hZO7LJy6tq0F9HlCIuevbN3dQC9AQatsKbSl+gVm
- 0XKoPjVyyW4W4UALZNOSKIf3wmfSnjzCzvKFzoOrW4wrtRUyBz95jAEHDEkpf9Zb7Nq66fy97Yr
- j7Nd+xVoJTNh5fSFqWzIIMXy/RyxlFzTwen4ghMqLvOSU3/WwEMoVfDGGG194Mim+FHqoKcaxrf
- q+1mPu5ndC8ZIAiQgxBUcdKxArD2XVP0PP0++/UO3tF7wNBR83i4h3os7jz9cR9u2TH+ZzeAPQJ
- e635Rl+YqQHRuWkM4kSla2A==
-X-Received: by 2002:a05:600c:350e:b0:495:4f84:7280 with SMTP id
- 5b1f17b1804b1-496c5660694mr577295e9.4.1785180019727; 
- Mon, 27 Jul 2026 12:20:19 -0700 (PDT)
-X-Received: by 2002:a05:600c:350e:b0:495:4f84:7280 with SMTP id
- 5b1f17b1804b1-496c5660694mr576845e9.4.1785180019291; 
- Mon, 27 Jul 2026 12:20:19 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785180022; x=1785784822;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=nJ5++lDmKJE8GWzy18k6nmNQiVQ39RoIQiUYRj/hei0=;
+ b=OUssaxBQ932nmjKfLZgni2coVAlJQ+1cKR2A3jT+fAW0JOvOHnkNSQxUeDZ+Db8nY5
+ l/6lC87l+9b73RcrnUVxYTqQtd3688ODZBa/STu62T9NRGPVVLdHCTen+vdQC8wnuCXF
+ sDmmaqI74tQ5Xi5q/1XNo8EN5wHiEwrzMTTSPtn+EnTS75sBvAf1EqN4Ds5vjA7nB/mo
+ xVJHfAFjgsbYClcZLUFGfYCHh5QjeOjPuBMDgunR4B7uixQKlC1CJy/vQ3rwuKx4pp1+
+ cQRd03oVhBqBPrkIwAytiLjyGeynthkQFb5uQHYi0RmRvssl0nZcD/JPZMEM0ayvdaDl
+ 0x/w==
+X-Gm-Message-State: AOJu0Yy4bTQgkbUUbFZ8VV2A6S9F0B0cDAW8563RiUOGLR8ZR1iIO0yw
+ 8Oy13EHEysk8WPeXc8OZXFTxJPbcOafkW0S4V5KIr/xpkGSSW5G5np18ok9K8hDrEplVArz6no/
+ IQEHCW38VE88fbt45YucSOyrvcfPeGi1qILUhrrS97XONqLl+udPJ02pT5xoGEjvUdDcd0kMnLR
+ E9vlMmMlnGFKau3QTD3R3+7Pv60qB5wZxUVQ==
+X-Gm-Gg: AR+sD10+Zf6u5b/dUFIRbZwXqqJdvlo4cU767Kht4geIVdtXqLQi1JTDMPQLXlDa4n4
+ Wm4y+93ORutNz0ZIs60+xUd7No5tE0HK9lUXIJ0IHhdsDBQsLY3gXOP5HgEeVOzsOIGsmMZ58Ey
+ m/FWYW4QYR+VVotvs/OTpWfkD0euRzq/Re6m5W35lU7ZuvZvSY5GIvG3r7M6Zqt84g6VYwbk+Yr
+ qlfPaMm+uZ5OVUccackwk9SqOosgg/QJhhy8zQB3fM/HvRgn+tGEt0gpFhCp0KAHEs9IvOHpZET
+ rwPHyOVnbUl/Pnf+npUkOU5VskRRvf+axYQyWNHN8jQ/ssZ+hSLoaYPjZ2tOD5XTDn5qVxE/xGa
+ EWxQ/IE7Bw77p4TkgJFaX8Q==
+X-Received: by 2002:a05:6000:480c:b0:47f:93b6:8d08 with SMTP id
+ ffacd0b85a97d-47f9fc99455mr12110422f8f.21.1785180022068; 
+ Mon, 27 Jul 2026 12:20:22 -0700 (PDT)
+X-Received: by 2002:a05:6000:480c:b0:47f:93b6:8d08 with SMTP id
+ ffacd0b85a97d-47f9fc99455mr12110394f8f.21.1785180021497; 
+ Mon, 27 Jul 2026 12:20:21 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-28-14.inter.net.il. [80.230.28.14])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-496c444304esm15501925e9.0.2026.07.27.12.20.18
+ ffacd0b85a97d-47f85bd850asm50550911f8f.15.2026.07.27.12.20.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 12:20:18 -0700 (PDT)
-Date: Mon, 27 Jul 2026 15:20:17 -0400
+ Mon, 27 Jul 2026 12:20:20 -0700 (PDT)
+Date: Mon, 27 Jul 2026 15:20:19 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL v2 19/30] virtio-snd: check rx buffer descriptor size
-Message-ID: <bdac94e9cfdff4d9d3c1a6f7cd995e4e4f04d7a9.1785179875.git.mst@redhat.com>
+Subject: [PULL v2 20/30] virtio-snd: check for overflow before g_malloc0
+Message-ID: <fa9c0c9f716e39309ffdd95a5b7afc33cc0692d8.1785179875.git.mst@redhat.com>
 References: <cover.1785179875.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1785179875.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
 X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,42 +123,75 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-It must be at least sizeof(virtio_snd_pcm_status).
+Coverity points out one g_malloc0 overflow, but it seems to be a false
+positive. Add a check to it regardless to fortify the code, and also add
+checks for every other g_malloc0 use.
 
-I haven't verified if it's possible to get an underflow, but coverity
-points it out in CID 1547527 so add a check.
-
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Resolves: Coverity CID 1547527
 Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260420-virtio-fixups-v3-1-07aef1eff9d2@linaro.org>
+Message-ID: <20260420-virtio-fixups-v3-2-07aef1eff9d2@linaro.org>
 ---
- hw/audio/virtio-snd.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ hw/audio/virtio-snd.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
 diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index fb5cff3866..93fbcfb43f 100644
+index 93fbcfb43f..694bcebb60 100644
 --- a/hw/audio/virtio-snd.c
 +++ b/hw/audio/virtio-snd.c
-@@ -970,12 +970,14 @@ static void virtio_snd_handle_rx_xfer(VirtIODevice *vdev, VirtQueue *vq)
+@@ -850,7 +850,7 @@ static void virtio_snd_handle_tx_xfer(VirtIODevice *vdev, VirtQueue *vq)
+     VirtIOSound *vsnd = VIRTIO_SND(vdev);
+     VirtIOSoundPCMBuffer *buffer;
+     VirtQueueElement *elem;
+-    size_t msg_sz, size;
++    size_t msg_sz, size, tmp;
+     virtio_snd_pcm_xfer hdr;
+     uint32_t stream_id;
+     /*
+@@ -880,6 +880,8 @@ static void virtio_snd_handle_tx_xfer(VirtIODevice *vdev, VirtQueue *vq)
+         if (msg_sz != sizeof(virtio_snd_pcm_xfer)) {
+             goto tx_err;
+         }
++        assert(iov_size(elem->out_sg, elem->out_num) >= msg_sz);
++        size = iov_size(elem->out_sg, elem->out_num) - msg_sz;
+         stream_id = le32_to_cpu(hdr.stream_id);
+ 
+         if (stream_id >= vsnd->snd_conf.streams
+@@ -892,9 +894,11 @@ static void virtio_snd_handle_tx_xfer(VirtIODevice *vdev, VirtQueue *vq)
+             goto tx_err;
          }
  
-         stream = vsnd->pcm.streams[stream_id];
--        if (stream == NULL || stream->info.direction != VIRTIO_SND_D_INPUT) {
-+        size = iov_size(elem->in_sg, elem->in_num);
-+        if (stream == NULL
-+            || stream->info.direction != VIRTIO_SND_D_INPUT
-+            || size < sizeof(virtio_snd_pcm_status)) {
-             goto rx_err;
-         }
-+        size -= sizeof(virtio_snd_pcm_status);
++        /* Check for g_malloc0 overflow. */
++        if (!g_size_checked_add(&tmp, sizeof(VirtIOSoundPCMBuffer), size)) {
++            goto tx_err;
++        }
          WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
--            size = iov_size(elem->in_sg, elem->in_num) -
--                sizeof(virtio_snd_pcm_status);
+-            size = iov_size(elem->out_sg, elem->out_num) - msg_sz;
+-
              buffer = g_malloc0(sizeof(VirtIOSoundPCMBuffer) + size);
              buffer->elem = elem;
-             buffer->vq = vq;
+             buffer->populated = false;
+@@ -932,7 +936,7 @@ static void virtio_snd_handle_rx_xfer(VirtIODevice *vdev, VirtQueue *vq)
+     VirtIOSound *vsnd = VIRTIO_SND(vdev);
+     VirtIOSoundPCMBuffer *buffer;
+     VirtQueueElement *elem;
+-    size_t msg_sz, size;
++    size_t msg_sz, size, tmp;
+     virtio_snd_pcm_xfer hdr;
+     uint32_t stream_id;
+     /*
+@@ -977,6 +981,10 @@ static void virtio_snd_handle_rx_xfer(VirtIODevice *vdev, VirtQueue *vq)
+             goto rx_err;
+         }
+         size -= sizeof(virtio_snd_pcm_status);
++        /* Check for g_malloc0 overflow. */
++        if (!g_size_checked_add(&tmp, sizeof(VirtIOSoundPCMBuffer), size)) {
++            goto rx_err;
++        }
+         WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
+             buffer = g_malloc0(sizeof(VirtIOSoundPCMBuffer) + size);
+             buffer->elem = elem;
 -- 
 MST
 
