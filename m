@@ -4,103 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3B17C53209
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 18:30:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82873C531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 18:44:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woQ5j-00051l-Mx; Mon, 27 Jul 2026 14:30:19 -0400
+	id 1woQIU-0007Re-7V; Mon, 27 Jul 2026 14:43:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1woQ5b-00050Y-Ao
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 14:30:12 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1woQIN-0007Qu-RC
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 14:43:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1woQ5W-0001qP-W9
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 14:30:11 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1woQIM-0004AO-Dn
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 14:43:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785177002;
+ s=mimecast20190719; t=1785177801;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=rSWc/GMSImC7pqT0snauMmWe2Y9An9z92JO0MDCd8nM=;
- b=HgfsPJj6AG7DhNADkoKsZsbnUgVqLslQAgb6OumpSbMxZXuqUkBeD2bhPAxHvjtpZy0jeo
- Z4UiYIxBdyVduRZPzM7/jmV1KYWpXbFfDddnll2CtyhpPBwZuYMTyMN/giwt+jRzCfJPLx
- Yq2Y5RBc6hpsaOYmqIR9cBf0qTYjeZE=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-711-iw2nlVSJP3urzsbUKtwu4A-1; Mon, 27 Jul 2026 14:30:01 -0400
-X-MC-Unique: iw2nlVSJP3urzsbUKtwu4A-1
-X-Mimecast-MFC-AGG-ID: iw2nlVSJP3urzsbUKtwu4A_1785177000
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51c0e702df8so37043421cf.2
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 11:30:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785177000; x=1785781800; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=rSWc/GMSImC7pqT0snauMmWe2Y9An9z92JO0MDCd8nM=;
- b=CAFNTDIhujWTV2VV/JKKkiB/1sRZhWdJMkBoHt5094akIS70Q/DfJRw4VMW10R/AN1
- I1XOsyS8K2knkY1HxhYaXmXVPK5CWBiCmuXhA+64muk2baHJi4FGPaEyMlFNWNGyRjkH
- BhvUWSYB0WOA3PCZ08//KHUbF9/YRQUE6NPVowqR8ETErnuIg9n3cCZqKvzAk23prwTK
- auRXbWbFDZ5Hx+MA98TKChM0fcVPhc/JsG926ov2Y+Bw3/6SPWsOO9WZZPE1m8zUYrrG
- a4lXyYsDcD6l1Xif3/WNU3PoT731qTGcio3/fFuSJNTw7x+1lBAEegi+yhq7ukTTgiiR
- DRCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785177000; x=1785781800;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=rSWc/GMSImC7pqT0snauMmWe2Y9An9z92JO0MDCd8nM=;
- b=mVT2S/FkIG6tEPoEY+2sOfxEpFJHaBk0opEOV7w43BfrhUsiFVIHsQrgAQJXJ7eG7F
- ynqiqIfH5PzjP72OI7nMmrTgYTfJNOSei7xBAxKPuKXRlt3yOmXmAuimDQViObxZlBFe
- IcPpazNnyrgwXhfQcUuJ3novUgWaMvNa5LCCt0N5AaHshsOFDd7VGTi0USxQGIvBfDPc
- PsPAyJ4zWI3OFTO07oFIXZz33Occ3aGukytBtWqbZVRwnMgAVQxgmnJIfDkG9ThqbNlG
- EU+o0qxDonMdBPth7Buzndn2h2JcU/u5GDWfLbG4ixhiFb0kWJ1cEu85UYRaQ47MXOm8
- gflw==
-X-Gm-Message-State: AOJu0Yyhedcueutdp47gomxqTndr45tYAs4EoO2+wUc17ResvpoibMfq
- +Ehu7xTYJztogq7AfyMDFGoLZcuI3sTet+ptRH90mkx7tmQbmZ4KmNevcZyIX4Hb1r0ddhCgHBn
- RLmRVjk9cYngmKLWmpqc+e8sn63+amPssm81VxDGSEi5sQ2R/xQZf3kCl
-X-Gm-Gg: AR+sD11t2oNe2QTpIISZWGLajCPdJNCeevw5I20Z77lwxEv97qfbB4SmjLZusta/wKO
- mkJcCMPxuF939WtshGd/a1Z3RjX+iyjtLku4VTY7/ytOLEW1OtzMXPJkvcg1t7Aq8bBy6fQdBlT
- BgxBdm1XhtsCX6DvAsHWTyBS1OH0qDjq4gR3yeQ9JGT0yKNbImIl9nitbRSe5Wyko5sFsq6KwXi
- D9L5D4VYW55vwtnq3Jo0pXkCT4E/LPd5zc98k5jqwAaGCLU75I6sUr6sPwr7Hqq1Lt91EE7OPoy
- ev7CMywjW7L1ANRjgTGh/iI2lMEqjGuG+hOjp0621iUfFgyMOLx2niaRaEjP54Ux7z6J
-X-Received: by 2002:a05:622a:4888:b0:517:8e65:68ea with SMTP id
- d75a77b69052e-529d18f1be0mr7679101cf.54.1785177000536; 
- Mon, 27 Jul 2026 11:30:00 -0700 (PDT)
-X-Received: by 2002:a05:622a:4888:b0:517:8e65:68ea with SMTP id
- d75a77b69052e-529d18f1be0mr7678751cf.54.1785176999933; 
- Mon, 27 Jul 2026 11:29:59 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-907e8519ecdsm70394506d6.4.2026.07.27.11.29.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 11:29:59 -0700 (PDT)
-Date: Mon, 27 Jul 2026 14:29:47 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] vmstate: fix type confusion in vmstate_size() for
- VMSTATE_VBUFFER_UINT64
-Message-ID: <amejm_jVnRl6IW5C@x1.local>
-References: <801b1501ee10241f7ac49a10570d548352b36347.1784890517.git.mst@redhat.com>
+ bh=vv2vAxkyJsstkbuLMBlczqwE+kvJD6rbHIf1vCAI7nQ=;
+ b=HIqqifBDbZkLvCjZ3CeZu3YzR2PMYQfiTSu4c+Rkh1v8oohE0QmjQIk+x87vOVRjPoEWYC
+ kA0cg/skbsInwyLiedxetGR2UIRo7gpatEsgY2eyPclPXJfMNCYHe+ErMOgJRB78o33+J6
+ +yRxi2mnbaEa7Bli0qVqvSavvLerXtI=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-301-LJXkFmDhM_Gcj7PmxiWvcw-1; Mon,
+ 27 Jul 2026 14:43:16 -0400
+X-MC-Unique: LJXkFmDhM_Gcj7PmxiWvcw-1
+X-Mimecast-MFC-AGG-ID: LJXkFmDhM_Gcj7PmxiWvcw_1785177794
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C60A51955F28; Mon, 27 Jul 2026 18:43:12 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1C56318001E3; Mon, 27 Jul 2026 18:43:08 +0000 (UTC)
+Date: Mon, 27 Jul 2026 14:43:05 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Connor Kite <connorkite@gmail.com>, qemu-devel@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Haixu Cui <quic_haixcui@quicinc.com>,
+ Raphael Norwitz <rnorwitz@nvidia.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Milan Zamazal <mzamazal@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ qemu-block@nongnu.org, virtio-fs@lists.linux.dev,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Jason Wang <jasowangio@gmail.com>,
+ Peter Xu <peterx@redhat.com>,
+ Eugenio =?iso-8859-1?Q?P=E9rez?= <eperezma@redhat.com>,
+ Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
+Subject: Re: [PATCH RFC 03/15] backends/cryptodev-vhost-user: add memory
+ isolation bool
+Message-ID: <20260727184305.GB371693@fedora>
+References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
+ <20260723-vhost-user-isolated-memory-v1-3-6b97c439eb28@gmail.com>
+ <87fr18diqb.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="gY0jI/gfOQgW8+h2"
 Content-Disposition: inline
-In-Reply-To: <801b1501ee10241f7ac49a10570d548352b36347.1784890517.git.mst@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <87fr18diqb.fsf@pond.sub.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,38 +108,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 24, 2026 at 06:57:02AM -0400, Michael S. Tsirkin wrote:
-> vhost user currently saves the inflight buffer to the migration stream
-> using VMSTATE_VBUFFER_UINT64. The size is controlled by the vhost-user
-> backend.
-> 
-> But the implementation of that is broken if size is >2G: it stores the
-> buffer size in a uint64_t field, but vmstate_size() always reads the
-> size field as int32_t regardless of the macro used. This, in turn,
-> causes negative or truncated lengths on load, leading to undersized
-> allocations and down the road out-of-bounds buffer access.
-> 
-> There's no practical reason to support such large sizes, so it's enough
-> to validate: read the field as uint64_t when VMS_VBUFFER_UINT64 is set,
-> reject negative or oversized values, and propagate errors to
-> vmstate_load_vmsd().
-> 
-> Note: the large value is coming from the backend, not guest, so this
-> shouldn't be considered a security issue. The CVE was assigned before
-> the qemu security policy was updated to exclude this class of bugs.
-> 
-> Fixes: CVE-2026-6426
-> Fixes: f6fdd8b2bd ("vmstate: introduce VMSTATE_VBUFFER_UINT64")
-> Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3675
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+--gY0jI/gfOQgW8+h2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Just to keep a record in case anyone needs, the review discussion is in the
-pull request:
+On Fri, Jul 24, 2026 at 08:06:36AM +0200, Markus Armbruster wrote:
+> Connor Kite <connorkite@gmail.com> writes:
+>    # @memory-isolation: disable access from cryptodev to guest memory.
+>    #     (default: false) (since 11.2)
+>=20
+> Pardon my ignorance...  What exactly is "cryptodev" here?  Is it code
+> running in another process?
+>=20
+> Should the description answer my question?  Perhaps like this:
+>=20
+>   # @memory-isolation: isolate guest memory.  Isolated guest memory
+>   #     cannot be accessed from uh, what exactly?
+>=20
+> Fill in the blank.
 
-https://lore.kernel.org/qemu-devel/amdT6P4esRDwyRX4@x1.local/
+Maybe it's clearer to mention the potentially untrusted vhost-user
+backend process rather than cryptodev (the virtio-crypto vhost-user
+device)?
 
--- 
-Peter Xu
+Stefan
+
+--gY0jI/gfOQgW8+h2
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmpnprkACgkQnKSrs4Gr
+c8hfjwgAsUY5rQK5VxV+u2eBHIXa6bJmd0kuVddy2fYB8K4GFM/E7Cd7jMEPNhmL
+WpVMMyTYqRcamqsSs8gXJYdXTXf7K6nO3zQW8n4vr6osXq9Ph/QRt+IkQd7RW2Rw
+gzYRf/pVUWBhMf14Ds2Ak8s11TsxEngt8ACu5SqrHQR9tvOT1GJ8WrLaljpuyfEP
+tTWPNSYXmUF//lXgopDaHni6khrALLfGgFTtT5/EEQlm8A8Bm7q5bNRGxdODz4DE
+89UTlZ+cXmv8u9x2jyOXpvL0WtbTej/QhoNZYTetYlOkDE18/5CEFiFU/+sfeRfK
+pB4iLbwCio+f3owLNiHykyBb14H2ig==
+=k1yY
+-----END PGP SIGNATURE-----
+
+--gY0jI/gfOQgW8+h2--
 
 
