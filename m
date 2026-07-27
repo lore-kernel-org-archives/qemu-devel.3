@@ -4,90 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35101C53219
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:49:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A756C53219
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:51:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woJpT-0004Kn-HC; Mon, 27 Jul 2026 07:49:07 -0400
+	id 1woJre-0004yC-Tp; Mon, 27 Jul 2026 07:51:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1woJpR-0004KN-UU
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:49:06 -0400
-Received: from mout.kundenserver.de ([212.227.126.130])
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1woJrN-0004vh-HP; Mon, 27 Jul 2026 07:51:05 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1woJpP-0003GO-Jr
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:49:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivier.eu;
- s=s1-ionos; t=1785152930; x=1785757730; i=laurent@vivier.eu;
- bh=izHEDe4KmGMuFXpzYv98ubGuADuZNf0ACapc9QPNRbI=;
- h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:
- MIME-Version:Content-Transfer-Encoding:cc:
- content-transfer-encoding:content-type:date:from:message-id:
- mime-version:reply-to:subject:to;
- b=eiFE3O4mtky6lkLizY9Ht737cDH0OkOxz5uS7Dd06rixFdE5USvNtPSqbqy9Zkz3
- EfuxdSgLFhnuHdzK56N2j17xogzjFIiqPfId0ojbbxlee4789ccHU0STzTa6owe+G
- /bdYB95Uvb2RlKfBeXdjvTrFBmich4L0bMt6hNm7vSRnKluJrX+zW8aJuSHnE8RNN
- 1jUSZzalb5MXl6Z21Bq6zuVemv3cmSS1Jqn070x33TYuhsTbl0f9v0vBQVeFgNc69
- GKKDWK7TAqBxFkwXuvOeaBNSuHWRbp3TAPNLErC48ZZcYv4GHO0ePk0pwMd8yRty9
- 5ZCrVwGkyx/00fnzCw==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from client.hidden.invalid by mrelayeu.kundenserver.de (mreue011
- [212.227.15.167]) with ESMTPSA (Nemesis) id 1N7iT4-1x15e42XhK-014plE; Mon, 27
- Jul 2026 13:48:50 +0200
-From: Laurent Vivier <laurent@vivier.eu>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>,
- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Subject: [PATCH] linux-user/sh4: allow full 32-bit address space
-Date: Mon, 27 Jul 2026 13:48:48 +0200
-Message-ID: <20260727114848.1041856-1-laurent@vivier.eu>
-X-Mailer: git-send-email 2.54.0
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1woJrL-0003aX-QO; Mon, 27 Jul 2026 07:51:05 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66RAIXjF1844602; Mon, 27 Jul 2026 11:50:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=s2/pXswdrVAnMv2CvhClv30IKAIgeWe715ypWWuJ5
+ 8g=; b=rzT0csmiEYV32gTGL4Uodyzs4oOjVTqXlS/7VSDn1KGPrXrmg1i1jNN7+
+ AHfvzR4a2t9S6Fqhdlr+gzPGIrMqEH5pCnwWmzwuZ4tG7xkqNcIZj36AjOEbE3QJ
+ GFhnEV1GajjF2VA4jP/i8aBjO4JyKVxijcIp6mYARAnCIIIS7pfRxuxUFCSW74Df
+ FejwrhTgN6pASyaYJ/ZpB1i8H5PpVIAOuATVhgKe6G2FMaFbCKjzm51bh3WfYAuz
+ UXIyO4ykXVno+xK2unrOVJ2GZgF0NGcy6p395juCrjjcSUl6GElHCvmI1Tg/GMs+
+ MFddnGlZjArZFIW3lJzV7ztijz7mw==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuyhycwj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Jul 2026 11:50:58 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66RBfJBC007048;
+ Mon, 27 Jul 2026 11:50:57 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fna5xvxjt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Jul 2026 11:50:57 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66RBou0l17891960
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 27 Jul 2026 11:50:56 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C7CC65805A;
+ Mon, 27 Jul 2026 11:50:56 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3CB715803F;
+ Mon, 27 Jul 2026 11:50:54 +0000 (GMT)
+Received: from b35lp69.lnxne.boe (unknown [9.87.84.240])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 27 Jul 2026 11:50:54 +0000 (GMT)
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
+To: Cornelia Huck <cohuck@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Joshua Daley <jdaley@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Jared Rossi <jrossi@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH 0/5] more hardening fixes for s390
+Date: Mon, 27 Jul 2026 13:50:47 +0200
+Message-ID: <20260727115052.24289-1-borntraeger@linux.ibm.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:rV5WDqvLBIVEMZ7KKXcOsu+/zqXBNZcloi+rZ2PP5u8ijIRDuxU
- XlQ8McqUsFFBDt4FLCs51nufik1co6MUB+YqWjoPOYuwEweRaie6VlMesse6tpVhhAX/JIU
- oPmWLI5ZwI2p/z+sZY/ramhlZFSLQH+kik69eo0UNXWE6u6z6nUVobHyBqgtsMnjl/I2G/5
- y0ItunxR1NM0OV+GftYgg==
-UI-OutboundReport: notjunk:1;M01:P0:1y2oHLmjbCM=;EPzwscCcN5BbMjdtKIyBNGzD/3a
- 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
-Received-SPF: pass client-ip=212.227.126.130; envelope-from=laurent@vivier.eu;
- helo=mout.kundenserver.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDExNiBTYWx0ZWRfX/LrQZlHgOABS
+ 21c5rOWV/oGC4YrI1SGkrrBFtmD/MGh9Qh/Rj30ZUN7D90/4x153ru0pzclM2eMz4PFk1OZyw0w
+ JVigNVcSSCXvFa6jXI6kHuiRAjnapw0=
+X-Proofpoint-GUID: yw7iTYIxSFNo9xs8xp9ej5u9-dWIYIbV
+X-Proofpoint-ORIG-GUID: yw7iTYIxSFNo9xs8xp9ej5u9-dWIYIbV
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDExNiBTYWx0ZWRfX4wDuZq0FIA66
+ tJtPtyeQFEEbWMMq1afVq4NqJI9MIb4SgTjo+405GL6Jz/d/fGR1uXI3ixL7cAL8Z1Lf8j3BiMe
+ p4q95CFuQhMzUl7brzxU7Ytp9oYWgB+Q38ITD5Ba3jYlE++zztrV9lREe9U4FSRUPGIFgPq6Q1M
+ cIwOWOOw21Skgdb2kCiMID404kWtCBxrEskJ4bug/nD03vnFn1N0/xKxU87vkXbPQIVjwkM520d
+ YO4aYUhxmTe6yqlfXsZLkZV056ItFbyHS6/pUu2ujEkL4MvgxK4rg6dc7mjl7QOe9RzQ8ROveHD
+ 5BCARD5+i+m86eUd0CayJKEkANgP5bzfjA2j7dcmqlku7sSBpxrE1trCnxCKT5YphWeLAnBWxVV
+ LY//dkdoN2GGqSLtkdqdHdNv88HKF+FXf04otEtCcJU4r+RHBCbJ6uC0R7TCJkwp0nkMIVzjEXq
+ JKMERXAbtX3tuNtFoMw==
+X-Authority-Analysis: v=2.4 cv=X5Vi7mTe c=1 sm=1 tr=0 ts=6a674622 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=NLiCwHATAAAA:8 a=X2q3w5tz9y4kLuQqkKgA:9
+ a=F9tHCgz3TLBaZgltkx5D:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-27_03,2026-07-24_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 impostorscore=0 lowpriorityscore=0 phishscore=0
+ priorityscore=1501 malwarescore=0 spamscore=0 suspectscore=0 bulkscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607270116
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,55 +128,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On real SH4 hardware, the address space is split between user mode
-(U0, 0x00000000-0x7fffffff) and kernel mode (P1-P4, 0x80000000-0xffffffff)=
-,
-so TARGET_VIRT_ADDR_SPACE_BITS was set to 31 for CONFIG_USER_ONLY.
+Cornelia, Eric, Matt,
 
-However, qemu-user does not emulate the MMU, so this limit is not needed.
-The only effect is to restrict reserved_va to 2 GB, causing OOM failures
-for memory-intensive builds (e.g. webkit2gtk on Debian sh4 buildds).
+here are 5 more fixes for hardening QEMU against invalid input. Nothing
+is strictly a security issues as defined in the policy. For example
+https://qemu-project.gitlab.io/qemu/system/security.html says assert /
+abort: If triggering the code path requires kernel privileges (or root
+account access) in the guest, asserts/aborts in QEMU are a self
+inflicted denial of service. These will not be treated as security
+flaws, at most hardening bugs.
+And if anyone can provide invalid boot loader content it can provide
+anything to boot if secure boot is not available.
+We should fix those anyway, probably even for 11.1 
 
-Set TARGET_VIRT_ADDR_SPACE_BITS to 32 unconditionally, like most other
-32-bit targets. Also fix the TASK_UNMAPPED_BASE macro to use 1ull instead
-of 1u to avoid undefined behavior when shifting by 32.
+Conny, I did not rebuild the s390-ccw, I assume you will do that?
 
-Reported-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: Laurent Vivier <laurent@vivier.eu>
-=2D--
- linux-user/sh4/target_mman.h | 2 +-
- target/sh4/cpu-param.h       | 6 +-----
- 2 files changed, 2 insertions(+), 6 deletions(-)
+Christian Borntraeger (1):
+  hw/char/sclpconsole-lm: avoid guest triggerable assert
 
-diff --git a/linux-user/sh4/target_mman.h b/linux-user/sh4/target_mman.h
-index dd9016081e9f..2d05837c2f36 100644
-=2D-- a/linux-user/sh4/target_mman.h
-+++ b/linux-user/sh4/target_mman.h
-@@ -1,6 +1,6 @@
- /* arch/sh/include/asm/processor_32.h */
- #define TASK_UNMAPPED_BASE \
--    TARGET_PAGE_ALIGN((1u << TARGET_VIRT_ADDR_SPACE_BITS) / 3)
-+    TARGET_PAGE_ALIGN((1ull << TARGET_VIRT_ADDR_SPACE_BITS) / 3)
-=20
- /* arch/sh/include/asm/elf.h */
- #define ELF_ET_DYN_BASE       (TASK_UNMAPPED_BASE * 2)
-diff --git a/target/sh4/cpu-param.h b/target/sh4/cpu-param.h
-index c3b8114e538b..d95827078260 100644
-=2D-- a/target/sh4/cpu-param.h
-+++ b/target/sh4/cpu-param.h
-@@ -9,10 +9,6 @@
- #define SH4_CPU_PARAM_H
-=20
- #define TARGET_PAGE_BITS 12  /* 4k */
--#ifdef CONFIG_USER_ONLY
--# define TARGET_VIRT_ADDR_SPACE_BITS 31
--#else
--# define TARGET_VIRT_ADDR_SPACE_BITS 32
--#endif
-+#define TARGET_VIRT_ADDR_SPACE_BITS 32
-=20
- #endif
-=2D-=20
-2.54.0
+Joshua Daley (4):
+  s390x/ipl: validate num_comp against iplb length before iterating
+  pc-bios/s390-ccw: fix out-of-bounds read in iso_get_file_size()
+  pc-bios/s390-ccw: bounds-check zipl menu entry index before array
+    write
+  pc-bios/s390-ccw: bound zipl menu strlen and replace VLA in
+    zipl_print_entry
+
+ hw/char/sclpconsole-lm.c    |  3 ++-
+ hw/s390x/ipl.h              |  6 ++++++
+ pc-bios/s390-ccw/bootmap.c  |  6 ++++--
+ pc-bios/s390-ccw/helper.h   | 10 ++++++++++
+ pc-bios/s390-ccw/menu.c     | 36 +++++++++++++++++++++++++++++-------
+ pc-bios/s390-ccw/s390-ccw.h |  2 +-
+ 6 files changed, 52 insertions(+), 11 deletions(-)
+
+-- 
+2.53.0
 
 
