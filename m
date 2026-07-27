@@ -4,74 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DD6DC531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 05:41:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3178BC531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 05:48:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woE4W-0003fZ-FH; Mon, 27 Jul 2026 01:40:16 -0400
+	id 1woEC1-0008N1-W0; Mon, 27 Jul 2026 01:48:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1woE4U-0003ax-S4
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 01:40:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1woEBz-0008ME-Go; Mon, 27 Jul 2026 01:47:59 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1woE4S-0003kS-09
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 01:40:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785130811;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/DQi5EVb5djvOpoc59q1ru9zq7bNILZ8NCa1752G+d0=;
- b=ICoGICkX7iqEKDz3hegIFj8Rnu9gHo1MQwlkAb4eYzk92JDyXES5Iurc2uhy6FyLMczPTJ
- Y/Jzw4CyP//s3W6vIgIJZZn5gVUE/P6UiIVVLXquU/4iMUI8FZUnoF6xnw7Hh7Deouc+oK
- 4xfqj8BsvW0lqTZL34FpYWGFE4mMtuA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-677-3CUxu2ukNIqFYg3hcwJnFA-1; Mon,
- 27 Jul 2026 01:40:07 -0400
-X-MC-Unique: 3CUxu2ukNIqFYg3hcwJnFA-1
-X-Mimecast-MFC-AGG-ID: 3CUxu2ukNIqFYg3hcwJnFA_1785130806
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1A34A1944DD9; Mon, 27 Jul 2026 05:40:06 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.32.30])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 718631956088; Mon, 27 Jul 2026 05:40:03 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
- "Michael S . Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [RFC PATCH 07/11] igb: Quiesce VFs on STOP and include PF enable
- state in migration blob
-Date: Mon, 27 Jul 2026 07:39:31 +0200
-Message-ID: <20260727053935.1392269-8-clg@redhat.com>
-In-Reply-To: <20260727053935.1392269-1-clg@redhat.com>
-References: <20260727053935.1392269-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1woEBx-0004Tn-UH; Mon, 27 Jul 2026 01:47:59 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66R1ljP5856156; Mon, 27 Jul 2026 05:47:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=fnC3VU2QX0BmZeizcNnXv3x8oksJ4m
+ acVoZK7Hyyhok=; b=JMegFdZ03kRM0GRS7vM+JHUHL3PaFCDqwyW7swvelCBHrk
+ Tc7cH0VSAEe42zY3veZgVrLUUxS1+A8nXt3cKmC1hWG2vsMHtYKRWf6mBypbwAZw
+ rk08Im4KA7ZeHEPFWW8SslDa8FRNx0VAINFrg0DbE5rn/o3hUUzFcU91Bun7/EvB
+ 5omJWtRS707k+mWSGZZGlBcPULfTYvEE7kDCorIMDsoaiD8gqQWhRPqEo0x3VbQi
+ P0d4zdEd4fUkUVTAhmH206K1OXXwltDB/b4EsYpEcrJduwn5VIb6DWKHXebcmxRD
+ zX+CFOyQ4AT68NvEZZbQHNHNRDDUWKKIxOh+WFGQ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuw76asb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Jul 2026 05:47:54 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66R5fGvP026175;
+ Mon, 27 Jul 2026 05:47:53 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn8fjv217-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Jul 2026 05:47:53 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66R5lnP440960348
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 27 Jul 2026 05:47:49 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4FBE32004B;
+ Mon, 27 Jul 2026 05:47:49 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 868F020043;
+ Mon, 27 Jul 2026 05:47:47 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 27 Jul 2026 05:47:47 +0000 (GMT)
+Date: Mon, 27 Jul 2026 11:18:06 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Shivang Upadhyay <shivangu@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, thuth@redhat.com,
+ adityag@linux.ibm.com, amachhiw@linux.ibm.com, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, npiggin@gmail.com
+Subject: Re: [PATCH v2] tests/functional/ppc: skip remote interrupts test if
+ -net user not built
+Message-ID: <20260727110516.c62eed78-ec-amachhiw@linux.ibm.com>
+Mail-Followup-To: Shivang Upadhyay <shivangu@linux.ibm.com>, 
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, thuth@redhat.com,
+ adityag@linux.ibm.com, 
+ harshpb@linux.ibm.com, milesg@linux.ibm.com, npiggin@gmail.com
+References: <20260724085440.520125-1-shivangu@linux.ibm.com>
+ <20260725174600.17683-1-shivangu@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260725174600.17683-1-shivangu@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: t7dorexCDRiV9fGcKatFFacdn7QNZrVO
+X-Proofpoint-ORIG-GUID: nGKNiFoUYP730nD0aJs5Gg9brG0iVtUp
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDA1NSBTYWx0ZWRfXzkUPonYpKJKA
+ W+qb9V+VZUzioPOT0bK1hJbnagRwKNE1I3GccwVrahPsaQQpTcLjbD07dS6qoazPi/FNfM8uw/9
+ dGCImhzs8+TgmJ+ydEWHKoZNOg8+G5kh8q0kK2RxVIOBB2xjnEMXSdL2k3l7yrh6LsyhpjIo0rF
+ YceVCauM3WLXotmIEawpyfvIM6AARnWekDrMIkg6eP4uHfzPr6ozjqCMwsxnXG0EsRtDnFRo526
+ dWcEltKyeV/WNkrwIfNfWjv079TIOAGYeOcTMlSABlE0pyssoXUj6CeJvDWD5IbA/u1OkoxoFsS
+ sQFw2BL57YXDett9FxORHlUWDOcZuU9xD17cJkoGDvR7QgoPr1x1y9uOTcDyAR97LgQMdsMhjDb
+ UXzMxiF1hHQdHWAYzzqVR0Bw/QcNfsqaHXUJBo6tUy7gHUbOcg510xzekKy+PXI+8Rn0JSFTnVM
+ e24mlenXA+ezjFX/nxw==
+X-Authority-Analysis: v=2.4 cv=SKFykuvH c=1 sm=1 tr=0 ts=6a66f10a cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=20KFwNOVAAAA:8 a=U6qE2ORhIC03JROcnmMA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDA1NSBTYWx0ZWRfX/xBsEC5NsiXS
+ ei4ELYnKlepML4H9FRqf4yiBoJDM/w3TDlYnEcxfpkqWMrd+NG0Qhgtg7sUpR7GDHR/FEw2Hvx1
+ q701E5gV0mdDlekx9cSb+KERp89pSBo=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-27_01,2026-07-24_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607270055
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,296 +129,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Quiesce VF queues when entering the STOP state by disabling RX and TX
-at the PF level (VFRE/VFTE). This ensures no DMA activity occurs while
-the device state is being serialized. The unquiesce path re-enables
-queues when returning to RUNNING.
+Hi Shivang,
 
-The VFRE and VFTE registers are shared PF-level registers with one bit
-per VF controlling RX and TX enable respectively. Writing the full
-32-bit register during restore would clobber other VFs' bits, so these
-bits cannot be included in the regular per-VF register list. Instead,
-save the per-VF VFRE/VFTE bit state at quiesce time - before the bits
-are cleared - and append it to the migration blob as two bytes. On the
-destination, extract these bits and restore them during unquiesce.
+Thanks for making the suggested changes and sending a v2. My comments
+are inline.
 
-For QEMU's emulated igb, the device state machine guarantees no DMA in
-these states. This register establishes the protocol for real hardware
-implementations where DMA drain has latency.
+On 2026/07/25 11:16 PM, Shivang Upadhyay wrote:
+> While running remote interrupts test, without libslirp-devel installed,
+> facing the following panic logs.
+> 
+>   File
+>     ...
+>     raise VMLaunchFailure(
+>     ...<3 lines>...
+>     ) from exc
+>     ...
+>         Output: qemu-system-ppc64: -netdev user,id=net0: network backend
+> 'user' is not compiled into this binary
+> 
+> Adding netdev user requirement for this test.
+> 
+> Suggested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+> Suggested-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+> ---
+>  tests/functional/ppc64/test_powernv.py | 1 +
+>  1 file changed, 1 insertion(+)
 
-Assisted-by: Claude
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- hw/net/igb_migration.h |   4 ++
- hw/net/igb_migration.c | 110 +++++++++++++++++++++++++++++++++++++++--
- hw/net/trace-events    |   6 ++-
- 3 files changed, 115 insertions(+), 5 deletions(-)
+Tested on a system without libslirp-devel. Test is correctly skipped:
 
-diff --git a/hw/net/igb_migration.h b/hw/net/igb_migration.h
-index a2e7b363cb04..414412f6392e 100644
---- a/hw/net/igb_migration.h
-+++ b/hw/net/igb_migration.h
-@@ -75,6 +75,7 @@
- /* MIG_STATUS bits */
- #define IGB_MIG_STATUS_DATA_AVAIL   (1u << 0)
- #define IGB_MIG_STATUS_ERROR        (1u << 1)
-+#define IGB_MIG_STATUS_QUIESCED     (1u << 2)
- 
- /* MIG_STATUS error codes in bits [15:8], valid when ERROR bit is set */
- #define IGB_MIG_STATUS_ERR_SHIFT    8
-@@ -143,6 +144,9 @@ typedef struct IgbVfMigState {
-     uint32_t mig_data_size;
-     uint64_t mig_data_buf_addr;
- 
-+    bool mig_saved_vfre;
-+    bool mig_saved_vfte;
-+
-     uint32_t mig_dirty_pgsize;
-     uint64_t mig_dirty_range_iova;
-     uint32_t mig_dirty_range_size;
-diff --git a/hw/net/igb_migration.c b/hw/net/igb_migration.c
-index 9a9ce902bb4a..187077c14c48 100644
---- a/hw/net/igb_migration.c
-+++ b/hw/net/igb_migration.c
-@@ -95,6 +95,7 @@ static IGBCore *igbvf_get_core(IgbVfState *s)
-  *   { uint32_t offset; uint32_t value; } regs[num_regs]
-  *   uint32_t  num_tx_ctx   (number of TX queue context blocks)
-  *   { raw struct igb_tx data } tx_ctx[num_tx_ctx]
-+ *   uint32_t  vfre_vfte    (VFRE in [7:0], VFTE in [15:8])
-  */
- 
- /* Maximum number of registers in the VF state slice */
-@@ -227,6 +228,13 @@ static uint32_t *igb_core_vf_save_ra(IGBCore *core, uint16_t vfn,
-     return p;
- }
- 
-+static uint32_t *igb_core_vf_save_vfre_vfte(uint32_t *p,
-+                                            bool vfre, bool vfte)
-+{
-+    *p++ = cpu_to_le32((uint32_t)vfre | ((uint32_t)vfte << 8));
-+    return p;
-+}
-+
- static uint32_t *igb_core_vf_save_tx_ctx(IGBCore *core, int queue,
-                                          uint32_t *p)
- {
-@@ -243,12 +251,14 @@ static size_t igb_core_vf_state_max_size(int num_fixed_regs)
-          + num_fixed_regs * 2 * sizeof(uint32_t)   /* fixed reg pairs */
-          + max_ra_regs * 2 * sizeof(uint32_t)      /* RA reg pairs */
-          + sizeof(uint32_t)                        /* num_tx_ctx */
--         + 2 * sizeof(struct igb_tx);              /* TX context */
-+         + 2 * sizeof(struct igb_tx)               /* TX context */
-+         + sizeof(uint32_t);                        /* VFRE + VFTE */
- }
- 
- static int igb_core_vf_save_state(IgbVfState *s,
-                                   void *buf, size_t buf_size)
- {
-+    IgbVfMigState *ms = &s->mig;
-     IGBCore *core = igbvf_get_core(s);
-     uint32_t offsets[IGB_VF_MAX_REGS];
-     int num_regs, total_regs;
-@@ -296,9 +306,15 @@ static int igb_core_vf_save_state(IgbVfState *s,
-     p = igb_core_vf_save_tx_ctx(core, q0, p);
-     p = igb_core_vf_save_tx_ctx(core, q1, p);
- 
-+    /* Per-VF VFRE/VFTE enable bits */
-+    p = igb_core_vf_save_vfre_vfte(p, ms->mig_saved_vfre,
-+                                   ms->mig_saved_vfte);
-+
-     size = (uint8_t *)p - (uint8_t *)buf;
- 
--    trace_igbvf_mig_save_state(s->vfn, size);
-+    trace_igbvf_mig_save_state(s->vfn, size, ms->mig_saved_vfre,
-+                               ms->mig_saved_vfte,
-+                               core->mac[VFRE]);
-     return size;
- }
- 
-@@ -310,6 +326,16 @@ static int igb_core_vf_max_data_size(IgbVfState *s)
-     return size;
- }
- 
-+static const void *igb_core_vf_load_vfre_vfte(const void *p,
-+                                              bool *out_vfre, bool *out_vfte)
-+{
-+    uint32_t val = le32_to_cpu(*(const uint32_t *)p);
-+
-+    *out_vfre = !!(val & 0xff);
-+    *out_vfte = !!((val >> 8) & 0xff);
-+    return (const uint8_t *)p + sizeof(uint32_t);
-+}
-+
- static const void *igb_core_vf_load_tx_ctx(IGBCore *core, int queue,
-                                            const void *data)
- {
-@@ -323,6 +349,7 @@ static const void *igb_core_vf_load_tx_ctx(IGBCore *core, int queue,
- static int igb_core_vf_load_state(IgbVfState *s,
-                                   const void *buf, size_t size)
- {
-+    IgbVfMigState *ms = &s->mig;
-     IGBCore *core = igbvf_get_core(s);
-     const uint32_t *p = buf;
-     uint32_t magic, version, saved_vfn, num_regs, num_tx;
-@@ -378,7 +405,13 @@ static int igb_core_vf_load_state(IgbVfState *s,
-      * destination-specific IRTE references after migration.
-      */
- 
--    trace_igbvf_mig_load_state(s->vfn, (uint32_t)size);
-+    /* Per-VF VFRE/VFTE enable bits */
-+    p = igb_core_vf_load_vfre_vfte(p, &ms->mig_saved_vfre,
-+                                   &ms->mig_saved_vfte);
-+
-+    trace_igbvf_mig_load_state(s->vfn, (uint32_t)size,
-+                               ms->mig_saved_vfre,
-+                               ms->mig_saved_vfte);
-     return 0;
- }
- 
-@@ -387,6 +420,12 @@ static int igbvf_mig_load(IgbVfState *s, const void *buf, size_t size)
-     IGBCore *core = igbvf_get_core(s);
-     int ret;
- 
-+    /*
-+     * Pre-load: Clear the VFLRE bit before restoring state so the PF
-+     * watchdog does not overwrite what we are about to load.
-+     */
-+    core->mac[VFLRE] &= ~BIT(s->vfn);
-+
-     ret = igb_core_vf_load_state(s, buf, size);
-     if (ret < 0) {
-         return ret;
-@@ -556,6 +595,45 @@ static bool igb_core_vf_dirty_query(IgbVfState *s,
-     return false;
- }
- 
-+/* Quiesce a VF by disabling its RX and TX at the PF level. */
-+static void igb_core_vf_quiesce(IgbVfState *s)
-+{
-+    IgbVfMigState *ms = &s->mig;
-+    IGBCore *core = igbvf_get_core(s);
-+
-+    ms->mig_saved_vfre = !!(core->mac[VFRE] & BIT(s->vfn));
-+    ms->mig_saved_vfte = !!(core->mac[VFTE] & BIT(s->vfn));
-+
-+    core->mac[VFRE] &= ~BIT(s->vfn);
-+    core->mac[VFTE] &= ~BIT(s->vfn);
-+    trace_igbvf_mig_quiesce(s->vfn, core->mac[VFRE], core->mac[VFTE]);
-+}
-+
-+static void igb_core_vf_unquiesce(IgbVfState *s)
-+{
-+    IgbVfMigState *ms = &s->mig;
-+    IGBCore *core = igbvf_get_core(s);
-+    bool re = ms->mig_saved_vfre;
-+    bool te = ms->mig_saved_vfte;
-+
-+    if (re) {
-+        core->mac[VFRE] |= BIT(s->vfn);
-+    } else {
-+        core->mac[VFRE] &= ~BIT(s->vfn);
-+    }
-+    if (te) {
-+        core->mac[VFTE] |= BIT(s->vfn);
-+    } else {
-+        core->mac[VFTE] &= ~BIT(s->vfn);
-+    }
-+
-+    trace_igbvf_mig_unquiesce(s->vfn, core->mac[VFRE], core->mac[VFTE]);
-+
-+    if (re) {
-+        igb_start_recv(core);
-+    }
-+}
-+
- /* ================================================================
-  * Migration BAR register read/write handlers
-  * ================================================================ */
-@@ -599,6 +677,10 @@ static bool igbvf_mig_set_state(IgbVfState *s, uint32_t new_state)
-             old == IGB_MIG_STATE_ERROR) {
-             igb_core_vf_dirty_disable(s);
-         }
-+        if (old == IGB_MIG_STATE_RUNNING ||
-+            old == IGB_MIG_STATE_PRE_COPY) {
-+            igb_core_vf_quiesce(s);
-+        }
-         break;
- 
-     case IGB_MIG_STATE_RUNNING:
-@@ -609,6 +691,9 @@ static bool igbvf_mig_set_state(IgbVfState *s, uint32_t new_state)
-         if (old == IGB_MIG_STATE_PRE_COPY) {
-             igb_core_vf_dirty_disable(s);
-         }
-+        if (old == IGB_MIG_STATE_STOP) {
-+            igb_core_vf_unquiesce(s);
-+        }
-         break;
- 
-     case IGB_MIG_STATE_STOP_COPY:
-@@ -616,6 +701,9 @@ static bool igbvf_mig_set_state(IgbVfState *s, uint32_t new_state)
-             old != IGB_MIG_STATE_PRE_COPY) {
-             return false;
-         }
-+        if (old == IGB_MIG_STATE_PRE_COPY) {
-+            igb_core_vf_quiesce(s);
-+        }
-         ret = igb_core_vf_save_state(s, ms->mig_data, sizeof(ms->mig_data));
-         if (ret < 0) {
-             ms->mig_error = -ret;
-@@ -656,6 +744,20 @@ static uint32_t igbvf_mig_get_status(IgbVfState *s)
-         status |= IGB_MIG_STATUS_DATA_AVAIL;
-     }
- 
-+    /*
-+     * QUIESCED tells the driver it is safe to read device state.
-+     * STOP and STOP_COPY must guarantee that no VF DMA is in flight;
-+     * igb_core_vf_quiesce() enforces this by disabling RX/TX for the
-+     * VF.
-+     *
-+     * Under QEMU, DMA completes synchronously within the MMIO handler
-+     * so there is nothing to drain, but real hardware would need this.
-+     */
-+    if (ms->mig_state == IGB_MIG_STATE_STOP ||
-+        ms->mig_state == IGB_MIG_STATE_STOP_COPY) {
-+        status |= IGB_MIG_STATUS_QUIESCED;
-+    }
-+
-     return status;
- }
- 
-@@ -1000,5 +1102,7 @@ void igbvf_mig_state_reset(IgbVfState *s)
-     ms->mig_dirty_range_size = 0;
-     ms->mig_dirty_buf_addr = 0;
-     ms->mig_dirty_status = IGB_MIG_DIRTY_STATUS_OK;
-+    ms->mig_saved_vfre = true;
-+    ms->mig_saved_vfte = true;
-     trace_igbvf_mig_reset(s->vfn);
- }
-diff --git a/hw/net/trace-events b/hw/net/trace-events
-index 95fdea89d49c..f4940e3e176d 100644
---- a/hw/net/trace-events
-+++ b/hw/net/trace-events
-@@ -300,8 +300,8 @@ igbvf_mig_bar_read(uint16_t vfn, uint64_t addr, uint64_t val) "VF%u: BAR read ad
- igbvf_mig_bar_write(uint16_t vfn, uint64_t addr, uint64_t val) "VF%u: BAR write addr=0x%"PRIx64" val=0x%"PRIx64
- igbvf_mig_set_state(uint16_t vfn, uint32_t old_state, uint32_t new_state) "VF%u: state %u -> %u"
- igbvf_mig_set_state_err(uint16_t vfn, uint32_t old_state, uint32_t new_state) "VF%u: invalid transition %u -> %u"
--igbvf_mig_save_state(uint16_t vfn, uint32_t size) "VF%u: saved %u bytes of device state"
--igbvf_mig_load_state(uint16_t vfn, uint32_t size) "VF%u: loaded %u bytes of device state"
-+igbvf_mig_save_state(uint16_t vfn, int size, bool vfre, bool vfte, uint32_t reg_vfre) "VF%u: saved %d bytes vfre=%d vfte=%d VFRE=0x%x"
-+igbvf_mig_load_state(uint16_t vfn, uint32_t size, bool vfre, bool vfte) "VF%u: loaded %u bytes vfre=%d vfte=%d"
- igbvf_mig_reset(uint16_t vfn) "VF%u: migration state reset"
- igbvf_mig_dirty_enable(uint16_t vfn, uint64_t pgsize, uint64_t nbits) "VF%u: dirty tracking enabled pgsize=%"PRIu64" nbits=%"PRIu64
- igbvf_mig_dirty_disable(uint16_t vfn) "VF%u: dirty tracking disabled"
-@@ -310,6 +310,8 @@ igbvf_mig_dirty_query(uint16_t vfn, uint64_t size, uint32_t dirty_pages) "VF%u:
- # igb_core.c - VF migration diagnostics
- igb_core_dirty_track_dma(int vfn, uint64_t addr, uint64_t len) "VF%d: dirty DMA addr=0x%"PRIx64" len=%"PRIu64
- igb_core_dirty_track_dma_drop(int vfn, uint64_t addr, uint64_t len) "VF%d: dirty DMA dropped addr=0x%"PRIx64" len=%"PRIu64" no matching range"
-+igbvf_mig_quiesce(uint16_t vfn, uint32_t vfre, uint32_t vfte) "VF%u: quiesce VFRE=0x%x VFTE=0x%x"
-+igbvf_mig_unquiesce(uint16_t vfn, uint32_t vfre, uint32_t vfte) "VF%u: unquiesce VFRE=0x%x VFTE=0x%x"
- 
- # spapr_llan.c
- spapr_vlan_get_rx_bd_from_pool_found(int pool, int32_t count, uint32_t rx_bufs) "pool=%d count=%"PRId32" rxbufs=%"PRIu32
--- 
-2.55.0
+  ok 1 test_powernv.PowernvMachine.test_linux_remote_interrupts # SKIP no support for user networking
+  1..1
 
+Tested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+
+> 
+> diff --git a/tests/functional/ppc64/test_powernv.py b/tests/functional/ppc64/test_powernv.py
+> index bac2017e18..9a95b6011d 100755
+> --- a/tests/functional/ppc64/test_powernv.py
+> +++ b/tests/functional/ppc64/test_powernv.py
+> @@ -91,6 +91,7 @@ def test_linux_smt_boot(self):
+>      def test_linux_remote_interrupts(self):
+>          self.require_accelerator("tcg")
+>          self.set_machine('powernv')
+> +        self.require_netdev('user')
+
+One minor nit: require_netdev('user') is placed after set_machine().
+Though it's not necessary, I would prefer to group all require_* guards
+together at the top before any setup, so it's immediately clear what
+preconditions the test has. Either way:
+
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+
+~Amit
+
+>  
+>          # Have below setup in this test:
+>          # 1. e1000e attached to pcie.6, which is from 7th PHB, belonging to 2nd
+> -- 
+> 2.54.0
+> 
+> 
 
