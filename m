@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2420EC531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:21:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD920C531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 19:21:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woQsC-0000Et-IC; Mon, 27 Jul 2026 15:20:24 -0400
+	id 1woQri-00005a-J5; Mon, 27 Jul 2026 15:19:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQsA-0000E6-Hw
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQrg-0008WR-Gp
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:19:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQs8-0000bh-U7
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:20:22 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woQre-0000LY-MT
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 15:19:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785180020;
+ s=mimecast20190719; t=1785179990;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=KIzOAIfM1reEGtLuVwKSJi5MtWyPECzNtg489klcaAk=;
- b=YmU59zWgqS8VrLZEgHvG4qp6tbsIQ+Ieh2zCKMcs5mmB/LDa89hBbMNTuWAsDYpuSYVkwA
- JUVRxrfCE1WPex70dowlmgpF6l7jGNF1mUN22CREFAyn6IIVbgBR4mMdF587J5OTNXSvZn
- /K4HCQ0nZTQbUF/tONfuDzpgCbKqEA0=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5xEgcXduIKUS+efKpR6fC7s/haat8kW+FyLhnuY1/MM=;
+ b=AzYI2kv4XwmqttRp2hZ1WU/3zBj4Afd3v70vDaglFKNXQpQP+17yD6W+LFfIvmUoUIvnx8
+ Gzje4xMsEBCJR1e1+l7Gtsk2lBd/gp9ZbU2Rpw0RW8kHeC2nqvlVBphHdutD8af5QCWmi1
+ LxPrjQT8aSaH/kbKmOwBKLY1BJC3XbU=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-616-ByBTP5jnOHqcW_uO1JPJCw-1; Mon, 27 Jul 2026 15:20:16 -0400
-X-MC-Unique: ByBTP5jnOHqcW_uO1JPJCw-1
-X-Mimecast-MFC-AGG-ID: ByBTP5jnOHqcW_uO1JPJCw_1785180016
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-47407691804so2231215f8f.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:20:16 -0700 (PDT)
+ us-mta-527-zb2lgnO_PACqcGKH2tVlbA-1; Mon, 27 Jul 2026 15:19:48 -0400
+X-MC-Unique: zb2lgnO_PACqcGKH2tVlbA-1
+X-Mimecast-MFC-AGG-ID: zb2lgnO_PACqcGKH2tVlbA_1785179987
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-493bfc3b84aso17325845e9.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 12:19:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785180016; x=1785784816; darn=nongnu.org;
+ d=redhat.com; s=google; t=1785179987; x=1785784787; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=KIzOAIfM1reEGtLuVwKSJi5MtWyPECzNtg489klcaAk=;
- b=GeWCE+03ESFMJmjYBU0V9jtz4xViYmqwe5WQA6B/COtEihdh8WD3admAxQbCLTnTGl
- aRFs3gL/GvfthtC3Yo6avw5MeTePgObSsilovzLL4Dk27BDTndLxDtRuJa8C+W08ZXrj
- bclRaGdb0yBHevLytUTYHjih7C3aXtI0nwh/qRuMYk0RifWsmbzSuA+pQNA9F1uwA1Hx
- yBIlemD4IljwObVbilRwVN3VdOxYm8MfKDMP12cIzhqWjTobQuc+iNZ105wG7Ab0wKqO
- drRF6PKhEyVaMXoziPk3FMCZcwt0FCVCqk8VWN/Tyxnbm9KWzKwRMPfDPLcuxkSBxLHk
- R8cA==
+ bh=5xEgcXduIKUS+efKpR6fC7s/haat8kW+FyLhnuY1/MM=;
+ b=m/Iv13VPjDXTLs5sYE5PGtPIujZM4twMoNPYswpYK3DdNSHbb4hBjIY7RorfRJo4Vk
+ 7YYTuiiK35sK+WKINxwQ8uNoGgAWBMEd1ozb4Lq7nYO6CekStgCZKygC9notqcPYy4Eb
+ LiZx1Jp9deLC7yRsXHkprLGOw75lurgOB4HtmKRHy3GaTnOIdipSMNJp8Tke0+/Ypt6E
+ idmTFaT5cNPJTVP7cVghtRq1fUy6bSh4X+99MebDBFz1X4c3d0oMkE3hjfWPv3kI9RTd
+ j/cMxuuvf4jBIPsW149ywupRLxFHjLZGRzYGLIDGbZyfwbtqOVp7npzDJCnVDvVCHjlr
+ ndxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785180016; x=1785784816;
+ d=1e100.net; s=20251104; t=1785179987; x=1785784787;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=KIzOAIfM1reEGtLuVwKSJi5MtWyPECzNtg489klcaAk=;
- b=ZYq3xmWtCqpWN3/fYkaO6lYnXNtiPEKqOp90uy073lJgrTXp8+vfWWpSmQX5opeuw1
- 5uN0ggWLQ+9hY4yeJ9uravIE0NkO6EZtFZSFC6kq8sqbUKwdeohcVOwFSUqohGV5jg5T
- xBdRv6jGnzkfyZ40UBlIO5N40GPeN9Dl97sw4jzgnwz+jW8bctXiYywnDYnx6iPOVurk
- fIGOlKokVKBvGgoEr7uW09FAIjvi7TSfYvoyyA2VNAROymxsdLwJMi3/BwChAVKcFoLl
- a5nK4GQbTZGmeE0MnhxOcHtpGhbXgGQcgx3N63wOWd9eSZ6/gPNHEZUIQO0+LhdNVWU9
- zXbQ==
-X-Gm-Message-State: AOJu0YwLS1jM0FYyFSn9FqTVz2Pvps7hMRSYhB2MBN+NeuX0IX0exZds
- OdLeewlqRZqYOJyREakmdQD/gOshz0G802RNuoqVMWrrmFyR5BNEbJCV5wO7yIdWwUEb8plTH+J
- TfzX8On8jbcDfNlKLzIexKJ9FItNYbcrFv2s+O19nVypS2qAXy5ifYaoOwSszf7+0Zmd2tAZpD5
- nc+dSmjsivlGb2e4LHxpKjekCAF0BXeu4aUA==
-X-Gm-Gg: AR+sD13tCny7KhmCfM/iqouvWAMCuw78BpzaIUw7cAf95djEBtPz4/Tv+pIKEnd/UH9
- smnAfKDFfFr/1fYcr6ceEjtfDJAlZkOUtoMkWQRvU/2AepqwTps39oQSbvDg62Lm9loRm71uac6
- +doIu3h/rYXMdksjf6jIfT4J23CPmS2y0PVv2dzXkGR8iWzNhlu5iTAPZ5PgEw9hMrI2eusPYTT
- d++Wk/Gj3NR4eS2YHiJJ/XJp3+8rWZK/b4mxn8GUtbo4rrjrWypELIB0lwqqRTTvq1/L0GJlILX
- mQuryDhRjabtvhFr6H7LAL7RiEKC5P9QoqtX3Qk22VlQ5HXQ/IXyZspfnTu3cI7KlLY0HPqv1uD
- wlPNKoq8HlszXvi9B+l9Liw==
-X-Received: by 2002:a05:6000:220e:b0:47a:e342:373e with SMTP id
- ffacd0b85a97d-47fafa8d34fmr441021f8f.58.1785180015479; 
- Mon, 27 Jul 2026 12:20:15 -0700 (PDT)
-X-Received: by 2002:a05:6000:220e:b0:47a:e342:373e with SMTP id
- ffacd0b85a97d-47fafa8d34fmr440972f8f.58.1785180014837; 
- Mon, 27 Jul 2026 12:20:14 -0700 (PDT)
+ bh=5xEgcXduIKUS+efKpR6fC7s/haat8kW+FyLhnuY1/MM=;
+ b=YCsaF2urI1bnTxDoMJzz3bMDHneFQOLQbQX+xubh/zKRwWA9OFVoz0t4NTJA9im5U/
+ 7XLOjk4eeXKwSw2jlwkDHbdsKoi+5GheYAPoIAVirPdb5aayGWcg1vdGFeewO6dv/+sO
+ DomOESW1sKkNRQy+wRohqaSzaeml8JVRQ3CvvHT+ES4xAEkheKczG4Wqdc4D2fp5PZ2/
+ czZKDdOwSebUEOXbziawvePCfc/LdRHPmPEkh/2si2eyrvriAxg3nHhxtJ/YEzeLP8LX
+ WjKbxzb/HhW4M+FezqOicdh78kSBER4h+GM/x11I+9Tcs61uGbatAyBs0fMtFn3J388+
+ IFsw==
+X-Gm-Message-State: AOJu0YxV1EEuNOCMNoiSu+Q6rYzam93tkp4KKyX2QHsdKcZZTFNP9Ssd
+ Lacms2wM2qPK+HgQt4RZ9b4gnGUwiBkAgBe95FJWz2h6klO1XsYzy57yr7Sdjxo2j36n4cvbhR/
+ fgSQAYz7RjroXqPJA09Lw4VBm+9tCNlA/2fApP5v4CCK83fvGyjVn2YfVctxuT9xZmrEKQdSc3r
+ /CfzSlaQKkhqCJq1QzELBQkyeVF8uWFuGFTA==
+X-Gm-Gg: AR+sD12VZn6kTm3cSFWnpfjncH0n8RH6OKufyWy1mWLjeHCzXBuk5i1SSb9avAyRRNO
+ pbW5fQ1mIHcIUR2X0jnVWAcdEEHTGCNv+Z7lZo0JOyUYJKGOHViL93Uy6s7PvorhqB0A+4CPFkY
+ x9c1ccKViASX+CNhnXyVmh44Z4Q1nEIEebZUMl4IWcj933pgQ1ElEKp+tvgshYpOQivJp13wvjQ
+ MJt+VUebjfqvUUNW+rb3FOsO74BopNm1TW+TU2xQHjhrBRWfFvDO4iXNM36BJMYVxipB4dfJM/u
+ 2deyo4vrbsYwaQ8upyLh6JNU7xf/4RNqEZrT6TD/JH+++HR6GizF8Jo/30tI9jvynhdZlsIYJIi
+ x7bLfgs+PkGRAQc4F4ODHLg==
+X-Received: by 2002:a05:600c:5253:b0:495:4732:1eb9 with SMTP id
+ 5b1f17b1804b1-496c4fce74dmr4251295e9.21.1785179987343; 
+ Mon, 27 Jul 2026 12:19:47 -0700 (PDT)
+X-Received: by 2002:a05:600c:5253:b0:495:4732:1eb9 with SMTP id
+ 5b1f17b1804b1-496c4fce74dmr4250865e9.21.1785179986671; 
+ Mon, 27 Jul 2026 12:19:46 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-28-14.inter.net.il. [80.230.28.14])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f864305f5sm50322446f8f.17.2026.07.27.12.20.13
+ 5b1f17b1804b1-496b388d5b4sm178961985e9.3.2026.07.27.12.19.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 12:20:14 -0700 (PDT)
-Date: Mon, 27 Jul 2026 15:20:13 -0400
+ Mon, 27 Jul 2026 12:19:46 -0700 (PDT)
+Date: Mon, 27 Jul 2026 15:19:44 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Jia Jia <physicalmtea@gmail.com>,
- Xie Yongji <xieyongji@bytedance.com>
-Subject: [PULL v2 17/30] libvduse: validate vq size
-Message-ID: <733a98a552e4bd68932de1f58bd6ea39b57b261c.1785179875.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Stefano Garzarella <sgarzare@redhat.com>, xlabai <xlabai@tencent.com>
+Subject: [PULL v2 04/30] libvhost-user: protect against OOB writes in
+ vu_set_inflight_fd
+Message-ID: <fbdfdbb9920cb69408d53cb86a8e079a2054581e.1785179875.git.mst@redhat.com>
 References: <cover.1785179875.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -96,15 +97,15 @@ Content-Disposition: inline
 In-Reply-To: <cover.1785179875.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
 X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,46 +121,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-libvduse assumes that vq size (aka vq num) is below VIRTQUEUE_MAX_SIZE
-and maps logs large enough based on this assumption.
+vu_set_inflight_fd() trusts the num_queues value from the
+VHOST_USER_SET_INFLIGHT_FD message without checking it against
+dev->max_queues, so an oversized value causes out-of-bounds writes to
+dev->vq.
 
-However, vduse_queue_enable() accepts the vq size returned through
-VDUSE_VQ_GET_INFO without validation, so a value above
-VIRTQUEUE_MAX_SIZE (1024) overruns the inflight log and causes
-out-of-bounds writes in vduse_queue_inflight_get().
+Front end is generally trusted so not a security problem, but OOB isn't
+a nice way to handle frontend bugs.  Let's harden this a bit:
+check num_queues and panic if it's invalid.
 
-According to the virtio spec, vq size can only be reduced, not
-increased, so vq size must not exceed the previously configured
-max_size, but the kernel vduse module does not validate this for us, and
-we should not trust another process to follow the spec.
-
-Validate and reject vq size values above VIRTQUEUE_MAX_SIZE.
-
-Fixes: CVE-2026-61402
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3652
-Reported-by: Jia Jia <physicalmtea@gmail.com>
-Message-ID: <bf7e71b3139875e5e00fd53970c772d6c90dc2a1.1784888961.git.mst@redhat.com>
+Fixes: 5f9ff1eff3 ("libvhost-user: Support tracking inflight I/O in shared memory")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3740
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+Reported-by: xlabai <xlabai@tencent.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <23b3f12388c1035f208550df9de9944c22d8d534.1784899127.git.mst@redhat.com>
 ---
- subprojects/libvduse/libvduse.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ subprojects/libvhost-user/libvhost-user.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/subprojects/libvduse/libvduse.c b/subprojects/libvduse/libvduse.c
-index df9ca5e56f..712b97b4c3 100644
---- a/subprojects/libvduse/libvduse.c
-+++ b/subprojects/libvduse/libvduse.c
-@@ -902,6 +902,11 @@ static void vduse_queue_enable(VduseVirtq *vq)
-         return;
+diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+index 2c35bddd6f..8208265588 100644
+--- a/subprojects/libvhost-user/libvhost-user.c
++++ b/subprojects/libvhost-user/libvhost-user.c
+@@ -1998,6 +1998,8 @@ vu_get_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
+ 
+     if (vmsg->size != sizeof(vmsg->payload.inflight)) {
+         vu_panic(dev, "Invalid get_inflight_fd message:%d", vmsg->size);
++        vmsg_close_fds(vmsg);
++        vmsg->fd_num = 0;
+         vmsg->payload.inflight.mmap_size = 0;
+         return true;
+     }
+@@ -2005,6 +2007,15 @@ vu_get_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
+     num_queues = vmsg->payload.inflight.num_queues;
+     queue_size = vmsg->payload.inflight.queue_size;
+ 
++    if (num_queues > dev->max_queues) {
++        vu_panic(dev, "Invalid get_inflight_fd num_queues: %"PRId16,
++                 num_queues);
++        vmsg_close_fds(vmsg);
++        vmsg->fd_num = 0;
++        vmsg->payload.inflight.mmap_size = 0;
++        return true;
++    }
++
+     DPRINT("set_inflight_fd num_queues: %"PRId16"\n", num_queues);
+     DPRINT("set_inflight_fd queue_size: %"PRId16"\n", queue_size);
+ 
+@@ -2052,6 +2063,7 @@ vu_set_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
+         vmsg->size != sizeof(vmsg->payload.inflight)) {
+         vu_panic(dev, "Invalid set_inflight_fd message size:%d fds:%d",
+                  vmsg->size, vmsg->fd_num);
++        vmsg_close_fds(vmsg);
+         return false;
      }
  
-+    if (vq_info.num > VIRTQUEUE_MAX_SIZE) {
-+        fprintf(stderr, "vq[%d] vring num %u exceeds max %u\n",
-+                vq->index, vq_info.num, VIRTQUEUE_MAX_SIZE);
-+        return;
+@@ -2061,6 +2073,13 @@ vu_set_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
+     num_queues = vmsg->payload.inflight.num_queues;
+     queue_size = vmsg->payload.inflight.queue_size;
+ 
++    if (num_queues > dev->max_queues) {
++        vu_panic(dev, "Invalid set_inflight_fd num_queues: %"PRId16,
++                 num_queues);
++        close(fd);
++        return false;
 +    }
-     vq->vring.num = vq_info.num;
-     vq->vring.desc_addr = vq_info.desc_addr;
-     vq->vring.avail_addr = vq_info.driver_addr;
++
+     DPRINT("set_inflight_fd mmap_size: %"PRId64"\n", mmap_size);
+     DPRINT("set_inflight_fd mmap_offset: %"PRId64"\n", mmap_offset);
+     DPRINT("set_inflight_fd num_queues: %"PRId16"\n", num_queues);
+@@ -2071,6 +2090,7 @@ vu_set_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
+ 
+     if (rc == MAP_FAILED) {
+         vu_panic(dev, "set_inflight_fd mmap error: %s", strerror(errno));
++        close(fd);
+         return false;
+     }
+ 
 -- 
 MST
 
