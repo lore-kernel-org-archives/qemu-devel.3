@@ -4,64 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 469B1C53219
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 08:20:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDD01C53219
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 08:20:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woGZ2-0006Xq-Uv; Mon, 27 Jul 2026 04:19:56 -0400
+	id 1woGZX-0006fn-DM; Mon, 27 Jul 2026 04:20:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1woGZ1-0006Xb-HU
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 04:19:55 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1woGYz-0003PR-7e
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 04:19:55 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66R8JjMD046435
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 27 Jul 2026 17:19:45 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=75pR8Gpqt2T8QYdmYo1HOa1gzP9K+CNFUycv1ayEIu0=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1785140385; v=1;
- b=aGxC5a8kwCqILX3xXPDwIBYnSj47F6KsGrtn2miNwnmXGcRtJaTPCvw23MOKnRAD
- Mql6x7ZqjJNt4opP+FvDI66tSrQdt3PQm2uyXiuRvpf1mdc4t341f2ajPcv60FdF
- Le83XdV3RhpK3GRqFi1gB00AuoATjTH9dGoJa/wFgSmCyfWlY3WnalYrN19OT+ud
- jecVNj48XH5TFtHKgF2jSwbicHuspL6aOjySDbllK0p/oHqOrrO3lTr1mveHPzt2
- CGgRCVYIaOiwBpm2azgCbwlkzwPKbcT8Dlaj1OhSY206VqM6aQUa/Fp405K05COM
- oW8mSrGgxP9S21m9upyirw==
-Message-ID: <2dd7a514-bc66-4a19-974f-6258cc966d67@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 27 Jul 2026 17:19:45 +0900
+ (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
+ id 1woGZW-0006ek-0e
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 04:20:26 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
+ id 1woGZU-0003dX-Fp
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 04:20:25 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-6611669cd16so2984414d50.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 01:20:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785140423; cv=none;
+ d=google.com; s=arc-20260327;
+ b=YCjvNyR8yd/76HbohiUeEaIGq3wJnN2xxfVOjB312wVWGPJZCK++N63vnaKPPuJzde
+ RS/sUMVGH903EaMlwEG0Feg0A0OKYuV4Tgk+gcYBSNgQ5FJ6o6G3PHW05JZ/vGAKn4qD
+ vEJLHfB422TAHWrW9k4h8ywER33NzBkeKIY/tp+Jso7mVCDGEi+cRm3bgp9BCZPbGhyy
+ VO0KlmxoN70wXSNFWk5KFk2HApf9iX0NPdJdNd/bd/GbmbZZkh5q2drEmx6i3EJOSkOV
+ fxqdgIxvZjGhklUCbkznOO55+yn8eRIrN4mglzoJkViruhH3uil3yq5YP0fFblLIHJ9D
+ c0wA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=jY5R4YnftG+67F752+w1fCDnLdBQjLukzln0QJWYakA=;
+ fh=d0f15bx3ZaGyK7JifOdMNzQFc7oCSEbXVVXrfMtAisI=;
+ b=r1J6tpPRD8wo9IUbdqdsPFgueUVEo1CYw1x+P6/IV+cCvuIFprbEoppoVp1y3LmJqK
+ hqJnGEfIxL1zEvTJDx+qPubi3GcZYUKgg8duWfr4pdBUIvAkNGVV1lkVSBSXlOwSfxXu
+ 5gTguw6EIScdXBF3WmIKnvttYFg0upGEPjzOdcLuYzMxSf3msAjjdAO3TDXQM+BgmY6b
+ ydUzr7uamIx/1JaZMmTjh/+S8WXOGS9UZZomOCk0+HiSiwDJB/+GMy8S+PBwg8pp9Sq8
+ 03w+eYqp9lZmybY9gPM/x4W7JL0uvStBiK8ttDlB8tMCZ+V2XKUg++V4prwsGSOFFABP
+ 0HZQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785140423; x=1785745223; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=jY5R4YnftG+67F752+w1fCDnLdBQjLukzln0QJWYakA=;
+ b=QirrN9HsWGijEltmMy6UcPRS55Ynk0Gfve2atWffmuSjyPRQzzXalUEVeLP9DGEhng
+ 2IDM5yLfCpSrXlpuQiXy0N9D2rstpSqqKatid6k05zwPlzVhAc9ey5kdSb/a3aDfsVF+
+ imAjJyMvskiRz/3i+hAaXrPwtS0s8YneXO720VkFurOiwc4KzdfniULXgxdAC4xzhHzz
+ zHq2SmSRWM1RGuw5Do1Nl7VwA6duggPPu0h2AdJtpXIjROcT87O67Lae2TJW/Xs3SupZ
+ 7Lr84DGjPbQfNSC+ibwB5y0dRDN9eycbtzrL9OzQihmprfV3nFmfj5AFZM8rWVQAC6kS
+ S7Fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785140423; x=1785745223;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=jY5R4YnftG+67F752+w1fCDnLdBQjLukzln0QJWYakA=;
+ b=WcFm1PUv/kWWFAW2CAwGLw+GfzRM0VZ8Fk+XwMVnfmKJAiMHyzZf5M1EMNHTCe83UA
+ /WqoAmGuGoNcx7GuHpTRy52e5jhnRYkdrAv1z6zT9RMz7aYbtwKTqveMzdiX6QAEF9Wn
+ kHyyTkqkG/q6fMK/77ssW+i3tjAagX6OGe46P9IvyMImbNB6X/roMZdbuGrmtROgHEz4
+ B0CvjKJNFuMlpF09FWfCo6MUXxWCdQNUBdseGYxIHEBuCJaY2HwwJxDO9Mp6gvJ9rZ2P
+ E0y09TrFzT9LVgidp/sQSwaj6gFwg02gxJiiHKE1HlPfRmPq5XexPhU1SJSDTzy7k2XW
+ 7saA==
+X-Gm-Message-State: AOJu0Yw2G16783xwu52TE5/7x9LX1T0fSibvPhwwmuA9SbPLImDWLL9D
+ 56kosiQMycX8nsRTjDClyKe8Fn58Y7eDf1L1hciTXK3NGMlHXCqIISE20nTvzs5ep7iGjVmI1ng
+ fZZ+riWRx3oUA2kKrHVX5eSLFQAqiMzw=
+X-Gm-Gg: AR+sD13cSXrpqZGEqqBuzXmXDtTmi4NXFmYw8gk0I4ADfGTsQu1WGR6rlIoazdfGj4h
+ y2GGVmAsBt20Kp93u7s4rfFcFXDzeOnxdfId2bJfZHJwg6BCvPVScAM5hLLRvaFbDHhtWOF8KMw
+ bjz14vv/tO1fl+nLeNJqd0FHMhFrao9tCn0QXS/GC+tTpF0RZ1FsXPT+IxXhFQwW6plx1AfdzCz
+ Pg/HMrC8Rm7SNUJ1ZBPEZjtExfkqXMCT5B8Ak+vyZfKufh2iYtYic0d1dmB4s0Foah0uJQ4BCHE
+ GuakzUv8o+jZEtHm2UTr
+X-Received: by 2002:a05:690e:43dc:b0:664:d186:4737 with SMTP id
+ 956f58d0204a3-668c79ea27cmr1581439d50.27.1785140423193; Mon, 27 Jul 2026
+ 01:20:23 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 07/11] igb: Quiesce VFs on STOP and include PF enable
- state in migration blob
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
- "Michael S . Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>
-References: <20260727053935.1392269-1-clg@redhat.com>
- <20260727053935.1392269-8-clg@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260727053935.1392269-8-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <cover.1785064312.git.flamboyant.h.01@gmail.com>
+ <12e325190a15045cff5c429b154217814cd9e618.1785064313.git.flamboyant.h.01@gmail.com>
+ <CAEUhbmUEF7fLEP9+HbE6mKE5OKsVm0rds+1S==BtRLArLZMbxA@mail.gmail.com>
+In-Reply-To: <CAEUhbmUEF7fLEP9+HbE6mKE5OKsVm0rds+1S==BtRLArLZMbxA@mail.gmail.com>
+From: Kangjie Huang <flamboyant.h.01@gmail.com>
+Date: Mon, 27 Jul 2026 16:20:13 +0800
+X-Gm-Features: AUfX_my5W-JnReOjWkXYfWOzexfEZY9mN_IT7v3NsbVMsx3V2W48XUR2rDhTa1A
+Message-ID: <CAAW0U4YezAk=RRM2ERqen=znt=kY4+nLrjJOEE2r=pwzc0Q+vA@mail.gmail.com>
+Subject: Re: [PATCH 01/11] hw/ssi: Add K230 DesignWare SSI register model
+To: Bin Meng <bmeng.cn@gmail.com>
+Cc: qemu-devel@nongnu.org, "open list:K230 Machines" <qemu-riscv@nongnu.org>, 
+ Chao Liu <chao.liu@processmission.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Alistair Francis <alistair@alistair23.me>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Kangjie Huang <flamboyant.h.01@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=flamboyant.h.01@gmail.com; helo=mail-yx1-xb12f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,304 +129,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/27 14:39, Cédric Le Goater wrote:
-> Quiesce VF queues when entering the STOP state by disabling RX and TX
-> at the PF level (VFRE/VFTE). This ensures no DMA activity occurs while
-> the device state is being serialized. The unquiesce path re-enables
-> queues when returning to RUNNING.
-> 
-> The VFRE and VFTE registers are shared PF-level registers with one bit
-> per VF controlling RX and TX enable respectively. Writing the full
-> 32-bit register during restore would clobber other VFs' bits, so these
-> bits cannot be included in the regular per-VF register list. Instead,
-> save the per-VF VFRE/VFTE bit state at quiesce time - before the bits
-> are cleared - and append it to the migration blob as two bytes. On the
-> destination, extract these bits and restore them during unquiesce.
-> 
-> For QEMU's emulated igb, the device state machine guarantees no DMA in
-> these states. This register establishes the protocol for real hardware
-> implementations where DMA drain has latency.
-> 
-> Assisted-by: Claude
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   hw/net/igb_migration.h |   4 ++
->   hw/net/igb_migration.c | 110 +++++++++++++++++++++++++++++++++++++++--
->   hw/net/trace-events    |   6 ++-
->   3 files changed, 115 insertions(+), 5 deletions(-)
-> 
-> diff --git a/hw/net/igb_migration.h b/hw/net/igb_migration.h
-> index a2e7b363cb04..414412f6392e 100644
-> --- a/hw/net/igb_migration.h
-> +++ b/hw/net/igb_migration.h
-> @@ -75,6 +75,7 @@
->   /* MIG_STATUS bits */
->   #define IGB_MIG_STATUS_DATA_AVAIL   (1u << 0)
->   #define IGB_MIG_STATUS_ERROR        (1u << 1)
-> +#define IGB_MIG_STATUS_QUIESCED     (1u << 2)
->   
->   /* MIG_STATUS error codes in bits [15:8], valid when ERROR bit is set */
->   #define IGB_MIG_STATUS_ERR_SHIFT    8
-> @@ -143,6 +144,9 @@ typedef struct IgbVfMigState {
->       uint32_t mig_data_size;
->       uint64_t mig_data_buf_addr;
->   
-> +    bool mig_saved_vfre;
-> +    bool mig_saved_vfte;
-> +
->       uint32_t mig_dirty_pgsize;
->       uint64_t mig_dirty_range_iova;
->       uint32_t mig_dirty_range_size;
-> diff --git a/hw/net/igb_migration.c b/hw/net/igb_migration.c
-> index 9a9ce902bb4a..187077c14c48 100644
-> --- a/hw/net/igb_migration.c
-> +++ b/hw/net/igb_migration.c
-> @@ -95,6 +95,7 @@ static IGBCore *igbvf_get_core(IgbVfState *s)
->    *   { uint32_t offset; uint32_t value; } regs[num_regs]
->    *   uint32_t  num_tx_ctx   (number of TX queue context blocks)
->    *   { raw struct igb_tx data } tx_ctx[num_tx_ctx]
-> + *   uint32_t  vfre_vfte    (VFRE in [7:0], VFTE in [15:8])
->    */
->   
->   /* Maximum number of registers in the VF state slice */
-> @@ -227,6 +228,13 @@ static uint32_t *igb_core_vf_save_ra(IGBCore *core, uint16_t vfn,
->       return p;
->   }
->   
-> +static uint32_t *igb_core_vf_save_vfre_vfte(uint32_t *p,
-> +                                            bool vfre, bool vfte)
-> +{
-> +    *p++ = cpu_to_le32((uint32_t)vfre | ((uint32_t)vfte << 8));
-> +    return p;
-> +}
-> +
->   static uint32_t *igb_core_vf_save_tx_ctx(IGBCore *core, int queue,
->                                            uint32_t *p)
->   {
-> @@ -243,12 +251,14 @@ static size_t igb_core_vf_state_max_size(int num_fixed_regs)
->            + num_fixed_regs * 2 * sizeof(uint32_t)   /* fixed reg pairs */
->            + max_ra_regs * 2 * sizeof(uint32_t)      /* RA reg pairs */
->            + sizeof(uint32_t)                        /* num_tx_ctx */
-> -         + 2 * sizeof(struct igb_tx);              /* TX context */
-> +         + 2 * sizeof(struct igb_tx)               /* TX context */
-> +         + sizeof(uint32_t);                        /* VFRE + VFTE */
->   }
->   
->   static int igb_core_vf_save_state(IgbVfState *s,
->                                     void *buf, size_t buf_size)
->   {
-> +    IgbVfMigState *ms = &s->mig;
->       IGBCore *core = igbvf_get_core(s);
->       uint32_t offsets[IGB_VF_MAX_REGS];
->       int num_regs, total_regs;
-> @@ -296,9 +306,15 @@ static int igb_core_vf_save_state(IgbVfState *s,
->       p = igb_core_vf_save_tx_ctx(core, q0, p);
->       p = igb_core_vf_save_tx_ctx(core, q1, p);
->   
-> +    /* Per-VF VFRE/VFTE enable bits */
-> +    p = igb_core_vf_save_vfre_vfte(p, ms->mig_saved_vfre,
-> +                                   ms->mig_saved_vfte);
-> +
->       size = (uint8_t *)p - (uint8_t *)buf;
->   
-> -    trace_igbvf_mig_save_state(s->vfn, size);
-> +    trace_igbvf_mig_save_state(s->vfn, size, ms->mig_saved_vfre,
-> +                               ms->mig_saved_vfte,
-> +                               core->mac[VFRE]);
->       return size;
->   }
->   
-> @@ -310,6 +326,16 @@ static int igb_core_vf_max_data_size(IgbVfState *s)
->       return size;
->   }
->   
-> +static const void *igb_core_vf_load_vfre_vfte(const void *p,
-> +                                              bool *out_vfre, bool *out_vfte)
-> +{
-> +    uint32_t val = le32_to_cpu(*(const uint32_t *)p);
-> +
-> +    *out_vfre = !!(val & 0xff);
-> +    *out_vfte = !!((val >> 8) & 0xff);
-> +    return (const uint8_t *)p + sizeof(uint32_t);
-> +}
-> +
->   static const void *igb_core_vf_load_tx_ctx(IGBCore *core, int queue,
->                                              const void *data)
->   {
-> @@ -323,6 +349,7 @@ static const void *igb_core_vf_load_tx_ctx(IGBCore *core, int queue,
->   static int igb_core_vf_load_state(IgbVfState *s,
->                                     const void *buf, size_t size)
->   {
-> +    IgbVfMigState *ms = &s->mig;
->       IGBCore *core = igbvf_get_core(s);
->       const uint32_t *p = buf;
->       uint32_t magic, version, saved_vfn, num_regs, num_tx;
-> @@ -378,7 +405,13 @@ static int igb_core_vf_load_state(IgbVfState *s,
->        * destination-specific IRTE references after migration.
->        */
->   
-> -    trace_igbvf_mig_load_state(s->vfn, (uint32_t)size);
-> +    /* Per-VF VFRE/VFTE enable bits */
-> +    p = igb_core_vf_load_vfre_vfte(p, &ms->mig_saved_vfre,
-> +                                   &ms->mig_saved_vfte);
-> +
-> +    trace_igbvf_mig_load_state(s->vfn, (uint32_t)size,
-> +                               ms->mig_saved_vfre,
-> +                               ms->mig_saved_vfte);
->       return 0;
->   }
->   
-> @@ -387,6 +420,12 @@ static int igbvf_mig_load(IgbVfState *s, const void *buf, size_t size)
->       IGBCore *core = igbvf_get_core(s);
->       int ret;
->   
-> +    /*
-> +     * Pre-load: Clear the VFLRE bit before restoring state so the PF
-> +     * watchdog does not overwrite what we are about to load.
-> +     */
-> +    core->mac[VFLRE] &= ~BIT(s->vfn);
-> +
->       ret = igb_core_vf_load_state(s, buf, size);
->       if (ret < 0) {
->           return ret;
-> @@ -556,6 +595,45 @@ static bool igb_core_vf_dirty_query(IgbVfState *s,
->       return false;
->   }
->   
-> +/* Quiesce a VF by disabling its RX and TX at the PF level. */
-> +static void igb_core_vf_quiesce(IgbVfState *s)
-> +{
-> +    IgbVfMigState *ms = &s->mig;
-> +    IGBCore *core = igbvf_get_core(s);
-> +
-> +    ms->mig_saved_vfre = !!(core->mac[VFRE] & BIT(s->vfn));
-> +    ms->mig_saved_vfte = !!(core->mac[VFTE] & BIT(s->vfn));
-> +
-> +    core->mac[VFRE] &= ~BIT(s->vfn);
-> +    core->mac[VFTE] &= ~BIT(s->vfn);
-> +    trace_igbvf_mig_quiesce(s->vfn, core->mac[VFRE], core->mac[VFTE]);
-> +}
-> +
-> +static void igb_core_vf_unquiesce(IgbVfState *s)
-> +{
-> +    IgbVfMigState *ms = &s->mig;
-> +    IGBCore *core = igbvf_get_core(s);
-> +    bool re = ms->mig_saved_vfre;
-> +    bool te = ms->mig_saved_vfte;
-> +
-> +    if (re) {
-> +        core->mac[VFRE] |= BIT(s->vfn);
-> +    } else {
-> +        core->mac[VFRE] &= ~BIT(s->vfn);
-> +    }
-> +    if (te) {
-> +        core->mac[VFTE] |= BIT(s->vfn);
-> +    } else {
-> +        core->mac[VFTE] &= ~BIT(s->vfn);
-> +    }
-> +
-> +    trace_igbvf_mig_unquiesce(s->vfn, core->mac[VFRE], core->mac[VFTE]);
-> +
-> +    if (re) {
-> +        igb_start_recv(core);
-> +    }
-> +}
-> +
->   /* ================================================================
->    * Migration BAR register read/write handlers
->    * ================================================================ */
-> @@ -599,6 +677,10 @@ static bool igbvf_mig_set_state(IgbVfState *s, uint32_t new_state)
->               old == IGB_MIG_STATE_ERROR) {
->               igb_core_vf_dirty_disable(s);
->           }
-> +        if (old == IGB_MIG_STATE_RUNNING ||
-> +            old == IGB_MIG_STATE_PRE_COPY) {
-> +            igb_core_vf_quiesce(s);
-> +        }
+Hi Bin,
+Bin Meng <bmeng.cn@gmail.com> =E4=BA=8E2026=E5=B9=B47=E6=9C=8827=E6=97=A5=
+=E5=91=A8=E4=B8=80 12:45=E5=86=99=E9=81=93=EF=BC=9A
+>
+> Please split the model into 2 models:
+>
+> - One generic model for Synopsys DesignWare SSI controller
+> - One K230 specific wrapper model on top of the Synopsys DesignWare
+> SSI controller [optional, if the generic model is enough to make the
+> k230 software happy]
+>
+> This way we can reuse the Synopsys DesignWare SSI controller model by
+> other machines in the future.
 
-ERROR → STOP is accepted, but quiescing only occurs from RUNNING or 
-PRE_COPY. For example, a missing DATA_XFER buffer enters ERROR while 
-RX/TX remain enabled; moving to STOP then advertises QUIESCED while VF 
-DMA is still enabled.
+Thanks for the review and the suggestion!
+I will look into the common parts between the generic DesignWare SSI
+and the K230 implementation, and complete the split in v2.
 
 Regards,
-Akihiko Odaki
-
->           break;
->   
->       case IGB_MIG_STATE_RUNNING:
-> @@ -609,6 +691,9 @@ static bool igbvf_mig_set_state(IgbVfState *s, uint32_t new_state)
->           if (old == IGB_MIG_STATE_PRE_COPY) {
->               igb_core_vf_dirty_disable(s);
->           }
-> +        if (old == IGB_MIG_STATE_STOP) {
-> +            igb_core_vf_unquiesce(s);
-> +        }
->           break;
->   
->       case IGB_MIG_STATE_STOP_COPY:
-> @@ -616,6 +701,9 @@ static bool igbvf_mig_set_state(IgbVfState *s, uint32_t new_state)
->               old != IGB_MIG_STATE_PRE_COPY) {
->               return false;
->           }
-> +        if (old == IGB_MIG_STATE_PRE_COPY) {
-> +            igb_core_vf_quiesce(s);
-> +        }
->           ret = igb_core_vf_save_state(s, ms->mig_data, sizeof(ms->mig_data));
->           if (ret < 0) {
->               ms->mig_error = -ret;
-> @@ -656,6 +744,20 @@ static uint32_t igbvf_mig_get_status(IgbVfState *s)
->           status |= IGB_MIG_STATUS_DATA_AVAIL;
->       }
->   
-> +    /*
-> +     * QUIESCED tells the driver it is safe to read device state.
-> +     * STOP and STOP_COPY must guarantee that no VF DMA is in flight;
-> +     * igb_core_vf_quiesce() enforces this by disabling RX/TX for the
-> +     * VF.
-> +     *
-> +     * Under QEMU, DMA completes synchronously within the MMIO handler
-> +     * so there is nothing to drain, but real hardware would need this.
-> +     */
-> +    if (ms->mig_state == IGB_MIG_STATE_STOP ||
-> +        ms->mig_state == IGB_MIG_STATE_STOP_COPY) {
-> +        status |= IGB_MIG_STATUS_QUIESCED;
-> +    }
-> +
->       return status;
->   }
->   
-> @@ -1000,5 +1102,7 @@ void igbvf_mig_state_reset(IgbVfState *s)
->       ms->mig_dirty_range_size = 0;
->       ms->mig_dirty_buf_addr = 0;
->       ms->mig_dirty_status = IGB_MIG_DIRTY_STATUS_OK;
-> +    ms->mig_saved_vfre = true;
-> +    ms->mig_saved_vfte = true;
->       trace_igbvf_mig_reset(s->vfn);
->   }
-> diff --git a/hw/net/trace-events b/hw/net/trace-events
-> index 95fdea89d49c..f4940e3e176d 100644
-> --- a/hw/net/trace-events
-> +++ b/hw/net/trace-events
-> @@ -300,8 +300,8 @@ igbvf_mig_bar_read(uint16_t vfn, uint64_t addr, uint64_t val) "VF%u: BAR read ad
->   igbvf_mig_bar_write(uint16_t vfn, uint64_t addr, uint64_t val) "VF%u: BAR write addr=0x%"PRIx64" val=0x%"PRIx64
->   igbvf_mig_set_state(uint16_t vfn, uint32_t old_state, uint32_t new_state) "VF%u: state %u -> %u"
->   igbvf_mig_set_state_err(uint16_t vfn, uint32_t old_state, uint32_t new_state) "VF%u: invalid transition %u -> %u"
-> -igbvf_mig_save_state(uint16_t vfn, uint32_t size) "VF%u: saved %u bytes of device state"
-> -igbvf_mig_load_state(uint16_t vfn, uint32_t size) "VF%u: loaded %u bytes of device state"
-> +igbvf_mig_save_state(uint16_t vfn, int size, bool vfre, bool vfte, uint32_t reg_vfre) "VF%u: saved %d bytes vfre=%d vfte=%d VFRE=0x%x"
-> +igbvf_mig_load_state(uint16_t vfn, uint32_t size, bool vfre, bool vfte) "VF%u: loaded %u bytes vfre=%d vfte=%d"
->   igbvf_mig_reset(uint16_t vfn) "VF%u: migration state reset"
->   igbvf_mig_dirty_enable(uint16_t vfn, uint64_t pgsize, uint64_t nbits) "VF%u: dirty tracking enabled pgsize=%"PRIu64" nbits=%"PRIu64
->   igbvf_mig_dirty_disable(uint16_t vfn) "VF%u: dirty tracking disabled"
-> @@ -310,6 +310,8 @@ igbvf_mig_dirty_query(uint16_t vfn, uint64_t size, uint32_t dirty_pages) "VF%u:
->   # igb_core.c - VF migration diagnostics
->   igb_core_dirty_track_dma(int vfn, uint64_t addr, uint64_t len) "VF%d: dirty DMA addr=0x%"PRIx64" len=%"PRIu64
->   igb_core_dirty_track_dma_drop(int vfn, uint64_t addr, uint64_t len) "VF%d: dirty DMA dropped addr=0x%"PRIx64" len=%"PRIu64" no matching range"
-> +igbvf_mig_quiesce(uint16_t vfn, uint32_t vfre, uint32_t vfte) "VF%u: quiesce VFRE=0x%x VFTE=0x%x"
-> +igbvf_mig_unquiesce(uint16_t vfn, uint32_t vfre, uint32_t vfte) "VF%u: unquiesce VFRE=0x%x VFTE=0x%x"
->   
->   # spapr_llan.c
->   spapr_vlan_get_rx_bd_from_pool_found(int pool, int32_t count, uint32_t rx_bufs) "pool=%d count=%"PRId32" rxbufs=%"PRIu32
-
+Kangjie
 
