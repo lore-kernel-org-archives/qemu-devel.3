@@ -4,141 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A5EDC531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 06:22:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0606BC531FC
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 06:24:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woEjB-00012A-U4; Mon, 27 Jul 2026 02:22:17 -0400
+	id 1woEks-0002Lg-I3; Mon, 27 Jul 2026 02:24:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1woEj7-0000r6-AF
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 02:22:13 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
+ id 1woEkr-0002LF-0Y; Mon, 27 Jul 2026 02:24:01 -0400
+Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1woEj5-0007fr-KM
- for qemu-devel@nongnu.org; Mon, 27 Jul 2026 02:22:12 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66R1gAKR2382054
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 06:22:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- sUtEzWtXJQlAwdOjECPID8kjSkP3jBnkmNI81rEjE0o=; b=AYYIyszgVt7gZzvf
- 6wp2i0i+E0EZCYQafUHTwhedV2M4vlXxpBFc2LkiV+UfJ+TwcSJIxGeA+bBQvll6
- J8Gq9PLJtQFdrjheVgl6nuIPwcWOHTwkKgjUOjKDH05Gm2OhmHvGGuc6ao1KuwV7
- mmMlG5ZoBksfds1F2pExCDuNApiBjEU68cRtB0k6InmFv4g9RLQMRS+ZLireKl5T
- KdktsNU38Dx8hQYzdAUQxtatwDolgAfEwuZUf2ksBYcp4wfShbHmrteb6wSxVL0T
- qUiTFBkhfaBzQ7GOkix5PWvjo7Lrv6lWIEiPeBJ5DHnEZuhW2KUV+T2OxD54WBKJ
- cKRlog==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fmn7vcr10-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 06:22:08 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-522de3c645dso50582361cf.3
- for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 23:22:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1785133328; x=1785738128; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=sUtEzWtXJQlAwdOjECPID8kjSkP3jBnkmNI81rEjE0o=;
- b=XZSOvjH9nA6xri7EzuMYFelCpSdsANQ0olREk7aHc+gGoshg3dmlQuyG0vOeEiTj4n
- z8j2QnbLHDsPduTT/U7fo8k0cGwZLPAE16jyv0dJON2l/YhOPEcPRNC/WFDnUVOhrda5
- 76vTfYVQJP29Wlc0alCXi0H+Z7XOC0h+/C8m6UJbXqMsCqpcT91ek7KkhXVLx5/DTyC2
- 8+zNFXGtDXQx81f0kc/7V8EQPnopFWTKNp7heo8BsTIlvR/NN7a9l37B0613dso0txdF
- CIlVCg0DaUob6yIfjMs8BP4GsKPVNt1bE1enAEFYenqCbUAJNuyxnF39TUlWwf9Hb2Kw
- 2/zQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785133328; x=1785738128;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=sUtEzWtXJQlAwdOjECPID8kjSkP3jBnkmNI81rEjE0o=;
- b=N4CmTfnFwhq32AjZh8TBugtYJ22mcVzU7lvaKZ1KpVlAwvZilpm/M8zKL4c1lefn4p
- 5p9lQ+TUHDL6ZbyHJJVZBDE2GDJxDNLKrkTBoyvCLkfnLWrWd+PByp65zowkFmjIJ+6c
- z//0p1pdWJ6HkhmUzpFGRl5U8ExNG5ld6veHBC90CKIVlp8mnedZen5wYnsA3DOWd1rm
- ZgSRt/TEipzY2WXDn8gG5bSXLWbeUU0s4TJZ88GVJwdwjGG1xpI9asW9in0RTv9n3pFV
- mHhIm/fFDs9y3f2sLmFpJJkepMl8bcsBzaNwBaJZ3Is7r/fn/HcCpYVLEHGJSMtm8the
- b3vg==
-X-Forwarded-Encrypted: i=1;
- AHgh+Ro/3mmtbPv1xQDS/eAtELBu56ThabRN6XO3dxZT7fw81MxK+q6g5Vx/t2hjjPS32eE/MjbCaIInAWXd@nongnu.org
-X-Gm-Message-State: AOJu0Yy59skb5DMykbQB6mZLz7Jr6To9eH4MIOfItM+MyiW3uL+/DoJ1
- NviXHJC+LXPDyCaeWX4igF1euQJDpVW7QNRI9nGmP7Ks9KvYW5poJLlAZBDAF6qukHKoGrXC8ZL
- 5rXSEdubGgTI4z88J78mkCa76Efu349tdAJdODSPBGfTpnT0HBzrCGNy/Mw==
-X-Gm-Gg: AR+sD10M/cGRpOM2hIyCfgvZWFQGEvSrx26As0rB7GcdHY3e5krVVgL1mjOxp2OmGKP
- emsJxSF6BalGpY3wbPpKZoRW+RaaIDfSeYjJw007NBgrQG6mrlrrU7+gJzD8VRPVi3dJFFOrZlT
- CgRS4dOGHQsyp5FMGJ9o9BxN3YEec9blinC9swF7vdglFX0mSqr5bwmROG5K3gduD/0Vi3rBVIw
- ZQV1ISzDMdfR0Wv2pyr/JPtmGQqGiDXbntflVGl1slQHqbqDp/LJeKnd18FuMISrtzyHnAlUIm7
- eeN0ydJpC79UJnET1XQAYkkMs6nqhlnq4RksDRHG5D5EDwxS2eIWgUV/63BmFouHmes/AfO3D81
- BhW99YLl9zmQi9jpI833S/mU+U1JDtIU3XyzPYx0KdBM/sY7a4sU=
-X-Received: by 2002:a05:622a:64a:b0:51a:8bc9:2915 with SMTP id
- d75a77b69052e-529a8381d19mr76073881cf.8.1785133328040; 
- Sun, 26 Jul 2026 23:22:08 -0700 (PDT)
-X-Received: by 2002:a05:622a:64a:b0:51a:8bc9:2915 with SMTP id
- d75a77b69052e-529a8381d19mr76073751cf.8.1785133327618; 
- Sun, 26 Jul 2026 23:22:07 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c52fc0sm46137384f8f.23.2026.07.26.23.22.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 26 Jul 2026 23:22:07 -0700 (PDT)
-Message-ID: <c31eb382-d50d-422f-af4f-543eccb37003@oss.qualcomm.com>
-Date: Mon, 27 Jul 2026 08:22:05 +0200
+ (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
+ id 1woEkl-0007pF-VK; Mon, 27 Jul 2026 02:24:00 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=X7wFWY9GFcF5EJ5pOY2IFH/xCmSM2lVs8o+8R7PRBx+D5YqpgsWVms/Y2vmrGDbA4r6rgV5VcLna67s4DAULyk0R1Hw9qmW0R/fjyBrR9KbU8i7WNKqoZ0oF9ALydmxivhrBoCNs5cZsmfQ8/4pjQUZtg0KcvR8PJrSOobeZzfnXZ8j36MjJHEOh+bwNaJXmNLZIYQn/sV1o7yTH5SX1otD2+2JrdHxbGuOTD/qe6GHUhcVBrZAQ5EGVvHMJynWoO/DaQ2+XKkAJabygXIsJHovVCGKf0kHv0NQoDsjKXIHX9hJHprSU8pq5AV8vsTUtGJCDDcMZtHaWZngSCnzsDg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=eAePPg3exTqsxFDa08PJMLemjRtbLsbYo7AwhhsyNcU=;
+ b=I3LEvVxBByy8ceKnw1K663nBc7ZXlGIN/3Sxr9rp4tK0n5Tj7mgqinGIb94JWG3CMgMEBhE6rxYCystStGeCH6oPNSTiteCJzjVftT6/paomItdzU4TCr/FPK8dieRY4+C9s8H0L5jpG+6J3jDgp8G6zF0VwV89/DNQPKsKWF9621B+6RyyZX9ZYgPI2nsozaUTglK5wDnohAqJrguRlQf2a45x7J9Sf8NUqPylLmLdBEpTu9zIaTOHTXSikxXFM63y+MXx3TDZ8guYQZ+a6t3yXex3ySqL5AXU0mioz2rzg+dJ7uZB8oGtMp8w4bwgAvXdTP4PdQRKRBzk+vIJN2w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=processmission.com; dmarc=pass action=none
+ header.from=processmission.com; dkim=pass header.d=processmission.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=eAePPg3exTqsxFDa08PJMLemjRtbLsbYo7AwhhsyNcU=;
+ b=t/ovlX2zsP9R4Fdx4VHqQR5zRIg2IXlckJIee91HQYnYqFoMDXGhNHpO2kpY8WyR5eD3onYTUK41YxwgaBJA/muXQHU7fF/NzNA7iQWcJ7iTP8RS0mxaT79vW9xuZb+Xqj+8DN5JMlqZD9dW9LoymiLrWTHYJufiEC3LYJJnXTWT2WUAtsg4hpbgK6W6nQOdk6JH6fUnx1SAAxs2/4GwuadE7jZjZFr5bBMbiXtIET99ShtHPPCPqL9fJspvSBo2ox1TFuMqKVDNmKAgf8VMSQ+LwiRct8eGlCiokySOOGb8F3PRHZppvb6giHhByKrrpXzW4dmwbqaj3ZYkuilNdQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=processmission.com;
+Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
+ by TY0PR02MB5624.apcprd02.prod.outlook.com (2603:1096:400:1b0::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Mon, 27 Jul
+ 2026 06:23:50 +0000
+Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
+ ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
+ ([fe80::e5f3:5fb7:3d29:5934%4]) with mapi id 15.21.0245.012; Mon, 27 Jul 2026
+ 06:23:50 +0000
+Date: Mon, 27 Jul 2026 14:23:44 +0800
+From: Chao Liu <chao.liu@processmission.com>
+To: flavien.solt97@gmail.com
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Andrew Jones <andrew.jones@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 3/3] tests/qtest: add RISC-V IOMMU MRIF notice tests
+Message-ID: <amb5WWDBFlauiAd9@ChaodeMacBook-Pro.local>
+References: <CANVUYGtOgMnNRkfU=zs=jvtg7yKOHXZVb8k5oVnp+D2=U4xeWA@mail.gmail.com>
+ <CANVUYGs1Poa1i53Xwg=Us=UJejDbCmch2jGGmYw_Z0dE=Q-Utg@mail.gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CANVUYGs1Poa1i53Xwg=Us=UJejDbCmch2jGGmYw_Z0dE=Q-Utg@mail.gmail.com>
+X-ClientProxiedBy: SJ0PR03CA0022.namprd03.prod.outlook.com
+ (2603:10b6:a03:33a::27) To TYNPR02MB9351.apcprd02.prod.outlook.com
+ (2603:1096:405:3d0::15)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/sparc: set reg window data structures currently
- after vmstate load
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, peter.maydell@linaro.org,
- atar4qemu@gmail.com, qemu-stable@nongnu.org, qemu-devel@nongnu.org
-References: <20260725123411.993099-1-mark.cave-ayland@ilande.co.uk>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260725123411.993099-1-mark.cave-ayland@ilande.co.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=GKk41ONK c=1 sm=1 tr=0 ts=6a66f910 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=69wJf7TsAAAA:8 a=pcZqCyVeAAAA:8 a=EUspDBNiAAAA:8 a=W7HDxenLHfcYYEYlDDAA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
- a=Fg1AiH1G6rFz08G2ETeA:22 a=SGy6VSG0Ue1xmPAwIFl9:22
-X-Proofpoint-GUID: 8JqJQjsEOY9c4wylUgGEQ0M8uBekWuzR
-X-Proofpoint-ORIG-GUID: 8JqJQjsEOY9c4wylUgGEQ0M8uBekWuzR
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDA2MSBTYWx0ZWRfX35Kc/4q/tXOP
- hmHTMFCoFqi13ez6pGZiUDXneW5Vz3WcN1YVc0PL9A8fFJH6GX7VSOZVcllUF1sooMw/Qi8MmZ0
- mgcPnv3K9pz4v+EfoG1N5IiFZYhA/Gg=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDA2MSBTYWx0ZWRfX/Ta5A2eA4pAh
- rw435lYH55ltKJ/GYXZvz9z4Ht0rZEt8Rn6mff0JUHD65Fx9m50rtkYg6N9YqAvHqiVP8iycOep
- N4Ho6WO4qnunH6pMm3mX1BcHPy7Lb7M2q59GcaOYQsxnCzm8oj4ZY2sxfDGW6AvBiU9aqieNprU
- vT4A/c1vSBNLxuf4zMI31YfIuAG7ADLItwE5hu3BIoCxIlVHe2mEaoNQlFzohy6thxxn4gWnhjZ
- GyAiIffj/DJQgevLfUQ06UOORyHJAt39km32tb6KVKsRGxdemVozHuXyLSNxAA1iweiqE794KIc
- RfGpsFjjR2raPzT7zS+7AsckZ0ShQgJoH89/uNhkBXi8VYKvz9sDw1tgfJ5+oC98Y9UeqCC8H8X
- IjcGhS0xjZg69szOWzGu/QjEQRETWQzJKmHVndLz0T+2ZjJ2dwMTeEj8vgb/BBKgysuWU53F/5V
- j/IvIBkxmrMefx03icg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-27_01,2026-07-24_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
- clxscore=1015 bulkscore=0 suspectscore=0 priorityscore=1501 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607270061
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|TY0PR02MB5624:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5ae89819-3cf6-489f-4a3c-08deeba79f88
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|34096008|376014|7416014|366016|23010399003|1800799024|6133799003|4143699003|56012099006|10067099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: JqUPAu1xxNezQFDcl4o4Wtv67uxltL7md7hQ1XvMkeLLMQXRnQZHmzql01GSdSwNLu7V+Uuj2EKb/ZPofrKiS+Hlf4H8vwY/3mDWdMsoseXjj4nL3FgjXFx8UaxL0I1g5i8qnw6VnH9ZZ5LXUb46OTx9yrerPS1/RrCUxJga6h/KQnT9QKWHtDRRRUmaARf8N0TtjS6b31g5nnMLVY3I3pniziWThxAJV4vkUinIj9Q3RFO0Hsyedz0HTjaUk2FmaYNo3m3PwGgs9KTGwNwV7VeWFdlxA5ctlbkoPHHuhkS2z8gOno6Jk8CNa0jXU0+81I0E0mZW5NICGmy4vFcxysr+eNicWLmkm3VLZkiNjxqaXDij2L62/ut0ZTCm63idb0W+VYu7/Rz6IYSSP15Fo6haIIT4vn2gJwf5jD83QV139WsDuJAbpqAwyZcPYaxQfSUXLWILNPTmh6B39QtXYgiGdoFvN9Fg62qKZJojRcDjysu1Euc+C2IS34QmQaaY0k1DprjhlgkaENXzshg8eiWj8IdEkCpYD+0R9Rm8/7q4ARelkfGf5YfukYm1WHu0owfupdMafwxmHRpfGEbakEOnTd2CkAptfHQMCl8DYL4tPEcYMd7pR8jRlSSJ1DixHMRhxCdrP5ehXqeotJqo7uPhvBwgTMprtn3lWUJfp0E=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(34096008)(376014)(7416014)(366016)(23010399003)(1800799024)(6133799003)(4143699003)(56012099006)(10067099003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?LnqV1sfwyJ2DsovsqqeQBJZ/RekMR7WjsjuRovvtJdlZ2zPspf8GxYZ+n/s1?=
+ =?us-ascii?Q?mUPUnG1MC1xXoJFw0O8NhLVy7r3N9qIIBI/PDviBSeY3bUVfqAvDTbpSjKKQ?=
+ =?us-ascii?Q?3N8Wc0qi3Oyt9GbapSaKvEi3d7O6uUiat5oFkI6j3YBv9BQFV5fzImQh/LHY?=
+ =?us-ascii?Q?U8GTHLejc49OGotteIs7gaRf5C/YNifTTVWcEl3Dw8Ngesf8LL+cfq8yAKHf?=
+ =?us-ascii?Q?Pp26utP9OPlglY4dGXV6GZYRO1CDVX66X0GzY0vW220Abmh6o8q9HxW943DG?=
+ =?us-ascii?Q?rIV4NAZKVqpy2OBOBF0qm4PQbbCVd/ATunXpFetyLAvNeojBOvkLuxCUnd27?=
+ =?us-ascii?Q?6MrCyaKGNNsLUUB2KR2yts5xL/gQOfvou9O9JSD0i6vqXuaBGV2h1AECmg1s?=
+ =?us-ascii?Q?6Nqwj0bqRaWdkt9rU1iz5zEEOhBzmwjYTbGfpQY5YS8Qa7HCTxkl0gjZhKS2?=
+ =?us-ascii?Q?erjn5GS7b4RpesqqPMzcSB8kkhLRAt4eoq1pFoPIy9wrQyrW0GuN5+m/Vseb?=
+ =?us-ascii?Q?JIcTI4B3BItWdY+6SlBWscUFy3tE7rOeTOCkWBp0VWEDAo0M14d3VuP3eaUD?=
+ =?us-ascii?Q?2iCJ+8+Fw+pohaaBeJU1WVItNEf7siGIOJqR3hJyiZ+z7q4P/cKt2lM3c0Bq?=
+ =?us-ascii?Q?W81Kk6dW2gK7Fi7z+N073w6okyFz7JJg+5YY+1sETxNYK1kQQ//rRBa42gH8?=
+ =?us-ascii?Q?ol4VG9qfsUvQup+jakmIVSxAIa3BXrgvUzATKXGkuDrdMcCqv1e/crFxZpQH?=
+ =?us-ascii?Q?VT4Rgr4VSQeQVodnC4UD8PFkOwl1rGBb4CSEQ9PH6MWmZuwRGzZr0IyvphL+?=
+ =?us-ascii?Q?LvMQdaHPlkIdF13wbvXofEmspOpuS50NXTBjLe62IYwHTJQafdM61fc5ZJD3?=
+ =?us-ascii?Q?bV0mXFW2YSWr5BvYE8PP8WzDAxPnwSDe9rrubWvnhN59iXSpPiqSum002hyr?=
+ =?us-ascii?Q?3TXVxw/XUarIKIND5TRXFx4a+nLK0S19KxjPd8Wryp/B5YZMWyrBVBQmYArS?=
+ =?us-ascii?Q?nPjwstjeN7gJBvqsZc98ddgWTT7lrRF9NzTQYOkl/xtdEVSZxYIXssT2eECx?=
+ =?us-ascii?Q?/kQy7IXGN91m/RLTog2FYTDQwZuyl0rLFVxFPVsZqU/IGm48uyK3+TaKFsdM?=
+ =?us-ascii?Q?L6Y5FkwXkEDAUUjUaFrupRk0DC9SCasam0FxImTMigowd7Xo/5ghn3sLv61j?=
+ =?us-ascii?Q?EaL9fFJW+iqE45yyUWk2H5PER7h5bsM0UOhHwJPxvS3KwNaNhCZkdHgs97ad?=
+ =?us-ascii?Q?4edMCm3rlRrcBLzrDOpruwYd07aPLtfeSozN7f5NJlJHpSICSZBDLnSXzvH6?=
+ =?us-ascii?Q?w+WqKtym5h3kKjMRqVWS4Q4/5WLDhW2wT4To7Hm+hOgc/L9jIbcgjp5j25Ah?=
+ =?us-ascii?Q?6jslWWw6lzAmUIv5JYR1afR3Py5b5UmCgLM/zOq3XHoLIqn7PW1lcO+tqC3q?=
+ =?us-ascii?Q?19TgeIdMxGFT9zTo2uuS5OFcSWxqoMMtNoAxdrVQRhvWczi2vRrnX+Ogheeh?=
+ =?us-ascii?Q?l7PSX4Ga9iNTBA7fEsgMWRMzzw7lJJ8ikHffgytIJLx0b8IiE+x2SKIzDErq?=
+ =?us-ascii?Q?KOwdNOVkW1tlrJf2w9I4FDgk6H0wqI+BApzaqhMIgcnmA35f4TMOx3nyKoo7?=
+ =?us-ascii?Q?EMjxixamsaM5ZBOgzkS1RXHulxjOooTJj+pm4twnt4GJz8LM1bsXSzvRH40r?=
+ =?us-ascii?Q?5JBk/kNuXSwdGXq1842KzXyDPnr/T5Efnyw6ySoMM06mF4Pm4/Et7tiTtfds?=
+ =?us-ascii?Q?xGC4RCG4H3fYgzIrva4nZOqa/l9V0fw=3D?=
+X-OriginatorOrg: processmission.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5ae89819-3cf6-489f-4a3c-08deeba79f88
+X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 06:23:50.3375 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: KtWL+ZjlK/pFr1/ssGPzMDKuZso/Bw73XpqRivL7FQLydj29CwxCmfwH8+awm+PeME2j9M8/8yzcWqCo5gHDw1PRiol3+JfYUD2xXmStg3k=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY0PR02MB5624
+Received-SPF: pass client-ip=2a01:111:f403:c405::7;
+ envelope-from=chao.liu@processmission.com;
+ helo=TYDPR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,66 +146,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/7/26 14:33, Mark Cave-Ayland wrote:
-> In the SPARC CPU state, env->regwptr points into the env->regbase
-> array at wherever the architectural CWP (current window pointer) says
-> we are in the register windows.  We don't migrate this directly,
-> since it's a host pointer, so we must ensure it is set up again
-> after migration load.
+On Sun, Jul 26, 2026 at 05:22:00AM +0800, flavien.solt97@gmail.com wrote:
+> Exercise MRIF-mode MSI writes through iommu-testdev with the destination
+> interrupt-enable bit both clear and set. Each case requires the pending
+> bit to be stored plus the configured notice ID to reach guest memory.
 > 
-> We also have to deal with a special case when CWP is (nwindows - 1).
-> In this case, while running we keep the "in" register data for this
-> window in a temporary location at the end of the regbase[] array, so
-> that generated code doesn't have to special case this "wrap around"
-> case.  In cpu_pre_save() we call cpu_set_cwp() to force a copy of the
-> wrapped data from its temporary location into the architectural
-> location in window 0's "out" registers.  We then migrate only
-> (nwindows * 16) entries in the regbase[] array.  So on the
-> destination we need to copy the "in" register data back to its
-> temporary location again.
+> The enable-clear case regresses the notice suppression fixed by the
+> previous patch. The enable-set case provides a control for the existing
+> path.
 > 
-> For 32-bit SPARC we get this right, because the CWP is in the PSR.
-> The get_psr() function does:
->       env->cwp = 0;
->       cpu_put_psr_raw(env, val);
-> which causes cpu_put_psr_raw() to call cpu_set_cwp() in a way that
-> sets up both regwptr and the wrapped-register data.
-> 
-> However, for 64-bit SPARC the CWP is not in the PSR, and
-> cpu_put_psr_raw() will not call cpu_set_cwp().  This leaves the guest
-> register state in a corrupted state, and the guest will likely crash
-> on the destination if it didn't happen to be executing with CWP == 0.
-> 
-> Fix this by adding a custom vmstate_cwp VMStateInfo with corresponding
-> get_cwp() and put_cwp() helpers which does the same for the 64-bit
-> case.
-> 
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> Signed-off-by: Flavien Solt <flavien.solt97@gmail.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
+
+Thanks,
+Chao
+
+>
 > ---
->   target/sparc/machine.c | 40 +++++++++++++++++++++++++++++++++++++++-
->   1 file changed, 39 insertions(+), 1 deletion(-)
-
-
-> @@ -286,7 +317,14 @@ const VMStateDescription vmstate_sparc_cpu = {
->           VMSTATE_CPU_TIMER(env.hstick, SPARCCPU),
->           /* On SPARC32 env.psrpil and env.cwp are migrated as part of the PSR */
->           VMSTATE_UINT32(env.psrpil, SPARCCPU),
-> -        VMSTATE_UINT32(env.cwp, SPARCCPU),
-> +        {
-> +            .name = "env.cwp",
-> +            .version_id = 0,
-> +            .size = sizeof(uint32_t),
-> +            .info = &vmstate_cwp,
-> +            .flags = VMS_SINGLE,
-> +            .offset = 0,
-> +        },
->   #endif
->           VMSTATE_END_OF_LIST()
->       },
-
-No need to bump SPARC_VMSTATE_VER.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-
+>  tests/qtest/iommu-riscv-test.c | 102 +++++++++++++++++++++++++++++++++
+>  1 file changed, 102 insertions(+)
+> 
+> diff --git a/tests/qtest/iommu-riscv-test.c b/tests/qtest/iommu-riscv-test.c
+> index 2638024..85f79ea 100644
+> --- a/tests/qtest/iommu-riscv-test.c
+> +++ b/tests/qtest/iommu-riscv-test.c
+> @@ -14,6 +14,7 @@
+>  #include "hw/pci/pci_regs.h"
+>  #include "hw/misc/iommu-testdev.h"
+>  #include "hw/riscv/riscv-iommu-bits.h"
+> +#include "libqos/qos-iommu-testdev.h"
+>  #include "libqos/qos-riscv-iommu.h"
+>  #include "libqos/riscv-iommu.h"
+> 
+> @@ -26,6 +27,13 @@
+>  #define RISCV_BUS_MMIO_LIMIT       0x80000000
+>  #define RISCV_ECAM_ALLOC_PTR       0x30000000
+> 
+> +#define RISCV_MRIF_MSI_IOVA        0x00000000fee00000ull
+> +#define RISCV_MRIF_MSI_PT_GPA      (QRIOMMU_SPACE_OFFS + 0x00030000ull)
+> +#define RISCV_MRIF_BASE_GPA        (QRIOMMU_SPACE_OFFS + 0x00031000ull)
+> +#define RISCV_MRIF_NOTICE_GPA      (QRIOMMU_SPACE_OFFS + 0x00032000ull)
+> +#define RISCV_MRIF_INTID           5u
+> +#define RISCV_MRIF_NOTICE_ID       0x12du
+> +
+>  typedef struct RiscvIommuTestState {
+>      QTestState *qts;
+>      QGenericPCIBus gbus;
+> @@ -264,6 +272,96 @@ static void test_riscv_iommu_nested(void)
+>      run_riscv_iommu_translation(&cfg);
+>  }
+> 
+> +static void riscv_iommu_setup_mrif_context(RiscvIommuTestState *state)
+> +{
+> +    uint64_t dc_addr;
+> +    uint64_t msiptp;
+> +    uint64_t pte0;
+> +    uint64_t pte1;
+> +
+> +    qtest_memset(state->qts, QRIOMMU_SPACE_OFFS + QRIOMMU_DDT_BASE, 0,
+> +                 0x1000);
+> +    qtest_memset(state->qts, RISCV_MRIF_MSI_PT_GPA, 0, 0x1000);
+> +    qtest_memset(state->qts, RISCV_MRIF_BASE_GPA, 0, 0x1000);
+> +    qtest_memset(state->qts, RISCV_MRIF_NOTICE_GPA, 0, 4);
+> +
+> +    dc_addr = QRIOMMU_SPACE_OFFS + QRIOMMU_DDT_BASE +
+> +              state->testdev->devfn * sizeof(struct riscv_iommu_dc);
+> +
+> +    msiptp = (RISCV_MRIF_MSI_PT_GPA >> 12) |
+> +             ((uint64_t)RISCV_IOMMU_DC_MSIPTP_MODE_FLAT << 60);
+> +
+> +    qtest_writeq(state->qts, dc_addr + 0, RISCV_IOMMU_DC_TC_V);
+> +    qtest_writeq(state->qts, dc_addr + 8, 0);
+> +    qtest_writeq(state->qts, dc_addr + 16, 0);
+> +    qtest_writeq(state->qts, dc_addr + 24, 0);
+> +    qtest_writeq(state->qts, dc_addr + 32, msiptp);
+> +    qtest_writeq(state->qts, dc_addr + 40, 0);
+> +    qtest_writeq(state->qts, dc_addr + 48, RISCV_MRIF_MSI_IOVA >> 12);
+> +    qtest_writeq(state->qts, dc_addr + 56, 0);
+> +
+> +    pte0 = RISCV_IOMMU_MSI_PTE_V |
+> +           ((uint64_t)RISCV_IOMMU_MSI_PTE_M_MRIF << 1) |
+> +           ((RISCV_MRIF_BASE_GPA >> 9) << 7);
+> +    pte1 = ((RISCV_MRIF_NOTICE_GPA >> 12) << 10) | RISCV_MRIF_NOTICE_ID;
+> +
+> +    qtest_writeq(state->qts, RISCV_MRIF_MSI_PT_GPA, pte0);
+> +    qtest_writeq(state->qts, RISCV_MRIF_MSI_PT_GPA + 8, pte1);
+> +
+> +    qriommu_program_regs(state->qts, state->iommu_base);
+> +}
+> +
+> +static void run_riscv_iommu_mrif_notice(bool enable_bit)
+> +{
+> +    RiscvIommuTestState state = { 0 };
+> +    uint64_t pending;
+> +    uint64_t enabled;
+> +    uint32_t notice;
+> +    uint32_t dma_result;
+> +
+> +    if (!riscv_iommu_test_setup(&state)) {
+> +        return;
+> +    }
+> +
+> +    riscv_iommu_check(state.qts, state.iommu_base, QRIOMMU_TM_BARE);
+> +    riscv_iommu_setup_mrif_context(&state);
+> +
+> +    enabled = enable_bit ? (1ull << RISCV_MRIF_INTID) : 0;
+> +    qtest_writeq(state.qts, RISCV_MRIF_BASE_GPA + 8, enabled);
+> +    qpci_io_writel(state.testdev, state.testdev_bar, ITD_REG_DMA_WRITE_VAL,
+> +                   RISCV_MRIF_INTID);
+> +
+> +    dma_result = qos_iommu_testdev_trigger_dma(
+> +        state.testdev, state.testdev_bar, RISCV_MRIF_MSI_IOVA,
+> +        RISCV_MRIF_NOTICE_GPA, DMA_LEN, qriommu_build_dma_attrs());
+> +
+> +    pending = qtest_readq(state.qts, RISCV_MRIF_BASE_GPA);
+> +    notice = qtest_readl(state.qts, RISCV_MRIF_NOTICE_GPA);
+> +
+> +    g_test_message("MRIF notice: enable=%u pending=0x%" PRIx64
+> +                   " notice=0x%x", enable_bit, pending, notice);
+> +
+> +    /*
+> +     * Interrupt remapping consumes the original DMA write; the generic
+> +     * test device cannot read it back from the supplied physical address.
+> +     */
+> +    g_assert_cmpuint(dma_result, ==, ITD_DMA_ERR_MISMATCH);
+> +    g_assert_cmpuint(pending & (1ull << RISCV_MRIF_INTID), !=, 0);
+> +    g_assert_cmpuint(notice, ==, RISCV_MRIF_NOTICE_ID);
+> +
+> +    riscv_iommu_test_teardown(&state);
+> +}
+> +
+> +static void test_riscv_iommu_mrif_notice_enable_clear(void)
+> +{
+> +    run_riscv_iommu_mrif_notice(false);
+> +}
+> +
+> +static void test_riscv_iommu_mrif_notice_enable_set(void)
+> +{
+> +    run_riscv_iommu_mrif_notice(true);
+> +}
+> +
+>  int main(int argc, char **argv)
+>  {
+>      g_test_init(&argc, &argv, NULL);
+> @@ -275,5 +373,9 @@ int main(int argc, char **argv)
+>                     test_riscv_iommu_g_stage_only);
+>      qtest_add_func("/iommu-testdev/translation/ns-nested",
+>                     test_riscv_iommu_nested);
+> +    qtest_add_func("/iommu-testdev/mrif-notice/enable-clear",
+> +                   test_riscv_iommu_mrif_notice_enable_clear);
+> +    qtest_add_func("/iommu-testdev/mrif-notice/enable-set",
+> +                   test_riscv_iommu_mrif_notice_enable_set);
+>      return g_test_run();
+>  }
+> -- 
+> 2.54.0
 
