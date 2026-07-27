@@ -4,117 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CEDBC531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:53:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2B5DC53219
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 11:53:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woJrk-0004zt-4P; Mon, 27 Jul 2026 07:51:28 -0400
+	id 1woJsj-000721-3H; Mon, 27 Jul 2026 07:52:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1woJrU-0004wn-2J; Mon, 27 Jul 2026 07:51:14 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1woJse-0006tk-Qo
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:52:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1woJrR-0003bY-Kw; Mon, 27 Jul 2026 07:51:11 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66RAIRon1921906; Mon, 27 Jul 2026 11:51:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=cinOn7EZUswlo4m4E
- SBe3xqFp5wap0QF3wBx+OjvrGI=; b=sTa19WlvyAqVDrzYBs82M0xqpNpo1GSR8
- oXD4D6o3ZfEyJkAkQ5xNZ3L4TdV+tizRM28NDY3520dOCSdLb96glnLFAy1m7c2y
- Ez29ElygV00oD7UjhobupywobV8yHv+g8xlJPhfloa8fwNz4g8pkfn0XCY35zCJ2
- zYcmPvmRvYZPz7Df7uRW4ziwu+CIVmpWMv/dobyskXyuI1R5Ett6YyH0KV4gnQ2M
- m1vdhO0zAMNua8rbad8rIdS34GPMSgXVygfLRoG3BlZguIqS2pgJud4hYkhc4RwO
- qoicNGyPjwQPfOh0K/NPNqRpLcObsN0U9Rqr6MhXN7+YmHgLpRfyw==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuw77t5y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Jul 2026 11:51:05 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66RBfJhL016262;
- Mon, 27 Jul 2026 11:51:04 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fn9pg510x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Jul 2026 11:51:04 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66RBp2HJ31523480
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 27 Jul 2026 11:51:02 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 87E305803F;
- Mon, 27 Jul 2026 11:51:02 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EA3CD58056;
- Mon, 27 Jul 2026 11:50:59 +0000 (GMT)
-Received: from b35lp69.lnxne.boe (unknown [9.87.84.240])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 27 Jul 2026 11:50:59 +0000 (GMT)
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
- Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Hendrik Brueckner <brueckner@linux.ibm.com>,
- Joshua Daley <jdaley@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Jared Rossi <jrossi@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 2/5] s390x/ipl: validate num_comp against iplb length before
- iterating
-Date: Mon, 27 Jul 2026 13:50:49 +0200
-Message-ID: <20260727115052.24289-3-borntraeger@linux.ibm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260727115052.24289-1-borntraeger@linux.ibm.com>
-References: <20260727115052.24289-1-borntraeger@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1woJsd-0003kv-CC
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 07:52:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785153142;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=lUsEKDENP5KDAItOjUu9l7KMJdCOMqwDHqD2UVqTyGc=;
+ b=D4Fc8ce5Mh9+biy4GgtTDCNCWj5SQreXXgZpViwW6j2oVvxUfQgjgxSyQhUzvWijPeX1/t
+ kaR1ynI4zc4zG3Cv75n77YK4+e47VtqFeiWVZkM673apw7B9gq/oEwM4kz/PdF+6x+PpjZ
+ JPsapEXV+wMG/eEWpcoGxFdM5+Ix3Lo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-644-HDEx8qiUNlmrFhWpgo0xCQ-1; Mon,
+ 27 Jul 2026 07:52:17 -0400
+X-MC-Unique: HDEx8qiUNlmrFhWpgo0xCQ-1
+X-Mimecast-MFC-AGG-ID: HDEx8qiUNlmrFhWpgo0xCQ_1785153136
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C91FC180135F; Mon, 27 Jul 2026 11:52:16 +0000 (UTC)
+Received: from localhost (unknown [10.44.24.5])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B751D30010C8; Mon, 27 Jul 2026 11:52:15 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Mon, 27 Jul 2026 15:51:17 +0400
+Subject: [GIT PULL 08/23] docs/hyperv: fix misleading hv-crash shutdown
+ description
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 7krlJ-0RR7aSYbWViqpd66Hih9cmGFow
-X-Proofpoint-ORIG-GUID: 7krlJ-0RR7aSYbWViqpd66Hih9cmGFow
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDExNiBTYWx0ZWRfXyOyOIC7K//E4
- jLUvQiTPqWdlWGbU+zbe2KAb6TTcJM7J25H1C0dQBRnt0nqAXopZQTStUPRTDZlM++g5IwkFhZU
- wsw4l45F9wCw5ZQrym4X59AlVoflklKnnN74w3u6vnpGP74M25rB1uEkcSlxeCKjFkBVkGwQZYy
- osircfqsZT7fdMkisosRhf/fo+mJFrLOemyces2Wv7S/B+lMdMvWInA6pl/yzKyZB0dPhdHrAxO
- rqiEDA308dFXUbPowfIrhs93qNnfkRJZYGgEhV50D6zbrxJeb5GjIiRZWEXS0/o96NIrYtscPTr
- EzXTRr9RnEkP//T4gjnaqVgDz5hG60sPHsTQkU5oh29Xgia7uRJFpBCJ74PX8OD7xR48Mx7DbgS
- uDJDkuyd6PEWgKcJOR+JN9yAdBkPwE4jJDG1SJe+0v2u+LAN+Xx6JFRWgFl598p2DJ0x4vTpYBY
- DllaY9PRRuabFEg3ttw==
-X-Authority-Analysis: v=2.4 cv=SKFykuvH c=1 sm=1 tr=0 ts=6a674629 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=--xg8yz4SgT6yQT1UFEA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDExNiBTYWx0ZWRfXzUAS4Suk2KcY
- VwK8Qliw3ifypgUupez12auWVgth7hR7TQEnSQX25hM/Gsqa8jqspB2upxMFmOLdbfmAuiOYTxY
- 67OlP2WRGmpqZ0FDReWYHUWY9fhQ9Fk=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-27_03,2026-07-24_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0
- lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607270116
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=borntraeger@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-Id: <20260727-fix-v1-8-ca3fa3851347@redhat.com>
+References: <20260727-fix-v1-0-ca3fa3851347@redhat.com>
+In-Reply-To: <20260727-fix-v1-0-ca3fa3851347@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2505;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=37ToipwIaXpMMjvpg8YSWf1licth1SjqGNKBZN8+5bE=;
+ b=owEBbAKT/ZANAwAKAdro4Ql1lpzlAcsmYgBqZ0Y/pYW0pTY+5t39HHKRU2Hc46khOktK7TOrX
+ 0ZI4coFs2CJAjIEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCamdGPwAKCRDa6OEJdZac
+ 5a8mD/MFIxGGXiFJTJzQ1r+YnfZXNk+pVyevsckdw1eOMUce84rMwC0+LOHxwZcQfZIA2uQxBzx
+ kCxMnOzww2NJ6VRKXSV+TIQA7j/LVAKyEvV9nrHIlL+YPhV+wt5BZRaHJrbp8/5tmxYiIxdaDTO
+ cegqOK/XX1LA9LFJuaXXbIER3GJvCYpUi/zVD95DfuzdqfZ8OdLblwUcJHvP3Yqn3skDOw9UTuD
+ EoRLF88O5tgZ4S3pBC/kYfhObHfQZTBsNYEEsCsItAmPkY0JsUS1P0tgY0mcLW0QIxSMSX89HfR
+ ygZo4Aca3nZ+vdLksjHqwHo47R+q6gZnW/Orm4twkp5B1Osc4TA4ydZxCKrET3vkiA7tic5r4JQ
+ Vomhb1bbYHrkFAxGm59y+IokEvLUMnyInemfapm3rLke5oMigkYdbJ6s80PLCi4GTmryO5cjXJa
+ gx27KxwP/YJJk/DW2B5RmZUIsK0c0O5po7MKxX5fWKrsOSzRWqvl57tTNYIGWzQ5oOvLTvmfWGX
+ AgbLVuDXZTnYVvrcn/vOmtQW225XIa4CkT8bcaF/YEbOMC9rQYg26Qcs1msMVOBsQcXjrZBlIeQ
+ 4uBQB140ub1A2Rhrn+nKIuE3aDFFxtu5SFmYTT+jFMKoIgsQvpmtmDWDQ3wVhlCWJdTDpPQTpx/
+ uBSKwC+pQDh7e
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,38 +104,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joshua Daley <jdaley@linux.ibm.com>
+The documentation stated that writing to HV_X64_MSR_CRASH_CTL
+unconditionally causes the guest to shutdown. In reality, it triggers
+qemu_system_guest_panicked() via KVM_SYSTEM_EVENT_CRASH and the
+resulting action depends on the generic panic action policy
+(-action panic=...), which defaults to shutdown.
 
-In ipl_valid_pv_components(), the upper bound of the for loop,
-ipib_pv->num_comp, is read from guest memory. Before iterating, verify
-that its value will not cause a read beyond the end of the
-IplParameterBlock.
-
-Fixes: c3347ed0d2ee42a7 ("s390x: protvirt: Support unpack facility")
-Signed-off-by: Joshua Daley <jdaley@linux.ibm.com>
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260701122135.3168729-1-marcandre.lureau@redhat.com>
 ---
- hw/s390x/ipl.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ docs/system/i386/hyperv.rst | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-index fac30763df..ef9c063d90 100644
---- a/hw/s390x/ipl.h
-+++ b/hw/s390x/ipl.h
-@@ -124,6 +124,12 @@ static inline bool ipl_valid_pv_components(IplParameterBlock *iplb)
-         return false;
-     }
+diff --git a/docs/system/i386/hyperv.rst b/docs/system/i386/hyperv.rst
+index 1c1de77feb65..e1babffb0f99 100644
+--- a/docs/system/i386/hyperv.rst
++++ b/docs/system/i386/hyperv.rst
+@@ -71,8 +71,11 @@ Existing enlightenments
+   by the guest when it crashes, HV_X64_MSR_CRASH_P0..HV_X64_MSR_CRASH_P5 MSRs
+   contain additional crash information. This information is outputted in QEMU log
+   and through QAPI.
+-  Note: unlike under genuine Hyper-V, write to HV_X64_MSR_CRASH_CTL causes guest
+-  to shutdown. This effectively blocks crash dump generation by Windows.
++  Note: unlike under genuine Hyper-V, write to HV_X64_MSR_CRASH_CTL triggers
++  ``qemu_system_guest_panicked()`` via ``KVM_SYSTEM_EVENT_CRASH`` and the
++  resulting action depends on the ``-action panic=...`` policy (default:
++  ``shutdown``). With the default action, this effectively blocks crash dump
++  generation by Windows.
  
-+    if (offsetof(IplParameterBlock, pv.components) +
-+        ipib_pv->num_comp * sizeof(IPLBlockPVComp) >
-+        be32_to_cpu(iplb->len)) {
-+        return false;
-+    }
-+
-     for (i = 0; i < ipib_pv->num_comp; i++) {
-         /* Addr must be 4k aligned */
-         if (ipib_pv->components[i].addr & ~TARGET_PAGE_MASK) {
+ ``hv-time``
+   Enables two Hyper-V-specific clocksources available to the guest: MSR-based
+@@ -304,8 +307,9 @@ currently implemented Hyper-V enlightenments with the following exceptions:
+   ``hv-version-id-snumber`` can be left unchanged, guests are not supposed to
+   behave differently when different Hyper-V version is presented to them.
+ - ``hv-crash`` must only be enabled if the crash information is consumed via
+-  QAPI by higher levels of the virtualization stack. Enabling this feature
+-  effectively prevents Windows from creating dumps upon crashes.
++  QAPI by higher levels of the virtualization stack. With the default
++  ``-action panic=shutdown`` policy, enabling this feature effectively
++  prevents Windows from creating dumps upon crashes.
+ - ``hv-reenlightenment`` can only be used on hardware which supports TSC
+   scaling or when guest migration is not needed.
+ - ``hv-spinlocks`` should be set to e.g. 0xfff when host CPUs are overcommited
+
 -- 
-2.53.0
+2.55.0
 
 
