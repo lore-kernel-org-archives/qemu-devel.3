@@ -4,131 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CDCCC531D0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 06:25:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2F1FC531D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Jul 2026 06:27:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woEmN-0003SP-35; Mon, 27 Jul 2026 02:25:35 -0400
+	id 1woEny-0004lF-7I; Mon, 27 Jul 2026 02:27:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1woEm9-0003O0-K9; Mon, 27 Jul 2026 02:25:22 -0400
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1woEnw-0004ky-9I
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 02:27:12 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1woEm7-00086E-UA; Mon, 27 Jul 2026 02:25:21 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JufwKdwyADiHSGAKHDICSrilqqJmM7ElnzsAPF91vfoVsV7yP67vYF1WBSDPsqLgFG4XTpgqwd2makUDK2HJySoj5djMEW30cY8LajeQQhfAVHJn1Ik45seat70Drr2uJXn6wvACgOwhY2dT3sFbKLtQ57eOZT9zHkHD4EYDxKM27i1QbnAN9s2/wuwj8ykCT8pe9OOTCv+YWgW4nZvHhYFbK3QLSxEGlK26QKO/2QJGT1tPRyHFhHrtbUsRiW3xswvPM1VosX3HaHStItRmpF99P8kOt/zd8YagAhT2tBdDpXJ6Ar0ASWwWb3NYCgfPE048u3HEJZp6hYGeWG2Q/w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dtKRcVMah0RxpUYgW9XBeUVrKpOuNDoLTQzo3yofJ+w=;
- b=GA1CMQB1SsztUh5kUGwSPkoJ2TJkNyYs8BR8iZnvxWKmidODa3Uf1aTzKRbAhD8RWF74pg7jNsJHr8+WtO3U3B9T8Sf8VmbocmX1WNdMhTshx0jZj0EajapaVbMVkXJUftW3hl0NFtPzvNOZbUMEQ7h6UgZRkGOX59g6CnhjshGFoUfW1EXmchtmx9XEQ/S7GOeO3qLaOO/WooLGxWHtVa3ugbVpACbEotqqfxCSRoVKwcvpwLguG5sksPyhH4HQwzbcC/Diqu5Rm8mdMgL2v7sHFmj+1HgFU+4krZDm5GvL+V2a7UYZFsFKTEgMyjy7l6lDc+A2ekCz4O4sFYz8wg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=dtKRcVMah0RxpUYgW9XBeUVrKpOuNDoLTQzo3yofJ+w=;
- b=a6vRDTGEd/nsT3yu/TUPmF+NOzXmV0TT5xX1ZudbG7KlhsTbqiPhmDNs6DVIPZGVzJHz+CbPCyJ/NC7f+gPAwLNKItUQB+To5BqD4di9Tjjq+7AvtCm7+Qgmknfus+sZz6Z781kCJ/frq0k7+5u8ICGgeLcLfqIkQEF+nrhgk9rB5078h3JXKfJm+e2ltymmGVP44N5pqVKZ150pCIWSoIAGGC2BUYa4Am2eA2AkcMSJJCHUuMmUTCUNhFFeVOCHJnWBpEljFkqZX2tmEE+Q1q6fTme7uX9sbHreDnxRFyYljbcF8edR9ZTOXet4+KktoC7nISZh3lkcjEkkBU00dg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
- by TY0PR02MB5624.apcprd02.prod.outlook.com (2603:1096:400:1b0::7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Mon, 27 Jul
- 2026 06:25:13 +0000
-Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
- ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
- ([fe80::e5f3:5fb7:3d29:5934%4]) with mapi id 15.21.0245.012; Mon, 27 Jul 2026
- 06:25:13 +0000
-Date: Mon, 27 Jul 2026 14:25:08 +0800
-From: Chao Liu <chao.liu@processmission.com>
-To: flavien.solt97@gmail.com
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Andrew Jones <andrew.jones@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v3 3/3] tests/qtest: add RISC-V IOMMU MRIF notice tests
-Message-ID: <amb5vEsBhpbHbHJ-@ChaodeMacBook-Pro.local>
-References: <CANVUYGvOyZdCwXOtDkS7bXY3Z2HGK1b6QWKttCVUjhnpH65g5A@mail.gmail.com>
- <CANVUYGsmXiKSQdb_BjCVPo1dvmF0K5-B63iQpszqqYLhZsc_Zg@mail.gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CANVUYGsmXiKSQdb_BjCVPo1dvmF0K5-B63iQpszqqYLhZsc_Zg@mail.gmail.com>
-X-ClientProxiedBy: SJ2PR07CA0014.namprd07.prod.outlook.com
- (2603:10b6:a03:505::7) To TYNPR02MB9351.apcprd02.prod.outlook.com
- (2603:1096:405:3d0::15)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1woEnu-0008EN-KQ
+ for qemu-devel@nongnu.org; Mon, 27 Jul 2026 02:27:12 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66R1fp1a2240162
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 06:27:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ tUvZ0eUlMImlDP3VdoMDLwTadd2TsCsWJdNGa+7f8J8=; b=TzMMfE1w5R38ZAcm
+ LVWKxMlNXLFzCx4lTHty0HIX5JB1PoFS4D/VqofhgxzReL+FXDI/aDJQEAI117tm
+ bSgwKOYYRvYkJ+FaXdMvjYh7y7Yty0Ci3uHcJ4m7vBVjv8NoHb1yxJaJwKoJGaig
+ uDgfM9albv1mal/QUz0U8V2s6aQewNC3yCbIwyr2CAx9lYWpptDuREPGUTWWPajz
+ mGY+NyggGIjnhIe+sB5MAD4iXC6SEqiWjabAb0LPCBTam+vX0wqdVBAWuQc1Gviv
+ J4AM0W4BuRzqHUcNb/JLn3xoDBEXe0YO09JYLQr2xS4yzxCgLdVnwvIkcxXiTXIf
+ OSZlVw==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fnsxs13ee-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 06:27:09 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-51c1a97644aso30773521cf.2
+ for <qemu-devel@nongnu.org>; Sun, 26 Jul 2026 23:27:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1785133628; x=1785738428; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=tUvZ0eUlMImlDP3VdoMDLwTadd2TsCsWJdNGa+7f8J8=;
+ b=E9Ohvs9gDNDL4sUduyTHgW1J/0p+nj9Z3ZKRNfjGc8ns74o4BeVcJfPWIAVllHBri6
+ 6pMpgTdnmznupz2aQGLiEhUgiahXucwq//LL1Kc/5814NFU4yek6IyrtRM9PHT+FQVxN
+ 58hmX3dYQXALm2dslp1/PBBBchGlWk3Qf0XOWoX50XwgMh4ieNs3w4ag1rZSvWX1uuLK
+ PZSccmssWBGp02joD4vOJQHr2bcmOrEGGq5ALsRQKrVtNwDe0HcacmZy4xLDPkfxqErB
+ 6FNZGO17EGDY1+jggbYcnaK7953Z0PGCbOt5o+bu+NM4yNkoCuZRkZ76gsdyy6AD4vGL
+ RbaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785133628; x=1785738428;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=tUvZ0eUlMImlDP3VdoMDLwTadd2TsCsWJdNGa+7f8J8=;
+ b=KYZ5oaY9BGgXW2ny7CzwNGN0lTKjYFtvln2P17MagigFOertX4jKHTVsU0NWZIM8LW
+ +0Shylk5iegUaBo9aDRHZjZDm5bKnuKeyi4bjP8XWT65nTdad4KAaaKT7dzPsc0O/WHq
+ ESYGMAG9TlFdqS6cTr2akF2iGGbe5Up9dft+WUJSduqrYU0E/I7dapgskrNKfPdfgVND
+ Go5S0MftYj42WJDuuTtj01KpnFjwgNWadYBi78k/Dww1o5VTG4XnslBbQmuRd4ndcak5
+ NjZOcoURflUrtgFzxaS00191vJmIg1aaExIPBApo6RTttFBpjZ4SRH7c0HEvXSwnOH65
+ NWQQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpqxR0KAGr833wb6pqsbWZdsVWUVIfRR8UCjG3MHffzF+BfAgQ2ZFUCg9/vDvqjzJ2BwxC7Jgf7Hr+b@nongnu.org
+X-Gm-Message-State: AOJu0Ywoivweany2lg/0nhiDOyQiwiUkkNQYtR4AhM4jbvF5S1iB2Z0W
+ 50kSqreJClVbnaN8qnR1XZ2L5x8B+e8ZUszSJOq/FG63YKx+4ndXg/4C4+rfn65IjsEoS7HS66a
+ Twwn/1WI0hEoDcStgDE4KvbCDCHrRBlROS/pifthtMJwX5xv5bMYlGG0HJw==
+X-Gm-Gg: AR+sD123e/EuMDR8IqyzT7F7SVhh5dzMnFq6eEvr81ZYQyKbfA5flW/Z6BgVQK4o90u
+ G2FJ5QU3fOi0G3LmUxKpdseOvwfVpuxKL2bbek8aMugzmeylTnBXx9sfG6JQuau116bTzTINdV6
+ +K/9a4IJ5tFP7LRcrVSg+z7l9ni2+MDWCIY3zSxZRB98WgPDbLD3sqefCERqx6qX4jojUzSyn8r
+ uP/aKrWtJecr3+yvRlU8nl/g7NUtoTdu/CNbhOfxzWb/aGunLposw4qiFwYsjdxQ8KReQIMgXZg
+ 33uMlDzTtvrdEgW4vZi1V4Xd4iCxuziOmFPf5JNOWg6iumhVsP6j54Y1luDNdAzwJJMSw2UO5RC
+ oK2KMMB2gZKoY88Kig2a/r43Xp0jU/bKNRqvThOREWuigaHPyDVQ=
+X-Received: by 2002:a05:622a:386:b0:51c:25da:903e with SMTP id
+ d75a77b69052e-529a86f41fdmr73277191cf.58.1785133628552; 
+ Sun, 26 Jul 2026 23:27:08 -0700 (PDT)
+X-Received: by 2002:a05:622a:386:b0:51c:25da:903e with SMTP id
+ d75a77b69052e-529a86f41fdmr73277101cf.58.1785133628155; 
+ Sun, 26 Jul 2026 23:27:08 -0700 (PDT)
+Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f85c63bd3sm45980724f8f.27.2026.07.26.23.27.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 26 Jul 2026 23:27:07 -0700 (PDT)
+Message-ID: <c972ac12-20cc-4f01-bb49-fd09491265c4@oss.qualcomm.com>
+Date: Mon, 27 Jul 2026 08:27:06 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|TY0PR02MB5624:EE_
-X-MS-Office365-Filtering-Correlation-Id: a688c71b-3c7b-437d-1f67-08deeba7d112
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|34096008|376014|7416014|366016|23010399003|1800799024|6133799003|4143699003|56012099006|10067099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: hJ6QSV9oRBMj+BjOg/hQiOZo8RqjbUg27dLicsSsnhhch8+BRedwG462x73SUeZDBMBzapvYf/+j9AzoFO7/E7b5EU34T3l7HHPJ97IGTzfNuaUFlLZ1OeUjyjVBh4n2lpWPMmSdJuTouwF40df+owNxeFg3TfEEJXYPy8Zcvme0xtqTCgiyUW3z/fy7pQesCiAV4+mXCgVsVvAEPRlHue3G97akIbH/sY+iCLqz0mm/pdsbpcww2AA4Hoz+qaBNkmzNcyvW7bXypXoWvf3KMor8eiWFnZlRvGq/Axo0QMCVdN4RBxHcJs493ngUn8oa6aZ7wsfcFUmy3xMyjOKSNZMHQejGQ7BWGkUUU2iAXYGz3K2BH41xibrMLJO67/AOJHF1aUnyrM62jak1aXw/jB5EWX3pWiPsHoWFWq81hw14V9M7mTosK+3HSc6xHFZMroPHpqXSUMMvhEW2H9QAmVA3HgLHdt4wi9dsOWvBQwdI4TdvYTBX14Jv3UKfm/AzrNNNLuq6zi+fn7zyFCuoRC0UpSANlC0koJGM6kzvvwpDCPd1bW7ym+cy0H8elpu4GX9aSMkAUUewh+r6MMyPvebFUSd6bOG/0f60pt754Zfz+GexNSJjTh29LnGbYuHXEcGJnWK4w8ouCVaR1S0GQE5O0vgGNrjvl5r2xdF3Gao=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(34096008)(376014)(7416014)(366016)(23010399003)(1800799024)(6133799003)(4143699003)(56012099006)(10067099003)(18002099003)(22082099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?U4FumZdcseRbnRhRq9c98D+ZUPiWrXkYiSbA3bYNpAAfcKUZbPfVGoN7LPpX?=
- =?us-ascii?Q?uhPUqiV2/WSEe6TFAmiI2UqcN6eVHUhsmkKqqN5Iwh3z18nM17ljWZCxWugt?=
- =?us-ascii?Q?m80HOc4l8K6ANxc8u9Wwq/dDgvT7OHWuHsGCdUun0Rjz4de2ffb3/yV4/FWb?=
- =?us-ascii?Q?s3YlLZYoaU3Co7h/w0u2m+HcZj538p1HdaujEeeiaJFWZlNOPUMiBZbCDA6u?=
- =?us-ascii?Q?jv4aL0eDxbJcWtulDAIxu5k0S7vnIPRJUjHPKXSfAPdSo3Iw9LEcBUCSUcxL?=
- =?us-ascii?Q?bOA8S6rT9+FTs9HPuI1bn5sLEUnonPxgIINWSeRhGtHMWkrcpGoQg5NzSqF+?=
- =?us-ascii?Q?OZXmeuU6HvY1I94jXlII8tqhQPu0czlpKr66gUzD3MZn0wIKcnhdqfusrTV1?=
- =?us-ascii?Q?ctuIq9ARdfSmTcyULAQvLn77XkEIfWTnS6wyRZH0b+O+FC/djlGqSA9HU43z?=
- =?us-ascii?Q?l7bnykntSQSH24T0Zt0ACCbGpwwUSvoo90+eyBbuUJ86PmbvKd42Ozj+Zg4O?=
- =?us-ascii?Q?Cj+PKaTJ6F0mc6wuE1P8C1ajWbXTxiRgxkHANGKCO7TaMtF1NRf+WOTu+rMP?=
- =?us-ascii?Q?HN6Rc1DHlCXS680274XMZOIcyER+TpBSl5StG1WF89F16noTxMOthyNQcDNb?=
- =?us-ascii?Q?D1jHaYMUyt0bYSA8wNkbYLSHKkswstGlkljw/FEokuJKxaAiYTqmCSuWs6rD?=
- =?us-ascii?Q?wz5jqAxvMBHorKIBq5bYqvdRXpjkCrnP92AC+SwQ3PZgK0Nx33xJFA94DJ7t?=
- =?us-ascii?Q?ww1lwmniylacIbNnkmsB4LHOeY+dowlX4Te6vJH/KYpINi/L0nukHpd65NoR?=
- =?us-ascii?Q?vfXxkvqJhHlQ5X9GWX0ypmxIPhBZ+A6buNbS6lJ53GrnqUBM+MsH730gU8ob?=
- =?us-ascii?Q?XiccnEjB32wWDwSVhcLP0hDLHSoWae7sfPzAScLzLZGoZ4eOafl+V9z2TtfL?=
- =?us-ascii?Q?WZEJfqnEN50vSdlZmGUQ6IwDyHE48lpR88yugo+/IMGKvK3abB4fDAgL018S?=
- =?us-ascii?Q?Mi+zpQMH6aqpxIEUpLFxWa0dHFKuTU3nONyQrk6V/cie1YiYHx1Z7pveGCj3?=
- =?us-ascii?Q?a6LAifxGKa44V0FmklLmlObQi+Yb7n+mdg1rYUMi9HfNQLYkhTTOAXK36hKM?=
- =?us-ascii?Q?M8AEyMuBNWvfQZDmFG6/fSC7L0cwmh6wQR62Nx9GXkqvj2pLUX0/Zf8DRiAm?=
- =?us-ascii?Q?NGcmJMJH37d2lH9dUW2rur1M/JDwmjIVs1Vldswr3zg4cQfmWDzeeU4L3QYs?=
- =?us-ascii?Q?HOAr39EdU6GGBT+q1d/1l4/xlLwTeYdYrA8QmNxEvM54Jz4iOWNtkAq/7w+Y?=
- =?us-ascii?Q?Z6ZnPOl6i+hObS3uloHEL3av6xc0ZkjtyeQKhFlsndyi2y5Gy5H1l+6JraOT?=
- =?us-ascii?Q?fkRzohpj2efJOF4hM9yQKEhG5Bns8J4SE+mkaGzc9pqJz+U5gF9ucImcyVHM?=
- =?us-ascii?Q?XC6Czcp2pKV+fGP0S5S5CER5iAWqARLrNcZxoT2jKcYBcjMkwmOw+aWpgqVD?=
- =?us-ascii?Q?L3DHc+DNyktot1sgXrUIWnx1FHh7EXbbf76sy0WPvC22tbiYesdiJCWJh2i/?=
- =?us-ascii?Q?GFeoYh6Ws4To1+tg0PMmTsNXSjmbwIpxEJ9h2GWD5eWmBOQdoqDKOLEFtnzM?=
- =?us-ascii?Q?q5TmK2kEsUbG8UG0dyXSe5O330jW5eU1AZMYMelHxvApe3PJF/Mv82/RsoNs?=
- =?us-ascii?Q?35nckbESS+TwctHm1pIn21Em0vnkscmrTNU9hUvfUoet5iVl50jIUBHVt0/3?=
- =?us-ascii?Q?8eQMFSEQvzf6MvGnVQEf6LvsF+/FfMk=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a688c71b-3c7b-437d-1f67-08deeba7d112
-X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 06:25:13.4354 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: UwPNUBNM5JxPRZjacSYD1ezHnLCmgSRo8VPgnEHACiG7qVHwKbf5zZc9clWjImr55R2FNuICor+aeHN0oIdxZjxgEm5+PnTN+IY3+0VqTUE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY0PR02MB5624
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
- envelope-from=chao.liu@processmission.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/1] hw/intc: resample level IRQ on PLIC completion
+Content-Language: en-US
+To: lanxiaoyun <dubdublan1987@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Alistair.Francis@wdc.com, palmer@dabbelt.com
+References: <cover.1784966571.git.dubdublan1987@gmail.com>
+ <b946a6859040243e973622b7f038a19c2021db95.1784966571.git.dubdublan1987@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <b946a6859040243e973622b7f038a19c2021db95.1784966571.git.dubdublan1987@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI3MDA2MiBTYWx0ZWRfX0lmcBQPMd7t/
+ WSq6TM6AyqXh6CIDQQ1iTEaCbZOuF2gC/40KSGTi1qri0xtJ/Xsr/fIy0EtU+ZEgXy9atGuXWGF
+ 9/AEsynCDtuuDMLb533BCOKkOII6HrdaiAfVsTc95L2j52SBc51XqjGn4BQnVcw4LCksAPsn7eu
+ m+QZhvhj0b9ZVf2FMP9ILsCkMAWhlEFt9LHumzp4OaYqKdFZanqzSCFbM3WdD4iD4UgoO/KmPjL
+ iQ7wizMH1NQ1+dchYm+kLBMC0D+V9BpZZIzgKTuuPlWwznR3+Lm/Oczwm/7AazCmBQvk+dMJZuK
+ GMM+ZFBhD7UOA+4HBZA12AwyM0eTPbZkVPhFL0iKz5gfuu5ZITB0d2dPhB69VOeHu7VipokUcAJ
+ YTIqFZYZ928COY32+XjJ4mzeZPZ5oXQ6PIgEn7C//1/c7MoqTU7qUqy9T1FVjXsMgiy2XNtRXFS
+ 2MYVBpjjk1XepxK43hQ==
+X-Authority-Analysis: v=2.4 cv=EYr4hvmC c=1 sm=1 tr=0 ts=6a66fa3d cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=pGLkceISAAAA:8 a=_q44DS1WNQBOSQMTb2QA:9 a=QEXdDO2ut3YA:10
+ a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-ORIG-GUID: IYIKgeJrN-zgHmkM-eO2ZNZDe4U0ApCS
+X-Proofpoint-GUID: IYIKgeJrN-zgHmkM-eO2ZNZDe4U0ApCS
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI3MDA2MiBTYWx0ZWRfXyv7iACTzwvBI
+ kCdLuTs68SWHBBPlvo2o83I+5bdL0MfjmY84MsRpLJOGq0tIjosopc7pq5ixmW3eLJi+mBZPoal
+ SCDIJPiEHF0mupamQibz+FrWsJzVdTs=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-27_01,2026-07-24_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 suspectscore=0 clxscore=1015 priorityscore=1501
+ bulkscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607270062
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -145,163 +154,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Jul 26, 2026 at 07:28:27PM +0800, flavien.solt97@gmail.com wrote:
-> From a13bfa64b84ac70c9e257253616ce650fc3e794b Mon Sep 17 00:00:00 2001
-> From: Flavien Solt <flavien.solt97@gmail.com>
-> Date: Sun, 26 Jul 2026 17:54:04 +0800
-> Subject: [PATCH v3 3/3] tests/qtest: add RISC-V IOMMU MRIF notice tests
-> 
-> Exercise MRIF-mode MSI writes through iommu-testdev with the destination
-> interrupt-enable bit both clear and set. Each case requires the pending
-> bit to be stored plus the configured notice ID to reach guest memory.
-> 
-> The enable-clear case regresses the notice suppression fixed by the
-> previous patch. The enable-set case provides a control for the existing
-> path.
-> 
-> Signed-off-by: Flavien Solt <flavien.solt97@gmail.com>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
+Hi,
 
-Thanks,
-Chao
-
+On 25/7/26 18:51, lanxiaoyun wrote:
+> From: lanxiaoyun1 <dubdublan1987@gmail.com>
+> 
+> When an interrupt completion message is received, if the interrupt is
+> level-triggered and still asserted, forward a new interrupt request to
+> the PLIC core.
+> 
+> This updates the SiFive PLIC IRQ handling so completion rechecks the
+> current source level and reasserts pending state when the input remains
+> high, matching the RISC-V PLIC specification.
+> 
+> Signed-off-by: lanxiaoyun1 <dubdublan1987@gmail.com>
 > ---
->  tests/qtest/iommu-riscv-test.c | 102 +++++++++++++++++++++++++++++++++
->  1 file changed, 102 insertions(+)
+>   hw/intc/sifive_plic.c         | 4 +++-
+>   include/hw/intc/sifive_plic.h | 1 +
+>   2 files changed, 4 insertions(+), 1 deletion(-)
 > 
-> diff --git a/tests/qtest/iommu-riscv-test.c b/tests/qtest/iommu-riscv-test.c
-> index 2638024..85f79ea 100644
-> --- a/tests/qtest/iommu-riscv-test.c
-> +++ b/tests/qtest/iommu-riscv-test.c
-> @@ -14,6 +14,7 @@
->  #include "hw/pci/pci_regs.h"
->  #include "hw/misc/iommu-testdev.h"
->  #include "hw/riscv/riscv-iommu-bits.h"
-> +#include "libqos/qos-iommu-testdev.h"
->  #include "libqos/qos-riscv-iommu.h"
->  #include "libqos/riscv-iommu.h"
-> 
-> @@ -26,6 +27,13 @@
->  #define RISCV_BUS_MMIO_LIMIT       0x80000000
->  #define RISCV_ECAM_ALLOC_PTR       0x30000000
-> 
-> +#define RISCV_MRIF_MSI_IOVA        0x00000000fee00000ull
-> +#define RISCV_MRIF_MSI_PT_GPA      (QRIOMMU_SPACE_OFFS + 0x00030000ull)
-> +#define RISCV_MRIF_BASE_GPA        (QRIOMMU_SPACE_OFFS + 0x00031000ull)
-> +#define RISCV_MRIF_NOTICE_GPA      (QRIOMMU_SPACE_OFFS + 0x00032000ull)
-> +#define RISCV_MRIF_INTID           5u
-> +#define RISCV_MRIF_NOTICE_ID       0x12du
-> +
->  typedef struct RiscvIommuTestState {
->      QTestState *qts;
->      QGenericPCIBus gbus;
-> @@ -264,6 +272,96 @@ static void test_riscv_iommu_nested(void)
->      run_riscv_iommu_translation(&cfg);
->  }
-> 
-> +static void riscv_iommu_setup_mrif_context(RiscvIommuTestState *state)
-> +{
-> +    uint64_t dc_addr;
-> +    uint64_t msiptp;
-> +    uint64_t pte0;
-> +    uint64_t pte1;
-> +
-> +    qtest_memset(state->qts, QRIOMMU_SPACE_OFFS + QRIOMMU_DDT_BASE, 0,
-> +                 0x1000);
-> +    qtest_memset(state->qts, RISCV_MRIF_MSI_PT_GPA, 0, 0x1000);
-> +    qtest_memset(state->qts, RISCV_MRIF_BASE_GPA, 0, 0x1000);
-> +    qtest_memset(state->qts, RISCV_MRIF_NOTICE_GPA, 0, 4);
-> +
-> +    dc_addr = QRIOMMU_SPACE_OFFS + QRIOMMU_DDT_BASE +
-> +              state->testdev->devfn * sizeof(struct riscv_iommu_dc);
-> +
-> +    msiptp = (RISCV_MRIF_MSI_PT_GPA >> 12) |
-> +             ((uint64_t)RISCV_IOMMU_DC_MSIPTP_MODE_FLAT << 60);
-> +
-> +    qtest_writeq(state->qts, dc_addr + 0, RISCV_IOMMU_DC_TC_V);
-> +    qtest_writeq(state->qts, dc_addr + 8, 0);
-> +    qtest_writeq(state->qts, dc_addr + 16, 0);
-> +    qtest_writeq(state->qts, dc_addr + 24, 0);
-> +    qtest_writeq(state->qts, dc_addr + 32, msiptp);
-> +    qtest_writeq(state->qts, dc_addr + 40, 0);
-> +    qtest_writeq(state->qts, dc_addr + 48, RISCV_MRIF_MSI_IOVA >> 12);
-> +    qtest_writeq(state->qts, dc_addr + 56, 0);
-> +
-> +    pte0 = RISCV_IOMMU_MSI_PTE_V |
-> +           ((uint64_t)RISCV_IOMMU_MSI_PTE_M_MRIF << 1) |
-> +           ((RISCV_MRIF_BASE_GPA >> 9) << 7);
-> +    pte1 = ((RISCV_MRIF_NOTICE_GPA >> 12) << 10) | RISCV_MRIF_NOTICE_ID;
-> +
-> +    qtest_writeq(state->qts, RISCV_MRIF_MSI_PT_GPA, pte0);
-> +    qtest_writeq(state->qts, RISCV_MRIF_MSI_PT_GPA + 8, pte1);
-> +
-> +    qriommu_program_regs(state->qts, state->iommu_base);
-> +}
-> +
-> +static void run_riscv_iommu_mrif_notice(bool enable_bit)
-> +{
-> +    RiscvIommuTestState state = { 0 };
-> +    uint64_t pending;
-> +    uint64_t enabled;
-> +    uint32_t notice;
-> +    uint32_t dma_result;
-> +
-> +    if (!riscv_iommu_test_setup(&state)) {
-> +        return;
-> +    }
-> +
-> +    riscv_iommu_check(state.qts, state.iommu_base, QRIOMMU_TM_BARE);
-> +    riscv_iommu_setup_mrif_context(&state);
-> +
-> +    enabled = enable_bit ? (1ull << RISCV_MRIF_INTID) : 0;
-> +    qtest_writeq(state.qts, RISCV_MRIF_BASE_GPA + 8, enabled);
-> +    qpci_io_writel(state.testdev, state.testdev_bar, ITD_REG_DMA_WRITE_VAL,
-> +                   RISCV_MRIF_INTID);
-> +
-> +    dma_result = qos_iommu_testdev_trigger_dma(
-> +        state.testdev, state.testdev_bar, RISCV_MRIF_MSI_IOVA,
-> +        RISCV_MRIF_NOTICE_GPA, DMA_LEN, qriommu_build_dma_attrs());
-> +
-> +    pending = qtest_readq(state.qts, RISCV_MRIF_BASE_GPA);
-> +    notice = qtest_readl(state.qts, RISCV_MRIF_NOTICE_GPA);
-> +
-> +    g_test_message("MRIF notice: enable=%u pending=0x%" PRIx64
-> +                   " notice=0x%x", enable_bit, pending, notice);
-> +
-> +    /*
-> +     * Interrupt remapping consumes the original DMA write; the generic
-> +     * test device cannot read it back from the supplied physical address.
-> +     */
-> +    g_assert_cmpuint(dma_result, ==, ITD_DMA_ERR_MISMATCH);
-> +    g_assert_cmpuint(pending & (1ull << RISCV_MRIF_INTID), !=, 0);
-> +    g_assert_cmpuint(notice, ==, RISCV_MRIF_NOTICE_ID);
-> +
-> +    riscv_iommu_test_teardown(&state);
-> +}
-> +
-> +static void test_riscv_iommu_mrif_notice_enable_clear(void)
-> +{
-> +    run_riscv_iommu_mrif_notice(false);
-> +}
-> +
-> +static void test_riscv_iommu_mrif_notice_enable_set(void)
-> +{
-> +    run_riscv_iommu_mrif_notice(true);
-> +}
-> +
->  int main(int argc, char **argv)
->  {
->      g_test_init(&argc, &argv, NULL);
-> @@ -275,5 +373,9 @@ int main(int argc, char **argv)
->                     test_riscv_iommu_g_stage_only);
->      qtest_add_func("/iommu-testdev/translation/ns-nested",
->                     test_riscv_iommu_nested);
-> +    qtest_add_func("/iommu-testdev/mrif-notice/enable-clear",
-> +                   test_riscv_iommu_mrif_notice_enable_clear);
-> +    qtest_add_func("/iommu-testdev/mrif-notice/enable-set",
-> +                   test_riscv_iommu_mrif_notice_enable_set);
->      return g_test_run();
->  }
-> -- 
-> 2.54.0
+> diff --git a/hw/intc/sifive_plic.c b/hw/intc/sifive_plic.c
+> index 9c84ff06a9..43f235e329 100644
+> --- a/hw/intc/sifive_plic.c
+> +++ b/hw/intc/sifive_plic.c
+> @@ -246,6 +246,7 @@ static void sifive_plic_write(void *opaque, hwaddr addr, uint64_t value,
+>           } else if (contextid == 4) {
+>               if (value < plic->num_sources) {
+>                   sifive_plic_set_claimed(plic, value, false);
+> +                sifive_plic_set_pending(plic, value, !!plic->source[value]);
+>                   sifive_plic_update(plic);
+>               }
+>           } else {
+> @@ -276,6 +277,7 @@ static void sifive_plic_reset(DeviceState *dev)
+>       int i;
+>   
+>       memset(s->source_priority, 0, sizeof(uint32_t) * s->num_sources);
+> +    memset(s->source, 0, sizeof(uint32_t) * s->num_sources);
+>       memset(s->target_priority, 0, sizeof(uint32_t) * s->num_addrs);
+>       memset(s->pending, 0, sizeof(uint32_t) * s->bitfield_words);
+>       memset(s->claimed, 0, sizeof(uint32_t) * s->bitfield_words);
+> @@ -353,7 +355,7 @@ static void parse_hart_config(SiFivePLICState *plic)
+>   static void sifive_plic_irq_request(void *opaque, int irq, int level)
+>   {
+>       SiFivePLICState *s = opaque;
+> -
+> +    s->source[irq] = !!level;
+>       if (level > 0) {
+>           sifive_plic_set_pending(s, irq, true);
+>           sifive_plic_update(s);
+> diff --git a/include/hw/intc/sifive_plic.h b/include/hw/intc/sifive_plic.h
+> index 32973dbf28..627a418ba1 100644
+> --- a/include/hw/intc/sifive_plic.h
+> +++ b/include/hw/intc/sifive_plic.h
+> @@ -54,6 +54,7 @@ struct SiFivePLICState {
+>       uint32_t num_enables;
+>       PLICAddr *addr_config;
+>       uint32_t *source_priority;
+> +    uint32_t *source;
+>       uint32_t *target_priority;
+>       uint32_t *pending;
+>       uint32_t *claimed;
+
+Where is this array initialized?
 
