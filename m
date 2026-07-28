@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A33CC53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 17:38:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EB63C54F4D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 17:38:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wolka-0007Ss-2Q; Tue, 28 Jul 2026 13:37:56 -0400
+	id 1wolkf-0007VJ-Ko; Tue, 28 Jul 2026 13:38:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wolkV-0007P2-Sz
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 13:37:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wolkY-0007PY-3H
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 13:37:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wolkT-0005tJ-O8
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 13:37:51 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wolkV-0005tk-VV
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 13:37:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785260268;
+ s=mimecast20190719; t=1785260270;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NgTKXSJ0g2+HCcpre4LqKZbJQ12eE7mQTgcJ1v3nspg=;
- b=CfaXyQVjhflbibWlISyp/233FlDkJy3PGuMVkZQ86zT+6puVGp58z0N7XtNqFVuKbM8wW/
- QB56G8pS8ruD46yMEeZPmb0A3Wj2m408501wq6YPceuw3FTC1h6P/K2y4HGB+ESnJVcsFz
- MxBSAkuAXT4oxDQaSdPW86lOKoB6wYM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=e76K6cxxgvd1ewhHg5dFxYUvxgoqgs/uhh+nuVf2wWw=;
+ b=I+qa7//sc0IIxNUN5qcF7AZRk5W/2XH+oEJTVupmA+dSe6mmIjOX0whWA1bn4HUGFj34Ze
+ Z9gVMwVu0mt3ixedg2WPIqVOXC1vR3fYiKusJJqGCwxvGyZ3vMZuX+KAIYHuxaqVG760j+
+ W14bzUKOoysQwwBEipkvHlpeputJLJk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-zYGprw2YMtWOQJqWiCXy_Q-1; Tue,
- 28 Jul 2026 13:37:47 -0400
-X-MC-Unique: zYGprw2YMtWOQJqWiCXy_Q-1
-X-Mimecast-MFC-AGG-ID: zYGprw2YMtWOQJqWiCXy_Q_1785260266
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-86-5XUbdhaQNIioH7bz-1L7hA-1; Tue,
+ 28 Jul 2026 13:37:49 -0400
+X-MC-Unique: 5XUbdhaQNIioH7bz-1L7hA-1
+X-Mimecast-MFC-AGG-ID: 5XUbdhaQNIioH7bz-1L7hA_1785260268
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3D04B195604B; Tue, 28 Jul 2026 17:37:46 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6661B18004BB; Tue, 28 Jul 2026 17:37:48 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.44.49.201])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CAB0A19560AB; Tue, 28 Jul 2026 17:37:44 +0000 (UTC)
+ id DBBF119560AB; Tue, 28 Jul 2026 17:37:46 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	stefanha@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 01/17] block/cloop: fix integer overflow in total_sectors
- calculation
-Date: Tue, 28 Jul 2026 19:37:23 +0200
-Message-ID: <20260728173739.352078-2-kwolf@redhat.com>
+Subject: [PULL 02/17] block/accounting: take stats->lock in latency histogram
+ setters
+Date: Tue, 28 Jul 2026 19:37:24 +0200
+Message-ID: <20260728173739.352078-3-kwolf@redhat.com>
 In-Reply-To: <20260728173739.352078-1-kwolf@redhat.com>
 References: <20260728173739.352078-1-kwolf@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,44 +83,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: malike <malike@kylinos.cn>
+From: "Denis V. Lunev" <den@openvz.org>
 
-The total_sectors is computed as n_blocks * sectors_per_block where
-both operands are uint32_t. The multiplication is performed in 32-bit
-arithmetic and can overflow when the product exceeds UINT32_MAX,
-producing a value much smaller than the true image size. The result
-is assigned to int64_t total_sectors but the 32-bit multiplication
-has already wrapped around, and the zero-extension to 64-bit does
-not recover the correct value.
+block_latency_histogram_set() and block_latency_histograms_clear()
+replace BlockLatencyHistogram's nbins/boundaries/bins without taking
+stats->lock, while block_account_one_io() reads those same fields
+under that lock from whatever iothread completes the I/O. The result
+is usual use-after-free and qemu crash.
 
-This causes the block layer to reject valid I/O requests (DoS) when
-the reported total_sectors is smaller than the actual image.
+Take stats->lock in both setters, matching the lock already held by
+the reader.
 
-Use 64-bit arithmetic by casting one operand to uint64_t so the
-multiplication is performed in 64-bit precision.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3972
-Signed-off-by: Ma Like <malike@kylinos.cn>
-Message-ID: <20260713031750.58448-1-malike@kylinos.cn>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Kevin Wolf <kwolf@redhat.com>
+CC: Hanna Reitz <hreitz@redhat.com>
+CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Message-ID: <20260724111311.4086859-2-den@openvz.org>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- block/cloop.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ block/accounting.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/block/cloop.c b/block/cloop.c
-index 443af1444e8..a16f08e6ef6 100644
---- a/block/cloop.c
-+++ b/block/cloop.c
-@@ -202,7 +202,8 @@ static int cloop_open(BlockDriverState *bs, QDict *options, int flags,
-     s->current_block = s->n_blocks;
+diff --git a/block/accounting.c b/block/accounting.c
+index f00fe997403..6e06c7609eb 100644
+--- a/block/accounting.c
++++ b/block/accounting.c
+@@ -194,6 +194,8 @@ int block_latency_histogram_set(BlockAcctStats *stats, enum BlockAcctType type,
+         return -EINVAL;
+     }
  
-     s->sectors_per_block = s->block_size/512;
--    bs->total_sectors = s->n_blocks * s->sectors_per_block;
-+    /* Cast to uint64_t to prevent uint32_t overflow */
-+    bs->total_sectors = (uint64_t)s->n_blocks * s->sectors_per_block;
-     qemu_co_mutex_init(&s->lock);
++    qemu_mutex_lock(&stats->lock);
++
+     hist->nbins = new_nbins;
+     g_free(hist->boundaries);
+     hist->boundaries = g_new(uint64_t, hist->nbins - 1);
+@@ -206,6 +208,8 @@ int block_latency_histogram_set(BlockAcctStats *stats, enum BlockAcctType type,
+     g_free(hist->bins);
+     hist->bins = g_new0(uint64_t, hist->nbins);
+ 
++    qemu_mutex_unlock(&stats->lock);
++
      return 0;
+ }
  
+@@ -213,12 +217,16 @@ void block_latency_histograms_clear(BlockAcctStats *stats)
+ {
+     int i;
+ 
++    qemu_mutex_lock(&stats->lock);
++
+     for (i = 0; i < BLOCK_MAX_IOTYPE; i++) {
+         BlockLatencyHistogram *hist = &stats->latency_histogram[i];
+         g_free(hist->bins);
+         g_free(hist->boundaries);
+         memset(hist, 0, sizeof(*hist));
+     }
++
++    qemu_mutex_unlock(&stats->lock);
+ }
+ 
+ static void block_account_one_io(BlockAcctStats *stats, BlockAcctCookie *cookie,
 -- 
 2.55.0
 
