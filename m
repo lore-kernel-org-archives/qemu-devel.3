@@ -4,78 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7670CC53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 18:00:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E59AEC54F54
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 18:01:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wom6R-0004QG-L0; Tue, 28 Jul 2026 14:00:31 -0400
+	id 1wom6b-0004bg-69; Tue, 28 Jul 2026 14:00:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1wom6O-0004Pb-Tb
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 14:00:29 -0400
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wom6X-0004U9-JV; Tue, 28 Jul 2026 14:00:38 -0400
 Received: from fout-a3-smtp.messagingengine.com ([103.168.172.146])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1wom6N-0001Vh-1w
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 14:00:28 -0400
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfout.phl.internal (Postfix) with ESMTP id EE737EC03EB;
- Tue, 28 Jul 2026 14:00:25 -0400 (EDT)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wom6V-0001Xf-Sw; Tue, 28 Jul 2026 14:00:37 -0400
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+ by mailfout.phl.internal (Postfix) with ESMTP id A5A59EC03EB;
+ Tue, 28 Jul 2026 14:00:34 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-02.internal (MEProxy); Tue, 28 Jul 2026 14:00:25 -0400
+ by phl-compute-05.internal (MEProxy); Tue, 28 Jul 2026 14:00:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:message-id:mime-version
- :reply-to:subject:subject:to:to; s=fm1; t=1785261625; x=
- 1785348025; bh=4KVBolDTcVreHTFkDRgdLiRHcN1OPMBH1qRNKYHGYRQ=; b=I
- 0iwQYJsKs32AiS3ohhcna+TTTdOWDdXj5rBd0yz29ZATqkkjt1qQx/L3BqplpLuP
- z25KD0ZD14+2oEwhI0UM31esS5AXME4jKuIkuHmA6KFHEwfG9ArHAkXcfzmk3kDV
- OijNR4t5+m/S/BupCzoulKeixfiJbYjYW1BLtcgHycgqwFHTlM33HJwpCubwuJpm
- mouJQuVx1lWxnx5sP6BOPlxrEVEEP01TrMB5iLrw6L9DRlrc+eyuStay8V6ylY/b
- PJxfJBhBShFT8cUMnXPtCAMiYow0ItxfgfrpZ4BXDism8JV/RSgllz/uXifRxqyK
- OGorKxzRCDvL+xD+hxt9g==
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm1;
+ t=1785261634; x=1785348034; bh=/TtEQXPk16auxIOaY+Xnq34xyZiCgmr4
+ O2lVrdENHxQ=; b=k6Kj+p6PABr8scqutt3/3emTOXo2GaRUwed03aE0hs3vMTW9
+ rosc31BKyYMH5zzUlW3+ZhU+yu2MgR49jrLMIJkfo1J2ybgALSIbB+b1pmO3L+Mf
+ PMX7xwDXu8lsC3AdCxu/7TRVO2iOFe7uByVODD8Sa7OooALtmzpyn1MxIteUQ0go
+ i3x4fW0FFJPtz0ag6qJiQH6qpgeJtCWLmM4sHvo6mjCNB91bszJeHpmG/1HjtrQ5
+ tWHF56EKhyYmSLbXm3g2giTsb2Mc01hQHq9inN2iPvmtFyVgcHnZBgSpvLVojLq/
+ kFubZ7Vf/4yK3Hy6xm3Cm5PXBcqGYxPFOahR/g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; t=1785261625; x=1785348025; bh=4KVBolDTcVreHTFkDRgdLiRHcN1O
- PMBH1qRNKYHGYRQ=; b=IMGLKLEpbQJ18rvbxaG4Z/cp3N/+SIEuDVRAmZo2QAtV
- mrikdRS29Wk407IVStHEV3IU1FmGv941920lRohQWYc/MwdxMAiH2+FAvlaRVAsa
- q+qUzEoWiDQjv7TDW1jC+rnkatkepFg0F6Pax88BtahFUl0evCeUit6H17yotcld
- lVLioNO5gyo4nXgqhzDI5F3e3XDM/calXALzic7AsQs/4b71tuhqN9xWp0rq0vsT
- xOfpAP36XvpK1e5wr6oHV+fbpJMhkw3Q/08rYXDivXIHZvdDuyMIK9xSGOc+GCZN
- +l61j1rqBJgBd4sSuSYms4EfgcSICxLwrR0FjjIsPw==
-X-ME-Sender: <xms:Oe5oariF1vsTNT3FKJhe-wONL-zMp5P7LvZfPkxp49lIbr9gFNqldw>
- <xme:Oe5oasUqsmlKQbKpITVI0BeiyH5hOEWEnun3pbXBDQUSJHbY1-8up26kw-9Vcqw8u
- ufzTdjGTBuqwi20SyxZAqIRlylJEdhnGZxPw9gcSp9qBDvv6ziBQ4U>
-X-ME-Received: <xmr:Oe5oaqPmeTIEY_-wu0xOVLYQA1TnVk98VTA-3IiP7acH69FmqexzTc2T0LfVTBqbA9qfWSU9CYNaHbsuVmjsVIqAQv92pPoHbbk0IXxBmm3YaygOo4lvVmbUQw>
-X-ME-Proxy-Cause: dmFkZTF08tH0abgo4h86GppyqKneRZNZXbdrEpQ/daSHdGPM+KCG6eKqb/juIy/0hXmW2j
- GOM+2P0evUg7GfnKUn9nBfCPdA0WsDDKFj52Q1AW+5rgaKY6H6fJYrXiNl024I0PfaxdyZ
- 3LZhvNEKd1be8sBeLtmZ6jVJIzGqq5nW0pj8h2kzkPuDzUQVGTkUIZM45YbWnqcN0Q2swq
- VgNdYNQ4NebuwfKYd7Ij39ZZxS6m5n1tB3V3op8reaUSFdZz498l9rUjZgZdEQ3WK6uB1g
- B6v4R9J6ofQjFK2R1MSR3H2TtQHznAR6gd0Chm/SFoV5cGuNmVg9DBONsJKp6hnSma0qfL
- 4XgkMxoTo8paZOACDtPxYk/vOFREg6zQ39+7eSsnEcB5hHIbvPNueXW384J+BcFhxUBqkU
- Pl64pkudeRUmYsUXyB77V27ICL2r9mPT5N+tvpknncfoaH5Cp0Ui6WrPIvOI3G1uGyRosf
- sfOzQa8YtBPxO3jQfiTEmixJZZ8J6Kr1yUBYaRxjtdfV2aVciETDMNC5hUJxVyAAql54NL
- 6vyO2T5MUX7BYFZAnUW91Sv1A/uj1Sv6Ezo5IGbyV2JmHku0ik4ERWX5suwFopDgR5cYz7
- +S/bhAoHwVNCrvwGUPH+ZNPY4p94zaZqBWti/GSGz5b0MdpzzhsyJYXA9Sig
-X-ME-Proxy: <xmx:Oe5oagadM621wvyYPi3RGMCNxAFvtBOr7ofub2_EwPt3jLwqliRrmw>
- <xmx:Oe5oaupHE0hmA9vgQ_ieIdbTEcq7M2YGS9DDZtxfd52Fy_sxmTQBTg>
- <xmx:Oe5oakZeVCP0PJLH4gMR3ZO-kRqzI1UUdqvkZbsSx5VAVo2A9KitGQ>
- <xmx:Oe5oamSDiN7OWbjeScbDdf_upegIFGGufhO889woiPeJ7o3qMoH07w>
- <xmx:Oe5oankzSi3HqCLbQCEPy4JhcZO3rFRsv7GRADDSliwgP84_FZlJ7JKi>
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1785261634; x=
+ 1785348034; bh=/TtEQXPk16auxIOaY+Xnq34xyZiCgmr4O2lVrdENHxQ=; b=i
+ dgDuHkKSPjtmrjjF/qn/fWqTR508nMoo9fvLglMsNRIHk6ze7WE0fzuqeB1IQu3K
+ eiluW8yN+4Ob/OjBLY4rXw4OJxETR4LlzSb0JEl+VX0jHqSaWu8UqBqdi2Rv4q+c
+ OyzVY9xHbDPP6jPczlpOctwWReYWZ4XRIP1IGiI6Q0XGOR61fDOhb5Gnz5Lh67ny
+ DKAN3JgbO3vXBkEyjDZfrVOR8eqqOUYMLJmLBgKGdUcQSB1HLOvkaN+A2Rl5i226
+ jjTCfycFuBU0YuToUl2MYOSGn2QbkxfVuC1Up34C/HznGfhJdJo0jC4mICwzhSuB
+ yNQdfl8QKqwWKS2HIgU8Q==
+X-ME-Sender: <xms:Qu5oaqKbTqJ9eK7Bmgd6HZuJv1qlCvV9SPjijg7mDVkXBYateappKQ>
+ <xme:Qu5oakuwV-MfMvRSK_7_a5mi9moPLMT7st8haEQvGuuwGTtrhHQtwkRdN5r3bfM0i
+ JYYnZfI7FxCVy_bSF6rN5PLHHDzSXKDYtsRV99H_zyP0S4oFBaHkHw>
+X-ME-Received: <xmr:Qu5oauVG-6pwYYJX629clZleBNZOMGqFEPibhJ1HkIrlsxdw7kfTrGpsc434G50OMmjrwxJ3LiwsfCvBKrkEav-nyVozrmmSweb2zxgFvzCp-EyRrTEcDcHUXQ>
+X-ME-Proxy-Cause: dmFkZTFObtFZ0S9XoA6JusdJFz/Dpr4TfI7w4J2+u3NKGWTHrUpO2Au3H29XjmsbbVfgUZ
+ pOSlja/qDFIsPO5UBlnFGkOafmj8IgESJmVIyVH35db2pxDBz6HGywBEzXLBezr5pyG/1P
+ 77+Ny2ne1a2rQL4qesFFaK9wZOhV9dLwtFUpCkOha8a25HmNc4WBCeTswNdjTOyOimuriW
+ UCBCSOh7U9YqRwTDZstEFU5hrBqQtKTK6KJU+RqZ60azzRBmknC90baCGSIE4dUzb2mIb3
+ PFwWjSn2BRjk5PZuPZaRMrxSywOEhIYs/8CzmuBALgv883dhiEzZeCqgMsoQiB5o++l0Og
+ uGiboYRqPZbiU2AbcU5HT2E/TNbPKA8nTgZznT/9VKmRlsRG8oUHvhCXdGSHtNYugDZff+
+ 81fraaxaRoO6wc5nCsdWXWB9Ll9uz0WvqZ+HajM919H4HhiRYm1H0NuVVsdgwht0gVJPz9
+ wtDj8rxpYW6TlUvCeKawwbdLKRQHmtRN0IFJ710ctcDNWAjXq+b+nBpOg335Q10eTtrDwS
+ icoTCrm1NGA5PyifAOxo8tDEOT6rzudjwa5Kg0uQYg5beSK7SmpQqbGR5WqwYtWsL10iDc
+ wkFUboA3/Vp0kJ/dnmnGIb6wB1CJF/Po2HNQOZ5xExhGF9wfYT0KeyMUxJLQ
+X-ME-Proxy: <xmx:Qu5oaviiV41AHxbHSLD4F1rFD4Zdb10aYt6fX8WjAKuZyy6I59rCWA>
+ <xmx:Qu5oampj27hxSZ_dNxEmZT9umLiyvNR66qoi8rIWRobP4O4LT2PRLA>
+ <xmx:Qu5oalFGFHQQZlJ0tT-1UepQ8SIWMDj52C-QCcCXVKl2Hxy3Igm1sQ>
+ <xmx:Qu5oar6ygX3yo9GazRNOl1zso7R5s7LUvbkR4_GDcBSoQDYC54wsnA>
+ <xmx:Qu5oaoqy9VK42-RPJWDPlJutPZOxnQ0bpYQ5e3jArCyd42_WyVB5OMcC>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Jul 2026 14:00:24 -0400 (EDT)
+ 28 Jul 2026 14:00:33 -0400 (EDT)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Klaus Jensen <k.jensen@samsung.com>
-Subject: [PULL 0/4] hw/nvme fixes
-Date: Tue, 28 Jul 2026 20:00:14 +0200
-Message-ID: <20260728180018.3574-1-its@irrelevant.dk>
+ Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
+Subject: [PULL 4/4] hw/nvme: fix unintentional integer overflow in shift
+Date: Tue, 28 Jul 2026 20:00:18 +0200
+Message-ID: <20260728180018.3574-5-its@irrelevant.dk>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260728180018.3574-1-its@irrelevant.dk>
+References: <20260728180018.3574-1-its@irrelevant.dk>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -105,34 +111,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Klaus Jensen <k.jensen@samsung.com>
 
-Hi,
+Fix potentially overflowing shift operation.
 
-The following changes since commit de5eb7c4dd3ef5688b14007134eb11ff4973580c:
+Cc: qemu-stable@nongnu.org
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Suggested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Resolves: Coverity CID 1663674
+Fixes: ec917cd49918 ("hw/nvme: fix FDP set FDP events")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+---
+ hw/nvme/ctrl.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-  Merge tag 'hw-misc-20260728' of https://github.com/philmd/qemu into staging (2026-07-28 10:04:08 -0400)
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index acd10fcc67fa..bd6ad64b2000 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -196,6 +196,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/bitops.h"
+ #include "qemu/cutils.h"
+ #include "qemu/error-report.h"
+ #include "qemu/log.h"
+@@ -6625,7 +6626,8 @@ static uint16_t nvme_set_feature_fdp_events(NvmeCtrl *n, NvmeNamespace *ns,
+         if (!shift && event_type) {
+             continue;
+         }
+-        event_mask |= (1 << nvme_fdp_evf_shifts[events[i]]);
++        event_mask =
++            deposit64(event_mask, nvme_fdp_evf_shifts[events[i]], 1, 1);
+     }
+ 
+     if (enable) {
+-- 
+2.53.0
 
-are available in the Git repository at:
-
-  https://gitlab.com/birkelund/qemu.git tags/pull-nvme-20260728
-
-for you to fetch changes up to c39e05af439a3a2bd58a847fc30d7eb590fcf61e:
-
-  hw/nvme: fix unintentional integer overflow in shift (2026-07-28 19:59:01 +0200)
-
-----------------------------------------------------------------
-nvme queue
-
-----------------------------------------------------------------
-Alexander Mikhalitsyn (1):
-      hw/nvme: use GPtrArray for blocker_features
-
-Daniel Paziyski (1):
-      hw/nvme: fix assertion failure on subregion removal
-
-Klaus Jensen (2):
-      hw/nvme: fix cross-namespace copy dif buffer overflow
-      hw/nvme: fix unintentional integer overflow in shift
-
- hw/nvme/ctrl.c | 57 +++++++++++++++++++++++++++------------------------------
- 1 file changed, 27 insertions(+), 30 deletions(-)
 
