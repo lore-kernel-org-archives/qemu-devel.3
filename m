@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 631DBC53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 17:39:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A83FFC54F54
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 17:40:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wolkx-0007th-GM; Tue, 28 Jul 2026 13:38:19 -0400
+	id 1wolkb-0007UE-4U; Tue, 28 Jul 2026 13:37:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wolks-0007in-0E
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 13:38:14 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wolkZ-0007SR-L2
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 13:37:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wolkn-0005wq-3J
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 13:38:11 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wolkX-0005uA-L8
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 13:37:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785260288;
+ s=mimecast20190719; t=1785260273;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MOBkLdj0jrd1jP/+IUoTpp53NS0nyiizBjoOlyLwujE=;
- b=UZ+A7Eid7s2YpkrF8pBEUl5pwSojh1QiY/UJcwm5kJCOvyegQ4kjk6WDhmAx/0Th2jQkLe
- lds302V/V63LqTZEKgafT/g2+DIQ+j4jcKXkpspC7J0ukPWvMmhYl78ppCjFZdbRqyFDir
- Jyr284D5O8Bi7qhZRkvhd73B6W1QB24=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=TUfP1MZqGOC1JM5FBKvAKia4foMHvKwuszAbsWpwtVs=;
+ b=bzZ1wH0JF8J65vDY0ZTaf1NRpnJgcf2i4mZv9Ff+30MP2DV/8Rdq//guswZdu0OC0vjg0h
+ WFg+OGVaZDIf9sPAQu4ZPYk+4j51ptBf2lotw+TBsmrovFf58cGlFAALvcfrmtlFPP2E7H
+ 91Pjgpj4y0o909xE3ssX6hoS/XQedLY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-126-QwmqRJ6ZOkm7qsHdmnKyaA-1; Tue,
- 28 Jul 2026 13:38:06 -0400
-X-MC-Unique: QwmqRJ6ZOkm7qsHdmnKyaA-1
-X-Mimecast-MFC-AGG-ID: QwmqRJ6ZOkm7qsHdmnKyaA_1785260285
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-244-XFA5Q5TxOjysqgU1VC8vfA-1; Tue,
+ 28 Jul 2026 13:37:51 -0400
+X-MC-Unique: XFA5Q5TxOjysqgU1VC8vfA-1
+X-Mimecast-MFC-AGG-ID: XFA5Q5TxOjysqgU1VC8vfA_1785260270
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2C8E219560A1; Tue, 28 Jul 2026 17:38:05 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 50664180057B; Tue, 28 Jul 2026 17:37:50 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.44.49.201])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CA79C19560AB; Tue, 28 Jul 2026 17:38:03 +0000 (UTC)
+ id D324D19560AB; Tue, 28 Jul 2026 17:37:48 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	stefanha@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 11/17] iotests/migrate-bitmaps-postcopy-test: replace the
- timing assertion with a content check
-Date: Tue, 28 Jul 2026 19:37:33 +0200
-Message-ID: <20260728173739.352078-12-kwolf@redhat.com>
+Subject: [PULL 03/17] block/qapi: take stats->lock when reading BlockAcctStats
+ for query-blockstats
+Date: Tue, 28 Jul 2026 19:37:25 +0200
+Message-ID: <20260728173739.352078-4-kwolf@redhat.com>
 In-Reply-To: <20260728173739.352078-1-kwolf@redhat.com>
 References: <20260728173739.352078-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -61,14 +61,13 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,67 +85,88 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Denis V. Lunev" <den@openvz.org>
 
-`downtime * 10 < postcopy_time` was an unnormalized wall-clock
-heuristic (commit e80a4150a5) that fails on fast hosts, where the
-bitmap payload now transfers in under a second.
+bdrv_query_blk_stats() reads BlockAcctStats's counters, latency
+histogram, and per-interval TimedAverage stats without stats->lock,
+while block_account_one_io() updates the same fields under that lock
+from an iothread. timed_average_min()/max()/avg() make this worse
+than a stale read: they call check_expirations(), which can reset a
+window's sum/count/min/max -- a write, not just a read -- so this is
+a genuine race with a concurrent writer, not merely a slower reader
+like the scalar counters.
 
-Check the actual invariant instead: right after RESUME, bitmap0's
-content hash on the destination must not yet match the fully
-migrated value. Throttle max-bandwidth first, since all-zero chunks
-skip the payload write and would otherwise let a fast host finish
-the transfer before the check runs.
+Take stats->lock for the whole call, both to close the race and to
+make the returned snapshot internally consistent (previously each
+field could reflect a different instant relative to concurrent
+updates).
+
+block_acct_queue_depth() used to take the lock itself on every call;
+since bdrv_query_blk_stats() is its only caller and now already holds
+the lock, that would self-deadlock. Make it require the caller to
+hold stats->lock instead (documented and asserted).
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 CC: Kevin Wolf <kwolf@redhat.com>
 CC: Hanna Reitz <hreitz@redhat.com>
 CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Message-ID: <20260715103451.1930909-4-den@openvz.org>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Message-ID: <20260724111311.4086859-3-den@openvz.org>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- .../tests/migrate-bitmaps-postcopy-test           | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ include/block/accounting.h | 1 +
+ block/accounting.c         | 3 +--
+ block/qapi.c               | 3 +++
+ 3 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test b/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
-index c519e6db8c7..33ff2b861f7 100755
---- a/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
-+++ b/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
-@@ -160,12 +160,26 @@ class TestDirtyBitmapPostcopyMigration(iotests.QMPTestCase):
+diff --git a/include/block/accounting.h b/include/block/accounting.h
+index b1cf417b572..12d32460927 100644
+--- a/include/block/accounting.h
++++ b/include/block/accounting.h
+@@ -116,6 +116,7 @@ void block_acct_invalid(BlockAcctStats *stats, enum BlockAcctType type);
+ void block_acct_merge_done(BlockAcctStats *stats, enum BlockAcctType type,
+                            int num_requests);
+ int64_t block_acct_idle_time_ns(BlockAcctStats *stats);
++/* Caller must hold stats->stats->lock. */
+ double block_acct_queue_depth(BlockAcctTimedStats *stats,
+                               enum BlockAcctType type);
+ int block_latency_histogram_set(BlockAcctStats *stats, enum BlockAcctType type,
+diff --git a/block/accounting.c b/block/accounting.c
+index 6e06c7609eb..038af370170 100644
+--- a/block/accounting.c
++++ b/block/accounting.c
+@@ -318,10 +318,9 @@ double block_acct_queue_depth(BlockAcctTimedStats *stats,
+     uint64_t sum, elapsed;
  
-         self.vm_b.cmd('migrate-set-capabilities', capabilities=caps)
+     assert(type < BLOCK_MAX_IOTYPE);
++    assert(qemu_mutex_trylock(&stats->stats->lock) == -EBUSY);
  
-+        # Throttle so the chunks covering our discards (the only ones
-+        # not skipped by the all-zero fast path) can't outrun the check
-+        # below.
-+        self.vm_a.cmd('migrate-set-parameters', max_bandwidth=16536)
+-    qemu_mutex_lock(&stats->stats->lock);
+     sum = timed_average_sum(&stats->latency[type], &elapsed);
+-    qemu_mutex_unlock(&stats->stats->lock);
+ 
+     return (double) sum / elapsed;
+ }
+diff --git a/block/qapi.c b/block/qapi.c
+index eabfbfc2585..1dfac510918 100644
+--- a/block/qapi.c
++++ b/block/qapi.c
+@@ -535,6 +535,8 @@ static void bdrv_query_blk_stats(BlockDeviceStats *ds, BlockBackend *blk)
+     BlockAcctTimedStats *ts = NULL;
+     BlockLatencyHistogram *hgram;
+ 
++    qemu_mutex_lock(&stats->lock);
 +
-         self.vm_a.cmd('migrate', uri='exec:cat>' + fifo)
+     ds->rd_bytes = stats->nr_bytes[BLOCK_ACCT_READ];
+     ds->wr_bytes = stats->nr_bytes[BLOCK_ACCT_WRITE];
+     ds->zone_append_bytes = stats->nr_bytes[BLOCK_ACCT_ZONE_APPEND];
+@@ -624,6 +626,7 @@ static void bdrv_query_blk_stats(BlockDeviceStats *ds, BlockBackend *blk)
+         = bdrv_latency_histogram_stats(&hgram[BLOCK_ACCT_ZONE_APPEND]);
+     ds->flush_latency_histogram
+         = bdrv_latency_histogram_stats(&hgram[BLOCK_ACCT_FLUSH]);
++    qemu_mutex_unlock(&stats->lock);
+ }
  
-         self.vm_a.cmd('migrate-start-postcopy')
- 
-         event_resume = self.vm_b.event_wait('RESUME')
-         self.vm_b_events.append(event_resume)
-+
-+        # bitmap0 can't already have its final content: that requires
-+        # the bit data to have actually arrived.
-+        result = self.vm_b.qmp('x-debug-block-dirty-bitmap-sha256',
-+                               node='drive0', name='bitmap0')
-+        assert result['return']['sha256'] != all_discards_sha256
-+
-+        self.vm_a.cmd('migrate-set-parameters', max_bandwidth=0)
-+
-         return (event_resume, discards1_sha256, all_discards_sha256)
- 
-     def test_postcopy_success(self):
-@@ -186,7 +200,6 @@ class TestDirtyBitmapPostcopyMigration(iotests.QMPTestCase):
-         downtime = event_dist(event_stop, event_resume)
-         postcopy_time = event_dist(event_resume, event_complete)
- 
--        assert downtime * 10 < postcopy_time
-         if debug:
-             print('downtime:', downtime)
-             print('postcopy_time:', postcopy_time)
+ static BlockStats * GRAPH_RDLOCK
 -- 
 2.55.0
 
