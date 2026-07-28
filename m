@@ -4,93 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C28CC54EFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 11:17:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93933C531F9
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 11:21:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wofnj-0001V6-NE; Tue, 28 Jul 2026 07:16:47 -0400
+	id 1wofrv-0003gM-Kq; Tue, 28 Jul 2026 07:21:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wofnc-0001S3-A5
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 07:16:41 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wofnZ-0005dn-Mp
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 07:16:40 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4956869750eso28097785e9.2
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 04:16:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785237395; x=1785842195; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=+VC5XlZjOD0If4uBQba9NfUJ8lBSE0okGvUEe+SC8+M=;
- b=sQT+3ouVbvuv6tj5giuRpBKDmh+T8Tu5aWeGFzulT3mA7L2kMVh2y2/nipk8ftsMIk
- dSPtr7nmEN8IeiQeDuH2T5E+9TmF4KPIrTFu6AgMJU+6q06TGpkSnYKG/yZK8U2bDobJ
- n0NNgYjsGecf2VwNVKw6b0uJzddHyZxNFlkms+e6yk+guE/tOReNHkFEbhd7dab6AcCN
- n9dLeb8nDohr08r6fS0bt9KMoX/X1TqCw9jzUBdTshnofAMJlEmsZ38Iz3jD5ZzAx4Eu
- QiaUb0zTgUqexqGKMI0zLZbVZ+QZR4SwQ+2jpf/m+uLEsT8OeF+58GqFbp9Rsg711/Ge
- DktQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785237395; x=1785842195;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=+VC5XlZjOD0If4uBQba9NfUJ8lBSE0okGvUEe+SC8+M=;
- b=NcRXOg84Ftn2rBJS9AbdK9akntQh4eajnKzToYo45Uhdoxya/edtwpmHmxtMrGQi0T
- c2l4mRmlCJ5zCD7aVYQkqFemwyvnRkDFyk7sgIfA+ffkh665hF/K7cjD9ORgd3uUYb3k
- eWypolbfEi4ir3imBZ1CYoNopZ83TXNOGrmpENzEi7h4X8E6Y0F5VCl8T83YbpTX1SGK
- 4IXLRwyA4nfA2Ar1WFqgUwuJ1xdWH50KK6Y5w7Ft3SMmNjVZVm4qABPZHpX0E0GbhHLm
- wZSGQIlKQFvuF35Dgi+S79dwGggtpraBx4u3mbJfEeFO+5awxFJrjGyjhlpUJ17FgY0w
- cCHw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrRGk4rA7KRwOch/IG1TYopARFGodVdAhmYZQP4v/OIADsZ0i2up4K1xn6DdsdaFKv6v74AnBFK3diL@nongnu.org
-X-Gm-Message-State: AOJu0YzCmgdS0LCBFm4zHXjChS8ar0c9r6PYMOPH6W+f0aFOfvLlAxyf
- eKgynQVqC6+pZyOJnvQu1hd9+8Ys06fvwt+Slf8heyvAqPMBAUirQlm68kvywwJcoKVkPVrKxed
- wqpjW
-X-Gm-Gg: AR+sD11Y2wh8ohMathd6NALi/S7uF380RnGGhsTk1gPDVQWnB89n+4QilLwwEqgqMR8
- OWmau9I2acUrBh/NdxcTTnOW3RMyeZ6f8mVAyIWvUiOpUhTzB7oank5lnWdTUF2/h19T9fLCTcV
- w93jy6rMtBe1ZZsnzZEEYltLUn1LGaGYenunhGx80yj0vUxmIYyzJXebgGb3iprgvl/vxkCahim
- Hp8LFu2GTBDKKE/pd1q6tcBACyz4BIpQIYOBszEPuh17fJmaUZGYonrq+/MoPBMyxZG0TaOveQ8
- qUfIt3CnnMA0FGt9ecUgQrcCx2lTW1dw4QQPE95np9uflS99OHMt2FtQiuCrmly0MQg6KoyEJzv
- vt4WEusqXAQQQYeGg/cDMbggHyMOX9EU/sdkogy7rwRJSGAEGSMixSxI2vVuOcdID+wafmYvulU
- LbqcueXgPTQCrjoEukuwNS4WfdjUwNGJpACkG2256RHZd67hLj+4Jf0amRDn88alzsb914VVzy3
- 176TsoMyNU=
-X-Received: by 2002:a05:600d:844e:20b0:495:5375:2510 with SMTP id
- 5b1f17b1804b1-496c6568a37mr15038315e9.24.1785237395488; 
- Tue, 28 Jul 2026 04:16:35 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4957b5ed646sm284546255e9.0.2026.07.28.04.16.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jul 2026 04:16:34 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH for-11.1 3/3] target/arm: Remove stale comment about WFE/SEV
- implementation
-Date: Tue, 28 Jul 2026 12:16:29 +0100
-Message-ID: <20260728111629.1705308-4-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260728111629.1705308-1-peter.maydell@linaro.org>
-References: <20260728111629.1705308-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <lpieralisi@kernel.org>)
+ id 1wofru-0003g9-HK
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 07:21:06 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lpieralisi@kernel.org>)
+ id 1wofrs-00075l-Pa
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 07:21:06 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id 3C08760A9E;
+ Tue, 28 Jul 2026 11:21:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC4031F000E9;
+ Tue, 28 Jul 2026 11:20:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1785237661;
+ bh=tMmthg5QOwk/FUXaXgk/6L7Fh6QZ5tRAI7epZh6STjY=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=cs8I++fp+QyWQn6MvZa/IFmUpxSlRWOpIjNyPxnhgd6xrKyMJC+C/f6mqniHyaAPD
+ R6Ziqi28s/xfDKGE9kBpMw1T8dZcAff7t8r6/ZvX+LgSpBA7Qjw/3nbB9zWaXKfJdS
+ 3UEiQbAMhl3Qx82xtgekAe+jqOu348xm+H2IpTLzxRZaO7iv2+vd7UUZ3gOlEZQGfA
+ spKgnQ2xvQUdhZXI0JkFmbEzoW+lLM/8npqP6SoeT7lHXPnn7WObyxXeZ3NKpHeewj
+ 4At8XyXC7VmeS45wm9DufLnU67iOXrgldg7sZm6FxOAGhEwybBGiDtJaPtWmUTgGxh
+ Hao2MWx19ZBjw==
+Date: Tue, 28 Jul 2026 13:20:56 +0200
+From: Lorenzo Pieralisi <lpieralisi@kernel.org>
+To: Michael Roth <michael.roth@amd.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
+ berrange@redhat.com, armbru@redhat.com, pankaj.gupta@amd.com,
+ isaku.yamahata@intel.com, xiaoyao.li@intel.com,
+ chao.p.peng@linux.intel.com, david@kernel.org, ashish.kalra@amd.com,
+ ackerleytng@google.com
+Subject: Re: [PATCH RFC 10/12] accel/kvm: Don't default to private attributes
+ for in-place conversion
+Message-ID: <amiQmARN-r2RSaax@lpieralisi>
+References: <20260528000416.8161-1-michael.roth@amd.com>
+ <20260528000416.8161-11-michael.roth@amd.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260528000416.8161-11-michael.roth@amd.com>
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=lpieralisi@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,28 +75,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We forgot to remove a comment about WFE/SEV only being implemented
-for M-profile when we added the A-profile support for this; delete
-the stale text.
+On Wed, May 27, 2026 at 07:03:35PM -0500, Michael Roth wrote:
+> Without in-place conversion, QEMU can still access shared memory to load
+> initial state into guest memory prior to launch even if the GPA's memory
+> attributes default to private, since userspace is accessing a completely
+> separate pool of memory. With in-place conversion, all these accesses
+> would need to first be converted to shared, then back to private, since
+> the memory all comes from guest_memfd and only shared memory can be
+> accessed by userspace.
+> 
+> To avoid sprinkling these differences in behavior throughout QEMU when
+> in-place conversion is enabled, just default to shared. This does not
+> compromise guest security, since Confidential VMs will necessarily
+> enforce this via trusted entities, and simply generate implicit page
+> state changes if their default expectations don't match KVM's. However,
+> in most cases a guest will explicitly convert memory to a particular
+> state before actually using it, so even these implicit conversion
+> requests should be rare.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/cpu.h | 1 -
- 1 file changed, 1 deletion(-)
+I assume you want to prevent peppering code with convert-in-place
+conditional paths where, if we default to private, certain mem copies
+to guest memory would fault.
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 03a30afcbed..c0492c8dfbc 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -766,7 +766,6 @@ typedef struct CPUArchState {
-     /*
-      * The event register is shared by all ARM profiles (A/R/M),
-      * so it is stored in the top-level CPU state.
--     * WFE/SEV handling is currently implemented only for M-profile.
-      */
-     bool event_register;
- 
--- 
-2.43.0
+Flip side: we default to shared, we leave the current code paths unchanged
+(that assume double backing) but we end up (eg on CCA) populating guest memory
+twice, once with a copy to shared guest memfd memory (that is basically
+useless because populating in CCA is destructive) and then populating
+the guest memory region using CCA KVM interface (KVM_ARM_RMI_POPULATE).
 
+I am just thinking aloud and sharing what I have noticed so far.
+
+Lorenzo
+
+> Signed-off-by: Michael Roth <michael.roth@amd.com>
+> ---
+>  accel/kvm/kvm-all.c | 21 ++++++++++++++++++++-
+>  1 file changed, 20 insertions(+), 1 deletion(-)
+> 
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index fd01435a0f..c3d399517d 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -1808,7 +1808,26 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml,
+>              abort();
+>          }
+>  
+> -        if (memory_region_has_guest_memfd(mr)) {
+> +        /*
+> +         * Without in-place conversion, QEMU can still access shared memory
+> +         * to load initial state into guest memory prior to launch even if
+> +         * the GPA's memory attributes default to private, since userspace
+> +         * is accessing a completely separate pool of memory. With in-place
+> +         * conversion, all these accesses would need to first be converted
+> +         * to shared, then back to private, since the memory all comes from
+> +         * guest_memfd and only shared memory can be accessed by userspace.
+> +         *
+> +         * To avoid sprinkling these differences in behavior throughout QEMU
+> +         * when in-place conversion is enabled, just default to shared. This
+> +         * does not compromise guest security, since Confidential VMs will
+> +         * necessarily enforce this via trusted entities, and simply generate
+> +         * implicit page state changes if their default expectations don't
+> +         * match KVM's. However, in most cases a guest will explicitly
+> +         * convert memory to a particular state before actually using it, so
+> +         * even these implicit conversion requests should be rare.
+> +         */
+> +        if (memory_region_has_guest_memfd(mr) &&
+> +            !(current_machine->cgs && current_machine->cgs->convert_in_place)) {
+>              err = kvm_set_memory_attributes_private(start_addr, slot_size);
+>              if (err) {
+>                  error_report("%s: failed to set memory attribute private: %s",
+> -- 
+> 2.43.0
+> 
 
