@@ -4,129 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB6DAC53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 09:41:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C842C54EFC
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 09:41:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woeJE-0002c0-Dj; Tue, 28 Jul 2026 05:41:12 -0400
+	id 1woeJL-0002l1-63; Tue, 28 Jul 2026 05:41:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1woeJB-0002Zz-DN
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 05:41:09 -0400
+ id 1woeJG-0002dy-Vv
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 05:41:15 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1woeJ9-0007Od-Ls
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 05:41:09 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1woeJF-0007QI-8z
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 05:41:14 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66S82Ghr2128814
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 09:41:05 GMT
+ 66S82Eji2026962
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 09:41:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- u/byRxww6h1eTsTIyxFmwIVT8X+SFfGh7WiYz2U2f1s=; b=AqPhFsJL88cOtGk2
- BfRo3c1WK/tm7Ki9PBvLLrJ2XTXQjMNCDpwZO8EX0+7d/y32zwPsMbPEGe4HGpoM
- KjmxNf4q+Thz++3jStywynIkNaj3BH0qZWDIqSP8lqSU843piRyDU/z4mksH1rct
- EaLewsZYXQs/N+eCJ/9OPqni6KuTtCxmzTOYYGsadr87h2liHjkd41YxNkjpMkHN
- Ya+my+0jnLt4bOSFXrUdCpDOeypiIz5HwgarVs+ykYnumf3VTY/AHj9zBZyv9LfO
- Gc0x1NKK1Wu0pqkgekFJY4AXx+Mv3GGo2/B8shOYD9ztaV1aa8x+ZbvIESFp3GnD
- Pkb53w==
+ cUMY7buvUujjwmjvw1tjC7sd0Ar7z/xxnVlDZDXYTMM=; b=SMhTE+PVDHEXPb71
+ tswbFjZHxRy5I7dsSSlKdeSnxR5waF/2BlflUa7QZCWYfuWhk3j15B/Qh/UldWYz
+ Gs0xAu0bWgxJvLU2q2sHZGpL/5ak8OjSpsSHk69PKn1uM1IwgKQerl1+rpIA2PU9
+ ttO4rCJRXQlzIRQxqB2UHCU4ywnqeMFPpdz9DZzj2bUQQ6Kigt5n87CNJ28VMlIm
+ ITeuR/hZUz0d0KyjcvYSgWVs01e7HA4JwnceSRQzcE8ga8lek+jSuU7Ot70xTuzM
+ cZNinAcX+pxJ/BoK6iajiwGMXgkGBslO0jpA7o0OkyArQTduOv2H/Aie3yqHg2p5
+ VKgUfw==
 Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
  [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fpbn8bh7g-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fpq9hgraa-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 09:41:05 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 09:41:12 +0000 (GMT)
 Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-51c1a97644aso45880581cf.2
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 02:41:05 -0700 (PDT)
+ d75a77b69052e-51a8db414c7so54235011cf.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 02:41:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1785231665; x=1785836465; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1785231672; x=1785836472; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=u/byRxww6h1eTsTIyxFmwIVT8X+SFfGh7WiYz2U2f1s=;
- b=bXiod4GZgkl3+usoSxvNt9W3o8MOOKQM5OcjRSmOUJPIu5ewVbRqFnDr+KiDLjI+t4
- eeE0zcR9b2beF9xPduZnzJzYEtCGeYJUBH6w4YITFvHAKMdxxnHMKjpRm6Srxrnv03In
- pyc7V+rfDxaHWD0B52J+VFaAVqXn/uQloAH/7mxEmcOiOmyfR95R4frKkV/O8mzzeYW6
- IGSdZgcLCjq8zDHkpkKNuRHqRCeGrfoFKS+In1xGY0diYDyCY0wBcdkGKlcr/b1rEjcS
- VjU8i3XDiSQ9sKPSLNAQOTKrkFx+OzPvnq9Xz0sqqYMMZZxZVs8WESx9nSqq9rBdznII
- 6iZg==
+ bh=cUMY7buvUujjwmjvw1tjC7sd0Ar7z/xxnVlDZDXYTMM=;
+ b=aJ5oBZqA/V0Mr4ny2P3C0W8ZDsWdy83Y01NWnemKbSFq9LTcTIT0nqUNE8Paq7VXAq
+ 9TBDOZE0h01ycMo3S/z2LJbwjpBt78I1Ql+QvFiohl27UW78N7ZE5W04JgpVpkCcS5J7
+ do9obcZYndwSTJjGOqXKdHn3xRet4HLs+SRLTcmKn616rnd/MbqOo3aU9+Jz+/4Q3dWe
+ YMxkJdPSwcKr4bO0fikOhuP95W8imi06LrGQTt7TU42Zz5UtC7RuSxvYR/8GOO8uNmb8
+ 4sVX2vOJZJUs0aLXMIKftP02MUGFg7rx8sJVuXUyIHy5b7bwnHoBdi99PAJzl7RWHbZP
+ zfWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785231665; x=1785836465;
+ d=1e100.net; s=20251104; t=1785231672; x=1785836472;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=u/byRxww6h1eTsTIyxFmwIVT8X+SFfGh7WiYz2U2f1s=;
- b=bhxQ4PqBOGooO7UzDcGlwMhkGEb9FVo9MGKe1craWe4lxkGMr/o6Knc+QdZetWTmcY
- qIb3TaCD6uzd1Np5aE9CnJLZddm2t5xBGME/ezvmxtcx/RxORWi27jj+vBDlubl+jxL5
- jsBU7ZL9b8tKybbi8aIvSH6mG729/j7s5pvistYDeaVtOjwHUNRYPG0T1yqo0gATTNaF
- zCJd9HPtl6S6k3oFmxI6abPldbdoXsxeYhvsDchzquZphzoV3hGYGu23Elx9wtlyGYER
- Wu8lyYzMayRw++fdIQM0C8IkFF2b0qHkQ1D9R6Iud0vviK596WYF65brfAngROIZCeh1
- T+Eg==
-X-Gm-Message-State: AOJu0YxZru6I1EJh0jT3TVg21MmwpD/6KKxuN1tSY+2cZorXZof/d1Pr
- Xo6yz4duHZz5/8x58ADHatcFxCjugwHxsiLxFu4+qC635hhpiIoeYQ3Y9d8/TUFf62xvCtJIAac
- 5dbLxkTGKWJi3BdDnhMDnDCLf2dqIprphIp0YrPz4F3Dg5j/7LNBPAz9i92r5b5HtAg==
-X-Gm-Gg: AR+sD12naXnSLOypOjUfZ4IjrVne6+rNGL/BicffchC3GqA08JiH4RqjbcoPwTgv3v4
- yZaUkvr97DTjj6S7vsCs7RFaQOcJME/3wPnGJMho9vHaNo+aOTRDAg0v1qVdAisMAerhmWdWgCL
- luXO+j3mwwQFR5bYM2qEZblgofzbE9Ed5ZkXn9IE2lwXKpwHEd/XtM/R35gkHwQ0dSuX/ty5ILl
- 4ggjZxJOYd0sDNaKK51vpF2PHeMIi+aBaBIynyvv55D7KGuwk/tWeU8HMbRh0HNQbsbzJd7d8Z/
- BmZR1jWSEc+K3ENSsdrV/eBZe9TJX7g44GPX2btgMFkqxaCLStDlMTya/bF+yw0I7/tgmSdZw4A
- K7Jd70Vlk0DspAvSxCiczuULZLAwHSiPIzat2+eYIRmKkhIFleGDQtwDKVA==
-X-Received: by 2002:a05:622a:558b:b0:51c:667:7e30 with SMTP id
- d75a77b69052e-529d70d8521mr11364071cf.47.1785231665031; 
- Tue, 28 Jul 2026 02:41:05 -0700 (PDT)
-X-Received: by 2002:a05:622a:558b:b0:51c:667:7e30 with SMTP id
- d75a77b69052e-529d70d8521mr11363821cf.47.1785231664337; 
- Tue, 28 Jul 2026 02:41:04 -0700 (PDT)
+ bh=cUMY7buvUujjwmjvw1tjC7sd0Ar7z/xxnVlDZDXYTMM=;
+ b=FYnAjI5pg6/hOAOCQx7vxjIYVULgWn1dqa+DotXd6mRfnDcvm0shKqqQxxBHTD2x5a
+ NCTFlhZTi2w4evxWxvnOKyj67h1um8SCywDIjVwCsMzkJR2Yy0cT/i+H2vYrqIU7+DqY
+ qOBKLwdnMwDqtiNHWm7w+keYREYQNTWHsPFtFtrayRe+A9M2eC4P6mUg5ziHh3Z9k47u
+ mHDYKJbg5CfpSv44de+wBRU1i2b+sntBggkkXSzRB2U867q9aQP/oRRc3KfjcoSxwlSu
+ t3ZSFkP7cC9QbcTne/LD8T/8e7MbcTzGtbrdSjoJmUfVzEaPNrof7+blT7bFXFXoJY3m
+ LtGg==
+X-Gm-Message-State: AOJu0YwKAxJ4W0kQmn/jpD+kBXwm32wkRvEDQE2U1gMY6uqTpmOqIx1R
+ MBENLZ0hUygPgvCbjSC/cS8kFbOkYwDPI9yM0Lwf+LW7lq6YsJ8DbeuEza6MURZVXMUtBDMxuSF
+ OtXAgzVm1v30hXkeXVNT2G058ZeOqX7S5SvzHcAN6EDqJhsHTDsZw2+G1Pf7nLoqJuQ==
+X-Gm-Gg: AR+sD10tOaZ7FZ2jgxN+ShypcbnG2jzjeUsKOwn6Po2RLZyBf1fk0q9ljqBm+YMvT3L
+ 9CcmsQF41b4dhR2Qr7oJBLwTGuh7TMvMCAXF2ncOMC68atPhz6rrDwtN6LiXgD6nfrfSMpg8y2P
+ n8XNFPfr/pI2z6QqLQWApbbcRgTfd0RS96zmIZArY5h6KAxyZooNHq0BFBsq/0RuUIqIlGlqlDj
+ h0NA7yFUf0pYUAw2yZuzIb1IyO/1AST1AtvTZFWCkJe3CPjLboz9IM2BbhZfbZ/MVosS07KRO+k
+ ZGG7XVRKXvXUU8xcGizgnbf4xZnvf+uaqEKnwB/ygzQfi0RmRfyQ/FqVzQhFy/qFBInKEDP+Syv
+ 328KDSv7elEM2NoDmGpA3o/3iP+DfeXVlkkpfgXSkEG3M/eHLBKuDCpA97g==
+X-Received: by 2002:ac8:5f8a:0:b0:51a:8c9a:8fb3 with SMTP id
+ d75a77b69052e-529d72226d4mr11994801cf.68.1785231671678; 
+ Tue, 28 Jul 2026 02:41:11 -0700 (PDT)
+X-Received: by 2002:ac8:5f8a:0:b0:51a:8c9a:8fb3 with SMTP id
+ d75a77b69052e-529d72226d4mr11994501cf.68.1785231671074; 
+ Tue, 28 Jul 2026 02:41:11 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c66cebsm57977299f8f.30.2026.07.28.02.41.03
+ 5b1f17b1804b1-496c45cb67esm67587875e9.8.2026.07.28.02.41.10
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 28 Jul 2026 02:41:03 -0700 (PDT)
+ Tue, 28 Jul 2026 02:41:10 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 1/6] hw/net/xilinx_axienet: Don't write checksums off end of
- packet
-Date: Tue, 28 Jul 2026 11:40:50 +0200
-Message-ID: <20260728094055.12684-2-philmd@oss.qualcomm.com>
+Subject: [PULL 2/6] hw/sd/sdhci: Extract uSDHC-specific quirk
+Date: Tue, 28 Jul 2026 11:40:51 +0200
+Message-ID: <20260728094055.12684-3-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260728094055.12684-1-philmd@oss.qualcomm.com>
 References: <20260728094055.12684-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDA4MyBTYWx0ZWRfX0ypmpS1O66J2
- zsZwlA7KDzHPJr2ILFmDhzLOHBpAWtrzOY1TyjbTcXwU6/2j37Rw3u7Bga8ZK+cakhw/XOwOasW
- 1MfvSCsKqFcj2cvzzGLE+0i9a64FTqclhikZQzXoQVfE1TqDHSN6lDJSS1MNeKqdKHilzM53Sli
- 6z19KZOrGRl8ey+0MQHners5GRfTVC0NdNkUpSfPE9zTtMjA4ICKpA0xAGfsUUYJcZz6F/clQUQ
- AvMZycbzuJCkWoWASAgM28rbCuoimh/pCaaVkiS8VmB0c7Ppb9CgkfrgUg5+DwiJrfTPcYMXlhw
- J2qBIsSDaGU2wH3jPc6//Fqeo+yF1z83wFu9yvR1mx7dMy8fkVIY5RlWy4Ri7si3xKrgZ6IeCfX
- bWXb1O+VyJi9HLHyKRb/F2DyUKxdTrKWICj06fkRLOphfS6/2sVWP9YlL5vXyTqoG0vLmeEzjLx
- a+dAaNON/9BV2ynBW2g==
-X-Authority-Analysis: v=2.4 cv=RO+D2Yi+ c=1 sm=1 tr=0 ts=6a687931 cx=c_pps
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDA4MyBTYWx0ZWRfX9eLLy5WF1CMr
+ DL554uIXPUG83N2IeOHDpe44g2Fx8jkczpRtJ4J2N18faSxRXojEyZZmFq/YWRw7QVeyDEW+50y
+ +7gCa7vW6mVGNqPwE4jgtIuLOlB7pZg=
+X-Proofpoint-GUID: c0KyRfDKaO5QntFBC3JnHN9PmaWy0ZhF
+X-Proofpoint-ORIG-GUID: c0KyRfDKaO5QntFBC3JnHN9PmaWy0ZhF
+X-Authority-Analysis: v=2.4 cv=Aa6B2XXG c=1 sm=1 tr=0 ts=6a687938 cx=c_pps
  a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=p0WdMEafAAAA:8 a=KKAkSRfTAAAA:8 a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8
- a=JF9118EUAAAA:8 a=keMAUe95F7znPUNsns8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22 a=cvBusfyB2V15izCimMoJ:22 a=Fg1AiH1G6rFz08G2ETeA:22
- a=xVlTc564ipvMDusKsbsT:22
-X-Proofpoint-ORIG-GUID: ozyWDdBcZEspOTB7D2ZyeasMK8OPWFjd
-X-Proofpoint-GUID: ozyWDdBcZEspOTB7D2ZyeasMK8OPWFjd
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDA4MyBTYWx0ZWRfX6QrXYm++hNoK
- SaeDy3RShtAboeNZJXWaa1v1a6pHmOLbZB7ebSwmIzw3EtV5bpiRcmlF7H+E0Nx7Ebrik49bk91
- OnvKo0qoR7VLDKCP6M1PW2t4oBJAkWM=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=pGLkceISAAAA:8 a=69wJf7TsAAAA:8 a=FRSEYCzRAAAA:8 a=EUspDBNiAAAA:8
+ a=Rg1yqSK7o-gODesPaPkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=a_PwQJl-kcHnX1M80qC6:22 a=Fg1AiH1G6rFz08G2ETeA:22 a=H4N_Y-AU75W7NKDNhZlT:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDA4MyBTYWx0ZWRfX5cAZNQCTiq/X
+ WKVNuOuknfphNbVRYBXCN3Zg9g1TT9Feh5Ci2pSRsOWE6H7IP91ZJ8v7gP+5eM1To+pa4NsGW0h
+ 1ErJWo/2YRWNJgJmKhAl7jfizF2X7fs+eKid56ZYDPD1cMWs/cumrSmLt2y0Lx6PtKtzQtf1RR7
+ 3IdvP2rEbG4brHjOLGgdwcqsT2yQeb6LXbqyA2mlccrkhBp7PJAJ9z7lWT+qhc/F0KPh9KIrOqs
+ LlhuZUKuu8vGi4G5pPZ0Q4D3dxxFKCVvD4VlcT2Ig8ED7hE3XMeSUOngalcT0a56B8BGHM4k060
+ 0hDRlS4M4uzTKGphZYyIyMyryGW7jKhUFme2zowCpI2HxkSDCHoPPqUqnO5doEniYaRDEbQMo8f
+ WO4QgxP34dZrQmHNVV6FuQfkmhHFLOsQMLz32Qe/Bd93gqPzwi6daZkcumU5H+z6gjiAY0Y//Nc
+ bIBD9LLlf/6EFAYXPBQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-28_02,2026-07-27_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 phishscore=0 priorityscore=1501 spamscore=0
- lowpriorityscore=0 adultscore=0 clxscore=1015 malwarescore=0 bulkscore=0
+ impostorscore=0 adultscore=0 phishscore=0 malwarescore=0 clxscore=1015
+ lowpriorityscore=0 spamscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607280083
 Received-SPF: pass client-ip=205.220.180.131;
@@ -153,80 +151,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Bernhard Beschow <shentey@gmail.com>
 
-The xilinx_axienet device has ethernet checksum offloading, with a
-mode where the guest provides the offsets within the packet where
-the data to be checksummed starts, and where the final checksum
-should be written into the packet.
+In Linux, the ESDHC_MIX_CTRL quirk is guarded by esdhc_is_usdhc() while
+the eSDHC code path uses the standard SDHC interface. Extract the quirk
+into a new `usdhc_write()` function.
 
-We don't sanity check the TX_CSINSERT offset before writing the
-checksum data into it, which means the guest can pass us a value that
-is larger than the packet itself and cause us to write the checksum
-off the end of the buffer.  We also don't explicitly check the
-TX_CSBEGIN offset; this doesn't currently cause any problems because
-we will pass a negative length to net_checksum_add() which does
-nothing, but it's a potential trap for the future if the type
-used for the length gets changed to be unsigned.
-
-Explicitly check the offsets.  The datasheet doesn't say what happens
-if the guest misprograms this, so we choose to log an error and send
-the packet as-is.
+Fixes file system corruption on emulated i.MX53 where Linux'
+esdhc_is_usdhc() returns false. The same likely happens on e500 and
+imx25-pdk machines.
 
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3599
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: 75e98bc4f859 ("hw/sd/sdhci: Add TYPE_FSL_ESDHC_BE")
+Reviewed-by: Bin Meng <bin.meng@processmission.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Message-ID: <20260720201133.24796-3-shentey@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260706162704.787495-1-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/net/xilinx_axienet.c | 29 ++++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 11 deletions(-)
+ hw/sd/sdhci.c | 73 +++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 44 insertions(+), 29 deletions(-)
 
-diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c
-index 9f5f65ecfac..d35f4a847d6 100644
---- a/hw/net/xilinx_axienet.c
-+++ b/hw/net/xilinx_axienet.c
-@@ -922,20 +922,27 @@ xilinx_axienet_data_stream_push(StreamSink *obj, uint8_t *buf, size_t size,
-     if (s->hdr[0] & 1) {
-         unsigned int start_off = s->hdr[1] >> 16;
-         unsigned int write_off = s->hdr[1] & 0xffff;
--        uint32_t tmp_csum;
--        uint16_t csum;
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index c86dfa281f4..e58a6103970 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -1795,34 +1795,6 @@ esdhc_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+         sdhci_write(opaque, offset, value, size);
+         break;
  
--        tmp_csum = net_checksum_add(s->txpos - start_off,
--                                    buf + start_off);
--        /* Accumulate the seed.  */
--        tmp_csum += s->hdr[2] & 0xffff;
-+        if (start_off > s->txpos || write_off + 2 > s->txpos) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: offsets outside packet, skipping checksum\n",
-+                          TYPE_XILINX_AXI_ENET);
-+        } else {
-+            uint32_t tmp_csum;
-+            uint16_t csum;
+-    case ESDHC_MIX_CTRL:
+-        /*
+-         * So, when SD/MMC stack in Linux tries to write to "Transfer
+-         * Mode Register", ESDHC i.MX quirk code will translate it
+-         * into a write to ESDHC_MIX_CTRL, so we do the opposite in
+-         * order to get where we started
+-         *
+-         * Note that Auto CMD23 Enable bit is located in a wrong place
+-         * on i.MX, but since it is not used by QEMU we do not care.
+-         *
+-         * We don't want to call sdhci_write(.., SDHC_TRNMOD, ...)
+-         * here because it will result in a call to
+-         * sdhci_send_command(s) which we don't want.
+-         *
+-         */
+-        s->trnmod = value & UINT16_MAX;
+-        break;
+-    case SDHC_TRNMOD:
+-        /*
+-         * Similar to above, but this time a write to "Command
+-         * Register" will be translated into a 4-byte write to
+-         * "Transfer Mode register" where lower 16-bit of value would
+-         * be set to zero. So what we do is fill those bits with
+-         * cached value from s->trnmod and let the SDHCI
+-         * infrastructure handle the rest
+-         */
+-        sdhci_write(opaque, offset, val | s->trnmod, size);
+-        break;
+     case SDHC_BLKSIZE:
+         /*
+          * ESDHCI does not implement "Host SDMA Buffer Boundary", and
+@@ -1891,9 +1863,52 @@ static void fsl_esdhc_le_init(Object *obj)
+     qdev_prop_set_uint8(dev, "sd-spec-version", 2);
+ }
  
--        /* Fold the 32bit partial checksum.  */
--        csum = net_checksum_finish(tmp_csum);
-+            tmp_csum = net_checksum_add(s->txpos - start_off,
-+                                        buf + start_off);
-+            /* Accumulate the seed.  */
-+            tmp_csum += s->hdr[2] & 0xffff;
- 
--        /* Writeback.  */
--        buf[write_off] = csum >> 8;
--        buf[write_off + 1] = csum & 0xff;
-+            /* Fold the 32bit partial checksum.  */
-+            csum = net_checksum_finish(tmp_csum);
++static void
++usdhc_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
++{
++    SDHCIState *s = SYSBUS_SDHCI(opaque);
++    uint32_t value = (uint32_t)val;
 +
-+            /* Writeback.  */
-+            buf[write_off] = csum >> 8;
-+            buf[write_off + 1] = csum & 0xff;
-+        }
-     }
- 
-     qemu_send_packet(qemu_get_queue(s->nic), buf, s->txpos);
++    switch (offset) {
++    case ESDHC_MIX_CTRL:
++        /*
++         * So, when SD/MMC stack in Linux tries to write to "Transfer
++         * Mode Register", uSDHC i.MX quirk code will translate it
++         * into a write to ESDHC_MIX_CTRL, so we do the opposite in
++         * order to get where we started.
++         *
++         * Note that Auto CMD23 Enable bit is located in a wrong place
++         * on i.MX, but since it is not used by QEMU we do not care.
++         *
++         * We don't want to call sdhci_write(.., SDHC_TRNMOD, ...)
++         * here because it will result in a call to
++         * sdhci_send_command(s) which we don't want.
++         *
++         */
++        s->trnmod = value & UINT16_MAX;
++        break;
++
++    case SDHC_TRNMOD:
++        /*
++         * Similar to above, but this time a write to "Command
++         * Register" will be translated into a 4-byte write to
++         * "Transfer Mode register" where lower 16-bit of value would
++         * be set to zero. So what we do is fill those bits with
++         * cached value from s->trnmod and let the SDHCI
++         * infrastructure handle the rest
++         */
++        sdhci_write(opaque, offset, val | s->trnmod, size);
++        break;
++
++    default:
++        esdhc_write(opaque, offset, val, size);
++        break;
++    }
++}
++
+ static const MemoryRegionOps usdhc_mmio_ops = {
+     .read = esdhc_read,
+-    .write = esdhc_write,
++    .write = usdhc_write,
+     .valid = {
+         .min_access_size = 1,
+         .max_access_size = 4,
 -- 
 2.53.0
 
