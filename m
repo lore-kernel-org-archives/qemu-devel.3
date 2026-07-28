@@ -4,109 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1812C531F9
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 10:09:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A2F5C53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 10:09:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woejW-00062G-Ii; Tue, 28 Jul 2026 06:08:22 -0400
+	id 1woekF-0006OS-3C; Tue, 28 Jul 2026 06:09:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1woejU-00061F-NJ
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 06:08:20 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1woejT-0002tw-44
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 06:08:20 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-84e0688b859so2247781b3a.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 03:08:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785233297; cv=none;
- d=google.com; s=arc-20260327;
- b=SgdxmIzxXy8/CZLZ6dcCdZrX7L8w1+2Xoekjh7AWp/PzoAkLoZDIHhN/0lDiT1M76w
- y2q1JQC6fgHJgz3YsXk2uTBCw4aoTOGaT2A5ykcJmdMyz3B+oLKcC4z3eI0LiYeVamSl
- ekk9iYrusVB6QWq5GxXKcA1TWbw8Xl3MfCMOrfMJtENyekkpoKFO+uu4vfKCmbOM2Rnz
- zqeKqo33+IOmhx/IUaURa/UgWY7eQvfN3ZHvW9TavtpmQbdiU2MQCAcqqNnu3Zbcj9vd
- Jp0drgffQSeOWAceFJcHkCHd70zgg8vrV3O/N2Hliy3m89bsmGy0IEBfoqJ7e3Opjezz
- geZA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=JIgVzNEEgAxZnCC/6kCbzkUK93pDVNFQiloOlOUEUK4=;
- fh=Ignx5OwJGf5MLaEhElmXotiHFVlMs56P+2OVxWOMZwQ=;
- b=PKnbFV5jBMEZo1cvyCCUw2Mt5RGG32PLDl7XvvoEcwiMn7QHViFOVOjqhN2VD8Z1hE
- 5rjj1spW8VWNlsIjUY7xZMfMQiWV4FHpmMFCPyLGBPtQY1uHITMLgZcbeAwv0iDeYLmy
- RcAxnUsSFn7Nf0cYNM9RlzmF+ZAd705ZEpYe7u0JCDSgOmMUxeWtyxGExL9eL7ikEtVE
- 6f+KrTUbeZssyW2UFahir17kKr3R/SMEkBmmj6fIrOJarTxdTEWPsIbJNhBgh1oAeyMx
- AgRDS/z8v1HmyWB/DlDqPstY8BZgoSL1UmLrDe6vICCDZ2PZOX50XuGFfdGLs5hSuzSk
- LYUQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785233297; x=1785838097; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=JIgVzNEEgAxZnCC/6kCbzkUK93pDVNFQiloOlOUEUK4=;
- b=CCdBrwGUocPztSKaNj+d/AjgOiYWLNkGqoq7B+i5sWuF8n+w/p63HDFspUdYluEdgF
- JyWfginpiEjbZ2+pGMJvQMHwN+pRpycO3m/B4oo9kSB1ZcYtNgmRMSONexZxbdt4LOKW
- lR9QKFUFP2DUKzUz36RrcPSgDatOrJ8vh4y62dMSnQky9DwcnD54vrCLOWlqwbPUSS3x
- jHQHoB8NxrEqeQyZA7fBdP1Yq3x+ZYrhCw6xfA8efvEERyF9GgvdeUEEJ4N5DuRDGE8r
- VNXR8CXmCpGs+/PGT6ULdO3GQF24W6+gnixRAqKMCUeHRHw0cTrcB+bB3hUowCy0ZeJN
- Wdkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785233297; x=1785838097;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=JIgVzNEEgAxZnCC/6kCbzkUK93pDVNFQiloOlOUEUK4=;
- b=q0Sw7OZV0dPNGT4pkDkfNrt31J9BBJ4TFOVofwwB8OJHT4IjWiVEWh2MFxTnHMPQ51
- VmGGm1HNFAB5xdft0z2z7WUm8ETZ0VYdLmZPjBI1epareQfVzYjvm5Gan8c0XCqqwZT4
- TdConyx5iVUeFLpD9ZP4FN1UO9VbZwrOT+spNP1cPH/dkEqjgePNxe6pvmQ55zXWO23P
- Hld+r5ur11h63GM/uosRpTDh/Fga/OaKHux1tYhIYoscLbKEAo851KQktnVJh5jzwQ3j
- xQxkeAAu/zakbDV1vl7S9Ukj+rGx7yICvYYYBSp1IBdSw+dFy4OHnzCkIu4WvfZS9Vpy
- cFjg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrAhBTzG3+v/Hz0wiuO0UP30+K95mHm6xlJR5JYBbrn8fC/n2SEPQJJE6JnzYbeo6og9p4P8uK/7hz3@nongnu.org
-X-Gm-Message-State: AOJu0YxclemPw+DSm1TivfrXI8lml9uzN4xXjbbzJEg3sGFIVPbU09z+
- ak3Bj0wdeAgJ5GQfKhjAhfkPz82Rrkwn2BJp7PTTUXYyaluyQVM89xqP3PItaZsHJmaT3/5Vb+F
- pCMJeFjVvk1y02Wk8YK3LFX0BnKQubFY=
-X-Gm-Gg: AR+sD13CR3N3tBqYmF5ndL19WTQRqsjxEnooTJ2XO5TRPC/Jc5WuXrMFF6rqMd4A2/X
- fDbJ1dyGmnZ2dLxMBeMFSDTMnG/G4OlvhCBUMp94pfjYgFK60xGnDPaBdtEGmIv0s7gu6ccfcOq
- aKJ4+9YMiwZDP4U76ZDCnDIIh0oS3YCISwrjieqtSs/nGsMSzpqWZrWRWb2D9GNVyQ8c7TcM4nk
- OonGbSOFuYLP9Lu1bf27HqgUICFPLel5vkZfnxOW3ULeFrw6iu8r1QnX1gWhM3UGtGiFriJh19g
- wFaMWnapJVafqt/CZg==
-X-Received: by 2002:a05:6300:4046:b0:3c0:b766:751b with SMTP id
- adf61e73a8af0-3c8aafa05famr2253524637.14.1785233297451; Tue, 28 Jul 2026
- 03:08:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1woek9-0006FI-D8; Tue, 28 Jul 2026 06:09:01 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1woek7-0002zv-N4; Tue, 28 Jul 2026 06:09:01 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id 2BF77C09C7;
+ Tue, 28 Jul 2026 13:08:58 +0300 (MSK)
+Received: from dtalexundeer-nx.yandex-team.ru (unknown
+ [2a02:6bf:803e:400:f26c:359c:adc2:62a4])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id f8aui7IXWGk0-Mq83LI1c; Tue, 28 Jul 2026 13:08:57 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1785233337;
+ bh=ujC3ej8bJDvizLd+7cawo2cVAZ82aDZXHA5LsNPROBA=;
+ h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=CedcR7LRSYy2Ja2w7GmZEgOsHTksKYFrQr+83HNaTamLgtdAtw459vXRmtcVqC8lm
+ rPkiBqpXee4d3D3EeNUt7ByZ9+YUiHEicVl6te9/fE6PSJ5NyawlgPvoLxHESVmF/8
+ ZbVTEvm+5WejtpXv5sWgIU5O8T95B3QHviiHyGKY=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+To: qemu-devel@nongnu.org
+Cc: Hanna Reitz <hreitz@redhat.com>, Jason Wang <jasowangio@gmail.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Jason Wang <jasowang@redhat.com>, Fam Zheng <fam@euphon.net>,
+ qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, virtio-fs@lists.linux.dev,
+ Kevin Wolf <kwolf@redhat.com>, zhenwei pi <zhenwei.pi@linux.dev>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Milan Zamazal <mzamazal@redhat.com>, Raphael Norwitz <rnorwitz@nvidia.com>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Subject: [PATCH v5 6/6] vhost-user-blk: use GET_VRING_BASE_SKIP_DRAIN during
+ inflight migration
+Date: Tue, 28 Jul 2026 15:08:41 +0500
+Message-Id: <20260728100841.3475774-7-dtalexundeer@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260728100841.3475774-1-dtalexundeer@yandex-team.ru>
+References: <20260728100841.3475774-1-dtalexundeer@yandex-team.ru>
 MIME-Version: 1.0
-References: <20260706173324.804340-1-peter.maydell@linaro.org>
-In-Reply-To: <20260706173324.804340-1-peter.maydell@linaro.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 28 Jul 2026 14:08:04 +0400
-X-Gm-Features: AUfX_mxvftl6QLAhz1gMtiJlX23nbPjTYQIYnLQwNdW1378YWXTbNuI4jb4Sj00
-Message-ID: <CAJ+F1C+TO_-ktDqJnbeXuaCdAsomQMTvWZ8aAFndn=JPF1+2sw@mail.gmail.com>
-Subject: Re: [PATCH 0/3] hw/display/exynos4210_find: Clamp windows to screen
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pf1-x432.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -118,44 +88,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 6, 2026 at 9:33=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
-org> wrote:
->
-> The exynos4210_fimd device has a setup where the guest can program
-> both the overall size of the LCD screen and also the corners of
-> "windows" that define where the guest memory should appear on that
-> screen. The current code assumes that the guest is sensible and
-> puts the corners of windows inside the overall screen. If it doesn't
-> then we will try to copy data to an address that is outside the
-> interfal framebuffer memory that we allocate to be the size of the
-> screen.
->
-> This patchset clamps the window coordinates to be within the screen
-> size. Patches 1 and 2 are simple refactorings to make the third
-> patch easier to read.
->
-> This fixes https://gitlab.com/qemu-project/qemu/-/work_items/3795
+Currently during live migration vhost-user-blk sends GET_VRING_BASE to
+stop vrings, which causes the back-end to drain all in-flight I/O before
+returning. This blocks the migration source until all I/O completes,
+adding significant downtime proportional to the I/O load.
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+When inflight-migration is enabled and the device is stopping due to
+live migration (RUN_STATE_FINISH_MIGRATE), send GET_VRING_BASE_SKIP_DRAIN
+instead. This instructs the back-end to immediately suspend in-flight
+I/O and record it in the shared inflight region, which is then migrated
+to the destination host along with the rest of the device state.
 
->
-> thanks
-> -- PMM
->
-> Peter Maydell (3):
->   hw/display/exynos4210_fimd: Factor out finding screen width/height
->   hw/display/exynos4210_fimd: Pass width to draw_line functions
->   hw/display/exynos4210_fimd: Clamp windows to screen size
->
->  hw/display/exynos4210_fimd.c | 54 ++++++++++++++++++++++++++----------
->  1 file changed, 39 insertions(+), 15 deletions(-)
->
-> --
-> 2.43.0
->
->
+If the back-end does not support VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN,
+migration is aborted with an error in pre_save rather than hitting an
+assert at runtime.
 
+Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+---
+ hw/block/vhost-user-blk.c      | 30 ++++++++++++++++++++++++------
+ hw/virtio/vhost-user.c         |  3 +--
+ include/hw/virtio/vhost-user.h |  1 -
+ 3 files changed, 25 insertions(+), 9 deletions(-)
 
---=20
-Marc-Andr=C3=A9 Lureau
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index 156ed6de30..9531d92e48 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -135,10 +135,7 @@ static bool vhost_user_blk_inflight_needed(void *opaque)
+ {
+     struct VHostUserBlk *s = opaque;
+ 
+-    bool inflight_migration = virtio_has_feature(s->dev.protocol_features,
+-                               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
+-
+-    return inflight_migration;
++    return s->inflight_migration;
+ }
+ 
+ 
+@@ -239,11 +236,14 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
+         return 0;
+     }
+ 
++    bool skip_drain = vhost_user_blk_inflight_needed(s) &&
++                      runstate_check(RUN_STATE_FINISH_MIGRATE);
++
+     force_stop = s->skip_get_vring_base_on_force_shutdown &&
+                  qemu_force_shutdown_requested();
+ 
+     ret = force_stop ? vhost_dev_force_stop(&s->dev, vdev, true) :
+-                       vhost_dev_stop(&s->dev, vdev, true, false);
++                       vhost_dev_stop(&s->dev, vdev, true, skip_drain);
+ 
+     err = k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false);
+     if (err < 0) {
+@@ -375,7 +375,6 @@ static int vhost_user_blk_connect(DeviceState *dev, Error **errp)
+     vhost_dev_set_config_notifier(&s->dev, &blk_ops);
+ 
+     s->vhost_user.supports_config = true;
+-    s->vhost_user.supports_inflight_migration = s->inflight_migration;
+     ret = vhost_dev_init(&s->dev, &s->vhost_user, VHOST_BACKEND_TYPE_USER, 0,
+                          errp);
+     if (ret < 0) {
+@@ -598,10 +597,29 @@ static struct vhost_dev *vhost_user_blk_get_vhost(VirtIODevice *vdev)
+     return &s->dev;
+ }
+ 
++static bool vhost_user_blk_pre_save(void *opaque, Error **errp)
++{
++    VHostUserBlk *s = VHOST_USER_BLK(opaque);
++
++    bool inflight_migration_enabled = vhost_user_has_protocol_feature(&s->dev,
++                               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN);
++
++    if (vhost_user_blk_inflight_needed(s) && !inflight_migration_enabled) {
++        error_setg(errp, "can't migrate vhost-user-blk device: "
++                         "backend doesn't support "
++                         "VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN "
++                         "protocol feature");
++        return false;
++    }
++
++    return true;
++}
++
+ static const VMStateDescription vmstate_vhost_user_blk_inflight = {
+     .name = "vhost-user-blk/inflight",
+     .version_id = 1,
+     .needed = vhost_user_blk_inflight_needed,
++    .pre_save_errp = vhost_user_blk_pre_save,
+     .fields = (const VMStateField[]) {
+         VMSTATE_VHOST_INFLIGHT_REGION(inflight, VHostUserBlk),
+         VMSTATE_END_OF_LIST()
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index bf455daa44..03b8bc20f9 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -2571,8 +2571,7 @@ static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
+             }
+         }
+ 
+-        if (!u->user->supports_inflight_migration ||
+-            !virtio_has_feature(protocol_features,
++        if (!virtio_has_feature(protocol_features,
+                                 VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD)) {
+             protocol_features &= ~(1ULL <<
+                                VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
+diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
+index 47c13f8677..78b4fba27f 100644
+--- a/include/hw/virtio/vhost-user.h
++++ b/include/hw/virtio/vhost-user.h
+@@ -73,7 +73,6 @@ typedef struct VhostUserState {
+     GPtrArray *notifiers;
+     int memory_slots;
+     bool supports_config;
+-    bool supports_inflight_migration;
+ } VhostUserState;
+ 
+ /**
+-- 
+2.34.1
+
 
