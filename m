@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66F8AC53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 18:00:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7670CC53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 18:00:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wom5h-0003uk-AG; Tue, 28 Jul 2026 13:59:45 -0400
+	id 1wom6R-0004QG-L0; Tue, 28 Jul 2026 14:00:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wom5f-0003uZ-MT
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 13:59:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1wom6O-0004Pb-Tb
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 14:00:29 -0400
+Received: from fout-a3-smtp.messagingengine.com ([103.168.172.146])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wom5d-0001EB-T0
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 13:59:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785261580;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=cS0EzTAQDiqM2NCjwARPepeKeyD6JcAXZzR3bdlB7Tw=;
- b=Spq3gGCmdsYVPBXcw/4YKLQmmx/VrDWzVWdiMZ6lRsLleZuUCez9MGAFFCy+5WR38Fvr2J
- bmcHI9OLOlSPky3AcI+ZV+LB8PiQBRdmjN1xn/n9lnsK0FV407Fsto6SlF4tCvynZ6y/Tq
- 5Cb2m1TcD18t2QfB8/IIC3flHKQRyuU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-425-IQMTAg7WOgKLtMfjyeIIWw-1; Tue,
- 28 Jul 2026 13:59:38 -0400
-X-MC-Unique: IQMTAg7WOgKLtMfjyeIIWw-1
-X-Mimecast-MFC-AGG-ID: IQMTAg7WOgKLtMfjyeIIWw_1785261576
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8521019560B7; Tue, 28 Jul 2026 17:59:35 +0000 (UTC)
-Received: from localhost (unknown [10.2.17.47])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EA5A1180044F; Tue, 28 Jul 2026 17:59:32 +0000 (UTC)
-Date: Tue, 28 Jul 2026 13:59:31 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Connor Kite <connorkite@gmail.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Haixu Cui <quic_haixcui@quicinc.com>,
- Raphael Norwitz <rnorwitz@nvidia.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Milan Zamazal <mzamazal@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- qemu-block@nongnu.org, virtio-fs@lists.linux.dev,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- zhenwei pi <zhenwei.pi@linux.dev>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
- Eugenio =?iso-8859-1?Q?P=E9rez?= <eperezma@redhat.com>,
- Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
-Subject: Re: [PATCH RFC 11/15] hw/virtio/vhost-user: create isolation region
-Message-ID: <20260728175931.GI371693@fedora>
-References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
- <20260723-vhost-user-isolated-memory-v1-11-6b97c439eb28@gmail.com>
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1wom6N-0001Vh-1w
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 14:00:28 -0400
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailfout.phl.internal (Postfix) with ESMTP id EE737EC03EB;
+ Tue, 28 Jul 2026 14:00:25 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-02.internal (MEProxy); Tue, 28 Jul 2026 14:00:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:message-id:mime-version
+ :reply-to:subject:subject:to:to; s=fm1; t=1785261625; x=
+ 1785348025; bh=4KVBolDTcVreHTFkDRgdLiRHcN1OPMBH1qRNKYHGYRQ=; b=I
+ 0iwQYJsKs32AiS3ohhcna+TTTdOWDdXj5rBd0yz29ZATqkkjt1qQx/L3BqplpLuP
+ z25KD0ZD14+2oEwhI0UM31esS5AXME4jKuIkuHmA6KFHEwfG9ArHAkXcfzmk3kDV
+ OijNR4t5+m/S/BupCzoulKeixfiJbYjYW1BLtcgHycgqwFHTlM33HJwpCubwuJpm
+ mouJQuVx1lWxnx5sP6BOPlxrEVEEP01TrMB5iLrw6L9DRlrc+eyuStay8V6ylY/b
+ PJxfJBhBShFT8cUMnXPtCAMiYow0ItxfgfrpZ4BXDism8JV/RSgllz/uXifRxqyK
+ OGorKxzRCDvL+xD+hxt9g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm2; t=1785261625; x=1785348025; bh=4KVBolDTcVreHTFkDRgdLiRHcN1O
+ PMBH1qRNKYHGYRQ=; b=IMGLKLEpbQJ18rvbxaG4Z/cp3N/+SIEuDVRAmZo2QAtV
+ mrikdRS29Wk407IVStHEV3IU1FmGv941920lRohQWYc/MwdxMAiH2+FAvlaRVAsa
+ q+qUzEoWiDQjv7TDW1jC+rnkatkepFg0F6Pax88BtahFUl0evCeUit6H17yotcld
+ lVLioNO5gyo4nXgqhzDI5F3e3XDM/calXALzic7AsQs/4b71tuhqN9xWp0rq0vsT
+ xOfpAP36XvpK1e5wr6oHV+fbpJMhkw3Q/08rYXDivXIHZvdDuyMIK9xSGOc+GCZN
+ +l61j1rqBJgBd4sSuSYms4EfgcSICxLwrR0FjjIsPw==
+X-ME-Sender: <xms:Oe5oariF1vsTNT3FKJhe-wONL-zMp5P7LvZfPkxp49lIbr9gFNqldw>
+ <xme:Oe5oasUqsmlKQbKpITVI0BeiyH5hOEWEnun3pbXBDQUSJHbY1-8up26kw-9Vcqw8u
+ ufzTdjGTBuqwi20SyxZAqIRlylJEdhnGZxPw9gcSp9qBDvv6ziBQ4U>
+X-ME-Received: <xmr:Oe5oaqPmeTIEY_-wu0xOVLYQA1TnVk98VTA-3IiP7acH69FmqexzTc2T0LfVTBqbA9qfWSU9CYNaHbsuVmjsVIqAQv92pPoHbbk0IXxBmm3YaygOo4lvVmbUQw>
+X-ME-Proxy-Cause: dmFkZTF08tH0abgo4h86GppyqKneRZNZXbdrEpQ/daSHdGPM+KCG6eKqb/juIy/0hXmW2j
+ GOM+2P0evUg7GfnKUn9nBfCPdA0WsDDKFj52Q1AW+5rgaKY6H6fJYrXiNl024I0PfaxdyZ
+ 3LZhvNEKd1be8sBeLtmZ6jVJIzGqq5nW0pj8h2kzkPuDzUQVGTkUIZM45YbWnqcN0Q2swq
+ VgNdYNQ4NebuwfKYd7Ij39ZZxS6m5n1tB3V3op8reaUSFdZz498l9rUjZgZdEQ3WK6uB1g
+ B6v4R9J6ofQjFK2R1MSR3H2TtQHznAR6gd0Chm/SFoV5cGuNmVg9DBONsJKp6hnSma0qfL
+ 4XgkMxoTo8paZOACDtPxYk/vOFREg6zQ39+7eSsnEcB5hHIbvPNueXW384J+BcFhxUBqkU
+ Pl64pkudeRUmYsUXyB77V27ICL2r9mPT5N+tvpknncfoaH5Cp0Ui6WrPIvOI3G1uGyRosf
+ sfOzQa8YtBPxO3jQfiTEmixJZZ8J6Kr1yUBYaRxjtdfV2aVciETDMNC5hUJxVyAAql54NL
+ 6vyO2T5MUX7BYFZAnUW91Sv1A/uj1Sv6Ezo5IGbyV2JmHku0ik4ERWX5suwFopDgR5cYz7
+ +S/bhAoHwVNCrvwGUPH+ZNPY4p94zaZqBWti/GSGz5b0MdpzzhsyJYXA9Sig
+X-ME-Proxy: <xmx:Oe5oagadM621wvyYPi3RGMCNxAFvtBOr7ofub2_EwPt3jLwqliRrmw>
+ <xmx:Oe5oaupHE0hmA9vgQ_ieIdbTEcq7M2YGS9DDZtxfd52Fy_sxmTQBTg>
+ <xmx:Oe5oakZeVCP0PJLH4gMR3ZO-kRqzI1UUdqvkZbsSx5VAVo2A9KitGQ>
+ <xmx:Oe5oamSDiN7OWbjeScbDdf_upegIFGGufhO889woiPeJ7o3qMoH07w>
+ <xmx:Oe5oankzSi3HqCLbQCEPy4JhcZO3rFRsv7GRADDSliwgP84_FZlJ7JKi>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 28 Jul 2026 14:00:24 -0400 (EDT)
+From: Klaus Jensen <its@irrelevant.dk>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Klaus Jensen <k.jensen@samsung.com>
+Subject: [PULL 0/4] hw/nvme fixes
+Date: Tue, 28 Jul 2026 20:00:14 +0200
+Message-ID: <20260728180018.3574-1-its@irrelevant.dk>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="eVHUeOInXn1sYibu"
-Content-Disposition: inline
-In-Reply-To: <20260723-vhost-user-isolated-memory-v1-11-6b97c439eb28@gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=103.168.172.146; envelope-from=its@irrelevant.dk;
+ helo=fout-a3-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,279 +103,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---eVHUeOInXn1sYibu
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+From: Klaus Jensen <k.jensen@samsung.com>
 
-On Thu, Jul 23, 2026 at 03:30:10PM -0700, Connor Kite wrote:
-> If memory isolation mode is active for the vhost-user device adds
-> features to:
-> - Gather the size required for bounce buffers and vrings in shared
->   isolation region
-> - Allocate the required space in an anonymous file
-> - Create a vhost-iova-tree with space to map entire isolation region
-> - Map guest memory regions and shared vrings into the tree
-> - Release these resources upon backend cleanup
->=20
-> Signed-off-by: Connor Kite <connorkite@gmail.com>
-> ---
->  hw/virtio/vhost-user.c | 129 +++++++++++++++++++++++++++++++++++++++++++=
-++++++
->  1 file changed, 129 insertions(+)
->=20
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index f296b63fb9..710cf966f8 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -18,6 +18,7 @@
->  #include "hw/virtio/vhost-backend.h"
->  #include "hw/virtio/virtio.h"
->  #include "hw/virtio/virtio-net.h"
-> +#include "hw/virtio/vhost-iova-tree.h"
->  #include "chardev/char-fe.h"
->  #include "io/channel-socket.h"
->  #include "system/kvm.h"
-> @@ -25,6 +26,7 @@
->  #include "qemu/main-loop.h"
->  #include "qemu/uuid.h"
->  #include "qemu/sockets.h"
-> +#include "qemu/memfd.h"
->  #include "system/runstate.h"
->  #include "system/cryptodev.h"
->  #include "migration/postcopy-ram.h"
-> @@ -320,6 +322,13 @@ static VhostUserMsg m __attribute__ ((unused));
->  /* The version of the protocol we support */
->  #define VHOST_USER_VERSION    (0x1)
-> =20
-> +typedef struct IsolationRegion {
-> +    uint64_t base_addr;
-> +    uint64_t vring_base_addr;
-> +    uint64_t size;
-> +    int iso_fd;
-> +} IsolationRegion;
+Hi,
 
-The purpose of the base_addr and vring_base_addr fields is not obvious.
-I suggest adjusting the types, names, and adding comments to make the
-purpose clearer:
+The following changes since commit de5eb7c4dd3ef5688b14007134eb11ff4973580c:
 
-  typedef struct {
-      void *mem;           /* mapped shared memory */
-      size_t size;
-      uint64_t vring_iova;
-      int fd;              /* shared memory fd */
-  } IsolationRegion;
+  Merge tag 'hw-misc-20260728' of https://github.com/philmd/qemu into staging (2026-07-28 10:04:08 -0400)
 
-> +
->  struct vhost_user {
->      struct vhost_dev *dev;
->      /* Shared between vhost devs of the same virtio device */
-> @@ -353,6 +362,10 @@ struct vhost_user {
->       * by the backend (see @features).
->       */
->      uint64_t protocol_features;
-> +
-> +    /* Isolated memory data*/
-> +    struct IsolationRegion iso_memory;
+are available in the Git repository at:
 
-struct is not necessary since there is a typedef:
+  https://gitlab.com/birkelund/qemu.git tags/pull-nvme-20260728
 
-  IsolationRegion iso_memory;
+for you to fetch changes up to c39e05af439a3a2bd58a847fc30d7eb590fcf61e:
 
-> +    VhostIOVATree *iso_iova_tree;
+  hw/nvme: fix unintentional integer overflow in shift (2026-07-28 19:59:01 +0200)
 
-The IOVA tree seems to be closely used with IsolationRegion. Maybe this
-field should move into IsolationRegion?
+----------------------------------------------------------------
+nvme queue
 
->  };
-> =20
->  struct scrub_regions {
-> @@ -1109,6 +1122,121 @@ static int vhost_user_set_mem_table_postcopy(stru=
-ct vhost_dev *dev,
->      return 0;
->  }
-> =20
-> +/* TODO: Is there any notifier cleanup required here?*/
-> +static void cleanup_isolation_regions(struct vhost_dev *dev)
-> +{
-> +    struct vhost_user *u =3D dev->opaque;
-> +    if (u->iso_memory.base_addr) {
-> +        vhost_iova_tree_delete(u->iso_iova_tree);
-> +        u->iso_iova_tree =3D NULL;
-> +        memset(&u->iso_memory, 0, sizeof(IsolationRegion));
-> +        qemu_memfd_free((gpointer) u->iso_memory.base_addr, u->iso_memor=
-y.size,
-> +                         u->iso_memory.iso_fd);
-> +        u->iso_memory.base_addr =3D 0;
-> +    }
-> +}
-> +
-> +__attribute__((unused))
-> +static int init_isolation_regions(struct vhost_dev *dev,
-> +                                  VhostUserMsg *msg,
-> +                                  int *fds, size_t *fd_num)
-> +{
-> +    Error *err =3D NULL;
-> +    struct vhost_user *u =3D dev->opaque;
-> +    uint32_t nregions =3D dev->mem->nregions;
-> +    uint64_t buffer_reg_size =3D 0;
-> +    DMAMap newEntry =3D {
-> +        .perm =3D IOMMU_RW
-> +    };
-> +    g_autoptr(GArray) buffer_regions =3D
-> +        g_array_new(FALSE, TRUE, sizeof(DMAMap));
-> +
-> +    msg->hdr.request =3D VHOST_USER_SET_MEM_TABLE;
-> +
-> +    /* In case of reset, clear old regions*/
-> +    if (u->iso_memory.base_addr !=3D 0) {
-> +        cleanup_isolation_regions(dev);
-> +        vhost_iova_tree_delete(u->iso_iova_tree);
-> +    }
-> +
-> +    /* Gather information for bounce buffers to be mapped */
-> +    for (int i =3D 0; i < nregions; i++) {
+----------------------------------------------------------------
+Alexander Mikhalitsyn (1):
+      hw/nvme: use GPtrArray for blocker_features
 
-nregions is uint32_t, so i should also be uint32_t to avoid
-signed/unsigned comparisons.
+Daniel Paziyski (1):
+      hw/nvme: fix assertion failure on subregion removal
 
-> +        struct vhost_memory_region *dev_region =3D &dev->mem->regions[i];
-> +        hwaddr size =3D ROUND_UP(dev_region->memory_size,
-> +                      qemu_real_host_page_size());
-> +        newEntry.translated_addr =3D dev_region->guest_phys_addr;
-> +        newEntry.size =3D size - 1;
-> +        buffer_reg_size +=3D size;
-> +        g_array_append_val(buffer_regions, newEntry);
-> +    }
-> +
-> +    int num;
-> +    size_t desc_size;
-> +    size_t avail_size;
-> +    size_t driver_area_size;
-> +    size_t device_area_size;
-> +    size_t total_vring_size =3D 0;
-> +    size_t total_mmap_size;
-> +
-> +    /* Get space required for all vrings */
-> +    for (int j =3D 0; j < dev->nvqs; j++) {
-> +        num =3D virtio_queue_get_num(dev->vdev, dev->vq_index + j);
-> +        desc_size =3D sizeof(vring_desc_t) * num;
-> +        avail_size =3D offsetof(vring_avail_t, ring[num]) +
-> +                        sizeof(uint16_t);
-> +        driver_area_size =3D ROUND_UP(desc_size + avail_size,
-> +                            qemu_real_host_page_size());
-> +        device_area_size =3D ROUND_UP(offsetof(vring_used_t, ring[num]) +
-> +                                    sizeof(uint16_t),
-> +                                    qemu_real_host_page_size());
-> +        total_vring_size +=3D driver_area_size + device_area_size;
+Klaus Jensen (2):
+      hw/nvme: fix cross-namespace copy dif buffer overflow
+      hw/nvme: fix unintentional integer overflow in shift
 
-Please avoid duplicating the memory layout calculations. When packed
-vring support is added to vhost-shadow-virtqueue.c this will become more
-complex and it should be done in a single place. vhost-shadow-virtque.c
-should expose an API for the size calculation.
-
-> +    }
-> +
-> +    total_mmap_size =3D buffer_reg_size + total_vring_size;
-> +
-> +    /* Allocate and map an anonymous file to hold the isolation region */
-> +    u->iso_memory.base_addr =3D (uint64_t) qemu_memfd_alloc("iso_r",
-
-Please make the name unique (e.g. using dev->vdev->name).
-
-> +                              total_mmap_size,
-> +                              F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
-> +                              &u->iso_memory.iso_fd, &err);
-> +    u->iso_memory.size =3D total_mmap_size;
-> +
-> +    if (err) {
-> +        error_report_err(err);
-> +        cleanup_isolation_regions(dev);
-> +        return -1;
-> +    }
-> +
-> +    uint64_t last_addr =3D int128_get64(int128_add(u->iso_memory.base_ad=
-dr,
-> +                                                 total_mmap_size - 1));
-> +
-> +    /*
-> +     * Instantiates iova tree sized to map bounce buffers and vrings to =
-the
-> +     * isolation region in host va.
-> +     */
-> +    u->iso_iova_tree =3D vhost_iova_tree_new(u->iso_memory.base_addr, la=
-st_addr);
-
-Is it possible to use 0 as the IOVA base address so that QEMU's
-addresses aren't leaked to the vhost-user back-end? It's good security
-practice not to reveal memory addresses to the outside world because
-that information can be used to defeat address space randomization or
-infer memory addresses of other data structures.
-
-> +
-> +    assert(&u->iso_memory.iso_fd >=3D 0);
-
-The dereference operator should not be used here, it's the iso_fd value
-that is being tested.
-
-> +    DMAMap *map;
-> +    DMAMap vring_map =3D {
-> +        .perm =3D IOMMU_RW,
-> +        .size =3D total_vring_size - 1,
-> +        /*vrings are allocated on tree first, so will be assigned base a=
-ddr*/
-> +        .translated_addr =3D u->iso_memory.base_addr
-
-Why is this field assigned here, I think this field is used as the
-output of vhost_iova_tree_map_alloc() rather than an input (e.g. see
-vhost_vdpa_svq_map_rings())?
-
-> +    };
-> +
-> +    vhost_iova_tree_map_alloc(u->iso_iova_tree, &vring_map,
-> +                              vring_map.translated_addr);
-> +    u->iso_memory.vring_base_addr =3D vring_map.iova;
-> +    for (int i =3D 0; i < buffer_regions->len; i++) {
-> +        map =3D &g_array_index(buffer_regions, DMAMap, i);
-> +        vhost_iova_tree_map_alloc_gpa(u->iso_iova_tree, map,
-> +                                      map->translated_addr);
-> +    }
-> +
-> +    return 0;
-> +}
-> +
->  static int vhost_user_set_mem_table(struct vhost_dev *dev,
->                                      struct vhost_memory *mem)
->  {
-> @@ -2681,6 +2809,7 @@ static int vhost_user_backend_cleanup(struct vhost_=
-dev *dev)
->      g_free(u->region_rb_offset);
->      u->region_rb_offset =3D NULL;
->      u->region_rb_len =3D 0;
-> +    cleanup_isolation_regions(dev);
->      g_free(u);
->      dev->opaque =3D 0;
-> =20
->=20
-> --=20
-> 2.43.0
->=20
-
---eVHUeOInXn1sYibu
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmpo7gMACgkQnKSrs4Gr
-c8jNVQf+Poa/X1HyBYzQTgFsy72tIiN0Bwr8wmcum0Vf38D+2M7XV9+BOvmTqrpa
-WcsBmzrObSUb2USMP4TfKc5uojTEmmt1lttMeHBjMBjvX1QzmFCyOBUK5FMetHd4
-3Fnvqrr1dcIMEGgsN+gaCqDXJp0SV6suYjsjilYtitJB+4r3vqqHvh4TqrM6Zurl
-zSMxCsUAqr/7ZueoHe0FdJPL9j3XIsFZztJUyl3+5FpWaejjr1N/tIf2uLX35B3a
-s9z5wjDMRAbbhRlQUw1lzl1ss2JA6AIe6otJXMI9+pJ17n3lH9Zrrz/1SE8vwknd
-SrPehXGEg8u4T6TpdOAxxACtD65EPQ==
-=VyXq
------END PGP SIGNATURE-----
-
---eVHUeOInXn1sYibu--
-
+ hw/nvme/ctrl.c | 57 +++++++++++++++++++++++++++------------------------------
+ 1 file changed, 27 insertions(+), 30 deletions(-)
 
