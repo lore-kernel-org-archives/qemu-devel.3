@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A391C54F4C
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 13:47:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0ECCC54F4C
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 13:47:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woi9O-0005Tt-AN; Tue, 28 Jul 2026 09:47:18 -0400
+	id 1woi9P-0005UW-PS; Tue, 28 Jul 2026 09:47:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jdaley@linux.ibm.com>)
- id 1woi9M-0005Sb-Ok; Tue, 28 Jul 2026 09:47:16 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1woi9O-0005Tw-Iy; Tue, 28 Jul 2026 09:47:18 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jdaley@linux.ibm.com>)
- id 1woi9J-0000QV-Jc; Tue, 28 Jul 2026 09:47:16 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1woi9L-0000Qd-QW; Tue, 28 Jul 2026 09:47:18 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66SBIGXk854402; Tue, 28 Jul 2026 13:47:10 GMT
+ 66SBHbbF3258326; Tue, 28 Jul 2026 13:47:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=Rl+8KV6hQs7LOtHIoLKbABfULwvo828ZJ1JqlK/Id
- U0=; b=SrUlXCA8U18JAnVVP9EJBQrfmMja30yOj06GiC7huyDhi6+5AcXYcPOe2
- WaUqaaX8O5X8BvGcndrFPC+0RBfv5gkvg+ssQkCKSAw6x5oeNtQKt3M/40qqodjP
- XSgJyPqCfTPccMrn+gJNs0fA+IcCsCZxWmNOZRbfHU8hNA3kBNyCl1YSR81BkVk9
- bdsyf5F6TWetJrmvCD6T2vSEeBX7cUOwZjSRavy/aC/hZlV2Ppekwsz9wNXw0mh+
- a2mcmQmwz1PNgpQsvv795hlFQ0TEVCCtH+mNJDqfe34kyZn4Fe4rX3RvnV6U2ilq
- hxyD/8rtlSt+2/wgn/ytwRhDFMLBQ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0nmuq8-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=rMhSUEAN8Fbx637AD
+ 72JAnn4vRZCFE7sWuDOFd6pCFc=; b=IpSZrSrSK11wZWkb8i3VlTJHG8CL9tKNi
+ l2ma+hipgsc3dnb4MS5y9dvCFaqabNnk8O+gCdeROXDi8Pov88LiYW7egJqmjS6e
+ jGtZZLeCp6RpYem6X6bqNdqhCrak9fFsFI/kmK+u18kxVnqAl3Td6ENxu1JcvzGg
+ GaSAMEzdf1tHMm/nOxUxgHIJgK9nl65afiUSZJjRCrqqOOLpuBg1Guje+yvimHMg
+ LRepvX5bhSscaHkYjnXU+dKyzwdo8xPhZX86Ucii0KY5e0xnOdbvB+MDMwlVOrvN
+ fXXyocVi4ylBb8MivMiO/d5voZy4ncc1Tl2C1nzXven6S7Q64UyrQ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuycdekc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Tue, 28 Jul 2026 13:47:09 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66SDfFKF010623;
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66SDfQd3013366;
  Tue, 28 Jul 2026 13:47:09 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn7uw26w8-1
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fna5y1s4j-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Jul 2026 13:47:09 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66SDl5Km27656826
+ Tue, 28 Jul 2026 13:47:08 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66SDl5lE51970346
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Tue, 28 Jul 2026 13:47:05 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ED83F20043;
- Tue, 28 Jul 2026 13:47:04 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BC6BD20040;
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 080A320043;
+ Tue, 28 Jul 2026 13:47:05 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BF3A42004B;
  Tue, 28 Jul 2026 13:47:04 +0000 (GMT)
 Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with SMTP;
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with SMTP;
  Tue, 28 Jul 2026 13:47:04 +0000 (GMT)
 Received: by tuxmaker.boeblingen.de.ibm.com (Postfix, from userid 56370)
- id A41EB162592; Tue, 28 Jul 2026 15:47:04 +0200 (CEST)
+ id A5934162820; Tue, 28 Jul 2026 15:47:04 +0200 (CEST)
 From: Joshua Daley <jdaley@linux.ibm.com>
 To: farman@linux.ibm.com
 Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, cohuck@redhat.com,
@@ -68,47 +68,49 @@ Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, cohuck@redhat.com,
  marcandre.lureau@redhat.com, mjrosato@linux.ibm.com,
  jjherne@linux.ibm.com, jrossi@linux.ibm.com, zycai@linux.ibm.com,
  jdaley@linux.ibm.com
-Subject: [PATCH v2 0/1] pc-bios/s390-ccw: bound zipl menu strlen and replace
+Subject: [PATCH v2 1/1] pc-bios/s390-ccw: bound zipl menu strlen and replace
  VLA in zipl_print_entry
-Date: Tue, 28 Jul 2026 15:47:03 +0200
-Message-ID: <20260728134704.2924005-1-jdaley@linux.ibm.com>
+Date: Tue, 28 Jul 2026 15:47:04 +0200
+Message-ID: <20260728134704.2924005-2-jdaley@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260728134704.2924005-1-jdaley@linux.ibm.com>
+References: <20260728134704.2924005-1-jdaley@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDExOCBTYWx0ZWRfX12/hgE/jjw3w
- a07JjsIZbtdeURQdSOxsLNZpcIR7pbixsc+UriaC/yDzbDPrrJgPvzT/JTbORg9C8Y8A/seC/1P
- MUWBzkuFMyv6waNeA2yedJM4mZeDc74=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDExOCBTYWx0ZWRfXwY3wcBC7DcaI
- pWfnj71mVpYv4VSxMNIDi/yxJKam8OBMqQOVFVKg5lyfmUnyXP5NjjA2tASUwgny817S1FYgdsk
- t1PtWnZjQutYyOSp6p8Z0FPGJs0ddFIqtXTlIW+fGzbUxbnUkESndW8sw5JyvxeBTGRMI5LBr5N
- yplTIvOQXHnb0lLHYVw4ZRlKepGp1RnvdUVe9q10XQWzpokDx7GBeHVvco2LyIuzbjZcAX/4G/C
- BHPTi32lsS2rQwUmwTIfii/NM0pTDIJChDxiYVnuS/ddQzbg2dPPHug0kwR0NalGSXpJy8vT3NT
- 6Ea+qr1R5DKYwmsqx1CyxnlySFTz0Ourqmn+vwsZOipZjjwh6ZKuOj8vpDIvioZwY8zDl29RtWE
- IE0UdyDRSIWkMu8Po17xycwL+dOxt5PzAKGNRIYYh1JBxA1F1NNMWL/yHx9BYlSuuLh3ad6x5QX
- 3xqwoRPTzBV1P0G9TxA==
-X-Authority-Analysis: v=2.4 cv=b5WCJNGx c=1 sm=1 tr=0 ts=6a68b2dd cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Proofpoint-ORIG-GUID: G0kYXrmPiOURj6nMnUPCoUyhXOI4CA-g
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDExOCBTYWx0ZWRfXzpE7uE1h5PvI
+ 4GS6JbxCIu0Tb7R7rJqh2Vy4Z6t+gUwn8AVJWshUOj65H1L2APCw4Y7QRSPPfN6IvHoHJ4SUlJo
+ L0CZkVH6zC6vHZ3sYzppkYFpOEi4f1ex7LCaPDz1eefTSnmcaDTaD2V1IQHpyvbo2ZOAm2JXyY9
+ YHAExW78ur7CxhYvvKKOKEExX20ArJ1+dsA8q0NQai8FWWZogkwJq3yiayHibOgAqqaQXbGjvXe
+ zMXUTn4OzFlXFy4znVDu+JSlpbR7pOpm9Qv0JbIuvvDGdB8gpl7UWuHhe3/6+qM3jf8M37M9l4V
+ qc6xmPBl5018hTSocTFHVkc60fqYCIQ6kn/oVPBBvIUMv2+0gOTXs03/wwEc0QZEszkmqSIIvM9
+ UggC3ige+ExtMHrxB5iLzxAWRtD2ZFFNso+PVls0uziR5OSGRwR34oOr2dZ61wfWdWOHs6XT+hK
+ mKs7g4wTGLvPq+2UWuw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDExOCBTYWx0ZWRfX/qY7CCB9s17m
+ SHTVTmMtngB/ZzisWMHQFmnxHqudxzEvYDjRXL+Qt3GBz6HqQACOsqxHWcLc8AkdhvLGe8oNKe4
+ DXv3WCEvNbJfOJ1HVFqxLRKemXkVxZ4=
+X-Authority-Analysis: v=2.4 cv=AZeB2XXG c=1 sm=1 tr=0 ts=6a68b2dd cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=NzGWJsgcWuOPWxY40HQA:9
-X-Proofpoint-GUID: OlDFo4LnHkRgPnKIfA6ZsDA8NuDV-g6M
-X-Proofpoint-ORIG-GUID: OlDFo4LnHkRgPnKIfA6ZsDA8NuDV-g6M
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=OmDNG2-DsvkCiAtxb_cA:9
+X-Proofpoint-GUID: G0kYXrmPiOURj6nMnUPCoUyhXOI4CA-g
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-28_03,2026-07-28_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0 impostorscore=0
- bulkscore=0 phishscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0
+ spamscore=0 priorityscore=1501 phishscore=0 adultscore=0 impostorscore=0
+ clxscore=1015 malwarescore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607280118
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jdaley@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jdaley@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,27 +127,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The original version of this patch is part of the series
-"[PATCH 0/5] more hardening fixes for s390"
-from Christian Borntraeger <borntraeger@linux.ibm.com>.
+menu_get_zipl_boot_index() calls strlen() on a pointer into the middle
+of _s2 with no upper bound, so a stage-2 image whose blocks contain no
+NUL bytes causes strlen() to walk beyond _s2. The resulting length
+is then used to size a stack VLA in zipl_print_entry(), risking a stack
+overflow.
 
-Changes v1 -> v2:
+Fix by:
 
-- Added a condition after the banner skip that returns 0 (boot default)
-  before printing the banner, if there are no entries in menu_data.
+- Implementing strnlen(), a bounded version of strlen().
 
-- Modified commit message 2nd bullet, final sentence.
+- Adding a menu_data_end parameter to menu_get_zipl_boot_index() and
+  replacing both strlen() calls with strnlen() bounded by the remaining
+  buffer space. The loop guard also checks that the pointer has not
+  reached menu_data_end. The function returns 0 (boot default) if
+  somehow menu_data reaches menu_data_end before printing any entries.
 
-Joshua Daley (1):
-  pc-bios/s390-ccw: bound zipl menu strlen and replace VLA in
-    zipl_print_entry
+- Replacing the VLA char buf[len + 2] in zipl_print_entry() with a fixed
+  ZIPL_ENTRY_MAX + 2 (82-byte) buffer and truncating len before use.
 
+- Passing s2_end (_s2 + sizeof(_s2)) as menu_data_end at the one call
+  site in eckd_get_boot_menu_index(), so the bound is exactly the end of
+  the buffer.
+
+Fixes: f7178910845a ("s390-ccw: print zipl boot menu")
+Signed-off-by: Joshua Daley <jdaley@linux.ibm.com>
+---
  pc-bios/s390-ccw/bootmap.c  |  4 +++-
  pc-bios/s390-ccw/helper.h   | 10 ++++++++++
  pc-bios/s390-ccw/menu.c     | 29 +++++++++++++++++++++++------
  pc-bios/s390-ccw/s390-ccw.h |  2 +-
  4 files changed, 37 insertions(+), 8 deletions(-)
 
+diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+index 420ee32eff..662265171b 100644
+--- a/pc-bios/s390-ccw/bootmap.c
++++ b/pc-bios/s390-ccw/bootmap.c
+@@ -61,6 +61,7 @@ static uint8_t _s2[MAX_SECTOR_SIZE * 3] __attribute__((=
+__aligned__(PAGE_SIZE)));
+ static void *s2_prev_blk =3D _s2;
+ static void *s2_cur_blk =3D _s2 + MAX_SECTOR_SIZE;
+ static void *s2_next_blk =3D _s2 + MAX_SECTOR_SIZE * 2;
++static void *s2_end =3D _s2 + sizeof(_s2);
+=20
+ static inline int verify_boot_info(BootInfo *bip)
+ {
+@@ -308,7 +309,8 @@ static int eckd_get_boot_menu_index(block_number_t s1=
+b_block_nr)
+                 }
+             }
+=20
+-            return menu_get_zipl_boot_index(s2_cur_blk + banner_offset);
++            return menu_get_zipl_boot_index(s2_cur_blk + banner_offset,
++                                            s2_end);
+         }
+=20
+         prev_block_nr =3D cur_block_nr;
+diff --git a/pc-bios/s390-ccw/helper.h b/pc-bios/s390-ccw/helper.h
+index 8e3dfcb6d6..d9b7da444a 100644
+--- a/pc-bios/s390-ccw/helper.h
++++ b/pc-bios/s390-ccw/helper.h
+@@ -45,4 +45,14 @@ static inline void sleep(unsigned int seconds)
+     }
+ }
+=20
++static inline size_t strnlen(const char *s, size_t maxlen)
++{
++    size_t len =3D 0;
++
++    while (len < maxlen && s[len]) {
++        len++;
++    }
++    return len;
++}
++
+ #endif
+diff --git a/pc-bios/s390-ccw/menu.c b/pc-bios/s390-ccw/menu.c
+index b6a9a56d46..9b81154b0e 100644
+--- a/pc-bios/s390-ccw/menu.c
++++ b/pc-bios/s390-ccw/menu.c
+@@ -16,6 +16,7 @@
+ #include "s390-ccw.h"
+ #include "sclp.h"
+ #include "s390-time.h"
++#include "helper.h"
+=20
+ #define KEYCODE_NO_INP '\0'
+ #define KEYCODE_ESCAPE '\033'
+@@ -26,6 +27,9 @@
+ #define ZIPL_TIMEOUT_OFFSET 138
+ #define ZIPL_FLAG_OFFSET    140
+=20
++/* Max printable chars for a zipl boot menu entry */
++#define ZIPL_ENTRY_MAX 80
++
+ #define TOD_CLOCK_MILLISECOND   0x3e8000
+=20
+ #define LOW_CORE_EXTERNAL_INT_ADDR   0x86
+@@ -179,9 +183,13 @@ int menu_get_boot_index(bool *valid_entries)
+ /* Returns the entry number that was printed, or -1 on invalid entry */
+ static int zipl_print_entry(const char *data, size_t len)
+ {
+-    char buf[len + 2];
++    char buf[ZIPL_ENTRY_MAX + 2];
+     const char *p;
+=20
++    if (len > ZIPL_ENTRY_MAX) {
++        len =3D ZIPL_ENTRY_MAX;
++    }
++
+     ebcdic_to_ascii(data, buf, len);
+     buf[len] =3D '\n';
+     buf[len + 1] =3D '\0';
+@@ -196,7 +204,7 @@ static int zipl_print_entry(const char *data, size_t =
+len)
+     return atoi(p);
+ }
+=20
+-int menu_get_zipl_boot_index(const char *menu_data)
++int menu_get_zipl_boot_index(const char *menu_data, const char *menu_dat=
+a_end)
+ {
+     size_t len;
+     int entry;
+@@ -212,13 +220,22 @@ int menu_get_zipl_boot_index(const char *menu_data)
+         timeout =3D zipl_timeout * 1000;
+     }
+=20
+-    /* Print banner */
++    if (menu_data >=3D menu_data_end) {
++        return 0; /* Boot default */
++    }
++
++    /* Skip banner */
++    len =3D strnlen(menu_data, menu_data_end - menu_data);
++    menu_data +=3D len + 1;
++    if (menu_data >=3D menu_data_end || !(*menu_data)) {
++        return 0; /* No entries, boot default */
++    }
++
+     puts("s390-ccw zIPL Boot Menu\n");
+-    menu_data +=3D strlen(menu_data) + 1;
+=20
+     /* Print entries */
+-    while (*menu_data) {
+-        len =3D strlen(menu_data);
++    while (menu_data < menu_data_end && *menu_data) {
++        len =3D strnlen(menu_data, menu_data_end - menu_data);
+         entry =3D zipl_print_entry(menu_data, len);
+         menu_data +=3D len + 1;
+=20
+diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
+index 1e1f71775e..f6030a6071 100644
+--- a/pc-bios/s390-ccw/s390-ccw.h
++++ b/pc-bios/s390-ccw/s390-ccw.h
+@@ -76,7 +76,7 @@ void jump_to_low_kernel(void);
+=20
+ /* menu.c */
+ void menu_set_parms(uint8_t boot_menu_flag, uint32_t boot_menu_timeout);
+-int menu_get_zipl_boot_index(const char *menu_data);
++int menu_get_zipl_boot_index(const char *menu_data, const char *menu_dat=
+a_end);
+ bool menu_is_enabled_zipl(void);
+ int menu_get_enum_boot_index(bool *valid_entries);
+ bool menu_is_enabled_enum(void);
 --=20
 2.34.1
 
