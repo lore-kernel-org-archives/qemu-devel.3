@@ -4,107 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 315B9C54F51
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 21:05:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0114C54F51
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 21:05:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wooyw-0004XS-7f; Tue, 28 Jul 2026 17:05:02 -0400
+	id 1wooz8-0004kY-V1; Tue, 28 Jul 2026 17:05:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wooyb-0004UE-OF
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 17:04:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wooyY-0004U1-Rt
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 17:04:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wooyZ-0003j3-LP
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 17:04:37 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wooyU-0003hi-M9
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 17:04:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785272675;
+ s=mimecast20190719; t=1785272670;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6FT8OgjVcYPi7/KqauWOXOjhtabKrcCzvRSC05e9FEY=;
- b=LxAusN11SuYnNIgKzZR56xe4TZql9rbfLUhmse2Pb4p6wRC2ZtGfFUoiOmN3hs8pbxQKYF
- uYSPFQFIZyAjIIvmZ0JrwLrw807sx99mbr+uvbZOytKAlEgxmewxkQXKDsa3WHkA9LPGhd
- vSFbnCdY2jvYdcOOhtq/CsevloDIVk4=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Wgod9mpBIeEAPuUI2tKpiE28TzA1mnnfyKCqZ3+xNnc=;
+ b=LIQxqypYgUCzpbuqt276TPQK8SLm7leckvG83pAXCt/9OMgh+4ObG/BsbaBBiFwi2PR/1Q
+ b81iyG3rJytARfY3fDrvAmZdAwb3CGW1SNVLZtY2iDH8atIYLkCRsNYL+4FIS/7uNj2SSp
+ VwO6njeE1Q7tJ/CIX7vZncDSY4TQrxU=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-114-JFne_50zMGeLv_PvboYa1Q-1; Tue, 28 Jul 2026 17:04:33 -0400
-X-MC-Unique: JFne_50zMGeLv_PvboYa1Q-1
-X-Mimecast-MFC-AGG-ID: JFne_50zMGeLv_PvboYa1Q_1785272673
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-91931144870so42738185a.1
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 14:04:33 -0700 (PDT)
+ us-mta-509-BvA-K2jEPnOySNDx_XA6XA-1; Tue, 28 Jul 2026 17:04:28 -0400
+X-MC-Unique: BvA-K2jEPnOySNDx_XA6XA-1
+X-Mimecast-MFC-AGG-ID: BvA-K2jEPnOySNDx_XA6XA_1785272668
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-90284139cceso14484016d6.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 14:04:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785272673; x=1785877473; darn=nongnu.org;
+ d=redhat.com; s=google; t=1785272668; x=1785877468; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=6FT8OgjVcYPi7/KqauWOXOjhtabKrcCzvRSC05e9FEY=;
- b=iA8oaYGYHjvCyjpd/sa1JSZ8p2WRw1rxEwybopzFDqvxcEBkyq582ijiU0V4EDqAwV
- ildpTbGL/f3SqdlN1OZEmKRP5JdAuctm8YbgUYLA7zttjC8iiuXrIvXA9ncTfaXZq1C+
- vkboAQKAThsicercCFLekqygMHGm2N/hsNTxYBG/3Gap5lrI6LAwnBkW866nyDqA/2hX
- 0Obq5p0IKIb3t6lnj0B/bCzP3n07/4XiFLIC8JQosAGrkp9orj6jsmANdwVjED+tVPqc
- bIcV48TyE0L4QNiRMpPgUCuXrhAsOtKAuqY9n1fF8aJC7/1xbZExgbPWYFjCazfi25/J
- ycCQ==
+ bh=Wgod9mpBIeEAPuUI2tKpiE28TzA1mnnfyKCqZ3+xNnc=;
+ b=SYmCvnjMyVDpC8xTXI4tyqqykqZQoqPdGqJ4Oq6noGLUa6wbLRx36sTW8QIYeOD2rL
+ KGqzyzGaMtXgB1xM7aBsTReoTyulIp5Y57oV+MifbnYJYzFvD6x+ziJCxxct6ipj+CPP
+ 7yS9kB4ByqxEI9hgjzrRP9NtLEIRLexMTWhmxItmZY4XiDAt3bHg6IQwPnlu97CRbDxk
+ w+YjvTJE+bbWiHr0q9vYXBVbWy2jmIrHlcKS+uH1oMUvnoI31aFzG1H9iTaoB6t1+wEV
+ wvWGPhmjz1cJWflExC/FvwwWdBsOmk5fyoNDqsP0pC7HYAQ2RifY/JCFsWVPklgVoyf/
+ IBXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785272673; x=1785877473;
+ d=1e100.net; s=20251104; t=1785272668; x=1785877468;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=6FT8OgjVcYPi7/KqauWOXOjhtabKrcCzvRSC05e9FEY=;
- b=AzN8OjNeQoR+FWCajuDhqctj/8cW3QJLfA0n8U4o/uDdrW4GQ5l1/qz1AGMAg9XqVw
- Veh8W+wLj4M6EKaH4CFnHNdzorkKk0e7R/y4XTHqAcBsy9Vv3t1v8jFalDwPPd1GVUYz
- 33PwOC1A8rC7+7N8taW8xFfeE7E10ZNQFM1mLa9olnUe301SnajGYhyM3oCKYecfdmpr
- F4P2XeRhxCxk8oeUQ8ORbI8I76r2jMxEtFzfKvjPcEeYrIggSAKuhFMyKJLxXyd1Fz92
- NyEO77ubhMbfUBmCjVWmBIHdm1TtXo7ZymDeY7uF4EPsqwBLc/7lYKtpJ+dE9TYwPR7C
- wYaw==
-X-Gm-Message-State: AOJu0YxKFcOxch7uv82bQ+4+U92EAZnvH7tW4Q+zJYGwLjc+/T6FlH6Z
- 0q/PTqOKhKKEOZ4ImK4GFE9yor1WB0undYT1QXt/0ogL2OCHtRHZdo6DgQoereaZ85PFpfdJmKL
- DJdw1sk1dTGCnNwzKSi4SjQdOOezwowypWunQWJd73s9BimZS5kzQDkD3why4iBfbX2D3HNoONw
- /0nlWtkhcHQmTa1mgNQcUfhaf+RUqw+TC+OQXJpg==
-X-Gm-Gg: AR+sD11YVwKAl+E1TQZ6pEmlIsgs4xXVlgG0OBUHw4dtLYOVIbMuMudEUeH3XqG0vMT
- x++TSUFZhL9Cnmr8ZMCxZDSIs01fjnj1l5Th1nmeaK1JY4KT8WAT7HwOuBaTZSwYH8W+pHwJ3Cp
- aZrRV+Ci/iAtY+ltxIei7mH3sQIeA9wykQnPXvMaxfExwXgU1ZzBqIwwEDIAGY+LTzvVynfmpW7
- FGQQ7Kt/LpuJbLWuhIfuuiSUJoNNacPMSl1FbAoCMv5tfxHAwIJfwnA77hTl6kEoA+az2tfO0Ie
- yZXyjcoKjN3zA2kKqH0A0+0fA9BzGfuNVU/gwWAFrffAvTQjDTMyMX8CLW+kuzddtRxgfR7Kqru
- aIQDE1qFLuSypgtTkz0oUDXOWj5KMDF7pROoR12dQ1g26gYPEExTsZx9+
-X-Received: by 2002:a05:620a:7006:b0:92e:c117:5ed6 with SMTP id
- af79cd13be357-933027b20fbmr440073685a.86.1785272672999; 
- Tue, 28 Jul 2026 14:04:32 -0700 (PDT)
-X-Received: by 2002:a05:620a:7006:b0:92e:c117:5ed6 with SMTP id
- af79cd13be357-933027b20fbmr440068185a.86.1785272672299; 
- Tue, 28 Jul 2026 14:04:32 -0700 (PDT)
+ bh=Wgod9mpBIeEAPuUI2tKpiE28TzA1mnnfyKCqZ3+xNnc=;
+ b=tPeVA8W28ZLKWyC2uIV29wbr6qp+xNF+ZPnlA+Pxip/VllFvzgpqklPPici0SfU//h
+ CE22mrM49amxGCF6Gdg6ZPW1WWP8AJ/0apu/XodK8V5ai/ofBMJhE9JJICUXh7Jz5epH
+ JewmDCABoJ2zzuXlyvnmOr+rfiJsOjEc0vmnTojAdRrfJf6r+h0xF4NbcAB+bXsLWGfG
+ 2kIwn7W5TZrZseQlorOWngyoWT1HXEiYhv+YbduAsWjD17EHPgwgWfup1A2x+iobT3FQ
+ +tMh7NFDjJWrG3g7zd/2wYpdWEEg9N1zFTr0wAtuo9cdIrh6vj6towN28UbMM2oKyJ2k
+ VSFQ==
+X-Gm-Message-State: AOJu0YwIFG+8bFjQuLbS6bl0Sn2jrahIsoySCgwqdhFg/koJt5SV1JjO
+ b8yNAgKG3++Oj8ta858YfB5UqtBb/qUR7WGQcsuuI74IkA9rYRexa5FLRYE68O/O2Nn6N42+jzj
+ f6acBbv2k/XNe7udJ+pbRIMLqHXIBamt8veENh3kfSlG6KCs6QfjGzmekjgROnGCHLx7sVuUD6X
+ /uHdgf2m8o+CqzdDU8APGC8dx9sZJ8wifwcUUoGA==
+X-Gm-Gg: AR+sD11XMaT/RCqBabf10d231ILvJjOfAHN0O0byMGh1BxrMvP9Dh+NbC+wm0UTbZyM
+ Wn1f+8EG3AaTGTjviipUMHjRFmcDbayJ84B3mOY9eKJixMQID83dFt89skppGitu3YAxgQ4lWlW
+ Bugoy6mpKxWAyYgoHYqeYPXXO1cIzhBjVjn9BVgQS8hLORbZA6j9AQWVi3Nk/GneSdyF5AA9hTO
+ PteEWHka5gmWqSQiQoIA0ah0qAuAMJ5VjgMJixzW36fRJmCVyz09X4oAm9Bga2/1P5xGTU5Y6w6
+ bHdFa0vrcsG6moxtZuqZ0bxmAWieo0KUuCbapufAyr2R2yLB5f91lAWMfo2DNB/P+YLtfOad+DS
+ uq4Svat0an1RZ8h69h1MFz+TKWmwYOQgXn8pNY+5WoPNZqdf1z16bAzrJ
+X-Received: by 2002:a05:620a:40c2:b0:8cd:d688:7aef with SMTP id
+ af79cd13be357-93302640f89mr440567885a.19.1785272667686; 
+ Tue, 28 Jul 2026 14:04:27 -0700 (PDT)
+X-Received: by 2002:a05:620a:40c2:b0:8cd:d688:7aef with SMTP id
+ af79cd13be357-93302640f89mr440563685a.19.1785272667038; 
+ Tue, 28 Jul 2026 14:04:27 -0700 (PDT)
 Received: from x1.com
  (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-933d3227707sm21277985a.6.2026.07.28.14.04.30
+ af79cd13be357-933d3227707sm21277985a.6.2026.07.28.14.04.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jul 2026 14:04:31 -0700 (PDT)
+ Tue, 28 Jul 2026 14:04:25 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>,
- peterx@redhat.com, Tristan Madani <tristan@talencesecurity.com>
-Subject: [PATCH v2 5/5] migration/ram: Check for RAMBlock size mismatch when
- parsing
-Date: Tue, 28 Jul 2026 17:04:17 -0400
-Message-ID: <20260728210417.1925078-6-peterx@redhat.com>
+ peterx@redhat.com, xlabai <xlabai@tencent.com>,
+ Jules Denardou <jules.denardou@datadoghq.com>,
+ Tristan Madani <tristan@talencesecurity.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+Subject: [PATCH v2 2/5] migration/multifd: Validate next_packet_size in
+ zlib/zstd recv
+Date: Tue, 28 Jul 2026 17:04:14 -0400
+Message-ID: <20260728210417.1925078-3-peterx@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260728210417.1925078-1-peterx@redhat.com>
 References: <20260728210417.1925078-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
 X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,49 +123,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an underflow check for the subtract of total RAMBlock size to make sure
-it won't underflow.  It should not happen in production systems but only if
-the migration stream was hijacked, which is not a real concern since
-migration channel is trusted.  Still protect against it.
+The zlib and zstd multifd compression backends read next_packet_size from
+the incoming migration stream and use it directly as the read length into a
+fixed-size buffer (MULTIFD_PACKET_SIZE * 2 = 1MB).  A malicious migration
+source can set next_packet_size bigger than allocated, causing a heap
+buffer overflow write on the destination.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4013
+Add a check against zbuff_len before reading, matching what the qatzip
+backend already does.  Also replace the assert(in_size == 0) for empty
+packets with proper error reporting, since the value is wire-controlled,
+meanwhile assert() stops working with -DNDEBUG builds.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3737
+Reported-by: xlabai <xlabai@tencent.com>
+Reported-by: Jules Denardou <jules.denardou@datadoghq.com>
 Reported-by: Tristan Madani <tristan@talencesecurity.com>
+Reported-by: david korczynski (@david1766)
+Reported-by: huntr bubble (@bubblehuntr)
+Cc: qemu-stable <qemu-stable@nongnu.org>
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/ram.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ migration/multifd-zlib.c | 11 ++++++++++-
+ migration/multifd-zstd.c | 11 ++++++++++-
+ 2 files changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/migration/ram.c b/migration/ram.c
-index 8918b2f03b..85feff578c 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -4268,7 +4268,7 @@ static int parse_ramblocks(QEMUFile *f, ram_addr_t total_ram_bytes)
-     int ret = 0;
- 
-     /* Synchronize RAM block list */
--    while (!ret && total_ram_bytes) {
-+    while (total_ram_bytes) {
-         RAMBlock *block;
-         char id[256];
-         ram_addr_t length;
-@@ -4285,8 +4285,15 @@ static int parse_ramblocks(QEMUFile *f, ram_addr_t total_ram_bytes)
-             error_report("Unknown ramblock \"%s\", cannot accept "
-                          "migration", id);
-             ret = -EINVAL;
-+            break;
-+        }
-+
-+        if (usub64_overflow(total_ram_bytes, length, &total_ram_bytes)) {
-+            error_report("%s: RAMBlock '%s' size underflow total RAM size",
-+                         __func__, block->idstr);
-+            ret = -EFAULT;
-+            break;
-         }
--        total_ram_bytes -= length;
+diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
+index 8820b2a787..400146566e 100644
+--- a/migration/multifd-zlib.c
++++ b/migration/multifd-zlib.c
+@@ -216,10 +216,19 @@ static int multifd_zlib_recv(MultiFDRecvParams *p, Error **errp)
+         return -1;
      }
  
-     return ret;
++    if (in_size > z->zbuff_len) {
++        error_setg(errp, "multifd %u: next_packet_size %"PRIu32
++                   " exceeds allocated %"PRIu32, p->id, in_size, z->zbuff_len);
++        return -1;
++    }
++
+     multifd_recv_zero_page_process(p);
+ 
+     if (!p->normal_num) {
+-        assert(in_size == 0);
++        if (in_size != 0) {
++            error_setg(errp, "multifd %u: expected empty packet", p->id);
++            return -1;
++        }
+         return 0;
+     }
+ 
+diff --git a/migration/multifd-zstd.c b/migration/multifd-zstd.c
+index 3c2dcf76b0..69ef1a5f38 100644
+--- a/migration/multifd-zstd.c
++++ b/migration/multifd-zstd.c
+@@ -210,10 +210,19 @@ static int multifd_zstd_recv(MultiFDRecvParams *p, Error **errp)
+         return -1;
+     }
+ 
++    if (in_size > z->zbuff_len) {
++        error_setg(errp, "multifd %u: next_packet_size %"PRIu32
++                   " exceeds allocated %"PRIu32, p->id, in_size, z->zbuff_len);
++        return -1;
++    }
++
+     multifd_recv_zero_page_process(p);
+ 
+     if (!p->normal_num) {
+-        assert(in_size == 0);
++        if (in_size != 0) {
++            error_setg(errp, "multifd %u: expected empty packet", p->id);
++            return -1;
++        }
+         return 0;
+     }
+ 
 -- 
 2.54.0
 
