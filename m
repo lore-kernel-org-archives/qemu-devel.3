@@ -4,115 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F17FC53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 09:36:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C6BDC54EFC
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 09:40:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woeEQ-0000bV-9l; Tue, 28 Jul 2026 05:36:14 -0400
+	id 1woeII-0001iY-L0; Tue, 28 Jul 2026 05:40:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1woeEM-0000ab-PX
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 05:36:11 -0400
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1woeEL-0006cE-CC
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 05:36:10 -0400
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-66843536f94so3693030d50.3
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 02:36:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785231368; cv=none;
- d=google.com; s=arc-20260327;
- b=NbmposC2zCVrIuTCvQJ2siZI6ovO04HtMbz/pKilVFx0EAeK0cmJvTW/XlImcX8fmQ
- Jgt0d8wz1k0tnDWVhCFBvJkj4zGqWqDY+8k0Do7+hbgcZyZEjbBO29HddrX+k6OHmkxn
- KIY7L1OfSwkRq/lkMVkIBuMjv8jaXD1D2AE+UkgvqUlk1H50l8URKOwSU52wJR/w89G3
- ui1tF9xagRDPZYhjx7m2AcGarP2FdGywAI0MhLAEnJgmLxbEdP/u3nGUkxNEE6XyUV6g
- ccllf36uGSimY/he5mrwxI/Q82EoCzn48PckAL1BQClBLh+A93KHY8Dc5TQikWFvoPDW
- qlxw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=bQ8g7wh/VQmeuL3pf7641R7XPUOWCoD/LSEhd20H3PI=;
- fh=bNSRRZzP95yNPSGnIOXEYnS+DORMT7Z9hNb6PXNQ0mE=;
- b=VO5lWhaXDxQSiQ9Mci31T5PewxXmAqx08Lq3qZ3IWtAG/eyKz6ix7ls9Pxvv7zfg+K
- WaLLaCRU7HXafwzWkdHKi7aJZJPlmQzSr9r8GIi0zpDK4qz/eOpZe4OrvbyNusY+GI/K
- haIEahTMsOtbHza0dyYMAt/OG8X4H6E1EOfdmIoR9W+RQat/w3ArQkE/1eH2m5ywbFID
- qPPIdM5m8Yuz/yG5nF/5hbAIR3ruaJ+mxRrY+dlXoNOPXq34k+2KxJ6uVgano+aSRDVL
- Qs00tzpaxRfyYN551mO7x/n43r4VTSmBzkpGKKS5r4tFB4Ij5OVhBOcuC3YTPhUgW8SA
- EwnA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785231368; x=1785836168; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=bQ8g7wh/VQmeuL3pf7641R7XPUOWCoD/LSEhd20H3PI=;
- b=V2T/7LwLJC5hmBfKBTOnBast5vdk92h5CuPYpeCxlHOO/Lv5vfATEKkLf4ghVcpZKG
- cFAgDMg6kUrrY0DG8EiT7vMX26F7hgoIAf0KvK06VJbMXDbRYp0uklSmTNfkh5zT5fXM
- 9avPzhYO6BM4f2m6xadC0dS5z3nwfBQtzhA33qXVeuxG1nZ86PewIVWn30eZBcmTck3n
- 6hRDkizFCCPoTh1nBjmhBuWfXaXfHfRDYmNdogmnHViLkI/OxZGObRvZL9gumJCflPvH
- w6NHsRwLSpLn0pTdDjmmtUFhfKN7O2GxYPYmnqqpl9Jyt69xJ1pI+aVRftO5zql6oR+E
- tOCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785231368; x=1785836168;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=bQ8g7wh/VQmeuL3pf7641R7XPUOWCoD/LSEhd20H3PI=;
- b=KctWO0oPHK/ADxWjm76uAtWtVkKzyyelCPeNwvx8HqqKlJhhXF4Ru4Y1VJaldZYT+P
- sAoGJtJhmbgx2mVlLWcNnd2YnzOTbVFEWzP0JRCRwVLXg+oVOvI8JEP+ja6J5JTL22gF
- 3cPJdIq1/9XbTHmNFGAMzD5TCjdeAmSufyVMRa/eS1jqa7qwOUXhro/P+u9GPpOPPZeM
- +MIuvZ+El4JAXcllq5oVq5QrtAfwNETAe8eU1pTcjBXocST8aV5RV4n9LQg5bFYRtnLu
- lOHL1k9oOLs6qjsYDz0bKqVqr6Wx9mEkHnE1HJqjTlt0HZua4Ydy7jMgZmMYOG2J7DLa
- fv+Q==
-X-Forwarded-Encrypted: i=1;
- AHgh+Ro87p1xify3rAMM6VIUVmipj5go6dASlOoqFjXMlmQBtX/98YJxo/r02UnZGPJB+ttODf4A3RIccKOt@nongnu.org
-X-Gm-Message-State: AOJu0Ywad4B7XYu40CW00pnJIVQ9kFmWjBpmYCYD5e+J4v/tzy6LKdw5
- ApM3cuxTtbfAwA179kaTDzSktPrUHn90X5RapoI0V3ZHsWzfJuir3nMJ5I+lBffvxu5Nij1ivPw
- A0gXWBQ4L3sxw9zVXl2cnvt9T7A8wS3XN6A+0QPy5KA==
-X-Gm-Gg: AR+sD107qRPkSp12wKEZtVQT6RggBsCVQSjOtY6r8yhTp78ycDH6wCx/hkmvaIFXB9e
- EpbE0YM7B4Wf43wnWhSERUJD0mCn5MX0lNHGTFUQznCMIymPz5n+9rmOz5UqWAUqO8pa9VGFwDk
- WTELOxH8AZRJALrn4GfRehxlOKN2uos2cmkt9Gf3SkxeQI2YUxprtMRJa79m026FKf+cVPRN2E0
- uEAxI2UT4XGgfu0C0T9wds/S4TgmD4np+UYGlrXbk4w7W4BcB94+y2ZFYO8R9YJuuj6p/RiVBbK
- IDDILZPJVL5sUvSX1MLYCJzlW4UkXEQ7yZyvZFZx2/+61w==
-X-Received: by 2002:a05:690e:438c:b0:668:8bca:3c44 with SMTP id
- 956f58d0204a3-669054c30d6mr414180d50.7.1785231367803; Tue, 28 Jul 2026
- 02:36:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1woeIG-0001hd-3L; Tue, 28 Jul 2026 05:40:12 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1woeIE-0007Gu-GF; Tue, 28 Jul 2026 05:40:11 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66S8Hvvl521165; Tue, 28 Jul 2026 09:40:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=5Zt8jCyI7ZyP673H3DXohRcDcb0Xoq
+ FyMcEgqynr9bc=; b=fFtfKlpCu+mMw0rmrpYodIGyZx78tIrqinnNQ4jSHUM9Vk
+ dgrmXXW9xJdmIfDbXUWbmx68rWwSMkCn/HJ2sb/RPHHkPcvHAnkhb6xx5cbzOgbD
+ sZkEAz+lL8OXMMRsgIPwknodtdYHyJ3Uv4rZ0rvzcREwAS787kax0ICVTJjBrHLS
+ 3DJpyqPoE0AH6kZ02+KKjtQmpT+IHfrBqCQ67cM+xo1+CgrgHfhwaUHtwiDow48R
+ AYh+VMKI2RFF9YMfomLRwjz8mjmr0zkUHYLZGRY+E/a17Y1hIqZQyf6r37D8rOdz
+ g2q+hDLQkx73aVCzRt+ve0QWKl4gcjP2ubQe/5dA==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuwcuxgy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Jul 2026 09:40:08 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66S9QOo5031821;
+ Tue, 28 Jul 2026 09:40:07 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fn7fq9by8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Jul 2026 09:40:07 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66S9e37k44302800
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 28 Jul 2026 09:40:03 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7980420043;
+ Tue, 28 Jul 2026 09:40:03 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CBEDE20040;
+ Tue, 28 Jul 2026 09:40:01 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 28 Jul 2026 09:40:01 +0000 (GMT)
+Date: Tue, 28 Jul 2026 15:10:24 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Glenn Miles <milesg@linux.ibm.com>,
+ qemu-ppc@nongnu.org, Chinmay Rath <rathc@linux.ibm.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>
+Subject: Re: [PATCH] target/ppc/cpu_init: make cpu listing determnistic
+Message-ID: <20260728150627.b0e3b230-14-amachhiw@linux.ibm.com>
+Mail-Followup-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ qemu-devel@nongnu.org, Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Chinmay Rath <rathc@linux.ibm.com>, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Nicholas Piggin <npiggin@gmail.com>
+References: <20260720192403.66694-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
-References: <20260727032649.145381-1-gshan@redhat.com>
- <20260727032649.145381-3-gshan@redhat.com>
- <CAFEAcA9_tDRAd97z4UtNhFPK+fMbq37LJhWTSmD5cueo61hvvg@mail.gmail.com>
- <0a384d67-fc56-4a21-9d0e-25f218a45228@redhat.com>
- <CAFEAcA9HbTSj9cJfv8o=jYSuPhScr-RVKWCos4kpUJ+T1S6g5Q@mail.gmail.com>
- <13333e56-3725-4550-849c-9035f6925213@oss.qualcomm.com>
-In-Reply-To: <13333e56-3725-4550-849c-9035f6925213@oss.qualcomm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 Jul 2026 10:35:56 +0100
-X-Gm-Features: AUfX_mxoPQ0uNECS8VRE3JYfpevUh2jVyh0wg_6Tx3dOKzoqW1yLGkxMX_uuWPw
-Message-ID: <CAFEAcA9X7SNUvQpwXA2_xReUERB-eBETty3g32-PD=MVk536sg@mail.gmail.com>
-Subject: Re: [PATCH v4 2/3] system/memory: Use qemu_ram_move() for directly
- accessible regions
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: Gavin Shan <gshan@redhat.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- peterx@redhat.com, mst@redhat.com, richard.henderson@linaro.org, 
- alex@shazbot.org, berrange@redhat.com, philmd@mailo.com, david@kernel.org, 
- clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com, jugraham@redhat.com, 
- liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn, shan.gavin@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260720192403.66694-1-pierrick.bouvier@oss.qualcomm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: IVrhZVzkCClyGV7LKEhD4U-NcO4qpLv4
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDA4MCBTYWx0ZWRfXxEiYxaQH6ma5
+ t64EKbgHjptvqqgQA6fVLnFAmVlsB6pr6LUsSK8UpFxX/JdrgfL1mVFP7COvmsGA43Tb4pfZlbs
+ 8XZSNT+LPB3cCdAw5DuEm6UUYc/0RN8=
+X-Authority-Analysis: v=2.4 cv=E/z9Y6dl c=1 sm=1 tr=0 ts=6a6878f8 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=EUspDBNiAAAA:8 a=Z-4x5wT5InqdIIAgZasA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDA4MCBTYWx0ZWRfX1KvspSRpsISs
+ vjLg//Dak4EMpVpWytlL3W9AJMsVp3TBxWlK6DOQ1aYG0nUEGOGKwwLUbvLy/JQZPo/uBjy315c
+ ZC8T8BWbsNLKbdeeCcgHgAXgnef1+FPbjWTpf19Jrz5RiJxFrdni1AqS+wav6GLtcRofUSzwToN
+ DDrJnxlszPCpG0KGiuv6w3tK1gzLYCm92I9DdE5IP8E2roBl/f1x+JECKJpMIPUEjmH2SfPIwyn
+ 0RRr1D320UszDmK0hkCCXP5mytalwhTij+7vG2efb3tbF5IF+8RMSNxmfrisJ/bz4U02jlRRBHX
+ VJh9lGHNHS5SW5hjzEIPH0JQIqYBRsUl8DajMxWcF0FobMpVH7BhWbY+EoqOIxjHpUzc3MdpOcF
+ LJ9Jy7goPxrwUARbPoRckINGFDbG5tLKNHiFVgWTbmyQIGH3chYhAjwspQrIpwrLJdE957iXFlx
+ Vsfp41H2WXu7xg6SeUg==
+X-Proofpoint-GUID: N-8DKGzM3jykyd47Y6yEsHg8KYsN3JeQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-28_02,2026-07-27_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 spamscore=0 clxscore=1011 phishscore=0
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607280080
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,54 +130,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 28 Jul 2026 at 10:22, Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> On 28/7/26 11:01, Peter Maydell wrote:
-> > On Tue, 28 Jul 2026 at 04:01, Gavin Shan <gshan@redhat.com> wrote:
-> >>
-> >> On 7/27/26 10:51 PM, Peter Maydell wrote:
+On 2026/07/20 07:24 PM, Pierrick Bouvier wrote:
+> The existing compare function only make sure that we list cpus with PVR
+> order. However, we never compare cpu names.
+> As a result, while cpus are grouped per PVR, the order within a group is
+> non deterministic. Depending on QOM type initialization order, we get
+> different results for -cpu help.
+> 
+> For instance, previous output could be:
+> Available CPUs:
+>   755_v1.0         PVR 00083100
+>   745_v1.0         PVR 00083100
+>   755_v1.1         PVR 00083101
+>   745_v1.1         PVR 00083101
+> 
+> While a sorted output should be:
+> Available CPUs:
+>   745_v1.0         PVR 00083100
+>   755_v1.0         PVR 00083100
+>   745_v1.1         PVR 00083101
+>   755_v1.1         PVR 00083101
+> 
+> Fix it by comparing cpu names to have a stable result.
 
+Verified the before/after output of `qemu-system-ppc64 -cpu help`. The
+patch correctly stabilises ordering in all PVR-collision groups.
 
-> >>>> +    test =3D (uintptr_t)src | (uintptr_t)dst | n;
-> >>>> +    len =3D test & -test;
-> >>>
-> >>> What is this doing? I am not a fan of clever bit twiddling
-> >>> that isn't commented to explain itself. Readers of the code
-> >>> shouldn't have to go off and search for an explanation of what
-> >>> is going on.
-> >>>
-> >>
-> >> The following comments will be added for (v5).
-> >>
-> >>       /*
-> >>        * Maximal length of aligned access that are determined by @src,
-> >>        * @dst and @n
-> >>        */
-> >
-> > What I mean is more that it ought to say why "x & -x"
-> > achieves that goal.
->
-> Hmm isn't "x & -x" restricted to power of 2? Here we have no garanty
-> @test is, because we have no garanty @n is. Ah, this is catched by
-> the 'len !=3D n' check and returns after calling memmove(). Indeed not
-> very clear notation. Again:
->
->    ...
->
->    /* Overlapping buffers, unaligned or oversized access */
->    if (!QEMU_IS_ALIGNED((uintptr_t)src | (uintptr_t)dst, n)) {
->        memmove(dst, src, n);
->        return;
->    }
->
->    switch (n) {
->    ...
+No regressions: identical CPU set, ordering only.
 
-I'm not inherently against the bit twiddling (QEMU_IS_ALIGNED
-on a variable length will do a division, maybe we care?);
-I just want that if we do use a bit-twiddling trick that we
-explain why it does the thing we want it to do.
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com> 
+Tested-by: Amit Machhiwal <amachhiw@linux.ibm.com> 
 
--- PMM
+Minor nit: subject line has a typo ("determnistic" should be
+"deterministic").
+
+Thanks,
+Amit
+
+> This allows us to record and compare various command line results across
+> versions to make sure we didn't break anything while working on
+> single-binary.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>  target/ppc/cpu_init.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+> index f404c7e549d..3443dbeeb01 100644
+> --- a/target/ppc/cpu_init.c
+> +++ b/target/ppc/cpu_init.c
+> @@ -7130,7 +7130,7 @@ static gint ppc_cpu_list_compare(gconstpointer a, gconstpointer b, gpointer d)
+>          } else if (pcc_a->pvr > pcc_b->pvr) {
+>              return 1;
+>          } else {
+> -            return 0;
+> +            return strcmp(name_a, name_b);
+>          }
+>      }
+>  }
+> -- 
+> 2.43.0
+> 
+> 
 
