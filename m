@@ -4,64 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE3F2C531F9
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 11:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8906CC531F9
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 11:17:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wofk1-000093-0R; Tue, 28 Jul 2026 07:12:57 -0400
+	id 1wofnf-0001TJ-9m; Tue, 28 Jul 2026 07:16:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhaoguohan@kylinos.cn>)
- id 1wofjx-00008c-NU
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 07:12:53 -0400
-Received: from mailgw.kylinos.cn ([124.126.103.232])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhaoguohan@kylinos.cn>)
- id 1wofjv-0004IL-Qs
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 07:12:53 -0400
-X-UUID: 3fce034c8a7511f1aa26b74ffac11d73-20260728
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12, REQID:09624de6-19f5-4dd3-ba27-2b3746b8b743, IP:15,
- URL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
- :release,TS:15
-X-CID-INFO: VERSION:1.3.12, REQID:09624de6-19f5-4dd3-ba27-2b3746b8b743, IP:15,
- UR
- L:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:r
- elease,TS:15
-X-CID-META: VersionHash:e7bac3a, CLOUDID:6fbf01e76d8c4ec4d043735d61c231f1,
- BulkI
- D:260728191245IY5W75BC,BulkQuantity:0,Recheck:0,SF:10|66|78|102|127|136|86
- 5|898,TC:nil,Content:0|15|50,EDM:-3,IP:-2,URL:0,File:nil,RT:nil,Bulk:nil,Q
- S:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,
- ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 3fce034c8a7511f1aa26b74ffac11d73-20260728
-X-User: zhaoguohan@kylinos.cn
-Received: from zgh-vmware-virtual-platform.localdomain [(116.128.244.171)] by
- mailgw.kylinos.cn (envelope-from <zhaoguohan@kylinos.cn>)
- (Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
- with ESMTP id 498631248; Tue, 28 Jul 2026 19:12:41 +0800
-From: GuoHan Zhao <zhaoguohan@kylinos.cn>
-To: qemu-devel@nongnu.org
-Cc: "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH] virtio-crypto: clean up every data queue
-Date: Tue, 28 Jul 2026 19:12:17 +0800
-Message-ID: <20260728111217.573046-1-zhaoguohan@kylinos.cn>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wofnW-0001QX-PE
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 07:16:35 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wofnU-0005cp-UF
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 07:16:34 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-49548aebcd8so27694305e9.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 04:16:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1785237391; x=1785842191; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=VOFBP/T90PBYUvVnaOb7OX7hosCDnhBkxoYr0mmJGQo=;
+ b=wgpxRXZle7WXQ0a6QCHrc9C9hFEqGh28ZmHMks6+iTei4zilMbxFfPQj/LpZZ3Z/Hl
+ ZJDQuO1/8g+OppD2HqxAgaCUkQKqTRl9D54cEqy9AcT6CANQtLgqQoMifYCPYH+58kca
+ GXEguco9aXH285g8VXEu6eJ8bCB6DweYz8Vz4oa+Es5EPsZusmlCBQDbJJshCoB6q5gm
+ guSNjBBQEReGIHpA8dZk/u8ziwnH98LoTGaKwk3cQ3Jcvo5CJwS/VOrWrNwcfeTKkXG+
+ J9dDv/E2l73V0oTKWAZmGxqlpDlQXwxB+4hAIA7WjQqCybbf0rZ/thEGx1Ni2Z6Wpbya
+ RbxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785237391; x=1785842191;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=VOFBP/T90PBYUvVnaOb7OX7hosCDnhBkxoYr0mmJGQo=;
+ b=ksaGYAK8vB4buzILqPDRl5CXpRZ6FaPV6PL/ILNwk3j9M+N+MjqPBExWc3rTAtjzk5
+ 7lYkxCBVmEmcGdk8O6Y+9c4FVPFK3Mj7/8gtcThcRvMpgsg7bn2GKX/nGaXBchM/jhad
+ wUkJyprZTZr4n0qiP5l/feaAoNff4sSBM1WMeeu7bTXpa0n7s96rXfKbLMNky4XQk4Eg
+ KrWfJJN+BrNQMPQxn09X1DstuPM7Ql7TG1g/0RFjlc/DcURDe3Ft9GWj2Ce3J5sSn27q
+ WnMq2Q92sR6+CcN7vbITof2ChOOKVs3R6whz8lEMcDtSQHmXwMz1dPlYAmXfhreKMaXk
+ G/yg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoxHXNugkeSZNJGYYAFVYURjlHXgPp21riR6FA7cQEC21vIAhLItFNJb2gJZbdXBgp4BuRXZveVR4nM@nongnu.org
+X-Gm-Message-State: AOJu0YyB5IoQtxunWKSGdNdY1eqTSb4k5TeBs1tDLdy1YY5HYNxnYWFb
+ UtoUy0t6omIF0dwN+3o8raktUXAwn2smENOXVyLA9HJspg6IrTf3VIjRvNdc1m8QevQ=
+X-Gm-Gg: AR+sD12L34YZJvfqYZWb2MX9MxB4qQtyV0ndYgcnydTdPmKekz0dSM+yA6AaLa/LNIm
+ 0PzuzplcXof1Kl27HPfDz2cuNyhC1ykZpcFm04CS8xwKgdrS3H8KcvA8g2uNGoMRyo/BPZntv/8
+ QLq4+hJL4S+DB4Ttsm+sr2k6TlA+yLv5VpqMdAo5GOIze0iJZ9j7oR/hTxljfselQq30i6BC/dT
+ spUlFB7bBDmJFaayYPKy3cZNz6mvLAol9CzTtxdefP6nDVysreZ+wkmB2zv0GdUIDbVWuySg1IV
+ WozBgr1ChbAJ/mAXLhQP0QrK0QM3j9x9dnRWycCsPoRpTio+znkycoz0Yz+PHgiPQBo8hM5E7Kf
+ gj0NW1NFazDyIJoIy+AQ+CR3Y8SvmrWIPz/tjR9wrwPZobfKuOErHV6zCajaaYp+44kG1a90Gq/
+ UWq7vyr3/Aju9+O/Mz68WUys256EGl1gvmu57zdtRgT8+fYFrpO9a184beZT6klsHodjy5m11in
+ mT5XdJ3LxhIZ1RKPWax6g==
+X-Received: by 2002:a05:600c:4fd6:b0:495:48d7:f178 with SMTP id
+ 5b1f17b1804b1-496c64394dbmr21014155e9.11.1785237391062; 
+ Tue, 28 Jul 2026 04:16:31 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4957b5ed646sm284546255e9.0.2026.07.28.04.16.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 Jul 2026 04:16:30 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH for-11.1 0/3] target/arm: Fix SEV/WFE handling for v6K and
+ earlier
+Date: Tue, 28 Jul 2026 12:16:26 +0100
+Message-ID: <20260728111629.1705308-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=124.126.103.232;
- envelope-from=zhaoguohan@kylinos.cn; helo=mailgw.kylinos.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,36 +102,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-realize() creates max_queues data queues and one BH for each of them.
-unrealize() decides how many to tear down from multiqueue, but nothing ever
-sets that field, so it only deletes the first queue and BH.
+This is an extension of my previous patch
+https://patchew.org/QEMU/20260727151325.1428686-1-peter.maydell@linaro.org/
+("target/arm: Don't NOP the SEV insn on v6K CPUs") to also get the
+architecture version checks right on SEV, WFE and YIELD.  (That then
+means all the insns in the NOP-hint space have checks in them).  RTH
+suggested that a mismatch in the condition check between WFE and SEV
+was more important than I had thought, and I agree.  A guest might
+choose to have spinlocks using WFE/SEV regardless of CPU architecture
+version, and rely on them degrading to busy-wait loops on older CPUs
+because both WFE/SEV are NOPs there; if we make WFE actually wait but
+SEV a NOP then that kind of code would deadlock.
 
-It does not matter how many queues the guest used here.  unrealize() must
-undo all the allocations made by realize(), so loop over max_queues.
+Patch 1: same as previous, already reviewed.
+Patch 2: add checks to WFE, WFI and YIELD.
+Patch 3: trivial comment cleanup.
 
-Fixes: 20cb2ffd5ff3 ("virtio-crypto: using bh to handle dataq's requests")
-Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
----
- hw/virtio/virtio-crypto.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+thanks
+-- PMM
 
-diff --git a/hw/virtio/virtio-crypto.c b/hw/virtio/virtio-crypto.c
-index 79e2acb56cc4..85c7279aae27 100644
---- a/hw/virtio/virtio-crypto.c
-+++ b/hw/virtio/virtio-crypto.c
-@@ -1114,10 +1114,9 @@ static void virtio_crypto_device_unrealize(DeviceState *dev)
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VirtIOCrypto *vcrypto = VIRTIO_CRYPTO(dev);
-     VirtIOCryptoQueue *q;
--    int i, max_queues;
-+    int i;
- 
--    max_queues = vcrypto->multiqueue ? vcrypto->max_queues : 1;
--    for (i = 0; i < max_queues; i++) {
-+    for (i = 0; i < vcrypto->max_queues; i++) {
-         virtio_delete_queue(vcrypto->vqs[i].dataq);
-         q = &vcrypto->vqs[i];
-         qemu_bh_delete(q->dataq_bh);
+Peter Maydell (3):
+  target/arm: Don't NOP the SEV insn on v6K CPUs
+  target/arm: Make YIELD, WFI and WFE be NOPs on pre-v6K
+  target/arm: Remove stale comment about WFE/SEV implementation
+
+ target/arm/cpu.h           |  1 -
+ target/arm/tcg/translate.c | 48 ++++++++++++++++++++++++++++----------
+ 2 files changed, 36 insertions(+), 13 deletions(-)
+
 -- 
 2.43.0
 
