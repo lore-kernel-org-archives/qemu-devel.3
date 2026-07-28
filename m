@@ -4,111 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 454BCC531F9
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 11:55:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40E7AC54F4C
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 12:13:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wogOK-0003dT-TP; Tue, 28 Jul 2026 07:54:36 -0400
+	id 1woggH-0000X3-JB; Tue, 28 Jul 2026 08:13:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wogOJ-0003dB-T8
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 07:54:35 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wogOI-0003T9-8g
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 07:54:35 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-69f2c67650aso5894740a12.2
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 04:54:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785239672; cv=none;
- d=google.com; s=arc-20260327;
- b=cRlc6h4qukYW4mPfVUC0IBV3pihWtfYVC3jwX87/dhCBCa6vFqzyEC4/ksS8MEEobW
- Pg6dTJtZe1ZPAlikO1rGXnpTE62Lc0mhsesSTcOdNYpwK3PhRh0v1xtpLfnqQ14dbRTB
- L2V0UwrFu1lzjyj7zRoClulnUI0eBGdo1MIhjN6l1u2cUz1HF2dKjju8AanV4YIOen+K
- 3bb7uRoG2ZaaUUexYjmrpVJxcgBAci+oAkeEO2rSo2Njw7S6ddPid3QiVgva6DmSYyTs
- viBfE93TB4YZvDy/65Zejg6JcpW2Ym2NvbuI/Y7uETec+qKZj8cWX4I5QoDAsN/OHATV
- vuMg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=TCToJWvJfRyrR0jqpHboirR71JfmGpfG7tWSem5nL4E=;
- fh=tjNm5tq/l5hSIYRh5KJ6fWlxXh51w7XSCiX1DyJ8gxY=;
- b=ew9H8XxzyofIMe8Q3AYNKOySvqDYxiAyXmIuvfFcpA9+sYQG3fPVHtWqIQbNxHLIBX
- YCWdKxUJW6IvZUIZU1msDXRv2y4IwdfFcodAH76BCAb/eV5KW+nXBA4Q31dFQEAILDSf
- ylY/ASLCi1bO9WXYir6imCPQmYtnZKoaW39u3p1GfecnBgQJCT0vFNWgnhf2dOf9Y+d4
- kljGjSpP2ra0jaSn40XWdMsAk21nYO5J3jyhECdfbzK8cXWUmzCNZ/qCFizwxvPnefZ5
- LAhWk4aXWEJELOT0HWR8EOZ2+OldUTCnhPfgXKx/1JnyfqLamiSL1jKCnZTUU5zPKEOW
- VG3Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785239672; x=1785844472; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=TCToJWvJfRyrR0jqpHboirR71JfmGpfG7tWSem5nL4E=;
- b=PCFiSty8Zz0uqiQKOMqdwu73lmAQMxlQx8hU2vgPaspUnwpHasEwzHsomjNlsWyYe+
- m9g1ioeR0ISW2Y9JLx7u/u8ruyk9ty+EZmCF5X1NLwZZx0Hkzu2yd7jTRhFdX87NqQDV
- udAPgEPx5Y/SmaMw3xwAj0f7V3uifTsDDO/2e+A+5TxX3WjikU0gbgbXImKlNm7ShB7i
- a2KkrK0lPaw1hDlTyuQ/o54aoi1GOL2t1Y6PDtE1K36IIsHVjtKMwUoL2aFWk2gGsSiO
- QODbcklotHgC/yFFZ8emm152rtG8+o7V30yIbuKFyUqmkkjyFrjDXf7ZV0WLgHuA5wvO
- Mfeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785239672; x=1785844472;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=TCToJWvJfRyrR0jqpHboirR71JfmGpfG7tWSem5nL4E=;
- b=CmGyXU4mnxW1XhByNDhaXWnDNxKtiYnBwt9OhyG9BDu+Lb8qxnuGmKs2FFN677tPkM
- 69HeOsmp4jgDPoA0UCWOSexjShEvR2bFUPD+LR4c46gSWh61NOo5vFcPK0UMsHipEHwi
- 3hdCa7VdgAcLbHibSceoEd42lk7WVuxf7uI4J9TVxEF1JuD7YLhCgu95+bSlOTPkpzJd
- pIFDirtqjmJ62JJwSnoPUk23XjTUw0KTyllLjgYFKN23pllM1oBBpehvsGbcN1OvUJ8k
- 4NWZj+BVPtstRhnfrApd7G4utBXh8U1p+5cXMuS8NvpzbMQCmAMOx9rBdwPvQk/TUgUI
- Z4hA==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rp8zyqUQ9D3G6YP323Ev+gAlvaloGKnOSUkyynFGFi376jGF/3xH6K8GT0XuF/MXWRV6NQp7Y7MT+An@nongnu.org
-X-Gm-Message-State: AOJu0Yw1MFWDKB98wTpXbioTGlyWyi1aIfWTPhh4t9S4UYp4IM5Y+Aro
- 6NvnT1oD4jGVsjSI/jWKs689P8/pUhCNRNi81MoZzMOmM9d7z5l2TO+fnavF9mP1dGi36n04bM+
- nsAmDpa7ygcVCxmHb6ECQtkL5DmAaV6A=
-X-Gm-Gg: AR+sD12YXOteFSmvgGa4XYe2cOmVBKv1sPUkgBDnkBsJUwi6cEVUjSYxi6XhLIkhVsi
- WETJgec7AjmmmLSdXejvmy/jgNzHq9Aih1ANh0i+fW4xvg8rAwapyTZORnVADYS3T9Bz79o6kXp
- 6krfzVLTRDpjsGetXHFEzMkBiP4ALODJP1rA5WzpjS9jyZeXExfN+KJIXNqNLBswCWjnSryIO8N
- om2n9rgGB+9RBJ17jfAAhaN6qctvQDuGVQeh+bXluHNN46Q5tnwGkdOLEc6LmrpE8osVM1Ipcbi
- vcMOvj+ujVakPq7wtik=
-X-Received: by 2002:a05:6402:21d4:b0:69a:bce:f1de with SMTP id
- 4fb4d7f45d1cf-6a034a5efe5mr1033867a12.26.1785239671433; Tue, 28 Jul 2026
- 04:54:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1woggD-0000Wk-5C
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 08:13:05 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1woggB-00085m-Bn
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 08:13:04 -0400
+Received: from example.com (p5b3e8a57.dip0.t-ipconnect.de [91.62.138.87])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 6514020B7166;
+ Tue, 28 Jul 2026 05:12:43 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 6514020B7166
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1785240764;
+ bh=L1UUqVe4RI1z+HNgdIVUVZYfe5SzeWjqnpvqJMK1wPA=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=BZGS4SE4gDfsMBX/KBtgPdycJ/81IuUasre1rZ03y7JzQnQs29s9Tbdg+X5ITW0xW
+ +SWwWJg0+6tPMifPnrUZbSqwjaU/ymF+osLa/X7rgTfydBa7H9oB51UdoDax4sWUzx
+ VGCZ++PXJcfsimBOWb3DXxivPycN3/E3i5QOoBRI=
+Date: Tue, 28 Jul 2026 14:12:54 +0200
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org,
+ Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@microsoft.com>,
+ Wei Liu <liuwe@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
+ Magnus Kulke <magnuskulke@microsoft.com>
+Subject: Re: [PATCH 1/3] include/hw/hyperv: add ABI for exception intercepts
+ and pending events
+Message-ID: <amicxk7VALAfWRCJ@example.com>
+References: <20260727142807.84269-1-dblanzeanu@linux.microsoft.com>
+ <20260727142807.84269-2-dblanzeanu@linux.microsoft.com>
 MIME-Version: 1.0
-References: <20260726193636.110586-1-deller@kernel.org>
- <20260726193636.110586-3-deller@kernel.org>
- <CAJSP0QVMP8dPx4-123C8HtryogHyhcwBRdFUe5HcfGu8i2EbJg@mail.gmail.com>
- <071e926e-afee-4b6a-80b7-b475d3284833@gmx.de>
-In-Reply-To: <071e926e-afee-4b6a-80b7-b475d3284833@gmx.de>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Tue, 28 Jul 2026 07:54:18 -0400
-X-Gm-Features: AUfX_mwUiUASPv6Z7dYrLPgLV6h79oI3mgFcsOeqD-M6MkZFbW4AwkLeaUiPhx0
-Message-ID: <CAJSP0QVoP11zVbsMHNkNFCzxTN2zc=dkAdKSVNmxfsBpsyxRZw@mail.gmail.com>
-Subject: Re: [PULL 2/2] linux-user: fix guards for the fsmount(2) syscall
- series
-To: Helge Deller <deller@gmx.de>
-Cc: Helge Deller <deller@kernel.org>, Matt Turner <mattst88@gmail.com>,
- qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260727142807.84269-2-dblanzeanu@linux.microsoft.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,70 +70,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 28, 2026 at 6:11=E2=80=AFAM Helge Deller <deller@gmx.de> wrote:
->
-> On 7/27/26 16:15, Stefan Hajnoczi wrote:
-> > On Sun, Jul 26, 2026 at 3:36=E2=80=AFPM Helge Deller <deller@kernel.org=
-> wrote:
-> >>
-> >> From: Matt Turner <mattst88@gmail.com>
-> >>
-> >> The fsopen(), fsconfig(), fsmount() and fspick() implementations are
-> >> guarded by defined(NR_fsopen) rather than defined(__NR_fsopen). No suc=
-h
-> >> macro exists, so the guard is never true and the entire series compile=
-s
-> >> out. Guests calling any of the four get -ENOSYS, which for example mak=
-es
-> >> systemd's credential setup fail with EXIT_CREDENTIALS for most units.
-> >>
-> >> The strace bits for fsconfig() have the same typo.
-> >
-> > Please take a look at the following CI failure:
-> >
-> > ../linux-user/strace.c: In function =E2=80=98print_fsconfig_cmd_name=E2=
-=80=99:
-> > ../linux-user/strace.c:4352:10: error: =E2=80=98FSCONFIG_SET_FLAG=E2=80=
-=99 undeclared
-> > (first use in this function)
-> > 4352 | case FSCONFIG_SET_FLAG:
-> > | ^~~~~~~~~~~~~~~~~
-> >
-> > https://gitlab.com/qemu-project/qemu/-/jobs/15553379213#L2358
-> >
-> > Once this has been fixed, please send a v2 pull request. Thanks!
->
-> I've sent a new pull request.
-> I added a dependency on the availability of the FSCONFIG_SET_FLAG define.
-> This is okay for now, but maybe a better fix is possible?
->
-> Usually this define should be available, but it doesn't seem to
-> be in that chroot image.
-> I'm sure I'm missing something, but is it somewhere documented how to get=
- that chroot
-> image locally so that I can reproduce the problem?
+On Mon, Jul 27, 2026 at 05:28:05PM +0300, Doru Blânzeanu wrote:
+> Import the hypervisor definitions needed to intercept guest exceptions
+> and to inject events back into a guest, in preparation for gdbstub
+> debugging support in the MSHV accelerator.
+> 
+> Add:
+>   - union hv_intercept_parameters, struct hv_input_install_intercept and
+>     HVCALL_INSTALL_INTERCEPT, used to install an exception intercept on
+>     the partition;
+>   - struct hv_x64_exception_intercept_message, the message delivered on
+>     an intercepted exception, carrying the faulting RIP, the exception
+>     vector and the instruction bytes;
+>   - HV_X64_PENDING_EVENT_EXCEPTION, the pending-event type for an
+>     exception.
+> 
+> These definitions mirror the hypervisor headers and have no functional
+> effect on their own.
+> 
+> Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+> ---
+>  include/hw/hyperv/hvgdk_mini.h | 56 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 56 insertions(+)
+> 
+> diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+> index f8838a31bb..c81928d0c2 100644
+> --- a/include/hw/hyperv/hvgdk_mini.h
+> +++ b/include/hw/hyperv/hvgdk_mini.h
+> @@ -22,6 +22,9 @@
+>  #define HV_X64_MSR_TSC_FREQUENCY    0x40000022
+>  #define HV_X64_MSR_APIC_FREQUENCY   0x40000023
+>  
+> +/* event_type values for hv_x64_pending_exception_event */
+> +#define HV_X64_PENDING_EVENT_EXCEPTION 0
+> +
+>  typedef enum hv_register_name {
+>      /* Pending Interruption Register */
+>      HV_REGISTER_PENDING_INTERRUPTION = 0x00010002,
+> @@ -236,6 +239,29 @@ enum hv_intercept_type {
+>      HV_INTERCEPT_TYPE_INVALID               = 0XFFFFFFFF,
+>  };
+>  
+> +union hv_intercept_parameters {
+> +    /* HV_INTERCEPT_PARAMETERS is defined to be an 8-byte field. */
+> +    uint64_t as_uint64;
+> +    /* HV_INTERCEPT_TYPE_X64_IO_PORT */
+> +    uint16_t io_port;
+> +    /* HV_INTERCEPT_TYPE_X64_CPUID */
+> +    uint32_t cpuid_index;
+> +    /* HV_INTERCEPT_TYPE_X64_APIC_WRITE */
+> +    uint32_t apic_write_mask;
+> +    /* HV_INTERCEPT_TYPE_EXCEPTION */
+> +    uint16_t exception_vector;
+> +    /* HV_INTERCEPT_TYPE_X64_MSR_INDEX */
+> +    uint32_t msr_index;
+> +    /* N.B. Other intercept types do not have any parameters. */
+> +};
+> +
+> +struct hv_input_install_intercept {
+> +    uint64_t partition_id;
+> +    uint32_t access_type; /* mask */
+> +    uint32_t intercept_type; /* enum hv_intercept_type */
+> +    union hv_intercept_parameters intercept_parameter;
+> +} QEMU_PACKED;
+> +
+>  struct hv_u128 {
+>      uint64_t low_part;
+>      uint64_t high_part;
+> @@ -836,6 +862,35 @@ struct hv_x64_memory_intercept_message {
+>      uint8_t instruction_bytes[16];
+>  } QEMU_PACKED;
+>  
+> +struct hv_x64_exception_intercept_message {
+> +    struct hv_x64_intercept_message_header header;
+> +    uint16_t exception_vector;
+> +    uint8_t exception_info;
+> +    uint8_t instruction_byte_count;
+> +    uint32_t error_code;
+> +    uint64_t exception_parameter; /* DR6 for #DB, CR2 for #PF */
+> +    uint64_t reserved;
+> +    uint8_t instruction_bytes[16];
+> +    struct hv_x64_segment_register ds_segment;
+> +    struct hv_x64_segment_register ss_segment;
+> +    uint64_t rax;
+> +    uint64_t rcx;
+> +    uint64_t rdx;
+> +    uint64_t rbx;
+> +    uint64_t rsp;
+> +    uint64_t rbp;
+> +    uint64_t rsi;
+> +    uint64_t rdi;
+> +    uint64_t r8;
+> +    uint64_t r9;
+> +    uint64_t r10;
+> +    uint64_t r11;
+> +    uint64_t r12;
+> +    uint64_t r13;
+> +    uint64_t r14;
+> +    uint64_t r15;
+> +} QEMU_PACKED;
+> +
+>  union hv_message_flags {
+>      uint8_t asu8;
+>      struct {
+> @@ -943,6 +998,7 @@ struct hv_cpuid {
+>  
+>  #define HVCALL_GET_PARTITION_PROPERTY    0x0044
+>  #define HVCALL_SET_PARTITION_PROPERTY    0x0045
+> +#define HVCALL_INSTALL_INTERCEPT         0x004d
+>  #define HVCALL_GET_VP_REGISTERS          0x0050
+>  #define HVCALL_SET_VP_REGISTERS          0x0051
+>  #define HVCALL_TRANSLATE_VIRTUAL_ADDRESS 0x0052
+> -- 
+> 2.53.0
 
-$ git grep build-without-default
-.gitlab-ci.d/buildtest.yml:build-without-defaults:
-$ cat .gitlab-ci.d/buildtest.yml
-...
-# Check our reduced build configurations
-build-without-defaults:
-  extends: .native_build_job_template
-  needs:
-    - job: amd64-centos9-container
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  variables:
-    IMAGE: centos9
-    ^^^^^^^^^^^^^^^^
-$ git grep amd64-centos9-container
-.gitlab-ci.d/container-core.yml:amd64-centos9-container
-
-The amd64-centos9-container job builds the
-tests/docker/dockerfiles/centos9.docker Dockerfile.
-
-You can reproduce QEMU's centos9 image locally with `make docker-image-cent=
-os9`.
-
-Stefan
+Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
