@@ -4,109 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1733C54EFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 09:02:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8883DC53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 09:08:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wodhI-0007G9-MX; Tue, 28 Jul 2026 05:02:00 -0400
+	id 1wodnC-0008KK-B1; Tue, 28 Jul 2026 05:08:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wodhH-0007Ff-6d
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 05:01:59 -0400
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wodhF-0007YU-H8
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 05:01:58 -0400
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-667971437d6so4309315d50.2
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 02:01:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785229316; cv=none;
- d=google.com; s=arc-20260327;
- b=cfQI/qrG2/plKY7e0NySasBLJRkLLpiqCYG3/LOHnvqW/UJKjlZO7FOY48OlsUiiKg
- ICOG2WTlxtk91Z5O4/HqcNjDy4dbuhyvnJWRRFLD1MhQYOqBNIKtNG3uHH0jw++ijbvY
- aqE3m2eizqGVs3pYGRMHIM7qKdKTMU1GePvPXCMekXa0UNBk0G+R3Gt8cAHJfy1IAlUy
- 1uuM20MnOauC1SOvaJmOAaRsLom24wCQYRwW+j3iTIsTDPspd/asERF6FbKxt/zK/XDu
- ZDAEXBWpqKKxfEIboY950pFpUrgULdO644x4sZuMZtH1jO1ywkhNHiafCZigwcHS/R0s
- Vpvw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=/O1e1QgCmvZVbsVP7BYBNHDqnpIPp2EA9lqFhqaqi/w=;
- fh=4II/KbelIFK+SHhW1nZ+hm8cDILvv9DtoWip4ODhj8c=;
- b=iFAgsqyxClJKnOX5reDLHFsGVwVERB7bNJJXLXHHapTLJNt+hN8xKASXDwBSkirErQ
- J6bExChACianhPKdVTT1JL2xZdPQaiLzs78SkkTtjskxcyrqqB9PtQXv1vYn/1+NCx5Z
- b+soCJHKxhakjTtYWk1Tji4eCpx8DFUTmpqikTWz4AAl7nJrQMjF6EVnRndBuPfKT33J
- cQGWCWPeJTi/b3jtqOHhWDXaMJ4Zh29YZnAJF36jjwxxIp+JteJ1SPGYH+wcEzLabJWe
- K9P6+nW+Ij3VqTOAcFZU2PP6raEvowdiQwlJ/NCbFqpbmk5hsJvyFv4y3nOk1vvHmuh5
- GxEQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wodnA-0008Js-7A
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 05:08:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wodn8-0000Zt-Ht
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 05:08:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785229680;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=J9Pay3CB4/jUDP1B9Gpnd14/0/1wQBnSVImQu4Mbq5I=;
+ b=DRFHjsTjfm/PwQ2y2cSCO9xczRmNkQK4VMEw/47VhbIdR0ZpbrxDhRKDn+nrMmsKsE6keI
+ IlLUDmhDhEi6eQzN7nwqdTT0wIpixK1dPmVaFhkMl+g3L2W7Uu+BCfdo59pIyym8Vp1JP2
+ Ky3OwVbrCuxvQ4Jc9THnF4zoLjCYd+c=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-101-sHevl3wZMAukFV-UFn2ZlA-1; Tue, 28 Jul 2026 05:07:58 -0400
+X-MC-Unique: sHevl3wZMAukFV-UFn2ZlA-1
+X-Mimecast-MFC-AGG-ID: sHevl3wZMAukFV-UFn2ZlA_1785229677
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-47d81cf0c4cso2362693f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 02:07:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785229316; x=1785834116; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=/O1e1QgCmvZVbsVP7BYBNHDqnpIPp2EA9lqFhqaqi/w=;
- b=PspjOYpSu7+Y/tnJLW6qkrqDXC9Pw7lVR1F7CXl4R9zwgIYLIK23n8CA8nS0A5Havh
- t9B8YjMbZXwdFwLo/KW4c03sugLHRI+oBkG4FRduRvVAyfrDQxSiSkW2l2MGag404EhA
- uTFY9TTIyywNtJ6QwLmA5L2O6q+6uUSulGEWCp9vzm6glYfOrV3mElwQ2ND+UBUeciAm
- GhPWZqNZPEW3SrLpJVCqm9uRN/F8S4VZv9/K2DuOvzwfNH3kTZ2SIvm2cGCSawI/d6jK
- QzoXRse/djJIh7XzstqeSNTULipn6TB/lE++O0/AOwx/C0TGAoRqQ/6XkTSgEp5/lBGK
- 8VrA==
+ d=redhat.com; s=google; t=1785229677; x=1785834477; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=J9Pay3CB4/jUDP1B9Gpnd14/0/1wQBnSVImQu4Mbq5I=;
+ b=KQC/tYoRPgA3WFFnrdV/hR27yxPjch2x8cj+tVdzSuEixXZKmxtiW/7R9tSrorv/c/
+ ++1uIUSsCAy7jFuaKUXY6N+Ed3VOcq8IUNa83yq6lQtGKAPv0e9e7YlG7tbC8Ftfm/6X
+ YNJ1Y8PWJ01f5zscMs52GYi3etRkGa0Wgpi1o+0hcmSB4inmw3jEgaMEwVj4DIuka0sv
+ jhRYOz5gu+TUxpH/8Np4h6cshy5IWJaMzz5LsafhXxM3Mf/lOIDp+ZPST2gDlM0JEkl+
+ 0Md6tcNLXi6fQXfkld1xDTx/+UaTM4lkAapPXtiXkrDsEHU525xa/N+2iELZDheg+z1v
+ 7o6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785229316; x=1785834116;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=/O1e1QgCmvZVbsVP7BYBNHDqnpIPp2EA9lqFhqaqi/w=;
- b=j0cULtVeDmiZh3soxXaXGcLofafkOGcukd98HZt4BEs+NwPnx1W5As2y/o0+UZjBN9
- Eh7ZzqMALhPP7FNzNF60lZflZa6Wn7VQoWaqt9+K5CKTpg97IjkU8Vr7ehJLMqZ9tafS
- afYbO9tBQ/gDlMoAmBUtF/ZZkqEpBovNAsHZkoG8C1JY6JN0U/S0tDWhrWr37m9aFqCz
- rK4j9QAArKgAsN7/mN7pjoj2VMApweMFB2aoMTnwImMQ/brVJj7GLVzCdKq9OhFEeIw2
- usd9+WpvspmEy1vEjc+VvgerFHV2LPPuYbnX6kqdhoiad8fmepd99MJF9Q2/Hb8vuzbc
- 6k5A==
+ d=1e100.net; s=20251104; t=1785229677; x=1785834477;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=J9Pay3CB4/jUDP1B9Gpnd14/0/1wQBnSVImQu4Mbq5I=;
+ b=CklTUWK9tZPBJNdl5tOCfgKIyJcYff1WELegxhzrHCIOwl04uW8Hep/8I8rIqj48GL
+ VSiVV0RRowAuUXMNG/pbJ/Fk2LLF2g5IFnDdnn/24K0HDnRysnEDDOlmjcaajQwTEfwn
+ o7qs187ndFiC+asSOIUPX+rKRPHOSMBtQA472rxTOmoqrlfsUgjhz7xDJZdP2xWVmWrd
+ MCcwVmLC0xxsu8lDt3sTZl3yhfzhBQoTkb9tvFbN9YwfAbrvKE4+y8MzZsSvilTgaAo+
+ UbsgsuPNnb1Y5kGMLRUYJk6rSTDkU6n5z2FETDePrGDU0UWu8/ilJaj0Hw1sND5iJRho
+ mLMw==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrwDI3iI4Oz9wKSjHVnWu6FqYwMRsKrqOyfK4InDG+oeh4VmcyX/kqz5h/2a/MSYONoMbt++qT4q9PR@nongnu.org
-X-Gm-Message-State: AOJu0Yy4xqH1EllaK2uBe2VSR6clewlYjoPfvZ4IOv8fHvj/9hEuHuMv
- MkWo4XapEujUTI+1fpw3PagjmoRlEK2lgsbx1ICIhfzgiSj2idaFLujTgt7zt+AXyKFDnwi3578
- zu/dFlMyPdqIXGOR7jEfHCgU6viyK2uXBcuwwlQrK+w==
-X-Gm-Gg: AR+sD13ub9vJOk/ZD+Gjkui/gKhXDuTqcWbHUdUaO0AwWqEc4olzfzoIjC1p9Urxt0t
- c/fQK/W1VehfSYpb0rArlGhAxUYigREavt8P8Ybdc1g2cM70szLd2dgMCOGO92DCUdehn3Eekke
- OTyznlpBTbL5Sw07UEjXlXoLNqvVb+Cy6QTqk0KF4wtiwrsCWo8sJM1rH9fyfB/GOQ2s29L1NmJ
- HulQlGZU1IGtt7FoBWBYWO6YeyGLzc3mOBKs9HfuBibjHzIgd7PFOH3zvDwZdb3DPQ4zmJ0sg8m
- OletmJUgvnhJDiiOPU0THpV187IfRQLq7OFuJyYsebSTQg==
-X-Received: by 2002:a53:c70c:0:b0:668:111:b895 with SMTP id
- 956f58d0204a3-6690580e328mr291405d50.83.1785229316193; Tue, 28 Jul 2026
- 02:01:56 -0700 (PDT)
+ AHgh+RrqxI9+jYjccI9/ilyxE25gAFWeZlWd0VoTJLbIya8RrAXt7XeeXsAOzwlyukXCpzV46BsjPhFJU7di@nongnu.org
+X-Gm-Message-State: AOJu0Yw7a7B/9qkjShC4L71CmeWlYvKBKOlFDZ4tzANsBviCaqYFNc31
+ oEaZ4JEbtIY+p+wwd/oIGZyjLpGBlcmOsrP2KBiyiQu6Gu5j+tb6/qhIf8YmWs5I4AvlOkS+IBx
+ w+Zf7y85PDu7egicWmI//K6mmfIdric50Z6CbN5EMJvRSNFTr3A+A3k2E
+X-Gm-Gg: AR+sD108+e+CIxKz2/iNvxCvxWTnONNC0jZ/+E38khgrDdhAzp7wvcVDJD51UTXagdH
+ nfwOfWDovD1wQXdGl9vUIh9tiXblYke28qNAytIDdT6h7vc+yKtFvgM+hxreOY4Ts7xWUa1vDno
+ JIE0E0Vp0bLQn84Ty6y8ORjJ3L+88oUk0kSIL+EL2iPJBJALRjbHtouWC39INIYoGLXdQF9R4Dm
+ bp0Q9LsRzOJbIiEr34GuM3mXmA5TjU+tpg+aw/8HwxAZfIesZox/ZB6TDd9W0BGaFJVR8bVYAp2
+ yj+3N9OhWKddmdGdl5dgB/8Dv6uuy+mAweQwU2oXD8jJ9NjTi4BnsnEA1iWWIwfKFpjudbw=
+X-Received: by 2002:a05:6000:26cb:b0:47f:8ae9:4445 with SMTP id
+ ffacd0b85a97d-47fb1f1f4femr1609886f8f.44.1785229677503; 
+ Tue, 28 Jul 2026 02:07:57 -0700 (PDT)
+X-Received: by 2002:a05:6000:26cb:b0:47f:8ae9:4445 with SMTP id
+ ffacd0b85a97d-47fb1f1f4femr1609848f8f.44.1785229677014; 
+ Tue, 28 Jul 2026 02:07:57 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.51.53]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f85c531afsm62752243f8f.24.2026.07.28.02.07.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 Jul 2026 02:07:55 -0700 (PDT)
+Message-ID: <34f352d0-8263-495a-8a5e-c85a71fc25b4@redhat.com>
+Date: Tue, 28 Jul 2026 11:07:54 +0200
 MIME-Version: 1.0
-References: <20260727032649.145381-1-gshan@redhat.com>
- <20260727032649.145381-3-gshan@redhat.com>
- <CAFEAcA9_tDRAd97z4UtNhFPK+fMbq37LJhWTSmD5cueo61hvvg@mail.gmail.com>
- <0a384d67-fc56-4a21-9d0e-25f218a45228@redhat.com>
-In-Reply-To: <0a384d67-fc56-4a21-9d0e-25f218a45228@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 Jul 2026 10:01:43 +0100
-X-Gm-Features: AUfX_mzZaSlhFOGmRL7hAVNwbkrAj7yyDQ20dte6sSEpFsYt_seZpNpIhuS5X60
-Message-ID: <CAFEAcA9HbTSj9cJfv8o=jYSuPhScr-RVKWCos4kpUJ+T1S6g5Q@mail.gmail.com>
-Subject: Re: [PATCH v4 2/3] system/memory: Use qemu_ram_move() for directly
- accessible regions
-To: Gavin Shan <gshan@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, peterx@redhat.com, 
- mst@redhat.com, philmd@oss.qualcomm.com, richard.henderson@linaro.org, 
- alex@shazbot.org, berrange@redhat.com, philmd@mailo.com, david@kernel.org, 
- clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com, jugraham@redhat.com, 
- liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn, shan.gavin@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] qemu-web: Fix broken link
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20260724151936.3332290-1-farosas@suse.de>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260724151936.3332290-1-farosas@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,66 +162,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 28 Jul 2026 at 04:01, Gavin Shan <gshan@redhat.com> wrote:
->
-> On 7/27/26 10:51 PM, Peter Maydell wrote:
+On 24/07/2026 17.19, Fabiano Rosas wrote:
+> The page
+> https://www.qemu.org/contribute/security-process/
+> 
+> links to inexistent
+> https://www.qemu.org/contribute/security-process/report-a-bug.html
+> 
+> Fabiano Rosas (2):
+>    contribute: Fix broken hyperlink to the report a bug section
+>    contribute: Grammar fix in Security Process header
+> 
+>   contribute/security-process.md | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+Thanks, applied!
 
-> >> +void qemu_ram_move(void *dst, const void *src, size_t n)
-> >> +{
-> >> +    uintptr_t test, len;
-> >> +
-> >> +    if (src == dst || n == 0) {
-> >
-> > I think we should not bother testing for src == dst. It's
-> > vanishingly unlikely to actually happen, and if it does
-> > happen then the code will work fine, and it's probably better
-> > to actually do the access in that case than to skip it.
-> >
->
-> We can drop the check of (src == dst), but it will introduce inconsistent
-> behaviors. For example, qemu_ram_move(0x1, 0x1, 0x2) is finally turned to
-> memmove(0x1, 0x1,0x2) where no memory movement happens in glibc::memmove(),
-> but qemu_ram_move(0x0, 0x0, 0x2) is turned to qatomic_set((uint16_t *)dst,
-> qatomic_read((uint16_t *)src)) where we do have memory movement happening.
-> So I would like to keep the check of (src == dst) in order for the consistent
-> behaviors.
+  Thomas
 
-Well, it depends on which kind of consistency you want.
-If we do the src == dst check, then we have the inconsistency
-that a small aligned access always happens exactly once,
-*unless* it happens that src == dst, in which case it doesn't
-happen even though the caller asked for it.
-
-You can see this in the documentation comment I suggested above:
-if you don't check 'src == dst' then you can document it as
-"memmove, plus for a small access where src and dst are naturally
-aligned we guarantee it to happen exactly once atomically".
-If you do check src == dst then it gets more complicated,
-because you have to say "memmove, plus for a small access
-where src and dest are naturally aligned *and* src != dst then ...".
-
-I think that because it's the small sized accesses where we
-know that it might be necessary to really actually do the
-access, that we should do that also for src == dst.
-
-> >> +    test = (uintptr_t)src | (uintptr_t)dst | n;
-> >> +    len = test & -test;
-> >
-> > What is this doing? I am not a fan of clever bit twiddling
-> > that isn't commented to explain itself. Readers of the code
-> > shouldn't have to go off and search for an explanation of what
-> > is going on.
-> >
->
-> The following comments will be added for (v5).
->
->      /*
->       * Maximal length of aligned access that are determined by @src,
->       * @dst and @n
->       */
-
-What I mean is more that it ought to say why "x & -x"
-achieves that goal.
-
--- PMM
 
