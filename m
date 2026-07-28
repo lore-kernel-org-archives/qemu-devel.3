@@ -4,113 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F200C54F4D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 07:27:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE6FCC54F4C
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 07:36:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wocDd-0007QF-He; Tue, 28 Jul 2026 03:27:17 -0400
+	id 1wocLR-0000AI-Iq; Tue, 28 Jul 2026 03:35:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1wocDb-0007PY-Gh
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 03:27:15 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wocLK-00009q-Td
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 03:35:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1wocDZ-0007W1-Pn
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 03:27:15 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wocLJ-0000N2-4H
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 03:35:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785223632;
+ s=mimecast20190719; t=1785224111;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EWZ2IwZRDhsIKjyGu5uUpNcfNA1CEMoAFMEUePFUXyg=;
- b=aEALdmNJEUHhUmTKc2jVNhrcB4KtpPFtVO2awoY5MeY4g/8BxmuwdN1/2sK1NDUHVTKCcQ
- FDn+FFRe+UpkLe2+YUjGpiPaT1MXOlo9K0grGhVw+h4AodLA7S2PUxrXxWrN/z47fSQ69f
- prV0ls+JAFb7rCj8U2btE9NOCuDVG34=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-589-nVxK7WKKNKircVOK8VLlDw-1; Tue, 28 Jul 2026 03:26:05 -0400
-X-MC-Unique: nVxK7WKKNKircVOK8VLlDw-1
-X-Mimecast-MFC-AGG-ID: nVxK7WKKNKircVOK8VLlDw_1785223564
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4955d314945so24376425e9.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 00:26:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785223564; x=1785828364; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=EWZ2IwZRDhsIKjyGu5uUpNcfNA1CEMoAFMEUePFUXyg=;
- b=h6Ez7TSHXjleymLDqj24/Ff7GwVKAOJn5KCIhEys80FHZ4oSCTjv9H6p8yFNi9er4W
- CwhHs9447JqkzCGXFr1w7upM7B9taDI1tD6muMwt2FZy5XaG1EbLSq8cbocT1Q1IRhLx
- xnvDzxpDgAyPgQxSBSdSn6DP/5kNWwqHEDjP4qbvw7FF4ipvKOGzxVc2l2+fJpFISo94
- CT+8TVb7rak9Tg3IklOgZpipXyrsn1KAduHrmXCUe1iISX3LfpNwA2rIYCHEJJJ08OYH
- lVtCoZwE0ZQlvPzNq2tu/+rFfryEU3IYCtb5JfefZt1g5PvHG14nUMSW6/HVfS7YnJTt
- sDnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785223564; x=1785828364;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=EWZ2IwZRDhsIKjyGu5uUpNcfNA1CEMoAFMEUePFUXyg=;
- b=UZbgAWPPmvtjZ66Wh5RODZ56M9re8MH6FFlOZ/2sPeGGe9cPeop6FLOeo9V/NmkgqZ
- AHexZjbOQwL13+M08TSvf1Ko08erB8gvyDxD5nYmscSYM7FTOwI89ZPZiuCzB/aCPOwm
- xMuenh2SyIV+xzE5PM3PpFZ+0VxZ1pdDTR56iz3bQ6r9N406Vs2iQRQc/IeNgKLykb42
- lH1Cor0OK+Rgsi7zw7j5qxI1oYQ1v9fKpyjEor8olmnd3pfxrneoqCT8h6i28YwHCCwa
- Pf1DpSvN9z2uqrJHykozUUu7xK07GvNDrFJpFE70rvWn/yM68ZG2Oz4pVd/VAg32awbS
- 3VlA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqMc01GmqYVDdAUxnoBAeHxmK1pCS/5X0/5LERgavd/7cmkoEWufXGh++q7tWlhRfikjJxuT7ZOMSgX@nongnu.org
-X-Gm-Message-State: AOJu0YwyJ+zZsnKdCdOm9DX6HgsCyAhKZovQHgyD36W6/Yqfe9b7maak
- 0Zo1c8ixg1/Fajr0nxQBNkj3VyVP/bsowHVGs5HvUUcD0MCsH46+V1ZD0pOpJzv601/LVgx5WTV
- Q+gC0nYOV7WyegzsRSVlMl/ATQa/nw2yof4qYAaL6ci9QSI5rK1vNwXCL
-X-Gm-Gg: AR+sD13CRH3gd/9gt9XLbhUz1F/TXTQ9v1qX/BNagBajSj/3GWkNXSfyKBnmWDPMHA1
- vnUqxXKLQpTLxg9+FUXYJnZOvRn8zec5MBuQntAc3YQzd5eUVDCEFL/Dg/eUtwf3F8gnEEtjKpw
- CIiMcApVKaSoDxiUXP/y0RmFuXtSGDUCEdRBPJYiJPIublboY/upUeIQHj/9/a2YKYXxMVP6snf
- edN/9f5ra5Jg/qMpJD0y6hzX5Woja1kqkOpWbEuIvIfHoi9pYSAhDF8GorvV1tkolLh0vD4i7Uq
- 6qsqLimw08QVG5CO2ZEqoylo+5LKXTKU3d6wAfR9fgaHtBVjgiTNmkkMr9mPw+yQ9W1hzeNCqSE
- inP0gxV1PPK5Bhb+9qaUuNf92OtLBUUTfh+YU/S/ddF4hf9hX/5BglLUIi6MDERvKYJ/H+jp/xM
- JorQ==
-X-Received: by 2002:a05:600c:3f16:b0:495:607e:5ee7 with SMTP id
- 5b1f17b1804b1-496c6435aeamr10972165e9.17.1785223563743; 
- Tue, 28 Jul 2026 00:26:03 -0700 (PDT)
-X-Received: by 2002:a05:600c:3f16:b0:495:607e:5ee7 with SMTP id
- 5b1f17b1804b1-496c6435aeamr10971875e9.17.1785223563336; 
- Tue, 28 Jul 2026 00:26:03 -0700 (PDT)
-Received: from ?IPV6:2a0d:3344:5521:6b10:58fd:68f:7756:389d?
- ([2a0d:3344:5521:6b10:58fd:68f:7756:389d])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4957f9b8b67sm335535145e9.4.2026.07.28.00.26.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Jul 2026 00:26:02 -0700 (PDT)
-Message-ID: <d1e6a9a5-e6ef-4f6a-82ea-20a55328bf9e@redhat.com>
-Date: Tue, 28 Jul 2026 09:26:01 +0200
+ bh=mCZz1SanrmLWK/32ASGRImroeKf/utvWCyHdyzOAil0=;
+ b=CJztUB7TtOl51rk+6Bs92T/5zhxk12HG92DvqrGi6ubaiW1I5+B8qU0YPfaxixs6YLMHwS
+ 7fx3ZPSExLEtk2/LsRTP4jwxaJn8j6825cXaLrlmwC9YOuEaXO1buOfcgFCdI0TFmg+n8E
+ /8qMJ0+OcDFijgcGlYXWP73wjcXSdmc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-63-ynZ70cpBMZSyfs1PpH8akw-1; Tue,
+ 28 Jul 2026 03:35:07 -0400
+X-MC-Unique: ynZ70cpBMZSyfs1PpH8akw-1
+X-Mimecast-MFC-AGG-ID: ynZ70cpBMZSyfs1PpH8akw_1785224107
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5BD83195608C; Tue, 28 Jul 2026 07:35:06 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F24FB180044F; Tue, 28 Jul 2026 07:35:04 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9736221E6920; Tue, 28 Jul 2026 09:35:02 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Michael Roth
+ <michael.roth@amd.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Subject: Re: [PATCH v2 50/53] qdev: simplify DEFINE_PROP_ARRAY and remove
+ generic array PropertyInfo
+In-Reply-To: <20260616-qom-qapi-v2-50-cc9396b9c18c@redhat.com>
+ (=?utf-8?Q?=22Marc-Andr=C3=A9?=
+ Lureau"'s message of "Tue, 16 Jun 2026 00:38:16 +0400")
+References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
+ <20260616-qom-qapi-v2-50-cc9396b9c18c@redhat.com>
+Date: Tue, 28 Jul 2026 09:35:02 +0200
+Message-ID: <87wlufword.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 01/30] virtio: use masked features with set_features_ex
-To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jason Wang <jasowangio@gmail.com>, Yuri Benditovich <ybendito@redhat.com>,
- huntr bubble <bubblehuntr@gmail.com>
-References: <cover.1785179875.git.mst@redhat.com>
- <a6e0519ea8ed6fc84fab9bf9ca82c7a55780f880.1785179875.git.mst@redhat.com>
-Content-Language: en-US
-From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <a6e0519ea8ed6fc84fab9bf9ca82c7a55780f880.1785179875.git.mst@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pabeni@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,50 +92,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-n 7/27/26 9:19 PM, Michael S. Tsirkin wrote:
-> virtio_set_features_nocheck() calls set_features_ex
-> with guest-supplied feature bits, without masking the value
-> with host features (unlike set_features which gets the
-> correct val & host_features).
-> 
-> This does not matter if the driver matches spec, but drivers
-> can be malicious or buggy and set bit outside the host mask.
-> 
-> Devices don't expect this, so unsupported guest feature bits getting set
-> can break the host. In virtio-net, this can enable RSC without vnet
-> header support and cause out-of-bounds reads from short packets.
-> 
-> Pass the masked features to set_features_ex, consistent with set_features.
-> 
-> Fixes: CVE-2026-63321
-> Fixes: 64a6a336f4 ("virtio: add support for negotiating extended features")
-> Cc: Jason Wang <jasowangio@gmail.com>
-> Cc: Yuri Benditovich <ybendito@redhat.com>
-> Cc: Paolo Abeni <pabeni@redhat.com>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3623
-> Reported-by: huntr bubble <bubblehuntr@gmail.com>
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> Message-ID: <dfd27c9b26e442a2076f6ddc9bb3d38363d9b2da.1784891251.git.mst@redhat.com>
-> ---
->  hw/virtio/virtio.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index f4d86a3655..7c19080db5 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -3320,7 +3320,7 @@ static int virtio_set_features_nocheck(VirtIODevice *vdev, const uint64_t *val)
->      virtio_features_and(tmp, val, vdev->host_features_ex);
->  
->      if (k->set_features_ex) {
-> -        k->set_features_ex(vdev, val);
-> +        k->set_features_ex(vdev, tmp);
->      } else if (k->set_features) {
->          bad = bad || virtio_features_use_ex(tmp);
->          k->set_features(vdev, tmp[0]);
+Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
 
-I fear this comes too late, but FWIW the fix LGTM, thanks Michael!
+> Change DEFINE_PROP_ARRAY, the macro now uses _arrayprop##_list to
+> resolve the typed list PropertyInfo (introduced in the previous patch)
+> instead of the generic qdev_prop_array.
+>
+> This means the element type and size information is carried by the
+> PropertyInfo itself rather than duplicated at each callsite. Since
+> the typed list PropertyInfos encode element_info and element_size,
+> the .arrayinfo and .arrayfieldsize fields are no longer set by the
+> macro (they will be removed from the Property struct in the next patch).
+>
+> Remove qdev_prop_array, which is now unused.
+>
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-Acked-by: Paolo Abeni <pabeni@redhat.com>
+[...]
+
+> diff --git a/hw/intc/arm_gicv5_common.c b/hw/intc/arm_gicv5_common.c
+> index b155486af65..61c8ae49302 100644
+> --- a/hw/intc/arm_gicv5_common.c
+> +++ b/hw/intc/arm_gicv5_common.c
+> @@ -191,9 +191,9 @@ static void gicv5_common_realize(DeviceState *dev, Er=
+ror **errp)
+>=20=20
+>  static const Property arm_gicv5_common_properties[] =3D {
+>      DEFINE_PROP_LINK_ARRAY("cpus", GICv5Common, num_cpus,
+> -                           cpus, TYPE_ARM_CPU, ARMCPU *),
+> +                           cpus, TYPE_ARM_CPU),
+>      DEFINE_PROP_ARRAY("cpu-iaffids", GICv5Common, num_cpu_iaffids,
+> -                      cpu_iaffids, qdev_prop_uint32, uint32_t),
+> +                      cpu_iaffids, qdev_prop_uint32),
+>      DEFINE_PROP_UINT32("irsid", GICv5Common, irsid, 0),
+>      DEFINE_PROP_UINT32("spi-range", GICv5Common, spi_range, 0),
+>      DEFINE_PROP_UINT32("spi-base", GICv5Common, spi_base, 0),
+
+Doesn't compile for me.  I applied the series at merge commit
+8333dba732.  If it compiles for you, could you push it to where I can
+pull?
+
+FAILED: [code=3D1] libsystem.a.p/hw_intc_arm_gicv5_common.c.o=20
+cc -m64 -Ilibsystem.a.p -I. -I.. -Isubprojects/libvduse -I../subprojects/li=
+bvduse -Iui -Iqapi -Itrace -Iui/shader -I/usr/include/p11-kit-1 -I/usr/incl=
+ude/pixman-1 -I/usr/include/libpng16 -I/usr/include/spice-server -I/usr/inc=
+lude/spice-1 -I/usr/include/opus -I/usr/include/cacard -I/usr/include/nss3 =
+-I/usr/include/nspr4 -I/usr/include/PCSC -I/usr/include/gstreamer-1.0 -I/us=
+r/include/libdrm -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/u=
+sr/include/sysprof-6 -I/usr/include/orc-0.4 -I/usr/include/libusb-1.0 -I/us=
+r/include/SDL2 -I/usr/include/libmount -I/usr/include/blkid -I/usr/include/=
+gio-unix-2.0 -I/usr/include/slirp -I/usr/local/include -I/usr/include/gtk-3=
+.0 -I/usr/include/pango-1.0 -I/usr/include/cloudproviders -I/usr/include/ca=
+iro -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/glycin-2 -I/usr/include/at=
+-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/include/atk-1.0 -I/usr/lib64=
+/pkgconfig/../../include/dbus-1.0 -I/usr/lib64/pkgconfig/../../lib64/dbus-1=
+.0/include -I/usr/include/fribidi -I/usr/include/libxml2 -I/usr/include/har=
+fbuzz -I/usr/include/freetype2 -I/usr/include/vte-2.91 -I/usr/include/rav1e=
+ -I/usr/include/svt-av1 -I/usr/include/libvmaf -I/usr/include/webp -I/usr/i=
+nclude/virgl -I/usr/include/fuse3 -I/usr/include/uuid -I/usr/include/pipewi=
+re-0.3 -I/usr/include/spa-0.2 -fdiagnostics-color=3Dauto -Wall -Winvalid-pc=
+h -Werror -std=3Dgnu11 -O2 -g -mcx16 -msse2 -D_GNU_SOURCE -D_LARGEFILE_SOUR=
+CE -fno-strict-aliasing -fno-common -fwrapv -ftrivial-auto-var-init=3Dzero =
+-fzero-call-used-regs=3Dused-gpr -fstack-protector-strong -Wempty-body -Wen=
+dif-labels -Wexpansion-to-defined -Wformat-overflow=3D2 -Wformat-security -=
+Wformat-y2k -Wignored-qualifiers -Wimplicit-fallthrough=3D2 -Winit-self -Wm=
+issing-format-attribute -Wmissing-prototypes -Wnested-externs -Wold-style-d=
+eclaration -Wold-style-definition -Wredundant-decls -Wshadow=3Dlocal -Wstri=
+ct-prototypes -Wtype-limits -Wundef -Wvla -Wwrite-strings -Wno-missing-incl=
+ude-dirs -Wno-psabi -Wno-shift-negative-value -isystem /work/armbru/qemu/li=
+nux-headers -isystem linux-headers -iquote . -iquote /work/armbru/qemu -iqu=
+ote /work/armbru/qemu/include -iquote /work/armbru/qemu/host/include/x86_64=
+ -iquote /work/armbru/qemu/host/include/generic -iquote /work/armbru/qemu/t=
+cg/x86_64 -pthread -DSTAP_SDT_V2 -fPIE -D_FILE_OFFSET_BITS=3D64 -D__USE_FIL=
+E_OFFSET64 -D__USE_LARGEFILE64 -DUSE_POSIX_ACLS=3D1 -DHWY_SHARED_DEFINE -DA=
+VIF_DLL -DEB_DLL -D_DEFAULT_SOURCE -D_XOPEN_SOURCE=3D600 -DNCURSES_WIDECHAR=
+=3D1 -D_GNU_SOURCE=3D1 -D_REENTRANT -DSTRUCT_IOVEC_DEFINED -DWITH_GZFILEOP =
+-DCONFIG_SOFTMMU -DCOMPILING_SYSTEM_VS_USER -MD -MQ libsystem.a.p/hw_intc_a=
+rm_gicv5_common.c.o -MF libsystem.a.p/hw_intc_arm_gicv5_common.c.o.d -o lib=
+system.a.p/hw_intc_arm_gicv5_common.c.o -c ../hw/intc/arm_gicv5_common.c
+In file included from ../hw/intc/arm_gicv5_common.c:12:
+/work/armbru/qemu/include/hw/core/qdev-properties.h:195:40: error: =E2=80=
+=98qdev_prop_array=E2=80=99 undeclared here (not in a function); did you me=
+an =E2=80=98qdev_prop_set_array=E2=80=99?
+  195 |     DEFINE_PROP(_name, _state, _field, qdev_prop_array, uint32_t,  =
+     \
+      |                                        ^~~~~~~~~~~~~~~
+/work/armbru/qemu/include/hw/core/qdev-properties.h:88:24: note: in definit=
+ion of macro =E2=80=98DEFINE_PROP=E2=80=99
+   88 |         .info      =3D &(_prop),                                   \
+      |                        ^~~~~
+../hw/intc/arm_gicv5_common.c:193:5: note: in expansion of macro =E2=80=98D=
+EFINE_PROP_LINK_ARRAY=E2=80=99
+  193 |     DEFINE_PROP_LINK_ARRAY("cpus", GICv5Common, num_cpus,
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+../hw/intc/arm_gicv5_common.c:196:62: error: macro =E2=80=98DEFINE_PROP_ARR=
+AY=E2=80=99 passed 6 arguments, but takes just 5
+  196 |                       cpu_iaffids, qdev_prop_uint32, uint32_t),
+      |                                                              ^
+/work/armbru/qemu/include/hw/core/qdev-properties.h:166:9: note: macro =E2=
+=80=98DEFINE_PROP_ARRAY=E2=80=99 defined here
+  166 | #define DEFINE_PROP_ARRAY(_name, _state, _field,                   =
+     \
+      |         ^~~~~~~~~~~~~~~~~
+../hw/intc/arm_gicv5_common.c:195:5: error: =E2=80=98DEFINE_PROP_ARRAY=E2=
+=80=99 undeclared here (not in a function)
+  195 |     DEFINE_PROP_ARRAY("cpu-iaffids", GICv5Common, num_cpu_iaffids,
+      |     ^~~~~~~~~~~~~~~~~
+
+[...]
 
 
