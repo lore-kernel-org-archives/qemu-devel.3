@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10978C54F4C
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 12:32:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41CFDC54F4C
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 12:33:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wogyH-0005SP-7s; Tue, 28 Jul 2026 08:31:46 -0400
+	id 1wogyA-0005Lw-SX; Tue, 28 Jul 2026 08:31:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wogyE-0005Pk-0d
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 08:31:42 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1wogy7-0005JS-KW
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 08:31:35 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wogyC-00034m-By
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 08:31:41 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-47f9ab7ee38so2015123f8f.2
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 05:31:39 -0700 (PDT)
+ id 1wogy4-0002zB-Ay
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 08:31:35 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-47f7027ca11so2118641f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 05:31:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785241899; x=1785846699; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=0uyvWvhf2PkGp8LEN9Yz1w34qwzlXkF8Nfzq654Qzu4=;
- b=Xe+8WsSYvcHZnhUY+3/eTn/7KL2rLszOEK1US+PCbof+OYAluytqGjDDV9zX0zGoIU
- IRi3Ar4PHgptvQhoH3E3i7Pn2JXmIBbz0Kw/4EUT/FJ2gAJVJg1p6LEj4oJ72q7eiyU8
- 6Bv7pZb2cVHhZdDrt6jZtelllYd9y5JcZeo5eUdyAYLcGYmbNoM0tNZz0RORJSU/2DrM
- eeZitnhKpipeiqmNSKYi9RyBVTFNWmhM8qZZIw43ZGXFaKJ5T9GAfaOv+2BZNNJgPYcW
- 4FBr4nI/uxqe06+Leh2WEvH8YzxHV/IS5AYyX/m3Y9psEUBp2p4KYclUpn4a6Z7+aL8j
- 2uNg==
+ d=linaro.org; s=google; t=1785241891; x=1785846691; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=eHJg2TI8NW97mO+REE/Db1uHVBK+LSsko2hTZNzs3wo=;
+ b=eqMkxaqjdwqTfojIQYF507DePMRD762GYzqcTa3+1u4SE+UExNLMkYU9JMbWFtVLQp
+ hhL/lLzJwV6pZBhBGFoUGVXYd/lPJXSiThsG+8TzDM2LtouODa5Ix5YNH22gboYqXy8W
+ GiX5J5JLuDYhGAAVAYuDEHfq3hFUDIrQedTHHFLwKkeXEnOUsSnxDp5xNIIAU35RgH8I
+ 96b6bgDPaW2gydasDxx6GosgEYMK84L3tPCjReTfs3JorCdv0kO8UKCF5zFHgv2glSrs
+ gz3RufMKbBS8kKV/wJs5B8PuTnB1ZsHQg8sigxPuL/yhynaAk5r6VgIDPyHezPgWp0cS
+ JQyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785241899; x=1785846699;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=0uyvWvhf2PkGp8LEN9Yz1w34qwzlXkF8Nfzq654Qzu4=;
- b=Oz6XqQMf6jdBsMvgiNFEIWYuxkFJdedWygiiJHryNdOrbgE6arhLcdL9etLjPgJmnS
- DHFJvvuHbXGocuAhMIpbQeN6by8HZlLfVBZx59qgfWcl7K63/KSR6SOdShOob1iTmnXQ
- x8BcKCZoeOdzSthd8D5pEQUuNXHqNskQnP44I8r6M84cPOuW7KbuNzZ1oMVDnbqCSQAx
- MStjXLTNg7o47WFGwWlHfnJqJ0cz0UHggh65WEWAlXPkAZtqCDLdKG2bw6ljn8dq4rLs
- 5LsSIqMgm8rxCP+RGVYox82eaO9m9vkUD0YVLPvbJJ61ET+PW5nrxn6eWifwQLTSAuGj
- /6Qw==
-X-Gm-Message-State: AOJu0Yyjq23yiBCUA9Ja9M8+GLBBvoeq66PdrU9gDxPWuhU5M6eV0RJf
- NCSo20BszYvdhWL69BI8OAbydmnJetj0br45Elmm/qElacV/z6VS2Cthrbo8wmpYl+VOv/ENWgi
- LS7Lx
-X-Gm-Gg: AR+sD13SYqwaqckIgOlDl4KPlrdfv9FmKYWFaF0fVrxQB0al58+Gj18mJPfukt8LA7j
- qkiCTIRnYdY27fePFT0RwHmSxXpD0RX/9uAfu+2GhYWVpgNiBXH66sXnFDc0rRNIJlGXxPilTXe
- iGGM9njjtLzUyV2JzQPtRvs+dvDMMThsJ0bB0HLAPuYgBUvgoH3bY8txnQLETxM68/AL/pQyYFx
- dzzTFCn4giZyzMjY8U0THnzRh7A3QoTMp1TQpkzAhYqROu9b45r9ZfTw/HYVnTDrRbjHF92bBM9
- gq31TfuQZX+N6sCWvmF+MIzqsyRHD4K5gPjcvNoqDMMDMSd6h5H6bVP+q01wiaX00A45Bixq1QD
- 9fWTrjgDyxlUl/ekRr/uhoPBtYKiswU69j1Qt1zgnDFcTJNHBubOkVbwILl3KHaVFFyzU46jL70
- QkS+m8eQkysJZQiebKvxEiYlu/ORCJS0oRjnkHHDsIIg4BhhVLhizPcW8NoJ5G2kgr0m9tSrLCm
- p0/SlXAQgI=
-X-Received: by 2002:a05:6000:2c02:b0:47f:943a:a7f4 with SMTP id
- ffacd0b85a97d-47fb1f394f0mr2562067f8f.61.1785241898700; 
- Tue, 28 Jul 2026 05:31:38 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785241891; x=1785846691;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=eHJg2TI8NW97mO+REE/Db1uHVBK+LSsko2hTZNzs3wo=;
+ b=XXQoYRk1Z+ffjgqjhfgOmK8+LyC19AnQ8NhR+EoQpmxRuODD8ii722TVAxcn2Q4m4f
+ GFizQ+dJ0lWdpeccePEhTl0u9GO5gwB0Bg4/Es7CMwjpZClIgTIAtQVF04TVuPQlSiQo
+ 6hT3Z359afibWpbP5QFe63s46qYttnNzAvY2HkeXVLdt8TbfZGSRfMS7k4XtWwQdjsMv
+ w3p9i52UHj4SvBfWhKT215roP7z1anzRdkyEe3I8MxHLSk3Zg8SUVev6rm8bUzy1xnoU
+ KrR9hRqj3cSPBrDHtIz0386SI9QJJ88iEnx80jIl2M6ZwPI4BHRM8qRMZ9FcWM5aE2cT
+ JEnQ==
+X-Gm-Message-State: AOJu0Yw5dYItVk3d/5ZM3ER6TYygSeIrO3Sos20HBrb+wHeWEedpeO4k
+ BFIImgc/KAARA3y66La9xhZA9D6eaTNtyCMSWHkM55FofN+imZXPgEPLBjzJg6H4h21hRhRkyzd
+ JgYIy
+X-Gm-Gg: AR+sD12K1TMwpSEN7USiUSF/pv/rIdBe+y/a5x3YVpoQuc6xfEVk/lKgwEKXCDOuHtw
+ acj4uDnAiExR7ZogUx0rg2M5IGYauRvqCq5tPIVPgYHYxoot0l8u9pmyDcf7gw5+B98z0PJqRyo
+ pLcL7186Uu14aGPNloJgLmyLNLlS3zCYF/Tv5e+yG8Va5BDtrcl1PojlJj2vQyInAQE1rGLp7bF
+ NunT6QWF57qpbu+WTVERBUDZtOSVWP9r4JaaLdWNKGvmq7dpxvBpVGIJ30Prqpt1bb/uYyt8WcC
+ GjcXGKT5yZaRuoO35WZuQPFndBiYWkqyVREi/Muhh+hAL2FGh2I7jgUeQBgRvTqrZt0LZMK59rG
+ eYv8YpqBmcyZlQ4Jmtf8MjWtn6wOom/LDLCbUXRvCjctNqwPuibV0rllN+hNjrDlu+zMjrdZGFZ
+ HMDXt9uFpGcMCGWgHBvwvO/3U7t/3f4M9EY0UxLtcDDOlOZ0/lcEn/zuSBfFCr3zQOu7ELDjdUu
+ tTXKI8x8cN2TFSeS/KeSw==
+X-Received: by 2002:a05:6000:1865:b0:47f:8abb:7476 with SMTP id
+ ffacd0b85a97d-47fb1e72377mr2568128f8f.19.1785241890715; 
+ Tue, 28 Jul 2026 05:31:30 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c6f076sm58499039f8f.34.2026.07.28.05.31.37
+ ffacd0b85a97d-47f85c6f076sm58499039f8f.34.2026.07.28.05.31.29
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jul 2026 05:31:37 -0700 (PDT)
+ Tue, 28 Jul 2026 05:31:30 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/20] hw/net/can/flexcan: Fix mailbox index calculation in
- flexcan_mem_read()
-Date: Tue, 28 Jul 2026 13:31:16 +0100
-Message-ID: <20260728123127.1711653-10-peter.maydell@linaro.org>
+Subject: [PULL 02/20] target/arm: Add stub for define_gicv5_cpuif_regs()
+Date: Tue, 28 Jul 2026 13:31:09 +0100
+Message-ID: <20260728123127.1711653-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260728123127.1711653-1-peter.maydell@linaro.org>
 References: <20260728123127.1711653-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,44 +103,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-Calculate mailbox indices from the `mbs[]` array layout instead of the
-oversized raw `mb[]` view. This prevents accessing mailbox entries beyond
-the valid array range and fixes Coverity CID 1662974.
+The common helper.c file calls define_gicv5_cpuif_regs() which
+is only defined when TCG is built:
 
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260723070059.6332-6-shentey@gmail.com
+  $ git grep -w define_gicv5_cpuif_regs
+  target/arm/internals.h:1885:void define_gicv5_cpuif_regs(ARMCPU *cpu);
+  target/arm/helper.c:6334:        define_gicv5_cpuif_regs(cpu);
+  target/arm/tcg/gicv5-cpuif.c:923:void define_gicv5_cpuif_regs(ARMCPU *cpu)
+
+This fixes when building on macOS with --disable-tcg:
+
+  Undefined symbols for architecture arm64:
+    "_define_gicv5_cpuif_regs", referenced from:
+        _register_cp_regs_for_features in target_arm_helper.c.o
+
+Define the GICv5 stubs in their own compilation unit, otherwise
+we get the following error:
+
+  duplicate symbol '_raise_exception_ra' in:
+    libsystem_arm.a.p/target_arm_tcg_op_helper.c.o
+    libstubs_arm.a[4](target_arm_tcg-stubs.c.o)
+
+Fixes: ee0f1ce00db ("target/arm: GICv5 cpuif: Initial skeleton and GSB barrier insns")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260721122135.6288-3-philmd@oss.qualcomm.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/net/can/flexcan.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ target/arm/gicv5-stubs.c | 17 +++++++++++++++++
+ target/arm/meson.build   |  1 +
+ target/arm/tcg-stubs.c   |  4 ----
+ 3 files changed, 18 insertions(+), 4 deletions(-)
+ create mode 100644 target/arm/gicv5-stubs.c
 
-diff --git a/hw/net/can/flexcan.c b/hw/net/can/flexcan.c
-index 651904fa379..8d680f1832e 100644
---- a/hw/net/can/flexcan.c
-+++ b/hw/net/can/flexcan.c
-@@ -1239,14 +1239,12 @@ static void flexcan_mem_write(void *opaque, hwaddr addr, uint64_t val,
- static uint64_t flexcan_mem_read(void *opqaue, hwaddr addr, unsigned size)
+diff --git a/target/arm/gicv5-stubs.c b/target/arm/gicv5-stubs.c
+new file mode 100644
+index 00000000000..845626d7c6b
+--- /dev/null
++++ b/target/arm/gicv5-stubs.c
+@@ -0,0 +1,17 @@
++/*
++ * QEMU ARM stubs for GICv5 TCG helper functions
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "internals.h"
++
++void define_gicv5_cpuif_regs(ARMCPU *cpu)
++{
++    g_assert_not_reached();
++}
++
++void gicv5_update_ppi_state(CPUARMState *env, int ppi, bool level)
++{
++}
+diff --git a/target/arm/meson.build b/target/arm/meson.build
+index 4412fde065f..f6ae8934d1b 100644
+--- a/target/arm/meson.build
++++ b/target/arm/meson.build
+@@ -37,6 +37,7 @@ arm_system_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
+ arm_user_ss.add(files('cpu.c'))
+ arm_stubs_ss.add(files(
+   'cpu32-stubs.c',
++  'gicv5-stubs.c',
+   'kvm-stub.c'
+ ))
+ arm_user_ss.add(files(
+diff --git a/target/arm/tcg-stubs.c b/target/arm/tcg-stubs.c
+index 8d97449cfc6..aeeede80661 100644
+--- a/target/arm/tcg-stubs.c
++++ b/target/arm/tcg-stubs.c
+@@ -43,7 +43,3 @@ void vfp_clear_float_status_exc_flags(CPUARMState *env)
+ void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask)
  {
-     FlexcanState *s = opqaue;
-+    const int mbid = (addr - offsetof(FlexcanRegs, mbs)) /
-+        sizeof(s->regs.mbs[0]);
-     uint32_t rv = s->regs_raw[addr >> 2];
- 
--    if (addr >= offsetof(FlexcanRegs, mb) &&
--        addr < offsetof(FlexcanRegs, _reserved4)) {
-+    if (0 <= mbid && mbid < ARRAY_SIZE(s->regs.mbs)) {
-         /* reading from mailbox */
--        hwaddr offset = addr - offsetof(FlexcanRegs, mb);
--        int mbid = offset / sizeof(FlexcanRegsMessageBuffer);
+ }
 -
-         if (addr % 16 == 0 && s->locked_mbidx != mbid) {
-             /* reading control word locks the mailbox */
-             flexcan_mb_unlock(s);
+-void gicv5_update_ppi_state(CPUARMState *env, int ppi, bool level)
+-{
+-}
 -- 
 2.43.0
 
