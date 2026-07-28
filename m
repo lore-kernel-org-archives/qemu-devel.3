@@ -4,122 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7352C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 14:34:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCA02C53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 14:36:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woist-0005Jz-VL; Tue, 28 Jul 2026 10:34:21 -0400
+	id 1woiud-0006r1-PI; Tue, 28 Jul 2026 10:36:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1woiss-0005JJ-Nw
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:34:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1woisq-0008M9-1V
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:34:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785249255;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qArjsjIQU1lq2Ykf7SAMUFMtBbSfJkNEpAzhQotRVLg=;
- b=ebWzZzWjP/c61Q+Pk0KP+36idoBBBjxcizPGGC7TvJi9Ggooh8T8KTQTIsFVZdZOpa4BaO
- A32wmEHgC4Y12dhLI3dpDHHYxuM8j7rr21ONaMyGmh3m8CDuSc9qlA98YyVaWH86Wc+4ed
- OTiG6pvyw8mzgIwwiYtATuMaHdNOFqo=
-Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
- [209.85.222.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-134-S0v9-G4SOraus9uaz4ONmQ-1; Tue, 28 Jul 2026 10:34:13 -0400
-X-MC-Unique: S0v9-G4SOraus9uaz4ONmQ-1
-X-Mimecast-MFC-AGG-ID: S0v9-G4SOraus9uaz4ONmQ_1785249252
-Received: by mail-ua1-f72.google.com with SMTP id
- a1e0cc1a2514c-97715f83b77so185211241.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 07:34:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1woiuD-0006P4-UF
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:35:47 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1woiu0-0000EV-AM
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:35:35 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-66899fe9077so6200175d50.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 07:35:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785249323; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Gi7Dv7YkLxO9uMJhVvKZbOJHnmpjaqprTuYAoypx1UWOZxY5piVJApeflKX+1e4LTH
+ FZXc7mOgeGXHDFUPW6/ilQSrShD7HsXCcPAKqoTqHl48sjP5ltEulEqU+aAinf7Gfkel
+ iVAYuZ6EMOyyIngohnWx27cG7bOxPpTb9RGVSv8pG5nWrhBOehpO6KP8bqJEsIygnaUv
+ Z8dM2fkGPf+iOJlKFwQBCrVyy4AGgYamHuLBEP4FdNGU4Sn24Md4vOtox/KkxPFj1Crn
+ MnAiAftz4i0RNZW2YmaqGvqMGKWiX0qKumEyfsYn70AxgW6D+a7Zii8oDKuv09Q1flfQ
+ HgCw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=8zdjuGvJTGsQwq2F1n0Ey0GkjCD1z1YqRCka3lBjlr0=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=eXoGCMMSBupU5m6UoOX2/zqgeAEI3egMNO5L0iv4ALNGaRLhR7S8napHHtpMBSwOus
+ if/Ntb+Eci5mXaEEFrLnHQ3O7Aa3o9DGq05uf9tjRPLl+ThCACZ+2R302MaMSXSA+nCa
+ xry0XMJE6zZEmWykRRh31ro5Jpt0ioMLbOnL7CFobZ6BpT1e8sRp2piquWhGBM0TjXmB
+ 38ckJHL0H9nLvsIfnddt03M5pABIj67kDGn7TWQOEv7uPL4X5Cc+34Krr4wLxPQ7qYg7
+ MzCF96LVsTIC1xF5QH9BPSiMXtHWBbmTmK4xU019PUbq8cj1JRT7b0C5CI6LUMtJQa50
+ dQBQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785249252; x=1785854052; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=qArjsjIQU1lq2Ykf7SAMUFMtBbSfJkNEpAzhQotRVLg=;
- b=aOtMOz8QdOV31mvxbEYDFPj72PsscmB8eYPS5AcKojRygTPbZAGq23ZwHllQcQgHU6
- YDp3amF78qpnuvXa+LWP+a5HbC6qPd3RLgmLk6W5IBxUMH0GlQHwzE+nbJ7h5b+RM4C7
- pVPn87AWWhHOM7uGa4WpO8AccC+4w5WEoxgS0aQ4lVR2SWwuVbWr1jtRhlqQ8incI+N8
- eZW5+7DWUhr+j/oJ1U9q+9ozUaUoAvbIoV/QDFII37GI+CvjtOC2x1G3FrRAHbNAx3kE
- 1tn/Qk57hsuxTFa4Ss8OmBPAQLQ4VwBPB1S+XLh3a5WtkvWW8wkZq3z1ExVVt40yuaBe
- UwlQ==
+ d=linaro.org; s=google; t=1785249323; x=1785854123; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=8zdjuGvJTGsQwq2F1n0Ey0GkjCD1z1YqRCka3lBjlr0=;
+ b=qeNecfh4exff0mNMbQ46IDLJOXGzEmYHt8/tBODXZE9yOzVcX9v7D8k+sNeqZw69Hf
+ 3aU04O8E1BjoYCcQdsdeBpFw7jHizG2vxXiy1MqHB2GRpwb3J8B/3bWOoE7ylSdCiohx
+ Tvu8iYz5vfGhLcdp2FhHnh8DSVi7Afmiwy3302xdNb9+YQxMgyeiH6bfOOsCq6327Dm8
+ IGxdJYiWZH7Ic+dHpHV6suWUaicg5sXKo1jSaijaR4ko3XDGw1QBveQPr4K30OopTvcf
+ YE3sue+pnVtoNyvtWIdwc8jREtRX6kwWWzTEpv5abnfnimwVBlG+sBt1Bf+ygXjurrm2
+ BI5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785249252; x=1785854052;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=qArjsjIQU1lq2Ykf7SAMUFMtBbSfJkNEpAzhQotRVLg=;
- b=ffevY63Zzhjqi98j98JV5ujk6LT/Rw0ztrC4y2WZCx51d1NTii3wJYKTUTQK97rt2k
- W6Ys25oKTcRva0u7QVe6z/WfnAHedTao8+5uyHAk9B0YL53hKZzNtUe14AMGPFdGZXa4
- CYxrEnRnyhq0p9gLhGoq40R/iKYcqWiB7eEP3j8HLyERwshp51BHanxnu61f5RLnqxjS
- qAWQGkHwmsPNAAD0lqLQzFmwV201JBj/ETUO2gvuok1EdrpySIwxMopcAzDBPgmFkh5W
- hkFweIDDnP4yXcjiR06WmRQJD74OXzGfdUEVuVpYBdCMleiyXXFGEpsNZZeChfma7lIM
- sSSQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpO88kogbs+94QPSyHTmM0juISaS5D/Jii74RcOHBqGro3s06BVTh7jEoU4K1OYzmyRcNVsi4r6hoe8@nongnu.org
-X-Gm-Message-State: AOJu0YxtweI3VzfMvWAY4yvpO5+wqEl/gtiE75ZFdHeSmjKvjfW6E+YP
- JY7agoyobSr904SXlAeuDojRgxIPW92uiZwMp5uXeUlSGEjRZBzGyOadBvoZ+VYqAdjOJI9jIwH
- CI4xJ+y9zhYVTzAKncJVCkU0MB71krdV/pZLzkvNzl17UcmV17aIFVotY
-X-Gm-Gg: AR+sD11G9OdwupR/gT62rwZw81LMkBprQDhVyV2pm6qvqeUh8FKYyQ3wzxc8XwQSefS
- ZmE4gRf935zNBZKh8LXSEWMrs9a1EEOfGY/8uXrwHMn5obbF/56HUClomsbPaF8T8ZU56qDsGOn
- MbUy8nJu0p3nhhBRfQaKwnpDSjzu+mJIkwihjCZG37Sskx3Ml1ECxhdegRuhFT8nde8niLFdIrp
- GrOyDE8Bqljvnzt2bRtraiFwbZ7ppkkWMST57ncw2MYpnkXxmp2x6z07oM3E7/6PJYGstsG9ab1
- IU9UaXEncXf0Uf8+VIX5/+3tp6K8V9v6WvL+qys5BNF06Imq5qMEnbxVCCoiSYuwl7/KHjqp0e9
- FKKQUrFFCNUY6BGbblTRqfaZ/7Vc/Hd1xU8zn0Cm55ZQ4XTDtVRF21cTNNFw=
-X-Received: by 2002:a05:6102:a50:b0:738:d6c:7104 with SMTP id
- ada2fe7eead31-7549c7802dbmr1285355137.0.1785249252261; 
- Tue, 28 Jul 2026 07:34:12 -0700 (PDT)
-X-Received: by 2002:a05:6102:a50:b0:738:d6c:7104 with SMTP id
- ada2fe7eead31-7549c7802dbmr1285326137.0.1785249251641; 
- Tue, 28 Jul 2026 07:34:11 -0700 (PDT)
-Received: from x1.local
- (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
- by smtp.gmail.com with ESMTPSA id
- a1e0cc1a2514c-97774c8f725sm7526928241.5.2026.07.28.07.34.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jul 2026 07:34:10 -0700 (PDT)
-Date: Tue, 28 Jul 2026 10:34:08 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Gavin Shan <gshan@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, mst@redhat.com,
- richard.henderson@linaro.org, alex@shazbot.org, berrange@redhat.com,
- philmd@mailo.com, david@kernel.org, clg@redhat.com,
- pbonzini@redhat.com, phrdina@redhat.com, jugraham@redhat.com,
- liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn, shan.gavin@gmail.com
-Subject: Re: [PATCH v4 2/3] system/memory: Use qemu_ram_move() for directly
- accessible regions
-Message-ID: <ami94CmeBNRKy_es@x1.local>
-References: <20260727032649.145381-1-gshan@redhat.com>
- <20260727032649.145381-3-gshan@redhat.com>
- <CAFEAcA9_tDRAd97z4UtNhFPK+fMbq37LJhWTSmD5cueo61hvvg@mail.gmail.com>
- <0a384d67-fc56-4a21-9d0e-25f218a45228@redhat.com>
- <CAFEAcA9HbTSj9cJfv8o=jYSuPhScr-RVKWCos4kpUJ+T1S6g5Q@mail.gmail.com>
- <13333e56-3725-4550-849c-9035f6925213@oss.qualcomm.com>
- <CAFEAcA9X7SNUvQpwXA2_xReUERB-eBETty3g32-PD=MVk536sg@mail.gmail.com>
- <2322668a-20a3-4a6b-8d7f-c04ddfef84f1@redhat.com>
+ d=1e100.net; s=20251104; t=1785249323; x=1785854123;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=8zdjuGvJTGsQwq2F1n0Ey0GkjCD1z1YqRCka3lBjlr0=;
+ b=tOVY1O2OlVA5UMaZz9Zc9B9O23CZ42DoednMT6Qm2gcw1/0migqjYaS1irOrEbyPjC
+ nDmdMCaWxdljJbwpo77Kw0I9h5pkY+fA61dfDU0TwX9Ll46R6isfXBWZoYXeGf167lwj
+ STYJVGMBl4rPNX0pPL4IjtZNB1nB1qDJCgo1Xjlb+DIZ2+e7MDRjCyf1vrS6Ymr9c9gn
+ Ew7w/QWbgFTo1P6CSu+axny7nRT9L1w8m+SpvpRpqxTUCpiY4NuX0f52LAkhMey/BJBA
+ nJNhBr4eqkVsfuzz+Kgh7MoMLiaa/0O+rz58mK4KsYMhLBcf3ZN7ZQ6CdJgOW3DEuQDM
+ r96w==
+X-Gm-Message-State: AOJu0YzBC3lb6ock3LuSEdqSqltDb6/ki8DcMNfzuENGfDMgZu74Umvl
+ BtRYpxT1C+jCF5d2gutKrrTO1w7pVnoxfyMvUzDrgwm8N1S+KkJDn1BgwMLZuPUajjZZQE6gp+J
+ i8f8Fe7v8WcpN0/DpwP/8oRLxhH80JUZUgi5ua1uZaQ==
+X-Gm-Gg: AR+sD13aefTpYYC10O7xFQipFAsdacaQbc6GrD/s3Rd0NH/NS/oMN2sNCTtaqGPsyz2
+ CGsDI0ZBys2EVpXICG0UfX9AJ0bxEv5mQ61NSG4i2JuLP58Q1WY2flUhfo6O/YzT5xv3mDncf/z
+ yAfR5ffxcj7TNdolgmIR8A9OWSlypZNDfQILmZ3GfrYAhEptgBtj5hBIHMCynYXWLLs1+gm3K6M
+ GN20WUt1Plpx+eCIYB+rpsCNYgSNN/kxeqqiSZqJeR9RMfU6A2uWblapGDeVWelfgjlDtmp0uTT
+ A1U+m65YKMNkB+qI/O3Hgk6jlFPifR/7BItWUf9GViQYig==
+X-Received: by 2002:a05:690e:25e6:b0:667:8b91:2419 with SMTP id
+ 956f58d0204a3-6690587b56cmr845448d50.96.1785249323330; Tue, 28 Jul 2026
+ 07:35:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2322668a-20a3-4a6b-8d7f-c04ddfef84f1@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20260717232306.378988-1-richard.henderson@linaro.org>
+ <20260717232306.378988-11-richard.henderson@linaro.org>
+In-Reply-To: <20260717232306.378988-11-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 28 Jul 2026 15:35:11 +0100
+X-Gm-Features: AUfX_mybFjM-ZTAbW-M7iEp3YfR85oNH22ooPlplyuhKoeDN2wuNIhtfWjP20s4
+Message-ID: <CAFEAcA--TV8fXLHFBUbUEi0wr+4Vu+wqYED2RevMG3bUyEpMnA@mail.gmail.com>
+Subject: Re: [PATCH 09/17] target/arm: Drop TLB_MMIO check in
+ allocation_tag_mem_internal
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,96 +115,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 28, 2026 at 08:23:48PM +1000, Gavin Shan wrote:
-> On 7/28/26 7:35 PM, Peter Maydell wrote:
-> > On Tue, 28 Jul 2026 at 10:22, Philippe Mathieu-Daudé
-> > <philmd@oss.qualcomm.com> wrote:
-> > > 
-> > > On 28/7/26 11:01, Peter Maydell wrote:
-> > > > On Tue, 28 Jul 2026 at 04:01, Gavin Shan <gshan@redhat.com> wrote:
-> > > > > 
-> > > > > On 7/27/26 10:51 PM, Peter Maydell wrote:
-> > 
-> > 
-> > > > > > > +    test = (uintptr_t)src | (uintptr_t)dst | n;
-> > > > > > > +    len = test & -test;
-> > > > > > 
-> > > > > > What is this doing? I am not a fan of clever bit twiddling
-> > > > > > that isn't commented to explain itself. Readers of the code
-> > > > > > shouldn't have to go off and search for an explanation of what
-> > > > > > is going on.
-> > > > > > 
-> > > > > 
-> > > > > The following comments will be added for (v5).
-> > > > > 
-> > > > >        /*
-> > > > >         * Maximal length of aligned access that are determined by @src,
-> > > > >         * @dst and @n
-> > > > >         */
-> > > > 
-> > > > What I mean is more that it ought to say why "x & -x"
-> > > > achieves that goal.
-> > > 
-> > > Hmm isn't "x & -x" restricted to power of 2? Here we have no garanty
-> > > @test is, because we have no garanty @n is. Ah, this is catched by
-> > > the 'len != n' check and returns after calling memmove(). Indeed not
-> > > very clear notation. Again:
-> > > 
-> > >     ...
-> > > 
-> > >     /* Overlapping buffers, unaligned or oversized access */
-> > >     if (!QEMU_IS_ALIGNED((uintptr_t)src | (uintptr_t)dst, n)) {
-> > >         memmove(dst, src, n);
-> > >         return;
-> > >     }
-> > > 
-> > >     switch (n) {
-> > >     ...
-> > 
-> > I'm not inherently against the bit twiddling (QEMU_IS_ALIGNED
-> > on a variable length will do a division, maybe we care?);
-> > I just want that if we do use a bit-twiddling trick that we
-> > explain why it does the thing we want it to do.
+On Sat, 18 Jul 2026 at 00:25, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> There is a memory_region_is_ram check later that
+> actually does that this was trying to do.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/tcg/mte_helper.c | 11 -----------
+>  1 file changed, 11 deletions(-)
+>
+> diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
+> index 997248bd57..6177dea842 100644
+> --- a/target/arm/tcg/mte_helper.c
+> +++ b/target/arm/tcg/mte_helper.c
+> @@ -181,17 +181,6 @@ allocation_tag_mem_internal(CPUARMState *env, int ptr_mmu_idx,
+>          goto fini;
+>      }
+>
+> -    /*
+> -     * If not backed by host ram, there is no tag storage: access unchecked.
+> -     * This is probably a guest os bug though, so log it.
+> -     */
+> -    if (unlikely(ret.flags & TLB_MMIO)) {
+> -        qemu_log_mask(LOG_GUEST_ERROR,
+> -                      "Page @ 0x%" PRIx64 " indicates Tagged Normal memory "
+> -                      "but is not backed by host ram\n", ptr);
+> -        goto fini;
+> -    }
 
-I think the bit ops should be more efficient. I plan to queue v5 with a
-fixup, v5 here:
+The memory_region_is_ram() check is on the MR we got back
+from looking up the tag addr in the tag address space
+(which should always be RAM unless the board code messed
+something up). That's not the same as this check, which is
+looking at how the physical address is backed.
 
-https://lore.kernel.org/qemu-devel/20260728031731.286666-1-gshan@redhat.com/
+Does RAM being monitored by a plugin appear as the TLB_MMIO
+flag here, or is that some other flag? If it does appear
+as TLB_MMIO, that would be a reason not to make this check
+here. But in that case you need to adjust the logging
+on the !memory_region_is_ram() check below, because we
+will now wind up there for both the "board code error"
+case (address is backed by host RAM but there's no tag RAM
+for it) and the "guest error" cases (guest configured some
+MMIO-backed range as Tagged in the page tables).
 
-Fixup:
-
-diff --git a/system/physmem.c b/system/physmem.c
-index fbe7df2391..2f37cbeb07 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -3162,13 +3162,18 @@ void qemu_ram_move(void *dst, const void *src, size_t n)
- {
-     uintptr_t test, len;
-
--    if (src == dst || n == 0) {
-+    if (n == 0) {
-         return;
-     }
-
-     /*
--     * Maximal length of aligned access that are determined by @src,
--     * @dst and @n
-+     * Calculate "the lowest set bit" over @src, @dst and @n, result put
-+     * into @len (which guarantees a power-of-two).  With that and the
-+     * later check (len!=n), it makes sure that we will only do the atomic
-+     * ops when:
-+     *
-+     * (1) @n is a power-of-two
-+     * (2) @src and @dst addresses are both aligned to @n
-      */
-     test = (uintptr_t)src | (uintptr_t)dst | n;
-     len = test & -test;
-
-Does it look ok to all of you?
-
-Thanks,
-
--- 
-Peter Xu
-
+thanks
+-- PMM
 
