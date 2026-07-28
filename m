@@ -4,108 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3EE9C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 21:05:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C4CEC53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 21:05:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wooyq-0004X6-E1; Tue, 28 Jul 2026 17:04:52 -0400
+	id 1wooz4-0004gK-Rw; Tue, 28 Jul 2026 17:05:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wooyY-0004U3-Ul
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 17:04:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wooya-0004UC-IJ
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 17:04:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wooyW-0003i2-0E
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 17:04:34 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wooyX-0003iR-Nr
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 17:04:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785272671;
+ s=mimecast20190719; t=1785272673;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+pei3vmco7Kz5qqmpc9dFtZ8rmZ+J3fui21id4q3x4w=;
- b=TpvRiMA1m+hFDrbF6Ssgt6qYt2u/BUTXwVPQhkQal40r1z9Dt1z6c3l9ajMbGV9jeYkaIa
- zJBIPr1hkLJHszEIIGoHTfP5V6QnwYhyxXM1gTJ5HHfUH54pLoQC/shKJ+Jxtz3jWLLvRK
- s8HGGFsCvCj7oJLBNAvQ7KU6xwhrh5U=
+ bh=QTM/N9lbOP8xRMWNN1H0iMPnAMdF9INBG5H3f+egzqw=;
+ b=RLJuUdrmEEdprB4swlZs4u6v2x0b5tP/ex/7oinDT36tdMMZY8Qj0EPw6q+S662XOycL/F
+ KHKR2/0FbOJuZtY6WtNzMftUJh+E5biMOcVnmPB8bUvhNnCnewqLBh0fgTlqiChKkJkVzF
+ RnGWOEcKVniWzzU+45X50QesAgc+rDE=
 Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
  [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-209-XGYYBp2dN7yEw31ASmN-VQ-1; Tue, 28 Jul 2026 17:04:29 -0400
-X-MC-Unique: XGYYBp2dN7yEw31ASmN-VQ-1
-X-Mimecast-MFC-AGG-ID: XGYYBp2dN7yEw31ASmN-VQ_1785272669
+ us-mta-116-Dxo8-o_sMDysM_TWjPMEMA-1; Tue, 28 Jul 2026 17:04:31 -0400
+X-MC-Unique: Dxo8-o_sMDysM_TWjPMEMA-1
+X-Mimecast-MFC-AGG-ID: Dxo8-o_sMDysM_TWjPMEMA_1785272671
 Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-92e4f27f49bso36708685a.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 14:04:29 -0700 (PDT)
+ af79cd13be357-930b571432fso36455285a.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 14:04:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785272669; x=1785877469; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=+pei3vmco7Kz5qqmpc9dFtZ8rmZ+J3fui21id4q3x4w=;
- b=YeAepEiweQ5jHxk5PFeSTblRZjqfiHI7nXSO5yelQtfwXWR8v4jii54zLHpm+daCVG
- 7jLErBKXJGFe18Pfe1QbuxNL57KIxGAm1B/0SnkFs/cgTlM6BV8yoKWDqbuGZNUaITzY
- Ntn+tWgigaRykAg/MDqgq/g9/0sa4p/rNau8qpR0jbRb378hm6qlCI/FJiS4C9StxOxm
- ExD57V9Emi+XEeiS5E5HKR8h9CZAKPeOijJlzMAyc6CTq7/c7H4RN2a/nSlgSaYQiRTD
- UTH2Ppo9daElaUOYSxWBOqgvZ4kIXTJbL0f96HoUXei88TWFRmb2tfbU0i5/b8mmyRsK
- WF3A==
+ d=redhat.com; s=google; t=1785272671; x=1785877471; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=QTM/N9lbOP8xRMWNN1H0iMPnAMdF9INBG5H3f+egzqw=;
+ b=mnFRSni87qgCHNGU/LZG9ZHd2qKNwgv3viYdnwvAGr+lbtuZv+oWdWQmWoKd2Niy/M
+ xJmoZsxk72Zu8LUSRyDPqsP2ju8/13T6IpPMjm4FLezLiE40E7TUWDu/y1hadAlAVMql
+ FYMkCN77hqj37Gr2LGG3Mj7HvBPlBXAgINPRHc5Ug1dCoFt7LC/nY/ufE1i7Hq8iw+8n
+ WoAxLbnac2Fr73PxCyA8WWFoAxHjQo/fACU+te+/jHi/FUdw2nLIxOKPcyzKq29lhqjX
+ LrAW1FuQMT2tOUHBPGFVz7JbxUAJIx93ZvgENYnJTMr69Ok+7Z0o9Z4FB6mAIk+XVYjo
+ 8+3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785272669; x=1785877469;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=+pei3vmco7Kz5qqmpc9dFtZ8rmZ+J3fui21id4q3x4w=;
- b=Ac0wmrwKmX//7f38WEkzFsoeZpQJOLpMF/K+d5KzjBJxNLCFFLFXKGaLqHkUly/S4B
- Bb4RhDAf3jEqHnaerK/NYnDR8lJV1Aekfv7/HtY6QQ10iZkdp/lfQFliFlvuJz1Q7UXk
- /KdHT9v/5ePviwu1x5gMWiht44MCNVQn2RgBAG7RXJkViasUjX0Qso/Gs+0Is2sXhGXw
- UWYWavFFmrMbE6jrA7MP7L6lMQ9P47TiRyaDI/wYwZo6gxynpOPOPlaYnVys/6SgbkEW
- 3z9CEX6RyD33+6qorGrnMSF/f8nxgXja7RX8MIK5g0OgiNZrmFXdeUqFt1K3LNTvzINI
- ubVg==
-X-Gm-Message-State: AOJu0Yzk6gsq45f7wDWTA9MxGaBBFhvGruFwRn6DF4bMMY5AWhc2Bdcf
- Q8XQRkiGfROpyPT+9BPIKUb47wedvLoL+w5kqJsCfxA3ycMopAhqgA1kalYT62+jQRibJ4W+Kks
- GBvilJ3eTiwIElHR8UCCZImEdlhpAtEWUKX7wpz7TZ4HP8pAZp+Rxd6tbu0BRRf1l+6m1E+5Vri
- IGG5E6PAsd/VIXGezUdyaZcfiNsi96EStFgjSKTA==
-X-Gm-Gg: AR+sD136C8hGTUJy1vbzgUq9lFolA0DAQ9Gs9HldIfjvkbALlX7tSRAbeO6wz511gc2
- UalXo4dX66QoSWUvjsgbmpqCTVJ0TTvR7ymqyjdhRHeUNthZjq3LYsIHnFa+j7+r9SPnp4bu1dG
- eYlFvMVIcL7rCv5ISWwu88+XKNS6p5v7FzWyItxk3Cn/N5g09BIhZpT5SJ70JFIHyKSi6EDuuxx
- sui6jvavPOzvIW60Oev+RqAvoa+QelxuPPKt71FTzUW1ZPyBckh9n5wvVBfBFyAqq0Gd2ke1xZA
- D7xe08jU57ILEzj8OzeBmgNTaQQDDhHeEcwfGPoG4uYOOKtELi6X2T/GBzFrd9qDjdkpzRvwLQu
- aJwxWwGqLelejpMbZpjItxKpaGSnUN+xKoZktG+ll4tevF1N94/PuOdzX
-X-Received: by 2002:a05:620a:1712:b0:930:9c0c:657 with SMTP id
- af79cd13be357-93302620f6cmr408754785a.60.1785272669086; 
- Tue, 28 Jul 2026 14:04:29 -0700 (PDT)
-X-Received: by 2002:a05:620a:1712:b0:930:9c0c:657 with SMTP id
- af79cd13be357-93302620f6cmr408750385a.60.1785272668412; 
- Tue, 28 Jul 2026 14:04:28 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785272671; x=1785877471;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=QTM/N9lbOP8xRMWNN1H0iMPnAMdF9INBG5H3f+egzqw=;
+ b=eGW/GTMhrNYnKMDZkCtJWDFmisbNXjdtdcKAGxdg0FnaE++zLscX05muZZlLe38Lcu
+ N+MGX4YM49s+dgKLFwqiwqwczlKGpdyKBfsZ184JQw7S1NIQvav0WFo02+3H2rP36pbW
+ A23ysVwGFuLjbN+wUPHa4KtmsX6aiem0ddp2+58x9tnDOn9L6E63j0J7zfwVgq8Gqj+/
+ bJf057vsylUjdqXR9jOawgJnhq3HYHDVOoJpghzhozBM42y/hTju37ixDhSlTg6aSunM
+ qk5bxazF0ylw+H7k8tJa8ZMW2SF6s23ymozf60cNkOJdhUV5nb5zTRxpr0md9MPqurYt
+ 3BGw==
+X-Gm-Message-State: AOJu0Yz9KKqG+L4w8x0AcjbC9VQhzhGKdQJMHkow7moWRhW83j9pZFhe
+ Y2Uk0mPWLHAW/D8toE7osGlb2OotPSj2OrLNyENMC3EulBLZPWmfb4Dh2NPMznB/foAm0S1Y+LM
+ wxCwBbhUGaurxE9A/EnF36VzGw3l4+f4iIkpTvTHK8BR/0+eD68nPvFYvSvpBW5zyRyani5qFF0
+ jOVY0MkHLVvgCYNMCJhwXNy/xTNrMg3Yam51j9Ag==
+X-Gm-Gg: AR+sD13v1JZiMenvWF/Xj/YSnlVjjYELJZx3hEapaYkBzsCgLdTzO50d82kxPdM4pMK
+ 5osyD7eyl6dK8HzfmF+H24Zd5kAtRDGb0DtiXyoNIzoZmjU/gecR3tZ/u1WTSXEpZ/BwI3vlZ3Z
+ /JJ8MLCOX1eS+ToC/CLtcg7ZlDUN6mkOIOs0TeO0Soya26qme5Nj4bk/cuZOvp/Rp6H52BuZRIl
+ +E2CXu8CCPpsfsbNekwF1GOfpS0A/n80QmcTzx3NXWeJgZRdRcH3M6Q1jyH33OCgUKkZSlt/FtC
+ 2tvNrC/1PsftBHzsdBKZ/lPwor8VkjRrpHWw6y3RYWHqPlrWvFT4XgoXDdHuoo7n2D++cxaYAbe
+ zVqbl70LCCqTFUvatBxB/fqu6uzUwVifm8Ihc7UhrpmSL02YUevT5qegw
+X-Received: by 2002:a05:620a:2683:b0:92e:c0ac:aeb6 with SMTP id
+ af79cd13be357-9330270951emr375409785a.40.1785272671006; 
+ Tue, 28 Jul 2026 14:04:31 -0700 (PDT)
+X-Received: by 2002:a05:620a:2683:b0:92e:c0ac:aeb6 with SMTP id
+ af79cd13be357-9330270951emr375405685a.40.1785272670440; 
+ Tue, 28 Jul 2026 14:04:30 -0700 (PDT)
 Received: from x1.com
  (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-933d3227707sm21277985a.6.2026.07.28.14.04.27
+ af79cd13be357-933d3227707sm21277985a.6.2026.07.28.14.04.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jul 2026 14:04:27 -0700 (PDT)
+ Tue, 28 Jul 2026 14:04:29 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>,
- peterx@redhat.com, qemu-stable <qemu-stable@nongnu.org>,
- Yuan Liu <yuan1.liu@intel.com>, Yichen Wang <yichen.wang@bytedance.com>
-Subject: [PATCH v2 3/5] migration/multifd: Replace assert() with error_setg()
- in recv paths
-Date: Tue, 28 Jul 2026 17:04:15 -0400
-Message-ID: <20260728210417.1925078-4-peterx@redhat.com>
+ peterx@redhat.com, Feifan Qian <bea1e@proton.me>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2 4/5] migration: Fix rare hang of
+ migration_channel_read_peek()
+Date: Tue, 28 Jul 2026 17:04:16 -0400
+Message-ID: <20260728210417.1925078-5-peterx@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260728210417.1925078-1-peterx@redhat.com>
 References: <20260728210417.1925078-1-peterx@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
 X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,144 +123,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QPL and UADK multifd backends use assert() to validate wire-controlled
-fields like per-page compressed lengths and packet size consistency.  These
-asserts will stop working with -DNDEBUG builds, so may stop working.
+In an unlikely case, when a migration stream is attached to the destination
+QEMU and only send <4 bytes to the channel as magic, it's possible that
+migration_channel_read_peek() may spin forever.
 
-Replace all assert() calls in the receive path with proper error_setg() so
-validation failures are reported gracefully rather than crashing or
-silently ignored.
+Fix it by adding a manual sleep for partial read.
 
-While at it, touch up an assert() in qatzip recv path too.
+Since the path isn't attached to a coroutine, it means when partial read
+happens, there's yet not much we can do but hang the main thread, it will
+happen even for len==0 case.  It means monitors can hang due to this,
+either partial read or no data arrived (but connection established).
 
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Cc: Yuan Liu <yuan1.liu@intel.com>
-Cc: Yichen Wang <yichen.wang@bytedance.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Leave this for later, the hope is this is extremely rare in production.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3889
+Reported-by: Feifan Qian <bea1e@proton.me>
+Cc: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/multifd-qatzip.c |  5 ++++-
- migration/multifd-qpl.c    | 24 ++++++++++++++++++++----
- migration/multifd-uadk.c   | 24 ++++++++++++++++++++----
- 3 files changed, 44 insertions(+), 9 deletions(-)
+ migration/channel.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/migration/multifd-qatzip.c b/migration/multifd-qatzip.c
-index 7419e5dc0d..0262e81eac 100644
---- a/migration/multifd-qatzip.c
-+++ b/migration/multifd-qatzip.c
-@@ -348,7 +348,10 @@ static int qatzip_recv(MultiFDRecvParams *p, Error **errp)
+diff --git a/migration/channel.c b/migration/channel.c
+index 1e2935f926..f446561b59 100644
+--- a/migration/channel.c
++++ b/migration/channel.c
+@@ -296,9 +296,16 @@ int migration_channel_read_peek(QIOChannel *ioc,
  
-     multifd_recv_zero_page_process(p);
-     if (!p->normal_num) {
--        assert(in_size == 0);
-+        if (in_size != 0) {
-+            error_setg(errp, "multifd %u: expected empty packet", p->id);
-+            return -1;
-+        }
-         return 0;
+         if (len == buflen) {
+             break;
++        } else if (len == 0) {
++            qio_channel_wait_cond(ioc, G_IO_IN);
++        } else {
++            /*
++             * When partially ready, we can't use qio_channel_wait_cond()
++             * because it will return immediately.  Apply a manual wait.
++             */
++            assert(!qemu_in_coroutine());
++            g_usleep(1000);
+         }
+-
+-        qio_channel_wait_cond(ioc, G_IO_IN);
      }
  
-diff --git a/migration/multifd-qpl.c b/migration/multifd-qpl.c
-index 52902eb00c..3826e7f340 100644
---- a/migration/multifd-qpl.c
-+++ b/migration/multifd-qpl.c
-@@ -664,26 +664,42 @@ static int multifd_qpl_recv(MultiFDRecvParams *p, Error **errp)
-     }
-     multifd_recv_zero_page_process(p);
-     if (!p->normal_num) {
--        assert(in_size == 0);
-+        if (in_size != 0) {
-+            error_setg(errp, "multifd %u: expected empty packet", p->id);
-+            return -1;
-+        }
-         return 0;
-     }
- 
-     /* read compressed page lengths */
-     len = p->normal_num * sizeof(uint32_t);
--    assert(len < in_size);
-+    if (len >= in_size) {
-+        error_setg(errp, "multifd %u: header len %"PRIu32
-+                   " >= packet size %"PRIu32, p->id, len, in_size);
-+        return -1;
-+    }
-     ret = qio_channel_read_all(p->c, (void *) qpl->zlen, len, errp);
-     if (ret != 0) {
-         return ret;
-     }
-     for (int i = 0; i < p->normal_num; i++) {
-         qpl->zlen[i] = be32_to_cpu(qpl->zlen[i]);
--        assert(qpl->zlen[i] <= multifd_ram_page_size());
-+        if (qpl->zlen[i] > multifd_ram_page_size()) {
-+            error_setg(errp, "multifd %u: page %d compressed len %"
-+                       PRIu32" too large", p->id, i, qpl->zlen[i]);
-+            return -1;
-+        }
-         zbuf_len += qpl->zlen[i];
-         ramblock_recv_bitmap_set_offset(p->block, p->normal[i]);
-     }
- 
-     /* read compressed pages */
--    assert(in_size == len + zbuf_len);
-+    if (in_size != len + zbuf_len) {
-+        error_setg(errp, "multifd %u: packet size %"PRIu32
-+                   " != header %"PRIu32" + data %"PRIu32,
-+                   p->id, in_size, len, zbuf_len);
-+        return -1;
-+    }
-     ret = qio_channel_read_all(p->c, (void *) qpl->zbuf, zbuf_len, errp);
-     if (ret != 0) {
-         return ret;
-diff --git a/migration/multifd-uadk.c b/migration/multifd-uadk.c
-index fd7cd9b5e8..d373615ba8 100644
---- a/migration/multifd-uadk.c
-+++ b/migration/multifd-uadk.c
-@@ -245,12 +245,19 @@ static int multifd_uadk_recv(MultiFDRecvParams *p, Error **errp)
- 
-     multifd_recv_zero_page_process(p);
-     if (!p->normal_num) {
--        assert(in_size == 0);
-+        if (in_size != 0) {
-+            error_setg(errp, "multifd %u: expected empty packet", p->id);
-+            return -1;
-+        }
-         return 0;
-     }
- 
-     /* read compressed data lengths */
--    assert(hdr_len < in_size);
-+    if (hdr_len >= in_size) {
-+        error_setg(errp, "multifd %u: header len %"PRIu32
-+                   " >= packet size %"PRIu32, p->id, hdr_len, in_size);
-+        return -1;
-+    }
-     ret = qio_channel_read_all(p->c, (void *) uadk_data->buf_hdr,
-                                hdr_len, errp);
-     if (ret != 0) {
-@@ -259,12 +266,21 @@ static int multifd_uadk_recv(MultiFDRecvParams *p, Error **errp)
- 
-     for (int i = 0; i < p->normal_num; i++) {
-         uadk_data->buf_hdr[i] = be32_to_cpu(uadk_data->buf_hdr[i]);
-+        if (uadk_data->buf_hdr[i] > page_size) {
-+            error_setg(errp, "multifd %u: page %d compressed len %"PRIu32
-+                       " too large", p->id, i, uadk_data->buf_hdr[i]);
-+            return -1;
-+        }
-         data_len += uadk_data->buf_hdr[i];
--        assert(uadk_data->buf_hdr[i] <= page_size);
-     }
- 
-     /* read compressed data */
--    assert(in_size == hdr_len + data_len);
-+    if (in_size != hdr_len + data_len) {
-+        error_setg(errp, "multifd %u: packet size %"PRIu32
-+                   " != header %"PRIu32" + data %"PRIu32,
-+                   p->id, in_size, hdr_len, data_len);
-+        return -1;
-+    }
-     ret = qio_channel_read_all(p->c, (void *)buf, data_len, errp);
-     if (ret != 0) {
-         return ret;
+     return 0;
 -- 
 2.54.0
 
