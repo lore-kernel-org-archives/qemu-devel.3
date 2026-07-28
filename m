@@ -4,105 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD883C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 14:09:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8072C54F4C
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 14:22:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woiUW-00062C-KA; Tue, 28 Jul 2026 10:09:08 -0400
+	id 1woigU-0000O2-Lk; Tue, 28 Jul 2026 10:21:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <huang.botsz@gmail.com>)
- id 1woiUU-00061b-R8
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:09:06 -0400
-Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1woigT-0000Nf-90
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:21:29 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <huang.botsz@gmail.com>)
- id 1woiUT-0003rA-04
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:09:06 -0400
-Received: by mail-ot1-x32a.google.com with SMTP id
- 46e09a7af769-7ee50eb2db4so3132432a34.3
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 07:09:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785247743; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1woigP-0005v4-08
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:21:26 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-66825847b2cso3980746d50.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 07:21:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785248483; cv=none;
  d=google.com; s=arc-20260327;
- b=g2fylVAxbaOjqXWoXk/VdUhbILuyAlpQAT6NmVzws6a3nBCHamsDK/2o/Es4TX0PBw
- GcbM1X74C2zaW5hWIoB2hqrlhslN0P3d/Z8EoIa+NGxC87GhSVoBaQ7/5nVrGeu8T3Kc
- NRJuETitMaT0XoV9P6LwLGJSHHUHasa5mwVUcwH/EkGAoObNiFuumbEK5oUUwvzTxGoI
- 8eq8LkyOk8VidDLrYXaqiUj1CCb7fS2g8yLv/cErtmv5pURdjGyy1zM4aBB0lBrMzAex
- 5TtfSSj5NimsEzG738Siz6oHZ+nqi05+Kg4Nu32N/wQENaVt5sZUnuqsiNztWsdVXi+9
- cGBA==
+ b=VzclnSZvhs7YMWwFf06R95Bni8njqYQO6vxeKgFgBJ10MZE6Z3gnGJ3WUqlXgbFsBL
+ vKJr61ZbTIle/fp2VrV9rIHS+paCF6BtxJPc/l3DTO7FDrxbW/XeOj8S1z66ajLYIjbk
+ 70+9h1WpY/mNEvFBovQSZxAxAeTR9CJ5yhxrawLXu7n2A4MtWAsjywmRxaF88DOoUlGV
+ kHyKv+EOwF2j2MNtg/0UpXAxlWQ/Otni6WmZ6UxBt9E2luJMS+6+BsJsDfiWNUlS6RYL
+ 1jPcw+L1ICGEU/0i5dEHbolbCGpKpzG7meB9ZCBIQTJ/PdHsCEsi5g9WUr3VXV3GQtl2
+ +JZg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=w8VPkSPT7sWevU5cAFZw5DWgr97KdkfvaaLraanPR2o=;
- fh=v1p9TD2qHziwhYeF1a/EamknYRJiam1BaPt8Qa1kYs4=;
- b=Zk86Cj3ep2bSCRUBRiEMiWQAKnVYkr51MO6al8xhxDo3dw3AviTgfj8H6nqO0RZNZz
- uzTTXHk0OtKDGdBRNB+cIZ1xhbTA5lAb006cOlKeMYblwRrDmhr57SBL8Dm9bafoXQbO
- on/wqijUmC2IwL2R2aSvWyIZJsIJhaknP/8TJdJG8uE4HpO6fSyr8F0t3WzD6n0wupts
- JrSl6KL70OR4K17hzIJZkGZ9oLGLq3m8Kn54ktIgU/5ARP5JbrobpAQQ2xUWkrwl9WiP
- Nvtbw3AFDkrab0qEnCHOS5DEMsjG71PL03s0HILLxpZXyH4rFjg3YyUNcOvEx2efJaRp
- rHLQ==; darn=nongnu.org
+ bh=fzin/IsM5OqsI6fmAfgIVjv6Niy4XQcWkpkLsHG64os=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=m2rNOaiKKqBmAwYnDmP0sXUXK5R3e+7qd4Pus3V/sObsyY5J63QTxIJCvQpkexq4o0
+ BnIp6m282Na/hdDwIVIixn3j6rY9u0ODOfiWOZqKPjmY8Qbdps9NuWaPie4oZk1XgJih
+ 1L2j3hYIUMauyHa3/CuMf8UJcwGKIBmcPUvfxvPUcAtKsrwKE0qrS8Rj2V0VtETG0PJ9
+ r36KUrraclWs/OOiKc8rqZ3o5LdayQDLNNqVP+R8rwfbLbE2lzNwT+zSFC9+g2vRv9iP
+ lXeoT7Zk1VN4zoAExQXVWQMLUKHePgqWAxYreuJewh/fHXi/2oWam6sjMmDX4bMxMZRM
+ y/dQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785247743; x=1785852543; darn=nongnu.org;
+ d=linaro.org; s=google; t=1785248483; x=1785853283; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=w8VPkSPT7sWevU5cAFZw5DWgr97KdkfvaaLraanPR2o=;
- b=njpHtGS6uvfsPeWGTvaQ5GV2Z17v6JdnC7y0NWfLMRJ7U+WwnKhF1NNKUkFxYe0QJz
- Md3MXR8GuUGumib8irrLEPaw70lG3eLuOXLRDKmPbrt5xnzqDEWZl42dl8X86bm0ner+
- 5aWB+Lm+hUwjCV0Dyw0PcYJkcjjayoznPhjOj6IYUME2cOOvGvXqT65yZcRRZ+VZdprz
- 7oAmA+dVXBf4qkASrTjJk64CBy64dY6ePMsRMGm9P6avm62akjFXtURCAp+PFgPFNMsA
- vKcdPGTXndstI+RNrQzim3dCiHueJfzD2eK/OEZVqhTlJBTu6CPBGZ8cIu/NjR2lfAt+
- 5ZFg==
+ :content-type; bh=fzin/IsM5OqsI6fmAfgIVjv6Niy4XQcWkpkLsHG64os=;
+ b=lPyR6rF4kfJQkax1KPw+9SXROOAobQHwjf0uCjuY18S6Q9xSXdypsha6tL2mZah3mU
+ rclG1dU05CAGFEAYuw/zI7kl5rOOEX0Gnb+fSOeLoLdshJdM8q1wtF07xke79ZfrzmNk
+ lreSOFazlHmL5qCld9hixvxg3RCsU8irNwn6bpNbVxjFFhO5F0+hv1wijwHNXS9PS7BV
+ Sv7/TLTRMdvDMOaHmw24hwWK6FNWE7rH9pqh4lhN+ji0vhDa4fHYgKwr+oeDZcRFNjTd
+ n0eC0BJ4uldys/AVWb6LAgBOatsF+ku1nGL5qj5YFn5govKvCdhpIuarCWbLz50JYJ3a
+ cWwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785247743; x=1785852543;
+ d=1e100.net; s=20251104; t=1785248483; x=1785853283;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=w8VPkSPT7sWevU5cAFZw5DWgr97KdkfvaaLraanPR2o=;
- b=sYBUJNvAY4eGOOkFLYq1FihF47S+No2QdQWpdSC3UGq58BMC6Jlm3uAReAOqxk7pEb
- uHTwqXckD/Rbot1tW9bLvL5ogo14jfHBsVlOwczaGo8LbJsTpwKJZLIWutaixJppUr9n
- zNLr+COOVSoteRRXX8ev84OR+E2ke6xpDPNkuEr/Dpey1A1tlillGsKUSMEV6X4FUBcm
- K5+EPcLphILaVzcXMauhpqJ2Vx7Gia7uWZ/gqdmToE5tfzqvRKgAM6nUbBRQyVWcigUx
- 4rNRwLxPi++2CdxPKKU+4VXaalUGevQD9vqVSFSQNCHpID6p0B3T1c9qt4B9ky5gTQIX
- QM2w==
-X-Forwarded-Encrypted: i=1;
- AHgh+RodIEHXL2bs8dY1+8YmJkWb9Dc00ufAcOmFT+Mual6GkX0XvPX3hkxAUo+NnG14bccoOn05HC+gyr0S@nongnu.org
-X-Gm-Message-State: AOJu0YwWcadOz2qADTAtoGjIEtolWByMfhvUxLCkMIUepZZC76aoNovw
- lLhWehNRqgjt+7FRF4KyngrIGo8jY2y4IyfRi91M3mtkfd+dQwqZU0d6XByvEktTQznBbG6RAfW
- 2z7c7/zFXPq1PHGRT5bZw3XYoiq0nrgo=
-X-Gm-Gg: AR+sD12USZv+aP8HGrv12tgU7exyaKWC93Vwqd1PvnyNLZHOsHrVcZnRNdTQOeH7OoJ
- /+ceJjWcF3gB8/auZfe7BLyiYpgVluu5rrKTQYekCuR25Vm60SS9xygWD1MTnCaWgPxSxQE8SQc
- BTr/m5VNCM7YHuiRVWL025WMQJADBQWi/pXNLKz1uy5CP/5oo1AbR3ywFjqcfC2+UG6Iy5EiHMW
- E51YewWRapKFEaP+0oSW3rqPzw8GLSnaKTDE5TP/zCjkF5YIhTmSXBaKE3c9JRzo2t/2ZKEpk6V
- uZ9qe26aypncYUB4wmdwXz1cZWKpaKPXFFfja8FH8ctbn8knmSBnCITtKhX0Ef1JNMae3ohCArF
- nIw==
-X-Received: by 2002:a05:6830:3741:b0:7e6:dc7a:f459 with SMTP id
- 46e09a7af769-7effef433b6mr1542620a34.11.1785247743346; Tue, 28 Jul 2026
- 07:09:03 -0700 (PDT)
+ bh=fzin/IsM5OqsI6fmAfgIVjv6Niy4XQcWkpkLsHG64os=;
+ b=U+xgpxqZtTqZw6W2tl0avO1OTI+wsdn1KuPsXqUGXUZ6/hhzTbJ0Gw5MYGUbfmIRLf
+ URGo7Dkkyb2e9sAd4k7L9fQyECJdnRhzykJGeQYkaaRJxGlsvMbbMOF61kcHMaBDgO4F
+ NpzM7BILeDWPz5Vd3msrhyV9te2SKbXqLL/QWTi1UTqrq6+g69VEP5GB6hp14fX4e2rU
+ hJ4nhaCxCEfv7kZEDzbtrdP4LrlQ6K8O4dUBAKdgI7f92TNB3qVdvHq6oG1m/RA+jkll
+ CIc64rv0Cl2M5GQW7l/y79Hf+CTDpkWfulX820aZfMhxo7+VFbcHUyj1L4W2XV5jFi27
+ /KDA==
+X-Gm-Message-State: AOJu0YwB35RWB3pfvrtDKLesCLTgZYON3h+DhsNoEHLBWUisZutln0Zk
+ 6TB0fOyDjmftH1BnUOzh8i48PF1VTbuINY1j/pktcoAcKNGRhvbazBnianm34IVY/L6RWzVYAMN
+ wvZr73yYwwrxWldRj5Cye6hr719SmNVdd2m0Ls7ff9Q==
+X-Gm-Gg: AR+sD10G2u51If9Z0LZhw8TMSib8Wyb66bnjvzsAQB3+r3eOzavnbeTiT9RppQiCMOx
+ 8kmW/0QsAocNxijtHw5oL+Fgpp3VoqU/zcsTgNWPDHSrvvj7V8yiRM0vvslP5XT+W04m/PHsUWg
+ OKR4lAiN/wXVRV76AIrM0+93a21j/tg+QME3+dHN+PqGNQn4c02ffHqHpJHFzqXVXDLlA2c8GWR
+ XiTAGPv+uznbzPGDDCxZ3mCYo0zjPc8GX/DMJySBbuh9zzOj0xYpSCsX1FiFunTLQAYJF0NVQxT
+ 8Dw0d9k4YGJ8S0TkcyO34tBHqLonm8nGA7mQsN9kwL0a1L7NqanYP8g0
+X-Received: by 2002:a05:690e:445:b0:664:ae68:33a2 with SMTP id
+ 956f58d0204a3-669057ff3f3mr822938d50.67.1785248483333; Tue, 28 Jul 2026
+ 07:21:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260724124220.24152-1-22925483+botszhuang@users.noreply.github.com>
- <CAFEAcA-q5ihYpgYtEosQ3+SgbMdw7e7=xk4motLFL-A==g1k0w@mail.gmail.com>
- <a9ad33dc-b487-4ce7-9b8e-d437b6cc5d12@oss.qualcomm.com>
-In-Reply-To: <a9ad33dc-b487-4ce7-9b8e-d437b6cc5d12@oss.qualcomm.com>
-From: B H <huang.botsz@gmail.com>
-Date: Tue, 28 Jul 2026 22:08:27 +0800
-X-Gm-Features: AUfX_mx5Vv5DM91K48rp0bgZcpGc6s6ZOGvX3SHDJJ68-x55560VvR9PkJTpZ6w
-Message-ID: <CAJQXNd3D6R1bA65sthKMWLGkCnk0ZjJu-fcmhnJpvquS4ihe0Q@mail.gmail.com>
-Subject: Re: [PATCH] fix BCM2835_I2C_CLKT
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- philmd@mailo.com, qemu-arm@nongnu.org, sef1548@gmail.com
-Content-Type: multipart/alternative; boundary="000000000000940a8b0657ac61f4"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
- envelope-from=huang.botsz@gmail.com; helo=mail-ot1-x32a.google.com
+References: <20260717232306.378988-1-richard.henderson@linaro.org>
+ <20260717232306.378988-6-richard.henderson@linaro.org>
+In-Reply-To: <20260717232306.378988-6-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 28 Jul 2026 15:21:12 +0100
+X-Gm-Features: AUfX_myd12dQglp4aAEys021uKQB23XelQ60QlFJReHpqRr0E6hGcv3l9S4m20M
+Message-ID: <CAFEAcA9gNvMD5YVTy2Zj51riyY9j+eCurQpH8M-ymb4yaf4-Kw@mail.gmail.com>
+Subject: Re: [PATCH 04/17] target/arm: Raise alignment fault for DC_ZVA on
+ Device memory
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,203 +115,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000940a8b0657ac61f4
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Dear all,
-
-Thanks for applying the patch and for the detailed explanation!
-
-You are completely right=E2=80=94my commit message reasoning was flawed. QE=
-MU's
-macro doesn't change the guest's behavior, it only affects how QEMU handles
-the guest's access (logging a guest error and returning read-as-zero, as
-you noted). I appreciate you clarifying that.
-
-Regarding the register layout, since the CLKT register is at offset 0x1c
-(and assuming it's the last 32-bit register), the total memory region size
-should technically be 0x20 instead of 0x24.
-
-Do you think we should also reduce the region size, as shown in the diff
-below? If it looks good to you, I can send this as a separate follow-up
-patch.
-
--- >8 --
-diff --git a/hw/i2c/bcm2835_i2c.c b/hw/i2c/bcm2835_i2c.c
-index 34de1f36e5b..5f6093087dd 100644
---- a/hw/i2c/bcm2835_i2c.c
-+++ b/hw/i2c/bcm2835_i2c.c
-@@ -222,7 +222,7 @@ static void bcm2835_i2c_realize(DeviceState *dev, Error
-**errp)
-       s->bus =3D i2c_init_bus(dev, NULL);
-
-       memory_region_init_io(&s->iomem, OBJECT(dev), &bcm2835_i2c_ops, s,
--                          TYPE_BCM2835_I2C, 0x24);
-+                          TYPE_BCM2835_I2C, 0x20);
-       sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iomem);
-       sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);
-   }
----
-
-Best regards,
-Botsz HUANG
-Signed-off-by: botszhuang <botszhuang@gmail.com>
-
-Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> =E6=96=BC 2026=E5=B9=
-=B47=E6=9C=8827=E6=97=A5=E9=80=B1=E4=B8=80 =E4=B8=8B=E5=8D=887:54=E5=AF=AB=
-=E9=81=93=EF=BC=9A
-
-> On 27/7/26 12:04, Peter Maydell wrote:
-> > On Fri, 24 Jul 2026 at 13:51, botszhuang <huang.botsz@gmail.com> wrote:
-> >>
-> >> hw/i2c/bcm2835_i2c: Correct CLKT register offset
-> >>
-> >> The Clock Stretch Timeout (CLKT) register for the BCM2835 I2C
-> controller is actually located at offset 0x1c, not 0x20.
-> >>
-> >> The previous incorrect value caused the guest OS to read from and writ=
-e
-> to the wrong memory address when configuring the I2C timeout, which could
-> lead to unexpected controller behavior.
-> >>
-> >> Update the BCM2835_I2C_CLKT macro to match the hardware specification.
-> >
-> > Checking the datasheet, this is definitely the wrong value,
-> > so the fix is correct. I'm a bit confused by your commit message,
-> > though. The value here in QEMU can't cause the guest OS to write
-> > to the wrong memory address, because the guest OS doesn't ever
-> > see what we have defined here. It has the offset hardcoded into
-> > its own source code.
-> >
-> > It looks to me like the effect of getting this wrong is that when
-> > the guest writes to CLKT (at its actual 0x1c offset) we will log
-> > a guest error and give read-as-zero behaviour. That's not correct,
-> > but I expect for most guest OSes it'll be pretty harmless because
-> > the guest probably doesn't write the value it wants to configure
-> > and then read it back to check. (QEMU ignores the value written
-> > anyway.)
-> >
-> > I've applied this to target-arm.next.
+On Sat, 18 Jul 2026 at 00:26, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> Should we also reduce the region size?
+> Raise alignment fault when DC_ZVA targets Device memory, as required
+> by the architecture.  With MTE, an alignment exception is not always
+> correctly ordered vs a tag check fail exception -- to be fixed in
+> followup patches.
 >
-> -- >8 --
-> diff --git a/hw/i2c/bcm2835_i2c.c b/hw/i2c/bcm2835_i2c.c
-> index 34de1f36e5b..5f6093087dd 100644
-> --- a/hw/i2c/bcm2835_i2c.c
-> +++ b/hw/i2c/bcm2835_i2c.c
-> @@ -222,7 +222,7 @@ static void bcm2835_i2c_realize(DeviceState *dev,
-> Error **errp)
->       s->bus =3D i2c_init_bus(dev, NULL);
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3005
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+
 >
->       memory_region_init_io(&s->iomem, OBJECT(dev), &bcm2835_i2c_ops, s,
-> -                          TYPE_BCM2835_I2C, 0x24);
-> +                          TYPE_BCM2835_I2C, 0x20);
->       sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iomem);
->       sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);
->   }
-> ---
->
+> +void HELPER(dc_zva)(CPUARMState *env, uint64_t addr)
+> +{
+> +    uintptr_t ra = GETPC();
+> +    size_t len = (size_t)4 << get_dczid_bs(env_archcpu(env));
+> +    int mmu_idx = arm_env_mmu_index(env);
+> +    MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
 
---000000000000940a8b0657ac61f4
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I feel like some static analyzer or compiler is going to complain
+that this assignment is pointless in the !CONFIG_USER_ONLY case.
+Maybe better to set attrs = MEMTXATTRS_UNSPECIFIED inside the
+#ifdef CONFIG_USER_ONLY block ?
 
-<div dir=3D"ltr"><div dir=3D"ltr">Dear all,<br><br><div>Thanks for applying=
- the patch and for the detailed explanation!=C2=A0</div><div><br></div><div=
->You are completely right=E2=80=94my commit message reasoning was flawed. Q=
-EMU&#39;s macro doesn&#39;t change the guest&#39;s behavior, it only affect=
-s how QEMU handles the guest&#39;s access (logging a guest error and return=
-ing read-as-zero, as you noted). I appreciate you clarifying that.</div><br=
->Regarding the register layout, since the CLKT register is at offset 0x1c (=
-and assuming it&#39;s the last 32-bit register), the total memory region si=
-ze should technically be 0x20 instead of 0x24.<br><br>Do you think we shoul=
-d also reduce the region size, as shown in the diff below? If it looks good=
- to you, I can send this as a separate follow-up patch.<br><br>-- &gt;8 --<=
-br>diff --git a/hw/i2c/bcm2835_i2c.c b/hw/i2c/bcm2835_i2c.c<br>index 34de1f=
-36e5b..5f6093087dd 100644<br>--- a/hw/i2c/bcm2835_i2c.c<br>+++ b/hw/i2c/bcm=
-2835_i2c.c<br>@@ -222,7 +222,7 @@ static void bcm2835_i2c_realize(DeviceSta=
-te *dev, Error **errp)<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;bus =3D i2c_init=
-_bus(dev, NULL);<br>=C2=A0<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0memory_region_init=
-_io(&amp;s-&gt;iomem, OBJECT(dev), &amp;bcm2835_i2c_ops, s,<br>- =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0TYPE_BCM2835_I2C, 0x24);<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0TYPE_BCM2835_I2C, 0x20)=
-;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0sysbus_init_mmio(SYS_BUS_DEVICE(dev), &amp;=
-s-&gt;iomem);<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0sysbus_init_irq(SYS_BUS_DEVICE(=
-dev), &amp;s-&gt;irq);<br>=C2=A0 =C2=A0}<br>---<br><br>Best regards,<br>Bot=
-sz HUANG<br>Signed-off-by: botszhuang &lt;<a href=3D"mailto:botszhuang@gmai=
-l.com" target=3D"_blank">botszhuang@gmail.com</a>&gt;</div><br><div class=
-=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">Philippe Mathieu-Dau=
-d=C3=A9 &lt;<a href=3D"mailto:philmd@oss.qualcomm.com" target=3D"_blank">ph=
-ilmd@oss.qualcomm.com</a>&gt; =E6=96=BC 2026=E5=B9=B47=E6=9C=8827=E6=97=A5=
-=E9=80=B1=E4=B8=80 =E4=B8=8B=E5=8D=887:54=E5=AF=AB=E9=81=93=EF=BC=9A<br></d=
-iv><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
-er-left:1px solid rgb(204,204,204);padding-left:1ex">On 27/7/26 12:04, Pete=
-r Maydell wrote:<br>
-&gt; On Fri, 24 Jul 2026 at 13:51, botszhuang &lt;<a href=3D"mailto:huang.b=
-otsz@gmail.com" target=3D"_blank">huang.botsz@gmail.com</a>&gt; wrote:<br>
-&gt;&gt;<br>
-&gt;&gt; hw/i2c/bcm2835_i2c: Correct CLKT register offset<br>
-&gt;&gt;<br>
-&gt;&gt; The Clock Stretch Timeout (CLKT) register for the BCM2835 I2C cont=
-roller is actually located at offset 0x1c, not 0x20.<br>
-&gt;&gt;<br>
-&gt;&gt; The previous incorrect value caused the guest OS to read from and =
-write to the wrong memory address when configuring the I2C timeout, which c=
-ould lead to unexpected controller behavior.<br>
-&gt;&gt;<br>
-&gt;&gt; Update the BCM2835_I2C_CLKT macro to match the hardware specificat=
-ion.<br>
-&gt; <br>
-&gt; Checking the datasheet, this is definitely the wrong value,<br>
-&gt; so the fix is correct. I&#39;m a bit confused by your commit message,<=
-br>
-&gt; though. The value here in QEMU can&#39;t cause the guest OS to write<b=
-r>
-&gt; to the wrong memory address, because the guest OS doesn&#39;t ever<br>
-&gt; see what we have defined here. It has the offset hardcoded into<br>
-&gt; its own source code.<br>
-&gt; <br>
-&gt; It looks to me like the effect of getting this wrong is that when<br>
-&gt; the guest writes to CLKT (at its actual 0x1c offset) we will log<br>
-&gt; a guest error and give read-as-zero behaviour. That&#39;s not correct,=
-<br>
-&gt; but I expect for most guest OSes it&#39;ll be pretty harmless because<=
-br>
-&gt; the guest probably doesn&#39;t write the value it wants to configure<b=
-r>
-&gt; and then read it back to check. (QEMU ignores the value written<br>
-&gt; anyway.)<br>
-&gt; <br>
-&gt; I&#39;ve applied this to target-arm.next.<br>
-<br>
-Should we also reduce the region size?<br>
-<br>
--- &gt;8 --<br>
-diff --git a/hw/i2c/bcm2835_i2c.c b/hw/i2c/bcm2835_i2c.c<br>
-index 34de1f36e5b..5f6093087dd 100644<br>
---- a/hw/i2c/bcm2835_i2c.c<br>
-+++ b/hw/i2c/bcm2835_i2c.c<br>
-@@ -222,7 +222,7 @@ static void bcm2835_i2c_realize(DeviceState *dev, <br>
-Error **errp)<br>
-=C2=A0 =C2=A0 =C2=A0 s-&gt;bus =3D i2c_init_bus(dev, NULL);<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 memory_region_init_io(&amp;s-&gt;iomem, OBJECT(dev), &=
-amp;bcm2835_i2c_ops, s,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 TYPE_BCM2835_I2C, 0x24);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 TYPE_BCM2835_I2C, 0x20);<br>
-=C2=A0 =C2=A0 =C2=A0 sysbus_init_mmio(SYS_BUS_DEVICE(dev), &amp;s-&gt;iomem=
-);<br>
-=C2=A0 =C2=A0 =C2=A0 sysbus_init_irq(SYS_BUS_DEVICE(dev), &amp;s-&gt;irq);<=
-br>
-=C2=A0 }<br>
----<br>
-</blockquote></div>
-</div>
+> +    int flags;
+> +    void *mem;
+> +
+> +    /* DC_ZVA requires that we supply the original pointer for traps. */
+> +#ifdef CONFIG_USER_ONLY
+> +    flags = probe_access_flags(env, addr, 0, MMU_DATA_STORE, mmu_idx,
+> +                               false, &mem, ra);
+> +#else
+> +    CPUTLBEntryFull *full;
+> +    flags = probe_access_full(env, addr, 0, MMU_DATA_STORE, mmu_idx,
+> +                              false, &mem, &full, ra);
 
---000000000000940a8b0657ac61f4--
+Is 0 really the right size to pass in here? Looking at
+probe_access_full(), if you pass in a 0 size then it will
+call notdirty_write() with a dirtysize parameter of 1,
+which will then not invalidate or set the VGA/migration
+dirty bits on the full range of memory we're about to clear.
+This would be OK if we then went through the slowpath and
+did a set of byte accesses, but probe_access_full() will
+clear TLB_NOTDIRTY from the flags it returns to us if it
+called notdirty_write(), so we will take the fastpath if
+that was the only flag set.
+
+Maybe probe_access_full(), probe_access_full_mmu() and
+probe_access_flags() should not call notdirty_write() and
+clear TLB_NOTDIRTY from the flags they return if the passed
+in size is 0 ?
+
+The notdirty_write() API also wants the base address of the
+DC ZVA block (since that's where we will be writing from),
+not the address from the guest.
+
+(We may be getting away with some of this because of various
+functions rounding up/down to full page addresses, but none
+of these functions seem to document that, so we shouldn't
+rely on it.)
+
+> +    attrs = full->attrs;
+> +#endif
+> +
+> +    flags = do_dcxva_traps(env, addr, len, mmu_idx, flags, attrs, ra);
+> +
+> +    /* After traps, treat as aligned blocks. */
+> +    addr = addr & -len;
+> +    mem = (void *)((uintptr_t)mem & -len);
+> +
+> +    do_dczva_0(env, addr, len, mem, mmu_idx, flags, ra);
+> +}
+> +
+>  /*
+>   * Perform an MTE checked access for DC_ZVA.
+>   */
+> --
+
+-- PMM
 
