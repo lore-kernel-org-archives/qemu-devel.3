@@ -4,96 +4,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C665EC54F4C
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 14:04:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8817DC53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 14:06:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woiPT-0003g4-SS; Tue, 28 Jul 2026 10:03:55 -0400
+	id 1woiRO-0004W3-De; Tue, 28 Jul 2026 10:05:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1woiPR-0003fT-OY
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:03:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1woiRM-0004Vd-8H; Tue, 28 Jul 2026 10:05:52 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1woiPQ-0002fY-7t
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:03:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785247431;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PohtNST+Xy8qYme8Z1wQJAszUVDb0swxBNH2usSpkdU=;
- b=Z4wnkHYX0xDYn6qGQfjERYPTa7sqkxdPpJgCM6uYN0M1z6k7eeDs6cx3qS5LNslsF5Xkf7
- Fuvw/8J2T+xCyuzfNO3C5tSweDKL1RUbn1TZ7Ixheovb8zge6LV3eMh0oCSuzlyPN0gZFf
- bgWL5tXgHD741pv6yNXXq6CoGPTDrFI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-269-JnQILyFeNDG833Mv4P6lVw-1; Tue,
- 28 Jul 2026 10:03:47 -0400
-X-MC-Unique: JnQILyFeNDG833Mv4P6lVw-1
-X-Mimecast-MFC-AGG-ID: JnQILyFeNDG833Mv4P6lVw_1785247423
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CE94019560BE; Tue, 28 Jul 2026 14:03:42 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D4DF21800480; Tue, 28 Jul 2026 14:03:40 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6D74D21E6920; Tue, 28 Jul 2026 16:03:38 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,  Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Lukas Straub
- <lukasstraub2@web.de>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,  Zhao Liu
- <zhao1.liu@intel.com>,  Laurent Vivier <laurent@vivier.eu>,  "Gonglei
- (Arei)" <arei.gonglei@huawei.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>,  Alex Williamson <alex@shazbot.org>,  zhenwei pi
- <zhenwei.pi@linux.dev>,  Hanna Reitz <hreitz@redhat.com>,  Ani Sinha
- <anisinha@redhat.com>,  qemu-block@nongnu.org,  Paolo Bonzini
- <pbonzini@redhat.com>,  Peter Xu <peterx@redhat.com>,  Kevin Wolf
- <kwolf@redhat.com>,  linux-cxl@vger.kernel.org,  Jiri Pirko
- <jiri@resnulli.us>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Stefan
- Berger <stefanb@linux.vnet.ibm.com>,  Fabiano Rosas <farosas@suse.de>,
- Stefan Hajnoczi <stefanha@redhat.com>,  Michael Tokarev <mjt@tls.msk.ru>,
- Igor Mammedov <imammedo@redhat.com>,  "Michael S. Tsirkin"
- <mst@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Mauro Carvalho
- Chehab <mchehab+huawei@kernel.org>,  linux-edac@vger.kernel.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,  Richard
- Henderson <richard.henderson@linaro.org>,  Eric Blake <eblake@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?=
- Le Goater <clg@redhat.com>,  Jason Wang <jasowangio@gmail.com>,
- qemu-trivial@nongnu.org,  Jonathan Cameron <jic23@kernel.org>
-Subject: Re: [PATCH v2 00/44] qapi: convert trivial intro sections
-In-Reply-To: <CAFn=p-Z0Ys6FoUqRPY7d5CaN4YfHE4DUN6VLtMeWRJgUk3Khkg@mail.gmail.com>
- (John Snow's message of "Mon, 27 Jul 2026 13:16:13 -0400")
-References: <20260723044805.527643-1-jsnow@redhat.com>
- <87ik65g8xm.fsf@pond.sub.org> <87h5lobypc.fsf@pond.sub.org>
- <CAFn=p-Z0Ys6FoUqRPY7d5CaN4YfHE4DUN6VLtMeWRJgUk3Khkg@mail.gmail.com>
-Date: Tue, 28 Jul 2026 16:03:38 +0200
-Message-ID: <87mrvbtdmt.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1woiRD-0003Ug-Jj; Tue, 28 Jul 2026 10:05:52 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66SDlf0c1236929; Tue, 28 Jul 2026 14:05:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=qRuMr1
+ eUYRhMQFy4MpWhYBtLnSh4l3ku78I1q6RNxgk=; b=IyV17WkMTtFL6Sk3x5MCsc
+ SLO+LORYMXvLXrr3u/KUReSASpwAr2mrOJcEW2v62jsRU3l1PcnyB73m2YzpAg0K
+ cJVdPDVl2Q/p4+ow2FVD7MtXlt5CJlSIgOS+vhitR0aEb90YrupVB6cpaZBIMF8u
+ NYkSA7KG3nOmZ1fc4LAH4nXWNkAsEW4RrJkClmdCX6W03TBgd+AGh0V3e8RQK0lL
+ NAn7oOKkKqmdcXToxVExfFGUPgMKB/hBH+oOB9iIHU/UdoZrY1CQ8O+7h2DNjfBU
+ 6zhRJTFqelK/9zgfuJFr/TV8g1NEeGWpHsj0/+99kfFDsUCP+oW+jLhGdXExEetg
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0nmxrp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Jul 2026 14:05:37 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66SDuF9o031302;
+ Tue, 28 Jul 2026 14:05:36 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fna5y1urk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Jul 2026 14:05:36 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66SE5Z6V50921816
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 28 Jul 2026 14:05:35 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0F1E658055;
+ Tue, 28 Jul 2026 14:05:35 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5C16458063;
+ Tue, 28 Jul 2026 14:05:33 +0000 (GMT)
+Received: from [9.61.20.104] (unknown [9.61.20.104])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 28 Jul 2026 14:05:33 +0000 (GMT)
+Message-ID: <3e9327fd-25f3-424e-b41b-c766c8af62e2@linux.ibm.com>
+Date: Tue, 28 Jul 2026 10:05:32 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+From: Eric Farman <farman@linux.ibm.com>
+Subject: Re: [PATCH 0/5] more hardening fixes for s390
+To: Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Joshua Daley <jdaley@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Jared Rossi <jrossi@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20260727115052.24289-1-borntraeger@linux.ibm.com>
+Content-Language: en-US
+Autocrypt: addr=farman@linux.ibm.com; keydata=
+ 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
+ y8m0x6unNti2MZIUMy0m2gcE
+In-Reply-To: <20260727115052.24289-1-borntraeger@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDEyMiBTYWx0ZWRfXw0f4kllrSOJy
+ kTu5pq7uEU4pQhtJ9VbnVqRDsjsgNADkWW0rRDMoSGNKGxq4opfN9zkrpifSL9tc9/7z1fmlr7R
+ WGn8tkXWL4/+sXw5qMMFecJGnKtOLZM=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDEyMiBTYWx0ZWRfX/FefN+mhEBZ1
+ 7N6qWjxK1csG+ZQjMlW8iRCjoR/rlcmFXPQG6b/UsimTlgx4Xny3rcUxZ/f0SCaSdUGNxATvgQM
+ uCsQbzT9+SPYallOGPLYLvKk4rQ37kbbLh4dTeOKPJlY6XrtaqdQ5u3e7Mi1yFsJSxnIFbq7P6O
+ LfNhcb/6APe97q3YfSuPj0l+ty1Zy4L4V3a8wBiGKXYdcqnIN9BoUDysvkxegGtTMcLr/sorCY/
+ BObN1xiKc5rccRGgsPp4uDKHHvyN/dan1Dd+QDHRdub1os3Iay7ZgVfI8Dysb60ODxJy10xuITj
+ 6WWWgLWrJnoa3sS4ify/j++7tW4YV1yGO+4f3jqP/2MzZdbg7u625XnCBwuyV0zS5mjbPw70yWw
+ DIRsj0407QJGxJpF+DzhyYsImzrLgfFKjHIf7D2Hvr9PSSvKEHk57eYpcd6+SzyqLnlz71qkjen
+ N3Q+IRg9B1TvQMb3HQw==
+X-Authority-Analysis: v=2.4 cv=b5WCJNGx c=1 sm=1 tr=0 ts=6a68b731 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=NLiCwHATAAAA:8
+ a=5lzg20ZYiTl3fW5vGnQA:9 a=QEXdDO2ut3YA:10 a=F9tHCgz3TLBaZgltkx5D:22
+X-Proofpoint-GUID: vNXhd7LOmNfp4YajvwJRM3XdaLa5Nu3k
+X-Proofpoint-ORIG-GUID: vNXhd7LOmNfp4YajvwJRM3XdaLa5Nu3k
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-28_03,2026-07-28_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0 impostorscore=0
+ bulkscore=0 phishscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607280122
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,58 +175,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
 
-> On Fri, Jul 24, 2026 at 4:04=E2=80=AFAM Markus Armbruster <armbru@redhat.=
-com> wrote:
->>
->> Markus Armbruster <armbru@redhat.com> writes:
->>
->> [...]
->>
->> > Converting single first paragraps is mechanical.  For it to be correct,
->> > this single paragraph must actually be the overview, and not some other
->> > crap.  I expect it to be almost always overview.  Not sure how to best
->> > look for the exceptions.
->>
->> The separation truly matters only when the inliner inlines the doc
->> comment.  It potentially matters when it would inline it if the type was
->> used differently.
->
-> It also (potentially) matters for auto-generated docs, such as
-> undocumented members, return types, features*, errors*. The break
-> point is where these fields get inserted.
 
-Right, I forgot about this.  There goes my review shortcut...
+On 7/27/26 7:50 AM, Christian Borntraeger wrote:
+> Cornelia, Eric, Matt,
+> 
+> here are 5 more fixes for hardening QEMU against invalid input. Nothing
+> is strictly a security issues as defined in the policy. For example
+> https://qemu-project.gitlab.io/qemu/system/security.html says assert /
+> abort: If triggering the code path requires kernel privileges (or root
+> account access) in the guest, asserts/aborts in QEMU are a self
+> inflicted denial of service. These will not be treated as security
+> flaws, at most hardening bugs.
+> And if anyone can provide invalid boot loader content it can provide
+> anything to boot if secure boot is not available.
+> We should fix those anyway, probably even for 11.1
+> 
+> Conny, I did not rebuild the s390-ccw, I assume you will do that?
+> 
+> Christian Borntraeger (1):
+>    hw/char/sclpconsole-lm: avoid guest triggerable assert
+> 
+> Joshua Daley (4):
+>    s390x/ipl: validate num_comp against iplb length before iterating
+>    pc-bios/s390-ccw: fix out-of-bounds read in iso_get_file_size()
+>    pc-bios/s390-ccw: bounds-check zipl menu entry index before array
+>      write
 
-> (*Not currently performed. Not asserting that it will be performed, or
-> that it is necessarily valuable to do so. Just fleshing out the
-> category.)
->
->>
->> If I remember correctly, the inliner inlines doc of struct / union base
->> type, union branch type, command / event argument type.
->>
->> Argument can only be struct or union.  Base and branch can only be
->> struct.
->>
->> We talked about maybe inlining return types some day.  This would be
->> struct, union, or array of struct or union.
->>
->> So, for anything other than struct and union, the inliner doesn't get
->> involved, and separating the overview cleanly is just a matter of
->> writing style.  I'm not sure we care.  Even if we elect to care,
->> cleaning it up is hardly this series' business.  In short, your
->> mechanical conversion of single first paragraphs to overview syntax
->> should be fine even where a paragraph's contents isn't clearly overview.
->
-> Except in cases where stub positioning matters, see also the former
-> "TODO:" syntax used to delineate intro/details.
->
->>
->> Structs and unions, however, could use an eye-over.
->>
->> [...]
->>
+Applied these four for 11.2, with the two typos fixed as Matt mentioned, 
+and cc'd qemu-stable.
+
+>    pc-bios/s390-ccw: bound zipl menu strlen and replace VLA in
+>      zipl_print_entry
+
+Will wait for a v2 on this one.
+
+Thanks!
+
+> 
+>   hw/char/sclpconsole-lm.c    |  3 ++-
+>   hw/s390x/ipl.h              |  6 ++++++
+>   pc-bios/s390-ccw/bootmap.c  |  6 ++++--
+>   pc-bios/s390-ccw/helper.h   | 10 ++++++++++
+>   pc-bios/s390-ccw/menu.c     | 36 +++++++++++++++++++++++++++++-------
+>   pc-bios/s390-ccw/s390-ccw.h |  2 +-
+>   6 files changed, 52 insertions(+), 11 deletions(-)
+> 
+
 
 
