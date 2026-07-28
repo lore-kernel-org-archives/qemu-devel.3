@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AEB5C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 19:42:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D5E1C54F56
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 19:45:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wongk-00088X-7F; Tue, 28 Jul 2026 15:42:06 -0400
+	id 1wonjW-0000vL-KH; Tue, 28 Jul 2026 15:44:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wongi-00087w-QR
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:42:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wonjU-0000tW-AD
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:44:56 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wongf-0005Lu-7y
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:42:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785267719;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=x+AkxoWsB7uc2detbeE8+509PBr3u/TvOz/2hh/L2Kw=;
- b=OGYwNZCV3nHy6uAyeeAnTQy9crfhg1i9aexc51a+eiuDtMG1wkqytq0Ju8/o8bbXjhq90t
- /tz1A51V+raxIurcQK1SeqQZW4ZYl5uK1M1AmB30judyjQuE6lDp7TveZM88U/e/pYz27+
- XNkz7/XtdTbecIYKyi32CMnvxmAkHPA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-427-sF0ED4HdOLyGoftEuRehEA-1; Tue,
- 28 Jul 2026 15:41:55 -0400
-X-MC-Unique: sF0ED4HdOLyGoftEuRehEA-1
-X-Mimecast-MFC-AGG-ID: sF0ED4HdOLyGoftEuRehEA_1785267712
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BDC3519560B2; Tue, 28 Jul 2026 19:41:50 +0000 (UTC)
-Received: from localhost (unknown [10.2.17.47])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EF12F1956089; Tue, 28 Jul 2026 19:41:47 +0000 (UTC)
-Date: Tue, 28 Jul 2026 15:41:46 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Connor Kite <connorkite@gmail.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Haixu Cui <quic_haixcui@quicinc.com>,
- Raphael Norwitz <rnorwitz@nvidia.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Milan Zamazal <mzamazal@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- qemu-block@nongnu.org, virtio-fs@lists.linux.dev,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- zhenwei pi <zhenwei.pi@linux.dev>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
- Eugenio =?iso-8859-1?Q?P=E9rez?= <eperezma@redhat.com>,
- Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
-Subject: Re: [PATCH RFC 13/15] hw/virtio/vhost-user: add shadow virtqueues
- and eventfd intercepts
-Message-ID: <20260728194145.GK371693@fedora>
-References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
- <20260723-vhost-user-isolated-memory-v1-13-6b97c439eb28@gmail.com>
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wonjS-0005l4-6r
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:44:56 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wonjA-00000001Tds-42i9; Tue, 28 Jul 2026 21:44:36 +0200
+Message-ID: <6c472c83-7334-4f50-bc68-627b452d8287@maciej.szmigiero.name>
+Date: Tue, 28 Jul 2026 21:44:31 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="B6GEy+uFbHjCCumJ"
-Content-Disposition: inline
-In-Reply-To: <20260723-vhost-user-isolated-memory-v1-13-6b97c439eb28@gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] hw/vfio: Fix liveness check in
+ vfio_connect_kvm_msi_virq()
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Tycho Andersen <tycho@kernel.org>
+Cc: Alex Williamson <alex@shazbot.org>, Mark Kanda <mark.kanda@oracle.com>,
+ Ben Chaney <bchaney@akamai.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+References: <20260727150038.2684512-1-tycho@kernel.org>
+ <093da848-d6f9-4d88-a317-6acfac2724bf@redhat.com>
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Content-Language: en-US, pl-PL
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <093da848-d6f9-4d88-a317-6acfac2724bf@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,167 +106,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---B6GEy+uFbHjCCumJ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 27.07.2026 17:27, Cédric Le Goater wrote:
+> + CPR maintainers,
+> 
+> On 7/27/26 17:00, Tycho Andersen wrote:
+>> From: "Tycho Andersen (AMD)" <tycho@kernel.org>
+>>
+>> While working on savevm/loadvm for a new vfio device, I encountered the
+>> crash below. Since vfio_connect_kvm_msi_virq() didn't check the ->use flag
+>> for the vector, it would pass an unused vector down to
+>> vfio_cpr_load_vector_fd() which would crash.
+>>
+>> Fix this by checking the ->use flag along with the virq number to detect
+>> whether a vector is valid or not.
+>>
+>> Thread 1 "qemu-system-x86" received signal SIGSEGV, Segmentation fault.
+>> 0x0000555555a891ef in vfio_cpr_load_vector_fd (vdev=vdev@entry=0x0,
+>>      name=name@entry=0x555555eeb27e "kvm_interrupt", nr=nr@entry=1) at ../hw/vfio/cpr.c:44
+>> 44        g_autofree char *fdname = STRDUP_VECTOR_FD_NAME(vdev, name);
+>> (gdb) bt
+>> #0  0x0000555555a891ef in vfio_cpr_load_vector_fd
+>>      (vdev=vdev@entry=0x0, name=name@entry=0x555555eeb27e "kvm_interrupt", nr=nr@entry=1)
+>>      at ../hw/vfio/cpr.c:44
+>> #1  0x0000555555ce64a1 in vfio_notifier_init
+>>      (vdev=0x0, e=e@entry=0x5555586971b4, name=name@entry=0x555555eeb27e "kvm_interrupt", nr=nr@entry=1, errp=errp@entry=0x0) at ../hw/vfio/pci.c:79
+>> #2  0x0000555555ce721e in vfio_connect_kvm_msi_virq (vector=0x5555586971a8, nr=nr@entry=1)
+>>      at ../hw/vfio/pci.c:601
+>> #3  0x0000555555cea5a5 in vfio_connect_kvm_msi_virq (nr=1, vector=<optimized out>)
+>>      at ../hw/vfio/pci.c:597
+>> #4  vfio_pci_commit_kvm_msi_virq_batch (vdev=0x55555906de40) at ../hw/vfio/pci.c:822
+>> #5  0x0000555555cea9f2 in vfio_msix_enable (vdev=vdev@entry=0x55555906de40) at ../hw/vfio/pci.c:850
+>> #6  0x0000555555ceb152 in vfio_pci_load_config (vbasedev=0x55555906e900, f=<optimized out>)
+>>      at ../hw/vfio/pci.c:3088
+>> #7  0x0000555555a8c765 in vfio_load_device_config_state (f=0x5555574a43d0, opaque=0x55555906e900)
+>>      at ../hw/vfio/migration.c:278
+>> #8  0x0000555555b3a522 in vmstate_load
+>>      (f=f@entry=0x5555574a43d0, se=se@entry=0x5555591edd40, errp=errp@entry=0x7fffffffe130)
+>>      at ../migration/savevm.c:971
+>> #9  0x0000555555b3ab1a in qemu_loadvm_section_start_full
+>>      (f=f@entry=0x5555574a43d0, type=type@entry=4 '\004', errp=errp@entry=0x7fffffffe130)
+>>      at ../migration/savevm.c:2654
+>> #10 0x0000555555b3e1ee in qemu_loadvm_state_main
+>>      (f=f@entry=0x5555574a43d0, mis=mis@entry=0x5555571de5a0, errp=0x7fffffffe130,
+>>      errp@entry=0x555557157c10 <error_fatal>) at ../migration/savevm.c:2973
+>> #11 0x0000555555b3f7b7 in qemu_loadvm_state
+>>      (f=f@entry=0x5555574a43d0, errp=errp@entry=0x555557157c10 <error_fatal>)
+>>      at ../migration/savevm.c:3058
+>> #12 0x0000555555b40863 in load_snapshot
+>>      (name=0x7fffffffecc9 "foo", vmstate=vmstate@entry=0x0, has_devices=has_devices@entry=false, devices=devices@entry=0x0, errp=errp@entry=0x555557157c10 <error_fatal>) at ../migration/savevm.c:3452
+>> #13 0x0000555555adc211 in qmp_x_exit_preconfig (errp=0x555557157c10 <error_fatal>) at ../system/vl.c:2817
+>> #14 qmp_x_exit_preconfig (errp=0x555557157c10 <error_fatal>) at ../system/vl.c:2802
+>> #15 0x0000555555adf8ed in qemu_init (argc=<optimized out>, argv=<optimized out>) at ../system/vl.c:3849
+>> #16 0x00005555558903fd in main (argc=<optimized out>, argv=<optimized out>) at ../system/main.c:71
+>>
+>> Fixes: 30edcb4d4e7a ("vfio-pci: preserve MSI")
+>> Signed-off-by: Tycho Andersen (AMD) <tycho@kernel.org>
+>> ---
+>> An alternative implementation of this would be to set ->virq = -1 after
+>> the allocation in vfio_msix_enable(), but since other locations that
+>> checks ->virq >= 0 also check ->use, I added it here too. Maybe it would
+>> be useful to do both.
+>> ---
+>>   hw/vfio/pci.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+>> index 380dd8c15f..b5280c3d2a 100644
+>> --- a/hw/vfio/pci.c
+>> +++ b/hw/vfio/pci.c
+>> @@ -589,7 +589,7 @@ static void vfio_connect_kvm_msi_virq(VFIOMSIVector *vector, int nr)
+>>   {
+>>       const char *name = "kvm_interrupt";
+>> -    if (vector->virq < 0) {
+>> +    if (!vector->use || vector->virq < 0) {
+>>           return;
+>>       }
+>>
+>> base-commit: 300438ffbb8d9430cac2fcc15cba6f482b2c0587
+> 
+> 
+> Looks ok to me.
 
-On Thu, Jul 23, 2026 at 03:30:12PM -0700, Connor Kite wrote:
-> Adds shadow virtqueues that will eventually be used to transfer data
-> between device and host via bounce buffers when isolation mode is
-> active.  The svqs are initalized, and eventfd assignments are
-> intercepted so that notifications come to svqs first before
-> the guest or backend receive them.
->=20
-> Signed-off-by: Connor Kite <connorkite@gmail.com>
-> ---
->  hw/virtio/vhost-user.c | 54 ++++++++++++++++++++++++++++++++++++++++++++=
-++++++
->  1 file changed, 54 insertions(+)
->=20
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index acabfb7f1c..75858289a2 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -18,6 +18,7 @@
->  #include "hw/virtio/vhost-backend.h"
->  #include "hw/virtio/virtio.h"
->  #include "hw/virtio/virtio-net.h"
-> +#include "hw/virtio/vhost-shadow-virtqueue.h"
->  #include "hw/virtio/vhost-iova-tree.h"
->  #include "chardev/char-fe.h"
->  #include "io/channel-socket.h"
-> @@ -365,7 +366,9 @@ struct vhost_user {
-> =20
->      /* Isolated memory data*/
->      struct IsolationRegion iso_memory;
-> +    GPtrArray *shadow_vqs;
->      VhostIOVATree *iso_iova_tree;
-> +    bool svqs_allocated;
->  };
-> =20
->  struct scrub_regions {
-> @@ -1693,6 +1696,24 @@ static int vhost_set_vring_file(struct vhost_dev *=
-dev,
->  static int vhost_user_set_vring_kick(struct vhost_dev *dev,
->                                       struct vhost_vring_file *file)
->  {
-> +    struct vhost_user *u =3D dev->opaque;
-> +    int svq_idx =3D file->index - dev->vq_index;
-> +    if (u->user->memory_isolation) {
-> +        VhostShadowVirtqueue *svq =3D g_ptr_array_index(u->shadow_vqs,
-> +                                                      svq_idx);
-> +        vhost_svq_set_svq_kick_fd(svq, file->fd);
-> +
-> +        if (svq->hdev_kick.initialized =3D=3D false) {
-> +            int r =3D event_notifier_init(&svq->hdev_kick, 0);
+Looks ok to me from the CPR side too, so:
+Acked-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com> # for CPR
 
-Where is event_notifier_cleanup() called?
-
-> +            if (r) {
-> +                error_report("Failed to create kick event notifier");
-> +                return r;
-> +            }
-> +        }
-> +
-> +        file->fd =3D event_notifier_get_fd(&svq->hdev_kick);
-
-Modifying the function argument is probably not expected but
-vhost_virtqueue_start() doesn't use it after this call, so there is no
-immediate problem. It would be safer to have a local struct
-vhost_vring_file that can be modified without affecting the caller's
-copy.
-
-> +    }
-> +
->      int ret =3D vhost_set_vring_file(dev, VHOST_USER_SET_VRING_KICK, fil=
-e);
->      if (ret < 0) {
->          return ret;
-> @@ -1721,6 +1742,24 @@ static int vhost_user_set_vring_kick(struct vhost_=
-dev *dev,
->  static int vhost_user_set_vring_call(struct vhost_dev *dev,
->                                       struct vhost_vring_file *file)
->  {
-> +    struct vhost_user *u =3D dev->opaque;
-> +    int svq_idx =3D file->index - dev->vq_index;
-> +    if (u->user->memory_isolation) {
-> +        VhostShadowVirtqueue *svq =3D g_ptr_array_index(u->shadow_vqs,
-> +                                                      svq_idx);
-> +        vhost_svq_set_svq_call_fd(svq, file->fd);
-> +
-> +        if (svq->hdev_call.initialized =3D=3D false) {
-> +            int r =3D event_notifier_init(&svq->hdev_call, 0);
-
-Where is event_notifier_cleanup() called?
-
-> +            if (r) {
-> +                error_report("Failed to create call event notifier");
-> +                return r;
-> +            }
-> +        }
-> +
-> +        file->fd =3D event_notifier_get_fd(&svq->hdev_call);
-
-Same as above.
-
-> +    }
-> +
->      return vhost_set_vring_file(dev, VHOST_USER_SET_VRING_CALL, file);
->  }
-> =20
-> @@ -2715,6 +2754,17 @@ static int vhost_user_postcopy_notifier(NotifierWi=
-thReturn *notifier,
->      return 0;
->  }
-> =20
-> +static void vhost_user_init_svq(struct vhost_dev *dev, struct vhost_user=
- *u)
-> +{
-> +    /*Modified from vhost-vdpa*/
-> +    u->shadow_vqs =3D g_ptr_array_new_full(dev->nvqs, vhost_svq_free);
-> +    for (int i =3D 0; i < dev->nvqs; i++) {
-> +        VhostShadowVirtqueue *svq;
-> +        svq =3D vhost_svq_new(NULL, NULL);
-> +        g_ptr_array_add(u->shadow_vqs, svq);
-> +    }
-> +}
-> +
->  static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
->                                     Error **errp)
->  {
-> @@ -2859,6 +2909,10 @@ static int vhost_user_backend_init(struct vhost_de=
-v *dev, void *opaque,
->      u->postcopy_notifier.notify =3D vhost_user_postcopy_notifier;
->      postcopy_add_notifier(&u->postcopy_notifier);
-> =20
-> +    if (vus->memory_isolation) {
-> +        vhost_user_init_svq(dev, u);
-> +    }
-> +
->      return 0;
->  }
-> =20
->=20
-> --=20
-> 2.43.0
->=20
-
---B6GEy+uFbHjCCumJ
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmppBfkACgkQnKSrs4Gr
-c8incggAjXD8O74CX7ZbPEI9yeqAUza43JWOz78Ypa4LvWMaqWm0MK2nSmjunVjC
-99wXDVM2Dz2DVphziIy7C6D/zyJBopg1K/N08Z1ZKB43TY3BtteU0tfEgJuAOooA
-TKK5UJynp/mLbMG8IWEVB1Sg9bogNL8cckPMzVVzkQwCD+33CPBfwHChwmR4zuai
-XNUeTUnU3D4mQycDXAlsWG+MwGQRh1GPd6i0Q8bIXM7Uv1w8qSSeZ4skNGEvH0SZ
-Xq7Y0sXONrDVkRGyvKkHOb7claFGvm4KoCUTt8rVwe1BSM9+JMC+apsDBiLvTxlX
-qAJCi8AzjycweYFAENIpHtQrM5h0uw==
-=gN7E
------END PGP SIGNATURE-----
-
---B6GEy+uFbHjCCumJ--
+Thanks,
+Maciej
 
 
