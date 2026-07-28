@@ -4,120 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55BAFC53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 21:01:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6155AC53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 21:05:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woovM-0003Xd-3K; Tue, 28 Jul 2026 17:01:16 -0400
+	id 1wooye-0004U2-8P; Tue, 28 Jul 2026 17:04:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1woovJ-0003XN-9d
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 17:01:13 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1woovH-0003Ko-6M
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 17:01:13 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id A07B47C57E;
- Tue, 28 Jul 2026 21:01:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1785272465; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wooyX-0004TT-Gw
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 17:04:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wooyS-0003hO-Hm
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 17:04:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785272666;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CJ5OF3WyZ6XsDMyUpWGekSp3ZIeqbyazjY1fBVYJnR8=;
- b=cvOm71XVsxlBb86GOjdrEoARnIkT/c97AP5k+ylEOI+gF6eTXZqCkW3bQaHjdEl2ca6Dsb
- zEaXua8d0KhQD6Pbnj0KcvlP5rpKfm1Jb4fFjQ/GynwLBVkuHtsY+QfokjPvPG+BSgZ5PW
- jwS001eV+uAGwTdb9BKsf/eXF6aqDYs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1785272465;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=CJ5OF3WyZ6XsDMyUpWGekSp3ZIeqbyazjY1fBVYJnR8=;
- b=V8yA2XUhz6O5/LoxpNkZjzd783TqQnHfglIm+4aqI08ErTs497KlOh3f1X6f+5R/espUw8
- ytSvzDr3C+XoHrBA==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=rRORIL4c;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=KVswEpwT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1785272461; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=CJ5OF3WyZ6XsDMyUpWGekSp3ZIeqbyazjY1fBVYJnR8=;
- b=rRORIL4ch+N/7Czw4QFCDBOojfyrWVqjnHfcxD+Xp52FZyRnD/oWgiBghA4b4jrwfCD2b0
- oacQr8Vgj3uEo/363n9nkla/WtcnQbcvavfZd/CWCrX+o8gV7zhdkkhRWACLd1DU8xzCiR
- pvPNRVLMxVUWKSQTeTRbivPFdAHcpV8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1785272461;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=CJ5OF3WyZ6XsDMyUpWGekSp3ZIeqbyazjY1fBVYJnR8=;
- b=KVswEpwT9EKvq4NDlF5NcCkz93+BWwq0u6ugor8YYUPuLUVJKuR1VfDXAT0t6J4M95fZNO
- SGTLeZ1B1WE3kmAA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 40FAF779B1;
- Tue, 28 Jul 2026 21:01:01 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id zAf1BI0YaWrKCwAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 28 Jul 2026 21:01:01 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, Juraj
- Marcin <jmarcin@redhat.com>, Feifan Qian <bea1e@proton.me>
-Subject: Re: [PATCH 4/5] migration: Fix rare hang of
- migration_channel_read_peek()
-In-Reply-To: <amkVJZ14O60zAeVt@x1.local>
-References: <20260728155247.1894355-1-peterx@redhat.com>
- <20260728155247.1894355-5-peterx@redhat.com> <amjXxDH73ah-dUGE@redhat.com>
- <amjiLyOJF92okvik@x1.local> <87o6fqopgn.fsf@suse.de>
- <amkVJZ14O60zAeVt@x1.local>
-Date: Tue, 28 Jul 2026 18:00:50 -0300
-Message-ID: <87ecgmomm5.fsf@suse.de>
+ bh=VoCKTGTB00eE5rGMysylu8v8Cd44pkfWk8gVfgTvXSU=;
+ b=WbowbVJScI+uMbG7Tt41fVWThFLSnzmnqGL6Cr5jIMZOAXnSj+VrgaVW7lZvZhg4k8hSEj
+ 4aRS8ODn0bok2kXYxEtheXm80p9SaFXKmC6voLyHj/mw0GkVZjDUosU/0neK7QUII2vR6F
+ D5LtCPkqocolzEp1h5qzKvxFyZBsYvk=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-636-ZPMnFipfOFGCbWunkRPqPA-1; Tue, 28 Jul 2026 17:04:25 -0400
+X-MC-Unique: ZPMnFipfOFGCbWunkRPqPA-1
+X-Mimecast-MFC-AGG-ID: ZPMnFipfOFGCbWunkRPqPA_1785272665
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-92e7ee64b25so53757985a.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 14:04:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1785272665; x=1785877465; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=VoCKTGTB00eE5rGMysylu8v8Cd44pkfWk8gVfgTvXSU=;
+ b=FCVtdnhHteNYiQ9yzcf/4HNulTGjUgl6d8qMV5ept9eekEz8NSxhPXIB+FkQFff9nB
+ GbfNj2FTcj7w//SAiWeTYNfPyQ2vVlpQpGoH/bObu/mITCL2r1zeDecqJ96iq8GhDnZK
+ qlpLey7Quw2K0CwJ5w3Yg5SnEYmGdzfInCEC6q0X5xjcxl5Dxtpvqa97qR6XIUFuVQ4b
+ WwxJSuptbHZi/sl0hsUs/0BeuLqNbNqTmJgQsYBlm81Xvq7rkLaPVbhHCMvH2vZPFzlU
+ PguFoozSVzQz0lWtAXMuewBeT/2Ds/H5PyMr0fLzQYbcp4vdG5zx3PwVvZ/ujke1jHdr
+ lvZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785272665; x=1785877465;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=VoCKTGTB00eE5rGMysylu8v8Cd44pkfWk8gVfgTvXSU=;
+ b=FeL8YybcmFJiMUCq1WmAIfP7amS7L4jvjRHPSrgyBM5nAqYipfD+59zYmR62Oqr8TC
+ pINRsG8M+k8ri3BI5STofQKb7fphT00QLWpc1swl4s2NYjp3aCUtJO7XFgw/qNqfv38v
+ S/2p9j2gByw2F+wkLrkKm0t0bTSV5WQ/eOowRPZnNNnCf2SpSb2sHyD7Kk3EtZSuytGw
+ sW5A6lZYTrVvNS9iv038SFC/Maupz+TXy3x7DJfOyYLsjSuTRVgvOcc0XjWl5o/1N5/1
+ gB+gPBmI9pQnXU1xPzVyTIm+SCnFbF6HSRlC/xJpiA+uW0vKOXg7D2oI5H2y7a+6TTIj
+ uCdQ==
+X-Gm-Message-State: AOJu0YxM8qu/brHc/HyirH7tdYdzwK9J4A/mOq4pdNxRDKlPM4Sc0gJx
+ l7IlqvCUHBexcqnwGgy/+LvzcWR8UsC1uqLw5mMESgt6StD4aOoeEC0kBaDKG6vqtH4+2pLmnmg
+ okKgru8spFWDF825/ohHuNlawe1O7zzv77W+z6jwMEjps1v6Jy6efq4A/EOHcOerYRXkVi1e/S4
+ AW66PTNJyrIY9aXgIf58Nt9VSgmILQm6h6mmc44Q==
+X-Gm-Gg: AR+sD13rhgtihgNE9NWEIh9s8Ur3Ch/jaFdpQvtzF6IgaxuYp3ij9Wp7RSsXlkc7tzh
+ UMle8YectncsjDDsLhWDbZNVfgAS7EAAPAF8WpZkMNHn6ziav0H6s2KrB+LoRWp1C9w/QyGlVSE
+ iA6C2fFsOaPUcYX9K3HEk4uTwZjMMjFsDMUou4hDvSviytKdVA/g+Ovl1ymxzUFWYMhXGLs2dKB
+ bq5R7qycWFjoN+Re4a6h2ouRolINI+3zhd71bPk3qlA4Y5VeInhHQI9XK4kCxtOm7jKfatLmPvM
+ fa7sgmJJ6LWtq1uvaXGTRFqQKdN4f6Ctr+fMwY+nEA36hJOs8gt6L8LR/+c6PkC7L7dCj8PkawX
+ MmH+vo7ipFnmijqQwwZ3Qwpsg/TgQfN+MwbgC6XX78vuW4mXFPidmril/
+X-Received: by 2002:a05:620a:2789:b0:930:a3f9:93b0 with SMTP id
+ af79cd13be357-93302afd4cfmr461978085a.86.1785272664812; 
+ Tue, 28 Jul 2026 14:04:24 -0700 (PDT)
+X-Received: by 2002:a05:620a:2789:b0:930:a3f9:93b0 with SMTP id
+ af79cd13be357-93302afd4cfmr461972685a.86.1785272664123; 
+ Tue, 28 Jul 2026 14:04:24 -0700 (PDT)
+Received: from x1.com
+ (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-933d3227707sm21277985a.6.2026.07.28.14.04.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 Jul 2026 14:04:23 -0700 (PDT)
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>,
+ peterx@redhat.com, Feifan Qian <bea1e@proton.me>,
+ qemu-stable <qemu-stable@nongnu.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v2 1/5] migration: Fix possible overflow in
+ vmstate_handle_alloc()
+Date: Tue, 28 Jul 2026 17:04:13 -0400
+Message-ID: <20260728210417.1925078-2-peterx@redhat.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260728210417.1925078-1-peterx@redhat.com>
+References: <20260728210417.1925078-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MISSING_XM_UA(0.00)[]; TO_DN_SOME(0.00)[];
- MIME_TRACE(0.00)[0:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,gitlab.com:url];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: A07B47C57E
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,164 +122,209 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Migration incoming side almost always trusted the stream data and allows
+allocation to happen with whatever size received.  With it, malicious
+migration stream can manipulate destination QEMU behavior on g_malloc(), in
+path of vmstate_handle_alloc() on specific VMSD fields.  Fix it by limiting
+all sizes with int32_t positive values (INT_MAX) explicitly.
 
-> On Tue, Jul 28, 2026 at 04:59:20PM -0300, Fabiano Rosas wrote:
->> Peter Xu <peterx@redhat.com> writes:
->>=20
->> > On Tue, Jul 28, 2026 at 05:24:36PM +0100, Daniel P. Berrang=C3=A9 wrot=
-e:
->> >> On Tue, Jul 28, 2026 at 11:52:46AM -0400, Peter Xu wrote:
->> >> > In an unlikely case, when a migration stream is attached to the des=
-tination
->> >> > QEMU and only send <4 bytes to the channel as magic, it's possible =
-that
->> >> > migration_channel_read_peek() may spin forever without yielding in =
-the main
->> >> > thread causing two unwanted consequences:
->> >> >=20
->> >> > - CPU will spin 100% waiting for the rest bytes until it reaches 4
->> >> > - (more importantly..) Main thread is stuck during this process as =
-the qio
->> >> >   operation won't really yield the coroutine
->> >> >=20
->> >> > Fix it by consuming the bytes that arrived.
->> >> >=20
->> >> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3889
->> >> > Cc: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->> >> > Reported-by: Feifan Qian <bea1e@proton.me>
->> >> > Signed-off-by: Peter Xu <peterx@redhat.com>
->> >> > ---
->> >> >  migration/channel.c | 26 +++++++++++++++++++++++---
->> >> >  1 file changed, 23 insertions(+), 3 deletions(-)
->> >> >=20
->> >> > diff --git a/migration/channel.c b/migration/channel.c
->> >> > index 1e2935f926..28fe1d2906 100644
->> >> > --- a/migration/channel.c
->> >> > +++ b/migration/channel.c
->> >> > @@ -294,11 +294,31 @@ int migration_channel_read_peek(QIOChannel *i=
-oc,
->> >> >              return -1;
->> >> >          }
->> >> >=20=20
->> >> > -        if (len =3D=3D buflen) {
->> >> > +        if (len =3D=3D iov.iov_len) {
->> >> >              break;
->> >> > -        }
->> >> > +        } else if (len =3D=3D 0) {
->> >> > +            qio_channel_wait_cond(ioc, G_IO_IN);
->> >> > +        } else {
->> >> > +            ssize_t received =3D len;
->> >> >=20=20
->> >> > -        qio_channel_wait_cond(ioc, G_IO_IN);
->> >> > +            /*
->> >> > +             * Partially arrived, read out to make qio_channel_wai=
-t_cond()
->> >> > +             * won't return immediately, causing an unwanted spin =
-on this
->> >> > +             * CPU.
->> >> > +             */
->> >> > +            iov.iov_len =3D len;
->> >> > +            len =3D qio_channel_readv_full(ioc, &iov, 1, NULL, NUL=
-L, 0, errp);
->> >>=20
->> >> Sure this breaks the API behaviour that the caller is expecting to
->> >> see.
->> >>=20
->> >> migration_channel_identify will call migration_channel_read_peek
->> >> to match the magic bytes.
->> >>=20
->> >> But something later in the flow will actually try to read the magic
->> >> bytes.  By consuming them in this migration_channel_read_peek
->> >> method, surely we're breaking the code that wants to read the bytes
->> >> later.
->> >
->> > Ah right, stupid me.  The best then is for partial read we apply a man=
-ual
->> > wait.
->> >
->> > I can also revert 604bb1badc ("migration: Properly wait on G_IO_IN when
->> > peeking messages"), looping with 1ms interval for data isn't too bad. =
- But
->> > the best is we only do that for partial, so:
->> >
->> > diff --git a/migration/channel.c b/migration/channel.c
->> > index 1e2935f926..88f89521f8 100644
->> > --- a/migration/channel.c
->> > +++ b/migration/channel.c
->> > @@ -296,9 +296,19 @@ int migration_channel_read_peek(QIOChannel *ioc,
->> >
->> >          if (len =3D=3D buflen) {
->> >              break;
->> > +        } else if (len =3D=3D 0) {
->> > +            qio_channel_wait_cond(ioc, G_IO_IN);
->> > +        } else {
->> > +            /*
->> > +             * When partially ready, we can't use qio_channel_wait_co=
-nd()
->> > +             * because it will return immediately.  Apply a manual wa=
-it.
->> > +             */
->> > +            if (qemu_in_coroutine()) {
->>=20
->> There's no coroutine at this point, could replace this with an assert.
->
-> Hmm, true..  Then it means this can stuck the main thread even if no data
-> arrived (len=3D=3D0), hang monitors..  I hope it's not a major issue and
-> shouldn't easily happen in real life, because normally when src connected,
-> at least the headers will be dumped very soon.
->
+We have quite a few bug reports recently leveraging this defect. It can be
+reproduced in many ways for (I think) all archs binaries, but the simplest
+reproducer is:
 
-If I'm not mistaken the watch only dispatches when there's IO.
+  $ hexdump -C ./vm.img
+  00000000  51 45 56 4d 00 00 00 03  07 80 00 00 00 00 00 00  |QEVM............|
 
-> I'll switch to assert for now.
->
->>=20
->> > +                qemu_co_sleep_ns(QEMU_CLOCK_REALTIME, 1000000);
->> > +            } else {
->> > +                g_usleep(1000);
->> > +            }
->> >          }
->> > -
->> > -        qio_channel_wait_cond(ioc, G_IO_IN);
->> >      }
->> >
->> >      return 0;
->> >
->> > Any preference?
->> >
->> > Thanks,
->> >
->> >>=20
->> >> > +            /*
->> >> > +             * QIO_CHANNEL_ERR_BLOCK also shouldn't happen, due to=
- the
->> >> > +             * prior peek just happened.  We should be pretty sure=
- we will
->> >> > +             * read what we peeked, or the channel was broken.
->> >> > +             */
->> >> > +            if (len !=3D received) {
->> >> > +                return -1;
->> >> > +            }
->> >> > +            iov.iov_base +=3D received;
->> >> > +            iov.iov_len =3D buflen - received;
->> >> > +        }
->> >> >      }
->> >> >=20=20
->> >> >      return 0;
->> >> > --=20
->> >> > 2.54.0
->> >> >=20
->> >>=20
->> >> With regards,
->> >> Daniel
->> >> --=20
->> >> |: https://berrange.com       ~~        https://hachyderm.io/@berrang=
-e :|
->> >> |: https://libvirt.org          ~~          https://entangle-photo.or=
-g :|
->> >> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.co=
-m :|
->> >>=20
->>=20
+  $ ./qemu-system-x86_64 -incoming file:./vm.img
+  VNC server running on ::1:5900
+  qemu-system-x86_64: GLib: ../glib/gmem.c:106: failed to allocate 18446744071562067968 bytes
+  Aborted                    (core dumped) ./qemu-system-x86_64 -incoming file:./vm.img
+
+We could assert here, but since we have errp right above the stack this
+patch routes the errp over to allow destination QEMU fail gracefully.  This
+means there's no way to DoS coredumpctl as well because we don't generate
+core dumps at all. The output message could also hopefully help triage
+issues when it's not a malicious stream but only wrong image used.
+
+When at this, making sure multiplex also won't overflow.
+
+After patched:
+
+  $ ./qemu-system-x86_64 -incoming file:./vm.img
+  VNC server running on ::1:5900
+  qemu-system-x86_64: load of migration failed: Invalid argument: vmstate_size: VMState field 'name' overflow
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3805
+Reported-by: Feifan Qian <bea1e@proton.me>
+Reported-by: dong ling (@dongling226655)
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/vmstate.c | 91 ++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 77 insertions(+), 14 deletions(-)
+
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index 50ebe37845..7bf0c2bae5 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -78,9 +78,10 @@ vmsd_init_ptr_marker_field(VMStateField *fake, const VMStateField *field)
+     };
+ }
+ 
+-static int vmstate_n_elems(void *opaque, const VMStateField *field)
++static int32_t vmstate_n_elems(void *opaque, const VMStateField *field,
++                               Error **errp)
+ {
+-    int n_elems = 1;
++    int32_t n_elems = 1;
+ 
+     if (field->flags & VMS_ARRAY) {
+         n_elems = field->num;
+@@ -94,18 +95,35 @@ static int vmstate_n_elems(void *opaque, const VMStateField *field)
+         n_elems = *(uint8_t *)(opaque + field->num_offset);
+     }
+ 
++    if (n_elems < 0) {
++        error_setg(errp, "%s: VMState field '%s' num_offset overflow",
++                   __func__, field->name);
++        return -EINVAL;
++    }
++
+     trace_vmstate_n_elems(field->name, n_elems);
++
+     return n_elems;
+ }
+ 
+-static int vmstate_size(void *opaque, const VMStateField *field)
++static int32_t vmstate_size(void *opaque, const VMStateField *field,
++                            Error **errp)
+ {
+-    int size;
++    int32_t size;
+ 
+     if (field->flags & VMS_VBUFFER) {
++        /* For both int32_t/uint32_t we only allow 2GB limit for VBUFFER */
+         size = *(int32_t *)(opaque + field->size_offset);
++
++        /* Check this explicitly for untrusted length input first */
++        if (size < 0) {
++            goto overflow;
++        }
++
+         if (field->flags & VMS_MULTIPLY) {
+-            size *= field->size;
++            if (smul32_overflow(field->size, size, &size)) {
++                goto overflow;
++            }
+         }
+     } else if (field->flags & VMS_ARRAY_OF_POINTER) {
+         /*
+@@ -115,21 +133,45 @@ static int vmstate_size(void *opaque, const VMStateField *field)
+         size = sizeof(void *);
+     } else {
+         size = field->size;
++        assert(size >= 0);
+     }
+ 
+     return size;
++
++overflow:
++    error_setg(errp, "%s: VMState field '%s' overflow",
++               __func__, field->name);
++    return -EINVAL;
+ }
+ 
+-static void vmstate_handle_alloc(void *ptr, const VMStateField *field,
+-                                 void *opaque)
++static bool vmstate_handle_alloc(void *ptr, const VMStateField *field,
++                                 void *opaque, Error **errp)
+ {
+     if (field->flags & VMS_POINTER && field->flags & VMS_ALLOC) {
+-        gsize size = vmstate_size(opaque, field);
+-        size *= vmstate_n_elems(opaque, field);
++        int32_t size, n;
++
++        size = vmstate_size(opaque, field, errp);
++        if (size < 0) {
++            return false;
++        }
++
++        n = vmstate_n_elems(opaque, field, errp);
++        if (n < 0) {
++            return false;
++        }
++
++        if (smul32_overflow(size, n, &size)) {
++            error_setg(errp, "%s: VMState field '%s' multiply overflow",
++                       __func__, field->name);
++            return false;
++        }
++
+         if (size) {
+             *(void **)ptr = g_malloc(size);
+         }
+     }
++
++    return true;
+ }
+ 
+ static bool vmstate_ptr_marker_load(QEMUFile *f, bool *load_field,
+@@ -335,10 +377,22 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
+ 
+         if (exists) {
+             void *first_elem = opaque + field->offset;
+-            int i, n_elems = vmstate_n_elems(opaque, field);
+-            int size = vmstate_size(opaque, field);
++            int i, n_elems = vmstate_n_elems(opaque, field, errp);
++            int size;
++
++            if (n_elems < 0) {
++                return false;
++            }
++
++            size = vmstate_size(opaque, field, errp);
++            if (size < 0) {
++                return false;
++            }
++
++            if (!vmstate_handle_alloc(first_elem, field, opaque, errp)) {
++                return false;
++            }
+ 
+-            vmstate_handle_alloc(first_elem, field, opaque);
+             if (field->flags & VMS_POINTER) {
+                 first_elem = *(void **)first_elem;
+                 assert(first_elem || !n_elems || !size);
+@@ -650,8 +704,7 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+     while (field->name) {
+         if (vmstate_field_exists(vmsd, field, opaque, version_id)) {
+             void *first_elem = opaque + field->offset;
+-            int i, n_elems = vmstate_n_elems(opaque, field);
+-            int size = vmstate_size(opaque, field);
++            int i, n_elems = vmstate_n_elems(opaque, field, errp);
+             JSONWriter *vmdesc_loop = vmdesc;
+             bool is_prev_null = false;
+             /*
+@@ -660,6 +713,16 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+              */
+             bool use_dynamic_array =
+                 field->flags & VMS_ARRAY_OF_POINTER_AUTO_ALLOC;
++            int32_t size;
++
++            if (n_elems < 0) {
++                return false;
++            }
++
++            size = vmstate_size(opaque, field, errp);
++            if (size < 0) {
++                return false;
++            }
+ 
+             trace_vmstate_save_state_loop(vmsd->name, field->name, n_elems);
+             if (field->flags & VMS_POINTER) {
+-- 
+2.54.0
+
 
