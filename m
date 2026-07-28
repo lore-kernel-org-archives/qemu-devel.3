@@ -4,94 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB406C531F9
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 16:19:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02781C54F4D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 16:22:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wokWe-0007qb-FK; Tue, 28 Jul 2026 12:19:28 -0400
+	id 1wokYz-00016N-8L; Tue, 28 Jul 2026 12:21:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wokWc-0007kg-MV; Tue, 28 Jul 2026 12:19:26 -0400
-Received: from fout-a8-smtp.messagingengine.com ([103.168.172.151])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wokWa-0001kd-GA; Tue, 28 Jul 2026 12:19:26 -0400
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
- by mailfout.phl.internal (Postfix) with ESMTP id B19ACEC0387;
- Tue, 28 Jul 2026 12:19:22 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-05.internal (MEProxy); Tue, 28 Jul 2026 12:19:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1785255562; x=
- 1785341962; bh=iI2lOoxlTFaZosu2XQziaVDKsmV7HEO8B4kvXMSadss=; b=a
- nsoPAkZSfepEMmuNgcHbXOESVc+pYGFxp5PAOw7XC8T51DuIuhUArSxzoZlIwc3F
- LLVnNsdrRWM8Sbq+Le9RSp8myeR3qDFn9oC+QFEWrtaVDtqvpb4COWKByPRfIEJh
- zuBBp30dlWIyw5Mokd5c5pBqz6sMX5mESTRBQjcD6bKxtPsmBCF4bWhnf2TVzret
- y4MOiZi82xTxUOZfDjoIvy6Un89+Kwu1TtdqzXAtS9+k9H6dV4kVct/L3iwDsvMk
- a9odDO+mtH0jvuNKVeH3rL1I3jHUjPF123fM5pjBZ7y4qnQDIdGiop8SBrEVGs2f
- nLzy/iB1nA5DmlF+jTy0w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
- 1785255562; x=1785341962; bh=iI2lOoxlTFaZosu2XQziaVDKsmV7HEO8B4k
- vXMSadss=; b=L7PV5GcneYa4a9j+2UWsg0dJLZrX8hy6lgMotBW6dfIx7Hpe8VB
- rDhkzKfru+Ybqaj27Gkra5MHnoSS1pcgWTj1ZZbDhw59pbTNfFxDk6OM4nvE+UMa
- cCGLy7clvcVTNfzOpLBDDf6MZvLDc0ENcFmWlQI1o1OUSkl9v2kjJreLlO9dmQmU
- duwafxa2akkvktPcTUTZrxPh5WCJIFsovxKxuaHc89ROXLqzboBZAMRv4XuIz8qu
- HnwgySpCpOjQqeWVJokmRY7NDz+s7d8U/tQp0i2Vir0c/XX1FrTftT7nZF1yEWih
- 84BZqS19fMd47LDqlUGljD8qUKoFPlNlHdQ==
-X-ME-Sender: <xms:idZoajSpUr2Px7PpGOVWENOhHi5AIeb0Swaq0-wkGCmIHUB8fj839g>
- <xme:idZoanWj2iY5LNQyor2A1EQXGzCrYrwpIFFgBGdYkpHBU2hWVsMqixoKCAQQr5lVh
- Ij4wnSt2-OZ8dJoAn2smXF2pIeVrNSy8XwLyzMNElaD7GT9FZ0-SIg>
-X-ME-Received: <xmr:idZoaseL7Kbzch3H9NBjsgiKyDEkkM53CSuOHCStfRt1Ie9K7P2jhCnoSpj3yxkL4nr6I4wqVSMaw4hj-BrBXiLExW2fMJs>
-X-ME-Proxy-Cause: dmFkZTEtcQaa0JWIoN8qNXKf0FPQK54ujQ5B/M0yw+Gnmy9N96Dq49rWEP4TC8Ek1FH4ld
- ayFbHTpuUx2UVR5LjMA79/KRi3zfwj/m9GEkCxhaJlwflbyA4bMiDgWLBDaj5CCD/guMqq
- uOAD7U+KeZFJg8k4392H6qWQd6xExi9JROESt332PvtyCrAK5npWdmUncSFxDOioUAiFR3
- WFLuLYPHPCfqfxqq5hivGmh1QrMATOh1AIrk16gT7UNTFkAuij50nmjuFjy5mtKjaEAB+v
- 5m3ky7qtBQjf7rEgsj5BJLbe54qXP9Y4reDv2qWYcKJzieOxTOdYV58J2XTQlFwh3yZPGO
- MdNKen+dd7d5F6rwUKROA5iSfbyzkhQxU6gmYo+83ArWWbhzPA0r58soTZJtkqFP89xtQL
- 5adK6UWcd66Cb4TJOtilsdgsB2xHDLbHccSnaZLSADS7tgf3H/zVrJ/GQ4qSKT87Hw2rGx
- eJBS2O2Ow3YUwTnJxOpkC/+FeuN4+FT50pQL1odwXsm8dFIwUomFoiW8Kg1TUiYYvnADuk
- cJ90w7F1Bg653IW+C1jjowSTZmI/i7KvYI0vCGo5g8utiQWQRocTiPN5OJqx5m7ORsscem
- dhr6m2EaCzADkhHBtYKxrFoKJp5FBnMsEhZuWaraUTI7ebV7eBcC1Yy2X6PA
-X-ME-Proxy: <xmx:idZoajIDTRNbCzGm_Bb4SMUuBCI98dgeNRiXr-QIvnxlX1nwtZsZlg>
- <xmx:idZoahx4QTggT9wgO622TBEMxlsw0uzLuYt_R1PG-XhRiZD2s6FmuQ>
- <xmx:idZoahsCO9l8QwEE8pZGX0xYsZd2rFuktfdrEnuwZcog8fe-4f8-NQ>
- <xmx:idZoasAj76UCb899FeSUIG7k5p5rlkb6K1QeeZnwGSGhEqwFZHpfvA>
- <xmx:itZoarQZE5t14hKRQAIaZXeucHMtHQCaJ1mXTeopd00KUvQwVKVgoQO5>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Jul 2026 12:19:20 -0400 (EDT)
-Date: Tue, 28 Jul 2026 18:19:18 +0200
-From: Klaus Jensen <its@irrelevant.dk>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Keith Busch <kbusch@kernel.org>,
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org,
- Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v2] hw/nvme: fix unintentional integer overflow in shift
-Message-ID: <amjWhJLsmk85RrOZ@AALNPWKJENSEN.aal.scsc.local>
-References: <20260728-fix-shift-v2-1-6c2355edcfbc@samsung.com>
- <ef1474c7-8461-4c31-aa56-7f79ee9ab280@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wokYt-000145-Rk
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 12:21:47 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wokYr-0002bi-04
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 12:21:46 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-6685001353fso3616907d50.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 09:21:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785255704; cv=none;
+ d=google.com; s=arc-20260327;
+ b=ddE55adrCfHw/ePeio0seLZwwVISTK8soju5RjwKlV3+FpR6GOxZ5XhXDVnAk6a6wf
+ eu156pYLYVEPMD0b2+ETL2xVXhPSHy+KKCichbxsW0XbCKJrgXCJgHBiIg99a9+KUXQq
+ +axRIYz73tJKwWHRBtLuFm6lV8d7UoRo8QdtrwgpkH8x/Qu+MS3CE/1t7glXpTidKXfF
+ eQ0UFSEKIqSL87Bb/etTy4nrZeETrjL7f8lN3XUrpE0DCF2xTs63vAeEQyMn3hNDZJlF
+ dLyUg9CTh46j55LITkfTFn0YRdtqUZ1r93p+rERl89eSdhYsNnqLSlmmsGEDRXSVxMLj
+ rZhw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=Aqd1xv0JpXnuqL6Y1foBBz5WTXkBaepovOrceKkx33s=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=i4ybiVilVqfEYuHJOurgYtL3B0Z6YyBFE3da1cVSdK6T3aA1943ueeJ6S6JXq7pJI8
+ cDHkAJ2QC0kkTi0xwSoCiGmRF4mTcXJ60eNhFwq3PL4eqYGvCVnR+iyTOt5VHa4rdssC
+ eVsxA38bEVJBY4zZEu1PNeJRyMNLfZ8aGkDP6JPNNkLQxwf2bbsWMkifN/+zeYe1PmUL
+ TFaBdtyE4zrUwjgWllq3SlDrg9OTTuWWKUccQcVXYBR9vijFkLnvo1ygeDsxFF2BRY5f
+ R9FU8anRiw93ahXUitA+QjIqvXSQePn3Fp9dR5+DjKlN0dSByDDGuPE5nVW15cxZ+waq
+ yBxg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1785255704; x=1785860504; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=Aqd1xv0JpXnuqL6Y1foBBz5WTXkBaepovOrceKkx33s=;
+ b=qN3p2BQGUArl4TBkdIu6SYWwsB3fgGimExJO5nFKbfnUl3okMQKc8RW7l0tKLIUh0S
+ 6Ad29kBqB5ugnQPHuVk68kPMhoDvagsuLFwnaw3wlDxH3CGeN161PJZuaucYk4NRAQ4Z
+ ebyovxjdNmmca6k5ey2abaV6Xs39B2FYulIq5NKQMY+hqxpypnupGIx502km4O0fs0mm
+ MjlxV1XGNXE8G/uVDO/2mcOn/f2zu9G318YEHY9fyRrQm50gl3mz7vXcfuDoZSEYk+zR
+ BH/WpmxzFAyoxQqkFW0W7vdcV5QcfJ8Wiq4VifZpUpKRDvYuJZK9W+xylygL9Glr/7Kv
+ X9RQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785255704; x=1785860504;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=Aqd1xv0JpXnuqL6Y1foBBz5WTXkBaepovOrceKkx33s=;
+ b=TuEZQR5P4j3ELJ1X6tbRSggeMLWCQUJpco2FuWDNN7G6EUJHAa0WTgXt2qvmy1iJpk
+ r7PTkrHyawnZ4F9ejPBDzyv+AVGeH2QIyeo/9Rho+cNWn/AK6g1jiAuKS6CtLe3HZO2N
+ 5aKCj4uQm02APlMPIfO3W97K+JMqa9uXCSLHDi1aARXnf0plQ5MC5bflC6Dn+NEntDNc
+ h8+/ev/ReTJG+K742i1L2PqlSOygpwnMa8nOmxPYBm10KN+1Gt8UUqlqetwxqu6j7+dt
+ cHNs5Z8aeNTbbyMTYAP/0deM2a5nQ4g18aatMFPLuIECbqJDFkxvSe3hOF6O/SMfdBPD
+ uMew==
+X-Gm-Message-State: AOJu0YyuUJ4PVujYIug9mXxZ67bJb7xCvI5HtNM60PMnjQXnydKnZCjW
+ htDoBhLf9ftiT3vU8Qd8hiylRk4PbEbv2yaBacJ0CLHFB63d/oSO9al1m4TWf3v13J3mNjhqUA2
+ mZsXTiREp6YI4QbXZOwXthsd7DSmc9JSHOSrQkwYo7Q==
+X-Gm-Gg: AR+sD13Ye4foVi9qUguPzTKg2V5GYd129aX5+oHy/kqr47ERI+L20nM9N4yBlCTAQjl
+ 9tHaRGb0cREY/CMYEj8t7HDYhe4igxM2oXu8kZSf6FvRzyN0hi408tXuxJazpzELglIiNjijHGd
+ L1ae8YFsVumZhLpqRXAgZ6gBgo2crWNX0x6X8bsjRHkFUNOSMvjJp6GtIC9Tb0JOj94L9+jyJlY
+ Y6pTvvLq9A0vqzAiR0fp3r/WbuQgIXMHp3ptCabHz2Komskma0XK5cVGZhAgST0AOiVghwXfZz/
+ pLF5a5OSyf6Bd8sm8QvvrgZ1j98mumQkQM/dvP9rWotffEcpy9cSx0Qe
+X-Received: by 2002:a05:690e:1348:b0:667:89c0:71b1 with SMTP id
+ 956f58d0204a3-6690d157f04mr626466d50.31.1785255703765; Tue, 28 Jul 2026
+ 09:21:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="OjoMGAxBjjcenz9a"
-Content-Disposition: inline
-In-Reply-To: <ef1474c7-8461-4c31-aa56-7f79ee9ab280@oss.qualcomm.com>
-Received-SPF: pass client-ip=103.168.172.151; envelope-from=its@irrelevant.dk;
- helo=fout-a8-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260721184656.530230-1-richard.henderson@linaro.org>
+ <20260721184656.530230-18-richard.henderson@linaro.org>
+In-Reply-To: <20260721184656.530230-18-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 28 Jul 2026 17:21:32 +0100
+X-Gm-Features: AUfX_mz3qjdLeaP64rgE-JM-WVOvdXjDaJ9OsQz-YmYAJJFs0eMEyCKvhlruclM
+Message-ID: <CAFEAcA_ZWK5BDPu2bUp2adoZXDcXa4mhh0qJGD2Gxikf0786cA@mail.gmail.com>
+Subject: Re: [PATCH 17/20] target/arm: Implement AESEMC
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,56 +114,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---OjoMGAxBjjcenz9a
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Tue, 21 Jul 2026 at 19:52, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-On Jul 28 18:15, Philippe Mathieu-Daud=C3=A9 wrote:
-> On 28/7/26 11:42, Klaus Jensen wrote:
-> > From: Klaus Jensen <k.jensen@samsung.com>
-> >=20
-> > Fix potentially overflowing shift operation.
-> >=20
-> > Cc: qemu-stable@nongnu.org
-> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> > Suggested-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> > Resolves: Coverity CID 1663674
-> > Fixes: ec917cd49918 ("hw/nvme: fix FDP set FDP events")
-> > Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-> > ---
-> > Changes in v2:
-> > - use deposit64
-> > - Link to v1: https://lore.kernel.org/qemu-devel/20260728-fix-shift-v1-=
-1-bdb98c205233@samsung.com
-> > ---
-> >   hw/nvme/ctrl.c | 3 ++-
-> >   1 file changed, 2 insertions(+), 1 deletion(-)
->=20
-> Please include "qemu/bitops.h" when applying (it is indirectly
-> included but we rather explicit includes otherwise refactoring
-> unrelated headers might break here), otherwise:
->=20
 
-Gotcha.
+> +void HELPER(crypto_aesemc)(void *vd, void *vn, void *vm, uint32_t desc)
+> +{
+> +    intptr_t opr_sz = simd_oprsz(desc);
+> +    intptr_t idx = simd_data(desc);
+> +    void *vm_idx = vm + idx * 16;
+> +    intptr_t s = opr_sz - 16;
+> +
+> +    do {
+> +        intptr_t base = ROUND_DOWN(s, 4 * 16);
+> +        AESState rk = *(AESState *)(vm_idx + base);
+> +        do {
+> +            AESState *ad = (AESState *)(vd + s);
+> +            AESState *st = (AESState *)(vn + s);
+> +            AESState t;
+> +
+> +            /* Like above: Arm AK comes first; api AK comes last */
+> +            if (HOST_BIG_ENDIAN) {
+> +                t.d[0] = st->d[1] ^ rk.d[1];
+> +                t.d[1] = st->d[0] ^ rk.d[0];
+> +                aesenc_SB_SR_MC_AK(&t, &t, &aes_zero, false);
+> +                ad->d[0] = t.d[1];
+> +                ad->d[1] = t.d[0];
+> +            } else {
+> +                t.v = st->v ^ rk.v;
+> +                aesenc_SB_SR_MC_AK(ad, &t, &aes_zero, false);
 
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
->=20
+I did wonder why the Arm ARM describes this as "AddRoundKey(), ShiftRows(),
+SubBytes(), and MixColumns()" whereas our AES functions do SB, SR, MC, AK,
+but the answer seems to be that SB and SR can be done in either order
+and you still get the same answer. (And the ordering of AK is as per the
+comments here).
 
---OjoMGAxBjjcenz9a
-Content-Type: application/pgp-signature; name=signature.asc
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmpo1oQACgkQTeGvMW1P
-DemilggAgpxDlIMEof7nunn3L+AAdqb/3LBO8EL9Pzo0yNF7fO8NOnKpsB2BSTDM
-MY41aAhtDRQl0Ra6hRA5qrml+3cfA+crYA+Bazhr1XWnV24P43xbKKJmFc4898sF
-IDovtDGii8w6WUFzaJ+Hm8pfHF/qPsPCcQW6GiHpEsjKEDZ7VXT65wAw7oJhCF50
-f8Wp9r6JSL9xMHD9LYvkWxRxI2tpSXEswwrWFWxDgjVcWV2mIwOVSFdFQgFkKyXR
-4bR+nfAz1McFEIJHEEhr0kCFaNUw55X9f2YWgOZBEpBWdz/rKLJeKwTXlYlKKyiI
-PuNZRmtE+vBTnEHbu6KxXYJAfLNqdg==
-=yUZL
------END PGP SIGNATURE-----
-
---OjoMGAxBjjcenz9a--
+thanks
+-- PMM
 
