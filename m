@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD011C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 19:31:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6867CC54F56
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 19:31:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wonS7-0003D0-5V; Tue, 28 Jul 2026 15:26:59 -0400
+	id 1wonSx-0003dw-UO; Tue, 28 Jul 2026 15:27:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1wonS4-0003Ae-FU
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:26:56 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1wonSJ-0003SX-Vh
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:27:12 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1wonS2-0001Si-Of
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:26:56 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-38e3efab7e0so210545a91.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 12:26:54 -0700 (PDT)
+ id 1wonSI-0001ZX-HT
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:27:11 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-38dc69c74b8so246648a91.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 12:27:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785266813; x=1785871613; darn=nongnu.org;
+ d=linaro.org; s=google; t=1785266829; x=1785871629; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=0POncQiCikAc5guGwIPh9olnmP/V6mz621ilQVpgEaE=;
- b=Voa+mYUgkciLtw/hje8JRyZ+48z/bbRmGUuqJEGr22YxYXIG3U+ddcERfHPjbFRrYQ
- j0xTZLMF7eRKHZ1Albwe1lGRekiBDVGgC6bAb1YJOsGXhWudxJm+hi/m+qJGBBOdk+7X
- Cy+z//so7YtmkrW/VBYj6TJrQj5JFc5r+394oMhgsDQOLN/tD6QhfsuzHo/rBACkb901
- NTezi+hKz63fgTGDvdtLFETM8me9KkHBG/4W9outLjxt5HBCULswqILYDhv5jeyCPBmh
- SoLhCJNNemt1L+zzIU78ZwlbU33Cj712kwant93o05Q9U4BCJw/4Lp0plE0tS3RTRSsY
- 7C3w==
+ bh=O97834IMZHMJj8CNpJQMqMEGxl2bcDXLGwhFx5nEj0E=;
+ b=JGvp3EC9S3QKc2++uBAqH4Q5I0O+DaoAUSg4jSpE8loaJH6Nf9sKjLNRHK6zhbnkHD
+ eCFEAK0snC/ZtSIvQrYUw4Y/X74nBXKkaeugCfMyHKTMPBTb3TBLj/8Iv5oBcydeHE7j
+ NIIOFEX9+PAdZEfqPzHjcwbDGJ6fm6LAxDzr9F53mPrXLZfz0QBfqLgqphoSTfEXl6Xl
+ xptfsRrNBaxnsgnfgclph0vjgZjIDESeOkFaGZv/U1+wpvUrOjnFJtqNz0jCk+iWMoEf
+ uHD5Dd83F5H+ImOwQlBkrhGOqbMDhW2hXUVpQIhBHV4os9xNX1zynudAy78OymxweBhP
+ zBfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785266813; x=1785871613;
+ d=1e100.net; s=20251104; t=1785266829; x=1785871629;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=0POncQiCikAc5guGwIPh9olnmP/V6mz621ilQVpgEaE=;
- b=STgaPIKFYge14AUCazYS/Ek66JUryimzFqG+zOdB1Lg6jIrkM1G+HDORjPQ81K1E02
- P2ZXdvBjBdOA6mtu/B+quJkqlTptKmip/SKdRxTwJPR7T8gga7u0kR7XnGEaytGDRUop
- pyRsaUZLpuRYqjX5HiiNieW2d8B02wjAlaFLl3ZiE8k+/oqbuddVeDv1kHu5xJMzBkAz
- tmkkdzUZ9fvMEA8PnpahyILRHzu2RCUZ4C1zu0EpVPAQp4fPXAZ/HRqJlvMFr3XpKMe6
- DMGsq7OlqRbzMzOLdZ5BA0UAzxGRBaEOGLR7Xjp5rxCmPEb1QhoFFiWTo11qqOD3uyNc
- Y3aA==
-X-Gm-Message-State: AOJu0Yy2+z6w++e06B1BYCnxuPB7atVGOSbu3x/7yqbAkTFKnBvH1u9h
- oGYhWczQI/B2LtXCRs6OrKzMe5gXgQVEoJvR1GKm/i5Rwfhb0A8dEOKDy7QZ2F7z0wU=
-X-Gm-Gg: AR+sD13a7uTnsCqWqHPVLywlhWZ1rmf97Dw6OZrPm6H0dG7lmeEE5pXtqO0N+2Tehca
- TYN+Q0ZF8HVzKkTACRlnJiyTm1RvtcCvYZRWuhugDPtP+Gh4iEBPKcjlICCqtSuxW34DvYrpkOq
- c2yyo3N3PthDHnkbmt/SLIS5EkE+G+JjGInd2IwxsqTUB5SmGA0/rabuTM5m+MGCU1vM8S3Cot5
- T4594fuUKGOOHRGQ4ueQZdU6mwBshH/2sD5UGfdjGXlucFfZ9DYMm6dzHs1mKnR2jGDhiZUM3XM
- bj4qsVQuBVWvDbwiD/ng9IbTb0xz93Nat4dt4Qk76i47z8VcAv3Dc9lY4NrIIY57vahktfdMry1
- e7zJlLPUqHa9BPz/mkQwgEH1nI0L+n7GOmbApWrkAWojf5SuvoLindcoTYbjiVLKXUVIbIw/H3v
- AVxmxlH84O3O8UdZcbCcFc0v/Zbl503ayB9WGZrW4=
-X-Received: by 2002:a17:90b:1b05:b0:384:927f:3db9 with SMTP id
- 98e67ed59e1d1-38f6a2069fbmr3543414a91.1.1785266813372; 
- Tue, 28 Jul 2026 12:26:53 -0700 (PDT)
+ bh=O97834IMZHMJj8CNpJQMqMEGxl2bcDXLGwhFx5nEj0E=;
+ b=Hq3jD4f/jmb7urS0deKBW3k5qKNQV6UTfFtrrES3PYLdI0LyoAUGf7pxrzcmlOrbNL
+ ZeLv56B8llFAqoTQ1qwIKeRRr8ykfM/JsS8HnzqlS6pwS74fOvgeIqTYe7k80PmUpAeE
+ eZCL2ILD6JaSUu7SgC520sd+bsHjblaWWBaZcacZo1wj0j5m6rDjyhoNGf7B29wfppQh
+ 6wtffXBVgDjUONXWX4N5Di1zpKxhfEcIFmbBXnf8s49cFN0RmwWDecPuVn8RJsJzRujU
+ 2b1AWAlMSGLS0/WZ9f7P4bK5bhNycLw/rz198nC/HMqZijdaFpi96hyNXmPStt+v0sBB
+ dQhw==
+X-Gm-Message-State: AOJu0Yz2uXDYsk0qqucg4y22AzvluOZPoMwiCvzQSOdVFvciAhVWTUUn
+ J2TzIDonyeq2KiF4aBbW55laZg7vUs+qPUJ5I0YOtWWpqGlve9htMSStn2e09/98cZE=
+X-Gm-Gg: AR+sD13vHWRtxJGLI50pThhPquYjPNGrzCyz+itiFH4Y52Y7Pp+0F+32vLrMaltc8qc
+ Ei5Ztqw+0F3V/9OWd6zQ21Ia4yyYwAVIIl85oIghW7YoKfweJ0juAAj3Tmz2oEJESCg+x7wAC9W
+ y5impy0iaieGUqn3S0gp/sg2Yxa1+sFYRQ+5OV4y0mQQ7nruAIzZuzdsS8KlUD8ojnzm+1GnW7E
+ znSDkTjNf82CLidvAHJZhnuqxNW6RzIZdisGleisNjeNWsuiXc2/9c4AP764jPENDQHly257Ui7
+ aP5ugx+0KYYmYFSGsEBVBXJ2wan5eu8a9rL26PmZbhvADa/kaDP1i9hT66aYpQZsoMTpZ8rwJdg
+ TJ0yBiFc5nP/OjhVLUEBWuVGINH8AbxOFa9uci8BBy8ROUV4tgCNO2XOwZPWMVuVaC4nfoIgwhk
+ L8RpG5EBYa3qZvoLxF6L4lGcT20aUs
+X-Received: by 2002:a17:90b:4483:b0:38e:584f:2515 with SMTP id
+ 98e67ed59e1d1-38f6a465c40mr3652686a91.37.1785266829178; 
+ Tue, 28 Jul 2026 12:27:09 -0700 (PDT)
 Received: from p14s.cg.shawcable.net
  ([2604:3d09:148c:c800:b9d1:87c9:a085:86c9])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38f7f1353fdsm372650a91.8.2026.07.28.12.26.51
+ 98e67ed59e1d1-38f7f1353fdsm372650a91.8.2026.07.28.12.27.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jul 2026 12:26:52 -0700 (PDT)
+ Tue, 28 Jul 2026 12:27:08 -0700 (PDT)
 From: Mathieu Poirier <mathieu.poirier@linaro.org>
 To: berrange@redhat.com, kchamart@redhat.com,
  pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
@@ -73,16 +73,16 @@ To: berrange@redhat.com, kchamart@redhat.com,
 Cc: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org,
 	kvm@vger.kernel.org
-Subject: [RFC v2 09/24] hw/core/loader: Add a ROM loader notifier
-Date: Tue, 28 Jul 2026 13:26:15 -0600
-Message-ID: <20260728192630.240375-10-mathieu.poirier@linaro.org>
+Subject: [RFC v2 16/24] hw/arm/virt: Embed Realm VM type with IPA address space
+Date: Tue, 28 Jul 2026 13:26:22 -0600
+Message-ID: <20260728192630.240375-17-mathieu.poirier@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260728192630.240375-1-mathieu.poirier@linaro.org>
 References: <20260728192630.240375-1-mathieu.poirier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=mathieu.poirier@linaro.org; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=mathieu.poirier@linaro.org; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,95 +107,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-Add a function to register a notifier that is invoked when ROMs get
-loaded into guest memory.
-
-It will be used by Arm confidential guest support, in order to register
-all blobs loaded into memory with KVM, so that their content is moved
-into Realm state and measured into the initial VM state.
+Set the Ream VM bit in the IPA address space size when needed.
 
 Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 ---
- hw/core/loader.c         | 15 +++++++++++++++
- include/hw/core/loader.h | 17 +++++++++++++++++
- 2 files changed, 32 insertions(+)
+ hw/arm/virt.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/hw/core/loader.c b/hw/core/loader.c
-index 5cbfba0a86d2..b3d769bec5cb 100644
---- a/hw/core/loader.c
-+++ b/hw/core/loader.c
-@@ -74,6 +74,8 @@
- #endif
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 27bed9755320..9123f46fae4a 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -97,6 +97,8 @@
+ #include "qemu/guest-random.h"
+ #include "hw/watchdog/sbsa_gwdt.h"
  
- static int roms_loaded;
-+static NotifierList rom_loader_notifier =
-+    NOTIFIER_LIST_INITIALIZER(rom_loader_notifier);
++#include <linux/kvm.h>
++
+ static GlobalProperty arm_virt_compat_defaults[] = {
+     { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
+ };
+@@ -4053,9 +4055,12 @@ static int virt_kvm_type(MachineState *ms, const char *type_str)
+     VirtMachineState *vms = VIRT_MACHINE(ms);
+     int max_vm_pa_size, requested_pa_size;
+     bool fixed_ipa;
++    int vm_type;
  
- /* return the size or -1 if error */
- int64_t get_image_size(const char *filename, Error **errp)
-@@ -1201,6 +1203,11 @@ MemoryRegion *rom_add_blob(const char *name, const void *blob, size_t len,
-     return mr;
+     max_vm_pa_size = kvm_arm_get_max_vm_ipa_size(ms, &fixed_ipa);
+ 
++    vm_type = (ms->cgs ? KVM_VM_TYPE_ARM_REALM : KVM_VM_TYPE_ARM_NORMAL);
++
+     /* we freeze the memory map to compute the highest gpa */
+     virt_set_memmap(vms, max_vm_pa_size);
+ 
+@@ -4080,7 +4085,11 @@ static int virt_kvm_type(MachineState *ms, const char *type_str)
+      * the implicit legacy 40b IPA setting, in which case the kvm_type
+      * must be 0.
+      */
+-    return fixed_ipa ? 0 : requested_pa_size;
++    if (fixed_ipa) {
++        return 0;
++    }
++
++    return requested_pa_size | vm_type;
  }
  
-+void rom_add_load_notifier(Notifier *notifier)
-+{
-+    notifier_list_add(&rom_loader_notifier, notifier);
-+}
-+
- /* This function is specific for elf program because we don't need to allocate
-  * all the rom. We just allocate the first part and the rest is just zeros. This
-  * is why romsize and datasize are different. Also, this function takes its own
-@@ -1242,6 +1249,7 @@ ssize_t rom_add_option(const char *file, int32_t bootindex)
- static void rom_reset(void *unused)
- {
-     Rom *rom;
-+    RomLoaderNotifyData notify;
- 
-     QTAILQ_FOREACH(rom, &roms, next) {
-         if (rom->fw_file) {
-@@ -1290,6 +1298,13 @@ static void rom_reset(void *unused)
-         address_space_flush_icache_range(rom->as, rom->addr, rom->datasize);
- 
-         trace_loader_write_rom(rom->name, rom->addr, rom->datasize, rom->isrom);
-+
-+        notify = (RomLoaderNotifyData) {
-+            .addr = rom->addr,
-+            .len = rom->datasize,
-+            .as = rom->as,
-+        };
-+        notifier_list_notify(&rom_loader_notifier, &notify);
-     }
- }
- 
-diff --git a/include/hw/core/loader.h b/include/hw/core/loader.h
-index d9431e8a8d12..94cf6ad2e26b 100644
---- a/include/hw/core/loader.h
-+++ b/include/hw/core/loader.h
-@@ -342,6 +342,23 @@ void *rom_ptr_for_as(AddressSpace *as, hwaddr addr, size_t size);
- ssize_t rom_add_vga(const char *file);
- ssize_t rom_add_option(const char *file, int32_t bootindex);
- 
-+typedef struct RomLoaderNotifyData {
-+    /* Address of the blob in guest memory */
-+    hwaddr addr;
-+    /* Length of the blob */
-+    size_t len;
-+    /* Address space of the blob */
-+    AddressSpace *as;
-+} RomLoaderNotifyData;
-+
-+/**
-+ * rom_add_load_notifier - Add a notifier for loaded images
-+ *
-+ * Add a notifier that will be invoked with a RomLoaderNotifyData structure for
-+ * each blob loaded into guest memory, after the blob is loaded.
-+ */
-+void rom_add_load_notifier(Notifier *notifier);
-+
- /* This is the usual maximum in uboot, so if a uImage overflows this, it would
-  * overflow on real hardware too. */
- #define UBOOT_MAX_DECOMPRESSED_BYTES (64 << 20)
+ static int virt_get_physical_address_range(MachineState *ms,
 -- 
 2.43.0
 
