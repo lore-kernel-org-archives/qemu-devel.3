@@ -4,83 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF517C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 19:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80F45C53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 20:00:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wonsu-0005Ht-Jx; Tue, 28 Jul 2026 15:54:41 -0400
+	id 1wonxq-0008CU-FI; Tue, 28 Jul 2026 15:59:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wonsl-0005FX-I7
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:54:33 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wonxn-00083p-8X
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:59:43 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wonsj-0007l2-Im
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:54:31 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wonxl-0000E3-18
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:59:42 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 1F5233E09;
- Tue, 28 Jul 2026 19:54:17 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id F104C7C49B;
+ Tue, 28 Jul 2026 19:59:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1785268461; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1785268775; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=t8spdf91S/Bg/lDyUcq7/NFQuyLSz3UPebvGfNPC4do=;
- b=dmdGSS1ja/797I4Yiv4CUybEj3gVkITeG3ZVKL6ZMO9targ5vQHbfIylf6he16fC3dMhCE
- gdvWSbhdSzlmFlg92g2yrHZ/yYEAZi5Els6AzoF7fjb3YBGKHGOikIiZw0bJY88TBtjhhU
- WVA85RYkbOTldW1Gm4Xtcex6nztMvSA=
+ bh=c9EL0CXmu7v5jOGHm9kC2Rt0uRXI5wCl402bNEwnByM=;
+ b=jsBQTvS2XEP+KPkDtbgm3lGmcFzMtHmDlzOvfB5GYIggB2FUQlDd/5P/xodVrou70TH3YF
+ /OeTgEzcjSkG0vTEOIRzkG3Y8nUScLzs4NqIV3yMhifA+CFptBfPfximUw/E1pfPFDKrrK
+ xCcSlFONngLeYmtMY3MXJ/Z2iNVebvY=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1785268461;
+ s=susede2_ed25519; t=1785268775;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=t8spdf91S/Bg/lDyUcq7/NFQuyLSz3UPebvGfNPC4do=;
- b=AjVhY74wAIhfJ9IR+9zUM1AZwjx0G9iBJ9sClZzmYQmDwpC+BmTVSebJorS0RNKynYTIQq
- PqzH8Zb00Rpr9AAg==
-Authentication-Results: smtp-out2.suse.de;
+ bh=c9EL0CXmu7v5jOGHm9kC2Rt0uRXI5wCl402bNEwnByM=;
+ b=THZIJXqSf7ftscJV5DPUcip+5Yr7GedopygKNkhJKUBnsLILKTsbrLEsqs5elnEskPKMLJ
+ 4aVGhaDsADhJsVCA==
+Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1785268457; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1785268770; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=t8spdf91S/Bg/lDyUcq7/NFQuyLSz3UPebvGfNPC4do=;
- b=tEI4vYILM9gbKj+MOsbghhih6SQ+pgzZUIUO/ktKWnA3CdBvnl+rShYAh0XXai/8q5jd/K
- an2JpHFX5+9xhL4CBTOqaxKRYhbmgFH5sYTTWsp65dxV2csJv6iGnMHCp58Hkw7t0Fmv6/
- k9xT3zQRsg8OyDn/040kxq/14SpCmww=
+ bh=c9EL0CXmu7v5jOGHm9kC2Rt0uRXI5wCl402bNEwnByM=;
+ b=O75W8UdXmcsx1sqg4ZV/VJlFY2iC17AJRSWJbFxqR9dBfNMdbpy5UwjYpdzU+5B5kAEmmH
+ BaGsbnUFlZ+C/2jKy9te0SETFNxa/qBFc7rnQVv7+DxAaYRKBsppaUKmTH6rZQj3khHUpn
+ qt+mRl6UeBJ1po0YmYDUZT5XWCdkBDc=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1785268457;
+ s=susede2_ed25519; t=1785268770;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=t8spdf91S/Bg/lDyUcq7/NFQuyLSz3UPebvGfNPC4do=;
- b=EQwesQxmF8MQJHNLwhaO3XD6EwLkkPstPOjAOrBgpM5vy2L4D5oQkoi41W/9UH0t03NJuV
- pxqbcpTYocUTUUAA==
+ bh=c9EL0CXmu7v5jOGHm9kC2Rt0uRXI5wCl402bNEwnByM=;
+ b=VjMNzVQUNw9ssnAdsCciCROwhHqiHP1lZDq4Rtdw3q8ECk54+IDoEkyPtxMHkvD+ZgX304
+ fwM+R4G6F/cB6VBg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AD7EF779B1;
- Tue, 28 Jul 2026 19:54:16 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8F814779B1;
+ Tue, 28 Jul 2026 19:59:30 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id oJvbHugIaWpzTAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 28 Jul 2026 19:54:16 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id RWIKGCIKaWpDUQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 28 Jul 2026 19:59:30 +0000
 From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, Juraj Marcin <jmarcin@redhat.com>, Tristan Madani
- <tristan@talencesecurity.com>
-Subject: Re: [PATCH 5/5] migration/ram: Check for RAMBlock size mismatch
- when parsing
-In-Reply-To: <20260728155247.1894355-6-peterx@redhat.com>
+To: Peter Xu <peterx@redhat.com>, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>, Feifan Qian
+ <bea1e@proton.me>
+Subject: Re: [PATCH 4/5] migration: Fix rare hang of
+ migration_channel_read_peek()
+In-Reply-To: <amjiLyOJF92okvik@x1.local>
 References: <20260728155247.1894355-1-peterx@redhat.com>
- <20260728155247.1894355-6-peterx@redhat.com>
-Date: Tue, 28 Jul 2026 16:54:14 -0300
-Message-ID: <87qzkmopp5.fsf@suse.de>
+ <20260728155247.1894355-5-peterx@redhat.com> <amjXxDH73ah-dUGE@redhat.com>
+ <amjiLyOJF92okvik@x1.local>
+Date: Tue, 28 Jul 2026 16:59:20 -0300
+Message-ID: <87o6fqopgn.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
  RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
@@ -91,16 +98,14 @@ X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
  FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url, talencesecurity.com:email,
- suse.de:email, suse.de:mid, imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,48 +124,136 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Peter Xu <peterx@redhat.com> writes:
 
-> Add an underflow check for the subtract of total RAMBlock size to make sure
-> it won't underflow.  It should not happen in production systems but only if
-> the migration stream was hijacked, which is not a real concern since
-> migration channel is trusted.  Still protect against it.
+> On Tue, Jul 28, 2026 at 05:24:36PM +0100, Daniel P. Berrang=C3=A9 wrote:
+>> On Tue, Jul 28, 2026 at 11:52:46AM -0400, Peter Xu wrote:
+>> > In an unlikely case, when a migration stream is attached to the destin=
+ation
+>> > QEMU and only send <4 bytes to the channel as magic, it's possible that
+>> > migration_channel_read_peek() may spin forever without yielding in the=
+ main
+>> > thread causing two unwanted consequences:
+>> >=20
+>> > - CPU will spin 100% waiting for the rest bytes until it reaches 4
+>> > - (more importantly..) Main thread is stuck during this process as the=
+ qio
+>> >   operation won't really yield the coroutine
+>> >=20
+>> > Fix it by consuming the bytes that arrived.
+>> >=20
+>> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3889
+>> > Cc: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>> > Reported-by: Feifan Qian <bea1e@proton.me>
+>> > Signed-off-by: Peter Xu <peterx@redhat.com>
+>> > ---
+>> >  migration/channel.c | 26 +++++++++++++++++++++++---
+>> >  1 file changed, 23 insertions(+), 3 deletions(-)
+>> >=20
+>> > diff --git a/migration/channel.c b/migration/channel.c
+>> > index 1e2935f926..28fe1d2906 100644
+>> > --- a/migration/channel.c
+>> > +++ b/migration/channel.c
+>> > @@ -294,11 +294,31 @@ int migration_channel_read_peek(QIOChannel *ioc,
+>> >              return -1;
+>> >          }
+>> >=20=20
+>> > -        if (len =3D=3D buflen) {
+>> > +        if (len =3D=3D iov.iov_len) {
+>> >              break;
+>> > -        }
+>> > +        } else if (len =3D=3D 0) {
+>> > +            qio_channel_wait_cond(ioc, G_IO_IN);
+>> > +        } else {
+>> > +            ssize_t received =3D len;
+>> >=20=20
+>> > -        qio_channel_wait_cond(ioc, G_IO_IN);
+>> > +            /*
+>> > +             * Partially arrived, read out to make qio_channel_wait_c=
+ond()
+>> > +             * won't return immediately, causing an unwanted spin on =
+this
+>> > +             * CPU.
+>> > +             */
+>> > +            iov.iov_len =3D len;
+>> > +            len =3D qio_channel_readv_full(ioc, &iov, 1, NULL, NULL, =
+0, errp);
+>>=20
+>> Sure this breaks the API behaviour that the caller is expecting to
+>> see.
+>>=20
+>> migration_channel_identify will call migration_channel_read_peek
+>> to match the magic bytes.
+>>=20
+>> But something later in the flow will actually try to read the magic
+>> bytes.  By consuming them in this migration_channel_read_peek
+>> method, surely we're breaking the code that wants to read the bytes
+>> later.
 >
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4013
-> Reported-by: Tristan Madani <tristan@talencesecurity.com>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  migration/ram.c | 11 +++++++++--
->  1 file changed, 9 insertions(+), 2 deletions(-)
+> Ah right, stupid me.  The best then is for partial read we apply a manual
+> wait.
 >
-> diff --git a/migration/ram.c b/migration/ram.c
-> index 8918b2f03b..85feff578c 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -4268,7 +4268,7 @@ static int parse_ramblocks(QEMUFile *f, ram_addr_t total_ram_bytes)
->      int ret = 0;
->  
->      /* Synchronize RAM block list */
-> -    while (!ret && total_ram_bytes) {
-> +    while (total_ram_bytes) {
->          RAMBlock *block;
->          char id[256];
->          ram_addr_t length;
-> @@ -4285,8 +4285,15 @@ static int parse_ramblocks(QEMUFile *f, ram_addr_t total_ram_bytes)
->              error_report("Unknown ramblock \"%s\", cannot accept "
->                           "migration", id);
->              ret = -EINVAL;
-> +            break;
-> +        }
-> +
-> +        if (usub64_overflow(total_ram_bytes, length, &total_ram_bytes)) {
-> +            error_report("%s: RAMBlock '%s' size underflow total RAM size",
-> +                         __func__, block->idstr);
-> +            ret = -EFAULT;
-> +            break;
->          }
-> -        total_ram_bytes -= length;
->      }
->  
->      return ret;
+> I can also revert 604bb1badc ("migration: Properly wait on G_IO_IN when
+> peeking messages"), looping with 1ms interval for data isn't too bad.  But
+> the best is we only do that for partial, so:
+>
+> diff --git a/migration/channel.c b/migration/channel.c
+> index 1e2935f926..88f89521f8 100644
+> --- a/migration/channel.c
+> +++ b/migration/channel.c
+> @@ -296,9 +296,19 @@ int migration_channel_read_peek(QIOChannel *ioc,
+>
+>          if (len =3D=3D buflen) {
+>              break;
+> +        } else if (len =3D=3D 0) {
+> +            qio_channel_wait_cond(ioc, G_IO_IN);
+> +        } else {
+> +            /*
+> +             * When partially ready, we can't use qio_channel_wait_cond()
+> +             * because it will return immediately.  Apply a manual wait.
+> +             */
+> +            if (qemu_in_coroutine()) {
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+There's no coroutine at this point, could replace this with an assert.
+
+> +                qemu_co_sleep_ns(QEMU_CLOCK_REALTIME, 1000000);
+> +            } else {
+> +                g_usleep(1000);
+> +            }
+>          }
+> -
+> -        qio_channel_wait_cond(ioc, G_IO_IN);
+>      }
+>
+>      return 0;
+>
+> Any preference?
+>
+> Thanks,
+>
+>>=20
+>> > +            /*
+>> > +             * QIO_CHANNEL_ERR_BLOCK also shouldn't happen, due to the
+>> > +             * prior peek just happened.  We should be pretty sure we=
+ will
+>> > +             * read what we peeked, or the channel was broken.
+>> > +             */
+>> > +            if (len !=3D received) {
+>> > +                return -1;
+>> > +            }
+>> > +            iov.iov_base +=3D received;
+>> > +            iov.iov_len =3D buflen - received;
+>> > +        }
+>> >      }
+>> >=20=20
+>> >      return 0;
+>> > --=20
+>> > 2.54.0
+>> >=20
+>>=20
+>> With regards,
+>> Daniel
+>> --=20
+>> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+>> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+>> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>>=20
 
