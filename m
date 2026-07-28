@@ -4,63 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC9D2C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 13:53:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD6C1C54F51
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 14:03:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woiF5-0007jA-SA; Tue, 28 Jul 2026 09:53:12 -0400
+	id 1woiNm-0002ia-FG; Tue, 28 Jul 2026 10:02:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1woiF3-0007if-JZ; Tue, 28 Jul 2026 09:53:09 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1woiNg-0002hk-GW
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:02:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1woiF0-0001F4-A4; Tue, 28 Jul 2026 09:53:09 -0400
-Received: from [192.168.10.145] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66SDqp8l070066
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 28 Jul 2026 22:52:51 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=nQHW/sr4AZIMKp0yFNZIgwtSy/2mIDNrqiKgqm/oifQ=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1785246771; v=1;
- b=JV5usYJ+cIS9xfS3Uopr7sJZgwcv3jmYmmKR1eDqQCMB6U9jBR8xpAPnS4x3UU07
- J8Le8smdus3mn6VFycUCEOa6mkG5dswIfPRkre1P7/PO09FG30JR1ktNsdBncOib
- Nb5ICY/nbg4X+7Muoy7dM9UktteNBAumBptiXpNNr0/KuBgSMQ44GjS45mLaRrHR
- UDdiXEjVuKPSBWhYeDyTGE9N++fk6lWnFQ8a4onja3HIVUhS9d8S+1OLAOvf551x
- vdMMZ/n1VtMgCp48ldlVOmzLf2TMExAuFjiF+AjXlWEoTMG+WQmIFLQvl/wQ9ybN
- VKxKedYY3+t9UUXupGnvrQ==
-Message-ID: <78b94211-72ee-481f-8809-ee786e3389c1@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 28 Jul 2026 22:52:51 +0900
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1woiNe-0002ZA-CR
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:02:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785247319;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rGC8K64Yob8r2JvUgCNx/wrbN79uNJ24+jQ74+JG3cU=;
+ b=dUUkgas1+C2IMYrf8SbrKwmBaYyteZB0DdW5rtnjbIQ0PBkCaYPLWZhBhP1BpZW3hznNtt
+ 8qO5ureQK4weGMwO+xEW0tq8z8qQD458vvGIjv2S7px24SJ6fwW6tl89DLvwnC7IeyUkCb
+ +B07ya6BYlj6iHVFmGfIf4jYnL/qTVY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-435-m5lm208sPei4GLoitcWCsg-1; Tue,
+ 28 Jul 2026 10:01:55 -0400
+X-MC-Unique: m5lm208sPei4GLoitcWCsg-1
+X-Mimecast-MFC-AGG-ID: m5lm208sPei4GLoitcWCsg_1785247313
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DE54118001EE; Tue, 28 Jul 2026 14:01:50 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8EC9B180044F; Tue, 28 Jul 2026 14:01:47 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 388B921E6920; Tue, 28 Jul 2026 16:01:45 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,  Lukas
+ Straub <lukasstraub2@web.de>,  Vladimir Sementsov-Ogievskiy
+ <vsementsov@yandex-team.ru>,  Zhao Liu <zhao1.liu@intel.com>,  Laurent
+ Vivier <laurent@vivier.eu>,  "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,  Alex
+ Williamson
+ <alex@shazbot.org>,  zhenwei pi <zhenwei.pi@linux.dev>,  Hanna Reitz
+ <hreitz@redhat.com>,  Ani Sinha <anisinha@redhat.com>,
+ qemu-block@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Peter Xu
+ <peterx@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,
+ linux-cxl@vger.kernel.org,  Jiri Pirko <jiri@resnulli.us>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Stefan Berger
+ <stefanb@linux.vnet.ibm.com>,  Fabiano Rosas <farosas@suse.de>,  Stefan
+ Hajnoczi <stefanha@redhat.com>,  Michael Tokarev <mjt@tls.msk.ru>,  Igor
+ Mammedov <imammedo@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,  Mauro Carvalho Chehab
+ <mchehab+huawei@kernel.org>,  linux-edac@vger.kernel.org,  =?utf-8?Q?Marc?=
+ =?utf-8?Q?-Andr=C3=A9?=
+ Lureau <marcandre.lureau@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Eric Blake <eblake@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?=
+ Le Goater <clg@redhat.com>,  Jason Wang <jasowangio@gmail.com>,
+ qemu-trivial@nongnu.org,  Jonathan Cameron <jic23@kernel.org>
+Subject: Re: [PATCH v2 44/44] qapi: convert trivial intro sections for
+ block-core.json
+In-Reply-To: <CAFn=p-axhB-ezhfD2F8EoFhWT0h92d6oWP6Li1-JdhiXUGbsdA@mail.gmail.com>
+ (John Snow's message of "Mon, 27 Jul 2026 13:20:09 -0400")
+References: <20260723044805.527643-1-jsnow@redhat.com>
+ <20260723044805.527643-45-jsnow@redhat.com>
+ <87y0f0aikr.fsf@pond.sub.org>
+ <CAFn=p-axhB-ezhfD2F8EoFhWT0h92d6oWP6Li1-JdhiXUGbsdA@mail.gmail.com>
+Date: Tue, 28 Jul 2026 16:01:45 +0200
+Message-ID: <87qzkntdpy.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: Re: [PATCH v7] target/arm: Always add pmu property for host and max
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org,
- devel@daynix.com
-References: <20260629-pmu-v7-1-939518c349be@rsg.ci.i.u-tokyo.ac.jp>
- <CAFEAcA-=u3ZgiAXRNWM1VCMv7FYG2YP=oirf40yGo--p0BSfbg@mail.gmail.com>
- <39e270ed-1667-4bbf-8732-913e8b1f87e8@rsg.ci.i.u-tokyo.ac.jp>
- <CAFEAcA-_mSr0e8yePxoxW2wS7xAHtTzd8S5MfLWwr_BPkAD+Rg@mail.gmail.com>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA-_mSr0e8yePxoxW2wS7xAHtTzd8S5MfLWwr_BPkAD+Rg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,87 +112,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/28 18:40, Peter Maydell wrote:
-> On Tue, 28 Jul 2026 at 10:33, Akihiko Odaki
-> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>
->> On 2026/07/28 1:10, Peter Maydell wrote:
->>> On Mon, 29 Jun 2026 at 09:10, Akihiko Odaki
->>> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>>>
->>>> kvm-steal-time and sve properties are added for KVM even if the
->>>> corresponding features are not available. Always add pmu property for
->>>> "host" and "max".
->>>>
->>>> Note that we still don't add the property for other CPUs that lack PMU.
->>>> This is because we do not know what a PMU version should be enabled
->>>> when the user sets the property to true while it is defined as an error
->>>> for the "host" or "max" CPU when the hardware accelerator is enabled and
->>>> the host doesn't have a PMU.
->>>>
->>>> This fixes qtest-aarch64/arm-cpu-features on the hosts that supports
->>>> KVM but doesn't support PMU emulation.
->>>
->>> No, we should not special case "host" and "max" like this.
->>> The "pmu" property exists only if the CPU has a PMU and it can
->>> be turned off. If The arm-cpu-features test assumes that the
->>> host CPU always has a PMU and so always has the property, then
->>> that's a bug in the test, not in the code handling the property.
->>
->> The test correctly avoids assuming that the host always has a PMU. It
->> expects that the run-time-derived "host" CPU has a stable "pmu"
->> property, with its value reporting whether PMU is available.
-> 
-> That is not a valid expectation currently, because that's not
-> how the property behaves (and is not how many of the Arm CPU
-> properties behave). If we (as has been proposed) refactor Arm CPU
-> properties so that they're class properties rather than object
-> properties then we will have a property that is present always.
-> I don't inherently object to doing that.
-> 
->> That is already how Arm handles SVE. Commit d25293068b03 ("target/arm:
->> Move kvm test out of cpu_arm_set_sve") added a false SVE property when
->> KVM lacks SVE. PAuth and kvm-steal-time use the same general model.
->> Other architectures do the similar; for example LoongArch KVM does
->> exactly this for "pmu". So we are avoiding special-casing the Arm pmu
->> property here.
->>
->> The comment in aarch64_add_sve_properties() gives the rationale
->> explicitly: "to allow -cpu max,sve=off to always be valid." sve=on still
->> fails in that case. Keeping the property stable prevents -cpu
->> host,pmu=off from becoming invalid on hosts where the PMU cannot be
->> enabled. This also matters outside the test: libvirt emits pmu=off when
->> the PMU is explicitly disabled. This design is intended to follow the
->> alternative you described previously [1].
->>
->> "host" and "max" are special-cased for a different reason. For fixed Arm
->> CPU models, the property is omitted because its semantics is not defined
->> when they don't have PMUs. "host" and "max" are different: "host" and
->> "max" enable whatever PMU available, and fail otherwise.
-> 
-> We should not special case "host" and "max". If we want an "always present"
-> property then its semantics should be:
->   - always exists for all CPUs
->   - if the CPU can't support a PMU then you can't set it to "on"
+John Snow <jsnow@redhat.com> writes:
 
-This patch follows the behavior of the sve property. Although sve is 
-registered with object_property_add_bool(), the presence of the property 
-is determined per class basis: the arm-cpu-host and arm-cpu-max classes 
-always expose it, while the other arm-cpu subclasses expose it only when 
-they support SVE.
+> On Fri, Jul 24, 2026 at 4:38=E2=80=AFAM Markus Armbruster <armbru@redhat.=
+com> wrote:
 
-As I quoted earlier, the SVE code explicitly documents why the property 
-should be always present for the host and max CPUs, and 
-qtest-aarch64/arm-cpu-features tests that along with the pmu property, 
-so I would prefer to maintain consistency here unless there is a reason 
-to do otherwise.
+[...]
 
-That said, the SVE code does not explain why the property must be 
-*absent* for fixed CPU models that lack the feature, so there is 
-certainly room to refine that design uniformly. Please note that the 
-current test case contains dead code asserting that the property is 
-absent on AArch32 CPUs when running KVM, which might need to be updated.
+>> I believe all the problematic first paragraphs consist of more than one
+>> sentence.  What about splitting "trivial" into "very trivial" (just one
+>> paragraph, no sentence-ending punctuation in the middle) and "hopefully
+>> trivial" (just one paragraph, remainder)?
+>
+> That's tricky to automate, and doing it by hand doesn't sound much fun
+> either... can we just power through one-by-one?
+>
+> Unless you have a script or a trick you believe will help, and then I
+> am happy to oblige.
 
-Regards,
-Akihiko Odaki
+By hand would clearly be a bad use of your time.
+
+I'll look into automating it.
+
 
