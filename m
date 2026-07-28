@@ -4,91 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C64CC54F4D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 07:44:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9640FC54F4C
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 07:46:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wocTr-0002Jx-5I; Tue, 28 Jul 2026 03:44:03 -0400
+	id 1wocVz-00038I-3I; Tue, 28 Jul 2026 03:46:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wocTn-0002JJ-Vt; Tue, 28 Jul 2026 03:44:00 -0400
-Received: from fhigh-a2-smtp.messagingengine.com ([103.168.172.153])
+ id 1wocVx-000386-TJ; Tue, 28 Jul 2026 03:46:13 -0400
+Received: from fout-a1-smtp.messagingengine.com ([103.168.172.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wocTl-0001Tl-Ou; Tue, 28 Jul 2026 03:43:59 -0400
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfhigh.phl.internal (Postfix) with ESMTP id D543A14000B6;
- Tue, 28 Jul 2026 03:43:54 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-04.internal (MEProxy); Tue, 28 Jul 2026 03:43:54 -0400
+ id 1wocVv-0001qp-EY; Tue, 28 Jul 2026 03:46:12 -0400
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+ by mailfout.phl.internal (Postfix) with ESMTP id 01C69EC0232;
+ Tue, 28 Jul 2026 03:46:10 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-05.internal (MEProxy); Tue, 28 Jul 2026 03:46:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-type:content-type:date:date:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1785224634; x=
- 1785311034; bh=dCRKJLN2RrCNP7efXZ7zhIxYqx2WtiCSMNhmvJ5IJ+M=; b=d
- WtCEIcFyv12yL+rZm0LnUCHlEqt/774IOnAifqakrLmaX1OXfANWrVwcXQ5Emipc
- 6tjMsqsquY6HGkeSJR7A/OBBm0RbJ8E55E8spjXmqa1zON94gRsMscMZZt3/zugR
- KeatRL+nM9aqUnmV37ogzTBshpsDnwyMO3W1IYK+mZhFaJy5UxpO8NuoOaBtpA4H
- Z79+CUfVbWY+IuBUVlnIbyIpL+pQeYX6V5hD+p0MSiMc5Nkj/7tZqXTW+Sd6gPIc
- zLSVT1pwFMqDgvPDvpGojwOJUatDCArXV6nV/oeQ8C+UK8gRUxy4vVLIAEMsKQHo
- g/jaa1jh4NoiPsSLVlnGw==
+ :reply-to:subject:subject:to:to; s=fm1; t=1785224769; x=
+ 1785311169; bh=eJH1NKI/QgFHKbgWCsPI3uuPR850SYB/lPJOS79BJhI=; b=S
+ LhxWyNewAB5eLSgLhOc94CU8hyAX1FU6YPjKumMByc814WlrEoqq2jBWZNFhIJyq
+ S6FXgiwp+CSTnGoYpF0ezebChyIkDRAH1s02T7EWmVkzDvf9rkwUqjMcs1dMnm3D
+ kg13DdZXCQj/IVTsxShUgo5Dg2aJwtu9xA7S0lANexyvo15I+XLHtkLaYveL+cau
+ ujrLnCtx1WOm0HObGaabXkkg6RU6mGvBVPTades2OBsAfdZ+CmQ5PMW/XMjsK7Vw
+ zUzyPOh7ZjfBYeVJvNikesSDU1GoFL9oxIB8YH6oSPSoLOY30fPisf+6zzGEM4ph
+ FlWdQ93CHxs3ZJzKbZtkw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-type:content-type:date:date
  :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
  :message-id:mime-version:references:reply-to:subject:subject:to
  :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
- 1785224634; x=1785311034; bh=dCRKJLN2RrCNP7efXZ7zhIxYqx2WtiCSMNh
- mvJ5IJ+M=; b=ACUX3ndm5iK/wY4+VnqqSXmz5oPwE5mb/uy1qeYfHk8NlTfxy/M
- ftJkgv5kBLmPP/GOnHcq15U8QFe2SDTX2kzv50U6fWuDeBTRXsb9UiQMuhu6q4Un
- 9HTwYeI+ZaU90Bzvj92JuXmA6HpxZqKavvslZDsKkDZ5B+FdtROihWuBs+HzUnch
- fLb/jR9HzD3omuMpD5rAAnmWwhPfm2MgUZsdZxoPV9YApwafV3jsD5qpYN1uqWgW
- mapffWZ9hIjKbdT7rc5YVptJ1vkjF6poZ79nOgM+hCHlC3FmK5hLSTdm55VxKnuQ
- 4JJORM2WOk1eCkwOmYRWYXS9sNt81pTloxg==
-X-ME-Sender: <xms:uV1oahhEc9KotaOWdp_zXgFAzA2R6ZXKzbvN2LxDhhkLwSDwzfBw9w>
- <xme:uV1oagHurhLoXjAmEvr6wobsTYcii3KyQHGcDX9hVL64X-yZPkmyH3CTsQMwOpObJ
- wrxii4HocYKzrfyLRyqyfeGxWvROBW9XfGqflTtAPH090J6U5tEOMY>
-X-ME-Received: <xmr:uV1oag-YFtm7xSJedZTF00kwZGhYL-_ShX3EaC1vJpiz8e7AlamQ_YywDkvx>
-X-ME-Proxy-Cause: dmFkZTG1T3na9OGM/lVDbENxZ6/xZHRBrph/+Me8I4Awn5xmsjbSsALh6VFVFxM/CN+xl/
- vlxpKjdnHkyMn2Ht1+0ZjPPCdNYBFiLQwtuAtYX2PAA5GhGFvyqTa6a6DJhC01ymwOKXs/
- 2oQYnCHxR7K8CILWrXHsJ1s///g/Xf5G1qAXKKkj7R4+4X12b5tH/lVlhXnE+AxSWaVgc8
- 1xrzcs1fLkCM6LrISAnipqGZYv0moZ+dEhZggbVtyf/1Qzf4Ojw0KpzU+oNoH2hUDOubOD
- z6cOLoH2xpT4rImeEOkgFgEE3HCWZV5clERPBHJZe+tI9Av2W8Cff0TfmYHdKa7dU8C4s2
- EYTzwyRdy9Ow0sxn79FsIMrOiFw79dsXWqUiUMvSaHJDslZ0TDbcSEsrurbRleZ1HNzMj4
- gYcVp1F4a+BKCQkwafzlFuvLJKhiibF2a6+EWIX3EoJy+vvrQDmU9+nv6xYjyRMk4viqxH
- ipb5TjCRT5yJ0p+OFn/Y4M2epFRbFJTBgsH5eH6Qjkt5wR2INqBsNmg1oOGdHKKBlrSqdH
- ilHtxY59HR+boahbj0ZoLKEjJcoxof2/bhwvQ0eyIaBXAq1MCAsfEmoPHZ3NkiTClKwyH4
- b4glyG69xqcZW4vRNbyEwtdQFpgBhjfxPKRxGkou1s45fiu7x2Bk9CV+lP5g
-X-ME-Proxy: <xmx:uV1oanwzeXm47pOnIwtPBAQNcRJBnpF1CAmIbc8kRJAJTrrgUzpJJw>
- <xmx:uV1oasMRuS7kW6SsQ9Yf80mvZ3UWDVKSC2zhi2Z3p8_AegWO3XHG-w>
- <xmx:uV1oas_fbhkHK4gVdqZjLOd0wcr7TlbrndiEqKloDNXEKRianJF3tw>
- <xmx:uV1oap7TW24-Byo8iJaKY5CG1VY63izlkj4EZ62VXT7PNnWMU6tcQw>
- <xmx:ul1oasTxsR8u7ZQeH_kQih30Mv0Gjl10ZZDEXllnhjmmc5dMDI84_4n8>
+ 1785224769; x=1785311169; bh=eJH1NKI/QgFHKbgWCsPI3uuPR850SYB/lPJ
+ OS79BJhI=; b=LHHfhnAYrTyWtNWLoQDVmICDLGxbx06vCs0dWnw+aKXiVBURChY
+ V3aIvgjKpefuQFBjIWJt8FyF7wlW1BRaz8fElYvWMoqz62q9a4NkBdsnoQ7Zaqoq
+ 90kQVY4rON+D8MFVjRd+q1I6eM0Gc8G3H0zOdVV+vnj2ZHq+IPi1DSObJgp0qlU7
+ JxB+k6/xJTuYYo8rIDmH9vEhzkDOgb9hl9c2JLP6Zfo2XsXhWGOQPiUiksI+ou/F
+ lnVdxx7rUV7/XYGtz7YncGMX2XlRITISrhdP8BCe+NbW4ItfjAajfvymNzdhBBRC
+ xh3e7kQl+x06DZj+9vU6DxLhiXt8MZk3/7Q==
+X-ME-Sender: <xms:QV5oam2VLzP0XDRYWpqi7lR7OuqNWy6JJVSGQDmXJWb7x1qyIRxMwQ>
+ <xme:QV5oaiDn-tUN-e-lrpXM043QSbNgIPqMWbSr4Dy9EItbU51bz2ZZQSi3wR0f8XDUB
+ xyY0NmLhoK6C4UAVOvGt16kMwQEFr9yeS4XJ4Eof11iLN2wIEkatfE>
+X-ME-Received: <xmr:QV5oaqdwNK-NlA7nX3Nr-KzkaLiPCnk751pE3-Txjy9IkZ9cd8VgBhnJFyJpEw>
+X-ME-Proxy-Cause: dmFkZTFG5p0UXrE06AXv3HitZ9HUbiino+zuB15xYT/yvXKuH/reGi/TWKmmeP/o+oHYDM
+ bWs563mZow4Tmj50s2lEg78m7D6YPFUo8odqi3b4MJH6vFgOS8L5mBxWU7cXptLC5yRTAf
+ w+gNhHe2MFusBgnMg6tAmzR8xuHQwwbk+8lFuSDOMrTSMeXx9Snw6P0EUaN3y0zKVt+pyc
+ inMEfyXMrUH0gAtJJPbg2tQBtf9Gvegj0KJoLUignvc1K2qv0ydJjKQXzh7IMY5QpwdyW9
+ FzP32S4dQwLQd5rimLjEqpbeAFwtq1THnepum3fCOKftAJyrg3uysiB13EdEG2fVgtFpaF
+ 0W4MKh8bNA7c74SNx8fWwqjK+ztp2R8qhFaNF7sCmEFIE7HFpkCZq3XDI4KiCgTHHMTGR7
+ AeVRMPZ9aEsgw9mNcbvb//cyOgjZ0QY9NAY453gqS1vJfH6COCUuMeJHqevSQTU7R95B+y
+ cTx5qRnbNQvAXd3LdObKOP4JfhcFVg8IeFSqW/OecC2zIaXANu8uS1uytK3OraFjh443Hn
+ su2Es4qZTVTXFPHzakXNG+FX6H4eePY0hjxPNP4GhSer/xZ9zbA9UeSqi33//lfWUYp93q
+ YtXiGsgwV5nt4oQZPRMdsiURZGyDYLfc6jKoYoa/hdt3p0I6Dn3+PgxwcEzQ
+X-ME-Proxy: <xmx:QV5oan5C71lNHp1ofRKeVuY6OwmlySW9vvje78WIZ3WqmLVWL5XPsg>
+ <xmx:QV5oalXehxlAb4CByPEvpDiVeid4XcUhCZ53gFP-8-oykNO_bUsuvQ>
+ <xmx:QV5oau5344BymPEQbeIyrsdFGp_xHkpI8VwWc93etTGqgWZ2cbuJZA>
+ <xmx:QV5oaoqzd5jX-fOqHggOHw73Pn7vXsYPKqsFrfw2nXhXOfxUbIFFZg>
+ <xmx:QV5oasNGITip7TKfBhpMUb9LkzAlqABZW6-fAVmNazEnLwFnCqfcsFWr>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Jul 2026 03:43:53 -0400 (EDT)
-Date: Tue, 28 Jul 2026 09:43:52 +0200
+ 28 Jul 2026 03:46:09 -0400 (EDT)
+Date: Tue, 28 Jul 2026 09:46:08 +0200
 From: Klaus Jensen <its@irrelevant.dk>
-To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
- Jesper Devantier <foss@defmacro.it>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: Re: [PATCH] hw/nvme: use GPtrArray for blocker_features
-Message-ID: <amhdtSJyGh39zq5x@AALNPWKJENSEN.aal.scsc.local>
-References: <20260709084728.92862-1-alexander@mihalicyn.com>
- <CAFEAcA82Ps8EDcjpoYVBxf5VAmiSJNvE1dvuKWokPKbp7OpWjw@mail.gmail.com>
- <CAJqdLroRKpD0B2KXbwG61DY=Uff_DZyxE-XB_AQmEnQt6ViyHg@mail.gmail.com>
- <CAFEAcA_gZmVZr5ixHgf9EmPHb2kBgOdenF=3JTNEzs71v+gM=w@mail.gmail.com>
- <CAJqdLrp6oi2dycW-m=zBWnaQ3nTy7cYtxUY_drEnYkoWgvGpSw@mail.gmail.com>
+To: Daniel Paziyski <danielpaziyski@gmail.com>
+Cc: Keith Busch <kbusch@kernel.org>, Jesper Devantier <foss@defmacro.it>,
+ "open list:nvme" <qemu-block@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH] hw/nvme: fix assertion failure on subregion removal when
+ removing a nvme controller with a msix exclusive bar
+Message-ID: <amhePzE79du0xpUT@AALNPWKJENSEN.aal.scsc.local>
+References: <20260726183008.160498-1-danielpaziyski@gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="XaGRKtCO8x2CKB2E"
+ protocol="application/pgp-signature"; boundary="W4oj83cuMl/p+8Zu"
 Content-Disposition: inline
-In-Reply-To: <CAJqdLrp6oi2dycW-m=zBWnaQ3nTy7cYtxUY_drEnYkoWgvGpSw@mail.gmail.com>
-Received-SPF: pass client-ip=103.168.172.153; envelope-from=its@irrelevant.dk;
- helo=fhigh-a2-smtp.messagingengine.com
+In-Reply-To: <20260726183008.160498-1-danielpaziyski@gmail.com>
+Received-SPF: pass client-ip=103.168.172.144; envelope-from=its@irrelevant.dk;
+ helo=fout-a1-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -111,103 +107,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---XaGRKtCO8x2CKB2E
+--W4oj83cuMl/p+8Zu
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Jul  9 11:01, Alexander Mikhalitsyn wrote:
-> Am Do., 9. Juli 2026 um 10:58 Uhr schrieb Peter Maydell
-> <peter.maydell@linaro.org>:
-> >
-> > On Thu, 9 Jul 2026 at 09:53, Alexander Mikhalitsyn
-> > <alexander@mihalicyn.com> wrote:
-> > >
-> > > Am Do., 9. Juli 2026 um 10:51 Uhr schrieb Peter Maydell
-> > > <peter.maydell@linaro.org>:
-> > > >
-> > > > On Thu, 9 Jul 2026 at 09:47, Alexander Mikhalitsyn
-> > > > <alexander@mihalicyn.com> wrote:
-> > > > >
-> > > > > From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-> > > > >
-> > > > > Let's use GPtrArray to build a list of blocker features and then
-> > > > > g_strjoinv() to build a final comma-delimited string.
-> > > > >
-> > > > > While previous approach was technically correct, it is fragile
-> > > > > (because we need to take care of static buffer size choice) and
-> > > > > Coverity dislikes it too.
-> > > > >
-> > > > > Note, that we use g_ptr_array_new() to allocate array which means
-> > > > > that GDestroyNotify callback is not set, so we can pass pointers =
-to
-> > > > > a static memory like g_ptr_array_add(..., (gpointer) "SR-IOV") wi=
-thout
-> > > > > any problems as there won't be any attempt to free that memory.
-> > > > >
-> > > > > Resolves: Coverity CID 1663673
-> > > > > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> > > > > Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futur=
-fusion.io>
-> > > > > ---
-> >
-> > > > > @@ -9416,15 +9405,15 @@ static bool nvme_set_migration_blockers(N=
-vmeCtrl *n, PCIDevice *pci_dev,
-> > > > >              }
-> > > > >
-> > > > >              if (namespaces_num > 1) {
-> > > > > -                nvme_add_blocker_feature(blocker_features,
-> > > > > -                                         "Namespace Attachment");
-> > > > > +                g_ptr_array_add(blocker_features,
-> > > > > +                                         (gpointer) "Namespace A=
-ttachment");
-> > > >
-> > >
-> > > Hi Peter,
-> > >
-> > > > Is the cast here because we're dropping the const property of the
-> > > > literal string?
-> > >
-> > > yep.
-> >
-> > Mmm. Unfortunate but unavoidable I guess.
-> >
-> > The glib docs recommend using "void *" instead of "gpointer" in
-> > new code: https://docs.gtk.org/glib/types.html#gpointer
-> > but either way
+On Jul 26 20:30, Daniel Paziyski wrote:
+> When a controller is created with a MSI-X exclusive BAR, the bar0 memory =
+region
+> is not used at all, and so, the iomem region is not added as a subregion =
+of it.
+> However, when removing a NVMe controller, the iomem region is uncondition=
+ally
+> removed as a subregion of bar0, causing an assertion failure. Remove the =
+iomem
+> memory region as a subregion of bar0 only if not using a MSI-X exclusive =
+BAR.
 >=20
-> ah, I didn't know that. My first intention was to use "void *", but
-> then I searched over QEMU codebase
-> and found a few gpointer casts in exact use-case (with g_ptr_array_add).
+> QEMU options (requires a hotunplug-aware OS):
 >=20
-> I can correct this and resend if you want ;)
+>         -M q35 -device pcie-root-port,id=3Drp0 \
+>         -device nvme,serial=3Dctrl0,id=3Dctrl0,bus=3Drp0,msix-exclusive-b=
+ar=3Don
 >=20
-> >
-> > Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> >
-> > -- PMM
+> In the QEMU monitor, or by causing an ejection from the OS:
+>=20
+>         device_del ctrl0
+>=20
+> Message in stderr:
+>=20
+> qemu-system-x86_64: ../system/memory.c:2617: memory_region_del_subregion:=
+ Assertion `subregion->container =3D=3D mr' failed.
+>=20
+> Fixes: fa905f65c554 ("hw/nvme: add machine compatibility parameter to ena=
+ble msix exclusive bar")
+> Fixes: 9162f1012576 ("hw/nvme: fix msix_uninit with exclusive bar")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4090
+> Signed-off-by: Daniel Paziyski <danielpaziyski@gmail.com>
+> ---
+>  hw/nvme/ctrl.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+>=20
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index a67e159889..142fbe033e 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
+> @@ -9710,10 +9710,9 @@ static void nvme_exit(PCIDevice *pci_dev)
+>          msix_uninit_exclusive_bar(pci_dev);
+>      } else {
+>          msix_uninit(pci_dev, &n->bar0, &n->bar0);
+> +        memory_region_del_subregion(&n->bar0, &n->iomem);
+>      }
+> =20
+> -    memory_region_del_subregion(&n->bar0, &n->iomem);
+> -
+>      migrate_del_blocker(&n->migration_blocker);
+>  }
+> =20
+> --=20
+> 2.55.0
+>=20
 >=20
 
-Thanks,
-
-Added to nvme.next with the gpointer cast changed to void *.
+LGTM.
 
 Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
 
---XaGRKtCO8x2CKB2E
+--W4oj83cuMl/p+8Zu
 Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmpoXbUACgkQTeGvMW1P
-Denj0ggAmXM3HCGTF5M/jmuQjSvyNGmHWPlbmCOvSumHsbEcflHtuEVUam3VZ8i9
-AMKReG79UK0htQ3T+sz92KCvfvGKAvL+sNN+EvHV/vFHKfxTnSlVj4OlJPUoBDT1
-+n6QOGrECBeC9/kyU+PF9vmn5J5dAeSjuu90Dk3KbCS0gEc7vP7fza5LIxKhb7LT
-cbc2S4CqWFisLeiqcScgpnhS/npzt6fLzyfIywzYZMucJZqFQvBJkKoJxmNRu76A
-ai4OHLuJCTkdC7Bjcasq7Ul3zA+qHkkQ/L3t7XgFR8AoHSbCnGHIOKhYolVAPosN
-DJJgzpResFf155PKS0g6yK8PKAnbjw==
-=9CPP
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmpoXkAACgkQTeGvMW1P
+DelWrAf/UBiPJfTdQvFLJrlo3vThuXkmOHgH3JUMtHsjyPS3zOCKW4fk+zmhPrTi
+lt+jPRw315ebQzwKJx3Zo9dH0TP8RckEq5nuR/T4oSRhH44GFuKfk2htWZBmjpdX
+/UD5ymNkhP9n4N55Umpto4obSWvOVds4dxfNl4kCFl04KrAClhXwO31n5W1GixR+
+DkSPo53mKIIlhCZeZCFUZKJySDIVgTTRH3pkJF8bY/bzr0stQAjCefKdSw2BC3x7
++LfZye/CNf2aCl4AdaQkmZg3SXse4RXmUMCrEt9B7HwB2aBvmh1J1Cx9lAu4dInk
+m/73BeTKzh6WXc8UqrImJEaFKU+mzQ==
+=VYN0
 -----END PGP SIGNATURE-----
 
---XaGRKtCO8x2CKB2E--
+--W4oj83cuMl/p+8Zu--
 
