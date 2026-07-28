@@ -4,116 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF835C54F4C
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 14:39:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A471AC53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 14:44:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woixb-0002nQ-7n; Tue, 28 Jul 2026 10:39:11 -0400
+	id 1woj21-0004LG-Lm; Tue, 28 Jul 2026 10:43:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1woixY-0002lw-V6
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:39:09 -0400
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
+ (Exim 4.90_1) (envelope-from <rohit.kuma1313@gmail.com>)
+ id 1woj1u-0004JW-VL
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:43:41 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1woixX-0000mZ-En
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:39:08 -0400
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-6681e7911b0so5458858d50.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 07:39:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785249546; cv=none;
- d=google.com; s=arc-20260327;
- b=jNYXJVOHvbGoJU/kR2xRjbgPHw1NQ9iMDQFerwEzUdGaktIB/9z0EMj1L3WxPTlTDe
- zrptRTqi+y09FSGuBjm5wITWBALFQPdapfJvv+wp4dTad8mKbyOkem5T99w+AUccCyg+
- AJdONbKdt+QZrg1lum0EyBHU1++KvRWN4Fb+x6r6SKZkaxmcVEdQAe5lEyiLPQVBXGoe
- tVUi2ChfZn5ZVJCYjepVWDxbT1FDcKiEwcRKH2csKwKHeVGImCqcIljAAge37GFXcNFr
- jW35YGVQoYPujPf/Xab09bSDPAUvKfO/kFCAJR9CTCiGWCzZV7b6tAe5YcFxC9c4wPAD
- OvFQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=H0pP+XrMAwMqRZG5C6J60GHZJEAKEPpIro+Dr/Olv3o=;
- fh=E0eWGkwA2p36YxiBUYxgmPHOVCPDf8a5rzjKX+YB7yo=;
- b=IyZYGdZin7eDy7Z0UowgQmaiTHwoWxNR6XHkzToeSZLXLQ5rsIiL8/XC0APaulR4rM
- K7gbhFzkw1cJn1+N1M1dNnLv8MkxEM0UHA2l7CJlN6Raq2w2x0pkqP50MCO6uy7O2Y0E
- TRQqRdtRRfSXQfxMYkobxGcJsmtgX2u1vjcK6TYxSmsZVxbAT7Uq9aKj8bCc32NsdY9x
- i0JnGtLG9O4FNbkM7FZIbJbDSorFZ4lm4dDQLO2yRc/VQSDvyZtspYyeTRv9C3hlgzID
- 0nYHcs1s9bVGb6nusgJiZXcsG2VAsklErl+l55HyyI69hOTrlwHfZR0HxIBMhoVh7zi3
- 1+2g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <rohit.kuma1313@gmail.com>)
+ id 1woj1r-0001jK-DD
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:43:36 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4953e04ef16so42402765e9.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 07:43:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785249546; x=1785854346; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=H0pP+XrMAwMqRZG5C6J60GHZJEAKEPpIro+Dr/Olv3o=;
- b=M7IR33OZNOzGYryCCWJNWNhZiWFJtfC1VP6MgrhqxXPzOloFjJonfQPwHnqLZ2fXkA
- n/dS9VKaeblefZ3FT4EwONW4gl28Bnw2AobjNO54ofmO56OvbW+mYbHEA4OqYW61cM0v
- UNf0Dc06U7ccTG0sLv92KckLD2GF1Zj8tjLMup7XDZyzQ9f8OoA5Xoq/cKwPZicvzNVL
- HQMGuI/yJ1WknojM/bkXsDz/VbxnGhM7DBByWHFSV1h5KKqgy+arPu67fXVGsqHOzhNN
- gibi9QzdKeweBi84ZIywl98YieDBWtyHC6SRsJxwi352nPsD2iBh0qH1YS2ItbubDo0O
- OzGg==
+ d=gmail.com; s=20251104; t=1785249814; x=1785854614; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=wCtAzg51hhstS+Gbl8wuHsxX6KoJDd8QSjWjrDQlyaQ=;
+ b=dMGz1fvZKEJLLA5+aJhoTxTXB0EMllwovmHRim1CjFUT5HaYSMw69Y9ImMgAIoDoMa
+ diN2P8crRliIFFzj83TDDc2vfbg3DupFesxr3KQYsCyh+oS59QSUbITKEMaUOXi4Mhiz
+ RuzFMmWAI2jxiqPUtyDjw3Xi0w5Cfyqiqc5jLWRX/42mYUgT2Umzjcg0brCbrwHCIs6q
+ Q6zHCknLXFs+CyMfXwXyz0bJxZlKspCz4cXykmWN4ESocUA6pgrlBhNq5cTdbFPAQxln
+ hvCyuNhugyXVzkqT+yReIudeX/efYv3T5aUhWhiyP+p9sPchUc0qVtcOmDTxyO9OsJoF
+ azWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785249546; x=1785854346;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=H0pP+XrMAwMqRZG5C6J60GHZJEAKEPpIro+Dr/Olv3o=;
- b=FoINm90zqMDCPIj49OYgxPOg9iMXfBu/UleZzN/EMHDcysyUQ4IswGE2Lfe3tQhRuJ
- wBazF/4lOB9/g4+6wzqZx9yt9Mgp5+2dRyK5yEl+yio5+j75UL/ZVqhBuKuPq7Z2yJFV
- mhOhDTsFd4KJLeRpo84cdcwCZEcT1E1VOYkqCtlR3ZT1CX1GeR2Wds0muPD1HP0RUBY8
- +rWHPUKbUkSAEFxC9HCNIRwsBbmNC4lZuTKp8HrLt+GagX/FtzAcczcdJztAYChSNGuP
- 7DNtqXThvfGxr2bg2XIdafCGsMLdMVbw3pgS/FK/RuDib56db9tFHfg296deUFBbCTtU
- ObfQ==
+ d=1e100.net; s=20251104; t=1785249814; x=1785854614;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=wCtAzg51hhstS+Gbl8wuHsxX6KoJDd8QSjWjrDQlyaQ=;
+ b=P9PcAb+J8Y8Qw5HqSsVDiS03/09p8SRoFJrshr8PUJFuTrzNcce/FNyJBZkHLDtPoY
+ 9agt/50755A3I089fkmFe2M4Fl3kT2MiVVkcXnOUA3E+Bv5FgcYh/5Ok/kqL+lNvJytt
+ cdtYTBfGOtaj5LaoUyI5TU2b5OzE9f+MD6C+kx3+WfGK0FyXgR8DrslpXdoxgzr+cDCY
+ +gir7HVgTop9VflP4GeTHB8T04Mf/RVxWb6po3moqbh7Sez2f/wTktxLa7IdAeQUTDkw
+ lglQqbOHAGFFhsuWHx6vATwCldyN1yx8alVwJir2+slh+6ybxI4eb0oYMfvcV1xuj2bO
+ gHEQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpBkGDkILoZ+DPi21rH44f2aCLBediMij5uoinDaiS+C1nsP6qJA0AsGPRHmIcamSN8ZyCE5nyluZd7@nongnu.org
-X-Gm-Message-State: AOJu0Yy4s5KVza/jvfsyIw8Hm7NKYv/b0fmn2tzhK+ZnxncYTu2132rZ
- Or1wsmREuFbRFUdZUb22Hv09EKbC43OHY1+fo9XrAYRPruVO66xDckaCIBYfy8oFp0WiOb1B4ys
- yux0kVD4thqetj1lsxLOK+Y18znH+8xCwdio1QDI7gp12Qoet0uebVEQ=
-X-Gm-Gg: AR+sD106qqq13p/wH3n08Qxp2CFnxNJFyxliAdEHA5+nekr1bXtDqm6Onhon2t7o55E
- PFvvgNzAIB8gqSf26uG8WHCT6ywPbDIGBbbfjNOa2JTL5pZjBHpmnQDquOjYIhEY0HqL6zC16we
- bq20Y6jkgDStiiuTI6dTS5LNKdjJfIvCre2PveXLmiIMcoHbXALiXIiEpc/OOOzDk6ms6Opu/X1
- It6KtIFubMkDZr4mrSUZQORA0LQwG9MyrRP5EKvIuynvCulX6HOqHK5sRCZS4s2lkvy2rQ6000E
- PnqjgeKGt+m/gG1EwqXCyGnPPV150HcjNkAuvlkgk7dnww==
-X-Received: by 2002:a05:690e:4005:b0:667:91ba:9bdc with SMTP id
- 956f58d0204a3-6690545d1b7mr1162220d50.11.1785249546204; Tue, 28 Jul 2026
- 07:39:06 -0700 (PDT)
+ AHgh+RoLc3i8UgTCqrftj36602BMFSu12jHSrijNHR1m0xdBJwQCGx0nJtaljjRzA71bCgA2JIY4cSahU+yZ@nongnu.org
+X-Gm-Message-State: AOJu0Yx+ywdc4pBn+PLGkujqxkieht8gbo0T5Rn89E/CitYMS5opGuaB
+ W6PpB8U4IS5z+cwACIxpVMBgdv6m9DlOJXdqDxsaM6VH9k7AVQlBYy3L
+X-Gm-Gg: AR+sD11aoAgVOe30E0hzAUGul37RUgzmWAhAX9SdGK0g8wzFVxRU80r3yS4IXKH6bma
+ Em7AS1cVf5yvnI6EECcYPcY0ZLn8rVPKfG2jEPPeaZ+WfWFJRSbS8TnNpq7ZNxZ+Ak/FCqn7TKN
+ rQskPTlAoJnQ+AJrFQ14qUiYcd2CuXyZ7yuv7KLzMt1qKcKxvJ5Elex7WBTJnSfJHfFszEnQakB
+ t1YngBNKDq32Y+GWi8iR0bAdMfwIxu9nay6gzAnYOutDNuP+Wdie1pfLpa3kmbAGHuDAx0qoPAA
+ Gr9TJa69JfmDYVdm24V+3MY4QQfQsR3ur44h2xnzqnENueH+wHX5ORKSsgXvfB8yUPbIZ3BNM1H
+ wniJBw41IWx4wyt9buevu8G6fsvTEnilGPR0TswXsQZ86MbW49MAJ1TuXeU8JIsQhb2hR+GjBAa
+ 8VugDv3l0X0NOrb1Qn3ehQJB5Zsfyve5LZCn0JiqJt6TIp2gQ7hh2QeZ/IbMTV8zTvcH9gVjg9+
+ AReGrYZwaZxBUS9BOwu38hWtLoB7ho9hts1ETl1VaJx+an83uY=
+X-Received: by 2002:a05:600c:638f:b0:496:bba5:33a9 with SMTP id
+ 5b1f17b1804b1-496c658ef41mr31120935e9.34.1785249813521; 
+ Tue, 28 Jul 2026 07:43:33 -0700 (PDT)
+Received: from ip-172-31-13-20.eu-central-1.compute.internal
+ (ec2-18-198-207-175.eu-central-1.compute.amazonaws.com. [18.198.207.175])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-496c444304esm80724215e9.0.2026.07.28.07.43.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 Jul 2026 07:43:33 -0700 (PDT)
+From: Rohitashv Kumar <rohit.kuma1313@gmail.com>
+To: Jason Wang <jasowangio@gmail.com>,
+	qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Rohitashv Kumar <roohiit@amazon.de>
+Subject: [PATCH] qapi/net: gate user/vde/netmap netdev backends behind their
+ CONFIG symbols
+Date: Tue, 28 Jul 2026 14:43:03 +0000
+Message-ID: <20260728144303.223207-1-rohit.kuma1313@gmail.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-References: <20260727032649.145381-1-gshan@redhat.com>
- <20260727032649.145381-3-gshan@redhat.com>
- <CAFEAcA9_tDRAd97z4UtNhFPK+fMbq37LJhWTSmD5cueo61hvvg@mail.gmail.com>
- <0a384d67-fc56-4a21-9d0e-25f218a45228@redhat.com>
- <CAFEAcA9HbTSj9cJfv8o=jYSuPhScr-RVKWCos4kpUJ+T1S6g5Q@mail.gmail.com>
- <13333e56-3725-4550-849c-9035f6925213@oss.qualcomm.com>
- <CAFEAcA9X7SNUvQpwXA2_xReUERB-eBETty3g32-PD=MVk536sg@mail.gmail.com>
- <2322668a-20a3-4a6b-8d7f-c04ddfef84f1@redhat.com> <ami94CmeBNRKy_es@x1.local>
-In-Reply-To: <ami94CmeBNRKy_es@x1.local>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 Jul 2026 15:38:53 +0100
-X-Gm-Features: AUfX_mwPf8ZxxzTtyolXaaZ5S2ILmfPZnwZ5wIVgDG62c5eXdboXHCSKaUXDWTw
-Message-ID: <CAFEAcA-y+vNK2u-rSq+SVjNZrhO2=BsUysEw2PtCdCZ=qYx2bw@mail.gmail.com>
-Subject: Re: [PATCH v4 2/3] system/memory: Use qemu_ram_move() for directly
- accessible regions
-To: Peter Xu <peterx@redhat.com>
-Cc: Gavin Shan <gshan@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, mst@redhat.com, 
- richard.henderson@linaro.org, alex@shazbot.org, berrange@redhat.com, 
- philmd@mailo.com, david@kernel.org, clg@redhat.com, pbonzini@redhat.com, 
- phrdina@redhat.com, jugraham@redhat.com, liugang24219@sangfor.com.cn, 
- dinghui@sangfor.com.cn, shan.gavin@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=rohit.kuma1313@gmail.com; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,34 +104,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 28 Jul 2026 at 15:34, Peter Xu <peterx@redhat.com> wrote:
-> I think the bit ops should be more efficient. I plan to queue v5 with a
-> fixup, v5 here:
->
-> https://lore.kernel.org/qemu-devel/20260728031731.286666-1-gshan@redhat.com/
->
-> Fixup:
->
-> diff --git a/system/physmem.c b/system/physmem.c
-> index fbe7df2391..2f37cbeb07 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -3162,13 +3162,18 @@ void qemu_ram_move(void *dst, const void *src, size_t n)
->  {
->      uintptr_t test, len;
->
-> -    if (src == dst || n == 0) {
-> +    if (n == 0) {
->          return;
->      }
+From: Rohitashv Kumar <roohiit@amazon.de>
 
-As we're dropping the src==dst check here, we also need to drop
-the "and the memory areas do not overlap" clause from the
-documentation comment.
+Their NetClientDriver enum members and Netdev union branches were
+unconditional, so query-qmp-schema advertised them even when built without
+CONFIG_SLIRP/CONFIG_VDE/CONFIG_NETMAP. Gate them, and guard the matching
+NET_CLIENT_DRIVER_USER/_VDE case labels in net/hub.c.
 
-Otherwise I'm happy with the v5 with that fixup applied,
-and you can apply my Reviewed-by: tag.
+Signed-off-by: Rohitashv Kumar <roohiit@amazon.de>
+---
+ net/hub.c     |  4 ++++
+ qapi/net.json | 19 +++++++++++++------
+ 2 files changed, 17 insertions(+), 6 deletions(-)
 
-thanks
--- PMM
+diff --git a/net/hub.c b/net/hub.c
+index ee5881f6d5..2a7c2bc6d7 100644
+--- a/net/hub.c
++++ b/net/hub.c
+@@ -294,12 +294,16 @@ void net_hub_check_clients(void)
+ #ifdef CONFIG_PASST
+             case NET_CLIENT_DRIVER_PASST:
+ #endif
++#ifdef CONFIG_SLIRP
+             case NET_CLIENT_DRIVER_USER:
++#endif
+             case NET_CLIENT_DRIVER_TAP:
+             case NET_CLIENT_DRIVER_SOCKET:
+             case NET_CLIENT_DRIVER_STREAM:
+             case NET_CLIENT_DRIVER_DGRAM:
++#ifdef CONFIG_VDE
+             case NET_CLIENT_DRIVER_VDE:
++#endif
+             case NET_CLIENT_DRIVER_VHOST_USER:
+                 has_host_dev = 1;
+                 break;
+diff --git a/qapi/net.json b/qapi/net.json
+index 1a6382825c..e9f1300629 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -922,9 +922,13 @@
+ # Since: 2.7
+ ##
+ { 'enum': 'NetClientDriver',
+-  'data': [ 'none', 'nic', 'user', 'tap', 'l2tpv3', 'socket', 'stream',
+-            'dgram', 'vde', 'bridge', 'hubport', 'netmap', 'vhost-user',
+-            'vhost-vdpa',
++  'data': [ 'none', 'nic',
++            { 'name': 'user', 'if': 'CONFIG_SLIRP' },
++            'tap', 'l2tpv3', 'socket', 'stream', 'dgram',
++            { 'name': 'vde', 'if': 'CONFIG_VDE' },
++            'bridge', 'hubport',
++            { 'name': 'netmap', 'if': 'CONFIG_NETMAP' },
++            'vhost-user', 'vhost-vdpa',
+             { 'name': 'passt', 'if': 'CONFIG_PASST' },
+             { 'name': 'af-xdp', 'if': 'CONFIG_AF_XDP' },
+             { 'name': 'vmnet-host', 'if': 'CONFIG_VMNET' },
+@@ -949,16 +953,19 @@
+     'nic':      'NetLegacyNicOptions',
+     'passt':    { 'type': 'NetdevPasstOptions',
+                   'if': 'CONFIG_PASST' },
+-    'user':     'NetdevUserOptions',
++    'user':     { 'type': 'NetdevUserOptions',
++                  'if': 'CONFIG_SLIRP' },
+     'tap':      'NetdevTapOptions',
+     'l2tpv3':   'NetdevL2TPv3Options',
+     'socket':   'NetdevSocketOptions',
+     'stream':   'NetdevStreamOptions',
+     'dgram':    'NetdevDgramOptions',
+-    'vde':      'NetdevVdeOptions',
++    'vde':      { 'type': 'NetdevVdeOptions',
++                  'if': 'CONFIG_VDE' },
+     'bridge':   'NetdevBridgeOptions',
+     'hubport':  'NetdevHubPortOptions',
+-    'netmap':   'NetdevNetmapOptions',
++    'netmap':   { 'type': 'NetdevNetmapOptions',
++                  'if': 'CONFIG_NETMAP' },
+     'af-xdp':   { 'type': 'NetdevAFXDPOptions',
+                   'if': 'CONFIG_AF_XDP' },
+     'vhost-user': 'NetdevVhostUserOptions',
+-- 
+2.50.1
+
 
