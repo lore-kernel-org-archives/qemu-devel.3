@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEC31C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 04:56:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCEBDC54F51
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 04:56:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woZp6-0007bf-TO; Tue, 28 Jul 2026 00:53:48 -0400
+	id 1woZpD-00007S-7O; Tue, 28 Jul 2026 00:53:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1woZoG-0006Td-JS
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 00:52:57 -0400
+ id 1woZoY-0006dc-0t
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 00:53:17 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1woZoD-0002aQ-0G
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 00:52:56 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1woZoT-0002ay-Jt
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 00:53:11 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66S3amTM2693126
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 04:52:51 GMT
+ 66S3bAW81062986
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 04:52:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- qLRUEwOy9z3PHWEQvDqDDgrUMwI5uZf0njY7zMmojRE=; b=SoDExHBpue0kLgQ1
- Et76/fWpBgruNl+PmtJhiAFXuaHzKRDPkXMR0sZ5TrUoVeo3tCc5OaSjZAz9KZ1v
- N8uoXjQQ23xZpJqw1pE5Wpht6AqQoxzDoaX1Rp/Z1hgwNvoaOAZ7nC0RQMKc55g9
- wfrjDTDhZeNkYUpmhh7L+UkRoKhYvnReulRojqqOQbM422O8tsNJy+55bEkKeG4c
- PRxIDbBJuAa0LT/oromWkDOmaVRsTlDSnpLA8dhaimu2XjSTJS4+09LHHau7eo8H
- rPVViNN6vJqtFoW/icPu2ZiiWe6rmuGqH9fgmPx2cBqBxfN/ohjlMz95LYCymbzD
- jsOoKQ==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fpbp5jfgk-1
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=tzhUo/Lgyqc
+ w6MHdeyYZqV9/kIE6pkdsoGxXj2rSAxU=; b=kmy0B3J1yi/i1G22CZT5Q1oVnFo
+ nRAO970Sd91sb3JMwRYvpX0dEZy5lK0G1ihaot3ksvsRDWKADkI5Imvh7gRoPapy
+ 9FiixTK2pV5BUaKLcj7J/oJY/IewJKBUYemG6X2w+OScDTeFP5ONyVJRu3D9zO53
+ gdntJI9EtZ3l2w9fuX9PiTnn6anFPnicO1sJkpsGnwk2J9RBPdTYRwi5U5M9l0xF
+ JJI0FbjF8sNWoduc56gsBM33iaEGd0X185Nl60qambf2qqiCvCJcHa7n/wE3E8Z/
+ OVuC7rUkZbwPM/cn4yTBsD4ifv08ehH1topvC+BFcDMq/7w464LxTA5ypXA==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fp4v6chu7-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 04:52:51 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-38ec0f510a9so8574639a91.2
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 21:52:51 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 04:52:57 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-cb5bdd8450dso2364668a12.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 21:52:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1785214371; x=1785819171; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=qLRUEwOy9z3PHWEQvDqDDgrUMwI5uZf0njY7zMmojRE=;
- b=FZjt1v6NSavqFiheM0UR7ohGGMhvmzWuDTq7hWX8JYIMVEZgtxe433DBfzanxdeMPQ
- MnkdhwM/DIrWCs3Vg3aDDvYFbQhZzaOIcpFmSErXSl8e8SgeV3/LQfYvWsXpYdp2zXqT
- 9QY7xy39RcJKh7nXGJeQE44bbpolXvp0ooIAtXetfupU4ZMRIeX4ys283gFx2H1ZiAfS
- UNEm5Ft+9nlUNqZvPNz6RFCDgzkU+0unixIformfr3EI8994pT5NVHwBKjuf/S8NrvD1
- PVm4ZE4d07HcK1HNwfmj16KBTY4JnfkOGX9W9WZ+FQXm8KDQrZq3jOS92tmcpdjUxNgU
- buDQ==
+ d=oss.qualcomm.com; s=google; t=1785214377; x=1785819177; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=tzhUo/Lgyqcw6MHdeyYZqV9/kIE6pkdsoGxXj2rSAxU=;
+ b=WE00um+aQHZYLqbYe7+8upnOSn7Wk4FC6zNMCNh1s8nArJjKFzkVv1y5lnDAK2EXvW
+ XzbUxaex9zZ9i948ZzMz24lajLUOyUGkenOOSC4KfxdhxuIoRoGeFoLO3DvhfqQdV+BK
+ zd03jmCSGfAw9upLTKcl9lWywq53MVEeVlMDA/HGNaue/gQ8jqPrkGOwRKQDyFY3xpss
+ L67U5NIA7ihzIPLhpUibyUWRmN9pKqtYKU4lYAfDRsaVLoafSeQvZ1kHPVfPXJL864B0
+ 7KTMulwNOPaPkbe3UZ/OPpF+cJbZEj4Xl6WbsxI8555dDY7hSXHWpF1AetKu8/5aUCoB
+ Ygqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785214371; x=1785819171;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=qLRUEwOy9z3PHWEQvDqDDgrUMwI5uZf0njY7zMmojRE=;
- b=ZllaQm5/o/NxsqXu6MFlIxJ7zFDBAbsPk9qU1nUz1W2xRJ1p98px8TLqR9CUZlj2dd
- wRmglgbm0xdKdIISFdGsZ7LxkbJSmchY7wz50nid9soRqQm/SnAMjdJ8i3MXR22Dbar0
- NbP1bFurvmd034ntPjdEnQyerrMDYXq2h2+kSinGc00YZfBqVcWoNb5y+Gjpz70J5geV
- f4hUnVYcOZwLH8JNJ85/Ix0Rlahh+JKZ1s+M8/ZqYEh+bMsYyglNEUDglVT1xiFdb656
- usv8oRHdGNsX6AfH/d9bMmJlv2FpJNo113+i2l1FE6IeT5q2mq1vb/LqjEkA5Jz8Sgew
- zVig==
-X-Gm-Message-State: AOJu0YzppWL8E2UnuHmfImazt49yLsb7puy6hz24Yq4AIfJdsjdzIcdo
- FP5Ne2duATU9oULrTuU9+FwSn53XnwEBHmF4sRHDrjjO4BtiEFEYWBQZWtjhyX2jmGpKLn+T318
- Phy7cUjoB1rxGCSNiePqTjPYIKEqYTDItrk+fSDTag5+ZdOqpPEscqOb9oYnMQSyi7g==
-X-Gm-Gg: AR+sD10tZkT3GhRn7m9slMIyXWOMG8uZwJA514AyfK6Bf1snKYIAJy0WRZ8vJmFI+Nt
- 47FD9FJ7WDj/4oywhVNJb5EyDxI1rbFdIFgQMREQ3BW95DYvwyFQdAPI4gj+zftAM6bqu+L8h0i
- n+phjOeunOP0KQobaK6I5u7/l5faKlP4GX3j/1gouX0SdrU4U7PpwF7TJw9zhDxwIQWxnBzH5WY
- J2V2UFD5WkBtM5TSh3gw08/ib5BZo78qwbD/5Vkc+7ttJTaG4lKxUZBoyh5rT/oD6JlAyausEe3
- VqwsfgdE98D6yfypRGaVpK+ZmIz0mNvyr976cVGa55mPa44+PEBpRv8olrvBLUUsslR8i9lDcz7
- 8HEYvV7v0BANp1utnyKT9QRTXDjuuVOWAviYYg8RcROlv7TeGgBGG5HIrW9RAZtv7EWH/ugs=
-X-Received: by 2002:a05:6a20:939a:b0:3c0:b4f8:bbfb with SMTP id
- adf61e73a8af0-3c8ac2436d5mr1155067637.22.1785214370280; 
- Mon, 27 Jul 2026 21:52:50 -0700 (PDT)
-X-Received: by 2002:a05:6a20:939a:b0:3c0:b4f8:bbfb with SMTP id
- adf61e73a8af0-3c8ac2436d5mr1155015637.22.1785214369263; 
- Mon, 27 Jul 2026 21:52:49 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785214377; x=1785819177;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=tzhUo/Lgyqcw6MHdeyYZqV9/kIE6pkdsoGxXj2rSAxU=;
+ b=B25O7TA9lbpUeSF5Z8zieuChG9Y/vxirJ3ZcsjdB5pbjEFZ1Euuhnq8CCPfH93kZbp
+ p2y/7JSAzj4Fe6Yi9HlQ591+1ppSxuHJUaBq2TciVcuoPQ87C+fffc/0Vkx4dXgPKu7P
+ CM4nUbQAPBQyztFM9UsUi8gqrOTEmOXkH84OdGQqa6DbY5MJEpdPrOubOxyNnyRPlN4d
+ oWAANIzAYnc7PjEWwBLxhm7SospAd/XEGJJFcnRNZ3nChJwn4SGygF2MhgGme6LAqtMO
+ jZVegEaMeBtaJuABQKhxmJNHG3+xI7Odt6PaxBIHbNtJkxaDnyjudob/n9TNv3XyqNmn
+ 0qcg==
+X-Gm-Message-State: AOJu0Yxng3j81cNr3yM+8Jy2eqilobqGKi39Bp2lUunfKDYrYlCuDSEK
+ 31hqBxZBtqgNj/Lldk6n/nAbiU4rq/XZF+r3BpcEKiGjg6Qjd7lq54ANNwDie8joA1Fx+JTwxqM
+ 09VnZzDPowNTXOGen6FM8pjg1gqq8hz8J+o9kZpQW37REXLgv3cMVIanhK2Og9DDdsQ==
+X-Gm-Gg: AR+sD10mBNeEhLj/Hh12x1fPjp/Up3sJdorpgw4ctXGISzHJ9SCswHX9d/UCukRfkfz
+ ecXv6g6D/+/8IpMQmdYVbMaNhLc4PI6//VgmgVhAO65pMMZAzjMnr/JbZkX/Hyp8+/CnNadZtI7
+ qU+3xxWe0+mfpkJGSFK82laxoNKL4WjxmF7xbcV4XKCYQ4hUn+JIhMC0zcgOid0KBqCvAISGzBb
+ f1207YLBJ8E248XfDrt2m9a8uMn1p4djQXtnnzFp8R8RqPwhPlEWS3jLiZF/hz7N3YtJdev5v/c
+ KzAyMIghXa4xPWVqlR1EunApXA/sfbFylEibwHGa2hNv91PvXJzOOq9VfrSXFr7WyjfSTcoAq3t
+ MhT6zjYoyQVdbhCb3800GYvItN+B4ir6uZe2BpQ43Q+qYdn5KcESBzd6ErXT7aJjsAnChGY8=
+X-Received: by 2002:a05:6a21:7a8c:b0:3c0:9c19:b271 with SMTP id
+ adf61e73a8af0-3c8ba63c8fcmr1099709637.63.1785214376746; 
+ Mon, 27 Jul 2026 21:52:56 -0700 (PDT)
+X-Received: by 2002:a05:6a21:7a8c:b0:3c0:9c19:b271 with SMTP id
+ adf61e73a8af0-3c8ba63c8fcmr1099685637.63.1785214376351; 
+ Mon, 27 Jul 2026 21:52:56 -0700 (PDT)
 Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-314bc3e878esm38900559eec.3.2026.07.27.21.52.48
+ 5a478bee46e88-314bc3e878esm38900559eec.3.2026.07.27.21.52.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 21:52:48 -0700 (PDT)
+ Mon, 27 Jul 2026 21:52:55 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -101,42 +99,41 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Helge Deller <deller@gmx.de>, Gustavo Romero <gustavo.romero@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PATCH v6 097/103] tests/tcg: remove remaining Makefiles
-Date: Mon, 27 Jul 2026 21:42:41 -0700
-Message-ID: <20260728044248.137626-98-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v6 102/103] meson.build: add summary for TCG tests
+Date: Mon, 27 Jul 2026 21:42:46 -0700
+Message-ID: <20260728044248.137626-103-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260728044248.137626-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260728044248.137626-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDA0MiBTYWx0ZWRfX2TFvmfMfTmMu
- 37PUKQUIdZjTLv8Z8W/0zf40JGLfCYu+W6bjzKZWP5J9bCNhXiIID3dFv5rWrKkt24r+XrMtbmv
- YwUscw3rllcuppHb2BCT7PggEdPiIn4=
-X-Authority-Analysis: v=2.4 cv=XuDK/1F9 c=1 sm=1 tr=0 ts=6a6835a3 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=mDV3o1hIAAAA:8 a=p0WdMEafAAAA:8 a=EUspDBNiAAAA:8 a=EjJ-HZw9IJny81YvC_AA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDA0MiBTYWx0ZWRfX3OKB+GDOLTf4
- 5wi0cnr4mMYr0dDa2/dl1fze6PGZctw0nn8blw6/mi3jxkStpTcjYTVp9JXazPpAJazKYoCAhTm
- nJhL/DCkTCX4NDlcShpX6/80bCq83YSZaVf7bKApgd95tGIJg8+wNvKxpe5rQ/o5QibR0QxS7O5
- fRXP7xoeGdJ8JVjLGg4pBsUhmDpFYgsUep1ansJTNbr0jWUQn7un6VlIDVxDuw49rUYeL+dgHsh
- 1/o2b/9iPFgmT3NSK28AsC0Q4pR3Phdc+Gdw+W0gujignHgiFf4hlYQTLE6kEyL7bZqesAsPBMS
- 0XLbHc+54E6WGlekaLdT020RcaWAXcOmXdXI7c9gIuU5YPZtE6a74ZcVHput4Srs1RbGJ/hX1Uc
- 7lXSwTdED0fLHJTiircSZi+20t0dGG/ZJ921alHfQYFSpvgDiddJ/vHp3ArtzDiMKM6p34KUpxv
- U0EuIugRbFBy78RgJDg==
-X-Proofpoint-ORIG-GUID: w_g0t_h8w8Wi2vx0tCw7OUftwuj9LOfB
-X-Proofpoint-GUID: w_g0t_h8w8Wi2vx0tCw7OUftwuj9LOfB
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDA0MiBTYWx0ZWRfX71ECUQttCndX
+ jbQjI08i5kunSX64/qQlSM2XqY7EHNuVR59mNU4uS1vl52mTVK6e1KtH7C2bUwIKCXkmm0ruJVf
+ 1H8UKloOHMIVFq8ccERN+QjcuEPdsNc=
+X-Proofpoint-GUID: mcRAvQ2eWKXbATGe--QxY_2DnIWPXHrB
+X-Authority-Analysis: v=2.4 cv=ev3vCIpX c=1 sm=1 tr=0 ts=6a6835a9 cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=EUspDBNiAAAA:8
+ a=0WdsRCv6IZyI2kSXPrQA:9 a=_Vgx9l1VpLgwpw_dHYaR:22
+X-Proofpoint-ORIG-GUID: mcRAvQ2eWKXbATGe--QxY_2DnIWPXHrB
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDA0MiBTYWx0ZWRfX5rqfmbKGz0Ff
+ VDahQ9xi6aANtGJjq1wItHdNrNUcEIMWytyN+LvSLXJncO1iq1Rg4sDcrkOWF8sn6st/B1SkwUh
+ NWR/F/uhSQBoOVUY4z8GyfKZD1UkYIyJORBxwJppzcBT2BDXvYzEP5iW2cUrfMiJ3H6w8HVe63k
+ tIINZCNnDO/CkJ1ymf92K7lUuc+Lwb5LixiYqveboXHuzTMImtLvqvd9L1V5dwhrUbMBmZ/ej8g
+ mEY2k4NbTt2EpReVo/v8llC9NUsWZPKwGzPv967eVbNqdwk/vf+yoBmcPUgtw2cvm7jCtZHPTcB
+ g/8E6buKJlNThDszBLBImFt9VBpL0MmPV1oAw26071x0eODg1ZYPRZnO1w2xvRLe5Xr8+24q8B5
+ PwKAMHMAmuzgh4MPsNOAvoHf5G7lITw2T400yj1soUPaIi6CmHkSE3e8qX4MSRs8pza+RigHn3F
+ 7Oh0TALl3Sz8X/fxZhQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-28_01,2026-07-27_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 adultscore=0 impostorscore=0 phishscore=0 clxscore=1015
- suspectscore=0 bulkscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607280042
+ adultscore=0 phishscore=0 lowpriorityscore=0 priorityscore=1501
+ suspectscore=0 clxscore=1015 impostorscore=0 bulkscore=0 malwarescore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607280042
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0a-0031df01.pphosted.com
@@ -162,679 +159,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-tests/tcg/mips/user/ has extra tests that are not currently run at the
-moment. Keep their Makefiles until they are implemented.
+Replacing existing summary that only contained information about
+existing cross compilers with a full summary for all targets.
+We add gdb and container information.
+We specify cc for each target (softmmu + linux-user) independently
+in case we would use different cc for bare metal vs user binaries.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Users can query full command line for tests by building tests with
+tcg-tests target, so no need to repeat it here.
+
+Output before change:
+
+$ ./configure
+  Cross compilers
+    aarch64                         : /path/to/qemu/build/pyvenv/bin/python3 -B /path/to/qemu/tests/docker/docker.py --engine auto cc --cc aarch64-linux-gnu-gcc -i qemu/debian-arm64-cross -s /path/to/qemu --
+    aarch64_be                      : /path/to/qemu/build/pyvenv/bin/python3 -B /path/to/qemu/tests/docker/docker.py --engine auto cc --cc aarch64-linux-gnu-gcc -i qemu/debian-all-test-cross -s /path/to/qemu --
+    alpha                           : alpha-linux-gnu-gcc
+    ...
+
+Output after change:
+
+$ ./configure --disable-containers
+  TCG tests
+    gdb                             : /usr/bin/gdb-multiarch
+    container command               : NO
+    cc for aarch64-softmmu          : NO
+    cc for aarch64-linux-user       : NO
+    cc for aarch64_be-linux-user    : NO
+    cc for alpha-softmmu            : alpha-linux-gnu-gcc
+
+$ ./configure --gdb=gdb --container-command=podman
+  TCG tests
+    gdb                             : /usr/bin/gdb
+    container command               : podman
+    cc for aarch64-softmmu          : aarch64-linux-gnu-gcc (from 'debian-all-test-cross' container)
+    cc for aarch64-linux-user       : aarch64-linux-gnu-gcc (from 'debian-all-test-cross' container)
+    cc for aarch64_be-linux-user    : aarch64-linux-gnu-gcc (from 'debian-all-test-cross' container)
+    cc for alpha-softmmu            : alpha-linux-gnu-gcc
+    ...
+
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- configure                                     |   9 -
- tests/tcg/Makefile.target                     | 287 ------------------
- tests/tcg/minilib/Makefile.target             |  21 --
- tests/tcg/multiarch/Makefile.target           | 223 --------------
- .../multiarch/system/Makefile.softmmu-target  |  81 -----
- 5 files changed, 621 deletions(-)
- delete mode 100644 tests/tcg/Makefile.target
- delete mode 100644 tests/tcg/minilib/Makefile.target
- delete mode 100644 tests/tcg/multiarch/Makefile.target
- delete mode 100644 tests/tcg/multiarch/system/Makefile.softmmu-target
+ meson.build           | 19 ++++---------------
+ tests/tcg/meson.build | 20 +++++++++++++++++---
+ 2 files changed, 21 insertions(+), 18 deletions(-)
 
-diff --git a/configure b/configure
-index 6ddfe4b5342..0ae20b7cdfc 100755
---- a/configure
-+++ b/configure
-@@ -1753,15 +1753,6 @@ if test "$default_targets" = "yes"; then
-   echo "CONFIG_DEFAULT_TARGETS=y" >> $config_host_mak
- fi
+diff --git a/meson.build b/meson.build
+index d59c86ab2bc..f66c466dddd 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4605,6 +4605,7 @@ subdir('docs')
+ subdir('pyvenv')
+ # Tests are disabled on emscripten because they rely on host features that aren't
+ # supported by emscripten (e.g. fork and unix socket).
++tcg_tests_summary = {}
+ if host_os != 'emscripten'
+   subdir('tests')
+ endif
+@@ -4792,21 +4793,9 @@ summary_info += {'sparse':            sparse}
+ summary_info += {'mingw32 support':   host_os == 'windows'}
+ summary(summary_info, bool_yn: true, section: 'Compilation')
  
--# tests/tcg configuration
--mkdir -p tests/tcg
--echo "# Automatically generated by configure - do not modify" > tests/tcg/$config_host_mak
--echo "SRC_PATH=$source_path" >> tests/tcg/$config_host_mak
--if test "$plugins" = "yes" ; then
--    echo "CONFIG_PLUGIN=y" >> tests/tcg/$config_host_mak
--fi
--echo "PYTHON=$python" >> tests/tcg/$config_host_mak
--
- tcg_tests_with_compilers=
- for target in $target_list; do
-   arch=${target%%-*}
-diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
-deleted file mode 100644
-index 836fccaca23..00000000000
---- a/tests/tcg/Makefile.target
-+++ /dev/null
-@@ -1,287 +0,0 @@
--# -*- Mode: makefile -*-
--#
--# TCG tests
--#
--# These are complicated by the fact we want to build them for guest
--# systems. This requires knowing what guests we are building and which
--# ones we have cross-compilers for or docker images with
--# cross-compilers.
--#
--# The tests themselves should be as minimal as possible as
--# cross-compilers don't always have a large amount of libraries
--# available.
--#
--# We only include the host build system for SRC_PATH and we don't
--# bother with the common rules.mk. We expect the following:
--#
--#   CC - the C compiler command
--#   EXTRA_CFLAGS - any extra CFLAGS
--#   BUILD_STATIC - are we building static binaries
--#
--# By default all tests are statically compiled but some host systems
--# may not package static libraries by default. If an external
--# cross-compiler can only build dynamic libraries the user might need
--# to make extra efforts to ensure ld.so can link at runtime when the
--# tests are run.
--#
--# We also accept SPEED=slow to enable slower running tests
--#
--# We also expect to be in the tests build dir for the FOO-(linux-user|softmmu).
--#
--
--all:
---include ../config-host.mak
---include config-target.mak
--
--# Get semihosting definitions for user-mode emulation
--ifeq ($(filter %-softmmu, $(TARGET)),)
---include $(SRC_PATH)/configs/targets/$(TARGET).mak
--endif
--
--# for including , in command strings
--COMMA := ,
--NULL :=
--SPACE := $(NULL) #
--TARGET_PREFIX=tests/tcg/$(TARGET):$(SPACE)
--
--quiet-@ = $(if $(V),,@$(if $1,printf "  %-7s %s\n" "$(strip $1)" "$(strip $2)" && ))
--quiet-command = $(call quiet-@,$2,$3)$1
--
--cc-test = $(CC) -Werror $1 -c -o /dev/null -xc /dev/null >/dev/null 2>&1
--cc-option = if $(call cc-test, $1); then \
--    echo "$(TARGET_PREFIX)$1 detected" && echo "$(strip $2)=$(strip $1)" >&3; else \
--    echo "$(TARGET_PREFIX)$1 not detected"; fi
--
--# $1 = test name, $2 = cmd, $3 = desc
--ifeq ($(filter %-softmmu, $(TARGET)),)
--run-test = $(call quiet-command, timeout -s KILL --foreground $(TIMEOUT) $2 > $1.out, \
--	TEST,$(or $3, $*, $<) on $(TARGET_NAME))
--else
--run-test = $(call quiet-command, timeout -s KILL --foreground $(TIMEOUT) $2, \
--        TEST,$(or $3, $*, $<) on $(TARGET_NAME))
--endif
--
--# $1 = test name, $2 = reference
--# to work around the pipe squashing the status we only pipe the result if
--# we know it failed and then force failure at the end.
--diff-out = $(call quiet-command, diff -q $1.out $2 || \
--                                 (diff -u $1.out $2 | head -n 10 && false), \
--                                 DIFF,$1.out with $2)
--
--# $1 = test name, $2 = reason
--skip-test = @printf "  SKIPPED %s on $(TARGET_NAME) because %s\n" $1 $2
--
--# $1 = test name, $2 = reference
--# As above but only diff if reference file exists, otherwise the test
--# passes if it managed to complete with a status of zero
--conditional-diff-out = 							\
--	$(if $(wildcard $2), 						\
--		$(call diff-out,$1,$2), 				\
--		$(call skip-test,"$1 check","no reference"))
--
--
--# Tests we are building
--TESTS=
--# additional tests which may re-use existing binaries
--EXTRA_TESTS=
--
--# Start with a blank slate, the build targets get to add stuff first
--CFLAGS=
--LDFLAGS=
--
--QEMU_OPTS=
--CHECK_PLUGIN_OUTPUT_COMMAND=
--
--
--# If TCG debugging, or TCI is enabled things are a lot slower
--# so we have to set our timeout for that. The current worst case
--# offender is the system memory test running under TCI.
--TIMEOUT=120
--
--ifeq ($(filter %-softmmu, $(TARGET)),)
--# The order we include is important. We include multiarch first and
--# then the target. If there are common tests shared between
--# sub-targets (e.g. ARM & AArch64) then it is up to
--# $(TARGET_NAME)/Makefile.target to include the common parent
--# architecture in its VPATH. However some targets are so minimal we
--# can't even build the multiarch tests.
--ifeq ($(wildcard $(SRC_PATH)/tests/tcg/$(TARGET_NAME)/Makefile.target),)
--# skip user tests if Makefile.target is not present
--else ifneq ($(filter $(TARGET_NAME),aarch64_be),)
---include $(SRC_PATH)/tests/tcg/$(TARGET_NAME)/Makefile.target
--else
---include $(SRC_PATH)/tests/tcg/multiarch/Makefile.target
---include $(SRC_PATH)/tests/tcg/$(TARGET_NAME)/Makefile.target
--endif
--
--# Add the common build options
--CFLAGS+=-Wall -Werror -O0 -g -fno-strict-aliasing
--ifeq ($(BUILD_STATIC),y)
--LDFLAGS+=-static
--endif
--
--%: %.c
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
--%: %.S
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -Wa,--noexecstack $< -o $@ $(LDFLAGS)
--else
--# For system targets we include a different Makefile fragment as the
--# build options for bare programs are usually pretty different. They
--# are expected to provide their own build recipes.
--EXTRA_CFLAGS += -ffreestanding -fno-stack-protector
--
--# We skip the multiarch tests if the target hasn't provided a boot.S
--MULTIARCH_SOFTMMU_TARGETS = i386 alpha aarch64 arm loongarch64 s390x x86_64
--
--ifneq ($(filter $(TARGET_NAME),$(MULTIARCH_SOFTMMU_TARGETS)),)
---include $(SRC_PATH)/tests/tcg/minilib/Makefile.target
---include $(SRC_PATH)/tests/tcg/multiarch/system/Makefile.softmmu-target
--endif
--ifeq ($(wildcard $(SRC_PATH)/tests/tcg/$(TARGET_NAME)/Makefile.softmmu-target),)
--# skip system tests if Makefile.target is not present
--else
---include $(SRC_PATH)/tests/tcg/$(TARGET_NAME)/Makefile.softmmu-target
--endif
--
--endif
--
--all: $(TESTS) $(EXTRA_TESTS)
--
--#
--# Test Runners
--#
--# By default we just run the test with the appropriate QEMU for the
--# target. More advanced tests may want to override the runner in their
--# specific make rules. Additional runners for the same binary should
--# be added to EXTRA_RUNS.
--#
--
--RUN_TESTS=$(patsubst %,run-%, $(TESTS))
--
--# If plugins exist also include those in the tests
--ifeq ($(CONFIG_PLUGIN),y)
--PLUGIN_SRC=$(SRC_PATH)/tests/tcg/plugins
--PLUGIN_LIB=../plugins
--VPATH+=$(PLUGIN_LIB)
--# Some plugins need to be disabled for all tests to avoid exponential explosion.
--# For example, libpatch.so only needs to run against the arch-specific patch
--# target test, so we explicitly run it in the arch-specific Makefile.
--DISABLE_PLUGINS=libpatch.so
--
--# Likewise don't bother with the syscall plugin for softmmu
--ifneq ($(filter %-softmmu, $(TARGET)),)
--DISABLE_PLUGINS += libsyscall.so
--endif
--
--PLUGINS=$(filter-out $(DISABLE_PLUGINS), \
--	$(patsubst %.c, lib%.so, $(notdir $(wildcard $(PLUGIN_SRC)/*.c))))
--
--strip-plugin = $(wordlist 1, 1, $(subst -with-, ,$1))
--extract-plugin = $(wordlist 2, 2, $(subst -with-, ,$1))
--extract-test = $(subst run-plugin-,,$(wordlist 1, 1, $(subst -with-, ,$1)))
--
--# We need to ensure expand the run-plugin-TEST-with-PLUGIN
--# pre-requistes manually here as we can't use stems to handle it. We
--# only expand MULTIARCH_TESTS which are common on most of our targets
--# and rotate the plugins so we don't grow too out of control as new
--# tests are added. Plugins that need to run with a specific test
--# should ensure they add their combination to EXTRA_RUNS.
--
--ifneq ($(MULTIARCH_TESTS),)
--
--# Extract extra tests from the extra test+plugin combination.
--EXTRA_TESTS_WITH_PLUGIN=$(foreach test, \
--                        $(EXTRA_RUNS_WITH_PLUGIN),$(call extract-test,$(test)))
--# Exclude tests that were specified to run with specific plugins from the tests
--# which can run with any plugin combination, so we don't run it twice.
--MULTIARCH_TESTS:=$(filter-out $(EXTRA_TESTS_WITH_PLUGIN), $(MULTIARCH_TESTS))
--
--NUM_PLUGINS := $(words $(PLUGINS))
--NUM_TESTS := $(words $(MULTIARCH_TESTS))
--
--define mod_plus_one
--  $(shell $(PYTHON) -c "print( ($(1) % $(2)) + 1 )")
--endef
--
--# Rules for running tests with any plugin combination, i.e., no specific plugin.
--$(foreach _idx, $(shell seq 1 $(NUM_TESTS)), \
--	$(eval _test := $(word $(_idx), $(MULTIARCH_TESTS))) \
--	$(eval _plugin := $(word $(call mod_plus_one, $(_idx), $(NUM_PLUGINS)), $(PLUGINS))) \
--	$(eval run-plugin-$(_test)-with-$(_plugin): $(_test) $(_plugin)) \
--	$(eval RUN_TESTS+=run-plugin-$(_test)-with-$(_plugin)))
--
--# Rules for running extra tests with specific plugins.
--$(foreach f,$(EXTRA_RUNS_WITH_PLUGIN), \
--    $(eval $(f): $(call extract-test,$(f)) $(call extract-plugin,$(f))))
--
--endif # MULTIARCH_TESTS
--endif # CONFIG_PLUGIN
--
--RUN_TESTS+=$(EXTRA_RUNS)
--RUN_TESTS+=$(EXTRA_RUNS_WITH_PLUGIN)
--
--# Some plugins need additional arguments above the default to fully
--# exercise things. We can define them on a per-test basis here.
--run-plugin-%-with-libmem.so: PLUGIN_ARGS=$(COMMA)inline=true
--
--ifeq ($(filter %-softmmu, $(TARGET)),)
--run-%: %
--	$(call run-test, $<, env QEMU=$(QEMU) $(QEMU) $(QEMU_OPTS) $<)
--
--run-plugin-%:
--	$(call run-test, $@, env QEMU=$(QEMU) $(QEMU) $(QEMU_OPTS) \
--		-plugin $(PLUGIN_LIB)/$(call extract-plugin,$@)$(PLUGIN_ARGS) \
--		-d plugin -D $*.pout \
--		 $(call strip-plugin,$<))
--	$(if $(CHECK_PLUGIN_OUTPUT_COMMAND),				      \
--		$(call quiet-command, $(CHECK_PLUGIN_OUTPUT_COMMAND) $*.pout, \
--		       TEST, check plugin $(call extract-plugin,$@) output    \
--		       with $(call strip-plugin,$<)))
--else
--run-%: %
--	$(call run-test, $<, \
--	  $(QEMU) -monitor none -display none \
--		  -chardev file$(COMMA)path=$<.out$(COMMA)id=output \
--		  $(QEMU_OPTS) $<)
--
--run-plugin-%:
--	$(call run-test, $@, \
--	  $(QEMU) -monitor none -display none \
--		  -chardev file$(COMMA)path=$@.out$(COMMA)id=output \
--	   	  -plugin $(PLUGIN_LIB)/$(call extract-plugin,$@)$(PLUGIN_ARGS) \
--	    	  -d plugin -D $*.pout \
--		  $(QEMU_OPTS) $(call strip-plugin,$<))
--	$(if $(CHECK_PLUGIN_OUTPUT_COMMAND),				      \
--		$(call quiet-command, $(CHECK_PLUGIN_OUTPUT_COMMAND) $*.pout, \
--		       TEST, check plugin $(call extract-plugin,$@) output    \
--		       with $(call strip-plugin,$<)))
--endif
--
--gdb-%: %
--	gdb --args $(QEMU) $(QEMU_OPTS) $<
--
--# Filter tests based on TCG_TEST_FILTER if set
--ifdef TCG_TEST_FILTER
--FILTERED_RUN_TESTS=$(foreach test,$(RUN_TESTS),$(if $(findstring $(TCG_TEST_FILTER),$(test)),$(test)))
--else
--FILTERED_RUN_TESTS=$(RUN_TESTS)
--endif
--
--.PHONY: run
--run: $(FILTERED_RUN_TESTS)
--
--clean:
--	rm -f $(TESTS) *.o $(CLEANFILES)
--
--distclean:
--	rm -f config-cc.mak config-target.mak ../config-$(TARGET).mak
--
--.PHONY: help
--help:
--	@echo "TCG tests help $(TARGET_NAME)"
--	@echo "Built with $(CC)"
--	@echo "Available tests:"
--	@$(foreach t,$(RUN_TESTS),echo "  $t";)
--	@echo ""
--	@echo "Environment variables:"
--	@echo "  TCG_TEST_FILTER=<pattern>  Filter tests matching pattern"
-diff --git a/tests/tcg/minilib/Makefile.target b/tests/tcg/minilib/Makefile.target
-deleted file mode 100644
-index af0bf54be98..00000000000
---- a/tests/tcg/minilib/Makefile.target
-+++ /dev/null
-@@ -1,21 +0,0 @@
--#
--# System test minilib objects
--#
--# The system tests are very constrained in terms of the library they
--# support but we are not savages. We provide a few helpful routines
--# that can be shared with the tests for basic I/O.
--#
--# They assume each arch has provided a putc function.
--#
--
--SYSTEM_MINILIB_SRC=$(SRC_PATH)/tests/tcg/minilib
--MINILIB_SRCS=$(wildcard $(SYSTEM_MINILIB_SRC)/*.c)
--MINILIB_OBJS=$(patsubst $(SYSTEM_MINILIB_SRC)/%.c, %.o, $(MINILIB_SRCS))
--
--MINILIB_CFLAGS+=-nostdlib -fno-stack-protector -ggdb -O0
--MINILIB_INC=-isystem $(SYSTEM_MINILIB_SRC)
--
--.PRECIOUS: $(MINILIB_OBJS)
--
--%.o: $(SYSTEM_MINILIB_SRC)/%.c
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -c $< -o $@
-diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
-deleted file mode 100644
-index 35050acedc9..00000000000
---- a/tests/tcg/multiarch/Makefile.target
-+++ /dev/null
-@@ -1,223 +0,0 @@
--# -*- Mode: makefile -*-
--#
--# Multiarch Tests - included from tests/tcg/Makefile.target
--#
--# These tests are plain C and built without any architecture specific code.
--#
--
--MULTIARCH_SRC=$(SRC_PATH)/tests/tcg/multiarch
--
--# Set search path for all sources
--VPATH 	       += $(MULTIARCH_SRC)
--MULTIARCH_SRCS =  $(notdir $(wildcard $(MULTIARCH_SRC)/*.c))
--ifeq ($(filter %-linux-user, $(TARGET)),$(TARGET))
--VPATH 	       += $(MULTIARCH_SRC)/linux
--MULTIARCH_SRCS += $(notdir $(wildcard $(MULTIARCH_SRC)/linux/*.c))
--endif
--ifeq ($(CONFIG_PLUGIN),y)
--VPATH 	       += $(MULTIARCH_SRC)/plugin
--MULTIARCH_SRCS += $(notdir $(wildcard $(MULTIARCH_SRC)/plugin/*.c))
--endif
--MULTIARCH_TESTS = $(MULTIARCH_SRCS:.c=)
--
--#
--# The following are any additional rules needed to build things
--#
--
--
--float_%: LDFLAGS+=-lm
--float_%: float_%.c libs/float_helpers.c
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< $(MULTIARCH_SRC)/libs/float_helpers.c -o $@ $(LDFLAGS)
--
--run-float_%: float_%
--	$(call run-test,$<, $(QEMU) $(QEMU_OPTS) $<)
--	$(call conditional-diff-out,$<,$(SRC_PATH)/tests/tcg/$(TARGET_NAME)/$<.ref)
--
--fnmsub: LDFLAGS+=-lm
--
--testthread: LDFLAGS+=-lpthread
--
--threadcount: LDFLAGS+=-lpthread
--
--signals: LDFLAGS+=-lrt -lpthread
--
--munmap-pthread: CFLAGS+=-pthread
--munmap-pthread: LDFLAGS+=-pthread
--
--vma-pthread: CFLAGS+=-pthread
--vma-pthread: LDFLAGS+=-pthread
--
--sigreturn-sigmask: CFLAGS+=-pthread
--sigreturn-sigmask: LDFLAGS+=-pthread
--
--tb-link: LDFLAGS+=-lpthread
--
--# GCC versions 12/13/14/15 at least incorrectly complain about
--# "'SHA1Transform' reading 64 bytes from a region of size 0"; see the gcc bug
--# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106709
--# Since this is just a standard piece of library code we've borrowed for a
--# TCG test case, suppress the warning rather than trying to modify the
--# code to work around the compiler.
--sha1: CFLAGS+=-Wno-stringop-overread -Wno-unknown-warning-option
--
--run-test-mmap: test-mmap
--	$(call run-test, test-mmap, $(QEMU) $<, $< (default))
--
--ifneq ($(GDB),)
--GDB_SCRIPT=$(SRC_PATH)/tests/guest-debug/run-test.py
--
--run-gdbstub-sha1: sha1
--	$(call run-test, $@, $(GDB_SCRIPT) \
--		--gdb $(GDB) \
--		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
--		--bin $< --test $(MULTIARCH_SRC)/gdbstub/sha1.py, \
--	basic gdbstub support)
--
--run-gdbstub-qxfer-auxv-read: sha1
--	$(call run-test, $@, $(GDB_SCRIPT) \
--		--gdb $(GDB) \
--		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
--		--bin $< --test $(MULTIARCH_SRC)/gdbstub/test-qxfer-auxv-read.py, \
--	basic gdbstub qXfer:auxv:read support)
--
--run-gdbstub-qxfer-siginfo-read: segfault
--	$(call run-test, $@, $(GDB_SCRIPT) \
--		--gdb $(GDB) \
--		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
--		--bin "$< -s" --test $(MULTIARCH_SRC)/gdbstub/test-qxfer-siginfo-read.py, \
--	basic gdbstub qXfer:siginfo:read support)
--
--run-gdbstub-proc-mappings: sha1
--	$(call run-test, $@, $(GDB_SCRIPT) \
--		--gdb $(GDB) \
--		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
--		--bin $< --test $(MULTIARCH_SRC)/gdbstub/test-proc-mappings.py, \
--	proc mappings support)
--
--run-gdbstub-thread-breakpoint: testthread
--	$(call run-test, $@, $(GDB_SCRIPT) \
--		--gdb $(GDB) \
--		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
--		--bin $< --test $(MULTIARCH_SRC)/gdbstub/test-thread-breakpoint.py, \
--	hitting a breakpoint on non-main thread)
--
--run-gdbstub-registers: sha512
--	$(call run-test, $@, $(GDB_SCRIPT) \
--		--gdb $(GDB) \
--		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
--		--bin $< --test $(MULTIARCH_SRC)/gdbstub/registers.py, \
--	checking register enumeration)
--
--# The prot-none test was skipped on gitlab due to missing gdb-multiarch,
--# however it seems to have bitrotten. Disable, it is tracked as
--# https://gitlab.com/qemu-project/qemu/-/issues/3329
--run-gdbstub-prot-none: prot-none
--ifneq ($(GITLAB_CI),)
--	$(call skip-test, $<, "Broken on GitLab")
--else
--	$(call run-test, $@, env PROT_NONE_PY=1 $(GDB_SCRIPT) \
--		--gdb $(GDB) \
--		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
--		--bin $< --test $(MULTIARCH_SRC)/gdbstub/prot-none.py, \
--	accessing PROT_NONE memory)
--endif
--
--run-gdbstub-catch-syscalls: catch-syscalls
--	$(call run-test, $@, $(GDB_SCRIPT) \
--		--gdb $(GDB) \
--		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
--		--bin $< --test $(MULTIARCH_SRC)/gdbstub/catch-syscalls.py, \
--	hitting a syscall catchpoint)
--
--run-gdbstub-follow-fork-mode-child: follow-fork-mode
--	$(call run-test, $@, $(GDB_SCRIPT) \
--		--gdb $(GDB) \
--		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
--		--bin $< --test $(MULTIARCH_SRC)/gdbstub/follow-fork-mode-child.py, \
--	following children on fork)
--
--run-gdbstub-follow-fork-mode-parent: follow-fork-mode
--	$(call run-test, $@, $(GDB_SCRIPT) \
--		--gdb $(GDB) \
--		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
--		--bin $< --test $(MULTIARCH_SRC)/gdbstub/follow-fork-mode-parent.py, \
--	following parents on fork)
--
--run-gdbstub-late-attach: late-attach
--	$(call run-test, $@, env LATE_ATTACH_PY=1 $(GDB_SCRIPT) \
--		--gdb $(GDB) \
--		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" --no-suspend \
--		--bin $< --test $(MULTIARCH_SRC)/gdbstub/late-attach.py, \
--	attaching to a running process)
--
--else
--run-gdbstub-%:
--	$(call skip-test, "gdbstub test $*", "need working gdb with $(patsubst -%,,$(TARGET_NAME)) support")
--endif
--EXTRA_RUNS += run-gdbstub-sha1 run-gdbstub-qxfer-auxv-read \
--	      run-gdbstub-proc-mappings run-gdbstub-thread-breakpoint \
--	      run-gdbstub-registers run-gdbstub-prot-none \
--	      run-gdbstub-catch-syscalls run-gdbstub-follow-fork-mode-child \
--	      run-gdbstub-follow-fork-mode-parent \
--	      run-gdbstub-qxfer-siginfo-read run-gdbstub-late-attach
--
--# ARM Compatible Semi Hosting Tests
--#
--# Despite having ARM in the name we actually have several
--# architectures that implement it. We gate the tests on the feature
--# appearing in config.
--#
--ifeq ($(CONFIG_ARM_COMPATIBLE_SEMIHOSTING),y)
--VPATH += $(MULTIARCH_SRC)/arm-compat-semi
--
--# Add -I path back to TARGET_NAME for semicall.h
--semihosting: CFLAGS+=-I$(SRC_PATH)/tests/tcg/$(TARGET_NAME)
--
--run-semihosting: semihosting
--	$(call run-test,$<,$(QEMU) $< 2> $<.err)
--
--run-plugin-semihosting-with-%:
--	$(call run-test, $@, $(QEMU) $(QEMU_OPTS) \
--		-plugin $(PLUGIN_LIB)/$(call extract-plugin,$@) \
--		 $(call strip-plugin,$<) 2> $<.err, \
--		$< with $*)
--
--semiconsole: CFLAGS+=-I$(SRC_PATH)/tests/tcg/$(TARGET_NAME)
--
--run-semiconsole: semiconsole
--	$(call skip-test, $<, "MANUAL ONLY")
--
--run-plugin-semiconsole-with-%:
--	$(call skip-test, $<, "MANUAL ONLY")
--
--TESTS += semihosting semiconsole
--endif
--
--test-plugin-mem-access: CFLAGS+=-pthread -O0
--test-plugin-mem-access: LDFLAGS+=-pthread -O0
--
--ifeq ($(CONFIG_PLUGIN),y)
--# Test plugin memory access instrumentation
--run-plugin-test-plugin-mem-access-with-libmem.so: \
--	PLUGIN_ARGS=$(COMMA)print-accesses=true
--run-plugin-test-plugin-mem-access-with-libmem.so: \
--	CHECK_PLUGIN_OUTPUT_COMMAND= \
--	$(SRC_PATH)/tests/tcg/multiarch/plugin/regex-compare.sh $@.out
--run-plugin-test-plugin-syscall-filter-with-libsyscall.so:
--run-plugin-test-plugin-set-pc-with-libsetpc.so:
--
--EXTRA_RUNS_WITH_PLUGIN += run-plugin-test-plugin-mem-access-with-libmem.so \
--			  run-plugin-test-plugin-syscall-filter-with-libsyscall.so \
--			  run-plugin-test-plugin-set-pc-with-libsetpc.so
--
--else # CONFIG_PLUGIN=n
--# Do not build the syscall skipping test if it's not tested with the setpc
--# plugin because it will simply fail the test.
--MULTIARCH_TESTS := $(filter-out test-plugin-set-pc, $(MULTIARCH_TESTS))
--
--# test-plugin-syscall-filter needs syscall plugin to succeed
--test-plugin-syscall-filter: CFLAGS+=-DSKIP
--endif
--
--# Update TESTS
--TESTS += $(MULTIARCH_TESTS)
-diff --git a/tests/tcg/multiarch/system/Makefile.softmmu-target b/tests/tcg/multiarch/system/Makefile.softmmu-target
-deleted file mode 100644
-index 98c4eda5e00..00000000000
---- a/tests/tcg/multiarch/system/Makefile.softmmu-target
-+++ /dev/null
-@@ -1,81 +0,0 @@
--# -*- Mode: makefile -*-
--#
--# Multiarch system tests
--#
--# We just collect the tests together here and rely on the actual guest
--# architecture to add to the test dependencies and deal with the
--# complications of building.
--#
--# To support the multiarch guests the target arch needs to provide a
--# boot.S that jumps to main and provides a __sys_outc functions.
--# Remember to update MULTIARCH_SOFTMMU_TARGETS in the tcg test
--# Makefile.target when this is done.
--#
--
--MULTIARCH_SRC=$(SRC_PATH)/tests/tcg/multiarch
--MULTIARCH_SYSTEM_SRC=$(MULTIARCH_SRC)/system
--VPATH+=$(MULTIARCH_SYSTEM_SRC)
--
--MULTIARCH_TEST_SRCS=$(wildcard $(MULTIARCH_SYSTEM_SRC)/*.c)
--MULTIARCH_TESTS = $(patsubst $(MULTIARCH_SYSTEM_SRC)/%.c, %, $(MULTIARCH_TEST_SRCS))
--
--ifneq ($(GDB),)
--GDB_SCRIPT=$(SRC_PATH)/tests/guest-debug/run-test.py
--
--run-gdbstub-memory: memory
--	$(call run-test, $@, $(GDB_SCRIPT) \
--		--gdb $(GDB) \
--		--qemu $(QEMU) \
--		--output $<.gdb.out \
--		--qargs \
--		"-monitor none -display none -chardev file$(COMMA)path=$<.out$(COMMA)id=output $(QEMU_OPTS)" \
--		--bin $< --test $(MULTIARCH_SRC)/gdbstub/memory.py, \
--	softmmu gdbstub support)
--run-gdbstub-interrupt: interrupt
--	$(call run-test, $@, $(GDB_SCRIPT) \
--		--gdb $(GDB) \
--		--qemu $(QEMU) \
--		--output $<.gdb.out \
--		--qargs \
--		"-smp 2 -monitor none -display none -chardev file$(COMMA)path=$<.out$(COMMA)id=output $(QEMU_OPTS)" \
--		--bin $< --test $(MULTIARCH_SRC)/gdbstub/interrupt.py, \
--	softmmu gdbstub support)
--run-gdbstub-untimely-packet: hello
--	$(call run-test, $@, $(GDB_SCRIPT) \
--		--gdb $(GDB) \
--		--gdb-args "-ex 'set debug remote 1'" \
--		--output untimely-packet.gdb.out \
--		--stderr untimely-packet.gdb.err \
--		--qemu $(QEMU) \
--		--bin $< --qargs \
--		"-monitor none -display none -chardev file$(COMMA)path=untimely-packet.out$(COMMA)id=output $(QEMU_OPTS)", \
--	softmmu gdbstub untimely packets)
--	$(call quiet-command, \
--		(! grep -Fq 'Packet instead of Ack, ignoring it' untimely-packet.gdb.err), \
--		"GREP", file untimely-packet.gdb.err)
--
--run-gdbstub-registers: memory
--	$(call run-test, $@, $(GDB_SCRIPT) \
--		--gdb $(GDB) \
--		--qemu $(QEMU) \
--		--output $<.registers.gdb.out \
--		--qargs \
--		"-monitor none -display none -chardev file$(COMMA)path=$<.out$(COMMA)id=output $(QEMU_OPTS)" \
--		--bin $< --test $(MULTIARCH_SRC)/gdbstub/registers.py, \
--	softmmu gdbstub support)
--else
--run-gdbstub-%:
--	$(call skip-test, "gdbstub test $*", "need working gdb with $(patsubst -%,,$(TARGET_NAME)) support")
--endif
--
--MULTIARCH_RUNS += run-gdbstub-memory run-gdbstub-interrupt \
--	run-gdbstub-untimely-packet run-gdbstub-registers
--
--ifeq ($(CONFIG_PLUGIN),y)
--# Test plugin memory access instrumentation
--run-plugin-memory-with-libmem.so: memory libmem.so
--run-plugin-memory-with-libmem.so: PLUGIN_ARGS=$(COMMA)region-summary=true
--run-plugin-memory-with-libmem.so: CHECK_PLUGIN_OUTPUT_COMMAND=$(MULTIARCH_SYSTEM_SRC)/validate-memory-counts.py $@.out
--
--EXTRA_RUNS_WITH_PLUGIN += run-plugin-memory-with-libmem.so
--endif
+-# snarf the cross-compilation information for tests
+-summary_info = {}
+-have_cross = false
+-foreach target: target_dirs
+-  tcg_mak = meson.current_build_dir() / 'tests/tcg' / target / 'config-target.mak'
+-  if fs.exists(tcg_mak)
+-    config_cross_tcg = keyval.load(tcg_mak)
+-    if 'CC' in config_cross_tcg
+-      summary_info += {config_cross_tcg['TARGET_NAME']: config_cross_tcg['CC']}
+-      have_cross = true
+-    endif
+-  endif
+-endforeach
+-if have_cross
+-  summary(summary_info, bool_yn: true, section: 'Cross compilers')
++# TCG tests configuration
++if tcg_tests_summary != {}
++  summary(tcg_tests_summary, bool_yn: true, section: 'TCG tests')
+ endif
+ 
+ # Targets and accelerators
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index 8dd6623ad1d..5a634c7fdf5 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -77,25 +77,30 @@ if gdb.found()
+     gdb_arch_supported += {arch: true}
+   endforeach
+ endif
++tcg_tests_summary += {'gdb': gdb}
+ 
+ docker_supported = false
++container_command = false
+ if get_option('containers')
+   if get_option('container_command') != ''
+     # make sure command is working
+-    cmd = get_option('container_command').split()
++    container_command = get_option('container_command')
++    cmd = container_command.split()
+     run_command([cmd, 'info'], check: true)
+     docker_supported = true
+     docker_wrapper = [docker_wrapper, '--command',
+-                      get_option('container_command')]
++                      container_command]
+   else
+     docker_probe = run_command(docker_wrapper, 'probe', check: false)
+     docker_supported = docker_probe.returncode() == 0
+     if docker_supported
++      container_command = docker_probe.stdout().strip()
+       docker_wrapper = [docker_wrapper, '--command',
+-                        docker_probe.stdout().strip()]
++                        container_command]
+     endif
+   endif
+ endif
++tcg_tests_summary += {'container command': container_command}
+ 
+ # plugins come first, as we need to build the list
+ test_plugins = {}
+@@ -269,6 +274,15 @@ foreach target, plan: tcg_tests
+     endif
+   endif
+ 
++  summary_cc = false
++  if has_cc
++    summary_cc = plan['cc']
++    if not cc_from_system
++      summary_cc += ' (from \'' + plan['cc_dockerfile'] + '\' container)'
++    endif
++  endif
++  tcg_tests_summary += {'cc for ' + target: summary_cc}
++
+   folder = plan['folder']
+   gdb_arch = plan['gdb_arch']
+   qemu = plan['qemu']
 -- 
 2.47.3
 
