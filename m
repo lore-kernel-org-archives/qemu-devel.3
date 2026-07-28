@@ -4,95 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCA02C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 14:36:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E8B1C53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 14:36:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woiud-0006r1-PI; Tue, 28 Jul 2026 10:36:07 -0400
+	id 1woiuj-0007Ht-LZ; Tue, 28 Jul 2026 10:36:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1woiuD-0006P4-UF
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:35:47 -0400
-Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1woiui-0007FU-Aq
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:36:12 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1woiu0-0000EV-AM
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:35:35 -0400
-Received: by mail-yx1-xb132.google.com with SMTP id
- 956f58d0204a3-66899fe9077so6200175d50.1
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 07:35:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785249323; cv=none;
- d=google.com; s=arc-20260327;
- b=Gi7Dv7YkLxO9uMJhVvKZbOJHnmpjaqprTuYAoypx1UWOZxY5piVJApeflKX+1e4LTH
- FZXc7mOgeGXHDFUPW6/ilQSrShD7HsXCcPAKqoTqHl48sjP5ltEulEqU+aAinf7Gfkel
- iVAYuZ6EMOyyIngohnWx27cG7bOxPpTb9RGVSv8pG5nWrhBOehpO6KP8bqJEsIygnaUv
- Z8dM2fkGPf+iOJlKFwQBCrVyy4AGgYamHuLBEP4FdNGU4Sn24Md4vOtox/KkxPFj1Crn
- MnAiAftz4i0RNZW2YmaqGvqMGKWiX0qKumEyfsYn70AxgW6D+a7Zii8oDKuv09Q1flfQ
- HgCw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=8zdjuGvJTGsQwq2F1n0Ey0GkjCD1z1YqRCka3lBjlr0=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=eXoGCMMSBupU5m6UoOX2/zqgeAEI3egMNO5L0iv4ALNGaRLhR7S8napHHtpMBSwOus
- if/Ntb+Eci5mXaEEFrLnHQ3O7Aa3o9DGq05uf9tjRPLl+ThCACZ+2R302MaMSXSA+nCa
- xry0XMJE6zZEmWykRRh31ro5Jpt0ioMLbOnL7CFobZ6BpT1e8sRp2piquWhGBM0TjXmB
- 38ckJHL0H9nLvsIfnddt03M5pABIj67kDGn7TWQOEv7uPL4X5Cc+34Krr4wLxPQ7qYg7
- MzCF96LVsTIC1xF5QH9BPSiMXtHWBbmTmK4xU019PUbq8cj1JRT7b0C5CI6LUMtJQa50
- dQBQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1woiuf-0000Mi-Mf
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:36:12 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2caf228a910so30172255ad.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 07:36:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785249323; x=1785854123; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=8zdjuGvJTGsQwq2F1n0Ey0GkjCD1z1YqRCka3lBjlr0=;
- b=qeNecfh4exff0mNMbQ46IDLJOXGzEmYHt8/tBODXZE9yOzVcX9v7D8k+sNeqZw69Hf
- 3aU04O8E1BjoYCcQdsdeBpFw7jHizG2vxXiy1MqHB2GRpwb3J8B/3bWOoE7ylSdCiohx
- Tvu8iYz5vfGhLcdp2FhHnh8DSVi7Afmiwy3302xdNb9+YQxMgyeiH6bfOOsCq6327Dm8
- IGxdJYiWZH7Ic+dHpHV6suWUaicg5sXKo1jSaijaR4ko3XDGw1QBveQPr4K30OopTvcf
- YE3sue+pnVtoNyvtWIdwc8jREtRX6kwWWzTEpv5abnfnimwVBlG+sBt1Bf+ygXjurrm2
- BI5Q==
+ d=linaro.org; s=google; t=1785249368; x=1785854168; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=/TvV2ZYJxZd8YpGuQK1TH+25tGjcP9zyMSOMw0LuEO0=;
+ b=YyburfbskDaAsrpsXX5Tle5PvxcU0vddbsnFnn+Ih8eUiEmW43ydBP+LJ0b15z05XJ
+ MiHih8k0kCFNN4YJxZVBgDb4q9zA5q3qYEO5XfZB+h/R6ZiYpwjx4l9uZYJEuPMZ7o2M
+ bTF0xsRL3P7xnsIN7FD0ADJ0czLgeDo2aGfN9HBHD1tkqiYYcfLe4TAvP8gITJu+CoMD
+ 32VpuzB1FC4QYJXTGHnoyE8br4E1rp6CzTEbbWpGIpaL6adZ60qxNxGbbDryo2Ntb6e3
+ +iz/2MKn9jtTDUMYHK/1vfQDYL4IhpOIoVUuiC6Qc8rx4krcNaZoi6u2h/6ra6SY2MQO
+ dNaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785249323; x=1785854123;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=8zdjuGvJTGsQwq2F1n0Ey0GkjCD1z1YqRCka3lBjlr0=;
- b=tOVY1O2OlVA5UMaZz9Zc9B9O23CZ42DoednMT6Qm2gcw1/0migqjYaS1irOrEbyPjC
- nDmdMCaWxdljJbwpo77Kw0I9h5pkY+fA61dfDU0TwX9Ll46R6isfXBWZoYXeGf167lwj
- STYJVGMBl4rPNX0pPL4IjtZNB1nB1qDJCgo1Xjlb+DIZ2+e7MDRjCyf1vrS6Ymr9c9gn
- Ew7w/QWbgFTo1P6CSu+axny7nRT9L1w8m+SpvpRpqxTUCpiY4NuX0f52LAkhMey/BJBA
- nJNhBr4eqkVsfuzz+Kgh7MoMLiaa/0O+rz58mK4KsYMhLBcf3ZN7ZQ6CdJgOW3DEuQDM
- r96w==
-X-Gm-Message-State: AOJu0YzBC3lb6ock3LuSEdqSqltDb6/ki8DcMNfzuENGfDMgZu74Umvl
- BtRYpxT1C+jCF5d2gutKrrTO1w7pVnoxfyMvUzDrgwm8N1S+KkJDn1BgwMLZuPUajjZZQE6gp+J
- i8f8Fe7v8WcpN0/DpwP/8oRLxhH80JUZUgi5ua1uZaQ==
-X-Gm-Gg: AR+sD13aefTpYYC10O7xFQipFAsdacaQbc6GrD/s3Rd0NH/NS/oMN2sNCTtaqGPsyz2
- CGsDI0ZBys2EVpXICG0UfX9AJ0bxEv5mQ61NSG4i2JuLP58Q1WY2flUhfo6O/YzT5xv3mDncf/z
- yAfR5ffxcj7TNdolgmIR8A9OWSlypZNDfQILmZ3GfrYAhEptgBtj5hBIHMCynYXWLLs1+gm3K6M
- GN20WUt1Plpx+eCIYB+rpsCNYgSNN/kxeqqiSZqJeR9RMfU6A2uWblapGDeVWelfgjlDtmp0uTT
- A1U+m65YKMNkB+qI/O3Hgk6jlFPifR/7BItWUf9GViQYig==
-X-Received: by 2002:a05:690e:25e6:b0:667:8b91:2419 with SMTP id
- 956f58d0204a3-6690587b56cmr845448d50.96.1785249323330; Tue, 28 Jul 2026
- 07:35:23 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785249368; x=1785854168;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=/TvV2ZYJxZd8YpGuQK1TH+25tGjcP9zyMSOMw0LuEO0=;
+ b=sANfzjxRzsRzfiv+SrZVfJ2+/fHfTkMUsuVBdXtZ/w6gJdrSeTQOGNRlQeXyIwH+AK
+ FpYAmt+p0dKDhqzLOdpAnd9AHzxaDW738KJXe+69wpIT/okUANWIJcbX8j76oewRxHaz
+ 1wfReAju33Gmj+JF73hGNgRl1x2KaEW1oT82ULzlbTqQ5Xrw/l5/q/D9nzp5QKdmt0GL
+ nEJQ+oQWyWQDjSNv+VZ/FsZgOMw3NgXc2PsJUP+LCOOugFfpqTmKGCX129SYbLj28hMT
+ sqE2dh03ingiqw7SJro//vdPAuxLrtVvDj3eTN/755QsioXg1oHsJiHOkx7un5a3A1Vv
+ Z0RQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrIpS5yHzdoA/ulr3i0C0mdZ+c/Br5wHA7akXxbc32Q+l8j5JPINrv3sLG09H752Xux4WRvHqe181x2@nongnu.org
+X-Gm-Message-State: AOJu0Yz3It0xVLh/kRtdpECfVnF94kFEywq2M5s8JWKbN5gGXsPiCOuV
+ C/fmLbA2MapMneeLYwwjjdz+LD8vdCXhMRqMBkEelLUsv5gMg7O3Opv+MIFxRdq59cM=
+X-Gm-Gg: AR+sD13IWDmUUO1AeCFmKTwn598s8sDtnBJaW37twSAWYcHcYQKWuFH1x6+qbRQFrpm
+ RYavsaeft8KAO2atRiFDZDi9RgBxYdAodeFVx3uvc5yg7S7GHloU3MK1bDWFB7ZJRf4FKkYvhnR
+ TSUuw+IO2l0YOuRwccGx23T0CBLJzDpPDZ6yfZMRvVLEvuBn+pmpfzEb+gBmc7O5j4gebf0JtmZ
+ UCDJqqLAp1L7ulbZJgG8x8dqLSafIzXjc48uHFyLxss4qc3NNcpitZJlqLL7Qc0tyjMjz2eCuBy
+ lV1y5nLUs6IJT4/MgE1NPfnImz0fV10pCvSmCjndZpzdo/ftzWw+BZoAbPzd9QmcGaqizk3dmBY
+ kXlihCKf9BY6+kAwv2tbT5oxNcJFXIR6MYS9FD5w267E6vzIPZqJpm9w2f9rnj0wP5LH43ui6N1
+ eTCtbVeC4T/1ysEoLxbUTrNr3kHNxc8QYzPbEbX64yVab8aIFWIUv6
+X-Received: by 2002:a17:902:fda5:b0:2ce:faa6:7cbb with SMTP id
+ d9443c01a7336-2d015c9241amr35316355ad.4.1785249367711; 
+ Tue, 28 Jul 2026 07:36:07 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2cfde7fdfb0sm53540005ad.74.2026.07.28.07.36.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 Jul 2026 07:36:07 -0700 (PDT)
+Message-ID: <5a4bf3ac-0720-4afa-87a5-1410782ff7dd@linaro.org>
+Date: Tue, 28 Jul 2026 07:36:05 -0700
 MIME-Version: 1.0
-References: <20260717232306.378988-1-richard.henderson@linaro.org>
- <20260717232306.378988-11-richard.henderson@linaro.org>
-In-Reply-To: <20260717232306.378988-11-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 Jul 2026 15:35:11 +0100
-X-Gm-Features: AUfX_mybFjM-ZTAbW-M7iEp3YfR85oNH22ooPlplyuhKoeDN2wuNIhtfWjP20s4
-Message-ID: <CAFEAcA--TV8fXLHFBUbUEi0wr+4Vu+wqYED2RevMG3bUyEpMnA@mail.gmail.com>
-Subject: Re: [PATCH 09/17] target/arm: Drop TLB_MMIO check in
- allocation_tag_mem_internal
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-11.1 2/3] target/arm: Make YIELD, WFI and WFE be NOPs
+ on pre-v6K
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260728111629.1705308-1-peter.maydell@linaro.org>
+ <20260728111629.1705308-3-peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260728111629.1705308-3-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,52 +107,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 18 Jul 2026 at 00:25, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> There is a memory_region_is_ram check later that
-> actually does that this was trying to do.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On 7/28/26 04:16, Peter Maydell wrote:
+> The YIELD, WFI and WFE instructions are in the NOP hint space, and
+> were only defined to actual non-NOP instructions starting in the v6K
+> architecture; they are also present for all M-profile architecture
+> versions.
+> 
+> We never did check the architecture version before making these
+> instructions have their special behaviour.  Mostly this has not been
+> a problem because a guest won't execute one of these insns unless it
+> is prepared for it to have its usual effect, and because we
+> implemented SEV and WFE as NOPs anyway.
+> 
+> Now we have implemented SEV and WFE to be more than just NOPs, it's
+> important that we have the same condition on the SEV as the WFE, so
+> that we either NOP both or else implement both.  A guest probably
+> won't try to use SEV/WFE on CPUs that don't implement them, but it is
+> valid for it to do that and rely on them both being NOPs (and so a
+> WFE-loop falls back to a pure busy-wait loop).
+> 
+> Add the "only if M profile or v6K or better" check to YIELD, WFE and
+> WFI.  This means that all the insns in the NOP-hint space for A32,
+> T32 and T16 have a correct feature check.
+> 
+> Fixes: 60e7ee5bb7cd ("target/arm: implements SEV/SEVL for all modes")
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->  target/arm/tcg/mte_helper.c | 11 -----------
->  1 file changed, 11 deletions(-)
->
-> diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
-> index 997248bd57..6177dea842 100644
-> --- a/target/arm/tcg/mte_helper.c
-> +++ b/target/arm/tcg/mte_helper.c
-> @@ -181,17 +181,6 @@ allocation_tag_mem_internal(CPUARMState *env, int ptr_mmu_idx,
->          goto fini;
->      }
->
-> -    /*
-> -     * If not backed by host ram, there is no tag storage: access unchecked.
-> -     * This is probably a guest os bug though, so log it.
-> -     */
-> -    if (unlikely(ret.flags & TLB_MMIO)) {
-> -        qemu_log_mask(LOG_GUEST_ERROR,
-> -                      "Page @ 0x%" PRIx64 " indicates Tagged Normal memory "
-> -                      "but is not backed by host ram\n", ptr);
-> -        goto fini;
-> -    }
+>   target/arm/tcg/translate.c | 35 ++++++++++++++++++++++++++---------
+>   1 file changed, 26 insertions(+), 9 deletions(-)
 
-The memory_region_is_ram() check is on the MR we got back
-from looking up the tag addr in the tag address space
-(which should always be RAM unless the board code messed
-something up). That's not the same as this check, which is
-looking at how the physical address is backed.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Does RAM being monitored by a plugin appear as the TLB_MMIO
-flag here, or is that some other flag? If it does appear
-as TLB_MMIO, that would be a reason not to make this check
-here. But in that case you need to adjust the logging
-on the !memory_region_is_ram() check below, because we
-will now wind up there for both the "board code error"
-case (address is backed by host RAM but there's no tag RAM
-for it) and the "guest error" cases (guest configured some
-MMIO-backed range as Tagged in the page tables).
-
-thanks
--- PMM
+r~
 
