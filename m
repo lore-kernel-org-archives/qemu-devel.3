@@ -4,61 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98EB5C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 06:57:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CAFFC53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 07:05:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wobko-0002mq-2g; Tue, 28 Jul 2026 02:57:30 -0400
+	id 1wobrg-0003qT-1E; Tue, 28 Jul 2026 03:04:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wobkk-0002mX-LZ; Tue, 28 Jul 2026 02:57:26 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wobki-0003Qe-Rz; Tue, 28 Jul 2026 02:57:26 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66S6vIHE026492
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 28 Jul 2026 15:57:18 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=E2mQ5dPFlg7wSF/V0QU1NDcap666JAYAx1+P7fkpHdY=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1785221838; v=1;
- b=epwGjFel9CeUhkg3ARqWd7x0oRgx8TN6lh/XFxub+w82oUcq4nCCS9QzqLQwIZwt
- NBygvynQ+dyOHaQIF7cg2xyNagVNxqXDrOl/SYCiBaQbCj733zPg58JJEBQa/meF
- WFNiToLRgGxTCJQx4jfXUHuSmDoCgUrwIjTa/0dSNVu4B/wEBV8XT6e090fbWd44
- NUREarBWy9kohPy0oJdSUXJgX9EP1ufn3Hmo94ZFmv2OjGJDCviRR2t2IG/iWu5k
- KjVp6gqRbl4NeHdvnUL1O5ugokgHDsz13H1ZZpuYOPJrXJagwclG2gwXlbdOP7AP
- AkWhQvKtOGuLueFQSbXzAQ==
-Message-ID: <0d8606b1-c6d6-4d06-bf83-050152ea0034@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 28 Jul 2026 15:57:18 +0900
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wobrc-0003q0-VS
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 03:04:32 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wobrb-0003xF-7M
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 03:04:32 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2cfbbdfa60bso32273815ad.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 00:04:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785222269; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Zsa/nVzLRK5svZfykRdCFTO6gVBd6MQmuGuwX4ETXUdYDQjNqJ2h1wd0AUH0Gy5yh8
+ PGJ5RjbdGYeFrZVCjM25gSJB/J71IQO2w1s+8HNBwRNjDca/qlVc+IicQOPCjdgIMG+g
+ aHnyHzsiwNezkKB0mBGyinfxAR5eFVBawg7IwFKWRaEI4b0gbS/ceKYWiWjnDwiCTJnN
+ w19b6wi6RXCZXETV9qBr0Ee/CrqMfHtbKJahnaQU3EA15T41Ph8LVYufVMJy/qOiuSYC
+ PmIsX0tfbFHelAmxRrEZntoDXdQG6RkaYTFdsJ5L0OQHaBqj64TqyrzUnA1zHao9FiXA
+ LqQQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Hp+8Ozl+RC1zjPFWO3nSYJyzsmOfMmGT7fXcZMHEWYg=;
+ fh=TWRAAoZCm3M4LD17F0zGwps6A0QjDI6fltqLeiVJu+w=;
+ b=g2BO/mFXbD1arEYGqQRol3Y1iuw+QHeABsWOvoz+ENH/n6GrQF83aoe/sjNPZenCF+
+ gIIeCUY6rSgy9ZBNeRheFCN0iQveS9W5B/vQtnFPMqYd46S5DM6NmelmaV+1WVZpdA6S
+ Zr2XhwLMfKvUqNxqMSMtCiZ9DOhBLSNEEkmw3+iHc4KH0RWOVwEp6kQ7rbUvwzox4xPk
+ htFpLQNHAZmzgVFZGZC56YM16SVbvi9K3RamqoivuvT7W+csP35q8bxlLz6+OobEmFtN
+ Js7ZUGyds/AYEKhdtbqV1kem7Kps3kyqkg1Uwhjlhy3vHvt3cVE5esNxFNEizWndzbPP
+ antg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785222269; x=1785827069; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Hp+8Ozl+RC1zjPFWO3nSYJyzsmOfMmGT7fXcZMHEWYg=;
+ b=Nju15btyKdBY+kXfOwv1RgH8H0fMRadF+4JW4DN9S51Jv6hQO8rcA6c9k3RxjzISvq
+ 0Yip/1DT7dLz5zn3rgU7JeCSmygb3MiRM6uu3izOsO1Zk3XcLoLsfuX9PCkmsJzrFk0g
+ DU9lttMSbofn8MhSc/SVGJNASv8OQynWFNhFgLXoq51PBC5gvbwnZF0h+vDleRkm/BQj
+ Nb+5k9MceEF0NuDgpNDmzxoitat3FvJ1q6ZOy0H+xCgkYG/GIPuC5XLy/0oR0ASBg+Bo
+ cNmeFMaSAZbvoowfS+HcT+Mpz4h0zv8iHwJN/gkS1Lu8BkeRMmkh4TMiiyztdXOBDsuS
+ C33A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785222269; x=1785827069;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Hp+8Ozl+RC1zjPFWO3nSYJyzsmOfMmGT7fXcZMHEWYg=;
+ b=QeAE3vehm0q3ZPuzJVSmgblzoT2sch4sg+GCBslLaBW1KmNM0lb44lapAKh4hDmfqd
+ 4A6F/8izQH/8gr9dX/tS6u0lzpA3gybqdbVoB5HBMQ/tL0BEtt55YLeOUVtAyB/1J32b
+ 9OppBKExcNP5++kwOqO8EDV/ZL3pnI4PjxLPLewFyYNNEMjTQU+nZjc06huT5I1kPLet
+ 95BRaPgOAH/BWUv04N55lHT4w87C4pR409N7mLC1LEL7GXZC+gTn9RVbYACLMQDE4Rx7
+ nJFoyWjO4hfoqKqs64d1kZ2ZR5WLtCCbWKW4nAbdkxClLJ9IKEbmAOK/j+cSW02+/fPL
+ X8yQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Ro2f0DAV9JYkUd4QjNWvgqiUGfA706K106ixe9foZWcer/k/46L7MVsQckMKLu2SjrRJaOJoVrHExf3@nongnu.org
+X-Gm-Message-State: AOJu0YxTrgsvjVyIgrvzpRM50o9BeBVRFRdaPUXJprb4b84mdfocT5E8
+ YaHpzgEPgsd8pCJypy8BAsnux/hHMau8iuXyQLkixKsLOkkOTkUHIsyykTZC6PnZDhC0LDcTscE
+ dEOLWR98nvlrxZ+f/Xj324vwRhq92cmA=
+X-Gm-Gg: AR+sD13XX6ZwZlS1tPs+0GW8lwMHYLxbc6Rli7SH0tI6Av5JMXu4643yoktgZaYPXKW
+ FNa1EipperG6VWWtghx/PzCWtxSL5AheOvX1hnJvgdaxkSWUDr+IK9V39BVr/9iDerzqsO4fDIl
+ Zr92dzdwwhZ7dhhpc5PaZVDRbzSCXuSSXgGdVNAoDS7SMl0hY+VGymfFzntE4ANqIC6YCtQJTpk
+ xizEjOB+mZKM7QjOGjUVVnryIFSwx4AiFI1sk1hEZY5SI1crsgii0iMScouFHmHx0erjgqk1SCs
+ P387XHe2EC8OWIwwYg==
+X-Received: by 2002:a05:6a21:1f83:b0:3bf:6d96:ac40 with SMTP id
+ adf61e73a8af0-3c8aafbdddcmr1682073637.12.1785222268908; Tue, 28 Jul 2026
+ 00:04:28 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/display/virtio-gpu: Initialize blob mapping for
- ATTACH_BACKING
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+References: <20260727-blob-v2-1-d0b9af38a975@rsg.ci.i.u-tokyo.ac.jp>
+ <amclS3G5VTeZuP8Z@redhat.com>
+ <5f437bad-2ca1-4960-8229-4a9e6107200f@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <5f437bad-2ca1-4960-8229-4a9e6107200f@rsg.ci.i.u-tokyo.ac.jp>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 28 Jul 2026 11:04:16 +0400
+X-Gm-Features: AUfX_myX-dCzkoAlEvwB8r3Sd_xyItniDFkxQvxdugVZFswplpk6yDMaTHlMCsw
+Message-ID: <CAJ+F1CK3DKbjKUco_XLxgMFhvfqFXHnneM_ee3odf+hp5WHTrA@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/display/virtio-gpu: Reject non-migratable large
+ blobs
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- QEMU Stable <qemu-stable@nongnu.org>
-References: <20260725-backing-v1-1-5b584bf7df5a@rsg.ci.i.u-tokyo.ac.jp>
- <95cca0b3-6e94-4b31-9531-e1057804122c@tls.msk.ru>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <95cca0b3-6e94-4b31-9531-e1057804122c@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+ "Michael S. Tsirkin" <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,58 +124,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/28 6:36, Michael Tokarev wrote:
-> On 7/25/26 10:11, Akihiko Odaki wrote:
->> It is necessary for blob cursor and scanout.
->>
->> Fixes: e0933d91b1cd ("virtio-gpu: Add virtio_gpu_resource_create_blob")
->> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->> ---
->>   hw/display/virtio-gpu.c | 4 ++++
->>   1 file changed, 4 insertions(+)
-> 
-> Again, is this a qemu-stable material?  From the description
-> it's difficult to say what's going on here, it feels like this
-> change should be back-ported to the stable branches.
+Hi
 
-This is another[1] NULL pointer derefence fix; it is a trivial fix that 
-can be cleanly backported.
+On Tue, Jul 28, 2026 at 10:26=E2=80=AFAM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>
+> On 2026/07/27 18:30, Daniel P. Berrang=C3=A9 wrote:
+> > On Mon, Jul 27, 2026 at 06:23:25PM +0900, Akihiko Odaki wrote:
+> >> The blob size is encoded as a 64-bit integer in the virtio protocol, b=
+ut
+> >> it is encoded as a 32-bit integer in the migration stream, and
+> >> a large blob whose size cannot be expressed in a 32-bit integer will
+> >> be corrupted after migration. Deny creating such large blobs.
+> >
+> > Is there a valid use case for such large blobs ?   If so, rather than
+> > rejecting the blob, we could dynamically add a migration  blocker.
+> > That would allow the valid use cases, while preventing the migration
+> > problem.
+>
+> For the QEMU code path changed here, there should be no practical use
+> case for a blob larger than 4 GiB. The non-virgl implementation uses
+> blobs as scanout or cursor backing. Such a size is excessive for those us=
+es.
+>
+> A dynamic migration blocker would also let the guest make an otherwise
+> migratable VM non-migratable at runtime merely by creating such a
+> resource. This could interfere with host-level VM management. So I think
+> rejecting sizes that the current migration format cannot represent is
+> better for now.
 
-[1] 
-https://lore.kernel.org/qemu-devel/81a781bb-a4e2-4cfc-a9d1-0316cfb2f17a@rsg.ci.i.u-tokyo.ac.jp/
+What's the difference? The dynamic blocker would simply happen earlier
+or be queryable, no?
 
-Regards,
-Akihiko Odaki
+> If a concrete use case emerges, extending the migration format would be
+> preferable to making migratability depend on guest-controlled state.
+>
+> Regards,
+> Akihiko Odaki
+>
+> >
+> >>
+> >> Fixes: f66767f75c9c ("virtio-gpu: add virtio-gpu/blob vmstate subsecti=
+on")
+> >> Fixes: 10b9ddbc83b9 ("Revert "virtio-gpu: block migration of VMs with =
+blob=3Dtrue"")
+> >> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> >> ---
+> >> Changes in v2:
+> >> - Add the Fixes: tag for f66767f75c9c.
+> >> - Add a TODO to encode blob_size as 64 bits in virtio-gpu/blob
+> >>    VMState version 2.
+> >> - Link to v1: https://lore.kernel.org/qemu-devel/20260725-blob-v1-1-f6=
+43fbd76398@rsg.ci.i.u-tokyo.ac.jp
+> >> ---
+> >>   hw/display/virtio-gpu.c | 15 +++++++++++++++
+> >>   1 file changed, 15 insertions(+)
+> >>
+> >> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+> >> index 718ba3039290..987b1b3ea860 100644
+> >> --- a/hw/display/virtio-gpu.c
+> >> +++ b/hw/display/virtio-gpu.c
+> >> @@ -352,6 +352,14 @@ static void virtio_gpu_resource_create_blob(VirtI=
+OGPU *g,
+> >>           return;
+> >>       }
+> >>
+> >> +    if (cblob.size > UINT32_MAX) {
+> >> +        qemu_log_mask(LOG_GUEST_ERROR,
+> >> +                      "%s: blob too large (%" PRIu64 "> %" PRIu32 ")\=
+n",
+> >> +                      __func__, cblob.size, UINT32_MAX);
+> >> +        cmd->error =3D VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
+> >> +        return;
+> >> +    }
+> >> +
+> >>       if (virtio_gpu_find_resource(g, cblob.resource_id)) {
+> >>           qemu_log_mask(LOG_GUEST_ERROR, "%s: resource already exists =
+%d\n",
+> >>                         __func__, cblob.resource_id);
+> >> @@ -1435,7 +1443,14 @@ static int virtio_gpu_blob_save(QEMUFile *f, vo=
+id *opaque, size_t size,
+> >>           }
+> >>           assert(!res->image);
+> >>           qemu_put_be32(f, res->resource_id);
+> >> +
+> >> +        /*
+> >> +         * The migration stream encodes blob_size as a 32-bit integer=
+ for
+> >> +         * compatibility though virtio encodes it as a 64-bit integer=
+. A newer
+> >> +         * version of the migration stream should encode it as a 64-b=
+it integer.
+> >> +         */
+> >>           qemu_put_be32(f, res->blob_size);
+> >> +
+> >>           qemu_put_be32(f, res->iov_cnt);
+> >>           for (i =3D 0; i < res->iov_cnt; i++) {
+> >>               qemu_put_be64(f, res->addrs[i]);
+> >>
+> >> ---
+> >> base-commit: 006a22cb26998998385b104db1ff9466ef2f3153
+> >> change-id: 20260725-blob-8a6a1a85601a
+> >>
+> >> Best regards,
+> >> --
+> >> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> >>
+> >>
+> >
+> > With regards,
+> > Daniel
+>
+>
 
-> 
-> Thanks,
-> 
-> /mjt
-> 
->> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
->> index 718ba3039290..e886298ec42f 100644
->> --- a/hw/display/virtio-gpu.c
->> +++ b/hw/display/virtio-gpu.c
->> @@ -984,6 +984,10 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
->>           cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
->>           return;
->>       }
->> +
->> +    if (!res->image) {
->> +        virtio_gpu_init_udmabuf(res);
->> +    }
->>   }
->>   static void
->>
->> ---
->> base-commit: 006a22cb26998998385b104db1ff9466ef2f3153
->> change-id: 20260725-backing-db0e69515455
->>
->> Best regards,
->> -- 
->> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>
->>
-> 
 
+--=20
+Marc-Andr=C3=A9 Lureau
 
