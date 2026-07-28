@@ -4,68 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC2B8C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 15:06:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03F4AC53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 15:07:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wojNz-0002k0-K7; Tue, 28 Jul 2026 11:06:27 -0400
+	id 1wojOO-0002sz-0D; Tue, 28 Jul 2026 11:06:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wojNb-0002eu-Dy
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 11:06:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wojOM-0002rr-Gj
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 11:06:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wojNZ-0005Cj-Lk
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 11:06:03 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wojOK-0005Ld-Tc
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 11:06:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785251160;
+ s=mimecast20190719; t=1785251207;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=CEa1UaYTqKsR3ZI22DUHmtrNqVkGp0so/PMo85//CCE=;
- b=VQBz4kiBWUGDIaB/euAF2550GkFbbohVBnYuhxFMyEP6nt+hS0YLzokSzWkh5aTFU//F/5
- PRi4NKoCA0nyfx1X9IJ8IUC+5yGEH/MNDtS/5XndDXoD0IILZ5Xj1888J6YiY0JQvB+yVK
- svuoUzNWyeh/7lIoA0q0clpa5EvqBsM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=gGCW8S6/PwqcOTJQB5tkv7+LFwSBeoEStZwBaaCZweo=;
+ b=Euo11I8474ACrq/SThY9dsBtkbr6ON+rF6YTcKzmaOB4FiM8Fu0K94gacguWGBrs72APYY
+ MRGanY8OvgNa1+FffrSMjwhKqdCQ6eu/AVzkDVoSMlDqb2cnFTL9k73IyZXyX7KewjVgfY
+ UzjBbYoFsmwLrdiXO3Psu/bFokHxRxI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-611--seB-44hMEO3u0IR57CPug-1; Tue,
- 28 Jul 2026 11:05:57 -0400
-X-MC-Unique: -seB-44hMEO3u0IR57CPug-1
-X-Mimecast-MFC-AGG-ID: -seB-44hMEO3u0IR57CPug_1785251156
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-6-S56wrrqEOp298gCaXqdk6w-1; Tue,
+ 28 Jul 2026 11:06:41 -0400
+X-MC-Unique: S56wrrqEOp298gCaXqdk6w-1
+X-Mimecast-MFC-AGG-ID: S56wrrqEOp298gCaXqdk6w_1785251198
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8D8F4180057E; Tue, 28 Jul 2026 15:05:54 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.49.201])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9DDDD18004AD; Tue, 28 Jul 2026 15:05:52 +0000 (UTC)
-Date: Tue, 28 Jul 2026 17:05:50 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Eric Farman <farman@linux.ibm.com>
-Cc: Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>
-Subject: Re: [PATCH v1 0/3] io_tests fuse fixes
-Message-ID: <amjFTkbGZX-1d42k@redhat.com>
-References: <20260725125651.3896151-1-farman@linux.ibm.com>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D70D01956095; Tue, 28 Jul 2026 15:06:37 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.73])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4D4391956045; Tue, 28 Jul 2026 15:06:35 +0000 (UTC)
+Date: Tue, 28 Jul 2026 11:06:31 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Connor Kite <connorkite@gmail.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Haixu Cui <quic_haixcui@quicinc.com>,
+ Raphael Norwitz <rnorwitz@nvidia.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Milan Zamazal <mzamazal@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ qemu-block@nongnu.org, virtio-fs@lists.linux.dev,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Eugenio =?iso-8859-1?Q?P=E9rez?= <eperezma@redhat.com>,
+ Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
+Subject: Re: [PATCH RFC 08/15] hw/virtio/vhost-shadow-virtqueue: used handler
+Message-ID: <20260728150631.GF371693@fedora>
+References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
+ <20260723-vhost-user-isolated-memory-v1-8-6b97c439eb28@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="bnqYc8PExKM7h3vZ"
 Content-Disposition: inline
-In-Reply-To: <20260725125651.3896151-1-farman@linux.ibm.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+In-Reply-To: <20260723-vhost-user-isolated-memory-v1-8-6b97c439eb28@gmail.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,24 +106,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 25.07.2026 um 14:56 hat Eric Farman geschrieben:
-> Hi,
-> 
-> The following are three small fixes against some of the qemu iotests
-> to avoid some errors that should prevent the tests from running in
-> the first place. We noticed these on an s390 host, but I don't
-> believe that to be relevant. My hunch is the messages are slightly
-> different based on distro, because the tests (correctly) skip for
-> me running Fedora on s390 or x86_64 while they fail under Ubuntu 26.04.
+--bnqYc8PExKM7h3vZ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This series conflicts with a patch from Denis Lunev I already queued:
+On Thu, Jul 23, 2026 at 03:30:07PM -0700, Connor Kite wrote:
+> Adds a handler callback to shadow virtqueues in order to enable
+> non-default processing of used vring elements from the device.
+>=20
+> Signed-off-by: Connor Kite <connorkite@gmail.com>
+> ---
+>  hw/virtio/vhost-shadow-virtqueue.c |  4 ++++
+>  hw/virtio/vhost-shadow-virtqueue.h | 14 ++++++++++++++
+>  2 files changed, 18 insertions(+)
+>=20
+> diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-=
+virtqueue.c
+> index bcb7f2ffc7..eb86c1ee37 100644
+> --- a/hw/virtio/vhost-shadow-virtqueue.c
+> +++ b/hw/virtio/vhost-shadow-virtqueue.c
+> @@ -669,6 +669,10 @@ static void vhost_svq_flush(VhostShadowVirtqueue *sv=
+q,
+>                  break;
+>              }
+> =20
+> +            if (svq->ops && svq->ops->used_handler) {
+> +                svq->ops->used_handler(svq, elem, svq->ops_opaque);
+> +            }
+> +
+>              if (unlikely(i >=3D svq->vring.num)) {
+>                  qemu_log_mask(LOG_GUEST_ERROR,
+>                           "More than %u used buffers obtained in a %u siz=
+e SVQ",
+> diff --git a/hw/virtio/vhost-shadow-virtqueue.h b/hw/virtio/vhost-shadow-=
+virtqueue.h
+> index ec16a1e838..ccfeee36d7 100644
+> --- a/hw/virtio/vhost-shadow-virtqueue.h
+> +++ b/hw/virtio/vhost-shadow-virtqueue.h
+> @@ -56,8 +56,22 @@ typedef int (*VirtQueueAvailCallback)(VhostShadowVirtq=
+ueue *svq,
+>                                        VirtQueueElement *elem,
+>                                        void *vq_callback_opaque);
+> =20
+> +/**
+> + * Callback to handle a used buffer
+> + *
+> + * @svq: Shadow virtqueue
+> + * @elem: Element placed in the queue by the device
+> + * @vq_callback_opaque: Used to pass arguments to callback
+> + *
+> + * Returns 0 if the vq is running as expected
 
-[PATCH v2 2/3] iotests: skip FUSE tests when FUSE is not usable
-https://patchew.org/QEMU/20260715103451.1930909-1-den@openvz.org/20260715103451.1930909-3-den@openvz.org/
+The doc comment should mention what non-0 look like. Are errors reported
+as a negative errno?
 
-Can you please check if this already solves some of your problems and
-rebase the rest of your series on top of it?
+> + */
+> +typedef int (*VirtQueueUsedCallback)(VhostShadowVirtqueue *svq,
+> +                                      VirtQueueElement *elem,
+> +                                      void *vq_callback_opaque);
+> +
+>  typedef struct VhostShadowVirtqueueOps {
+>      VirtQueueAvailCallback avail_handler;
+> +    VirtQueueUsedCallback used_handler;
+>  } VhostShadowVirtqueueOps;
+> =20
+>  /* Shadow virtqueue to relay notifications */
+>=20
+> --=20
+> 2.43.0
+>=20
 
-Kevin
+--bnqYc8PExKM7h3vZ
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmpoxXcACgkQnKSrs4Gr
+c8gEPAgAnM6gyWjjb6vq24pJXR1H067s9W6tNHemw0rnqT+tOhL0zrKs5bwsa7QJ
+C5GmytVPByQVkR5AAvGVNioKhkx366NbjkUFCb9T+lJUACWTWZHha/4fH+HuLaI/
++paYr3L5wQ2DWD5sTeHw9kUa5koz+zZEX3dBFh8rRGT8NuxsizK43ObYziMx4tlQ
+maxC4ffSsCnQ1JtVlkfbD4OhgJFilrpwXoHCmWaR/MynF/QCVcN2rIQPmB9BEUZC
+siRj6oL3FVHYBqy2yFWusYLvaUb0ksEjxZWr4hA4ZpJrzXlxF1JFPf9KChzI43B3
+2s/BlDWvdUL7ZLNJfdHVgOqS3OiwTw==
+=7ZzM
+-----END PGP SIGNATURE-----
+
+--bnqYc8PExKM7h3vZ--
 
 
