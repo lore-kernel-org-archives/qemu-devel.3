@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A946DC53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 19:31:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDD9FC54F52
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 19:32:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wonUE-0005Ps-JH; Tue, 28 Jul 2026 15:29:11 -0400
+	id 1wonRx-0002zr-S3; Tue, 28 Jul 2026 15:26:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1wonSZ-0003cn-HK
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:27:31 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1wonRp-0002tM-E2
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:26:42 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1wonSX-0001eJ-Qx
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:27:27 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-38dfe910e9dso161195a91.3
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 12:27:25 -0700 (PDT)
+ id 1wonRn-0001Lj-S4
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:26:41 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-38dd55ad76cso190814a91.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 12:26:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785266844; x=1785871644; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=LpASq3jOBF00q1EZdBLVp0S8hhXgpRTHfBnK0kI8ssk=;
- b=D8omu9Du/0UkorCtGyhr73TtjY98gEmaL/qXwyorjycBqE/D8xs+aguGR6po/XCZkt
- GMYHvK7LOMWaezsf7tcWoq2J199u7rz4foCJBJDYLS3Gqv46UyO2SLJV0UlW88J/b3CO
- Y7hcL7SKBQOgv7FbP/AyO5PMyHHPkjqdGm+sa9DuCaIf8IK1+cdUzlwjC+8HXwck51YN
- Y1M1BvlHwAxbOEQZAXycyoQcTfIAwL1tIpXEjgkiHiY28yC81z3PayEJs94hYpIxbZnM
- r+Nswyrlr91NyDtSTqWgI0mztzL4bI8FmDpnOarWhE962t/c4iha1wOqCGhoVxr8BoVq
- afkQ==
+ d=linaro.org; s=google; t=1785266797; x=1785871597; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=CTa8ol54WmkLiwpxVbLa9gLi/D951jAni9gUZTC/0Gw=;
+ b=FZN5u+02W5PUw7NV/1b252l9Nh2zGGrTHZvsaz86b3ISaKXTa3LaqVOeSzgbI59hlp
+ rHWQnTqqV9As5tFpT1n5EqXPUMz1UOXKQwBXQ1nDNT0qJxwtHIy6muqUrSZ3pkxadU1K
+ HqsIPYR+i9o+4Lcttrk+9Cu6Nd1xikhFdtygOCSzJcNd1nVVHJiGIBlpyNbU9kPNhZW5
+ B3OHYPsotRHS6Yj+iTD/2kzvlsfXXhl5mwKNIGtAXzwwDKdULgsdf9Iv6Qfpzt5R05jQ
+ uEeIXM07gOuTYHI0aFZJ3C9ZWxwnc9jW6fx5GcHdQXNlCryi+DgFgd1KGPxdb3NhSPIY
+ +7Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785266844; x=1785871644;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=LpASq3jOBF00q1EZdBLVp0S8hhXgpRTHfBnK0kI8ssk=;
- b=FAxrOX4ZcZkL/6s965ARvGVDEI6zHsPyLRBuqhkAdo3ZzyPga0nadtpLf5pWtuMeg7
- i+mfZHiEceQpm0tVD/r7CA8Cjh7lsRmxfOFR/Ipdso/iu1+XW07/XFQmfnVLSRO++huX
- SpWRI9OTsKPqHy6mp/tm0PTyMLYZ+BSeoVW5gPViXIcxi8BPZYsHXnAusn4oIrRymBv5
- DmpyGfCQYXvjsmDS/2L3zlfw/XsmrvdW1LLagAjIKJvfOaZwTyxjyNsoouHirPH/7lQC
- mtaHpzn09CbdClsWCFYWA8fDo5oDkqKqKDstu7pAD6fKVNymF2j5i0GKusFds/dGFxBs
- 1Jcw==
-X-Gm-Message-State: AOJu0Yz5JbeEG6gQ2hca8fxrq2zqxiH38DI0tRbIEzocRPYEvgTc12Lm
- pHBihPg0svUyqFOUiaUWVq5wKLI1zJ0aYckeEBkagpEOC4uBc2O0nRzzwkicDJaHBx4=
-X-Gm-Gg: AR+sD12ii0mtGTV/kR9XB2SbAjdcTKXMxCiB0EU04K4XeqI3/3+vj9Tysd6F0u/qmHn
- kCz2aS9XYnIKbGVH0U/L8xuniwep8NZgRTqTFcwFnSFOGgPi/Kly5LhpA7BeGRmA5BXbEypprYW
- R+kMcWepmM5T21HecRwer17tdemRLM1ZhA4WuVYce2RFYVqm4qKu0m3ubEW8jRQNDGfgKVCuIP0
- nvYIpNy0Tl2YOF9CucV7HHHqh8LJnc2M/ZZLBuw4u7bS6B5HCXJ+/IW6+rIgx71X8HjAQbC5xRR
- 0nVzoHykvg4kNQ5jL3k2tzknSsNqknl/Roi/W7OLKVvS1cfahfDaTrCCu0aCJ2cKjSpvnvBj6Ul
- DRkU0VL8LCfeHN4VQz+OSrwhMY06ULo+V4wKMPNxzBvNd7ki7aYkVrlAQ4sTx6Jv5bOTh8436hA
- RKjYZdqvCN+KjWjFJ5fwV/jpHi7yx/PVqyxsyScdZGxQe07y7DEetrbF1g505qet8OoaefPIHXU
- 1eBUvkOdhfRzWc=
-X-Received: by 2002:a17:90b:5864:b0:38e:c7b0:84ad with SMTP id
- 98e67ed59e1d1-38f6a1becc7mr3877953a91.0.1785266844304; 
- Tue, 28 Jul 2026 12:27:24 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785266797; x=1785871597;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=CTa8ol54WmkLiwpxVbLa9gLi/D951jAni9gUZTC/0Gw=;
+ b=FYQ2FDgjcj0KspxQ3clJNRdUH6VXnsvxcv3EOE5JOURDODNA2he2KnqoeTBt+G++tk
+ 3GxPGKh+tQ+pHhVSwethI7IT8WgQ0t0yyoaesyo8j0vBAhQ0EujvmlH92Rup/s94zGW9
+ XgALFo0gZdMyMakY1JBvTxFxMR6iLSEXPEfXn/4af2J0b2ErpJ5/QTYfK46I/i1l1EFO
+ J/l/oZbBjdDUqxSeS0AI9aYyGTaDzdVX58Tb31mL60OzVgwBU0cFeG9L7P0xZwzpHseB
+ GkPJ+Xj7WsEgDaqZEIxugERPg8lb6jwos45NgfXeZqPTEqI35ulx6E3+Rcr9K/2U7BN1
+ GOaA==
+X-Gm-Message-State: AOJu0Yw+DgGAMiSchQN96M4nSfHYAzrWF91G1QGeqIl7AzBtflOt42+B
+ U/+vK8HbSS51MvxNrtY+7jEYlp8uZGfvEwmi3qo82bDRYuh7IBsCtQvg9u/cUe6PmrM=
+X-Gm-Gg: AR+sD10jW3WiSpadmltNaj/F4t2wT1ltF9Sv7Vn4JpCDoliVmiN9V719dHEePlwNdfK
+ GDek9z8tc3W5CKSpYkvZ9DQsnK3xnIfZy6amu7WS2Fy0NmpxhVX8+erIRI7+Br/swqzRnXCIZXf
+ 6O2W10aF8IxJ/2euJIASDvwiUkOjatbFhMJydG0aRqyzsq+RlOCXBa1/JhyKq6zGQMvA2GGDhc4
+ bE3UVWzAB/KlmpXERfw89+XWwYUHOPQd1mAeDbTdvEA/D4fqPg4QUozpvwRIjBR8CBZRXMFIpLr
+ Hikgt2xX8xryHgrF/ltGAQNI/QDbwtKUGP2BOmbiJDzkQzuuRpE4hF89YoZZ2B7sI0k5WHqeeVI
+ cF2Z/3karrEiVnAaDPcx6Dw/8mqaQi05DTpb6cEyBPwCNHcT/RLrHYHoRtgUb3iMyBfEKmkAvLw
+ hRRRAgAh8KdroQi32n4Jcab/nIK8uGBkMYSTLD++YwtbeZgh3ikspte1+2N0QZdTZOdrFNdixmY
+ te8SlHAQeC9Brg=
+X-Received: by 2002:a17:90b:2d87:b0:38e:5ce1:ae30 with SMTP id
+ 98e67ed59e1d1-38f6a336e0cmr3477306a91.14.1785266797109; 
+ Tue, 28 Jul 2026 12:26:37 -0700 (PDT)
 Received: from p14s.cg.shawcable.net
  ([2604:3d09:148c:c800:b9d1:87c9:a085:86c9])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38f7f1353fdsm372650a91.8.2026.07.28.12.27.22
+ 98e67ed59e1d1-38f7f1353fdsm372650a91.8.2026.07.28.12.26.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jul 2026 12:27:23 -0700 (PDT)
+ Tue, 28 Jul 2026 12:26:36 -0700 (PDT)
 From: Mathieu Poirier <mathieu.poirier@linaro.org>
 To: berrange@redhat.com, kchamart@redhat.com,
  pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
@@ -74,16 +75,18 @@ To: berrange@redhat.com, kchamart@redhat.com,
 Cc: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org,
 	kvm@vger.kernel.org
-Subject: [RFC v2 23/24] hw/arm/boot: Load DTB as is for confidential VMs
-Date: Tue, 28 Jul 2026 13:26:29 -0600
-Message-ID: <20260728192630.240375-24-mathieu.poirier@linaro.org>
+Subject: [RFC v2 02/24] target/arm/kvm: Return immediately on error in
+ kvm_arch_init()
+Date: Tue, 28 Jul 2026 13:26:08 -0600
+Message-ID: <20260728192630.240375-3-mathieu.poirier@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260728192630.240375-1-mathieu.poirier@linaro.org>
 References: <20260728192630.240375-1-mathieu.poirier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=mathieu.poirier@linaro.org; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=mathieu.poirier@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,35 +111,66 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-Load DTB without modifications when provided.  That way it is possible
-for a verification entity to reconstruct the Realm's initial measurement.
+Returning an error to kvm_init() is fatal anyway, no need to continue
+the initialization.
+
+Leave the `ret` variable in the function scope because it will be reused
+when adding RME support.
 
 Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 ---
- hw/arm/boot.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ target/arm/kvm.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/hw/arm/boot.c b/hw/arm/boot.c
-index 1e8efada209f..9b3d3558bcbc 100644
---- a/hw/arm/boot.c
-+++ b/hw/arm/boot.c
-@@ -477,7 +477,14 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
-     g_autoptr(MemoryDeviceInfoList) md_list = NULL;
-     Error *err = NULL;
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index d40a6a985914..ed99be7fd80c 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -596,7 +596,7 @@ int kvm_arch_get_default_type(MachineState *ms)
  
--    if (binfo->dtb_filename) {
-+    if (binfo->dtb_filename && binfo->confidential) {
-+        /*
-+         * If the user is providing a DTB for a confidential VM, it is already
-+         * tailored to this configuration and measured. Load it as is, without
-+         * any modification.
-+         */
-+        return rom_add_file_fixed_as(binfo->dtb_filename, addr, -1, as);
-+    } else if (binfo->dtb_filename) {
-         char *filename;
-         filename = qemu_find_file(QEMU_FILE_TYPE_DTB, binfo->dtb_filename);
-         if (!filename) {
+ int kvm_arch_init(MachineState *ms, KVMState *s)
+ {
+-    int ret = 0;
++    int ret;
+     /* For ARM interrupt delivery is always asynchronous,
+      * whether we are using an in-kernel VGIC or not.
+      */
+@@ -618,7 +618,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+         !kvm_check_extension(s, KVM_CAP_ARM_IRQ_LINE_LAYOUT_2)) {
+         error_report("Using more than 256 vcpus requires a host kernel "
+                      "with KVM_CAP_ARM_IRQ_LINE_LAYOUT_2");
+-        ret = -EINVAL;
++        return -EINVAL;
+     }
+ 
+     if (kvm_check_extension(s, KVM_CAP_ARM_NISV_TO_USER)) {
+@@ -640,13 +640,14 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+             warn_report("Eager Page Split support not available");
+         } else if (!(s->kvm_eager_split_size & sizes)) {
+             error_report("Eager Page Split requested chunk size not valid");
+-            ret = -EINVAL;
++            return -EINVAL;
+         } else {
+             ret = kvm_vm_enable_cap(s, KVM_CAP_ARM_EAGER_SPLIT_CHUNK_SIZE, 0,
+                                     s->kvm_eager_split_size);
+             if (ret < 0) {
+                 error_report("Enabling of Eager Page Split failed: %s",
+                              strerror(-ret));
++                return ret;
+             }
+         }
+     }
+@@ -659,7 +660,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+     hw_breakpoints = g_array_sized_new(true, true,
+                                        sizeof(HWBreakpoint), max_hw_bps);
+ 
+-    return ret;
++    return 0;
+ }
+ 
+ unsigned long kvm_arch_vcpu_id(CPUState *cpu)
 -- 
 2.43.0
 
