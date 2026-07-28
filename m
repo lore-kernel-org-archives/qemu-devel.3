@@ -4,106 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FF15C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 20:28:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEE8FC54F51
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 20:37:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wooPT-0000z8-QF; Tue, 28 Jul 2026 16:28:19 -0400
+	id 1wooXp-0002vB-VI; Tue, 28 Jul 2026 16:36:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wooPR-0000yd-Vq
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 16:28:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wooXn-0002uV-Tc; Tue, 28 Jul 2026 16:36:56 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wooPQ-0006az-E0
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 16:28:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785270494;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=FFoW+/9yDgOW9KoIeu3Wdgdu+J6msIOVqvm8609v8R8=;
- b=Bc5T1v1DF4TIyvehdT5h2ufOH8LQbMQrKRvbKA01BExKURVcQhw10FVgkBrjUFEXMTTCvZ
- B+krhtL1/S0iStLSR8CHlBAG7RZ5z7JsTEzc0cP9tzyOEAgkaOg46tZtyaqbGn5wVC1y9N
- SS35zr38auBRnbkGGFz0lwKui8nOe+o=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-400-AFBBPDU_PGSa3IBFjAbROQ-1; Tue, 28 Jul 2026 16:28:13 -0400
-X-MC-Unique: AFBBPDU_PGSa3IBFjAbROQ-1
-X-Mimecast-MFC-AGG-ID: AFBBPDU_PGSa3IBFjAbROQ_1785270492
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-92ac0a54110so42185385a.2
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 13:28:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785270492; x=1785875292; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=FFoW+/9yDgOW9KoIeu3Wdgdu+J6msIOVqvm8609v8R8=;
- b=ml6B4mDujvTB+EqICwJJVfDhiCSCz8e9OLvfG3UahcpIABdzIE3jCCGV3GbZmPSmz2
- 632GQFp6vNOW5ZRbvLYli3BxZoU98QbFsnj2tqU7wQ5rbruvdpWGF9rojSbZru3cjeuF
- jryBRwrrCJc4oHYfTW2I5LbMf9Rum2F6JNEasHkuyriDgAo/qSHHqxADdPxRjd3a0nPD
- jskDxHTXxK6srILxyVNBvYD9G6ay+s6kg3D2BUgPFqMj5zSvcuX6MzTB8pNlZImx/S6g
- 1Ylz55refgSU13VgVwR+xttXzA8WqeL2k2Jdejcc/5LUib+vjkqbN/wxkPePogKP6EDD
- HEDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785270492; x=1785875292;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=FFoW+/9yDgOW9KoIeu3Wdgdu+J6msIOVqvm8609v8R8=;
- b=BtBk+NnxFtBTuCvZZbCO+gubjNArYqgrYYGithpkD36YGI1pPb2M0t9IRAesaIWnu6
- sOcc6WQBoiTMh1gnIyJ0OeCshElo+eHV59abOXcyylEgAQE9eMGHgsStPv+YaI/d+/tD
- Mzb81rrvlIcarJttUkpF1K3N4CHL9Vf9KOHFBLHk9KT/mGDmSEAGDPJJsmg2KQq4nK/B
- /gXaPwlV4iT+9dR52XaWKLH86Jv0/uTtR+6R8+grr76E2Cd95fAHMf0GlNNAZnx7OxQ/
- Xi037b3jphRyd3fUrn4O+YehWeYYJC/ovz8IJRBoH2iMm7OLXpkHNLgXJLNRELnpCEYN
- MKdg==
-X-Gm-Message-State: AOJu0Yx0055i07K5aGAqWk6cxGTY0DVsyvyEUf5mq5BItwfQCn6U8URF
- G85jbkLYc58s2FHYjznhRLn6oIV2rxqa0mt9jj5kIrreEDUnu6v3nv+dA3KMFZHIW1kN3+HyKjl
- odo48ph/bRvMqHm6rNVKgPpqa5gJsxmi11xwItsP83CG92OZTVAxlzzZD
-X-Gm-Gg: AR+sD10oyuAb61l0mQ0mER7RCELusDX5Fb7Jkb5Hnx0dDfCOT4vYRFHwPYHuv2eAsfc
- UgvIgG2+Gfqas3OWzErRhH4/AGzYnbr2w2AUSJ1dlu7F0UAGzZsBT53C2gPsCYwv/la53lymAi3
- 4Md5i0Fp1x9Y0tDfsBXT83j5YWU7K+vJEBbjzOej0G16TPtStBtcQJqmxtBkX8UiFQojnsX2BUz
- MQL4HOImgrmWK1t5rG6qx79zHz6pDiejXZ7DNGRmI2A1ESQao53U/M1kQcNkppmT+MnNajq5u8n
- d1Db3ONVfJtjyoBMwupXWXIRehckxVaaRkBrat5rB2v3Y+ZrKzUImrwm652zY2HNs95b
-X-Received: by 2002:a05:620a:268b:b0:92e:e569:dc20 with SMTP id
- af79cd13be357-933027a71d8mr375311785a.78.1785270492394; 
- Tue, 28 Jul 2026 13:28:12 -0700 (PDT)
-X-Received: by 2002:a05:620a:268b:b0:92e:e569:dc20 with SMTP id
- af79cd13be357-933027a71d8mr375307985a.78.1785270491820; 
- Tue, 28 Jul 2026 13:28:11 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-9081dd6857csm7585146d6.40.2026.07.28.13.28.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jul 2026 13:28:11 -0700 (PDT)
-Date: Tue, 28 Jul 2026 16:28:00 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
- qemu-stable <qemu-stable@nongnu.org>, Yuan Liu <yuan1.liu@intel.com>,
- Yichen Wang <yichen.wang@bytedance.com>
-Subject: Re: [PATCH 3/5] migration/multifd: Replace assert() with
- error_setg() in recv paths
-Message-ID: <amkQ0JzADdKbhsOJ@x1.local>
-References: <20260728155247.1894355-1-peterx@redhat.com>
- <20260728155247.1894355-4-peterx@redhat.com>
- <87tspiopuc.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wooXl-00085a-Uz; Tue, 28 Jul 2026 16:36:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1785271004; bh=BcvM1hh2cV/YH7x8qaS53Qb7cdkywghNFqqRXKWjS78=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=OnEFYQ6fAG3s9dqmYxv2e1yrfzVbl3OwL2NZ4oU9HzMCbGTRHb/TBqVRCX+ijbbY8
+ X9RDpOdqmVohnN+Y3NDyVizihXnw2RwWh9RILaZGfTjzIVsrzdROnJja8FL5GeMt8b
+ +fQM7adxyjPitlDX8f2GVvZSo1CXM3zhcPb672jcxZyVPNkgIxakP/icApa5GNbMUV
+ 5Uztl/YX3xkdofvlqQWJlu1gZgHbcaR52/VV6aDre4Eg+7L5V/+KiJ0u4RGK4MJtb8
+ rO/N1doXVnjeg6bMBYiewRchDfgsFcpYx4hIY/StrERDacg0Zd+1JO3AcHJfj9Zts5
+ +YI8AwhYSTGJA==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id B9A3F1C6435;
+ Tue, 28 Jul 2026 23:36:44 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id BBAA53F878A;
+ Tue, 28 Jul 2026 23:36:49 +0300 (MSK)
+Message-ID: <9f831894-4184-4a8d-9ebd-f11ca941ef07@tls.msk.ru>
+Date: Tue, 28 Jul 2026 23:36:31 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87tspiopuc.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-11.1?] qemu-iotest 161: fix race
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+References: <20260728163919.369020-1-mjt@tls.msk.ru>
+ <amjss5kbAzHgjmdC@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <amjss5kbAzHgjmdC@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,38 +113,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 28, 2026 at 04:51:07PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > QPL and UADK multifd backends use assert() to validate wire-controlled
-> > fields like per-page compressed lengths and packet size consistency.  These
-> > asserts will stop working with released version of binaries, so may stop
-> > working.
-> 
-> This is not true, asserts are always on. Same for the similar comment in
-> the previous patch commit message.
+On 7/28/26 20:53, Kevin Wolf wrote:
 
-Shall I perhaps replace this to "when compiled with -DNDEBUG"?
+>> diff --git a/tests/qemu-iotests/161 b/tests/qemu-iotests/161
+>> index f25effab936..0b8ba0b19e2 100755
+>> --- a/tests/qemu-iotests/161
+>> +++ b/tests/qemu-iotests/161
+>> @@ -106,6 +106,7 @@ echo
+>>   echo "*** Commit and then change an option on the backing file"
+>>   echo
+>>   # Create the images again
+>> +rm -f -- "$TEST_IMG.base" "$TEST_IMG.int"
+>>   TEST_IMG="$TEST_IMG.base" _make_test_img $IMG_SIZE
+>>   TEST_IMG="$TEST_IMG.int" _make_test_img -b "$TEST_IMG.base" -F $IMGFMT
+>>   _make_test_img -b "$TEST_IMG.int" -F $IMGFMT
+> 
+> This can only work for the file protocol, but the test also supports
+> fuse, which is now broken.
 
-> 
-> >
-> > Replace all assert() calls in the receive path with proper error_setg() so
-> > validation failures are reported gracefully rather than crashing or
-> > silently ignored.
-> >
-> > While at it, touch up an assert() in qatzip recv path too.
-> >
-> > Cc: qemu-stable <qemu-stable@nongnu.org>
-> > Cc: Fabiano Rosas <farosas@suse.de>
-> > Cc: Yuan Liu <yuan1.liu@intel.com>
-> > Cc: Yichen Wang <yichen.wang@bytedance.com>
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> 
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+I haven't noticed _rm_test_img function.  I wonder maybe we can add
+this rm into _make_test_img directly, and fix this for all tests?
+
+_make_test_img already calls _rm_test_img - for fuse protocol exactly.
+It can call _rm_test_img unconditionally, I guess.
+
+I'll give it a try tomorrow.
 
 Thanks,
 
--- 
-Peter Xu
-
+/mjt
 
