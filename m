@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2118C54F4C
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 15:36:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E083C53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 15:36:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wojqT-00010U-Tm; Tue, 28 Jul 2026 11:35:55 -0400
+	id 1wojqh-000182-12; Tue, 28 Jul 2026 11:36:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wojqG-0000ql-0A
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 11:35:42 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ id 1wojqY-00015H-RJ
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 11:36:00 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wojqC-0002Ek-Nm
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 11:35:39 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-c1677c91969so417982066b.1
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 08:35:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785252935; cv=none;
+ id 1wojqX-0002Gy-81
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 11:35:58 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-698bf053053so5954464a12.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 08:35:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785252955; cv=none;
  d=google.com; s=arc-20260327;
- b=sPeTKhVCUUJdC/nPZW2t3rY5q9BuKY/Xd7uGSCa79NGTa+gy4Pvv+QdxhGrtOUB1cK
- tkYCBYk5g7rjIqu+j2kExlCR9yjPCXD2uv0WN8zG+A8xZWOaU1lE22m9DqMeiVxtzx0p
- fw2j4CpQ1Ampae10SRSPR7J2j6XN+rgUMGf0bYbf6xJfNqroSs9jn5UpTKAWUBlEeW8S
- PihG1ZmHIP/UFsRYB/aO7tBfqIFbz3WKdk4n0xNPAa33nxEygXyRu1xZYPEYSOfElRpv
- 1yEVyM46HPijafvSdelzHK2En1U0V5dGxCOLi/dpd+3T5nS2Y/7cB68uJTHUOySAPKUo
- mf7w==
+ b=L+tSJmEWaiRi4WBfevyf07mIUrR9Q0yBUuZYvG0gPpqQTk0/Y+NiU1iMnjIF0+xz0T
+ bhS0jLTzd8AhKN+FLOsVKIvpsvorbitTVBfQStBB2kSB5Ho9UjXlEzitklLznduJMKA/
+ dKvzDxsu4W9xBbCqu+50YDVvuYnQojXIO0iZboKbLs5lTPFsudcGIt4KbrVpUsZ2ATeH
+ nsZ+oNgr+yo3KVTMST/Kt9HRYarvPoXL+JGLQg0z2c7t66skVd9AG4ZvooxTrHU7PJEM
+ HyQsviMuHGx4iEWA0FXCHEpfq0Ay6px5WurUWZLcCi7bKNqkvUpY4m8RqBeoGDA8Fk7c
+ wvNg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=bNtLwb6th+DGqc1clfZZuDiT8g78E+W4g/BU+0Ht5sU=;
+ bh=9Az08cN4p5zTkZ9k8ldu1orMamIIQtwJyBx6lq5S8R0=;
  fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=DQ1Io0kpSR8F5pCiAG3V3y6id9JqvV2MBd9KZcyW54axdgIzOXvRN/N5LsJ34NhPlK
- KI/+u7D52EWHwf2IFIGx6kTaq1BYTeCQoIYhX8bzOxfvaSPPy9YG7Ceq7haogM+tcNf+
- KIYNczJ51r8AJxSMqN6sAXHpXQPiREVscqGW/vMJnG9isN+qZfeGRKK4rxApipfBlDKa
- 8dWqLKtYRyIVpvDJdWZR5BW3+0D65aAgdkMN9Q5+VHneMRFrfeTJFURl1Z9NSjqkMJxd
- En7NssXvOBgHtI3HQ+BIneOXr2JUdaKza+HvY3btYi5ioLVjFVXzpl3cdojr36UaGMuF
- RJjg==; darn=nongnu.org
+ b=Ysu9io2BDtbxuupdRnuytiaCAlCREzw9QDHZ9yhDP47qhT0If6bKJhMrPLoqwygQ2c
+ p4bqeQEJhkK1XM48fXCUvTVwFgGDiA1x2r4Vy3HOkofvHEBEkEctTJqsLD/8fSdyxsK4
+ kRzqnzoCSHyLv9l13gLnvd5896MEc7JdHPikAWUrF+6J2EDUF1BU/CJd7KhXgQlZRs1y
+ GL82G/liqzaxYUUynFgj5OKbzWv6mySs+YyZJ+89ZEqmOXICNvUK9YQtN18cWhECsqFQ
+ DF2Lu1lVxBNzU7A9qmLS3S0J0TJZsF9D74AQz4X4G/NUMun43z1ktZY6FV3c4GIFyVlA
+ q/tg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785252935; x=1785857735; darn=nongnu.org;
+ d=linaro.org; s=google; t=1785252955; x=1785857755; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=bNtLwb6th+DGqc1clfZZuDiT8g78E+W4g/BU+0Ht5sU=;
- b=h3TxeqQP3Zttk5ERjnBpHdVgd6LI+A+wEgeLDAog8PppL4ZW8X2dz2Pk0W1s79/52B
- JyBiDqniNznfuZ8v/iAPeqjDwnrSvWJmYym741l4q8D1XWklBwPfzQ8lsqmeZqdlUuaG
- Z4uPyJqPf27Xn4tcnGD4au9ovWyThMusWgYlEkaGwDbWFZuBONiJ4SCMr9cLfVPeGvxw
- 3j31M9VsSoV1ij14q8XmEnb0+rrtWtUB8QrIuzJE/2dWzVdvaws6aPLViwNSI/DTN++L
- m6+5onR/8MRvNlzzeU8h0uSbNQ5F4EMLJxY4ZT0bLu6VNt0w86r8W1HWs0hVxEL4l7HL
- jWsQ==
+ :content-type; bh=9Az08cN4p5zTkZ9k8ldu1orMamIIQtwJyBx6lq5S8R0=;
+ b=OJ63dj7O5K+bKqjHT19TYHsXmye5oGsJsVbRFymkSoK25fBOlGFNxfCYwMVv6PSeF8
+ l3MIjJhmgEPLGmpn+1m0bX1s6j95pIv3mmpjCkX13+0Zwiwkqtg6ZO5GzKUvSq/3uaze
+ BLUhwOpPsCZUefkvqojSYDhTCuDJhYUFIrer0jPhHtFaLfyptJVxbCoZF0GEv414Tvf2
+ z+itbgSsDLGq4yyOLVLmy/56lETDutC3p1afWmpqyb6Qrm9RXJv5YUKtp+YmlPmsLlwW
+ t4jyIRLw8AsITanr/XPDMXmNtI+tx5wnmWgOWqOR1wzn5NXb0uCYwjsWJnDTox8TdN3/
+ kX1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785252935; x=1785857735;
+ d=1e100.net; s=20251104; t=1785252955; x=1785857755;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=bNtLwb6th+DGqc1clfZZuDiT8g78E+W4g/BU+0Ht5sU=;
- b=epEQHIBRHSrEaQYmA5bVeQuyPljRBewkK+ryW5qdpZ+P3JcpZmEAYOKrpUs/PIW3Dk
- ucKLrtjd8W7RlaPdYbgtIloVtpm5HwPDEJceMvYK/5/k0AG6KapaagrHO4eFfK/VzwSA
- pLXEuGQfjOLqYcN6m+P2+OMHLvaWA7QbrFWLrO9/qhEaqR2/470CboN271s3zErsWfw4
- zz5luAa8RZ0G/BqMlOjh8j2+VCowTSeFGtKj+l8zF9cRVoOR8G04q/2NcU22nt5Mno2a
- alwLXyhquL5CpnVksrwn9bQSISFMt0TxOYtTBPZLdX3nTjF8iqSB9jFOd2i97fkcm6k5
- srMw==
-X-Gm-Message-State: AOJu0YxLSFBSpvlzpt9n9wen75I+48T4eBLvimaCu4DVcyrEySYlgHZR
- VrVV1nfMVLYve631VBKsYkS/YfQGQj4E/rYs9szPOmRlfABFxZ4pGEp4thbRv044U/ta1yPD+ZH
- p6+FrNC+sjfmK3Ce8ZeNiE+EGMtG06zPXAqzdi34m6g==
-X-Gm-Gg: AR+sD101RPjt2t2d//79d2YegNeHirbr0Aycdv8MHA+GZbwN34Y4lIRQ7CZM9/wjlAI
- UWWZp9kClU3ptle4VbQFA1jf50hoSEzDN+3L+HwNDn7bWPMMICK8b0r8kjZpkwDWzJuMxnhzHzh
- FHQI2+Bd1crJCUsmHFdwoSd1xNj6z4wH7OtrZJnTf3e3AQ3XGmMSNrOfNE9JQEU4wiAp0qC7kU6
- hxRUi8IVERhAwpMFTFBQv3MyOvFnJz1EcTMl8Umq1kyaLVDXMFvxUrVkmnuWjFwsW74GJVJhozQ
- eB8X4Vsxmzx3H2GEstxyaZDc7Hsk1gKCa/pIOqh+XA8sng==
-X-Received: by 2002:a17:907:c706:b0:c16:6fdb:222 with SMTP id
- a640c23a62f3a-c1f7246c31dmr155579066b.48.1785252935136; Tue, 28 Jul 2026
- 08:35:35 -0700 (PDT)
+ bh=9Az08cN4p5zTkZ9k8ldu1orMamIIQtwJyBx6lq5S8R0=;
+ b=nrXyrAnoFwY1zmHcYj74Q51pc0W9hhawrsNdTTUEGfH2UTW3NUlB+qO5YKe1kKOGTB
+ /B8hv+5DI5mxaXdHVvgDJowMLFPRZg/Shwbt3uFmiNRW9WKrQa9MfhAgT698Fzbhcz1s
+ rKxZhzl6p6kHwrIMVncY0O7buK/8MQLcQaYm+3M2ZFnFqTqRfTgnooVwQ0yxLrTahWP6
+ YuWsXc1Pq3ZzlVskxN4ujkIF/Fj4h+r0Q/0bDJvTt8SUwIP3IhMaf3WCc6bvGJ5z0DVm
+ D2T6R7t3uG3K33+IUe8c0mTrb3VTv7cbIMsj5XaDtDVS/0pQ+CmJXUDgNFLJDHt33v3Y
+ Ewnw==
+X-Gm-Message-State: AOJu0Yw5PfJsUg92LWv2dEHmANAbTeR82MfjbJyIbDRnwSNNyprgVFAS
+ If64WxjC6ttJ8Ce2XL7eQu7GiKBm/MMK4xy5WyXHCf38zddl+Gk8QqXOMsG5pLeUNvaXuOJ1ZnL
+ ILR4uMxo8JxuRlTXJwJ0cm0O5AyZfcwQePGFS/mr8QQ==
+X-Gm-Gg: AR+sD13GaWNAhgtudHoXDBDZEUXQJVF9x4WjX/qBFb+9weUkGYgArvIXKCUsyhc1EQF
+ xS578RRgxVJRxiyZptKNUt2ZtDhjfqtYWWUDgIdpza8uRmNN0DONu+RuJMwZj7lMSgoH7EMRDoH
+ xlDsiG5uiLEHKM8Bzws9flw1X/B9eKaqoTdoJlbwRngJ2rQvi5kVRPuU/NTrdsoaE0PcL0PBQSM
+ b4uSodBn9lADTEM7+0AKuctFKVewm7oy8zTdMbg1+hn+7voH9X78p0iZ8tVzJM7U/bWK4t+oGyo
+ WTKaQYuWXNN54Uw66Uaqi3auwl0yW6onzyTlQKsfn1Y51w==
+X-Received: by 2002:a17:907:8b87:b0:c1f:304a:9a45 with SMTP id
+ a640c23a62f3a-c1f72222977mr161321466b.38.1785252955657; Tue, 28 Jul 2026
+ 08:35:55 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260721184656.530230-1-richard.henderson@linaro.org>
- <20260721184656.530230-12-richard.henderson@linaro.org>
-In-Reply-To: <20260721184656.530230-12-richard.henderson@linaro.org>
+ <20260721184656.530230-11-richard.henderson@linaro.org>
+In-Reply-To: <20260721184656.530230-11-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 Jul 2026 16:35:20 +0100
-X-Gm-Features: AUfX_mzGU2gm4OweVLqis-aItdOGYe39OH3Pb5G8MULZr4wdjKqbTKrTPCYSPAU
-Message-ID: <CAFEAcA_b5sWi=wx9ituMtOx=Ztg_SfFsTPdEOG23EUm2CST5HA@mail.gmail.com>
-Subject: Re: [PATCH 11/20] target/arm: Rename isar_feature_aa64_sve_bitperm
+Date: Tue, 28 Jul 2026 16:35:32 +0100
+X-Gm-Features: AUfX_mztmS6OXeHW72L5oaoYZ95WMDb4bGZ6FougjdJZCofj15NDtIyzUYq9c4U
+Message-ID: <CAFEAcA98J6gMG9_2UtYq8Xc=qM_sQF5XCa+a1DRKYDqdS-9KJw@mail.gmail.com>
+Subject: Re: [PATCH 10/20] target/arm: Rename isar_feature_aa64_sve_pmull128
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,13 +114,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 21 Jul 2026 at 19:49, Richard Henderson
+On Tue, 21 Jul 2026 at 19:52, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> Rename from isar_feature_aa64_sve2_bitperm to match
-> the feature name: FEAT_SVE_BITPERM.
+> Rename from isar_feature_aa64_sve2_pmull128 to match
+> the feature name: FEAT_SVE_PMULL128.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
