@@ -4,65 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAEDFC53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 06:46:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC5E9C54F4C
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 06:55:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wobaD-0007Ec-Vz; Tue, 28 Jul 2026 02:46:34 -0400
+	id 1wobiL-0001CN-8k; Tue, 28 Jul 2026 02:54:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wobaA-0007Dw-Ny; Tue, 28 Jul 2026 02:46:31 -0400
+ id 1wobiH-0001BZ-SH; Tue, 28 Jul 2026 02:54:53 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1woba9-0002J9-0l; Tue, 28 Jul 2026 02:46:30 -0400
+ id 1wobiE-000317-Hh; Tue, 28 Jul 2026 02:54:52 -0400
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66S6jxUp022470
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66S6semH025665
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 28 Jul 2026 15:45:59 +0900 (JST)
+ Tue, 28 Jul 2026 15:54:41 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=F4Kpp8ZC+oShbz+ryerAbTbGLQGu+Iok9aKAPBtTJDM=; 
+DKIM-Signature: a=rsa-sha256; bh=TObdROh5e/L641ulJ7t48JBbKT2xnRkP2LjX1jLitpc=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1785221159; v=1;
- b=dzGBbr7Q3KYLWAzNTFDlVI/reG15Zttb9//6Atkehu0E6/Glvd41W+ZczxfofFDz
- 28BNu2A24X8Hs6y00FAc7vvRbBliRLGod9NkIBprRvK5S6TG4OtB/z3yHk34wxC2
- NjJi1cddUtFu72Om9mZfJotdVbhgVQf/lyfyWhw6GQPwVnbEpxSOdnV/ylOoTwYk
- Z/PSDfu52STuUMN7OqxXxt+RNiu5WhV5nv6/3905loi8hmHQQFDb0I+VguvOHhX+
- yY7tnHytFdOcysA2nuz8mduoX7/KJDdzRl/NYJPyK6VhEDs5pWKQ3ZZCpQ/nw9RC
- J1O2ls5w5lsUlx0s8o3SfQ==
-Message-ID: <cdba4688-2aa5-42a1-8dcc-f540989314ee@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 28 Jul 2026 15:45:58 +0900
+ s=rs20250326; t=1785221681; v=1;
+ b=J+vmlZiVRSkhEU6CGDFVVqWW8dyNPJw8fbjciPS55cmXIWTVDcUc//hG/6BgAaJu
+ 9MlPSfPDb4a7FRTt2US4T3NRhi8U0bHuztaVbh4gtaPYTnummyuTcKH/aKZCMbzK
+ h6itXv9OvUOv4Mm7eb+XR9CkdAvGkQ3VdfHzxa6QyeEv2DrL3aXMj4oNF/DuxQd5
+ Bjn0GEZHH80bE36JY9s+D7iQzClmAdljH/KRBxMN4Z5QomuwBFi/KKAlOKSf7d6P
+ /axRh8uDQqbRFGrikho003M29jUS5LcT/UsIK0a3M+PgFo90z8ztKU0QgzaRZDB8
+ rQimjkENWc3RzC4+rFRHaQ==
+Message-ID: <81a781bb-a4e2-4cfc-a9d1-0316cfb2f17a@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 28 Jul 2026 15:54:40 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/12] hw/cxl: fix invalid free on early return
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
- Jonathan Cameron <jic23@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Wei Liu <wei.liu@kernel.org>,
- linux-cxl@vger.kernel.org, Brian Cain <brian.cain@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-References: <20260727-fix2-v2-0-d0c4831ed7ea@redhat.com>
- <20260727-fix2-v2-5-d0c4831ed7ea@redhat.com>
- <20260726164738-mutt-send-email-mst@kernel.org>
- <CAJ+F1C+fCyazpGfof9H0_n54FMy3LX6ujdmTcW=gAmhFz8Lk-w@mail.gmail.com>
- <70e1a2db-472d-46f4-ae27-ea8fb4af6cc0@rsg.ci.i.u-tokyo.ac.jp>
- <20260727042804-mutt-send-email-mst@kernel.org>
+Subject: Re: [PATCH] hw/display/virtio-gpu: Fix empty blob discrimination
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ QEMU Stable <qemu-stable@nongnu.org>
+References: <20260725-image-v1-1-4698a805afde@rsg.ci.i.u-tokyo.ac.jp>
+ <b0951125-f714-4bdf-a178-1a7658bef43d@tls.msk.ru>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260727042804-mutt-send-email-mst@kernel.org>
+In-Reply-To: <b0951125-f714-4bdf-a178-1a7658bef43d@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -88,67 +74,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/27 17:30, Michael S. Tsirkin wrote:
-> On Mon, Jul 27, 2026 at 01:40:48PM +0900, Akihiko Odaki wrote:
->> On 2026/07/27 6:09, Marc-André Lureau wrote:
->>> On Mon, Jul 27, 2026 at 12:49 AM Michael S. Tsirkin <mst@redhat.com> wrote:
->>>>
->>>> On Mon, Jul 27, 2026 at 12:44:04AM +0400, Marc-André Lureau wrote:
->>>>> Fixes: 680935c9a6ff ("hw/cxl: Add a performant (and correct) path for the non interleaved cases")
->>>>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->>>>
->>>> Not commit log really?
->>>
->>> SSIA, but I can make it longer if it helps.
+On 2026/07/28 6:35, Michael Tokarev wrote:
+> On 7/25/26 10:12, Akihiko Odaki wrote:
+>> Discriminating blobs by checking whether blob_size is nonzero fails for
+>> empty blobs. Identify 2D resources by their non-NULL image instead.
 >>
->> I agree the subject is sufficient so:
->>
->> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>
->> That said, we can quote docs/devel/style.rst if desired:
->>
->>> * Variables declared with g_auto* MUST always be initialized,
->>>    otherwise the cleanup function will use uninitialized stack memory
+>> Fixes: bdd53f739273 ("virtio-gpu: Update cursor data using blob")
+>> Fixes: f66767f75c9c ("virtio-gpu: add virtio-gpu/blob vmstate 
+>> subsection")
+>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>> ---
+>>   hw/display/virtio-gpu.c | 18 +++++++++---------
+>>   1 file changed, 9 insertions(+), 9 deletions(-)
 > 
-> I like that. But the question is not just whether it's required by
-> the coding style. The question is if there's a bug and how is it
-> reacheable, which can guide things like backporting decisions.
-> Thanks!
+> Is this a qemu-stable material?  I've no idea from the description
+> about the implication of the previous behavior.
 
-The quoted text also tells the consequence. Probably it's placed in 
-docs/devel/style.rst just because people are likely to check it.
+This fix is not important nor a regression but you may still pick it.
+
+The consequence of the bug this patch fixes is a NULL pointer 
+dereference and denial-of-service. docs/devel/stable-process.rst says:
+
+ > Generally, the following patches are considered stable material:
+ >
+ > * Patches that fix severe issues, like fixes for CVEs
+ >
+ > * Patches that fix regressions
+
+And I don't think this match with the description. It still does fix a 
+bug, and I think you can cleanly backport it and you tend to backport 
+such a patch.
 
 Regards,
 Akihiko Odaki
 
 > 
->> Regards,
->> Akihiko Odaki
+> Thanks,
+> 
+> /mjt
+> 
+>> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+>> index 718ba3039290..6413df029b8e 100644
+>> --- a/hw/display/virtio-gpu.c
+>> +++ b/hw/display/virtio-gpu.c
+>> @@ -56,18 +56,18 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
+>>           return;
+>>       }
+>> -    if (res->blob_size) {
+>> -        if (res->blob_size < (s->current_cursor->width *
+>> -                              s->current_cursor->height * 4)) {
+>> -            return;
+>> -        }
+>> -        data = res->blob;
+>> -    } else {
+>> +    if (res->image) {
+>>           if (pixman_image_get_width(res->image)  != s- 
+>> >current_cursor->width ||
+>>               pixman_image_get_height(res->image) != s- 
+>> >current_cursor->height) {
+>>               return;
+>>           }
+>>           data = pixman_image_get_data(res->image);
+>> +    } else {
+>> +        if (res->blob_size < (s->current_cursor->width *
+>> +                              s->current_cursor->height * 4)) {
+>> +            return;
+>> +        }
+>> +        data = res->blob;
+>>       }
+>>       pixels = s->current_cursor->width * s->current_cursor->height;
+>> @@ -1279,7 +1279,7 @@ static int virtio_gpu_save(QEMUFile *f, void 
+>> *opaque, size_t size,
+>>       assert(QTAILQ_EMPTY(&g->cmdq));
+>>       QTAILQ_FOREACH(res, &g->reslist, next) {
+>> -        if (res->blob_size) {
+>> +        if (!res->image) {
+>>               continue;
+>>           }
+>>           qemu_put_be32(f, res->resource_id);
+>> @@ -1430,7 +1430,7 @@ static int virtio_gpu_blob_save(QEMUFile *f, 
+>> void *opaque, size_t size,
+>>       assert(QTAILQ_EMPTY(&g->cmdq));
+>>       QTAILQ_FOREACH(res, &g->reslist, next) {
+>> -        if (!res->blob_size) {
+>> +        if (res->image) {
+>>               continue;
+>>           }
+>>           assert(!res->image);
 >>
->>>
->>>>
->>>>> ---
->>>>>    hw/cxl/cxl-host.c | 2 +-
->>>>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>>>
->>>>> diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
->>>>> index 7e744312f1d8..eba13c9e7cba 100644
->>>>> --- a/hw/cxl/cxl-host.c
->>>>> +++ b/hw/cxl/cxl-host.c
->>>>> @@ -279,7 +279,7 @@ static void cxl_fmws_direct_passthrough_setup(CXLDirectPTState *state,
->>>>>        MemoryRegion *mr = NULL;
->>>>>        uint64_t vmr_size = 0, pmr_size = 0, offset = 0;
->>>>>        MemoryRegion *direct_mr;
->>>>> -    g_autofree char *direct_mr_name;
->>>>> +    g_autofree char *direct_mr_name = NULL;
->>>>>        unsigned int idx = state->hdm_decoder_idx;
->>>>>
->>>>>        if (ct3d->hostvmem) {
->>>>>
->>>>> --
->>>>> 2.55.0
->>>>
->>>>
+>> ---
+>> base-commit: 006a22cb26998998385b104db1ff9466ef2f3153
+>> change-id: 20260725-image-6c8566fb1253
+>>
+>> Best regards,
+>> -- 
+>> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>
+>>
 > 
 
 
