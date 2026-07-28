@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26655C53219
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10978C54F4C
 	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 12:32:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wogyl-0005e7-N3; Tue, 28 Jul 2026 08:32:17 -0400
+	id 1wogyH-0005SP-7s; Tue, 28 Jul 2026 08:31:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wogyO-0005U9-Oh
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 08:31:53 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1wogyE-0005Pk-0d
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 08:31:42 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wogyL-00038a-Hr
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 08:31:51 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-4758bd3731bso846134f8f.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 05:31:49 -0700 (PDT)
+ id 1wogyC-00034m-By
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 08:31:41 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-47f9ab7ee38so2015123f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 05:31:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785241908; x=1785846708; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Z+NA8drOMvPbg/W0pIEUVm9ErLpNSN5tCGIppYnQUqw=;
- b=OfaNPHXdnRF9ZJyAxj3GJ0VTbjMBorSYvnuM7Fe8OhcjvRJXGX881IMXZE7tP8g/Tg
- 0xY2k0O2FJiieZEJGicxnfMJlc3IY2c3F7A9uKWwc760KS1G9x8ZlcQxhDBBrwrMSY2f
- pq70n+u46qFWTBS5AEwXP1cY4PlU5uEOuoEaKMWMGyusm5wus74E2lOgAQ40SXup751w
- HY5ZORbExjezfoW5kjuFBMzMqaaARnYp3sEQyOWB6O8P1LK8fOYXdErBvYZxoxfQ6A+6
- psAKRePA1Y2Q7efZ7tpZc0o5YdMrcEdUgMUlk8icMv9PYcVcqjT0eoNnjdj/ENAiznCs
- 42Ag==
+ d=linaro.org; s=google; t=1785241899; x=1785846699; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=0uyvWvhf2PkGp8LEN9Yz1w34qwzlXkF8Nfzq654Qzu4=;
+ b=Xe+8WsSYvcHZnhUY+3/eTn/7KL2rLszOEK1US+PCbof+OYAluytqGjDDV9zX0zGoIU
+ IRi3Ar4PHgptvQhoH3E3i7Pn2JXmIBbz0Kw/4EUT/FJ2gAJVJg1p6LEj4oJ72q7eiyU8
+ 6Bv7pZb2cVHhZdDrt6jZtelllYd9y5JcZeo5eUdyAYLcGYmbNoM0tNZz0RORJSU/2DrM
+ eeZitnhKpipeiqmNSKYi9RyBVTFNWmhM8qZZIw43ZGXFaKJ5T9GAfaOv+2BZNNJgPYcW
+ 4FBr4nI/uxqe06+Leh2WEvH8YzxHV/IS5AYyX/m3Y9psEUBp2p4KYclUpn4a6Z7+aL8j
+ 2uNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785241908; x=1785846708;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Z+NA8drOMvPbg/W0pIEUVm9ErLpNSN5tCGIppYnQUqw=;
- b=WKCVhE6IQEzLm6ZBvEpnenB2lPuGOLVOmJbZ/XIVR9ZcJxd0Xu3DnsV4aZmeaMlgyT
- CS7zeMRNgaHm0di1TokYPniRc+urSSr0k8xso4N7jYoohHwFva9A4j8hyexoCq8dkHrQ
- RHnRoXD42N73ly4QdpBTtLYAhUthLaNQoRv19rWCeEn6hL6Nsihmu3lcFdPzO91jXcck
- ZJTyDnUeqasq+GKdi+U17rG6BmmEj11fO5DxF5z1wBYvh4E2etkZe6XM5FGxA5kGg8AY
- lOFAmeCQ3g3t9aWptxFBnqykR8ZrcT0rfqgfVaXsXmWKH2tN1SyorNt/MRqiaF4+6JP2
- h3mQ==
-X-Gm-Message-State: AOJu0YxIaO0vkntcC57iBzzRL4PVo+v8GW+sPZibhZZ03jh6N2+/D9N9
- jP4M9KkyETgheoS+Mrh//wDs4eR9jwUJ8E/82a+XMzjQ74sMDOLb0Ecg3GOOc2ho6x0c17hqDc1
- hDw15
-X-Gm-Gg: AR+sD111R9RwXS8iyAi8Dqb8Pyl+0N+SVWSz2LsWvMbxpolR8ai5bIv8xM+9ScLESr8
- wpdF9i7MeOIYj0Jjk7D5z30Cp2QWwO4BvY2pfH1UmVZ6Z4gad0PxaBhqSphmLCyVKsxjjnPN+eI
- E2s5O7HvcU5lDfgzbmilXgvsWZTHY69FinyWAUbmJeniFS98JvjL68vuPkXF6C4NF6kaz1FeRtq
- o6bsVGXPGKCpZLoa9ddQhstbSug+R7Orv5zgZ9R73VGhGVMx6ijgiSvVK9IaAGSpv8epdFqbe2d
- 1F75O8b+0T1RQ5f2lEjZLbXqEkwYJU+83wAvKSQW2C7w3+HkYBPm1olDA7ZE8vs/u2p5/F0GX5m
- VEypw1O8hAAaktFsPcAvYo7OBh6eUf5NKZJfdudgYkE+kpH3bebQpV2VkunNneSa/JtiAOSaK9B
- FuZYEDIjrc02xVy4X/4W8MQtz3+FrdcvZHbjDsQMVWtPsG+ODiW8fm+iToxhxqB84eJBa4mrbGj
- PeY8bwAQSw=
-X-Received: by 2002:a05:6000:310a:b0:47f:6e8b:699c with SMTP id
- ffacd0b85a97d-47fb1ecab50mr2686444f8f.14.1785241907769; 
- Tue, 28 Jul 2026 05:31:47 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785241899; x=1785846699;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=0uyvWvhf2PkGp8LEN9Yz1w34qwzlXkF8Nfzq654Qzu4=;
+ b=Oz6XqQMf6jdBsMvgiNFEIWYuxkFJdedWygiiJHryNdOrbgE6arhLcdL9etLjPgJmnS
+ DHFJvvuHbXGocuAhMIpbQeN6by8HZlLfVBZx59qgfWcl7K63/KSR6SOdShOob1iTmnXQ
+ x8BcKCZoeOdzSthd8D5pEQUuNXHqNskQnP44I8r6M84cPOuW7KbuNzZ1oMVDnbqCSQAx
+ MStjXLTNg7o47WFGwWlHfnJqJ0cz0UHggh65WEWAlXPkAZtqCDLdKG2bw6ljn8dq4rLs
+ 5LsSIqMgm8rxCP+RGVYox82eaO9m9vkUD0YVLPvbJJ61ET+PW5nrxn6eWifwQLTSAuGj
+ /6Qw==
+X-Gm-Message-State: AOJu0Yyjq23yiBCUA9Ja9M8+GLBBvoeq66PdrU9gDxPWuhU5M6eV0RJf
+ NCSo20BszYvdhWL69BI8OAbydmnJetj0br45Elmm/qElacV/z6VS2Cthrbo8wmpYl+VOv/ENWgi
+ LS7Lx
+X-Gm-Gg: AR+sD13SYqwaqckIgOlDl4KPlrdfv9FmKYWFaF0fVrxQB0al58+Gj18mJPfukt8LA7j
+ qkiCTIRnYdY27fePFT0RwHmSxXpD0RX/9uAfu+2GhYWVpgNiBXH66sXnFDc0rRNIJlGXxPilTXe
+ iGGM9njjtLzUyV2JzQPtRvs+dvDMMThsJ0bB0HLAPuYgBUvgoH3bY8txnQLETxM68/AL/pQyYFx
+ dzzTFCn4giZyzMjY8U0THnzRh7A3QoTMp1TQpkzAhYqROu9b45r9ZfTw/HYVnTDrRbjHF92bBM9
+ gq31TfuQZX+N6sCWvmF+MIzqsyRHD4K5gPjcvNoqDMMDMSd6h5H6bVP+q01wiaX00A45Bixq1QD
+ 9fWTrjgDyxlUl/ekRr/uhoPBtYKiswU69j1Qt1zgnDFcTJNHBubOkVbwILl3KHaVFFyzU46jL70
+ QkS+m8eQkysJZQiebKvxEiYlu/ORCJS0oRjnkHHDsIIg4BhhVLhizPcW8NoJ5G2kgr0m9tSrLCm
+ p0/SlXAQgI=
+X-Received: by 2002:a05:6000:2c02:b0:47f:943a:a7f4 with SMTP id
+ ffacd0b85a97d-47fb1f394f0mr2562067f8f.61.1785241898700; 
+ Tue, 28 Jul 2026 05:31:38 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c6f076sm58499039f8f.34.2026.07.28.05.31.47
+ ffacd0b85a97d-47f85c6f076sm58499039f8f.34.2026.07.28.05.31.37
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jul 2026 05:31:47 -0700 (PDT)
+ Tue, 28 Jul 2026 05:31:37 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 18/20] hw/display/exynos4210_fimd: Factor out finding screen
- width/height
-Date: Tue, 28 Jul 2026 13:31:25 +0100
-Message-ID: <20260728123127.1711653-19-peter.maydell@linaro.org>
+Subject: [PULL 09/20] hw/net/can/flexcan: Fix mailbox index calculation in
+ flexcan_mem_read()
+Date: Tue, 28 Jul 2026 13:31:16 +0100
+Message-ID: <20260728123127.1711653-10-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260728123127.1711653-1-peter.maydell@linaro.org>
 References: <20260728123127.1711653-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,74 +102,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently we hard-code the expressions for getting the global screen
-width and height out of the VIDTCON2 register where we need them.
-Use functions instead.  Make the global_width variable in
-exynos4210_fimd_update() uint32_t for consistency.  (The values are
-clamped to well below INT_MAX, so there is no overflow risk here.)
+From: Bernhard Beschow <shentey@gmail.com>
 
-Stable CC because this is a prerequisite for an upcoming bugfix
-commit.
+Calculate mailbox indices from the `mbs[]` array layout instead of the
+oversized raw `mb[]` view. This prevents accessing mailbox entries beyond
+the valid array range and fixes Coverity CID 1662974.
 
-Cc: qemu-stable@nongnu.org
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260723070059.6332-6-shentey@gmail.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-id: 20260706173324.804340-2-peter.maydell@linaro.org
 ---
- hw/display/exynos4210_fimd.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ hw/net/can/flexcan.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/hw/display/exynos4210_fimd.c b/hw/display/exynos4210_fimd.c
-index 7507e4fd3ca..43ad5fa0b46 100644
---- a/hw/display/exynos4210_fimd.c
-+++ b/hw/display/exynos4210_fimd.c
-@@ -1195,15 +1195,25 @@ static void exynos4210_fimd_update_irq(Exynos4210fimdState *s)
-     }
- }
- 
-+static uint32_t exynos4210_fimd_global_width(Exynos4210fimdState *s)
-+{
-+    return ((s->vidtcon[2] >> FIMD_VIDTCON2_HOR_SHIFT) &
-+            FIMD_VIDTCON2_SIZE_MASK) + 1;
-+}
-+
-+static uint32_t exynos4210_fimd_global_height(Exynos4210fimdState *s)
-+{
-+    return ((s->vidtcon[2] >> FIMD_VIDTCON2_VER_SHIFT) &
-+            FIMD_VIDTCON2_SIZE_MASK) + 1;
-+}
-+
- static void exynos4210_update_resolution(Exynos4210fimdState *s)
+diff --git a/hw/net/can/flexcan.c b/hw/net/can/flexcan.c
+index 651904fa379..8d680f1832e 100644
+--- a/hw/net/can/flexcan.c
++++ b/hw/net/can/flexcan.c
+@@ -1239,14 +1239,12 @@ static void flexcan_mem_write(void *opaque, hwaddr addr, uint64_t val,
+ static uint64_t flexcan_mem_read(void *opqaue, hwaddr addr, unsigned size)
  {
-     DisplaySurface *surface = qemu_console_surface(s->console);
+     FlexcanState *s = opqaue;
++    const int mbid = (addr - offsetof(FlexcanRegs, mbs)) /
++        sizeof(s->regs.mbs[0]);
+     uint32_t rv = s->regs_raw[addr >> 2];
  
-     /* LCD resolution is stored in VIDEO TIME CONTROL REGISTER 2 */
--    uint32_t width = ((s->vidtcon[2] >> FIMD_VIDTCON2_HOR_SHIFT) &
--            FIMD_VIDTCON2_SIZE_MASK) + 1;
--    uint32_t height = ((s->vidtcon[2] >> FIMD_VIDTCON2_VER_SHIFT) &
--            FIMD_VIDTCON2_SIZE_MASK) + 1;
-+    uint32_t width = exynos4210_fimd_global_width(s);
-+    uint32_t height = exynos4210_fimd_global_height(s);
- 
-     if (s->ifb == NULL || surface_width(surface) != width ||
-             surface_height(surface) != height) {
-@@ -1229,14 +1239,14 @@ static bool exynos4210_fimd_update(void *opaque)
-     bool blend = false;
-     uint8_t *host_fb_addr;
-     bool is_dirty = false;
--    int global_width;
-+    uint32_t global_width;
- 
-     if (!s || !s->console || !s->enabled ||
-         surface_bits_per_pixel(qemu_console_surface(s->console)) == 0) {
-         return true;
-     }
- 
--    global_width = (s->vidtcon[2] & FIMD_VIDTCON2_SIZE_MASK) + 1;
-+    global_width = exynos4210_fimd_global_width(s);
-     exynos4210_update_resolution(s);
-     surface = qemu_console_surface(s->console);
- 
+-    if (addr >= offsetof(FlexcanRegs, mb) &&
+-        addr < offsetof(FlexcanRegs, _reserved4)) {
++    if (0 <= mbid && mbid < ARRAY_SIZE(s->regs.mbs)) {
+         /* reading from mailbox */
+-        hwaddr offset = addr - offsetof(FlexcanRegs, mb);
+-        int mbid = offset / sizeof(FlexcanRegsMessageBuffer);
+-
+         if (addr % 16 == 0 && s->locked_mbidx != mbid) {
+             /* reading control word locks the mailbox */
+             flexcan_mb_unlock(s);
 -- 
 2.43.0
 
