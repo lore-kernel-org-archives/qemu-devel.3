@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22B42C54F51
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 04:53:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F0C7C54F52
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 04:53:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woZp5-0007Nz-JR; Tue, 28 Jul 2026 00:53:47 -0400
+	id 1woZp7-0007ge-5u; Tue, 28 Jul 2026 00:53:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1woZoC-0006Lp-UU
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 00:52:53 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1woZoZ-0006dg-Cy
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 00:53:17 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1woZoB-0002aD-AJ
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 00:52:52 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1woZoU-0002b7-7p
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 00:53:15 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66S3abHJ1527461
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 04:52:49 GMT
+ 66S3aXT51714754
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 04:52:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- I8oWCntI2KAg6ntVFInXo1IctT7vnJlZcAcd39Wk+NE=; b=Ouw8/Ly0KIk8YCSU
- oM/BieKUr2K7pxkjgybqpZjAimoqvArrPY4rZw6wSmF7rVNeRr1fHLKKk2Wb3bSm
- MuocN5eJHTOwuTXNYuub36ln4yw4QHpXvemGwpDyHAbF0ojpNRE1VN66Kp1EBx9V
- wt5gZ741Jk4BE9oPNbH1sjA+YWRunUlNihIvqqtZtysGBtc5C/RpkfU7MMCdRqgj
- FiPPe50rubPrlqpSxEacr8R5pYxFku9eB55E95vNdJ2H/rlzqsnZ0AHqrhMHpXEb
- rCm85veNiRhPYmSmBJCKvK5ulFjPpb0YEdHA0w1M8Fc6C/PkO/m6yxplA4u2xasY
- DbE/hQ==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fpbn8adus-1
+ wA6SVL1jEnrYMkjlxMgyaKGyMI0ytUyN8YKu6Wo6XtI=; b=G2/IYLc25OZbXXZF
+ cX02SzYM5sm2bdIcxIpP5IeVoNm11saZIX0zzmHvN8hJ4mwwdfelJUNDlLd2s9k5
+ GFmrH8JQ2wtEcPIG8RzVk15wzEFx3K7Go9HmoD8lN9VwzYCAbCELeyFrNcZDZlbv
+ cWuu97SIpdnA0Wx5HEDTmyLX1lW1GoBHYujxUnONwMnA6wBfcwXXYUBWNndtSAWj
+ aBoz/234Jx1y8AlmlKJgxTMAOhqJ+8ofEh9kZEDs0iecMRiAC0xJly/IvI9CB+Iu
+ 5nhDYH+oUtPkDtspIoainoeEbmrhGHnl34RSFJcwnNW54SE/PrDYga6HGxnE3HE+
+ 5DCVHg==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fpadkk03g-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 04:52:49 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-38e475f83a2so5734781a91.1
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 21:52:49 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 04:52:58 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-cab041eced3so4592107a12.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 21:52:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1785214368; x=1785819168; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1785214378; x=1785819178; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=I8oWCntI2KAg6ntVFInXo1IctT7vnJlZcAcd39Wk+NE=;
- b=WFuipcbCsBZnuUo0CdQl2hG36BgParZeOXXOMUWoNPpaO8mWlAuYcUAvy4adXJOfUq
- 0QcVjiduOeP3L0xXiJqOkzlRDH+tgSRwePqxvuSczM4JDQRP+eRxyPt6i5g7Q08/V14s
- Ci+KNkgw5vuGMjBC3QOZywB4J6Je6wBhEeoB56Je38GGjicK9+ab1c6GqdyTh+TrESM/
- L6P/LA9wuio4plqGm/KbByL11K0e5vfJO7b19LTvUGzTu436BuKOAYoiAlsFU8Nxhf0O
- ZOH0ACGx4bD18NkVttiU2SzibPHKfBgMVRmZiolPf7T03BQqmaT0Gw2mIIWmlQ8q3zso
- n4sg==
+ bh=wA6SVL1jEnrYMkjlxMgyaKGyMI0ytUyN8YKu6Wo6XtI=;
+ b=AQH1rtWXvocjtECsxnuUtVFknWEQirsqpry1ZtcoUzaM7ItyZ8TSLlrYx7uAsq0+wh
+ s8oZB4+vVgT6dUCHJe6Z2bPvlhuHR+Zbo4sB6xFFe/2sgOqf14wd3CadxvLvUrfwctIt
+ Ex2frBg3T7QqlmbpJ6dGjqZnVkcIX1mBCuxUuQJUoRrgmG4NMqCcoHj5mMXwJAJqGKGH
+ nsWrXvHPLH5i4ZHKQVIYLHiQdShIMBfg8S29dpsEDixtkd85NklZ1MQ+a6Sap3fFwiZ6
+ znrX9RTmkJzAxtErEYooUdSYegdvxSNK0y9Z4Do1DSJa6lLJAoaQP8KE+p/29jQfMqbz
+ UXJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785214368; x=1785819168;
+ d=1e100.net; s=20251104; t=1785214378; x=1785819178;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=I8oWCntI2KAg6ntVFInXo1IctT7vnJlZcAcd39Wk+NE=;
- b=l7I2s5wZQTVsn21OzHEcXIYcdgylryVnVpDNNmVcL0PFCqGZ/irvKlHhhhOPQ55AAP
- CksWDWakrdHvfF5/WAHueG1zVqXdod10ssYFsMcwykWAK65VxcBt2TsOT3dvy0iQedgX
- e4rpXu1TFSnEWaLiMqAFAh7qomtwQ8VhU6xPTquU/0XUqfRbNMXQ9iR7UQvRA4CJI49r
- 017yTqW1yuT6aWRXfZ94DdJSPdTIqwpj4YoGDaTDNW4LTGdOfoZN3hc/XQLPMnDetVAU
- FPk4ux9p7mv0ToZlhx87J4GQSy2zVMFIghC+2Ww3jGDjTZ0IhWUr3KyruLfcyO91Clvs
- W+Mw==
-X-Gm-Message-State: AOJu0YzpBq01zLMIZtl6tp6D6XZrAo9L/+GeNJJXx0u4tZ93IPll5ExP
- wcenN8LUp6NfZAI5EDyhyMLTYNm5t/yONIpXinpnQUQxxo4CbtC6LZy7rpO8IngD3SclFngAHrD
- j/XyBkcO7K5tIvqeY7knxZJHg79Y690tIro/x2mLraBD1JL/rqP3/EN2xzLb8hGTRrg==
-X-Gm-Gg: AR+sD12bH1/aCfHqVsY1t7LO6LYtWfRSJ8NUCRTK1O5r9XVM0D3n1+uRYEnWWTXfpgc
- TS/1D7+ThxWvpXDZAVSVwlnc91KewhaXbwW2RmNXMsbQA2w7V1c7J9gfbxXJ4/B1crhqDdWSPzq
- eQ3eDfMQiFqGljZvb03xBQKhoA5j+XrExenlDDMgqJiIzQ5ipdsDpEopQVQ5zlCv6M/mZjSGK4c
- MMKYxzoCUYrB+QJHNI9wxFwTjkIBQIDbCtJA0VmiB2nh5jYJMhSAf/OLlkEOEam8tnCZBM82vxU
- V4Lmuq27bhdi+S0COKdgj5rs4e+Vx7Wri0ndO0Hl8+ej270FVW/2Ts0SXatDFWD5AbBLGYJib/A
- GG9zFPzDQ18eUXEML3Zb8Am78DMO2ZnngQ1UHyWIGsvFLIR0iRDeOGJtDTXgJJ12V2d6I/wc=
-X-Received: by 2002:a17:90b:4cc2:b0:38f:474f:e77 with SMTP id
- 98e67ed59e1d1-38f6a45e1cemr824022a91.37.1785214368282; 
- Mon, 27 Jul 2026 21:52:48 -0700 (PDT)
-X-Received: by 2002:a17:90b:4cc2:b0:38f:474f:e77 with SMTP id
- 98e67ed59e1d1-38f6a45e1cemr823995a91.37.1785214367750; 
- Mon, 27 Jul 2026 21:52:47 -0700 (PDT)
+ bh=wA6SVL1jEnrYMkjlxMgyaKGyMI0ytUyN8YKu6Wo6XtI=;
+ b=MADmcVVuBPUMnq5AGzs8ZfHfCVKZxNi7I7w/cjrVZw/FUzTUv+MNg79EpA8ehDwmQI
+ +iLj1w2zY6DT1sVOtpyO1g41Y4lvXNhvEJI5dWyCncDZ71kmFM9eFSsLwW/axFzdbxZ0
+ RWe1F1nA1hOiLt7esPK1fao1CrCRFazgIeuSSJSRKjT92JhGDRANf+dA3r0byvGxhB4F
+ jD1BRmf2MK/BqWmz1iW/Z3RyarKPPnBz2yI5JqI35AfLGBq7vjD0pTVc7ZWPbespts49
+ 4ImV0wXF3fYgML7o8Ne97TeDgYplvsqaZa+Lz6+pkcSYHdn/FtWeIdzqLDBWyRWB7vAj
+ CUSA==
+X-Gm-Message-State: AOJu0Yy5/QW93QB9X+s3/LhuUJESuv/DO1saQcsSjXhyWS1riq0pRP6C
+ 3mlZTVFPr4PY4pqMKdMmOw0xc5WseYJMx/04Od/AtAZyBjIKiwOjiRuYKHJQqgcEwXQea4H/agL
+ /b7LovM8fa+75GVzDBGMAFx1pVV6Ss+UF4Z9UZU9rlB1wXp/rGvc3j/XyJbxo9qkhCg==
+X-Gm-Gg: AR+sD11auuncsjtJgs6q6/LP6b4Zi3ylGWhWhI2AcXoJ1OZcbyML81DQkzdQ2J5gjpT
+ p1YNEj8KtGov/RVZgV7YSW+f6+qgEDVKjQ+Va2JED1xZ+iGjdsm5fXk+dcUri4xFQ60Lh2q6r48
+ iiZIc1Pk9VTVU4Dh2nYZ1G7ikxnaX8n0IIG1E6AdWp4BvhdoSVZxBUWuj5NAmeJmRA3jAR3t+Nl
+ 7ydYRKedSrN643O2oupG339qKsMLL7eN1yks3QI+NYxBm6ieQjZOQfS5kVqvdtX8ICYofik2Z06
+ mluQSqi72J7ujwq5pMtIbC+pmdtCZ8yll9yr7/z8eNidQkNM6Yb90DoOMu3wjP9fqVCtn0i5x6K
+ 5gH8eHLIkEZe2DyZK6f/DjZlduHRCTE74jlLDYaiA/v2ZzA+e8Hi6dS5LYVCvxQncZe0qqao=
+X-Received: by 2002:a05:6a21:e0a7:b0:3bf:6c08:fba2 with SMTP id
+ adf61e73a8af0-3c8ba5ae742mr1287266637.54.1785214378210; 
+ Mon, 27 Jul 2026 21:52:58 -0700 (PDT)
+X-Received: by 2002:a05:6a21:e0a7:b0:3bf:6c08:fba2 with SMTP id
+ adf61e73a8af0-3c8ba5ae742mr1287234637.54.1785214377734; 
+ Mon, 27 Jul 2026 21:52:57 -0700 (PDT)
 Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-314bc3e878esm38900559eec.3.2026.07.27.21.52.46
+ 5a478bee46e88-314bc3e878esm38900559eec.3.2026.07.27.21.52.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jul 2026 21:52:47 -0700 (PDT)
+ Mon, 27 Jul 2026 21:52:57 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -101,45 +101,45 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Helge Deller <deller@gmx.de>, Gustavo Romero <gustavo.romero@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PATCH v6 096/103] tests: remove tcg tests machinery
-Date: Mon, 27 Jul 2026 21:42:40 -0700
-Message-ID: <20260728044248.137626-97-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v6 103/103] docs/devel/testing/: update documentation
+Date: Mon, 27 Jul 2026 21:42:47 -0700
+Message-ID: <20260728044248.137626-104-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260728044248.137626-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260728044248.137626-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDA0MiBTYWx0ZWRfXze4f8/up+2eP
- rwpJ4mI7e5xXM75Rr9D114d7aoajmpmLTNZ7VLR9JWZQqJqbXMYIlNmvsEqwE+mEb66umt3hX/3
- 44ppYe6AbP9/jxI/PqAftnCi81KS9Jf94rUuMrw4WxmryUo3e2mPmzUQrN2KPjQxX2MeVfS57wz
- FMEIxRIR2pVfPU+F+RYkpxm/VbCl/9E7CIACf7pcKTWRdp3fHpy6xxk0zFYJLEZ4VAGgNE7TSIy
- YV1MldMK/kLJZaJ8zTE9+Xb+kXOu4WipA8isWE2NOOziS8zzuy6/uTj7WN6gKj2SP1Vp9twAXuY
- pv38nLdhzL2R0pOG6E9wQ6w3MfS/on6mKFgD/8qlY+ra3C7zhujNE9uRAceXPemrqWSn6UlXaol
- +AlMfX0/q1UXxdenuFla9egKC2Mq27mrOyBP6h5yRj9i5UBOPGYojaEbXN8g+319JrG44Kfm1XD
- 1e+nV8whzj0my+G+5zA==
-X-Authority-Analysis: v=2.4 cv=RO+D2Yi+ c=1 sm=1 tr=0 ts=6a6835a1 cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-ORIG-GUID: vWoNPwNA0qzTq3_ldELeZvZKqj5S_hmK
+X-Proofpoint-GUID: vWoNPwNA0qzTq3_ldELeZvZKqj5S_hmK
+X-Authority-Analysis: v=2.4 cv=Ns7htcdJ c=1 sm=1 tr=0 ts=6a6835aa cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=45U3grDSXPH4n2F9VpgA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: bli43Zkodu8iF24KHKxaw37IMOhPQ6zc
-X-Proofpoint-GUID: bli43Zkodu8iF24KHKxaw37IMOhPQ6zc
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDA0MiBTYWx0ZWRfX4WlPRQFRC6zs
- KSpU+BHdu+6D+NLsuii77U3Ji11yDrI9vui0Ha/nNpLeYm/ZnMnTQXq4FYwB3T7YKg3ARJSmj9o
- HoKSKAncIZeZ20lkz/ArdOLjbtGb1mw=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=Ka6hOPz7-XPfh0ZDgTkA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDA0MiBTYWx0ZWRfX9OBidFYe+yfI
+ v4/izXgl8XWfbQmdu2h2ezyYrwqIN5ds/AR6r+GYzXnSkh3HcqfAkJoDLZ8rL1bj0LPMtx2uTlH
+ 1SddT3t1RaAbbjxO+wXoBwRo9dDLKvWasoj0KQdyE0eMKpuECnVZ6nZrUuft9m4I6x+EENIaMPY
+ 5Et9f7rGCyRYJGrog+gumISJhed8hswvtvuFGotDEznhMhfuH6D7KbcCIQ6DXoNVi3hzfZ3Rpu3
+ YbUG+oj/4bM+QC9pEooR6XComlPQyZrb5fejvNj/1EsQeDYUjfdvwNXyL2Rq7KIRVGO0l/hBuUa
+ xkBSssudtyy0r9GpXqCpYF530xFsbrdJPRKNzqjKDQz1yPN0ZWUxr+qkN9qOup3TR0pKVIXUkxt
+ AQiTm2V+pJ0zX+G+F6SaTNdRIq8/2Q6Y5VIpGGLOh6jJfi9BMp9p89G6q+ELnPCe1ubyOrj1Ndt
+ bFbpTrHEp3wKlnOSmsw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDA0MiBTYWx0ZWRfX0FC+EMMMBC1H
+ TtzB8G77frDDSKGSV+5OXJ7qgRLph9IFm5CbKKUYc0Vqe2OvQ5P/0Vm5GXohxuoUKRrg6uePliH
+ T8+ZCaFwsuLJZ3Urqq9tCjb7Lw4QBXU=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-28_01,2026-07-27_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 phishscore=0 priorityscore=1501 spamscore=0
- lowpriorityscore=0 adultscore=0 clxscore=1015 malwarescore=0 bulkscore=0
+ suspectscore=0 malwarescore=0 impostorscore=0 phishscore=0 spamscore=0
+ clxscore=1015 adultscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607280042
-Received-SPF: pass client-ip=205.220.180.131;
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -162,106 +162,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It's now built-in meson, which offers targets check-tcg and check-tcg-*.
+We document how to build and run tcg tests with new framework.
 
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/Makefile.include | 68 ++----------------------------------------
- 1 file changed, 2 insertions(+), 66 deletions(-)
+ docs/devel/build-system.rst |  4 ++--
+ docs/devel/testing/main.rst | 33 ++++++++++++++++++++++-----------
+ 2 files changed, 24 insertions(+), 13 deletions(-)
 
-diff --git a/tests/Makefile.include b/tests/Makefile.include
-index 494d0109f26..9f82552ab54 100644
---- a/tests/Makefile.include
-+++ b/tests/Makefile.include
-@@ -19,9 +19,7 @@ check-help:
- ifneq ($(filter $(all-check-targets), check-softfloat),)
- 	@echo " $(MAKE) check-softfloat               Run FPU emulation tests"
- 	@echo " $(MAKE) check-tcg                     Run TCG tests"
--	@echo " $(MAKE) run-tcg-tests-TARGET          Run TCG tests for a given target"
--	@echo
--	@echo "The variable TCG_TEST_FILTER will select the subset of matching tests."
-+	@echo " $(MAKE) check-tcg-TARGET              Run TCG tests for a given target"
- endif
- 	@echo
- 	@echo " $(MAKE) check-report.junit.xml        Generates an aggregated XML test report"
-@@ -40,67 +38,6 @@ export SRC_PATH
+diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
+index 71331e64ac8..c64d40b42af 100644
+--- a/docs/devel/build-system.rst
++++ b/docs/devel/build-system.rst
+@@ -447,8 +447,8 @@ these sub-Makefiles, the resulting build is largely non-recursive.
+ Tests, whether defined in ``meson.build`` or not, are also ran by the
+ Makefile with the traditional ``make check`` phony target, while benchmarks
+ are run with ``make bench``.  Meson test suites such as ``unit`` can be ran
+-with ``make check-unit``, and ``make check-tcg`` builds and runs "non-Meson"
+-tests for all targets.
++with ``make check-unit``, and ``make check-tcg`` builds and runs tcg tests
++for all targets.
  
- SPEED = quick
+ If desired, it is also possible to use ``ninja`` and ``pyvenv/bin/meson test``,
+ respectively to build emulators and run tests defined in meson.build.
+diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
+index c6821a36d99..9cbac144fdd 100644
+--- a/docs/devel/testing/main.rst
++++ b/docs/devel/testing/main.rst
+@@ -1035,29 +1035,40 @@ See :ref:`container-ref` for more details.
+ Running subset of tests
+ ~~~~~~~~~~~~~~~~~~~~~~~
  
--
--# TCG_TESTS_WITH_COMPILERS represents the test targets we have cross compiler
--# support for, CONFIGURED_TCG_TARGETS it what meson has finally
--# configured having rejected stuff we can't build.
--CONFIGURED_TCG_TARGETS=$(patsubst %-config-target.h, %, $(wildcard *-config-target.h))
--
--# This is the intersection of what tests we can build and is configured
--TCG_TESTS_TARGETS=$(filter $(CONFIGURED_TCG_TARGETS), $(TCG_TESTS_WITH_COMPILERS))
--
--# Per guest TCG tests
--BUILD_TCG_TARGET_RULES=$(patsubst %,build-tcg-tests-%, $(TCG_TESTS_TARGETS))
--CLEAN_TCG_TARGET_RULES=$(patsubst %,clean-tcg-tests-%, $(TCG_TESTS_TARGETS))
--DISTCLEAN_TCG_TARGET_RULES=$(patsubst %,distclean-tcg-tests-%, $(TCG_TESTS_TARGETS))
--RUN_TCG_TARGET_RULES=$(patsubst %,run-tcg-tests-%, $(TCG_TESTS_TARGETS))
--
--$(foreach TARGET,$(TCG_TESTS_TARGETS), \
--        $(eval $(BUILD_DIR)/tests/tcg/config-$(TARGET).mak: config-host.mak))
--
--# $1 = the stem (e.g., arm-softmmu or x86_64-linux-user)
--get-qemu-bin = $(if $(findstring softmmu,$1),qemu-system-$(subst -softmmu,,$1),qemu-$(subst -linux-user,,$1))
--
--$(foreach TARGET,$(TCG_TESTS_TARGETS), \
--        $(eval .ninja-goals.run-tcg-tests-$(TARGET) += $(call get-qemu-bin,$(TARGET))))
--
--.PHONY: $(TCG_TESTS_TARGETS:%=build-tcg-tests-%)
--$(TCG_TESTS_TARGETS:%=build-tcg-tests-%): build-tcg-tests-%: $(BUILD_DIR)/tests/tcg/config-%.mak
--	$(call quiet-command, \
--            $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS), \
--        "BUILD","$* guest-tests")
--
--.PHONY: $(TCG_TESTS_TARGETS:%=run-tcg-tests-%)
--$(TCG_TESTS_TARGETS:%=run-tcg-tests-%): run-tcg-tests-%: build-tcg-tests-%
--	$(call quiet-command, \
--           $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS) SPEED=$(SPEED) TCG_TEST_FILTER=$(TCG_TEST_FILTER) run, \
--        "RUN", "$* guest-tests")
--
--.PHONY: $(TCG_TESTS_TARGETS:%=clean-tcg-tests-%)
--$(TCG_TESTS_TARGETS:%=clean-tcg-tests-%): clean-tcg-tests-%:
--	$(call quiet-command, \
--           $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS) clean, \
--        "CLEAN", "$* guest-tests")
--
--.PHONY: $(TCG_TESTS_TARGETS:%=distclean-tcg-tests-%)
--$(TCG_TESTS_TARGETS:%=distclean-tcg-tests-%): distclean-tcg-tests-%:
--	$(call quiet-command, \
--           $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS) distclean, \
--        "CLEAN", "$* guest-tests")
--
--.PHONY: build-tcg
--build-tcg: $(BUILD_TCG_TARGET_RULES)
--
--.PHONY: check-tcg
--.ninja-goals.check-tcg = all test-plugins
--check-tcg: $(RUN_TCG_TARGET_RULES)
--
--.PHONY: clean-tcg
--clean-tcg: $(CLEAN_TCG_TARGET_RULES)
--
--.PHONY: distclean-tcg
--distclean-tcg: $(DISTCLEAN_TCG_TARGET_RULES)
--
- # Build up our target list from the filtered list of ninja targets
- TARGETS=$(patsubst libqemu-%.a, %, $(filter libqemu-%.a, $(ninja-targets)))
+-You can build the tests for one architecture::
++You can build the tcg tests using::
  
-@@ -128,7 +65,6 @@ check-build: run-ninja
- check-clean:
- 	rm -rf $(BUILD_DIR)/tests/functional
+-  make build-tcg-tests-$TARGET
++  make tcg-tests
  
--clean: check-clean clean-tcg
--distclean: distclean-tcg
-+clean: check-clean
+-And run with::
++And run them for one target with::
  
- endif
+-  make run-tcg-tests-$TARGET
++  make check-tcg-$TARGET
+ 
+ Adding ``V=1`` to the invocation will show the details of how to
+ invoke QEMU for the test which is useful for debugging tests.
+ 
++Tests can also be run using directly meson test::
++
++  ./pyvenv/bin/meson test --suite tcg
++  ./pyvenv/bin/meson test --suite tcg-$TARGET
++
++Tests can be listed using::
++
++  ./pyvenv/bin/meson test --suite tcg --list
++
+ Running individual tests
+ ~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+-Tests can also be run directly from the test build directory. If you
+-run ``make help`` from the test build directory you will get a list of
+-all the tests that can be run. Please note that same binaries are used
+-in multiple tests, for example::
++Tests can also be run using directly meson test::
+ 
+-  make run-plugin-test-mmap-with-libinline.so
++  ./pyvenv/bin/meson test $TARGET-$TEST
+ 
+-will run the mmap test with the ``libinline.so`` TCG plugin. The
+-gdbstub tests also re-use the test binaries but while exercising gdb.
++For instance::
++
++  ./pyvenv/bin/meson test aarch64-softmmu-hello
++
++Test command and output can be accessed by using verbose flag::
++
++  ./pyvenv/bin/meson test aarch64-softmmu-hello --verbose
+ 
+ TCG test dependencies
+ ~~~~~~~~~~~~~~~~~~~~~
 -- 
 2.47.3
 
