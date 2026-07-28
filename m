@@ -4,120 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFA99C531F9
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 10:24:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 343EEC531F9
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 10:39:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woeyk-0004ER-G5; Tue, 28 Jul 2026 06:24:06 -0400
+	id 1wofCO-0006aJ-OC; Tue, 28 Jul 2026 06:38:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1woeyj-0004E0-Az
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 06:24:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wofCM-0006Zw-MD; Tue, 28 Jul 2026 06:38:10 -0400
+Received: from fhigh-a5-smtp.messagingengine.com ([103.168.172.156])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1woeyh-0005Bv-QT
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 06:24:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785234241;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eb0F9fPTNxjGu53kmweUHKC7A+M3Yj3h+ht+6OfGSx4=;
- b=TBsrkK4m7xok3QgbI2MK0VFLcqSZ+SZw0QasD0Mmyc5pRBRXnFDNgeJWZd2cy845+pLOrv
- GwvV1y+k5TMKo9J8nQI5j8DTntWECLjwtyBxYeRW+oJPqB0POWhxYqf7DTmw7Ah4iU4vpu
- gGpBbWlCqGupcYdIJYR7FICCNIME4bs=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-306-2S2mq7mZMBmNzvuyUvceTQ-1; Tue, 28 Jul 2026 06:24:00 -0400
-X-MC-Unique: 2S2mq7mZMBmNzvuyUvceTQ-1
-X-Mimecast-MFC-AGG-ID: 2S2mq7mZMBmNzvuyUvceTQ_1785234239
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2d001671a54so33462935ad.2
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 03:24:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785234239; x=1785839039; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=eb0F9fPTNxjGu53kmweUHKC7A+M3Yj3h+ht+6OfGSx4=;
- b=GRRYYd9ypZsZos4yFyCjz/6DqTfiLk5HQcSqbV5HfFxm6zVy/2Xuej38qszooUKjcw
- k5pLXQORNrNNK5FNNKLE3iwgwbDFIckooyk97+K7BdcdXBKTM5qk357HDTvwgojnYP1g
- dYLAwQSw+iKuv9wVdyNoYWLRvIANjtTokDfNqGr5jnwPBnfbFbl1mH10OclhBvv4fZ1r
- ov0iuR9hUcdowBPGMVuvxdY3TblnpThLV38BOZ/6QSmsVCllO+u5H/7/I0RhEtq/2KfP
- 3lxJ7M+1f5kDK/U8PBXFkIOteOAS2zAnMrVPiQ5zvmBr7KRUFihvGJ+8tha835Q/rUUG
- l1lw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785234239; x=1785839039;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=eb0F9fPTNxjGu53kmweUHKC7A+M3Yj3h+ht+6OfGSx4=;
- b=hQyuJzg+DotfriuIMP/ZWdg/2VR/mjK8sWCH5Cw6Pj4eulQRWOA3PFxoH1tcWPBYbX
- 5fSfcWDmbkHhWkSNSAqsK5dzBqQe3yTJ2nKJgmfUOBE3CFBCQtf+7KbY6k4hXG32Al1U
- QbO9vhmuOx+qvLfOFu2zPPE2vR9HA7dEfC+2uTr4JuR1Zn6+eHfmd/gketg1EnwDm5el
- z098vF8+y5x1StH03wrvjozzge7jlFncl6mFF8GEUjnTGMtHDvIP2I14/t0ocGPxobbI
- 1/rMAvN0ZYtlKW0BIv7duK9Gjx8Lcg9ksqyRFZH+91TZme2pGqPeS5Iy6clxxGmZjlcR
- nxag==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rry4J3aJm6khoZahMcHcVDcuu0disVRSV+ZMvSgrfsOad+5I5gnP/3kLSiuJpNbtiUz9BVB213ph+9g@nongnu.org
-X-Gm-Message-State: AOJu0YwgWs/WyL6ZM3jic0uBkIH4MpyS1xqiFmf9UjRqEMEozHbCA6In
- 7e6yHiZoVpQIc+cJ1ZZIJ9ML/UOZNKgE8dEoJzwwfnPSZz1DTSasrX/DM60iWyFETgCgV2FUZFg
- ADqQnhzy5ot2XbIQVcihtiHS/xFlXLQPSwjpYKAmlSl87GW7RzB4Wpved
-X-Gm-Gg: AR+sD10YsRGWe0aiLfODPX2YqAkqYxL991C1MOYpDJKr3+hXwcS6axSH2xTmAzrIWbW
- 75kepUQFkPY04H8MWCTynWDgVGKK0Ev1RiJYSvhva1Vj0QWZkn0DFFepcZkPcYRTX2r8oI+VBqT
- urbqd73FIfK9EJbFaoL8OW2dfr6gWrNAPoUAYL1nFQfZhvd2T/ztaIrXp47E3yijFLUcD9/jfNw
- eekco0UvEKb2czMbFRHkq/XBlnjwhXR/miph4Ye7qVUSMqoGX0/M9AoXXTk43y7f5PduOW/CgXd
- bzxmsocKonaGykUXcq4oW7GExqJadgxXsGLMPqVatIjgkQFMImeSJ8q6GC9qe7FAHDvkxZ37qDt
- oq2sCf0d/EA4Q/O+0Dgm8A/yKTuhNhMEnHAt2ET3pMl0=
-X-Received: by 2002:a17:902:f645:b0:2ca:ecf6:910e with SMTP id
- d9443c01a7336-2d0159aff48mr22419625ad.0.1785234239183; 
- Tue, 28 Jul 2026 03:23:59 -0700 (PDT)
-X-Received: by 2002:a17:902:f645:b0:2ca:ecf6:910e with SMTP id
- d9443c01a7336-2d0159aff48mr22419255ad.0.1785234238691; 
- Tue, 28 Jul 2026 03:23:58 -0700 (PDT)
-Received: from [192.168.68.51] (n175-34-8-244.mrk21.qld.optusnet.com.au.
- [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2cfde5e2a78sm50739545ad.26.2026.07.28.03.23.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Jul 2026 03:23:57 -0700 (PDT)
-Message-ID: <2322668a-20a3-4a6b-8d7f-c04ddfef84f1@redhat.com>
-Date: Tue, 28 Jul 2026 20:23:48 +1000
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wofCK-0007nH-Ik; Tue, 28 Jul 2026 06:38:10 -0400
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 1003014000BA;
+ Tue, 28 Jul 2026 06:38:06 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-02.internal (MEProxy); Tue, 28 Jul 2026 06:38:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:message-id:mime-version
+ :reply-to:subject:subject:to:to; s=fm1; t=1785235086; x=
+ 1785321486; bh=M7Mv2covBoU0JIe/7oHQC0IX5yHW74bQCd8oTyJplp4=; b=o
+ 5TM/3iSlrGSxsCBZad836MGWpOoHDkd8E6XPTkIl+Ko/LX+KUfwItqttfINx2AbX
+ AWnr2HNmBe8XaKwkGZj6vJt2r5Ihhgbb2SoIBRH2xiP75NXmrAmMTkabbzMXe1rO
+ DMbowfVJpKCxC9acHDapZ1X33+uJX1c6EEi+hGbDYy0UvR9v2FrQqhdcv2hDkxm+
+ TQMKaBP08Rzx3HMBYaC5+yd0whrIAE7GSMPoy251SpvBVvg3N7KBAvDhZkKSfeeX
+ zydvQQm7bp1qtSPvAJWHLcq2H6mgJp6mBEqWDYw7PAGWzEfLs2r9RqYVI5LZcRvU
+ C6vACAWogagUgZnujHfdg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm2; t=1785235086; x=1785321486; bh=M7Mv2covBoU0JIe/7oHQC0IX5yHW
+ 74bQCd8oTyJplp4=; b=f0qYzEn0cNEF//oQOS004+tm2kcuSorORxxKEtjAvpDb
+ /3FmwO28YmVYhjpGvk39lN9tP2JrdoLVrK1YG8WWde9qvd5GMAJfoAcr6YqQYBDj
+ 6S23efs/ZYDbtFhlw+fAuxGXLbSbIekvOywt6r56NhtBxbT73aqJ878Hg5oE7NtW
+ oVndxIn0VD7X//1Xot9nSCMZNwOo98PfLahRuchjP3Bk4vcFIiYsdtjig4EmDOVA
+ h3rZnys6EOsDGeRNLXlX1kgtsxBoZI69cac7W5KeggUCxyGoV26oznkWUFvQIHyS
+ i4l5JgVdNxafSVnmX2fe0tafUWiNnxU6ZwSud0S3/A==
+X-ME-Sender: <xms:jIZoavbm3bBhuaschJ2s4Pqp9CFZ93TKY8bKWXOPaiqGH0eHMNLefw>
+ <xme:jIZoaqQtqeHl9Ox2j9RUC8lOI943dY31O4_3zl7RmonB1ZDwzW7hKbSKFM56peZM9
+ E55bTVeVt3kbG4HywOsQ2rtyNtu48aXcIKR6YncMxzeXU806ryUAw>
+X-ME-Received: <xmr:jIZoau_hBC8qkkxRtBly2sPQSnhSAZ3sfGSv4z_UPhFaemuo55hWFr5o65GfyZgbNXxloSvPtsAORRyvPK2-mYo>
+X-ME-Proxy-Cause: dmFkZTFWEkuZYqxkI1PM7KajHp9rrAvXDpC89GHVZusGuCZXeRaM0TXFNHvtDsMeJbTPXw
+ yhHu1flzyFJkQiEQGMlSPXc9xKfv23HMYkWkEmqd0/n5oyvtkZIDk/4VG67ryd5UuhUdy9
+ UkKjvzl8NqNR77Pn2DnMyOFQ5mNLdjY2J2qgSxjqS6KQ4UW+bEZ49qPaQua0EgvYpToVMM
+ B2HtbKUkmiyG/o9wZrjgSNPWSwDV66sRlmsHppBu5cwDsIxEWQRrY6LyaIpobe6/k5Lc+S
+ RTdvgKp1rZTff7npohhqbMoItzhZStXaXkN/2LoNMxFtWhGvB4MSGrUv+qRTHP2KcUreCK
+ gXBbNRy7Wbx+VHpAEAaUctukmL1wl7a++/BIlqouHZEs7v08YZ4Sb2gQLLhwczC4ElRjw0
+ 61G9QrNKJKA+OAwDxIFk1mVXuy/l0NRvdsdsI0TrawpYe7KKfkWk0c/spzwD43qV/EWl+O
+ LS9geQQbuq3dhvK0e8byS5TPE0+u6vZB9Hvl68tnHMKp+/tboCkWAXv+hNwTCYONyZCHGJ
+ ckTiFWYH6EVu9vbymukMM7nLTFV1niaxXLfbwoxO36cD31FiueaveYch8Ew+MwqDkDpz+f
+ woyFt8VXVf80eFbxqRberac3lJBNHvjrZDJNBr+4rVEpnAL4h63qHTzaL82g
+X-ME-Proxy: <xmx:jIZoaqhXlq97R4UbyJ21MItrp_grP6eoYn3CF1wQ72K1Ddk3KGluEQ>
+ <xmx:jIZoavZ79RwIcPsWICkRvXgWQQCHaD9y2QQGkePEoFeMnZ4SDsj0ig>
+ <xmx:jIZoav8IW6_TBvnSPA4_I-2YHZQ7URdPC_ua5KoPOCKFM-NysRcF4A>
+ <xmx:jIZoahOFdifYFFiDFGgbq5aI0Ig11aTO4leau51u93aXTr8I0p955Q>
+ <xmx:joZoaiBWMC5X5oKaf5Z3DTmFNv9HYJIchbnOzEdYygfjm6TXCx1SuPD6>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 28 Jul 2026 06:38:02 -0400 (EDT)
+From: Klaus Jensen <its@irrelevant.dk>
+Date: Tue, 28 Jul 2026 12:37:57 +0200
+Subject: [PATCH v2] hw/nvme: fix cross-namespace copy dif buffer overflow
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/3] system/memory: Use qemu_ram_move() for directly
- accessible regions
-To: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, peterx@redhat.com,
- mst@redhat.com, richard.henderson@linaro.org, alex@shazbot.org,
- berrange@redhat.com, philmd@mailo.com, david@kernel.org, clg@redhat.com,
- pbonzini@redhat.com, phrdina@redhat.com, jugraham@redhat.com,
- liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn, shan.gavin@gmail.com
-References: <20260727032649.145381-1-gshan@redhat.com>
- <20260727032649.145381-3-gshan@redhat.com>
- <CAFEAcA9_tDRAd97z4UtNhFPK+fMbq37LJhWTSmD5cueo61hvvg@mail.gmail.com>
- <0a384d67-fc56-4a21-9d0e-25f218a45228@redhat.com>
- <CAFEAcA9HbTSj9cJfv8o=jYSuPhScr-RVKWCos4kpUJ+T1S6g5Q@mail.gmail.com>
- <13333e56-3725-4550-849c-9035f6925213@oss.qualcomm.com>
- <CAFEAcA9X7SNUvQpwXA2_xReUERB-eBETty3g32-PD=MVk536sg@mail.gmail.com>
-Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <CAFEAcA9X7SNUvQpwXA2_xReUERB-eBETty3g32-PD=MVk536sg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260728-fix-cross-ns-pract-v2-1-4641b842836f@samsung.com>
+X-B4-Tracking: v=1; b=H4sIAISGaGoC/32NQQ7CIBBFr9LM2jF0UKhdeQ/TBUFoWRQapjaah
+ ruLPYDL9/P/+zuwy8Ex9M0O2W2BQ4oV6NSAnUwcHYZnZSBBSmjq0Ic32pyYMTIu2dgV1U1erO1
+ IXD1BHS7Z1dYhfQyVp8Bryp/jY2t/6V/d1mKLJLxSWikptb+zmfkVx7NNMwyllC+OtcCUtgAAA
+ A==
+X-Change-ID: 20260728-fix-cross-ns-pract-6934cc8205f2
+To: qemu-devel@nongnu.org, Keith Busch <kbusch@kernel.org>, 
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>, 
+ qemu-block@nongnu.org
+Cc: Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org, 
+ Jihe Wang <wangjihe.mail@gmail.com>, boy juju <agx1657748706@gmail.com>, 
+ contact <contact@xchglabs.com>, david korczynski <david@adalogics.com>, 
+ "Brian Chastain (off_by_one / Curious-Keeper)" <brian@scalingsuccess.io>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2775; i=k.jensen@samsung.com; 
+ h=from:subject:message-id;
+ bh=1nJigRZtBRlzSPtxniqiAgw5y3n0ND5NX5tJEqgohVY=; 
+ b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0o0bkFGdEFaTCtrQTBEQUFvQlRlR3ZNV
+ zFQRGVrQnl5WmlBR3BvaG9pOEN6YnVjNks1bXJ3bHBHMm9XZkR1CnJjVTRRMWc4SHU1S3ZhR2dw
+ WDVtOG9rQk13UUFBUW9BSFJZaEJGSW9NNnAxNHR6bW9rZG13RTNocnpGdFR3M3AKQlFKcWFJYUl
+ BQW9KRUUzaHJ6RnRUdzNwanI4SC8wbksvUTA3RVQ5cGJLcTBJM2hEVGpaZHBDcW5vQ2FTWWJ2MA
+ ptdUVIM1ZZS3hYMHh3anNBQkVnVGRxMDNVdDBDclBVVlluQzFPaXVyM3M1bU9iemxUL2dKaVh6N
+ kNOajBwOFcvCm1vd2hVOHVpek9xNHFSVnJaQ0dHbnhTRnZqMVpsbmVDeHYzUGFOdXhjUVlVM00w
+ UVliQjJvNEFQeXJ1UmNxMUMKc0IrQ3IvKzM0Z3gwME1FNTVqWGoxODdseVpyUURwbWR6N096ZGZ
+ GazVaVk9OWDNMMVZmMGFEVitON0ljZmVKbApsM3RpWmFqQktUdnJZK1ZYMS9iTDltelJQdUx6TV
+ ByTXBQWFo1VmlBVjVpL0plTklZaFJsQWdKcFBiUlBlcDFwCkw2ZU14TUtYNkV6ZjRLTzlQQXFZb
+ 0RFVnQ0elRjV3JkYWRLNER2UWRMY0Nkc01rekxuS1hIYk1YCj1YNkplCi0tLS0tRU5EIFBHUCBN
+ RVNTQUdFLS0tLS0K
+X-Developer-Key: i=k.jensen@samsung.com; a=openpgp;
+ fpr=DDCA4D9C9EF931CC3468427263D56FC5E55DA838
+Received-SPF: pass client-ip=103.168.172.156; envelope-from=its@irrelevant.dk;
+ helo=fhigh-a5-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,101 +128,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/28/26 7:35 PM, Peter Maydell wrote:
-> On Tue, 28 Jul 2026 at 10:22, Philippe Mathieu-Daudé
-> <philmd@oss.qualcomm.com> wrote:
->>
->> On 28/7/26 11:01, Peter Maydell wrote:
->>> On Tue, 28 Jul 2026 at 04:01, Gavin Shan <gshan@redhat.com> wrote:
->>>>
->>>> On 7/27/26 10:51 PM, Peter Maydell wrote:
-> 
-> 
->>>>>> +    test = (uintptr_t)src | (uintptr_t)dst | n;
->>>>>> +    len = test & -test;
->>>>>
->>>>> What is this doing? I am not a fan of clever bit twiddling
->>>>> that isn't commented to explain itself. Readers of the code
->>>>> shouldn't have to go off and search for an explanation of what
->>>>> is going on.
->>>>>
->>>>
->>>> The following comments will be added for (v5).
->>>>
->>>>        /*
->>>>         * Maximal length of aligned access that are determined by @src,
->>>>         * @dst and @n
->>>>         */
->>>
->>> What I mean is more that it ought to say why "x & -x"
->>> achieves that goal.
->>
->> Hmm isn't "x & -x" restricted to power of 2? Here we have no garanty
->> @test is, because we have no garanty @n is. Ah, this is catched by
->> the 'len != n' check and returns after calling memmove(). Indeed not
->> very clear notation. Again:
->>
->>     ...
->>
->>     /* Overlapping buffers, unaligned or oversized access */
->>     if (!QEMU_IS_ALIGNED((uintptr_t)src | (uintptr_t)dst, n)) {
->>         memmove(dst, src, n);
->>         return;
->>     }
->>
->>     switch (n) {
->>     ...
-> 
-> I'm not inherently against the bit twiddling (QEMU_IS_ALIGNED
-> on a variable length will do a division, maybe we care?);
-> I just want that if we do use a bit-twiddling trick that we
-> explain why it does the thing we want it to do.
-> 
+From: Klaus Jensen <k.jensen@samsung.com>
 
-Ok, PeterM and Philippe, Could you please help to check if below code looks
-good to you? Thanks a lot :-)
+The NVMe specification allows a controller with multiple namespaces to
+use different LBA formats per namespace. One implication of this is that
+the destination namespace may have a metadata area for PI, but the
+source does not. In that case, the controller shall generate the
+protection information, but the bounce buffer is erroneously allocated
+without space for that, causing a buffer overflow.
 
-void qemu_ram_move(void *dst, const void *src, size_t n)
-{
-     if (n == 0) {
-         return;
+Fix the allocation.
+
+Cc: qemu-stable@nongnu.org
+Fixes: d522aef88d42 ("hw/nvme: add cross namespace copy support")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3387
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3692
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3841
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3853
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3936
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4031
+Reported-by: Jihe Wang <wangjihe.mail@gmail.com>
+Reported-by: boy juju <agx1657748706@gmail.com>
+Reported-by: contact <contact@xchglabs.com>
+Reported-by: david korczynski <david@adalogics.com>
+Reported-by: Brian Chastain (off_by_one / Curious-Keeper) <brian@scalingsuccess.io>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+---
+Changes in v2:
+- use MAX instead of the tertiary if
+- assert that we don't 
+- Link to v1: https://lore.kernel.org/qemu-devel/20260728-fix-cross-ns-pract-v1-1-20f66766337f@samsung.com
+---
+ hw/nvme/ctrl.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index a67e1598891c..7f28d2e3eb49 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -3210,7 +3210,7 @@ static void nvme_do_copy(NvmeCopyAIOCB *iocb)
+     uint16_t prinfow = ((copy->control[2] >> 2) & 0xf);
+     uint64_t slba;
+     uint32_t nlb;
+-    size_t len;
++    size_t len, blen;
+     uint16_t status;
+     uint32_t dnsid = le32_to_cpu(req->cmd.nsid);
+     uint32_t snsid = dnsid;
+@@ -3331,10 +3331,13 @@ static void nvme_do_copy(NvmeCopyAIOCB *iocb)
      }
+ 
+     g_free(iocb->bounce);
+-    iocb->bounce = g_malloc_n(le16_to_cpu(sns->id_ns.mssrl),
+-                              sns->lbasz + sns->lbaf.ms);
++    assert(g_size_checked_mul(&blen, le16_to_cpu(sns->id_ns.mssrl),
++                              sns->lbasz + MAX(sns->lbaf.ms, dns->lbaf.ms)));
++
++    iocb->bounce = g_malloc(blen);
+ 
+     qemu_iovec_reset(&iocb->iov);
++    assert(len <= blen);
+     qemu_iovec_add(&iocb->iov, iocb->bounce, len);
+ 
+     block_acct_start(blk_get_stats(sns->blkconf.blk), &iocb->acct.read, 0,
 
-     /* Overlapping areas, unaligned or oversized access */
-     if (!is_power_of_2(n) || n > 8 ||
-         !QEMU_IS_ALIGNED((uintptr_t)src | (uintptr_t)dst, n)) {
-         memmove(dst, src, n);
-         return;
-     }
+---
+base-commit: 299e7557ed15a9a325620698add379a3ce2d1d95
+change-id: 20260728-fix-cross-ns-pract-6934cc8205f2
 
-      switch (n) {
-      case 1:
-          qatomic_set((uint8_t *)dst, qatomic_read((uint8_t *)src));
-          break;
-      case 2:
-          qatomic_set((uint16_t *)dst, qatomic_read((uint16_t *)src));
-          break;
-      case 4:
-          qatomic_set((uint32_t *)dst, qatomic_read((uint32_t *)src));
-          break;
-      case 8:
-          qatomic_set((uint64_t *)dst, qatomic_read((uint64_t *)src));
-          break;
-      default:
-          g_assert_not_reached();
-      }
-}
-
-QEMU_IS_ALIGNED() doesn't require the arguments are power-of-two values.
-
-#define QEMU_IS_ALIGNED(n, m) (((n) % (m)) == 0)   /* QEMU_IS_ALIGNED(3, 3) => true */
-
-I also need to drop "and the memory areas do not overlap" in (v6) from the
-comments for include/system/memory.h::qemu_ram_move() as the check 'src == dst'
-check has been dropped. Sorry that I sent (v5) too quick because our downstream
-need a stabilized version to integrate.
-
-Thanks,
-Gavin
+Best regards,
+-- 
+Klaus Jensen <k.jensen@samsung.com>
 
 
