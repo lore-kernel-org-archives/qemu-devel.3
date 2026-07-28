@@ -4,110 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C4CEC53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 21:05:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B968C53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 21:07:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wooz4-0004gK-Rw; Tue, 28 Jul 2026 17:05:08 -0400
+	id 1wop1h-000749-F0; Tue, 28 Jul 2026 17:07:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wooya-0004UC-IJ
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 17:04:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wop1c-00073W-ID
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 17:07:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wooyX-0003iR-Nr
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 17:04:35 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wop1a-0004PY-Ul
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 17:07:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785272673;
+ s=mimecast20190719; t=1785272862;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QTM/N9lbOP8xRMWNN1H0iMPnAMdF9INBG5H3f+egzqw=;
- b=RLJuUdrmEEdprB4swlZs4u6v2x0b5tP/ex/7oinDT36tdMMZY8Qj0EPw6q+S662XOycL/F
- KHKR2/0FbOJuZtY6WtNzMftUJh+E5biMOcVnmPB8bUvhNnCnewqLBh0fgTlqiChKkJkVzF
- RnGWOEcKVniWzzU+45X50QesAgc+rDE=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=lupCBJWz5Jm4q83lgBdtnVQAvIY+UMv/u8+1D/HDGdg=;
+ b=AkPkMmIqA+oJEhK126jeBsPiOkdhg3vcW++mqv/xTybQE1dglGf3e6IQ/GVa3xn2IAGcwh
+ Ayo33TXKI7tOrgyQEGkKn+P941p1Kz0VKlzBcdG23csFcJ8TpOJpITnxhtXiEd016/CqCa
+ OXr+sFuZfE+SBm+CZoEt/sWgnCBQM6M=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-116-Dxo8-o_sMDysM_TWjPMEMA-1; Tue, 28 Jul 2026 17:04:31 -0400
-X-MC-Unique: Dxo8-o_sMDysM_TWjPMEMA-1
-X-Mimecast-MFC-AGG-ID: Dxo8-o_sMDysM_TWjPMEMA_1785272671
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-930b571432fso36455285a.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 14:04:31 -0700 (PDT)
+ us-mta-219-cD3SZ_acPbeoRuBNTvc4rQ-1; Tue, 28 Jul 2026 17:07:39 -0400
+X-MC-Unique: cD3SZ_acPbeoRuBNTvc4rQ-1
+X-Mimecast-MFC-AGG-ID: cD3SZ_acPbeoRuBNTvc4rQ_1785272859
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-92e5e38fbc5so42766785a.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 14:07:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785272671; x=1785877471; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ d=redhat.com; s=google; t=1785272859; x=1785877659; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=QTM/N9lbOP8xRMWNN1H0iMPnAMdF9INBG5H3f+egzqw=;
- b=mnFRSni87qgCHNGU/LZG9ZHd2qKNwgv3viYdnwvAGr+lbtuZv+oWdWQmWoKd2Niy/M
- xJmoZsxk72Zu8LUSRyDPqsP2ju8/13T6IpPMjm4FLezLiE40E7TUWDu/y1hadAlAVMql
- FYMkCN77hqj37Gr2LGG3Mj7HvBPlBXAgINPRHc5Ug1dCoFt7LC/nY/ufE1i7Hq8iw+8n
- WoAxLbnac2Fr73PxCyA8WWFoAxHjQo/fACU+te+/jHi/FUdw2nLIxOKPcyzKq29lhqjX
- LrAW1FuQMT2tOUHBPGFVz7JbxUAJIx93ZvgENYnJTMr69Ok+7Z0o9Z4FB6mAIk+XVYjo
- 8+3Q==
+ bh=lupCBJWz5Jm4q83lgBdtnVQAvIY+UMv/u8+1D/HDGdg=;
+ b=amHTOoJgziK0BZ+1iEnCcZVccZLILHu8N48botvgr+BFBfPivNc+9TmSFeQKe/FMp9
+ qEKAqP9MBrHchC6zQLr1U7jve1Lya1slT+OtvGlqwpvXN/h1UWmTCK/QnD6MHQr1O5/2
+ i3yAvI6TuZRtp6Uvsfr+CzrtLBJM4s0lwaWo4Ggfb0+isIPFrQsspz8hRO+LuE/MBU0V
+ i3IWdv3br6WhGX/JUNbXZ/uGrRf5w/Qc2hzFOfijXB5nlwayxx+su4I4+xD9wUh6WoNw
+ l7cyCf1qW5SQE05W6v5Fi4UnxCYGuGlwxlRHL5jEUVAvtv6C+VUBsA4p3rghT/j5J5+f
+ HzLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785272671; x=1785877471;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ d=1e100.net; s=20251104; t=1785272859; x=1785877659;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=QTM/N9lbOP8xRMWNN1H0iMPnAMdF9INBG5H3f+egzqw=;
- b=eGW/GTMhrNYnKMDZkCtJWDFmisbNXjdtdcKAGxdg0FnaE++zLscX05muZZlLe38Lcu
- N+MGX4YM49s+dgKLFwqiwqwczlKGpdyKBfsZ184JQw7S1NIQvav0WFo02+3H2rP36pbW
- A23ysVwGFuLjbN+wUPHa4KtmsX6aiem0ddp2+58x9tnDOn9L6E63j0J7zfwVgq8Gqj+/
- bJf057vsylUjdqXR9jOawgJnhq3HYHDVOoJpghzhozBM42y/hTju37ixDhSlTg6aSunM
- qk5bxazF0ylw+H7k8tJa8ZMW2SF6s23ymozf60cNkOJdhUV5nb5zTRxpr0md9MPqurYt
- 3BGw==
-X-Gm-Message-State: AOJu0Yz9KKqG+L4w8x0AcjbC9VQhzhGKdQJMHkow7moWRhW83j9pZFhe
- Y2Uk0mPWLHAW/D8toE7osGlb2OotPSj2OrLNyENMC3EulBLZPWmfb4Dh2NPMznB/foAm0S1Y+LM
- wxCwBbhUGaurxE9A/EnF36VzGw3l4+f4iIkpTvTHK8BR/0+eD68nPvFYvSvpBW5zyRyani5qFF0
- jOVY0MkHLVvgCYNMCJhwXNy/xTNrMg3Yam51j9Ag==
-X-Gm-Gg: AR+sD13v1JZiMenvWF/Xj/YSnlVjjYELJZx3hEapaYkBzsCgLdTzO50d82kxPdM4pMK
- 5osyD7eyl6dK8HzfmF+H24Zd5kAtRDGb0DtiXyoNIzoZmjU/gecR3tZ/u1WTSXEpZ/BwI3vlZ3Z
- /JJ8MLCOX1eS+ToC/CLtcg7ZlDUN6mkOIOs0TeO0Soya26qme5Nj4bk/cuZOvp/Rp6H52BuZRIl
- +E2CXu8CCPpsfsbNekwF1GOfpS0A/n80QmcTzx3NXWeJgZRdRcH3M6Q1jyH33OCgUKkZSlt/FtC
- 2tvNrC/1PsftBHzsdBKZ/lPwor8VkjRrpHWw6y3RYWHqPlrWvFT4XgoXDdHuoo7n2D++cxaYAbe
- zVqbl70LCCqTFUvatBxB/fqu6uzUwVifm8Ihc7UhrpmSL02YUevT5qegw
-X-Received: by 2002:a05:620a:2683:b0:92e:c0ac:aeb6 with SMTP id
- af79cd13be357-9330270951emr375409785a.40.1785272671006; 
- Tue, 28 Jul 2026 14:04:31 -0700 (PDT)
-X-Received: by 2002:a05:620a:2683:b0:92e:c0ac:aeb6 with SMTP id
- af79cd13be357-9330270951emr375405685a.40.1785272670440; 
- Tue, 28 Jul 2026 14:04:30 -0700 (PDT)
-Received: from x1.com
+ bh=lupCBJWz5Jm4q83lgBdtnVQAvIY+UMv/u8+1D/HDGdg=;
+ b=RQN1p99/UP1+C4TdE2l4tIWCAFrhW+fSjvX1yFjlqi9htT5v9Big4tHHbKeh3pV2Eh
+ jAgxJLu+AXTy4N/i5jXF0hVp4o3zUEKG3iRpHDoIiEP/OBpXaKOJiFf7xu9zwFW0PME7
+ pXubQeD4PqLw8ZUJXZIMczIDYejkQQp7RkJ5UY71e6ipNNaJds/ZzUxJL01KqwlteDnH
+ VhhnVFCATNdmMnZfcDEmAJfXmUPQgbLtalphqbXHZlslYD9BxolnItkbZsLp1O2YlI//
+ jsYTlX7kc1AaJY1RthdjKb99uaoyxevSWaSSB8I0YvOxOIShAOCW3niuVNikfSDbwFKf
+ G+KQ==
+X-Gm-Message-State: AOJu0YzMyAhBtAX3Z3pfpeQl/LNYRZKSemKs7MtrNwEgY3Lmgt8uJaPH
+ CI6Pj8fbGTfVH34+McPx/gGYHSl/ES+E6+D7g7u/Vbt6WePktBnD2U6vEyeMvyOOH5tB8vsWR/2
+ JGFQ2Fae1m+vyUTVDRDSjpwzB7LxiwGHvdPu0kzOCzVVi9dY8DGMUI3E7
+X-Gm-Gg: AR+sD12AZp+UBcfYcjpggR5HNXwW8bvQOLgq2UB5pjP56P8XlerbEtAMf/sYgn27Yfa
+ Kof7YXb/LePRIjvU4Olrw1JZf+tM5B1cHDb48BqHXOEBxatOEfkMSIPHSDygGTY/gZdhxk5VLcZ
+ UOJihb93KrLvmFjFg24exXf+ff2JdKy58cE5WQL0BY1rFB2Mh5hvXP1mMnsDOTAYuBn+PScV65g
+ IBfP4n0brQzJvdsb6gwOYjULdphWy+5rgUiJYiM2wdIEpodQEfTrzwZJ6AwHuZSDxjeGC29KRyE
+ Tlj1/zW86FDU4LHJ9SYzdvGKiVXiq8ZUkiL0cNRwSos5yejyQdZbYsA3ZNr7ctxjBZUoe5/tClz
+ o5vZMhXJro37YNoi9WE42JSztls3nBB7mIs+oDcjodpf0AWR3SsUgalW2j14=
+X-Received: by 2002:a05:620a:6cca:b0:931:62d:6c3e with SMTP id
+ af79cd13be357-933026a88eemr433985285a.86.1785272859193; 
+ Tue, 28 Jul 2026 14:07:39 -0700 (PDT)
+X-Received: by 2002:a05:620a:6cca:b0:931:62d:6c3e with SMTP id
+ af79cd13be357-933026a88eemr433980485a.86.1785272858492; 
+ Tue, 28 Jul 2026 14:07:38 -0700 (PDT)
+Received: from x1.local
  (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-933d3227707sm21277985a.6.2026.07.28.14.04.28
+ af79cd13be357-933d3257522sm21329285a.11.2026.07.28.14.07.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jul 2026 14:04:29 -0700 (PDT)
+ Tue, 28 Jul 2026 14:07:37 -0700 (PDT)
+Date: Tue, 28 Jul 2026 17:07:36 -0400
 From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>,
- peterx@redhat.com, Feifan Qian <bea1e@proton.me>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 4/5] migration: Fix rare hang of
- migration_channel_read_peek()
-Date: Tue, 28 Jul 2026 17:04:16 -0400
-Message-ID: <20260728210417.1925078-5-peterx@redhat.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260728210417.1925078-1-peterx@redhat.com>
-References: <20260728210417.1925078-1-peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
+ qemu-stable <qemu-stable@nongnu.org>, Yuan Liu <yuan1.liu@intel.com>,
+ Yichen Wang <yichen.wang@bytedance.com>
+Subject: Re: [PATCH 3/5] migration/multifd: Replace assert() with
+ error_setg() in recv paths
+Message-ID: <amkaGO1kQYrHquMe@x1.local>
+References: <20260728155247.1894355-1-peterx@redhat.com>
+ <20260728155247.1894355-4-peterx@redhat.com>
+ <87tspiopuc.fsf@suse.de> <amkQ0JzADdKbhsOJ@x1.local>
+ <87h5liomod.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87h5liomod.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
 X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,51 +123,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In an unlikely case, when a migration stream is attached to the destination
-QEMU and only send <4 bytes to the channel as magic, it's possible that
-migration_channel_read_peek() may spin forever.
+On Tue, Jul 28, 2026 at 05:59:30PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > On Tue, Jul 28, 2026 at 04:51:07PM -0300, Fabiano Rosas wrote:
+> >> Peter Xu <peterx@redhat.com> writes:
+> >> 
+> >> > QPL and UADK multifd backends use assert() to validate wire-controlled
+> >> > fields like per-page compressed lengths and packet size consistency.  These
+> >> > asserts will stop working with released version of binaries, so may stop
+> >> > working.
+> >> 
+> >> This is not true, asserts are always on. Same for the similar comment in
+> >> the previous patch commit message.
+> >
+> > Shall I perhaps replace this to "when compiled with -DNDEBUG"?
+> >
+> 
+> It's not allowed as per osdep.h:
+> 
+> #ifdef NDEBUG
+> #error building with NDEBUG is not supported
+> #endif
 
-Fix it by adding a manual sleep for partial read.
+I shouldn't have sent v2.. I'll wait for a few days for sending v3.
 
-Since the path isn't attached to a coroutine, it means when partial read
-happens, there's yet not much we can do but hang the main thread, it will
-happen even for len==0 case.  It means monitors can hang due to this,
-either partial read or no data arrived (but connection established).
-
-Leave this for later, the hope is this is extremely rare in production.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3889
-Reported-by: Feifan Qian <bea1e@proton.me>
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/channel.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/migration/channel.c b/migration/channel.c
-index 1e2935f926..f446561b59 100644
---- a/migration/channel.c
-+++ b/migration/channel.c
-@@ -296,9 +296,16 @@ int migration_channel_read_peek(QIOChannel *ioc,
- 
-         if (len == buflen) {
-             break;
-+        } else if (len == 0) {
-+            qio_channel_wait_cond(ioc, G_IO_IN);
-+        } else {
-+            /*
-+             * When partially ready, we can't use qio_channel_wait_cond()
-+             * because it will return immediately.  Apply a manual wait.
-+             */
-+            assert(!qemu_in_coroutine());
-+            g_usleep(1000);
-         }
--
--        qio_channel_wait_cond(ioc, G_IO_IN);
-     }
- 
-     return 0;
 -- 
-2.54.0
+Peter Xu
 
 
