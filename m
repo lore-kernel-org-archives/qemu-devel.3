@@ -4,93 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83ACDC54F51
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 20:58:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFD21C54F51
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 20:58:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woos1-0001cK-1P; Tue, 28 Jul 2026 16:57:49 -0400
+	id 1woosT-0001fr-OR; Tue, 28 Jul 2026 16:58:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1woorz-0001c4-BQ
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 16:57:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1woorx-0002um-9Z
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 16:57:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785272263;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2gQVzdpbxWqZEcXE7NBAxZ1Oi0L9W0NRspalkpY0XQ8=;
- b=EQ/9NZs11IKHCFZX4LsQd5XLXp4qTcWre+yG8X0VQHpt12PCO0tEYkxLvOIVEorEUMmhfB
- SZ5RSKLzpB7ZFp6kKro5/oGoAIey+eDHkPfeqB3V/U9jtHoKyvo0FZqLp93IsTd5RmCxbK
- 6T3GBCaXSEj5ZrRW5F655rGyIyLNR4I=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-15-95PmEynJNFq84Bw3LkEj0w-1; Tue,
- 28 Jul 2026 16:57:39 -0400
-X-MC-Unique: 95PmEynJNFq84Bw3LkEj0w-1
-X-Mimecast-MFC-AGG-ID: 95PmEynJNFq84Bw3LkEj0w_1785272257
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1woosS-0001eG-BP
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 16:58:16 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1woosQ-0002wk-2m
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 16:58:16 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 201D019560A6; Tue, 28 Jul 2026 20:57:35 +0000 (UTC)
-Received: from localhost (unknown [10.2.17.47])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1C0E618004AD; Tue, 28 Jul 2026 20:57:31 +0000 (UTC)
-Date: Tue, 28 Jul 2026 16:57:28 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Connor Kite <connorkite@gmail.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Haixu Cui <quic_haixcui@quicinc.com>,
- Raphael Norwitz <rnorwitz@nvidia.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Milan Zamazal <mzamazal@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- qemu-block@nongnu.org, virtio-fs@lists.linux.dev,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- zhenwei pi <zhenwei.pi@linux.dev>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
- Eugenio =?iso-8859-1?Q?P=E9rez?= <eperezma@redhat.com>,
- Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
-Subject: Re: [PATCH RFC 14/15] hw/virtio/vhost-user: handle data movement
- with shadow vqs
-Message-ID: <20260728205728.GL371693@fedora>
-References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
- <20260723-vhost-user-isolated-memory-v1-14-6b97c439eb28@gmail.com>
+ by smtp-out2.suse.de (Postfix) with ESMTPS id B76293E08;
+ Tue, 28 Jul 2026 20:58:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1785272287; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=e1A0ooj8JtfKgp7UEpDBJbA229SMu6Fyl2utYV/uW8M=;
+ b=ObRz8gIYnTZjv+CHNwaHUYftePzJAEj1cEFZKdAxxplmjd3I3D2dLNJHxy/DjMTnNUMNzj
+ AqlAONzpafRDO5jzIilY/5BAgfBw0T8k+mSUSCHcvK9+aKUdILGpnyN29/7bcVxoDJD0g1
+ xKhP4PP3Ln+cAPEUgFdjyswRqcoXuKM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1785272287;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=e1A0ooj8JtfKgp7UEpDBJbA229SMu6Fyl2utYV/uW8M=;
+ b=9zoMpYOf5XtoYjxs3wPmiRdERENf/w7TQlSDa+4y4VwJoACRKeyUMlzXch4FepoiFEAaZx
+ XrraaOmUrxl8gSDQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=a0o+5Dly;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=yYZIEH5Y
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1785272283; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=e1A0ooj8JtfKgp7UEpDBJbA229SMu6Fyl2utYV/uW8M=;
+ b=a0o+5Dlyso41rJdt8kWzGKVs4QO1qMj+IjrJalb7Bg+Nz4Cjg61PGKnh9aqI4L/qUnq8Td
+ bmYruHHuRzeh0j3NkNj1SajaUb6k0AR/Uunze4VM9eSjUVtq6f0eKng/TCpnq7fVwR7WDR
+ 2Faslt5GubZWnl/jKWzCK3dY63VGfpY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1785272283;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=e1A0ooj8JtfKgp7UEpDBJbA229SMu6Fyl2utYV/uW8M=;
+ b=yYZIEH5Ymr/kKp3U9jpAMXpExdWKnPCh3ptvGLa0iBj3S/qDxEiVqzBP52p/VaaiX51Qm1
+ NVRY4HkIdufr9+Dw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4CC93779B1;
+ Tue, 28 Jul 2026 20:58:03 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 3jFLB9sXaWrsCAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 28 Jul 2026 20:58:03 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, "Michael S. Tsirkin" <mst@redhat.com>, Stefano
+ Garzarella <sgarzare@redhat.com>, =?utf-8?B?6rmA7Iq57KSR?=
+ <seungjung0711@gmail.com>, Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Subject: Re: [PATCH] vhost/migration: Fix incorrect size used in
+ inflight->addr in VMSD
+In-Reply-To: <20260728153942.1891677-1-peterx@redhat.com>
+References: <20260728153942.1891677-1-peterx@redhat.com>
+Date: Tue, 28 Jul 2026 17:57:56 -0300
+Message-ID: <87jyqeomqz.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="jGEHF4PY3Zu7S4sk"
-Content-Disposition: inline
-In-Reply-To: <20260723-vhost-user-isolated-memory-v1-14-6b97c439eb28@gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MISSING_XM_UA(0.00)[]; RCPT_COUNT_SEVEN(0.00)[7];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ FREEMAIL_CC(0.00)[redhat.com,gmail.com,yandex-team.ru];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,gitlab.com:url];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Queue-Id: B76293E08
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,312 +131,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---jGEHF4PY3Zu7S4sk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Peter Xu <peterx@redhat.com> writes:
 
-On Thu, Jul 23, 2026 at 03:30:13PM -0700, Connor Kite wrote:
-> - Add start logic for shadow virtqueues, which sets vring addresses.
-> - Update logic for sending vring addresses to backend to point
->   to the shadow vrings when isolation mode is active.
-> - Implement handlers for intercepted avail and used descriptors. These
->   handlers copy buffer contents between bounce buffers in the isolation
->   region and the buffers made available by the guest
-> - Implement logic to stop svqs
->=20
-> Signed-off-by: Connor Kite <connorkite@gmail.com>
+> It was overlooked that VMSTATE_VBUFFER_UINT64() won't really work with an
+> uint64_t, as vmstate core only treats the size as 32bits, and maximum
+> INT32_MAX (see vmstate_size()).
+>
+> Considering that we do not need real 64bits for the size, stick with the =
+2G
+> limit, converting the size field into 32bits.
+>
+> Since we can't touch the wire protocol on migration from an old QEMU, we
+> can't directly modify the type of size to uint32_t.  Instead, we need to
+> introduce a temporary variable for this extremely rare issue __size_32bits
+> to be used only for VMSTATE_VBUFFER_UINT32().  Document it and name it
+> weird enough so people won't get confused on having two size variables.
+>
+> Remove VMSTATE_VBUFFER_UINT64() altogether, because it was never going to
+> be used right.  It means QEMU will only support 2G max for VMS_VBUFFER.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3675
+> Reported-by: =EA=B9=80=EC=8A=B9=EC=A4=91 <seungjung0711@gmail.com>
+> Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+> Cc: Michael S. Tsirkin <mst@redhat.com>
+> Cc: Fabiano Rosas <farosas@suse.de>
+> Fixes: 3a80ff0721 ("vhost: add vmstate for inflight region with inner buf=
+fer")
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->  hw/virtio/vhost-user.c | 167 +++++++++++++++++++++++++++++++++++++++++++=
-+++++-
->  1 file changed, 166 insertions(+), 1 deletion(-)
->=20
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index 75858289a2..e65f877f9a 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -1299,6 +1299,97 @@ static int init_isolation_regions(struct vhost_dev=
- *dev,
->      return 0;
+>
+> PS1: I only did smoke test as I'm not fluent with vhost inflight feature.
+> Please kindly try it out if possible. In general, migrations from older
+> QEMU should work even after applied.  One can also treat this as partly-R=
+FC
+> from that.
+>
+> PS2: Michael, we have just discussed what we should define as CVE for
+> migration, and this one shouldn't fall into CVE category, please refer to:
+>
+> https://lore.kernel.org/r/20260721131457.3062767-1-farosas@suse.de
+>
+> So I didn't yet attach CVE tag.  Please correct if I'm wrong, thanks.
+> ---
+>  include/hw/virtio/vhost.h   |  5 +++++
+>  include/migration/vmstate.h | 10 ----------
+>  hw/virtio/vhost.c           | 19 ++++++++++++++-----
+>  3 files changed, 19 insertions(+), 15 deletions(-)
+>
+> diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+> index 684bafcaad..1d1cc24c04 100644
+> --- a/include/hw/virtio/vhost.h
+> +++ b/include/hw/virtio/vhost.h
+> @@ -17,6 +17,11 @@ struct vhost_inflight {
+>      int fd;
+>      void *addr;
+>      uint64_t size;
+> +    /*
+> +     * This is a temporary variable only used during migration loading to
+> +     * satisfy VMSTATE_VBUFFER_UINT32() typing. Please use @size otherwi=
+se.
+> +     */
+> +    uint32_t __size_32bits;
+>      uint64_t offset;
+>      uint16_t queue_size;
+>  };
+> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+> index 1b7f295417..a349b2d84a 100644
+> --- a/include/migration/vmstate.h
+> +++ b/include/migration/vmstate.h
+> @@ -782,16 +782,6 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>      .offset       =3D offsetof(_state, _field),                        \
 >  }
-> =20
-> +static int vhost_user_memory_lookup(struct vhost_dev *dev, hwaddr gpa,
-> +                                    hwaddr *hva)
-> +{
-> +    int i;
-> +    hwaddr offset;
-> +
-> +    for (i =3D 0; i < dev->mem->nregions; i++) {
-> +        struct vhost_memory_region *reg =3D dev->mem->regions + i;
-> +
-> +        if (gpa >=3D reg->guest_phys_addr &&
-> +            reg->guest_phys_addr + reg->memory_size > gpa) {
-> +            offset =3D gpa - reg->guest_phys_addr;
-> +            *hva =3D reg->userspace_addr + offset;
-> +            return 0;
-> +        }
-> +    }
-> +
-> +    return -EFAULT;
-> +}
-> +
-> +static int vhost_user_svq_handle_used(VhostShadowVirtqueue *svq,
-> +                                      VirtQueueElement *elem,
-> +                                      void *opaque)
-> +{
-> +    hwaddr hva;
-> +    int r;
-> +    struct vhost_dev *dev =3D opaque;
-> +
-> +    for (int i =3D 0; i < elem->in_num; i++) {
-> +        r =3D vhost_user_memory_lookup(dev, elem->in_addr[i], &hva);
-> +        if (r < 0) {
-> +            return r;
-> +        }
-> +
-> +        memcpy((void *) hva, elem->in_sg[i].iov_base, elem->in_sg[i].iov=
-_len);
-> +        elem->in_sg[i].iov_base =3D (void *) hva;
-> +    }
-> +
-> +    for (int i =3D 0; i < elem->out_num; i++) {
-> +        r =3D vhost_user_memory_lookup(dev, elem->out_addr[i], &hva);
-> +        if (r < 0) {
-> +            return r;
-> +        }
-> +
-> +        memcpy((void *) hva, elem->out_sg[i].iov_base, elem->out_sg[i].i=
-ov_len);
-> +        elem->out_sg[i].iov_base =3D (void *) hva;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static int vhost_user_svq_handle_avail(VhostShadowVirtqueue *svq,
-> +                                       VirtQueueElement *elem,
-> +                                       void *opaque)
-> +{
-> +    hwaddr offset;
-> +    const DMAMap *map;
-> +    DMAMap needle;
-> +    hwaddr *iova_base;
-> +
-> +    for (int i =3D 0; i < elem->out_num; i++) {
-> +        needle.translated_addr =3D elem->out_addr[i];
-> +        needle.size =3D elem->out_sg[i].iov_len - 1;
-> +        map =3D vhost_iova_tree_find_gpa(svq->iova_tree, &needle);
+>=20=20
+> -#define VMSTATE_VBUFFER_UINT64(_field, _state, _version, _test, _field_s=
+ize) { \
+> -    .name         =3D (stringify(_field)),                             \
+> -    .version_id   =3D (_version),                                      \
+> -    .field_exists =3D (_test),                                         \
+> -    .size_offset  =3D vmstate_offset_value(_state, _field_size, uint64_t=
+),\
+> -    .info         =3D &vmstate_info_buffer,                            \
+> -    .flags        =3D VMS_VBUFFER | VMS_POINTER,                       \
+> -    .offset       =3D offsetof(_state, _field),                        \
+> -}
 
-Mapping failure must be handled.
+Why don't you just leave this macro around, put a "do not use" comment
+above it and remove the type check for this one instance? You're already
+checking against INT32_MAX during pre_load.
 
-> +        offset =3D needle.translated_addr - map->translated_addr;
-> +        iova_base =3D (void *)(map->iova + offset);
-> +
-> +        elem->out_sg[i].iov_base =3D iova_base;
-> +        memcpy(iova_base, elem->out_sg[i].iov_base, needle.size + 1);
+We could even lift that check up into vmstate_pre_load and reject
+there globally, don't even touch the virtio code.
 
-iova_base is an iova, not QEMU memory (HVA). Memcpy cannot be used with
-IOVAs. The address of the mapped shared memory is needed as the
-destination instead.
 
-> +    }
-> +
-> +    for (int i =3D 0; i < elem->in_num; i++) {
-> +        needle.translated_addr =3D elem->in_addr[i];
-> +        needle.size =3D elem->in_sg[i].iov_len - 1;
-> +        map =3D vhost_iova_tree_find_gpa(svq->iova_tree, &needle);
+/rant
+... what's even the point of having per-type variants of VMSTATE macros
+that exist just to type-check the extra offsets (.num_offset,
+.size_offset as opposed to .offset)?
 
-Mapping failure must be handled.
+For instance, look at vmstate_n_elems casting opaque data to 32 and
+sub-32bit size and assigning to an int! What do we gain from that? It's
+circular reasoning that does nothing aside from bothering the person
+writing the vmstate.
 
-> +        offset =3D needle.translated_addr - map->translated_addr;
-> +        iova_base =3D (void *)(map->iova + offset);
-> +
-> +        elem->in_sg[i].iov_base =3D iova_base;
-> +        memcpy(iova_base, elem->in_sg[i].iov_base, needle.size + 1);
+Right? Maybe I'm missing something, it's the end of the day already.
 
-No memcpy is necessary before vhost_svq_add() since this is data that
-will be read from the device upon I/O completion.
-
-> +    }
-
-elem->out_sg[] and elem->in_sg[] are modified in this function. Have we
-lost the original I/O buffer memory address from the guest virtqueue?
-This is a problem because they will be needed when completing the
-request.
-
-> +
-> +    vhost_svq_add(svq, elem->out_sg, elem->out_num, elem->out_addr,
-> +                  elem->in_sg, elem->in_num, elem->in_addr, elem);
-> +
-> +    return 0;
-> +}
-> +
-> +
-> +
-> +
->  static int vhost_user_set_mem_table(struct vhost_dev *dev,
->                                      struct vhost_memory *mem)
+> -
+>  #define VMSTATE_VBUFFER_ALLOC_UINT32(_field, _state, _version,       \
+>                                       _test, _field_size) {           \
+>      .name         =3D (stringify(_field)),                             \
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index af41841b52..e7c570d0f5 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -2022,15 +2022,24 @@ void vhost_get_features_ex(struct vhost_dev *hdev,
+>  static bool vhost_inflight_buffer_pre_load(void *opaque, Error **errp)
 >  {
-> @@ -1772,6 +1863,8 @@ static int vhost_user_set_vring_err(struct vhost_de=
-v *dev,
->  static int vhost_user_set_vring_addr(struct vhost_dev *dev,
->                                       struct vhost_vring_addr *addr)
->  {
-> +    struct vhost_user *u =3D dev->opaque;
+>      struct vhost_inflight *inflight =3D opaque;
+> -
+>      int fd =3D -1;
+> -    void *addr =3D qemu_memfd_alloc("vhost-inflight", inflight->size,
+> -                                  F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_S=
+EAL,
+> -                                  &fd, errp);
+> +    void *addr;
 > +
->      VhostUserMsg msg =3D {
->          .hdr.request =3D VHOST_USER_SET_VRING_ADDR,
->          .hdr.flags =3D VHOST_USER_VERSION,
-> @@ -1779,6 +1872,25 @@ static int vhost_user_set_vring_addr(struct vhost_=
-dev *dev,
->          .hdr.size =3D sizeof(msg.payload.addr),
->      };
-> =20
-> +    if (u->user->memory_isolation) {
-> +        if (!u->svqs_allocated) {
-> +            return 0;
-> +        }
-
-Is the idea that this returns silently when called before
-vhost_user_dev_start()? State make code harder to understand. It would
-be cleaner to set up the vring addresses without relying on
-svqs_allocated. What is the reason for deferring the vring address
-setup to vhost_user_dev_start()?
-
-> +
-> +        int svq_idx =3D addr->index - dev->vq_index;
-> +        VhostShadowVirtqueue *svq =3D g_ptr_array_index(u->shadow_vqs,
-> +                                                      svq_idx);
-> +
-> +        struct vhost_vring_addr svq_addr =3D {
-> +            .avail_user_addr =3D (uint64_t)(uintptr_t)svq->vring.avail,
-> +            .desc_user_addr =3D (uint64_t)(uintptr_t)svq->vring.desc,
-> +            .used_user_addr =3D (uint64_t)(uintptr_t)svq->vring.used,
-> +            .index =3D addr->index,
-> +        };
-> +
-> +        msg.payload.addr =3D svq_addr;
+> +    if (inflight->size > INT32_MAX) {
+> +        error_setg(errp, "inflight size '%"PRIu64"' exceeds "
+> +                   "migration limit '%"PRIu32"'", inflight->size, INT32_=
+MAX);
+> +        return false;
 > +    }
 > +
->      /*
->       * wait for a reply if logging is enabled to make sure
->       * backend is actually logging changes
-> @@ -2754,13 +2866,18 @@ static int vhost_user_postcopy_notifier(NotifierW=
-ithReturn *notifier,
->      return 0;
->  }
-> =20
-> +static const VhostShadowVirtqueueOps vhost_user_svq_ops =3D {
-> +    .avail_handler =3D vhost_user_svq_handle_avail,
-> +    .used_handler =3D vhost_user_svq_handle_used
-> +};
-> +
->  static void vhost_user_init_svq(struct vhost_dev *dev, struct vhost_user=
- *u)
->  {
->      /*Modified from vhost-vdpa*/
->      u->shadow_vqs =3D g_ptr_array_new_full(dev->nvqs, vhost_svq_free);
->      for (int i =3D 0; i < dev->nvqs; i++) {
->          VhostShadowVirtqueue *svq;
-> -        svq =3D vhost_svq_new(NULL, NULL);
-> +        svq =3D vhost_svq_new(&vhost_user_svq_ops, dev);
->          g_ptr_array_add(u->shadow_vqs, svq);
+> +    addr =3D qemu_memfd_alloc("vhost-inflight", inflight->size,
+> +                            F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
+> +                            &fd, errp);
+>      if (!addr) {
+>          return false;
 >      }
->  }
-> @@ -3466,8 +3583,56 @@ void vhost_user_async_close(DeviceState *d,
+>=20=20
+> +    /* Only used in VMSTATE_VBUFFER_UINT32() */
+> +    inflight->__size_32bits =3D inflight->size;
+>      inflight->offset =3D 0;
+>      inflight->addr =3D addr;
+>      inflight->fd =3D fd;
+> @@ -2042,7 +2051,7 @@ const VMStateDescription vmstate_vhost_inflight_reg=
+ion_buffer =3D {
+>      .name =3D "vhost-inflight-region/buffer",
+>      .pre_load_errp =3D vhost_inflight_buffer_pre_load,
+>      .fields =3D (const VMStateField[]) {
+> -        VMSTATE_VBUFFER_UINT64(addr, struct vhost_inflight, 0, NULL, siz=
+e),
+> +        VMSTATE_VBUFFER_UINT32(addr, struct vhost_inflight, 0, NULL, __s=
+ize_32bits),
+>          VMSTATE_END_OF_LIST()
 >      }
->  }
-> =20
-> +static bool vhost_user_svqs_start(struct vhost_dev *dev)
-> +{
-> +    struct vhost_user *u =3D dev->opaque;
-> +    uint64_t vring_base =3D u->iso_memory.vring_base_addr;
-> +    u->svqs_allocated =3D true;
-
-Where is this field cleared to false on reset?
-
-> +
-> +    for (int i =3D 0; i < u->shadow_vqs->len; i++) {
-> +        VirtQueue *vq =3D virtio_get_queue(dev->vdev, dev->vq_index + i);
-> +        VhostShadowVirtqueue *svq =3D g_ptr_array_index(u->shadow_vqs, i=
-);
-> +        svq->base_addr =3D (hwaddr *) vring_base;
-
-Does this support multiple virtqueues, it looks like they will all use
-the same base_addr?
-
-> +        vhost_svq_start(svq, dev->vdev, vq, u->iso_iova_tree);
-> +
-> +        struct vhost_vring_addr addr =3D {
-> +            .index =3D dev->vq_index + i,
-> +            .desc_user_addr =3D vring_base,
-> +            .avail_user_addr =3D vring_base + sizeof(vring_desc_t) *
-> +                svq->vring.num,
-> +            .used_user_addr =3D vring_base + vhost_svq_driver_area_size(=
-svq)
-> +        };
-> +
-> +        vhost_user_set_vring_addr(dev, &addr);
-
-Also mentioned above in vhost_user_set_vring_addr():
-
-Sending a vhost-user message here is strange since that should already
-be done by vhost.c:vhost_virtqueue_start() ->
-vhost_user_set_vring_addr().
-
-> +
-> +        vring_base +=3D vhost_svq_device_area_size(svq) +
-> +                      vhost_svq_driver_area_size(svq);
-> +    }
-> +
-> +    return false;
-> +}
-> +
-> +static void vhost_user_svqs_stop(struct vhost_dev *dev)
-> +{
-> +    struct vhost_user *u =3D dev->opaque;
-> +
-> +    for (int i =3D 0; i < u->shadow_vqs->len; i++) {
-> +        vhost_svq_stop(g_ptr_array_index(u->shadow_vqs, i));
-> +    }
-> +}
-> +
-> +
->  static int vhost_user_dev_start(struct vhost_dev *dev, bool started)
->  {
-> +    struct vhost_user *u =3D dev->opaque;
-> +    if (u->user->memory_isolation) {
-> +        if (started) {
-> +            vhost_user_svqs_start(dev);
-> +        } else {
-> +            vhost_user_svqs_stop(dev);
-> +        }
-> +    }
-> +
->      if (!vhost_user_has_protocol_feature(dev, VHOST_USER_PROTOCOL_F_STAT=
-US)) {
->          return 0;
->      }
->=20
-> --=20
-> 2.43.0
->=20
-
---jGEHF4PY3Zu7S4sk
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmppF7gACgkQnKSrs4Gr
-c8iMXQf/flRUGehIw2aZaL3YqKW3Ey6JqYz3KCvxDySSHiWXLHLTS4zwL/hYasxN
-oa8/Mj6z97q/u4m+/jNgbi0kH70Or/BvDFlTyKN2rLDZaSSB/4KnXmXky5G1dWaw
-T0smQfvc3gWP9XP8H0PM+GQ5VyqroFz0tSXDkhmgHmkcsskn/8mvFjDU5Pq2cNTc
-VUMqMBKUjLHMWsIBoYoAC14JX3WRXC3hKHtUubBrZeMiz4zrPjQnVup14wIVZkmu
-E2/1xZflft+qFSLPl5kXHvHv2bANBgnmN0uOQBhLFZvn+utheat9BlFZuU35EKfC
-r6m/0t6HEpMn6a6J8oLLs0LOtuIk/g==
-=gpUw
------END PGP SIGNATURE-----
-
---jGEHF4PY3Zu7S4sk--
-
+>  };
 
