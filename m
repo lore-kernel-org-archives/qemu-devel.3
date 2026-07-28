@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2A38C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 15:39:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CED77C54F4C
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 15:39:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wojtU-0003Xe-Q4; Tue, 28 Jul 2026 11:39:00 -0400
+	id 1wojtb-0003io-68; Tue, 28 Jul 2026 11:39:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wojtS-0003Vy-RY
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 11:38:58 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wojtY-0003g5-VT
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 11:39:05 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wojtQ-0002h5-Uu
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 11:38:58 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4954d29264cso20236465e9.2
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 08:38:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wojtX-0002mV-As
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 11:39:04 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-47ddf7b09e5so13527f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 08:39:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1785253135; x=1785857935; darn=nongnu.org;
+ d=openvz.org; s=google; t=1785253142; x=1785857942; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=/g2p3N4kfpkZuJaxI9UjRhwniulc+lWWhKKajqjETAQ=;
- b=WBaf1ljcBNk8ccZ1uCrMYmCxiJ1SbQhGA+U8SOleaDH9ZdnvZn9U6g/U0l5U83kAvO
- KW7cEy+m2QXMwSGYqnevboSQ97gYpZoXqL1xwXrY0ISyUQ5mfDehDL3r7UmFYgTEbreQ
- Qene7BV82v9dRjeUYKg1gIncqy9szmwj6KFnsD3ioYq50iWCkXiMuFVDSBnawsxgvt5j
- SmZRAkidtdeqKvgwS+xSco1b8gm1ti8gAlBDMHcqbNYY8L7o/D1cjQ4vmLElWd+JXLHm
- +iv+PK41WYasrSt3zSyb/b5TZs0ASTxkJOcEOC7Tm4BGwa7shtUD0APoKWHyqRxkubbr
- vHWg==
+ bh=uhfeGe/4CB094Qsb3YMVun3IRBzdJrjy7hL+hy4mT8o=;
+ b=to7vuMGBX0XZJl2XuOS3A3K9mTXum4WeNtwIp2bqrqgI9AjdrrF/OvxFUVxLyq7AAJ
+ ZuDi/MTgs0Or/hzSyaAnjiDPR/Bt7mUa6JL5Ezi0Crw57xD5bgsVlFOZLv3gnmOvXq9p
+ qnBAmwjNG8Ud2dJUqqQpk4YMyEryDHep1vMtfDdzkGxql8BkclQ+9zbAnXGhnQy19cEF
+ TDJKbBs7ugyy2tiGA37hMt5X8CEpkbL/i2QPgCwuPcirKwuWjub7CmqgGTgLPWll7QRz
+ LIH7nPZ9QxMWfeYnW7R1nbIudpQIbX6WhjHN12feEAKTksISh3des3xFNlqTWgIOfnuu
+ w1HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785253135; x=1785857935;
+ d=1e100.net; s=20251104; t=1785253142; x=1785857942;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=/g2p3N4kfpkZuJaxI9UjRhwniulc+lWWhKKajqjETAQ=;
- b=Eto83mlOV9OoIwEzJ8czbp6GRgE07yZZlUImUKu8coSftPcQW2bJyLVwk0k4W240A9
- ayMQpsKNT5LJYpM3LNEHlZhEu0Gh1rxrt/B3TQVLNJw6aD1wtw4VzW753NFdu9GC8wlX
- 3PatrfTI1sQmTFc4lpQKR0sP4EEE8CzJzovxjWbBjwKswDKHDw/9xdrgeeQSz3K+0OoG
- gUis3EdOimAiBfq6T/tpBhF8wbsWzkSrkIzBsrJvLG0qkwJuYT4/d75T9Vg9lFa05sCS
- vT5dVvxkrUDPqBeIemDVJ+dsJ5lm+HkcnUKBfkZ6VQVsHLc0sT2QgA9i7xRvGlWSLqSp
- +B9Q==
+ bh=uhfeGe/4CB094Qsb3YMVun3IRBzdJrjy7hL+hy4mT8o=;
+ b=hfphq53OHd4zQFPr65O33h4sufmwrgeHNohKSVK60n11FBHSd558R0ejUthvHEWPOo
+ GWgIEzd3G5EpsEb+xWhvXw7YQjvMYCnY0nsYpHRTJ0l5Fs4Lvw/4bb96AWOtns4uSZtx
+ G+aKN/t1ZpzIDDUiRVX/ju5sWBvfEXhRhQd2Agy3/mB9R+0wkpozICqhr9Fhy13RBprf
+ ChVxXhDPXZbFwrLC01FwIsWSwa+9m6EMom5UmGqUYvHfrArHqaoIzF/AFy7Jv3Q2+pUy
+ xmuUmzPhQzXtKfOlvHc6x46dteI/TQAVqGfWCd79AXfNvr4lqQFRti6jvnDd79/95bHU
+ 7ebw==
 X-Forwarded-Encrypted: i=1;
- AHgh+RoeLyeD8CYpfK62Qejub6GORL389Byt8XH6YesgAStg04eha5B0J1kNwhRgm5QKJtZxPtvkSP3FMxjT@nongnu.org
-X-Gm-Message-State: AOJu0YxzTXfRIiEgK5lcXluGkPllVkc1qj1aExaI4XvBg/K8PH89H2p4
- 20xQev6bWNB/eUlk7Z1PU6yGYOpUcCX6MATZFRt9dp8s5p/0siZsT5xgYAwRXBLByuA=
-X-Gm-Gg: AR+sD11Ni8pwh1GSaqUcfqzG6QErCfpfIlr6qUW9EfOTIJIvQsspCGy1+gbbqJodwpJ
- jvXEwIirhN0csw9cORAfvnAAHIrAjAJpwbNRBT8cImecv0iQNQt6SuRTXr93F6j8pjldyo7HS8Z
- ir3V+SOqpeyQPVVtD6coorl5eJxSwLTik0GlXqlIDfrr0xlbruv4QvGxbv/8iu8b0dbXvhfJH4z
- +YewszxLZpz+CWKHsgwcxUktIaWymn4mu6gnZZAGM2bR7vlO2vguSVjUaPfp5pjYA8cOg4VxHkA
- 5BTcIW2h5Vk3j6zNrk8VHhd2vbtJhBh57XkZGabuZZjb0afd0wU+0OBRszjY+Vaxss/SROShrRZ
- Wozvc7LziljPUumOHXAooxjwx+uO66l9I0wNHuOTlIorZWKfyoeh3ls/NN8XbP2igG3ZxChLzWQ
+ AHgh+RqtW5TIXue0dJZMZfBlhNJEw2HndXEuUW952P3EBRNU52w81UQwEo6OfvZntLCmlgSc0oEPaEykC8b1@nongnu.org
+X-Gm-Message-State: AOJu0YyMZOrUQ+rJo4MxMtJdxBP3GA2G4yO+mCkcB1qsmrglUMict5CI
+ BEta+DdgMPyg9v3P/N2Kp063hbMQ7W2n114q0Ka06jJQCWlVbt1sWTAvLuAcSHAe4SQ=
+X-Gm-Gg: AR+sD12JcmAMqzLYr5f2SPwWyCb7Zw4WeJF6eFPnvWjZvywukMqWjBBDnFaJG5NQ/5k
+ 4qTFt0cYw/cKYjHulCBvdNC8M8bP9Yk7FE+yxSwYdogr6d68414+1CzYY+IeMC97+I4HJ0PE+WG
+ uuJ3BeyTR4LCThXTqMva+FXfpm5fByFx0RfBp3cerFoC0gg0kcc4efmcynaYBeEArYMjhA0MnT0
+ WNAuKLzfn6CGlsWLb7aMv3WtwWkrTWNxmDp2PpNyGkKYVV9WbQ8U4Gh7sdxKywsDWOj7JH3eVux
+ PH9mexw5yCZYLIljCuE78vJR5OiC7TbTbCpcX4Viu16VRmZXTmW7nl+rjTaSp2POBuhIKpClKRW
+ k+aPYVf8bEloDB329ajL8qTcsVklezNd5eYA7h5bK52TwDqajnbL0vua2YB0Z4W7G7BSShwuEuQ
  ==
-X-Received: by 2002:a05:600c:4eca:b0:495:7379:17b1 with SMTP id
- 5b1f17b1804b1-496c6585036mr32275645e9.30.1785253135218; 
- Tue, 28 Jul 2026 08:38:55 -0700 (PDT)
+X-Received: by 2002:a05:6000:41fe:b0:475:f100:35f4 with SMTP id
+ ffacd0b85a97d-47fb1ee73ecmr3347316f8f.49.1785253141830; 
+ Tue, 28 Jul 2026 08:39:01 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:45be:7876:b62b:ca4])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f939c1465sm44190499f8f.26.2026.07.28.08.38.54
+ ffacd0b85a97d-47f939c1465sm44190499f8f.26.2026.07.28.08.39.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jul 2026 08:38:54 -0700 (PDT)
+ Tue, 28 Jul 2026 08:39:01 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-block@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: den@openvz.org, Thomas Huth <thuth@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL v2 3/9] parallels: fix bat_entries overflow in image creation
-Date: Tue, 28 Jul 2026 17:38:43 +0200
-Message-ID: <20260728153849.601939-4-den@openvz.org>
+Cc: den@openvz.org,
+	Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL v2 9/9] MAINTAINERS: update parallels tree location
+Date: Tue, 28 Jul 2026 17:38:49 +0200
+Message-ID: <20260728153849.601939-10-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260728153849.601939-1-den@openvz.org>
 References: <20260728153849.601939-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=den@openvz.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=den@openvz.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,158 +101,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-parallels_co_create() computed the BAT entry count directly into a
-uint32_t, wrapping silently to zero at exactly 2^32 entries and
-writing out a header whose BAT no longer matches its advertised
-size. Compute it in an int64_t first and reject it once it no longer
-fits, matching the cap parallels_open() already enforces. Also
-reject cluster-size 0, and clamp header.cylinders instead of letting
-it truncate the same way.
+src.openvz.org is become unmaintained, point to the GitLab tree
+instead.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Thomas Huth <thuth@redhat.com>
 CC: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- block/parallels.c          | 23 +++++++++++++++++------
- tests/qemu-iotests/212     |  8 ++++++--
- tests/qemu-iotests/212.out | 10 ++++++++--
- 3 files changed, 31 insertions(+), 10 deletions(-)
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/parallels.c b/block/parallels.c
-index 0f655b58d5..e3d26a6650 100644
---- a/block/parallels.c
-+++ b/block/parallels.c
-@@ -999,7 +999,8 @@ parallels_co_create(BlockdevCreateOptions* opts, Error **errp)
-     BlockdevCreateOptionsParallels *parallels_opts;
-     BlockDriverState *bs;
-     BlockBackend *blk;
--    int64_t total_size, cl_size;
-+    int64_t total_size, cl_size, bat_count;
-+    uint64_t cylinders;
-     uint32_t bat_entries, bat_sectors;
-     ParallelsHeader header;
-     uint8_t tmp[BDRV_SECTOR_SIZE];
-@@ -1017,16 +1018,22 @@ parallels_co_create(BlockdevCreateOptions* opts, Error **errp)
-         cl_size = DEFAULT_CLUSTER_SIZE;
-     }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index a28935c898..902db77218 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4393,7 +4393,7 @@ F: block/parallels.c
+ F: block/parallels-ext.c
+ F: docs/interop/parallels.rst
+ F: docs/interop/prl-xml.rst
+-T: git https://src.openvz.org/scm/~den/qemu.git parallels
++T: git https://gitlab.com/dlunev/qemu.git parallels
  
--    /* XXX What is the real limit here? This is an insanely large maximum. */
-+    /* Bounds cl_size so the multiplication below can't overflow int64_t. */
-     if (cl_size >= INT64_MAX / MAX_PARALLELS_IMAGE_FACTOR) {
-         error_setg(errp, "Cluster size is too large");
-         return -EINVAL;
-     }
--    if (total_size >= MAX_PARALLELS_IMAGE_FACTOR * cl_size) {
-+    if (cl_size <= 0 || total_size >= MAX_PARALLELS_IMAGE_FACTOR * cl_size) {
-         error_setg(errp, "Image size is too large for this cluster size");
-         return -E2BIG;
-     }
- 
-+    bat_count = DIV_ROUND_UP(total_size, cl_size);
-+    if (bat_count > INT_MAX / (int64_t)sizeof(uint32_t)) {
-+        error_setg(errp, "Catalog too large");
-+        return -EFBIG;
-+    }
-+
-     if (!QEMU_IS_ALIGNED(total_size, BDRV_SECTOR_SIZE)) {
-         error_setg(errp, "Image size must be a multiple of 512 bytes");
-         return -EINVAL;
-@@ -1052,7 +1059,7 @@ parallels_co_create(BlockdevCreateOptions* opts, Error **errp)
-     blk_set_allow_write_beyond_eof(blk, true);
- 
-     /* Create image format */
--    bat_entries = DIV_ROUND_UP(total_size, cl_size);
-+    bat_entries = bat_count;
-     bat_sectors = DIV_ROUND_UP(bat_entry_off(bat_entries), cl_size);
-     bat_sectors = (bat_sectors *  cl_size) >> BDRV_SECTOR_BITS;
- 
-@@ -1061,8 +1068,12 @@ parallels_co_create(BlockdevCreateOptions* opts, Error **errp)
-     header.version = cpu_to_le32(HEADER_VERSION);
-     /* don't care much about geometry, it is not used on image level */
-     header.heads = cpu_to_le32(HEADS_NUMBER);
--    header.cylinders = cpu_to_le32(total_size / BDRV_SECTOR_SIZE
--                                   / HEADS_NUMBER / SEC_IN_CYL);
-+    cylinders = total_size / BDRV_SECTOR_SIZE / HEADS_NUMBER / SEC_IN_CYL;
-+    /* Write only by spec, do not care */
-+    if (cylinders >= UINT32_MAX) {
-+        cylinders = UINT32_MAX;
-+    }
-+    header.cylinders = cpu_to_le32(cylinders);
-     header.tracks = cpu_to_le32(cl_size >> BDRV_SECTOR_BITS);
-     header.bat_entries = cpu_to_le32(bat_entries);
-     header.nb_sectors = cpu_to_le64(DIV_ROUND_UP(total_size, BDRV_SECTOR_SIZE));
-diff --git a/tests/qemu-iotests/212 b/tests/qemu-iotests/212
-index d4af0c4ac8..4ca6149b6b 100755
---- a/tests/qemu-iotests/212
-+++ b/tests/qemu-iotests/212
-@@ -133,13 +133,15 @@ with iotests.FilePath('t.parallels') as disk_path, \
-     #
-     # Maximum size
-     #
-+    # Largest catalog parallels_open() can address.
-+    #
-     iotests.log("=== Maximum size ===")
-     iotests.log("")
- 
-     vm.launch()
-     vm.blockdev_create({ 'driver': imgfmt,
-                          'file': 'node0',
--                         'size': 4503599627369984})
-+                         'size': 562949952372736})
-     vm.shutdown()
- 
-     iotests.img_info_log(disk_path)
-@@ -158,13 +160,15 @@ with iotests.FilePath('t.parallels') as disk_path, \
-     # 4. 2^63 - 512 (generally valid, but with the image header the file will
-     #                exceed 63 bits)
-     # 5. 2^52 (512 bytes more than maximum image size)
-+    # 6. 2^52 - 512 (wraps bat_entries to 0 at the default 1 MiB cluster size)
- 
-     iotests.log("=== Invalid sizes ===")
-     iotests.log("")
- 
-     vm.launch()
-     for size in [ 1234, 18446744073709551104, 9223372036854775808,
--                  9223372036854775296, 4503599627370497 ]:
-+                  9223372036854775296, 4503599627370497,
-+                  4503599627369984 ]:
-         vm.blockdev_create({ 'driver': imgfmt,
-                              'file': 'node0',
-                              'size': size })
-diff --git a/tests/qemu-iotests/212.out b/tests/qemu-iotests/212.out
-index 8102033488..d59f8ed44b 100644
---- a/tests/qemu-iotests/212.out
-+++ b/tests/qemu-iotests/212.out
-@@ -69,14 +69,14 @@ virtual size: 0 B (0 bytes)
- 
- === Maximum size ===
- 
--{"execute": "blockdev-create", "arguments": {"job-id": "job0", "options": {"driver": "parallels", "file": "node0", "size": 4503599627369984}}}
-+{"execute": "blockdev-create", "arguments": {"job-id": "job0", "options": {"driver": "parallels", "file": "node0", "size": 562949952372736}}}
- {"return": {}}
- {"execute": "job-dismiss", "arguments": {"id": "job0"}}
- {"return": {}}
- 
- image: TEST_IMG
- file format: IMGFMT
--virtual size: 4 PiB (4503599627369984 bytes)
-+virtual size: 512 TiB (562949952372736 bytes)
- 
- === Invalid sizes ===
- 
-@@ -110,6 +110,12 @@ Job failed: Image size is too large for this cluster size
- {"execute": "job-dismiss", "arguments": {"id": "job0"}}
- {"return": {}}
- 
-+{"execute": "blockdev-create", "arguments": {"job-id": "job0", "options": {"driver": "parallels", "file": "node0", "size": 4503599627369984}}}
-+{"return": {}}
-+Job failed: Catalog too large
-+{"execute": "job-dismiss", "arguments": {"id": "job0"}}
-+{"return": {}}
-+
- === Invalid cluster size ===
- 
- {"execute": "blockdev-create", "arguments": {"job-id": "job0", "options": {"cluster-size": 1234, "driver": "parallels", "file": "node0", "size": 67108864}}}
+ qed
+ M: Stefan Hajnoczi <stefanha@redhat.com>
 -- 
 2.53.0
 
