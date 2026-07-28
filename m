@@ -4,65 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED22DC53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 19:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C5AEC53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 19:19:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wonIl-0006xl-EL; Tue, 28 Jul 2026 15:17:22 -0400
+	id 1wonKC-0008Jw-KM; Tue, 28 Jul 2026 15:18:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wonIf-0006x2-RC
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:17:16 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wonIc-0006ry-7q
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:17:13 -0400
-Received: from [192.168.10.145] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66SJH33e039205
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 29 Jul 2026 04:17:03 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=ozcdzObB4uj/nevt7XGA7aOiR/U6QaFad46JM89j4qE=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1785266224; v=1;
- b=YF/QvAkJpmwH4Q062ZwNwxSyNy3ZNB175XwPOKhhtBPjAtQLlfuzUMTV196rEvUl
- c2+9NT5hbJrD6jQ33baLWs+ECMjiY0RrR2lGNoUIxr75yeDtRnK0ic6vMQpTk/rD
- ZFJ2BNhfVx/nxaybWHglHUUPzAnmsdPWUKaA25p5NRC2/4TQZRJNlZFmAzxxHxWf
- eKmjD753ZykQ+zAUjLkhz05f3l2KJku6dEQ6VR3XcFynZbtARogcNjNLP8c/fpfR
- B2F93Mj9dKB/Qgdp2W30dZpoFvvPD0Y52qXn9pmtIb7uLkQrOrF/DmIHBbOeIv2B
- SHvIbm+gZ/eJrdGoEujRiw==
-Message-ID: <6192257c-a6cc-4309-a3e2-be86ef0b3904@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 29 Jul 2026 04:17:03 +0900
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wonK6-0008J3-AF
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:18:42 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wonK4-0007F6-9n
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:18:42 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-69c600f76ccso188747a12.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 12:18:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785266319; cv=none;
+ d=google.com; s=arc-20260327;
+ b=OQ3dS6AwDbr9F4+CAdHzPWipTQ/ezW+LLpI+c12RwlBlnq1FCzY+AKjxBCipX1ei0W
+ hCp7cEA6sGdVj8nMSgCqGJdNjYSwMfnLqp81NmrytCZg4JyeIUBoDgiEc3gbsSq1xns/
+ cLqEhz7FYHpF2P6NQRkCDmULJumVUbOaHfOPhL8uHleltxoqv9lwWW0N28hj0BLZjaDy
+ ntoHbIZjTtiX7xySFp5/vNtJI9lbpjnL3lMMtwFxOjoDeulTFw9OrociIEAvHyvWLyqR
+ m/LLLFoFgLE1Wyb/UtFm2E6dml6TBTIMazyZ0MeKwYxiSDO0sdlMPY8+qC1Lnn167zCd
+ TYNQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=QiFENo3Nyl9AQtEd4aostqsdQ5U3/B+Snq9ofCy4bLs=;
+ fh=CNAgUDLasxz2lYSZNlMG+iH4+MgqX9vF4bvGWaFS8S8=;
+ b=lNbRaKvEGtEyrgrYt2DUoQuS83PZKgrwc+DH8tybYzVVeyRnKKnSzHJyvP/VOP6QxE
+ J1FNF+Asg06yyuWJGPqIzA4M8QT26H49NmnOXruaYBfHNkflw3I/3ZJcq7Ek2DX7sC6M
+ +xHZGmWkwvMwUr/Gmmp4TfqUAdiUxUwgc1zuZoFMvlA7lfwKjodJDq4Y6Pi2wRIJ7Xtt
+ QAIbYrai83PH/YdOlNCqPNxvCExvtM4aaq0LXPwYbiEGx3wa5R+hExl/MHbfzhGnhyCb
+ vkuzLrW25vlxCwto1e2vnAG2z9uMFiyhV5WIdppuHPQ7Vmhay4g+NMIBakwNKts8gDvH
+ ENAA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785266319; x=1785871119; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=QiFENo3Nyl9AQtEd4aostqsdQ5U3/B+Snq9ofCy4bLs=;
+ b=mhFHASGgcdr0PPZxp3ztajxLAfJ/MrsyJoTFQTU4VbWwraH37zVfukEqMv2htCs/jl
+ Taupr3NKR+rOgDVZb2O+GM1rpqwJVSTsc37qj49XCERHjvpQ/ctpK9Sn/56Vm5kOZQNg
+ E/XGQSHOR1ImQsX2b55Qt+Tp4IkxCrkPkhnzxmiw+8Yqv9dCeVvH/7/RO+CCy09p0vWC
+ /LsQ/ZMpalSeOSlV19b311IKJtn12XLlfcp0cbt70zkjcUWpMhZ0P3nud6B+41ORtKQM
+ gquX/CyZYMRaCS7yEOSy97gY4B9n7mNb5b2zH+Z/e9VnlH908fdRS4Afb3s4GdfvoI3C
+ 0X5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785266319; x=1785871119;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=QiFENo3Nyl9AQtEd4aostqsdQ5U3/B+Snq9ofCy4bLs=;
+ b=UPWL1V3oi1a8q7dRmYzzF7DHCyvBTZ41sOTxMllVP0Yc9Ns+ZAA5VQQwj8EHm63wPz
+ pCOU/z03HwAqm84WfpouNQl1EWKAN0Pm6hGN6Y5CLiehmFCLLgYLxP8nL+1ccuabKu4V
+ 6oVlf5z5VP1GkOvZeO9S/jRuFy4IQapoPL+5UPWGLC/TfHmHpGgUuYPjmCg3+NJnH7f/
+ Wf0ZI5Vbqp3CPXQS9FZM3AljfissX2gYCScj4GgzBK7o3yRe00FgukEfNgpFd6xLoX3v
+ 4xr8lJdXwDKVZSQqoan7RFznYO2SOO+8A2YLsJcSEWxioreTDW789h/KyXv6MZ7LBeu5
+ 6iHg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqUFJAnxlFiMSZIMVJtDFUYHJ6Al4+giEC+TsFiQQu/mDw/DvXmLYOwBmcz+IBF8agZKCvFYMhOus25@nongnu.org
+X-Gm-Message-State: AOJu0Yzc6nTvQMw69IsZ+HaYb4N4sNou+59th3y6rNzQDWhb01A29vrW
+ UREtty5IwoekSA0j2BFxK2iqLn5EgtLGoAZLoRUT1lnnhBczUbZMlNfoxoV3pXfeBX1Aa8RtPQQ
+ vKY/CF6b4NbUoWPlqeifasd5qcdC0s08=
+X-Gm-Gg: AR+sD11Z6niHQWVBpppmmqebAR9z5Z+AXayMvst39ltZnR+UOnhCNcNdBQ56l9+iI6M
+ qfc2s9hLa+kJSUoETP7iHNQW99tpTXodHVjDdH2YAkr97wvWuFo3S9wiEyhMrOabfA4+Y78aFpy
+ 94UASew8S6s5TWycBBOIW7235XdXORaJYPxZwIVQ3STEpmDcOEUtv63J5D3KjISmsHteID58pD5
+ 2lLZTEjiuJD/v2pv9Lxc5Z7QEfpaTrUuOOIAIYV3N356dvuUbc0oh1mhXk2baZReGc3QSax7g5V
+ qOkR7GczhBsKllujDATHE3DJXotXXg==
+X-Received: by 2002:a05:6402:42cb:b0:69f:cb2f:7a9f with SMTP id
+ 4fb4d7f45d1cf-6a0349474ebmr2127025a12.0.1785266318495; Tue, 28 Jul 2026
+ 12:18:38 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] virtio-gpu: use g_try_malloc to avoid guest-triggered
- abort
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, akihiko.odaki@gmail.com,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-References: <20260728101523.3041854-1-marcandre.lureau@redhat.com>
- <a661b28d-8656-4e27-8038-e7b360e550b8@rsg.ci.i.u-tokyo.ac.jp>
- <CAMxuvazu9g-M7EvHZAS3_Wbd0m0s8p0BuZbwLJZm9XBuEbrhBg@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <CAMxuvazu9g-M7EvHZAS3_Wbd0m0s8p0BuZbwLJZm9XBuEbrhBg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20260728173739.352078-1-kwolf@redhat.com>
+ <20260728173739.352078-15-kwolf@redhat.com>
+In-Reply-To: <20260728173739.352078-15-kwolf@redhat.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Tue, 28 Jul 2026 15:18:24 -0400
+X-Gm-Features: AUfX_mzNMtIrag08TP3pfqUBDW3ryVoZkJtXu5c9KyIHGXW4v9mlqMeAyWHm7o4
+Message-ID: <CAJSP0QUzVP1eksORFJV0trFDztBWR9WW4B-d-MEaxa7mJpKkxg@mail.gmail.com>
+Subject: Re: [PULL 14/17] iotests: test O_TRUNC behavior for fuse exports
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, stefanha@redhat.com, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,212 +119,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/28 23:33, Marc-André Lureau wrote:
-> Hi
-> 
-> On Tue, Jul 28, 2026 at 6:28 PM Akihiko Odaki
-> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>
->> On 2026/07/28 19:15, marcandre.lureau@redhat.com wrote:
->>> From: Marc-André Lureau <marcandre.lureau@redhat.com>
->>>
->>> Use g_try_malloc/g_try_new0 for guest-controlled allocation, so failure
->>> returns an error to the guest rather than crashing the host (glib
->>> behaviour).
->>>
->>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3898
->>>
->>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->>> ---
->>> Based-on: <20260710134720.2317856-1-marcandre.lureau@redhat.com> ("[PATCH] vhost-user-gpu: fix integer overflow in buffer allocation")
->>> v2:
->>>    - accept NULL 0-size allocations
->>> ---
->>>    contrib/vhost-user-gpu/vhost-user-gpu.c | 25 +++++++++++++++++--------
->>>    contrib/vhost-user-gpu/virgl.c          |  6 +++++-
->>>    contrib/vhost-user-gpu/vugbm.c          |  5 ++++-
->>>    hw/display/virtio-gpu-rutabaga.c        | 14 ++++++++++++--
->>>    hw/display/virtio-gpu-virgl.c           |  6 +++++-
->>>    hw/display/virtio-gpu.c                 |  5 ++++-
->>>    6 files changed, 47 insertions(+), 14 deletions(-)
->>>
->>> diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/vhost-user-gpu/vhost-user-gpu.c
->>> index ee9858c397ce..0fd115300425 100644
->>> --- a/contrib/vhost-user-gpu/vhost-user-gpu.c
->>> +++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
->>> @@ -487,7 +487,7 @@ vg_create_mapping_iov(VuGpu *g,
->>>                          struct virtio_gpu_ctrl_command *cmd,
->>>                          struct iovec **iov)
->>>    {
->>> -    struct virtio_gpu_mem_entry *ents;
->>> +    g_autofree struct virtio_gpu_mem_entry *ents = NULL;
->>>        size_t esize, s;
->>>        int i;
->>>
->>> @@ -498,17 +498,22 @@ vg_create_mapping_iov(VuGpu *g,
->>>        }
->>>
->>>        esize = sizeof(*ents) * ab->nr_entries;
->>> -    ents = g_malloc(esize);
->>> +    ents = g_try_malloc(esize);
->>> +    if (!ents && esize) {
->>> +        return -1;
->>> +    }
->>>        s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
->>>                       sizeof(*ab), ents, esize);
->>>        if (s != esize) {
->>>            g_critical("%s: command data size incorrect %zu vs %zu",
->>>                       __func__, s, esize);
->>> -        g_free(ents);
->>>            return -1;
->>>        }
->>>
->>> -    *iov = g_new0(struct iovec, ab->nr_entries);
->>> +    *iov = g_try_new0(struct iovec, ab->nr_entries);
->>> +    if (!*iov && ab->nr_entries) {
->>> +        return -1;
->>> +    }
->>>        for (i = 0; i < ab->nr_entries; i++) {
->>>            uint64_t len = ents[i].length;
->>>            (*iov)[i].iov_len = ents[i].length;
->>> @@ -517,12 +522,10 @@ vg_create_mapping_iov(VuGpu *g,
->>>                g_critical("%s: resource %d element %d",
->>>                           __func__, ab->resource_id, i);
->>>                g_free(*iov);
->>> -            g_free(ents);
->>>                *iov = NULL;
->>>                return -1;
->>>            }
->>>        }
->>> -    g_free(ents);
->>>        return 0;
->>>    }
->>>
->>> @@ -828,8 +831,14 @@ vg_resource_flush(VuGpu *g,
->>>                    PIXMAN_FORMAT_BPP(pixman_image_get_format(res->image)) / 8;
->>>                size_t size = width * height * bpp;
->>>
->>> -            void *p = g_malloc(VHOST_USER_GPU_HDR_SIZE +
->>> -                               sizeof(VhostUserGpuUpdate) + size);
->>> +            void *p = g_try_malloc(VHOST_USER_GPU_HDR_SIZE +
->>> +                                   sizeof(VhostUserGpuUpdate) + size);
->>> +            if (!p) {
->>> +                pixman_region_fini(&region);
->>> +                pixman_region_fini(&finalregion);
->>> +                cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
->>> +                break;
->>> +            }
->>>                VhostUserGpuMsg *msg = p;
->>>                msg->request = VHOST_USER_GPU_UPDATE;
->>>                msg->size = sizeof(VhostUserGpuUpdate) + size;
->>> diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
->>> index 550fd03bf5c4..20bae57d0fe4 100644
->>> --- a/contrib/vhost-user-gpu/virgl.c
->>> +++ b/contrib/vhost-user-gpu/virgl.c
->>> @@ -209,7 +209,11 @@ virgl_cmd_submit_3d(VuGpu *g,
->>>            return;
->>>        }
->>>
->>> -    buf = g_malloc(cs.size);
->>> +    buf = g_try_malloc(cs.size);
->>> +    if (!buf && cs.size) {
->>> +        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
->>> +        return;
->>> +    }
->>>        s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
->>>                       sizeof(cs), buf, cs.size);
->>>        if (s != cs.size) {
->>> diff --git a/contrib/vhost-user-gpu/vugbm.c b/contrib/vhost-user-gpu/vugbm.c
->>> index 710d54529779..e2d8385fd857 100644
->>> --- a/contrib/vhost-user-gpu/vugbm.c
->>> +++ b/contrib/vhost-user-gpu/vugbm.c
->>> @@ -13,7 +13,10 @@
->>>    static bool
->>>    mem_alloc_bo(struct vugbm_buffer *buf)
->>>    {
->>> -    buf->mmap = g_malloc((uint64_t)buf->width * buf->height * 4);
->>> +    buf->mmap = g_try_malloc((uint64_t)buf->width * buf->height * 4);
->>> +    if (!buf->mmap && buf->width && buf->height) {
->>> +        return false;
->>> +    }
->>>        buf->stride = buf->width * 4;
->>>        return true;
->>>    }
->>> diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
->>> index e28aad94eead..60f64d9a8fa7 100644
->>> --- a/hw/display/virtio-gpu-rutabaga.c
->>> +++ b/hw/display/virtio-gpu-rutabaga.c
->>> @@ -360,10 +360,20 @@ rutabaga_cmd_submit_3d(VirtIOGPU *g,
->>>            return;
->>>        }
->>>
->>> -    buf = g_new0(uint8_t, cs.size);
->>> +    buf = g_try_new0(uint8_t, cs.size);
->>> +    if (!buf && cs.size) {
->>> +        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
->>> +        return;
->>> +    }
->>>        s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
->>>                       sizeof(cs), buf, cs.size);
->>> -    CHECK(s == cs.size, cmd);
->>> +    if (s != cs.size) {
->>> +        qemu_log_mask(LOG_GUEST_ERROR,
->>> +                      "%s: size mismatch (%zu/%u)\n",
->>> +                      __func__, s, cs.size);
->>> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
->>> +        return;
->>> +    }
->>>
->>>        rutabaga_cmd.ctx_id = cs.hdr.ctx_id;
->>>        rutabaga_cmd.cmd = buf;
->>> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
->>> index d9e5b0110497..028ab776df6a 100644
->>> --- a/hw/display/virtio-gpu-virgl.c
->>> +++ b/hw/display/virtio-gpu-virgl.c
->>> @@ -615,7 +615,11 @@ static void virgl_cmd_submit_3d(VirtIOGPU *g,
->>>            return;
->>>        }
->>>
->>> -    buf = g_malloc(cs.size);
->>> +    buf = g_try_malloc(cs.size);
->>> +    if (!buf && cs.size) {
->>> +        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
->>> +        return;
->>> +    }
->>>        s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
->>>                       sizeof(cs), buf, cs.size);
->>>        if (s != cs.size) {
->>> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
->>> index 8607d0c0b581..9bacd38b4521 100644
->>> --- a/hw/display/virtio-gpu.c
->>> +++ b/hw/display/virtio-gpu.c
->>> @@ -892,7 +892,10 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
->>>        }
->>>
->>>        esize = sizeof(*ents) * nr_entries;
->>> -    ents = g_malloc(esize);
->>> +    ents = g_try_malloc(esize);
->>> +    if (!ents && esize) {
->>> +        return -1;
->>> +    }
->>
->> This converts the entry allocation to g_try_malloc(), but the resulting
->> mapping arrays still grow with aborting g_renew() calls.
->> dma_memory_map() may return only part of an entry; with fragmented IOMMU
->> mappings, guest-controlled entries can expand into more IOVs than
->> nr_entries.
->>
-> 
-> The goal is not to make QEMU OOM-safe. Even when malloc returns
-> non-zero we may reach that and get killed. This patch is more a safety
-> guard for easy guest triggered allocations that can crash QEMU.
-I agree we are not going to make QEMU OOM-safe, but I'm not sure where 
-we draw the line between "easy" and "hard" guest-triggered allocations. 
-Even if the IOMMU mapping isn't fragmented, the data from ents is 
-essentially duplicated into iov right after, doubling the allocation 
-size anyway. I feel it's easier to avoid reasoning by just consistently 
-using g_try_* in this function.
+Hi Kevin and Fiona,
+Please take a look at the following CI failure and send a new pull request:
 
-Regards,
-Akihiko Odaki
+https://gitlab.com/qemu-project/qemu/-/jobs/15583116603#L174
+
+88/104 block-raw-optional+block-slow - qemu:io-raw-fuse-truncate ERROR
+0.24s exit status 1
+>>> MESON_TEST_ITERATION=3D1 MSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_erro=
+r=3D1:print_summary=3D1:print_stacktrace=3D1 RUST_BACKTRACE=3D1 ASAN_OPTION=
+S=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1 MALLOC_PERTURB_=
+=3D106 UBSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=
+=3D1:print_stacktrace=3D1 LD_LIBRARY_PATH=3D/builds/qemu-project/qemu/build=
+/subprojects/libvfio-user/lib PYTHON=3D/builds/qemu-project/qemu/build/pyve=
+nv/bin/python3 /builds/qemu-project/qemu/build/pyvenv/bin/python3 /builds/q=
+emu-project/qemu/build/../tests/qemu-iotests/check -tap -raw fuse-truncate =
+--source-dir /builds/qemu-project/qemu/tests/qemu-iotests --build-dir /buil=
+ds/qemu-project/qemu/build/tests/qemu-iotests
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80 =E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95
+stderr:
+--- /builds/qemu-project/qemu/tests/qemu-iotests/tests/fuse-truncate.out
++++ /builds/qemu-project/qemu/build/scratch/raw-file-fuse-truncate/fuse-tru=
+ncate.out.bad
+@@ -1,5 +1,23 @@
+-...
++E..
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++ERROR: test_o_trunc (__main__.TestTruncateBlockdev)
++----------------------------------------------------------------------
++Traceback (most recent call last):
++ File "/builds/qemu-project/qemu/tests/qemu-iotests/tests/fuse-truncate",
+line 93, in setUp
++ self.evaluate_preconditions()
++ File "/builds/qemu-project/qemu/tests/qemu-iotests/tests/fuse-truncate",
+line 133, in evaluate_preconditions
++ self.supports_preconditions =3D check_sudo_support()
++ File "/builds/qemu-project/qemu/tests/qemu-iotests/tests/fuse-truncate",
+line 41, in check_sudo_support
++ subprocess.run(['sudo', '-n', 'losetup', '--version'],
++ File "/usr/lib64/python3.9/subprocess.py", line 505, in run
++ with Popen(*popenargs, **kwargs) as process:
++ File "/usr/lib64/python3.9/subprocess.py", line 951, in __init__
++ self._execute_child(args, executable, preexec_fn, close_fds,
++ File "/usr/lib64/python3.9/subprocess.py", line 1837, in _execute_child
++ raise child_exception_type(errno_num, err_msg, err_filename)
++FileNotFoundError: [Errno 2] No such file or directory: 'sudo'
 
