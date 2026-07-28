@@ -4,102 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 977F6C54F51
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 20:45:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7105EC53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 20:47:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woofe-0007Rj-1s; Tue, 28 Jul 2026 16:45:02 -0400
+	id 1woohN-0008Cs-IT; Tue, 28 Jul 2026 16:46:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ankur98saini@gmail.com>)
- id 1woofa-0007Qk-CR
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 16:44:58 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ankur98saini@gmail.com>)
- id 1woofY-0000yR-KD
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 16:44:58 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-84862b0d5aeso278146b3a.2
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 13:44:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1woohL-0008CQ-2X
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 16:46:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1woohJ-0001IF-5S
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 16:46:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785271603;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tyYrci+SqDiXj523SP2QWHVzT3hYSaTidHhfmmseMQM=;
+ b=UP140JqR1+M44dhSm24UkSic3jb0+JCaDeVckc/O1H11V6sU/gOh5fJiDYH8owURCbGnRY
+ +5Zs53vwsFmdM+qVsmRbzwjqPSlOZiD8L9lSy5sHW/guqf/0cWUlSwPNlMlE6eUHZ0AE4v
+ zYeMSpB+bJBVU4suRtuYkHAa7UUadj4=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-507-DdaA1b2gM-CpkhJ3VTchGw-1; Tue, 28 Jul 2026 16:46:42 -0400
+X-MC-Unique: DdaA1b2gM-CpkhJ3VTchGw-1
+X-Mimecast-MFC-AGG-ID: DdaA1b2gM-CpkhJ3VTchGw_1785271601
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-90410c668adso2997116d6.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 13:46:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785271495; x=1785876295; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:content-type
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=wvCFO13d/gX0SSOPI5qiEVi+rN+exkvgG4VdgT27TEw=;
- b=GI8AS2c9UEt1Geg9Ahk0yLC+6jd6t99r0dYT9AXNzpSjCRZFGoCwl9X9KVOzlDHfml
- ArdhbkXNtHGbfUbQxnqa8tuDfQx9v4c6rR8XZcmNnq9wWzSbYjwztEGo38JL/qf76dhk
- MQWhe5eK/+7EsCfo58x6zzPTKo21ioGIutAJMqhpOVO6RT4m965Wp+VzCnxwEK5eIPR/
- 4dcdAu4G0cxUkA7p/BrZ4lTztD/+Sr5VjTWEAPT24sECbbSfCqHNWnxM1TfZnqsi/VjX
- m4+jMNryjBXV1VTjQX1bRuBNpgG6RvnFvMlNL/aEdTNoKIYVEsv2wS89Ts5nvJJCEPb0
- 9aVA==
+ d=redhat.com; s=google; t=1785271601; x=1785876401; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=tyYrci+SqDiXj523SP2QWHVzT3hYSaTidHhfmmseMQM=;
+ b=qpUkivbBPJNUl1omI4DD9pilB8P1aZG2GO3EH1EGdA1e7/sQa4kaTmSAlNWgp0kI87
+ rZGB6NlF8cFuV5CQwcHczpzDecBC30bHIZvGkJs/tUsNNiGJWjeue/pFCGqfXuk2VVUS
+ 7UI1Rtd7tveTcKcd12J2TuvhoGITqazMvdXRLdwJJXIgAsGh74bZjyieKpsnnd+3vRcs
+ a8sRD3SdvzC/BOJ5XE/xY6cIc32hgtNFhh/edyjOh3D/KymY/aFHxcCKqvtUNdlxJ9xd
+ RZLsE9Lqao86qyZR3Ee06Twsv+EfO7eHM7TbPwXfAIcP9+XMyxL84BUErufsVdp17ykJ
+ Km8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785271495; x=1785876295;
- h=cc:to:message-id:content-transfer-encoding:content-type
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=wvCFO13d/gX0SSOPI5qiEVi+rN+exkvgG4VdgT27TEw=;
- b=rFBsx3VzfGr23LjXaUhRHAsYTQRzS9VssIfF3mpDX8zh4S6BnNHXH6JiveGDrsmJ+l
- bnjl1+Twz6hPVaPp+Qyj3+CNsTqrCqvlu1jd61yFe2Ae9BubwRWqDBrBEvUmI6+hpS4y
- krLfuguIEB1u0MALpTgAb6pY05e8StXPykNMCZEDj+aAmySUrA1v+4D5xZOHKvExcR5U
- WLPo7gHI4xknLd6f1Uy7+lQLYw2LeKhvjCzXtS+UhF+VccDaYmyKoloERAdrjFSDe0e0
- zweNkQTQnfNu2eRGEOeNNMF1kN+DzLpAk+yMJB5FckPt3Wi6LMEH1SKGQpHf18Xi2Ni3
- hNxw==
-X-Gm-Message-State: AOJu0Yw0r0VL4dLqD3fFmYRxHcxv8sdXMvz+bCGaeINocoPgBxFKh3MC
- 688AwTVNia/uwOqIIJEiwAX1XSKEf568qn81FiVNtbnlLjKh6Yc5Kwg4
-X-Gm-Gg: AR+sD13b+hr4Gp34qIPx5dZwo1QtdcQvkwxln8bCudQgPui3EsHT2uDB6f4gdYSZ0u7
- IyVz5U4G3vj6/Xw0D7g283zL6wD3YuKABPeVlYBKje13TgmS6vraTeugWkmcHFvALkDC1TwcFrK
- ZEM2PeGipENAsC3nDzeJXpNMEYtegTTOjcinGH6lU9PQ2u4P+UrRMm6c+xM+1G1g85qbdF7GbWd
- EL37CUMshbZoJ/N/h3lsF/ReVExbDqjzplGS1XVqK3CSvkU+IPAWtqz08/yNMSU7157jwyLG4pr
- YhUWJuZ1ZFwcrToZoCvhNKp9IM3OZuLxHg4BUIGwd4ZOpnRK5ymmwP+gPFEaMZuDZ/uJnYdBMmL
- AngnKyzUhqbov/MvYRrDVZLKcIHgvBmf8YRGQPVQIKWEz2c+O8iHKHnNgSTEJpV272k8kippvkE
- ld12e6kumeG+VsetLom2mXLw==
-X-Received: by 2002:a05:6a21:6492:b0:3c3:9aff:7a67 with SMTP id
- adf61e73a8af0-3c8ab0d85d1mr4571134637.17.1785271495019; 
- Tue, 28 Jul 2026 13:44:55 -0700 (PDT)
-Received: from [127.0.1.1] ([49.43.137.199]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13e7262c23bsm1734366c88.1.2026.07.28.13.44.51
+ d=1e100.net; s=20251104; t=1785271601; x=1785876401;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=tyYrci+SqDiXj523SP2QWHVzT3hYSaTidHhfmmseMQM=;
+ b=ImU9W0AOLDTDj4075I5tGQySQbTBloBUPGhHpOc8Y7LQIFGNERHtO/3Z3bNHW7q+KB
+ B+dDp2QxuX8/k2rkxtRZSmOLbJqJE4rZU59kc0VD+e5ZEOGEM60cnE8w1XtuLMh0nH/v
+ LcDSfGD0jgngIr2SHmY0Rq3XkC1Zvb/JmER3bgVpZ6xRV5p1jAvjioX2xhk++I9vPqGs
+ ZweskC7mn3EiHfFp8yRu3w8zsDIF7Z0K9nU2bUuoCucdYkK+2v38Mu9vaYxpFl8mX+g+
+ 3OFO/jY7s0LXtek05EBjfDAaKUnep8dHisTTIgQisSW+Jfd8Ui5RalVf+U94/cMZVZhS
+ bimA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqbL744zkPHaMF0724bOEap9ETOnmOMK8ANc276lLgXPb16p/m+ctz+oh1yw3YKb4XjRPO5EaXqzWpu@nongnu.org
+X-Gm-Message-State: AOJu0Yx2+JK99s/4gELqv6jPC6WUMNdunkbzDY3UuYcn6ZM4azw+FB4H
+ qCp7VrvnTQjKsSiPjgxD1YtCMJk7ncxN9EIDljsxIW97D7K/u0/qSN+s2rH3tT6e2hD4Q/qptN4
+ GfVG7sE2mJvoR9nNSMVLRkITKSZt9A5RNzJkGx5eXCqb4Dlv54vJFii+O
+X-Gm-Gg: AR+sD13b1tWhe+TTOFu4XsVHdOuGWV5blsNW3KYhFP8JqSd9p7JVcM1rOgAvDmwnF8f
+ SQZu21xfHJGtP38WaKbH+CKgxNOAbMohPpnhNwufe1narB5+sQarUGGsFVkoQ1LzjL6UIDp5z2E
+ abYH2vq2mOUBwdNUQxOHSfnPIfrQS959+wUcaYf8U0jaXaG+nplg9zUnmtG5VZnYvZNioI59Iun
+ F9G7erItb7IaUXKGJ7aoFhPqqDaWKPhOcrZpbN0mbLMs48LOHIhBNIrQytpN4E20YRug4AD+isT
+ 36gkMWTBHuH6lDO7p7kmnFWnOX2BD6PHWULM5XZw9jBlUpo8hpNpdgzmf2f4cHAG1gwn
+X-Received: by 2002:a05:6214:310d:b0:8f2:5a3e:c5fe with SMTP id
+ 6a1803df08f44-908172dca3cmr43825196d6.45.1785271601289; 
+ Tue, 28 Jul 2026 13:46:41 -0700 (PDT)
+X-Received: by 2002:a05:6214:310d:b0:8f2:5a3e:c5fe with SMTP id
+ 6a1803df08f44-908172dca3cmr43824886d6.45.1785271600720; 
+ Tue, 28 Jul 2026 13:46:40 -0700 (PDT)
+Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-9081dd8cb0dsm7482806d6.48.2026.07.28.13.46.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jul 2026 13:44:54 -0700 (PDT)
-From: Ankur Saini <ankur98saini@gmail.com>
-Date: Wed, 29 Jul 2026 02:14:24 +0530
-Subject: [PATCH v2] virtio-gpu: reject requests with short/truncated
- control headers
+ Tue, 28 Jul 2026 13:46:39 -0700 (PDT)
+Date: Tue, 28 Jul 2026 16:46:29 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
+ Feifan Qian <bea1e@proton.me>
+Subject: Re: [PATCH 4/5] migration: Fix rare hang of
+ migration_channel_read_peek()
+Message-ID: <amkVJZ14O60zAeVt@x1.local>
+References: <20260728155247.1894355-1-peterx@redhat.com>
+ <20260728155247.1894355-5-peterx@redhat.com>
+ <amjXxDH73ah-dUGE@redhat.com> <amjiLyOJF92okvik@x1.local>
+ <87o6fqopgn.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260729-virtio-gpu-short-header-v2-1-18036a97219a@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WNQQ6CMBBFr0Jm7Zi2IaCuvIdhMdKBTiLUTLHRE
- O5u5QIu30v++yskVuEEl2oF5SxJ4lzAHSroA80jo/jC4IxrTOtOmEUXiTg+X5hC1AUDk2fFum2
- IrCeuhxbK+qk8yHsv37rCQdIS9bMfZfuz/5vZokUa7JmMuVtj/HWcSB7HPk7Qbdv2BXneVAS+A
- AAA
-X-Change-ID: 20260728-virtio-gpu-short-header-476aa1dae4f7
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, 
- Ankur Saini <ankur98saini@gmail.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1785271491; l=3552;
- i=ankur98saini@gmail.com; s=20260728; h=from:subject:message-id;
- bh=MM5LFpD2vK4p0vGwklanlLhmAWMaXRot2mtQBQ3akmU=;
- b=WN686dLBMhrl8pwHl7JUS85vT4SOBD6d0cp07WwGaXalHAdFV+nz6Zmnfhpk0o+EbBg6YDs5h
- tosn+5vWGx7C/jbqATTpH3xtd1fNgK2iw/smq/ET16HdXriHNEYuOOa
-X-Developer-Key: i=ankur98saini@gmail.com; a=ed25519;
- pk=fiA1ENLrWfuTIKes9f/fn/hIbq1fqEHYxopa8LdM/8s=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=ankur98saini@gmail.com; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87o6fqopgn.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,93 +124,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A control request shorter than virtio_gpu_ctrl_hdr can leave cmd_hdr
-partially initialized. If the supplied bytes set the fence flag, stale
-fence metadata may later be returned to the guest.
+On Tue, Jul 28, 2026 at 04:59:20PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > On Tue, Jul 28, 2026 at 05:24:36PM +0100, Daniel P. Berrangé wrote:
+> >> On Tue, Jul 28, 2026 at 11:52:46AM -0400, Peter Xu wrote:
+> >> > In an unlikely case, when a migration stream is attached to the destination
+> >> > QEMU and only send <4 bytes to the channel as magic, it's possible that
+> >> > migration_channel_read_peek() may spin forever without yielding in the main
+> >> > thread causing two unwanted consequences:
+> >> > 
+> >> > - CPU will spin 100% waiting for the rest bytes until it reaches 4
+> >> > - (more importantly..) Main thread is stuck during this process as the qio
+> >> >   operation won't really yield the coroutine
+> >> > 
+> >> > Fix it by consuming the bytes that arrived.
+> >> > 
+> >> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3889
+> >> > Cc: Daniel P. Berrangé <berrange@redhat.com>
+> >> > Reported-by: Feifan Qian <bea1e@proton.me>
+> >> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> >> > ---
+> >> >  migration/channel.c | 26 +++++++++++++++++++++++---
+> >> >  1 file changed, 23 insertions(+), 3 deletions(-)
+> >> > 
+> >> > diff --git a/migration/channel.c b/migration/channel.c
+> >> > index 1e2935f926..28fe1d2906 100644
+> >> > --- a/migration/channel.c
+> >> > +++ b/migration/channel.c
+> >> > @@ -294,11 +294,31 @@ int migration_channel_read_peek(QIOChannel *ioc,
+> >> >              return -1;
+> >> >          }
+> >> >  
+> >> > -        if (len == buflen) {
+> >> > +        if (len == iov.iov_len) {
+> >> >              break;
+> >> > -        }
+> >> > +        } else if (len == 0) {
+> >> > +            qio_channel_wait_cond(ioc, G_IO_IN);
+> >> > +        } else {
+> >> > +            ssize_t received = len;
+> >> >  
+> >> > -        qio_channel_wait_cond(ioc, G_IO_IN);
+> >> > +            /*
+> >> > +             * Partially arrived, read out to make qio_channel_wait_cond()
+> >> > +             * won't return immediately, causing an unwanted spin on this
+> >> > +             * CPU.
+> >> > +             */
+> >> > +            iov.iov_len = len;
+> >> > +            len = qio_channel_readv_full(ioc, &iov, 1, NULL, NULL, 0, errp);
+> >> 
+> >> Sure this breaks the API behaviour that the caller is expecting to
+> >> see.
+> >> 
+> >> migration_channel_identify will call migration_channel_read_peek
+> >> to match the magic bytes.
+> >> 
+> >> But something later in the flow will actually try to read the magic
+> >> bytes.  By consuming them in this migration_channel_read_peek
+> >> method, surely we're breaking the code that wants to read the bytes
+> >> later.
+> >
+> > Ah right, stupid me.  The best then is for partial read we apply a manual
+> > wait.
+> >
+> > I can also revert 604bb1badc ("migration: Properly wait on G_IO_IN when
+> > peeking messages"), looping with 1ms interval for data isn't too bad.  But
+> > the best is we only do that for partial, so:
+> >
+> > diff --git a/migration/channel.c b/migration/channel.c
+> > index 1e2935f926..88f89521f8 100644
+> > --- a/migration/channel.c
+> > +++ b/migration/channel.c
+> > @@ -296,9 +296,19 @@ int migration_channel_read_peek(QIOChannel *ioc,
+> >
+> >          if (len == buflen) {
+> >              break;
+> > +        } else if (len == 0) {
+> > +            qio_channel_wait_cond(ioc, G_IO_IN);
+> > +        } else {
+> > +            /*
+> > +             * When partially ready, we can't use qio_channel_wait_cond()
+> > +             * because it will return immediately.  Apply a manual wait.
+> > +             */
+> > +            if (qemu_in_coroutine()) {
+> 
+> There's no coroutine at this point, could replace this with an assert.
 
-The vhost-user-gpu backend has the same issue: it logs a short header
-copy but continues to process the partially initialized command.
+Hmm, true..  Then it means this can stuck the main thread even if no data
+arrived (len==0), hang monitors..  I hope it's not a major issue and
+shouldn't easily happen in real life, because normally when src connected,
+at least the headers will be dumped very soon.
 
-Validate the common header length before dispatch in both paths. Clear
-cmd_hdr and complete malformed requests with ERR_INVALID_PARAMETER so
-stale fields cannot reach the response.
+I'll switch to assert for now.
 
-Fixes: CVE-2026-18054
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4094
-Reported-by: Ankur Saini <ankur98saini@gmail.com>
-Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Ankur Saini <ankur98saini@gmail.com>
----
-Changes in v2:
-- Also reject short/truncated control headers in vhost-user-gpu.
-- Expand the commit message to describe both affected paths.
-- Link to v1: https://lore.kernel.org/qemu-devel/20260728-virtio-gpu-short-header-v1-1-af19a00b100d@gmail.com
----
- contrib/vhost-user-gpu/vhost-user-gpu.c | 21 ++++++++++++---------
- hw/display/virtio-gpu.c                 | 10 ++++++++--
- 2 files changed, 20 insertions(+), 11 deletions(-)
+> 
+> > +                qemu_co_sleep_ns(QEMU_CLOCK_REALTIME, 1000000);
+> > +            } else {
+> > +                g_usleep(1000);
+> > +            }
+> >          }
+> > -
+> > -        qio_channel_wait_cond(ioc, G_IO_IN);
+> >      }
+> >
+> >      return 0;
+> >
+> > Any preference?
+> >
+> > Thanks,
+> >
+> >> 
+> >> > +            /*
+> >> > +             * QIO_CHANNEL_ERR_BLOCK also shouldn't happen, due to the
+> >> > +             * prior peek just happened.  We should be pretty sure we will
+> >> > +             * read what we peeked, or the channel was broken.
+> >> > +             */
+> >> > +            if (len != received) {
+> >> > +                return -1;
+> >> > +            }
+> >> > +            iov.iov_base += received;
+> >> > +            iov.iov_len = buflen - received;
+> >> > +        }
+> >> >      }
+> >> >  
+> >> >      return 0;
+> >> > -- 
+> >> > 2.54.0
+> >> > 
+> >> 
+> >> With regards,
+> >> Daniel
+> >> -- 
+> >> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> >> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> >> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+> >> 
+> 
 
-diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/vhost-user-gpu/vhost-user-gpu.c
-index bb41758e34..8149834745 100644
---- a/contrib/vhost-user-gpu/vhost-user-gpu.c
-+++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
-@@ -924,16 +924,19 @@ vg_handle_ctrl(VuDev *dev, int qidx)
-         if (len != sizeof(cmd->cmd_hdr)) {
-             g_warning("%s: command size incorrect %zu vs %zu\n",
-                       __func__, len, sizeof(cmd->cmd_hdr));
--        }
--
--        virtio_gpu_ctrl_hdr_bswap(&cmd->cmd_hdr);
--        g_debug("%d %s\n", cmd->cmd_hdr.type,
--                vg_cmd_to_string(cmd->cmd_hdr.type));
--
--        if (vg->virgl) {
--            vg_virgl_process_cmd(vg, cmd);
-+            memset(&cmd->cmd_hdr, 0, sizeof(cmd->cmd_hdr));
-+            vg_ctrl_response_nodata(
-+                vg, cmd, VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER);
-         } else {
--            vg_process_cmd(vg, cmd);
-+            virtio_gpu_ctrl_hdr_bswap(&cmd->cmd_hdr);
-+            g_debug("%d %s\n", cmd->cmd_hdr.type,
-+                    vg_cmd_to_string(cmd->cmd_hdr.type));
-+
-+            if (vg->virgl) {
-+                vg_virgl_process_cmd(vg, cmd);
-+            } else {
-+                vg_process_cmd(vg, cmd);
-+            }
-         }
- 
-         if (cmd->state != VG_CMD_STATE_FINISHED) {
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 4d46a4eb10..15a845eff6 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -1105,8 +1105,14 @@ void virtio_gpu_process_cmdq(VirtIOGPU *g)
-             break;
-         }
- 
--        /* process command */
--        vgc->process_cmd(g, cmd);
-+        if (unlikely(iov_size(cmd->elem.out_sg, cmd->elem.out_num) <
-+                     sizeof(cmd->cmd_hdr))) {
-+            memset(&cmd->cmd_hdr, 0, sizeof(cmd->cmd_hdr));
-+            virtio_gpu_ctrl_response_nodata(
-+                g, cmd, VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER);
-+        } else {
-+            vgc->process_cmd(g, cmd);
-+        }
- 
-         /* command suspended */
-         if (!cmd->finished && !(cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_FENCE)) {
-
----
-base-commit: 299e7557ed15a9a325620698add379a3ce2d1d95
-change-id: 20260728-virtio-gpu-short-header-476aa1dae4f7
-
-Best regards,
 -- 
-Ankur Saini <ankur98saini@gmail.com>
+Peter Xu
 
 
