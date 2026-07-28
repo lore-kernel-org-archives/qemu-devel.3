@@ -4,102 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3600BC54F4C
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 15:23:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14797C54F4C
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 15:24:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wojeX-0000mk-0x; Tue, 28 Jul 2026 11:23:33 -0400
+	id 1wojea-0001Ar-3G; Tue, 28 Jul 2026 11:23:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1woje9-0000aO-A1
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 11:23:14 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1woje7-0000Kl-SG
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 11:23:08 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-6983f20a8bfso6386498a12.1
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 08:23:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785252186; cv=none;
- d=google.com; s=arc-20260327;
- b=hgbfwOgQSvFKs4wmJNQz+eosgwvN4WeDbBX9QoidABV0bhLK1VvEz0SaNKDrPoY+aJ
- eYMFYPdzscNx7/tGlE0Ta8HAEHurMveEhoMP0Y1AYqofg35pFZf1ReubGUwvF2bGp+ZA
- vOkE/yL7xH0Ny3F59x/MZc3+ho56DW5sCP99OPXetr71VDp2t4KOlNglV2yezgzzSwLx
- chJxOThg9bjJUY7K7jaAxQHM9t8GGL4akhpaLPCVteycgww0BZKs1MR+hbxqJ39ZkfDZ
- kPjIDSvKQmcO28iWn4YE2gJbUYbZqq1Ks4Qb+Y2MTH6tXsto4WoDNBGzOTVQkm1B+ReL
- vx0A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=6tpV9v/Kg119xk54JR97ciqjzzxdkwIqP4iGztEVIJI=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=QaTHva6iyLYLhTyOR29uii3uuiShfof6NESspVxMyePW9EQ5dSMGWqTzTEfGhxOrz6
- EZBc2UOtwwD9ujg6AGUVnL2Dnxr/J78EaC/AShvC4ovneLbMtocgTDaaDpCKZyR18stQ
- X66MhNKgWoVuOnWQrNaMRiOhAOjaOqr1tVbikbHaQSYmUwn1o1B2+l208D5co3Arcebh
- jwZGRbrY8/pZk3wr0eRgbkqlbZM48zJ2Zv51ziqWYLXZ2C+YhRrtgFGGzznepV+IUXyN
- nzTzM+gboCWzXuUH0c2MaS29wKpCEMo3fhSdrjFKJI3tvezczfDvVCMwD+Z/mtRExn83
- EWEA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785252186; x=1785856986; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=6tpV9v/Kg119xk54JR97ciqjzzxdkwIqP4iGztEVIJI=;
- b=mX/qKdL41pb4fhQ8mb9y7l8Zusr3hF+dmjaW65HzxqxDVw3bIXs1OnQjysgL2N27IM
- +KvKjRbP6Og8F++/3ZkUoyWR89W1EU4ijx8BIrIONLtTRSwEm4mw4rnt74SzP+NefWmw
- JWAevqBWeClOCULS6HMK8sRO6toOOgaqGP9WXEZM+naNuLRmo5NBDcjgPI9QcFO3V/6S
- 1ACPBBVJ6WuLSlOns+uE7+vyxpepPqIHHkQbMP+AJizUIrjjEA9xJhK6T1jgDO0okBY3
- NBu3HawL+hcxDr8LsVdskC4FnBP0YKizQCF+yDBk4me0csSxrJJ1W7YbPW52HG5jnqj2
- PYbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785252186; x=1785856986;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=6tpV9v/Kg119xk54JR97ciqjzzxdkwIqP4iGztEVIJI=;
- b=Ly6MgkwIPnGJUZBjM2X7I9BXQgoqa6eIjM2mIsiGxxgnUQpCb3AgSrMLYWxTF0rrJr
- krDb1zmQxplN1lOQ0pscWty99YBeoqcCSsc7DEzerGmFyDCxJBmwWth52LZtLIw8JGbl
- SpzdOiTEcfPQslDW1ohdFh6dr8OabENak+NH3FBW0RiWpdmO4tZOtAJApp/rjTXWO/49
- VHu7spBX/cqp+z9DDQbzfMHZB8qKAmqr5gLFRGOU4Moh7iunTi8+eL6bJ3G9ADTKnFuv
- MINDjVrlqg/awaFpm5H0Y9vd+/Rm87PGbERLwzPTMHMEzaiSc2Qx9HXazIFZlOi6Ibr/
- Jhsw==
-X-Gm-Message-State: AOJu0Yz2W3EWA21M4R6jEiucNfSPKDPyvIc2B7xBs2wjQicbSRsRnkxg
- U2NaftTJ9zuYzxUTKYY05Edm7WW15OLaBY3EF18vFGj8ltKnTaIO94CnTqjX+8wlaXkYRfdYXgp
- K/0g80Dov00EvxhsMGT57ruQyf3qew4af3lfTpF+kHw==
-X-Gm-Gg: AR+sD10F4KSi3J5jrJypbEc+TuNtWd2gLVSKIEvPi2QzMoQX327tsXmwlSH4B2rYly+
- u2oxR5uJoSmKvfp93R3VOszik8HM2liDnCbFfwLcJ8RmH4mzLIiNHvsxOA1BDBuW3eHX0GrYOx3
- TmNmYRthrI98L9JKC2cbjvaKbpgKaxXv+ep0hBOjPoCBpu1IkLAPRX67unSOeLICLMR8594/EWJ
- YofQQgiizkaroYHGdr1CeUffc1gz2Mne/KkE2UWg5eXaUk4GGspSPGma+X4Httu11cAiT/DafZQ
- aE9JBCWfl69nM075IuEu35sbNwt3qEz6R1bY5Ib0lGu5xw==
-X-Received: by 2002:a17:907:3e9c:b0:c1c:4a80:30cc with SMTP id
- a640c23a62f3a-c1f72251cc6mr161154966b.46.1785252186333; Tue, 28 Jul 2026
- 08:23:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wojeR-0000kt-Vg
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 11:23:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wojeM-0000M4-CT
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 11:23:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785252201;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=yGLmE0Uup5xWQ2G+SyVEbIDUzauE43uCgyclhivM0xc=;
+ b=LWN02+hj/hNTdMItfozH39dibtDOrc42Kj616EWlEmxjnwLobt7ddonf2UfsTvVw4i0V+Z
+ k/gAzEcNGq3Ns37CUojZvqMFhGmtg1QGIYoenbg3VzpM3sLF5tePwhLc5TvSE/OhgrcQT+
+ qHwOUsVumr0OLV8IKzvbK7IV4Twdb9s=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-605-qGo7YqOsNRW6cQPfrLF7kQ-1; Tue,
+ 28 Jul 2026 11:23:18 -0400
+X-MC-Unique: qGo7YqOsNRW6cQPfrLF7kQ-1
+X-Mimecast-MFC-AGG-ID: qGo7YqOsNRW6cQPfrLF7kQ_1785252194
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6582E1956058; Tue, 28 Jul 2026 15:23:12 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.73])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4D3D818004AD; Tue, 28 Jul 2026 15:23:09 +0000 (UTC)
+Date: Tue, 28 Jul 2026 11:23:08 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Connor Kite <connorkite@gmail.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Haixu Cui <quic_haixcui@quicinc.com>,
+ Raphael Norwitz <rnorwitz@nvidia.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Milan Zamazal <mzamazal@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ qemu-block@nongnu.org, virtio-fs@lists.linux.dev,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Eugenio =?iso-8859-1?Q?P=E9rez?= <eperezma@redhat.com>,
+ Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
+Subject: Re: [PATCH RFC 09/15] hw/virtio/vhost-shadow-virtqueue: specified
+ vring placement
+Message-ID: <20260728152308.GG371693@fedora>
+References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
+ <20260723-vhost-user-isolated-memory-v1-9-6b97c439eb28@gmail.com>
 MIME-Version: 1.0
-References: <20260721184656.530230-1-richard.henderson@linaro.org>
- <20260721184656.530230-4-richard.henderson@linaro.org>
-In-Reply-To: <20260721184656.530230-4-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 Jul 2026 16:22:50 +0100
-X-Gm-Features: AUfX_mwh-YNdXFyiWCCOCm44OL2O1x9X-npQ-uURM_q36bA5bauGyq3oqAMX-VM
-Message-ID: <CAFEAcA_V5gNCQZzXJbX4dqYDXsFkpvvbNKFKH0j-bEKucJiWXQ@mail.gmail.com>
-Subject: Re: [PATCH 03/20] target/arm: Remove DO_ZPZZ_AH_FP from
- translate-sme.c
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="Dl4fy5/Nk4W7j/qR"
+Content-Disposition: inline
+In-Reply-To: <20260723-vhost-user-isolated-memory-v1-9-6b97c439eb28@gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,16 +106,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 21 Jul 2026 at 19:49, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Expand the macro at each use site.
-> Merge the two arrays and index by fpcr_ah.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+--Dl4fy5/Nk4W7j/qR
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+On Thu, Jul 23, 2026 at 03:30:08PM -0700, Connor Kite wrote:
+> By default svq vrings are placed in an anonymous memory map. As svqs
+> will be leveraged to enable memory isolation in vhost-user, it is useful
+> to be able to place the vrings in a shared isolation memory region.
+>=20
+> Adds the option to specify vring placement by providing a vring base
+> address before starting the svq.
+>=20
+> Signed-off-by: Connor Kite <connorkite@gmail.com>
+> ---
+>  hw/virtio/vhost-shadow-virtqueue.c | 22 +++++++++++++++-------
+>  hw/virtio/vhost-shadow-virtqueue.h |  3 +++
+>  2 files changed, 18 insertions(+), 7 deletions(-)
+>=20
+> diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-=
+virtqueue.c
+> index eb86c1ee37..9e3c359f50 100644
+> --- a/hw/virtio/vhost-shadow-virtqueue.c
+> +++ b/hw/virtio/vhost-shadow-virtqueue.c
+> @@ -857,14 +857,21 @@ void vhost_svq_start(VhostShadowVirtqueue *svq, Vir=
+tIODevice *vdev,
+> =20
+>      svq->vring.num =3D virtio_queue_get_num(vdev, virtio_get_queue_index=
+(vq));
+>      svq->num_free =3D svq->vring.num;
+> -    svq->vring.desc =3D mmap(NULL, vhost_svq_driver_area_size(svq),
+> -                           PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANON=
+YMOUS,
+> -                           -1, 0);
+>      desc_size =3D sizeof(vring_desc_t) * svq->vring.num;
+> -    svq->vring.avail =3D (void *)((char *)svq->vring.desc + desc_size);
+> -    svq->vring.used =3D mmap(NULL, vhost_svq_device_area_size(svq),
+> -                           PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANON=
+YMOUS,
+> -                           -1, 0);
+> +    if (svq->base_addr =3D=3D NULL) {
+> +        svq->vring.desc =3D mmap(NULL, vhost_svq_driver_area_size(svq),
+> +                            PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANO=
+NYMOUS,
+> +                            -1, 0);
+> +        svq->vring.avail =3D (void *)((char *)svq->vring.desc + desc_siz=
+e);
+> +        svq->vring.used =3D mmap(NULL, vhost_svq_device_area_size(svq),
+> +                            PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANO=
+NYMOUS,
+> +                            -1, 0);
+> +    } else {
+> +        svq->vring.desc =3D (void *) svq->base_addr;
+> +        svq->vring.avail =3D (void *)((char *)svq->vring.desc + desc_siz=
+e);
+> +        svq->vring.used =3D (void *)((char *)svq->base_addr +
+> +                          vhost_svq_driver_area_size(svq));
+> +    }
+>      svq->desc_state =3D g_new0(SVQDescState, svq->vring.num);
+>      if (virtio_vdev_has_feature(svq->vdev, VIRTIO_F_IN_ORDER)) {
+>          svq->batch_last.id =3D VIRTIO_RING_NOT_IN_BATCH;
+> @@ -929,6 +936,7 @@ VhostShadowVirtqueue *vhost_svq_new(const VhostShadow=
+VirtqueueOps *ops,
+>      event_notifier_init_fd(&svq->svq_kick, VHOST_FILE_UNBIND);
+>      svq->ops =3D ops;
+>      svq->ops_opaque =3D ops_opaque;
+> +    svq->base_addr =3D NULL;
+>      return svq;
+>  }
+> =20
+> diff --git a/hw/virtio/vhost-shadow-virtqueue.h b/hw/virtio/vhost-shadow-=
+virtqueue.h
+> index ccfeee36d7..39f69e6455 100644
+> --- a/hw/virtio/vhost-shadow-virtqueue.h
+> +++ b/hw/virtio/vhost-shadow-virtqueue.h
+> @@ -148,6 +148,9 @@ typedef struct VhostShadowVirtqueue {
+> =20
+>      /* Size of SVQ vring free descriptors */
+>      uint16_t num_free;
+> +
+> +    /* Location assigned to vrings if not in default anon memory map*/
+> +    hwaddr *base_addr;
 
-thanks
--- PMM
+Why is base_addr a hwaddr? This is QEMU memory, not guest RAM. I
+expected this to be void *.
+
+A size needs to be at least documented here to reduce the chance of
+memory bugs. Even better would be an interface like
+vhost_svq_vring_total_size() so the caller can fetch the number of bytes
+before allocating the memory.
+
+--Dl4fy5/Nk4W7j/qR
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmpoyVwACgkQnKSrs4Gr
+c8jUuwgAvMc/G3tOhj0RTFEXylyhHMcyDAfcvVg+19MNnwq8RSuEjpwK7ongL+Do
+s3rzWOVKWxQS8RMFhq0E1zXoLWZ0+nt3Ziqi2XBOj28SEiO3eZyfXMQ6lC1UYo1i
+ZiN0+qHov/H69XAb8cKJgt4xKyiLhVEZfC/DKBzNzVOiFHApRfzdPQapfqTXA4PJ
+5z0v+rRysNK9dCaLDf6hqlXki1xWm3M877IeDEztVtof0FolUwLgy4DM9r8lwEdi
+efKoa9g6Jb083QGMMCKEzXR5wkxvrIVsbIc/OonhN8XDNjJNPpiaZeLlDj0WddGb
+BECKOD1lZ+YB9/soytLlda2bjV2M8g==
+=jc6J
+-----END PGP SIGNATURE-----
+
+--Dl4fy5/Nk4W7j/qR--
+
 
