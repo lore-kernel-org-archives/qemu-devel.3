@@ -4,107 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B53D4C54EFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 09:40:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 873D9C53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 09:41:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woeIQ-0001kL-21; Tue, 28 Jul 2026 05:40:22 -0400
+	id 1woeJ6-0002XN-0i; Tue, 28 Jul 2026 05:41:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1woeIO-0001ja-NI
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 05:40:20 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1woeIN-0007IB-34
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 05:40:20 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-81f64e8dfbcso42218407b3.2
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 02:40:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785231617; cv=none;
- d=google.com; s=arc-20260327;
- b=HGXO47ESWuyxTOYCGGW2cEU/tCIbQxl9afwQcwIBNozhhqVSyZ01IaIVsG4dvKLLYm
- 30VBWvHwg2mdpshgbhPiAK7nzjzX11OlaSmhHRpri3xiX+WcD4nPrLolO4kOXVCC2H39
- BoVPO+G0nD3DEg9G57sX32KwfyRSN7qUOZT8Ordgo48B84f1HNT05Yy4rBlqw1pb4KAu
- F3s1//Z6Gq48+1QNK/928GDWZYut7VapbSCrf9Uz48Brnh6Es9liPnY/svcwCB4Pd2Dy
- uIBb2GqTbM/VgCrekd2WdyS+tVOTFQBYK2u52u6bEx/5sjnTcbizDjrqDQaSeWySWHO6
- qyfA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=NaRacMAIbT0zf+9+8JPgWZVOEMFjv7cQZrTI6Ni4rVA=;
- fh=XMDBKzMxTOWVDKj3Qgn2GUGQI4LTszMri9ik4aJz2po=;
- b=mQYPq/PXHXe+x4T82VNbtJoZQwP7S3xpe7HuqVLRZTL8xNkWsoE+VV2VcP4f5nNbUZ
- mtEqNWaL9T0LWzzr52UMxPK6xzj7VzDlfUG6zZdEG5NlnwsSRyWT7aRc3w39GGpamwoc
- mDGdPvqmvtEQ8Idt8U4LWkcKrhASxQT5dHdnRTmw8n6uGBen2aeMrrlM+lPrcAfZ09o0
- BFzzG31NAe0//gtCumd83n7h5z94CbqhDP0GniP/ThHH0h+6YIr/svJB165YXX5vdnWv
- 6rv0FlXY1CuNQ97r2sLf8sYLXQ+M8QQz4KE/uVGifSMvHj1nTP0MPUh1UF4IPw99XWF6
- 0DzA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1woeJ4-0002X0-1r
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 05:41:02 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1woeJ2-0007O5-8g
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 05:41:01 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66S82IwP2128939
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 09:40:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=dU6sbOT5wqbC1lAHl5GpwO
+ /YKP08AIv1S30ys0KIROw=; b=Wath89aXWbXXVWc2BMBRzqx6K6aPoZgcIGzFUA
+ cGSHpF2rDfNVsWSrDIH40zql0YdIUefODS7vLQ2TDQaeUt162H0Vtl0z03e4t2uA
+ zMmes2CpM7T42001Xw8ghK4MGx7AaUd7qj/HxFdrSkFp/oVm1wFCSKtEYDsou+Gg
+ I7sMiLvT8lveszRrzrEA6WfNjKNCJuPnSDTaT9VNZrkLZWiW70gEjk60ygcvIMld
+ cUCubz1pg6pEwhbK5PR2zMSYxhzHgVSrO5AmI8amub+KI5xtpz6ukpdZuadfSt7C
+ /Yft48dZ0VORHBsGpuQEgWqmsnTx08sOsjnwkG8DWX4HvjiQ==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fpbn8bh6u-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 09:40:58 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-51c07f25de2so31553561cf.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 02:40:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785231617; x=1785836417; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=NaRacMAIbT0zf+9+8JPgWZVOEMFjv7cQZrTI6Ni4rVA=;
- b=b/hWZwRxKSfzWK7xn1Cfae0bCVgAhzvwpk0Vh5itGLhxv3+vRtmhVqZY3qUGheCU+E
- yoQDq4PLzwEzi3H9xGihh76SOY3gDyUO3zChtpdeW2gVqfLLPictsN+rkga5KDlr+CHm
- iyIPWLNvZg/8bUfyzXCvseXl6rdejShtTBoq0caCU9EOqgdKIgLd7YW2lI8niXJBr7nW
- 2Uku3bqGP+yq2qrEMCx0srpEt2ClwMYTTcExDg4PHRxzaePLNccOmwGbdMhbmUr7/3cr
- DrPXCN8zmQiam8tSLFhijUqeQj2UInfHLGyzzcgQgWLG2xEpBA2eFl8L1/FySkBGR6mm
- mVYQ==
+ d=oss.qualcomm.com; s=google; t=1785231658; x=1785836458; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=dU6sbOT5wqbC1lAHl5GpwO/YKP08AIv1S30ys0KIROw=;
+ b=FBM7V4ZG46m1NScqebYjz53xT0jxxHP0RIzEVBjf5GqVab0YgCHrs4jZGunD/qg/le
+ 9Tsvhli5C7MHhmvmY+Nc7w6BJzBkAO4m7R1T8ptTwW97Zvf4bN/sXpKzmvQ/HMi64wVf
+ ErG7fNjrwLc6yCpFRRzcEdjp51lxGkwmoT38Orq8oBe7SeyEH/Ok89eigvIkwL0riyCl
+ QjhPt9Xx8t2PCiE2wqgWbNgDf/woxsIljwIbmJ5mjdBl8X5CS6lg8UfvgXocqrXVo/Gp
+ HKe+csY+lp3Hkhth3enmpQnAZlyXO3ov4pR12mvYHxPnxYOuQg7CT0TwxZuKb6TT7m/W
+ /MPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785231617; x=1785836417;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=NaRacMAIbT0zf+9+8JPgWZVOEMFjv7cQZrTI6Ni4rVA=;
- b=tWZK6KX4riwekw7frE4zoB/QPDIcIICsZjirwOJwOe8H6YZZgdWvPiahsAzI6tR27H
- aCSSWVCcH+Xn6skko81rV8OAkHaKSflPSao2ODq8nbmgv2x3NYZZ56cAonuguj38JtbL
- Ckbz9lp/0jKLbuH6fg6nsidiH/XVPumdHO8QBKJQrDdTKNpOPi1a5d+qFIOkIMLewgsR
- 4QxhKdeODWwjRRaHZ0lE4Ooz7OwysXsH2vCAHsuh7jusd3ZOFLGM6uJJUZZ3l4YwqV25
- xDSsQBxUkgmpEiHly2xSewlVJ4Vj2LFlO1qgUq6Jbh3DEQy4tMP9nwRxUwUB2X2+VnBw
- rWiA==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rr5BhlWplJqbOc4WFwfIKZXdAfxN/HgSMbMVYkP8nAEmXq0FmybLRhTHCKIInoc5du6gZiGF+ekqie0@nongnu.org
-X-Gm-Message-State: AOJu0YwPCo/T15BPAa5G30ezhb10JIb+dRb2fNGTxTHASaruS1+rF5pj
- 5v1IO6Js0Q5pyBbXXmLUt5WxoULuOEYQm9lU17/POKS8Ha91tMSUNlKIKINMqYKix2XECL0RCww
- GSuqXagpBlJMCUjZa6z/srq93hXUn5RhqOLUM7+Wy0A==
-X-Gm-Gg: AR+sD10ibSpqwgjwM9GH1Bn2Q9TSGa8mDwQ61CumCNRKc8JaVqM4ISmxOJCIqhWxKsB
- KPRUWwVVPvLE2+M8GliyrNZaseUoMB2EYeIWaprS9tdyESt8ipTQ0zQgiG4ZvM94wHUn4kU8kWm
- LijKuU9QQQH/ggrCq6HOdJLEVIY/6hREDIgwVGImJSJxvGFH1liPmCF9ty8ZnSH5G1dfSn0mqtE
- wtzdH0cAuq6t0Yx9H8UEHH2n/0+S4QJI62SabhFm4dYxla3HRJfG/uMy6cXnaVPWdJqq0SdfJVh
- KrnDhYTblj+hNG5J1x9ETltumYawvk/7oG0F0Jmgr69ZrO+9PT/QwXuw
-X-Received: by 2002:a05:690c:250a:b0:81e:d656:9909 with SMTP id
- 00721157ae682-81f991faa6amr8140497b3.1.1785231617336; Tue, 28 Jul 2026
- 02:40:17 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785231658; x=1785836458;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=dU6sbOT5wqbC1lAHl5GpwO/YKP08AIv1S30ys0KIROw=;
+ b=QXPJ1UWd3vfFgG1O/fV9dH+34+oNXYjNPMiMOdoTDa+e9syJPwpevw7vY+355wqdPU
+ 1zLacauWIxh+AYrrUMEGAzMeZmOafp6wOjj3BifLISEPNWb4S5/CUF2d9dVLJ1/XuLo+
+ orPlqnHdjIykaXxPytcgpQOFYxJUEZOjPifF3aQtFChcIuxPtwJVHr6EVcvjpLZRr6cD
+ gk0SzgGIX/iN9ZtrmJY59ljF+jCABvVeRXddAGawqF0t/wWLyNR5tg+QJIn0NpCQmnC3
+ 9+6HhvQOvlq2bYIyAGXXpR2TOYWrqSHAQtIvNRo/7NJHqAneDfZOnnSDFHpkva7dmZvi
+ FQzw==
+X-Gm-Message-State: AOJu0YwNiwQCOckqNvSKKbyCBNyVUpn3j9Rq4OnGtPtkll1ypX5ZzePz
+ zEO3p1mKlz+KZLWhNx66lhPDPuMbAcyBWvnW20Uxwce/rwQ00J4Go0dJBrtWK142ZresfUJw01x
+ vXayL8Q32gemZjVhcml+LTOppaikqSHUUlwWD1h5x/5tl8dc6ZGoHrg5FQjoEY7sYCQ==
+X-Gm-Gg: AR+sD11I6C9yxJepOf0cifV9FiZvpACC5DtJM4iZCRLuY6RLvk8q9YvVVa1AjKFoMvj
+ l6Y4sVWJk6VJrcWk77ZbF3lOvk/sl24BP+pu+KqYdzGu9oz2gP7DoJkvNDi6HPyBghwhSSaT7el
+ 5Fe9K/5rZ+UEdrY7i5IVVo4rdPDQJwTU5QcrkzxaaHNUOSmBAD3DbfNdJi77WMqfr77v90yTyKT
+ E+n70P37qhLmpsNDfP2sGA55OiN4ALBWXoZhXh/7peAUEn+8fDvHEgkgJem06m0aUt0KXRXWIuk
+ GaHdEg/dwFu90Ala+b/tWMrHXIGkTp5JmXb0h1swCruWLqa/R4pIXduqpVyQUC2NT+NiTNAM5Ch
+ GzZxnwtTE2VsEwN2kAait89hsM/nScUZafIZENFQNNUdWldvh57oIW3Dgtw==
+X-Received: by 2002:a05:622a:1b8e:b0:51a:8c9b:6499 with SMTP id
+ d75a77b69052e-529d7163793mr12371211cf.61.1785231658046; 
+ Tue, 28 Jul 2026 02:40:58 -0700 (PDT)
+X-Received: by 2002:a05:622a:1b8e:b0:51a:8c9b:6499 with SMTP id
+ d75a77b69052e-529d7163793mr12370981cf.61.1785231657506; 
+ Tue, 28 Jul 2026 02:40:57 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-496c45cbd09sm59403365e9.10.2026.07.28.02.40.56
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 28 Jul 2026 02:40:56 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Subject: [PULL 0/6] Misc HW patches for 2026-07-28
+Date: Tue, 28 Jul 2026 11:40:49 +0200
+Message-ID: <20260728094055.12684-1-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-References: <20260629-pmu-v7-1-939518c349be@rsg.ci.i.u-tokyo.ac.jp>
- <CAFEAcA-=u3ZgiAXRNWM1VCMv7FYG2YP=oirf40yGo--p0BSfbg@mail.gmail.com>
- <39e270ed-1667-4bbf-8732-913e8b1f87e8@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <39e270ed-1667-4bbf-8732-913e8b1f87e8@rsg.ci.i.u-tokyo.ac.jp>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 Jul 2026 10:40:06 +0100
-X-Gm-Features: AUfX_mySqC9ltK0KFuDMKEMZTn6u-bGp6fw-nzmfG1sVgTzOupa-Mk8nMlvhu-s
-Message-ID: <CAFEAcA-_mSr0e8yePxoxW2wS7xAHtTzd8S5MfLWwr_BPkAD+Rg@mail.gmail.com>
-Subject: Re: [PATCH v7] target/arm: Always add pmu property for host and max
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- qemu-arm@nongnu.org, 
- qemu-devel@nongnu.org, kvm@vger.kernel.org, devel@daynix.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDA4MyBTYWx0ZWRfX34uelGmF2zKs
+ nWlmxULBdozIzqStxtICWJxJ613EM2jzeVhrwEptDuw8ZWWIGV0ixByXcnE1j+rsjGJeG7UW4vj
+ woJdbefz0YPiScVIVv+hReioTmMR6q7R7+9zq80zazlzCaP/tT5cr619bUW120v1z5d1EVku3VY
+ B5G7YmPKDUZOqzKPVs4zZt79/osSXilkHOFLmTSmZ4toPzv926lBzIXKF7l6wdCGIel+qDMlu2E
+ GIcrbext91HHAPnPfux4feCxx5buagBatdZeyMBS3+17evnAXqOgBia/FCfQlwA802qK7TbTisO
+ 9M7AQCa6YvbeMZov3o738TkakjwxDgFA7GgKkF9yDyDftqgTDc/g71+ce0MTXDzAqu7IPIpARHx
+ z9ERQ6kWCam/fcHEa+lyLq7c68MR/vDMdba/U+UCSUJUSXadEWQvnbxcQ16daAS20GkeZ9AFlTQ
+ MMrurv7/dH47a5wcaDw==
+X-Authority-Analysis: v=2.4 cv=RO+D2Yi+ c=1 sm=1 tr=0 ts=6a68792a cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=VwQbUJbxAAAA:8 a=NEAV23lmAAAA:8 a=vkRzn229ap7jrLUKHgkA:9 a=QEXdDO2ut3YA:10
+ a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-ORIG-GUID: cAgnfKpJKbL1smz_Xpuw6cMpexzMD8KM
+X-Proofpoint-GUID: cAgnfKpJKbL1smz_Xpuw6cMpexzMD8KM
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDA4MyBTYWx0ZWRfX/Z7kFZzuvbTo
+ k5TaHRBSK6ro6MWoDhzBw8VZbv3CbDNN8NRMMhGJo2QuzcQx1+ZXpadJnFWqpp3ho96/mIn5+Q2
+ U4Bjwfmjm+fQYe3W04L2tlvC8mNIHLM=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-28_02,2026-07-27_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 phishscore=0 priorityscore=1501 spamscore=0
+ lowpriorityscore=0 adultscore=0 clxscore=1015 malwarescore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607280083
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,67 +145,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 28 Jul 2026 at 10:33, Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> On 2026/07/28 1:10, Peter Maydell wrote:
-> > On Mon, 29 Jun 2026 at 09:10, Akihiko Odaki
-> > <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
-> >>
-> >> kvm-steal-time and sve properties are added for KVM even if the
-> >> corresponding features are not available. Always add pmu property for
-> >> "host" and "max".
-> >>
-> >> Note that we still don't add the property for other CPUs that lack PMU.
-> >> This is because we do not know what a PMU version should be enabled
-> >> when the user sets the property to true while it is defined as an error
-> >> for the "host" or "max" CPU when the hardware accelerator is enabled and
-> >> the host doesn't have a PMU.
-> >>
-> >> This fixes qtest-aarch64/arm-cpu-features on the hosts that supports
-> >> KVM but doesn't support PMU emulation.
-> >
-> > No, we should not special case "host" and "max" like this.
-> > The "pmu" property exists only if the CPU has a PMU and it can
-> > be turned off. If The arm-cpu-features test assumes that the
-> > host CPU always has a PMU and so always has the property, then
-> > that's a bug in the test, not in the code handling the property.
->
-> The test correctly avoids assuming that the host always has a PMU. It
-> expects that the run-time-derived "host" CPU has a stable "pmu"
-> property, with its value reporting whether PMU is available.
+The following changes since commit 299e7557ed15a9a325620698add379a3ce2d1d95:
 
-That is not a valid expectation currently, because that's not
-how the property behaves (and is not how many of the Arm CPU
-properties behave). If we (as has been proposed) refactor Arm CPU
-properties so that they're class properties rather than object
-properties then we will have a property that is present always.
-I don't inherently object to doing that.
+  Merge tag 'for_upstream' of https://git.kernel.org/pub/scm/virt/kvm/mst/qemu into staging (2026-07-27 16:51:28 -0400)
 
-> That is already how Arm handles SVE. Commit d25293068b03 ("target/arm:
-> Move kvm test out of cpu_arm_set_sve") added a false SVE property when
-> KVM lacks SVE. PAuth and kvm-steal-time use the same general model.
-> Other architectures do the similar; for example LoongArch KVM does
-> exactly this for "pmu". So we are avoiding special-casing the Arm pmu
-> property here.
->
-> The comment in aarch64_add_sve_properties() gives the rationale
-> explicitly: "to allow -cpu max,sve=off to always be valid." sve=on still
-> fails in that case. Keeping the property stable prevents -cpu
-> host,pmu=off from becoming invalid on hosts where the PMU cannot be
-> enabled. This also matters outside the test: libvirt emits pmu=off when
-> the PMU is explicitly disabled. This design is intended to follow the
-> alternative you described previously [1].
->
-> "host" and "max" are special-cased for a different reason. For fixed Arm
-> CPU models, the property is omitted because its semantics is not defined
-> when they don't have PMUs. "host" and "max" are different: "host" and
-> "max" enable whatever PMU available, and fail otherwise.
+are available in the Git repository at:
 
-We should not special case "host" and "max". If we want an "always present"
-property then its semantics should be:
- - always exists for all CPUs
- - if the CPU can't support a PMU then you can't set it to "on"
+  https://github.com/philmd/qemu.git tags/hw-misc-20260728
 
--- PMM
+for you to fetch changes up to c607cca75c354f2be9c2d3259f5b5237afec1717:
+
+  tests/functional/ppc: skip remote interrupts test if -net user not built (2026-07-28 11:09:08 +0200)
+
+----------------------------------------------------------------
+Misc HW patches
+
+- HW model fixes (network, SDHCI)
+- SPARC64 vCPU migration fix
+- PPC64 functional test fix
+----------------------------------------------------------------
+
+Bernhard Beschow (1):
+  hw/sd/sdhci: Extract uSDHC-specific quirk
+
+Laurent Vivier (2):
+  hw/net/e1000e: recalculate rx_desc_len on migration load
+  hw/net/igb: recalculate rx_desc_len on migration load
+
+Mark Cave-Ayland (1):
+  target/sparc: set reg window data structures currently after vmstate
+    load
+
+Peter Maydell (1):
+  hw/net/xilinx_axienet: Don't write checksums off end of packet
+
+Shivang Upadhyay (1):
+  tests/functional/ppc: skip remote interrupts test if -net user not
+    built
+
+ hw/net/e1000e_core.c                   | 18 +++++--
+ hw/net/igb_core.c                      |  2 +
+ hw/net/xilinx_axienet.c                | 29 ++++++----
+ hw/sd/sdhci.c                          | 73 ++++++++++++++++----------
+ target/sparc/machine.c                 | 40 +++++++++++++-
+ tests/functional/ppc64/test_powernv.py |  1 +
+ 6 files changed, 117 insertions(+), 46 deletions(-)
+
+-- 
+2.53.0
+
 
