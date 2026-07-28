@@ -4,129 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1411C54F4C
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 08:33:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEE05C53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 08:41:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wodFp-0007Fe-ON; Tue, 28 Jul 2026 04:33:38 -0400
+	id 1wodMp-0000TA-V3; Tue, 28 Jul 2026 04:40:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wodFd-0007DA-Qw
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 04:33:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wodMm-0000Sa-6x; Tue, 28 Jul 2026 04:40:48 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wodFS-000171-Up
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 04:33:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785227592;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NGotaTdj+KrTnZZOt7ewDiOQxo0Uc4LTH1dViwMTBJA=;
- b=TQRfK3dQcor0Aw8YFREPvp1rlPrPjRpjbtj//oecT5RmSs8bMRH/9ZlreX0prJIb72OdN1
- E+SeUgBNuPZ1W8SCctfbfXeQqDzhG61nD4kFr1uFC6EeQBiUXpNd7c3K+9GeNGOZGXiQ0M
- uxta3wugRuueUtEB262Nj3VkwFqpHnw=
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
- [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-303-pBG410YcOgGl8wHLubzaAg-1; Tue, 28 Jul 2026 04:33:11 -0400
-X-MC-Unique: pBG410YcOgGl8wHLubzaAg-1
-X-Mimecast-MFC-AGG-ID: pBG410YcOgGl8wHLubzaAg_1785227590
-Received: by mail-pf1-f199.google.com with SMTP id
- d2e1a72fcca58-8487ed7f7beso3881690b3a.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 01:33:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785227590; cv=none;
- d=google.com; s=arc-20260327;
- b=OWhG+B0iZ5m6WnY0rKIwVovIQ22WWvuKIlc8rV2cpg82/5jl3HakmrkD48MqO0BKmv
- lg3uRAu4yatPAyMM3aUTP3gBz9w7iSxeV++GMXqQ550XHDvPaYdlMRYpX1NySkWUOmIb
- 9O2mbW43tK2GRCK0c0lVVnBUHZXQ2bh+vyZDmmjqPxyTYiRZHQlXXniYh8sXjYK6QXIU
- AZp04sbyoh5hdwcpVED65E4tSsM4bkI3rH9RFchNqbzULyBFB8n7aRKzxZA2wez6Bkf2
- tCxm0H1ka8RD6eXJEFCNeqaThYOu+pDkutJzZj1ERYCMtbL6k67vlncRKcO9Oj8YcpJm
- vIDA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=NGotaTdj+KrTnZZOt7ewDiOQxo0Uc4LTH1dViwMTBJA=;
- fh=/dMNiWP/UJp0ib95kJpEXmCAYazcCM53J8+UCiPYHqE=;
- b=eSbMw/+H4YiYRRqLtsUUuiXxbW/z9o3hn1OyCjtS96JscKgP2ILk3lNZmQCxxmUtS0
- 8yvzQUrg56IYJpiUm2kDOIySwfaz92PQr1S1aX7hxB1ROl4fKA8GzPvtrGIdjTeB2mOM
- 0/YvIkiMI/sBKQgGJvBFonnVMgHJDS8MPakY5gK8M5lsezWH4fGxE1Y6wrq/xEtU57Tk
- 6Cyc97Cxw3S4a9qPgbnhzAHRnY0M2blLlASgKuuPKRX5l5T70bRqq6K5mBP1Abf3YpUt
- oTaFi2NA3FfQwfKxB1vQixhNx49Cszy3yf+EhP0k/HAy890d5lkBG3GKc/u2sQNuVOwW
- AHBQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785227590; x=1785832390; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=NGotaTdj+KrTnZZOt7ewDiOQxo0Uc4LTH1dViwMTBJA=;
- b=EtzcarvU6tlo7z+BJg2pp5lx7lJlvQ8IGkBpJcZ1DZLqIr3jlcvjD6OyhpoUyrzuI3
- iEWiey6sMx09bCbpzcb7R/wy83A9G2D/eMlnejORdJYACUdFbhY50e/lVkFfa0p7dUrc
- 280qg6kaV+lDMF55szjbF1F5CGmHkzSnMlv8bg5x472P2AG4py0Fr96v+KrZ0/ay88lc
- zOhvl3sRJ3Vre0H/OVp8Glg/Z5iMeTfP3szQ+uButONHE3eOm7G0nVV7DR2oWv+f6zHG
- LnuGr9FfhSfRFubREBJiprBz3eWxaiMAVby0TyMtnNuwMs1cDjwooAScxidGypw/IDNf
- a4JA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785227590; x=1785832390;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=NGotaTdj+KrTnZZOt7ewDiOQxo0Uc4LTH1dViwMTBJA=;
- b=FmQXTFrnVuIiDk5yYkacv+PNnEgsdPAaCUriGsYoEPkxrCSJls4r7FN33/cQ7ObX+F
- eDzO2+Et9XHTm9MBwL3nifjAz7pqpCEaM/gZaV0BrUR0CINUR6C7FhwPjY8T086VrfBd
- KAvpd4cndaEJFmVnKeqv8Pb5eHUYNiQmJpoMzW+FlT2oLsDOPKW1iEdxyxuZFAI1vTt1
- Y4S3Sa6aBytJAEJRWQKdizzHwNCypk2C/n+WyBfFZ5faFMNPqHFKnlExO/YJkz+hKc7Q
- FCmfQZoJ/lVvXKx7KRzkUeEAgI9KRlrCMCA1A7igDpMXacEdl1gBHALohudeGi5RYTLc
- BvRQ==
-X-Gm-Message-State: AOJu0YwHy9u/DYAOFTRQ/loFP+JjczZc/1Rt9WCQWaJdI5Dc+YPyIrvV
- 4PK1U2b5i6+1ukdYBEQ0LQDJeiE055yeVBcypOyEmJPjwt/cxFiyMywCu2VrczAlea3NQavA/Yq
- 0DJnJIqbZ8cy58xB+Ii9H36kGwgTm+2Dw3WChMCusdTqoc53Ek2p4XUV9C5WscecArulsj7Jy1g
- bo/c9tyMFL+OKrnQ8s8CdxIXxqXH637+U=
-X-Gm-Gg: AR+sD13347/QDtUPlgvBaQ7dHW3is5YBwZKq2Jbmue/XDg+DzGmGlWzHreeie5v+hox
- lTw46ffBDRG4DIpFYlKXG4PqgRdMvDI5ZP4acnJp0ias+X0i39+nEDFZ8bvoZsCVf+OsCZoM5DK
- qelgtG2If/8oJq7hioLF0opUryKzkHeLpdeVVcXX7quqgbdBLBisLdcdt3n+DDg2aPlB5yke16h
- H2rKFAp5uMEtT7+KNMJP0ircE7Hq9ywbQodc4mJE6BlWLvQ13mOS1rESIPGYJOWuEWo2RdtHjN+
- pw==
-X-Received: by 2002:a05:6a00:b4e:b0:84c:1cd2:142b with SMTP id
- d2e1a72fcca58-84e932ca245mr1413439b3a.9.1785227589904; 
- Tue, 28 Jul 2026 01:33:09 -0700 (PDT)
-X-Received: by 2002:a05:6a00:b4e:b0:84c:1cd2:142b with SMTP id
- d2e1a72fcca58-84e932ca245mr1413409b3a.9.1785227589359; Tue, 28 Jul 2026
- 01:33:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wodMj-0003J4-1Z; Tue, 28 Jul 2026 04:40:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1785228037; bh=ksMnHtn/lDCdXifatGh88h4Iz053Q/ybjuFrJdz28G4=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=p1UKAnUp1+QVVTUPCTMCGGFvgIbsukmJJb927OW7p1YoO05Mk22ib1ZKRF0ATsKjI
+ 95zemxtrCuESs0BxxVGznvP3LiJkYF6BmKJY/7EpwLNvgFvyNHbEFW3KuCa64pNB7U
+ XdTrqv2X9Jay4y+yYiRSe90kOMj/Gdf/LkjVM76yYlGx6DZK/WNIhU91TdWJobWFlT
+ v3iLoLi+onoyxYjOmxgJ33Njmnm3zn7CSUtSsAYsCLxS/dG5nse0m2VL97BwfrAQrG
+ k/6ZeckTXZ+oxai1uAYwc6XurcKDBvWckyhcM4Ie7qut71FfngzlbT0bltFMeHKO68
+ vHtJtzgafy7Wg==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 64B421C54EA;
+ Tue, 28 Jul 2026 11:40:37 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 665643F83AA;
+ Tue, 28 Jul 2026 11:40:41 +0300 (MSK)
+Message-ID: <65990a19-6a7e-4c1c-9354-0fffa13cbba9@tls.msk.ru>
+Date: Tue, 28 Jul 2026 11:40:24 +0300
 MIME-Version: 1.0
-References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
- <20260616-qom-qapi-v2-50-cc9396b9c18c@redhat.com>
- <87wlufword.fsf@pond.sub.org> <87jyqfwmgu.fsf@pond.sub.org>
-In-Reply-To: <87jyqfwmgu.fsf@pond.sub.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 28 Jul 2026 12:32:58 +0400
-X-Gm-Features: AUfX_myVhbqtF54hNcVyZPxIyQKs7P-bf6UT7u1LrkLIEMiGTAevpAt1B2TlTqU
-Message-ID: <CAMxuvawA6Yzcr2nC5pMzHAYX7ZGv4V6VP3bJ64Gq_Pwo43wf0w@mail.gmail.com>
-Subject: Re: [PATCH v2 50/53] qdev: simplify DEFINE_PROP_ARRAY and remove
- generic array PropertyInfo
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Michael Roth <michael.roth@amd.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL v2 09/30] virtio-mmio: fix QUEUE_NUM_MAX
+To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Yonggang Luo <luoyonggang@gmail.com>, Miku Hatsune <anznu1l@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>, QEMU Stable <qemu-stable@nongnu.org>
+References: <cover.1785179875.git.mst@redhat.com>
+ <a5cff318f06cd06b37224e15ee74d64d1df8b12b.1785179875.git.mst@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <a5cff318f06cd06b37224e15ee74d64d1df8b12b.1785179875.git.mst@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -143,63 +116,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Markus
+On 7/27/26 22:19, Michael S. Tsirkin wrote:
+> virtio-mmio reports VIRTQUEUE_MAX_SIZE (1024) as QUEUE_NUM_MAX for every
+> queue, regardless of the size the device passes to virtio_add_queue().
+> 
+> This works by accident because QEMU mostly does not care about the ring
+> size - the guest is the one allocating memory here.  But this changes
+> with in-order vqs where qemu is the one allocating resources.
+> Now, specifying a larger vq than allocated causes an OOB memory access.
+> 
+> To fix:
+> - for new machine types, report the actual max queue size to guest
+> - for old machine types, use a compat property to allocate 1k sized
+>    queues
+> 
+> Fixes: 525d82e323 ("virtio: fix queue size validation against allocated maximum")
 
-On Tue, Jul 28, 2026 at 12:24=E2=80=AFPM Markus Armbruster <armbru@redhat.c=
-om> wrote:
->
-> Markus Armbruster <armbru@redhat.com> writes:
->
-> > Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
-> >
-> >> Change DEFINE_PROP_ARRAY, the macro now uses _arrayprop##_list to
-> >> resolve the typed list PropertyInfo (introduced in the previous patch)
-> >> instead of the generic qdev_prop_array.
-> >>
-> >> This means the element type and size information is carried by the
-> >> PropertyInfo itself rather than duplicated at each callsite. Since
-> >> the typed list PropertyInfos encode element_info and element_size,
-> >> the .arrayinfo and .arrayfieldsize fields are no longer set by the
-> >> macro (they will be removed from the Property struct in the next patch=
-).
-> >>
-> >> Remove qdev_prop_array, which is now unused.
-> >>
-> >> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > [...]
-> >
-> >> diff --git a/hw/intc/arm_gicv5_common.c b/hw/intc/arm_gicv5_common.c
-> >> index b155486af65..61c8ae49302 100644
-> >> --- a/hw/intc/arm_gicv5_common.c
-> >> +++ b/hw/intc/arm_gicv5_common.c
-> >> @@ -191,9 +191,9 @@ static void gicv5_common_realize(DeviceState *dev,=
- Error **errp)
-> >>
-> >>  static const Property arm_gicv5_common_properties[] =3D {
-> >>      DEFINE_PROP_LINK_ARRAY("cpus", GICv5Common, num_cpus,
-> >> -                           cpus, TYPE_ARM_CPU, ARMCPU *),
-> >> +                           cpus, TYPE_ARM_CPU),
-> >>      DEFINE_PROP_ARRAY("cpu-iaffids", GICv5Common, num_cpu_iaffids,
-> >> -                      cpu_iaffids, qdev_prop_uint32, uint32_t),
-> >> +                      cpu_iaffids, qdev_prop_uint32),
-> >>      DEFINE_PROP_UINT32("irsid", GICv5Common, irsid, 0),
-> >>      DEFINE_PROP_UINT32("spi-range", GICv5Common, spi_range, 0),
-> >>      DEFINE_PROP_UINT32("spi-base", GICv5Common, spi_base, 0),
-> >
-> > Doesn't compile for me.  I applied the series at merge commit
-> > 8333dba732.  If it compiles for you, could you push it to where I can
-> > pull?
->
-> I just found base-commit: 2f28d34ea0aead9830478cd1d3d0dd9d9191d82e in
-> your cover letter, and I'm going to try it.
->
+This is actually d530f2dfbd2 in the master branch.
+But his is an interesting case of the Fixes: tag.
 
-I did a rebase
-https://gitlab.com/marcandre.lureau/qemu.git qom-qapi
+The change it is fixing (this non-existing commit) is in
+the same pull request and comes right NEXT to this fix!
+So we fix something first and introduce it.. later? :)
 
-Waiting for your feedback before sending a v3
+It's a fun stuff.
 
-thanks!
+But besides this, I wonder what can we do with that for
+the stable series...
 
+> Fixes: CVE-2026-50626
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3882
+> Cc: Peter Maydell <peter.maydell@linaro.org>
+> Message-ID: <8715acbb9516e67e2a776cda6f9edf105343f788.1784930765.git.mst@redhat.com>
+> Acked-by: Yonggang Luo <luoyonggang@gmail.com>
+> Reported-by: Miku Hatsune <anznu1l@gmail.com>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+...
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index 805148678d..73b4d82b4a 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -41,6 +41,7 @@
+>   #include "hw/arm/smmuv3.h"
+>   
+>   GlobalProperty hw_compat_11_0[] = {
+> +    { "virtio-mmio", VIRTIO_QUEUE_SIZE_OVERRIDE, "1024" },
+
+..because it is adding a new field into the migration stream,
+which is a problem for stable series.
+
+Or is it a problem in previous releases?
+
+Thanks,
+
+/mjt
 
