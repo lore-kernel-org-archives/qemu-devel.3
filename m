@@ -4,55 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2174C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 12:43:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCF8DC54F4C
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 13:02:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woh9S-0007p6-VR; Tue, 28 Jul 2026 08:43:18 -0400
+	id 1wohR6-0003hH-4e; Tue, 28 Jul 2026 09:01:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1woh9O-0007om-OM
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 08:43:14 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1woh9M-0005Jo-U6
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 08:43:14 -0400
-Received: from example.com (p5b3e8a57.dip0.t-ipconnect.de [91.62.138.87])
- by linux.microsoft.com (Postfix) with ESMTPSA id 5974D20B7166;
- Tue, 28 Jul 2026 05:42:53 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 5974D20B7166
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1785242574;
- bh=1HZIk+zCFxPKTu/sHqfQbEukmPiALzD4aocxayn3Xp0=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=CuDdvhH3fAgOFvP4x+A9CtoGLqjK/pRMSIQCGipxmOhm9LGlHt9KhpXeHSe9RMV+R
- B0NxvlHItpyBOUzmeb3zj7RcAtej9mEv0ljnqemNLsyHNSIoi5r7i0Uwj174QM01Bn
- eT3bibR8PSK7bhnuAazAr60koIm0csGjydAOyEdU=
-Date: Tue, 28 Jul 2026 14:43:04 +0200
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org,
- Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@microsoft.com>,
- Wei Liu <liuwe@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
- Magnus Kulke <magnuskulke@microsoft.com>
-Subject: Re: [PATCH 3/3] target/i386/mshv: support single-stepping
-Message-ID: <amij2PMFQweUwS61@example.com>
-References: <20260727142807.84269-1-dblanzeanu@linux.microsoft.com>
- <20260727142807.84269-4-dblanzeanu@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wohQk-0003gC-1G
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 09:01:23 -0400
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wohQi-0000Oj-G8
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 09:01:09 -0400
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-81ef8255cccso39190437b3.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 06:01:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785243667; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Mb9oq72RLVTkGb/Krl8QMZzlWEd4i+IFEUyMUxbo1j/lFJzZMavkvmVoKq2v16MDAR
+ BWvBxouB8Cg/cRKcVTGyeU+HLwunfWx8O4KQQsBP3DT+knWKtjz46GXOj83TFmtr+37s
+ Bkn1DjvqREtCBCmQsvAat0BKdvrrDgTx/Qt+4Hs/rL0uOCbfsclVVY6CsHKyCnt+x3T5
+ cIf5KuTHAPXTDZZYc4HT6vr+M9VH2//20jbT78L245ptqiXIs19SYu+r7hIC1KZysFRq
+ eTQiB7lUbloxIfK//HSRy/U6onXsxaTY3gVMcPpFt0h3mO0lJH3DqCI6n+f5RuBGZ9JC
+ Njyg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=zAvVxxAjh4GA1DaK6vTvvXcTJ5QysptMYb7oOiTYSFI=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=T1zB92sWV1Bf4p0hBn7g+iBlasfd0/2/8eocQw836doFzUYkS8dMEvqNbY46TA69sm
+ oEbIlCd1+5uF5t/T4q+CLPAeRWANHW2qItMVtvgJXzSBKdL4YCMVyMVPc9kfNbQFw7m5
+ JRuYJ6f8QVCyCgAuR3pMIWbr4oT+q7jLyz6nxLcOgeL/Ed06i0KCbWMMZ7hO9O9urKNf
+ UfEW/+MvOmioajJwJpSlF3m7q2JEND8ugwHTN3GkyYOwN4iuII1NRM9gygMikV1xB6Ab
+ s93Stqd3oFkaNTi3rYrieJMq7npf9b/ICRhfaOU3ZbSRFwhs8sD3YrD8FjLRgrtpoQQG
+ rACg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1785243667; x=1785848467; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=zAvVxxAjh4GA1DaK6vTvvXcTJ5QysptMYb7oOiTYSFI=;
+ b=EWO1nXlY/+ZTFAVYKtJiyl81til6ZaFeRIUiKX7q2uttfGOdWALD1VEE7XqJEsjZWe
+ R8FlrUgmUAejfLcaxA3ObKCQ/7UMeyIcECfinoCI8GU2ImHamLm+IEJKgTsIkZkDtRWA
+ O2RTFcNGUojqwhlE8gNInEjkohNl9aE/0ra4gS6RFySABLB0xmTKUF4hCZRdcmXSsY5K
+ 4wwzv5l/8ZwqAj1+FyuHowzrwfs6MDXUsklfPmC0l+3xToqXqGJmNdkdcAPBXjUzvzV6
+ 9inEbJY1jE4O9U8iprPMfOuWCyS0g4A9FGh5jHhsV7SsyC/5BWm2tSZ106vjD2Bh2CVD
+ 6H+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785243667; x=1785848467;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=zAvVxxAjh4GA1DaK6vTvvXcTJ5QysptMYb7oOiTYSFI=;
+ b=GcvLe8Tjh+q60+oEyAuoelOQo6bURdYAYP6/XeRALkGlOzM3lU7pNckWCNkqJrHFKq
+ CbxywNfaz/W9hcCiMEOZcXikgL33JSSWNVphW1Xs55sagJiq8p8tfT66rKzSk4ddY1Vn
+ dAXa7GN+mYoTKJOkBtn5Rf9Roe93Gk8FyBTClaMjgxOP8eEvaM46s++y6+ayPMeBE3zE
+ Ec/CZzd/R9wntS6gt+fFUhFpoX5Pi3BHMKIUAyo5inF0mMKGIJ611qkwS8KeN4/071gX
+ qA5yOJyhZMYcqwOb18x2mIYVb1Z3l9J84YSYAB/xIcqYYS+W9Ky75P/aeouzMTnf316y
+ 6dWA==
+X-Gm-Message-State: AOJu0YziNyZWj5IHAc7CtGz5V/ZbOxx340oi3AJ86ECqNxjjHzCevhHV
+ PICMT93c8iPhsE/sF/esr2UcYTcn9fiXsPfB1wYp/IwGc/IbFXJU5zq9k62GEgMLItQSMOI0JQS
+ 1v9mDIIcBTGNOseINe3eyBT9B3XZ2Vv9frsSGjfNDdQ==
+X-Gm-Gg: AR+sD12NHAEQrE3OnHKWb1ufYUoqBTdolPXbohLDq3+pV9eePdtv3WjU10DSjVaTAWJ
+ RuPe8q+yovBDJDhJJfVnlaSwS9R6hfZXDr/WGos/pja3o/fdQbh8ULUI0dXSgM3haTuDejT7vXv
+ wU+UYLwK3sd6e0M9r2fubY+3BbnXZswbjs7bjbUWq+apzpEsuZrfMmOdpLwf0NVyqufuaFebG8c
+ WRr9DPzT4Mg1GuxpBfAOc3eNgTzoPgDvi7V4X62lK87GkFE7Kb4OPrF078JkEkslhdmtpVlF+jx
+ 2uFcghuE8hAt5L8EL3sDudFlzgsHcaANX8bD9gf9FVC7OA==
+X-Received: by 2002:a05:690c:6f10:b0:81f:6547:cfc0 with SMTP id
+ 00721157ae682-81f992cab9cmr8501997b3.67.1785243666822; Tue, 28 Jul 2026
+ 06:01:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260727142807.84269-4-dblanzeanu@linux.microsoft.com>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20260713230244.70174-1-richard.henderson@linaro.org>
+ <20260713230244.70174-2-richard.henderson@linaro.org>
+In-Reply-To: <20260713230244.70174-2-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 28 Jul 2026 14:00:55 +0100
+X-Gm-Features: AUfX_mwW0GD9xgUdh3_FqO4ontu-2JUanXp_eKQ3XqnqnoA_sn92XaEoupC3hrc
+Message-ID: <CAFEAcA_gEawV6WuN-W2fZp2L9CdWT3F3MDhnV_y4QY2d-NG5fQ@mail.gmail.com>
+Subject: Re: [PATCH 01/10] target/arm: Implement FTMOPA (non-widening, FP32)
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,92 +114,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 27, 2026 at 05:28:07PM +0300, Doru Blânzeanu wrote:
-> Single-step by toggling RFLAGS.TF around the vCPU run, as WHPX does.
-> TF is set only on the live register, never in env->eflags, so it is not read
-> back and re-applied by a later register store.
-> The resulting #DB is reported to gdb by mshv_handle_debug() whenever the vCPU
-> is single-stepping.
-> 
-> Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+On Tue, 14 Jul 2026 at 00:04, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  target/i386/mshv/mshv-cpu.c | 50 +++++++++++++++++++++++++++++++++++++
->  1 file changed, 50 insertions(+)
-> 
-> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-> index 2333d3304a..036b142113 100644
-> --- a/target/i386/mshv/mshv-cpu.c
-> +++ b/target/i386/mshv/mshv-cpu.c
-> @@ -1974,17 +1974,67 @@ static int handle_debug(CPUState *cpu, hv_message *msg)
->      return 0;
->  }
->  
-> +/*
-> + * Flip RFLAGS.TF like WHPX. Set it only on the live register, not env->eflags,
-> + * so a later store won't put it back.
-> + */
-> +static int arch_set_single_step(CPUState *cpu, bool enable)
-> +{
-> +    X86CPU *x86cpu = X86_CPU(cpu);
-> +    CPUX86State *env = &x86cpu->env;
-> +    hv_register_assoc assoc = { .name = HV_X64_REGISTER_RFLAGS };
-> +    uint64_t rflags;
-> +    int ret;
-> +
-> +    if (env->regs_page && env->regs_page->isvalid != 0) {
-> +        rflags = env->regs_page->rflags;
-> +        rflags = enable ? (rflags | TF_MASK) : (rflags & ~TF_MASK);
-> +        env->regs_page->rflags = rflags;
-> +        env->regs_page->dirty |= (1u << HV_X64_REGISTER_CLASS_FLAGS);
-> +        return 0;
-> +    }
-> +
-> +    ret = mshv_get_generic_regs(cpu, &assoc, 1);
-> +    if (ret < 0) {
-> +        return ret;
-> +    }
-> +    rflags = assoc.value.reg64;
-> +    rflags = enable ? (rflags | TF_MASK) : (rflags & ~TF_MASK);
-> +    assoc.value.reg64 = rflags;
-> +    return mshv_set_generic_regs(cpu, &assoc, 1);
-> +}
-> +
->  int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
->  {
->      int ret;
->      enum MshvVmExit exit_reason;
->      int cpu_fd = mshv_vcpufd(cpu);
-> +    bool single_step;
-> +
-> +    /* enable single stepping by flipping RFLAGS.TF */
-> +    single_step = cpu_single_stepping(cpu);
-> +    if (single_step) {
-> +        ret = arch_set_single_step(cpu, true);
-> +        if (ret < 0) {
-> +            error_report("Failed to arm single-step (TF) on vcpu %d: %s",
-> +                         cpu->cpu_index, strerror(-ret));
-> +            *exit = MshvVmExitShutdown;
-> +            return -1;
-> +        }
-> +    }
->  
->      ret = ioctl(cpu_fd, MSHV_RUN_VP, msg);
->      if (ret < 0) {
->          return MshvVmExitShutdown;
->      }
->  
-> +    /* disable single stepping by flipping RFLAGS.TF */
-> +    if (single_step && arch_set_single_step(cpu, false) < 0) {
-> +        error_report("Failed to clear single-step (TF) on vcpu %d",
-> +                     cpu->cpu_index);
-> +        return -1;
-> +    }
-> +
->      switch (msg->header.message_type) {
->      case HVMSG_UNRECOVERABLE_EXCEPTION:
->          return MshvVmExitShutdown;
-> -- 
-> 2.53.0
+>  target/arm/cpu-features.h        |  5 ++++
+>  target/arm/tcg/helper-sme-defs.h |  2 ++
+>  target/arm/tcg/sme_helper.c      | 49 ++++++++++++++++++++++++++++++++
+>  target/arm/tcg/translate-sme.c   | 26 +++++++++++++++++
+>  target/arm/tcg/sme.decode        | 10 +++++++
+>  5 files changed, 92 insertions(+)
 
-Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+thanks
+-- PMM
 
