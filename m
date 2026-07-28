@@ -4,134 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA73CC54EFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 08:16:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA7CBC53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 08:16:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wocyW-0007dA-Ep; Tue, 28 Jul 2026 04:15:44 -0400
+	id 1woczF-00080d-0B; Tue, 28 Jul 2026 04:16:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wocyV-0007cr-04
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 04:15:43 -0400
+ id 1woczB-0007tO-U0
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 04:16:26 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wocyT-0006m0-7a
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 04:15:42 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ id 1wocz9-0006nx-Pw
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 04:16:25 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66S82DEv2480142
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 08:15:39 GMT
+ 66S82KF32317993
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 08:16:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- XQqiFG2aoLUrZJ36D/JnFNoNB9Yuz7WprZPbxXTXBZo=; b=ZpUV9bdRoPM0Drm3
- ZG48QF3AR1WEbUjdmTxKAQmumQImMlkTf+Vjto+SBAf2XcTCbuzM7yfWFdqB2as4
- cbLGUDb11yaqzeQKL9s6v4ZiRXJYGQJJ6WLJXk7ugy9CSZ/dCCJlTUDshBgEN/o6
- p432s9JN4TXKf7xkVx2h0KDaElW2PLfaJF/qbhBagdK0l0Eg+cC6XKnqqTFSO32/
- kmaw1DJnBLzu78u6bS/gI73MHSvo5nx+lD2fFph/lHPlyxGO/VpWFlPJWH6PfayK
- fqbeYJqpRW8RT8AHNidCNR/3La33HZlAz0fE2TikX+e7rguWZQoESwQNRN7y6Pi1
- 1btoig==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fpmy10x98-1
+ Gzk2lrzrqZX7SqvM/G2m3AldXsI5eEndZqc05GUO1lc=; b=J9oeDD1vEfuLnuhF
+ exMm6K/Fz5Bb4qaCAo9D0t9uclYrBTqOOIcZtyL2LEv1p1zKVTK1NCb0uXFdlCsQ
+ 7ifcrU1Z1l17gP0KyZy20Fg6j9p3opkoBSIZkbQuEennsqxBUs3+aaSeaOkeP4RK
+ kSStCU5nQrkj9rdRC7ugk+ejWxKeLAvUS9tLU5j87DVg4HRf2cmbXdGpA9Zkeg2b
+ Iokyv06Im8LDTUx3okOP3RMUMthvPiTG8BvwACsxiLER7+BF3JMkXQiH2FMMe6om
+ wSrSZSt4ZCsmA8YSdDabdy8XQPDkD9hwePC/3F+YwxRthgLT81n8fxVKYf/xs0YW
+ pZC3ag==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fpadkkr0y-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 08:15:39 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-930a098ea19so395469185a.1
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 01:15:39 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 08:16:20 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8f0f45415cfso44963916d6.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 01:16:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1785226538; x=1785831338; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1785226580; x=1785831380; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=XQqiFG2aoLUrZJ36D/JnFNoNB9Yuz7WprZPbxXTXBZo=;
- b=Hv6KmcR6QpN4UqfoIEYUbNa0S1Tu0fmXn5qKYCsO4TVIaXzjnBPPPyHbu24ituUyUO
- O3Dct8KvKChHcijrscXTXdUgsB/X0EJWZOBV74w1AAoo/392ZVq5flsYuiKaY7KTYxWW
- j8ZboMTybjlKkqLIZQFmQW/v7qC39fp5pWvjdAX1qdZkSxHwtV8DrcSV3Dgre0SUStGx
- Qm4o7E7lZFYHQlOqCjML45KCcN1XoRGLOXBZlsLRDUWKWHNCadq2YY21jbM/lN2HJuET
- /QrUbB5n5yUayCTRGn45GRWbpi0dYdcjNA6sQ3qog52CI4zkGX15VBFcO5KXHYDJ2lcq
- VIRA==
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Gzk2lrzrqZX7SqvM/G2m3AldXsI5eEndZqc05GUO1lc=;
+ b=UeA5hbMruoMqDPidrkweubO1h5/UiTRl+FR7Z4jvCKuP8YlJ/XRAijTFTXiMLEA1/h
+ yWHHeH3GrFftcf+4mF+7glYaQHDAz9UzY1zva1TRZk/I8SGcRdJmvQOeLO/iwH9t0wnT
+ cqjbEr2khbeIXLUpinCcdhKcZh49Seso1UTMkmAr2dtoa7H+x/F0F9EzytgHNdgmTAbp
+ 0iQDntNNphqx67zIPr89r6vUoU3Zylz+oo7H+Y6uH6KDGBLUUjLEII6CtPvTz0MKgkWS
+ 4zmGJ+E6/Wtik08ORhyiceHDXC+OtdAHj0tOKpNyzN/FeWAU+lyBGH3S/88nMeSsFgfv
+ D1FA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785226538; x=1785831338;
+ d=1e100.net; s=20251104; t=1785226580; x=1785831380;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=XQqiFG2aoLUrZJ36D/JnFNoNB9Yuz7WprZPbxXTXBZo=;
- b=UyjBzTKGLBHU4aq+WDB/HrlCMNKTrUhfU2WcturwYCj+Yf3cvDG1ZbUpaQpfFtC9cu
- 2Cuc9DxzxgxHCh34AcFgKeFX58D4r1H/rlJDV1TGEWHQ0HT8Xgsf8E0I23kUL+RknnvU
- jE0UHPqVevwQ7NJ9bSKfsdQPk3+ruhkafNmvm3kfH7yZVZ4B5JZQddSo1HpIzD74evF8
- N7wV9XNNtyUgs7lI/dA8E8HmFas8Rfht8hMva6Wt0r2UyzswxrqtlLglWA0IswjXgtRm
- 5fDOBQRTQJ6Jtu1/C5MyjEK4qz9OMf1vu8CdZ2tuP5/F8ZUmJIQ1sz6lCE+v37VRI1CW
- BHig==
-X-Gm-Message-State: AOJu0Yz9QeyZfJD2YynankUfUf7sBrqtqsI3DMfvnQUObLMhutmnpayf
- Ar3cAp572+bZNQt7fR+eI4uTfSF9Jtg/MejINRZeIy3gW+rOHHV6jMR5znU6N0nJSLmOuVk+cAb
- BEOuCcD0M5ONqLt/coyGULPMgfYsgorlK59zDD5ap94llEFmEC94ctfQ/qw==
-X-Gm-Gg: AR+sD13wg/C2QWeo07eHPWwmQUq29pLiMvkgMMC+r4QYyR8bFgZ4ea1d3U3UqLVByzv
- KKT11aUKaZmRSkifzAuxeMTn3OCB0BUREVxMxRulp7qYLWuP6zWHjHLqDechA8+Yd/L6zP9QSuR
- Acl1uuzGe7HARPbzSvJ317D9MimiEKti+tDZ8GXk+fHa0d0HWjylA5xa5JuHl3tBHlRzDbUSdO9
- mpReQntoU8yW/Qv1KUwXUKl1XBeie27Gk4+VDtmG86SlglfMXUXObmK1hUTxREMTFant00JDxT/
- cBx8Kxlf+gziXdFNUGlujpxWx8QUa7emfcKI3WB7occEL75wFHIM/YXE4V8gLzRqmeibDa4Nje+
- spnAtP9q+vaGOC4bdxz/FPUEYlIHrd7tBcD7D2XNR9tYBLUAnVmU=
-X-Received: by 2002:ac8:7fc2:0:b0:51b:fe7a:4eb8 with SMTP id
- d75a77b69052e-529d71524ecmr10713011cf.35.1785226538082; 
- Tue, 28 Jul 2026 01:15:38 -0700 (PDT)
-X-Received: by 2002:ac8:7fc2:0:b0:51b:fe7a:4eb8 with SMTP id
- d75a77b69052e-529d71524ecmr10712821cf.35.1785226537629; 
- Tue, 28 Jul 2026 01:15:37 -0700 (PDT)
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=Gzk2lrzrqZX7SqvM/G2m3AldXsI5eEndZqc05GUO1lc=;
+ b=ALUWhXD9lbUu8oiNFfRYiQUMoCu1Ur3y958a2xeLwA2tRfhcdNc+4SvcjP5kkdKYT9
+ spD6ochJvUG2SbLASABe6wJ+W6mbmn7uGaefp//DPVWXtsHpXaZt2E7puZLMFsPICbil
+ Kx+dvON685xPD3su2G66V95+rAE9gMALc7eQ91LOGBwoSgIfp90pVmdhjbFgPoiEx6kw
+ M0D88Buz1hz/Px4YgNoUKA7bGRsu/1ZIxMYLajU+762mXln77D6N0QPkr+2Q/DFLpncm
+ toYJqCEJa+NFf/sb5uoEvjMNF9ywoGnpJBI5WypbtsNfmod48tIXd8lId4EK2dvoQl+v
+ aFOA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoQywYyN1OEq6tj2arV72UYQzj9QSGqjgSr7eqpzk0Im04dKxwp20g8gvWELpUOExFnwIkQpuFmup+c@nongnu.org
+X-Gm-Message-State: AOJu0YwoxMICZbiBalCdcbNjJb9tvNNmOGazBKv7Ck4rDFdDiHlvr+4U
+ AIWIGwdez5HVv+DDQJj9/lHZQt2jp+BOIMhVifYmyvtowbAUaaVgzRqetzNO3JxIQN81qMg2Uci
+ bYOoojH+DnvqxIam4lNYnROPSIUFpTn1p50uZg2t7aJt0HSVxBEEivtHC9w==
+X-Gm-Gg: AR+sD10wv/3SnISlYqySdPMnn/HmwlRHjwAdR0BCJsx9o7YZ5GZ2XkroCXfSMCXPj1V
+ OHkJx2UpU4dfegX0KEBBtw9toGWdqQooBfPzZNtFHhpCthJCR98cMhqbRzqqT1Wo35h3rC5ca4N
+ R97/aldiBZaYwFmniSo0iFLhvOuL6mRVeT5N6uRTTIprIgleoFtxLAQTIXtbBy46BqvfPgnXzqt
+ zTRfHSsB/bsF+PD5lJfOB9lDsqTpaFdlUbNDhPb963T6wydxnLVv9/zS9hXor2/Cg8sEcxTa5do
+ 2ofLyCiBxUPjq9KO94jYoxwn81HPgXUrrE93/nByW7dgAwCUBGOgG+5pWO+RSRI6Hq+Z+6BsST5
+ KZMvJM6ufquVkBIj6Y8VylCyKuZVrxLzg/CJXqPDs4l88Br8tOPU=
+X-Received: by 2002:a05:622a:2a0f:b0:51c:439c:babb with SMTP id
+ d75a77b69052e-529d7102cc0mr9750461cf.47.1785226580043; 
+ Tue, 28 Jul 2026 01:16:20 -0700 (PDT)
+X-Received: by 2002:a05:622a:2a0f:b0:51c:439c:babb with SMTP id
+ d75a77b69052e-529d7102cc0mr9750311cf.47.1785226579626; 
+ Tue, 28 Jul 2026 01:16:19 -0700 (PDT)
 Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-496c462512dsm52770435e9.13.2026.07.28.01.15.36
+ 5b1f17b1804b1-4957e334f63sm233566595e9.1.2026.07.28.01.16.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Jul 2026 01:15:36 -0700 (PDT)
-Message-ID: <d4ed43db-6c6b-4269-b6da-38320d340cc6@oss.qualcomm.com>
-Date: Tue, 28 Jul 2026 10:15:36 +0200
+ Tue, 28 Jul 2026 01:16:18 -0700 (PDT)
+Message-ID: <877501e4-91c9-4272-a004-23b6ba9bf30e@oss.qualcomm.com>
+Date: Tue, 28 Jul 2026 10:16:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/sd/sdhci: Extract uSDHC-specific quirk
+Subject: Re: [PATCH v2] target/sparc: set reg window data structures currently
+ after vmstate load
 Content-Language: en-US
-To: Bernhard Beschow <shentey@gmail.com>, Bin Meng <bmeng.cn@gmail.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>, qemu-block@nongnu.org
-References: <20260719211923.1079282-1-shentey@gmail.com>
- <20260719211923.1079282-3-shentey@gmail.com>
- <CAEUhbmWhqc+_7MQA3Y9ZG9vwBjsbE4-w3tsx7Ep1CbBHze3Mcw@mail.gmail.com>
- <897E12B2-A6E5-4524-9983-FA861A7FDDD3@gmail.com>
- <CAEUhbmXT9ajeFMz8_1GsCWZJU-FmkYXTPZd-pfYQ2A45Qm7hFQ@mail.gmail.com>
- <D1B4AD96-B24C-4448-9B83-8D319997E768@gmail.com>
- <26ad904f-7f15-4ccb-a9c0-3c3bc279a283@oss.qualcomm.com>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, peter.maydell@linaro.org,
+ atar4qemu@gmail.com, qemu-stable@nongnu.org, qemu-devel@nongnu.org
+References: <20260725123411.993099-1-mark.cave-ayland@ilande.co.uk>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <26ad904f-7f15-4ccb-a9c0-3c3bc279a283@oss.qualcomm.com>
+In-Reply-To: <20260725123411.993099-1-mark.cave-ayland@ilande.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: bBgDIBBprOGGy4TcKQCxpiKuaK2KukQe
-X-Proofpoint-ORIG-GUID: bBgDIBBprOGGy4TcKQCxpiKuaK2KukQe
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDA2OSBTYWx0ZWRfX+2mPtE5isK3c
- JBbYGO03kDJHyauxIEoxijYPRSCBdpsFBo5LUBvJ4I8U/tDHCiKuEn60KdSEv+2u44yaekh4WXN
- wBB6YttoL/lMX2rwqmVpi542OZdapD2RqRMF4MdZIwMLSf/b9GLw6eKRW0a4YA3StbiWtC5h7ZC
- DhdrUQ+N+tFuEylcA7sEE7WpNCoHqX9Eb7zrhbxXRrvtjlqtuRd1nXMgvvvUEIN01HzlHquD79r
- w62J2DgfN0BHU5NLShkRJmcwFT+2kFJ5FoyoOy+vZsCtCdTvmI3j25mCfokHQvJKiMi3WY5J63w
- tuODVGfyfVLJjdnoDEopmA2/1TQeCVeIZ4Sk/Es3cXQ9GMxMt+oBtjht4tGCx9Mv8kqFtx+LoKw
- G965bSZvKjCmm5z4ppLm2TfOIEY25v4vl+D0kvJfuR8xef5cHOgWVv5IUMLiRhKtL6sWf1nH4A5
- sCap/LVf3ViehhHDibQ==
-X-Authority-Analysis: v=2.4 cv=PJo/P/qC c=1 sm=1 tr=0 ts=6a68652b cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: W2LHVGeVDXpiXAP-0gCQQ7_-tq3MoL95
+X-Proofpoint-GUID: W2LHVGeVDXpiXAP-0gCQQ7_-tq3MoL95
+X-Authority-Analysis: v=2.4 cv=Ns7htcdJ c=1 sm=1 tr=0 ts=6a686555 cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=pGLkceISAAAA:8 a=NUih9VNtcY7qAV_uwyIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDA2OSBTYWx0ZWRfX6lhx3IpvmRPT
- FlhIedb1KWvCXA0Ebp7Ix5eKnzJENoqszMNm5Sm/u9tJ/im7UeNY8YH3QF9j2FmXUWuzLdTxlGa
- CujZJEs+a4KeYwjAJ+QlRe6Htg5Zjoo=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=69wJf7TsAAAA:8 a=pcZqCyVeAAAA:8 a=TKYMeimfTSsNrNSE2JcA:9 a=QEXdDO2ut3YA:10
+ a=pJ04lnu7RYOZP9TFuWaZ:22 a=Fg1AiH1G6rFz08G2ETeA:22 a=SGy6VSG0Ue1xmPAwIFl9:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDA2OSBTYWx0ZWRfXwXvqjQoj6lBQ
+ kc6RiyhsHpteew9elruiQD0P9EunyeOC3c1ArX3H9aTp2lGt9ooAcdGPC1vW852Sqh3X6zuyJYn
+ lPyx8R9dlfcb9Xf56QUAdoiEYVhHnS5YWtFhiCceCwYTeQtfgiqpFugJi8vC98uJCZYwpEBENg2
+ 1IskfBLviPv+d7JRkNGbECigF0UaleVwpbCi06MJcBHYRsM/Mk8CDq6j2SCdFoFszWTv7sJCHdA
+ S4qqkehe0nOsLmeiu9ohhktPcs/NLu5kE32BQuX9LFZOADgofZ4puzP097ipESNPN//bstG0G2C
+ /ogBGyVxusZO9llU2iQKOd2wZkNJVnkVxJw9xzkWi0cTBCdBQJGZHhDJplnnudJLlmi3DVdAZcu
+ tzi2Mj74dq4gNqvIqAVqYeqX3oRyNlEmywWNlRZSt2M++tl3FzYbmiLfsSUkFUIOF+nLMXwnVai
+ MWTHc/NBSbNP1xd1YnA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDA2OSBTYWx0ZWRfX66++TCyIblKg
+ LRO4ftF4GzrRB77ixmtRxyrsUopBNNVq4GDFJ8PpY9W8FUn0bf/fjc4KEB4Bu+pvje2qhfTAc9c
+ vLP1CFLdnSOvvmP79aTU1o0gQjcWgDI=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-28_02,2026-07-27_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015
- priorityscore=1501 malwarescore=0 adultscore=0 suspectscore=0 impostorscore=0
+ suspectscore=0 malwarescore=0 impostorscore=0 phishscore=0 spamscore=0
+ clxscore=1015 adultscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607280069
 Received-SPF: pass client-ip=205.220.168.131;
@@ -142,7 +138,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,100 +154,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Bin,
+On 25/7/26 14:33, Mark Cave-Ayland wrote:
+> In the SPARC CPU state, env->regwptr points into the env->regbase
+> array at wherever the architectural CWP (current window pointer) says
+> we are in the register windows.  We don't migrate this directly,
+> since it's a host pointer, so we must ensure it is set up again
+> after migration load.
+> 
+> We also have to deal with a special case when CWP is (nwindows - 1).
+> In this case, while running we keep the "in" register data for this
+> window in a temporary location at the end of the regbase[] array, so
+> that generated code doesn't have to special case this "wrap around"
+> case.  In cpu_pre_save() we call cpu_set_cwp() to force a copy of the
+> wrapped data from its temporary location into the architectural
+> location in window 0's "out" registers.  We then migrate only
+> (nwindows * 16) entries in the regbase[] array.  So on the
+> destination we need to copy the "in" register data back to its
+> temporary location again.
+> 
+> For 32-bit SPARC we get this right, because the CWP is in the PSR.
+> The get_psr() function does:
+>       env->cwp = 0;
+>       cpu_put_psr_raw(env, val);
+> which causes cpu_put_psr_raw() to call cpu_set_cwp() in a way that
+> sets up both regwptr and the wrapped-register data.
+> 
+> However, for 64-bit SPARC the CWP is not in the PSR, and
+> cpu_put_psr_raw() will not call cpu_set_cwp().  This leaves the guest
+> register state in a corrupted state, and the guest will likely crash
+> on the destination if it didn't happen to be executing with CWP == 0.
+> 
+> Fix this by adding a custom vmstate_cwp VMStateInfo with corresponding
+> get_cwp() and put_cwp() helpers which does the same for the 64-bit
+> case.
+> 
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> ---
+>   target/sparc/machine.c | 40 +++++++++++++++++++++++++++++++++++++++-
+>   1 file changed, 39 insertions(+), 1 deletion(-)
 
-On 21/7/26 12:42, Philippe Mathieu-DaudÃ© wrote:
-> On 21/7/26 12:29, Bernhard Beschow wrote:
->>
->>
->> Am 21. Juli 2026 08:38:19 UTC schrieb Bin Meng <bmeng.cn@gmail.com>:
->>> Hi Bernhard,
->>>
->>> On Tue, Jul 21, 2026 at 5:11 AM Bernhard Beschow <shentey@gmail.com> 
->>> wrote:
->>>>
->>>>
->>>>
->>>> Am 20. Juli 2026 14:50:24 UTC schrieb Bin Meng <bmeng.cn@gmail.com>:
->>>>
->>>> Hi Bin,
->>>>
->>>> Thanks for yor reviews and R-b tags!
->>>>
->>>>> On Mon, Jul 20, 2026 at 5:19 AM Bernhard Beschow 
->>>>> <shentey@gmail.com> wrote:
->>>>>>
->>>>>> In Linux, the ESDHC_MIX_CTRL qirk is guarded by esdhc_is_usdhc() 
->>>>>> while
->>>>>> the eSDHC code path uses the standard SDHC interface. Extract the 
->>>>>> quirk
->>>>>> into a new `usdhc_write()` function.
->>>>>>
->>>>>> Fixes file system corruption on emulated i.MX53 where Linux'
->>>>>> esdhc_is_usdhc() returns false. The same likely happens on e500 and
->>>>>> imx25-pdk machines.
->>>>>>
->>>>>> Fixes: 75e98bc4f859 ("hw/sd/sdhci: Add TYPE_FSL_ESDHC_BE")
->>>>>> cc: qemu-stable
->>>>>> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
->>>>>> ---
->>>>>>   hw/sd/sdhci.c | 73 ++++++++++++++++++++++++++++++ 
->>>>>> +--------------------
->>>>>>   1 file changed, 44 insertions(+), 29 deletions(-)
->>>>>>
->>>>>> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
->>>>>> index c86dfa281f..e58a610397 100644
->>>>>> --- a/hw/sd/sdhci.c
->>>>>> +++ b/hw/sd/sdhci.c
->>>>>> @@ -1795,34 +1795,6 @@ esdhc_write(void *opaque, hwaddr offset, 
->>>>>> uint64_t val, unsigned size)
->>>>>>           sdhci_write(opaque, offset, value, size);
->>>>>>           break;
->>>>>>
->>>>>> -    case ESDHC_MIX_CTRL:
->>>>>> -        /*
->>>>>> -         * So, when SD/MMC stack in Linux tries to write to 
->>>>>> "Transfer
->>>>>> -         * Mode Register", ESDHC i.MX quirk code will translate it
->>>>>> -         * into a write to ESDHC_MIX_CTRL, so we do the opposite in
->>>>>> -         * order to get where we started
->>>>>> -         *
->>>>>> -         * Note that Auto CMD23 Enable bit is located in a wrong 
->>>>>> place
->>>>>> -         * on i.MX, but since it is not used by QEMU we do not care.
->>>>>> -         *
->>>>>> -         * We don't want to call sdhci_write(.., SDHC_TRNMOD, ...)
->>>>>> -         * here because it will result in a call to
->>>>>> -         * sdhci_send_command(s) which we don't want.
->>>>>> -         *
->>>>>> -         */
->>>>>> -        s->trnmod = value & UINT16_MAX;
->>>>>> -        break;
->>>>>> -    case SDHC_TRNMOD:
->>>>>
->>>>> Looks like this register is not eSDHC specific?
->>>>
->>>> Not quite sure what you mean exactly. The SDHC_TRNMOD isn't eSDHC 
->>>> specific but as per the comment above trnmod partial handling is 
->>>> deferred here, i.e. needs to be intercepted.
->>>
->>> If I read the Linux driver correctly, I think we should do something
->>> like below when writing to SDHC_TRNMOD:
->>>
->>>   case SDHC_TRNMOD:
->>>       if (is_usdhc) {
->>>           val |= s->trnmod;
->>>       }
->>>       sdhci_write(opaque, offset, val, size);
->>>       break;
->>>
->>> Because for eSDHC, the transfer mode is already passed in the value,
->>> and oring previous s->trnmod may cause some bits being set to old
->>> previous value unexpectedly. Please double check.
->>
->> By moving out of esdhc_write() into a dedicated usdhc_write() method 
->> we achieve exactly that, no?
-
-What is your final tought, should we proceed with v2?
-
+Queued via hw-misc, thanks!
 
