@@ -4,109 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 343E4C54F55
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B12DFC53219
 	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 19:29:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wonS5-0003BO-FU; Tue, 28 Jul 2026 15:26:57 -0400
+	id 1wonS6-0003C9-2P; Tue, 28 Jul 2026 15:26:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wonS3-00039n-S9; Tue, 28 Jul 2026 15:26:55 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wonS4-00039w-0C; Tue, 28 Jul 2026 15:26:56 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wonS1-0001Rp-4a; Tue, 28 Jul 2026 15:26:55 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1wonS1-0001Rn-4r; Tue, 28 Jul 2026 15:26:55 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66SIHg0G1847795; Tue, 28 Jul 2026 19:26:51 GMT
+ 66SIHs2O1959789; Tue, 28 Jul 2026 19:26:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=tcocHMKGOitFbIO0A
- iuKvq9Jkdg0WyqmIl2Fj2ZS+Hk=; b=sMIcCpzqtaijlpQH4UrlAzzv51C1P3WR3
- eUWnh8tGqFotnk9J2WiMJdiBF7C5W59nX2fhnUu2OlvnSo5viGmUOxWlmYlAME5h
- k29FPCH1QfkmqiB4KFsmrXJElL4gUqwugZ8SCwHfW6+ooiqHRAr4RqQge2POCt2P
- M9+Y2wdxPI/dl3McQjsXB7wckbCDDmfLarR1C4rpm3pvnXUML3rma7suH8XbyOVI
- 8bJVfiUpQRgdcCIZZy/RfPFYriZ20gvKOyzOYHdMAyz+ddnvQjliqx+E491C7o5i
- NpLEXRQQeU1XxDrdRVhlm9ZvZ+i+KH4J7kMM7DWjVpSs855lqD+bA==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuyj6jre-1
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=DFJYd9d93LuhuxNg6wCeAyzoEpGRkaGl0ff5KsSqT
+ 5E=; b=pqwm9u23jyQQQE0dSzVdth8mVfbBFiKcJzNc1VfFygJ3/c11Pb6hV6fIk
+ 4rAV/v1+/U4N+C5kMKbRcZIIRWnCMYqQNQs/YF9n1aCyKVb2N13TN1iu420XwBe3
+ V2ciXC/TbVjSTJT8ORhjGKcWUaBdKaz8Ve2oHAMr+u0sh2z3PvBcXzJ/xFZ2YuHX
+ lt3AhYbMggIzqh5+6pouZV2LHQYi6N5UQ61o73P7NIQlQRzpigJLqIBi2COBN9Bw
+ NPkzVzNHOwFSCysfAhqWo/NF5wW4nplnCD6Fydkcm52ZTyOvp9ehscTwYDDeWGmI
+ dbPZa1j5HTN8YBNR4zfypscpnf2nw==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0xq7tf-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Tue, 28 Jul 2026 19:26:51 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66SJQHt5003853;
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66SJQIYV030727;
  Tue, 28 Jul 2026 19:26:50 GMT
 Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fn9pgbct8-1
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fn7fqbrxp-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Tue, 28 Jul 2026 19:26:50 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
  by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66SJQklU30867812
+ 66SJQkLU29098280
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Tue, 28 Jul 2026 19:26:46 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 910F42005A;
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9242020043;
  Tue, 28 Jul 2026 19:26:46 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7BFAC2004D;
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7FA2F20040;
  Tue, 28 Jul 2026 19:26:46 +0000 (GMT)
 Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
  Tue, 28 Jul 2026 19:26:46 +0000 (GMT)
 Received: by tuxmaker.boeblingen.de.ibm.com (Postfix, from userid 4958)
- id 2D855162820; Tue, 28 Jul 2026 21:26:46 +0200 (CEST)
+ id 2B600162592; Tue, 28 Jul 2026 21:26:46 +0200 (CEST)
 From: Eric Farman <farman@linux.ibm.com>
 To: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
 Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
  Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>
-Subject: [PATCH v2 1/1] iotests/108: skip test if cannot access /dev/fuse
-Date: Tue, 28 Jul 2026 21:26:44 +0200
-Message-ID: <20260728192644.2879028-2-farman@linux.ibm.com>
+Subject: [PATCH v2 0/1] qemu-iotests: One more fuse fix
+Date: Tue, 28 Jul 2026 21:26:43 +0200
+Message-ID: <20260728192644.2879028-1-farman@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260728192644.2879028-1-farman@linux.ibm.com>
-References: <20260728192644.2879028-1-farman@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDE2NiBTYWx0ZWRfXx2y85RytcmKD
- bU5ngO7BCnvbwZHU7aGJ20FzCwphRn+GlOaf4GEzZhDOde9EMPUUAZkd7HUpw10cx+J9RVeOoND
- obZMa7MDHjng1W9ewjqPYuiJ8t6ARyI=
-X-Proofpoint-GUID: b1ytC65bCRHm4ZIq3UmF7S5anIqxjR-3
-X-Proofpoint-ORIG-GUID: b1ytC65bCRHm4ZIq3UmF7S5anIqxjR-3
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDE2NiBTYWx0ZWRfX90YQuZ1XYHH+
- jsejzUBmwALkuw9EWvLiOphfRB3FoSaLESQf4Jh+A/RPeuYeCHNI/8gDNw/BDHABoXP6A34ztYk
- /vJHKgD2J7vcT2D4ssDrDdJcWVepTgaf4K/8hO7LyfKu07jzdOUzUtxJjtV5VOwYbnn2e8OJSrY
- c6AXSmVESHTvYJF3x3ocJTi7JWitqdc7bvIJ21HabscCHbnqZYZj7xJ26DtzomTzc/MSekhuEw/
- pctA4jKvZcEJ2qfqiZOIYY3cPNOiQ33iszICUXs2QHh42flvXOgwlI0txVPAA8hn+u88udCjvPA
- jThpdEHtW49te67c+0ISAOXOaJviPdMajqG1uj8sNwLXiqGHf3d0Ivu8w4EHzJ4EY3pob0dT3X6
- /gLdgpq2liPRn00x3dYPylFeaZN38V0cn+YTRP4BN59kukybRKDZJRPbifu8yB5npIwhIys5x1q
- hTZGrAchHzUpuiFue9w==
-X-Authority-Analysis: v=2.4 cv=X5Vi7mTe c=1 sm=1 tr=0 ts=6a69027b cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Proofpoint-GUID: OX0wv9rSLNS_RbQcjz7X8dwY9QPMZWxl
+X-Proofpoint-ORIG-GUID: OX0wv9rSLNS_RbQcjz7X8dwY9QPMZWxl
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDE2NiBTYWx0ZWRfX+fr9WAvfNgzU
+ TDwiJ1MvEgE7DgcwMV3Z3kaSZR1WSXQDur94pBwLpgy6TXiUL/QNxS2fvkUZ0Blv5XGCxl3Rs9G
+ yKEGvtiqLjq3OAjbpbZb40eYIAOafKY=
+X-Authority-Analysis: v=2.4 cv=dYuwG3Xe c=1 sm=1 tr=0 ts=6a69027b cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=6rqHouBjAAAA:8 a=VnNF1IyMAAAA:8
- a=1E8FyHytxJbjzsJNRtcA:9 a=Hx1yvPaMooE3kwe23bt7:22
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=6rqHouBjAAAA:8
+ a=auybPDAIUdcjEHudMXUA:9 a=zZCYzV9kfG8A:10 a=Hx1yvPaMooE3kwe23bt7:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDE2NiBTYWx0ZWRfX608/zIHpEtoh
+ 6jUNIyfQTeue3ExzDhK02WSGhaAIcXaPfY4NZpakOkvvat+FjJp9XbpnboxmxMX5rToKEmP0OKK
+ yLHXQe6yGUACvXMYMeOTcWzcdl2nBjHGSytPxjFpAB0OiyDbbeVnG0b+KDgHPMXqj+YMQY1Ik78
+ X5JM58Rlvh1ibbGsc4lsXluJfFx1ujS2HR47grgQImZia1GHMQY5Jg3c+rfsMAFJfTrrIbuEXEc
+ mYJ0/18EGj7xtyCxb2hJuYe+i846lN66iE+sju3oHOmsQYKuU8x20a9xfW8KhAUz8Y0cgKaJepP
+ SGXgl1xGAfWphiAnYg2w8yXZ72QtEnKRC0P5jzawdN9/vnrlmK/lxMJ8cXo5bTscCZrBT1jJ0Uy
+ q/iEYyMKrAjfsdSTy9LIgo3tMDKJ/S62da0d/tDN5LgsEIJ0wznOyJSGjYEQ+sOztA43I/O7e9K
+ 4k9T5e4W6/x/v4U5vfw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-28_05,2026-07-28_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 lowpriorityscore=0 phishscore=0
- priorityscore=1501 malwarescore=0 spamscore=0 suspectscore=0 bulkscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607280166
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ priorityscore=1501 impostorscore=0 clxscore=1015 phishscore=0 malwarescore=0
+ spamscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607280166
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,54 +120,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This test might fail if the user is not root (or sudo'd):
+Hi,
 
-  fusermount3: failed to open .../scratch/qcow2-file-108/fuse-export: Permission denied
+After learning about Denis' series of fuse fixes, there's still
+one test that doesn't run on my system. The attached is a fix that
+builds upon their changes to fix test 108 as well.
 
-A check exists to try to cover for this, but there are
-two potential error messages that signal this case
-(per the comment block associated with the check) and
-only a skip for one of them.
+v1: https://lore.kernel.org/r/20260725125651.3896151-1-farman@linux.ibm.com/
+v1->v2:
+ - [KW] Rebase on https://lore.kernel.org/r/20260715103451.1930909-1-den@openvz.org/
+   and drop two of the (now superfluous) patches
 
-Update the common fuse check to include this message,
-and update test 108 to utilize it.
+Eric Farman (1):
+  iotests/108: skip test if cannot access /dev/fuse
 
-Fixes: 9ffd6d646d ("iotests/108: Test new refcount rebuild algorithm")
-Based-on: <20260715103451.1930909-1-den@openvz.org>
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
----
  tests/qemu-iotests/108       | 5 +----
  tests/qemu-iotests/common.rc | 1 +
  2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qemu-iotests/108 b/tests/qemu-iotests/108
-index bf808b3512..5d91e58943 100755
---- a/tests/qemu-iotests/108
-+++ b/tests/qemu-iotests/108
-@@ -69,10 +69,7 @@ else
-     # or "Invalid parameter 'fuse'", depending on whether there is
-     # FUSE support or not.
-     error=$($QSD --export fuse 2>&1)
--    if [[ $error = *"'fuse'"* ]]; then
--        _notrun 'Passwordless sudo for losetup or FUSE support required, but' \
--                'neither is available'
--    fi
-+    _notrun_on_fuse_error "$error"
- fi
- 
- echo
-diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
-index bcb1ec50a9..844c19d15a 100644
---- a/tests/qemu-iotests/common.rc
-+++ b/tests/qemu-iotests/common.rc
-@@ -986,6 +986,7 @@ _require_drivers()
- _notrun_on_fuse_error()
- {
-     case "$1" in
-+        *"Parameter 'id' is missing"* | \
-         *"Parameter 'type' does not accept value 'fuse'"*)
-             _notrun "No FUSE support"
-             ;;
 -- 
 2.53.0
 
