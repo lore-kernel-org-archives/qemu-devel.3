@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B5F6C54F54
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 12:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAA1BC53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 12:33:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wogyS-0005UW-Mn; Tue, 28 Jul 2026 08:32:02 -0400
+	id 1wogyH-0005Ra-1V; Tue, 28 Jul 2026 08:31:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wogyJ-0005TA-EB
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 08:31:48 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1wogyC-0005O5-CU
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 08:31:40 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wogyH-00037b-D6
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 08:31:47 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-47640541585so2451012f8f.1
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 05:31:45 -0700 (PDT)
+ id 1wogyA-00033G-GB
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 08:31:39 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-47640541585so2450947f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 05:31:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785241904; x=1785846704; darn=nongnu.org;
+ d=linaro.org; s=google; t=1785241896; x=1785846696; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=HaIHRX8D6+O/vM0awli5v5WdN5nd4X+pGymcCAc0deI=;
- b=sE/4RCQV6V0gzc+OUiJFGsxmhr7HTfHCEFQ7OTeirvOdpO52NzweUe962QQKDNMA8s
- qriHKuszWxUQu0gZOH0y6juiwdJ64+qGY6h8YyZKS06P4JxcK5JjGnK1PqNhu8EyzFbL
- h+vNQbhzxNFAz27bDSSS6RbA/5c5BsxCDUOtCB9zyq24ueVzG9UP96evtDW7WEb9UgK+
- 4NKF3PicUYyXrbCG0Og88OvpPMDDJsCZjQRlp0UCKhUWPj9t7SCsM7KTLfJkAyfJ/Fqu
- lxUaTGB3lcybCy1SokxtNa0/0scz47DdGwWuynJW50mogbhTGwvGMHl+8FEifdQVs5in
- YUpw==
+ bh=lKVj3gACkbHKcSCHyOf7jiUGxcjNCDEqa/wnEa9T7ro=;
+ b=yhXEBXbJEfdBrC9GKyoPFMn31YCqJZcmTxklEEg9jVUMFYxy6dttjwNGi6NTcE6w0t
+ 0hCLihAE+yumaxpac1Tx3XCxy13/J/9aK8Ypeij6TgzMu5NWC8N7Maz35AfoHGi8M57L
+ mGYXPVpRxHaofruvlZJ1uULUP9ZgDfA2izg45lh9iY5nATBGlKEEC3e+NPzTxUWjhV6l
+ JQ8nz1A9Jow6q8KpSgcemX+L6bikuLqGN9LzI1zjlkbQygVbfgz+svCJ+k7/XNaxmqO8
+ SIKADtsTx4iiEHV37JjtECYhdeyfVynUif5VQRKaUlkgL8mxblvkCqHKVUKa6J8Ft/AB
+ JqcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785241904; x=1785846704;
+ d=1e100.net; s=20251104; t=1785241896; x=1785846696;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=HaIHRX8D6+O/vM0awli5v5WdN5nd4X+pGymcCAc0deI=;
- b=mLSpf/hRCZFS3cVLlmgfkiy9bBbRdDW0hYJb6v9c9MWk9FKcDEGH+Yvkc1iBx6AxR+
- zrO4Y4i8mZ1IXUOsa3qDbFg7XIVvCaQawED2EKjXB0QKGEGbknp++HP0E8biOX8BoGoL
- adzirYP8ucGH8JY2T7dLmqoERnl1MGotwM91llJk/vKt5ZjGt0LNoaGjft66+Q4QHj65
- zh/bWiK+qtWjhGPmYZP6N1As8BavkC1Orjqn/+7XU8itrfd+qiIBjeJNQafRnQIObWuU
- wlrt6K341B94Uplp5BCEC4ZJdAQ8mzoPeC1kLRUXbIo3mmMeSD4EQd708donF/WkD4uH
- XNmg==
-X-Gm-Message-State: AOJu0YxL3GMLlSoPlBsGkXQjsozMgi+7EL7SZCbphn5oWBNu7aX+Frmc
- QWo3w9NzCg7g2vi5Wx+JgL88ZhJKGhrJ/IQ1QlxubvUHz5Z9wmhF/PCGIVpWi5q0V3Pqk58AHYe
- zde7K
-X-Gm-Gg: AR+sD11ecD4Eoo3cJ4p+XG3oemQMuCnAZTUmxVV2fDBLfMYsolbfjTvYLvaZlKdYfnb
- gx/0QZvEXQYyZPkeSQECXNCq4eKvNl1rlVuaBhDg1nsbYIzqmh/hRwSyj/3HHh1e3Y+NTrFtw/j
- +rU5fNeTStg9IYwFZK9NSv9tbemFI1KSwKG4XbHvQafT9FI5je4GOPXlCBcX8dl7pUyrpQw/WQ5
- 2zyTy7T94Ct/wanpkx6wqo0cbfJHwUO1W6fSGHQDBQKKYRchF8Jk6F+2VJBRcDNLZirfNAgyV2+
- Lf5LPvR+ZcVa9KedKgCSI0tpIOI7/hvVkg5/YENZtTWiz1JD4l01arPS+af8nSfF7K/DPzgQwgq
- kdWxvLvRFZC28Vzo3/QQZx8IvOtdm3iGVoXTK3hFw4cA+CiwNtCVsaFwxDGaGdds4HuDT7gGtbu
- nDTQcfRasUV73TLRzMznYJ8j0vUoqtjyeHanB1oKgviDsJBFFTtkh7mzz626kBEEvKAYyZ4y0r6
- dP4Om57EaA=
-X-Received: by 2002:a5d:5d81:0:b0:47f:854b:5c68 with SMTP id
- ffacd0b85a97d-47fb1f28197mr2540682f8f.55.1785241903864; 
- Tue, 28 Jul 2026 05:31:43 -0700 (PDT)
+ bh=lKVj3gACkbHKcSCHyOf7jiUGxcjNCDEqa/wnEa9T7ro=;
+ b=o53DxTmoVftHAdFY3do5cPVzmwfPaV9aOdx6RmY272R8hfUbcrrFycxOnArOsU5U+a
+ yEXYyCGgOWaLlBcGvoKsVIwPrsgrUiHx/Q+9tePI5QlknKDejxM2kGIw11ECOAW4qvBn
+ 4thqKbvGAqluwlDaN1n4z6JslqMf1oi7wDRC6PSIJIgIRkTYX/UOmsFOOsM6IPlug3ho
+ jwaE48vRX6hiHqOeR/kO6ANIPi2jFcuF/cIbfH8RfU/EaWEyhSOkjkza2oCfBQgnUWJC
+ 2FBvU6zfMzOF1YTX2k5G8hbI7hHetuAPZokG47UjppDE1EIPg/UTxF0+N58/aQL7r879
+ Nm9A==
+X-Gm-Message-State: AOJu0YxAS+nMn40iZYpI8gJNfmXrQNPOV0jpkCWqwZ2m5DoHlSRcgTd+
+ 63b6vejdEibfh8l6VXLdu7E3oQGR5Dow+jJ8lQ952qdg8P/JtRpezixVRu6gk8Dw07kgZmvh+kL
+ u51+2
+X-Gm-Gg: AR+sD11MikV93WUFYUZPXhYQMzc/RHmkq+eU1zTw3HRT3e7jAVPZ5aE40f/7XJ4b1Nn
+ D+BCyBhb7O8hKOqOsjKdoJURziDEUaDfhylpyPbtBk0/rw+Z6DntgMBijlOzNzVCS1/tQQv7Smu
+ MuDzt74iLS2BGU0uWEIC9aRNL9V/QKyfSAxIXyT1iz1rYZlXBntIxAiLXij19/xea6sEAazISpn
+ llLIl9dgef31t+19i7imA4ePjMc5p/gS+oCKCmXYNPV2N7nsO6VRODChoFeQ3ga6XenQgc2I/YC
+ 43Q8mOLNCYrZ5IHahulCoxbeMzU3JgiIwD4HDPAjP/TYFhcgA6uPKbyGVRy5KWJo9eYs8MtC5Jv
+ 0GPw2iuPJv/9ZXjrId7sw4YbGP//PCMh5KPadT0VnbQNs/2g2bZmZ+oMiIM/8sDo44zl5PIdB+/
+ LACATPKhD799gJaMCj0Ebk/2sgz1RPd0nuk7afQlJEl2uaruTVNt+ndYGrd1KOIwDm3ZvRo4DhG
+ Q41f6HV4iE=
+X-Received: by 2002:a05:6000:290f:b0:46e:37a6:c762 with SMTP id
+ ffacd0b85a97d-47fb1f10955mr2533978f8f.32.1785241896472; 
+ Tue, 28 Jul 2026 05:31:36 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c6f076sm58499039f8f.34.2026.07.28.05.31.43
+ ffacd0b85a97d-47f85c6f076sm58499039f8f.34.2026.07.28.05.31.35
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jul 2026 05:31:43 -0700 (PDT)
+ Tue, 28 Jul 2026 05:31:35 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 14/20] docs/system/arm: Update Nuvoton OpenBMC image guidance
-Date: Tue, 28 Jul 2026 13:31:21 +0100
-Message-ID: <20260728123127.1711653-15-peter.maydell@linaro.org>
+Subject: [PULL 07/20] hw/net/can/flexcan: Fix out-of-bounds access in
+ flexcan_mx_rx()
+Date: Tue, 28 Jul 2026 13:31:14 +0100
+Message-ID: <20260728123127.1711653-8-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260728123127.1711653-1-peter.maydell@linaro.org>
 References: <20260728123127.1711653-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,91 +102,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Meng <bin.meng@processmission.com>
+From: Bernhard Beschow <shentey@gmail.com>
 
-Describe the current OpenBMC target naming and release status for
-Nuvoton machines. The latest 2.18.0 release no longer includes GSJ,
-so point users at older 2.14.0 sources and explain how to find
-Jenkins MTD artifacts.
+Require `last_not_free_to_receive_mbid >= 0` before indexing `mbs[]`.
+This prevents a possible `-1` array index and fixes Coverity CID
+1662790.
 
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Message-id: 20260627063208.33642-1-bin.meng@processmission.com
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260723070059.6332-4-shentey@gmail.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- docs/system/arm/nuvoton.rst | 54 +++++++++++++++++++++++++++++++++----
- 1 file changed, 49 insertions(+), 5 deletions(-)
+ hw/net/can/flexcan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/docs/system/arm/nuvoton.rst b/docs/system/arm/nuvoton.rst
-index e4827fb43a1..51d36b2bc0b 100644
---- a/docs/system/arm/nuvoton.rst
-+++ b/docs/system/arm/nuvoton.rst
-@@ -94,16 +94,60 @@ Boot options
- ------------
+diff --git a/hw/net/can/flexcan.c b/hw/net/can/flexcan.c
+index 3a97edf7a4d..dd92a383373 100644
+--- a/hw/net/can/flexcan.c
++++ b/hw/net/can/flexcan.c
+@@ -1075,7 +1075,7 @@ static enum FlexcanRx flexcan_mb_rx(FlexcanState *s, const qemu_can_frame *buf)
+         }
+     }
  
- The Nuvoton machines can boot from an OpenBMC firmware image, or directly into
--a kernel using the ``-kernel`` option. OpenBMC images for ``quanta-gsj`` and
--possibly others can be downloaded from the OpenBMC jenkins :
-+a kernel using the ``-kernel`` option. OpenBMC machine names do not always
-+match QEMU machine names. Check the OpenBMC supported-machine list and Jenkins
-+for currently available source and pre-built images.
-+
-+Known OpenBMC (v2.18.0) target names for QEMU Nuvoton machines per:
-+
-+   https://github.com/openbmc/openbmc/blob/2.18.0/meta-phosphor/docs/supported-machines.md
-+
-+.. list-table::
-+   :header-rows: 1
-+
-+   * - QEMU machine
-+     - OpenBMC machine
-+   * - ``npcm750-evb``
-+     - ``evb-npcm750``
-+   * - ``npcm845-evb``
-+     - ``evb-npcm845``
-+   * - ``quanta-gbs-bmc``
-+     - ``gbs``
-+   * - ``kudo-bmc``
-+     - ``kudo``
-+   * - ``mori-bmc``
-+     - ``mori``
-+
-+As of June 2026, the latest OpenBMC release, ``2.18.0``, no longer lists a
-+``gsj`` machine. To build an image for QEMU's ``quanta-gsj`` machine, use an
-+older OpenBMC release that still contains ``meta-quanta/meta-gsj``. The
-+``2.14.0`` release contains the ``gsj`` machine:
-+
-+   https://github.com/openbmc/openbmc/tree/2.14.0/meta-quanta/meta-gsj
-+
-+Some pre-built OpenBMC images for QEMU Nuvoton machines may be available on
-+Jenkins:
- 
-    https://jenkins.openbmc.org/
- 
--The firmware image should be attached as an MTD drive. Example :
-+To find a pre-built MTD image on Jenkins, start from the Jenkins home page and
-+open the ``latest-master`` job. Select the matrix configuration whose
-+``target`` matches the OpenBMC machine name, for example
-+``label=docker-builder,target=gbs``, then open its latest successful build's
-+artifacts. The MTD image is usually published under
-+``openbmc/build/tmp/deploy/images/<machine>/`` as
-+``obmc-phosphor-image-<machine>-<timestamp>.static.mtd``. If Jenkins does not
-+list a matching target, or the build artifacts do not include an MTD image,
-+there is no current pre-built MTD image for that machine.
-+
-+The firmware image should be attached as an MTD drive. Example:
- 
- .. code-block:: bash
- 
--  $ qemu-system-arm -machine quanta-gsj -nographic \
--      -drive file=image-bmc,if=mtd,bus=0,unit=0,format=raw
-+  $ qemu-system-arm -machine quanta-gbs-bmc -nographic \
-+      -drive file=obmc-phosphor-image-gbs-xxxxxx.static.mtd,if=mtd,bus=0,unit=0,format=raw
- 
- The default root password for test images is usually ``0penBmc``.
-+
-+For other machines that don't have pre-built images on Jenkins, build an image
-+from source by following the OpenBMC build documentation.
+-    if (last_not_free_to_receive_mbid >= -1) {
++    if (last_not_free_to_receive_mbid >= 0) {
+         if (last_not_free_to_receive_locked) {
+             /*
+              * copy to temporary mailbox (SMB)
 -- 
 2.43.0
 
