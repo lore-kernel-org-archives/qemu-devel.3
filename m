@@ -4,99 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40512C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 17:35:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCB1EC54F4D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 17:37:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wolhZ-0005pF-Jx; Tue, 28 Jul 2026 13:34:49 -0400
+	id 1woljm-0006tz-2e; Tue, 28 Jul 2026 13:37:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wolhU-0005op-Uq; Tue, 28 Jul 2026 13:34:45 -0400
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1woljk-0006tb-C6; Tue, 28 Jul 2026 13:37:04 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wolhS-0005LE-GD; Tue, 28 Jul 2026 13:34:44 -0400
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wolji-0005pU-KX; Tue, 28 Jul 2026 13:37:04 -0400
 Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66SEm1gw1491778; Tue, 28 Jul 2026 17:34:36 GMT
+ 66SEmF0N1492045; Tue, 28 Jul 2026 17:37:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=gZzk5O
- sTZOG5DO4PMsyX6y90QYNJ5JoV/d23y7TNpqw=; b=nizid2kBjQYTZ8LyK24bJI
- AvY8DBpAYhmBNIZM+juzQQGfbFUCbnLdGwwilfy9Db8eD+1reRAyVtf/UNN8mwI1
- pdmZ9sqy/2DzRSVPeOGqDEutI8iiVRoEa0v8eABPkhH44TFAc4BgK/9THIQUsAbc
- 8GGnIx/9+ceEdQqUkmjfpRsh96eAaVGPenPf3R2gdF833weD1BbKcJpNsgoBRT2s
- ISYhTayY+7qQGbtRrGFPuAksuhBgOVVEiph+lMIqt6G1Cwwj5T6gIpHYlJMRoTCS
- tUtJ5VzudFFvg8c0L6IR/cOLDY9nwAB45485Yu1G/bPrL2S5dme3UTBjHG2pIVBQ
+ :message-id:mime-version:references:subject:to; s=pp1; bh=eyQLeH
+ gTiHFyHH4jL84GuWDbgV4hY/iVR2pvr4kVFHg=; b=PtuDnJK6Blfh7HJZCqTr6a
+ dkZc64jRztNvBVuXxdxjAGPrGXjicC8cRbmmUVoWygrVdHIVm59dTvnKbQJCLSNh
+ I90GMN7ojTjngPGarPZlyCw5x4oaNkFbqhevcWU8BaELFjZL9+sPAUgIg0pogLic
+ Uc4aeGLn4Y7PHkzwSLw8MjJ2Kvj+BJkzh0yyJdVWKlswGY3mdiaR0DRu26MuFvgX
+ /bOT+T0309oLtI+F38wBhUn+01NzOWdERpkrWpSNZzgJ8ky8f4ieY2tvWaH/p9uI
+ 13J94T5pEtHolPbep9W2LlxovxIhx73C3aUFjsM95AawDxKxgIf+qY47+REoT+LQ
  ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0xpp4m-1
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0xppg3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Jul 2026 17:34:35 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66SHQF33007689;
- Tue, 28 Jul 2026 17:34:35 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fna5y2srm-1
+ Tue, 28 Jul 2026 17:37:00 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66SHQEVw006843;
+ Tue, 28 Jul 2026 17:36:59 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fn7fqb91y-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Jul 2026 17:34:35 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66SHYYpU56820018
+ Tue, 28 Jul 2026 17:36:59 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66SHaxTA58196380
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 28 Jul 2026 17:34:34 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 243085805A;
- Tue, 28 Jul 2026 17:34:34 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1E92558052;
- Tue, 28 Jul 2026 17:34:33 +0000 (GMT)
-Received: from [9.61.157.32] (unknown [9.61.157.32])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 28 Jul 2026 17:34:33 +0000 (GMT)
-Message-ID: <40e02089-c223-4d59-a4c6-1ac1fc31a7e2@linux.ibm.com>
-Date: Tue, 28 Jul 2026 13:34:32 -0400
+ Tue, 28 Jul 2026 17:36:59 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 004A05805D;
+ Tue, 28 Jul 2026 17:36:59 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 67B5558061;
+ Tue, 28 Jul 2026 17:36:58 +0000 (GMT)
+Received: from [9.61.160.189] (unknown [9.61.160.189])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 28 Jul 2026 17:36:58 +0000 (GMT)
+Message-ID: <7962f44e-1936-4a14-ba97-1b7548cfac17@linux.ibm.com>
+Date: Tue, 28 Jul 2026 13:36:57 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/1] pc-bios/s390-ccw: bound zipl menu strlen and
- replace VLA in zipl_print_entry
-To: Joshua Daley <jdaley@linux.ibm.com>, farman@linux.ibm.com
-Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, cohuck@redhat.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- brueckner@linux.ibm.com, pbonzini@redhat.com,
- marcandre.lureau@redhat.com, jjherne@linux.ibm.com,
- jrossi@linux.ibm.com, zycai@linux.ibm.com
-References: <20260728134704.2924005-1-jdaley@linux.ibm.com>
- <20260728134704.2924005-2-jdaley@linux.ibm.com>
+From: Eric Farman <farman@linux.ibm.com>
+Subject: Re: [PATCH v1 0/3] io_tests fuse fixes
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>
+References: <20260725125651.3896151-1-farman@linux.ibm.com>
+ <amjFTkbGZX-1d42k@redhat.com>
 Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260728134704.2924005-2-jdaley@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
+Autocrypt: addr=farman@linux.ibm.com; keydata=
+ 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
+ y8m0x6unNti2MZIUMy0m2gcE
+In-Reply-To: <amjFTkbGZX-1d42k@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: mwPVMN0O5qkMNGbi6crxgK1j5n0YLKYa
-X-Proofpoint-ORIG-GUID: mwPVMN0O5qkMNGbi6crxgK1j5n0YLKYa
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDE1MyBTYWx0ZWRfXwJq/Tc4NBcZZ
- XLtq8CLGS1BjMCSmhqJvDRmtSdYE2K/a+UPIVXT9FhLFlzrATbWRTxvOplXBU1O5ByG5mo2V1CT
- XS3kJe3z2/pQgV8Sn25NT60I2y34kvY=
-X-Authority-Analysis: v=2.4 cv=dYuwG3Xe c=1 sm=1 tr=0 ts=6a68e82c cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Proofpoint-GUID: rBcoI9XyjxMX1cyVwbiSzKVIkacKyNsa
+X-Proofpoint-ORIG-GUID: rBcoI9XyjxMX1cyVwbiSzKVIkacKyNsa
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDE1MyBTYWx0ZWRfXxQ+FH3sM1ij9
+ eSVlEETVLTT/at7sYfE8H7sN2RqJW4rCP1gAzDMi52JvOc+LO+pSbBxcZmJv0xi2mxFbXpv3n2K
+ KoZkr0n0t1luvGsbSt8HWokFhX4mEto=
+X-Authority-Analysis: v=2.4 cv=dYuwG3Xe c=1 sm=1 tr=0 ts=6a68e8bc cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=JFDnpvIpuvfgIa8d490A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDE1MyBTYWx0ZWRfX+ZsEG0GauqsD
- wfNyGQ8SVGx6Hraus3KLKuevpeOZEhBq+tDv2eT4XLZoX9R/f6Fax1msObG7Yg6iu9EelxbhalD
- hQfaGevNXEhhRt3GedRBOhZntlrZmWavFOMJ/X3X6SPmqgmiRAzkOETyWIII0r9zMk/MRccyS31
- 2+EF1anW9y8bSWbBMLGegy5BPu0fk6dkEpb5MYXp9kLvxX4p+zOFtN4icUxUc4syFRo2xTxQfPD
- Wt8R+/auJIef6aUVW6U81zvddBfr1re+LeMiUCsWw/ybuNRNfYXlhPjn1XNJ3fS8HB1Im78Oxeo
- Y9yWtLi7ACqGszMZ5VZrPL2XnpWJUZdyf2WLky+yWpaydEO8tFjMgky+Ld8jfQOFzXo36qer/Xv
- 6NlgK/oiBAgyW2PMrWQPWF0MjbHhGUMq3fno8x3akX/GuTciU4CH6bs90Cyj/PCOhWWxfsC8B9w
- R9F+8PdppV75sPBk4YA==
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=GaQpPoNlAAAA:8
+ a=6rqHouBjAAAA:8 a=n_4g61ibiLGcWaaL1QAA:9 a=QEXdDO2ut3YA:10
+ a=xF5q_uoM5gZT5J3czcBi:22 a=Hx1yvPaMooE3kwe23bt7:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDE1MyBTYWx0ZWRfX+tufvxST1w5o
+ 2KZY+7/YAPFIqdE+oboY/U6jTZUHQIOnVPP0Q3C+CjZPoP2LjG8M9+kXW7EpCkoXdVmygtlDTmN
+ 8Ih+cwK2GS5UckVOvPGQkocNq10uAVSfq7dmYJ1whUzF3Wdz+hx00HSEqnPOGw061eUQsLFjCHO
+ EMQg8HOrZFc6sBcvXV9KIamFQVUcHTRIqs2sQlPaxxCBlA4Tg9IfejyKha1eOysl81jbmYFCELa
+ 6voKKiHTPvXscvBfsa9jgZO5PFD+ZwSgjVI012w32hLKXRmeMfKTAn2sl1MeM1GCHTkhd3dnn2X
+ SYtDYKuqbr/WzR6iCpokd9A6JC/ZNyenAE3aRZpwFuPldcGBDlo2IPLuC5NTN6WavQmpOtqJpTe
+ GmhFReQjC6VdohsM5q9jkrZsyH5MNe+5gp6MriFu7CkOQwCqZujgrVPNeSuSzMN16AcXFmhbEjy
+ SVwQafeaWX7vh0L1TTA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-28_04,2026-07-28_02,2025-10-01_01
@@ -105,8 +145,8 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  spamscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607280153
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -129,179 +169,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/28/26 9:47 AM, Joshua Daley wrote:
-> menu_get_zipl_boot_index() calls strlen() on a pointer into the middle
-> of _s2 with no upper bound, so a stage-2 image whose blocks contain no
-> NUL bytes causes strlen() to walk beyond _s2. The resulting length
-> is then used to size a stack VLA in zipl_print_entry(), risking a stack
-> overflow.
-> 
-> Fix by:
-> 
-> - Implementing strnlen(), a bounded version of strlen().
 
-Thanks Josh!  One other minor comment...
 
-Nit: it might be worth clarifying why we must implement our own
-strnlen() where we were previously using strlen() without any custom
-implementation.
-Something like: 's390-ccw uses libc from SLOF, which includes strlen()
-but does not have an implementation of strnlen(), so we must implement
-our own.'
+On 7/28/26 11:05 AM, Kevin Wolf wrote:
+> Am 25.07.2026 um 14:56 hat Eric Farman geschrieben:
+>> Hi,
+>>
+>> The following are three small fixes against some of the qemu iotests
+>> to avoid some errors that should prevent the tests from running in
+>> the first place. We noticed these on an s390 host, but I don't
+>> believe that to be relevant. My hunch is the messages are slightly
+>> different based on distro, because the tests (correctly) skip for
+>> me running Fedora on s390 or x86_64 while they fail under Ubuntu 26.04.
+> 
+> This series conflicts with a patch from Denis Lunev I already queued:
+> 
+> [PATCH v2 2/3] iotests: skip FUSE tests when FUSE is not usable
+> https://patchew.org/QEMU/20260715103451.1930909-1-den@openvz.org/20260715103451.1930909-3-den@openvz.org/
+> 
+> Can you please check if this already solves some of your problems and
+> rebase the rest of your series on top of it?
 
-Either way:
+Ah, thanks for the pointer. That does indeed cover some of them, but not 
+108. I'll send that by itself as a v2 shortly.
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+> 
+> Kevin
+> 
 
-> 
-> - Adding a menu_data_end parameter to menu_get_zipl_boot_index() and
->   replacing both strlen() calls with strnlen() bounded by the remaining
->   buffer space. The loop guard also checks that the pointer has not
->   reached menu_data_end. The function returns 0 (boot default) if
->   somehow menu_data reaches menu_data_end before printing any entries.
-> 
-> - Replacing the VLA char buf[len + 2] in zipl_print_entry() with a fixed
->   ZIPL_ENTRY_MAX + 2 (82-byte) buffer and truncating len before use.
-> 
-> - Passing s2_end (_s2 + sizeof(_s2)) as menu_data_end at the one call
->   site in eckd_get_boot_menu_index(), so the bound is exactly the end of
->   the buffer.
-> 
-> Fixes: f7178910845a ("s390-ccw: print zipl boot menu")
-> Signed-off-by: Joshua Daley <jdaley@linux.ibm.com>
-> ---
->  pc-bios/s390-ccw/bootmap.c  |  4 +++-
->  pc-bios/s390-ccw/helper.h   | 10 ++++++++++
->  pc-bios/s390-ccw/menu.c     | 29 +++++++++++++++++++++++------
->  pc-bios/s390-ccw/s390-ccw.h |  2 +-
->  4 files changed, 37 insertions(+), 8 deletions(-)
-> 
-> diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
-> index 420ee32eff..662265171b 100644
-> --- a/pc-bios/s390-ccw/bootmap.c
-> +++ b/pc-bios/s390-ccw/bootmap.c
-> @@ -61,6 +61,7 @@ static uint8_t _s2[MAX_SECTOR_SIZE * 3] __attribute__((__aligned__(PAGE_SIZE)));
->  static void *s2_prev_blk = _s2;
->  static void *s2_cur_blk = _s2 + MAX_SECTOR_SIZE;
->  static void *s2_next_blk = _s2 + MAX_SECTOR_SIZE * 2;
-> +static void *s2_end = _s2 + sizeof(_s2);
->  
->  static inline int verify_boot_info(BootInfo *bip)
->  {
-> @@ -308,7 +309,8 @@ static int eckd_get_boot_menu_index(block_number_t s1b_block_nr)
->                  }
->              }
->  
-> -            return menu_get_zipl_boot_index(s2_cur_blk + banner_offset);
-> +            return menu_get_zipl_boot_index(s2_cur_blk + banner_offset,
-> +                                            s2_end);
->          }
->  
->          prev_block_nr = cur_block_nr;
-> diff --git a/pc-bios/s390-ccw/helper.h b/pc-bios/s390-ccw/helper.h
-> index 8e3dfcb6d6..d9b7da444a 100644
-> --- a/pc-bios/s390-ccw/helper.h
-> +++ b/pc-bios/s390-ccw/helper.h
-> @@ -45,4 +45,14 @@ static inline void sleep(unsigned int seconds)
->      }
->  }
->  
-> +static inline size_t strnlen(const char *s, size_t maxlen)
-> +{
-> +    size_t len = 0;
-> +
-> +    while (len < maxlen && s[len]) {
-> +        len++;
-> +    }
-> +    return len;
-> +}
-> +
->  #endif
-> diff --git a/pc-bios/s390-ccw/menu.c b/pc-bios/s390-ccw/menu.c
-> index b6a9a56d46..9b81154b0e 100644
-> --- a/pc-bios/s390-ccw/menu.c
-> +++ b/pc-bios/s390-ccw/menu.c
-> @@ -16,6 +16,7 @@
->  #include "s390-ccw.h"
->  #include "sclp.h"
->  #include "s390-time.h"
-> +#include "helper.h"
->  
->  #define KEYCODE_NO_INP '\0'
->  #define KEYCODE_ESCAPE '\033'
-> @@ -26,6 +27,9 @@
->  #define ZIPL_TIMEOUT_OFFSET 138
->  #define ZIPL_FLAG_OFFSET    140
->  
-> +/* Max printable chars for a zipl boot menu entry */
-> +#define ZIPL_ENTRY_MAX 80
-> +
->  #define TOD_CLOCK_MILLISECOND   0x3e8000
->  
->  #define LOW_CORE_EXTERNAL_INT_ADDR   0x86
-> @@ -179,9 +183,13 @@ int menu_get_boot_index(bool *valid_entries)
->  /* Returns the entry number that was printed, or -1 on invalid entry */
->  static int zipl_print_entry(const char *data, size_t len)
->  {
-> -    char buf[len + 2];
-> +    char buf[ZIPL_ENTRY_MAX + 2];
->      const char *p;
->  
-> +    if (len > ZIPL_ENTRY_MAX) {
-> +        len = ZIPL_ENTRY_MAX;
-> +    }
-> +
->      ebcdic_to_ascii(data, buf, len);
->      buf[len] = '\n';
->      buf[len + 1] = '\0';
-> @@ -196,7 +204,7 @@ static int zipl_print_entry(const char *data, size_t len)
->      return atoi(p);
->  }
->  
-> -int menu_get_zipl_boot_index(const char *menu_data)
-> +int menu_get_zipl_boot_index(const char *menu_data, const char *menu_data_end)
->  {
->      size_t len;
->      int entry;
-> @@ -212,13 +220,22 @@ int menu_get_zipl_boot_index(const char *menu_data)
->          timeout = zipl_timeout * 1000;
->      }
->  
-> -    /* Print banner */
-> +    if (menu_data >= menu_data_end) {
-> +        return 0; /* Boot default */
-> +    }
-> +
-> +    /* Skip banner */
-> +    len = strnlen(menu_data, menu_data_end - menu_data);
-> +    menu_data += len + 1;
-> +    if (menu_data >= menu_data_end || !(*menu_data)) {
-> +        return 0; /* No entries, boot default */
-> +    }
-> +
->      puts("s390-ccw zIPL Boot Menu\n");
-> -    menu_data += strlen(menu_data) + 1;
->  
->      /* Print entries */
-> -    while (*menu_data) {
-> -        len = strlen(menu_data);
-> +    while (menu_data < menu_data_end && *menu_data) {
-> +        len = strnlen(menu_data, menu_data_end - menu_data);
->          entry = zipl_print_entry(menu_data, len);
->          menu_data += len + 1;
->  
-> diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
-> index 1e1f71775e..f6030a6071 100644
-> --- a/pc-bios/s390-ccw/s390-ccw.h
-> +++ b/pc-bios/s390-ccw/s390-ccw.h
-> @@ -76,7 +76,7 @@ void jump_to_low_kernel(void);
->  
->  /* menu.c */
->  void menu_set_parms(uint8_t boot_menu_flag, uint32_t boot_menu_timeout);
-> -int menu_get_zipl_boot_index(const char *menu_data);
-> +int menu_get_zipl_boot_index(const char *menu_data, const char *menu_data_end);
->  bool menu_is_enabled_zipl(void);
->  int menu_get_enum_boot_index(bool *valid_entries);
->  bool menu_is_enabled_enum(void);
 
 
