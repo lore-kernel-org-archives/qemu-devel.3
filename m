@@ -4,70 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07567C54F54
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 17:41:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5E4FC53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 17:44:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wolkx-0007tq-JD; Tue, 28 Jul 2026 13:38:19 -0400
+	id 1wolqe-0002YA-2D; Tue, 28 Jul 2026 13:44:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wolks-0007j4-3Y
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 13:38:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wolkn-0005wQ-43
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 13:38:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785260284;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FkgB/lfetYOAjuo99Q9suYGhJFjx2DNE8Y3ECDTUeYk=;
- b=NE/k2mKsLKGd3xrQATkI9vhtWke+wrmfmMnea5yI17U83b5nr+73I0I7JWFSTsV2kvc5Pw
- lA8Z/tGCy2JSITd4sLI6QSfJXcMAKM1w58PnU0Pofh4533NTsJ+h9nPBYCwLjCAN+5dRmy
- MrkpdPdMhfRn/639iPii63Uv3b05qLM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-631--GxJ8BLUNDqHyaqeKkeaog-1; Tue,
- 28 Jul 2026 13:38:00 -0400
-X-MC-Unique: -GxJ8BLUNDqHyaqeKkeaog-1
-X-Mimecast-MFC-AGG-ID: -GxJ8BLUNDqHyaqeKkeaog_1785260279
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A7B1718002C3; Tue, 28 Jul 2026 17:37:59 +0000 (UTC)
-Received: from merkur.redhat.com (unknown [10.44.49.201])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0F0A219560AB; Tue, 28 Jul 2026 17:37:57 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	stefanha@redhat.com,
-	qemu-devel@nongnu.org
-Subject: [PULL 08/17] qcow2: do not try to clear the dirty bit on a read-only
- node
-Date: Tue, 28 Jul 2026 19:37:30 +0200
-Message-ID: <20260728173739.352078-9-kwolf@redhat.com>
-In-Reply-To: <20260728173739.352078-1-kwolf@redhat.com>
-References: <20260728173739.352078-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wolqc-0002Xa-WE
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 13:44:11 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wolqb-0006ve-57
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 13:44:10 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-c15e03c2763so18148966b.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 10:44:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785260648; cv=none;
+ d=google.com; s=arc-20260327;
+ b=KV92QEC/S/6eAlStVPqOi5wwnfvaUMdlknwffDcAtYKuaGmeMGEFvUpvp8rmb8TfeC
+ 2BUC9CXYEKQAW5IEEXjDuEmZ17cv6rGXDrzxCJrPcMkCaUr7vQuA9yJYzg1TSRWQzvm2
+ kdDPjvzHraNEuFaD+hwp6mJauIlcdfryt6ml5GvnxIMVSxFGXii/n0d2XPxknuU8v2wd
+ U2Wt9Gmi8wNDG6TlPow5Q2G1a1eW0DBfm5VNZ7DpQZ+OyOMTW94HMEgL9thuPaVB3l54
+ d94zFOPr/p3QTHnwgy7lr/q0N0zEk5YEEXx/RLWrkniMffrJ43jQ8EE+qTW7175f2dKQ
+ cTOA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=MWZLNPG/yu21CFjKEtT3reINRinmw317B8AyEMtABus=;
+ fh=xWSkzQgsBXu3+20YnzBfal+nvTG8YYutGQdtbnGx0RE=;
+ b=qMMxscJe6dWsaYNr2IlYHH9x8HzpwyvklPpYfKvGcza95DtHfg5yL/gQ+9HjnMEyGm
+ KfExXDP4rn0fhIVELZG/XR430E2NtZ4TkiFSyQOs3BcItWFPbRnc81T8k+QpfKMywTX8
+ xXCCT2pO1ifSrkl73jEycT/NNHfhkhxMPRe7fviAMMqF7WnZK6cJdLFdCd2udy0NO5/Q
+ DV7jeJZ/0S8h5zn/1hIHVeQZF9Vsd+FWQlJ/14lhcZv09vOZLXqb8XQK4XdDFeIdgFm+
+ Sz1rlDaxBnM9SvSCB0QnmP1q9gN/GbBq1rmvOAgnSNV2475REPXzeFAzVBLGc0FqXhW/
+ WK9A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785260648; x=1785865448; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=MWZLNPG/yu21CFjKEtT3reINRinmw317B8AyEMtABus=;
+ b=EhDtjuBiobXD0u7KJQNuSWlMGUBWS9m0MSxgBKbUHTVTeqy4N1FB70/Ir5iJe8In4S
+ sAiV/laX0fKDSeltKy2FUIo5s0aAqL9UjOFXmkioQiSZU3EdbwsrxI1NUCr+uqAZNFlJ
+ ypPUly+M+XkJ1sF5SV9WG+yaGOIZ4idQIL79nqucRbSf53+ZT1sN/N1EzjmG/ghTEJ8K
+ +Z+W6i4PAP5tcgOpLkMiMZnb141dofzx76G9BZNMJ4f8cittN1TV2cu+FS3tsEMhewMI
+ dcm1TmC3iiXMZ9jI2xbh9uxi97zQ/HtYPWjkoztUxtUYqxTTe91d38tzWC70/PWRnbtK
+ AsGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785260648; x=1785865448;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=MWZLNPG/yu21CFjKEtT3reINRinmw317B8AyEMtABus=;
+ b=dt2UW3cbjWQ7Lo19bMbTJTSLo99xUtBWwlqf8kxhVJeDEW73IB1X4CMzZivaMDGYYY
+ VeJXV3ydb6nc4GGKko6Lq/BQwuqkrPQsT0mjkdz1jBRmaHwLeZP+6R9GQj1RibR70A99
+ n0Ia+W8MnMBi8lYfq3AYFsxLLZJy3vq5f3K3//KWRxQmIf9E/cDbZUzirgH8vvNkNEJt
+ eoI8r0bdAp1L/WklHEiSJTaoEMgDW1hshjB7JeKq9tYn2RzRSZaQ9H123/YTBZvPELAQ
+ 7wNF+zFXa7+QE0K6Kpd4iBlGPazRvTkjVN5FUsvsTEQXFZvZ+3/OHcPuMe/OS+PIs/9Y
+ T8Rw==
+X-Gm-Message-State: AOJu0Yw5oafB4SQ5AfhIMNhRypY0m1sDIb7RIVxtlN442DOEUqlxXhk2
+ jNNiuefbii0NcV5Ljlpm2ZmHlbxrllpmn00N5/OZm65h6FrV9xrSFlMyu380qTt4kZ3XHh5GaTu
+ 1zEXokXD2zG59kezErGQ5oxMs7USoUtw=
+X-Gm-Gg: AR+sD109k0k1AcShVerl5hrDB66OCkG4Ow4B57vA0nN298HDt4pMPmhOAOEvJwVd9re
+ h6apBLnRe6ZZOZ363tdNAsRpi+7KEYeSIMPWSct1KvH08wiCn7Te822PzGppWMwL8dRoelgBTxK
+ NyN1nn0W4juwTkPwXQ8nrmIX45PvXeVaqNHRvOJRHs3Go8mtioCeK59y7u+PP3/EbcOfqrAYkiu
+ uAOE3L4VWqbXJkITslq8OCKbQrsu9reTmQ7EXADHNsCaAK7CDMoS9eulA1F/Q3427T1QfhC+mwM
+ 7bUdE7qEFy8Nz5aUcgw=
+X-Received: by 2002:a17:906:6a27:b0:c1c:1fbf:5d18 with SMTP id
+ a640c23a62f3a-c1f71b3ac24mr177554966b.3.1785260647519; Tue, 28 Jul 2026
+ 10:44:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20260728163919.369020-1-mjt@tls.msk.ru>
+In-Reply-To: <20260728163919.369020-1-mjt@tls.msk.ru>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Tue, 28 Jul 2026 13:43:54 -0400
+X-Gm-Features: AUfX_mxS4Y6mtUZOMHKOSSWWC0aqFEqYiHz60dAPyxJFTeMBCa1lDe9AzGHHUC4
+Message-ID: <CAJSP0QUxDeZTcEqHAPMVYqQ2LyeH9WcTbneosC02u6vubLMgBA@mail.gmail.com>
+Subject: Re: [PATCH for-11.1?] qemu-iotest 161: fix race
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Kevin Wolf <kwolf@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=stefanha@gmail.com; helo=mail-ej1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,87 +117,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+On Tue, Jul 28, 2026 at 12:40=E2=80=AFPM Michael Tokarev <mjt@tls.msk.ru> w=
+rote:
+>
+> qemu-iotest 161 fails intermittedly due to a race condition:
+>
+> qemu:block / io-qcow2-161             ERROR            2.08s   exit statu=
+s 1
+> =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95 =E2=9C=80  =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95
+> stderr:
+> --- tests/qemu-iotests/161.out
+> +++ scratch/qcow2-file-161/161.out.bad
+> @@ -34,6 +34,8 @@
+>  *** Commit and then change an option on the backing file
+>
+>  Formatting 'TEST_DIR/t.IMGFMT.base', fmt=3DIMGFMT size=3D1048576
+> +qemu-img: TEST_DIR/t.IMGFMT.base: Failed to get "write" lock
+> +Is another process using the image [TEST_DIR/t.IMGFMT.base]?
+>  Formatting 'TEST_DIR/t.IMGFMT.int', fmt=3DIMGFMT size=3D1048576 backing_=
+file=3DTEST_DIR/t.IMGFMT.base backing_fmt=3DIMGFMT
+>  Formatting 'TEST_DIR/t.IMGFMT', fmt=3DIMGFMT size=3D1048576 backing_file=
+=3DTEST_DIR/t.IMGFMT.int backing_fmt=3DIMGFMT
+>  { 'execute': 'qmp_capabilities' }
+>
+> This test is run right after a previous test, where we've
+> killed qemu process which holds the test image open.
+> It looks like when the next test is started (with creating
+> the image files), old qemu is still running, so we're racing
+> with that qemu, and qemu-img is unable to lock the image file
+> properly.
+>
+> We can add some `sleep $little-amount` here, but it is simpler
+> and more reliable to just remove the image files, so that new
+> ones are created.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2867
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-qcow2_do_close() -> qcow2_inactivate() clears the dirty bit with a
-plain write to bs->file, unconditionally. A read-only node can still
-be dirty, inherited from an earlier writable session, and that write
-then hits a missing BLK_PERM_WRITE and asserts in
-bdrv_co_write_req_prepare() (block/io.c) on an entirely ordinary
-close -- closing is expected, the dirty bit on a read-only node
-is not.
-
-Skip the clear for read-only nodes, same as read access already does.
-Any other still-dirty node keeps the unguarded write: it is expected
-to hold write permission, and a missing one there is a bug worth
-seeing.
-
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Kevin Wolf <kwolf@redhat.com>
-CC: Hanna Reitz <hreitz@redhat.com>
-Message-ID: <20260716153552.3376009-1-den@openvz.org>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- block/qcow2.c              |  6 +++++-
- tests/qemu-iotests/039     | 11 +++++++++++
- tests/qemu-iotests/039.out |  3 +++
- 3 files changed, 19 insertions(+), 1 deletion(-)
-
-diff --git a/block/qcow2.c b/block/qcow2.c
-index 19271b10a49..7292dd036c9 100644
---- a/block/qcow2.c
-+++ b/block/qcow2.c
-@@ -2870,7 +2870,11 @@ static int GRAPH_RDLOCK qcow2_inactivate(BlockDriverState *bs)
-                      strerror(-ret));
-     }
- 
--    if (result == 0) {
-+    /*
-+     * A read-only node cannot resolve an inherited dirty bit here;
-+     * leave it dirty, same as plain read access already does.
-+     */
-+    if (result == 0 && !bdrv_is_read_only(bs)) {
-         qcow2_mark_clean(bs);
-     }
- 
-diff --git a/tests/qemu-iotests/039 b/tests/qemu-iotests/039
-index e43e7026ce3..94a8bfe754e 100755
---- a/tests/qemu-iotests/039
-+++ b/tests/qemu-iotests/039
-@@ -84,6 +84,17 @@ $QEMU_IO -r -c "read -P 0x5a 0 512" "$TEST_IMG" | _filter_qemu_io
- # The dirty bit must be set
- _qcow2_dump_header | grep incompatible_features
- 
-+echo
-+echo "== Read-only open must not crash on close =="
-+
-+# We must not try to write the QCOW2 header to a read-only image.
-+$QEMU_IMG info --image-opts \
-+    "driver=$IMGFMT,read-only=on,file.driver=file,file.filename=$TEST_IMG,file.read-only=off" \
-+    > /dev/null
-+
-+# The dirty bit must still be set: this open never wrote any guest data
-+_qcow2_dump_header | grep incompatible_features
-+
- echo
- echo "== Repairing the image file must succeed =="
- 
-diff --git a/tests/qemu-iotests/039.out b/tests/qemu-iotests/039.out
-index 8fdbcc528aa..c66361128f6 100644
---- a/tests/qemu-iotests/039.out
-+++ b/tests/qemu-iotests/039.out
-@@ -24,6 +24,9 @@ read 512/512 bytes at offset 0
- 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- incompatible_features     [0]
- 
-+== Read-only open must not crash on close ==
-+incompatible_features     [0]
-+
- == Repairing the image file must succeed ==
- ERROR cluster 5 refcount=0 reference=1
- Rebuilding refcount structure
--- 
-2.55.0
-
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
