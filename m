@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A2F5C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 10:09:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CDEFC531F9
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 10:09:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woekF-0006OS-3C; Tue, 28 Jul 2026 06:09:07 -0400
+	id 1woekI-0006Xm-Oj; Tue, 28 Jul 2026 06:09:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1woek9-0006FI-D8; Tue, 28 Jul 2026 06:09:01 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ id 1woek6-0006EO-8Q; Tue, 28 Jul 2026 06:08:59 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1woek7-0002zv-N4; Tue, 28 Jul 2026 06:09:01 -0400
+ id 1woek4-0002yl-5V; Tue, 28 Jul 2026 06:08:57 -0400
 Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id 2BF77C09C7;
- Tue, 28 Jul 2026 13:08:58 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id BA420C09A1;
+ Tue, 28 Jul 2026 13:08:53 +0300 (MSK)
 Received: from dtalexundeer-nx.yandex-team.ru (unknown
  [2a02:6bf:803e:400:f26c:359c:adc2:62a4])
  by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id f8aui7IXWGk0-Mq83LI1c; Tue, 28 Jul 2026 13:08:57 +0300
+ id f8aui7IXWGk0-hEMSNmwb; Tue, 28 Jul 2026 13:08:53 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1785233337;
- bh=ujC3ej8bJDvizLd+7cawo2cVAZ82aDZXHA5LsNPROBA=;
+ s=default; t=1785233333;
+ bh=PfoLHGcOutgg0hQy+Phc11/k5TDb5rZJ1aU6PrMxzJE=;
  h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=CedcR7LRSYy2Ja2w7GmZEgOsHTksKYFrQr+83HNaTamLgtdAtw459vXRmtcVqC8lm
- rPkiBqpXee4d3D3EeNUt7ByZ9+YUiHEicVl6te9/fE6PSJ5NyawlgPvoLxHESVmF/8
- ZbVTEvm+5WejtpXv5sWgIU5O8T95B3QHviiHyGKY=
+ b=yXfUT8Rej7gAuIcmXlHTUgZ5+ijF0yv/P82PSzNWMj5uesDWNwFvc+6JA3Mv39/J+
+ hjRuS9J2GnkOP/CBnHyHJqiz+ERftvnaGX2YFRHBblHGBkRIpsiFsU/QIFOg/pLzmQ
+ +LQhsbwvqYDb5ppI24fBUkPtSEuL/EfKS0D8/akQ=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
@@ -56,23 +55,22 @@ Cc: Hanna Reitz <hreitz@redhat.com>, Jason Wang <jasowangio@gmail.com>,
  Stefano Garzarella <sgarzare@redhat.com>,
  Milan Zamazal <mzamazal@redhat.com>, Raphael Norwitz <rnorwitz@nvidia.com>,
  Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Subject: [PATCH v5 6/6] vhost-user-blk: use GET_VRING_BASE_SKIP_DRAIN during
- inflight migration
-Date: Tue, 28 Jul 2026 15:08:41 +0500
-Message-Id: <20260728100841.3475774-7-dtalexundeer@yandex-team.ru>
+Subject: [PATCH v5 3/6] vhost-user: use skip_drain with
+ GET_VRING_BASE_SKIP_DRAIN message
+Date: Tue, 28 Jul 2026 15:08:38 +0500
+Message-Id: <20260728100841.3475774-4-dtalexundeer@yandex-team.ru>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260728100841.3475774-1-dtalexundeer@yandex-team.ru>
 References: <20260728100841.3475774-1-dtalexundeer@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.72;
  envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,124 +86,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently during live migration vhost-user-blk sends GET_VRING_BASE to
-stop vrings, which causes the back-end to drain all in-flight I/O before
-returning. This blocks the migration source until all I/O completes,
-adding significant downtime proportional to the I/O load.
-
-When inflight-migration is enabled and the device is stopping due to
-live migration (RUN_STATE_FINISH_MIGRATE), send GET_VRING_BASE_SKIP_DRAIN
-instead. This instructs the back-end to immediately suspend in-flight
-I/O and record it in the shared inflight region, which is then migrated
-to the destination host along with the rest of the device state.
-
-If the back-end does not support VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN,
-migration is aborted with an error in pre_save rather than hitting an
-assert at runtime.
+Wire up the skip_drain parameter introduced in the previous commit to
+the new GET_VRING_BASE_SKIP_DRAIN message. When skip_drain is set,
+send GET_VRING_BASE_SKIP_DRAIN instead of GET_VRING_BASE, instructing
+the back-end to suspend in-flight I/O immediately.
 
 Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
 ---
- hw/block/vhost-user-blk.c      | 30 ++++++++++++++++++++++++------
- hw/virtio/vhost-user.c         |  3 +--
- include/hw/virtio/vhost-user.h |  1 -
- 3 files changed, 25 insertions(+), 9 deletions(-)
+ hw/virtio/vhost.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-index 156ed6de30..9531d92e48 100644
---- a/hw/block/vhost-user-blk.c
-+++ b/hw/block/vhost-user-blk.c
-@@ -135,10 +135,7 @@ static bool vhost_user_blk_inflight_needed(void *opaque)
- {
-     struct VHostUserBlk *s = opaque;
- 
--    bool inflight_migration = virtio_has_feature(s->dev.protocol_features,
--                               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
--
--    return inflight_migration;
-+    return s->inflight_migration;
- }
- 
- 
-@@ -239,11 +236,14 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
-         return 0;
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 2c7f464d55..bd079f9080 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1518,7 +1518,11 @@ static int do_vhost_virtqueue_stop(struct vhost_dev *dev,
      }
  
-+    bool skip_drain = vhost_user_blk_inflight_needed(s) &&
-+                      runstate_check(RUN_STATE_FINISH_MIGRATE);
-+
-     force_stop = s->skip_get_vring_base_on_force_shutdown &&
-                  qemu_force_shutdown_requested();
- 
-     ret = force_stop ? vhost_dev_force_stop(&s->dev, vdev, true) :
--                       vhost_dev_stop(&s->dev, vdev, true, false);
-+                       vhost_dev_stop(&s->dev, vdev, true, skip_drain);
- 
-     err = k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false);
-     if (err < 0) {
-@@ -375,7 +375,6 @@ static int vhost_user_blk_connect(DeviceState *dev, Error **errp)
-     vhost_dev_set_config_notifier(&s->dev, &blk_ops);
- 
-     s->vhost_user.supports_config = true;
--    s->vhost_user.supports_inflight_migration = s->inflight_migration;
-     ret = vhost_dev_init(&s->dev, &s->vhost_user, VHOST_BACKEND_TYPE_USER, 0,
-                          errp);
-     if (ret < 0) {
-@@ -598,10 +597,29 @@ static struct vhost_dev *vhost_user_blk_get_vhost(VirtIODevice *vdev)
-     return &s->dev;
- }
- 
-+static bool vhost_user_blk_pre_save(void *opaque, Error **errp)
-+{
-+    VHostUserBlk *s = VHOST_USER_BLK(opaque);
-+
-+    bool inflight_migration_enabled = vhost_user_has_protocol_feature(&s->dev,
-+                               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN);
-+
-+    if (vhost_user_blk_inflight_needed(s) && !inflight_migration_enabled) {
-+        error_setg(errp, "can't migrate vhost-user-blk device: "
-+                         "backend doesn't support "
-+                         "VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN "
-+                         "protocol feature");
-+        return false;
-+    }
-+
-+    return true;
-+}
-+
- static const VMStateDescription vmstate_vhost_user_blk_inflight = {
-     .name = "vhost-user-blk/inflight",
-     .version_id = 1,
-     .needed = vhost_user_blk_inflight_needed,
-+    .pre_save_errp = vhost_user_blk_pre_save,
-     .fields = (const VMStateField[]) {
-         VMSTATE_VHOST_INFLIGHT_REGION(inflight, VHostUserBlk),
-         VMSTATE_END_OF_LIST()
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index bf455daa44..03b8bc20f9 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -2571,8 +2571,7 @@ static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
-             }
+     if (!force) {
+-        r = dev->vhost_ops->vhost_get_vring_base(dev, &state);
++        if (!skip_drain) {
++            r = dev->vhost_ops->vhost_get_vring_base(dev, &state);
++        } else {
++            r = dev->vhost_ops->vhost_get_vring_base_skip_drain(dev, &state);
++        }
+         if (r < 0) {
+             VHOST_OPS_DEBUG(r, "vhost VQ %u ring restore failed: %d", idx, r);
          }
- 
--        if (!u->user->supports_inflight_migration ||
--            !virtio_has_feature(protocol_features,
-+        if (!virtio_has_feature(protocol_features,
-                                 VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD)) {
-             protocol_features &= ~(1ULL <<
-                                VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
-diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
-index 47c13f8677..78b4fba27f 100644
---- a/include/hw/virtio/vhost-user.h
-+++ b/include/hw/virtio/vhost-user.h
-@@ -73,7 +73,6 @@ typedef struct VhostUserState {
-     GPtrArray *notifiers;
-     int memory_slots;
-     bool supports_config;
--    bool supports_inflight_migration;
- } VhostUserState;
- 
- /**
 -- 
 2.34.1
 
