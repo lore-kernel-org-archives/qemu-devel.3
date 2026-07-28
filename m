@@ -4,100 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8760C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 13:45:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A391C54F4C
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 13:47:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woi7X-0004kh-GT; Tue, 28 Jul 2026 09:45:23 -0400
+	id 1woi9O-0005Tt-AN; Tue, 28 Jul 2026 09:47:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1woi7V-0004jt-Ko
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 09:45:21 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1woi7T-0000D5-CK
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 09:45:21 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-664e3ed58bcso1308522d50.1
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 06:45:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785246318; cv=none;
- d=google.com; s=arc-20260327;
- b=Gf/f1RUDonm39CfMwKdNplHJc9vNsYh9+y9FGdI7pDCDRU8jM1XIqxNMmK10zNe6yn
- 4J9hBgsEg4Qf/ReVEyicCy88FzrfB/E2/P4gHB3cWEsdY9sgPqPaiRA1xlr+b0C6d1A/
- 3yFUNXcpCR6ASbAja5Emd+GGr9k4cAyANhOe7CxIIvWcTqdoBSwl8mohFY81CT2LSFbJ
- 7IH1y+V38rgEdQxYFbCsHeFpQOO+ZGDOJP7f6MaD5spKiOzEqViu5r9XA990Bmf9/QFT
- 4nQSfO0AnZNTtq/rAJzyiq/JWg8BJ/gKZFV+bHVYrWrYRBw4m4GXQnZLguotlneqcuEE
- qTYA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=oWTksGYluHomzQY+4oVvYnKF49euD6wn1i5gDGA+5sM=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=WDMXrPZyFVmEEVxyRj8IOY5zN/qELvZhaviJpf28o6dlEo3kVpCNyEXHwexapIYDxT
- 2Vsc1A51Dh+XVjIKVzIIF9vuEhJI+3lRfHglGVYcAV1qRSjew1cCeFqmNBJu6D2JiNFk
- eifVH26oh2whwihn8Xl8edmHD9DsDnXVljwpmEeot+sr6i4m/kNA6xu3tBsjhiVnw68I
- 6ruAj5AzepNGY5VrWCOQ0Tfb/gSuutiuk3Eq73Q+1mVybEqgOyhh9UqALyswj1o4+Eur
- HdtJv3KB+Ws62he/BoUKHtFsvgJSOpNXUoidv1E6bkLH6ljpIPLR8jerP1iYAHQGXu2i
- t1gA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785246318; x=1785851118; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=oWTksGYluHomzQY+4oVvYnKF49euD6wn1i5gDGA+5sM=;
- b=wtOnVKakbta3mYkDAFWWsBk8/Iq7JIBGgDVD5BUfBzhnDgZXeQ7n+WgPe70WxHdKC4
- sfET12KYgfikm9wtkhLn+SOBdb9woYlb8afWNa7Zn53F6hSu1IGYeU1FjPcQi8oLpOLM
- t5oZpKUXVNQLNQ1eah5aAtsMWVpL2LUtRZ+oBIt2zTW9YxZ5PzPHKR5raReHvOZR/XH/
- DkZPQYmxd1RLfGgh7f9sSS93+6PSAIK/6/lOCNV2cZAwKW/jAgs9S/CsYkm7DcG+oimp
- uNjCByU5WjJpJ/PF+Xd9uVmhe3YS6/lmS2vLAqC9GORUeY4hDAEOsA0AAoxHBJ7EY4H2
- t5uA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785246318; x=1785851118;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=oWTksGYluHomzQY+4oVvYnKF49euD6wn1i5gDGA+5sM=;
- b=sDrlaWuAmmnsTusUJWOZpo12BA4AKEtp3ypEy6B19aDI/F2XbZYxk+93/0IawT3kR8
- yBBZmS80Eg27FLGtmHdrvJq4Vl8QuphSBdrycGJorOBaYNmslrhCNHyu5BG6HTJFhA16
- /D1IrIaSGJnciXdCvPvNOyBdZ39G92orlZSkNoD9qwBJhomaFomv3xIE/KiMlmYb57tD
- uIay/vXl6V5QUe49gtyx51BniPINohpCsSQJQsU07NUx6H6SMDeVV6Z5Ukh3v/Y5U7FH
- EaS6sw0VH5Q/qQ9B9A/A5Nei8Dkidb6H3Gojx+7l8Xtagd2Lphz8x6ihxJvRO3woY+RB
- EY6A==
-X-Gm-Message-State: AOJu0YzFeOOnuWvnvCs5L9qGySz8D7OjWVHiFhoLJ/O3om+eyRfwUIsU
- 1Pwxl/lJMG+6dH+bNP9nLGtnfllYOPN0n/pdo3JTWFSG3ulTmSUsdiRpOGOSTAUJcTdP/8dVcOQ
- 4kYoXjHKQJP4CqS7D+oczOx76IKp0Da5Zp0pk8V7iWjwXBiR1EZi6
-X-Gm-Gg: AR+sD13uev5S5ruxw2f6eYBRP/OIDiuRWPyXzdLaBJZfK/sfk9Dvllel95Akt+EBXE/
- /xO3s0NNH1caMXZmD4v2N1SbqvtF8g5K1VaMO8rBcDkA0ur5TWHNEcjj9fcV7OmxUfG8quvDVVi
- NPkVrpUKs6ETV+kMsohBpY3Zos8N1ARgVAWDqtzGmlnL8alhoNCtiLB4ezPStRbkGFz1zAw98pB
- bU8PJ6R6UYh8fYcaSqdQ1b8rS/qOlP4NjQtOsT/+9SaONO9DAV0MEYm6Mqo4JbDQlEL4coLzEgN
- fPtOJ9BnWsciyYwbG2+mMjl9/KJGvh/HOT7CgOuoduIVlF/uX/t3RX/L
-X-Received: by 2002:a53:d84a:0:b0:664:d5ff:2856 with SMTP id
- 956f58d0204a3-669056b8a34mr666743d50.14.1785246318099; Tue, 28 Jul 2026
- 06:45:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jdaley@linux.ibm.com>)
+ id 1woi9M-0005Sb-Ok; Tue, 28 Jul 2026 09:47:16 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jdaley@linux.ibm.com>)
+ id 1woi9J-0000QV-Jc; Tue, 28 Jul 2026 09:47:16 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66SBIGXk854402; Tue, 28 Jul 2026 13:47:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=Rl+8KV6hQs7LOtHIoLKbABfULwvo828ZJ1JqlK/Id
+ U0=; b=SrUlXCA8U18JAnVVP9EJBQrfmMja30yOj06GiC7huyDhi6+5AcXYcPOe2
+ WaUqaaX8O5X8BvGcndrFPC+0RBfv5gkvg+ssQkCKSAw6x5oeNtQKt3M/40qqodjP
+ XSgJyPqCfTPccMrn+gJNs0fA+IcCsCZxWmNOZRbfHU8hNA3kBNyCl1YSR81BkVk9
+ bdsyf5F6TWetJrmvCD6T2vSEeBX7cUOwZjSRavy/aC/hZlV2Ppekwsz9wNXw0mh+
+ a2mcmQmwz1PNgpQsvv795hlFQ0TEVCCtH+mNJDqfe34kyZn4Fe4rX3RvnV6U2ilq
+ hxyD/8rtlSt+2/wgn/ytwRhDFMLBQ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0nmuq8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Jul 2026 13:47:09 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66SDfFKF010623;
+ Tue, 28 Jul 2026 13:47:09 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn7uw26w8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Jul 2026 13:47:09 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66SDl5Km27656826
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 28 Jul 2026 13:47:05 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id ED83F20043;
+ Tue, 28 Jul 2026 13:47:04 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BC6BD20040;
+ Tue, 28 Jul 2026 13:47:04 +0000 (GMT)
+Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with SMTP;
+ Tue, 28 Jul 2026 13:47:04 +0000 (GMT)
+Received: by tuxmaker.boeblingen.de.ibm.com (Postfix, from userid 56370)
+ id A41EB162592; Tue, 28 Jul 2026 15:47:04 +0200 (CEST)
+From: Joshua Daley <jdaley@linux.ibm.com>
+To: farman@linux.ibm.com
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, cohuck@redhat.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ brueckner@linux.ibm.com, pbonzini@redhat.com,
+ marcandre.lureau@redhat.com, mjrosato@linux.ibm.com,
+ jjherne@linux.ibm.com, jrossi@linux.ibm.com, zycai@linux.ibm.com,
+ jdaley@linux.ibm.com
+Subject: [PATCH v2 0/1] pc-bios/s390-ccw: bound zipl menu strlen and replace
+ VLA in zipl_print_entry
+Date: Tue, 28 Jul 2026 15:47:03 +0200
+Message-ID: <20260728134704.2924005-1-jdaley@linux.ibm.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-References: <20260719174905.420725-1-richard.henderson@linaro.org>
-In-Reply-To: <20260719174905.420725-1-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 Jul 2026 14:45:05 +0100
-X-Gm-Features: AUfX_mxz5GDWY3ReeGESaqLV6Gu7iHT0MPVjE7kafcNEYuK5GM82NcdI1dAJwYw
-Message-ID: <CAFEAcA9sSHOFU8A5Z39dSc2KiytHm7NQtPWtZiqxgxQCc3Ah0w@mail.gmail.com>
-Subject: Re: [PATCH for-11.2 0/6] target/arm: Implement FEAT_SME2p2
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDExOCBTYWx0ZWRfX12/hgE/jjw3w
+ a07JjsIZbtdeURQdSOxsLNZpcIR7pbixsc+UriaC/yDzbDPrrJgPvzT/JTbORg9C8Y8A/seC/1P
+ MUWBzkuFMyv6waNeA2yedJM4mZeDc74=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDExOCBTYWx0ZWRfXwY3wcBC7DcaI
+ pWfnj71mVpYv4VSxMNIDi/yxJKam8OBMqQOVFVKg5lyfmUnyXP5NjjA2tASUwgny817S1FYgdsk
+ t1PtWnZjQutYyOSp6p8Z0FPGJs0ddFIqtXTlIW+fGzbUxbnUkESndW8sw5JyvxeBTGRMI5LBr5N
+ yplTIvOQXHnb0lLHYVw4ZRlKepGp1RnvdUVe9q10XQWzpokDx7GBeHVvco2LyIuzbjZcAX/4G/C
+ BHPTi32lsS2rQwUmwTIfii/NM0pTDIJChDxiYVnuS/ddQzbg2dPPHug0kwR0NalGSXpJy8vT3NT
+ 6Ea+qr1R5DKYwmsqx1CyxnlySFTz0Ourqmn+vwsZOipZjjwh6ZKuOj8vpDIvioZwY8zDl29RtWE
+ IE0UdyDRSIWkMu8Po17xycwL+dOxt5PzAKGNRIYYh1JBxA1F1NNMWL/yHx9BYlSuuLh3ad6x5QX
+ 3xqwoRPTzBV1P0G9TxA==
+X-Authority-Analysis: v=2.4 cv=b5WCJNGx c=1 sm=1 tr=0 ts=6a68b2dd cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=NzGWJsgcWuOPWxY40HQA:9
+X-Proofpoint-GUID: OlDFo4LnHkRgPnKIfA6ZsDA8NuDV-g6M
+X-Proofpoint-ORIG-GUID: OlDFo4LnHkRgPnKIfA6ZsDA8NuDV-g6M
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-28_03,2026-07-28_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0 impostorscore=0
+ bulkscore=0 phishscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607280118
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jdaley@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,31 +125,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 19 Jul 2026 at 18:49, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Based-on: 20260713230244.70174-1-richard.henderson@linaro.org
-> ("[PATCH for-11.2 00/10] target/arm: Implement FEAT_SME_TMOP")
->
-> One final pair of insns, FMUL (multiple and single vectors) and
-> FMUL (multiple vectors), which are not covered by a sub-feature.
->
-> Finishing SME2p2 allows us to finally enable SVE2p2 in -cpu max.
->
->
-> r~
->
->
-> Richard Henderson (6):
->   target/arm: Split zdn in do_z2z_n1 and do_z2z_n1_fpst
->   target/arm: Split zdn in do_z2z_nn and do_z2z_nn_fpst
->   target/arm: Fix b16b16 feature test for SME2 BFCLAMP, BFMAX, BFMIN
->   target/arm: Split decode of BFloat SME FMAX/FMIN
->   target/arm: Implement FMUL (multiple/multiple and single vectors)
->   target/arm: Enable FEAT_SVE2p2 and FEAT_SME2p2 for -cpu ma
+The original version of this patch is part of the series
+"[PATCH 0/5] more hardening fixes for s390"
+from Christian Borntraeger <borntraeger@linux.ibm.com>.
 
-Given your reply to patch 4 I assume you'll respin this at
-some point, so I won't look at 4 or 5 until then.
+Changes v1 -> v2:
 
--- PMM
+- Added a condition after the banner skip that returns 0 (boot default)
+  before printing the banner, if there are no entries in menu_data.
+
+- Modified commit message 2nd bullet, final sentence.
+
+Joshua Daley (1):
+  pc-bios/s390-ccw: bound zipl menu strlen and replace VLA in
+    zipl_print_entry
+
+ pc-bios/s390-ccw/bootmap.c  |  4 +++-
+ pc-bios/s390-ccw/helper.h   | 10 ++++++++++
+ pc-bios/s390-ccw/menu.c     | 29 +++++++++++++++++++++++------
+ pc-bios/s390-ccw/s390-ccw.h |  2 +-
+ 4 files changed, 37 insertions(+), 8 deletions(-)
+
+--=20
+2.34.1
+
 
