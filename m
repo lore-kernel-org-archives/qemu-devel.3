@@ -4,161 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8817DC53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 14:06:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD883C53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 14:09:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woiRO-0004W3-De; Tue, 28 Jul 2026 10:05:54 -0400
+	id 1woiUW-00062C-KA; Tue, 28 Jul 2026 10:09:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1woiRM-0004Vd-8H; Tue, 28 Jul 2026 10:05:52 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1woiRD-0003Ug-Jj; Tue, 28 Jul 2026 10:05:52 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66SDlf0c1236929; Tue, 28 Jul 2026 14:05:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=qRuMr1
- eUYRhMQFy4MpWhYBtLnSh4l3ku78I1q6RNxgk=; b=IyV17WkMTtFL6Sk3x5MCsc
- SLO+LORYMXvLXrr3u/KUReSASpwAr2mrOJcEW2v62jsRU3l1PcnyB73m2YzpAg0K
- cJVdPDVl2Q/p4+ow2FVD7MtXlt5CJlSIgOS+vhitR0aEb90YrupVB6cpaZBIMF8u
- NYkSA7KG3nOmZ1fc4LAH4nXWNkAsEW4RrJkClmdCX6W03TBgd+AGh0V3e8RQK0lL
- NAn7oOKkKqmdcXToxVExfFGUPgMKB/hBH+oOB9iIHU/UdoZrY1CQ8O+7h2DNjfBU
- 6zhRJTFqelK/9zgfuJFr/TV8g1NEeGWpHsj0/+99kfFDsUCP+oW+jLhGdXExEetg
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0nmxrp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Jul 2026 14:05:37 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66SDuF9o031302;
- Tue, 28 Jul 2026 14:05:36 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fna5y1urk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Jul 2026 14:05:36 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66SE5Z6V50921816
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 28 Jul 2026 14:05:35 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0F1E658055;
- Tue, 28 Jul 2026 14:05:35 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5C16458063;
- Tue, 28 Jul 2026 14:05:33 +0000 (GMT)
-Received: from [9.61.20.104] (unknown [9.61.20.104])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 28 Jul 2026 14:05:33 +0000 (GMT)
-Message-ID: <3e9327fd-25f3-424e-b41b-c766c8af62e2@linux.ibm.com>
-Date: Tue, 28 Jul 2026 10:05:32 -0400
+ (Exim 4.90_1) (envelope-from <huang.botsz@gmail.com>)
+ id 1woiUU-00061b-R8
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:09:06 -0400
+Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <huang.botsz@gmail.com>)
+ id 1woiUT-0003rA-04
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:09:06 -0400
+Received: by mail-ot1-x32a.google.com with SMTP id
+ 46e09a7af769-7ee50eb2db4so3132432a34.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 07:09:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785247743; cv=none;
+ d=google.com; s=arc-20260327;
+ b=g2fylVAxbaOjqXWoXk/VdUhbILuyAlpQAT6NmVzws6a3nBCHamsDK/2o/Es4TX0PBw
+ GcbM1X74C2zaW5hWIoB2hqrlhslN0P3d/Z8EoIa+NGxC87GhSVoBaQ7/5nVrGeu8T3Kc
+ NRJuETitMaT0XoV9P6LwLGJSHHUHasa5mwVUcwH/EkGAoObNiFuumbEK5oUUwvzTxGoI
+ 8eq8LkyOk8VidDLrYXaqiUj1CCb7fS2g8yLv/cErtmv5pURdjGyy1zM4aBB0lBrMzAex
+ 5TtfSSj5NimsEzG738Siz6oHZ+nqi05+Kg4Nu32N/wQENaVt5sZUnuqsiNztWsdVXi+9
+ cGBA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=w8VPkSPT7sWevU5cAFZw5DWgr97KdkfvaaLraanPR2o=;
+ fh=v1p9TD2qHziwhYeF1a/EamknYRJiam1BaPt8Qa1kYs4=;
+ b=Zk86Cj3ep2bSCRUBRiEMiWQAKnVYkr51MO6al8xhxDo3dw3AviTgfj8H6nqO0RZNZz
+ uzTTXHk0OtKDGdBRNB+cIZ1xhbTA5lAb006cOlKeMYblwRrDmhr57SBL8Dm9bafoXQbO
+ on/wqijUmC2IwL2R2aSvWyIZJsIJhaknP/8TJdJG8uE4HpO6fSyr8F0t3WzD6n0wupts
+ JrSl6KL70OR4K17hzIJZkGZ9oLGLq3m8Kn54ktIgU/5ARP5JbrobpAQQ2xUWkrwl9WiP
+ Nvtbw3AFDkrab0qEnCHOS5DEMsjG71PL03s0HILLxpZXyH4rFjg3YyUNcOvEx2efJaRp
+ rHLQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785247743; x=1785852543; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=w8VPkSPT7sWevU5cAFZw5DWgr97KdkfvaaLraanPR2o=;
+ b=njpHtGS6uvfsPeWGTvaQ5GV2Z17v6JdnC7y0NWfLMRJ7U+WwnKhF1NNKUkFxYe0QJz
+ Md3MXR8GuUGumib8irrLEPaw70lG3eLuOXLRDKmPbrt5xnzqDEWZl42dl8X86bm0ner+
+ 5aWB+Lm+hUwjCV0Dyw0PcYJkcjjayoznPhjOj6IYUME2cOOvGvXqT65yZcRRZ+VZdprz
+ 7oAmA+dVXBf4qkASrTjJk64CBy64dY6ePMsRMGm9P6avm62akjFXtURCAp+PFgPFNMsA
+ vKcdPGTXndstI+RNrQzim3dCiHueJfzD2eK/OEZVqhTlJBTu6CPBGZ8cIu/NjR2lfAt+
+ 5ZFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785247743; x=1785852543;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=w8VPkSPT7sWevU5cAFZw5DWgr97KdkfvaaLraanPR2o=;
+ b=sYBUJNvAY4eGOOkFLYq1FihF47S+No2QdQWpdSC3UGq58BMC6Jlm3uAReAOqxk7pEb
+ uHTwqXckD/Rbot1tW9bLvL5ogo14jfHBsVlOwczaGo8LbJsTpwKJZLIWutaixJppUr9n
+ zNLr+COOVSoteRRXX8ev84OR+E2ke6xpDPNkuEr/Dpey1A1tlillGsKUSMEV6X4FUBcm
+ K5+EPcLphILaVzcXMauhpqJ2Vx7Gia7uWZ/gqdmToE5tfzqvRKgAM6nUbBRQyVWcigUx
+ 4rNRwLxPi++2CdxPKKU+4VXaalUGevQD9vqVSFSQNCHpID6p0B3T1c9qt4B9ky5gTQIX
+ QM2w==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RodIEHXL2bs8dY1+8YmJkWb9Dc00ufAcOmFT+Mual6GkX0XvPX3hkxAUo+NnG14bccoOn05HC+gyr0S@nongnu.org
+X-Gm-Message-State: AOJu0YwWcadOz2qADTAtoGjIEtolWByMfhvUxLCkMIUepZZC76aoNovw
+ lLhWehNRqgjt+7FRF4KyngrIGo8jY2y4IyfRi91M3mtkfd+dQwqZU0d6XByvEktTQznBbG6RAfW
+ 2z7c7/zFXPq1PHGRT5bZw3XYoiq0nrgo=
+X-Gm-Gg: AR+sD12USZv+aP8HGrv12tgU7exyaKWC93Vwqd1PvnyNLZHOsHrVcZnRNdTQOeH7OoJ
+ /+ceJjWcF3gB8/auZfe7BLyiYpgVluu5rrKTQYekCuR25Vm60SS9xygWD1MTnCaWgPxSxQE8SQc
+ BTr/m5VNCM7YHuiRVWL025WMQJADBQWi/pXNLKz1uy5CP/5oo1AbR3ywFjqcfC2+UG6Iy5EiHMW
+ E51YewWRapKFEaP+0oSW3rqPzw8GLSnaKTDE5TP/zCjkF5YIhTmSXBaKE3c9JRzo2t/2ZKEpk6V
+ uZ9qe26aypncYUB4wmdwXz1cZWKpaKPXFFfja8FH8ctbn8knmSBnCITtKhX0Ef1JNMae3ohCArF
+ nIw==
+X-Received: by 2002:a05:6830:3741:b0:7e6:dc7a:f459 with SMTP id
+ 46e09a7af769-7effef433b6mr1542620a34.11.1785247743346; Tue, 28 Jul 2026
+ 07:09:03 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Eric Farman <farman@linux.ibm.com>
-Subject: Re: [PATCH 0/5] more hardening fixes for s390
-To: Christian Borntraeger <borntraeger@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
- Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Hendrik Brueckner <brueckner@linux.ibm.com>,
- Joshua Daley <jdaley@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Jared Rossi <jrossi@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20260727115052.24289-1-borntraeger@linux.ibm.com>
-Content-Language: en-US
-Autocrypt: addr=farman@linux.ibm.com; keydata=
- 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
- y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20260727115052.24289-1-borntraeger@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDEyMiBTYWx0ZWRfXw0f4kllrSOJy
- kTu5pq7uEU4pQhtJ9VbnVqRDsjsgNADkWW0rRDMoSGNKGxq4opfN9zkrpifSL9tc9/7z1fmlr7R
- WGn8tkXWL4/+sXw5qMMFecJGnKtOLZM=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDEyMiBTYWx0ZWRfX/FefN+mhEBZ1
- 7N6qWjxK1csG+ZQjMlW8iRCjoR/rlcmFXPQG6b/UsimTlgx4Xny3rcUxZ/f0SCaSdUGNxATvgQM
- uCsQbzT9+SPYallOGPLYLvKk4rQ37kbbLh4dTeOKPJlY6XrtaqdQ5u3e7Mi1yFsJSxnIFbq7P6O
- LfNhcb/6APe97q3YfSuPj0l+ty1Zy4L4V3a8wBiGKXYdcqnIN9BoUDysvkxegGtTMcLr/sorCY/
- BObN1xiKc5rccRGgsPp4uDKHHvyN/dan1Dd+QDHRdub1os3Iay7ZgVfI8Dysb60ODxJy10xuITj
- 6WWWgLWrJnoa3sS4ify/j++7tW4YV1yGO+4f3jqP/2MzZdbg7u625XnCBwuyV0zS5mjbPw70yWw
- DIRsj0407QJGxJpF+DzhyYsImzrLgfFKjHIf7D2Hvr9PSSvKEHk57eYpcd6+SzyqLnlz71qkjen
- N3Q+IRg9B1TvQMb3HQw==
-X-Authority-Analysis: v=2.4 cv=b5WCJNGx c=1 sm=1 tr=0 ts=6a68b731 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=NLiCwHATAAAA:8
- a=5lzg20ZYiTl3fW5vGnQA:9 a=QEXdDO2ut3YA:10 a=F9tHCgz3TLBaZgltkx5D:22
-X-Proofpoint-GUID: vNXhd7LOmNfp4YajvwJRM3XdaLa5Nu3k
-X-Proofpoint-ORIG-GUID: vNXhd7LOmNfp4YajvwJRM3XdaLa5Nu3k
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-28_03,2026-07-28_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0 impostorscore=0
- bulkscore=0 phishscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607280122
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260724124220.24152-1-22925483+botszhuang@users.noreply.github.com>
+ <CAFEAcA-q5ihYpgYtEosQ3+SgbMdw7e7=xk4motLFL-A==g1k0w@mail.gmail.com>
+ <a9ad33dc-b487-4ce7-9b8e-d437b6cc5d12@oss.qualcomm.com>
+In-Reply-To: <a9ad33dc-b487-4ce7-9b8e-d437b6cc5d12@oss.qualcomm.com>
+From: B H <huang.botsz@gmail.com>
+Date: Tue, 28 Jul 2026 22:08:27 +0800
+X-Gm-Features: AUfX_mx5Vv5DM91K48rp0bgZcpGc6s6ZOGvX3SHDJJ68-x55560VvR9PkJTpZ6w
+Message-ID: <CAJQXNd3D6R1bA65sthKMWLGkCnk0ZjJu-fcmhnJpvquS4ihe0Q@mail.gmail.com>
+Subject: Re: [PATCH] fix BCM2835_I2C_CLKT
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ philmd@mailo.com, qemu-arm@nongnu.org, sef1548@gmail.com
+Content-Type: multipart/alternative; boundary="000000000000940a8b0657ac61f4"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
+ envelope-from=huang.botsz@gmail.com; helo=mail-ot1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -175,52 +119,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--000000000000940a8b0657ac61f4
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Dear all,
 
-On 7/27/26 7:50 AM, Christian Borntraeger wrote:
-> Cornelia, Eric, Matt,
-> 
-> here are 5 more fixes for hardening QEMU against invalid input. Nothing
-> is strictly a security issues as defined in the policy. For example
-> https://qemu-project.gitlab.io/qemu/system/security.html says assert /
-> abort: If triggering the code path requires kernel privileges (or root
-> account access) in the guest, asserts/aborts in QEMU are a self
-> inflicted denial of service. These will not be treated as security
-> flaws, at most hardening bugs.
-> And if anyone can provide invalid boot loader content it can provide
-> anything to boot if secure boot is not available.
-> We should fix those anyway, probably even for 11.1
-> 
-> Conny, I did not rebuild the s390-ccw, I assume you will do that?
-> 
-> Christian Borntraeger (1):
->    hw/char/sclpconsole-lm: avoid guest triggerable assert
-> 
-> Joshua Daley (4):
->    s390x/ipl: validate num_comp against iplb length before iterating
->    pc-bios/s390-ccw: fix out-of-bounds read in iso_get_file_size()
->    pc-bios/s390-ccw: bounds-check zipl menu entry index before array
->      write
+Thanks for applying the patch and for the detailed explanation!
 
-Applied these four for 11.2, with the two typos fixed as Matt mentioned, 
-and cc'd qemu-stable.
+You are completely right=E2=80=94my commit message reasoning was flawed. QE=
+MU's
+macro doesn't change the guest's behavior, it only affects how QEMU handles
+the guest's access (logging a guest error and returning read-as-zero, as
+you noted). I appreciate you clarifying that.
 
->    pc-bios/s390-ccw: bound zipl menu strlen and replace VLA in
->      zipl_print_entry
+Regarding the register layout, since the CLKT register is at offset 0x1c
+(and assuming it's the last 32-bit register), the total memory region size
+should technically be 0x20 instead of 0x24.
 
-Will wait for a v2 on this one.
+Do you think we should also reduce the region size, as shown in the diff
+below? If it looks good to you, I can send this as a separate follow-up
+patch.
 
-Thanks!
+-- >8 --
+diff --git a/hw/i2c/bcm2835_i2c.c b/hw/i2c/bcm2835_i2c.c
+index 34de1f36e5b..5f6093087dd 100644
+--- a/hw/i2c/bcm2835_i2c.c
++++ b/hw/i2c/bcm2835_i2c.c
+@@ -222,7 +222,7 @@ static void bcm2835_i2c_realize(DeviceState *dev, Error
+**errp)
+       s->bus =3D i2c_init_bus(dev, NULL);
 
-> 
->   hw/char/sclpconsole-lm.c    |  3 ++-
->   hw/s390x/ipl.h              |  6 ++++++
->   pc-bios/s390-ccw/bootmap.c  |  6 ++++--
->   pc-bios/s390-ccw/helper.h   | 10 ++++++++++
->   pc-bios/s390-ccw/menu.c     | 36 +++++++++++++++++++++++++++++-------
->   pc-bios/s390-ccw/s390-ccw.h |  2 +-
->   6 files changed, 52 insertions(+), 11 deletions(-)
-> 
+       memory_region_init_io(&s->iomem, OBJECT(dev), &bcm2835_i2c_ops, s,
+-                          TYPE_BCM2835_I2C, 0x24);
++                          TYPE_BCM2835_I2C, 0x20);
+       sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iomem);
+       sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);
+   }
+---
 
+Best regards,
+Botsz HUANG
+Signed-off-by: botszhuang <botszhuang@gmail.com>
 
+Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> =E6=96=BC 2026=E5=B9=
+=B47=E6=9C=8827=E6=97=A5=E9=80=B1=E4=B8=80 =E4=B8=8B=E5=8D=887:54=E5=AF=AB=
+=E9=81=93=EF=BC=9A
+
+> On 27/7/26 12:04, Peter Maydell wrote:
+> > On Fri, 24 Jul 2026 at 13:51, botszhuang <huang.botsz@gmail.com> wrote:
+> >>
+> >> hw/i2c/bcm2835_i2c: Correct CLKT register offset
+> >>
+> >> The Clock Stretch Timeout (CLKT) register for the BCM2835 I2C
+> controller is actually located at offset 0x1c, not 0x20.
+> >>
+> >> The previous incorrect value caused the guest OS to read from and writ=
+e
+> to the wrong memory address when configuring the I2C timeout, which could
+> lead to unexpected controller behavior.
+> >>
+> >> Update the BCM2835_I2C_CLKT macro to match the hardware specification.
+> >
+> > Checking the datasheet, this is definitely the wrong value,
+> > so the fix is correct. I'm a bit confused by your commit message,
+> > though. The value here in QEMU can't cause the guest OS to write
+> > to the wrong memory address, because the guest OS doesn't ever
+> > see what we have defined here. It has the offset hardcoded into
+> > its own source code.
+> >
+> > It looks to me like the effect of getting this wrong is that when
+> > the guest writes to CLKT (at its actual 0x1c offset) we will log
+> > a guest error and give read-as-zero behaviour. That's not correct,
+> > but I expect for most guest OSes it'll be pretty harmless because
+> > the guest probably doesn't write the value it wants to configure
+> > and then read it back to check. (QEMU ignores the value written
+> > anyway.)
+> >
+> > I've applied this to target-arm.next.
+>
+> Should we also reduce the region size?
+>
+> -- >8 --
+> diff --git a/hw/i2c/bcm2835_i2c.c b/hw/i2c/bcm2835_i2c.c
+> index 34de1f36e5b..5f6093087dd 100644
+> --- a/hw/i2c/bcm2835_i2c.c
+> +++ b/hw/i2c/bcm2835_i2c.c
+> @@ -222,7 +222,7 @@ static void bcm2835_i2c_realize(DeviceState *dev,
+> Error **errp)
+>       s->bus =3D i2c_init_bus(dev, NULL);
+>
+>       memory_region_init_io(&s->iomem, OBJECT(dev), &bcm2835_i2c_ops, s,
+> -                          TYPE_BCM2835_I2C, 0x24);
+> +                          TYPE_BCM2835_I2C, 0x20);
+>       sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iomem);
+>       sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);
+>   }
+> ---
+>
+
+--000000000000940a8b0657ac61f4
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Dear all,<br><br><div>Thanks for applying=
+ the patch and for the detailed explanation!=C2=A0</div><div><br></div><div=
+>You are completely right=E2=80=94my commit message reasoning was flawed. Q=
+EMU&#39;s macro doesn&#39;t change the guest&#39;s behavior, it only affect=
+s how QEMU handles the guest&#39;s access (logging a guest error and return=
+ing read-as-zero, as you noted). I appreciate you clarifying that.</div><br=
+>Regarding the register layout, since the CLKT register is at offset 0x1c (=
+and assuming it&#39;s the last 32-bit register), the total memory region si=
+ze should technically be 0x20 instead of 0x24.<br><br>Do you think we shoul=
+d also reduce the region size, as shown in the diff below? If it looks good=
+ to you, I can send this as a separate follow-up patch.<br><br>-- &gt;8 --<=
+br>diff --git a/hw/i2c/bcm2835_i2c.c b/hw/i2c/bcm2835_i2c.c<br>index 34de1f=
+36e5b..5f6093087dd 100644<br>--- a/hw/i2c/bcm2835_i2c.c<br>+++ b/hw/i2c/bcm=
+2835_i2c.c<br>@@ -222,7 +222,7 @@ static void bcm2835_i2c_realize(DeviceSta=
+te *dev, Error **errp)<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;bus =3D i2c_init=
+_bus(dev, NULL);<br>=C2=A0<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0memory_region_init=
+_io(&amp;s-&gt;iomem, OBJECT(dev), &amp;bcm2835_i2c_ops, s,<br>- =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0TYPE_BCM2835_I2C, 0x24);<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0TYPE_BCM2835_I2C, 0x20)=
+;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0sysbus_init_mmio(SYS_BUS_DEVICE(dev), &amp;=
+s-&gt;iomem);<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0sysbus_init_irq(SYS_BUS_DEVICE(=
+dev), &amp;s-&gt;irq);<br>=C2=A0 =C2=A0}<br>---<br><br>Best regards,<br>Bot=
+sz HUANG<br>Signed-off-by: botszhuang &lt;<a href=3D"mailto:botszhuang@gmai=
+l.com" target=3D"_blank">botszhuang@gmail.com</a>&gt;</div><br><div class=
+=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">Philippe Mathieu-Dau=
+d=C3=A9 &lt;<a href=3D"mailto:philmd@oss.qualcomm.com" target=3D"_blank">ph=
+ilmd@oss.qualcomm.com</a>&gt; =E6=96=BC 2026=E5=B9=B47=E6=9C=8827=E6=97=A5=
+=E9=80=B1=E4=B8=80 =E4=B8=8B=E5=8D=887:54=E5=AF=AB=E9=81=93=EF=BC=9A<br></d=
+iv><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
+er-left:1px solid rgb(204,204,204);padding-left:1ex">On 27/7/26 12:04, Pete=
+r Maydell wrote:<br>
+&gt; On Fri, 24 Jul 2026 at 13:51, botszhuang &lt;<a href=3D"mailto:huang.b=
+otsz@gmail.com" target=3D"_blank">huang.botsz@gmail.com</a>&gt; wrote:<br>
+&gt;&gt;<br>
+&gt;&gt; hw/i2c/bcm2835_i2c: Correct CLKT register offset<br>
+&gt;&gt;<br>
+&gt;&gt; The Clock Stretch Timeout (CLKT) register for the BCM2835 I2C cont=
+roller is actually located at offset 0x1c, not 0x20.<br>
+&gt;&gt;<br>
+&gt;&gt; The previous incorrect value caused the guest OS to read from and =
+write to the wrong memory address when configuring the I2C timeout, which c=
+ould lead to unexpected controller behavior.<br>
+&gt;&gt;<br>
+&gt;&gt; Update the BCM2835_I2C_CLKT macro to match the hardware specificat=
+ion.<br>
+&gt; <br>
+&gt; Checking the datasheet, this is definitely the wrong value,<br>
+&gt; so the fix is correct. I&#39;m a bit confused by your commit message,<=
+br>
+&gt; though. The value here in QEMU can&#39;t cause the guest OS to write<b=
+r>
+&gt; to the wrong memory address, because the guest OS doesn&#39;t ever<br>
+&gt; see what we have defined here. It has the offset hardcoded into<br>
+&gt; its own source code.<br>
+&gt; <br>
+&gt; It looks to me like the effect of getting this wrong is that when<br>
+&gt; the guest writes to CLKT (at its actual 0x1c offset) we will log<br>
+&gt; a guest error and give read-as-zero behaviour. That&#39;s not correct,=
+<br>
+&gt; but I expect for most guest OSes it&#39;ll be pretty harmless because<=
+br>
+&gt; the guest probably doesn&#39;t write the value it wants to configure<b=
+r>
+&gt; and then read it back to check. (QEMU ignores the value written<br>
+&gt; anyway.)<br>
+&gt; <br>
+&gt; I&#39;ve applied this to target-arm.next.<br>
+<br>
+Should we also reduce the region size?<br>
+<br>
+-- &gt;8 --<br>
+diff --git a/hw/i2c/bcm2835_i2c.c b/hw/i2c/bcm2835_i2c.c<br>
+index 34de1f36e5b..5f6093087dd 100644<br>
+--- a/hw/i2c/bcm2835_i2c.c<br>
++++ b/hw/i2c/bcm2835_i2c.c<br>
+@@ -222,7 +222,7 @@ static void bcm2835_i2c_realize(DeviceState *dev, <br>
+Error **errp)<br>
+=C2=A0 =C2=A0 =C2=A0 s-&gt;bus =3D i2c_init_bus(dev, NULL);<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 memory_region_init_io(&amp;s-&gt;iomem, OBJECT(dev), &=
+amp;bcm2835_i2c_ops, s,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 TYPE_BCM2835_I2C, 0x24);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 TYPE_BCM2835_I2C, 0x20);<br>
+=C2=A0 =C2=A0 =C2=A0 sysbus_init_mmio(SYS_BUS_DEVICE(dev), &amp;s-&gt;iomem=
+);<br>
+=C2=A0 =C2=A0 =C2=A0 sysbus_init_irq(SYS_BUS_DEVICE(dev), &amp;s-&gt;irq);<=
+br>
+=C2=A0 }<br>
+---<br>
+</blockquote></div>
+</div>
+
+--000000000000940a8b0657ac61f4--
 
