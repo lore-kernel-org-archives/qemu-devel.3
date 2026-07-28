@@ -4,112 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3940C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 08:53:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8622DC53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 08:56:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wodYl-0004Di-Jk; Tue, 28 Jul 2026 04:53:11 -0400
+	id 1wodbb-0005Pm-1i; Tue, 28 Jul 2026 04:56:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wodYk-0004D5-29
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 04:53:10 -0400
-Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wodYi-0005tg-Dy
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 04:53:09 -0400
-Received: by mail-yx1-xb130.google.com with SMTP id
- 956f58d0204a3-664c6304683so3375974d50.2
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 01:53:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785228787; cv=none;
- d=google.com; s=arc-20260327;
- b=m6Vrvqz4eNCC9piwgm6dxZbUgaxkDH4jnJkz/DX1c5zsS9s7m9y9gcQlVQdKoFVz2G
- AiKqhHfplH0kqRiOPtOT+kieaN8aTDRun+Xzn8RudORRAifS38hOVdpx8loYCXfRWe1D
- 0LBHfMbV2+ay1K8vZr6uC+CP3qrJ8AhWaQGoVNdMu0hNWClN/EC1LnE73/rbhgQTnPt5
- DFau73ixkrVhZV1A0975T/Kk4sClXhMhgZ7zjt68lb3awU6aeRdj2679uMpO52ChwiW4
- E4Eg4PpUX0wMdv7r1QJnvQ4AuNepdqEk7RZN245GdynZBaN+8N6+UuFQyHyckP473lAS
- eNuw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=9nhd/cDyN21eQWwaO/mvyaQxyj43TTi12ejFrpBe9Ds=;
- fh=YG1pRJdCyEO9Oscc0oc/JMCNarb96HqgFtCqsRzM8wg=;
- b=lyFOTEBTNkNF7ZWCm3FYmzI3CFHsDrI/NE/8s0BFojKJrTzWVE1bRaMtSa936QyKvx
- 0l0/9ybH5RUKqVzyS+A2bLA+5a5KR7X0+Nfeb2hFs5E8UoOh/FMH97SL5GDGBcgmq9Oh
- 6C4Ca1zf+A2dPdCwdFKFjNhomXtAuRrcL9dHL3XblQTurAbDcXNnP1qkY6PMjLO539rJ
- TZr8axZaXAxl0mdrmOZETAROTPF4oz45rjGPAeiYhfAnn+NM2oov5gGRqsNQgcGecUAG
- uy1TzLU65IHcs1exRXZMRdTy4X/QV3f+V0Ra0oX7jqOJ1JyONRQ/WRdFk+lY9wCRxeby
- SNaQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785228787; x=1785833587; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=9nhd/cDyN21eQWwaO/mvyaQxyj43TTi12ejFrpBe9Ds=;
- b=izzQoPt4xjqZBA1OV1SJWIO4t7otcYcKESdLAqFCO/xQC/yAEpYQqVAlQSKpOCXRn1
- F6SfuqDowDxeKJ4Zsl7F8hCEDGj90VmBk+PcpjjLl7NKNpTfR2nuQ4uHI9AksLi6FKBr
- twyAdmor6oLKxtkwKqI2f9XAN+ejZjCLYP/83/5v3kYbXDeybQ146XAib1Gfzv/b6bQO
- HVsrs0kJyPQgr4y9jWzr14QXExKOVOpOrRDWuVt4AvXj0UrXYOpuXzVin2C3WYd7XiAF
- tq4Zb7G5vRSv+RG/MrAOJaAaQySd+5BgaEdubyaFrwfv5SnR3ITHzVStoOyeokSoqL/J
- sHzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785228787; x=1785833587;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=9nhd/cDyN21eQWwaO/mvyaQxyj43TTi12ejFrpBe9Ds=;
- b=LuYqPQZZ0uPasTMmsj5azg84FMs0ceOxo02Q0zcwpfaAfgBexJmY/ZmPLxZp+tHRKh
- sfT5cltS7+z+nUEzAd7bsM+xyL635f3p/ASv+wVl7wiIJGHUeVRYPQ6War8EMjmQydss
- 1mjcCuIvutbBjorgfQgjwkxXEXUwxJ3QTLlchnTCYOmIFXsSlqxd83pAztp9UI96s7AG
- 3togO7U28RXcKG3juL6gp5XWEn1RYe9gXhf9iyUSqTzNZUoerFDvx3M9jA25LqGiBkjU
- /zrNxtLUySdmwmL2HtolFtPa8WyTN+7OjsPZWrANkXDgOeZ7ujsHyE7wGKWqNywo03HS
- Xr5g==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoUDeOh4+iUK+YEbaXobywdFvZW7NIjDAnMoeEed26oQszJDJDhI8a/RvMVugRL6M7SnQ31MMvh1QQk@nongnu.org
-X-Gm-Message-State: AOJu0YzVPR4WI20ClJhvNqkiTEwXUtwHnPza5lygfbqoq0yBBfa4kyd7
- MDP1KusiEQqpupZCb4X1NLEV9Fz8kyk11rqBgo+u3uvVhhntH48cS1cJIEuOrQ5EuIdAnSVdzHx
- 2jJBLO3Rw/liqHdr4ZBPORmZaDYa1wPw=
-X-Gm-Gg: AR+sD10LxmeqanN86jyAdRVtS29Q6AzIc0so4g5l5R2bIpbPqyKzbkBFBXv2sMQA967
- 6n31d6gB8TEuYLqP4EQ2E9QAV0z+Fbethn9itvdRXwBJ3kQmeOL8jk1eWQRz5kEz7NMQhGmdbHy
- eCku2ZSYMGk9q9rQMKDyYYBGSDrHRz1Ku0KS7B/aku0wP+XzR/Q45BqijQa8weqX8ufPbkxLqns
- VvSV4mQ46PijPXvLVoy6X51IwTm5xA8uUGLXLaT2HlDo+AM1Dqu5Iea/y5BWg==
-X-Received: by 2002:a05:690c:690a:b0:81d:bc5:4624 with SMTP id
- 00721157ae682-81f99258bd4mr6005947b3.25.1785228786942; Tue, 28 Jul 2026
- 01:53:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wodbX-0005PW-Ve
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 04:56:04 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wodbV-0006X1-7h
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 04:56:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1785228953; bh=USRUjQuRxaQfizRdzTJrnPWqovNwxaPjeCGodBd2JmU=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=k5l6L2nZTBmYYqQwPV1ZuRk1yLIN0CAVTvyZlbt7obRGfXjcJ+Ajmrqeh78G/DHuh
+ h4oRBVxBL0McQ8vDNhfJoatVI3QWJgg4oUQYfkDlgdgNv7Kh2cgfrPQ1xO2I0HHC3V
+ DZ+49mN/SqGUn0mWQc4z7D/YkYhqs/aYRfSvDl6oZhk53S55pf3iAzsWXMHdQouWhK
+ Af19pFLogSdgRbWVyQPcyqcGpBZovxijcIczmTQMZjmUdqW76f2LIbcFcx6TysRg2A
+ r4fmvJFdWczUEL0FI6zV4fLBiQI4/Vd1CR25t5+r0R5s7rT80+5VtRkkxnzie0yMMd
+ 0qVAxqqM4ojqg==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id D7E991C5541;
+ Tue, 28 Jul 2026 11:55:53 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id E4FD63F83BB;
+ Tue, 28 Jul 2026 11:55:57 +0300 (MSK)
+Message-ID: <e27b1577-1dc4-4af7-8be7-079c4e86e4fa@tls.msk.ru>
+Date: Tue, 28 Jul 2026 11:55:41 +0300
 MIME-Version: 1.0
-References: <20260719211923.1079282-1-shentey@gmail.com>
- <20260719211923.1079282-3-shentey@gmail.com>
- <CAEUhbmWhqc+_7MQA3Y9ZG9vwBjsbE4-w3tsx7Ep1CbBHze3Mcw@mail.gmail.com>
- <897E12B2-A6E5-4524-9983-FA861A7FDDD3@gmail.com>
- <CAEUhbmXT9ajeFMz8_1GsCWZJU-FmkYXTPZd-pfYQ2A45Qm7hFQ@mail.gmail.com>
- <D1B4AD96-B24C-4448-9B83-8D319997E768@gmail.com>
- <26ad904f-7f15-4ccb-a9c0-3c3bc279a283@oss.qualcomm.com>
- <d4ed43db-6c6b-4269-b6da-38320d340cc6@oss.qualcomm.com>
-In-Reply-To: <d4ed43db-6c6b-4269-b6da-38320d340cc6@oss.qualcomm.com>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Tue, 28 Jul 2026 16:52:54 +0800
-X-Gm-Features: AUfX_myCTwhAqnIvEnEdNS-E53DTZNwtt4OMwBsv33S7Xdn39KvRVu8BAdY-SiE
-Message-ID: <CAEUhbmXmK_g2Ds5ij2VQmiYWx7AjqQ3qPRhYaKttZUtAd-5dKw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] hw/sd/sdhci: Extract uSDHC-specific quirk
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- qemu-block@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yx1-xb130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] virtio: stop migrating num_default, validate vring.num on
+ load
+To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
+Cc: Cornelia Huck <cohuck@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+References: <3e6a7c403f93acc37af6a6332fdc65049ae218fb.1784894327.git.mst@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <3e6a7c403f93acc37af6a6332fdc65049ae218fb.1784894327.git.mst@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,113 +113,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 28, 2026 at 4:15=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> Hi Bin,
->
-> On 21/7/26 12:42, Philippe Mathieu-Daud=C3=83=C2=A9 wrote:
-> > On 21/7/26 12:29, Bernhard Beschow wrote:
-> >>
-> >>
-> >> Am 21. Juli 2026 08:38:19 UTC schrieb Bin Meng <bmeng.cn@gmail.com>:
-> >>> Hi Bernhard,
-> >>>
-> >>> On Tue, Jul 21, 2026 at 5:11=E2=80=AFAM Bernhard Beschow <shentey@gma=
-il.com>
-> >>> wrote:
-> >>>>
-> >>>>
-> >>>>
-> >>>> Am 20. Juli 2026 14:50:24 UTC schrieb Bin Meng <bmeng.cn@gmail.com>:
-> >>>>
-> >>>> Hi Bin,
-> >>>>
-> >>>> Thanks for yor reviews and R-b tags!
-> >>>>
-> >>>>> On Mon, Jul 20, 2026 at 5:19=E2=80=AFAM Bernhard Beschow
-> >>>>> <shentey@gmail.com> wrote:
-> >>>>>>
-> >>>>>> In Linux, the ESDHC_MIX_CTRL qirk is guarded by esdhc_is_usdhc()
-> >>>>>> while
-> >>>>>> the eSDHC code path uses the standard SDHC interface. Extract the
-> >>>>>> quirk
-> >>>>>> into a new `usdhc_write()` function.
-> >>>>>>
-> >>>>>> Fixes file system corruption on emulated i.MX53 where Linux'
-> >>>>>> esdhc_is_usdhc() returns false. The same likely happens on e500 an=
-d
-> >>>>>> imx25-pdk machines.
-> >>>>>>
-> >>>>>> Fixes: 75e98bc4f859 ("hw/sd/sdhci: Add TYPE_FSL_ESDHC_BE")
-> >>>>>> cc: qemu-stable
-> >>>>>> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> >>>>>> ---
-> >>>>>>   hw/sd/sdhci.c | 73 ++++++++++++++++++++++++++++++
-> >>>>>> +--------------------
-> >>>>>>   1 file changed, 44 insertions(+), 29 deletions(-)
-> >>>>>>
-> >>>>>> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-> >>>>>> index c86dfa281f..e58a610397 100644
-> >>>>>> --- a/hw/sd/sdhci.c
-> >>>>>> +++ b/hw/sd/sdhci.c
-> >>>>>> @@ -1795,34 +1795,6 @@ esdhc_write(void *opaque, hwaddr offset,
-> >>>>>> uint64_t val, unsigned size)
-> >>>>>>           sdhci_write(opaque, offset, value, size);
-> >>>>>>           break;
-> >>>>>>
-> >>>>>> -    case ESDHC_MIX_CTRL:
-> >>>>>> -        /*
-> >>>>>> -         * So, when SD/MMC stack in Linux tries to write to
-> >>>>>> "Transfer
-> >>>>>> -         * Mode Register", ESDHC i.MX quirk code will translate i=
-t
-> >>>>>> -         * into a write to ESDHC_MIX_CTRL, so we do the opposite =
-in
-> >>>>>> -         * order to get where we started
-> >>>>>> -         *
-> >>>>>> -         * Note that Auto CMD23 Enable bit is located in a wrong
-> >>>>>> place
-> >>>>>> -         * on i.MX, but since it is not used by QEMU we do not ca=
-re.
-> >>>>>> -         *
-> >>>>>> -         * We don't want to call sdhci_write(.., SDHC_TRNMOD, ...=
-)
-> >>>>>> -         * here because it will result in a call to
-> >>>>>> -         * sdhci_send_command(s) which we don't want.
-> >>>>>> -         *
-> >>>>>> -         */
-> >>>>>> -        s->trnmod =3D value & UINT16_MAX;
-> >>>>>> -        break;
-> >>>>>> -    case SDHC_TRNMOD:
-> >>>>>
-> >>>>> Looks like this register is not eSDHC specific?
-> >>>>
-> >>>> Not quite sure what you mean exactly. The SDHC_TRNMOD isn't eSDHC
-> >>>> specific but as per the comment above trnmod partial handling is
-> >>>> deferred here, i.e. needs to be intercepted.
-> >>>
-> >>> If I read the Linux driver correctly, I think we should do something
-> >>> like below when writing to SDHC_TRNMOD:
-> >>>
-> >>>   case SDHC_TRNMOD:
-> >>>       if (is_usdhc) {
-> >>>           val |=3D s->trnmod;
-> >>>       }
-> >>>       sdhci_write(opaque, offset, val, size);
-> >>>       break;
-> >>>
-> >>> Because for eSDHC, the transfer mode is already passed in the value,
-> >>> and oring previous s->trnmod may cause some bits being set to old
-> >>> previous value unexpectedly. Please double check.
-> >>
-> >> By moving out of esdhc_write() into a dedicated usdhc_write() method
-> >> we achieve exactly that, no?
->
-> What is your final tought, should we proceed with v2?
+On 7/24/26 14:58, Michael S. Tsirkin wrote:
+> num_default tracks the allocation size of used_elems, set by
+> virtio_add_queue(). Migrating it via the ringsize subsection is
+> wrong: a migration stream (malicious or simply from a different
+> configuration) can inflate num_default so that
+> virtio_queue_set_num() accepts oversized values, leading to OOB
+> access on the used_elems array.
+> 
+> It is not even migrated consistently: a configuration with a
+> smaller num_default could thinkably migrate and work but in the
+> common case of num == num_default the value is not actually sent.
+> 
+> Stop migrating num_default: make virtio_ringsize_needed() return
+> false so the subsection is never sent, and use VMSTATE_UNUSED to
+> consume the field from old streams without applying it. The
+> destination keeps its local num_default from virtio_add_queue(),
+> which matches the actual allocation.
 
-Yes, I think so.
+What happens here with an attempt to migrate to an earlier
+version of qemu, without this patch applied, but with non-
+default values of vring.num?
 
-Regards,
-Bin
+Maybe we should send the values still, but always validate
+them on load?
+
+Also, what should we do here on older (stable) releases?
+It raises the same question, how about migrating back to
+a version without this change?
+
+Thanks,
+
+/mjt
+
+> Also validate vring.num against num_default when loading the core
+> virtio state, rejecting streams that supply a queue size larger
+> than the locally allocated maximum.
+> 
+> Fixes: 46c5d0823d ("virtio: ring sizes vs. reset")
+> Fixes: 50e5ae4dc3 ("migration/virtio: Remove simple .get/.put use")
+> Cc: Cornelia Huck <cohuck@redhat.com>
+> Cc: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> ---
+>   hw/virtio/virtio.c | 16 +++++++---------
+>   1 file changed, 7 insertions(+), 9 deletions(-)
+> 
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index 94ddbfd09f..437c001a04 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -2817,14 +2817,6 @@ static bool virtio_packed_virtqueue_needed(void *opaque)
+>   
+>   static bool virtio_ringsize_needed(void *opaque)
+>   {
+> -    VirtIODevice *vdev = opaque;
+> -    int i;
+> -
+> -    for (i = 0; i < VIRTIO_QUEUE_MAX; i++) {
+> -        if (vdev->vq[i].vring.num != vdev->vq[i].vring.num_default) {
+> -            return true;
+> -        }
+> -    }
+>       return false;
+>   }
+>   
+> @@ -2913,7 +2905,7 @@ static const VMStateDescription vmstate_ringsize = {
+>       .version_id = 1,
+>       .minimum_version_id = 1,
+>       .fields = (const VMStateField[]) {
+> -        VMSTATE_UINT32(vring.num_default, struct VirtQueue),
+> +        VMSTATE_UNUSED(sizeof(uint32_t)),
+>           VMSTATE_END_OF_LIST()
+>       }
+>   };
+> @@ -3593,6 +3585,12 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
+>   
+>       for (i = 0; i < num; i++) {
+>           vdev->vq[i].vring.num = qemu_get_be32(f);
+> +        if (vdev->vq[i].vring.num > vdev->vq[i].vring.num_default) {
+> +            error_report("VQ %d vring.num %u exceeds allocated max %u",
+> +                         i, vdev->vq[i].vring.num,
+> +                         vdev->vq[i].vring.num_default);
+> +            return -1;
+> +        }
+>           if (k->has_variable_vring_alignment) {
+>               vdev->vq[i].vring.align = qemu_get_be32(f);
+>           }
+
 
