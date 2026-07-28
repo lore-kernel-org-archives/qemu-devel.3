@@ -4,69 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B395C54F4C
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 14:46:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB371C53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 14:47:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woj4C-0005G6-Pq; Tue, 28 Jul 2026 10:46:00 -0400
+	id 1woj4r-0005Qj-CJ; Tue, 28 Jul 2026 10:46:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1woj44-0005DI-Jq
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:45:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1woj42-0002AZ-NR
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:45:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785249949;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=tfCKWL3Wn9ifQiaSgFcXafwGlP71xrdDuMdmzX3iepQ=;
- b=QynIXXXuyzzyLyprXa5XnVydCbJrMaT0lr8KWA1tYtthb6B+hhwlUKCTCksSOiOCdlU16W
- Ocb05Hi/3xu3PPqLNrLR/7wKYiH8mFTIOoMYhdkSYMk8If5kdfXhvV2sUyRwKL7BbTbCcN
- U4tmQz1ucatRXQO31SIOqJKEmX9cYtk=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-CsfkOxq3OXeXq5jlm4x13A-1; Tue,
- 28 Jul 2026 10:45:44 -0400
-X-MC-Unique: CsfkOxq3OXeXq5jlm4x13A-1
-X-Mimecast-MFC-AGG-ID: CsfkOxq3OXeXq5jlm4x13A_1785249943
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0F07E1956095; Tue, 28 Jul 2026 14:45:43 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.49.201])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D4484414; Tue, 28 Jul 2026 14:45:40 +0000 (UTC)
-Date: Tue, 28 Jul 2026 16:45:38 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: "Denis V. Lunev" <den@openvz.org>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-stable@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH v3 0/1] coroutine: fix lost wakeup in qemu_co_sleep_wake()
-Message-ID: <amjAkrzDhsOiPENz@redhat.com>
-References: <20260610115850.2410566-1-den@openvz.org>
+ (Exim 4.90_1) (envelope-from <ankur98saini@gmail.com>)
+ id 1woibw-00085I-D4
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:16:48 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ankur98saini@gmail.com>)
+ id 1woibu-0004pC-R8
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 10:16:48 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-38511175ad3so2719317a91.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 07:16:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785248205; x=1785853005; darn=nongnu.org;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=U2zaWvTtl44HTglvhMoWXik3ygFdc89/lqZhyO6KZ4o=;
+ b=fmdlQR1EnIE3B+zwkQmp83zy+hXvADD9xWkYqIS2ASfRoJY+E29cvEy4FmBGjtTSWi
+ dwRq7DFOfnOl5KFfNSv0eH5zbFzbEiJbqY+iuQ4ndQtDPIBwXTaob4UrDLC7+XJxKRuU
+ gquFCRriNlRUTN7am+WzKLd6OjbcX/cklYVVokWOSPcqDSeSX6j/QiHxVkvyXk60Ksas
+ KGgr/wC2BGeldzprWU9QxWmyrFQkXWenT1wFGYNxTBJ3e3uSAw38ohjv6DM/87BFjFo9
+ gXBNB/I1jgbw57JzMdR4vQTz0gRhzxHirMlO3PqDRXK1j/DeQcRgmfugX0RCrE+AZvwo
+ nIJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785248205; x=1785853005;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=U2zaWvTtl44HTglvhMoWXik3ygFdc89/lqZhyO6KZ4o=;
+ b=ilczNTZ95qk7YdcTpxVhdpkRaDvikeMDwMwHnM7CzkSSz+KNiW+v/q6Qu5StvL+sB5
+ vEu7KFJjtsOUioGGokgzcgQ4ccIHzpb4FEouHF2007L6lViFYxnuJt40PxHQKB10UG2/
+ iqz6/BL8kzo3Vu8/nHBkdrs+0laoWIOHc+DCVq4AS825MGYs+1copWwgig7abQuSpCY0
+ /oi6Jn4hHdzHexnki81msmzs0ei4eyob14O/igWHkF2nT/80FQP75WTr3mKuRzl7uUUy
+ TU9xUGr1DDnbsUvzbhb9Dh/rYfW5Ms/46qEPgVub4FuXyNBePbYGY7CiaesWU+ax+Xpr
+ 8PoQ==
+X-Gm-Message-State: AOJu0YwT+CO6PZUe+8b4JOUO5JzVgdg7/QkhvbMex1Q0K7I5rsrajtWy
+ aFCSHk+c59yxVFmDISyZCwASvJorF90koMjwWYm0cROZznNOH1kckGLanMZCpxyj
+X-Gm-Gg: AR+sD12BXC58HSc2OLFfmfRh7mm2OVjmY71JFcpN29zJtqxRbXKkWe1vnOcUWSGbFBI
+ yx7CZee5dBNn7JHzoU0XirvqTcRHlmKHT8+D+lx2zdVgictXnZc1jTm9h7u1Q5cXTXv06HITd/L
+ updMp/ZWSRGWw3cjs/Mpr4TOPjiS30C1FdbkGmufAXtJ4s9IT/AIcjv8cFDX2UM4/jINfzN9OCj
+ 0o1vsBGEdUsRrrRdBSyL68dpulbp0De6+hrIiwSk3PvFJUh3vw/SNduFco3GbHj84J7/f2EIL1F
+ 5dpx90vCnuTHIsKbqkzMsBEPcBgBLjwwf5782+/KLkugqHZN6mQytmG0ml4KVTFf2iJlTBvBn9f
+ hWNtPYQI5xstHJ07LQoB0Mt3eZDv2BHlnqnMbbKr4tx7DhC8eA5wcP/dP1cvhSqJ5hMO02VL/lL
+ eXbndsvoshVV9t+ZJ24FdbxQ==
+X-Received: by 2002:a17:90b:6cb:b0:38e:e0b:320d with SMTP id
+ 98e67ed59e1d1-38f6a480a61mr2844239a91.41.1785248204865; 
+ Tue, 28 Jul 2026 07:16:44 -0700 (PDT)
+Received: from [127.0.1.1] ([49.43.137.199]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-314bc413766sm45998740eec.8.2026.07.28.07.16.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 Jul 2026 07:16:44 -0700 (PDT)
+From: Ankur Saini <ankur98saini@gmail.com>
+Date: Tue, 28 Jul 2026 19:46:26 +0530
+Subject: [PATCH] virtio-gpu: reject requests with short/truncated control
+ headers
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260610115850.2410566-1-den@openvz.org>
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260728-virtio-gpu-short-header-v1-1-af19a00b100d@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MMQqAMAxA0atIZgNaxIpXEYdg0zaLlVRFkN7d4
+ viG/1/IrMIZ5uYF5VuypL2ibxvYIu2BUVw1mM6MnTUT3qKnJAzHhTkmPTEyOVYc7EjUO+LBW6j
+ 1oezl+c/LWsoHVf5LamkAAAA=
+X-Change-ID: 20260728-virtio-gpu-short-header-476aa1dae4f7
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Ankur Saini <ankur98saini@gmail.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1785248201; l=2028;
+ i=ankur98saini@gmail.com; s=20260728; h=from:subject:message-id;
+ bh=qIndgFbaTJljNIzm/aezZhwlfPR+k3VUJ5+5SD8sUjI=;
+ b=tSzKEL36AkFeodx7ZrcwAfiJshueff6QoTSW0gR69VBK97pWFnp3ltpu+yDX5KvFQ95loLXj4
+ zryVNmARLhODkBi+NtIzxUzhuuTVHaaPG+ub1FATGV3LQk6wB9BIIJw
+X-Developer-Key: i=ankur98saini@gmail.com; a=ed25519;
+ pk=fiA1ENLrWfuTIKes9f/fn/hIbq1fqEHYxopa8LdM/8s=
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=ankur98saini@gmail.com; helo=mail-pj1-x102e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 28 Jul 2026 10:46:14 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,15 +113,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 10.06.2026 um 13:58 hat Denis V. Lunev geschrieben:
-> Changes since v2
-> ----------------
->   * Drop the redundant fast-path check in qemu_co_sleep(); the publish
->     cmpxchg already consumes a pending wake (Kevin).
->   * Add a deterministic regression test, no threads or timers needed.
+A control request shorter than virtio_gpu_ctrl_hdr can leave cmd_hdr
+partially initialized. If the supplied bytes set the fence flag, stale
+fence metadata may later be returned to the guest.
 
-Thanks, applied to the block branch.
+Validate the common header length before dispatch. Clear cmd_hdr and
+complete malformed requests with ERR_INVALID_PARAMETER so stale fields
+cannot reach the response.
 
-Kevin
+Fixes: CVE-2026-18054
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4094
+Reported-by: Ankur Saini <ankur98saini@gmail.com>
+Signed-off-by: Ankur Saini <ankur98saini@gmail.com>
+---
+A control request shorter than virtio_gpu_ctrl_hdr can leave cmd_hdr
+partially initialized. If the supplied bytes set the fence flag, stale
+fence metadata may later be returned to the guest.
+
+Validate the common header length before dispatch. Clear cmd_hdr and
+complete malformed requests with ERR_INVALID_PARAMETER so stale fields
+cannot reach the response.
+---
+ hw/display/virtio-gpu.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 4d46a4eb10..15a845eff6 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -1105,8 +1105,14 @@ void virtio_gpu_process_cmdq(VirtIOGPU *g)
+             break;
+         }
+ 
+-        /* process command */
+-        vgc->process_cmd(g, cmd);
++        if (unlikely(iov_size(cmd->elem.out_sg, cmd->elem.out_num) <
++                     sizeof(cmd->cmd_hdr))) {
++            memset(&cmd->cmd_hdr, 0, sizeof(cmd->cmd_hdr));
++            virtio_gpu_ctrl_response_nodata(
++                g, cmd, VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER);
++        } else {
++            vgc->process_cmd(g, cmd);
++        }
+ 
+         /* command suspended */
+         if (!cmd->finished && !(cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_FENCE)) {
+
+---
+base-commit: 299e7557ed15a9a325620698add379a3ce2d1d95
+change-id: 20260728-virtio-gpu-short-header-476aa1dae4f7
+
+Best regards,
+-- 
+Ankur Saini <ankur98saini@gmail.com>
 
 
