@@ -4,102 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40E65C54EFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 09:01:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1733C54EFC
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 09:02:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wodgO-0006qZ-W5; Tue, 28 Jul 2026 05:01:05 -0400
+	id 1wodhI-0007G9-MX; Tue, 28 Jul 2026 05:02:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1wodgM-0006qJ-U2
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 05:01:02 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1wodgK-0007Fw-Tu
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 05:01:02 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66S8uIvN1007464; Tue, 28 Jul 2026 09:00:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=corp-2025-04-25; bh=aUI4voTxK7Lrl9nsAqoACXgBMMhTP
- WyG5Bh3JpmCAG4=; b=R6WADr4bCoRurno2UmdImCvLOfiLvzuF9+mdH4ZCk+qWS
- VrRwN1QotiBrezpSNypRUjt+ltx3zpTFGZvY1DSzG3jybI7C+GQ+sSdJsgCRFzlR
- YrPcJpS3y5z/+FSfV1V8KBTp6pA2w5SslT1Iapns9WXoAt3zcArQ6v67R+HGDisd
- E4dfd6X/VOLyUPQcADzNcX1WPWbOntHTODGYIvrlEKR3TzHwKsU3IDrwDSU5rSl+
- AVeZgbLp/K56E2Soz4dZPsr/av0E2BjZUwnidkI8Ve1qfmfAKLd8raMhbRVH0KnY
- +7KKg5qbRzkC8HcN239MTtRJt42oG8euDdIimsGeg==
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4fmqyybfwv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 28 Jul 2026 09:00:54 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
- with ESMTP id 66S8tYvv027466; Tue, 28 Jul 2026 09:00:54 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 4fnh6peurk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 28 Jul 2026 09:00:54 +0000 (GMT)
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 66S90r8d005792;
- Tue, 28 Jul 2026 09:00:53 GMT
-Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 4fnh6peuqt-1; Tue, 28 Jul 2026 09:00:53 +0000 (GMT)
-From: Dongli Zhang <dongli.zhang@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: dave@treblig.org, peterx@redhat.com, farosas@suse.de,
- maciej.szmigiero@oracle.com, mark.kanda@oracle.com, bchaney@akamai.com,
- joe.jin@oracle.com
-Subject: [PATCH v3 1/1] migration/cpr: Add HMP support for cpr-transfer
-Date: Tue, 28 Jul 2026 01:59:03 -0700
-Message-ID: <20260728085903.173265-1-dongli.zhang@oracle.com>
-X-Mailer: git-send-email 2.43.5
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wodhH-0007Ff-6d
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 05:01:59 -0400
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wodhF-0007YU-H8
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 05:01:58 -0400
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-667971437d6so4309315d50.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 02:01:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785229316; cv=none;
+ d=google.com; s=arc-20260327;
+ b=cfQI/qrG2/plKY7e0NySasBLJRkLLpiqCYG3/LOHnvqW/UJKjlZO7FOY48OlsUiiKg
+ ICOG2WTlxtk91Z5O4/HqcNjDy4dbuhyvnJWRRFLD1MhQYOqBNIKtNG3uHH0jw++ijbvY
+ aqE3m2eizqGVs3pYGRMHIM7qKdKTMU1GePvPXCMekXa0UNBk0G+R3Gt8cAHJfy1IAlUy
+ 1uuM20MnOauC1SOvaJmOAaRsLom24wCQYRwW+j3iTIsTDPspd/asERF6FbKxt/zK/XDu
+ ZDAEXBWpqKKxfEIboY950pFpUrgULdO644x4sZuMZtH1jO1ywkhNHiafCZigwcHS/R0s
+ Vpvw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=/O1e1QgCmvZVbsVP7BYBNHDqnpIPp2EA9lqFhqaqi/w=;
+ fh=4II/KbelIFK+SHhW1nZ+hm8cDILvv9DtoWip4ODhj8c=;
+ b=iFAgsqyxClJKnOX5reDLHFsGVwVERB7bNJJXLXHHapTLJNt+hN8xKASXDwBSkirErQ
+ J6bExChACianhPKdVTT1JL2xZdPQaiLzs78SkkTtjskxcyrqqB9PtQXv1vYn/1+NCx5Z
+ b+soCJHKxhakjTtYWk1Tji4eCpx8DFUTmpqikTWz4AAl7nJrQMjF6EVnRndBuPfKT33J
+ cQGWCWPeJTi/b3jtqOHhWDXaMJ4Zh29YZnAJF36jjwxxIp+JteJ1SPGYH+wcEzLabJWe
+ K9P6+nW+Ij3VqTOAcFZU2PP6raEvowdiQwlJ/NCbFqpbmk5hsJvyFv4y3nOk1vvHmuh5
+ GxEQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1785229316; x=1785834116; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=/O1e1QgCmvZVbsVP7BYBNHDqnpIPp2EA9lqFhqaqi/w=;
+ b=PspjOYpSu7+Y/tnJLW6qkrqDXC9Pw7lVR1F7CXl4R9zwgIYLIK23n8CA8nS0A5Havh
+ t9B8YjMbZXwdFwLo/KW4c03sugLHRI+oBkG4FRduRvVAyfrDQxSiSkW2l2MGag404EhA
+ uTFY9TTIyywNtJ6QwLmA5L2O6q+6uUSulGEWCp9vzm6glYfOrV3mElwQ2ND+UBUeciAm
+ GhPWZqNZPEW3SrLpJVCqm9uRN/F8S4VZv9/K2DuOvzwfNH3kTZ2SIvm2cGCSawI/d6jK
+ QzoXRse/djJIh7XzstqeSNTULipn6TB/lE++O0/AOwx/C0TGAoRqQ/6XkTSgEp5/lBGK
+ 8VrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785229316; x=1785834116;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=/O1e1QgCmvZVbsVP7BYBNHDqnpIPp2EA9lqFhqaqi/w=;
+ b=j0cULtVeDmiZh3soxXaXGcLofafkOGcukd98HZt4BEs+NwPnx1W5As2y/o0+UZjBN9
+ Eh7ZzqMALhPP7FNzNF60lZflZa6Wn7VQoWaqt9+K5CKTpg97IjkU8Vr7ehJLMqZ9tafS
+ afYbO9tBQ/gDlMoAmBUtF/ZZkqEpBovNAsHZkoG8C1JY6JN0U/S0tDWhrWr37m9aFqCz
+ rK4j9QAArKgAsN7/mN7pjoj2VMApweMFB2aoMTnwImMQ/brVJj7GLVzCdKq9OhFEeIw2
+ usd9+WpvspmEy1vEjc+VvgerFHV2LPPuYbnX6kqdhoiad8fmepd99MJF9Q2/Hb8vuzbc
+ 6k5A==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrwDI3iI4Oz9wKSjHVnWu6FqYwMRsKrqOyfK4InDG+oeh4VmcyX/kqz5h/2a/MSYONoMbt++qT4q9PR@nongnu.org
+X-Gm-Message-State: AOJu0Yy4xqH1EllaK2uBe2VSR6clewlYjoPfvZ4IOv8fHvj/9hEuHuMv
+ MkWo4XapEujUTI+1fpw3PagjmoRlEK2lgsbx1ICIhfzgiSj2idaFLujTgt7zt+AXyKFDnwi3578
+ zu/dFlMyPdqIXGOR7jEfHCgU6viyK2uXBcuwwlQrK+w==
+X-Gm-Gg: AR+sD13ub9vJOk/ZD+Gjkui/gKhXDuTqcWbHUdUaO0AwWqEc4olzfzoIjC1p9Urxt0t
+ c/fQK/W1VehfSYpb0rArlGhAxUYigREavt8P8Ybdc1g2cM70szLd2dgMCOGO92DCUdehn3Eekke
+ OTyznlpBTbL5Sw07UEjXlXoLNqvVb+Cy6QTqk0KF4wtiwrsCWo8sJM1rH9fyfB/GOQ2s29L1NmJ
+ HulQlGZU1IGtt7FoBWBYWO6YeyGLzc3mOBKs9HfuBibjHzIgd7PFOH3zvDwZdb3DPQ4zmJ0sg8m
+ OletmJUgvnhJDiiOPU0THpV187IfRQLq7OFuJyYsebSTQg==
+X-Received: by 2002:a53:c70c:0:b0:668:111:b895 with SMTP id
+ 956f58d0204a3-6690580e328mr291405d50.83.1785229316193; Tue, 28 Jul 2026
+ 02:01:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-28_02,2026-07-27_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- mlxlogscore=999 mlxscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0
- bulkscore=0 suspectscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2606160000 definitions=main-2607280077
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDA3NiBTYWx0ZWRfX5PqkZfBB2f63
- K2hY5bwHCzbCmlfbNDeRbC+s5DXPXRwBbPT3YcTurbZqZ8+Xa3oQgVPi4gahcKCQTaQdhCblQzb
- pE5/5P5+4bdHtnfCEZ9JLm+TwB76oY9dv0oDICulx3VNp0lpC3Ao
-X-Proofpoint-GUID: 8rdIexzi3YyIRJpHyCl7BXNJOPIrhq53
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDA3NiBTYWx0ZWRfX70xdabhyQKpV
- VpNRkn1PfoK4JDG6EaBRgWIPnBbSWVl3JFuWlF2E2TFXO5bhD5l2gNz9cCuFcitKsOK3EKq5C3L
- yYQtHq3M8r/o3Bii+CsrC7VVG/jzZw18yGBjEQ4Zuv56oY+JIlQ6Z0s+ovogGsNoxxudG2drr1w
- mIkV7uPE3lIlMGGJ8+bdd/3ZH5kKsabSLdpw2H2WtcdE7s9Jz79ylosJrYH9yXubKIGwDayYoJt
- 0s0lMKoFmmyaIye4UilFpAnHuhIak7xxE6PVZt4PF2KE2PtMvu4DhQafbKW0OutaHEyEbZzwzne
- S94bfEF0G06prBZ7RNkymoGoOFLqBS4MSgkxxBXX45raxPLuskV5dvYHrNotCPfrHPnMQYLklnr
- 7oEYvUoGLEp1E6NGMM/9xKpoYvMXXeVh9NxAUDjnpr4eyswiVS1jGCxrC5OMMR+UyPnyhKKK4p4
- I9Vcbdb1oWfDItdIdLOflsZwBtCH5GfgbkVVhhtA=
-X-Authority-Analysis: v=2.4 cv=HNnz0Itv c=1 sm=1 tr=0 ts=6a686fc7 b=1 cx=c_pps
- a=zPCbziy225d3KhSqZt3L1A==:117
- a=zPCbziy225d3KhSqZt3L1A==:17
- a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=BqU2WV_vvsyTyxaotp0D:22 a=yPCof4ZbAAAA:8 a=3WJfbomfAAAA:8
- a=UmWCymfRQi47eAz9EPkA:9 a=1cNuO-ABBywtgFSQhe9S:22 a=5yU3S35YU4bGjq-dph-N:22
- a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:12114
-X-Proofpoint-ORIG-GUID: 8rdIexzi3YyIRJpHyCl7BXNJOPIrhq53
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260727032649.145381-1-gshan@redhat.com>
+ <20260727032649.145381-3-gshan@redhat.com>
+ <CAFEAcA9_tDRAd97z4UtNhFPK+fMbq37LJhWTSmD5cueo61hvvg@mail.gmail.com>
+ <0a384d67-fc56-4a21-9d0e-25f218a45228@redhat.com>
+In-Reply-To: <0a384d67-fc56-4a21-9d0e-25f218a45228@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 28 Jul 2026 10:01:43 +0100
+X-Gm-Features: AUfX_mzZaSlhFOGmRL7hAVNwbkrAj7yyDQ20dte6sSEpFsYt_seZpNpIhuS5X60
+Message-ID: <CAFEAcA9HbTSj9cJfv8o=jYSuPhScr-RVKWCos4kpUJ+T1S6g5Q@mail.gmail.com>
+Subject: Re: [PATCH v4 2/3] system/memory: Use qemu_ram_move() for directly
+ accessible regions
+To: Gavin Shan <gshan@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, peterx@redhat.com, 
+ mst@redhat.com, philmd@oss.qualcomm.com, richard.henderson@linaro.org, 
+ alex@shazbot.org, berrange@redhat.com, philmd@mailo.com, david@kernel.org, 
+ clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com, jugraham@redhat.com, 
+ liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn, shan.gavin@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,114 +123,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently the cpr-transfer source QEMU instance cannot be driven entirely
-via HMP.  The source must use QMP in order to specify both the
-main migration channel and the CPR channel.
+On Tue, 28 Jul 2026 at 04:01, Gavin Shan <gshan@redhat.com> wrote:
+>
+> On 7/27/26 10:51 PM, Peter Maydell wrote:
 
-Extend the HMP migrate command with an optional CPR channel URI. When the
-migration mode is cpr-transfer, HMP uses this URI to build a
-CPR MigrationChannel in addition to the main migration channel. The new
-option is rejected unless the migration mode is cpr-transfer, so existing
-HMP migrate usage is unchanged.
+> >> +void qemu_ram_move(void *dst, const void *src, size_t n)
+> >> +{
+> >> +    uintptr_t test, len;
+> >> +
+> >> +    if (src == dst || n == 0) {
+> >
+> > I think we should not bother testing for src == dst. It's
+> > vanishingly unlikely to actually happen, and if it does
+> > happen then the code will work fine, and it's probably better
+> > to actually do the access in that case than to skip it.
+> >
+>
+> We can drop the check of (src == dst), but it will introduce inconsistent
+> behaviors. For example, qemu_ram_move(0x1, 0x1, 0x2) is finally turned to
+> memmove(0x1, 0x1,0x2) where no memory movement happens in glibc::memmove(),
+> but qemu_ram_move(0x0, 0x0, 0x2) is turned to qatomic_set((uint16_t *)dst,
+> qatomic_read((uint16_t *)src)) where we do have memory movement happening.
+> So I would like to keep the check of (src == dst) in order for the consistent
+> behaviors.
 
-For example, source QEMU HMP commands can be something like below. The
-"-c unix:/tmp/cpr.sock" is for CPR URI.
+Well, it depends on which kind of consistency you want.
+If we do the src == dst check, then we have the inconsistency
+that a small aligned access always happens exactly once,
+*unless* it happens that src == dst, in which case it doesn't
+happen even though the caller asked for it.
 
-(qemu) migrate_set_parameter mode cpr-transfer
-(qemu) migrate -c unix:/tmp/cpr.sock tcp:0:50002
+You can see this in the documentation comment I suggested above:
+if you don't check 'src == dst' then you can document it as
+"memmove, plus for a small access where src and dst are naturally
+aligned we guarantee it to happen exactly once atomically".
+If you do check src == dst then it gets more complicated,
+because you have to say "memmove, plus for a small access
+where src and dest are naturally aligned *and* src != dst then ...".
 
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-Acked-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
----
-v1->v2:
-  - Use the '-c' option in the HMP command reference.
-  - Use "a second uri can only be used in cpr-transfer mode" as error
-    message.
-v2->v3:
-  - Use "-c can only be used in cpr-transfer mode".
-  - Add Reviewed-by and Acked-by.
+I think that because it's the small sized accesses where we
+know that it might be necessary to really actually do the
+access, that we should do that also for src == dst.
 
- hmp-commands.hx                | 12 ++++++++----
- migration/migration-hmp-cmds.c | 18 ++++++++++++++++++
- 2 files changed, 26 insertions(+), 4 deletions(-)
+> >> +    test = (uintptr_t)src | (uintptr_t)dst | n;
+> >> +    len = test & -test;
+> >
+> > What is this doing? I am not a fan of clever bit twiddling
+> > that isn't commented to explain itself. Readers of the code
+> > shouldn't have to go off and search for an explanation of what
+> > is going on.
+> >
+>
+> The following comments will be added for (v5).
+>
+>      /*
+>       * Maximal length of aligned access that are determined by @src,
+>       * @dst and @n
+>       */
 
-diff --git a/hmp-commands.hx b/hmp-commands.hx
-index 7ae2468a3d..7f43cf537f 100644
---- a/hmp-commands.hx
-+++ b/hmp-commands.hx
-@@ -928,16 +928,17 @@ ERST
- 
-     {
-         .name       = "migrate",
--        .args_type  = "detach:-d,resume:-r,uri:s",
--        .params     = "[-d] [-r] uri",
-+        .args_type  = "detach:-d,resume:-r,uri-cpr:-cs,uri:s",
-+        .params     = "[-d] [-r] [-c uri-cpr] uri",
-         .help       = "migrate to URI (using -d to not wait for completion)"
--		      "\n\t\t\t -r to resume a paused postcopy migration",
-+		      "\n\t\t\t -r to resume a paused postcopy migration"
-+		      "\n\t\t\t -c to specify a CPR URI for cpr-transfer mode",
-         .cmd        = hmp_migrate,
-     },
- 
- 
- SRST
--``migrate [-d] [-r]`` *uri*
-+``migrate [-d] [-r] [-c uri-cpr]`` *uri*
-   Migrate the VM to *uri*.
- 
-   ``-d``
-@@ -945,6 +946,9 @@ SRST
-     query an ongoing migration process, use "info migrate".
-   ``-r``
-     Resume a paused postcopy migration.
-+  ``-c`` *uri-cpr*
-+    Specify the CPR URI for cpr-transfer mode. It must be a UNIX domain
-+    socket.
- ERST
- 
-     {
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index b04fc4489f..b5eb27467c 100644
---- a/migration/migration-hmp-cmds.c
-+++ b/migration/migration-hmp-cmds.c
-@@ -837,9 +837,11 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
-     bool detach = qdict_get_try_bool(qdict, "detach", false);
-     bool resume = qdict_get_try_bool(qdict, "resume", false);
-     const char *uri = qdict_get_str(qdict, "uri");
-+    const char *uri_cpr = qdict_get_try_str(qdict, "uri-cpr");
-     Error *err = NULL;
-     g_autoptr(MigrationChannelList) caps = NULL;
-     g_autoptr(MigrationChannel) channel = NULL;
-+    g_autoptr(MigrationChannel) channel_cpr = NULL;
- 
-     if (!migrate_uri_parse(uri, &channel, &err)) {
-         hmp_handle_error(mon, err);
-@@ -847,6 +849,22 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
-     }
-     QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel));
- 
-+    if (uri_cpr) {
-+        if (migrate_mode() != MIG_MODE_CPR_TRANSFER) {
-+            error_setg(&err, "-c can only be used in cpr-transfer mode");
-+            hmp_handle_error(mon, err);
-+            return;
-+        }
-+
-+        if (!migrate_uri_parse(uri_cpr, &channel_cpr, &err)) {
-+            hmp_handle_error(mon, err);
-+            return;
-+        }
-+
-+        channel_cpr->channel_type = MIGRATION_CHANNEL_TYPE_CPR;
-+        QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel_cpr));
-+    }
-+
-     qmp_migrate(NULL, true, caps, true, resume, &err);
-     if (hmp_handle_error(mon, err)) {
-         return;
--- 
-2.43.5
+What I mean is more that it ought to say why "x & -x"
+achieves that goal.
 
+-- PMM
 
