@@ -4,94 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A3B3C54EFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 09:43:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47007C531F9
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 09:45:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woeKv-0005CA-AJ; Tue, 28 Jul 2026 05:42:57 -0400
+	id 1woeN9-0006SW-Lq; Tue, 28 Jul 2026 05:45:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1woeKt-0005Ao-Ic; Tue, 28 Jul 2026 05:42:55 -0400
-Received: from fhigh-a4-smtp.messagingengine.com ([103.168.172.155])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1woeN6-0006Qm-Su; Tue, 28 Jul 2026 05:45:12 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1woeKs-0007hG-89; Tue, 28 Jul 2026 05:42:55 -0400
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 7DBE314000F2;
- Tue, 28 Jul 2026 05:42:50 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-01.internal (MEProxy); Tue, 28 Jul 2026 05:42:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1785231770; x=
- 1785318170; bh=U6g6qtE8GIN58YV3JQwYnVYZ4fHIbT+TKRxggWh8KBw=; b=X
- TT38Jl5PCWXs3GYo69S1m2LkU4qZYANanOl+hKZ2k5jfO/rXMr+YL4b9XuHFkuA/
- 3lWAi7nOF9AVNE8TYP/IeDRBH5e8xRwzUAfaorI2QMys1MxaC3iybVHBDkBaoQ27
- 0ZTpObvsqIsXfsDCAlaO/8Bv3FSpvlpI3TdRDZGeM9KzZ3L3wVXbAw7Pog8t26gF
- ZVR9lcZUuAQ95VBleaMP/WcJLZPDe6VMpT0jFZA044uyvJZ7A8GrW4xOunblFEk5
- D15ckuEoDDDrhe28C9+p6OH7NXS5vUwFy4RXlgc9aGosGFmC4Lj1r6UIzuWPk69o
- +0C2nWn4+3/z61xJxk9sw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
- 1785231770; x=1785318170; bh=U6g6qtE8GIN58YV3JQwYnVYZ4fHIbT+TKRx
- ggWh8KBw=; b=QOY+d5zdnEbIG1QacL6x8szxlluFsjJ+GqLNO5Vz8LCtu3mvCwf
- QyXN2lIBKVcGLYUvmuzYhyMlIxRA+h2iLNcvDaCRFHSS4CyxCnEfvaD9q7oUMAAo
- owwx8wL6JjrvYmm0YWRhNRr52oc6/7XnXdsMukz/FUkOVTFdqzC7wXUoAg59TEOS
- yls10UEOChUTwMRaCXEvy6jxrU6bi3NBwzsVbtx1hFfQwMJng5eqeT1Ruk3cDWkH
- IbJf/0F9aIrYp1DDTgYqCCEO/J1/XpCuBM6F5aR17j5npOh+aXZrxuCL9cU5WCdq
- m+ggEfuqQpHBRwylHg7V/7vmELOcRi4YjcQ==
-X-ME-Sender: <xms:mnloah-IRxZPvWoM3tarccy3PCS1lV54ghe13ADsPOA762zRtNwSnA>
- <xme:mnloaoSvCFIh12YIx9p2dVsyBzU8D5alC5LL3XO_sV_e_Uh1dFKFemziCaXdInx9F
- Yc6oAnJB8NSD4tbAso-7IIXJcrB0Yxss7jklC2oieNsgghd41S83NY>
-X-ME-Received: <xmr:mnloaiooMYiMhpBE9QFTE8AV6DW35dht1wfzyyi3otHOShRysMpy9oR3YgIm9w>
-X-ME-Proxy-Cause: dmFkZTEuBL7FQdztr/r5uUGPMrihDvt4AS5u/IOGItM+SoVjTDKfrcQDcvTKCDjBQG5ryb
- brjL2Y8WXYXUq/WgEkmBrgpnrwDqaahrzy4VuYvBWlLO3x08nfEEv8DII+0yG3ST1E+a5M
- EUW5w8qah4ULGGqMuZmgYHNEn4guI4Fy1aMMnS8hTtukCOry92xYRaQBCu7kSaeCefhGTY
- YVglfwTBxyxoPSUo2kJnHjmxgGBTosdL/UOuyiQyDU6KcD2AafpTchKY/D9SYv/i1RE8GC
- 5au5Y6bUcjPKmWlVYjaCuzWsmYw9SfRVihOZsYu4a886DqPs6bCA0KI91KndG35sRX0fB5
- sir8ew1aMbBScnJ8Zvn3thal3ZafkLTqalWBmR673pk6ShhSGs7lnaE6Rd69lUDD72DTiM
- lgdTOdo1fkFiTMs6l+2TIMu18M2agxZQOvW0wRL/HS+qP+lTkpjX6cWNhPGMWrSwWe8Y21
- mZ7cOYVMpBQybS89e2q81PwMuw3rsYpNv0F7O0indRBbcTxT0NeQVqYxJA59TAjCCGxGoK
- H0AN/8r1vTMTqmopM72IKiC9vlaA21HMn9BuOxU7OOeuKJfpnAfcpDA5q+0mhiPb2e7P0P
- yaloabmdCPoHhdA4nfkqrGW7Bqe1v12kFPgH8j9rG+8Kw8k6zLx/TJc50YZA
-X-ME-Proxy: <xmx:mnloalmLSKcmHaoHVhXMXjnwPZnHO72JX11NZ_ECkM0UftAtRi0sUw>
- <xmx:mnloard6oYyiVQ7FUYIf7wSWzW3vNK7U98hfLXq8Np9rYVFQgr03Sw>
- <xmx:mnloahpgV9nVF7DazgGI0HzEFb7W5laPszYpoLu3jm-8dmNSYfh_mg>
- <xmx:mnloalNDivc1MkC-YYQh3SuWC2QRw73FSYUy4IW1cs51Ww5uLKh6HA>
- <xmx:mnloasNz6Ih1u3RyGzM-IfjztFkeLefYEtMq0Jj-T8HiyOlknFXNcj5e>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Jul 2026 05:42:49 -0400 (EDT)
-Date: Tue, 28 Jul 2026 11:42:46 +0200
-From: Klaus Jensen <its@irrelevant.dk>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Keith Busch <kbusch@kernel.org>,
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org,
- Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH] hw/nvme: fix unintentional integer overflow in shift
-Message-ID: <amh5lvDUQ-cOOgNb@AALNPWKJENSEN.aal.scsc.local>
-References: <20260728-fix-shift-v1-1-bdb98c205233@samsung.com>
- <7428df68-ffb9-429b-b0ab-8c009c0c42ad@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1woeN2-0008AL-TK; Tue, 28 Jul 2026 05:45:12 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66S9ivuC096132
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 28 Jul 2026 18:44:57 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=nOIci4ba09JQ2PquXLmlZXVxiIAZWGNDnNFK7+Rrmvc=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1785231897; v=1;
+ b=bZwx6XZ/fX+7yweqqUPOl2RyanQT/WlQ+amnGQDkP5NGLylzzl+cSkD1vNxbpRmP
+ xiEFQA1Ni6mzTEEMgZv7bFY4ejubVxoxHz0LoEf8WOer/O6b/rIog5V11DdWvt+a
+ ZYfmwe85wRxxr+mIu9fE2Yg5FAgW0ggJ05YFa1g7Ztysgvr9mSlQoST1VcbcYZnM
+ OeSia9kcH0KAiuAPbvZVcsc6dipBA+CuD3KysBj3Vch+ha8s/ycVbCrhHbziPeSp
+ lSXDEK2BLUVZWrgU6OXDvJXi8kKuhtjhTQhRSeUGdJ/qIv5EYYbQRC5U1GVM6NWV
+ KeJ09YeTiCQqSVvJeAk4rA==
+Message-ID: <43d31e12-f140-4918-8150-e6cf7c9e4732@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 28 Jul 2026 18:44:57 +0900
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="Mekm0Dq+Zh2R6atJ"
-Content-Disposition: inline
-In-Reply-To: <7428df68-ffb9-429b-b0ab-8c009c0c42ad@oss.qualcomm.com>
-Received-SPF: pass client-ip=103.168.172.155; envelope-from=its@irrelevant.dk;
- helo=fhigh-a4-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/display/virtio-gpu: Fix empty blob discrimination
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ QEMU Stable <qemu-stable@nongnu.org>
+References: <20260725-image-v1-1-4698a805afde@rsg.ci.i.u-tokyo.ac.jp>
+ <b0951125-f714-4bdf-a178-1a7658bef43d@tls.msk.ru>
+ <81a781bb-a4e2-4cfc-a9d1-0316cfb2f17a@rsg.ci.i.u-tokyo.ac.jp>
+ <7d152a87-03db-44f9-b2e4-a6aa8729a0d5@tls.msk.ru>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <7d152a87-03db-44f9-b2e4-a6aa8729a0d5@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,70 +76,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---Mekm0Dq+Zh2R6atJ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 2026/07/28 16:47, Michael Tokarev wrote:
+> On 7/28/26 09:54, Akihiko Odaki wrote:
+> ...
+>> The consequence of the bug this patch fixes is a NULL pointer 
+>> dereference and denial-of-service. docs/devel/stable-process.rst says:
+>>
+>>  > Generally, the following patches are considered stable material:
+>>  >
+>>  > * Patches that fix severe issues, like fixes for CVEs
+>>  > * Patches that fix regressions
+> 
+> In these two cases, changes are *definitely* for-stable.  Other changes -
+> fixing bugs but without regressions or CVEs - might also be for stable,
+> but it is more case-by-case material.
+> 
+> You haven't quoted the very next paragraph from this document though:
+> 
+>    If you think the patch would be important for users of the current 
+> release
+>    (or for a distribution picking fixes), it is usually a good candidate
+>    for stable.
+> 
+> Without "regular bug fixes" in stable we wont survive ;)
+> 
+>> And I don't think this match with the description. It still does fix a 
+>> bug, and I think you can cleanly backport it and you tend to backport 
+>> such a patch.
+> What I'm thinking is more like - all at once - does the bug affects users
+> (is the subsystem in question actually used or not (it might be some
+> very niche thing); is it a fast-moving target so only very recent code
+> makes sense in the first place and so there's no reason to back-port
+> fixes; can the bug be triggered in real life or just theoretical (like,
+> it is not a problem in current code but future changes might trigger it);
+> is it more a cosmetic thing or something like a crash; and so on.  And
+> on the other hand, whenever this is a trivial fix or something more
+> complex which might cause bugs by its own.
+> 
+> In this particular case, the fix is trivial and the subsystem is in
+> use, but if this bug can be seen in real life I still don't know.
+> 
+> At least now I know why you haven't considered it for-stable in
+> the first place - because you assumed only CVE and regression fixes
+> should go there :)
 
-On Jul 28 11:34, Philippe Mathieu-Daud=C3=A9 wrote:
-> On 28/7/26 11:26, Klaus Jensen wrote:
-> > From: Klaus Jensen <k.jensen@samsung.com>
-> >=20
-> > Fix potentially overflowing shift operation.
-> >=20
-> > Cc: qemu-stable@nongnu.org
-> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> > Resolves: Coverity CID 1663674
-> > Fixes: ec917cd49918 ("hw/nvme: fix FDP set FDP events")
-> > Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-> > ---
-> >   hw/nvme/ctrl.c | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> >=20
-> > diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-> > index a67e1598891c..40f22fdc40bd 100644
-> > --- a/hw/nvme/ctrl.c
-> > +++ b/hw/nvme/ctrl.c
-> > @@ -6622,7 +6622,7 @@ static uint16_t nvme_set_feature_fdp_events(NvmeC=
-trl *n, NvmeNamespace *ns,
-> >           if (!shift && event_type) {
-> >               continue;
-> >           }
-> > -        event_mask |=3D (1 << nvme_fdp_evf_shifts[events[i]]);
-> > +        event_mask |=3D (1ULL << nvme_fdp_evf_shifts[events[i]]);
->=20
-> Alternatively:
->=20
->   event_mask =3D deposit64(event_mask, nvme_fdp_evf_shifts[events[i]], 1);
->=20
+Indeed I forgot to quote the paragraph. This bug can only be triggered 
+by a malfunctional guest and does not have a practical impact. I usually 
+consider a fix that address a user-provided bug report for stable.
 
-Better! Thanks!
-
-> >       }
-> >       if (enable) {
-> >=20
-> > ---
-> > base-commit: 299e7557ed15a9a325620698add379a3ce2d1d95
-> > change-id: 20260728-fix-shift-525e53c1df6f
-> >=20
-> > Best regards,
->=20
->=20
-
---Mekm0Dq+Zh2R6atJ
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmpoeZYACgkQTeGvMW1P
-Demspwf+MMVXN6dlQS+1AgqbhwYAEU0Hu0cSXASc5yW+dfBspITu5pni+ZlhiohT
-+vSmh2yCHtCnMn2+F7K/GDqOsT3oFtrsMWXhzJCfrd8R3RBtVRHds8lIeAJ2Ml97
-pEPbuD7w2Ea8o93Yk1WTcexaZ3sUVQeDaT2nejz+VJemtEjkEiMQmMfNS8zMv2Rn
-mVCcwnqb1f2kTWRNDPexguzE5D6EGWUaiVpxG6vUJumNoUVD03Es/cOh8rlr98qS
-4PqfHHVdWBwuH3MD76lOvreByAlmxjW8F0T9HVc5r20QBJLeFaCpattFRJF694PE
-2lzbASIqAk5u8escXHA+h1tE6TG5Og==
-=elDZ
------END PGP SIGNATURE-----
-
---Mekm0Dq+Zh2R6atJ--
+Regards,
+Akihiko Odaki
 
