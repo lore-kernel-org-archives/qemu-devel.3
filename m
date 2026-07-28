@@ -4,74 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9130C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 10:59:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25073C531F9
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 11:13:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wofWg-0004pI-SM; Tue, 28 Jul 2026 06:59:10 -0400
+	id 1wofje-000061-Gv; Tue, 28 Jul 2026 07:12:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wofWf-0004ol-3n
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 06:59:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhaoguohan@kylinos.cn>)
+ id 1wofjb-00005T-3I
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 07:12:31 -0400
+Received: from mailgw.kylinos.cn ([124.126.103.232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wofWc-00021h-TG
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 06:59:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785236345;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=JeuoP3lL5XBajGPFLtV9BJ5VTwqdJ52lCs2oVBygD+U=;
- b=Sy3YZ3RpyehCbFf6UpEpu8Mm4X9jjjxi7BOJDbqD3/SavWpL/BTABsq+TLzr3gpidVkZIv
- bZBkB6gtE9ji7K3H8wrrYesZxTaAZaz4jDCBdN3yiE6i58+oECM4RMuHBo7+4EQVmZdjKJ
- rR2EyTWgXr+10rWKQWkZjV0jmKsMxI0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-13-54P7SB4eNIOREdAKqVCaAA-1; Tue,
- 28 Jul 2026 06:59:02 -0400
-X-MC-Unique: 54P7SB4eNIOREdAKqVCaAA-1
-X-Mimecast-MFC-AGG-ID: 54P7SB4eNIOREdAKqVCaAA_1785236341
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8BE0619560A2; Tue, 28 Jul 2026 10:59:00 +0000 (UTC)
-Received: from localhost (unknown [10.44.24.15])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C390219560AB; Tue, 28 Jul 2026 10:58:58 +0000 (UTC)
-From: marcandre.lureau@redhat.com
+ (Exim 4.90_1) (envelope-from <zhaoguohan@kylinos.cn>)
+ id 1wofjY-0004D1-6d
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 07:12:30 -0400
+X-UUID: 2a3924308a7511f1aa26b74ffac11d73-20260728
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.12, REQID:f6473d65-276c-4d17-995f-68703e21d8c1, IP:15,
+ URL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+ :release,TS:15
+X-CID-INFO: VERSION:1.3.12, REQID:f6473d65-276c-4d17-995f-68703e21d8c1, IP:15,
+ UR
+ L:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:r
+ elease,TS:15
+X-CID-META: VersionHash:e7bac3a, CLOUDID:b225b5019b9461c859ebf45dcad40170,
+ BulkI
+ D:260728191209SSOAZ7L1,BulkQuantity:0,Recheck:0,SF:10|66|78|102|127|136|85
+ 0|865|898,TC:nil,Content:0|15|50,EDM:-3,IP:-2,URL:0,File:nil,RT:nil,Bulk:n
+ il,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BR
+ E:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 2a3924308a7511f1aa26b74ffac11d73-20260728
+X-User: zhaoguohan@kylinos.cn
+Received: from localhost.localdomain [(116.128.244.171)] by mailgw.kylinos.cn
+ (envelope-from <zhaoguohan@kylinos.cn>)
+ (Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+ with ESMTP id 1418706460; Tue, 28 Jul 2026 19:12:04 +0800
+From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 To: qemu-devel@nongnu.org
-Cc: akihiko.odaki@gmail.com,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v2] hw/display/virtio-gpu: fix use-after-free on blob detach
- backing
-Date: Tue, 28 Jul 2026 14:58:54 +0400
-Message-ID: <20260728105854.3096660-1-marcandre.lureau@redhat.com>
+Cc: "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>
+Subject: [PATCH] cryptodev: reject queue counts above the array limit
+Date: Tue, 28 Jul 2026 19:11:35 +0800
+Message-ID: <20260728111135.572426-1-zhaoguohan@kylinos.cn>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=124.126.103.232;
+ envelope-from=zhaoguohan@kylinos.cn; helo=mailgw.kylinos.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,87 +77,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+The queues property accepts any non-zero uint32_t, but
+CryptoDevBackendPeers::ccs only has MAX_CRYPTO_QUEUE_NUM entries.
 
-virtio_gpu_cleanup_mapping() tears down the udmabuf mapping (or, for the
-small-iov case, the guest memory mapping) via virtio_gpu_fini_udmabuf(),
-but leaves res->blob pointing at it afterwards. Once a blob resource
-goes through RESOURCE_DETACH_BACKING, res->blob is left dangling while
-res->blob_size is still non-zero.
+This can make even an error path crash.  For example, a builtin backend
+with queues=65 first reports that it only supports one queue.  When the
+half-created object is finalized, cleanup walks all 65 entries and reads
+ccs[64].
 
-virtio_gpu_update_cursor_data() only checks res->blob_size before
-copying from res->blob, so UPDATE_CURSOR on a detached blob resource
-makes QEMU memcpy from freed memory.
+Reject queue counts that do not fit in ccs[].
 
-virtio_gpu_do_set_scanout() also creates scanout->ds over
-res->blob + fb->offset. RESOURCE_DETACH_BACKING leaves that surface
-installed, so a subsequent display refresh can still read the backing
-after virtio_gpu_fini_udmabuf() has unmapped it.
-
-Disable any active scanouts referencing the resource before tearing down
-its backing, clear res->blob afterwards, and check it before
-dereferencing in virtio_gpu_update_cursor_data().
-
-Fixes: CVE-2026-66020
-Fixes: bdd53f739273 ("virtio-gpu: Update cursor data using blob")
-Fixes: 32db3c63ae11 ("virtio-gpu: Add virtio_gpu_set_scanout_blob")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3881
-Reported-by: 章鱼哥@aipy (www.aipyaipy.com)
-Reported-by: swing <swing@mail.exp.sh>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Fixes: 46fd17054548 ("cryptodev: introduce a new is_used property")
+Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
 ---
-v3:
- - only disable blob-based scanouts on detach_backing
----
- hw/display/virtio-gpu.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ backends/cryptodev.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 574e68992925..9bacd38b4521 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -63,8 +63,16 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
-         }
-         data = pixman_image_get_data(res->image);
-     } else {
-+        if (!res->blob) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "%s: resource %d has no blob\n",
-+                          __func__, resource_id);
-+            return;
-+        }
-         if (res->blob_size < (s->current_cursor->width *
-                               s->current_cursor->height * 4)) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: blob size too small for resource %d\n",
-+                          __func__, resource_id);
-             return;
-         }
-         data = res->blob;
-@@ -974,6 +982,7 @@ void virtio_gpu_cleanup_mapping(VirtIOGPU *g,
- 
-     if (res->blob) {
-         virtio_gpu_fini_udmabuf(g, res);
-+        res->blob = NULL;
-     }
- }
- 
-@@ -1039,6 +1048,15 @@ virtio_gpu_resource_detach_backing(VirtIOGPU *g,
-     if (!res) {
+diff --git a/backends/cryptodev.c b/backends/cryptodev.c
+index e8f2b18f2017..84f00313e925 100644
+--- a/backends/cryptodev.c
++++ b/backends/cryptodev.c
+@@ -309,9 +309,9 @@ cryptodev_backend_set_queues(Object *obj, Visitor *v, const char *name,
+     if (!visit_type_uint32(v, name, &value, errp)) {
          return;
      }
-+
-+    if (res->blob) {
-+        for (int i = 0; i < g->parent_obj.conf.max_outputs; i++) {
-+            if (res->scanout_bitmask & (1 << i)) {
-+                virtio_gpu_disable_scanout(g, i);
-+            }
-+        }
-+    }
-+
-     virtio_gpu_cleanup_mapping(g, res);
- }
- 
+-    if (!value) {
+-        error_setg(errp, "Property '%s.%s' doesn't take value '%" PRIu32 "'",
+-                   object_get_typename(obj), name, value);
++    if (!value || value > MAX_CRYPTO_QUEUE_NUM) {
++        error_setg(errp, "Property '%s.%s' must be between 1 and %d",
++                   object_get_typename(obj), name, MAX_CRYPTO_QUEUE_NUM);
+         return;
+     }
+     backend->conf.peers.queues = value;
 -- 
-2.55.0
+2.43.0
 
 
