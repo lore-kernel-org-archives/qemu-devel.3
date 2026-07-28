@@ -4,93 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D5E1C54F56
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 19:45:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D5A8C54F52
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 19:45:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wonjW-0000vL-KH; Tue, 28 Jul 2026 15:44:58 -0400
+	id 1wonjI-0000s2-Gr; Tue, 28 Jul 2026 15:44:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wonjU-0000tW-AD
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:44:56 -0400
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wonjS-0005l4-6r
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:44:56 -0400
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wonjA-00000001Tds-42i9; Tue, 28 Jul 2026 21:44:36 +0200
-Message-ID: <6c472c83-7334-4f50-bc68-627b452d8287@maciej.szmigiero.name>
-Date: Tue, 28 Jul 2026 21:44:31 +0200
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wonjE-0000rX-9k
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:44:40 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wonjC-0005jo-Na
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:44:40 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 791333E08;
+ Tue, 28 Jul 2026 19:44:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1785267872; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=yWFEqYBzV6vSmyx5QuCiJrafX/4t8frvImO28PzBlEk=;
+ b=fnekiyhtxfTx0h7gig4w8Fl/9enNJUItdz7xLGOOhiFiA6NcHksXm8n4nsxIhbxZwY9IC7
+ SYxywdq9uCUnSGYjMpxZSLk6o9z8ElbcpDn8BiSZzwW4b381fNsHo6lgWljMi+wKVuH2Uo
+ pjAcwiKKATGvV0+Cpk5CEN0G/ay6sHI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1785267872;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=yWFEqYBzV6vSmyx5QuCiJrafX/4t8frvImO28PzBlEk=;
+ b=udh5p59oVlxYE+cPW+olFrQl6/V0Ya57/5ePsisNBdGEjxfdly1NRZRr2wM+Fd1Ogp5TXX
+ /kLM3tmH9xljC6CQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="dnzO9F6/";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=RiBPDGJF
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1785267868; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=yWFEqYBzV6vSmyx5QuCiJrafX/4t8frvImO28PzBlEk=;
+ b=dnzO9F6/OP5GFb6aQR5l7+OVbwA4diddTZrUP0wjdGKaC9VmKWAhZmI7f8ncKMw+jf9l8k
+ BP9ovjwzA0/lL2soLk/D8J9csgvBHrnGoWiLIF0P4Q8R41HvyE9AnXm1O6jE1fhBVf5rgh
+ n4yuUPGeTfuY0UQNG/JYi3XRrXwiIB8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1785267868;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=yWFEqYBzV6vSmyx5QuCiJrafX/4t8frvImO28PzBlEk=;
+ b=RiBPDGJFtePTm5g3p54ftyHDrJvk3KBfS0MELUGFMPOuM4BOQrvE6viJ4ORlT6mf59JtL9
+ JWKhLJIMU24D5LCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 11758779B1;
+ Tue, 28 Jul 2026 19:44:27 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id qWG5NJsGaWqDQwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 28 Jul 2026 19:44:27 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, Juraj Marcin <jmarcin@redhat.com>, xlabai
+ <xlabai@tencent.com>, Jules Denardou <jules.denardou@datadoghq.com>,
+ Tristan Madani <tristan@talencesecurity.com>, qemu-stable
+ <qemu-stable@nongnu.org>
+Subject: Re: [PATCH 2/5] migration/multifd: Validate next_packet_size in
+ zlib/zstd recv
+In-Reply-To: <20260728155247.1894355-3-peterx@redhat.com>
+References: <20260728155247.1894355-1-peterx@redhat.com>
+ <20260728155247.1894355-3-peterx@redhat.com>
+Date: Tue, 28 Jul 2026 16:44:21 -0300
+Message-ID: <87wlueoq5m.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] hw/vfio: Fix liveness check in
- vfio_connect_kvm_msi_virq()
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Tycho Andersen <tycho@kernel.org>
-Cc: Alex Williamson <alex@shazbot.org>, Mark Kanda <mark.kanda@oracle.com>,
- Ben Chaney <bchaney@akamai.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-References: <20260727150038.2684512-1-tycho@kernel.org>
- <093da848-d6f9-4d88-a317-6acfac2724bf@redhat.com>
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Content-Language: en-US, pl-PL
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <093da848-d6f9-4d88-a317-6acfac2724bf@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 791333E08
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_TLS_ALL(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MID_RHS_MATCH_FROM(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[8]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[nongnu.org:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:email,suse.de:dkim,gitlab.com:url];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,91 +126,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27.07.2026 17:27, Cédric Le Goater wrote:
-> + CPR maintainers,
-> 
-> On 7/27/26 17:00, Tycho Andersen wrote:
->> From: "Tycho Andersen (AMD)" <tycho@kernel.org>
->>
->> While working on savevm/loadvm for a new vfio device, I encountered the
->> crash below. Since vfio_connect_kvm_msi_virq() didn't check the ->use flag
->> for the vector, it would pass an unused vector down to
->> vfio_cpr_load_vector_fd() which would crash.
->>
->> Fix this by checking the ->use flag along with the virq number to detect
->> whether a vector is valid or not.
->>
->> Thread 1 "qemu-system-x86" received signal SIGSEGV, Segmentation fault.
->> 0x0000555555a891ef in vfio_cpr_load_vector_fd (vdev=vdev@entry=0x0,
->>      name=name@entry=0x555555eeb27e "kvm_interrupt", nr=nr@entry=1) at ../hw/vfio/cpr.c:44
->> 44        g_autofree char *fdname = STRDUP_VECTOR_FD_NAME(vdev, name);
->> (gdb) bt
->> #0  0x0000555555a891ef in vfio_cpr_load_vector_fd
->>      (vdev=vdev@entry=0x0, name=name@entry=0x555555eeb27e "kvm_interrupt", nr=nr@entry=1)
->>      at ../hw/vfio/cpr.c:44
->> #1  0x0000555555ce64a1 in vfio_notifier_init
->>      (vdev=0x0, e=e@entry=0x5555586971b4, name=name@entry=0x555555eeb27e "kvm_interrupt", nr=nr@entry=1, errp=errp@entry=0x0) at ../hw/vfio/pci.c:79
->> #2  0x0000555555ce721e in vfio_connect_kvm_msi_virq (vector=0x5555586971a8, nr=nr@entry=1)
->>      at ../hw/vfio/pci.c:601
->> #3  0x0000555555cea5a5 in vfio_connect_kvm_msi_virq (nr=1, vector=<optimized out>)
->>      at ../hw/vfio/pci.c:597
->> #4  vfio_pci_commit_kvm_msi_virq_batch (vdev=0x55555906de40) at ../hw/vfio/pci.c:822
->> #5  0x0000555555cea9f2 in vfio_msix_enable (vdev=vdev@entry=0x55555906de40) at ../hw/vfio/pci.c:850
->> #6  0x0000555555ceb152 in vfio_pci_load_config (vbasedev=0x55555906e900, f=<optimized out>)
->>      at ../hw/vfio/pci.c:3088
->> #7  0x0000555555a8c765 in vfio_load_device_config_state (f=0x5555574a43d0, opaque=0x55555906e900)
->>      at ../hw/vfio/migration.c:278
->> #8  0x0000555555b3a522 in vmstate_load
->>      (f=f@entry=0x5555574a43d0, se=se@entry=0x5555591edd40, errp=errp@entry=0x7fffffffe130)
->>      at ../migration/savevm.c:971
->> #9  0x0000555555b3ab1a in qemu_loadvm_section_start_full
->>      (f=f@entry=0x5555574a43d0, type=type@entry=4 '\004', errp=errp@entry=0x7fffffffe130)
->>      at ../migration/savevm.c:2654
->> #10 0x0000555555b3e1ee in qemu_loadvm_state_main
->>      (f=f@entry=0x5555574a43d0, mis=mis@entry=0x5555571de5a0, errp=0x7fffffffe130,
->>      errp@entry=0x555557157c10 <error_fatal>) at ../migration/savevm.c:2973
->> #11 0x0000555555b3f7b7 in qemu_loadvm_state
->>      (f=f@entry=0x5555574a43d0, errp=errp@entry=0x555557157c10 <error_fatal>)
->>      at ../migration/savevm.c:3058
->> #12 0x0000555555b40863 in load_snapshot
->>      (name=0x7fffffffecc9 "foo", vmstate=vmstate@entry=0x0, has_devices=has_devices@entry=false, devices=devices@entry=0x0, errp=errp@entry=0x555557157c10 <error_fatal>) at ../migration/savevm.c:3452
->> #13 0x0000555555adc211 in qmp_x_exit_preconfig (errp=0x555557157c10 <error_fatal>) at ../system/vl.c:2817
->> #14 qmp_x_exit_preconfig (errp=0x555557157c10 <error_fatal>) at ../system/vl.c:2802
->> #15 0x0000555555adf8ed in qemu_init (argc=<optimized out>, argv=<optimized out>) at ../system/vl.c:3849
->> #16 0x00005555558903fd in main (argc=<optimized out>, argv=<optimized out>) at ../system/main.c:71
->>
->> Fixes: 30edcb4d4e7a ("vfio-pci: preserve MSI")
->> Signed-off-by: Tycho Andersen (AMD) <tycho@kernel.org>
->> ---
->> An alternative implementation of this would be to set ->virq = -1 after
->> the allocation in vfio_msix_enable(), but since other locations that
->> checks ->virq >= 0 also check ->use, I added it here too. Maybe it would
->> be useful to do both.
->> ---
->>   hw/vfio/pci.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->> index 380dd8c15f..b5280c3d2a 100644
->> --- a/hw/vfio/pci.c
->> +++ b/hw/vfio/pci.c
->> @@ -589,7 +589,7 @@ static void vfio_connect_kvm_msi_virq(VFIOMSIVector *vector, int nr)
->>   {
->>       const char *name = "kvm_interrupt";
->> -    if (vector->virq < 0) {
->> +    if (!vector->use || vector->virq < 0) {
->>           return;
->>       }
->>
->> base-commit: 300438ffbb8d9430cac2fcc15cba6f482b2c0587
-> 
-> 
-> Looks ok to me.
+Peter Xu <peterx@redhat.com> writes:
 
-Looks ok to me from the CPR side too, so:
-Acked-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com> # for CPR
+> The zlib and zstd multifd compression backends read next_packet_size from
+> the incoming migration stream and use it directly as the read length into a
+> fixed-size buffer (MULTIFD_PACKET_SIZE * 2 = 1MB).  A malicious migration
+> source can set next_packet_size bigger than allocated, causing a heap
+> buffer overflow write on the destination.
+>
+> Add a check against zbuff_len before reading, matching what the qatzip
+> backend already does.  Also replace the assert(in_size == 0) for empty
+> packets with proper error reporting, since the value is wire-controlled,
+> meanwhile assert() stops working with release builds.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3737
+> Reported-by: xlabai <xlabai@tencent.com>
+> Reported-by: Jules Denardou <jules.denardou@datadoghq.com>
+> Reported-by: Tristan Madani <tristan@talencesecurity.com>
+> Reported-by: david korczynski (@david1766)
+> Reported-by: huntr bubble (@bubblehuntr)
+> Cc: qemu-stable <qemu-stable@nongnu.org>
+> Cc: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
-Thanks,
-Maciej
-
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
