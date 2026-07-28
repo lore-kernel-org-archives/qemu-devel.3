@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93612C54F4D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 17:40:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CB45C54F4D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 17:40:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wolkv-0007sN-4x; Tue, 28 Jul 2026 13:38:17 -0400
+	id 1wolla-0008TA-HV; Tue, 28 Jul 2026 13:38:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wolks-0007j0-3J
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 13:38:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wolkv-0007st-No
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 13:38:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wolkn-0005wk-3f
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 13:38:12 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wolkt-0005z1-Ix
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 13:38:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785260287;
+ s=mimecast20190719; t=1785260294;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Dic/xYE7w0ZGRSy4vTqdGsET1sJ+FyAccUS3zVDMPFg=;
- b=C/2ZAZWunV0VZm9ckduRFIPVr7V18OMVmFHrPHLA8+AfDeqWtmoa4jPXJQTUew8KVofCUL
- yImf46YqncoQftz/IbGAAzYlb9UtDNbyM7nPNRBBw/haXGi1jHhv5fBcQCsLgs+IpyxIJl
- mBGqpiJ7AD7eOz/W97XXpbTzc/wsJes=
+ bh=Q7nuyHh/6+whFieOir7Dl29FiWOnuVherO6W5vllIo0=;
+ b=fZepXgZJSpmZ2dFp0fPw7gjhyn4uq9qIYDzSOJeTN67i+ciKXEElQdJk6qVtJDfgqxnjfq
+ JrQ0qvnYRf/dTxc/Xu752jCQ9wbm4e+Bmk7YFbGLQbk8HGLbdgF5KxZ7UZLnjOqBoTugww
+ TGjucHJuyVcbp6lUO19DKRABvJLfCwY=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-68-J5osA2FMN4qvqFBy6QHJgQ-1; Tue,
- 28 Jul 2026 13:38:04 -0400
-X-MC-Unique: J5osA2FMN4qvqFBy6QHJgQ-1
-X-Mimecast-MFC-AGG-ID: J5osA2FMN4qvqFBy6QHJgQ_1785260283
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-0IcNMx-hNFCBJaSz8d4Z0w-1; Tue,
+ 28 Jul 2026 13:38:11 -0400
+X-MC-Unique: 0IcNMx-hNFCBJaSz8d4Z0w-1
+X-Mimecast-MFC-AGG-ID: 0IcNMx-hNFCBJaSz8d4Z0w_1785260290
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 619D719560B7; Tue, 28 Jul 2026 17:38:03 +0000 (UTC)
+ id 7BE9D1956043; Tue, 28 Jul 2026 17:38:10 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.44.49.201])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0C7C91956044; Tue, 28 Jul 2026 17:38:01 +0000 (UTC)
+ id 256CA1956043; Tue, 28 Jul 2026 17:38:08 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	stefanha@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 10/17] iotests: skip FUSE tests when FUSE is not usable
-Date: Tue, 28 Jul 2026 19:37:32 +0200
-Message-ID: <20260728173739.352078-11-kwolf@redhat.com>
+Subject: [PULL 14/17] iotests: test O_TRUNC behavior for fuse exports
+Date: Tue, 28 Jul 2026 19:37:36 +0200
+Message-ID: <20260728173739.352078-15-kwolf@redhat.com>
 In-Reply-To: <20260728173739.352078-1-kwolf@redhat.com>
 References: <20260728173739.352078-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -2
 X-Spam_score: -0.3
 X-Spam_bar: /
 X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,106 +82,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Fiona Ebner <f.ebner@proxmox.com>
 
-file-io-error, fuse-allow-other and fuse-mmap-shared skip only when
-FUSE is not compiled in. When FUSE is built in but unusable at run
-time (no /dev/fuse access, fusermount lacking permissions), the
-export fails to mount with "Failed to mount FUSE session to export"
-and the tests report a spurious failure instead of skipping, like
-NBD tests already do for missing NBD support.
+The test cases for the blockdev-based export and for the file-based
+export with growable=on work before commit a94a1d7699 ("fuse: Manually
+process requests (without libfuse)"), then are broken until commit
+"block/export/fuse: fix regression with O_TRUNC when export is
+growable".
 
-Add _notrun_on_fuse_error() to common.rc and use it in the shell
-tests. fuse-mmap-shared is Python, so it gets an equivalent inline
-check.
+The test case for the blockdev-based export requires passwordless sudo
+for losetup and chmod similar to test 108.
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Kevin Wolf <kwolf@redhat.com>
-CC: Hanna Reitz <hreitz@redhat.com>
-Message-ID: <20260715103451.1930909-3-den@openvz.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Message-ID: <20260702132256.661429-3-f.ebner@proxmox.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- tests/qemu-iotests/common.rc              | 14 ++++++++++++++
- tests/qemu-iotests/tests/file-io-error    |  4 +---
- tests/qemu-iotests/tests/fuse-allow-other |  2 ++
- tests/qemu-iotests/tests/fuse-mmap-shared |  9 ++++++---
- 4 files changed, 23 insertions(+), 6 deletions(-)
+ tests/qemu-iotests/tests/fuse-truncate     | 171 +++++++++++++++++++++
+ tests/qemu-iotests/tests/fuse-truncate.out |   5 +
+ 2 files changed, 176 insertions(+)
+ create mode 100755 tests/qemu-iotests/tests/fuse-truncate
+ create mode 100644 tests/qemu-iotests/tests/fuse-truncate.out
 
-diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
-index 298bc483e0c..bcb1ec50a93 100644
---- a/tests/qemu-iotests/common.rc
-+++ b/tests/qemu-iotests/common.rc
-@@ -981,6 +981,20 @@ _require_drivers()
-     done
- }
- 
-+# Skip if FUSE is unusable: not compiled in, or the export failed to
-+# mount. $1 is the failing 'block-export-add' reply.
-+_notrun_on_fuse_error()
-+{
-+    case "$1" in
-+        *"Parameter 'type' does not accept value 'fuse'"*)
-+            _notrun "No FUSE support"
-+            ;;
-+        *"Failed to mount FUSE session"*)
-+            _notrun "FUSE not usable in this environment"
-+            ;;
-+    esac
-+}
+diff --git a/tests/qemu-iotests/tests/fuse-truncate b/tests/qemu-iotests/tests/fuse-truncate
+new file mode 100755
+index 00000000000..10bc1175c09
+--- /dev/null
++++ b/tests/qemu-iotests/tests/fuse-truncate
+@@ -0,0 +1,171 @@
++#!/usr/bin/env python3
++# group: rw
++#
++# Test how fuse exports behave with regard to O_TRUNC.
++#
++# Copyright (C) 2026 Proxmox Server Solutions GmbH
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
- # Check that we have a file system that allows huge (but very sparse) files
- #
- _require_large_file()
-diff --git a/tests/qemu-iotests/tests/file-io-error b/tests/qemu-iotests/tests/file-io-error
-index fb8db73b31b..0d970c102f6 100755
---- a/tests/qemu-iotests/tests/file-io-error
-+++ b/tests/qemu-iotests/tests/file-io-error
-@@ -89,9 +89,7 @@ output=$(_send_qemu_cmd $QEMU_HANDLE \
-     'return' \
-     | grep -v 'option allow_other only allowed if')
- 
--if echo "$output" | grep -q "Parameter 'type' does not accept value 'fuse'"; then
--    _notrun 'No FUSE support'
--fi
-+_notrun_on_fuse_error "$output"
- echo "$output"
- 
- echo
-diff --git a/tests/qemu-iotests/tests/fuse-allow-other b/tests/qemu-iotests/tests/fuse-allow-other
-index eaa39f8f236..50a36601d75 100755
---- a/tests/qemu-iotests/tests/fuse-allow-other
-+++ b/tests/qemu-iotests/tests/fuse-allow-other
-@@ -77,6 +77,8 @@ fuse_export_add()
-         _notrun "allow_other not supported"
-     fi
- 
-+    _notrun_on_fuse_error "$output"
++import os
++import subprocess
++from pathlib import Path
 +
-     echo "$output"
- }
- 
-diff --git a/tests/qemu-iotests/tests/fuse-mmap-shared b/tests/qemu-iotests/tests/fuse-mmap-shared
-index 52941a3bb69..b1901058946 100755
---- a/tests/qemu-iotests/tests/fuse-mmap-shared
-+++ b/tests/qemu-iotests/tests/fuse-mmap-shared
-@@ -28,9 +28,12 @@ def test_fuse_support(mount_point):
-     })
-     test_qsd.stop()
-     if 'error' in res:
--        assert (res['error']['desc'] ==
--                "Parameter 'type' does not accept value 'fuse'")
--        iotests.notrun('No FUSE support')
-+        desc = res['error']['desc']
-+        if desc == "Parameter 'type' does not accept value 'fuse'":
-+            iotests.notrun('No FUSE support')
-+        if 'Failed to mount FUSE session' in desc:
-+            iotests.notrun('FUSE not usable in this environment')
-+        assert False, desc
- 
- # Shared mmap when using direct IO is only supported for Linux kernels >= 6.6
- # with commit e78662e818f94 ("fuse: add a new fuse init flag to relax
++import iotests
++from iotests import qemu_img, QemuStorageDaemon
++
++fuse_mount_point = os.path.join(iotests.test_dir, 'export.fuse')
++image_size = 1 * 1024 * 1024
++image = os.path.join(iotests.test_dir, 'image.' + iotests.imgfmt)
++
++def check_fuse_support():
++    Path(fuse_mount_point).touch()
++    test_qsd = QemuStorageDaemon('--blockdev', 'null-co,node-name=node0',
++                                 qmp=True)
++    res = test_qsd.qmp('block-export-add', {
++        'id': 'exp0',
++        'type': 'fuse',
++        'node-name': 'node0',
++        'mountpoint': fuse_mount_point,
++        'allow-other': 'off'
++    })
++    test_qsd.stop()
++    os.remove(fuse_mount_point)
++    if 'error' in res:
++        assert (res['error']['desc'] ==
++                "Parameter 'type' does not accept value 'fuse'")
++        iotests.notrun('No FUSE support')
++
++def check_sudo_support():
++    try:
++        subprocess.run(['sudo', '-n', 'losetup', '--version'],
++                       capture_output=True, check=True)
++    except subprocess.CalledProcessError:
++        return False
++    try:
++        subprocess.run(['sudo', '-n', 'chmod', '--version'],
++                       capture_output=True, check=True)
++    except subprocess.CalledProcessError:
++        return False
++    return True
++
++check_fuse_support()
++
++class TestTruncateBase(iotests.QMPTestCase):
++    growable = False
++    supports_preconditions = True
++
++    def evaluate_preconditions(self):
++        return
++
++    def add_blockdev(self):
++        qemu_img('create', '-f', iotests.imgfmt, image, str(image_size))
++        self.qsd.cmd('blockdev-add', {
++            'node-name': 'node0',
++            'driver': iotests.imgfmt,
++            'file': {
++                'driver': 'file',
++                'filename': image
++            }
++        })
++
++    def cleanup_blockdev(self):
++        os.remove(image)
++
++    def add_export(self):
++        self.qsd.cmd('block-export-add', {
++            'id': 'exp0',
++            'type': 'fuse',
++            'node-name': 'node0',
++            'mountpoint': fuse_mount_point,
++            'growable': self.growable,
++            'writable': True,
++            'allow-other': 'off'
++        })
++
++    def stop_qsd(self):
++        if self.qsd:
++            self.qsd.cmd('block-export-del', {'id': 'exp0'})
++            self.qsd.stop()
++            self.qsd = None
++
++    def setUp(self):
++        self.evaluate_preconditions()
++        if not self.supports_preconditions:
++            return
++        Path(fuse_mount_point).touch()
++        self.qsd = QemuStorageDaemon(qmp=True)
++        self.add_blockdev()
++        self.add_export()
++
++    def tearDown(self):
++        if not self.supports_preconditions:
++            return
++        self.stop_qsd()
++        self.cleanup_blockdev()
++        os.remove(fuse_mount_point)
++
++class TestTruncateFileGrowable(TestTruncateBase):
++    growable = True
++
++    def test_o_trunc(self):
++        with open(fuse_mount_point, 'w+b') as file:
++            file.seek(0, os.SEEK_END)
++            self.assertEqual(file.tell(), 0)
++            file.write(b"test")
++        self.stop_qsd()
++
++class TestTruncateFileNotGrowable(TestTruncateBase):
++    growable = False
++
++    def test_o_trunc(self):
++        with open(fuse_mount_point, 'w+b') as file:
++            file.seek(0, os.SEEK_END)
++            self.assertEqual(file.tell(), image_size)
++            file.seek(0, os.SEEK_SET)
++            file.write(b"test")
++        self.stop_qsd()
++
++class TestTruncateBlockdev(TestTruncateBase):
++    growable = False
++
++    def evaluate_preconditions(self):
++        self.supports_preconditions = check_sudo_support()
++
++    def add_blockdev(self):
++        qemu_img('create', '-f', iotests.imgfmt, image, str(image_size))
++        res = subprocess.run(['sudo', '-n', 'losetup', '--show', '-f', image],
++                             check=True, capture_output=True, text=True)
++        self.loopdev = res.stdout.strip()
++        subprocess.run(['sudo', '-n', 'chmod', 'go+rw', self.loopdev],
++                       check=True, capture_output=True)
++        self.qsd.cmd('blockdev-add', {
++            'node-name': 'node0',
++            'driver': iotests.imgfmt,
++            'file': {
++                'driver': 'host_device',
++                'filename': self.loopdev
++            }
++        })
++
++    def cleanup_blockdev(self):
++        subprocess.run(['sudo', '-n', 'losetup', '--detach', self.loopdev],
++                       check=True, capture_output=True)
++        os.remove(image)
++
++    def test_o_trunc(self):
++        if not self.supports_preconditions:
++            iotests.case_notrun('No passwordless sudo for losetup and chmod')
++            return
++
++        with open(fuse_mount_point, 'w+b') as file:
++            file.seek(0, os.SEEK_END)
++            self.assertEqual(file.tell(), image_size)
++            file.seek(0, os.SEEK_SET)
++            file.write(b"test")
++        self.stop_qsd()
++
++if __name__ == '__main__':
++    iotests.main(supported_fmts=['raw'],
++                 supported_protocols=['file'],
++                 supported_platforms=['linux'])
+diff --git a/tests/qemu-iotests/tests/fuse-truncate.out b/tests/qemu-iotests/tests/fuse-truncate.out
+new file mode 100644
+index 00000000000..8d7e9967009
+--- /dev/null
++++ b/tests/qemu-iotests/tests/fuse-truncate.out
+@@ -0,0 +1,5 @@
++...
++----------------------------------------------------------------------
++Ran 3 tests
++
++OK
 -- 
 2.55.0
 
