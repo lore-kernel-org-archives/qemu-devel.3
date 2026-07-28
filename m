@@ -4,99 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74ED4C54F4D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 18:01:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83168C53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 18:25:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wom6a-0004aY-DP; Tue, 28 Jul 2026 14:00:40 -0400
+	id 1womUG-0003Kc-Qi; Tue, 28 Jul 2026 14:25:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wom6W-0004Tr-Ca; Tue, 28 Jul 2026 14:00:38 -0400
-Received: from fhigh-a8-smtp.messagingengine.com ([103.168.172.159])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wom6U-0001Ww-BP; Tue, 28 Jul 2026 14:00:35 -0400
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailfhigh.phl.internal (Postfix) with ESMTP id D2A021400081;
- Tue, 28 Jul 2026 14:00:32 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-01.internal (MEProxy); Tue, 28 Jul 2026 14:00:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm1;
- t=1785261632; x=1785348032; bh=p3HPNeu+aHFrrJk+v9+jgkacqq2akWMF
- c3V3H8X2mkk=; b=rvDINbIZmhgsNeJGbuAsXFJAnjlNTShYU1lkuw5SB7UZeGgJ
- p8iON4cbfdIIVfLP6ssndyXn3IEWh8bpO3RZYPcw9fRWFr/2sBaJlAEJbKBJSkR0
- HfzZw7hYkZAxHx0qumLcxnKFTnkTI7+L/q6ukB1N5PXk5TdtmBhapk12cwLIR/Ak
- Z3Msk1ZkLyQrOOSywTnB/pm856hbJIzse/fBq+RYBiqaqERZ4UVfN0t9nS07QBiR
- Dzh66uymXxwfB+6Qz2CoUZKk3aScKIRX1c6Mj6Yxj5LqAvK4QvhxdcDJQL72g5jo
- +9aUR6aZVxG51TPnU5Xo4ZszJchH9RfC+SiWMg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1785261632; x=
- 1785348032; bh=p3HPNeu+aHFrrJk+v9+jgkacqq2akWMFc3V3H8X2mkk=; b=j
- BLU8Megz/SNeQVRJRv2Fh0RmW86/cid8j5O4T1RR9xB8KqZrNW6tpaLZI5astGs6
- vOtnKHNTYyPcEKatKJuZHMyPCiDl6EeCW8xZ3i7G94UcTs6Xv5srJoInHEQ6VTtk
- CyZky8fhI8AIgktIbrVz4a17F8pgoASnWWhjckut3oU3bygAJQsYBVSedqpqFgmh
- fZgN1BaZCB1S0wnRZjND6JhpDbtbrUJzJSWkBZueDcwZgnirIU5eSrlYq8F+KT+Q
- 5CxBI+jsIqiMDIRqHvuRyEm+YoqwQfA9/mH8XeIY5r0FuqXeLMdqWs0aZK4y76Y0
- sN4rBxUoyJe6s8JRQaIcg==
-X-ME-Sender: <xms:QO5oag_jxjNsRZSjkaDgfzRrRzAz50KM2GK93GkiV8nPvhPho7MuDQ>
- <xme:QO5oav90-dYurKH9sAWvVzPeUFRCTIZqHaQLs0JSaXo1Pz62hKHJzxKwn7UidkSZC
- BDZdbputgqiK6wGJNwq8_LPzkR6eCQHc-sIa7UDQkhYgnm66EVxNtI>
-X-ME-Received: <xmr:QO5oag4y6NSe627mYVF6Wrd0I5L0Wb6OfFRgNR7Q1DoP-pq2UDGuMz0Mfq-EFoSGlO_3lghCcoFt3bY4BRlZW8rlX6XlQqAlGcqNLQyTbAZJAV9_TxVJ7YEKdw>
-X-ME-Proxy-Cause: dmFkZTFocshqA88LTMiGWBA+maAGF21oBkmgGwtu1yypWYGnE8uPdno3TETbWkuDKQRKSo
- pFNpFTZmZWEeewnA9ZsX6E0LhYgMh7JQuvjNs0HUf0kPqX/vwYYRprMdK3uFzdEXlpXhlx
- /DsbRDS4OzMi7LmMBTkGH/ytZ7guloixqKsdtiHOqYWwTyD13c2a4jFsq/CTFwSxrtJHs1
- XDSbpwRIh8VKfSs6MoIyfylsB15USzH92ZMKKbodtikHFKACmUPIvmDER0tSTmD5TJhBgH
- sCI7q0PYNzHmLlpZqhwgBeL87fulSHgWtT+8fhrop2C5qdTeadyZ+Pgh3bu7gu/ovwzvOx
- U1cI9E4u4+Q6HqA71R69G+/bDiOuJTKLl+oIVxwmQunEs5tOgiXlFqhdr2IfI3LISBXiJy
- 9OzMecTqA3sxr1Z6FaPtIcVfrnviGQdw6RZAQynziFRiSCUNmVKLZmoeE5EMDwBPIIk3KK
- hHBMGssot4JZ18G22PNQdQCFOoguWfv172I2nVhqcSpvGNvXglVFuX8gVHj1GyW2g0L5o9
- o142FnyIWtPDlilWXQeUXkUKKMYYDZKcX5YR1LDHw1G5jhScrgk8jFZM1/DcIyjNg+ahRc
- H6KP8ofo2WGgHXozhN+Jt+Z4YcZZH2KGH/Vjj7NNkh0LscNUl1KdYnj+TWAQ
-X-ME-Proxy: <xmx:QO5oagZsKKwapJJr5QKkn8ipKnKKcgZqKXNLctODvtxmMSij5TA2Fg>
- <xmx:QO5oaq-h6QUZ4JZ4LeSmh18KQjElhtXz0FTKmQRWRLM8DbA1X8owdQ>
- <xmx:QO5oavSkjB0WaKrhdxoMfZYTzkP78fCnHxyBwMHjClnslO_8DFK7mw>
- <xmx:QO5oatLz5dq5JHx1y5wCvCX21D6fGd8nHdvP6Hw0qJJkfcqdI0kFEw>
- <xmx:QO5oanLDt6KkGz0ZL1qVrwcxIPcJIsETVC8L2CArXN5uYlPnzEvqRYD7>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Jul 2026 14:00:30 -0400 (EDT)
-From: Klaus Jensen <its@irrelevant.dk>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org,
- Jihe Wang <wangjihe.mail@gmail.com>, boy juju <agx1657748706@gmail.com>,
- contact <contact@xchglabs.com>, david korczynski <david@adalogics.com>,
- "Brian Chastain (off_by_one / Curious-Keeper)" <brian@scalingsuccess.io>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
-Subject: [PULL 3/4] hw/nvme: fix cross-namespace copy dif buffer overflow
-Date: Tue, 28 Jul 2026 20:00:17 +0200
-Message-ID: <20260728180018.3574-4-its@irrelevant.dk>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260728180018.3574-1-its@irrelevant.dk>
-References: <20260728180018.3574-1-its@irrelevant.dk>
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1womUF-0003I3-JV
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 14:25:07 -0400
+Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1womUE-0005V5-3r
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 14:25:07 -0400
+Received: by mail-qt1-x832.google.com with SMTP id
+ d75a77b69052e-51c0ecfaee7so1202821cf.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 11:25:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785263105; cv=none;
+ d=google.com; s=arc-20260327;
+ b=FiRAQOshfmiJRjHDKQiyj7BsxXjrNitTInk2JbLVXqsyHJU75vvgh+PE666RmWdKYd
+ 9bFI5CAWEMDLvwUI4Sg2eIHj0WFhUYnrjdNZQNwpLC96oztVEzHFp+efMZZFJ/JBrxZF
+ gkJX5M6J8NfFmnTwnfpbZNEaAtYIa9ZoDpPKCjhV8PT2qwdOPCRvxZnyQe8Gq1+PbgCY
+ GlLLOkh1/Na/bYQRE348lvwWknBL6Sve3KUHipHfitDZ4f8Hsr5iXOtCTQOAv1Z5iq2f
+ hI3OjzjEjR+NKvz9U7WaJQ+1ZU8XfsOE7WUW7oS8x7gdT0T2IOlSAiMh6TPIQGJqCsSw
+ Lu6A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=yw/O6SQwJLjpZ7378AMJ71CoM2jdC0JRf6nC/TAnmgE=;
+ fh=KDk387A1+PRrP73gRLCRtBl8PbehjOWW2KJG+BrFQO4=;
+ b=IThf0DgMbtkSdaNqM3hpVKF20x5gY7fZ4iwTTlsP+In6PjnLDnSfKOcFKnmVOrKYNN
+ 0iDnXpt/V6i3MbhztZvd4leTBwCUV98Jq8Nc07km7DA8S+LIWyAIa5BfNjteIzW/Wdwj
+ I4NCeoQH7NLXwaCqE2m6HvLxP70fLXbSbWBIeGQbOUemWiZe/Vo+ztQOO5yOE+zXCEYY
+ dI2vGKIGZFOg7s8Gfo2tBCRQRxZonlMm7tvEU7pxrhi59zvK2QSwMphqYr8Xuh6bDf0n
+ zs4ohyiGFVLKeS6tQVye/i2aZjyc346g7jLt1f8961p7UDKmFP8m59py74SXwJkmW56Y
+ 7RyA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785263105; x=1785867905; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=yw/O6SQwJLjpZ7378AMJ71CoM2jdC0JRf6nC/TAnmgE=;
+ b=RP1iOdpPisupQQQ678TSNPiWJkakZx0OTmy5dJSOC1VYTv4z+GzFqeh/rNVQARRKxh
+ KFKh1+7DBBk3R7tJns+CT9xP8ohRfbOHMJQnITlauGq1eZxZti/RPkT7HMJEsLQoPp/U
+ KC+SLblSR8S8uXDdJkZzHyKnJqg6Rc0T1/aJ+ApSrHc4becWtTP/aJPAuqpDztf6OzPz
+ 9K4L5Fruay1sZgepHcc6D6FCMfYC4l5TN4hvSvd39Hn9HfHYbZ7takjviOUTFyqZnb+W
+ 5Zl034NOyOMkSm44rCHzwMyQ9NZmr4uJlk1HxdZqTSd5IULwiouEADk6FuI6+FxG+ekM
+ JDnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785263105; x=1785867905;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=yw/O6SQwJLjpZ7378AMJ71CoM2jdC0JRf6nC/TAnmgE=;
+ b=Sj5XIi/ybB2Mg/GK1mKGnIoOJvXHK8+PZvC73g9+mO+nwklRWZy1qJeSQy9RV76vrt
+ XNVgbCBQ248cQUSbwAb3MamwVq69kQewOFVGVAIkpIlADH6VR+uYMIdPKHdqVGbn/ApI
+ OHZ3AN7zIpC4zpDcrMulpBdrul+m7KbEYyLScLb4rbD/j+8sGC4jejMnSWi/v5zVoqjr
+ qB+Gn5UJNvxNu03yi2sDCw0GU6UJLSCI6/CglTZL5H1tiPY8KMw1c/q0upGoXnyh6hPA
+ Ks4OQt+nkAvo+6rSMkfsHRsbY5XNbCMFUIgWPUjYMZlyS8t7UJNJq12yLSsOViWTx/Tp
+ 8SDw==
+X-Gm-Message-State: AOJu0Yy41PLdEbk0sW+LQgyhBkZtdUZQlFuUp58KJ0ZGINFVWlkSQKUq
+ QnCDIdGBCtwh9+SucFUj2CXcN+TUrMj9t4a/7XPEdR8SDpAr4bJuMTOCFA5T1LZ0V0bStcUnxiG
+ tEmxeKcsfHeAMpNcxzklWjuI2/n1NCBw=
+X-Gm-Gg: AR+sD13iws9KKMPT31KSkz8j9GIMdXtnRc3vl1ektU56jpd6lS8cvngfjAAT6BnbyTk
+ 7ifMZzxtpyQiGwKP9iPYUvLIPwBQf/5nKRseXT3T7nUfqFQ6+SArPKaMmQPWVhu1ZhF82B6Fw+6
+ 7rcwEC8HJAS1pWTUp6xTc5x4zw2ubvntJ4KCIwilouAQp1UAYzNb/VTvHFK6ySuDIvH3Dscb2s3
+ nsWDt9VdTxZ60ijmrbfBji4AZ81U9wCZB4tlz4uj4bKBFacXGFSJZoNPobBA0Yo8sBOIR9yxEQl
+ xZ+DZjXiYk0IHQ10Mvkk
+X-Received: by 2002:ac8:5913:0:b0:51c:857f:9c12 with SMTP id
+ d75a77b69052e-529d6f9df1fmr34798741cf.4.1785263104714; Tue, 28 Jul 2026
+ 11:25:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=103.168.172.159; envelope-from=its@irrelevant.dk;
- helo=fhigh-a8-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
+ <20260723-vhost-user-isolated-memory-v1-6-6b97c439eb28@gmail.com>
+ <20260727190757.GE371693@fedora>
+In-Reply-To: <20260727190757.GE371693@fedora>
+From: Connor Kite <connorkite@gmail.com>
+Date: Tue, 28 Jul 2026 11:24:52 -0700
+X-Gm-Features: AUfX_mxdl45Zem6osR1ajKoHrgb8A0mkuybo1B5FEZIrW6w-mTKndp87VL8pkVw
+Message-ID: <CA+spn3pPNuAL=6qAfN7CGXnitoudv_JD+HUna+4cU--c_qoN4g@mail.gmail.com>
+Subject: Re: [PATCH RFC 06/15] util/iova-tree: g_tree_foreach wrapper
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Raphael Norwitz <rnorwitz@nvidia.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
+ Milan Zamazal <mzamazal@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org, 
+ virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
+ zhenwei pi <zhenwei.pi@linux.dev>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
+ Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
+ envelope-from=connorkite@gmail.com; helo=mail-qt1-x832.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,61 +137,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Klaus Jensen <k.jensen@samsung.com>
+On Mon, Jul 27, 2026 at 12:08=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.c=
+om> wrote:
+>
+> On Thu, Jul 23, 2026 at 03:30:05PM -0700, Connor Kite wrote:
+> > Add a wrapper to iova-tree to call g_tree_foreach.  Provies a means to
+>
+> Provies -> Provides
+>
+> > execute some function on each node of the iova-tree.
+> >
+> > Signed-off-by: Connor Kite <connorkite@gmail.com>
+> > ---
+> >  include/qemu/iova-tree.h | 13 +++++++++++++
+> >  util/iova-tree.c         |  5 +++++
+> >  2 files changed, 18 insertions(+)
+>
+> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-The NVMe specification allows a controller with multiple namespaces to
-use different LBA formats per namespace. One implication of this is that
-the destination namespace may have a metadata area for PI, but the
-source does not. In that case, the controller shall generate the
-protection information, but the bounce buffer is erroneously allocated
-without space for that, causing a buffer overflow.
+This is fixed on my end now and will be included in the next rev of the ser=
+ies.
 
-Fix the allocation.
-
-Cc: qemu-stable@nongnu.org
-Fixes: d522aef88d42 ("hw/nvme: add cross namespace copy support")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3387
-Reported-by: Jihe Wang <wangjihe.mail@gmail.com>
-Reported-by: boy juju <agx1657748706@gmail.com>
-Reported-by: contact <contact@xchglabs.com>
-Reported-by: david korczynski <david@adalogics.com>
-Reported-by: Brian Chastain (off_by_one / Curious-Keeper) <brian@scalingsuccess.io>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
----
- hw/nvme/ctrl.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index e1639b3839f7..acd10fcc67fa 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -3210,7 +3210,7 @@ static void nvme_do_copy(NvmeCopyAIOCB *iocb)
-     uint16_t prinfow = ((copy->control[2] >> 2) & 0xf);
-     uint64_t slba;
-     uint32_t nlb;
--    size_t len;
-+    size_t len, blen;
-     uint16_t status;
-     uint32_t dnsid = le32_to_cpu(req->cmd.nsid);
-     uint32_t snsid = dnsid;
-@@ -3331,10 +3331,13 @@ static void nvme_do_copy(NvmeCopyAIOCB *iocb)
-     }
- 
-     g_free(iocb->bounce);
--    iocb->bounce = g_malloc_n(le16_to_cpu(sns->id_ns.mssrl),
--                              sns->lbasz + sns->lbaf.ms);
-+    assert(g_size_checked_mul(&blen, le16_to_cpu(sns->id_ns.mssrl),
-+                              sns->lbasz + MAX(sns->lbaf.ms, dns->lbaf.ms)));
-+
-+    iocb->bounce = g_malloc(blen);
- 
-     qemu_iovec_reset(&iocb->iov);
-+    assert(len <= blen);
-     qemu_iovec_add(&iocb->iov, iocb->bounce, len);
- 
-     block_acct_start(blk_get_stats(sns->blkconf.blk), &iocb->acct.read, 0,
--- 
-2.53.0
-
+Thanks,
+Connor
 
