@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47CE4C54F4C
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 12:35:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FEDCC54F4C
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 12:35:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wogyD-0005Op-4t; Tue, 28 Jul 2026 08:31:41 -0400
+	id 1wogyL-0005Te-4b; Tue, 28 Jul 2026 08:31:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wogyA-0005LN-9Y
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 08:31:38 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1wogyG-0005Rc-2L
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 08:31:44 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wogy8-00031k-CH
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 08:31:37 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-47ddf7b09e5so3814787f8f.1
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 05:31:35 -0700 (PDT)
+ id 1wogyE-00036f-GV
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 08:31:43 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-47ddf7b09e5so3814890f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 05:31:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785241894; x=1785846694; darn=nongnu.org;
+ d=linaro.org; s=google; t=1785241901; x=1785846701; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=gUUiNLWtaOE76P9Ld8dPEc8PLTGOYX0cCZJT6bvTEgk=;
- b=NouFk9+vnaJUcPHpR378lcyTyXRgUV0m7mooFEfl2a16PJDosGH2/M+bBX45xssljX
- 0E3qB03usZAEAsZmR9EssERx+I2QZqdA9zHc2ufXa6xw6WmSheVjSDH/OJAzzBDIbKW5
- dGLcmsgioOLZBVMUyLkq4m66jgXt1DCBn8U5MQnz8TnBs8KHjaZj6E7CzHs2Vn54sRjW
- 6rJK2NNhJehv+JcsUXXtD0Knk/bkZvb3j2hKsf8kvCJDcF3pm+DxumhFXaTgAsRZX+hw
- 47xHQGUxFBkPr8AmbO+vZlilzBcms0DUWukQb47YYSMAoPGFDc37IaBYTiQflgomiZRA
- mC0w==
+ bh=a4dcbC3gNnlrbmKHPiL3tt+ekuDPbeGi+rxaeJ4+ROU=;
+ b=pCu87mtY/cnjEJBtX7zfqElKzTmXKJ1n/ORPdLJCLyLWGV/txo6ruDT7irfCPKdG7h
+ dX4U8pc/49bCseqnrpLNDYgkpfOlgKKq4Srj8matG3tDGEKXQUG190dhYPJFBnK58b41
+ cgznHwN8pMtTrhPeSGdbcP8ODsawwh4+sQg9aOPRbsVOE/cTNztnr3R69p+/N5G4imRf
+ jubkfwC73c7jmIpZ89S/mEMDSKsM3nVxHdY+I9G57tpVD22o8DSX9xqN3nVDzk2tVXIq
+ 8WCtmdyGGafCud8yBwRZJULMHQAkN14IC5NIkwIWSykOR5uocyH3IDXlwaQm4DmlxeZo
+ YKqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785241894; x=1785846694;
+ d=1e100.net; s=20251104; t=1785241901; x=1785846701;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=gUUiNLWtaOE76P9Ld8dPEc8PLTGOYX0cCZJT6bvTEgk=;
- b=J1ArvzRpEKeRIEqjQeAuqH6H9eRgwulG2MKtieDrUofweoQ8WqtBbbGJqQ9p3i24mS
- OldssSbCvgGXr3tbZ5PWEkNQZVsCsBpSdnVIlEi8IgWk9kc5eS6s6utkuPC+twqsmzKJ
- PLAkZyEJKqSwDqNYxwjOFXLYCFcJDHVJAnUeXKHtnA2hvXWDyR7Nve4uHbFWUvWvMF1F
- nhdsYMmEbAgQFoSvg4IZcrbz+FFJkNY43Dsl04OCB/yrP4EwAI5dFsRUTPXt3NizmOfz
- vTOEdZSLCY9K/x6UC9y3vo4fcqEY2oEGH66WCPK/UEogWl7RSt0WWgTu5eB+sZv0ZCQa
- D0iQ==
-X-Gm-Message-State: AOJu0Ywg0auTtn5DBc5v0sfQPpypz6nEGrxie2Cc477v4HNOvXzn5hw1
- 2cuUgdgEBlKOztOvE3fxybsOvhHQaD3EqzYd1gJGQniFG85c519+GjBvSshlKiAhp70yUKIZUMT
- +wydZ
-X-Gm-Gg: AR+sD11zP+O2bi+TcYKOw2W64S132yYiObdFweyIN8y81YMtmMr+AqfC9tN/WdmKAkv
- jBXLFfB20r0XO/St0Q8PIuo43rq1OzLSodzTJ7XJx1KumPViQ2yQUfTKCU7ql05u+YWBegvGmFT
- mgbuwNb0C8ydumEyzxINAn9cruuR5AMi8ciFpPgzgLRF+QfZdb3BLifMAE4lMnW33HbAcCZ7Kr3
- t6HETa77unzmeXMn2n5WEgzaGII7OyCshGWtwuUdPc9zpe43qoZ+Q8Pmfg0Igror2mOgL/0HBiJ
- t6IAQnE9/+z2mf5yEJjb/YiShsjKoHcltFKc05cja9fyU+L/uplSdSFNkFtjFv/YaBbkF8JffSn
- UIU4JOx4uBd1XK40ok0z8z6slXNc/TExnfDB59E/I7xs2hJX3ehbaL8H9QEvUx6oRFgkSqj9Esy
- MmVNLSt4nV+dvMlgYliCiuxGiCSA64KSwCkSsJjfJdXIAcWeLkBVzBwZZoIQpz6oZ5kRwomy/ZD
- tO2CBcrj08=
-X-Received: by 2002:a05:6000:25f9:b0:47f:73fb:daa1 with SMTP id
- ffacd0b85a97d-47fb1e8e7efmr2532926f8f.19.1785241894283; 
- Tue, 28 Jul 2026 05:31:34 -0700 (PDT)
+ bh=a4dcbC3gNnlrbmKHPiL3tt+ekuDPbeGi+rxaeJ4+ROU=;
+ b=QdgmWywA3J9xRj09Bn5s3dtJdEKfA+1gOJGjzE4Vl968MZfgjPqqaxz0ImPLLJo2S1
+ YV/0RKqlA0VLKFeSsdz0Jk26ozHQtXG6fNsdq1xx4bL/j1oKhlgQat0iyUXEfbyk57om
+ gTiF3mdyTx1kykuElJ0WVcTX0l7dh8d78v4M6UEqS+LdKQ4J696PEmxG0mAfiTCeusl6
+ mPoFyYriZWO/HCCSWnE2FPIrRAgPxb31j936oDcbBlgkVkFHJCGUG1Xep1ECxFuoRyVJ
+ twVSvvdff3RS7pjAajnwS4tJYk9jFwQMkVuzcpstimE4TYRYccBCUfwQJ5jVINDfsSr2
+ 46kQ==
+X-Gm-Message-State: AOJu0YxWRSKj17Q8Y4pkcwW/5uIF1NdGzV5o9BgLpKMMjbIpguJ948/l
+ supHQtBFzwJZznXuSrxI7QzSIBlG/qO5Tza5CjJrTEbx3lGhroZxjQIBVEjoMPL9rOHGuecl0Iv
+ 0LPdy
+X-Gm-Gg: AR+sD121ReY9UOMqpbod4gsD+QbQ7RxZ8H/f5VdL/N702sz2URiVJudQbJZRdzrorJS
+ dbzhrtgRMc4CufY3exZ9OBtw5k7OX3qeghlKVy1i1MiDl16nFZPt9M8JnPDTAIFrQ8t1q0uGnkO
+ zcxRBIl9JVsUP5fz0acCrS4H5s2Ss6wKEUIIAPfbp39r1Od0ycMOauaKOj6a5ivKkW14tHZfHOG
+ i0dT+SsL2B5Md62AdOX0w//xQfv4WA6JeeUyK5ayjEdK4QUwwbAy8qtc3AqsleHNjRVvhxe93v9
+ k3AvedoARmINgMTaXU0GXFfPUTBHXhQn8X2cWi1TLIv0FGcIqJe3iNs+aTwnrcdTCN+dRzD/nqU
+ ymmg014IDF5NZnFgLt1c5iJa9ccxXo44g8mtHBVQUvmV1zU44RT4BJek3rdgwsFTPxKX9xPlktw
+ JcFobmcMU5T8G3Et9gvDbLuk22QhdO5PRV0FAcUuJNDuj4i7+BRDH6MKRtWJaC9c1kl7cE3hlwK
+ dnRO+MWgnY=
+X-Received: by 2002:a05:6000:240d:b0:47f:928e:21f7 with SMTP id
+ ffacd0b85a97d-47fb1ef25a6mr2766787f8f.55.1785241900853; 
+ Tue, 28 Jul 2026 05:31:40 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f85c6f076sm58499039f8f.34.2026.07.28.05.31.32
+ ffacd0b85a97d-47f85c6f076sm58499039f8f.34.2026.07.28.05.31.39
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jul 2026 05:31:33 -0700 (PDT)
+ Tue, 28 Jul 2026 05:31:39 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 05/20] hw/net/can/flexcan: Use mbs[] array for FIFO pop
-Date: Tue, 28 Jul 2026 13:31:12 +0100
-Message-ID: <20260728123127.1711653-6-peter.maydell@linaro.org>
+Subject: [PULL 11/20] hw/net/flexcan: Drop oversized 'mb[]' mailbox view
+Date: Tue, 28 Jul 2026 13:31:18 +0100
+Message-ID: <20260728123127.1711653-12-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260728123127.1711653-1-peter.maydell@linaro.org>
 References: <20260728123127.1711653-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,53 +105,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bernhard Beschow <shentey@gmail.com>
 
-Implement FIFO entry shifting using the underlying `mbs[]` array instead
-of the overlapping `fifo` union view. This makes it explicit that the
-operation copies within a contiguous mailbox array and avoids Coverity
-CID 1662971.
+As indicated in the comments, the `mb[]` a.k.a. `mbs []` views should
+cover 0x400 (1024) bytes. However, the `mb[]` array covers four times
+the size since `sizeof(FlexcanRegsMessageBuffer)` returns the size in
+bytes instead of counting the number of uint32_t fields. This shifts the
+subsequent register offsets by 0xc00 which is not intended. Fix the size
+and thus the offsets by dropping the now unused `mb[]` view.
 
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Note that the different size changes the migration layout. Since the device
+model is new, no change in the version fields is needed.
+
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260723070059.6332-2-shentey@gmail.com
+Message-id: 20260723070059.6332-8-shentey@gmail.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/net/can/flexcan.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ include/hw/net/flexcan.h | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/hw/net/can/flexcan.c b/hw/net/can/flexcan.c
-index da36d10bd33..3a97edf7a4d 100644
---- a/hw/net/can/flexcan.c
-+++ b/hw/net/can/flexcan.c
-@@ -879,22 +879,22 @@ static bool flexcan_can_receive(CanBusClientState *client)
-  */
- static void flexcan_fifo_pop(FlexcanState *s)
- {
--    if (s->regs.fifo.mb_back.can_ctrl != 0) {
-+    if (s->regs.mbs[0].can_ctrl != 0) {
-         /* move queue elements forward */
--        memmove(&s->regs.fifo.mb_back, &s->regs.fifo.mbs_queue[0],
--                sizeof(s->regs.fifo.mbs_queue));
-+        memmove(&s->regs.mbs[0], &s->regs.mbs[1],
-+                sizeof(s->regs.mbs[0]) * (FLEXCAN_FIFO_DEPTH - 1));
- 
-         /* clear the first-in slot */
-         memset(&s->regs.mbs[FLEXCAN_FIFO_DEPTH - 1], 0,
-                sizeof(FlexcanRegsMessageBuffer));
- 
-         trace_flexcan_fifo_pop(DEVICE(s)->canonical_path, 1,
--                               s->regs.fifo.mb_back.can_ctrl != 0);
-+                               s->regs.mbs[0].can_ctrl != 0);
-     } else {
-         trace_flexcan_fifo_pop(DEVICE(s)->canonical_path, 0, 0);
-     }
- 
--    if (s->regs.fifo.mb_back.can_ctrl != 0) {
-+    if (s->regs.mbs[0].can_ctrl != 0) {
-         flexcan_irq_iflag_set(s, I_FIFO_AVAILABLE);
-     } else {
-         flexcan_irq_iflag_clear(s, I_FIFO_AVAILABLE);
+diff --git a/include/hw/net/flexcan.h b/include/hw/net/flexcan.h
+index d8159475e04..9affdff8372 100644
+--- a/include/hw/net/flexcan.h
++++ b/include/hw/net/flexcan.h
+@@ -65,10 +65,8 @@ typedef struct FlexcanRegs {
+     uint32_t dbg1;               /* 0x58, unused */
+     uint32_t dbg2;               /* 0x5C, unused */
+     uint32_t _reserved3[8];      /* 0x60 */
+-    union {                      /* 0x80 - not affected by soft reset */
+-        uint32_t mb[sizeof(FlexcanRegsMessageBuffer) * FLEXCAN_MAILBOX_COUNT];
+-        FlexcanRegsMessageBuffer mbs[FLEXCAN_MAILBOX_COUNT];
+-    };
++    /* 0x80 - not affected by soft reset */
++    FlexcanRegsMessageBuffer mbs[FLEXCAN_MAILBOX_COUNT];
+     uint32_t _reserved4[256];    /* 0x480 */
+     uint32_t rximr[64];          /* 0x880 - not affected by soft reset */
+     uint32_t _reserved5[24];     /* 0x980 */
 -- 
 2.43.0
 
