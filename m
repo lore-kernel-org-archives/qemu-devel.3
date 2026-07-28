@@ -4,107 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08D48C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 10:54:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9130C53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 10:59:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wofRi-0008R1-I8; Tue, 28 Jul 2026 06:54:02 -0400
+	id 1wofWg-0004pI-SM; Tue, 28 Jul 2026 06:59:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wofRg-0008Pi-Vl
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 06:54:00 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wofRf-0001ZN-53
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 06:54:00 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-c15e03c2763so153481166b.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 03:53:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785236037; cv=none;
- d=google.com; s=arc-20260327;
- b=Oj3lKMES2WzfSWCiiVfgJae+T+0q0XMjJeQIxSaO3Sjof6kN9LC+L8YJR2YcA3722z
- AzjRJvYzTnHGKGOnyr6UrTmJlw+X1FlIa0sXmp79Ovi14N38U0RhVfF51JHMsjSup3D+
- SycbYKb6w8rI/m+N1cQVwxTeg8G6e3TbCsa28NfwxfpeHFVFkf8imWXqZyC6/dST5mHf
- MPFqTmoCOW7q40HM84gDd6xrUGRz0Vwc3riYOp+arcFdPmLIWa53z2NMHp5eRqPzHkEX
- 3HthL29I2ao350y2rHW4FHnTLK14FKmQbaCL5FWQb060C7JME4BlVpokdDEb35FyeJGa
- yCFA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=CB264p/AqqELwUasp4UlJr7Ar3fLjUbzIFbSsqhWT8Y=;
- fh=7eAwecYj/Uvlsf4omIcrRH5txg5yMwJdWSev9+zlqx8=;
- b=WqsqdtboGjYpo6NGIsmENYgNSAlq4+GPz0JMJhFovhcja/HO03VQmUvPzBZ0nctHlq
- rtJO8U3nWqt722R5vbnVzFp5zg58WRYYDixSiz0LmswZtfcIG0fplpLhfWEPh/eqN/Wv
- xC/V4bM9FY5sJ6UwOZApWNM6sFOPkIDpul//8fApwheQoZWNErbi5FUaMIOqrwu3DSF3
- ZEtOKJJ+Yb0eh32lnt6lQCBm0yUAJuRpQytxAPvPSFPSdsCq6P3q5rPpN70T36aYoFlx
- OesZT5GLPkYas4ffKYP98IoeNnPaj4W6C8nJWoV1lSF65ACWDgtKeAoWvPlkxNvBtyxC
- I5Dg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1785236037; x=1785840837; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=CB264p/AqqELwUasp4UlJr7Ar3fLjUbzIFbSsqhWT8Y=;
- b=YcopCZcUjRkNrRtFUDMR+nM7GVFfiOU+fPkK4JPKa7hbYgmhr0pqrKXOo+P1gSSMRD
- D2BXysRHmZMvN9vtcTrBA2Q/dc0imh4ryvshJkWSy2lBpzmeSzTL26d8ZdMLDe1tAQb9
- yXejimArFBqySEk+75kMShhCe4EFdbdDiDASs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785236037; x=1785840837;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=CB264p/AqqELwUasp4UlJr7Ar3fLjUbzIFbSsqhWT8Y=;
- b=a1DMWW+9OIK6mp3m8IOh9AGTdxyckwjbV1ECEd5Ijl96tGLIt/UFu1KDCUGT6+uLGy
- tpTxaXudqccvgb1WIu06sztM+mlfquC8Cvvh++6w+AqLAL3dApu2Slz3rb1z15X+hui3
- ch6axXgOwdEfmP75bK4PBTJ+DfsEWxK7w6KOlkGupHstx3d9eEaIeP80Hc/DK/vjNiio
- u+OthvrBzoYKJU5MAAhJaLAor3z8zlE2kG7rZlbWJdZYMfeQPvXh/mJX2Os86iGpvhbh
- JmnPE2YZ4E18fL6ha8Eo23ZKWDrQTtXh1qVO4abXCBDboDy/oo1xrEzrKwKLKOp+4HHu
- 3klA==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rpu5Mb9zjAr2LtCbwZx68fyE+OR73vXNUsCfonfvAG+7HLdzuVXURAr+mURf2fRYbXPfdyLYu6nG6zV@nongnu.org
-X-Gm-Message-State: AOJu0YwAYN8aJe+4V3oAeJuoYJvqyqL+U0/kZMZoQFuLOa+y6uwoeFLi
- SMAcNqsjhH9cSq61cIHQoCdC5YV9C2sKHBO45eMYC04pLw0x3GbNVO+xYVmKa2XYz0w+Fe6GdGH
- CX//3/WTsxxcZAxIqwIO3ETPhSAseBAJ2/kXRG/sKQg==
-X-Gm-Gg: AR+sD11xx+rAGB2frcN0nyB9IgKCsprARICuvTQW1+S9WcBxvEKqme0YwA5uxHr1vMF
- AElErMiAIMT8tXL/uEvQWIGQDs6B1HYi5zdwxtlA6hyMfVca1M6Y6y3OYhmvseYvUTYlkv8oXTV
- B7tTSeHlbCrXJJddV7PJOb4cyoH+sYRUmmtZvqWojoFWU7z7a2yD9bCOVueGy9YkraW8/vZXwdf
- 7jXue/bxutHAitM4A9mkTLBzNPlwx2IvyUuHXclMb+ynpwdNe4LXwUOBOhtL3MYa7QjvhbrWMw0
- ezvoxe1uJ8bFwQFR8g==
-X-Received: by 2002:a17:906:eece:b0:c16:8eb:d8ac with SMTP id
- a640c23a62f3a-c1f71e3dcb0mr109730166b.23.1785236036691; Tue, 28 Jul 2026
- 03:53:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wofWf-0004ol-3n
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 06:59:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wofWc-00021h-TG
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 06:59:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785236345;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=JeuoP3lL5XBajGPFLtV9BJ5VTwqdJ52lCs2oVBygD+U=;
+ b=Sy3YZ3RpyehCbFf6UpEpu8Mm4X9jjjxi7BOJDbqD3/SavWpL/BTABsq+TLzr3gpidVkZIv
+ bZBkB6gtE9ji7K3H8wrrYesZxTaAZaz4jDCBdN3yiE6i58+oECM4RMuHBo7+4EQVmZdjKJ
+ rR2EyTWgXr+10rWKQWkZjV0jmKsMxI0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-13-54P7SB4eNIOREdAKqVCaAA-1; Tue,
+ 28 Jul 2026 06:59:02 -0400
+X-MC-Unique: 54P7SB4eNIOREdAKqVCaAA-1
+X-Mimecast-MFC-AGG-ID: 54P7SB4eNIOREdAKqVCaAA_1785236341
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8BE0619560A2; Tue, 28 Jul 2026 10:59:00 +0000 (UTC)
+Received: from localhost (unknown [10.44.24.15])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C390219560AB; Tue, 28 Jul 2026 10:58:58 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: akihiko.odaki@gmail.com,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH v2] hw/display/virtio-gpu: fix use-after-free on blob detach
+ backing
+Date: Tue, 28 Jul 2026 14:58:54 +0400
+Message-ID: <20260728105854.3096660-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-References: <20260709084728.92862-1-alexander@mihalicyn.com>
- <CAFEAcA82Ps8EDcjpoYVBxf5VAmiSJNvE1dvuKWokPKbp7OpWjw@mail.gmail.com>
- <CAJqdLroRKpD0B2KXbwG61DY=Uff_DZyxE-XB_AQmEnQt6ViyHg@mail.gmail.com>
- <CAFEAcA_gZmVZr5ixHgf9EmPHb2kBgOdenF=3JTNEzs71v+gM=w@mail.gmail.com>
- <CAJqdLrp6oi2dycW-m=zBWnaQ3nTy7cYtxUY_drEnYkoWgvGpSw@mail.gmail.com>
- <amhdtSJyGh39zq5x@AALNPWKJENSEN.aal.scsc.local>
-In-Reply-To: <amhdtSJyGh39zq5x@AALNPWKJENSEN.aal.scsc.local>
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Date: Tue, 28 Jul 2026 12:53:44 +0200
-X-Gm-Features: AUfX_mz1ByC7L68KlrY4IJ62716E-RoYaKVEPbShOFrF6fRpcpqbPuEHdIhX9Ik
-Message-ID: <CAJqdLrqxOVLvGWMEhwCzAgKhA5ELu5vxTmBzz1BSAN-pgDe+Hw@mail.gmail.com>
-Subject: Re: [PATCH] hw/nvme: use GPtrArray for blocker_features
-To: Klaus Jensen <its@irrelevant.dk>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, 
- Keith Busch <kbusch@kernel.org>, Jesper Devantier <foss@defmacro.it>, 
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alexander@mihalicyn.com; helo=mail-ej1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,81 +87,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Di., 28. Juli 2026 um 09:43 Uhr schrieb Klaus Jensen <its@irrelevant.dk>:
->
-> On Jul  9 11:01, Alexander Mikhalitsyn wrote:
-> > Am Do., 9. Juli 2026 um 10:58 Uhr schrieb Peter Maydell
-> > <peter.maydell@linaro.org>:
-> > >
-> > > On Thu, 9 Jul 2026 at 09:53, Alexander Mikhalitsyn
-> > > <alexander@mihalicyn.com> wrote:
-> > > >
-> > > > Am Do., 9. Juli 2026 um 10:51 Uhr schrieb Peter Maydell
-> > > > <peter.maydell@linaro.org>:
-> > > > >
-> > > > > On Thu, 9 Jul 2026 at 09:47, Alexander Mikhalitsyn
-> > > > > <alexander@mihalicyn.com> wrote:
-> > > > > >
-> > > > > > From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-> > > > > >
-> > > > > > Let's use GPtrArray to build a list of blocker features and then
-> > > > > > g_strjoinv() to build a final comma-delimited string.
-> > > > > >
-> > > > > > While previous approach was technically correct, it is fragile
-> > > > > > (because we need to take care of static buffer size choice) and
-> > > > > > Coverity dislikes it too.
-> > > > > >
-> > > > > > Note, that we use g_ptr_array_new() to allocate array which means
-> > > > > > that GDestroyNotify callback is not set, so we can pass pointers to
-> > > > > > a static memory like g_ptr_array_add(..., (gpointer) "SR-IOV") without
-> > > > > > any problems as there won't be any attempt to free that memory.
-> > > > > >
-> > > > > > Resolves: Coverity CID 1663673
-> > > > > > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> > > > > > Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-> > > > > > ---
-> > >
-> > > > > > @@ -9416,15 +9405,15 @@ static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_dev,
-> > > > > >              }
-> > > > > >
-> > > > > >              if (namespaces_num > 1) {
-> > > > > > -                nvme_add_blocker_feature(blocker_features,
-> > > > > > -                                         "Namespace Attachment");
-> > > > > > +                g_ptr_array_add(blocker_features,
-> > > > > > +                                         (gpointer) "Namespace Attachment");
-> > > > >
-> > > >
-> > > > Hi Peter,
-> > > >
-> > > > > Is the cast here because we're dropping the const property of the
-> > > > > literal string?
-> > > >
-> > > > yep.
-> > >
-> > > Mmm. Unfortunate but unavoidable I guess.
-> > >
-> > > The glib docs recommend using "void *" instead of "gpointer" in
-> > > new code: https://docs.gtk.org/glib/types.html#gpointer
-> > > but either way
-> >
-> > ah, I didn't know that. My first intention was to use "void *", but
-> > then I searched over QEMU codebase
-> > and found a few gpointer casts in exact use-case (with g_ptr_array_add).
-> >
-> > I can correct this and resend if you want ;)
-> >
-> > >
-> > > Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> > >
-> > > -- PMM
-> >
->
-> Thanks,
->
-> Added to nvme.next with the gpointer cast changed to void *.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Thank you, Klaus ;-)
+virtio_gpu_cleanup_mapping() tears down the udmabuf mapping (or, for the
+small-iov case, the guest memory mapping) via virtio_gpu_fini_udmabuf(),
+but leaves res->blob pointing at it afterwards. Once a blob resource
+goes through RESOURCE_DETACH_BACKING, res->blob is left dangling while
+res->blob_size is still non-zero.
 
->
-> Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+virtio_gpu_update_cursor_data() only checks res->blob_size before
+copying from res->blob, so UPDATE_CURSOR on a detached blob resource
+makes QEMU memcpy from freed memory.
+
+virtio_gpu_do_set_scanout() also creates scanout->ds over
+res->blob + fb->offset. RESOURCE_DETACH_BACKING leaves that surface
+installed, so a subsequent display refresh can still read the backing
+after virtio_gpu_fini_udmabuf() has unmapped it.
+
+Disable any active scanouts referencing the resource before tearing down
+its backing, clear res->blob afterwards, and check it before
+dereferencing in virtio_gpu_update_cursor_data().
+
+Fixes: CVE-2026-66020
+Fixes: bdd53f739273 ("virtio-gpu: Update cursor data using blob")
+Fixes: 32db3c63ae11 ("virtio-gpu: Add virtio_gpu_set_scanout_blob")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3881
+Reported-by: 章鱼哥@aipy (www.aipyaipy.com)
+Reported-by: swing <swing@mail.exp.sh>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+v3:
+ - only disable blob-based scanouts on detach_backing
+---
+ hw/display/virtio-gpu.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 574e68992925..9bacd38b4521 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -63,8 +63,16 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
+         }
+         data = pixman_image_get_data(res->image);
+     } else {
++        if (!res->blob) {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: resource %d has no blob\n",
++                          __func__, resource_id);
++            return;
++        }
+         if (res->blob_size < (s->current_cursor->width *
+                               s->current_cursor->height * 4)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: blob size too small for resource %d\n",
++                          __func__, resource_id);
+             return;
+         }
+         data = res->blob;
+@@ -974,6 +982,7 @@ void virtio_gpu_cleanup_mapping(VirtIOGPU *g,
+ 
+     if (res->blob) {
+         virtio_gpu_fini_udmabuf(g, res);
++        res->blob = NULL;
+     }
+ }
+ 
+@@ -1039,6 +1048,15 @@ virtio_gpu_resource_detach_backing(VirtIOGPU *g,
+     if (!res) {
+         return;
+     }
++
++    if (res->blob) {
++        for (int i = 0; i < g->parent_obj.conf.max_outputs; i++) {
++            if (res->scanout_bitmask & (1 << i)) {
++                virtio_gpu_disable_scanout(g, i);
++            }
++        }
++    }
++
+     virtio_gpu_cleanup_mapping(g, res);
+ }
+ 
+-- 
+2.55.0
+
 
