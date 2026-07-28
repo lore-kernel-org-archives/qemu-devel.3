@@ -4,51 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC5E9C54F4C
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 06:55:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98EB5C53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 06:57:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wobiL-0001CN-8k; Tue, 28 Jul 2026 02:54:57 -0400
+	id 1wobko-0002mq-2g; Tue, 28 Jul 2026 02:57:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wobiH-0001BZ-SH; Tue, 28 Jul 2026 02:54:53 -0400
+ id 1wobkk-0002mX-LZ; Tue, 28 Jul 2026 02:57:26 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wobiE-000317-Hh; Tue, 28 Jul 2026 02:54:52 -0400
+ id 1wobki-0003Qe-Rz; Tue, 28 Jul 2026 02:57:26 -0400
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66S6semH025665
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66S6vIHE026492
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 28 Jul 2026 15:54:41 +0900 (JST)
+ Tue, 28 Jul 2026 15:57:18 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=TObdROh5e/L641ulJ7t48JBbKT2xnRkP2LjX1jLitpc=; 
+DKIM-Signature: a=rsa-sha256; bh=E2mQ5dPFlg7wSF/V0QU1NDcap666JAYAx1+P7fkpHdY=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1785221681; v=1;
- b=J+vmlZiVRSkhEU6CGDFVVqWW8dyNPJw8fbjciPS55cmXIWTVDcUc//hG/6BgAaJu
- 9MlPSfPDb4a7FRTt2US4T3NRhi8U0bHuztaVbh4gtaPYTnummyuTcKH/aKZCMbzK
- h6itXv9OvUOv4Mm7eb+XR9CkdAvGkQ3VdfHzxa6QyeEv2DrL3aXMj4oNF/DuxQd5
- Bjn0GEZHH80bE36JY9s+D7iQzClmAdljH/KRBxMN4Z5QomuwBFi/KKAlOKSf7d6P
- /axRh8uDQqbRFGrikho003M29jUS5LcT/UsIK0a3M+PgFo90z8ztKU0QgzaRZDB8
- rQimjkENWc3RzC4+rFRHaQ==
-Message-ID: <81a781bb-a4e2-4cfc-a9d1-0316cfb2f17a@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 28 Jul 2026 15:54:40 +0900
+ s=rs20250326; t=1785221838; v=1;
+ b=epwGjFel9CeUhkg3ARqWd7x0oRgx8TN6lh/XFxub+w82oUcq4nCCS9QzqLQwIZwt
+ NBygvynQ+dyOHaQIF7cg2xyNagVNxqXDrOl/SYCiBaQbCj733zPg58JJEBQa/meF
+ WFNiToLRgGxTCJQx4jfXUHuSmDoCgUrwIjTa/0dSNVu4B/wEBV8XT6e090fbWd44
+ NUREarBWy9kohPy0oJdSUXJgX9EP1ufn3Hmo94ZFmv2OjGJDCviRR2t2IG/iWu5k
+ KjVp6gqRbl4NeHdvnUL1O5ugokgHDsz13H1ZZpuYOPJrXJagwclG2gwXlbdOP7AP
+ AkWhQvKtOGuLueFQSbXzAQ==
+Message-ID: <0d8606b1-c6d6-4d06-bf83-050152ea0034@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 28 Jul 2026 15:57:18 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/display/virtio-gpu: Fix empty blob discrimination
+Subject: Re: [PATCH] hw/display/virtio-gpu: Initialize blob mapping for
+ ATTACH_BACKING
 To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  QEMU Stable <qemu-stable@nongnu.org>
-References: <20260725-image-v1-1-4698a805afde@rsg.ci.i.u-tokyo.ac.jp>
- <b0951125-f714-4bdf-a178-1a7658bef43d@tls.msk.ru>
+References: <20260725-backing-v1-1-5b584bf7df5a@rsg.ci.i.u-tokyo.ac.jp>
+ <95cca0b3-6e94-4b31-9531-e1057804122c@tls.msk.ru>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <b0951125-f714-4bdf-a178-1a7658bef43d@tls.msk.ru>
+In-Reply-To: <95cca0b3-6e94-4b31-9531-e1057804122c@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -74,36 +75,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/28 6:35, Michael Tokarev wrote:
-> On 7/25/26 10:12, Akihiko Odaki wrote:
->> Discriminating blobs by checking whether blob_size is nonzero fails for
->> empty blobs. Identify 2D resources by their non-NULL image instead.
+On 2026/07/28 6:36, Michael Tokarev wrote:
+> On 7/25/26 10:11, Akihiko Odaki wrote:
+>> It is necessary for blob cursor and scanout.
 >>
->> Fixes: bdd53f739273 ("virtio-gpu: Update cursor data using blob")
->> Fixes: f66767f75c9c ("virtio-gpu: add virtio-gpu/blob vmstate 
->> subsection")
+>> Fixes: e0933d91b1cd ("virtio-gpu: Add virtio_gpu_resource_create_blob")
 >> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 >> ---
->>   hw/display/virtio-gpu.c | 18 +++++++++---------
->>   1 file changed, 9 insertions(+), 9 deletions(-)
+>>   hw/display/virtio-gpu.c | 4 ++++
+>>   1 file changed, 4 insertions(+)
 > 
-> Is this a qemu-stable material?  I've no idea from the description
-> about the implication of the previous behavior.
+> Again, is this a qemu-stable material?  From the description
+> it's difficult to say what's going on here, it feels like this
+> change should be back-ported to the stable branches.
 
-This fix is not important nor a regression but you may still pick it.
+This is another[1] NULL pointer derefence fix; it is a trivial fix that 
+can be cleanly backported.
 
-The consequence of the bug this patch fixes is a NULL pointer 
-dereference and denial-of-service. docs/devel/stable-process.rst says:
-
- > Generally, the following patches are considered stable material:
- >
- > * Patches that fix severe issues, like fixes for CVEs
- >
- > * Patches that fix regressions
-
-And I don't think this match with the description. It still does fix a 
-bug, and I think you can cleanly backport it and you tend to backport 
-such a patch.
+[1] 
+https://lore.kernel.org/qemu-devel/81a781bb-a4e2-4cfc-a9d1-0316cfb2f17a@rsg.ci.i.u-tokyo.ac.jp/
 
 Regards,
 Akihiko Odaki
@@ -114,57 +104,23 @@ Akihiko Odaki
 > /mjt
 > 
 >> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
->> index 718ba3039290..6413df029b8e 100644
+>> index 718ba3039290..e886298ec42f 100644
 >> --- a/hw/display/virtio-gpu.c
 >> +++ b/hw/display/virtio-gpu.c
->> @@ -56,18 +56,18 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
+>> @@ -984,6 +984,10 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
+>>           cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
 >>           return;
 >>       }
->> -    if (res->blob_size) {
->> -        if (res->blob_size < (s->current_cursor->width *
->> -                              s->current_cursor->height * 4)) {
->> -            return;
->> -        }
->> -        data = res->blob;
->> -    } else {
->> +    if (res->image) {
->>           if (pixman_image_get_width(res->image)  != s- 
->> >current_cursor->width ||
->>               pixman_image_get_height(res->image) != s- 
->> >current_cursor->height) {
->>               return;
->>           }
->>           data = pixman_image_get_data(res->image);
->> +    } else {
->> +        if (res->blob_size < (s->current_cursor->width *
->> +                              s->current_cursor->height * 4)) {
->> +            return;
->> +        }
->> +        data = res->blob;
->>       }
->>       pixels = s->current_cursor->width * s->current_cursor->height;
->> @@ -1279,7 +1279,7 @@ static int virtio_gpu_save(QEMUFile *f, void 
->> *opaque, size_t size,
->>       assert(QTAILQ_EMPTY(&g->cmdq));
->>       QTAILQ_FOREACH(res, &g->reslist, next) {
->> -        if (res->blob_size) {
->> +        if (!res->image) {
->>               continue;
->>           }
->>           qemu_put_be32(f, res->resource_id);
->> @@ -1430,7 +1430,7 @@ static int virtio_gpu_blob_save(QEMUFile *f, 
->> void *opaque, size_t size,
->>       assert(QTAILQ_EMPTY(&g->cmdq));
->>       QTAILQ_FOREACH(res, &g->reslist, next) {
->> -        if (!res->blob_size) {
->> +        if (res->image) {
->>               continue;
->>           }
->>           assert(!res->image);
+>> +
+>> +    if (!res->image) {
+>> +        virtio_gpu_init_udmabuf(res);
+>> +    }
+>>   }
+>>   static void
 >>
 >> ---
 >> base-commit: 006a22cb26998998385b104db1ff9466ef2f3153
->> change-id: 20260725-image-6c8566fb1253
+>> change-id: 20260725-backing-db0e69515455
 >>
 >> Best regards,
 >> -- 
