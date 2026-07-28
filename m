@@ -4,74 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C27FC53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 15:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3134CC54F4C
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 15:57:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wok9H-0005Jg-OG; Tue, 28 Jul 2026 11:55:19 -0400
+	id 1wokAg-0005v0-9V; Tue, 28 Jul 2026 11:56:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wok9G-0005JH-Bs
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 11:55:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wokAe-0005uQ-9Q
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 11:56:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wok9E-00060X-Hm
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 11:55:18 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wokAd-00066n-3W
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 11:56:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785254115;
+ s=mimecast20190719; t=1785254202;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=t+Wr8o26eKVo3iuDutsiE6EDvAwl5wgH61wZ6LkIVzw=;
- b=RXoP38fpDc99pHfvaBLphjMzMit68rVPZEQ4ETOKHeFpXXAZPBB6CVz825AGRtfC3QTxhO
- ax8nGmlyulOpDayY0rewhCdsZVuRyK1gU6AhCvFIc/vF0GeqZwAGzCKrNqd+5Sc7ks1Rtr
- LW2DxB8ilZUzD/Xm7/LZX1U7eIbPPF4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=mtypavJ2VO8PSS22P4NulKfqebCfKS2fqRQfhVc0DEQ=;
+ b=O45X0IBldTo193TZEMauErWN1Qi0TIuJ9lXNJ9UXYAAsvv450CCVVbea/05mdt+5oq0Z12
+ UAuL9eGIU42tImLoNymt/5QDurxWJMtoxLGQtbry5jK94DQilB352LdVwxx5L35uwz6Q0w
+ cIxElGupl2zn5qpUdiu1RBWWCMduGXg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-618-ATdZ_BSZN9eTBpyJzvJbNQ-1; Tue,
- 28 Jul 2026 11:55:12 -0400
-X-MC-Unique: ATdZ_BSZN9eTBpyJzvJbNQ-1
-X-Mimecast-MFC-AGG-ID: ATdZ_BSZN9eTBpyJzvJbNQ_1785254110
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-59-mt24AuRuPHOx7flLZTzVEg-1; Tue,
+ 28 Jul 2026 11:56:38 -0400
+X-MC-Unique: mt24AuRuPHOx7flLZTzVEg-1
+X-Mimecast-MFC-AGG-ID: mt24AuRuPHOx7flLZTzVEg_1785254198
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7875519560A2; Tue, 28 Jul 2026 15:55:10 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BB43E180058B; Tue, 28 Jul 2026 15:56:37 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.49.201])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A10D5300019F; Tue, 28 Jul 2026 15:55:07 +0000 (UTC)
-Date: Tue, 28 Jul 2026 17:55:05 +0200
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 338FB1800480; Tue, 28 Jul 2026 15:56:35 +0000 (UTC)
+Date: Tue, 28 Jul 2026 17:56:33 +0200
 From: Kevin Wolf <kwolf@redhat.com>
-To: Christian Quante <christian@quante.one>
-Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
- PC-DOS repro <chrischaan66@googlemail.com>
-Subject: Re: [PATCH v2 0/2] hw/block/fdc: do not claim a diskette that is not
- there
-Message-ID: <amjQ2TmHqDPFUm2r@redhat.com>
-References: <20260710113134.43012-1-christian@quante.one>
- <20260714164031.60551-1-christian@quante.one>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH] iotests: increase timeouts for tests to 5 minutes
+Message-ID: <amjRMd79LWwhN8G0@redhat.com>
+References: <20260623160326.2346255-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20260714164031.60551-1-christian@quante.one>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260623160326.2346255-1-berrange@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,69 +83,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 14.07.2026 um 18:40 hat Christian Quante geschrieben:
-> From: PC-DOS repro <chrischaan66@googlemail.com>
+Am 23.06.2026 um 18:03 hat Daniel P. Berrangé geschrieben:
+> Currently we have tests timeout set to 3 minutes, on the basis
+> that they're generally done in less than a minute. I've hit a
+> couple of random failures suggesting that's not sufficiently
+> pessimistic. Increase the timeout to 5 minutes to have a greater
+> safety net in high load scenarios.
 > 
-> Kevin, thank you -- that was a far closer read than I expected for a floppy
-> patch, and all three points were right.
-> 
->   1/2  The SET_CUR_DRV() omission you spotted.  It is real: every other
->        handler latches the drive from fifo[1], READ ID does not, so it
->        answers about whichever drive was selected last.  A DOR write
->        normally selects the drive as a side effect, which is why nobody
->        has tripped over it.  It goes first because 2/2 checks the medium
->        of exactly that drive.
-> 
->   2/2  The main change, now with the fd_seek() return code you suggested
->        instead of a second blk_is_inserted() in the caller.  Nothing made
->        it harder than it looked -- but it does drag fdctrl_format_sector()
->        along, because a new return value would otherwise fall through its
->        "default" and let FORMAT TRACK carry on as if nothing happened.  So
->        FORMAT on an empty drive now answers ST1.MA as well.  I could not
->        get a guest to reach that path: DOS gives up during media sensing
->        and never issues the command, and a hand-written FORMAT TRACK needs
->        the per-sector data phase to get there at all.  It is the right
->        answer semantically, but it is untested on a guest, and I would
->        rather say so than bury it.
-> 
->        The test comment is fixed too -- it claimed the preceding tests
->        leave the drive empty, which is exactly the dependency you object
->        to.  The two tests now stand on their own; the wider ordering
->        problem in fdc-test I left alone, as you asked.
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 
-If you feel like addressing the wider ordering problem in the tests,
-too, you're welcome to do so. I just didn't feel it was fair to require
-you to clean up unrelated existing code before I would merge your fix.
-
-> Measured, empty 1.44M drive, INT 13h AH=02h on A: (SeaBIOS 1.17.0):
-> 
->   before      0.11 s, AH = 0x20 (controller failure)
->   after       0.21 s, AH = 0xC0 (no media)
-> 
-> The extra 0.1 s is SeaBIOS working through the data rates now that READ ID
-> no longer succeeds on the first try.  Booting from a hard disk is unchanged
-> -- the drive is not touched at all -- and no guest changes what it shows:
-> DOS shows the same message for 0x20 as for 0xC0, and Windows 3.11 and
-> OS/2 2.11 show exactly what they showed before.
-> 
-> A SeaBIOS series is on its list [1] that probes the disk change line before
-> media sensing; with it, the same read takes 0.11 s and answers 0x80 ("not
-> ready"), which DOS and Windows both render correctly.  The two are
-> independent -- neither waits for the other.
-> 
-> [1] https://mail.coreboot.org/archives/list/seabios@seabios.org/thread/K2QGADPOTAEEZRQS5T6PKZLDQUBO62HY/
-> 
-> Christian Quante (2):
->   hw/block/fdc: select the drive named by the READ ID command
->   hw/block/fdc: report a missing address mark on an empty drive
-
-Thanks, applied to the block branch (though I took the liberty to add
-the new return value 5 to the fd_seek() comment while applying it).
-
-Just in case it might be useful to know for you another time, I'd like
-to mention that the convention for QEMU mailing lists is that new patch
-versions are posted as new top-level threads because they won't be
-missed as easily then. But not a problem for this one.
+Thanks, applied to the block branch.
 
 Kevin
 
