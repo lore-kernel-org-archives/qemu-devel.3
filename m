@@ -4,87 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D665C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 04:11:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CE43C54F54
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 04:30:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woZ9n-0003XD-RT; Tue, 28 Jul 2026 00:11:09 -0400
+	id 1woZS3-0006Tz-47; Tue, 28 Jul 2026 00:29:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dubdublan1987@gmail.com>)
- id 1woZ9P-0003VD-Oi
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 00:10:45 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dubdublan1987@gmail.com>)
- id 1woZ9M-0003hh-39
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 00:10:42 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2cacf197759so48606705ad.2
- for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 21:10:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1woZRz-0006Tl-Fj
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 00:29:56 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1woZRx-0005XJ-Qa
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 00:29:55 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66S46XnR1821214
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 04:29:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 7mfV4RKJ0gYj3Dz0Wts9VsRZwebzCvI1ibFhtlKM1ks=; b=KE4faL6iyYyXiZQr
+ zJgOgAWbuxjL3CXu0d1MAPHwx/BuXiUwxXDO08aLr6DEI63ybe7ZivR2jPXuQVWR
+ oWObe2ak5V4mYsSftEE7m0sBqw7wlgpsy5+ewwQws+pnmxGTUAIzuj2n3uvDqMJu
+ 6GyHbvrfHPGI8f4vPw/a6svkQXyd/4AJFSX80dnzKMCfj1mSQPNVrbgLiPyOa8kn
+ l8iVSYp0FqcjmmSaMsxiqQLgBzsx0I/KXZexaJeRFPnMmC/9b8Ao9HDBqx/FhMoH
+ f5WUxan3UogD8MvDJa/tT/H6AGFfX/wSqwgh8JAdfQzxXrtUh7yrNHGcbVvW20f6
+ drkIAQ==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fpn3y027w-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 04:29:49 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-51c0199faafso41368841cf.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Jul 2026 21:29:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785211839; x=1785816639; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=1ZNFzEPH0Jg7uKKvrJCqD8ThwFjBxj0u025SyTmCZm4=;
- b=dFT03hKwXjQDHfReYtK8ug0jKWAAkKS1w0ZWBMwoYoLz++qj9y5s02x2aykBkCJ0cq
- oaJ3xxWxIDvbQAwtdPnn0NPdzFF0bcBfqFmeHZEib2ZVXUq+w2k2Xs4HIHSGTH14mdoz
- HOah+1POp2loY7AFt4oMwWtjqBBFlL+xPwGXgIOzDDWyIcU9werKZf7yB+ZfPjyE1mHA
- hJPx8mcQJ7Ih2PRtGGpvpGq4YVZMJ3MPlNnNwXsw2Mib7hP3r4LWDFBHmWjgMQ5sdjmy
- DMaqLN+NITo3J3KuFxdezhyFvubR54wWBQyeFHMGK66RK/ymFOPkXAoxfLClMrBz7ton
- GyDA==
+ d=oss.qualcomm.com; s=google; t=1785212989; x=1785817789; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=7mfV4RKJ0gYj3Dz0Wts9VsRZwebzCvI1ibFhtlKM1ks=;
+ b=EhaWyPHX+DnfJN8da8tkhdgmJKpU171t2vsKd4mGBQ4hFalyJMGjnV4nPNqUSf3sjb
+ GEtt7N9QJ/ULY2p/MoYcvn+5yeibXearsbnRLwo5h9cQLlbCh8kh/PTpKqocOZXk4PRK
+ UTX9i87L3tAZpJzvMze5w+dsSL/K2ttT1hW+w7n/MXQ8uBhOJDb3qaYtm448PJVYfxuh
+ 80zVlBk3uR2/ebW4DMdbX0k4NVumpJ7+3y2xcOKDSh2vd3UHkcMX2l3bSZlfdZ97KjsL
+ ZIl00RLBq8nQnOHyFkFt9dWuMFcwehiXVn1tzEcHOdscocjwTAwG8tHLaM+kzGeiglWI
+ B9og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785211839; x=1785816639;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=1ZNFzEPH0Jg7uKKvrJCqD8ThwFjBxj0u025SyTmCZm4=;
- b=gCiXihM43k22FpDgGnCA+OQbNwz6ohO2qPFuXcx3sbQKpARRNQI543dHWedxMXaeTU
- 47soa0G36jIF/sIMEMEtn7dzSd5Qg1r7XI/aJoRP9OI3HBqbLtvuQRExhufVKHMS93r5
- su0E0YeWuHcXwdZbfBY0u9y4wGm7qn9Q4mojFBMVHSKMMbTKtoGQl7Pri43eb3a+vabu
- TyvUd2H0PzfUZIqK0KbDvP4Nc6OWWboxXRLrlbENrFYzcynB5qq+jM1tdPwqqtSpYLou
- XHLvj+Q1GtVYwaCGo1eC6wBHstuXzN60ZuR3bafYj2iLkX8AQlufrTK50woA33pBzWfZ
- m1mA==
-X-Gm-Message-State: AOJu0Ywxx5S8gq4smg2sGm8xYlyE82RqyqJe4t8nNguuKMWo1nJi9McD
- KGKE9B/lI2mLk2ZZ4MuUyRXOnSnEduB1j3Oheg6DoPOjQIwMOcXRqX/aDxsq/pDOlpY=
-X-Gm-Gg: AR+sD112nxUUOqLwxFEs5/UPsNyYb6gvkyL77JGDBBR3OT7WdEBwAUk6KHU+KNUGjrn
- sWrWG5qRZrZWKWuxwwtaMwqgy9JQqMeNSXc+M306gachykOOYw+pdqOrgjQk7O0DCvNVQSNfQ3I
- ujlFAwX12IRfqCaDddkl9GFk5CBcBnJakTRfDFzrBx0+eIlVByp0l+F16iRoKYlOVzDJCZG0kSY
- rtdRCFSHrq39+QiKMxb1hsEt7LXnVdYWMm25dPwEr6W6eBk1GaX2pIowW7AKkaOk2UlJ27v3V6l
- PXGPM/dQCeCHjv9w9Nc1ROlaco3JynUAeaZIk6S+gCPMzFZVBmjHxjJ/wqWj2phzGvhqiwIJH6r
- j5lcV4A/Yk0yRAJcku0B7r8Rgh722Fc4ykV0yods+rITF5oaocmSdvhPuBA7RT03rLpWWRfeQry
- ktcVx9L7lzibUniO3MnzzFHq3+iirpEQ==
-X-Received: by 2002:a17:902:fd87:b0:2c9:e9c4:82c1 with SMTP id
- d9443c01a7336-2d015f02158mr8104815ad.26.1785211838668; 
- Mon, 27 Jul 2026 21:10:38 -0700 (PDT)
-Received: from localhost.localdomain.localdomain ([27.115.61.146])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2cfde80ee56sm44378785ad.76.2026.07.27.21.10.36
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 27 Jul 2026 21:10:38 -0700 (PDT)
-From: lanxiaoyun <dubdublan1987@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Alistair.Francis@wdc.com, palmer@dabbelt.com,
- lanxiaoyun1 <dubdublan1987@gmail.com>
-Subject: [PATCH v2 1/1] hw/intc: resample level IRQ on PLIC completion
-Date: Tue, 28 Jul 2026 12:09:22 +0800
-Message-ID: <37c3604b0cf28f07f006aa40e7c20a5b12e34184.1785210445.git.dubdublan1987@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1785210445.git.dubdublan1987@gmail.com>
-References: <cover.1785210445.git.dubdublan1987@gmail.com>
+ d=1e100.net; s=20251104; t=1785212989; x=1785817789;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=7mfV4RKJ0gYj3Dz0Wts9VsRZwebzCvI1ibFhtlKM1ks=;
+ b=jQqblaCzT1oNbYZr8a1xvHt8wijPPkl86tvtYk4oZgq3p8BAL+/+wq5zo++4Pot6iZ
+ iZbaRHepr76oOIwdcKKUXOt8bDpQ6z9qnaOvHvVWjIRuMEwOjfghfwp0zvFbgQW+Cgui
+ +6w5riLwMrAH3LkyCJgokG1+ZFvq+M87b0hT5Qd8PdWWDXG6FamwzTZeVxdGWw4JH8xB
+ m9iDqhaZa2603x729LkCTiavLv+rYrbQ7UPcN91gEkHBIr1d/afrC+soMN6joVvopIk+
+ orxS9gZ+YKc3tcbZ/Ty3UU6m7GIpd32iUfUlAzR8jocRuelsYlaBBeyGGVH+mHF2YO5i
+ nCKw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rpg/YvqeXvTYbeDcWsflORBqULLnUB1UN9XOxA+OKqtR+SMEe90MsFT6vHHjY2LEmBe4fFtXMlTyJNN@nongnu.org
+X-Gm-Message-State: AOJu0YzzaTgPIa7N+hk1dubqY6uRAiXkFOdaSGDU8brDdmq2gzoOfc9n
+ Iyopjqsat3MTpUEZWpuuPv5FVUFzyYPWWS2DSHiat+XbzZ7A9DKRkFoc4ymmBPbGTO3NsZr+UXC
+ xkwxUfp8DEhgu+Lifzii8mzz0EGOPwTbCz5uF5UH8MpEwCB5IndWhU+BMCw==
+X-Gm-Gg: AR+sD11p3seKq2ZHY2vmdiYamYYj86TVUD4VIVxK/PPFDhDBEZBP01kthtsyCfoCXRF
+ WYYdGrJcbOQfJlntAS4LLI0oZt0Paqu67QpMeaNhWeB82rUHRqNORkDSqJu2ZY7YVoQ9HDm1+bN
+ c+fMyxwS4R9KolG+D2Quh+SLi44OIWHfvA/3FtlBXfExW6ox/2FHpj+z0Z8ey2PT6AucXDKjrBS
+ ssaUlcvNOvBC4DY1I3esBMobmJ+WDWklV2ZhQDlvQPu2bXVMS9Ksi+bHKI9FSD8ORsqptwDvZRm
+ pIAxru/yi/yAZdyeV8sKtQtJXbeq9Nbke+tvyBnC7mOq+smh7+jR9K/2upjzBs1mgtvt4aYRJfr
+ ilpe3VJkhuSdm9Ffic8P7L7IpX2AO4tUDMF1JjOh7UGMst+kakrw=
+X-Received: by 2002:ac8:7d02:0:b0:521:987f:bf34 with SMTP id
+ d75a77b69052e-529d72125cdmr5434531cf.61.1785212989274; 
+ Mon, 27 Jul 2026 21:29:49 -0700 (PDT)
+X-Received: by 2002:ac8:7d02:0:b0:521:987f:bf34 with SMTP id
+ d75a77b69052e-529d72125cdmr5434381cf.61.1785212988786; 
+ Mon, 27 Jul 2026 21:29:48 -0700 (PDT)
+Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-496c44b84edsm67604605e9.5.2026.07.27.21.29.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 Jul 2026 21:29:48 -0700 (PDT)
+Message-ID: <14b0818d-cffb-4648-bd42-560361822f95@oss.qualcomm.com>
+Date: Tue, 28 Jul 2026 06:29:47 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] linux-user/sh4: allow full 32-bit address space
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Max Filippov <jcmvbkbc@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+References: <20260727114848.1041856-1-laurent@vivier.eu>
+ <877be8fd-af97-4f68-b4a4-31201334c96c@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <877be8fd-af97-4f68-b4a4-31201334c96c@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=dubdublan1987@gmail.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Authority-Analysis: v=2.4 cv=fbidDUQF c=1 sm=1 tr=0 ts=6a68303d cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=cplnpDx6AAAA:8 a=yFfpETEzUMEildScezgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=uxP6HrT_eTzRwkO_Te1X:22 a=bHwCOBSOUrNypjIvOSWD:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDAzOCBTYWx0ZWRfX5cubaXJLTMeJ
+ nJXOG93u7N29WjDZZJQQMdHpfkfUQ+clZsrvWNeU3mjOBaehizcRU9QO3WeOVbksxTWW00mMmca
+ mTQZd/ZgATLoOQ9hz37ZioQHIEEyWAY=
+X-Proofpoint-ORIG-GUID: E2a8cQLXAsIqYQiEeAzjbb4rtFO8irEX
+X-Proofpoint-GUID: E2a8cQLXAsIqYQiEeAzjbb4rtFO8irEX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDAzOCBTYWx0ZWRfX/NHPo+F8LK3w
+ nRnBa0SrYkF3UxTfbZEsMxmnvDScxlXtRhaW3lPF3S72iZW2b+lC76F93hdIWJ2J4uHsa+3QVpm
+ Ju9o99/CLpUk76ZcpAFnq4q1MMnjFWqPJEWzX175A5pTC+PiaAFxSCAWHwJ5fYEGFFgvnTsgzrZ
+ hbJSsxkvMvMcJC+7mebvv7CJ2h4selHv4rt90M/L1oBeQ6EyhwJesXFAqdtHsYns61KrbGyl1kq
+ YD7TyCYndO2IZ2YCFMcWYNiQMHfn8GqiLk5iJkc2uQtJWQfC/QdY5qgce+3VA6pt9OGGGZarico
+ bJdXioOS+O5TLAt1lSPDxcNfzDS1BqyqIAYRedq+h4FJ0u+D0lhUTB9PinXzcUOihiDphTy77mu
+ CplnJpfBPbvw4peg7nt/dG1CoqCMAZckkmmrCTziuuzNDMKzEflJEpIP93ZBG+7x/KaML28RYNT
+ ZFOninJSe2IdOzm3J1w==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-28_01,2026-07-27_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 bulkscore=0 suspectscore=0 clxscore=1015 impostorscore=0
+ phishscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607280038
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,72 +155,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: lanxiaoyun1 <dubdublan1987@gmail.com>
+Hi Laurent,
 
-When an interrupt completion message is received, if the interrupt is
-level-triggered and still asserted, forward a new interrupt request to
-the PLIC core.
+On 27/7/26 18:51, Richard Henderson wrote:
+> On 7/27/26 04:48, Laurent Vivier wrote:
+>> On real SH4 hardware, the address space is split between user mode
+>> (U0, 0x00000000-0x7fffffff) and kernel mode (P1-P4, 
+>> 0x80000000-0xffffffff),
+>> so TARGET_VIRT_ADDR_SPACE_BITS was set to 31 for CONFIG_USER_ONLY.
+>>
+>> However, qemu-user does not emulate the MMU, so this limit is not needed.
 
-This updates the SiFive PLIC IRQ handling so completion rechecks the
-current source level and reasserts pending state when the input remains
-high, matching the RISC-V PLIC specification.
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [*]
 
-Signed-off-by: lanxiaoyun1 <dubdublan1987@gmail.com>
----
- hw/intc/sifive_plic.c         | 5 ++++-
- include/hw/intc/sifive_plic.h | 1 +
- 2 files changed, 5 insertions(+), 1 deletion(-)
+>> The only effect is to restrict reserved_va to 2 GB, causing OOM failures
+>> for memory-intensive builds (e.g. webkit2gtk on Debian sh4 buildds).
+>>
+>> Set TARGET_VIRT_ADDR_SPACE_BITS to 32 unconditionally, like most other
+>> 32-bit targets. Also fix the TASK_UNMAPPED_BASE macro to use 1ull instead
+>> of 1u to avoid undefined behavior when shifting by 32.
+>>
+>> Reported-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+>> Signed-off-by: Laurent Vivier <laurent@vivier.eu>
+>> ---
+>>   linux-user/sh4/target_mman.h | 2 +-
+>>   target/sh4/cpu-param.h       | 6 +-----
+>>   2 files changed, 2 insertions(+), 6 deletions(-)
+> 
+> So, the goal is to run things under qemu-linux-user that can't run on 
+> hardware?
+> 
+> I'm not necessarily opposed, though there have been software systems 
+> that know that the upper bit is unused and reuse it for tagged 
+> pointers.  Emacs did so, sometime last century.  I'm sure there were 
+> others.  Anyway that's the reason we currently limit qemu-linux-user 
+> like the hardware does.
+> 
+> If you're going to drop that, you might do this for all targets:
+> 
+> mips/cpu-param.h:#  define TARGET_VIRT_ADDR_SPACE_BITS 31
+> sh4/cpu-param.h:# define TARGET_VIRT_ADDR_SPACE_BITS 31
 
-diff --git a/hw/intc/sifive_plic.c b/hw/intc/sifive_plic.c
-index 9c84ff06a9..3927684bcf 100644
---- a/hw/intc/sifive_plic.c
-+++ b/hw/intc/sifive_plic.c
-@@ -246,6 +246,7 @@ static void sifive_plic_write(void *opaque, hwaddr addr, uint64_t value,
-         } else if (contextid == 4) {
-             if (value < plic->num_sources) {
-                 sifive_plic_set_claimed(plic, value, false);
-+                sifive_plic_set_pending(plic, value, !!plic->source[value]);
-                 sifive_plic_update(plic);
-             }
-         } else {
-@@ -276,6 +277,7 @@ static void sifive_plic_reset(DeviceState *dev)
-     int i;
- 
-     memset(s->source_priority, 0, sizeof(uint32_t) * s->num_sources);
-+    memset(s->source, 0, sizeof(uint32_t) * s->num_sources);
-     memset(s->target_priority, 0, sizeof(uint32_t) * s->num_addrs);
-     memset(s->pending, 0, sizeof(uint32_t) * s->bitfield_words);
-     memset(s->claimed, 0, sizeof(uint32_t) * s->bitfield_words);
-@@ -353,7 +355,7 @@ static void parse_hart_config(SiFivePLICState *plic)
- static void sifive_plic_irq_request(void *opaque, int irq, int level)
- {
-     SiFivePLICState *s = opaque;
--
-+    s->source[irq] = !!level;
-     if (level > 0) {
-         sifive_plic_set_pending(s, irq, true);
-         sifive_plic_update(s);
-@@ -379,6 +381,7 @@ static void sifive_plic_realize(DeviceState *dev, Error **errp)
-     s->bitfield_words = (s->num_sources + 31) >> 5;
-     s->num_enables = s->bitfield_words * s->num_addrs;
-     s->source_priority = g_new0(uint32_t, s->num_sources);
-+    s->source = g_new0(uint32_t, s->num_sources);
-     s->target_priority = g_new(uint32_t, s->num_addrs);
-     s->pending = g_new0(uint32_t, s->bitfield_words);
-     s->claimed = g_new0(uint32_t, s->bitfield_words);
-diff --git a/include/hw/intc/sifive_plic.h b/include/hw/intc/sifive_plic.h
-index 32973dbf28..627a418ba1 100644
---- a/include/hw/intc/sifive_plic.h
-+++ b/include/hw/intc/sifive_plic.h
-@@ -54,6 +54,7 @@ struct SiFivePLICState {
-     uint32_t num_enables;
-     PLICAddr *addr_config;
-     uint32_t *source_priority;
-+    uint32_t *source;
-     uint32_t *target_priority;
-     uint32_t *pending;
-     uint32_t *claimed;
--- 
-2.43.0
-
+If so please add a comment ([*]) around these definitions.
 
