@@ -4,107 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82183C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 22:31:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01044C53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 22:39:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woqJg-0004xZ-8T; Tue, 28 Jul 2026 18:30:28 -0400
+	id 1woqRa-0007D5-So; Tue, 28 Jul 2026 18:38:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1woqJa-0004wq-Qi; Tue, 28 Jul 2026 18:30:22 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1woqJZ-0001CW-3t; Tue, 28 Jul 2026 18:30:22 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66SLHt4j2236906; Tue, 28 Jul 2026 22:30:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=wEKwJLxIVZu6K9/CDfPeeHLrdBXEY/qacRx54B5Y8
- 2g=; b=fdVBCCyfMLzNjnydqmpRKRGQn0wN82hsTM/rgCcKBLfuIdDbl4Q1sXULG
- YNsVloi6VqIgJYixdvR9J0uY3oD4BKa+9h8pJkcz/YXjUi44EEESlifn9XV9ny9w
- ug/J7T+WcLWhIR3Yq2Mofk5kqVyyvHN00uVwfQXd/dSUf/nPRbvhDAmmWgoII7wk
- ytUl5ZCl5NqFbKnMSfW5c9cKsdKtUNa95xKmV6fWbBSzTnNrQw+68v51OzlKqDsZ
- rSTcAJqqn3JNKPU6FLyrI2vpRK8JXxVTxi6PR9zfcI2+ZAt3QRdQdjgJdxI2y+oI
- l3y6gqu8MU4ndJJJ86f++j+OMIhiw==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0nq5ut-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Jul 2026 22:30:17 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66SMQJHu015104;
- Tue, 28 Jul 2026 22:30:17 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn8yhc451-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Jul 2026 22:30:17 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66SMUGAs60293478
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 28 Jul 2026 22:30:16 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 01A495805A;
- Tue, 28 Jul 2026 22:30:16 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E06D85805C;
- Tue, 28 Jul 2026 22:30:14 +0000 (GMT)
-Received: from t15.ibmuc.com (unknown [9.61.152.208])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 28 Jul 2026 22:30:14 +0000 (GMT)
-From: jrossi@linux.ibm.com
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, cohuck@redhat.com,
- mjrosato@linux.ibm.com
-Cc: farman@linux.ibm.com, jrossi@linux.ibm.com, zycai@linux.ibm.com,
- jjherne@linux.ibm.com, borntraeger@linux.ibm.com, jdaley@linux.ibm.com,
- qemu-stable@nongnu.org
-Subject: [PATCH qemu] pc-bios/s390-ccw: Fix off-by-one errors with loadparm
- and boot entries
-Date: Tue, 28 Jul 2026 18:30:13 -0400
-Message-ID: <20260728223013.4047042-1-jrossi@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
+ (Exim 4.90_1) (envelope-from <nodokaorganized@gmail.com>)
+ id 1woqRY-0007Am-Uz
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 18:38:36 -0400
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nodokaorganized@gmail.com>)
+ id 1woqRX-00027f-D6
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 18:38:36 -0400
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-81ed2a00f12so5931727b3.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 15:38:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785278314; x=1785883114; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=AwLlwqIULYzs6brU2iW3maT1jYZq1OENqElphuHRRCE=;
+ b=ipvNU6Pgb9KVbd/aWZoSBe53UD9E64hWddk/qzHgRWkygsOfSzaRwpdtY1ffC70UJx
+ iM1Arc39rSspwTKkf2ZQszWAwxf02ZyLYLHyghuEXBUfHZQ0KqZsDyNIpU6OUI4l40zu
+ Bjfwj37Y7qJ8VzpxP3gANlZ70K6BH5uIIbIATugjAIGyl7nvoOTUfv54rpgsq+Q4d+O5
+ a0VrbVis4HPzIGINqyPSR+/joCLik1UV8PUdlqI2JBVR0qWV3y+B858Hnglpqbs96Y/2
+ b5WA5U622t4AXHPNXNGiLYe6zEMdfGOvKvM3NV9BNLRaZ7UbmddbfbfYo7abtQHtmTV1
+ pViA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785278314; x=1785883114;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=AwLlwqIULYzs6brU2iW3maT1jYZq1OENqElphuHRRCE=;
+ b=ndR9790KsndXMRlk97qhuComupdnLI6fxutaeSOphzzXJszgSt6a5SooXK/Ip2forG
+ 8EuqioNOYFrrK273f0w3ZLkcaQAR42IFwWna2mc4mbpZab7AetmB/kQyW5DHH+rNzhUZ
+ cDt5NBq9f50bI2E3ygQaqD0G2VBlURjmLvfunaUUnXL8LHs5E5bSugX7ztahXA4/NuAl
+ ls20u/XifPC+8FHgw12jLgkBL2/qgp4CbeZPKaIghqjhcVm+D9calrp00wmSZGMyuL7N
+ r0OSzBTEGPJZc+jMebLW1/1EYuNPgb2n0nu33kFyRra4hiIHnc77V7+gWNfS2jMcMI+m
+ SsxQ==
+X-Gm-Message-State: AOJu0YyR7QE2EbDYOSG8tI1LK4A8dzUrN/ZrFzg0uWE17DDsRQBL/oes
+ tr3pytv6a8hdeVczQCrnsK12UrdDdQPhwT8esB64XWzcUGjFtPnyX8w89ZOAUjdU
+X-Gm-Gg: AR+sD11DtV1TZfH9KuB5pkcgZpPd5hz/ilR+2zsCVJE8Toc5m55Kx646NViHIZ3/IRI
+ adgJv5aisbzDrSZ4qGehNtM5G6/MGUzBuZ43MMnG+nJc0lMw3moMQ0M0Ev8k0K6rwIt3gColnMJ
+ eBtZTTFZkdEgrfNwlh2RnoTKyvjwVsxGmXwr12enUtdGRQiUQdgcqFMNM7NpULb4HYfFO32MxVB
+ X2L2NbXKKYPPO6x7K6TuYjEiFxGss/LjhoPhBFnBJ7jt2FvXy1PSNaxjVNAGN26yk0vBRF2oClK
+ l4dUpDmFjRGqulCQubVsLEy9unPE3srQfu1rtLws1wGzLtk5srxewrljkq2ZmZk5Y47MSb3spTX
+ G3UFO1OQp65Tzjw8TyGra0ZlfRgSBiuLkDcmpQuPYuS7fn5l45pPkVQ4OgYCt2PAnZbLYjOrKHi
+ zXfxEgfZGC76H0kS0aGxZqse2bfvEdkO4tuMiJKKlzTd/4tK6JY1pcGrSsQac7y7FDXYPnaZtHY
+ XGf5TF6dws2MV26N8IAZ30SnzRJtT9A/YaUuTtONI02PULKrrtgHWBq2rI3kEu4YjzjbmfQ+fAs
+ m+TfXBGErgmWFTHqsYAp
+X-Received: by 2002:a05:690c:3681:b0:81e:d8ec:d855 with SMTP id
+ 00721157ae682-81f9936c55dmr19427097b3.62.1785278313923; 
+ Tue, 28 Jul 2026 15:38:33 -0700 (PDT)
+Received: from ip-172-32-0-41.us-east-2.compute.internal
+ (ec2-3-143-144-70.us-east-2.compute.amazonaws.com. [3.143.144.70])
+ by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-81fa27592e9sm7541447b3.8.2026.07.28.15.38.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 Jul 2026 15:38:33 -0700 (PDT)
+From: Nodoka Shibasaki <nodokaorganized@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Nodoka Shibasaki <nodokaorganized@gmail.com>
+Subject: [RFC PATCH v2 0/2] hw/i2c,
+ hw/misc: emulated Xilinx AXI-IIC controller + PCIe FPGA carrier
+Date: Tue, 28 Jul 2026 22:38:27 +0000
+Message-ID: <20260728223829.2613524-1-nodokaorganized@gmail.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260715221400.1484805-1-nodokaorganized@gmail.com>
+References: <20260715221400.1484805-1-nodokaorganized@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDE5MCBTYWx0ZWRfX0476Dxtejv03
- sdHQqpVg/sDuKMAFBd3OxUP16g6OevH8t2aP1eQv/A+j3UIZG+wLIUbEiVwBmtsMeaOEaUX4mEd
- T+EAWBsTTVIuhCy2nvdSXgSZwo9z+KY=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDE5MCBTYWx0ZWRfX855wROg8vcVz
- Mrn1zsnXOipkLl8ma3cm9KRfwWXMBFZFluGe+sMcCTkDpjsABEKAob2Dye4LcyhWM67ORJ9gsB9
- 1MM6n8xZ6r26u31lHvi0EGwOajnK88zhYO9bhzSh9hNa6nCDndSev9gbPU+WNFpow8y6EdWJLtR
- OB9Ht21oLG5493U0N2qmnMpw48a3PGmaNLV22pmKTzcSqsc7PrQCZiXyjCTkxICNk8LaD83NwFD
- dJf+iQkiq/iNzIk0/L4BY/T87ftRERHS377M2dnt+tWTaOdICY/q5f6Unh9IMEjz9RdDVEkQVsd
- 6zpb+a/GViAlb4wA1rHWYKUJ1Ze3a10Qc+aBffFHFT/D8Ka6H+ycuGIklMn5np9r98VZD54SZlg
- ZQUBr3vg2sZyOjv5AAJ/JC5nQ+iy3j/6lZTsM1giNiRQFJ8xO04C+fX9LTXR43k08mIkDNMVFH0
- gSv60WD3s2P+C0YM0aQ==
-X-Authority-Analysis: v=2.4 cv=b5WCJNGx c=1 sm=1 tr=0 ts=6a692d79 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
- a=kCIrWdday8tkOiwSnjsA:9 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: ezECWE2dCbospXA2-kO1TtuzY4CV1QvB
-X-Proofpoint-ORIG-GUID: ezECWE2dCbospXA2-kO1TtuzY4CV1QvB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-28_06,2026-07-28_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0 impostorscore=0
- bulkscore=0 phishscore=0 suspectscore=0 clxscore=1011 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607280190
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=nodokaorganized@gmail.com; helo=mail-yw1-x112d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,103 +104,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jared Rossi <jrossi@linux.ibm.com>
+Hi all,
 
-The loadparm may optionally be used to select a boot entry, with the
-intended range being 0 through 31 inclusive, for a total of 32 entries.
-Previously, MAX_BOOT_ENTRIES was defined as 31, indicating that it was
-intended to correspond to the index of the boot entry rather than the
-count; however, some guards also used MAX_BOOT_ENTRIES as a count of the
-maximum allowed entries, which resulted in a mismatch between the intended
-and actual range such that index 31 could never be used in practice.
+This is a follow-up to the single-patch RFC I sent last week ("[RFC
+PATCH 1/1] hw/misc: add xiic-fpga-i2c, an emulated PCIe FPGA I2C
+controller"). Based on the split suggested there between a
+standardized controller and its carrier, this v2 breaks the device in
+two:
 
-Move the definition of MAX_BOOT_ENTRIES to qipl.h so it is shared and
-change the value to 32, representing a count of the maximum number of
-allowed boot entries and allowing the loadparm to accept values 0 through
-31 as intended.  Update some instances in the netboot code where
-MAX_BOOT_ENTRIES was used as the max index so that all guards treat
-MAX_BOOT_ENTRIES as a count across all boot methods.
+  1/2 - hw/i2c: a generic model of the AMD/Xilinx AXI IIC controller
+        (LogiCORE IP, PG090) as a SysBus device, independent of any
+        particular carrier.
+  2/2 - hw/misc: a PCIe function, gated behind TEST_DEVICES, that
+        embeds N of the above controllers behind one BAR0 window and
+        aggregates their interrupts onto a single MSI vector (with a
+        legacy INTx fallback). This models a specific FPGA carrier
+        rather than a standardized board, hence hw/misc + TEST_DEVICES
+        rather than hw/i2c proper.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 806315279d5c ("pc-bios/s390-ccw: Remove panics from ECKD IPL path")
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
----
- include/hw/s390x/ipl/qipl.h |  2 ++
- pc-bios/s390-ccw/netmain.c  | 11 +++++++----
- pc-bios/s390-ccw/s390-ccw.h |  2 --
- 3 files changed, 9 insertions(+), 6 deletions(-)
+Together they let the Linux i2c-xiic driver, and any I2C slave behind
+it, be exercised under QEMU without real hardware.
 
-diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
-index 8d3c83a80b..b390f2f112 100644
---- a/include/hw/s390x/ipl/qipl.h
-+++ b/include/hw/s390x/ipl/qipl.h
-@@ -20,6 +20,8 @@
- #define LOADPARM_LEN    8
- #define NO_LOADPARM "\0\0\0\0\0\0\0\0"
- 
-+#define MAX_BOOT_ENTRIES  32
-+
- enum S390IplType {
-     S390_IPL_TYPE_FCP = 0x00,
-     S390_IPL_TYPE_CCW = 0x02,
-diff --git a/pc-bios/s390-ccw/netmain.c b/pc-bios/s390-ccw/netmain.c
-index 651cedf6ef..791854fce0 100644
---- a/pc-bios/s390-ccw/netmain.c
-+++ b/pc-bios/s390-ccw/netmain.c
-@@ -40,6 +40,9 @@
- #define DEFAULT_BOOT_RETRIES 10
- #define DEFAULT_TFTP_RETRIES 20
- 
-+/* Index 0 is reserved for default alias, start PXE cfg indices at 1 */
-+#define PXECFG_MAX              (MAX_BOOT_ENTRIES - 1)
-+
- extern char _start[];
- 
- #define KERNEL_ADDR             ((void *)0L)
-@@ -381,13 +384,13 @@ static int net_select_and_load_kernel(filename_ip_t *fn_ip,
- 
- static int net_try_pxelinux_cfg(filename_ip_t *fn_ip)
- {
--    struct pl_cfg_entry entries[MAX_BOOT_ENTRIES];
-+    struct pl_cfg_entry entries[PXECFG_MAX];
-     int num_ent, def_ent = 0;
- 
-     num_ent = pxelinux_load_parse_cfg(fn_ip, mac, get_uuid(),
-                                       DEFAULT_TFTP_RETRIES,
-                                       cfgbuf, sizeof(cfgbuf),
--                                      entries, MAX_BOOT_ENTRIES, &def_ent);
-+                                      entries, PXECFG_MAX, &def_ent);
- 
-     return net_select_and_load_kernel(fn_ip, num_ent, def_ent, entries);
- }
-@@ -470,11 +473,11 @@ static int net_try_direct_tftp_load(filename_ip_t *fn_ip)
-          * a magic comment string.
-          */
-         if (!strncasecmp("# pxelinux", cfgbuf, 10)) {
--            struct pl_cfg_entry entries[MAX_BOOT_ENTRIES];
-+            struct pl_cfg_entry entries[PXECFG_MAX];
-             int num_ent, def_ent = 0;
- 
-             num_ent = pxelinux_parse_cfg(cfgbuf, sizeof(cfgbuf), entries,
--                                         MAX_BOOT_ENTRIES, &def_ent);
-+                                         PXECFG_MAX, &def_ent);
-             return net_select_and_load_kernel(fn_ip, num_ent, def_ent,
-                                               entries);
-         }
-diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
-index 1e1f71775e..d0498e2944 100644
---- a/pc-bios/s390-ccw/s390-ccw.h
-+++ b/pc-bios/s390-ccw/s390-ccw.h
-@@ -82,8 +82,6 @@ int menu_get_enum_boot_index(bool *valid_entries);
- bool menu_is_enabled_enum(void);
- int menu_get_boot_index(bool *valid_entries);
- 
--#define MAX_BOOT_ENTRIES  31
--
- __attribute__ ((__noreturn__))
- static inline void panic(const char *string)
- {
+Changes since v1:
+  - Split the single device into a generic hw/i2c controller model and
+    a separate hw/misc PCIe carrier that instantiates it.
+  - Added a register-level spec for the controller
+    (docs/specs/xlnx-axi-iic.rst).
+  - Added a qtest (tests/qtest/xiic-fpga-i2c-test.c) that drives a
+    transfer through BAR0 to a tmp105 slave and checks register,
+    transfer and NACK behavior.
+  - Reworded comments/commit messages to describe the hardware in
+    generic terms rather than referencing a specific downstream
+    project.
+
+Open questions (carried over / updated from v1):
+
+  1. Is hw/misc + TEST_DEVICES the right home for the carrier, given
+     the controller itself is now a standalone hw/i2c device? I split
+     it this way since the carrier's register aggregation is specific
+     to one FPGA design rather than a standardized board.
+
+  2. The AXI-IIC register decode is deliberately partial: it
+     implements the subset the Linux i2c-xiic driver actually touches
+     in dynamic mode. I can flesh out static/manual mode if that is
+     preferred for a general-purpose model.
+
+This series is based on current master. Happy to add more qtest
+coverage or documentation if there's interest in merging either half.
+
+Thanks
+
+Nodoka Shibasaki (2):
+  hw/i2c: add xlnx-axi-iic, a Xilinx AXI IIC controller
+  hw/misc: add xiic-fpga-i2c, a PCIe FPGA embedding xlnx-axi-iic cores
+
+ MAINTAINERS                                |  12 +
+ configs/devices/x86_64-softmmu/default.mak |   5 +
+ docs/specs/index.rst                       |   1 +
+ docs/specs/xlnx-axi-iic.rst                |  62 +++++
+ hw/i2c/Kconfig                             |   4 +
+ hw/i2c/meson.build                         |   1 +
+ hw/i2c/xlnx-axi-iic.c                      | 284 +++++++++++++++++++++
+ hw/misc/Kconfig                            |   6 +
+ hw/misc/meson.build                        |   1 +
+ hw/misc/xiic_fpga_i2c.c                    | 261 +++++++++++++++++++
+ include/hw/i2c/xlnx-axi-iic.h              |  69 +++++
+ tests/qtest/meson.build                    |   2 +
+ tests/qtest/xiic-fpga-i2c-test.c           | 159 ++++++++++++
+ 13 files changed, 867 insertions(+)
+ create mode 100644 docs/specs/xlnx-axi-iic.rst
+ create mode 100644 hw/i2c/xlnx-axi-iic.c
+ create mode 100644 hw/misc/xiic_fpga_i2c.c
+ create mode 100644 include/hw/i2c/xlnx-axi-iic.h
+ create mode 100644 tests/qtest/xiic-fpga-i2c-test.c
+
 -- 
-2.54.0
+2.50.1
 
 
