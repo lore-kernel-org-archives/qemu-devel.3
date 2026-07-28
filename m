@@ -4,104 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D382C54EFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 09:43:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A3B3C54EFC
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 09:43:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woeKe-00056n-3V; Tue, 28 Jul 2026 05:42:40 -0400
+	id 1woeKv-0005CA-AJ; Tue, 28 Jul 2026 05:42:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1woeKc-00054r-1f; Tue, 28 Jul 2026 05:42:38 -0400
+ id 1woeKt-0005Ao-Ic; Tue, 28 Jul 2026 05:42:55 -0400
 Received: from fhigh-a4-smtp.messagingengine.com ([103.168.172.155])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1woeKa-0007fi-0v; Tue, 28 Jul 2026 05:42:37 -0400
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 3710614000F1;
- Tue, 28 Jul 2026 05:42:34 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-02.internal (MEProxy); Tue, 28 Jul 2026 05:42:34 -0400
+ id 1woeKs-0007hG-89; Tue, 28 Jul 2026 05:42:55 -0400
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 7DBE314000F2;
+ Tue, 28 Jul 2026 05:42:50 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-01.internal (MEProxy); Tue, 28 Jul 2026 05:42:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:message-id:mime-version
- :reply-to:subject:subject:to:to; s=fm1; t=1785231754; x=
- 1785318154; bh=F10lZgIhS9fM8xfP8fCFp9Akvi+SjrcoC8HeUz69isE=; b=Z
- IH7gm2S9mNcBRIiYUP+gL05Fdz44EUTxHOLpERlqY1MVqeOKrqrtpuiJSvtT/Lf0
- ePnXf/3zxSJVxTt7udREiofG+26xI/JzoFK0ynQu+9ZZ3dYWBqNSDJAoH+p3k076
- RwiTTauboGy8iHFoXd2m+EkcJt07RUAe6RR5tTSJuHw3jk4XW/2SMHSMbN9HLjG+
- lbU5bBy++P8ErZZnOXJlXC7F80dGvhwWwzpxdsDKO63qNHM33yymhFlkrfSxpKQu
- Cgo8p3mC3E6c1ZLbzU+M1r4jWtmDBB8rsIooJiX5Voy0TjW8Fqd/DuQ7lI5rObCz
- g+bBri4QqixIrAFMudTcw==
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm1; t=1785231770; x=
+ 1785318170; bh=U6g6qtE8GIN58YV3JQwYnVYZ4fHIbT+TKRxggWh8KBw=; b=X
+ TT38Jl5PCWXs3GYo69S1m2LkU4qZYANanOl+hKZ2k5jfO/rXMr+YL4b9XuHFkuA/
+ 3lWAi7nOF9AVNE8TYP/IeDRBH5e8xRwzUAfaorI2QMys1MxaC3iybVHBDkBaoQ27
+ 0ZTpObvsqIsXfsDCAlaO/8Bv3FSpvlpI3TdRDZGeM9KzZ3L3wVXbAw7Pog8t26gF
+ ZVR9lcZUuAQ95VBleaMP/WcJLZPDe6VMpT0jFZA044uyvJZ7A8GrW4xOunblFEk5
+ D15ckuEoDDDrhe28C9+p6OH7NXS5vUwFy4RXlgc9aGosGFmC4Lj1r6UIzuWPk69o
+ +0C2nWn4+3/z61xJxk9sw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; t=1785231754; x=1785318154; bh=F10lZgIhS9fM8xfP8fCFp9Akvi+S
- jrcoC8HeUz69isE=; b=CrRCK8CgbjJTIBc/fDmctWZbWTQuhtmMjpk+CLYlVHz5
- wTphJ9Br26DJ0MiRHoKOjt8hf6OfLalfKObQkPQVG6AeJw5fP9UZiE8nDBLD1Des
- B+BiGahFoejrHidXHu6xtjk0pkHoCifhVia5WapehvU1WVDExLbW6srebyKAGKj2
- z8JZLMpb5uvzbx/+APDSWeSn/SRuDBPm0YrqPYiIJ0B1d9Lwth5BWp/F1uj5wpD0
- PBv7eeJIZ32I9i8VEvW0yzdCzGwTxIEGg1ZDqg2bYwAthXo5cMO+sYUkoPcM/x6C
- zE91jVhiO7MCve4icpLFympkSumMqxkD5K3qUqt1JQ==
-X-ME-Sender: <xms:iXloapqMMzI0sDoW36Vq2-bGtM1XnDhHIFe0ao36HIEl6hlhfgTnVQ>
- <xme:iXloauMZ8Qz92mGAoWg0dkqdKBLG81NGGE9IcGPVnC6_vZ8V9dHQoO6-oTrTkufHA
- gp_UZl1UHBH-umSniqri_6OtxmW1NFdHGRLnkG-Q6C7Pr1b-7NkSQ>
-X-ME-Received: <xmr:iXloap3MS16zOiqhThXM7DyfacN5st43rta8hcbvG0iFlLnQrjp_yXz3hH1XWG9zBNcCEzNWbOuSRO98pH-lK5Y>
-X-ME-Proxy-Cause: dmFkZTEJMsmRmLdoCPg9YBLMBdtJJPidsyL6ff+pCoXh/HhRV2xt3Q8RjIAvfUl+jbuZvK
- 81nEpm2pK3/ZxwdKBrxR40nHjCw7hCpaXGUO5kL42eE2RONMV9C2jZONKTs9vPbfk78Vnu
- 4KEEmXDN1SMBUBljWQo3KRuNo8wmWKNkGz+SfPGnWUSakykXrMWwM+P86hNKrNhM8jtam+
- phRuRxPz4GicCOm2ZSNPJ4jSqX2EbOiwDVEjL2a1jQm9LY3x8li8fRpk7ICDMYN7FmAgEF
- Zrq5NE7EFkGbHPCUWZ5O4nmK5g91ek6C8+ojaW9X0LtkvoOxMKEEAgcMdj0LQXHmYUuVGg
- 6/3nit8lHqCmx0RJysrv0wittbXv5FeXKU+dyx7BPZaB9ll2EBpZpuwUriUGYzEyC+KSnu
- 3QKln3GlkSt5WG+0nabM3qZ6PL2z/Xkjz6y3PjTLk5tveL9+OSk4q/V3B5XmgE8Ew0dQW1
- 4Ygd/a1ssefmmmueHC78+b7D03Y0haW1BmHrEh2dcrHrzfapMgLR6mEEKfHkdSwnLlyB4+
- CrabRwcmzIUyCmDtdmxWyHkx+ym3ZssG7lgt6F1mtm3VvXPhyUtorP+X4UM16S5lMEIzGh
- gBpV1rBWStIz+iiRUruL1yXkuQ+XJuMoJVKt/kbimfXWyWwhqILjij1lZadw
-X-ME-Proxy: <xmx:iXloalDiYxSublzAB3sYEgz5ZtD8WwO0SYILBU7FmKOyq-CIMTd1bg>
- <xmx:iXloauJrG-_hE2oyjiX984ix48_ZbRB02ANHM32Zt4rz1f_y-oMy0A>
- <xmx:iXloammxk_PO9dYEBQZ4rzWIScfK5zuzQmscHkxJwNbT49NDDqZWUA>
- <xmx:iXloavbbGcuq5Va4o6JShnL0nH_Qi_30VNKeFay7x9WA6ClNCnEbOA>
- <xmx:inloaiLM5bEEMa1UMjU92tSr9N6EHgG2VSFOlCHcH-AnipXHJkHlIKpS>
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+ 1785231770; x=1785318170; bh=U6g6qtE8GIN58YV3JQwYnVYZ4fHIbT+TKRx
+ ggWh8KBw=; b=QOY+d5zdnEbIG1QacL6x8szxlluFsjJ+GqLNO5Vz8LCtu3mvCwf
+ QyXN2lIBKVcGLYUvmuzYhyMlIxRA+h2iLNcvDaCRFHSS4CyxCnEfvaD9q7oUMAAo
+ owwx8wL6JjrvYmm0YWRhNRr52oc6/7XnXdsMukz/FUkOVTFdqzC7wXUoAg59TEOS
+ yls10UEOChUTwMRaCXEvy6jxrU6bi3NBwzsVbtx1hFfQwMJng5eqeT1Ruk3cDWkH
+ IbJf/0F9aIrYp1DDTgYqCCEO/J1/XpCuBM6F5aR17j5npOh+aXZrxuCL9cU5WCdq
+ m+ggEfuqQpHBRwylHg7V/7vmELOcRi4YjcQ==
+X-ME-Sender: <xms:mnloah-IRxZPvWoM3tarccy3PCS1lV54ghe13ADsPOA762zRtNwSnA>
+ <xme:mnloaoSvCFIh12YIx9p2dVsyBzU8D5alC5LL3XO_sV_e_Uh1dFKFemziCaXdInx9F
+ Yc6oAnJB8NSD4tbAso-7IIXJcrB0Yxss7jklC2oieNsgghd41S83NY>
+X-ME-Received: <xmr:mnloaiooMYiMhpBE9QFTE8AV6DW35dht1wfzyyi3otHOShRysMpy9oR3YgIm9w>
+X-ME-Proxy-Cause: dmFkZTEuBL7FQdztr/r5uUGPMrihDvt4AS5u/IOGItM+SoVjTDKfrcQDcvTKCDjBQG5ryb
+ brjL2Y8WXYXUq/WgEkmBrgpnrwDqaahrzy4VuYvBWlLO3x08nfEEv8DII+0yG3ST1E+a5M
+ EUW5w8qah4ULGGqMuZmgYHNEn4guI4Fy1aMMnS8hTtukCOry92xYRaQBCu7kSaeCefhGTY
+ YVglfwTBxyxoPSUo2kJnHjmxgGBTosdL/UOuyiQyDU6KcD2AafpTchKY/D9SYv/i1RE8GC
+ 5au5Y6bUcjPKmWlVYjaCuzWsmYw9SfRVihOZsYu4a886DqPs6bCA0KI91KndG35sRX0fB5
+ sir8ew1aMbBScnJ8Zvn3thal3ZafkLTqalWBmR673pk6ShhSGs7lnaE6Rd69lUDD72DTiM
+ lgdTOdo1fkFiTMs6l+2TIMu18M2agxZQOvW0wRL/HS+qP+lTkpjX6cWNhPGMWrSwWe8Y21
+ mZ7cOYVMpBQybS89e2q81PwMuw3rsYpNv0F7O0indRBbcTxT0NeQVqYxJA59TAjCCGxGoK
+ H0AN/8r1vTMTqmopM72IKiC9vlaA21HMn9BuOxU7OOeuKJfpnAfcpDA5q+0mhiPb2e7P0P
+ yaloabmdCPoHhdA4nfkqrGW7Bqe1v12kFPgH8j9rG+8Kw8k6zLx/TJc50YZA
+X-ME-Proxy: <xmx:mnloalmLSKcmHaoHVhXMXjnwPZnHO72JX11NZ_ECkM0UftAtRi0sUw>
+ <xmx:mnloard6oYyiVQ7FUYIf7wSWzW3vNK7U98hfLXq8Np9rYVFQgr03Sw>
+ <xmx:mnloahpgV9nVF7DazgGI0HzEFb7W5laPszYpoLu3jm-8dmNSYfh_mg>
+ <xmx:mnloalNDivc1MkC-YYQh3SuWC2QRw73FSYUy4IW1cs51Ww5uLKh6HA>
+ <xmx:mnloasNz6Ih1u3RyGzM-IfjztFkeLefYEtMq0Jj-T8HiyOlknFXNcj5e>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Jul 2026 05:42:32 -0400 (EDT)
+ 28 Jul 2026 05:42:49 -0400 (EDT)
+Date: Tue, 28 Jul 2026 11:42:46 +0200
 From: Klaus Jensen <its@irrelevant.dk>
-Date: Tue, 28 Jul 2026 11:42:29 +0200
-Subject: [PATCH v2] hw/nvme: fix unintentional integer overflow in shift
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Keith Busch <kbusch@kernel.org>,
+ Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org,
+ Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH] hw/nvme: fix unintentional integer overflow in shift
+Message-ID: <amh5lvDUQ-cOOgNb@AALNPWKJENSEN.aal.scsc.local>
+References: <20260728-fix-shift-v1-1-bdb98c205233@samsung.com>
+ <7428df68-ffb9-429b-b0ab-8c009c0c42ad@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260728-fix-shift-v2-1-6c2355edcfbc@samsung.com>
-X-B4-Tracking: v=1; b=H4sIAIR5aGoC/22MQQ7CIBBFr9LMWgwMoVZX3sN00VJoZ1EwTCWah
- ruLXbt8/7+8Hdglcgy3ZofkMjHFUAFPDdhlCLMTNFUGlNjKC3bC01vwQn4TBo0z2qrJtx6q/0y
- unkfr0VdeiLeYPkc6q9/6r5KVUGKcxmtnURrU+s7Dyq8wn21coS+lfAEweCT/pAAAAA==
-X-Change-ID: 20260728-fix-shift-525e53c1df6f
-To: qemu-devel@nongnu.org, Keith Busch <kbusch@kernel.org>, 
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>, 
- qemu-block@nongnu.org
-Cc: Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org, 
- Peter Maydell <peter.maydell@linaro.org>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1217; i=k.jensen@samsung.com; 
- h=from:subject:message-id;
- bh=/Uis/eaQNNFFqZdLAUDjaB8XzmZD/QmRVGS+dsT8hB4=; 
- b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0o0bkFGdEFaTCtrQTBEQUFvQlRlR3ZNV
- zFQRGVrQnl5WmlBR3BvZVlqM2pmWWptamxvMGVacE5KSGc3Q1dICnRqY29aT05RaCt6akNEVlRn
- LytjSDRrQk13UUFBUW9BSFJZaEJGSW9NNnAxNHR6bW9rZG13RTNocnpGdFR3M3AKQlFKcWFIbUl
- BQW9KRUUzaHJ6RnRUdzNwbzlnSC8zOXRZbHh0OTdlZ0RnbkNCZDZ2MUxNeGhsLzRWZ09WOHMweg
- p6eHdManc3a3IzbjNoS2pNOHZVT2ZrSkhBNVd2d2hRNG9tY0tvZFdHaVZnMGt1eW54RE40eXd2a
- HByK0hDcUwwClpVZ3Y2V1FiaTFqQmZWdnY5d1d0V1JsOTErZFM5T250Z3F0UFUzdm45enAwVldz
- M1AyWUJzT09ZME45ZmJHamYKcWp0Qkc2OHFWSHhnU1drejVWS3NVd0hQTWdWamFuQmREc0hZVG5
- Pd2doditXbis4SC93blNBMjBzWklxeE5jcgpFak9lSEFsUlBLM09vam1NcmhxUXdLZnJ5RFVpam
- l1R3FnWXNKZkdvR1JPQ3R3THg1TTZ1QXQ5akNmOGZ2RFMyCjJFZWtoekFISTU0V0RwT0EwZXpyT
- zQxRk9OTFdSMGZJL3BkcjBuVzFwQ2JpNjNRUnhGOTBycW9rCj1KMjErCi0tLS0tRU5EIFBHUCBN
- RVNTQUdFLS0tLS0K
-X-Developer-Key: i=k.jensen@samsung.com; a=openpgp;
- fpr=DDCA4D9C9EF931CC3468427263D56FC5E55DA838
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="Mekm0Dq+Zh2R6atJ"
+Content-Disposition: inline
+In-Reply-To: <7428df68-ffb9-429b-b0ab-8c009c0c42ad@oss.qualcomm.com>
 Received-SPF: pass client-ip=103.168.172.155; envelope-from=its@irrelevant.dk;
  helo=fhigh-a4-smtp.messagingengine.com
 X-Spam_score_int: -27
@@ -126,45 +108,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Klaus Jensen <k.jensen@samsung.com>
+--Mekm0Dq+Zh2R6atJ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Fix potentially overflowing shift operation.
+On Jul 28 11:34, Philippe Mathieu-Daud=C3=A9 wrote:
+> On 28/7/26 11:26, Klaus Jensen wrote:
+> > From: Klaus Jensen <k.jensen@samsung.com>
+> >=20
+> > Fix potentially overflowing shift operation.
+> >=20
+> > Cc: qemu-stable@nongnu.org
+> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> > Resolves: Coverity CID 1663674
+> > Fixes: ec917cd49918 ("hw/nvme: fix FDP set FDP events")
+> > Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+> > ---
+> >   hw/nvme/ctrl.c | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> >=20
+> > diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> > index a67e1598891c..40f22fdc40bd 100644
+> > --- a/hw/nvme/ctrl.c
+> > +++ b/hw/nvme/ctrl.c
+> > @@ -6622,7 +6622,7 @@ static uint16_t nvme_set_feature_fdp_events(NvmeC=
+trl *n, NvmeNamespace *ns,
+> >           if (!shift && event_type) {
+> >               continue;
+> >           }
+> > -        event_mask |=3D (1 << nvme_fdp_evf_shifts[events[i]]);
+> > +        event_mask |=3D (1ULL << nvme_fdp_evf_shifts[events[i]]);
+>=20
+> Alternatively:
+>=20
+>   event_mask =3D deposit64(event_mask, nvme_fdp_evf_shifts[events[i]], 1);
+>=20
 
-Cc: qemu-stable@nongnu.org
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Suggested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Resolves: Coverity CID 1663674
-Fixes: ec917cd49918 ("hw/nvme: fix FDP set FDP events")
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
----
-Changes in v2:
-- use deposit64
-- Link to v1: https://lore.kernel.org/qemu-devel/20260728-fix-shift-v1-1-bdb98c205233@samsung.com
----
- hw/nvme/ctrl.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Better! Thanks!
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index a67e1598891c..4f1fe2ed493d 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -6622,7 +6622,8 @@ static uint16_t nvme_set_feature_fdp_events(NvmeCtrl *n, NvmeNamespace *ns,
-         if (!shift && event_type) {
-             continue;
-         }
--        event_mask |= (1 << nvme_fdp_evf_shifts[events[i]]);
-+        event_mask =
-+            deposit64(event_mask, nvme_fdp_evf_shifts[events[i]], 1, 1);
-     }
- 
-     if (enable) {
+> >       }
+> >       if (enable) {
+> >=20
+> > ---
+> > base-commit: 299e7557ed15a9a325620698add379a3ce2d1d95
+> > change-id: 20260728-fix-shift-525e53c1df6f
+> >=20
+> > Best regards,
+>=20
+>=20
 
----
-base-commit: 299e7557ed15a9a325620698add379a3ce2d1d95
-change-id: 20260728-fix-shift-525e53c1df6f
+--Mekm0Dq+Zh2R6atJ
+Content-Type: application/pgp-signature; name=signature.asc
 
-Best regards,
--- 
-Klaus Jensen <k.jensen@samsung.com>
+-----BEGIN PGP SIGNATURE-----
 
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmpoeZYACgkQTeGvMW1P
+Demspwf+MMVXN6dlQS+1AgqbhwYAEU0Hu0cSXASc5yW+dfBspITu5pni+ZlhiohT
++vSmh2yCHtCnMn2+F7K/GDqOsT3oFtrsMWXhzJCfrd8R3RBtVRHds8lIeAJ2Ml97
+pEPbuD7w2Ea8o93Yk1WTcexaZ3sUVQeDaT2nejz+VJemtEjkEiMQmMfNS8zMv2Rn
+mVCcwnqb1f2kTWRNDPexguzE5D6EGWUaiVpxG6vUJumNoUVD03Es/cOh8rlr98qS
+4PqfHHVdWBwuH3MD76lOvreByAlmxjW8F0T9HVc5r20QBJLeFaCpattFRJF694PE
+2lzbASIqAk5u8escXHA+h1tE6TG5Og==
+=elDZ
+-----END PGP SIGNATURE-----
+
+--Mekm0Dq+Zh2R6atJ--
 
