@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B9C3C54F56
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 19:29:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F347C53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 19:30:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wonTM-00047k-Jh; Tue, 28 Jul 2026 15:28:17 -0400
+	id 1wonTM-00047a-Jh; Tue, 28 Jul 2026 15:28:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1wonSY-0003cR-T9
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:27:29 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1wonSN-0003TN-3C
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:27:19 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1wonSW-0001dd-1L
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:27:26 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-381b831d535so269115a91.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 12:27:23 -0700 (PDT)
+ id 1wonSL-0001aQ-Fp
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 15:27:14 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-38125cebfdaso257873a91.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 12:27:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785266842; x=1785871642; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=osGTHClTLaBLi3JCE0COpcCCRCh2Va5dTzvXjc97G4M=;
- b=aA461d18SCgxJJPLdJpLmuedoq8/77lD+ZTGHV92ZIUr2ok8EZlJAHK9K08Le6vy1d
- ZbuYi1m/OBmMf7qkJSiblzt3OcMzqejZ9fN/+EWMcJxuYYoX+Aci+sd06lNRrN826LaX
- tECLnSZMkHcNfPJsrwKc+/RsG0/WhcxXduSD6TskeCAywyW67TfzIOfKJXviAB6tmmbT
- ftxwe7Q/GCZQs4t3XAUrJSe4RZTs2clSMc5vGaFL5AiraxdE9mYvRdXFHXFby2WQRSAe
- K9TQzpqrAGjaHnHuk235Nc7l3HWg309NRtJaSF5zj20x81p7tpDHGGTdyLF3ofZmhE7j
- m6fw==
+ d=linaro.org; s=google; t=1785266832; x=1785871632; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=pK2tYb+uha0OTzKJ3jiWlIwpjnwXssFbFzC9Lye+Plw=;
+ b=ob31+VHf4H1bYkQdzWtVNSBZQr1vSnSFxFTJBWCpgUMVY8k/HlZYkrcnEUP7eD+jWb
+ EfrLDYAqbBLaILaf6oI0khQZ3CoayT59OIr3KT03c7wV1KohPGw2DWzBuXDpClFYVjdU
+ nK5+dZbj+jXMTh6iXRi/GNwxhNAnP24zBNRNrCOfL8a1bOesG+Ys4bMzUnrHueY3Hts2
+ 2/6C5GrZLrw+TXN+hcnvdPLxFhiH/ABuv1B4ByXu6GcpATgI5Z8vm3Fds+OKHv03XcFY
+ OmBeC44Kh/oBQLrfLNBaBhtaWSW8skzpwxl+CiGf9ue2gQOBEhyRF5eGz3NDBefqwbRy
+ 7Kww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785266842; x=1785871642;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=osGTHClTLaBLi3JCE0COpcCCRCh2Va5dTzvXjc97G4M=;
- b=C0YQ2rprYfJHmcJZskJSz/JjO7lTwt+cc4Y6xHe7dEheSvNv5LAeIYTyJPFINatnsH
- C+q8kBnNQnK6G4McKdgtoHaU51vjwHLeL3PIukAHMFbFgv/lkL8GUQNW+YUhOqVQc6or
- HiSVJQaQIK5Ct/ROKDAAdldpamxEVvtkUG6nnF5hpdLvSNEJQvLbUAPKtSZIX8bqrEEy
- LgGggQw6yxuk22tNOjlretmuhxV1R8FOwC2NEzECo8KFZeQjmDSoEzVBDXkywb7CGyT6
- uWEnv4f0LKqqhOl8rCARsJne7eVtxLIgPrm74UdC36qeUeEPUesNKILSJaZQKO2c/eGT
- ZgFQ==
-X-Gm-Message-State: AOJu0YxT92HicgNWRWFhVFwKSaRu0B8pJa11w2Z5c9F/Ho+d6Z5dV31S
- W+7RpRcPM5rhrH9FF83zh0AE0WNrrDzQri2ZU1ha7GwOArTtcWH1ft6ZFdAYMRtLUpw=
-X-Gm-Gg: AR+sD11bVn0prGUSbZ5ESG42Dte0OTftNkZv79NOCfBuBV+bYi0+ermoWoAmK2/f/3o
- wPviFhgUNeLTyNqJyN1LmpsfRLBk/3b/3ku39pEWCxphe9kEWMC9cNol5y1aSixe3OaJkgy3R2r
- 90/bVDdxQ0/4AKKyYSKZsImA7axzMmQBiaULrd5EcE+sfzNrZ6lfP76Zg+XlPoZ1VP93TXleoRr
- 2fxchE9/oaQWfe74gm3mqWWGtRA+So2DyrhUep0TbbBRNehZMV4I9viwpWy0duYEC4wKpOvCreR
- PnFq+tDZQTthzc+P97BxlukUi0rtdA6BE1F3nHbC1vGPf7QILU0CRhi3/sBTwDnRiTVzwCiEszX
- oMthXxt7FV+R1iUdf7Hm54h/seYZoXiqLum5iycJA+fk0g7Al871e6kFWLa1CaF2To1Vf2xbVy+
- tOWz4hb5WSS/KtVCb1WKS4AlRf6zHI
-X-Received: by 2002:a17:90b:390b:b0:38e:2f21:3bb5 with SMTP id
- 98e67ed59e1d1-38f6a4e3667mr4131018a91.21.1785266842244; 
- Tue, 28 Jul 2026 12:27:22 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785266832; x=1785871632;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=pK2tYb+uha0OTzKJ3jiWlIwpjnwXssFbFzC9Lye+Plw=;
+ b=NYcGreklIXaXQdF68sFLEfzAK9QhVnNV4VT5JpHw/vNunClzq4ZiJn0eQYSB7Io1ij
+ 0cRHkY7zGtdhjM0uVygcstOSXYdvF2Wxc2N6QBbHSlIn8L72TSo1kNXD2U2uydkeim7G
+ eKsuFnoeJdp5qgdzCNbRB7tDPq3XD7zQ263T6E4R7JDWesWHopk0S5KATbQTUkXtqr92
+ eaW5gFpnYyJC+X6ZHIM/aYM4QgmyZy0zQ+a+58x7GpQWcUNo5wNH/CYgKEl0Y+elIO4Z
+ pnFdQZQQsayz/Y6lnMCksjmisCUobiI0kWm3zBwB6OxsnrFIb21e3+tZEbuSkI5P/Cj5
+ cC1g==
+X-Gm-Message-State: AOJu0YyHor9Tgpd0W0HPutjmBIZl4m2k3U7YtOt7JfKfFkdkstku3rxB
+ jRiYpXZFxgWepeDcrlUV37fXUEvNWnykyfeeP8IPXxljJGg7LJ7DSasM3f2VGED9lgk=
+X-Gm-Gg: AR+sD10HSMDsT940o+iYn5T3SUos/AqfG6C2dPSefj8Zkpy9w77CflbJSmvKMvhJ8gT
+ yIUbEwyv3y7mjl8PYPX2bnsyOhaQJlvirVTPr7uhdrwLpM27KT6howQ537EpksW/4uX4OdVY5Nx
+ L1AFRzOjgX7OR24PEyrINWCxCSUsKzvCcaejT8jHa3Jf5e66IhWU4/3qUYE+lUKJAXY6CeQlze8
+ ghuMovJlEKSTbGml1wW8R6CNIH4vHjfYKWTYTfJw4EG8XUFWQkCFPDMiVSmwz3LLg1clp09h508
+ Of2FU3RItY2NpNjpm7Jxf6gpbiKUjk5EIDCPEsJSwaeKx0FHitDgmhVpFVPN0JQ8zttWG9nDqsg
+ dCwa061bPk2hMfrqO9aytDdc4joBW/BWYSE9/2UwXPKA0yOlAQHVme87OttQ0csGvs2KJ8a7bJC
+ 8iy2zE/06pnmGxLng9xwAd0ZD8o4B9Pzy24+QxTlF7lvFlaxC9ED9fH/rj2WdyASsAIMdPVlM3u
+ nj1NZKFD6YUHAo=
+X-Received: by 2002:a17:90b:1d04:b0:38f:57d0:3a9 with SMTP id
+ 98e67ed59e1d1-38f6a51c0b8mr3938868a91.36.1785266831998; 
+ Tue, 28 Jul 2026 12:27:11 -0700 (PDT)
 Received: from p14s.cg.shawcable.net
  ([2604:3d09:148c:c800:b9d1:87c9:a085:86c9])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38f7f1353fdsm372650a91.8.2026.07.28.12.27.20
+ 98e67ed59e1d1-38f7f1353fdsm372650a91.8.2026.07.28.12.27.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jul 2026 12:27:21 -0700 (PDT)
+ Tue, 28 Jul 2026 12:27:11 -0700 (PDT)
 From: Mathieu Poirier <mathieu.poirier@linaro.org>
 To: berrange@redhat.com, kchamart@redhat.com,
  pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
@@ -74,25 +74,24 @@ To: berrange@redhat.com, kchamart@redhat.com,
 Cc: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org,
 	kvm@vger.kernel.org
-Subject: [RFC v2 22/24] docs/interop/firmware.json: Add arm-rme firmware
- feature
-Date: Tue, 28 Jul 2026 13:26:28 -0600
-Message-ID: <20260728192630.240375-23-mathieu.poirier@linaro.org>
+Subject: [RFC v2 17/24] hw/arm/virt: Reserve one bit of guest physical address
+ for RME
+Date: Tue, 28 Jul 2026 13:26:23 -0600
+Message-ID: <20260728192630.240375-18-mathieu.poirier@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260728192630.240375-1-mathieu.poirier@linaro.org>
 References: <20260728192630.240375-1-mathieu.poirier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=mathieu.poirier@linaro.org; helo=mail-pj1-x102b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=mathieu.poirier@linaro.org; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,48 +109,65 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-Some distributions provide packages continaing firmware to be run under
-QEMU, such as "qemu-efi-aarch64" or "edk2-aarch64". Those packages also
-contain descriptors in /usr/share/qemu/firmware/*.json listing the
-firmware features, so that environments like libvirt can figure out
-which firmware they can load.
-
-Define an optional feature for arm64 firmware to indicate that a
-firmware supports running in a Realm. Firmware implementations need
-extra support for running in a Realm, in particular to distinguish
-shared from private guest memory.
+When RME is enabled, the upper GPA bit is used to distinguish protected
+from unprotected addresses. Reserve it when setting up the guest memory
+map.
 
 Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 ---
- docs/interop/firmware.json | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ hw/arm/virt.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
-index 421bee0e5ed4..2850b91078d9 100644
---- a/docs/interop/firmware.json
-+++ b/docs/interop/firmware.json
-@@ -161,6 +161,9 @@
- #     options related to this feature are documented in
- #     "docs/system/i386/amd-memory-encryption.rst".
- #
-+# @arm-rme: The firmware supports running in a Realm, under the Arm Realm
-+#     Management Extension (RME).
-+#
- # @intel-tdx: The firmware supports running under Intel Trust Domain
- #     Extensions (TDX).
- #
-@@ -229,7 +232,7 @@
- { 'enum' : 'FirmwareFeature',
-   'data' : [ 'acpi-s3', 'acpi-s4',
-              'amd-sev', 'amd-sev-es', 'amd-sev-snp',
--             'intel-tdx',
-+             'arm-rme', 'intel-tdx',
-              'enrolled-keys', 'requires-smm',
-              'secure-boot', 'host-uefi-vars',
-              'verbose-dynamic', 'verbose-static' ] }
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 9123f46fae4a..fa6cd62a335c 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -4054,17 +4054,27 @@ static int virt_kvm_type(MachineState *ms, const char *type_str)
+ {
+     VirtMachineState *vms = VIRT_MACHINE(ms);
+     int max_vm_pa_size, requested_pa_size;
++    int rme_reserve_bit = 0;
+     bool fixed_ipa;
+     int vm_type;
+ 
+-    max_vm_pa_size = kvm_arm_get_max_vm_ipa_size(ms, &fixed_ipa);
+-
+     vm_type = (ms->cgs ? KVM_VM_TYPE_ARM_REALM : KVM_VM_TYPE_ARM_NORMAL);
+ 
++    if (vm_type) {
++        /*
++         * With RME, the upper GPA bit differentiates Realm from NS memory.
++         * Reserve the upper bit to ensure that highmem devices will fit.
++         */
++        rme_reserve_bit = 1;
++    }
++
++    max_vm_pa_size = kvm_arm_get_max_vm_ipa_size(ms, &fixed_ipa) -
++                     rme_reserve_bit;
++
+     /* we freeze the memory map to compute the highest gpa */
+     virt_set_memmap(vms, max_vm_pa_size);
+ 
+-    requested_pa_size = 64 - clz64(vms->highest_gpa);
++    requested_pa_size = 64 - clz64(vms->highest_gpa) + rme_reserve_bit;
+ 
+     /*
+      * KVM requires the IPA size to be at least 32 bits.
+@@ -4073,11 +4083,11 @@ static int virt_kvm_type(MachineState *ms, const char *type_str)
+         requested_pa_size = 32;
+     }
+ 
+-    if (requested_pa_size > max_vm_pa_size) {
++    if (requested_pa_size > max_vm_pa_size + rme_reserve_bit) {
+         error_report("-m and ,maxmem option values "
+                      "require an IPA range (%d bits) larger than "
+                      "the one supported by the host (%d bits)",
+-                     requested_pa_size, max_vm_pa_size);
++                     requested_pa_size, max_vm_pa_size + rme_reserve_bit);
+         return -1;
+     }
+     /*
 -- 
 2.43.0
 
