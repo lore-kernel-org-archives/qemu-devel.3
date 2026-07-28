@@ -4,103 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5E4FC53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 17:44:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83F0AC54F4D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 17:47:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wolqe-0002YA-2D; Tue, 28 Jul 2026 13:44:12 -0400
+	id 1wolt5-0003Yr-Vr; Tue, 28 Jul 2026 13:46:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wolqc-0002Xa-WE
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 13:44:11 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wolqb-0006ve-57
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 13:44:10 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-c15e03c2763so18148966b.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 10:44:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785260648; cv=none;
- d=google.com; s=arc-20260327;
- b=KV92QEC/S/6eAlStVPqOi5wwnfvaUMdlknwffDcAtYKuaGmeMGEFvUpvp8rmb8TfeC
- 2BUC9CXYEKQAW5IEEXjDuEmZ17cv6rGXDrzxCJrPcMkCaUr7vQuA9yJYzg1TSRWQzvm2
- kdDPjvzHraNEuFaD+hwp6mJauIlcdfryt6ml5GvnxIMVSxFGXii/n0d2XPxknuU8v2wd
- U2Wt9Gmi8wNDG6TlPow5Q2G1a1eW0DBfm5VNZ7DpQZ+OyOMTW94HMEgL9thuPaVB3l54
- d94zFOPr/p3QTHnwgy7lr/q0N0zEk5YEEXx/RLWrkniMffrJ43jQ8EE+qTW7175f2dKQ
- cTOA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=MWZLNPG/yu21CFjKEtT3reINRinmw317B8AyEMtABus=;
- fh=xWSkzQgsBXu3+20YnzBfal+nvTG8YYutGQdtbnGx0RE=;
- b=qMMxscJe6dWsaYNr2IlYHH9x8HzpwyvklPpYfKvGcza95DtHfg5yL/gQ+9HjnMEyGm
- KfExXDP4rn0fhIVELZG/XR430E2NtZ4TkiFSyQOs3BcItWFPbRnc81T8k+QpfKMywTX8
- xXCCT2pO1ifSrkl73jEycT/NNHfhkhxMPRe7fviAMMqF7WnZK6cJdLFdCd2udy0NO5/Q
- DV7jeJZ/0S8h5zn/1hIHVeQZF9Vsd+FWQlJ/14lhcZv09vOZLXqb8XQK4XdDFeIdgFm+
- Sz1rlDaxBnM9SvSCB0QnmP1q9gN/GbBq1rmvOAgnSNV2475REPXzeFAzVBLGc0FqXhW/
- WK9A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785260648; x=1785865448; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=MWZLNPG/yu21CFjKEtT3reINRinmw317B8AyEMtABus=;
- b=EhDtjuBiobXD0u7KJQNuSWlMGUBWS9m0MSxgBKbUHTVTeqy4N1FB70/Ir5iJe8In4S
- sAiV/laX0fKDSeltKy2FUIo5s0aAqL9UjOFXmkioQiSZU3EdbwsrxI1NUCr+uqAZNFlJ
- ypPUly+M+XkJ1sF5SV9WG+yaGOIZ4idQIL79nqucRbSf53+ZT1sN/N1EzjmG/ghTEJ8K
- +Z+W6i4PAP5tcgOpLkMiMZnb141dofzx76G9BZNMJ4f8cittN1TV2cu+FS3tsEMhewMI
- dcm1TmC3iiXMZ9jI2xbh9uxi97zQ/HtYPWjkoztUxtUYqxTTe91d38tzWC70/PWRnbtK
- AsGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785260648; x=1785865448;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=MWZLNPG/yu21CFjKEtT3reINRinmw317B8AyEMtABus=;
- b=dt2UW3cbjWQ7Lo19bMbTJTSLo99xUtBWwlqf8kxhVJeDEW73IB1X4CMzZivaMDGYYY
- VeJXV3ydb6nc4GGKko6Lq/BQwuqkrPQsT0mjkdz1jBRmaHwLeZP+6R9GQj1RibR70A99
- n0Ia+W8MnMBi8lYfq3AYFsxLLZJy3vq5f3K3//KWRxQmIf9E/cDbZUzirgH8vvNkNEJt
- eoI8r0bdAp1L/WklHEiSJTaoEMgDW1hshjB7JeKq9tYn2RzRSZaQ9H123/YTBZvPELAQ
- 7wNF+zFXa7+QE0K6Kpd4iBlGPazRvTkjVN5FUsvsTEQXFZvZ+3/OHcPuMe/OS+PIs/9Y
- T8Rw==
-X-Gm-Message-State: AOJu0Yw5oafB4SQ5AfhIMNhRypY0m1sDIb7RIVxtlN442DOEUqlxXhk2
- jNNiuefbii0NcV5Ljlpm2ZmHlbxrllpmn00N5/OZm65h6FrV9xrSFlMyu380qTt4kZ3XHh5GaTu
- 1zEXokXD2zG59kezErGQ5oxMs7USoUtw=
-X-Gm-Gg: AR+sD109k0k1AcShVerl5hrDB66OCkG4Ow4B57vA0nN298HDt4pMPmhOAOEvJwVd9re
- h6apBLnRe6ZZOZ363tdNAsRpi+7KEYeSIMPWSct1KvH08wiCn7Te822PzGppWMwL8dRoelgBTxK
- NyN1nn0W4juwTkPwXQ8nrmIX45PvXeVaqNHRvOJRHs3Go8mtioCeK59y7u+PP3/EbcOfqrAYkiu
- uAOE3L4VWqbXJkITslq8OCKbQrsu9reTmQ7EXADHNsCaAK7CDMoS9eulA1F/Q3427T1QfhC+mwM
- 7bUdE7qEFy8Nz5aUcgw=
-X-Received: by 2002:a17:906:6a27:b0:c1c:1fbf:5d18 with SMTP id
- a640c23a62f3a-c1f71b3ac24mr177554966b.3.1785260647519; Tue, 28 Jul 2026
- 10:44:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1wolt4-0003YO-Bk; Tue, 28 Jul 2026 13:46:42 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1wolt2-0007Mf-Ld; Tue, 28 Jul 2026 13:46:42 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66SEll6U1380276; Tue, 28 Jul 2026 17:46:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=0hfCeB
+ KzhSvkaNzpzqzqmWLE5ghqXYnYCmfkvnZusRw=; b=PcHR1Rtg/Fkh2kvyQcDdG8
+ ZR64fpLoI/WiutPYO1gWprCd87XuDNVkddlHNxtIQf2uzuOi51YUrcJcGg3fNnMS
+ w8XWbYuQWSmNXmphsBNTkDZk9hucBqKOJF3a3qkBq2W9kiZKkZCwuRtiqPMyYzI9
+ NiTUC0mfIJKhq5YhLVArhzTvEbCnv3kjREHXLh4lQFWfqN0C3odoSLWV4Md26Xdd
+ rrUy4oqLAcNr+k7+t6o+Rw18u9dKPNe93tkT7P3VhrOAm2yO+LgnZMFDI22isiAT
+ xQlX7ppFAnooomIFA1KjV0/sTxzcq87cmeIjSdO9zK8RL3/Fc6HoemIT9jY9rdvA
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuyj6371-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Jul 2026 17:46:36 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66SHfRK4013306;
+ Tue, 28 Jul 2026 17:46:36 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn8fk34kv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Jul 2026 17:46:36 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66SHkYbx7340786
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 28 Jul 2026 17:46:34 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BA48D58061;
+ Tue, 28 Jul 2026 17:46:34 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E4A0258056;
+ Tue, 28 Jul 2026 17:46:33 +0000 (GMT)
+Received: from [9.61.254.110] (unknown [9.61.254.110])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 28 Jul 2026 17:46:33 +0000 (GMT)
+Message-ID: <992b35d7-5a7d-4f16-9409-1b2d3e2c2416@linux.ibm.com>
+Date: Tue, 28 Jul 2026 10:46:33 -0700
 MIME-Version: 1.0
-References: <20260728163919.369020-1-mjt@tls.msk.ru>
-In-Reply-To: <20260728163919.369020-1-mjt@tls.msk.ru>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Tue, 28 Jul 2026 13:43:54 -0400
-X-Gm-Features: AUfX_mxS4Y6mtUZOMHKOSSWWC0aqFEqYiHz60dAPyxJFTeMBCa1lDe9AzGHHUC4
-Message-ID: <CAJSP0QUxDeZTcEqHAPMVYqQ2LyeH9WcTbneosC02u6vubLMgBA@mail.gmail.com>
-Subject: Re: [PATCH for-11.1?] qemu-iotest 161: fix race
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Kevin Wolf <kwolf@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=stefanha@gmail.com; helo=mail-ej1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 14/15] s390x/pci: Implement migration for emulated
+ devices
+To: Konstantin Shkolnyy <kshk@linux.ibm.com>, mjrosato@linux.ibm.com
+Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ cohuck@redhat.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+References: <20260724030919.123733-1-kshk@linux.ibm.com>
+ <20260724030919.123733-15-kshk@linux.ibm.com>
+ <6390365c-018e-4ac9-96fd-7dba63736a2c@linux.ibm.com>
+ <403c57ad-107a-4d59-ad4a-874d2c3a5f2d@linux.ibm.com>
+Content-Language: en-US
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <403c57ad-107a-4d59-ad4a-874d2c3a5f2d@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDE1MyBTYWx0ZWRfX2IzivFOvHU3x
+ u2ifygv655dWl6u1JFJSUWNTiYowp7fzE+MTxlAZDgT8CCfEHy9U0tyH9rHHTJ2HCZ18/ASGDnY
+ +RanMKF/N8bqUp6RZ1xueXEzgisblP8=
+X-Proofpoint-GUID: u3ddTZne_U_KwLfvH8q20Tze9T2gj1-Z
+X-Proofpoint-ORIG-GUID: u3ddTZne_U_KwLfvH8q20Tze9T2gj1-Z
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDE1MyBTYWx0ZWRfX758s9oaACCRZ
+ 0z8XwY2kAkXgrlzm7H6DK0LzVCT2U8XXNJzvtOvLYDK9d1fE88GXKawYM9n2wiV2IEUU25feGUZ
+ sIGf0smWqosEgMdCYX8QtTHat04kCLlCCNTbb1jsRHxdRyXZhnShzSZuGpsTFb+bO2/mpv65row
+ /ninkdIKaAHbMGXKZnLEOMaK5ZWWlDhK9UgyYs/SEcg4KfW6Gkhd03JsMFbwugvCdRvSeXkMewm
+ rdybgF6d1GzgBB1Y/ms/KVGiFpNzf+zcRsgoXjwByRfDuf+eMoKfM91H8U2OnzY69Ga1dl++cXd
+ vdPqsBOf+1USfhtOEUq2YHYmtLUa+GS1jJr2Adds/NWGlKsA2dKnXAvRnheHr4oW4stRgZCXLwk
+ x8L9skRSXTYpEq368AfmzKVxJqdq6byMNqyfwEjq0caI2tpxJO+i0lG9jnGCpGLuYA35dLZOkVU
+ PdjGCNkh/X+p5DVovVA==
+X-Authority-Analysis: v=2.4 cv=X5Vi7mTe c=1 sm=1 tr=0 ts=6a68eafc cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=pn0MaP5iemrY9aBgGVsA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-28_04,2026-07-28_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 lowpriorityscore=0 phishscore=0
+ priorityscore=1501 malwarescore=0 spamscore=0 suspectscore=0 bulkscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607280153
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,50 +129,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 28, 2026 at 12:40=E2=80=AFPM Michael Tokarev <mjt@tls.msk.ru> w=
-rote:
->
-> qemu-iotest 161 fails intermittedly due to a race condition:
->
-> qemu:block / io-qcow2-161             ERROR            2.08s   exit statu=
-s 1
-> =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95 =E2=9C=80  =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95
-> stderr:
-> --- tests/qemu-iotests/161.out
-> +++ scratch/qcow2-file-161/161.out.bad
-> @@ -34,6 +34,8 @@
->  *** Commit and then change an option on the backing file
->
->  Formatting 'TEST_DIR/t.IMGFMT.base', fmt=3DIMGFMT size=3D1048576
-> +qemu-img: TEST_DIR/t.IMGFMT.base: Failed to get "write" lock
-> +Is another process using the image [TEST_DIR/t.IMGFMT.base]?
->  Formatting 'TEST_DIR/t.IMGFMT.int', fmt=3DIMGFMT size=3D1048576 backing_=
-file=3DTEST_DIR/t.IMGFMT.base backing_fmt=3DIMGFMT
->  Formatting 'TEST_DIR/t.IMGFMT', fmt=3DIMGFMT size=3D1048576 backing_file=
-=3DTEST_DIR/t.IMGFMT.int backing_fmt=3DIMGFMT
->  { 'execute': 'qmp_capabilities' }
->
-> This test is run right after a previous test, where we've
-> killed qemu process which holds the test image open.
-> It looks like when the next test is started (with creating
-> the image files), old qemu is still running, so we're racing
-> with that qemu, and qemu-img is unable to lock the image file
-> properly.
->
-> We can add some `sleep $little-amount` here, but it is simpler
-> and more reliable to just remove the image files, so that new
-> ones are created.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2867
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+On 7/27/2026 4:23 PM, Konstantin Shkolnyy wrote:
+>>> +static int s390_pci_device_pre_load(void *opaque)
+>>> +{
+>>> +    S390PCIBusDevice *pbdev = S390_PCI_DEVICE(opaque);
+>>> +    S390PCIBusDevice *found_pbdev;
+>>> +
+>>> +    /*
+>>> +     * Make sure pbdev is removed from the table before state load. 
+>>> The change
+>>> +     * of pbdev->idx means it needs to be moved to a different 
+>>> position anyway,
+>>> +     * and is illegal while in the table. But be careful to not remove
+>>> +     * instead another pbdev whose state might have been loaded 
+>>> earlier and
+>>
+>> I think "instead" is not needed in the statement above.
+>>
+>> Maybe I am missing something, but could you help me understand why do 
+>> we need to remove the pbdev if we found at a particular idx? If there 
+>> is a collision with idx, ie on destination we have a different device 
+>> with the same idx, are we removing a valid device?
+>
+> I see that this is not the best comment. How about this variant:
+>
+>     * State loading can change pbdev->idx. Therefore, make sure pbdev 
+> is removed
+>     * from the table before that happens. The table type used stores a 
+> pointer
+>     * to pbdev->idx and becomes corrupt if idx is changed from 
+> outside. But be
+>     * careful to not remove instead another pbdev whose state might 
+> have been
+>     * loaded earlier and that got assigned this idx value and had 
+> therefore
+>     * already replaced our pbdev in the table. post_load() will 
+> reinsert our
+>     * pbdev into the table.
+>
+So pbdev->idx is autogenerated when we create the device at destination, 
+since we are migrating the idx from source this could change on 
+destination and corrupt the hash table? Then do we need to migrate the idx?
+
+
+>>
+>>> +     * that has then replaced our pbdev. (post_load() will put our 
+>>> pbdev back.)
+>>> +     */
+>>> +    found_pbdev = g_hash_table_lookup(s390_get_phb()->zpci_table, 
+>>> &pbdev->idx);
+>>> +    assert(found_pbdev); 
+AFAIU the pbdev->idx at pre_load() would be what we assign automatically 
+at the destination. In that case wouldn't this assert always be true?
+
+
+>>> +    if (found_pbdev == pbdev) {
+
+similarly this should also be true?
+
+
+>>> + g_hash_table_remove(s390_get_phb()->zpci_table, &pbdev->idx);
+
+Don't we have to free this idx now? so reverse of s390_pci_alloc_idx()?
+
+
+>>> +    }
+>>> +
+>>> +    return 0;
+>>> +}
+>>> +
+>>> +static int s390_pci_device_post_load(void *opaque, int version_id)
+>>> +{
+>>> +    S390PCIBusDevice *pbdev = S390_PCI_DEVICE(opaque);
+>>> +
+>>>       /*
+>>> -     * TODO: add state handling here, so migration works at least with
+>>> -     * emulated pci devices on s390x
+>>> +     * Now that pbdev->idx has been loaded, use it to place pbdev 
+>>> back into
+>>> +     * the table. This may replace a different not-yet-state-loaded 
+>>> pbdev,
+>>> +     * but pre_load() handles this case.
+>>>        */
+>>> -    .unmigratable = 1,
+>>> +    g_hash_table_replace(s390_get_phb()->zpci_table, &pbdev->idx, 
+>>> pbdev);
+>>> +
+>>> +    /*
+>>> +     * Regenerate IOMMU state, including IOTLB contents and QEMU 
+>>> memory regions.
+>>> +     */
+>>> +    if (pbdev->iommu_enabled) {
+>>> +        assert(pbdev->iommu);
+>>> +        if (s390_pci_is_translation_enabled(pbdev->g_iota)) {
+>>> +            s390_pci_iommu_enable(pbdev);
+>>> +            s390_pci_ioat_replay(pbdev);
+>>> +        } else {
+>>> +            s390_pci_iommu_direct_map_enable(pbdev);
+>>> +        }
+>>> +    }
+>>> +
+>>> +    /*
+>>> +     * Guest sets fmb_addr by mpcifc.ZPCI_MOD_FC_SET_MEASURE 
+>>> instruction,
+>>> +     * whose handler consequently starts fmb_timer. We may need to 
+>>> restart it.
+>>> +     */
+>>> +    if (pbdev->fmb_addr) {
+>>> +        assert(!pbdev->fmb_timer);
+>>> +        assert(pbdev->pci_group);
+>>> +        pbdev->fmb_timer = timer_new_ms(QEMU_CLOCK_VIRTUAL,
+>>> +                                        fmb_update, pbdev);
+>>> +        timer_mod(pbdev->fmb_timer,
+>>> +                  qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) +
+>>> + pbdev->pci_group->zpci_group.mui);
+>>> +    }
+>>> +    return 0;
+>>> +} 
 
