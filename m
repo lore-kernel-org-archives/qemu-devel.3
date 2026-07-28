@@ -4,65 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5858EC54F4C
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 07:19:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F200C54F4D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 07:27:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woc5N-0005q4-GP; Tue, 28 Jul 2026 03:18:46 -0400
+	id 1wocDd-0007QF-He; Tue, 28 Jul 2026 03:27:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1woc5K-0005pZ-Hb
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 03:18:43 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1wocDb-0007PY-Gh
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 03:27:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1woc5G-0006Is-B7
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 03:18:41 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66S7IS6x035538
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 28 Jul 2026 16:18:28 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=Ovcb1A9pQDCK9JriztZnecXO3+UYv/tgTiIEd+NlCEQ=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1785223108; v=1;
- b=gmREBM2gnvQCEnDyU4H7zftc41z6C1/0U4sSAtgDBA3CoU2ykM4jWutUFc2Lb60+
- mck15Dz7lhYs6mW4gqwdzZIfa2pMij9qonXSqWLZJYOS5fMh0OSu3AMrCIVQIo8V
- QBcwMpzuP8g2WPPiHscihKdihVMfQnksrszu+r5pA+vKxyGdWNSN/Iz98VkurnbP
- nwojJcaxkU5c5dnNB728yo/vTFAo4QFz4ZdnZ7+p1MEsse66IHvvIkJi9FntP6+f
- YajWvXB1Z1/r5y9Z4gc1m9NiTI41hBXnEUBdMzrKZ7mLu7fJ3QWcXGeaySlVLCwz
- qsIU5pOC43cD77LAqUQ/ZA==
-Message-ID: <e48752c0-0050-4e8d-aff4-d34ab1b84d44@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 28 Jul 2026 16:18:28 +0900
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1wocDZ-0007W1-Pn
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 03:27:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785223632;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=EWZ2IwZRDhsIKjyGu5uUpNcfNA1CEMoAFMEUePFUXyg=;
+ b=aEALdmNJEUHhUmTKc2jVNhrcB4KtpPFtVO2awoY5MeY4g/8BxmuwdN1/2sK1NDUHVTKCcQ
+ FDn+FFRe+UpkLe2+YUjGpiPaT1MXOlo9K0grGhVw+h4AodLA7S2PUxrXxWrN/z47fSQ69f
+ prV0ls+JAFb7rCj8U2btE9NOCuDVG34=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-589-nVxK7WKKNKircVOK8VLlDw-1; Tue, 28 Jul 2026 03:26:05 -0400
+X-MC-Unique: nVxK7WKKNKircVOK8VLlDw-1
+X-Mimecast-MFC-AGG-ID: nVxK7WKKNKircVOK8VLlDw_1785223564
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4955d314945so24376425e9.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 00:26:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1785223564; x=1785828364; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=EWZ2IwZRDhsIKjyGu5uUpNcfNA1CEMoAFMEUePFUXyg=;
+ b=h6Ez7TSHXjleymLDqj24/Ff7GwVKAOJn5KCIhEys80FHZ4oSCTjv9H6p8yFNi9er4W
+ CwhHs9447JqkzCGXFr1w7upM7B9taDI1tD6muMwt2FZy5XaG1EbLSq8cbocT1Q1IRhLx
+ xnvDzxpDgAyPgQxSBSdSn6DP/5kNWwqHEDjP4qbvw7FF4ipvKOGzxVc2l2+fJpFISo94
+ CT+8TVb7rak9Tg3IklOgZpipXyrsn1KAduHrmXCUe1iISX3LfpNwA2rIYCHEJJJ08OYH
+ lVtCoZwE0ZQlvPzNq2tu/+rFfryEU3IYCtb5JfefZt1g5PvHG14nUMSW6/HVfS7YnJTt
+ sDnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785223564; x=1785828364;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=EWZ2IwZRDhsIKjyGu5uUpNcfNA1CEMoAFMEUePFUXyg=;
+ b=UZbgAWPPmvtjZ66Wh5RODZ56M9re8MH6FFlOZ/2sPeGGe9cPeop6FLOeo9V/NmkgqZ
+ AHexZjbOQwL13+M08TSvf1Ko08erB8gvyDxD5nYmscSYM7FTOwI89ZPZiuCzB/aCPOwm
+ xMuenh2SyIV+xzE5PM3PpFZ+0VxZ1pdDTR56iz3bQ6r9N406Vs2iQRQc/IeNgKLykb42
+ lH1Cor0OK+Rgsi7zw7j5qxI1oYQ1v9fKpyjEor8olmnd3pfxrneoqCT8h6i28YwHCCwa
+ Pf1DpSvN9z2uqrJHykozUUu7xK07GvNDrFJpFE70rvWn/yM68ZG2Oz4pVd/VAg32awbS
+ 3VlA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqMc01GmqYVDdAUxnoBAeHxmK1pCS/5X0/5LERgavd/7cmkoEWufXGh++q7tWlhRfikjJxuT7ZOMSgX@nongnu.org
+X-Gm-Message-State: AOJu0YwyJ+zZsnKdCdOm9DX6HgsCyAhKZovQHgyD36W6/Yqfe9b7maak
+ 0Zo1c8ixg1/Fajr0nxQBNkj3VyVP/bsowHVGs5HvUUcD0MCsH46+V1ZD0pOpJzv601/LVgx5WTV
+ Q+gC0nYOV7WyegzsRSVlMl/ATQa/nw2yof4qYAaL6ci9QSI5rK1vNwXCL
+X-Gm-Gg: AR+sD13CRH3gd/9gt9XLbhUz1F/TXTQ9v1qX/BNagBajSj/3GWkNXSfyKBnmWDPMHA1
+ vnUqxXKLQpTLxg9+FUXYJnZOvRn8zec5MBuQntAc3YQzd5eUVDCEFL/Dg/eUtwf3F8gnEEtjKpw
+ CIiMcApVKaSoDxiUXP/y0RmFuXtSGDUCEdRBPJYiJPIublboY/upUeIQHj/9/a2YKYXxMVP6snf
+ edN/9f5ra5Jg/qMpJD0y6hzX5Woja1kqkOpWbEuIvIfHoi9pYSAhDF8GorvV1tkolLh0vD4i7Uq
+ 6qsqLimw08QVG5CO2ZEqoylo+5LKXTKU3d6wAfR9fgaHtBVjgiTNmkkMr9mPw+yQ9W1hzeNCqSE
+ inP0gxV1PPK5Bhb+9qaUuNf92OtLBUUTfh+YU/S/ddF4hf9hX/5BglLUIi6MDERvKYJ/H+jp/xM
+ JorQ==
+X-Received: by 2002:a05:600c:3f16:b0:495:607e:5ee7 with SMTP id
+ 5b1f17b1804b1-496c6435aeamr10972165e9.17.1785223563743; 
+ Tue, 28 Jul 2026 00:26:03 -0700 (PDT)
+X-Received: by 2002:a05:600c:3f16:b0:495:607e:5ee7 with SMTP id
+ 5b1f17b1804b1-496c6435aeamr10971875e9.17.1785223563336; 
+ Tue, 28 Jul 2026 00:26:03 -0700 (PDT)
+Received: from ?IPV6:2a0d:3344:5521:6b10:58fd:68f:7756:389d?
+ ([2a0d:3344:5521:6b10:58fd:68f:7756:389d])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4957f9b8b67sm335535145e9.4.2026.07.28.00.26.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 Jul 2026 00:26:02 -0700 (PDT)
+Message-ID: <d1e6a9a5-e6ef-4f6a-82ea-20a55328bf9e@redhat.com>
+Date: Tue, 28 Jul 2026 09:26:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/display/virtio-gpu: Reject non-migratable large
- blobs
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <20260727-blob-v2-1-d0b9af38a975@rsg.ci.i.u-tokyo.ac.jp>
- <amclS3G5VTeZuP8Z@redhat.com>
- <5f437bad-2ca1-4960-8229-4a9e6107200f@rsg.ci.i.u-tokyo.ac.jp>
- <CAJ+F1CK3DKbjKUco_XLxgMFhvfqFXHnneM_ee3odf+hp5WHTrA@mail.gmail.com>
+Subject: Re: [PULL v2 01/30] virtio: use masked features with set_features_ex
+To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Jason Wang <jasowangio@gmail.com>, Yuri Benditovich <ybendito@redhat.com>,
+ huntr bubble <bubblehuntr@gmail.com>
+References: <cover.1785179875.git.mst@redhat.com>
+ <a6e0519ea8ed6fc84fab9bf9ca82c7a55780f880.1785179875.git.mst@redhat.com>
 Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <CAJ+F1CK3DKbjKUco_XLxgMFhvfqFXHnneM_ee3odf+hp5WHTrA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+From: Paolo Abeni <pabeni@redhat.com>
+In-Reply-To: <a6e0519ea8ed6fc84fab9bf9ca82c7a55780f880.1785179875.git.mst@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pabeni@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,124 +126,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/28 16:04, Marc-André Lureau wrote:
-> Hi
+n 7/27/26 9:19 PM, Michael S. Tsirkin wrote:
+> virtio_set_features_nocheck() calls set_features_ex
+> with guest-supplied feature bits, without masking the value
+> with host features (unlike set_features which gets the
+> correct val & host_features).
 > 
-> On Tue, Jul 28, 2026 at 10:26 AM Akihiko Odaki
-> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>
->> On 2026/07/27 18:30, Daniel P. Berrangé wrote:
->>> On Mon, Jul 27, 2026 at 06:23:25PM +0900, Akihiko Odaki wrote:
->>>> The blob size is encoded as a 64-bit integer in the virtio protocol, but
->>>> it is encoded as a 32-bit integer in the migration stream, and
->>>> a large blob whose size cannot be expressed in a 32-bit integer will
->>>> be corrupted after migration. Deny creating such large blobs.
->>>
->>> Is there a valid use case for such large blobs ?   If so, rather than
->>> rejecting the blob, we could dynamically add a migration  blocker.
->>> That would allow the valid use cases, while preventing the migration
->>> problem.
->>
->> For the QEMU code path changed here, there should be no practical use
->> case for a blob larger than 4 GiB. The non-virgl implementation uses
->> blobs as scanout or cursor backing. Such a size is excessive for those uses.
->>
->> A dynamic migration blocker would also let the guest make an otherwise
->> migratable VM non-migratable at runtime merely by creating such a
->> resource. This could interfere with host-level VM management. So I think
->> rejecting sizes that the current migration format cannot represent is
->> better for now.
+> This does not matter if the driver matches spec, but drivers
+> can be malicious or buggy and set bit outside the host mask.
 > 
-> What's the difference? The dynamic blocker would simply happen earlier
-> or be queryable, no?
-
-The difference I had in mind was that the guest could make migration 
-unavailable after the VM had started in an unexpected way for the user 
-who manages the host.
-
-But I now remember that, if QEMU is started with -only-migratable, 
-migrate_add_blocker() fails, so resource creation can be rejected in 
-that configuration. It also fails while a migration or snapshot is 
-already in progress.
-
-Now I feel safer with the dynamic blocker. I will change the patch to 
-keep a migration blocker installed while any such blob exists.
-
-Regards,
-Akihiko Odaki
-
+> Devices don't expect this, so unsupported guest feature bits getting set
+> can break the host. In virtio-net, this can enable RSC without vnet
+> header support and cause out-of-bounds reads from short packets.
 > 
->> If a concrete use case emerges, extending the migration format would be
->> preferable to making migratability depend on guest-controlled state.
->>
->> Regards,
->> Akihiko Odaki
->>
->>>
->>>>
->>>> Fixes: f66767f75c9c ("virtio-gpu: add virtio-gpu/blob vmstate subsection")
->>>> Fixes: 10b9ddbc83b9 ("Revert "virtio-gpu: block migration of VMs with blob=true"")
->>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>> ---
->>>> Changes in v2:
->>>> - Add the Fixes: tag for f66767f75c9c.
->>>> - Add a TODO to encode blob_size as 64 bits in virtio-gpu/blob
->>>>     VMState version 2.
->>>> - Link to v1: https://lore.kernel.org/qemu-devel/20260725-blob-v1-1-f643fbd76398@rsg.ci.i.u-tokyo.ac.jp
->>>> ---
->>>>    hw/display/virtio-gpu.c | 15 +++++++++++++++
->>>>    1 file changed, 15 insertions(+)
->>>>
->>>> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
->>>> index 718ba3039290..987b1b3ea860 100644
->>>> --- a/hw/display/virtio-gpu.c
->>>> +++ b/hw/display/virtio-gpu.c
->>>> @@ -352,6 +352,14 @@ static void virtio_gpu_resource_create_blob(VirtIOGPU *g,
->>>>            return;
->>>>        }
->>>>
->>>> +    if (cblob.size > UINT32_MAX) {
->>>> +        qemu_log_mask(LOG_GUEST_ERROR,
->>>> +                      "%s: blob too large (%" PRIu64 "> %" PRIu32 ")\n",
->>>> +                      __func__, cblob.size, UINT32_MAX);
->>>> +        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
->>>> +        return;
->>>> +    }
->>>> +
->>>>        if (virtio_gpu_find_resource(g, cblob.resource_id)) {
->>>>            qemu_log_mask(LOG_GUEST_ERROR, "%s: resource already exists %d\n",
->>>>                          __func__, cblob.resource_id);
->>>> @@ -1435,7 +1443,14 @@ static int virtio_gpu_blob_save(QEMUFile *f, void *opaque, size_t size,
->>>>            }
->>>>            assert(!res->image);
->>>>            qemu_put_be32(f, res->resource_id);
->>>> +
->>>> +        /*
->>>> +         * The migration stream encodes blob_size as a 32-bit integer for
->>>> +         * compatibility though virtio encodes it as a 64-bit integer. A newer
->>>> +         * version of the migration stream should encode it as a 64-bit integer.
->>>> +         */
->>>>            qemu_put_be32(f, res->blob_size);
->>>> +
->>>>            qemu_put_be32(f, res->iov_cnt);
->>>>            for (i = 0; i < res->iov_cnt; i++) {
->>>>                qemu_put_be64(f, res->addrs[i]);
->>>>
->>>> ---
->>>> base-commit: 006a22cb26998998385b104db1ff9466ef2f3153
->>>> change-id: 20260725-blob-8a6a1a85601a
->>>>
->>>> Best regards,
->>>> --
->>>> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>>
->>>>
->>>
->>> With regards,
->>> Daniel
->>
->>
+> Pass the masked features to set_features_ex, consistent with set_features.
 > 
+> Fixes: CVE-2026-63321
+> Fixes: 64a6a336f4 ("virtio: add support for negotiating extended features")
+> Cc: Jason Wang <jasowangio@gmail.com>
+> Cc: Yuri Benditovich <ybendito@redhat.com>
+> Cc: Paolo Abeni <pabeni@redhat.com>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3623
+> Reported-by: huntr bubble <bubblehuntr@gmail.com>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> Message-ID: <dfd27c9b26e442a2076f6ddc9bb3d38363d9b2da.1784891251.git.mst@redhat.com>
+> ---
+>  hw/virtio/virtio.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index f4d86a3655..7c19080db5 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -3320,7 +3320,7 @@ static int virtio_set_features_nocheck(VirtIODevice *vdev, const uint64_t *val)
+>      virtio_features_and(tmp, val, vdev->host_features_ex);
+>  
+>      if (k->set_features_ex) {
+> -        k->set_features_ex(vdev, val);
+> +        k->set_features_ex(vdev, tmp);
+>      } else if (k->set_features) {
+>          bad = bad || virtio_features_use_ex(tmp);
+>          k->set_features(vdev, tmp[0]);
+
+I fear this comes too late, but FWIW the fix LGTM, thanks Michael!
+
+Acked-by: Paolo Abeni <pabeni@redhat.com>
 
 
