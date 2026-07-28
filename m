@@ -4,79 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE6FCC54F4C
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 07:36:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47298C53219
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 07:37:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wocLR-0000AI-Iq; Tue, 28 Jul 2026 03:35:22 -0400
+	id 1wocN3-0000eN-0A; Tue, 28 Jul 2026 03:37:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wocLK-00009q-Td
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 03:35:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wocN1-0000e1-A8
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 03:36:59 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wocLJ-0000N2-4H
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 03:35:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785224111;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mCZz1SanrmLWK/32ASGRImroeKf/utvWCyHdyzOAil0=;
- b=CJztUB7TtOl51rk+6Bs92T/5zhxk12HG92DvqrGi6ubaiW1I5+B8qU0YPfaxixs6YLMHwS
- 7fx3ZPSExLEtk2/LsRTP4jwxaJn8j6825cXaLrlmwC9YOuEaXO1buOfcgFCdI0TFmg+n8E
- /8qMJ0+OcDFijgcGlYXWP73wjcXSdmc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-63-ynZ70cpBMZSyfs1PpH8akw-1; Tue,
- 28 Jul 2026 03:35:07 -0400
-X-MC-Unique: ynZ70cpBMZSyfs1PpH8akw-1
-X-Mimecast-MFC-AGG-ID: ynZ70cpBMZSyfs1PpH8akw_1785224107
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5BD83195608C; Tue, 28 Jul 2026 07:35:06 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F24FB180044F; Tue, 28 Jul 2026 07:35:04 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9736221E6920; Tue, 28 Jul 2026 09:35:02 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Michael Roth
- <michael.roth@amd.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: Re: [PATCH v2 50/53] qdev: simplify DEFINE_PROP_ARRAY and remove
- generic array PropertyInfo
-In-Reply-To: <20260616-qom-qapi-v2-50-cc9396b9c18c@redhat.com>
- (=?utf-8?Q?=22Marc-Andr=C3=A9?=
- Lureau"'s message of "Tue, 16 Jun 2026 00:38:16 +0400")
-References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
- <20260616-qom-qapi-v2-50-cc9396b9c18c@redhat.com>
-Date: Tue, 28 Jul 2026 09:35:02 +0200
-Message-ID: <87wlufword.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wocMz-0000TT-TX
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 03:36:59 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66S3b7fQ1701852
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 07:36:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ eGcPvgzg96/uZtd06AtwxJbkAab5DOzMq6pivJ9Cbag=; b=IZoPF2bcUMz1klXq
+ DyD+gZsbKAbzbVM66Rh+iXk0qmUUbiMsBwTVOEnydrzy8XyOnvx+DzMuPCtrWOfc
+ dwczHsW01CHAtF9xN8bAEVytCILNV2sro0UYD6JbUs2fjqMkOFW6/Q7DpsAWe6wQ
+ 40q0eTO06oitMnpacFG3EsNHOZiOcmce0/cyLx89yZPAu2eIqtlQNxfRm+RhbqXe
+ 2OQ15j5pwD5jKcfUZ3X5izXlMVN1IEcPWsHkrABYBOdgKeNy0fEhScXWIjEV2GgI
+ 4wNBvaHh4pjxyzCsdu1STiNcJvJjCmdHr+jf7GYe0ZaYacQsyZAzMfEZyhlz/3MQ
+ RxDMVg==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fphh7hjnv-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 07:36:55 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-51c12e43b98so44056941cf.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 00:36:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1785224214; x=1785829014; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=eGcPvgzg96/uZtd06AtwxJbkAab5DOzMq6pivJ9Cbag=;
+ b=TRnbE3+IDK6oJNA+FC5tnxS7FMB5Wt5jbS/EYqcqszgLGJ8/dcKxvdT/fUwwT1Uv7R
+ KW+7B0WspeZ45lUkjPyuES902LpbeZDQq5Z0EESaqkMbeAZfqJviYvkeTDxd5ARJU/gi
+ EGVARKO6O4inWrRyx4FqK+G/huaqAxtJ8qkuHJ+a/C9K0dylMIFSI5jBNTo9OZOjrUGc
+ yAboKN7WoVL46O7WZSZQ+ikwvbUTPJp/aULTc4AJEIwDT11u1tZXAt7++GVR43lv3ulq
+ HzgGK7hwles9sv6eur8+hJlxae/yI4A6/pRHPk3/p3Es7aMoOF8r0n0iPAe8kVtPINHL
+ cdBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785224214; x=1785829014;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=eGcPvgzg96/uZtd06AtwxJbkAab5DOzMq6pivJ9Cbag=;
+ b=s8Urf1jY7gtD+9K+ayUjRDYs6HQ6YAUMPr32kUMG81XOH+ANh7St+NJnFBtqNryEMU
+ YoCAAjZvikVXMnhCkawDFCdQ2AzEAn7oXyrauH5LQq+DQROLtjjgZVQOY+r4xLs1Ih/3
+ DlgjXfGAlYe9ww5yW44L0kQ+PgcBnTTu1uFrwCnLeF2VqhVERnUib0CVGa2EWc6KjbTt
+ fUJqNs1yoe9Htxkwe/0gXUHm7O4tG4cga4j9WYg3LE8rDlSnfdsVdcwySfCqRP00A0t4
+ IXxilMyxdXzNbymrU9SziFSlKRnvQgorw68Fd84VHLpvMVrQZTeHL6faXM/8SY1MsQrM
+ 1UDA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqTO/kWh34Su7w6TL4G+MtWlSJmjCfpRD/De8YyUUSyJQWkjA4oTTdWQcgdBA2uQUBPHoMMnLVBkSwL@nongnu.org
+X-Gm-Message-State: AOJu0YxdsR459aylZtkri2YjxMUtr7iaK12uoNvt7cwo6z3CuuDc9w2F
+ l+Ad5heZw17XtB8b5CDsC5kEG2RfIWR9xEpOfTV1Mrw8UlxJC6KLkNQ1MWf6xO0Z1p6o7d+Zebq
+ e/QlvZsbRgHQGFYU+royK+tTTONSoqCjMrV/a/8tT0Sn5MrG4LnR5XMkscw==
+X-Gm-Gg: AR+sD137C6AocHWszl79DiSXMX9QdP2CxEt06Dm38hPW7XhiL+w36LSRyPWzRjm+por
+ dJ07vtIaB3anZR4za8bjqRESjqpK7D3I622X4i7Qi9cvSiKCjDGty625lOZqCbYzti+rsXMG0T7
+ sc/EodHCemmtw4EWj4ZgVfJq1AbZgODZVyLeWXQw84FVv12i0tsJg1QhcGTzCWS2QgGxAl4Feug
+ qc/wFhnw34CalS0thb/KSsl/r/L9ClDrEb7MyhvKjpshZe5qmOVe5w4hliHdl24UnKSFBz9g/vY
+ 1QJEZyf//cNUMQzB/2aude30A+oafThmL9AEZ4BGoMdYk1jQPcq+FvIKtYGR+7j/nL3gk5UklSG
+ 4ag+b1pg6R+BHoJ/1nb8AzZNFf6ZHs89yjjsyh3pWPWKfhAXzGQM=
+X-Received: by 2002:ac8:7dc9:0:b0:51c:e14:87a7 with SMTP id
+ d75a77b69052e-529d6ffca4emr9867111cf.28.1785224214430; 
+ Tue, 28 Jul 2026 00:36:54 -0700 (PDT)
+X-Received: by 2002:ac8:7dc9:0:b0:51c:e14:87a7 with SMTP id
+ d75a77b69052e-529d6ffca4emr9866751cf.28.1785224213871; 
+ Tue, 28 Jul 2026 00:36:53 -0700 (PDT)
+Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-496c45c338fsm56945885e9.8.2026.07.28.00.36.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 Jul 2026 00:36:53 -0700 (PDT)
+Message-ID: <1c5b223c-301b-419a-a686-0170ce3fddd0@oss.qualcomm.com>
+Date: Tue, 28 Jul 2026 09:36:51 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 050/103] tests/tcg/multiarch/sha1.c: fix big endian
+ implementation
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Brian Cain
+ <brian.cain@oss.qualcomm.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Helge Deller <deller@gmx.de>, Gustavo Romero <gustavo.romero@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+References: <20260728044248.137626-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260728044248.137626-51-pierrick.bouvier@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260728044248.137626-51-pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI4MDA2NCBTYWx0ZWRfX50aTEk69JNO5
+ 5uMs5Mbdb+aX6I4aOLyRnsTbA+IyGM1vXrMduVHhgcnyBXe4TWcoorXIChMLWS6O4nytZG551hV
+ KF2uemS5qTtNBsYG9N99myiy98RoxOooaBfYPQ/vwYlVKG7RWNj3FZDW01lc2kiQi5q8PyHgFin
+ Wt2+mcP0F5xXKuqG//2j1NgojYw062ZdGHRfefidh9S4ePON3XLJz8GQ49ofEwE9lz9B5y/AF2i
+ zCQDEBdOEemRLL42rOulKd+urj9vokf2Yy+Njkya9gM10ZOfoIpz6o/jOj+RljLxroz/94GEtvK
+ NUv/+SzNZ5f0HjITE3sQ3qM6Be5rhQ2xU5Xlwwtsvfh7EEvC29p76xe+Gd4j0MJUNA9rmxUAWr5
+ FYaWjIuWj2i08jkFkv2xzrBE/jNCxuNTQIERhCyEpu6IKIjUq3L83p/ejDOMxEjjWu1qwCZI019
+ usTVmKhyfhEsEMCQ/2g==
+X-Proofpoint-ORIG-GUID: njVlhKLhuWh-2OZNGz-r9P-RSXFqZOAg
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI4MDA2NCBTYWx0ZWRfX02hBrQtMto5W
+ NZlrApTz0rowpkaoCgfD8l9gsChzYi1xQSCmnTTCim1tUcxJh6IBKqxwjjY+GDPGGVLhoQQse3A
+ olwXvY75wlNbF7l3qI9d4xll/fsHBDw=
+X-Proofpoint-GUID: njVlhKLhuWh-2OZNGz-r9P-RSXFqZOAg
+X-Authority-Analysis: v=2.4 cv=b+6CJNGx c=1 sm=1 tr=0 ts=6a685c17 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=JV1jFzSIkSeHzW4z598A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-28_01,2026-07-27_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0
+ priorityscore=1501 impostorscore=0 malwarescore=0 bulkscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607280064
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,113 +163,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
+On 28/7/26 06:41, Pierrick Bouvier wrote:
+> All big endian targets were returning a wrong value due to this.
+> 
+> Tested-by: Alex Bennée <alex.bennee@linaro.org>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>   tests/tcg/multiarch/sha1.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/tests/tcg/multiarch/sha1.c b/tests/tcg/multiarch/sha1.c
+> index 0081bd76577..6cebad2951d 100644
+> --- a/tests/tcg/multiarch/sha1.c
+> +++ b/tests/tcg/multiarch/sha1.c
+> @@ -48,10 +48,10 @@ void SHA1Final(unsigned char digest[20], SHA1_CTX* context);
+>   
+>   /* blk0() and blk() perform the initial expand. */
+>   /* I got the idea of expanding during the round function from SSLeay */
+> -#if BYTE_ORDER == LITTLE_ENDIAN
+> +#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+>   #define blk0(i) (block->l[i] = (rol(block->l[i],24)&0xFF00FF00) \
+>       |(rol(block->l[i],8)&0x00FF00FF))
+> -#elif BYTE_ORDER == BIG_ENDIAN
+> +#elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+>   #define blk0(i) block->l[i]
+>   #else
+>   #error "Endianness not defined!"
 
-> Change DEFINE_PROP_ARRAY, the macro now uses _arrayprop##_list to
-> resolve the typed list PropertyInfo (introduced in the previous patch)
-> instead of the generic qdev_prop_array.
->
-> This means the element type and size information is carried by the
-> PropertyInfo itself rather than duplicated at each callsite. Since
-> the typed list PropertyInfos encode element_info and element_size,
-> the .arrayinfo and .arrayfieldsize fields are no longer set by the
-> macro (they will be removed from the Property struct in the next patch).
->
-> Remove qdev_prop_array, which is now unused.
->
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-[...]
-
-> diff --git a/hw/intc/arm_gicv5_common.c b/hw/intc/arm_gicv5_common.c
-> index b155486af65..61c8ae49302 100644
-> --- a/hw/intc/arm_gicv5_common.c
-> +++ b/hw/intc/arm_gicv5_common.c
-> @@ -191,9 +191,9 @@ static void gicv5_common_realize(DeviceState *dev, Er=
-ror **errp)
->=20=20
->  static const Property arm_gicv5_common_properties[] =3D {
->      DEFINE_PROP_LINK_ARRAY("cpus", GICv5Common, num_cpus,
-> -                           cpus, TYPE_ARM_CPU, ARMCPU *),
-> +                           cpus, TYPE_ARM_CPU),
->      DEFINE_PROP_ARRAY("cpu-iaffids", GICv5Common, num_cpu_iaffids,
-> -                      cpu_iaffids, qdev_prop_uint32, uint32_t),
-> +                      cpu_iaffids, qdev_prop_uint32),
->      DEFINE_PROP_UINT32("irsid", GICv5Common, irsid, 0),
->      DEFINE_PROP_UINT32("spi-range", GICv5Common, spi_range, 0),
->      DEFINE_PROP_UINT32("spi-base", GICv5Common, spi_base, 0),
-
-Doesn't compile for me.  I applied the series at merge commit
-8333dba732.  If it compiles for you, could you push it to where I can
-pull?
-
-FAILED: [code=3D1] libsystem.a.p/hw_intc_arm_gicv5_common.c.o=20
-cc -m64 -Ilibsystem.a.p -I. -I.. -Isubprojects/libvduse -I../subprojects/li=
-bvduse -Iui -Iqapi -Itrace -Iui/shader -I/usr/include/p11-kit-1 -I/usr/incl=
-ude/pixman-1 -I/usr/include/libpng16 -I/usr/include/spice-server -I/usr/inc=
-lude/spice-1 -I/usr/include/opus -I/usr/include/cacard -I/usr/include/nss3 =
--I/usr/include/nspr4 -I/usr/include/PCSC -I/usr/include/gstreamer-1.0 -I/us=
-r/include/libdrm -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/u=
-sr/include/sysprof-6 -I/usr/include/orc-0.4 -I/usr/include/libusb-1.0 -I/us=
-r/include/SDL2 -I/usr/include/libmount -I/usr/include/blkid -I/usr/include/=
-gio-unix-2.0 -I/usr/include/slirp -I/usr/local/include -I/usr/include/gtk-3=
-.0 -I/usr/include/pango-1.0 -I/usr/include/cloudproviders -I/usr/include/ca=
-iro -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/glycin-2 -I/usr/include/at=
--spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/include/atk-1.0 -I/usr/lib64=
-/pkgconfig/../../include/dbus-1.0 -I/usr/lib64/pkgconfig/../../lib64/dbus-1=
-.0/include -I/usr/include/fribidi -I/usr/include/libxml2 -I/usr/include/har=
-fbuzz -I/usr/include/freetype2 -I/usr/include/vte-2.91 -I/usr/include/rav1e=
- -I/usr/include/svt-av1 -I/usr/include/libvmaf -I/usr/include/webp -I/usr/i=
-nclude/virgl -I/usr/include/fuse3 -I/usr/include/uuid -I/usr/include/pipewi=
-re-0.3 -I/usr/include/spa-0.2 -fdiagnostics-color=3Dauto -Wall -Winvalid-pc=
-h -Werror -std=3Dgnu11 -O2 -g -mcx16 -msse2 -D_GNU_SOURCE -D_LARGEFILE_SOUR=
-CE -fno-strict-aliasing -fno-common -fwrapv -ftrivial-auto-var-init=3Dzero =
--fzero-call-used-regs=3Dused-gpr -fstack-protector-strong -Wempty-body -Wen=
-dif-labels -Wexpansion-to-defined -Wformat-overflow=3D2 -Wformat-security -=
-Wformat-y2k -Wignored-qualifiers -Wimplicit-fallthrough=3D2 -Winit-self -Wm=
-issing-format-attribute -Wmissing-prototypes -Wnested-externs -Wold-style-d=
-eclaration -Wold-style-definition -Wredundant-decls -Wshadow=3Dlocal -Wstri=
-ct-prototypes -Wtype-limits -Wundef -Wvla -Wwrite-strings -Wno-missing-incl=
-ude-dirs -Wno-psabi -Wno-shift-negative-value -isystem /work/armbru/qemu/li=
-nux-headers -isystem linux-headers -iquote . -iquote /work/armbru/qemu -iqu=
-ote /work/armbru/qemu/include -iquote /work/armbru/qemu/host/include/x86_64=
- -iquote /work/armbru/qemu/host/include/generic -iquote /work/armbru/qemu/t=
-cg/x86_64 -pthread -DSTAP_SDT_V2 -fPIE -D_FILE_OFFSET_BITS=3D64 -D__USE_FIL=
-E_OFFSET64 -D__USE_LARGEFILE64 -DUSE_POSIX_ACLS=3D1 -DHWY_SHARED_DEFINE -DA=
-VIF_DLL -DEB_DLL -D_DEFAULT_SOURCE -D_XOPEN_SOURCE=3D600 -DNCURSES_WIDECHAR=
-=3D1 -D_GNU_SOURCE=3D1 -D_REENTRANT -DSTRUCT_IOVEC_DEFINED -DWITH_GZFILEOP =
--DCONFIG_SOFTMMU -DCOMPILING_SYSTEM_VS_USER -MD -MQ libsystem.a.p/hw_intc_a=
-rm_gicv5_common.c.o -MF libsystem.a.p/hw_intc_arm_gicv5_common.c.o.d -o lib=
-system.a.p/hw_intc_arm_gicv5_common.c.o -c ../hw/intc/arm_gicv5_common.c
-In file included from ../hw/intc/arm_gicv5_common.c:12:
-/work/armbru/qemu/include/hw/core/qdev-properties.h:195:40: error: =E2=80=
-=98qdev_prop_array=E2=80=99 undeclared here (not in a function); did you me=
-an =E2=80=98qdev_prop_set_array=E2=80=99?
-  195 |     DEFINE_PROP(_name, _state, _field, qdev_prop_array, uint32_t,  =
-     \
-      |                                        ^~~~~~~~~~~~~~~
-/work/armbru/qemu/include/hw/core/qdev-properties.h:88:24: note: in definit=
-ion of macro =E2=80=98DEFINE_PROP=E2=80=99
-   88 |         .info      =3D &(_prop),                                   \
-      |                        ^~~~~
-../hw/intc/arm_gicv5_common.c:193:5: note: in expansion of macro =E2=80=98D=
-EFINE_PROP_LINK_ARRAY=E2=80=99
-  193 |     DEFINE_PROP_LINK_ARRAY("cpus", GICv5Common, num_cpus,
-      |     ^~~~~~~~~~~~~~~~~~~~~~
-../hw/intc/arm_gicv5_common.c:196:62: error: macro =E2=80=98DEFINE_PROP_ARR=
-AY=E2=80=99 passed 6 arguments, but takes just 5
-  196 |                       cpu_iaffids, qdev_prop_uint32, uint32_t),
-      |                                                              ^
-/work/armbru/qemu/include/hw/core/qdev-properties.h:166:9: note: macro =E2=
-=80=98DEFINE_PROP_ARRAY=E2=80=99 defined here
-  166 | #define DEFINE_PROP_ARRAY(_name, _state, _field,                   =
-     \
-      |         ^~~~~~~~~~~~~~~~~
-../hw/intc/arm_gicv5_common.c:195:5: error: =E2=80=98DEFINE_PROP_ARRAY=E2=
-=80=99 undeclared here (not in a function)
-  195 |     DEFINE_PROP_ARRAY("cpu-iaffids", GICv5Common, num_cpu_iaffids,
-      |     ^~~~~~~~~~~~~~~~~
-
-[...]
-
+Orthogonal but what about tests/tcg/multiarch/sigbus.c?
 
