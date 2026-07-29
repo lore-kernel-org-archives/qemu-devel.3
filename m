@@ -4,75 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5E77C53200
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 11:11:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 859D3C54F51
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 11:19:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp2Bk-00038p-FE; Wed, 29 Jul 2026 07:11:04 -0400
+	id 1wp2JC-0005g1-0R; Wed, 29 Jul 2026 07:18:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wp2Bj-00038a-A6
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 07:11:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wp2Iz-0005fN-QF; Wed, 29 Jul 2026 07:18:35 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wp2Bh-00068M-8Y
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 07:11:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785323460;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/vYkS5QDV1iNuG0FXFWsi7MwD0TdqBy22Vsne7MF9xs=;
- b=bcI1Mt1udBvyocNCB2sIMux1NYWbVZeHZOqh9dCBuSbAHv6s4vDpMks1XOQb0Y1Q/8P0Y7
- iE+15Wy0nPpIyq+BCchX0ycnEJfll01pDmGpTiOSWeUoqheKs4xBT8Bt8jnvcHwt7pDGo9
- ljcJW8PgZkvG+CkLz6WxlAIHMH7JmYM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-p2gRZgfMPlG2bvZA0XQXPg-1; Wed,
- 29 Jul 2026 07:10:57 -0400
-X-MC-Unique: p2gRZgfMPlG2bvZA0XQXPg-1
-X-Mimecast-MFC-AGG-ID: p2gRZgfMPlG2bvZA0XQXPg_1785323455
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0D628180056E; Wed, 29 Jul 2026 11:10:55 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AEF44300019F; Wed, 29 Jul 2026 11:10:53 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5FA8821E6920; Wed, 29 Jul 2026 13:10:51 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: jasowang@redhat.com,  mst@redhat.com,  peterx@redhat.com,
- farosas@suse.de,  raphael.s.norwitz@gmail.com,  bchaney@akamai.com,
- qemu-devel@nongnu.org,  berrange@redhat.com,  pbonzini@redhat.com,
- yc-core@yandex-team.ru,  mark.caveayland@nutanix.com,  Eric Blake
- <eblake@redhat.com>
-Subject: Re: [PATCH v20 09/15] qapi: add local migration parameter
-In-Reply-To: <20260729091334.1863155-10-vsementsov@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Wed, 29 Jul 2026 12:12:47 +0300")
-References: <20260729091334.1863155-1-vsementsov@yandex-team.ru>
- <20260729091334.1863155-10-vsementsov@yandex-team.ru>
-Date: Wed, 29 Jul 2026 13:10:51 +0200
-Message-ID: <87se52qcec.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wp2Iw-0007Bv-8K; Wed, 29 Jul 2026 07:18:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1785323896; bh=UW2WDPWHIY4V6y4Gv+n79M0tRRrzkP2Ps3UlhjGzv20=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=CRGzj6sTR/gSp0qIwLnconPlXmmlTgFH+dG/cQuBt+wdsAtJUW2XSonuZzumK0fYx
+ 9aUv8fU+dZxlIlkFapAJvDWkh/o8ztWQHSgLuvLVGzkHkKCeQfGIhcvWK6310hK/m5
+ PknC4lIt1f4F7xGrViW1HPqib4XvAkbcUngfyr8+srixBpgpjPnC4Me6MOsShtjKih
+ 1UjtICJs9Yxlhiw0q24TYei0aXc99jiBMhgUJp1Rp0mv53jwOeBc3Kg9yzAQ3o6Uyl
+ NY60AooWGagJ0+6cMLeOlpV2L4eKzfrouYmHE/SwRz4KhBxEbsbnlidYm9+CMljolF
+ gThwy454kcIYQ==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 536571C6795;
+ Wed, 29 Jul 2026 14:18:16 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 89FCC3F9B72;
+ Wed, 29 Jul 2026 14:18:22 +0300 (MSK)
+Message-ID: <24a06836-a31a-4276-9409-5810653a052a@tls.msk.ru>
+Date: Wed, 29 Jul 2026 14:18:08 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-11.1?] qemu-iotest 161: fix race
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+References: <20260728163919.369020-1-mjt@tls.msk.ru>
+ <amneOTq8dVIw-YIZ@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <amneOTq8dVIw-YIZ@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,177 +113,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+On 7/29/26 14:04, Daniel P. Berrangé wrote:
+> On Tue, Jul 28, 2026 at 07:39:16PM +0300, Michael Tokarev wrote:
 
-> We are going to implement local-migration feature: some devices will be
-> able to transfer open file descriptors through migration stream (which
-> must UNIX domain socket for that purpose).  This allows to transfer the
-> whole backend state without reconnecting and restarting the backend
-> service. For example, virtio-net will migrate its attached TAP netdev,
-> together with its connected file descriptors.
->
-> In this commit we introduce a migration parameter, which enables
-> the feature for devices that support it (none at the moment).
->
-> We can't simply auto-detect local migration by checking whether the
-> migration channel is a UNIX domain socket: the UNIX socket may be only
-> the first part of the transfer channel to a remote target.  Hence an
-> explicit parameter is needed. More over, "local" migration parameter
 
-Moreover
+>> This test is run right after a previous test, where we've
+>> killed qemu process which holds the test image open.
+> 
+> When you say "previous test" can you clarify the scenario you're
+> hitting. The tests run with TEST_DIR set to a name that is unique
+> to the test name + format. eg
+> 
+>     qemu.git/build/scratch/raw-file-101
 
-> may be useful in cpr-exec mode, when FDs are passed through exec
-> instead of UNIX socket.
->
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->  include/migration/misc.h |  2 ++
->  migration/options.c      | 18 +++++++++++++++++-
->  qapi/migration.json      | 22 ++++++++++++++++++----
->  3 files changed, 37 insertions(+), 5 deletions(-)
->
-> diff --git a/include/migration/misc.h b/include/migration/misc.h
-> index 2b2fbb59a40..019717f4cda 100644
-> --- a/include/migration/misc.h
-> +++ b/include/migration/misc.h
-> @@ -161,4 +161,6 @@ bool multifd_join_device_state_save_threads(void);
->  
->  void migration_request_switchover_ack_legacy(const char *requester);
->  
-> +bool migrate_local(void);
-> +
->  #endif
-> diff --git a/migration/options.c b/migration/options.c
-> index dfce19405d4..5c439f6d724 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
-> @@ -14,6 +14,7 @@
->  #include "qemu/osdep.h"
->  #include "qemu/error-report.h"
->  #include "qemu/units.h"
-> +#include "qapi/util.h"
->  #include "exec/target_page.h"
->  #include "qapi/clone-visitor.h"
->  #include "qapi/error.h"
-> @@ -25,6 +26,7 @@
->  #include "migration/colo.h"
->  #include "migration/cpr.h"
->  #include "migration/misc.h"
-> +#include "migration/options.h"
->  #include "migration.h"
->  #include "migration-stats.h"
->  #include "qemu-file.h"
-> @@ -350,6 +352,12 @@ bool migrate_mapped_ram(void)
->      return s->capabilities[MIGRATION_CAPABILITY_MAPPED_RAM];
->  }
->  
-> +bool migrate_local(void)
-> +{
-> +    MigrationState *s = migrate_get_current();
-> +    return s->parameters.local;
-> +}
-> +
->  bool migrate_ignore_shared(void)
->  {
->      MigrationState *s = migrate_get_current();
-> @@ -1085,7 +1093,7 @@ static void migrate_mark_all_params_present(MigrationParameters *p)
->          &p->has_announce_step, &p->has_block_bitmap_mapping,
->          &p->has_x_vcpu_dirty_limit_period, &p->has_vcpu_dirty_limit,
->          &p->has_mode, &p->has_zero_page_detection, &p->has_direct_io,
-> -        &p->has_x_rdma_chunk_size, &p->has_cpr_exec_command,
-> +        &p->has_x_rdma_chunk_size, &p->has_cpr_exec_command, &p->has_local,
->      };
->  
->      len = ARRAY_SIZE(has_fields);
-> @@ -1433,6 +1441,10 @@ static void migrate_params_test_apply(MigrationParameters *params,
->          qapi_free_strList(dest->cpr_exec_command);
->          dest->cpr_exec_command = QAPI_CLONE(strList, params->cpr_exec_command);
->      }
-> +
-> +    if (params->has_local) {
-> +        dest->local = params->local;
-> +    }
->  }
->  
->  static void migrate_params_apply(MigrationParameters *params)
-> @@ -1565,6 +1577,10 @@ static void migrate_params_apply(MigrationParameters *params)
->          s->parameters.cpr_exec_command =
->              QAPI_CLONE(strList, params->cpr_exec_command);
->      }
-> +
-> +    if (params->has_local) {
-> +        s->parameters.local = params->local;
-> +    }
->  }
->  
->  void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index b1eaf7b0545..bb744f134ce 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -830,7 +830,8 @@
->             'zero-page-detection',
->             'direct-io',
->             { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
-> -           'cpr-exec-command'] }
-> +           'cpr-exec-command',
-> +           'local'] }
->  
->  ##
->  # @migrate-set-parameters:
-> @@ -1012,10 +1013,21 @@
->  #     Must be set to the same value on both source and destination
->  #     before migration starts.  (Since 11.1)
->  #
-> +# @local: Permit the use of optimizations for local migration.
-> +#     This must only be set when either both the source and
-> +#     destination QEMU processes are directly connected with a UNIX
-> +#     domain socket as the migration channel (to enable use of file
-> +#     descriptor passing) or cpr-exec migration mode is enabled
-> +#     (this way file descriptors are inherited by new process).
-> +#     Individual device backends may need additional configuration
-> +#     flags set  to enable local migration optimizations.
+It is the same SUBtest in qemu-iotests/161.
 
-Extra space between "set" and "to".
-
-> +#     This will be documented against the device
-> +#     backends where it applies.  (Since 11.2)
-
-Reflow while there:
-
-   # @local: Permit the use of optimizations for local migration.  This
-   #     must only be set when either both the source and destination
-   #     QEMU processes are directly connected with a UNIX domain socket
-   #     as the migration channel (to enable use of file descriptor
-   #     passing) or cpr-exec migration mode is enabled (this way file
-   #     descriptors are inherited by new process).  Individual device
-   #     backends may need additional configuration flags set to enable
-   #     local migration optimizations.  This will be documented against
-   #     the device backends where it applies.  (Since 11.2)
-
-> +#
->  # Features:
->  #
-> -# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
-> -#     @x-vcpu-dirty-limit-period are experimental.
-> +# @unstable: Members @local, @x-checkpoint-delay, @x-rdma-chunk-size,
-> +#     and @x-vcpu-dirty-limit-period are experimental.
->  #
->  # Since: 2.4
->  ##
-> @@ -1053,7 +1065,9 @@
->              '*direct-io': 'bool',
->              '*x-rdma-chunk-size': { 'type': 'uint64',
->                                      'features': [ 'unstable' ] },
-> -            '*cpr-exec-command': [ 'str' ]} }
-> +            '*cpr-exec-command': [ 'str' ],
-> +            '*local': { 'type': 'bool',
-> +                        'features': [ 'unstable' ] } } }
->  
->  ##
->  # @query-migrate-parameters:
-
-With these cosmetic tweaks
-Acked-by: Markus Armbruster <armbru@redhat.com>
-
+/mjt
 
