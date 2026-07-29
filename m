@@ -4,114 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D224CC53200
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 06:44:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BEBCC53219
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 06:52:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1woy0a-00038Q-Uv; Wed, 29 Jul 2026 02:43:17 -0400
+	id 1woy9D-00053a-Cb; Wed, 29 Jul 2026 02:52:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woy0Y-00037i-Rk
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 02:43:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1woy0X-0006c2-CK
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 02:43:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785307392;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Axd1EoHnmhzRa1SQPWvvHGAxnFWzpQ2UvAfELfnuDSo=;
- b=PV/cEbNb2n+7rCST/R+4rcgnHlTTvpY3d6ukC7rKlcthnWOE1j0R0vT3zTTsWGXwejUDEk
- XpV4UBA1raEEBtr4KSRnSeERdw3TMOFdicSw3r9NjQX365cPNRR2m2NR/NmSQEnI8de4Mh
- KK+wfRxI8R9VORw0Bj0fTipQQOxjV4s=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-57-P7NwQS-FMgC49QYFLAh3iA-1; Wed, 29 Jul 2026 02:43:10 -0400
-X-MC-Unique: P7NwQS-FMgC49QYFLAh3iA-1
-X-Mimecast-MFC-AGG-ID: P7NwQS-FMgC49QYFLAh3iA_1785307389
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-49561facb1dso4030765e9.3
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 23:43:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <physicalmtea@gmail.com>)
+ id 1woy9C-00052F-3L
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 02:52:10 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <physicalmtea@gmail.com>)
+ id 1woy9A-0007rz-4H
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 02:52:09 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-38f620399a0so469203a91.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 23:52:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785307389; x=1785912189; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Axd1EoHnmhzRa1SQPWvvHGAxnFWzpQ2UvAfELfnuDSo=;
- b=Ce6Hj+y3P5idYXyGJiES0stZWz9uDm6Y6ggxcxH+mIal1NhxSP0ib7adUhY5YIQZ/a
- Z6dl9LSuOHxO7vawTJnTv3ITIOx+Bzrck5niRUBhUipDc2kxbqYqnuGkLQrrrROtvShz
- n7f6XhEKVwtYVj8cnWItjyEFidGrx8FD/XSSYfYQV05jEaCyCkmxVc54FNaTdQQsyCA+
- FVNtrkDcKbQitUm/9fUu1vYPIJi8dFxM5pnzqPwZVnL5zSEz+a+b2XZMV9Ry3biZr3z5
- Pk0ldwKlu8M6CthjtB1wo7R4Z+B9gUPS7oWJMyoQXUh8PdHQzJ+uDTm1JhFzlPxLChJ0
- sv5A==
+ d=gmail.com; s=20251104; t=1785307926; x=1785912726; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ZYGjUuQiuRV7YhV61sT40yToB5ErVWpo9yoY2GDkffo=;
+ b=EqE/sp8GKUaIdz4i5q4pD4v17hz/7SXvJrD4XM/OcYTZ+MflAi1AwGhFWmQPfoXW5x
+ G6AvjJAcugGnDYmjGCYhp8+EO9ppsx22nDl1fdvJ1dwV+AAcvIJf7pZw0CN+jmpwXa/q
+ ufbWuS4sj+vX6ywGUegJlTpDP8qbCS9fEuqnOkq8kYK1TT37eb0h+oRgebRzU/xMJd4m
+ Y+65ExxGbPueAGfJWiZTYNeCjiqteXwfWCYHkhGplcpZOs5awkE36U376nOGJOB7Vt/3
+ qyAxwRUYph7sNMgyPzOO318saPYc7a0wtZ9uh7wiewYvieHDpVuLS2Yo6rJBT5QTTV3H
+ ABFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785307389; x=1785912189;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=Axd1EoHnmhzRa1SQPWvvHGAxnFWzpQ2UvAfELfnuDSo=;
- b=CNr0vJ/7vPVO3ZEKUYgQC82YYO+gahrG+Y88IdubTBfjcRxIKI+AkYET41CjEqZgju
- nQ9ijDkIbMTGMFGvxPlbd4Fs/5QAfXWpwyNfXfIhDX2ySqqpqYWmYmuX8MUjHlr759gJ
- BeSVlXsaUlZd7aQgkJnNiqBI5xq/keJ4v0vugPtewYGLnOmwbtv6hWo73sYaeOlC/PLD
- yZZihJ175aSjaHbxgZmupCDmkTu7MAFTn+ctBIYeB9o1dfQwZ3ynqY0rbwo/K5XDZQeM
- WfKhPOSCA5JN9yOhwiwd6D7qBT/HVEcM03j1+dsJPwP4xSSOyT7/03fjHCcB/LFwx8sV
- GA4w==
-X-Gm-Message-State: AOJu0YwlUWpXnPKeKspYrV7T/1zo6t9baQBzZ/FrtYLprr9X3jbKu2hn
- U7aA273D4HLlBWLjc5HnOAxuh3LPE+mNdx8TwTa6BX8AjTU5MfeHaDaA0zdguXwegXYYr6Xv1M3
- kCm14K915jdtCOyZvh+CuLcJYltIH60qZrpiEYNZO0VpsV51Nm02AYFYB
-X-Gm-Gg: AR+sD12RjUWDmtyP1vdV6zj/oZI8OIZtVRJ11qXSp8G2PIDgfq4eOveYdQtz0OJBKXK
- H1zYyzZ/CSa6eC1N1TsfOgB0gyNcyaZ+s1yUFIF/NqtzFGH8IeGvP7gopvsyDDCCYGl/OqVcLst
- dVEhKSkyJCwC5AuOJi59DZ+Lhep9ue3r6Nlp0CLLjnW/tDR7BjAuoCITP7uAwEvAFiubkrBcgjx
- ZElsKceLzez4qp3HLJ6JyGhjGNrYTqASwsXSVrowaORO+QPrR+qmuiqE3It2aVhVXnxbliF0IvC
- d4JL2w8z/9o1aEnzGzcBHOpwcpaUHiX+ooxJTJGsZPNycalyQyXZ7/3EKBcXcR4Hbg/rjwj7pfa
- JHg7Zh9n1kz2iCdOJ+WOEc90=
-X-Received: by 2002:a05:600c:4f86:b0:496:c933:c276 with SMTP id
- 5b1f17b1804b1-496c933c2afmr45867145e9.25.1785307388994; 
- Tue, 28 Jul 2026 23:43:08 -0700 (PDT)
-X-Received: by 2002:a05:600c:4f86:b0:496:c933:c276 with SMTP id
- 5b1f17b1804b1-496c933c2afmr45866595e9.25.1785307388294; 
- Tue, 28 Jul 2026 23:43:08 -0700 (PDT)
-Received: from redhat.com (ppp-94-66-118-61.home.otenet.gr. [94.66.118.61])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-496c4632263sm141575415e9.15.2026.07.28.23.43.05
+ d=1e100.net; s=20251104; t=1785307926; x=1785912726;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ZYGjUuQiuRV7YhV61sT40yToB5ErVWpo9yoY2GDkffo=;
+ b=cVAdcNbQk0Tos9W+tKpKPXMfYlPuJbvyam/tlxMnx9bVJau4RLg2/xqFVshsaoVUe7
+ JSGu4xqfAzHA60IVLaZ65lU7zTkHWOGf9R4K97HNnH75wfdErANkNJ/RY8tg9WiqDnIW
+ Y1n5bsrQVTaPHw/Cw1hhbtu1QCrvieM3yDP6AavlgtHGOMiUrMhuxQ2DTd0uLXuKmWyC
+ Z21ImizW7lbmm7C+qbFN7k2v1taabHpPm2dY82Dy2SYDSmI9/0lzJnmGB9qZixsx2/T6
+ okW9nKTNpBdNYBY7DJCNbRcF0XI86k4cDUzKD7mUFWRpIT5vRYThpOgtoNFPe0NxuTzs
+ 5frg==
+X-Gm-Message-State: AOJu0YxlkWGPuxJ7f2CnzLiDi7vHLcyUWjXU4ZiNCEXKCP3HouGXIbeg
+ EnJ9d0bkKKDFBjktaMvzdjlnJNZ7FE1pRqIZ24TforuOxHFCq2GonOeD9jf50BQwI40=
+X-Gm-Gg: AR+sD13XYMAsM1c35GUChJxhmvb3lvzu0idrlc07LjqC4Sv5F0FwLrhw2jWHBPcLW8X
+ sv9dWECMpb18GGOIpTW3LdZixwbxPDt40z+e/+qv9YDaqGsssCNOTF909Fns8xnV+08ADQpTNRy
+ OiUosOS3dnXAyov5D7KEjR0E2kYPlo9WMyPuvrC/2gjU9cZ5kzNEjZ38qQhNjWQowDnVJfC8mm/
+ FDMsT4xzlHEpXXwr+/86uEoavilcrG/OnDHsQVp1FvUfmAJov6BNOFIDiW/IugbaW8EZ0i2R+dV
+ KHFn73/FPz2ZVSOjoAqSabCf/HK+NT80f6e22ydvFzk3HOj9U1X/wBRYREeLn/864OwbK/dmVEC
+ 760l7qmO2bwblKDceq+PDNez01ucbhZvU+1gMw8BYL+TvbMHuxDSWbMdPDLeWd5ZbTOXCOVK0b1
+ 6T88/GeTVjq8GSMZ1rNMokV8Lr4rBV/AdIqomoOBSWvmntoKj0l4vgTKYX+i5VUN+ZTD6q7n16T
+ R4=
+X-Received: by 2002:a05:6a21:9e0f:b0:3c3:83e8:c211 with SMTP id
+ adf61e73a8af0-3c8ba63ad14mr6418244637.63.1785307926088; 
+ Tue, 28 Jul 2026 23:52:06 -0700 (PDT)
+Received: from [127.0.1.1] ([188.253.12.32]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-13e72745b1bsm5914218c88.14.2026.07.28.23.52.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jul 2026 23:43:07 -0700 (PDT)
-Date: Wed, 29 Jul 2026 02:43:03 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Yonggang Luo <luoyonggang@gmail.com>, Miku Hatsune <anznu1l@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
- Zhao Liu <zhao1.liu@intel.com>, QEMU Stable <qemu-stable@nongnu.org>
-Subject: Re: [PULL v2 09/30] virtio-mmio: fix QUEUE_NUM_MAX
-Message-ID: <20260729024227-mutt-send-email-mst@kernel.org>
-References: <cover.1785179875.git.mst@redhat.com>
- <a5cff318f06cd06b37224e15ee74d64d1df8b12b.1785179875.git.mst@redhat.com>
- <65990a19-6a7e-4c1c-9354-0fffa13cbba9@tls.msk.ru>
- <20260728154328-mutt-send-email-mst@kernel.org>
- <75f2277a-8508-4e6e-adfe-92bed9fc1bf6@tls.msk.ru>
- <20260728192047-mutt-send-email-mst@kernel.org>
- <af6d5296-9860-4c5d-a72e-f2eacac3e2e9@tls.msk.ru>
- <c376bfdb-e917-4d6a-b89e-69e7185798ae@tls.msk.ru>
+ Tue, 28 Jul 2026 23:52:05 -0700 (PDT)
+From: Jia Jia <physicalmtea@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: eric.auger@redhat.com,
+	mst@redhat.com
+Subject: [PATCH] hw/virtio: reject inverted virtio-iommu IOVA ranges
+Date: Wed, 29 Jul 2026 14:51:53 +0800
+Message-Id: <20260729065153.1718783-1-physicalmtea@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <c376bfdb-e917-4d6a-b89e-69e7185798ae@tls.msk.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=physicalmtea@gmail.com; helo=mail-pj1-x1029.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,53 +97,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 29, 2026 at 08:24:22AM +0300, Michael Tokarev wrote:
-> On 7/29/26 08:12, Michael Tokarev wrote:
-> > On 7/29/26 02:22, Michael S. Tsirkin wrote:
-> > > On Tue, Jul 28, 2026 at 11:17:34PM +0300, Michael Tokarev wrote:
-> > ..
-> > > > So this whole change, for older versions, becomes just:
-> > > > 
-> > > > --- a/hw/virtio/virtio.c
-> > > > +++ b/hw/virtio/virtio.c
-> > > > @@ -2572,6 +2572,8 @@ VirtQueue *virtio_add_queue(VirtIODevice *vdev, int queue_size,
-> > > >       if (i == VIRTIO_QUEUE_MAX || queue_size > VIRTQUEUE_MAX_SIZE)
-> > > >           abort();
-> > > > 
-> > > > +    queue_size = VIRTQUEUE_MAX_SIZE; /* fixed properly in 11.1. */
-> 
-> BTW, with this override in place, the second half of this fix isn't
-> even needed - for older/stable versions, this line is enough to fix
-> CVE-2026-50626.
-> 
-> > BTW, can't this logic be implemented without a compat property in
-> > the first place?  This x-override-queue-size seems like a hack.
-> > or a.. twisted way to compare a machine version.
-> 
-> Besides being a hack, it also redefines a #define within a compat property
-> (using a "magic number" instead of a symbolic constant) in a non-obvious
-> way.  Though it might be a good way here, since the property value is the
-> actual historical number which should never be changed.
-> 
-> > Can't this very place become
-> > 
-> >     if (machine_version < 11.1) {
-> >        queue_size = VIRTQUEUE_MAX_SIZE;
-> >     }
-> > 
-> > instead of using this indirect property?
-> 
-> That would be great if this patch can be reduced to this (plus the
-> fixup for VIRTIO_MMIO_QUEUE_NUM_MAX in virtio_mmio_read) without
-> (ab)using properties like this.
-> 
-> BTW, isn't x-override-queue-size becoming a part of user interface?
+Guest MAP and UNMAP requests can set virt_end below virt_start. Since
+virt_end is inclusive, this is not a valid interval. MAP nevertheless
+stores it in domain->mappings, but interval_cmp() assumes low <= high.
+For an inverted key, interval_cmp(key, key) returns -1. A covering UNMAP
+can therefore find the key but fail to remove it and repeat forever while
+holding s->mutex.
 
-I guess you dislike how qemu handles compatibility generally?
+Reject inverted request ranges with VIRTIO_IOMMU_S_INVAL and make the
+notifier range decomposition skip invalid ranges. Keep the existing
+notifier-before-remove ordering, but return VIRTIO_IOMMU_S_DEVERR if
+g_tree_remove() fails.
 
+State produced by an older QEMU can still carry such a key over
+migration. Reconstruct endpoints first so failed loads can be cleaned up by
+the normal reset and unrealize paths. Validate every mapping before switching
+address spaces or scheduling command processing, and reject invalid migration
+state.
 
-> Thanks,
-> 
-> /mjt
+Fixes: fe2cacae2438 ("virtio-iommu: Implement map/unmap")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4104
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+---
+ hw/virtio/virtio-iommu.c | 77 +++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 72 insertions(+), 5 deletions(-)
+
+diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+index 533bd5073f..b7145c8277 100644
+--- a/hw/virtio/virtio-iommu.c
++++ b/hw/virtio/virtio-iommu.c
+@@ -210,7 +210,13 @@ static void virtio_iommu_notify_map_unmap(IOMMUMemoryRegion *mr,
+                                           IOMMUTLBEvent *event,
+                                           hwaddr virt_start, hwaddr virt_end)
+ {
+-    uint64_t delta = virt_end - virt_start;
++    uint64_t delta;
++
++    if (virt_end < virt_start) {
++        return;
++    }
++
++    delta = virt_end - virt_start;
+ 
+     event->entry.iova = virt_start;
+     event->entry.addr_mask = delta;
+@@ -807,6 +813,10 @@ static int virtio_iommu_map(VirtIOIOMMU *s,
+         return VIRTIO_IOMMU_S_INVAL;
+     }
+ 
++    if (virt_end < virt_start) {
++        return VIRTIO_IOMMU_S_INVAL;
++    }
++
+     domain = g_tree_lookup(s->domains, GUINT_TO_POINTER(domain_id));
+     if (!domain) {
+         return VIRTIO_IOMMU_S_NOENT;
+@@ -857,6 +867,10 @@ static int virtio_iommu_unmap(VirtIOIOMMU *s,
+ 
+     trace_virtio_iommu_unmap(domain_id, virt_start, virt_end);
+ 
++    if (virt_end < virt_start) {
++        return VIRTIO_IOMMU_S_INVAL;
++    }
++
+     domain = g_tree_lookup(s->domains, GUINT_TO_POINTER(domain_id));
+     if (!domain) {
+         return VIRTIO_IOMMU_S_NOENT;
+@@ -879,7 +893,10 @@ static int virtio_iommu_unmap(VirtIOIOMMU *s,
+                 virtio_iommu_notify_unmap(ep->iommu_mr, current_low,
+                                           current_high);
+             }
+-            g_tree_remove(domain->mappings, iter_key);
++            if (!g_tree_remove(domain->mappings, iter_key)) {
++                ret = VIRTIO_IOMMU_S_DEVERR;
++                break;
++            }
+             trace_virtio_iommu_unmap_done(domain_id, current_low, current_high);
+         } else {
+             ret = VIRTIO_IOMMU_S_RANGE;
+@@ -1639,12 +1656,62 @@ static gboolean reconstruct_endpoints(gpointer key, gpointer value,
+     return false; /* continue the domain traversal */
+ }
+ 
+-static int iommu_post_load(void *opaque, int version_id)
++typedef struct VirtIOIOMMUMappingValidation {
++    bool valid;
++    uint32_t domain_id;
++    uint64_t low;
++    uint64_t high;
++} VirtIOIOMMUMappingValidation;
++
++static gboolean virtio_iommu_validate_mapping(gpointer key, gpointer value,
++                                              gpointer data)
++{
++    VirtIOIOMMUInterval *interval = key;
++    VirtIOIOMMUMappingValidation *validation = data;
++
++    if (interval->high < interval->low) {
++        validation->valid = false;
++        validation->low = interval->low;
++        validation->high = interval->high;
++        return true;
++    }
++
++    return false;
++}
++
++static gboolean virtio_iommu_validate_domain_mappings(gpointer key,
++                                                      gpointer value,
++                                                      gpointer data)
++{
++    VirtIOIOMMUDomain *domain = value;
++    VirtIOIOMMUMappingValidation *validation = data;
++
++    validation->domain_id = domain->id;
++    g_tree_foreach(domain->mappings, virtio_iommu_validate_mapping,
++                   validation);
++    return !validation->valid;
++}
++
++static bool iommu_post_load_errp(void *opaque, int version_id, Error **errp)
+ {
+     VirtIOIOMMU *s = opaque;
++    VirtIOIOMMUMappingValidation validation = {
++        .valid = true,
++    };
+ 
++    /* Rebuild ownership before validation so failed loads can be cleaned up. */
+     g_tree_foreach(s->domains, reconstruct_endpoints, s);
+ 
++    g_tree_foreach(s->domains, virtio_iommu_validate_domain_mappings,
++                   &validation);
++    if (!validation.valid) {
++        error_setg(errp,
++                   "virtio-iommu: invalid migrated mapping in domain %u: "
++                   "[0x%" PRIx64 ", 0x%" PRIx64 "]",
++                   validation.domain_id, validation.low, validation.high);
++        return false;
++    }
++
+     /*
+      * Memory regions are dynamically turned on/off depending on
+      * 'config.bypass' and attached domain type if there is. After
+@@ -1657,14 +1724,14 @@ static int iommu_post_load(void *opaque, int version_id)
+         timer_mod(s->cmd_timer,
+                   qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL_RT) + 1);
+     }
+-    return 0;
++    return true;
+ }
+ 
+ static const VMStateDescription vmstate_virtio_iommu_device = {
+     .name = "virtio-iommu-device",
+     .minimum_version_id = 2,
+     .version_id = 2,
+-    .post_load = iommu_post_load,
++    .post_load_errp = iommu_post_load_errp,
+     .fields = (const VMStateField[]) {
+         VMSTATE_GTREE_DIRECT_KEY_V(domains, VirtIOIOMMU, 2,
+                                    &vmstate_domain, VirtIOIOMMUDomain),
+-- 
+2.34.1
 
 
