@@ -4,101 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2786DC54F51
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 12:29:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C59E2C54F51
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 12:37:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp3P1-00022q-8c; Wed, 29 Jul 2026 08:28:51 -0400
+	id 1wp3X2-0003Xq-73; Wed, 29 Jul 2026 08:37:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wp3Oz-00022d-Rn
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 08:28:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
+ id 1wp3Wp-0003XW-U7; Wed, 29 Jul 2026 08:36:56 -0400
+Received: from [115.124.30.98] (helo=out30-98.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wp3Oy-000655-5n
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 08:28:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785328127;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=lZB+X5ob5wwqfh6ZynqtDSRQc0S1FnqCVYB/Ky5FKCI=;
- b=ce+oTgZ6lx23exLWwnSoE7aXgcfjZMZGWYW5Zk0G/G3fQ+hN2xkreZKyz7SKAbDte93XLa
- MjTTyCmpoGW7uJ/MNQurH/dVHaJYHnsOECGXDBX4t6OqC5i9yrDKQqsKKKUn8GHYd34hNA
- qntvhTbsqGFvWv5gX6X1tl31ER1Mb5w=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-404-ha4ewESSOvS_vgOx5gDUyw-1; Wed, 29 Jul 2026 08:28:43 -0400
-X-MC-Unique: ha4ewESSOvS_vgOx5gDUyw-1
-X-Mimecast-MFC-AGG-ID: ha4ewESSOvS_vgOx5gDUyw_1785328123
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-47f835ac1aeso666113f8f.3
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 05:28:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
+ id 1wp3Wk-0007K1-2c; Wed, 29 Jul 2026 08:36:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785328122; x=1785932922; darn=nongnu.org;
- h=content-disposition:content-type:mime-version:message-id:subject:cc
- :to:from:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=lZB+X5ob5wwqfh6ZynqtDSRQc0S1FnqCVYB/Ky5FKCI=;
- b=MMxsz1c4Zz3C8I/7+FixnPW5UY1pq1cYyu2jyGgQhYd19895H6kpOl3c8ziji5UleE
- 2yRzk4s0UK+xZ78ZpxFBsnAnGvcL2siZJVur91hD1xSjvxuq/7KM9zy4zYPIzM4AE2J6
- rJlex+L5e8rXGBgAlNY9EKwu+VnmAoTk/kBVOf6YrprQXOm2JK9ar4wtcshiLcr3s6n9
- hCIWem+Cm33iaVTr6lwMFfaoNLl2Mbawnh490TMrWr2F04WC8U3QEQ/XMvV7s3cXHnB7
- gZF/+LKRwcqiwsWbz9sOxaVJYY9T8Pey+q07xdFIEtqL+Qt3RQpJxjljmjuK0q+s4NDG
- /5zQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785328122; x=1785932922;
- h=content-disposition:content-type:mime-version:message-id:subject:cc
- :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=lZB+X5ob5wwqfh6ZynqtDSRQc0S1FnqCVYB/Ky5FKCI=;
- b=UEyeJBDnF98C3hYlQ2bKRo72KbA4zxKJPWdulh2k3WbKzkwygPiajQak4CJW+zVrpi
- b9koNChny+E6HYWNybG8821xhjtQWu2q8h+Ifd9jKmdwTCUTCcrP6hOZ14HuNSuXMhA7
- TxKm/MOcHzxeaYf5NdHZTHTyVG+mWGFBB2GkuN9C4OtpPP3giD6B5FvH1T5Nfyh+tQ8q
- zGj7GWtNdebTFrVkVW87v6bf1KD2O5nZ7O1pMkIcWw3/24qRJ0SaeVBjJ6N9EwgY+3HZ
- 7Y05HPk8vxhYWvRtbDYir8LpYk2Uzj+5IvUGtpy8usttl4YKnwdXJzQ3KyC7D5uIrVvc
- ZaUA==
-X-Gm-Message-State: AOJu0YwjHTz2aXKZFz9TmLXXkiCgnOQnKJgwPxr4nw+4/JmaeRg3ijJf
- ze5/4ARcpEKvSGcU7+8zb+kotn1ZRkBxyg4umqf94CCUtX/fFS64GGAiTlUVf7foyEAMLz460+t
- kXGnOa+SxHs8VQKB6PicsOXTv2SR4uiIX1euWWOMmc4CVRo+Fys+WRpKBe6sAKKS/g5zPVqNkyL
- DN/ieN5HN68+Q4blIW6WtoLdiWdp+xnfLJ7Q==
-X-Gm-Gg: AR+sD11T/+WJT9adqtqDFdL2Z62PXGP4gXN42gGU2NR44VEBX2rfaL6Hh1ieygqHcC6
- PJuzMH0BpTU64bxHG+YUO6e/ESg6MCTv7Qlj5rht5UExkB9T9YSgVjIwX294Ce5YYagfYZ7VWEn
- CFY5f+QWz7mGEsfNtb062M/HTm9vhhPuUWTxXmOEpwZRtXfa3UgeMlmX2hB91mYnWEjNeWxWO+8
- kSrYtMhNNjNE+yl6OJBceJRqep5uNZOe6ju8C5PTAWo1s6bLVuPYQ01Plc1kzKWG9J6aAb61a06
- CchCtaVtEh+4HmuB31CdBcCNbawrwBUH32ZVljCQu/wBqtx0TfxxeKX5ewZX+/PYwBtDAwLnd3I
- +m8XyslXk4KZ+0pbRX+qpY0E=
-X-Received: by 2002:a05:6000:18a3:b0:47f:9287:6356 with SMTP id
- ffacd0b85a97d-47fb1ea77bamr8286208f8f.32.1785328122447; 
- Wed, 29 Jul 2026 05:28:42 -0700 (PDT)
-X-Received: by 2002:a05:6000:18a3:b0:47f:9287:6356 with SMTP id
- ffacd0b85a97d-47fb1ea77bamr8286148f8f.32.1785328121875; 
- Wed, 29 Jul 2026 05:28:41 -0700 (PDT)
-Received: from redhat.com (ppp-94-66-118-61.home.otenet.gr. [94.66.118.61])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47fb6aa3a88sm6948030f8f.6.2026.07.29.05.28.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Jul 2026 05:28:41 -0700 (PDT)
-Date: Wed, 29 Jul 2026 08:28:39 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: David Hildenbrand <david@kernel.org>, mhun512 <mhun512@gmail.com>
-Subject: [PATCH] virtio-balloon: fix free-page BH teardown on unrealize
-Message-ID: <0967d574d9ffe469edf5fc16da86237e54a69c34.1785327742.git.mst@redhat.com>
+ d=linux.alibaba.com; s=default;
+ t=1785328579; h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
+ bh=jKlcdBnFuHgRxrT49QtoTVmYgMs7rTqDYQgsQRVgtko=;
+ b=yrC8hcqvn3Nkg8nYirUUimLRMMKsFZV4+b9yVySNwpADg1vvo/7f0/113yUkfXToMXYbkqe2RdxErCRmTVvliAeuvpH0TUdf5hdrt88VwTFD83YASn/JlIdAMuBXhQ2iv5nw0ibF0dFHgxuYJOjcB7CZzbKupFRTmmPN+b7jTYg=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R871e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037033178;
+ MF=cp0613@linux.alibaba.com; NM=1; PH=DS; RN=17; SR=0;
+ TI=SMTPD_---0X82AQ0a_1785328573; 
+Received: from DESKTOP-S9E58SO.localdomain(mailfrom:cp0613@linux.alibaba.com
+ fp:SMTPD_---0X82AQ0a_1785328573 cluster:ay36) by smtp.aliyun-inc.com;
+ Wed, 29 Jul 2026 20:36:17 +0800
+From: Chen Pei <cp0613@linux.alibaba.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: jic23@kernel.org, pbonzini@redhat.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu.zevorn@gmail.com, sunilvl@ventanamicro.com, dave.jiang@intel.com,
+ alison.schofield@intel.com, mst@redhat.com, guoren@kernel.org,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org, linux-cxl@vger.kernel.org
+Subject: Re: [PATCH v2 3/4] hw/riscv/virt,
+ gpex: Provide 32-bit MMIO window for CXL host bridges
+Date: Wed, 29 Jul 2026 20:36:10 +0800
+Message-ID: <20260729122505.200000-1-cp0613@linux.alibaba.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260727110615.3e523125@imammedo>
+References: <20260618093827.3507-1-cp0613@linux.alibaba.com>
+ <20260618093827.3507-4-cp0613@linux.alibaba.com>
+ <20260727110615.3e523125@imammedo>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.98 (deferred)
+Received-SPF: pass client-ip=115.124.30.98;
+ envelope-from=cp0613@linux.alibaba.com; helo=out30-98.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,97 +76,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a guest triggers PCIe hot-unplug while the free-page-hint BH
-is running on an IOThread, the BH will keep accessing
-vq->used_elems array when running it. Note that qemu_bh_delete
-merely prevents new BHs from running, it does not wait
-for already running ones to finish.
+Hi Igor,
 
-We need to wait for it to finish - do it like virtio scsi and
-run a dummy oneshot AIO in the same context, and wait for it.
+Thanks for the review.
 
-But there's a twist: BH could be blocked in qemu_cond_wait,
-then AIO won't run.
+On Mon, 27 Jul 2026 11:06:15 +0200
+Igor Mammedov <imammedo@redhat.com> wrote:
 
-Add a special reporting state FREE_PAGE_HINT_S_UNREALIZE to make BH exit
-immediately.
+> I kind of dislike (basically riscv specific hack) in generic code.
+> well, correct way to tackle this is
+>  1: fix UEFI to perform required initialization.
 
-Cc: David Hildenbrand <david@kernel.org>
-Fixes: CVE-2026-66899
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4079
-Reported-by: mhun512 <mhun512@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- include/hw/virtio/virtio-balloon.h |  1 +
- hw/virtio/virtio-balloon.c         | 19 ++++++++++++++++++-
- 2 files changed, 19 insertions(+), 1 deletion(-)
+I agree this is not a clean solution, and I acknowledge the concern
+about putting riscv-specific behavior into the shared gpex code.
 
-diff --git a/include/hw/virtio/virtio-balloon.h b/include/hw/virtio/virtio-balloon.h
-index abbf339718..53bbaa4c9a 100644
---- a/include/hw/virtio/virtio-balloon.h
-+++ b/include/hw/virtio/virtio-balloon.h
-@@ -39,6 +39,7 @@ enum virtio_balloon_free_page_hint_status {
-     FREE_PAGE_HINT_S_REQUESTED = 1,
-     FREE_PAGE_HINT_S_START = 2,
-     FREE_PAGE_HINT_S_DONE = 3,
-+    FREE_PAGE_HINT_S_UNREALIZE = 4,
- };
- 
- struct VirtIOBalloon {
-diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
-index 4c5f486ba2..07d519cf6d 100644
---- a/hw/virtio/virtio-balloon.c
-+++ b/hw/virtio/virtio-balloon.c
-@@ -35,6 +35,7 @@
- #include "system/reset.h"
- #include "hw/virtio/virtio-bus.h"
- #include "hw/virtio/virtio-access.h"
-+#include "qemu/aio-wait.h"
- 
- #define BALLOON_PAGE_SIZE  (1 << VIRTIO_BALLOON_PFN_SHIFT)
- 
-@@ -519,6 +520,9 @@ static bool get_free_page_hints(VirtIOBalloon *dev)
-     int i;
- 
-     while (dev->block_iothread) {
-+        if (dev->free_page_hint_status == FREE_PAGE_HINT_S_UNREALIZE) {
-+            return false;
-+        }
-         qemu_cond_wait(&dev->free_page_cond, &dev->free_page_lock);
-     }
- 
-@@ -912,6 +916,11 @@ static void virtio_balloon_device_realize(DeviceState *dev, Error **errp)
-     qemu_register_resettable(OBJECT(dev));
- }
- 
-+static void dummy_bh(void *opaque)
-+{
-+    /* Do nothing */
-+}
-+
- static void virtio_balloon_device_unrealize(DeviceState *dev)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-@@ -919,9 +928,17 @@ static void virtio_balloon_device_unrealize(DeviceState *dev)
- 
-     qemu_unregister_resettable(OBJECT(dev));
-     if (s->free_page_bh) {
-+        AioContext *ctx = iothread_get_aio_context(s->iothread);
-+
-         qemu_bh_delete(s->free_page_bh);
-+
-+        qemu_mutex_lock(&s->free_page_lock);
-+        s->free_page_hint_status = FREE_PAGE_HINT_S_UNREALIZE;
-+        qemu_cond_signal(&s->free_page_cond);
-+        qemu_mutex_unlock(&s->free_page_lock);
-+        aio_wait_bh_oneshot(ctx, dummy_bh, NULL);
-+
-         object_unref(OBJECT(s->iothread));
--        virtio_balloon_free_page_stop(s);
-         precopy_remove_notifier(&s->free_page_hint_notify);
-     }
-     balloon_stats_destroy_timer(s);
--- 
-MST
+I did try the "fix UEFI" direction first. With the current EDK2
+(edk2-stable202602, the same FdtPciHostBridgeLib/PciBusDxe used by
+both aarch64 and riscv virt), I booted a riscv virt machine with
+pxb-cxl and dumped the ECAM config space after the firmware finished
+enumeration:
 
+  - pxb-cxl (1b36:000b) on bus 0: class 0x0600 (host bridge),
+    header type 0, memory/prefetchable window registers all zero;
+  - cxl-rp on bus 12: memory window base > limit (empty, reset value);
+  - cxl-type3 on bus 13: entire config space reads 0xffffffff,
+    i.e. the firmware never enumerated behind the CXL host bridge.
+
+The root cause is that PciBusDxe only recurses into devices for which
+IS_PCI_BRIDGE() is true (header layout 1), while pxb-cxl presents
+header type 0 and class 0x0600, so the firmware neither assigns it a
+secondary bus number nor any MMIO window. FdtPciHostBridgeLib likewise
+only consumes the single "pci-host-ecam-generic" node describing PCI0
+and has no knowledge of the expander bridge. As a result build_crs()
+genuinely returns an empty set on riscv today - this is not a timing
+artifact.
+
+> if you have to put a hack into QEMU, make it work with current build_crs()
+> and localize 'proper simulated initialization' in riscv codebase
+> (i.e. do not spread it to common codebase). But before doing it see (#1 not=
+e).
+
+Understood. Since #1 (a UEFI that performs the initialization) is not
+available on riscv at the moment, the static window is currently the
+only path that makes CXL host bridge _CRS usable here.
+
+For what it is worth, this is consistent with how CXL is being handled
+on the ARM side. The sbsa-ref enablement (Yuquan Wang, RFC up to v7,
+"hw/arm/sbsa-ref: Support CXL Host Bridge & CFMW" [1], plus the
+matching edk2-platforms RFC [2]) deliberately carves out exclusive
+static MMIO32/MMIO64 and bus-number ranges for the CXL host bridge and
+builds static ACPI tables, explicitly noting that it "doesn't need to
+communicate CXL contents via DT to edk2". Jonathan Cameron's arm/virt
+approach instead relies on EDK2 performing the enumeration and QEMU
+reading the result back via build_crs(), but that depends on a recent
+EDK2 with expander-bridge support that we do not have on riscv yet;
+his earlier DT-binding RFC for expander bridges [3] also notes that on
+the DT path QEMU has to allocate the windows itself.
+
+[1] https://lore.kernel.org/all/20250807111037.241118-1-wangyuquan1236@phytium.com.cn/
+[2] https://op-lists.linaro.org/archives/list/asa-dev@op-lists.linaro.org/thread/EPPN4R6KLGKYLWPOZUBWJG5HCXAAO3SQ/
+[3] https://lore.kernel.org/all/20230421165037.2506-1-Jonathan.Cameron@huawei.com/
+
+Given that, my tentative plan for v3 is to keep the static-window
+approach for now but address your objection by localizing it: drop the
+cxl_mmio32 field and the is_cxl branch from the common gpex code, and
+instead simulate the initialization in riscv virt code so that the
+existing build_crs() path produces the correct _CRS (i.e. have riscv
+pre-populate the bridge window registers / range set the way a
+firmware would), keeping the common codebase untouched.
+
+Before I rework it that way, I would appreciate any suggestions you
+may have on this approach.
+
+Thanks,
+Pei
 
