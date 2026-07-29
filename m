@@ -4,128 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21F5FC53200
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 17:09:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2AE3C53219
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 17:14:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp7ld-0005MM-L2; Wed, 29 Jul 2026 13:08:29 -0400
+	id 1wp7qe-0006E0-Vs; Wed, 29 Jul 2026 13:13:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wp7lc-0005MC-50
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 13:08:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wp7lZ-0000iJ-6c
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 13:08:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785344903;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EtMDQQ8P7jogKX/DaFK3dwhlAQg67ExL8fqTonoWsbI=;
- b=J5nFhuMfEQtmBWxwTDRBNKxQn816ng16NE/u2HF6nb/HVvrzpvKjzHoo7fxOB4LDdewHtJ
- lvZez6Kjn7bnNP1HUPU7dLYUvY6kao1Pn1mlzuSQgIym2majpuzK0UVw88WLtI3RmceUAV
- rQZB5u30ZEZbs4r3ZDu6CqnPpG2nyXM=
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
- [209.85.210.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-661-8rMSr6E-NACLFTO9phenOg-1; Wed, 29 Jul 2026 13:08:21 -0400
-X-MC-Unique: 8rMSr6E-NACLFTO9phenOg-1
-X-Mimecast-MFC-AGG-ID: 8rMSr6E-NACLFTO9phenOg_1785344901
-Received: by mail-pf1-f197.google.com with SMTP id
- d2e1a72fcca58-84e3d575d6eso2144616b3a.3
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 10:08:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785344901; cv=none;
- d=google.com; s=arc-20260327;
- b=i4gm3T/lktzh5tCS2mpJho6rV2L2Bg9B1oVe+X0tIJvSy/Ur6uROIPlwCzkYscMHUj
- 0j5aKGkL0lCqlm3MtYt6wrf0y4LSzu4hDz3Yii6EemNTMrFkz7C1Yj+1ZiqkCDjpGKD8
- xUQZvgLqQ6lrW3zM3piMJOhYW8o/3i845BX12B8u8QVliX4IJ4xB4v2yz5pkcrIk120K
- GmBYvUV5yrxZ76JMdrSB82PlHun88z+uNY1scARETajQ1Tui1N9M977+H7tY5+oqv17P
- R8iMRxxRqHI0vV8IBx8eskHTMaYVUhOW7yoVLFsnj2Y0gk7q6KHiaDjSOUkThRypezxH
- 30Vw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=EtMDQQ8P7jogKX/DaFK3dwhlAQg67ExL8fqTonoWsbI=;
- fh=Mv1A6n6KFlrSGcPfMYLj5w1nMwlf7S1yGBCIO/Xo1CM=;
- b=oJIcR3WCQppFuQaDHDN71392pwCnqnuJwC5cMlGDZXllvE3Rqv1XWTqSYQQSy/bU1h
- UbZ4kXhIbdf1thrcb12n0qjgKJFGAZdUexcm+vJcMz70ovIp3+OzYpuIweBu0VyzQGMy
- z6Ehft62HAZH3CFjeKe4Qte8QlfFdom31rFWMXo5pe+YYip6b+QiNDZ9Z1k7llJlotwH
- tipm7u3kZOGlZqBzS6YYeYqTDvILa4vmx4TMQYdOiwbLZJHhwISLlvwAt/0Am0OuFdXU
- jmXefpQGnk8GoguljXWmMZcY82BxGUX9t1CghBtfgW6YLZEUp5vlGX3NfPjkSUrUbcBT
- 3kPg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
+ id 1wp670-0007kJ-D9
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 11:22:26 -0400
+Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
+ id 1wp66y-0006pp-Br
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 11:22:26 -0400
+Received: by mail-oo1-xc31.google.com with SMTP id
+ 006d021491bc7-6a168dc590cso686065eaf.0
+ for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 08:22:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785344901; x=1785949701; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=EtMDQQ8P7jogKX/DaFK3dwhlAQg67ExL8fqTonoWsbI=;
- b=hay1L5hYEYqTegEkAASussoqy1YgcCgBcZ66moXPBZFiR60fmWovcHSJczWZhpGPoH
- MS1/oaZhN2uuvnjI5MJgnCtwc+Yzsxduz+eKPb/wm22nthnRNB5B/B76uRbcGEvqezkh
- +T3/2MA1f+sAt3lU6DWdg4Kc/3zD/kGOPBSzd83olsiU2hXEK5TQnBpBU1rNUshjPxd4
- 8C/DkJUTO/qLOZtZRKoJaKdGhvEuoC9dsJpfYfBkEjgXQS/DFkGirQMvuL1aSb5Joa56
- GaBtn69fWhm4XdZKSYTWF+4+K73dcQz20kvJD6VpqFMSrXMfAvvomrLF7/aXg5hEPUGh
- iOrg==
+ d=tenstorrent.com; s=google; t=1785338542; x=1785943342; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=CBmdf56EYLwZeQDdu0YfiTsea5ggFrXhk0M3G8m9ebk=;
+ b=UcdDlvdofghiz6S1RSOYKG000ydIqiyQ7OK+n2bvYPfNW/H47peMSa1BUaHMLln9Co
+ D/mlEITtbprQrP9JJmDFxeyn3l/t7TTaK/QixapjJfLLeecpkZHBXBbkNjGIINPHDWkh
+ wy/an3e/k1uQt91TprIbFZBKxUgnByfibyzEklZ3kT+hPKCpLJS8dEEbHYmKVThotVIe
+ 9fPbT7oH0+vZFYxoqB5aJdWBAB559D1AzjEptgZbEajXCi9ndUYPBJ3XJ+ADVRtrP9CA
+ TMQy67lCaVsu+iX/7LnhC7mkq+PnBFSM1Kv/ZAU8ULiKo+EWg6HXFlHyEJVi5a1Ws63k
+ ambw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785344901; x=1785949701;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=EtMDQQ8P7jogKX/DaFK3dwhlAQg67ExL8fqTonoWsbI=;
- b=g2zccKd3Fwu8LG3PjLH/ANbkoxmx5n1Luo6jmrvrqzZMb9W0gnoafvoltXZWVYLm7L
- VQ/UnwhqnqAw4nZbN8Z+urYJ5hCFrZWqqUmA/vqYfZz7TB7TK59h8US6oZIFViHWJb46
- +oxHVhP/ZLPlvuu9lvF/EbOlri8rTIJ1+5wKxhWoymYHvKv5a85y3bfvReAj41DyU+DI
- d530XFPURneUMUD04INmU+VuGs2IVfJMGNi9U6Pqw+7ITijRMiWetlow0vsQSMKIfSnZ
- +gYgSku+7LIyfFih1bRcFsL5jFR5bMb9y705JkxaPlRQDelI2OWzaTtALRiiNWRmnveu
- ytEQ==
-X-Gm-Message-State: AOJu0YyeYzPm4d8H6SjzfQPydxDNnGEwVzYN+EFtxdk32P1pbJAvZeWV
- o2wAnCLT8gTwE+Osx1YVlSBAN0NdyAUebO+sQCTshOSzMG8A7vKRDJva9kfOieapTF0xlPw9VUF
- HGU6s0ZH8RlLV4Iv70N/ll4U8LiNBqsJQ/68dyp0Oq+da35kXD3uMVJH0xBw5veRWNuQnveCT9I
- fkjlY9gu74h3XSDdqAi5CCSbKMhlIg3Es=
-X-Gm-Gg: AR+sD12+F8cj7mk3QxBtuXSZfBMcA1Yoh0X7dDtT7vp3tPy3mWQDTxXFnFwa5tgyrVV
- oUHJqKfNu/9Fftd0OWhkJOSRNm0O2VkQboRFPCrsJoqKfHxRykNp2LGu6AS5HHcR7qK2iMAC1XG
- Ljj+bxDNOQKrq6VlPkudY0W3OH4uBsqLM8ZOEjrzs1jpRhgdITQUe0MiwCVkyWBtn+RgaI7PqY+
- MlLL5DO49haf11/31PyGTlm+FiSpNzwM6pJ1RoCI39UO4EwIRAc/+LnG4FeLAy9q4Zd4f0Ybh6i
- DQ==
-X-Received: by 2002:a05:6a00:390a:b0:847:7f38:27c2 with SMTP id
- d2e1a72fcca58-84e933215d7mr8040837b3a.50.1785344900659; 
- Wed, 29 Jul 2026 10:08:20 -0700 (PDT)
-X-Received: by 2002:a05:6a00:390a:b0:847:7f38:27c2 with SMTP id
- d2e1a72fcca58-84e933215d7mr8040802b3a.50.1785344900193; Wed, 29 Jul 2026
- 10:08:20 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785338542; x=1785943342;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=CBmdf56EYLwZeQDdu0YfiTsea5ggFrXhk0M3G8m9ebk=;
+ b=JuQ3Zi7m0zt2qcA8U4ihwn+PF/OXj3HxzBssIIJxa20yw9/GJ1s0Y61pF0XdomAEuh
+ m/Hu7fDKl+KgcJ0DZkNGXh6AnH889yIZuJsmPt1lgh6FpJRnCuW2CWol3mVPkrm3rWzP
+ 58TemLbNudSPWMFZzF8n+EwYQdLuvZblaxqJ8YSzpA7KhvTB5vZ7KjAJqn611DAqxQel
+ AN74RtL67gC4+NTNt4nRt8cEhc4chzz4gQT1dmtKMzscxsalCAI6B4QCs3e85jRVTcYU
+ jaH6F+zKxNPbuHXez7vIXasK/3oWyM7Q0qKY8de3NTUzi8gfUpCPKjVIzqLtYHZkU6Q+
+ pC8g==
+X-Gm-Message-State: AOJu0Yy4qx5mqCQFGq3vk6U3I1yieTv8zrmvKc6v/DHR7vd111dl2Kyc
+ PG9yJ5lGDcnE7BNrcVmXA3OMcQ9p/p1kPbV/vL87MUvOWP6zuNsazt3wP2JTHMLovHs=
+X-Gm-Gg: AR+sD133cGfAxbRXAiOh+XnOgPBRrDzEE4nmZYG1YyYyRX9GajRYMa42PYJB2G9EwtM
+ WTBQb6DzU199SAgL+13Vhw6e+vTNVZ6o3LfSnAHwor8yzyJRqK8KA7HZSe34eLHH/hS4xa+q5wZ
+ O/D6Baa7D5ku7fRYmcTxZjQROMiJrG2ozzgcxlMpqN+JyqzmTNweoMRxsgNR/4HZKNduoDbCTTN
+ kn63PYqq35Bz6AfMFyancw0aEYZaXxq1arPSnxJhdjRssvYkq9J9LkyuK0EdBgHlTmaR2FoHPj3
+ YB+QmJ0WIrt1WMAB68mmamZaQY0Jbge5ruRzSyLhk3AVGo+eslcTyHS5vtHfYzdJr4z/PoMrmWL
+ FluB3EbOT8cj3sRuuXa+RA0dwtNZCFe3FKnl4JfI8CPJHrpI/LwqF52HEZM46TYWue4oeTuu7OW
+ gqJJFh/PJfqzRF0+OUexDSs/Tx0AER2irJ3lstG3844kPjLJxXcS2UufAaOBSbZ+EtF+pFHA7ez
+ znpKT/zLm1q2qEvlfHj0bXukWxU1LG5RW0uMQ==
+X-Received: by 2002:a05:6820:f0a:b0:6a1:44aa:86ce with SMTP id
+ 006d021491bc7-6ac96a07437mr2988543eaf.22.1785338542233; 
+ Wed, 29 Jul 2026 08:22:22 -0700 (PDT)
+Received: from [10.200.56.99] ([12.55.13.134])
+ by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-458867fb651sm2476451fac.11.2026.07.29.08.22.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 Jul 2026 08:22:21 -0700 (PDT)
+From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Subject: [PATCH 0/2] Add Model for Tenstorrent Atlantis PRCM
+Date: Wed, 29 Jul 2026 10:21:33 -0500
+Message-Id: <20260729-atlantis_prcm-v1-0-502882933e51@oss.tenstorrent.com>
 MIME-Version: 1.0
-References: <20260729150420.632747-2-rohit.kuma1313@gmail.com>
-In-Reply-To: <20260729150420.632747-2-rohit.kuma1313@gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Wed, 29 Jul 2026 21:08:08 +0400
-X-Gm-Features: AUfX_mzrrt7lp1BHm7aFXgjv_rOhLV7CiUMPXfcje9DDNQfeZr4p98Hf0FUIwzc
-Message-ID: <CAMxuvazXhyzMUS+NC=62izXb8VgPSSD1mpa23QU3XAW61uYkng@mail.gmail.com>
-Subject: Re: [PATCH] meson: do not emit modules with no enabled sources
-To: Rohitashv Kumar <rohit.kuma1313@gmail.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Rohitashv Kumar <roohiit@amazon.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAH0aamoC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDcyNz3cSSnMS8kszi+IKi5FzdJDMTo+S0JGPzFFNzJaCegqLUtMwKsHn
+ RsRB+cWlSVmpyCcgQpdpaAKx8ne1xAAAA
+X-Change-ID: 20260727-atlantis_prcm-b642cfb37d57
+To: qemu-devel@nongnu.org
+Cc: Joel Stanley <joel@jms.id.au>, Nicholas Piggin <npiggin@gmail.com>, 
+ Michael Ellerman <mpe@kernel.org>, 
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+X-Mailer: b4 0.15.1
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
+ envelope-from=asrinivasan@tenstorrent.com; helo=mail-oo1-xc31.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 29 Jul 2026 13:13:39 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -140,52 +113,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 29, 2026 at 7:09=E2=80=AFPM Rohitashv Kumar
-<rohit.kuma1313@gmail.com> wrote:
->
-> From: Rohitashv Kumar <roohiit@amazon.de>
->
-> With modular builds, the system/block module loop adds the common
-> boilerplate (modulecommon) to every registered module and emits a
-> shared_module unconditionally.  A module whose device sources are all
-> disabled by the configuration then still produces a shared object
-> containing nothing but the boilerplate: an empty stub that provides no
-> devices and only complicates packaging.
->
-> This happens when a module is registered under a broader condition than
-> the one gating its sources, e.g. hw-display-virtio-gpu-pci (registered on
-> CONFIG_VIRTIO_PCI, sources need CONFIG_VIRTIO_GPU) in a build without
-> virtio-gpu, or hw-s390x-virtio-gpu-ccw (registered unconditionally,
-> source needs CONFIG_VIRTIO_CCW) in a build without an s390x target.
->
-> The target_modules loop already skips modules whose applied source set is
-> empty; make the system/block loop consistent and do the same.
->
-> Signed-off-by: Rohitashv Kumar <roohiit@amazon.de>
+This series adds a qemu model for the PRCM blocks present in Tenstorrent
+Atlantis. This block controls clock, reset and other misc functionality
+in the SoC. Linux support for the Clocks/Resets served by the RCPU PRCM
+was added in [1]. This PRCM model has been tested with a linux DT that
+enables the PRCM and sets the UART clk to the one provided by the PRCM.
+This DT will be sent out shortly.
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+[1] https://lore.kernel.org/linux-riscv/20260306-atlantis-clocks-v8-0-6c9b14a4aa8e@oss.tenstorrent.com/
 
-> ---
->  meson.build | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/meson.build b/meson.build
-> index 49a5baf5..557edd71 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -3903,6 +3903,9 @@ foreach d, list : modules
->      if enable_modules
->        module_ss.add(modulecommon)
->        module_ss =3D module_ss.apply(config_all_devices, strict: false)
-> +      if module_ss.sources() =3D=3D []
-> +        continue
-> +      endif
->        sl =3D static_library(d + '-' + m, [genh, module_ss.sources()],
->                            dependencies: module_ss.dependencies(), pic: t=
-rue)
->        if d =3D=3D 'block'
-> --
-> 2.47.3
->
+Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+---
+Anirudh Srinivasan (2):
+      hw/misc: Add Tenstorrent Atlantis PRCM model
+      hw/riscv/tt-atlantis: Add PRCMs to tt-atlantis model
+
+ MAINTAINERS                        |   2 +
+ docs/system/riscv/tt_atlantis.rst  |   1 +
+ hw/misc/meson.build                |   1 +
+ hw/misc/trace-events               |   4 +
+ hw/misc/tt_atlantis_prcm.c         | 436 +++++++++++++++++++++++++++++++++++++
+ hw/riscv/tt_atlantis.c             |  92 ++++++++
+ include/hw/misc/tt_atlantis_prcm.h |  51 +++++
+ include/hw/riscv/tt_atlantis.h     |  19 ++
+ 8 files changed, 606 insertions(+)
+---
+base-commit: 499039798cdad7d86b787fec0eaf1da4151c0f05
+change-id: 20260727-atlantis_prcm-b642cfb37d57
+
+Best regards,
+--  
+Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
 
 
