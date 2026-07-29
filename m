@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DFCEC54FCD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FAA4C55162
 	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 22:28:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpCkb-0007ef-PS; Wed, 29 Jul 2026 18:27:45 -0400
+	id 1wpCkY-0007e8-8D; Wed, 29 Jul 2026 18:27:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wpCka-0007eP-KC
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 18:27:44 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1wpCkW-0007df-LN
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 18:27:40 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wpCkS-0008Mr-Fk
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 18:27:44 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2d01663d816so13709995ad.1
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 15:27:36 -0700 (PDT)
+ id 1wpCkR-0008Md-9u
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 18:27:40 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2caea3f742bso18619765ad.0
+ for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 15:27:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785364055; x=1785968855; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=x7llLYb5SiO/txOcB5U0TYVAXKt2eTpfMujF/WHT6VM=;
- b=Y05CmA4nIvoB2sbASjur3iAbmn2CE71ziwrPowYhRcxcHP2cgvPV5bVdoIq5iXeQ9p
- aPHVHsSlgDXR2fANNJZNw8aK8LuTNb9n/q3Uj5jThbLRsp/Mlmelr9n4ZnT9yEKz9/uZ
- vr7+QNrzWFeQWGg615F3vSNm13T5k4fXCsd8qnoHm4xkeS/znQyqMUcuiLgOohCIgLtb
- AY73vJaPBlrCU65K3wo33EMWGaBSd9IFy84mNp2VX8UkeKHz7JqicHjFh6+xrXXq+lyc
- kBJK9F/A0pNxrySa/jwcyF2ylGrk4QNVo6Z1lSCq6mWzOyJUyp/kmrjQ9rieUEQD3xGB
- U3Rg==
+ d=linaro.org; s=google; t=1785364053; x=1785968853; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=AUFi+zCctBpA2uvKv+04JwYF81yZKqzpoGjoTvWudc0=;
+ b=e0/D2x9fCUfD/IX4fUKCM7MnRCC+pzn98sv0bpE0UV+it7MhvSUIsxtRXbzxoyOUbg
+ by531gJAlQKB8w6BxaUf8jRtPifSYAtwve/1nZgO8ab/MaG9fGG5SdywhrfZOx+utOJy
+ 2aDaK+TZEbDKnF2T0gJBqI2MURh9JdTRs6iajlvLmb5m0N6SFoFNIFJ3u4uQjgrB/HSV
+ qV7vUvj/7gAQhOBWPakUoIPZ2AI3eJE2FzzCZKYq/7dtz3mgWJM4LJ+auV+bELvkNRYY
+ uNlRldFd6VLf+VT+8Jzde3uaVy2mQFRF8yxYDB2xx0iaTy4HzKw6HiOFhTADbYKUFaxL
+ 498A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785364055; x=1785968855;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=x7llLYb5SiO/txOcB5U0TYVAXKt2eTpfMujF/WHT6VM=;
- b=YfGcJQBJ3iEh4P0Niwv/tDmLHMUMhq+5BEoeZOzBHtGIg0zMFCuviR3C/gqV9nRotu
- aeHG6QZdlpSFDn9IdcbEf2VM0BSsdmy0gYSqDX2ctU5eU7MmrSI6g7h0XerH2O2K9y0B
- o00aeb10k+ul4tyzjFFR6IwsAFdPZEW7QJtmBrVYIWa3u5Ua5TkC5FJUlrnyr/Tq4XB/
- qK+LbEDShKUpvG/i6EHni+lXtGDJdcPfp18oEWZuuYIm9dVfjZyv9ygOvEtdaFgAMFT7
- MoA5/hNlyCYQCcTIUJCKrKnwcz/6lr677G4m6NH8nsBaJTbcslc9WjlT5WACIfPUKJt6
- lgbQ==
-X-Gm-Message-State: AOJu0YxmiobRlOQOVVXK1ZIKcmOjkdt7i+xoPtc3MDXXOSvgNOHsKPZj
- yOPing91PIJcF6CMLRwtfk81Ivxk8mbOzKKIzb07WiszrzT1eO1GuW72y86Hio+s3b4t6iDEOH0
- kqwmw
-X-Gm-Gg: AR+sD1015p4e8rARbOYZDt4PcMclH3G5SkdE2cOlbd92yoqje9ttxDv3BQZP2/RM3Y+
- 7hVhYwyb/mGdCi96uuqYO03bz37Rl+vwF6rEIGGEnkEoX9FAaxqBsCco9yT7P9ghRjv4z9lNV+A
- EzsliZpvE2azj33TPn2eJVkj5zlFnLWy5hmpDYefpQy1G2kEsoWiNIHggiHSfZVksQTT9kysra8
- Rq3oo7Jth0zBS3dc91w16pI5cc0lJbFa8H+r7VKbpmuvhwVDkC4kqLvlJVBABhdYdAHNgtMYNbJ
- jNxny2qwxI2l97lNgHcc2xZxwgt97FfKPIIcA3qisRS75yMI22U2ePHrbHr5iqXC5m4GmkgYIVY
- lQZuGDQM6fPiS4y8gRWBaYHmTL98gI5RTNVAOMPQl3xSjGp6fryUh36UBaniCh/RdoYbjjH0FKO
- R8zw0V/aXwGBn7c/ai19i5tgangbaaCIb+yoyLaMmPjcESpyn0WsoWoMB/0f2OVEU6Y/5KDQmDW
- jnXNic86R5A+Ji+LE49fwVm2f2HZL0=
-X-Received: by 2002:a17:903:4590:b0:2cc:f4d4:29a7 with SMTP id
- d9443c01a7336-2d035ca4d31mr1469865ad.24.1785364054868; 
- Wed, 29 Jul 2026 15:27:34 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785364053; x=1785968853;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=AUFi+zCctBpA2uvKv+04JwYF81yZKqzpoGjoTvWudc0=;
+ b=Yv/bqH33Ht0rBBC+N+DNbuuMzVCaejqPNGpX/FsS7XsCWI8f1CNWpYlCCJOeUEIXXl
+ +ho6YW4fkCtLv2fUOWA7v9RZQcJqNNnDkDEmQxNbg0KyzIzmKlopc74QqHuv1tYA2SXg
+ mYsg/gdkY61Bl/Cd88erYy7dO4qpow/NNvbmSmu/4CuDoC4k+IvSbvBsANd52wICqlBj
+ y3ufn7/5mHquGrOg4ePfSQfk3ghR4KmIbkZHIFJm8lGxQgOxO5lv44UFqGpE092kcI42
+ xSPhy/snY92b0vzRVaw+xmQIj7s+/WpcrXQFotNEBrt1mTjOZh8B/Gdp8j6ng4ecDw3w
+ 6S9w==
+X-Gm-Message-State: AOJu0YxuuwOPlT3wT4UpXk3s8B/4gBTqozGuh278JT2LKa42C9zomVkZ
+ 38TXyjUXsZmKTl8STV6QN+X3Ha1HXbHMqNdgfIY1Ghv7wFmp1eLPOYkzMX0j/7cC8U5KG/LPlV1
+ N9e7m
+X-Gm-Gg: AR+sD10d4k8u0+pX/hHnLGxe1XjLLbj3gmUHiHNNScYwL1p0Ws4FytTmHD3HvO7/KX0
+ XZ9zNhjey00AxWnUe+tRQ8CmF9aQ+Tx0qw0K3MHt2aLdatMxfGCEAcJ6rrxxGENmso9IXBXPOJZ
+ BLHgiL3LWnfUku3tMawSrdQnCboLAc+Mv0wmcKKdG0hw1digYV0ApwyBRN2Z13oQ9oEeO/uC0ZM
+ 9Wo/tBTp88xOpvDlLjsYyDqVKu/3QapNm6mFtAycpejQCM5tBxWviWLYF4imBMGN02zI/1d9B7C
+ w+6VtZXRUeSuOj9mxf+W49Z7i4qTyjFni9RWlUv8gc/cb/TTP7FWPkwnGSacB9cDTAgsjIoQN52
+ 3PrBMAGQADLYxmafcPng3g7B4m7Ecw4pr/7JRJ49mhAhcs2DxsIAmdM7+QuNE27Yv/JjONTfc4e
+ sa7Y9BFl5MvJsgAeNxb97Jete1RV+55VvgWYTSDgPHtkjj7BrBQlTYfHWswjejNDUwGF2EE6sp7
+ wOsCrlajfF/8P9whqqF
+X-Received: by 2002:a17:902:e783:b0:2c9:a9c0:80b6 with SMTP id
+ d9443c01a7336-2d035d155e2mr1622435ad.34.1785364053383; 
+ Wed, 29 Jul 2026 15:27:33 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d022bca9d7sm17159035ad.52.2026.07.29.15.27.34
+ d9443c01a7336-2d022bca9d7sm17159035ad.52.2026.07.29.15.27.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Jul 2026 15:27:34 -0700 (PDT)
+ Wed, 29 Jul 2026 15:27:33 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: mjt@tls.msk.ru,
 	2358543632@qq.com,
 	quintin.kong@qq.com
-Subject: [PATCH 2/2] tcg/mips64: Preserve the base of unaligned loads
-Date: Wed, 29 Jul 2026 15:27:32 -0700
-Message-ID: <20260729222732.12927-3-richard.henderson@linaro.org>
+Subject: [PATCH 0/2] tcg/mips stable patches
+Date: Wed, 29 Jul 2026 15:27:30 -0700
+Message-ID: <20260729222732.12927-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260729222732.12927-1-richard.henderson@linaro.org>
-References: <20260729222732.12927-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,64 +100,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Quintin Kong <quintin.kong@qq.com>
+Supercedes: tencent_E2269E77D2CCF40AAE3E69F67780397B0A0A@qq.com
+("[RFC PATCH 11.0 0/2] tcg/mips64: Fix shifts and unaligned loads - [DORA-B]")
 
-The qemu_ld output constraint permits the output register to overlap a
-dead address input. That is valid for a direct load, but a pre-R6 MIPS
-host implements an unaligned 32-bit or 64-bit load with an LWR/LWL or
-LDR/LDL pair. Both instructions require the original base address.
+Hi Quentin, thanks for these.  Note that I cannot even compile test
+mips64 anymore because Debian buster was the last os release, and
+buster has package versions too old for qemu.
 
-If lo and base overlap, the first instruction replaces the base with
-part of the loaded value. The second instruction then accesses an
-unrelated address.
+I've fixed up the html damage from your mailer, reviewed the changes,
+and have changed the second patch to fix the address inside the called
+function.  If one wanted to backport the fix all the way to qemu v8,
+one would have to apply your patch in two locations for mips32.
 
-Prior to eb664d0c527, the address register was always a temporary,
-so this problem never occured.  Copy an overlapping base to TCG_TMP0.
+Michael, the first patch applies cleanly from stable-10.1, and the
+second applies from stable-10.0.
 
-Fixes: eb664d0c527 ("tcg/mips: Rationalize args to tcg_out_qemu_{ld,st}")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4102
-Signed-off-by: Quintin Kong <quintin.kong@qq.com>
-[rth: Move fixup into tcg_out_qemu_ld_unalign for qemu 10 series]
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <tencent_8D773439C708369D6BD2ACF71EACE26B020A@qq.com>
----
- tcg/mips/tcg-target.c.inc | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/tcg/mips/tcg-target.c.inc b/tcg/mips/tcg-target.c.inc
-index 29cf7fa0ab..a683bff625 100644
---- a/tcg/mips/tcg-target.c.inc
-+++ b/tcg/mips/tcg-target.c.inc
-@@ -1338,9 +1338,9 @@ static void tcg_out_qemu_ld_unalign(TCGContext *s, TCGReg lo, TCGReg hi,
-     const MIPSInsn ld1 = HOST_BIG_ENDIAN ? OPC_LDL : OPC_LDR;
-     const MIPSInsn ld2 = HOST_BIG_ENDIAN ? OPC_LDR : OPC_LDL;
-     bool sgn = opc & MO_SIGN;
-+    MemOp size = opc & MO_SIZE;
- 
--    switch (opc & MO_SIZE) {
--    case MO_16:
-+    if (size == MO_16) {
-         if (HOST_BIG_ENDIAN) {
-             tcg_out_opc_imm(s, sgn ? OPC_LB : OPC_LBU, TCG_TMP0, base, 0);
-             tcg_out_opc_imm(s, OPC_LBU, lo, base, 1);
-@@ -1360,8 +1360,16 @@ static void tcg_out_qemu_ld_unalign(TCGContext *s, TCGReg lo, TCGReg hi,
-             tcg_out_opc_sa(s, OPC_SLL, TCG_TMP1, TCG_TMP1, 8);
-             tcg_out_opc_reg(s, OPC_OR, lo, TCG_TMP0, TCG_TMP1);
-         }
--        break;
-+        return;
-+    }
- 
-+    /* Both loads in the unaligned pair require the original base. */
-+    if (lo == base) {
-+        tcg_out_mov(s, TCG_TYPE_PTR, TCG_TMP0, base);
-+        base = TCG_TMP0;
-+    }
-+
-+    switch (size) {
-     case MO_32:
-         tcg_out_opc_imm(s, lw1, lo, base, 0);
-         tcg_out_opc_imm(s, lw2, lo, base, 3);
+r~
+
+
+Quintin Kong (2):
+  tcg/mips64: Fix variable shift operand order
+  tcg/mips64: Preserve the base of unaligned loads
+
+ tcg/mips/tcg-target.c.inc | 22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
+
 -- 
 2.43.0
 
