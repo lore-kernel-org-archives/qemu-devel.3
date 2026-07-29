@@ -4,158 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F128C54F51
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 09:59:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9910C53200
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 10:04:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp141-0003jU-SV; Wed, 29 Jul 2026 05:59:01 -0400
+	id 1wp19B-0004cr-T0; Wed, 29 Jul 2026 06:04:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wp140-0003jE-82
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 05:59:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wp13x-0002xm-N8
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 05:58:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785319135;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=xJH3rf8o2pEe+QG945LI/VaztkRHENzVgrBaD1b+sDQ=;
- b=UBaNOT4VDs3oS1G4DJQ0ucHuLDDRuXXAXTauy6iembtux3yrBzl//NxNyaV0NdkOn3gYrp
- 9CE8K2MjsUZkB+4mwzhkSQOmj6Yd8LPVlzBtcqHfAigxyvVS4GLH2WgFs35IEXBWZkqq7a
- oZ6kaMeCDq37Adtt59hGbjMZ2cdX71E=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-564-pXdihciFNDi-mE6UvJYrBw-1; Wed, 29 Jul 2026 05:58:53 -0400
-X-MC-Unique: pXdihciFNDi-mE6UvJYrBw-1
-X-Mimecast-MFC-AGG-ID: pXdihciFNDi-mE6UvJYrBw_1785319133
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-47f810c8aebso468262f8f.2
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 02:58:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wp19A-0004cj-IA
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 06:04:20 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wp198-00042A-MN
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 06:04:20 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-8111c0c7561so9620967b3.3
+ for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 03:04:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785319457; cv=none;
+ d=google.com; s=arc-20260327;
+ b=IdwgRaWxYMgYApbDFvSPIAYbeAMAruTzWG5FpiFms84geE6j5V17ouAc3b2t5Qose/
+ VvMCRSfzKFcr19idBQAuI2vtN6TnV4JcTVpQX0lw7Yxm55UyAKesMFTUUV520IJQKteo
+ aWakM5cHmpz/5UlTRRp1U7c4KDoCAwhvXyoYQv2p7ho0wL3ZPYPDfVH9/Z5UuJakVLtN
+ lxOeM4jdjPEJv4vMDviRW60cwOLZbR8rNfGBoe0Ru7okGVeN3Ff6ZBe18pf/dlgKpj+Y
+ qcmZJ6PWdbfN5IEJuaW4GUWAOvIaMLn+artREu7lRHYpPNxcNZpPCpf592jbWVQxwuxk
+ UEGw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=mONJcJM3vtdz8G/OIOMkcMJK5xW3cgfZk3miNlXqX0Y=;
+ fh=4SjtnPNCiaaaeFhaON8mG3x72oBiAheHsDAZtPcqOYc=;
+ b=LcT93gWRUPf/KodU9KZDzpWlR18ZomTGn94/jAawGjoq1j93z0yEMs4HA8C+Xh6x5P
+ 3WmslwZBfxTgDcXjvIN7pV90FipHyvYXDhdhmYSZfdWbo1ApE08a1mJfHVBqUoLM7qi+
+ 5yqkXFoRyp8Oapv6JotCkR7LsyawibZBR4dKv7N5X0dGCRjyDFB/UGqNVLv2o/DVVX1l
+ 5eAXZr9xLh829RNU9TC5fSUxvceQMLuBcnMtM2v42UwtVQDUIVTwCrxjRpEo0rlF/jR3
+ g+Z/nGsh5mzCueRs2E1XUmftFRWvtrLDk97H4YXkRHUTNZalIW2q+UEzhmjLWXWVMSc3
+ qGVA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785319132; x=1785923932; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=xJH3rf8o2pEe+QG945LI/VaztkRHENzVgrBaD1b+sDQ=;
- b=MmZpeKQClGrJrIZ4/0K5TqTuWqX5Pyxo8RrwrtMY4Jl70V4KMCzb6i8kPn0v7otOcU
- C1Xxe1YLsCubvTGQ9GL7m1bfJMCugvfeDZhl1v06/awABmB5Ku0YVd2Nd2AuNiCa/D2M
- 2NRdhDdPpTqhrw2q/yVKJAFF6k5iOSUYe5mTpteaMHFurAZv6hvwKk4nNehUSOwBVlR/
- x5+1TIWoPcDrjjLkWcbqJtA9IX6mwCWHIPhAHtYLI03OyyseGNmfUXcs+dUYA7/kFbTo
- fhV2SAuMjJAY0yiJZl57pJUR9swQsrunHT6TG5XmqxxHgBmzb7hZQJz6mudLo4gkwNPG
- 2PPQ==
+ d=redhat.com; s=google; t=1785319457; x=1785924257; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=mONJcJM3vtdz8G/OIOMkcMJK5xW3cgfZk3miNlXqX0Y=;
+ b=fHJy5N+3Fo3SM+fgwvUetJn4GzGSA0ULttajZ5cZ8RZldHOtSRFX1SORSywQ1yPeVq
+ nyO0J3StwO7YxQrtbZ74LdGgtgsthJ2flhdtRe2KAhVqMfibrKGr3KIHZ1nhaGzn5mgy
+ Y1a3GsOVK2qgbmxQOMRLn9woD34v/TK2l6ATHU+upyLK7vZPP4c/kgKowerX02lVyJ/d
+ MwGoDZuANOOzrE6JpbGYRbsegVd2WWLNbohotbVuENufRorwSg7J50lU/K8Y72kc1nKd
+ TB3FlSaN1MbOa24OLLevxbthD4dawFZiD9mk52jX01pJ0JuLupO9vSE1cTu4Y/2NS4RS
+ WTjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785319132; x=1785923932;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=xJH3rf8o2pEe+QG945LI/VaztkRHENzVgrBaD1b+sDQ=;
- b=qjkez6Jl6k2MRNo7pzvd5ai2vzeRxanH8tHyGNVHDWvZ4ylwKRCBRgsdexKhmkJLMr
- +4aNSzBGtm+4scZFZCv7CvY1Dwpr7PNKjhJzcPe3s7k314W6w06wHZZnK8E2wiLRFhWl
- DOLjxiCp3BVQNYPDyfE6Z4mwO0uY141z78Ye/8AEw41txhjinrEA9KIzL+6zlfnW5ImF
- dL/3+SzOTwdyeOj5O2tgsDzF6uHHFhjChOklFd/wrzbeq5H+taNE4rDHIInI4ad7PuQ5
- YZgqGiqRwLKh6NxKW7IKbnQ0HzuQWuUsp/M75UFrZsKbMNBQFN1hbIL5w+HxOx2/aqZ5
- ZQzQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoUzW90f8cVp6DINJhFOlht0NLwhtuSXfBWGLBY8SKnK65MngVyVMGwqKst4uNlaZquZjUmbOcib+kP@nongnu.org
-X-Gm-Message-State: AOJu0Yz1LJuuNhdAfNikPleNtVWOqpzUbmStiLGu76P/Emy59T0pt8Hx
- BKzyoLMejJFq442uDku1RgS5R8E0eo9DKLjJYqJlRi4HseEyDa+XhGlCWQcivcoi1f7IE2z6fzR
- E8MSD4aSGUvxdiJYKiwBxPveIOTxOzAuB832wZmULb0v3AhV0ES5pUI2Z
-X-Gm-Gg: AR+sD11atRwRme9bM6hcRl7n2DOTifpRgvicOMG2QW1p4xa0lZDRpbyjPTdD4ocw3gr
- 2QAFxSU0vF1Rac18Fo+43MmR++Q72Ny+hnICJpB6Cu5QdrJ/1l5kMqVu2J72Bv2EySNYPnCQwC/
- 7rgjvgRAR8GN3+NVVlmKSSgI95hGmm8LUv2il51CDBd6IlBLD22ZmXmz3ZFrPLFrxqBix8mgNLe
- tBIyhs9keNibQuLvBKztyY0b8J2uSxIjdIrA8oxdOkZ35TxkUnUWXBCuoeSLXdQ6Vpf1rRnVJ8x
- zJMH2zhkt1sG85eeWAC36xXfKxN+zam+/P8+VIEFmcVsltOmsgE1GCcfp80G6pSCA3pCywS3Q6c
- kmx+i4iA6snO+lsSudEXpnlayQgGAFL+rfCsnL2c=
-X-Received: by 2002:a05:6000:381:b0:47e:f3d:2b3 with SMTP id
- ffacd0b85a97d-47fb1f14c91mr7389994f8f.39.1785319132476; 
- Wed, 29 Jul 2026 02:58:52 -0700 (PDT)
-X-Received: by 2002:a05:6000:381:b0:47e:f3d:2b3 with SMTP id
- ffacd0b85a97d-47fb1f14c91mr7389945f8f.39.1785319131932; 
- Wed, 29 Jul 2026 02:58:51 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47fb6acbfb3sm6476120f8f.14.2026.07.29.02.58.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Jul 2026 02:58:50 -0700 (PDT)
-Message-ID: <ae43beb2-852b-4fb8-a7ea-f24052483837@redhat.com>
-Date: Wed, 29 Jul 2026 11:58:49 +0200
+ d=1e100.net; s=20251104; t=1785319457; x=1785924257;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=mONJcJM3vtdz8G/OIOMkcMJK5xW3cgfZk3miNlXqX0Y=;
+ b=mb7KfZ2MMmZdLqVs975TaZK9td1T273AOXcay6K09W3HGIKeYv/Wo/2rUugY9YxTsw
+ +s2YOn5fKYKy17Xtx3xzBQNaxhgBm52dvNl011zhcA52ayVk203IH55MvtIvg0/wtrf8
+ UXqC/0ZLgRLiVk/mAA9yZgZFkyz3NdNJu6eMuiDVZ06S6LUVTTVooJI9VO0Xz0ASMGet
+ rGuxHm4J7NJDYsPxV+C5/PD3U43ykJgWJNbMSQl7yY7sJdBKOUzwvNgE44/LNsjyvacn
+ HuZFKbUhAKd/2vVamGceZpELS/aUi/nNT5RcsxGrKJGA2ElOvtsAxRUh6VBE7BqNH+cx
+ gTEA==
+X-Gm-Message-State: AOJu0YzJNON13pw27F0n2IG/qNYSO6Mv8UoYa27P9+HsIjT/a/dOKFmD
+ U5bvckrmT5gLKCqKJR1PP0c//Qt9Xnel64J1CtZLmUewd1pvauyHHkTT9IbEO6OdW7QJNXQFD4v
+ 7HfHKnXltW1Kq3Om9BhWahE63PAGfAUQ=
+X-Gm-Gg: AR+sD124cZSVLxs42lEQFUC+3cZ2ZqGG1nJYV6Ih7NFmHVejxaTDjSjQ6AzWiYT1yoJ
+ Z95NkLMXCEN7hT10kBCpot8rFg6rMKaY5Xl52W1NwOiHCVS9AbNjz6OAEb0Wy4ueJTYFTREE8hu
+ QT6zItVpjpw14apO1cYPhBfIAagIA8EXV3MOKWB4eumf0xL5yKr5iqwzObLH0UqXkwHcMQbx+Hp
+ 3wX5oKSu04jmZjTERWMEOOqYdJRKQViqO6M209Moke3H3gykjZPbRJp0MPYSN7drrIH4/2yLWJc
+ 9QWEwK0CKEd2EYS4vZYlhGVxFIspbn3Ekrqkkns/hQyo6NvjmTBsCrDEZ7QSVzBmwJukPsbMd+q
+ p2wFjLp+Px24=
+X-Received: by 2002:a05:690c:6d07:b0:81d:bc5:4600 with SMTP id
+ 00721157ae682-81f991874cfmr31008107b3.6.1785319456857; Wed, 29 Jul 2026
+ 03:04:16 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 01/13] vfio/igd: Clear saved BDSM in legacy VBIOS ROM at
- load time
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: Tomita Moeko <tomitamoeko@gmail.com>, K S Maan
- <kirandeepmaan45@gmail.com>, qemu-stable@nongnu.org,
- Alex Williamson <alex@shazbot.org>, Mario Casquero <mcasquer@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20260721170518.4160785-1-clg@redhat.com>
- <20260721170518.4160785-2-clg@redhat.com>
- <9e9a526d-e54e-402c-8f78-958e4ee514d5@tls.msk.ru>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <9e9a526d-e54e-402c-8f78-958e4ee514d5@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
+ <878q6us19k.fsf@pond.sub.org>
+In-Reply-To: <878q6us19k.fsf@pond.sub.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Wed, 29 Jul 2026 14:04:03 +0400
+X-Gm-Features: AUfX_mzW1dXnFjf-Ply1s5_JDO7e3AokRdQ8ZAi6SPajXxS5d2cG49B0pWuB3O0
+Message-ID: <CAJ+F1CJBzrP9WjrO2zf7JEFmUchEFDZcGhc9zgR2XTU-rQZQiA@mail.gmail.com>
+Subject: Re: [PATCH 00/54] qom/qdev: associate properties with QAPI schema
+ types
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-yw1-x112e.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,108 +121,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/24/26 10:33, Michael Tokarev wrote:
-> On 7/21/26 20:05, Cédric Le Goater wrote:
->> From: Tomita Moeko <tomitamoeko@gmail.com>
->>
->> IGD does not come with a ROM BAR [1], the ROM BAR read by default from
->> kernel is actually the host VBIOS shadow RAM region that contains host
->> modifications on boot. With AI-assisted reverse engineering on VBIOS
->> binaries, it is observed that VBIOS saves BDSM register value on first
->> access and uses saved value if present.
->>
->> When the image is executed in guest, since there is already a saved HPA
->> in VBIOS, it keeps using that value instead of the GPA programmed by
->> SeaBIOS in BDSM register in PCI config space, causing VBIOS to program
->> GTT entries with wrong address, resulting in garbled output in BIOS
->> POST and the error below detected by i915 driver.
->>
->> i915 0000:00:02.0: [drm] *ERROR* Initial plane programming using invalid range, dma_addr=0x00000000db200000 ((null) [0x00000000baf00000-0x00000000beefffff])
->>
->> The previous solution, c4c45e943e51 ("vfio/pci: Intel graphics legacy
->> mode assignment"), adjusts GTT entry addresses to (addr - host BDSM +
->> guest BDSM) to workaround that. But it is removed in 5aed8b0f0be2
->> ("vfio/igd: Remove GTT write quirk in IO BAR 4") due to inconsistent
->> values in MMIO BAR0 and IO BAR4.
->>
->> Since it was a value latched into the VBIOS that breaks virtualization
->> (QEMU does not map the GTT at the same address in the VM), a ROM quirk
->> clearing the saved value in VBIOS image is introduced. It searches the
->> BDSM accessor routine by matching a 19-byte signature anchored on the
->> unique `mov $0x105e,%ax` instruction, then locates the offset of saved
->> BDSM and clears it. This makes the routine fall through to the PCI
->> config read on the first call inside the guest.
->>
->> [1] 3.5.15, 4th Generation Intel Core Processor Family Datasheet Vol. 2
->>      https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/4th-gen-core-family-desktop-vol-2-datasheet.pdf
->>
->> Fixes: 5aed8b0f0be2 ("vfio/igd: Remove GTT write quirk in IO BAR 4")
->> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3093
->> Reported-by: K S Maan <kirandeepmaan45@gmail.com>
->> Cc: qemu-stable@nongnu.org
->> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
->> Reviewed-by: Alex Williamson <alex@shazbot.org>
->> Link: https://lore.kernel.org/qemu-devel/20260708103100.23127-1-tomitamoeko@gmail.com
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> 
-> 
->> ---
->>   hw/vfio/pci.h        |   3 ++
->>   hw/vfio/igd-stubs.c  |   5 ++
->>   hw/vfio/igd.c        | 115 +++++++++++++++++++++++++++++++++++++++++++
->>   hw/vfio/pci-quirks.c |   5 ++
->>   hw/vfio/pci.c        |   2 +
->>   hw/vfio/trace-events |   1 +
->>   6 files changed, 131 insertions(+)
-> 
-> I'm picking this up for currently active stable qemu series.  Since this
-> change touches several files, including new file since last release
-> (hw/vfio/igd-stubs.c), I'm also picking a few other changes to the
-> stable series, namely, for 11.0.x:
-> 
-> v11.0.0-2776-gc822ecd8066 vfio/pci: Initialize rom_read_failed in vfio_pci_load_rom()
->    this is a little bugfix by its own, so it's okay to pick up
-> 
-> v11.0.0-3-g55e25958aa1 hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD,
->    Add stubs for needed functions.  This changes quite a few things,
->    but not much.  I can adjust this change (Clear saved BDSM) for the
->    context before CONFIG_VFIO_IGD removal, but it feels like it would
->    be better to pick up CONFIG_VFIO_IGD removal too, to make the branches
->    more similar.
-> 
-> For 10.0.x, things are a bit more complex here.  In particular, 10.0.x
-> lacks
-> 
->   v10.0.0-290-ge218ccf0c94 vfio: Rename VFIODevice related services
->   v10.0.0-756-g2e27becf17b vfio: consistently handle return value for helpers
->   v10.2.0-2365-g988499515da "hw/display: Build stubs once"
-> 
-> and these are more troublesome to pick up, including "CONFIG_VFIO_IGD
-> removal", so I'm picking up "Initialize rom_read_failed", and adjusting
-> "Clear saved BDSM" for the lack of "CONFIG_VFIO_IGD removal" (it's
-> stright-forward, with #ifdef CONFIG_VFIO_IGD instead of empty stub).
-> 
-> I'm not very comfortable with the different approach to 10.0.x and 11.0.x,
-> maybe I should omit "CONFIG_VFIO_IGD removal" from 11.0.x too.
-> 
-> What do you think?
+Hi
 
-For the stable branches, I would take the fixes only :
+On Wed, Jul 29, 2026 at 11:29=E2=80=AFAM Markus Armbruster via qemu
+development <qemu-devel@nongnu.org> wrote:
+> Before I dive into individual patches, let me try to work out what the
+> series does as a whole.
+>
+> > This series adds:
+> >   - A new QAPITypeInfo struct that pairs a property with its QAPI schem=
+a
+> >     type name, enum lookup table, and list-element type.
+>
+> Peeking at the code, I see that ObjectProperty gains a member @qapi_type
+> pointing to its QAPITypeInfo.
+>
+> It is null when the ObjectProperty doesn't have a QAPI type.
+>
+> If it's non-null, then ObjectProperty members @name and @type are
+> redundant with qapi_type.name and .type.
+>
+> Correct?
 
-  c822ecd80661 ("vfio/pci: Initialize rom_read_failed in vfio_pci_load_rom()")
-  256229e8f9b9 ("vfio/igd: Clear saved BDSM in legacy VBIOS ROM at load time")
+Almost. @name is the property name (e.g. "policy"), not the type name.
+But @type becomes redundant with qapi_type->name when qapi_type is set
+(object_property_add_qapi derive prop->type from qapi_type->name).
 
-and commit 55e25958aa1a ("hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD") is
-not one.
+Also @type carries additional information for some property kinds that
+@qapi_type doesn't cover: child<T> and link<T> embed the linked
+object's QOM type name in the type string. qapi_type can't represent
+that atm.
 
-I would skip 55e25958aa1a and adapt the BDSM patch with #ifdef CONFIG_VFIO_IGD
-in 10.0.x and 11.0.x.
+> Would "every ObjectProperty has a QAPI type" be a reasonable goal for
+> the future?
 
-How's that ?
+Maybe? we would need to address the child<>/link<> gap. At least we
+can make raw object_property_add() deprecated/static in object.c after
+this series
 
-C.
+>
+> >
+> >   - A QAPI code generator (qapi-type-infos) that emits a QAPITypeInfo
+> >     instance for every schema-defined type, including the mapping
+> >     between internal C names and the schema name visible to clients.
+>
+> Peeking at the code, I find:
+>
+> * The type
+>
+>     typedef struct QAPITypeInfo {
+>         const char *name;
+>         const char *schema_name;
+>         const QEnumLookup *lookup;
+>         const struct QAPITypeInfo *list;
+>     } QAPITypeInfo;
+>
+> * A T_type_info for each QAPI type T, including built-in types.
+>
+> * T_type_info member @name is T's QAPI name, i.e. "T".
+>
+> * T_type_info member @schema_name is T's masked name used in
+>   query-qmp-schema output, null when T is elided there.
+>
+> * T_type_info member @list points to TList_type_info when that exists,
+>   else it's null.
+>
+> * T_type_info member @lookup points to T_lookup when T is an enum, else
+>   it's null.
+>
+> Correct?
+
+Yes
+
+> >   - A "qapi-type" field in the ObjectPropertyInfo and
+> >     ObjectPropertyValue QMP structs, populated from the QAPITypeInfo
+> >     when present giving clients a cross-reference into query-qmp-schema
+> >     output.
+>
+> To be precise: when ObjectPropertyInfo member @type is "T", then member
+> @qapi-type is T_type_info.qapi-type.  Correct?
+
+@qapi-type is T_type_info.schema_name, the masked name
+
+> If .qapi-type is non-null, you can use it to look up precise type
+> information via QAPI introspection, i.e. query-qmp-schema.
+>
+> Correct?
+
+Yes
+
+>
+> Possible problem: query-qmp-schema covers only types that are actually
+> used in QMP.  But the above technique additionally wants QOM property
+> types.  I haven't checked what your series does about this, if anything.
+
+Most types used as QOM properties are also used by QMP commands. But
+it's true that types not used by QMP get schame_name =3D NULL atm.
+
+Should we have a new pragma? Even if we have conditions, we may end up
+with unused types in the build, but that shouldn't be a big issue. Or
+we would need a more complicated several step build.
+
+> ObjectPropertyInfo is only used with QMP command handlers.  It is
+> computed from ObjectProperty.
+>
+> >   - Conversion of all PropertyInfo definitions from the old
+> >     .type/.enum_table strings to the new .qapi_type pointer.
+>
+> The above is QOM, this is qdev.
+>
+> Like ObjectProperty, PropertyInfo gains a member @qapi_type pointing to
+> its QAPITypeInfo.  Howver, this one cannot be null.
+>
+> PropertyInfo members @type and @enum_table are dropped, because they are
+> redundant with qapi_type.type and .lookup.
+>
+> Correct?
+
+Almost. Every PropertyInfo has a non-NULL qapi_type, except the array
+ones (created with DEFINE_PROP_ARRAY_INFO) which leave .qapi_type NULL
+and derive it at registration time from
+.element_info->qapi_type->list. Either way, the resulting
+ObjectProperty always ends up with a non-NULL qapi_type.
+
+PropertyInfo members @type and @enum_table are dropped, because they
+are redundant with qapi_type->name and ->lookup.
+
+> >   - Replacement of the generic qdev_prop_array with typed per-element
+> >     array PropertyInfos, removing the arrayinfo/arrayfieldsize
+> >     indirection from struct Property.
+>
+> Before the series, an array-valued Property's @info member is
+> @qdev_prop_array.  @qdev_prop_array provides no information on the array
+> elements.  Instead, Property member @arrayinfo points to the
+> PropertyInfo for the elements, and @arrayfieldsize is the size of an
+> element.
+>
+> Your series makes PropertyInfo array-capable: new members @element_info
+> and @element_size are the elements' PropertyInfo and size.  It then adds
+> a proper PropertyInfo for each such property, and drops
+> @qdev_prop_array.
+>
+> Correct?
+
+Yes
+
+>
+> This could perhaps be spun out and merged separately to reduce the size
+> of future respins.
+
+I can split it out if it helps
+
+>
+> Not mentioned:
+>
+>     - New QOM property creation functions for creating properties of
+>       QAPI type.  These take a QAPITypeInfo.
+>
+>     - Convert some properties to use them.
+>
+> >   - Removal of the deprecated PropertyInfo.type and .enum_table fields,
+> >     and of the old object_property_add_enum/add_tm APIs.
+> >
+> > Along the way, a few pre-existing type mismatches in property
+> > definitions are fixed, the "struct tm" RTC property is replaced with a
+> > proper QAPI StructTm type etc. Introducing more specific types or a
+> > "typedef" to QAPI could help provide better associated type information=
+s
+> > than plain "str" in many cases, for example.
+>
+> Examples?
+>
+
+Properties using str_type_info that carry structured values with their
+own validation: macaddr ("52:54:00:12:34:56"), PCI addresses
+("04:00.0"), netdev names, chardev names, drive names, UUID strings. A
+QAPI "typedef" (or newtype) for e.g. MacAddr, PciDevAddr, UUID could
+let tools know these aren't arbitrary strings (see "hw/nvdimm: convert
+UUID property to QAPI-aware registration" patch).
 
 
-
-
+> > Comments welcome!
+> >
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
 
