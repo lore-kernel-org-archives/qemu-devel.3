@@ -4,104 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AAB0C53200
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 09:34:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AFD4C54F51
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 09:38:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp0fk-0008CU-1V; Wed, 29 Jul 2026 05:33:56 -0400
+	id 1wp0k4-0000Vt-Cn; Wed, 29 Jul 2026 05:38:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wp0fj-0008CL-1w
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 05:33:55 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wp0k2-0000VQ-8s
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 05:38:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wp0fh-0007yS-IE
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 05:33:54 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wp0k0-00005M-QY
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 05:38:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785317632;
+ s=mimecast20190719; t=1785317900;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8g4DexJtR4YjAKHqeHRSG0L8dG+hA5n6I5AxcdMrLlc=;
- b=JeLD5AOZ1L7XCtJXCI/wXDOF4Jap1XOBXzNhTC72nZf03ZppDSXw+RN6Xy4OfW9U5i/GmL
- 2SN+X0aNobFZA4IwBhLYjGO8fmZ85OWr/mCv/Uiq6viZFGuEo/n4xcaJIzq2ZY1YrlA58+
- XgIBV8ST0sYyyhWwxrzhTHxPiVICr2Q=
+ bh=8Os2dKUA6dgVnL1MT+Rig3IQBmbVntu1NaYMrgHRmc0=;
+ b=aHAUancYLXjcc9thgu7rxGduJ6t+adP0B6VXuxdGFS1qZk+aGvVPtmdtyvTM50pApUfoYh
+ QIfkN+RpV+9JrzTOM5d/xqiy6T34LykGmtTvCuMMBV2fwiowdcEnK87iNHbXN9nqvD56B6
+ 9P7v2g+0b8OjyqucQAUQFsEPd+UpWdA=
 Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
  [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-67-2xSoBJsCP0iz_9mdqmf4FA-1; Wed, 29 Jul 2026 05:33:51 -0400
-X-MC-Unique: 2xSoBJsCP0iz_9mdqmf4FA-1
-X-Mimecast-MFC-AGG-ID: 2xSoBJsCP0iz_9mdqmf4FA_1785317630
+ us-mta-297-oaB5u29RO1ek-pFCL8n3-Q-1; Wed, 29 Jul 2026 05:38:17 -0400
+X-MC-Unique: oaB5u29RO1ek-pFCL8n3-Q-1
+X-Mimecast-MFC-AGG-ID: oaB5u29RO1ek-pFCL8n3-Q_1785317896
 Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4955b84e25eso5124425e9.1
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 02:33:51 -0700 (PDT)
+ 5b1f17b1804b1-4954fd771baso12008985e9.0
+ for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 02:38:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785317630; x=1785922430; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=8g4DexJtR4YjAKHqeHRSG0L8dG+hA5n6I5AxcdMrLlc=;
- b=r5FQkLf3UVyECTIGUTWxv+t/3JJM4kY/FeFxSIf4ZRC3Me0PyUZe9oUaA8Wew/TT4y
- GRAPWcOwNYi/NwSZh6cWIGPHZHdaUMBRP0SWmNhlx7NSsPJsPo0VfplhpsYVKHBGd+hn
- HGCcNxx0utGygte/TJuqr0YtTj1+AfizHZfIEz1BrbNgAsXkDHd+++YD91XuexPoMAZN
- /WpLv9tYUQDsF7hvwxjJ4nI0MG3AFUxGf9qxZ4IBj5chxPaVPQ7Q/aBBtK7V9snra9gR
- XbLFvo6lQqbWmhEVoEcYxGj0cQOPG7YlxnSI3DqNRL7/Y9ddIcHpOZ+xb7VuCyktmt2o
- WSPw==
+ d=redhat.com; s=google; t=1785317896; x=1785922696; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=8Os2dKUA6dgVnL1MT+Rig3IQBmbVntu1NaYMrgHRmc0=;
+ b=BWQuYI3IF1k5s4vUUO2+5pa1H+sNyvc5sOET9URr1ovSCNwJhfwMSqT+LAykJXnwSb
+ xXyE7nhpo6YjY2iUIfzNLCri56igkG5q6AinOVmIYWZuCTQwkK8M6Cdjyu/KQNjib8tr
+ FMOsyET/tbKio5IsX3jgQQVL7UT9YbuEmlbU4pJU9KI8sLNRiAhzgrVf8yaQRl9zWWPW
+ aDV087cK2FQ6ckT1Ayz5knPDuMVYrALpQJfn1Pf/eu70VjLEB6K6WYbvbELXaPL5dTyI
+ rue2tkaIAct/2LK2V2bzktmU+jL7u9D6jmhTz9VJT2Z9XDXTXwL3rJpUlno72DQcgGkO
+ ZvGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785317630; x=1785922430;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=8g4DexJtR4YjAKHqeHRSG0L8dG+hA5n6I5AxcdMrLlc=;
- b=dMXL+/LNKp2FZjlp6rqVZTfLb0xVVinD17KX5tYDpGZ5vdCCsmK1iun4KCd7fXg875
- 69USdUjDdGF9HGKRubwHxKlS7upbv7m2PZvvHaVyNH5QF9frSTh1JFCp960JeznE6WLt
- FBn/9z1Ep9B6czEriTP/las2+TES7pH1+6QX7V3pblGIqo5G2Hb8dOU7KayMKbrIttce
- X844i7++fYVwfxGhHDi12Z4TSXXPNWF8WTZUm/8qGiGZZlyqkQjIr8Z5jLWLX1JNeF57
- 6UtD1GPt8eE/lPH1nHmZgJ9K44rUqwR9lHPOUHpytmnRdf/kywxyVnipOnhn6HUJJj3l
- AN2g==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqL11XzqPfqIPC+tcQ3yj7JzrjwXUzmcBHQ8iyzaH0fdZ33HpNConuQJ8wJQuF4Dtg6218ccT5pfhjG@nongnu.org
-X-Gm-Message-State: AOJu0YzAz4pims9bCbzPOQPO08PkWbTgq5JqeiH209RMjhqtSrve2N2m
- mvmUBWzOtBMJfRmm9Fsp80EB74AvIsT6zvr5YnrHYFMEGcpK1rxT28EkvlxMW6j2bvSYWDNdOvX
- z20K5X6FEarBHDF0tatUiD03D1hCYvYuIU/5tN+H388Npi+m/wq9dIjkh
-X-Gm-Gg: AR+sD11hvkbTcCWzDffpQNWgxD64nMhzd99Calk2Sudj0LebUw0UbUzi/PlXNE66KQR
- UJrsOZDL7F767MBm4muOO824RTx95UyP1WzNqHk+PI0Qp1MvJliKkaztQpOycg3KQfZ1eub4tGj
- QHe9kN4/i67dtm+4iBQf0l82xzA9anP31JLx+bszgjp7MvBgYXO+HlI3EVfQBSzZp4kSx+vO76J
- NsuopZt7irBtv7oQyZDv/r2qrE0/HSswsfua2tjY23//IDzYUHhZQ2Rlm6TqVaWF8bf3FRX2LLA
- Jh9detkheN0CmdweJa+FZR/G461GnfIFz8D5exokdZilQ7FsjEKmW9FpNrwVMm59viGzc2G5V17
- PupfQyL3PyD45Z5FPp4eDsKk=
-X-Received: by 2002:a05:600c:4e02:b0:495:3fe1:4ce4 with SMTP id
- 5b1f17b1804b1-496c65979dcmr61715635e9.26.1785317630051; 
- Wed, 29 Jul 2026 02:33:50 -0700 (PDT)
-X-Received: by 2002:a05:600c:4e02:b0:495:3fe1:4ce4 with SMTP id
- 5b1f17b1804b1-496c65979dcmr61715205e9.26.1785317629524; 
- Wed, 29 Jul 2026 02:33:49 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785317896; x=1785922696;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=8Os2dKUA6dgVnL1MT+Rig3IQBmbVntu1NaYMrgHRmc0=;
+ b=AkKufEIZh7KuxStZZnsjGbGoC6lw02XZfMqZcdxnIdCStY5kiZRyuziYODm5cjtuWB
+ Gwcd2atA9NG6RYGmgUb82f3GyJzUt4o092m5eOmncDLWWl2nZvPK5XA64sDYq/V+1Il4
+ I3Jb3Nx/9nvmTo/H6M3bC6uCuinnn/aFGxQoA6BoN7qIL3RcOHaLAxitqS6WgdrqqB6B
+ YdS+QYncbw8E3BhDKHhJmxMBej5zdLXllICP1JrNkg6FmQsPWTQ4Mq+JxB91xUdPH665
+ dOKgpvznl4qZgJp3DEnOm/5g4/i05syo6KBpoEt7QzTU9QxGs9b2Wq0aZxm462OIkeE/
+ hdhQ==
+X-Gm-Message-State: AOJu0YyQTuEHGX5BHApKa9YbHVXYP0SUlNzoTUOhuqALchcW0j/Hid5S
+ SAMrrjq5tDZ6sp0YBbgcvRUp+OoRt9qmAwstZ6OvkI4oFDnDGgZYNbqBWrrufGxtNpZbjUMakJ6
+ 97Ijr9qdJzdy3v46Q+KBb+NTMn7QrQf6Bgi5/XBCezrfX76U3sBstoa7G
+X-Gm-Gg: AR+sD10tSXQrwWNTfNINT0kiSCnwe0AzyZI7w4uN70/2kfSshXnteU2GhqD/x94/6oy
+ Ici7r2tQbj8VIVDrjQDF5mAYB7qq1HFq3cKYCDM3cDCiiTlYs3lF5cwnfSNyjzTQ3u6f3jty2Hp
+ Ph6bCUL1pNaWENoGqlq13mrD7F1Ft32mMgmg/0NIXAUho+eHbuw8Rjz02/qwlTfIBO3/DPmRQc6
+ QSOfgcH3p7pK8lQADQJzpxZ57p5NsV/h9h9Rsl3oNov7J6MSnzirCywZungCBMw740VHeHCZKH8
+ vkW4Rb+bhKV6KhpdnKgVRjQl68hITIA22y6Gws19WeKuU9tH8Z3Gqi8NlJc0xGxxYHuo3xp67NC
+ U7dBocsSmvv8s63olld8IRuU=
+X-Received: by 2002:a05:600d:8499:10b0:495:58fe:88e5 with SMTP id
+ 5b1f17b1804b1-497fd2d9f86mr13793835e9.2.1785317895641; 
+ Wed, 29 Jul 2026 02:38:15 -0700 (PDT)
+X-Received: by 2002:a05:600d:8499:10b0:495:58fe:88e5 with SMTP id
+ 5b1f17b1804b1-497fd2d9f86mr13793495e9.2.1785317895138; 
+ Wed, 29 Jul 2026 02:38:15 -0700 (PDT)
 Received: from redhat.com (ppp-94-66-118-61.home.otenet.gr. [94.66.118.61])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49764d777afsm52741275e9.4.2026.07.29.02.33.47
+ ffacd0b85a97d-47fb647a8d4sm6515183f8f.0.2026.07.29.02.38.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Jul 2026 02:33:48 -0700 (PDT)
-Date: Wed, 29 Jul 2026 05:33:45 -0400
+ Wed, 29 Jul 2026 02:38:14 -0700 (PDT)
+Date: Wed, 29 Jul 2026 05:38:11 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Laurent Vivier <lvivier@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>, qemu-devel@nongnu.org,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Fam Zheng <fam@euphon.net>,
- qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Amit Shah <amit@kernel.org>
-Subject: Re: [PATCH 0/3] Harden virtio migration load paths against crafted
- streams
-Message-ID: <20260729053331-mutt-send-email-mst@kernel.org>
-References: <20260710102859.1967551-1-lvivier@redhat.com>
- <20260725113324-mutt-send-email-mst@kernel.org>
- <amjEALq8-unXNAZS@redhat.com>
- <6a3b587a-09de-4d63-9aba-403a9af97b63@redhat.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Yonggang Luo <luoyonggang@gmail.com>, Miku Hatsune <anznu1l@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>, QEMU Stable <qemu-stable@nongnu.org>
+Subject: Re: [PULL v2 09/30] virtio-mmio: fix QUEUE_NUM_MAX
+Message-ID: <20260729053423-mutt-send-email-mst@kernel.org>
+References: <cover.1785179875.git.mst@redhat.com>
+ <a5cff318f06cd06b37224e15ee74d64d1df8b12b.1785179875.git.mst@redhat.com>
+ <65990a19-6a7e-4c1c-9354-0fffa13cbba9@tls.msk.ru>
+ <20260728154328-mutt-send-email-mst@kernel.org>
+ <75f2277a-8508-4e6e-adfe-92bed9fc1bf6@tls.msk.ru>
+ <20260728192047-mutt-send-email-mst@kernel.org>
+ <af6d5296-9860-4c5d-a72e-f2eacac3e2e9@tls.msk.ru>
+ <23cbb4e8-1467-4a0f-9af7-67e3c64cba7e@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <6a3b587a-09de-4d63-9aba-403a9af97b63@redhat.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <23cbb4e8-1467-4a0f-9af7-67e3c64cba7e@tls.msk.ru>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -36
@@ -126,54 +128,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 29, 2026 at 10:56:56AM +0200, Laurent Vivier wrote:
-> On 7/28/26 17:00, Kevin Wolf wrote:
-> > Am 25.07.2026 um 17:34 hat Michael S. Tsirkin geschrieben:
-> > > On Fri, Jul 10, 2026 at 12:28:56PM +0200, Laurent Vivier wrote:
-> > > > A crafted migration stream can crash the destination QEMU process
-> > > > through unvalidated fields in the virtio device state: an unbounded
-> > > > allocation in virtio-serial, reachable assertions in the shared
-> > > > virtqueue element deserializer, and assert()/exit(1) calls in
-> > > > virtio-scsi request loading.
+On Wed, Jul 29, 2026 at 12:25:30PM +0300, Michael Tokarev wrote:
+> On 7/29/26 08:12, Michael Tokarev wrote:
+> > On 7/29/26 02:22, Michael S. Tsirkin wrote:
+> > > On Tue, Jul 28, 2026 at 11:17:34PM +0300, Michael Tokarev wrote:
+> > ..
+> > > > So this whole change, for older versions, becomes just:
 > > > > 
-> > > > These are hardening fixes: the destination QEMU is in a paused
-> > > > pre-start state and the source VM is unaffected by a failed migration.
+> > > > --- a/hw/virtio/virtio.c
+> > > > +++ b/hw/virtio/virtio.c
+> > > > @@ -2572,6 +2572,8 @@ VirtQueue *virtio_add_queue(VirtIODevice *vdev, int queue_size,
+> > > >       if (i == VIRTIO_QUEUE_MAX || queue_size > VIRTQUEUE_MAX_SIZE)
+> > > >           abort();
 > > > > 
-> > > > Patch 1 validates the virtio-serial nr_active_ports count against the
-> > > > configured maximum before allocating the post-load array.
-> > > > 
-> > > > Patch 2 replaces the assertions in qemu_get_virtqueue_element() with
-> > > > a bounds check returning NULL, and updates all callers (virtio-serial,
-> > > > virtio-blk, virtio-scsi, scsi-bus) to handle the failure gracefully.
-> > > > 
-> > > > Patch 3 replaces the remaining assert() and exit(1) calls in
-> > > > virtio_scsi_load_request() with proper error returns.
-> > > > 
-> > > > Tested with migration round-trips for virtio-serial (0 to 511 ports),
-> > > > virtio-blk (1-2 disks), and virtio-scsi (1-2 disks), plus the
-> > > > original PoC reproducers for issues #3801 and #3802.
-> > > > 
-> > > > Laurent Vivier (3):
-> > > >    hw/char/virtio-serial-bus: validate nr_active_ports from migration
-> > > >      stream
-> > > >    hw/virtio: return NULL from qemu_get_virtqueue_element() on invalid
-> > > >      state
-> > > >    hw/scsi/virtio-scsi: harden virtio_scsi_load_request() against invalid
-> > > >      stream
+> > > > +    queue_size = VIRTQUEUE_MAX_SIZE; /* fixed properly in 11.1. */
+> > > > +
 > > > 
-> > > Kevin objected to my version of this, I guess same will apply?
+> > > Or you can stick to upstream and add the compat entry for 11.0.
 > > 
-> > Objecting is a big word. I suggested some improvements around passing
-> > errors to the caller instead of trying to handle everything locally. But
-> > yes, at the first sight I think they would apply here, too.
+> > Compat entry for 11.0 which will never be used?
+> > With a non-obvious logic which boils down to this single line?
+> > 
+> > Or what do you mean?
+> > 
+> > BTW, can't this logic be implemented without a compat property in
+> > the first place?  This x-override-queue-size seems like a hack.
+> > or a.. twisted way to compare a machine version.
+> > 
+> > Can't this very place become
+> > 
+> >     if (machine_version < 11.1) {
+> >        queue_size = VIRTQUEUE_MAX_SIZE;
+> >     }
+> > 
+> > instead of using this indirect property?
 > 
-> Michael,
+> Michael, I still don't understand what we're doing here and - now -
+> why do we need to distinguish between old and new machine types at all.
 > 
-> will you rework your series or do you prefer I update mine?
+> Behavior before the fixes:
+> 
+>  qemu always reported queue size to be the maximum allowed one (1024),
+>    even if actual queue size requested and allocated was smaller
+>  qemu accepted requests to elements past the allocated size, which
+>    allowed to read/write past the allocated buffer - which can't be
+>    considered part of ABI, obviously :)
+> 
+> Behavior after the fixes, for new machine types:
+> 
+>  qemu reports actually requested and allocated queue size
+>  qemu properly disallows access past the allocated queue size
+> 
+> What would break if we switch to the new behavior unconditionally,
+> regardless of the machine types?
+
+It's guest visible. You will get two reads from same register
+suddenly returning different values.
+
+
+> I don't understand why do you suggest to implement the same logic for
+> older/stable qemu versions if it will always evaluate to allocating
+> the max size for the queue regardless of the requested size.
 > 
 > Thanks,
-> Laurent
+> 
+> /mjt
 
-Pls go ahead, thanks a lot!
+My preference, normally, is to just stick to upstream as much as
+possibly. I just do not want slightly different code bases when we can
+trivially have one.  If nothing else, less of a chance a follow up patch
+will cause conflicts, and then it snowballs from there.
+
+
+-- 
+MST
 
 
