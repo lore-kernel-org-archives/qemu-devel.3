@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3CCDC53200
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 15:30:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABD9BC53219
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 15:31:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp6Ed-0003lC-6T; Wed, 29 Jul 2026 11:30:19 -0400
+	id 1wp6FW-0004SN-7N; Wed, 29 Jul 2026 11:31:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1wp6Ea-0003hg-ER
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 11:30:16 -0400
-Received: from mail-wm1-f47.google.com ([209.85.128.47])
+ id 1wp6FS-0004P4-DY
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 11:31:10 -0400
+Received: from mail-wr1-f48.google.com ([209.85.221.48])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1wp6EW-0008Kd-Ju
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 11:30:16 -0400
-Received: by mail-wm1-f47.google.com with SMTP id
- 5b1f17b1804b1-4921eed3fa2so7537585e9.0
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 08:30:07 -0700 (PDT)
+ id 1wp6FQ-0000EW-De
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 11:31:10 -0400
+Received: by mail-wr1-f48.google.com with SMTP id
+ ffacd0b85a97d-47f96c5b722so683320f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 08:31:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785339006; x=1785943806;
+ d=1e100.net; s=20251104; t=1785339066; x=1785943866;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=2NJzAdGamh6q0UofkS1blWw4H+aSbe43q4hTcBp6DSQ=;
- b=iTUZLIJsuEJcWYpMURuu+Y9LegHaUuNXIdks8aoehKq7KM5cTUBEAxnsVVY1GzIplE
- 6xw+RtdZHu3D9hD6kYPtVmy4yxA6shUQDZA8fM4cyPiY/yAPkwsr4byR7Kby7OwY3CU9
- 0y1La7e3UU66rWelb1dTPPAu44qFrCU15ZzRs5JbKNU2BryRycEjWQBmsbLcfCZV3bte
- Jn2etpTke8OIEUDyJIGqgeKLvD4ONbLZJcm/MVXFBsMwJtqyXEharTvGcGPjSrIRIo8A
- YJoNu/0vaxW0cTRti5TS9ybET1Yd5RFYUqOX8+yV9ej5/pFudW8wDczG0Gu9nBew0Hc9
- MN8A==
-X-Gm-Message-State: AOJu0Yxv/Sw8Xbc9Oi0A8s/9q8V5F2OB6vTUUyypHs8YBAOXhUOmWvAz
- oeaYYM1Y2NisqFj+UaRPDd4eoNp2gWEWROxolaGgkNi/rkb24Hwl7NVTZWfwChbt
-X-Gm-Gg: AR+sD12M3HApA7hIfPJuf1h+movGiyGsFUcdJRjY8F1FU2r5sLLHQsjeDe3o/m2Ip0x
- h7TP711DkYqkJqw8ae1r32pCzmIdNeEupfeK9XVjWRjW50dt/cLMXyCtpIPM2uh+se1QZXXmlc9
- YwpjhqDwJzBda08Tele0XWqM6I8le8I6SA8f7eVfHmYrRlIXfDIobqtnE+sSciwpB06GstN3Bse
- HEkvmTfrOluZY8ua8pjTuQcaQHp9jIpFd1MfmfRJARECwPk6ik5zdvc/LxeQ8+q+rb6zrlYxJ4X
- eshS7jrvM79ocOal3fJ+wjeuflSYSq4LZvLfNm8DkbludWolzw7rBJohEAesh715HFk4hfL28ZE
- ra5L7VrUWPbWvG/6ztOcPQjuMAz3ieGHX7jAKldLq1f08B8t+VxxZ1CUOdWWKJHvTT9UuNBoYdl
- OKpaKitY/8dvnD76czWG669jHbb2TYlECqZ3Nl29KRK8dBlpJu8X7T8V5zIGK+B5D2oEpf0UpfY
- mTdQaetRvrIyO5y6jp4618EF3xKnGokauOk
-X-Received: by 2002:a05:600c:81c8:b0:495:401d:9f4f with SMTP id
- 5b1f17b1804b1-496c65764e0mr81396345e9.25.1785339006277; 
- Wed, 29 Jul 2026 08:30:06 -0700 (PDT)
+ bh=jDYA5Xg1AcjoGqaDT6Y+c4Ycg06GuzHzyiFnFNhge4E=;
+ b=tSl2P6/QNZyetkjrtbLH57HtB2lc69P6OToR/iGMBboBuzIlUxARqukUGAx8hNmVH8
+ 411OMswGvFfDGGq1kqyBFjmO6XPicP0bWX1WeTyO2hioZoF30HUVJ/8cActqkaJpS24M
+ CXiHuC/xkugnXLMf3msK4kiEVUIs8lsvGE356nntO5gG4Nw6jcC2sMveva5ZKyUtZHD1
+ odTuAb/nR7dCLKAPqroh3yeU+5L2qEOLVeEUEt2SemDReT4tfu0sy9DcO4ukK8LgR4JQ
+ eXVEypa2chE0QTYGytw9LavPC/4x8MSIpMpCMUWLU7lMz3sZfT9dZ6mCVjkWbDZeQkzR
+ j0uw==
+X-Gm-Message-State: AOJu0YwmKYhPniVx2DFoE2eIgv+k/VmNFdg5Rjum9UkDkZaWEDSVdsrd
+ b9oingcxLcqZduN6alv6GOnVATEDZXQwspBAKfrqOJkTjp/3P2qyaAceLMhArfuO
+X-Gm-Gg: AR+sD1361PiimkHc+ajYe5BKPBZC7VZcISN4CLp6jK46EiikLl/s6XW+fsRG9P2aLMI
+ +eROi80SgkZrRPz98CeGtRkPTKe0l8p0ZqAz2Ph6F+pYIcAyJh0n9FHqd8v8Fc4CQ3tnlpW4ECH
+ P9R0D7TzKNkintmZ63XieDhU9Yoj5iLx0E6noLNN5cfVJt8r0KUVKy11N8b5Wd4+wC/lkNCy14V
+ usDykYEHYoIWcbb5NvNWw1f8STtxZPBXomryhftEpIuOrjtNAqlf4RjkucYH9i8v7E5VCHamiiN
+ Zp/2upUv3Y+oOz+WexsCnGpmMBHaBUFu5nlD9MYfe1K6ymzPk3B+wDWYGcp0QLHBQZNGTdg/WPt
+ NzBWsdvEwujI17FPFVG2Q5wwQZIEh62Oe9JZAMMFWsluSmhOJ26f+TCG7MjgQ/LMuq/CmSdLRMN
+ xUOnZNbrZukhg1YOJRtwkY/G5HyAnNyd3fYVIUco4WPrm7X12oTL1SqutIjeWDjBTYSu7new//K
+ l8Pk7uG4ZjVdmVieloQzGEV/LaangNdM7ep
+X-Received: by 2002:a05:6000:2505:b0:47f:93e2:a07b with SMTP id
+ ffacd0b85a97d-47fb1f139bemr7833148f8f.30.1785339066052; 
+ Wed, 29 Jul 2026 08:31:06 -0700 (PDT)
 Received: from localhost (89-93-216-19.hfc.dyn.abo.bbox.fr. [89.93.216.19])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47fb6aa3935sm9202485f8f.4.2026.07.29.08.30.05
+ ffacd0b85a97d-47fb6b19653sm9241418f8f.30.2026.07.29.08.31.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Jul 2026 08:30:05 -0700 (PDT)
-Date: Wed, 29 Jul 2026 17:12:43 +0200
-Subject: [PATCH 07/25] hw/sensor: tmp105: add TMP75, TMP175 and LM75B variants
+ Wed, 29 Jul 2026 08:31:05 -0700 (PDT)
+Date: Wed, 29 Jul 2026 17:12:44 +0200
+Subject: [PATCH 08/25] tests/qtest: tmp105: cover the ALERT fault queue
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260729-sanmiguel-bmc-locator-v1-7-c8f9a8d101f6@free.fr>
+Message-Id: <20260729-sanmiguel-bmc-locator-v1-8-c8f9a8d101f6@free.fr>
 References: <20260729-sanmiguel-bmc-locator-v1-0-c8f9a8d101f6@free.fr>
 In-Reply-To: <20260729-sanmiguel-bmc-locator-v1-0-c8f9a8d101f6@free.fr>
 To: qemu-devel@nongnu.org
@@ -75,15 +75,15 @@ Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Emmanuel Blot <eblot@meta.com>, Emmanuel Blot <emmanuel.blot@free.fr>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1785337963; l=11789;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1785337963; l=3508;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=L67/MdlXgO5Di25siwtmOLs/rlQN0tXp5n3l9YtfUhA=;
- b=9098N82rvqT/Eev7J+05+WlgNRCGk7PBnrH5qj7rxchuGr63xqOSrsln89uvGKOGDldswFpTT
- PstM+YevBg4Bhon81exesWgyVXyNDGn1mEtXhtyOurk17ZBRCptxX2E
+ bh=STa9fNUK+ufnQgeeZ6iWhS9xfz1DLS6Eh0Aq6teT5tE=;
+ b=xtY694VImiCxYAX0qVieR4ERcGUo2zzwI4PDzEuYHi94dRFnY9GdIDtdgSu+C4m6898aqkBLc
+ eugd46uxI4rD6qYoFHqjM+CUOx6BFnK0KArniCyu2zO6AK9pd5BhvOC
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.128.47; envelope-from=eblot.ml@gmail.com;
- helo=mail-wm1-f47.google.com
+Received-SPF: pass client-ip=209.85.221.48; envelope-from=eblot.ml@gmail.com;
+ helo=mail-wr1-f48.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -109,337 +109,104 @@ From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The TI TMP75/TMP175 and the NXP LM75B share the TMP105 register map and
-control semantics, differing only in a few details. Model them as
-variants of the TMP105, parameterised by a small per-type class
-descriptor covering the fault-queue depths, the writable config bits,
-the converter resolution, the set-point masks and the TMP75's
-alert-clear on thermostat-mode change.
-
-The variant is class data, not migrated state, so the wire format is
-unchanged and all variants share the existing vmstate.
-
-While here, align the shared shutdown handling with the hardware:
-entering shutdown now clears the ALERT/OS output in interrupt mode,
-correcting the base TMP105 as well.
+Add two qgraph tests exercising the ALERT pin, the only way the TMP105
+exposes its alarm state. One checks the default single-fault behaviour;
+the other checks a deeper fault queue, including the running-count reset
+on an in-range conversion and its effect on both asserting and releasing
+the alarm.
 
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- hw/sensor/tmp105.c         | 171 +++++++++++++++++++++++++++++++++++++--------
- include/hw/sensor/tmp105.h |   6 +-
- 2 files changed, 147 insertions(+), 30 deletions(-)
+ tests/qtest/tmp105-test.c | 63 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 63 insertions(+)
 
-diff --git a/hw/sensor/tmp105.c b/hw/sensor/tmp105.c
-index fefa661711..69ade2013d 100644
---- a/hw/sensor/tmp105.c
-+++ b/hw/sensor/tmp105.c
-@@ -1,5 +1,5 @@
- /*
-- * Texas Instruments TMP105 temperature sensor.
-+ * Texas Instruments TMP105/TMP75/TMP175/LM75B temperature sensor.
-  *
-  * Copyright (C) 2008 Nokia Corporation
-  * Written by Andrzej Zaborowski <andrew@openedhand.com>
-@@ -16,6 +16,13 @@
-  *
-  * You should have received a copy of the GNU General Public License along
-  * with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *
-+ * Limitations:
-+ * - The SMBus Alert Response Address protocol and the general-call commands
-+ *   are not implemented.
-+ * - The over-limit comparison uses the full 8.8 fixed-point temperature and a
-+ *   ">=" boundary for every variant. The LM75B's 9-bit comparison quantisation
-+ *   and strict-exceed boundary are therefore only approximated.
-  */
+diff --git a/tests/qtest/tmp105-test.c b/tests/qtest/tmp105-test.c
+index 3b114a50f55..29a031fb7bf 100644
+--- a/tests/qtest/tmp105-test.c
++++ b/tests/qtest/tmp105-test.c
+@@ -17,6 +17,11 @@
  
- #include "qemu/osdep.h"
-@@ -31,15 +38,29 @@
- #include "migration/vmstate.h"
- #include "trace.h"
- 
--OBJECT_DECLARE_SIMPLE_TYPE(TMP105State, TMP105)
-+OBJECT_DECLARE_TYPE(TMP105State, TMP105Class, TMP105)
- 
- /**
-- * TMP105State:
-- * @config: Bits 5 and 6 (value 32 and 64) determine the precision of the
-- * temperature. See Table 8 in the data sheet.
-+ * TMP105Variant:
-+ * Per-device-model parameters. The TMP105, TMP75, TMP175 and LM75B share the
-+ * same register map and control semantics; they differ only in a handful of
-+ * details captured here.
-  *
-- * @see_also: http://www.ti.com/lit/gpn/tmp105
-+ * @faultq: fault-queue length table selected by Config bits
-+ * @config_wmask: writable Config bits. The LM75B has no resolution (R1:R0) or
-+ * one-shot (OS) bits.
-+ * @fixed_res: converter resolution field pinned by the device, or -1 when it is
-+ * software-selectable.
-+ * @limit_lsb_mask: low-byte mask applied to the T_LOW/T_HIGH limit registers.
-  */
-+typedef struct TMP105Variant {
-+    const uint8_t *faultq;
-+    uint8_t config_wmask;
-+    int8_t fixed_res;
-+    uint8_t limit_lsb_mask;
-+    bool tm_change_clears_alert;
-+} TMP105Variant;
+ #define TMP105_TEST_ID   "tmp105-test"
+ #define TMP105_TEST_ADDR 0x49
++#define TMP105_TEST_PATH "/machine/peripheral/" TMP105_TEST_ID
 +
- struct TMP105State {
-     /*< private >*/
-     I2CSlave parent_obj;
-@@ -53,7 +74,7 @@ struct TMP105State {
-     uint8_t config;
-     int16_t temperature;
-     int16_t limit[2];
--    int faults;
-+    uint8_t faults;
-     uint8_t fault_count;
-     uint8_t alarm;
-     /*
-@@ -65,6 +86,11 @@ struct TMP105State {
-     bool detect_falling;
- };
++#define TMP105_CONFIG_POL   (1 << 2)   /* ALERT active-high when set */
++#define TMP105_CONFIG_FQ_1  (0 << 3)   /* fault queue: 1 consecutive fault */
++#define TMP105_CONFIG_FQ_4  (2 << 3)   /* fault queue: 4 consecutive faults */
  
-+struct TMP105Class {
-+    I2CSlaveClass parent_class;
-+    const TMP105Variant *var;
-+};
-+
- FIELD(CONFIG, SHUTDOWN_MODE,        0, 1)
- FIELD(CONFIG, THERMOSTAT_MODE,      1, 1)
- FIELD(CONFIG, POLARITY,             2, 1)
-@@ -152,10 +178,11 @@ static void tmp105_set_temperature(Object *obj, Visitor *v, const char *name,
-     tmp105_alarm_update(s, false);
+ static int qmp_tmp105_get_temperature(const char *id)
+ {
+@@ -105,6 +110,62 @@ static void send_and_receive(void *obj, void *data, QGuestAllocator *alloc)
+     g_assert_cmphex(i2c_get16(i2cdev, TMP105_REG_T_HIGH), ==, 0x4230);
  }
  
--static const int tmp105_faultq[4] = { 1, 2, 4, 6 };
--
- static void tmp105_read(TMP105State *s)
- {
-+    const TMP105Variant *var = TMP105_GET_CLASS(s)->var;
-+    int res;
-+
-     s->len = 0;
- 
-     if (FIELD_EX8(s->config, CONFIG, THERMOSTAT_MODE)) {
-@@ -165,9 +192,11 @@ static void tmp105_read(TMP105State *s)
- 
-     switch (s->pointer & 3) {
-     case TMP105_REG_TEMPERATURE:
-+        res = var->fixed_res >= 0 ? var->fixed_res :
-+              FIELD_EX8(s->config, CONFIG, CONVERTER_RESOLUTION);
-         s->buf[s->len++] = (((uint16_t) s->temperature) >> 8);
-         s->buf[s->len++] = (((uint16_t) s->temperature) >> 0) &
--                (0xf0 << (FIELD_EX8(~s->config, CONFIG, CONVERTER_RESOLUTION)));
-+                (0xf0 << (3 - res));
-         break;
- 
-     case TMP105_REG_CONFIG:
-@@ -190,6 +219,10 @@ static void tmp105_read(TMP105State *s)
- 
- static void tmp105_write(TMP105State *s)
- {
-+    const TMP105Variant *var = TMP105_GET_CLASS(s)->var;
-+    uint8_t config, one_shot;
-+    bool waking;
-+
-     trace_tmp105_write(s->parent_obj.address, s->pointer);
- 
-     switch (s->pointer & 3) {
-@@ -197,14 +230,27 @@ static void tmp105_write(TMP105State *s)
-         break;
- 
-     case TMP105_REG_CONFIG:
--        if (FIELD_EX8(s->buf[0] & ~s->config, CONFIG, SHUTDOWN_MODE)) {
-+        config = s->buf[0] & var->config_wmask;
-+        if (FIELD_EX8(config & ~s->config, CONFIG, SHUTDOWN_MODE)) {
-             trace_tmp105_write_shutdown(s->parent_obj.address);
-+            if (FIELD_EX8(config, CONFIG, THERMOSTAT_MODE)) {
-+                s->alarm = 0;
-+            }
-         }
--        s->config = FIELD_DP8(s->buf[0], CONFIG, ONE_SHOT, 0);
--        s->faults = tmp105_faultq[FIELD_EX8(s->config, CONFIG, FAULT_QUEUE)];
--        if (FIELD_EX8(s->buf[0], CONFIG, ONE_SHOT) &&
--            FIELD_EX8(s->config, CONFIG, SHUTDOWN_MODE)) {
-+        if (var->tm_change_clears_alert &&
-+            FIELD_EX8(config ^ s->config, CONFIG, THERMOSTAT_MODE)) {
-+            s->alarm = 0;
-+            s->fault_count = 0;
-+            s->detect_falling = false;
-+        }
-+        waking = FIELD_EX8(s->config & ~config, CONFIG, SHUTDOWN_MODE);
-+        one_shot = FIELD_EX8(config, CONFIG, ONE_SHOT);
-+        s->config = FIELD_DP8(config, CONFIG, ONE_SHOT, 0);
-+        s->faults = var->faultq[FIELD_EX8(s->config, CONFIG, FAULT_QUEUE)];
-+        if (one_shot && FIELD_EX8(s->config, CONFIG, SHUTDOWN_MODE)) {
-             tmp105_alarm_update(s, true);
-+        } else if (waking) {
-+            tmp105_alarm_update(s, false);
-         } else {
-             tmp105_interrupt_update(s);
-         }
-@@ -214,7 +260,8 @@ static void tmp105_write(TMP105State *s)
-     case TMP105_REG_T_HIGH:
-         if (s->len >= 3) {
-             s->limit[s->pointer & 1] = (int16_t)
--                    ((((uint16_t) s->buf[0]) << 8) | (s->buf[1] & 0xf0));
-+                    ((((uint16_t) s->buf[0]) << 8) |
-+                     (s->buf[1] & var->limit_lsb_mask));
-         }
-         tmp105_interrupt_update(s);
-         break;
-@@ -265,8 +312,9 @@ static int tmp105_event(I2CSlave *i2c, enum i2c_event event)
- static int tmp105_post_load(void *opaque, int version_id)
- {
-     TMP105State *s = opaque;
-+    const TMP105Variant *var = TMP105_GET_CLASS(s)->var;
- 
--    s->faults = tmp105_faultq[FIELD_EX8(s->config, CONFIG, FAULT_QUEUE)];
-+    s->faults = var->faultq[FIELD_EX8(s->config, CONFIG, FAULT_QUEUE)];
- 
-     tmp105_interrupt_update(s);
-     return 0;
-@@ -339,11 +387,12 @@ static const VMStateDescription vmstate_tmp105 = {
- static void tmp105_reset_hold(Object *obj, ResetType type)
- {
-     TMP105State *s = TMP105(obj);
-+    const TMP105Variant *var = TMP105_GET_CLASS(s)->var;
- 
-     s->temperature = 0;
-     s->pointer = 0;
-     s->config = 0;
--    s->faults = tmp105_faultq[FIELD_EX8(s->config, CONFIG, FAULT_QUEUE)];
-+    s->faults = var->faultq[FIELD_EX8(s->config, CONFIG, FAULT_QUEUE)];
-     s->fault_count = 0;
-     s->alarm = 0;
-     s->detect_falling = false;
-@@ -376,6 +425,7 @@ static void tmp105_class_init(ObjectClass *klass, const void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
-     ResettableClass *rc = RESETTABLE_CLASS(klass);
-+    TMP105Class *tc = TMP105_CLASS(klass);
- 
-     dc->realize = tmp105_realize;
-     k->event = tmp105_event;
-@@ -383,19 +433,82 @@ static void tmp105_class_init(ObjectClass *klass, const void *data)
-     k->send = tmp105_tx;
-     rc->phases.hold = tmp105_reset_hold;
-     dc->vmsd = &vmstate_tmp105;
-+    tc->var = data;
- }
- 
--static const TypeInfo tmp105_info = {
--    .name          = TYPE_TMP105,
--    .parent        = TYPE_I2C_SLAVE,
--    .instance_size = sizeof(TMP105State),
--    .instance_init = tmp105_initfn,
--    .class_init    = tmp105_class_init,
 +/*
-+ * Fault-queue length selected by Config F1:F0. Row 0 (1/2/4/6) is used by the
-+ * TMP105, TMP175 and LM75B; row 1 (1/2/3/4) by the TMP75.
++ * The TMP105 exposes its alarm state only through the ALERT pin.
 + */
-+static const uint8_t tmp105_faultq[][4] = {
-+    { 1, 2, 4, 6 },
-+    { 1, 2, 3, 4 },
- };
++static void test_alert_single_fault(void *obj, void *data,
++                                    QGuestAllocator *alloc)
++{
++    QI2CDevice *i2cdev = (QI2CDevice *)obj;
++
++    qtest_irq_intercept_out(global_qtest, TMP105_TEST_PATH);
++
++    i2c_set8(i2cdev, TMP105_REG_CONFIG, TMP105_CONFIG_POL | TMP105_CONFIG_FQ_1);
++    g_assert_false(get_irq(0));
++
++    qmp_tmp105_set_temperature(TMP105_TEST_ID, 85000);
++    g_assert_true(get_irq(0));
++
++    qmp_tmp105_set_temperature(TMP105_TEST_ID, 70000);
++    g_assert_false(get_irq(0));
++}
++
++static void test_fault_queue(void *obj, void *data, QGuestAllocator *alloc)
++{
++    QI2CDevice *i2cdev = (QI2CDevice *)obj;
++    int i;
++
++    qtest_irq_intercept_out(global_qtest, TMP105_TEST_PATH);
++
++    /* Comparator mode, active-high ALERT, fault queue of four. */
++    i2c_set8(i2cdev, TMP105_REG_CONFIG, TMP105_CONFIG_POL | TMP105_CONFIG_FQ_4);
++    g_assert_false(get_irq(0));
++
++    for (i = 0; i < 3; i++) {
++        qmp_tmp105_set_temperature(TMP105_TEST_ID, 85000);
++        g_assert_false(get_irq(0));
++    }
++
++    qmp_tmp105_set_temperature(TMP105_TEST_ID, 25000);
++    g_assert_false(get_irq(0));
++
++    for (i = 0; i < 3; i++) {
++        qmp_tmp105_set_temperature(TMP105_TEST_ID, 85000);
++        g_assert_false(get_irq(0));
++    }
++
++    qmp_tmp105_set_temperature(TMP105_TEST_ID, 85000);
++    g_assert_true(get_irq(0));
++
++    for (i = 0; i < 3; i++) {
++        qmp_tmp105_set_temperature(TMP105_TEST_ID, 70000);
++        g_assert_true(get_irq(0));
++    }
++
++    qmp_tmp105_set_temperature(TMP105_TEST_ID, 70000);
++    g_assert_false(get_irq(0));
++}
++
+ static void tmp105_register_nodes(void)
+ {
+     QOSGraphEdgeOptions opts = {
+@@ -116,5 +177,7 @@ static void tmp105_register_nodes(void)
+     qos_node_consumes("tmp105", "i2c-bus", &opts);
  
--static void tmp105_register_types(void)
--{
--    type_register_static(&tmp105_info);
--}
-+/* The F1:F0 field must never index past a fault-queue table row. */
-+QEMU_BUILD_BUG_ON((1 << R_CONFIG_FAULT_QUEUE_LENGTH) - 1 >=
-+                  ARRAY_SIZE(tmp105_faultq[0]));
-+
-+static const TMP105Variant tmp105_variant = {
-+    .faultq = tmp105_faultq[0],
-+    .config_wmask = 0xff,
-+    .fixed_res = -1,
-+    .limit_lsb_mask = 0xf0,
-+    .tm_change_clears_alert = false,
-+};
-+
-+static const TMP105Variant tmp175_variant = {
-+    .faultq = tmp105_faultq[0],
-+    .config_wmask = 0xff,
-+    .fixed_res = -1,
-+    .limit_lsb_mask = 0xf0,
-+    .tm_change_clears_alert = false,
-+};
-+
-+static const TMP105Variant tmp75_variant = {
-+    .faultq = tmp105_faultq[1],
-+    .config_wmask = 0xff,
-+    .fixed_res = -1,
-+    .limit_lsb_mask = 0xf0,
-+    .tm_change_clears_alert = true,
-+};
-+
-+static const TMP105Variant lm75b_variant = {
-+    .faultq = tmp105_faultq[0],
-+    .config_wmask = 0x1f,    /* R1:R0 and OS are reserved */
-+    .fixed_res = 2,          /* fixed 11-bit resolution, 0.125 C */
-+    .limit_lsb_mask = 0x80,  /* 9-bit limits, 0.5 C */
-+    .tm_change_clears_alert = false,
-+};
-+
-+static const TypeInfo tmp105_types[] = {
-+    {
-+        .name          = TYPE_TMP105,
-+        .parent        = TYPE_I2C_SLAVE,
-+        .instance_size = sizeof(TMP105State),
-+        .class_size    = sizeof(TMP105Class),
-+        .instance_init = tmp105_initfn,
-+        .class_init    = tmp105_class_init,
-+        .class_data    = &tmp105_variant,
-+    },
-+    {
-+        .name          = TYPE_TMP175,
-+        .parent        = TYPE_TMP105,
-+        .class_init    = tmp105_class_init,
-+        .class_data    = &tmp175_variant,
-+    },
-+    {
-+        .name          = TYPE_TMP75,
-+        .parent        = TYPE_TMP105,
-+        .class_init    = tmp105_class_init,
-+        .class_data    = &tmp75_variant,
-+    },
-+    {
-+        .name          = TYPE_LM75B,
-+        .parent        = TYPE_TMP105,
-+        .class_init    = tmp105_class_init,
-+        .class_data    = &lm75b_variant,
-+    },
-+};
- 
--type_init(tmp105_register_types)
-+DEFINE_TYPES(tmp105_types)
-diff --git a/include/hw/sensor/tmp105.h b/include/hw/sensor/tmp105.h
-index daece592e9..0698aeead7 100644
---- a/include/hw/sensor/tmp105.h
-+++ b/include/hw/sensor/tmp105.h
-@@ -1,5 +1,5 @@
- /*
-- * Texas Instruments TMP105 Temperature Sensor
-+ * Texas Instruments TMP105/TMP75/TMP175/LM75B Temperature Sensor
-  *
-  * Browse the data sheet:
-  *
-@@ -14,6 +14,10 @@
- #ifndef HW_SENSOR_TMP105_H
- #define HW_SENSOR_TMP105_H
- 
-+/* TMP75, TMP175 and NXP LM75B are register-compatible with TMP105. */
- #define TYPE_TMP105 "tmp105"
-+#define TYPE_TMP175 "tmp175"
-+#define TYPE_TMP75  "tmp75"
-+#define TYPE_LM75B  "lm75b"
- 
- #endif
+     qos_add_test("tx-rx", "tmp105", send_and_receive, NULL);
++    qos_add_test("alert-single-fault", "tmp105", test_alert_single_fault, NULL);
++    qos_add_test("fault-queue", "tmp105", test_fault_queue, NULL);
+ }
+ libqos_init(tmp105_register_nodes);
 
 -- 
 2.50.1
