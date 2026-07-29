@@ -4,77 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6E0DC54F51
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 12:46:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72E79C53200
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 13:17:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp3fk-0006hB-9l; Wed, 29 Jul 2026 08:46:08 -0400
+	id 1wp491-0005JW-2W; Wed, 29 Jul 2026 09:16:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wp3fh-0006fe-5F
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 08:46:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1wp48v-0005Iu-9g; Wed, 29 Jul 2026 09:16:18 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wp3ff-0000Dc-7b
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 08:46:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785329162;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0C0KEc7fmodXRRaLfl5nsdgWxAjHwuQvUyvH1IbIkys=;
- b=hvrkrdrRJPDWBersDlG+3d4GeIwjG/y3w4z739PozNoJx9iyVqK0PqOQa+8MInBcRiK71t
- JbxzWWs6Ur0hrm2HikLMxuzIOuLdFNeTkuglAkPSOY52NK6xiNWjp1LmJw+2qDQ7XXM0ML
- 2jENgOGRjp3pr3WFtZzMWj07mLaUAwI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-245-YguQSYtmNPqTsizD0pTaeQ-1; Wed,
- 29 Jul 2026 08:46:00 -0400
-X-MC-Unique: YguQSYtmNPqTsizD0pTaeQ-1
-X-Mimecast-MFC-AGG-ID: YguQSYtmNPqTsizD0pTaeQ_1785329158
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 39C10195604B; Wed, 29 Jul 2026 12:45:58 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2A0C8180044F; Wed, 29 Jul 2026 12:45:57 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id CBC1321E6920; Wed, 29 Jul 2026 14:45:54 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: jasowang@redhat.com,  mst@redhat.com,  peterx@redhat.com,
- farosas@suse.de,  raphael.s.norwitz@gmail.com,  bchaney@akamai.com,
- qemu-devel@nongnu.org,  berrange@redhat.com,  pbonzini@redhat.com,
- yc-core@yandex-team.ru,  mark.caveayland@nutanix.com,  Jason Wang
- <jasowangio@gmail.com>,  Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v20 13/15] net/tap: support local migration with virtio-net
-In-Reply-To: <86a38d6a-f9e4-4597-a7e6-9999cd8a11f6@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Wed, 29 Jul 2026 15:25:40 +0300")
-References: <20260729091334.1863155-1-vsementsov@yandex-team.ru>
- <20260729091334.1863155-14-vsementsov@yandex-team.ru>
- <87jyqeqbgx.fsf@pond.sub.org>
- <86a38d6a-f9e4-4597-a7e6-9999cd8a11f6@yandex-team.ru>
-Date: Wed, 29 Jul 2026 14:45:54 +0200
-Message-ID: <87zezaotfh.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1wp48t-0006dy-D5; Wed, 29 Jul 2026 09:16:17 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id 21538600BB;
+ Wed, 29 Jul 2026 13:16:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 026691F00A3A;
+ Wed, 29 Jul 2026 13:16:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1785330964;
+ bh=evAvWUfQ1WJQi9YR6wUf0+FTw/54fnlp+3u3zzxLd0Q=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=L7G+QeFZKOIfCRV4DOv0UbUoNK+6rZ6WvHpQUsS/Tw0r54X1IV+xj0XxNp4kxyPSl
+ vwOWqZn52ccVoGxQdnHMxVe5U5u7j5LmwjfXY8yTWDHneyuYdIaILzV2gxFwHtOPrS
+ 6Ge60HTInb52iXCRjBydsIwNrTzarnJBxssbcjJMYiaEo/XzmE0eBlIhqZQ5skVwr4
+ zn5dJp2li6M+IKB9MkS5e4rH2RsUCAQlj3X8w+hEruN/B7jvdkj3EVth1RsYjlkbZx
+ /Mf/XvuAfpAlQfUZw+s1g8RL8Z70V/LXGh8uUCMc1b4Pbcid64gCemc2mM9Zpta8P9
+ ENwQARI81OZRg==
+Date: Wed, 29 Jul 2026 15:16:00 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Sam Li <faithilikerun@gmail.com>,
+ Dmitry Fomichev <dmitry.fomichev@wdc.com>,
+ Damien Le Moal <dlemoal@kernel.org>,
+ Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Subject: Re: [PATCH v2] file-posix: fix cache.direct=on check for zoned block
+ devices
+Message-ID: <amn9EN4bj7YLpyIB@ryzen>
+References: <20260617133658.2022750-1-cassel@kernel.org>
+ <20260618150025.GC720244@fedora>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260618150025.GC720244@fedora>
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=cassel@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,14 +74,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+On Thu, Jun 18, 2026 at 11:00:25AM -0400, Stefan Hajnoczi wrote:
+> On Wed, Jun 17, 2026 at 03:36:58PM +0200, Niklas Cassel wrote:
+> > For zoned block devices with SWR zones, the order of the writes must be
+> > maintained to avoid write not at write pointer errors.
+> > Thus, cache.direct=on must be used to bypass the page cache, since the
+> > page cache uses write-back caching, where the physical order of the writes
+> > is not guaranteed.
+> > 
+> > There is already a check for cache.direct=on in raw_open_common(),
+> > however, this check is done before raw_refresh_zoned_limits() has been
+> > called (which initializes bs->bl.zoned), so it is currently dead code.
+> > 
+> > Fix this by moving the check to raw_refresh_zoned_limits(), such that the
+> > check is done after bs->bl.zoned has been initialized.
+> > 
+> > Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+> > Reviewed-by: Dmitry Fomichev <dmitry.fomichev@wdc.com>
+> > Fixes: 774c726ceb2a ("block: add zoned BlockDriver check to block layer")
+> > Signed-off-by: Niklas Cassel <cassel@kernel.org>
+> > ---
+> > Changes since v1:
+> > -Picked up tags from Damien and Dmitry
+> > -Modified existing code comment to use plural instead of singular
+> > 
+> >  block/file-posix.c | 22 ++++++++++------------
+> >  1 file changed, 10 insertions(+), 12 deletions(-)
+> 
+> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-[...]
+Gentle ping on this patch.
 
-> Or x-permit-local-migration? I've added "x-" prefix as Michael suggested.
-> And it seems reasonable, as it's not only QAPI field, but also QOM property,
-> and we don't have "unstable" features for properties.
+Would be nice if anyone could pick it up :)
 
-I'm fine with "x-".
 
+Kind regards,
+Niklas
 
