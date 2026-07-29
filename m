@@ -4,139 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEE21C54F52
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 13:30:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F83EC54F51
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 14:01:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp4MP-0007jc-Ct; Wed, 29 Jul 2026 09:30:13 -0400
+	id 1wp4ph-0005Uo-K0; Wed, 29 Jul 2026 10:00:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wp4MM-0007jN-Os
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 09:30:10 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wp4pe-0005UZ-SK
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 10:00:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wp4ML-0001dj-3H
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 09:30:10 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66TD89HR2144073
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 13:30:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 7o520iD6vAXproxNtG9jKUsZWRYUepljt5EPuEGeAKA=; b=GUN0U6AqcCWF/HGK
- l60jzmyBL/rFyjMYXJefukxazNhcmgMJhihRcd3LrsVpSkcGIDkHj01WLPLbOndo
- p80OAvDDgptZahZqrCnVB41RS0sFz5uCKqwb5XeqgTnJl8/VxeAcSL8c4LZvnPrB
- rg5ywA9ksEm598LoikNzxK05pqpWpZCENl4MzdLX+ugKjiMDTA9WFMV6n/2AdzHq
- h8bgHXBoZnIHBIGKvh86OebCCx7XKZJZufvChCsefFFsk293XNKLXXmFiq05k4W7
- +PcQFSoiVl8Lse6mZqeK+vAOHi69qcSUhhxYsRARn+pXc4vs3DzIpmYLH1NNy1y3
- NYhV6g==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fqh3ggbud-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 13:30:05 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51c0f0a0760so19506401cf.2
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 06:30:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wp4pb-0007kc-Td
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 10:00:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785333621;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=e32g8xX9tcDIlAcR2bDdawCIfJ9uMQIzd88MCdytoII=;
+ b=X+aVmj5Q5Y3jB/OE3BNZElWw9k/6C+tSQgxeei5nEJHRqfta9L3RUXBlIzxSTNnzpjP2Nu
+ ojAvBA9oJZXDfXAsvkLCDrZdajXD+qU5e923KcuYAZx5dba6wemMLRo0ZK/x+ZSyA6PEMg
+ y+EVWPQQFtUwWeQqafbgjlcCdHgNv/E=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-516-TWc8j2HlPwmxl0TUnPBphA-1; Wed, 29 Jul 2026 10:00:20 -0400
+X-MC-Unique: TWc8j2HlPwmxl0TUnPBphA-1
+X-Mimecast-MFC-AGG-ID: TWc8j2HlPwmxl0TUnPBphA_1785333620
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8eec6acbe21so23040176d6.3
+ for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 07:00:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1785331804; x=1785936604; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=7o520iD6vAXproxNtG9jKUsZWRYUepljt5EPuEGeAKA=;
- b=g2G30DR2fdmPjKKPuXGOCxqsXcv2EPaMcD+ID3Kb27aLUm1I2EcgnN3jZPIstmu1eY
- c86EbSYxInpwCyfJVnacYQajdZMIoWr8tuErCBZymykxPqAZEQ7wCTrNdDeaxUlQlyAc
- 8bVx4FtuBEkWcVP/TQiRV4mFmonyAesl+ixwX7VluamYjg16UmiEYxzT8/00DKYa0ql8
- QIqgnuzFNd+09p270ZaZAtKwhZSqmWjpt9p6AdYahdn44OgKGHIP+xo8ipQEd0+Oy/XQ
- fULvff6D0Y8RH4SJ+sScXfCnpkrVKbi7VBMsQyZsOx9k2IA8Hf9srK9PPKlEPitzAXRg
- gvTw==
+ d=redhat.com; s=google; t=1785333620; x=1785938420; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=e32g8xX9tcDIlAcR2bDdawCIfJ9uMQIzd88MCdytoII=;
+ b=DzCkrNFLqponGdt+A38xx4nYsMxtpfDd1I6WqDCg0BOrLw8T92vmXTViX6RLRzIvda
+ UT7/50bq+Ol+uXnXQx2WCEoQJTWXacG+hzZp54qXsLyED8lMFDp2rf5zj/OddT3dUGR3
+ U6F/OHtzkI2AlD3n97AmiBj7Zd6GzUtWWQep5CifF7roarshazuMHLQhE5YtVKrlzrCu
+ aKxN+09W0a7qzD7ZuWSW1i4Byf0fE7SkpVNyI/Q6rMJgW2n5GqyktNAY/Vl722wXwFxt
+ xof5mlmbwW9rOwRU+cHp6+I1OTpU9Fw8AHs3ot9NRtntwcfG8vUzehlmy+uKh8liapU/
+ RFAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785331804; x=1785936604;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=7o520iD6vAXproxNtG9jKUsZWRYUepljt5EPuEGeAKA=;
- b=Jn5IdWFg3lQbE91IwWbQaj81DMoopvdIDXrNdUv0USXYPurloq90qRRn1H9iB5E+pA
- /O9MfRSn5fdIFBJhv0U9FUqlOrroD71y9NesR+O4xuclADpwtT2P3kwJM//DTQ5WxS8q
- /As7uVuqCd/+AlMpSC7nxFSXAVxI7eEKsMG0Cn3uCfeyil800QMJk9siVHlCMRinIMAC
- 7dGaSkKgWA1JMc6Mqg7weUp5P9Xg4Vzd4HAWe4tc9EBLPJPo0AiWMsx7KVNV87gNd2X9
- j3h2MBEvH46A27cNaIh0AF4mMOrWkaQ6B0BmInY6d04OrUuhg9L1wERvu2wo6g7EM/gF
- RjTg==
-X-Gm-Message-State: AOJu0YwWsmuHg+me5YDhnLkfCx5L5Du1b53ekBVaGzaA8vlh9VG7QGG1
- 4WWO+WqHgE11ccvd5o6288WgC1ARx2cCiSILshYdsKWz3IF4djfrQ5GNno/CcgrsvdHSE5wQOzV
- SI9jxPbN/8leshAHKW4oRhQt6wkzHu0xB4opmuk6/OU3OqGpEfgA+M0WXUg==
-X-Gm-Gg: AR+sD12heUKvW125kHV+t86NOSh3t7QB+JpNMpnafsMa+Z9t+NQ81O/wheCGt+sgOcx
- wtGitw+qTNz27R+AuOu1pjwvabhrjWTrpA3j3NCApj9dFA8igStUnn7ZbpnfRHK3LYMcQr6AG4E
- qDZTnZ4B83eeDgXnJD922rruLGtFWELbV8FxejGFHAfGhQFHg/Q+tbcQn6XnmWI69CHtaSMS1FJ
- 4EhWkrqK6owm6urBN2uFm0i3PcNp4AOhNc0XGe2K4r4z+/ys9SMCQu4qyxCqlP6A/JRTNJJywIt
- MoZc5H2fKHBn5Iw/oiI10bAZszlPF6vVbMf8GFRnJIj8AChTMLAk1KmLGUW2128xI8NH4+2naVH
- tJa/MB5Tu2bGFqb6+GaBkQi7f9QfnnvOVq118JRP451M3L8Okrik=
-X-Received: by 2002:ac8:7fcd:0:b0:51a:8835:58cb with SMTP id
- d75a77b69052e-529d71d8c6emr62138971cf.54.1785331804266; 
- Wed, 29 Jul 2026 06:30:04 -0700 (PDT)
-X-Received: by 2002:ac8:7fcd:0:b0:51a:8835:58cb with SMTP id
- d75a77b69052e-529d71d8c6emr62138451cf.54.1785331803530; 
- Wed, 29 Jul 2026 06:30:03 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4976bd6da4asm44081265e9.1.2026.07.29.06.30.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Jul 2026 06:30:02 -0700 (PDT)
-Message-ID: <eeac5fd9-e03e-43e6-b53b-d0bb2d9e375f@oss.qualcomm.com>
-Date: Wed, 29 Jul 2026 15:30:01 +0200
+ d=1e100.net; s=20251104; t=1785333620; x=1785938420;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=e32g8xX9tcDIlAcR2bDdawCIfJ9uMQIzd88MCdytoII=;
+ b=qiZq2fcJ31JggcgBBaFT0qNXGvt+EmAvhOmavZGLhefxa0TXj6b033bWfDhSEq57k1
+ 1tlnoHqKA4mdpP38VFuuG+BJHSOkOjokI8u3H+BiwNMtTbaV7hhlr9MRcJVKScNMqvFR
+ 1sUcc9dfNNSXrOq9R5qubtRKubTMVNGU9z1HalGjVTwv5eKMtd9ntJZaDb2jE23S7Gbp
+ Js5GX2dvf/ZVq28HFxYst9udXJs35YNyYKAm4YUfGLexI9/4IKMlSPy9+pbQVnfSVIWQ
+ TIgU+J1IRKRaYPayn5hsl/PTdTBbZJ3l9A5sE9aijiL4AXlOrn+7yKC6237O+icI7tK1
+ Kg1A==
+X-Gm-Message-State: AOJu0YxxtfppiXT9Js+ieFdQYZlbFanlCp4dgxN1a/0VxENgo57N78Mv
+ vGHO06QTb92rnrTrVt/uwWmEAbUooMM4JvzODVvmsEYjXy04KhDMbjf/9WmMAGcORcf83gBZf+t
+ 0NmIT8a675ltOQVwYddDQ602RrDhK1RqVAY9YEJ+gIULqN+0+C3+lw7PO
+X-Gm-Gg: AR+sD10Xf1z52pWIWCDq36ddcO2ltztW0477uzVo5SCM8RjMaOfJ67cxgoOtZ/DxO+e
+ tJJeZTfrb/X86dWTsMlamce21XsXoR8TC6ee4CE1uqobC6RtRJNerVBBZcrHQbcYaYvrC0v5Xo1
+ g6H8sww2SmL8br4ecR5A4ADlkjW6N6l9AZrvOba3W1/hw9O5uSyIiumA3SWjJj39FWjwpDvwDDi
+ gD2B334T+bKa1DgVVLj/Y5hbLd5E1oPgoX2Gzo7oPn/GZ9UzcoAatK3vhFY9UcYoODRSbO/XzJ2
+ l9PsvAPuNNCLqYnkN8TlGhJ26LrXwquS4VUnOMJFsZX5Sm32lnl2ddysogX+tP5Yw0fYvMfftEq
+ qm4GGoeVKD1HZ3jYvq1n+tHpVew4=
+X-Received: by 2002:a05:6214:413:b0:8e9:f5de:d613 with SMTP id
+ 6a1803df08f44-9081734f655mr73698796d6.50.1785333618800; 
+ Wed, 29 Jul 2026 07:00:18 -0700 (PDT)
+X-Received: by 2002:a05:6214:413:b0:8e9:f5de:d613 with SMTP id
+ 6a1803df08f44-9081734f655mr73696186d6.50.1785333616767; 
+ Wed, 29 Jul 2026 07:00:16 -0700 (PDT)
+Received: from x1.local (67-208-31-164.ip.tor.radiant.net. [67.208.31.164])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-9081dd905a0sm24886366d6.44.2026.07.29.07.00.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 Jul 2026 07:00:16 -0700 (PDT)
+Date: Wed, 29 Jul 2026 10:00:13 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?utf-8?B?6rmA7Iq57KSR?= <seungjung0711@gmail.com>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Subject: Re: [PATCH] vhost/migration: Fix incorrect size used in
+ inflight->addr in VMSD
+Message-ID: <amoHbVsgzkYclCt2@x1.local>
+References: <20260728153942.1891677-1-peterx@redhat.com>
+ <87jyqeomqz.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Issue with PyPI when working offline
-Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>
-Cc: QEMU Developers <qemu-devel@nongnu.org>, Cleber Rosa <crosa@redhat.com>
-References: <6e28a268-6ec0-4f83-8d31-76c48634c2b0@linaro.org>
- <9cf3e30b-b2fe-4507-ac57-b437dca14721@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <9cf3e30b-b2fe-4507-ac57-b437dca14721@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI5MDExMSBTYWx0ZWRfX06IjY8QmNaFs
- PwE6fT3hGCjiQ2rAeYof5Zb43wF7rE1NuAUAxRe0hZkwEv2v2x26WDlIDwKY7RIipRZaDavbnDk
- iLRrrHO67n8ilNA9H92CbIVCunaOwD2GVX6UO8r/sC9dzMp4pg8R4L2oUi3y+3C8R84JM2V9/Ix
- tSc3FpzxrOyDggg/FZS7oK/KaicXJOAsCBrd5n/9rty19t6btqfqlvwh2QavmIy2cPkmrUCh/d2
- CQEUjGkKGw5y33XmEg/U07O8Mi80NYnCg2k40y+enDYtHaO8mBMopypcS9btQBvmf4/m5ZgFubU
- bDR5rI5rJYYPQWedT6HfPvXbBMycKTDXwRfNEj8bSHBm32sSyyCGm1hTi6UjRQVV5qr8echYqqU
- o7R//MMW5o6vZgnhto/PIbo5Fe5zg5CoU+w3vSIQb58FcvQaoJ+p1Pga1/RQ4V5u+QNhklc20BM
- v9/Rvi4ycDXDhrfM7qw==
-X-Proofpoint-ORIG-GUID: UGcfIVQzzUEE8CcW99BPD_36T9nLc2jM
-X-Authority-Analysis: v=2.4 cv=EOw2FVZC c=1 sm=1 tr=0 ts=6a6a005d cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=CckQENj0AAAA:8 a=4EhkSYhyf4amYo8IwWcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-GUID: UGcfIVQzzUEE8CcW99BPD_36T9nLc2jM
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI5MDExMSBTYWx0ZWRfXwJs2DJe8s+sd
- FnMEEdbuAU/GjKkQnhiRBCpVJS4IjYIdeJtCxcQ9AmHAQaCE7vjVP2Hbcw/waVHIHATTCDU3Pra
- xirQpEFAsH9P99yRFF4qGxoPH/WutAY=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-29_05,2026-07-28_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 suspectscore=0 malwarescore=0 spamscore=0
- impostorscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607290111
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <87jyqeomqz.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,50 +123,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo,
-
-On 13/5/26 15:36, Paolo Bonzini wrote:
-> On 5/13/26 15:04, Philippe Mathieu-Daudé wrote:
->> Hi,
->>
->> This is the second time I'm working offline and do a simple
->> rebase, which triggers a re-configure, and then I'm stuck because
->> PyPI tries to access the Internet and do not allow me to neither
->> build nor test:
+On Tue, Jul 28, 2026 at 05:57:56PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
 > 
-> Does it work if you configure with --disable-download?
+> > It was overlooked that VMSTATE_VBUFFER_UINT64() won't really work with an
+> > uint64_t, as vmstate core only treats the size as 32bits, and maximum
+> > INT32_MAX (see vmstate_size()).
+> >
+> > Considering that we do not need real 64bits for the size, stick with the 2G
+> > limit, converting the size field into 32bits.
+> >
+> > Since we can't touch the wire protocol on migration from an old QEMU, we
+> > can't directly modify the type of size to uint32_t.  Instead, we need to
+> > introduce a temporary variable for this extremely rare issue __size_32bits
+> > to be used only for VMSTATE_VBUFFER_UINT32().  Document it and name it
+> > weird enough so people won't get confused on having two size variables.
+> >
+> > Remove VMSTATE_VBUFFER_UINT64() altogether, because it was never going to
+> > be used right.  It means QEMU will only support 2G max for VMS_VBUFFER.
+> >
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3675
+> > Reported-by: 김승중 <seungjung0711@gmail.com>
+> > Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+> > Cc: Michael S. Tsirkin <mst@redhat.com>
+> > Cc: Fabiano Rosas <farosas@suse.de>
+> > Fixes: 3a80ff0721 ("vhost: add vmstate for inflight region with inner buffer")
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >
+> > PS1: I only did smoke test as I'm not fluent with vhost inflight feature.
+> > Please kindly try it out if possible. In general, migrations from older
+> > QEMU should work even after applied.  One can also treat this as partly-RFC
+> > from that.
+> >
+> > PS2: Michael, we have just discussed what we should define as CVE for
+> > migration, and this one shouldn't fall into CVE category, please refer to:
+> >
+> > https://lore.kernel.org/r/20260721131457.3062767-1-farosas@suse.de
+> >
+> > So I didn't yet attach CVE tag.  Please correct if I'm wrong, thanks.
+> > ---
+> >  include/hw/virtio/vhost.h   |  5 +++++
+> >  include/migration/vmstate.h | 10 ----------
+> >  hw/virtio/vhost.c           | 19 ++++++++++++++-----
+> >  3 files changed, 19 insertions(+), 15 deletions(-)
+> >
+> > diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+> > index 684bafcaad..1d1cc24c04 100644
+> > --- a/include/hw/virtio/vhost.h
+> > +++ b/include/hw/virtio/vhost.h
+> > @@ -17,6 +17,11 @@ struct vhost_inflight {
+> >      int fd;
+> >      void *addr;
+> >      uint64_t size;
+> > +    /*
+> > +     * This is a temporary variable only used during migration loading to
+> > +     * satisfy VMSTATE_VBUFFER_UINT32() typing. Please use @size otherwise.
+> > +     */
+> > +    uint32_t __size_32bits;
+> >      uint64_t offset;
+> >      uint16_t queue_size;
+> >  };
+> > diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+> > index 1b7f295417..a349b2d84a 100644
+> > --- a/include/migration/vmstate.h
+> > +++ b/include/migration/vmstate.h
+> > @@ -782,16 +782,6 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+> >      .offset       = offsetof(_state, _field),                        \
+> >  }
+> >  
+> > -#define VMSTATE_VBUFFER_UINT64(_field, _state, _version, _test, _field_size) { \
+> > -    .name         = (stringify(_field)),                             \
+> > -    .version_id   = (_version),                                      \
+> > -    .field_exists = (_test),                                         \
+> > -    .size_offset  = vmstate_offset_value(_state, _field_size, uint64_t),\
+> > -    .info         = &vmstate_info_buffer,                            \
+> > -    .flags        = VMS_VBUFFER | VMS_POINTER,                       \
+> > -    .offset       = offsetof(_state, _field),                        \
+> > -}
+> 
+> Why don't you just leave this macro around, put a "do not use" comment
+> above it and remove the type check for this one instance? You're already
+> checking against INT32_MAX during pre_load.
 
-I got this issue again today:
+What's the benefit of keeping this global macro if we only allow one user
+to use it?
 
-$ ../configure --disable-docs --enable-plugins 
---target-list=aarch64-softmmu --enable-tcg --enable-kvm
-python determined to be '/usr/bin/python3'
-python version: Python 3.14.4
-mkvenv: Creating non-isolated virtual environment at 'pyvenv'
-mkvenv: checking for meson>=1.5.0
-mkvenv: checking for pycotap>=1.1.0
-mkvenv: installing meson==1.11.1, pycotap==1.3.1
-mkvenv: checking for qemu.qmp>=0.0.5
-mkvenv: checking for setuptools>=44.1.1
-mkvenv: checking for wheel>=0.34.2
-mkvenv: checking for pip>=20.3.4
-mkvenv: installing qemu.qmp==0.0.6
-WARNING: Retrying (Retry(total=4, connect=None, read=None, 
-redirect=None, status=None)) after connection broken by 
-'ReadTimeoutError("HTTPSConnectionPool(host='pypi.org', port=443): Read 
-timed out. (read timeout=15)")': /simple/qemu-qmp/
-WARNING: Retrying (Retry(total=3, connect=None, read=None, 
-redirect=None, status=None)) after connection broken by 
-'ReadTimeoutError("HTTPSConnectionPool(host='pypi.org', port=443): Read 
-timed out. (read timeout=15)")': /simple/qemu-qmp/
-WARNING: Retrying (Retry(total=2, connect=None, read=None, 
-redirect=None, status=None)) after connection broken by 
-'ReadTimeoutError("HTTPSConnectionPool(host='pypi.org', port=443): Read 
-timed out. (read timeout=15)")': /simple/qemu-qmp/
+Commenting to say "don't use" is not guaranteeing anything, at least we
+should also rename the macro to some weird name to make people notice.
+Keeping the macro name like this OTOH suggests abuse.  But if we think it
+should only be used in 1 place, fixing the one place might be better?
 
-Indeed using --disable-download fixed it.
+> 
+> We could even lift that check up into vmstate_pre_load and reject
+> there globally, don't even touch the virtio code.
+
+Personally, I don't like the idea leaking VBUFFER impl details into
+vmstate_pre_load() which is so far only a wrapper, especially only for this
+one instance.. which we do not suggest future users to use.
+
+If we go this route, I'd rather merge Michael's version to support u64,
+even if we don't need a u64 size.  But I really don't want to introduce yet
+another VMS flag just for this... we'll have no real use if we have noticed
+this problem when the vhost inflight patch was reviewed.  It will be a
+uint32_t or int32_t already.  I just can't come up with some users need
+size >2G.
+
+The recent AI reports just make such feeling stronger: we just used the
+reason "max 2G, should be fine" when AI reports that unlimited size
+allocation problem, now we will need to wait for another AI report which
+says "it's not 2G anymore, 1<<64-1 that is", if we don't come up with a
+proper limit for VMSD field allocations.
+
+> 
+> 
+> /rant
+> ... what's even the point of having per-type variants of VMSTATE macros
+> that exist just to type-check the extra offsets (.num_offset,
+> .size_offset as opposed to .offset)?
+> 
+> For instance, look at vmstate_n_elems casting opaque data to 32 and
+> sub-32bit size and assigning to an int! What do we gain from that? It's
+> circular reasoning that does nothing aside from bothering the person
+> writing the vmstate.
+> 
+> Right? Maybe I'm missing something, it's the end of the day already.
+
+I can also only guess, which is.. I believe Michael was right, the initial
+vmstate code was simply broken where it should have considered the type of
+size fields of all kinds, but forgot, and it just worked because nobody
+needed u64 for a size field.
+
+Said that, I still want to see if we can avoid introducing that at all.  To
+me, I still prefer this patch (after fixing pre_save()..).  But let me know
+if I didn't convince any of you.. we can discuss.
 
 Thanks,
 
-Phil.
+> 
+> > -
+> >  #define VMSTATE_VBUFFER_ALLOC_UINT32(_field, _state, _version,       \
+> >                                       _test, _field_size) {           \
+> >      .name         = (stringify(_field)),                             \
+> > diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> > index af41841b52..e7c570d0f5 100644
+> > --- a/hw/virtio/vhost.c
+> > +++ b/hw/virtio/vhost.c
+> > @@ -2022,15 +2022,24 @@ void vhost_get_features_ex(struct vhost_dev *hdev,
+> >  static bool vhost_inflight_buffer_pre_load(void *opaque, Error **errp)
+> >  {
+> >      struct vhost_inflight *inflight = opaque;
+> > -
+> >      int fd = -1;
+> > -    void *addr = qemu_memfd_alloc("vhost-inflight", inflight->size,
+> > -                                  F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
+> > -                                  &fd, errp);
+> > +    void *addr;
+> > +
+> > +    if (inflight->size > INT32_MAX) {
+> > +        error_setg(errp, "inflight size '%"PRIu64"' exceeds "
+> > +                   "migration limit '%"PRIu32"'", inflight->size, INT32_MAX);
+> > +        return false;
+> > +    }
+> > +
+> > +    addr = qemu_memfd_alloc("vhost-inflight", inflight->size,
+> > +                            F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
+> > +                            &fd, errp);
+> >      if (!addr) {
+> >          return false;
+> >      }
+> >  
+> > +    /* Only used in VMSTATE_VBUFFER_UINT32() */
+> > +    inflight->__size_32bits = inflight->size;
+> >      inflight->offset = 0;
+> >      inflight->addr = addr;
+> >      inflight->fd = fd;
+> > @@ -2042,7 +2051,7 @@ const VMStateDescription vmstate_vhost_inflight_region_buffer = {
+> >      .name = "vhost-inflight-region/buffer",
+> >      .pre_load_errp = vhost_inflight_buffer_pre_load,
+> >      .fields = (const VMStateField[]) {
+> > -        VMSTATE_VBUFFER_UINT64(addr, struct vhost_inflight, 0, NULL, size),
+> > +        VMSTATE_VBUFFER_UINT32(addr, struct vhost_inflight, 0, NULL, __size_32bits),
+> >          VMSTATE_END_OF_LIST()
+> >      }
+> >  };
+> 
+
+-- 
+Peter Xu
+
 
