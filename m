@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE4EFC54FD4
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 20:59:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 178CFC54F51
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 20:59:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpBMt-0002cx-0h; Wed, 29 Jul 2026 16:59:11 -0400
+	id 1wpBMw-0002eT-Hk; Wed, 29 Jul 2026 16:59:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wpBMs-0002cb-1T
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 16:59:10 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wpBMt-0002d0-BV
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 16:59:11 -0400
 Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wpBMq-0003jf-8C
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 16:59:09 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wpBMr-0003jx-Kh
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 16:59:11 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id DA38E41337;
- Wed, 29 Jul 2026 20:59:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50AC1F000E9;
- Wed, 29 Jul 2026 20:59:05 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 8E64843AA0;
+ Wed, 29 Jul 2026 20:59:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311291F000E9;
+ Wed, 29 Jul 2026 20:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1785358746;
- bh=BEFr1h/VsNDeqpel0U40OJaN6BsW/FCmAU4aUz8uGAI=;
+ s=k20260515; t=1785358748;
+ bh=D+7TI/A5weC4o5qGGiEE6Wy+v675CcpJHfbuWtjckgE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Kcvou41bIbQDHBrMc4J5TjpNv9aTQ8CwZHqAqfFZ+Mwx4HiTuwX8tvP2I1GplU7WT
- KaT+rYUAh7TE9fBSIVfsEFAln0SEECHFP4CMZe6rlQwavcRrqNpLk03D8MuNDZI5pm
- PVywPjdpv/7D+eRAeqZ/ImluRo15t85GTS53wozhamEm5Nhl1k/1ugm7/uzHucUkMn
- GeE5cDLWSHUtdWDWAIcjXMPTqHYSR+L1NwCR7Yyzb0I3XxnkkR9G2yYQaHvMuhruac
- BOQgKv03ohMPf8jhNLXw4QydvOBjWToy+PvhWJg4tBv4uGMhDDuHrrRHBIoTmwBl3i
- 7gIZWUVYQc5YQ==
+ b=Z9fCISCOL38OV+P0l0WsDsglWITnLzE2Q9ob9K5BJe5EciEPtIfjDJSiUKNrOVotQ
+ nBR6H+yBl4wKK0JUt5I08H2FbRoIs1I9/KoGdMoLMbjH2HbyCkxCWI/2iTXoRGyafF
+ mpyreMOU8HcRyDlaKkjC1DJnulYaL3IitOuDWykugY7sEUl5JztC4dfrM7698r6H+M
+ BDLWcuNzl6FKYefUUlfzk1VpdbdV4FdWiQcb16rZwqSOuc+U5svkeFo7k+94nTRZN0
+ jweiZN+xksQCqa4AJYmWYZPIxqtpe3B9wOzUd9nH3rUmP9tMkhm31JNByI2yI417D9
+ rId5972KS8Kaw==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org,
 	Stefan Hajnoczi <stefanha@gmail.com>
 Cc: Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Laurent Vivier <laurent@vivier.eu>
-Subject: [PULL 1/3] linux-user: Fix msqid_ds struct wrt 32-bit big endian
- architectures
-Date: Wed, 29 Jul 2026 22:59:00 +0200
-Message-ID: <20260729205902.3767-2-deller@kernel.org>
+ Laurent Vivier <laurent@vivier.eu>, no92 <leo@managarm.org>
+Subject: [PULL 2/3] linux-user: fix incorrect msg_l[sr]pid members of
+ target_msqid_ds
+Date: Wed, 29 Jul 2026 22:59:01 +0200
+Message-ID: <20260729205902.3767-3-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260729205902.3767-1-deller@kernel.org>
 References: <20260729205902.3767-1-deller@kernel.org>
@@ -71,79 +71,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: no92 <leo@managarm.org>
 
-Make sure that the time entries (msg_stime, msg_rtime and msg_ctime)
-are defined as 64-bit time_t values, since the userspace may access
-the whole 64-bit value. By this change we fix the word ordering for
-32-bit big endian architectures as well.
-
-This fixes the msgctl01 LTP testcase on hppa32.
+The members are declared as __kernel_pid_t in Linux UAPI headers.
+Analogous members in struct target_shmid_ds (shm_[cl]pid) are also
+declared as abi_int.
 
 Cc: qemu-stable@nongnu.org
+Fixes: 1c54ff97bbde ("linux-user: fix and cleanup IPCOP_msg* ipc calls handling")
+Signed-off-by: no92 <leo@managarm.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/syscall.c | 30 ++++++++++++------------------
- 1 file changed, 12 insertions(+), 18 deletions(-)
+ linux-user/syscall.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 740142825d..c93b770ced 100644
+index c93b770ced..547784d971 100644
 --- a/linux-user/syscall.c
 +++ b/linux-user/syscall.c
-@@ -4216,21 +4216,15 @@ static inline abi_long do_semtimedop(int semid,
- }
- #endif
- 
-+#define target_time64_t         abi_ullong
-+#define target_swap_time64(x)   tswap64(x)
-+
- struct target_msqid_ds
- {
-     struct target_ipc_perm msg_perm;
--    abi_ulong msg_stime;
--#if TARGET_ABI_BITS == 32
--    abi_ulong __unused1;
--#endif
--    abi_ulong msg_rtime;
--#if TARGET_ABI_BITS == 32
--    abi_ulong __unused2;
--#endif
--    abi_ulong msg_ctime;
--#if TARGET_ABI_BITS == 32
--    abi_ulong __unused3;
--#endif
-+    target_time64_t msg_stime;
-+    target_time64_t msg_rtime;
-+    target_time64_t msg_ctime;
+@@ -4228,8 +4228,8 @@ struct target_msqid_ds
      abi_ulong __msg_cbytes;
      abi_ulong msg_qnum;
      abi_ulong msg_qbytes;
-@@ -4249,9 +4243,9 @@ static inline abi_long target_to_host_msqid_ds(struct msqid_ds *host_md,
-         return -TARGET_EFAULT;
-     if (target_to_host_ipc_perm(&(host_md->msg_perm),target_addr))
-         return -TARGET_EFAULT;
--    host_md->msg_stime = tswapal(target_md->msg_stime);
--    host_md->msg_rtime = tswapal(target_md->msg_rtime);
--    host_md->msg_ctime = tswapal(target_md->msg_ctime);
-+    host_md->msg_stime = target_swap_time64(target_md->msg_stime);
-+    host_md->msg_rtime = target_swap_time64(target_md->msg_rtime);
-+    host_md->msg_ctime = target_swap_time64(target_md->msg_ctime);
+-    abi_ulong msg_lspid;
+-    abi_ulong msg_lrpid;
++    abi_int msg_lspid;
++    abi_int msg_lrpid;
+     abi_ulong __unused4;
+     abi_ulong __unused5;
+ };
+@@ -4249,8 +4249,8 @@ static inline abi_long target_to_host_msqid_ds(struct msqid_ds *host_md,
      host_md->__msg_cbytes = tswapal(target_md->__msg_cbytes);
      host_md->msg_qnum = tswapal(target_md->msg_qnum);
      host_md->msg_qbytes = tswapal(target_md->msg_qbytes);
-@@ -4270,9 +4264,9 @@ static inline abi_long host_to_target_msqid_ds(abi_ulong target_addr,
-         return -TARGET_EFAULT;
-     if (host_to_target_ipc_perm(target_addr,&(host_md->msg_perm)))
-         return -TARGET_EFAULT;
--    target_md->msg_stime = tswapal(host_md->msg_stime);
--    target_md->msg_rtime = tswapal(host_md->msg_rtime);
--    target_md->msg_ctime = tswapal(host_md->msg_ctime);
-+    target_md->msg_stime = target_swap_time64(host_md->msg_stime);
-+    target_md->msg_rtime = target_swap_time64(host_md->msg_rtime);
-+    target_md->msg_ctime = target_swap_time64(host_md->msg_ctime);
+-    host_md->msg_lspid = tswapal(target_md->msg_lspid);
+-    host_md->msg_lrpid = tswapal(target_md->msg_lrpid);
++    host_md->msg_lspid = tswap32(target_md->msg_lspid);
++    host_md->msg_lrpid = tswap32(target_md->msg_lrpid);
+     unlock_user_struct(target_md, target_addr, 0);
+     return 0;
+ }
+@@ -4270,8 +4270,8 @@ static inline abi_long host_to_target_msqid_ds(abi_ulong target_addr,
      target_md->__msg_cbytes = tswapal(host_md->__msg_cbytes);
      target_md->msg_qnum = tswapal(host_md->msg_qnum);
      target_md->msg_qbytes = tswapal(host_md->msg_qbytes);
+-    target_md->msg_lspid = tswapal(host_md->msg_lspid);
+-    target_md->msg_lrpid = tswapal(host_md->msg_lrpid);
++    target_md->msg_lspid = tswap32(host_md->msg_lspid);
++    target_md->msg_lrpid = tswap32(host_md->msg_lrpid);
+     unlock_user_struct(target_md, target_addr, 1);
+     return 0;
+ }
 -- 
 2.54.0
 
