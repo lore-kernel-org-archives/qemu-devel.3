@@ -4,73 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EF67C53219
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 17:54:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54B57C53200
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 17:54:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp8TD-0007pB-DE; Wed, 29 Jul 2026 13:53:31 -0400
+	id 1wp8UT-00005l-5x; Wed, 29 Jul 2026 13:54:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wp8TB-0007og-4D
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 13:53:29 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wp8T8-0007VR-KD
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 13:53:28 -0400
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
- by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 9ED2C80774;
- Wed, 29 Jul 2026 20:53:20 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:484::1:24] (unknown
- [2a02:6bf:8080:484::1:24])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id JriBRXJXwSw0-I0UHsDQB; Wed, 29 Jul 2026 20:53:20 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1785347600;
- bh=APAUFTy7QKnRX0XpJ5HdG1xLoPlj/0G+fW3XtojcCoU=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=FaY6xa31u9EtotHaRZ29xIsde11ZlZpHPbY6TvpFCyeaaR+Tyl4dgLbXzGh6++t8A
- NEMohfM/KLBNyAgczeqLAeKva3L0zb8OmGiMvEHdYsQ7jUEFRIMc2RueP6EeTljKOY
- ra8Jd1WH5Q5y1vu+Gw3P1pSxfAhFahgIsRin7pGs=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <fe8912a6-6650-4c81-8c28-56aa040863c2@yandex-team.ru>
-Date: Wed, 29 Jul 2026 20:53:19 +0300
+ (Exim 4.90_1) (envelope-from <caojunze424@gmail.com>)
+ id 1wp8UR-000054-FF
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 13:54:47 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <caojunze424@gmail.com>)
+ id 1wp8UQ-0007mI-3G
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 13:54:47 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-84a3e5ca66eso177989b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 10:54:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785347684; x=1785952484; darn=nongnu.org;
+ h=message-id:date:references:in-reply-to:cc:to:from:subject
+ :content-transfer-encoding:content-type:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=St0sbWVUOO25NzxE5LrZ2jH6fvu64X2fWRJfs5ToJAU=;
+ b=QmkfEjYYJ2grc5H896z1TB4/pjwRbVCCM8WPzViK1mFwtXpFR/S3tsY61LknxkSVKM
+ RsxXbm+m3WRnYKT6ItfE69BNU++wUctLTHw63JpJ2ZCiI5BXTOYN0MI1D4QDACZR9lAT
+ NA3rOOh6XGWcLM1saEOci3jvS3T7kHazzfRvu7fvmAo5jGl6RkIHBiW52k9lOSrhPajQ
+ OAXl1JqZWffoh2jezx10e/lstN0wPIsJfz/JQ58pF7v6K8Qy0h0IRjsr+QwsYDFcdMtV
+ VKUMHyGt97SfPz5YIkZJxc4pU4GCo05KFzFH2wDVcSmSBC5r1PELPdy308qJdiYdd/QF
+ NbhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785347684; x=1785952484;
+ h=message-id:date:references:in-reply-to:cc:to:from:subject
+ :content-transfer-encoding:content-type:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=St0sbWVUOO25NzxE5LrZ2jH6fvu64X2fWRJfs5ToJAU=;
+ b=CytR5oHnUntf46YCH0B0TV1U1QlcGviLtvLUquQQVH5D6YFH4DxluTItCuGShr2elk
+ oOFmRpyrDCzb0pSywf+C0pkLqVSNRwlvjQm+zjKGigwIlbSovrdhBjfn8vhSKuWHb79P
+ 7h1YfFU3hPRGtbHucWcqF0cIwtYdVcnuBvkBTbH1Zj0uirwK7ZMhcDZBhMSz3BsHX+2E
+ YZxkW+CoGJHco43JwgLOfKub+pD5Pce60zQmr+34OzHqJgK+F20+egyc1Y9SxNkApYes
+ 1GYDCwUhZBtVtF9z1ddx0kHwRN+gXNKC1edtYnXB00Wsg3heOsCvu7caL3oqR6gUmzod
+ sdaQ==
+X-Gm-Message-State: AOJu0YxZ6WNenQRNQ5gv+24GTIVo341CGjAtOdiHMmXkcXsOlh02cpxT
+ 5JMWbb+4ikAW7YfpnyMBHG2d2BwpcnrDYebi880yJ5dh1FB1F5q/UoyG
+X-Gm-Gg: AR+sD12pMxgNjLQTWBAMiu/5UVNhW6n7yZ3Ibz/dGGvxwxBxiJA8sMf7WhHH1ipWx1+
+ bVxGKYudecclmxNF8UsIELPjlA8DID4t4y9DlbA/4b13pGLwmTI5slF5EK6cQEMPYtLjxOYiTMx
+ QY6axvwZTbfUvVNXMa6GoHMXDtHuewWDQo3xCtWHkNlGqR0HTK1vvMQM7CYKaFhHP7yvoSkvn5p
+ +hvgixeX3MmDIZbCVDIiFqZkwCEMBesuQ2Efbs8vMJeivW5ueYd1bj7J5qgwvVllC1pHQ0BpYO4
+ alpYZ7zEn10z3bdrklj1KVVYeoztq4tOwoVemQNcanc2t52G1S548RYg2a76oJGTdddgf3z78O7
+ jH2+333PBjUAL2WZUfk6RFByV/W+4lCIJN9nnT3+lTZFRbB8qsqFf6EE8jjs1D245QQfU8AadZD
+ jZQ7m3y7DRbWVo3NOSZQC3Yy+eucP18vgubJD0k4GrkXHnyUj6Jn7WNEysQG+LdhROpOSP+Gst7
+ lKXX8oM21WjbBIiyQ==
+X-Received: by 2002:a17:90b:2f8d:b0:381:28e0:6248 with SMTP id
+ 98e67ed59e1d1-38f6a257aa7mr7756612a91.1.1785347683993; 
+ Wed, 29 Jul 2026 10:54:43 -0700 (PDT)
+Received: from DESKTOP-7HME356.localdomain ([38.34.7.236])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-31504d2ec2asm14067698eec.21.2026.07.29.10.54.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 Jul 2026 10:54:43 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v20 10/15] migration/channel: check that transfer is UNIX
- socket when "local" set
-To: Peter Xu <peterx@redhat.com>
-Cc: jasowang@redhat.com, mst@redhat.com, armbru@redhat.com, farosas@suse.de,
- raphael.s.norwitz@gmail.com, bchaney@akamai.com, qemu-devel@nongnu.org,
- berrange@redhat.com, pbonzini@redhat.com, yc-core@yandex-team.ru,
- mark.caveayland@nutanix.com
-References: <20260729091334.1863155-1-vsementsov@yandex-team.ru>
- <20260729091334.1863155-11-vsementsov@yandex-team.ru>
- <amoJoAyhymPgvyTR@x1.local>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <amoJoAyhymPgvyTR@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Subject: Re: [PATCH] hw/timer: add k230 dwapb timer
+From: Junze Cao <caojunze424@gmail.com>
+To: raoyi <rao232328@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com, 
+ palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com, 
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com, 
+ chao.liu@processmission.com, farosas@suse.de, lvivier@redhat.com, 
+ caojunze424@gmail.com
+In-Reply-To: <20260726142703.37637-1-rao232328@gmail.com>
+References: <20260726142703.37637-1-rao232328@gmail.com>
+Date: Thu, 30 Jul 2026 01:54:35 +0800
+Message-Id: <178534767556.3353.6907171394775089230.b4-review@b4>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1785347679; l=910;
+ i=caojunze424@gmail.com; s=junze-gmail; h=from:subject:message-id;
+ bh=yAB3p4cdEs5MBTKXrHrGI7OoYufnBipiRpDH33OzWpk=;
+ b=TJv22RC97kA7J9RIyXp1ISxAE9PBRhZ7MXHpjrFc+ikgx3Le8yMycWRA8BvZEs+089rGXnTIM
+ fE+8G9AwPPDAhs89TSGeaLCiEAvubg2662Nw9Xme+Sh3ehoM41J5561
+X-Developer-Key: i=caojunze424@gmail.com; a=ed25519;
+ pk=lnFIWNw+6CoDrHFIKUJKdgrRbvgAbQGcEFiVsIigOJ8=
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=caojunze424@gmail.com; helo=mail-pf1-x433.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -82,68 +114,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.07.26 17:09, Peter Xu wrote:
-> On Wed, Jul 29, 2026 at 12:12:48PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> As documented, for "local", the migration channel must be direct
->> UNIX socket connection from source to target. We can't check for
->> it being "direct", but let's at least check that we deal with
->> UNIX socket (fd-passing supported).
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
->>   migration/channel.c | 17 +++++++++++++++++
->>   1 file changed, 17 insertions(+)
->>
->> diff --git a/migration/channel.c b/migration/channel.c
->> index 1e2935f926b..537673c29e9 100644
->> --- a/migration/channel.c
->> +++ b/migration/channel.c
->> @@ -214,6 +214,13 @@ void migration_channel_process_incoming(QIOChannel *ioc)
->>       trace_migration_set_incoming_channel(
->>           ioc, object_get_typename(OBJECT(ioc)));
->>   
->> +    if (migrate_local() && migrate_mode() != MIG_MODE_CPR_EXEC &&
->> +        !qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_FD_PASS)) {
->> +        error_setg(&local_err,
->> +                   "local migration requires a UNIX domain socket channel");
->> +        goto out;
->> +    }
->> +
->>       if (migrate_channel_requires_tls_upgrade(ioc)) {
->>           migration_tls_channel_process_incoming(ioc, &local_err);
->>       } else {
->> @@ -241,6 +248,16 @@ void migration_channel_connect_outgoing(MigrationState *s, QIOChannel *ioc)
->>   {
->>       trace_migration_set_outgoing_channel(ioc, object_get_typename(OBJECT(ioc)));
->>   
->> +    if (migrate_local() && migrate_mode() != MIG_MODE_CPR_EXEC &&
->> +        !qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_FD_PASS)) {
->> +        Error *local_err = NULL;
->> +
->> +        error_setg(&local_err,
->> +                   "local migration requires a UNIX domain socket channel");
->> +        migration_connect_error_propagate(s, local_err);
->> +        return;
->> +    }
->> +
+On Sun, 26 Jul 2026 22:26:39 +0800, raoyi <rao232328@gmail.com> wrote:
+> Add DesignWare APB timer peripheral for K230 machine.
+> The timer uses the Clock framework for frequency input,
+> preparing for future CMU integration.
 > 
-> We only need to touch migration_capabilities_and_transport_compatible()?
-> It should work for both, and fail QMP commands directly might also be
-> slightly better.
+> Signed-off-by: raoyi <rao232328@gmail.com>
 
-Hm. Don't remember why I didn't go this way. Will try.
+Thank you very much for your contribution.
 
-> 
->>       if (migrate_channel_requires_tls_upgrade(ioc)) {
->>           Error *local_err = NULL;
->>   
->> -- 
->> 2.43.0
->>
-> 
+I recommend splitting this patch into three separate patches.The plan consists of three patches:
+We want to keep the coding style as consistent as possible with the previous patch.
 
+1. The implementation of the K230 DesignWare APB (DWAPB) timer model (k230_dwapb_timer.c).
+2. The integration of peripheral models into the K230 board.
+3. Testing and documentation.
+
+Additionally, this patch has a conflict with the current master branch. Please do a rebase when the maintainer asks for the merge.
+There's no need to do it right now.
 
 -- 
-Best regards,
-Vladimir
+Junze Cao <caojunze424@gmail.com>
+
 
