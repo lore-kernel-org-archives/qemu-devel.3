@@ -4,52 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5230C54FD4
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 20:59:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B340FC54FD4
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 20:59:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpBMv-0002eB-Ne; Wed, 29 Jul 2026 16:59:13 -0400
+	id 1wpBMu-0002dk-4m; Wed, 29 Jul 2026 16:59:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wpBMu-0002dz-Mn
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 16:59:12 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wpBMs-0002cd-65
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 16:59:10 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wpBMt-0003kP-6U
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 16:59:12 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wpBMp-0003jT-Vv
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 16:59:09 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 6F6806004E;
- Wed, 29 Jul 2026 20:59:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9CFF1F000E9;
- Wed, 29 Jul 2026 20:59:08 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 85E096004E;
+ Wed, 29 Jul 2026 20:59:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238C11F000E9;
+ Wed, 29 Jul 2026 20:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1785358750;
- bh=pQx5YbcditN3B7gV622IuItDzYq/EcAseJ4AJoGmdfw=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=MoAUAWyu4/JqThZgQstUPx26alNES4xuYDFZJt+YZ/ZsTwrNwdy8oSe36VSXjVA6A
- S07uWRI4TkMA1zjMm0BOuNBw1QA1u/8lUnr3/zM2uSq8dgUMvlyhVvrMA/PUH9/ETj
- U//HDsimTIAMef94Qhx2ac2YzjwXDedkhBUnH4DUzC47q1Hbm0pbevcocFH6t3l8ee
- 8qX6KMZZlO/RnWMP9dM6MkXQpIKjhAD7UIYL0UYnwwi1tQmK1FOJj5b3sikSkSIrz7
- NoPeiaPQP7f5/zk+/g57EsVzHrW5Bus6YEE1370DK6ll48sEEFWYeLfOGdKb5Oqcv5
- yI1wAoIguULsg==
+ s=k20260515; t=1785358745;
+ bh=CfgM8ffPWAoUfGTQDY6DB2doCh3f8Hr4YEQMQ3+Js5o=;
+ h=From:To:Cc:Subject:Date;
+ b=FEgacMWg091fbxY8yg69UcRJ2AyAl9QpZ0zNGAm+HT4Bk/eOdYzxg4z4cL6OX6m6+
+ 9FEAm3Z6q0XFRZkIRIsmMifhOPyCwdYvMbxNTQgmShanZgBqDjHdR8o4aBjxi0iFg0
+ LmmqMQzi7xGG05XSd4lwX39GaaROk2in111OrobglXFWIhnjcc9JvkKhRjKUKR6ScD
+ 00U8AjQg1Sf6weTIQS6aL1zXa66pClkADVVyCBWfrhOmvnnpFhmKYuJwuJTTX4gHHq
+ NhIIJCU15t2+woya5acvYD5N3dS7PLa/u0yBkZrF0wqgICaRYZadrZ/RMSOv7n62ed
+ 2YcM49iF4vccw==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org,
 	Stefan Hajnoczi <stefanha@gmail.com>
 Cc: Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 3/3] linux-user/aarch64: Fix SHADOW_STACK_SET_TOKEN
-Date: Wed, 29 Jul 2026 22:59:02 +0200
-Message-ID: <20260729205902.3767-4-deller@kernel.org>
+ Laurent Vivier <laurent@vivier.eu>
+Subject: [PULL 0/3] Linux user patches
+Date: Wed, 29 Jul 2026 22:58:59 +0200
+Message-ID: <20260729205902.3767-1-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260729205902.3767-1-deller@kernel.org>
-References: <20260729205902.3767-1-deller@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
@@ -71,34 +69,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Helge Deller <deller@gmx.de>
 
-The token is not computed via TARGET_PAGE_SIZE, but via a fixed 12-bit field.
+The following changes since commit de5eb7c4dd3ef5688b14007134eb11ff4973580c:
 
-Cc: qemu-stable@nongnu.org
-Fixes: ad1afe433fa ("linux-user/aarch64: Implement map_shadow_stack syscall")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4106
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- linux-user/syscall.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+  Merge tag 'hw-misc-20260728' of https://github.com/philmd/qemu into staging (2026-07-28 10:04:08 -0400)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 547784d971..dc028686f4 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -6900,7 +6900,8 @@ static abi_long do_map_shadow_stack(CPUArchState *env, abi_ulong addr,
-                 /* Leave an extra empty frame at top-of-stack. */
-                 cap_ptr -= 8;
-             }
--            cap_val = (cap_ptr & TARGET_PAGE_MASK) | 1;
-+            /* Note the 12 bit field is unaffected by current page size. */
-+            cap_val = deposit64(cap_ptr, 0, 12, 1);
-             if (put_user_u64(cap_val, cap_ptr)) {
-                 /* Allocation succeeded above. */
-                 g_assert_not_reached();
+are available in the Git repository at:
+
+  https://github.com/hdeller/qemu-hppa.git tags/linux-user-pull-request
+
+for you to fetch changes up to 8d0ac5933aa3476283c14680f165727268103fcd:
+
+  linux-user/aarch64: Fix SHADOW_STACK_SET_TOKEN (2026-07-29 22:56:12 +0200)
+
+----------------------------------------------------------------
+linux-user patches
+
+Three linux-user patches, one aarch64 shadow stack fix
+and two fixes for members of the target_msqid_ds struct.
+
+----------------------------------------------------------------
+
+Helge Deller (1):
+  linux-user: Fix msqid_ds struct wrt 32-bit big endian architectures
+
+Richard Henderson (1):
+  linux-user/aarch64: Fix SHADOW_STACK_SET_TOKEN
+
+no92 (1):
+  linux-user: fix incorrect msg_l[sr]pid members of target_msqid_ds
+
+ linux-user/syscall.c | 45 ++++++++++++++++++++------------------------
+ 1 file changed, 20 insertions(+), 25 deletions(-)
+
 -- 
 2.54.0
 
