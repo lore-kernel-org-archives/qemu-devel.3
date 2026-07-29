@@ -4,100 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B62FBC54F51
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 16:31:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6F1CC53200
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 16:52:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp7BM-0003f5-PN; Wed, 29 Jul 2026 12:31:00 -0400
+	id 1wp7VH-00078g-JJ; Wed, 29 Jul 2026 12:51:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imbrenda@linux.ibm.com>)
- id 1wp7BL-0003em-U3; Wed, 29 Jul 2026 12:30:59 -0400
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wp7VG-000786-3p; Wed, 29 Jul 2026 12:51:34 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imbrenda@linux.ibm.com>)
- id 1wp7BJ-0002hG-3c; Wed, 29 Jul 2026 12:30:59 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wp7VE-0005D0-AG; Wed, 29 Jul 2026 12:51:33 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66TFHn0d356419; Wed, 29 Jul 2026 16:30:51 GMT
+ 66TFHZSh2684329; Wed, 29 Jul 2026 16:51:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=VrmZ6oWEzawslv5z7qwpzvKCOk1bqmPse8PYp4rEy
- Lo=; b=VND821RKvItKJIn3c+oLAj++vOF1HTmV7wX/UPhSif3741Hb5NBWYW7mL
- Uptg9ZOMT6ov2lMFXYlCv5QzGoP3frrcjq1QdbhycQoSXfwGv36nxF29IGguK6R5
- p5CCSTxYwpDHpWj7qTlzjKyAD6mpobxBIQv7k9M3c20AWKWgJN/Fp2p/63Qtw06C
- ggjhvm61hM/p1XYMP42Kj9JvhbR8pvjBIv0zw842NMDPbgTKT9RW8EdZtipCUYGs
- tot3+Jp6g188nbB/SMfehK8doh/B2KccgBRqIRBrSaVLuIDKBkzZCEJiJlmykPGI
- ZE+e0P0tNfC192DhviCZnyAIhv0wA==
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=fUZNgJ
+ eTAwq6SLl+Lg0BtuNaeoOrFJgPnrUdv/oO85w=; b=EsJUZjspFi8wKuuhV4UTU8
+ kbNEbZTQaPTd8x6htrWjxOb3/BNeGBWGFVw1kGr870tl1iHM2lIE0cxY/kkH0COP
+ L959ZCndMC5Ngn4wjuPhxoaSMVhPHMtPhzm/fE0BLu+COqrZANNcncAvfh/+SwnQ
+ J4oIcGgf/zwlOxRdG2yshoyITYRr8etNgZaViV/hHWyQTNqASJNwBqnQyygUY79V
+ GSf4vCglQCWH+FBnU3+AvLteY8C/vTYm1Uc5JlYqM0+147fvqsb+0evwVvEOZCH9
+ FRZb+6mL1SmPBLLD4QtJh8mtPzKQh8dqjr/3VEb+mUcwu4AtqExyJHHO1dIIVlFw
+ ==
 Received: from ppma13.dal12v.mail.ibm.com
  (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuw7knfh-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuyckph3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Jul 2026 16:30:51 +0000 (GMT)
+ Wed, 29 Jul 2026 16:51:21 +0000 (GMT)
 Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66TGQFCT010643;
- Wed, 29 Jul 2026 16:30:50 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fn9pgfa5t-1
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66TGfGW4029008;
+ Wed, 29 Jul 2026 16:51:20 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fn9pgfcnc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Jul 2026 16:30:50 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66TGUi8h31195524
+ Wed, 29 Jul 2026 16:51:20 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66TGpJY311404016
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 29 Jul 2026 16:30:44 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5AAAF2004B;
- Wed, 29 Jul 2026 16:30:44 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1F8E520040;
- Wed, 29 Jul 2026 16:30:44 +0000 (GMT)
-Received: from p-imbrenda.ehn-de.ibm.com (unknown [9.224.75.30])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 29 Jul 2026 16:30:44 +0000 (GMT)
-From: Claudio Imbrenda <imbrenda@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, borntraeger@de.ibm.com, frankja@linux.ibm.com,
- pasic@linux.ibm.com, mhartmay@linux.ibm.com, david@kernel.org,
- farman@linux.ibm.com, mjrosato@linux.ibm.com,
- richard.henderson@linaro.org, iii@linux.ibm.com, cohuck@redhat.com
-Subject: [PATCH v2 0/1] target/s390x: Allow 2G hugepages guest backing
-Date: Wed, 29 Jul 2026 18:30:42 +0200
-Message-ID: <20260729163043.843517-1-imbrenda@linux.ibm.com>
-X-Mailer: git-send-email 2.55.0
+ Wed, 29 Jul 2026 16:51:19 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B01215803F;
+ Wed, 29 Jul 2026 16:51:19 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 36AF458056;
+ Wed, 29 Jul 2026 16:51:19 +0000 (GMT)
+Received: from [9.61.160.189] (unknown [9.61.160.189])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 29 Jul 2026 16:51:19 +0000 (GMT)
+Message-ID: <7c484c20-4742-4fa9-aa58-d85f7dc4acc0@linux.ibm.com>
+Date: Wed, 29 Jul 2026 12:51:18 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] target/s390x/tcg: Set STCK/STCKF condition code
+ after the store
+To: Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Cornelia Huck <cohuck@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>
+Cc: David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260714203206.363028-1-iii@linux.ibm.com>
+Content-Language: en-US
+From: Eric Farman <farman@linux.ibm.com>
+Autocrypt: addr=farman@linux.ibm.com; keydata=
+ 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
+ y8m0x6unNti2MZIUMy0m2gcE
+In-Reply-To: <20260714203206.363028-1-iii@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: BjLqOMOAtL5rjJrBTZGGSvCm17zgciTg
-X-Proofpoint-ORIG-GUID: BjLqOMOAtL5rjJrBTZGGSvCm17zgciTg
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI5MDEyOSBTYWx0ZWRfX2MQ5i40IkO+l
- 6ztGFSStwxy97W+eRZ2XIM8k1gYCTMObw6rmoOvt+c2YFMJwvep0E8eov43OPu1JtuJltCLrJXh
- fjo+f3iAiqBmboiDtAKXZUBDF56NHLCa4Se/baAOtNc1a3VYR1mevI49n7W7QOXb3bj8r9OLN8q
- sC7SNXY7aUiQ5y8ie0W6+7m8jDwPhvCH6WvKm/XybD/QZdyvs0K0ySS/JRXmorjMN9ZjZq19JS6
- 9VxKEStLYB7JicQILd4p6AxT4/dybUwoMaZrvwyFyieYWtjnKUQLm1vatnR6hw1f14fKIcMO3wU
- uewAZk2+0Em2wLZYxirhM+8QpAebR1x3orYsiznHu5YHpskGykIevDtQ45oxGkhxeVuaJJjgU59
- 70sJuroTQXymKudrfeiqZ2hNY2f/5IgBhUWf6GtuZwq+Chns5qPOUpURs4qCHcDYtPdwcqGbxLa
- 1TpkyssxNJNwzo5mnKg==
-X-Authority-Analysis: v=2.4 cv=SKFykuvH c=1 sm=1 tr=0 ts=6a6a2abb cx=c_pps
+X-Proofpoint-ORIG-GUID: GtVu6hfEPqvp42B7ues53HFky0YGJcsp
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI5MDEzMiBTYWx0ZWRfX/Hx0LtwlT+IS
+ kVFb5OUmC09GEQPixPzgjXQLO6JcocEWSyho4zZs3RkrqcHvE8tdHBrYJfd9e/RuKaZkZxbDCCO
+ VBlgXpbnDIAKCnkwQobSoTcCnJMFvGUoafkKbJ1oV6Gk29vy1CU0zHSXamne+ReZ1IL3s5zZEVH
+ VmTGnACiMqzMUNg+o1bhluMTgPLT3Y/9U3m6/Y6AXYaODeaGcqexqZ2zpsyynERNubIAhM8NQPm
+ 61ehs4u+D+eKrtleJ0Yv5sCjIGSjJF/DjYpdnYYkRAIFZlE+6bm5cp17StTcZ987aGRiHizryNK
+ QebGgfr/+iwIXvyAvmHhKp4ZmgM4NRF78F+AZabNKI8TspX8jtfv7h9SZhaOnnjxPJ0d2gwPMzQ
+ 7Nu9nxpqCBetKURvztgk0qjayFi2QCvVvorwMVVBm4Hkw9+mTC0skJRnQA6WVCMCgFp+oH3MYsH
+ 2cNY/KwuA3zvCl+QzvQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI5MDEzMiBTYWx0ZWRfX/goLOyXj5UmD
+ Azb30PRnylc+rjLlQ6mtPxuGjyAQpImTp3TTYY9VBlX0dp1wNb+iRxXO/P1iZPeO+rNLrO+f2iZ
+ 2qHWsTv51LczMXKd7K2gWIBocioBo1I=
+X-Authority-Analysis: v=2.4 cv=AZeB2XXG c=1 sm=1 tr=0 ts=6a6a2f89 cx=c_pps
  a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=NKObR2d5V9wX7O2UfkQA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI5MDEyOSBTYWx0ZWRfXx8dnXQIWXVQ5
- NRTzv4oBedNzzC53Vp9KPa7oscPelkakDbS846wmt4rLEeOKhSyTSJTPZGrQHY7QEi9OMi7mB2u
- vyB2Gbfjp2ztANYbTQ4joTGl2ZSJptg=
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=tcd8Mcrn2PGfhcq-lLYA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: GtVu6hfEPqvp42B7ues53HFky0YGJcsp
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-29_06,2026-07-29_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0
- lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607290129
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=imbrenda@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+ spamscore=0 priorityscore=1501 phishscore=0 adultscore=0 impostorscore=0
+ clxscore=1015 malwarescore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607290132
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -120,27 +170,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow mapping guest with 2G hugepages on hosts that support it.
-    
-Add new helper functions to check whether hpages are in effect, and
-which size.
-
-v1->v2:
-* Rename the global variable to cap_hpage
-* Use different values of cap_hpage to distinguish between hpage sizes
-* Add wrappers to test for specific hpage sizes
 
 
-Claudio Imbrenda (1):
-  target/s390x: Allow 2G hugepages guest backing
+On 7/14/26 4:29 PM, Ilya Leoshkevich wrote:
+> Hi,
+> 
+> Ido reported an assertion failure after failing STCKF and provided a
+> small assembly snippet that causes it.
+> 
+> This series fixes the issue and adds a test based on that snippet.
+> 
+> Best regards,
+> Ilya
+> 
+> Ilya Leoshkevich (2):
+>    target/s390x/tcg: Set STCK/STCKF condition code after the store
+>    tests/tcg/s390x: Test STCKF condition code on a faulting store
 
- target/s390x/diag.c          |  2 +-
- target/s390x/kvm/kvm.c       | 40 +++++++++++++++++++++++-------------
- target/s390x/kvm/kvm_s390x.h |  2 ++
- target/s390x/kvm/stubs.c     | 10 +++++++++
- 4 files changed, 39 insertions(+), 15 deletions(-)
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
--- 
-2.55.0
+> 
+>   target/s390x/tcg/insn-data.h.inc |  4 +--
+>   target/s390x/tcg/translate.c     |  2 ++
+>   tests/tcg/s390x/Makefile.target  |  1 +
+>   tests/tcg/s390x/stckf.c          | 44 ++++++++++++++++++++++++++++++++
+>   4 files changed, 49 insertions(+), 2 deletions(-)
+>   create mode 100644 tests/tcg/s390x/stckf.c
+> 
 
 
