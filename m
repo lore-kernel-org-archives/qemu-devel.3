@@ -4,125 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE6E7C53219
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 16:03:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEAB2C53219
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 16:09:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp6jq-0005fp-VF; Wed, 29 Jul 2026 12:02:35 -0400
+	id 1wp6pT-0008VK-Sa; Wed, 29 Jul 2026 12:08:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wp6jW-0005Qg-Iq
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 12:02:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1wp6pQ-0008Ui-M8; Wed, 29 Jul 2026 12:08:20 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wp6jU-0004tA-3F
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 12:02:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785340929;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rhlPvcuqgtFQwP8UB1DWn9mXVZlt9Pmzt0zx8Vi5J/U=;
- b=NFtn7o6S6bNdSUPcsO4WA71VYdml3331PUQaTZnMte7KaG97G1AKabI4KWnU68ET1bI8GQ
- uvEJWs6EQoxSULaMYeU5rmVG1Y1U4maXVTZJtAOw9bNpaIY90E3INqCM4cw2NSlaIErLpb
- 7p8B/c7PNAzQExAL+8ktm9cKOnVsVWk=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-582-RZRSffbiOqayQLcWvms2Eg-1; Wed, 29 Jul 2026 12:02:08 -0400
-X-MC-Unique: RZRSffbiOqayQLcWvms2Eg-1
-X-Mimecast-MFC-AGG-ID: RZRSffbiOqayQLcWvms2Eg_1785340927
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-81eddfe28b4so40506357b3.3
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 09:02:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785340927; cv=none;
- d=google.com; s=arc-20260327;
- b=kn4KSjWZORdfZ9uvOcSqY7im2Nd7a+gGFcjSdC2pk1Q0NZwE8QDmCSO2a4O95bglq4
- MNgI9fItZGPjh5B4iTcXnxsHMCIrcbqvh2nDT4bi69DqcBDeH/qdtllNpIiCaAMyRlRT
- zafgwMY1X/q/MEE/2aRaj4ZiIXIN1egnHh1K4RiaEb1opjUNdtX/re2I5mEiy9Mr2YbP
- xQhZEHAG6WrmE/1LHEm0omJ7v4G0OT/niW40Kwho//dtuy7AYnGNBmR6Oxe6C3d3WbU0
- oE6+N0WV/pQbgaqPm/gJP7CkPQ8rtlX9b0gQ0tHf6dA2wetqcec2ja7PUy332ffoqhpC
- UuSw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=rhlPvcuqgtFQwP8UB1DWn9mXVZlt9Pmzt0zx8Vi5J/U=;
- fh=Q2NquebOiZf11f0TQPe+H1Q2skcQXLSJJRg7BoeZOZI=;
- b=lXor8HR5xUSix1Y2OCh9QsfmDPzrnqV1kT88sB5bw8lFHDAMZgz1xROLxO5zbXdViD
- WU5rn3qvaCuqKNJrvCxtVIzX3Sfl2Y0+rrl917IBWUelWAyGLaGlUphNC+fgmrcYnIPo
- Kd38Z+NdGiy3TnxZVTMknUvQ4SRojQPZqcc792GA95nSzunPHxfRad+zDPtVAWzYojRW
- kmZK6XWcETzLqOFR+8t+idzC7Yd7wkwyktbHCkwlX6vE4EUDMvGHWnpnKYWZ38IPY7g6
- 8LnNTgbt1acpDUdWiCjKupwPtyPznsLwGByCfap7C7jLM9ib7uwufiTnRfXZ3Uavqzzu
- 7whg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785340927; x=1785945727; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=rhlPvcuqgtFQwP8UB1DWn9mXVZlt9Pmzt0zx8Vi5J/U=;
- b=Up5MRPEOFokOE24nwQ+KlY8Rlqn9BYMa9+ZvC304pZU6cnNp4hpA9/PTQuh9DEnn78
- 726EHXQVBXmmgQoxXyWBbO7x2/F8h/DkPvKw9+AZr8279uGeNG36uSLcbpegHBLE4RAW
- d/56rNqr3SNT3bSvn1JckpJ3UPt3uiMPeBTkXARmd66XjPlYSMmWH5D0qPChyAIA1GYJ
- QDUW14gEzW70726hYT4ePanWxNQEUgNyYLdxb2WDLvQQfhKRD+Xowwfhrdr/50eukZsk
- S3/QxAXwLZK1tlXgarF8IiAxCoToadZIJtUcasFjeEA2tkFlUWKsGwfDivpXsTCEfJD8
- U1Cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785340927; x=1785945727;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=rhlPvcuqgtFQwP8UB1DWn9mXVZlt9Pmzt0zx8Vi5J/U=;
- b=TttBCAXHrwDzzkScYcroMOKAeXTE35zwm3gBmKa/Ni4ZA0ylS0URALlNlF+UtpFb17
- 1OaEGOBhrYHP1Bu61Ep50TYvZb1tY8avvHBBImrkRtYhjHJ9nQhGl4fJzUejajrYY5nw
- KGM8PQA3skYBWdMz3u6mMrsXNBFXIp14xH88KUVzrRYuJFEJomZq5/CUDTM+qngU5v8o
- IpdgEERxWMY/8RRf5YZ8R+taIHFk2fjNsGdzzYN7LG/AmkVZAAuSNtt4lx6VhcSuMqG1
- /j5AfpQ43I3MisIfVQKJTF2MT/gv7Fl3TTVerg8vIU+Yrv8RCgtZxWSQoze40KpjWn0e
- +apg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrPpHd0IBVWpO8JVauiKGxNLhR7Hn7LU/5FhwJyuUlEhoe27jS2/EJ3QkQfT7mN1AMS1jhbaIrYkodh@nongnu.org
-X-Gm-Message-State: AOJu0Yz1DLG5nmQDcuiDtYJLMHDRpQdy2X19OHcCh/7o83jl+EBGWOZT
- i4QW+QilXmi6AeTvMgPYsUR7xUtJu/JXoSOmjtdy/wNYn+sdrkjqggWFWjITIF66IK3WUWlQhBX
- 4bisCTA2aYoZrhVyBLWxx+yp4cLbCv/0rR+BSw8UhR9CfqbAi+IR3qkn1jL4Uij9+BzgIfYtblw
- MMTxUaCsXmiP8TkDf26Lc5ojt8kVUzVIo=
-X-Gm-Gg: AR+sD11LPdWkTgOtCxx1wl8lWME9WHNNrJsXoHCiIS2Sg7r0ujYR7/vlr7iNdOonPo0
- Ni56/nuN+SdVh8+smvwUKLRP0or2ENGZFHxpQ5Glf0DQMRH5YM7XX46zGo37zqfVDGhS53w6iLj
- U8vNHc4jZ0APiK2WsfeJq9C+kfHHP9nxQ35tP4thP0WWjE2EGu9S4hznBZ/WxQp22vFsWWcaerO
- Mp1zNLwkhJpqjw3
-X-Received: by 2002:a05:690c:6508:b0:80e:3d45:5206 with SMTP id
- 00721157ae682-81f9914017amr45200857b3.18.1785340927230; 
- Wed, 29 Jul 2026 09:02:07 -0700 (PDT)
-X-Received: by 2002:a05:690c:6508:b0:80e:3d45:5206 with SMTP id
- 00721157ae682-81f9914017amr45200107b3.18.1785340926584; Wed, 29 Jul 2026
- 09:02:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1wp6pN-0006UB-8w; Wed, 29 Jul 2026 12:08:19 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66TFHa7i2684342; Wed, 29 Jul 2026 16:08:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=F21nKn
+ DfFS9bUSa3pz1dAtHPz9MlYaG7PMOT5OWcmQ8=; b=VLoPrbf79e5QiSoS5Gqnti
+ Zj2gQboM50SIfGVoE5BFtJyUWzLdYh8qgbL/xYhPhi6tts7p1AApv5JuflHrz82H
+ XDMuW2eAQ9+lCOxS9Fhi7YkMKGntyzXZ4qj6/38YzthLgrNK3EQyDhVbafpXUlBo
+ M4k3TfL2OcW4iU9MZ+bICZRj/p4gR9I2Ya1N1Xs1GQE7mBN5FqUwPtBf24zMGjaj
+ 6096fc/E8LOKd9X4oPgDme9/6ZvOBydwHbm/Ny528OEG1xllmtySKZKsmprwZvMX
+ lkeHRwSwMxr0IiLKuq2wCBYSNCpBcNv8EmFH3htrNkpJWIZn3IskGdNyLmbWufbw
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuyckgjm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 29 Jul 2026 16:08:11 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66TFuIbj020472;
+ Wed, 29 Jul 2026 16:08:10 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn8fk7e1q-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 29 Jul 2026 16:08:10 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66TG893E30278368
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 29 Jul 2026 16:08:09 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 795675805A;
+ Wed, 29 Jul 2026 16:08:09 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4483B58051;
+ Wed, 29 Jul 2026 16:08:09 +0000 (GMT)
+Received: from [9.61.244.82] (unknown [9.61.244.82])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 29 Jul 2026 16:08:09 +0000 (GMT)
+Message-ID: <bc7d585c-b122-4759-b137-6d05e02d1485@linux.ibm.com>
+Date: Wed, 29 Jul 2026 11:08:09 -0500
 MIME-Version: 1.0
-References: <6e28a268-6ec0-4f83-8d31-76c48634c2b0@linaro.org>
- <9cf3e30b-b2fe-4507-ac57-b437dca14721@redhat.com>
- <eeac5fd9-e03e-43e6-b53b-d0bb2d9e375f@oss.qualcomm.com>
-In-Reply-To: <eeac5fd9-e03e-43e6-b53b-d0bb2d9e375f@oss.qualcomm.com>
-From: John Snow <jsnow@redhat.com>
-Date: Wed, 29 Jul 2026 12:01:53 -0400
-X-Gm-Features: AUfX_mxRtcNVrB-P3BzWD5mfZqTllplnoE5oBNwhpeg6V34Uw6LMFRzcN22iM08
-Message-ID: <CAFn=p-ZkTd5iv9UZCondYbBe6Y3Gudcv8oE-95Ttnh2O8dujEQ@mail.gmail.com>
-Subject: Re: Issue with PyPI when working offline
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- QEMU Developers <qemu-devel@nongnu.org>, Cleber Rosa <crosa@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 14/15] s390x/pci: Implement migration for emulated
+ devices
+Content-Language: en-US
+To: Farhan Ali <alifm@linux.ibm.com>, mjrosato@linux.ibm.com
+Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ cohuck@redhat.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+References: <20260724030919.123733-1-kshk@linux.ibm.com>
+ <20260724030919.123733-15-kshk@linux.ibm.com>
+ <6390365c-018e-4ac9-96fd-7dba63736a2c@linux.ibm.com>
+ <403c57ad-107a-4d59-ad4a-874d2c3a5f2d@linux.ibm.com>
+ <992b35d7-5a7d-4f16-9409-1b2d3e2c2416@linux.ibm.com>
+ <bd784407-06a3-47fc-8c13-4e3d70e856b5@linux.ibm.com>
+ <cd95e362-56b6-4e1f-ae8b-287db5fbb41d@linux.ibm.com>
+From: Konstantin Shkolnyy <kshk@linux.ibm.com>
+In-Reply-To: <cd95e362-56b6-4e1f-ae8b-287db5fbb41d@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 6aCa6qWn7L5MRzk32iTXxnzJNUv4nUO-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI5MDEyNiBTYWx0ZWRfX0IIvsVQsYldu
+ FGc9PESjxUKepDBDk5O6G4dla3A02XzTpGJdnB7rD9Jxv3BJXK3hDGnoD3W1m5JzLzgeVMIO2tj
+ j78R65QrTZ4XGPphWfw855/6j6C0WAmMr1x94DhpFFyTGsOvwXt8pvrnyOY7569u3jjdK5YE+7R
+ Fn7K3UlIqoyAY/Gr5s+sB47uU+KcORqduPkgf6tv8j7vDg16UtWVR1T2CGmtNfvenWLq1znDikR
+ s4UiRUm0VUOtqyOuliaYNyAvQcSn5M0w1YIeIuogx3WfZDLZinPsRMte3pg6gvM1qGOXpJN0td0
+ KiyE73ncH9oppAw9xJjsT/lecd+XBImt7sppNKTz8WCguUdBJ8vgjaKQRzS3fj86MxMgtjc+rNA
+ 4vyqcW9iU2rc6xpk5zKEFjOzy3LYbKpqo+vBoi2Ns7QosdGF1sXwHmegErwLUFgdn+92M5omNcg
+ HiBKdm2iThA9OFJRqCA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI5MDEyNiBTYWx0ZWRfX6drIVz4r6r09
+ LNY1oIFvtJmxbRukWMWqw2zqOB/VeaMS1nyoSSmdW1y6QSXGJ5FaObISQFEYSTJTbqw94y4pqxp
+ mZK10QUhl3x4cQGsQMyGihvoezfrf/0=
+X-Authority-Analysis: v=2.4 cv=AZeB2XXG c=1 sm=1 tr=0 ts=6a6a256b cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=P-IC7800AAAA:8
+ a=QFrQIMpG0r8RfQomfMcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=d3PnA9EDa4IxuAV0gXij:22
+X-Proofpoint-GUID: 6aCa6qWn7L5MRzk32iTXxnzJNUv4nUO-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-29_06,2026-07-29_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 priorityscore=1501 phishscore=0 adultscore=0 impostorscore=0
+ clxscore=1015 malwarescore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607290126
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kshk@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,59 +132,197 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 29, 2026 at 9:30=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> Hi Paolo,
->
-> On 13/5/26 15:36, Paolo Bonzini wrote:
-> > On 5/13/26 15:04, Philippe Mathieu-Daud=C3=A9 wrote:
-> >> Hi,
-> >>
-> >> This is the second time I'm working offline and do a simple
-> >> rebase, which triggers a re-configure, and then I'm stuck because
-> >> PyPI tries to access the Internet and do not allow me to neither
-> >> build nor test:
-> >
-> > Does it work if you configure with --disable-download?
->
-> I got this issue again today:
->
-> $ ../configure --disable-docs --enable-plugins
-> --target-list=3Daarch64-softmmu --enable-tcg --enable-kvm
-> python determined to be '/usr/bin/python3'
-> python version: Python 3.14.4
-> mkvenv: Creating non-isolated virtual environment at 'pyvenv'
-> mkvenv: checking for meson>=3D1.5.0
-> mkvenv: checking for pycotap>=3D1.1.0
-> mkvenv: installing meson=3D=3D1.11.1, pycotap=3D=3D1.3.1
-> mkvenv: checking for qemu.qmp>=3D0.0.5
-> mkvenv: checking for setuptools>=3D44.1.1
-> mkvenv: checking for wheel>=3D0.34.2
-> mkvenv: checking for pip>=3D20.3.4
-> mkvenv: installing qemu.qmp=3D=3D0.0.6
-> WARNING: Retrying (Retry(total=3D4, connect=3DNone, read=3DNone,
-> redirect=3DNone, status=3DNone)) after connection broken by
-> 'ReadTimeoutError("HTTPSConnectionPool(host=3D'pypi.org', port=3D443): Re=
-ad
-> timed out. (read timeout=3D15)")': /simple/qemu-qmp/
-> WARNING: Retrying (Retry(total=3D3, connect=3DNone, read=3DNone,
-> redirect=3DNone, status=3DNone)) after connection broken by
-> 'ReadTimeoutError("HTTPSConnectionPool(host=3D'pypi.org', port=3D443): Re=
-ad
-> timed out. (read timeout=3D15)")': /simple/qemu-qmp/
-> WARNING: Retrying (Retry(total=3D2, connect=3DNone, read=3DNone,
-> redirect=3DNone, status=3DNone)) after connection broken by
-> 'ReadTimeoutError("HTTPSConnectionPool(host=3D'pypi.org', port=3D443): Re=
-ad
-> timed out. (read timeout=3D15)")': /simple/qemu-qmp/
->
-> Indeed using --disable-download fixed it.
->
-> Thanks,
->
-> Phil.
+On 260728 16:29, Farhan Ali wrote:
+> 
+> On 7/28/2026 1:59 PM, Konstantin Shkolnyy wrote:
+>> On 260728 12:46, Farhan Ali wrote:
+>>>
+>>> On 7/27/2026 4:23 PM, Konstantin Shkolnyy wrote:
+>>>>>> +static int s390_pci_device_pre_load(void *opaque)
+>>>>>> +{
+>>>>>> +    S390PCIBusDevice *pbdev = S390_PCI_DEVICE(opaque);
+>>>>>> +    S390PCIBusDevice *found_pbdev;
+>>>>>> +
+>>>>>> +    /*
+>>>>>> +     * Make sure pbdev is removed from the table before state 
+>>>>>> load. The change
+>>>>>> +     * of pbdev->idx means it needs to be moved to a different 
+>>>>>> position anyway,
+>>>>>> +     * and is illegal while in the table. But be careful to not 
+>>>>>> remove
+>>>>>> +     * instead another pbdev whose state might have been loaded 
+>>>>>> earlier and
+>>>>>
+>>>>> I think "instead" is not needed in the statement above.
+>>>>>
+>>>>> Maybe I am missing something, but could you help me understand why 
+>>>>> do we need to remove the pbdev if we found at a particular idx? If 
+>>>>> there is a collision with idx, ie on destination we have a 
+>>>>> different device with the same idx, are we removing a valid device?
+>>>>
+>>>> I see that this is not the best comment. How about this variant:
+>>>>
+>>>>     * State loading can change pbdev->idx. Therefore, make sure 
+>>>> pbdev is removed
+>>>>     * from the table before that happens. The table type used stores 
+>>>> a pointer
+>>>>     * to pbdev->idx and becomes corrupt if idx is changed from 
+>>>> outside. But be
+>>>>     * careful to not remove instead another pbdev whose state might 
+>>>> have been
+>>>>     * loaded earlier and that got assigned this idx value and had 
+>>>> therefore
+>>>>     * already replaced our pbdev in the table. post_load() will 
+>>>> reinsert our
+>>>>     * pbdev into the table.
+>>>>
+>>> So pbdev->idx is autogenerated when we create the device at 
+>>> destination, since we are migrating the idx from source this could 
+>>> change on destination and corrupt the hash table?
+>>
+>> Exactly.
+>>
+>>  Then do we need to migrate the idx?
+>>>
+>>
+>> idx is part of "function handle". So, it should remain unchanged after 
+>> migration.
+>>
+>>>
+>>>>>
+>>>>>> +     * that has then replaced our pbdev. (post_load() will put 
+>>>>>> our pbdev back.)
+>>>>>> +     */
+>>>>>> +    found_pbdev = g_hash_table_lookup(s390_get_phb()->zpci_table, 
+>>>>>> &pbdev->idx);
+>>>>>> +    assert(found_pbdev); 
+>>> AFAIU the pbdev->idx at pre_load() would be what we assign 
+>>> automatically at the destination. In that case wouldn't this assert 
+>>> always be true?
+>>
+>> Yes. This assert documents that a pbdev is always expected to be found 
+>> for this "autogenerated when we create the device at destination" 
+>> pbdev->idx - either the pbdev we are currently processing, or another 
+>> pbdev that was "loaded" earlier with the same idx value (which came 
+>> from the source) and inserted by post_load() into zpci_table.
+>>>
+>>>
+>>>>>> +    if (found_pbdev == pbdev) {
+>>>
+>>> similarly this should also be true?
+>>
+>> No always true, as described above.
+>>
+> Okay this makes a lot more sense to me now, thanks for the explanation!
+> 
+> 
+>>>
+>>>
+>>>>>> + g_hash_table_remove(s390_get_phb()->zpci_table, &pbdev->idx);
+>>>
+>>> Don't we have to free this idx now? so reverse of s390_pci_alloc_idx()?
+>>
+>> AFA I can see, simply removing pbdev->idx from zpci_table already 
+>> "frees" the idx value for reuse. s390_pci_alloc_idx() interprets s- 
+>> >next_idx as the "next mostly likely free" idx value. It then checks 
+>> if zpci_table has this idx; if it does, it checks idx+1, etc. until it 
+>> doesn't.
+>>
+>> It seems, we could add "s->next_idx = pbdev->idx;" here to make it 
+>> pick this idx next time instead of larger values, but it's not 
+>> strictly necessary. Do you think we should do it? 
+> 
+> We seem to be doing it in s390_pci_interp_plug() [1] so maybe we should 
+> just to close this gap? In reality though this "leak" is not a concern 
+> for resource exhaustion.
+> 
+> [1] https://elixir.bootlin.com/qemu/v11.1.0-rc1/source/hw/s390x/s390- 
+> pci-bus.c#L1072
 
-Odd, it's supposed to install from the local path. I'll look.
+However, s390_pcihost_unplug() doesn't change s->next_idx after calling 
+g_hash_table_remove().
+
+In practice, since we have 64K values to go through before the idx 
+allocator wraps around and starts searching from 0, it seems unlikely to 
+happen. (We'd have to plug PCI devices 64K times.)
+
+The purpose of s->next_idx appears to be to help allocation to happen on 
+the first try without checking zpci_table many times.
+
+If we just keep incrementing s->next_idx and never set it back, it'll 
+allocate on the first try 64K times.
+
+If, however, we set it back after g_hash_table_remove(), the next 
+allocation will be quick, but subsequent ones might have to scan 
+zpci_table before finding a free value. In this implementation, the 
+scanning we try to avoid might happen in practice long before we reach 
+64K allocations. On top of that, we'll then reuse old "function handle" 
+values - not that I know of a problem with that, but...
+
+So, it's extra code to set s->next_idx back and I don't see how it's useful.
+
+> 
+> Thanks
+> 
+> Farhan
+> 
+>>
+>>>
+>>>
+>>>>>> +    }
+>>>>>> +
+>>>>>> +    return 0;
+>>>>>> +}
+>>>>>> +
+>>>>>> +static int s390_pci_device_post_load(void *opaque, int version_id)
+>>>>>> +{
+>>>>>> +    S390PCIBusDevice *pbdev = S390_PCI_DEVICE(opaque);
+>>>>>> +
+>>>>>>       /*
+>>>>>> -     * TODO: add state handling here, so migration works at least 
+>>>>>> with
+>>>>>> -     * emulated pci devices on s390x
+>>>>>> +     * Now that pbdev->idx has been loaded, use it to place pbdev 
+>>>>>> back into
+>>>>>> +     * the table. This may replace a different not-yet-state- 
+>>>>>> loaded pbdev,
+>>>>>> +     * but pre_load() handles this case.
+>>>>>>        */
+>>>>>> -    .unmigratable = 1,
+>>>>>> +    g_hash_table_replace(s390_get_phb()->zpci_table, &pbdev->idx, 
+>>>>>> pbdev);
+>>>>>> +
+>>>>>> +    /*
+>>>>>> +     * Regenerate IOMMU state, including IOTLB contents and QEMU 
+>>>>>> memory regions.
+>>>>>> +     */
+>>>>>> +    if (pbdev->iommu_enabled) {
+>>>>>> +        assert(pbdev->iommu);
+>>>>>> +        if (s390_pci_is_translation_enabled(pbdev->g_iota)) {
+>>>>>> +            s390_pci_iommu_enable(pbdev);
+>>>>>> +            s390_pci_ioat_replay(pbdev);
+>>>>>> +        } else {
+>>>>>> +            s390_pci_iommu_direct_map_enable(pbdev);
+>>>>>> +        }
+>>>>>> +    }
+>>>>>> +
+>>>>>> +    /*
+>>>>>> +     * Guest sets fmb_addr by mpcifc.ZPCI_MOD_FC_SET_MEASURE 
+>>>>>> instruction,
+>>>>>> +     * whose handler consequently starts fmb_timer. We may need 
+>>>>>> to restart it.
+>>>>>> +     */
+>>>>>> +    if (pbdev->fmb_addr) {
+>>>>>> +        assert(!pbdev->fmb_timer);
+>>>>>> +        assert(pbdev->pci_group);
+>>>>>> +        pbdev->fmb_timer = timer_new_ms(QEMU_CLOCK_VIRTUAL,
+>>>>>> +                                        fmb_update, pbdev);
+>>>>>> +        timer_mod(pbdev->fmb_timer,
+>>>>>> +                  qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) +
+>>>>>> + pbdev->pci_group->zpci_group.mui);
+>>>>>> +    }
+>>>>>> +    return 0;
+>>>>>> +} 
+>>
 
 
