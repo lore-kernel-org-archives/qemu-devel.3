@@ -4,84 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21D47C53200
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 23:15:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FCB8C53200
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 23:19:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpDSy-000798-2Q; Wed, 29 Jul 2026 19:13:36 -0400
+	id 1wpDYV-0002oT-2A; Wed, 29 Jul 2026 19:19:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3GYlqagYKCjAfUfgedSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--titusr.bounces.google.com>)
- id 1wpDSw-00077D-9x
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 19:13:34 -0400
-Received: from mail-pj1-x1047.google.com ([2607:f8b0:4864:20::1047])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3GYlqagYKCjAfUfgedSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--titusr.bounces.google.com>)
- id 1wpDSt-0007Gv-MI
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 19:13:33 -0400
-Received: by mail-pj1-x1047.google.com with SMTP id
- 98e67ed59e1d1-38ea32e57e2so2520245a91.1
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 16:13:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1785366810; x=1785971610; darn=nongnu.org;
- h=content-type:cc:to:from:subject:message-id:references:mime-version
- :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=N9LG6dG3goSjvKzksT9K58D3H3jHh9Zchpi/PnZxLks=;
- b=G1s5wXREBPyZ7YywoSAAVWDbLW53jukNZVfqkyMUUYVpw5EdZC7NqGAbtp6tMNvsRw
- Tz1nDZx0WWN2uC3JxIFef4N1VKwMxx20CMIKRvUYu7B01EN9BksYkFzLAqBb/9a2VOKK
- dGiv66k/wZ5wRyUl9vZ68ksanN0PTDF3ranu6eZaK4TcBDU8s1G9XYFF4/zBPqXNE2C1
- P493XdYQ0513dREdjzdReyHT5mtgB/f4+2ORc8KpXfw9DUoHXRN/se4GZDyfFV9xEoKy
- AGOvagA4FbsZyhvwzipbOkosheS1/P1qY6dPC4sHYV0Q+OARJSrLlw4cV9b5bbr+Igd0
- Va3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785366810; x=1785971610;
- h=content-type:cc:to:from:subject:message-id:references:mime-version
- :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=N9LG6dG3goSjvKzksT9K58D3H3jHh9Zchpi/PnZxLks=;
- b=SNbJ4NVFGcoRM9XeLDGyBYM5zCFiyjcxevpDRjKYNEYXRO0iM726lwUeMG2dYf6OPi
- uUGHzfkwYBUsjaLxQTtrgaaq3XhWnGsoBETlLcGIi8laWubRrol25eawjjU0KfrdzqOJ
- 6KPgbXRgjDCwFTUA6JfZK55+hOQ+vpI2TL6SABMm9Wt2yNVKatL0a2COSCnLuAJk0Gcc
- fP8tDWdSiTWj9/ROrhFj8hl8X8DqcL6x5YNQhYZi53H/HHIPv6WnLfcw0tlsYLqr3u85
- /2CiYKSZLQmuV0hz076DeGBrKyDlYjhLaE8+iK0LozlHINd6RRrAUvzo3SM2NlD37IyO
- Hr3w==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpitO0iJVh0M0OO8BrtIgVtNrnAfioQWtgLgedWMHF70nbZW2RFjhkCRZ7FFInNjcSFbTgzNaPatBrE@nongnu.org
-X-Gm-Message-State: AOJu0YxRg5dy0dKSv6DN4i4BOh61zBgheMPsHbx36NIyBEqZJTXp/2gp
- HBHZPj1EiKLQmPsDyF0hd0IMyYT4Eh6EiwAb+JS3xtfN1CMIIcg2qZx6VA2nfS9gINsGM0/Aoua
- h3Dbi6g==
-X-Received: from dybdr30.prod.google.com
- ([2002:a05:7300:b29e:b0:313:d984:da01])
- (user=titusr job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:4b84:b0:38e:5964:97a8
- with SMTP id 98e67ed59e1d1-38f9bd87177mr213677a91.16.1785366809728; Wed, 29
- Jul 2026 16:13:29 -0700 (PDT)
-Date: Wed, 29 Jul 2026 23:13:16 +0000
-In-Reply-To: <20260729231325.3808993-1-titusr@google.com>
-Mime-Version: 1.0
-References: <20260729231325.3808993-1-titusr@google.com>
-X-Mailer: git-send-email 2.55.0.508.g3f0d502094-goog
-Message-ID: <20260729231325.3808993-2-titusr@google.com>
-Subject: [PATCH 1/8] osdep: add DIV_ROUND_CLOSEST
-From: Titus Rwantare <titusr@google.com>
-To: peter.maydell@linaro.org
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kfting@nuvoton.com, 
- imaginos32@gmail.com, wuhaotsh@google.com, philmd@mailo.com, 
- fanjason@google.com, Titus Rwantare <titusr@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1047;
- envelope-from=3GYlqagYKCjAfUfgedSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--titusr.bounces.google.com;
- helo=mail-pj1-x1047.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1wpDYS-0002nt-US
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 19:19:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1wpDYQ-0008B0-Qu
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 19:19:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785367153;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=pw+D3vabNcb7FTrzqlhU+J8urkDBPU4nDsAViHHBh1s=;
+ b=jEBPpcBiTTusqzC/5dpqkpXdtogy1lrFveWpqxxc+quJQB/nTbtHhav0FNcS5S7GesTlHI
+ pZgm9bY25Qtjq1RSlKdm+eF2DbPxu4iI+jvcKnkEdNWrCjISlj/89B69RwEAviORvwPLNu
+ 14sJbQvY7vRcRRyP16HmAzNkd/2vvSo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-620-U_aTOE8jMWGoDq9J1awYDA-1; Wed,
+ 29 Jul 2026 19:19:11 -0400
+X-MC-Unique: U_aTOE8jMWGoDq9J1awYDA-1
+X-Mimecast-MFC-AGG-ID: U_aTOE8jMWGoDq9J1awYDA_1785367150
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8BAED19560AF; Wed, 29 Jul 2026 23:19:09 +0000 (UTC)
+Received: from lenovo-t14s.redhat.corp
+ (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id AA6D5300019F; Wed, 29 Jul 2026 23:19:05 +0000 (UTC)
+From: Laurent Vivier <lvivier@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Amit Shah <amit@kernel.org>, qemu-ppc@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Hanna Reitz <hreitz@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Fam Zheng <fam@euphon.net>, qemu-block@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>, Laurent Vivier <lvivier@redhat.com>
+Subject: [PATCH v3 0/7] Harden virtio migration load paths against crafted
+ streams
+Date: Thu, 30 Jul 2026 01:18:57 +0200
+Message-ID: <20260729231904.775331-1-lvivier@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=lvivier@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,39 +90,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is taken from linux/include/uapi/linux/const.h to match the driver
-behaviour when reading sensor values.
+A crafted migration stream can crash the destination QEMU process
+through unvalidated fields in the virtio device state: an unbounded
+allocation in virtio-serial, reachable assertions in the shared
+virtqueue element deserializer, assert()/exit(1) calls in
+virtio-scsi and spapr-vscsi request loading, and missing error
+propagation through the SCSI and virtio device load paths.
 
-Signed-off-by: Titus Rwantare <titusr@google.com>
----
- include/qemu/osdep.h | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+These are hardening fixes: the destination QEMU is in a paused
+pre-start state and the source VM is unaffected by a failed migration.
 
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index 1ec5b42230..08f87c9d61 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -522,6 +522,19 @@ void QEMU_ERROR("code path is reachable")
- #define DIV_ROUND_UP(n, d) (((n) + (d) - 1) / (d))
- #endif
- 
-+#ifndef DIV_ROUND_CLOSEST
-+#define DIV_ROUND_CLOSEST(n, d) \
-+({ \
-+    typeof(n) __n = n; \
-+    typeof(d) __d = d; \
-+    (((typeof(n))-1) > 0 || \
-+     ((typeof(d))-1) > 0 || \
-+     (((__n) > 0) == ((__d) > 0))) ? \
-+        (((__n) + ((__d) / 2)) / (__d)) : \
-+        (((__n) - ((__d) / 2)) / (__d)); \
-+})
-+#endif
-+
- /*
-  * &(x)[0] is always a pointer - if it's same type as x then the argument is a
-  * pointer, not an array.
+Patch 1 adds an Error** parameter to the virtio and SCSI load_request
+callbacks, allowing proper error propagation instead of error_report()
+or silent failures. This provides the infrastructure for the remaining
+patches.
+
+Patch 2 validates the virtio-serial nr_active_ports count against the
+configured maximum before allocating the post-load array.
+
+Patches 3 and 5 are from Michael S. Tsirkin, modified to use the new
+Error** parameter:
+
+Patch 3 makes virtqueue_map() return bool instead of calling exit(1)
+on mapping failures, and propagates errors through
+qemu_get_virtqueue_element() to virtio-blk, virtio-serial, and
+virtio-scsi.
+
+Patch 4 replaces the assertions in qemu_get_virtqueue_element() with
+a bounds check returning NULL on invalid in_num/out_num counts.
+
+Patch 5 replaces the assertion in mptsas_load_request() with proper
+error handling.
+
+Patch 6 replaces the remaining assert() and exit(1) calls in
+virtio_scsi_load_request() with proper error returns.
+
+Patch 7 replaces the assert() calls in vscsi_load_request() with
+proper error returns and propagation.
+
+v2:
+- New patch 1 to add Error** parameter to load_request callbacks
+- Patches 2, 4, 6, 7: add error_setg() calls with descriptive messages
+- New patches 3 and 5 from Michael S. Tsirkin (modified to use errp)
+- Patch 4: remove caller updates (now handled by patch 3)
+- New patch 7: harden spapr_vscsi load_request
+
+Tested with migration round-trips for virtio-serial (0 to 511 ports),
+virtio-blk (1-2 disks), virtio-scsi (1-2 disks), mptsas1068
+(with and without scsi-hd), and spapr-vscsi, plus the original PoC
+reproducers for issues #3801, #3802, and #3888. ppc64 qtests pass.
+
+Laurent Vivier (5):
+  VirtioDeviceClass: Add an Error parameter to vmstate load member
+  hw/char/virtio-serial-bus: validate nr_active_ports from migration stream
+  hw/virtio: return NULL from qemu_get_virtqueue_element() on invalid state
+  hw/scsi/virtio-scsi: harden virtio_scsi_load_request() against invalid stream
+  hw/scsi/spapr_vscsi: do not crash QEMU on migration errors
+
+Michael S. Tsirkin (2):
+  virtio: do not crash QEMU on migration errors
+  mptsas: do not crash QEMU on migration errors
+
+ hw/block/virtio-blk.c       | 16 ++++++--
+ hw/char/virtio-serial-bus.c | 33 ++++++++++----
+ hw/scsi/esp.c               |  2 +-
+ hw/scsi/mptsas.c            | 18 +++++---
+ hw/scsi/scsi-bus.c          | 25 +++++++++--
+ hw/scsi/scsi-disk.c         | 10 +++--
+ hw/scsi/scsi-generic.c      |  3 +-
+ hw/scsi/spapr_vscsi.c       | 18 +++++++--
+ hw/scsi/virtio-scsi.c       | 27 ++++++++++--
+ hw/usb/dev-storage.c        |  2 +-
+ hw/virtio/virtio.c          | 82 ++++++++++++++++++++++++++-----------
+ include/hw/scsi/scsi.h      |  4 +-
+ include/hw/usb/msd.h        |  2 +-
+ include/hw/virtio/virtio.h  |  4 +-
+ 14 files changed, 182 insertions(+), 62 deletions(-)
+
+Laurent Vivier (5):
+  VirtioDeviceClass: Add an Error parameter to vmstate load member
+  hw/char/virtio-serial-bus: validate nr_active_ports from migration
+    stream
+  hw/virtio: return NULL from qemu_get_virtqueue_element() on invalid
+    state
+  hw/scsi/virtio-scsi: harden virtio_scsi_load_request() against invalid
+    stream
+  hw/scsi/spapr_vscsi: do not crash QEMU on migration errors
+
+Michael S. Tsirkin (2):
+  virtio: do not crash QEMU on migration errors
+  mptsas: do not crash QEMU on migration errors
+
+ hw/block/virtio-blk.c       | 11 +++++--
+ hw/char/virtio-serial-bus.c | 30 +++++++++++------
+ hw/scsi/esp.c               |  2 +-
+ hw/scsi/mptsas.c            | 16 ++++++----
+ hw/scsi/scsi-bus.c          | 18 +++++++++--
+ hw/scsi/scsi-disk.c         |  7 ++--
+ hw/scsi/scsi-generic.c      |  3 +-
+ hw/scsi/spapr_vscsi.c       | 25 +++++++++++----
+ hw/scsi/virtio-scsi.c       | 28 ++++++++++++----
+ hw/usb/dev-storage.c        |  2 +-
+ hw/virtio/virtio.c          | 64 ++++++++++++++++++++++++-------------
+ include/hw/scsi/scsi.h      |  4 +--
+ include/hw/usb/msd.h        |  2 +-
+ include/hw/virtio/virtio.h  |  4 +--
+ 14 files changed, 150 insertions(+), 66 deletions(-)
+
 -- 
-2.55.0.508.g3f0d502094-goog
+2.54.0
 
 
