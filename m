@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79D2AC54F51
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 14:49:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42AE1C53200
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 14:50:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp5aL-0004YU-Ju; Wed, 29 Jul 2026 10:48:41 -0400
+	id 1wp5aK-0004Uy-Kw; Wed, 29 Jul 2026 10:48:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wp5Zh-0004Gk-Ew; Wed, 29 Jul 2026 10:48:03 -0400
+ id 1wp5Zf-0004GW-AK; Wed, 29 Jul 2026 10:48:03 -0400
 Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wp5Zf-0000PQ-Pu; Wed, 29 Jul 2026 10:48:01 -0400
+ id 1wp5Zb-0000Pj-7M; Wed, 29 Jul 2026 10:47:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1785336479; x=1816872479;
+ t=1785336475; x=1816872475;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=TTMOY2fZFNZ9to25DAyguXipu7ZylHJM05ZnvGrBuk0=;
- b=j6qC1yXkgab+Kas29py0IrrYtXUohQoJuu8oD8hWVwktxNQt165hH0TQ
- vq3L0gCB4On+fsd3T4TlgCJPtAFFGqxrln/384sZmOpdQMD5Efq5Itcaz
- BkJPM0S/xmDEYCYG1Szx5FBwku176m+k4qZMMd7UIpLePfMM+J7Yu8luU
- h42pyxHDn2YXqMNCaLyTystJDvM3oAn2v5jDBKd+kdCxXi/tInrmJANq1
- d6XLI5pI/s/xR/dfHv4yG9kF6ZidCZINLCSqCSwKCfkDXmA0ZuSagPj/c
- 8MiREyEsbqFWWy+Y7WK0EFtG3q8CWOAHIEDVR5tN8s/RW354PgCPM1puH Q==;
-X-CSE-ConnectionGUID: kvvga2BnS4iXZF10zQx2/A==
-X-CSE-MsgGUID: a82qhxr/R3iZxJGfwxDaXA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11859"; a="86133649"
-X-IronPort-AV: E=Sophos;i="6.25,192,1779174000"; d="scan'208";a="86133649"
+ bh=vbh6j/yVXhjUgJsuEkmBoPmh0Q2oLphjP1TzurM+BmM=;
+ b=FkqVOPOJuuZsRtqkTm5M0rNQK6gMbDGNTV7Tl9Pu4JaZi+P3B7COlfez
+ vwoX1yN9uSj+tduUUbk1R9sTBuc1KidvNW/IxbQETsdNifcwFSiyJuvkV
+ b5VcHbDfbBcBQmRwYiWpN/1hZH6ozudMxWB8nq2vqScGfA4Jfcg5WsxqG
+ +DwFqxkFc6x9AaEfKKn1NMrTEjuHJjz7gLnwa+2waKapYlXrf9nSdnEES
+ Q8h1fKAv1FAo0Z7FQIA06vYGXDhgYDQqur6Kt4UvORO4TpEz3w43vScJX
+ HXBe/DtXsJiYW86OA6wZH+c71iH87+fxDB2OZZiLd6o5E/Jc1wG6d/VG1 g==;
+X-CSE-ConnectionGUID: I4eLWUTcS/mibUi1kU5W3A==
+X-CSE-MsgGUID: gf2ln6PYSMyk96SeKfcsrQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11859"; a="86133634"
+X-IronPort-AV: E=Sophos;i="6.25,192,1779174000"; d="scan'208";a="86133634"
 Received: from orviesa010.jf.intel.com ([10.64.159.150])
  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Jul 2026 07:47:58 -0700
-X-CSE-ConnectionGUID: DIRx8iN+TkyZQuHNiBIh1g==
-X-CSE-MsgGUID: xxtaG2MHSyege38di/25Zg==
+ 29 Jul 2026 07:47:54 -0700
+X-CSE-ConnectionGUID: d0yMF8R2RsqTRxp/mGLOKw==
+X-CSE-MsgGUID: t6i3EbevR36Zs68m4BAXkA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,192,1779174000"; d="scan'208";a="258788881"
+X-IronPort-AV: E=Sophos;i="6.25,192,1779174000"; d="scan'208";a="258788811"
 Received: from junjie-desk-dev.bj.intel.com (HELO
  junjie-desk-dev.tail2c02c1.ts.net) ([10.238.152.71])
  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Jul 2026 07:47:57 -0700
+ 29 Jul 2026 07:47:52 -0700
 From: Junjie Cao <junjie.cao@intel.com>
 To: qemu-devel@nongnu.org
 Cc: jic23@kernel.org, linux-cxl@vger.kernel.org, philmd@oss.qualcomm.com,
  qemu-stable@nongnu.org
-Subject: [PATCH v3 7/7] hw/cxl: clear poison lists and feature transfer state
- on reset
-Date: Wed, 29 Jul 2026 22:46:45 +0800
-Message-ID: <20260729144645.1552511-8-junjie.cao@intel.com>
+Subject: [PATCH v3 5/7] hw/cxl: discard in-flight sanitize state on mailbox
+ teardown
+Date: Wed, 29 Jul 2026 22:46:43 +0800
+Message-ID: <20260729144645.1552511-6-junjie.cao@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260729144645.1552511-1-junjie.cao@intel.com>
 References: <20260729144645.1552511-1-junjie.cao@intel.com>
@@ -83,71 +83,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The poison lists (active, backup, and scan-media results), their
-associated overflow tracking, and the Set Feature partial-transfer
-state are all device-internal dynamic state that accumulates during
-the device's lifetime.
+Per CXL r4.0 Section 8.2.9.4, "Background commands do not continue to
+execute across Conventional Resets."  If a Media Operations sanitize is
+in progress when the device is reset, the background timer is cancelled
+and freed via cxl_destroy_cci(), but the per-operation state
+(media_op_sanitize) is heap-allocated separately and would be leaked.
 
-Per CXL r4.0 Table 8-309 (Identify Memory Device), the "Injects
-Persistent Poison" capability bit (offset 41h, Bit[0]) controls poison
-retention across reset.  When cleared — the QEMU default — "a
-Conventional Reset or CXL Reset shall automatically clear the injected
-poison."  Clear all poison lists accordingly, reusing the existing
-cxl_clear_poison_list_overflowed() helper for the overflow tracking.
+Free it from cxl_destroy_mailbox_t3(): the timer that advances the
+operation lives in the CCI torn down there, so the operation can never
+complete once the mailbox is gone; preserving the heap state has no
+benefit and would leak it the next time media_op_sanitize is assigned.
+Routing the discard through the mailbox teardown also covers device
+unrealize, where ct3_exit() previously leaked an in-flight sanitize.
 
-For the Set Feature transfer state, CXL r4.0 Section 8.2.10.6.3 (Set
-Feature) requires: "If the Feature data transfer is interrupted by a
-Conventional Reset or a CXL Reset, the Feature data transfer shall be
-aborted by the device [...] the device shall require the Feature data
-transfer to be started from the beginning."  Zero set_feat_info on
-reset so any partially transferred Set Feature is abandoned and must
-restart from the beginning.
+The completion path in __do_sanitize() frees the same state; factor the
+free into a cxl_discard_media_op_sanitize() helper used by both places,
+so the whole media_op_sanitize lifecycle now stays within
+cxl-mailbox-utils.c.
 
-Both clears run after the RESET_TYPE_WAKEUP early-return added in the
-previous patch, so this state is preserved across a suspend-to-RAM
-wakeup.
+Note that Section 8.2.10.9.5.1 additionally requires a device whose
+Sanitize was interrupted by reset to remain in the Media Disabled state
+until a successful Sanitize completes.  That latch is not modelled here
+(reset re-enables media via memdev_reg_init_common()) and is left for
+future work; this patch only addresses the resource leak.
 
+Suggested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Junjie Cao <junjie.cao@intel.com>
 ---
- hw/mem/cxl_type3.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ hw/cxl/cxl-mailbox-utils.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 2392358071..0b36485344 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -1327,6 +1327,16 @@ MemTxResult cxl_type3_write(PCIDevice *d, hwaddr host_addr, uint64_t data,
-     return address_space_write(as, dpa_offset, attrs, &data, size);
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index bc00fec9f8..cbd6ebf9fe 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -2636,6 +2636,12 @@ static int sanitize_range(CXLType3Dev *ct3d, uint64_t dpa_addr, size_t length,
+     return address_space_set(as, dpa_addr, fill_value, length, mem_attrs);
  }
  
-+static void ct3d_clear_poison_list(CXLPoisonList *list)
++static void cxl_discard_media_op_sanitize(CXLType3Dev *ct3d)
 +{
-+    CXLPoison *ent, *next;
-+
-+    QLIST_FOREACH_SAFE(ent, list, node, next) {
-+        QLIST_REMOVE(ent, node);
-+        g_free(ent);
-+    }
++    g_free(ct3d->media_op_sanitize);
++    ct3d->media_op_sanitize = NULL;
 +}
 +
- static void ct3d_reset_hold(Object *obj, ResetType type)
+ /* Perform the actual device zeroing */
+ static void __do_sanitize(CXLType3Dev *ct3d)
  {
-     CXLType3Dev *ct3d = CXL_TYPE3(obj);
-@@ -1377,6 +1387,14 @@ static void ct3d_reset_hold(Object *obj, ResetType type)
-         ct3d->cxl_dstate.event_logs[i].irq_enabled = false;
+@@ -2653,8 +2659,7 @@ static void __do_sanitize(CXLType3Dev *ct3d)
+         }
      }
-     ct3d->scan_media_hasrun = false;
-+
-+    ct3d_clear_poison_list(&ct3d->poison_list);
-+    ct3d_clear_poison_list(&ct3d->poison_list_bkp);
-+    ct3d_clear_poison_list(&ct3d->scan_media_results);
-+    ct3d->poison_list_cnt = 0;
-+    cxl_clear_poison_list_overflowed(ct3d);
-+
-+    memset(&ct3d->set_feat_info, 0, sizeof(ct3d->set_feat_info));
+ exit:
+-    g_free(ct3d->media_op_sanitize);
+-    ct3d->media_op_sanitize = NULL;
++    cxl_discard_media_op_sanitize(ct3d);
+     return;
  }
  
- static const Property ct3_props[] = {
+@@ -4848,6 +4853,12 @@ void cxl_destroy_mailbox_t3(CXLType3Dev *ct3d)
+     if (ct3d->cci.initialized) {
+         cxl_destroy_cci(&ct3d->cci);
+     }
++    /*
++     * An in-flight Media Operations sanitize is only advanced by this CCI's
++     * background timer; with the CCI gone the operation can never complete,
++     * so its state would otherwise be leaked (CXL r4.0 Section 8.2.9.4).
++     */
++    cxl_discard_media_op_sanitize(ct3d);
+ }
+ 
+ static const struct cxl_cmd cxl_cmd_set_t3_ld[256][256] = {
 -- 
 2.43.0
 
