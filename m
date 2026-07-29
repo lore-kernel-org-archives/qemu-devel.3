@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 556E1C53200
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 15:29:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA67BC53200
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 15:29:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp6DC-0001f5-KK; Wed, 29 Jul 2026 11:28:50 -0400
+	id 1wp6Dc-0002IO-HF; Wed, 29 Jul 2026 11:29:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1wp6DA-0001dt-Kj
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 11:28:48 -0400
-Received: from mail-wm1-f52.google.com ([209.85.128.52])
+ id 1wp6Db-0002I4-De
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 11:29:15 -0400
+Received: from mail-wr1-f49.google.com ([209.85.221.49])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1wp6D8-00083g-KT
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 11:28:48 -0400
-Received: by mail-wm1-f52.google.com with SMTP id
- 5b1f17b1804b1-4954a9e8490so12588845e9.1
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 08:28:46 -0700 (PDT)
+ id 1wp6Da-0008Ec-1k
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 11:29:15 -0400
+Received: by mail-wr1-f49.google.com with SMTP id
+ ffacd0b85a97d-47df43bfb07so466159f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 08:29:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785338925; x=1785943725;
+ d=1e100.net; s=20251104; t=1785338952; x=1785943752;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=6TeMroFC0RkCp4VBi9WC++CXDwcuWrermHZePSESP/4=;
- b=CDTkniNY620/9GmcqtJbVjY3FMIwcmHhyuBDjcaq9Yo5YM3A39wiVxd7ZnY+ygB3mK
- QzT6qsxrkdkaAZ2Wd+qDoW0zmkTGY1tIQRsVjK1mfd2+U9wcUQdlSjIxEjrcrKw/TXwx
- KUdaovKnuhcUn/E3T5W1Qj08+Z2R99tJsu2F9GqIjOnwhBWzuzanVfcEILGPp10vuyBf
- 7mA66JmqEV0g8K/fvQxOdfghOpN+ehLh7uvwmZ10q/3Ot5yx6xhykU2CCodlLpYsLC77
- XoDBbUE1AOJY34hnvVrc+PIODNVcqE0SZT5aLBBrkR1RqZqhzqS/irhEE7BRWL5K2VU0
- S/Yg==
-X-Gm-Message-State: AOJu0YzpqOAgJrfLdsnS4zX7QboDxYQkMvgX6Y29IEEnFVWmzJ285GUk
- jKIxIrilAFKAXyxaLKmVRAf98eK8L+nXXuVmftl1USyoDGGS3KdAW9H463RqS0TV
-X-Gm-Gg: AR+sD10+V53wSxGIrtKDL+hLxoHNtoLgbb7n6fatcQdZ/lEN5cYwJ11vuDdcZBNxBFv
- smSpDPa2yXakKik0XxdaDlJ1FE4o6e0c/Vn+mbpcbbOS4s5cDsaioxEoHszJvB+EsfWEmhDj+rw
- UbP0UEbmS4KbxD2c9xJNpwPB7IG1tMtCkMBP4RI2syuBowrIiYwHuYR0wFZVbj9sXYq4EK40oZV
- ZEllHCwp3A2hz/sk7/QQ4OP6SC9eEPa4w/g1UARrIGrZFBEQzU3AnP3/iwfbQZc7N1S2G21neoO
- ExtPwh3UrZJu6aDVq39LOv3GjgXKILsSe0rJ+H+XDNKNvrM0fnQ7MUIzrg5U3vcVrPSaGgpf+2o
- x7q4ZZPfEoPihwI4EslLmQc/77HZmEk6XdZfqmMj4npw+i2GtDaL0Eq83yOTnunlMvdEWEdNAdm
- E54ZjiP4lAcmocHG1WL7LNiLAxcmOLYc2m/n69NxNgV9AHLkqwhl5sxkxgPIyINvp5MAogSA6Zu
- idVlQ54rR+QPaONgoDiGGxA6l4k4IiHMVQa
-X-Received: by 2002:a05:600c:1e0a:b0:495:6193:c6c0 with SMTP id
- 5b1f17b1804b1-497fd31a32dmr31294815e9.18.1785338925020; 
- Wed, 29 Jul 2026 08:28:45 -0700 (PDT)
+ bh=9UU67IURNj8PURmFA5VKoABWjQcNQzhVJM3O/Bwow3E=;
+ b=K8Pr/JXnEQxYdX6rtSG6EQpLieHdKxi8x6JNcv+sBDFQbTEfI0XopvmEF6+Xz5aG/H
+ XQgWe+OWJLq7/41b0g/ubnNYXxo2V+h2AxtCvDm2IOxzpsyOu3c+9y5ImFzK6ikHsF0F
+ +ZO5ubJ/LtbEtfqxRBnUk5Aw3rrlV8+6e9ORqrMyv1Fetd/He2oSZGLonH/ESKqug9iB
+ QGVcXddze5/e5Nbg1OScNQGtTJE8QCpb4swprptBh2K22sjtqkcd6nD+fJDbs4o34lV3
+ EUm714HkUjF8TGmzeLnb2k1dFElaQtoCaCwKf00LbsXMnRf5JrVfT1iX1UyHB0bodTHZ
+ Ce2g==
+X-Gm-Message-State: AOJu0YyLgh8OumntibQmBJpm0HfZQO6RYmPZb8issELI5nbLKyd3Fb2K
+ PODgfma5Dx4uresBf0jlkmYXWv3KpT7hNhXDanYmpLRDqfhsmf9oIzwLKZDJOAdc
+X-Gm-Gg: AR+sD127StHEYPsMiiEY8JYbIQ8ZwhJjG+Z4S2bpWPqVIieDxb7t6nARaq+sgJY91pj
+ WzKM/JE6L45sfiOuQrPbqurfvIMKrAqnmgRPYymW4IRanCxzF7bp2/9bxFXSNM1M5olxq4kABK8
+ zlSq9ZrslwiQfV1gUoAvZRjct6eA2EnusgvXR/0UyMi0JKMYsFNLKFZ6phSOgWyc3XpTiH7ypok
+ hWAZs5/W5NxByg1Ol57zGP1R8FF5bLRFhnxdzrYv5giiNQDcX2diJuCFwnCfR5THUNgWW9gcCDN
+ ei19V+DZGtU0WAKJticfZyNTePQHgpmwc//qk9QwLasEHhcQ59DUW7WSQ66qtGt6zdMLmr/JoLW
+ +LlnIpCDI2Yi7sVEx6aeaJHhKQ6oaTdPY6Hs1ibA6+rbMFgIwg+AOcUGjepc0SBbs4ZGGE5GeNT
+ zFTLSVRs/PmFJAyboKCcgw9MwoWdiHpaktlUfI6KkDn1OdADHFo6rBqvoHntsGr966drRRDjF/t
+ aV6elvK1/IlFIxzBNfsxiIwBLjoA864h4cr/o0DJ7PEFA1o
+X-Received: by 2002:a05:6000:2dc4:b0:47d:ed1d:e0e6 with SMTP id
+ ffacd0b85a97d-47fb1f2a08dmr9196249f8f.55.1785338952567; 
+ Wed, 29 Jul 2026 08:29:12 -0700 (PDT)
 Received: from localhost (89-93-216-19.hfc.dyn.abo.bbox.fr. [89.93.216.19])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-497fecfccc7sm51853475e9.12.2026.07.29.08.28.44
+ ffacd0b85a97d-47fbf0a4a00sm2558113f8f.34.2026.07.29.08.29.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Jul 2026 08:28:44 -0700 (PDT)
-Date: Wed, 29 Jul 2026 17:12:40 +0200
-Subject: [PATCH 04/25] hw/sensor: tmp105: enforce the configurable fault queue
+ Wed, 29 Jul 2026 08:29:12 -0700 (PDT)
+Date: Wed, 29 Jul 2026 17:12:41 +0200
+Subject: [PATCH 05/25] hw/sensor: tmp105: describe the temperature property
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260729-sanmiguel-bmc-locator-v1-4-c8f9a8d101f6@free.fr>
+Message-Id: <20260729-sanmiguel-bmc-locator-v1-5-c8f9a8d101f6@free.fr>
 References: <20260729-sanmiguel-bmc-locator-v1-0-c8f9a8d101f6@free.fr>
 In-Reply-To: <20260729-sanmiguel-bmc-locator-v1-0-c8f9a8d101f6@free.fr>
 To: qemu-devel@nongnu.org
@@ -75,15 +75,15 @@ Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Emmanuel Blot <eblot@meta.com>, Emmanuel Blot <emmanuel.blot@free.fr>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1785337963; l=5924;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1785337963; l=972;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=wwzB72eiHroHgVASMgeEaV/IOYNCK41LnLDKlIYNhaw=;
- b=qclnMbBBl89pIwmlJvsnRWjTsMVMyTUqwR/avwjEkWmoLp/xHt+doV+8U+o+2UNYZYU4OaumB
- ZCrLNsP4RdWDc49Z8abnmLy2Is/aXArBzkpgxUYGsK1tF2hIl+yYPdx
+ bh=dtFmKtAlRiVXJztXMlux9lIKLH6pMshNOkJwipbdeOQ=;
+ b=AT4qhv0C1pJItpktotlJxfRrfF3wClzk3gbUDiD8QoHK4O7xdJCyXzg4+vTmT7Ot0Qmsdptxq
+ y0EWOgJSQguAi5l2aqyt2Dj11hdGl+iW/BbjvgmlbJsUqO2OjDuc3Ik
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.128.52; envelope-from=eblot.ml@gmail.com;
- helo=mail-wm1-f52.google.com
+Received-SPF: pass client-ip=209.85.221.49; envelope-from=eblot.ml@gmail.com;
+ helo=mail-wr1-f49.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -109,175 +109,29 @@ From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The fault-queue depth selected in the configuration register was decoded
-but never consulted, so the ALERT pin tripped on the very first
-out-of-limit conversion regardless of the programmed depth.
-
-Track the consecutive-fault count and only change the ALERT state once
-it reaches the programmed depth; any in-range conversion clears the
-count. The default configuration keeps the previous behaviour. The count
-is migrated through an optional subsection so existing streams stay
-compatible.
+Attach a description to the dynamic "temperature" QOM property so it is
+documented in the QOM introspection output (qom-list-properties), like
+the injection properties of the INA230/INA238 models. The value is
+expressed in millidegrees Celsius.
 
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- hw/sensor/tmp105.c | 87 ++++++++++++++++++++++++++++++++++--------------------
- 1 file changed, 55 insertions(+), 32 deletions(-)
+ hw/sensor/tmp105.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/hw/sensor/tmp105.c b/hw/sensor/tmp105.c
-index f7d0c738ca..5c77f991cc 100644
+index 5c77f991cc..fefa661711 100644
 --- a/hw/sensor/tmp105.c
 +++ b/hw/sensor/tmp105.c
-@@ -54,6 +54,7 @@ struct TMP105State {
-     int16_t temperature;
-     int16_t limit[2];
-     int faults;
-+    uint8_t fault_count;
-     uint8_t alarm;
-     /*
-      * The TMP105 initially looks for a temperature rising above T_high;
-@@ -78,43 +79,40 @@ static void tmp105_interrupt_update(TMP105State *s)
- 
- static void tmp105_alarm_update(TMP105State *s, bool one_shot)
- {
-+    bool fault;
-+
-     if (FIELD_EX8(s->config, CONFIG, SHUTDOWN_MODE) && !one_shot) {
-         return;
-     }
- 
--    if (FIELD_EX8(s->config, CONFIG, THERMOSTAT_MODE)) {
--        /*
--         * TM == 1 : Interrupt mode. We signal Alert when the
--         * temperature rises above T_high, and expect the guest to clear
--         * it (eg by reading a device register).
--         */
--        if (s->detect_falling) {
--            if (s->temperature < s->limit[0]) {
--                s->alarm = 1;
--                s->detect_falling = false;
--            }
--        } else {
--            if (s->temperature >= s->limit[1]) {
--                s->alarm = 1;
--                s->detect_falling = true;
--            }
--        }
-+    /*
-+     * A fault is a conversion that lies outside the limit currently being
-+     * watched: above T_high while looking for the alarm to trip, below T_low
-+     * afterwards.
-+     */
-+    if (s->detect_falling) {
-+        fault = s->temperature < s->limit[0];
-     } else {
--        /*
--         * TM == 0 : Comparator mode. We signal Alert when the temperature
--         * rises above T_high, and stop signalling it when the temperature
--         * falls below T_low.
--         */
-+        fault = s->temperature >= s->limit[1];
-+    }
-+
-+    if (!fault) {
-+        s->fault_count = 0;
-+    } else if (++s->fault_count >= s->faults) {
-+        s->fault_count = 0;
-         if (s->detect_falling) {
--            if (s->temperature < s->limit[0]) {
--                s->alarm = 0;
--                s->detect_falling = false;
--            }
-+            /*
-+             * Temperature fell back below T_low. In comparator mode (TM == 0)
-+             * the alarm is released; in interrupt mode (TM == 1) it is
-+             * asserted again and the guest is expected to clear it by reading
-+             * a register.
-+             */
-+            s->alarm = FIELD_EX8(s->config, CONFIG, THERMOSTAT_MODE);
-+            s->detect_falling = false;
-         } else {
--            if (s->temperature >= s->limit[1]) {
--                s->alarm = 1;
--                s->detect_falling = true;
--            }
-+            /* Temperature rose to or above T_high: assert the alarm. */
-+            s->alarm = 1;
-+            s->detect_falling = true;
-         }
-     }
- 
-@@ -204,7 +202,12 @@ static void tmp105_write(TMP105State *s)
-         }
-         s->config = FIELD_DP8(s->buf[0], CONFIG, ONE_SHOT, 0);
-         s->faults = tmp105_faultq[FIELD_EX8(s->config, CONFIG, FAULT_QUEUE)];
--        tmp105_alarm_update(s, FIELD_EX8(s->buf[0], CONFIG, ONE_SHOT));
-+        if (FIELD_EX8(s->buf[0], CONFIG, ONE_SHOT) &&
-+            FIELD_EX8(s->config, CONFIG, SHUTDOWN_MODE)) {
-+            tmp105_alarm_update(s, true);
-+        } else {
-+            tmp105_interrupt_update(s);
-+        }
-         break;
- 
-     case TMP105_REG_T_LOW:
-@@ -213,7 +216,7 @@ static void tmp105_write(TMP105State *s)
-             s->limit[s->pointer & 1] = (int16_t)
-                     ((((uint16_t) s->buf[0]) << 8) | (s->buf[1] & 0xf0));
-         }
--        tmp105_alarm_update(s, false);
-+        tmp105_interrupt_update(s);
-         break;
-     }
- }
-@@ -281,6 +284,13 @@ static bool detect_falling_needed(void *opaque)
-     return s->detect_falling;
+@@ -367,6 +367,8 @@ static void tmp105_initfn(Object *obj)
+     object_property_add(obj, "temperature", "int",
+                         tmp105_get_temperature,
+                         tmp105_set_temperature, NULL, NULL);
++    object_property_set_description(obj, "temperature",
++                                    "Temperature, in millidegrees Celsius");
  }
  
-+static bool fault_count_needed(void *opaque)
-+{
-+    const TMP105State *s = opaque;
-+
-+    return s->fault_count != 0;
-+}
-+
- static const VMStateDescription vmstate_tmp105_detect_falling = {
-     .name = "TMP105/detect-falling",
-     .version_id = 1,
-@@ -292,6 +302,17 @@ static const VMStateDescription vmstate_tmp105_detect_falling = {
-     }
- };
- 
-+static const VMStateDescription vmstate_tmp105_fault_count = {
-+    .name = "TMP105/fault-count",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = fault_count_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT8(fault_count, TMP105State),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- static const VMStateDescription vmstate_tmp105 = {
-     .name = "TMP105",
-     .version_id = 0,
-@@ -310,6 +331,7 @@ static const VMStateDescription vmstate_tmp105 = {
-     },
-     .subsections = (const VMStateDescription * const []) {
-         &vmstate_tmp105_detect_falling,
-+        &vmstate_tmp105_fault_count,
-         NULL
-     }
- };
-@@ -322,6 +344,7 @@ static void tmp105_reset_hold(Object *obj, ResetType type)
-     s->pointer = 0;
-     s->config = 0;
-     s->faults = tmp105_faultq[FIELD_EX8(s->config, CONFIG, FAULT_QUEUE)];
-+    s->fault_count = 0;
-     s->alarm = 0;
-     s->detect_falling = false;
- 
+ static void tmp105_class_init(ObjectClass *klass, const void *data)
 
 -- 
 2.50.1
