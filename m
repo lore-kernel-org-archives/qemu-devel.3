@@ -4,118 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61426C53219
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 04:45:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A327CC53200
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 05:13:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wow9j-0007Ty-Qc; Wed, 29 Jul 2026 00:44:36 -0400
+	id 1wowbD-0004Lb-73; Wed, 29 Jul 2026 01:12:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wow9g-0007Sb-5w; Wed, 29 Jul 2026 00:44:32 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wowbB-0004Gh-Ed; Wed, 29 Jul 2026 01:12:57 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wow9e-0005PC-KF; Wed, 29 Jul 2026 00:44:31 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66T1JGaF2717083; Wed, 29 Jul 2026 04:44:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=0HvNb41BYWs4ARy7cF3NJ3OCdRMp5u
- m5w7FhRWyT3Cg=; b=gBdt2kHFXtgWi1s90hCDhP9Z1MP9R7h83sO71DGdFzvs3D
- 1DP/ZpowhTikX9rPfU0IPz5106uDTtTLVHwMrkBVIyniVOycUQMzKMYGKAvyYRbr
- MBStkMlsSxxcBh2tI9H3WwB4litEudAGtS3/u0vZfqmn67wwundjFOYYGdXqtOM5
- hqByrpvo4nDwNJZ4eJH600VwQVPyEF1Jjle7NRNmlbycApFWaK7d+MPC+xY1ws6Z
- azrNHthLtwTWg6JtCpc4coGi6/8gfWKKy27pN6WekyDA5bMCvQP00nd5T/8rhZMN
- CfNE3ArZGtvSQ3ivdyHoHqzvihXtWYLKW1LOBF6Q==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0nr3sw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Jul 2026 04:44:27 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66T4fc9W016959;
- Wed, 29 Jul 2026 04:44:26 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fna5y4vwt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Jul 2026 04:44:26 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66T4iMcB46530886
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 29 Jul 2026 04:44:22 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6C9992004B;
- Wed, 29 Jul 2026 04:44:22 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BFCD220040;
- Wed, 29 Jul 2026 04:44:20 +0000 (GMT)
-Received: from fedora (unknown [9.5.7.39])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 29 Jul 2026 04:44:20 +0000 (GMT)
-Date: Wed, 29 Jul 2026 10:14:45 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Glenn Miles <milesg@linux.ibm.com>,
- qemu-ppc@nongnu.org, Chinmay Rath <rathc@linux.ibm.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>
-Subject: Re: [PATCH] target/ppc/cpu_init: make cpu listing determnistic
-Message-ID: <20260729101217.db953dfc-ee-amachhiw@linux.ibm.com>
-Mail-Followup-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- qemu-devel@nongnu.org, Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org,
- Chinmay Rath <rathc@linux.ibm.com>, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Nicholas Piggin <npiggin@gmail.com>
-References: <20260720192403.66694-1-pierrick.bouvier@oss.qualcomm.com>
- <20260728150627.b0e3b230-14-amachhiw@linux.ibm.com>
- <54a09c6f-0ed4-49f8-abec-afd916faefcf@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wowb9-0001Hh-Fr; Wed, 29 Jul 2026 01:12:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1785301958; bh=y31SjDTHr8Sgk4THI1Fz7hl8alXcUKww6Hgxg+dZ+ag=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=xXQFlbt1yLp5NFg7sZEdZj9qjvG3zEhY1T1H8QIANusVSbgcENhaPZCLnBnIyW5Qy
+ qdxtmkitQXimfvSK1mKoHBftPeLmScmAy/stGx7en9ZmT05D7LP0gbpFZ70sdHErQ4
+ O9QxMRx5WJkL/QhijWQVihvhNpHzHvVvxlinT4RBIOAy37m1sfDz/CJTJr+u2R3kng
+ ppal0LXWukc2Yttyaz51YAb7y1DBqWxQpv8tUEQNNr9uQqQ4MiMXuiPXxgBORBBT4K
+ lbSTpWWIy90vaqf99P7QaIME/5FPxPCUGAcTmvXeImX8DyWwPyU19qbejS1YR2+GSv
+ Y2pMgovXrhPLA==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 2812B1C6661;
+ Wed, 29 Jul 2026 08:12:38 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id B0B193F9098;
+ Wed, 29 Jul 2026 08:12:43 +0300 (MSK)
+Message-ID: <af6d5296-9860-4c5d-a72e-f2eacac3e2e9@tls.msk.ru>
+Date: Wed, 29 Jul 2026 08:12:30 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <54a09c6f-0ed4-49f8-abec-afd916faefcf@oss.qualcomm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI5MDAzMiBTYWx0ZWRfXyVwCTmgAhFW9
- wDpHhDH39g/fEFu2+NCj02imPgzkcxrVccfqcN7xjXbhXDXHM3JbBnhOx35oweb8crCtr7gjDZ6
- q/pSFKBlS1wAgdkYdQ6P9Q0xG08+nvY=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI5MDAzMiBTYWx0ZWRfXwAOuCfWWPe72
- wF0nKo+82/zS2VoJ8asoddvPVqnrujJKavLuTvB/W/tGmvi2Xynsaw2Zttylkq5l/UYMsX+0vzv
- H816o6C1MU3MU7KZbfMCYw6eAl55Uqv4svtFqEnn348gVL0RmQ6BBPutM0nW0jSpi2ObKQ8dRqV
- 0oJUZShz/u2++8ZbRPyEj+048TQG2FleE19RzAEwsEhAeerYirciLI5wt0bIV25TB3GnfTaD4VG
- jLArYTdxmWzdGeI15JsiwVKaXZ5MNCx319feOjW+6Rsua00xT+7tcdj8jzVjCe/G7itjIwO0lKf
- Kl6oKzHykDtUEglWJ4VKxKcVgxH5wMP8lgmJb5FzrKDg1rWNimV8tKzslUMpC3V90hppnn83mxv
- 6AOETsmBxegXJrPzYJ+ex0Z7qchZ6Y3S7mAfTN73jVt3DDd7uL9+zA4sIRovT22s216xemhFsOa
- tu5JyUFd+JTW3whPzZg==
-X-Authority-Analysis: v=2.4 cv=b5WCJNGx c=1 sm=1 tr=0 ts=6a69852b cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=EUspDBNiAAAA:8 a=S2qm46derESQu8h7nLUA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-GUID: PG5ezyfv8jxThQvX7TEaDqZMA07HoAfz
-X-Proofpoint-ORIG-GUID: qnqXcXJEW6WCg51dC_fykWo0pmFkminD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-29_01,2026-07-28_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0 impostorscore=0
- bulkscore=0 phishscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607290032
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL v2 09/30] virtio-mmio: fix QUEUE_NUM_MAX
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Yonggang Luo <luoyonggang@gmail.com>, Miku Hatsune <anznu1l@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>, QEMU Stable <qemu-stable@nongnu.org>
+References: <cover.1785179875.git.mst@redhat.com>
+ <a5cff318f06cd06b37224e15ee74d64d1df8b12b.1785179875.git.mst@redhat.com>
+ <65990a19-6a7e-4c1c-9354-0fffa13cbba9@tls.msk.ru>
+ <20260728154328-mutt-send-email-mst@kernel.org>
+ <75f2277a-8508-4e6e-adfe-92bed9fc1bf6@tls.msk.ru>
+ <20260728192047-mutt-send-email-mst@kernel.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260728192047-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -132,88 +120,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/28 10:57 AM, Pierrick Bouvier wrote:
-> On 7/28/2026 2:40 AM, Amit Machhiwal wrote:
-> > On 2026/07/20 07:24 PM, Pierrick Bouvier wrote:
-> >> The existing compare function only make sure that we list cpus with PVR
-> >> order. However, we never compare cpu names.
-> >> As a result, while cpus are grouped per PVR, the order within a group is
-> >> non deterministic. Depending on QOM type initialization order, we get
-> >> different results for -cpu help.
-> >>
-> >> For instance, previous output could be:
-> >> Available CPUs:
-> >>   755_v1.0         PVR 00083100
-> >>   745_v1.0         PVR 00083100
-> >>   755_v1.1         PVR 00083101
-> >>   745_v1.1         PVR 00083101
-> >>
-> >> While a sorted output should be:
-> >> Available CPUs:
-> >>   745_v1.0         PVR 00083100
-> >>   755_v1.0         PVR 00083100
-> >>   745_v1.1         PVR 00083101
-> >>   755_v1.1         PVR 00083101
-> >>
-> >> Fix it by comparing cpu names to have a stable result.
-> > 
-> > Verified the before/after output of `qemu-system-ppc64 -cpu help`. The
-> > patch correctly stabilises ordering in all PVR-collision groups.
-> > 
-> > No regressions: identical CPU set, ordering only.
-> > 
-> > Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com> 
-> > Tested-by: Amit Machhiwal <amachhiw@linux.ibm.com> 
-> > 
-> > Minor nit: subject line has a typo ("determnistic" should be
-> > "deterministic").
-> > 
-> > Thanks,
-> > Amit
-> >
+On 7/29/26 02:22, Michael S. Tsirkin wrote:
+> On Tue, Jul 28, 2026 at 11:17:34PM +0300, Michael Tokarev wrote:
+..
+>> So this whole change, for older versions, becomes just:
+>>
+>> --- a/hw/virtio/virtio.c
+>> +++ b/hw/virtio/virtio.c
+>> @@ -2572,6 +2572,8 @@ VirtQueue *virtio_add_queue(VirtIODevice *vdev, int queue_size,
+>>       if (i == VIRTIO_QUEUE_MAX || queue_size > VIRTQUEUE_MAX_SIZE)
+>>           abort();
+>>
+>> +    queue_size = VIRTQUEUE_MAX_SIZE; /* fixed properly in 11.1. */
+>> +
 > 
-> Thanks Amit.
-> 
-> Do you need a v2 with a change, or feel like fixing the typo when
-> pulling this patch?
+> Or you can stick to upstream and add the compat entry for 11.0.
 
-I think its a minor one and a v2 is not required just for this.
+Compat entry for 11.0 which will never be used?
+With a non-obvious logic which boils down to this single line?
 
-@Harsh, could you please fix this while pulling it?
+Or what do you mean?
+
+BTW, can't this logic be implemented without a compat property in
+the first place?  This x-override-queue-size seems like a hack.
+or a.. twisted way to compare a machine version.
+
+Can't this very place become
+
+    if (machine_version < 11.1) {
+       queue_size = VIRTQUEUE_MAX_SIZE;
+    }
+
+instead of using this indirect property?
 
 Thanks,
-Amit
 
-> 
-> Regards,
-> Pierrick
-> 
-> >> This allows us to record and compare various command line results across
-> >> versions to make sure we didn't break anything while working on
-> >> single-binary.
-> >>
-> >> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> >> ---
-> >>  target/ppc/cpu_init.c | 2 +-
-> >>  1 file changed, 1 insertion(+), 1 deletion(-)
-> >>
-> >> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> >> index f404c7e549d..3443dbeeb01 100644
-> >> --- a/target/ppc/cpu_init.c
-> >> +++ b/target/ppc/cpu_init.c
-> >> @@ -7130,7 +7130,7 @@ static gint ppc_cpu_list_compare(gconstpointer a, gconstpointer b, gpointer d)
-> >>          } else if (pcc_a->pvr > pcc_b->pvr) {
-> >>              return 1;
-> >>          } else {
-> >> -            return 0;
-> >> +            return strcmp(name_a, name_b);
-> >>          }
-> >>      }
-> >>  }
-> >> -- 
-> >> 2.43.0
-> >>
-> >>
-> 
-> 
+/mjt
 
