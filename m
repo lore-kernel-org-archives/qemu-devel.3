@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3963C54F51
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 09:33:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63B1FC53200
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 09:33:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp0dp-00058J-9O; Wed, 29 Jul 2026 05:31:57 -0400
+	id 1wp0dp-00058E-0v; Wed, 29 Jul 2026 05:31:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wp0dn-00057D-Jb
+ id 1wp0dn-00057G-N7
  for qemu-devel@nongnu.org; Wed, 29 Jul 2026 05:31:55 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wp0dl-0007kx-06
+ id 1wp0dj-0007ki-TP
  for qemu-devel@nongnu.org; Wed, 29 Jul 2026 05:31:55 -0400
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
- by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id B5A26C0A4A;
- Wed, 29 Jul 2026 12:31:51 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id 46540C0A30;
+ Wed, 29 Jul 2026 12:31:49 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:484::1:24])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id kVacraKWFGk0-Pn7GdoXq; Wed, 29 Jul 2026 12:31:51 +0300
+ id kVacraKWFGk0-uDo1mEko; Wed, 29 Jul 2026 12:31:48 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1785317511;
- bh=Heugvd44UzeLE9Y7zi6x0k/Glc660bM46rnMu4b77TM=;
+ s=default; t=1785317508;
+ bh=A4ebB8HLDseDR8vfsLUWnp1Ldex+8n1ox5y/Vnz21xI=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=SGXYJEvCNAnuMcKt3cjMntW90BbdPsDfN86r0r8LtvAdTtQqPOJ66VFNy1O+COnH+
- JDVBwGkjxdOtVkVJtIWacqdgZC0xz7G0tFzlGDSbOmZ/pWp8CdZmKarHIoy6NeSOMw
- 2Shy2O1mahzLuz4zyBI49NOp7sSdWmV2cNwvyIQk=
+ b=Kmeal9Z52ZyP/6uO1oASs/MV+sBFfXZwftaKAITkfTPh7dpCX7jKw+PuDtNoS4ynu
+ NvNEKtehMYpWOZK+hg7VWJbHJj09Bvx5/YXpCeaV54OhcH2+0gpjYiKPFfaOteOXd5
+ 4gWse1QztV/wz9nT2jQ1XuIcXYG3YTXcw6SRTroY=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -47,24 +46,24 @@ Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
  raphael.s.norwitz@gmail.com, bchaney@akamai.com, vsementsov@yandex-team.ru,
  qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
  yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
- Thomas Huth <th.huth+qemu@posteo.eu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PATCH 4/5] tests/testcase.py: passthrough monitor_address
-Date: Wed, 29 Jul 2026 12:31:44 +0300
-Message-ID: <20260729093146.1893719-5-vsementsov@yandex-team.ru>
+ John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
+Subject: [PATCH 1/5] python/qemu/machine: add possibility to postpone qmp
+ connect
+Date: Wed, 29 Jul 2026 12:31:41 +0300
+Message-ID: <20260729093146.1893719-2-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260729093146.1893719-1-vsementsov@yandex-team.ru>
 References: <20260729093146.1893719-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.72;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,47 +79,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We'll need it soon to implement test for cpr-exec mode of
-tap-fd-migration.
+This is need to test cpr-transfer migration, as on started
+target QMP is not available until we call "migrate" on
+source.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- tests/functional/qemu_test/testcase.py | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ python/qemu/machine/machine.py | 53 ++++++++++++++++++----------------
+ 1 file changed, 28 insertions(+), 25 deletions(-)
 
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index 12ef84281c4..69d3d06cc0e 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -381,11 +381,12 @@ def require_device(self, devicename):
-         if helptxt.find(devicename) < 0:
-             self.skipTest('no support for device ' + devicename)
+diff --git a/python/qemu/machine/machine.py b/python/qemu/machine/machine.py
+index bfb59d4c0bf..00154b8591f 100644
+--- a/python/qemu/machine/machine.py
++++ b/python/qemu/machine/machine.py
+@@ -449,17 +449,17 @@ def _post_shutdown(self) -> None:
+         self._user_killed = False
+         self._launched = False
  
--    def _new_vm(self, name):
-+    def _new_vm(self, name, monitor_address):
-         vm = QEMUMachine(self.qemu_bin,
-                          name=name,
-                          base_temp_dir=self.workdir,
--                         log_dir=self.log_file())
-+                         log_dir=self.log_file(),
-+                         monitor_address=monitor_address)
-         self.log.debug('QEMUMachine "%s" created', name)
-         self.log.debug('QEMUMachine "%s" temp_dir: %s', name, vm.temp_dir)
+-    def launch(self) -> None:
++    def launch(self, do_start_process=True, do_qmp_connect=True) -> None:
+         """
+         Launch the VM and make sure we cleanup and expose the
+         command line/output in case of exception
+         """
  
-@@ -400,11 +401,11 @@ def _new_vm(self, name):
-     def vm(self):
-         return self.get_vm(name='default')
+-        if self._launched:
++        if self._launched and do_start_process:
+             raise QEMUMachineError('VM already launched')
  
--    def get_vm(self, name=None):
-+    def get_vm(self, name=None, monitor_address=None):
-         if not name:
-             name = str(uuid.uuid4())
-         if self._vms.get(name) is None:
--            self._vms[name] = self._new_vm(name)
-+            self._vms[name] = self._new_vm(name, monitor_address)
-             if self.cpu is not None:
-                 self._vms[name].add_args('-cpu', self.cpu)
-             if self.machine is not None:
+         try:
+-            self._launch()
++            self._launch(do_start_process, do_qmp_connect)
+         except BaseException as exc:
+             # We may have launched the process but it may
+             # have exited before we could connect via QMP.
+@@ -482,31 +482,34 @@ def launch(self) -> None:
+             # that exception. However, we still want to clean up.
+             raise
+ 
+-    def _launch(self) -> None:
++    def _launch(self, do_start_process=True, do_qmp_connect=True) -> None:
+         """
+         Launch the VM and establish a QMP connection
+         """
+-        self._pre_launch()
+-        LOG.debug('VM launch command: %r', ' '.join(self._qemu_full_args))
+-        # Log a simplified, developer-runnable command:
+-        # Exclude harness-managed infrastructure args (harness_args)
+-        # and wrapper.
+-        debug_cmd = [self._binary]
+-        debug_cmd.extend(self._console_args(interactive=True))
+-        debug_cmd.extend(self._base_args)
+-        debug_cmd.extend(self._args)
+-        LOG.debug('Developer-runnable command: %r', ' '.join(debug_cmd))
+-
+-        # Cleaning up of this subprocess is guaranteed by _do_shutdown.
+-        # pylint: disable=consider-using-with
+-        self._popen = subprocess.Popen(self._qemu_full_args,
+-                                       stdin=subprocess.DEVNULL,
+-                                       stdout=self._qemu_log_file,
+-                                       stderr=subprocess.STDOUT,
+-                                       shell=False,
+-                                       close_fds=False)
+-        self._launched = True
+-        self._post_launch()
++        if do_start_process:
++            self._pre_launch()
++            LOG.debug('VM launch command: %r', ' '.join(self._qemu_full_args))
++            # Log a simplified, developer-runnable command:
++            # Exclude harness-managed infrastructure args (harness_args)
++            # and wrapper.
++            debug_cmd = [self._binary]
++            debug_cmd.extend(self._console_args(interactive=True))
++            debug_cmd.extend(self._base_args)
++            debug_cmd.extend(self._args)
++            LOG.debug('Developer-runnable command: %r', ' '.join(debug_cmd))
++
++            # Cleaning up of this subprocess is guaranteed by _do_shutdown.
++            # pylint: disable=consider-using-with
++            self._popen = subprocess.Popen(self._qemu_full_args,
++                                           stdin=subprocess.DEVNULL,
++                                           stdout=self._qemu_log_file,
++                                           stderr=subprocess.STDOUT,
++                                           shell=False,
++                                           close_fds=False)
++            self._launched = True
++
++        if do_qmp_connect:
++            self._post_launch()
+ 
+     def _close_qmp_connection(self) -> None:
+         """
 -- 
 2.43.0
 
