@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 485A9C53219
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 15:41:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 331B0C53219
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 15:41:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp6Oh-0006BY-02; Wed, 29 Jul 2026 11:40:43 -0400
+	id 1wp6PN-0006ib-75; Wed, 29 Jul 2026 11:41:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1wp6Of-0006B4-OS
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 11:40:41 -0400
-Received: from mail-wr1-f54.google.com ([209.85.221.54])
+ id 1wp6PI-0006i6-8Z
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 11:41:20 -0400
+Received: from mail-wr1-f42.google.com ([209.85.221.42])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1wp6Oe-0001wS-8O
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 11:40:41 -0400
-Received: by mail-wr1-f54.google.com with SMTP id
- ffacd0b85a97d-47f7854678bso583189f8f.3
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 08:40:39 -0700 (PDT)
+ id 1wp6PD-00024W-HV
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 11:41:16 -0400
+Received: by mail-wr1-f42.google.com with SMTP id
+ ffacd0b85a97d-47de0093c42so891802f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 08:41:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785339639; x=1785944439;
+ d=1e100.net; s=20251104; t=1785339674; x=1785944474;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=T3QJvSJZGpsccP9EvkOCqQcE/jNtNeeQY/Ifg8+pe0I=;
- b=GIE1f8Qn0zmt3tVWcOopvCRWJlanE6gvm1Np7gVjoou2MCu4YJFZgNY4DwZBnbYSkM
- 1iukn/f3ardNyW55sh1FeI7bUrfy8stgKLUwoJC4yfxIsp4ngjAthv4oU9FgpOf6y/j1
- jjZecXs2sli5iE99nHnPdX21nB/e8C+asTfUhFjl5srrrNdcTv4flSWMH44HXM5yoAZ8
- U/LMUuoXu9/r9g8HZD1d/BfT1Zkz3ugaTuTKhBkF5jh1Bjhv0Z5Cw2zeVZFr1d8wBrqj
- DqfzMzuW1yxsDQytoLbPCky2KS0e8tWuON+JW0UHn6q612UeZvv6/x9NQjSxH0M8HFAD
- 14+g==
-X-Gm-Message-State: AOJu0YzA1YLKUve7cmWIvcVRAx1daN3OkTBS6Yfih/eTGuYdt+3Yf9mh
- SirM95KAVFLBZmhOjIsWM+r5jmNCAKB6jg4fE1aSb9M0R2HqZDY7qifFEJ6HqK5W
-X-Gm-Gg: AR+sD125W2MBI9dS2gT/zgQH5gJinG/hsa/jeoNgeA3VglSCIBWbdrHI4Q1AoikB7Cu
- XW3p+0WfbJY9znbs1QAlygkdU2SIaKpsiURZqYoOIzf6M6JYUStm+Lr3W6L2AzbVxI6Vt6kJf73
- VB4+vPnNVumot3Sef0At5W1Cmr2uKQ8puYnHsM4sAP1+Z3/F8xbsY7i2rMKzMu8TpdXmxLU8x/7
- 7JG1fGqtIC4EaObsXg6MgOb9+EFIAo/K/7NbwSMbva2//4BmUjpelRd0owO0hKvCzowAZd+DMVX
- wNPddpiUGBQAbfU6Id8FRDbz49q0i9PHnB58sELL6AyRFFOEA1gNDPd1ckwnc4VqI3/NMwDIAov
- ARpNTivnVEj8M4ZME21JTEq5dEBA918xda6gidNVJdTjU7JyjeJSFswLau/TibLCDr5mSLjq3jE
- 0rfinhdOEe6MRb/Vm7Da4mpHIFBLSbVE/JJ1M8NI/dMNyoSYlnq4QtwHFVszVqNjNS/sCNI3kIF
- dSeWcTsc7schK0GdNpr9kpi76rpzRZ4bJf0
-X-Received: by 2002:a05:6000:1787:b0:47f:5371:1b15 with SMTP id
- ffacd0b85a97d-47fb1ee2366mr8768400f8f.26.1785339638711; 
- Wed, 29 Jul 2026 08:40:38 -0700 (PDT)
+ bh=Wfgnax45aICt6Jk7Ro6ypa6BY2EaCT+RRKjj6PSNFs8=;
+ b=ovIwKbR3rKH9Z21MmE+GHz8SajN4cRnzQ/txqWCubnDAOJ3mJSS4ZqY59dUDSjIto4
+ fm7uWEla1o9sKbUZ1nqT4hHzfgeCJxJPr/1ANNzcWDtkqLBMZWyR4eIAYk+CtyHWHFpt
+ wgphhSFsde5vlyQcNtPcbGLdx74Wz7ET9fXYQR/3N2BXRTD2ptLqa7xA/ZqI7bEyuQUs
+ NxfzNPphOfcOC1woBdRowI8wOZEychnP72XfiGfKED5VbBVf98Hrv7r+YxKovy/4o7ex
+ giki9OuOyc2JDaNPp9JqQHlf6zT/To+3kbh7YSRL4rC1uUzfTU0tpSgCI2tKlR7mBP7x
+ KdAQ==
+X-Gm-Message-State: AOJu0Yy+5O5hT6hMwBx5iUYyzzMJBjtr1/r5o8Tn/mcgXCwMVDqnglaQ
+ GNHGw+9dl2XwicxHiDq0D1UChnE7rn4knGYPIcVyiZWPsCX5fvge13BXU9Wg8wU7
+X-Gm-Gg: AR+sD11j0FH6f1adAfHMhfKkpFmYjPlRZjS0Yci1egufvh3ZyaaUbneD/t15SHUCzzc
+ 2g/b2qz70i9LYv6oh9bzA2w+R/YGG/hdXlFXMB/wRhcgXORK8d5e+lIy7XxL0WzoNLL0NFi6SIE
+ cPjOEgr0sglzRWD+i/6P/Wt7B+H/jPR2GA6JxgGJekPzmLAub0EfsyGKHKE4aDX1XWNd4QCFNa1
+ uS9HEoEMK9wpcYMfe6TRN9mQb4+NwEDH4A2cU1Cwi9eO4zmpTFtdDyvHuGm8NCpmKM5VIDXswVP
+ QY+jm9pWiEOqbmoFjzR5eOOuf4b68i6VODMsVyTA+VAHKtEDj7ap0fEs3CR2tolgeOdEf94wii2
+ 38Wkj0A5xeQXoAqSW1CPNZqw9nP+Sk4/SZSUmKh6LWGLv33ng+kyemECbtJfWq1ALJ0KcoKPgz2
+ sPEZSewaMbfTH2dWzH3p8oYYGesyMRSMyOI4hwTWW4gPs+AgKbEqUEeWaJMO3Gk79GuJ3G9kMpu
+ KohanyGAM3wZ4xDWqFSMlR5pKNzedERu/xX
+X-Received: by 2002:a05:6000:4902:b0:47f:9096:3c57 with SMTP id
+ ffacd0b85a97d-47fb1eab364mr9370179f8f.40.1785339674061; 
+ Wed, 29 Jul 2026 08:41:14 -0700 (PDT)
 Received: from localhost (89-93-216-19.hfc.dyn.abo.bbox.fr. [89.93.216.19])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47fb647a8d4sm9038598f8f.0.2026.07.29.08.40.37
+ ffacd0b85a97d-47fb6b0ef88sm9908108f8f.23.2026.07.29.08.41.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Jul 2026 08:40:38 -0700 (PDT)
-Date: Wed, 29 Jul 2026 17:12:52 +0200
-Subject: [PATCH 16/25] tests/functional: aspeed: optionally check the
- device tree model on boot
+ Wed, 29 Jul 2026 08:41:13 -0700 (PDT)
+Date: Wed, 29 Jul 2026 17:12:53 +0200
+Subject: [PATCH 17/25] tests/functional: give the set_machine probe VM the
+ test workdir
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260729-sanmiguel-bmc-locator-v1-16-c8f9a8d101f6@free.fr>
+Message-Id: <20260729-sanmiguel-bmc-locator-v1-17-c8f9a8d101f6@free.fr>
 References: <20260729-sanmiguel-bmc-locator-v1-0-c8f9a8d101f6@free.fr>
 In-Reply-To: <20260729-sanmiguel-bmc-locator-v1-0-c8f9a8d101f6@free.fr>
 To: qemu-devel@nongnu.org
@@ -76,15 +76,15 @@ Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Emmanuel Blot <eblot@meta.com>, Emmanuel Blot <emmanuel.blot@free.fr>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1785337964; l=1664;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1785337964; l=1100;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=cY6O6mrVrai7NMYpMfMfQOtbJnyb/EZq8fgGv1TgVEA=;
- b=AQ838ecWOWwFlpkOwwRhntcyWOI8dzW7kvtPnC3tGjFbVBZtLn17rgPtFJ1xHgzM538PwMyl6
- BrrNfBaCySPCA6QAwmenQtUOHlmRsrLclEX5O3GhdNCEWK22+y8Xssl
+ bh=Z+1yI9ZlM43E+k0NqAp1ImIMvg64cZpfA63qBC1lq6E=;
+ b=p3ZPoaVQaMoUhqcwXzxowFOcrqom/B2Cp0ujOdgH6gbdM+Zxbt3P9FzbwLrV6TlMqb5yG/W/g
+ 8hz+FG8ZFUKAyWKhBcoEq5yUDoj871e1agFAVXejpUyQyLBWcF2pT4a
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.221.54; envelope-from=eblot.ml@gmail.com;
- helo=mail-wr1-f54.google.com
+Received-SPF: pass client-ip=209.85.221.42; envelope-from=eblot.ml@gmail.com;
+ helo=mail-wr1-f42.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -110,42 +110,31 @@ From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an optional 'dt_model' argument to do_test_arm_aspeed_openbmc().
-When
-provided, the helper also waits for the kernel's "Machine model: ..."
-line,
-letting a test confirm the booted image actually matches the expected
-board
-device tree rather than only the SoC revision.
+set_machine() launches a throwaway QEMUMachine to query the available
+machine types, but constructs it without base_temp_dir, so it falls back
+to the hardcoded "/var/tmp" default instead of the writable per-test
+workdir that the actual test VM already uses. Pass base_temp_dir=
+self.workdir for consistency; this also fixes VM launch on hosts where
+/var/tmp is not writable.
 
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- tests/functional/aspeed.py | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tests/functional/qemu_test/testcase.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/functional/aspeed.py b/tests/functional/aspeed.py
-index 076da1036c..08af6b4839 100644
---- a/tests/functional/aspeed.py
-+++ b/tests/functional/aspeed.py
-@@ -8,7 +8,8 @@
- class AspeedTest(LinuxKernelTest):
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index e4179d165c..ed861709e1 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -317,7 +317,7 @@ def set_machine(self, machinename):
+         cls = type(self)
  
-     def do_test_arm_aspeed_openbmc(self, machine, image, uboot='2019.04',
--                                   cpu_id='0x0', soc='AST2500 rev A1'):
-+                                   cpu_id='0x0', soc='AST2500 rev A1',
-+                                   dt_model=None):
-         self.set_machine(machine)
-         self.vm.set_console()
-         self.vm.add_args('-drive', f'file={image},if=mtd,format=raw',
-@@ -19,6 +20,8 @@ def do_test_arm_aspeed_openbmc(self, machine, image, uboot='2019.04',
-         self.wait_for_console_pattern('## Loading kernel from FIT Image')
-         self.wait_for_console_pattern('Starting kernel ...')
-         self.wait_for_console_pattern(f'Booting Linux on physical CPU {cpu_id}')
-+        if dt_model:
-+            self.wait_for_console_pattern(f'Machine model: {dt_model}')
-         self.wait_for_console_pattern(f'ASPEED {soc}')
-         self.wait_for_console_pattern('/init as init process')
-         self.wait_for_boot_complete()
+         if not hasattr(cls, "_machines"):
+-            tmp_vm = QEMUMachine(self.qemu_bin)
++            tmp_vm = QEMUMachine(self.qemu_bin, base_temp_dir=self.workdir)
+             tmp_vm.set_machine('none')
+ 
+             try:
 
 -- 
 2.50.1
