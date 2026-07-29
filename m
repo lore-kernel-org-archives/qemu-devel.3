@@ -4,108 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C987C53219
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 17:40:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D69BC53219
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 17:45:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp8GY-0005DV-6C; Wed, 29 Jul 2026 13:40:26 -0400
+	id 1wp8Ke-0005sI-V5; Wed, 29 Jul 2026 13:44:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wp8GW-0005DM-Ow
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 13:40:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1wp8Kc-0005rj-FF; Wed, 29 Jul 2026 13:44:39 -0400
+Received: from smtpout1.mo528.mail-out.ovh.net ([46.105.34.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wp8GU-0005P7-QC
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 13:40:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785346821;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=y8ty+y/wFQYmnzv5XMOibILjBW8+1jAsgcCUFAaFz2U=;
- b=NlwALY46rm+0EHIN73hk5VwhgtIBxi9O5KdbQXNJfqz0LjypYoezgmgzbyL7aG5R99UE1e
- oZGOFo2pOoF3mO/QTm0Sie4EPgFCbnA0vS3y6A+C1LaCN2wHWBDePOzEDd+L2hSXefBfOO
- JLCc3iJYSFbgzodQoPfsvzvUO+s3z2w=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-175-3mGhbMOHM5e5K9y4T5azzQ-1; Wed, 29 Jul 2026 13:40:19 -0400
-X-MC-Unique: 3mGhbMOHM5e5K9y4T5azzQ-1
-X-Mimecast-MFC-AGG-ID: 3mGhbMOHM5e5K9y4T5azzQ_1785346819
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51c21c01cf3so20790091cf.2
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 10:40:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785346819; x=1785951619; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=y8ty+y/wFQYmnzv5XMOibILjBW8+1jAsgcCUFAaFz2U=;
- b=DSqkS7oXaTQNhv28qPyB4yjvyrBdVIJjce0+zcqNvtghin2bFpkb5Y7Ilya2wpHRHv
- OEdESGTBo9W2mupW0gKizgXINBOrw90dodd+wd9YvCNLCOaxh6e4yb0/+vhr7F06m1ke
- yQ9iwJ65Sdu66ND7PYeMyAFAWxAONyc38tkLtLfvHxCTqG07O3RfcxU39/+PNpXMrIey
- gRi0E2ry8sNMz0YipoOGqXWkBCmyxEbSxIZ1Dq9j8+XLc5YlyM1tP2BIxTrB8OmeJ9EJ
- 1oBZY3+sH7PUjvdMD7vJgze+gx55Hyqr5JUdM+mWAPnCKAAn1FqfIQn8qyIRAaQJzuXb
- imTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785346819; x=1785951619;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=y8ty+y/wFQYmnzv5XMOibILjBW8+1jAsgcCUFAaFz2U=;
- b=Q4lSHm+/rUtNWDu/Kmcgstmi3m+F8h4Bw1+/ntHoD2D0D8h38mXK2CBlwqcvAONfp4
- cyviXt6DcOH8cB4zeoWnk+9wEcSmHM/3ANeBjk9eNYYAvAwnA4PK5RTuC33g+HU/1V4x
- tYtW5lIi775tg1hb+erQ9RkLsh4w9qiZXP/0SRJwjPXIct+HiGxIScVB4T9pGQx56Drv
- Lc3tXcsZEHpozrPCYxRRNCQUX3biQKmYYo215PFDE9htNP2KcWaLPTj61CXzM9727XvA
- DUlcp7pTLEAbGeSDB4OZszOpEW1/3XqN2By3s6Yyht9UKDyYPS7W+WjfBHzrmptTOTZt
- thOA==
-X-Gm-Message-State: AOJu0YxSmxepu+3aaYxlZs+6SFltVm9OYHbbo3HaS0uTZZud718qbZqr
- GR/FZn66BGV/AXSSAuAvuLxjv3I5JRNpuK/bG6OhmVcTJjz9hlEqIe71PDYdpTHshccnIHtfYla
- pawF2LsVmlR3yie7Zlk0q49/KyRtHACLxB0ovcAXcFhNUwWCWI/UQaXgp
-X-Gm-Gg: AR+sD10gZbXNdKMNCAA8Fj3E7xow1XWN1MlW+r4Wb6vRIIt+5V+v32lA17BZf/XrJbe
- wyMVTgEsSjSP+by0y3MIvSS1HB//UzTwh4ueh0wW8037zBmPmEaGR+1MYUAdnrj+Tce+x4+OFVg
- f7BzPjcXi+HJSt3uoNE+xDL0bU8wVS83sNRfdHm4y84na2k2ATTY0LCSuRyJfDC5wvxg8Oo+IAg
- 5HVTqNbF4KSXEnVSXcpmUIYYMWoisKrhAF47PK4IEoLtpdMhTmtbxhExxXvJWNe0IMz5X730CZW
- FS1Spdi9y6CAwcaTSNKai1O4LTJa6LdaSW+DfD3fQByLlZ0eRMtNpDVfbuQI9Cw9OFxY
-X-Received: by 2002:a05:622a:1191:b0:51c:fc4:a144 with SMTP id
- d75a77b69052e-529d70557e0mr75702091cf.4.1785346818694; 
- Wed, 29 Jul 2026 10:40:18 -0700 (PDT)
-X-Received: by 2002:a05:622a:1191:b0:51c:fc4:a144 with SMTP id
- d75a77b69052e-529d70557e0mr75701531cf.4.1785346818044; 
- Wed, 29 Jul 2026 10:40:18 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-529e30fc51fsm23518071cf.30.2026.07.29.10.40.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Jul 2026 10:40:17 -0700 (PDT)
-Date: Wed, 29 Jul 2026 13:40:06 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?utf-8?B?6rmA7Iq57KSR?= <seungjung0711@gmail.com>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Subject: Re: [PATCH] vhost/migration: Fix incorrect size used in
- inflight->addr in VMSD
-Message-ID: <amo69qbbLChFBaUY@x1.local>
-References: <20260728153942.1891677-1-peterx@redhat.com>
- <87jyqeomqz.fsf@suse.de> <amoHbVsgzkYclCt2@x1.local>
- <878q6toopr.fsf@suse.de> <amof2Vbn_nTHR5H9@x1.local>
- <875x1xojtk.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1wp8KX-0005wv-SX; Wed, 29 Jul 2026 13:44:38 -0400
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net [51.210.158.128])
+ by mo528.mail-out.ovh.net (Postfix) with ESMTPS id 4h9KTK4Fjjz5xTx;
+ Wed, 29 Jul 2026 17:44:21 +0000 (UTC)
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net. [127.0.0.1])
+ by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Wed, 29 Jul 2026 17:44:20 +0000 (UTC)
+Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.58.138])
+ by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4h9KTJ4JzLz6JXG; Wed, 29 Jul 2026 17:44:20 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.7])
+ (Authenticated sender: clg@kaod.org)
+ by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 30ED1203E56; 
+ Wed, 29 Jul 2026 17:44:18 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-109S003f0c85720-acce-4764-bcfc-90db5372366c,
+ 8FFE599222FA429370CFDB2A71624BCB30E75F05) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <feb70328-dc8e-4ace-b98a-7f11ac15bdef@kaod.org>
+Date: Wed, 29 Jul 2026 19:44:17 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <875x1xojtk.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/25] hw/sensor: tmp105: add TMP75, TMP175 and LM75B
+ variants
+To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Emmanuel Blot <eblot@meta.com>
+References: <20260729-sanmiguel-bmc-locator-v1-0-c8f9a8d101f6@free.fr>
+ <20260729-sanmiguel-bmc-locator-v1-7-c8f9a8d101f6@free.fr>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260729-sanmiguel-bmc-locator-v1-7-c8f9a8d101f6@free.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+x-ovh-tracer-id: 4320077946504195117
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTGSfpiAAf24rEM4RrQfZGb3cnidySuQFuOG1S8dsDNSoJtLyhic9mHrCT+07HMqi+QlsDJ0ORBezYPyXDsX4IEzLAe3d05nHsYWNWA1ydzBqj6slxgYKoeZiKcg0Ud+0BzzQsK+Q8BGWHkihKlEcb3dldm+SmxPbj0Cp/JFXDf0fGucDOfVnY39y4tbHyhJ+9MR6culo0ayHmlXSQsmN87vOva3yPDdE90MU9kpiz2e2CIf99Eqeu6abXIfji7DYLdNfoFTvlUSTkCRXPPJP2EbaW2rvrHrFheQMlby02zjjbLdupLT3aiRL1e8QuiCDPfjUliYyNH9BDj8lJHlnWRlU4RvwlIqeiKCBDE+zGPrrx3PfsjdAHbnSNAw2a5EK+CittrSuKrvTBKjv7vAymBpW0v9f9qSmPnreDkZB3jdP/83x1sDecIk1IA9Y7/buh0AlZ1AW0vHVmIAKM21b1BQALMLtWV6qR2qRbvjlhJtIcFjr5ldmKm/3xwc2lDTNn1NSQ1ouYtiI4Gkml02buYyAeqDiaenWNcfikgFo7QvJ9KCT+eQKLNgx502M2Lkw08ruFdpLXCW8xfxsTEd+pzZ6Ah+/Hy4WgWzuJWekPgn8XE7koTGWEV0ITpJhQXrnRN0h1jj4LX2h69Yoz/d9HdauPcJUge+0ngkmyQFdOmK0w
+DKIM-Signature: a=rsa-sha256; bh=ymimZJi2J4sf+nzv/A9pQg18QGPFr5OYRN9x8I1M4OE=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1785347063; v=1;
+ b=BPBWMaH8+W83yG55gfjetwzodzS7XfTw7hCzUyI6lsYDuicpmRuCjH2x13mFZASMtKEvVO4U
+ oslp3JMFrBSJELur3WVPJa9oebowcls+Bq/EOVbudXbUwNmk+vbBMV4aI8cP2RNn2Sfha19qX/9
+ 7MWfyy+4ecN6etZdQVPWgQzkYY1Qa8lpIMB1nVNPvzYhZNAtGLeIZriiz9uQvFVDGjBRgi8Q78M
+ 8vBBrVMtVtE9kl06yYxyDCkJ3AWIMQgOAQAwy1QRbdwK6aQRP5m2HNMf2Ybi+DZ3bef7qZilvnW
+ wcEsopYG4bUvoX6fhPw0EyXfXZ6pEXX7Ikmn/S1iftpRQ==
+Received-SPF: pass client-ip=46.105.34.251; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo528.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,40 +139,344 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 29, 2026 at 01:13:27PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
+On 7/29/26 17:12, Emmanuel Blot wrote:
+> The TI TMP75/TMP175 and the NXP LM75B share the TMP105 register map and
+> control semantics, differing only in a few details. Model them as
+> variants of the TMP105, parameterised by a small per-type class
+> descriptor covering the fault-queue depths, the writable config bits,
+> the converter resolution, the set-point masks and the TMP75's
+> alert-clear on thermostat-mode change.
 > 
-> > On Wed, Jul 29, 2026 at 11:27:44AM -0300, Fabiano Rosas wrote:
-> >> Hm, but isn't it better to have a global cap anyway? So we don't need
-> >> every device code to change with similar checks.
-> >> 
-> >> > If we go this route, I'd rather merge Michael's version to support u64,
-> >> > even if we don't need a u64 size.  But I really don't want to introduce yet
-> >> > another VMS flag just for this... we'll have no real use if we have noticed
-> >> > this problem when the vhost inflight patch was reviewed.  It will be a
-> >> > uint32_t or int32_t already.  I just can't come up with some users need
-> >> > size >2G.
-> >> >
-> >> 
-> >> I agree with making all u64. I think we can actually remove all the
-> >> extra VMS_VARRAY_* and VBUFFER_* flags and instead doa single type-check
-> >> of "int <= 64bit". Give me a couple of hours and I will post an RFC.
-> >
-> > I confess I don't yet get what is the global cap you mentioned.. but sure,
-> > I'll wait and read the RFC first.
+> The variant is class data, not migrated state, so the wire format is
+> unchanged and all variants share the existing vmstate.
 > 
-> I was thinking the vmstate code could define a limit to the size (of
-> anything) and always enforce it. The device code can then use some
-> custom macros (not yet existent) to limit even further.
+> While here, align the shared shutdown handling with the hardware:
+> entering shutdown now clears the ALERT/OS output in interrupt mode,
+> correcting the base TMP105 as well.
+> 
+> Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
+> ---
+>   hw/sensor/tmp105.c         | 171 +++++++++++++++++++++++++++++++++++++--------
+>   include/hw/sensor/tmp105.h |   6 +-
+>   2 files changed, 147 insertions(+), 30 deletions(-)
+> 
+> diff --git a/hw/sensor/tmp105.c b/hw/sensor/tmp105.c
+> index fefa661711..69ade2013d 100644
+> --- a/hw/sensor/tmp105.c
+> +++ b/hw/sensor/tmp105.c
+> @@ -1,5 +1,5 @@
+>   /*
+> - * Texas Instruments TMP105 temperature sensor.
+> + * Texas Instruments TMP105/TMP75/TMP175/LM75B temperature sensor.
+>    *
+>    * Copyright (C) 2008 Nokia Corporation
+>    * Written by Andrzej Zaborowski <andrew@openedhand.com>
+> @@ -16,6 +16,13 @@
+>    *
+>    * You should have received a copy of the GNU General Public License along
+>    * with this program; if not, see <http://www.gnu.org/licenses/>.
+> + *
+> + * Limitations:
+> + * - The SMBus Alert Response Address protocol and the general-call commands
+> + *   are not implemented.
+> + * - The over-limit comparison uses the full 8.8 fixed-point temperature and a
+> + *   ">=" boundary for every variant. The LM75B's 9-bit comparison quantisation
+> + *   and strict-exceed boundary are therefore only approximated.
+>    */
+>   
+>   #include "qemu/osdep.h"
+> @@ -31,15 +38,29 @@
+>   #include "migration/vmstate.h"
+>   #include "trace.h"
+>   
+> -OBJECT_DECLARE_SIMPLE_TYPE(TMP105State, TMP105)
+> +OBJECT_DECLARE_TYPE(TMP105State, TMP105Class, TMP105)
+>   
+>   /**
+> - * TMP105State:
+> - * @config: Bits 5 and 6 (value 32 and 64) determine the precision of the
+> - * temperature. See Table 8 in the data sheet.
+> + * TMP105Variant:
+> + * Per-device-model parameters. The TMP105, TMP75, TMP175 and LM75B share the
+> + * same register map and control semantics; they differ only in a handful of
+> + * details captured here.
+>    *
+> - * @see_also: http://www.ti.com/lit/gpn/tmp105
+> + * @faultq: fault-queue length table selected by Config bits
+> + * @config_wmask: writable Config bits. The LM75B has no resolution (R1:R0) or
+> + * one-shot (OS) bits.
+> + * @fixed_res: converter resolution field pinned by the device, or -1 when it is
+> + * software-selectable.
+> + * @limit_lsb_mask: low-byte mask applied to the T_LOW/T_HIGH limit registers.
+>    */
+> +typedef struct TMP105Variant {
+> +    const uint8_t *faultq;
+> +    uint8_t config_wmask;
+> +    int8_t fixed_res;
+> +    uint8_t limit_lsb_mask;
+> +    bool tm_change_clears_alert;
+> +} TMP105Variant;
 
-Ah I see.
+There are class attributes which belong to the TMP105Class below.
 
-With 32bit limit (let's assume we don't have that further "it's int32_t"
-problem..), it's already throttled to 32bit max.  I added it into vhost
-code only because in reality it was a 64bit internally.  None of the rest
-users should need it since they should be sticking with 32bit fields.
+Thanks,
 
--- 
-Peter Xu
+C.
+
+>   struct TMP105State {
+>       /*< private >*/
+>       I2CSlave parent_obj;
+> @@ -53,7 +74,7 @@ struct TMP105State {
+>       uint8_t config;
+>       int16_t temperature;
+>       int16_t limit[2];
+> -    int faults;
+> +    uint8_t faults;
+>       uint8_t fault_count;
+>       uint8_t alarm;
+>       /*
+> @@ -65,6 +86,11 @@ struct TMP105State {
+>       bool detect_falling;
+>   };
+>   
+> +struct TMP105Class {
+> +    I2CSlaveClass parent_class;
+> +    const TMP105Variant *var;
+> +};
+> +
+>   FIELD(CONFIG, SHUTDOWN_MODE,        0, 1)
+>   FIELD(CONFIG, THERMOSTAT_MODE,      1, 1)
+>   FIELD(CONFIG, POLARITY,             2, 1)
+> @@ -152,10 +178,11 @@ static void tmp105_set_temperature(Object *obj, Visitor *v, const char *name,
+>       tmp105_alarm_update(s, false);
+>   }
+>   
+> -static const int tmp105_faultq[4] = { 1, 2, 4, 6 };
+> -
+>   static void tmp105_read(TMP105State *s)
+>   {
+> +    const TMP105Variant *var = TMP105_GET_CLASS(s)->var;
+> +    int res;
+> +
+>       s->len = 0;
+>   
+>       if (FIELD_EX8(s->config, CONFIG, THERMOSTAT_MODE)) {
+> @@ -165,9 +192,11 @@ static void tmp105_read(TMP105State *s)
+>   
+>       switch (s->pointer & 3) {
+>       case TMP105_REG_TEMPERATURE:
+> +        res = var->fixed_res >= 0 ? var->fixed_res :
+> +              FIELD_EX8(s->config, CONFIG, CONVERTER_RESOLUTION);
+>           s->buf[s->len++] = (((uint16_t) s->temperature) >> 8);
+>           s->buf[s->len++] = (((uint16_t) s->temperature) >> 0) &
+> -                (0xf0 << (FIELD_EX8(~s->config, CONFIG, CONVERTER_RESOLUTION)));
+> +                (0xf0 << (3 - res));
+>           break;
+>   
+>       case TMP105_REG_CONFIG:
+> @@ -190,6 +219,10 @@ static void tmp105_read(TMP105State *s)
+>   
+>   static void tmp105_write(TMP105State *s)
+>   {
+> +    const TMP105Variant *var = TMP105_GET_CLASS(s)->var;
+> +    uint8_t config, one_shot;
+> +    bool waking;
+> +
+>       trace_tmp105_write(s->parent_obj.address, s->pointer);
+>   
+>       switch (s->pointer & 3) {
+> @@ -197,14 +230,27 @@ static void tmp105_write(TMP105State *s)
+>           break;
+>   
+>       case TMP105_REG_CONFIG:
+> -        if (FIELD_EX8(s->buf[0] & ~s->config, CONFIG, SHUTDOWN_MODE)) {
+> +        config = s->buf[0] & var->config_wmask;
+> +        if (FIELD_EX8(config & ~s->config, CONFIG, SHUTDOWN_MODE)) {
+>               trace_tmp105_write_shutdown(s->parent_obj.address);
+> +            if (FIELD_EX8(config, CONFIG, THERMOSTAT_MODE)) {
+> +                s->alarm = 0;
+> +            }
+>           }
+> -        s->config = FIELD_DP8(s->buf[0], CONFIG, ONE_SHOT, 0);
+> -        s->faults = tmp105_faultq[FIELD_EX8(s->config, CONFIG, FAULT_QUEUE)];
+> -        if (FIELD_EX8(s->buf[0], CONFIG, ONE_SHOT) &&
+> -            FIELD_EX8(s->config, CONFIG, SHUTDOWN_MODE)) {
+> +        if (var->tm_change_clears_alert &&
+> +            FIELD_EX8(config ^ s->config, CONFIG, THERMOSTAT_MODE)) {
+> +            s->alarm = 0;
+> +            s->fault_count = 0;
+> +            s->detect_falling = false;
+> +        }
+> +        waking = FIELD_EX8(s->config & ~config, CONFIG, SHUTDOWN_MODE);
+> +        one_shot = FIELD_EX8(config, CONFIG, ONE_SHOT);
+> +        s->config = FIELD_DP8(config, CONFIG, ONE_SHOT, 0);
+> +        s->faults = var->faultq[FIELD_EX8(s->config, CONFIG, FAULT_QUEUE)];
+> +        if (one_shot && FIELD_EX8(s->config, CONFIG, SHUTDOWN_MODE)) {
+>               tmp105_alarm_update(s, true);
+> +        } else if (waking) {
+> +            tmp105_alarm_update(s, false);
+>           } else {
+>               tmp105_interrupt_update(s);
+>           }
+> @@ -214,7 +260,8 @@ static void tmp105_write(TMP105State *s)
+>       case TMP105_REG_T_HIGH:
+>           if (s->len >= 3) {
+>               s->limit[s->pointer & 1] = (int16_t)
+> -                    ((((uint16_t) s->buf[0]) << 8) | (s->buf[1] & 0xf0));
+> +                    ((((uint16_t) s->buf[0]) << 8) |
+> +                     (s->buf[1] & var->limit_lsb_mask));
+>           }
+>           tmp105_interrupt_update(s);
+>           break;
+> @@ -265,8 +312,9 @@ static int tmp105_event(I2CSlave *i2c, enum i2c_event event)
+>   static int tmp105_post_load(void *opaque, int version_id)
+>   {
+>       TMP105State *s = opaque;
+> +    const TMP105Variant *var = TMP105_GET_CLASS(s)->var;
+>   
+> -    s->faults = tmp105_faultq[FIELD_EX8(s->config, CONFIG, FAULT_QUEUE)];
+> +    s->faults = var->faultq[FIELD_EX8(s->config, CONFIG, FAULT_QUEUE)];
+>   
+>       tmp105_interrupt_update(s);
+>       return 0;
+> @@ -339,11 +387,12 @@ static const VMStateDescription vmstate_tmp105 = {
+>   static void tmp105_reset_hold(Object *obj, ResetType type)
+>   {
+>       TMP105State *s = TMP105(obj);
+> +    const TMP105Variant *var = TMP105_GET_CLASS(s)->var;
+>   
+>       s->temperature = 0;
+>       s->pointer = 0;
+>       s->config = 0;
+> -    s->faults = tmp105_faultq[FIELD_EX8(s->config, CONFIG, FAULT_QUEUE)];
+> +    s->faults = var->faultq[FIELD_EX8(s->config, CONFIG, FAULT_QUEUE)];
+>       s->fault_count = 0;
+>       s->alarm = 0;
+>       s->detect_falling = false;
+> @@ -376,6 +425,7 @@ static void tmp105_class_init(ObjectClass *klass, const void *data)
+>       DeviceClass *dc = DEVICE_CLASS(klass);
+>       I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
+>       ResettableClass *rc = RESETTABLE_CLASS(klass);
+> +    TMP105Class *tc = TMP105_CLASS(klass);
+>   
+>       dc->realize = tmp105_realize;
+>       k->event = tmp105_event;
+> @@ -383,19 +433,82 @@ static void tmp105_class_init(ObjectClass *klass, const void *data)
+>       k->send = tmp105_tx;
+>       rc->phases.hold = tmp105_reset_hold;
+>       dc->vmsd = &vmstate_tmp105;
+> +    tc->var = data;
+>   }
+>   
+> -static const TypeInfo tmp105_info = {
+> -    .name          = TYPE_TMP105,
+> -    .parent        = TYPE_I2C_SLAVE,
+> -    .instance_size = sizeof(TMP105State),
+> -    .instance_init = tmp105_initfn,
+> -    .class_init    = tmp105_class_init,
+> +/*
+> + * Fault-queue length selected by Config F1:F0. Row 0 (1/2/4/6) is used by the
+> + * TMP105, TMP175 and LM75B; row 1 (1/2/3/4) by the TMP75.
+> + */
+> +static const uint8_t tmp105_faultq[][4] = {
+> +    { 1, 2, 4, 6 },
+> +    { 1, 2, 3, 4 },
+>   };
+>   
+> -static void tmp105_register_types(void)
+> -{
+> -    type_register_static(&tmp105_info);
+> -}
+> +/* The F1:F0 field must never index past a fault-queue table row. */
+> +QEMU_BUILD_BUG_ON((1 << R_CONFIG_FAULT_QUEUE_LENGTH) - 1 >=
+> +                  ARRAY_SIZE(tmp105_faultq[0]));
+> +
+> +static const TMP105Variant tmp105_variant = {
+> +    .faultq = tmp105_faultq[0],
+> +    .config_wmask = 0xff,
+> +    .fixed_res = -1,
+> +    .limit_lsb_mask = 0xf0,
+> +    .tm_change_clears_alert = false,
+> +};
+> +
+> +static const TMP105Variant tmp175_variant = {
+> +    .faultq = tmp105_faultq[0],
+> +    .config_wmask = 0xff,
+> +    .fixed_res = -1,
+> +    .limit_lsb_mask = 0xf0,
+> +    .tm_change_clears_alert = false,
+> +};
+> +
+> +static const TMP105Variant tmp75_variant = {
+> +    .faultq = tmp105_faultq[1],
+> +    .config_wmask = 0xff,
+> +    .fixed_res = -1,
+> +    .limit_lsb_mask = 0xf0,
+> +    .tm_change_clears_alert = true,
+> +};
+> +
+> +static const TMP105Variant lm75b_variant = {
+> +    .faultq = tmp105_faultq[0],
+> +    .config_wmask = 0x1f,    /* R1:R0 and OS are reserved */
+> +    .fixed_res = 2,          /* fixed 11-bit resolution, 0.125 C */
+> +    .limit_lsb_mask = 0x80,  /* 9-bit limits, 0.5 C */
+> +    .tm_change_clears_alert = false,
+> +};
+> +
+> +static const TypeInfo tmp105_types[] = {
+> +    {
+> +        .name          = TYPE_TMP105,
+> +        .parent        = TYPE_I2C_SLAVE,
+> +        .instance_size = sizeof(TMP105State),
+> +        .class_size    = sizeof(TMP105Class),
+> +        .instance_init = tmp105_initfn,
+> +        .class_init    = tmp105_class_init,
+> +        .class_data    = &tmp105_variant,
+> +    },
+> +    {
+> +        .name          = TYPE_TMP175,
+> +        .parent        = TYPE_TMP105,
+> +        .class_init    = tmp105_class_init,
+> +        .class_data    = &tmp175_variant,
+> +    },
+> +    {
+> +        .name          = TYPE_TMP75,
+> +        .parent        = TYPE_TMP105,
+> +        .class_init    = tmp105_class_init,
+> +        .class_data    = &tmp75_variant,
+> +    },
+> +    {
+> +        .name          = TYPE_LM75B,
+> +        .parent        = TYPE_TMP105,
+> +        .class_init    = tmp105_class_init,
+> +        .class_data    = &lm75b_variant,
+> +    },
+> +};
+>   
+> -type_init(tmp105_register_types)
+> +DEFINE_TYPES(tmp105_types)
+> diff --git a/include/hw/sensor/tmp105.h b/include/hw/sensor/tmp105.h
+> index daece592e9..0698aeead7 100644
+> --- a/include/hw/sensor/tmp105.h
+> +++ b/include/hw/sensor/tmp105.h
+> @@ -1,5 +1,5 @@
+>   /*
+> - * Texas Instruments TMP105 Temperature Sensor
+> + * Texas Instruments TMP105/TMP75/TMP175/LM75B Temperature Sensor
+>    *
+>    * Browse the data sheet:
+>    *
+> @@ -14,6 +14,10 @@
+>   #ifndef HW_SENSOR_TMP105_H
+>   #define HW_SENSOR_TMP105_H
+>   
+> +/* TMP75, TMP175 and NXP LM75B are register-compatible with TMP105. */
+>   #define TYPE_TMP105 "tmp105"
+> +#define TYPE_TMP175 "tmp175"
+> +#define TYPE_TMP75  "tmp75"
+> +#define TYPE_LM75B  "lm75b"
+>   
+>   #endif
+> 
 
 
