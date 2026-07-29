@@ -4,122 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29263C54F51
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 14:28:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0A99C53200
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 14:39:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp5GN-00079H-PQ; Wed, 29 Jul 2026 10:28:03 -0400
+	id 1wp5RI-0001PX-BI; Wed, 29 Jul 2026 10:39:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wp5GL-00078z-Lf
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 10:28:01 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wp5GJ-0003RW-AX
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 10:28:01 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id D5EED3E0A;
- Wed, 29 Jul 2026 14:27:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1785335272; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wp5RD-0001PA-FD
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 10:39:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wp5RA-0005um-TF
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 10:39:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785335951;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OYKfCu7yhPTnw0jWwoG2x5O4lpQdkpFK4ASz1qI7dKY=;
- b=eDXDzQqhbPCc3omDWrGW5N23ul3lMnbpGhMG3hEaMZC4ccyO4NDd+P2Edcy7iYGapEXsVL
- bOMs+uwBGVzosAB56D++r8IS28xPR1Y29h4eo0uNZ9tBvUtl1eki+B2DqPbUm2jYpiT5i9
- pVNh7onqXyNFlNDau4yyIk/myAaCZn0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1785335272;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OYKfCu7yhPTnw0jWwoG2x5O4lpQdkpFK4ASz1qI7dKY=;
- b=AkbSYe/g3p+H2Brli3uNU8KwQAbThN39Tz3ytHKO6jzSSyqBo0C28s16LHIu6zujCR5WrQ
- bvhRM2PGRlT3veBg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=DUb1JRgN;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=8f0Kx6BU
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1785335267; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OYKfCu7yhPTnw0jWwoG2x5O4lpQdkpFK4ASz1qI7dKY=;
- b=DUb1JRgNTLL2y+ufSgQP0ILu1taUrIlBI2keypFjSIGw8n/L69HiGMea1Zqni+3sakkuGJ
- 6TMRyugNAjVpGfHf+WZqD5q+B+5C6tsws96oTaf4bo5zKvh/M9b5ydcXHHX+GezmZZ4oLx
- 7LYuk+ogT9HolSmKt+QvdLlp5BfeFHs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1785335267;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OYKfCu7yhPTnw0jWwoG2x5O4lpQdkpFK4ASz1qI7dKY=;
- b=8f0Kx6BUrrWue76k/qZEIhlqe7LQ8bO3GeWOgXhXkemVSaVtNc0HommDVP4BsydjwPZsnW
- SjkJJC+5OhcOwjCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 763AD779B1;
- Wed, 29 Jul 2026 14:27:47 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id gr8BEuMNampiNgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 29 Jul 2026 14:27:47 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, Stefano
- Garzarella <sgarzare@redhat.com>, =?utf-8?B?6rmA7Iq57KSR?=
- <seungjung0711@gmail.com>, Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Subject: Re: [PATCH] vhost/migration: Fix incorrect size used in
- inflight->addr in VMSD
-In-Reply-To: <amoHbVsgzkYclCt2@x1.local>
-References: <20260728153942.1891677-1-peterx@redhat.com>
- <87jyqeomqz.fsf@suse.de> <amoHbVsgzkYclCt2@x1.local>
-Date: Wed, 29 Jul 2026 11:27:44 -0300
-Message-ID: <878q6toopr.fsf@suse.de>
+ bh=qOnTk6/yHiTcYITCKdeVC5C3GiW3dEC6Vexx6iygnPs=;
+ b=RhikhoDbeQWhcg6TVjiNxIn8XOMEeG2v3oVOD8mRx5ynT+i6CTGLn6Vq8vB/yHXT9wY4kA
+ mWD4D9difIwjG+98d2c5lugZk2TIuocXJbsY29igllo90N1n0U7zXaeaevgOrsTKenldgy
+ qn4l/Nusu8bl0lO6D1Iws3d7EOnDJfA=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-75-eXCI95daOiuqwqyq3XX6aQ-1; Wed, 29 Jul 2026 10:39:10 -0400
+X-MC-Unique: eXCI95daOiuqwqyq3XX6aQ-1
+X-Mimecast-MFC-AGG-ID: eXCI95daOiuqwqyq3XX6aQ_1785335949
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-8eeba1d9e47so12069326d6.2
+ for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 07:39:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1785335949; x=1785940749; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=qOnTk6/yHiTcYITCKdeVC5C3GiW3dEC6Vexx6iygnPs=;
+ b=Aslgrghs2HhhtRpZh0c9WrvvdDAGNe6AiEW4ARa7OGPM0VLqCGryOzFp56no5QrdsV
+ clWKO3jHF4Z73fdVJsmYdefnYUW3YwubX6mwY5JEx/MMjakDN81OPHB0xB+c1MgFoD9h
+ kZXKwBH0yOGUtDC4sJonxJLLkdb235OIweoehnqZHRJemk4B+UzlwwYvHamL/TTYECYF
+ yA+E1CMZrtI26JS+JoAhbDDm5VFe83Y1GfE9WeQzvXbLuk4EylcQTQof3usKUnIxkvcf
+ /qIRVCxLSuyHi5o1gzwVTvCxfXGa5gkvsCk98RHsAAinbv14Co5jnVW88CtxvNXdTxZJ
+ xTTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785335949; x=1785940749;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=qOnTk6/yHiTcYITCKdeVC5C3GiW3dEC6Vexx6iygnPs=;
+ b=AwajKyL0isbvkU/8KS9zgaIuhLD1S4MsNm0iBuj4wv1xF1gg0UGFjY3wHk/QMIfrva
+ gBClQFgzxqe8niksdz1QUlHSc8/A74DzwuhU/0+NJL9SQn8FhEU+Z2CcUxDYKK81zGnI
+ fLF2tR2vhM2I7SUNNIIBxkXl0r3QwgxEoxL280U2zuMB+IXSPJFZ5ORr3tWyJO+0ehyZ
+ 69YdfaRRty7yOZUn+icdOhmdTtBlDkMcegCnAmuwBzC1xaAO+4zdZf1WZ1kBkOn20JrF
+ +eXkSDxInKNLDMZGBwe+rb26uOcssG9uDQ12eZs2kgYVKsYhxf11Q8gKeEmZ6hbLYn0P
+ Q/Sg==
+X-Gm-Message-State: AOJu0Yxl+eYXLmPx2wr8+elFeJ7OycX/GcvNdFRN+NqH+G8AuDhhAAR9
+ PwS/cg+Gt6NVHvPX0iv0M6EJb6r2TsC+OhyH8Szb9WSDkzIfS4KXkfmenfUbLF+5ndpu5sd0oBy
+ GsrzHohzkYm5x49uKzVXdh0UHMrxyrnmWm0e04vtZlrGmxEy8pu4TACx+AZ3NQfdnn99H7HQqQr
+ WNJj8RTPAXIJ95elKCWeio/VcGjZUMFIPZiGWkFA==
+X-Gm-Gg: AR+sD13MZ3688KHfv+VRy7xGmwGG9LRJuoPnwn5Lx72/3sFbwU8vguVvMwfVTk4+sw6
+ fEVFpjmq4e/Ego3muR3GlghXcBRIu7rNxRDwkncPZrFLNOCfHaBm//g1bkpvo0hrdUaTnIJ1qMd
+ ZC/ZeyY/21O3WGcN1nJAXm5//yzjQ6JgCx8C3oyKpDpcJVYDVJOHr81rdfcnL7Mca5CiH3tbwJi
+ xRjrixzZKFfkpP9+zbPN0UmDjnR9kE/rxv99y+xyEtMNd7OZ6GzB1QN5bV/RXlmpVSUOOMfH4mi
+ BB5LeSG0Ds0YxZS6menuR6bUuJs78CGzemf9gsTmgbBXLze7wbwlA1vuHyqXCy+Nt/f/DcNVR9U
+ sgjnL9NafP78rRCVfdkyFVc2lzvo=
+X-Received: by 2002:a05:6214:29c1:b0:8ef:ec2c:6b70 with SMTP id
+ 6a1803df08f44-90817379643mr79305296d6.53.1785335949303; 
+ Wed, 29 Jul 2026 07:39:09 -0700 (PDT)
+X-Received: by 2002:a05:6214:29c1:b0:8ef:ec2c:6b70 with SMTP id
+ 6a1803df08f44-90817379643mr79304276d6.53.1785335947843; 
+ Wed, 29 Jul 2026 07:39:07 -0700 (PDT)
+Received: from x1.local (67-208-31-164.ip.tor.radiant.net. [67.208.31.164])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-9081dd6b55asm25599566d6.36.2026.07.29.07.39.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 Jul 2026 07:39:07 -0700 (PDT)
+Date: Wed, 29 Jul 2026 10:38:59 -0400
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>,
+ Feifan Qian <bea1e@proton.me>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Subject: Re: [PATCH v2 4/5] migration: Fix rare hang of
+ migration_channel_read_peek()
+Message-ID: <amoQgwYxfUTPHyHv@x1.local>
+References: <20260728210417.1925078-1-peterx@redhat.com>
+ <20260728210417.1925078-5-peterx@redhat.com>
+ <amkfP-dtwmxzg_TC@x1.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: D5EED3E0A
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[];
- FREEMAIL_CC(0.00)[nongnu.org,redhat.com,gmail.com,yandex-team.ru];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MID_RHS_MATCH_FROM(0.00)[]; MISSING_XM_UA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email, suse.de:dkim,
- gitlab.com:url, yandex-team.ru:email, imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <amkfP-dtwmxzg_TC@x1.local>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -136,238 +124,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On Tue, Jul 28, 2026 at 05:29:35PM -0400, Peter Xu wrote:
+> On Tue, Jul 28, 2026 at 05:04:16PM -0400, Peter Xu wrote:
+> > In an unlikely case, when a migration stream is attached to the destination
+> > QEMU and only send <4 bytes to the channel as magic, it's possible that
+> > migration_channel_read_peek() may spin forever.
+> > 
+> > Fix it by adding a manual sleep for partial read.
+> > 
+> > Since the path isn't attached to a coroutine, it means when partial read
+> > happens, there's yet not much we can do but hang the main thread, it will
+> > happen even for len==0 case.  It means monitors can hang due to this,
+> > either partial read or no data arrived (but connection established).
+> > 
+> > Leave this for later, the hope is this is extremely rare in production.
+> > 
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3889
+> > Reported-by: Feifan Qian <bea1e@proton.me>
+> > Cc: Daniel P. Berrangé <berrange@redhat.com>
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >  migration/channel.c | 11 +++++++++--
+> >  1 file changed, 9 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/migration/channel.c b/migration/channel.c
+> > index 1e2935f926..f446561b59 100644
+> > --- a/migration/channel.c
+> > +++ b/migration/channel.c
+> > @@ -296,9 +296,16 @@ int migration_channel_read_peek(QIOChannel *ioc,
+> >  
+> >          if (len == buflen) {
+> >              break;
+> > +        } else if (len == 0) {
+> 
+> I think this should be QIO_CHANNEL_ERR_BLOCK, not 0..  I'll fix it when I
+> post v3, and I'll do some more tests.
 
-> On Tue, Jul 28, 2026 at 05:57:56PM -0300, Fabiano Rosas wrote:
->> Peter Xu <peterx@redhat.com> writes:
->>=20
->> > It was overlooked that VMSTATE_VBUFFER_UINT64() won't really work with=
- an
->> > uint64_t, as vmstate core only treats the size as 32bits, and maximum
->> > INT32_MAX (see vmstate_size()).
->> >
->> > Considering that we do not need real 64bits for the size, stick with t=
-he 2G
->> > limit, converting the size field into 32bits.
->> >
->> > Since we can't touch the wire protocol on migration from an old QEMU, =
-we
->> > can't directly modify the type of size to uint32_t.  Instead, we need =
-to
->> > introduce a temporary variable for this extremely rare issue __size_32=
-bits
->> > to be used only for VMSTATE_VBUFFER_UINT32().  Document it and name it
->> > weird enough so people won't get confused on having two size variables.
->> >
->> > Remove VMSTATE_VBUFFER_UINT64() altogether, because it was never going=
- to
->> > be used right.  It means QEMU will only support 2G max for VMS_VBUFFER.
->> >
->> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3675
->> > Reported-by: =EA=B9=80=EC=8A=B9=EC=A4=91 <seungjung0711@gmail.com>
->> > Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
->> > Cc: Michael S. Tsirkin <mst@redhat.com>
->> > Cc: Fabiano Rosas <farosas@suse.de>
->> > Fixes: 3a80ff0721 ("vhost: add vmstate for inflight region with inner =
-buffer")
->> > Signed-off-by: Peter Xu <peterx@redhat.com>
->> > ---
->> >
->> > PS1: I only did smoke test as I'm not fluent with vhost inflight featu=
-re.
->> > Please kindly try it out if possible. In general, migrations from older
->> > QEMU should work even after applied.  One can also treat this as partl=
-y-RFC
->> > from that.
->> >
->> > PS2: Michael, we have just discussed what we should define as CVE for
->> > migration, and this one shouldn't fall into CVE category, please refer=
- to:
->> >
->> > https://lore.kernel.org/r/20260721131457.3062767-1-farosas@suse.de
->> >
->> > So I didn't yet attach CVE tag.  Please correct if I'm wrong, thanks.
->> > ---
->> >  include/hw/virtio/vhost.h   |  5 +++++
->> >  include/migration/vmstate.h | 10 ----------
->> >  hw/virtio/vhost.c           | 19 ++++++++++++++-----
->> >  3 files changed, 19 insertions(+), 15 deletions(-)
->> >
->> > diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
->> > index 684bafcaad..1d1cc24c04 100644
->> > --- a/include/hw/virtio/vhost.h
->> > +++ b/include/hw/virtio/vhost.h
->> > @@ -17,6 +17,11 @@ struct vhost_inflight {
->> >      int fd;
->> >      void *addr;
->> >      uint64_t size;
->> > +    /*
->> > +     * This is a temporary variable only used during migration loadin=
-g to
->> > +     * satisfy VMSTATE_VBUFFER_UINT32() typing. Please use @size othe=
-rwise.
->> > +     */
->> > +    uint32_t __size_32bits;
->> >      uint64_t offset;
->> >      uint16_t queue_size;
->> >  };
->> > diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
->> > index 1b7f295417..a349b2d84a 100644
->> > --- a/include/migration/vmstate.h
->> > +++ b/include/migration/vmstate.h
->> > @@ -782,16 +782,6 @@ extern const VMStateInfo vmstate_info_g_byte_arra=
-y;
->> >      .offset       =3D offsetof(_state, _field),                      =
-  \
->> >  }
->> >=20=20
->> > -#define VMSTATE_VBUFFER_UINT64(_field, _state, _version, _test, _fiel=
-d_size) { \
->> > -    .name         =3D (stringify(_field)),                           =
-  \
->> > -    .version_id   =3D (_version),                                    =
-  \
->> > -    .field_exists =3D (_test),                                       =
-  \
->> > -    .size_offset  =3D vmstate_offset_value(_state, _field_size, uint6=
-4_t),\
->> > -    .info         =3D &vmstate_info_buffer,                          =
-  \
->> > -    .flags        =3D VMS_VBUFFER | VMS_POINTER,                     =
-  \
->> > -    .offset       =3D offsetof(_state, _field),                      =
-  \
->> > -}
->>=20
->> Why don't you just leave this macro around, put a "do not use" comment
->> above it and remove the type check for this one instance? You're already
->> checking against INT32_MAX during pre_load.
->
-> What's the benefit of keeping this global macro if we only allow one user
-> to use it?
->
-> Commenting to say "don't use" is not guaranteeing anything, at least we
-> should also rename the macro to some weird name to make people notice.
-> Keeping the macro name like this OTOH suggests abuse.  But if we think it
-> should only be used in 1 place, fixing the one place might be better?
->
+I just found that I cannot really hit this path.. because essentially
+migration_channel_read_peek() is too early, and we haven't set iochannel to
+be in non-blocking (QEMU only does it for the main channel; for the rest
+channels they're always in blocking mode).
 
-I was thinking of fixing this on the vmstate size and not changing the
-virtio code. But yes, it's better to fix properly.
+But still, instead of asserting it, I plan to keep this line so this code
+is generic to blocking mode too in the future.
 
->>=20
->> We could even lift that check up into vmstate_pre_load and reject
->> there globally, don't even touch the virtio code.
->
-> Personally, I don't like the idea leaking VBUFFER impl details into
-> vmstate_pre_load() which is so far only a wrapper, especially only for th=
-is
-> one instance.. which we do not suggest future users to use.
->
+> 
+> > +            qio_channel_wait_cond(ioc, G_IO_IN);
+> > +        } else {
+> > +            /*
+> > +             * When partially ready, we can't use qio_channel_wait_cond()
+> > +             * because it will return immediately.  Apply a manual wait.
+> > +             */
+> > +            assert(!qemu_in_coroutine());
+> > +            g_usleep(1000);
+> >          }
+> > -
+> > -        qio_channel_wait_cond(ioc, G_IO_IN);
+> >      }
+> >  
+> >      return 0;
+> > -- 
+> > 2.54.0
+> > 
+> 
+> -- 
+> Peter Xu
 
-Hm, but isn't it better to have a global cap anyway? So we don't need
-every device code to change with similar checks.
+-- 
+Peter Xu
 
-> If we go this route, I'd rather merge Michael's version to support u64,
-> even if we don't need a u64 size.  But I really don't want to introduce y=
-et
-> another VMS flag just for this... we'll have no real use if we have notic=
-ed
-> this problem when the vhost inflight patch was reviewed.  It will be a
-> uint32_t or int32_t already.  I just can't come up with some users need
-> size >2G.
->
-
-I agree with making all u64. I think we can actually remove all the
-extra VMS_VARRAY_* and VBUFFER_* flags and instead doa single type-check
-of "int <=3D 64bit". Give me a couple of hours and I will post an RFC.
-
-> The recent AI reports just make such feeling stronger: we just used the
-> reason "max 2G, should be fine" when AI reports that unlimited size
-> allocation problem, now we will need to wait for another AI report which
-> says "it's not 2G anymore, 1<<64-1 that is", if we don't come up with a
-> proper limit for VMSD field allocations.
->
->>=20
->>=20
->> /rant
->> ... what's even the point of having per-type variants of VMSTATE macros
->> that exist just to type-check the extra offsets (.num_offset,
->> .size_offset as opposed to .offset)?
->>=20
->> For instance, look at vmstate_n_elems casting opaque data to 32 and
->> sub-32bit size and assigning to an int! What do we gain from that? It's
->> circular reasoning that does nothing aside from bothering the person
->> writing the vmstate.
->>=20
->> Right? Maybe I'm missing something, it's the end of the day already.
->
-> I can also only guess, which is.. I believe Michael was right, the initial
-> vmstate code was simply broken where it should have considered the type of
-> size fields of all kinds, but forgot, and it just worked because nobody
-> needed u64 for a size field.
->
-> Said that, I still want to see if we can avoid introducing that at all.  =
-To
-> me, I still prefer this patch (after fixing pre_save()..).  But let me kn=
-ow
-> if I didn't convince any of you.. we can discuss.
->
-> Thanks,
->
->>=20
->> > -
->> >  #define VMSTATE_VBUFFER_ALLOC_UINT32(_field, _state, _version,       \
->> >                                       _test, _field_size) {           \
->> >      .name         =3D (stringify(_field)),                           =
-  \
->> > diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
->> > index af41841b52..e7c570d0f5 100644
->> > --- a/hw/virtio/vhost.c
->> > +++ b/hw/virtio/vhost.c
->> > @@ -2022,15 +2022,24 @@ void vhost_get_features_ex(struct vhost_dev *h=
-dev,
->> >  static bool vhost_inflight_buffer_pre_load(void *opaque, Error **errp)
->> >  {
->> >      struct vhost_inflight *inflight =3D opaque;
->> > -
->> >      int fd =3D -1;
->> > -    void *addr =3D qemu_memfd_alloc("vhost-inflight", inflight->size,
->> > -                                  F_SEAL_GROW | F_SEAL_SHRINK | F_SEA=
-L_SEAL,
->> > -                                  &fd, errp);
->> > +    void *addr;
->> > +
->> > +    if (inflight->size > INT32_MAX) {
->> > +        error_setg(errp, "inflight size '%"PRIu64"' exceeds "
->> > +                   "migration limit '%"PRIu32"'", inflight->size, INT=
-32_MAX);
->> > +        return false;
->> > +    }
->> > +
->> > +    addr =3D qemu_memfd_alloc("vhost-inflight", inflight->size,
->> > +                            F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
->> > +                            &fd, errp);
->> >      if (!addr) {
->> >          return false;
->> >      }
->> >=20=20
->> > +    /* Only used in VMSTATE_VBUFFER_UINT32() */
->> > +    inflight->__size_32bits =3D inflight->size;
->> >      inflight->offset =3D 0;
->> >      inflight->addr =3D addr;
->> >      inflight->fd =3D fd;
->> > @@ -2042,7 +2051,7 @@ const VMStateDescription vmstate_vhost_inflight_=
-region_buffer =3D {
->> >      .name =3D "vhost-inflight-region/buffer",
->> >      .pre_load_errp =3D vhost_inflight_buffer_pre_load,
->> >      .fields =3D (const VMStateField[]) {
->> > -        VMSTATE_VBUFFER_UINT64(addr, struct vhost_inflight, 0, NULL, =
-size),
->> > +        VMSTATE_VBUFFER_UINT32(addr, struct vhost_inflight, 0, NULL, =
-__size_32bits),
->> >          VMSTATE_END_OF_LIST()
->> >      }
->> >  };
->>=20
 
