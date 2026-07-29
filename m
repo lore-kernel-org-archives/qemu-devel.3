@@ -4,93 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AFD4C54F51
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 09:38:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82033C54F51
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 09:51:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp0k4-0000Vt-Cn; Wed, 29 Jul 2026 05:38:24 -0400
+	id 1wp0vg-0002VH-8o; Wed, 29 Jul 2026 05:50:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wp0k2-0000VQ-8s
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 05:38:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wp0ve-0002Ut-Am; Wed, 29 Jul 2026 05:50:22 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wp0k0-00005M-QY
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 05:38:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785317900;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8Os2dKUA6dgVnL1MT+Rig3IQBmbVntu1NaYMrgHRmc0=;
- b=aHAUancYLXjcc9thgu7rxGduJ6t+adP0B6VXuxdGFS1qZk+aGvVPtmdtyvTM50pApUfoYh
- QIfkN+RpV+9JrzTOM5d/xqiy6T34LykGmtTvCuMMBV2fwiowdcEnK87iNHbXN9nqvD56B6
- 9P7v2g+0b8OjyqucQAUQFsEPd+UpWdA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-297-oaB5u29RO1ek-pFCL8n3-Q-1; Wed, 29 Jul 2026 05:38:17 -0400
-X-MC-Unique: oaB5u29RO1ek-pFCL8n3-Q-1
-X-Mimecast-MFC-AGG-ID: oaB5u29RO1ek-pFCL8n3-Q_1785317896
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4954fd771baso12008985e9.0
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 02:38:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785317896; x=1785922696; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=8Os2dKUA6dgVnL1MT+Rig3IQBmbVntu1NaYMrgHRmc0=;
- b=BWQuYI3IF1k5s4vUUO2+5pa1H+sNyvc5sOET9URr1ovSCNwJhfwMSqT+LAykJXnwSb
- xXyE7nhpo6YjY2iUIfzNLCri56igkG5q6AinOVmIYWZuCTQwkK8M6Cdjyu/KQNjib8tr
- FMOsyET/tbKio5IsX3jgQQVL7UT9YbuEmlbU4pJU9KI8sLNRiAhzgrVf8yaQRl9zWWPW
- aDV087cK2FQ6ckT1Ayz5knPDuMVYrALpQJfn1Pf/eu70VjLEB6K6WYbvbELXaPL5dTyI
- rue2tkaIAct/2LK2V2bzktmU+jL7u9D6jmhTz9VJT2Z9XDXTXwL3rJpUlno72DQcgGkO
- ZvGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785317896; x=1785922696;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=8Os2dKUA6dgVnL1MT+Rig3IQBmbVntu1NaYMrgHRmc0=;
- b=AkKufEIZh7KuxStZZnsjGbGoC6lw02XZfMqZcdxnIdCStY5kiZRyuziYODm5cjtuWB
- Gwcd2atA9NG6RYGmgUb82f3GyJzUt4o092m5eOmncDLWWl2nZvPK5XA64sDYq/V+1Il4
- I3Jb3Nx/9nvmTo/H6M3bC6uCuinnn/aFGxQoA6BoN7qIL3RcOHaLAxitqS6WgdrqqB6B
- YdS+QYncbw8E3BhDKHhJmxMBej5zdLXllICP1JrNkg6FmQsPWTQ4Mq+JxB91xUdPH665
- dOKgpvznl4qZgJp3DEnOm/5g4/i05syo6KBpoEt7QzTU9QxGs9b2Wq0aZxm462OIkeE/
- hdhQ==
-X-Gm-Message-State: AOJu0YyQTuEHGX5BHApKa9YbHVXYP0SUlNzoTUOhuqALchcW0j/Hid5S
- SAMrrjq5tDZ6sp0YBbgcvRUp+OoRt9qmAwstZ6OvkI4oFDnDGgZYNbqBWrrufGxtNpZbjUMakJ6
- 97Ijr9qdJzdy3v46Q+KBb+NTMn7QrQf6Bgi5/XBCezrfX76U3sBstoa7G
-X-Gm-Gg: AR+sD10tSXQrwWNTfNINT0kiSCnwe0AzyZI7w4uN70/2kfSshXnteU2GhqD/x94/6oy
- Ici7r2tQbj8VIVDrjQDF5mAYB7qq1HFq3cKYCDM3cDCiiTlYs3lF5cwnfSNyjzTQ3u6f3jty2Hp
- Ph6bCUL1pNaWENoGqlq13mrD7F1Ft32mMgmg/0NIXAUho+eHbuw8Rjz02/qwlTfIBO3/DPmRQc6
- QSOfgcH3p7pK8lQADQJzpxZ57p5NsV/h9h9Rsl3oNov7J6MSnzirCywZungCBMw740VHeHCZKH8
- vkW4Rb+bhKV6KhpdnKgVRjQl68hITIA22y6Gws19WeKuU9tH8Z3Gqi8NlJc0xGxxYHuo3xp67NC
- U7dBocsSmvv8s63olld8IRuU=
-X-Received: by 2002:a05:600d:8499:10b0:495:58fe:88e5 with SMTP id
- 5b1f17b1804b1-497fd2d9f86mr13793835e9.2.1785317895641; 
- Wed, 29 Jul 2026 02:38:15 -0700 (PDT)
-X-Received: by 2002:a05:600d:8499:10b0:495:58fe:88e5 with SMTP id
- 5b1f17b1804b1-497fd2d9f86mr13793495e9.2.1785317895138; 
- Wed, 29 Jul 2026 02:38:15 -0700 (PDT)
-Received: from redhat.com (ppp-94-66-118-61.home.otenet.gr. [94.66.118.61])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47fb647a8d4sm6515183f8f.0.2026.07.29.02.38.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Jul 2026 02:38:14 -0700 (PDT)
-Date: Wed, 29 Jul 2026 05:38:11 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wp0vc-0001UC-6I; Wed, 29 Jul 2026 05:50:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1785318608; bh=SJuvGm8XtoJLG+zYc+ls84lcbSSeK548+0+LvAlgB9g=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=t1lrQsWzJU9BTxrXPU4c+7F8IIsSXyLhSSIE7d2HhcbByukIzMfOoNK3MOIBQBKIG
+ xEH0W1HxG2yHrh+Uv0pn9HARgT9LeC0XKsepb/iePBcZ+TMUO+WffwRYxCICC/oCzn
+ tHZ5wxXsHNIRz/dNEb0Gcyoyq3sqJnc22YulXYdXvlGXfBJvIMyhsXqewF3/38ddAL
+ QXNZoQHDysb9ubLRYK3MLOnn6YYKEKajhGmyGJBl8HdA4oGBbh/iP79+WYl3cbviD4
+ gBCgO16eRiNYJ4VpOH3EoQDSutEg72GaO2PINrGfy152DGmSCt/EXqB7FF6X6GSeZ5
+ cwKVNIv0hgxYA==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id BAF461C673E;
+ Wed, 29 Jul 2026 12:50:08 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id C03F23F9989;
+ Wed, 29 Jul 2026 12:50:14 +0300 (MSK)
+Message-ID: <90d15fe9-9250-486c-9349-441d0c11c655@tls.msk.ru>
+Date: Wed, 29 Jul 2026 12:49:59 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL v2 09/30] virtio-mmio: fix QUEUE_NUM_MAX
+To: "Michael S. Tsirkin" <mst@redhat.com>
 Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Yonggang Luo <luoyonggang@gmail.com>, Miku Hatsune <anznu1l@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Zhao Liu <zhao1.liu@intel.com>, QEMU Stable <qemu-stable@nongnu.org>
-Subject: Re: [PULL v2 09/30] virtio-mmio: fix QUEUE_NUM_MAX
-Message-ID: <20260729053423-mutt-send-email-mst@kernel.org>
 References: <cover.1785179875.git.mst@redhat.com>
  <a5cff318f06cd06b37224e15ee74d64d1df8b12b.1785179875.git.mst@redhat.com>
  <65990a19-6a7e-4c1c-9354-0fffa13cbba9@tls.msk.ru>
@@ -99,20 +51,63 @@ References: <cover.1785179875.git.mst@redhat.com>
  <20260728192047-mutt-send-email-mst@kernel.org>
  <af6d5296-9860-4c5d-a72e-f2eacac3e2e9@tls.msk.ru>
  <23cbb4e8-1467-4a0f-9af7-67e3c64cba7e@tls.msk.ru>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <23cbb4e8-1467-4a0f-9af7-67e3c64cba7e@tls.msk.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ <20260729053423-mutt-send-email-mst@kernel.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260729053423-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,79 +123,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 29, 2026 at 12:25:30PM +0300, Michael Tokarev wrote:
-> On 7/29/26 08:12, Michael Tokarev wrote:
-> > On 7/29/26 02:22, Michael S. Tsirkin wrote:
-> > > On Tue, Jul 28, 2026 at 11:17:34PM +0300, Michael Tokarev wrote:
-> > ..
-> > > > So this whole change, for older versions, becomes just:
-> > > > 
-> > > > --- a/hw/virtio/virtio.c
-> > > > +++ b/hw/virtio/virtio.c
-> > > > @@ -2572,6 +2572,8 @@ VirtQueue *virtio_add_queue(VirtIODevice *vdev, int queue_size,
-> > > >       if (i == VIRTIO_QUEUE_MAX || queue_size > VIRTQUEUE_MAX_SIZE)
-> > > >           abort();
-> > > > 
-> > > > +    queue_size = VIRTQUEUE_MAX_SIZE; /* fixed properly in 11.1. */
-> > > > +
-> > > 
-> > > Or you can stick to upstream and add the compat entry for 11.0.
-> > 
-> > Compat entry for 11.0 which will never be used?
-> > With a non-obvious logic which boils down to this single line?
-> > 
-> > Or what do you mean?
-> > 
-> > BTW, can't this logic be implemented without a compat property in
-> > the first place?  This x-override-queue-size seems like a hack.
-> > or a.. twisted way to compare a machine version.
-> > 
-> > Can't this very place become
-> > 
-> >     if (machine_version < 11.1) {
-> >        queue_size = VIRTQUEUE_MAX_SIZE;
-> >     }
-> > 
-> > instead of using this indirect property?
-> 
-> Michael, I still don't understand what we're doing here and - now -
-> why do we need to distinguish between old and new machine types at all.
-> 
-> Behavior before the fixes:
-> 
->  qemu always reported queue size to be the maximum allowed one (1024),
->    even if actual queue size requested and allocated was smaller
->  qemu accepted requests to elements past the allocated size, which
->    allowed to read/write past the allocated buffer - which can't be
->    considered part of ABI, obviously :)
-> 
-> Behavior after the fixes, for new machine types:
-> 
->  qemu reports actually requested and allocated queue size
->  qemu properly disallows access past the allocated queue size
-> 
-> What would break if we switch to the new behavior unconditionally,
-> regardless of the machine types?
+On 7/29/26 12:38, Michael S. Tsirkin wrote:
+> On Wed, Jul 29, 2026 at 12:25:30PM +0300, Michael Tokarev wrote:
 
-It's guest visible. You will get two reads from same register
-suddenly returning different values.
-
-
-> I don't understand why do you suggest to implement the same logic for
-> older/stable qemu versions if it will always evaluate to allocating
-> the max size for the queue regardless of the requested size.
+>> What would break if we switch to the new behavior unconditionally,
+>> regardless of the machine types?
 > 
-> Thanks,
+> It's guest visible. You will get two reads from same register
+> suddenly returning different values.
+
+The old value basically makes no sense.  We returned a wrong value
+here, now we return the correct one.  It's like, I don't know, a lot
+of fixes in various other areas - when it was a bug in qemu impl. of
+some register read which was subsequently corrected - it doesn't need
+a compat property to continue returning a wrong/bogus value for old
+machines?  I think here, there's no real difference - because the
+guest can't access the "extra" space anyway without causing some
+unexpected results (usually a crash).
+
+>> I don't understand why do you suggest to implement the same logic for
+>> older/stable qemu versions if it will always evaluate to allocating
+>> the max size for the queue regardless of the requested size.
+>>
+>> Thanks,
+>>
+>> /mjt
 > 
-> /mjt
+> My preference, normally, is to just stick to upstream as much as
+> possibly. I just do not want slightly different code bases when we can
+> trivially have one.  If nothing else, less of a chance a follow up patch
+> will cause conflicts, and then it snowballs from there.
 
-My preference, normally, is to just stick to upstream as much as
-possibly. I just do not want slightly different code bases when we can
-trivially have one.  If nothing else, less of a chance a follow up patch
-will cause conflicts, and then it snowballs from there.
+Yes, this is exactly my preference as well.  It is more, I often
+pick up some other changes to stable - changes which aren't fixing
+anything, - say, some renames or code shuffling around - just to
+make the resulting code closer to the master branch, so that
+subsequent changes has much more chances to apply cleanly.
 
+In this case I can drop the addition to hw_compat_11_0[] (because
+it doesn't exist in 11.0 and before) and keep everything else.
+There will be quite some code which boils down to a single line
+(queue_size = QUEUE_SIZE_MAX).  Twisted code which does not contain
+the main trigger (the property) at all.  This change and the
+subsequent change which it fixes - in reality, all these ifs
+and conditions would be just useless, but will give someone a
+puzzle to solve, wtf is going on here?
 
--- 
-MST
+Ofc it would be ideal - from the back-porting PoV only - to just
+drop this all entirely and unconditionally report the correct
+queue size to begin with, as per above.
 
+Hwell.. :)
+
+/mjt
 
