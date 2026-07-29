@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 178CFC54F51
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 20:59:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5230C54FD4
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 20:59:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpBMw-0002eT-Hk; Wed, 29 Jul 2026 16:59:14 -0400
+	id 1wpBMv-0002eB-Ne; Wed, 29 Jul 2026 16:59:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wpBMt-0002d0-BV
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 16:59:11 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wpBMu-0002dz-Mn
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 16:59:12 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wpBMr-0003jx-Kh
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 16:59:11 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wpBMt-0003kP-6U
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 16:59:12 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 8E64843AA0;
+ by tor.source.kernel.org (Postfix) with ESMTP id 6F6806004E;
+ Wed, 29 Jul 2026 20:59:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9CFF1F000E9;
  Wed, 29 Jul 2026 20:59:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311291F000E9;
- Wed, 29 Jul 2026 20:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1785358748;
- bh=D+7TI/A5weC4o5qGGiEE6Wy+v675CcpJHfbuWtjckgE=;
+ s=k20260515; t=1785358750;
+ bh=pQx5YbcditN3B7gV622IuItDzYq/EcAseJ4AJoGmdfw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Z9fCISCOL38OV+P0l0WsDsglWITnLzE2Q9ob9K5BJe5EciEPtIfjDJSiUKNrOVotQ
- nBR6H+yBl4wKK0JUt5I08H2FbRoIs1I9/KoGdMoLMbjH2HbyCkxCWI/2iTXoRGyafF
- mpyreMOU8HcRyDlaKkjC1DJnulYaL3IitOuDWykugY7sEUl5JztC4dfrM7698r6H+M
- BDLWcuNzl6FKYefUUlfzk1VpdbdV4FdWiQcb16rZwqSOuc+U5svkeFo7k+94nTRZN0
- jweiZN+xksQCqa4AJYmWYZPIxqtpe3B9wOzUd9nH3rUmP9tMkhm31JNByI2yI417D9
- rId5972KS8Kaw==
+ b=MoAUAWyu4/JqThZgQstUPx26alNES4xuYDFZJt+YZ/ZsTwrNwdy8oSe36VSXjVA6A
+ S07uWRI4TkMA1zjMm0BOuNBw1QA1u/8lUnr3/zM2uSq8dgUMvlyhVvrMA/PUH9/ETj
+ U//HDsimTIAMef94Qhx2ac2YzjwXDedkhBUnH4DUzC47q1Hbm0pbevcocFH6t3l8ee
+ 8qX6KMZZlO/RnWMP9dM6MkXQpIKjhAD7UIYL0UYnwwi1tQmK1FOJj5b3sikSkSIrz7
+ NoPeiaPQP7f5/zk+/g57EsVzHrW5Bus6YEE1370DK6ll48sEEFWYeLfOGdKb5Oqcv5
+ yI1wAoIguULsg==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org,
 	Stefan Hajnoczi <stefanha@gmail.com>
 Cc: Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Laurent Vivier <laurent@vivier.eu>, no92 <leo@managarm.org>
-Subject: [PULL 2/3] linux-user: fix incorrect msg_l[sr]pid members of
- target_msqid_ds
-Date: Wed, 29 Jul 2026 22:59:01 +0200
-Message-ID: <20260729205902.3767-3-deller@kernel.org>
+ Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 3/3] linux-user/aarch64: Fix SHADOW_STACK_SET_TOKEN
+Date: Wed, 29 Jul 2026 22:59:02 +0200
+Message-ID: <20260729205902.3767-4-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260729205902.3767-1-deller@kernel.org>
 References: <20260729205902.3767-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
@@ -71,58 +71,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: no92 <leo@managarm.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The members are declared as __kernel_pid_t in Linux UAPI headers.
-Analogous members in struct target_shmid_ds (shm_[cl]pid) are also
-declared as abi_int.
+The token is not computed via TARGET_PAGE_SIZE, but via a fixed 12-bit field.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 1c54ff97bbde ("linux-user: fix and cleanup IPCOP_msg* ipc calls handling")
-Signed-off-by: no92 <leo@managarm.org>
+Fixes: ad1afe433fa ("linux-user/aarch64: Implement map_shadow_stack syscall")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4106
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/syscall.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ linux-user/syscall.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index c93b770ced..547784d971 100644
+index 547784d971..dc028686f4 100644
 --- a/linux-user/syscall.c
 +++ b/linux-user/syscall.c
-@@ -4228,8 +4228,8 @@ struct target_msqid_ds
-     abi_ulong __msg_cbytes;
-     abi_ulong msg_qnum;
-     abi_ulong msg_qbytes;
--    abi_ulong msg_lspid;
--    abi_ulong msg_lrpid;
-+    abi_int msg_lspid;
-+    abi_int msg_lrpid;
-     abi_ulong __unused4;
-     abi_ulong __unused5;
- };
-@@ -4249,8 +4249,8 @@ static inline abi_long target_to_host_msqid_ds(struct msqid_ds *host_md,
-     host_md->__msg_cbytes = tswapal(target_md->__msg_cbytes);
-     host_md->msg_qnum = tswapal(target_md->msg_qnum);
-     host_md->msg_qbytes = tswapal(target_md->msg_qbytes);
--    host_md->msg_lspid = tswapal(target_md->msg_lspid);
--    host_md->msg_lrpid = tswapal(target_md->msg_lrpid);
-+    host_md->msg_lspid = tswap32(target_md->msg_lspid);
-+    host_md->msg_lrpid = tswap32(target_md->msg_lrpid);
-     unlock_user_struct(target_md, target_addr, 0);
-     return 0;
- }
-@@ -4270,8 +4270,8 @@ static inline abi_long host_to_target_msqid_ds(abi_ulong target_addr,
-     target_md->__msg_cbytes = tswapal(host_md->__msg_cbytes);
-     target_md->msg_qnum = tswapal(host_md->msg_qnum);
-     target_md->msg_qbytes = tswapal(host_md->msg_qbytes);
--    target_md->msg_lspid = tswapal(host_md->msg_lspid);
--    target_md->msg_lrpid = tswapal(host_md->msg_lrpid);
-+    target_md->msg_lspid = tswap32(host_md->msg_lspid);
-+    target_md->msg_lrpid = tswap32(host_md->msg_lrpid);
-     unlock_user_struct(target_md, target_addr, 1);
-     return 0;
- }
+@@ -6900,7 +6900,8 @@ static abi_long do_map_shadow_stack(CPUArchState *env, abi_ulong addr,
+                 /* Leave an extra empty frame at top-of-stack. */
+                 cap_ptr -= 8;
+             }
+-            cap_val = (cap_ptr & TARGET_PAGE_MASK) | 1;
++            /* Note the 12 bit field is unaffected by current page size. */
++            cap_val = deposit64(cap_ptr, 0, 12, 1);
+             if (put_user_u64(cap_val, cap_ptr)) {
+                 /* Allocation succeeded above. */
+                 g_assert_not_reached();
 -- 
 2.54.0
 
