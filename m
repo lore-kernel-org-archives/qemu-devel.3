@@ -4,61 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72E79C53200
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 13:17:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D49FC54F51
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 13:19:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp491-0005JW-2W; Wed, 29 Jul 2026 09:16:23 -0400
+	id 1wp4C9-00064F-OH; Wed, 29 Jul 2026 09:19:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1wp48v-0005Iu-9g; Wed, 29 Jul 2026 09:16:18 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wp4C8-00063D-6E
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 09:19:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1wp48t-0006dy-D5; Wed, 29 Jul 2026 09:16:17 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 21538600BB;
- Wed, 29 Jul 2026 13:16:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 026691F00A3A;
- Wed, 29 Jul 2026 13:16:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1785330964;
- bh=evAvWUfQ1WJQi9YR6wUf0+FTw/54fnlp+3u3zzxLd0Q=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=L7G+QeFZKOIfCRV4DOv0UbUoNK+6rZ6WvHpQUsS/Tw0r54X1IV+xj0XxNp4kxyPSl
- vwOWqZn52ccVoGxQdnHMxVe5U5u7j5LmwjfXY8yTWDHneyuYdIaILzV2gxFwHtOPrS
- 6Ge60HTInb52iXCRjBydsIwNrTzarnJBxssbcjJMYiaEo/XzmE0eBlIhqZQ5skVwr4
- zn5dJp2li6M+IKB9MkS5e4rH2RsUCAQlj3X8w+hEruN/B7jvdkj3EVth1RsYjlkbZx
- /Mf/XvuAfpAlQfUZw+s1g8RL8Z70V/LXGh8uUCMc1b4Pbcid64gCemc2mM9Zpta8P9
- ENwQARI81OZRg==
-Date: Wed, 29 Jul 2026 15:16:00 +0200
-From: Niklas Cassel <cassel@kernel.org>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Sam Li <faithilikerun@gmail.com>,
- Dmitry Fomichev <dmitry.fomichev@wdc.com>,
- Damien Le Moal <dlemoal@kernel.org>,
- Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Subject: Re: [PATCH v2] file-posix: fix cache.direct=on check for zoned block
- devices
-Message-ID: <amn9EN4bj7YLpyIB@ryzen>
-References: <20260617133658.2022750-1-cassel@kernel.org>
- <20260618150025.GC720244@fedora>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wp4C6-0007IZ-Tb
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 09:19:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785331174;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=sryp4hFaqfg1ik5yxQ8SR+ahHklOqvC83RwyhZtrv3k=;
+ b=bLKfqATZ7yFwFfNyorkxCtvulDZG3cv7QOU/QdMMt17mq4AReS76eBwrorQ+l1tBE9135n
+ qSXuXoSIyhX/d91G5nYu8as2pi97h6WiF7BFsZHN0LiJFlxiONzbW3J4qr4yb7cJkkjUjD
+ NI0taKl2dRqFKZo/RLNQCvwej74SHd8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-302-dOhaJe3kPB6pN55vYbOv8A-1; Wed,
+ 29 Jul 2026 09:19:30 -0400
+X-MC-Unique: dOhaJe3kPB6pN55vYbOv8A-1
+X-Mimecast-MFC-AGG-ID: dOhaJe3kPB6pN55vYbOv8A_1785331169
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 70986195608E; Wed, 29 Jul 2026 13:19:29 +0000 (UTC)
+Received: from localhost (unknown [10.2.17.47])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B2CE519560AB; Wed, 29 Jul 2026 13:19:28 +0000 (UTC)
+Date: Wed, 29 Jul 2026 09:19:27 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, kwolf@redhat.com, stefanha@redhat.com,
+ qemu-devel@nongnu.org
+Subject: Re: [PULL v2 00/17] Block layer patches
+Message-ID: <20260729131927.GA1379893@fedora>
+References: <20260729084046.22211-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="19sp0DQPD8stHxJm"
 Content-Disposition: inline
-In-Reply-To: <20260618150025.GC720244@fedora>
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=cassel@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+In-Reply-To: <20260729084046.22211-1-kwolf@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,40 +85,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 18, 2026 at 11:00:25AM -0400, Stefan Hajnoczi wrote:
-> On Wed, Jun 17, 2026 at 03:36:58PM +0200, Niklas Cassel wrote:
-> > For zoned block devices with SWR zones, the order of the writes must be
-> > maintained to avoid write not at write pointer errors.
-> > Thus, cache.direct=on must be used to bypass the page cache, since the
-> > page cache uses write-back caching, where the physical order of the writes
-> > is not guaranteed.
-> > 
-> > There is already a check for cache.direct=on in raw_open_common(),
-> > however, this check is done before raw_refresh_zoned_limits() has been
-> > called (which initializes bs->bl.zoned), so it is currently dead code.
-> > 
-> > Fix this by moving the check to raw_refresh_zoned_limits(), such that the
-> > check is done after bs->bl.zoned has been initialized.
-> > 
-> > Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-> > Reviewed-by: Dmitry Fomichev <dmitry.fomichev@wdc.com>
-> > Fixes: 774c726ceb2a ("block: add zoned BlockDriver check to block layer")
-> > Signed-off-by: Niklas Cassel <cassel@kernel.org>
-> > ---
-> > Changes since v1:
-> > -Picked up tags from Damien and Dmitry
-> > -Modified existing code comment to use plural instead of singular
-> > 
-> >  block/file-posix.c | 22 ++++++++++------------
-> >  1 file changed, 10 insertions(+), 12 deletions(-)
-> 
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+--19sp0DQPD8stHxJm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Gentle ping on this patch.
+Applied, thanks.
 
-Would be nice if anyone could pick it up :)
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
 
+--19sp0DQPD8stHxJm
+Content-Type: application/pgp-signature; name=signature.asc
 
-Kind regards,
-Niklas
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmpp/d8ACgkQnKSrs4Gr
+c8g6MQgAyWLYNj8n4GRhQruMrttF8ACNdic2BsY7mDs+XAkOZGkOltRUT2WcaTT4
+7RxTUVRM6S0RIAT0fzHFPWaLBD3IiIQ5pz/lc6DNM5dxgUgKSDxtiUWQx8kqXBKK
+Q1ckDlBkkLzVWP4H8gX5F2WofKXtpQMmWR+xMYrYsU86WakEAPOp5u6KgJlpXn1c
+Dd5iIBsh2PKdM017Iob1N38coenvN2fqVJypmQ7QgBGvNNtZNM/CfwPD4m1J5jDv
+R8NS7Vf+UQ+bC7hh1HlKaAwy93teCTRB5n6XJiFp+yn/BgcRyaWhvj6Dd9yvhkFq
+5d6f4GinfnUGeItQlHRLSk+qmRMQug==
+=JxDy
+-----END PGP SIGNATURE-----
+
+--19sp0DQPD8stHxJm--
+
 
