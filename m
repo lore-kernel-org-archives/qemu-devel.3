@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3261BC54F51
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 09:16:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EB69C53200
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 09:16:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp0MM-0003kx-2z; Wed, 29 Jul 2026 05:13:54 -0400
+	id 1wp0MH-0003hm-EQ; Wed, 29 Jul 2026 05:13:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wp0MK-0003kb-Jf
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 05:13:52 -0400
+ id 1wp0MF-0003gt-Nc
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 05:13:47 -0400
 Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wp0MI-0004wq-Qo
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 05:13:52 -0400
+ id 1wp0MD-0004um-AT
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 05:13:47 -0400
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
- by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id 89981C0A85;
- Wed, 29 Jul 2026 12:13:49 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id AC7DBC0A07;
+ Wed, 29 Jul 2026 12:13:41 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:484::1:24])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id bDa8GXKW9mI0-YOhrtORp; Wed, 29 Jul 2026 12:13:48 +0300
+ id bDa8GXKW9mI0-cIPS7QSl; Wed, 29 Jul 2026 12:13:41 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1785316428;
- bh=S8Vp8LJifdN8Jxab7p9d0uomfrkWpnzEOimzEfJAt10=;
+ s=default; t=1785316421;
+ bh=DaeKnaftV441pYWOLN5La1ohWjtFSUg301klU0RusmE=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=qwuoPnb2UGk5sSmBnNIMciU7576qiQL7up+iQFhzU+cQHHkQTxX6VKG/ttjyQNdCs
- J+8SFBNbbVtPSDyXRcm1NOkpEpPL6U2n+mcLUBLniPXdAo7S8YnPSCAvWe9jxH+hZy
- 8F+97z2TayFYgDMOAVQT6VYTs8+0XNdc9FXhaars=
+ b=f+WSXzsG5e0FKusqSy6DU+U6nyeedccqtX0hJKxcTpyf7gqntU7S+W/M5OL0MF3tg
+ JIRVT5+TdgaoZlDmwEfaCZ5EMNpWRmmi1FAZK5fBfD7RTXFXfy3uKGjfmSKPtkayJ2
+ 7QthPw1U6DjoGflTI3HASfSFMG+ePTFtpiFbnR0s=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -46,10 +46,11 @@ Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
  raphael.s.norwitz@gmail.com, bchaney@akamai.com, vsementsov@yandex-team.ru,
  qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
  yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
- Eric Blake <eblake@redhat.com>
-Subject: [PATCH v20 09/15] qapi: add local migration parameter
-Date: Wed, 29 Jul 2026 12:12:47 +0300
-Message-ID: <20260729091334.1863155-10-vsementsov@yandex-team.ru>
+ Eric Blake <eblake@redhat.com>, Jason Wang <jasowangio@gmail.com>
+Subject: [PATCH v20 02/15] net/tap: improve script/downscript options
+ documentation
+Date: Wed, 29 Jul 2026 12:12:40 +0300
+Message-ID: <20260729091334.1863155-3-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260729091334.1863155-1-vsementsov@yandex-team.ru>
 References: <20260729091334.1863155-1-vsementsov@yandex-team.ru>
@@ -78,154 +79,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We are going to implement local-migration feature: some devices will be
-able to transfer open file descriptors through migration stream (which
-must UNIX domain socket for that purpose).  This allows to transfer the
-whole backend state without reconnecting and restarting the backend
-service. For example, virtio-net will migrate its attached TAP netdev,
-together with its connected file descriptors.
-
-In this commit we introduce a migration parameter, which enables
-the feature for devices that support it (none at the moment).
-
-We can't simply auto-detect local migration by checking whether the
-migration channel is a UNIX domain socket: the UNIX socket may be only
-the first part of the transfer channel to a remote target.  Hence an
-explicit parameter is needed. More over, "local" migration parameter
-may be useful in cpr-exec mode, when FDs are passed through exec
-instead of UNIX socket.
+Properly document defaults and special values of "" and "no".
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Ben Chaney <bchaney@akamai.com>
 ---
- include/migration/misc.h |  2 ++
- migration/options.c      | 18 +++++++++++++++++-
- qapi/migration.json      | 22 ++++++++++++++++++----
- 3 files changed, 37 insertions(+), 5 deletions(-)
+ qapi/net.json   | 12 +++++++++---
+ qemu-options.hx |  9 +++++----
+ 2 files changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/include/migration/misc.h b/include/migration/misc.h
-index 2b2fbb59a40..019717f4cda 100644
---- a/include/migration/misc.h
-+++ b/include/migration/misc.h
-@@ -161,4 +161,6 @@ bool multifd_join_device_state_save_threads(void);
- 
- void migration_request_switchover_ack_legacy(const char *requester);
- 
-+bool migrate_local(void);
-+
- #endif
-diff --git a/migration/options.c b/migration/options.c
-index dfce19405d4..5c439f6d724 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -14,6 +14,7 @@
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
- #include "qemu/units.h"
-+#include "qapi/util.h"
- #include "exec/target_page.h"
- #include "qapi/clone-visitor.h"
- #include "qapi/error.h"
-@@ -25,6 +26,7 @@
- #include "migration/colo.h"
- #include "migration/cpr.h"
- #include "migration/misc.h"
-+#include "migration/options.h"
- #include "migration.h"
- #include "migration-stats.h"
- #include "qemu-file.h"
-@@ -350,6 +352,12 @@ bool migrate_mapped_ram(void)
-     return s->capabilities[MIGRATION_CAPABILITY_MAPPED_RAM];
- }
- 
-+bool migrate_local(void)
-+{
-+    MigrationState *s = migrate_get_current();
-+    return s->parameters.local;
-+}
-+
- bool migrate_ignore_shared(void)
- {
-     MigrationState *s = migrate_get_current();
-@@ -1085,7 +1093,7 @@ static void migrate_mark_all_params_present(MigrationParameters *p)
-         &p->has_announce_step, &p->has_block_bitmap_mapping,
-         &p->has_x_vcpu_dirty_limit_period, &p->has_vcpu_dirty_limit,
-         &p->has_mode, &p->has_zero_page_detection, &p->has_direct_io,
--        &p->has_x_rdma_chunk_size, &p->has_cpr_exec_command,
-+        &p->has_x_rdma_chunk_size, &p->has_cpr_exec_command, &p->has_local,
-     };
- 
-     len = ARRAY_SIZE(has_fields);
-@@ -1433,6 +1441,10 @@ static void migrate_params_test_apply(MigrationParameters *params,
-         qapi_free_strList(dest->cpr_exec_command);
-         dest->cpr_exec_command = QAPI_CLONE(strList, params->cpr_exec_command);
-     }
-+
-+    if (params->has_local) {
-+        dest->local = params->local;
-+    }
- }
- 
- static void migrate_params_apply(MigrationParameters *params)
-@@ -1565,6 +1577,10 @@ static void migrate_params_apply(MigrationParameters *params)
-         s->parameters.cpr_exec_command =
-             QAPI_CLONE(strList, params->cpr_exec_command);
-     }
-+
-+    if (params->has_local) {
-+        s->parameters.local = params->local;
-+    }
- }
- 
- void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
-diff --git a/qapi/migration.json b/qapi/migration.json
-index b1eaf7b0545..bb744f134ce 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -830,7 +830,8 @@
-            'zero-page-detection',
-            'direct-io',
-            { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
--           'cpr-exec-command'] }
-+           'cpr-exec-command',
-+           'local'] }
- 
- ##
- # @migrate-set-parameters:
-@@ -1012,10 +1013,21 @@
- #     Must be set to the same value on both source and destination
- #     before migration starts.  (Since 11.1)
+diff --git a/qapi/net.json b/qapi/net.json
+index 1a6382825c5..8f0915c4d86 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -399,9 +399,15 @@
+ # @fds: multiple file descriptors of already opened multiqueue capable
+ #     tap
  #
-+# @local: Permit the use of optimizations for local migration.
-+#     This must only be set when either both the source and
-+#     destination QEMU processes are directly connected with a UNIX
-+#     domain socket as the migration channel (to enable use of file
-+#     descriptor passing) or cpr-exec migration mode is enabled
-+#     (this way file descriptors are inherited by new process).
-+#     Individual device backends may need additional configuration
-+#     flags set  to enable local migration optimizations.
-+#     This will be documented against the device
-+#     backends where it applies.  (Since 11.2)
+-# @script: script to initialize the interface
+-#
+-# @downscript: script to shut down the interface
++# @script: script to initialize the interface.  An empty string or
++#     "no" disables script execution.  Defaults to
++#     ``<sysconfdir>/qemu-ifup``, where ``<sysconfdir>`` is the
++#     system configuration directory at build time (typically /etc).
 +#
- # Features:
++# @downscript: script to shut down the interface.  An empty string or
++#     "no" disables script execution.  Defaults to
++#     ``<sysconfdir>/qemu-ifdown``, where ``<sysconfdir>`` is the
++#     system configuration directory at build time (typically /etc).
  #
--# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
--#     @x-vcpu-dirty-limit-period are experimental.
-+# @unstable: Members @local, @x-checkpoint-delay, @x-rdma-chunk-size,
-+#     and @x-vcpu-dirty-limit-period are experimental.
+ # @br: bridge name (since 2.8)
  #
- # Since: 2.4
- ##
-@@ -1053,7 +1065,9 @@
-             '*direct-io': 'bool',
-             '*x-rdma-chunk-size': { 'type': 'uint64',
-                                     'features': [ 'unstable' ] },
--            '*cpr-exec-command': [ 'str' ]} }
-+            '*cpr-exec-command': [ 'str' ],
-+            '*local': { 'type': 'bool',
-+                        'features': [ 'unstable' ] } } }
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 34970fffc94..200949655ea 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -3014,7 +3014,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
+     "                use network scripts 'file' (default=" DEFAULT_NETWORK_SCRIPT ")\n"
+     "                to configure it and 'dfile' (default=" DEFAULT_NETWORK_DOWN_SCRIPT ")\n"
+     "                to deconfigure it\n"
+-    "                use '[down]script=no' to disable script execution\n"
++    "                use '[down]script=no' or '[down]script=' to disable script execution\n"
+     "                use network helper 'helper' (default=" DEFAULT_BRIDGE_HELPER ") to\n"
+     "                configure it\n"
+     "                use 'fd=h' to connect to an already opened TAP interface\n"
+@@ -3550,9 +3550,10 @@ SRST
+     Use the network script file to configure it and the network script
+     dfile to deconfigure it. If name is not provided, the OS
+     automatically provides one. The default network configure script is
+-    ``/etc/qemu-ifup`` and the default network deconfigure script is
+-    ``/etc/qemu-ifdown``. Use ``script=no`` or ``downscript=no`` to
+-    disable script execution.
++    ``<sysconfdir>/qemu-ifup`` and the default network deconfigure script is
++    ``<sysconfdir>/qemu-ifdown``, where ``<sysconfdir>`` is the system
++    configuration directory at build time (typically ``/etc``).
++    Use ``[down]script=no`` or ``[down]script=`` to disable script execution.
  
- ##
- # @query-migrate-parameters:
+     If running QEMU as an unprivileged user, use the network helper
+     to configure the TAP interface and attach it to the bridge.
 -- 
 2.43.0
 
