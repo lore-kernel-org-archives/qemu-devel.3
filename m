@@ -4,40 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A327CC53200
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 05:13:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00E31C53219
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 05:25:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wowbD-0004Lb-73; Wed, 29 Jul 2026 01:12:59 -0400
+	id 1wowma-0000aR-3Q; Wed, 29 Jul 2026 01:24:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wowbB-0004Gh-Ed; Wed, 29 Jul 2026 01:12:57 -0400
+ id 1wowmX-0000Zt-OP; Wed, 29 Jul 2026 01:24:41 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wowb9-0001Hh-Fr; Wed, 29 Jul 2026 01:12:57 -0400
+ id 1wowmV-0002JW-Sb; Wed, 29 Jul 2026 01:24:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1785301958; bh=y31SjDTHr8Sgk4THI1Fz7hl8alXcUKww6Hgxg+dZ+ag=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=xXQFlbt1yLp5NFg7sZEdZj9qjvG3zEhY1T1H8QIANusVSbgcENhaPZCLnBnIyW5Qy
- qdxtmkitQXimfvSK1mKoHBftPeLmScmAy/stGx7en9ZmT05D7LP0gbpFZ70sdHErQ4
- O9QxMRx5WJkL/QhijWQVihvhNpHzHvVvxlinT4RBIOAy37m1sfDz/CJTJr+u2R3kng
- ppal0LXWukc2Yttyaz51YAb7y1DBqWxQpv8tUEQNNr9uQqQ4MiMXuiPXxgBORBBT4K
- lbSTpWWIy90vaqf99P7QaIME/5FPxPCUGAcTmvXeImX8DyWwPyU19qbejS1YR2+GSv
- Y2pMgovXrhPLA==
+ t=1785302670; bh=xENdQ2RycXd4EoTkxjEjRvLXWNEZN0T6gZ1eBbNKC7s=;
+ h=Date:Subject:From:To:Cc:References:In-Reply-To;
+ b=Np22Z2xf/caTN8KF3MRZMfizE8U6eBF2EpC0YNA2BZESsiG+ziAA8noKuKQjrQ7ki
+ zLWwydtv4fHaiDegWvyAjkvqw8jvt0nALtM9E4Z8o6CWw8RjG5ijoxWuFcYRYnCnRG
+ YW5cojBsm+3m/Q+Lfo0QFAXPp2+r/skoN2YfBUyhRXZnUlPFSCkjkadf8j2vmdJCsv
+ 2j7eDNCkfYnWAEDVeGXhEYRWA1m64ZbpenqKx+YGDYfwR7AXto3mEgl8dVP/U36nBv
+ WoemD020545pjF6yOM7bOYDw9PKBvhmB1mNGb2qf5lFwIF9A8t59wliShm0vWVuWIx
+ LX4ZAClpWcmEg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2812B1C6661;
- Wed, 29 Jul 2026 08:12:38 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 26EF21C6669;
+ Wed, 29 Jul 2026 08:24:30 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B0B193F9098;
- Wed, 29 Jul 2026 08:12:43 +0300 (MSK)
-Message-ID: <af6d5296-9860-4c5d-a72e-f2eacac3e2e9@tls.msk.ru>
-Date: Wed, 29 Jul 2026 08:12:30 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id CF1B83F90A3;
+ Wed, 29 Jul 2026 08:24:35 +0300 (MSK)
+Message-ID: <c376bfdb-e917-4d6a-b89e-69e7185798ae@tls.msk.ru>
+Date: Wed, 29 Jul 2026 08:24:22 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PULL v2 09/30] virtio-mmio: fix QUEUE_NUM_MAX
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: "Michael S. Tsirkin" <mst@redhat.com>
 Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Yonggang Luo <luoyonggang@gmail.com>, Miku Hatsune <anznu1l@gmail.com>,
@@ -49,8 +50,8 @@ References: <cover.1785179875.git.mst@redhat.com>
  <20260728154328-mutt-send-email-mst@kernel.org>
  <75f2277a-8508-4e6e-adfe-92bed9fc1bf6@tls.msk.ru>
  <20260728192047-mutt-send-email-mst@kernel.org>
+ <af6d5296-9860-4c5d-a72e-f2eacac3e2e9@tls.msk.ru>
 Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -94,9 +95,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260728192047-mutt-send-email-mst@kernel.org>
+In-Reply-To: <af6d5296-9860-4c5d-a72e-f2eacac3e2e9@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -120,38 +121,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/29/26 02:22, Michael S. Tsirkin wrote:
-> On Tue, Jul 28, 2026 at 11:17:34PM +0300, Michael Tokarev wrote:
-..
->> So this whole change, for older versions, becomes just:
->>
->> --- a/hw/virtio/virtio.c
->> +++ b/hw/virtio/virtio.c
->> @@ -2572,6 +2572,8 @@ VirtQueue *virtio_add_queue(VirtIODevice *vdev, int queue_size,
->>       if (i == VIRTIO_QUEUE_MAX || queue_size > VIRTQUEUE_MAX_SIZE)
->>           abort();
->>
->> +    queue_size = VIRTQUEUE_MAX_SIZE; /* fixed properly in 11.1. */
->> +
+On 7/29/26 08:12, Michael Tokarev wrote:
+> On 7/29/26 02:22, Michael S. Tsirkin wrote:
+>> On Tue, Jul 28, 2026 at 11:17:34PM +0300, Michael Tokarev wrote:
+> ..
+>>> So this whole change, for older versions, becomes just:
+>>>
+>>> --- a/hw/virtio/virtio.c
+>>> +++ b/hw/virtio/virtio.c
+>>> @@ -2572,6 +2572,8 @@ VirtQueue *virtio_add_queue(VirtIODevice *vdev, int queue_size,
+>>>       if (i == VIRTIO_QUEUE_MAX || queue_size > VIRTQUEUE_MAX_SIZE)
+>>>           abort();
+>>>
+>>> +    queue_size = VIRTQUEUE_MAX_SIZE; /* fixed properly in 11.1. */
+
+BTW, with this override in place, the second half of this fix isn't
+even needed - for older/stable versions, this line is enough to fix
+CVE-2026-50626.
+
+> BTW, can't this logic be implemented without a compat property in
+> the first place?  This x-override-queue-size seems like a hack.
+> or a.. twisted way to compare a machine version.
+
+Besides being a hack, it also redefines a #define within a compat property
+(using a "magic number" instead of a symbolic constant) in a non-obvious
+way.  Though it might be a good way here, since the property value is the
+actual historical number which should never be changed.
+
+> Can't this very place become
 > 
-> Or you can stick to upstream and add the compat entry for 11.0.
+>     if (machine_version < 11.1) {
+>        queue_size = VIRTQUEUE_MAX_SIZE;
+>     }
+> 
+> instead of using this indirect property?
 
-Compat entry for 11.0 which will never be used?
-With a non-obvious logic which boils down to this single line?
+That would be great if this patch can be reduced to this (plus the
+fixup for VIRTIO_MMIO_QUEUE_NUM_MAX in virtio_mmio_read) without
+(ab)using properties like this.
 
-Or what do you mean?
-
-BTW, can't this logic be implemented without a compat property in
-the first place?  This x-override-queue-size seems like a hack.
-or a.. twisted way to compare a machine version.
-
-Can't this very place become
-
-    if (machine_version < 11.1) {
-       queue_size = VIRTQUEUE_MAX_SIZE;
-    }
-
-instead of using this indirect property?
+BTW, isn't x-override-queue-size becoming a part of user interface?
 
 Thanks,
 
