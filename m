@@ -4,112 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9910C53200
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 10:04:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEB7AC53200
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 10:11:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp19B-0004cr-T0; Wed, 29 Jul 2026 06:04:21 -0400
+	id 1wp1Eu-0006CE-QG; Wed, 29 Jul 2026 06:10:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wp19A-0004cj-IA
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 06:04:20 -0400
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wp198-00042A-MN
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 06:04:20 -0400
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-8111c0c7561so9620967b3.3
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 03:04:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785319457; cv=none;
- d=google.com; s=arc-20260327;
- b=IdwgRaWxYMgYApbDFvSPIAYbeAMAruTzWG5FpiFms84geE6j5V17ouAc3b2t5Qose/
- VvMCRSfzKFcr19idBQAuI2vtN6TnV4JcTVpQX0lw7Yxm55UyAKesMFTUUV520IJQKteo
- aWakM5cHmpz/5UlTRRp1U7c4KDoCAwhvXyoYQv2p7ho0wL3ZPYPDfVH9/Z5UuJakVLtN
- lxOeM4jdjPEJv4vMDviRW60cwOLZbR8rNfGBoe0Ru7okGVeN3Ff6ZBe18pf/dlgKpj+Y
- qcmZJ6PWdbfN5IEJuaW4GUWAOvIaMLn+artREu7lRHYpPNxcNZpPCpf592jbWVQxwuxk
- UEGw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=mONJcJM3vtdz8G/OIOMkcMJK5xW3cgfZk3miNlXqX0Y=;
- fh=4SjtnPNCiaaaeFhaON8mG3x72oBiAheHsDAZtPcqOYc=;
- b=LcT93gWRUPf/KodU9KZDzpWlR18ZomTGn94/jAawGjoq1j93z0yEMs4HA8C+Xh6x5P
- 3WmslwZBfxTgDcXjvIN7pV90FipHyvYXDhdhmYSZfdWbo1ApE08a1mJfHVBqUoLM7qi+
- 5yqkXFoRyp8Oapv6JotCkR7LsyawibZBR4dKv7N5X0dGCRjyDFB/UGqNVLv2o/DVVX1l
- 5eAXZr9xLh829RNU9TC5fSUxvceQMLuBcnMtM2v42UwtVQDUIVTwCrxjRpEo0rlF/jR3
- g+Z/nGsh5mzCueRs2E1XUmftFRWvtrLDk97H4YXkRHUTNZalIW2q+UEzhmjLWXWVMSc3
- qGVA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785319457; x=1785924257; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=mONJcJM3vtdz8G/OIOMkcMJK5xW3cgfZk3miNlXqX0Y=;
- b=fHJy5N+3Fo3SM+fgwvUetJn4GzGSA0ULttajZ5cZ8RZldHOtSRFX1SORSywQ1yPeVq
- nyO0J3StwO7YxQrtbZ74LdGgtgsthJ2flhdtRe2KAhVqMfibrKGr3KIHZ1nhaGzn5mgy
- Y1a3GsOVK2qgbmxQOMRLn9woD34v/TK2l6ATHU+upyLK7vZPP4c/kgKowerX02lVyJ/d
- MwGoDZuANOOzrE6JpbGYRbsegVd2WWLNbohotbVuENufRorwSg7J50lU/K8Y72kc1nKd
- TB3FlSaN1MbOa24OLLevxbthD4dawFZiD9mk52jX01pJ0JuLupO9vSE1cTu4Y/2NS4RS
- WTjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785319457; x=1785924257;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=mONJcJM3vtdz8G/OIOMkcMJK5xW3cgfZk3miNlXqX0Y=;
- b=mb7KfZ2MMmZdLqVs975TaZK9td1T273AOXcay6K09W3HGIKeYv/Wo/2rUugY9YxTsw
- +s2YOn5fKYKy17Xtx3xzBQNaxhgBm52dvNl011zhcA52ayVk203IH55MvtIvg0/wtrf8
- UXqC/0ZLgRLiVk/mAA9yZgZFkyz3NdNJu6eMuiDVZ06S6LUVTTVooJI9VO0Xz0ASMGet
- rGuxHm4J7NJDYsPxV+C5/PD3U43ykJgWJNbMSQl7yY7sJdBKOUzwvNgE44/LNsjyvacn
- HuZFKbUhAKd/2vVamGceZpELS/aUi/nNT5RcsxGrKJGA2ElOvtsAxRUh6VBE7BqNH+cx
- gTEA==
-X-Gm-Message-State: AOJu0YzJNON13pw27F0n2IG/qNYSO6Mv8UoYa27P9+HsIjT/a/dOKFmD
- U5bvckrmT5gLKCqKJR1PP0c//Qt9Xnel64J1CtZLmUewd1pvauyHHkTT9IbEO6OdW7QJNXQFD4v
- 7HfHKnXltW1Kq3Om9BhWahE63PAGfAUQ=
-X-Gm-Gg: AR+sD124cZSVLxs42lEQFUC+3cZ2ZqGG1nJYV6Ih7NFmHVejxaTDjSjQ6AzWiYT1yoJ
- Z95NkLMXCEN7hT10kBCpot8rFg6rMKaY5Xl52W1NwOiHCVS9AbNjz6OAEb0Wy4ueJTYFTREE8hu
- QT6zItVpjpw14apO1cYPhBfIAagIA8EXV3MOKWB4eumf0xL5yKr5iqwzObLH0UqXkwHcMQbx+Hp
- 3wX5oKSu04jmZjTERWMEOOqYdJRKQViqO6M209Moke3H3gykjZPbRJp0MPYSN7drrIH4/2yLWJc
- 9QWEwK0CKEd2EYS4vZYlhGVxFIspbn3Ekrqkkns/hQyo6NvjmTBsCrDEZ7QSVzBmwJukPsbMd+q
- p2wFjLp+Px24=
-X-Received: by 2002:a05:690c:6d07:b0:81d:bc5:4600 with SMTP id
- 00721157ae682-81f991874cfmr31008107b3.6.1785319456857; Wed, 29 Jul 2026
- 03:04:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1wp1Es-00069j-JT; Wed, 29 Jul 2026 06:10:14 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1wp1Ep-0004qz-Vz; Wed, 29 Jul 2026 06:10:14 -0400
+Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id AE13480751;
+ Wed, 29 Jul 2026 13:10:05 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:b6f::1:d] (unknown [2a02:6bf:8080:b6f::1:d])
+ by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id w9bbWI46dOs0-TZRjoJd4; Wed, 29 Jul 2026 13:10:04 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1785319805;
+ bh=6VqBSJrGuBKQciTs3ZUEWb642k2uE+/MmlaIkErgY2c=;
+ h=In-Reply-To:Cc:Date:References:To:Subject:Message-ID:From;
+ b=E8C69o9sB3I9bW6OgPHpZbpXmfNjkEywjqbLf9BOqtmm1nvnkaihLbbADNGGhKjEr
+ aMDNxWEcoZ1rI+5F1oJObphUh3o6SECnoKnjCnMp2vAmeNFKfoUyLZDNd1pNRuiaso
+ 0vhg1NeSr74xzrkWxuhwxCm1olBWLd94iTIiVA1k=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Content-Type: multipart/alternative;
+ boundary="------------0TYlVCWjJtBSp7PYYpQl0aS0"
+Message-ID: <679a33d1-0f6c-4456-ac76-1f9e1251f2ec@yandex-team.ru>
+Date: Wed, 29 Jul 2026 15:09:57 +0500
 MIME-Version: 1.0
-References: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
- <878q6us19k.fsf@pond.sub.org>
-In-Reply-To: <878q6us19k.fsf@pond.sub.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Wed, 29 Jul 2026 14:04:03 +0400
-X-Gm-Features: AUfX_mzW1dXnFjf-Ply1s5_JDO7e3AokRdQ8ZAi6SPajXxS5d2cG49B0pWuB3O0
-Message-ID: <CAJ+F1CJBzrP9WjrO2zf7JEFmUchEFDZcGhc9zgR2XTU-rQZQiA@mail.gmail.com>
-Subject: Re: [PATCH 00/54] qom/qdev: associate properties with QAPI schema
- types
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-yw1-x112e.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 4/6] vhost-user-blk: make inflight-migration prop
+ mutable
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>, Jason Wang
+ <jasowang@redhat.com>, Fam Zheng <fam@euphon.net>, qemu-block@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ virtio-fs@lists.linux.dev, Kevin Wolf <kwolf@redhat.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>, Paolo Bonzini <pbonzini@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Milan Zamazal
+ <mzamazal@redhat.com>, Raphael Norwitz <rnorwitz@nvidia.com>
+References: <20260728100841.3475774-1-dtalexundeer@yandex-team.ru>
+ <20260728100841.3475774-5-dtalexundeer@yandex-team.ru>
+ <20260729051509-mutt-send-email-mst@kernel.org>
+Content-Language: en-US
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+In-Reply-To: <20260729051509-mutt-send-email-mst@kernel.org>
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -121,188 +87,307 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Wed, Jul 29, 2026 at 11:29=E2=80=AFAM Markus Armbruster via qemu
-development <qemu-devel@nongnu.org> wrote:
-> Before I dive into individual patches, let me try to work out what the
-> series does as a whole.
->
-> > This series adds:
-> >   - A new QAPITypeInfo struct that pairs a property with its QAPI schem=
-a
-> >     type name, enum lookup table, and list-element type.
->
-> Peeking at the code, I see that ObjectProperty gains a member @qapi_type
-> pointing to its QAPITypeInfo.
->
-> It is null when the ObjectProperty doesn't have a QAPI type.
->
-> If it's non-null, then ObjectProperty members @name and @type are
-> redundant with qapi_type.name and .type.
->
-> Correct?
-
-Almost. @name is the property name (e.g. "policy"), not the type name.
-But @type becomes redundant with qapi_type->name when qapi_type is set
-(object_property_add_qapi derive prop->type from qapi_type->name).
-
-Also @type carries additional information for some property kinds that
-@qapi_type doesn't cover: child<T> and link<T> embed the linked
-object's QOM type name in the type string. qapi_type can't represent
-that atm.
-
-> Would "every ObjectProperty has a QAPI type" be a reasonable goal for
-> the future?
-
-Maybe? we would need to address the child<>/link<> gap. At least we
-can make raw object_property_add() deprecated/static in object.c after
-this series
-
->
-> >
-> >   - A QAPI code generator (qapi-type-infos) that emits a QAPITypeInfo
-> >     instance for every schema-defined type, including the mapping
-> >     between internal C names and the schema name visible to clients.
->
-> Peeking at the code, I find:
->
-> * The type
->
->     typedef struct QAPITypeInfo {
->         const char *name;
->         const char *schema_name;
->         const QEnumLookup *lookup;
->         const struct QAPITypeInfo *list;
->     } QAPITypeInfo;
->
-> * A T_type_info for each QAPI type T, including built-in types.
->
-> * T_type_info member @name is T's QAPI name, i.e. "T".
->
-> * T_type_info member @schema_name is T's masked name used in
->   query-qmp-schema output, null when T is elided there.
->
-> * T_type_info member @list points to TList_type_info when that exists,
->   else it's null.
->
-> * T_type_info member @lookup points to T_lookup when T is an enum, else
->   it's null.
->
-> Correct?
-
-Yes
-
-> >   - A "qapi-type" field in the ObjectPropertyInfo and
-> >     ObjectPropertyValue QMP structs, populated from the QAPITypeInfo
-> >     when present giving clients a cross-reference into query-qmp-schema
-> >     output.
->
-> To be precise: when ObjectPropertyInfo member @type is "T", then member
-> @qapi-type is T_type_info.qapi-type.  Correct?
-
-@qapi-type is T_type_info.schema_name, the masked name
-
-> If .qapi-type is non-null, you can use it to look up precise type
-> information via QAPI introspection, i.e. query-qmp-schema.
->
-> Correct?
-
-Yes
-
->
-> Possible problem: query-qmp-schema covers only types that are actually
-> used in QMP.  But the above technique additionally wants QOM property
-> types.  I haven't checked what your series does about this, if anything.
-
-Most types used as QOM properties are also used by QMP commands. But
-it's true that types not used by QMP get schame_name =3D NULL atm.
-
-Should we have a new pragma? Even if we have conditions, we may end up
-with unused types in the build, but that shouldn't be a big issue. Or
-we would need a more complicated several step build.
-
-> ObjectPropertyInfo is only used with QMP command handlers.  It is
-> computed from ObjectProperty.
->
-> >   - Conversion of all PropertyInfo definitions from the old
-> >     .type/.enum_table strings to the new .qapi_type pointer.
->
-> The above is QOM, this is qdev.
->
-> Like ObjectProperty, PropertyInfo gains a member @qapi_type pointing to
-> its QAPITypeInfo.  Howver, this one cannot be null.
->
-> PropertyInfo members @type and @enum_table are dropped, because they are
-> redundant with qapi_type.type and .lookup.
->
-> Correct?
-
-Almost. Every PropertyInfo has a non-NULL qapi_type, except the array
-ones (created with DEFINE_PROP_ARRAY_INFO) which leave .qapi_type NULL
-and derive it at registration time from
-.element_info->qapi_type->list. Either way, the resulting
-ObjectProperty always ends up with a non-NULL qapi_type.
-
-PropertyInfo members @type and @enum_table are dropped, because they
-are redundant with qapi_type->name and ->lookup.
-
-> >   - Replacement of the generic qdev_prop_array with typed per-element
-> >     array PropertyInfos, removing the arrayinfo/arrayfieldsize
-> >     indirection from struct Property.
->
-> Before the series, an array-valued Property's @info member is
-> @qdev_prop_array.  @qdev_prop_array provides no information on the array
-> elements.  Instead, Property member @arrayinfo points to the
-> PropertyInfo for the elements, and @arrayfieldsize is the size of an
-> element.
->
-> Your series makes PropertyInfo array-capable: new members @element_info
-> and @element_size are the elements' PropertyInfo and size.  It then adds
-> a proper PropertyInfo for each such property, and drops
-> @qdev_prop_array.
->
-> Correct?
-
-Yes
-
->
-> This could perhaps be spun out and merged separately to reduce the size
-> of future respins.
-
-I can split it out if it helps
-
->
-> Not mentioned:
->
->     - New QOM property creation functions for creating properties of
->       QAPI type.  These take a QAPITypeInfo.
->
->     - Convert some properties to use them.
->
-> >   - Removal of the deprecated PropertyInfo.type and .enum_table fields,
-> >     and of the old object_property_add_enum/add_tm APIs.
-> >
-> > Along the way, a few pre-existing type mismatches in property
-> > definitions are fixed, the "struct tm" RTC property is replaced with a
-> > proper QAPI StructTm type etc. Introducing more specific types or a
-> > "typedef" to QAPI could help provide better associated type information=
-s
-> > than plain "str" in many cases, for example.
->
-> Examples?
->
-
-Properties using str_type_info that carry structured values with their
-own validation: macaddr ("52:54:00:12:34:56"), PCI addresses
-("04:00.0"), netdev names, chardev names, drive names, UUID strings. A
-QAPI "typedef" (or newtype) for e.g. MacAddr, PciDevAddr, UUID could
-let tools know these aren't arbitrary strings (see "hw/nvdimm: convert
-UUID property to QAPI-aware registration" patch).
+This is a multi-part message in MIME format.
+--------------0TYlVCWjJtBSp7PYYpQl0aS0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
 
-> > Comments welcome!
-> >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+On 7/29/26 14:32, Michael S. Tsirkin wrote:
+> On Tue, Jul 28, 2026 at 03:08:39PM +0500, Alexandr Moshkov wrote:
+>> When migrating from a QEMU version that supports inflight-migration to
+>> an older one that does not, there is no way to disable the feature at
+>> runtime — the VM must be stopped and reconfigured. This is impractical
+>> in production environments.
+>>
+>> Make the inflight-migration property mutable after device realization
+>> so it can be toggled via qom-set without restarting the VM.
+>>
+>> Acked-by: Raphael Norwitz<rnorwitz@nvidia.com>
+>> Signed-off-by: Alexandr Moshkov<dtalexundeer@yandex-team.ru>
 >
+>
+> I think I am beginning to understand.
+>
+>
+> You are running qemu with inflight-migration on and want to migrate
+> to qemu without inflight-migration at all.
+>
+>
+> Since it is guest transparent you could retrofit it like this.
+>
+> My question is why is it worth it, we do not normally support
+> migrating between qemu versions with different command lines.
+
+I think you right. MaybeI've beenfocusingtoomuchonthe abilityto migrate 
+betweenversionsof qemuwithandwithoutinflightmigration.
+
+Thisseriesallows to turnoffand on the inflight-migration feature 
+atruntimewithout recreatingthe VM (it was the only way to turn off the 
+feature, since the protocol feature could no longer be turned off, 
+afterinitialization withthe backend). This is more important feature,and 
+it leads to the fact that this feature allows to migrate between 
+different versions of qemu (with and without inflight-migration support).
+
+>
+>> ---
+>>   hw/block/vhost-user-blk.c | 10 ++++++++--
+>>   1 file changed, 8 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+>> index e3b873af7c..650c004bde 100644
+>> --- a/hw/block/vhost-user-blk.c
+>> +++ b/hw/block/vhost-user-blk.c
+>> @@ -619,6 +619,8 @@ static const VMStateDescription vmstate_vhost_user_blk = {
+>>       }
+>>   };
+>>   
+>> +static PropertyInfo vhost_user_blk_inflight_migration_prop;
+>> +
+>>   static const Property vhost_user_blk_properties[] = {
+>>       DEFINE_PROP_CHR("chardev", VHostUserBlk, chardev),
+>>       DEFINE_PROP_UINT16("num-queues", VHostUserBlk, num_queues,
+>> @@ -632,8 +634,9 @@ static const Property vhost_user_blk_properties[] = {
+>>                         VIRTIO_BLK_F_WRITE_ZEROES, true),
+>>       DEFINE_PROP_BOOL("skip-get-vring-base-on-force-shutdown", VHostUserBlk,
+>>                        skip_get_vring_base_on_force_shutdown, false),
+>> -    DEFINE_PROP_BOOL("inflight-migration", VHostUserBlk,
+>> -                     inflight_migration, false),
+>> +    DEFINE_PROP("inflight-migration", VHostUserBlk, inflight_migration,
+>> +                vhost_user_blk_inflight_migration_prop, bool,
+>> +                .set_default = true, .defval.u = false),
+>>   };
+>>   
+>>   static void vhost_user_blk_class_init(ObjectClass *klass, const void *data)
+>> @@ -665,6 +668,9 @@ static const TypeInfo vhost_user_blk_info = {
+>>   
+>>   static void virtio_register_types(void)
+>>   {
+>> +    vhost_user_blk_inflight_migration_prop = qdev_prop_bool;
+>> +    vhost_user_blk_inflight_migration_prop.realized_set_allowed = true;
+>> +
+>>       type_register_static(&vhost_user_blk_info);
+>>   }
+> So then,  for example, let us say I paused the VM, then set the flag,
+> now inflight is on but GET_BASE did not drain it?
+If I understood the question correctly, thisis validbehavior. Before 
+migration QEMU check protocol features to understand does the backend 
+support inflight migration. If it does, after that QEMU migrate inflight 
+buffer to other VM. If it's not, return error before migration started.
+>> -- 
+>> 2.34.1
+--------------0TYlVCWjJtBSp7PYYpQl0aS0
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 7/29/26 14:32, Michael S. Tsirkin
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:20260729051509-mutt-send-email-mst@kernel.org">
+      <pre wrap="" class="moz-quote-pre">On Tue, Jul 28, 2026 at 03:08:39PM +0500, Alexandr Moshkov wrote:
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">When migrating from a QEMU version that supports inflight-migration to
+an older one that does not, there is no way to disable the feature at
+runtime — the VM must be stopped and reconfigured. This is impractical
+in production environments.
+
+Make the inflight-migration property mutable after device realization
+so it can be toggled via qom-set without restarting the VM.
+
+Acked-by: Raphael Norwitz <a class="moz-txt-link-rfc2396E" href="mailto:rnorwitz@nvidia.com">&lt;rnorwitz@nvidia.com&gt;</a>
+Signed-off-by: Alexandr Moshkov <a class="moz-txt-link-rfc2396E" href="mailto:dtalexundeer@yandex-team.ru">&lt;dtalexundeer@yandex-team.ru&gt;</a>
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+
+
+I think I am beginning to understand.
+
+
+You are running qemu with inflight-migration on and want to migrate
+to qemu without inflight-migration at all.
+
+
+Since it is guest transparent you could retrofit it like this.
+
+My question is why is it worth it, we do not normally support
+migrating between qemu versions with different command lines.</pre>
+    </blockquote>
+    <p>I think you right. <span class="YPkS7KbdpWfGdYKd3QB9"
+      data-src-align="0:5:221:4" style="white-space: pre-wrap;">Maybe</span><span
+      style="white-space: pre-wrap;"> </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="11:1"
+      style="white-space: pre-wrap;">I</span><span
+      style="white-space: pre-wrap;">'ve </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="6:4"
+      style="white-space: pre-wrap;">been</span><span
+      style="white-space: pre-wrap;"> </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="27:14"
+      style="white-space: pre-wrap;">focusing</span><span
+      style="white-space: pre-wrap;"> </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="13:7"
+      style="white-space: pre-wrap;">too</span><span
+      style="white-space: pre-wrap;"> </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="21:5"
+      style="white-space: pre-wrap;">much</span><span
+      style="white-space: pre-wrap;"> </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="42:2"
+      style="white-space: pre-wrap;">on</span><span
+      style="white-space: pre-wrap;"> the </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="45:11:129:11:162:11"
+      style="white-space: pre-wrap;">ability</span><span
+      style="white-space: pre-wrap;"> to migrate </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="66:5"
+      style="white-space: pre-wrap;">between</span><span
+      style="white-space: pre-wrap;"> </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="72:8"
+      style="white-space: pre-wrap;">versions</span><span
+      style="white-space: pre-wrap;"> of </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="81:4"
+      style="white-space: pre-wrap;">qemu</span><span
+      style="white-space: pre-wrap;"> </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="86:1"
+      style="white-space: pre-wrap;">with</span><span
+      style="white-space: pre-wrap;"> </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="107:1:151:1"
+      style="white-space: pre-wrap;">and</span><span
+      style="white-space: pre-wrap;"> </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="109:3:205:2"
+      style="white-space: pre-wrap;">without</span><span
+      style="white-space: pre-wrap;"> </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="88:8:174:8"
+      style="white-space: pre-wrap;">inflight</span><span
+      style="white-space: pre-wrap;"> </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="57:8:97:9:183:9"
+      style="white-space: pre-wrap;">migration</span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="112:1:225:1"
+      style="white-space: pre-wrap;">.</span><span
+      style="white-space: pre-wrap;"> </span></p>
+    <p><span class="YPkS7KbdpWfGdYKd3QB9" data-src-align="114:3:124:4"
+      style="white-space: pre-wrap;">This</span><span
+      style="white-space: pre-wrap;"> </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="118:5"
+      style="white-space: pre-wrap;">series</span><span
+      style="white-space: pre-wrap;"> allows to </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="153:8"
+      style="white-space: pre-wrap;">turn</span><span
+      style="white-space: pre-wrap;"> </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="141:9"
+      style="white-space: pre-wrap;">off</span><span
+      style="white-space: pre-wrap;"> and on the inflight</span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="182:1"
+      style="white-space: pre-wrap;">-</span><span
+      style="white-space: pre-wrap;">migration feature </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="193:1"
+      style="white-space: pre-wrap;">at</span><span
+      style="white-space: pre-wrap;"> </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="195:8"
+      style="white-space: pre-wrap;">runtime</span><span
+      style="white-space: pre-wrap;"> without </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="208:12"
+      style="white-space: pre-wrap;">recreating</span><span
+      style="white-space: pre-wrap;"> the VM (it was the only way to turn off the feature, since the protocol feature could no longer be turned off, </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="53:5"
+      style="white-space: pre-wrap;">after</span><span
+      style="white-space: pre-wrap;"> initialization </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="71:1"
+      style="white-space: pre-wrap;">with</span><span
+      style="white-space: pre-wrap;"> the </span><span
+      class="YPkS7KbdpWfGdYKd3QB9" data-src-align="73:8"
+      style="white-space: pre-wrap;">backend</span><span
+      style="white-space: pre-wrap;">). 
+This is more important feature,</span><span class="YPkS7KbdpWfGdYKd3QB9"
+      data-src-align="0:149" style="white-space: pre-wrap;"> and it leads to the fact that this feature allows to migrate between different versions of qemu (with and without inflight-migration support).</span></p>
+    <p><span class="YPkS7KbdpWfGdYKd3QB9" data-src-align="0:149"
+      style="white-space: pre-wrap;">
+</span></p>
+    <blockquote type="cite"
+      cite="mid:20260729051509-mutt-send-email-mst@kernel.org">
+      <pre wrap="" class="moz-quote-pre">
+
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">---
+ hw/block/vhost-user-blk.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index e3b873af7c..650c004bde 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -619,6 +619,8 @@ static const VMStateDescription vmstate_vhost_user_blk = {
+     }
+ };
+ 
++static PropertyInfo vhost_user_blk_inflight_migration_prop;
++
+ static const Property vhost_user_blk_properties[] = {
+     DEFINE_PROP_CHR("chardev", VHostUserBlk, chardev),
+     DEFINE_PROP_UINT16("num-queues", VHostUserBlk, num_queues,
+@@ -632,8 +634,9 @@ static const Property vhost_user_blk_properties[] = {
+                       VIRTIO_BLK_F_WRITE_ZEROES, true),
+     DEFINE_PROP_BOOL("skip-get-vring-base-on-force-shutdown", VHostUserBlk,
+                      skip_get_vring_base_on_force_shutdown, false),
+-    DEFINE_PROP_BOOL("inflight-migration", VHostUserBlk,
+-                     inflight_migration, false),
++    DEFINE_PROP("inflight-migration", VHostUserBlk, inflight_migration,
++                vhost_user_blk_inflight_migration_prop, bool,
++                .set_default = true, .defval.u = false),
+ };
+ 
+ static void vhost_user_blk_class_init(ObjectClass *klass, const void *data)
+@@ -665,6 +668,9 @@ static const TypeInfo vhost_user_blk_info = {
+ 
+ static void virtio_register_types(void)
+ {
++    vhost_user_blk_inflight_migration_prop = qdev_prop_bool;
++    vhost_user_blk_inflight_migration_prop.realized_set_allowed = true;
++
+     type_register_static(&amp;vhost_user_blk_info);
+ }
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+So then,  for example, let us say I paused the VM, then set the flag,
+now inflight is on but GET_BASE did not drain it?
+</pre>
+    </blockquote>
+    <span class="YPkS7KbdpWfGdYKd3QB9" data-src-align="0:3"
+    style="white-space: pre-wrap;">If I understood the question correctly, this</span><span
+    style="white-space: pre-wrap;"> is </span><span
+    class="YPkS7KbdpWfGdYKd3QB9" data-src-align="4:8"
+    style="white-space: pre-wrap;">valid</span><span
+    style="white-space: pre-wrap;"> </span><span
+    class="YPkS7KbdpWfGdYKd3QB9" data-src-align="13:9"
+    style="white-space: pre-wrap;">behavior</span><span
+    style="white-space: pre-wrap;">. </span>Before migration QEMU check
+    protocol features to understand does the backend support inflight
+    migration. If it does, after that QEMU migrate inflight buffer to
+    other VM. If it's not, return error before migration started.  
+    <blockquote type="cite"
+      cite="mid:20260729051509-mutt-send-email-mst@kernel.org">
+      <pre wrap="" class="moz-quote-pre">
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">-- 
+2.34.1
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+</pre>
+    </blockquote>
+  </body>
+</html>
+
+--------------0TYlVCWjJtBSp7PYYpQl0aS0--
 
