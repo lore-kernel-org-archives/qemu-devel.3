@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A97B1C54F51
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 07:58:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7481FC54F51
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 08:40:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wozAr-0008Jy-EN; Wed, 29 Jul 2026 03:57:57 -0400
+	id 1wozpk-0002CD-6m; Wed, 29 Jul 2026 04:40:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wozAq-0008Jb-GA
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 03:57:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1)
+ (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
+ id 1wozpi-00028l-IE; Wed, 29 Jul 2026 04:40:10 -0400
+Received: from zm-mta-out-3.u-ga.fr ([152.77.200.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wozAo-00020k-Pe
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 03:57:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785311873;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=YOZULDzniFj/gLf5QOhTIR4ke0Ws5kBaUguwO34pDsM=;
- b=hEbyikAMYR17Ss9aqQco3+S7NR7/rn1ZUrs2IUPh7U0W2KPSMLemjeOWUH3xg5QiYs+Tdy
- OZ6khj05F8V4rw3GZcPlEOO/IvT1gqpkvVyDHt7Zo0XvBSFuYXRGORUuhzJyvbz8BSUECt
- klQ+D9poiY/0ETfogWXAdiG5HkuBVcw=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-64-BPl52zrpM8Kk-4MhG7L-mw-1; Wed,
- 29 Jul 2026 03:57:50 -0400
-X-MC-Unique: BPl52zrpM8Kk-4MhG7L-mw-1
-X-Mimecast-MFC-AGG-ID: BPl52zrpM8Kk-4MhG7L-mw_1785311870
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (Exim 4.90_1)
+ (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
+ id 1wozpg-0008GB-Pz; Wed, 29 Jul 2026 04:40:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=univ-grenoble-alpes.fr; s=2020; t=1785314404;
+ bh=ocPHFdXbLcL1yFdnlCp9sUPravLu4RnRJk/UejhcPFQ=;
+ h=From:To:Cc:Subject:Date:From;
+ b=Oz7+EXofO/YV593jxrrVPg++VYr1ho9h90JP7oyI82iuClBBoTTnR3xJmy0IhT35I
+ AS7Irs4nSEQAxee29FEyt2HKodicGSiJWSDwaRxZ2ujjm4tjWQ+MSgBWieCWY/JyGN
+ Q34J2AYvV+OctZQ2uifweLJDzttrJbG6uIzkBekYR2NHzx8E9xPGkR8zLUF0/nooW0
+ PpsSLIN//52t8E3DB6v0te/+wH5SATx3z/cz0gJlWPlDOHrAnZZ+i78ml1SeOrj/7X
+ 2r8Y85unin3gAUtKNVZAN76hvVNm7cUPfBqzj5K0ldCMooxVeQaDmcejf72c3y4YDW
+ 2EB4+TLpsIC/Q==
+Received: from mailhub-2.u-ga.fr (mailhub-2.u-ga.fr [129.88.178.102])
+ by zm-mta-out-3.u-ga.fr (Postfix) with ESMTP id 252FD40222;
+ Wed, 29 Jul 2026 10:40:04 +0200 (CEST)
+Received: from smtps.univ-grenoble-alpes.fr (smtps3.u-ga.fr [195.83.24.62])
+ by mailhub-2.u-ga.fr (Postfix) with ESMTP id 20956FF855;
+ Wed, 29 Jul 2026 10:40:04 +0200 (CEST)
+Received: from naga.tima.u-ga.fr (naga.tima.u-ga.fr [147.171.132.150])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0895C180048E
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 07:57:50 +0000 (UTC)
-Received: from localhost (unknown [10.44.24.15])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E478B300019F; Wed, 29 Jul 2026 07:57:48 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH] hw/usb/dev-smartcard-reader: fix OOB read from pending
- bulk-in ring
-Date: Wed, 29 Jul 2026 11:57:43 +0400
-Message-ID: <20260729075743.333920-1-marcandre.lureau@redhat.com>
+ (Authenticated sender: petrotf@univ-grenoble-alpes.fr)
+ by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id C0FC9400EE;
+ Wed, 29 Jul 2026 10:40:03 +0200 (CEST)
+From: frederic.petrot@univ-grenoble-alpes.fr
+To: daniel.barboza@oss.qualcomm.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
+ <frederic.petrot@univ-grenoble-alpes.fr>
+Subject: [PATCH 1/2] target/riscv: Fix sstatus update in rv128
+Date: Wed, 29 Jul 2026 10:39:40 +0200
+Message-ID: <20260729083941.103646-1-frederic.petrot@univ-grenoble-alpes.fr>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Greylist: Whitelist-UGA SMTP Authentifie (petrotf@univ-grenoble-alpes.fr)
+ via submission-587 ACL (41)
+Received-SPF: pass client-ip=152.77.200.56;
+ envelope-from=frederic.petrot@univ-grenoble-alpes.fr;
+ helo=zm-mta-out-3.u-ga.fr
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,60 +84,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
 
-ccid_bulk_in_get() decrements bulk_in_pending_num when a slot becomes
-active, but the slot is only truly free after ccid_bulk_in_release().  A
-guest can fill all 8 ring slots, partially read one (leaving pos
-non-zero), then send another command whose response reuses the active
-slot. The stale pos > new len makes the uint32_t subtraction in
-ccid_bulk_in_copy_to_guest() wrap, reading past data[].
+The sstatus register assignment was performed before the write
+mask was fully constructed, leading to an incomplete update of
+sstatus fields on the experimental rv128 target.
 
-Move the decrement to ccid_bulk_in_release() so the slot stays busy
-until then. Add an assert(pos <= len) before the substraction.
+Move the sstatus write after the mask completion so the full
+write mask is applied correctly.
 
-In practice, the device advertises bMaxCCIDBusySlots=1, so a conforming
-host never has more than one command in flight and the ring never fills.
-
-Fixes: CVE-2026-18204
-Fixes: 367071447ec5 ("usb-ccid: add CCID bus")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4086
-Reported-by: Warisjeet Singh <sinxx198@gmail.com>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
 ---
- hw/usb/dev-smartcard-reader.c | 4 ++--
+ target/riscv/tcg/csr.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/usb/dev-smartcard-reader.c b/hw/usb/dev-smartcard-reader.c
-index 964c142d1066..5f8b95be46b2 100644
---- a/hw/usb/dev-smartcard-reader.c
-+++ b/hw/usb/dev-smartcard-reader.c
-@@ -580,6 +580,7 @@ static void ccid_bulk_in_release(USBCCIDState *s)
-     assert(s->current_bulk_in != NULL);
-     s->current_bulk_in->pos = 0;
-     s->current_bulk_in = NULL;
-+    s->bulk_in_pending_num--;
- }
- 
- static void ccid_bulk_in_get(USBCCIDState *s)
-@@ -587,8 +588,6 @@ static void ccid_bulk_in_get(USBCCIDState *s)
-     if (s->current_bulk_in != NULL || s->bulk_in_pending_num == 0) {
-         return;
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index 36f2004bc5..d834b77714 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -3984,7 +3984,7 @@ static RISCVException read_sstatus_i128(CPURISCVState *env, int csrno,
+                                         Int128 *val)
+ {
+     uint64_t mask = sstatus_v1_10_mask;
+-    uint64_t sstatus = env->mstatus & mask;
++    uint64_t sstatus;
+     if (env->xl != MXL_RV32 || env->debugger) {
+         mask |= SSTATUS64_UXL;
      }
--    assert(s->bulk_in_pending_num > 0);
--    s->bulk_in_pending_num--;
-     s->current_bulk_in =
-         &s->bulk_in_pending[(s->bulk_in_pending_start++) % BULK_IN_PENDING_NUM];
+@@ -3995,7 +3995,7 @@ static RISCVException read_sstatus_i128(CPURISCVState *env, int csrno,
+     if (env_archcpu(env)->cfg.ext_zicfilp) {
+         mask |= SSTATUS_SPELP;
+     }
+-
++    sstatus = env->mstatus & mask;
+     *val = int128_make128(sstatus, add_status_sd(MXL_RV128, sstatus));
+     return RISCV_EXCP_NONE;
  }
-@@ -1078,6 +1077,7 @@ static void ccid_bulk_in_copy_to_guest(USBCCIDState *s, USBPacket *p,
- 
-     ccid_bulk_in_get(s);
-     if (s->current_bulk_in != NULL) {
-+        assert(s->current_bulk_in->pos <= s->current_bulk_in->len);
-         len = MIN(s->current_bulk_in->len - s->current_bulk_in->pos,
-                   p->iov.size);
-         if (len) {
 -- 
-2.55.0
+2.43.0
 
 
