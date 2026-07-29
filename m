@@ -4,102 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C6FAC54F51
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 08:49:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C11FC54F51
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 08:53:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wozyf-0005ei-GL; Wed, 29 Jul 2026 04:49:25 -0400
+	id 1wp02I-0006ex-FJ; Wed, 29 Jul 2026 04:53:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wozyd-0005dc-Io
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 04:49:23 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wp02H-0006eb-9a
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 04:53:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wozyb-0000vx-N6
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 04:49:23 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wp02F-0001av-CR
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 04:53:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785314960;
+ s=mimecast20190719; t=1785315186;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2yh3BIB+H9/koe2qpEOET1hY0QQoEPObrHfwGhNalzE=;
- b=OqVUd6G5z/reje4tSu8KFSE1reDtMIqtsxwEG/OADFN4S1juCH4qZiKwKGCVJaGNWLGhpq
- zA/6ywQuwk0bf8lC6CYnfTmv4W2W/8YyZUb5/rKVlJ9n2YQfm/KTKmHk8lUN8pLPECqT0t
- 4RHFWoYEgsDutkvZcm8hr7XqOs+SGpw=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Tv6K40ZRYLXtDOO9k56dhSmeM2GbO4ttQZWVT8p8xvI=;
+ b=VJRSSPE10iY0sMrdz4VqkQrwyR59pFJvmgB6QyvtS8xtByTgZGco1iv4TAaVxqA74ocvRf
+ fXsTA8ytO4VsbaXprLaB1XNg/dP4nJE8A2mS7GW23vp0vyeFSuc+rNzoVRMkwqPjDbIAsH
+ jONV9qeTyUNzlOUOWgWDt/34iIgTD4U=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-689-MRIsR1oRMhGHOLWN237Ocg-1; Wed, 29 Jul 2026 04:49:18 -0400
-X-MC-Unique: MRIsR1oRMhGHOLWN237Ocg-1
-X-Mimecast-MFC-AGG-ID: MRIsR1oRMhGHOLWN237Ocg_1785314957
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-490a767b782so5216255e9.2
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 01:49:18 -0700 (PDT)
+ us-mta-159-2TswCvqHNymlzNdme-JoLg-1; Wed, 29 Jul 2026 04:53:04 -0400
+X-MC-Unique: 2TswCvqHNymlzNdme-JoLg-1
+X-Mimecast-MFC-AGG-ID: 2TswCvqHNymlzNdme-JoLg_1785315183
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-47485fde05aso498271f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 01:53:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785314957; x=1785919757; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=2yh3BIB+H9/koe2qpEOET1hY0QQoEPObrHfwGhNalzE=;
- b=Q/BhA6LKLJEOIqocklhprBrKMt7jxzeESkLwKjYSWjoh65rum4V0iydjpkgrpoRYdC
- 7YKWKzci7cXfPhFkG0Tnw/ijpgRzKlk5fwWzKYXEcwdY2TT1uCy7lgYYfCDnFLDE/1N8
- NCSaknh0JCdT09KneB3dtDi9qeWiyfvWh91a8ZG4XMjTttavusvkERLRgAQLoMNWqi3I
- 5M+rUGk33UoHVedZGWxEacASgtYUEG7fiuCZI8g7c5ou8EQLNnDpMZNvK5nmbx6fT11a
- 2yruEPM6hKbIuJXFCBDKMiabIjBBYKx/5h3D8GsOd0W4LWJGnUfqY6luE8pHU5cYCi63
- mzAg==
+ d=redhat.com; s=google; t=1785315183; x=1785919983; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Tv6K40ZRYLXtDOO9k56dhSmeM2GbO4ttQZWVT8p8xvI=;
+ b=GidYwdbWIDIJJv5aaXLLrWqMRgIeXVt+d/WFuzLNxW1fu2GWz5FW9o92PoxI8LHxkR
+ 7tqlAuGysnA+h8/Ykb9gPaFO0ITyA2sPV2ozCmmYWTopv2ePBl9vl6sYiaswLmnkTpLW
+ Ea/dTm7ZgvJL0sLFQw9k3mW/WCAkgmQHy1wEY8swzy0mZDZr6Rgu3kenZyVUbnHQ4w88
+ +RO6ckavYyTv8ulY2ZWp0iI6qjvztvEztRkq26x8UiM7H08Mx1pU3vFSR7qbSudB/jN9
+ c2JDj/V+L6+qRMpIQ6DzBAfQ18yypCUdsus0uoKcl03E0l/8Bt7ydUTWGEUDrxXOOzlP
+ okCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785314957; x=1785919757;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=2yh3BIB+H9/koe2qpEOET1hY0QQoEPObrHfwGhNalzE=;
- b=Xyiwf8tzLmvHUMXLXxlQzkjHVd6rs9Xztxaq8jOFddenY7NMUO3FkZqk5E3ol6eLQs
- iq52nI/8fAFFn8K7ng1uLsR1XPtSTAF3WKqkIwvmc05WSKBRnt/FCp5UuCMBrbvUPdjX
- 0gm0+qEYzjhJghKZ3ioPHCNYObepxq0zFKLZTUd4E0Xy49l/PGYV25TQbNoGWJPsiNbR
- sL8SmlwPEUsnZxhg7lZM3OZD0SA3YPT/+cplrMZy/6ncZj3TE9FJcDXJj1msVSOtBx0P
- d7GHnvoCuYzFmtNW+k9b/eOtQ4Wx8kcmxws7v0LWh2obPD3Mc+4oVABTqwhH3KSLZNUN
- AZRQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoNXhEnSUR2Mkq/PMjsEFHjbPw2lfLI9MagL19DhxBUweYKU7H+8VM8D9fWzj3YuqDV42xCiAq5uqkk@nongnu.org
-X-Gm-Message-State: AOJu0YyVNnbiClmsZOV4iDhxRv8ZwXBBlUlPtFsn151OzHmsBVFcZ/iP
- /GGv45ICJamTfc3DwrQnrBrZtxCIi+HiwvMsnUyWbNAIraHehOoyrHg4R8fr9WrqkYZJrRNClIR
- VfKaVqUbWP19yNStrZ0CPlsTdOKMS6iziJPKnNPR4AcB8bnd1DLL9wTWe
-X-Gm-Gg: AR+sD11/8Z3+bXsmI9Ho5JbQ/Ui4V2V5Jc3STn64rGUiCSqbniGklt2jf0VXtf5ylKC
- lncRJC4nYdkWsZnZ6FmgiPKbAxwuiRLV1a7tVU5ThHqtq8gbGTcy/xG/GqCr+PCN8TPVDz3YVFD
- Mwh7eID6pupda4d9YaSMKgRRk4ijtakkdcSIseJXRn405evfb/FJ74rBGYYB6RCGijG3LnN0UKt
- pfMx6cifb/e7iJpX4A35IyQ8+hOelKndLCnRAXLetcsOuxuAFWQSkPm6Pk2VcK9NTeUhxde3Rta
- +x/cD/Y29Bu2B8HRlUT0syRSN9VyEF0W/ebRAJxBIGEbSuJiDubaxZIoH9H7DIiV9ejj1rGPrU0
- jCfmeVQACQY4Gkq8iFQBiZD4=
-X-Received: by 2002:a05:600c:630d:b0:495:5365:c0d2 with SMTP id
- 5b1f17b1804b1-496c6558b53mr72676355e9.14.1785314957113; 
- Wed, 29 Jul 2026 01:49:17 -0700 (PDT)
-X-Received: by 2002:a05:600c:630d:b0:495:5365:c0d2 with SMTP id
- 5b1f17b1804b1-496c6558b53mr72675905e9.14.1785314956547; 
- Wed, 29 Jul 2026 01:49:16 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785315183; x=1785919983;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Tv6K40ZRYLXtDOO9k56dhSmeM2GbO4ttQZWVT8p8xvI=;
+ b=RdFOzkoUJOoT88pkDBUk+unRi1azy14MG2GlU6NZzNB88Sj3AQAqFUZ4nZWbn/5hI3
+ eZwRb7snik9opYwxMrYL1mc392l5oM+6vCq+tVs+9kYRw3C/uEx8af44ZALJJRDI3vZ8
+ n2HW39YK223ArgQ2BSeUBZZJRmo/Uj/ZlWvidl5aDrrDR2kNdZ3hW6dX8h6r9LQlhith
+ A3M5Dyfxe6Z2Wgr2/Yz3xIp2Rg4MT0cwybxfEqwCP7ZWmHp1VMUF+bIoHT72nsGJ1G3O
+ eU1X63FFK3xCgIxHAsHGIpB4NEpblsmTeH4atJgPnuPotdHu9Acg9zlcQMUQVplUKw6u
+ eLBQ==
+X-Gm-Message-State: AOJu0YxOIkC83Smcz1uPldqBMkWIW5GeZqEhzQ/iAnYC2SLoFPgGFoxO
+ lRV4QZHAQEp4yLAFnPPSFVYS/+SspkS52LE0QWApZsG4yV2TeDTRerScc6sHYTUUFUOrCgcaiH2
+ ZiWuuWA1AxXqzRKkN8p6ciP6MCcvHMuG2avfkBjnLIhMmIKtUXt8O5qUH
+X-Gm-Gg: AR+sD13rlJZaggMYEYMr5rRh9r6PUI/yIdr9uR3MZ7MZS/6qS2RhBsYHj5wT9sdNEvM
+ iPSnIFSO7EYmCvsAnk8deop/Nh4kPSZH1Y3E7MFUPfFrcof1rQ4ZS0hLLYF+SwhV4pbB2byS9cA
+ 6WIPGWD2qWe3rN3pjsZuw56KjxGy9X8nrsJdTOuQ4se3A6qUDlm0Wj6Et717jtLhoQHSZ1qPuqi
+ +iwCKLyqhonn5jTv15GW5sH/M73YvTpC953uhmw9sw1kakdn46Pgnegl5FCoEma0QY45sXl4vuM
+ 43IU1O8dka/SXuk5s3mf9y7o1Stg2wygNPDDB5JCKA/AD8FMYmjl61P2r3a3gD6cTyAq5OGudL7
+ 75yoOjdi5EWvs/ifi5dWCpfQ=
+X-Received: by 2002:a05:6000:2010:b0:47f:949e:1c17 with SMTP id
+ ffacd0b85a97d-47fb1f17d09mr6889665f8f.44.1785315183350; 
+ Wed, 29 Jul 2026 01:53:03 -0700 (PDT)
+X-Received: by 2002:a05:6000:2010:b0:47f:949e:1c17 with SMTP id
+ ffacd0b85a97d-47fb1f17d09mr6889619f8f.44.1785315182720; 
+ Wed, 29 Jul 2026 01:53:02 -0700 (PDT)
 Received: from redhat.com (ppp-94-66-118-61.home.otenet.gr. [94.66.118.61])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-496c44afaecsm156645945e9.2.2026.07.29.01.49.15
+ ffacd0b85a97d-47fb6b0ee81sm6459799f8f.17.2026.07.29.01.53.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Jul 2026 01:49:15 -0700 (PDT)
-Date: Wed, 29 Jul 2026 04:49:13 -0400
+ Wed, 29 Jul 2026 01:53:02 -0700 (PDT)
+Date: Wed, 29 Jul 2026 04:52:59 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Stefano Garzarella <sgarzare@redhat.com>,
- =?utf-8?B?6rmA7Iq57KSR?= <seungjung0711@gmail.com>
-Subject: Re: [PATCH] vhost/migration: Fix incorrect size used in
- inflight->addr in VMSD
-Message-ID: <20260729041953-mutt-send-email-mst@kernel.org>
-References: <20260728153942.1891677-1-peterx@redhat.com>
- <77c2f243-498f-4f2f-9dfd-1ccb2c9aa94b@yandex-team.ru>
+To: Jia Jia <physicalmtea@gmail.com>
+Cc: qemu-devel@nongnu.org, eric.auger@redhat.com
+Subject: Re: [PATCH] hw/virtio: reject inverted virtio-iommu IOVA ranges
+Message-ID: <20260729045037-mutt-send-email-mst@kernel.org>
+References: <20260729065153.1718783-1-physicalmtea@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <77c2f243-498f-4f2f-9dfd-1ccb2c9aa94b@yandex-team.ru>
+In-Reply-To: <20260729065153.1718783-1-physicalmtea@gmail.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -36
@@ -124,165 +116,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 29, 2026 at 12:25:05PM +0500, Alexandr Moshkov wrote:
+On Wed, Jul 29, 2026 at 02:51:53PM +0800, Jia Jia wrote:
+> Guest MAP and UNMAP requests can set virt_end below virt_start. Since
+> virt_end is inclusive, this is not a valid interval. MAP nevertheless
+> stores it in domain->mappings, but interval_cmp() assumes low <= high.
+> For an inverted key, interval_cmp(key, key) returns -1. A covering UNMAP
+> can therefore find the key but fail to remove it and repeat forever while
+> holding s->mutex.
 > 
-> On 7/28/26 20:39, Peter Xu wrote:
-> > It was overlooked that VMSTATE_VBUFFER_UINT64() won't really work with an
-> > uint64_t, as vmstate core only treats the size as 32bits, and maximum
-> > INT32_MAX (see vmstate_size()).
-> > 
-> > Considering that we do not need real 64bits for the size, stick with the 2G
-> > limit, converting the size field into 32bits.
-> > 
-> > Since we can't touch the wire protocol on migration from an old QEMU, we
-> > can't directly modify the type of size to uint32_t.  Instead, we need to
-> > introduce a temporary variable for this extremely rare issue __size_32bits
-> > to be used only for VMSTATE_VBUFFER_UINT32().  Document it and name it
-> > weird enough so people won't get confused on having two size variables.
-> > 
-> > Remove VMSTATE_VBUFFER_UINT64() altogether, because it was never going to
-> > be used right.  It means QEMU will only support 2G max for VMS_VBUFFER.
-> > 
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3675
-> > Reported-by: 김승중 <seungjung0711@gmail.com>
-> > Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-> > Cc: Michael S. Tsirkin <mst@redhat.com>
-> > Cc: Fabiano Rosas <farosas@suse.de>
-> > Fixes: 3a80ff0721 ("vhost: add vmstate for inflight region with inner buffer")
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> > 
-> > PS1: I only did smoke test as I'm not fluent with vhost inflight feature.
-> > Please kindly try it out if possible. In general, migrations from older
-> > QEMU should work even after applied.  One can also treat this as partly-RFC
-> > from that.
+> Reject inverted request ranges with VIRTIO_IOMMU_S_INVAL and make the
+> notifier range decomposition skip invalid ranges. Keep the existing
+> notifier-before-remove ordering, but return VIRTIO_IOMMU_S_DEVERR if
+> g_tree_remove() fails.
 > 
-> It looks like inflight migration is broken:
+> State produced by an older QEMU can still carry such a key over
+> migration. Reconstruct endpoints first so failed loads can be cleaned up by
+> the normal reset and unrealize paths. Validate every mapping before switching
+> address spaces or scheduling command processing, and reject invalid migration
+> state.
 > 
-> qemu-system-x86_64: Missing section footer for
-> 0000:00:02.0:00.0:00.0/vhost-user-blk
-> migrate_error error=load of migration failed: Invalid argument: Section
-> footer error, section_id: 53
-> qemu-system-x86_64: load of migration failed: Invalid argument: Section
-> footer error, section_id: 53
-> 
-> As far as I understand this happen because __size_32bits not initialized on
-> source - it's never set. So vmstate_size() reads 0, and zero-lenght buffer
-> is written into migration stream.
-> The destination then allocates the correct buffer but reads 0 bytes from the
-> stream, leaving unconsumed data and causing the section footer check to
-> fail.
-> 
-> It can be fixed with adding pre_save (or pre_save_errp) to
-> vmstate_vhost_inflight_region_buffer that initialize __size_32bits from
-> size:
-> 
-> static int vhost_inflight_buffer_pre_save(void *opaque)
-> {
->     struct vhost_inflight *inflight = opaque;
->     /* Only used in VMSTATE_VBUFFER_UINT32() */
->     inflight->__size_32bits = inflight->size;
->     return 0;
-> }
+> Fixes: fe2cacae2438 ("virtio-iommu: Implement map/unmap")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4104
+> Signed-off-by: Jia Jia <physicalmtea@gmail.com>
 
-At which point I ask whether open coding all this mess
-is so much better.
+I'm fine with rejecting this to make debugging such issues easier, but
+worrying about migrating from qemu with this is IMHO not worth it.
 
 
-Way I look at it, vmstate machinery had an API of storing size in u64
-that it failed to implement correctly. Why not fix it?
-
-
-
-> > 
-> > PS2: Michael, we have just discussed what we should define as CVE for
-> > migration, and this one shouldn't fall into CVE category, please refer to:
-> > 
-> > https://lore.kernel.org/r/20260721131457.3062767-1-farosas@suse.de
-> > 
-> > So I didn't yet attach CVE tag.  Please correct if I'm wrong, thanks.
-> > ---
-> >   include/hw/virtio/vhost.h   |  5 +++++
-> >   include/migration/vmstate.h | 10 ----------
-> >   hw/virtio/vhost.c           | 19 ++++++++++++++-----
-> >   3 files changed, 19 insertions(+), 15 deletions(-)
-> > 
-> > diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-> > index 684bafcaad..1d1cc24c04 100644
-> > --- a/include/hw/virtio/vhost.h
-> > +++ b/include/hw/virtio/vhost.h
-> > @@ -17,6 +17,11 @@ struct vhost_inflight {
-> >       int fd;
-> >       void *addr;
-> >       uint64_t size;
-> > +    /*
-> > +     * This is a temporary variable only used during migration loading to
-> > +     * satisfy VMSTATE_VBUFFER_UINT32() typing. Please use @size otherwise.
-> > +     */
-> > +    uint32_t __size_32bits;
-> >       uint64_t offset;
-> >       uint16_t queue_size;
-> >   };
-> > diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-> > index 1b7f295417..a349b2d84a 100644
-> > --- a/include/migration/vmstate.h
-> > +++ b/include/migration/vmstate.h
-> > @@ -782,16 +782,6 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-> >       .offset       = offsetof(_state, _field),                        \
-> >   }
-> > -#define VMSTATE_VBUFFER_UINT64(_field, _state, _version, _test, _field_size) { \
-> > -    .name         = (stringify(_field)),                             \
-> > -    .version_id   = (_version),                                      \
-> > -    .field_exists = (_test),                                         \
-> > -    .size_offset  = vmstate_offset_value(_state, _field_size, uint64_t),\
-> > -    .info         = &vmstate_info_buffer,                            \
-> > -    .flags        = VMS_VBUFFER | VMS_POINTER,                       \
-> > -    .offset       = offsetof(_state, _field),                        \
-> > -}
-> > -
-> >   #define VMSTATE_VBUFFER_ALLOC_UINT32(_field, _state, _version,       \
-> >                                        _test, _field_size) {           \
-> >       .name         = (stringify(_field)),                             \
-> > diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> > index af41841b52..e7c570d0f5 100644
-> > --- a/hw/virtio/vhost.c
-> > +++ b/hw/virtio/vhost.c
-> > @@ -2022,15 +2022,24 @@ void vhost_get_features_ex(struct vhost_dev *hdev,
-> >   static bool vhost_inflight_buffer_pre_load(void *opaque, Error **errp)
-> >   {
-> >       struct vhost_inflight *inflight = opaque;
-> > -
-> >       int fd = -1;
-> > -    void *addr = qemu_memfd_alloc("vhost-inflight", inflight->size,
-> > -                                  F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
-> > -                                  &fd, errp);
-> > +    void *addr;
-> > +
-> > +    if (inflight->size > INT32_MAX) {
-> > +        error_setg(errp, "inflight size '%"PRIu64"' exceeds "
-> > +                   "migration limit '%"PRIu32"'", inflight->size, INT32_MAX);
-> > +        return false;
-> > +    }
-> > +
-> > +    addr = qemu_memfd_alloc("vhost-inflight", inflight->size,
-> > +                            F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
-> > +                            &fd, errp);
-> >       if (!addr) {
-> >           return false;
-> >       }
-> > +    /* Only used in VMSTATE_VBUFFER_UINT32() */
-> > +    inflight->__size_32bits = inflight->size;
-> >       inflight->offset = 0;
-> >       inflight->addr = addr;
-> >       inflight->fd = fd;
-> > @@ -2042,7 +2051,7 @@ const VMStateDescription vmstate_vhost_inflight_region_buffer = {
-> >       .name = "vhost-inflight-region/buffer",
-> >       .pre_load_errp = vhost_inflight_buffer_pre_load,
-> >       .fields = (const VMStateField[]) {
-> > -        VMSTATE_VBUFFER_UINT64(addr, struct vhost_inflight, 0, NULL, size),
-> > +        VMSTATE_VBUFFER_UINT32(addr, struct vhost_inflight, 0, NULL, __size_32bits),
-> >           VMSTATE_END_OF_LIST()
-> >       }
-> >   };
+> ---
+>  hw/virtio/virtio-iommu.c | 77 +++++++++++++++++++++++++++++++++++++---
+>  1 file changed, 72 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+> index 533bd5073f..b7145c8277 100644
+> --- a/hw/virtio/virtio-iommu.c
+> +++ b/hw/virtio/virtio-iommu.c
+> @@ -210,7 +210,13 @@ static void virtio_iommu_notify_map_unmap(IOMMUMemoryRegion *mr,
+>                                            IOMMUTLBEvent *event,
+>                                            hwaddr virt_start, hwaddr virt_end)
+>  {
+> -    uint64_t delta = virt_end - virt_start;
+> +    uint64_t delta;
+> +
+> +    if (virt_end < virt_start) {
+> +        return;
+> +    }
+> +
+> +    delta = virt_end - virt_start;
+>  
+>      event->entry.iova = virt_start;
+>      event->entry.addr_mask = delta;
+> @@ -807,6 +813,10 @@ static int virtio_iommu_map(VirtIOIOMMU *s,
+>          return VIRTIO_IOMMU_S_INVAL;
+>      }
+>  
+> +    if (virt_end < virt_start) {
+> +        return VIRTIO_IOMMU_S_INVAL;
+> +    }
+> +
+>      domain = g_tree_lookup(s->domains, GUINT_TO_POINTER(domain_id));
+>      if (!domain) {
+>          return VIRTIO_IOMMU_S_NOENT;
+> @@ -857,6 +867,10 @@ static int virtio_iommu_unmap(VirtIOIOMMU *s,
+>  
+>      trace_virtio_iommu_unmap(domain_id, virt_start, virt_end);
+>  
+> +    if (virt_end < virt_start) {
+> +        return VIRTIO_IOMMU_S_INVAL;
+> +    }
+> +
+>      domain = g_tree_lookup(s->domains, GUINT_TO_POINTER(domain_id));
+>      if (!domain) {
+>          return VIRTIO_IOMMU_S_NOENT;
+> @@ -879,7 +893,10 @@ static int virtio_iommu_unmap(VirtIOIOMMU *s,
+>                  virtio_iommu_notify_unmap(ep->iommu_mr, current_low,
+>                                            current_high);
+>              }
+> -            g_tree_remove(domain->mappings, iter_key);
+> +            if (!g_tree_remove(domain->mappings, iter_key)) {
+> +                ret = VIRTIO_IOMMU_S_DEVERR;
+> +                break;
+> +            }
+>              trace_virtio_iommu_unmap_done(domain_id, current_low, current_high);
+>          } else {
+>              ret = VIRTIO_IOMMU_S_RANGE;
+> @@ -1639,12 +1656,62 @@ static gboolean reconstruct_endpoints(gpointer key, gpointer value,
+>      return false; /* continue the domain traversal */
+>  }
+>  
+> -static int iommu_post_load(void *opaque, int version_id)
+> +typedef struct VirtIOIOMMUMappingValidation {
+> +    bool valid;
+> +    uint32_t domain_id;
+> +    uint64_t low;
+> +    uint64_t high;
+> +} VirtIOIOMMUMappingValidation;
+> +
+> +static gboolean virtio_iommu_validate_mapping(gpointer key, gpointer value,
+> +                                              gpointer data)
+> +{
+> +    VirtIOIOMMUInterval *interval = key;
+> +    VirtIOIOMMUMappingValidation *validation = data;
+> +
+> +    if (interval->high < interval->low) {
+> +        validation->valid = false;
+> +        validation->low = interval->low;
+> +        validation->high = interval->high;
+> +        return true;
+> +    }
+> +
+> +    return false;
+> +}
+> +
+> +static gboolean virtio_iommu_validate_domain_mappings(gpointer key,
+> +                                                      gpointer value,
+> +                                                      gpointer data)
+> +{
+> +    VirtIOIOMMUDomain *domain = value;
+> +    VirtIOIOMMUMappingValidation *validation = data;
+> +
+> +    validation->domain_id = domain->id;
+> +    g_tree_foreach(domain->mappings, virtio_iommu_validate_mapping,
+> +                   validation);
+> +    return !validation->valid;
+> +}
+> +
+> +static bool iommu_post_load_errp(void *opaque, int version_id, Error **errp)
+>  {
+>      VirtIOIOMMU *s = opaque;
+> +    VirtIOIOMMUMappingValidation validation = {
+> +        .valid = true,
+> +    };
+>  
+> +    /* Rebuild ownership before validation so failed loads can be cleaned up. */
+>      g_tree_foreach(s->domains, reconstruct_endpoints, s);
+>  
+> +    g_tree_foreach(s->domains, virtio_iommu_validate_domain_mappings,
+> +                   &validation);
+> +    if (!validation.valid) {
+> +        error_setg(errp,
+> +                   "virtio-iommu: invalid migrated mapping in domain %u: "
+> +                   "[0x%" PRIx64 ", 0x%" PRIx64 "]",
+> +                   validation.domain_id, validation.low, validation.high);
+> +        return false;
+> +    }
+> +
+>      /*
+>       * Memory regions are dynamically turned on/off depending on
+>       * 'config.bypass' and attached domain type if there is. After
+> @@ -1657,14 +1724,14 @@ static int iommu_post_load(void *opaque, int version_id)
+>          timer_mod(s->cmd_timer,
+>                    qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL_RT) + 1);
+>      }
+> -    return 0;
+> +    return true;
+>  }
+>  
+>  static const VMStateDescription vmstate_virtio_iommu_device = {
+>      .name = "virtio-iommu-device",
+>      .minimum_version_id = 2,
+>      .version_id = 2,
+> -    .post_load = iommu_post_load,
+> +    .post_load_errp = iommu_post_load_errp,
+>      .fields = (const VMStateField[]) {
+>          VMSTATE_GTREE_DIRECT_KEY_V(domains, VirtIOIOMMU, 2,
+>                                     &vmstate_domain, VirtIOIOMMUDomain),
+> -- 
+> 2.34.1
 
 
