@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FD90C53200
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 15:51:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B8C1C53219
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 15:53:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp6ZB-0002eW-Cb; Wed, 29 Jul 2026 11:51:33 -0400
+	id 1wp6a4-00034n-Vj; Wed, 29 Jul 2026 11:52:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1wp6Z9-0002dv-KI
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 11:51:31 -0400
-Received: from mail-wm1-f42.google.com ([209.85.128.42])
+ id 1wp6Zu-00034B-Tp
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 11:52:19 -0400
+Received: from mail-wm1-f44.google.com ([209.85.128.44])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1wp6Z7-0003ib-Dd
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 11:51:31 -0400
-Received: by mail-wm1-f42.google.com with SMTP id
- 5b1f17b1804b1-493f6de72faso180295e9.0
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 08:51:29 -0700 (PDT)
+ id 1wp6Zt-0003ks-HP
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 11:52:18 -0400
+Received: by mail-wm1-f44.google.com with SMTP id
+ 5b1f17b1804b1-493f75f7172so9093695e9.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 08:52:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785340288; x=1785945088;
+ d=1e100.net; s=20251104; t=1785340335; x=1785945135;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=QZUm9tfsjEjTtlnBZiVGDO9i7PQPNiLnEUF75edt6r8=;
- b=Vi1y2WPI9LuhddbhgYkTya+12etVvU9aBjutSdp1wRADAbzOZz0KmlltKLio1JwXP/
- Sln6FPQWLCqA1uJlCLRxiL+MyBnNww4lmNEjVyk+3FS19jnnGcWXPrrpcn7IVwhZAR2S
- wRtixuFsxAU6LonRv4XM2FIkG+4gaQC9fzwGatSJsU+UmyuD41S4Sy4qMs1yeXUHzKPy
- BERUcyEAeN1S2neKKEEO+Uam5BI/0NHLivkVfvJvs8vDOwRpxzYVa+DSLqQLw2GTti6z
- lzOffKt8BTb7Yc9c5LtU0uQkRYG50zyULlN8z9U2pdgaFyCPO/jlVfb8ZuKPtD5OxXdJ
- oa5w==
-X-Gm-Message-State: AOJu0Yzu4gM3ax/5aXB1FQrTKVYHZ+ewnsvShEeQwmyAJv04rhWc0fL4
- pU47ltuiegRn60LOvN/S8k68khcd8E9Bf5KoEEmHwnkXm6+6kpRftu9KH4HT30ZZ
-X-Gm-Gg: AR+sD102IupzSR4GE7jkNGH7WkvQShdjhyLjmK3Dl4Wf3Upw6RC1AmBcmWgp73YuaT9
- 2BOdXHMohHPiSCt9+iWkdsI+sGyX9UL+sSEPWERY8dDL4T4OQGpcdmaTYco6xHsz/j8zmJGy2hM
- KLgMaXDGxMGyMwPApfQQRnfubnwoXACFstGK9xtwtvB2avCJjgA0cO3tugGfR4c+cj/P2YYP74F
- s7j4Nj6WeuT7fM47sj49KEJt6P19d4SpSfb1toTNy2fufcYrTcJVgCTxjW0D0YAspf20avqatSF
- T/VEVbmMraHW/qWwyv8NosO6/8tt+gIS2EINipJsaxWeWmpiSPq02XqbTROOXiuNgnDydbxN3aC
- y8b5a9A3RzYPHwUhhb5pouICjtuv6uMEIs7v/DTkslZx5xo+nZw/8708k2tNPiztlVY6GGXp3WD
- rWHqn3sePJWu1uQP6iJMN5ldSl4Z9+XhH8JSNHnrp0aqj90eZj3oK3Bj09sOlk0+DGz56Fua/mC
- Q4/kUF/ZEWJ8U57pY4BR6lLPfsu4yj7qm/n
-X-Received: by 2002:a05:600c:4746:b0:495:3c6f:7c18 with SMTP id
- 5b1f17b1804b1-497fd2f50bbmr29949825e9.3.1785340287675; 
- Wed, 29 Jul 2026 08:51:27 -0700 (PDT)
+ bh=S23pR2ZvsSLYFR0+0DeQ83TbuXFd8+C0obNCg2DOLig=;
+ b=DmdAKJaCPvzgTLCNQpu6Es6YtMZMThDqKxlajy7zW3xH5rMrSPrOOhdbwf50TTfPtO
+ y6sBQ+WyDKpmruG1h6aGsdWDRprUZR8lro7WM4KGiNF0DRp7olwRP20/WneZkN4ci2Cu
+ 1I3v1BOPAltcGWvD5C3+NTnddy/+Mc1pfLhYmBx5lYz1VWmvgxbgZKItGfAZ4DG2gjqU
+ 7tA9pSb8aNLWT1KZ6iCtvBxyzIUjkR5mnYVid1r9PdeFrbmaakLfmt2CSWG5L3dbkstg
+ kF7TqMBn72ixZCuAoG8b2aTuNIx9Ja/dshFcWhgkiku3QjlHxHbav3wTdAt2Il7ThhoH
+ 2H+w==
+X-Gm-Message-State: AOJu0YzjJ2B72Exo6nhwmxZrOtgXiwsVdjAjOXGtIAGcI63Vy2E0xeyC
+ V55GCQEFL7GQiAUYwam4/W7MYAfp0jNwjxdDpG/Vae2hhmiO/XzLQrK1SJuVQLWe
+X-Gm-Gg: AR+sD12wdB5gX4GYC7g1+geOMQrwza9FPA+zp/1VilzzeoZaKb7OX11gUSE1FRIhh/q
+ Zs0IGrVJyc+0TrV2vROXJNhA8mGEoERXsX2wj1ekKmSBp/9ujmn1YFlDuws5IfFmblCwr/qkrWJ
+ ie+vf0orWYL/sEdl6PMhLZArYAiZCnI14tu2Frtf6uFm1OZVCSqXKeTA6895RkmjOVS9ndYc6AZ
+ 4/dno6ccK38ePWC+XWiIy63qD+UBYMdnjLnUFS8181imgrD7Z8NgpzrXzWje3ktHpl3DThSwxEa
+ 3kh7/FP63oIzuakrg71hPxwCYFIq0bNsS99rNo0i46vJaBW5YNXX4BE//+GmxZU1agtjtldqj4j
+ 48FHMQGBxXp262Tx2RL+k66l9c23mhNnC3F9nHAxFVCwoCOnYV7NaC5AqNajXndvjmlilCxUpnb
+ h6QWNZf+dAVV3QdFOM2Tif2sCxvHdOsBH26CQbFzSXrtJLfx7DMXQjIwbqt+okAVMjDQzfUkmSc
+ /+pdYiPVMgluaSmiALfenzssZCTW8UnR/Q+
+X-Received: by 2002:a05:600c:37c9:b0:495:5062:17f9 with SMTP id
+ 5b1f17b1804b1-496c6586ef5mr82687305e9.30.1785340334609; 
+ Wed, 29 Jul 2026 08:52:14 -0700 (PDT)
 Received: from localhost (89-93-216-19.hfc.dyn.abo.bbox.fr. [89.93.216.19])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4976bd83fabsm67580295e9.15.2026.07.29.08.51.27
+ ffacd0b85a97d-47fb6abc703sm9232200f8f.9.2026.07.29.08.52.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Jul 2026 08:51:27 -0700 (PDT)
-Date: Wed, 29 Jul 2026 17:12:59 +0200
-Subject: [PATCH 23/25] tests/functional/arm: catalina: test PCA9555 IO
- expander via QOM
+ Wed, 29 Jul 2026 08:52:14 -0700 (PDT)
+Date: Wed, 29 Jul 2026 17:13:00 +0200
+Subject: [PATCH 24/25] hw/arm: catalina: drive pca9554 io expander input
+ pins externally
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260729-sanmiguel-bmc-locator-v1-23-c8f9a8d101f6@free.fr>
+Message-Id: <20260729-sanmiguel-bmc-locator-v1-24-c8f9a8d101f6@free.fr>
 References: <20260729-sanmiguel-bmc-locator-v1-0-c8f9a8d101f6@free.fr>
 In-Reply-To: <20260729-sanmiguel-bmc-locator-v1-0-c8f9a8d101f6@free.fr>
 To: qemu-devel@nongnu.org
@@ -76,15 +76,15 @@ Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Emmanuel Blot <eblot@meta.com>, Emmanuel Blot <emmanuel.blot@free.fr>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1785337965; l=4869;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1785337965; l=1675;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=x+swaeJ/f66FZ473PfGW+ic8eASLYIskyDGJo0YAj4k=;
- b=L2VjD8kMI40onDaVTPP/4MaReFi085o/rT1wZ2U7xAYYJ/98Vm7oKDkvClup9EVTwfq7WB5Bm
- VqGK1rrbdd6DI7w3UrzkqIT/QJ3C2ofhun0yaZ47z7+3bEyvOJPr0X5
+ bh=EtxfxNQ4ajDXh5xrjgZPSfhgjy+Z8hKW5J2/81txDi0=;
+ b=rMYVawj86TmRdA0ZIqeU6Z7QP5vJDeB+O4/UTS57BG0oWEM0HD+J4VbxBfuUdzBnPGrCnZPwi
+ ZXM6tiNJQltAPqBOviArDenJybTyKeu4hoeENAHh4HHDK8asFxYIuHo
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.128.42; envelope-from=eblot.ml@gmail.com;
- helo=mail-wm1-f42.google.com
+Received-SPF: pass client-ip=209.85.128.44; envelope-from=eblot.ml@gmail.com;
+ helo=mail-wm1-f44.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -110,117 +110,41 @@ From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Drive the io_expander0 (pca9555@20 on i2c2) input pins from the host
-through the pin%d QOM properties and read each one back both via qom-get
-and via the guest kernel gpiochip (libgpiod), spanning both 8-bit ports
-and both ends, then check two pins on different ports are reported
-independently.
-
-Introduce a check_ioexp() helper doing that round-trip so further
-expanders can reuse it. Address the expander through the device locator
-rather than a hardcoded QOM path.
+Create io_expander5 (pca9554@27) with hw-dir=true so its pin%d QOM
+properties drive the external input level of each pin, matching the
+pca9555 expanders, instead of the legacy behaviour that forces the pin
+to an output. This lets external agents, including tests, stimulate the
+input pins and have the guest read them back.
 
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- tests/functional/arm/test_aspeed_catalina.py | 64 +++++++++++++++++++++++++++-
- 1 file changed, 63 insertions(+), 1 deletion(-)
+ hw/arm/aspeed_ast2600_catalina.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/tests/functional/arm/test_aspeed_catalina.py b/tests/functional/arm/test_aspeed_catalina.py
-index b80b5fe92b..5624774891 100755
---- a/tests/functional/arm/test_aspeed_catalina.py
-+++ b/tests/functional/arm/test_aspeed_catalina.py
-@@ -2,6 +2,8 @@
- #
- # Functional test that boots the ASPEED machines
- #
-+# Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
-+#
- # SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/hw/arm/aspeed_ast2600_catalina.c b/hw/arm/aspeed_ast2600_catalina.c
+index 928e140b21..69e072c932 100644
+--- a/hw/arm/aspeed_ast2600_catalina.c
++++ b/hw/arm/aspeed_ast2600_catalina.c
+@@ -545,9 +545,16 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
+     i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5), TYPE_TMP75, 0x4f);
  
- import sys
-@@ -28,6 +30,10 @@ class CatalinaMachine(AspeedTest):
-     TMP75_HWMON = "/sys/bus/i2c/devices/9-004b/hwmon/hwmon*"
-     PROMPT = "root@catalina:~#"
- 
-+    # io_expander0: pca9555@20 on i2c2, a 16-bit expander directly on the bus.
-+    IOEXP0_LOCATOR = "/machine/soc::aspeed.i2c-ast2600[0]~i2c[2]~pca9555@0x20"
-+    IOEXP0_GPIODETECT = r"\[2-0020\]"
+     /* i2c1mux0ch6 */
+-    /* io_expander5 - pca9554@27 */
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 6),
+-                            TYPE_PCA9554, 0x27);
++    /* io_expander5 - pca9554@27 (external agents drive its input pins) */
++    {
++        I2CBus *bus = pca954x_i2c_get_bus(i2c_mux, 6);
++        I2CSlave *ioexp = i2c_slave_new(TYPE_PCA9554, 0x27);
 +
-     def test_arm_ast2600_catalina_openbmc(self):
-         image_path = self.uncompress(self.ASSET_CATALINA_FLASH)
- 
-@@ -45,7 +51,9 @@ def test_arm_ast2600_catalina_openbmc(self):
-         if sys.version_info < (3, 10):
-             return
- 
--        tmp75 = DeviceLocator(self.vm.cmd).resolve(self.TMP75_LOCATOR, "tmp75")
-+        locator = DeviceLocator(self.vm.cmd)
-+        tmp75 = locator.resolve(self.TMP75_LOCATOR, "tmp75")
-+        ioexp0 = locator.resolve(self.IOEXP0_LOCATOR, "pca9555")
- 
-         # temp1_input reports the temperature in millidegrees Celsius. Drive it
-         # through QOM (units of 0.001 C) and check the kernel hwmon interface
-@@ -55,6 +63,60 @@ def test_arm_ast2600_catalina_openbmc(self):
-                         property="temperature", value=milli_c)
-             self.wait_hwmon_value(self.TMP75_HWMON, "temp1_input", milli_c)
- 
-+        # pca9555@20 spans two 8-bit ports (pins 0-7 and 8-15).
-+        self.check_ioexp(ioexp0, self.IOEXP0_GPIODETECT, (0, 7, 8, 15))
-+
-+    def check_ioexp(self, qom, gpiodetect, pins):
-+        # The guest drives these lines as inputs: set_pin injects an external
-+        # level, read back over QOM and gpioget. Outputs are covered by qtests.
-+        chip = self.resolve_gpiochip(gpiodetect)
-+        for pin in pins:
-+            self.set_pin(qom, pin, "low")
-+            self.assert_pin(qom, pin, "low")
-+            self.assert_gpio_line(chip, pin, 0)
-+            self.set_pin(qom, pin, "high")
-+            self.assert_pin(qom, pin, "high")
-+            self.assert_gpio_line(chip, pin, 1)
-+
-+        # Drive two pins to opposite levels at once to confirm they are
-+        # reported back independently.
-+        lo, hi = pins[0], pins[-1]
-+        self.set_pin(qom, lo, "low")
-+        self.set_pin(qom, hi, "high")
-+        self.assert_pin(qom, lo, "low")
-+        self.assert_pin(qom, hi, "high")
-+        self.assert_gpio_line(chip, lo, 0)
-+        self.assert_gpio_line(chip, hi, 1)
-+
-+    def read_catalina_console(self, command):
-+        return exec_command_and_wait_for_pattern(self, command, self.PROMPT)
-+
-+    def resolve_gpiochip(self, gpiodetect):
-+        # awk already prints the "gpiochipN" name; just pick it out of the
-+        # console output (the command echo and prompt hold no such token).
-+        out = self.read_catalina_console(
-+            f"gpiodetect | awk '/{gpiodetect}/{{print $1}}'")
-+        for token in out.split():
-+            if token.startswith(b"gpiochip"):
-+                return token.decode()
-+        self.fail(f"could not resolve gpiochip {gpiodetect}")
-+
-+    def set_pin(self, qom, pin, level):
-+        self.vm.cmd("qom-set", path=qom, property=f"pin{pin}", value=level)
-+
-+    def get_pin(self, qom, pin):
-+        return self.vm.cmd("qom-get", path=qom, property=f"pin{pin}")
-+
-+    def assert_pin(self, qom, pin, expected):
-+        level = self.get_pin(qom, pin)
-+        self.assertEqual(level, expected,
-+                         f"pin{pin} QOM read {level!r}, expected {expected!r}")
-+
-+    def assert_gpio_line(self, chip, pin, expected):
-+        out = self.read_catalina_console(
-+            f"echo LINE{pin}=$(gpioget {chip} {pin})")
-+        self.assertIn(f"LINE{pin}={expected}".encode(), out)
-+
- 
- if __name__ == '__main__':
-     AspeedTest.main()
++        object_property_add_child(OBJECT(bus), "0x27", OBJECT(ioexp));
++        object_property_set_bool(OBJECT(ioexp), "hw-dir", true,
++                                 &error_abort);
++        i2c_slave_realize_and_unref(ioexp, bus, &error_abort);
++    }
+     /* io_expander6 - pca9555@25 */
+     i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 6),
+                             TYPE_PCA9555, 0x25);
 
 -- 
 2.50.1
