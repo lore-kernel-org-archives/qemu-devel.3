@@ -4,110 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02AA9C53219
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Jul 2026 23:23:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64B5EC54F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 03:23:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wor8Q-0003se-Qa; Tue, 28 Jul 2026 19:22:54 -0400
+	id 1wousN-0005s7-Js; Tue, 28 Jul 2026 23:22:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wor8P-0003sN-GW
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 19:22:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wor8O-0002D1-0n
- for qemu-devel@nongnu.org; Tue, 28 Jul 2026 19:22:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785280971;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jcEG/1WekdiDcEugRjB6HpFz7LXnxpDlrbH+l78OfH4=;
- b=OQB1QofF35bcH9JdcoERXZB/8nQamKgTaGtOwnYGjYsf4DG39kzw3WO5PJpgGobeut6asO
- X2K66WA3LTT5TGE4Ya5nXTpIYSv3rxhzhK892Qo9/I5GaWgKWqZuDRADQQIG8OtjjBwAI2
- IH80PInqLJXVPsCRUHOG2/wmlayP9Q4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-382-oI4rYbzNMYegL1g7IvgQxw-1; Tue, 28 Jul 2026 19:22:49 -0400
-X-MC-Unique: oI4rYbzNMYegL1g7IvgQxw-1
-X-Mimecast-MFC-AGG-ID: oI4rYbzNMYegL1g7IvgQxw_1785280969
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4954b1c6310so2987225e9.0
- for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 16:22:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
+ id 1wousK-0005r3-Cu
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 23:22:33 -0400
+Received: from mail-pj2-x03.google.com ([2607:f8b0:4864:39::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
+ id 1wousI-0002fV-9j
+ for qemu-devel@nongnu.org; Tue, 28 Jul 2026 23:22:32 -0400
+Received: by mail-pj2-x03.google.com with SMTP id
+ 98e67ed59e1d1-381072761d4so274930a91.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Jul 2026 20:22:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785280968; x=1785885768; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=jcEG/1WekdiDcEugRjB6HpFz7LXnxpDlrbH+l78OfH4=;
- b=XjP0OAm3xcLGGonPdNod6JHsSVkqBpGldPjHr2V+huVTwGWNqjth4LPTstVzudvaGx
- FPWYKBoFHrNYTpnjN0SxyOATa7/fj7V0WWSrtAzXGJvzjR7+y2lvciJPzwrwUudtKHgr
- RmRakh8FjMefRfKMFEObun8J1q1IWYlBfXDQ1EhnyA2XBcqZCokQGSpj8w9Kt0Gz0wyt
- 4YtBdkZidG6hdbjDGcJQrBkWrNMOMH6/EOtmcUq4oVIC5MWVun8Nhon6Y55DITz/RNSC
- foCeNGAHCvTuN3RID7Ynb2RbgI9XeB7jwMlzl51PejyUbm59BCAYsI9Gu1SNhEx+aVm5
- xEpQ==
+ d=gmail.com; s=20251104; t=1785295348; x=1785900148; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=XYrZqz8WLEVINKi0z5jjSklUBUy+R/RHV21+vI9FKlY=;
+ b=AgXNrphOGzvWfw3U/45x04l7uAGYtWllzwKFR0ZkF3YhMjkrZs5kWI1mMxtiYHpWBS
+ a7YjxnnhDK9UxfPeHoLSHdBmGPuuuhWkGTo7nDD/2lsHR30BPUYR+/PtD3cLFyMIul9e
+ kGQbasuc4jvyxHWpK74luIDCfWgD48cnaCADo4uXIPNalnH070TwKhDGU7d/nYqJPkvu
+ hrR7jl1FS2dpAscpm2caJQyJUMcIR6jd8vKkd/vT1LJ3pGTSKPRD5DSJvbpEKmG+qTlg
+ EdwZrrvYpAZCVjxsTS8qTpGx6L9isq4s3ApbASPYhziOIQaAZ5lck0ns0sCxflPXWt/+
+ 0qvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785280968; x=1785885768;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=jcEG/1WekdiDcEugRjB6HpFz7LXnxpDlrbH+l78OfH4=;
- b=BPWS5SnOQf1Znrn82r2gUVcLA+JgXj3Ae4flegZmyy9X7j8RhnLdorzumjrNA0VApx
- DUyWp9eiMeCuPIPoC716KT4O4G+Va4ZQnHRn5yl9lA8fwVB2a3hp8iwxKZ0D3ixupe1J
- Mytbc54sWBbW1MROYpQ7xCTBodsm4NnAIf9hS+DfiUDcwVTlVhCrdwYBRbyILC8RPi7H
- XwK2f3JeC1Ig+HWHbVeHICFMJ6EcBjX2SMQB/6GcnMJ18NJHFbEwzLffDodfji9i1zv3
- gHOKUBobB0gu4mijiCeo8z7JQSKswHtpCl0HV8fm4VfpXRF8fS4xGfpizqybA39Z0JSU
- 8ISA==
-X-Gm-Message-State: AOJu0Yw+kVWkzXmFyh8ywh+i3b1aTpzMhZCa2qfe0yaplNwQFv96KYXP
- L0h7Vq8lMRYkVkkY3+JwsJHjhl6cHV5GT2PiBAxKaz/qDhZ3or7xQD1nqypVC9BOFs+V7jU+nHX
- Op1FILK5imtDROd9PHPnGTdpdvjcr6Rm5+pKpFBCIfKaJ01BLFmbhQpvO
-X-Gm-Gg: AR+sD12KujiqNyqMU7CIti82RBPUmn3+SbctwuAlKIaep8aWSrs/I+JbFPzdrqtE8ax
- mOKjfMCsGyOGRjEpFPF/s2Shsq9EW3Fk2xAG1HfG7aNuQhc0o1GCM2kitC0nWWp5QNLQLXNekyb
- ZYpyERfAysDQtweKlsB6MNgiYN0e+392l8Td4CZK755Fhg/fbNMpxjpjl5a+wDcJtxEpBVh7J9t
- g19yGcwD8C8myghXs7KdlrIZq2af+KfjMXFJH3zNACQEf5UfT7XRPZ4WFu1W5sgaoe9H/AFa0mG
- N5Zsu/o3NLJbfBqc0Jc0adTXKaVSHJDT4hd6ksqq3u9ZUdABq55b5X2vuZGzPruwJhbLUamkQbE
- efIEmQDfB9fcvcgenVbvBrqk=
-X-Received: by 2002:a7b:c00b:0:b0:493:d741:5d72 with SMTP id
- 5b1f17b1804b1-496c65a5ab0mr34112395e9.38.1785280968523; 
- Tue, 28 Jul 2026 16:22:48 -0700 (PDT)
-X-Received: by 2002:a7b:c00b:0:b0:493:d741:5d72 with SMTP id
- 5b1f17b1804b1-496c65a5ab0mr34112285e9.38.1785280968054; 
- Tue, 28 Jul 2026 16:22:48 -0700 (PDT)
-Received: from redhat.com (ppp-94-66-118-61.home.otenet.gr. [94.66.118.61])
+ d=1e100.net; s=20251104; t=1785295348; x=1785900148;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=XYrZqz8WLEVINKi0z5jjSklUBUy+R/RHV21+vI9FKlY=;
+ b=P4RG5Zd/+ky2s3iaNu2BLSiWwUkb0wdSiePKeofeeQg06Ryn5lVd+B2E6aIprIWD9G
+ 0LpHq8lZCGvbALBCFIf6l2BxiWy9iHRpDRH9T7pHoxRnfjUCFG1fcA8xbkZvk3mfEAQY
+ wh+e6jeOorq60uD90qWVSy5/NLHw2Zm5N0QWeeaWQXwGBR0EKxcd556sXaIIeQ4iHw+F
+ 3QM9qGI1E5zWZF55f4TyeB2UyiezKwNEVzPkpNtBXGLnHOugrFk34u6s1I9NB7ZDaxRm
+ zv10zZvzAHkmft3Q0XhiuWCO5lX0b4I0xCF3bP/XWOEBqRp1m602UR5JdlJvZHydrYBp
+ IgEA==
+X-Gm-Message-State: AOJu0YwSp6TS/TtVmo9dWkOHsk2OoVBpTgb55iIGGKMTg1KzXSiGpEzI
+ dySS7cKqy+z8dI/b2hWuEHL/yGYFQ8q2blv2FsHyYkWNmyb3vwutBUh4+LMNHSUFEvA=
+X-Gm-Gg: AR+sD13pLJvi+zBgKorSUlfhK6OwR8vTs1fjRP8Xp0xMwS+/Y+v50Dgq9X0GKP7nyoZ
+ KX/G5yPgboGG1AyLg9nlzUwrFby3daocXSMKT9xXMuSD/KtNzZWecTBxosph1qDneg9LJimR9Za
+ j+lioE6oDoZiQ4/5Q9wFH69SRtfFAsAH9P/tFHCRywjc4yTVqbATiwGSzgzG/QYTYzYpaE4Sr/c
+ 2DcZkyAIZCtLaZu6bJfZJhVv3NmAYM+5y/Bz1csurCCgdTY0y3fAJXy20em9v8PorhutCVs/rhu
+ TkCV6d7zkNB2LojKsfLpRsx7vRq3AMlJYFWjnsnhFqDryr8pE4I6RTpCktHxPKpO+pi3Psmy/+o
+ 0QPkB8ixXmeK+e858A8GSTBnkWMboBQid9enBCngcCgIUae4wJz3/kwFwDatlDmnZYAln9IMpnb
+ NcIsrMY/KntfDgs3QNrhZ7XJVRxoo0YiLXCgjjBPfZXAT8sM4RGIT/K2IifG4xnvVEJuCN2sJE6
+ MIZwd1BmBF0COn0UA==
+X-Received: by 2002:a17:90b:5868:b0:380:7688:fbe9 with SMTP id
+ 98e67ed59e1d1-38f6a422b1amr5346842a91.8.1785295347948; 
+ Tue, 28 Jul 2026 20:22:27 -0700 (PDT)
+Received: from Dell-WorkStation.localdomain ([103.190.179.65])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-496c44afaecsm125210845e9.2.2026.07.28.16.22.46
+ a92af1059eb24-13e72643a12sm6126723c88.5.2026.07.28.20.22.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Jul 2026 16:22:47 -0700 (PDT)
-Date: Tue, 28 Jul 2026 19:22:44 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Yonggang Luo <luoyonggang@gmail.com>, Miku Hatsune <anznu1l@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
- Zhao Liu <zhao1.liu@intel.com>, QEMU Stable <qemu-stable@nongnu.org>
-Subject: Re: [PULL v2 09/30] virtio-mmio: fix QUEUE_NUM_MAX
-Message-ID: <20260728192047-mutt-send-email-mst@kernel.org>
-References: <cover.1785179875.git.mst@redhat.com>
- <a5cff318f06cd06b37224e15ee74d64d1df8b12b.1785179875.git.mst@redhat.com>
- <65990a19-6a7e-4c1c-9354-0fffa13cbba9@tls.msk.ru>
- <20260728154328-mutt-send-email-mst@kernel.org>
- <75f2277a-8508-4e6e-adfe-92bed9fc1bf6@tls.msk.ru>
+ Tue, 28 Jul 2026 20:22:27 -0700 (PDT)
+From: Zephyr Li <fritchleybohrer@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ Zephyr Li <fritchleybohrer@gmail.com>
+Subject: [PATCH] target/riscv: do not count ECALL in minstret
+Date: Wed, 29 Jul 2026 11:22:02 +0800
+Message-ID: <20260729032202.1415046-1-fritchleybohrer@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <75f2277a-8508-4e6e-adfe-92bed9fc1bf6@tls.msk.ru>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:39::3;
+ envelope-from=fritchleybohrer@gmail.com; helo=mail-pj2-x03.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,58 +100,213 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 28, 2026 at 11:17:34PM +0300, Michael Tokarev wrote:
-> On 7/28/26 22:45, Michael S. Tsirkin wrote:
-> > On Tue, Jul 28, 2026 at 11:40:24AM +0300, Michael Tokarev wrote:
-> 
-> ...
-> > > > diff --git a/hw/core/machine.c b/hw/core/machine.c
-> > > > index 805148678d..73b4d82b4a 100644
-> > > > --- a/hw/core/machine.c
-> > > > +++ b/hw/core/machine.c
-> > > > @@ -41,6 +41,7 @@
-> > > >    #include "hw/arm/smmuv3.h"
-> > > >    GlobalProperty hw_compat_11_0[] = {
-> > > > +    { "virtio-mmio", VIRTIO_QUEUE_SIZE_OVERRIDE, "1024" },
-> > > 
-> > > ..because it is adding a new field into the migration stream,
-> > > which is a problem for stable series.
-> > 
-> > 
-> > this is compat not a migration stream, right?
-> 
-> Aha, yes, I was a bit tired today.
-> 
-> > For stable, the value needs to be 1024 for all types.
-> 
-> So this whole change, for older versions, becomes just:
-> 
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -2572,6 +2572,8 @@ VirtQueue *virtio_add_queue(VirtIODevice *vdev, int queue_size,
->      if (i == VIRTIO_QUEUE_MAX || queue_size > VIRTQUEUE_MAX_SIZE)
->          abort();
-> 
-> +    queue_size = VIRTQUEUE_MAX_SIZE; /* fixed properly in 11.1. */
-> +
+With icount enabled, helper_raise_exception() leaves ECALL in
+icount_get_raw() because it exits without restoring the current TB
+state. This makes minstret count an instruction that does not retire.
 
-Or you can stick to upstream and add the compat entry for 11.0.
+Adjust only the fixed minstret baseline so that mcycle accounting
+remains unchanged.
 
->      vdev->vq[i].vring.num = queue_size;
->      vdev->vq[i].vring.num_default = queue_size;
->      vdev->vq[i].vring.align = VIRTIO_PCI_VRING_ALIGN;
-> 
-> 
-> so we override supplied size just like when
-> x-override-queue-size is set for compat-11.0 or earlier.
-> 
-> Got it.
-> 
-> Now, the fun continues - this is the first time in qemu history
-> when a bigger change reduces in stable series into such a one-liner :)
-> 
-> Thanks,
-> 
-> /mjt
+Add an RV64 softmmu regression test for the issue.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4087
+Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
+---
+ target/riscv/tcg/op_helper.c              |  6 +++
+ target/riscv/tcg/pmu.c                    | 44 +++++++++++++-----
+ target/riscv/tcg/pmu.h                    |  1 +
+ tests/tcg/riscv64/Makefile.softmmu-target |  4 ++
+ tests/tcg/riscv64/test-minstret-ecall.S   | 55 +++++++++++++++++++++++
+ 5 files changed, 98 insertions(+), 12 deletions(-)
+ create mode 100644 tests/tcg/riscv64/test-minstret-ecall.S
+
+diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
+index ba3c7da375..acdccd1a97 100644
+--- a/target/riscv/tcg/op_helper.c
++++ b/target/riscv/tcg/op_helper.c
+@@ -21,6 +21,9 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "target/riscv/tcg/csr.h"
++#ifndef CONFIG_USER_ONLY
++#include "pmu.h"
++#endif
+ #include "internals.h"
+ #include "exec/cputlb.h"
+ #include "accel/tcg/cpu-ldst.h"
+@@ -47,6 +50,9 @@ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
+ 
+ void helper_raise_exception(CPURISCVState *env, uint32_t exception)
+ {
++#ifndef CONFIG_USER_ONLY
++    riscv_pmu_decr_instret(env);
++#endif
+     riscv_raise_exception(env, exception, 0);
+ }
+ 
+diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
+index 38ad2737e1..1a4658319b 100644
+--- a/target/riscv/tcg/pmu.c
++++ b/target/riscv/tcg/pmu.c
+@@ -49,6 +49,21 @@ static bool riscv_pmu_counter_enabled(RISCVCPU *cpu, uint32_t ctr_idx)
+     }
+ }
+ 
++static bool riscv_pmu_counter_filtered(CPURISCVState *env, uint64_t cfg)
++{
++    bool virt_on = env->virt_enabled;
++
++    return (env->priv == PRV_M && (cfg & MHPMEVENT_BIT_MINH)) ||
++           (env->priv == PRV_S && virt_on &&
++            (cfg & MHPMEVENT_BIT_VSINH)) ||
++           (env->priv == PRV_U && virt_on &&
++            (cfg & MHPMEVENT_BIT_VUINH)) ||
++           (env->priv == PRV_S && !virt_on &&
++            (cfg & MHPMEVENT_BIT_SINH)) ||
++           (env->priv == PRV_U && !virt_on &&
++            (cfg & MHPMEVENT_BIT_UINH));
++}
++
+ /*
+  * Information needed to update counters:
+  *  new_priv, new_virt: To correctly save starting snapshot for the newly
+@@ -147,12 +162,27 @@ void riscv_pmu_update_fixed_ctrs(CPURISCVState *env,
+     riscv_pmu_icount_update_priv(env, newpriv, new_virt);
+ }
+ 
++void riscv_pmu_decr_instret(CPURISCVState *env)
++{
++    if (!icount_enabled() ||
++        (env->mcountinhibit & COUNTEREN_IR) ||
++        riscv_pmu_counter_filtered(env, env->minstretcfg)) {
++        return;
++    }
++
++    /*
++     * minstret is derived from icount, which includes the current
++     * instruction.  Move the baseline forward to exclude an instruction
++     * that raises an exception and therefore does not retire.
++     */
++    env->pmu_ctrs[2].mhpmcounter_prev++;
++}
++
+ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
+ {
+     uint32_t ctr_idx;
+     CPURISCVState *env = &cpu->env;
+     uint64_t max_val = UINT64_MAX;
+-    bool virt_on = env->virt_enabled;
+     PMUCTRState *counter;
+     gpointer value;
+ 
+@@ -170,17 +200,7 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
+         return -1;
+     }
+ 
+-    /* Privilege mode filtering */
+-    if ((env->priv == PRV_M &&
+-        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_MINH)) ||
+-        (env->priv == PRV_S && virt_on &&
+-        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_VSINH)) ||
+-        (env->priv == PRV_U && virt_on &&
+-        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_VUINH)) ||
+-        (env->priv == PRV_S && !virt_on &&
+-        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_SINH)) ||
+-        (env->priv == PRV_U && !virt_on &&
+-        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_UINH))) {
++    if (riscv_pmu_counter_filtered(env, env->mhpmevent_val[ctr_idx])) {
+         return 0;
+     }
+ 
+diff --git a/target/riscv/tcg/pmu.h b/target/riscv/tcg/pmu.h
+index b4f1e469a2..2429c01b77 100644
+--- a/target/riscv/tcg/pmu.h
++++ b/target/riscv/tcg/pmu.h
+@@ -36,6 +36,7 @@ int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
+                           uint32_t ctr_idx);
+ void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, privilege_mode_t newpriv,
+                                  bool new_virt);
++void riscv_pmu_decr_instret(CPURISCVState *env);
+ RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
+                                   bool upper_half, uint32_t ctr_idx);
+ 
+diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
+index 82be8a2c91..42038ce3b4 100644
+--- a/tests/tcg/riscv64/Makefile.softmmu-target
++++ b/tests/tcg/riscv64/Makefile.softmmu-target
+@@ -24,6 +24,10 @@ EXTRA_RUNS += run-test-mepc-masking
+ run-test-mepc-masking: test-mepc-masking
+ 	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
+ 
++EXTRA_RUNS += run-test-minstret-ecall
++run-test-minstret-ecall: test-minstret-ecall
++	$(call run-test, $<, $(QEMU) -icount shift=1 $(QEMU_OPTS)$<)
++
+ EXTRA_RUNS += run-plugin-doubletrap
+ run-plugin-doubletrap: doubletrap
+ 	$(call run-test, $<, \
+diff --git a/tests/tcg/riscv64/test-minstret-ecall.S b/tests/tcg/riscv64/test-minstret-ecall.S
+new file mode 100644
+index 0000000000..ab268f7f22
+--- /dev/null
++++ b/tests/tcg/riscv64/test-minstret-ecall.S
+@@ -0,0 +1,55 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++	.option	norvc
++
++	.text
++	.global	_start
++_start:
++	lla	t0, trap
++	csrw	mtvec, t0
++
++	/*
++	 * The first CSR read retires after obtaining s0.  The ecall does not
++	 * retire, so the trap handler must observe a difference of one.
++	 */
++	csrr	s0, minstret
++	ecall
++	sub	t0, s1, s0
++	li	t1, 1
++	bne	t0, t1, fail
++
++	li	a0, 0
++	j	_exit
++
++trap:
++	csrr	s1, minstret
++	csrr	t0, mcause
++	li	t1, 11		/* Environment call from M-mode */
++	bne	t0, t1, fail
++
++	csrr	t0, mepc
++	addi	t0, t0, 4
++	csrw	mepc, t0
++	mret
++
++fail:
++	li	a0, 1
++
++_exit:
++	lla	a1, semiargs
++	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
++
++	/* Semihosting call sequence */
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.data
++	.balign	16
++semiargs:
++	.space	16
+-- 
+2.43.0
 
 
