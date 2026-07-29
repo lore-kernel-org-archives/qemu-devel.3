@@ -4,111 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D29EC54FCD
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 22:09:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DFCEC54FCD
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 22:28:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpCSB-00089m-CB; Wed, 29 Jul 2026 18:08:43 -0400
+	id 1wpCkb-0007ef-PS; Wed, 29 Jul 2026 18:27:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wpCS8-00089U-LZ
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 18:08:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wpCS6-0004zP-O8
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 18:08:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785362917;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=lK+/jF54pCNYivFqRHvaGkLZjZo51InvpvYpWbPOvec=;
- b=VBNKwbStKsNSvTYwzHpvqOtwbuW4QT91A0RB9s4113vZ7AaKsX0sdIebo6DJi6cptPqioP
- wdq/yBcnftnKkFf1dfY+ywxQgxvzB7dv95aTe9E4iX5xa0BcMWjIFbUUSICorTFgZG0hBG
- UuWSgh1uvF9GBpOzQuSwcjUYyZgWTLc=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-543-dd7jWMLVPHqBxyGoCp3qCg-1; Wed, 29 Jul 2026 18:08:33 -0400
-X-MC-Unique: dd7jWMLVPHqBxyGoCp3qCg-1
-X-Mimecast-MFC-AGG-ID: dd7jWMLVPHqBxyGoCp3qCg_1785362912
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-c1f548718d0so193205566b.0
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 15:08:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wpCka-0007eP-KC
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 18:27:44 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wpCkS-0008Mr-Fk
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 18:27:44 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2d01663d816so13709995ad.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 15:27:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785362912; x=1785967712; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=lK+/jF54pCNYivFqRHvaGkLZjZo51InvpvYpWbPOvec=;
- b=aoYhUzIaV0EI9j3llARdKTs2CU3i1wdJETzfS9LKQ8hveFHnYYRKAnuDvYAe8yI0+Q
- UjcY3dFWzxzlGUD7odjI+ThbmpolZ/d9AiT9YcVWl1eVd6VhxhUq7KRcd9gB73K47Hdj
- zKpG+L/oO+umt1zXw10E4gSFFOZAsvYF9SQNUZsQL1JE0300ECiikH8ARkbgZ7xQL4jw
- mwSCz1lEaMLHJPqmx0oS/QBwdjI9byz+SCAj43CNHYAYLDgipnrjExgDK73cdlAq+CMa
- GOA1JDRr/1p29YwsCjmtfDSha2KaNKo8GlUYMKaxDmsGXVD63OWKBbDDMVIPl7Q3zsF2
- 1mJw==
+ d=linaro.org; s=google; t=1785364055; x=1785968855; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=x7llLYb5SiO/txOcB5U0TYVAXKt2eTpfMujF/WHT6VM=;
+ b=Y05CmA4nIvoB2sbASjur3iAbmn2CE71ziwrPowYhRcxcHP2cgvPV5bVdoIq5iXeQ9p
+ aPHVHsSlgDXR2fANNJZNw8aK8LuTNb9n/q3Uj5jThbLRsp/Mlmelr9n4ZnT9yEKz9/uZ
+ vr7+QNrzWFeQWGg615F3vSNm13T5k4fXCsd8qnoHm4xkeS/znQyqMUcuiLgOohCIgLtb
+ AY73vJaPBlrCU65K3wo33EMWGaBSd9IFy84mNp2VX8UkeKHz7JqicHjFh6+xrXXq+lyc
+ kBJK9F/A0pNxrySa/jwcyF2ylGrk4QNVo6Z1lSCq6mWzOyJUyp/kmrjQ9rieUEQD3xGB
+ U3Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785362912; x=1785967712;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=lK+/jF54pCNYivFqRHvaGkLZjZo51InvpvYpWbPOvec=;
- b=PdSF6l+glXWAhsfYJF/sYs8rajaYJOZJKy6o0Qb5vcwvK7p7IkQNr2a9WfYOZM00rc
- FB2hGahBbg4eZ7W/V376R5MIltrKl6Jmn3PRdvfVU/q6r7MijqAfTr2YHm6MggXXRbIp
- O1s1O42I7y6Ms6loqkWgItKB45g0wfEtWDmPQ6kivAPc0CMX3ujR4ZetPz1dogSfZ/ut
- Ihe3h8cciSQpW8VdoSam4Hs974okD3eP6hznsEwGsZ9vH2ll7wsg/WBNOmol7RRNpRYs
- ysmr6BgLq7gh5XXoI5WrkoNNxrDUcJv0Zd4Kyov1fIYm3Hv8Y7UePvXoXkjWebof65wx
- kprw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RohMKMxv7zY/ioYeGkZ6svjO16VDDCFRLUjhtx6HqLa4dFs8LBBRn/n90uqpDbDNwOetK5k+fgVOMc4@nongnu.org
-X-Gm-Message-State: AOJu0YwOsiSx/DOEtBcwj57caGtunm1F6BJJRkeeDmPcF4iPezKuKdHK
- 6c+LQ6Brvi/0d1ZDGoisC03iEn8PNM4u82Wx79lLmHTdOVNjd3KzQupZIHTs053+XLhEqU/WOmO
- 8Q+ogDaBNbwHSw51f3Eno6RhXIlNxLBGhur2Ay+Q7Oi0izWv1lLL/vKgw
-X-Gm-Gg: AR+sD10sR2xJ5mMvUiITX4S+DNiGiqOYV8M2hhqlpcU10/reZU70uCS2IwGGIUXO/nG
- +nUyCFBb8LIeSvNRlqKHTH3XQnF5Bytlt9VFDQkoN5bN7ZaX1xJVfA/MjSKdjs3EDGierH7UYfa
- ww5/mB4CBgIOXY1wJqsZzR73wscBDi27ZiyoFFjiEB6+tilzFvTO2ZYEhm9ORVqVL6TY8KqSb/u
- ifi4fuoR8v5Em+mOIfGQnf5LUn6sSFvES9joYIbZdpsCdtl9OWqJ9yjlFDU6QSxuu9dZDU+v/45
- qA17TkWYHfX/cwrxWJq7Nvkc5F06naYPuCVjkmqlKB7/+QYkPOI3i6ayKnODpJiWStQ2QQ==
-X-Received: by 2002:a17:907:961b:b0:c1c:3b06:ed24 with SMTP id
- a640c23a62f3a-c1fa5671767mr11114466b.28.1785362912230; 
- Wed, 29 Jul 2026 15:08:32 -0700 (PDT)
-X-Received: by 2002:a17:907:961b:b0:c1c:3b06:ed24 with SMTP id
- a640c23a62f3a-c1fa5671767mr11112766b.28.1785362911656; 
- Wed, 29 Jul 2026 15:08:31 -0700 (PDT)
-Received: from redhat.com ([186.247.166.223]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c1f83cde9cbsm165650266b.16.2026.07.29.15.08.29
+ d=1e100.net; s=20251104; t=1785364055; x=1785968855;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=x7llLYb5SiO/txOcB5U0TYVAXKt2eTpfMujF/WHT6VM=;
+ b=YfGcJQBJ3iEh4P0Niwv/tDmLHMUMhq+5BEoeZOzBHtGIg0zMFCuviR3C/gqV9nRotu
+ aeHG6QZdlpSFDn9IdcbEf2VM0BSsdmy0gYSqDX2ctU5eU7MmrSI6g7h0XerH2O2K9y0B
+ o00aeb10k+ul4tyzjFFR6IwsAFdPZEW7QJtmBrVYIWa3u5Ua5TkC5FJUlrnyr/Tq4XB/
+ qK+LbEDShKUpvG/i6EHni+lXtGDJdcPfp18oEWZuuYIm9dVfjZyv9ygOvEtdaFgAMFT7
+ MoA5/hNlyCYQCcTIUJCKrKnwcz/6lr677G4m6NH8nsBaJTbcslc9WjlT5WACIfPUKJt6
+ lgbQ==
+X-Gm-Message-State: AOJu0YxmiobRlOQOVVXK1ZIKcmOjkdt7i+xoPtc3MDXXOSvgNOHsKPZj
+ yOPing91PIJcF6CMLRwtfk81Ivxk8mbOzKKIzb07WiszrzT1eO1GuW72y86Hio+s3b4t6iDEOH0
+ kqwmw
+X-Gm-Gg: AR+sD1015p4e8rARbOYZDt4PcMclH3G5SkdE2cOlbd92yoqje9ttxDv3BQZP2/RM3Y+
+ 7hVhYwyb/mGdCi96uuqYO03bz37Rl+vwF6rEIGGEnkEoX9FAaxqBsCco9yT7P9ghRjv4z9lNV+A
+ EzsliZpvE2azj33TPn2eJVkj5zlFnLWy5hmpDYefpQy1G2kEsoWiNIHggiHSfZVksQTT9kysra8
+ Rq3oo7Jth0zBS3dc91w16pI5cc0lJbFa8H+r7VKbpmuvhwVDkC4kqLvlJVBABhdYdAHNgtMYNbJ
+ jNxny2qwxI2l97lNgHcc2xZxwgt97FfKPIIcA3qisRS75yMI22U2ePHrbHr5iqXC5m4GmkgYIVY
+ lQZuGDQM6fPiS4y8gRWBaYHmTL98gI5RTNVAOMPQl3xSjGp6fryUh36UBaniCh/RdoYbjjH0FKO
+ R8zw0V/aXwGBn7c/ai19i5tgangbaaCIb+yoyLaMmPjcESpyn0WsoWoMB/0f2OVEU6Y/5KDQmDW
+ jnXNic86R5A+Ji+LE49fwVm2f2HZL0=
+X-Received: by 2002:a17:903:4590:b0:2cc:f4d4:29a7 with SMTP id
+ d9443c01a7336-2d035ca4d31mr1469865ad.24.1785364054868; 
+ Wed, 29 Jul 2026 15:27:34 -0700 (PDT)
+Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2d022bca9d7sm17159035ad.52.2026.07.29.15.27.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Jul 2026 15:08:30 -0700 (PDT)
-Date: Wed, 29 Jul 2026 18:08:27 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?utf-8?B?6rmA7Iq57KSR?= <seungjung0711@gmail.com>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Subject: Re: [PATCH] vhost/migration: Fix incorrect size used in
- inflight->addr in VMSD
-Message-ID: <20260729180727-mutt-send-email-mst@kernel.org>
-References: <20260728153942.1891677-1-peterx@redhat.com>
- <87jyqeomqz.fsf@suse.de> <amoHbVsgzkYclCt2@x1.local>
- <878q6toopr.fsf@suse.de> <amof2Vbn_nTHR5H9@x1.local>
- <875x1xojtk.fsf@suse.de> <amo86cXLNE2uV6Ge@x1.local>
- <20260729145247-mutt-send-email-mst@kernel.org>
- <ampUBV4wAluFGW93@x1.local>
+ Wed, 29 Jul 2026 15:27:34 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: mjt@tls.msk.ru,
+	2358543632@qq.com,
+	quintin.kong@qq.com
+Subject: [PATCH 2/2] tcg/mips64: Preserve the base of unaligned loads
+Date: Wed, 29 Jul 2026 15:27:32 -0700
+Message-ID: <20260729222732.12927-3-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260729222732.12927-1-richard.henderson@linaro.org>
+References: <20260729222732.12927-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ampUBV4wAluFGW93@x1.local>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,47 +103,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 29, 2026 at 03:27:01PM -0400, Peter Xu wrote:
-> On Wed, Jul 29, 2026 at 02:57:57PM -0400, Michael S. Tsirkin wrote:
-> > On Wed, Jul 29, 2026 at 01:48:25PM -0400, Peter Xu wrote:
-> > > So to me, it's much simpler we say migration stream must be
-> > > trusted, and I expect dest QEMU can allocate any buffer it needs, until it
-> > > eats the whole system memory.  I really don't see much real risk..
-> > 
-> > It's not risk due to migration, specifically. But making qemu
-> > drink up terabytes from the guest would be problematic, right?
-> > 
-> > Putting qemu in a cgroup with restricted total memory
-> > would be one way to prevent this class of security issue,
-> > and a robust one.
-> > 
-> > But that, in turn, is impossible if qemu insists on allocating
-> > unlimited memory at the drop of a hat.
-> 
-> Just to clarify at least one thing.. we have two attack surfaces here and
-> they're very different IMHO:
-> 
-> (1) guest behavior caused memory allocation, or,
-> 
-> (2) migration stream caused memory allocation.
-> 
-> AFAIU, (1) is more severe. All my points only apply to (2).
+From: Quintin Kong <quintin.kong@qq.com>
 
+The qemu_ld output constraint permits the output register to overlap a
+dead address input. That is valid for a direct load, but a pre-R6 MIPS
+host implements an unaligned 32-bit or 64-bit load with an LWR/LWL or
+LDR/LDL pair. Both instructions require the original base address.
 
-Absolutely. Yet without fixing 2 we can't mitigate 1 with OS level
-protections.
+If lo and base overlap, the first instruction replaces the base with
+part of the loaded value. The second instruction then accesses an
+unrelated address.
 
-> 
-> > 
-> > However, migration is hardly the worst offender here, and I am
-> > not at all sure we need to start with it if we even want
-> > to address this limitation.
-> 
-> Agree.
-> 
-> Thanks,
-> 
-> -- 
-> Peter Xu
+Prior to eb664d0c527, the address register was always a temporary,
+so this problem never occured.  Copy an overlapping base to TCG_TMP0.
+
+Fixes: eb664d0c527 ("tcg/mips: Rationalize args to tcg_out_qemu_{ld,st}")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4102
+Signed-off-by: Quintin Kong <quintin.kong@qq.com>
+[rth: Move fixup into tcg_out_qemu_ld_unalign for qemu 10 series]
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <tencent_8D773439C708369D6BD2ACF71EACE26B020A@qq.com>
+---
+ tcg/mips/tcg-target.c.inc | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/tcg/mips/tcg-target.c.inc b/tcg/mips/tcg-target.c.inc
+index 29cf7fa0ab..a683bff625 100644
+--- a/tcg/mips/tcg-target.c.inc
++++ b/tcg/mips/tcg-target.c.inc
+@@ -1338,9 +1338,9 @@ static void tcg_out_qemu_ld_unalign(TCGContext *s, TCGReg lo, TCGReg hi,
+     const MIPSInsn ld1 = HOST_BIG_ENDIAN ? OPC_LDL : OPC_LDR;
+     const MIPSInsn ld2 = HOST_BIG_ENDIAN ? OPC_LDR : OPC_LDL;
+     bool sgn = opc & MO_SIGN;
++    MemOp size = opc & MO_SIZE;
+ 
+-    switch (opc & MO_SIZE) {
+-    case MO_16:
++    if (size == MO_16) {
+         if (HOST_BIG_ENDIAN) {
+             tcg_out_opc_imm(s, sgn ? OPC_LB : OPC_LBU, TCG_TMP0, base, 0);
+             tcg_out_opc_imm(s, OPC_LBU, lo, base, 1);
+@@ -1360,8 +1360,16 @@ static void tcg_out_qemu_ld_unalign(TCGContext *s, TCGReg lo, TCGReg hi,
+             tcg_out_opc_sa(s, OPC_SLL, TCG_TMP1, TCG_TMP1, 8);
+             tcg_out_opc_reg(s, OPC_OR, lo, TCG_TMP0, TCG_TMP1);
+         }
+-        break;
++        return;
++    }
+ 
++    /* Both loads in the unaligned pair require the original base. */
++    if (lo == base) {
++        tcg_out_mov(s, TCG_TYPE_PTR, TCG_TMP0, base);
++        base = TCG_TMP0;
++    }
++
++    switch (size) {
+     case MO_32:
+         tcg_out_opc_imm(s, lw1, lo, base, 0);
+         tcg_out_opc_imm(s, lw2, lo, base, 3);
+-- 
+2.43.0
 
 
