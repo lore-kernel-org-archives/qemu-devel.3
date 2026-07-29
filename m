@@ -4,116 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15F2BC53200
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 16:14:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52229C53200
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 16:15:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp6uq-0000pW-N7; Wed, 29 Jul 2026 12:13:58 -0400
+	id 1wp6vn-0001Ar-5l; Wed, 29 Jul 2026 12:14:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wp6uk-0000p0-Vt
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 12:13:52 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wp6ui-0007Km-KF
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 12:13:50 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wp6vl-0001Ad-EG
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 12:14:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wp6vc-0007O8-RB
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 12:14:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785341681;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=VfGo4J0x9BDxBKLH9mRdOFD2i5I9a9WusDIyqvl/xPY=;
+ b=jCKOGAXdla5xQ14dqbjtpUv1tatrwATxqJFT7XV0LokW1sKl85bGFr6+1PPoD8CnqWsyXW
+ nwM6hmcfjHX9ln1EVmihWeQLGdwtv7HJFI0IH5WboxmuFmGRPP4qW2nHvawdg83IP8ZyZR
+ Zk4JxEiJAOuhVHD03O/ycDYG8ZY8imY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-551-tmCevGjRN8qgHXaUsMpiBg-1; Wed,
+ 29 Jul 2026 12:14:38 -0400
+X-MC-Unique: tmCevGjRN8qgHXaUsMpiBg-1
+X-Mimecast-MFC-AGG-ID: tmCevGjRN8qgHXaUsMpiBg_1785341677
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 0FB0F3DF5;
- Wed, 29 Jul 2026 16:13:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1785341622; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SSXa2xhLiA3PfzXP449HBTT00t6D+sZUVhNhHbMOU1M=;
- b=005Mai4zBFqoHjGpGSVvrSYKjOISW1W7ROmazTs35+H5t+57X4WJqUNcIzDCWmQEraE0OM
- A3bM3YsJqLXcCkIGwPcTOqyQNPIpVh04cDl64GNNrRgc14FWUP1MyEyHu3YwN4nxUUxuEe
- AnVAt3Q35Y4+ttryKV0UgNBERtk0r68=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1785341622;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SSXa2xhLiA3PfzXP449HBTT00t6D+sZUVhNhHbMOU1M=;
- b=lOaL8fjxf/+QmCy5rIPNPWk//uGwwH7vT7RbeTOH508zznodbTkBFgje5JtoiC3RbrIKwi
- 0pvfhEvwcLrF9lDg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=XLM2HHmn;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=KTUDjIeW
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1785341618; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SSXa2xhLiA3PfzXP449HBTT00t6D+sZUVhNhHbMOU1M=;
- b=XLM2HHmnjNw9uF1n+79baOgpEgfWM6mY+pZ0122YnERZRFUFYgusklaRqRy8PvKRFHHQn1
- lyjWqEpHOjUICt6AJNtzeMiHIwm4rESx9j8hOQG+rcvXjDorHV72oDAeUh5HAJVmmr2VhF
- tYFkUA3aAveYPRkEuVpwRKH9rIDl1PE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1785341618;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SSXa2xhLiA3PfzXP449HBTT00t6D+sZUVhNhHbMOU1M=;
- b=KTUDjIeWLpshzQ/GuM/WfGIE0+ZteD+wNijP5u2qb72aSk1gnbJrEgIRqnGC2cW1gp4cPl
- wCWQsgI6BOdC5QDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A4169779A1;
- Wed, 29 Jul 2026 16:13:37 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 1UwlHbEmamrdHwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 29 Jul 2026 16:13:37 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, Stefano
- Garzarella <sgarzare@redhat.com>, =?utf-8?B?6rmA7Iq57KSR?=
- <seungjung0711@gmail.com>, Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Subject: Re: [PATCH] vhost/migration: Fix incorrect size used in
- inflight->addr in VMSD
-In-Reply-To: <amof2Vbn_nTHR5H9@x1.local>
-References: <20260728153942.1891677-1-peterx@redhat.com>
- <87jyqeomqz.fsf@suse.de> <amoHbVsgzkYclCt2@x1.local>
- <878q6toopr.fsf@suse.de> <amof2Vbn_nTHR5H9@x1.local>
-Date: Wed, 29 Jul 2026 13:13:27 -0300
-Message-ID: <875x1xojtk.fsf@suse.de>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A08E918004D4; Wed, 29 Jul 2026 16:14:36 +0000 (UTC)
+Received: from localhost (unknown [10.44.24.15])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D8001180044F; Wed, 29 Jul 2026 16:14:34 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: akihiko.odaki@gmail.com, thuth@redhat.com,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH v3] hw/display/virtio-gpu: validate blob iov size
+Date: Wed, 29 Jul 2026 20:14:31 +0400
+Message-ID: <20260729161431.1180691-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 0FB0F3DF5
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; ARC_NA(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- FREEMAIL_CC(0.00)[nongnu.org,redhat.com,gmail.com,yandex-team.ru];
- DKIM_TRACE(0.00)[suse.de:+]; RCPT_COUNT_FIVE(0.00)[6];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MID_RHS_MATCH_FROM(0.00)[]; MISSING_XM_UA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns, suse.de:mid, suse.de:dkim]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,28 +86,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-> On Wed, Jul 29, 2026 at 11:27:44AM -0300, Fabiano Rosas wrote:
->> Hm, but isn't it better to have a global cap anyway? So we don't need
->> every device code to change with similar checks.
->> 
->> > If we go this route, I'd rather merge Michael's version to support u64,
->> > even if we don't need a u64 size.  But I really don't want to introduce yet
->> > another VMS flag just for this... we'll have no real use if we have noticed
->> > this problem when the vhost inflight patch was reviewed.  It will be a
->> > uint32_t or int32_t already.  I just can't come up with some users need
->> > size >2G.
->> >
->> 
->> I agree with making all u64. I think we can actually remove all the
->> extra VMS_VARRAY_* and VBUFFER_* flags and instead doa single type-check
->> of "int <= 64bit". Give me a couple of hours and I will post an RFC.
->
-> I confess I don't yet get what is the global cap you mentioned.. but sure,
-> I'll wait and read the RFC first.
+virtio_gpu_resource_create_blob() stores the guest-controlled blob_size
+without checking it against the total size of the iov backing entries.
+Since both values are independently guest-controlled, a malicious guest
+can set blob_size much larger than the actual iov backing. Subsequent
+SET_SCANOUT_BLOB checks bounds against the inflated blob_size, allowing
+a pixman surface to be created over the undersized buffer. Any display
+refresh then reads past the actual allocation, potentially crashing
+QEMU or leaking host memory contents depending on the backing type.
 
-I was thinking the vmstate code could define a limit to the size (of
-anything) and always enforce it. The device code can then use some
-custom macros (not yet existent) to limit even further.
+Validate that the iov backing is at least as large as the declared
+blob_size in create_blob (when nr_entries > 0, since the spec permits
+deferred backing), attach_backing (when attaching to a blob resource),
+and the blob migration load path.
+
+Fixes: CVE-2026-66021
+Fixes: e0933d91b1cd ("virtio-gpu: Add virtio_gpu_resource_create_blob")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3945
+Reported-by: "sundayjiang(蒋浩天)" <sundayjiang@tencent.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+v3:
+ - drop a redundant blob_size check
+ - in blob_load, check only when iov_cnt > 0, matching the create path
+---
+ hw/display/virtio-gpu.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 15a845eff60e..c707f1f516ea 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -372,6 +372,17 @@ static void virtio_gpu_resource_create_blob(VirtIOGPU *g,
+         return;
+     }
+ 
++    if (res->iov_cnt > 0 &&
++        iov_size(res->iov, res->iov_cnt) < res->blob_size) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: backing storage smaller than blob size\n",
++                      __func__);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        virtio_gpu_cleanup_mapping(g, res);
++        g_free(res);
++        return;
++    }
++
+     virtio_gpu_init_udmabuf(res);
+     QTAILQ_INSERT_HEAD(&g->reslist, res, next);
+ }
+@@ -993,6 +1004,15 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
+         return;
+     }
+ 
++    if (iov_size(res->iov, res->iov_cnt) < res->blob_size) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: backing storage smaller than blob size\n",
++                      __func__);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        virtio_gpu_cleanup_mapping(g, res);
++        return;
++    }
++
+     if (!res->image) {
+         virtio_gpu_init_udmabuf(res);
+     }
+@@ -1499,6 +1519,14 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
+             res->iov[i].iov_len = qemu_get_be32(f);
+         }
+ 
++        if (res->iov_cnt > 0 &&
++            iov_size(res->iov, res->iov_cnt) < res->blob_size) {
++            g_free(res->addrs);
++            g_free(res->iov);
++            g_free(res);
++            return -EINVAL;
++        }
++
+         if (!virtio_gpu_load_restore_mapping(g, res)) {
+             g_free(res);
+             return -EINVAL;
+-- 
+2.55.0
+
 
