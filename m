@@ -4,144 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E672C53219
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 17:31:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C987C53219
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 17:40:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp870-0002tM-SJ; Wed, 29 Jul 2026 13:30:36 -0400
+	id 1wp8GY-0005DV-6C; Wed, 29 Jul 2026 13:40:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wp86p-0002sJ-Gm
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 13:30:25 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wp8GW-0005DM-Ow
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 13:40:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wp86n-00043O-NX
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 13:30:23 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66TF2TNq1699319
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 17:30:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- H5casXszahOkdiJ6ouqGyxiqSIyoWUab5LhsteLrUAM=; b=bTYr39r/TQkrgzWv
- AdUGyAspDnMHvWoSWkZscyVuo0e4uKQ0zyLqu2ZEOMk/sRBHxoGwPoMwWmaetxGl
- g5ZCkqSPFUllDnMMrdQN3JLDrKSKDxLpxT4+IT4zUpDDo4cnSccoc6G78QeA/ZR/
- LnJmEUTHDzCi4o+unWKCZsrfeEwK6MBU96D6JovEhcUe1fw92xG3GJniKUS4kEHI
- CMv/wNBk7qAju+vPAdKJOsH64NZ9IZ24xdk6Bk1+aiR6lLrvfADlVGoG19l6WXLj
- bBrakPI5k54NdbBmOAVlhoDf9ppf88DIyx3jn+EJ7gG6pN09+pqap2vbG5WXW78J
- 9ntmKA==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fqgrj1tdt-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 17:30:18 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-38827cee19eso1528863a91.3
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 10:30:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wp8GU-0005P7-QC
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 13:40:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785346821;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=y8ty+y/wFQYmnzv5XMOibILjBW8+1jAsgcCUFAaFz2U=;
+ b=NlwALY46rm+0EHIN73hk5VwhgtIBxi9O5KdbQXNJfqz0LjypYoezgmgzbyL7aG5R99UE1e
+ oZGOFo2pOoF3mO/QTm0Sie4EPgFCbnA0vS3y6A+C1LaCN2wHWBDePOzEDd+L2hSXefBfOO
+ JLCc3iJYSFbgzodQoPfsvzvUO+s3z2w=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-175-3mGhbMOHM5e5K9y4T5azzQ-1; Wed, 29 Jul 2026 13:40:19 -0400
+X-MC-Unique: 3mGhbMOHM5e5K9y4T5azzQ-1
+X-Mimecast-MFC-AGG-ID: 3mGhbMOHM5e5K9y4T5azzQ_1785346819
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51c21c01cf3so20790091cf.2
+ for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 10:40:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1785346218; x=1785951018; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=H5casXszahOkdiJ6ouqGyxiqSIyoWUab5LhsteLrUAM=;
- b=G9f8jTlcwLFw7JldTxjFZzFaGfsyy8IBO2InO++dz4PvSL+izPuv8u+7JYxk96gkmD
- 0e29XvmWV7nsoDl2JbcDAuCZ1YDOBR43FTY5UdcTtt0kRoIBjn02tLtQ0U6D/VA40AVk
- luvx+HMd44UW1okiQiOmtLqKSDPs5coI/yTJe1ZfcK8ynudJ5XDRZ/csyW0ZO99Hi/p+
- Y5B65QT2HLxbvyWiobIHjH8kajz+fAwuOTkb8nvN03/7mVPTIw3dFpe1JXFh/Qgu9eIr
- tOXfed0QyBIRIjx8oYz+s8EdZBfwl+Wcg0fZzt3p9iaOpZ5hx0fEMVCeOsB47PTcPLHs
- Xddg==
+ d=redhat.com; s=google; t=1785346819; x=1785951619; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=y8ty+y/wFQYmnzv5XMOibILjBW8+1jAsgcCUFAaFz2U=;
+ b=DSqkS7oXaTQNhv28qPyB4yjvyrBdVIJjce0+zcqNvtghin2bFpkb5Y7Ilya2wpHRHv
+ OEdESGTBo9W2mupW0gKizgXINBOrw90dodd+wd9YvCNLCOaxh6e4yb0/+vhr7F06m1ke
+ yQ9iwJ65Sdu66ND7PYeMyAFAWxAONyc38tkLtLfvHxCTqG07O3RfcxU39/+PNpXMrIey
+ gRi0E2ry8sNMz0YipoOGqXWkBCmyxEbSxIZ1Dq9j8+XLc5YlyM1tP2BIxTrB8OmeJ9EJ
+ 1oBZY3+sH7PUjvdMD7vJgze+gx55Hyqr5JUdM+mWAPnCKAAn1FqfIQn8qyIRAaQJzuXb
+ imTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785346218; x=1785951018;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=H5casXszahOkdiJ6ouqGyxiqSIyoWUab5LhsteLrUAM=;
- b=HB981Hbv+cizLLZ9TqXdEqnsGoQ3MUgPN26zN8GAoUsDMfga9UAvFaWDPD1pAxk/+Q
- +ZSszTYkrV7B+gR9vmMZbEUbF3+jGxx5GHUQTvfAmuPI0VvVAq3ghjE558LKvFHqwXme
- XlkAE9f6rFZwVyni2eTh6ivGmWcReTzNuF76wcI3xSEugITHbvt3bau58Zidv3aiAw3O
- zAVa1AsX51ymRLv0SFxF0i+OmnSLsGH09plzy+fVeOxacZ7zz63EtikrIQY7E2CpAl/E
- lM55SwtYwBK06jnYIW277QNNjz8+7FDLRNaiStug4y9o6qImAunLSoSUT8Eal17GQOcL
- ydnQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+Romz5bjIkgp9B8Enqa5StcVlse3vmo/csnFCXYhCdrUuvx9+Qv+cQ504cTWMFjTM75mp+x677RVBYW1@nongnu.org
-X-Gm-Message-State: AOJu0YyEAi9flvaBl9lTdQF7rdK8rjJnM2xAnwGTh7QL4ICwu6LiKPYY
- snC3worps4HV1vj+kk/3kfoAx/cyH9vJrPFk9hdbOii7kfzCPbRdABe5ZC6BEhuHJbJPMmUiMyO
- +TJA9F0BPFjPz0kGlm1E6YVQIMUzEfPSnI2LrJUuSf48uBbxY92btI6sbLQ==
-X-Gm-Gg: AR+sD13I92ZSXEJ1xdjDY9b/t59sOQyVkLXIBsNq/Entte5a1XOeN/NHzJoDYUp8DWy
- M7pfw8/wQeFibI2BL31bJ4ELmTk6H+HEBE94itX/21gM0qB/D3v+9SB+kC4RGlSZc6q77XPmxEy
- tlNT3jzWHqdNYStQLChZlH59vEtIxd0Xv6wLnp5QxwuLk2JcoLJ9lMV3BGPfc3rNHe4/DV5jcW+
- HoHcp/XyeqcDRzJ6juU7PS/2f6hM4TNRA5GANgNY8bq9PYb7IC5wWa+ndgp6VoMftH9Lxnuy4lX
- Xu5E+V1HnaJMCe+HqlLewJLX8Ne/Knn+paCNaf9czzHxgO4kzyoV6jZseriAU5QqJ2rh0rILyOe
- Kq/KEhcKEGhfhPONCc8IBO3ljxlhhpF939x5DCu/rh1b6D8z1SvU7o5ne5Mmx84obnF3v
-X-Received: by 2002:a17:90b:4a86:b0:387:e0cb:c8da with SMTP id
- 98e67ed59e1d1-38f6a45dd52mr6504911a91.35.1785346217864; 
- Wed, 29 Jul 2026 10:30:17 -0700 (PDT)
-X-Received: by 2002:a17:90b:4a86:b0:387:e0cb:c8da with SMTP id
- 98e67ed59e1d1-38f6a45dd52mr6504897a91.35.1785346217393; 
- Wed, 29 Jul 2026 10:30:17 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-31504d37368sm21859092eec.22.2026.07.29.10.30.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Jul 2026 10:30:16 -0700 (PDT)
-Message-ID: <f48912af-15f2-4732-afe9-cb180279e2d5@oss.qualcomm.com>
-Date: Wed, 29 Jul 2026 10:30:14 -0700
+ d=1e100.net; s=20251104; t=1785346819; x=1785951619;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=y8ty+y/wFQYmnzv5XMOibILjBW8+1jAsgcCUFAaFz2U=;
+ b=Q4lSHm+/rUtNWDu/Kmcgstmi3m+F8h4Bw1+/ntHoD2D0D8h38mXK2CBlwqcvAONfp4
+ cyviXt6DcOH8cB4zeoWnk+9wEcSmHM/3ANeBjk9eNYYAvAwnA4PK5RTuC33g+HU/1V4x
+ tYtW5lIi775tg1hb+erQ9RkLsh4w9qiZXP/0SRJwjPXIct+HiGxIScVB4T9pGQx56Drv
+ Lc3tXcsZEHpozrPCYxRRNCQUX3biQKmYYo215PFDE9htNP2KcWaLPTj61CXzM9727XvA
+ DUlcp7pTLEAbGeSDB4OZszOpEW1/3XqN2By3s6Yyht9UKDyYPS7W+WjfBHzrmptTOTZt
+ thOA==
+X-Gm-Message-State: AOJu0YxSmxepu+3aaYxlZs+6SFltVm9OYHbbo3HaS0uTZZud718qbZqr
+ GR/FZn66BGV/AXSSAuAvuLxjv3I5JRNpuK/bG6OhmVcTJjz9hlEqIe71PDYdpTHshccnIHtfYla
+ pawF2LsVmlR3yie7Zlk0q49/KyRtHACLxB0ovcAXcFhNUwWCWI/UQaXgp
+X-Gm-Gg: AR+sD10gZbXNdKMNCAA8Fj3E7xow1XWN1MlW+r4Wb6vRIIt+5V+v32lA17BZf/XrJbe
+ wyMVTgEsSjSP+by0y3MIvSS1HB//UzTwh4ueh0wW8037zBmPmEaGR+1MYUAdnrj+Tce+x4+OFVg
+ f7BzPjcXi+HJSt3uoNE+xDL0bU8wVS83sNRfdHm4y84na2k2ATTY0LCSuRyJfDC5wvxg8Oo+IAg
+ 5HVTqNbF4KSXEnVSXcpmUIYYMWoisKrhAF47PK4IEoLtpdMhTmtbxhExxXvJWNe0IMz5X730CZW
+ FS1Spdi9y6CAwcaTSNKai1O4LTJa6LdaSW+DfD3fQByLlZ0eRMtNpDVfbuQI9Cw9OFxY
+X-Received: by 2002:a05:622a:1191:b0:51c:fc4:a144 with SMTP id
+ d75a77b69052e-529d70557e0mr75702091cf.4.1785346818694; 
+ Wed, 29 Jul 2026 10:40:18 -0700 (PDT)
+X-Received: by 2002:a05:622a:1191:b0:51c:fc4:a144 with SMTP id
+ d75a77b69052e-529d70557e0mr75701531cf.4.1785346818044; 
+ Wed, 29 Jul 2026 10:40:18 -0700 (PDT)
+Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-529e30fc51fsm23518071cf.30.2026.07.29.10.40.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 Jul 2026 10:40:17 -0700 (PDT)
+Date: Wed, 29 Jul 2026 13:40:06 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?utf-8?B?6rmA7Iq57KSR?= <seungjung0711@gmail.com>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Subject: Re: [PATCH] vhost/migration: Fix incorrect size used in
+ inflight->addr in VMSD
+Message-ID: <amo69qbbLChFBaUY@x1.local>
+References: <20260728153942.1891677-1-peterx@redhat.com>
+ <87jyqeomqz.fsf@suse.de> <amoHbVsgzkYclCt2@x1.local>
+ <878q6toopr.fsf@suse.de> <amof2Vbn_nTHR5H9@x1.local>
+ <875x1xojtk.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] meson: do not emit modules with no enabled sources
-To: Rohitashv Kumar <rohit.kuma1313@gmail.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Rohitashv Kumar <roohiit@amazon.de>
-References: <20260729150420.632747-2-rohit.kuma1313@gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260729150420.632747-2-rohit.kuma1313@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=RJOD2Yi+ c=1 sm=1 tr=0 ts=6a6a38aa cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=yX9pvZ6cGgldRaZeu0QA:9 a=QEXdDO2ut3YA:10
- a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-ORIG-GUID: CJJfq0Nsg9d89kfti1p1zxFkLS_MACdq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI5MDEzNSBTYWx0ZWRfX40yzU/I7sM3n
- SuB6RQTLcKIZXJ/tvcvFa70+07E/KkGgqP+e/yxMNnRCpxE0AFx6gI+VlDtXB6u74y/j5pUFLRn
- GfE+CHZejtN3WW0nXrClXVIpjbNWvKSvmUA1bwynHRdQgzfnyT0LseeET3Sy6/d3uu9/gHh8e3C
- GgB8avEqJmvgZj4pvL0ctFjX6zSDQNJ3oKZvYBfmnjISr+ArVdT+e/9VZxXipAE9Hf7EVWRyTRn
- 5Wc9rsMsaasSufqGkN8M/vsvtGjo8w0gyewYrwiAALXXwRboEgpMgS6wGhb8QVD34o8c2ItJDIK
- P034xadvyLw95n8r+ahbsqMJ+Fcoa7Z9zqfwO8UFCvwyAiQwwZDvGNAU/Di7pBayXrieF3g+KGZ
- GGZOFOLWeSwIBfZkO3x6LjYig24yMOw308PQQMviNSpYX4mjY+eLFCls8ZtTPTsIyNj7xqZ0t/A
- cyr/gf44Ge5Yg5SWU/Q==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI5MDEzNSBTYWx0ZWRfX8svgPe2is9At
- PPh5TKT9hWZiaEfx7Fg9/bC3dtKI82GfJEXsInDyOibI0sgwOI4HCmThThlRTx4ViFNe4jKMZ1F
- RLqLJOmm83js0gdimRE/OXgDBMwnhpc=
-X-Proofpoint-GUID: CJJfq0Nsg9d89kfti1p1zxFkLS_MACdq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-29_06,2026-07-29_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0 malwarescore=0
- impostorscore=0 suspectscore=0 clxscore=1015 spamscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607290135
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <875x1xojtk.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -158,30 +121,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/29/2026 8:04 AM, Rohitashv Kumar wrote:
-> From: Rohitashv Kumar <roohiit@amazon.de>
+On Wed, Jul 29, 2026 at 01:13:27PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
 > 
-> With modular builds, the system/block module loop adds the common
-> boilerplate (modulecommon) to every registered module and emits a
-> shared_module unconditionally.  A module whose device sources are all
-> disabled by the configuration then still produces a shared object
-> containing nothing but the boilerplate: an empty stub that provides no
-> devices and only complicates packaging.
+> > On Wed, Jul 29, 2026 at 11:27:44AM -0300, Fabiano Rosas wrote:
+> >> Hm, but isn't it better to have a global cap anyway? So we don't need
+> >> every device code to change with similar checks.
+> >> 
+> >> > If we go this route, I'd rather merge Michael's version to support u64,
+> >> > even if we don't need a u64 size.  But I really don't want to introduce yet
+> >> > another VMS flag just for this... we'll have no real use if we have noticed
+> >> > this problem when the vhost inflight patch was reviewed.  It will be a
+> >> > uint32_t or int32_t already.  I just can't come up with some users need
+> >> > size >2G.
+> >> >
+> >> 
+> >> I agree with making all u64. I think we can actually remove all the
+> >> extra VMS_VARRAY_* and VBUFFER_* flags and instead doa single type-check
+> >> of "int <= 64bit". Give me a couple of hours and I will post an RFC.
+> >
+> > I confess I don't yet get what is the global cap you mentioned.. but sure,
+> > I'll wait and read the RFC first.
 > 
-> This happens when a module is registered under a broader condition than
-> the one gating its sources, e.g. hw-display-virtio-gpu-pci (registered on
-> CONFIG_VIRTIO_PCI, sources need CONFIG_VIRTIO_GPU) in a build without
-> virtio-gpu, or hw-s390x-virtio-gpu-ccw (registered unconditionally,
-> source needs CONFIG_VIRTIO_CCW) in a build without an s390x target.
-> 
-> The target_modules loop already skips modules whose applied source set is
-> empty; make the system/block loop consistent and do the same.
-> 
-> Signed-off-by: Rohitashv Kumar <roohiit@amazon.de>
-> ---
->  meson.build | 3 +++
->  1 file changed, 3 insertions(+)
-> 
+> I was thinking the vmstate code could define a limit to the size (of
+> anything) and always enforce it. The device code can then use some
+> custom macros (not yet existent) to limit even further.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Ah I see.
+
+With 32bit limit (let's assume we don't have that further "it's int32_t"
+problem..), it's already throttled to 32bit max.  I added it into vhost
+code only because in reality it was a 64bit internally.  None of the rest
+users should need it since they should be sticking with 32bit fields.
+
+-- 
+Peter Xu
+
 
