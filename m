@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FAA4C55162
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 22:28:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 966BAC54FCD
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 22:28:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpCkY-0007e8-8D; Wed, 29 Jul 2026 18:27:42 -0400
+	id 1wpCkc-0007f0-C7; Wed, 29 Jul 2026 18:27:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wpCkW-0007df-LN
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 18:27:40 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1wpCkb-0007eX-7T
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 18:27:45 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wpCkR-0008Md-9u
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 18:27:40 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2caea3f742bso18619765ad.0
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 15:27:34 -0700 (PDT)
+ id 1wpCkR-0008Mg-Mj
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 18:27:44 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2ceb096e675so19478195ad.0
+ for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 15:27:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785364053; x=1785968853; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=AUFi+zCctBpA2uvKv+04JwYF81yZKqzpoGjoTvWudc0=;
- b=e0/D2x9fCUfD/IX4fUKCM7MnRCC+pzn98sv0bpE0UV+it7MhvSUIsxtRXbzxoyOUbg
- by531gJAlQKB8w6BxaUf8jRtPifSYAtwve/1nZgO8ab/MaG9fGG5SdywhrfZOx+utOJy
- 2aDaK+TZEbDKnF2T0gJBqI2MURh9JdTRs6iajlvLmb5m0N6SFoFNIFJ3u4uQjgrB/HSV
- qV7vUvj/7gAQhOBWPakUoIPZ2AI3eJE2FzzCZKYq/7dtz3mgWJM4LJ+auV+bELvkNRYY
- uNlRldFd6VLf+VT+8Jzde3uaVy2mQFRF8yxYDB2xx0iaTy4HzKw6HiOFhTADbYKUFaxL
- 498A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785364053; x=1785968853;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1785364054; x=1785968854; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=AUFi+zCctBpA2uvKv+04JwYF81yZKqzpoGjoTvWudc0=;
- b=Yv/bqH33Ht0rBBC+N+DNbuuMzVCaejqPNGpX/FsS7XsCWI8f1CNWpYlCCJOeUEIXXl
- +ho6YW4fkCtLv2fUOWA7v9RZQcJqNNnDkDEmQxNbg0KyzIzmKlopc74QqHuv1tYA2SXg
- mYsg/gdkY61Bl/Cd88erYy7dO4qpow/NNvbmSmu/4CuDoC4k+IvSbvBsANd52wICqlBj
- y3ufn7/5mHquGrOg4ePfSQfk3ghR4KmIbkZHIFJm8lGxQgOxO5lv44UFqGpE092kcI42
- xSPhy/snY92b0vzRVaw+xmQIj7s+/WpcrXQFotNEBrt1mTjOZh8B/Gdp8j6ng4ecDw3w
- 6S9w==
-X-Gm-Message-State: AOJu0YxuuwOPlT3wT4UpXk3s8B/4gBTqozGuh278JT2LKa42C9zomVkZ
- 38TXyjUXsZmKTl8STV6QN+X3Ha1HXbHMqNdgfIY1Ghv7wFmp1eLPOYkzMX0j/7cC8U5KG/LPlV1
- N9e7m
-X-Gm-Gg: AR+sD10d4k8u0+pX/hHnLGxe1XjLLbj3gmUHiHNNScYwL1p0Ws4FytTmHD3HvO7/KX0
- XZ9zNhjey00AxWnUe+tRQ8CmF9aQ+Tx0qw0K3MHt2aLdatMxfGCEAcJ6rrxxGENmso9IXBXPOJZ
- BLHgiL3LWnfUku3tMawSrdQnCboLAc+Mv0wmcKKdG0hw1digYV0ApwyBRN2Z13oQ9oEeO/uC0ZM
- 9Wo/tBTp88xOpvDlLjsYyDqVKu/3QapNm6mFtAycpejQCM5tBxWviWLYF4imBMGN02zI/1d9B7C
- w+6VtZXRUeSuOj9mxf+W49Z7i4qTyjFni9RWlUv8gc/cb/TTP7FWPkwnGSacB9cDTAgsjIoQN52
- 3PrBMAGQADLYxmafcPng3g7B4m7Ecw4pr/7JRJ49mhAhcs2DxsIAmdM7+QuNE27Yv/JjONTfc4e
- sa7Y9BFl5MvJsgAeNxb97Jete1RV+55VvgWYTSDgPHtkjj7BrBQlTYfHWswjejNDUwGF2EE6sp7
- wOsCrlajfF/8P9whqqF
-X-Received: by 2002:a17:902:e783:b0:2c9:a9c0:80b6 with SMTP id
- d9443c01a7336-2d035d155e2mr1622435ad.34.1785364053383; 
- Wed, 29 Jul 2026 15:27:33 -0700 (PDT)
+ bh=j95vJfjdZ/LfANZcybXJ0RTFQkgqTX8pW2dKKED9Anw=;
+ b=b4CnMSCMkwNLjMO+2xUjrLvpCZeBv8guAKWcXS8P0JNHdKPXl1MELdp9fCo1YKSEYv
+ 5O7Py452EYzwTdW5DApXkAOq+XodqhP4zcCWubsYc//R20tpkDvHEJjiWyFykdn9v85g
+ gdm2y6jaUGIDVStLw1Ns3I/FALXUTe55b3HrhJLv7x/xNiJdLasO1Eit86YLIeBzZZuC
+ TaJqPTaQSvrLpmY/BRGFj/4+LSQdkjx5j3J5ak38eNbbBUK/RL5d9Zn8ewGbDD8BrE/s
+ qWPaMujt7YtGxRElPrZ8ZBy1JjqLcxegfN/IUH4m8gU8D9IdTaHPxliuYWHDacQkWoR+
+ bbSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785364054; x=1785968854;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=j95vJfjdZ/LfANZcybXJ0RTFQkgqTX8pW2dKKED9Anw=;
+ b=KsCSNR7dOjOqPBt/occTa7DP3H1DY5iKkKFm2cIJPXP7O65qK4M86nNAfPzAkkz/M1
+ KoV13/4ILW4UwI4sDoYAiEX9g1OAYFRvJgUGD52BLWX1dsrL8EaicGbFagjutdhTJ8Se
+ 01GOuWFg+57k1QDgDKhFT6u3i5+tEhWIZu0CV1K7ecoAr2F+5P3B46b2M49Ij2SzhnOi
+ UefMmK4FHYTbf957zPADN59A3HnFj4ciy5TfmfRtirogARITY8CsfCkcffCwoGWFnILl
+ ZtMFDlScb3Cl1AoIB5XGotAQGjV7EwlGhG2RcYTSnNtgNPEyoBTBrGi8z+UhF7da8Bm5
+ MiWQ==
+X-Gm-Message-State: AOJu0Yz2SWrAf5mItiR4yw0Kl4wNqLSnpT8LiNho2czqNLe42FSrcHP7
+ HiWnBf1jzHmdbu/kwZz+ve2WYas0I7nnM3kqs46FCO1D2C3uJ4CwQneZ//ToW+n1owPAtEnI8MV
+ J8O13
+X-Gm-Gg: AR+sD11cdkihvibJUgKqstn+7x0q6jBdpHIbvQ5oeQS3qxKevolmYmrIbN0wt+3ixXS
+ cRxRYEZGp5L5tHEU9tH06xZDhlaYKh+0ctFCC71hscUmCUg0YF7pH0iZILGe0uSik1s+KjSzWyf
+ 7ahmnP4mfc1JHTs5eX14KZ5OWi1euqafb9rJypXP5/Af54mt4Q3uzcAkAKqmOFm+x9wO8vNzE2U
+ KnXfbSYBE7shwV6pyJCQlEe2evHkKyRU7A77C0C54JbSw7JB1FwVJB0U8UFY31Qz+UYrY7ijt+S
+ yIMF5Ilxi+Tln2lL+0rjsg9QaarzMCnuHuqiuDpCg5QCJOvQ4GkQ0s8P2Bd+t1C5OrKMOSi+Uzh
+ 0YYExGyusqT0uGbIu7yq8ynH+fIoGxqme5889fRuzUpnxoyDRyxUFPyUCSDpZpPmqfRNheU4N+p
+ uXCaIHTYSsBEKkjkjxi9+T/WqhDg3/Kv2yOgJT+CcUtcvDkCUxftXfQ9F+dXN/dd/y2sKm41Yye
+ /yK1j4ma6R/s+TVUUkt
+X-Received: by 2002:a17:902:e883:b0:2cc:7c36:2c23 with SMTP id
+ d9443c01a7336-2d035cff1e5mr1728565ad.43.1785364054128; 
+ Wed, 29 Jul 2026 15:27:34 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d022bca9d7sm17159035ad.52.2026.07.29.15.27.32
+ d9443c01a7336-2d022bca9d7sm17159035ad.52.2026.07.29.15.27.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 29 Jul 2026 15:27:33 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: mjt@tls.msk.ru,
-	2358543632@qq.com,
-	quintin.kong@qq.com
-Subject: [PATCH 0/2] tcg/mips stable patches
-Date: Wed, 29 Jul 2026 15:27:30 -0700
-Message-ID: <20260729222732.12927-1-richard.henderson@linaro.org>
+Cc: mjt@tls.msk.ru, 2358543632@qq.com, quintin.kong@qq.com,
+ qemu-stable@nongnu.org
+Subject: [PATCH 1/2] tcg/mips64: Fix variable shift operand order
+Date: Wed, 29 Jul 2026 15:27:31 -0700
+Message-ID: <20260729222732.12927-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260729222732.12927-1-richard.henderson@linaro.org>
+References: <20260729222732.12927-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,32 +102,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Supercedes: tencent_E2269E77D2CCF40AAE3E69F67780397B0A0A@qq.com
-("[RFC PATCH 11.0 0/2] tcg/mips64: Fix shifts and unaligned loads - [DORA-B]")
+From: Quintin Kong <quintin.kong@qq.com>
 
-Hi Quentin, thanks for these.  Note that I cannot even compile test
-mips64 anymore because Debian buster was the last os release, and
-buster has package versions too old for qemu.
+TCGOutOpBinary passes (output, value, count), but MIPS variable shift
+instructions encode (rd, rt, rs), where rt is the value and rs is the
+count. tcg_out_opc_reg() takes its register fields in (rd, rs, rt)
+order, so passing (a0, a1, a2) encodes the value as the count and the
+count as the value.
 
-I've fixed up the html damage from your mailer, reviewed the changes,
-and have changed the second patch to fix the address inside the called
-function.  If one wanted to backport the fix all the way to qemu v8,
-one would have to apply your patch in two locations for mips32.
+Swap a1 and a2 at the four variable shift emitters. This covers the I32
+and I64 forms of SHL, SHR, SAR, and ROTR.
 
-Michael, the first patch applies cleanly from stable-10.1, and the
-second applies from stable-10.0.
+Cc: qemu-stable@nongnu.org
+Fixes: 03568c0d5395 ("tcg: Convert rotl, rotr to TCGOutOpBinary")
+Fixes: b5aafbaa8346 ("tcg: Convert sar to TCGOutOpBinary")
+Fixes: 27d21ee7c791 ("tcg: Convert shl to TCGOutOpBinary")
+Fixes: edd6ba8a6bc8 ("tcg: Convert shr to TCGOutOpBinary")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4103
+Signed-off-by: Quintin Kong <quintin.kong@qq.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <tencent_59B16645478B73A6A0E779128D406FE96A06@qq.com>
+---
+ tcg/mips/tcg-target.c.inc | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-
-r~
-
-
-Quintin Kong (2):
-  tcg/mips64: Fix variable shift operand order
-  tcg/mips64: Preserve the base of unaligned loads
-
- tcg/mips/tcg-target.c.inc | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
-
+diff --git a/tcg/mips/tcg-target.c.inc b/tcg/mips/tcg-target.c.inc
+index 400eafbab4..29cf7fa0ab 100644
+--- a/tcg/mips/tcg-target.c.inc
++++ b/tcg/mips/tcg-target.c.inc
+@@ -2049,7 +2049,7 @@ static void tgen_rotr(TCGContext *s, TCGType type,
+                      TCGReg a0, TCGReg a1, TCGReg a2)
+ {
+     MIPSInsn insn = type == TCG_TYPE_I32 ? OPC_ROTRV : OPC_DROTRV;
+-    tcg_out_opc_reg(s, insn, a0, a1, a2);
++    tcg_out_opc_reg(s, insn, a0, a2, a1);
+ }
+ 
+ static void tgen_rotri(TCGContext *s, TCGType type,
+@@ -2073,7 +2073,7 @@ static void tgen_sar(TCGContext *s, TCGType type,
+                      TCGReg a0, TCGReg a1, TCGReg a2)
+ {
+     MIPSInsn insn = type == TCG_TYPE_I32 ? OPC_SRAV : OPC_DSRAV;
+-    tcg_out_opc_reg(s, insn, a0, a1, a2);
++    tcg_out_opc_reg(s, insn, a0, a2, a1);
+ }
+ 
+ static void tgen_sari(TCGContext *s, TCGType type,
+@@ -2096,7 +2096,7 @@ static void tgen_shl(TCGContext *s, TCGType type,
+                      TCGReg a0, TCGReg a1, TCGReg a2)
+ {
+     MIPSInsn insn = type == TCG_TYPE_I32 ? OPC_SLLV : OPC_DSLLV;
+-    tcg_out_opc_reg(s, insn, a0, a1, a2);
++    tcg_out_opc_reg(s, insn, a0, a2, a1);
+ }
+ 
+ static void tgen_shli(TCGContext *s, TCGType type,
+@@ -2119,7 +2119,7 @@ static void tgen_shr(TCGContext *s, TCGType type,
+                      TCGReg a0, TCGReg a1, TCGReg a2)
+ {
+     MIPSInsn insn = type == TCG_TYPE_I32 ? OPC_SRLV : OPC_DSRLV;
+-    tcg_out_opc_reg(s, insn, a0, a1, a2);
++    tcg_out_opc_reg(s, insn, a0, a2, a1);
+ }
+ 
+ static void tgen_shri(TCGContext *s, TCGType type,
 -- 
 2.43.0
 
