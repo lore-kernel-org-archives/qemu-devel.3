@@ -4,123 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8205BC54F51
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84E14C54F52
 	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 09:15:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp0Nh-00050l-SX; Wed, 29 Jul 2026 05:15:17 -0400
+	id 1wp0MH-0003i9-Vr; Wed, 29 Jul 2026 05:13:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wp0NV-0004tA-S1
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 05:15:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wp0MG-0003hR-NX
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 05:13:48 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wp0NS-00058V-BK
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 05:15:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785316501;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rYr0+FiHmRj8yNdI0i2RKV5Ne11x9RSo4XasXZfEr/s=;
- b=QgvUbnbRbVM2ENHbtAVav+zQLxxdczBy+5VhZfELyDaciRD58N5jvxOpn3Hs9Z/x8ikrj9
- NahqLVoANb2X0nND9UmqPmV0H8DZV+qlSBxvvNsIME8IppA4jLuMEOe+cTWAvJzyHl2KV+
- LptH199gnPc/uzEfpnsI7k1tP363lL8=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-96-VfkjduedOFOkU9Ka3gbADQ-1; Wed, 29 Jul 2026 05:15:00 -0400
-X-MC-Unique: VfkjduedOFOkU9Ka3gbADQ-1
-X-Mimecast-MFC-AGG-ID: VfkjduedOFOkU9Ka3gbADQ_1785316499
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4956c1655c3so3789575e9.0
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 02:14:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785316499; x=1785921299; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=rYr0+FiHmRj8yNdI0i2RKV5Ne11x9RSo4XasXZfEr/s=;
- b=bBpHhhnmtI3PRaAvoMw8Wu7CNP8pB1iIHuT00iU6UTnhzjM166XPwmbga2IxSUBRYk
- 8ZfzXpV1KgcyvEqCt/4tQMfiNBjuQouc3FiyqMwaLQQnue5R9aWrtQyLFHZfDA1CeIzB
- yxu61GuM3+INv2HqyVnFOQE8sqQe47rFqCEXfuybpOeSBb/cgDh/vURpobIQuZv7hFbm
- wNSILV7GnZ7EZDnEBLYQcrrfaCJ+hOR/tITxJ+Cteg8O7o2Bpx9Df3TviHr6NvU9hiZH
- 9VAjRquua9U9lifpnY9QKkotPiLQX+8dOZ81gszBgNykndnPGaE9rsiK/FuzeiLf8jhT
- FUyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785316499; x=1785921299;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=rYr0+FiHmRj8yNdI0i2RKV5Ne11x9RSo4XasXZfEr/s=;
- b=lzMmaUezxQdDAKTO5lN1Di7ix5TZWRCJIVX6vfMJWlsymvgMl67v4KEIu0UE5Bxmdi
- yDDvezxxHhTlGD+UAjdhk7Weuxdzeu0599LJ3+zRCXtStqyAMwe9ffuacf5QDH2vUSas
- z4SM1X5lOMz0k2SKg1pSvm/FR9m3qhjAPB9OjkwFpncGFql0JRnvJJeqhAS5goQPAmU2
- fW9TjmLZ4yn3stXHvZHNPmsbzRir9IqbrzNcDkaAxOUvUHNWI3iZ4iJ9fmTBASN1w7Hl
- FUp9IF5H0nWiNM0ckTjisYyL5Jk/SnYNldAyoDmxJTRbI3lq6ERpPRfJyM44dyt2glU4
- wkfQ==
-X-Gm-Message-State: AOJu0YyKu8RmmeLMaQ0ONAh2jCdFGEO6b0jvk5pLy9zgB4cFSMhN6+Jw
- Hec/zpzB1Z7Ao2ZQ9mrQ59PnAkH88E4Vb5Gkjv/6bVm/hDenY3rAwnJ3MoMc11z6S0Wavdijtwg
- 23G+pa04yrxAEUmRXgYoXkRhBa6IPBztYn97+24vmB4rVSIArByjKNaVu
-X-Gm-Gg: AR+sD10yS9iXvpkJNT07by4npYGsgIg3YXt6bHOlhnkAC2espP4/pNfVMjZYP2NiuYw
- 2CFiPM/R5X8YzDRvixRzXm8grV7V2jT1GwtSY2MRm+5YDoi62wDvtvoaAMpqfUr4ojASmLGIY35
- CCVxJcZeb/w4+GP1O6AMJNpAAfhJVjuK1TsSmdKODp5Qo1zOzpQnWCzr1hcOsLli3xGWa6L0SuJ
- EyG1d8iwlnfQH+dRA4MNnmO8u5TYGWrOuXInuteOF8XLXKUVAp8rHEsbaHrjiF73barKj3eZ2z8
- pWJ27MZYfSEcWbJnXHNTO4mFtzAt8KjrVU9GgQTErC04s+2SrQG0ld+mpVhR2pxzM+MyAKBGuHl
- Ob2pFtxERKmOWhcq7z5p+JGE=
-X-Received: by 2002:a05:600c:8b78:b0:495:5d6d:9cb3 with SMTP id
- 5b1f17b1804b1-496c65996aemr61940885e9.37.1785316498645; 
- Wed, 29 Jul 2026 02:14:58 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b78:b0:495:5d6d:9cb3 with SMTP id
- 5b1f17b1804b1-496c65996aemr61940375e9.37.1785316498118; 
- Wed, 29 Jul 2026 02:14:58 -0700 (PDT)
-Received: from redhat.com (ppp-94-66-118-61.home.otenet.gr. [94.66.118.61])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47fb6b0ef25sm6233060f8f.24.2026.07.29.02.14.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Jul 2026 02:14:57 -0700 (PDT)
-Date: Wed, 29 Jul 2026 05:14:53 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Jason Wang <jasowangio@gmail.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- Jason Wang <jasowang@redhat.com>, Fam Zheng <fam@euphon.net>,
- qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- virtio-fs@lists.linux.dev, Kevin Wolf <kwolf@redhat.com>,
- zhenwei pi <zhenwei.pi@linux.dev>, Paolo Bonzini <pbonzini@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Milan Zamazal <mzamazal@redhat.com>, Raphael Norwitz <rnorwitz@nvidia.com>
-Subject: Re: [PATCH v5 2/6] vhost-user: add GET_VRING_BASE_SKIP_DRAIN message
-Message-ID: <20260729045541-mutt-send-email-mst@kernel.org>
-References: <20260728100841.3475774-1-dtalexundeer@yandex-team.ru>
- <20260728100841.3475774-3-dtalexundeer@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wp0MD-0004uZ-Gf
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 05:13:48 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
+ by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id 3A1B6C0A16;
+ Wed, 29 Jul 2026 12:13:39 +0300 (MSK)
+Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:484::1:24])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id bDa8GXKW9mI0-aWFUvYes; Wed, 29 Jul 2026 12:13:38 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1785316418;
+ bh=nJX+IdgbdDM/FLPNp/Cf9qv2C/y3bYAjrm4iACmgaMI=;
+ h=Message-ID:Date:Cc:Subject:To:From;
+ b=agxdUiyFVYuM8dcrvScltH5xlWDnOrMOL3tEGsGEmRVJzA/SJ8cWzTQOnCcaAjc5T
+ TsjZOGf1Iuf2fD8WBLGC45v8brzxD5oNChzPV3iAM9qdGTFhwA0tZDvpGJGK8NDAWt
+ 64MWXmFyiMuwiCzEL9skwKFjcz6nQKLrfFtqpcC0=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: jasowang@redhat.com,
+	mst@redhat.com
+Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
+ raphael.s.norwitz@gmail.com, bchaney@akamai.com, vsementsov@yandex-team.ru,
+ qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
+ yc-core@yandex-team.ru, mark.caveayland@nutanix.com
+Subject: [PATCH v20 00/15] virtio-net: live-TAP local migration
+Date: Wed, 29 Jul 2026 12:12:38 +0300
+Message-ID: <20260729091334.1863155-1-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260728100841.3475774-3-dtalexundeer@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -132,313 +76,463 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 28, 2026 at 03:08:37PM +0500, Alexandr Moshkov wrote:
-> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT was introduced to allow
-> the back-end to suspend in-flight I/O during GET_VRING_BASE instead of
-> draining it, enabling live migration of in-flight requests. However,
-> this behaviour is tied to the protocol feature itself — once negotiated,
+Hi all!
 
-Can we please avoid em-dashes and all kind of unicode fanciness in
-commit log? I worry if we do this the next step is emojis) Let's stick
-to ASCII with the exception of UTF-8 in contributor names.
+Here is a migration for TAP net backend, including its properties and
+open fds.
 
-Thanks.
+With this new feature, management software doesn't need to initialize
+new TAP and do a switch to it. Nothing should be done around
+virtio-net in local migration: it just migrates and continues to use
+same TAP device. So we avoid extra logic in management software, extra
+allocations in kernel (for new TAP), and corresponding extra delay in
+migration downtime.
 
-> there is no way for the front-end to tell the back-end to fall back to
-> the normal drain behaviour on a per-stop basis. This makes it impossible
-> to selectively use suspend semantics only during live migration while
-> keeping drain semantics in other cases.
+v20:
+
+Main changes:
+
+ - mark the new API unstable for now
+ - support CPR -- actually only drop UNIX-socket requirement
+   when mode is cpr-exec both in documentation (09) and check (10)
+
+Details:
+
+01: - update commit message
+    - rename script_arg -> script_arg_value, to simplify 03
+    - keep r-bs by Markus and Ben
+02: add r-b by Ben
+03: - improve warn_report() wording
+    - synchronize QAPI and cmdline documentation
+    - keep r-bs by Ben and Markus
+06-08: add r-b by Ben
+09: - drop "on the same OS" from @local documentation [Markus]
+    - mention cpr-exec mode
+    - mark @local as unstable (to be consistent
+      with x-local-migration-supported, which was discussed to be
+      unstable, seems better to keep the complete new API as unstable
+      for a while)
+    - mention why not simply detect "is UNIX socket" in commit message
+    - drop r-b/a-b
+10: - skip UNIX-socket requirement for cpr-exec migration mode
+    - drop r-b
+11: add r-b by Ben
+12: - rework the patch after discussion with Ben
+    - drop r-b
+13: - rename local-migration-supported -> x-local-migration-supported and
+      mark it unstable in QAPI (we want "x-" because it's not only QAPI
+      field but also QOM property)
+    - improve documentation and error reporting
+    - keep r-b by Ben
+15: - improve cleanup (more guarantee to cleanup /dev/shm)
+    - some improvements to make further introduction of CPR-tests simpler
+       - move some initial things to setUp()
+       - drop default nic
+       - rework prepare_and_launch_vm() to be only prepare_vm()
+       - add migrate() helper
+    - drop r-b
+
+v20 is pushed to
+
+    https://gitlab.com/vsementsov/qemu.git
+      tag: up-tap-fd-migration-with-bk-opt-v20
+
+To run the test, use sudo, as test needs to configure TAP device:
+
+    sudo PYTHONPATH=python:tests/functional \
+    QEMU_TEST_QEMU_BINARY=$PWD/build/qemu-system-x86_64 \
+    MESON_BUILD_ROOT=$PWD/build \
+    ./build/pyvenv/bin/python3 tests/functional/x86_64/test_tap_migration.py
+
+Or, to test the feature by hand, you may follow the instruction at
+the and of this document (search for "How to run local fd migration by hand"
+caption).
 
 
-So what are the "other cases"?
+Why this series, and why do it this way
+=======================================
 
-> 
-> Introduce a separate message VHOST_USER_GET_VRING_BASE_SKIP_DRAIN (id=45)
-> guarded by a new protocol feature
-> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN. The message is identical
-> to GET_VRING_BASE except that the back-end must immediately suspend all
-> in-flight I/O and record it in the inflight region. This way the front-end
-> has explicit per-call control: send GET_VRING_BASE for normal drain, send
-> GET_VRING_BASE_SKIP_DRAIN when immediate suspend is needed.
-> 
-> The new feature requires both VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT
-> and VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD to be negotiated.
-> 
-> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-> ---
->  docs/interop/vhost-user.rst       | 88 +++++++++++++++++++------------
->  hw/virtio/vhost-user.c            | 44 ++++++++++++++--
->  hw/virtio/vhost.c                 |  2 +-
->  include/hw/virtio/vhost-backend.h |  1 +
->  include/hw/virtio/vhost-user.h    |  1 +
->  5 files changed, 95 insertions(+), 41 deletions(-)
-> 
-> diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
-> index c83ae2accb..d2e0efaeaa 100644
-> --- a/docs/interop/vhost-user.rst
-> +++ b/docs/interop/vhost-user.rst
-> @@ -445,6 +445,7 @@ replies, except for the following requests:
->  * ``VHOST_USER_GET_FEATURES``
->  * ``VHOST_USER_GET_PROTOCOL_FEATURES``
->  * ``VHOST_USER_GET_VRING_BASE``
-> +* ``VHOST_USER_GET_VRING_BASE_SKIP_DRAIN``
->  * ``VHOST_USER_SET_LOG_BASE`` (if ``VHOST_USER_PROTOCOL_F_LOG_SHMFD``)
->  * ``VHOST_USER_GET_INFLIGHT_FD`` (if ``VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD``)
->  
-> @@ -523,7 +524,7 @@ must start a ring upon receiving a kick (that is, detecting that file
->  descriptor is readable) on the descriptor specified by
->  ``VHOST_USER_SET_VRING_KICK`` or receiving the in-band message
->  ``VHOST_USER_VRING_KICK`` if negotiated, and stop a ring upon receiving
-> -``VHOST_USER_GET_VRING_BASE``.
-> +``VHOST_USER_GET_VRING_BASE`` or ``VHOST_USER_GET_VRING_BASE_SKIP_DRAIN``.
->  
->  Rings can be enabled or disabled by ``VHOST_USER_SET_VRING_ENABLE``.
->  
-> @@ -1101,29 +1102,30 @@ Protocol features
->  
->  .. code:: c
->  
-> -  #define VHOST_USER_PROTOCOL_F_MQ                       0
-> -  #define VHOST_USER_PROTOCOL_F_LOG_SHMFD                1
-> -  #define VHOST_USER_PROTOCOL_F_RARP                     2
-> -  #define VHOST_USER_PROTOCOL_F_REPLY_ACK                3
-> -  #define VHOST_USER_PROTOCOL_F_MTU                      4
-> -  #define VHOST_USER_PROTOCOL_F_BACKEND_REQ              5
-> -  #define VHOST_USER_PROTOCOL_F_CROSS_ENDIAN             6
-> -  #define VHOST_USER_PROTOCOL_F_CRYPTO_SESSION           7
-> -  #define VHOST_USER_PROTOCOL_F_PAGEFAULT                8
-> -  #define VHOST_USER_PROTOCOL_F_CONFIG                   9
-> -  #define VHOST_USER_PROTOCOL_F_BACKEND_SEND_FD         10
-> -  #define VHOST_USER_PROTOCOL_F_HOST_NOTIFIER           11
-> -  #define VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD          12
-> -  #define VHOST_USER_PROTOCOL_F_RESET_DEVICE            13
-> -  #define VHOST_USER_PROTOCOL_F_INBAND_NOTIFICATIONS    14
-> -  #define VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS     15
-> -  #define VHOST_USER_PROTOCOL_F_STATUS                  16
-> -  #define VHOST_USER_PROTOCOL_F_XEN_MMAP                17
-> -  #define VHOST_USER_PROTOCOL_F_SHARED_OBJECT           18
-> -  #define VHOST_USER_PROTOCOL_F_DEVICE_STATE            19
-> -  #define VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT 20
-> -  #define VHOST_USER_PROTOCOL_F_GPA_ADDRESSES           21
-> -  #define VHOST_USER_PROTOCOL_F_SHMEM_MAP               22
-> +  #define VHOST_USER_PROTOCOL_F_MQ                         0
-> +  #define VHOST_USER_PROTOCOL_F_LOG_SHMFD                  1
-> +  #define VHOST_USER_PROTOCOL_F_RARP                       2
-> +  #define VHOST_USER_PROTOCOL_F_REPLY_ACK                  3
-> +  #define VHOST_USER_PROTOCOL_F_MTU                        4
-> +  #define VHOST_USER_PROTOCOL_F_BACKEND_REQ                5
-> +  #define VHOST_USER_PROTOCOL_F_CROSS_ENDIAN               6
-> +  #define VHOST_USER_PROTOCOL_F_CRYPTO_SESSION             7
-> +  #define VHOST_USER_PROTOCOL_F_PAGEFAULT                  8
-> +  #define VHOST_USER_PROTOCOL_F_CONFIG                     9
-> +  #define VHOST_USER_PROTOCOL_F_BACKEND_SEND_FD           10
-> +  #define VHOST_USER_PROTOCOL_F_HOST_NOTIFIER             11
-> +  #define VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD            12
-> +  #define VHOST_USER_PROTOCOL_F_RESET_DEVICE              13
-> +  #define VHOST_USER_PROTOCOL_F_INBAND_NOTIFICATIONS      14
-> +  #define VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS       15
-> +  #define VHOST_USER_PROTOCOL_F_STATUS                    16
-> +  #define VHOST_USER_PROTOCOL_F_XEN_MMAP                  17
-> +  #define VHOST_USER_PROTOCOL_F_SHARED_OBJECT             18
-> +  #define VHOST_USER_PROTOCOL_F_DEVICE_STATE              19
-> +  #define VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT   20
-> +  #define VHOST_USER_PROTOCOL_F_GPA_ADDRESSES             21
-> +  #define VHOST_USER_PROTOCOL_F_SHMEM_MAP                 22
-> +  #define VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN 23
->  
->  Front-end message types
->  -----------------------
-> @@ -1320,17 +1322,11 @@ Front-end message types
->    set to 0.
->  
->    By default, the back-end must complete all inflight I/O requests for the
-> -  specified vring before stopping it.
-> -
-> -  If the ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT`` protocol
-> -  feature has been negotiated, the back-end may suspend in-flight I/O
-> -  requests and record them as described in :ref:`Inflight I/O tracking
-> -  <inflight_io_tracking>` instead of completing them before stopping the vring.
-> -  How to suspend an in-flight request depends on the implementation of the back-end
-> -  but it typically can be done by aborting or cancelling the underlying I/O
-> -  request. The ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT``
-> -  protocol feature must only be negotiated if
-> -  ``VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD`` is also negotiated.
-> +  specified vring before stopping it. If the
-> +  ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN`` protocol feature has
-> +  been negotiated, the front-end may instead use
-> +  ``VHOST_USER_GET_VRING_BASE_SKIP_DRAIN`` to request the back-end to
-> +  suspend in-flight I/O immediately.
->  
->  ``VHOST_USER_SET_VRING_KICK``
->    :id: 12
-> @@ -1833,6 +1829,28 @@ Front-end message types
->  
->    * The size may be 0 if the region is unused.
->  
-> +``VHOST_USER_GET_VRING_BASE_SKIP_DRAIN``
-> +  :id: 45
-> +  :equivalent ioctl: N/A
-> +  :request payload: vring state description
-> +  :reply payload: vring descriptor index/indices
-> +
-> +  This message requires the ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN``
-> +  protocol feature to be negotiated.
-> +
-> +  Identical to ``VHOST_USER_GET_VRING_BASE`` except that the back-end
-> +  must not wait for inflight I/O requests to complete before stopping
-> +  the vring.  Instead, the back-end must immediately suspend all
-> +  in-flight I/O requests and record them as described in
-> +  :ref:`Inflight I/O tracking <inflight_io_tracking>`. How to suspend
-> +  an in-flight request depends on the implementation of the back-end,
-> +  but it typically can be done by aborting or cancelling the underlying
-> +  I/O request.
-> +
-> +  The ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN`` protocol feature
-> +  must only be negotiated if both ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT``
-> +  and ``VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD`` are also negotiated.
-> +
->  Back-end message types
->  ----------------------
->  
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index d627351f45..bf455daa44 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -101,6 +101,7 @@ typedef enum VhostUserRequest {
->      VHOST_USER_SET_DEVICE_STATE_FD = 42,
->      VHOST_USER_CHECK_DEVICE_STATE = 43,
->      VHOST_USER_GET_SHMEM_CONFIG = 44,
-> +    VHOST_USER_GET_VRING_BASE_SKIP_DRAIN = 45,
->      VHOST_USER_MAX
->  } VhostUserRequest;
->  
-> @@ -167,6 +168,7 @@ static const char *vhost_req_name(VhostUserRequest req)
->      VHOST_USER_CASE(GET_SHARED_OBJECT)
->      VHOST_USER_CASE(SET_DEVICE_STATE_FD)
->      VHOST_USER_CASE(CHECK_DEVICE_STATE)
-> +    VHOST_USER_CASE(GET_VRING_BASE_SKIP_DRAIN)
->      default:
->          return "<unknown>";
->      }
-> @@ -1399,12 +1401,18 @@ static VhostUserHostNotifier *fetch_notifier(VhostUserState *u,
->      return g_ptr_array_index(u->notifiers, idx);
->  }
->  
-> -static int vhost_user_get_vring_base(struct vhost_dev *dev,
-> -                                     struct vhost_vring_state *ring)
-> +static int get_vring_base(struct vhost_dev *dev,
-> +                          struct vhost_vring_state *ring,
-> +                          bool skip_drain)
->  {
->      int ret;
-> +    int request = VHOST_USER_GET_VRING_BASE;
-> +    if (skip_drain) {
-> +        request = VHOST_USER_GET_VRING_BASE_SKIP_DRAIN;
-> +    }
-> +
->      VhostUserMsg msg = {
-> -        .hdr.request = VHOST_USER_GET_VRING_BASE,
-> +        .hdr.request = request,
->          .hdr.flags = VHOST_USER_VERSION,
->          .payload.state = *ring,
->          .hdr.size = sizeof(msg.payload.state),
-> @@ -1424,9 +1432,9 @@ static int vhost_user_get_vring_base(struct vhost_dev *dev,
->          return ret;
->      }
->  
-> -    if (msg.hdr.request != VHOST_USER_GET_VRING_BASE) {
-> +    if (msg.hdr.request != request) {
->          error_report("Received unexpected msg type. Expected %d received %d",
-> -                     VHOST_USER_GET_VRING_BASE, msg.hdr.request);
-> +                     request, msg.hdr.request);
->          return -EPROTO;
->      }
->  
-> @@ -1440,6 +1448,25 @@ static int vhost_user_get_vring_base(struct vhost_dev *dev,
->      return 0;
->  }
->  
-> +static int vhost_user_get_vring_base(struct vhost_dev *dev,
-> +                                     struct vhost_vring_state *ring)
-> +{
-> +    return get_vring_base(dev, ring, false);
-> +}
-> +
-> +static int vhost_user_get_vring_base_skip_drain(struct vhost_dev *dev,
-> +                                     struct vhost_vring_state *ring)
-> +{
-> +    bool skip_drain_supported = vhost_user_has_protocol_feature(dev,
-> +                               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN);
-> +
-> +    if (!skip_drain_supported) {
-> +        return 0;
-> +    }
-> +
-> +    return get_vring_base(dev, ring, true);
-> +}
-> +
->  static int vhost_set_vring_file(struct vhost_dev *dev,
->                                  VhostUserRequest request,
->                                  struct vhost_vring_file *file)
-> @@ -2551,6 +2578,12 @@ static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
->                                 VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
->          }
->  
-> +        if (!virtio_has_feature(protocol_features,
-> +                                VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT)) {
-> +            protocol_features &= ~(1ULL <<
-> +                             VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN);
-> +        }
-> +
->          /* final set of protocol features */
->          u->protocol_features = protocol_features;
->          err = vhost_user_set_protocol_features(dev, u->protocol_features);
-> @@ -3409,6 +3442,7 @@ const VhostOps user_ops = {
->          .vhost_set_vring_num = vhost_user_set_vring_num,
->          .vhost_set_vring_base = vhost_user_set_vring_base,
->          .vhost_get_vring_base = vhost_user_get_vring_base,
-> +        .vhost_get_vring_base_skip_drain = vhost_user_get_vring_base_skip_drain,
->          .vhost_set_vring_kick = vhost_user_set_vring_kick,
->          .vhost_set_vring_call = vhost_user_set_vring_call,
->          .vhost_set_vring_err = vhost_user_set_vring_err,
-> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> index 2a62550222..2c7f464d55 100644
-> --- a/hw/virtio/vhost.c
-> +++ b/hw/virtio/vhost.c
-> @@ -1502,7 +1502,7 @@ static int do_vhost_virtqueue_stop(struct vhost_dev *dev,
->  {
->      if (skip_drain) {
->          assert(vhost_user_has_protocol_feature(dev,
-> -               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT));
-> +               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN));
->      }
->      int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, idx);
->      struct vhost_vring_state state = {
-> diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
-> index d878d7b733..daa979a1aa 100644
-> --- a/include/hw/virtio/vhost-backend.h
-> +++ b/include/hw/virtio/vhost-backend.h
-> @@ -190,6 +190,7 @@ typedef struct VhostOps {
->      vhost_set_vring_num_op vhost_set_vring_num;
->      vhost_set_vring_base_op vhost_set_vring_base;
->      vhost_get_vring_base_op vhost_get_vring_base;
-> +    vhost_get_vring_base_op vhost_get_vring_base_skip_drain;
->      vhost_set_vring_kick_op vhost_set_vring_kick;
->      vhost_set_vring_call_op vhost_set_vring_call;
->      vhost_set_vring_err_op vhost_set_vring_err;
-> diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
-> index 06c360af18..47c13f8677 100644
-> --- a/include/hw/virtio/vhost-user.h
-> +++ b/include/hw/virtio/vhost-user.h
-> @@ -36,6 +36,7 @@ enum VhostUserProtocolFeature {
->      VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT = 20,
->      VHOST_USER_PROTOCOL_F_GPA_ADDRESSES = 21,
->      VHOST_USER_PROTOCOL_F_SHMEM = 22,
-> +    VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN = 23,
->      VHOST_USER_PROTOCOL_F_MAX
->  };
->  
-> -- 
-> 2.34.1
+This came up in the v19 discussion, so it's summarized here to avoid
+repeating the same questions.
+There was a large discussion at v19, covered many questions. I'm
+summarizing them below.
+
+v19: https://lore.kernel.org/qemu-devel/20260714154246.1242856-1-vsementsov@yandex-team.ru/
+
+Why local migration matters
+---------------------------
+
+Local migration (migrating to a new QEMU process on the same host) is not
+a rare operation for in the cloud.  When upgrading QEMU, _all_ VMs on
+_all_ hosts are locally migrated.  The freeze time of such update affects
+_all_ customers, and some are sensitive to even small freezes.  Remote
+migrations, by contrast, are done mostly to release a physical server for
+service/redeploy, which is relatively infrequent.
+
+The aggregate impact is large, and reducing the per-VM downtime is
+significant.
+
+Why not just create a new TAP and switch to it
+----------------------------------------------
+
+It is possible to create a new TAP device on the target and
+migrate the usual way.  But the overhead is in switching to the new TAP
+in our cloud virtual networking component.  Could the switching itself
+be optimized to always be very fast?  Probably yes, but we chose a
+different approach: drop extra components from the process and avoid
+any switching at all.  Both the cloud networking component and the
+storage backend (with the vhost-user-blk live-update series) don't even
+know that QEMU is migrating.  This gives a simpler design (fewer
+components involved) and shows good results -- several times reduction
+in freeze time.
+
+Also, on hosts with many CPUs, TAP queues allocate a noticeable amount of
+RAM, so having 2x queues during migration is an overhead.
+
+Why not use a persistent TAP (open the same TAP on both source and target)
+-------------------------------------------------------------------------
+
+First, same memory overhead like with "new TAP" case.
+
+Second, MAX_TAP_QUEUES is 256 in the kernel; if the source already has more
+  than 128 queues open, the target cannot open the same device.
+
+[Note also, that such persistent TAP migration will not "just work",
+it also needs QEMU changes like patch 12/15 to avoid packet lost]
+
+Why not pass FDs externally (e.g. from libvirt / management tool)
+-----------------------------------------------------------------
+
+- The management tool would need to store (or retrieve from source QEMU)
+  and pass these FDs, requiring it to know about FDs that QEMU already
+  owns.  Libvirt may restart, and that shouldn't break migration.
+- Adding an API to retrieve FDs from QEMU just to pass them to target QEMU
+  is not a clearer solution.
+- QEMU owns the TAP fd and has full knowledge of its state.  Pushing
+  this responsibility to an external tool means the tool needs to
+  understand QEMU internals -- that's a worse separation of concerns.
+- QEMU already passes FDs through migration for VFIO devices (CPR), we
+  do continue this practice
+
+Looking at wider picture, where we want to migrate not only TAP, but also
+vfio devices (already implemented as CPR migration, but may be updated to
+use similar approach as in this series, to use one migration channel),
+vhost-user-blk (my another series in flight) and vhost-user-fs (not yet
+published), vhost-vsock migration ("[PATCH v3 0/7] migration/cpr: support
+vhost-vsock devices" in flight-series from Virtuozzo), it seems to be a
+good generic approach: simply pass backends (including open FDs) to the
+target, not involving mgmt. Qemu has full knowledge about these FDs and
+owns the whole state. Migrating them in QEMU looks correct.
+
+Why not use the cpr-transfer approach (pass FDs before device creation)
+-----------------------------------------------------------------------
+
+The CPR approach passes FDs _before_ any devices are created on the
+target.  While this avoids touching frontend code (patch 11/15), it
+means the target starts using (calling ioctls on) FDs that are still
+actively used by the running source QEMU.  That works for TAP, but it
+does _not_ work with vhost-user-blk, where sharing the fd between
+source and running target can break things.  My series uses the same
+approach for both net and storage, and it also works with CPR (see
+below).
+
+That's not saying about "local" approach provides simpler user
+experience than cpr-transfer:
+
+- no need in secondary migration channel
+- no need to work with unavailable QMP for target process until
+  "migrate" on source
+- more like usual migration
+
+Does this work with CPR?
+------------------------
+
+Yes.  For cpr-transfer, TAP migrates through the main migration channel
+like other (non-CPR) devices.  For cpr-exec, TAP FDs don't have
+FD_CLOEXEC set, so they are inherited by the new process as-is; the
+same core mechanism (load_fd / save_fd in migration/vmstate-types.c) is
+used.  The 'local' migration parameter documentation now also covers
+cpr-exec mode (skip the UNIX-socket requirement in that case).
+New test cases exercising both cpr-transfer and cpr-exec with TAP
+local migration will be sent as separate series.
+
+
+How to run local fd migration by hand
+=====================================
+
+The walkthrough uses four terminals:
+
+  source-cmd  -- source VM console (serial output, guest login)
+  source-qmp  -- QMP connection to the source QEMU
+  target-cmd  -- target VM console (serial output, guest login after migration)
+  target-qmp  -- QMP connection to the target QEMU
+
+1. Prerequisites
+----------------
+
+    QEMU=/path/to/your/build/qemu-system-x86_64
+
+# download same image as in test
+
+    wget -O /tmp/alpine.iso "https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/x86_64/alpine-standard-3.22.1-x86_64.iso"
+
+
+# prepare tap device (be careful to not break your own networks)
+
+    sudo ip tuntap add dev tap0 mode tap multi_queue
+    sudo ip addr add 192.168.100.1/24 dev tap0
+    sudo ip link set tap0 up
+
+
+2. Start source VM
+------------------
+
+In source-cmd, run:
+
+    $QEMU \
+        -name source \
+        -machine q35 \
+        -accel kvm \
+        -m 1G \
+        -object memory-backend-file,id=ram0,size=1G,mem-path=/dev/shm/qemu_migration_test,share=on \
+        -machine memory-backend=ram0 \
+        -drive file=/tmp/alpine.iso,media=cdrom,format=raw \
+        -device pcie-pci-bridge,id=pci.1,bus=pcie.0 \
+        -serial stdio \
+        -nographic \
+        -S \
+        -qmp unix:/tmp/qmp-source.sock,server=on,wait=off
+
+Note: the netdev and virtio-net device are added via QMP below for symmetry
+with the target.  On the source you could also pass them on the command line
+(with x-local-migration-supported=on).
+
+In source-qmp, connect and add the TAP netdev and virtio-net device:
+
+    socat - UNIX-CONNECT:/tmp/qmp-source.sock
+
+    {"execute": "qmp_capabilities"}
+
+    {"execute": "netdev_add", "arguments": {
+        "id": "netdev.1",
+        "type": "tap",
+        "ifname": "tap0",
+        "queues": 4,
+        "vnet_hdr": true,
+        "script": "no",
+        "downscript": "no",
+        "x-local-migration-supported": true
+    }}
+
+    {"execute": "device_add", "arguments": {
+        "driver": "virtio-net-pci",
+        "id": "vnet.1",
+        "netdev": "netdev.1",
+        "bus": "pci.1",
+        "mq": true,
+        "vectors": 18,
+        "romfile": "",
+        "disable-legacy": "off"
+    }}
+
+    {"execute": "cont"}
+
+Wait for Alpine to boot in source-cmd.  When you see the login prompt, log
+in as root (no password):
+
+    localhost login: root
+
+Configure the guest network:
+
+    ip addr add 192.168.100.2/24 dev eth0
+    ip link set eth0 up
+
+Verify connectivity from the guest:
+
+    ping -c 3 192.168.100.1
+
+And from the host (in any spare terminal):
+
+    ping -c 3 192.168.100.2
+
+
+3. Start target VM
+------------------
+
+The TAP netdev must be created via QMP after enabling the "local" migration
+parameter -- the target will not open tap0 itself; instead it will receive the
+TAP file descriptors from the source over the migration channel.
+
+In target-cmd, run:
+
+    $QEMU \
+        -name target \
+        -machine q35 \
+        -accel kvm \
+        -m 1G \
+        -object memory-backend-file,id=ram0,size=1G,mem-path=/dev/shm/qemu_migration_test,share=on \
+        -machine memory-backend=ram0 \
+        -drive file=/tmp/alpine.iso,media=cdrom,format=raw \
+        -device pcie-pci-bridge,id=pci.1,bus=pcie.0 \
+        -serial stdio \
+        -nographic \
+        -qmp unix:/tmp/qmp-target.sock,server=on,wait=off \
+        -incoming defer
+
+In target-qmp, connect, enable local migration, and add the TAP netdev and
+virtio-net device.  The "local" parameter must be set before creating the TAP.
+Do not pass ifname/fd -- the fd will arrive via the migration channel:
+
+    socat - UNIX-CONNECT:/tmp/qmp-target.sock
+
+    {"execute": "qmp_capabilities"}
+
+    {"execute": "migrate-set-capabilities", "arguments": {
+        "capabilities": [
+            {"capability": "events",          "state": true},
+            {"capability": "x-ignore-shared", "state": true}
+        ]
+    }}
+
+    {"execute": "migrate-set-parameters", "arguments": {"local": true}}
+
+    {"execute": "netdev_add", "arguments": {
+        "id": "netdev.1",
+        "type": "tap",
+        "queues": 4,
+        "script": "",
+        "downscript": "",
+        "x-local-migration-supported": true
+    }}
+
+    {"execute": "device_add", "arguments": {
+        "driver": "virtio-net-pci",
+        "id": "vnet.1",
+        "netdev": "netdev.1",
+        "bus": "pci.1",
+        "mq": true,
+        "vectors": 18,
+        "romfile": "",
+        "disable-legacy": "off"
+    }}
+
+4. Start migration
+------------------
+
+In target-qmp, tell the target to listen for the incoming migration:
+
+    {"execute": "migrate-incoming",
+     "arguments": {"uri": "unix:/tmp/migration.sock"}}
+
+In source-qmp, configure migration capabilities and parameters:
+
+    {"execute": "migrate-set-capabilities", "arguments": {
+        "capabilities": [
+            {"capability": "events",          "state": true},
+            {"capability": "x-ignore-shared", "state": true}
+        ]
+    }}
+
+    {"execute": "migrate-set-parameters", "arguments": {"local": true}}
+
+In source-qmp, trigger the migration:
+
+    {"execute": "migrate",
+     "arguments": {"uri": "unix:/tmp/migration.sock"}}
+
+Poll migration status until it completes (source-qmp):
+
+    {"execute": "query-migrate"}
+    # repeat until "status" == "completed"
+
+Or just wait for the MIGRATION event that QEMU emits automatically:
+
+    # {"event": "MIGRATION", "data": {"status": "completed"}, ...}
+
+Once the source reports "completed", resume the target VM (target-qmp):
+
+    {"execute": "cont"}
+
+The target VM is now running with the migrated state and the TAP file
+descriptors that were passed from the source. Still, target console
+(in target-cmd) may still be empty, until you at least press Enter in
+it.
+
+Verify that the guest is still reachable from the host:
+
+    ping -c 3 192.168.100.2
+
+And from inside the guest in target-cmd:
+
+    ping -c 3 192.168.100.1
+
+
+5. Cleanup
+----------
+
+Shut down the target VM (target-qmp):
+
+    {"execute": "quit"}
+
+Shut down the source VM (source-qmp):
+
+    {"execute": "quit"}
+
+Remove the TAP device:
+
+    sudo ip tuntap del tap0 mode tap multi_queue
+
+Remove the shared memory file:
+
+    rm /dev/shm/qemu_migration_test
+
+Remove leftover sockets if they still exist:
+
+    rm -f /tmp/migration.sock /tmp/qmp-source.sock /tmp/qmp-target.sock
+
+Vladimir Sementsov-Ogievskiy (15):
+  net/tap: rework tap_parse_script
+  net/tap: improve script/downscript options documentation
+  net/tap: deprecate "no" as special value for script/downscript
+  net/tap: move vhost-net open() calls to tap_parse_vhost_fds()
+  net/tap: move vhost initialization to tap_setup_vhost()
+  net/tap: use container_of instead of DO_UPCAST
+  net/tap: QOMify tap backend
+  net/tap: add TYPE_VMSTATE_IF interface
+  qapi: add local migration parameter
+  migration/channel: check that transfer is UNIX socket when "local" set
+  virtio-net: support local migration of backend
+  net/tap: disable read polling for stopped VM
+  net/tap: support local migration with virtio-net
+  tests/functional: add skipWithoutSudo() decorator
+  tests/functional: add test_tap_migration
+
+ docs/about/deprecated.rst                     |  18 +
+ docs/system/i386/microvm.rst                  |   4 +-
+ docs/system/i386/xenpvh.rst                   |   2 +-
+ docs/system/ppc/ppce500.rst                   |   4 +-
+ docs/system/riscv/microchip-icicle-kit.rst    |   2 +-
+ docs/system/riscv/sifive_u.rst                |   2 +-
+ hw/net/virtio-net.c                           |  89 +++-
+ include/hw/virtio/virtio-net.h                |   1 +
+ include/migration/misc.h                      |   2 +
+ include/migration/vmstate.h                   |   2 +
+ include/net/net.h                             |   9 +
+ include/net/tap.h                             |   2 +
+ migration/channel.c                           |  17 +
+ migration/options.c                           |  18 +-
+ net/net.c                                     |  14 +-
+ net/tap.c                                     | 446 ++++++++++++++---
+ qapi/migration.json                           |  22 +-
+ qapi/net.json                                 |  45 +-
+ qemu-options.hx                               |  13 +-
+ tests/functional/qemu_test/decorators.py      |  16 +
+ tests/functional/x86_64/meson.build           |   1 +
+ tests/functional/x86_64/test_tap_migration.py | 461 ++++++++++++++++++
+ 22 files changed, 1081 insertions(+), 109 deletions(-)
+ create mode 100755 tests/functional/x86_64/test_tap_migration.py
+
+-- 
+2.43.0
 
 
