@@ -4,70 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EB69C53200
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 09:16:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1EF5C54F51
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 09:17:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp0MH-0003hm-EQ; Wed, 29 Jul 2026 05:13:49 -0400
+	id 1wp0Q3-0001p9-4l; Wed, 29 Jul 2026 05:17:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wp0MF-0003gt-Nc
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 05:13:47 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wp0Q0-0001nF-AT
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 05:17:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wp0MD-0004um-AT
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 05:13:47 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
- by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id AC7DBC0A07;
- Wed, 29 Jul 2026 12:13:41 +0300 (MSK)
-Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:484::1:24])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id bDa8GXKW9mI0-cIPS7QSl; Wed, 29 Jul 2026 12:13:41 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1785316421;
- bh=DaeKnaftV441pYWOLN5La1ohWjtFSUg301klU0RusmE=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=f+WSXzsG5e0FKusqSy6DU+U6nyeedccqtX0hJKxcTpyf7gqntU7S+W/M5OL0MF3tg
- JIRVT5+TdgaoZlDmwEfaCZ5EMNpWRmmi1FAZK5fBfD7RTXFXfy3uKGjfmSKPtkayJ2
- 7QthPw1U6DjoGflTI3HASfSFMG+ePTFtpiFbnR0s=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: jasowang@redhat.com,
-	mst@redhat.com
-Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
- raphael.s.norwitz@gmail.com, bchaney@akamai.com, vsementsov@yandex-team.ru,
- qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
- yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
- Eric Blake <eblake@redhat.com>, Jason Wang <jasowangio@gmail.com>
-Subject: [PATCH v20 02/15] net/tap: improve script/downscript options
- documentation
-Date: Wed, 29 Jul 2026 12:12:40 +0300
-Message-ID: <20260729091334.1863155-3-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260729091334.1863155-1-vsementsov@yandex-team.ru>
-References: <20260729091334.1863155-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wp0Px-0005UR-7I
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 05:17:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785316656;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6AZUni5pu3rT71xyj5RDOkhB5zsnWpKb5bvls+Gr4fE=;
+ b=cGHNF+snESWgYTbCUjUfegDmUDQ0Z2Jyt+qZvLSdz+cv7H4xEztdhfCb5Txi8rosu7Hp1O
+ mU4j7sg1p6x8SNIy0eRD7aJaOdaGXGiKKHLyJdHre0XCO9F+wNpqoNg23FztOJRyc2CAIc
+ QfvpxSVxxKqFresul1jKRE5TpzOiQk4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-640-2nWEASjcMgST-J4HII62fg-1; Wed,
+ 29 Jul 2026 05:17:33 -0400
+X-MC-Unique: 2nWEASjcMgST-J4HII62fg-1
+X-Mimecast-MFC-AGG-ID: 2nWEASjcMgST-J4HII62fg_1785316652
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7CEEE1800347; Wed, 29 Jul 2026 09:17:31 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.180])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 19177300019F; Wed, 29 Jul 2026 09:17:28 +0000 (UTC)
+Date: Wed, 29 Jul 2026 11:17:26 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+Subject: Re: [PATCH for-11.1?] qemu-iotest 161: fix race
+Message-ID: <amnFJjf3_QVwNJwi@redhat.com>
+References: <20260728163919.369020-1-mjt@tls.msk.ru>
+ <amjss5kbAzHgjmdC@redhat.com>
+ <9f831894-4184-4a8d-9ebd-f11ca941ef07@tls.msk.ru>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9f831894-4184-4a8d-9ebd-f11ca941ef07@tls.msk.ru>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -79,67 +82,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Properly document defaults and special values of "" and "no".
+Am 28.07.2026 um 22:36 hat Michael Tokarev geschrieben:
+> On 7/28/26 20:53, Kevin Wolf wrote:
+> 
+> > > diff --git a/tests/qemu-iotests/161 b/tests/qemu-iotests/161
+> > > index f25effab936..0b8ba0b19e2 100755
+> > > --- a/tests/qemu-iotests/161
+> > > +++ b/tests/qemu-iotests/161
+> > > @@ -106,6 +106,7 @@ echo
+> > >   echo "*** Commit and then change an option on the backing file"
+> > >   echo
+> > >   # Create the images again
+> > > +rm -f -- "$TEST_IMG.base" "$TEST_IMG.int"
+> > >   TEST_IMG="$TEST_IMG.base" _make_test_img $IMG_SIZE
+> > >   TEST_IMG="$TEST_IMG.int" _make_test_img -b "$TEST_IMG.base" -F $IMGFMT
+> > >   _make_test_img -b "$TEST_IMG.int" -F $IMGFMT
+> > 
+> > This can only work for the file protocol, but the test also supports
+> > fuse, which is now broken.
+> 
+> I haven't noticed _rm_test_img function.  I wonder maybe we can add
+> this rm into _make_test_img directly, and fix this for all tests?
+> 
+> _make_test_img already calls _rm_test_img - for fuse protocol exactly.
+> It can call _rm_test_img unconditionally, I guess.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Ben Chaney <bchaney@akamai.com>
----
- qapi/net.json   | 12 +++++++++---
- qemu-options.hx |  9 +++++----
- 2 files changed, 14 insertions(+), 7 deletions(-)
+Using _rm_test_img should do the trick for 161 because it only supports
+file and fuse anyway. Those are the obvious two protocols that work with
+_rm_test_img.
 
-diff --git a/qapi/net.json b/qapi/net.json
-index 1a6382825c5..8f0915c4d86 100644
---- a/qapi/net.json
-+++ b/qapi/net.json
-@@ -399,9 +399,15 @@
- # @fds: multiple file descriptors of already opened multiqueue capable
- #     tap
- #
--# @script: script to initialize the interface
--#
--# @downscript: script to shut down the interface
-+# @script: script to initialize the interface.  An empty string or
-+#     "no" disables script execution.  Defaults to
-+#     ``<sysconfdir>/qemu-ifup``, where ``<sysconfdir>`` is the
-+#     system configuration directory at build time (typically /etc).
-+#
-+# @downscript: script to shut down the interface.  An empty string or
-+#     "no" disables script execution.  Defaults to
-+#     ``<sysconfdir>/qemu-ifdown``, where ``<sysconfdir>`` is the
-+#     system configuration directory at build time (typically /etc).
- #
- # @br: bridge name (since 2.8)
- #
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 34970fffc94..200949655ea 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -3014,7 +3014,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
-     "                use network scripts 'file' (default=" DEFAULT_NETWORK_SCRIPT ")\n"
-     "                to configure it and 'dfile' (default=" DEFAULT_NETWORK_DOWN_SCRIPT ")\n"
-     "                to deconfigure it\n"
--    "                use '[down]script=no' to disable script execution\n"
-+    "                use '[down]script=no' or '[down]script=' to disable script execution\n"
-     "                use network helper 'helper' (default=" DEFAULT_BRIDGE_HELPER ") to\n"
-     "                configure it\n"
-     "                use 'fd=h' to connect to an already opened TAP interface\n"
-@@ -3550,9 +3550,10 @@ SRST
-     Use the network script file to configure it and the network script
-     dfile to deconfigure it. If name is not provided, the OS
-     automatically provides one. The default network configure script is
--    ``/etc/qemu-ifup`` and the default network deconfigure script is
--    ``/etc/qemu-ifdown``. Use ``script=no`` or ``downscript=no`` to
--    disable script execution.
-+    ``<sysconfdir>/qemu-ifup`` and the default network deconfigure script is
-+    ``<sysconfdir>/qemu-ifdown``, where ``<sysconfdir>`` is the system
-+    configuration directory at build time (typically ``/etc``).
-+    Use ``[down]script=no`` or ``[down]script=`` to disable script execution.
- 
-     If running QEMU as an unprivileged user, use the network helper
-     to configure the TAP interface and attach it to the bridge.
--- 
-2.43.0
+Some others might work, too, because they just export a local file that
+can be deleted normally (nbd, ssh, nfs). _make_test_img() seems to take
+care of restarting the NBD server so that it would then serve the new
+image. I suppose SSH and NFS don't need to be notified and would
+automatically serve the new image. It's not entirely obvious, but it
+looks like it could work.
+
+rbd probably breaks, so we might need to exclude that.
+
+Kevin
 
 
