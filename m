@@ -4,121 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1A1EC54F51
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 11:25:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 934EAC54F51
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 11:31:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp2PO-0000Tz-Ek; Wed, 29 Jul 2026 07:25:10 -0400
+	id 1wp2VC-0002E8-As; Wed, 29 Jul 2026 07:31:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <asahu1x@linux.ibm.com>)
- id 1wp2PM-0000Td-Ax
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 07:25:08 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wp2VA-0002Dx-CN
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 07:31:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <asahu1x@linux.ibm.com>)
- id 1wp2PK-00087V-Ei
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 07:25:08 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66TBHfod3954914; Wed, 29 Jul 2026 11:25:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=9QD4EW
- OIE7H257RjVt8bF5OFna7Ne9oNiudFWk1haN4=; b=Glx+wVXkKWbznfw1ca9DfT
- s/1ZeIWbidF9jdo/DaW+qH/Zy+6PBgJKUu96nNSxBP09TNMDct9TjET2q7lt5jKn
- xtkv9/dRxNGfGQnp5VuETlMnzJ41aAAosFj661npgRUaLyYZULfBuGi5s8rMbAw1
- n7/Bi9OCY8aymQ2oUGR2qqLoRg0pfal6peP1Smd4bOpBNH2h1hkkxYVpeYlqOGrl
- 7TiOgoQEx5C1BEklVI/ZVao4u9dihmwVvXGuvVZK1fzvVtxWcr/M1DADDRl6KAnv
- Wf2DB1dKqSWchqt+9HYguNZweUxzzVDHtxpOfHKMlqtVH7NoPFA2UwCqs57zle/A
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0nsjnv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Jul 2026 11:25:02 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66TBBeP0020882;
- Wed, 29 Jul 2026 11:25:02 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fna5y65qr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Jul 2026 11:25:02 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66TBP1Nn30802534
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 29 Jul 2026 11:25:01 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1D18758043;
- Wed, 29 Jul 2026 11:25:01 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 03E4258059;
- Wed, 29 Jul 2026 11:24:55 +0000 (GMT)
-Received: from [9.124.208.184] (unknown [9.124.208.184])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 29 Jul 2026 11:24:54 +0000 (GMT)
-Message-ID: <79992c9a-1267-4512-aca2-7187e0925789@linux.ibm.com>
-Date: Wed, 29 Jul 2026 16:54:53 +0530
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wp2V7-0001IU-UJ
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 07:31:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785324663;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=MpkwfLSAhK+gyuTeXSWDbKE8h+1eJUPvUOBLN3Rwxyc=;
+ b=OF2C6by1iXjtDkjXuVX3ZhE2K9hIrZ6xX6Fh2OJqx3KSb4jpWOTfMD+Ne/QY6ZuvbZNNJK
+ r7I/BboCAyC48FF9hu8DV8nJjKFnerqGLVm9HrcOtmVReUHiwKELlTn2PPp7ldk5Pjf+MN
+ gia+Rnrf3QhFejB1fsFeyMIZKpJjKOg=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-482-BB52mUKzNkqXtLRIbvj1uA-1; Wed,
+ 29 Jul 2026 07:31:00 -0400
+X-MC-Unique: BB52mUKzNkqXtLRIbvj1uA-1
+X-Mimecast-MFC-AGG-ID: BB52mUKzNkqXtLRIbvj1uA_1785324658
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3AF2119560B5; Wed, 29 Jul 2026 11:30:58 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 20D25414; Wed, 29 Jul 2026 11:30:57 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9F16121E6920; Wed, 29 Jul 2026 13:30:54 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: jasowang@redhat.com,  mst@redhat.com,  armbru@redhat.com,
+ peterx@redhat.com,  farosas@suse.de,  raphael.s.norwitz@gmail.com,
+ bchaney@akamai.com,  qemu-devel@nongnu.org,  berrange@redhat.com,
+ pbonzini@redhat.com,  yc-core@yandex-team.ru,
+ mark.caveayland@nutanix.com,  Jason Wang <jasowangio@gmail.com>,  Eric
+ Blake <eblake@redhat.com>
+Subject: Re: [PATCH v20 13/15] net/tap: support local migration with virtio-net
+In-Reply-To: <20260729091334.1863155-14-vsementsov@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Wed, 29 Jul 2026 12:12:51 +0300")
+References: <20260729091334.1863155-1-vsementsov@yandex-team.ru>
+ <20260729091334.1863155-14-vsementsov@yandex-team.ru>
+Date: Wed, 29 Jul 2026 13:30:54 +0200
+Message-ID: <87jyqeqbgx.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 000/103] tests/tcg: run tests with meson
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Brian Cain
- <brian.cain@oss.qualcomm.com>, Peter Maydell <peter.maydell@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Helge Deller <deller@gmx.de>, Gustavo Romero <gustavo.romero@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, asahu1x@linux.ibm.com
-References: <20260728044248.137626-1-pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-From: Aniket Sahu <asahu1x@linux.ibm.com>
-In-Reply-To: <20260728044248.137626-1-pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI5MDA5MyBTYWx0ZWRfXxzHmpoZfvevt
- ZAzm1Eq9JNq+AvCvAZ2W55Sfk9r/2JOVwZQDXpm12r6OjAbs+5ql0wIsTx7RX2IjqwbMA07/vUH
- sf5TxutBp7uQghcZY3miCXzsGEs6t1A=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI5MDA5MyBTYWx0ZWRfX1mQXM8fHlJC6
- MD4cj10uDVgwke+ydQL6sN/TC2s6FIIPD/4/C6UOe3J+jFNUztpPIECYi+vK5m3QGQtoSJAgLcB
- 0D8mKwIAE5Zk57iNg+4v7ynphRO/uamScoULTUlckbxO7CVhBqEG+0wvp9Y3YbuvGsSWp2SwyVm
- yr/i29gRYKPNQvSuiaw0akTRtaMkUjmp2FjrPyYW4LEw2z/37xbaIs5HNBmt4mVUe1XhaZ6exsa
- 1oupLdg0hfyRUVhGD9rrO5SHghYUuLIizrhJFRSXz264bbrerLAmIGF3rv1tI9lWKNSP8sou6RK
- Zn4V720C5fTLQWBbES2BE0GA5U5+feZkqkqb0lKGPJ8XmAW2rMfKc/EQtRAlmBHihlx2nf2WfG0
- 14FEYMrAKHBMW7uF/Z3GQEpmWRWdz/a6wo0O/rDf5CHVhsAfmdWOjIxoytDuihGnFcQNGSFPjtI
- HvSjWOr3448QYvp5mpg==
-X-Authority-Analysis: v=2.4 cv=b5WCJNGx c=1 sm=1 tr=0 ts=6a69e30f cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=p0WdMEafAAAA:8
- a=VnNF1IyMAAAA:8 a=0E0gm9adgrEd7Zdai5YA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: QlNcJmatqyGkqcfwVsYKF1Ng91d9cUnn
-X-Proofpoint-ORIG-GUID: kiWBb0exdgItLQpB8Ai0P7vIBV2A0X7T
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-29_04,2026-07-28_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0 impostorscore=0
- bulkscore=0 phishscore=0 suspectscore=0 clxscore=1011 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607290093
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=asahu1x@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,57 +90,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 28 Jul 2026, Pierrick Bouvier wrote:
- > [PATCH v6 000/103] tests/tcg: run tests with meson
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
+> Support transferring of TAP state (including open fd).
+>
+> Add new property "x-local-migration-supported", which defines
+> whether local-migration is actually supported for this TAP device.
+> Starting from 11.2 QEMU Machine Types it's enabled by default.
+>
+> Note that local-migration is enabled by global "local" migration
+> parameter, but individual devices may have additional options to
+> enable/disable it per device.
+>
+> The tricky thing is that we need to know whether to call open/connect in
+> TAP initialization code, i.e. we need to know the value of migration
+> parameter "local" when creating the TAP device.  For incoming migration,
+> we can know only for TAP devices created with QMP after setting the
+> migration parameter with QMP.
+>
+> So the full picture is:
+>
+> On source, to start outgoing "local" migration you need:
+>
+>  - migration parameter "local" set to true
+>  - "x-local-migration-supported" TAP option set to true (the
+>    default, starting from 11.2 QEMU Machine Types)
 
-Platform details:
-   Host arch:       ppc64le
-   OS:              Ubuntu 26.04
-   Kernel:          7.0.0-28-generic
-   GCC:             15.2.0 (Ubuntu 15.2.0-16ubuntu1)
-   meson:           1.10.1
-   ninja:           1.13.2
+Is the machine type part still accurate?  The description in the QAPI
+schema has (default: false, since 11.2).
 
-Commands used to build and run the tests:
-$ mkdir build && cd build
-$ ../configure
-$ make -j$(nproc)
-$ make check-tcg
+>
+> If at least one of these options is not set, TAP backend
+> doesn't participate in migration.
+>
+> On target, things are more difficult:
+>
+> Same, you need both "local" and "x-local-migration-supported"
+> be set. And same, if one of them is not set, TAP backend
+> is initialized as usual, and doesn't accept any incoming
+> state.
+>
+> Additionally, if you are going to set "local", it must be
+> set before creating the TAP device. If TAP device created
+> with "local" unset, it initializes as usual. If you enable
+> "local" after it and start incoming migration, it will fail
+> in .pre_load handler of TAP backend.
+>
+> Moreover, there are interface restrictions: if you create TAP
+> device when QEMU is in INCOMING state, and both "local"
+> and "x-local-migration-supported" set, most of TAP options are
+> not allowed, and script/downscript are required to be explicitly
+> unset (set to "" or "no").
+>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Reviewed-by: Ben Chaney <bchaney@akamai.com>
 
-Command output: The test report is very large, so I'm only adding the 
-final report here
+[...]
 
-...
-1476/1480 tcg+tcg-xtensaeb-softmmu - qemu:xtensaeb-softmmu-test_sext     
-                     SKIP             0.00s   exit status 77
-1477/1480 tcg+tcg-xtensaeb-softmmu - qemu:xtensaeb-softmmu-test_shift   
-                        SKIP        0.00s   exit status 77
-1478/1480 tcg+tcg-xtensaeb-softmmu - qemu:xtensaeb-softmmu-test_sr       
-                 SKIP             0.00s   exit status 77
-1479/1480 tcg+tcg-xtensaeb-softmmu - qemu:xtensaeb-softmmu-test_timer   
-                        SKIP        0.00s   exit status 77
-1480/1480 tcg+tcg-xtensaeb-softmmu - qemu:xtensaeb-softmmu-test_windowed 
-                         SKIP          0.00s   exit status 77
+> diff --git a/qapi/net.json b/qapi/net.json
+> index acb8594c952..e6921912e12 100644
+> --- a/qapi/net.json
+> +++ b/qapi/net.json
+> @@ -437,6 +437,29 @@
+>  # @poll-us: maximum number of microseconds that could be spent on busy
+>  #     polling for tap (since 2.7)
+>  #
+> +# @x-local-migration-supported: enable local migration for this TAP
+> +#     backend.  When set, local migration is enabled/disabled by
+> +#     migration parameter @local for this TAP backend.  When unset,
+> +#     migration parameter @local is ignored for this TAP backend.
+> +#     To be able to do incoming local migration of a TAP backend,
+> +#     migration parameter @local must be set _before_ creating the
+> +#     TAP backend.  Otherwise, TAP backend is initialized as usual,
+> +#     opening/creating TAP devices in kernel.  In this case further
+> +#     local incoming migration (with migration parameter @local set
+> +#     after creating TAP backend with @x-local-migration-supporeted
+> +#     parameter set) will simply fail.
 
-Summary of Failures:
+Either have a a blank line here so you actually get two paragraphs, or
+refill the entire description to avoid the illusion of two paragraphs.
 
-  117/1480 tcg+tcg-aarch64-linux-user - qemu:aarch64-linux-user-gcsss   
-           FAIL             0.11s   killed by signal 6 SIGABRT
+> +#     Moreover, when QEMU is in incoming migration state, migration
+> +#     parameter @local is set and @x-local-migration-supported is set,
+> +#     the following options are not supported and must not be set:
+> +#     @fd, @fds, @helper, @br, @ifname, @sndbuf, @vnet_hdr.
+> +#     Additionally in this case @script and @downscipt must be
 
-Ok:                228
-Fail:              1
-Skipped:           1251
+@downscript
 
-Full log written to /home/stuff/code/qemu/build/meson-logs/testlog.txt
+> +#     explicitly disabled (empty strings or "no").
 
+"no" is deprecated [PATCH 3].  We'll have to remember deleting 'or "no"'
+here when remove it.  Easy to forget.  Delete it now?
 
+Maybe
 
-Failure noted:
+   #     Additionally, @script and @downscript must be explicitly disabled
+   #     then.
 
-- aarch64-linux-user/gcsss: SIGABRT on ppc64le host. Confirmed
-   pre-existing on origin/master, not introduced by this series.
-   Filed an issue for the same: 
-https://gitlab.com/qemu-project/qemu/-/work_items/4106
+> +#     (default: false, since 11.2)
+> +#
+> +# Features:
+> +#
+> +# @unstable: Member @x-local-migration-supported is experimental.
+> +#
+>  # Since: 1.2
+>  ##
+>  { 'struct': 'NetdevTapOptions',
+> @@ -455,7 +478,9 @@
+>      '*vhostfds':   'str',
+>      '*vhostforce': 'bool',
+>      '*queues':     'uint32',
+> -    '*poll-us':    'uint32'} }
+> +    '*poll-us':    'uint32',
+> +    '*x-local-migration-supported': {
+> +      'type': 'bool', 'features' : [ 'unstable'] } } }
+>  
+>  ##
+>  # @NetdevSocketOptions:
+
+Naming is hard...
+
+"Supported" sounds like a property of the QEMU process.  That's not what
+this is.  It's an on/off switch that happens to be in series with
+another on/off switch, namely migration parameter @local.
+
+Maybe
+
+    @permit-local-migration: permit local migration for this TAP
+        backend.  When set, local migration is enabled/disabled by
+        migration parameter @local for this TAP backend.  ...
+
 
