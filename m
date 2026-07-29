@@ -4,154 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B6C5C53200
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 15:19:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D790BC53200
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Jul 2026 15:27:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wp646-0005q7-JL; Wed, 29 Jul 2026 11:19:28 -0400
+	id 1wp6BM-0008SR-GD; Wed, 29 Jul 2026 11:26:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wp642-0005p9-RP
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 11:19:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wp63x-00069A-Fp
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 11:19:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785338355;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=+ltmo4+aF3/fRqmq5GL63qBbwTYCnJGeLDFe6Zpz0SI=;
- b=eSNOSD0W5pfCxRmjZn11zNRlhesnoU76ptkqVZEG6YnHX+/XL+XhQBz2ANDRVqIRHztdGd
- BPEMMGqe6YGv14Y+Snw62hfwpVsdQNKigZLpyLlyilpYs9cV1F4G73u/PKo1xYTcdIhHxh
- SPNutXFNY4AlP9zl3tyi/WWC2a7y9Lw=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-211-ix4xT0MfNBSejVrGhu3k7Q-1; Wed, 29 Jul 2026 11:19:12 -0400
-X-MC-Unique: ix4xT0MfNBSejVrGhu3k7Q-1
-X-Mimecast-MFC-AGG-ID: ix4xT0MfNBSejVrGhu3k7Q_1785338351
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-47f8580ed9eso961615f8f.0
- for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 08:19:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785338351; x=1785943151; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=+ltmo4+aF3/fRqmq5GL63qBbwTYCnJGeLDFe6Zpz0SI=;
- b=FGQDTfYTPJTvjVTB9AcpMEii3ieIIjIZ/zCykJm9vM8lOpbpuJYQVmdTeS1T55BrHq
- tHlLME2SFhbqfHVv6t6vAM9DHrbf9CGDdncYViQowwyVHcN4xuVweKih13Rcguqb+14l
- Dwhn8189w9a1UHxhXPi6SocOy5OKQYUE4f2JQKw2+FKETDRevZ4pcL0wG07S5Jjw8Lpq
- Eh+5qSAI7dxeD7fSAPLezCEOx4VhqrQ9E6Lt1M6K6O962Cmx7o12iXv5EGT4ln8HIJY9
- SGICnDv68/KfLqCvrJhmTz5KitLFm/hqhtXqLHOlMXcjoTEUo9pn62rVV/91A3q2R6dF
- lOmw==
+ (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
+ id 1wp6BK-0008Rk-8W
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 11:26:54 -0400
+Received: from mail-wm1-f52.google.com ([209.85.128.52])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
+ id 1wp6BH-0007vm-V6
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 11:26:54 -0400
+Received: by mail-wm1-f52.google.com with SMTP id
+ 5b1f17b1804b1-4954c0833b4so7655815e9.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 08:26:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785338351; x=1785943151;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20251104; t=1785338810; x=1785943610;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=+ltmo4+aF3/fRqmq5GL63qBbwTYCnJGeLDFe6Zpz0SI=;
- b=UiVrO7INurH3zmJh/LI8+HLxdVHyaBU1A2db4fWzHE6RXa7RIL0nziMZYTfXMaGdWH
- oXE5I3TaP7P+0uSKBaKLm5vgQFvVTRebh3FsqkdfQ5r3BrjiEc1p/XODm75O7tRpDomQ
- BPRq+YryOb6TghR+Mwxd4hQdoGD+g48xmxmxbAxJIKjx+uECwdUH2ZdzWwjpizXplTzE
- AdulkmnHRxDsZyr4kjmmQ8o/kt65VMh6LEX8zoYYAxmdv/SxnhIqV/9eNqoaE2elsc/0
- 2Tn5HA/YLF5PTZzsdnBbZuHQ8uuxXmO/l3mJ8Apf+U90wJEKo4abE64oBPx4pf1ENd6V
- ZMrQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpXVs92LwBqd9Rl3SKId7+d0k87msMJoRoQhL6dyHuhb/h9kHZ3eWbRlswJ+j92v2kkekDvIShiMGxQ@nongnu.org
-X-Gm-Message-State: AOJu0YyZuW8AS63lC/8l8qYYtXvfpGmmEvI1Rpx4fxCfeY/l/4ZkM9TK
- s0CEgFtKDlmxpJ9OPneNxHsG/sxmP2gk3WXSs6m2RxHbmgtbsiOMIWGn8M+EB4OUWYi8b905r9R
- 5vCnZxuIfIfmJqSh5HlocCm/yF4Ut5eIkXX0veIGdsv0VGRh7zsoDziie
-X-Gm-Gg: AR+sD11XNwCwaJE/DYOdt5UZmAD9kVnuNj+HgEJc07RGG43h43NwABJYsQBepIdfYQs
- yhXpd5izT+P0pGGg/MibOJZMpAm1H1bJ+k7ViyFJeRMYCg7wwJkf6BIJOOmxcHUzJfjwHI7o27N
- NKwjsdveomX2/nT2y0Llb3d/e/gdTCp6v4qOdtza7ddOVdKiTVgdaL4qVyRw7BF/pULyskaKrwQ
- XjDda/XbUBaUqTaY4jaVshscLiXahhgeYArHe3N3/XOXFTygzSx/7sJPtuXakppyImcvYDf67Fi
- uJq8BAeZepdbdbpe5MXUFHf1nUy/9sMPdKrdsRT2MYiQUhLX0hNUDZF6WPI2CtXGa1rwe5s=
-X-Received: by 2002:a05:600c:3b27:b0:496:c378:6420 with SMTP id
- 5b1f17b1804b1-496c653a48fmr84187595e9.8.1785338350579; 
- Wed, 29 Jul 2026 08:19:10 -0700 (PDT)
-X-Received: by 2002:a05:600c:3b27:b0:496:c378:6420 with SMTP id
- 5b1f17b1804b1-496c653a48fmr84187125e9.8.1785338350006; 
- Wed, 29 Jul 2026 08:19:10 -0700 (PDT)
-Received: from [192.168.0.9] ([47.64.51.53]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49764d8e826sm73945285e9.8.2026.07.29.08.19.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Jul 2026 08:19:08 -0700 (PDT)
-Message-ID: <b0733bce-3902-47a1-a617-5f4aeda06fbe@redhat.com>
-Date: Wed, 29 Jul 2026 17:19:06 +0200
+ bh=UT65JqqXMWe4/qK/5ftLxPo3hI40eeDx4IMRwjYgdTI=;
+ b=tDntpgQ03IQmjfNAaWlVBWLAperFEXwuIM8lNJH6KRLt+z4x37rmD9RpYA4WPgZKSq
+ VxL3VgXRmFPUqBl5kw+5h6Uvgt/Mm3S1FJXNWKIVoh5Maeun9cKqTk4gpA1+Ypz7JoJ4
+ 5jdZ9bZcCVFfudTui+IlKMWpDA1VnOxcYLT3Sh1bQqI/2CyEKEa6THGnu1RjMuBn5Hpr
+ AxI9lUl86tSymJxafR3ybVkD3TYCjVzYT6xM1yU6k6nPkzjyGprH6OhrPWutphgtPiHa
+ VtWkVkH2McpcRF5/cVAhgg7gF/RL7fqL1G3pAn9l+df0V/0jp9pLBtHhPgLvHTCznb60
+ gyAg==
+X-Gm-Message-State: AOJu0Yy8QxvkRJDCqp1zWvVxdFQJEZKa2rMmwODmE66bmxfIcOVEotmq
+ dPSYNtHm8bCgqV4xpXRvld3K6ClALgmLLxVkPaCrmgFZP3rQUFZCFjzC8lxNDJbf
+X-Gm-Gg: AR+sD118ZhX/A6r8N84yS/NvO92/cp2jUKdqFOmSvmyKhea5/O5nEZRxUuPmdUdz2cv
+ hNCbbwpzsVe2bFjKAo/8NBqVbtvuPc9YDTDZwewJtQ6vyt5lviGGFx1Y0pZn8aRvxgdfHxFvwM2
+ KqO9hg8p9o2IshJ+/0UhyHljIIkcseNaRlNbOcDdMSc9Nk/4uOq5BUFNtVFvrMwEAjJANBi04nE
+ Q2of5FM0IbKHgimLogFMOheyZi7NnJ6VnEzIQs92xIgS9+enpa42dDDJDk2ytUhbDTzDxaOtWAW
+ 2o0/+P/4ct+ok0j2knnixkYz4jRdYOT2mjN2b0spWtOO6HpfF4rPnqpHhOWAqvYkPRkiWHSLIWl
+ Uu+CzapZU3Rp7FOh7v2O14KZ15WAW9z6n+gf/guUsX/qlI10ZYPwzu3a/mMSP6CRQWVEqm8MTod
+ xSpfpn1iB4jQbdUJacQwro5eexoPdQkYfPwGIR/xJSfWkMdF0Qy5JUkPi8/II3mNvw4ocprIksb
+ YV03n9IrZ7kUXeZjlhv583R5pj5qyjMgnu2eqfouzfMp+g=
+X-Received: by 2002:a05:600c:c16d:b0:493:c8a6:b517 with SMTP id
+ 5b1f17b1804b1-496c6588c3cmr77985135e9.38.1785338810006; 
+ Wed, 29 Jul 2026 08:26:50 -0700 (PDT)
+Received: from localhost (89-93-216-19.hfc.dyn.abo.bbox.fr. [89.93.216.19])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4976bd6e179sm71564555e9.9.2026.07.29.08.26.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 Jul 2026 08:26:49 -0700 (PDT)
+Subject: [PATCH 00/25] hw/arm: Facebook SanMiguel BMC and TMP75-family sensors
+Date: Wed, 29 Jul 2026 17:12:36 +0200
+Message-Id: <20260729-sanmiguel-bmc-locator-v1-0-c8f9a8d101f6@free.fr>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/display/virtio-gpu: validate blob iov size in
- create_blob
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-References: <20260724035712.856636-1-marcandre.lureau@redhat.com>
- <bfcab7d8-c7ae-4c2a-be79-6bdc5c8faaf7@rsg.ci.i.u-tokyo.ac.jp>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <bfcab7d8-c7ae-4c2a-be79-6bdc5c8faaf7@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQrCMBBG4auUWTvQRojoVcRFMv2tI20imbYIp
+ Xc36vJbvLeRoSiMLs1GBaua5lTRHRqSR0gDWPtqcq3z7cmd2UKadFgwcpyExyxhzoX72B1FEOC
+ 9UG1fBXd9/77X29+2xCdk/s5o3z/q7r4ZeQAAAA==
+X-Change-ID: 20260729-sanmiguel-bmc-locator-db13cceae66c
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
+ qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Thomas Huth <th.huth+qemu@posteo.eu>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Emmanuel Blot <eblot@meta.com>, Emmanuel Blot <emmanuel.blot@free.fr>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1785337963; l=6248;
+ i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
+ bh=PlkjWdIRrG8gzC0wTRtdaD5kPU6CgbQT0mpFnaBbSio=;
+ b=1BWHsZxjyC3uuM+EWgc/buNelXYzfL1is4vi7QynbvUkhicp9NtIKpQ5fujZfVUMccAk0j1Eb
+ adg11x7iuPcDndozSqHLasskI7eY/A2AyXeqY91ReIFrQbxcGvwKVCA
+X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
+ pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
+Received-SPF: pass client-ip=209.85.128.52; envelope-from=eblot.ml@gmail.com;
+ helo=mail-wm1-f52.google.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,83 +105,137 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Emmanuel Blot <emmanuel.blot@free.fr>
+From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/07/2026 08.26, Akihiko Odaki wrote:
-> On 2026/07/24 12:57, marcandre.lureau@redhat.com wrote:
->> From: Marc-André Lureau <marcandre.lureau@redhat.com>
->>
->> virtio_gpu_resource_create_blob() stores the guest-controlled blob_size
->> without checking it against the total size of the iov backing entries.
->> Since both values are independently guest-controlled, a malicious guest
->> can set blob_size much larger than the actual iov backing. Subsequent
->> SET_SCANOUT_BLOB checks bounds against the inflated blob_size, allowing
->> a pixman surface to be created over the undersized buffer. Any display
->> refresh then reads past the actual allocation, potentially crashing
->> QEMU or leaking host memory contents depending on the backing type.
->>
->> Reject the resource early when the iov backing is smaller than the
->> declared blob_size.
-> 
-> The same invariant also needs to be enforced when backing is supplied
-> by VIRTIO_GPU_CMD_RESOURCE_ATTACH_BACKING and when blob migration state
-> is loaded. Otherwise, newly attached backing or state received from an
-> older source can bypass this fix.
-> 
-> The check cannot be unconditional at resource creation, however. The
-> specification permits nr_entries == 0 so that backing can be attached
-> later for swap-in/swap-out. As written, this patch rejects that valid
-> request:
-> 
->  > To facilitate drivers that support swap-in and swap-out, nr_entries
->  > may be zero and VIRTIO_GPU_CMD_RESOURCE_ATTACH_BACKING may be
->  > subsequently used. VIRTIO_GPU_CMD_RESOURCE_DETACH_BACKING may be
->  > used to unassign memory entries.
-> 
-> https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html#x1-4120008
+This series adds the Facebook SanMiguel BMC, promotes the
+TMP75/TMP175/LM75B sensors from generic TMP105 stand-ins to improved,
+dedicated models, and introduces the test-side plumbing needed to
+exercise real I2C devices from functional tests without hardcoding QOM
+paths.
 
-The patch that is proposed in 
-https://gitlab.com/qemu-project/qemu/-/work_items/4112 also checks for 
-res->iov_cnt > 0 ... would that fix your concerns?
+The work falls into four parts.
 
-  Thomas
+1. TMP* sensor models
 
+The TMP105 model was the only stand-in for a whole family of pin- and
+register-compatible parts, and several boards worked around the gap with
+private TYPE_TMP75 / TYPE_LM75 aliases that resolved back to a plain
+TMP105.
 
+The model is first cleaned up for correctness and QEMU convention. One
+of those changes touches migrated state, which gains an optional
+subsection so existing streams stay compatible.
 
-> 
->>
->> Fixes: CVE-2026-66021
->> Fixes: e0933d91b1cd ("virtio-gpu: Add virtio_gpu_resource_create_blob")
->> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3945
->> Reported-by: "sundayjiang(蒋浩天)" <sundayjiang@tencent.com>
->> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->> ---
->>   hw/display/virtio-gpu.c | 10 ++++++++++
->>   1 file changed, 10 insertions(+)
->>
->> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
->> index eac039c3c366..cc6dbd116618 100644
->> --- a/hw/display/virtio-gpu.c
->> +++ b/hw/display/virtio-gpu.c
->> @@ -372,6 +372,16 @@ static void virtio_gpu_resource_create_blob(VirtIOGPU 
->> *g,
->>           return;
->>       }
->> +    if (iov_size(res->iov, res->iov_cnt) < res->blob_size) {
->> +        qemu_log_mask(LOG_GUEST_ERROR,
->> +                      "%s: backing storage smaller than blob size\n",
->> +                      __func__);
->> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
->> +        virtio_gpu_cleanup_mapping(g, res);
->> +        g_free(res);
->> +        return;
->> +    }
->> +
->>       virtio_gpu_init_udmabuf(res);
->>       QTAILQ_INSERT_HEAD(&g->reslist, res, next);
->>   }
-> 
-> 
+On that base, TMP75/TMP175/LM75B become variants selected by a small
+per-type class descriptor. The variant is class data, so the wire format
+is unchanged and all variants share the existing vmstate. qtest coverage
+is added for the per-variant behaviour. The existing BMC boards then
+drop their local aliases and instantiate the real models.
+
+2. SanMiguel BMC
+
+A new AST2600-based machine for the Facebook SanMiguel BMC, derived from
+its device tree. It wires up three TMP75 sensors, IO expanders, FRU
+EEPROMs, an I2C mux and an RTC across its I2C buses, and provides its
+RAM, flash and networking; the FRU EEPROMs are populated with data read
+from physical hardware. A functional test boots the OpenBMC image and
+drives each sensor over QOM, checking the guest hwmon interface reports
+the injected value back.
+
+3. Python device locator
+
+A QOM path names a device by its position under the object that owns it,
+in enumeration order — it says nothing about where the device sits in
+the bus topology. From a QOM path alone it is impossible to tell where a
+device is actually connected or what purpose it serves.
+
+DeviceLocator is a pure-Python helper that resolves a device from a
+string descriptor of its position — bus, address, type, on-bus index —
+by walking the bus/device hierarchy. It uses only standard QOM queries
+over QMP: no new QEMU commands, no model changes. A self-check exercises
+the grammar and its error paths against a paused SanMiguel BMC; it needs
+no disk image and runs in about a second.
+
+Note: the helper adopts the 3.10 type-hint syntax rather than the 3.9
+equivalents; 3.9 reached end of life on 2025-10-31. The import is
+guarded so the module still loads on 3.9 and dependent tests skip there.
+
+Two small test-framework fixes ride along: the set_machine probe VM now
+gets the per-test workdir instead of the hardcoded /var/tmp default, and
+the Aspeed OpenBMC helper can optionally assert the booted device-tree
+model.
+
+4. Catalina follow-ups
+
+The final three commits are the tail of the earlier "hw/arm: improve
+Aspeed Catalina BMC emulation" series: functional tests for the PCA9555
+and PCA9554 IO expanders, plus the PCA9554 change that drives its input
+pins externally. They were held back because reaching such devices from
+a test needs a stable way to reference them by bus position — the QOM
+re-parenting patch tried then was rejected, and the device locator now
+unblocks them.
+
+Based on:
+
+  repo:   https://github.com/legoater/qemu.git
+  branch: aspeed-11.1
+  commit: 04d27371e3 ("hw/arm: catalina: add NIC and FIO temperature sensors")
+
+Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
+
+Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
+---
+Emmanuel Blot (25):
+      hw/sensor: tmp105: make device state private to the implementation
+      hw/sensor: tmp105: name the parent object field parent_obj
+      hw/sensor: tmp105: implement Resettable reset
+      hw/sensor: tmp105: enforce the configurable fault queue
+      hw/sensor: tmp105: describe the temperature property
+      hw/arm: aspeed: guard board-local temperature-sensor aliases
+      hw/sensor: tmp105: add TMP75, TMP175 and LM75B variants
+      tests/qtest: tmp105: cover the ALERT fault queue
+      tests/qtest: tmp105: cover the TMP75, TMP175 and LM75B variants
+      tests/qtest: tmp105: cover one-shot and fault-queue write immunity
+      tests/qtest: tmp105: cover shutdown clearing the ALERT across variants
+      hw/arm: sanmiguel: add Facebook SanMiguel BMC machine
+      hw/arm: sanmiguel: populate EEPROM data
+      hw/arm: catalina: use the real TMP75 model
+      hw/arm: fuji: use the real TMP75 and LM75B temperature sensors
+      tests/functional: aspeed: optionally check the device tree model on boot
+      tests/functional: give the set_machine probe VM the test workdir
+      tests/functional: add a pure-Python device-locator resolver
+      tests/functional: add a device-locator self-check
+      tests/functional: aspeed: add hwmon sensor read helpers
+      tests/functional/arm: sanmiguel: add BMC boot test
+      tests/functional/arm: catalina: test TMP75
+      tests/functional/arm: catalina: test PCA9555 IO expander via QOM
+      hw/arm: catalina: drive pca9554 io expander input pins externally
+      tests/functional/arm: catalina: test PCA9554 IO expander via QOM
+
+ hw/arm/aspeed_ast2600_catalina.c              |  14 +-
+ hw/arm/aspeed_ast2600_fuji.c                  |  16 +-
+ hw/arm/aspeed_ast2600_sanmiguel.c             | 405 ++++++++++++++++++
+ hw/arm/meson.build                            |   1 +
+ hw/sensor/tmp105.c                            | 305 +++++++++++---
+ include/hw/sensor/tmp105.h                    |  46 +-
+ tests/functional/arm/meson.build              |   3 +
+ tests/functional/arm/test_aspeed_catalina.py  | 107 ++++-
+ tests/functional/arm/test_aspeed_sanmiguel.py |  72 ++++
+ tests/functional/arm/test_device_locator.py   | 114 +++++
+ tests/functional/aspeed.py                    |  21 +-
+ tests/functional/qemu_test/locator.py         | 578 ++++++++++++++++++++++++++
+ tests/functional/qemu_test/testcase.py        |   2 +-
+ tests/qtest/tmp105-test.c                     | 359 ++++++++++++++++
+ 14 files changed, 1922 insertions(+), 121 deletions(-)
+---
+base-commit: 1dad7db18669f337ca0ddefa97906cd5acfed1b7
+change-id: 20260729-sanmiguel-bmc-locator-db13cceae66c
+
+Best regards,
+--  
+Emmanuel Blot <emmanuel.blot@free.fr>
 
 
