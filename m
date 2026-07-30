@@ -4,200 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11724C55162
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 21:46:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5567C5516D
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 21:46:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpYZj-0007d4-98; Thu, 30 Jul 2026 17:45:59 -0400
+	id 1wpYaU-00017N-CS; Thu, 30 Jul 2026 17:46:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1wpYZW-0007Zv-9H
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 17:45:46 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wpYaQ-00016B-1P; Thu, 30 Jul 2026 17:46:42 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1wpYZU-0002Hb-M3
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 17:45:46 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66UEtpp01475446; Thu, 30 Jul 2026 21:45:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wpYaO-0002KL-0M; Thu, 30 Jul 2026 17:46:41 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66UJlu0h3874818; Thu, 30 Jul 2026 21:46:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=vMJYW3+4pW72t1eDYeFdssASlm0/5JpSwdiTdmmZ1WU=; b=
- LlLFQgbxv1Zfz1o87yZ/8hMO4CB5CBHlO3krviT/mfQa7/AAWE/JE1xsCro/jdmR
- nBDWJ82zM9zoW8Bq/Pa8IJf99eWS6MRGzs56NCB453H98JjEUSoDNVPkt2U/qUhA
- 08vJ06nMXusmhgf4LHkIlRkUxWzzZt1eg/x9PwCOZORC1yd47l7VGBnNvtbmlW4l
- KSmTUV5sALlbeMva01HkA+63riIoCtGICWF1ZD2BEEsedkw1Wtd0y4yCgn8a3MSG
- L1UeX411+VQadwM+yOXtj69UeOdnyJOYTMO//IKqLpCK6L8tLkkn8FKRDoIff8yd
- ephsFQ/XaIp+jtJgv5Ry6w==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4fmr5y0jxc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 30 Jul 2026 21:45:36 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
- with ESMTP id 66ULeXKl038000; Thu, 30 Jul 2026 21:45:36 GMT
-Received: from ch1pr05cu001.outbound.protection.outlook.com
- (mail-northcentralusazon11010023.outbound.protection.outlook.com
- [52.101.193.23])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 4fnhenqmxa-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
- Thu, 30 Jul 2026 21:45:35 +0000 (GMT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=apcSU6ZsV83wZk9lAdkfIxC85667JtJ8SYgcx+RNYOKo1OJjUQ4bMczdg9Hz6rQ3e2zyl+adm7J5XbvwtvBsKgBUM3rs/m2CRZfmO0m0nd4ATt3+b8pQaBuVb29TSmjfeLB321kuL68Knf4/hA/EPRB4Ga4RnQ7Yrujuxh5KHR3HDprSG6cJOEihFLho+F5tT35B8xPGipF/S5aQKZUpgKUOqoZGEz3sHM/YWcqeEvm+icg4lDboEt198Q8/8taH1IaC752SghMyiHP9U/BbakfmQI1zFBs++spO82wjl53e3CBsNQwt1DNqwht0uU9QRb8jcKZfkAgNF8y90GXlhw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vMJYW3+4pW72t1eDYeFdssASlm0/5JpSwdiTdmmZ1WU=;
- b=VkPHWkREG5eJ3/b7dpzGRg/X+jWjMPZcwsPIFGs59uGdilZ4TuSueg0ioYo4SFKzeC9GftqBbqTRMJnmkQXAi9Vb0OON4J7wf4fpf7K6K/0LIPX4QrHK0xJbXDWA4KDuYECfdCpEbm4CfXO7zBmWASFt8ochx9FGs4tW/KNjPXuV+DY5upZYeQ0a0k9ruuilubD8AwDk3VM9K8NTbzGn5eTGLHSGhmCPMsjDY1Ej+ig/dpn0QRCviPP0ILBz8/SBwFtP+JD6L3QyhU7MyNO0EPm4fkolP99yvTXkK9LEfFfTcelEWiblkVUYVUcPT26/zraH+s0tkpDv5I/pCPTWWg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vMJYW3+4pW72t1eDYeFdssASlm0/5JpSwdiTdmmZ1WU=;
- b=KVg9C6jIklHkoi2janPSiJ4zxR1t7Mw/OMuD30O7mQ5aGIzQcbaG4/JBrOLm07CB4S/nyO6z44E40fsW5z17N+3t/KkggXDhsQHulC9Wwmv5O0YzzEyobqnl5q3Bzz55Ipv/g0bUiSTNkybY8dXxFQ4jOzEB16GBmmtH4hcHJDY=
-Received: from BLAPR10MB5041.namprd10.prod.outlook.com (2603:10b6:208:30e::6)
- by DS0PR10MB7128.namprd10.prod.outlook.com (2603:10b6:8:dd::5) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.270.15; Thu, 30 Jul 2026 21:45:30 +0000
-Received: from BLAPR10MB5041.namprd10.prod.outlook.com
- ([fe80::2c19:641c:14b9:b1b4]) by BLAPR10MB5041.namprd10.prod.outlook.com
- ([fe80::2c19:641c:14b9:b1b4%4]) with mapi id 15.21.0245.012; Thu, 30 Jul 2026
- 21:45:30 +0000
-Message-ID: <bd81495e-522e-4954-b8ff-95e2b08f171c@oracle.com>
-Date: Thu, 30 Jul 2026 17:45:26 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/8] amd_iommu: Return empty efr for stub call
-To: Sairaj Kodilkar <sarunkod@amd.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Igor Mammedov <imammedo@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: vasant.hegde@amd.com, suravee.suthikulpanit@amd.com
-References: <20260511123937.32743-1-sarunkod@amd.com>
- <20260511123937.32743-4-sarunkod@amd.com>
-Content-Language: en-US
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-In-Reply-To: <20260511123937.32743-4-sarunkod@amd.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PH7P221CA0045.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:510:33c::17) To BLAPR10MB5041.namprd10.prod.outlook.com
- (2603:10b6:208:30e::6)
+ :message-id:mime-version:references:subject:to; s=pp1; bh=uiRxuz
+ CYTXqXMhgMe5Td64el756/xBosIhMXm6SdygI=; b=kFyh8IAgSs/PyhV/SR1w06
+ DxraXYm5Y44CnADcn9MkBwH8BzrF43YRMRpVclec2K8DGiY/AhZTVJRWzUfVDD6E
+ tK0cwivxsCCFFdtb9RzromowE4zEy5pIcQRvNKaKQLbWolwfXkGs/iiorsue7gen
+ BTa+DrbfwPjPzO4LCw9sPXMx3LN2/B5hQ7CvCmpBPp+lJptvxGdouwRTjHQ+CIOp
+ JMB+K/rRLohxElC/rYXE0pLAB2i1VD1h++BmHwyWXyOQvqZAFe8mLyGoG8Jb2b8Q
+ cdPw9aKULsPg/qBSc1Pqmyq1Z25SbaEWLztHLeISsSCkOsfO50eQ8s3zlGE/zVEA
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0p1475-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Jul 2026 21:46:36 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66ULfHS3025774;
+ Thu, 30 Jul 2026 21:46:36 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn8fkda1r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Jul 2026 21:46:35 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66ULkYZ88454898
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 30 Jul 2026 21:46:34 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5371E58043;
+ Thu, 30 Jul 2026 21:46:34 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6B3B65805D;
+ Thu, 30 Jul 2026 21:46:32 +0000 (GMT)
+Received: from fedora-workstation.ibmuc.com (unknown [9.61.77.192])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 30 Jul 2026 21:46:32 +0000 (GMT)
+From: Zhuoying Cai <zycai@linux.ibm.com>
+To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, david@kernel.org, walling@linux.ibm.com,
+ jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
+ eblake@redhat.com, armbru@redhat.com, zycai@linux.ibm.com,
+ alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+Subject: [PATCH v17 03/34] crypto/x509-utils: Add helper functions for
+ certificate store
+Date: Thu, 30 Jul 2026 17:45:52 -0400
+Message-ID: <20260730214624.2328883-4-zycai@linux.ibm.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260730214624.2328883-1-zycai@linux.ibm.com>
+References: <20260730214624.2328883-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BLAPR10MB5041:EE_|DS0PR10MB7128:EE_
-X-MS-Office365-Filtering-Correlation-Id: 45870334-6145-46e7-5ea8-08deee83e014
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|7416014|376014|1800799024|366016|10067099003|4143699003|56012099006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: g+IHXpATBMVyS+5P0JEi6ZxJgzw2MFYo3nudPIES6yinLMRFhvmMotCxvrAUHK3iPs70Ilt1C19izByxi3SUZMfD+vMXNmovFmcpRhNoEV9Fq6bvnmClaEbqYVDnbjkxXrQH4bxRuwHaUp5tcrUhNnPQN0n6esO623fJmQTZ3giRUX9W1UN6yvJbbdeOZMTa/m3D+odcA2lVfgz7EnUw0xJqaBdthFDJxx2n4vdFMUWtsCUTZVXUAGPUrYMGSQnwzhYc8JLOjQgD8/FcbglXukwcCcpuBM8M3XsnDkgTQqZVvvUmeYe5oEYczyjQbpIWOTTdJFwl2m68FaDgzj2rlNSj1TW0iYD31+zidZn4OZOdYWvGgOJFEqNsTdRbFd8axAVwHkxDdPhIhaScolgVOoeCrz0KeEEErv4EqZdBpeNuQvtg8oQWTZi1itp8PVjyyPmPu9JD0JJFeSQyKKyYSWj5YRgXd50BZ+OEuSDri/Q5BIwK58dM3/kG0cwAL/0cmEPoxWywPcTh8g1BrY+kuj2AC68KPSgQDPKRxhu4Bf/BijKkyQjL3y1pE04r/CrQaPNcZ6yKB4kBNRsFkb/cSAM4utqyudQ1TX3HEhB+xS8OvluERRQr/Mw7IzaIt3+Hfi6xrAXVpmO/9TvSGCvZDU3ye3/IEqHF0u2cadT1FQw=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BLAPR10MB5041.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(7416014)(376014)(1800799024)(366016)(10067099003)(4143699003)(56012099006)(22082099003)(18002099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WEk3Y1VQM2F6V2d6SHNmNGJRNXY2enRiMzk4NVVGd0RneEhRVEM3ZlpGV1N4?=
- =?utf-8?B?VVgrWUxPZHZQd2pQN1I1ODdEUzdReHpxY1FXa1U0UjFIRGxQalEwaFh4QlM1?=
- =?utf-8?B?eUdBTXBqWnBxWk52S0dSWDFlWVBFUjBJOTExY2JSU0xGUUt6S0paaGRzWDRn?=
- =?utf-8?B?ZXVQK2pLYS9SdzF4c1VISlVnNmtJVW5zMzBPalphUjMxeW14UVE4Q0pjdktV?=
- =?utf-8?B?ZHM0NW40Ykcza0VQbFAzNXBtU01LWnNxUm55Tm5UbXBWNUdmV1huN3ZnTksr?=
- =?utf-8?B?bStHV0w3UEVMRHlFY25aMVpKOVpvVWJ6a2NkMjZ1cnNjSnFUdEhDdHZGWVdm?=
- =?utf-8?B?Vlg1WjlhS0NCMkw1V1ZxeHo3YUZQUHh0OFRnUmpSdUFJSkhqRVRDYk45emxr?=
- =?utf-8?B?NDU5b3haTzc4VExxaTNKRFNvKzl2R3pRUHo2TlZETERWaG5wU0loS21paGJi?=
- =?utf-8?B?MVlublk5OWx0L3ZhZW1OWkg0NUdGTUJhTDNhc2Z2YTdpbXNZR3JGUUU4ZU5v?=
- =?utf-8?B?aVhBMC8vb215YlAvRmp4VG9qRGdSU0dZcVlXUDVJQ2NLazJ3Tld5SlhYQkYw?=
- =?utf-8?B?c1JZNW1CQ2laODd5RExDUXVaOEJ5cHZZWXdSWWwvT1h5UnRHVEVDYXhTRm1H?=
- =?utf-8?B?aFVTd29MZVJDc2NmWXpuNkk4c0ZNeVcremVMSm9Kb1M1TzNWejQ1SVBoU3Qx?=
- =?utf-8?B?ZXJhR0tCaWc5OG9zd3RZc2NZT1dLT1pXYVAvREZSTDRDNUYxNk9uZkxpRWEy?=
- =?utf-8?B?VFVJQThzdlVQWjVSS0I5VlRRRVErYTAvOVdOdm42Wmd6MXNNMjNrNzNKNHZq?=
- =?utf-8?B?UExEWGNmYXRSdU50NXNsZnphT1p6WEFabHNXUXNYTzB1aGVQbVM4aDFJUDBJ?=
- =?utf-8?B?eUNhZTRDQy9ia1ZCMjZGdzczbzJ4ekpsYy9iSUdVRllvY0I0c3JwMm1NSGU1?=
- =?utf-8?B?WDdlUDBjeWxwZFdvUXhRUndvaFFaR0d0Tk1lZWg5eXVDeTY2cU1LRldHQity?=
- =?utf-8?B?TEFaeFNROEJSaGpScEtjc0ZCaFR5ejlUVnNyQk1UOHJMQTZNZ1R4OWk5RUtn?=
- =?utf-8?B?OWJWZjJTeHFUeWpkblBRTzNDeHFHVm1QdWYva3oyQWJMZ2pOQkVaWjZQL2No?=
- =?utf-8?B?V2ZqZ004cWMrbloyTHplYUNONHpUV1N6T1VJN28yaytTQnVzS25xRjlELy9U?=
- =?utf-8?B?WnRveG1IdUQxcE9JUHBvUnRUcDhyVDJtRjNQYzJUMTJCM2FSSDlxY0xwVmtQ?=
- =?utf-8?B?Z0NaSkpFLzNBWlgvWGFJcFNPTTR1UVVGdGVmR2pOS3dpTUpGR2tqQ2J1YWhu?=
- =?utf-8?B?ZFJYT2dpRTdsVzgzclhpSXU0enlFSm93bjhYcWM5M0ZmU3B1QWR0blZBaFEx?=
- =?utf-8?B?MHlOY2hkOTYrbFRoVVR5Tkp4ZnkzaitXRmNtOUtFMStpZUtYYW5VSGR6U0l5?=
- =?utf-8?B?dCtsTjZBU0xoWlRwNTZqVzIzeDQyT2crb1BqdzVmcHdCY0dxTVFrQXpWV045?=
- =?utf-8?B?b2VscTNpMVVuUTdVcmF4cS9sem8zdUpBc3VQR3BTMkZBQXNDRERYQkxXOEww?=
- =?utf-8?B?aDZvS3NETlBmYnNUYVlXSjUyVUVtYzhoOTUvb3RFdGlFNDdhSnlhT3d1R0dC?=
- =?utf-8?B?MVJ1aC8zUEowd0lvSmc5ZnpJS1pFMk5wWnB2WVZ1OWI0N3Nmdk1hYVlBWnRm?=
- =?utf-8?B?b0hRUytiNFdlVW95Nk1uMGxnM1N0Tzl6UmVEaldTT1B5a2owT0RVOFI0SkdO?=
- =?utf-8?B?YzQ3Sko2TUlaZmtFdnZKNVhPOFZ2LzdNVHR0c2NJRlM3NGlIRmYvU2MydDJm?=
- =?utf-8?B?ZEl6OUdyL1J2S1Z2T0tXaFh0RGs1UlpiRkc1cG5JdzB0N1BYbGR5R01kVTZW?=
- =?utf-8?B?VWhpc25JdmxJak1UejJ4RytwL3l2N2VjS1NZb2xrblpiMkp2V1o2ZzAyTkdM?=
- =?utf-8?B?Q3N6bUk4VGV5dzQ4TFRCbU50c3Q1dDJibXI2V01qL01QTFJkRWJvaG1VRHJM?=
- =?utf-8?B?Wkg4VkZENVpnWUZWSW1LVzNqUTVkazJsTVRPdDFlOGhmaXMrb2s4TmhLWldw?=
- =?utf-8?B?dXpsM3JINXo5UnZ5N2dmWFBZa01MbWtId3RJbWNkVVNzWDVTM2Jhd3B4dFpB?=
- =?utf-8?B?cWdKa2JyQXhEOE5qUmNac1lHRldWUDB2bDJBRFBybzBIa3RmamRkUlVPeCs0?=
- =?utf-8?B?VG84M2IwME1rTzJldWpEQXBYZUNNV2FQOCtYUlZEMWVXbXB4bmpPa2kzaUJH?=
- =?utf-8?B?eFlIa28vcGZITTFaeGE3dTYxVE4xUUVOcm1VTG85ZVlJOXBYMU90ZityMzkw?=
- =?utf-8?B?MVgvSExKUnNoNDd4RThkekZJdjhiRG5MY1BHVTA0SDJkMEdXcERCajUzYmU2?=
- =?utf-8?Q?edTgHljrM3wMdbkM=3D?=
-X-Exchange-RoutingPolicyChecked: sQVGZF7Ukh0RJRLjOABxeUJMXPPlSFKTyqS5ToZZIEDk8/cAWd2UlZ4FzzRTiwtVKlLtl/BS1tylukojRl2Ir9h4/YVzlhn9oPaET3O4bzwlMMFSg80uGVIFYAe+6v9uVjFX3gNzKt/sjMlxn7mJ4d0qqpiy95RNZ9oUejlUtjjoLyOi4TR9YY69rAebpW+lEE45E0Oz1J6uNqH1U7kVg+Ub35BP/c/A6j9OudYtr11/dadzItHA9kalTJYcwnEGxXPbyjAyxHuLT3X28GlYW7k9p86+zXTCLJ5BaaxhfjfqX1D3nAsVnU/MU7Ok0k2p/0AI++HUwPkRy1r05DMh5A==
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: bUhUoqEMSCPV60skagTSeK5iG4lFfFbHcv9iWUQB3l0GbizH/pWdqgJ7KBbrDB9daOl6qIEiQ7oSY6FOshJzkuwrg3aNmlQjas3NFTR+7S8tPl0Gj1TnByh6d+kg5fRpxiMgttfaxNs0ece7lEOWkCK47j4EiLobLOREhq792el/+Mv2jGZxhP9Vy+lMijpxYEwRnAue5qK4F+PJXCgExlr5mc0YEfL2SgN7s5pGm5eWSrgyX/nONk0P7SC94ZbdRfLncQzaWKG18G/bBYsz72rllyjJYUsCIdewxprHYFgjp+GAkEtQvf2JRvpjsAXLgl3tnP4mfJjoP6FSraUfywBN1SeoLq1QfLFtx/Jo8DWMqGEQFmG/Kr8PfYUp2kJ+YfA+FjFqxfj0mNXj4rYdVICx/q9nvZaSs6bibsHqTtQ1P1fEPiDrzxbf1qI5wr8OetsBF9Lz/ORnGfM6OgJJX4v2SnC/KbtABLM9VF4sFFu6P2OLu/fMCTiW632Qag8CqBJhFXgSDTa32KJTMZ/nynn0WCFIs7k5vw2ymcEp9RvXf3XjzTZZLdGX9qe0gcxsPqmv6VUB7wq6GebRbpaK0hyHV6mt5QHBObaofSCCyqM=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 45870334-6145-46e7-5ea8-08deee83e014
-X-MS-Exchange-CrossTenant-AuthSource: BLAPR10MB5041.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jul 2026 21:45:30.2466 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: NO15HRKQ48L3MmTjAOwNBIjI0OMSZy0J9w+83F5zfifOZ2qm3EnZxp7Ww+8khd2dOVgwaYpraUCn/9myzOrP8Fh23FqRLg3AmGjxMpjdV9A=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR10MB7128
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMwMDE1NCBTYWx0ZWRfX0wFDKXHrkpH0
+ AUQ02dgWvZAa82kxfbqaY45rg2Ujpb8o7VoZcVYeC4wyP4jq2jU11NwZjuTOSMY0utIyDBWvpVe
+ Q83J+ZAnSx4dSCm3m1XqqvV3p79Sx4U=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMwMDE1NCBTYWx0ZWRfX0QUuS2UQOl+g
+ l8ozCAZ1SWfW2UGVfUHQVnlB3t5v4fCdfq1E2zCep0jfTWg7DLCcD7JpeYFr4sr91XOBEXdsIsT
+ YddkS1dNgqgMJx/jUgK5b4oO052jfOUeyf0bPU64dAeUv5lHcFECwbpt1lqQrnOxYaL9l358Nwg
+ rEeCi7D6V992uaD9B0i5MLHFx0bXchCWW7QHtRbxNgGp2BMuUP2T5grjbM4ZXKGD4tuX8NBWE/u
+ SVDPLoltq/CuF9e7wHP9NDRy3V3pPZVs+NK6K/RMXLDPV+E8JC73raQx8+rw+s3EBJk4AxjgCbz
+ jkQKWTWumyNI0bI30wvfZd5wPuUYlI2+SdAj9wsMNtM4ZHJrDCE42oWsjEIfyZvRs0Kw7UmWDgL
+ mSdZkMZctB4e8X0nJjvAbVrADshYuZbDUM0e0dWR4bLS0YakFk7i0E72lZtslRP5QSQzPLWpxVe
+ bmnMDStp0iyoOI+ouEA==
+X-Authority-Analysis: v=2.4 cv=b5WCJNGx c=1 sm=1 tr=0 ts=6a6bc63c cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=20KFwNOVAAAA:8 a=GX81FK21qHpjiM7aGUoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: hn-JArsU4l9Vu2DMXkUVWYDJvSlY87QO
+X-Proofpoint-ORIG-GUID: hn-JArsU4l9Vu2DMXkUVWYDJvSlY87QO
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-30_06,2026-07-30_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- mlxscore=0 bulkscore=0 lowpriorityscore=0
- suspectscore=0 mlxlogscore=999
- spamscore=0 adultscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2606160000 definitions=main-2607300156
-X-Proofpoint-ORIG-GUID: fV7uZhDenNRETia5HO9YnPSXXd_7UVx8
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMwMDE1NiBTYWx0ZWRfXxZH/5rlQIjU7
- K8A/DvZj3Pr+uSIHHD95Mz/KumCjvevc1UtfHQRJ4xHRhuEXX1Exn58qKnFLMgfvd02M2I4Cdzz
- 8aUjUoWwhK+yRQESmMvlXmGMxfyva0BBpabxenJHt3pU/Cg4jOA0YlR1Qcqifh9WjnE3TtrY49r
- hYE1uMXraYv1gouSc27PbetbwVsXyw2y8Vv2nChJiVUKKadj2yPKQLhKWDjIPeiK8NtG2BAXFFj
- Sb6ZE+S+Tj8KUh4EQLWd8V4oxobN4DSoF4veM64tyRLv1Atj9KY9Xu48NRDLZqbLWalTiVX8xVr
- Ww6BXsZ9TCASanXWOMgTNflizhTHgmDKhaT/BV9u8JSW3hhbjBu2lLIX4kZoggX3hZZ38KMcDSK
- S1eeXvXNiaJaEe7kR80T2gDs8P8BgNLFiH6/uSmaVSzkFzjNRLiXMc27DspS7MUGyUa4jGz70rg
- MiFwRnVxtwfsWgySA9g==
-X-Proofpoint-GUID: fV7uZhDenNRETia5HO9YnPSXXd_7UVx8
-X-Authority-Analysis: v=2.4 cv=A6Jc+aWG c=1 sm=1 tr=0 ts=6a6bc600 cx=c_pps
- a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=RAioF0-LDSMA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=jiCTI4zE5U7BLdzWsZGv:22 a=RD47p0oAkeU5bO7t-o6f:22 a=zd2uoN0lAAAA:8
- a=yPCof4ZbAAAA:8 a=EdtI61k60ghVUAyOQqwA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMwMDE1NiBTYWx0ZWRfX6g784PacGBS/
- plHDnrEOIcJB9GPXLC6jbQ8usw5QbogP7DEktUeaXOXHvzmurDqqfFtmBS6PWLfwSomTP0WREJG
- sDXW64aBFUNypEmJpewBqjjpm7V02CJxQi3Y7KXIooC0pmVCmeV4
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0 impostorscore=0
+ bulkscore=0 phishscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607300154
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -213,32 +128,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Introduce new helper functions for x509 certificate, which will be used
+by the certificate store:
 
+qcrypto_x509_convert_cert_der() - converts a certificate from PEM to DER format
 
-On 5/11/26 8:39 AM, Sairaj Kodilkar wrote:
-> The stub call should not return normal EFR as it is used as place holder
-> when actual AMD IOMMU calls are not available. Hence return 0.
-> 
-> Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
-> Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-> 
+These functions provide support for certificate format conversion.
 
-Reviewed-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Acked-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+---
+ crypto/x509-utils.c         | 49 +++++++++++++++++++++++++++++++++++++
+ include/crypto/x509-utils.h | 21 ++++++++++++++++
+ 2 files changed, 70 insertions(+)
 
-> ---
->  hw/i386/amd_iommu-stub.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/i386/amd_iommu-stub.c b/hw/i386/amd_iommu-stub.c
-> index d62a3732e60f..fb36dee903ee 100644
-> --- a/hw/i386/amd_iommu-stub.c
-> +++ b/hw/i386/amd_iommu-stub.c
-> @@ -22,5 +22,5 @@
->  
->  uint64_t amdvi_extended_feature_register(AMDVIState *s)
->  {
-> -    return AMDVI_DEFAULT_EXT_FEATURES;
-> +    return 0;
->  }
+diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
+index 1b497caae8..369e7ca6af 100644
+--- a/crypto/x509-utils.c
++++ b/crypto/x509-utils.c
+@@ -82,6 +82,46 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+     return ret;
+ }
+ 
++int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
++                                  uint8_t **result, size_t *resultlen,
++                                  Error **errp)
++{
++    int ret = -1;
++    int rc;
++    gnutls_x509_crt_t crt;
++    gnutls_datum_t datum = {.data = cert, .size = size};
++    gnutls_datum_t datum_der = {.data = NULL, .size = 0};
++
++    rc = gnutls_x509_crt_init(&crt);
++    if (rc < 0) {
++        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
++        return ret;
++    }
++
++    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
++    if (rc != 0) {
++        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
++        goto cleanup;
++    }
++
++    rc = gnutls_x509_crt_export2(crt, GNUTLS_X509_FMT_DER, &datum_der);
++    if (rc != 0) {
++        error_setg(errp, "Failed to convert certificate to DER format: %s",
++                   gnutls_strerror(rc));
++        goto cleanup;
++    }
++
++    *resultlen = datum_der.size;
++    *result = g_memdup2(datum_der.data, datum_der.size);
++
++    ret = 0;
++
++cleanup:
++    gnutls_x509_crt_deinit(crt);
++    g_free(datum_der.data);
++    return ret;
++}
++
+ #else /* ! CONFIG_GNUTLS */
+ 
+ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+@@ -94,4 +134,13 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+     return -1;
+ }
+ 
++int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
++                                  uint8_t **result,
++                                  size_t *resultlen,
++                                  Error **errp)
++{
++    error_setg(errp, "GNUTLS is required to export X.509 certificate");
++    return -1;
++}
++
+ #endif /* ! CONFIG_GNUTLS */
+diff --git a/include/crypto/x509-utils.h b/include/crypto/x509-utils.h
+index 1e99661a71..91ae79fb03 100644
+--- a/include/crypto/x509-utils.h
++++ b/include/crypto/x509-utils.h
+@@ -19,4 +19,25 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+                                       size_t *resultlen,
+                                       Error **errp);
+ 
++/**
++ * qcrypto_x509_convert_cert_der
++ * @cert: pointer to the raw certificate data in PEM format
++ * @size: size of the certificate
++ * @result: output location for the allocated buffer for the certificate
++ *          in DER format
++ *          (the function allocates memory which must be freed by the caller)
++ * @resultlen: pointer to the size of the buffer (will be updated with the
++ *             actual size of the DER-encoded certificate)
++ * @errp: error pointer
++ *
++ * Convert the given @cert from PEM to DER format.
++ *
++ * Returns: 0 on success,
++ *         -1 on error.
++ */
++int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
++                                  uint8_t **result,
++                                  size_t *resultlen,
++                                  Error **errp);
++
+ #endif
+-- 
+2.55.0
 
 
