@@ -4,49 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FB4AC54FD2
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:12:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6823C54FCD
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:22:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpH7a-0004zP-Qz; Wed, 29 Jul 2026 23:07:46 -0400
+	id 1wpHLK-0006Jk-HR; Wed, 29 Jul 2026 23:21:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH76-0004Sr-DQ
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:07:18 -0400
-Received: from rev.ng ([94.130.142.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH72-0002zK-W1
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:07:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
- Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=bLMxEDtYtHEQEK6wR7TDb5jQ5+u/BTLS7BKnJclrKiw=; b=XvKmkQwS5YWCu3v
- OsNFjGfbltcq1N+S8SpStFyVUiRg4+txiPz5LfTgvmVqw8FJImVEzEMgHyTqR2VEtI+022f8FKq/Q
- DR6ViXNAxVAS9lOwE4Uj3iS7MygyKX1LIIkvweq01N35ytl9EN2v8pKylZxXGpfUUiNO7Gkn81uCe
- Pc=;
+ (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
+ id 1wpHLJ-0006Av-1D
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:21:57 -0400
+Received: from mail-pj2-x01.google.com ([2607:f8b0:4864:39::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
+ id 1wpHLG-0005kg-De
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:21:56 -0400
+Received: by mail-pj2-x01.google.com with SMTP id
+ d9443c01a7336-2ce7ac92dfcso14182125ad.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Jul 2026 20:21:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785381713; x=1785986513; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Ys3esONrsqVlxBqYcs6Dkbb9Y8Q4W6mN8HUg+v1YKjQ=;
+ b=PeEUXnAeTyknhgVCr1/iRSSr7VszChGtrjJLYLMzQ2yzK0j/oT1IQNhZAFeHn/qo+M
+ L8j8yUqa/qVHzZuSzs86jOCdWjZZsPkKsJ5c6NzjlKquItk8iQpcWksgfa8cG6zxUASQ
+ YBGwE0PH4Xsu6ZMHEIcB/MeHJG/leX2iQavKj/azsqZKa+U7K7VFS0ANSUcud63sEj6+
+ e7QIneMMqe7dS6hT0h+/EFQfiSkTAv1U+s+Vnn0ngnj9BGnZubkC2iR/EQPjcDnVFjOY
+ QXtxstTdnTL/SzZ2BdVK+NYPhH/qNp/ItVMIwm2x+JZKh1zuIDBCn4MDz3EMmYheqHpx
+ A0dg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785381713; x=1785986513;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Ys3esONrsqVlxBqYcs6Dkbb9Y8Q4W6mN8HUg+v1YKjQ=;
+ b=hDuQq3hbuWpthD3rbLLNXNZWk01Ha4b/q0jKjkTiTEvR29dsncQiqVvTFIhkKukDdd
+ Xgef2YT7PH6ZOayI4B/PbEIwxnfCoKYX1ZS1tDpSavjOEYOKC86YIX9HcIiEGTaggMRt
+ KVGweaxg7gIB0zLzlRKJTcdq0ksEbDPuax1GLZe/0G7ljZeAStm8avydPCm1IiSI5HBj
+ GN83Uj3UtHivgPOH+wONQaWK5xPIAQ9G64uhEjaoQW0KGy5ER4xDUVOsvXuGRtBpd72D
+ g5uVTUvSs7QBSXz8Faf70Bm19xBBO23gUsSi9QcmKzV0I10782lu1vMvNSz4FkgmBboa
+ LXHA==
+X-Gm-Message-State: AOJu0Yy3q7C/wq/S9qgLJKnQN6nvb5crahE9VOEedzXBfbHHllNT4BOW
+ /kQG+ee49QbyqLH+CHNyzExY835k7/5bVsPWAkrsij1NoM780FbpBNipwGXqEChWQnewfJJz
+X-Gm-Gg: AR+sD12HtpnlhMckVU0oZJB6gFIHu/lAqeWhJjPG/Za9VXGdr6kieQXjdeRA/EqZd+E
+ wLO9YAwqWJkF8yMNypSF4y3m/DoJ8fd0L3BW0MYSbiPhLi47fCxMxMIh2392QG4+UcN8yIgdoMK
+ j/4TxvM3H8LuAHD+Q7jI8+VSCRxHFjdmbIVu3MykBZhuvdRXD5t0XHgNppSTanXRVAPvkg/bJ+I
+ SLD/lkVOrkiAbyfgqgrL37+WNpaSLsg0G1Fx058wIwxaCJRxjZ3DOkEwhhmDx/gZE3AeHP5pRmV
+ EON7X0GmPWuJr1t1n18VfNRYxLUo2JP1MgKQRSSgUXDCNWAXhvxnG9rj4m7TdI/bgSrDX62Y52C
+ 4rKfpZ2X6raG0z9z6sDrLthgl+g81OUVxu/zZKwPqBPCI0UMMf1H/gzlBlmlhzhq0qdQMkf8nM0
+ 0wW6v0XXtQGs+5GgL6jquSb980P3bwvCmN2TxjdrixOv+WhrgePznGufiCq7SbHBuNOlV9bYI7w
+ yDI9ZPJQaCFqm6OZQ==
+X-Received: by 2002:a17:902:ebc2:b0:2ce:93a3:c168 with SMTP id
+ d9443c01a7336-2d035b9ae04mr9177385ad.7.1785381712320; 
+ Wed, 29 Jul 2026 20:21:52 -0700 (PDT)
+Received: from Dell-WorkStation.localdomain ([141.164.58.245])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2d022a18abasm19343055ad.5.2026.07.29.20.21.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 Jul 2026 20:21:51 -0700 (PDT)
+From: Zephyr Li <fritchleybohrer@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: ale@rev.ng, brian.cain@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
- philmd@mailo.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 35/50] helper-to-tcg: TcgGenPass,
- propagate constant expresssions
-Date: Thu, 30 Jul 2026 05:10:09 +0200
-Message-ID: <20260730031025.12926-36-anjo@rev.ng>
-In-Reply-To: <20260730031025.12926-1-anjo@rev.ng>
-References: <20260730031025.12926-1-anjo@rev.ng>
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ Zephyr Li <fritchleybohrer@gmail.com>
+Subject: [PATCH v2] target/riscv: do not count ECALL in minstret
+Date: Thu, 30 Jul 2026 11:21:20 +0800
+Message-ID: <20260730032122.2564190-1-fritchleybohrer@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
+Received-SPF: pass client-ip=2607:f8b0:4864:39::1;
+ envelope-from=fritchleybohrer@gmail.com; helo=mail-pj2-x01.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -59,373 +97,221 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In a forward pass over the instructions, fold and propagate constant
-expressions to `TcgV`s with a string representing the expression.
+With icount enabled, helper_raise_exception() leaves ECALL in
+icount_get_raw() because it exits without restoring the current TB
+state. This makes minstret count an instruction that does not retire.
 
-This needs to be performed before register allocation where `TcgV`
-registers are assigned to `Value`s to get the best register reuse.
-Register allocation is also performed in a backwards pass over the
-instructions, so these two passes cannot be nicely combined.
+Adjust only the fixed minstret baseline so that mcycle accounting
+remains unchanged.
 
-Signed-off-by: Anton Johansson <anjo@rev.ng>
+Add an RV64 softmmu regression test for the issue.
+
+Fixes: 4fe8ae09062d ("target/riscv: Combine mhpmcounter and mhpmcounterh")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4087
+Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 ---
- subprojects/helper-to-tcg/meson.build         |   1 +
- .../src/TcgGenPass/MapConstantExpressions.cpp | 328 ++++++++++++++++++
- 2 files changed, 329 insertions(+)
- create mode 100644 subprojects/helper-to-tcg/src/TcgGenPass/MapConstantExpressions.cpp
+Changes in v2:
+- Add the Fixes tag suggested by Daniel.
 
-diff --git a/subprojects/helper-to-tcg/meson.build b/subprojects/helper-to-tcg/meson.build
-index 22190025d0..046cdb916b 100644
---- a/subprojects/helper-to-tcg/meson.build
-+++ b/subprojects/helper-to-tcg/meson.build
-@@ -52,6 +52,7 @@ sources = [
-     'src/TcgGenPass/LinearizeBlocks.cpp',
-     'src/TcgGenPass/TcgEmit.cpp',
-     'src/TcgGenPass/MapArguments.cpp',
-+    'src/TcgGenPass/MapConstantExpressions.cpp',
- ]
+---
+ target/riscv/tcg/op_helper.c              |  6 +++
+ target/riscv/tcg/pmu.c                    | 44 +++++++++++++-----
+ target/riscv/tcg/pmu.h                    |  1 +
+ tests/tcg/riscv64/Makefile.softmmu-target |  4 ++
+ tests/tcg/riscv64/test-minstret-ecall.S   | 55 +++++++++++++++++++++++
+ 5 files changed, 98 insertions(+), 12 deletions(-)
+ create mode 100644 tests/tcg/riscv64/test-minstret-ecall.S
+
+diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
+index ba3c7da375..acdccd1a97 100644
+--- a/target/riscv/tcg/op_helper.c
++++ b/target/riscv/tcg/op_helper.c
+@@ -21,6 +21,9 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "target/riscv/tcg/csr.h"
++#ifndef CONFIG_USER_ONLY
++#include "pmu.h"
++#endif
+ #include "internals.h"
+ #include "exec/cputlb.h"
+ #include "accel/tcg/cpu-ldst.h"
+@@ -47,6 +50,9 @@ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
  
- clang = bindir / 'clang'
-diff --git a/subprojects/helper-to-tcg/src/TcgGenPass/MapConstantExpressions.cpp b/subprojects/helper-to-tcg/src/TcgGenPass/MapConstantExpressions.cpp
+ void helper_raise_exception(CPURISCVState *env, uint32_t exception)
+ {
++#ifndef CONFIG_USER_ONLY
++    riscv_pmu_decr_instret(env);
++#endif
+     riscv_raise_exception(env, exception, 0);
+ }
+ 
+diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
+index 38ad2737e1..1a4658319b 100644
+--- a/target/riscv/tcg/pmu.c
++++ b/target/riscv/tcg/pmu.c
+@@ -49,6 +49,21 @@ static bool riscv_pmu_counter_enabled(RISCVCPU *cpu, uint32_t ctr_idx)
+     }
+ }
+ 
++static bool riscv_pmu_counter_filtered(CPURISCVState *env, uint64_t cfg)
++{
++    bool virt_on = env->virt_enabled;
++
++    return (env->priv == PRV_M && (cfg & MHPMEVENT_BIT_MINH)) ||
++           (env->priv == PRV_S && virt_on &&
++            (cfg & MHPMEVENT_BIT_VSINH)) ||
++           (env->priv == PRV_U && virt_on &&
++            (cfg & MHPMEVENT_BIT_VUINH)) ||
++           (env->priv == PRV_S && !virt_on &&
++            (cfg & MHPMEVENT_BIT_SINH)) ||
++           (env->priv == PRV_U && !virt_on &&
++            (cfg & MHPMEVENT_BIT_UINH));
++}
++
+ /*
+  * Information needed to update counters:
+  *  new_priv, new_virt: To correctly save starting snapshot for the newly
+@@ -147,12 +162,27 @@ void riscv_pmu_update_fixed_ctrs(CPURISCVState *env,
+     riscv_pmu_icount_update_priv(env, newpriv, new_virt);
+ }
+ 
++void riscv_pmu_decr_instret(CPURISCVState *env)
++{
++    if (!icount_enabled() ||
++        (env->mcountinhibit & COUNTEREN_IR) ||
++        riscv_pmu_counter_filtered(env, env->minstretcfg)) {
++        return;
++    }
++
++    /*
++     * minstret is derived from icount, which includes the current
++     * instruction.  Move the baseline forward to exclude an instruction
++     * that raises an exception and therefore does not retire.
++     */
++    env->pmu_ctrs[2].mhpmcounter_prev++;
++}
++
+ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
+ {
+     uint32_t ctr_idx;
+     CPURISCVState *env = &cpu->env;
+     uint64_t max_val = UINT64_MAX;
+-    bool virt_on = env->virt_enabled;
+     PMUCTRState *counter;
+     gpointer value;
+ 
+@@ -170,17 +200,7 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
+         return -1;
+     }
+ 
+-    /* Privilege mode filtering */
+-    if ((env->priv == PRV_M &&
+-        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_MINH)) ||
+-        (env->priv == PRV_S && virt_on &&
+-        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_VSINH)) ||
+-        (env->priv == PRV_U && virt_on &&
+-        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_VUINH)) ||
+-        (env->priv == PRV_S && !virt_on &&
+-        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_SINH)) ||
+-        (env->priv == PRV_U && !virt_on &&
+-        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_UINH))) {
++    if (riscv_pmu_counter_filtered(env, env->mhpmevent_val[ctr_idx])) {
+         return 0;
+     }
+ 
+diff --git a/target/riscv/tcg/pmu.h b/target/riscv/tcg/pmu.h
+index b4f1e469a2..2429c01b77 100644
+--- a/target/riscv/tcg/pmu.h
++++ b/target/riscv/tcg/pmu.h
+@@ -36,6 +36,7 @@ int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
+                           uint32_t ctr_idx);
+ void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, privilege_mode_t newpriv,
+                                  bool new_virt);
++void riscv_pmu_decr_instret(CPURISCVState *env);
+ RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
+                                   bool upper_half, uint32_t ctr_idx);
+ 
+diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
+index 82be8a2c91..42038ce3b4 100644
+--- a/tests/tcg/riscv64/Makefile.softmmu-target
++++ b/tests/tcg/riscv64/Makefile.softmmu-target
+@@ -24,6 +24,10 @@ EXTRA_RUNS += run-test-mepc-masking
+ run-test-mepc-masking: test-mepc-masking
+ 	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
+ 
++EXTRA_RUNS += run-test-minstret-ecall
++run-test-minstret-ecall: test-minstret-ecall
++	$(call run-test, $<, $(QEMU) -icount shift=1 $(QEMU_OPTS)$<)
++
+ EXTRA_RUNS += run-plugin-doubletrap
+ run-plugin-doubletrap: doubletrap
+ 	$(call run-test, $<, \
+diff --git a/tests/tcg/riscv64/test-minstret-ecall.S b/tests/tcg/riscv64/test-minstret-ecall.S
 new file mode 100644
-index 0000000000..0d0810ebc8
+index 0000000000..ab268f7f22
 --- /dev/null
-+++ b/subprojects/helper-to-tcg/src/TcgGenPass/MapConstantExpressions.cpp
-@@ -0,0 +1,328 @@
-+//
-+//  Copyright(c) 2026 rev.ng Labs Srl. All Rights Reserved.
-+//
-+//  This program is free software; you can redistribute it and/or modify
-+//  it under the terms of the GNU General Public License as published by
-+//  the Free Software Foundation; either version 2 of the License, or
-+//  (at your option) any later version.
-+//
-+//  This program is distributed in the hope that it will be useful,
-+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+//  GNU General Public License for more details.
-+//
-+//  You should have received a copy of the GNU General Public License
-+//  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+//
++++ b/tests/tcg/riscv64/test-minstret-ecall.S
+@@ -0,0 +1,55 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
 +
-+#include "ValueMapping.hpp"
++	.option	norvc
 +
-+#include "DebugInfo.hpp"
-+#include "Error.hpp"
-+#include "PseudoInst.hpp"
-+#include "TcgEmit.hpp"
-+#include "TcgGlobalMap.hpp"
-+#include "TcgType.hpp"
++	.text
++	.global	_start
++_start:
++	lla	t0, trap
++	csrw	mtvec, t0
 +
-+#include <llvm/IR/BasicBlock.h>
-+#include <llvm/IR/Constants.h>
-+#include <llvm/IR/DerivedTypes.h>
-+#include <llvm/IR/Function.h>
-+#include <llvm/IR/Instructions.h>
-+#include <llvm/IR/Module.h>
++	/*
++	 * The first CSR read retires after obtaining s0.  The ecall does not
++	 * retire, so the trap handler must observe a difference of one.
++	 */
++	csrr	s0, minstret
++	ecall
++	sub	t0, s1, s0
++	li	t1, 1
++	bne	t0, t1, fail
 +
-+using namespace llvm;
++	li	a0, 0
++	j	_exit
 +
-+//
-+// Functions for mapping an LLVM Value to a TcgV
-+//
++trap:
++	csrr	s1, minstret
++	csrr	t0, mcause
++	li	t1, 11		/* Environment call from M-mode */
++	bne	t0, t1, fail
 +
-+// Provides a C string representation of a ConstantInt
-+static std::string constantIntToStr(const ConstantInt *C) {
-+    SmallString<20> ResultStr;
-+    auto *Int = cast<ConstantInt>(C);
-+    const APInt Value = Int->getUniqueInteger();
-+    const unsigned BitWidth = Int->getBitWidth();
-+    if (BitWidth == 1) {
-+        // Emit as bool
-+        return (Value.getBoolValue()) ? "true" : "false";
-+    } else if (BitWidth == 64 and !Int->isNegative() and Int->uge(0xefff)) {
-+        // Emit hex-formatted integer as 64-bit constants often occur in vector
-+        // expressions, and are way easier to read.
-+        Value.toString(ResultStr, 16, false, true);
-+        return Twine(ResultStr).str();
-+    } else {
-+        // Emit as signed integer
-+        const char *SuffixStr = "";
-+        if (Value.ugt(UINT32_MAX) or C->getBitWidth() == 64) {
-+            SuffixStr = Int->isNegative() ? "ll" : "ull";
-+        }
-+        bool IsMax =
-+            (Int->isNegative()) ? Value.isMaxSignedValue() : Value.isMaxValue();
-+        bool IsMin = Int->isNegative() and Value.isMinSignedValue();
-+        unsigned Bitwidth = Value.getBitWidth();
-+        if (IsMax) {
-+            return Twine("INT").concat(Twine(Bitwidth)).concat("_MAX").str();
-+        } else if (IsMin) {
-+            return Twine("INT").concat(Twine(Bitwidth)).concat("_MIN").str();
-+        } else {
-+            Value.toString(ResultStr, 10, Value.isNegative(), true);
-+            return Twine(ResultStr).concat(SuffixStr).str();
-+        }
-+    }
-+}
++	csrr	t0, mepc
++	addi	t0, t0, 4
++	csrw	mepc, t0
++	mret
 +
-+static Expected<TcgV> mapIntegerConstant(TempAllocationData &TAD,
-+                                         const ConstantInt *V) {
-+    auto Size = ValueSize::fromLlvmType(cast<IntegerType>(V->getType()));
-+    if (!Size) {
-+        return Size.takeError();
-+    }
-+    auto Tcg = TcgV::makeTemp(*Size, IrImmediate);
-+    Tcg.Name = constantIntToStr(V);
-+    return TAD.map(V, Tcg);
-+}
++fail:
++	li	a0, 1
 +
-+static Expected<TcgV> mapVectorConstant(TempAllocationData &TAD,
-+                                        const AnnotationMapTy &Annotations,
-+                                        const DebugInfoMapTy &DebugInfo,
-+                                        const Value *V, VectorType *VecTy) {
-+    auto *Const = dyn_cast<Constant>(V);
-+    if (!Const) {
-+        return mkError("Non-constant vector");
-+    }
++_exit:
++	lla	a1, semiargs
++	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
 +
-+    auto Size = VectorSize::fromLlvmType(VecTy);
-+    if (!Size) {
-+        return Size.takeError();
-+    }
-+    auto Tcg = TcgV::makeVector(*Size);
++	/* Semihosting call sequence */
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
 +
-+    // At this point, splatted vectors should have been converted to calls to
-+    // @VecSplat, to more closely match TCG and benefit from future variable
-+    // assignments.
-+    assert(!Const->getSplatValue());
-+
-+    std::string ExprStr;
-+    raw_string_ostream Expr(ExprStr);
-+
-+    // Map constant elements of vector where elements differ
-+    //   <32 x i32> <i32 1, i32 2, ..., i32 16>
-+
-+    Expr << "{";
-+    for (unsigned I = 0; I < Size->ElementCount; ++I) {
-+        ConstantInt *C = cast<ConstantInt>(Const->getAggregateElement(I));
-+        Expr << constantIntToStr(C);
-+        if (I < Size->ElementCount - 1) {
-+            Expr << ", ";
-+        }
-+    }
-+    Expr << "}";
-+    Tcg.Name = ExprStr;
-+    Tcg.ConstantExpression = true;
-+
-+    return TAD.map(V, Tcg);
-+}
-+
-+// Given a LLVM value, assigns a TcgV by type (integer, pointer, vector).  If
-+// the given value has already been mapped to a TcgV, return it.
-+static Expected<TcgV> mapConstant(TempAllocationData &TAD,
-+                                  const AnnotationMapTy &AnnotationMap,
-+                                  const DebugInfoMapTy &DebugInfo,
-+                                  const Value *V) {
-+    // Return previously mapped value
-+    auto It = TAD.Map.find(V);
-+    if (It != TAD.Map.end()) {
-+        return It->second;
-+    }
-+
-+    Type *Ty = V->getType();
-+    if (auto *ConstInt = dyn_cast<ConstantInt>(V)) {
-+        return mapIntegerConstant(TAD, ConstInt);
-+    } else if (isa<VectorType>(Ty)) {
-+        return mapVectorConstant(TAD, AnnotationMap, DebugInfo, V,
-+                                 cast<VectorType>(Ty));
-+    }
-+
-+    return mkError("Unable to map value ", V);
-+}
-+
-+Error propagateConstantExpressions(CEmitter &C, const Function &F,
-+                                   const LinearBlocks &Blocks,
-+                                   const AnnotationMapTy &AnnotationMap,
-+                                   const DebugInfoMapTy &DebugInfo,
-+                                   const TcgGlobalMap &TcgGlobals,
-+                                   TempAllocationData &TAD) {
-+    SmallVector<Value *, 16> Worklist;
-+    for (BasicBlock *BB : Blocks) {
-+        for (Instruction &I : *BB) {
-+            // Skip all instructions for which all operands have not been
-+            // mapped, at this point we're only mapping constant expressions, so
-+            // this is equivalent to all operands being constant expressions.
-+            bool SkipInstruction = false;
-+            SmallVector<TcgV, 4> Ops;
-+            for (Value *V : getOperands(&I)) {
-+                // Try and map `V` as a constant, or return previously mapped
-+                // value. At this point any previously mapped value must be an
-+                // argument to the function.
-+                Expected<TcgV> T =
-+                    mapConstant(TAD, AnnotationMap, DebugInfo, V);
-+                if (!T or T->Kind == IrValue or T->Kind == IrPtr) {
-+                    // Do break out here, we still need to map all operands,
-+                    // consider
-+                    //
-+                    //   call @func(i32 %nonconst, i32 0).
-+                    SkipInstruction = true;
-+                    continue;
-+                }
-+                Ops.push_back(*T);
-+            }
-+            if (SkipInstruction) {
-+                continue;
-+            }
-+
-+            switch (I.getOpcode()) {
-+            case Instruction::SExt:
-+            case Instruction::ZExt: {
-+                auto *IntTy = dyn_cast<IntegerType>(I.getType());
-+                if (!IntTy) {
-+                    continue;
-+                }
-+                auto Size = ValueSize::fromLlvmType(IntTy);
-+                if (!Size) {
-+                    return Size.takeError();
-+                }
-+                bool Signed = (I.getOpcode() == Instruction::SExt);
-+                TAD.Map[&I] = C.extend(Signed, Ops[0], *Size);
-+            } break;
-+            case Instruction::Trunc: {
-+                auto Trunc = cast<TruncInst>(&I);
-+                if (!Trunc->getDestTy()->isIntegerTy()) {
-+                    continue;
-+                }
-+                TAD.Map[&I] = Ops[0];
-+            } break;
-+            case Instruction::Add:
-+            case Instruction::And:
-+            case Instruction::AShr:
-+            case Instruction::LShr:
-+            case Instruction::Mul:
-+            case Instruction::UDiv:
-+            case Instruction::SDiv:
-+            case Instruction::Or:
-+            case Instruction::Shl:
-+            case Instruction::Sub:
-+            case Instruction::Xor: {
-+                auto Bin = cast<BinaryOperator>(&I);
-+                if (!isa<IntegerType>(Bin->getType())) {
-+                    continue;
-+                }
-+                assert(Ops[0].Kind == Ops[1].Kind);
-+                TAD.Map[&I] = C.binop(Bin->getOpcode(), Ops[0], Ops[1]);
-+            } break;
-+            case Instruction::ICmp: {
-+                auto *ICmp = cast<ICmpInst>(&I);
-+                assert(Ops[0].Kind == Ops[1].Kind);
-+                TAD.Map[&I] = C.compare(ICmp->getPredicate(), Ops[0], Ops[1]);
-+            } break;
-+            case Instruction::Call: {
-+                auto *Call = cast<CallInst>(&I);
-+
-+                // Rule out calls which are marked as returning integer
-+                // immediates first, then handle specific pseudo instructions.
-+
-+                Type *RetTy = Call->getType();
-+
-+                if (auto IntTy = dyn_cast<IntegerType>(RetTy)) {
-+                    auto It = AnnotationMap.find(Call->getCalledFunction());
-+                    if (It != AnnotationMap.end() and
-+                        It->second.isSet(
-+                            FunctionAnnotation::ReturnsImmediate)) {
-+                        auto Size = ValueSize::fromLlvmType(IntTy);
-+                        if (!Size) {
-+                            return Size.takeError();
-+                        }
-+                        auto Tcg = TcgV::makeTemp(*Size, IrImmediate);
-+                        Tcg.Name = getDebugVarName(DebugInfo, Call);
-+                        Tcg.Kind = IrImmediate;
-+                        TAD.Map[Call] = Tcg;
-+                        continue;
-+                    }
-+                }
-+
-+                switch (getPseudoInstFromCall(Call)) {
-+                case IdentityMap: {
-+                    TcgV Tcg;
-+                    if (auto *IntTy = dyn_cast<IntegerType>(RetTy)) {
-+                        auto Size = ValueSize::fromLlvmType(IntTy);
-+                        if (!Size) {
-+                            return Size.takeError();
-+                        }
-+                        Tcg = TcgV::makeTemp(*Size, IrValue);
-+                    } else if (auto *VecTy = dyn_cast<VectorType>(RetTy)) {
-+                        auto Size = VectorSize::fromLlvmType(VecTy);
-+                        if (!Size) {
-+                            return Size.takeError();
-+                        }
-+                        Tcg = TcgV::makeVector(*Size);
-+                    } else {
-+                        abort();
-+                    }
-+                    Tcg.ConstantExpression = true;
-+                    Tcg.Name = Ops[0].Name;
-+                    TAD.Map[&I] = Tcg;
-+                } break;
-+                case PtrAdd: {
-+                    TAD.Map[&I] = C.ptrAdd(Ops[0], Ops[1]);
-+                } break;
-+                case Movcond: {
-+                    auto LlvmPred = static_cast<ICmpInst::Predicate>(
-+                        cast<ConstantInt>(Call->getOperand(0))->getZExtValue());
-+                    const TcgV Cond = C.compare(LlvmPred, Ops[1], Ops[2]);
-+                    TAD.Map[&I] = C.ternary(Cond, Ops[3], Ops[4]);
-+                } break;
-+                case AccessGlobalArray: {
-+                    const uint64_t TypeIndex =
-+                        cast<ConstantInt>(Call->getArgOperand(0))
-+                            ->getZExtValue();
-+                    const uint64_t Offset =
-+                        cast<ConstantInt>(Call->getArgOperand(1))
-+                            ->getZExtValue();
-+                    assert(TypeIndex < TcgGlobals.size());
-+                    auto It = TcgGlobals[TypeIndex].find(Offset);
-+                    assert(It != TcgGlobals[TypeIndex].end());
-+                    const TcgGlobal Global = It->second;
-+                    if (Ops[2].Kind != IrImmediate) {
-+                        return mkError(
-+                            "Global array access with non-immediate index");
-+                    }
-+                    auto Code = Global.Code.str() + "[" + getName(Ops[2]) + "]";
-+                    TAD.Map[&I] = TcgV::makeConstantExpression(
-+                        Code, *ValueSize::fromBitWidth(Global.Size), IrValue);
-+                } break;
-+                case AccessGlobalValue: {
-+                    const uint64_t TypeIndex =
-+                        cast<ConstantInt>(Call->getArgOperand(0))
-+                            ->getZExtValue();
-+                    const uint64_t Offset =
-+                        cast<ConstantInt>(Call->getArgOperand(1))
-+                            ->getZExtValue();
-+                    assert(TypeIndex < TcgGlobals.size());
-+                    auto It = TcgGlobals[TypeIndex].find(Offset);
-+                    assert(It != TcgGlobals[TypeIndex].end());
-+                    const TcgGlobal Global = It->second;
-+                    TAD.Map[&I] = TcgV::makeConstantExpression(
-+                        Global.Code.str(),
-+                        *ValueSize::fromBitWidth(Global.Size), IrValue);
-+                } break;
-+                default:
-+                    continue;
-+                }
-+            } break;
-+            default:
-+                continue;
-+            }
-+        }
-+    }
-+    return Error::success();
-+}
++	.data
++	.balign	16
++semiargs:
++	.space	16
 -- 
-2.52.0
-
+2.43.0
 
