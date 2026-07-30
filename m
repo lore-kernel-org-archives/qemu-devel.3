@@ -4,87 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63EEEC55165
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD462C55167
 	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 00:30:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpb8Z-0002oK-Lx; Thu, 30 Jul 2026 20:30:07 -0400
+	id 1wpb8a-0002oL-9E; Thu, 30 Jul 2026 20:30:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <oliverhenryc@gmail.com>)
- id 1wpZp2-0008F7-Os
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 19:05:52 -0400
-Received: from mail-qv1-xf2e.google.com ([2607:f8b0:4864:20::f2e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <oliverhenryc@gmail.com>)
- id 1wpZp1-0000hc-D8
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 19:05:52 -0400
-Received: by mail-qv1-xf2e.google.com with SMTP id
- 6a1803df08f44-907ae87ebfcso585646d6.0
- for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 16:05:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785452750; x=1786057550; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=WeoZMFRUcScYUud2h5F047Ygt+CNqlQ41cRVby3nNZ4=;
- b=O+7x55poI3NUpZGUXU/XT70rYwH0C+uCQFCAybrhYKczVGbl8m/xHauj2moH5GRY/N
- nmpK3IjUTCGorc7OzZQs41/mHvqCrYWvFPHSa2/xvXTRo78XXpEIWNxpGrzMIh4QXoTe
- 2ZcXIjY0EE2eTQSIS/YBi1XR/u0938XRzvhAw/fjFvCboBnsIpQ/GOLGzsnmiszobPrP
- vhajgKMNxqKNsCjz+oisHdD3doaeF5ozB2JibjaDGtyN8wfPvJHc0Y7GKh4Tu+ypQto4
- NcCZTK0T7B+QlXOLyT2znqUxk1XZJqE0q5k8XMeKwO8UKYnkW+UYtvRJv9BpQY4kmBGg
- co6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785452750; x=1786057550;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=WeoZMFRUcScYUud2h5F047Ygt+CNqlQ41cRVby3nNZ4=;
- b=cOLJQSL3VeUIPpEkGjToUhmjtoYHze9jyA/viMNSuBORuWtW3ZE40wCoR8w1r8dOb3
- 3WMBDpqDIqCWVK7qJjuLzlVtOYHQsB4ISDHfYqWpMZgbG7LH+xIXubDbD/mJKNW3/xxz
- 8PVzzBR4mH28alww9A0jSEDGDlMfkF7DyMMUOZrEXW4Wk4ufLsEXcQyVCjhzrywr75TA
- 7zDM+7nGN1VRQ82kHp+GH4hlbX3g6XQn3yZ0gMaFZPyy9yTJn1pH4YuXoaLSvVTsbyoP
- l11DVT1nomSG8+Ub8vCBChguEdYxKaJiGO9lYSLXgW9j+hvq2cnMUNnTSNJgdXewhTVi
- z8yw==
-X-Gm-Message-State: AOJu0YziuLAcBZy7DwGFHZlEGAsvZ/twg0ECxaEkr7wVM29ssgVDTQ2n
- nX1e08J1ru6HKPjuI8/ci0z3V7zh2EqwckB+XkCnNGx5Dts6nRhKd+54Mzq6yPVTkwc=
-X-Gm-Gg: AR+sD120p8S1MM5lt+Q6LdnE9ff8hJvDzvcWy+HgIWMDCnI2chX5N/hLQWXoYcY8R5X
- gqlXICa4GJ18hWLPKyoBlczRTrKoD13W+Tt258PZbkkNIR5jqmH5CHmzRCI5Be+uTyvsKtLtisV
- k/c+ddwoBkv7gFABjOHimwcQu4QoT3X8Xw7s+xVQJiR6LrALV/TsuHx+oedoOEklaexHBwt5D1I
- bKzIsIuh+eGynQ+swXo7MR6Lc1X22td4Loj8vHCZA6eaOP5vHTJck6nOl1gKOSbE4/RAhDRPjVp
- /M3iTpNsa4UMMNKkAn3JVEO55forIo9bDus8qTene97rDpBYCrP6EpAewyY8m/uRxI1t4htNlg1
- AbAX3/jB6OxvLNDrn+TdRndVsvEzbPLUohQixoJ6/sFZmAVw6q6p3b8i0QmYHLzbWScP7My8P5D
- ywFjUWnVfuhxdWf3qHlSqjfwkjTHbVLfvdGTcdBjrOEc42esGyIHtMnkggj8OQBEYlOV1I7h7Gf
- ACOdldtK9janItZLsqNMC7S4WjRqmZKCCFNog==
-X-Received: by 2002:a05:6214:e84:b0:8e9:ee1f:6631 with SMTP id
- 6a1803df08f44-9083be78c93mr33422606d6.3.1785452749712; 
- Thu, 30 Jul 2026 16:05:49 -0700 (PDT)
-Received: from DESKTOP-MVROD8J ([147.124.77.95])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-908324f8805sm28111446d6.35.2026.07.30.16.05.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Jul 2026 16:05:49 -0700 (PDT)
-From: Oliver Clarke <oliverhenryc@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, marcandre.lureau@redhat.com,
- Oliver Clarke <oliverhenryc@gmail.com>
-Subject: [PATCH] sdl2: fix HighDPI display scaling
-Date: Thu, 30 Jul 2026 19:04:48 -0400
-Message-ID: <20260730230449.963-1-oliverhenryc@gmail.com>
-X-Mailer: git-send-email 2.51.0.windows.1
+ (Exim 4.90_1) (envelope-from <github@me.samiser.xyz>)
+ id 1wpZjn-0006sI-CZ; Thu, 30 Jul 2026 19:00:28 -0400
+Received: from fhigh-b4-smtp.messagingengine.com ([202.12.124.155])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <github@me.samiser.xyz>)
+ id 1wpZjl-00086p-1c; Thu, 30 Jul 2026 19:00:27 -0400
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 37F627A00BF;
+ Thu, 30 Jul 2026 19:00:22 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+ by phl-compute-01.internal (MEProxy); Thu, 30 Jul 2026 19:00:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samiser.xyz; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:message-id:mime-version:reply-to
+ :subject:subject:to:to; s=fm2; t=1785452422; x=1785538822; bh=iv
+ 4Oe/AnM0yPB7D4mqPwwlLCYXgJke8vGTKjJD+LGDU=; b=GPhHxFQ9uRuNcoSkMn
+ KRmBk3Rj4OokqvVh6QXrff6Uy5psNuGQ3ER+B4Zgax0MBSmPFJvJ6HpD45L6jubS
+ OMALIDyfgWqOv0st1SBhzhzLpO5P5ZYoMK4IQdT39TSiB/2iTangv4ddm88WsPp2
+ BkHGBajfuEPeNeifEnzUrexLi4m5E9jMp1AIdULcnB0yIq3GqRdxO2hgF13KSrY6
+ +XdShZzrrm2Om/939BH//pYIDZ684GMnYjdvSHhJ4gQO7zNqIp2blh49waJ1ChFO
+ 50GSDGkW3O7N82q3eF5AkBJX7gmCvdmIbQWsk16Xy6qiUwVJGgOrFtUBR/+lZtxn
+ jwUQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm2; t=1785452422; x=1785538822; bh=iv4Oe/AnM0yPB7D4mqPwwlLCYXgJ
+ ke8vGTKjJD+LGDU=; b=LDsNIUMFK4gg6uh6QLx0p/Q+x/CyYJy2ME24Yv1SFi3j
+ yRuxA9zpJhnidzAP6ndke7TE4yL5YH9GFMZhpb0XeHMOTiVE+eAU4CCPmQgKmXhE
+ vQPmQCri11bwEji1cKbq1jMe7gDnlTbvN4Ob6cBB+bRa6DDKO5edS1mpSbVs+w/T
+ ASAlJd8JbUNJBQXTI1acdMOqnNE5/I0RAH6ziX6UO8HRSaRGEUXwOJ83+OEvQRTf
+ wZDKmHumGmruKzS8dTlNDgk2+OLR/rBM37GBVOSqOX3UG9RGqQoFakV86vWCQh9n
+ 7wC/HGdB1jUnfOjr7jG4zjGnLzCT16iqNijUKAmgzA==
+X-ME-Sender: <xms:hddrasQpPLgWWCharpZ8tssqumb8ihUjzGwywSayjTirrIdpLGHzYA>
+ <xme:hddrakm0YtOTEs16BvCAUJEXEfTsxWB4PaYG22_MjGkAEVl-xN9WTGjnmfNy1HFqs
+ QZiN9D4EVBWHiogDvEl-uF5Jv9LWG3R7kVyOpx1Kh1cXAILskBq2Txk>
+X-ME-Proxy-Cause: dmFkZTEySoZUukO9JNiKHFlFpVcz1T0J3ydTsJc0bYDgl7U6DDAU1kD+v+81pMVIeCUtyK
+ I4qUae06yfblVx/jvmB2mFtCyc7G8IEd4s5CahSvVR2hTZbfiLufz+8QSW9FVRAWNPiFjc
+ 55AqfLTUvlTgDLnY7nwfwXF3N2katalpCG+WpW9sFTtIyU9hEGi/qLEm1COk27J6VTEDgg
+ yRz/ufKuGUmRHmm4v5EXEEZur1mY//5RhynYRTw9tjnPoFqBXELKfubUpFJjYViOu6/G3W
+ Zma/XTM+dkNlWAwRSM7laDnhxGaHgYGbVGwx+BUrQ0W/CbJWH1gH3UZYL8XGPgyfSlMTqc
+ 3fRVguKSDdH+w0HjUfylQDldXjsOIUA6kXV9uTSjL8o92kynxx+1vQIpJwjD7U4BWpHhf0
+ S5AWOSu+UYtbjsoA5jOILVprZthYjBPz18CqfiQWG3m1eso50AlEeonIeL7umhcknwfnuk
+ PZi5BRvXRTxE0h0H33ptgqeHlN4euGukAjrNLkQlItDlyHEBngJxHxm5HEDFtsKsBljp6O
+ x0MtmvIdF7TOEwm3K/LHVRqivMY2W7IvcLpfCKh9BIq1htD8j3DDcLu8c4NjO702FGdPrJ
+ MtD1osnDPMMeEHJ8Dd2VR2aHYR/CeOs7LDEq+JCJpnsB7mGAzsb8TI8fW9JA
+X-ME-Proxy: <xmx:hddrat3SFvKnQYqly19S3K4OgKmQsXs4G9e32AlgQsjlm-v5iGvjjg>
+ <xmx:hddrarEWFQK6TY6FhPiX6umqdpMHMQpTSgV1kYw464IegUD4w3pY4Q>
+ <xmx:hddrai69c6yQ_88ugcfrRxWqXCHkhc0sNEwOPY-LweKtpoHKJIoEmg>
+ <xmx:hddrapvuxoxTro4DD9461_IlnioQBqIt5-NjkEGGqIcw6BoW6X7nwg>
+ <xmx:htdrar8EHKbKuIqmWcbzPmt125GQhb_6X0aN_gMQ_gDwlgCdOTxuQ3XC>
+Feedback-ID: if6a9495e:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+ id 9BCB21EA006C; Thu, 30 Jul 2026 19:00:21 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2e;
- envelope-from=oliverhenryc@gmail.com; helo=mail-qv1-xf2e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Date: Thu, 30 Jul 2026 23:59:44 +0100
+From: "Sam Heney" <github@me.samiser.xyz>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com, farosas@suse.de, qemu-trivial@nongnu.org
+Message-Id: <5f24de0e-49af-45a7-927f-f79b203bb335@app.fastmail.com>
+Subject: [PATCH] tests/qtest/migration: Only build tls_no_hostname test with
+ TASN1
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=202.12.124.155;
+ envelope-from=github@me.samiser.xyz; helo=fhigh-b4-smtp.messagingengine.com
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FROM_SUSPICIOUS_NTLD=0.5,
+ FROM_SUSPICIOUS_NTLD_FP=1.999, PDS_OTHER_BAD_TLD=0.001, RCVD_IN_DNSWL_LOW=-0.7,
+ SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 30 Jul 2026 20:30:04 -0400
+X-Mailman-Approved-At: Thu, 30 Jul 2026 20:30:05 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,37 +103,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This makes sdl2 windows work well with dpi scaling. It fixes the issue of the display surface being stretched to fit the dpi corrected window (which created a blurry result).
+The test_precopy_tcp_tls_no_hostname test and its start hook use
+TestMigrateTLSX509 and migrate_hook_start_tls_x509_common(), which
+are only defined when CONFIG_TASN1 is set. This means building with
+gnutls enabled but libtasn1 unavailable fails:
 
-Note, this does not do any scaling, it just tells the os to not scale the window. Before, when the console requested size 640x480, the logical size of the window was 640x480, and the physical size was scaled by the dpi scaling. Now, both the logical and physical size will be 640x480. This is unlike most dpi aware programs which usually do have the scaled physical size, then also make the render target that scaled size as well. This doesn't make as much sense for QEMU, since the guest is responsible for modesetting, and they should get the exact physical pixels they request (if i modeset to 3840x2160, I wouldn't want this to be scaled in any way).
+  ../tests/qtest/migration/tls-tests.c: In function 'migrate_hook_start_tls_x509_no_host':
+  ../tests/qtest/migration/tls-tests.c:510:5: error: unknown type name 'TestMigrateTLSX509'
 
-Signed-off-by: Oliver Clarke <oliverhenryc@gmail.com>
+Guard the test with CONFIG_TASN1 like the other x509 tests.
+
+Fixes: df9c38b19af8 ("tests/qtest/migration: Add a NULL parameters test for TLS")
+Signed-off-by: Sam Heney <github@me.samiser.xyz>
 ---
- ui/sdl2.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tests/qtest/migration/tls-tests.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/ui/sdl2.c b/ui/sdl2.c
-index 1c97d23a47..1910477db4 100644
---- a/ui/sdl2.c
-+++ b/ui/sdl2.c
-@@ -102,7 +102,7 @@ void sdl2_window_create(struct sdl2_console *scon)
-         flags |= SDL_WINDOW_OPENGL;
-     }
- #endif
--
-+    flags |= SDL_WINDOW_ALLOW_HIGHDPI;
-     scon->real_window = SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED,
-                                          SDL_WINDOWPOS_UNDEFINED,
-                                          surface_width(scon->surface),
-@@ -907,6 +907,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
-     char *dir;
- 
-     assert(o->type == DISPLAY_TYPE_SDL);
-+    SDL_SetHint(SDL_HINT_WINDOWS_DPI_AWARENESS, "permonitorv2");
- 
-     if (SDL_GetHintBoolean("QEMU_ENABLE_SDL_LOGGING", SDL_FALSE)) {
-         SDL_LogSetAllPriority(SDL_LOG_PRIORITY_VERBOSE);
--- 
-2.51.0.windows.1
+diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
+index 827cc7bcf8..9bdb1165af 100644
+--- a/tests/qtest/migration/tls-tests.c
++++ b/tests/qtest/migration/tls-tests.c
+@@ -492,6 +492,7 @@ static void test_precopy_tcp_no_tls(char *name, MigrateCommon *args)
+     test_precopy_common(args);
+ }
 
++#ifdef CONFIG_TASN1
+ static void *
+ migrate_hook_start_tls_x509_no_host(QTestState *from, QTestState *to)
+ {
+@@ -519,7 +520,6 @@ static void test_precopy_tcp_tls_no_hostname(char *name, MigrateCommon *args)
+     test_precopy_common(args);
+ }
+
+-#ifdef CONFIG_TASN1
+ static void test_precopy_tcp_tls_x509_default_host(char *name,
+                                                    MigrateCommon *args)
+ {
+@@ -719,8 +719,10 @@ void migration_test_add_tls(MigrationTestEnv *env)
+
+     migration_test_add("/migration/precopy/tcp/no-tls",
+                        test_precopy_tcp_no_tls);
++#ifdef CONFIG_TASN1
+     migration_test_add("/migration/precopy/tcp/tls/no-hostname",
+                        test_precopy_tcp_tls_no_hostname);
++#endif /* CONFIG_TASN1 */
+
+     migration_test_add("/migration/precopy/unix/tls/psk",
+                        test_precopy_unix_tls_psk);
 
