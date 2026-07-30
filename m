@@ -4,104 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD53C55164
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 15:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7BA0C55162
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 15:47:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpSpC-0008Mc-KU; Thu, 30 Jul 2026 11:37:34 -0400
+	id 1wpSy0-0002Ba-E3; Thu, 30 Jul 2026 11:46:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wpSpA-0008MD-BL
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 11:37:32 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wpSp8-0003pS-Jz
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 11:37:32 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wpSxz-0002BB-0u
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 11:46:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wpSxw-0005x3-Fq
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 11:46:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785426395;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ipMtX17ru06OSKuMG+OP6V1yu1tewBPf197411q1u1c=;
+ b=Vhe0UiturC8chsKkvZyhIX5ILGD9ZQ3vr8PxaKwaJVOnTKIYnVMuSS9oktxEOHOx/AdAYq
+ C457XCNBFILBFNSbwaAkcidoeqn/3qjFWxiTAgP8EJdyMOPZ/gOmMkMCzUL4PUeaGtvzSp
+ JzloBmNZuhWSRCY/1W2XtOS8tSWN32g=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-522-7N2UJ5p3O7-U-AxkHV2g5w-1; Thu,
+ 30 Jul 2026 11:46:31 -0400
+X-MC-Unique: 7N2UJ5p3O7-U-AxkHV2g5w-1
+X-Mimecast-MFC-AGG-ID: 7N2UJ5p3O7-U-AxkHV2g5w_1785426390
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 8DF973E2C;
- Thu, 30 Jul 2026 15:37:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1785425844; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mO5Rh04uWDPYLHX7xQSUweHncyGn5Cd7rSlnXpDUR5Q=;
- b=gJEkcE/eHa4MHDnA6pllLfJ+EO1dM2fU8JacTzplShPdGvRmzW6VAZZl/D78dt2ad8193n
- hUD6eFYgnF0b+Kn3FU/FoSatLt1Y717pPZo32a2XSwwR4mcfKors8QKZx7Aon9LBpjZ58j
- ObwOSvbbCZAVTciAcZlFQUvPM/+aA34=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1785425844;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mO5Rh04uWDPYLHX7xQSUweHncyGn5Cd7rSlnXpDUR5Q=;
- b=z+qtBnqB2DeiC50zqF3kvcfVDmrpezK3a7bcYNrsdYKD6s+cqq3+1ZuvbW7kI8VlAaKnuU
- DuNjh9UIC3TGeuAA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1785425840; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mO5Rh04uWDPYLHX7xQSUweHncyGn5Cd7rSlnXpDUR5Q=;
- b=ilz8Ybpwje9MQ7K+w37/8zDfWTbmvspd1Qj06jjxXYdaxRpV+lhJ5LyyWRsAoYwDF57yRH
- w7Szz7pUQHwf/ahuGOAPZNV4J8prZbfw78+u6C4xmZVnYLbAW2Lf3EfJSy2AGm7Qy2AFw2
- kBhbiZurgJIkI3kJcpvXTwAlptFhDOg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1785425840;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mO5Rh04uWDPYLHX7xQSUweHncyGn5Cd7rSlnXpDUR5Q=;
- b=WqjBQUQF62uVIp6r7ujzPTQKHwlLJYksnizGLaqbbw6jqlefHyywq1Ohr3GFGCBWgCdJ1J
- 9WbN7fICwvPtkABg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2F009779CC;
- Thu, 30 Jul 2026 15:37:20 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id XaCpALBva2pYZAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 30 Jul 2026 15:37:20 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>, Alexandr
- Moshkov <dtalexundeer@yandex-team.ru>, Vladimir Sementsov-Ogievskiy
- <vsementsov@yandex-team.ru>
-Subject: Re: [PATCH 0/4] migration: Remove extra type-checking from vmstate
- macros
-In-Reply-To: <amtbGkfKvPCJgDec@x1.local>
-References: <20260729225227.1170574-1-farosas@suse.de>
- <amtbGkfKvPCJgDec@x1.local>
-Date: Thu, 30 Jul 2026 12:37:13 -0300
-Message-ID: <87v79wmqty.fsf@suse.de>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D87591956096; Thu, 30 Jul 2026 15:46:29 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.178])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3A8F530002E9; Thu, 30 Jul 2026 15:46:28 +0000 (UTC)
+Date: Thu, 30 Jul 2026 11:46:27 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, John Snow <jsnow@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
+Subject: Re: [PATCH 0/6] hw/[block]: Fix missing accounting
+Message-ID: <20260730154627.GD1442692@fedora>
+References: <20260724152315.234183-1-hreitz@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="2fQ9thYzZz1dcl30"
+Content-Disposition: inline
+In-Reply-To: <20260724152315.234183-1-hreitz@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,60 +88,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+--2fQ9thYzZz1dcl30
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Wed, Jul 29, 2026 at 07:52:23PM -0300, Fabiano Rosas wrote:
->> Hi, this is basically what I ranted about in:
->> https://lore.kernel.org/r/87jyqeomqz.fsf@suse.de
->> 
->> I'm replacing the per-integer-size type checks with a single "int that
->> fits in 32bit" check. This allows several lines of duplicated code to
->> be removed.
->> 
->> I haven't changed the macro names in the device code yet. If this
->> series gets positive feedback then I'll send per-subsystem patches
->> doing that.
->> 
->> CI run: https://gitlab.com/farosas/qemu/-/pipelines/2716814081
->> Also tested:
->> - migration-test --full --thorough
->> - x86_64 compat run forwards and backwards for previous 3 QEMU releases
->> - s390x compat run forwards and backwards for previous 2 QEMU releases
->> - ppc64 compat run forwards and backwards for previous QEMU release
->> - migration-test smoke ASAN/UBSAN run
->> 
->> Fabiano Rosas (4):
->>   migration: Remove VMSTATE_ARRAY_INT32_UNSAFE
->>   migration: Introduce VMStateOffset
->>   migration: Remove redundant flags
->>   migration: Remove duplicate vmstate macros
->
-> Nice work!
->
-> I think I was only looking at VBUFFER side and I thought it was fine
-> sticking with 32bit even signed or not, not a huge deal.  But cleaning up
-> VARRAY whole thing together looks definitely an improvement.  I definitely
-> like your version here.
->
-> I assume with your series I can drop both of my patches here, right?
->
->   [PATCH v2 1/5] migration: Fix possible overflow in vmstate_handle_alloc()
->   https://lore.kernel.org/r/20260728210417.1925078-2-peterx@redhat.com
->   (I'll still respin with the rest)
->
->   [PATCH] vhost/migration: Fix incorrect size used in inflight->addr in VMSD
->   https://lore.kernel.org/r/20260728153942.1891677-1-peterx@redhat.com
->
-> The only missing piece would be an multiply overflow check in
-> vmstate_handle_alloc(), if you could add that check too while rewritting
-> that in patch 1 then I think it'll cover all.
->
-> Vladimir's ask in the separate email makes sense: I wonder if we can also
-> do one step further and merge VBUFFER into VARRAY.
->
-> The other trivial thing is, while looking, I found one trivial macro
-> VMSTATE_PARTIAL_VBUFFER not used; can drop it altogether.
+On Fri, Jul 24, 2026 at 05:23:09PM +0200, Hanna Czenczek wrote:
+> Hi,
+>=20
+> There are some places where block accounting should be happening, but is
+> not; either because the whole operation is not accounted (like discard
+> operations in virtio-blk) or because certain code paths forget to
+> finalize existing cookies.
+>=20
+>=20
+> Hanna Czenczek (6):
+>   hw/virtio-blk: Account discard operations
+>   hw/virtio-blk: Complete zone-append cookies
+>   hw/nvme: Fix block accounting in nvme_copy()
+>   hw/nvme: Fix block accounting for compare
+>   hw/ide: Have ide_dma_cb() complete accounting
+>   hw/scsi-disk: Fix accounting for IGNORE, ret > 0
+>=20
+>  hw/block/virtio-blk.c | 34 +++++++++++----------
+>  hw/ide/core.c         |  3 +-
+>  hw/nvme/ctrl.c        | 70 +++++++++++++++++++++++++++----------------
+>  hw/scsi/scsi-disk.c   |  7 +++++
+>  4 files changed, 72 insertions(+), 42 deletions(-)
+>=20
+> --=20
+> 2.55.0
+>=20
 
-I can look at it all. Just a heads-up, I'll be off for a couple of weeks
-starting tomorrow.
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+
+--2fQ9thYzZz1dcl30
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmprcdMACgkQnKSrs4Gr
+c8iZHwf/aEbyrZ2dd61e6DvonITDQJcA5bN+D5dlxwEqOuKpu/f6jPF4XNakXfee
+crtLjZRl/qjxsaXNHm10rD0RSflLc7KPdmxMAZiAU+E7rCmJTGjGuc3wGwzq1csx
+DFJXi4nNSKIX45Rn0iRGXnQyI5GRawxtckbVZR9kNVSR9vNicIbWIrLNrUNUg7TG
+4ZDCm3lJ6QbuzRbfhb3dmuFX1ohphCcM+blGU8h5+tDYLOK2QCq3sj/LnkI73f2H
+C36kK2Cu+Pm5Fx0+/u6sttam5CwyWkByScdoJLKHtqiqjol1G+TFzZ2jxY1zI0ai
+dxOlFZDAHHIHbqK0b/+nW+2/bxWqEw==
+=xqK+
+-----END PGP SIGNATURE-----
+
+--2fQ9thYzZz1dcl30--
+
 
