@@ -4,112 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF891C5516D
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 20:12:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B85BC5516D
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 20:27:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpX5E-0004Hv-S5; Thu, 30 Jul 2026 16:10:24 -0400
+	id 1wpXKr-0002h3-UT; Thu, 30 Jul 2026 16:26:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mikail.sadic@ibm.com>)
- id 1wpX5D-0004Gr-4z; Thu, 30 Jul 2026 16:10:23 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mikail.sadic@ibm.com>)
- id 1wpX59-0001gl-7H; Thu, 30 Jul 2026 16:10:22 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66UJmPAd4002336; Thu, 30 Jul 2026 20:09:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=Y0IOPq+csbNiZCdzz
- uIQcAE4iD6CSkfd7N8cKEWNwgg=; b=smpsq8CwOPya2QwRcrB09O3IcGPXt4tEz
- r18MC4uphZSEKieRaRngr4ToR8m640nGtA3vKSOIpF4DEtiTw87kdbgHdQp53RvT
- yJhC6sMa41tDpbSy4aG6V+lGSw3ZQdUMtKkrDpSsIwnUuBwQ2w94666XMeAD9ZXS
- NGvtEN8Zo5ov+wi6pZfM91UQ3/o4Xxir67ePcRARMt3FaOGEiAq/zGFIXy3bPyt8
- E8UtwrJ8imv82+9/LoNzKbht0wn2JegUKUR/DUXuZaNg64EpFO6d7D90IN2s/lsh
- IYBrVkL/JWGKRkgnHnJhFfBjE6VtWtc3tVMHuvleeIaqYBrSAIlaQ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuwd8sp0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Jul 2026 20:09:50 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66UJuKDi028389;
- Thu, 30 Jul 2026 20:09:49 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn8fkcy7f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Jul 2026 20:09:49 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66UK9m7e33030574
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 30 Jul 2026 20:09:48 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1C30D58043;
- Thu, 30 Jul 2026 20:09:48 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B43B75805D;
- Thu, 30 Jul 2026 20:09:47 +0000 (GMT)
-Received: from IBM-MFS.atx-us.ibm.com (unknown [9.16.49.87])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 30 Jul 2026 20:09:47 +0000 (GMT)
-From: Mikail Sadic <mikail.sadic@ibm.com>
-To: clg@kaod.org, peter.maydell@linaro.org
-Cc: Mikail Sadic <mikail.sadic@ibm.com>, pbonzini@redhat.com,
- ninad@linux.ibm.com, titusr@google.com, jeuk20.kim@samsung.com,
- philmd@mailo.com, steven_lee@aspeedtech.com, leetroy@gmail.com,
- jamin_lin@aspeedtech.com, kane_chen@aspeedtech.com,
- andrew@codeconstruct.com.au, joel@jms.id.au, calebs@linux.ibm.com,
- milesg@linux.ibm.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v2 2/8] fsi/cfam: Add CFAM-S model
-Date: Thu, 30 Jul 2026 15:09:37 -0500
-Message-ID: <20260730200945.1113936-3-mikail.sadic@ibm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260730200945.1113936-1-mikail.sadic@ibm.com>
-References: <20260730200945.1113936-1-mikail.sadic@ibm.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wpXKp-0002gq-Vc
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 16:26:32 -0400
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wpXKo-0005xY-75
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 16:26:31 -0400
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-664b05d408bso126584d50.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 13:26:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785443189; cv=none;
+ d=google.com; s=arc-20260327;
+ b=rVbeeK2m4LgA9ORCQ4k5mvrY0Csxurqpmhx/WOFKUqIMSRo2eGD5QK8zkq0CsoZ6Yk
+ kfXVy7c5wTgbQlJQGa9HxQJqBCT6Uwyg/GHfYvz3ODdXoO71BJs47fZLTZdD2jUSQsR+
+ bkLgqyuxatFsd9SBJ2KGt5W8fPYxce+mdmk4bhjmU30241tHjdkM6WprWVKgpLMHY6X/
+ gv2jPXP+zyMdBSqilOVUT43mZKWw/JfiE/EZJcTPQZjvAEoWQmamxffBxDceDErxnhj+
+ r1byargL393nXULZuvupa54I4Rr5SReTByXyzeeJ1IXg3DtHLX83xWiipODTUt6j2IF2
+ afkw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=7GdvycCNaIvEdBUSG05rClIhRTbx4L+HpG9U0AVT4q0=;
+ fh=Mwuq573iCp9M7/4LHhrrdtS1U7mxXVvI4mYPg/mZOH8=;
+ b=AHaOmKMej+D8cR/FxF6xvr5jpvAOJpZTF8nk4yapE/bkmBGT/rKFG4ne6P6eVshM/R
+ C5/TidSjHllvTQelQ1vkdurSboKa+rQW3OV9TkF4d9AC2oBpbb4rA6is9cM8wmpILJAA
+ lg6bbJPFPEKzcDnknQq5ofawYu7DGmrt1RQkMIYAhyxzwn5sVGVHxhS6rov5d5qWldwL
+ QeQjQKqzqRipabsaOKnFvJExngJdbwc1rQptRoo/QKqGivOI9qh8mSAPS/hRiOg1841i
+ 54ryezbQUrCecuce/N/jNANIMJb4pp6rFJFD09wD2JnNOeD0xUsrfIQ4qSdjpqm4YtkR
+ DN7g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1785443189; x=1786047989; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=7GdvycCNaIvEdBUSG05rClIhRTbx4L+HpG9U0AVT4q0=;
+ b=jKmMjpIzYpToqI1n1OS6nnNFkYmOjR5yZUVYQ44MDy/wl/q83a4OblkGLuksrK2Xqp
+ 335kGL0d8LlE53RgmWhIV+7XNEMQLWUGE7c1qXWRso0okdvOmsrjw0kQ3wrbpqLWgMhP
+ 3ve6JSQUXUz6dDlzPBs86xzs1ThhOYarwn7aG3xHbH2lUj34E44HaN1gPBYwbaJu20c4
+ N0axIVdjVthqLCYoB9Cz2TEy4OocqoaTUBLK0ZIdFJcyuCg1VZEAcrtRI+jBx0iuD8qG
+ TaxPxqPLGPIWalrSeJx6N3ngDXPtcE+bVteu4+DtGpIUHWmy+XLJWZGj2C4Gtnj4LXZi
+ yHhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785443189; x=1786047989;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=7GdvycCNaIvEdBUSG05rClIhRTbx4L+HpG9U0AVT4q0=;
+ b=Jde+3hyFVs2teMuh8HTA63LH8Iyq7woxd0IthG0mbDxnWOuK3acRjyCBYPjJ/5Af/1
+ fLZs1wI4yR+GIXkJNSq3vw1LmngK7SsPXOUGKEqzQzb/3Wd0Dj39Llt3AVVvxnUy8EOU
+ OJNdKUzkAgg/HA8JUmdlnV4xG4IbUbIjt/kTjBsUBjOfXurDbzITu7wzHBRkmoZeNECb
+ WeLE1lkFFpSp3GJEKnkTUkDwARSoZdRgsyrrCu7yUGr7XjUggwUH5LWWySIQj80SuCcP
+ n7q6D8zWf873K7jKmX6iCBgLS5x+xOYelZtqob028NoCCdQ5AZ/SyAIP3wWMmxD0z/QS
+ PTNA==
+X-Gm-Message-State: AOJu0YyILciL1lk92MT64AHXggwp10gD3avsSE1S6IO+YO+bH1BIJ76k
+ e9NJncId722970o9DQGRKVe5OvKmyzVQw2+4bS9sdjEN/48tH56rtTSg4uRbSaNwHztWXOAb+S1
+ g7jjwpCOTe571D745s8p966bPpUsbQcD9koxJOclGLg==
+X-Gm-Gg: AR+sD10Hn+/l32PLz3VlKQlOBfcnyXJM2d/7pGle0q1SDfcs9+4ivrd6ObwpFQ/C0V3
+ DAYbIskXYgkuRn8/JY4H55NOgD15k4f3Lv6j6OiTix1lxvFhDyOdYPGaJsECBO7MfcfTeTMr5n/
+ YSViWvS9cxeTWN2/zAHzRT1aQfOBYLY6jfGhNX1I2rEuLj3BGO9FyzPCCmEAR/XcI8teyGs4IEJ
+ k13hPCDeAYZpXR5OjMXPRSNBGPqCWVU1lDyUTZUeQtxdgJSRfwqP15NaK/2HaZPqDye/uDrBoG8
+ 6uWhAbDEvKqPOrOIz7fRCbtj/JnAAyrXx8e5YDXJrIC6MkP5sthTzfZfs7dc7LDvGt8hXSm7QKf
+ uo4ZMBuIyfmftTaZriW3/d+PI/c9F
+X-Received: by 2002:a05:690e:43d7:b0:667:af05:2e89 with SMTP id
+ 956f58d0204a3-6692f7d345fmr2023070d50.74.1785443188710; Thu, 30 Jul 2026
+ 13:26:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: mWwk015d5UXQgOd9TcvvPKspRn4i8_lq
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfXzI6+vvnawTnC
- 1PjxaUZQPVlv9uyTiqpWzeoO+VvsvI0cePrk3LlwyEgcdqnrcsxfyFQJ1GmKmqd75Efamvzzmcp
- iTfqs6fbVcrTK8MID95OMT3tE8JElM8=
-X-Authority-Analysis: v=2.4 cv=E/z9Y6dl c=1 sm=1 tr=0 ts=6a6baf8e cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=NEAV23lmAAAA:8 a=VnNF1IyMAAAA:8
- a=GLtLAL1jAtWljCBMQDYA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfXyLWgJYRq7K1v
- xIULbAAwDWlqFkyLqTroq0+aVMQZCmmc5GuynMLhplCTfmhofhL+CFSuEItYXvDmj7e5I1MGE/7
- 3782oNsfU1bNDNBEF77DaLcvb/3ltCkqqaOXZNBO4yc3B6oakZQY9KRLw5/BIm3QNdq+LDlFeXf
- pgOZbXzZTebwoAETDkwiGfzUkU4XhppTSbBrlf1WaS/mhI5ZKaV6aBiJnGLauCPemlesKlRQ8cB
- BpRWbI1RHYBT2eBmhTATrIYE9Ls0i1sSB8bAov+YkLsFRC2gu8MG/EblaLB5GNFPp2OVF60jHv5
- W5OU2Uwg88+Icuk1fD4kDV68Ib5BBMhuB7CzR4y8oldkw/mobK/1doCRWTHARVp0C7MS2HZj03/
- uXWLjfd4o9MlxUTP6SD7yKoEpTJ+cgsZFa6N0Gl94vywVrHyzGGe+iXlmGvCgxbj7P1ebXdg+m8
- eeXgFZk1eF3IowsvNIA==
-X-Proofpoint-GUID: k_-QzT2kljF6fNUxY6lmxOaHPF5oXazT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-30_06,2026-07-30_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 spamscore=0 clxscore=1015 phishscore=0
- lowpriorityscore=0 bulkscore=0 malwarescore=0 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607300145
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=mikail.sadic@ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <CAFEAcA_UhmCxJc16CHE=4ZR1+PA0=4-29=fEe+d+iUmhLTzpuQ@mail.gmail.com>
+ <CAEUhbmW=02DNwVH7pLtuWBzEnEVJiJNrZVcys-pLY_cS0uro1Q@mail.gmail.com>
+ <CAFEAcA9DB+j3KJCM9yxVoSzQaXgx4uC_Bb7qm_p+OwS6EKn1fQ@mail.gmail.com>
+ <CAFEAcA9t7TjhCSZ1EyBOPStu6vadq3UA9FMgbWOqkqfM0aMDoA@mail.gmail.com>
+ <CAFEAcA9O4naO3WJXYL_qCZAvoGRchEryFnBHMJm-MT0+CjH=aw@mail.gmail.com>
+ <CAEUhbmU18Z7zvkErg_CMvgnhkJuY69oON6SjoiqvCbrrG8g7gA@mail.gmail.com>
+In-Reply-To: <CAEUhbmU18Z7zvkErg_CMvgnhkJuY69oON6SjoiqvCbrrG8g7gA@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 30 Jul 2026 21:26:17 +0100
+X-Gm-Features: AUfX_myBlavwPdBD4vDXdih44wTmiIFa96taWyvn79ADh0evYRkbkTHHUU5TjhY
+Message-ID: <CAFEAcA_NPkHt+b1vQwqhw3k++psxrqd+oUA6Q=hAebU0jHMXJw@mail.gmail.com>
+Subject: Re: QEMU net code and padding of short packets
+To: Bin Meng <bmeng.cn@gmail.com>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, Jason Wang <jasowang@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,412 +122,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add TYPE_FSI_CFAM_S, derivative of CFAM, as a second type on the common
-CFAM base class. The base class builds the register slot, the config
-table region, the FSI responder and the local bus, so the CFAM-S supplies
-only its config table (chip ID with major 9, an FSI responder and a v1
-mailbox), its slot offsets and the mailbox engine. Its realize chains the
-base one and adds the one thing that is new: the slot is aliased across
-the four slave-ID views, so enumeration and normal access reach the same
-registers.
+On Tue, 21 Jul 2026 at 12:34, Bin Meng <bmeng.cn@gmail.com> wrote:
+>
+> Hi Peter,
+>
+> On Tue, Jul 21, 2026 at 12:22=E2=80=AFAM Peter Maydell <peter.maydell@lin=
+aro.org> wrote:
+> >
+> > On Mon, 29 Jun 2026 at 17:31, Peter Maydell <peter.maydell@linaro.org> =
+wrote:
+> > > I'm also looking at a variant of this involving vlan headers:
+> > > https://gitlab.com/qemu-project/qemu/-/work_items/3518
+> > >
+> > > In commit 63b901bfd30 you removed the code from rtl8139.c
+> > > which handled padding out short frames in the device's
+> > > receive path, because we now do the padding at the other end.
+> > > However, in this case the padding code in the device was
+> > > also handling a case where there's an 802.1Q vlan tag: it makes
+> > > the buffer at least MIN_BUF_SIZE + VLAN_HLEN =3D=3D 64 bytes, with
+> > > the comment "Include some tailroom in case a vlan tag is
+> > > later removed". Then later we use this to avoid the copy
+> > > from the buffer reading off the end, but now the copy can
+> > > read 4 bytes of data off the end of the packet into guest
+> > > memory.
+> > >
+> > > How should we handle this? We could:
+> > >  - reinstate the rtl8139 padding code
+> > >  - make the generic padding code allow enough extra space
+> > >    for the 802.1Q vlan tag (so devices can assume that the
+> > >    frame is at least its minimum size even if there's a
+> > >    vlan tag)
+> > >  - have rtl8139 special case this
+> >
+> > Ping? How do you think we should handle the "short packet
+> > with a vlan header" case? I think I lean towards making
+> > the generic code deal with it.
 
-The v1 mailbox is a local bus engine added in lbus.c next to the
-scratchpad which the CFAM-S just instantiates.
+> For the VLAN case, after looking at it more closely, I
+> agree that the generic padding code should handle it. A single-tagged
+> Ethernet frame has a minimum length of ETH_ZLEN + VLAN_HLEN =3D=3D 64
+> bytes without FCS, so padding it to 64 is not merely providing private
+> tailroom for rtl8139. Ideally the helper could derive the minimum from
+> the L2 header length, which would also cover double-tagged frames.
 
-Sharing the base config table implementation means the CFAM-S also
-honors the SID_BREAK sequence and word-only config access.
+Having looked at the 802.1Q spec, I found that it actually says
+that a single-tagged ethernet frame's minimum length is still
+60 bytes without FCS. So I now think the problem is that the rtl8139
+code is unnecessarily trying to pad out the input tagged frame's
+payload more than it needs to, and the fix is just to stop doing that.
 
-FSIMasterState gains a cfam_s field. fsi_master_init() creates both the
-cfam and cfam-s children, realize hooks them into the OPB-to-FSI aperture.
-
-Signed-off-by: Mikail Sadic <mikail.sadic@ibm.com>
----
- docs/specs/fsi.rst          | 15 ++++++
- include/hw/fsi/cfam-s.h     | 40 ++++++++++++++++
- include/hw/fsi/cfam.h       | 10 ++++
- include/hw/fsi/fsi-master.h |  2 +
- include/hw/fsi/lbus.h       | 11 +++++
- hw/fsi/cfam-s.c             | 91 +++++++++++++++++++++++++++++++++++++
- hw/fsi/fsi-master.c         |  7 +++
- hw/fsi/lbus.c               | 69 ++++++++++++++++++++++++++++
- hw/fsi/meson.build          |  2 +-
- hw/fsi/trace-events         |  2 +
- 10 files changed, 248 insertions(+), 1 deletion(-)
- create mode 100644 include/hw/fsi/cfam-s.h
- create mode 100644 hw/fsi/cfam-s.c
-
-diff --git a/docs/specs/fsi.rst b/docs/specs/fsi.rst
-index f7d86d3e37..fb7a3669ef 100644
---- a/docs/specs/fsi.rst
-+++ b/docs/specs/fsi.rst
-@@ -120,3 +120,18 @@ from the BMC. (see the `pdbg source repository`_ for more details)
- 
- .. _pdbg source repository:
-    https://github.com/open-power/pdbg
-+
-+CFAM-S model
-+------------
-+
-+The CFAM-S is a derivative of the CFAM. Both are modelled on a common CFAM
-+model that builds the register slot, the configuration table, the FSI
-+responder and the local bus; each supplies its own configuration table, slot
-+layout and engines. The CFAM-S supports a limited set of engines: an FSI
-+responder and a version 1 mailbox.
-+
-+The configuration table advertises the responder and the mailbox engines.
-+The responder is backed by the FSI slave control registers; the mailbox
-+provides a small block of scratch registers. The register block is exposed
-+through each slave-ID view so that enumeration and normal access reach the
-+same registers.
-diff --git a/include/hw/fsi/cfam-s.h b/include/hw/fsi/cfam-s.h
-new file mode 100644
-index 0000000000..daf72124c4
---- /dev/null
-+++ b/include/hw/fsi/cfam-s.h
-@@ -0,0 +1,40 @@
-+/*
-+ * IBM Common FRU Access Macro - S variant (CFAM-S)
-+ *
-+ * Copyright (C) 2026 IBM Corp.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef FSI_CFAM_S_H
-+#define FSI_CFAM_S_H
-+
-+#include "system/memory.h"
-+#include "hw/fsi/cfam.h"
-+#include "hw/fsi/fsi.h"
-+#include "hw/fsi/lbus.h"
-+
-+#define TYPE_FSI_CFAM_S "cfam-s"
-+OBJECT_DECLARE_TYPE(FSICFAMSState, FSICFAMSClass, FSI_CFAM_S)
-+
-+/* The register slot is visible in each of the four slave-ID views */
-+#define CFAM_S_WINDOW_SIZE (4 * FSI_CFAM_SLOT_SIZE)
-+
-+struct FSICFAMSState {
-+    /* < private > */
-+    FSICFAMCommonState parent;
-+
-+    /* parent.mr aliased across the slave-ID views */
-+    MemoryRegion window;
-+    MemoryRegion slot_alias[3];
-+
-+    FSIMbox mbox;
-+};
-+
-+struct FSICFAMSClass {
-+    /* < private > */
-+    FSICFAMCommonClass parent_class;
-+
-+    DeviceRealize parent_realize;
-+};
-+
-+#endif /* FSI_CFAM_S_H */
-diff --git a/include/hw/fsi/cfam.h b/include/hw/fsi/cfam.h
-index 0f5464b4a0..43f6be9d18 100644
---- a/include/hw/fsi/cfam.h
-+++ b/include/hw/fsi/cfam.h
-@@ -35,6 +35,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(FSICFAMState, FSI_CFAM)
- #define ENGINE_CONFIG_TYPE_PEEK       (0x02 << 4)
- #define ENGINE_CONFIG_TYPE_FSI        (0x03 << 4)
- #define ENGINE_CONFIG_TYPE_SCRATCHPAD (0x06 << 4)
-+#define ENGINE_CONFIG_TYPE_MBOX_V1    (0x14 << 4)
- 
- /* Valid, slots, version, type, crc */
- #define CFAM_CONFIG_REG(__VER, __TYPE, __CRC)   \
-@@ -44,6 +45,15 @@ OBJECT_DECLARE_SIMPLE_TYPE(FSICFAMState, FSI_CFAM)
-      (__TYPE)                 |   \
-      (__CRC))
- 
-+/* As above, for the last entry in a table: NEXT is clear */
-+#define CFAM_CONFIG_LAST(__VER, __TYPE, __CRC)  \
-+    (0x00010000               |   \
-+     (__VER)                  |   \
-+     (__TYPE)                 |   \
-+     (__CRC))
-+
-+#define CFAM_CONFIG_CHIP_ID_MAJOR(__MAJOR) (((__MAJOR) & 0xf) << 8)
-+
- struct FSICFAMCommonState {
-     /* < private > */
-     FSISlaveState parent;
-diff --git a/include/hw/fsi/fsi-master.h b/include/hw/fsi/fsi-master.h
-index 60ddaa994f..6a2782fdf2 100644
---- a/include/hw/fsi/fsi-master.h
-+++ b/include/hw/fsi/fsi-master.h
-@@ -11,6 +11,7 @@
- #include "hw/core/qdev.h"
- #include "hw/fsi/fsi.h"
- #include "hw/fsi/cfam.h"
-+#include "hw/fsi/cfam-s.h"
- 
- #define TYPE_FSI_MASTER "fsi.master"
- OBJECT_DECLARE_SIMPLE_TYPE(FSIMasterState, FSI_MASTER)
-@@ -26,6 +27,7 @@ typedef struct FSIMasterState {
- 
-     uint32_t regs[FSI_MASTER_NR_REGS];
-     FSICFAMState cfam;
-+    FSICFAMSState cfam_s;
- } FSIMasterState;
- 
- 
-diff --git a/include/hw/fsi/lbus.h b/include/hw/fsi/lbus.h
-index 1b894509fe..582d7169d6 100644
---- a/include/hw/fsi/lbus.h
-+++ b/include/hw/fsi/lbus.h
-@@ -40,4 +40,15 @@ typedef struct FSIScratchPad {
-         uint32_t regs[FSI_SCRATCHPAD_NR_REGS];
- } FSIScratchPad;
- 
-+#define TYPE_FSI_MBOX "fsi.mbox"
-+OBJECT_DECLARE_SIMPLE_TYPE(FSIMbox, FSI_MBOX)
-+
-+#define FSI_MBOX_SCRATCH_NUM 5
-+
-+struct FSIMbox {
-+    FSILBusDevice parent;
-+
-+    uint32_t scratch[FSI_MBOX_SCRATCH_NUM];
-+};
-+
- #endif /* FSI_LBUS_H */
-diff --git a/hw/fsi/cfam-s.c b/hw/fsi/cfam-s.c
-new file mode 100644
-index 0000000000..3df6da3788
---- /dev/null
-+++ b/hw/fsi/cfam-s.c
-@@ -0,0 +1,91 @@
-+/*
-+ * IBM Common FRU Access Macro - S variant (CFAM-S)
-+ *
-+ * A CFAM flavor built on the common CFAM model (see cfam.c). It supports an
-+ * FSI responder and a v1 mailbox, and exposes its register slot in each
-+ * slave-ID view of the link.
-+ *
-+ * Copyright (C) 2026 IBM Corp.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qemu/units.h"
-+#include "hw/fsi/cfam-s.h"
-+#include "hw/fsi/fsi.h"
-+
-+/* Slot layout: 0x000 config table, 0x400 responder, 0x800 mailbox */
-+#define CFAM_S_RESPONDER_BASE 0x400
-+#define CFAM_S_MBOX_BASE      0x800
-+
-+/* Config table: chip ID with major 9 (the CFAM-S), then the engines */
-+static const uint32_t cfam_s_config[] = {
-+    ENGINE_CONFIG_NEXT | CFAM_CONFIG_CHIP_ID_MAJOR(9) | 0xd,
-+    CFAM_CONFIG_REG(0x1000, ENGINE_CONFIG_TYPE_FSI, 0xb),
-+    CFAM_CONFIG_LAST(0x1000, ENGINE_CONFIG_TYPE_MBOX_V1, 0x3),
-+};
-+
-+static bool fsi_cfam_s_realize_engines(FSICFAMCommonState *cfam, Error **errp)
-+{
-+    FSICFAMSState *cfam_s = FSI_CFAM_S(cfam);
-+
-+    object_initialize_child(OBJECT(cfam_s), "mbox", &cfam_s->mbox,
-+                            TYPE_FSI_MBOX);
-+    return fsi_cfam_add_engine(cfam, DEVICE(&cfam_s->mbox), 0, errp);
-+}
-+
-+static void fsi_cfam_s_realize(DeviceState *dev, Error **errp)
-+{
-+    ERRP_GUARD();
-+    FSICFAMSState *cfam_s = FSI_CFAM_S(dev);
-+    FSICFAMCommonState *cfam = FSI_CFAM_COMMON(dev);
-+    FSICFAMSClass *sc = FSI_CFAM_S_GET_CLASS(dev);
-+
-+    sc->parent_realize(dev, errp);
-+    if (*errp) {
-+        return;
-+    }
-+
-+    memory_region_init(&cfam_s->window, OBJECT(cfam_s),
-+                       TYPE_FSI_CFAM_S ".window", CFAM_S_WINDOW_SIZE);
-+    memory_region_add_subregion(&cfam_s->window, 0, &cfam->mr);
-+
-+    /* Alias the slot into the other three slave-ID views */
-+    for (int i = 0; i < ARRAY_SIZE(cfam_s->slot_alias); i++) {
-+        memory_region_init_alias(&cfam_s->slot_alias[i], OBJECT(cfam_s),
-+                                 TYPE_FSI_CFAM_S ".slot-alias", &cfam->mr, 0,
-+                                 FSI_CFAM_SLOT_SIZE);
-+        memory_region_add_subregion(&cfam_s->window,
-+                                    (i + 1) * FSI_CFAM_SLOT_SIZE,
-+                                    &cfam_s->slot_alias[i]);
-+    }
-+}
-+
-+static void fsi_cfam_s_class_init(ObjectClass *klass, const void *data)
-+{
-+    FSICFAMSClass *sc = FSI_CFAM_S_CLASS(klass);
-+    FSICFAMCommonClass *cc = FSI_CFAM_COMMON_CLASS(klass);
-+
-+    device_class_set_parent_realize(DEVICE_CLASS(klass), fsi_cfam_s_realize,
-+                                    &sc->parent_realize);
-+
-+    cc->config = cfam_s_config;
-+    cc->config_nr = ARRAY_SIZE(cfam_s_config);
-+    cc->responder_offset = CFAM_S_RESPONDER_BASE;
-+    cc->lbus_offset = CFAM_S_MBOX_BASE;
-+    cc->realize_engines = fsi_cfam_s_realize_engines;
-+}
-+
-+static const TypeInfo cfam_s_types[] = {
-+    {
-+        .name = TYPE_FSI_CFAM_S,
-+        .parent = TYPE_FSI_CFAM_COMMON,
-+        .instance_size = sizeof(FSICFAMSState),
-+        .class_size = sizeof(FSICFAMSClass),
-+        .class_init = fsi_cfam_s_class_init,
-+    },
-+};
-+
-+DEFINE_TYPES(cfam_s_types)
-diff --git a/hw/fsi/fsi-master.c b/hw/fsi/fsi-master.c
-index d82df1c094..82991b1005 100644
---- a/hw/fsi/fsi-master.c
-+++ b/hw/fsi/fsi-master.c
-@@ -8,6 +8,7 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "qemu/log.h"
-+#include "qemu/units.h"
- #include "trace.h"
- 
- #include "hw/fsi/fsi-master.h"
-@@ -113,6 +114,7 @@ static void fsi_master_init(Object *o)
-     FSIMasterState *s = FSI_MASTER(o);
- 
-     object_initialize_child(o, "cfam", &s->cfam, TYPE_FSI_CFAM);
-+    object_initialize_child(o, "cfam-s", &s->cfam_s, TYPE_FSI_CFAM_S);
- 
-     qbus_init(&s->bus, sizeof(s->bus), TYPE_FSI_BUS, DEVICE(s), NULL);
- 
-@@ -131,6 +133,11 @@ static void fsi_master_realize(DeviceState *dev, Error **errp)
- 
-     /* address ? */
-     memory_region_add_subregion(&s->opb2fsi, 0, &s->cfam.parent.mr);
-+
-+    if (!qdev_realize(DEVICE(&s->cfam_s), BUS(&s->bus), errp)) {
-+        return;
-+    }
-+    memory_region_add_subregion(&s->opb2fsi, 2 * MiB, &s->cfam_s.window);
- }
- 
- static void fsi_master_reset(DeviceState *dev)
-diff --git a/hw/fsi/lbus.c b/hw/fsi/lbus.c
-index cae29e0658..902f8d8a5e 100644
---- a/hw/fsi/lbus.c
-+++ b/hw/fsi/lbus.c
-@@ -107,11 +107,80 @@ static const TypeInfo fsi_scratchpad_info = {
-     .class_init = fsi_scratchpad_class_init,
- };
- 
-+/* The mailbox exposes its scratch registers at this offset */
-+#define FSI_MBOX_SCRATCH_OFF 0xe0
-+#define FSI_MBOX_SCRATCH_END (FSI_MBOX_SCRATCH_OFF + FSI_MBOX_SCRATCH_NUM * 4)
-+
-+static uint64_t fsi_mbox_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    FSIMbox *mbox = FSI_MBOX(opaque);
-+
-+    trace_fsi_mbox_read(addr, size);
-+
-+    if (addr < FSI_MBOX_SCRATCH_OFF || addr >= FSI_MBOX_SCRATCH_END) {
-+        return 0;
-+    }
-+
-+    return mbox->scratch[TO_REG(addr - FSI_MBOX_SCRATCH_OFF)];
-+}
-+
-+static void fsi_mbox_write(void *opaque, hwaddr addr, uint64_t data,
-+                           unsigned size)
-+{
-+    FSIMbox *mbox = FSI_MBOX(opaque);
-+
-+    trace_fsi_mbox_write(addr, size, data);
-+
-+    if (addr < FSI_MBOX_SCRATCH_OFF || addr >= FSI_MBOX_SCRATCH_END) {
-+        return;
-+    }
-+
-+    mbox->scratch[TO_REG(addr - FSI_MBOX_SCRATCH_OFF)] = data;
-+}
-+
-+static const struct MemoryRegionOps fsi_mbox_ops = {
-+    .read = fsi_mbox_read,
-+    .write = fsi_mbox_write,
-+    .endianness = DEVICE_BIG_ENDIAN,
-+};
-+
-+static void fsi_mbox_realize(DeviceState *dev, Error **errp)
-+{
-+    FSILBusDevice *ldev = FSI_LBUS_DEVICE(dev);
-+
-+    memory_region_init_io(&ldev->iomem, OBJECT(ldev), &fsi_mbox_ops,
-+                          ldev, TYPE_FSI_MBOX, 0x400);
-+}
-+
-+static void fsi_mbox_reset(DeviceState *dev)
-+{
-+    FSIMbox *mbox = FSI_MBOX(dev);
-+
-+    memset(mbox->scratch, 0, sizeof(mbox->scratch));
-+}
-+
-+static void fsi_mbox_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->bus_type = TYPE_FSI_LBUS;
-+    dc->realize = fsi_mbox_realize;
-+    device_class_set_legacy_reset(dc, fsi_mbox_reset);
-+}
-+
-+static const TypeInfo fsi_mbox_info = {
-+    .name = TYPE_FSI_MBOX,
-+    .parent = TYPE_FSI_LBUS_DEVICE,
-+    .instance_size = sizeof(FSIMbox),
-+    .class_init = fsi_mbox_class_init,
-+};
-+
- static void fsi_lbus_register_types(void)
- {
-     type_register_static(&fsi_lbus_info);
-     type_register_static(&fsi_lbus_device_type_info);
-     type_register_static(&fsi_scratchpad_info);
-+    type_register_static(&fsi_mbox_info);
- }
- 
- type_init(fsi_lbus_register_types);
-diff --git a/hw/fsi/meson.build b/hw/fsi/meson.build
-index a18a076552..585d549405 100644
---- a/hw/fsi/meson.build
-+++ b/hw/fsi/meson.build
-@@ -1,2 +1,2 @@
--system_ss.add(when: 'CONFIG_FSI', if_true: files('lbus.c','fsi.c','cfam.c','fsi-master.c'))
-+system_ss.add(when: 'CONFIG_FSI', if_true: files('lbus.c','fsi.c','cfam.c','cfam-s.c','fsi-master.c'))
- system_ss.add(when: 'CONFIG_FSI_APB2OPB_ASPEED', if_true: files('aspeed_apb2opb.c'))
-diff --git a/hw/fsi/trace-events b/hw/fsi/trace-events
-index 9e286d08d3..42edce6437 100644
---- a/hw/fsi/trace-events
-+++ b/hw/fsi/trace-events
-@@ -1,5 +1,7 @@
- fsi_scratchpad_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " size=%d"
- fsi_scratchpad_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
-+fsi_mbox_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " size=%d"
-+fsi_mbox_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
- fsi_slave_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " size=%d"
- fsi_slave_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
- fsi_cfam_config_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " size=%d"
--- 
-2.53.0
-
+-- PMM
 
