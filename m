@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5431C5516D
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 20:11:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55573C5516E
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 20:11:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpX57-00048p-Gr; Thu, 30 Jul 2026 16:10:19 -0400
+	id 1wpX5T-0004Uy-SV; Thu, 30 Jul 2026 16:10:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mikail.sadic@ibm.com>)
- id 1wpX54-00048J-U9; Thu, 30 Jul 2026 16:10:14 -0400
+ id 1wpX5R-0004SC-Ol; Thu, 30 Jul 2026 16:10:37 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mikail.sadic@ibm.com>)
- id 1wpX52-0001fr-1t; Thu, 30 Jul 2026 16:10:14 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1wpX5P-0001i4-GY; Thu, 30 Jul 2026 16:10:37 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66UJmHPg3943952; Thu, 30 Jul 2026 20:09:51 GMT
+ 66UJle9G3975760; Thu, 30 Jul 2026 20:09:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=2NOnTZEqIuT7IFHuD
- eZwjuJsE3jf3YykrmT+jlq0Wt4=; b=F9YTBs6lbZbUKfKJ0Oz/W37hWbLdEybpN
- JvgmeYR0fP4mqheuDHP4hjvj+0aUpLOoTz8vLaGNAz6IFA07M0P5o+MlDSGzsc+S
- QJeX8twIZLRxDefVhmxkelz+Kz9pkfrM00jKL9FQmSoFLu/v6OWS6bKYYC2Kiycm
- j+Q9d576VtjTQ8TR7O24QypTXTAy7IXPnz21k9lImiA8EMShYXXYzNrwdysJpzhb
- wpBh7LuJRKuzfkuFTwayIgkgSqjw65t+HW8vlWhkXaBYGHwtMWRrJD6gk00fylsb
- /VyNCZhHI7tkDFmArmYavCwljpMzIbDTfLLxc6y06aUPx8v3TQIQQ==
+ :mime-version:references:subject:to; s=pp1; bh=8Aux4Nt9AqJZJwSbt
+ 1118cnbfcrSHGWwBveD1cl72L4=; b=eKU1QP189Hve0OkjCKq0TTpV94km0XP5W
+ ozMfz/Z4X81qbdTg6DKT0Ofvqj8+jubkG47i0kpX1QspphScmdenblX0dBBzxW9U
+ RpAx34l1VL8l+r6gS7T86LMnhMifipxt7UsFyKlx5L7eu9injFpB8jIJYBZJNwcT
+ CPKP5yq+a7jmpmUWKY/zVQlR+rTfvni1wqsAUsJFSruLD0Uykft19wYsfC1+y6th
+ jfZZRiG+vsJcqlscxlsLPHhv1VdDK2W1/J/cvEybCd5MiXHriAW6ez5oOuItmjBx
+ tdtkso4nr32BO8SR3oZTQ5Wi3VlR4ipN2pJgG3LpzPOiC/shb5cDQ==
 Received: from ppma23.wdc07v.mail.ibm.com
  (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuw7spef-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0y1qqg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Jul 2026 20:09:51 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66UJuGf4005613;
+ Thu, 30 Jul 2026 20:09:50 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn8yhmv4j-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Thu, 30 Jul 2026 20:09:50 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66UJuQ4s005700;
- Thu, 30 Jul 2026 20:09:49 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn8yhmv4e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Jul 2026 20:09:49 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66UK9lw937880508
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66UK9nb89896568
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 30 Jul 2026 20:09:48 GMT
+ Thu, 30 Jul 2026 20:09:49 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AC79E5805F;
- Thu, 30 Jul 2026 20:09:47 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 44C4C58043;
+ Thu, 30 Jul 2026 20:09:49 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5247858059;
- Thu, 30 Jul 2026 20:09:47 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id DF47E58059;
+ Thu, 30 Jul 2026 20:09:48 +0000 (GMT)
 Received: from IBM-MFS.atx-us.ibm.com (unknown [9.16.49.87])
  by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 30 Jul 2026 20:09:47 +0000 (GMT)
+ Thu, 30 Jul 2026 20:09:48 +0000 (GMT)
 From: Mikail Sadic <mikail.sadic@ibm.com>
 To: clg@kaod.org, peter.maydell@linaro.org
 Cc: Mikail Sadic <mikail.sadic@ibm.com>, pbonzini@redhat.com,
@@ -65,9 +65,9 @@ Cc: Mikail Sadic <mikail.sadic@ibm.com>, pbonzini@redhat.com,
  jamin_lin@aspeedtech.com, kane_chen@aspeedtech.com,
  andrew@codeconstruct.com.au, joel@jms.id.au, calebs@linux.ibm.com,
  milesg@linux.ibm.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v2 1/8] fsi/cfam: Add common CFAM base class
-Date: Thu, 30 Jul 2026 15:09:36 -0500
-Message-ID: <20260730200945.1113936-2-mikail.sadic@ibm.com>
+Subject: [PATCH v2 5/8] hw/sensor: Add UCD90320 model
+Date: Thu, 30 Jul 2026 15:09:40 -0500
+Message-ID: <20260730200945.1113936-6-mikail.sadic@ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260730200945.1113936-1-mikail.sadic@ibm.com>
 References: <20260730200945.1113936-1-mikail.sadic@ibm.com>
@@ -75,32 +75,31 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: 8UdPS8RSGLu6oWLLwnLVM8H5t6qa2v4N
-X-Proofpoint-ORIG-GUID: cIdF5xvVpOJNbx2soWv5RvJy_IyjWcP2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfX5aHXK0yYoGOW
- lY7RqN7W/uTTkoEo4gERGUYq2Q/1vA8yZXIra0J+QnxhtdPTDsmV0D678jQAwc8layQFRxKrZQx
- 3407dobxjgcUfBsEY40LmjSEsCojWs/Ma4m/umah0IGy+pL8+rbkfh2ib0RcRx4Tig3IvLiZY5B
- 31/0+y5HbnBRS/fbZFJNxth8AeynN3fphHBUYLLNn2PFjQAh6KLx3OcRcje4meHYHwGBQl411PN
- DmEqws3ULGbExND2xvxta4R2/F00l1xC8HqNGLK8Lyjo9yL+xgxgSOLtIGD0sss7CgQguBJdfJ8
- hrEX52RhX2IeYtb65gaZ/wy+teMscucg43aohEWFjAf7sooFt98fogINId/xpiocBAkQ5Fwvv7y
- AkUe1k4koenWaorFIwj5vx9jfAM4QVYqr00SxAP5ARZscaJVR7BKUM9TQ267wW9uaUjyomRvCvC
- AQd8IsYsSbzcwgLtaLg==
-X-Authority-Analysis: v=2.4 cv=SKFykuvH c=1 sm=1 tr=0 ts=6a6baf8f cx=c_pps
+X-Proofpoint-GUID: Gdo-mcPwe46Wa9Bj2ydwhVwMQWf-aEgn
+X-Proofpoint-ORIG-GUID: f-FEj2txod8zBAmV_phaVn5IrIpRRcV7
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfXw5b/kJqe1rJT
+ 8RMv5edOauWikFumpzUo1be2QkleyflCL71fuyUp+BzIIBPd4Mt9TF4mk9fmi56C9ZHDr2dUeoL
+ 9Q1NlB1w3n5/BB1kY/QAd9ymCO/Z+iY=
+X-Authority-Analysis: v=2.4 cv=dYuwG3Xe c=1 sm=1 tr=0 ts=6a6baf90 cx=c_pps
  a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=W4DHDBySKM8I3gRjHxAA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfXyW4uVVRbV+fP
- z1d/jPIIlt52sG/D5C9miEH0yN/XjLJ2pRXzPrR/Z3hwDyenihR0g6qPkYhR+6z8DBOTb8cbvYn
- YTuUpHN4DhlmrmoyQNPai4cev4f6h18=
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=YwPlQgHYUhtu6dumBzMA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfXzvV6hLmdfO9h
+ KWrWgKwXSwF1Z5qG0wZM6d914W+lFePYcuiQGnJB/FRVRhKn3aW94cvRaTavmmaSEGhHWiJG9qa
+ clg+Fye2ZpGcFK+bUYWGI+44DIlVVaXnAF4y8XwsnDT3qWVg+S8j9ctnwXpqJ65V+U02LA/xjUN
+ rnNf6G/UZRxZhbLdsfh7U8wl3T8oUgoS2uolTXEsF9JXijQr6Vx8kXUaqiXDA0x8B7y3wrMqYV+
+ GM0TIe0L3HPzINNztkCNrz8eX57hCaxezelCBQK/rGCFYkUj1y+FbxZ/tN4yrZNkil7YoWQmEq6
+ 1vRfAf2rD90BL/iQp9D2qfgXOzKjyX0CptOQC5X1TkNonV4RFR0/JjIkR2+ARx9nvNt9bS2H9rg
+ CoiV4xbTIRLJ+k2jiPCYa4sP0udVJhvVdcm39SM9KIiePkN/xl/gzjY7DGS4joU/+n7MaWb95FK
+ gHoUNNg91ffOJw3WY0g==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-30_06,2026-07-30_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0
- lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607300145
+ priorityscore=1501 impostorscore=0 clxscore=1015 phishscore=0 malwarescore=0
+ spamscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607300145
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=mikail.sadic@ibm.com;
  helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -27
@@ -125,318 +124,297 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prepare a common CFAM parent class for CFAM-S implementation.
-
-Add an abstract TYPE_FSI_CFAM_COMMON with an FSICFAMCommonClass holding
-what varies between types: the config table, the offsets of the FSI
-responder and the local bus within the register slot, and a
-realize_engines() hook for the engines on the local bus. Its realize is
-driven by those fields, so one realize serves every type. TYPE_FSI_CFAM
-keeps its name and becomes the first derived type, supplying the P9
-config table, its slot offsets and the scratchpad engine. The config
-table becomes data, still written with the same CFAM_CONFIG_REG()
-expressions, which move to the header so a derived type can describe its
-own table the same way.
-
-No functional change: same memory map, same config words, same type and
-child names. aspeed_fsi-test verified.
+Add a PMBus device model for the TI-UCD90320 24-rail power
+sequencer. Configures 24 pages with linear vout mode and responds to
+the vendor-specific UCD9000_DEVICE_ID, NUM_PAGES, MONITOR_CONFIG, and
+MFR_STATUS commands, allowing the Linux ucd9000 driver to bind and
+create hwmon sysfs entries.
 
 Signed-off-by: Mikail Sadic <mikail.sadic@ibm.com>
 ---
- include/hw/fsi/cfam.h |  58 ++++++++++++++++++--
- hw/fsi/cfam.c         | 123 ++++++++++++++++++++++++------------------
- hw/fsi/fsi-master.c   |   2 +-
- 3 files changed, 127 insertions(+), 56 deletions(-)
+ MAINTAINERS             |   1 +
+ docs/specs/index.rst    |   1 +
+ docs/specs/ucd90320.rst |  36 +++++++++
+ hw/sensor/ucd90320.c    | 169 ++++++++++++++++++++++++++++++++++++++++
+ hw/arm/Kconfig          |   1 +
+ hw/sensor/Kconfig       |   4 +
+ hw/sensor/meson.build   |   1 +
+ 7 files changed, 213 insertions(+)
+ create mode 100644 docs/specs/ucd90320.rst
+ create mode 100644 hw/sensor/ucd90320.c
 
-diff --git a/include/hw/fsi/cfam.h b/include/hw/fsi/cfam.h
-index cceb4bd6f1..0f5464b4a0 100644
---- a/include/hw/fsi/cfam.h
-+++ b/include/hw/fsi/cfam.h
-@@ -7,18 +7,44 @@
- #ifndef FSI_CFAM_H
- #define FSI_CFAM_H
- 
-+#include "qemu/units.h"
- #include "system/memory.h"
- 
- #include "hw/fsi/fsi.h"
- #include "hw/fsi/lbus.h"
- 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 902db77218..ec415cb8e4 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4063,6 +4063,7 @@ F: hw/i2c/pmbus_device.c
+ F: hw/sensor/adm1272.c
+ F: hw/sensor/isl_pmbus_vr.c
+ F: hw/sensor/max34451.c
++F: hw/sensor/ucd90320.c
+ F: include/hw/i2c/pmbus_device.h
+ F: include/hw/sensor/isl_pmbus_vr.h
+ F: tests/qtest/adm1272-test.c
+diff --git a/docs/specs/index.rst b/docs/specs/index.rst
+index b7909a108a..4de65e2fdf 100644
+--- a/docs/specs/index.rst
++++ b/docs/specs/index.rst
+@@ -39,4 +39,5 @@ guest hardware that is specific to QEMU.
+    riscv-iommu
+    riscv-aia
+    aspeed-intc
++   ucd90320
+    iommu-testdev
+diff --git a/docs/specs/ucd90320.rst b/docs/specs/ucd90320.rst
+new file mode 100644
+index 0000000000..fdc0878c75
+--- /dev/null
++++ b/docs/specs/ucd90320.rst
+@@ -0,0 +1,36 @@
++Texas Instruments UCD90320 Power Sequencer
++==========================================
++
++The UCD90320 is a 24-rail PMBus power sequencer. QEMU models it as a PMBus
++device (``"ucd90320"``) so the Linux ``ucd9000`` driver can bind and create
++``hwmon`` sysfs entries.
++
++The model configures 24 PMBus pages (one per rail) with ``VOUT_MODE = 0x00``
++(linear, exponent 0). ``READ_VOUT`` and ``MFR_STATUS`` return zero on all
++pages.
++
++Vendor-specific commands handled:
++
+++------+---------------------------+--------------------------------------------+
++| Code | Name                      | Response                                   |
+++======+===========================+============================================+
++| 0xD5 | ``UCD9000_MONITOR_CONFIG``| Block: one byte ``0x00``                   |
+++------+---------------------------+--------------------------------------------+
++| 0xD6 | ``UCD9000_NUM_PAGES``     | Byte: ``24``                               |
+++------+---------------------------+--------------------------------------------+
++| 0xF3 | ``UCD9000_MFR_STATUS``    | Block: four bytes ``0x00 0x00 0x00 0x00``  |
+++------+---------------------------+--------------------------------------------+
++| 0xFD | ``UCD9000_DEVICE_ID``     | Block: ASCII string ``"UCD90320"``         |
+++------+---------------------------+--------------------------------------------+
++
++``DEVICE_ID`` uses the vendor-specific code ``0xFD`` rather than the standard
++``PMBUS_IC_DEVICE_ID`` (``0xAD``), matching the Linux ``ucd9000`` probe
++sequence.
++
++The UCD90320 is instantiated automatically in the ``huygens-bmc`` machine on
++I2C bus 5 at address ``0x11``. To instantiate on a different Aspeed machine:
++
++.. code-block:: c
++
++  i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5),
++                          "ucd90320", 0x11);
+diff --git a/hw/sensor/ucd90320.c b/hw/sensor/ucd90320.c
+new file mode 100644
+index 0000000000..6d4f828448
+--- /dev/null
++++ b/hw/sensor/ucd90320.c
+@@ -0,0 +1,169 @@
 +/*
-+ * All CFAM flavors present a register slot holding a config table, an FSI
-+ * responder and a local bus carrying the engines the config table describes.
-+ * That is the common model; each flavor supplies its own table, slot layout
-+ * and engines.
++ * Texas Instruments UCD90320 24-Rail PMBus Power Sequencer
++ *
++ * Copyright 2026 IBM Corp.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+#define TYPE_FSI_CFAM_COMMON "cfam-common"
-+OBJECT_DECLARE_TYPE(FSICFAMCommonState, FSICFAMCommonClass, FSI_CFAM_COMMON)
 +
- #define TYPE_FSI_CFAM "cfam"
--#define FSI_CFAM(obj) OBJECT_CHECK(FSICFAMState, (obj), TYPE_FSI_CFAM)
-+OBJECT_DECLARE_SIMPLE_TYPE(FSICFAMState, FSI_CFAM)
- 
- /* P9-ism */
- #define CFAM_CONFIG_NR_REGS 0x28
- 
--typedef struct FSICFAMState {
-+#define FSI_CFAM_SLOT_SIZE   (2 * MiB)
-+#define FSI_CFAM_CONFIG_SIZE 0x400
++#include "qemu/osdep.h"
++#include "hw/i2c/pmbus_device.h"
++#include "migration/vmstate.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
 +
-+#define ENGINE_CONFIG_NEXT            BIT(31)
-+#define ENGINE_CONFIG_TYPE_PEEK       (0x02 << 4)
-+#define ENGINE_CONFIG_TYPE_FSI        (0x03 << 4)
-+#define ENGINE_CONFIG_TYPE_SCRATCHPAD (0x06 << 4)
++#define TYPE_UCD90320 "ucd90320"
 +
-+/* Valid, slots, version, type, crc */
-+#define CFAM_CONFIG_REG(__VER, __TYPE, __CRC)   \
-+    (ENGINE_CONFIG_NEXT       |   \
-+     0x00010000               |   \
-+     (__VER)                  |   \
-+     (__TYPE)                 |   \
-+     (__CRC))
++/* UCD90320 has 24 sequenced power-rail pages */
++#define UCD90320_NUM_PAGES 24
 +
-+struct FSICFAMCommonState {
-     /* < private > */
-     FSISlaveState parent;
- 
-@@ -28,7 +54,33 @@ typedef struct FSICFAMState {
-     MemoryRegion mr;
- 
-     FSILBus lbus;
-+};
++/* Vendor-specific command codes (not in the standard PMBus register table) */
++#define UCD9000_MONITOR_CONFIG  0xd5
++#define UCD9000_NUM_PAGES       0xd6
++#define UCD9000_MFR_STATUS      0xf3
++#define UCD9000_DEVICE_ID       0xfd
 +
-+struct FSICFAMCommonClass {
-+    /* < private > */
-+    DeviceClass parent_class;
++#define UCD90320_DEVICE_ID_LEN     8
++#define UCD90320_MFR_STATUS_LEN    4
 +
-+    /* < public > */
-+    /* Config table served by the common ops, one word per 4-byte offset */
-+    const uint32_t *config;
-+    unsigned config_nr;
++typedef struct UCD90320State {
++    PMBusDevice parent;
 +
-+    /* Layout of the register slot */
-+    hwaddr responder_offset;
-+    hwaddr lbus_offset;
++    /* Reset values for the vendor-specific block-read commands. */
++    uint8_t device_id[UCD90320_DEVICE_ID_LEN];
++    uint8_t monitor_config;
++    uint8_t mfr_status[UCD90320_MFR_STATUS_LEN];
++} UCD90320State;
 +
-+    /* Realize and map this flavor's local bus engines */
-+    bool (*realize_engines)(FSICFAMCommonState *cfam, Error **errp);
-+};
++#define UCD90320(obj) OBJECT_CHECK(UCD90320State, (obj), TYPE_UCD90320)
 +
-+struct FSICFAMState {
-+    /* < private > */
-+    FSICFAMCommonState parent;
++static void ucd90320_send_block(PMBusDevice *pmdev,
++                                const uint8_t *data, uint8_t len)
++{
++    int i;
 +
-     FSIScratchPad scratchpad;
--} FSICFAMState;
-+};
-+
-+bool fsi_cfam_add_engine(FSICFAMCommonState *cfam, DeviceState *engine,
-+                         hwaddr offset, Error **errp);
- 
- #endif /* FSI_CFAM_H */
-diff --git a/hw/fsi/cfam.c b/hw/fsi/cfam.c
-index 54c0b05769..361cb34808 100644
---- a/hw/fsi/cfam.c
-+++ b/hw/fsi/cfam.c
-@@ -16,19 +16,6 @@
- 
- #include "hw/core/qdev-properties.h"
- 
--#define ENGINE_CONFIG_NEXT            BIT(31)
--#define ENGINE_CONFIG_TYPE_PEEK       (0x02 << 4)
--#define ENGINE_CONFIG_TYPE_FSI        (0x03 << 4)
--#define ENGINE_CONFIG_TYPE_SCRATCHPAD (0x06 << 4)
--
--/* Valid, slots, version, type, crc */
--#define CFAM_CONFIG_REG(__VER, __TYPE, __CRC)   \
--    (ENGINE_CONFIG_NEXT       |   \
--     0x00010000               |   \
--     (__VER)                  |   \
--     (__TYPE)                 |   \
--     (__CRC))
--
- #define TO_REG(x)                          ((x) >> 2)
- 
- #define CFAM_CONFIG_CHIP_ID                TO_REG(0x00)
-@@ -36,34 +23,33 @@
- #define CFAM_CONFIG_CHIP_ID_P9             0xc0022d15
- #define CFAM_CONFIG_CHIP_ID_BREAK          0xc0de0000
- 
-+/*
-+ * Config table of the P9 CFAM: the chip ID followed by one entry per engine,
-+ * entry n describing the engine at address n * 4. We need to add future
-+ * engines from address 0x10 onwards.
-+ */
-+static const uint32_t cfam_p9_config[] = {
-+    CFAM_CONFIG_CHIP_ID_P9,
-+    CFAM_CONFIG_REG(0x1000, ENGINE_CONFIG_TYPE_PEEK, 0xc),
-+    CFAM_CONFIG_REG(0x5000, ENGINE_CONFIG_TYPE_FSI, 0xa),
-+    CFAM_CONFIG_REG(0x1000, ENGINE_CONFIG_TYPE_SCRATCHPAD, 0x7),
-+};
-+
- static uint64_t fsi_cfam_config_read(void *opaque, hwaddr addr, unsigned size)
- {
-+    FSICFAMCommonClass *cc = FSI_CFAM_COMMON_GET_CLASS(opaque);
-+    unsigned int reg = TO_REG(addr);
-+
-     trace_fsi_cfam_config_read(addr, size);
- 
--    switch (addr) {
--    case 0x00:
--        return CFAM_CONFIG_CHIP_ID_P9;
--    case 0x04:
--        return CFAM_CONFIG_REG(0x1000, ENGINE_CONFIG_TYPE_PEEK, 0xc);
--    case 0x08:
--        return CFAM_CONFIG_REG(0x5000, ENGINE_CONFIG_TYPE_FSI, 0xa);
--    case 0xc:
--        return CFAM_CONFIG_REG(0x1000, ENGINE_CONFIG_TYPE_SCRATCHPAD, 0x7);
--    default:
--        /*
--         * The config table contains different engines from 0xc onwards.
--         * The scratch pad is already added at address 0xc. We need to add
--         * future engines from address 0x10 onwards. Returning 0 as engine
--         * is not implemented.
--         */
--        return 0;
--    }
-+    /* Engines past the end of the table are not implemented */
-+    return reg < cc->config_nr ? cc->config[reg] : 0;
- }
- 
- static void fsi_cfam_config_write(void *opaque, hwaddr addr, uint64_t data,
-                                   unsigned size)
- {
--    FSICFAMState *cfam = FSI_CFAM(opaque);
-+    FSICFAMCommonState *cfam = FSI_CFAM_COMMON(opaque);
- 
-     trace_fsi_cfam_config_write(addr, size, data);
- 
-@@ -109,59 +95,92 @@ static const struct MemoryRegionOps fsi_cfam_unimplemented_ops = {
-     .endianness = DEVICE_BIG_ENDIAN,
- };
- 
--static void fsi_cfam_instance_init(Object *obj)
-+bool fsi_cfam_add_engine(FSICFAMCommonState *cfam, DeviceState *engine,
-+                         hwaddr offset, Error **errp)
- {
--    FSICFAMState *s = FSI_CFAM(obj);
-+    if (!qdev_realize(engine, BUS(&cfam->lbus), errp)) {
-+        return false;
++    pmdev->out_buf[len + pmdev->out_buf_len] = len;
++    for (i = len - 1; i >= 0; i--) {
++        pmdev->out_buf[i + pmdev->out_buf_len] = data[len - 1 - i];
 +    }
- 
--    object_initialize_child(obj, "scratchpad", &s->scratchpad,
--                            TYPE_FSI_SCRATCHPAD);
-+    memory_region_add_subregion(&cfam->lbus.mr, offset,
-+                                &FSI_LBUS_DEVICE(engine)->iomem);
-+    return true;
- }
- 
--static void fsi_cfam_realize(DeviceState *dev, Error **errp)
-+static void fsi_cfam_common_realize(DeviceState *dev, Error **errp)
- {
--    FSICFAMState *cfam = FSI_CFAM(dev);
-+    FSICFAMCommonState *cfam = FSI_CFAM_COMMON(dev);
-+    FSICFAMCommonClass *cc = FSI_CFAM_COMMON_GET_CLASS(dev);
-     FSISlaveState *slave = FSI_SLAVE(dev);
-+    const char *type = object_get_typename(OBJECT(dev));
-+    g_autofree char *config_name = g_strdup_printf("%s.config", type);
- 
-     /* Each slave has a 2MiB address space */
-     memory_region_init_io(&cfam->mr, OBJECT(cfam), &fsi_cfam_unimplemented_ops,
--                          cfam, TYPE_FSI_CFAM, 2 * MiB);
-+                          cfam, type, FSI_CFAM_SLOT_SIZE);
- 
-     qbus_init(&cfam->lbus, sizeof(cfam->lbus), TYPE_FSI_LBUS, DEVICE(cfam),
-               NULL);
- 
-     memory_region_init_io(&cfam->config_iomem, OBJECT(cfam), &cfam_config_ops,
--                          cfam, TYPE_FSI_CFAM ".config", 0x400);
-+                          cfam, config_name, FSI_CFAM_CONFIG_SIZE);
- 
-     memory_region_add_subregion(&cfam->mr, 0, &cfam->config_iomem);
--    memory_region_add_subregion(&cfam->mr, 0x800, &slave->iomem);
--    memory_region_add_subregion(&cfam->mr, 0xc00, &cfam->lbus.mr);
-+    memory_region_add_subregion(&cfam->mr, cc->responder_offset, &slave->iomem);
-+    memory_region_add_subregion(&cfam->mr, cc->lbus_offset, &cfam->lbus.mr);
-+
-+    cc->realize_engines(cfam, errp);
++    pmdev->out_buf_len += len + 1;
 +}
 +
-+static void fsi_cfam_common_class_init(ObjectClass *klass, const void *data)
++static uint8_t ucd90320_read_byte(PMBusDevice *pmdev)
 +{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
++    UCD90320State *s = UCD90320(pmdev);
 +
-+    dc->bus_type = TYPE_FSI_BUS;
-+    dc->realize = fsi_cfam_common_realize;
++    switch (pmdev->code) {
++    case UCD9000_DEVICE_ID:
++        ucd90320_send_block(pmdev, s->device_id, sizeof(s->device_id));
++        pmbus_idle(pmdev);
++        return 0;
++    case UCD9000_NUM_PAGES:
++        pmbus_send8(pmdev, UCD90320_NUM_PAGES);
++        pmbus_idle(pmdev);
++        return 0;
++
++    case UCD9000_MONITOR_CONFIG:
++        ucd90320_send_block(pmdev, &s->monitor_config,
++                            sizeof(s->monitor_config));
++        pmbus_idle(pmdev);
++        return 0;
++    case UCD9000_MFR_STATUS:
++        ucd90320_send_block(pmdev, s->mfr_status, sizeof(s->mfr_status));
++        pmbus_idle(pmdev);
++        return 0;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: reading from unsupported register: 0x%02x\n",
++                      __func__, pmdev->code);
++        break;
++    }
++    return 0xFF;
 +}
 +
-+static bool fsi_cfam_realize_engines(FSICFAMCommonState *cfam, Error **errp)
++static int ucd90320_write_data(PMBusDevice *pmdev, const uint8_t *buf,
++                               uint8_t len)
 +{
-+    FSICFAMState *s = FSI_CFAM(cfam);
- 
-     /* Add scratchpad engine */
--    if (!qdev_realize(DEVICE(&cfam->scratchpad), BUS(&cfam->lbus), errp)) {
--        return;
--    }
-+    object_initialize_child(OBJECT(s), "scratchpad", &s->scratchpad,
-+                            TYPE_FSI_SCRATCHPAD);
- 
--    FSILBusDevice *fsi_dev = FSI_LBUS_DEVICE(&cfam->scratchpad);
--    memory_region_add_subregion(&cfam->lbus.mr, 0, &fsi_dev->iomem);
-+    return fsi_cfam_add_engine(cfam, DEVICE(&s->scratchpad), 0, errp);
- }
- 
- static void fsi_cfam_class_init(ObjectClass *klass, const void *data)
- {
--    DeviceClass *dc = DEVICE_CLASS(klass);
--    dc->bus_type = TYPE_FSI_BUS;
--    dc->realize = fsi_cfam_realize;
-+    FSICFAMCommonClass *cc = FSI_CFAM_COMMON_CLASS(klass);
++    if (len == 0) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: writing empty data\n", __func__);
++        return -1;
++    }
 +
-+    cc->config = cfam_p9_config;
-+    cc->config_nr = ARRAY_SIZE(cfam_p9_config);
-+    cc->responder_offset = 0x800;
-+    cc->lbus_offset = 0xc00;
-+    cc->realize_engines = fsi_cfam_realize_engines;
- }
- 
-+static const TypeInfo fsi_cfam_common_info = {
-+    .name = TYPE_FSI_CFAM_COMMON,
-+    .parent = TYPE_FSI_SLAVE,
-+    .instance_size = sizeof(FSICFAMCommonState),
-+    .class_size = sizeof(FSICFAMCommonClass),
-+    .class_init = fsi_cfam_common_class_init,
-+    .abstract = true,
++    pmdev->code = buf[0];
++
++    if (len == 1) {
++        return 0;
++    }
++
++    return 0;
++}
++
++static void ucd90320_exit_reset(Object *obj, ResetType type)
++{
++    PMBusDevice *pmdev = PMBUS_DEVICE(obj);
++    UCD90320State *s = UCD90320(obj);
++
++    pmdev->capability = 0x20; /* PEC supported */
++
++    for (int i = 0; i < UCD90320_NUM_PAGES; i++) {
++        pmdev->pages[i].operation     = 0x80; /* on */
++        pmdev->pages[i].on_off_config = 0x1a;
++        pmdev->pages[i].vout_mode     = 0x00; /* linear mode, exponent=0 */
++        pmdev->pages[i].read_vout     = 0;    /* rails off, pgood=0 */
++    }
++
++    memcpy(s->device_id, "UCD90320", sizeof(s->device_id));
++    s->monitor_config = 0x00;
++    memset(s->mfr_status, 0x00, sizeof(s->mfr_status));
++}
++
++static void ucd90320_init(Object *obj)
++{
++    PMBusDevice *pmdev = PMBUS_DEVICE(obj);
++    uint64_t flags = PB_HAS_VOUT | PB_HAS_VOUT_MODE |
++                     PB_HAS_STATUS_MFR_SPECIFIC;
++
++    for (int i = 0; i < UCD90320_NUM_PAGES; i++) {
++        pmbus_page_config(pmdev, i, flags);
++    }
++}
++
++static const VMStateDescription vmstate_ucd90320 = {
++    .name = TYPE_UCD90320,
++    .version_id = 0,
++    .minimum_version_id = 0,
++    .fields = (const VMStateField[]) {
++        VMSTATE_PMBUS_DEVICE(parent, UCD90320State),
++        VMSTATE_UINT8_ARRAY(device_id, UCD90320State, UCD90320_DEVICE_ID_LEN),
++        VMSTATE_UINT8(monitor_config, UCD90320State),
++        VMSTATE_UINT8_ARRAY(mfr_status, UCD90320State,
++                            UCD90320_MFR_STATUS_LEN),
++        VMSTATE_END_OF_LIST()
++    }
 +};
 +
- static const TypeInfo fsi_cfam_info = {
-     .name = TYPE_FSI_CFAM,
--    .parent = TYPE_FSI_SLAVE,
--    .instance_init = fsi_cfam_instance_init,
-+    .parent = TYPE_FSI_CFAM_COMMON,
-     .instance_size = sizeof(FSICFAMState),
-     .class_init = fsi_cfam_class_init,
- };
- 
- static void fsi_cfam_register_types(void)
- {
-+    type_register_static(&fsi_cfam_common_info);
-     type_register_static(&fsi_cfam_info);
- }
- 
-diff --git a/hw/fsi/fsi-master.c b/hw/fsi/fsi-master.c
-index 083a5507ab..d82df1c094 100644
---- a/hw/fsi/fsi-master.c
-+++ b/hw/fsi/fsi-master.c
-@@ -130,7 +130,7 @@ static void fsi_master_realize(DeviceState *dev, Error **errp)
-     }
- 
-     /* address ? */
--    memory_region_add_subregion(&s->opb2fsi, 0, &s->cfam.mr);
-+    memory_region_add_subregion(&s->opb2fsi, 0, &s->cfam.parent.mr);
- }
- 
- static void fsi_master_reset(DeviceState *dev)
++static void ucd90320_class_init(ObjectClass *klass, const void *data)
++{
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    PMBusDeviceClass *k = PMBUS_DEVICE_CLASS(klass);
++
++    dc->desc = "Texas Instruments UCD90320 24-Rail Power Sequencer";
++    dc->vmsd = &vmstate_ucd90320;
++    k->write_data = ucd90320_write_data;
++    k->receive_byte = ucd90320_read_byte;
++    k->device_num_pages = UCD90320_NUM_PAGES;
++    rc->phases.exit = ucd90320_exit_reset;
++}
++
++static const TypeInfo ucd90320_types[] = {
++    {
++        .name          = TYPE_UCD90320,
++        .parent        = TYPE_PMBUS_DEVICE,
++        .instance_size = sizeof(UCD90320State),
++        .instance_init = ucd90320_init,
++        .class_init    = ucd90320_class_init,
++    },
++};
++
++DEFINE_TYPES(ucd90320_types)
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 82e0bc2e70..ac44740547 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -555,6 +555,7 @@ config ASPEED_SOC
+     select LED
+     select PMBUS
+     select MAX31785
++    select UCD90320
+     select FSI_APB2OPB_ASPEED
+     select AT24C
+     select PCI_EXPRESS
+diff --git a/hw/sensor/Kconfig b/hw/sensor/Kconfig
+index bc6331b4ab..135ffa7d5d 100644
+--- a/hw/sensor/Kconfig
++++ b/hw/sensor/Kconfig
+@@ -43,3 +43,7 @@ config ISL_PMBUS_VR
+ config MAX31785
+     bool
+     depends on PMBUS
++
++config UCD90320
++    bool
++    depends on PMBUS
+diff --git a/hw/sensor/meson.build b/hw/sensor/meson.build
+index 420fdc3359..c0583161d3 100644
+--- a/hw/sensor/meson.build
++++ b/hw/sensor/meson.build
+@@ -8,3 +8,4 @@ system_ss.add(when: 'CONFIG_MAX34451', if_true: files('max34451.c'))
+ system_ss.add(when: 'CONFIG_LSM303DLHC_MAG', if_true: files('lsm303dlhc_mag.c'))
+ system_ss.add(when: 'CONFIG_ISL_PMBUS_VR', if_true: files('isl_pmbus_vr.c'))
+ system_ss.add(when: 'CONFIG_MAX31785', if_true: files('max31785.c'))
++system_ss.add(when: 'CONFIG_UCD90320', if_true: files('ucd90320.c'))
 -- 
 2.53.0
 
