@@ -4,113 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B5F7C54FDF
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 10:34:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8343FC54FDF
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 10:49:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpO5r-0001jQ-6w; Thu, 30 Jul 2026 06:34:27 -0400
+	id 1wpOJd-00042V-39; Thu, 30 Jul 2026 06:48:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wpO5p-0001j5-7P
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 06:34:25 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wpO5n-00062m-OI
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 06:34:24 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-81ee41aaec1so29352137b3.3
- for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 03:34:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785407662; cv=none;
- d=google.com; s=arc-20260327;
- b=WpSPD5tudvuDQVD7xCDhbyaY/mAVQpTBZdksohqpP8Mg/tubx0URSmcdklI878HkEt
- R/izEBdHOpMNb/l6JeAROU9n1ILUjOn6Wlnn96wxHnhKaBFR/CPWI1o1YR5SKj/QRji7
- cYCMrYEWH071N8xoVVmuIg6fJtJ+BDWGvWRfLgRclBQ+kto8YRiKJPr5GB/YFgy789Tk
- BAckyw//oMy7m57ReMQByU+Sb1yJvdnh6oNIit9CIiYVL7tME/vhka29MFM7Zo8yvYy2
- xp3x0+D3wQMGPzsMM9aljyk4/IvQwn2/EbvUQ9NgNXa6ADWP7jc4fdzac2WBDueaMUEm
- lVew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=wUfthRHiqBb3xBsLHBxGBaZMfDAbD2HSehNMN9I2q2Y=;
- fh=oa7Edr1eZgSY5VWv3KBc54lviIojwgspf9aEbhrWUoI=;
- b=DTo8RpD/42ocBfhxPeJCwijwvHJRLH/amDuA0VfPS6OaTZjcy+hLpe3aP9lmC/xmJD
- WuEp5Ys/sXUDhsCFq1RpX22hdV1o/GfggR/t021Z5nvglsOY9YXY5AL4Qdwt1SafwaHG
- zAgrJcWLNEbWtpE3f30jTnaNxq5E+SZiHb5+dh7Egz3ujqkbiHBHPFoi/20uAPIOK1fE
- e0Z5my/egjIOLHlto+BhwnuENCKNz05t7WfmYGP/G8i45wahuJWxpHOWdRS/1AOe7XFV
- mFpEwbcg0S4PAHZB+IJL1PIkrNLoxc3S/yPYosWZv//64qTE5hN36aFHeosswLAsUb9F
- khqA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wpOJb-00041k-QL
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 06:48:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wpOJZ-0007yP-Qu
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 06:48:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785408516;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=xqABIavlrrajkReXncM00EueNjRJQ+FaDQ9dp/u19zg=;
+ b=VBVll28YiBv0AG/9r/eHb92w2IpUhF9/eAQapVOocyeFxJJGiV7FZ92j7h/oD2QZtSemLa
+ 1+xu3bc5icoKkGKdFPUy0xhyf9aQTOSDZVfdXjbjjHvzLL9BVVE+Y6h5aE1KFj7crWp/pO
+ /2CuqKtl3EYME0TqtrreDG77AvvY23A=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-253-r-gcOz8VNEyOYAsOaF_lVA-1; Thu, 30 Jul 2026 06:48:35 -0400
+X-MC-Unique: r-gcOz8VNEyOYAsOaF_lVA-1
+X-Mimecast-MFC-AGG-ID: r-gcOz8VNEyOYAsOaF_lVA_1785408514
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-495474a5fbcso19667055e9.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 03:48:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785407662; x=1786012462; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=wUfthRHiqBb3xBsLHBxGBaZMfDAbD2HSehNMN9I2q2Y=;
- b=XaWKPk/flAT/2qLrdYdhckBWLlVvdpqTbJiQDccZJUANHCtJ8v4fwmuguSvgzH1RE3
- h0zPiYTsY9nK0ZaL0amUKJfzAk4wyjVx1nVeQUBRPoUpMBKMpVDzYbqECZWn797PiCB5
- UHw8DLSIBU+uumh7SIVzIPR9HPoUtrAuSkzBqOmN2+AaIvWXzphOOlXSXI12phJHINgy
- 3e9HC+SG9OyYyWQO/el7STI6IuO5EAuQD3E9rkiggHaf0evT6oph2B6CUJr2LRkOilTw
- n6xIKkTvNHXgvRwEHJJQkYwHKlQD8MS8ODRTCC+Hk0g6WZSUPvcuJWfE/b7xLhha6yPN
- bhmg==
+ d=redhat.com; s=google; t=1785408514; x=1786013314; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=xqABIavlrrajkReXncM00EueNjRJQ+FaDQ9dp/u19zg=;
+ b=SsOY++xJBk9p0GA/tVYl42rRD6NZ9FdFkGXFLibkLG7KVTjpS/idQq7qGDDqSCWGji
+ jfocstfnnxf8zNkYoVs9C2RW7T8cpZJBFEimi6stgsaHwG3Ceen1Mv9NWuSMwhradMMR
+ quR0ggXMxvZBBVRq4pP36E2JZSgNB+i1q4iq7CvbFgZX4kSZv8EGtivqPte4qHx0+hsV
+ M6NGAOV+hOoOJTq4/l562MaKPhpXVxGc1q0YDy+2pa/FWfZYHPHocpaGPd07BapJlPXR
+ dMSrHeLvk4KswbPXJR+oOC4r1gyqz9SFykm3qn73n5lyGcaXCQAKb/tZTrIdNCfAxqVc
+ uVGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785407662; x=1786012462;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=wUfthRHiqBb3xBsLHBxGBaZMfDAbD2HSehNMN9I2q2Y=;
- b=sgXzwb4G7WBuvgvnj+rlocBLgzd9Q05IcWo596q13TUEpoBOutgMt9Q3Ggw5BWLxds
- O9JkDCzWB8aCvZVggGqXdrkp9gR5rGDIX1aGFl2ZUlbOENLmkKbSfznjUbBzq/gvr1mq
- VNNxQ7gLPTtVGv/6am3SY7usZ7zmdkiz4eLL7bG0FdCaJj5CV1pc8lYyBG3D5H054MtC
- WGoJnlmClRMBCYT2gxLnnwgdy+fOPZzb46Lz/w7XtUMYYrSslUsp8c9H8fYPdvHqyUnt
- Pti/EFVLFvy8xkzn2tvVqe0o9YEI0xCmEB1uy+isI379gO9v+1gi7bjN8uTE4D/w0Np4
- kLKg==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rq6Nr3LM6Rk+sYlMo+CpPfhtLCIrkwWhgOQl6aVDrF64jl4qlfKSligVmFKh8fruFx4t1omDZ75/Pe3@nongnu.org
-X-Gm-Message-State: AOJu0Yw8NBHUR4es8cgs1cm0oVjnr5fucjkjVe7UrNMCrI58YlwfAio9
- GBz0NSD4cXrpSanynwjwhfTdrQ4SZJevXLzvtykhZDi/9Jx1bc2DkYXWx2DkT1VZPo9V4rZ2Fsc
- rYE9Uqp6i2mJPpW7225UidnntPcNTmnT+cEfVXxiZ7g==
-X-Gm-Gg: AR+sD12KI1J2H6oq6MOu721EdP/IC07H1TAXqhK43pNykGi17tiidM4wynftrZUHqwo
- DlM+dVnzz/GMmE1uUDKHYbcBb3QCWFA592Yel7NYQTr0Acc8x4oM+jdsBWHA5xGHwBsa+iwYJWe
- 0kav2oEatioKIBGtRuepxlksQ3p7Hh/nO9evEszi0H5TZWLArmHQcttYpVZNL9BG+vqUA32SDcD
- 3uDR2XiYiuHB7M/9t3sX6IWKkz2ePsDgHiU2qOOtK8e/XiYhXK0vtN6/0xgOEUT6BTmvfiL1JFR
- nVx1h1q6oeCYjL2WVLLbG7KC2nDPRI2CEPUIldGVNMk0nJwQWrVG0l5aD765ZKesHKTmWVj9bSi
- jX2iLhud0skwhLeorGXYxSzcMylAUe/ATbe5kfhI=
-X-Received: by 2002:a05:690c:6a0b:b0:80d:5ddd:1989 with SMTP id
- 00721157ae682-81fb891e18fmr12463087b3.10.1785407662413; Thu, 30 Jul 2026
- 03:34:22 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785408514; x=1786013314;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=xqABIavlrrajkReXncM00EueNjRJQ+FaDQ9dp/u19zg=;
+ b=pMdSFXWu9NoP2j8MWI0fP9m3Nl4OoJqr9KEJLm/19eJcBwsk3F8JcfEk1pjtzP297t
+ 26ZaTrtoVl9uOsSS7qOTPJSNpQgRFhq5iz5RcICq/Ee3pjQH1oPOfuEPrMn+nmCmej0K
+ OYmgOZqn7cQQRW38I0lM0kcs4UQo8XmTbQWAuJLUzuVcuirYphqOLs0Qnx5zLTM4NYFf
+ y8hA+Yn3hjwazss+86DjUDEpH3Oasvss9fktc7SEWzjPJwR999HToNwsXoFsb9nk/lmU
+ ru9sbphKV5R1GY6Vm/sxr4FIN7AjjdlPPE29IzB1WZfru7nLu9FBjc5BMFZ6B1jb8iba
+ 6RZQ==
+X-Gm-Message-State: AOJu0YwSoZ3EAhdNPhpfpf8yyNev8v4e7wqrOInQfHOvhfgH+DHDQGTk
+ bMUn0EZdmoJE2HUinM994AfaA3dc/royzaPxu2dtekSzQ0Ns2VrJOhVC+E1g6LL7dXZuImtT+b1
+ FwvXPDNX+igZ6AHh+yyfTWCBhsdpNNM/ragdBKBro/By4n8CShqRqgTmn
+X-Gm-Gg: AR+sD13vevPfFqECLOh4kAAeb+k+R+nWTl8azEbO/MN2A069QYDdmfGQtHcMW2PY41s
+ 10q+1lkVfk6dYnHL3eeO7GfRHjcPS0JZ7yxVnD6qNY237FCe0RszskE3I0dOF4M3qWqlpZJ9RNj
+ a13nOkF2E0dx2JmKJ2Qsv3Rys0EYWHeOejvx/CTNsiKe30eiXvzMh4t1PVB62im3or2Mbzt+6s3
+ 580fQOYeUbLmxhPWvKchPunpDQ1hMtTZkARzbOClDD7lQJtg+6o48lA7M1uFJSFmUwFK5jNeakE
+ 2KNQyQAqozj11mJ/Axi183MUZZHgmWr6e/m80ZBgI6oYS8MMZnRb2qHs5iUgTe0NmIvQXZs33Rz
+ KtUTCsbdxmNN6uF8+bVCM0hY=
+X-Received: by 2002:a7b:ce93:0:b0:495:4d2d:82f2 with SMTP id
+ 5b1f17b1804b1-49800eb6f98mr21410455e9.26.1785408513931; 
+ Thu, 30 Jul 2026 03:48:33 -0700 (PDT)
+X-Received: by 2002:a7b:ce93:0:b0:495:4d2d:82f2 with SMTP id
+ 5b1f17b1804b1-49800eb6f98mr21410045e9.26.1785408513399; 
+ Thu, 30 Jul 2026 03:48:33 -0700 (PDT)
+Received: from redhat.com (ppp-94-66-118-61.home.otenet.gr. [94.66.118.61])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-498011fd5fesm46275465e9.7.2026.07.30.03.48.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 30 Jul 2026 03:48:32 -0700 (PDT)
+Date: Thu, 30 Jul 2026 06:48:29 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Yonggang Luo <luoyonggang@gmail.com>, Miku Hatsune <anznu1l@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>, QEMU Stable <qemu-stable@nongnu.org>
+Subject: Re: [PULL v2 09/30] virtio-mmio: fix QUEUE_NUM_MAX
+Message-ID: <20260730064630-mutt-send-email-mst@kernel.org>
+References: <65990a19-6a7e-4c1c-9354-0fffa13cbba9@tls.msk.ru>
+ <20260728154328-mutt-send-email-mst@kernel.org>
+ <75f2277a-8508-4e6e-adfe-92bed9fc1bf6@tls.msk.ru>
+ <20260728192047-mutt-send-email-mst@kernel.org>
+ <af6d5296-9860-4c5d-a72e-f2eacac3e2e9@tls.msk.ru>
+ <23cbb4e8-1467-4a0f-9af7-67e3c64cba7e@tls.msk.ru>
+ <20260729053423-mutt-send-email-mst@kernel.org>
+ <90d15fe9-9250-486c-9349-441d0c11c655@tls.msk.ru>
+ <20260729055600-mutt-send-email-mst@kernel.org>
+ <0702c51b-aec7-4688-a2ec-7363ccdfbc73@tls.msk.ru>
 MIME-Version: 1.0
-References: <20260728031731.286666-1-gshan@redhat.com>
- <20260728031731.286666-3-gshan@redhat.com>
- <20260729182316-mutt-send-email-mst@kernel.org>
- <CAFEAcA8nxsXNPuqOoc4DGnHbCKQ-pBJib4JhXnYkzMg79GMfAA@mail.gmail.com>
- <20260730062155-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20260730062155-mutt-send-email-mst@kernel.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 30 Jul 2026 11:34:10 +0100
-X-Gm-Features: AUfX_mwJ2MI7LWs4BECwMrgTBZakM1zAATcqiS8nddtqW6Hd7PF_7BUI1NUnB0Q
-Message-ID: <CAFEAcA_xWqomb6jPf_9RmAfaf77uHajMkQk4biOcK3xR+Rgunw@mail.gmail.com>
-Subject: Re: [PATCH v5 2/3] system/memory: Use qemu_ram_move() for directly
- accessible regions
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Gavin Shan <gshan@redhat.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- peterx@redhat.com, philmd@oss.qualcomm.com, richard.henderson@linaro.org, 
- alex@shazbot.org, berrange@redhat.com, philmd@mailo.com, david@kernel.org, 
- clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com,
- jugraham@redhat.com, 
- liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn, shan.gavin@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0702c51b-aec7-4688-a2ec-7363ccdfbc73@tls.msk.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,24 +128,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 30 Jul 2026 at 11:27, Michael S. Tsirkin <mst@redhat.com> wrote:
->
-> On Thu, Jul 30, 2026 at 10:24:32AM +0100, Peter Maydell wrote:
-> > The idea is rather just to ignore the unaligned-access-to-not-RAM
-> > case as "only a theoretical issue" and default it to memmove().
-> > If anybody reports an actual problem we can think about it then :-)
+On Thu, Jul 30, 2026 at 08:38:46AM +0300, Michael Tokarev wrote:
+> On 7/29/26 13:26, Michael S. Tsirkin wrote:
+> > On Wed, Jul 29, 2026 at 12:49:59PM +0300, Michael Tokarev wrote:
+> 
+> > > The old value basically makes no sense.  We returned a wrong value
+> > > here, now we return the correct one.
+> > 
+> > So now, guest read the big value, and it is writing that value back.
+> > But since we changed the value to smaller one now guest is
+> > writing a value bigger than the max and out of spec and it will fail.
+> > Not nice at all.
+> 
+> Just to clarify: this might happen only after migration (to qemu "fixed"
+> the way I was thinking).
 
-> Well given the only reported case of virtio DMA into vfio memory we have is
-> GH100 and that one is mapped MT_NORMAL, I'm fine with that.
+read num before migration, write after migration.
 
-> I feel extending vfio to report the mapping type to userspace might
-> not be a bad idea down the road, though. "Directly accessible"
-> is a very rough approximation to the rich variety of mappings
-> available across architectures.
+> []
+> > I'm not strongly objecting to changing the original patch.
+> > This needs a bunch of thought though, as we are breaking a
+> > fundamental promise of live migration.
+> > And given we are in freeze and it's a CVE, there's some urgency
+> > to get the fix merged.
+> 
+> Yes, I fully understand the time constraints we have here.  Also,
+> it's fixed for 11.1+, and the release is coming - and once it's
+> out, this whole problem is history already :)
+> 
+> [...]
+> 
+> > My suggestion would be to propose a cleanup upstream, including
+> > an analysis of the risks, and we'll discuss.
+> > 
+> > Or you can do original development in the stable branch if you
+> > prefer, be my guest, but don't expect it to get same level of
+> > scrutiny as upstream code gets. If anything breaks, it's on you.
+> 
+> There's no need for a stable-only solution which is different in
+> logic, since it is the upstream version with current logic which
+> we must be able to migrate to anyway.  So any changes needs to be
+> in agreement with the upstream.
+> 
+> > > Ofc it would be ideal - from the back-porting PoV only - to just
+> > > drop this all entirely and unconditionally report the correct
+> > > queue size to begin with, as per above.
+> 
+> > A discussion for upstream, imho.
+> 
+> Yes, this is exactly what I'm doing - discussing it here.
+> But without a proposal yet ;))
+> 
+> Ok.
+> 
+> For now, for the two active stable series, I'll pick up only this
+> change out of the two, and even it reduced to a one-liner I mentioned
+> earlier (doing `queue_size = QUEUE_SIZE_MAX`).  This is sufficient to
+> fix the bug in stable series (the other change isn't needed).  If
+> anything will come touching this place (including a more elegant
+> solution), it's trivial to revert it and re-do, no snow-ball effect
+> is expected.
+> 
+> And thank you for your patience!
+> 
+> /mjt
 
-Yes, this sounds like a good longer term idea. If userspace doesn't
-have a way to know what the mapping behind something it's mmap()ed
-is then it can't know what operations it can and can't safely do.
-
--- PMM
 
