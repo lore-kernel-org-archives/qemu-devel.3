@@ -4,53 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE3F1C5516D
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 21:16:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 886DFC5516D
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 21:29:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpY6j-00086O-9R; Thu, 30 Jul 2026 17:16:01 -0400
+	id 1wpYIu-0002FM-6K; Thu, 30 Jul 2026 17:28:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <agraf@csgraf.de>)
- id 1wpY6b-0007uB-Cp; Thu, 30 Jul 2026 17:15:56 -0400
-Received: from mail.csgraf.de ([85.25.223.15] helo=zulu616.server4you.de)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <agraf@csgraf.de>)
- id 1wpY6Y-000620-Qg; Thu, 30 Jul 2026 17:15:52 -0400
-Received: from [192.168.106.196]
- (dynamic-077-007-119-149.77.7.pool.telefonica.de [77.7.119.149])
- by csgraf.de (Postfix) with ESMTPSA id 64F0860804CE;
- Thu, 30 Jul 2026 23:15:28 +0200 (CEST)
-Message-ID: <1e9f7c9f-8f03-4bc3-a04a-480ce16fe4ff@csgraf.de>
-Date: Thu, 30 Jul 2026 23:15:22 +0200
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1wpYIs-0002EW-Bv
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 17:28:34 -0400
+Received: from mail-qt1-x82c.google.com ([2607:f8b0:4864:20::82c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1wpYIq-00089X-VW
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 17:28:34 -0400
+Received: by mail-qt1-x82c.google.com with SMTP id
+ d75a77b69052e-529a1ee0e62so1399091cf.2
+ for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 14:28:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785446911; cv=none;
+ d=google.com; s=arc-20260327;
+ b=eeTj4/WnA+TfAvdp8rLVVLSAVqEfIGrd4/BZsu2ZHzetcM2zhPQKn0rFSYCCP9zxzV
+ sPuqVt1STzUj/dU+WGZGJiMDujPuWhla12PBI/Y2QsUlGgNfJYtfsN4sRbZ1Fv3BwcWt
+ Om7YSa8L+HMF7UlAmmxCKPvb87aYdOo92/hXCpLTxrJoQiu5ktgSzF6ZAsx1YZNLHTby
+ ytnex4vL12x5/dmXeVQuRLnI20q/UFAmb6ZV38ORU/30/2Nx34BMLNv2LzJ7q7YUjuS4
+ P8X2xPDfTYAg/RdZzWEQ1lScKvxF8gQr0ViUSEqR2ZBJv+MQxWmbUiHyZHwxrOrNSJ+I
+ EDsQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=8U5244hAigndAEdl7eLC13olLEushepCON12adQSRDs=;
+ fh=5c2zzDCO3AarKeAiMGTbVWF3GfaVX9WQmTkvlSIBr/A=;
+ b=TsOvnCM4+gBV2ELU+4CmsFT53XqXdw99VN/el03ldXRsve6QWmZ09O1bHtWjJo4lnF
+ 4w5jWtiTv9LAVoCF1G7U+5K1hFLqi6/WWCpSIslE68FIFkjFoCoEXXPKMBUHHyf2B056
+ qNrV1tXoSIWn13kuRFFV3VwwP6K7k/Db+EFrvWBxuNNIyetouz2tIeumPFzNIgm7fsn7
+ PvkyB8AAPwKWo59CNwB/vH3Q6i48yMUcPF7Fd8aKFmRqOLGRXtuw3Q5WtUpEqT3WI5nm
+ mFVUSZi5OG/seAZ2qiPIm15Ph9oGZaCMAuS/PI6+hsEZOt92CWcEl5YV9DZLm2fhfHgT
+ CV0g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785446911; x=1786051711; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=8U5244hAigndAEdl7eLC13olLEushepCON12adQSRDs=;
+ b=fTVZNhHXwxxVLInFy9pmrnAZhq7wmpshXxlweyQS/GkdWraNBClaEkTaiKG421u0oN
+ Gf4OMjm77TKF9IZUeT5SJjWUBh1r+Obn71p1rhusksfQPaN2xXYBo45zVcfZ3wQM3mjj
+ 5CwQocroqEeLcrhgzx7t8mZespV7EQME89nmUf4tGwU7PyJn62londA+BRjrogw45Emr
+ 9Oqi6KEZo00sI1v9G4yHHJ/nkckyg3r5pG0WJ8pJ7aBzBqA1TKU78yI6UUgTX1JfGYpx
+ 0ysHGW5KN7ZaEGAMP25X8NoX6AWS7VZPOMGDhJB/cAqAJtNjAbeY7wBW6WT+mfmthuQt
+ vRXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785446911; x=1786051711;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=8U5244hAigndAEdl7eLC13olLEushepCON12adQSRDs=;
+ b=TDTf7aL+T5skc2cBKjxkKSMcKnQoY+ajBpGZmhihZzmMJqEk/fTckbACUQfSUBzNl/
+ yAwAaEPdYpMfxEqiiJbGBfstTKBAN3KkhnTT8dN1RtYR/9xkL0RLSIgqInwMFIP39GnQ
+ WzfDjuOduJ1g//GXt8DHjDK8ugF/1tKR6YeMrpmN1S+89w1qROPl60uc8Tut7UNRvGcx
+ S0POy3/hZ+DqPHu498RmPrd5+BNt4q1xBVKhaI3d5hptYc2zFU/t3+YySX+sWBMRgTYY
+ gj7mWoLh86BCKIpqoTbBfT8+CxgnylhDzD59nhBwd4KS+2lyXDfvMCtOyDa4On63Jxe9
+ DvZA==
+X-Gm-Message-State: AOJu0Yw5XQ4CUrfLVVSsRyKxPeUR2wrT9HTIOnRN84LOOdi0cCeMkhxT
+ P15FytKTiXhP4aSFa3iNuay00YdjGN9aoIhcf8SwNc9sWlEqRa4w/Ovi6fHfj6dIlCBi9nCKeZi
+ ogTH1TDrlZXNNy1v1UPa0a1A6Gq36Ln0=
+X-Gm-Gg: AR+sD10NLb2vyp9AEoKnbi2ufM3CXA0/rIf370rKSwBZKZ2q53nTGjOSz59cRm14i2B
+ RfzTlydnUve2cAQdP2zo6izKhcpTTFkbKMnSv0KQPcqFNJ088bk7OxGln0XyCq6IhcNGSu4QCMr
+ uQMTobCywukS4cxmA7kjCHdUZt/BMpUlacqGZe7NNNRnfLaxSYqMqjXoerRCHSYv3PaPtI27vdX
+ 2cPowWXKc/9fgq2MMAWGNJS1UAHTMgSi9Qte9bDbmBR1zcJPiSzxtZRC2t7p1R0NmloEEHbwA+B
+ ya1ea71DODXpQll30G+Rikbc9ZnW7SWbb5nvvSK+H2RDf6GlA4ftVbauHtTPLAOICanFbjr9iQ=
+ =
+X-Received: by 2002:a05:622a:248b:b0:51c:f3:34e3 with SMTP id
+ d75a77b69052e-52b3849c151mr47267131cf.28.1785446911402; Thu, 30 Jul 2026
+ 14:28:31 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 12/19] hvf: Simplify post reset/init/loadvm hooks
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- QEMU Developers <qemu-devel@nongnu.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eduardo Habkost <ehabkost@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <r.bolshakov@yadro.com>,
- qemu-arm <qemu-arm@nongnu.org>, Frank Yang <lfy@google.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Collingbourne <pcc@google.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-References: <20210519202253.76782-1-agraf@csgraf.de>
- <20210519202253.76782-13-agraf@csgraf.de>
- <d4dba8be-4982-4125-b447-cdb2de1ad060@oss.qualcomm.com>
-Content-Language: en-US
-From: Alexander Graf <agraf@csgraf.de>
-In-Reply-To: <d4dba8be-4982-4125-b447-cdb2de1ad060@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=85.25.223.15; envelope-from=agraf@csgraf.de;
- helo=zulu616.server4you.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
+ <20260723-vhost-user-isolated-memory-v1-5-6b97c439eb28@gmail.com>
+ <20260727190604.GD371693@fedora>
+In-Reply-To: <20260727190604.GD371693@fedora>
+From: Connor Kite <connorkite@gmail.com>
+Date: Thu, 30 Jul 2026 14:28:20 -0700
+X-Gm-Features: AUfX_mx1j5MBaUGOE6NKwGCPoRQwCG8zc56N5iSyDBsMPzBNCOI9mFAWQ7QJtrA
+Message-ID: <CA+spn3rAiRCs3KAL55-qCJVWzUX7p+riyLW2s_dqKmS+tbX4jg@mail.gmail.com>
+Subject: Re: [PATCH RFC 05/15] vhost-user: add memory_isolation to
+ VhostUserState
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Haixu Cui <quic_haixcui@quicinc.com>, 
+ Raphael Norwitz <rnorwitz@nvidia.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
+ Milan Zamazal <mzamazal@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org, 
+ virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
+ zhenwei pi <zhenwei.pi@linux.dev>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
+ Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82c;
+ envelope-from=connorkite@gmail.com; helo=mail-qt1-x82c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,88 +140,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hey Philippe,
-
-On 30.07.26 18:00, Philippe Mathieu-Daudé wrote:
-> Hi Alex,
+On Fri, Jul 24, 2026 at 4:09=E2=80=AFAM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
 >
-> (old patch committed as bac969ef30e8a8b73acbeb6d68abff6f68b2056c)
+> The signature of the stub for !defined(CONFIG_VHOST_USER) is not
+> updated, breaking builds.
 >
-> On 19/5/21 22:22, Alexander Graf wrote:
->> The hooks we have that call us after reset, init and loadvm really all
->> just want to say "The reference of all register state is in the QEMU
->> vcpu struct, please push it".
->>
->> We already have a working pushing mechanism though called 
->> cpu->vcpu_dirty,
->> so we can just reuse that for all of the above, syncing state 
->> properly the
->> next time we actually execute a vCPU.
->>
->> This fixes PSCI resets on ARM, as they modify CPU state even after the
->> post init call has completed, but before we execute the vCPU again.
->>
->> To also make the scheme work for x86, we have to make sure we don't
->> move stale eflags into our env when the vcpu state is dirty.
->>
->> Signed-off-by: Alexander Graf <agraf@csgraf.de>
->> Reviewed-by: Roman Bolshakov <r.bolshakov@yadro.com>
->> Tested-by: Roman Bolshakov <r.bolshakov@yadro.com>
->> ---
->>   accel/hvf/hvf-accel-ops.c | 27 +++++++--------------------
->>   target/i386/hvf/x86hvf.c  |  5 ++++-
->>   2 files changed, 11 insertions(+), 21 deletions(-)
->>
->> diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
->> index ded918c443..d1691be989 100644
->> --- a/accel/hvf/hvf-accel-ops.c
->> +++ b/accel/hvf/hvf-accel-ops.c
->> @@ -205,39 +205,26 @@ static void hvf_cpu_synchronize_state(CPUState 
->> *cpu)
->>       }
->>   }
->>   -static void do_hvf_cpu_synchronize_post_reset(CPUState *cpu,
->> -                                              run_on_cpu_data arg)
->> +static void do_hvf_cpu_synchronize_set_dirty(CPUState *cpu,
->> +                                             run_on_cpu_data arg)
->>   {
->> -    hvf_put_registers(cpu);
->> -    cpu->vcpu_dirty = false;
->> +    /* QEMU state is the reference, push it to HVF now and on next 
->> entry */
->> +    cpu->vcpu_dirty = true;
->>   }
->>     static void hvf_cpu_synchronize_post_reset(CPUState *cpu)
->>   {
->> -    run_on_cpu(cpu, do_hvf_cpu_synchronize_post_reset, 
->> RUN_ON_CPU_NULL);
->> -}
->> -
->> -static void do_hvf_cpu_synchronize_post_init(CPUState *cpu,
->> -                                             run_on_cpu_data arg)
->> -{
->> -    hvf_put_registers(cpu);
->> -    cpu->vcpu_dirty = false;
->> +    run_on_cpu(cpu, do_hvf_cpu_synchronize_set_dirty, RUN_ON_CPU_NULL);
->>   }
->>     static void hvf_cpu_synchronize_post_init(CPUState *cpu)
->>   {
->> -    run_on_cpu(cpu, do_hvf_cpu_synchronize_post_init, RUN_ON_CPU_NULL);
+> Regards,
+> Akihiko Odaki
+
+Good catch!  I have fixed this in passt.c, which I believe is the only
+location affected.
+
+On Mon, Jul 27, 2026 at 12:06=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.c=
+om> wrote:
 >
-> Since we are not calling hvf_put_registers() anymore, any reason to keep
-> using run_on_cpu()? I think it is safe to update the field out of the
-> vCPU thread context, it will be consumed by the thread during the next
-> inner loop run, no need to schedule to the vCPU work queue. But I'm out
-> of my confort zone here so might be wrong.
+> On Thu, Jul 23, 2026 at 03:30:04PM -0700, Connor Kite wrote:
+> > @@ -73,12 +74,14 @@ typedef struct VhostUserState {
+> >      int memory_slots;
+> >      bool supports_config;
+> >      bool supports_inflight_migration;
+> > +    bool memory_isolation;
+> >  } VhostUserState;
+> >
+> >  /**
+> >   * vhost_user_init() - initialise shared vhost_user state
+> >   * @user: allocated area for storing shared state
+> >   * @chr: the chardev for the vhost socket
+> > + * @memory_isolation: disables device access to guest memory
+>
+> "Device" is confusing because it has several meanings. "vhost-user
+> back-end" would be clearer.
+>
+> "Disables" is also a little confusing because the vhost-user back-end
+> still needs to access guest memory somehow. Memory access cannot be
+> completely disabled. Something like "restricts vhost-user back-end
+> access to guest memory via bounce buffers" could be clearer, but it's up
+> to you. We probably don't want to repeat the full explanation in every
+> comment about memory isolation, so it's fine to omit the details as long
+> as there is user-facing documentation somewhere that explains what the
+> feature does.
 
-
-Your reasoning makes sense. But there could be dragons lurking 
-somewhere, like broken "info registers" views, HVF depending on specific 
-register contents for paused CPUs, etc.
-
-I don't see a way to reason about this except to empirically try.
-
-
-Alex
-
+Perhaps for brevity it might make sense to say "@memory_isolation: restrict
+direct access to guest memory from back-end".
 
