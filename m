@@ -4,115 +4,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8343FC54FDF
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 10:49:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15ED3C54FDF
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 10:50:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpOJd-00042V-39; Thu, 30 Jul 2026 06:48:41 -0400
+	id 1wpOL8-0004kJ-W3; Thu, 30 Jul 2026 06:50:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wpOJb-00041k-QL
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 06:48:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wpOL7-0004i6-L1
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 06:50:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wpOJZ-0007yP-Qu
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 06:48:39 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wpOL6-00004y-9J
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 06:50:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785408516;
+ s=mimecast20190719; t=1785408611;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xqABIavlrrajkReXncM00EueNjRJQ+FaDQ9dp/u19zg=;
- b=VBVll28YiBv0AG/9r/eHb92w2IpUhF9/eAQapVOocyeFxJJGiV7FZ92j7h/oD2QZtSemLa
- 1+xu3bc5icoKkGKdFPUy0xhyf9aQTOSDZVfdXjbjjHvzLL9BVVE+Y6h5aE1KFj7crWp/pO
- /2CuqKtl3EYME0TqtrreDG77AvvY23A=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=WqsPoxEJw0yP4OhfLRrCTDEL9RtNQ3K51WKgVzFOz+A=;
+ b=TvOihGic87RH9YI/ZTvBPCNvBvXwLxT5859n0X4UitEr/z4loimhEgP1Qxlg3FNrAv1n6Z
+ Koj3QC04v2vj4ekIoJpv6hyngvlgvCCVz5kMLoT1X/Fjr9Hv15CHPcPVQZqn4M13sU/yCY
+ LllQr2ulKchv73J9G/D30+ZSR1YMBmo=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-253-r-gcOz8VNEyOYAsOaF_lVA-1; Thu, 30 Jul 2026 06:48:35 -0400
-X-MC-Unique: r-gcOz8VNEyOYAsOaF_lVA-1
-X-Mimecast-MFC-AGG-ID: r-gcOz8VNEyOYAsOaF_lVA_1785408514
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-495474a5fbcso19667055e9.1
- for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 03:48:35 -0700 (PDT)
+ us-mta-74-w356ceR4NiSWWNez3KBLKA-1; Thu, 30 Jul 2026 06:50:07 -0400
+X-MC-Unique: w356ceR4NiSWWNez3KBLKA-1
+X-Mimecast-MFC-AGG-ID: w356ceR4NiSWWNez3KBLKA_1785408606
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-49561facb1dso13813635e9.3
+ for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 03:50:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785408514; x=1786013314; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=xqABIavlrrajkReXncM00EueNjRJQ+FaDQ9dp/u19zg=;
- b=SsOY++xJBk9p0GA/tVYl42rRD6NZ9FdFkGXFLibkLG7KVTjpS/idQq7qGDDqSCWGji
- jfocstfnnxf8zNkYoVs9C2RW7T8cpZJBFEimi6stgsaHwG3Ceen1Mv9NWuSMwhradMMR
- quR0ggXMxvZBBVRq4pP36E2JZSgNB+i1q4iq7CvbFgZX4kSZv8EGtivqPte4qHx0+hsV
- M6NGAOV+hOoOJTq4/l562MaKPhpXVxGc1q0YDy+2pa/FWfZYHPHocpaGPd07BapJlPXR
- dMSrHeLvk4KswbPXJR+oOC4r1gyqz9SFykm3qn73n5lyGcaXCQAKb/tZTrIdNCfAxqVc
- uVGQ==
+ d=redhat.com; s=google; t=1785408606; x=1786013406; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=WqsPoxEJw0yP4OhfLRrCTDEL9RtNQ3K51WKgVzFOz+A=;
+ b=sX8qRZJJkSHZOnQeklKhEmcsc0f7kuWpcxb1C6wyMf/uDv1be8vPc1zQpxkh+fD5oj
+ yl/tF9G6Da9AL2GtOpkTZrbn8fpmwCFt44HgSJIPScG+N0uJoAoG9TKp+xCFqsQhA1wk
+ yjuwMrROC+/gFsjH62MElylyiY1EaXFPpxaC5pyZepbLDtDy1Ply6GK/HnU6XvqvScAb
+ 3EfK9PJCKN74+w8fEVlDcrP9T1wts/JqTp9fXeIqw7g5ic7d/V7fC0+j+hh1hjAy16MZ
+ Ylk0DVgL1ENqL8MXEVqAtAr6f+gjJmAPrwrUvi1lEKtg7jSSoccS4CUj+dB0JPnqrd/0
+ 3klw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785408514; x=1786013314;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=xqABIavlrrajkReXncM00EueNjRJQ+FaDQ9dp/u19zg=;
- b=pMdSFXWu9NoP2j8MWI0fP9m3Nl4OoJqr9KEJLm/19eJcBwsk3F8JcfEk1pjtzP297t
- 26ZaTrtoVl9uOsSS7qOTPJSNpQgRFhq5iz5RcICq/Ee3pjQH1oPOfuEPrMn+nmCmej0K
- OYmgOZqn7cQQRW38I0lM0kcs4UQo8XmTbQWAuJLUzuVcuirYphqOLs0Qnx5zLTM4NYFf
- y8hA+Yn3hjwazss+86DjUDEpH3Oasvss9fktc7SEWzjPJwR999HToNwsXoFsb9nk/lmU
- ru9sbphKV5R1GY6Vm/sxr4FIN7AjjdlPPE29IzB1WZfru7nLu9FBjc5BMFZ6B1jb8iba
- 6RZQ==
-X-Gm-Message-State: AOJu0YwSoZ3EAhdNPhpfpf8yyNev8v4e7wqrOInQfHOvhfgH+DHDQGTk
- bMUn0EZdmoJE2HUinM994AfaA3dc/royzaPxu2dtekSzQ0Ns2VrJOhVC+E1g6LL7dXZuImtT+b1
- FwvXPDNX+igZ6AHh+yyfTWCBhsdpNNM/ragdBKBro/By4n8CShqRqgTmn
-X-Gm-Gg: AR+sD13vevPfFqECLOh4kAAeb+k+R+nWTl8azEbO/MN2A069QYDdmfGQtHcMW2PY41s
- 10q+1lkVfk6dYnHL3eeO7GfRHjcPS0JZ7yxVnD6qNY237FCe0RszskE3I0dOF4M3qWqlpZJ9RNj
- a13nOkF2E0dx2JmKJ2Qsv3Rys0EYWHeOejvx/CTNsiKe30eiXvzMh4t1PVB62im3or2Mbzt+6s3
- 580fQOYeUbLmxhPWvKchPunpDQ1hMtTZkARzbOClDD7lQJtg+6o48lA7M1uFJSFmUwFK5jNeakE
- 2KNQyQAqozj11mJ/Axi183MUZZHgmWr6e/m80ZBgI6oYS8MMZnRb2qHs5iUgTe0NmIvQXZs33Rz
- KtUTCsbdxmNN6uF8+bVCM0hY=
-X-Received: by 2002:a7b:ce93:0:b0:495:4d2d:82f2 with SMTP id
- 5b1f17b1804b1-49800eb6f98mr21410455e9.26.1785408513931; 
- Thu, 30 Jul 2026 03:48:33 -0700 (PDT)
-X-Received: by 2002:a7b:ce93:0:b0:495:4d2d:82f2 with SMTP id
- 5b1f17b1804b1-49800eb6f98mr21410045e9.26.1785408513399; 
- Thu, 30 Jul 2026 03:48:33 -0700 (PDT)
-Received: from redhat.com (ppp-94-66-118-61.home.otenet.gr. [94.66.118.61])
+ d=1e100.net; s=20251104; t=1785408606; x=1786013406;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=WqsPoxEJw0yP4OhfLRrCTDEL9RtNQ3K51WKgVzFOz+A=;
+ b=NvlkPXfy6Hgq2XH7N3q8Yr8Iwu/gh70n9jQDbWfRrlbK6KVzk+73Gt5XNZeKwt5Q1n
+ 2PLK0j5MiotIIBEb/iyosLJ9tixW6y7A1Q0BgBJi/42+Stq36PhZrcmzhyJkjirwguCH
+ fZ98BHTi1MyVJn56445l/pSdxUEaJ1NkDAapAFa5psIjg6xxlzfqMKh1UZnHx7gkaO5H
+ jenxswWHHPzg13eZZhXeUu43OlMZu0Y1EnRkDHvUTGoqFPO1NIIfKiJv9s+3+8b30URp
+ cgKnXU8Fhv2uuFnA8MI9vlY12JxAg2uZkflyQL9ddMqSawon4hrHyuMZZXkROHPx6Hwc
+ cPJQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrU0V890r/o1h8Ik9RjyW47XTffJMZ3SmnRv2Zx7pLcnqoC3PIvzFSVA6woBaU0of75xNcpk7ovNFCP@nongnu.org
+X-Gm-Message-State: AOJu0Yz5u6I3/Cn+3uwZrTsESF3ge6VdylzRhh7lC2VOs9tG1avSz2EP
+ daJD7zrxto1yDC36xBO8QxYCy1HSFEMeGF17oj+MUyMVngJe3CvhqpQZHHC7GY/mThhD6WK/dY8
+ 2mdWKBIyVdQYFfwo84AK4167cR/QjyKCiNGRRxpaF9C7T9+sr7IaUyqCi
+X-Gm-Gg: AR+sD11byl/vcTvLYu3nglPKLqvsGh+TmY7IcFeF0lISEoUkhiAFh02P+Xcc4WMORDh
+ 6MdW/mapKB6/TplE7ISO8jEsF+Nn67XFuAmU/i2OjKWV6WHOVpVvMjEfKL4vtNQ5sav+f10mES1
+ /ZU0pxtWUyAniF3G/JPa1BwCtcn7StJkAkgV627gnaQfks9ovWZstR8IPfoYYUsULq2p9Oqc08o
+ CZxUgKj27F/oRKypQgog9HADw/5k5B+3cVzSgM/GHRSGrIyecSSLT5qqtph7V8BHbxSrAGn/GvC
+ nAjDaU+JCHJdpMAug3ajvFwXNkxByWg4d49WGz3EDX467Kf52vpis/8fUZ8J1KfM0Gn9whbRsRp
+ j4DgvMhfftT4DFRgpuZRYXbFnCS3U7TGnS7r0SG4=
+X-Received: by 2002:a05:600c:628f:b0:495:4a34:16e1 with SMTP id
+ 5b1f17b1804b1-49800eadaf7mr27610655e9.23.1785408606502; 
+ Thu, 30 Jul 2026 03:50:06 -0700 (PDT)
+X-Received: by 2002:a05:600c:628f:b0:495:4a34:16e1 with SMTP id
+ 5b1f17b1804b1-49800eadaf7mr27610085e9.23.1785408605889; 
+ Thu, 30 Jul 2026 03:50:05 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-498011fd5fesm46275465e9.7.2026.07.30.03.48.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Jul 2026 03:48:32 -0700 (PDT)
-Date: Thu, 30 Jul 2026 06:48:29 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Yonggang Luo <luoyonggang@gmail.com>, Miku Hatsune <anznu1l@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
- Zhao Liu <zhao1.liu@intel.com>, QEMU Stable <qemu-stable@nongnu.org>
-Subject: Re: [PULL v2 09/30] virtio-mmio: fix QUEUE_NUM_MAX
-Message-ID: <20260730064630-mutt-send-email-mst@kernel.org>
-References: <65990a19-6a7e-4c1c-9354-0fffa13cbba9@tls.msk.ru>
- <20260728154328-mutt-send-email-mst@kernel.org>
- <75f2277a-8508-4e6e-adfe-92bed9fc1bf6@tls.msk.ru>
- <20260728192047-mutt-send-email-mst@kernel.org>
- <af6d5296-9860-4c5d-a72e-f2eacac3e2e9@tls.msk.ru>
- <23cbb4e8-1467-4a0f-9af7-67e3c64cba7e@tls.msk.ru>
- <20260729053423-mutt-send-email-mst@kernel.org>
- <90d15fe9-9250-486c-9349-441d0c11c655@tls.msk.ru>
- <20260729055600-mutt-send-email-mst@kernel.org>
- <0702c51b-aec7-4688-a2ec-7363ccdfbc73@tls.msk.ru>
+ ffacd0b85a97d-47fc892cc6asm5814809f8f.18.2026.07.30.03.50.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 30 Jul 2026 03:50:05 -0700 (PDT)
+Message-ID: <3da739fb-cc3e-42ed-ae7c-46afa38151ab@redhat.com>
+Date: Thu, 30 Jul 2026 12:50:03 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0702c51b-aec7-4688-a2ec-7363ccdfbc73@tls.msk.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 2/3] system/memory: Use qemu_ram_move() for directly
+ accessible regions
+To: Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Gavin Shan <gshan@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, peterx@redhat.com, philmd@oss.qualcomm.com,
+ richard.henderson@linaro.org, alex@shazbot.org, berrange@redhat.com,
+ philmd@mailo.com, david@kernel.org, pbonzini@redhat.com, phrdina@redhat.com,
+ jugraham@redhat.com, liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn,
+ shan.gavin@gmail.com
+References: <20260728031731.286666-1-gshan@redhat.com>
+ <20260728031731.286666-3-gshan@redhat.com>
+ <20260729182316-mutt-send-email-mst@kernel.org>
+ <CAFEAcA8nxsXNPuqOoc4DGnHbCKQ-pBJib4JhXnYkzMg79GMfAA@mail.gmail.com>
+ <20260730062155-mutt-send-email-mst@kernel.org>
+ <CAFEAcA_xWqomb6jPf_9RmAfaf77uHajMkQk4biOcK3xR+Rgunw@mail.gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <CAFEAcA_xWqomb6jPf_9RmAfaf77uHajMkQk4biOcK3xR+Rgunw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
 X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,69 +177,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 30, 2026 at 08:38:46AM +0300, Michael Tokarev wrote:
-> On 7/29/26 13:26, Michael S. Tsirkin wrote:
-> > On Wed, Jul 29, 2026 at 12:49:59PM +0300, Michael Tokarev wrote:
+On 7/30/26 12:34, Peter Maydell wrote:
+> On Thu, 30 Jul 2026 at 11:27, Michael S. Tsirkin <mst@redhat.com> wrote:
+>>
+>> On Thu, Jul 30, 2026 at 10:24:32AM +0100, Peter Maydell wrote:
+>>> The idea is rather just to ignore the unaligned-access-to-not-RAM
+>>> case as "only a theoretical issue" and default it to memmove().
+>>> If anybody reports an actual problem we can think about it then :-)
 > 
-> > > The old value basically makes no sense.  We returned a wrong value
-> > > here, now we return the correct one.
-> > 
-> > So now, guest read the big value, and it is writing that value back.
-> > But since we changed the value to smaller one now guest is
-> > writing a value bigger than the max and out of spec and it will fail.
-> > Not nice at all.
+>> Well given the only reported case of virtio DMA into vfio memory we have is
+>> GH100 and that one is mapped MT_NORMAL, I'm fine with that.
 > 
-> Just to clarify: this might happen only after migration (to qemu "fixed"
-> the way I was thinking).
+>> I feel extending vfio to report the mapping type to userspace might
+>> not be a bad idea down the road, though. "Directly accessible"
+>> is a very rough approximation to the rich variety of mappings
+>> available across architectures.
+> 
+> Yes, this sounds like a good longer term idea. If userspace doesn't
+> have a way to know what the mapping behind something it's mmap()ed
+> is then it can't know what operations it can and can't safely do.
+> 
+Gavin, didn't you have the idea of using a VFIO region caps for that ?
 
-read num before migration, write after migration.
+This is similar to what we did on POWER9 with :
 
-> []
-> > I'm not strongly objecting to changing the original patch.
-> > This needs a bunch of thought though, as we are breaking a
-> > fundamental promise of live migration.
-> > And given we are in freeze and it's a CVE, there's some urgency
-> > to get the fix merged.
-> 
-> Yes, I fully understand the time constraints we have here.  Also,
-> it's fixed for 11.1+, and the release is coming - and once it's
-> out, this whole problem is history already :)
-> 
-> [...]
-> 
-> > My suggestion would be to propose a cleanup upstream, including
-> > an analysis of the risks, and we'll discuss.
-> > 
-> > Or you can do original development in the stable branch if you
-> > prefer, be my guest, but don't expect it to get same level of
-> > scrutiny as upstream code gets. If anything breaks, it's on you.
-> 
-> There's no need for a stable-only solution which is different in
-> logic, since it is the upstream version with current logic which
-> we must be able to migrate to anyway.  So any changes needs to be
-> in agreement with the upstream.
-> 
-> > > Ofc it would be ideal - from the back-porting PoV only - to just
-> > > drop this all entirely and unconditionally report the correct
-> > > queue size to begin with, as per above.
-> 
-> > A discussion for upstream, imho.
-> 
-> Yes, this is exactly what I'm doing - discussing it here.
-> But without a proposal yet ;))
-> 
-> Ok.
-> 
-> For now, for the two active stable series, I'll pick up only this
-> change out of the two, and even it reduced to a one-liner I mentioned
-> earlier (doing `queue_size = QUEUE_SIZE_MAX`).  This is sufficient to
-> fix the bug in stable series (the other change isn't needed).  If
-> anything will come touching this place (including a more elegant
-> solution), it's trivial to revert it and re-do, no snow-ball effect
-> is expected.
-> 
-> And thank you for your patience!
-> 
-> /mjt
+    VFIO_REGION_INFO_CAP_NVLINK2_SSATGT
+
+which exported GPU RAM to the userspace too.
+
+Thanks,
+
+C.
 
 
