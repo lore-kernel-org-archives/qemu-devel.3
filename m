@@ -4,90 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEF93C55164
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 14:48:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 641D8C55164
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 14:57:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpS3g-0001yh-Lo; Thu, 30 Jul 2026 10:48:33 -0400
+	id 1wpSBY-0004Qi-SL; Thu, 30 Jul 2026 10:56:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wpS3R-0001xw-2L
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 10:48:13 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wpSBA-0004M4-9C
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 10:56:12 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wpS3N-0001Q8-KW
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 10:48:11 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-84536ecfc5bso2599573b3a.2
- for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 07:48:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wpSB8-0003EB-R4
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 10:56:12 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-6a051b73866so3152998a12.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 07:56:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785423368; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Kfds/xVEzL6dhb8TzWThPEDYAXB3pl+f1HFGMy6wmpv44SDFtldy/Bo69Q7foYG1+f
+ 95KK9Ez1t7cGyEZuEc5eZhxNx3q2eDRaxilM6nnHA8lhcIIb9gGUEB0HqFRfeHPVhVuM
+ k1lg3GlIfyzdutl04vNdVd0Cm7LJo3rOp85gJ0dwpplfSd4OAAvpr/+0rUWC3kIwR7V+
+ M6u6XwAo6d1ViNJSurZGB8C1O3OXIh6Sn3D3xwMxSdw83/GzOARMfa+eZEn+A3VKGCn0
+ 6l6pByo+4mzumUCkBq3+OsjyxfGzDYE+7kP6rpYfhlYuIQXc7coNN62VO58T2f8YytEK
+ i3lg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=wGbhZy/A5H58OF7/zPzBmqAu4fUKf7Z/iopqk1UseFM=;
+ fh=dMBuULl7DHqFgMFBx5jdFD0q/Yls2ZIryYpHmqk1U/E=;
+ b=JPF9NGEHkkX7+ctmfCUDG0sTZ9XHigP9u7RFXNsblCOZd4X/c5XG3miED50mCNTTC/
+ s0Ey6L9tCJ0K24Ua40Hj84JeJy0DUZnH8dyfIVkvrdSjR+2d38HVY9nk/YyDyzPLJSpS
+ AQu9jTwnGQsrmW3MMHJeJKEQr5jSxLDPaFfOFrmbUf4Il2DsvSkdT5D1p1lginTp1AdL
+ N2s6xgq0G9SGy5Z7k1A8vWexfWaojl81lqrGUmO1/ZpVZj148+URU7RbAi9grmdQ/mv4
+ jjKJWG3Pq8ZbdnreC5F2/rRafXrizwqIun0eOrB+jzH3E9igdaqHupiAa1GSCadBvjHU
+ Tj2w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785422888; x=1786027688; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=3gn3HYZ5hzQgQcFKlOAn8q+P8RK3JWAS4+JHwXjcNGI=;
- b=Dv+7gQQXh/APEDIMPTMq23AJUb2P0ENxdUt40KUywufgScsb9z8WdZcmfJJ9meyDYb
- 5Qg5YmXzdvDGvwiitl91Bt2iZFUORPazIOUziZx6yFuQb8drGWxJlnIf/VVthsb1Jfre
- 6VMLuuLAhC1JCcuii1A/YG4QdCQ4mfjnw89AxdifwEBe6szeBQ7uqesLuMHm6FJodUca
- O9gHK8detNLPAePqDiEWgSqVUf9IAyZMpeqXqPPSb6PHoGoipngBPqjJdrDVFttKIZjT
- SfhyqY1jrJ1sL/Mc5cgjGlViEcnaclhMt1X71is4PsoH5Zm/R4N7NzrCqtctMkC2ij+j
- FKdw==
+ d=gmail.com; s=20251104; t=1785423368; x=1786028168; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=wGbhZy/A5H58OF7/zPzBmqAu4fUKf7Z/iopqk1UseFM=;
+ b=pF1ZglnPbz6jx01BnHjHuIIG/Iciz1XPURt1gxbwz2VGFmDJ879wpavP+vp72AyTjA
+ DK+u/nUuHMam4ibit6PKwzVPpHPEqkF3EluO7H4HDTIIWh4Q6rWMzqUrYN/wvByBY+J7
+ h4G3jaSum7qVeWUSrw+Djw4ktrKRSgzGhsQ3F3xJQSTqvOpd3ENp/2X8B/bzfHDkt70f
+ /ju3IRUapD9+OSSlWO3+yTZH+SRGtOuVFT2al0xapjO3Po2Bw3gWxmg5bHtl8ssAug3e
+ pkFzuGjLXTYcUnsPIPxIQ8amFZcK9pCqJHKWHLou+/MP9L9P7VnrasefJ5yzJElxr6oC
+ YJ2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785422888; x=1786027688;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=3gn3HYZ5hzQgQcFKlOAn8q+P8RK3JWAS4+JHwXjcNGI=;
- b=sv+UY9tVE0sCBMspEQuAVche/TKvaGBafS0/CdDy2bgBn/oNWdWc2HlIlvjogCxpyn
- gAWwnzszVORBsyIPQMrsI12OKo3tMApA+E3qEy0y9fEEePhlGcyI8ZYytDOXLkwKqdcN
- G5KGK4cNup8d/d3OVv4w04K96cED/SfP4XznQoBdCaijUQ5cyD+PmlEWRC60FxiXqGLK
- eL0gtxk+J6gl55jP8Z9QcMoFXSJ73YaUmatY5wJKRwBeGJ58vyoA6HSBRNjkfjxdpYg6
- ivqQCSacG2WLNaR0sBTT9RSEntPvE0OgvBbF8PNCd5iaK6YF4zMoerWnoFxiOHpxxTBI
- KiQw==
-X-Gm-Message-State: AOJu0Yz6KF92EfUJmo919TLKhIbiNNwaYkM1S7gFHNmRxFJ+BZiTo5k4
- Trs3/21nyd2Cj9t6+SWA5D9Mtf3mNxtWdV8VTycmAr6Wh5I5k+QAs9nGswjG/RT5KvLQBYulVWC
- YwUHE
-X-Gm-Gg: AR+sD13mt68RDIHt2oM/wlTEuCjrTB7BqIvpicBjYAAK7w70vCwz9uGRZA6I85atd2u
- VKO09dtpBbw2I2J8Guaz1erq9AV0BvSEcl83B0SyBi/WJ6a3blBiGwABm60lVPh4my/T4uvScfS
- 6RgWROWbdU4ofgnxo0VkPxRU8mo4a8x5IQeTOQVLM1F5/gLzrdB9MySUsc/6vx4CZ4WBpGzjXwq
- e13hvnRkKq4in0DwohY17u1Ro18SIhLP0+JL6rIBw9couA4Us3+PSSedSfHxmhF/RxZlutimE8h
- /U2MHzBkG1F1y7T1bahJgRfu4C02IrOAr+EIchVhHFI195neISSle2nSCf2OHt6CGRuVRpe83IQ
- ESfaAJZZiyyS6IZnpGm9wTxALvIxtbY2M3oWPhMqWslwf4oUqM7fQm7zBHgPFOmADIBToIetIMh
- rXGMVANPNQs1Dgj2xo19nTi9JcrBi1Fu8cyXNLd7y6cEoEb0sA0EzbIUEYXkXZ56s08dYHiTu33
- 7lbQUJhMTs3foMXSW7XIvaqiKVIg2GMPz1Jp5o=
-X-Received: by 2002:a05:6a00:3495:b0:847:9aa8:d3bb with SMTP id
- d2e1a72fcca58-84ebc1f5e37mr3022647b3a.12.1785422887950; 
- Thu, 30 Jul 2026 07:48:07 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-84ea03ca2c0sm3179421b3a.60.2026.07.30.07.48.07
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Jul 2026 07:48:07 -0700 (PDT)
-Message-ID: <76b67992-50d6-4324-a6db-28c71d5c8cb6@linaro.org>
-Date: Thu, 30 Jul 2026 07:48:05 -0700
+ d=1e100.net; s=20251104; t=1785423368; x=1786028168;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=wGbhZy/A5H58OF7/zPzBmqAu4fUKf7Z/iopqk1UseFM=;
+ b=rcO109L2pHtB/ZsFf9AT+f6HK75+WyGigZS2RwZAc5qjaiPW+2gfS7vdhxkOIjW3aj
+ ep+8VIgIf0h9Gm7AUt7T5eY7TbYkU9zMuJFcs6eH40cnNf39SyTbUcPw1oWrvuCnlTcT
+ xT1uy7NimOLtk5URWOoIynWplsLtjmwWaze3C8gKvhi8gZLA3AExGKGZWXhOzusF9C6o
+ UxDnnWGmwXxKxe+9fvDq+sOqo4czL3evS3DDPid+4K5ZyapIfaclCbN90CAfEGX0AYuf
+ SReXAXQkZdv9siPs+JgEu834+iBb3qzh09nv+lrlt0NkMe/hJ+iderQZmM0UBySO3P1D
+ wuNw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqRvDzglN+ZZIW03NFfgT6b9IAzGCqTHS/JlpdZhNK18GyIYNCgvB/3Q7wFgPSvAafWINe4zYxyEQ57@nongnu.org
+X-Gm-Message-State: AOJu0YwgjAFEzXuVDrGNaQMTPxzfj6TvnjXJACy+gD87On6kE672as60
+ 0CbKJI6dpMQYoM8BR5dga2VAyeqIM39/skgaQSSUUDTl5HzTXkJJI21zLaCCA6z4LQG9gGRPt8h
+ tgZYLgpxQBv/fIx6Td7JugGVocF62gX8=
+X-Gm-Gg: AR+sD11uSW8rQFOqAoGF0mLHTpdpMyArPjSZeS9laT+f/Uy3BGeuD9TEqicythG1cnL
+ InSw3unO6oWrn5e4w7bSYAyqROjVMek3/t6IXFNdw7Cf0twhDEqp8zAWJHt3WuZ9+vH13n6pnZu
+ dlY2Z/9L+PrzFei4qdGTJXfGM5fWTJyQQ40WtV8tn1ryiJM6lLJziH/aMbojmU7R/hSOuxUcYBX
+ NtT7TxlrMFbOPU5TKhBqaEXkyrXjxRpOeGMRhmZf3UaV1Rv7Wj6iUmxoNqv8pe78d30ICiGkcX7
+ 4pk+fuoimunVHJgQfhtK5QvQJSymaKU6TLbyvMSbM9E/NLQLGGcgnTkOSj+qVB03kBYguWo9to4
+ yOu17Ta/9lCQx
+X-Received: by 2002:a17:907:1b09:b0:bec:64d4:3872 with SMTP id
+ a640c23a62f3a-c1fa54be7b7mr155957466b.24.1785423367202; Thu, 30 Jul 2026
+ 07:56:07 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/50] accel/tcg: Add getpc helper
-To: qemu-devel@nongnu.org
-References: <20260730031025.12926-1-anjo@rev.ng>
- <20260730031025.12926-3-anjo@rev.ng>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260730031025.12926-3-anjo@rev.ng>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+References: <20260730081325.1816193-1-den@openvz.org>
+ <20260730081325.1816193-2-den@openvz.org>
+In-Reply-To: <20260730081325.1816193-2-den@openvz.org>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Thu, 30 Jul 2026 10:55:53 -0400
+X-Gm-Features: AUfX_myqyMyyNCVbf1KmdiL17SMtPK73zTboRwaoD_LJmF5MaLdo2ZUW8sxVIv8
+Message-ID: <CAJSP0QUnp4=pPYQvGvTEoBCndvJb0o=Z0RzehP30KKK_svyXCA@mail.gmail.com>
+Subject: Re: [PULL 1/8] MAINTAINERS: add myself to IDE maintainers
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, 
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ "Denis V. Lunev" <den@openvz.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,38 +123,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/29/26 20:09, Anton Johansson via qemu development wrote:
-> Introduces a helper function to return the current pc (returnaddress of
-> the helper), this allows helper-to-tcg to correctly translate nested
-> helper functions that checks for faulting memory operations.
-> 
-> This is useful as an optimization where a helper functions has a
-> commonly taken fast path that doesn't fault e.g.
-> 
->    void HELPER(outer)(...)
->    {
->        ... // non faulting operations
->        if (some_uncommon_condition) {
->            helper_inner(..., GETPC())
->        }
->    }
-> 
-> the outer helper along with the condition can then be emitted as TCG,
-> and helper_inner() will be emitted as a gen_helper_inner(, ra), where ra
-> is the result of gen_helper_getpc().
-> 
-> NOTE: This is not ideal since we're introducing extra helper calls,
->        and the solution doesn't deal with the "inner" function not being
->        a helper.  A better solution and what we'll probably do in the
->        next version of the patchset is to instead emit a helper
->        definition for the "inner" function that uses GETPC().
+On Thu, Jul 30, 2026 at 4:14=E2=80=AFAM Denis V. Lunev <den@openvz.org> wro=
+te:
+>
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> CC: Stefan Hajnoczi <stefanha@redhat.com>
+> CC: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> ---
+>  MAINTAINERS | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 902db77218..4628793dde 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2160,6 +2160,7 @@ F: docs/specs/edu.rst
+>
+>  IDE
+>  M: John Snow <jsnow@redhat.com>
+> +M: Denis V. Lunev <den@openvz.org>
 
-This is both confusing and wrong.
+Waiting for acknowledgement from John.
 
-If you're transforming outer to hot tcg + cold helper, the cold helper would *still* use 
-GETPC(), which would still produce an address within the jit code block for the guest 
-instruction.
-
-
-r~
+Stefan
 
