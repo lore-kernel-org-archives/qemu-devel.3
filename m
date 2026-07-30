@@ -4,103 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89A68C54FDF
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 10:02:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29C85C54FDF
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 10:10:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpNZx-0007pX-6l; Thu, 30 Jul 2026 06:01:29 -0400
+	id 1wpNi2-0001Dh-QZ; Thu, 30 Jul 2026 06:09:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wpNZu-0007pI-1S
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 06:01:26 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ id 1wpNi0-0001Cz-Ma
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 06:09:48 -0400
+Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wpNZs-0000si-EI
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 06:01:25 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-81eef95653fso19676137b3.2
- for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 03:01:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785405683; cv=none;
+ id 1wpNhz-0002Fu-1p
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 06:09:48 -0400
+Received: by mail-yw1-x1132.google.com with SMTP id
+ 00721157ae682-80dc4a68e4aso25237427b3.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 03:09:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785406186; cv=none;
  d=google.com; s=arc-20260327;
- b=Q6o1pYKWZxVvyntG//nyCGK/CDNUAfvH0hjfUdVsCoPxZUFx0vt1FQOVEOal1LolpZ
- VNJb+L1+NKHRyIau4NKsCL1KZ44GoG2mGh99jxvvem0MNBiyF8BgS/bL0pJMNu7jR+q2
- htzL/FRCkqdlwvBa4c5Xp2w2o+yBM6SdAfRldln8VlyjjFVXE7o/HnFN5JuW6wda6GMk
- eZ6zavFwWu2WAbTLRiUyerIqgnYMLldIGk58/XbtOeToMgeS5mm5MDHn+V2PAuYks9Pc
- CHSruuX0ft7Bm4kIlk9rbrRI3suLIJGb7VjpjWFlCu4Zn9cE5uKjIwawqPxkD8IIguUA
- O8Kw==
+ b=Ql+Gej/DhB7iU77N7x/qT5OyxJ5+5orD+nDq+CfQcEhBVB+8zRsqdWhVlvCNWO98jE
+ sWnIGN+SndQ6ZS7jTfHUOOqgyZJl+nAgiDNzSohPEPp5lAh3ioX58y4RnFHUmsfHHjag
+ f9aFadE/mP0AKsv5q944WL5bXim80OxeU8bRF6jd62tOJzXNEMtAYIlglGUSlcYGETY7
+ /Gq9JYi3aHTD2hxnoNjHsy5NYmm1xMX1LoO6XNsHj94C7tu05WrW2Dh0DFaBbCN81SXI
+ apb/42dN/zpvZ90YZ/DWiHJSi0OzRs8xEm+bvWjp+N0eq0XtvoEKihiEE9ZQUV6yS0xw
+ p0EA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=P/Mp+0yMQyzZMoOj4/c0gNHEj4eagwIPAsKb9yBtZw4=;
- fh=0S1te/u/jyDlhoB3tvqQYV+iBKDK8Bm69l07N0IsbL8=;
- b=L1pxuyLmBk6a3l44Qsg6YUPMydW/najODnlBPrpcOfjh0h+gayC3GCbW/9RjMjh7Tr
- vHlROL/XqwTU+0EIR9jjnfMDzXllR0SwkvUOK+S0ND5ftTmbbuM6vgcki/+nesKayfxv
- rkcKVwQkFDA7r/RVIeEuCUUuPo4Ozkrwnx+Ntzeoh7VdK3Ug7xw7N6oGJyDGDF9NO8H1
- 8ho0A/nBVpgkWYwwSAuKuAS4jaddmqJs/VI0Yizp3GZ61xqkwtgbLa8nMETEDCuRl32W
- U8TSpQUY5lQSHa/Zd6lVdJZC6Zs2IizUAk7SAoKUR+i9hVhvezO62V5wZQhr+B379ak/
- nElQ==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=rNY/v4zEMAQ+AJ7jnoA8DzRZo7RsKMsnd03BwGq9OtY=;
+ fh=mVArEPsypA/bvqhGlg7JkTr9flwi5BnMwi4Vd02ZVR4=;
+ b=rrzMkhW5/F9OpkXR0B/+J0yrd4PV0g6N999NGmv5d1fE7DB/APr0mY3IgVKMAzMORb
+ uC/SZvwx47exVrhlMHzPnPP+RNQOHsexAuKLFcJb6mP4Vkd1nUc2hh115Tr34ARkFNqh
+ 8duqZUV+LI/bVoY0O+1ZuPHsBdhcvHuTClgKPx8Y+d88oyk1QYlDOkEiws41dssM2rfr
+ ZVQPfonhY0/nUaCKE7UX6vsRkH/ROrHzwI89StI3LQvHHbCO7XY60Bo4e3oSTMt/wr2S
+ j2WIQoAlkbdgm7w+ilhORmYRVMKXuZyH1afPIr8gw0mr6/Aqc5h/luU4DKcMFSgDPJlk
+ WAOQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785405683; x=1786010483; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=P/Mp+0yMQyzZMoOj4/c0gNHEj4eagwIPAsKb9yBtZw4=;
- b=PEVi+LIuK/Mn6QOriLEdCUsOOIOmMKx9/ov4GaTmEjufvQcsKNuj8FNzMBaEABTciU
- d3wGzCNOlLomV/cXsEYbisioyTlpqG/pKb550HCWIwkPVLrJO21MLtOpxiX0GCkv4b88
- mNfWyPk1loOtuVQh3ydvB0VhUmAzXNQdzHWTR890gUaA/ak7z5+PIMX/9nb/scukPF+U
- 9+ZshvXDCQmf+Jh1+NhYdTdnlvd3TlohN0+2fte5yUhXIyWRMQboDi/VU2gc8v/P7veT
- HHUUH/2Ur0IAl2GcSd4K+vGEpmS+aTbkkPIZ575x3MlfXupJlK3/ldBWz9KR4TD8zQRk
- deNQ==
+ d=linaro.org; s=google; t=1785406185; x=1786010985; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=rNY/v4zEMAQ+AJ7jnoA8DzRZo7RsKMsnd03BwGq9OtY=;
+ b=SoeGKp1YFHfzh4hGLtEr8kXXhdS+CdQjJqTtdLTYidqEFk2crP0uAcNCxETIDjLYw+
+ zBRIbRqoKEl5zMjCCnPqKZTBqQkJUgC8VLYhCQ/zICQd/IuSPq2R4Qvz7B687K0GQ5nV
+ BEpZ7jw4CO4oSx/ETSzM2aQw2R2AMzfVyVQxhg4ZNvUTrvJKIZj9taiaA99B6snf28I7
+ CwrH9gaM5d6mSVs3RiaW4/mogeKEov+nxsJRx8HzLnU1TJ1qKHPCrnV7EavMjQ2e+VdM
+ JwKpekVjQuGZ3TcF7kdi9WBOLXsiQBgYDM+q42JZVgDYeUhkM+wXe/NYS2iSxwzh9Ejw
+ F2VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785405683; x=1786010483;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=P/Mp+0yMQyzZMoOj4/c0gNHEj4eagwIPAsKb9yBtZw4=;
- b=TpulTvJa94P6ycD5mpgg6fOkyu+zM1/wprV03Fb6jl6t0haRxc7bDOQKRaPGlhQpmb
- Bv6ENsEv5rtt3npb9LHUEJFLYUDmodEPEwtJOY4FFCTC8N0F9hrZJp6wNfMkhdE7qAf6
- TQwY3/NvqWeDA55wC6229UMyHNyKrJ7nsHfYAAtwMZj9u/i4nei1povaiYoDi9nn+po+
- 5XXDyy3svld7jiB1h9kKMkJbXc9Gtf4C8vUKovzkNXpmwTopRqHtikrOnnFB9bMPI65p
- rfBtXlXlsfkl7TPT/P6jRluwhcDUicnDBzgaHd0BbfsPb5qejox2NCicjQKwzMxZz/dt
- iJlQ==
-X-Gm-Message-State: AOJu0Yyz24Sm+Jb5qj2aepTOpJVTsEjmqv1751Xixi6TRBaGXkuRzwe8
- Kb7dwUoI5uJLwmb6TMtiZXGA8MQatA9UypIDO+6G8ZGGU49XRxT1IWtq4gc+bzZ0GpZ2zn7Figp
- yJ2stiiQtu3u0pYzyKmj8vcE8E7mm/vIe8nQfQh+6uA==
-X-Gm-Gg: AR+sD1219Q4mim9opQEMw2GcszxH0++LrrhGHaxU2Z/nK3Rl0NkZrpvFD9ICm8t0DDN
- j+36SzAryHPUfDIwRGSdrFB1g8n2cKhuU1zqfAmmyv3rshCqnMFPoqlLmhmDWfWSypXG3XnsaXo
- 8/OeZSsoPDOhEUv/KIBDQmviJrJZTRzFoCOGeMBXpysutViecp/rhUKygp7Q0Rl0vH/3l6iiugV
- GU0h2FgVxZp6QprYpC4Qgd9kZ/kqZMcKp2/zKw+u+ItktjQyzzeJXwLPazabwVFH6o6trCX5Zkt
- 6DOqFrorUaDabhYL3W1Opgg1Us7t5BDpuWMSqeXjgsfzmX4zknlL2ew5lsQovDyC7KadWzQy2yC
- WqoMCjzS7Cbdk5ya92Xy/DJFiEzgK
-X-Received: by 2002:a05:690c:3744:b0:81e:776b:ba51 with SMTP id
- 00721157ae682-81fb8b3e74amr12539207b3.58.1785405682739; Thu, 30 Jul 2026
- 03:01:22 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785406185; x=1786010985;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=rNY/v4zEMAQ+AJ7jnoA8DzRZo7RsKMsnd03BwGq9OtY=;
+ b=iUCZjt8nqiyjFZQdLEen+UQs7SGOw9rwLOrnYjlKcR81uwFEu2Ev7W9Mi54wF1crTO
+ 65T/EfGmuT7IVILbe5K7c+qoQ7qT9xDJia6mOkV42tzM8rqBxq8WX5OVZxZ3MY96oLV6
+ u5weA48YDURuEwkXFpxDFqYcg5A4O1pf8+d+ZGG2m3KeftTpRtlGPQwYYqDg/VF6mvSv
+ zajsQ4eKR9Dftsi961wUeNfOliQxXxTSaJsOC/BNOX5pGikBe9ZjK5helEQYp4nmpA06
+ wYzurwQds4LNuc/HEJ1gRvaJkkTYA/2KL++9MVWVgnGvblLatqUUeK8HrM6WnKqAu/uY
+ 2cjA==
+X-Gm-Message-State: AOJu0Yx3bPht5GYInDyaTMuUR+Rh5HHbSjheKgOu50sYlApPwgHuRPhU
+ PE7A04yI5U4g4a31aV2OD4C/I6L010RbfJVHjrVEwbBOURyZoBqVRFjErPv96PVmFF5gl6jzJwb
+ 4mohuGwGri9fba0xcn8E+raXNVSwjo7jowwYdYUtfJqBBQehR5A4w
+X-Gm-Gg: AR+sD11DiP/EAwROnypfnbgyWOeegdcE3iT9uG3UVkjOfZf+zE+Koz8RrDWGtXI7I3E
+ ehCogt9Yr8LNA5JLJiyQ82scjj8IgGyq30YuPw/5kthf/nlavqOXZP/eGv0aOr6oPrYKquoSmVW
+ +9p/i1ACTj9h8c8cyhWSKEzj8m/dCkcKdmjFvvNVxpalCzpTgqgPfUuwCse2vPVYLxDbEHj4eze
+ fPlgtd7eIBGN7Txa75tgy/r/3Xg+MAtc4SIoUAeSMqcLUyOYERPibm30TLu4pO6qdJI8NEeXF+K
+ L0h4/vZrnS5kckJTvlWyVcwOS2cvNdveg7U46I6CGKEeoPUgkJKulMKQUkIljK+VsQjubWSmGtP
+ evb8+Puir0lXoW0XbnDe+7DekcVrj
+X-Received: by 2002:a05:690c:6a0b:b0:81e:6cd1:5313 with SMTP id
+ 00721157ae682-81fb89b8128mr13477867b3.20.1785406185437; Thu, 30 Jul 2026
+ 03:09:45 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260727-fix-v1-0-ca3fa3851347@redhat.com>
- <20260727-fix-v1-11-ca3fa3851347@redhat.com>
-In-Reply-To: <20260727-fix-v1-11-ca3fa3851347@redhat.com>
+References: <20260630104249.2533126-1-peter.maydell@linaro.org>
+ <CAFEAcA8J6-QbqAT-=kfEx2mAvkMucGJiyWC0_zMmVeSrmQw9Jw@mail.gmail.com>
+In-Reply-To: <CAFEAcA8J6-QbqAT-=kfEx2mAvkMucGJiyWC0_zMmVeSrmQw9Jw@mail.gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 30 Jul 2026 11:01:11 +0100
-X-Gm-Features: AUfX_mxs7FzIdxxvcXYzBEL2kSRitDgg5UC9DMfJVwMU65uNV-MCPkPUQWTJT-8
-Message-ID: <CAFEAcA_hVqYGFWGMnWEYcA9to29SFvpzseo-zTv-Pq+uLdyMiQ@mail.gmail.com>
-Subject: Re: [GIT PULL 11/23] hw/display/virtio-gpu: Avoid leaking migration
- blocker
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Date: Thu, 30 Jul 2026 11:09:33 +0100
+X-Gm-Features: AUfX_mwmp-dOKvxqhsXBXQ36uzcpsfAGcPuG90rX4-MllnJD8NkQHRL_n9tZV34
+Message-ID: <CAFEAcA_cGNhZ5JB3-13YXhptYknwiwERQDOS6RMfH17voorgeQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/ide: Don't divide by zero if guest specifies 0 sectors
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, John Snow <jsnow@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,55 +115,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 27 Jul 2026 at 12:53, Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@redhat.com> wrote:
->
-> From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->
-> virtio_gpu_base_device_realize() leaks a migration blocker if a
-> check of the output list fails after adding one. Perform the check
-> before adding a migration blocker to avoid the leak. This also
-> simplifies the code by merging two loops.
->
-> Fixes: d3a4969dc5ac ("Support per-head resolutions with virtio-gpu")
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Message-ID: <20260725-virgl-v1-1-58bb51e60da5@rsg.ci.i.u-tokyo.ac.jp>
-> ---
->  hw/display/virtio-gpu-base.c | 37 ++++++++++++++++---------------------
->  1 file changed, 16 insertions(+), 21 deletions(-)
-
-
-
-> @@ -207,6 +212,17 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
->                         node->value->name, EDID_NAME_MAX_LENGTH);
->              return false;
->          }
-> +        if (node->value->has_xres !=3D node->value->has_yres) {
-> +            error_setg(errp,
-> +                       "must set both outputs[%zd].xres and outputs[%zd]=
-.yres",
-> +                       output_idx, output_idx);
-> +            return false;
-> +        }
-> +        if (node->value->has_xres && node->value->has_yres) {
-> +            g->enabled_output_bitmask |=3D (1 << output_idx);
-> +            g->req_state[output_idx].width =3D node->value->xres;
-> +            g->req_state[output_idx].height =3D node->value->yres;
-> +        }
-
-Hi; Coverity points out an issue with this change (CID 1664272):
-just before this added code there is an existing check:
-
-        if (node->value && node->value->name &&
-            strlen(node->value->name) > EDID_NAME_MAX_LENGTH) {
-            ...
-        }
-
-That check assumes that node->value can be NULL, but this added
-code assumes node->value is not NULL and unconditionally
-dereferences it. Which is correct ?
+Ping^2 ?
 
 thanks
 -- PMM
+
+On Mon, 20 Jul 2026 at 09:42, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> Ping -- would anybody on the qemu-block side like to review this?
+>
+> thanks
+> -- PMM
+>
+> On Tue, 30 Jun 2026 at 11:42, Peter Maydell <peter.maydell@linaro.org> wrote:
+> >
+> > In ide_set_sector() if we're using CHS addressing the way we update
+> > the drive state involves dividing by (s->heads * s->sectors).  These
+> > values can be set by the guest using the INITIALIZE DRIVE PARAMETERS
+> > command, which means that s->sectors can be 0.  (s->heads can't be 0
+> > because the command passes a heads-1 value.) INITIALIZE DRIVE
+> > PARAMETERS is specified to not check the input values for validity;
+> > instead no error is posted until some other command makes an illegal
+> > access. So we have to cope with a 0 divisor here.
+> >
+> > Special-case s->sectors being zero.
+> >
+> > Cc: qemu-stable@nongnu.org
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2399
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> > We don't seem to ever actually check that the guest's read/write ops
+> > are within the CHS limits it sets with INITIALIZE DRIVE PARAMETERS --
+> > ide_sect_range_ok() only checks against the underlying block device
+> > geometry.  Maybe we should?  Then a zero-sectors misconfig would
+> > result in our reporting the error on the read/write as the spec
+> > suggests we should.  This patch fixes the division-by-zero, at least,
+> > though.
+> > ---
+> >  hw/ide/core.c | 28 +++++++++++++++++++++-------
+> >  1 file changed, 21 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/hw/ide/core.c b/hw/ide/core.c
+> > index f78b00220b..b030531534 100644
+> > --- a/hw/ide/core.c
+> > +++ b/hw/ide/core.c
+> > @@ -646,13 +646,27 @@ void ide_set_sector(IDEState *s, int64_t sector_num)
+> >          }
+> >      } else {
+> >          /* CHS */
+> > -        cyl = sector_num / (s->heads * s->sectors);
+> > -        r = sector_num % (s->heads * s->sectors);
+> > -        s->hcyl = cyl >> 8;
+> > -        s->lcyl = cyl;
+> > -        s->select = (s->select & ~(ATA_DEV_HS)) |
+> > -            ((r / s->sectors) & (ATA_DEV_HS));
+> > -        s->sector = (r % s->sectors) + 1;
+> > +        if (s->sectors == 0) {
+> > +            /*
+> > +             * s->sectors is under guest control via INITIALIZE DRIVE
+> > +             * PARAMETERS and can be 0; this is an error but can't
+> > +             * be reported at INITIALIZE DRIVE PARAMETERS time so we
+> > +             * have to cope with the bad value here.
+> > +             * (s->heads is always at least 1.)
+> > +             */
+> > +            s->hcyl = 0;
+> > +            s->lcyl = 0;
+> > +            s->select = s->select & ~(ATA_DEV_HS);
+> > +            s->sector = 1;
+> > +        } else {
+> > +            cyl = sector_num / (s->heads * s->sectors);
+> > +            r = sector_num % (s->heads * s->sectors);
+> > +            s->hcyl = cyl >> 8;
+> > +            s->lcyl = cyl;
+> > +            s->select = (s->select & ~(ATA_DEV_HS)) |
+> > +                ((r / s->sectors) & (ATA_DEV_HS));
+> > +            s->sector = (r % s->sectors) + 1;
+> > +        }
+> >      }
+> >  }
 
