@@ -4,79 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F655C55160
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 13:37:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82C1FC55160
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 13:37:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpQwb-00062B-6a; Thu, 30 Jul 2026 09:37:05 -0400
+	id 1wpQxI-0006Jw-D2; Thu, 30 Jul 2026 09:37:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wpQwX-00060h-J8
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 09:37:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wpQwV-0005v7-JW
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 09:37:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785418618;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SoVnwZJlubM4ByO+oH4lT4p2iRwlWm/TCyEBUs8QijM=;
- b=WOGyP9bod2X1QxUfUbtQvICjk711t5XMVbI9yTkU5o/lVBTbpuLswseeNWMKruPe/MvOWW
- CXl8+1848/96giHPfzBlyu7FIfdOtm8SDs7iCs/OdmjcRPAiKKJ3EyTfXzrpgrB1imLcYf
- DSJumdea5dtwXGwjC27OKy1BOFm7R4Y=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-654-crqjbs6lNNiQ_cDZR1Q4nw-1; Thu,
- 30 Jul 2026 09:36:53 -0400
-X-MC-Unique: crqjbs6lNNiQ_cDZR1Q4nw-1
-X-Mimecast-MFC-AGG-ID: crqjbs6lNNiQ_cDZR1Q4nw_1785418610
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4D59A19539B4; Thu, 30 Jul 2026 13:36:50 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.133])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 73CB9414; Thu, 30 Jul 2026 13:36:49 +0000 (UTC)
-Date: Thu, 30 Jul 2026 09:36:48 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, Amit Shah <amit@kernel.org>, qemu-ppc@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Hanna Reitz <hreitz@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Fam Zheng <fam@euphon.net>, qemu-block@nongnu.org
-Subject: Re: [PATCH v3 7/7] hw/scsi/spapr_vscsi: do not crash QEMU on
- migration errors
-Message-ID: <20260730133648.GB1442692@fedora>
-References: <20260729231904.775331-1-lvivier@redhat.com>
- <20260729231904.775331-8-lvivier@redhat.com>
+ (Exim 4.90_1) (envelope-from <rao232328@gmail.com>)
+ id 1wpQx0-0006Cz-V9
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 09:37:31 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rao232328@gmail.com>)
+ id 1wpQwz-0005ws-9G
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 09:37:30 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2cad8076b01so26021835ad.2
+ for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 06:37:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785418646; x=1786023446; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=WRMY2E9FxrNj1re4bnuTp0tUVJ08lXuNTXOMzGgnK3g=;
+ b=p+GghPFevxIiYpe4cnbZoV2iKy+BLPXL3zcTwLsQY2v1dkjxdeCSJo+7C25DQUI/v4
+ fpLOM/GI6F2gWoxpd/2bN68A7gbhEGjlA0F3j2Tn1nBwMFA3kwm1YJdUaSWqu21NVs51
+ roBFi4WoyaPxBZup2eWs2GXR5XZlNKYMKWK2ucsGBiePGwEnCHeGs6YZPNNGulr04Jql
+ eSb+qYh7VIf9aeE4KlUmMOtueOF0UIwcIYQPxDgLffV15L17VqqcXO5knn8x/5DJjSLx
+ jWNa9BvwOdv2HxO6Y2Cv86LHmszNaKfVI9kN5qBsJqFMqA14ymagEUrkYobD3agBe8jm
+ BQqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785418646; x=1786023446;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=WRMY2E9FxrNj1re4bnuTp0tUVJ08lXuNTXOMzGgnK3g=;
+ b=ofF7/t0btZpt4Q/2h18qL17DOzMXruamf3wFJEcCFt6+QWIPOYd7bAGIHOMsob6T6E
+ kxjhfPDsr6Kcpw8DCpvhQazXm5hMeh7vBM/OOJ8FeYvZuKAjslLPegwPecJJtAbqjnHI
+ LXvmBsWsFpDF2q9PncPaQwruljjte+pa6/seQKNSeASMZf/M2f8iJ7XTaPxI99JfQUDm
+ +YNcM0REbCpE2H+h+DdNTuNJEnEpN4QsyabN5lNB/VG1IFrN+Z/Mrn2j5iUYW9o1b/TQ
+ gPF51ZMceICPBzbTLialJ/slDGhgCjhnGl6IXach9y0UVcHnS/MM5xidcRpD7IoIsgGi
+ jBRg==
+X-Gm-Message-State: AOJu0Yy4BY1XX1COj0OeV6FtJcBj1mmbS1KtydWH0i3liceHZ3i1PR7z
+ Ey/IfhytG7LCUjzRsZLj8jRHezmUIeTZWiFAn7nnN2D8+hlZ/WyPVQimk96i+J9AVG4i6Q==
+X-Gm-Gg: AR+sD13R8c8zcBM+m0G9pZ4y8XDFpN3qWJHtgFX6pENrRogmIn3R94wU2COFfNSfVxx
+ oOiwMgrO+y5GAwxdaiDskZVZ58wGqf3f+TfjZdhRxoENvO0vkYwMTQlrVVmJEEjDBugTDQPZQPw
+ R3DWH9LLQ0dmLR0fcOgnkJ+jJ4/wCU8IK01bI3pz71kS8TDnkfzKBTz4pJF3Eb7wOFxA1hwskKl
+ ucFYbVFPocfxMxkmw5whIUu9E3oBQjwwdY4Mavr7foUJVKodk/5weq/QMACp4jxg/mX0S6WUAtQ
+ 1UpWDTK0dB6qbwao0OnRGb9s8SBHBXbFNiB9KpcHTmkr79dbq2gbKOyo/EMDmB8E6Hll9r6I0Fk
+ eSbmn46b5z2mgxfkdhNwyFRMFAE3rcemTqpN5cmRR+nNCaVcfWrfq2azAEgZiHMy+0p0D6DP376
+ UUTbjCcQ8Ne8NfyYEH3lkj0NF8U12rlYP9wr/eCu6RD7VxLuWtytmFcNEw1KR7npc+4N9JeHo=
+X-Received: by 2002:a17:903:384d:b0:2cf:4339:aaa with SMTP id
+ d9443c01a7336-2d03dcc6f61mr4232185ad.12.1785418646233; 
+ Thu, 30 Jul 2026 06:37:26 -0700 (PDT)
+Received: from DESKTOP-DFGP8OG.lan ([120.230.138.58])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2d022bf845asm26757745ad.60.2026.07.30.06.37.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 30 Jul 2026 06:37:25 -0700 (PDT)
+From: raoyi <rao232328@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, pbonzini@redhat.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu@processmission.com, farosas@suse.de, lvivier@redhat.com,
+ caojunze424@gmail.com, raoyi <rao232328@gmail.com>
+Subject: [PATCH v2 0/3] hw/timer: add k230 dwapb timer
+Date: Thu, 30 Jul 2026 21:37:08 +0800
+Message-ID: <20260730133713.3253-1-rao232328@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="OtAQh+GnUA29mUL/"
-Content-Disposition: inline
-In-Reply-To: <20260729231904.775331-8-lvivier@redhat.com>
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=rao232328@gmail.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,42 +101,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---OtAQh+GnUA29mUL/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Add DesignWare APB timer peripheral for K230 machine.
+The timer uses the Clock framework for frequency input,
+preparing for future CMU integration.
 
-On Thu, Jul 30, 2026 at 01:19:04AM +0200, Laurent Vivier wrote:
-> Currently vscsi asserts on invalid SCSI requests.
->=20
-> Fail migration gracefully instead.
->=20
-> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-> ---
->=20
-> Notes:
->     v2: New patch to manage vscsi
->=20
->  hw/scsi/spapr_vscsi.c | 18 +++++++++++++++---
->  1 file changed, 15 insertions(+), 3 deletions(-)
+Changes since v1:
+- Split into 3 patches: model, board integration, tests
+- Remove goto pattern from read/write handlers
+- Fix include order, add explicit bitops.h include
+- Add QOM <private>/<public> markers in struct
+- Fix copyright headers
 
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+raoyi (3):
+  hw/timer: add k230 dwapb timer model
+  hw/riscv: integrate k230 dwapb timer into k230 board
+  tests/qtest: add k230 dwapb timer test
 
---OtAQh+GnUA29mUL/
-Content-Type: application/pgp-signature; name=signature.asc
+ MAINTAINERS                         |   3 +
+ hw/riscv/Kconfig                    |   1 +
+ hw/riscv/k230.c                     |  23 +-
+ hw/timer/Kconfig                    |   4 +
+ hw/timer/k230_dwapb_timer.c         | 317 ++++++++++++++++++++++++++++
+ hw/timer/meson.build                |   1 +
+ hw/timer/trace-events               |   9 +
+ include/hw/riscv/k230.h             |   8 +
+ include/hw/timer/k230_dwapb_timer.h |  72 +++++++
+ tests/qtest/k230-dwapb-timer-test.c | 227 ++++++++++++++++++++
+ tests/qtest/meson.build             |   2 +-
+ 11 files changed, 663 insertions(+), 4 deletions(-)
+ create mode 100644 hw/timer/k230_dwapb_timer.c
+ create mode 100644 include/hw/timer/k230_dwapb_timer.h
+ create mode 100644 tests/qtest/k230-dwapb-timer-test.c
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmprU3AACgkQnKSrs4Gr
-c8glkQf/SLZkm+HZzliQR1S/fK89reyhCrwOXkuyYBILc/oEZd1yTwDQNelBW1fs
-LCtcWGXxZni6JAoouZT/gSD/RO17g56rGQwfKBdHzITOG8S0md6xSYBT30PcT5PG
-Zh+jhjLjpEN6yG1ATSs5aOQCRr5sBX72bEJR2RvaMyOuu4iPqAC6UwTVickL2e78
-9hIiK/uapIHOfpkqhKlY6qacjwiC4A1Ah3FDVTi00RNsUvdEMu3pq7h7RLNm0Aso
-iQ7wctRWleOf5uv+6I9tFGXmwyrP5OJCwQ+SWcH778tgu+2pGZ7mlP53pTck7liQ
-suSJV7GmaS5rx3e0NDksh5i85jVPew==
-=fZnL
------END PGP SIGNATURE-----
-
---OtAQh+GnUA29mUL/--
+-- 
+2.53.0
 
 
