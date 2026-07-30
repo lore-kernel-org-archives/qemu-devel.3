@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E372AC54FD2
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:08:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33BF3C54FCD
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:08:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpH5s-0001mu-Ps; Wed, 29 Jul 2026 23:06:00 -0400
+	id 1wpH7B-0004Vk-PT; Wed, 29 Jul 2026 23:07:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH5r-0001lP-4Q
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:05:59 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH72-0004FX-Fn
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:07:12 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH5l-0002qg-Oh
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:05:57 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH6q-0002xd-G9
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:07:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=/yrhCiwZxhpBbFg+pWTw+aPmGPtG9P1Y5tKxmOCNipk=; b=oLAQI28zPmNXjfF
- fZCz03lpFjp9mdiQ4T21MYVE7jFfW7VdfnhvliW0UNsBAZ3MY3SW6Ee7m9D+dsz+U9kYOMqDKaGIP
- hKIxBWmXlVQ9M2LcADcwSTUfMcRoL99AQUZ9xR0VOj3AhkEWo4GzEiSwifRk0zljSda7bqyAPeimM
- Dw=;
+ List-Help; bh=BpKyJdGN9i5for/iI7NHXUTpC+D8XweQHkAEvI9NdOM=; b=nqDlHokHNfrGhLn
+ MPhJQaZZvnE0/H7g1nPX0rV2LxHZx8a7/ao/PVjzMDOIHlHFB4jNrt8tSiwSxOWqs9F8XDsGuUYri
+ PXLBTxr5BL3nIMz0v1aaEwM2H5ecm1CpphS2LCeS8tqLf8SGm0rsPfnTfXYtOeaWN7IdyHj7+qRDV
+ sg=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, brian.cain@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
  philmd@mailo.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 03/50] tcg: Introduce tcg-global-mappings
-Date: Thu, 30 Jul 2026 05:09:37 +0200
-Message-ID: <20260730031025.12926-4-anjo@rev.ng>
+Subject: [PATCH v2 29/50] helper-to-tcg: Introduce TcgV structure
+Date: Thu, 30 Jul 2026 05:10:03 +0200
+Message-ID: <20260730031025.12926-30-anjo@rev.ng>
 In-Reply-To: <20260730031025.12926-1-anjo@rev.ng>
 References: <20260730031025.12926-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -63,226 +63,308 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds a cpu_mapping struct to describe, in a declarative fashion, the
-mapping between fields in a struct, and a corresponding TCG global.  As
-such, tcg_global_mem_new() can be automatically called given an array of
-cpu_mappings.
+Adds a struct representing everything a LLVM value might map to in TCG,
+this includes:
 
-This change is not limited to helper-to-tcg, but will be required in
-future commits to map between offsets into CPUArchState and TCGv
-globals in a target-agnostic way.
+  * TCGv_i* (IrValue);
+  * TCGv_ptr (IrPtr);
+  * TCGLabel (IrLabel);
+  * 123123ull (IrImmediate);
+  * intptr_t (IrPtrToOffset).
+
+Every `TcgV` value is assigned an increasing identifier, a kind
+(list above), a size, and optinally a name along with some extra
+flags.  Two values are considered equal if their identifiers are equal.
+For instance, this can mean one identifier might describe different LLVM
+sizes at different points in a function, which is very useful when mapping
+semantics from LLVM IR to TCG.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- include/tcg/tcg-global-mappings.h | 118 ++++++++++++++++++++++++++++++
- tcg/meson.build                   |   1 +
- tcg/tcg-global-mappings.c         |  62 ++++++++++++++++
- 3 files changed, 181 insertions(+)
- create mode 100644 include/tcg/tcg-global-mappings.h
- create mode 100644 tcg/tcg-global-mappings.c
+ subprojects/helper-to-tcg/include/TcgType.hpp | 276 ++++++++++++++++++
+ 1 file changed, 276 insertions(+)
+ create mode 100644 subprojects/helper-to-tcg/include/TcgType.hpp
 
-diff --git a/include/tcg/tcg-global-mappings.h b/include/tcg/tcg-global-mappings.h
+diff --git a/subprojects/helper-to-tcg/include/TcgType.hpp b/subprojects/helper-to-tcg/include/TcgType.hpp
 new file mode 100644
-index 0000000000..341dcd20b3
+index 0000000000..8cc46a6b1f
 --- /dev/null
-+++ b/include/tcg/tcg-global-mappings.h
-@@ -0,0 +1,118 @@
-+/*
-+ *  Copyright(c) 2026 rev.ng Labs Srl. All Rights Reserved.
-+ *
-+ *  This program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2 of the License, or
-+ *  (at your option) any later version.
-+ *
-+ *  This program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ */
++++ b/subprojects/helper-to-tcg/include/TcgType.hpp
+@@ -0,0 +1,276 @@
++//
++//  Copyright(c) 2026 rev.ng Labs Srl. All Rights Reserved.
++//
++//  This program is free software; you can redistribute it and/or modify
++//  it under the terms of the GNU General Public License as published by
++//  the Free Software Foundation; either version 2 of the License, or
++//  (at your option) any later version.
++//
++//  This program is distributed in the hope that it will be useful,
++//  but WITHOUT ANY WARRANTY; without even the implied warranty of
++//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++//  GNU General Public License for more details.
++//
++//  You should have received a copy of the GNU General Public License
++//  along with this program; if not, see <http://www.gnu.org/licenses/>.
++//
 +
-+#ifndef TCG_GLOBAL_MAP_H
-+#define TCG_GLOBAL_MAP_H
++#pragma once
 +
-+/**
-+ * cpu_tcg_mapping: Declarative mapping of offsets into a struct to global
-+ *                  TCGvs.  Parseable by LLVM-based tools.
-+ * @tcg_var_name: String name of the TCGv to use as destination of the mapping.
-+ * @tcg_var_base_address: Address of the above TCGv.
-+ * @cpu_type_name: String name of the base type being mapped, e.g. "CPUArchState".
-+ * @cpu_var_names: Array of printable names of TCGvs, used when calling
-+ *                 tcg_global_mem_new from init_cpu_tcg_mappings.  Contains
-+ *                 @number_of_elements strings.
-+ * @cpu_var_base_offset: Base offset of field in the source struct.
-+ * @cpu_var_size: Size of field in the source struct, if the field is an array,
-+ *                this holds the size of the element type.
-+ * @cpu_var_stride: Stride between array elements in the source struct.  This
-+ *                  can be greater than the element size when mapping a field
-+ *                  in an array of structs.
-+ * @number_of_elements: Number of elements of array in the source struct.
-+ */
-+typedef struct cpu_tcg_mapping {
-+    const char *tcg_var_name;
-+    void *tcg_var_base_address;
++#include "Error.hpp"
++#include "LlvmCompat.hpp"
 +
-+    const char *cpu_type_name;
-+    const char *const *cpu_var_names;
-+    size_t cpu_var_base_offset;
-+    size_t cpu_var_size;
-+    size_t cpu_var_stride;
++#include <llvm/ADT/ArrayRef.h>
++#include <llvm/ADT/StringRef.h>
++#include <llvm/IR/DerivedTypes.h>
++#include <llvm/Support/raw_ostream.h>
 +
-+    size_t number_of_elements;
-+} cpu_tcg_mapping;
++#include <assert.h>
++#include <stdint.h>
++#include <string>
++#include <utility> // std::pair
 +
-+#define STRUCT_SIZEOF_FIELD(S, member) sizeof(((S *)0)->member)
++// Data representing allowed vector and value sizes.
 +
-+#define STRUCT_ARRAY_SIZE(S, array)                                            \
-+    (STRUCT_SIZEOF_FIELD(S, array) / STRUCT_SIZEOF_FIELD(S, array[0]))
++// Sizes corresponding to a TCGv_i* register.
++enum AllowedTcgSize : uint8_t {
++    T32 = 32,
++    T64 = 64,
++    T128 = 128,
++};
 +
-+/*
-+ * Following are a few macros that aid in constructing
-+ * `cpu_tcg_mapping`s for a few common cases.
-+ */
++// Sizes corresponding of allowed LLVM values, operations smaller than
++// `AllowedTcgSize` act on these sizes.
++enum AllowedLlvmSize : uint8_t {
++    I1 = 1,
++    I8 = 8,
++    I16 = 16,
++    I32 = 32,
++    I64 = 64,
++};
 +
-+/* Map between single CPU register and to TCG global */
-+#define CPU_TCG_MAP(struct_type, tcg_var, cpu_var)                             \
-+    (cpu_tcg_mapping)                                                          \
-+    {                                                                          \
-+        .tcg_var_name = stringify(tcg_var),                                    \
-+        .tcg_var_base_address = &tcg_var,                                      \
-+        .cpu_type_name = stringify(struct_type),                               \
-+        .cpu_var_names = (const char *[]){stringify(cpu_var)},                 \
-+        .cpu_var_base_offset = offsetof(struct_type, cpu_var),                 \
-+        .cpu_var_size = STRUCT_SIZEOF_FIELD(struct_type, cpu_var),             \
-+        .cpu_var_stride = 0, .number_of_elements = 1,                          \
-+    }
++// Despite limiting sizes to an enum, when assigned from runtime values they may
++// still differ.
++inline bool verifyLlvmSize(AllowedLlvmSize S) {
++    switch (S) {
++    case I1:
++    case I8:
++    case I16:
++    case I32:
++    case I64:
++        return true;
++    default:
++        return false;
++    };
++}
 +
-+/* Map between array of CPU registers and array of TCG globals. */
-+#define CPU_TCG_MAP_ARRAY(struct_type, tcg_var, cpu_var, names)                \
-+    (cpu_tcg_mapping)                                                          \
-+    {                                                                          \
-+        .tcg_var_name = stringify(tcg_var),                                    \
-+        .tcg_var_base_address = tcg_var,                                       \
-+        .cpu_type_name = stringify(struct_type),                               \
-+        .cpu_var_names = names,                                                \
-+        .cpu_var_base_offset = offsetof(struct_type, cpu_var),                 \
-+        .cpu_var_size = STRUCT_SIZEOF_FIELD(struct_type, cpu_var[0]),          \
-+        .cpu_var_stride = STRUCT_SIZEOF_FIELD(struct_type, cpu_var[0]),        \
-+        .number_of_elements = STRUCT_ARRAY_SIZE(struct_type, cpu_var),         \
-+    }
++// Size of an integer value, combining a TCG and LLVM size.
++struct ValueSize {
++    AllowedTcgSize TcgBitWidth;
++    AllowedLlvmSize LlvmBitWidth;
 +
-+/*
-+ * Map between single member in an array of structs to an array
-+ * of TCG globals, e.g. maps
-+ *
-+ *     cpu_state.array_of_structs[i].member
-+ *
-+ * to
-+ *
-+ *     tcg_global_member[i]
-+ */
-+#define CPU_TCG_MAP_ARRAY_OF_STRUCTS(struct_type, tcg_var, cpu_struct,         \
-+                                     cpu_var, names)                           \
-+    (cpu_tcg_mapping)                                                          \
-+    {                                                                          \
-+        .tcg_var_name = stringify(tcg_var),                                    \
-+        .tcg_var_base_address = tcg_var,                                       \
-+        .cpu_type_name = stringify(struct_type),                               \
-+        .cpu_var_names = names,                                                \
-+        .cpu_var_base_offset = offsetof(struct_type, cpu_struct[0].cpu_var),   \
-+        .cpu_var_size =                                                        \
-+            STRUCT_SIZEOF_FIELD(struct_type, cpu_struct[0].cpu_var),           \
-+        .cpu_var_stride = STRUCT_SIZEOF_FIELD(struct_type, cpu_struct[0]),     \
-+        .number_of_elements = STRUCT_ARRAY_SIZE(struct_type, cpu_struct),      \
-+    }
-+
-+extern cpu_tcg_mapping tcg_global_mappings[];
-+extern size_t tcg_global_mapping_count;
-+
-+void init_cpu_tcg_mappings(cpu_tcg_mapping *mappings, size_t size);
-+
-+#endif /* TCG_GLOBAL_MAP_H */
-diff --git a/tcg/meson.build b/tcg/meson.build
-index 706a6eb260..c7c16eeb05 100644
---- a/tcg/meson.build
-+++ b/tcg/meson.build
-@@ -13,6 +13,7 @@ tcg_ss.add(files(
-   'tcg-op-ldst.c',
-   'tcg-op-gvec.c',
-   'tcg-op-vec.c',
-+  'tcg-global-mappings.c',
- ))
- 
- if get_option('tcg_interpreter')
-diff --git a/tcg/tcg-global-mappings.c b/tcg/tcg-global-mappings.c
-new file mode 100644
-index 0000000000..a75fad0c21
---- /dev/null
-+++ b/tcg/tcg-global-mappings.c
-@@ -0,0 +1,62 @@
-+/*
-+ *  Copyright(c) 2024 rev.ng Labs Srl. All Rights Reserved.
-+ *
-+ *  This program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2 of the License, or
-+ *  (at your option) any later version.
-+ *
-+ *  This program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "tcg/tcg-global-mappings.h"
-+#include "tcg/tcg-op-common.h"
-+#include "tcg/tcg.h"
-+
-+void init_cpu_tcg_mappings(cpu_tcg_mapping *mappings, size_t size)
-+{
-+    uintptr_t tcg_addr;
-+    size_t cpu_offset;
-+    const char *name;
-+    cpu_tcg_mapping m;
-+
-+    /*
-+     * Paranoid assertion, this should always hold since
-+     * they're typedef'd to pointers. But you never know!
-+     */
-+    g_assert(sizeof(TCGv_i32) == sizeof(TCGv_i64));
-+
-+    /*
-+     * Loop over entries in tcg_global_mappings and
-+     * create the `mapped to` TCGv's.
-+     */
-+    for (int i = 0; i < size; ++i) {
-+        m = mappings[i];
-+
-+        for (int j = 0; j < m.number_of_elements; ++j) {
-+            /*
-+             * Here we are using the fact that
-+             * sizeof(TCGv_i32) == sizeof(TCGv_i64) == sizeof(TCGv)
-+             */
-+            assert(sizeof(TCGv_i32) == sizeof(TCGv_i64));
-+            tcg_addr = (uintptr_t)m.tcg_var_base_address + j * sizeof(TCGv_i32);
-+            cpu_offset = m.cpu_var_base_offset + j * m.cpu_var_stride;
-+            name = m.cpu_var_names[j];
-+
-+            if (m.cpu_var_size < 8) {
-+                *(TCGv_i32 *)tcg_addr =
-+                    tcg_global_mem_new_i32(tcg_env, cpu_offset, name);
-+            } else {
-+                *(TCGv_i64 *)tcg_addr =
-+                    tcg_global_mem_new_i64(tcg_env, cpu_offset, name);
-+            }
++    static llvm::Expected<ValueSize> fromBitWidth(size_t BitWidth) {
++        ValueSize Ret;
++        if (BitWidth <= 32) {
++            Ret.TcgBitWidth = T32;
++        } else if (BitWidth <= 64) {
++            Ret.TcgBitWidth = T64;
++        } else {
++            Ret.TcgBitWidth = T128;
 +        }
++        Ret.LlvmBitWidth = (AllowedLlvmSize)BitWidth;
++        // There's no runtime sanity checks that an enum is not just any integer
++        // value, so verify manually.
++        if (verifyLlvmSize(Ret.LlvmBitWidth)) {
++            return Ret;
++        } else {
++            return mkError("Invalid bit width");
++        }
++    }
++
++    static llvm::Expected<ValueSize> fromLlvmType(llvm::IntegerType *Ty) {
++        return fromBitWidth(Ty->getBitWidth());
++    }
++};
++
++struct VectorSize {
++    uint8_t ElementCount;
++    AllowedLlvmSize ElementBitWidth;
++
++    inline size_t bytes() const { return (ElementCount * ElementBitWidth) / 8; }
++
++    static llvm::Expected<VectorSize> fromLlvmType(llvm::VectorType *Ty) {
++        auto *IntTy = llvm::dyn_cast<llvm::IntegerType>(Ty->getElementType());
++        if (!IntTy) {
++            return mkError(
++                "Vectors of non-integer element type not supported!\n");
++        }
++        VectorSize Ret{
++            (uint8_t)compat::getVectorElementCount(Ty),
++            (AllowedLlvmSize)IntTy->getBitWidth(),
++        };
++        // There's no runtime sanity checks that an enum is not just any integer
++        // value, so verify manually.
++        if (verifyLlvmSize(Ret.ElementBitWidth)) {
++            return Ret;
++        } else {
++            return mkError("Invalid bit width");
++        }
++    }
++};
++
++union TcgSize {
++    VectorSize Vec;
++    ValueSize Val;
++};
++
++// clang-format off
++enum TcgKind : uint8_t {
++    IrInvalid     = 0,
++    IrValue       = 1,  // TCG register value (TCGv_i*)
++    IrImmediate   = 2,  // Immediate argument to TCG operation ([u]int*_t)
++    IrPtr         = 4,  // TCG host pointer (TCGv_ptr)
++    IrPtrToOffset = 8,  // Target "gvec" vector (intptr_t)
++    IrLabel       = 16, // TCG label (TCGv_label)
++};
++// clang-format on
++
++// Describes a single value to be output in TCG, discriminated by `TcgKind`.
++//
++// This data is designed to be copied around and each value is identified via a
++// unique `Id`, as a result the "same" `TcgV` can take on e.g. different sizes
++// at different points in function, which allows one TCG variable to represent
++// multiple smaller "logical" LLVM sizes.
++//
++// TODO:
++//
++//   * There is overlap between `Kind == IrImmediate` and `(ConstantExpression
++//     and Kind == IrValue)` that is not obvious, the condition `!Name.empty()`
++//     is also rather similar to `ConstantExpression` in a lot of cases.
++//
++//   * `Name` should not be string, this is resulting in redundant copies and is
++//     also completely unnecessary given our usage pattern.  `Name` is never
++//     modified, and all strings are created by the same few passes.  A better
++//     solution would be to use a `StringSaver/BumpAllocator` in `CEmitter` and
++//     use `StringRef`s everywhere else.
++//
++struct TcgV {
++    uint16_t Id = 0;
++    TcgKind Kind = IrInvalid;
++    TcgSize Size;
++    bool ConstantExpression = false;
++    std::string Name = "";
++
++    // Static id used to identify `TcgV`s
++    inline static uint16_t IdCounter = 0;
++    static void resetId() { IdCounter = 0; }
++    static uint16_t getId() { return IdCounter++; }
++
++    // Helper functions for accessing size fields.
++    inline ValueSize intSize() const {
++        assert(Kind == IrImmediate or Kind == IrValue);
++        return Size.Val;
++    }
++
++    inline VectorSize vecSize() const {
++        assert(Kind == IrPtrToOffset);
++        return Size.Vec;
++    }
++
++    // Return as `int` to reduce casts when printing and to ease comparisons.
++    inline int tcgBitWidth() const { return intSize().TcgBitWidth; }
++    inline int llvmBitWidth() const { return intSize().LlvmBitWidth; }
++
++    static TcgV makeVector(VectorSize Size) {
++        return TcgV({}, {.Vec = Size}, IrPtrToOffset);
++    }
++
++    static TcgV makeImmediate(llvm::StringRef Name, ValueSize Size) {
++        return TcgV(Name.str(), {.Val = Size}, IrImmediate);
++    }
++
++    static TcgV makeTemp(ValueSize Size, TcgKind Kind) {
++        return TcgV({}, {.Val = Size}, Kind);
++    }
++
++    static TcgV makeConstantExpression(llvm::StringRef Expression,
++                                       ValueSize Size, TcgKind Kind) {
++        TcgV Tcg(Expression.str(), {.Val = Size}, Kind);
++        Tcg.ConstantExpression = true;
++        return Tcg;
++    }
++
++    static TcgV makeLabel() { return TcgV("", {.Val = {T32, I32}}, IrLabel); }
++
++    TcgV() = default;
++
++    TcgV(std::string Name, TcgSize Size, TcgKind Kind)
++        : Id(getId()), Kind(Kind), Size(Size), Name(Name) {}
++
++    // Equality between two values it determined only by the assigned id,
++    // consider a 16- to 8-bit truncation:
++    //
++    //   %1 = trunc i8, i16 %0,
++    //
++    // which after identity mapping becomes
++    //
++    //   %1 = call i8 @IdentityMap.i16.i8(i16 %0).
++    //
++    // Identity mapping will copy the `TcgV` assigned to `%0` to `%1`, but `%1`
++    // will retain its `LlvmSize` needed to emit correctly sized operations down
++    // the line.  Despite differing in `LlvmSize` both `%0` and `%1` will be
++    // emitted as the same TCG value with type `TCGv_i32`.
++    bool operator==(const TcgV &Other) const { return Other.Id == Id; }
++    bool operator!=(const TcgV &Other) const { return !operator==(Other); }
++
++    // Print out struct fields, useful for debugging.
++    inline void dump(llvm::raw_ostream &Out) const {
++        Out << "TcgV " << Id;
++        if (!Name.empty()) {
++            Out << " (" << Name << ")";
++        }
++        Out << ":\n";
++        Out << "  Kind: ";
++        switch (Kind) {
++        case IrInvalid:
++            Out << "IrInvalid\n";
++            break;
++        case IrValue:
++            Out << "IrValue\n";
++            break;
++        case IrImmediate:
++            Out << "IrImmediate\n";
++            break;
++        case IrPtr:
++            Out << "IrPtr\n";
++            break;
++        case IrPtrToOffset:
++            Out << "IrPtrToOffset\n";
++            break;
++        case IrLabel:
++            Out << "IrLabel\n";
++            break;
++        }
++        if (Kind == IrPtrToOffset) {
++            Out << "  VectorElementCount: " << (int)Size.Vec.ElementCount
++                << "\n";
++            Out << "  VectorElementBitWidth: " << (int)Size.Vec.ElementBitWidth
++                << "\n";
++        } else {
++            Out << "  TcgSize: " << (int)Size.Val.TcgBitWidth << "\n";
++            Out << "  LlvmSize: " << (int)Size.Val.LlvmBitWidth << "\n";
++        }
++        Out << "  ConstantExpression: " << ConstantExpression << "\n";
++    }
++};
++
++// Helper function for verifying that a set of `TcgV` are of acceptable types,
++// use with flags like
++//
++//   assertKinds({{Dst, IrPtr}, {Src, IrValue | IrImmediate}))
++//
++inline void assertKinds(llvm::ArrayRef<std::pair<const TcgV, uint8_t>> Pairs) {
++    for (auto &[Tcg, Flag] : Pairs) {
++        assert(Tcg.Kind & Flag);
 +    }
 +}
 -- 
