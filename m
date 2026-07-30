@@ -4,142 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B8B3C531D0
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 08:05:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2477BC531D0
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 08:07:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpLl4-0004Wv-7S; Thu, 30 Jul 2026 04:04:51 -0400
+	id 1wpLn1-00057J-AN; Thu, 30 Jul 2026 04:06:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wpLl1-0004WZ-GF
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 04:04:47 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wpLmt-00056p-Ew
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 04:06:44 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wpLkz-0007kK-Vl
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 04:04:47 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66U7xedb354067
- for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 08:04:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- IxO3Az/7UzgpLeO7MiA2Em00j3vlS2IoyTExgaeDHho=; b=lu5HbBJskU7XV4Dt
- tY34s8XrIocq9J51pRTGcAZQ/jvK/S5RHkIB8wIEY3xeULLULvn7f020qG87+F8X
- ORMjeah2BjBXDZnK8So0e64viSKJeJ8JQjM09PBy7d/IdiZXI+AHzKuRaIuCZMgY
- IHycnvlmXMd1lnGPgD0Gw4eKApfZiDafHclRIEuqyafFRpRLH4jpuQbKn/suohl4
- FFJ3+20D8CoMrw5kj+3FIhNNGFpJrYJaS+goL7IjPVG8gdMVX26ceRzLvj98bVja
- ZFc88m4znk6lDC4uoUwtG+SfUfL1ef4fabk3efmCube9eJyYbPjZbylxUbpfvJE2
- reZQpQ==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fr2q6g0qc-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 08:04:41 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51c0f0a0760so38188001cf.2
- for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 01:04:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1785398681; x=1786003481; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=IxO3Az/7UzgpLeO7MiA2Em00j3vlS2IoyTExgaeDHho=;
- b=Rc5/cOGpIkpm4324VnUWqbjBG+x0rtyYHCKr9VS2PtPv+gKpzPo+GbJv3Sryi9dV0j
- 4VPhjrfVUKRX/mTHx3vG0XQR7MLxg4W8EbFhLwnl1cT61/NvkAriP6PDJbIvcUd/vIeR
- 6HJg9x+Amt3xNuAmubSErkH+AOIVY5SVlI9NakogGtnnU0gEeASSxkZoUvczVPke1Laa
- SKk+EXQEgVIPgtKiC0HvDnfUu7px6vXX7WSgHsS6kAo/MxwQExY5dpujAo1S3DjWBWCU
- SkmagML6focGBIOFuQ+PtuiWGw4lNeg8O4z1xzqadRN0uKgkMOHRdcexKZNk4XPDz7wr
- Hd0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785398681; x=1786003481;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=IxO3Az/7UzgpLeO7MiA2Em00j3vlS2IoyTExgaeDHho=;
- b=SP62dkLXKjXmmrRt4vYhGLdPUeEvZeurvgLgzGCwYujUX/8L4pYMzUetq7eVuu5Xcb
- s3A/xyNK+BSWwmk4O9GiLjbaVQIXXRqvrytBU+aHaPi3Bccq0K5OWXun6SGdss/vzeSy
- XYQBFetmIlJpvlFY4BZjAuafuPdjuqD6itBZPMfuNXYbw9PcskV8rWjl+LyxbLTmF21q
- 8iIFNE7R6i2ORYauVyqbqiJtQMKTdKGZC8Vr0eT6Zw/ys+6TKvfpESX1ju0uew0MoFRF
- axZA1gP7LcNpFBtatIeY8jdGg8+WjBxLaTX6nyYMEeERd0qxufayE4xw6lVgDAphvuD0
- mo+Q==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqHy8qgkNSRd+28PXbORSK3lXHG+x6NsGoiHgNVBqT/N0ASXvJneW9FEeskVDsVQE1HdmQE+ZH9lPld@nongnu.org
-X-Gm-Message-State: AOJu0YwkXJIIcqC1yhZXRb1qsYjEpJAlT3ASo24o8MUArKqEWbikrmNb
- m0trB7tBNdfgGArezwF/I1d/teqKmIkcej6q40a6diCy/D7drtW2siuw6hWLDy/ZnZR0U6PiMsq
- 7U/z3fRd0qIjUoKgme5hfSmh1mdTISRS4JGHjsiw/pAingLOOObvMrtm37g==
-X-Gm-Gg: AR+sD137BVZx5Fjk7Plk/GxixTy8ovsvuf9wQPbws+K5Ml+6yZ742z6n6WKYiI9NE9e
- BaubIpF3se5YhTyTswJqKwmGXdYhIyp4ZFya3cdpbFFqtWXlNFgsWTSDUdR4WYHFQh6sZuSfN4N
- VWU+LccirmT+/rrinnwLE8u+SB6/XU+vWSav+Z25xv5v8Ckrsi2Q8mhcxg9ml1JYZLgqRruJCmy
- Vob656gLn2b2DFQxSIca6tE82gh65yzo5UZIgqpkGtZHD30hcxCJk10hxl3DYH7WFz8bWp7jS5z
- N+Vt3ZS5N1zcO8B2wBrHaxKrFwT5cqJ7Y5UZw4zyB/LoynO0iMpB3yMTvdzEVyPs5/FeOADkEQs
- ibcQCT9PslFodyD2xiekTBU9XP9LDjbYFrtc2TMeemEtMF0tTb/o=
-X-Received: by 2002:ac8:5955:0:b0:517:875a:d634 with SMTP id
- d75a77b69052e-52b383878d2mr16956721cf.2.1785398681171; 
- Thu, 30 Jul 2026 01:04:41 -0700 (PDT)
-X-Received: by 2002:ac8:5955:0:b0:517:875a:d634 with SMTP id
- d75a77b69052e-52b383878d2mr16956501cf.2.1785398680640; 
- Thu, 30 Jul 2026 01:04:40 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-498011e5edesm40004405e9.2.2026.07.30.01.04.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Jul 2026 01:04:39 -0700 (PDT)
-Message-ID: <99f0096b-8183-439d-863a-b40a4986a103@oss.qualcomm.com>
-Date: Thu, 30 Jul 2026 10:04:38 +0200
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wpLml-0008BH-Ja
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 04:06:41 -0400
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1b:16:0:640:bc52:0])
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id CBE7780758;
+ Thu, 30 Jul 2026 11:06:29 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:484::1:24] (unknown
+ [2a02:6bf:8080:484::1:24])
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id Q6avaRKXBSw0-uE4cfW3R; Thu, 30 Jul 2026 11:06:29 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1785398789;
+ bh=Nivra/j/Kj52XSgTnx3Io7bKUrMnVNXquvhpq31q3jQ=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=b9aoNCVZzfLx+9wuS6yBj1pObUOmWbcgYj/f9pVqd5j2sMMhDDkb/UpspBGFCBbZy
+ ZyER/CoUsOy3p0DMWfn7fDhHGRjYwB5mCeva367x7ByM5eIHq0DLd5CR8EIfdfmkKx
+ 9QyOrdVNztcjl/Ok/Yn61vhUGSw0eggQwdE5SG94=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <3166925a-0456-42b6-80d3-8154e3e66825@yandex-team.ru>
+Date: Thu, 30 Jul 2026 11:06:26 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/50] accel/tcg: Add bitreverse and funnel-shift
- runtime helper functions
+Subject: Re: [PATCH 2/4] migration: Introduce VMStateOffset
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+References: <20260729225227.1170574-1-farosas@suse.de>
+ <20260729225227.1170574-3-farosas@suse.de>
 Content-Language: en-US
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: ale@rev.ng, brian.cain@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
- philmd@mailo.com
-References: <20260730031025.12926-1-anjo@rev.ng>
- <20260730031025.12926-2-anjo@rev.ng>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260730031025.12926-2-anjo@rev.ng>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20260729225227.1170574-3-farosas@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMwMDA1NiBTYWx0ZWRfX9DHHWXYmdk1J
- xS0GDiA6tK4LxqFNIc3g/BXRLm9yOjOPYFF9d+zFF7k5mRcdhNhdXKL2YZ0LdeX2lbiQAmEEesc
- G5DDXOAyYtS8hlsjKfnAhiaNpQc1v3kkBpGHPZRe3v1JE7qg1ipW3BTMEC5v4igU50JRPkQAj16
- TQXIa8tnM8aAq0fTzs2Qd++XDJPJmKEWRdUUMM5wDwG4mULkYM0ObAAHfKqTn+ugXe+JqywXsNY
- EB3UWCVYimtQXE1JE9YnyEPvqdnElvnOF8FAPHOkyCA1i5ZwTY7TYpTqMyuZIM+Pzij/7Lmdizh
- 0L7sIi9GTNLeeHKgkfrEtJizk+2ldM/qBiPAWZaKPvNcH4uZBwL1E+M2loFldy4dsheJjteKZpf
- HJG1ztNbNCiJETMBNVHCYqrV8W3u4LS8kXS4litkpj1/LZcNcLem8AQcyHmDm8vvjs99mq0hgYp
- RnMxDp+yeezuutBjMFw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMwMDA1NiBTYWx0ZWRfX3i1YtJ2wCpuM
- HOhGbH5D53dIodr2S9vPNNMRWlyBPSBQ0WaKE419mHmfpIvY29vwIuArRhPfUwNnMoRbwdBil9J
- KhZbiVApdJkr4evRAMLUb8ftfLYpJpc=
-X-Authority-Analysis: v=2.4 cv=KYTidwYD c=1 sm=1 tr=0 ts=6a6b0599 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=3BIpWbpnriZcojft0aAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-GUID: OdVuisUTrZw3Bzio41tZ5zysR0ogrklC
-X-Proofpoint-ORIG-GUID: OdVuisUTrZw3Bzio41tZ5zysR0ogrklC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-30_02,2026-07-29_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0 adultscore=0
- priorityscore=1501 spamscore=0 bulkscore=0 malwarescore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607300056
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,57 +78,484 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/7/26 05:09, Anton Johansson via qemu development wrote:
-> Adds necessary helper functions for mapping LLVM IR onto TCG.
-> Specifically, helpers corresponding to the bitreverse and funnel-shift
-> intrinsics in LLVM.
+On 30.07.26 01:52, Fabiano Rosas wrote:
+> When migrating a buffer or array, the vmstate code needs to know the
+> size of the buffer and the number of elements of the array. Today a
+> vmstate writer can choose from a number of macros that take as last
+> input the name of a struct member from where the size/num will be
+> read.
 > 
-> Note: these may be converted to more efficient implementations in the
-> future, but for the time being it allows helper-to-tcg to support a
-> wider subset of LLVM IR.
+> At load time, the code will access those value via an opaque pointer
+> to the migrated data and therefore it needs to also know the size of
+> the struct member at that offset.
 > 
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> --
-> TODO: `tcg_gen_*()` variants will be added in the next version, it
-> slipped through (Richard).
+> Currently that information is communicated by means of the
+> VMS_VARRAY_* and VMS_VBUFFER_* flags, where each possible type is
+> represented by a flag.
+> 
+> So far, that's all fine, but since the vmstate code makes heavy use of
+> macros, handling several types individually (i.e. by name: int,
+> int32_t, etc) requires several versions of a same macro, one for each
+> type. E.g: VMSTATE_VBUFFER_ALLOC_UINT32
+>                                   ^
+> 
+> This creates a pattern where the vmstate writer has to match the macro
+> name to the data type and has resulted in the code having a tendency
+> of having one macro version for each type, for each type of vmstate.
+> 
+> There is also some cognitive load to deal with, e.g.
+> VMSTATE_VARRAY_INT32 doesn't hold an array of int32, it holds an array
+> of something else and the number of elements for the array is stored
+> in a variable of type int32.
+> 
+> We're now dealing with the scenario where the code has been expecting
+> int32_t at some places, but a uint64_t macro variant has been added
+> without the code being updated.
+> 
+> To address all these situations, introduce a new struct that will hold
+> the offset of the struct members, but also their size, so the various
+> extra macros can all be removed and the person writing the vmstate
+> doesn't need to care about type-checking. Still, keep a minimum check
+> that those fields are at least integers and fit into 64 bits.
+> 
+> What changes:
+> 
+> 1) type checking changes from individual types to a single check for
+>     all integers;
+> 
+> 2) there are new ways to access the offsets;
+> 
+> num_offset -> num_offset.off
+> size_offset -> size_offset.off
+> [new] num_offset.size
+> [new] size_offset.size
+> 
+> 2) reading the offsets goes from checking the VMS_VARRAY_* flags in an
+>     if/elseif block to comparing offset.size against the hardcoded
+>     sizes in bytes;
+> 
+> 3) the VMS_VARRAY_* and VMS_VBUFFER_* flags become obsolete. Removed
+>     in the next patch;
+> 
+> 4) memory usage increases +1 byte per vmstate;
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
->   accel/tcg/tcg-runtime.c | 28 ++++++++++++++++++++++++++++
->   accel/tcg/tcg-runtime.h |  6 ++++++
->   2 files changed, 34 insertions(+)
-
-
-> +uint32_t HELPER(bitreverse8_i32)(uint32_t x)
-> +{
-> +  return revbit8((uint8_t) x);
-> +}
-> +
-> +uint32_t HELPER(bitreverse16_i32)(uint32_t x)
-> +{
-> +  return revbit16((uint16_t) x);
-> +}
-> +
-> +uint32_t HELPER(bitreverse32_i32)(uint32_t x)
-> +{
-> +  return revbit32(x);
-> +}
-
-Please split in 2 patches, adding bitreverse family in
-one, and fshl_i64 in another.
-
-For bitreverse:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-
->   /* 64-bit helpers */
+>   include/migration/vmstate.h | 66 +++++++++++++++++++++++--------------
+>   migration/savevm.c          |  4 +--
+>   migration/vmstate.c         | 51 ++++++++++++++++++----------
+>   3 files changed, 76 insertions(+), 45 deletions(-)
+> 
+> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+> index 92a1a9fe98e..2ad3cc01371 100644
+> --- a/include/migration/vmstate.h
+> +++ b/include/migration/vmstate.h
+> @@ -31,6 +31,7 @@
 >   
-> +uint64_t HELPER(fshl_i64)(uint64_t a, uint64_t b, uint64_t c)
+>   typedef struct VMStateInfo VMStateInfo;
+>   typedef struct VMStateField VMStateField;
+> +typedef struct VMStateOffset VMStateOffset;
+>   
+>   /*
+>    * VMStateInfo allows customized migration of objects that don't fit in
+> @@ -187,6 +188,11 @@ typedef enum {
+>       MIG_PRI_MAX,
+>   } MigrationPriority;
+>   
+> +struct VMStateOffset {
+> +    uint32_t off;
+> +    uint8_t size;
+> +};
 
-Please use clearer hi/lo/sh/val/ret instead of a/b/c/d/shift:
+A bit strange to have offset field (off) inside "Offset" structure.
 
-   HELPER(fshl_i64)(uint64_t hi, uint64_t lo, uint64_t sh)
+VMStatePosition may be?
 
-> +{
-> +    Int128 d = int128_make128(b, a);
-> +    Int128 shift = int128_lshift(d, c);
-> +    return int128_gethi(shift);
+> +
+>   struct VMStateField {
+>       const char *name;
+>       size_t offset;
+> @@ -205,11 +211,11 @@ struct VMStateField {
+>        * pointer point to.
+>        */
+>       size_t size;
+> -    size_t size_offset;
+> +    VMStateOffset size_offset;
+
+size_offset variable of type Offset, which has offset and size fields inside. And different
+meaning for each "size" and "offset" in this context.. Partly preexisting, but we make
+it even more complicated by this patch. Maybe:
+
+    VMStatePosition size_pos;
+
+or even
+
+    VMStatePosition bufsize_pos;
+
+to also distinguish "buffer size" consept of "size of field containing buffer size".
+
+Side questions: is there any difference between VARRAY of bytes and BUFFER?
+We could probably share same @num and @num_offset fields for buffers, an
+drop size/size_offset at all.
+
+>   
+>       size_t start;
+>       int num;
+> -    size_t num_offset;
+> +    VMStateOffset num_offset;
+>       const VMStateInfo *info;
+>       enum VMStateFlags flags;
+>       const VMStateDescription *vmsd;
+> @@ -328,6 +334,16 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>       (type_check(t1, typeof_elt_of_field(t2, f))                      \
+>        + QEMU_BUILD_BUG_ON_ZERO(!QEMU_IS_ARRAY(((t2 *)0)->f)))
+>   
+> +#define type_check_int64(t)                                             \
+> +    (((ptrdiff_t)0 * (ptrdiff_t)(~((t)0))) +                            \
+
+why use ptrdiff_t, if want to compatibility with int64?
+
+> +     (0 * sizeof(char[(sizeof(t) <= sizeof(uint64_t)) ? 1 : -1])))
+
+could QEMU_BUILD_BUG_ON() be used to make more readable check?
+
+> +
+> +#define vmstate_field_offset(_state, _field) {                  \
+> +    .off = (offsetof(_state, _field) +                          \
+> +            type_check_int64(typeof_field(_state, _field))),    \
+> +    .size = sizeof(typeof_field(_state, _field)),               \
 > +}
+> +
+>   #define vmstate_offset_value(_state, _field, _type)                  \
+>       (offsetof(_state, _field) +                                      \
+>        type_check(_type, typeof_field(_state, _field)))
+> @@ -454,7 +470,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>   #define VMSTATE_VARRAY_INT32(_field, _state, _field_num, _version, _info, _type) {\
+>       .name       = (stringify(_field)),                               \
+>       .version_id = (_version),                                        \
+> -    .num_offset = vmstate_offset_value(_state, _field_num, int32_t), \
+> +    .num_offset = vmstate_field_offset(_state, _field_num),          \
+>       .info       = &(_info),                                          \
+>       .size       = sizeof(_type),                                     \
+>       .flags      = VMS_VARRAY_INT32|VMS_POINTER,                      \
+> @@ -464,7 +480,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>   #define VMSTATE_VARRAY_UINT32(_field, _state, _field_num, _version, _info, _type) {\
+>       .name       = (stringify(_field)),                               \
+>       .version_id = (_version),                                        \
+> -    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t),\
+> +    .num_offset = vmstate_field_offset(_state, _field_num),          \
+>       .info       = &(_info),                                          \
+>       .size       = sizeof(_type),                                     \
+>       .flags      = VMS_VARRAY_UINT32|VMS_POINTER,                     \
+> @@ -474,7 +490,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>   #define VMSTATE_VARRAY_INT32_ALLOC(_field, _state, _field_num, _version, _info, _type) {\
+>       .name       = (stringify(_field)),                               \
+>       .version_id = (_version),                                        \
+> -    .num_offset = vmstate_offset_value(_state, _field_num, int32_t), \
+> +    .num_offset = vmstate_field_offset(_state, _field_num),          \
+>       .info       = &(_info),                                          \
+>       .size       = sizeof(_type),                                     \
+>       .flags      = VMS_VARRAY_INT32 | VMS_POINTER | VMS_ALLOC,        \
+> @@ -484,7 +500,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>   #define VMSTATE_VARRAY_UINT32_ALLOC(_field, _state, _field_num, _version, _info, _type) {\
+>       .name       = (stringify(_field)),                               \
+>       .version_id = (_version),                                        \
+> -    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t),\
+> +    .num_offset = vmstate_field_offset(_state, _field_num),          \
+>       .info       = &(_info),                                          \
+>       .size       = sizeof(_type),                                     \
+>       .flags      = VMS_VARRAY_UINT32|VMS_POINTER|VMS_ALLOC,           \
+> @@ -494,7 +510,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>   #define VMSTATE_VARRAY_UINT16_ALLOC(_field, _state, _field_num, _version, _info, _type) {\
+>       .name       = (stringify(_field)),                               \
+>       .version_id = (_version),                                        \
+> -    .num_offset = vmstate_offset_value(_state, _field_num, uint16_t),\
+> +    .num_offset = vmstate_field_offset(_state, _field_num),          \
+>       .info       = &(_info),                                          \
+>       .size       = sizeof(_type),                                     \
+>       .flags      = VMS_VARRAY_UINT16 | VMS_POINTER | VMS_ALLOC,       \
+> @@ -504,7 +520,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>   #define VMSTATE_VARRAY_UINT16_UNSAFE(_field, _state, _field_num, _version, _info, _type) {\
+>       .name       = (stringify(_field)),                               \
+>       .version_id = (_version),                                        \
+> -    .num_offset = vmstate_offset_value(_state, _field_num, uint16_t),\
+> +    .num_offset = vmstate_field_offset(_state, _field_num),          \
+>       .info       = &(_info),                                          \
+>       .size       = sizeof(_type),                                     \
+>       .flags      = VMS_VARRAY_UINT16,                                 \
+> @@ -583,7 +599,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>       _field, _state, _field_num, _version, _vmsd, _type) {            \
+>       .name       = (stringify(_field)),                               \
+>       .version_id = (_version),                                        \
+> -    .num_offset = vmstate_offset_value(_state, _field_num, uint8_t), \
+> +    .num_offset = vmstate_field_offset(_state, _field_num),          \
+>       .vmsd       = &(_vmsd),                                          \
+>       .size       = sizeof(_type),                                     \
+>       .flags      = VMS_POINTER | VMS_VARRAY_UINT8 |                   \
+> @@ -596,7 +612,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>       _field, _state, _field_num, _version, _vmsd, _type) {             \
+>       .name       = (stringify(_field)),                                \
+>       .version_id = (_version),                                         \
+> -    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t), \
+> +    .num_offset = vmstate_field_offset(_state, _field_num),           \
+>       .vmsd       = &(_vmsd),                                           \
+>       .size       = sizeof(_type),                                      \
+>       .flags      = VMS_POINTER | VMS_VARRAY_UINT32 |                   \
+> @@ -608,7 +624,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>   #define VMSTATE_VARRAY_OF_POINTER_UINT32(_field, _state, _field_num, _version, _info, _type) { \
+>       .name       = (stringify(_field)),                                    \
+>       .version_id = (_version),                                             \
+> -    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t),     \
+> +    .num_offset = vmstate_field_offset(_state, _field_num),               \
+>       .info       = &(_info),                                               \
+>       .flags      = VMS_VARRAY_UINT32 | VMS_ARRAY_OF_POINTER | VMS_POINTER, \
+>       .offset     = vmstate_offset_pointer(_state, _field, _type *),          \
+> @@ -650,7 +666,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>   
+>   #define VMSTATE_STRUCT_VARRAY_UINT8(_field, _state, _field_num, _version, _vmsd, _type) { \
+>       .name       = (stringify(_field)),                               \
+> -    .num_offset = vmstate_offset_value(_state, _field_num, uint8_t), \
+> +    .num_offset = vmstate_field_offset(_state, _field_num),          \
+>       .version_id = (_version),                                        \
+>       .vmsd       = &(_vmsd),                                          \
+>       .size       = sizeof(_type),                                     \
+> @@ -674,7 +690,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>   #define VMSTATE_STRUCT_VARRAY_POINTER_INT32(_field, _state, _field_num, _vmsd, _type) { \
+>       .name       = (stringify(_field)),                               \
+>       .version_id = 0,                                                 \
+> -    .num_offset = vmstate_offset_value(_state, _field_num, int32_t), \
+> +    .num_offset = vmstate_field_offset(_state, _field_num),          \
+>       .size       = sizeof(_type),                                     \
+>       .vmsd       = &(_vmsd),                                          \
+>       .flags      = VMS_POINTER | VMS_VARRAY_INT32 | VMS_STRUCT,       \
+> @@ -684,7 +700,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>   #define VMSTATE_STRUCT_VARRAY_POINTER_UINT32(_field, _state, _field_num, _vmsd, _type) { \
+>       .name       = (stringify(_field)),                               \
+>       .version_id = 0,                                                 \
+> -    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t),\
+> +    .num_offset = vmstate_field_offset(_state, _field_num),          \
+>       .size       = sizeof(_type),                                     \
+>       .vmsd       = &(_vmsd),                                          \
+>       .flags      = VMS_POINTER | VMS_VARRAY_INT32 | VMS_STRUCT,       \
+> @@ -694,7 +710,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>   #define VMSTATE_STRUCT_VARRAY_POINTER_UINT16(_field, _state, _field_num, _vmsd, _type) { \
+>       .name       = (stringify(_field)),                               \
+>       .version_id = 0,                                                 \
+> -    .num_offset = vmstate_offset_value(_state, _field_num, uint16_t),\
+> +    .num_offset = vmstate_field_offset(_state, _field_num),          \
+>       .size       = sizeof(_type),                                     \
+>       .vmsd       = &(_vmsd),                                          \
+>       .flags      = VMS_POINTER | VMS_VARRAY_UINT16 | VMS_STRUCT,      \
+> @@ -703,7 +719,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>   
+>   #define VMSTATE_STRUCT_VARRAY_INT32(_field, _state, _field_num, _version, _vmsd, _type) { \
+>       .name       = (stringify(_field)),                               \
+> -    .num_offset = vmstate_offset_value(_state, _field_num, int32_t), \
+> +    .num_offset = vmstate_field_offset(_state, _field_num, int32_t), \
+>       .version_id = (_version),                                        \
+>       .vmsd       = &(_vmsd),                                          \
+>       .size       = sizeof(_type),                                     \
+> @@ -713,7 +729,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>   
+>   #define VMSTATE_STRUCT_VARRAY_UINT32(_field, _state, _field_num, _version, _vmsd, _type) { \
+>       .name       = (stringify(_field)),                               \
+> -    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t), \
+> +    .num_offset = vmstate_field_offset(_state, _field_num),          \
+>       .version_id = (_version),                                        \
+>       .vmsd       = &(_vmsd),                                          \
+>       .size       = sizeof(_type),                                     \
+> @@ -725,7 +741,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>       .name       = (stringify(_field)),                               \
+>       .version_id = (_version),                                        \
+>       .vmsd       = &(_vmsd),                                          \
+> -    .num_offset = vmstate_offset_value(_state, _field_num, int32_t), \
+> +    .num_offset = vmstate_field_offset(_state, _field_num),          \
+>       .size       = sizeof(_type),                                     \
+>       .flags      = VMS_STRUCT|VMS_VARRAY_INT32|VMS_ALLOC|VMS_POINTER, \
+>       .offset     = vmstate_offset_pointer(_state, _field, _type),     \
+> @@ -746,7 +762,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>       .name         = (stringify(_field)),                             \
+>       .version_id   = (_version),                                      \
+>       .field_exists = (_test),                                         \
+> -    .size_offset  = vmstate_offset_value(_state, _field_size, uint32_t),\
+> +    .size_offset  = vmstate_field_offset(_state, _field_size),       \
+>       .size         = (_multiply),                                      \
+>       .info         = &vmstate_info_buffer,                            \
+>       .flags        = VMS_VBUFFER|VMS_POINTER|VMS_MULTIPLY,            \
+> @@ -757,7 +773,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>       .name         = (stringify(_field)),                             \
+>       .version_id   = (_version),                                      \
+>       .field_exists = (_test),                                         \
+> -    .size_offset  = vmstate_offset_value(_state, _field_size, int32_t),\
+> +    .size_offset  = vmstate_field_offset(_state, _field_size),       \
+>       .info         = &vmstate_info_buffer,                            \
+>       .flags        = VMS_VBUFFER|VMS_POINTER,                         \
+>       .offset       = offsetof(_state, _field),                        \
+> @@ -767,7 +783,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>       .name         = (stringify(_field)),                             \
+>       .version_id   = (_version),                                      \
+>       .field_exists = (_test),                                         \
+> -    .size_offset  = vmstate_offset_value(_state, _field_size, uint32_t),\
+> +    .size_offset  = vmstate_field_offset(_state, _field_size),       \
+>       .info         = &vmstate_info_buffer,                            \
+>       .flags        = VMS_VBUFFER|VMS_POINTER,                         \
+>       .offset       = offsetof(_state, _field),                        \
+> @@ -777,7 +793,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>       .name         = (stringify(_field)),                             \
+>       .version_id   = (_version),                                      \
+>       .field_exists = (_test),                                         \
+> -    .size_offset  = vmstate_offset_value(_state, _field_size, uint64_t),\
+> +    .size_offset  = vmstate_field_offset(_state, _field_size),       \
+>       .info         = &vmstate_info_buffer,                            \
+>       .flags        = VMS_VBUFFER | VMS_POINTER,                       \
+>       .offset       = offsetof(_state, _field),                        \
+> @@ -788,7 +804,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>       .name         = (stringify(_field)),                             \
+>       .version_id   = (_version),                                      \
+>       .field_exists = (_test),                                         \
+> -    .size_offset  = vmstate_offset_value(_state, _field_size, uint32_t),\
+> +    .size_offset  = vmstate_field_offset(_state, _field_size),       \
+>       .info         = &vmstate_info_buffer,                            \
+>       .flags        = VMS_VBUFFER|VMS_POINTER|VMS_ALLOC,               \
+>       .offset       = offsetof(_state, _field),                        \
+> @@ -848,7 +864,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>   #define VMSTATE_UNUSED_VARRAY_UINT32(_state, _test, _version, _field_num, _size) {\
+>       .name         = "unused",                                        \
+>       .field_exists = (_test),                                         \
+> -    .num_offset   = vmstate_offset_value(_state, _field_num, uint32_t),\
+> +    .num_offset   = vmstate_field_offset(_state, _field_num),        \
+>       .version_id   = (_version),                                      \
+>       .size         = (_size),                                         \
+>       .info         = &vmstate_info_unused_buffer,                     \
+> @@ -862,7 +878,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>       .name         = (stringify(_field)),                             \
+>       .field_exists = (_test),                                         \
+>       .version_id   = (_version),                                      \
+> -    .size_offset  = vmstate_offset_value(_state, _field_size, int32_t),\
+> +    .size_offset  = vmstate_field_offset(_state, _field_size),       \
+>       .info         = &vmstate_info_bitmap,                            \
+>       .flags        = VMS_VBUFFER|VMS_POINTER,                         \
+>       .offset       = offsetof(_state, _field),                        \
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index 34dd06f9f73..a272bcfd0b4 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -873,14 +873,14 @@ static void vmstate_check(const VMStateDescription *vmsd)
+>                        * Size must be provided because dest QEMU needs that
+>                        * info to know what to allocate
+>                        */
+> -                    assert(field->size || field->size_offset);
+> +                    assert(field->size || field->size_offset.size != 0);
+>                   } else {
+>                       /*
+>                        * Otherwise size info isn't useful (because it's
+>                        * always the size of host pointer), detect accidental
+>                        * setup of sizes in this case.
+>                        */
+> -                    assert(field->size == 0 && field->size_offset == 0);
+> +                    assert(field->size == 0 && field->size_offset.size == 0);
+>                   }
+>                   /*
+>                    * VMS_ARRAY_OF_POINTER must be used only together with one
+> diff --git a/migration/vmstate.c b/migration/vmstate.c
+> index 50ebe378452..0a0b9faa20e 100644
+> --- a/migration/vmstate.c
+> +++ b/migration/vmstate.c
+> @@ -78,32 +78,45 @@ vmsd_init_ptr_marker_field(VMStateField *fake, const VMStateField *field)
+>       };
+>   }
+>   
+> -static int vmstate_n_elems(void *opaque, const VMStateField *field)
+> +static uint64_t vmstate_read_from_offset(void *opaque,
+> +                                         const VMStateOffset *offset)
+>   {
+> -    int n_elems = 1;
+> +    uint8_t *ptr = (uint8_t *)opaque + offset->off;
+> +
+> +    switch (offset->size) {
+> +    case 1:
+> +        return *(uint8_t *)ptr;
+> +    case 2:
+> +        return *(uint16_t *)ptr;
+> +    case 4:
+> +        return *(uint32_t *)ptr;
+> +    case 8:
+> +        return *(uint64_t *)ptr;
+> +    }
+> +    g_assert_not_reached();
+> +}
+> +
+> +static uint64_t vmstate_n_elems(void *opaque, const VMStateField *field)
+> +{
+> +    uint64_t n_elems = 1;
+>   
+>       if (field->flags & VMS_ARRAY) {
+>           n_elems = field->num;
+> -    } else if (field->flags & VMS_VARRAY_INT32) {
+> -        n_elems = *(int32_t *)(opaque + field->num_offset);
+> -    } else if (field->flags & VMS_VARRAY_UINT32) {
+> -        n_elems = *(uint32_t *)(opaque + field->num_offset);
+> -    } else if (field->flags & VMS_VARRAY_UINT16) {
+> -        n_elems = *(uint16_t *)(opaque + field->num_offset);
+> -    } else if (field->flags & VMS_VARRAY_UINT8) {
+> -        n_elems = *(uint8_t *)(opaque + field->num_offset);
+> +    } else if (field->flags & (VMS_VARRAY_INT32 | VMS_VARRAY_UINT32
+> +                               | VMS_VARRAY_UINT16 | VMS_VARRAY_UINT8)) {
+> +        n_elems = vmstate_read_from_offset(opaque, &field->num_offset);
+>       }
+>   
+>       trace_vmstate_n_elems(field->name, n_elems);
+>       return n_elems;
+>   }
+>   
+> -static int vmstate_size(void *opaque, const VMStateField *field)
+> +static uint64_t vmstate_size(void *opaque, const VMStateField *field)
+>   {
+> -    int size;
+> +    uint64_t size;
+>   
+>       if (field->flags & VMS_VBUFFER) {
+> -        size = *(int32_t *)(opaque + field->size_offset);
+> +        size = vmstate_read_from_offset(opaque, &field->size_offset);
+>           if (field->flags & VMS_MULTIPLY) {
+>               size *= field->size;
+>           }
+> @@ -124,7 +137,7 @@ static void vmstate_handle_alloc(void *ptr, const VMStateField *field,
+>                                    void *opaque)
+>   {
+>       if (field->flags & VMS_POINTER && field->flags & VMS_ALLOC) {
+> -        gsize size = vmstate_size(opaque, field);
+> +        uint64_t size = vmstate_size(opaque, field);
+>           size *= vmstate_n_elems(opaque, field);
+>           if (size) {
+>               *(void **)ptr = g_malloc(size);
+> @@ -335,8 +348,9 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
+>   
+>           if (exists) {
+>               void *first_elem = opaque + field->offset;
+> -            int i, n_elems = vmstate_n_elems(opaque, field);
+> -            int size = vmstate_size(opaque, field);
+> +            int i;
+> +            uint64_t n_elems = vmstate_n_elems(opaque, field);
+> +            uint64_t size = vmstate_size(opaque, field);
+>   
+>               vmstate_handle_alloc(first_elem, field, opaque);
+>               if (field->flags & VMS_POINTER) {
+> @@ -650,8 +664,9 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+>       while (field->name) {
+>           if (vmstate_field_exists(vmsd, field, opaque, version_id)) {
+>               void *first_elem = opaque + field->offset;
+> -            int i, n_elems = vmstate_n_elems(opaque, field);
+> -            int size = vmstate_size(opaque, field);
+> +            int i;
+> +            uint64_t n_elems = vmstate_n_elems(opaque, field);
+> +            uint64_t size = vmstate_size(opaque, field);
+>               JSONWriter *vmdesc_loop = vmdesc;
+>               bool is_prev_null = false;
+>               /*
+
+
+-- 
+Best regards,
+Vladimir
 
