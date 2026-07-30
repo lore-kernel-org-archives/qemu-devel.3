@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18A28C54FD2
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 06:33:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B3BDC531D0
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 06:47:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpKKE-0000aa-4A; Thu, 30 Jul 2026 02:33:02 -0400
+	id 1wpKXA-0002tH-Fh; Thu, 30 Jul 2026 02:46:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wpKKA-0000Zj-Gp; Thu, 30 Jul 2026 02:32:58 -0400
+ id 1wpKX8-0002sb-L1; Thu, 30 Jul 2026 02:46:22 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wpKK7-00021K-S2; Thu, 30 Jul 2026 02:32:58 -0400
+ id 1wpKX2-00040Y-Gp; Thu, 30 Jul 2026 02:46:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1785393163; bh=hL0MigISxTtGkV0szqoFLhQzio5ycu7N1tYz0e/R/Uo=;
+ t=1785393963; bh=AIZdrDRVDhZm6B16Xm4unrxEXR03jPtA/DH/NXYOxY4=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=ru6XTFdZ+P0VmeBldoJUqWr0N8yhi66KGac9C6i0tmd6cZVpKYrpfX7dirjOAUvcR
- gdUEpi5pJA7kf687BisfH+KDiVimoNowI2FNi7SqrHU1sBvNxlRyADV0X1HnJ8sArM
- o6I67LVdE3brpJZQdNgpR/931RS9tSxJR2EIYccdTBkZZpEPhxXVnXdNSXcWlyTq7W
- gJ8oP+8RclUJSKUj2CKuNrAc47RCkHWMkEmBPycva0LmIGuHLEVBQpaWNgw+LbOw42
- nSVO7H9YZ41wtcxz2H44A/NsPvbB+8YUaxoF3Bi+QyWr7zi/H0GcPqbYP0MLnRkTBq
- 0n6ESd3y3MnGw==
+ b=qyeUwbGosD+aWiV20/+7T95KF23di7PjbkkeN7znRTudy/z0AEnL+T8R97XNgFcKu
+ T9DWZZY7LYOADorqARz1csJCWQfJFBfmRM9j8KZeFBrfzLMTchKAjkSIQCUAkDkbJU
+ I1hALsiUBor/pMcM2tVkUORUu9eXR7AV4436CFu80/vpwOLFGNwo5wJUTTdlDKEntA
+ sXE6ULTebJKzOkxUjVEeF+6hnsRNNS9eCIMk90FY5rCDZLBVK1ne5PNwQQxpBM8+zV
+ vPI5RQqWIuXn+jgHSE4XuuPxfBvu1HV4Nv2koXneFwXV8AgTmPAaOhH6GuhPimhdH7
+ FKbtHPuAkZsYg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 727D71C6B45;
- Thu, 30 Jul 2026 09:32:43 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AA5401C6B4F;
+ Thu, 30 Jul 2026 09:46:03 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3FD4B3FA216;
- Thu, 30 Jul 2026 09:32:51 +0300 (MSK)
-Message-ID: <52e606b3-507b-4869-bf29-97437d4ff84f@tls.msk.ru>
-Date: Thu, 30 Jul 2026 09:32:36 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 74D833FA22B;
+ Thu, 30 Jul 2026 09:46:11 +0300 (MSK)
+Message-ID: <c2c41ecb-db27-420c-94fd-c34135c77c09@tls.msk.ru>
+Date: Thu, 30 Jul 2026 09:45:57 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 0/9] parallels: fix reachable assertion and related
- bounds-checking gaps
-To: "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, QEMU Stable <qemu-stable@nongnu.org>
-References: <20260728153849.601939-1-den@openvz.org>
+Subject: Re: [PATCH] linux-user/sh4: allow full 32-bit address space
+To: Laurent Vivier <laurent@vivier.eu>, qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+ QEMU Stable <qemu-stable@nongnu.org>
+References: <20260727114848.1041856-1-laurent@vivier.eu>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -88,7 +90,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260728153849.601939-1-den@openvz.org>
+In-Reply-To: <20260727114848.1041856-1-laurent@vivier.eu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -114,56 +116,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/28/26 18:38, Denis V. Lunev wrote:
-> The following changes since commit 6333226c2abb72f31648c251624c56e70993d625:
+On 7/27/26 14:48, Laurent Vivier wrote:
+> On real SH4 hardware, the address space is split between user mode
+> (U0, 0x00000000-0x7fffffff) and kernel mode (P1-P4, 0x80000000-0xffffffff),
+> so TARGET_VIRT_ADDR_SPACE_BITS was set to 31 for CONFIG_USER_ONLY.
 > 
->    Merge tag 'pull-9p-20260725' of https://github.com/cschoenebeck/qemu into staging (2026-07-26 08:30:07 -0400)
+> However, qemu-user does not emulate the MMU, so this limit is not needed.
+> The only effect is to restrict reserved_va to 2 GB, causing OOM failures
+> for memory-intensive builds (e.g. webkit2gtk on Debian sh4 buildds).
 > 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/dlunev/qemu.git tags/pull-parallels-2026-07-28
-> 
-> for you to fetch changes up to 352587cbe2d4cde1cece16e2f6a9e1e4190a03e6:
-> 
->    MAINTAINERS: update parallels tree location (2026-07-28 16:55:00 +0200)
-> 
-> ----------------------------------------------------------------
-> Parallels block driver patches
-> 
-> - fix a reachable assert()/process abort on a crafted image with an
->    inconsistent BAT vs. advertised disk size (GitLab #3804)
-> - fix related integer overflows capping the format's usable catalog
->    size below its documented maximum
-> - reject BAT entries pointing outside the data area in either
->    direction
-> - harden the dirty-bitmap extension loader against a reachable
->    abort and an unsafe allocator
-> 
-> Changes since v1:
-> 
-> - filter out format specific info in patches 2,8
-> 
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> CC: Thomas Huth <thuth@redhat.com>
-> CC: Stefan Hajnoczi <stefanha@redhat.com>
-> 
-> ----------------------------------------------------------------
-> Denis V. Lunev (9):
->    parallels: fix integer overflow in header size calculation
->    parallels: read header/BAT table in bounded chunks
->    parallels: fix bat_entries overflow in image creation
->    parallels: reject BAT entries pointing outside backed storage
->    parallels: validate bitmap L1 table size before allocating it
->    parallels: skip loading a genuinely empty bitmap L1 table
->    parallels: avoid fatal abort on large bitmap L1 table
->    parallels: validate BAT capacity against advertised disk size
->    MAINTAINERS: update parallels tree location
+> Set TARGET_VIRT_ADDR_SPACE_BITS to 32 unconditionally, like most other
+> 32-bit targets. Also fix the TASK_UNMAPPED_BASE macro to use 1ull instead
+> of 1u to avoid undefined behavior when shifting by 32.
 
-Hi Denis!
-
-This is a bugfix pull request.  Is it worth to pick it up for
-the stable series, or is parallels not used much outside of
-openvz (which sure uses locally patched qemu)?
+Should I pick this one for the stable series too?  So it will find its
+way to debian too, for example, so sh4 buildd(s) will feel a bit better? :)
 
 Thanks,
 
