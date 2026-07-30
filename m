@@ -4,63 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EE8FC54FD2
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 05:27:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80A98C54FD2
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 05:28:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpJI4-0001SS-AN; Thu, 30 Jul 2026 01:26:44 -0400
+	id 1wpJI1-0001Qz-3u; Thu, 30 Jul 2026 01:26:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xb@ultrarisc.com>)
- id 1wpJI1-0001RQ-WD; Thu, 30 Jul 2026 01:26:42 -0400
+ id 1wpJHz-0001QY-9A; Thu, 30 Jul 2026 01:26:39 -0400
 Received: from [218.76.62.146] (helo=ultrarisc.com)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <xb@ultrarisc.com>)
- id 1wpJHz-0000dJ-VE; Thu, 30 Jul 2026 01:26:41 -0400
+ id 1wpJHx-0000dF-7Y; Thu, 30 Jul 2026 01:26:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=ultrarisc.com; s=dkim; h=Received:From:To:Cc:Subject:Date:
  Message-ID:In-Reply-To:References:MIME-Version:
- Content-Transfer-Encoding; bh=aD/jTdD9MOdSu+muF3Xz3s07Z4no17P22D
- SZQ2ngdyQ=; b=h33NtVucEredpKHi0QsHTHJsSzjosnGxZYRmbcDFtm5H9o0mkR
- eH2dvPLPNrtCIiM3ogXIio0BChjw84eU7OCobmJki1/ZRt5wdUNFiD1WLYyKXK5z
- HXiWe9azNFHTH6TL2WHRy72Yp2d8yoxF6FhcofLS5MR5COaUinTvkfYDA=
+ Content-Transfer-Encoding; bh=DJ8hPiaRqQ2n5AJgLRt7ghP210MWnRvfNe
+ B/k12XEBM=; b=jOx8ppMEPI+cfHpnJ0h4y+Pt7uZAdSEfj0wPvyJwrhkwi/wq41
+ Pgi+EBBenKxOykeXuJg4KvqLAwgECaJVymF92esqeTCBI4V0cokmsZCGE0Yrkb3x
+ ezl9ZqlhTNFAV7NYf1Q6M8Kctwyg3CCMP/1mGqC4/De366EnjhIyPFGfY=
 Received: from ur-dp1000 (unknown [192.168.100.1])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAfwA3cUL63mpqEscVAA--.18165S2; 
- Thu, 30 Jul 2026 13:20:05 +0800 (CST)
+ AQAAfwA3cUL63mpqEscVAA--.18165S3; 
+ Thu, 30 Jul 2026 13:20:06 +0800 (CST)
 From: Xie Bo <xb@ultrarisc.com>
 To: qemu-devel@nongnu.org
 Cc: ajones@ventanamicro.com, qemu-riscv@nongnu.org, alistair23@gmail.com,
  pbonzini@redhat.com, anup@brainfault.org, alistair.francis@wdc.com,
  rkrcmar@ventanamicro.com, palmer@dabbelt.com,
  daniel.barboza@oss.qualcomm.com, xb@ultrarisc.com
-Subject: [PATCH v10 0/2] target/riscv: Fix riscv64 KVM migration
-Date: Thu, 30 Jul 2026 13:19:24 +0800
-Message-ID: <20260730051926.7322-1-xb@ultrarisc.com>
+Subject: [PATCH v10 1/2] target/riscv/kvm: Synchronize privilege mode
+Date: Thu, 30 Jul 2026 13:19:25 +0800
+Message-ID: <20260730051926.7322-2-xb@ultrarisc.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20250915070811.3422578-1-xb@ultrarisc.com>
+In-Reply-To: <20260730051926.7322-1-xb@ultrarisc.com>
 References: <20250915070811.3422578-1-xb@ultrarisc.com>
+ <20260730051926.7322-1-xb@ultrarisc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwA3cUL63mpqEscVAA--.18165S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7Kr1xKw4xXrW7CFy5XrWfAFb_yoW8tr4rpr
- 4rW3yFgFnFqFy7Gw1fJr43GFyYvr4fKF45twsrtr10v398JrWqgrs2qFyUXFZxCFyIgr1a
- vr1qy3sxCF1DAF7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUU9l14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
- 1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
- 6F4UM28EF7xvwVC2z280aVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4j6r
- 4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
- I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
- 4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628v
- n2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCY02Avz4vE-syl42xK82IYc2Ij64vIr41l4I
- 8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AK
- xVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcV
- AFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8I
- cIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r
- 4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjfUFg4SDUUUU
-X-CM-SenderInfo: l0e63zxwud2x1vfou0bp/1tbiAQATB2pkMtIAAQAZsj
+X-CM-TRANSID: AQAAfwA3cUL63mpqEscVAA--.18165S3
+X-Coremail-Antispam: 1UD129KBjvJXoW7tFWftw13GFWDtw1rAF1rXrb_yoW8Gry3pa
+ n5Gay5KF93JFWxG3yfAr4DX3WrWr43GwsxZFWxuw129r45trWUKr9FgF4Utr95GFWrZr4Y
+ vF4qkr1Y9F45ZaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUmm14x267AKxVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+ rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_Jr4l82xGYIkIc2
+ x26xkF7I0E14v26r4j6ryUM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
+ Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1l84
+ ACjcxK6I8E87Iv67AKxVWUJVW8JwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UM2AI
+ xVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20x
+ vE14v26r106r15McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xv
+ r2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxan2IY04
+ v7MxkF7I0En4kS14v26r1q6r43MxkIecxEwVCm-wCF04k20xvY0x0EwIxGrwCFx2IqxVCF
+ s4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r
+ 1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWU
+ JVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r
+ 1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1U
+ YxBIdaVFxhVjvjDU0xZFpf9x0JUTT5JUUUUU=
+X-CM-SenderInfo: l0e63zxwud2x1vfou0bp/1tbiAQATB2pkMtIAAQAbsh
 X-Host-Lookup-Failed: Reverse DNS lookup failed for 218.76.62.146 (failed)
 Received-SPF: pass client-ip=218.76.62.146; envelope-from=xb@ultrarisc.com;
  helo=ultrarisc.com
@@ -85,52 +87,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series revives v9, which was applied to riscv-to-apply.next but did
-not reach QEMU master.
+The KVM core register synchronization currently omits the vCPU privilege
+mode. As a result, env.priv can be stale when the migration stream is saved
+and the destination can restore the vCPU in the wrong mode.
 
-RISC-V KVM migration currently loses two pieces of vCPU state: the
-privilege mode core register and KVM MP state. The latter leaves secondary
-vCPUs in their reset STOPPED state on the destination.
+Read and write the KVM core mode register together with the other core
+registers. The generic RISC-V CPU VMState already carries env.priv, so no
+migration format change is required.
 
-Synchronize the privilege mode through the existing generic CPU VMState,
-and carry MP state in a capability-gated KVM-only subsection. Keeping MP
-state in a subsection avoids changing the generic RISC-V CPU VMState
-version or adding KVM state to TCG migration streams.
+Signed-off-by: Xie Bo <xb@ultrarisc.com>
+---
+ target/riscv/kvm/kvm-cpu.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-Migration streams from older QEMU versions that lack the subsection can
-still be loaded, retaining their previous destination reset behavior.
-When KVM_CAP_MP_STATE is available, streams produced by this series require
-a destination that recognizes the new subsection; an older destination
-rejects the stream instead of silently losing MP state.
-
-Changes from v9:
-- Rebase on QEMU master at e1705a25aff3.
-- Drop the reset-to-S-mode change that is already present upstream.
-- Keep the generic RISC-V CPU VMState version unchanged.
-- Save MP state in a KVM-only subsection and restore it only when the
-  subsection was loaded.
-- Reset the subsection-loaded flag in the parent VMState pre-load callback.
-
-Testing on a native riscv64 host with Linux 6.6.20 and GCC 13.3.0:
-- KVM build: riscv64-softmmu, --enable-kvm.
-- Non-KVM build: riscv64-softmmu, --disable-kvm.
-- Four-vCPU KVM migration on unmodified master: all vCPUs failed to run
-  after migration and the guest reported RCU stalls.
-- The same migration with this series: CPU0 through CPU3 all ran after
-  migration.
-- Four user-mode busy workers, one pinned to each vCPU, all made forward
-  progress across migration to exercise privilege-mode restoration.
-
-Xie Bo (2):
-  target/riscv/kvm: Synchronize privilege mode
-  target/riscv/kvm: Preserve MP state across migration
-
- target/riscv/cpu.h           |  4 +++
- target/riscv/kvm/kvm-cpu.c   | 62 ++++++++++++++++++++++++++----------
- target/riscv/kvm/kvm_riscv.h |  2 +-
- target/riscv/machine.c       | 45 ++++++++++++++++++++++++++
- 4 files changed, 96 insertions(+), 17 deletions(-)
-
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 495cb42dc8..8218832fbe 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -603,6 +603,12 @@ static int kvm_riscv_get_regs_core(CPUState *cs)
+     }
+     env->pc = reg;
+ 
++    ret = kvm_get_one_reg(cs, RISCV_CORE_REG(mode), &reg);
++    if (ret) {
++        return ret;
++    }
++    env->priv = reg;
++
+     for (i = 1; i < 32; i++) {
+         uint64_t id = KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_CORE, i);
+         ret = kvm_get_one_reg(cs, id, &reg);
+@@ -628,6 +634,12 @@ static int kvm_riscv_put_regs_core(CPUState *cs)
+         return ret;
+     }
+ 
++    reg = env->priv;
++    ret = kvm_set_one_reg(cs, RISCV_CORE_REG(mode), &reg);
++    if (ret) {
++        return ret;
++    }
++
+     for (i = 1; i < 32; i++) {
+         uint64_t id = KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_CORE, i);
+         reg = env->gpr[i];
 -- 
 2.17.1
 
