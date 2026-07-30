@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11E7FC5516D
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 20:11:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5431C5516D
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 20:11:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpX5S-0004SU-Bz; Thu, 30 Jul 2026 16:10:38 -0400
+	id 1wpX57-00048p-Gr; Thu, 30 Jul 2026 16:10:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mikail.sadic@ibm.com>)
- id 1wpX5R-0004Ri-24; Thu, 30 Jul 2026 16:10:37 -0400
+ id 1wpX54-00048J-U9; Thu, 30 Jul 2026 16:10:14 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mikail.sadic@ibm.com>)
- id 1wpX5O-0001hy-M4; Thu, 30 Jul 2026 16:10:36 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ id 1wpX52-0001fr-1t; Thu, 30 Jul 2026 16:10:14 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66UJmH4L2081231; Thu, 30 Jul 2026 20:09:53 GMT
+ 66UJmHPg3943952; Thu, 30 Jul 2026 20:09:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=FWH5fKEXgV1pyhFdq
- EV8/wNsqC10HjLI7+sxkBzqIC8=; b=LpH/8kojEHKnDEqZ3UDHpDV/hhbnEN0X2
- zQ8znmDfXpIr8kK6PgnqDocfeyR9lu3cilXJ1aNlgZ2i1ROdlTRlGgekpNM/VwLK
- sR5D4fae7YHbfph1xcBTirjIF0Ee4vAAio9kldcqPekpkKHeqHUySurYEX5zglRf
- a9fY6pQgnJ1PfZ6ZYgWuY6uNfuP17oANrhQGZrdrTc8qDoc5Cl9e731bl07y5jXG
- ky59ZAAhTuP8WRXN1xDAICy2AOjAxiP7ZTXzBqqaPHkd8IXsjTofAwqez6MdQN/u
- fNG8eiqbjKae/eVOEoP2emVnVPPNkdW4KMTM9PIDmWfhS8f6Wn1iQ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuycsmhu-1
+ :mime-version:references:subject:to; s=pp1; bh=2NOnTZEqIuT7IFHuD
+ eZwjuJsE3jf3YykrmT+jlq0Wt4=; b=F9YTBs6lbZbUKfKJ0Oz/W37hWbLdEybpN
+ JvgmeYR0fP4mqheuDHP4hjvj+0aUpLOoTz8vLaGNAz6IFA07M0P5o+MlDSGzsc+S
+ QJeX8twIZLRxDefVhmxkelz+Kz9pkfrM00jKL9FQmSoFLu/v6OWS6bKYYC2Kiycm
+ j+Q9d576VtjTQ8TR7O24QypTXTAy7IXPnz21k9lImiA8EMShYXXYzNrwdysJpzhb
+ wpBh7LuJRKuzfkuFTwayIgkgSqjw65t+HW8vlWhkXaBYGHwtMWRrJD6gk00fylsb
+ /VyNCZhHI7tkDFmArmYavCwljpMzIbDTfLLxc6y06aUPx8v3TQIQQ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuw7spef-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Jul 2026 20:09:52 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66UJuFfK017022;
- Thu, 30 Jul 2026 20:09:52 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fn9pgmsm1-1
+ Thu, 30 Jul 2026 20:09:50 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66UJuQ4s005700;
+ Thu, 30 Jul 2026 20:09:49 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn8yhmv4e-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Jul 2026 20:09:51 +0000 (GMT)
+ Thu, 30 Jul 2026 20:09:49 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66UK9orw5964432
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66UK9lw937880508
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 30 Jul 2026 20:09:50 GMT
+ Thu, 30 Jul 2026 20:09:48 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 143C158043;
- Thu, 30 Jul 2026 20:09:50 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id AC79E5805F;
+ Thu, 30 Jul 2026 20:09:47 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AE0BB58059;
- Thu, 30 Jul 2026 20:09:49 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 5247858059;
+ Thu, 30 Jul 2026 20:09:47 +0000 (GMT)
 Received: from IBM-MFS.atx-us.ibm.com (unknown [9.16.49.87])
  by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 30 Jul 2026 20:09:49 +0000 (GMT)
+ Thu, 30 Jul 2026 20:09:47 +0000 (GMT)
 From: Mikail Sadic <mikail.sadic@ibm.com>
 To: clg@kaod.org, peter.maydell@linaro.org
 Cc: Mikail Sadic <mikail.sadic@ibm.com>, pbonzini@redhat.com,
@@ -65,9 +65,9 @@ Cc: Mikail Sadic <mikail.sadic@ibm.com>, pbonzini@redhat.com,
  jamin_lin@aspeedtech.com, kane_chen@aspeedtech.com,
  andrew@codeconstruct.com.au, joel@jms.id.au, calebs@linux.ibm.com,
  milesg@linux.ibm.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v2 7/8] ufs/aspeed: Add AST2700 sysbus UFS frontend
-Date: Thu, 30 Jul 2026 15:09:42 -0500
-Message-ID: <20260730200945.1113936-8-mikail.sadic@ibm.com>
+Subject: [PATCH v2 1/8] fsi/cfam: Add common CFAM base class
+Date: Thu, 30 Jul 2026 15:09:36 -0500
+Message-ID: <20260730200945.1113936-2-mikail.sadic@ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260730200945.1113936-1-mikail.sadic@ibm.com>
 References: <20260730200945.1113936-1-mikail.sadic@ibm.com>
@@ -75,32 +75,32 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: YEVZtXDm-DSnWaz_85lEP0r0jnetkZSi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfX0WxJXGdwxGl2
- 3LcIarXuILV4maGCeYZPYwLDYm8OQjRCOBm+AI+r8Sk+jnqIsLgh2Z9XybiK9QWayB23BJsq90F
- d0rTOsmAZyND2DSuQti2qsusDKBrjv6o2qiHA78GEj5ztieBijW0UC7vL0Wjxg21hFeyzHq2obF
- eSQ7l+gW9PdAb8jde2pPYiCVKqsyabtGklz7ZzCEL9fk9p813xUnbdmBC9rKYeAzUXRSQXWlxXD
- 3DaZxfyHrCZt02ibMIdCoursYHn6QYcNouTz7dwES0qMMjzZW3iU6993eqAY7HxNr5PyMBENUrq
- +Wicz0G8tpONw29M8kJqhu6xKFnx6AKUspJ1KrspmhpdZNy4fDwn/LA6Qlua9zb72ypJoPFIiqu
- vCXN04iFPKQI8lqgAp1dWWwTdrhXvyFSC1nndCyZJS+vbVPm5y1B7DHruko1iv/m7eV8WBnPD0P
- u5IvE94mY1zhHFGwwGA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfXzwrId/mPb1pB
- 2CU8+116k4eY/OQw6IwcyJXBHbakk6IdqRJzOuc2qcRs+L0kwNHIy1fbczCe7ed23oG1k5QRHom
- iq9B3w9wiAyuWEZs1uDY4l8XQWabM3U=
-X-Authority-Analysis: v=2.4 cv=AZeB2XXG c=1 sm=1 tr=0 ts=6a6baf91 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Proofpoint-GUID: 8UdPS8RSGLu6oWLLwnLVM8H5t6qa2v4N
+X-Proofpoint-ORIG-GUID: cIdF5xvVpOJNbx2soWv5RvJy_IyjWcP2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfX5aHXK0yYoGOW
+ lY7RqN7W/uTTkoEo4gERGUYq2Q/1vA8yZXIra0J+QnxhtdPTDsmV0D678jQAwc8layQFRxKrZQx
+ 3407dobxjgcUfBsEY40LmjSEsCojWs/Ma4m/umah0IGy+pL8+rbkfh2ib0RcRx4Tig3IvLiZY5B
+ 31/0+y5HbnBRS/fbZFJNxth8AeynN3fphHBUYLLNn2PFjQAh6KLx3OcRcje4meHYHwGBQl411PN
+ DmEqws3ULGbExND2xvxta4R2/F00l1xC8HqNGLK8Lyjo9yL+xgxgSOLtIGD0sss7CgQguBJdfJ8
+ hrEX52RhX2IeYtb65gaZ/wy+teMscucg43aohEWFjAf7sooFt98fogINId/xpiocBAkQ5Fwvv7y
+ AkUe1k4koenWaorFIwj5vx9jfAM4QVYqr00SxAP5ARZscaJVR7BKUM9TQ267wW9uaUjyomRvCvC
+ AQd8IsYsSbzcwgLtaLg==
+X-Authority-Analysis: v=2.4 cv=SKFykuvH c=1 sm=1 tr=0 ts=6a6baf8f cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=hD80L64hAAAA:8
- a=3Ht_1UATksvqfbOLzXUA:9
-X-Proofpoint-GUID: C8vwfhOB7860XLOsy7cT3YYkMREV46q5
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=W4DHDBySKM8I3gRjHxAA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfXyW4uVVRbV+fP
+ z1d/jPIIlt52sG/D5C9miEH0yN/XjLJ2pRXzPrR/Z3hwDyenihR0g6qPkYhR+6z8DBOTb8cbvYn
+ YTuUpHN4DhlmrmoyQNPai4cev4f6h18=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-30_06,2026-07-30_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 phishscore=0 adultscore=0 impostorscore=0
- clxscore=1015 malwarescore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607300145
+ priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607300145
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=mikail.sadic@ibm.com;
  helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -27
@@ -125,329 +125,318 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add TYPE_ASPEED_UFS, a sysbus frontend around the common UFS core,
-and wire it into the AST2700 SoC. The frontend reuses UfsHc
-(instance_size = sizeof(UfsHc)), sets dma_as to address_space_memory,
-and calls ufs_realize_core() before exposing its MMIO region and IRQ via
-sysbus. It reports UFSHCI 2.0 (reg.ver = 0x0200) to match the AST2700
-(aspeed,ufshc-m31-16nm).
+Prepare a common CFAM parent class for CFAM-S implementation.
+
+Add an abstract TYPE_FSI_CFAM_COMMON with an FSICFAMCommonClass holding
+what varies between types: the config table, the offsets of the FSI
+responder and the local bus within the register slot, and a
+realize_engines() hook for the engines on the local bus. Its realize is
+driven by those fields, so one realize serves every type. TYPE_FSI_CFAM
+keeps its name and becomes the first derived type, supplying the P9
+config table, its slot offsets and the scratchpad engine. The config
+table becomes data, still written with the same CFAM_CONFIG_REG()
+expressions, which move to the header so a derived type can describe its
+own table the same way.
+
+No functional change: same memory map, same config words, same type and
+child names. aspeed_fsi-test verified.
 
 Signed-off-by: Mikail Sadic <mikail.sadic@ibm.com>
 ---
- MAINTAINERS                 |  1 +
- docs/specs/aspeed-ufs.rst   | 40 ++++++++++++++++++++
- docs/specs/index.rst        |  1 +
- include/hw/arm/aspeed.h     |  1 +
- include/hw/arm/aspeed_soc.h |  3 ++
- include/hw/ufs/aspeed_ufs.h | 16 ++++++++
- hw/arm/aspeed.c             | 25 +++++++++++++
- hw/arm/aspeed_ast27x0.c     | 13 +++++++
- hw/ufs/aspeed_ufs.c         | 75 +++++++++++++++++++++++++++++++++++++
- hw/ufs/meson.build          |  1 +
- 10 files changed, 176 insertions(+)
- create mode 100644 docs/specs/aspeed-ufs.rst
- create mode 100644 include/hw/ufs/aspeed_ufs.h
- create mode 100644 hw/ufs/aspeed_ufs.c
+ include/hw/fsi/cfam.h |  58 ++++++++++++++++++--
+ hw/fsi/cfam.c         | 123 ++++++++++++++++++++++++------------------
+ hw/fsi/fsi-master.c   |   2 +-
+ 3 files changed, 127 insertions(+), 56 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index ec415cb8e4..abebae2ff9 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2700,6 +2700,7 @@ M: Jeuk Kim <jeuk20.kim@samsung.com>
- S: Supported
- F: hw/ufs/*
- F: include/block/ufs.h
-+F: include/hw/ufs/aspeed_ufs.h
- F: tests/qtest/ufs-test.c
+diff --git a/include/hw/fsi/cfam.h b/include/hw/fsi/cfam.h
+index cceb4bd6f1..0f5464b4a0 100644
+--- a/include/hw/fsi/cfam.h
++++ b/include/hw/fsi/cfam.h
+@@ -7,18 +7,44 @@
+ #ifndef FSI_CFAM_H
+ #define FSI_CFAM_H
  
- megasas
-diff --git a/docs/specs/aspeed-ufs.rst b/docs/specs/aspeed-ufs.rst
-new file mode 100644
-index 0000000000..596b5d2756
---- /dev/null
-+++ b/docs/specs/aspeed-ufs.rst
-@@ -0,0 +1,40 @@
-+ASPEED AST2700 UFS Host Controller
-+===================================
-+
-+The AST2700 SoC includes a UFS host controller identified in the device tree
-+as ``aspeed,ufshc-m31-16nm``, mapped at ``0x12c08200`` (IRQ SPI 118). QEMU
-+models it as a sysbus frontend on top of the shared UFS core that also backs
-+the PCI UFS device (``hw/ufs/ufs.c`` and ``hw/ufs/lu.c``). The frontend only
-+provides the sysbus MMIO region, the interrupt line and the DMA address
-+space; all UFSHCI register behaviour, UTP transfer/task list processing,
-+UPIU and query handling and the SCSI logical-unit logic are implemented by
-+the core.
-+
-+The clock/reset wrapper at ``0x12c08000`` (``aspeed,ast2700-ufscnr``) is left
-+as an ``UnimplementedDevice``.
-+
-+Logical units
-+-------------
-+
-+Storage is attached through ``ufs-lu`` devices on the controller's UFS bus
-+(``ufs-bus.0``), exactly as for the PCI UFS device. The Huygens OpenBMC image
-+is laid out for 512-byte sectors, so its logical unit is created with
-+``logical-block-size=512``.
-+
-+Usage
-+-----
-+
-+Attach a UFS image as logical unit 0 of the controller's UFS bus:
-+
-+.. code-block:: console
-+
-+  qemu-system-aarch64 -M huygens-bmc \
-+    -nodefaults \
-+    -blockdev node-name=fmc0,driver=file,filename=image-bmc \
-+    -device w25q01jvq,bus=ssi.0,cs=0,drive=fmc0 \
-+    -blockdev node-name=ufs0,driver=file,filename=ufs.img \
-+    -device ufs-lu,bus=ufs-bus.0,drive=ufs0,lun=0,logical-block-size=512 \
-+    -display none -serial mon:stdio
-+
-+Please check :doc:`../../system/arm/aspeed` for more details on the
-+``huygens-bmc`` machine.
-diff --git a/docs/specs/index.rst b/docs/specs/index.rst
-index 4de65e2fdf..dd0cdec8d4 100644
---- a/docs/specs/index.rst
-+++ b/docs/specs/index.rst
-@@ -40,4 +40,5 @@ guest hardware that is specific to QEMU.
-    riscv-aia
-    aspeed-intc
-    ucd90320
-+   aspeed-ufs
-    iommu-testdev
-diff --git a/include/hw/arm/aspeed.h b/include/hw/arm/aspeed.h
-index a00238ed74..dedc784926 100644
---- a/include/hw/arm/aspeed.h
-+++ b/include/hw/arm/aspeed.h
-@@ -62,6 +62,7 @@ struct AspeedMachineClass {
-     uint32_t uart_default;
-     bool sdhci_wp_inverted;
-     bool vbootrom;
-+    uint32_t ufs_block_size;
- };
++#include "qemu/units.h"
+ #include "system/memory.h"
  
- /*
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index 41dc04e293..56fab0a350 100644
---- a/include/hw/arm/aspeed_soc.h
-+++ b/include/hw/arm/aspeed_soc.h
-@@ -35,6 +35,7 @@
- #include "hw/gpio/aspeed_gpio.h"
- #include "hw/gpio/aspeed_sgpio.h"
- #include "hw/sd/aspeed_sdhci.h"
-+#include "hw/ufs/aspeed_ufs.h"
- #include "hw/usb/hcd-ehci.h"
- #include "qom/object.h"
- #include "hw/misc/aspeed_lpc.h"
-@@ -118,6 +119,7 @@ struct AspeedSoCState {
-     AspeedAPB2OPBState fsi[2];
-     AspeedLTPIState ltpi_ctrl[ASPEED_IOEXP_NUM];
-     AspeedAST1700SoCState ioexp[ASPEED_IOEXP_NUM];
-+    UfsHc ufs;
- };
+ #include "hw/fsi/fsi.h"
+ #include "hw/fsi/lbus.h"
  
- #define TYPE_ASPEED_SOC "aspeed-soc"
-@@ -298,6 +300,7 @@ enum {
-     ASPEED_DEV_PRIC0,
-     ASPEED_DEV_PRIC1,
-     ASPEED_DEV_OTP,
-+    ASPEED_DEV_UFS,
- };
- 
- const char *aspeed_soc_cpu_type(const char * const *valid_cpu_types);
-diff --git a/include/hw/ufs/aspeed_ufs.h b/include/hw/ufs/aspeed_ufs.h
-new file mode 100644
-index 0000000000..1ccd0b51c0
---- /dev/null
-+++ b/include/hw/ufs/aspeed_ufs.h
-@@ -0,0 +1,16 @@
 +/*
-+ * ASPEED AST2700 UFS Host Controller
-+ *
-+ * Copyright 2026 IBM Corp.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
++ * All CFAM flavors present a register slot holding a config table, an FSI
++ * responder and a local bus carrying the engines the config table describes.
++ * That is the common model; each flavor supplies its own table, slot layout
++ * and engines.
 + */
++#define TYPE_FSI_CFAM_COMMON "cfam-common"
++OBJECT_DECLARE_TYPE(FSICFAMCommonState, FSICFAMCommonClass, FSI_CFAM_COMMON)
 +
-+#ifndef ASPEED_UFS_H
-+#define ASPEED_UFS_H
-+
-+#include "hw/ufs/ufs.h"
-+
-+#define TYPE_ASPEED_UFS "aspeed-ufs"
-+#define ASPEED_UFS(obj) OBJECT_CHECK(UfsHc, (obj), TYPE_ASPEED_UFS)
-+
-+#endif /* ASPEED_UFS_H */
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index a48c442058..5b9943a0e0 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -187,6 +187,31 @@ static void aspeed_machine_init(MachineState *machine)
-     aspeed_connect_serial_hds_to_uarts(bmc);
-     qdev_realize(DEVICE(bmc->soc), NULL, &error_abort);
+ #define TYPE_FSI_CFAM "cfam"
+-#define FSI_CFAM(obj) OBJECT_CHECK(FSICFAMState, (obj), TYPE_FSI_CFAM)
++OBJECT_DECLARE_SIMPLE_TYPE(FSICFAMState, FSI_CFAM)
  
-+    /*
-+     * If the SoC instantiated a UFS host controller (AST2700), attach the
-+     * first backend drive to it as logical unit 0.  The controller and its
-+     * UFS bus only exist once the SoC has been realized, so the ufs-lu is
-+     * created here rather than through a controller drive property.
-+     */
-+    if (object_resolve_path_component(OBJECT(bmc->soc), "ufs")) {
-+        DriveInfo *ufs_dinfo = drive_get(IF_NONE, 0, 0);
-+
-+        if (ufs_dinfo) {
-+            DeviceState *ufs_lu = qdev_new(TYPE_UFS_LU);
-+
-+            qdev_prop_set_uint8(ufs_lu, "lun", 0);
-+            if (amc->ufs_block_size) {
-+                qdev_prop_set_uint32(ufs_lu, "logical-block-size",
-+                                     amc->ufs_block_size);
-+            }
-+            qdev_prop_set_drive_err(ufs_lu, "drive",
-+                                    blk_by_legacy_dinfo(ufs_dinfo),
-+                                    &error_fatal);
-+            qdev_realize_and_unref(ufs_lu, BUS(&bmc->soc->ufs.bus),
-+                                   &error_fatal);
-+        }
-+    }
-+
-     if (defaults_enabled()) {
-         aspeed_board_init_flashes(&bmc->soc->fmc,
-                               bmc->fmc_model ? bmc->fmc_model : amc->fmc_model,
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index b908d7d4ff..1ee8f3a210 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -46,6 +46,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
-     [ASPEED_GIC_REDIST]    =  0x12280000,
-     [ASPEED_DEV_SDMC]      =  0x12C00000,
-     [ASPEED_DEV_SCU]       =  0x12C02000,
-+    [ASPEED_DEV_UFS]       =  0x12c08200,
-     [ASPEED_DEV_RTC]       =  0x12C0F000,
-     [ASPEED_DEV_TIMER1]    =  0x12C10000,
-     [ASPEED_DEV_PCIE_PHY0] =  0x12C15000,
-@@ -129,6 +130,7 @@ static const int aspeed_soc_ast2700a1_irqmap[] = {
-     [ASPEED_DEV_EHCI2]     = 37,
-     [ASPEED_DEV_PCIE0]     = 56,
-     [ASPEED_DEV_PCIE1]     = 57,
-+    [ASPEED_DEV_UFS]       = 118,
-     [ASPEED_DEV_LPC]       = 192,
-     [ASPEED_DEV_IBT]       = 192,
-     [ASPEED_DEV_KCS]       = 192,
-@@ -533,6 +535,8 @@ static void aspeed_soc_ast2700_init(Object *obj)
-     object_initialize_child(obj, "emmc-controller.sdhci", &s->emmc.slots[0],
-                             TYPE_SYSBUS_SDHCI);
+ /* P9-ism */
+ #define CFAM_CONFIG_NR_REGS 0x28
  
-+    object_initialize_child(obj, "ufs", &s->ufs, TYPE_ASPEED_UFS);
+-typedef struct FSICFAMState {
++#define FSI_CFAM_SLOT_SIZE   (2 * MiB)
++#define FSI_CFAM_CONFIG_SIZE 0x400
 +
-     snprintf(typename, sizeof(typename), "aspeed.timer-%s", socname);
-     object_initialize_child(obj, "timerctrl", &s->timerctrl, typename);
++#define ENGINE_CONFIG_NEXT            BIT(31)
++#define ENGINE_CONFIG_TYPE_PEEK       (0x02 << 4)
++#define ENGINE_CONFIG_TYPE_FSI        (0x03 << 4)
++#define ENGINE_CONFIG_TYPE_SCRATCHPAD (0x06 << 4)
++
++/* Valid, slots, version, type, crc */
++#define CFAM_CONFIG_REG(__VER, __TYPE, __CRC)   \
++    (ENGINE_CONFIG_NEXT       |   \
++     0x00010000               |   \
++     (__VER)                  |   \
++     (__TYPE)                 |   \
++     (__CRC))
++
++struct FSICFAMCommonState {
+     /* < private > */
+     FSISlaveState parent;
  
-@@ -1039,6 +1043,15 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->emmc), 0,
-                        aspeed_soc_ast2700_get_irq(s, ASPEED_DEV_EMMC));
+@@ -28,7 +54,33 @@ typedef struct FSICFAMState {
+     MemoryRegion mr;
  
-+    /* UFS */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->ufs), errp)) {
-+        return;
-+    }
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->ufs), 0,
-+                    sc->memmap[ASPEED_DEV_UFS]);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->ufs), 0,
-+                       aspeed_soc_ast2700_get_irq(s, ASPEED_DEV_UFS));
-+
-     /* Timer */
-     object_property_set_link(OBJECT(&s->timerctrl), "scu", OBJECT(&s->scu),
-                              &error_abort);
-diff --git a/hw/ufs/aspeed_ufs.c b/hw/ufs/aspeed_ufs.c
-new file mode 100644
-index 0000000000..d3e1a9a736
---- /dev/null
-+++ b/hw/ufs/aspeed_ufs.c
-@@ -0,0 +1,75 @@
-+/*
-+ * ASPEED AST2700 UFS Host Controller
-+ *
-+ * Sysbus frontend for the AST2700 UFS host controller
-+ * (aspeed,ufshc-m31-16nm).  The UFSHCI register interface, UTRL/UTMRL
-+ * processing, UPIU/query handling and the SCSI/logical-unit logic are all
-+ * provided by the shared UFS core (hw/ufs/ufs.c, hw/ufs/lu.c); this file
-+ * only supplies the sysbus-specific MMIO, IRQ and DMA plumbing.
-+ *
-+ * The ASPEED clock/reset wrapper at 0x12c08000 (aspeed,ast2700-ufscnr) is
-+ * modelled elsewhere as an UnimplementedDevice.
-+ *
-+ * Copyright 2026 IBM Corp.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "hw/core/qdev-properties.h"
-+#include "system/address-spaces.h"
-+#include "hw/ufs/aspeed_ufs.h"
-+
-+static void aspeed_ufs_realize(DeviceState *dev, Error **errp)
-+{
-+    UfsHc *u = ASPEED_UFS(dev);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+
-+    /* AST2700 UFS masters DMA into system memory. */
-+    u->dma_as = &address_space_memory;
-+
-+    if (!ufs_realize_core(u, errp)) {
-+        return;
-+    }
-+
-+    /*
-+     * The AST2700 host controller (aspeed,ufshc-m31-16nm) reports UFSHCI
-+     * version 2.0. The shared core defaults to 4.1, which makes the U-Boot
-+     * and Linux aspeed-ufs drivers run 4.x-only probe steps that this model
-+     * does not implement. Pin the controller version register to 2.0.
-+     */
-+    u->reg.ver = 0x00000200;
-+
-+    ufs_init_mmio(u);
-+    sysbus_init_mmio(sbd, &u->iomem);
-+    sysbus_init_irq(sbd, &u->irq);
-+}
-+
-+static const Property aspeed_ufs_props[] = {
-+    DEFINE_PROP_STRING("serial", UfsHc, params.serial),
-+    DEFINE_PROP_UINT8("nutrs", UfsHc, params.nutrs, 32),
-+    DEFINE_PROP_UINT8("nutmrs", UfsHc, params.nutmrs, 8),
-+    DEFINE_PROP_UINT32("wb-max-size", UfsHc, params.wb_max_size, 0x400),
-+    DEFINE_PROP_UINT32("wb-min-size", UfsHc, params.wb_min_size, 0x100),
+     FSILBus lbus;
 +};
 +
-+static void aspeed_ufs_class_init(ObjectClass *oc, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(oc);
++struct FSICFAMCommonClass {
++    /* < private > */
++    DeviceClass parent_class;
 +
-+    dc->realize = aspeed_ufs_realize;
-+    dc->desc = "ASPEED UFS Host Controller";
-+    device_class_set_props(dc, aspeed_ufs_props);
-+    set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
-+}
++    /* < public > */
++    /* Config table served by the common ops, one word per 4-byte offset */
++    const uint32_t *config;
++    unsigned config_nr;
 +
-+static const TypeInfo aspeed_ufs_types[] = {
-+    {
-+        .name          = TYPE_ASPEED_UFS,
-+        .parent        = TYPE_SYS_BUS_DEVICE,
-+        .instance_size = sizeof(UfsHc),
-+        .class_init    = aspeed_ufs_class_init,
-+    },
++    /* Layout of the register slot */
++    hwaddr responder_offset;
++    hwaddr lbus_offset;
++
++    /* Realize and map this flavor's local bus engines */
++    bool (*realize_engines)(FSICFAMCommonState *cfam, Error **errp);
 +};
 +
-+DEFINE_TYPES(aspeed_ufs_types)
-diff --git a/hw/ufs/meson.build b/hw/ufs/meson.build
-index 6e68328b93..86052e6fd2 100644
---- a/hw/ufs/meson.build
-+++ b/hw/ufs/meson.build
-@@ -1 +1,2 @@
- system_ss.add(when: 'CONFIG_UFS_PCI', if_true: files('ufs.c', 'lu.c'))
-+system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_ufs.c'))
++struct FSICFAMState {
++    /* < private > */
++    FSICFAMCommonState parent;
++
+     FSIScratchPad scratchpad;
+-} FSICFAMState;
++};
++
++bool fsi_cfam_add_engine(FSICFAMCommonState *cfam, DeviceState *engine,
++                         hwaddr offset, Error **errp);
+ 
+ #endif /* FSI_CFAM_H */
+diff --git a/hw/fsi/cfam.c b/hw/fsi/cfam.c
+index 54c0b05769..361cb34808 100644
+--- a/hw/fsi/cfam.c
++++ b/hw/fsi/cfam.c
+@@ -16,19 +16,6 @@
+ 
+ #include "hw/core/qdev-properties.h"
+ 
+-#define ENGINE_CONFIG_NEXT            BIT(31)
+-#define ENGINE_CONFIG_TYPE_PEEK       (0x02 << 4)
+-#define ENGINE_CONFIG_TYPE_FSI        (0x03 << 4)
+-#define ENGINE_CONFIG_TYPE_SCRATCHPAD (0x06 << 4)
+-
+-/* Valid, slots, version, type, crc */
+-#define CFAM_CONFIG_REG(__VER, __TYPE, __CRC)   \
+-    (ENGINE_CONFIG_NEXT       |   \
+-     0x00010000               |   \
+-     (__VER)                  |   \
+-     (__TYPE)                 |   \
+-     (__CRC))
+-
+ #define TO_REG(x)                          ((x) >> 2)
+ 
+ #define CFAM_CONFIG_CHIP_ID                TO_REG(0x00)
+@@ -36,34 +23,33 @@
+ #define CFAM_CONFIG_CHIP_ID_P9             0xc0022d15
+ #define CFAM_CONFIG_CHIP_ID_BREAK          0xc0de0000
+ 
++/*
++ * Config table of the P9 CFAM: the chip ID followed by one entry per engine,
++ * entry n describing the engine at address n * 4. We need to add future
++ * engines from address 0x10 onwards.
++ */
++static const uint32_t cfam_p9_config[] = {
++    CFAM_CONFIG_CHIP_ID_P9,
++    CFAM_CONFIG_REG(0x1000, ENGINE_CONFIG_TYPE_PEEK, 0xc),
++    CFAM_CONFIG_REG(0x5000, ENGINE_CONFIG_TYPE_FSI, 0xa),
++    CFAM_CONFIG_REG(0x1000, ENGINE_CONFIG_TYPE_SCRATCHPAD, 0x7),
++};
++
+ static uint64_t fsi_cfam_config_read(void *opaque, hwaddr addr, unsigned size)
+ {
++    FSICFAMCommonClass *cc = FSI_CFAM_COMMON_GET_CLASS(opaque);
++    unsigned int reg = TO_REG(addr);
++
+     trace_fsi_cfam_config_read(addr, size);
+ 
+-    switch (addr) {
+-    case 0x00:
+-        return CFAM_CONFIG_CHIP_ID_P9;
+-    case 0x04:
+-        return CFAM_CONFIG_REG(0x1000, ENGINE_CONFIG_TYPE_PEEK, 0xc);
+-    case 0x08:
+-        return CFAM_CONFIG_REG(0x5000, ENGINE_CONFIG_TYPE_FSI, 0xa);
+-    case 0xc:
+-        return CFAM_CONFIG_REG(0x1000, ENGINE_CONFIG_TYPE_SCRATCHPAD, 0x7);
+-    default:
+-        /*
+-         * The config table contains different engines from 0xc onwards.
+-         * The scratch pad is already added at address 0xc. We need to add
+-         * future engines from address 0x10 onwards. Returning 0 as engine
+-         * is not implemented.
+-         */
+-        return 0;
+-    }
++    /* Engines past the end of the table are not implemented */
++    return reg < cc->config_nr ? cc->config[reg] : 0;
+ }
+ 
+ static void fsi_cfam_config_write(void *opaque, hwaddr addr, uint64_t data,
+                                   unsigned size)
+ {
+-    FSICFAMState *cfam = FSI_CFAM(opaque);
++    FSICFAMCommonState *cfam = FSI_CFAM_COMMON(opaque);
+ 
+     trace_fsi_cfam_config_write(addr, size, data);
+ 
+@@ -109,59 +95,92 @@ static const struct MemoryRegionOps fsi_cfam_unimplemented_ops = {
+     .endianness = DEVICE_BIG_ENDIAN,
+ };
+ 
+-static void fsi_cfam_instance_init(Object *obj)
++bool fsi_cfam_add_engine(FSICFAMCommonState *cfam, DeviceState *engine,
++                         hwaddr offset, Error **errp)
+ {
+-    FSICFAMState *s = FSI_CFAM(obj);
++    if (!qdev_realize(engine, BUS(&cfam->lbus), errp)) {
++        return false;
++    }
+ 
+-    object_initialize_child(obj, "scratchpad", &s->scratchpad,
+-                            TYPE_FSI_SCRATCHPAD);
++    memory_region_add_subregion(&cfam->lbus.mr, offset,
++                                &FSI_LBUS_DEVICE(engine)->iomem);
++    return true;
+ }
+ 
+-static void fsi_cfam_realize(DeviceState *dev, Error **errp)
++static void fsi_cfam_common_realize(DeviceState *dev, Error **errp)
+ {
+-    FSICFAMState *cfam = FSI_CFAM(dev);
++    FSICFAMCommonState *cfam = FSI_CFAM_COMMON(dev);
++    FSICFAMCommonClass *cc = FSI_CFAM_COMMON_GET_CLASS(dev);
+     FSISlaveState *slave = FSI_SLAVE(dev);
++    const char *type = object_get_typename(OBJECT(dev));
++    g_autofree char *config_name = g_strdup_printf("%s.config", type);
+ 
+     /* Each slave has a 2MiB address space */
+     memory_region_init_io(&cfam->mr, OBJECT(cfam), &fsi_cfam_unimplemented_ops,
+-                          cfam, TYPE_FSI_CFAM, 2 * MiB);
++                          cfam, type, FSI_CFAM_SLOT_SIZE);
+ 
+     qbus_init(&cfam->lbus, sizeof(cfam->lbus), TYPE_FSI_LBUS, DEVICE(cfam),
+               NULL);
+ 
+     memory_region_init_io(&cfam->config_iomem, OBJECT(cfam), &cfam_config_ops,
+-                          cfam, TYPE_FSI_CFAM ".config", 0x400);
++                          cfam, config_name, FSI_CFAM_CONFIG_SIZE);
+ 
+     memory_region_add_subregion(&cfam->mr, 0, &cfam->config_iomem);
+-    memory_region_add_subregion(&cfam->mr, 0x800, &slave->iomem);
+-    memory_region_add_subregion(&cfam->mr, 0xc00, &cfam->lbus.mr);
++    memory_region_add_subregion(&cfam->mr, cc->responder_offset, &slave->iomem);
++    memory_region_add_subregion(&cfam->mr, cc->lbus_offset, &cfam->lbus.mr);
++
++    cc->realize_engines(cfam, errp);
++}
++
++static void fsi_cfam_common_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->bus_type = TYPE_FSI_BUS;
++    dc->realize = fsi_cfam_common_realize;
++}
++
++static bool fsi_cfam_realize_engines(FSICFAMCommonState *cfam, Error **errp)
++{
++    FSICFAMState *s = FSI_CFAM(cfam);
+ 
+     /* Add scratchpad engine */
+-    if (!qdev_realize(DEVICE(&cfam->scratchpad), BUS(&cfam->lbus), errp)) {
+-        return;
+-    }
++    object_initialize_child(OBJECT(s), "scratchpad", &s->scratchpad,
++                            TYPE_FSI_SCRATCHPAD);
+ 
+-    FSILBusDevice *fsi_dev = FSI_LBUS_DEVICE(&cfam->scratchpad);
+-    memory_region_add_subregion(&cfam->lbus.mr, 0, &fsi_dev->iomem);
++    return fsi_cfam_add_engine(cfam, DEVICE(&s->scratchpad), 0, errp);
+ }
+ 
+ static void fsi_cfam_class_init(ObjectClass *klass, const void *data)
+ {
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-    dc->bus_type = TYPE_FSI_BUS;
+-    dc->realize = fsi_cfam_realize;
++    FSICFAMCommonClass *cc = FSI_CFAM_COMMON_CLASS(klass);
++
++    cc->config = cfam_p9_config;
++    cc->config_nr = ARRAY_SIZE(cfam_p9_config);
++    cc->responder_offset = 0x800;
++    cc->lbus_offset = 0xc00;
++    cc->realize_engines = fsi_cfam_realize_engines;
+ }
+ 
++static const TypeInfo fsi_cfam_common_info = {
++    .name = TYPE_FSI_CFAM_COMMON,
++    .parent = TYPE_FSI_SLAVE,
++    .instance_size = sizeof(FSICFAMCommonState),
++    .class_size = sizeof(FSICFAMCommonClass),
++    .class_init = fsi_cfam_common_class_init,
++    .abstract = true,
++};
++
+ static const TypeInfo fsi_cfam_info = {
+     .name = TYPE_FSI_CFAM,
+-    .parent = TYPE_FSI_SLAVE,
+-    .instance_init = fsi_cfam_instance_init,
++    .parent = TYPE_FSI_CFAM_COMMON,
+     .instance_size = sizeof(FSICFAMState),
+     .class_init = fsi_cfam_class_init,
+ };
+ 
+ static void fsi_cfam_register_types(void)
+ {
++    type_register_static(&fsi_cfam_common_info);
+     type_register_static(&fsi_cfam_info);
+ }
+ 
+diff --git a/hw/fsi/fsi-master.c b/hw/fsi/fsi-master.c
+index 083a5507ab..d82df1c094 100644
+--- a/hw/fsi/fsi-master.c
++++ b/hw/fsi/fsi-master.c
+@@ -130,7 +130,7 @@ static void fsi_master_realize(DeviceState *dev, Error **errp)
+     }
+ 
+     /* address ? */
+-    memory_region_add_subregion(&s->opb2fsi, 0, &s->cfam.mr);
++    memory_region_add_subregion(&s->opb2fsi, 0, &s->cfam.parent.mr);
+ }
+ 
+ static void fsi_master_reset(DeviceState *dev)
 -- 
 2.53.0
 
