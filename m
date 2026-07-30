@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63A27C55160
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:11:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63252C54FCD
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:11:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpH7j-0005gX-8X; Wed, 29 Jul 2026 23:07:55 -0400
+	id 1wpH6e-000374-78; Wed, 29 Jul 2026 23:06:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH7U-0004oJ-6b
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:07:40 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH6b-0002vo-2U
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:06:45 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH7R-000331-Ij
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:07:39 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH6Z-0002w8-A2
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:06:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=0Wtxg1/Uax0r4CmxZajibuRuo8XlBt8dd5sMz+wH+Uc=; b=WZ4BUWtPxqI5Glh
- 9LMVJPi2873joDwov/2SWR5RNhbQnjb0O11WJTdhwqqdVpFy5Jmg5ATn7JaS9abW1zEgVQsg6k/Pf
- +Mj7NGP5Y0lkTQ0Z7zbtjeWPTnY1BfcJ/UztuWY8I4QUJgKLagLZeso2HOSYoVCBMSxDx+JqO6G93
- Jk=;
+ List-Help; bh=LRmxL4SoF9BQ3qcMgroP5TJKzuambQWaFM+uYcKhGIU=; b=olLaeJD7v7SN/K5
+ x1wY02RiFKuVhEhZQDwq66rEybN8THhyiUuVsJqWPu+a3QOmS0ezw61Gj+YK+QHtIKMJu0/2gOTJQ
+ 0e6g9W6H+IJpo9PNXeg2ZceEb1jq5yhMbXbXJ4346/Em9ow8NQkqH3kIwYMYw6oXBB7a7DTnNj5HE
+ b8=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, brian.cain@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
  philmd@mailo.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 48/50] target/hexagon: Manually call generated HVX
- instructions
-Date: Thu, 30 Jul 2026 05:10:22 +0200
-Message-ID: <20260730031025.12926-49-anjo@rev.ng>
+Subject: [PATCH v2 23/50] helper-to-tcg: PrepareForTcgPass,
+ remove functions with cycles
+Date: Thu, 30 Jul 2026 05:09:57 +0200
+Message-ID: <20260730031025.12926-24-anjo@rev.ng>
 In-Reply-To: <20260730031025.12926-1-anjo@rev.ng>
 References: <20260730031025.12926-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -64,126 +64,70 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For HVX instructions that were successfully translated by helper-to-tcg,
-emit calls to emit_*() "manually" from generate_*().  Recall that scalar
-instructions translated by helper-to-tcg are automatically called by a
-hook in tcg_gen_callN.
+Functions with cycles are removed for two primary reasons:
+
+  * As a simplifying assumption for register allocation which occurs down
+    the line, and;
+
+  * If a function contains cycles post-optimization neither unrolling or
+    loop vectorization were deemed beneficial, and the function _might_ be
+    better suited as a helper anyway.
+
+Cycles are detected by iterating over Strongly Connected Components
+(SCCs) which imply the existence of cycles if a SCC contains more than one
+node, or it has a self-edge.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/hexagon/gen_tcg_funcs.py | 14 ++++++++
- target/hexagon/hex_common.py    | 58 +++++++++++++++++++++++++++++++++
- 2 files changed, 72 insertions(+)
+ .../PrepareForTcgPass/PrepareForTcgPass.cpp   | 34 +++++++++++++++++--
+ 1 file changed, 32 insertions(+), 2 deletions(-)
 
-diff --git a/target/hexagon/gen_tcg_funcs.py b/target/hexagon/gen_tcg_funcs.py
-index 42b0064131..ee3b183e7b 100755
---- a/target/hexagon/gen_tcg_funcs.py
-+++ b/target/hexagon/gen_tcg_funcs.py
-@@ -86,7 +86,21 @@ def gen_tcg_func(f, tag, regs, imms):
+diff --git a/subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp b/subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp
+index cea6573e41..41f317ed0b 100644
+--- a/subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp
++++ b/subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp
+@@ -17,9 +17,39 @@
  
-         arguments = ", ".join(["ctx", "ctx->insn", "&ctx->pkt"] + declared)
-         f.write(f"    emit_{tag}({arguments});\n")
-+    elif hex_common.is_helper_to_tcg_enabled(tag) and tag.startswith("V6_"):
-+        ## For vector functions translated by helper-to-tcg we need to
-+        ## manually call the emitted code.  All other instructions translated
-+        ## are automatically called by the helper-functions dispatcher in
-+        ## tcg_gen_callN.
-+        declared = []
-+        ## Handle registers
-+        ret_type = hex_common.helper_ret_type(tag, regs).call_arg
-+        if ret_type != "void":
-+            declared.append(ret_type)
-+        for arg in hex_common.helper_to_tcg_hvx_call_args(tag, regs, imms):
-+            declared.append(arg)
+ #include "PrepareForTcgPass.hpp"
  
-+        arguments = ", ".join(declared)
-+        f.write(f"    emit_{tag}({arguments});\n")
-     elif hex_common.skip_qemu_helper(tag):
-         if "A_FPOP" in hex_common.attribdict[tag]:
-             f.write("    TCGv pkt_need_commit = ")
-diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
-index 3809749dfa..59fd563923 100755
---- a/target/hexagon/hex_common.py
-+++ b/target/hexagon/hex_common.py
-@@ -1293,6 +1293,60 @@ def helper_ret_type(tag, regs):
-     return return_type
++#include <llvm/ADT/SCCIterator.h>
++#include <llvm/ADT/SmallPtrSet.h>
++#include <llvm/IR/Function.h>
++#include <llvm/IR/Module.h>
++
+ using namespace llvm;
  
- 
-+def helper_to_tcg_hvx_call_args(tag, regs, imms):
-+    args = []
-+    # Used to ensure immediates are passed translated as immediates by
-+    # helper-to-tcg.
-+    imm_indices = []
+-PreservedAnalyses PrepareForTcgPass::run(Module &M, ModuleAnalysisManager &MAM)
+-{
++static void removeFunctionsWithLoops(Module &M, ModuleAnalysisManager &MAM) {
++    // Iterate over all Strongly Connected Components (SCCs), a SCC implies
++    // the existence of loops if:
++    //   - it has more than one node, or;
++    //   - it has a self-edge.
++    SmallPtrSet<Function *, 16> FunctionsToRemove;
++    for (Function &F : M) {
++        if (F.isDeclaration()) {
++            continue;
++        }
++        for (auto It = scc_begin(&F); !It.isAtEnd(); ++It) {
++            if (It.hasCycle()) {
++                FunctionsToRemove.insert(&F);
++                break;
++            }
++        }
++    }
 +
-+    ## First argument is the CPU state
-+    if need_env(tag):
-+        args.append("tcg_env")
++    for (Function *F : FunctionsToRemove) {
++        F->setComdat(nullptr);
++        F->deleteBody();
++    }
++}
 +
-+    ## For predicated instructions, we pass in the destination register
-+    if is_predicated(tag):
-+        for regtype, regid in regs:
-+            reg = get_register(tag, regtype, regid)
-+            if reg.is_writeonly() and not reg.is_hvx_reg():
-+                args.append(reg.helper_arg().call_arg)
-+
-+    ## Pass the HVX destination registers
-+    for regtype, regid in regs:
-+        reg = get_register(tag, regtype, regid)
-+        if reg.is_written() and reg.is_hvx_reg():
-+            args.append(reg.hvx_off())
-+
-+    ## Pass the source registers
-+    for regtype, regid in regs:
-+        reg = get_register(tag, regtype, regid)
-+        if reg.is_read() and not (reg.is_hvx_reg() and reg.is_readwrite()):
-+            if reg.is_hvx_reg():
-+                args.append(reg.hvx_off())
-+            else:
-+                args.append(reg.helper_arg().call_arg)
-+
-+    ## Pass the immediates
-+    for immlett, bits, immshift in imms:
-+        imm_indices.append(len(args))
-+        args.append(f"{imm_name(immlett)}")
-+
-+    ## Other stuff the helper might need
-+    if need_pkt_has_multi_cof(tag):
-+        args.append("ctx->pkt->pkt_has_multi_cof")
-+    if need_pkt_need_commit(tag):
-+        args.append("ctx->need_commit")
-+    if need_PC(tag):
-+        args.append("ctx->pkt->pc")
-+    if need_next_PC(tag):
-+        args.append("ctx->next_PC")
-+    if need_slot(tag):
-+        args.append("gen_slotval(ctx)")
-+    if need_part1(tag):
-+        args.append("insn->part1")
-+
-+    return args
-+
-+
- def helper_args(tag, regs, imms):
-     args = []
-     # Used to ensure immediates are passed translated as immediates by
-@@ -1406,6 +1460,8 @@ def parse_common_args(desc):
-     parser.add_argument("out", help="output file")
-     parser.add_argument("--idef-parser",
-                         help="file of instructions translated by idef-parser")
-+    parser.add_argument("--helper-to-tcg",
-+                        help="file of instructions translated by helper-to-tcg")
-     args = parser.parse_args()
-     read_semantics_file(args.semantics)
-     read_overrides_file(args.overrides)
-@@ -1413,6 +1469,8 @@ def parse_common_args(desc):
-     read_overrides_file(args.overrides_sys)
-     if args.idef_parser:
-         read_idef_parser_enabled_file(args.idef_parser)
-+    if args.helper_to_tcg:
-+        read_helper_to_tcg_enabled_file(args.helper_to_tcg)
-     calculate_attribs()
-     init_registers()
-     return args
++PreservedAnalyses PrepareForTcgPass::run(Module &M,
++                                         ModuleAnalysisManager &MAM) {
++    removeFunctionsWithLoops(M, MAM);
+     return PreservedAnalyses::none();
+ }
 -- 
 2.52.0
 
