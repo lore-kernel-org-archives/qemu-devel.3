@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6293EC54FD2
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:12:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1AE5C55160
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:12:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpH7e-0005DT-Qb; Wed, 29 Jul 2026 23:07:50 -0400
+	id 1wpH7j-0005gZ-8d; Wed, 29 Jul 2026 23:07:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH7P-0004jL-8w
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:07:38 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH7Z-0004ut-0v
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:07:46 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH7L-000322-N9
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:07:34 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH7V-00033d-0n
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:07:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=LWbK1ogEKI4l0O6ZYb7uczyO2GYhf+0xCu+Lx1buNeQ=; b=eC4XQHX8rJvHT/E
- HwiQuYdpsnjZd7FnNu52ZwfzUIRX6CDYEKTflHIYVqhMd4g9klqTezntGETzCwe0Yo4DyFYIOoddu
- QeDriLo3qLgjQlbTVRjoVBEqPoXL0N5Ifdq6tkyCSf6FBkpeNTOl9nfAcMnanIZ2eDjjYTymHn/5b
- Zs=;
+ List-Help; bh=i+JQrkELf2IFtebI8FAtcNj7KV+AasmxXTEZ+9GznPc=; b=dzKfvbV/RoTVnyv
+ lsSuFzRyWV6PsMHsgHTG3jQMNW7rAglL2IN+742BR2Z+4Ktv22xCpscaya9V9fuDfDj/FIhv/+qv2
+ kWI4Niyu3JSYfAVNgBTUmk3JXU+waBdvtWxRx7a9MZTSPPR6VdJBNOOky6puIegTab6gGIHGNDf5G
+ Z4=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, brian.cain@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
  philmd@mailo.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 45/50] target/hexagon: Emit annotations for helpers
-Date: Thu, 30 Jul 2026 05:10:19 +0200
-Message-ID: <20260730031025.12926-46-anjo@rev.ng>
+Subject: [PATCH v2 50/50] target/hexagon: Use helper-to-tcg
+Date: Thu, 30 Jul 2026 05:10:24 +0200
+Message-ID: <20260730031025.12926-51-anjo@rev.ng>
 In-Reply-To: <20260730031025.12926-1-anjo@rev.ng>
 References: <20260730031025.12926-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -63,291 +63,236 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds the following LLVM_ANNOTATE attributes to helper functions generated
-by Hexagon:
+Modifies meson.build to use helper-to-tcg for automatic translation of
+helper functions.  Any helper functions with the "helper-to-tcg"
+attribute will be automatically translated to TCG.
 
-  1. "helper-to-tcg", to specify that a given helper functions should be
-     translated, and;
+Order of code generation is changed, and helper functions are always
+generated first, for all instructions.  Helper functions are needed as
+input helper-to-tcg.  Next, input to idef-parser is generated for all
+instructions that were not successfully translated by helper-to-tcg.
 
-  2. "immediate: ..." to make sure immediate arguments to helper
-     functions remain immediates in the emitted TCG code (e.g. slot).
-
-  3. "ptr-to-offset: ..." to make sure pointer arguments are treated as
-     immediates representing an offset into the CPU state, needed to
-     work with gvec.
-
-Two functions are also added to hex_common.py, to firstly parse the
-generated file containing all successfully translated helper functions,
-and secondly to expose the indices of immediate and pointer (vector)
-arguments to helper functions.  The latter is needed to generate the
-input of helper-to-tcg.
+As such, a majority of instructions will be translated by helper-to-tcg,
+and the remaining instructions fed through idef-parser can be reduced
+moving forward.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/hexagon/gen_helper_funcs.py  | 17 ++++++++++-
- target/hexagon/gen_helper_protos.py |  2 +-
- target/hexagon/gen_tcg_funcs.py     |  2 +-
- target/hexagon/hex_common.py        | 45 +++++++++++++++++++++++------
- 4 files changed, 54 insertions(+), 12 deletions(-)
+ configs/targets/hexagon-linux-user.mak |   1 +
+ configs/targets/hexagon-softmmu.mak    |   1 +
+ target/hexagon/meson.build             | 148 ++++++++++++++++++-------
+ 3 files changed, 110 insertions(+), 40 deletions(-)
 
-diff --git a/target/hexagon/gen_helper_funcs.py b/target/hexagon/gen_helper_funcs.py
-index 1629ebc0e1..7a3de21019 100755
---- a/target/hexagon/gen_helper_funcs.py
-+++ b/target/hexagon/gen_helper_funcs.py
-@@ -41,9 +41,23 @@ def gen_helper_function(f, tag, tagregs, tagimms):
-     ret_type = hex_common.helper_ret_type(tag, regs).func_arg
+diff --git a/configs/targets/hexagon-linux-user.mak b/configs/targets/hexagon-linux-user.mak
+index 51fde5d60e..d441112f2e 100644
+--- a/configs/targets/hexagon-linux-user.mak
++++ b/configs/targets/hexagon-linux-user.mak
+@@ -4,3 +4,4 @@ TARGET_SYSTBL=syscall.tbl
+ TARGET_SYSTBL_ABI=common,32,hexagon,time32,stat64,rlimit,renameat
+ TARGET_LONG_BITS=32
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
++TARGET_HELPER_TO_TCG=y
+diff --git a/configs/targets/hexagon-softmmu.mak b/configs/targets/hexagon-softmmu.mak
+index a77c100f0c..bef72e8b2b 100644
+--- a/configs/targets/hexagon-softmmu.mak
++++ b/configs/targets/hexagon-softmmu.mak
+@@ -6,3 +6,4 @@ TARGET_LONG_BITS=32
+ TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+ TARGET_NEED_FDT=y
++TARGET_HELPER_TO_TCG=y
+diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
+index 59cb09c107..fdacd61ccf 100644
+--- a/target/hexagon/meson.build
++++ b/target/hexagon/meson.build
+@@ -262,23 +262,125 @@ hexagon_softmmu_ss.add(files(
+     'machine.c',
+ ))
  
-     declared = []
--    for arg in hex_common.helper_args(tag, regs, imms):
-+    helper_args, imm_inds, hvx_inds = hex_common.helper_args(tag, regs, imms)
-+    for arg in helper_args:
-         declared.append(arg.func_arg)
- 
-+    ## Specify that helpers should be translated by helper-to-tcg
-+    f.write(f'QEMU_ANNOTATE("helper-to-tcg")\n')
-+    ## Specify which arguments to the helper function should be treated as
-+    ## immediate arguments
-+    if len(imm_inds) > 0:
-+        imm_inds_str = ','.join(str(i) for i in imm_inds)
-+        f.write(f'QEMU_ANNOTATE("immediate: {imm_inds_str}")\n')
-+    ## Specify which arguments to the helper function should be treated as
-+    ## gvec vectors
-+    if len(hvx_inds) > 0:
-+        hvx_inds_str = ','.join(str(i) for i in hvx_inds)
-+        f.write(f'QEMU_ANNOTATE("ptr-to-offset: {hvx_inds_str}")\n')
++helper_dep = [semantics_generated]
++helper_in = [semantics_generated, gen_tcg_h, gen_tcg_hvx_h, gen_tcg_sys_h]
 +
-     arguments = ", ".join(declared)
-     f.write(f"{ret_type} HELPER({tag})({arguments})\n")
-     f.write("{\n")
-@@ -51,6 +65,7 @@ def gen_helper_function(f, tag, tagregs, tagimms):
-         f.write(hex_common.code_fmt(f"""\
-             uint32_t EA;
-         """))
++#
++# Step 5
++# We use Python scripts to generate the following files
++#     helper_protos_generated.h.inc
++#     helper_funcs_generated.c.inc
++#     analyze_funcs_generated.c.inc
+ #
+-# Step 4.5
++helper_protos_generated = custom_target(
++    'helper_protos_generated.h.inc',
++    output: 'helper_protos_generated.h.inc',
++    depends: helper_dep,
++    depend_files: [hex_common_py, gen_tcg_h, gen_tcg_hvx_h, gen_tcg_sys_h],
++    command: [python, files('gen_helper_protos.py'), helper_in, '@OUTPUT@'],
++)
++hexagon_ss.add(helper_protos_generated)
 +
-     ## Declare the return variable
-     if not hex_common.is_predicated(tag):
-         for regtype, regid in regs:
-diff --git a/target/hexagon/gen_helper_protos.py b/target/hexagon/gen_helper_protos.py
-index 59c8bdd05c..769611e56c 100755
---- a/target/hexagon/gen_helper_protos.py
-+++ b/target/hexagon/gen_helper_protos.py
-@@ -36,7 +36,7 @@ def gen_helper_prototype(f, tag, tagregs, tagimms):
-     ret_type = hex_common.helper_ret_type(tag, regs).proto_arg
-     declared.append(ret_type)
- 
--    for arg in hex_common.helper_args(tag, regs, imms):
-+    for arg in hex_common.helper_args(tag, regs, imms)[0]:
-         declared.append(arg.proto_arg)
- 
-     arguments = ", ".join(declared)
-diff --git a/target/hexagon/gen_tcg_funcs.py b/target/hexagon/gen_tcg_funcs.py
-index 6d5d99cee3..42b0064131 100755
---- a/target/hexagon/gen_tcg_funcs.py
-+++ b/target/hexagon/gen_tcg_funcs.py
-@@ -100,7 +100,7 @@ def gen_tcg_func(f, tag, regs, imms):
-         if ret_type != "void":
-             declared.append(ret_type)
- 
--        for arg in hex_common.helper_args(tag, regs, imms):
-+        for arg in hex_common.helper_args(tag, regs, imms)[0]:
-             declared.append(arg.call_arg)
- 
-         arguments = ", ".join(declared)
-diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
-index d91a653c3d..3809749dfa 100755
---- a/target/hexagon/hex_common.py
-+++ b/target/hexagon/hex_common.py
-@@ -32,6 +32,7 @@
- tags = []  # list of all tags
- overrides = {}  # tags with helper overrides
- idef_parser_enabled = {}  # tags enabled for idef-parser
-+helper_to_tcg_enabled = {}  # tags enabled for helper-to-tcg
- 
- 
- def is_sysemu_tag(tag):
-@@ -307,6 +308,10 @@ def is_idef_parser_enabled(tag):
-     return tag in idef_parser_enabled
- 
- 
-+def is_helper_to_tcg_enabled(tag):
-+    return tag in helper_to_tcg_enabled
++helper_funcs_generated = custom_target(
++    'helper_funcs_generated.c.inc',
++    output: 'helper_funcs_generated.c.inc',
++    depends: helper_dep,
++    depend_files: [hex_common_py, gen_tcg_h, gen_tcg_hvx_h, gen_tcg_sys_h],
++    command: [python, files('gen_helper_funcs.py'), helper_in, '@OUTPUT@'],
++)
++hexagon_ss.add(helper_funcs_generated)
++
++analyze_funcs_generated = custom_target(
++    'analyze_funcs_generated.c.inc',
++    output: 'analyze_funcs_generated.c.inc',
++    depends: helper_dep,
++    depend_files: [hex_common_py, gen_tcg_h, gen_tcg_hvx_h, gen_tcg_sys_h],
++    command: [python, files('gen_analyze_funcs.py'), helper_in, '@OUTPUT@'],
++)
++hexagon_ss.add(analyze_funcs_generated)
++
++#
++# Step 6
++# If enabled, run helper-to-tcg to attempt to translate any remaining
++# helper functions, producing:
++#     helper-to-tcg-emitted.c
++#     helper-to-tcg-emitted.h
++#     helper-to-tcg-enabled
++#     helper-to-tcg-log
++#
++
++idef_command_extra = []
++idef_dep_extra = []
++if helper_to_tcg.found()
++    helper_to_tcg_get_llvm_ir_cmd = helper_to_tcg.get_variable('get_llvm_ir_cmd')
++    helper_to_tcg_pipeline = helper_to_tcg.get_variable('pipeline')
++
++    helper_to_tcg_input_files = [
++        meson.current_source_dir() / 'op_helper.c',
++        meson.current_source_dir() / 'translate.c',
++        meson.current_source_dir() / 'reg_fields.c',
++        meson.current_source_dir() / 'arch.c',
++    ]
++
++    ll = custom_target('to-ll',
++        input: helper_to_tcg_input_files,
++        output:'helper-to-tcg-input.ll',
++        depends: [helper_funcs_generated, helper_protos_generated, libqemuutil],
++        command: helper_to_tcg_get_llvm_ir_cmd + ['-o', '@OUTPUT@', '@INPUT@', '--target-path', 'target/hexagon']
++    )
++
++    helper_to_tcg_target = custom_target('helper-to-tcg-hexagon',
++        output: ['helper-to-tcg-emitted.c',
++                 'helper-to-tcg-emitted.h',
++                 'helper-to-tcg-enabled'],
++        input: [ll],
++        depends: [helper_to_tcg_pipeline, analyze_funcs_generated, helper_funcs_generated, helper_protos_generated],
++        command: [helper_to_tcg_pipeline,
++                  '--temp-vector-block=tmp_VRegs',
++                  '--max-vector-temp-bytes=1024',
++                  '--max-vector-instructions=16',
++                  '--mmu-index-function=get_tb_mmu_index',
++                  '--tcg-global-mappings=tcg_global_mappings',
++                  '--output-source=@OUTPUT0@',
++                  '--output-header=@OUTPUT1@',
++                  '--output-enabled=@OUTPUT2@',
++                  '@INPUT@']
++    )
++
++    hexagon_ss.add(helper_to_tcg_target)
++
++    # List of instructions for which TCG generation was successful
++    generated_tcg_list = helper_to_tcg_target[2].full_path()
++
++    # Setup dependencies for idef-parser
++    idef_dep_extra += helper_to_tcg_target
++    idef_command_extra += ['--helper-to-tcg', generated_tcg_list]
++
++    # Setup input and dependencies for the final step, this depends on whether
++    helper_dep += [helper_to_tcg_target]
++    helper_in += ['--helper-to-tcg', generated_tcg_list]
++endif
 +
 +
- def is_hvx_insn(tag):
-     return "A_CVI" in attribdict[tag]
- 
-@@ -349,6 +354,13 @@ def read_idef_parser_enabled_file(name):
-         idef_parser_enabled = set(lines)
- 
- 
-+def read_helper_to_tcg_enabled_file(name):
-+    global helper_to_tcg_enabled
-+    with open(name, "r") as helper_to_tcg_enabled_file:
-+        lines = helper_to_tcg_enabled_file.read().strip().split("\n")
-+        helper_to_tcg_enabled = set(lines)
 +
++#
++# Step 6
+ # We use flex/bison based idef-parser to generate TCG code for a lot
+ # of instructions. idef-parser outputs
+ #     idef-generated-emitter.c
+ #     idef-generated-emitter.h.inc
+ #     idef-generated-enabled-instructions
+ #
 +
- def is_predicated(tag):
-     return "A_CONDEXEC" in attribdict[tag]
+ idef_parser_enabled = get_option('hexagon_idef_parser')
+ if idef_parser_enabled and ('hexagon-linux-user' in target_dirs or
+                             'hexagon-softmmu' in target_dirs)
+     idef_parser_input_generated = custom_target(
+         'idef_parser_input.h.inc',
+         output: 'idef_parser_input.h.inc',
+-        depends: [semantics_generated],
++        depends: [semantics_generated] + idef_dep_extra,
+         depend_files: [hex_common_py],
+-        command: [python, files('gen_idef_parser_funcs.py'), semantics_generated, '@OUTPUT@'],
++        command: [python, files('gen_idef_parser_funcs.py'), semantics_generated, '@OUTPUT@'] + idef_command_extra
+     )
  
-@@ -433,7 +445,7 @@ def hvx_off(self):
-     def helper_proto_type(self):
-         return "ptr"
-     def helper_arg_type(self):
--        return "void *"
-+        return "void * restrict"
-     def helper_arg_name(self):
-         return f"{self.reg_tcg()}_void"
+     compiler = meson.get_compiler('c').cmd_array()
+@@ -347,40 +449,15 @@ if idef_parser_enabled and ('hexagon-linux-user' in target_dirs or
  
-@@ -767,7 +779,7 @@ def decl_tcg(self, f, tag, regno):
-             const intptr_t {self.hvx_off()} =
-                 {vreg_offset_func(tag)}(ctx, {self.reg_num}, 1, true);
-         """))
--        if not skip_qemu_helper(tag):
-+        if not skip_qemu_helper(tag) and not is_helper_to_tcg_enabled(tag):
-             f.write(code_fmt(f"""\
-                 TCGv_ptr {self.reg_tcg()} = tcg_temp_new_ptr();
-                 tcg_gen_addi_ptr({self.reg_tcg()}, tcg_env, {self.hvx_off()});
-@@ -792,7 +804,7 @@ def decl_tcg(self, f, tag, regno):
-         f.write(code_fmt(f"""\
-             const intptr_t {self.hvx_off()} = vreg_src_off(ctx, {self.reg_num});
-         """))
--        if not skip_qemu_helper(tag):
-+        if not skip_qemu_helper(tag) and not is_helper_to_tcg_enabled(tag):
-             f.write(code_fmt(f"""\
-                 TCGv_ptr {self.reg_tcg()} = tcg_temp_new_ptr();
-                 tcg_gen_addi_ptr({self.reg_tcg()}, tcg_env, {self.hvx_off()});
-@@ -833,7 +845,7 @@ def decl_tcg(self, f, tag, regno):
-                              vreg_src_off(ctx, {self.reg_num}),
-                              sizeof(MMVector), sizeof(MMVector));
-         """))
--        if not skip_qemu_helper(tag):
-+        if not skip_qemu_helper(tag) and not is_helper_to_tcg_enabled(tag):
-             f.write(code_fmt(f"""\
-                 TCGv_ptr {self.reg_tcg()} = tcg_temp_new_ptr();
-                 tcg_gen_addi_ptr({self.reg_tcg()}, tcg_env, {self.hvx_off()});
-@@ -862,7 +874,7 @@ def decl_tcg(self, f, tag, regno):
-         f.write(code_fmt(f"""\
-             const intptr_t {self.hvx_off()} = offsetof(CPUHexagonState, vtmp);
-         """))
--        if not skip_qemu_helper(tag):
-+        if not skip_qemu_helper(tag) and not is_helper_to_tcg_enabled(tag):
-             f.write(code_fmt(f"""\
-                 TCGv_ptr {self.reg_tcg()} = tcg_temp_new_ptr();
-                 tcg_gen_addi_ptr({self.reg_tcg()}, tcg_env, {self.hvx_off()});
-@@ -898,7 +910,7 @@ def decl_tcg(self, f, tag, regno):
-             const intptr_t {self.hvx_off()} =
-                 {vreg_offset_func(tag)}(ctx, {self.reg_num}, 2, true);
-         """))
--        if not skip_qemu_helper(tag):
-+        if not skip_qemu_helper(tag) and not is_helper_to_tcg_enabled(tag):
-             f.write(code_fmt(f"""\
-                 TCGv_ptr {self.reg_tcg()} = tcg_temp_new_ptr();
-                 tcg_gen_addi_ptr({self.reg_tcg()}, tcg_env, {self.hvx_off()});
-@@ -930,7 +942,7 @@ def decl_tcg(self, f, tag, regno):
-                              vreg_src_off(ctx, {self.reg_num} ^ 1),
-                              sizeof(MMVector), sizeof(MMVector));
-         """))
--        if not skip_qemu_helper(tag):
-+        if not skip_qemu_helper(tag) and not is_helper_to_tcg_enabled(tag):
-             f.write(code_fmt(f"""\
-                 TCGv_ptr {self.reg_tcg()} = tcg_temp_new_ptr();
-                 tcg_gen_addi_ptr({self.reg_tcg()}, tcg_env, {self.hvx_off()});
-@@ -957,7 +969,7 @@ def decl_tcg(self, f, tag, regno):
-                              vreg_src_off(ctx, {self.reg_num} ^ 1),
-                              sizeof(MMVector), sizeof(MMVector));
-         """))
--        if not skip_qemu_helper(tag):
-+        if not skip_qemu_helper(tag) and not is_helper_to_tcg_enabled(tag):
-             f.write(code_fmt(f"""\
-                 TCGv_ptr {self.reg_tcg()} = tcg_temp_new_ptr();
-                 tcg_gen_addi_ptr({self.reg_tcg()}, tcg_env, {self.hvx_off()});
-@@ -1280,8 +1292,13 @@ def helper_ret_type(tag, regs):
-         raise Exception("numscalarresults > 1")
-     return return_type
+     # Setup input and dependencies for the next step, this depends on whether or
+     # not idef-parser is enabled
+-    helper_dep = [semantics_generated, idef_generated_tcg_c, idef_generated_tcg]
+-    helper_in = [semantics_generated, gen_tcg_h, gen_tcg_hvx_h, gen_tcg_sys_h, '--idef-parser', idef_generated_list]
+-else
+-    # Setup input and dependencies for the next step, this depends on whether or
+-    # not idef-parser is enabled
+-    helper_dep = [semantics_generated]
+-    helper_in = [semantics_generated, gen_tcg_h, gen_tcg_hvx_h, gen_tcg_sys_h]
++    helper_dep += [idef_generated_tcg_c, idef_generated_tcg]
++    helper_in += ['--idef-parser', idef_generated_list]
+ endif
  
-+
- def helper_args(tag, regs, imms):
-     args = []
-+    # Used to ensure immediates are passed translated as immediates by
-+    # helper-to-tcg.
-+    imm_indices = []
-+    hvx_indices = []
+ #
+-# Step 5
++# Step 7
+ # We use Python scripts to generate the following files
+-#     helper_protos_generated.h.inc
+-#     helper_funcs_generated.c.inc
+ #     tcg_funcs_generated.c.inc
+ #
+-helper_protos_generated = custom_target(
+-    'helper_protos_generated.h.inc',
+-    output: 'helper_protos_generated.h.inc',
+-    depends: helper_dep,
+-    depend_files: [hex_common_py, gen_tcg_h, gen_tcg_hvx_h, gen_tcg_sys_h],
+-    command: [python, files('gen_helper_protos.py'), helper_in, '@OUTPUT@'],
+-)
+-hexagon_ss.add(helper_protos_generated)
+-
+-helper_funcs_generated = custom_target(
+-    'helper_funcs_generated.c.inc',
+-    output: 'helper_funcs_generated.c.inc',
+-    depends: helper_dep,
+-    depend_files: [hex_common_py, gen_tcg_h, gen_tcg_hvx_h, gen_tcg_sys_h],
+-    command: [python, files('gen_helper_funcs.py'), helper_in, '@OUTPUT@'],
+-)
+-hexagon_ss.add(helper_funcs_generated)
+-
+ tcg_funcs_generated = custom_target(
+     'tcg_funcs_generated.c.inc',
+     output: 'tcg_funcs_generated.c.inc',
+@@ -390,14 +467,5 @@ tcg_funcs_generated = custom_target(
+ )
+ hexagon_ss.add(tcg_funcs_generated)
  
-     ## First argument is the CPU state
-     if need_env(tag):
-@@ -1302,16 +1319,20 @@ def helper_args(tag, regs, imms):
-     for regtype, regid in regs:
-         reg = get_register(tag, regtype, regid)
-         if reg.is_written() and reg.is_hvx_reg():
-+            hvx_indices.append(len(args))
-             args.append(reg.helper_arg())
- 
-     ## Pass the source registers
-     for regtype, regid in regs:
-         reg = get_register(tag, regtype, regid)
-         if reg.is_read() and not (reg.is_hvx_reg() and reg.is_readwrite()):
-+            if reg.is_hvx_reg():
-+                hvx_indices.append(len(args))
-             args.append(reg.helper_arg())
- 
-     ## Pass the immediates
-     for immlett, bits, immshift in imms:
-+        imm_indices.append(len(args))
-         args.append(HelperArg(
-             "s32",
-             f"tcg_constant_tl({imm_name(immlett)})",
-@@ -1320,24 +1341,28 @@ def helper_args(tag, regs, imms):
- 
-     ## Other stuff the helper might need
-     if need_pkt_has_multi_cof(tag):
-+        imm_indices.append(len(args))
-         args.append(HelperArg(
-             "i32",
-             "tcg_constant_tl(ctx->pkt.pkt_has_multi_cof)",
-             "uint32_t pkt_has_multi_cof"
-         ))
-     if need_pkt_need_commit(tag):
-+        imm_indices.append(len(args))
-         args.append(HelperArg(
-             "i32",
-             "tcg_constant_tl(ctx->need_commit)",
-             "uint32_t pkt_need_commit"
-         ))
-     if need_PC(tag):
-+        imm_indices.append(len(args))
-         args.append(HelperArg(
-             "i32",
-             "tcg_constant_tl(ctx->pkt.pc)",
-             "target_ulong PC"
-         ))
-     if need_next_PC(tag):
-+        imm_indices.append(len(args))
-         args.append(HelperArg(
-             "i32",
-             "tcg_constant_tl(ctx->next_PC)",
-@@ -1356,18 +1381,20 @@ def helper_args(tag, regs, imms):
-             "uint32_t SP"
-         ))
-     if need_slot(tag):
-+        imm_indices.append(len(args))
-         args.append(HelperArg(
-             "i32",
-             "gen_slotval(ctx)",
-             "uint32_t slotval"
-         ))
-     if need_part1(tag):
-+        imm_indices.append(len(args))
-         args.append(HelperArg(
-             "i32",
-             "tcg_constant_tl(insn->part1)"
-             "uint32_t part1"
-         ))
--    return args
-+    return args, imm_indices, hvx_indices
- 
- 
- def parse_common_args(desc):
+-analyze_funcs_generated = custom_target(
+-    'analyze_funcs_generated.c.inc',
+-    output: 'analyze_funcs_generated.c.inc',
+-    depends: helper_dep,
+-    depend_files: [hex_common_py, gen_tcg_h, gen_tcg_hvx_h, gen_tcg_sys_h],
+-    command: [python, files('gen_analyze_funcs.py'), helper_in, '@OUTPUT@'],
+-)
+-hexagon_ss.add(analyze_funcs_generated)
+-
+ target_arch += {'hexagon': hexagon_ss}
+ target_system_arch += {'hexagon': hexagon_softmmu_ss}
 -- 
 2.52.0
 
