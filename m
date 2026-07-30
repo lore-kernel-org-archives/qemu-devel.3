@@ -4,105 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E621C55167
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 14:23:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E723C55164
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 14:34:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpRel-0004A9-8T; Thu, 30 Jul 2026 10:22:43 -0400
+	id 1wpRpP-00062Y-SY; Thu, 30 Jul 2026 10:33:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wpRej-00049l-2a
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 10:22:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wpRpO-00061c-3u
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 10:33:42 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wpReh-0004jA-C2
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 10:22:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785421357;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=5BPAKJ6kFRcuWJbNPHQpP1XpfGUMJg5PdFE8H6LQBhA=;
- b=g/oy5RbgfPPfUtNO2piNOpTdbuUj1lMSFbYsyzKS6wJM0G+b3xEe2lj2Mw7fbBQO6f/z0d
- 3rYpr2tBw9EhPOhfrzKm+61hnxbdqrbZImxV8Bc3oAcE22zvx0RoWo72Wo+IsZxkuI6sEA
- RtEKCk41VJcPxcol3Ct976Elpw/NtYY=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-280-UlAuLrtBM-Ch3iNE2LS8EQ-1; Thu, 30 Jul 2026 10:22:34 -0400
-X-MC-Unique: UlAuLrtBM-Ch3iNE2LS8EQ-1
-X-Mimecast-MFC-AGG-ID: UlAuLrtBM-Ch3iNE2LS8EQ_1785421354
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51c0f0a0760so45243341cf.2
- for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 07:22:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wpRpK-0006oU-LW
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 10:33:41 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66UEHCcG1060951
+ for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 14:33:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 14dYxtDGXma7qj106lSBvKvs964VplqZz5J6EyKrMCA=; b=QH37Zh0vlvq9G+7r
+ GlO5KXRfcWK8PpcI7ETzesjPf1TPQotXrqQ2459ry8aJU0Njf8Ad2Jip2sVihfiB
+ F13hItws9G5kOJ4j+QBgWr3OzNkL3q3vyI30BKHfVt1VBBhG0vGQ4XcHqwhhV/4s
+ tvD7ZzeshPuvTdpEoYnr6qfK0oOC7atbeWj/PFc1MemTrZ8gPczrABGr2LDsdE05
+ J6xXDp03V1uyRJc8wJwjzbd+lAgIr3dvUDjigOLlfGzvTis6IyVdop8ym7tf3vWH
+ WEiS5Y0zSh20RRgEpOybenaG8Xg0Tm5wOTT0rRBsrnX5tvZdRc5cR5KdZ/XLsmcL
+ jyUWQQ==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fr88982bw-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 14:33:36 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8f1e4e0eac1so28218086d6.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 07:33:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785421354; x=1786026154; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=5BPAKJ6kFRcuWJbNPHQpP1XpfGUMJg5PdFE8H6LQBhA=;
- b=Y0HO0P3cTHbMfUp6YuYlfiEtC9UXBNQJWAg9jh8VzAELLdgZ8anNYlFCyAZeqC9dbk
- UjuIZ0PgS4ZybQjJQZDpit009rCP3Uk1hUbGuUnG1KA2HvvheO8ZavRLdvU12zPbbA8J
- Swnye1dCSgNUqiTcQ+F4zbxQCQGv+uvwyJe/ROIRV6Awsx2Dl4afTw0vZF6pRsV0Rdid
- yjc33xcB8HorcYDaecCJOgGh7psrSPDYTQfDT3C8NEBuOUUkz176Ry2aRWJdkbjx8G0i
- g/ttNSs6lT4Iy/XwAgEgSthOcXeItAM/StaddYbxtcBX6SShw0VC5r2qZTPcGUX8pwX7
- aq+w==
+ d=oss.qualcomm.com; s=google; t=1785422015; x=1786026815; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=14dYxtDGXma7qj106lSBvKvs964VplqZz5J6EyKrMCA=;
+ b=Awrh7bQazWP3tkoLlxPxKk/Ob8YQ2ncr2kLVfmDB7twN8o56sMI4d+JBgGrzP2NYTB
+ 6PZ9uVbsIX8X12OhnDETwj7okhFJxSkcmowP1rDwIyIVrNiguqkUxWJJYVFzo19VXNfk
+ XlEqSFRK+rk6vLh2zBG4/kpOPIdxyBK5r5qfidbxDHZcrxUqBq2qj+rsuwCxgbzcB46/
+ Yeg5k8F1n9KCcSYFiQjJ0rptFPZJjujJ3DWELw2ccoJmHwRCIeubarLsROXNw6fgkZJX
+ Y5ijr50blPLU7XsHWljEoCPxMxx7fWDf1m6Pcc6QUr02wI83yOMeDvX/BA17qzAiSYUw
+ v5Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785421354; x=1786026154;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=5BPAKJ6kFRcuWJbNPHQpP1XpfGUMJg5PdFE8H6LQBhA=;
- b=fVsY2clpkY1cH3Zu0FwsS/NPlE0rH/GlEPGHq3+zkhL9Yvuj2bp4lSkj4wenmd3gk5
- cLdY3tkFx7/boxTlv2mdsuIl3UdBSzm78fm2EMd9y2XtDgaZDkuSCA0thjIo0mHt0EMJ
- ax5nptLpYIXQXC6noJDJLGhsTysg11YGLODYk1zRVlClJsrqv/GINY5S51Ss8BgTcIgb
- jRC5c9OaIDDdxZcDLq6eMhx/OuCfP5Jx4uMbiBFiVrwdrd3IuUTvs9PPRQylBmop3igC
- 1K47zWZDOHMq69RYHRHOOJnYFcGpN03jNhjDP7/T6mG8vkUwzRDgwFcnLmZafzchOasg
- g/Aw==
-X-Gm-Message-State: AOJu0YyZsuskIYzunPsRju66SgotGZ3XndJU1LSIpR6tsH4jqQ58BsYF
- qrsPLq+BEuiQMgt8InNsxlMSUNOqH5YJGfrzVpdOGvTda4JpYaifVd8QMgOQX9L8M/5jzpT/saM
- L2OOUrJD8OoZIrABlmm5X47CC0qc3E720wEP96ro89uJGweIBYopQXZyn
-X-Gm-Gg: AR+sD10oi7pg6NFkXuLvHpbDSqfDi+mUaSdWW5EI2PzBESEom0x9nwUEBxd7NkuSZKN
- oMCAaEVficsnFJB7h+YYxgqWqJho49cDZtYmRz0mnqrrQ6fWlN+SZ3I8atpsd+Ohd5b3/x6pnrN
- FFM71QccJ0t01jvQFz5SAbuhW/dd6at+ES9lT6mjFxO/KbEFjsEkrxTt1PFEDO47YfXdb7qV9lg
- s9CNMXStsG3zIFm4cBgrcXo3v/y8Cu6/kjYcFWDd12Qm7h9rIhpzqXyb/UtgxZElIIDpbZAQjHN
- sXDf1PiN4iuJaIwGDM8egaZLzT5Ox1aTfcsO8fM0Wy4usAnmWqdciRk4yAqAEgAxSwBp
-X-Received: by 2002:a05:622a:646:b0:51c:c67:2042 with SMTP id
- d75a77b69052e-52b386a9316mr29579711cf.53.1785421353953; 
- Thu, 30 Jul 2026 07:22:33 -0700 (PDT)
-X-Received: by 2002:a05:622a:646:b0:51c:c67:2042 with SMTP id
- d75a77b69052e-52b386a9316mr29579231cf.53.1785421353382; 
- Thu, 30 Jul 2026 07:22:33 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-529e3993fadsm41624421cf.29.2026.07.30.07.22.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Jul 2026 07:22:32 -0700 (PDT)
-Date: Thu, 30 Jul 2026 10:22:28 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: Re: [PATCH 0/4] migration: Remove extra type-checking from vmstate
- macros
-Message-ID: <amteJEbrPguzFpH5@x1.local>
-References: <20260729225227.1170574-1-farosas@suse.de>
- <amtbGkfKvPCJgDec@x1.local>
+ d=1e100.net; s=20251104; t=1785422015; x=1786026815;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=14dYxtDGXma7qj106lSBvKvs964VplqZz5J6EyKrMCA=;
+ b=q9l7SsBbAEQkCdQUvoNTfyDxH9kWwu16t8/ErjQzvlmitEYZ5f6CsRJSUZ0RUzbiEo
+ EEKf5Zzek5Y8RwkrY6HnxLhqPXeql0uJKrIaFnEp/rtqrqATjaQYa/F4pAevmJ5Peuda
+ EItTupxwqN0EdzAr/KYtOhpmiH5hxf4d1KP91at92nsBZba7Aa20aKl98AS/msnXSXKk
+ mXx/ikQmQ0xSRxV7Az1zyQ64CPmNaqgPbLEPAz+lJxoDGTX7v7N6Yj9EVYVKPToQIiRV
+ g0EvyfZQu6wL852NU0I4SlietGaKTGRyodF/y31qSpL3K0lmzGMzMAfPCG1CbvsOJ7rD
+ V/4w==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrR+EAeIGjsutnCtVcmaRMBmENveQtMJ1qAgr3JBt2Zw3QCEj3AR6/e01HR1sQK4oEW9dBBvNCYTuIi@nongnu.org
+X-Gm-Message-State: AOJu0YyO+2D33K+M6iFfjZUvrWmzZOO+mnKDbWyAaDvArbcT+dyinfSe
+ 7EBSJVUTaAdQdzb1+Ja0a1jqZKQ6ZalEkI1UeLFSoLTGYKhlC4YvO42pOcezx3eGRuIaeF5Jd5q
+ 5pMKt+bF6xKy4YgRfwwccyiBDbhPOnyqoOPCH6Fln2qNbpM5NIZeQkO+nAg==
+X-Gm-Gg: AR+sD122fl4ywvMIEzqF7tHiO+/nCX3SrMwJrcxdma8orPJKcoWzyOddLzofUf108Ut
+ JRBU+E+Naj5RLZdG8FSgDSCCOxXGiH+tOzpVY6cv1qCWb7H8gE6aOOVkAJZ3K2fY9Vc7OMGZGi/
+ QpT0NDhNdGn3vtb2XD41lRUtnFjFRPWpZ6UmyOywOhyt33Ek2GwQuWzNulrsvLvZYbtsc/6bmLx
+ OypBAXxt6nBy0AyqptQRnl/R6M3n5yngJ/NwwFLTQfwygYIkr0u5jeAu3J0lcYVsR4ENvaKIGBZ
+ tswzWXIhHyEkWSfNmYgFqrmuQza1YS6xohYGAq+TIXcjR94pob+cws8ujuw+p0Rf6B0CDMCPeWC
+ 4uOQDJkKhH3De64t2LgPAcMcXwq0iBfrlj/huYatVfdPv5dZLWz0=
+X-Received: by 2002:a05:622a:14e:b0:51c:7b12:5fde with SMTP id
+ d75a77b69052e-52b386c4309mr29041321cf.74.1785422014632; 
+ Thu, 30 Jul 2026 07:33:34 -0700 (PDT)
+X-Received: by 2002:a05:622a:14e:b0:51c:7b12:5fde with SMTP id
+ d75a77b69052e-52b386c4309mr29040951cf.74.1785422014134; 
+ Thu, 30 Jul 2026 07:33:34 -0700 (PDT)
+Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47fc877dafasm6285828f8f.0.2026.07.30.07.33.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 30 Jul 2026 07:33:33 -0700 (PDT)
+Message-ID: <87f978ab-9813-4d0c-9a8b-e5f2ae70ff9d@oss.qualcomm.com>
+Date: Thu, 30 Jul 2026 16:33:32 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <amtbGkfKvPCJgDec@x1.local>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] target/riscv: Clearing the CSR values at reset and
+ syncing the MPSTATE with the host
+Content-Language: en-US
+To: "liguang.zhang" <18622748025@163.com>, qemu-devel@nongnu.org
+Cc: alistair23@gmail.com, "liguang.zhang" <liguang.zhang@hexintek.com>,
+ qemu-riscv <qemu-riscv@nongnu.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20230913083728.16935-1-18622748025@163.com>
+ <20230913091332.17355-1-18622748025@163.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20230913091332.17355-1-18622748025@163.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMwMDExMSBTYWx0ZWRfX01VzF7FRDNbc
+ c4qi2WR+jHOgbMeHLSqjHP7JpZM7lWv2HeqTMxWub8bc0+kGRCVTKsVhWEkLurNW4XS/4sTAWdf
+ vQk9HauuO7mazTGGz9t0sEMoB+TOsARv57JPoA38nxVpgfRWyna2kPZzw1+MPeFUB8rKMLRsL06
+ 6mQFJD/wgeQK43hPJjj6WmWcZcVm1V30yvuN4/vkEZau8xhwzwmw5flsynjHTJ3IZiVT5kg27XA
+ b7iZGD7IyTtMciaTUjFj2pwmQxLxN9zYMQwJITI/QkyrNgRw/jMgsmtksRwOFyp2wJzMZgljwBm
+ WB86x6ACuo1Spuc+86dwJvm4POysADGYvIGHEiKBhATPCQgjN2cNPupcLSzcTmDp2NPvje8hN18
+ 9SCxgc5yBKND6ELyPm5u3GWq+6f/9BetROFPlyO31RZ6rDIU3qctgCkzYaMExk/7097281vktIA
+ Effynjn/UhNPlEutiWg==
+X-Proofpoint-GUID: wykXQ99Uk_kU_8YXDVsBjMODsmtI5D07
+X-Proofpoint-ORIG-GUID: wykXQ99Uk_kU_8YXDVsBjMODsmtI5D07
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMwMDExMSBTYWx0ZWRfX5B0Ry0brD6D0
+ ob1WapZsY0y6ncbVL+MMcjIObNNdIuv6Z8owBiaQUJmZ/TD14uOtFaYzgTM2Bxa3w6RvczYxuZS
+ uooeIe611ofomiJVAi8s+D8Af91g+aQ=
+X-Authority-Analysis: v=2.4 cv=S5HpBosP c=1 sm=1 tr=0 ts=6a6b60c0 cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=9HpfiWj7wsRZE823:21 a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=ZpdpYltYx_vBUK5n70dp:22 a=Xlp9LwTNAAAA:8 a=n3itKfVQ9HkEtyc4GGgA:9
+ a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22 a=rg_ZO-Pv9Kk2mYsQ_rSh:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-30_04,2026-07-29_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 spamscore=0 phishscore=0 adultscore=0 suspectscore=0
+ priorityscore=1501 malwarescore=0 impostorscore=0 bulkscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607300111
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,77 +157,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 30, 2026 at 10:09:30AM -0400, Peter Xu wrote:
-> On Wed, Jul 29, 2026 at 07:52:23PM -0300, Fabiano Rosas wrote:
-> > Hi, this is basically what I ranted about in:
-> > https://lore.kernel.org/r/87jyqeomqz.fsf@suse.de
-> > 
-> > I'm replacing the per-integer-size type checks with a single "int that
-> > fits in 32bit" check. This allows several lines of duplicated code to
-> > be removed.
-> > 
-> > I haven't changed the macro names in the device code yet. If this
-> > series gets positive feedback then I'll send per-subsystem patches
-> > doing that.
-> > 
-> > CI run: https://gitlab.com/farosas/qemu/-/pipelines/2716814081
-> > Also tested:
-> > - migration-test --full --thorough
-> > - x86_64 compat run forwards and backwards for previous 3 QEMU releases
-> > - s390x compat run forwards and backwards for previous 2 QEMU releases
-> > - ppc64 compat run forwards and backwards for previous QEMU release
-> > - migration-test smoke ASAN/UBSAN run
-> > 
-> > Fabiano Rosas (4):
-> >   migration: Remove VMSTATE_ARRAY_INT32_UNSAFE
-> >   migration: Introduce VMStateOffset
-> >   migration: Remove redundant flags
-> >   migration: Remove duplicate vmstate macros
-> 
-> Nice work!
-> 
-> I think I was only looking at VBUFFER side and I thought it was fine
-> sticking with 32bit even signed or not, not a huge deal.  But cleaning up
-> VARRAY whole thing together looks definitely an improvement.  I definitely
-> like your version here.
-> 
-> I assume with your series I can drop both of my patches here, right?
-> 
->   [PATCH v2 1/5] migration: Fix possible overflow in vmstate_handle_alloc()
->   https://lore.kernel.org/r/20260728210417.1925078-2-peterx@redhat.com
->   (I'll still respin with the rest)
-> 
->   [PATCH] vhost/migration: Fix incorrect size used in inflight->addr in VMSD
->   https://lore.kernel.org/r/20260728153942.1891677-1-peterx@redhat.com
-> 
-> The only missing piece would be an multiply overflow check in
-> vmstate_handle_alloc(), if you could add that check too while rewritting
-> that in patch 1 then I think it'll cover all.
-> 
-> Vladimir's ask in the separate email makes sense: I wonder if we can also
-> do one step further and merge VBUFFER into VARRAY.
-> 
-> The other trivial thing is, while looking, I found one trivial macro
-> VMSTATE_PARTIAL_VBUFFER not used; can drop it altogether.
+Hi,
 
-Now officially declare support for u64 on all these offsets, we also need
-to double check on our alignment with security issues.
+(old patch committed as 8633951530cc923f1e7a6cd250f670f24c0ed817)
 
-Similar reports will not be a bug anymore but results will be the same I
-assume: it's anything the attacker can feed a u64 directly (instead of an
-int32_t negative overflow), result is still failing a malloc() with
-enormously large numbers, legally this time.
+On 13/9/23 11:13, liguang.zhang wrote:
+> From: "liguang.zhang" <liguang.zhang@hexintek.com>
+> 
+> Fix the guest reboot error when using KVM
+> There are two issues when rebooting a guest using KVM
+> 1. When the guest initiates a reboot the host is unable to stop the vcpu
+> 2. When running a SMP guest the qemu monitor system_reset causes a vcpu crash
+> 
+> This can be fixed by clearing the CSR values at reset and syncing the
+> MPSTATE with the host.
+> 
+> v4 update:
+> rebase on riscv-to-apply
+> 
+> Signed-off-by: liguang.zhang <liguang.zhang@hexintek.com>
+> ---
+>   target/riscv/kvm.c       | 42 ++++++++++++++++++++++++++++++++++++++++
+>   target/riscv/kvm_riscv.h |  1 +
+>   2 files changed, 43 insertions(+)
+> 
+> diff --git a/target/riscv/kvm.c b/target/riscv/kvm.c
+> index c01cfb03f4..8ee410b9b1 100644
+> --- a/target/riscv/kvm.c
+> +++ b/target/riscv/kvm.c
+> @@ -51,6 +51,8 @@ void riscv_kvm_aplic_request(void *opaque, int irq, int level)
+>       kvm_set_irq(kvm_state, irq, !!level);
+>   }
+>   
+> +static bool cap_has_mp_state;
+> +
+>   static uint64_t kvm_riscv_reg_id(CPURISCVState *env, uint64_t type,
+>                                    uint64_t idx)
+>   {
+> @@ -797,6 +799,24 @@ int kvm_arch_get_registers(CPUState *cs)
+>       return ret;
+>   }
+>   
+> +int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state)
+> +{
+> +    if (cap_has_mp_state) {
+> +        struct kvm_mp_state mp_state = {
+> +            .mp_state = state
+> +        };
+> +
+> +        int ret = kvm_vcpu_ioctl(CPU(cpu), KVM_SET_MP_STATE, &mp_state);
+> +        if (ret) {
+> +            fprintf(stderr, "%s: failed to sync MP_STATE %d/%s\n",
+> +                    __func__, ret, strerror(-ret));
+> +            return -1;
+> +        }
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+>   int kvm_arch_put_registers(CPUState *cs, int level)
+>   {
+>       int ret = 0;
+> @@ -816,6 +836,18 @@ int kvm_arch_put_registers(CPUState *cs, int level)
+>           return ret;
+>       }
+>   
+> +    if (KVM_PUT_RESET_STATE == level) {
 
-Do you still plan to work on finding per-user upper limit or whatever of
-that kind?  I'd say time spent working on series like this worths more than
-that, but I still want to check with you while looking at this solution.
+Why only RESET_STATE? Don't we also want that for FULL_STATE? IOW:
 
-I suppose with this, one option is we can close all tickets reporting
-security issues while allocating with all u64 fields.
+        if (level >= KVM_PUT_RESET_STATE) {
 
-Thanks,
-
--- 
-Peter Xu
+> +        RISCVCPU *cpu = RISCV_CPU(cs);
+> +        if (cs->cpu_index == 0) {
+> +            ret = kvm_riscv_sync_mpstate_to_kvm(cpu, KVM_MP_STATE_RUNNABLE);
+> +        } else {
+> +            ret = kvm_riscv_sync_mpstate_to_kvm(cpu, KVM_MP_STATE_STOPPED);
+> +        }
+> +        if (ret) {
+> +            return ret;
+> +        }
+> +    }
+> +
+>       return ret;
+>   }
+>   
+> @@ -928,6 +960,7 @@ int kvm_arch_get_default_type(MachineState *ms)
+>   
+>   int kvm_arch_init(MachineState *ms, KVMState *s)
+>   {
+> +    cap_has_mp_state = kvm_check_extension(s, KVM_CAP_MP_STATE);
+>       return 0;
+>   }
+>   
+> @@ -1014,10 +1047,19 @@ void kvm_riscv_reset_vcpu(RISCVCPU *cpu)
+>       if (!kvm_enabled()) {
+>           return;
+>       }
+> +    for (int i=0; i<32; i++)
+> +        env->gpr[i] = 0;
+>       env->pc = cpu->env.kernel_addr;
+>       env->gpr[10] = kvm_arch_vcpu_id(CPU(cpu)); /* a0 */
+>       env->gpr[11] = cpu->env.fdt_addr;          /* a1 */
+>       env->satp = 0;
+> +    env->mie = 0;
+> +    env->stvec = 0;
+> +    env->sscratch = 0;
+> +    env->sepc = 0;
+> +    env->scause = 0;
+> +    env->stval = 0;
+> +    env->mip = 0;
+>   }
+>   
+>   void kvm_riscv_set_irq(RISCVCPU *cpu, int irq, int level)
+> diff --git a/target/riscv/kvm_riscv.h b/target/riscv/kvm_riscv.h
+> index de8c209ebc..8f8c1f969a 100644
+> --- a/target/riscv/kvm_riscv.h
+> +++ b/target/riscv/kvm_riscv.h
+> @@ -27,5 +27,6 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+>                             uint64_t aplic_base, uint64_t imsic_base,
+>                             uint64_t guest_num);
+>   void riscv_kvm_aplic_request(void *opaque, int irq, int level);
+> +int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state);
+>   
+>   #endif
 
 
