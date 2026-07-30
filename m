@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC0DCC54FD2
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:06:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2F26C54FD2
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:06:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpH6G-0001vU-JD; Wed, 29 Jul 2026 23:06:24 -0400
+	id 1wpH5l-0001im-9H; Wed, 29 Jul 2026 23:05:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH6F-0001v9-60
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:06:23 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH5j-0001iG-AQ
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:05:51 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH6C-0002uL-VP
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:06:22 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH5h-0002qW-Ag
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:05:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=0VLdaQBq584YS84hmcm+SAqGLpmZtRsRFoJoJ75Ckkk=; b=EkEsc82WVsngqCI
- QWwvnVZl4clft91iJGdBp55rKXIrBXxBMFdhsdLZICKsb7Qp93e/KXZwsZYTz8rmK6KV07etCOCIV
- t+c3IhIqO6uJls4zLRixYU5d6w/lA9Hf5q142nhHY037TmT5nLdepq5Rg5OwuAZwP3/C2aku96GjH
- A4=;
+ List-Help; bh=N4VjtNGTVCTr3fiohuEIHANGrMrdHqVx/1EQ5lSRyCE=; b=CZy6N2iP0KZW2Dx
+ IKM90W85A6e81gynuWJxH2zCHiM2VFp7HQB8NGdH8h4lglM6B52kmqojywe8wwkWXTRvvA5O9ja8U
+ 5jrdW/s+3sggkAQclxaG85HmcY4DBsT4t7t931s9sIbt7gmJdFpT683s+a79am6HS2x1syb7XLiBy
+ eQ=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, brian.cain@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
  philmd@mailo.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 14/50] helper-to-tcg: PrepareForOptPass, map annotations
-Date: Thu, 30 Jul 2026 05:09:48 +0200
-Message-ID: <20260730031025.12926-15-anjo@rev.ng>
+Subject: [PATCH v2 01/50] accel/tcg: Add bitreverse and funnel-shift runtime
+ helper functions
+Date: Thu, 30 Jul 2026 05:09:35 +0200
+Message-ID: <20260730031025.12926-2-anjo@rev.ng>
 In-Reply-To: <20260730031025.12926-1-anjo@rev.ng>
 References: <20260730031025.12926-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -63,291 +64,100 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the LLVM IR module, function annotations are stored in one big global
-array of strings.  Traverse this array and parse the data into a format
-more useful for future passes.  A map between Functions * and an
-`Annotations` structure is exposed.
+Adds necessary helper functions for mapping LLVM IR onto TCG.
+Specifically, helpers corresponding to the bitreverse and funnel-shift
+intrinsics in LLVM.
+
+Note: these may be converted to more efficient implementations in the
+future, but for the time being it allows helper-to-tcg to support a
+wider subset of LLVM IR.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
+--
+TODO: `tcg_gen_*()` variants will be added in the next version, it
+slipped through (Richard).
 ---
- .../include/FunctionAnnotation.hpp            | 104 ++++++++++++++++++
- .../include/PrepareForOptPass.hpp             |   7 +-
- subprojects/helper-to-tcg/src/Pipeline.cpp    |   6 +-
- .../PrepareForOptPass/PrepareForOptPass.cpp   |  94 ++++++++++++++++
- 4 files changed, 209 insertions(+), 2 deletions(-)
- create mode 100644 subprojects/helper-to-tcg/include/FunctionAnnotation.hpp
+ accel/tcg/tcg-runtime.c | 28 ++++++++++++++++++++++++++++
+ accel/tcg/tcg-runtime.h |  6 ++++++
+ 2 files changed, 34 insertions(+)
 
-diff --git a/subprojects/helper-to-tcg/include/FunctionAnnotation.hpp b/subprojects/helper-to-tcg/include/FunctionAnnotation.hpp
-new file mode 100644
-index 0000000000..398dd53ef5
---- /dev/null
-+++ b/subprojects/helper-to-tcg/include/FunctionAnnotation.hpp
-@@ -0,0 +1,104 @@
-+//
-+//  Copyright(c) 2026 rev.ng Labs Srl. All Rights Reserved.
-+//
-+//  This program is free software; you can redistribute it and/or modify
-+//  it under the terms of the GNU General Public License as published by
-+//  the Free Software Foundation; either version 2 of the License, or
-+//  (at your option) any later version.
-+//
-+//  This program is distributed in the hope that it will be useful,
-+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+//  GNU General Public License for more details.
-+//
-+//  You should have received a copy of the GNU General Public License
-+//  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+//
-+
-+#pragma once
-+
-+#include <llvm/ADT/DenseMap.h>
-+#include <llvm/ADT/SmallVector.h>
-+#include <llvm/Support/Format.h>
-+#include <llvm/Support/raw_ostream.h>
-+#include <stdint.h>
-+
-+namespace llvm {
-+class Function;
-+}
-+
-+// Different kind of function annotations which control the behaviour
-+// of helper-to-tcg.
-+enum class ArgumentAnnotation : uint8_t {
-+    // Declares a list of arguments as immediates
-+    Immediate = 1,
-+    // Declares a list of arguments as vectors, represented by offsets into
-+    // the CPU state
-+    PtrToOffset = 2,
-+};
-+
-+// Different kind of function annotations which control the behaviour
-+// of helper-to-tcg.
-+enum class FunctionAnnotation : uint8_t {
-+    // Function should be translated
-+    HelperToTcg = 1,
-+    // Return value of function is an immediate
-+    ReturnsImmediate = 2,
-+};
-+
-+// Annotation data which may be attached to a function
-+class Annotations {
-+    // 8-bit flag for each argument in a function, fields defined by
-+    // `ArgumentAnnotions`.
-+    llvm::SmallVector<uint8_t, 4> ArgumentAnnotations;
-+    // Flag of function annotations, fields defined by `FunctionsAnnotations`.
-+    uint8_t FunctionAnnotations = 0;
-+
-+  public:
-+    inline uint8_t getArgFlag(size_t Index) const {
-+        if (Index >= ArgumentAnnotations.size()) {
-+            return 0;
-+        }
-+        return ArgumentAnnotations[Index];
-+    }
-+
-+    // Getters and setters for annotations flags.
-+
-+    inline void set(FunctionAnnotation FA) {
-+        FunctionAnnotations |= (uint8_t)FA;
-+    }
-+
-+    inline void set(size_t Index, ArgumentAnnotation AA) {
-+        if (Index >= ArgumentAnnotations.size()) {
-+            // Resizing will default initialize any new elements.
-+            ArgumentAnnotations.resize(Index + 1);
-+        }
-+        ArgumentAnnotations[Index] |= (uint8_t)AA;
-+    }
-+
-+    inline bool isSet(FunctionAnnotation FA) const {
-+        return (FunctionAnnotations & (uint8_t)FA) != 0;
-+    }
-+
-+    inline bool isSet(size_t Index, ArgumentAnnotation AA) const {
-+        uint8_t Flag = getArgFlag(Index);
-+        return (Flag & (uint8_t)AA) != 0;
-+    }
-+
-+    // Pretty printing debug information
-+    inline void dump(llvm::raw_ostream &Out) const {
-+        Out << "Annotations:\n";
-+        Out << "  Function: " << llvm::format_hex(FunctionAnnotations, 4)
-+            << "\n";
-+        for (size_t I = 0; I < ArgumentAnnotations.size(); ++I) {
-+            const uint8_t Flag = ArgumentAnnotations[I];
-+            Out << "  Argument[" << I << "]: " << llvm::format_hex(Flag, 4)
-+                << "\n";
-+        }
-+    }
-+};
-+
-+// Mapping from functions to annotations, this is the main structure to be used
-+// by other parts of the codebase when referencing annotations, filled out by
-+// `PrepareForOptPass`.
-+using AnnotationMapTy = llvm::DenseMap<llvm::Function *, Annotations>;
-diff --git a/subprojects/helper-to-tcg/include/PrepareForOptPass.hpp b/subprojects/helper-to-tcg/include/PrepareForOptPass.hpp
-index 2b3694c536..e007243578 100644
---- a/subprojects/helper-to-tcg/include/PrepareForOptPass.hpp
-+++ b/subprojects/helper-to-tcg/include/PrepareForOptPass.hpp
-@@ -17,6 +17,7 @@
- 
- #pragma once
- 
-+#include "FunctionAnnotation.hpp"
- #include <llvm/IR/PassManager.h>
- 
- //
-@@ -27,8 +28,12 @@
- //
- 
- class PrepareForOptPass : public llvm::PassInfoMixin<PrepareForOptPass> {
-+    AnnotationMapTy &ResultAnnotations;
- public:
--    PrepareForOptPass() {}
-+    PrepareForOptPass(AnnotationMapTy &ResultAnnotations)
-+        : ResultAnnotations(ResultAnnotations)
-+    {
-+    }
-     llvm::PreservedAnalyses run(llvm::Module &M,
-                                 llvm::ModuleAnalysisManager &MAM);
- };
-diff --git a/subprojects/helper-to-tcg/src/Pipeline.cpp b/subprojects/helper-to-tcg/src/Pipeline.cpp
-index 59de572bf6..051611b0f3 100644
---- a/subprojects/helper-to-tcg/src/Pipeline.cpp
-+++ b/subprojects/helper-to-tcg/src/Pipeline.cpp
-@@ -184,7 +184,11 @@ int main(int argc, char **argv) {
-         MPM.addPass(createModuleToFunctionPassAdaptor(std::move(FPM)));
-     }
- 
--    MPM.addPass(PrepareForOptPass());
-+    // TODO: Get pass results via dependencies instead? Adds more boiler-plate
-+    // but is correlct in LLVM-terms.
-+
-+    AnnotationMapTy Annotations;
-+    MPM.addPass(PrepareForOptPass(Annotations));
- 
-     {
-         FunctionPassManager FPM;
-diff --git a/subprojects/helper-to-tcg/src/PrepareForOptPass/PrepareForOptPass.cpp b/subprojects/helper-to-tcg/src/PrepareForOptPass/PrepareForOptPass.cpp
-index c15c0af6ea..1228ac952f 100644
---- a/subprojects/helper-to-tcg/src/PrepareForOptPass/PrepareForOptPass.cpp
-+++ b/subprojects/helper-to-tcg/src/PrepareForOptPass/PrepareForOptPass.cpp
-@@ -16,10 +16,15 @@
- //
- 
- #include "PrepareForOptPass.hpp"
-+#include "Error.hpp"
- 
- #include <llvm/ADT/StringRef.h>
- #include <llvm/ADT/StringSet.h>
- #include <llvm/Demangle/Demangle.h>
-+#include <llvm/IR/Constants.h>
-+#include <llvm/IR/Function.h>
-+#include <llvm/IR/Instruction.h>
-+#include <llvm/IR/Module.h>
- #include <llvm/Support/Debug.h>
- 
- #define DEBUG_TYPE "prepare-for-opt"
-@@ -63,8 +68,97 @@ static void demangleFunctionNames(Module &M) {
-     }
+diff --git a/accel/tcg/tcg-runtime.c b/accel/tcg/tcg-runtime.c
+index 7c0aab98a8..d42c00736b 100644
+--- a/accel/tcg/tcg-runtime.c
++++ b/accel/tcg/tcg-runtime.c
+@@ -24,6 +24,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/host-utils.h"
+ #include "exec/cpu-common.h"
++#include "qemu/int128.h"
+ #include "exec/helper-proto-common.h"
+ #include "accel/tcg/cpu-loop.h"
+ #include "accel/tcg/getpc.h"
+@@ -54,8 +55,30 @@ uint32_t HELPER(remu_i32)(uint32_t arg1, uint32_t arg2)
+     return arg1 % arg2;
  }
  
-+static Error parseAnnotationStr(Annotations &Ann, StringRef Str,
-+                                size_t NumArgs) {
-+    Str = Str.trim();
-+
-+    // Function annotations
-+    if (Str.consume_front("helper-to-tcg")) {
-+        Ann.set(FunctionAnnotation::HelperToTcg);
-+        return Error::success();
-+    } else if (Str.consume_front("returns-immediate")) {
-+        Ann.set(FunctionAnnotation::ReturnsImmediate);
-+        return Error::success();
-+    }
-+
-+    // Argument annotations
-+    ArgumentAnnotation AA;
-+    if (Str.consume_front("immediate")) {
-+        AA = ArgumentAnnotation::Immediate;
-+    } else if (Str.consume_front("ptr-to-offset")) {
-+        AA = ArgumentAnnotation::PtrToOffset;
-+    } else {
-+        return mkError("Unknown annotation");
-+    }
-+
-+    // An argument annotation looks like
-+    //
-+    //  "immediate: 0, 1, 2",
-+    //
-+    // parse the comma separated list of argument indices.
-+    if (!Str.consume_front(":")) {
-+        return mkError("Expected \":\"");
-+    }
-+    Str = Str.ltrim(' ');
-+    do {
-+        Str = Str.ltrim(' ');
-+        size_t I = 0;
-+        Str.consumeInteger(10, I);
-+        if (I >= NumArgs) {
-+            return mkError("Annotation has out of bounds argument index");
-+        }
-+        Ann.set(I, AA);
-+    } while (Str.consume_front(","));
-+
-+    return Error::success();
++uint32_t HELPER(bitreverse8_i32)(uint32_t x)
++{
++  return revbit8((uint8_t) x);
 +}
 +
-+static void collectAnnotations(Module &M, AnnotationMapTy &ResultAnnotations) {
-+    // cast over dyn_cast is being used here to
-+    // assert that the structure of
-+    //
-+    //     llvm.global.annotation
-+    //
-+    // is what we expect.
-+
-+    GlobalVariable *GA = M.getGlobalVariable("llvm.global.annotations");
-+    if (!GA) {
-+        return;
-+    }
-+
-+    // Get the metadata which is stored in the first op
-+    auto *CA = cast<ConstantArray>(GA->getOperand(0));
-+    // Loop over metadata
-+    for (Value *CAOp : CA->operands()) {
-+        auto *Struct = cast<ConstantStruct>(CAOp);
-+        assert(Struct->getNumOperands() >= 2);
-+
-+        Function *F = cast<Function>(Struct->getOperand(0));
-+        ConstantDataArray *AnnData =
-+            cast<ConstantDataArray>(Struct->getOperand(1)->getOperand(0));
-+
-+        StringRef AnnStr = AnnData->getAsString();
-+        AnnStr = AnnStr.substr(0, AnnStr.size() - 1);
-+        Annotations Ann = ResultAnnotations[F];
-+        if (auto Err = parseAnnotationStr(Ann, AnnStr, F->arg_size()); Err) {
-+            errs() << "Failed to parse annotation: \"" << Err
-+                   << "\" for function " << F->getName() << "\n";
-+            continue;
-+        }
-+        ResultAnnotations[F] = Ann;
-+    }
-+
-+    LLVM_DEBUG({
-+        for (auto &P : ResultAnnotations) {
-+            dbgs() << "Annotations for " << P.first->getName() << "\n";
-+            P.second.dump(dbgs());
-+        }
-+    });
++uint32_t HELPER(bitreverse16_i32)(uint32_t x)
++{
++  return revbit16((uint16_t) x);
 +}
 +
- PreservedAnalyses PrepareForOptPass::run(Module &M,
-                                          ModuleAnalysisManager &MAM) {
-     demangleFunctionNames(M);
-+    collectAnnotations(M, ResultAnnotations);
-     return PreservedAnalyses::none();
++uint32_t HELPER(bitreverse32_i32)(uint32_t x)
++{
++  return revbit32(x);
++}
++
+ /* 64-bit helpers */
+ 
++uint64_t HELPER(fshl_i64)(uint64_t a, uint64_t b, uint64_t c)
++{
++    Int128 d = int128_make128(b, a);
++    Int128 shift = int128_lshift(d, c);
++    return int128_gethi(shift);
++}
++
+ int64_t HELPER(div_i64)(int64_t arg1, int64_t arg2)
+ {
+     return arg1 / arg2;
+@@ -76,6 +99,11 @@ uint64_t HELPER(remu_i64)(uint64_t arg1, uint64_t arg2)
+     return arg1 % arg2;
  }
+ 
++uint64_t HELPER(bitreverse64_i64)(uint64_t x)
++{
++    return revbit64(x);
++}
++
+ uint64_t HELPER(muluh_i64)(uint64_t arg1, uint64_t arg2)
+ {
+     uint64_t l, h;
+diff --git a/accel/tcg/tcg-runtime.h b/accel/tcg/tcg-runtime.h
+index 0b832176b3..197d658b40 100644
+--- a/accel/tcg/tcg-runtime.h
++++ b/accel/tcg/tcg-runtime.h
+@@ -2,11 +2,17 @@ DEF_HELPER_FLAGS_2(div_i32, TCG_CALL_NO_RWG_SE, s32, s32, s32)
+ DEF_HELPER_FLAGS_2(rem_i32, TCG_CALL_NO_RWG_SE, s32, s32, s32)
+ DEF_HELPER_FLAGS_2(divu_i32, TCG_CALL_NO_RWG_SE, i32, i32, i32)
+ DEF_HELPER_FLAGS_2(remu_i32, TCG_CALL_NO_RWG_SE, i32, i32, i32)
++DEF_HELPER_FLAGS_1(bitreverse8_i32,  TCG_CALL_NO_RWG_SE, i32, i32)
++DEF_HELPER_FLAGS_1(bitreverse16_i32, TCG_CALL_NO_RWG_SE, i32, i32)
++DEF_HELPER_FLAGS_1(bitreverse32_i32, TCG_CALL_NO_RWG_SE, i32, i32)
+ 
+ DEF_HELPER_FLAGS_2(div_i64, TCG_CALL_NO_RWG_SE, s64, s64, s64)
+ DEF_HELPER_FLAGS_2(rem_i64, TCG_CALL_NO_RWG_SE, s64, s64, s64)
+ DEF_HELPER_FLAGS_2(divu_i64, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+ DEF_HELPER_FLAGS_2(remu_i64, TCG_CALL_NO_RWG_SE, i64, i64, i64)
++DEF_HELPER_FLAGS_1(bitreverse64_i64, TCG_CALL_NO_RWG_SE, i64, i64)
++
++DEF_HELPER_FLAGS_3(fshl_i64, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
+ 
+ DEF_HELPER_FLAGS_2(mulsh_i64, TCG_CALL_NO_RWG_SE, s64, s64, s64)
+ DEF_HELPER_FLAGS_2(muluh_i64, TCG_CALL_NO_RWG_SE, i64, i64, i64)
 -- 
 2.52.0
 
