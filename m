@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55573C5516E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6760DC55171
 	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 20:11:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpX5T-0004Uy-SV; Thu, 30 Jul 2026 16:10:39 -0400
+	id 1wpX5C-0004GQ-J7; Thu, 30 Jul 2026 16:10:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mikail.sadic@ibm.com>)
- id 1wpX5R-0004SC-Ol; Thu, 30 Jul 2026 16:10:37 -0400
+ id 1wpX5A-00049j-HM; Thu, 30 Jul 2026 16:10:20 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mikail.sadic@ibm.com>)
- id 1wpX5P-0001i4-GY; Thu, 30 Jul 2026 16:10:37 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1wpX58-0001gd-2T; Thu, 30 Jul 2026 16:10:20 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66UJle9G3975760; Thu, 30 Jul 2026 20:09:52 GMT
+ 66UJlwGw3942870; Thu, 30 Jul 2026 20:09:53 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=8Aux4Nt9AqJZJwSbt
- 1118cnbfcrSHGWwBveD1cl72L4=; b=eKU1QP189Hve0OkjCKq0TTpV94km0XP5W
- ozMfz/Z4X81qbdTg6DKT0Ofvqj8+jubkG47i0kpX1QspphScmdenblX0dBBzxW9U
- RpAx34l1VL8l+r6gS7T86LMnhMifipxt7UsFyKlx5L7eu9injFpB8jIJYBZJNwcT
- CPKP5yq+a7jmpmUWKY/zVQlR+rTfvni1wqsAUsJFSruLD0Uykft19wYsfC1+y6th
- jfZZRiG+vsJcqlscxlsLPHhv1VdDK2W1/J/cvEybCd5MiXHriAW6ez5oOuItmjBx
- tdtkso4nr32BO8SR3oZTQ5Wi3VlR4ipN2pJgG3LpzPOiC/shb5cDQ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0y1qqg-1
+ :mime-version:references:subject:to; s=pp1; bh=uxKVfcDIfxxH5N5G4
+ 79uiCdHgCaCC04SuPYebfocHYM=; b=mFq2ExReLtcjL+TcHqMUriDcdjimEYPfT
+ qSUQiqOvBQchn+fz3lbrSIOFRxucZbpTOKbqA00IQYj6rOBVSbe11u74GZdL65Mr
+ ahWdV5gMC2BfQwKfOkd8YUwEUmJ61q2vKk+MLtuK2gjMsxbl2R2XwmQsAIg3O11c
+ UCOeigiGLE6zJ1LynwPGLMDBVzgP25mLGxYrpdJVLzfttQuDtePf3eJJ4K8DOy6X
+ TnNBR7sAnGCN22otpd1YjzhOKZT/xDC0BKIsTfFDsxSPO3hQycHEDebPizJOPFxR
+ FW7p9GfkbBjNjxeOKP+UxHJpqyp5Z0yYrnwFEd9R8+7slhnxFmueQ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuw7sper-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Jul 2026 20:09:52 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66UJuIMt028370;
+ Thu, 30 Jul 2026 20:09:51 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn8fkcy7h-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Thu, 30 Jul 2026 20:09:51 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66UJuGf4005613;
- Thu, 30 Jul 2026 20:09:50 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn8yhmv4j-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Jul 2026 20:09:50 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
  by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66UK9nb89896568
+ 66UK9nBh10093296
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 30 Jul 2026 20:09:49 GMT
+ Thu, 30 Jul 2026 20:09:50 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 44C4C58043;
+ by IMSVA (Postfix) with ESMTP id A62E858055;
  Thu, 30 Jul 2026 20:09:49 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DF47E58059;
- Thu, 30 Jul 2026 20:09:48 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4CABF5805D;
+ Thu, 30 Jul 2026 20:09:49 +0000 (GMT)
 Received: from IBM-MFS.atx-us.ibm.com (unknown [9.16.49.87])
  by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 30 Jul 2026 20:09:48 +0000 (GMT)
+ Thu, 30 Jul 2026 20:09:49 +0000 (GMT)
 From: Mikail Sadic <mikail.sadic@ibm.com>
 To: clg@kaod.org, peter.maydell@linaro.org
 Cc: Mikail Sadic <mikail.sadic@ibm.com>, pbonzini@redhat.com,
@@ -65,9 +65,9 @@ Cc: Mikail Sadic <mikail.sadic@ibm.com>, pbonzini@redhat.com,
  jamin_lin@aspeedtech.com, kane_chen@aspeedtech.com,
  andrew@codeconstruct.com.au, joel@jms.id.au, calebs@linux.ibm.com,
  milesg@linux.ibm.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v2 5/8] hw/sensor: Add UCD90320 model
-Date: Thu, 30 Jul 2026 15:09:40 -0500
-Message-ID: <20260730200945.1113936-6-mikail.sadic@ibm.com>
+Subject: [PATCH v2 6/8] ufs: Refactor common core out of the PCI implementation
+Date: Thu, 30 Jul 2026 15:09:41 -0500
+Message-ID: <20260730200945.1113936-7-mikail.sadic@ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260730200945.1113936-1-mikail.sadic@ibm.com>
 References: <20260730200945.1113936-1-mikail.sadic@ibm.com>
@@ -75,31 +75,32 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: Gdo-mcPwe46Wa9Bj2ydwhVwMQWf-aEgn
-X-Proofpoint-ORIG-GUID: f-FEj2txod8zBAmV_phaVn5IrIpRRcV7
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfXw5b/kJqe1rJT
- 8RMv5edOauWikFumpzUo1be2QkleyflCL71fuyUp+BzIIBPd4Mt9TF4mk9fmi56C9ZHDr2dUeoL
- 9Q1NlB1w3n5/BB1kY/QAd9ymCO/Z+iY=
-X-Authority-Analysis: v=2.4 cv=dYuwG3Xe c=1 sm=1 tr=0 ts=6a6baf90 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-GUID: N6T7vCFdgHz0h05ezm_pZMH1CUtYKTDe
+X-Proofpoint-ORIG-GUID: rD6K3qn1ULoXr1rIJK3nyzrMtlBA5hvU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfXw2WAqLXRzuBd
+ C8r+ouGTury83qD1OttTgr+NL5CbTlkv3MvDMJpDfbvYUidsf7YGcxM4uoF80piW4tAUgZCgtSh
+ z//oMpnl43yS18L+XjCTKk5FAZW+jA6YTo1+iot9BCixQrIegUEXaBBTsmPGq9tUmGv7RzF59Zn
+ Pyr6gO8amePqylK05D4h6tpR6W9R1QyRv7Zh5B8LFAHc5Y84dyox6v3dv9Z+hnN5C8zyZhdtSQN
+ +AZgn3uDGDEMYb7WyZAV1plAhWvPmuHNEKDp56adTxL3+lNzNkg4fi0tHB+n9S92a5uOeKZoqbr
+ i/CY33GxSf6XeDKzQsptvS3qAKLDWBwVwWpkzvbs9SmMb4ahF19gtU66U08yMtbqGDEVgDpXOiR
+ RECdK1DZYg8hCNdpZjWgo+D7gBVhuyaYkwwzP92nC/d3gX5zNOZmIIf23IVM/pItu/mu1I59tQD
+ IgzTU5yRV6pe5Bvj3bA==
+X-Authority-Analysis: v=2.4 cv=SKFykuvH c=1 sm=1 tr=0 ts=6a6baf90 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=YwPlQgHYUhtu6dumBzMA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfXzvV6hLmdfO9h
- KWrWgKwXSwF1Z5qG0wZM6d914W+lFePYcuiQGnJB/FRVRhKn3aW94cvRaTavmmaSEGhHWiJG9qa
- clg+Fye2ZpGcFK+bUYWGI+44DIlVVaXnAF4y8XwsnDT3qWVg+S8j9ctnwXpqJ65V+U02LA/xjUN
- rnNf6G/UZRxZhbLdsfh7U8wl3T8oUgoS2uolTXEsF9JXijQr6Vx8kXUaqiXDA0x8B7y3wrMqYV+
- GM0TIe0L3HPzINNztkCNrz8eX57hCaxezelCBQK/rGCFYkUj1y+FbxZ/tN4yrZNkil7YoWQmEq6
- 1vRfAf2rD90BL/iQp9D2qfgXOzKjyX0CptOQC5X1TkNonV4RFR0/JjIkR2+ARx9nvNt9bS2H9rg
- CoiV4xbTIRLJ+k2jiPCYa4sP0udVJhvVdcm39SM9KIiePkN/xl/gzjY7DGS4joU/+n7MaWb95FK
- gHoUNNg91ffOJw3WY0g==
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=zbKmmB3fWhTtxL3vfSwA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfX3R6ir9WV2NlF
+ dwVX8VV1PYxLnevLVISErUDiCn4fFPT/HC3CIdPttGwZTI4lEwP70lhg9bqSb7NeCM3bEZE/kKD
+ VkpQN/VMlcTW3dcSs1Ra/QJnEeAgdR4=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-30_06,2026-07-30_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 clxscore=1015 phishscore=0 malwarescore=0
- spamscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607300145
+ priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607300145
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=mikail.sadic@ibm.com;
  helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -27
@@ -124,297 +125,322 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a PMBus device model for the TI-UCD90320 24-rail power
-sequencer. Configures 24 pages with linear vout mode and responds to
-the vendor-specific UCD9000_DEVICE_ID, NUM_PAGES, MONITOR_CONFIG, and
-MFR_STATUS commands, allowing the Linux ucd9000 driver to bind and
-create hwmon sysfs entries.
+In preparation for a sysbus UFS frontend (used by the Aspeed AST2700),
+separate the transport-independent UFS host-controller logic from the
+PCI-specific glue, following the pattern used by SDHCI and XHCI.
+
+UfsHc's PCIDevice parent is replaced by an anonymous union of a
+PCIDevice and a SysBusDevice, and the controller gains an explicit
+AddressSpace *dma_as used by ufs_addr_read()/ufs_addr_write() and the
+SG-list helpers instead of the PCI address space. Interrupt delivery
+goes through qemu_set_irq() in ufs_irq_check(). The realize path is
+split into a transport-agnostic ufs_realize_core() plus ufs_init_mmio(),
+and UfsBus gains an 'hc' back-pointer so ufs_lu_realize() no longer
+reaches through the PCI device. TYPE_UFS remains a PCI device, so
+'-device ufs' is unchanged and the PCI ufs-tests qtests still pass.
+
+Two small behaviour additions ride along on the core so that frontends
+with differing geometry and bus-scan behaviour can be modelled:
+
+  - ufs-lu gains configurable 'logical-block-size' property. It
+    defaults to UFS_BLOCK_SIZE, so the PCI device is unaffected.
+
+  - an unmapped LUN now answers INQUIRY as "not connected" rather than
+    failing the request, so that a host bus-scan does not observe
+    controller errors for absent LUNs.
 
 Signed-off-by: Mikail Sadic <mikail.sadic@ibm.com>
 ---
- MAINTAINERS             |   1 +
- docs/specs/index.rst    |   1 +
- docs/specs/ucd90320.rst |  36 +++++++++
- hw/sensor/ucd90320.c    | 169 ++++++++++++++++++++++++++++++++++++++++
- hw/arm/Kconfig          |   1 +
- hw/sensor/Kconfig       |   4 +
- hw/sensor/meson.build   |   1 +
- 7 files changed, 213 insertions(+)
- create mode 100644 docs/specs/ucd90320.rst
- create mode 100644 hw/sensor/ucd90320.c
+ hw/ufs/ufs.h | 18 ++++++++++++++++-
+ hw/ufs/lu.c  | 50 +++++++++++++++++++++++++++++++++++++++++----
+ hw/ufs/ufs.c | 57 ++++++++++++++++++++++++++++++++++++----------------
+ 3 files changed, 103 insertions(+), 22 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 902db77218..ec415cb8e4 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4063,6 +4063,7 @@ F: hw/i2c/pmbus_device.c
- F: hw/sensor/adm1272.c
- F: hw/sensor/isl_pmbus_vr.c
- F: hw/sensor/max34451.c
-+F: hw/sensor/ucd90320.c
- F: include/hw/i2c/pmbus_device.h
- F: include/hw/sensor/isl_pmbus_vr.h
- F: tests/qtest/adm1272-test.c
-diff --git a/docs/specs/index.rst b/docs/specs/index.rst
-index b7909a108a..4de65e2fdf 100644
---- a/docs/specs/index.rst
-+++ b/docs/specs/index.rst
-@@ -39,4 +39,5 @@ guest hardware that is specific to QEMU.
-    riscv-iommu
-    riscv-aia
-    aspeed-intc
-+   ucd90320
-    iommu-testdev
-diff --git a/docs/specs/ucd90320.rst b/docs/specs/ucd90320.rst
-new file mode 100644
-index 0000000000..fdc0878c75
---- /dev/null
-+++ b/docs/specs/ucd90320.rst
-@@ -0,0 +1,36 @@
-+Texas Instruments UCD90320 Power Sequencer
-+==========================================
+diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
+index feb47f460d..3d4be8deb5 100644
+--- a/hw/ufs/ufs.h
++++ b/hw/ufs/ufs.h
+@@ -12,7 +12,9 @@
+ #define HW_UFS_UFS_H
+ 
+ #include "hw/pci/pci_device.h"
++#include "hw/core/sysbus.h"
+ #include "hw/scsi/scsi.h"
++#include "scsi/constants.h"
+ #include "block/ufs.h"
+ 
+ #define UFS_MAX_LUS 32
+@@ -27,6 +29,7 @@ typedef struct UfsBusClass {
+ 
+ typedef struct UfsBus {
+     BusState parent_bus;
++    struct UfsHc *hc; /* host controller owning this bus (frontend-agnostic) */
+ } UfsBus;
+ 
+ #define TYPE_UFS_BUS "ufs-bus"
+@@ -77,6 +80,7 @@ typedef UfsReqResult (*UfsScsiOp)(struct UfsLu *, UfsRequest *);
+ typedef struct UfsLu {
+     DeviceState qdev;
+     uint8_t lun;
++    uint32_t logical_block_size;
+     UnitDescriptor unit_desc;
+     SCSIBus bus;
+     SCSIDevice *scsi_dev;
+@@ -141,7 +145,15 @@ typedef struct UfsWb {
+ } UfsWb;
+ 
+ typedef struct UfsHc {
+-    PCIDevice parent_obj;
++    /*
++     * The controller can be instantiated either as a PCI function or as a
++     * sysbus device.  Following the SDHCI model, both frontends share this
++     * state structure via a union of the possible parent objects.
++     */
++    union {
++        PCIDevice pci_dev;
++        SysBusDevice sbdev;
++    };
+     UfsBus bus;
+     MemoryRegion iomem;
+     UfsReg reg;
+@@ -162,6 +174,7 @@ typedef struct UfsHc {
+     Flags flags;
+ 
+     qemu_irq irq;
++    AddressSpace *dma_as;
+     QEMUBH *doorbell_bh;
+     QEMUBH *complete_bh;
+ 
+@@ -302,4 +315,7 @@ void ufs_build_query_response(UfsRequest *req);
+ void ufs_complete_req(UfsRequest *req, UfsReqResult req_result);
+ void ufs_wb_update_avail_buffer(UfsHc *u);
+ void ufs_init_wlu(UfsLu *wlu, uint8_t wlun);
++UfsReqResult ufs_emulate_absent_lun(UfsRequest *req);
++void ufs_init_mmio(UfsHc *u);
++bool ufs_realize_core(UfsHc *u, Error **errp);
+ #endif /* HW_UFS_UFS_H */
+diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
+index 13f4a90145..a0b5574668 100644
+--- a/hw/ufs/lu.c
++++ b/hw/ufs/lu.c
+@@ -308,6 +308,44 @@ static int ufs_emulate_wlun_inquiry(UfsRequest *req, uint8_t *outbuf,
+     return SCSI_INQUIRY_LEN;
+ }
+ 
++UfsReqResult ufs_emulate_absent_lun(UfsRequest *req)
++{
++    QEMU_UNINITIALIZED uint8_t outbuf[SCSI_INQUIRY_LEN];
++    uint8_t sense_buf[UFS_SENSE_SIZE];
++    uint8_t scsi_status;
++    int len = 0;
 +
-+The UCD90320 is a 24-rail PMBus power sequencer. QEMU models it as a PMBus
-+device (``"ucd90320"``) so the Linux ``ucd9000`` driver can bind and create
-+``hwmon`` sysfs entries.
++    if (req->req_upiu.sc.cdb[0] == INQUIRY &&
++        !(req->req_upiu.sc.cdb[1] & 0x1)) {
++        /*
++         * Standard INQUIRY to a logical unit that is not mapped: report it
++         * as "not connected" (peripheral qualifier 0x3, device type 0x1f)
++         * with GOOD status, like real hardware. Host-side bus scans then
++         * skip the unit quietly instead of flagging a controller error.
++         */
++        memset(outbuf, 0, sizeof(outbuf));
++        outbuf[0] = TYPE_NO_LUN;
++        outbuf[3] = 0x2;
++        outbuf[4] = SCSI_INQUIRY_LEN - 5;
++        len = SCSI_INQUIRY_LEN;
++        scsi_status = GOOD;
++    } else {
++        scsi_build_sense(sense_buf, SENSE_CODE(LUN_NOT_SUPPORTED));
++        scsi_status = CHECK_CONDITION;
++    }
 +
-+The model configures 24 PMBus pages (one per rail) with ``VOUT_MODE = 0x00``
-+(linear, exponent 0). ``READ_VOUT`` and ``MFR_STATUS`` return zero on all
-+pages.
++    len = MIN(len, (int)req->data_len);
++    if (scsi_status == GOOD && len > 0 &&
++        dma_buf_read(outbuf, len, NULL, req->sg, MEMTXATTRS_UNSPECIFIED) !=
++            MEMTX_OK) {
++        return UFS_REQUEST_FAIL;
++    }
 +
-+Vendor-specific commands handled:
++    ufs_build_scsi_response_upiu(req, sense_buf, sizeof(sense_buf), len,
++                                 scsi_status);
++    return UFS_REQUEST_SUCCESS;
++}
 +
-++------+---------------------------+--------------------------------------------+
-+| Code | Name                      | Response                                   |
-++======+===========================+============================================+
-+| 0xD5 | ``UCD9000_MONITOR_CONFIG``| Block: one byte ``0x00``                   |
-++------+---------------------------+--------------------------------------------+
-+| 0xD6 | ``UCD9000_NUM_PAGES``     | Byte: ``24``                               |
-++------+---------------------------+--------------------------------------------+
-+| 0xF3 | ``UCD9000_MFR_STATUS``    | Block: four bytes ``0x00 0x00 0x00 0x00``  |
-++------+---------------------------+--------------------------------------------+
-+| 0xFD | ``UCD9000_DEVICE_ID``     | Block: ASCII string ``"UCD90320"``         |
-++------+---------------------------+--------------------------------------------+
+ static UfsReqResult ufs_emulate_scsi_cmd(UfsLu *lu, UfsRequest *req)
+ {
+     uint8_t lun = lu->lun;
+@@ -394,6 +432,8 @@ static UfsReqResult ufs_process_scsi_cmd(UfsLu *lu, UfsRequest *req)
+ static const Property ufs_lu_props[] = {
+     DEFINE_PROP_DRIVE("drive", UfsLu, conf.blk),
+     DEFINE_PROP_UINT8("lun", UfsLu, lun, 0),
++    DEFINE_PROP_UINT32("logical-block-size", UfsLu, logical_block_size,
++                       UFS_BLOCK_SIZE),
+ };
+ 
+ static bool ufs_add_lu(UfsHc *u, UfsLu *lu, Error **errp)
+@@ -435,7 +475,7 @@ static void ufs_init_lu(UfsLu *lu)
+     lu->unit_desc.length = sizeof(UnitDescriptor);
+     lu->unit_desc.descriptor_idn = UFS_QUERY_DESC_IDN_UNIT;
+     lu->unit_desc.lu_enable = 0x01;
+-    lu->unit_desc.logical_block_size = UFS_BLOCK_SIZE_SHIFT;
++    lu->unit_desc.logical_block_size = ctz32(lu->logical_block_size);
+     lu->unit_desc.unit_index = lu->lun;
+     lu->unit_desc.logical_block_count =
+         cpu_to_be64(brdv_len / (1 << lu->unit_desc.logical_block_size));
+@@ -475,8 +515,10 @@ static void ufs_init_scsi_device(UfsLu *lu, BlockBackend *blk, Error **errp)
+     scsi_dev = qdev_new("scsi-hd");
+     object_property_add_child(OBJECT(&lu->bus), "ufs-scsi", OBJECT(scsi_dev));
+ 
+-    qdev_prop_set_uint32(scsi_dev, "physical_block_size", UFS_BLOCK_SIZE);
+-    qdev_prop_set_uint32(scsi_dev, "logical_block_size", UFS_BLOCK_SIZE);
++    qdev_prop_set_uint32(scsi_dev, "physical_block_size",
++                         lu->logical_block_size);
++    qdev_prop_set_uint32(scsi_dev, "logical_block_size",
++                         lu->logical_block_size);
+     qdev_prop_set_uint32(scsi_dev, "scsi-id", 0);
+     qdev_prop_set_uint32(scsi_dev, "lun", lu->lun);
+     if (!qdev_prop_set_drive_err(scsi_dev, "drive", blk, errp)) {
+@@ -497,7 +539,7 @@ static void ufs_lu_realize(DeviceState *dev, Error **errp)
+ {
+     UfsLu *lu = DO_UPCAST(UfsLu, qdev, dev);
+     BusState *s = qdev_get_parent_bus(dev);
+-    UfsHc *u = UFS(s->parent);
++    UfsHc *u = UFS_BUS(s)->hc;
+     BlockBackend *blk = lu->conf.blk;
+ 
+     if (!ufs_lu_check_constraints(lu, errp)) {
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index 464fd465b3..1489bd3321 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -102,7 +102,8 @@ static MemTxResult ufs_addr_read(UfsHc *u, hwaddr addr, void *buf, int size)
+         return MEMTX_DECODE_ERROR;
+     }
+ 
+-    return pci_dma_read(PCI_DEVICE(u), addr, buf, size);
++    return dma_memory_read(u->dma_as, addr, buf, size,
++                           MEMTXATTRS_UNSPECIFIED);
+ }
+ 
+ static MemTxResult ufs_addr_write(UfsHc *u, hwaddr addr, const void *buf,
+@@ -117,7 +118,8 @@ static MemTxResult ufs_addr_write(UfsHc *u, hwaddr addr, const void *buf,
+         return MEMTX_DECODE_ERROR;
+     }
+ 
+-    return pci_dma_write(PCI_DEVICE(u), addr, buf, size);
++    return dma_memory_write(u->dma_as, addr, buf, size,
++                            MEMTXATTRS_UNSPECIFIED);
+ }
+ 
+ static inline hwaddr ufs_get_utrd_addr(UfsHc *u, uint32_t slot)
+@@ -222,7 +224,7 @@ static MemTxResult ufs_dma_read_prdt(UfsRequest *req)
+     }
+ 
+     req->sg = g_malloc0(sizeof(QEMUSGList));
+-    pci_dma_sglist_init(req->sg, PCI_DEVICE(u), prdt_len);
++    qemu_sglist_init(req->sg, DEVICE(u), prdt_len, u->dma_as);
+     req->data_len = 0;
+ 
+     for (uint16_t i = 0; i < prdt_len; ++i) {
+@@ -317,14 +319,12 @@ static MemTxResult ufs_dma_write_upiu(UfsRequest *req)
+ 
+ static void ufs_irq_check(UfsHc *u)
+ {
+-    PCIDevice *pci = PCI_DEVICE(u);
+-
+     if ((u->reg.is & UFS_INTR_MASK) & u->reg.ie) {
+         trace_ufs_irq_raise();
+-        pci_irq_assert(pci);
++        qemu_set_irq(u->irq, 1);
+     } else {
+         trace_ufs_irq_lower();
+-        pci_irq_deassert(pci);
++        qemu_set_irq(u->irq, 0);
+     }
+ }
+ 
+@@ -1092,7 +1092,7 @@ static UfsReqResult ufs_exec_scsi_cmd(UfsRequest *req)
+ 
+     if (!is_wlun(lun) && (lun >= UFS_MAX_LUS || u->lus[lun] == NULL)) {
+         trace_ufs_err_scsi_cmd_invalid_lun(lun);
+-        return UFS_REQUEST_FAIL;
++        return ufs_emulate_absent_lun(req);
+     }
+ 
+     switch (lun) {
+@@ -2488,6 +2488,12 @@ static bool ufs_check_constraints(UfsHc *u, Error **errp)
+     return true;
+ }
+ 
++void ufs_init_mmio(UfsHc *u)
++{
++    memory_region_init_io(&u->iomem, OBJECT(u), &ufs_mmio_ops, u, "ufs",
++                          u->reg_size);
++}
 +
-+``DEVICE_ID`` uses the vendor-specific code ``0xFD`` rather than the standard
-+``PMBUS_IC_DEVICE_ID`` (``0xAD``), matching the Linux ``ucd9000`` probe
-+sequence.
-+
-+The UCD90320 is instantiated automatically in the ``huygens-bmc`` machine on
-+I2C bus 5 at address ``0x11``. To instantiate on a different Aspeed machine:
-+
-+.. code-block:: c
-+
-+  i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5),
-+                          "ucd90320", 0x11);
-diff --git a/hw/sensor/ucd90320.c b/hw/sensor/ucd90320.c
-new file mode 100644
-index 0000000000..6d4f828448
---- /dev/null
-+++ b/hw/sensor/ucd90320.c
-@@ -0,0 +1,169 @@
+ static void ufs_init_pci(UfsHc *u, PCIDevice *pci_dev)
+ {
+     uint8_t *pci_conf = pci_dev->config;
+@@ -2495,8 +2501,7 @@ static void ufs_init_pci(UfsHc *u, PCIDevice *pci_dev)
+     pci_conf[PCI_INTERRUPT_PIN] = 1;
+     pci_config_set_prog_interface(pci_conf, 0x1);
+ 
+-    memory_region_init_io(&u->iomem, OBJECT(u), &ufs_mmio_ops, u, "ufs",
+-                          u->reg_size);
++    ufs_init_mmio(u);
+     pci_register_bar(pci_dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY, &u->iomem);
+     u->irq = pci_allocate_irq(pci_dev);
+ }
+@@ -2689,25 +2694,43 @@ static void ufs_init_hc(UfsHc *u)
+     timer_mod(&u->idle_timer, now + UFS_IDLE_TIMER_TICK);
+ }
+ 
+-static void ufs_realize(PCIDevice *pci_dev, Error **errp)
 +/*
-+ * Texas Instruments UCD90320 24-Rail PMBus Power Sequencer
-+ *
-+ * Copyright 2026 IBM Corp.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
++ * Frontend-agnostic realization: everything except the host-bus specific
++ * MMIO/IRQ/DMA plumbing, which the PCI or sysbus frontend sets up around
++ * this call.  The frontend must assign u->dma_as before calling.
 + */
++bool ufs_realize_core(UfsHc *u, Error **errp)
+ {
+-    UfsHc *u = UFS(pci_dev);
+-
+     if (!ufs_check_constraints(u, errp)) {
+-        return;
++        return false;
+     }
+ 
+-    qbus_init(&u->bus, sizeof(UfsBus), TYPE_UFS_BUS, &pci_dev->qdev,
+-              u->parent_obj.qdev.id);
++    qbus_init(&u->bus, sizeof(UfsBus), TYPE_UFS_BUS, DEVICE(u),
++              DEVICE(u)->id);
++    u->bus.hc = u;
+ 
+     ufs_init_state(u);
+     ufs_init_hc(u);
+-    ufs_init_pci(u, pci_dev);
+ 
+     ufs_init_wlu(&u->report_wlu, UFS_UPIU_REPORT_LUNS_WLUN);
+     ufs_init_wlu(&u->dev_wlu, UFS_UPIU_UFS_DEVICE_WLUN);
+     ufs_init_wlu(&u->boot_wlu, UFS_UPIU_BOOT_WLUN);
+     ufs_init_wlu(&u->rpmb_wlu, UFS_UPIU_RPMB_WLUN);
 +
-+#include "qemu/osdep.h"
-+#include "hw/i2c/pmbus_device.h"
-+#include "migration/vmstate.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+
-+#define TYPE_UCD90320 "ucd90320"
-+
-+/* UCD90320 has 24 sequenced power-rail pages */
-+#define UCD90320_NUM_PAGES 24
-+
-+/* Vendor-specific command codes (not in the standard PMBus register table) */
-+#define UCD9000_MONITOR_CONFIG  0xd5
-+#define UCD9000_NUM_PAGES       0xd6
-+#define UCD9000_MFR_STATUS      0xf3
-+#define UCD9000_DEVICE_ID       0xfd
-+
-+#define UCD90320_DEVICE_ID_LEN     8
-+#define UCD90320_MFR_STATUS_LEN    4
-+
-+typedef struct UCD90320State {
-+    PMBusDevice parent;
-+
-+    /* Reset values for the vendor-specific block-read commands. */
-+    uint8_t device_id[UCD90320_DEVICE_ID_LEN];
-+    uint8_t monitor_config;
-+    uint8_t mfr_status[UCD90320_MFR_STATUS_LEN];
-+} UCD90320State;
-+
-+#define UCD90320(obj) OBJECT_CHECK(UCD90320State, (obj), TYPE_UCD90320)
-+
-+static void ucd90320_send_block(PMBusDevice *pmdev,
-+                                const uint8_t *data, uint8_t len)
-+{
-+    int i;
-+
-+    pmdev->out_buf[len + pmdev->out_buf_len] = len;
-+    for (i = len - 1; i >= 0; i--) {
-+        pmdev->out_buf[i + pmdev->out_buf_len] = data[len - 1 - i];
-+    }
-+    pmdev->out_buf_len += len + 1;
++    return true;
 +}
 +
-+static uint8_t ucd90320_read_byte(PMBusDevice *pmdev)
++static void ufs_realize(PCIDevice *pci_dev, Error **errp)
 +{
-+    UCD90320State *s = UCD90320(pmdev);
++    UfsHc *u = UFS(pci_dev);
 +
-+    switch (pmdev->code) {
-+    case UCD9000_DEVICE_ID:
-+        ucd90320_send_block(pmdev, s->device_id, sizeof(s->device_id));
-+        pmbus_idle(pmdev);
-+        return 0;
-+    case UCD9000_NUM_PAGES:
-+        pmbus_send8(pmdev, UCD90320_NUM_PAGES);
-+        pmbus_idle(pmdev);
-+        return 0;
++    u->dma_as = pci_get_address_space(pci_dev);
 +
-+    case UCD9000_MONITOR_CONFIG:
-+        ucd90320_send_block(pmdev, &s->monitor_config,
-+                            sizeof(s->monitor_config));
-+        pmbus_idle(pmdev);
-+        return 0;
-+    case UCD9000_MFR_STATUS:
-+        ucd90320_send_block(pmdev, s->mfr_status, sizeof(s->mfr_status));
-+        pmbus_idle(pmdev);
-+        return 0;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: reading from unsupported register: 0x%02x\n",
-+                      __func__, pmdev->code);
-+        break;
-+    }
-+    return 0xFF;
-+}
-+
-+static int ucd90320_write_data(PMBusDevice *pmdev, const uint8_t *buf,
-+                               uint8_t len)
-+{
-+    if (len == 0) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: writing empty data\n", __func__);
-+        return -1;
++    if (!ufs_realize_core(u, errp)) {
++        return;
 +    }
 +
-+    pmdev->code = buf[0];
-+
-+    if (len == 1) {
-+        return 0;
-+    }
-+
-+    return 0;
-+}
-+
-+static void ucd90320_exit_reset(Object *obj, ResetType type)
-+{
-+    PMBusDevice *pmdev = PMBUS_DEVICE(obj);
-+    UCD90320State *s = UCD90320(obj);
-+
-+    pmdev->capability = 0x20; /* PEC supported */
-+
-+    for (int i = 0; i < UCD90320_NUM_PAGES; i++) {
-+        pmdev->pages[i].operation     = 0x80; /* on */
-+        pmdev->pages[i].on_off_config = 0x1a;
-+        pmdev->pages[i].vout_mode     = 0x00; /* linear mode, exponent=0 */
-+        pmdev->pages[i].read_vout     = 0;    /* rails off, pgood=0 */
-+    }
-+
-+    memcpy(s->device_id, "UCD90320", sizeof(s->device_id));
-+    s->monitor_config = 0x00;
-+    memset(s->mfr_status, 0x00, sizeof(s->mfr_status));
-+}
-+
-+static void ucd90320_init(Object *obj)
-+{
-+    PMBusDevice *pmdev = PMBUS_DEVICE(obj);
-+    uint64_t flags = PB_HAS_VOUT | PB_HAS_VOUT_MODE |
-+                     PB_HAS_STATUS_MFR_SPECIFIC;
-+
-+    for (int i = 0; i < UCD90320_NUM_PAGES; i++) {
-+        pmbus_page_config(pmdev, i, flags);
-+    }
-+}
-+
-+static const VMStateDescription vmstate_ucd90320 = {
-+    .name = TYPE_UCD90320,
-+    .version_id = 0,
-+    .minimum_version_id = 0,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_PMBUS_DEVICE(parent, UCD90320State),
-+        VMSTATE_UINT8_ARRAY(device_id, UCD90320State, UCD90320_DEVICE_ID_LEN),
-+        VMSTATE_UINT8(monitor_config, UCD90320State),
-+        VMSTATE_UINT8_ARRAY(mfr_status, UCD90320State,
-+                            UCD90320_MFR_STATUS_LEN),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void ucd90320_class_init(ObjectClass *klass, const void *data)
-+{
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    PMBusDeviceClass *k = PMBUS_DEVICE_CLASS(klass);
-+
-+    dc->desc = "Texas Instruments UCD90320 24-Rail Power Sequencer";
-+    dc->vmsd = &vmstate_ucd90320;
-+    k->write_data = ucd90320_write_data;
-+    k->receive_byte = ucd90320_read_byte;
-+    k->device_num_pages = UCD90320_NUM_PAGES;
-+    rc->phases.exit = ucd90320_exit_reset;
-+}
-+
-+static const TypeInfo ucd90320_types[] = {
-+    {
-+        .name          = TYPE_UCD90320,
-+        .parent        = TYPE_PMBUS_DEVICE,
-+        .instance_size = sizeof(UCD90320State),
-+        .instance_init = ucd90320_init,
-+        .class_init    = ucd90320_class_init,
-+    },
-+};
-+
-+DEFINE_TYPES(ucd90320_types)
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 82e0bc2e70..ac44740547 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -555,6 +555,7 @@ config ASPEED_SOC
-     select LED
-     select PMBUS
-     select MAX31785
-+    select UCD90320
-     select FSI_APB2OPB_ASPEED
-     select AT24C
-     select PCI_EXPRESS
-diff --git a/hw/sensor/Kconfig b/hw/sensor/Kconfig
-index bc6331b4ab..135ffa7d5d 100644
---- a/hw/sensor/Kconfig
-+++ b/hw/sensor/Kconfig
-@@ -43,3 +43,7 @@ config ISL_PMBUS_VR
- config MAX31785
-     bool
-     depends on PMBUS
-+
-+config UCD90320
-+    bool
-+    depends on PMBUS
-diff --git a/hw/sensor/meson.build b/hw/sensor/meson.build
-index 420fdc3359..c0583161d3 100644
---- a/hw/sensor/meson.build
-+++ b/hw/sensor/meson.build
-@@ -8,3 +8,4 @@ system_ss.add(when: 'CONFIG_MAX34451', if_true: files('max34451.c'))
- system_ss.add(when: 'CONFIG_LSM303DLHC_MAG', if_true: files('lsm303dlhc_mag.c'))
- system_ss.add(when: 'CONFIG_ISL_PMBUS_VR', if_true: files('isl_pmbus_vr.c'))
- system_ss.add(when: 'CONFIG_MAX31785', if_true: files('max31785.c'))
-+system_ss.add(when: 'CONFIG_UCD90320', if_true: files('ucd90320.c'))
++    ufs_init_pci(u, pci_dev);
+ }
+ 
+ static void ufs_exit(PCIDevice *pci_dev)
 -- 
 2.53.0
 
