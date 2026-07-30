@@ -4,99 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B60F7C55165
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 12:29:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C6B3C55165
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 12:30:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpPsn-0005q0-RI; Thu, 30 Jul 2026 08:29:05 -0400
+	id 1wpPtR-0006WY-8H; Thu, 30 Jul 2026 08:29:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wpPsj-0005pe-MH
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 08:29:02 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ id 1wpPtM-0006UT-S7
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 08:29:40 -0400
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wpPsi-0001uM-5u
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 08:29:01 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-81e6f2ee60bso10475277b3.1
- for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 05:28:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785414537; cv=none;
+ id 1wpPtL-0001wI-5M
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 08:29:40 -0400
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-66899c7b57bso2847070d50.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 05:29:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785414578; cv=none;
  d=google.com; s=arc-20260327;
- b=cwMe4ti2rJ4+aCaDOozQ83Kz575HP7wpStT4KoMRgybCjgg2LAhHA8mN4Co9fBWTXj
- 4I5bPu6/LASYe21DfrLgGoxObBFccRd9xauoCVFsX61XyV54Fsf/s1k6YBQXmDZ9wFh5
- W9NclDd69JsmFxhyIYayOQ56H2j+G1/eCkw/QS2tpvv/YvyTM3DNUP4VYlichEg3B1ck
- vEw7SJ/1MOHCXpXDq6In4JOtX/gDNKie0Ep6jX5DrycysSRgF4fKQpUEKcJq2VET6NoQ
- lGYKWogrRi7W8RVsZu5zvRyVgURxbgK/4de7Xu1ewfmuumJmAyxtRic0JSOVMpFNjN7e
- 2VgQ==
+ b=SI61PmaXjALYb4Zkb8Ecnj37dms/aFAjuEnolfbaJtRYyDY6cvO28SNkmiQ6u7YUm9
+ yJPUlhR38CfGLqSmC6jZ2QzUkDR1mtA6z+LgQUy3vgbbtAB/f7qZLy8CzcJmXtqF4bAu
+ p2Prc7zArmWpOV5gl08CIFLYZhrdg1JMy4hVtxrbJ/JKnWVeiydDcNDNK29RSpOEPj6e
+ 0wq+5MUabat7xZuzgZZOjU2705tBjj0snqGCcXh3ZDTx1YoQ4v29YHj882EMpH+gjOBi
+ Lb9WpUWVfEgllNOVVMlEwJauJhBbsLrKTWigugkZI/Va9Ejr+c5d9tF+FZwDBWZUTnxg
+ eHtA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=QZvCRAOYx7Jmy32zGIW5M7L3b+vFulkwPEDTw/NPeRo=;
- fh=RWwcVw9W2H3ZVRYMXx33lzVj80iAwOWlXehQfCa1Gx8=;
- b=K0dX73ZdxcavBJDBErYqSKfuXaf4Gas3O672TNZMpMcJFQya4ooGpgrrmmW3Vsy5G+
- YDswehMm8QqmVN88KA6QVyKIri+zVoZdXfn3BgAyfRooFLhv3+aGO1rG1LVG7XhmjK1W
- w9gj0IOhHGcjklezLcQFC6QtBsqqir7GiDMLG/zCf1yQIJL3WjL9/iaFtBSDWFcvVFkL
- rs65ujb4k+zQgYxv7eZ5Yko5qm+ongZiENrltXVo+m7qPH4BFYvQ5saFUhuzTa/YGsIZ
- 8+hx8+ToZ5Wi1AdGopQzPr8d3L3ZOY3m+F/NrZug3U9bI0Yik1SqgDqoYmJAV9Xr9g/G
- KWhQ==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=h83qJRCbPi9Q/QwFzKfiuFaidosc70DcXYKbE7sjQQw=;
+ fh=/uX6n4ooPnSj4yw+YE2y9MXSxeiFvjRHwZj6Q+mP2z8=;
+ b=K/h5YjG21HV7BmKHrSxgozHNj46/weL8HuDmrKySX7N24uxj3MmC4VrB91K7R1PyFJ
+ dWUQh9Pwteq4kU8ZmnfPm5RzEQI2HphkrlvaH9HE3eiVKnxjVqXqXIqlgfbtAI33eZc1
+ uJpARhFfjFZJOTlzoovQDOLOIzu73HdD1zI3lz0tMblUxWyaqMZJ1qdebH1DMwfVFa+8
+ OlJLisAYNZoFksDKL9/qp0u04IzRjO3WLGZUzY5BN0/KYIynefg3b/ua6+ZXi5wf3xyt
+ 4vhsSJ5n9VuEaLQgYQthogOHj7OmyscFx+LDZU/j8BM/F9YoCnSQSJHxbKxcV/NEhCx9
+ Bgzg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785414537; x=1786019337; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=QZvCRAOYx7Jmy32zGIW5M7L3b+vFulkwPEDTw/NPeRo=;
- b=OyFYPhYSlVM2esDCg9knRHEq/dEmHPywU3X0IHOQdYwqODdLUp/wzE3+0MOQmBqqjQ
- lleKrWk52HvL0d6oUKcw2NpCy1a9wUHTlgNog/H+FkeXPxrnIeqR/iC/mLH6MX4ANV8K
- uP+YfHmvjzmOj/Yhv1u7JlYfFAY98GfZQkF9AmTh+FTobFw11AUhGBSGAujAKKHV5Deu
- KJbxAlPDakd0CvhqGuoo3+hOrtytNRsuoxGsMASSShlUHm9AJB+47SwS7hIZ34Oyy8Dt
- 7OpTZX88LPUTdblKPqGOgw5aItOmqF+/nFzASopUqMGEiAXOfWK0CvYTGKNqlL0TNgfr
- r/aA==
+ d=linaro.org; s=google; t=1785414578; x=1786019378; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=h83qJRCbPi9Q/QwFzKfiuFaidosc70DcXYKbE7sjQQw=;
+ b=EDtBduHcpQbJphVTKc/6TCJ3O8M9tF5iJGIDDISmeqaCjr4tORFhINioU1TVeTxM8m
+ 5nu7eWkl9f1UnZb/8DqY1jzuPX7BEvZ4dmZwbnFKFLjWZZiQ+xpYo5CbhbLgq3MLCNxJ
+ JAD25XbYmLRZKML/w85f+FG+gTWNYiSzUqjRSeJ2eRDPDY//7927IzfEOngVXhtyM1sM
+ 0edsxWWgOBi/1xemuOunvSObVI4mz7l4yAxzRSmnlaGEdw6AtKG+tbzQHvDYspRCqjx6
+ WOUN/yVEdqYVRxvUJW6fFx0bMF72tTMpcg6HcUQi/A5CCHThLyO5aZ+7/NVQT9M0V3KW
+ yn2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785414537; x=1786019337;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=QZvCRAOYx7Jmy32zGIW5M7L3b+vFulkwPEDTw/NPeRo=;
- b=f900QEYOhY5WooYu14+2U2aIdEL9DGqWPsbsaRaT3a6Zs73eZcIx/qpe7MPd21b6px
- OIJHNr8tTZSouJFIdkvGj3Tso5D08GefKi0Wfi/7vbrJrujM6Ql0d0mROw3k0QJdOhUj
- gezD4uPlSCiaLUOmydShSaT4Rd1W14+T0HLJg6On/p2Khf3nqw1OvT7S4o1rSKxzrFNq
- Jf5olNaCqDiusIkKu0DFDTiv0gX1It80HIJCQMZ6DSoWJfZoBrhV3BbJqLDeGHbZ49kI
- 2U3+rC60xq4uuJHWF1MeLHDIGLiXWgBO7ZtkCq50TvIUbcCnGWxkyZn58XpbUKd+lRwe
- ij9g==
+ d=1e100.net; s=20251104; t=1785414578; x=1786019378;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=h83qJRCbPi9Q/QwFzKfiuFaidosc70DcXYKbE7sjQQw=;
+ b=VAzR/7+bj7v3c/tCJi9JU66kSwkBnAFAe8o56I2+jDiETs2npaUAUd7+zNvuPcjRQI
+ HeKXUe5JXTopRr5BZtzFqaDyI26W0OHzmoAsXLC0zXRcoJUv6BgMwAbLtbNGCR6Tl+h5
+ 6UvP4IZBepLd9mY86O+/JAZtTTaqpvAdQhcZ17E3CRW/xvUExoxtqi0stzhfMX3olUkw
+ xcVuaUDJvDk5JjIaiE9v8XF2BG633NxZ9wYMsWulSmd0lgwr+k/P46HIf0UKNZzn28Ax
+ O4gO3HtaomhCJJAAMlbhfiXQJJvZ/XgArFIAjpU0xQLXaJiPkEY2rJRasnA/PuTHx9ch
+ c1cA==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rr1f/UINM5nI1+Jh3Hep6oNmv7NEPUhsc+5hYKvMwrN2bBPRL0uKD4JMNHUQiae2oUx+OglYyNeB8v5@nongnu.org
-X-Gm-Message-State: AOJu0Yzqsaj4Is6ueOEXyR2R/cux9MzekvG0Kc6vf/Hn/oylgfif+ESj
- cfUBoAvgZ7O5UhpfOtUeKTVZXfZ0ROpwS4tjS8NfPvdPNJ565yj1MWsOx/6OFMtvtAqBOIiznpW
- cu5XHHe4C7nPGwqyg0jOA7kMRKeQ39JOdyDR/4sLbLQ==
-X-Gm-Gg: AR+sD1040WNQywrSn96cXVI4V3a9ZVWvM96Fcx8QyzbANgeS9rnWBpy41TMC9j+QAcR
- HwcOyXRbfWbk4cv0mSdSjXEiBVpWDUBJp90pDc9PVOYya9d/moUEcFMq8iiAnFY344lNyPhWXUx
- SQWRusYFyg07JftWXgIIsbKZ+AtPxIKPCfwUuzbA2SmTxDpqdsuiRigdmPmAthEvjvhuIDQPFUX
- bqrNOHtqWtsBnSbbMkqvJ8F3QgX1PWz0VwiYouMOeNcKSSewYlyfHrLsTTZBJl53zHTZnx5eS+d
- mvksKr2GFe7RtN+HDUFqtwkh0Mbh/lOl1mOkOmN99mIJ1clwIEV9RyXFYUSvyOdZtfVDkFX9YxO
- AU9ESGcW3hmYyK9xq7iJxJ9InFivc
-X-Received: by 2002:a05:690c:3:b0:7dc:3d2b:2e94 with SMTP id
- 00721157ae682-81fc17225b0mr1160337b3.13.1785414537543; Thu, 30 Jul 2026
- 05:28:57 -0700 (PDT)
+ AHgh+RqGf7IRkkXxQBvgxy8R9XeAv5EDR3ojqDwrz8H+AZ5MkyMSkWCzMUeijCiegD6x4fWAkD8TzIKMDdKe@nongnu.org
+X-Gm-Message-State: AOJu0YzXhKa+TANDMbB7oIp2E+v8uls2mA8dlunnP9FG++Vbr3ag3oSJ
+ IMcS31d6ugUGrgsThJ2ddlEdbFlEhByjy8aRkGVtQbSpoR+8dlUqEfdXTit9sobfKmokFRRGoYF
+ uHS+EMxun7ZoHyAi9FUikYT0tQD2I7y6f0E4QqMqGIg==
+X-Gm-Gg: AR+sD12cn2SieCDRCyAIATUWPk8BeIOhBZkM/IPTrRBKjFpXXdyWtTaugGookEofJ4y
+ 335Jap6FtPaX5wtZzLj05aJG3lOEVoeKvW9LhGvdDHN/obIyKt21D0ZGyvFWZx9FfSTNKat1II/
+ 7pBMgwPTjj58hnylglyOOKIQQl8/pV3OIRq0qYc7wqsfSXaOCdnrdbGIuYYTJ9uVBMkQnd+JR0O
+ RB3bsulIeAH338zea+6JvObXkBcwda506GBSJjugtA4g4AY61k1puKMt+BHzSMbOZqQXSDgCniv
+ 07lpgY/9NPRadWVS//E7ae6DwdAOd2isf/iYJiSxUR8dwUMakZhVVWSKHlMkwUBBdsu68xWzllc
+ /IXqmg6OtHg6eVdvQZvGL0xXnGUON
+X-Received: by 2002:a53:a6c9:0:b0:668:9b6a:652d with SMTP id
+ 956f58d0204a3-6693a329ea5mr21489d50.3.1785414577810; Thu, 30 Jul 2026
+ 05:29:37 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260729231325.3808993-1-titusr@google.com>
- <20260729231325.3808993-2-titusr@google.com>
-In-Reply-To: <20260729231325.3808993-2-titusr@google.com>
+ <20260729231325.3808993-4-titusr@google.com>
+In-Reply-To: <20260729231325.3808993-4-titusr@google.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 30 Jul 2026 13:28:45 +0100
-X-Gm-Features: AUfX_mwI_IS-Mn2a8oByyTgSM13U4AxSHNIP4pfwReWSWAIpdNuxLntZ6e99kio
-Message-ID: <CAFEAcA9Omor0pJ5LTyYbk-41W9b707P9t1zATPto3M=a7j1Pyw@mail.gmail.com>
-Subject: Re: [PATCH 1/8] osdep: add DIV_ROUND_CLOSEST
+Date: Thu, 30 Jul 2026 13:29:26 +0100
+X-Gm-Features: AUfX_mxM6cOYRMi3l6xyZZeoTcA0Okydka2OwzWlafMGaSytHFDJbUbQfDAbUcw
+Message-ID: <CAFEAcA_RjDnLufCgRxFhbPQv9SrfLxC8RvY5-SKzVWpJ17P7Gw@mail.gmail.com>
+Subject: Re: [PATCH 3/8] hw/i2c: smbus: increase MAX_DATA_LEN
 To: Titus Rwantare <titusr@google.com>
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kfting@nuvoton.com, 
  imaginos32@gmail.com, wuhaotsh@google.com, philmd@mailo.com, 
  fanjason@google.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,38 +124,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Thu, 30 Jul 2026 at 00:13, Titus Rwantare <titusr@google.com> wrote:
 >
-> This is taken from linux/include/uapi/linux/const.h to match the driver
-> behaviour when reading sensor values.
+> The 32 byte payload was raised to 255 for block reads in the SMBus 3.0
+> specification. SMBus does not provide a way for devices to declare which
+> version of the spec they are designed to so we must allow newer devices
+> to return as much data as they allow.
 >
-> Signed-off-by: Titus Rwantare <titusr@google.com>
-> ---
->  include/qemu/osdep.h | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
+> vsmstate_smbus_extended_data is added to avoid breaking migration.
 >
-> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-> index 1ec5b42230..08f87c9d61 100644
-> --- a/include/qemu/osdep.h
-> +++ b/include/qemu/osdep.h
-> @@ -522,6 +522,19 @@ void QEMU_ERROR("code path is reachable")
->  #define DIV_ROUND_UP(n, d) (((n) + (d) - 1) / (d))
->  #endif
+> Specification: https://smbus.org/specs/SMBus_3_3_20240512.pdf
 >
-> +#ifndef DIV_ROUND_CLOSEST
-> +#define DIV_ROUND_CLOSEST(n, d) \
-> +({ \
-> +    typeof(n) __n = n; \
-> +    typeof(d) __d = d; \
-> +    (((typeof(n))-1) > 0 || \
-> +     ((typeof(d))-1) > 0 || \
-> +     (((__n) > 0) == ((__d) > 0))) ? \
-> +        (((__n) + ((__d) / 2)) / (__d)) : \
-> +        (((__n) - ((__d) / 2)) / (__d)); \
-> +})
-> +#endif
+> > 6.5.7 Block Write/Read
+> The Block Write begins with a slave address and a write condition. After =
+the command code the host issues a byte count which describes how many more=
+ bytes will follow in the message. If a slave has 20 bytes to send, the byt=
+e count field will have the value 20 (14h), followed by the 20 bytes of dat=
+a. The byte count does not include the PEC byte. The byte count may be 0. A=
+ Block Read or Block Write is allowed to transfer a maximum of 255 data byt=
+es.
 
-This is still missing the documentation comment that the kernel's
-version has. (We could also mention in that comment that this is
-from the kernel and so GPL-2-only.)
+You could line wrap this quote so it isn't one super long line.
 
+Otherwise
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+thanks
 -- PMM
 
