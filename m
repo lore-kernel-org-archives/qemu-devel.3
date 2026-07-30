@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 155A7C55164
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 16:09:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B7BEC55164
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 16:12:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpTJq-0004RS-M8; Thu, 30 Jul 2026 12:09:15 -0400
+	id 1wpTMW-0005GA-Gt; Thu, 30 Jul 2026 12:12:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wpTJf-0004QV-Pb
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 12:09:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wpTJd-0002cw-RH
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 12:09:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785427740;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dsVpAu3QcfKYN17RfZrDdBsSoJyLiS2uxIUvPEK9QqU=;
- b=RjVccr9XwuXWJm7W1EP4DzedI3kf3HVtavRhvFFg8Pe2dJ5BTv+DWgt3T+5hIbn+N///KR
- bTZGLpvFj9BQ63ziWUs4++oLVvYvpBKOTY+UdzptOlTDgf80PdFeXCTXV+ytKftbMUDukp
- cMKMp1MeXcdqprn0vOgti+bX4KeB7Vc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-20-0ZkvAFqSNH61vdvzDvY8hQ-1; Thu,
- 30 Jul 2026 12:08:56 -0400
-X-MC-Unique: 0ZkvAFqSNH61vdvzDvY8hQ-1
-X-Mimecast-MFC-AGG-ID: 0ZkvAFqSNH61vdvzDvY8hQ_1785427734
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5DD001956080; Thu, 30 Jul 2026 16:08:53 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.178])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 180BC30002E9; Thu, 30 Jul 2026 16:08:50 +0000 (UTC)
-Date: Thu, 30 Jul 2026 12:08:49 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- John Snow <jsnow@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, Fam Zheng <fam@euphon.net>,
- "Denis V. Lunev" <den@openvz.org>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Greg Kurz <groug@kaod.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- xen-devel@lists.xenproject.org, Li Zhijian <lizhijian@fujitsu.com>
-Subject: Re: [PATCH v2 6/8] block: add missing coroutine_fn annotations
-Message-ID: <20260730160849.GE1442692@fedora>
-References: <20260725-co-v2-0-d3552ddb3931@redhat.com>
- <20260725-co-v2-6-d3552ddb3931@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wpTMT-0005BB-9i
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 12:11:57 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wpTMQ-0003He-7t
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 12:11:56 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-84e84a6c4bfso958144b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 09:11:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1785427911; x=1786032711; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=WdBTdzTo6w5Qyog+GbxjiYLOJ20vhmXsolLk0+ayY1k=;
+ b=RLKP9aCyZ2jhxQco/i54oLAV6fffe3YXdo5Mptu7boIhcN8vtA1yJtNnITKz2Jtbug
+ 2DIZJMAiSGynQ/yLvRlrcPdPeoZ5FjlgEM4UIHuFSkCqPvLLLCUfxHmu2laTelFF6eWV
+ uoHbsuWoM5EZ9UxbknLTB0/LNnrq4c8nsFSd+LEB0JZb/ukJawUwjxkb8JMH1KI6EkZn
+ UU9ny/BvVU7s6xw9BFAZ8zMYF0hpy1IDMf3NIJPnqpiR4QOMHYj19J0Rca+vf0ZiEAVu
+ D/fRjAo3AWtNDcPTLCCr7uit3NDGc+5W/G8CATODc44sPTugFdLbwuH1S2vrYOsqPt+0
+ 7EJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785427911; x=1786032711;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=WdBTdzTo6w5Qyog+GbxjiYLOJ20vhmXsolLk0+ayY1k=;
+ b=E5loxZ7CvTvLqI8owTjFq7bBUp3aNGtfR+eXHokJH+o8YrXs3H+QOJGWFPdPN6WSbN
+ bXjtiXOXhU8dnQEY32Tag3l1+15Qtr/Edjfs7uVF9YXKYmKBkiUJJNBEphR2O85ICupf
+ I8hfTEwuv6wWosdwH4pQrvwO3R2AlNUuSpGzb77EQvBpn/q7FvQlT7cDOHUqLhnhld5V
+ i95+HM83Dbofpn7O3kzjAjyc/5fisF6X1mvmfBZpi0WEgjnJ7ND4b4AKMHwM/Up0Wz+E
+ GbVNIbrO8j1SGSn2uU3s/eZ5+elbgSzCYED5Aub+gsCgSXJw+j5TAkecsU98rYRPhCB/
+ cEqg==
+X-Gm-Message-State: AOJu0YwwD4w1F2R4M2tELOiulpkTM5ZTtR60vmaP27cQAseMcd2+2Wgo
+ BCQIhsZKLlx0/lJNPYr3/szyfGV7kBJIzsDzf625C9yL7WjKZz3rwYlhI508IGfdn9PRKMF065x
+ 6PqPb
+X-Gm-Gg: AR+sD11wp4qm1KxByYwVriv+jRgoH8/m6RfTb+4fpnadFNaAqF0yJzuIR2UdFDheJ/e
+ zqeg7a68HS6h4G0BEZY7IfVpW1dbcWVOtPuJN9feggXcoVus7/+pIStDlwoQNuvLIyoldgSOBTR
+ VNHt9Z96dDasQXKvU31TDoi+ZWQIhWCLasQHmxLA6v6j3zcNdcWh6Xych+tBYlFJhkKKXAtvjS3
+ 3JqcHkjA0ga6D5kp3NL39VcXV+jxuwMdgOxIuGrI6ohyU0Cj3xndHO0fE3apiCiemOes4VAtX4F
+ UM82bd7C1Ytknrt8yIILx35y+8IHm15714ZDZBQ17lWYADIlnxfstu8RaQRU935dFkOx4PYg7yV
+ IFLO+qV6pIaX986jNl7BDNYrCmHZwKT//U7Y/bCkOYdktQMv25ZqGHtEepsFLNBVjRKYSJ2a1ld
+ 031b8ngB8IlCas4sU6QQNn3raGeslgri6njsFuQ9S77M+QQ6Y7hKaRxUNPqSK66qSDC43x0HIxQ
+ ohWSGSQqKgVLRLgyZewvdo3+iD2hZjvSL2QweM=
+X-Received: by 2002:a05:6a00:4ac9:b0:848:2ef5:50dd with SMTP id
+ d2e1a72fcca58-84eca884981mr703344b3a.37.1785427911346; 
+ Thu, 30 Jul 2026 09:11:51 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-84ea03d3f16sm3378227b3a.59.2026.07.30.09.11.50
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 30 Jul 2026 09:11:50 -0700 (PDT)
+Message-ID: <741317bf-5f3f-4631-ab77-26ba6f80a251@linaro.org>
+Date: Thu, 30 Jul 2026 09:11:49 -0700
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="g6ePFKhtStmVnIyL"
-Content-Disposition: inline
-In-Reply-To: <20260725-co-v2-6-d3552ddb3931@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 03/50] tcg: Introduce tcg-global-mappings
+To: qemu-devel@nongnu.org
+References: <20260730031025.12926-1-anjo@rev.ng>
+ <20260730031025.12926-4-anjo@rev.ng>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260730031025.12926-4-anjo@rev.ng>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,60 +105,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---g6ePFKhtStmVnIyL
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 7/29/26 20:09, Anton Johansson via qemu development wrote:
+> +extern cpu_tcg_mapping tcg_global_mappings[];
+> +extern size_t tcg_global_mapping_count;
 
-On Sat, Jul 25, 2026 at 01:48:37PM +0400, Marc-Andr=E9 Lureau wrote:
-> diff --git a/block/parallels.c b/block/parallels.c
-> index 7a90fb5220b9..6f96cc4e3045 100644
-> --- a/block/parallels.c
-> +++ b/block/parallels.c
-> @@ -142,8 +142,9 @@ static uint32_t host_cluster_index(BDRVParallelsState=
- *s, int64_t off)
->      return off / s->cluster_size;
->  }
-> =20
-> -static int64_t block_status(BDRVParallelsState *s, int64_t sector_num,
-> -                            int nb_sectors, int *pnum)
-> +static int64_t
-> +block_status(BDRVParallelsState *s, int64_t sector_num,
-> +             int nb_sectors, int *pnum)
->  {
->      int64_t start_off =3D -2, prev_end_off =3D -2;
-> =20
+No globals.  All such data structures would be local to the translators, calling
 
-This hunk looks like an accidental whitespace change? This function is
-not a coroutine function.
+> +void init_cpu_tcg_mappings(cpu_tcg_mapping *mappings, size_t size);
 
-> @@ -2126,7 +2128,8 @@ fail:
->      return ret;
->  }
-> =20
-> -static void qcow2_reopen_commit(BDRVReopenState *state)
-> +static void
-> +qcow2_reopen_commit(BDRVReopenState *state)
+as necessary.
 
-Whitespace change?
+> +void init_cpu_tcg_mappings(cpu_tcg_mapping *mappings, size_t size)
+> +{
+> +    uintptr_t tcg_addr;
+> +    size_t cpu_offset;
+> +    const char *name;
+> +    cpu_tcg_mapping m;
+> +
+> +    /*
+> +     * Paranoid assertion, this should always hold since
+> +     * they're typedef'd to pointers. But you never know!
+> +     */
+> +    g_assert(sizeof(TCGv_i32) == sizeof(TCGv_i64));
+> +
+> +    /*
+> +     * Loop over entries in tcg_global_mappings and
+> +     * create the `mapped to` TCGv's.
+> +     */
+> +    for (int i = 0; i < size; ++i) {
+> +        m = mappings[i];
+> +
+> +        for (int j = 0; j < m.number_of_elements; ++j) {
+> +            /*
+> +             * Here we are using the fact that
+> +             * sizeof(TCGv_i32) == sizeof(TCGv_i64) == sizeof(TCGv)
+> +             */
+> +            assert(sizeof(TCGv_i32) == sizeof(TCGv_i64));
 
-Looks good aside from these whitespace changes.
+Two identical asserts in 10 lines.
 
---g6ePFKhtStmVnIyL
-Content-Type: application/pgp-signature; name=signature.asc
+Such things are better with a compile-time assert using QEMU_BUILD_BUG_ON, however...
 
------BEGIN PGP SIGNATURE-----
+> +            tcg_addr = (uintptr_t)m.tcg_var_base_address + j * sizeof(TCGv_i32);
+> +            cpu_offset = m.cpu_var_base_offset + j * m.cpu_var_stride;
+> +            name = m.cpu_var_names[j];
+> +
+> +            if (m.cpu_var_size < 8) {
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmprdxEACgkQnKSrs4Gr
-c8js3wgAnl0wOlSZnyScyNQg+Isn1t4N5afPjcm8ELinnU9anKcEJ1Sp1TkPsU9Q
-NwkfxO7GkL7vXUyVnUWSUh/oNRVYEXrgxNbxGMwG1mTdM7DA/jta+ap1efLTmNbr
-gK2SHM9ofCIdb1RltGF6b11gq607rjdF9dFy7vK9d3nmV6FHIqauvSiKUY5ksteR
-DUsNbxgdLc6hcNNGRzhyLYBsNazRginbl9zsKTLO5lp7ovVUIqzf/QNsIOyRU3xE
-wqZd8THPyZRBnkwbi/vTQjg9XBS5rm4BM/aIbYADrhLfqsX9jwHK/K5IOsK+OvuY
-Xw9Th5pdJNz/Ib8OiJpSzxo4PPKiLg==
-=ZGHJ
------END PGP SIGNATURE-----
+I can understand wanting to use sizeof in the macros,
+but we can do better than that with
 
---g6ePFKhtStmVnIyL--
+   .type = _Generic(((struct_type *)0)->cpu_var,
+                    uint64_t: TCG_TYPE_I64,
+                    int64_t: TCG_TYPE_I64,
+                    uint32_t: TCG_TYPE_I32,
+                    int32_t: TCG_TYPE_I32),
 
+which will catch mistakes earlier at compile-time.
+
+> +                *(TCGv_i32 *)tcg_addr =
+> +                    tcg_global_mem_new_i32(tcg_env, cpu_offset, name);
+> +            } else {
+> +                *(TCGv_i64 *)tcg_addr =
+> +                    tcg_global_mem_new_i64(tcg_env, cpu_offset, name);
+> +            }
+
+At which point you can use tcg_global_mem_new_internal.
+
+
+r~
 
