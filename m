@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC5D4C54FD2
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:10:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AED38C54FCD
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:10:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpH6Y-0002es-LM; Wed, 29 Jul 2026 23:06:42 -0400
+	id 1wpH7h-0005US-LA; Wed, 29 Jul 2026 23:07:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH6X-0002SO-0g
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:06:41 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH7J-0004hR-E0
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:07:31 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH6U-0002vo-Tb
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:06:40 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH7I-00031M-1O
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:07:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=LRMzawlJ3Kw59JwVhx4oKCorGEMhoXcYEID8YEaEEqs=; b=IiiIKoamNBqq1Jy
- KIwh6ayfWOPaEQWZ/QEgQB8DCQKuB/leIQRazrT0jg7KZky8kvWKWOxWtcdOFcE6unUARYJ8hUnE8
- 7rJGn23tvLOQbkRYGW+jcc6BhyPq0zBhiFUb5+3mCSiCDa/3WUh7mnaEsqUonbAxMVt59Q+VJ4Amp
- MI=;
+ List-Help; bh=KrUA14IUsSbr9Wds92GLD313FBynG/oxdLVdhWG7UhE=; b=XekgEHj6ybrt2rk
+ FRLDRJKohelF5ibk5bfUpdfffWuHM5k/EFIOZDIYyxe0l87mBW53GRlHZyLID2O3vHRn26c0MP8J7
+ qAlEtXh71z6JL+ybLFxykEZ0aL9hTo1PSVxgiO/SElYUadlAp5keIZYrj9z3mW8COsupHpp7EaIDr
+ Xs=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, brian.cain@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
  philmd@mailo.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 21/50] helper-to-tcg: Add guest vector layout description
-Date: Thu, 30 Jul 2026 05:09:55 +0200
-Message-ID: <20260730031025.12926-22-anjo@rev.ng>
+Subject: [PATCH v2 42/50] target/hexagon: Increase VECTOR_TEMPS_MAX
+Date: Thu, 30 Jul 2026 05:10:16 +0200
+Message-ID: <20260730031025.12926-43-anjo@rev.ng>
 In-Reply-To: <20260730031025.12926-1-anjo@rev.ng>
 References: <20260730031025.12926-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -63,144 +63,40 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vectors are represented as arrays of host-endian blocks at least 64 bits in
-size, the size of which is configurable.  Lane 0 in each block may be
-placed either at the most- or least-significant bytes.
-
-This covers a wide range of QEMU targets' vector representations.
-
-Vector layout information is used later when mapping constant
-expressions such as constant vectors, and when emitting helper functions
-for performing size-changing operations.
+Doubles the number of vector temporaries from 4 to 8, useful when
+emitting vector instructions with helper-to-tcg to handle more
+complicated helpers.  `tmp_VRegs` must be later specified later to
+`helper-to-tcg` through `--temp-vector-block=tmp_VRegs`.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- .../helper-to-tcg/include/VectorLayout.hpp    | 116 ++++++++++++++++++
- 1 file changed, 116 insertions(+)
- create mode 100644 subprojects/helper-to-tcg/include/VectorLayout.hpp
+ target/hexagon/cpu.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/subprojects/helper-to-tcg/include/VectorLayout.hpp b/subprojects/helper-to-tcg/include/VectorLayout.hpp
-new file mode 100644
-index 0000000000..e85f5029d5
---- /dev/null
-+++ b/subprojects/helper-to-tcg/include/VectorLayout.hpp
-@@ -0,0 +1,116 @@
-+//
-+//  Copyright(c) 2026 rev.ng Labs Srl. All Rights Reserved.
-+//
-+//  This program is free software; you can redistribute it and/or modify
-+//  it under the terms of the GNU General Public License as published by
-+//  the Free Software Foundation; either version 2 of the License, or
-+//  (at your option) any later version.
-+//
-+//  This program is distributed in the hope that it will be useful,
-+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+//  GNU General Public License for more details.
-+//
-+//  You should have received a copy of the GNU General Public License
-+//  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+//
+diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
+index 7694fd91fa..02ac011632 100644
+--- a/target/hexagon/cpu.h
++++ b/target/hexagon/cpu.h
+@@ -117,7 +117,7 @@ typedef struct {
+ #define SET_EXCEPTION           (env->status |= EXEC_STATUS_EXCEPTION)
+ 
+ /* Maximum number of vector temps in a packet */
+-#define VECTOR_TEMPS_MAX            4
++#define VECTOR_TEMPS_MAX            8
+ 
+ typedef struct CPUArchState {
+     target_ulong gpr[TOTAL_PER_THREAD_REGS];
+@@ -160,6 +160,10 @@ typedef struct CPUArchState {
+     MMVector future_VRegs[VECTOR_TEMPS_MAX] QEMU_ALIGNED(16);
+     MMVector tmp_VRegs[VECTOR_TEMPS_MAX] QEMU_ALIGNED(16);
+ 
++#ifdef TARGET_HELPER_TO_TCG
++    uint8_t tmp_vmem[4096] QEMU_ALIGNED(16);
++#endif
 +
-+#pragma once
-+
-+#include <llvm/ADT/ArrayRef.h>
-+#include <stddef.h>
-+#include <stdint.h>
-+
-+// Vector Layout
-+//
-+// Vector layouts among QEMU guests is quite diverse, this header aims to be
-+// simple but still capture a large subset of targets.
-+//
-+// Guest vectors are assumed to be divided into host-endian blocks of a
-+// configurable size (>= 64-bit and power-of-two), with block 0 always being at
-+// the lowest address.  Blocks in turn are divided into 64-bit columns which are
-+// used when interfacing with QEMUs `gvec` API.
-+//
-+// Below is a 32-byte <32 x i8> guest vector consisting of 16-byte blocks,
-+// 8-byte columns, and 1-byte lanes for each element in the vector.  Elements
-+// count from 1-32 in hex to indicate their position in memory.  Note this
-+// example is for a little-endian host with `LeastSignificant` lane preference
-+// meaning lane 0 is at the least significant bytes of each block.
-+//
-+//   Guest vector <32 x i8> {1, 2, 3, ..., 32}
-+//   +---------------------------------+---------------------------------+
-+//   |              BLOCK 0            |              BLOCK 1            |
-+//   +----------------+----------------+----------------+----------------+
-+//   |    COLUMN 0    |    COLUMN 1    |    COLUMN 2    |    COLUMN 3    |
-+//   |0102030405060708|090A0B0C0D0E0F10|1112131415161718|191A1B1C1D1E1F20|
-+//
-+//   LOW ADDRESS                                              HIGH ADDRESS
-+//
-+// On a big-endian host, the vector would instead be expressed in memory as
-+//
-+//   Guest vector <32 x i8> {1, 2, 3, ..., 32}
-+//   +---------------------------------+---------------------------------+
-+//   |              BLOCK 0            |              BLOCK 1            |
-+//   +----------------+----------------+----------------+----------------+
-+//   |    COLUMN 1    |    COLUMN 0    |    COLUMN 3    |    COLUMN 2    |
-+//   |100F0E0D0C0B0A09|0807060504030201|201F1E1D1C1B1A19|1817161514131211|
-+//
-+//   LOW ADDRESS                                              HIGH ADDRESS
-+//
-+// with the column order having shifted to make sure the host-endian blocks
-+// retain the same value.  Blocks are also allowed to be equal or greater in
-+// size that the guest vector, at which point the entire memory view of the
-+// vector would reverse when going from a little to big-endian host.
-+//
-+// The lane preference may also be changed to `MostSignificant` which for the
-+// little-endian example places lane 0 and the highest address of block 0.
-+// Note, that `MostSignificant` on little-endian and `LeastSignificant` on
-+// big-endian hosts are equivalent in their memory representation, but will
-+// differ in how they are emitted in C:
-+//
-+//   // MostSignificant, little endian
-+//   uint64_t vec[] = {0x90A0B0C0D0E0F10, 0x102030405060708, ...};
-+//
-+//   // LeastSignificant, big endian
-+//   uint64_t vec[] = {0x100F0E0D0C0B0A09, 0x807060504030201, ...};
-+//
-+
-+enum LanePreference {
-+    LeastSignificant,
-+    MostSignificant,
-+};
-+
-+struct VectorLayout {
-+    bool HostBigEndian;
-+    LanePreference Lane0;
-+    size_t BlockBytes;
-+
-+    inline size_t index(bool Reverse, size_t Count, size_t I, size_t J) const {
-+        if (Reverse) {
-+            return Count * I + (J ^ (Count - 1));
-+        } else {
-+            return Count * I + J;
-+        }
-+    }
-+
-+    // Return the index into a linear array of lane L in column C
-+    inline size_t indexLane(size_t LanesPerColumn, size_t C, size_t L) const {
-+        const bool Reverse = (Lane0 == MostSignificant);
-+        return index(Reverse, LanesPerColumn, C, L);
-+    }
-+
-+    // Return the index into a linear array of
-+    inline size_t indexBlock(size_t BlocksPerVec, size_t I) const {
-+        const bool Reverse = (HostBigEndian ^ (Lane0 == MostSignificant));
-+        return index(Reverse, BlocksPerVec, 0, I);
-+    }
-+
-+    //inline uint64_t column(llvm::ArrayRef<uint64_t> Lanes) {
-+    //    uint64_t Column = 0;
-+    //    const size_t LanesPerColumn = 64 / ElementSize;
-+    //    for (size_t L = 0; L < LanesPerColumn; ++L) {
-+    //        const size_t Index = VL.indexLane(LanesPerColumn, C, L);
-+    //        Column |= Ints[Index] << (ElementSize * L);
-+    //    }
-+    //}
-+};
+     MMQReg QRegs[NUM_QREGS] QEMU_ALIGNED(16);
+     MMQReg future_QRegs[NUM_QREGS] QEMU_ALIGNED(16);
+ 
 -- 
 2.52.0
 
