@@ -4,89 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AADE8C531D0
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 08:15:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7660AC531D0
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 08:19:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpLta-00074o-PS; Thu, 30 Jul 2026 04:13:38 -0400
+	id 1wpLzG-0003GY-FY; Thu, 30 Jul 2026 04:19:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wpLtY-00073j-7f
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 04:13:36 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wpLtW-00017e-DJ
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 04:13:35 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-c15d3cd51b2so233682066b.3
- for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 01:13:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1785399209; x=1786004009; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=wXiU7ti5qahm2uu10xmoUW4yWwkxyZQGn0PKpqZCris=;
- b=suBYjEzTXNT3xp0FjUL0or6LynSQZCNFzpAWMZt3o9suFrKAokzfgfWnthcFTj8Teo
- bj8xwMRT31v3nsGVxWk0Tg3bVG5lYxLqaULjbIAANNq4GNsOILEsTT5WPkTVi02tMulY
- El2+HMG11cp8jkS2jF196WyfCainCGq/dNNH3gcPxDmrnT6kHp17rbc+ztNCne2TUyfA
- gh/OFIaNeBZIeiH/i7CE1FyEgyvtu8Qi7Wp2G2LGJLTaZOxUVdTZG6ywIKHt/qtkKVbX
- TDwICCbmGVI/vbCIXkFCkmOYHnwGGKZWi2GeqBhqSlqNiaNxGfEkc8DGHyzWVSdga8+J
- +Xyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785399209; x=1786004009;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=wXiU7ti5qahm2uu10xmoUW4yWwkxyZQGn0PKpqZCris=;
- b=OpH2ms2jj2L7KKdOlcAnLBap4nZoKD6nH4HA2aEq8jLiCopd2vnQn+ut4WXf82bVfk
- kb4PcXzdnnFY0vmmGS2Gwu9kaeuKfu0HryBAoBoe1rlqaR5W0JKJu0/NDGV+BzrLiH+0
- ce0E8mPcdGySynC8A8vWCEYydQMAFu9/id61XxCE3kI8iPOh/anFrVtS5VVykHB8ZfnQ
- KNgm57HjIY08sr9pO+VcveegI2y1aKguijeWXnUVbKqdZ5tFRXQz/QqrQy/ArfcdtzQJ
- lOSAtEkS6OJThI82Po/Qn9Wrzu9Olf02K9bir207l/By8kJYADXZ/kG8nMorl2/LMz1Q
- jhKA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RobCPzB+tmCZRqaPxG1NHTMtGy8T/grOYlQnpxUDF/5gpIt0rep93cVh+3LxRErvixcRnJoN9c2XfR3@nongnu.org
-X-Gm-Message-State: AOJu0YxFPSgtZG35OBxVXrWFWencO736ZzdW0KIH1fkPjHmQI7ZAVS81
- Fye3ZEUirPd3ayMQM25ibPehbz7POCP1++VmfxKg0Q/K018D5YqV2KKYqmJ3L0zo7C4=
-X-Gm-Gg: AR+sD11nPXjnUEZWL7gYwSIfbM9sg3Nsmx9CEAjaOaM7RdqdxI6cyFbcYBUIhqDu03+
- OixN+fmnTf85VR/urw8o+r2i0KzxEsLbIpNLGPAyYmzc9OVh0w9RotU2yy95GMrQBE9xepEukYr
- 7OSXPHqu6V1g+N3FH6G5QqN54nt+SP5tvghIjwATUaUXpeivec9zlcjznHO00lsabqLHK+Amfsd
- yInh7IywIX7tX9QGO765s8S3IyU0rIqwev0Y9XFnVmjaCRa3poKRm5LIX6iwfXUyELolkNvm5uG
- jWkcMyQUNB07LvWboJqR9qN9S/eGFTuXnjqLpvGm6EuyP/dgk9jh0DWgiT3j5ZurfwQVUImmD2B
- 8vBk3JRN4GV5tmyCzBHUNTqrf3CkKNmu1TEVcEkKaSuDtjt/T1SEXAfPw/YHmdyjYI+RkzSqV2Y
- FnL79IiVUjj5RkFh8JSVNB9V60Pu6LCjFCtVhGyND+14NFeRdB7w==
-X-Received: by 2002:a17:907:97d4:b0:c15:edb7:a74d with SMTP id
- a640c23a62f3a-c1fa53ed69cmr83867366b.12.1785399209062; 
- Thu, 30 Jul 2026 01:13:29 -0700 (PDT)
-Received: from athena ([2a06:5b06:b600:300:871f:1fb4:356b:23d9])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c1fa857c8e1sm38373466b.19.2026.07.30.01.13.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Jul 2026 01:13:28 -0700 (PDT)
-From: "Denis V. Lunev" <den@openvz.org>
-To: qemu-block@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: den@openvz.org, Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 1/8] MAINTAINERS: add myself to IDE maintainers
-Date: Thu, 30 Jul 2026 10:13:17 +0200
-Message-ID: <20260730081325.1816193-2-den@openvz.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260730081325.1816193-1-den@openvz.org>
-References: <20260730081325.1816193-1-den@openvz.org>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wpLzE-0003G1-4m
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 04:19:28 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wpLzB-0002Am-74
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 04:19:27 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
+ by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id 0C77AC0230;
+ Thu, 30 Jul 2026 11:19:21 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:484::1:24] (unknown
+ [2a02:6bf:8080:484::1:24])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id KJa5mmMWEqM0-q7BU82Yh; Thu, 30 Jul 2026 11:19:20 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1785399560;
+ bh=ZVuMVkrE64wviS/lWMpHP4wMZwQ7czB1hmWn3gNsd5s=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=NJoJDD3jp4NkmKNU7aT28osrchNV904lFN4qBkYcLzYtPBi7LVJWcyURFlIgUTClb
+ 2HZ27t9wpotfX51KUIDqQyX/NQlUGL5P6jNRJQqZlw3TA709btZPGDrYn4XqS29kUd
+ r64wih5TGhos16aaJLED26wjVKMNa+9ju8eu6uyQ=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <783a90d1-be14-47fc-98ad-da4812b1ccb1@yandex-team.ru>
+Date: Thu, 30 Jul 2026 11:19:20 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=den@openvz.org; helo=mail-ej1-x62b.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] migration: Remove duplicate vmstate macros
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+References: <20260729225227.1170574-1-farosas@suse.de>
+ <20260729225227.1170574-5-farosas@suse.de>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20260729225227.1170574-5-farosas@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,26 +78,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Stefan Hajnoczi <stefanha@redhat.com>
-CC: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+On 30.07.26 01:52, Fabiano Rosas wrote:
+> -#define VMSTATE_STRUCT_VARRAY_INT32(_field, _state, _field_num, _version, _vmsd, _type) { \
+> -    .name       = (stringify(_field)),                               \
+> -    .num_offset = vmstate_field_offset(_state, _field_num, int32_t), \
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 902db77218..4628793dde 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2160,6 +2160,7 @@ F: docs/specs/edu.rst
- 
- IDE
- M: John Snow <jsnow@redhat.com>
-+M: Denis V. Lunev <den@openvz.org>
- L: qemu-block@nongnu.org
- S: Odd Fixes
- F: include/hw/ide/
+Hmm, this int32_t should be dropped in earlier commit.. It doesn't break
+compilation because VMSTATE_STRUCT_VARRAY_INT32. Suggest to drop it
+completely in patch 01, together with VMSTATE_ARRAY_INT32_UNSAFE.
+
+(interesting, do we have more unused macros?)
+
+> -    .version_id = (_version),                                        \
+> -    .vmsd       = &(_vmsd),                                          \
+> -    .size       = sizeof(_type),                                     \
+> -    .flags      = VMS_STRUCT | VMS_VARRAY,                           \
+> -    .offset     = vmstate_offset_varray(_state, _field, _type),      \
+> -}
+> -
+
+
 -- 
-2.53.0
-
+Best regards,
+Vladimir
 
