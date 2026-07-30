@@ -4,87 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D755BC54FDF
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 09:02:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C461C54FDF
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 09:18:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpMdk-00054P-8B; Thu, 30 Jul 2026 05:01:20 -0400
+	id 1wpMtD-00075P-Ih; Thu, 30 Jul 2026 05:17:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1wpMdf-00053R-Vp; Thu, 30 Jul 2026 05:01:16 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wpMtA-00074z-JC; Thu, 30 Jul 2026 05:17:16 -0400
+Received: from fout-a1-smtp.messagingengine.com ([103.168.172.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1wpMdb-0008Mi-9n; Thu, 30 Jul 2026 05:01:15 -0400
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:86a0:0:640:75de:0])
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id B2DDF80D17;
- Thu, 30 Jul 2026 12:01:05 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:c89::1:23] (unknown
- [2a02:6bf:8080:c89::1:23])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id 21bmHE4hHiE0-4i2Mu2Z6; Thu, 30 Jul 2026 12:01:05 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1785402065;
- bh=4u4B9NEnTzAdSn6cm125l7QGq7N8lTHRMpYcECCD93E=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=dU7T9OpyLUzZr1a4S09iesnZDSAaNct6p9fR0b1/ngiGf/14/voMarZR9jA99HGQI
- c/iekta89H//x3CfCADUFwBwGumopJ5ZuDXRuNe9l5TekHJ9Yk1XgvWvOqCztRamNK
- zxCPNxceSfYaQrYzrpEJArO1z2WXwK9Van3YvmBY=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <36d0eee5-0f45-4088-82a5-b2176a4c749a@yandex-team.ru>
-Date: Thu, 30 Jul 2026 14:01:02 +0500
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wpMt8-0002dq-GG; Thu, 30 Jul 2026 05:17:16 -0400
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+ by mailfout.phl.internal (Postfix) with ESMTP id 34951EC04AE;
+ Thu, 30 Jul 2026 05:17:12 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-07.internal (MEProxy); Thu, 30 Jul 2026 05:17:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm1; t=1785403032; x=
+ 1785489432; bh=+h8miCXuDj0hA1V9ztaoz/4HJO7w9S0WReMjQpJKjRw=; b=I
+ HfL/tBMTUloVCYvDOl+ql3Ms7GV7PtuyYWgZSi8MUd7aqP71GmEAT9PIOA8qxOXR
+ qKn5a1pNk+O/n6QoB0WV/j9qPkqMrunZkLDhV5k7qiJYPTgct/7dyowQhb+KskJn
+ B5D3nsAKj9fYPQS2TVj03hgBP0JB90ZgNAhYico4Dvt0lyJHq7Lfo3GgFQ43cM1+
+ 3hy/jQaBZ1cUsTgA1Noi76mvVemRDWJ6FnOlC5eq6afsrF/BIX5B9+SlbpT8zSMB
+ cr5JKGASuDXlHprnosGADre0rQqSJC2nLCm4ISf/284ScwljQuyD/U3RYS/g1EIm
+ aLvY1zE7YqiS1eKj50O9Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+ 1785403032; x=1785489432; bh=+h8miCXuDj0hA1V9ztaoz/4HJO7w9S0WReM
+ jQpJKjRw=; b=TzD4GX7GEUoCFkS6J3GTVHM7mmt6xuXjHtPHgMXBc/1bMs5m7l5
+ Hjl2esIWBXf7uFXDRQcttr6POwwsGUVZQpAliK2oVWVftJiVBzoREdcHFt58VQq5
+ /NYI9JwZdQjEJ5Otly24vc1cN91rqk7dUeBFyBkcSudpV/q7PjzL4pe5GPwL+sjt
+ M9Hz9ialPeg6l+xiIlbeD2WMSEH6DiTMvdb20Wm6/ZhhmcLJLI6gEI6t6EZdLvPZ
+ awTATZ+RMOzTvIVQcDvjlobCfJ8q0ykiGsOU+U6yKP9KwQEJ8TupRQBHBLctmEr6
+ Oitsj/LmGDh3iiW7f1HYM3NuiWMfqBsE3Jw==
+X-ME-Sender: <xms:lhZrai4JJSTs4CnEdRZgWvqNcwBu1gI22FucNUmMffgcsvQkJN0tqA>
+ <xme:lhZraocjOHyp_WqoruYJVpjgWAFgPipI1Iv34m4tjuCOip4Mgzim6lTUw0KVNFVHF
+ TAhqy3JWEnATaSZCzjBlNUByg9u-xXhBDlNOz6AUA079AVzBsatK0E>
+X-ME-Received: <xmr:lhZral6j7Jl220_VTOMeFb8bGXCC-qx2E1GZ1N_9cR-ArYPZcCrzbHAt_4TKEcgSItvQZo8th3CxHyQCP1HeLzEhgl2GfeQ>
+X-ME-Proxy-Cause: dmFkZTG4tRf+bWN/1LK4kPTRubluYuYF0gbumWUwIQetm4AZMfvvGTc615pDNhFvjml33O
+ nKzatPaTY/bLAYxUvs8O5Ws+/lYd/xQRx+fZY1w9SdZSK/eqpseoQv8Yiud7nRzVWbCCzs
+ IU1ecGxHCkmbZuDFc6yoxsE9TUsduBxWaD0u3i/DeYmbS93KHThGwAEtX+8aoF4jdZ/r/a
+ ah2dvgrh9lDFwK1NiR8P0KsEorxEp/DyVST5GkWdTlRxsViKEPPVHNmkhylpO8KFMpjVyT
+ AaxUhFvEw03KbTZpi/1H80Yb4AuC3i932Ua50HVt1KenVSh1OW8AltFiXPk9Cn9PnDZ6EI
+ U+pC2pyr9i/fqOSiqaduuV5MrK1nt4EkGoLF/1lrb53klMmnrEYSB2X7AEGyUZzij/1iZm
+ 1qmhrmT+WJ9vEhP4jh3SOzIAVcE5jQmnquoFLOr4TYKNXiBZg2waN+MiAqdvHw0exoC7yd
+ YMN48ucpg5byOo+8Zoky2qnKp+7dkk8kAQSBBpJ9tIpFThTZz1O0oBww4SJzlOx+WPktj3
+ eIAw4c8kclh2r2nmtj5jfG4gjxByMpGPm3V8AcKwKhr3i4a/qFRC9ssCGImu8jsW2C47uz
+ F5iY3JVihQa7PZwy7xFV/p0pCFVpIt7Py8pjVOtBcrIWE7ydztWFTCM6ZlnA
+X-ME-Proxy: <xmx:lhZral8EpXNC7YfuDEVwFnHn98bF0d0IZQKp6Cq8OSb2ETjwCkHAlg>
+ <xmx:lhZranEO4kQ2IIVp5iUNT13sZ-vpcLALEhIE3WCMtK-Osr0PsMHBsA>
+ <xmx:lhZraqUjaJSl29P6ryR2TZwEcg-F0PWqXXhN3pLJcYnPIOA5MgdOJw>
+ <xmx:lhZraj_UOUaqTtoH3aAQAmOpO-bSaJ-nGiLxZ6vEEkw72jv8OM1Plw>
+ <xmx:mBZramhg4jb6t_UH2lesOcPEHdGhM__C7--9EljsAX9ENp5nzinOGjdc>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 30 Jul 2026 05:17:10 -0400 (EDT)
+Date: Thu, 30 Jul 2026 11:17:09 +0200
+From: Klaus Jensen <its@irrelevant.dk>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Daniel Paziyski <danielpaziyski@gmail.com>,
+ Klaus Jensen <k.jensen@samsung.com>, Keith Busch <kbusch@kernel.org>,
+ Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org,
+ QEMU Stable <qemu-stable@nongnu.org>
+Subject: Re: [PULL 2/4] hw/nvme: fix assertion failure on subregion removal
+Message-ID: <amsWjr670LZk0zcG@AALNPWKJENSEN.aal.scsc.local>
+References: <20260728180018.3574-1-its@irrelevant.dk>
+ <20260728180018.3574-3-its@irrelevant.dk>
+ <9a9eb76f-446a-4fe1-a603-222918a2c13f@tls.msk.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/6] vhost-user-blk: make inflight-migration prop
- mutable
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Jason Wang <jasowangio@gmail.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>, Jason Wang
- <jasowang@redhat.com>, Fam Zheng <fam@euphon.net>, qemu-block@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- virtio-fs@lists.linux.dev, Kevin Wolf <kwolf@redhat.com>,
- zhenwei pi <zhenwei.pi@linux.dev>, Paolo Bonzini <pbonzini@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Milan Zamazal
- <mzamazal@redhat.com>, Raphael Norwitz <rnorwitz@nvidia.com>
-References: <20260729051509-mutt-send-email-mst@kernel.org>
- <679a33d1-0f6c-4456-ac76-1f9e1251f2ec@yandex-team.ru>
- <20260729061316-mutt-send-email-mst@kernel.org>
- <a4db1b40-d48c-473b-86a7-63a0c0cc5ccf@yandex-team.ru>
- <20260729064648-mutt-send-email-mst@kernel.org>
- <dd1f5830-75ff-4256-a179-6a8341a3b4ec@yandex-team.ru>
- <20260729074711-mutt-send-email-mst@kernel.org>
- <364c33f6-9a7e-4efa-a497-3b551095469a@yandex-team.ru>
- <20260729103653-mutt-send-email-mst@kernel.org>
- <fd6939fc-df30-499f-8313-767761270b80@yandex-team.ru>
- <20260729144949-mutt-send-email-mst@kernel.org>
-Content-Language: en-US
-From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-In-Reply-To: <20260729144949-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="Gj87SQnKRmjCgalu"
+Content-Disposition: inline
+In-Reply-To: <9a9eb76f-446a-4fe1-a603-222918a2c13f@tls.msk.ru>
+Received-SPF: pass client-ip=103.168.172.144; envelope-from=its@irrelevant.dk;
+ helo=fout-a1-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -96,239 +110,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--Gj87SQnKRmjCgalu
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 7/29/26 23:50, Michael S. Tsirkin wrote:
-> On Wed, Jul 29, 2026 at 08:18:19PM +0500, Alexandr Moshkov wrote:
->> On 7/29/26 19:48, Michael S. Tsirkin wrote:
->>> On Wed, Jul 29, 2026 at 07:07:11PM +0500, Alexandr Moshkov wrote:
->>>> On 7/29/26 17:13, Michael S. Tsirkin wrote:
->>>>> On Wed, Jul 29, 2026 at 03:56:54PM +0500, Alexandr Moshkov wrote:
->>>>>> On 7/29/26 15:48, Michael S. Tsirkin wrote:
->>>>>>
->>>>>>        On Wed, Jul 29, 2026 at 03:35:31PM +0500, Alexandr Moshkov wrote:
->>>>>>
->>>>>>            On 7/29/26 15:14, Michael S. Tsirkin wrote:
->>>>>>
->>>>>>                On Wed, Jul 29, 2026 at 03:09:57PM +0500, Alexandr Moshkov wrote:
->>>>>>
->>>>>>                    On 7/29/26 14:32, Michael S. Tsirkin wrote:
->>>>>>
->>>>>>                         On Tue, Jul 28, 2026 at 03:08:39PM +0500, Alexandr Moshkov wrote:
->>>>>>
->>>>>>                             When migrating from a QEMU version that supports inflight-migration to
->>>>>>                             an older one that does not, there is no way to disable the feature at
->>>>>>                             runtime — the VM must be stopped and reconfigured. This is impractical
->>>>>>                             in production environments.
->>>>>>
->>>>>>                             Make the inflight-migration property mutable after device realization
->>>>>>                             so it can be toggled via qom-set without restarting the VM.
->>>>>>
->>>>>>                             Acked-by: Raphael Norwitz <rnorwitz@nvidia.com>
->>>>>>                             Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
->>>>>>
->>>>>>
->>>>>>
->>>>>>                         I think I am beginning to understand.
->>>>>>
->>>>>>
->>>>>>                         You are running qemu with inflight-migration on and want to migrate
->>>>>>                         to qemu without inflight-migration at all.
->>>>>>
->>>>>>
->>>>>>                         Since it is guest transparent you could retrofit it like this.
->>>>>>
->>>>>>                         My question is why is it worth it, we do not normally support
->>>>>>                         migrating between qemu versions with different command lines.
->>>>>>
->>>>>>                    I think you right. Maybe I've been focusing too much on the ability to migrate
->>>>>>                    between versions of qemu with and without inflight migration.
->>>>>>
->>>>>>                    This series allows to turn off and on the inflight-migration feature at runtime
->>>>>>                    without recreating the VM
->>>>> restarting you mean.
->>>> Yes, sorry.
->>>>>> (it was the only way to turn off the feature, since
->>>>>>                    the protocol feature could no longer be turned off, after initialization with
->>>>>>                    the backend). This is more important feature, and it leads to the fact that
->>>>>>                    this feature allows to migrate between different versions of qemu (with and
->>>>>>                    without inflight-migration support).
->>>>> so again it's not the 1st feature we have like this. we tie migration
->>>>> to the machine type and same set of command line flags
->>>>> specifically to keep things manageable.
->>>>>
->>>>> really cross version migration is a pain as it is.
->>>> I understand that, thanks! Maybe we should focus on the fact that this
->>>> series allows to turn inflight_migration on and off (without cross version
->>>> migration) ?
->>>>
->>>> Firstly, I wanted to implement this through migration capabilities, but in
->>>> one of the threads,
->>>> it was agreed that a separate capability only for vhost-user-blk is not a
->>>> good idea.
->>> I mean it's a generic thing.
->>>
->>>> Therefore, I implemented it through a parameter that can be changed using
->>>> qom-set.
->>>>
->>>>>>                             ---
->>>>>>                              hw/block/vhost-user-blk.c | 10 ++++++++--
->>>>>>                              1 file changed, 8 insertions(+), 2 deletions(-)
->>>>>>
->>>>>>                             diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
->>>>>>                             index e3b873af7c..650c004bde 100644
->>>>>>                             --- a/hw/block/vhost-user-blk.c
->>>>>>                             +++ b/hw/block/vhost-user-blk.c
->>>>>>                             @@ -619,6 +619,8 @@ static const VMStateDescription vmstate_vhost_user_blk = {
->>>>>>                                  }
->>>>>>                              };
->>>>>>
->>>>>>                             +static PropertyInfo vhost_user_blk_inflight_migration_prop;
->>>>>>                             +
->>>>>>                              static const Property vhost_user_blk_properties[] = {
->>>>>>                                  DEFINE_PROP_CHR("chardev", VHostUserBlk, chardev),
->>>>>>                                  DEFINE_PROP_UINT16("num-queues", VHostUserBlk, num_queues,
->>>>>>                             @@ -632,8 +634,9 @@ static const Property vhost_user_blk_properties[] = {
->>>>>>                                                    VIRTIO_BLK_F_WRITE_ZEROES, true),
->>>>>>                                  DEFINE_PROP_BOOL("skip-get-vring-base-on-force-shutdown", VHostUserBlk,
->>>>>>                                                   skip_get_vring_base_on_force_shutdown, false),
->>>>>>                             -    DEFINE_PROP_BOOL("inflight-migration", VHostUserBlk,
->>>>>>                             -                     inflight_migration, false),
->>>>>>                             +    DEFINE_PROP("inflight-migration", VHostUserBlk, inflight_migration,
->>>>>>                             +                vhost_user_blk_inflight_migration_prop, bool,
->>>>>>                             +                .set_default = true, .defval.u = false),
->>>>>>                              };
->>>>>>
->>>>>>                              static void vhost_user_blk_class_init(ObjectClass *klass, const void *data)
->>>>>>                             @@ -665,6 +668,9 @@ static const TypeInfo vhost_user_blk_info = {
->>>>>>
->>>>>>                              static void virtio_register_types(void)
->>>>>>                              {
->>>>>>                             +    vhost_user_blk_inflight_migration_prop = qdev_prop_bool;
->>>>>>                             +    vhost_user_blk_inflight_migration_prop.realized_set_allowed = true;
->>>>>>                             +
->>>>>>                                  type_register_static(&vhost_user_blk_info);
->>>>>>                              }
->>>>>>
->>>>>>                         So then,  for example, let us say I paused the VM, then set the flag,
->>>>>>                         now inflight is on but GET_BASE did not drain it?
->>>>>>
->>>>>>                    If I understood the question correctly, this is valid behavior. Before
->>>>>>                    migration QEMU check protocol features to understand does the backend support
->>>>>>                    inflight migration. If it does, after that QEMU migrate inflight buffer to
->>>>>>                    other VM. If it's not, return error before migration started.
->>>>>>
->>>>>>                I apologise i reverted the logic in the question.
->>>>>>
->>>>>>
->>>>>>                I start vm and inflight is on.
->>>>>>                I stop vm get base does not drain.
->>>>>>
->>>>>>            In case of VM stop, backend wait to drain all requests. Ability to perform
->>>>>>            drain or not available only during migration by skip_drain variable in
->>>>>>            vhost_user_blk_stop().
->>>>>>
->>>>>>        What if it was migration but it failed?
->>>>>>
->>>>>> If migration failed, source vm just keep using inflight region, backend
->>>>>> continue to execute inflight requests that was tried to migrate.
->>>>> Sorry, to be more clear. I mean migration succeeded but destination failed to
->>>>> start, so now vm is stopped and we are now trying migrating to a different destination.
->>>> Is this a real case? I was thinking in case of any destination errors
->>>> (migration process or starting), source vm has to work...
->>> It does not start automatically in all cases, no.
->>>
->>>> I guess in that case, inflight requests can only be executed on different
->>>> destination or in current destination if vm be able to start.
->>>>
->>>>> IIUC currently on VM stop we simply send GET_BASE and this stops
->>>>> backend, and depending on features things remain in the inflight buffer.
->>>>> Correct me if  I am wrong.
->>>> Yes backend has to disconnect from QEMU.. So it not be changing guest
->>>> memory.
->>>>> I think that we do not want a slow flush on vm stop if we
->>>>> can avoid it, and we also do not want backend to keep changing
->>>>> guest memory when VM is stopped. No?
->>>> Yes, it is
->>>>>>            skip_drain true only if inflight_migration is on and runstate is
->>>>>>            FINISH_MIGRATION.
->>>>> FINISH_MIGRATE? actually i do not see where it affects it.
->>>> Sorry, I didn't understand) Who affects who?
->>>>>>        This btw I don't much like, a stopped VM would preferably
->>>>>>        behave the same whatever the reason to stop.
->>>>>>
->>>>>> Well, I don't see any other way to implement this.
->>>>> I am not 100% sure it's implementable as described, but I guess
->>>>> you could block changing the property if VM and thus the backend
->>>>> is not connected and running.
->>>>>
->>>>>
->>>>> Which is even more complexity but at least it is consistent.
->>>> Oh, I understand what you thinking about.
->>>>
->>>> I agreed, but why implementation (in this series) is not consistent? I was
->>>> thinking that current (in current qemu version) impl is not, because
->>>> GET_VRING_BASE has two behaviors, depending on the presence of the protocol
->>>> feature (drain or not drain requests).
->>>>
->>>> Now, I think it would be more clear: one message for drain GET_VRING_BASE
->>>> (as it was before), one for not drain GET_VRING_BASE_SKIP_DRAIN.
->>> Well the message is consistent. But its use does not seem to be.
->>>
->>>>>
->>>>>
->>>>>
->>>>>
->>>>>> I think backend must perform
->>>>>> drain in all cases except live migration with all the necessary checks
->>>>>> (protocol features, special message GET_VRING_BASE_SKIP_DRAIN).
->>>>> This is not what is going on now, right? Whether it drains depends
->>>>> on protocol features not on VM state and I think we should
->>>>> keep it like this.
->>>> Well yes, now in current qemu version drain or not drain depends on protocol
->>>> feature only, that try to be negotiated only if inflight_migration is set
->>>> on.
->>>>
->>>> In patch: in case live migration (if protocol feature and  device param)
->>>> sent message GET_VRING_BASE_SKIP_DRAIN to skip drain, in other cases sent
->>>> other message - GET_VRING_BASE with draining all requests.
->>>> So drain or not drain depends on message that QEMU send to backend.
->>>>
->>>>>>                i turn inflight off.
->>>>>>                now it looks like it will happily migrate?
->>>>>>
->>>>>>            So in this case, when vm migrated with inflight off, it will leads to using
->>>>>>            GET_VRING_BASE message, that wait all requests to be drained.
->>>>>>
->>>>>>
->>>>>>                             --
->>>>>>                             2.34.1
->>>>>>
->>>>>>
->>>>> i mean it migrated with on. vm was stopped then it flipped to off.
->>>> After stop vm will send GET_VRING_BASE to backend, that lead to drain all
->>>> requests. Non of the inflight requests will be missed here, If that's what
->>>> you mean.
->>> this:
->>>
->>> +    bool skip_drain = vhost_user_blk_inflight_needed(s) &&
->>> +                      runstate_check(RUN_STATE_FINISH_MIGRATE);
->>>
->>> is what I dislike.
->>>
->>> I dislike poking at migration state. It's painful enough that we
->>> need to worry about VM running or not.
->> I understand that. But I don't know how to do it another way. We can't just
->> erase runstate check - it will possibly leads to missing inflight requests
->> during VM stop.
->>
->> And don't know how to make stop more consistent. Do you have any thoughts?
->
-> Block disabling this when VM is not running.
+On Jul 30 10:22, Michael Tokarev wrote:
+> On 7/28/26 21:00, Klaus Jensen wrote:
+> > From: Daniel Paziyski <danielpaziyski@gmail.com>
+> >=20
+> > When a controller is created with a MSI-X exclusive BAR, the bar0 memor=
+y region
+> > is not used at all, and so, the iomem region is not added as a subregio=
+n of it.
+> > However, when removing a NVMe controller, the iomem region is unconditi=
+onally
+> > removed as a subregion of bar0, causing an assertion failure. Remove th=
+e iomem
+> > memory region as a subregion of bar0 only if not using a MSI-X exclusiv=
+e BAR.
+> >=20
+> > QEMU options (requires a hotunplug-aware OS):
+> >=20
+> >          -M q35 -device pcie-root-port,id=3Drp0 \
+> >          -device nvme,serial=3Dctrl0,id=3Dctrl0,bus=3Drp0,msix-exclusiv=
+e-bar=3Don
+> >=20
+> > In the QEMU monitor, or by causing an ejection from the OS:
+> >=20
+> >          device_del ctrl0
+> >=20
+> > Message in stderr:
+> >=20
+> > qemu-system-x86_64: ../system/memory.c:2617: memory_region_del_subregio=
+n: Assertion `subregion->container =3D=3D mr' failed.
+> >=20
+> > Fixes: fa905f65c554 ("hw/nvme: add machine compatibility parameter to e=
+nable msix exclusive bar")
+> > Fixes: 9162f1012576 ("hw/nvme: fix msix_uninit with exclusive bar")
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4090
+> > Signed-off-by: Daniel Paziyski <danielpaziyski@gmail.com>
+> > Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+> > Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+>=20
+> It feels like this one should be picked up for the stable series too,
+> should it not?  (I'm picking it up).
+>=20
 
-Alright, thanks. Now I understand)
+Yes, thanks Michael!
 
->
->>>>>
->>>>>
->>>>>
+--Gj87SQnKRmjCgalu
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmprFo4ACgkQTeGvMW1P
+DeksoQf+KzkqY6I1CSAQdecpqxj8gELZ5MHEayimOFky5vFmoFUdNFI4yQVdXUGq
+e4e6OX1Mgn70I2n8ETS23KwMy8PhRTEydULSpZnmLi/iFqxsaTR9uAjuqLehbQ+7
+/RDWukO/7y93tpuoktOblYvPJJwZ3M/1zKq+6DuT4q7xSD/LxuvnXbThymDsj10C
+90grk+ZXXOwgt2MtvPT7kbuUtYYweyRWmWTlHiIYF77OC5v2+Ge2wumJwj6q+XqI
+C1nn6mywu5i2Pt5R5JfNbq22btPEg+Yuxe7m/nqoWbTzntwk6RYz68HajUWwbHqY
+D/05/LtMOzt8rpTYUuzaCW7/SmE1KA==
+=drI6
+-----END PGP SIGNATURE-----
+
+--Gj87SQnKRmjCgalu--
 
