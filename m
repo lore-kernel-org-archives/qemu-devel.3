@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E415C54FCD
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:06:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC0DCC54FD2
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:06:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpH6N-00029Z-VP; Wed, 29 Jul 2026 23:06:31 -0400
+	id 1wpH6G-0001vU-JD; Wed, 29 Jul 2026 23:06:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH6M-00027f-Ms
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:06:30 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH6F-0001v9-60
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:06:23 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH6K-0002um-Ic
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:06:30 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH6C-0002uL-VP
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:06:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=eWZchuVqzSjR2V6QniOrNG+R+2Zn07uA9lVeEhjH+3o=; b=VDf4TL+DQY2z+n+
- A9rj1NanJFEupDQUDidbO6b9jNNql6dfGX8gigqLCIynKnFDIRlO/LH5AFQLiFmqa4lE2jmofGp/m
- geLeGiiSZtlT/Jfb5IiKdujybOur3rwezDxbe9XwvSzckE8Qm5KCWzFxRD7cu1iFwiKqPT5GE2zjF
- pM=;
+ List-Help; bh=0VLdaQBq584YS84hmcm+SAqGLpmZtRsRFoJoJ75Ckkk=; b=EkEsc82WVsngqCI
+ QWwvnVZl4clft91iJGdBp55rKXIrBXxBMFdhsdLZICKsb7Qp93e/KXZwsZYTz8rmK6KV07etCOCIV
+ t+c3IhIqO6uJls4zLRixYU5d6w/lA9Hf5q142nhHY037TmT5nLdepq5Rg5OwuAZwP3/C2aku96GjH
+ A4=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, brian.cain@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
  philmd@mailo.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 18/50] helper-to-tcg: PrepareForOptPass, collect debuginfo
-Date: Thu, 30 Jul 2026 05:09:52 +0200
-Message-ID: <20260730031025.12926-19-anjo@rev.ng>
+Subject: [PATCH v2 14/50] helper-to-tcg: PrepareForOptPass, map annotations
+Date: Thu, 30 Jul 2026 05:09:48 +0200
+Message-ID: <20260730031025.12926-15-anjo@rev.ng>
 In-Reply-To: <20260730031025.12926-1-anjo@rev.ng>
 References: <20260730031025.12926-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -63,25 +63,26 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Debug information is collected before any non-preserving optimization
-pass is ran.  Currently, only variable definitions are parsed, mapping a
-Value * to a name and typename.
+In the LLVM IR module, function annotations are stored in one big global
+array of strings.  Traverse this array and parse the data into a format
+more useful for future passes.  A map between Functions * and an
+`Annotations` structure is exposed.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- .../helper-to-tcg/include/DebugInfo.hpp       | 46 ++++++++++++++++
- .../include/PrepareForOptPass.hpp             | 10 ++--
- subprojects/helper-to-tcg/src/Pipeline.cpp    |  3 +-
- .../PrepareForOptPass/PrepareForOptPass.cpp   | 52 +++++++++++++++++++
- 4 files changed, 107 insertions(+), 4 deletions(-)
- create mode 100644 subprojects/helper-to-tcg/include/DebugInfo.hpp
+ .../include/FunctionAnnotation.hpp            | 104 ++++++++++++++++++
+ .../include/PrepareForOptPass.hpp             |   7 +-
+ subprojects/helper-to-tcg/src/Pipeline.cpp    |   6 +-
+ .../PrepareForOptPass/PrepareForOptPass.cpp   |  94 ++++++++++++++++
+ 4 files changed, 209 insertions(+), 2 deletions(-)
+ create mode 100644 subprojects/helper-to-tcg/include/FunctionAnnotation.hpp
 
-diff --git a/subprojects/helper-to-tcg/include/DebugInfo.hpp b/subprojects/helper-to-tcg/include/DebugInfo.hpp
+diff --git a/subprojects/helper-to-tcg/include/FunctionAnnotation.hpp b/subprojects/helper-to-tcg/include/FunctionAnnotation.hpp
 new file mode 100644
-index 0000000000..27e545c6b7
+index 0000000000..398dd53ef5
 --- /dev/null
-+++ b/subprojects/helper-to-tcg/include/DebugInfo.hpp
-@@ -0,0 +1,46 @@
++++ b/subprojects/helper-to-tcg/include/FunctionAnnotation.hpp
+@@ -0,0 +1,104 @@
 +//
 +//  Copyright(c) 2026 rev.ng Labs Srl. All Rights Reserved.
 +//
@@ -101,153 +102,252 @@ index 0000000000..27e545c6b7
 +
 +#pragma once
 +
-+#include <llvm/ADT/StringRef.h>
-+#include <llvm/IR/ValueMap.h>
++#include <llvm/ADT/DenseMap.h>
++#include <llvm/ADT/SmallVector.h>
++#include <llvm/Support/Format.h>
++#include <llvm/Support/raw_ostream.h>
++#include <stdint.h>
 +
 +namespace llvm {
-+class Value;
++class Function;
 +}
 +
-+// StringRefs will refer do debug metadata fields which have the same
-+// lifetime as the LLVMContext and survive accross optimizations and
-+// possible deletions of functions/variables.
-+struct DebugInfo {
-+    llvm::StringRef VarName;
-+    llvm::StringRef BaseTypeName;
++// Different kind of function annotations which control the behaviour
++// of helper-to-tcg.
++enum class ArgumentAnnotation : uint8_t {
++    // Declares a list of arguments as immediates
++    Immediate = 1,
++    // Declares a list of arguments as vectors, represented by offsets into
++    // the CPU state
++    PtrToOffset = 2,
 +};
 +
-+using DebugInfoMapTy = llvm::ValueMap<const llvm::Value *, DebugInfo>;
++// Different kind of function annotations which control the behaviour
++// of helper-to-tcg.
++enum class FunctionAnnotation : uint8_t {
++    // Function should be translated
++    HelperToTcg = 1,
++    // Return value of function is an immediate
++    ReturnsImmediate = 2,
++};
 +
-+// Helper to get the variable name from debug info associated with a particular
-+// value, or default construct an empty name.
-+inline llvm::StringRef getDebugVarName(const DebugInfoMapTy &DM,
-+                                       const llvm::Value *V) {
-+    auto It = DM.find(V);
-+    if (It != DM.end()) {
-+        return It->second.VarName;
++// Annotation data which may be attached to a function
++class Annotations {
++    // 8-bit flag for each argument in a function, fields defined by
++    // `ArgumentAnnotions`.
++    llvm::SmallVector<uint8_t, 4> ArgumentAnnotations;
++    // Flag of function annotations, fields defined by `FunctionsAnnotations`.
++    uint8_t FunctionAnnotations = 0;
++
++  public:
++    inline uint8_t getArgFlag(size_t Index) const {
++        if (Index >= ArgumentAnnotations.size()) {
++            return 0;
++        }
++        return ArgumentAnnotations[Index];
 +    }
-+    return {};
-+}
++
++    // Getters and setters for annotations flags.
++
++    inline void set(FunctionAnnotation FA) {
++        FunctionAnnotations |= (uint8_t)FA;
++    }
++
++    inline void set(size_t Index, ArgumentAnnotation AA) {
++        if (Index >= ArgumentAnnotations.size()) {
++            // Resizing will default initialize any new elements.
++            ArgumentAnnotations.resize(Index + 1);
++        }
++        ArgumentAnnotations[Index] |= (uint8_t)AA;
++    }
++
++    inline bool isSet(FunctionAnnotation FA) const {
++        return (FunctionAnnotations & (uint8_t)FA) != 0;
++    }
++
++    inline bool isSet(size_t Index, ArgumentAnnotation AA) const {
++        uint8_t Flag = getArgFlag(Index);
++        return (Flag & (uint8_t)AA) != 0;
++    }
++
++    // Pretty printing debug information
++    inline void dump(llvm::raw_ostream &Out) const {
++        Out << "Annotations:\n";
++        Out << "  Function: " << llvm::format_hex(FunctionAnnotations, 4)
++            << "\n";
++        for (size_t I = 0; I < ArgumentAnnotations.size(); ++I) {
++            const uint8_t Flag = ArgumentAnnotations[I];
++            Out << "  Argument[" << I << "]: " << llvm::format_hex(Flag, 4)
++                << "\n";
++        }
++    }
++};
++
++// Mapping from functions to annotations, this is the main structure to be used
++// by other parts of the codebase when referencing annotations, filled out by
++// `PrepareForOptPass`.
++using AnnotationMapTy = llvm::DenseMap<llvm::Function *, Annotations>;
 diff --git a/subprojects/helper-to-tcg/include/PrepareForOptPass.hpp b/subprojects/helper-to-tcg/include/PrepareForOptPass.hpp
-index 08ca9a43bb..43cf77190a 100644
+index 2b3694c536..e007243578 100644
 --- a/subprojects/helper-to-tcg/include/PrepareForOptPass.hpp
 +++ b/subprojects/helper-to-tcg/include/PrepareForOptPass.hpp
 @@ -17,6 +17,7 @@
  
  #pragma once
  
-+#include "DebugInfo.hpp"
- #include "FunctionAnnotation.hpp"
++#include "FunctionAnnotation.hpp"
  #include <llvm/IR/PassManager.h>
  
-@@ -29,10 +30,13 @@
+ //
+@@ -27,8 +28,12 @@
+ //
  
  class PrepareForOptPass : public llvm::PassInfoMixin<PrepareForOptPass> {
-     AnnotationMapTy &ResultAnnotations;
-+    DebugInfoMapTy &ResultDebugInfo;
- 
--  public:
--    PrepareForOptPass(AnnotationMapTy &ResultAnnotations)
--        : ResultAnnotations(ResultAnnotations) {}
-+public:
-+    PrepareForOptPass(AnnotationMapTy &ResultAnnotations,
-+                      DebugInfoMapTy &ResultDebugInfo)
-+        : ResultAnnotations(ResultAnnotations),
-+          ResultDebugInfo(ResultDebugInfo) {}
++    AnnotationMapTy &ResultAnnotations;
+ public:
+-    PrepareForOptPass() {}
++    PrepareForOptPass(AnnotationMapTy &ResultAnnotations)
++        : ResultAnnotations(ResultAnnotations)
++    {
++    }
      llvm::PreservedAnalyses run(llvm::Module &M,
                                  llvm::ModuleAnalysisManager &MAM);
  };
 diff --git a/subprojects/helper-to-tcg/src/Pipeline.cpp b/subprojects/helper-to-tcg/src/Pipeline.cpp
-index 89637eaec6..a11c5fd353 100644
+index 59de572bf6..051611b0f3 100644
 --- a/subprojects/helper-to-tcg/src/Pipeline.cpp
 +++ b/subprojects/helper-to-tcg/src/Pipeline.cpp
-@@ -193,7 +193,8 @@ int main(int argc, char **argv) {
-     // but is correlct in LLVM-terms.
+@@ -184,7 +184,11 @@ int main(int argc, char **argv) {
+         MPM.addPass(createModuleToFunctionPassAdaptor(std::move(FPM)));
+     }
  
-     AnnotationMapTy Annotations;
--    MPM.addPass(PrepareForOptPass(Annotations));
-+    DebugInfoMapTy DebugInfo;
-+    MPM.addPass(PrepareForOptPass(Annotations, DebugInfo));
+-    MPM.addPass(PrepareForOptPass());
++    // TODO: Get pass results via dependencies instead? Adds more boiler-plate
++    // but is correlct in LLVM-terms.
++
++    AnnotationMapTy Annotations;
++    MPM.addPass(PrepareForOptPass(Annotations));
  
      {
          FunctionPassManager FPM;
 diff --git a/subprojects/helper-to-tcg/src/PrepareForOptPass/PrepareForOptPass.cpp b/subprojects/helper-to-tcg/src/PrepareForOptPass/PrepareForOptPass.cpp
-index a7bee53582..7a9b954d7c 100644
+index c15c0af6ea..1228ac952f 100644
 --- a/subprojects/helper-to-tcg/src/PrepareForOptPass/PrepareForOptPass.cpp
 +++ b/subprojects/helper-to-tcg/src/PrepareForOptPass/PrepareForOptPass.cpp
-@@ -26,6 +26,9 @@
+@@ -16,10 +16,15 @@
+ //
+ 
+ #include "PrepareForOptPass.hpp"
++#include "Error.hpp"
+ 
+ #include <llvm/ADT/StringRef.h>
  #include <llvm/ADT/StringSet.h>
  #include <llvm/Demangle/Demangle.h>
- #include <llvm/IR/Constants.h>
-+#if LLVM_VERSION_MAJOR >= 19
-+#include <llvm/IR/DebugProgramInstruction.h>
-+#endif
- #include <llvm/IR/Function.h>
- #include <llvm/IR/Instruction.h>
- #include <llvm/IR/Instructions.h>
-@@ -288,6 +291,53 @@ static void replaceRetaddrWithUndef(Module &M) {
++#include <llvm/IR/Constants.h>
++#include <llvm/IR/Function.h>
++#include <llvm/IR/Instruction.h>
++#include <llvm/IR/Module.h>
+ #include <llvm/Support/Debug.h>
+ 
+ #define DEBUG_TYPE "prepare-for-opt"
+@@ -63,8 +68,97 @@ static void demangleFunctionNames(Module &M) {
      }
  }
  
-+static void collectDebugInfo(Function &F, DebugInfoMapTy &ResultDebugInfo) {
-+    StringSet EncounteredNames;
-+    for (auto &BB : F) {
-+        for (Instruction &I : BB) {
-+#if LLVM_VERSION_MAJOR >= 19
-+            for (DbgVariableRecord &DVR :
-+                 filterDbgVars(I.getDbgRecordRange())) {
-+                if (!DVR.isDbgValue()) {
-+                    continue;
-+                }
-+                StringRef BaseType{};
-+                StringRef VarName{};
-+                if (auto *Derived =
-+                        dyn_cast<DIDerivedType>(DVR.getVariable()->getType())) {
-+                    BaseType = Derived->getBaseType()->getName();
-+                }
-+                VarName = DVR.getVariable()->getName();
-+                if (ResultDebugInfo.find(DVR.getValue(0)) ==
-+                        ResultDebugInfo.end() and
-+                    !EncounteredNames.contains(VarName.data())) {
-+                    ResultDebugInfo[DVR.getValue(0)] = {VarName, BaseType};
-+                    EncounteredNames.insert(VarName.data());
-+                }
-+            }
-+#else
-+            if (I.isDebugOrPseudoInst()) {
-+                if (const auto *Dbg = dyn_cast<DbgValueInst>(&I)) {
-+                    StringRef BaseType{};
-+                    StringRef VarName{};
-+                    if (auto *Derived = dyn_cast<DIDerivedType>(
-+                            Dbg->getVariable()->getType())) {
-+                        BaseType = Derived->getBaseType()->getName();
-+                    }
-+                    VarName = Dbg->getVariable()->getName();
-+                    if (ResultDebugInfo.find(Dbg->getValue(0)) ==
-+                            ResultDebugInfo.end() and
-+                        !EncounteredNames.contains(VarName.data())) {
-+                        ResultDebugInfo[Dbg->getValue(0)] = {VarName, BaseType};
-+                        EncounteredNames.insert(VarName.data());
-+                    }
-+                }
-+            }
-+#endif
-+        }
++static Error parseAnnotationStr(Annotations &Ann, StringRef Str,
++                                size_t NumArgs) {
++    Str = Str.trim();
++
++    // Function annotations
++    if (Str.consume_front("helper-to-tcg")) {
++        Ann.set(FunctionAnnotation::HelperToTcg);
++        return Error::success();
++    } else if (Str.consume_front("returns-immediate")) {
++        Ann.set(FunctionAnnotation::ReturnsImmediate);
++        return Error::success();
 +    }
++
++    // Argument annotations
++    ArgumentAnnotation AA;
++    if (Str.consume_front("immediate")) {
++        AA = ArgumentAnnotation::Immediate;
++    } else if (Str.consume_front("ptr-to-offset")) {
++        AA = ArgumentAnnotation::PtrToOffset;
++    } else {
++        return mkError("Unknown annotation");
++    }
++
++    // An argument annotation looks like
++    //
++    //  "immediate: 0, 1, 2",
++    //
++    // parse the comma separated list of argument indices.
++    if (!Str.consume_front(":")) {
++        return mkError("Expected \":\"");
++    }
++    Str = Str.ltrim(' ');
++    do {
++        Str = Str.ltrim(' ');
++        size_t I = 0;
++        Str.consumeInteger(10, I);
++        if (I >= NumArgs) {
++            return mkError("Annotation has out of bounds argument index");
++        }
++        Ann.set(I, AA);
++    } while (Str.consume_front(","));
++
++    return Error::success();
++}
++
++static void collectAnnotations(Module &M, AnnotationMapTy &ResultAnnotations) {
++    // cast over dyn_cast is being used here to
++    // assert that the structure of
++    //
++    //     llvm.global.annotation
++    //
++    // is what we expect.
++
++    GlobalVariable *GA = M.getGlobalVariable("llvm.global.annotations");
++    if (!GA) {
++        return;
++    }
++
++    // Get the metadata which is stored in the first op
++    auto *CA = cast<ConstantArray>(GA->getOperand(0));
++    // Loop over metadata
++    for (Value *CAOp : CA->operands()) {
++        auto *Struct = cast<ConstantStruct>(CAOp);
++        assert(Struct->getNumOperands() >= 2);
++
++        Function *F = cast<Function>(Struct->getOperand(0));
++        ConstantDataArray *AnnData =
++            cast<ConstantDataArray>(Struct->getOperand(1)->getOperand(0));
++
++        StringRef AnnStr = AnnData->getAsString();
++        AnnStr = AnnStr.substr(0, AnnStr.size() - 1);
++        Annotations Ann = ResultAnnotations[F];
++        if (auto Err = parseAnnotationStr(Ann, AnnStr, F->arg_size()); Err) {
++            errs() << "Failed to parse annotation: \"" << Err
++                   << "\" for function " << F->getName() << "\n";
++            continue;
++        }
++        ResultAnnotations[F] = Ann;
++    }
++
++    LLVM_DEBUG({
++        for (auto &P : ResultAnnotations) {
++            dbgs() << "Annotations for " << P.first->getName() << "\n";
++            P.second.dump(dbgs());
++        }
++    });
 +}
 +
  PreservedAnalyses PrepareForOptPass::run(Module &M,
                                           ModuleAnalysisManager &MAM) {
      demangleFunctionNames(M);
-@@ -305,6 +355,8 @@ PreservedAnalyses PrepareForOptPass::run(Module &M,
-         if (F.getReturnType()->isStructTy()) {
-             F.addFnAttr(Attribute::AttrKind::AlwaysInline);
-         }
-+        // Populate variable and type names for `Value`s from debug info.
-+        collectDebugInfo(F, ResultDebugInfo);
-     }
- 
++    collectAnnotations(M, ResultAnnotations);
      return PreservedAnalyses::none();
+ }
 -- 
 2.52.0
 
