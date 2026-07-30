@@ -4,144 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4CB8C55164
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 17:33:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74869C5516E
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 17:56:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpUdd-00075I-Gg; Thu, 30 Jul 2026 13:33:45 -0400
+	id 1wpUz6-00020c-As; Thu, 30 Jul 2026 13:55:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wpUdb-000759-FU
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 13:33:43 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wpUz5-00020M-7e; Thu, 30 Jul 2026 13:55:55 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wpUdZ-0008K6-OZ
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 13:33:43 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66UGX3NU1525633
- for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 17:33:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- +QguBwq8LDsi4Cs+WatqKzRpXYHGa0wRzJDGyPPrBgM=; b=EY4jnklNe1kCEH7r
- +as4fAvuegKub1LpHnweHy07cGuU6BQPXJBmIhFPgj5PGOsPE+2sTR30flJaCghS
- HzTB/xatVuvlsvD89GbyqM3DCf4d/pASp49J4JxY7meXIlrgditZJ2/tvQbNOuil
- Cn3dN3kxY2mjhyMnVjQYN7mMRbsrojY13L8pCbhDCA2tHmxo3+jWASmXXE8JucXz
- 714N701G0xPpGhbI8rLI8RXAhQMNsNwes8dl6aWQ61CFbW9g6vhxoFtE6fSkd5ch
- 5UgiOWz5vJAQ4Io0mcUx1kTRh7AuYyqyZ7sP9cAqbq4PwSaYojB0kCLzF0wnYlNL
- Z4WmFw==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fr6yfsfuc-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 17:33:39 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-38fa7b09921so198513a91.1
- for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 10:33:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1785432819; x=1786037619; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=+QguBwq8LDsi4Cs+WatqKzRpXYHGa0wRzJDGyPPrBgM=;
- b=dmWJZ+pIx+bWgqrp6EbakfvgQmpGirOX/R6Hg/KzOEToIurQFRuEwclAnH/gOPeuth
- pvw9bmB8Ep0l3cqyIF7cC59Suq+HF7UdpT/OlLKpCzqn0g46gra7pRu4lrWt+wRb29Vv
- Prid8yj1GrekgmPeXGw8j2C/gpNGuwg6ayLZgLW0V/HNcWzctHcYzig0396XdlMx0lLA
- LRxv55cNHfRr1kz0W1pGjBNnzQN7KOX0wdBsv2SITI41XkOTVPnAQOZKQZZW1OY5LWch
- djtj/27KH/6Mpepe2S15lzd4n09wHkDDz86/zV4lOuyeQC2PGaOqgiHGrsP6ajyBUWqR
- p1DQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785432819; x=1786037619;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=+QguBwq8LDsi4Cs+WatqKzRpXYHGa0wRzJDGyPPrBgM=;
- b=h7pJe2oEq7STRHQLJWzqCQZPuaxAmMih2KKXYRlQ6AyguvFMApSobcETfNn2XJvsuQ
- +rhl31E5iBYc6TN3nBEqbOZT/cBWrkAi9xHni6VWloOrJQZ+W8523KY7Zjgvtv6J1Z/w
- axrm1HMQuaQU+oBgMFxKJyHXavw70Wk+WwvfcRNuAcZuNw0eqg6a5fMwVNgAxr9lYPlg
- HrHPDasyQfq99a3/XBukM/UwMWV1cXMEtm1zJkFviCPw018yTamsBPJQr65xnItFKfWz
- x1QrrRMRRpjhSXW3aWSg61eArcM8JfTXO1I8cfOgtkEdjpcTdbTVtk6ufSSCpmRsHgiw
- 0AZA==
-X-Gm-Message-State: AOJu0YypTC1E/xfUmb96pBiGAUH5CRTFdAKrjc404WATHQq/5TzkyT5N
- PiInnNZaC+bzrKv8cbDV4+hXaDIjXoTMcwVzIreS7Q1THCOj5SqXAqlQrvOq5h0vVK1HAPWjrv2
- AA6lyt05hjSH8vYy7miEOErthWvxPGPMHVB9kox58Bhkk/QSw1HRSjhJtQ36P5pbZIQ==
-X-Gm-Gg: AR+sD10Mol0Pntv0ocCuIMrh7rUn5xybrHNIsjSUniJ+4iSJsZgo45Xc1PtTxqDNQS8
- lDHGMse30BbHVx5t/AboQRG+Rv3u+Iah7jazCqevhOijVHVMEK78EZc8WjE8VvHGNbougML6oK0
- /NJFyRHZWTVgnirsGQnxCcV976Lv/2JOuRXfemF09hDFG+ESIlaJD5CiGTo5MEDOYTX9mCjHtsf
- LVxmq7dqvCbcjehnvrW9JyJsd1lSIDwUhZkTnpCnQtNywrHAAM/Lph4n0psNPl+tIIe1xtq131V
- CCvoHsqHmRWxotzxnJC1ixWXw6mFccpMt6JF8IZdSYsKoCKCJ4hhUSvEhQlkAzyxRc39B3bifof
- e8djWbJMpULmhYtTP8xOUx/zr2iRG7vpUOtDTUPO2ZYv+H9H7MvoQd6sAL3MqFBI5xUQX
-X-Received: by 2002:a17:90b:510f:b0:38e:dc4:3fbb with SMTP id
- 98e67ed59e1d1-38fa7f9b10cmr835770a91.43.1785432818713; 
- Thu, 30 Jul 2026 10:33:38 -0700 (PDT)
-X-Received: by 2002:a17:90b:510f:b0:38e:dc4:3fbb with SMTP id
- 98e67ed59e1d1-38fa7f9b10cmr835735a91.43.1785432818276; 
- Thu, 30 Jul 2026 10:33:38 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13e7271f010sm27081967c88.9.2026.07.30.10.33.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Jul 2026 10:33:37 -0700 (PDT)
-Message-ID: <56625144-c2fe-4017-90ed-473e570fa35d@oss.qualcomm.com>
-Date: Thu, 30 Jul 2026 10:33:36 -0700
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wpUz3-0004rf-J9; Thu, 30 Jul 2026 13:55:55 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66UGlwJs3612736; Thu, 30 Jul 2026 17:55:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=FIez5/
+ vXENXQokqM17EHXzJXNpDenT9j5NZEj5oRbZQ=; b=gMaGxZJWryw2lASiDwLp4t
+ I8zEV4lsXe5N5dW8m2PEPUsHfscCvoD3QIrW6wTTx3U6opB1NUuRMkzYBtv2676A
+ h0oOsCNxC8G+wD7PlnNDrxdUHbvdCxKkaSvZlMq9B4smdbrgRZunf4JkMyAVtBXv
+ jDzWR6ZamTDeygcXxqTBGvCy9OiVUKNU1/jZgsER/4RqtVMFkaW7b4z1ru/PSpbZ
+ lHJitqRKhz96qJGnfBCZy7oFjSCqKWUZoKjOnWq7PCLgzWfjIIE4K8X5JYRytHy5
+ w9DuiHjp+h2ccmlqPO2lohGKmRWAra2XKx+HMVOorr2p3XJGqYJam71F6BxgJ8IQ
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuwd889w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Jul 2026 17:55:51 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66UHfLZD003576;
+ Thu, 30 Jul 2026 17:55:50 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fna5yc643-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Jul 2026 17:55:50 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66UHtnvY64291090
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 30 Jul 2026 17:55:49 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1938358068;
+ Thu, 30 Jul 2026 17:55:49 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0CF8A58055;
+ Thu, 30 Jul 2026 17:55:48 +0000 (GMT)
+Received: from [9.61.160.189] (unknown [9.61.160.189])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 30 Jul 2026 17:55:47 +0000 (GMT)
+Message-ID: <ff0cd092-fc3a-460a-b248-cac4f4462b5a@linux.ibm.com>
+Date: Thu, 30 Jul 2026 13:55:47 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/27] single-binary: implement dynamic filtering for
- machine types
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Bernhard Beschow <shentey@gmail.com>, Anton Johansson <anjo@rev.ng>,
- Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-References: <20260724000948.234657-1-pierrick.bouvier@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH qemu] pc-bios/s390-ccw: Fix off-by-one errors with
+ loadparm and boot entries
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ cohuck@redhat.com, mjrosato@linux.ibm.com
+Cc: zycai@linux.ibm.com, jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
+ jdaley@linux.ibm.com, qemu-stable@nongnu.org
+References: <20260728223013.4047042-1-jrossi@linux.ibm.com>
 Content-Language: en-US
-In-Reply-To: <20260724000948.234657-1-pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+From: Eric Farman <farman@linux.ibm.com>
+Autocrypt: addr=farman@linux.ibm.com; keydata=
+ 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
+ y8m0x6unNti2MZIUMy0m2gcE
+In-Reply-To: <20260728223013.4047042-1-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMwMDEzMSBTYWx0ZWRfX5ddn5SWAblZX
- RrHA3tNH53qteIiprZw+0tJi1FgeoaigL1RcHKLFeESzQJxrzePQbtH9WNiFgQ9dJVNh8Q2MR5z
- 2BBMqD0iL5DEb7iC7O6UyXa9ScUGqnwJ104py23KesMCrSjh+IbrKO+WHXl+UqhYLnvtUOSh9j0
- P7IsX8rlhCq237EQY6xngusOhEITDqw058f1HN8A+VZ3jYlCN1y/e1qu3OMjE8AUpM3zErGodeE
- 9OOt1nnVHFgcFBC4jV+fRuT/Ff3UFjPPTs1gWdMsTmbrf6C68K81dAYIXK1/SNgrWifstxJrZBP
- 7wY8EQHxSOZJi9kqJOBS314L99l21NponGjOB4Uz2LAeW9psuMzLXZTZtRga1QZglkkyrHnIFGl
- 0zseED0thur9pp4nH9z1b6/w4WOeW/nxmc3STtGESC5rkN8tWt9VD/UQP4NvbeHdFyfiDRXyeih
- TwgD+XzOd3PofhMYuRw==
-X-Proofpoint-GUID: BmMZVoyVfgm0WoKc_P2UFlNkPiY8U6ML
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMwMDEzMSBTYWx0ZWRfX7KxL7tdQioJt
- tuiZHgBe07m+BwLg3zahxcNnDma9b2/GTXNBqDbDfLvEPdMMVgfcxtt78ikO0po+gk23EVhTgWS
- nj8pbYHFCDS3RQjFjOmc858dDwHNfQM=
-X-Authority-Analysis: v=2.4 cv=Tv3WQjXh c=1 sm=1 tr=0 ts=6a6b8af3 cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=BIMoBbIzgqyw9w_Ie0IA:9 a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-ORIG-GUID: BmMZVoyVfgm0WoKc_P2UFlNkPiY8U6ML
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: FbkNVosUNVMYhBFgYA_hrL6P6UwWb3HM
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMwMDEzMiBTYWx0ZWRfXyVSNsw5vsXDf
+ PbqdvmbmZl59nvihnAefB65UijyEG4G2hvEUKHGU1D2tc2tlH9parGWZyIbYkuCf/cyCRmWTQbc
+ 4kq7m78/M93/BLqZ/Q0VpQIglyTOA7Y=
+X-Authority-Analysis: v=2.4 cv=E/z9Y6dl c=1 sm=1 tr=0 ts=6a6b9027 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=69wJf7TsAAAA:8 a=jI0MlVVz9VgUAqM4pM4A:9 a=QEXdDO2ut3YA:10
+ a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMwMDEzMiBTYWx0ZWRfXzXnqytaTSgJD
+ N9bQe7Rox2Ev7wK1GeOYvxYSHH9E87K+FxpFIrLzxVSVXt4gGvpCSD0CCUjXuPCStRUrNfdnyX2
+ W9Ky+yIJYSWcfLxKvR96rGdxu5cKUBM5wbDmE3cu6C82xks/svbiCHSWVQBzfRJ57f/9+87C4WX
+ Fy5M9m8FKCUwxLtpI3eyzid4dG3G1VhlSF6prCJ/p3LLtRxEVI4Rk2lJaMAIckzkSX070yXA9Ri
+ 7XtcE8rkRnk2PYXERJ7eDs7q8rdZ77537zOc/WRax+VynzU68l9VnIXcHf+iOrBpJJevHFNAOGc
+ XCIWdo76mjLhVd7B1ydMR/gfuEj91+ed1YfQfNMGrMNriU/vCsFtKjxgQ83L7g9WzwuWNxUEsR5
+ d0z3/shT+q3IW3Yw5iQW2IQj42tKPDc8vvOawoQrKNcPb5bjjTKGkpWG50YdCnqI664snGLyXTp
+ 8hfBtrukrTg3w4p+Ysg==
+X-Proofpoint-GUID: FbkNVosUNVMYhBFgYA_hrL6P6UwWb3HM
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-30_05,2026-07-30_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0
- spamscore=0 phishscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
+ adultscore=0 priorityscore=1501 spamscore=0 clxscore=1015 phishscore=0
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 impostorscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607300131
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607300132
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -158,63 +170,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/23/2026 5:09 PM, Pierrick Bouvier wrote:
-> Now that we can link a single-binary with at least two targets (arm, aarch64),
-> we want to make sure that we expose the same set of machines (later devices and
-> cpus) than target binaries. For that, we implemented a static filtering based on
-> target interfaces that each machine will implement to declare which targets have
-> this machine.
-> 
-> However, we discovered that this static filtering is not enough. Indeed, some
-> machines and devices do not depend only on target, and their presence can depend
-> on Kconfig or host/target combination. Thus, our static approach can't work, and
-> we need something more flexible.
-> 
-> This series adds a new TYPE_TARGET_SPECIFIC, that declare a single function
-> bool is_available(void). From there, any machine type (and later devices and
-> cpus) can implement it to override their presence for each target.
-> We first replace the existing static mechanism with this, and once done, we
-> cleanup all the old interface. One nice benefit is that we can get rid of
-> config/targets/*.c files, which saves duplication.
-> 
-> This series was tested by comparing list of machines for all qemu system
-> binaries, before and after this change, to make sure we don't introduce a
-> regression.
-> 
-> Pierrick Bouvier (27):
->   include/qemu/target-info-qom.h: declare TYPE_TARGET_SPECIFIC interface
->   hw/arm: implement TYPE_TARGET_SPECIFIC
->   target-info: add target_riscv32 and target_base_riscv
->   hw/riscv: implement TYPE_TARGET_SPECIFIC
->   target-info: add target_config_multiprocess
->   hw/remote/machine: remove unsupported arm target
->   hw/remote/machine: implement TYPE_TARGET_SPECIFIC
->   target-info: add target_config_xen
->   hw/arm/xen-pvh: implement TYPE_TARGET_SPECIFIC
->   hw/xenpv/xen_machine_pv: implement TYPE_TARGET_SPECIFIC
->   target-info: add target_config_nitro
->   hw/nitro/machine: implement TYPE_TARGET_SPECIFIC
->   target-info-qom: implement new machine filtering per target
->   target-info-qom: use TYPE_MACHINE instead of target_machine_typename
->   target-info: remove target_machine_typename
->   target-info-qom: add type_target_specific
->   hw/arm: remove TYPE_TARGET_{AARCH64,ARM}_MACHINE
->   hw/arm: remove {arm,arm_aarch64,aarch64}_machine_interfaces
->   include/hw/core/boards.h: add DEFINE_MACHINE_TARGET_SPECIFIC
->   hw/arm: remove DEFINE_MACHINE_{AARCH64,ARM}
->   hw/arm: remove machines-qom.h
->   hw/riscv: remove TYPE_TARGET_{RISCV32,RISCV64}_MACHINE
->   hw/riscv: remove {riscv32,riscv32_64,riscv64}_machine_interfaces
->   hw/riscv: remove DEFINE_MACHINE_{RISCV32,RISCV64}
->   hw/riscv: remove machines-qom.h
->   configs/targets: remove target info definitions
->   target-info: rename target-info-stub.c in target-info-def.c
-> 
 
-Gentle ping after a week.
-You're welcome to review only your architecture if time is limited, and
-validate the global approach.
 
-Regards,
-Pierrick
+On 7/28/26 6:30 PM, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
+> 
+> The loadparm may optionally be used to select a boot entry, with the
+> intended range being 0 through 31 inclusive, for a total of 32 entries.
+> Previously, MAX_BOOT_ENTRIES was defined as 31, indicating that it was
+> intended to correspond to the index of the boot entry rather than the
+> count; however, some guards also used MAX_BOOT_ENTRIES as a count of the
+> maximum allowed entries, which resulted in a mismatch between the intended
+> and actual range such that index 31 could never be used in practice.
+> 
+> Move the definition of MAX_BOOT_ENTRIES to qipl.h so it is shared and
+> change the value to 32, representing a count of the maximum number of
+> allowed boot entries and allowing the loadparm to accept values 0 through
+> 31 as intended.  Update some instances in the netboot code where
+> MAX_BOOT_ENTRIES was used as the max index so that all guards treat
+> MAX_BOOT_ENTRIES as a count across all boot methods.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: 806315279d5c ("pc-bios/s390-ccw: Remove panics from ECKD IPL path")
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+
+Applied for 11.2; thank you!
+
+> ---
+>   include/hw/s390x/ipl/qipl.h |  2 ++
+>   pc-bios/s390-ccw/netmain.c  | 11 +++++++----
+>   pc-bios/s390-ccw/s390-ccw.h |  2 --
+>   3 files changed, 9 insertions(+), 6 deletions(-)
+> 
+> diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
+> index 8d3c83a80b..b390f2f112 100644
+> --- a/include/hw/s390x/ipl/qipl.h
+> +++ b/include/hw/s390x/ipl/qipl.h
+> @@ -20,6 +20,8 @@
+>   #define LOADPARM_LEN    8
+>   #define NO_LOADPARM "\0\0\0\0\0\0\0\0"
+>   
+> +#define MAX_BOOT_ENTRIES  32
+> +
+>   enum S390IplType {
+>       S390_IPL_TYPE_FCP = 0x00,
+>       S390_IPL_TYPE_CCW = 0x02,
+> diff --git a/pc-bios/s390-ccw/netmain.c b/pc-bios/s390-ccw/netmain.c
+> index 651cedf6ef..791854fce0 100644
+> --- a/pc-bios/s390-ccw/netmain.c
+> +++ b/pc-bios/s390-ccw/netmain.c
+> @@ -40,6 +40,9 @@
+>   #define DEFAULT_BOOT_RETRIES 10
+>   #define DEFAULT_TFTP_RETRIES 20
+>   
+> +/* Index 0 is reserved for default alias, start PXE cfg indices at 1 */
+> +#define PXECFG_MAX              (MAX_BOOT_ENTRIES - 1)
+> +
+>   extern char _start[];
+>   
+>   #define KERNEL_ADDR             ((void *)0L)
+> @@ -381,13 +384,13 @@ static int net_select_and_load_kernel(filename_ip_t *fn_ip,
+>   
+>   static int net_try_pxelinux_cfg(filename_ip_t *fn_ip)
+>   {
+> -    struct pl_cfg_entry entries[MAX_BOOT_ENTRIES];
+> +    struct pl_cfg_entry entries[PXECFG_MAX];
+>       int num_ent, def_ent = 0;
+>   
+>       num_ent = pxelinux_load_parse_cfg(fn_ip, mac, get_uuid(),
+>                                         DEFAULT_TFTP_RETRIES,
+>                                         cfgbuf, sizeof(cfgbuf),
+> -                                      entries, MAX_BOOT_ENTRIES, &def_ent);
+> +                                      entries, PXECFG_MAX, &def_ent);
+>   
+>       return net_select_and_load_kernel(fn_ip, num_ent, def_ent, entries);
+>   }
+> @@ -470,11 +473,11 @@ static int net_try_direct_tftp_load(filename_ip_t *fn_ip)
+>            * a magic comment string.
+>            */
+>           if (!strncasecmp("# pxelinux", cfgbuf, 10)) {
+> -            struct pl_cfg_entry entries[MAX_BOOT_ENTRIES];
+> +            struct pl_cfg_entry entries[PXECFG_MAX];
+>               int num_ent, def_ent = 0;
+>   
+>               num_ent = pxelinux_parse_cfg(cfgbuf, sizeof(cfgbuf), entries,
+> -                                         MAX_BOOT_ENTRIES, &def_ent);
+> +                                         PXECFG_MAX, &def_ent);
+>               return net_select_and_load_kernel(fn_ip, num_ent, def_ent,
+>                                                 entries);
+>           }
+> diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
+> index 1e1f71775e..d0498e2944 100644
+> --- a/pc-bios/s390-ccw/s390-ccw.h
+> +++ b/pc-bios/s390-ccw/s390-ccw.h
+> @@ -82,8 +82,6 @@ int menu_get_enum_boot_index(bool *valid_entries);
+>   bool menu_is_enabled_enum(void);
+>   int menu_get_boot_index(bool *valid_entries);
+>   
+> -#define MAX_BOOT_ENTRIES  31
+> -
+>   __attribute__ ((__noreturn__))
+>   static inline void panic(const char *string)
+>   {
+
 
