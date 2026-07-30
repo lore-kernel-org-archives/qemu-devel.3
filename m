@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2F26C54FD2
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:06:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BC13C54FD2
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:07:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpH5l-0001im-9H; Wed, 29 Jul 2026 23:05:53 -0400
+	id 1wpH6J-00023H-AE; Wed, 29 Jul 2026 23:06:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH5j-0001iG-AQ
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:05:51 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH6G-0001vI-9y
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:06:24 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH5h-0002qW-Ag
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:05:51 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH6E-0002uV-K6
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:06:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=N4VjtNGTVCTr3fiohuEIHANGrMrdHqVx/1EQ5lSRyCE=; b=CZy6N2iP0KZW2Dx
- IKM90W85A6e81gynuWJxH2zCHiM2VFp7HQB8NGdH8h4lglM6B52kmqojywe8wwkWXTRvvA5O9ja8U
- 5jrdW/s+3sggkAQclxaG85HmcY4DBsT4t7t931s9sIbt7gmJdFpT683s+a79am6HS2x1syb7XLiBy
- eQ=;
+ List-Help; bh=4Tb5OFlgULwGrf63MK6aCoPzsp36GX++Y+VZoCigufE=; b=sHgTzSofpdRh9/I
+ 7Uepo9inz+AJOhRaLQVXtJ+s+8ftzzuxOUaEG9XI0g4jrGo1/2LvQFhbTStyx1b1NkZuMU4BmUib7
+ EseB7tNCVgcMzxXFt/P5qJp+ZenXa/6qpGnGf1UYBAQF6a3sF4wFf6KuEByXvKYBYTEVF/KY9Ws7C
+ YA=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, brian.cain@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
  philmd@mailo.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 01/50] accel/tcg: Add bitreverse and funnel-shift runtime
- helper functions
-Date: Thu, 30 Jul 2026 05:09:35 +0200
-Message-ID: <20260730031025.12926-2-anjo@rev.ng>
+Subject: [PATCH v2 15/50] helper-to-tcg: PrepareForOptPass,
+ cull unused functions
+Date: Thu, 30 Jul 2026 05:09:49 +0200
+Message-ID: <20260730031025.12926-16-anjo@rev.ng>
 In-Reply-To: <20260730031025.12926-1-anjo@rev.ng>
 References: <20260730031025.12926-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -64,100 +64,187 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds necessary helper functions for mapping LLVM IR onto TCG.
-Specifically, helpers corresponding to the bitreverse and funnel-shift
-intrinsics in LLVM.
+Make an early pass over all functions in the input module and filter out
+functions with:
 
-Note: these may be converted to more efficient implementations in the
-future, but for the time being it allows helper-to-tcg to support a
-wider subset of LLVM IR.
+  1. Invalid return type, or;
+  2. No helper-to-tcg annotation and not called by a function with such
+     a annotation.
+
+A commandline option is also added to force translation of all functions
+starting with "helper_".
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
---
-TODO: `tcg_gen_*()` variants will be added in the next version, it
-slipped through (Richard).
 ---
- accel/tcg/tcg-runtime.c | 28 ++++++++++++++++++++++++++++
- accel/tcg/tcg-runtime.h |  6 ++++++
- 2 files changed, 34 insertions(+)
+ .../helper-to-tcg/include/CmdLineOptions.hpp  |  2 +
+ .../include/PrepareForOptPass.hpp             |  7 +-
+ subprojects/helper-to-tcg/src/Pipeline.cpp    |  5 ++
+ .../PrepareForOptPass/PrepareForOptPass.cpp   | 86 +++++++++++++++++++
+ 4 files changed, 96 insertions(+), 4 deletions(-)
 
-diff --git a/accel/tcg/tcg-runtime.c b/accel/tcg/tcg-runtime.c
-index 7c0aab98a8..d42c00736b 100644
---- a/accel/tcg/tcg-runtime.c
-+++ b/accel/tcg/tcg-runtime.c
-@@ -24,6 +24,7 @@
- #include "qemu/osdep.h"
- #include "qemu/host-utils.h"
- #include "exec/cpu-common.h"
-+#include "qemu/int128.h"
- #include "exec/helper-proto-common.h"
- #include "accel/tcg/cpu-loop.h"
- #include "accel/tcg/getpc.h"
-@@ -54,8 +55,30 @@ uint32_t HELPER(remu_i32)(uint32_t arg1, uint32_t arg2)
-     return arg1 % arg2;
+diff --git a/subprojects/helper-to-tcg/include/CmdLineOptions.hpp b/subprojects/helper-to-tcg/include/CmdLineOptions.hpp
+index 93706b78c5..ca1cb59835 100644
+--- a/subprojects/helper-to-tcg/include/CmdLineOptions.hpp
++++ b/subprojects/helper-to-tcg/include/CmdLineOptions.hpp
+@@ -21,3 +21,5 @@
+ 
+ // Options for pipeline
+ extern llvm::cl::list<std::string> InputFiles;
++// Options for PrepareForOptPass
++extern llvm::cl::opt<bool> TranslateAllHelpers;
+diff --git a/subprojects/helper-to-tcg/include/PrepareForOptPass.hpp b/subprojects/helper-to-tcg/include/PrepareForOptPass.hpp
+index e007243578..08ca9a43bb 100644
+--- a/subprojects/helper-to-tcg/include/PrepareForOptPass.hpp
++++ b/subprojects/helper-to-tcg/include/PrepareForOptPass.hpp
+@@ -29,11 +29,10 @@
+ 
+ class PrepareForOptPass : public llvm::PassInfoMixin<PrepareForOptPass> {
+     AnnotationMapTy &ResultAnnotations;
+-public:
++
++  public:
+     PrepareForOptPass(AnnotationMapTy &ResultAnnotations)
+-        : ResultAnnotations(ResultAnnotations)
+-    {
+-    }
++        : ResultAnnotations(ResultAnnotations) {}
+     llvm::PreservedAnalyses run(llvm::Module &M,
+                                 llvm::ModuleAnalysisManager &MAM);
+ };
+diff --git a/subprojects/helper-to-tcg/src/Pipeline.cpp b/subprojects/helper-to-tcg/src/Pipeline.cpp
+index 051611b0f3..89637eaec6 100644
+--- a/subprojects/helper-to-tcg/src/Pipeline.cpp
++++ b/subprojects/helper-to-tcg/src/Pipeline.cpp
+@@ -65,6 +65,11 @@ static cl::opt<std::string>
+               cl::init(""), cl::cat(Cat));
+ #endif
+ 
++// Options for PrepareForOptPass
++cl::opt<bool> TranslateAllHelpers(
++    "translate-all-helpers", cl::init(false),
++    cl::desc("Translate all functions starting with helper_*"), cl::cat(Cat));
++
+ // Define a TargetTransformInfo (TTI) subclass, this allows for overriding
+ // common per-llvm-target information expected by other LLVM passes, such
+ // as the width of the largest scalar/vector registers.  Needed for consistent
+diff --git a/subprojects/helper-to-tcg/src/PrepareForOptPass/PrepareForOptPass.cpp b/subprojects/helper-to-tcg/src/PrepareForOptPass/PrepareForOptPass.cpp
+index 1228ac952f..df6d9eeec8 100644
+--- a/subprojects/helper-to-tcg/src/PrepareForOptPass/PrepareForOptPass.cpp
++++ b/subprojects/helper-to-tcg/src/PrepareForOptPass/PrepareForOptPass.cpp
+@@ -16,17 +16,25 @@
+ //
+ 
+ #include "PrepareForOptPass.hpp"
++#include "CmdLineOptions.hpp"
+ #include "Error.hpp"
++#include "FunctionAnnotation.hpp"
++#include "LlvmCompat.hpp"
+ 
++#include <llvm/ADT/SmallPtrSet.h>
+ #include <llvm/ADT/StringRef.h>
+ #include <llvm/ADT/StringSet.h>
+ #include <llvm/Demangle/Demangle.h>
+ #include <llvm/IR/Constants.h>
+ #include <llvm/IR/Function.h>
+ #include <llvm/IR/Instruction.h>
++#include <llvm/IR/Instructions.h>
+ #include <llvm/IR/Module.h>
+ #include <llvm/Support/Debug.h>
+ 
++#include <queue>
++#include <set>
++
+ #define DEBUG_TYPE "prepare-for-opt"
+ 
+ using namespace llvm;
+@@ -156,9 +164,87 @@ static void collectAnnotations(Module &M, AnnotationMapTy &ResultAnnotations) {
+     });
  }
  
-+uint32_t HELPER(bitreverse8_i32)(uint32_t x)
-+{
-+  return revbit8((uint8_t) x);
++inline bool hasValidReturnTy(const Module &M, const Function *F) {
++    Type *RetTy = F->getReturnType();
++    return RetTy->isStructTy() || RetTy == Type::getVoidTy(F->getContext()) ||
++           RetTy == Type::getInt8Ty(M.getContext()) ||
++           RetTy == Type::getInt16Ty(M.getContext()) ||
++           RetTy == Type::getInt32Ty(M.getContext()) ||
++           RetTy == Type::getInt64Ty(M.getContext());
 +}
 +
-+uint32_t HELPER(bitreverse16_i32)(uint32_t x)
-+{
-+  return revbit16((uint16_t) x);
++// Functions that should be removed:
++//   - No helper-to-tcg annotation (if TranslateAllHelpers == false);
++//   - Invalid (non-integer/void) return type
++static bool shouldRemoveFunction(const Module &M, const Function &F,
++                                 const AnnotationMapTy &AnnotationMap) {
++    if (F.isDeclaration()) {
++        return false;
++    }
++
++    if (!hasValidReturnTy(M, &F)) {
++        return true;
++    }
++
++    std::queue<const Function *> Worklist;
++    std::set<const Function *> Visited;
++    Worklist.push(&F);
++    while (!Worklist.empty()) {
++        const Function *F = Worklist.front();
++        Worklist.pop();
++        if (F->isDeclaration() or Visited.find(F) != Visited.end()) {
++            continue;
++        }
++        Visited.insert(F);
++
++        if (TranslateAllHelpers and
++            compat::isFunctionQemuHelper(F->getName())) {
++            // If --translate-all-helpers is provided and `F` starts with
++            // "helper_*", then don't skip it.
++            return false;
++        } else if (auto It = AnnotationMap.find(F); It != AnnotationMap.end()) {
++            // Otherwise check "helper-to-tcg" annotation.
++            const Annotations &Ann = It->second;
++            if (Ann.isSet(FunctionAnnotation::HelperToTcg)) {
++                return false;
++            }
++        }
++
++        // Push functions that call `F` to the worklist, this way we retain
++        // functions that are being called by functions with the "helper-to-tcg"
++        // annotation.
++        for (const User *U : F->users()) {
++            auto Call = dyn_cast<CallInst>(U);
++            if (!Call) {
++                continue;
++            }
++            const Function *ParentF = Call->getParent()->getParent();
++            Worklist.push(ParentF);
++        }
++    }
++
++    return true;
 +}
 +
-+uint32_t HELPER(bitreverse32_i32)(uint32_t x)
-+{
-+  return revbit32(x);
++static void cullUnusedFunctions(Module &M, AnnotationMapTy &Annotations) {
++    SmallPtrSet<Function *, 16> FunctionsToRemove;
++    for (auto &F : M) {
++        if (shouldRemoveFunction(M, F, Annotations)) {
++            FunctionsToRemove.insert(&F);
++        }
++    }
++
++    for (Function *F : FunctionsToRemove) {
++        Annotations.erase(F);
++        F->setComdat(nullptr);
++        F->deleteBody();
++    }
 +}
 +
- /* 64-bit helpers */
- 
-+uint64_t HELPER(fshl_i64)(uint64_t a, uint64_t b, uint64_t c)
-+{
-+    Int128 d = int128_make128(b, a);
-+    Int128 shift = int128_lshift(d, c);
-+    return int128_gethi(shift);
-+}
-+
- int64_t HELPER(div_i64)(int64_t arg1, int64_t arg2)
- {
-     return arg1 / arg2;
-@@ -76,6 +99,11 @@ uint64_t HELPER(remu_i64)(uint64_t arg1, uint64_t arg2)
-     return arg1 % arg2;
+ PreservedAnalyses PrepareForOptPass::run(Module &M,
+                                          ModuleAnalysisManager &MAM) {
+     demangleFunctionNames(M);
+     collectAnnotations(M, ResultAnnotations);
++    cullUnusedFunctions(M, ResultAnnotations);
+     return PreservedAnalyses::none();
  }
- 
-+uint64_t HELPER(bitreverse64_i64)(uint64_t x)
-+{
-+    return revbit64(x);
-+}
-+
- uint64_t HELPER(muluh_i64)(uint64_t arg1, uint64_t arg2)
- {
-     uint64_t l, h;
-diff --git a/accel/tcg/tcg-runtime.h b/accel/tcg/tcg-runtime.h
-index 0b832176b3..197d658b40 100644
---- a/accel/tcg/tcg-runtime.h
-+++ b/accel/tcg/tcg-runtime.h
-@@ -2,11 +2,17 @@ DEF_HELPER_FLAGS_2(div_i32, TCG_CALL_NO_RWG_SE, s32, s32, s32)
- DEF_HELPER_FLAGS_2(rem_i32, TCG_CALL_NO_RWG_SE, s32, s32, s32)
- DEF_HELPER_FLAGS_2(divu_i32, TCG_CALL_NO_RWG_SE, i32, i32, i32)
- DEF_HELPER_FLAGS_2(remu_i32, TCG_CALL_NO_RWG_SE, i32, i32, i32)
-+DEF_HELPER_FLAGS_1(bitreverse8_i32,  TCG_CALL_NO_RWG_SE, i32, i32)
-+DEF_HELPER_FLAGS_1(bitreverse16_i32, TCG_CALL_NO_RWG_SE, i32, i32)
-+DEF_HELPER_FLAGS_1(bitreverse32_i32, TCG_CALL_NO_RWG_SE, i32, i32)
- 
- DEF_HELPER_FLAGS_2(div_i64, TCG_CALL_NO_RWG_SE, s64, s64, s64)
- DEF_HELPER_FLAGS_2(rem_i64, TCG_CALL_NO_RWG_SE, s64, s64, s64)
- DEF_HELPER_FLAGS_2(divu_i64, TCG_CALL_NO_RWG_SE, i64, i64, i64)
- DEF_HELPER_FLAGS_2(remu_i64, TCG_CALL_NO_RWG_SE, i64, i64, i64)
-+DEF_HELPER_FLAGS_1(bitreverse64_i64, TCG_CALL_NO_RWG_SE, i64, i64)
-+
-+DEF_HELPER_FLAGS_3(fshl_i64, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
- 
- DEF_HELPER_FLAGS_2(mulsh_i64, TCG_CALL_NO_RWG_SE, s64, s64, s64)
- DEF_HELPER_FLAGS_2(muluh_i64, TCG_CALL_NO_RWG_SE, i64, i64, i64)
 -- 
 2.52.0
 
