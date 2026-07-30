@@ -4,54 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 427BFC531D0
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 08:22:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A40D8C531D0
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 08:23:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpM1s-0004AB-EX; Thu, 30 Jul 2026 04:22:12 -0400
+	id 1wpM2l-0004XP-Nz; Thu, 30 Jul 2026 04:23:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wpM1r-00049x-0Q
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 04:22:11 -0400
+ id 1wpM2h-0004XC-GC
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 04:23:03 -0400
 Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wpM1p-0002zl-HN
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 04:22:10 -0400
+ id 1wpM2g-00031s-2J
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 04:23:03 -0400
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
- by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id 017ACC025D;
- Thu, 30 Jul 2026 11:22:07 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id C5D5FC025D;
+ Thu, 30 Jul 2026 11:23:00 +0300 (MSK)
 Received: from [IPV6:2a02:6bf:8080:484::1:24] (unknown
  [2a02:6bf:8080:484::1:24])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id 6MarKnMWKGk0-1qU8ymN7; Thu, 30 Jul 2026 11:22:06 +0300
+ id 0NaEVnMWOa60-XsEc6m2u; Thu, 30 Jul 2026 11:23:00 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1785399726;
- bh=2sM+u3Z5PYFP5dR41pcA4x5YGfJ4pUz+gESofPCIsy4=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=nwfgB908oqHQid3mE4isVKlUzKZfIQSZOrd2lp8RlotqVO+oedkGrfON2ujvm/Q4L
- tyklAQmx/9i0GXZDIvhnD1RQJNCa7YXChs/sEsFkOC/3/msdG6GOiUgnJn0w5A6sP1
- cDsQebG+8kNd7DGYtqRPviy7tUCXlPxHFp8y++c4=
+ s=default; t=1785399780;
+ bh=/KKUiIcvwrpbeOaS2SLHjKrp8BBuYShSBRDyHDvmrt0=;
+ h=In-Reply-To:Cc:Date:References:To:From:Subject:Message-ID;
+ b=MhwVHi67mYcxdmGdU1Ktk8SCLjP1cy2VvVM7cC8uVAN+3tAPFvF1PRx1yywiEO0gs
+ ++XUa6kUfMBegTZ6O9Qy4HwigePUbAwMcook36EcyY0nXuEOWN5Oe6lWAByNEmhZNJ
+ itZRydTMZKAsk8busZgMkNE4nvUpzy+BFUDNbSv8=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <59d8df72-f0f0-4f8e-99da-d1c5c4931c11@yandex-team.ru>
-Date: Thu, 30 Jul 2026 11:22:06 +0300
+Message-ID: <56164547-64a0-491f-87e4-bef38a97b9e4@yandex-team.ru>
+Date: Thu, 30 Jul 2026 11:23:00 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] migration: Remove extra type-checking from vmstate
- macros
+Subject: Re: [PATCH 3/4] migration: Remove redundant flags
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 References: <20260729225227.1170574-1-farosas@suse.de>
+ <20260729225227.1170574-4-farosas@suse.de>
+ <7ceba470-8416-475b-beca-a6c82daa4b4b@yandex-team.ru>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20260729225227.1170574-1-farosas@suse.de>
+In-Reply-To: <7ceba470-8416-475b-beca-a6c82daa4b4b@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=178.154.239.72;
@@ -78,27 +80,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30.07.26 01:52, Fabiano Rosas wrote:
-> Hi, this is basically what I ranted about in:
-> https://lore.kernel.org/r/87jyqeomqz.fsf@suse.de
+On 30.07.26 11:11, Vladimir Sementsov-Ogievskiy wrote:
+>> +
+>> +impl VMStateOffset {
 > 
-> I'm replacing the per-integer-size type checks with a single "int that
-> fits in 32bit" check. This allows several lines of duplicated code to
-> be removed.
-> 
-> I haven't changed the macro names in the device code yet. If this
-> series gets positive feedback then I'll send per-subsystem patches
-> doing that.
-> 
-> CI run: https://gitlab.com/farosas/qemu/-/pipelines/2716814081
-> Also tested:
-> - migration-test --full --thorough
-> - x86_64 compat run forwards and backwards for previous 3 QEMU releases
-> - s390x compat run forwards and backwards for previous 2 QEMU releases
-> - ppc64 compat run forwards and backwards for previous QEMU release
-> - migration-test smoke ASAN/UBSAN run
-> 
-Thanks for doing it, all these _TYPE_ were pain!
+> This looks like part of patch 01? And may be some other changes in rust.
+
+02 I wanted to say
 
 -- 
 Best regards,
