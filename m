@@ -4,68 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7DC0C55165
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 14:41:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D05C7C55164
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 14:43:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpRva-0007Ph-RO; Thu, 30 Jul 2026 10:40:06 -0400
+	id 1wpRyr-0000QP-4m; Thu, 30 Jul 2026 10:43:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wpRvS-0007Mt-07
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 10:39:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wpRvQ-0007x1-1q
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 10:39:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785422394;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=WU7696LrQetw1gphi8sovpLXs74SqnB+0kWy0HhzST0=;
- b=LkEE8Id1MaS6i1tl3zNqZUYrsf56LUzVVkDHlB8xwc/y5jzi4qxIlMZmEtXcP0JjZprm7L
- 1mjM+bjNMyRrkRx0OiyNk0Nnn9ygEyA8HyfLAUmwCtdUrU+NWRd2/tKd3b/h3el/Uujahw
- D3+jvbxyTgXuE4LP0hXHiEKiSEyfUvs=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-284-EJjkGOXbOgGF_UUN9IHc0A-1; Thu,
- 30 Jul 2026 10:39:49 -0400
-X-MC-Unique: EJjkGOXbOgGF_UUN9IHc0A-1
-X-Mimecast-MFC-AGG-ID: EJjkGOXbOgGF_UUN9IHc0A_1785422388
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F0E2519560B0; Thu, 30 Jul 2026 14:39:47 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.49.70])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 87F1E1956044; Thu, 30 Jul 2026 14:39:44 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
-	Dmitry Fleytman <dmitry.fleytman@gmail.com>
-Cc: Jason Wang <jasowangio@gmail.com>, qemu-trivial@nongnu.org,
- qemu-stable@nongnu.org
-Subject: [PATCH] hw/net/vmxnet3: Do not abort if guest provides bad interrupt
- numbers
-Date: Thu, 30 Jul 2026 16:39:43 +0200
-Message-ID: <20260730143943.1117129-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wpRym-0000Pq-AZ
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 10:43:24 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wpRyj-0000Wj-D8
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 10:43:22 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2cc891373e0so25690685ad.2
+ for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 07:43:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1785422600; x=1786027400; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=W0NF0nKzNCQ2o/fLvP3GnfiSmOdSPoTeUfgPDtX3uO8=;
+ b=ffiR17JDUXa89/zD7Ul5Wm0x7M6dGOLcRkE/G1Y49nMBvS02WaEZiCb0+bbfoaedDd
+ SNHnCJatdMPOT/NfHSL0SsdcCKFbuYZnsD5C6oT+kyr57RXs7afIs9wRJtqQEKnxGPka
+ DHNuRNmPAvnxnnMqQtYhUSD1IjTQHtXq272fU1l9l3bLQxRrV4CjjTkuIPoijFjOfTsf
+ e0iGyJbDdohwkAu7o4GdgQJkd/nLdh1swI9EyM0fO6hCXrzvDNucoAI6psHeer0tYeP+
+ wi9c3NVDQRiyVjDlPV+JA8YuFamudc8GELHpOa7jivS2S7rQdGnGYGDo5yyZLuOaV65W
+ j4uA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785422600; x=1786027400;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=W0NF0nKzNCQ2o/fLvP3GnfiSmOdSPoTeUfgPDtX3uO8=;
+ b=lCiseoJxIHsMsG2+sBaW/BACaQXJaWwSqBtlTlu0xgSlBfkC3MuHdDd0bltT5wApFS
+ D+6L3ctoWlH46YgZkI3LN/MPenDgqJ3X5X+n/lJYhCGIcypk5ByWMl65Qr9esbkyT5u3
+ Mdzj9+wOMFsPa44O9dp4bK2T53Oy+i/On2Co8l/2va62S+t6x/dtTznAxgubXgZdlyUd
+ xEjzolb1I4mPXLQEAsjTjWhSfm8NzLWBIBelOG+XtO0BlyuI9jr519yL0eS6Gu5AG3Oi
+ nIpfMZoiN7HwxdP5QbHk1yx5U+ysSN6pUmvsou2+SeZUkN7dUBqhdS9h6TeivJOkXIXt
+ kz1A==
+X-Gm-Message-State: AOJu0YxuBd7ryYTcy4D6TTbINd6LKdsRo1RjM9Fmnwh6pfhM/Wetyyn8
+ 9nxJWtTSwFNN0+1OyOyDtrXpwOWhDJpgsjhWWPwNjvIPW8N17OeavW4R6i11zm9xgdcQk0calYT
+ QnqOm
+X-Gm-Gg: AR+sD11DHZou77WPaDJz+drXOnUfhh8uyOIWX/91pgd9aMufZeXVtO9TnKyT/+BaQGg
+ 37Q/dR4T4QOfDvpUKAann5AFgZshkX+Cp4cJxQFFDRMtHIQxRcxuDZxAiP+gN41dyNr2p0vNPjQ
+ v+Ivft4hRY32V0sUQj31DVtzWJpzXHrHyhuvynENrnM4fSB5/DBACGrZTOt15AZ6mF1N4A/eSey
+ XTn5noT/Gkyf1pPXk/Rv6pSVmjJn1OLt+fI08bZGh/MCgFoOnLPO7d5O1bIe3yiVT2KkEmsk6vh
+ SvQZIpHGK21kHxLiHQr1cuG2CSwDfx924hoZAYO2ii3N1AsWlN2sU5AfBkCod9ghCM5tquOzmMb
+ V3/8RvUzl27jInwCA/pK6p1VW8moD42nRxGRCCu8ca4fmLSUV2iP/SxY7yOmhPZKTx0jrIz7u+H
+ 9IPKWJ7ritIo0ChAjZC+dMS0tUlVwN494LnCGorO7XlUUcU1pP96aBC19MW3Topdv7Znty5g1mQ
+ lafuG968AP1+IuBNk9tt3Y0FZQV8kazXAbiShk=
+X-Received: by 2002:a17:903:1aae:b0:2cc:9763:e607 with SMTP id
+ d9443c01a7336-2d035d1a647mr25494045ad.27.1785422599513; 
+ Thu, 30 Jul 2026 07:43:19 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2d022bcad98sm27809775ad.54.2026.07.30.07.43.18
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 30 Jul 2026 07:43:19 -0700 (PDT)
+Message-ID: <6c5f2bbf-8855-465f-8eba-9ec9df848d89@linaro.org>
+Date: Thu, 30 Jul 2026 07:43:17 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/50] accel/tcg: Add bitreverse and funnel-shift
+ runtime helper functions
+To: qemu-devel@nongnu.org
+References: <20260730031025.12926-1-anjo@rev.ng>
+ <20260730031025.12926-2-anjo@rev.ng>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260730031025.12926-2-anjo@rev.ng>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,101 +106,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On 7/29/26 20:09, Anton Johansson via qemu development wrote:
+> +uint64_t HELPER(fshl_i64)(uint64_t a, uint64_t b, uint64_t c)
+> +{
+> +    Int128 d = int128_make128(b, a);
+> +    Int128 shift = int128_lshift(d, c);
+> +    return int128_gethi(shift);
+> +}
 
-vmxnet3_validate_interrupts() currently aborts via hw_error() if
-the guest provided bad interrupt numbers. This should not happen,
-QEMU should rather refuse to activate the device in this case instead.
-Thus propagate the error to the callers to handle it more gracefully
-there.
+The existing similar opcode is extract2, performing a constant right double-word shift. 
+I'm open to adding a variable version, and adding left-shift, but we shouldn't have two 
+names for the same operation.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/539
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- hw/net/vmxnet3.c | 35 +++++++++++++++++++++++++++--------
- 1 file changed, 27 insertions(+), 8 deletions(-)
+Plus Phil's comment about not doing two things in the same patch.
 
-diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
-index 8569484b2f2..1c5d1d740cc 100644
---- a/hw/net/vmxnet3.c
-+++ b/hw/net/vmxnet3.c
-@@ -1336,32 +1336,46 @@ static bool vmxnet3_verify_intx(VMXNET3State *s, int intx)
-         || intx == pci_get_byte(s->parent_obj.config + PCI_INTERRUPT_PIN) - 1;
- }
- 
--static void vmxnet3_validate_interrupt_idx(bool is_msix, int idx)
-+static bool vmxnet3_validate_irq_idx(const char *type, bool is_msix, int idx)
- {
-     int max_ints = is_msix ? VMXNET3_MAX_INTRS : VMXNET3_MAX_NMSIX_INTRS;
-+
-     if (idx >= max_ints) {
--        hw_error("Bad interrupt index: %d\n", idx);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "vmxnet3: Bad %s queue interrupt index: %d\n",
-+                      type, idx);
-+        return false;
-     }
-+
-+    return true;
- }
- 
--static void vmxnet3_validate_interrupts(VMXNET3State *s)
-+static bool vmxnet3_validate_interrupts(VMXNET3State *s)
- {
-     int i;
- 
-     VMW_CFPRN("Verifying event interrupt index (%d)", s->event_int_idx);
--    vmxnet3_validate_interrupt_idx(s->msix_used, s->event_int_idx);
-+    if (!vmxnet3_validate_irq_idx("event", s->msix_used, s->event_int_idx)) {
-+        return false;
-+    }
- 
-     for (i = 0; i < s->txq_num; i++) {
-         int idx = s->txq_descr[i].intr_idx;
-         VMW_CFPRN("Verifying TX queue %d interrupt index (%d)", i, idx);
--        vmxnet3_validate_interrupt_idx(s->msix_used, idx);
-+        if (!vmxnet3_validate_irq_idx("TX", s->msix_used, idx)) {
-+            return false;
-+        }
-     }
- 
-     for (i = 0; i < s->rxq_num; i++) {
-         int idx = s->rxq_descr[i].intr_idx;
-         VMW_CFPRN("Verifying RX queue %d interrupt index (%d)", i, idx);
--        vmxnet3_validate_interrupt_idx(s->msix_used, idx);
-+        if (!vmxnet3_validate_irq_idx("RX", s->msix_used, idx)) {
-+            return false;
-+        }
-     }
-+
-+    return true;
- }
- 
- static bool vmxnet3_validate_queues(VMXNET3State *s)
-@@ -1554,7 +1568,10 @@ static void vmxnet3_activate_device(VMXNET3State *s)
-                sizeof(s->rxq_descr[i].rxq_stats));
-     }
- 
--    vmxnet3_validate_interrupts(s);
-+    if (!vmxnet3_validate_interrupts(s)) {
-+        vmxnet3_reset(s);
-+        return;
-+    }
- 
-     /* Make sure everything is in place before device activation */
-     smp_wmb();
-@@ -2392,7 +2409,9 @@ static int vmxnet3_post_load(void *opaque, int version_id)
-     if (!vmxnet3_validate_queues(s)) {
-         return -1;
-     }
--    vmxnet3_validate_interrupts(s);
-+    if (!vmxnet3_validate_interrupts(s)) {
-+        return -1;
-+    }
- 
-     return 0;
- }
--- 
-2.55.0
-
+r~
 
