@@ -4,100 +4,159 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6D2AC55162
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 14:02:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22FF7C55162
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 14:02:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpRKN-0004hf-3l; Thu, 30 Jul 2026 10:01:39 -0400
+	id 1wpRKv-0004re-CD; Thu, 30 Jul 2026 10:02:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wpRKB-0004c8-Dt
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 10:01:27 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1wpRKr-0004r3-Ft
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 10:02:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wpRK9-0001ij-SY
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 10:01:27 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id D4B2C600B0;
- Thu, 30 Jul 2026 14:01:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C3441F000E9;
- Thu, 30 Jul 2026 14:01:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1785420076;
- bh=Z+8k/l5U7v+TBJcojeZoNzaBJYyQnoI7s5fe33z3QG0=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=Tg+kqp6ULF9MXVo7qz1pPQW1AXFc0JXmW1LeoKoRLlS1BqwG18EXBhrQQSzoYW8+U
- t97/hdPX2g7bNXvnPkbgoJC6nNYNZd88ZF4BvmGM3wFBFQiBD9YaqfKhrGv4eus/Hp
- bRiTH66px6kghj0QmhQCBTqiuwbpOoDYxcm5L0R0LbaF1Xi7OEmDYhhRp5IswpjCVb
- v6vTJXu8WjjwFe5TF1omBYUMSuuoP0px3wf+JfjGOHNPXN9fVnqOsz5HO2N2bixTZE
- 4jyKYdFpVA9IvI2Uu43AxHRUbtd0y85UJitjyaGgJ4dcjxTcCSkorADLzUMd/TQ6i4
- koPyh7HmAjGFQ==
-Message-ID: <2873cb78-1ff2-4fd1-98b9-95f968070ea0@kernel.org>
-Date: Thu, 30 Jul 2026 16:01:13 +0200
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1wpRKp-0001lQ-Dw
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 10:02:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785420125;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=mAV/4Rh6IH5DArHhwpHZtNilXFnZlua6gpL7YEZRK9U=;
+ b=Jg8KQL7fQ31ioCx/5ptx9xvc7viChbmOsELiPFsxQbRYOGfcS6vq+eMKXsCkuH4u2hR6KL
+ cHBxAxePAp4VgUtmFClLTS9Ue/YmTWDuKVzH7o70KME/3O1yuol3B1E+9jM4X7C1uf5ivg
+ bGXKYai4KRbQ1fbfMGVY6zbhxxHRFPI=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-627-jDBxTmciPJmq69D-qCszrg-1; Thu, 30 Jul 2026 10:02:03 -0400
+X-MC-Unique: jDBxTmciPJmq69D-qCszrg-1
+X-Mimecast-MFC-AGG-ID: jDBxTmciPJmq69D-qCszrg_1785420122
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-47f8158485eso1817073f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 07:02:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1785420122; x=1786024922; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=mAV/4Rh6IH5DArHhwpHZtNilXFnZlua6gpL7YEZRK9U=;
+ b=LglJESw0lQNcEosihJZ6rZU0Wya+JbRqPB74IRK4vLqPiQx+DhnurzWVFJRuAS0zuV
+ LgQdyg4iFN2byx0CnhTV+W3LEgXlsQXpduJG4W3YGjsX3iiBHWMqSblC+n5zNCBpzYyu
+ IcxypcFWfb2iMhW7NnBz2O9ZStDlz2m22Sfj2JmmUX52cIEkTulMK4jfhNU0X8dRwFk/
+ MT95NskS2MUm8xO4Nfl+dZBWnhcdEMhtNE/rrRNklWphPBPAY4y4za07lMyz+AJdJSLp
+ DypbLdnd3hrWmr6+bETnrG4O5runeOYQNKwSPRNQWgO9kne83RE+z5vIbxDrHbl9Ws/t
+ h6Sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785420122; x=1786024922;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=mAV/4Rh6IH5DArHhwpHZtNilXFnZlua6gpL7YEZRK9U=;
+ b=igNnYT5sEg0449qHX6l8MgKiESt8OOtwNetCe+ek0fCr1CeO7eoyIcttGYnigu6/qB
+ 7SnfJT3AHJpoBtuk1F0kp5ED5sIIVfkt/ALk6mlHQVhmnc1T37NgFiIlrGNrQyImH8Zd
+ V5iF0tjO8r3udxqQitkiAc1i06CjDt0dN4pynFsHHcGSvUxvErYCggr9rOlwK0cqv99M
+ vVAcTB1eJ6CxmMtkjfbDuxLtsTXLBKeW9BD5A/P1+ZFiVT3n2GbDszvRB8tx8pJHral/
+ ht0eZ2IlMsSzbRmeAQ3jw9treNZ4rput3xyoiAxrB7SQsiSfR/l4sVCwoQ8Ry1VYtnQn
+ ZXqA==
+X-Gm-Message-State: AOJu0YwIVrrTa1V80DYZQtrvrjVywX9fXCIlGGlyziirXt7xbYsT7NLM
+ /DZ9ZKeE2DgRHLUwIQCU9scOCUfRaEp76Qfbnm842dqn3/Ta/qK0DFfve/m8wefIh0lHssVvx03
+ IBiKPJoS97kz7O5fgQv/qlhcnlekJylCy7Zu4kG698IAUcirdQKmz4FBNdp4/jhYk80SExcmPQL
+ ZkYW8NZ7iemZTnAqWh+jU4naq5Y7rj1DELQPd4z5MraA==
+X-Gm-Gg: AR+sD12RMDdhhHIvEp2UnbQmaQCh14glO15Up1DWWYSqChCv+eTX2T6UV+hqhULMCLx
+ m4uzOFGJ5jx1FdaxT3ec9MO6IK+D7GckO+7vt0FZtAw1xAkjDCn0kdnuD8LZguqHwj7p+lNTz19
+ L1EFDxfxtrI0WEcuKVfOOkIz/Gpb7HwTSmNmrQvL/sACDA0Iky3JFZTtB2hw4CL6z1irtBZW/6c
+ gzRLbhz8X402avAXl5lmD/Gb4xPfpFu/vEj55/t9CY6/PZral5pb5Q0QY1JCVOHOUyfrkRkdqvZ
+ mcUJhGguyZNkqHSpbYhIW8JDriDDdEns4g21K+RIIMrOXCwNy7dUZ8Eef6o67nVaRqICgrY8lp9
+ s74qnbyqQ+aG64uYqlhExNn65EYXm7Uvy0XZNEz8=
+X-Received: by 2002:a05:6000:258a:b0:47f:8f8f:db74 with SMTP id
+ ffacd0b85a97d-47fc80c1418mr4282580f8f.12.1785420122231; 
+ Thu, 30 Jul 2026 07:02:02 -0700 (PDT)
+X-Received: by 2002:a05:6000:258a:b0:47f:8f8f:db74 with SMTP id
+ ffacd0b85a97d-47fc80c1418mr4282485f8f.12.1785420121555; 
+ Thu, 30 Jul 2026 07:02:01 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:e10:ef90:343a:68f:2e91:95c?
+ ([2a01:e0a:e10:ef90:343a:68f:2e91:95c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47fc893fe58sm10537643f8f.31.2026.07.30.07.02.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 30 Jul 2026 07:02:00 -0700 (PDT)
+Message-ID: <41256b42-6f83-4509-adf4-7e95076aa101@redhat.com>
+Date: Thu, 30 Jul 2026 16:01:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] virtio-balloon: fix free-page BH teardown on unrealize
-To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Cc: mhun512 <mhun512@gmail.com>
-References: <0967d574d9ffe469edf5fc16da86237e54a69c34.1785327742.git.mst@redhat.com>
-From: "David Hildenbrand (Arm)" <david@kernel.org>
+Subject: Re: [PATCH v3 5/7] mptsas: do not crash QEMU on migration errors
+To: qemu-devel@nongnu.org
+Cc: Amit Shah <amit@kernel.org>, qemu-ppc@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Hanna Reitz <hreitz@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Fam Zheng <fam@euphon.net>, qemu-block@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>
+References: <20260729231904.775331-1-lvivier@redhat.com>
+ <20260729231904.775331-6-lvivier@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=david@kernel.org; keydata=
- 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
- qIws/H2t
-In-Reply-To: <0967d574d9ffe469edf5fc16da86237e54a69c34.1785327742.git.mst@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+From: Laurent Vivier <lvivier@redhat.com>
+Autocrypt: addr=lvivier@redhat.com; keydata=
+ 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
+In-Reply-To: <20260729231904.775331-6-lvivier@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=david@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=lvivier@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
 X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,37 +172,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 7/30/26 01:19, Laurent Vivier wrote:
+> From: "Michael S. Tsirkin" <mst@redhat.com>
+> 
+> Currently mptsas asserts on invalid sg list count in the migration
+> stream.
+> 
+> Fail migration gracefully instead.
+> 
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> [lvivier: use errp rather than qemu_file_set_error() to report error]
+> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+> ---
+> 
+> Notes:
+>      v2: new patch from Michael S. Tsirkin
+>          https://lore.kernel.org/qemu-devel/258d84f5af807e0103bf6f59165dd7450918e58c.1784898250.git.mst@redhat.com/
+>          Modified to use errp parameter with error_setg() instead of
+>          qemu_file_set_error() to report error
+> 
+>   hw/scsi/mptsas.c | 14 ++++++++------
+>   1 file changed, 8 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/scsi/mptsas.c b/hw/scsi/mptsas.c
+> index 45638af0afc3..34ceb6b5d25e 100644
+> --- a/hw/scsi/mptsas.c
+> +++ b/hw/scsi/mptsas.c
+> @@ -36,6 +36,8 @@
+>   #include "qapi/error.h"
+>   #include "mptsas.h"
+>   #include "migration/qemu-file-types.h"
+> +#include "migration/qemu-file.h"
 
-> +
->  static void virtio_balloon_device_unrealize(DeviceState *dev)
->  {
->      VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-> @@ -919,9 +928,17 @@ static void virtio_balloon_device_unrealize(DeviceState *dev)
->  
->      qemu_unregister_resettable(OBJECT(dev));
->      if (s->free_page_bh) {
-> +        AioContext *ctx = iothread_get_aio_context(s->iothread);
-> +
->          qemu_bh_delete(s->free_page_bh);
-> +
-> +        qemu_mutex_lock(&s->free_page_lock);
-> +        s->free_page_hint_status = FREE_PAGE_HINT_S_UNREALIZE;
-> +        qemu_cond_signal(&s->free_page_cond);
-> +        qemu_mutex_unlock(&s->free_page_lock);
-> +        aio_wait_bh_oneshot(ctx, dummy_bh, NULL);
-> +
->          object_unref(OBJECT(s->iothread));
-> -        virtio_balloon_free_page_stop(s);
->          precopy_remove_notifier(&s->free_page_hint_notify);
->      }
->      balloon_stats_destroy_timer(s);
+When I removed qemu_file_set_error() I forgot to remove this include.
+Perhaps it can be removed on merge? Otherwise I will send a v3.
 
-Not sure if this already went upsteam, but FWIW
+Thanks,
+Laurent
 
-Reviewed-by: David Hildenbrand <david@kernel.org>
+> +#include "qemu/error-report.h"
+>   #include "migration/vmstate.h"
+>   #include "mpi.h"
+>   
+> @@ -1242,12 +1244,12 @@ static void *mptsas_load_request(QEMUFile *f, SCSIRequest *sreq, Error **errp)
+>       qemu_get_buffer(f, (unsigned char *)&req->scsi_io, sizeof(req->scsi_io));
+>   
+>       n = qemu_get_be32(f);
+> -    /* TODO: add a way for SCSIBusInfo's load_request to fail,
+> -     * and fail migration instead of asserting here.
+> -     * This is just one thing (there are probably more) that must be
+> -     * fixed before we can allow NDEBUG compilation.
+> -     */
+> -    assert(n >= 0);
+> +    if (n < 0) {
+> +        error_setg(errp, "mptsas: invalid sg list count %d in migration stream",
+> +                   n);
+> +        g_free(req);
+> +        return NULL;
+> +    }
+>   
+>       pci_dma_sglist_init(&req->qsg, pci, n);
+>       for (i = 0; i < n; i++) {
 
--- 
-Cheers,
-
-David
 
