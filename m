@@ -4,108 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57B49C5516D
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 20:03:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0C11C5516F
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 20:11:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpWyR-0002sW-98; Thu, 30 Jul 2026 16:03:23 -0400
+	id 1wpX5P-0004Nx-TX; Thu, 30 Jul 2026 16:10:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wpWyH-0002mH-17
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 16:03:13 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wpWyF-0000Gk-JA
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 16:03:12 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-c1c4c7ddaf6so20411266b.3
- for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 13:03:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785441790; cv=none;
- d=google.com; s=arc-20260327;
- b=YYXyGWXkw/lVxLWThCsCrrWg/9T0l0FwEzOMRKYNHv4WuXmkYWcihe2HEml0kAQToy
- RccwNLhJmX+GYAaK34EhEIemCS7Sg7RgoMxH+6ThzTa+pUPiPSnKqKhh7gzUg9trbWUu
- VHk10D8VEvxRKWpHF/tvNxueuTE5CKInuQRpoZJ0uHRHhsLCeFDmKjva2gJTKROoMBza
- RpHpqI5U3yD0xj5SOdcHmpr/TRcwtQvCiEuXfcOoFB+Ltl7MmFRaqfDKtLQVooNWX9mH
- YCrXLC2FpfesQEpGhBFVExn8ODOGxytqRsd5zZCfRrKYSS84ciPo37XRZQdrmmeIecvj
- pQiA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=hwJSCqh+t35PmmhWCZfKJy/967KpiYv85ab0iTHIU3w=;
- fh=ZZZ1F3XP1CzKJQYqI6aEhVkOyjjcbpUDD/w/57abD1M=;
- b=eZ5wRUXw0MA/vkpOt1QMz0PlXizyANth5yZhHnrC2aJvzLRZFT626iSXP1LArNVtXZ
- BiRRnViIE/gSsGpdYAVCx4Xv0n8u2UHV54n5XreCXKYCkHmeIwGyX0h8FYC8U0QVc1y3
- DM1P2AGozU1zRvZg4jrCLfDUc04kA+wKdcB8vZupHOt+EtSFpO8YfTMP0yUq2qwzmQJV
- WcuJkA2Q61dGRW53uNJr7JJL9bm3rtDCPorDAfi2qxBZ0kJiAOmlBOQZku6UZG/QskBH
- p7l0QwsVG39uZAcUxZshjoHyl2NO1rF7BGneUV077Acad/LOMPW662CwKfrqQnrhcnjM
- d3Lg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785441790; x=1786046590; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=hwJSCqh+t35PmmhWCZfKJy/967KpiYv85ab0iTHIU3w=;
- b=k2fDf90Jr0yHMGJSEfFlDyoiDAydyFxW4APV9gSKt0ZCczWqjWWWEdDlsbIpgv21V/
- w44NAermH3TYamqpK8V3zWDmZq3sE9KSdlS24BfhXeCNdc0oCN6fQ80But52QmzUQYcf
- p2IuTYeOBGgkZKXbXBuWdVglRQx/4upaXAl27vwGkPnlS/ndCQTPjt/Igog59ISiI/wJ
- nqu4+as2ImlZpVgejQuU6dYExHulo7ajF+hVLm/8sExyy6c3GsYwQqAzjyacDiHKTRCS
- sxB8+fOOmQCaP36P/WfNlzt+sdaF1Qq6hWAKKtkS8+3e3Y67vPF+VwW/Qq5HpFBBRrms
- 2RnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785441790; x=1786046590;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=hwJSCqh+t35PmmhWCZfKJy/967KpiYv85ab0iTHIU3w=;
- b=hupfEkImtd1eXSFAw61arj5i6lAwNVdxds0HVHELBkU+j9oh1liM6YEH3HnNZE2PBC
- hHnksRKvG3w0pFlnUCQiLMl3OmAhYlJX2vgtVtKXsBqZCCLFzAyO9B+9+L841EwUp5y9
- NoS8eNToeWRe2wAbXNiDLRUbLWrZpQJ9aQiWfN22F9EI+LdyA9WQ38dPWrfuNify5R0Y
- raED7xgtEBru82LrY3w/YTBfdeV8/RDXZITk34pFF9Jo9gmQvWHPLqmHTakVVPAp+IUd
- KSsytWkvX3/bSRdsEk9G4z2GpmgTnJsaLkrhJ+nTPi7aKC2wEC+NLAbgW0uDavxWG2N9
- wGDw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrBTs9ipjFc3OKA/exaW4Ux22K6RmHc9bpLH8C6oSV7ZGAOmlxIsx6UmpomRcMzN+hY3eMS/J3JRFny@nongnu.org
-X-Gm-Message-State: AOJu0Yy1gpT2B9vLWNN97yMzmwL6ZEIAk4Y8kE71NTLCcJ1q2kJSz81i
- RaxtVJBEyJn/GkNTADyRSXWt4bYZwOwsUUdbCc2a2/Ut2yHehXsyNosbvIqe0FIzZky1rELF+Re
- cyowl/KarPUAgqN2zy1t6RzhzT5gfMKM=
-X-Gm-Gg: AR+sD11yXgVs7/NAtN8Wx5yAmx0+bhgYpdrTQZ6Yq3knf4gqrL3zP+JcGVslu32UAcQ
- R5xjQKd6RE0y3vEe/CQeyzeJwNXMD7wkUNjZ/kFbHi2BwEbelXSmvvY4cOcIT2OlXeK876IzoNZ
- 6jILDsI13L616M5Yt6ifFmHujn3GiViMrsrDcV9kaqD6tyJwvcl9f0Qfue9DxCbZEU4pKZLlkwL
- XzLpeDC8hNoYxyk5iWj55pGe0mQejyAZ8dFWaynJv10Lq//5eQa80msNT+/pEOkFzwn3/m3Dj8L
- Ey8gQpiKu3+GC/OGwOaLm5MKVzw6I7JKYRxvjleh8LvL3LLsYeC76IOYWzUdDjeAEF4zn6CcHBI
- 8pys=
-X-Received: by 2002:a17:907:9603:b0:c1f:9c3b:96a7 with SMTP id
- a640c23a62f3a-c1fa56612afmr189628566b.17.1785441789687; Thu, 30 Jul 2026
- 13:03:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mikail.sadic@ibm.com>)
+ id 1wpX5O-0004MU-OT; Thu, 30 Jul 2026 16:10:34 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mikail.sadic@ibm.com>)
+ id 1wpX5N-0001hq-A4; Thu, 30 Jul 2026 16:10:34 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66UJnFdg3878694; Thu, 30 Jul 2026 20:09:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=Q7oIuPCYo4p+RjfJB
+ 3jCPNS97if4AWQut/dKB+3wAW8=; b=kdxnhdB4+rY//wFWSmzCSEUIkGnmrOiZO
+ uHnucRR4HJenMVTsEYQ990U/pM8fFVzvlokQl3JZQS2pJZEIZqxnoKX/dKtYEraJ
+ XHZzdojBmiXNj/g/tDg5Fm9yJ73ptDnb7u/3GPNWda/wgPrvzjfPVnQ7Exf0Z2fj
+ pIRMn0L31NY+2SXIMOxPM515wn3I0pJYfHtKV/hvwjaP0QUvPxRIytuYNrRdum9v
+ 3Wi0vwmnSa4WGP1l8QPwEfN9sZjBglhWEVGXCNXAj9cQ1m/cNSfgzNYrgA5r1bLa
+ CTPx8Ki2+e50PhFq6bhRfoJpD8nMibgkAVHF4Qx6z7oD1TaN7FU1A==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0p0rwu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Jul 2026 20:09:51 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66UJfQJo022888;
+ Thu, 30 Jul 2026 20:09:50 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fn7fqn4g0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Jul 2026 20:09:50 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66UK9mgH9437720
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 30 Jul 2026 20:09:49 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D73F258055;
+ Thu, 30 Jul 2026 20:09:48 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 824265805E;
+ Thu, 30 Jul 2026 20:09:48 +0000 (GMT)
+Received: from IBM-MFS.atx-us.ibm.com (unknown [9.16.49.87])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 30 Jul 2026 20:09:48 +0000 (GMT)
+From: Mikail Sadic <mikail.sadic@ibm.com>
+To: clg@kaod.org, peter.maydell@linaro.org
+Cc: Mikail Sadic <mikail.sadic@ibm.com>, pbonzini@redhat.com,
+ ninad@linux.ibm.com, titusr@google.com, jeuk20.kim@samsung.com,
+ philmd@mailo.com, steven_lee@aspeedtech.com, leetroy@gmail.com,
+ jamin_lin@aspeedtech.com, kane_chen@aspeedtech.com,
+ andrew@codeconstruct.com.au, joel@jms.id.au, calebs@linux.ibm.com,
+ milesg@linux.ibm.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH v2 4/8] i2c/aspeed: Fix DMA receive first-byte handling for
+ block reads
+Date: Thu, 30 Jul 2026 15:09:39 -0500
+Message-ID: <20260730200945.1113936-5-mikail.sadic@ibm.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260730200945.1113936-1-mikail.sadic@ibm.com>
+References: <20260730200945.1113936-1-mikail.sadic@ibm.com>
 MIME-Version: 1.0
-References: <20260730153604.1462722-1-stefanha@redhat.com>
- <CAFEAcA-mn4x9MJ1dVra1jP_5taJJQHwYz-khKXzm8RCeYnaELg@mail.gmail.com>
-In-Reply-To: <CAFEAcA-mn4x9MJ1dVra1jP_5taJJQHwYz-khKXzm8RCeYnaELg@mail.gmail.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Thu, 30 Jul 2026 16:02:57 -0400
-X-Gm-Features: AUfX_my9pbbRCyCEqlkvEtjpBL6zm9LVZngVJWsjNsUXqBLABgWyRvwbtB6kE28
-Message-ID: <CAJSP0QV5v9BEMG_Y8M73voTvLevRq+gaDbzExJQurew=M12amw@mail.gmail.com>
-Subject: Re: [PATCH] virtio: make virtio_add_queue() queue_size an unsigned int
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org, 
- "Michael S. Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=stefanha@gmail.com; helo=mail-ej1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfX9Ib5WQIGA3va
+ wx2IrXhUTpER0EnXQQqSHiw0nKuDCws+PM3sl70qwzzV3YfGfePXMLpPFCEvaq4zb8QKQWNTqtQ
+ Uzxp6a1MbDh2Y+9DS6qdAkrZ1EM9wIU=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfX/UpgnRoE6ioX
+ aJT7RqLwLhAs4V3E8yVw70E1YhxCR6O+NA6kmES4RnSwLU2km40KXGTeomIxYTgkyaGs9aDed6v
+ pJMtN90KzJnx9l0rlpoiGcuxGzWPfWx9OiKbE7yJJW90XWGzAK9XJHo/Ohke4NMyVrxLn3g9Bbb
+ gi5BqPCc+Og2heYIXA9frcyWm46Dunr56ugAVHZRdL1AQaHkgMOCwrqJllsDURnX7Spz/qUqBu7
+ WMj4g4SGu7orNh+c6Cr5QcEXQaaFzwbbJJE1KP/No59Re+b6FILK6D5du60mpdEViFsQrggymiG
+ xNMqTQVcz+ix4tExjKfJBhPBtI3uGuSN2cLHg5XmRsQejScR1Vy/rKtTIeatchJZmubTpPCE49T
+ s5v9GyGbS6Oy6DkiU3Br6YwxF4/c1JcRnzec2odf5ppXovXPVyzBLeCHdaR0GhfPAMUtnmfq0bQ
+ cabOHqD3Kzkjmi0GtIA==
+X-Authority-Analysis: v=2.4 cv=b5WCJNGx c=1 sm=1 tr=0 ts=6a6baf90 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=82TwdL3_f4vI9uiogJoA:9
+X-Proofpoint-GUID: 15bHUHUO4BdO7DqZXfKyAbJetaJ-IBfd
+X-Proofpoint-ORIG-GUID: t7HXCBzbbRNUkpfalDDdzmwR-X-ZZ8fI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-30_06,2026-07-30_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0 impostorscore=0
+ bulkscore=0 phishscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607300145
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=mikail.sadic@ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,48 +125,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 30, 2026 at 12:02=E2=80=AFPM Peter Maydell <peter.maydell@linar=
-o.org> wrote:
->
-> On Thu, 30 Jul 2026 at 16:36, Stefan Hajnoczi <stefanha@redhat.com> wrote=
-:
-> >
-> > virtio_add_queue()'s queue_size argument is a signed int. Coverity is
-> > unhappy when that type is used as an argument to g_new0():
-> >
-> >   *** CID 1664271:         Error handling issues  (NEGATIVE_RETURNS)
-> >   /builds/qemu-project/qemu/hw/virtio/virtio.c: 2595             in vir=
-tio_add_queue()
-> >   2589         }
-> >   2590
-> >   2591         vdev->vq[i].vring.num =3D queue_size;
-> >   2592         vdev->vq[i].vring.num_default =3D queue_size;
-> >   2593         vdev->vq[i].vring.align =3D VIRTIO_PCI_VRING_ALIGN;
-> >   2594         vdev->vq[i].handle_output =3D handle_output;
-> >   >>>     CID 1664271:         Error handling issues  (NEGATIVE_RETURNS=
-)
-> >   >>>     "__n" is passed to a parameter that cannot be negative.
-> >   2595         vdev->vq[i].used_elems =3D g_new0(VirtQueueElement, queu=
-e_size);
->
-> Though note that the reason Coverity thinks this value can be negative
-> is not because the function might be passed a negative value, but
-> because it incorrectly thinks that
->         int override =3D object_property_get_int(OBJECT(qbus->parent),
->                                                VIRTIO_QUEUE_SIZE_OVERRIDE=
-,
->                                                &error_abort);
->
-> can return a negative number. (It can't because of the error_abort
-> and because the property is a UINT16 one.)
->
-> It might be a good idea to enforce the VIRTQUEUE_MAX_SIZE bounds
-> check on the queue size we get from the override property. Since
-> I think that can be set by the end-user (though probably it won't
-> be in practice) ideally we would not abort() on a bad property
-> value, but that's awkward to do at this point...
+An SMBus block read (I2C_M_RECV_LEN) reads the block length from the
+first received byte. The Linux/U-Boot aspeed I2C driver obtains that
+first byte from the I2CC_STS_AND_BUFF register (modelled here as
+reg_byte_buf), even when the transfer uses DMA. The DMA receive path,
+however, only wrote received data to DRAM and never updated
+reg_byte_buf, so block reads read a stale/zero length.
 
-I'll send a v2 that addresses VIRTIO_QUEUE_SIZE_OVERRIDE.
+Mirror the first DMA-received byte into reg_byte_buf so that
+I2C_M_RECV_LEN transfers using DMA report the correct block length.
+This is required for the ucd9000 driver, which uses
+i2c_smbus_read_block_data().
 
-Stefan
+Signed-off-by: Mikail Sadic <mikail.sadic@ibm.com>
+---
+ hw/i2c/aspeed_i2c.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+index 27afcaecee..facb54d27e 100644
+--- a/hw/i2c/aspeed_i2c.c
++++ b/hw/i2c/aspeed_i2c.c
+@@ -365,6 +365,7 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)
+     uint32_t reg_pool_ctrl = aspeed_i2c_bus_pool_ctrl_offset(bus);
+     uint32_t reg_byte_buf = aspeed_i2c_bus_byte_buf_offset(bus);
+     uint32_t reg_dma_len = aspeed_i2c_bus_dma_len_offset(bus);
++    bool first_dma_byte;
+     int pool_rx_count = SHARED_ARRAY_FIELD_EX32(bus->regs, reg_pool_ctrl,
+                                                 RX_SIZE) + 1;
+ 
+@@ -391,6 +392,7 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)
+         }
+ 
+         aspeed_i2c_set_rx_dma_dram_offset(bus);
++        first_dma_byte = true;
+         while (bus->regs[reg_dma_len]) {
+             MemTxResult result;
+ 
+@@ -407,6 +409,11 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)
+                 return;
+             }
+ 
++            /* Mirror first byte to reg_byte_buf for I2C_M_RECV_LEN. */
++            if (first_dma_byte) {
++                SHARED_ARRAY_FIELD_DP32(bus->regs, reg_byte_buf, RX_BUF, data);
++                first_dma_byte = false;
++            }
+             bus->dma_dram_offset++;
+             bus->regs[reg_dma_len]--;
+             /* In new mode, keep track of how many bytes we RXed */
+-- 
+2.53.0
+
 
