@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19B8FC55165
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:10:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B1EC55160
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:10:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpH7H-0004es-Lv; Wed, 29 Jul 2026 23:07:29 -0400
+	id 1wpH7Y-0004s0-Sl; Wed, 29 Jul 2026 23:07:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH74-0004Qq-C4
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:07:15 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH7J-0004hj-UR
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:07:33 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH6z-0002yV-Q4
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:07:13 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH7I-00031S-27
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:07:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=y7kRYOQZQnffNVG0Mg/57xQtZe9BL/W/UU2IwzeD6JQ=; b=QsMgZYfrTLRDoNc
- HjCkNpvPJq2oB8ZCxv+AFhAHV425dXVMvhd1YZrDMXp0parq26CPmSH+9QtAWHUgxF5bgH2Sd6YEm
- QkWaCZ06EGRSDs18LHuiaweSEVKFv1YWqumtIiajf84gVyUiIsHaAH4U+R4WMfO63lx80A5iz70C6
- oY=;
+ List-Help; bh=e8S9uzCAuoCBY6pZkq2YHmBcWy9lWVl15Vgdc8Hi8NE=; b=a5+N7Iz2fTim1G3
+ X4kI48tN1CAF/qcd367wSQPI8cc9oMNTFtx2Iju/jmeISgB9Z9oBcfvd8snNymqFYEiUmat+UNcDd
+ exenVIGZp85plwjn9oelnVV57ceIfKhYOULEEZPM2036dZb6me16bHv2ETJc8Q7JCgq6qZurCxsPv
+ sk=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, brian.cain@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
  philmd@mailo.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 34/50] helper-to-tcg: TcgGenPass, map arguments to TCG
-Date: Thu, 30 Jul 2026 05:10:08 +0200
-Message-ID: <20260730031025.12926-35-anjo@rev.ng>
+Subject: [PATCH v2 43/50] target/hexagon: Provide env to tcg global mapping
+Date: Thu, 30 Jul 2026 05:10:17 +0200
+Message-ID: <20260730031025.12926-44-anjo@rev.ng>
 In-Reply-To: <20260730031025.12926-1-anjo@rev.ng>
 References: <20260730031025.12926-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -63,156 +63,168 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mapping for arguments is slighty different than other `Value`s and depend
-on function annotations, perform it as a separe pass.
+Replaces previous calls to tcg_global_mem_new*() with a declarative
+global array of cpu_mapping structs.  This array can be used to
+initialize all TCG globals with one function call from the target, and
+may additionally be used from LLVM based tools to map between offsets
+into a struct and a mapped TCGv global.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- subprojects/helper-to-tcg/meson.build         |   1 +
- .../src/TcgGenPass/MapArguments.cpp           | 122 ++++++++++++++++++
- 2 files changed, 123 insertions(+)
- create mode 100644 subprojects/helper-to-tcg/src/TcgGenPass/MapArguments.cpp
+ target/hexagon/translate.c | 119 ++++++++++++++++++-------------------
+ 1 file changed, 57 insertions(+), 62 deletions(-)
 
-diff --git a/subprojects/helper-to-tcg/meson.build b/subprojects/helper-to-tcg/meson.build
-index c03a4d5df6..22190025d0 100644
---- a/subprojects/helper-to-tcg/meson.build
-+++ b/subprojects/helper-to-tcg/meson.build
-@@ -51,6 +51,7 @@ sources = [
-     'src/TcgGenPass/TcgGenPass.cpp',
-     'src/TcgGenPass/LinearizeBlocks.cpp',
-     'src/TcgGenPass/TcgEmit.cpp',
-+    'src/TcgGenPass/MapArguments.cpp',
- ]
+diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+index bfd84bba4e..870475010b 100644
+--- a/target/hexagon/translate.c
++++ b/target/hexagon/translate.c
+@@ -33,6 +33,7 @@
+ #include "genptr.h"
+ #include "printinsn.h"
+ #include "exec/target_page.h"
++#include "tcg/tcg-global-mappings.h"
  
- clang = bindir / 'clang'
-diff --git a/subprojects/helper-to-tcg/src/TcgGenPass/MapArguments.cpp b/subprojects/helper-to-tcg/src/TcgGenPass/MapArguments.cpp
-new file mode 100644
-index 0000000000..04aa8cf10c
---- /dev/null
-+++ b/subprojects/helper-to-tcg/src/TcgGenPass/MapArguments.cpp
-@@ -0,0 +1,122 @@
-+//
-+//  Copyright(c) 2026 rev.ng Labs Srl. All Rights Reserved.
-+//
-+//  This program is free software; you can redistribute it and/or modify
-+//  it under the terms of the GNU General Public License as published by
-+//  the Free Software Foundation; either version 2 of the License, or
-+//  (at your option) any later version.
-+//
-+//  This program is distributed in the hope that it will be useful,
-+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+//  GNU General Public License for more details.
-+//
-+//  You should have received a copy of the GNU General Public License
-+//  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+//
+ #define HELPER_H "helper.h"
+ #include "exec/helper-info.c.inc"
+@@ -1328,77 +1329,68 @@ static char store_val64_names[STORES_MAX][NAME_LEN];
+ static char vstore_addr_names[VSTORES_MAX][NAME_LEN];
+ static char vstore_size_names[VSTORES_MAX][NAME_LEN];
+ static char vstore_pending_names[VSTORES_MAX][NAME_LEN];
+-
+-void hexagon_translate_init(void)
+-{
+-    int i;
+-
+-    opcode_init();
++static const char *store_addr_names_ptr[STORES_MAX];
++static const char *store_width_names_ptr[STORES_MAX];
++static const char *store_val32_names_ptr[STORES_MAX];
++static const char *store_val64_names_ptr[STORES_MAX];
 +
-+#include "DebugInfo.hpp"
-+#include "ValueMapping.hpp"
++cpu_tcg_mapping tcg_global_mappings[] = {
++    /* General purpose and predicate registers */
++    CPU_TCG_MAP_ARRAY(CPUHexagonState, hex_gpr,  gpr,  hexagon_regnames),
++    CPU_TCG_MAP_ARRAY(CPUHexagonState, hex_pred, pred, hexagon_prednames),
 +
-+#include "Error.hpp"
-+#include "FunctionAnnotation.hpp"
-+#include "TcgType.hpp"
-+
-+#include <llvm/IR/Constants.h>
-+#include <llvm/IR/DerivedTypes.h>
-+#include <llvm/IR/Function.h>
-+#include <llvm/IR/Module.h>
-+
-+#define DEBUG_TYPE "map-arguments"
-+
-+//
-+// Map Arguments
-+//
-+// Assign `TcgV`s to function arguments, taking function annotations into
-+// account to force types.  Mapping them early and separately both makes sure
-+// that no other pass accidently assign to them, and separates out any special
-+// case logic that's necessary.
-+//
-+
-+using namespace llvm;
-+
-+static Expected<TcgV> mapIntegerArgument(TempAllocationData &TAD,
-+                                         const DebugInfoMapTy &DebugInfo,
-+                                         const Argument *Arg,
-+                                         uint8_t Annotations) {
-+    auto *IntTy = cast<IntegerType>(Arg->getType());
-+    auto Size = ValueSize::fromLlvmType(IntTy);
-+    if (!Size) {
-+        return Size.takeError();
-+    }
-+
-+    StringRef Name = getDebugVarName(DebugInfo, Arg);
-+
-+    if ((Annotations & (uint8_t)ArgumentAnnotation::Immediate) != 0) {
-+        auto Tcg = TcgV::makeImmediate(Name, *Size);
-+        return TAD.map(Arg, Tcg);
-+    } else {
-+        auto Tcg = TcgV::makeTemp(*Size, IrValue);
-+        Tcg.Name = Name;
-+        return TAD.map(Arg, Tcg);
-+    }
++    /* Misc */
++    CPU_TCG_MAP(CPUHexagonState, hex_new_value_usr,  new_value_usr),
++    CPU_TCG_MAP(CPUHexagonState, hex_next_PC,        next_PC),
++    CPU_TCG_MAP(CPUHexagonState, hex_slot_cancelled, slot_cancelled),
++    CPU_TCG_MAP(CPUHexagonState, hex_llsc_addr,      llsc_addr),
++    CPU_TCG_MAP(CPUHexagonState, hex_llsc_val,       llsc_val),
++    CPU_TCG_MAP(CPUHexagonState, hex_llsc_val_i64,   llsc_val_i64),
+ 
+ #ifndef CONFIG_USER_ONLY
+-    for (i = 0; i < NUM_GREGS; i++) {
+-            hex_greg[i] = tcg_global_mem_new_i32(tcg_env,
+-                offsetof(CPUHexagonState, greg[i]),
+-                hexagon_gregnames[i]);
+-    }
+-    for (i = 0; i < NUM_SREGS; i++) {
+-        if (i < HEX_SREG_GLB_START) {
+-            hex_t_sreg[i] = tcg_global_mem_new_i32(tcg_env,
+-                offsetof(CPUHexagonState, t_sreg[i]),
+-                hexagon_sregnames[i]);
+-        }
+-    }
++    CPU_TCG_MAP(CPUHexagonState, hex_cause_code, cause_code),
++    CPU_TCG_MAP(CPUHexagonState, hex_cycle_count, t_cycle_count),
++    CPU_TCG_MAP_ARRAY(CPUHexagonState, hex_greg, greg, hexagon_gregnames),
++    CPU_TCG_MAP_ARRAY(CPUHexagonState, hex_t_sreg, t_sreg, hexagon_sregnames),
+ #endif
+-    for (i = 0; i < TOTAL_PER_THREAD_REGS; i++) {
+-        hex_gpr[i] = tcg_global_mem_new(tcg_env,
+-            offsetof(CPUHexagonState, gpr[i]),
+-            hexagon_regnames[i]);
+-    }
+-    hex_new_value_usr = tcg_global_mem_new(tcg_env,
+-        offsetof(CPUHexagonState, new_value_usr), "new_value_usr");
+-    hex_next_PC = tcg_global_mem_new(tcg_env,
+-        offsetof(CPUHexagonState, next_PC), "next_PC");
+ 
+-    for (i = 0; i < NUM_PREGS; i++) {
+-        hex_pred[i] = tcg_global_mem_new(tcg_env,
+-            offsetof(CPUHexagonState, pred[i]),
+-            hexagon_prednames[i]);
+-    }
+-    hex_slot_cancelled = tcg_global_mem_new(tcg_env,
+-        offsetof(CPUHexagonState, slot_cancelled), "slot_cancelled");
+-    hex_llsc_addr = tcg_global_mem_new(tcg_env,
+-        offsetof(CPUHexagonState, llsc_addr), "llsc_addr");
+-    hex_llsc_val = tcg_global_mem_new(tcg_env,
+-        offsetof(CPUHexagonState, llsc_val), "llsc_val");
+-    hex_llsc_val_i64 = tcg_global_mem_new_i64(tcg_env,
+-        offsetof(CPUHexagonState, llsc_val_i64), "llsc_val_i64");
+-#ifndef CONFIG_USER_ONLY
+-    hex_cause_code = tcg_global_mem_new_i32(tcg_env,
+-        offsetof(CPUHexagonState, cause_code), "cause_code");
+-    hex_cycle_count = tcg_global_mem_new_i64(tcg_env,
+-        offsetof(CPUHexagonState, t_cycle_count), "t_cycle_count");
+-#endif
+-    for (i = 0; i < STORES_MAX; i++) {
+-        snprintf(store_addr_names[i], NAME_LEN, "store_addr_%d", i);
+-        hex_store_addr[i] = tcg_global_mem_new(tcg_env,
+-            offsetof(CPUHexagonState, mem_log_stores[i].va),
+-            store_addr_names[i]);
++    /* Logging stores */
++    CPU_TCG_MAP_ARRAY_OF_STRUCTS(CPUHexagonState, hex_store_addr,
++                                 mem_log_stores, va,     store_addr_names_ptr),
++    CPU_TCG_MAP_ARRAY_OF_STRUCTS(CPUHexagonState, hex_store_width,
++                                 mem_log_stores, width,  store_width_names_ptr),
++    CPU_TCG_MAP_ARRAY_OF_STRUCTS(CPUHexagonState, hex_store_val32,
++                                 mem_log_stores, data32, store_val32_names_ptr),
++    CPU_TCG_MAP_ARRAY_OF_STRUCTS(CPUHexagonState, hex_store_val64,
++                                 mem_log_stores, data64, store_val64_names_ptr),
++};
+ 
+-        snprintf(store_width_names[i], NAME_LEN, "store_width_%d", i);
+-        hex_store_width[i] = tcg_global_mem_new_i32(tcg_env,
+-            offsetof(CPUHexagonState, mem_log_stores[i].width),
+-            store_width_names[i]);
++size_t tcg_global_mapping_count = ARRAY_SIZE(tcg_global_mappings);
+ 
++static void init_cpu_reg_names(void) {
++    /*
++     * Create register names and store them in `*_names`,
++     * then copy to and array of pointers in `*_names_ptr`
++     * which is easier to pass around.
++     */
++    for (int i = 0; i < STORES_MAX; ++i) {
++        snprintf(store_addr_names[i],  NAME_LEN, "store_addr_%d",  i);
++        snprintf(store_width_names[i], NAME_LEN, "store_width_%d", i);
+         snprintf(store_val32_names[i], NAME_LEN, "store_val32_%d", i);
+-        hex_store_val32[i] = tcg_global_mem_new(tcg_env,
+-            offsetof(CPUHexagonState, mem_log_stores[i].data32),
+-            store_val32_names[i]);
+-
+         snprintf(store_val64_names[i], NAME_LEN, "store_val64_%d", i);
+-        hex_store_val64[i] = tcg_global_mem_new_i64(tcg_env,
+-            offsetof(CPUHexagonState, mem_log_stores[i].data64),
+-            store_val64_names[i]);
++        store_addr_names_ptr[i]  = store_addr_names[i];
++        store_width_names_ptr[i] = store_width_names[i];
++        store_val32_names_ptr[i] = store_val32_names[i];
++        store_val64_names_ptr[i] = store_val64_names[i];
+     }
 +}
 +
-+static Expected<TcgV> mapPointerArgument(TempAllocationData &TAD,
-+                                         const DebugInfoMapTy &DebugInfo,
-+                                         const Argument *Arg,
-+                                         uint8_t Annotations) {
-+    // If the value has an associated name from the debug information, use it
-+    StringRef Name{};
-+    if (auto It = DebugInfo.find(Arg); It != DebugInfo.end()) {
-+        Name = It->second.VarName;
-+    }
++void hexagon_translate_init(void)
++{
++    int i;
 +
-+    if ((Annotations & (uint8_t)ArgumentAnnotation::PtrToOffset) != 0) {
-+        auto Tcg = TcgV::makeVector({});
-+        Tcg.Name = Name;
-+        return TAD.map(Arg, Tcg);
-+    } else {
-+        auto Tcg = TcgV::makeTemp({}, IrPtr);
-+        Tcg.Name = Name;
-+        return TAD.map(Arg, Tcg);
-+    }
-+}
++    opcode_init();
 +
-+static Expected<TcgV> mapArgument(TempAllocationData &Data,
-+                                  const DebugInfoMapTy &DebugInfo,
-+                                  const Argument *Arg, uint8_t Annotations) {
-+    // We only map each argument once, assert it's not been mapped previously.
-+    assert(!Data.Map.count(Arg));
+     for (i = 0; i < VSTORES_MAX; i++) {
+         snprintf(vstore_addr_names[i], NAME_LEN, "vstore_addr_%d", i);
+         hex_vstore_addr[i] = tcg_global_mem_new(tcg_env,
+@@ -1415,4 +1407,7 @@ void hexagon_translate_init(void)
+             offsetof(CPUHexagonState, vstore_pending[i]),
+             vstore_pending_names[i]);
+     }
 +
-+    Type *Ty = Arg->getType();
-+    if (isa<IntegerType>(Ty)) {
-+        return mapIntegerArgument(Data, DebugInfo, Arg, Annotations);
-+    } else if (isa<PointerType>(Ty)) {
-+        return mapPointerArgument(Data, DebugInfo, Arg, Annotations);
-+    }
-+
-+    return mkError("Unable to map value ", Arg);
-+}
-+
-+Error mapArguments(const llvm::Function &F,
-+                   const AnnotationMapTy &AnnotationMap,
-+                   const DebugInfoMapTy &DebugInfo, TempAllocationData &Data) {
-+    // Map arguments
-+    for (size_t I = 0; I < F.arg_size(); ++I) {
-+        const Argument *Arg = F.getArg(I);
-+        auto It = AnnotationMap.find(&F);
-+        const uint8_t Annotations =
-+            (It != AnnotationMap.end()) ? It->second.getArgFlag(I) : 0;
-+        Expected<TcgV> TcgArg = mapArgument(Data, DebugInfo, Arg, Annotations);
-+        if (!TcgArg) {
-+            return TcgArg.takeError();
-+        }
-+        LLVM_DEBUG({
-+            dbgs() << "Mapped argument " << *Arg << " to: \n";
-+            TcgArg->dump(dbgs());
-+        });
-+    }
-+
-+    return Error::success();
-+}
++    init_cpu_reg_names();
++    init_cpu_tcg_mappings(tcg_global_mappings, tcg_global_mapping_count);
+ }
 -- 
 2.52.0
 
