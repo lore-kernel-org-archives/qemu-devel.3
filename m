@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A4E2C54FD2
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:09:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1AD3C54FCD
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:09:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpH76-0004Qv-4t; Wed, 29 Jul 2026 23:07:16 -0400
+	id 1wpH70-00049B-FY; Wed, 29 Jul 2026 23:07:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH72-0004FW-FA
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:07:12 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH6r-0003yv-Dj
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:07:01 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH6s-0002xl-4s
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:07:05 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH6o-0002xK-Hz
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:07:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=ykgq7m2MwXWBOItfqUBXCnnSV1ZKB1COoa7NuA2wPyE=; b=Nd3NokSIDLPYJ/o
- YwR4bJWTmEfyHuH33xqrIIUNvn78iSD9IwywvNx7l67Hzb3gaDZfTaXjCRt6RSbLz6srD/kPvxByO
- XCq4wDDY70ru/lodstpWFYbU8VUhYV2+wtQB88ZPYPpX5bxndkHAqgACzborFo6AdgVJS7wylpo/R
- +s=;
+ List-Help; bh=HnCTtpuYw/p0eFuGQNJjUUucCE/tt34zGt60GfprXAY=; b=WWgc7iaoB4AC1HS
+ ygbk4BuX+dtDjRW5vCx0eu+qvGLedUmxoXvzDkJoV7huHjk+WuX5NRhVvhz49p21gzIUx80wXB9Us
+ A+RsFvXzzuJUj9kSzcDIZR3VstZNBQL7PXvRtClWlNXO/SZItX7lyYaBcGS2lAsf/JLqDWdcFmUQj
+ Uc=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, brian.cain@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
  philmd@mailo.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 30/50] helper-to-tcg: Introduce TcgGenPass
-Date: Thu, 30 Jul 2026 05:10:04 +0200
-Message-ID: <20260730031025.12926-31-anjo@rev.ng>
+Subject: [PATCH v2 28/50] helper-to-tcg: PrepareForTcgPass,
+ identity map trivial expressions
+Date: Thu, 30 Jul 2026 05:10:02 +0200
+Message-ID: <20260730031025.12926-29-anjo@rev.ng>
 In-Reply-To: <20260730031025.12926-1-anjo@rev.ng>
 References: <20260730031025.12926-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -63,62 +64,138 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds a final backend pass over the LLVM module, taking
-previously optimized and canonicalized LLVM IR and for
-each function:
+Transformation of the IR, identity mapping expressions which
+would amount to nothing more than a move when emitted as TCG, but is
+required in LLVM IR to not break the IR.
 
-  1. Maps arguments, and propagates constant expressions;
-  2. Allocates TCG values to non-constants;
-  3. Emits the final TCG.
-
-Points above will be implemented in following commits, this commits adds
-boilerplate and some scaffolding for translating and emitting code.
-
-TODO: This commit could do with some more splitting, TcgEmit.hpp and
-ValueMapping.hpp and the functions therein are referenced but not added
-in this commit, they come later.
+Trivial expressions are mapped to a `@IdentityMap` pseudo instruction
+allowing them to be dealt with in a uniform manner down the line.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- .../helper-to-tcg/include/CmdLineOptions.hpp  |  16 +
- .../helper-to-tcg/include/TcgGenPass.hpp      |  63 +++
- subprojects/helper-to-tcg/meson.build         |   1 +
- subprojects/helper-to-tcg/src/Pipeline.cpp    |  97 ++++-
- .../src/TcgGenPass/TcgGenPass.cpp             | 385 ++++++++++++++++++
- 5 files changed, 561 insertions(+), 1 deletion(-)
- create mode 100644 subprojects/helper-to-tcg/include/TcgGenPass.hpp
- create mode 100644 subprojects/helper-to-tcg/src/TcgGenPass/TcgGenPass.cpp
+ subprojects/helper-to-tcg/meson.build         |  1 +
+ .../src/PrepareForTcgPass/IdentityMap.cpp     | 91 +++++++++++++++++++
+ .../src/PrepareForTcgPass/IdentityMap.hpp     | 39 ++++++++
+ .../PrepareForTcgPass/PrepareForTcgPass.cpp   |  4 +
+ 4 files changed, 135 insertions(+)
+ create mode 100644 subprojects/helper-to-tcg/src/PrepareForTcgPass/IdentityMap.cpp
+ create mode 100644 subprojects/helper-to-tcg/src/PrepareForTcgPass/IdentityMap.hpp
 
-diff --git a/subprojects/helper-to-tcg/include/CmdLineOptions.hpp b/subprojects/helper-to-tcg/include/CmdLineOptions.hpp
-index 3a827f8ab7..1a4c0dd732 100644
---- a/subprojects/helper-to-tcg/include/CmdLineOptions.hpp
-+++ b/subprojects/helper-to-tcg/include/CmdLineOptions.hpp
-@@ -28,3 +28,19 @@ extern llvm::cl::opt<std::string> TcgGlobalMappingsName;
- extern llvm::cl::opt<std::string> UserPCRelBranchFunc;
- extern llvm::cl::opt<std::string> UserPCRelBranchFallthroughFunc;
- extern llvm::cl::opt<std::string> UserPCRelBranchConditionalFunc;
-+// Options for TcgEmit
-+extern llvm::cl::opt<std::string> MmuIndexFunction;
-+extern llvm::cl::opt<std::string> TempVectorBlock;
-+extern llvm::cl::opt<uint32_t> MaxVectorInstructions;
-+extern llvm::cl::opt<uint32_t> MaxVectorTempBytes;
-+// Options for MapTemporaries
-+extern llvm::cl::opt<uint32_t> GuestPtrSize;
-+// Options for TcgGenPass
-+extern llvm::cl::opt<std::string> OutputSourceFile;
-+extern llvm::cl::opt<std::string> OutputHeaderFile;
-+extern llvm::cl::opt<std::string> OutputEnabledFile;
-+extern llvm::cl::opt<bool> ErrorOnTranslationFailure;
-+extern llvm::cl::opt<bool> StaticOutput;
-+extern llvm::cl::opt<bool> AllowDeclCall;
-+extern llvm::cl::opt<bool> ForwardContext;
-+extern llvm::cl::opt<bool> EmitVectorPreamble;
-diff --git a/subprojects/helper-to-tcg/include/TcgGenPass.hpp b/subprojects/helper-to-tcg/include/TcgGenPass.hpp
+diff --git a/subprojects/helper-to-tcg/meson.build b/subprojects/helper-to-tcg/meson.build
+index 79ce0c6dd8..c88c759ba6 100644
+--- a/subprojects/helper-to-tcg/meson.build
++++ b/subprojects/helper-to-tcg/meson.build
+@@ -47,6 +47,7 @@ sources = [
+     'src/PrepareForTcgPass/PrepareForTcgPass.cpp',
+     'src/PrepareForTcgPass/TransformGEPs.cpp',
+     'src/PrepareForTcgPass/CanonicalizeIR.cpp',
++    'src/PrepareForTcgPass/IdentityMap.cpp',
+ ]
+ 
+ clang = bindir / 'clang'
+diff --git a/subprojects/helper-to-tcg/src/PrepareForTcgPass/IdentityMap.cpp b/subprojects/helper-to-tcg/src/PrepareForTcgPass/IdentityMap.cpp
 new file mode 100644
-index 0000000000..8318b2c7cd
+index 0000000000..b9f4c8330f
 --- /dev/null
-+++ b/subprojects/helper-to-tcg/include/TcgGenPass.hpp
-@@ -0,0 +1,63 @@
++++ b/subprojects/helper-to-tcg/src/PrepareForTcgPass/IdentityMap.cpp
+@@ -0,0 +1,91 @@
++//
++//  Copyright(c) 2026 rev.ng Labs Srl. All Rights Reserved.
++//
++//  This program is free software; you can redistribute it and/or modify
++//  it under the terms of the GNU General Public License as published by
++//  the Free Software Foundation; either version 2 of the License, or
++//  (at your option) any later version.
++//
++//  This program is distributed in the hope that it will be useful,
++//  but WITHOUT ANY WARRANTY; without even the implied warranty of
++//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++//  GNU General Public License for more details.
++//
++//  You should have received a copy of the GNU General Public License
++//  along with this program; if not, see <http://www.gnu.org/licenses/>.
++//
++
++#include "IdentityMap.hpp"
++#include "PseudoInst.hpp"
++#include "TcgType.hpp"
++
++#include <llvm/ADT/SmallVector.h>
++#include <llvm/IR/IRBuilder.h>
++#include <llvm/IR/InstIterator.h>
++#include <llvm/IR/Instruction.h>
++#include <llvm/IR/Value.h>
++
++using namespace llvm;
++
++void identityMap(Module &M, Function &F) {
++    SmallVector<Instruction *, 8> InstToErase;
++
++    for (Instruction &I : instructions(F)) {
++        auto *ZExt = dyn_cast<ZExtInst>(&I);
++        if (ZExt) {
++            auto *SrcIntTy =
++                dyn_cast<IntegerType>(ZExt->getOperand(0)->getType());
++            auto *DstIntTy = dyn_cast<IntegerType>(ZExt->getType());
++            if (!SrcIntTy or !DstIntTy) {
++                continue;
++            }
++
++            auto SrcSize = ValueSize::fromLlvmType(SrcIntTy);
++            auto DstSize = ValueSize::fromLlvmType(DstIntTy);
++            if (!SrcSize or !DstSize) {
++                continue;
++            }
++
++            // TODO: Hack again to get bit width from icmp arguments, should
++            // widen in canonicalization phase.
++            if (SrcSize->LlvmBitWidth == 1) {
++                auto *ICmp = dyn_cast<ICmpInst>(ZExt->getOperand(0));
++                if (ICmp) {
++                    auto *ICmpOp = ICmp->getOperand(0);
++                    auto OpSize = ValueSize::fromLlvmType(
++                        cast<IntegerType>(ICmpOp->getType()));
++                    if (!OpSize) {
++                        continue;
++                    }
++                    SrcSize = *OpSize;
++                }
++            }
++
++            // Only identity map when TCG sizes match.
++            if (SrcSize->TcgBitWidth != DstSize->TcgBitWidth) {
++                continue;
++            }
++
++            IRBuilder<> Builder(&I);
++            ZExt->replaceAllUsesWith(createPseudoInstCall(
++                M, Builder, IdentityMap, DstIntTy, {ZExt->getOperand(0)}));
++            InstToErase.push_back(&I);
++        } else if (auto *Load = dyn_cast<LoadInst>(&I);
++                   Load and Load->getType()->isVectorTy()) {
++            Value *Ptr = Load->getPointerOperand();
++            IRBuilder<> Builder(&I);
++            Load->replaceAllUsesWith(createPseudoInstCall(
++                M, Builder, IdentityMap, Load->getType(), {Ptr}));
++            InstToErase.push_back(&I);
++        } else if (isa<FreezeInst>(&I)) {
++            IRBuilder<> Builder(&I);
++            I.replaceAllUsesWith(createPseudoInstCall(
++                M, Builder, IdentityMap, I.getType(), {I.getOperand(0)}));
++            InstToErase.push_back(&I);
++        }
++    }
++
++    for (Instruction *I : InstToErase) {
++        I->eraseFromParent();
++    }
++}
+diff --git a/subprojects/helper-to-tcg/src/PrepareForTcgPass/IdentityMap.hpp b/subprojects/helper-to-tcg/src/PrepareForTcgPass/IdentityMap.hpp
+new file mode 100644
+index 0000000000..25de0a2c71
+--- /dev/null
++++ b/subprojects/helper-to-tcg/src/PrepareForTcgPass/IdentityMap.hpp
+@@ -0,0 +1,39 @@
 +//
 +//  Copyright(c) 2026 rev.ng Labs Srl. All Rights Reserved.
 +//
@@ -138,588 +215,47 @@ index 0000000000..8318b2c7cd
 +
 +#pragma once
 +
-+#include "DebugInfo.hpp"
-+#include "FunctionAnnotation.hpp"
-+#include "TcgGlobalMap.hpp"
-+#include "VectorLayout.hpp"
-+
-+#include <llvm/IR/PassManager.h>
-+
-+//
-+// TcgGenPass
-+//
-+// Backend pass responsible for emitting the final TCG code.
-+//
-+// This pass is further diveded into smaller passes that map arguments,
-+// propagate constants, allocate registers, and emit finally TCG.
-+//
-+// Note, the incoming IR is broken and linearized to an array of basic blocks,
-+// which acts to simplify the various backend passes.
-+//
-+
-+class TcgGenPass : public llvm::PassInfoMixin<TcgGenPass> {
-+    llvm::raw_ostream &OutSource;
-+    llvm::raw_ostream &OutHeader;
-+    llvm::raw_ostream &OutHelpers;
-+    llvm::raw_ostream &OutEnabled;
-+    llvm::StringRef HeaderPath;
-+    const AnnotationMapTy &Annotations;
-+    const DebugInfoMapTy &DebugInfo;
-+    const TcgGlobalMap &TcgGlobals;
-+    const VectorLayout &VL;
-+
-+  public:
-+    TcgGenPass(llvm::raw_ostream &OutSource, llvm::raw_ostream &OutHeader,
-+               llvm::raw_ostream &OutHelpers, llvm::raw_ostream &OutEnabled,
-+               llvm::StringRef HeaderPath, const AnnotationMapTy &Annotations,
-+               const DebugInfoMapTy &DebugInfo, const TcgGlobalMap &TcgGlobals,
-+               const VectorLayout &VL)
-+        : OutSource(OutSource), OutHeader(OutHeader), OutHelpers(OutHelpers),
-+          OutEnabled(OutEnabled), HeaderPath(HeaderPath),
-+          Annotations(Annotations), DebugInfo(DebugInfo),
-+          TcgGlobals(TcgGlobals), VL(VL) {}
-+
-+    llvm::PreservedAnalyses run(llvm::Module &M,
-+                                llvm::ModuleAnalysisManager &MAM);
-+};
-diff --git a/subprojects/helper-to-tcg/meson.build b/subprojects/helper-to-tcg/meson.build
-index c88c759ba6..880561416a 100644
---- a/subprojects/helper-to-tcg/meson.build
-+++ b/subprojects/helper-to-tcg/meson.build
-@@ -48,6 +48,7 @@ sources = [
-     'src/PrepareForTcgPass/TransformGEPs.cpp',
-     'src/PrepareForTcgPass/CanonicalizeIR.cpp',
-     'src/PrepareForTcgPass/IdentityMap.cpp',
-+    'src/TcgGenPass/TcgGenPass.cpp',
- ]
- 
- clang = bindir / 'clang'
-diff --git a/subprojects/helper-to-tcg/src/Pipeline.cpp b/subprojects/helper-to-tcg/src/Pipeline.cpp
-index 9b45664bdc..6555762b9d 100644
---- a/subprojects/helper-to-tcg/src/Pipeline.cpp
-+++ b/subprojects/helper-to-tcg/src/Pipeline.cpp
-@@ -19,6 +19,7 @@
- #include "LlvmCompat.hpp"
- #include "PrepareForOptPass.hpp"
- #include "PrepareForTcgPass.hpp"
-+#include "TcgGenPass.hpp"
- #include "VectorLayout.hpp"
- 
- #if LLVM_VERSION_MAJOR == 15
-@@ -46,6 +47,7 @@
- #include <llvm/Support/MathExtras.h>
- #include <llvm/Support/SourceMgr.h>
- #include <llvm/Support/TargetSelect.h>
-+#include <llvm/Support/ToolOutputFile.h>
- #include <llvm/Target/TargetMachine.h>
- #include <llvm/Transforms/Scalar/DCE.h>
- #include <llvm/Transforms/Scalar/SROA.h>
-@@ -105,7 +107,7 @@ cl::opt<std::string> UserPCRelBranchFallthroughFunc(
-              " from inside a conditional block, but that condition isn't taken."
-              " and we instead need to fallthrough to the next instruction."),
-     cl::init(""), cl::cat(Cat));
-- 
-+
- static llvm::cl::opt<bool> VecForceBigEndian(
-     "vec-force-big-endian",
-     cl::desc("Force emission of vector operations as if on a big-endian host."),
-@@ -127,6 +129,76 @@ static llvm::cl::opt<LanePreference> VecLane0(
-                          "Vector lane 0 is in the most-significant bytes")),
-     cl::init(LeastSignificant), cl::cat(Cat));
- 
-+// Options for TcgEmit
-+cl::opt<std::string> MmuIndexFunction(
-+    "mmu-index-function",
-+    cl::desc("Name of a (uint32_t tb_flag) -> int function returning the "
-+             "mmu index from the tb_flags of the current translation block"),
-+    cl::init("get_tb_mmu_index"), cl::cat(Cat));
-+
-+cl::opt<std::string>
-+    TempVectorBlock("temp-vector-block",
-+                    cl::desc("Name of uint8_t[...] field in CPUArchState used "
-+                             "for allocating temporary gvec variables"),
-+                    cl::init("tmp_vmem"), cl::cat(Cat));
-+
-+cl::opt<uint32_t> MaxVectorTempBytes(
-+    "max-vector-temp-bytes",
-+    cl::desc("Maximum bytes to be allocated for vector temporaries"),
-+    cl::init(0), cl::cat(Cat));
-+
-+cl::opt<uint32_t> MaxVectorInstructions(
-+    "max-vector-instructions",
-+    cl::desc(
-+        "Maximum number of vector instructions an emitted function may have"),
-+    cl::init(0), cl::cat(Cat));
-+
-+// Options for MapTemporaries
-+cl::opt<uint32_t>
-+    GuestPtrSize("guest-ptr-size",
-+                 cl::desc("Pointer size of the guest architecture"),
-+                 cl::init(32), cl::cat(Cat));
-+
-+// Options for TcgGenPass
-+cl::opt<std::string> OutputSourceFile("output-source",
-+                                      cl::desc("output .c file"),
-+                                      cl::init("helper-to-tcg-emitted.c"),
-+                                      cl::cat(Cat));
-+
-+cl::opt<std::string> OutputHeaderFile("output-header",
-+                                      cl::desc("output .h file"),
-+                                      cl::init("helper-to-tcg-emitted.h"),
-+                                      cl::cat(Cat));
-+
-+cl::opt<std::string> OutputHelpersFile(
-+    "output-helpers", cl::desc("output support helper.h file"),
-+    cl::init("helper-to-tcg-support-helpers.h"), cl::cat(Cat));
-+
-+cl::opt<std::string>
-+    OutputEnabledFile("output-enabled",
-+                      cl::desc("output list of tranlated functions"),
-+                      cl::init("helper-to-tcg-enabled"), cl::cat(Cat));
-+
-+cl::opt<bool>
-+    ErrorOnTranslationFailure("error-on-translation-failure",
-+                              cl::desc("Abort translation on first failure"),
-+                              cl::init(false), cl::cat(Cat));
-+
-+cl::opt<bool> StaticOutput("static-output",
-+                           cl::desc("Statically define output functions"),
-+                           cl::init(false), cl::cat(Cat));
-+
-+cl::opt<bool>
-+    AllowDeclCall("allow-decl-call",
-+                  cl::desc("Forward calls to declared functions to output"),
-+                  cl::init(false), cl::cat(Cat));
-+
-+cl::opt<bool> ForwardContext(
-+    "forward-context",
-+    cl::desc(
-+        "Pass a DisasContext struct to all translated functions and calls"),
-+    cl::init(false), cl::cat(Cat));
-+
- // Define a TargetTransformInfo (TTI) subclass, this allows for overriding
- // common per-llvm-target information expected by other LLVM passes, such
- // as the width of the largest scalar/vector registers.  Needed for consistent
-@@ -300,5 +372,28 @@ int main(int argc, char **argv) {
-         MPM.addPass(createModuleToFunctionPassAdaptor(std::move(FPM)));
-     }
- 
-+    //
-+    // Finally we run a backend pass that converts from LLVM IR to TCG,
-+    // and emits the final code.
-+    //
-+
-+    std::error_code EC;
-+    ToolOutputFile OutSource(OutputSourceFile, EC, compat::OpenFlags);
-+    ToolOutputFile OutHeader(OutputHeaderFile, EC, compat::OpenFlags);
-+    ToolOutputFile OutHelpers(OutputHelpersFile, EC, compat::OpenFlags);
-+    ToolOutputFile OutEnabled(OutputEnabledFile, EC, compat::OpenFlags);
-+    assert(!EC);
-+
-+    MPM.addPass(TcgGenPass(OutSource.os(), OutHeader.os(), OutHelpers.os(),
-+                           OutEnabled.os(), OutputHeaderFile, Annotations,
-+                           DebugInfo, TcgGlobals, VL));
-+
-+    MPM.run(*M.get(), MAM);
-+
-+    OutSource.keep();
-+    OutHeader.keep();
-+    OutHelpers.keep();
-+    OutEnabled.keep();
-+
-     return 0;
- }
-diff --git a/subprojects/helper-to-tcg/src/TcgGenPass/TcgGenPass.cpp b/subprojects/helper-to-tcg/src/TcgGenPass/TcgGenPass.cpp
-new file mode 100644
-index 0000000000..a831a75204
---- /dev/null
-+++ b/subprojects/helper-to-tcg/src/TcgGenPass/TcgGenPass.cpp
-@@ -0,0 +1,385 @@
-+//
-+//  Copyright(c) 2026 rev.ng Labs Srl. All Rights Reserved.
-+//
-+//  This program is free software; you can redistribute it and/or modify
-+//  it under the terms of the GNU General Public License as published by
-+//  the Free Software Foundation; either version 2 of the License, or
-+//  (at your option) any later version.
-+//
-+//  This program is distributed in the hope that it will be useful,
-+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+//  GNU General Public License for more details.
-+//
-+//  You should have received a copy of the GNU General Public License
-+//  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+//
-+
-+#include "TcgGenPass.hpp"
-+#include "CmdLineOptions.hpp"
-+#include "DebugInfo.hpp"
-+#include "Error.hpp"
-+#include "LinearizeBlocks.hpp"
-+#include "TcgEmit.hpp"
-+#include "TcgType.hpp"
-+#include "ValueMapping.hpp"
-+
-+#include <llvm/ADT/PostOrderIterator.h>
-+#include <llvm/ADT/SmallBitVector.h>
-+#include <llvm/ADT/StringRef.h>
-+#include <llvm/ADT/StringSet.h>
-+#include <llvm/Analysis/CallGraph.h>
-+#include <llvm/IR/BasicBlock.h>
-+#include <llvm/IR/Constants.h>
-+#include <llvm/IR/DerivedTypes.h>
 +#include <llvm/IR/Function.h>
 +#include <llvm/IR/Module.h>
-+#include <llvm/Support/Debug.h>
-+#include <llvm/Support/FormatVariadic.h>
-+#include <llvm/Support/raw_ostream.h>
 +
-+#define DEBUG_TYPE "tcg-gen-pass"
++//
++// Transformation of the IR, taking what would become trivial unary operations
++// and maps them to a single @IdentityMap pseudo instruction.
++//
++// To motivate further, in order to produce nice IR on the other end, generally
++// the operands of these trivial expressions needs to be forwarded and treated
++// as the destination value (identity mapped).  However, directly removing these
++// instructions will result in broken LLVM IR (consider zext i8, i32 where both
++// the source and destination would map to TCGv_i32).
++//
++// Moreover, handling these identity mapped values in an adhoc way quickly
++// becomes cumbersome and spreads throughout the codebase.  Therefore,
++// introducing @IdentityMap allows code further down the pipeline to ignore the
++// source of the identity map.
++//
 +
-+using namespace llvm;
-+
-+struct TranslatedFunction {
-+    StringRef Name;
-+    std::string Decl;
-+    std::string Code;
-+    std::string DispatchCode;
-+    bool IsHelper;
-+    bool HasVectorTemporaries;
-+    bool NeedVectorSizeChangeOps;
-+};
-+
-+static Expected<TranslatedFunction>
-+translateFunction(Module &M, FunctionAnalysisManager &FAM, Function *F,
-+                  const TcgGlobalMap &TcgGlobals,
-+                  const AnnotationMapTy &Annotations,
-+                  const DebugInfoMapTy &DebugInfo,
-+                  const SmallPtrSet<Function *, 16> HasTranslatedFunction) {
-+    assert(!F->isDeclaration());
-+
-+    TranslatedFunction TF = {
-+        .Name = F->getName(),
-+    };
-+
-+    {
-+        // Remove prefix for helper functions to get cleaner emitted names
-+        TF.IsHelper = TF.Name.consume_front("helper_");
-+    }
-+
-+    std::string Body;
-+    raw_string_ostream Out(Body);
-+    CEmitter CE;
-+    TcgEmitter TE(Out, CE);
-+    TempAllocationData TAD;
-+
-+    // Following block of function calls make up the majority of the backend,
-+    // the rest is mostly string emission.
-+    {
-+        // Linearize blocks, putting into a vector and breaking the LLVM IR by
-+        // some replacing branches with pseudo instructions.
-+        const LinearBlocks Blocks = linearizeBlocks(M, FAM, *F);
-+        LLVM_DEBUG({
-+            dbgs() << "Translating " << F->getName() << "\n";
-+            for (auto &BB : Blocks) {
-+                dbgs() << *BB << "\n";
-+            }
-+        });
-+
-+        // Map arguments to `TcgV`, store results in `TempAllocationData`.
-+        if (auto Err = mapArguments(*F, Annotations, DebugInfo, TAD); Err) {
-+            return Err;
-+        }
-+
-+        // Make a forward pass over the IR, and propagate constant expressions
-+        // forward, assigning them to values in `TempAllocationData`.
-+        if (auto Err = propagateConstantExpressions(CE, *F, Blocks, Annotations,
-+                                                    DebugInfo, TcgGlobals, TAD);
-+            Err) {
-+            return Err;
-+        }
-+
-+        // Make a backward pass over the IR and assign temporary `TcgV`s to
-+        // non-constant expressions, attempt to reuse created temporaries.
-+        // Mapped temporaries are stored in `TempAllocationData`.
-+        if (auto Err = allocateTemporaries(*F, Blocks, Annotations, DebugInfo,
-+                                           CE, TcgGlobals, TAD);
-+            Err) {
-+            return Err;
-+        }
-+
-+        // At this point all `Value`s in the function have been mapped to either
-+        // a temporary or a constant expression, with the exception of labels.
-+        // Make a forward pass over the IR and emit the final TCG operations.
-+        if (auto Err = mapTcgOperations(Blocks, TcgGlobals, Annotations,
-+                                        HasTranslatedFunction, TAD, TE, CE);
-+            Err) {
-+            return Err;
-+        }
-+    }
-+
-+    Out.flush();
-+
-+    raw_string_ostream OutFunc(TF.Code);
-+    raw_string_ostream HeaderWriter(TF.Decl);
-+    raw_string_ostream DispatchWriter(TF.DispatchCode);
-+    std::string DispatchCall;
-+    raw_string_ostream DispatchCallWriter(DispatchCall);
-+    bool IsVectorInst = false;
-+
-+    if (StaticOutput) {
-+        HeaderWriter << "static ";
-+    }
-+    HeaderWriter << "void " << "emit_" << TF.Name << '(';
-+    SmallVector<TcgV, 4> CArgs;
-+
-+    if (!F->getReturnType()->isVoidTy()) {
-+        assert(TAD.hasReturnValue());
-+        IsVectorInst = (TAD.ReturnValue.Kind == IrPtrToOffset);
-+        CArgs.push_back(TAD.ReturnValue);
-+    }
-+
-+    for (const Argument &Arg : F->args()) {
-+        TcgV T = TAD.Map[&Arg];
-+        IsVectorInst |= (T.Kind == IrPtrToOffset);
-+        CArgs.push_back(T);
-+    }
-+
-+    if (ForwardContext) {
-+        HeaderWriter << "DisasContext *ctx";
-+        if (!CArgs.empty()) {
-+            HeaderWriter << ", ";
-+        }
-+    }
-+
-+    auto CArgIt = CArgs.begin();
-+    if (CArgIt != CArgs.end()) {
-+        HeaderWriter << TE.getType(*CArgIt) << ' ' << getName(*CArgIt);
-+        ++CArgIt;
-+    }
-+    while (CArgIt != CArgs.end()) {
-+        HeaderWriter << ", " << TE.getType(*CArgIt) << ' ' << getName(*CArgIt);
-+        ++CArgIt;
-+    }
-+
-+    if (!IsVectorInst) {
-+        DispatchCallWriter << "emit_" << TF.Name << "(";
-+        auto CArgIt = CArgs.begin();
-+        if (CArgIt != CArgs.end()) {
-+            DispatchWriter << "static inline void gen_helper_" << TF.Name
-+                           << "(";
-+            for (int i = 0; i < CArgs.size(); ++i) {
-+                if (i > 0) {
-+                    DispatchWriter << ", ";
-+                }
-+                DispatchWriter << TE.getType(TE.materialize(CArgs[i])) << " "
-+                               << getName(CArgs[i]);
-+            }
-+            DispatchWriter << ")\n{\n";
-+
-+            DispatchWriter << "emit_" << TF.Name << "(";
-+            for (int i = 0; i < CArgs.size(); ++i) {
-+                if (i > 0) {
-+                    DispatchWriter << ", ";
-+                }
-+                if (CArgs[i].Kind == IrImmediate) {
-+                    DispatchWriter << "tcgv_i" << CArgs[i].tcgBitWidth()
-+                                   << "_temp(" << getName(CArgs[i]) << ")->val";
-+                } else {
-+                    DispatchWriter << getName(CArgs[i]);
-+                }
-+            }
-+            DispatchWriter << ");\n}\n";
-+        }
-+    }
-+
-+    // Copy over function declaration from header to source file
-+    HeaderWriter << ')';
-+
-+    OutFunc << "// " << *F->getReturnType() << ' ' << F->getName() << '\n';
-+    OutFunc << HeaderWriter.str();
-+    OutFunc << " {\n";
-+    OutFunc << Body;
-+    OutFunc << "}\n";
-+
-+    HeaderWriter << ';';
-+
-+    if (MaxVectorTempBytes > 0 and
-+        TE.allocatedVectorMemory() > MaxVectorTempBytes) {
-+        return mkError(formatv("Uses too much vector memory: {0} > {1}",
-+                               TE.allocatedVectorMemory(), MaxVectorTempBytes)
-+                           .str());
-+    }
-+
-+    if (MaxVectorInstructions > 0 and
-+        TE.numVectorInstructions() > MaxVectorInstructions) {
-+        return mkError(formatv("Uses too many vector instructions: {0} > {1}",
-+                               TE.numVectorInstructions(),
-+                               MaxVectorInstructions)
-+                           .str());
-+    }
-+
-+    TF.HasVectorTemporaries = (TE.allocatedVectorMemory() > 0);
-+    TF.NeedVectorSizeChangeOps = TE.NeedVectorSizeChangeOps;
-+
-+    HeaderWriter.flush();
-+    DispatchWriter.flush();
-+    DispatchCallWriter.flush();
-+
-+    return TF;
-+}
-+
-+PreservedAnalyses TcgGenPass::run(Module &M, ModuleAnalysisManager &MAM) {
-+    auto &CG = MAM.getResult<CallGraphAnalysis>(M);
-+    auto &FAM =
-+        MAM.getResult<FunctionAnalysisManagerModuleProxy>(M).getManager();
-+
-+    // Vector of translation results, order matters, lower indices are emitted
-+    // higher up in the output file, and may be used by the higher indices.
-+    SmallVector<TranslatedFunction, 16> TranslatedFunctions;
-+    // Two sets used for quickly looking up whether or not a function has
-+    // already been translated, or the translation failed.
-+    SmallPtrSet<Function *, 16> FailedToTranslateFunction;
-+    SmallPtrSet<Function *, 16> HasTranslatedFunction;
-+    bool NeedVectorMem = false;
-+    bool NeedVectorSizeChangeOps = false;
++void identityMap(llvm::Module &M, llvm::Function &F);
+diff --git a/subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp b/subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp
+index 71749e2f6f..4185af7956 100644
+--- a/subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp
++++ b/subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp
+@@ -18,6 +18,7 @@
+ #include "PrepareForTcgPass.hpp"
+ #include "CanonicalizeIR.hpp"
+ #include "CmdLineOptions.hpp"
++#include "IdentityMap.hpp"
+ #include "TransformGEPs.hpp"
+ 
+ #include <llvm/ADT/SCCIterator.h>
+@@ -142,5 +143,8 @@ PreservedAnalyses PrepareForTcgPass::run(Module &M,
+         transformGEPs(M, F, ResultTcgGlobalMap, TypeIndexMap, DebugInfo);
+     }
+     canonicalizeIR(M, MAM, VL);
 +    for (Function &F : M) {
-+        if (F.isDeclaration()) {
-+            continue;
-+        }
-+
-+        // Depth first traversal of call graph.  Needed to ensure called
-+        // functions are translated before the current function.
-+        CallGraphNode *Node = CG[&F];
-+        for (auto *N : make_range(po_begin(Node), po_end(Node))) {
-+            Function *F = N->getFunction();
-+
-+            // If F in the call graph has already been translated and failed,
-+            // abort translation of the current function.
-+            if (FailedToTranslateFunction.contains(F)) {
-+                break;
-+            }
-+
-+            // Skip translation of invalid functions or functions that have
-+            // already been translated.
-+            if (!F or F->isDeclaration() or HasTranslatedFunction.contains(F)) {
-+                continue;
-+            }
-+
-+            // Reset variable IDs for the current function, since al TcgVs are
-+            // function-local.
-+            TcgV::resetId();
-+
-+            auto Translated =
-+                translateFunction(M, FAM, F, TcgGlobals, Annotations, DebugInfo,
-+                                  HasTranslatedFunction);
-+            if (!Translated) {
-+                FailedToTranslateFunction.insert(F);
-+                LLVM_DEBUG({
-+                    dbgs() << F->getName() << ": " << Translated.takeError()
-+                           << "\n";
-+                });
-+                if (ErrorOnTranslationFailure) {
-+                    return PreservedAnalyses::all();
-+                }
-+            } else {
-+                TranslatedFunctions.push_back(*Translated);
-+                HasTranslatedFunction.insert(F);
-+                NeedVectorMem |= Translated->HasVectorTemporaries;
-+                NeedVectorSizeChangeOps |= Translated->NeedVectorSizeChangeOps;
-+            }
-+        }
++        identityMap(M, F);
 +    }
-+
-+    // Preamble
-+    OutSource << "#include \"qemu/osdep.h\"\n";
-+    OutSource << "#include \"qemu/log.h\"\n";
-+    OutSource << "#include \"cpu.h\"\n";
-+    OutSource << "#include \"translate.h\"\n";
-+    OutSource << "#include \"tcg/tcg-op.h\"\n";
-+    OutSource << "#include \"tcg/tcg-op-gvec.h\"\n";
-+    OutSource << "#include \"tcg/tcg.h\"\n";
-+    // OutSource << "#include \"exec/helper-gen.h\"\n";
-+    if (ForwardContext) {
-+        OutSource << "#include \"translate.h\"\n";
-+    }
-+    if (!StaticOutput) {
-+        OutSource << "#include \"tcg/tcg-global-mappings.h\"\n";
-+    }
-+    if (MmuIndexFunction.size() > 0) {
-+        OutSource << "#include \"exec/translation-block.h\"";
-+    }
-+    OutSource << '\n';
-+
-+    if (!StaticOutput) {
-+        OutSource << "#include \""
-+                  << HeaderPath.substr(HeaderPath.find_last_of('/') + 1)
-+                  << "\"\n";
-+        OutSource << '\n';
-+
-+        // Emit extern definitions for all global TCGv_* that are mapped
-+        // to the CPUState.
-+        for (size_t TypeIndex = 0; TypeIndex < TcgGlobals.size(); ++TypeIndex) {
-+            for (auto &P : TcgGlobals[TypeIndex]) {
-+                const TcgGlobal &Global = P.second;
-+                auto Size = ValueSize::fromBitWidth(Global.Size);
-+                assert(Size);
-+                OutSource << "extern " << "TCGv_i" << (int)Size->TcgBitWidth
-+                          << " " << Global.Code;
-+                if (Global.NumElements > 1) {
-+                    OutSource << "[" << Global.NumElements << "]";
-+                }
-+                OutSource << ";\n";
-+            }
-+        }
-+    }
-+
-+    if (NeedVectorSizeChangeOps) {
-+        emitVectorSizeChangeOps(OutSource, OutHelpers, VL);
-+    }
-+
-+    if (NeedVectorMem) {
-+        emitVectorMem(OutSource);
-+    }
-+
-+    if (ForwardContext) {
-+        OutHeader << "struct DisasContext;\n";
-+        OutHeader << "typedef struct DisasContext DisasContext;\n";
-+        OutSource << "#include \"translate.h\"\n";
-+    }
-+
-+    // Emit translated functions
-+    for (auto &TF : TranslatedFunctions) {
-+        OutSource << TF.Code << '\n';
-+        OutHeader << TF.Decl << '\n';
-+        OutEnabled << TF.Name << '\n';
-+    }
-+
-+    // Emit a dispatched to go from helper function address to our
-+    // emitted code, if we succeeded.
-+    OutHeader << "bool helper_to_tcg_dispatcher(void *func, TCGTemp *ret_temp, "
-+                 "int nargs, TCGTemp **args);\n";
-+
-+    OutHeader << "#include \"tcg/helper-info.h\"\n";
-+    OutHeader << "#include \"exec/helper-head.h.inc\"\n";
-+    for (Function &F : M) {
-+        StringRef Name = F.getName();
-+        if (!Name.consume_front("helper_")) {
-+            continue;
-+        }
-+        if (!HasTranslatedFunction.contains(&F)) {
-+            SmallVector<Type *> ArgTys;
-+            for (auto &A : F.args()) {
-+                ArgTys.push_back(A.getType());
-+            }
-+            emitHelperGen(OutHeader, Name, F.getReturnType(), ArgTys);
-+        }
-+    }
-+    for (TranslatedFunction &TF : TranslatedFunctions) {
-+        OutHeader << TF.DispatchCode;
-+    }
-+
-+    return PreservedAnalyses::all();
-+}
+     return PreservedAnalyses::none();
+ }
 -- 
 2.52.0
 
