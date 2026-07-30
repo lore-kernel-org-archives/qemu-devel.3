@@ -4,97 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C461C54FDF
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 09:18:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76D2CC54FD2
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 09:21:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpMtD-00075P-Ih; Thu, 30 Jul 2026 05:17:19 -0400
+	id 1wpMwm-0000Aj-Im; Thu, 30 Jul 2026 05:21:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wpMtA-00074z-JC; Thu, 30 Jul 2026 05:17:16 -0400
-Received: from fout-a1-smtp.messagingengine.com ([103.168.172.144])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wpMwl-0000A4-6C
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 05:20:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wpMt8-0002dq-GG; Thu, 30 Jul 2026 05:17:16 -0400
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
- by mailfout.phl.internal (Postfix) with ESMTP id 34951EC04AE;
- Thu, 30 Jul 2026 05:17:12 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-07.internal (MEProxy); Thu, 30 Jul 2026 05:17:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1785403032; x=
- 1785489432; bh=+h8miCXuDj0hA1V9ztaoz/4HJO7w9S0WReMjQpJKjRw=; b=I
- HfL/tBMTUloVCYvDOl+ql3Ms7GV7PtuyYWgZSi8MUd7aqP71GmEAT9PIOA8qxOXR
- qKn5a1pNk+O/n6QoB0WV/j9qPkqMrunZkLDhV5k7qiJYPTgct/7dyowQhb+KskJn
- B5D3nsAKj9fYPQS2TVj03hgBP0JB90ZgNAhYico4Dvt0lyJHq7Lfo3GgFQ43cM1+
- 3hy/jQaBZ1cUsTgA1Noi76mvVemRDWJ6FnOlC5eq6afsrF/BIX5B9+SlbpT8zSMB
- cr5JKGASuDXlHprnosGADre0rQqSJC2nLCm4ISf/284ScwljQuyD/U3RYS/g1EIm
- aLvY1zE7YqiS1eKj50O9Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
- 1785403032; x=1785489432; bh=+h8miCXuDj0hA1V9ztaoz/4HJO7w9S0WReM
- jQpJKjRw=; b=TzD4GX7GEUoCFkS6J3GTVHM7mmt6xuXjHtPHgMXBc/1bMs5m7l5
- Hjl2esIWBXf7uFXDRQcttr6POwwsGUVZQpAliK2oVWVftJiVBzoREdcHFt58VQq5
- /NYI9JwZdQjEJ5Otly24vc1cN91rqk7dUeBFyBkcSudpV/q7PjzL4pe5GPwL+sjt
- M9Hz9ialPeg6l+xiIlbeD2WMSEH6DiTMvdb20Wm6/ZhhmcLJLI6gEI6t6EZdLvPZ
- awTATZ+RMOzTvIVQcDvjlobCfJ8q0ykiGsOU+U6yKP9KwQEJ8TupRQBHBLctmEr6
- Oitsj/LmGDh3iiW7f1HYM3NuiWMfqBsE3Jw==
-X-ME-Sender: <xms:lhZrai4JJSTs4CnEdRZgWvqNcwBu1gI22FucNUmMffgcsvQkJN0tqA>
- <xme:lhZraocjOHyp_WqoruYJVpjgWAFgPipI1Iv34m4tjuCOip4Mgzim6lTUw0KVNFVHF
- TAhqy3JWEnATaSZCzjBlNUByg9u-xXhBDlNOz6AUA079AVzBsatK0E>
-X-ME-Received: <xmr:lhZral6j7Jl220_VTOMeFb8bGXCC-qx2E1GZ1N_9cR-ArYPZcCrzbHAt_4TKEcgSItvQZo8th3CxHyQCP1HeLzEhgl2GfeQ>
-X-ME-Proxy-Cause: dmFkZTG4tRf+bWN/1LK4kPTRubluYuYF0gbumWUwIQetm4AZMfvvGTc615pDNhFvjml33O
- nKzatPaTY/bLAYxUvs8O5Ws+/lYd/xQRx+fZY1w9SdZSK/eqpseoQv8Yiud7nRzVWbCCzs
- IU1ecGxHCkmbZuDFc6yoxsE9TUsduBxWaD0u3i/DeYmbS93KHThGwAEtX+8aoF4jdZ/r/a
- ah2dvgrh9lDFwK1NiR8P0KsEorxEp/DyVST5GkWdTlRxsViKEPPVHNmkhylpO8KFMpjVyT
- AaxUhFvEw03KbTZpi/1H80Yb4AuC3i932Ua50HVt1KenVSh1OW8AltFiXPk9Cn9PnDZ6EI
- U+pC2pyr9i/fqOSiqaduuV5MrK1nt4EkGoLF/1lrb53klMmnrEYSB2X7AEGyUZzij/1iZm
- 1qmhrmT+WJ9vEhP4jh3SOzIAVcE5jQmnquoFLOr4TYKNXiBZg2waN+MiAqdvHw0exoC7yd
- YMN48ucpg5byOo+8Zoky2qnKp+7dkk8kAQSBBpJ9tIpFThTZz1O0oBww4SJzlOx+WPktj3
- eIAw4c8kclh2r2nmtj5jfG4gjxByMpGPm3V8AcKwKhr3i4a/qFRC9ssCGImu8jsW2C47uz
- F5iY3JVihQa7PZwy7xFV/p0pCFVpIt7Py8pjVOtBcrIWE7ydztWFTCM6ZlnA
-X-ME-Proxy: <xmx:lhZral8EpXNC7YfuDEVwFnHn98bF0d0IZQKp6Cq8OSb2ETjwCkHAlg>
- <xmx:lhZranEO4kQ2IIVp5iUNT13sZ-vpcLALEhIE3WCMtK-Osr0PsMHBsA>
- <xmx:lhZraqUjaJSl29P6ryR2TZwEcg-F0PWqXXhN3pLJcYnPIOA5MgdOJw>
- <xmx:lhZraj_UOUaqTtoH3aAQAmOpO-bSaJ-nGiLxZ6vEEkw72jv8OM1Plw>
- <xmx:mBZramhg4jb6t_UH2lesOcPEHdGhM__C7--9EljsAX9ENp5nzinOGjdc>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Jul 2026 05:17:10 -0400 (EDT)
-Date: Thu, 30 Jul 2026 11:17:09 +0200
-From: Klaus Jensen <its@irrelevant.dk>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Daniel Paziyski <danielpaziyski@gmail.com>,
- Klaus Jensen <k.jensen@samsung.com>, Keith Busch <kbusch@kernel.org>,
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org,
- QEMU Stable <qemu-stable@nongnu.org>
-Subject: Re: [PULL 2/4] hw/nvme: fix assertion failure on subregion removal
-Message-ID: <amsWjr670LZk0zcG@AALNPWKJENSEN.aal.scsc.local>
-References: <20260728180018.3574-1-its@irrelevant.dk>
- <20260728180018.3574-3-its@irrelevant.dk>
- <9a9eb76f-446a-4fe1-a603-222918a2c13f@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wpMwh-0003Us-Fq
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 05:20:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785403253;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NZCuLmXf1UjT2mns75nu3L1DB4/5yaS4QF/NEPsjTF8=;
+ b=Cu5ucf766qM5GjifL5uHj9wr14PsgD5b35P2vDDFopU8Q8U8zA+XpINFfgYbM+nmRr8H+g
+ jVMXx3gRmhbkE6nWznYJkio8Lhz1BNsC5Pkcrw+TX7ysEHTLX033QWbl04K1OsyyxSHk3O
+ NQe1yOCjT+OgXgEABWmrHJwKzvjQTjY=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-209-6gF-Hr4mOvew-lK5VfFKMw-1; Thu, 30 Jul 2026 05:20:52 -0400
+X-MC-Unique: 6gF-Hr4mOvew-lK5VfFKMw-1
+X-Mimecast-MFC-AGG-ID: 6gF-Hr4mOvew-lK5VfFKMw_1785403251
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-496b408a5c0so10418785e9.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 02:20:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1785403251; x=1786008051; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=NZCuLmXf1UjT2mns75nu3L1DB4/5yaS4QF/NEPsjTF8=;
+ b=Us4N5zaeeT3fxmcQmPlkvlttMOisGGwxcEjaKob6pdsA8FLkz1BTViFF87TB2lodXi
+ fyf/uIuJ6zdNhry5OHW94JkYDRlmQ4txWik7neqbA+YY5DEGDbr6eyDqGB8OqlC+E25A
+ pJ6C3lctPMACDg+L5d3oQ17XSjV4UlKlWTl71NGE8BsFYvqc2UlkpAslkih05FxLttfz
+ NmJNG9TF2iKVD+C80gehVnmOe+C9u29D+41i/9I3u9RnxN9KMN+Txv+IMwncX8y2U30u
+ 4yeGf7qehk4ZQMMBqVBxCyN7PQ3vK6SI4G9gymuaOycPiaFbW1id9ydMbhd/SQnTv4sa
+ sEgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785403251; x=1786008051;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=NZCuLmXf1UjT2mns75nu3L1DB4/5yaS4QF/NEPsjTF8=;
+ b=PGajiAa+kdRpgJS/ePep24jNaPb5VKXRh82n4mQeeluXCCkfuQdmWGgiWfzOinWC0g
+ eg9cdekDxZQH4SGPG9f7v04P602okCeaLCIlqLoqOU9yMvjr/QQBtOuuY2fJKe6yOT6X
+ LtFHycVPX+eYSr9et9t3IRep3TbPW9SGwDXg6ixkqp+oulSdYQqMn9UQIu7et+WbGEsj
+ CJKOmBRgd0ga8g4c5l0/J1HNT+ljabyfYV2TE9hYFVndpDBr/00L+w5nmCKwGlBUzj+w
+ Z9rzv1seFvW6ZHgD/iXbN5MLf+D5IylEEMk2Sw3cK0F7SW9d2JtIPpo3aLYsiGhtwl0V
+ o/BA==
+X-Gm-Message-State: AOJu0Ywv5rL2ZDhjg11zz4LoKp3UR4IbVcAfjKw28ZA3ZHY1wMmNQj2l
+ indlZ9HwjcuflGWnsst1uBYXQ2NOgbAPqDMHjdyFrUep1Hc28PrDBeA/eWpAqB6miaSon8XnEaN
+ HoNzMfzC2tCk1QU4BBQBH2VqHLaFrqoxrT7BP9+NyYiF5ooa4lXvpknvU
+X-Gm-Gg: AR+sD13zwYna++O1G9TJDsyN3EnToYctpDGsH+mPm3jm+fN1Q3qqEYA6enfPEt8jMRb
+ lFmBudlCMHtWcM7dyE9I6zFlyrewOXirY1TVXOtBTs1v+OlQwGGg3ugfLled5fCHG6aIo4ZD9tD
+ Usgw/kl4s6jnpSQUOLxdHhphMYaSjovM56wnW7L8m0BmbJ2QJUhk6JFtaaf6ZKRgH4BWNJGqGtZ
+ 1wWbtS6l3NafclYyOKV4uXXN/8eYyJz2ddt77vzXYFzyLMPh+jP3nkpypzMEvKTOos6W4USHBgc
+ 0RVxlWb7upvVLiiwWB1q88biDc/hwIPdHQu+o57VSMy6GUqSTIOKJK3mkx561b5GG4BrUaNjqyh
+ lm89iIym2rzgUeiTN9roLx9U=
+X-Received: by 2002:a05:600c:1989:b0:495:5890:8f6c with SMTP id
+ 5b1f17b1804b1-49800e6d3ecmr22462975e9.7.1785403250853; 
+ Thu, 30 Jul 2026 02:20:50 -0700 (PDT)
+X-Received: by 2002:a05:600c:1989:b0:495:5890:8f6c with SMTP id
+ 5b1f17b1804b1-49800e6d3ecmr22462495e9.7.1785403250224; 
+ Thu, 30 Jul 2026 02:20:50 -0700 (PDT)
+Received: from redhat.com (ppp-94-66-118-61.home.otenet.gr. [94.66.118.61])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47fc8941717sm4672761f8f.34.2026.07.30.02.20.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 30 Jul 2026 02:20:49 -0700 (PDT)
+Date: Thu, 30 Jul 2026 05:20:46 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Laurent Vivier <lvivier@redhat.com>
+Cc: qemu-devel@nongnu.org, Amit Shah <amit@kernel.org>, qemu-ppc@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Hanna Reitz <hreitz@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Fam Zheng <fam@euphon.net>, qemu-block@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PATCH v3 0/7] Harden virtio migration load paths against
+ crafted streams
+Message-ID: <20260730052027-mutt-send-email-mst@kernel.org>
+References: <20260729231904.775331-1-lvivier@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="Gj87SQnKRmjCgalu"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <9a9eb76f-446a-4fe1-a603-222918a2c13f@tls.msk.ru>
-Received-SPF: pass client-ip=103.168.172.144; envelope-from=its@irrelevant.dk;
- helo=fout-a1-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20260729231904.775331-1-lvivier@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,69 +124,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---Gj87SQnKRmjCgalu
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Thu, Jul 30, 2026 at 01:18:57AM +0200, Laurent Vivier wrote:
+> A crafted migration stream can crash the destination QEMU process
+> through unvalidated fields in the virtio device state: an unbounded
+> allocation in virtio-serial, reachable assertions in the shared
+> virtqueue element deserializer, assert()/exit(1) calls in
+> virtio-scsi and spapr-vscsi request loading, and missing error
+> propagation through the SCSI and virtio device load paths.
+> 
+> These are hardening fixes: the destination QEMU is in a paused
+> pre-start state and the source VM is unaffected by a failed migration.
+> 
+> Patch 1 adds an Error** parameter to the virtio and SCSI load_request
+> callbacks, allowing proper error propagation instead of error_report()
+> or silent failures. This provides the infrastructure for the remaining
+> patches.
+> 
+> Patch 2 validates the virtio-serial nr_active_ports count against the
+> configured maximum before allocating the post-load array.
+> 
+> Patches 3 and 5 are from Michael S. Tsirkin, modified to use the new
+> Error** parameter:
+> 
+> Patch 3 makes virtqueue_map() return bool instead of calling exit(1)
+> on mapping failures, and propagates errors through
+> qemu_get_virtqueue_element() to virtio-blk, virtio-serial, and
+> virtio-scsi.
+> 
+> Patch 4 replaces the assertions in qemu_get_virtqueue_element() with
+> a bounds check returning NULL on invalid in_num/out_num counts.
+> 
+> Patch 5 replaces the assertion in mptsas_load_request() with proper
+> error handling.
+> 
+> Patch 6 replaces the remaining assert() and exit(1) calls in
+> virtio_scsi_load_request() with proper error returns.
+> 
+> Patch 7 replaces the assert() calls in vscsi_load_request() with
+> proper error returns and propagation.
 
-On Jul 30 10:22, Michael Tokarev wrote:
-> On 7/28/26 21:00, Klaus Jensen wrote:
-> > From: Daniel Paziyski <danielpaziyski@gmail.com>
-> >=20
-> > When a controller is created with a MSI-X exclusive BAR, the bar0 memor=
-y region
-> > is not used at all, and so, the iomem region is not added as a subregio=
-n of it.
-> > However, when removing a NVMe controller, the iomem region is unconditi=
-onally
-> > removed as a subregion of bar0, causing an assertion failure. Remove th=
-e iomem
-> > memory region as a subregion of bar0 only if not using a MSI-X exclusiv=
-e BAR.
-> >=20
-> > QEMU options (requires a hotunplug-aware OS):
-> >=20
-> >          -M q35 -device pcie-root-port,id=3Drp0 \
-> >          -device nvme,serial=3Dctrl0,id=3Dctrl0,bus=3Drp0,msix-exclusiv=
-e-bar=3Don
-> >=20
-> > In the QEMU monitor, or by causing an ejection from the OS:
-> >=20
-> >          device_del ctrl0
-> >=20
-> > Message in stderr:
-> >=20
-> > qemu-system-x86_64: ../system/memory.c:2617: memory_region_del_subregio=
-n: Assertion `subregion->container =3D=3D mr' failed.
-> >=20
-> > Fixes: fa905f65c554 ("hw/nvme: add machine compatibility parameter to e=
-nable msix exclusive bar")
-> > Fixes: 9162f1012576 ("hw/nvme: fix msix_uninit with exclusive bar")
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4090
-> > Signed-off-by: Daniel Paziyski <danielpaziyski@gmail.com>
-> > Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-> > Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
->=20
-> It feels like this one should be picked up for the stable series too,
-> should it not?  (I'm picking it up).
->=20
 
-Yes, thanks Michael!
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 
---Gj87SQnKRmjCgalu
-Content-Type: application/pgp-signature; name=signature.asc
+> v2:
+> - New patch 1 to add Error** parameter to load_request callbacks
+> - Patches 2, 4, 6, 7: add error_setg() calls with descriptive messages
+> - New patches 3 and 5 from Michael S. Tsirkin (modified to use errp)
+> - Patch 4: remove caller updates (now handled by patch 3)
+> - New patch 7: harden spapr_vscsi load_request
+> 
+> Tested with migration round-trips for virtio-serial (0 to 511 ports),
+> virtio-blk (1-2 disks), virtio-scsi (1-2 disks), mptsas1068
+> (with and without scsi-hd), and spapr-vscsi, plus the original PoC
+> reproducers for issues #3801, #3802, and #3888. ppc64 qtests pass.
+> 
+> Laurent Vivier (5):
+>   VirtioDeviceClass: Add an Error parameter to vmstate load member
+>   hw/char/virtio-serial-bus: validate nr_active_ports from migration stream
+>   hw/virtio: return NULL from qemu_get_virtqueue_element() on invalid state
+>   hw/scsi/virtio-scsi: harden virtio_scsi_load_request() against invalid stream
+>   hw/scsi/spapr_vscsi: do not crash QEMU on migration errors
+> 
+> Michael S. Tsirkin (2):
+>   virtio: do not crash QEMU on migration errors
+>   mptsas: do not crash QEMU on migration errors
+> 
+>  hw/block/virtio-blk.c       | 16 ++++++--
+>  hw/char/virtio-serial-bus.c | 33 ++++++++++----
+>  hw/scsi/esp.c               |  2 +-
+>  hw/scsi/mptsas.c            | 18 +++++---
+>  hw/scsi/scsi-bus.c          | 25 +++++++++--
+>  hw/scsi/scsi-disk.c         | 10 +++--
+>  hw/scsi/scsi-generic.c      |  3 +-
+>  hw/scsi/spapr_vscsi.c       | 18 +++++++--
+>  hw/scsi/virtio-scsi.c       | 27 ++++++++++--
+>  hw/usb/dev-storage.c        |  2 +-
+>  hw/virtio/virtio.c          | 82 ++++++++++++++++++++++++++-----------
+>  include/hw/scsi/scsi.h      |  4 +-
+>  include/hw/usb/msd.h        |  2 +-
+>  include/hw/virtio/virtio.h  |  4 +-
+>  14 files changed, 182 insertions(+), 62 deletions(-)
+> 
+> Laurent Vivier (5):
+>   VirtioDeviceClass: Add an Error parameter to vmstate load member
+>   hw/char/virtio-serial-bus: validate nr_active_ports from migration
+>     stream
+>   hw/virtio: return NULL from qemu_get_virtqueue_element() on invalid
+>     state
+>   hw/scsi/virtio-scsi: harden virtio_scsi_load_request() against invalid
+>     stream
+>   hw/scsi/spapr_vscsi: do not crash QEMU on migration errors
+> 
+> Michael S. Tsirkin (2):
+>   virtio: do not crash QEMU on migration errors
+>   mptsas: do not crash QEMU on migration errors
+> 
+>  hw/block/virtio-blk.c       | 11 +++++--
+>  hw/char/virtio-serial-bus.c | 30 +++++++++++------
+>  hw/scsi/esp.c               |  2 +-
+>  hw/scsi/mptsas.c            | 16 ++++++----
+>  hw/scsi/scsi-bus.c          | 18 +++++++++--
+>  hw/scsi/scsi-disk.c         |  7 ++--
+>  hw/scsi/scsi-generic.c      |  3 +-
+>  hw/scsi/spapr_vscsi.c       | 25 +++++++++++----
+>  hw/scsi/virtio-scsi.c       | 28 ++++++++++++----
+>  hw/usb/dev-storage.c        |  2 +-
+>  hw/virtio/virtio.c          | 64 ++++++++++++++++++++++++-------------
+>  include/hw/scsi/scsi.h      |  4 +--
+>  include/hw/usb/msd.h        |  2 +-
+>  include/hw/virtio/virtio.h  |  4 +--
+>  14 files changed, 150 insertions(+), 66 deletions(-)
+> 
+> -- 
+> 2.54.0
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmprFo4ACgkQTeGvMW1P
-DeksoQf+KzkqY6I1CSAQdecpqxj8gELZ5MHEayimOFky5vFmoFUdNFI4yQVdXUGq
-e4e6OX1Mgn70I2n8ETS23KwMy8PhRTEydULSpZnmLi/iFqxsaTR9uAjuqLehbQ+7
-/RDWukO/7y93tpuoktOblYvPJJwZ3M/1zKq+6DuT4q7xSD/LxuvnXbThymDsj10C
-90grk+ZXXOwgt2MtvPT7kbuUtYYweyRWmWTlHiIYF77OC5v2+Ge2wumJwj6q+XqI
-C1nn6mywu5i2Pt5R5JfNbq22btPEg+Yuxe7m/nqoWbTzntwk6RYz68HajUWwbHqY
-D/05/LtMOzt8rpTYUuzaCW7/SmE1KA==
-=drI6
------END PGP SIGNATURE-----
-
---Gj87SQnKRmjCgalu--
 
