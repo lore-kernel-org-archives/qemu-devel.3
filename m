@@ -4,113 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52099C55160
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 12:21:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92B31C55165
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 12:24:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpPkJ-0000yS-Mn; Thu, 30 Jul 2026 08:20:19 -0400
+	id 1wpPnq-0002JB-G0; Thu, 30 Jul 2026 08:23:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imbrenda@linux.ibm.com>)
- id 1wpPkI-0000x4-1I; Thu, 30 Jul 2026 08:20:18 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <yoshinori.sato@nifty.com>)
+ id 1wpPnn-0002I0-Kx; Thu, 30 Jul 2026 08:23:55 -0400
+Received: from mta-snd-e09.mail.nifty.com ([106.153.226.41])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imbrenda@linux.ibm.com>)
- id 1wpPkG-0000Qi-8Z; Thu, 30 Jul 2026 08:20:17 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66UAHWTJ2741743; Thu, 30 Jul 2026 12:20:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=ijpt3/
- ArpcawwY5b3FQXsk1MA1HSNQYl5W5OKOxWoVA=; b=btSLLeh3h22c2kbiAJwLoS
- sTOw2kU6lvsWlg7ruPUpsVOu7tOBW5AM0e5MsAzp3HOU1gnnss0WlI4qxNeIEdRk
- xxilLsvoLuhy5pnrnXeu8QVSN2Ku7vEoUOU5+wgC2hzzYiZosNXg5j2ngYkYEjJy
- a+eWyoHbkyeFetzPPkvbLbSTf5LvpiHmujzzL3qdJzfql4fy+qA9EfqkCurpqX3f
- JdEQrqak98aeU+Zu7A5mrTe6xKub3uTwqJSPXvUlUzmaB+QvfN+UH2/gEsPu8bPk
- OFZhvhC6RlqJa0tQW6CNRMbs2TYY+FWIe8XyazWBlQXU/kvf5KgrgCw+B2lc5C8w
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0xynmr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Jul 2026 12:20:11 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66UCBNGq029795;
- Thu, 30 Jul 2026 12:20:10 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn7uwbcmp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Jul 2026 12:20:10 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66UCK3rC50987304
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 30 Jul 2026 12:20:03 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8F80F2004E;
- Thu, 30 Jul 2026 12:20:03 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 614F620040;
- Thu, 30 Jul 2026 12:20:03 +0000 (GMT)
-Received: from p-imbrenda (unknown [9.224.75.30])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with SMTP;
- Thu, 30 Jul 2026 12:20:03 +0000 (GMT)
-Date: Thu, 30 Jul 2026 14:20:01 +0200
-From: Claudio Imbrenda <imbrenda@linux.ibm.com>
-To: Matthew Rosato <mjrosato@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, borntraeger@de.ibm.com,
- frankja@linux.ibm.com, pasic@linux.ibm.com, mhartmay@linux.ibm.com,
- david@kernel.org, farman@linux.ibm.com, richard.henderson@linaro.org,
- iii@linux.ibm.com, cohuck@redhat.com
-Subject: Re: [PATCH v2 1/1] target/s390x: Allow 2G hugepages guest backing
-Message-ID: <20260730142001.760e057c@p-imbrenda>
-In-Reply-To: <d186d6e1-a820-490e-b616-2ac521d3a20e@linux.ibm.com>
-References: <20260729163043.843517-1-imbrenda@linux.ibm.com>
- <20260729163043.843517-2-imbrenda@linux.ibm.com>
- <d186d6e1-a820-490e-b616-2ac521d3a20e@linux.ibm.com>
-Organization: IBM
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <yoshinori.sato@nifty.com>)
+ id 1wpPnk-00011T-44; Thu, 30 Jul 2026 08:23:55 -0400
+Received: from sakura.ysato.name by mta-snd-e09.mail.nifty.com with ESMTP
+ id <20260730122341580.MOQH.60338.sakura.ysato.name@nifty.com>;
+ Thu, 30 Jul 2026 21:23:41 +0900
+Received: from SIOS1075.ysato.ml (ZM005235.ppp.dion.ne.jp [222.8.5.235])
+ by sakura.ysato.name (Postfix) with ESMTPSA id 141951C022E;
+ Thu, 30 Jul 2026 21:23:41 +0900 (JST)
+Date: Thu, 30 Jul 2026 21:23:38 +0900
+Message-ID: <87bjbod5th.wl-yoshinori.sato@nifty.com>
+From: yoshinori.sato@nifty.com
+To: Randy Schifflin <randy.schifflin@gmail.com>
+Cc: qemu-devel@nongnu.org,
+	qemu-trivial@nongnu.org
+Subject: Re: [PATCH v2 1/2] target/sh4: add tests for sh4 fipr and ftrv
+ instructions
+In-Reply-To: <20260729-fixup-sh4-tcg-fpu-instructions-b4-v2-1-2c1c0fe04672@gmail.com>
+References: <20260729-fixup-sh4-tcg-fpu-instructions-b4-v2-0-2c1c0fe04672@gmail.com>
+ <20260729-fixup-sh4-tcg-fpu-instructions-b4-v2-1-2c1c0fe04672@gmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
+ Emacs/30.1 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
 Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: e-o6k8t0uKCDWDL3uAxnNm00tcSuXLbq
-X-Proofpoint-ORIG-GUID: e-o6k8t0uKCDWDL3uAxnNm00tcSuXLbq
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMwMDA5MyBTYWx0ZWRfX5MN+72SPC8O6
- igotXblKSgXtEiuQx10uFW/mG/7xy1sn5JWLGyjDKugAej3eJiPpJDlG24SKD9aebdoJGyfjQRh
- iaciM+0C+/UMbCuKLOuPfwfKsytOGrA=
-X-Authority-Analysis: v=2.4 cv=dYuwG3Xe c=1 sm=1 tr=0 ts=6a6b417b cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=HTWikn-NoDX072xUEvEA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMwMDA5MyBTYWx0ZWRfX/zkmslJvDMtM
- qhrOCQJ3lOpvf5ly1Ll8EmBmNLJRAu6Qf/LNTRYY/cNiHGQnQy8POZlz6JBH8Jb8DarvC/nCFe/
- yj7I0C3WCoxYgIdFBgDDlrRUIWKfTMUlHL3KEM2xSmdORBodvu8S3Frtz1XYWEkhtd3pwqNZkk3
- TwvniV/kp8g/9Fqek/ie0NUG2QEVrgIaQ24DA9OtC5GZqCHwkh0iClZ7+76Ot6jm4jpJcLKi4NZ
- tnoRA68np0SAGByyhHO+r5FEZQbnRGfCmdFEjxVMtDmwJRK7eREawa/rgfbbIVI1QRiRqNeBOOj
- TWoJsir84BfploJis1HlVWUEnnL4/GhxD9LplmG1PmOY4pZ0ahcQkw2+hbga+gzdyUMveDtLF+U
- W4LxT7kP8f7TP7yzZ/Vgj53mjk6Y+aS5vHkuiwneBqB651pTrcvu31NR/wfgou3IbImMRN5+wsA
- s8vTgyGbH0q+CSLbwvg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-30_03,2026-07-29_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 clxscore=1015 phishscore=0 malwarescore=0
- spamscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607300093
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=imbrenda@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
+ s=default-1th84yt82rvi; t=1785414221; 
+ bh=sCx6KaABSq5Jdmn/uala+um3T/XLqrGKOH4ERKaU+vM=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References;
+ b=qBCe3JnJQ2GesA9pbzApyuz7kdraY+p9+hbtIyy2hFqyI45/Fb58OOeijEwWVxj5Qoj+TxZT
+ 5F3rpaV4386+ufxYOfT5ohpQcxPy/dxREfF+vfRyGsZ/wjSiuJ7NR+BJna4iQ3ATY2EvkQ8BBp
+ 3nYXgXEY0JOkjIEN4gdNXSKUIOst8U03FA2o7aYzuXC4XR5HevAGoEYc127DK5Y9krCuvsAkOa
+ Ww0OAknEO4o3d66f4mTfjeqH2yIKfw0qn8ffmlCB6GiAZozmjDIMn/JAswm+QPeIub33DO4xJ2
+ y63UsW2LQq38LwRu2/D1NPZxfKczAdM9YJ1LT4bIyqJBQ3HA==
+Received-SPF: pass client-ip=106.153.226.41;
+ envelope-from=yoshinori.sato@nifty.com; helo=mta-snd-e09.mail.nifty.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,57 +72,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 29 Jul 2026 13:53:01 -0400
-Matthew Rosato <mjrosato@linux.ibm.com> wrote:
+On Thu, 30 Jul 2026 05:45:05 +0900,
+Randy Schifflin wrote:
+> 
+> Add tests for the TCG generation of the sh4-specific `fipr`
+> and `ftrv` instructions.
+> 
+> Signed-off-by: Randy Schifflin <randy.schifflin@gmail.com>
+> ---
+>  tests/tcg/sh4/Makefile.target |   7 +++
+>  tests/tcg/sh4/test-fpu-fipr.c |  72 ++++++++++++++++++++++++++++
+>  tests/tcg/sh4/test-fpu-ftrv.c | 108 ++++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 187 insertions(+)
+> 
+> diff --git a/tests/tcg/sh4/Makefile.target b/tests/tcg/sh4/Makefile.target
+> index b7a8737be0..0975fac72d 100644
+> --- a/tests/tcg/sh4/Makefile.target
+> +++ b/tests/tcg/sh4/Makefile.target
+> @@ -16,3 +16,10 @@ TESTS += test-addv
+>  
+>  test-subv: CFLAGS += -O -g
+>  TESTS += test-subv
+> +
+> +test-fpu-fipr: CFLAGS += -O -g
+> +TESTS += test-fpu-fipr
+> +
+> +test-fpu-ftrv: CFLAGS += -O -g
+> +TESTS += test-fpu-ftrv
+> +
+> diff --git a/tests/tcg/sh4/test-fpu-fipr.c b/tests/tcg/sh4/test-fpu-fipr.c
+> new file mode 100644
+> index 0000000000..1bf1a1b4ec
+> --- /dev/null
+> +++ b/tests/tcg/sh4/test-fpu-fipr.c
+> @@ -0,0 +1,72 @@
+> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +
+> +#include <limits.h>
+> +#include <stdlib.h>
+> +static const unsigned long FPSCR_PR_BIT = 1UL << 19;
+> +
+> +static void single_precision_mode(void)
+> +{
+> +    unsigned long fpscr;
+> +    /* Read FPSCR register */
+> +    asm volatile("sts fpscr, %0" : "=r" (fpscr));
+> +    /* Set precision mode to single-precision */
+> +    fpscr &= ~FPSCR_PR_BIT;
+> +    /* Write FPSCR register */
+> +    asm volatile("lds %0, fpscr" : : "r" (fpscr));
+> +}
+> +
+> +static float fipr(const float v1[4], const float v2[4])
+> +{
+> +    float fout = 0.0;
+> +    /*
+> +     * Perform inner product of fv4 and fv8
+> +     * Result is stored in the last float register of the last vector argument
+> +     */
+> +    asm volatile(
+> +        "fmov %1,fr4\n"
+> +        "fmov %2,fr5\n"
+> +        "fmov %3,fr6\n"
+> +        "fmov %4,fr7\n"
+> +        "fmov %5,fr8\n"
+> +        "fmov %6,fr9\n"
+> +        "fmov %7,fr10\n"
+> +        "fmov %8,fr11\n"
+> +        "fipr fv4,fv8\n" /* (fr4,fr5,fr6,fr7) dot (fr8,fr9,fr10,fr11) */
+> +        "fmov fr11,%0\n" /* Result in fr11 */
+> +        : "=f" (fout)
+> +        : "f" (v1[0]), "f" (v1[1]), "f" (v1[2]), "f" (v1[3]),
+> +          "f" (v2[0]), "f" (v2[1]), "f" (v2[2]), "f" (v2[3]));
+> +    return fout;
+> +}
+> +
+> +int main(void)
+> +{
+> +    /*
+> +     * The SH4 manual specifies `fipr` is only available when
+> +     * FPSCR register precision-mode (PR) bit is 0
+> +     */
+> +    single_precision_mode();
+> +
+> +    float v1[4] = {1.0, 0.0, 0.0, 0.0};
+> +    float mag_sq = 0.0;
+> +    float dot = 0.0;
+> +
+> +    mag_sq = fipr(v1, v1);
+> +    if (mag_sq != 1.0) {
+> +        abort();
+> +    }
+> +
+> +    v1[0] = 2.0;
+> +    mag_sq = fipr(v1, v1);
+> +    if (mag_sq != 4.0) {
+> +        abort();
+> +    }
+> +
+> +    float v2[4] = {1.0, 0.0, 0.0, 0.0};
+> +    dot = fipr(v1, v2);
+> +    if (dot != 2.0) {
+> +        abort();
+> +    }
+> +
+> +    return 0;
+> +}
+> diff --git a/tests/tcg/sh4/test-fpu-ftrv.c b/tests/tcg/sh4/test-fpu-ftrv.c
+> new file mode 100644
+> index 0000000000..041e03120e
+> --- /dev/null
+> +++ b/tests/tcg/sh4/test-fpu-ftrv.c
+> @@ -0,0 +1,108 @@
+> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +
+> +#include <limits.h>
+> +#include <stdlib.h>
+> +static const unsigned long FPSCR_PR_BIT = 1UL << 19;
+> +
+> +static void single_precision_mode(void)
+> +{
+> +    unsigned long fpscr;
+> +    /* Read FPSCR register */
+> +    asm volatile("sts fpscr, %0" : "=r" (fpscr));
+> +    /* Set precision mode to single-precision */
+> +    fpscr &= ~FPSCR_PR_BIT;
+> +    /* Write FPSCR register */
+> +    asm volatile("lds %0, fpscr" : : "r" (fpscr));
+> +}
+> +
+> +/* Set XMTRX registers to a doubling scale matrix */
+> +static void xmtrx_scale_2(void)
+> +{
+> +    asm volatile(
+> +        "fldi0 fr0\n" /* Pair dr0 (fr0, fr1) = zero,zero */
+> +        "fldi0 fr1\n"
+> +        "fldi1 fr2\n"
+> +        "fadd fr2,fr2\n" /* Pair dr2 (fr2,fr3) = two,zero */
+> +        "fldi0 fr3\n"
+> +        "fldi0 fr4\n"
+> +        "fmov fr2,fr5\n" /* Pair dr4 (fr4, fr5) = zero,two */
+> +
+> +        /* Enable pair-write */
+> +        "fschg\n"
+> +        /* matrix[0][0] = 2.0 */
+> +        /* matrix[0][1] = 0.0 */
+> +        "fmov dr2,xd0\n"
+> +        /* matrix[0][2] = 0.0 */
+> +        /* matrix[0][3] = 0.0 */
+> +        "fmov dr0,xd2\n"
+> +        /* matrix[1][0] = 0.0 */
+> +        /* matrix[1][1] = 2.0 */
+> +        "fmov dr4,xd4\n"
+> +        /* matrix[1][2] = 0.0 */
+> +        /* matrix[1][3] = 0.0 */
+> +        "fmov dr0,xd6\n"
+> +        /* matrix[2][0] = 0.0 */
+> +        /* matrix[2][1] = 0.0 */
+> +        "fmov dr0,xd8\n"
+> +        /* matrix[2][2] = 2.0 */
+> +        /* matrix[2][3] = 0.0 */
+> +        "fmov dr2,xd10\n"
+> +        /* matrix[3][0] = 0.0 */
+> +        /* matrix[3][1] = 0.0 */
+> +        "fmov dr0,xd12\n"
+> +        /* matrix[3][2] = 0.0 */
+> +        /* matrix[3][3] = 2.0 */
+> +        "fmov dr4,xd14\n"
+> +        /* Disable pair-write */
+> +        "fschg"
+> +        :
+> +        :
+> +        : "fr0", "fr1", "fr2", "fr3", "fr4", "fr5");
+> +}
+> +
+> +/* Transform vector vin by xmtrx; store result in vector vout */
+> +static void ftrv(const float vin[4], float vout[4])
+> +{
+> +    asm volatile("fmov %4,fr0\n"
+> +                 "fmov %5,fr1\n"
+> +                 "fmov %6,fr2\n"
+> +                 "fmov %7,fr3\n"
+> +                 "ftrv xmtrx,fv0\n"
+> +                 "fmov fr0,%0\n"
+> +                 "fmov fr1,%1\n"
+> +                 "fmov fr2,%2\n"
+> +                 "fmov fr3,%3"
+> +                 : "=f" (vout[0]), "=f" (vout[1]),
+> +                   "=f" (vout[2]), "=f" (vout[3])
+> +                 : "f" (vin[0]), "f" (vin[1]),
+> +                   "f" (vin[2]), "f" (vin[3])
+> +                 : "fr0", "fr1", "fr2", "fr3");
+> +}
+> +
+> +int main(void)
+> +{
+> +    /*
+> +     * The SH4 manual specifies `ftrv` is only available when
+> +     * FPSCR register precision-mode (PR) bit is 0
+> +     */
+> +    single_precision_mode();
+> +    xmtrx_scale_2();
+> +    float vin[4] = {1.0, 2.0, 3.0, 4.0};
+> +    float vout[4] = { 0.0, 0.0, 0.0, 0.0};
+> +
+> +    ftrv(vin, vout);
+> +    if (vout[0] != 2.0) {
+> +        abort();
+> +    }
+> +    if (vout[1] != 4.0) {
+> +        abort();
+> +    }
+> +    if (vout[2] != 6.0) {
+> +        abort();
+> +    }
+> +    if (vout[3] != 8.0) {
+> +        abort();
+> +    }
+> +
+> +    return 0;
+> +}
+> 
+> -- 
+> 2.43.0
+> 
 
-> > -        if (kvm_enabled() && kvm_s390_get_hpage_1m()) {
-> > +        if (kvm_enabled() && kvm_s390_get_hpage()) {  
-> 
-> ...
-> 
-> >  
-> > -    cap_hpage_1m = 1;
-> > +int kvm_s390_get_hpage(void)
-> > +{
-> > +    return cap_hpage;
-> >  }
-> >  
-> >  int kvm_s390_get_hpage_1m(void)
-> >  {
-> > -    return cap_hpage_1m;
-> > +    return cap_hpage == 1;
-> > +}
-> > +
-> > +int kvm_s390_get_hpage_2g(void)
-> > +{
-> > +    return cap_hpage == 2;
-> >  }  
-> 
-> Hey Claudio,
-> 
-> Thanks for changing things to differentiate between 1m and 2g for the cap.
-> 
-> Overall LGTM but this patch now makes kvm_s390_get_hpage_1m() dead code
-> (not referenced anywhere) as well as introduces a new function
-> kvm_s390_get_hpage_2g() that is also unused.
-> 
-> Since this patch is by itself, why not just remove the functions
-> until/if they are needed and only provide kvm_s390_get_hpage()?
-> 
-> Do you have planned future patches that you are confident will soon make
-> use of these get_hpage_1m() and get_hpage_2g() helpers?
+Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
 
-yes, which is why I put them there :)
-
-but I understand that dead code is annoying, if you want I can simply
-respin without the unused functions, and introduce them later when they
-are actually needed.
-
-> 
-> Thanks,
-> Matt
-> 
-> 
-> 
-
+-- 
+Yosinori Sato
 
