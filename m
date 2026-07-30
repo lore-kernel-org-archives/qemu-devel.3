@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA695C5516D
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 20:11:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E289C5516E
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 20:12:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpX5Y-0004WT-QU; Thu, 30 Jul 2026 16:10:44 -0400
+	id 1wpX5D-0004Gy-CF; Thu, 30 Jul 2026 16:10:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mikail.sadic@ibm.com>)
- id 1wpX5T-0004T4-Ha; Thu, 30 Jul 2026 16:10:39 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wpX5B-0004DV-GC; Thu, 30 Jul 2026 16:10:21 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mikail.sadic@ibm.com>)
- id 1wpX5Q-0001iG-Ah; Thu, 30 Jul 2026 16:10:39 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1wpX59-0001gi-6j; Thu, 30 Jul 2026 16:10:21 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66UJlfB83975896; Thu, 30 Jul 2026 20:09:53 GMT
+ 66UJmv3S4002895; Thu, 30 Jul 2026 20:09:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=QgHh2RVoq/gZRZg3U
- ApSOySzsKpVXOTof7js0y5RBhA=; b=P+A1HZVfkWU2t6HImhzLU3SuFnBnND0d8
- o/c6tvdYuT9j/i4GcZAtbV6NSiX7w8Z+j7P2q/USttUaE2LUv8IJbASPIFAiVOOp
- SESsqTQe0TQ6upOqtYXUre/+YHzLwqdPdTsbjUgZyegMm2Xheryhpg45GsEbtp2t
- Raj/+WLH1HPhg+0x8LhIG/cFcwQGJcs2huNzNHPpqVNsflHwJ33N0epCwaVSPVNN
- vNrNq0MeF4UrHRU0CPwtXq1V3qg/ogyr211SoLeiXzJ/kfpQGixweqFRcsC129n2
- +d+19DDqGMd3yMxD6rarNNBDipEDqA4u/Q35lLK6EJPTXBPU67VQA==
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=42d3W3kF0uWwMZfKDf+l0ZD8hi/x
+ PFntIGPadmAHWWc=; b=pRtm4/14onYT2R06tj2JrM5qzBRMCb/oSTqoUPzHfcL2
+ 4NIO+XHatPQoHnHFNZ/q02zMaQ6tfrxtD+ZwWkx4id7vKTgKSfkRWnOz8VMrlG23
+ hMtvPCPyz3uw1mK/THzijzvqZygWbhA56KYaLZ2Fr3HHDV7namT++Czvcafbgr65
+ RcNJDJGPeEPDbT/3x+V9SJbElT2COeE6ZG9f93JsIr8awtqNc0NHIABdFDxZ+fvk
+ Bcukt7UPPzdyg4TD0S7gW3CMXM8SROQtcuCqdbkE2uvnI15N4XlBQNCGMFldcoeR
+ VTAFUzg8kf4TNmlUkkcQZZApDJYRT6Wg9JpPYEozgg==
 Received: from ppma22.wdc07v.mail.ibm.com
  (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0y1qqm-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuwd8snw-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Jul 2026 20:09:53 +0000 (GMT)
+ Thu, 30 Jul 2026 20:09:49 +0000 (GMT)
 Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66UJuKPG008947;
- Thu, 30 Jul 2026 20:09:52 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn7uwd385-1
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66UJuMG9008974;
+ Thu, 30 Jul 2026 20:09:48 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn7uwd382-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Jul 2026 20:09:52 +0000 (GMT)
+ Thu, 30 Jul 2026 20:09:48 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66UK9oE633424000
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66UK9lVo58786194
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 30 Jul 2026 20:09:50 GMT
+ Thu, 30 Jul 2026 20:09:47 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7F6EA58055;
- Thu, 30 Jul 2026 20:09:50 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4971D58043;
+ Thu, 30 Jul 2026 20:09:47 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1C03D5805D;
- Thu, 30 Jul 2026 20:09:50 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D890558055;
+ Thu, 30 Jul 2026 20:09:46 +0000 (GMT)
 Received: from IBM-MFS.atx-us.ibm.com (unknown [9.16.49.87])
  by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 30 Jul 2026 20:09:50 +0000 (GMT)
+ Thu, 30 Jul 2026 20:09:46 +0000 (GMT)
 From: Mikail Sadic <mikail.sadic@ibm.com>
 To: clg@kaod.org, peter.maydell@linaro.org
 Cc: Mikail Sadic <mikail.sadic@ibm.com>, pbonzini@redhat.com,
@@ -65,49 +65,49 @@ Cc: Mikail Sadic <mikail.sadic@ibm.com>, pbonzini@redhat.com,
  jamin_lin@aspeedtech.com, kane_chen@aspeedtech.com,
  andrew@codeconstruct.com.au, joel@jms.id.au, calebs@linux.ibm.com,
  milesg@linux.ibm.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v2 8/8] arm/aspeed: Add AST2700 Huygens machine
-Date: Thu, 30 Jul 2026 15:09:43 -0500
-Message-ID: <20260730200945.1113936-9-mikail.sadic@ibm.com>
+Subject: [PATCH v2 0/8] Add IBM Huygens BMC machine for AST2700
+Date: Thu, 30 Jul 2026 15:09:35 -0500
+Message-ID: <20260730200945.1113936-1-mikail.sadic@ibm.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260730200945.1113936-1-mikail.sadic@ibm.com>
-References: <20260730200945.1113936-1-mikail.sadic@ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: qPuTieXZmtgSdLd6Bj7NJCgIKSWGpCtG
-X-Proofpoint-ORIG-GUID: i84JhVPmXerw-TjG-rRtJX5xIh5lL1Vq
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfX0SsguU2aS4BJ
- ImHFtVJ2NR9erYbNlVFARXy8X9HTUefiX6tv37N/R7ipGA99qCEauuHYJP8id5+vmD0f7uavAW1
- HVzzNPjrBrYJ/7pO27ik1tW7HmxX9oc=
-X-Authority-Analysis: v=2.4 cv=dYuwG3Xe c=1 sm=1 tr=0 ts=6a6baf91 cx=c_pps
+X-Proofpoint-ORIG-GUID: BK4SpnDLrSpCpnrsnaxgcLhfmfHAEhYC
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfXyVvVlk+xVu3L
+ rgbqIbUXXFwn3BNGy/LJoWDZg5DHowapwE/bCakrC7B76tg/YF5fKFWoOqfiiW1X7ujeULnNCRn
+ snpu7zxP2WLBgtFhqzlQaWCE26/HguM=
+X-Authority-Analysis: v=2.4 cv=E/z9Y6dl c=1 sm=1 tr=0 ts=6a6baf8d cx=c_pps
  a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=7rK_Fc8NI2sx5OKxegoA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfX9j8qqI07HMcT
- kve0XU0AtiWetTn58v0bRFQ/W3iSEgKrOybusVL6C8DKe1wAA4JY3FOY1UUm4DDK1zu3YqyBv2p
- CAo+NuTQ6R2rLgu0QMTHG7iDBnfhFDuEH4VlZLF/PdOb2rorWPhyUtl6h5qPHY9hELyz76Euwhl
- yo4oQWcEK93VdgxX15i5WrPfnPnKvcbubcr6p3mYoNAhth/S+fjDNemDRyOr4tic/dcnWBquTb1
- oKBI+ZDPvEAdH3ct8NGFID9LFIrsBcG4X6j86KVG8whBsYvhr5uRBChp8tG1iDifYZX5+P/RFVs
- l25hRmwpmBA7jzD8tmBUyCivmztSYK0bCRmcuSrYLUOSIWGCF0dO09lLcz1sV6zSAt5aUQPUbIX
- t6BkfhPhmCZMm9gPYC8ngKXWMCT132BXG+qH01/C70MkV6xwK9m2/btYI7/t9WtEi2iDvfBmJMB
- v8+LQvhOFlDIOmZoezw==
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=X-OJmhkvuyxfmyMaHAUA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfXwIICU2hxqat1
+ 8LqPMnTR4uPbGCmHY14fP/wJsGPbDQZnzPKIF5Oo0ozkotbKpvmZsnkeMVqrJCW2Ont/YBVgr/n
+ z4TljfJeUI4/BYkovZokNtPDT604Lw45+mGKQLFdo5n1p2Q5B3hDsBMJAnvrCHIOFGGL/hVfA8h
+ Ik2rZCox3ydE0SFCMYOYB+Pu6urbekDWeEtAGoHlJXgTcdxi+b+JHBqf88rj/vuGR6W//Aatglv
+ l26IlUdct2mGrRgmdoF2+LosVKSJwXEOqRmUJ7MPo8BDqDziLQM3g+NgDvvTUUMyIugzeo7ooPZ
+ ZI9QJ6YpzY1dJ882BnRXLNvfJrfoZ51LBkE1nJSfw19xyKF7LUI3Xq/JbOSLRyOBJwSRdR98d1j
+ MsYW0RbqAJ+U/viPaElz2IVQRll/aw3j3XmUEO2NFJ4ULaQhnQ9px6h8MS6ggfSVBuXrDW1qDX+
+ Kenj2+5swsN8mwmPE8A==
+X-Proofpoint-GUID: sThEzNdcgbSYRcxQ4-9QZeGX_kifF1If
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-30_06,2026-07-30_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 clxscore=1015 phishscore=0 malwarescore=0
- spamscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 adultscore=0
+ adultscore=0 priorityscore=1501 spamscore=0 clxscore=1015 phishscore=0
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 impostorscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607300145
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=mikail.sadic@ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=mikail.sadic@ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,366 +124,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Huygens is the BMC of the IBM POWER12 server platform. The BMC
-handles power sequencing, thermal management, VPD access and host
-firmware boot for the POWER host processors. It is built around the
-Aspeed AST2700 A2 SoC.
+This series adds initial support for the IBM Huygens BMC, the baseboard
+management controller of an IBM POWER12 server platform, based on the
+ASPEED AST2700 A2 SoC.
 
-Add a 'huygens-bmc' machine that instantiates the AST2700 SoC with the
-board-specific configuration needed to boot the OpenBMC Linux image:
-the FMC/SPI flash models, the I2C topology (BMC, system and chassis VPD
-EEPROMs, the UCD90320 power sequencer and temperature sensors) and the
-network controllers.
+It introduces a CFAM-S FSI responder model, wires the AST2700 FSI
+controllers to their APB-to-OPB bridges, fixes an aspeed I2C DMA
+block-read corner case, adds a TI UCD90320 PMBus power-sequencer model,
+refactors the UFS device into a shared core with a new AST2700 sysbus
+frontend, and finally adds the huygens-bmc machine that ties these
+together to boot OpenBMC from FMC flash and a UFS root filesystem.
 
-Signed-off-by: Mikail Sadic <mikail.sadic@ibm.com>
----
+Patch summary:
+
+  1. fsi/cfam: a common CFAM model holding the slot, config table,
+     responder and local bus, with the existing cfam as its first
+     derivative. No functional change to the existing cfam.
+  2. fsi/cfam: the CFAM-S as a second derivative - its own config table,
+     the slave-ID alias window, and a v1 mailbox engine added to lbus.c
+     alongside the scratchpad.
+  3. arm/aspeed: wire the two AST2700 FSI controllers to their APB-to-OPB
+     bridges.
+  4. i2c/aspeed: fix DMA-receive first-byte handling so SMBus block reads
+     (I2C_M_RECV_LEN) report the correct length.
+  5. hw/sensor: TI UCD90320 24-rail PMBus power sequencer.
+  6. ufs: refactor the transport-independent UFS core out of the PCI
+     device (SDHCI/XHCI-style) so PCI and sysbus frontends share it.
+     TYPE_UFS stays a PCI device and -device ufs is unchanged.
+  7. ufs/aspeed: AST2700 sysbus UFS frontend on the shared core.
+  8. arm/aspeed: the huygens-bmc machine.
+
+Changes since v1:
+
+* Split the original 5 commits into 8. The aspeed I2C DMA fix, the FSI
+  controller wiring, the CFAM common base class, and the UFS
+  core-vs-frontend split are now separate patches (each buildable on its
+  own).
+
+* UFS: reworked per review (Jeuk Kim). Instead of a second, standalone
+  UFS implementation, the common core (register block, UTRL/UTMRL, UPIU,
+  query and ufs-lu handling) is separated from the PCI glue (DMA address
+  space, IRQ, realize) so the AST2700 controller is a thin sysbus
+  frontend on top of it, following the SDHCI/XHCI pattern. Two small,
+  backwards-compatible additions ride on the core: a configurable ufs-lu
+  logical-block-size (default unchanged, so the PCI device is unaffected)
+  and an unmapped-LUN INQUIRY that reports "not connected" instead of
+  failing the request. The PCI ufs-tests qtests still pass.
+
+* CFAM-S: reworked per review (Ninad). It now shares a common base class
+  with the cfam rather than being a parallel implementation: patch 1 adds
+  an abstract cfam-common whose realize is driven by an FSICFAMCommonClass
+  (config table, responder and local-bus offsets, and an engines hook),
+  and both cfam and cfam-s derive from it. They are siblings rather than
+  parent and child, since a CFAM-S is another kind of CFAM and not a
+  specialisation of the P9 one. Patch 2 adds cfam-s supplying only its own
+  config table, its mailbox engine and the slave-ID alias window; the v1
+  mailbox is a local bus engine so it sits in lbus.c next to the
+  scratchpad. Duplicated code has been cleaned. Two behavior changes
+  follow from sharing the common config ops, both noted in patch 2: cfam-s
+  now honors the SID_BREAK sequence, and config-table access is word-only
+  for both types. Also made generic, all specific references dropped.
+
+  Patch 1 is intended to be a no-op for the existing cfam, and was
+  checked that way: aspeed_fsi-test passes, the four P9 config words read
+  back identically over the OPB, and "info mtree" for ast2600-evb is
+  unchanged. The Rainier boot test was also run and verified.
+
+* i2c/aspeed: the DMA block-read fix is now its own patch, with a commit
+  message explaining the I2C_M_RECV_LEN + DMA interaction (Cédric).
+
+* UCD90320: the device-id/monitor-config/mfr-status responses are now
+  device reset state rather than file-scope constants, with matching
+  VMState (Cédric).
+
+* Docs: the huygens-bmc and aspeed-ufs boot examples now use -blockdev
+  instead of -drive (Cédric).
+
+* Machine: commit message expanded (POWER12 BMC on AST2700 A2), the VPD
+  buffer uses g_autofree, the docs describe the flash-vs-UFS split, and
+  the networking example was simplified.
+
+* New device files use DEFINE_TYPES() with inlined TypeInfo (Jamin Lin).
+
+* Dropped the v1 functional test for now: depends on non-public Huygens
+  images. It will be resent once images go public.
+
+Testing done:
+
+* Whole series builds.
+* aspeed_fsi-test passes (4/4), unchanged by the CFAM refactor.
+* huygens-bmc boots OpenBMC to the login prompt and multi-user target
+  from FMC flash + UFS storage (internal images).
+* PCI UFS ufs-tests qtests pass, unchanged by the refactor.
+* make check passes all tests.
+
+Note: checkpatch reports a couple of MAINTAINERS/SPDX warnings for the
+new files; they are covered by existing wildcard entries in the ASPEED
+and FSI sections.
+
+Thank you for all of the helpful feedback.
+
+Mikail Sadic (8):
+  fsi/cfam: Add common CFAM base class
+  fsi/cfam: Add CFAM-S model
+  arm/aspeed: Wire AST2700 FSI controllers to APB-to-OPB bridges
+  i2c/aspeed: Fix DMA receive first-byte handling for block reads
+  hw/sensor: Add UCD90320 model
+  ufs: Refactor common core out of the PCI implementation
+  ufs/aspeed: Add AST2700 sysbus UFS frontend
+  arm/aspeed: Add AST2700 Huygens machine
+
+ MAINTAINERS                     |   2 +
+ docs/specs/aspeed-ufs.rst       |  40 ++++++
+ docs/specs/fsi.rst              |  15 ++
+ docs/specs/index.rst            |   2 +
+ docs/specs/ucd90320.rst         |  36 +++++
  docs/system/arm/aspeed.rst      |  50 ++++++-
+ hw/ufs/ufs.h                    |  18 ++-
+ include/hw/arm/aspeed.h         |   1 +
+ include/hw/arm/aspeed_soc.h     |   3 +
+ include/hw/fsi/cfam-s.h         |  40 ++++++
+ include/hw/fsi/cfam.h           |  68 ++++++++-
+ include/hw/fsi/fsi-master.h     |   2 +
+ include/hw/fsi/lbus.h           |  11 ++
+ include/hw/ufs/aspeed_ufs.h     |  16 +++
+ hw/arm/aspeed.c                 |  25 ++++
+ hw/arm/aspeed_ast27x0.c         |  31 ++++
  hw/arm/aspeed_ast27x0_huygens.c | 241 ++++++++++++++++++++++++++++++++
+ hw/fsi/cfam-s.c                 |  91 ++++++++++++
+ hw/fsi/cfam.c                   | 123 +++++++++-------
+ hw/fsi/fsi-master.c             |   9 +-
+ hw/fsi/lbus.c                   |  69 +++++++++
+ hw/i2c/aspeed_i2c.c             |   7 +
+ hw/sensor/ucd90320.c            | 169 ++++++++++++++++++++++
+ hw/ufs/aspeed_ufs.c             |  75 ++++++++++
+ hw/ufs/lu.c                     |  50 ++++++-
+ hw/ufs/ufs.c                    |  57 +++++---
+ hw/arm/Kconfig                  |   1 +
  hw/arm/meson.build              |   1 +
- 3 files changed, 290 insertions(+), 2 deletions(-)
+ hw/fsi/meson.build              |   2 +-
+ hw/fsi/trace-events             |   2 +
+ hw/sensor/Kconfig               |   4 +
+ hw/sensor/meson.build           |   1 +
+ hw/ufs/meson.build              |   1 +
+ 33 files changed, 1182 insertions(+), 81 deletions(-)
+ create mode 100644 docs/specs/aspeed-ufs.rst
+ create mode 100644 docs/specs/ucd90320.rst
+ create mode 100644 include/hw/fsi/cfam-s.h
+ create mode 100644 include/hw/ufs/aspeed_ufs.h
  create mode 100644 hw/arm/aspeed_ast27x0_huygens.c
+ create mode 100644 hw/fsi/cfam-s.c
+ create mode 100644 hw/sensor/ucd90320.c
+ create mode 100644 hw/ufs/aspeed_ufs.c
 
-diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-index 2d51ceeb84..4e42b1edee 100644
---- a/docs/system/arm/aspeed.rst
-+++ b/docs/system/arm/aspeed.rst
-@@ -271,8 +271,8 @@ configuration file for OTP memory:
-     done > otpmem.img
-   fi
- 
--Aspeed 2700 family boards (``ast2700-evb``, ``ast2700fc``)
--==========================================================
-+Aspeed 2700 family boards (``ast2700-evb``, ``ast2700fc``, ``huygens-bmc``)
-+============================================================================
- 
- The QEMU Aspeed machines model BMCs of Aspeed evaluation boards.
- They are based on different releases of the Aspeed SoC :
-@@ -285,6 +285,7 @@ AST2700 SoC based machines :
- 
- - ``ast2700-evb``          Aspeed AST2700 Evaluation board (Cortex-A35)
- - ``ast2700fc``            Aspeed AST2700 Evaluation board (Cortex-A35 + Cortex-M4)
-+- ``huygens-bmc``          Aspeed AST2700 IBM Huygens POWER12 BMC
- 
- Supported devices
- -----------------
-@@ -312,6 +313,8 @@ Supported devices
-  * PECI Controller (minimal)
-  * I3C Controller
-  * Internal Bridge Controller (SLI dummy)
-+ * UFS Host Controller (aspeed,ufshc-m31-16nm) - ``huygens-bmc`` only
-+ * FSI APB-to-OPB bridge with CFAM-S mailbox
- 
- Missing devices
- ---------------
-@@ -440,6 +443,49 @@ Use ``tio`` or another terminal emulator to connect to the consoles:
-    $ tio /dev/pts/56
-    $ tio /dev/pts/57
- 
-+Booting the huygens-bmc machine
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+The IBM Huygens BMC is based on the AST2700 A2 SoC. Its storage is
-+split across two images:
-+
-+* the FMC (SPI NOR) flash image (``image-bmc``) holds U-Boot, the Linux
-+  kernel and the FIT image;
-+* the UFS image (``ufs.img``) holds the root filesystem.
-+
-+Both images can be built from the OpenBMC project tree.
-+
-+To boot the machine, attach the flash image to the FMC device and the
-+root filesystem image to a UFS logical unit. ``-nodefaults`` is used so the
-+board does not also create a default flash at chip-select 0, and the console
-+is wired explicitly since ``-nodefaults`` disables the implicit one:
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-aarch64 -M huygens-bmc \
-+        -nodefaults \
-+        -blockdev node-name=fmc0,driver=file,filename=image-bmc \
-+        -device w25q01jvq,bus=ssi.0,cs=0,drive=fmc0 \
-+        -blockdev node-name=ufs0,driver=file,filename=ufs.img \
-+        -device ufs-lu,bus=ufs-bus.0,drive=ufs0,lun=0,logical-block-size=512 \
-+        -display none -serial mon:stdio
-+
-+The FMC flash sits on chip-select 0 of the ``ssi.0`` bus and the UFS logical
-+unit on ``ufs-bus.0``. The Huygens image is laid out for 512-byte sectors,
-+hence ``logical-block-size=512``.
-+
-+The machine instantiates three ``ftgmac100`` Ethernet controllers, which
-+are wired up by the board. To expose them with user networking, add three
-+``-nic user`` options to the command above:
-+
-+.. code-block:: bash
-+
-+        -nic user \
-+        -nic user \
-+        -nic user
-+
-+The default BMC console is ``uart12``.
-+
- 
- Aspeed Bridge IC and Platform Root of Trust processor family boards (``ast1030-evb``, ``ast1040-evb``, ``ast1060-evb``)
- =======================================================================================================================
-diff --git a/hw/arm/aspeed_ast27x0_huygens.c b/hw/arm/aspeed_ast27x0_huygens.c
-new file mode 100644
-index 0000000000..bed91ce042
---- /dev/null
-+++ b/hw/arm/aspeed_ast27x0_huygens.c
-@@ -0,0 +1,241 @@
-+/*
-+ * IBM Huygens
-+ *
-+ * Copyright 2026 IBM Corp.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "hw/arm/machines-qom.h"
-+#include "hw/arm/aspeed.h"
-+#include "hw/arm/aspeed_soc.h"
-+#include "hw/nvram/eeprom_at24c.h"
-+#include "hw/i2c/i2c_mux_pca954x.h"
-+#include "hw/sensor/tmp105.h"
-+
-+/* SCU HW Strap1 */
-+#define HUYGENS_BMC_HW_STRAP1 0x00000800
-+/* SCUIO HW Strap1 */
-+#define HUYGENS_BMC_HW_STRAP2 0x00000700
-+
-+/*
-+ * 2048-byte IPZ VPD image:
-+ * VHDR, VTOC, VINI, VMPU, VSBP, VSYS, UTIL, DINF, VCEN + ECC
-+ */
-+static const uint8_t huygens_bmc_fruid[] = {
-+    0x00, 0x0f, 0x17, 0xba, 0x3a, 0xc9, 0x32, 0x31, 0x49, 0xb2, 0xde, 0x84,
-+    0x28, 0x00, 0x52, 0x54, 0x04, 0x56, 0x48, 0x44, 0x52, 0x56, 0x44, 0x02,
-+    0x30, 0x31, 0x50, 0x54, 0x0e, 0x56, 0x54, 0x4f, 0x43, 0xd5, 0x00, 0x37,
-+    0x00, 0x74, 0x00, 0xa6, 0x05, 0x1d, 0x00, 0x50, 0x46, 0x08, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x78, 0x84, 0x70, 0x00, 0x52, 0x54,
-+    0x04, 0x56, 0x54, 0x4f, 0x43, 0x50, 0x54, 0x62, 0x56, 0x49, 0x4e, 0x49,
-+    0xd5, 0x00, 0xab, 0x00, 0x84, 0x00, 0x85, 0x05, 0x21, 0x00, 0x56, 0x4d,
-+    0x50, 0x55, 0xff, 0x00, 0x2f, 0x01, 0xa4, 0x00, 0x5c, 0x05, 0x29, 0x00,
-+    0x56, 0x53, 0x42, 0x50, 0xff, 0x00, 0xd3, 0x01, 0x30, 0x00, 0x50, 0x05,
-+    0x0c, 0x00, 0x56, 0x53, 0x59, 0x53, 0xff, 0x00, 0x03, 0x02, 0x44, 0x01,
-+    0xff, 0x04, 0x51, 0x00, 0x55, 0x54, 0x49, 0x4c, 0xff, 0x00, 0x47, 0x03,
-+    0xe8, 0x00, 0xc5, 0x04, 0x3a, 0x00, 0x44, 0x49, 0x4e, 0x46, 0xff, 0x00,
-+    0x2f, 0x04, 0x30, 0x00, 0xb9, 0x04, 0x0c, 0x00, 0x56, 0x43, 0x45, 0x4e,
-+    0xff, 0x00, 0x5f, 0x04, 0x48, 0x00, 0xa7, 0x04, 0x12, 0x00, 0x50, 0x46,
-+    0x01, 0x00, 0x78, 0x84, 0x80, 0x00, 0x52, 0x54, 0x04, 0x56, 0x49, 0x4e,
-+    0x49, 0x44, 0x52, 0x10, 0x51, 0x45, 0x4d, 0x55, 0x20, 0x48, 0x55, 0x59,
-+    0x47, 0x45, 0x4e, 0x53, 0x20, 0x42, 0x4d, 0x43, 0x43, 0x45, 0x01, 0x20,
-+    0x56, 0x5a, 0x02, 0x20, 0x20, 0x46, 0x4e, 0x07, 0x20, 0x20, 0x20, 0x20,
-+    0x20, 0x20, 0x20, 0x50, 0x4e, 0x07, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-+    0x20, 0x53, 0x4e, 0x0c, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-+    0x20, 0x20, 0x20, 0x20, 0x43, 0x43, 0x04, 0x20, 0x20, 0x20, 0x20, 0x48,
-+    0x45, 0x04, 0x20, 0x20, 0x20, 0x20, 0x43, 0x54, 0x04, 0x00, 0x00, 0x00,
-+    0x00, 0x48, 0x57, 0x02, 0x00, 0x01, 0x42, 0x33, 0x06, 0x20, 0x20, 0x20,
-+    0x20, 0x20, 0x20, 0x42, 0x34, 0x01, 0x20, 0x42, 0x37, 0x0c, 0x20, 0x20,
-+    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x50, 0x46,
-+    0x01, 0x00, 0x78, 0x84, 0xa0, 0x00, 0x52, 0x54, 0x04, 0x56, 0x4d, 0x50,
-+    0x55, 0x56, 0x5a, 0x02, 0x30, 0x31, 0x53, 0x4f, 0x02, 0x00, 0x00, 0x44,
-+    0x49, 0x04, 0x00, 0x00, 0x00, 0x00, 0x49, 0x4e, 0x80, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x50, 0x46, 0x02, 0x00, 0x00, 0x78, 0x84,
-+    0x2c, 0x00, 0x52, 0x54, 0x04, 0x56, 0x53, 0x42, 0x50, 0x44, 0x52, 0x10,
-+    0x56, 0x50, 0x44, 0x20, 0x52, 0x4f, 0x4f, 0x54, 0x20, 0x4e, 0x4f, 0x44,
-+    0x45, 0x20, 0x20, 0x20, 0x50, 0x41, 0x01, 0x59, 0x49, 0x4d, 0x04, 0x70,
-+    0x00, 0x10, 0x00, 0x50, 0x46, 0x04, 0x00, 0x00, 0x00, 0x00, 0x78, 0x84,
-+    0x40, 0x01, 0x52, 0x54, 0x04, 0x56, 0x53, 0x59, 0x53, 0x44, 0x52, 0x06,
-+    0x53, 0x59, 0x53, 0x54, 0x45, 0x4d, 0x42, 0x52, 0x02, 0x20, 0x20, 0x53,
-+    0x45, 0x07, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x53, 0x47, 0x07,
-+    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x54, 0x4d, 0x08, 0x20, 0x20,
-+    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x54, 0x4e, 0x08, 0x20, 0x20, 0x20,
-+    0x20, 0x20, 0x20, 0x20, 0x20, 0x4d, 0x4e, 0x07, 0x20, 0x20, 0x20, 0x20,
-+    0x20, 0x20, 0x20, 0x49, 0x44, 0x02, 0x20, 0x20, 0x53, 0x55, 0x06, 0x20,
-+    0x20, 0x20, 0x20, 0x20, 0x20, 0x4e, 0x4e, 0x10, 0x20, 0x20, 0x20, 0x20,
-+    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-+    0x52, 0x47, 0x04, 0x20, 0x20, 0x20, 0x20, 0x52, 0x42, 0x04, 0x20, 0x20,
-+    0x20, 0x20, 0x57, 0x4e, 0x0c, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-+    0x20, 0x20, 0x20, 0x20, 0x20, 0x46, 0x56, 0x20, 0x20, 0x20, 0x20, 0x20,
-+    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-+    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-+    0x20, 0x20, 0x20, 0x20, 0x41, 0x41, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x41, 0x42, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x41, 0x4b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x41, 0x54, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x42, 0x4e, 0x40, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-+    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-+    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-+    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-+    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-+    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x42, 0x41, 0x01, 0x20, 0x4d,
-+    0x4d, 0x01, 0x20, 0x50, 0x46, 0x04, 0x00, 0x00, 0x00, 0x00, 0x78, 0x84,
-+    0xe4, 0x00, 0x52, 0x54, 0x04, 0x55, 0x54, 0x49, 0x4c, 0x44, 0x30, 0x01,
-+    0x00, 0x44, 0x31, 0x01, 0x00, 0x44, 0x32, 0x01, 0x00, 0x44, 0x33, 0x01,
-+    0x00, 0x44, 0x34, 0x04, 0x00, 0x00, 0x00, 0x00, 0x44, 0x35, 0x04, 0x00,
-+    0x00, 0x00, 0x00, 0x44, 0x36, 0x04, 0x00, 0x00, 0x00, 0x00, 0x44, 0x37,
-+    0x04, 0x00, 0x00, 0x00, 0x00, 0x44, 0x38, 0x08, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x44, 0x39, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x46, 0x30, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x46, 0x31, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x46, 0x32, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x46, 0x33, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46,
-+    0x34, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46, 0x35,
-+    0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x46, 0x36, 0x10, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x46, 0x37, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46, 0x38, 0x10, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x46, 0x39, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x50, 0x46, 0x02,
-+    0x00, 0x00, 0x78, 0x84, 0x2c, 0x00, 0x52, 0x54, 0x04, 0x44, 0x49, 0x4e,
-+    0x46, 0x52, 0x49, 0x04, 0x00, 0x00, 0x00, 0x00, 0x46, 0x4c, 0x14, 0x20,
-+    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-+    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x50, 0x46, 0x04, 0x00, 0x00,
-+    0x00, 0x00, 0x78, 0x84, 0x44, 0x00, 0x52, 0x54, 0x04, 0x56, 0x43, 0x45,
-+    0x4e, 0x44, 0x52, 0x06, 0x43, 0x45, 0x43, 0x20, 0x20, 0x20, 0x53, 0x45,
-+    0x07, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x54, 0x4d, 0x08, 0x20,
-+    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x46, 0x43, 0x08, 0x20, 0x20,
-+    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x52, 0x47, 0x04, 0x20, 0x20, 0x20,
-+    0x20, 0x52, 0x42, 0x04, 0x20, 0x20, 0x20, 0x20, 0x50, 0x46, 0x03, 0x00,
-+    /* ECC area */
-+    0x00, 0x00, 0x78, 0x4d, 0x5d, 0x84, 0x8c, 0x0a, 0xf9, 0xed, 0x3d, 0x96,
-+    0x11, 0x4a, 0x45, 0x9a, 0xb6, 0xb2, 0xd9, 0x19, 0x43, 0x05, 0x0f, 0xdd,
-+    0xb5, 0xf9, 0x3d, 0x5b, 0x81, 0xb3, 0x79, 0xcb, 0x19, 0x48, 0xbb, 0xa2,
-+    0x57, 0x10, 0x6e, 0x39, 0x38, 0x85, 0x5e, 0xa3, 0x24, 0xbc, 0x02, 0x63,
-+    0x6b, 0x79, 0xa3, 0x6b, 0xed, 0xcd, 0x27, 0x4e, 0x79, 0x9f, 0x76, 0x4e,
-+    0x7b, 0x93, 0x2d, 0xf4, 0x4c, 0x51, 0x0e, 0x28, 0x46, 0x43, 0x2b, 0xd9,
-+    0x1b, 0x21, 0x21, 0xc8, 0xe4, 0x6e, 0x9b, 0x4e, 0x34, 0x7e, 0x6e, 0x82,
-+    0x1b, 0x09, 0x13, 0xf1, 0x40, 0x7b, 0x9f, 0x6d, 0x50, 0x3e, 0x65, 0x31,
-+    0x1f, 0x19, 0x6f, 0x61, 0x78, 0x27, 0x72, 0x7c, 0x59, 0x34, 0x7c, 0x05,
-+    0x58, 0x13, 0x6f, 0x78, 0x13, 0x56, 0x33, 0x19, 0x1e, 0x79, 0x17, 0x41,
-+    0x28, 0x58, 0x6d, 0x26, 0x01, 0x34, 0x7d, 0x68, 0x1d, 0x7e, 0x1c, 0x42,
-+    0x49, 0x2a, 0x11, 0x7c, 0x70, 0x1a, 0x66, 0x47, 0x68, 0x6e, 0x3f, 0x5e,
-+    0x6b, 0x6d, 0x25, 0x7e, 0x3e, 0x24, 0x39, 0x07, 0x3c, 0x6e, 0x5b, 0x5d,
-+    0x4e, 0x59, 0x79, 0x7d, 0x6f, 0x5f, 0x7f, 0x5f, 0x4b, 0x5f, 0x6d, 0x3e,
-+    0x58, 0x57, 0x1b, 0x19, 0x5d, 0x14, 0x43, 0x83, 0xfc, 0xe6, 0x49, 0x84,
-+    0x41, 0x28, 0x0b, 0x0a, 0x00, 0x5b, 0xec, 0x46, 0x13, 0x4d, 0x00, 0xdc,
-+    0x89, 0xab, 0xbb, 0x77, 0x77, 0x7e, 0xee, 0xff, 0xfd, 0xdf, 0xff, 0xbb,
-+    0xbf, 0xff, 0x77, 0x7f, 0xfe, 0xee, 0xff, 0xfd, 0xdf, 0xff, 0xbb, 0xbf,
-+    0xfe, 0x76, 0x7e, 0xca, 0xc8, 0x99, 0x51, 0xd7, 0x70, 0x00, 0x03, 0x26,
-+    0x9e, 0x4e, 0x7f, 0x13, 0x38, 0xbb, 0x3c, 0xbb, 0x00, 0x02, 0xa0, 0x0a,
-+    0xcb, 0x70, 0xb7, 0x9f, 0x2b, 0x79, 0xa4, 0x00, 0x07, 0x71, 0xad, 0x17,
-+    0x41, 0xd7, 0xb9, 0x8c, 0x6d, 0x08, 0x2c, 0x80, 0x04, 0x56, 0x6b, 0x9f,
-+    0x00, 0x9f, 0xbe, 0xdb, 0x71, 0x63, 0x01, 0xb8, 0xf0, 0x41, 0xc0, 0xe1,
-+    0x8d, 0x3a, 0x6f, 0xc0, 0x66, 0x5f, 0xb6, 0x4c, 0x2a, 0x5f, 0x06, 0x00,
-+    /* Rest is 0x00 */
-+};
-+static const size_t huygens_bmc_fruid_len = sizeof(huygens_bmc_fruid);
-+
-+/* chassis1 VPD: huygens_bmc_fruid with VCEN.FC patched to "2E4C-001" */
-+#define HUYGENS_CHASSIS1_FC_OFFSET 0x048a
-+static const uint8_t huygens_chassis1_fc[] = {
-+    0x32, 0x45, 0x34, 0x43, 0x2d, 0x30, 0x30, 0x31
-+};
-+
-+static void huygens_bmc_i2c_init(AspeedMachineState *bmc)
-+{
-+    AspeedSoCState *soc = bmc->soc;
-+
-+    /* I2C0: BMC EEPROM */
-+    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50, 8 * KiB);
-+
-+    /* I2C5: UCD90320 power sequencer */
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5), "ucd90320", 0x11);
-+
-+    /* I2C6: chassis1 backplane VPD EEPROM */
-+    {
-+        g_autofree uint8_t *ch1 = g_malloc(huygens_bmc_fruid_len);
-+        memcpy(ch1, huygens_bmc_fruid, huygens_bmc_fruid_len);
-+        memcpy(ch1 + HUYGENS_CHASSIS1_FC_OFFSET,
-+               huygens_chassis1_fc, sizeof(huygens_chassis1_fc));
-+        at24c_eeprom_init_rom(aspeed_i2c_get_bus(&soc->i2c, 6), 0x50,
-+                              8 * KiB, ch1, huygens_bmc_fruid_len);
-+    }
-+
-+    /* I2C8: System VPD at 0x53 */
-+    at24c_eeprom_init_rom(aspeed_i2c_get_bus(&soc->i2c, 8), 0x53,
-+                          4 * KiB, huygens_bmc_fruid, huygens_bmc_fruid_len);
-+    /* LCD EEPROM */
-+    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 8), 0x51, 8 * KiB);
-+
-+    /* I2C9: System VPD redundant and op-panel devices */
-+    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 9),
-+                      0x53, 8 * KiB);  /* SYSVPD-redundant */
-+
-+    /* TMP275 temperature sensor (compatible with TMP105) */
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9),
-+                            TYPE_TMP105, 0x48);
-+
-+    /* Op-panel EEPROM */
-+    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 9), 0x51, 8 * KiB);
-+
-+    /* PCA9552 LED controllers on bus 9 */
-+    aspeed_create_pca9552(soc, 9, 0x62);
-+    aspeed_create_pca9552(soc, 9, 0x64);
-+    aspeed_create_pca9552(soc, 9, 0x66);
-+
-+    /* DPS310 pressure sensor */
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "dps310", 0x76);
-+}
-+
-+static void aspeed_machine_huygens_class_init(ObjectClass *oc,
-+                                              const void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
-+
-+    mc->alias      = "ast2700-huygens";
-+    mc->desc       = "Aspeed AST2700 A2 [IBM Huygens]";
-+    amc->soc_name  = "ast2700-a2";
-+    amc->hw_strap1 = HUYGENS_BMC_HW_STRAP1;
-+    amc->hw_strap2 = HUYGENS_BMC_HW_STRAP2;
-+    amc->fmc_model = "w25q01jvq";
-+    amc->spi_model = "w25q512jv";
-+    amc->num_cs    = 2;
-+    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
-+    amc->uart_default = ASPEED_DEV_UART12;
-+    amc->i2c_init  = huygens_bmc_i2c_init;
-+    amc->vbootrom  = true;
-+    /* UFS LUN block size to match the OpenBMC image layout */
-+    amc->ufs_block_size = 512;
-+    mc->default_ram_size = 2 * GiB;
-+    aspeed_machine_class_init_cpus_defaults(mc);
-+}
-+
-+static const TypeInfo aspeed_ast27x0_huygens_types[] = {
-+    {
-+        .name       = MACHINE_TYPE_NAME("huygens-bmc"),
-+        .parent     = TYPE_ASPEED_MACHINE,
-+        .class_init = aspeed_machine_huygens_class_init,
-+        .interfaces = aarch64_machine_interfaces,
-+    }
-+};
-+
-+DEFINE_TYPES(aspeed_ast27x0_huygens_types)
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 4233a800be..a237f1d04f 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -75,6 +75,7 @@ arm_common_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_ast27x0-fc.c',
-   'aspeed_ast27x0-ssp.c',
-   'aspeed_ast27x0-tsp.c',
-+  'aspeed_ast27x0_huygens.c',
-   'aspeed_coprocessor_common.c'))
- arm_common_ss.add(when: 'CONFIG_MPS2', if_true: files('mps2.c'))
- arm_common_ss.add(when: 'CONFIG_MPS2', if_true: files('mps2-tz.c'))
+
+base-commit: e1705a25aff35635c360bbaba4c2731d019a422a
 -- 
 2.53.0
 
