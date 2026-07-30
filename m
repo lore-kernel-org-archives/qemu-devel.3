@@ -4,110 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4744C54FDF
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 07:15:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E827CC55164
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 07:15:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpKxP-00088P-77; Thu, 30 Jul 2026 03:13:31 -0400
+	id 1wpKyl-0000rG-NH; Thu, 30 Jul 2026 03:14:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wpKxN-00087K-KY
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 03:13:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wpKyf-0000jO-LC; Thu, 30 Jul 2026 03:14:50 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wpKxL-0007v7-Vk
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 03:13:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785395607;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TcjFc/7/NHyuFbF0/DRanapEJL83S3ru+B67fe+lavo=;
- b=aVqTXsamNL4jJBm/AQjJrSO8AxJl6A6Xm1PM8/mwZrQclfAN0xBAcx0roU9NUO4hFQ91Wk
- C4tfbQhM+4udLw46Aej5T/v6DcZaNd5EGo8GDIw69sYYF/IffVoHhW5RfQRnl7WkE8yqtg
- UgDRAhCGUAMTxNVzLsA7pclt9F5+4p0=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-440-dFfu1CWUNFaF2LoyXkwadA-1; Thu, 30 Jul 2026 03:13:25 -0400
-X-MC-Unique: dFfu1CWUNFaF2LoyXkwadA-1
-X-Mimecast-MFC-AGG-ID: dFfu1CWUNFaF2LoyXkwadA_1785395604
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2cc73f47bdcso31846535ad.3
- for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 00:13:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785395604; x=1786000404; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=TcjFc/7/NHyuFbF0/DRanapEJL83S3ru+B67fe+lavo=;
- b=nKy2dgSie8F79yZ2DTiSWa1hE+9LzPonKcGnWOVTz84sYDt03kDRPNytSW8Zh54tEH
- 94jdVbdKUeE9NzMyAae1hIiFyxnas9YQ0UDYGgFsGX9F2NFBqKp2HdJGyWjXl0Trs1Nb
- hej3j9MwHqOGWagAV2MSmeBW9kDFKreJEZYzH4zfE+cAh77Zxfi2cbpBbiSw/KB+AxWK
- D3kvlVhX4mDmORGmkGeAoc3CwDLcGTs35ZbcKUVbzxQ6hu6B+NrVIytC+xPnKyDORHde
- hhzznBXAud4UzWuYPex2lSrxQUxWm85VcB0nSCuT7EmaL6xwWGMJRiddfhv35BcO8ZEV
- /E7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785395604; x=1786000404;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=TcjFc/7/NHyuFbF0/DRanapEJL83S3ru+B67fe+lavo=;
- b=q10Fnh0pcx68EXe9/0A7DzmJ09dZ3+IAU8MIZ+aIj56DBpXQXfsqI4Vq5pVmsckGrJ
- 4l6tlt1pthsk5tYMH7BnotZ3iwdmn3K2WRd/mJ5n23mQj7zGzoeyj4b8jTexYr7Twb+2
- Q6wzZBEKm+ltY+3ZgPI3DTVvxVAy+hGA0GdssLDz1yDRsMfnQtq6nMgWs1i9dnvGJ5EJ
- YdV1P+JZzaAbiU53M24w8MD1hcAWRnAOmOcGdqLxAImpU1Ymqh/0ahxAfT6IlUXAwiCr
- pDc32bwHMGfgsh/maX8i2ssu8ifUTxfamFcjg5Du0G8+EB663Ho2mQBkPLBZZF7cksv0
- Cxbw==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rqtc8VD2M9bfdLyyBbMAvCqt5ZgWmsNhP1XhpBp0xANYl1r+JoQZujwasHlYjw83IcJJqu0xeQimD2L@nongnu.org
-X-Gm-Message-State: AOJu0YzL+u3XFjGqnPSHsRmC5sQglERyjjyrLIWOlO82CdPARHYPH/pj
- KzrjZPgZ/FVoDtcoPw4cgF2Hpa8CkM2iV1AC/+MhcixoUQaPH/Zcw3ntL8eL3DbxaywbEPoEdH3
- SNvc8xax+sCcLNxvXnXPPEksSQAYZPNcddq2B32Yfys8G/+fAlWMRwt3qiUok6R+6
-X-Gm-Gg: AR+sD10LYbvAD46NqoM4DKAypGdJOrekT5tNrvw1U5dqg+FEFMd1ayhJJ4thOFD92uX
- KIVlPHpA4z6n63QO0VjLYTuFqZY/ODkSxw5K+V9+WEtP5ekXQRd4SuwUF+BKFhh33bITux2oZI+
- HNy/lgKNqBrmevzLInisLoIr8PqudxqNZNlb4VIy/Yfn2hhp6o3qwR6di/DCNCWhfm0AsboEEpa
- Ex1M6t6ODXBdAxZGFPzbBztMZAr8eMRHQ/iDhHNsbvrsiEt/Q5ZZ8lQjNYk36fsDQ2qkZZgPPJB
- l68E+J1ofKUDftmON8yD3AA/o+DQ7BfUACzxMgi2WL7ambc2/KkRLZtbMgyxWVSS34tCHsiYYxj
- O8a9sQd7sENDlUwPO0TAPqm1M52UqSK7i7x8=
-X-Received: by 2002:a17:903:2c0e:b0:2c8:25c8:85a6 with SMTP id
- d9443c01a7336-2d035b99bccmr15963725ad.2.1785395604260; 
- Thu, 30 Jul 2026 00:13:24 -0700 (PDT)
-X-Received: by 2002:a17:903:2c0e:b0:2c8:25c8:85a6 with SMTP id
- d9443c01a7336-2d035b99bccmr15963535ad.2.1785395603834; 
- Thu, 30 Jul 2026 00:13:23 -0700 (PDT)
-Received: from rhel9-box.lan ([223.236.229.143])
- by smtp.googlemail.com with ESMTPSA id
- d9443c01a7336-2d022a15893sm21864835ad.4.2026.07.30.00.13.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Jul 2026 00:13:23 -0700 (PDT)
-From: Ani Sinha <anisinha@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Cc: graf@amazon.com,
-	agraf@csgraf.de,
-	qemu-devel@nongnu.org
-Subject: [PATCH v3 2/9] igvm: track memory regions
-Date: Thu, 30 Jul 2026 12:42:29 +0530
-Message-ID: <20260730071254.80695-3-anisinha@redhat.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20260730071254.80695-1-anisinha@redhat.com>
-References: <20260730071254.80695-1-anisinha@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wpKyd-00084r-5D; Thu, 30 Jul 2026 03:14:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1785395676; bh=Eyxc2J/Cv9QhR77dqx3o1dAaMuphZUj5KfYZut8IwJQ=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=bVdNAECi+VE7Cdc76tvIrRy7Wx11qvmlkzv9iLLPZ13kLPlXwGMOu08uzKS3WlUj2
+ 6YLiwXDHSl5t4XbNPqpIiuHZvPpe9xcz4d65S3zVMgaB5O/nsMajs+MQeiG0U503ai
+ KEj6qZf3yMY2JiRh3VdYMFYEQI8RzYOfv6PJmUN3Rc1KbHQN1bUYSTrSxoDOOj24As
+ VacdweFh3Frjg6+XNYhkZTDQHrwTlW6hANcc+P+ndjQpADPVPzmpHSFVTDl1scawY9
+ 01yKSp7nztOS2lnlPrSYlgrLGDm0s2SZQM6TRdcn02NV4HNeb+aV/Zu6jxYWFiOHrm
+ q+lYSTujr4TuQ==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 4E05B1C6B6F;
+ Thu, 30 Jul 2026 10:14:36 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0CE743FA24D;
+ Thu, 30 Jul 2026 10:14:44 +0300 (MSK)
+Message-ID: <fb92df74-8900-4cbe-9212-21d08ce4b824@tls.msk.ru>
+Date: Thu, 30 Jul 2026 10:14:29 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 01/13] vfio/igd: Clear saved BDSM in legacy VBIOS ROM at
+ load time
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Tomita Moeko <tomitamoeko@gmail.com>, K S Maan
+ <kirandeepmaan45@gmail.com>, qemu-stable@nongnu.org,
+ Alex Williamson <alex@shazbot.org>, Mario Casquero <mcasquer@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20260721170518.4160785-1-clg@redhat.com>
+ <20260721170518.4160785-2-clg@redhat.com>
+ <9e9a526d-e54e-402c-8f78-958e4ee514d5@tls.msk.ru>
+ <ae43beb2-852b-4fb8-a7ea-f24052483837@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <ae43beb2-852b-4fb8-a7ea-f24052483837@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,104 +119,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+On 7/29/26 12:58, Cédric Le Goater wrote:
 
-Memory regions added by the current IGVM needs to be tracked so that they can be
-freed when a new IGVM is loaded.
+> For the stable branches, I would take the fixes only :
+> 
+>   c822ecd80661 ("vfio/pci: Initialize rom_read_failed in vfio_pci_load_rom()")
+>   256229e8f9b9 ("vfio/igd: Clear saved BDSM in legacy VBIOS ROM at load time")
+> 
+> and commit 55e25958aa1a ("hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD") is
+> not one.
+> 
+> I would skip 55e25958aa1a and adapt the BDSM patch with #ifdef CONFIG_VFIO_IGD
+> in 10.0.x and 11.0.x.
 
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
----
- backends/igvm-cfg.c            |  1 +
- backends/igvm.c                | 20 ++++++++++++--------
- include/system/igvm-internal.h |  6 ++++++
- 3 files changed, 19 insertions(+), 8 deletions(-)
+So yeah, as I did for 10.0.x, - omit other changes and adjust this patch, instead
+of picking up other changes.
 
-diff --git a/backends/igvm-cfg.c b/backends/igvm-cfg.c
-index e1f09855f6..38438a7b1e 100644
---- a/backends/igvm-cfg.c
-+++ b/backends/igvm-cfg.c
-@@ -65,6 +65,7 @@ static void igvm_complete(UserCreatable *uc, Error **errp)
-     IgvmCfg *igvm = IGVM_CFG(uc);
- 
-     igvm->file = qigvm_file_init(igvm->filename, errp);
-+    QTAILQ_INIT(&igvm->memory_regions);
- }
- 
- OBJECT_DEFINE_TYPE_WITH_INTERFACES(IgvmCfg, igvm_cfg, IGVM_CFG, OBJECT,
-diff --git a/backends/igvm.c b/backends/igvm.c
-index 534032fed8..9e7c90d386 100644
---- a/backends/igvm.c
-+++ b/backends/igvm.c
-@@ -220,7 +220,7 @@ static void *qigvm_prepare_memory(QIgvm *ctx, uint64_t addr, uint64_t size,
-                                   int region_identifier, Error **errp)
- {
-     ERRP_GUARD();
--    MemoryRegion *igvm_pages = NULL;
-+    IgvmMemoryRegion *imr = NULL;
-     Int128 gpa_region_size;
-     MemoryRegionSection mrs =
-         memory_region_find(get_system_memory(), addr, size);
-@@ -254,23 +254,27 @@ static void *qigvm_prepare_memory(QIgvm *ctx, uint64_t addr, uint64_t size,
-          */
-         g_autofree char *region_name =
-             g_strdup_printf("igvm.%X", region_identifier);
--        igvm_pages = g_new0(MemoryRegion, 1);
-+        imr = g_new0(IgvmMemoryRegion, 1);
-+        imr->mr = g_new0(MemoryRegion, 1);
-         if (ctx->machine_state->cgs &&
-             ctx->machine_state->cgs->require_guest_memfd) {
--            if (!memory_region_init_ram_guest_memfd(igvm_pages, NULL,
-+            if (!memory_region_init_ram_guest_memfd(imr->mr, NULL,
-                                                     region_name, size, errp)) {
--                g_free(igvm_pages);
-+                g_free(imr->mr);
-+                g_free(imr);
-                 return NULL;
-             }
-         } else {
--            if (!memory_region_init_ram(igvm_pages, NULL, region_name, size,
-+            if (!memory_region_init_ram(imr->mr, NULL, region_name, size,
-                                         errp)) {
--                g_free(igvm_pages);
-+                g_free(imr->mr);
-+                g_free(imr);
-                 return NULL;
-             }
-         }
--        memory_region_add_subregion(get_system_memory(), addr, igvm_pages);
--        return memory_region_get_ram_ptr(igvm_pages);
-+        memory_region_add_subregion(get_system_memory(), addr, imr->mr);
-+        QTAILQ_INSERT_TAIL(&ctx->cfg->memory_regions, imr, next);
-+        return memory_region_get_ram_ptr(imr->mr);
-     }
- }
- 
-diff --git a/include/system/igvm-internal.h b/include/system/igvm-internal.h
-index b5720fae0c..9e9fa1d9af 100644
---- a/include/system/igvm-internal.h
-+++ b/include/system/igvm-internal.h
-@@ -18,6 +18,11 @@
- #include "system/confidential-guest-support.h"
- #include <igvm/igvm.h>
- 
-+typedef struct IgvmMemoryRegion {
-+    QTAILQ_ENTRY(IgvmMemoryRegion) next;
-+    MemoryRegion *mr;
-+} IgvmMemoryRegion;
-+
- struct IgvmCfg {
-     Object parent_obj;
- 
-@@ -29,6 +34,7 @@ struct IgvmCfg {
-     char *filename;
-     IgvmHandle file;
-     ResettableState reset_state;
-+    QTAILQ_HEAD(, IgvmMemoryRegion) memory_regions;
- };
- 
- typedef struct QIgvmParameterData {
--- 
-2.42.0
+> How's that ?
 
+This definitely works.  Thank you!
+
+/mjt
 
