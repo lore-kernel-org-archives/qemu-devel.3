@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0C11C5516F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEACCC5516E
 	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 20:11:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpX5P-0004Nx-TX; Thu, 30 Jul 2026 16:10:35 -0400
+	id 1wpX5A-0004CJ-V6; Thu, 30 Jul 2026 16:10:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mikail.sadic@ibm.com>)
- id 1wpX5O-0004MU-OT; Thu, 30 Jul 2026 16:10:34 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wpX58-00049F-KY; Thu, 30 Jul 2026 16:10:19 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mikail.sadic@ibm.com>)
- id 1wpX5N-0001hq-A4; Thu, 30 Jul 2026 16:10:34 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1wpX56-0001gR-Tn; Thu, 30 Jul 2026 16:10:18 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66UJnFdg3878694; Thu, 30 Jul 2026 20:09:52 GMT
+ 66UJmVqD2081872; Thu, 30 Jul 2026 20:09:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=Q7oIuPCYo4p+RjfJB
- 3jCPNS97if4AWQut/dKB+3wAW8=; b=kdxnhdB4+rY//wFWSmzCSEUIkGnmrOiZO
- uHnucRR4HJenMVTsEYQ990U/pM8fFVzvlokQl3JZQS2pJZEIZqxnoKX/dKtYEraJ
- XHZzdojBmiXNj/g/tDg5Fm9yJ73ptDnb7u/3GPNWda/wgPrvzjfPVnQ7Exf0Z2fj
- pIRMn0L31NY+2SXIMOxPM515wn3I0pJYfHtKV/hvwjaP0QUvPxRIytuYNrRdum9v
- 3Wi0vwmnSa4WGP1l8QPwEfN9sZjBglhWEVGXCNXAj9cQ1m/cNSfgzNYrgA5r1bLa
- CTPx8Ki2+e50PhFq6bhRfoJpD8nMibgkAVHF4Qx6z7oD1TaN7FU1A==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmv0p0rwu-1
+ :mime-version:references:subject:to; s=pp1; bh=TR/zMuZQNfrB4LNiZ
+ cJDwIVjsxAmSUCCo0C3kWPvJlw=; b=SfHpFSIbGj1NtcHLK1JFb1q9sK8rJOn9e
+ y8PQOt9Y2WQzBxqk4VkoL1R43Fno29VrfjSzQLd8tBuXJet875bSWTMBIKtQ8r7j
+ qIHnC8oMwW6s0vthbWBf8y70DPEdhXlILr6r5FYKIAqPCe/bkfpMJ6A5zqapYDlg
+ 4MBuX8ZON+rqCzKuFbYtUJChbc75irkv4E64sRuWFeRNwPhuK27Qe8cIZf9Fd5a/
+ vUJwNu6ckN+Jt9CSCErmq5JO4POatjjg8mDaaey6a0heR1s4hVVl9uTHt+FCVOhZ
+ 4k+clq/naTFlmqILWgFiL3L6jLntnWnWuEOvYAs9K2B1Z5KsTyELg==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuycsmhn-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Thu, 30 Jul 2026 20:09:51 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66UJfQJo022888;
- Thu, 30 Jul 2026 20:09:50 GMT
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66UJuLjs008962;
+ Thu, 30 Jul 2026 20:09:49 GMT
 Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fn7fqn4g0-1
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn7uwd383-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Jul 2026 20:09:50 +0000 (GMT)
+ Thu, 30 Jul 2026 20:09:49 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
  by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66UK9mgH9437720
+ 66UK9mY429688336
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 30 Jul 2026 20:09:49 GMT
+ Thu, 30 Jul 2026 20:09:48 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D73F258055;
+ by IMSVA (Postfix) with ESMTP id 7A75E5805D;
  Thu, 30 Jul 2026 20:09:48 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 824265805E;
+ by IMSVA (Postfix) with ESMTP id 24D1758055;
  Thu, 30 Jul 2026 20:09:48 +0000 (GMT)
 Received: from IBM-MFS.atx-us.ibm.com (unknown [9.16.49.87])
  by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
@@ -65,10 +65,10 @@ Cc: Mikail Sadic <mikail.sadic@ibm.com>, pbonzini@redhat.com,
  jamin_lin@aspeedtech.com, kane_chen@aspeedtech.com,
  andrew@codeconstruct.com.au, joel@jms.id.au, calebs@linux.ibm.com,
  milesg@linux.ibm.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v2 4/8] i2c/aspeed: Fix DMA receive first-byte handling for
- block reads
-Date: Thu, 30 Jul 2026 15:09:39 -0500
-Message-ID: <20260730200945.1113936-5-mikail.sadic@ibm.com>
+Subject: [PATCH v2 3/8] arm/aspeed: Wire AST2700 FSI controllers to APB-to-OPB
+ bridges
+Date: Thu, 30 Jul 2026 15:09:38 -0500
+Message-ID: <20260730200945.1113936-4-mikail.sadic@ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260730200945.1113936-1-mikail.sadic@ibm.com>
 References: <20260730200945.1113936-1-mikail.sadic@ibm.com>
@@ -76,39 +76,39 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfX9Ib5WQIGA3va
- wx2IrXhUTpER0EnXQQqSHiw0nKuDCws+PM3sl70qwzzV3YfGfePXMLpPFCEvaq4zb8QKQWNTqtQ
- Uzxp6a1MbDh2Y+9DS6qdAkrZ1EM9wIU=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfX/UpgnRoE6ioX
- aJT7RqLwLhAs4V3E8yVw70E1YhxCR6O+NA6kmES4RnSwLU2km40KXGTeomIxYTgkyaGs9aDed6v
- pJMtN90KzJnx9l0rlpoiGcuxGzWPfWx9OiKbE7yJJW90XWGzAK9XJHo/Ohke4NMyVrxLn3g9Bbb
- gi5BqPCc+Og2heYIXA9frcyWm46Dunr56ugAVHZRdL1AQaHkgMOCwrqJllsDURnX7Spz/qUqBu7
- WMj4g4SGu7orNh+c6Cr5QcEXQaaFzwbbJJE1KP/No59Re+b6FILK6D5du60mpdEViFsQrggymiG
- xNMqTQVcz+ix4tExjKfJBhPBtI3uGuSN2cLHg5XmRsQejScR1Vy/rKtTIeatchJZmubTpPCE49T
- s5v9GyGbS6Oy6DkiU3Br6YwxF4/c1JcRnzec2odf5ppXovXPVyzBLeCHdaR0GhfPAMUtnmfq0bQ
- cabOHqD3Kzkjmi0GtIA==
-X-Authority-Analysis: v=2.4 cv=b5WCJNGx c=1 sm=1 tr=0 ts=6a6baf90 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Proofpoint-ORIG-GUID: aXlHLMtTivrWextQ2yR7MwyTfWqUls1N
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfX7nmPQ3u/Z7UM
+ clZw9o6bu+P8Dh/04mMD9AMKIPfWA+MCHN6xncXFhq4Xqy6N6h1ZgHnL386599KLOx8fw6gseUK
+ rlf5D2CZI84wicWzQ+/IhABIDexw7JZRJuLbxxBtJKahA6OGUq2J3pwnnR3088/htT8I+7w7th+
+ NbdVTiKZ/NPrfmr2oeo/ZnqdR8PX8jfL/NmJnBa2QtaK/E4GCuVD+ix4pPgVll3q8nPDG2QY2GT
+ KFH9PJjz4zcpL9tlXNqEEinfP1pu6euD6frD39TMOTEc3s1+8ELP0gQgkbsNIviSrV9wbAKUuiR
+ AV12go/N4EosKsC4Iw85TMtl/Uv/KiuTxxrlxSLTLWVoxiEK9LxACMAgn2yGUjbxpXz2pQKdrhS
+ nWHAGbLryvJuVZT5mULvR6U37pA7qjQ12gF4mAwuGojWKwrC03PXboc7qQCYNKhk5PBf/Uert2j
+ 3myOxnMp2ir+bJqv4yQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMwMDE0NSBTYWx0ZWRfXzzJZXVcFJI40
+ QnztJ1jP0Iim84rGVna13mwAwZQ10wlt4C0TZ3L0+flfDXivWV8Y5Wpy9eJbaJXJ0uLvSc2MHXv
+ ERi4XSl+guCLyfl5FZrdVTH4yQAsHbQ=
+X-Authority-Analysis: v=2.4 cv=AZeB2XXG c=1 sm=1 tr=0 ts=6a6baf8f cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=82TwdL3_f4vI9uiogJoA:9
-X-Proofpoint-GUID: 15bHUHUO4BdO7DqZXfKyAbJetaJ-IBfd
-X-Proofpoint-ORIG-GUID: t7HXCBzbbRNUkpfalDDdzmwR-X-ZZ8fI
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=phIN1QjiwUTDb9KW1ZcA:9
+X-Proofpoint-GUID: e06NPOStSOryLsiTMy1eqHDweHXpPIFC
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-30_06,2026-07-30_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0 impostorscore=0
- bulkscore=0 phishscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0
+ spamscore=0 priorityscore=1501 phishscore=0 adultscore=0 impostorscore=0
+ clxscore=1015 malwarescore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607300145
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=mikail.sadic@ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=mikail.sadic@ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,55 +125,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-An SMBus block read (I2C_M_RECV_LEN) reads the block length from the
-first received byte. The Linux/U-Boot aspeed I2C driver obtains that
-first byte from the I2CC_STS_AND_BUFF register (modelled here as
-reg_byte_buf), even when the transfer uses DMA. The DMA receive path,
-however, only wrote received data to DRAM and never updated
-reg_byte_buf, so block reads read a stale/zero length.
-
-Mirror the first DMA-received byte into reg_byte_buf so that
-I2C_M_RECV_LEN transfers using DMA report the correct block length.
-This is required for the ucd9000 driver, which uses
-i2c_smbus_read_block_data().
+The AST2700 SoC exposes two FSI controllers behind APB-to-OPB bridges.
+Add the ASPEED_DEV_FSI1/FSI2 memory-map entries, instantiate both fsi[]
+APB-to-OPB bridges and map them during SoC realize, so the CFAM/CFAM-S
+devices on the FSI local buses become reachable from the SoC.
 
 Signed-off-by: Mikail Sadic <mikail.sadic@ibm.com>
 ---
- hw/i2c/aspeed_i2c.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/arm/aspeed_ast27x0.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-index 27afcaecee..facb54d27e 100644
---- a/hw/i2c/aspeed_i2c.c
-+++ b/hw/i2c/aspeed_i2c.c
-@@ -365,6 +365,7 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)
-     uint32_t reg_pool_ctrl = aspeed_i2c_bus_pool_ctrl_offset(bus);
-     uint32_t reg_byte_buf = aspeed_i2c_bus_byte_buf_offset(bus);
-     uint32_t reg_dma_len = aspeed_i2c_bus_dma_len_offset(bus);
-+    bool first_dma_byte;
-     int pool_rx_count = SHARED_ARRAY_FIELD_EX32(bus->regs, reg_pool_ctrl,
-                                                 RX_SIZE) + 1;
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index dddd7d2106..b908d7d4ff 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -17,6 +17,7 @@
+ #include "qemu/module.h"
+ #include "qemu/error-report.h"
+ #include "hw/i2c/aspeed_i2c.h"
++#include "hw/fsi/aspeed_apb2opb.h"
+ #include "net/net.h"
+ #include "system/qtest.h"
+ #include "system/system.h"
+@@ -98,6 +99,8 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+     [ASPEED_DEV_PCIE_MMIO0] = 0x60000000,
+     [ASPEED_DEV_PCIE_MMIO1] = 0x80000000,
+     [ASPEED_DEV_PCIE_MMIO2] = 0xA0000000,
++    [ASPEED_DEV_FSI1]      =  0x21800000,
++    [ASPEED_DEV_FSI2]      =  0x23800000,
+     [ASPEED_DEV_SPI_BOOT]  =  0x100000000,
+     [ASPEED_DEV_SDRAM]     =  0x400000000,
+ };
+@@ -559,6 +562,11 @@ static void aspeed_soc_ast2700_init(Object *obj)
+                              sc->silicon_rev);
+     }
  
-@@ -391,6 +392,7 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)
++    for (i = 0; i < ARRAY_SIZE(s->fsi); i++) {
++        object_initialize_child(obj, "fsi[*]", &s->fsi[i],
++                                TYPE_ASPEED_APB2OPB);
++    }
++
+     object_initialize_child(obj, "dpmcu", &s->dpmcu,
+                             TYPE_UNIMPLEMENTED_DEVICE);
+     object_initialize_child(obj, "iomem", &s->iomem,
+@@ -1132,6 +1140,16 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
          }
+     }
  
-         aspeed_i2c_set_rx_dma_dram_offset(bus);
-+        first_dma_byte = true;
-         while (bus->regs[reg_dma_len]) {
-             MemTxResult result;
- 
-@@ -407,6 +409,11 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)
-                 return;
-             }
- 
-+            /* Mirror first byte to reg_byte_buf for I2C_M_RECV_LEN. */
-+            if (first_dma_byte) {
-+                SHARED_ARRAY_FIELD_DP32(bus->regs, reg_byte_buf, RX_BUF, data);
-+                first_dma_byte = false;
-+            }
-             bus->dma_dram_offset++;
-             bus->regs[reg_dma_len]--;
-             /* In new mode, keep track of how many bytes we RXed */
++    /* FSI / OPB */
++    for (i = 0; i < ARRAY_SIZE(s->fsi); i++) {
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->fsi[i]), errp)) {
++            return;
++        }
++        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->fsi[i]), 0,
++                        sc->memmap[ASPEED_DEV_FSI1 + i]);
++    }
++
++
+     aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->dpmcu),
+                                   "aspeed.dpmcu",
+                                   sc->memmap[ASPEED_DEV_DPMCU],
 -- 
 2.53.0
 
