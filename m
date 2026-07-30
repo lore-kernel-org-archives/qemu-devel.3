@@ -4,106 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4252AC55165
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 12:49:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B26BC55160
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 13:00:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpQBU-0005Gg-LD; Thu, 30 Jul 2026 08:48:24 -0400
+	id 1wpQMG-0006wU-Iz; Thu, 30 Jul 2026 08:59:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wpQAu-0005Er-Hb
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 08:47:55 -0400
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wpQAp-0006Py-N0
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 08:47:45 -0400
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-81ed000b507so21306397b3.0
- for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 05:47:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785415661; cv=none;
- d=google.com; s=arc-20260327;
- b=gW0Lvq96Era8yX1Zz5VI/sEkWPMmHjmehFpLZrx5+0EH6gJer0NCMZ8vq0veSMPzg5
- efAt4SGJuvoZaSSGDa56n9manFxfALEUWSOz7UCyPt8ZpGCl3bDqWkMbgbR30yOqk5tJ
- 05A+KBLesSDwlpSveCTgmwTmYR/8yA0iWMDIu8DBYgEF6o5y2/P3xln4JNLCvJJeUggD
- h8whDbpdwtu412gF8CN13MaJ6QP1sHc/cEjkOSAkYrEzhV7ECEsUTtsgN8542iTqRLe6
- dFsmfM8bwVuOUovbGW/Fai1xSmf9iodAzu2hNk+B7COyr3iHRlkSbgaxae9cro45sGa4
- LYJg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=bxFdje7jjR+zvKahWORqDVEHGclh6x66ydhbsiz7wmg=;
- fh=qfEqggjM1nwQcACoAs+knt93Mv1DjZDIyiTP3TgukQY=;
- b=VPQue1MqqRt9PIxPtc7V9oTtYa28YTOvzcdfQAfvYX2bH9rJRkqbXQArPHjUkLulS/
- xiPggcuju3uS0BuTmvxaJVj1taOPYAa0Rd7APhDaWAdpam4kylqfRTqePK5QiaCNjbh3
- /k3LR+T1eE/LHCdu508yRLFOgttl377KTAQjpq22QItHxOgNYE3U/S+rSqSyghgWMtZi
- Qn8p5apdvpJ+i86fpXqVa4LQqjbxUIeA7+xzxzQ/SgNw6TT2Xhdqg8daYMsFw6RnLm6V
- x7bVSd+2BM4znHhRbUk7Vv6wtS91C3QsSv7Ks2DrWtiCYoXEVZBE2Nrlan5mFrao+sv4
- 4eDQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785415661; x=1786020461; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=bxFdje7jjR+zvKahWORqDVEHGclh6x66ydhbsiz7wmg=;
- b=zZWjJz+nTvBst5Y75ynhf0Q8YlJC6uRYFOX3o0ElRr2RSNtIFWoeL8JM1hUpxoNY4E
- 6zZ05GL0XilgEkxxLNb66LEAwnXX5dI7uwx7wuthrKL4CG7Y7j4tkcWjsJWAdO/WdN2R
- ZgRou+RHui9ayqh3jjpONGs3mRsqL2H3/savUHb/J/+pa6A75vvJThG158bSZB5wf+iQ
- hIFvrU9p2YTb3mEZ/Tn+DlV5nXx+hrWo3s5rICBSZk5vkW8cOoS8K7dSXxQa0BEbgxHh
- AoRlTWx+1T1OMA7XDCB0sfnOF+tXrJseCqvBAHW6yuAsJMryEj9HZXAgHQglMtduJJGI
- n28g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785415661; x=1786020461;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=bxFdje7jjR+zvKahWORqDVEHGclh6x66ydhbsiz7wmg=;
- b=c5Px2AUTL9VZ6lRbMR2cGuxy+vMjPsOoWJkaZyoiFrrz2j7F+q4wkMcKn5PGJyqJnb
- aNnp8r15ctmzgjP+apvaVA6zkC+iEFHSWRmeNcWMFpm94sXUFJlEDgzaN+5Q7LDyftNQ
- 76udZp6P9I7+0gWXATxNOrNhjLsiEwiPa8MqK9Go7NLrnEGPzenDTG+0NUiwY370jprc
- BUzPn42aQSe6F1rNkLCQb93oVcEDEJLsxrSGJ4YduM1I/t+5QwhEB7SV23Oml1Cfmspu
- QJbR19B5VtvFy+nuyCjSOEsbOHZv45VY3xv8OyCMAGTAYVQ2g/wmpaUwe1lVc+6W/JRS
- 1Ypw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpXIdBJpaJH4hQiw6gXsff4iinEiH0s0+o9xmRAVscrzOBtUKR2OTRrjK5sxtnidwW7M5AVusOodBQZ@nongnu.org
-X-Gm-Message-State: AOJu0YzC3Taa08szUrMY/aWIFDJg9pJimVPeJRCSyCooUUW1tDjZGgxF
- 74oraNnXO1zj4mK9rn4CPFksqC5bMvUEYf4cemx7f6tnSf+tL54U2cN9KBmCVsiuRMIcQ6Qwtwc
- OAa0muy/j4u/7rxKtkEeL9c9CF157r9MvifGi3idQLA==
-X-Gm-Gg: AR+sD122tsnnHhBo6v520qWgPQu8Q8tIzH7hZzxeLFMpjmJHBjHH3loSoyFxn8NYNP6
- dD9ZRTgm+p3L1/jleKtqMFX5JutPf+YCUZQpql42u3ojarv4ZkyFuq47GUAKZKiaeX2r5X71+SJ
- M/S0/KFguke0rcG1mUWyAXHDIU78UvzKRyL0BkFLYTW0YnfUgRJ71nlvPVQGDyHs6o+yP9R9Zk9
- n/mZtLhYpJb9qU9KRA2r0A7xu5/iDJ2xoi/ilDqytBS0BZKu0fcbFKsMe3JS4t8uBWnHp5kg1oe
- 6dwcJ4d7glWcuxjmKMV+DGosVU/Fjx6pkxWjwBVBsKvre2RoSBCjgSe56xzjO7E9ofaJmzGtCft
- vIYfQ+/NZmbQvjpMMzQu20H1bcSIJ
-X-Received: by 2002:a05:690c:9a10:b0:81e:6a10:f904 with SMTP id
- 00721157ae682-81fb8acc1demr15752097b3.45.1785415661447; Thu, 30 Jul 2026
- 05:47:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wpQME-0006vb-EU
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 08:59:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wpQMC-0007hN-6Q
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 08:59:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785416366;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mDS4TkMha0gHH0wVcrCrut/csLSeIVhxyOKouJJJjDU=;
+ b=Yj9rImAf4GI4vRNF/8hj5d1eKk0CyREhpacJFnIj5E/YaV9yPRZEpXBQLbfLOUFCsCRiDS
+ CXV/D/Z5dyVMko035jlVZsdN3K27BU4scNhPPv4lDT9uVwuypnCBgHhaY5DzhIKfw105q0
+ A85bKjpVrZTvkJJKiQmU4MbBAyOSgVY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-442-4tyhKubONrCWr4rAUTIOHA-1; Thu,
+ 30 Jul 2026 08:59:22 -0400
+X-MC-Unique: 4tyhKubONrCWr4rAUTIOHA-1
+X-Mimecast-MFC-AGG-ID: 4tyhKubONrCWr4rAUTIOHA_1785416359
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D31C31800358; Thu, 30 Jul 2026 12:59:17 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D00CD180034E; Thu, 30 Jul 2026 12:59:14 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 74A8021E6920; Thu, 30 Jul 2026 14:59:12 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,  Lukas
+ Straub <lukasstraub2@web.de>,  Vladimir Sementsov-Ogievskiy
+ <vsementsov@yandex-team.ru>,  Zhao Liu <zhao1.liu@intel.com>,  Laurent
+ Vivier <laurent@vivier.eu>,  "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,  Alex
+ Williamson
+ <alex@shazbot.org>,  zhenwei pi <zhenwei.pi@linux.dev>,  Hanna Reitz
+ <hreitz@redhat.com>,  Ani Sinha <anisinha@redhat.com>,
+ qemu-block@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Peter Xu
+ <peterx@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,
+ linux-cxl@vger.kernel.org,  Jiri Pirko <jiri@resnulli.us>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Stefan Berger
+ <stefanb@linux.vnet.ibm.com>,  Fabiano Rosas <farosas@suse.de>,  Stefan
+ Hajnoczi <stefanha@redhat.com>,  Michael Tokarev <mjt@tls.msk.ru>,  Igor
+ Mammedov <imammedo@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,  Mauro Carvalho Chehab
+ <mchehab+huawei@kernel.org>,  linux-edac@vger.kernel.org,  =?utf-8?Q?Marc?=
+ =?utf-8?Q?-Andr=C3=A9?=
+ Lureau <marcandre.lureau@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Eric Blake <eblake@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?=
+ Le Goater <clg@redhat.com>,  Jason Wang <jasowangio@gmail.com>,
+ qemu-trivial@nongnu.org,  Jonathan Cameron <jic23@kernel.org>
+Subject: Re: [PATCH v2 44/44] qapi: convert trivial intro sections for
+ block-core.json
+In-Reply-To: <87qzkntdpy.fsf@pond.sub.org> (Markus Armbruster's message of
+ "Tue, 28 Jul 2026 16:01:45 +0200")
+References: <20260723044805.527643-1-jsnow@redhat.com>
+ <20260723044805.527643-45-jsnow@redhat.com>
+ <87y0f0aikr.fsf@pond.sub.org>
+ <CAFn=p-axhB-ezhfD2F8EoFhWT0h92d6oWP6Li1-JdhiXUGbsdA@mail.gmail.com>
+ <87qzkntdpy.fsf@pond.sub.org>
+Date: Thu, 30 Jul 2026 14:59:12 +0200
+Message-ID: <878q6socpr.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260729231325.3808993-1-titusr@google.com>
- <20260729231325.3808993-5-titusr@google.com>
-In-Reply-To: <20260729231325.3808993-5-titusr@google.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 30 Jul 2026 13:47:29 +0100
-X-Gm-Features: AUfX_myktQa3A4Ln_TqTYZyhBnV8C3Zs9A7DubEX9NAW-SgJPwRN32D4fSLMQZA
-Message-ID: <CAFEAcA9JKz6e4j6+-14EtpWs=g_c-EYE2Ay3OfyikbWOiyX8Ug@mail.gmail.com>
-Subject: Re: [PATCH 4/8] hw/sensor: update adm1266 block transfers
-To: Titus Rwantare <titusr@google.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kfting@nuvoton.com, 
- imaginos32@gmail.com, wuhaotsh@google.com, philmd@mailo.com, 
- fanjason@google.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,36 +113,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 30 Jul 2026 at 00:13, Titus Rwantare <titusr@google.com> wrote:
+Markus Armbruster <armbru@redhat.com> writes:
+
+> John Snow <jsnow@redhat.com> writes:
 >
-> Fixes an issue with reading the MFR_* registers on the ADM1266, this
-> device has an unconventional access pattern where a block write of
-> length 1 is written to the MFR_* register with the length of the data
-> to be read back. Simultaneously, it is possible to write to the contents
-> of these registers so long as the block write is longer than 1.
+>> On Fri, Jul 24, 2026 at 4:38=E2=80=AFAM Markus Armbruster <armbru@redhat=
+.com> wrote:
 >
-> Signed-off-by: Titus Rwantare <titusr@google.com>
-
->  typedef struct ADM1266State {
->      PMBusDevice parent;
-> +    uint8_t read_length;
+> [...]
 >
->      char mfr_id[32];
->      char mfr_model[32];
->      char mfr_rev[8];
-> +    char mfr_location[48];
-> +    char mfr_date[16];
-> +    char mfr_serial[32];
+>>> I believe all the problematic first paragraphs consist of more than one
+>>> sentence.  What about splitting "trivial" into "very trivial" (just one
+>>> paragraph, no sentence-ending punctuation in the middle) and "hopefully
+>>> trivial" (just one paragraph, remainder)?
+>>
+>> That's tricky to automate, and doing it by hand doesn't sound much fun
+>> either... can we just power through one-by-one?
+>>
+>> Unless you have a script or a trick you believe will help, and then I
+>> am happy to oblige.
+>
+> By hand would clearly be a bad use of your time.
+>
+> I'll look into automating it.
 
-This patch seems to be doing two things at once:
-(1) fix the semantics of the accesses to the MFR registers
-(2) add missing location/date/serial registers
+Lightly tested throwaway script:
 
-Please split it so we do these things in separate patches.
-(Notably, part (2) depends on patch 3 in this series, but
-I think a fix to (1) does not; we might want to mark the
-bugfix part for backports to stable.)
+#!/usr/bin/env python3
 
-thanks
--- PMM
+import os
+import re
+import subprocess
+import sys
+
+proc =3D subprocess.Popen(['/usr/bin/git', 'add', '-p'],
+                        bufsize=3D1,
+                        stdin=3Dsubprocess.PIPE,
+                        stdout=3Dsubprocess.PIPE,
+                        text=3DTrue)
+
+n =3D 0
+while True:
+    n +=3D 1
+    chunk =3D os.read(proc.stdout.fileno(), 1024*1024).decode('utf-8')
+    if not chunk:
+        break
+    lines =3D chunk.splitlines()
+    prompt =3D lines[-1]
+    if prompt.find('Stage this hunk') =3D=3D -1:
+        print(f"{sys.argv[0]}: no recognizable prompt after chunk #{n}",
+              file=3Dsys.stderr)
+        break
+    #old =3D '\n'.join(filter(lambda l: re.match(r'^[- ]', l), lines))
+    #print(old)
+    deleted =3D '\n'.join(filter(lambda l: re.match(r'^-#', l), lines))
+    if re.search(r'[!.?].*[!.?]', deleted, flags=3Dre.DOTALL):
+        proc.stdin.write('n\n')
+    else:
+        proc.stdin.write('y\n')
+    ch =3D os.read(proc.stdout.fileno(), 1).decode('utf-8')
+
+try:
+    proc.wait(1)
+except:
+    print(f"{sys.argv[0]}: git-add appears to hang, sending SIGTERM",
+          file=3Dsys.stderr)
+    proc.terminate()
+proc.wait()
+
+if proc.returncode !=3D 0:
+    print(f"{sys.argv[0]}: git-add terminated abnormally (code=3D{proc.retu=
+rncode})",
+          file=3Dsys.stderr)
+
 
