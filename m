@@ -4,156 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74869C5516E
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 17:56:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 112E0C5516E
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 18:20:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpUz6-00020c-As; Thu, 30 Jul 2026 13:55:56 -0400
+	id 1wpVMV-0003u2-LW; Thu, 30 Jul 2026 14:20:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wpUz5-00020M-7e; Thu, 30 Jul 2026 13:55:55 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wpUz3-0004rf-J9; Thu, 30 Jul 2026 13:55:55 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66UGlwJs3612736; Thu, 30 Jul 2026 17:55:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=FIez5/
- vXENXQokqM17EHXzJXNpDenT9j5NZEj5oRbZQ=; b=gMaGxZJWryw2lASiDwLp4t
- I8zEV4lsXe5N5dW8m2PEPUsHfscCvoD3QIrW6wTTx3U6opB1NUuRMkzYBtv2676A
- h0oOsCNxC8G+wD7PlnNDrxdUHbvdCxKkaSvZlMq9B4smdbrgRZunf4JkMyAVtBXv
- jDzWR6ZamTDeygcXxqTBGvCy9OiVUKNU1/jZgsER/4RqtVMFkaW7b4z1ru/PSpbZ
- lHJitqRKhz96qJGnfBCZy7oFjSCqKWUZoKjOnWq7PCLgzWfjIIE4K8X5JYRytHy5
- w9DuiHjp+h2ccmlqPO2lohGKmRWAra2XKx+HMVOorr2p3XJGqYJam71F6BxgJ8IQ
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuwd889w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Jul 2026 17:55:51 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66UHfLZD003576;
- Thu, 30 Jul 2026 17:55:50 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fna5yc643-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Jul 2026 17:55:50 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66UHtnvY64291090
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 30 Jul 2026 17:55:49 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1938358068;
- Thu, 30 Jul 2026 17:55:49 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0CF8A58055;
- Thu, 30 Jul 2026 17:55:48 +0000 (GMT)
-Received: from [9.61.160.189] (unknown [9.61.160.189])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 30 Jul 2026 17:55:47 +0000 (GMT)
-Message-ID: <ff0cd092-fc3a-460a-b248-cac4f4462b5a@linux.ibm.com>
-Date: Thu, 30 Jul 2026 13:55:47 -0400
+ (Exim 4.90_1) (envelope-from <ahshehab24@gmail.com>)
+ id 1wpVMU-0003ts-6Y
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 14:20:06 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ahshehab24@gmail.com>)
+ id 1wpVMS-0000Sl-EB
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 14:20:05 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-495590dde14so860965e9.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 11:20:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785435602; x=1786040402; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ZXZbQkwGxp+BHj+7kwSHsDy70ht4F/3kkqUFKGYMUBg=;
+ b=U72OCXyf67t7JfRV8AbRkJXYlsdykn0zqpftJVV2BHcSWMChPtYJZ+ZtIRyuSuK1Pu
+ j5c3TD06fadxvDCjlW+AsbTzC9VF5A2U8zMmrJ45crKuRWjgnhW7xTdLBltqgr2JZj7y
+ udnt5Hpthc6I5vfEGPt2tvvfOLhcfb8KaW2DdeqEWgQUSd5cOfLoaUQjwejB5BkC+Net
+ 83JC5lRkKpd/V7UHzQYQeHyY5nAW/u5EonwbHzk2Pj8nD/Yf8xUvfa9EF929WDHHNBjp
+ dmK0u+Xsxb4auAregukvkwnShSE39EmsZqOw0ICsExfnA2/7dloXyH6J17rA/Gbr6LGP
+ hIIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785435602; x=1786040402;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ZXZbQkwGxp+BHj+7kwSHsDy70ht4F/3kkqUFKGYMUBg=;
+ b=Uu5nkmWsudbidLfgKWxcRVYruPBh971o9TT4Kp6wVUM28MA+GDZWP2ulET98/PN2Vi
+ UzbXFIHhyOGZGVrZMMucz0ajW4AHU9NHk3jbLlqQQoKdseRxUSg/MGhgCK6X2t3bZHXJ
+ 8YfxdCGptZEwb6ZQjzcnDLXICGNPuTQe/UNigTx9p8aLOGHktfoCbFA66SyXl4onmsll
+ DG6DsylM6c7eD4XGSiDloFYKsfqMCxpXQ1wveVuV0tpaPMSzM1YiFa9D2kuQAs4tCZ9g
+ hKZKFY0xq62iY/KhGO98yYOk6P6UXM8FjyAC0rAtq9JMk99zMZwKaLwHIi296mu/d4SA
+ f4Qw==
+X-Gm-Message-State: AOJu0Yx0tf9v+mYVHyVtgoSkIJV3/glhzPRyRCfTwL1g0pMJ2dXUn7gw
+ gwD/8TpwVlzqfp9WknwSIWZdhVc9EZHpChAzS3BzbwYXXScdIt9nlYQBzSM88NQ81wY=
+X-Gm-Gg: AR+sD127poxhvjD9KnB1Yw2y+3mEbyyfqA3N+DNiDFed2u73nG/bUoxvLuvTRu68vcg
+ YFU9YY3Yfiswp2QsloPTjhXuezmRbP+RxiITsFW6ilPNLDhaZztU4ygW70OS8PsseBZ+12hS2O9
+ LVMqvBTIwYJVO41EFdM+27J84B7PXI9rCRuGf9GtDWQ9x7SHrQKgRwHNf4+c+S1e1q3Z3OW4bnM
+ pOaXb1pyr6D+bEl3j+XPrOjK0bAfVUmTz4bqsqM0StVWvcWZj3oIjLbXErdliQqOj4tNZsLHTET
+ 5BfZE4nm07jtURc3DPKQ+Z2LCDrSbM8+NEw1XeaqMYnShKoVsmQcVF9AvEX4jzYYvLGpatlYHZF
+ pbQP/RHmy7lDsl+YIe7BVFaYWL1NdONEfjFUSJ/dKMzXu9hU6m22UP8B+Rsmx6mvg0fVm7+tChX
+ Xs2Ld0qdYKHU+UtHjkisBwZl/ejaQ8U1tM2VXiwcrfmIp4AbfISBvW/nuDyrMkHuF762k4Gcwt/
+ qUuHJosQIs=
+X-Received: by 2002:a05:600c:8484:b0:492:45a0:dcef with SMTP id
+ 5b1f17b1804b1-49804c154d7mr23109405e9.5.1785435602219; 
+ Thu, 30 Jul 2026 11:20:02 -0700 (PDT)
+Received: from 5520-BMRXQ93.eg.si-vision.com ([102.186.12.84])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4980562b4c7sm4387355e9.0.2026.07.30.11.20.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 30 Jul 2026 11:20:01 -0700 (PDT)
+From: A-Shehab <ahshehab24@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Max Chou <max.chou@sifive.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, A-Shehab <ahshehab24@gmail.com>
+Subject: [PATCH] target/riscv: Fix PC sync in trans_sspopchk for CFI exception
+ handling
+Date: Thu, 30 Jul 2026 21:18:52 +0300
+Message-ID: <20260730181852.1622-1-ahshehab24@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH qemu] pc-bios/s390-ccw: Fix off-by-one errors with
- loadparm and boot entries
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- cohuck@redhat.com, mjrosato@linux.ibm.com
-Cc: zycai@linux.ibm.com, jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
- jdaley@linux.ibm.com, qemu-stable@nongnu.org
-References: <20260728223013.4047042-1-jrossi@linux.ibm.com>
-Content-Language: en-US
-From: Eric Farman <farman@linux.ibm.com>
-Autocrypt: addr=farman@linux.ibm.com; keydata=
- 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
- y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20260728223013.4047042-1-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: FbkNVosUNVMYhBFgYA_hrL6P6UwWb3HM
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMwMDEzMiBTYWx0ZWRfXyVSNsw5vsXDf
- PbqdvmbmZl59nvihnAefB65UijyEG4G2hvEUKHGU1D2tc2tlH9parGWZyIbYkuCf/cyCRmWTQbc
- 4kq7m78/M93/BLqZ/Q0VpQIglyTOA7Y=
-X-Authority-Analysis: v=2.4 cv=E/z9Y6dl c=1 sm=1 tr=0 ts=6a6b9027 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=69wJf7TsAAAA:8 a=jI0MlVVz9VgUAqM4pM4A:9 a=QEXdDO2ut3YA:10
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMwMDEzMiBTYWx0ZWRfXzXnqytaTSgJD
- N9bQe7Rox2Ev7wK1GeOYvxYSHH9E87K+FxpFIrLzxVSVXt4gGvpCSD0CCUjXuPCStRUrNfdnyX2
- W9Ky+yIJYSWcfLxKvR96rGdxu5cKUBM5wbDmE3cu6C82xks/svbiCHSWVQBzfRJ57f/9+87C4WX
- Fy5M9m8FKCUwxLtpI3eyzid4dG3G1VhlSF6prCJ/p3LLtRxEVI4Rk2lJaMAIckzkSX070yXA9Ri
- 7XtcE8rkRnk2PYXERJ7eDs7q8rdZ77537zOc/WRax+VynzU68l9VnIXcHf+iOrBpJJevHFNAOGc
- XCIWdo76mjLhVd7B1ydMR/gfuEj91+ed1YfQfNMGrMNriU/vCsFtKjxgQ83L7g9WzwuWNxUEsR5
- d0z3/shT+q3IW3Yw5iQW2IQj42tKPDc8vvOawoQrKNcPb5bjjTKGkpWG50YdCnqI664snGLyXTp
- 8hfBtrukrTg3w4p+Ysg==
-X-Proofpoint-GUID: FbkNVosUNVMYhBFgYA_hrL6P6UwWb3HM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-30_05,2026-07-30_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 spamscore=0 clxscore=1015 phishscore=0
- lowpriorityscore=0 bulkscore=0 malwarescore=0 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607300132
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=ahshehab24@gmail.com; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -170,107 +105,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Max Chou <max.chou@sifive.com>
 
+Move gen_update_pc call before conditional logic to ensure consistent
+PC state regardless of execution path.
 
-On 7/28/26 6:30 PM, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
-> 
-> The loadparm may optionally be used to select a boot entry, with the
-> intended range being 0 through 31 inclusive, for a total of 32 entries.
-> Previously, MAX_BOOT_ENTRIES was defined as 31, indicating that it was
-> intended to correspond to the index of the boot entry rather than the
-> count; however, some guards also used MAX_BOOT_ENTRIES as a count of the
-> maximum allowed entries, which resulted in a mismatch between the intended
-> and actual range such that index 31 could never be used in practice.
-> 
-> Move the definition of MAX_BOOT_ENTRIES to qipl.h so it is shared and
-> change the value to 32, representing a count of the maximum number of
-> allowed boot entries and allowing the loadparm to accept values 0 through
-> 31 as intended.  Update some instances in the netboot code where
-> MAX_BOOT_ENTRIES was used as the max index so that all guards treat
-> MAX_BOOT_ENTRIES as a count across all boot methods.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 806315279d5c ("pc-bios/s390-ccw: Remove panics from ECKD IPL path")
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+Previously, the host instructions generated to update the cpu_pc were
+only executed in the failure path when shadow stack validation failed.
+This created inconsistent PC synchronization.
 
-Applied for 11.2; thank you!
+This inconsistency caused issues in CF_PCREL mode where subsequent
+instructions calculated wrong relative offsets from stale pc_save
+values, and could lead to incorrect exception return addresses.
 
-> ---
->   include/hw/s390x/ipl/qipl.h |  2 ++
->   pc-bios/s390-ccw/netmain.c  | 11 +++++++----
->   pc-bios/s390-ccw/s390-ccw.h |  2 --
->   3 files changed, 9 insertions(+), 6 deletions(-)
-> 
-> diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
-> index 8d3c83a80b..b390f2f112 100644
-> --- a/include/hw/s390x/ipl/qipl.h
-> +++ b/include/hw/s390x/ipl/qipl.h
-> @@ -20,6 +20,8 @@
->   #define LOADPARM_LEN    8
->   #define NO_LOADPARM "\0\0\0\0\0\0\0\0"
->   
-> +#define MAX_BOOT_ENTRIES  32
-> +
->   enum S390IplType {
->       S390_IPL_TYPE_FCP = 0x00,
->       S390_IPL_TYPE_CCW = 0x02,
-> diff --git a/pc-bios/s390-ccw/netmain.c b/pc-bios/s390-ccw/netmain.c
-> index 651cedf6ef..791854fce0 100644
-> --- a/pc-bios/s390-ccw/netmain.c
-> +++ b/pc-bios/s390-ccw/netmain.c
-> @@ -40,6 +40,9 @@
->   #define DEFAULT_BOOT_RETRIES 10
->   #define DEFAULT_TFTP_RETRIES 20
->   
-> +/* Index 0 is reserved for default alias, start PXE cfg indices at 1 */
-> +#define PXECFG_MAX              (MAX_BOOT_ENTRIES - 1)
-> +
->   extern char _start[];
->   
->   #define KERNEL_ADDR             ((void *)0L)
-> @@ -381,13 +384,13 @@ static int net_select_and_load_kernel(filename_ip_t *fn_ip,
->   
->   static int net_try_pxelinux_cfg(filename_ip_t *fn_ip)
->   {
-> -    struct pl_cfg_entry entries[MAX_BOOT_ENTRIES];
-> +    struct pl_cfg_entry entries[PXECFG_MAX];
->       int num_ent, def_ent = 0;
->   
->       num_ent = pxelinux_load_parse_cfg(fn_ip, mac, get_uuid(),
->                                         DEFAULT_TFTP_RETRIES,
->                                         cfgbuf, sizeof(cfgbuf),
-> -                                      entries, MAX_BOOT_ENTRIES, &def_ent);
-> +                                      entries, PXECFG_MAX, &def_ent);
->   
->       return net_select_and_load_kernel(fn_ip, num_ent, def_ent, entries);
->   }
-> @@ -470,11 +473,11 @@ static int net_try_direct_tftp_load(filename_ip_t *fn_ip)
->            * a magic comment string.
->            */
->           if (!strncasecmp("# pxelinux", cfgbuf, 10)) {
-> -            struct pl_cfg_entry entries[MAX_BOOT_ENTRIES];
-> +            struct pl_cfg_entry entries[PXECFG_MAX];
->               int num_ent, def_ent = 0;
->   
->               num_ent = pxelinux_parse_cfg(cfgbuf, sizeof(cfgbuf), entries,
-> -                                         MAX_BOOT_ENTRIES, &def_ent);
-> +                                         PXECFG_MAX, &def_ent);
->               return net_select_and_load_kernel(fn_ip, num_ent, def_ent,
->                                                 entries);
->           }
-> diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
-> index 1e1f71775e..d0498e2944 100644
-> --- a/pc-bios/s390-ccw/s390-ccw.h
-> +++ b/pc-bios/s390-ccw/s390-ccw.h
-> @@ -82,8 +82,6 @@ int menu_get_enum_boot_index(bool *valid_entries);
->   bool menu_is_enabled_enum(void);
->   int menu_get_boot_index(bool *valid_entries);
->   
-> -#define MAX_BOOT_ENTRIES  31
-> -
->   __attribute__ ((__noreturn__))
->   static inline void panic(const char *string)
->   {
+This fix ensures PC is always synchronized before any helper that
+might raise an exception, maintaining consistent translator state
+across all execution paths.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4118
+Signed-off-by: Max Chou <max.chou@sifive.com>
+[ahshehab: rebased on current master; file moved to
+ target/riscv/tcg/insn_trans/ and the ssp load is now 64-bit wide]
+Tested-by: A-Shehab <ahshehab24@gmail.com>
+Signed-off-by: A-Shehab <ahshehab24@gmail.com>
+---
+This is a repost of Max Chou's patch from 2025-11-05 [1], which did not
+receive any review. Rebased onto current master: the file moved to
+target/riscv/tcg/insn_trans/ and the ssp load is now a 64-bit load, so
+the original patch no longer applies.
+
+I opened a GitLab issue (#4118) with a minimal, self-contained bare-metal
+reproducer for this bug. It runs an sspopchk that matches the shadow stack
+(the common case) followed by an auipc in the same translation block; on
+current master the auipc returns an address 4 bytes too low (exit 42) and
+with this patch it is correct (exit 0). The reproducer is included in the
+issue.
+
+[1] https://lore.kernel.org/qemu-devel/20251105134331.2865581-1-max.chou@sifive.com/
+
+ target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc
+index a813232887..d47a9f9c7d 100644
+--- a/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc
+@@ -32,6 +32,7 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
+     TCGLabel *skip = gen_new_label();
+     uint32_t tmp = (get_xl(ctx) == MXL_RV64) ? 8 : 4;
+     TCGv data = tcg_temp_new();
++    gen_update_pc(ctx, 0);
+     TCGv_i64 wide_addr = tcg_temp_new_i64();
+     tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
+     tcg_gen_trunc_i64_tl(addr, wide_addr);
+@@ -42,7 +43,6 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
+     tcg_gen_brcond_tl(TCG_COND_EQ, data, rs1, skip);
+     tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_BCFI_TVAL),
+                     tcg_env, offsetof(CPURISCVState, sw_check_code));
+-    gen_update_pc(ctx, 0);
+     gen_helper_raise_exception(tcg_env,
+                   tcg_constant_i32(RISCV_EXCP_SW_CHECK));
+     gen_set_label(skip);
+-- 
+2.53.0
 
 
