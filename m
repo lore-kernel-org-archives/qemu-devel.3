@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0F03C54FCD
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:07:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 201DAC54FCD
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:07:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpH6o-0003oI-Sc; Wed, 29 Jul 2026 23:06:58 -0400
+	id 1wpH6c-0002xn-GL; Wed, 29 Jul 2026 23:06:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH6i-0003Pl-DQ
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:06:52 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH6Z-0002nV-OW
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:06:43 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH6f-0002wj-Af
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:06:52 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH6X-0002vt-98
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:06:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=Wm8+yoau+DLBWo1+flB1+I3tcw4dSaa40HqLRuhRzfg=; b=CK3PAdywvx1i036
- Ql3i5R5QnbXpn8oKSK+05aGGxUeLsm0v4qKIvjsJ5sgBdR/JgDDZ2oQhbTqF9OpTGvqlSNkB4jBPv
- k47v+2kn9RFUePX8meJKXW9NIm/mMflCHHbRGqLccTttqHmJ/E6WIbSMIkyGeoVAC9G4Hjfw/kmCo
- m4=;
+ List-Help; bh=IkQugLx6QLVgUoZlVKl4ZiXCLCO5b235a651y44fLYM=; b=uePriEQZLUAPXN6
+ HH/VsIUgtnAF0dq9+1uCuAXXyykbtPaCTqNQ5Zl9m3/RU3rV5iTB9A9ml3SCjApva8Mkhylj8SzcP
+ ObqrFgd+GxWgBo6x/ad8aKJ1r/VcmqhEOZjNh2jq7ZnUjxnWp1SHPa2TYY7+s/udjdMfGJJIUtvuR
+ 9Y=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, brian.cain@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
  philmd@mailo.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 25/50] helper-to-tcg: PrepareForTcgPass, map TCG globals
-Date: Thu, 30 Jul 2026 05:09:59 +0200
-Message-ID: <20260730031025.12926-26-anjo@rev.ng>
+Subject: [PATCH v2 22/50] helper-to-tcg: Introduce PrepareForTcgPass
+Date: Thu, 30 Jul 2026 05:09:56 +0200
+Message-ID: <20260730031025.12926-23-anjo@rev.ng>
 In-Reply-To: <20260730031025.12926-1-anjo@rev.ng>
 References: <20260730031025.12926-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -63,53 +63,44 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The input LLVM module may define an array of cpu_mapping structs,
-describing the mapping between fields in a specified struct (usually
-CPUArchState) and TCG globals.
+Adds a new pass over the LLVM module which runs post-optimization with
+the end-goal of:
 
-Create a map between offsets into the specified struct and TCG globals
-(name, size, number of elements, stride) by iterating over the global
-cpu_mapping array.  The name of this array is configurable via
-the --tcg-global-mappings flag.
+  * Culling functions which aren't worth translating;
+  * Canonicalizing the IR to something closer to TCG, and;
+  * Extracting information which may be useful in the backend pass.
+
+The bulk of IR transformations occur in the canonicalization phase, with
+a handful occuring later in the packend. This commits sets up a new LLVM
+pass over the IR module and runs it from the pipeline.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- .../include/PrepareForTcgPass.hpp             |  6 +-
- .../helper-to-tcg/include/TcgGlobalMap.hpp    | 40 ++++++++++++
- subprojects/helper-to-tcg/src/Pipeline.cpp    |  9 +--
- .../PrepareForTcgPass/PrepareForTcgPass.cpp   | 62 +++++++++++++++++++
- 4 files changed, 112 insertions(+), 5 deletions(-)
- create mode 100644 subprojects/helper-to-tcg/include/TcgGlobalMap.hpp
+ .../helper-to-tcg/include/CmdLineOptions.hpp  |  2 ++
+ .../include/PrepareForTcgPass.hpp             | 27 +++++++++++++++++++
+ subprojects/helper-to-tcg/meson.build         |  1 +
+ subprojects/helper-to-tcg/src/Pipeline.cpp    | 24 +++++++++++++++++
+ .../PrepareForTcgPass/PrepareForTcgPass.cpp   | 25 +++++++++++++++++
+ 5 files changed, 79 insertions(+)
+ create mode 100644 subprojects/helper-to-tcg/include/PrepareForTcgPass.hpp
+ create mode 100644 subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp
 
+diff --git a/subprojects/helper-to-tcg/include/CmdLineOptions.hpp b/subprojects/helper-to-tcg/include/CmdLineOptions.hpp
+index ca1cb59835..bfdd3ebe41 100644
+--- a/subprojects/helper-to-tcg/include/CmdLineOptions.hpp
++++ b/subprojects/helper-to-tcg/include/CmdLineOptions.hpp
+@@ -23,3 +23,5 @@
+ extern llvm::cl::list<std::string> InputFiles;
+ // Options for PrepareForOptPass
+ extern llvm::cl::opt<bool> TranslateAllHelpers;
++// Options for PrepareForTcgPass
++extern llvm::cl::opt<std::string> TcgGlobalMappingsName;
 diff --git a/subprojects/helper-to-tcg/include/PrepareForTcgPass.hpp b/subprojects/helper-to-tcg/include/PrepareForTcgPass.hpp
-index 90bc9402cb..3e0679b46c 100644
---- a/subprojects/helper-to-tcg/include/PrepareForTcgPass.hpp
-+++ b/subprojects/helper-to-tcg/include/PrepareForTcgPass.hpp
-@@ -17,11 +17,15 @@
- 
- #pragma once
- 
-+#include "TcgGlobalMap.hpp"
- #include <llvm/IR/PassManager.h>
- 
- class PrepareForTcgPass : public llvm::PassInfoMixin<PrepareForTcgPass> {
-+    TcgGlobalMap &ResultTcgGlobalMap;
-+
- public:
--    PrepareForTcgPass() {}
-+    PrepareForTcgPass(TcgGlobalMap &ResultTcgGlobalMap)
-+        : ResultTcgGlobalMap(ResultTcgGlobalMap) {}
-     llvm::PreservedAnalyses run(llvm::Module &M,
-                                 llvm::ModuleAnalysisManager &MAM);
- };
-diff --git a/subprojects/helper-to-tcg/include/TcgGlobalMap.hpp b/subprojects/helper-to-tcg/include/TcgGlobalMap.hpp
 new file mode 100644
-index 0000000000..ad7ac54608
+index 0000000000..90bc9402cb
 --- /dev/null
-+++ b/subprojects/helper-to-tcg/include/TcgGlobalMap.hpp
-@@ -0,0 +1,40 @@
-+#pragma once
-+
++++ b/subprojects/helper-to-tcg/include/PrepareForTcgPass.hpp
+@@ -0,0 +1,27 @@
 +//
 +//  Copyright(c) 2026 rev.ng Labs Srl. All Rights Reserved.
 +//
@@ -127,142 +118,121 @@ index 0000000000..ad7ac54608
 +//  along with this program; if not, see <http://www.gnu.org/licenses/>.
 +//
 +
-+#include <llvm/ADT/DenseMap.h>
-+#include <llvm/ADT/SmallVector.h>
-+#include <llvm/ADT/StringRef.h>
-+#include <stdint.h>
++#pragma once
 +
-+// `TcgGlobal` describes a field in a struct which has a mapping to a TCG
-+// global.  `Size`, `NumElements`, and `Stride` describe the mapped type, all
-+// types are assumed to be integer or arrays of integers.  `Code` is the
-+// expression to be emitted when accessing the mapped global, usually the
-+// variable name.
-+struct TcgGlobal {
-+    llvm::StringRef Code;
-+    uint64_t Size;
-+    uint64_t NumElements;
-+    uint64_t Stride;
++#include <llvm/IR/PassManager.h>
++
++class PrepareForTcgPass : public llvm::PassInfoMixin<PrepareForTcgPass> {
++public:
++    PrepareForTcgPass() {}
++    llvm::PreservedAnalyses run(llvm::Module &M,
++                                llvm::ModuleAnalysisManager &MAM);
 +};
-+
-+// Array of maps between offsets into a mapped struct to the resulting global
-+// type, outer array is indexed by the base struct type to handle multiple
-+// struct-to-global mappings.
-+using TcgGlobalMap = llvm::SmallVector<llvm::DenseMap<uint32_t, TcgGlobal>, 1>;
+diff --git a/subprojects/helper-to-tcg/meson.build b/subprojects/helper-to-tcg/meson.build
+index b3a3de6297..c2926652f3 100644
+--- a/subprojects/helper-to-tcg/meson.build
++++ b/subprojects/helper-to-tcg/meson.build
+@@ -44,6 +44,7 @@ sources = [
+     'src/Pipeline.cpp',
+     'src/PrepareForOptPass/PrepareForOptPass.cpp',
+     'src/PseudoInst.cpp',
++    'src/PrepareForTcgPass/PrepareForTcgPass.cpp',
+ ]
+ 
+ clang = bindir / 'clang'
 diff --git a/subprojects/helper-to-tcg/src/Pipeline.cpp b/subprojects/helper-to-tcg/src/Pipeline.cpp
-index 6058718a9c..f24bb67f0c 100644
+index 571276de24..6058718a9c 100644
 --- a/subprojects/helper-to-tcg/src/Pipeline.cpp
 +++ b/subprojects/helper-to-tcg/src/Pipeline.cpp
-@@ -76,9 +76,9 @@ cl::opt<bool> TranslateAllHelpers(
- // Options for PrepareForTcgPass
- cl::opt<std::string> TcgGlobalMappingsName(
-     "tcg-global-mappings",
--    cl::desc("<Name of global cpu_mappings[] used for mapping accesses"
--             "into a struct to TCG globals>"),
--    cl::Required, cl::cat(Cat));
-+    cl::desc("Name of global cpu_mappings[] used for mapping accesses"
-+             "into a struct to TCG globals"),
-+    cl::init("mappings"), cl::cat(Cat));
+@@ -18,6 +18,7 @@
+ #include "CmdLineOptions.hpp"
+ #include "LlvmCompat.hpp"
+ #include "PrepareForOptPass.hpp"
++#include "PrepareForTcgPass.hpp"
  
+ #if LLVM_VERSION_MAJOR == 15
+ #include <llvm/ADT/Triple.h>
+@@ -32,6 +33,7 @@
+ #include <llvm/IR/LLVMContext.h>
+ #include <llvm/IR/Module.h>
+ #include <llvm/IR/PassManager.h>
++#include <llvm/IR/Verifier.h>
+ #include <llvm/IRReader/IRReader.h>
+ #include <llvm/InitializePasses.h>
+ #include <llvm/Linker/Linker.h>
+@@ -43,6 +45,7 @@
+ #include <llvm/Support/SourceMgr.h>
+ #include <llvm/Support/TargetSelect.h>
+ #include <llvm/Target/TargetMachine.h>
++#include <llvm/Transforms/Scalar/DCE.h>
+ #include <llvm/Transforms/Scalar/SROA.h>
+ 
+ #define DEBUG_TYPE "pipeline"
+@@ -70,6 +73,13 @@ cl::opt<bool> TranslateAllHelpers(
+     "translate-all-helpers", cl::init(false),
+     cl::desc("Translate all functions starting with helper_*"), cl::cat(Cat));
+ 
++// Options for PrepareForTcgPass
++cl::opt<std::string> TcgGlobalMappingsName(
++    "tcg-global-mappings",
++    cl::desc("<Name of global cpu_mappings[] used for mapping accesses"
++             "into a struct to TCG globals>"),
++    cl::Required, cl::cat(Cat));
++
  // Define a TargetTransformInfo (TTI) subclass, this allows for overriding
  // common per-llvm-target information expected by other LLVM passes, such
-@@ -230,7 +230,8 @@ int main(int argc, char **argv) {
-     // easily to TCG.
-     //
+ // as the width of the largest scalar/vector registers.  Needed for consistent
+@@ -214,5 +224,19 @@ int main(int argc, char **argv) {
+     MPM.addPass(
+         PB.buildModuleOptimizationPipeline(compat::OptimizationLevel::Oz, {}));
  
--    MPM.addPass(PrepareForTcgPass());
-+    TcgGlobalMap TcgGlobals;
-+    MPM.addPass(PrepareForTcgPass(TcgGlobals));
-     MPM.addPass(VerifierPass());
-     {
-         FunctionPassManager FPM;
++    //
++    // Next, we run our final transformations, including removing phis and our
++    // own instruction combining that prioritizes instructions that map more
++    // easily to TCG.
++    //
++
++    MPM.addPass(PrepareForTcgPass());
++    MPM.addPass(VerifierPass());
++    {
++        FunctionPassManager FPM;
++        FPM.addPass(DCEPass());
++        MPM.addPass(createModuleToFunctionPassAdaptor(std::move(FPM)));
++    }
++
+     return 0;
+ }
 diff --git a/subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp b/subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp
-index d8530406ad..69add43529 100644
---- a/subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp
+new file mode 100644
+index 0000000000..cea6573e41
+--- /dev/null
 +++ b/subprojects/helper-to-tcg/src/PrepareForTcgPass/PrepareForTcgPass.cpp
-@@ -16,9 +16,12 @@
- //
- 
- #include "PrepareForTcgPass.hpp"
-+#include "CmdLineOptions.hpp"
- 
- #include <llvm/ADT/SCCIterator.h>
- #include <llvm/ADT/SmallPtrSet.h>
-+#include <llvm/ADT/StringMap.h>
-+#include <llvm/IR/Constants.h>
- #include <llvm/IR/Function.h>
- #include <llvm/IR/InstIterator.h>
- #include <llvm/IR/Instructions.h>
-@@ -68,11 +71,70 @@ inline void demotePhis(Function &F) {
-     }
- }
- 
-+static StringMap<size_t> collectTcgGlobals(Module &M, TcgGlobalMap &ResultTcgGlobalMap) {
-+    auto *Map = M.getGlobalVariable(TcgGlobalMappingsName);
-+    if (!Map) {
-+        return {};
-+    }
+@@ -0,0 +1,25 @@
++//
++//  Copyright(c) 2026 rev.ng Labs Srl. All Rights Reserved.
++//
++//  This program is free software; you can redistribute it and/or modify
++//  it under the terms of the GNU General Public License as published by
++//  the Free Software Foundation; either version 2 of the License, or
++//  (at your option) any later version.
++//
++//  This program is distributed in the hope that it will be useful,
++//  but WITHOUT ANY WARRANTY; without even the implied warranty of
++//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++//  GNU General Public License for more details.
++//
++//  You should have received a copy of the GNU General Public License
++//  along with this program; if not, see <http://www.gnu.org/licenses/>.
++//
 +
-+    // In case the `tcg_global_mappings` array is empty,
-+    // casting to `ConstantArray` will fail, even though it's a
-+    // `[0 x %struct.cpu_tcg_mapping]`.
-+    auto *MapElems = dyn_cast<ConstantArray>(Map->getOperand(0));
-+    if (!MapElems) {
-+        return {};
-+    }
++#include "PrepareForTcgPass.hpp"
 +
-+    StringMap<size_t> TypeIndexMap;
++using namespace llvm;
 +
-+    for (auto Row : MapElems->operand_values()) {
-+        auto *ConstRow = cast<ConstantStruct>(Row);
-+
-+        // Get code string
-+        auto *CodePtr = ConstRow->getOperand(0);
-+        StringRef CodeStr =
-+            cast<ConstantDataArray>(CodePtr->getOperand(0))->getAsString();
-+        CodeStr = CodeStr.rtrim('\0');
-+
-+        // Get base type name
-+        auto *TypeNamePtr = ConstRow->getOperand(2);
-+        StringRef TypeNameStr =
-+            cast<ConstantDataArray>(TypeNamePtr->getOperand(0))->getAsString();
-+        TypeNameStr = TypeNameStr.rtrim('\0');
-+
-+        // Get offset in cpu env
-+        auto *Offset = cast<ConstantInt>(ConstRow->getOperand(4));
-+        // Get size of variable in cpu env
-+        auto *SizeInBytes = cast<ConstantInt>(ConstRow->getOperand(5));
-+        unsigned SizeInBits = 8 * SizeInBytes->getLimitedValue();
-+
-+        auto *Stride = cast<ConstantInt>(ConstRow->getOperand(6));
-+        auto *NumElements = cast<ConstantInt>(ConstRow->getOperand(7));
-+
-+        if (auto It = TypeIndexMap.find(TypeNameStr);
-+            It == TypeIndexMap.end()) {
-+            TypeIndexMap[TypeNameStr] = ResultTcgGlobalMap.size();
-+            ResultTcgGlobalMap.emplace_back();
-+        }
-+
-+        const size_t Index = TypeIndexMap[TypeNameStr];
-+        ResultTcgGlobalMap[Index][Offset->getLimitedValue()] = {
-+            CodeStr,
-+            SizeInBits,
-+            NumElements->getLimitedValue(),
-+            Stride->getLimitedValue(),
-+        };
-+    }
-+
-+    return TypeIndexMap;
++PreservedAnalyses PrepareForTcgPass::run(Module &M, ModuleAnalysisManager &MAM)
++{
++    return PreservedAnalyses::none();
 +}
-+
- PreservedAnalyses PrepareForTcgPass::run(Module &M,
-                                          ModuleAnalysisManager &MAM) {
-     removeFunctionsWithLoops(M, MAM);
-     for (Function &F : M) {
-         demotePhis(F);
-     }
-+    const StringMap<size_t> TypeIndexMap = collectTcgGlobals(M, ResultTcgGlobalMap);
-     return PreservedAnalyses::none();
- }
 -- 
 2.52.0
 
