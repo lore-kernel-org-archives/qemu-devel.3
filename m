@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51FB6C54FD2
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:08:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF4B4C54FD2
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Jul 2026 03:09:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpH5s-0001mr-L9; Wed, 29 Jul 2026 23:06:00 -0400
+	id 1wpH5v-0001qx-3L; Wed, 29 Jul 2026 23:06:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH5r-0001lM-3O
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:05:59 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH5t-0001n4-8H
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:06:01 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH5m-0002rf-Dz
- for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:05:56 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wpH5q-0002sX-Sr
+ for qemu-devel@nongnu.org; Wed, 29 Jul 2026 23:06:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=yysqe/Z5cYhXkFNQnRRfVlCRW9TXuGeF7cBWKGcBWgU=; b=CDfvdSDWKAaBq4g
- tqnoMXfQXvxs2uHteHF3/P4mSol8ZJ8hUmdnt+Chb2Afex25T/x+7AnqepYEpipNDWY2Y8/Lyk6I9
- I4o7aQ3mQoj2V/itOS3N3rC53sa4jmuSY6WcN35sgFNYnPrgoLtbiMyoQ/EDZn7GbPb8Fxak2nP2w
- kg=;
+ List-Help; bh=a1qsAGaR4LgJCtj8xxxYgcUmd5Ee5pQgbWSEUkovCOw=; b=VpMiZYIdCe4EFW5
+ DCugNvwK01PdWBzw8Kqb0YDsNUo8BlQ9769ikHtMzQYgqmcleG9YOlxE+fOKIIjhUYNhQvmQ7ExVp
+ VGMCBDDUwWZhlp3Td+6sKweqi7FbyKJkLT1koPrQ0z8a893+7gItlJc1S5Gp177hHPsqZYUzyWpXF
+ HA=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, brian.cain@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
  philmd@mailo.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 07/50] helper-to-tcg: Introduce get-llvm-ir.py
-Date: Thu, 30 Jul 2026 05:09:41 +0200
-Message-ID: <20260730031025.12926-8-anjo@rev.ng>
+Subject: [PATCH v2 08/50] helper-to-tcg: Handle LLVM version compatibility
+Date: Thu, 30 Jul 2026 05:09:42 +0200
+Message-ID: <20260730031025.12926-9-anjo@rev.ng>
 In-Reply-To: <20260730031025.12926-1-anjo@rev.ng>
 References: <20260730031025.12926-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -63,188 +63,257 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduces a new python helper script to convert a set of QEMU .c files to
-LLVM IR .ll using clang.  Compile flags are found by looking at
-compile_commands.json, and llvm-link is used to link together all LLVM
-modules into a single module.
+Adds a translation unit with the sole purpose of handling inter-LLVM
+code changes.  Instead of littering the code with #ifdefs, most of them
+will be limited to LlvmCompat.[cpp|hpp] and a saner compat::*() function
+is exposed in its place.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- subprojects/helper-to-tcg/get-llvm-ir.py | 145 +++++++++++++++++++++++
- subprojects/helper-to-tcg/meson.build    |   8 ++
- 2 files changed, 153 insertions(+)
- create mode 100755 subprojects/helper-to-tcg/get-llvm-ir.py
+ .../helper-to-tcg/include/LlvmCompat.hpp      | 124 ++++++++++++++++++
+ subprojects/helper-to-tcg/meson.build         |   1 +
+ subprojects/helper-to-tcg/src/LlvmCompat.cpp  |  89 +++++++++++++
+ 3 files changed, 214 insertions(+)
+ create mode 100644 subprojects/helper-to-tcg/include/LlvmCompat.hpp
+ create mode 100644 subprojects/helper-to-tcg/src/LlvmCompat.cpp
 
-diff --git a/subprojects/helper-to-tcg/get-llvm-ir.py b/subprojects/helper-to-tcg/get-llvm-ir.py
-new file mode 100755
-index 0000000000..982b87f791
+diff --git a/subprojects/helper-to-tcg/include/LlvmCompat.hpp b/subprojects/helper-to-tcg/include/LlvmCompat.hpp
+new file mode 100644
+index 0000000000..78822ca87b
 --- /dev/null
-+++ b/subprojects/helper-to-tcg/get-llvm-ir.py
-@@ -0,0 +1,145 @@
-+#!/usr/bin/env python3
++++ b/subprojects/helper-to-tcg/include/LlvmCompat.hpp
+@@ -0,0 +1,124 @@
++//
++//  Copyright(c) 2026 rev.ng Labs Srl. All Rights Reserved.
++//
++//  This program is free software; you can redistribute it and/or modify
++//  it under the terms of the GNU General Public License as published by
++//  the Free Software Foundation; either version 2 of the License, or
++//  (at your option) any later version.
++//
++//  This program is distributed in the hope that it will be useful,
++//  but WITHOUT ANY WARRANTY; without even the implied warranty of
++//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++//  GNU General Public License for more details.
++//
++//  You should have received a copy of the GNU General Public License
++//  along with this program; if not, see <http://www.gnu.org/licenses/>.
++//
 +
-+##
-+##  Copyright(c) 2026 rev.ng Labs Srl. All Rights Reserved.
-+##
-+##  This program is free software; you can redistribute it and/or modify
-+##  it under the terms of the GNU General Public License as published by
-+##  the Free Software Foundation; either version 2 of the License, or
-+##  (at your option) any later version.
-+##
-+##  This program is distributed in the hope that it will be useful,
-+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+##  GNU General Public License for more details.
-+##
-+##  You should have received a copy of the GNU General Public License
-+##  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+##
++#pragma once
 +
-+import argparse
-+import json
-+import os
-+import shlex
-+import sys
-+import subprocess
++//
++// The purpose of this file is to both collect and hide most api-specific
++// changes of LLVM [10,14]. Hopefully making it easier to keep track of the
++// changes necessary to support our targeted versions.
++//
++// Note some #ifdefs still remain throughout the codebase for larger codeblocks
++// that are specific enough such that pulling them here would be more cumbersome
++// than it's worth.
++//
 +
++#include <llvm/Analysis/TargetTransformInfo.h>
++#include <llvm/IR/DerivedTypes.h>
++#include <llvm/IR/Intrinsics.h>
++#include <llvm/IR/Module.h>
++#include <llvm/IR/PassManager.h>
++#include <llvm/IR/PatternMatch.h>
++#include <llvm/MC/TargetRegistry.h>
++#include <llvm/Passes/OptimizationLevel.h>
++#include <llvm/Passes/PassBuilder.h>
++#include <llvm/Support/FileSystem.h>
++#include <llvm/Transforms/Utils/UnifyFunctionExitNodes.h>
 +
-+def log(msg):
-+    print(msg, file=sys.stderr)
++#include <stdint.h>
 +
++namespace compat {
 +
-+def run_command(command):
-+    proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-+    out = proc.communicate()
-+    if proc.wait() != 0:
-+        log(f"Command: {' '.join(command)} exited with {proc.returncode}\n")
-+        log(f"output:\n{out}\n")
++constexpr auto OpenFlags = llvm::sys::fs::OF_TextWithCRLF;
 +
++using OptimizationLevel = llvm::OptimizationLevel;
 +
-+def find_compile_commands(compile_commands_path, clang_path, input_path, target):
-+    with open(compile_commands_path, "r") as f:
-+        compile_commands = json.load(f)
-+        for compile_command in compile_commands:
-+            path = compile_command["file"]
-+            if os.path.basename(path) != os.path.basename(input_path):
-+                continue
++constexpr auto LTOPhase = llvm::ThinOrFullLTOPhase::None;
 +
-+            os.chdir(compile_command["directory"])
-+            command = compile_command["command"]
++inline llvm::PassBuilder createPassBuilder(llvm::TargetMachine *TM,
++                                           llvm::PipelineTuningOptions &PTO) {
++#if LLVM_VERSION_MAJOR >= 16
++    return llvm::PassBuilder(TM, PTO, std::nullopt);
++#else
++    return llvm::PassBuilder(TM, PTO, llvm::None);
++#endif
++}
 +
-+            # If building multiple targets there's a chance
-+            # input files share the same path and name.
-+            # This could cause us to find the wrong compile
-+            # command, we use the target path to distinguish
-+            # between these.
-+            if not target in command:
-+                continue
++// LLVM 16 changes the getFixedSize() -> getFixedValue()
++size_t getTypeAllocSize(const llvm::DataLayout &DL, llvm::Type *Ty);
 +
-+            argv = shlex.split(command)
-+            argv[0] = clang_path
++// These rely on string comparison with QEMU names using StringRef::startswith,
++// which changed to StringRef::starts_with in LLVM 18.
++bool isFunctionQemuHelper(llvm::StringRef Name);
++bool isFunctionQemuLoadStore(llvm::StringRef Name);
 +
-+            return argv
++// LLVM 21 moved to initializing a TargetTransformInfo via unique_ptr,
++// instead of by value.
++template <typename T>
++auto makeTTI(llvm::TargetMachine *TM, const llvm::Function &F) {
++    // Use explicit TargetTransformInfo() contructor
++#if LLVM_VERSION_MAJOR >= 21
++    return llvm::TargetTransformInfo(std::make_unique<T>(TM, F));
++#else
++    return llvm::TargetTransformInfo(T(TM, F));
++#endif
++}
 +
-+    raise ValueError(f"Unable to find compile command for {input_path}")
++// Note, since constexpr auto is used to alias a function, default
++// arguments won't work.
++//
++// LLVM 20 deprecated getDeclaration() in favour of getOrInsertDeclaration()
++namespace Intrinsic {
++#if LLVM_VERSION_MAJOR >= 20
++constexpr auto getOrInsertDeclaration = llvm::Intrinsic::getOrInsertDeclaration;
++#else
++constexpr auto getOrInsertDeclaration = llvm::Intrinsic::getDeclaration;
++#endif
++} // namespace Intrinsic
 +
++// Wrapper to convert Function- to Module analysis manager
++template <typename T>
++inline const typename T::Result *
++getModuleAnalysisManagerProxyResult(llvm::FunctionAnalysisManager &FAM,
++                                    llvm::Function &F) {
++    auto &MAMProxy = FAM.getResult<llvm::ModuleAnalysisManagerFunctionProxy>(F);
++    return MAMProxy.getCachedResult<T>(*F.getParent());
++}
 +
-+def generate_llvm_ir(
-+    compile_commands_path, clang_path, output_path, input_path, target
-+):
-+    command = find_compile_commands(
-+        compile_commands_path, clang_path, input_path, target
-+    )
++llvm::TargetMachine *getTargetMachine(llvm::Triple &TheTriple);
 +
-+    flags_to_remove = {
-+        "-ftrivial-auto-var-init=zero",
-+        "-fzero-call-used-regs=used-gpr",
-+        "-Wimplicit-fallthrough=2",
-+        "-Wold-style-declaration",
-+        "-Wno-psabi",
-+        "-Wshadow=local",
-+        "-c",
-+    }
++//
++// LLVM 11 and below does not define the UnifyFunctionExitNodes pass
++// for the new pass manager.  Copy over the definition and use it for
++// 11 and below.
++//
++using llvm::UnifyFunctionExitNodesPass;
 +
-+    # Remove
-+    #   - output of makefile rules (-MQ,-MF target);
-+    #   - output of object files (-o target);
-+    #   - excessive zero-initialization of block-scope variables
-+    #     (-ftrivial-auto-var-init=zero);
-+    #   - and any optimization flags (-O).
-+    for i, arg in reversed(list(enumerate(command))):
-+        if arg in {"-MQ", "-o", "-MF"}:
-+            del command[i : i + 2]
-+        elif arg.startswith("-O") or arg in flags_to_remove:
-+            del command[i]
++inline uint32_t getVectorElementCount(const llvm::VectorType *VecTy) {
++    auto ElementCount = VecTy->getElementCount();
++    return ElementCount.getFixedValue();
++}
 +
-+    # Define a HELPER_TO_TCG macro for translation units wanting to
-+    # conditionally include or exclude code during translation to TCG.
-+    # Disable optimization (-O0) and make sure clang doesn't emit optnone
-+    # attributes (-disable-O0-optnone) which inhibit further optimization.
-+    # Optimization will be performed at a later stage in the helper-to-tcg
-+    # pipeline.
-+    command += [
-+        "-S",
-+        "-emit-llvm",
-+        "-DHELPER_TO_TCG_IR_GEN",
-+        "-O0",
-+        "-g",
-+        "-Xclang",
-+        "-disable-O0-optnone",
-+    ]
-+    if output_path:
-+        command += ["-o", output_path]
++//
++// PatternMatch
++//
 +
-+    run_command(command)
++#define compat_m_InsertElt llvm::PatternMatch::m_InsertElt
++#define compat_m_Shuffle llvm::PatternMatch::m_Shuffle
++#define compat_m_ZeroMask llvm::PatternMatch::m_ZeroMask
 +
-+
-+def main():
-+    parser = argparse.ArgumentParser(
-+        description="Produce the LLVM IR of a given .c file."
-+    )
-+    parser.add_argument(
-+        "--compile-commands", required=True, help="Path to compile_commands.json"
-+    )
-+    parser.add_argument("--clang", default="clang", help="Path to clang.")
-+    parser.add_argument("--llvm-link", default="llvm-link", help="Path to llvm-link.")
-+    parser.add_argument("-o", "--output", required=True, help="Output .ll file path")
-+    parser.add_argument(
-+        "--target-path", help="Path to QEMU target dir. (e.q. target/i386)"
-+    )
-+    parser.add_argument("inputs", nargs="+", help=".c file inputs")
-+    args = parser.parse_args()
-+
-+    outputs = []
-+    for input in args.inputs:
-+        output = os.path.basename(input) + ".ll"
-+        generate_llvm_ir(
-+            args.compile_commands, args.clang, output, input, args.target_path
-+        )
-+        outputs.append(output)
-+
-+    run_command([args.llvm_link] + outputs + ["-S", "-o", args.output])
-+
-+
-+if __name__ == "__main__":
-+    sys.exit(main())
++} // namespace compat
 diff --git a/subprojects/helper-to-tcg/meson.build b/subprojects/helper-to-tcg/meson.build
-index 8ab58adb39..97bce186fe 100644
+index 97bce186fe..965014c988 100644
 --- a/subprojects/helper-to-tcg/meson.build
 +++ b/subprojects/helper-to-tcg/meson.build
-@@ -42,6 +42,14 @@ endif
+@@ -40,6 +40,7 @@ if version_major < 10 or version_major > 21
+ endif
+ 
  sources = [
++    'src/LlvmCompat.cpp',
  ]
  
-+clang = bindir / 'clang'
-+llvm_link = bindir / 'llvm-link'
+ clang = bindir / 'clang'
+diff --git a/subprojects/helper-to-tcg/src/LlvmCompat.cpp b/subprojects/helper-to-tcg/src/LlvmCompat.cpp
+new file mode 100644
+index 0000000000..3a1995391c
+--- /dev/null
++++ b/subprojects/helper-to-tcg/src/LlvmCompat.cpp
+@@ -0,0 +1,89 @@
++//
++//  Copyright(c) 2026 rev.ng Labs Srl. All Rights Reserved.
++//
++//  This program is free software; you can redistribute it and/or modify
++//  it under the terms of the GNU General Public License as published by
++//  the Free Software Foundation; either version 2 of the License, or
++//  (at your option) any later version.
++//
++//  This program is distributed in the hope that it will be useful,
++//  but WITHOUT ANY WARRANTY; without even the implied warranty of
++//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++//  GNU General Public License for more details.
++//
++//  You should have received a copy of the GNU General Public License
++//  along with this program; if not, see <http://www.gnu.org/licenses/>.
++//
 +
-+get_llvm_ir_cmd = [python, meson.current_source_dir() / 'get-llvm-ir.py',
-+                   '--compile-commands', 'compile_commands.json',
-+                   '--clang', clang,
-+                   '--llvm-link', llvm_link]
++#include "LlvmCompat.hpp"
 +
- # NOTE: Add -Wno-template-id-cdtor for GCC versions >= 14.  This warning is
- # related to a change in the C++ standard in C++20, that also applies to C++14
- # for some reason. See defect report DR2237 and commit
++#include <llvm/CodeGen/CommandFlags.h>
++#include <llvm/Support/CodeGen.h>
++
++#include <string>
++
++// Static variables required by LLVM
++//
++// Defining RegisterCodeGenFlags with static duration registers extra
++// codegen commandline flags for specifying the target arch.
++static llvm::codegen::RegisterCodeGenFlags CGF;
++static llvm::ExitOnError ExitOnErr;
++
++namespace compat {
++
++using namespace llvm;
++
++size_t getTypeAllocSize(const llvm::DataLayout &DL, llvm::Type *Ty) {
++#if LLVM_VERSION_MAJOR >= 16
++    return DL.getTypeAllocSize(Ty).getFixedValue();
++#else
++    return DL.getTypeAllocSize(Ty).getFixedSize();
++#endif
++}
++
++bool isFunctionQemuHelper(StringRef Name) {
++#if LLVM_VERSION_MAJOR >= 18
++    return Name.starts_with("helper_");
++#else
++    return Name.startswith("helper_");
++#endif
++}
++
++bool isFunctionQemuLoadStore(StringRef Name) {
++#if LLVM_VERSION_MAJOR >= 18
++    return Name.starts_with("cpu_ld") or Name.starts_with("cpu_st");
++#else
++    return Name.startswith("cpu_ld") or Name.startswith("cpu_st");
++#endif
++}
++
++llvm::TargetMachine *getTargetMachine(llvm::Triple &TheTriple) {
++    const TargetOptions Options{};
++    std::string Error;
++    const Target *TheTarget = llvm::TargetRegistry::lookupTarget(
++        llvm::codegen::getMArch(), TheTriple, Error);
++    // Some modules don't specify a triple, and this is okay.
++    if (!TheTarget) {
++        return nullptr;
++    }
++
++#if LLVM_VERSION_MAJOR >= 18
++    auto Level = llvm::CodeGenOptLevel::Aggressive;
++#else
++    auto Level = llvm::CodeGenOpt::Aggressive;
++#endif
++
++#if LLVM_VERSION_MAJOR >= 21
++    return TheTarget->createTargetMachine(
++        llvm::Triple(TheTriple.getTriple()), llvm::codegen::getCPUStr(),
++        llvm::codegen::getFeaturesStr(), Options,
++        llvm::codegen::getExplicitRelocModel(),
++        llvm::codegen::getExplicitCodeModel(), Level);
++#else
++    return TheTarget->createTargetMachine(
++        TheTriple.getTriple(), llvm::codegen::getCPUStr(),
++        llvm::codegen::getFeaturesStr(), Options, {}, {}, Level);
++#endif
++}
++
++} // namespace compat
 -- 
 2.52.0
 
