@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFFDFC5516F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 18:58:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46306C5516F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 18:58:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpsPY-0007T5-Qg; Fri, 31 Jul 2026 14:56:48 -0400
+	id 1wpsPX-0007Rd-JU; Fri, 31 Jul 2026 14:56:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wpsPP-0007Pv-1d
+ id 1wpsPO-0007Pr-Mp
  for qemu-devel@nongnu.org; Fri, 31 Jul 2026 14:56:39 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wpsPL-0002Bp-Q1
+ id 1wpsPL-0002BK-5n
  for qemu-devel@nongnu.org; Fri, 31 Jul 2026 14:56:38 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2cfff5f88dbso15495525ad.3
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 11:56:34 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2cf52d15d88so11464965ad.2
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 11:56:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785524194; x=1786128994; darn=nongnu.org;
+ d=linaro.org; s=google; t=1785524191; x=1786128991; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=gM4b4z249JqdXNGEc6PkyqoCWTNGF1ul9Lvs/sJ0Pqc=;
- b=GyvgD8EnjChyNAbM2rdSiB30hF9CDt1dBUKLH7LxGHrruR2SBsXmBnodhcdhykOo4X
- f+95ptkiElpMTnXa1J1YJNljlFxyWBPwQgyNfX+Np/EDKOcIfZAAL0T3X+PG5f9DxKJ4
- /i1zvhil/nXVbLy1iDhWxF+BcPck23btLFdnWnRcvmI/V4hCO2fcJeSJ3kGfGVcZhkhX
- ylosD2Fqu9CjR6JSiyeP/5ibw/q1CVagNy4v9AcyOKy17bdGoyY5RBnWvqjPA01kK2LT
- HkNaB5U8D8DYx9EuO9ht8zVLG2F7KNqktaKjVc7VK5ubSNeEVhDns7mumdrymEqlHBth
- wDxg==
+ bh=Ssxnq1fZWvusp6QPJxLqALNlhOeT8Nu72SByH+hZVnc=;
+ b=cwUu0M+rjLkFewFheiTs7mMWcOtWtQSnDlffREOrsXEhq3OfQesldNtKFrPN2KMcbl
+ Mp1SRjo/4nIj05iBw5yjlpZFUKoz3A4RqSH3l+R3wKVl+ZZ86ZIb+grNgdoXgk8NwXTT
+ UmWSxs4cnOFzcfDjyq5O2PJ0GbMBZEuGrd91V4qk9geTCu/l5x+fhWaCul+rWtT/zgrX
+ CKoIDDXxrqmFwqyukU5kkAEKBUgcnnte3mDHjtlhempI0B7PyCjZYBd2jVQbNeFtaytn
+ p/J8t9bnGw3zuT5Wy0weV9CioF9wQg833Gi5bCiLfmRKg4JIjBjF0QfgJTYzjMbpX+tC
+ Noig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785524194; x=1786128994;
+ d=1e100.net; s=20251104; t=1785524191; x=1786128991;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=gM4b4z249JqdXNGEc6PkyqoCWTNGF1ul9Lvs/sJ0Pqc=;
- b=LAMslPJbI+XKomNCAakFIPUliLMCubJslFFIp4oQiT70Y4zA9XJI64Dlq5PkLZbsAu
- CX/sQPnMDg7OrZkeH2HHIY9UYAPeDoDCK4q4tSgXISXs2NPZTv7Q9qLhssd3vRJdmXh7
- Kx8CNvKD6Ktt+rdc+5Kc1cimAypV721YqHosl518hFwxNdpLf1NTQ0t64IfRgDJ2skmB
- 2PLYj5YwjVwfIlutO66djIFaoyeF8u9k5ae31xXdc2pWwG6SQfkk6VVMCYOMvl3kBKGp
- KcnO02vxkGd3Jh93n855q0xxDhw3yfAbFEnCNmFysEErK6zgAgxgDOop/TWvrCbWiwim
- rcNQ==
-X-Gm-Message-State: AOJu0YxIDI9mBRScqUUAKUEjP5Yxv0GhVacxvqk7qxO922QweE2FiPzw
- HqK3eQAk3OC3EozU1RmRucQ3NBJwvqqJfc6odmESlYjjM8s8X/kTUztza5MfXNa4pLWJ/fb2g9J
- Su/Hd
-X-Gm-Gg: AR+sD138SFY58LkLW/yjNPqdn+aFdnvN8au9rV9nRCvxye3hMSPinw7Trgm/QzNH+D7
- ycPNTjWXqr6MoAAlgUQDvjLzNzWUuMC9HTYCN8F4K/YI+3DAJYr15ZcmrWWpDSV5Vm1XZTS8hxB
- 8yjtgTS39gopL1TIcmXsQWEVCt8rXcjjOgi+Gn6mWFeDMKyd1f2UboTU8Rg6H4eKtrlJL6wyycE
- FHuakU3U/f8d9L5bO47V2I5VLvIfxJQZ+baXrXmMsrJgiJ4wBbflnZ66hmazAOc4nJ77cSOYbEf
- 6Fctb0fJ/S4ve4bkwqlyR+fkbTRhSwQfpjyXA5MgFF0KJh2gWKFX42B3y7/BmdvhJOpvZDLxgeZ
- d2YL4FD3IucCLEJTMVxtNAN+6ud7KaQsjOYK9/Chd7YGyMahO/pgMqqaXyqyYUTr1Le8n7EtHF8
- NDJkqIApyYa7RxjTfl85u+CRWtQ4X8ligLhmyUSPRRsRxUtbFeG4WG1hovfhWFegRrbRQ4WRCY/
- ouHEFnaxE4WuTorSuLS
-X-Received: by 2002:a17:903:26c4:b0:2c9:97a8:8c17 with SMTP id
- d9443c01a7336-2d05247261dmr10007305ad.42.1785524193884; 
- Fri, 31 Jul 2026 11:56:33 -0700 (PDT)
+ bh=Ssxnq1fZWvusp6QPJxLqALNlhOeT8Nu72SByH+hZVnc=;
+ b=G2tW15z+8B3p6x63bu58wEXDjRx8u+PMpE28U0b7sSbMo2DbEDz1MKVp6R+PDTxFUT
+ U+bs7SopfGB0NWp3/uaRNCS5R7YxOjPxAx0QYXgFJxRBjCiIhLhmixqWKUoQTntp90QW
+ OtYdgi34ZOOBZouMLDuAzQ6qxj3JDEae3AZifpv9EqyEBw0Jnn3twjimE2HzZ0ygxXY+
+ ODPhWVxYBkMq4nR5utvRmqMd2cF6dg+Ii5skfBHEEihvdw+eYeEzxGcydQ7GPfSB+zKw
+ CgN+ujs6kFRXXu6WS+PrlgLvQvCGmRso5N0tRC1urkWDbtAvgEtoL7icHzbSBCEXPbXg
+ 2wGA==
+X-Gm-Message-State: AOJu0Yy/9LRuIpb3ZfM27aWFaTKtqddWXsKNCNEopHn6EpGafdCDdTKe
+ dsq68h+abe1evvzCTs3IkoGB9BdoXFvQRWVuIiloybXH5E8gx7P0LdGnSbenVqTsPyHe5pLe7S4
+ 3JM2b
+X-Gm-Gg: AR+sD13WhQpjHLlH6iwjHcfrNnkcbFwOcRMrHAwD/oNShSVpF0DvOw01d1GElkpiMfo
+ pnEPi2E+IMWpggmGbuL0lnuPM15KfDQV6FKAHASbDHWpDbUhs/+cohJe6q787YBty2rL4mp9/oE
+ E7+WONVYyviEbSpEPLh1p9yU1UO+rgJ+Odaz0EANwsRCWZhdmtKfYiB6QmPODXwG7AO/b6jrB9k
+ CgDfEet56dOZk9tm3uk5jK9sb0Kn6dNhrZhk7ShQEhWWkl/cI0iSQckIyAiEP0+kguQ0i3tmN/+
+ f3Apr8xyTWvrGgt8cTgj6RC9XrBBgdiUXvq5tNdGRYI6a3JS4y19KmmBtU+FHgMZBL39ouAtqHz
+ 8yJFafZRCsxmnnwtj7SEYEYxTvQDZyGJ6B+LphPn7LF/LCQJdk1PLMVU2DOHkiXSsscdyweK9J+
+ CJ99zvauQEmDN3vWujCoLsBsHObVxzw1K02Z3HMGwtHMilegW8ss//Jsn2LVlsR/jt0QbBFowm6
+ q6HoKLiyr6g8PgwGfRT
+X-Received: by 2002:a17:902:d48f:b0:2cc:8267:31b5 with SMTP id
+ d9443c01a7336-2d0521b7e94mr10697305ad.19.1785524191053; 
+ Fri, 31 Jul 2026 11:56:31 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d04ae193fasm9356625ad.7.2026.07.31.11.56.33
+ d9443c01a7336-2d04ae193fasm9356625ad.7.2026.07.31.11.56.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 Jul 2026 11:56:33 -0700 (PDT)
+ Fri, 31 Jul 2026 11:56:30 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org,
 	philmd@oss.qualcomm.com
-Subject: [PATCH 05/14] target/s390x: Convert op_ld32s to op_ld
-Date: Fri, 31 Jul 2026 11:56:18 -0700
-Message-ID: <20260731185628.23161-6-richard.henderson@linaro.org>
+Subject: [PATCH 02/14] target/s390x: Convert op_ld8u to op_ld
+Date: Fri, 31 Jul 2026 11:56:15 -0700
+Message-ID: <20260731185628.23161-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260731185628.23161-1-richard.henderson@linaro.org>
 References: <20260731185628.23161-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,77 +102,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Note that op_ld32s already or'd in insn->data, with the only
-use being MO_ALIGN.  We now put the entire MemOp in insn->data.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/s390x/tcg/translate.c     |  7 -------
- target/s390x/tcg/insn-data.h.inc | 14 +++++++-------
- 2 files changed, 7 insertions(+), 14 deletions(-)
+ target/s390x/tcg/translate.c     | 6 ------
+ target/s390x/tcg/insn-data.h.inc | 6 +++---
+ 2 files changed, 3 insertions(+), 9 deletions(-)
 
 diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
-index d18450f764..79e02534cd 100644
+index 25a7842409..055e163837 100644
 --- a/target/s390x/tcg/translate.c
 +++ b/target/s390x/tcg/translate.c
-@@ -2755,13 +2755,6 @@ static DisasJumpType op_ld(DisasContext *s, DisasOps *o)
+@@ -2755,12 +2755,6 @@ static DisasJumpType op_ld(DisasContext *s, DisasOps *o)
      return DISAS_NEXT;
  }
  
--static DisasJumpType op_ld32s(DisasContext *s, DisasOps *o)
+-static DisasJumpType op_ld8u(DisasContext *s, DisasOps *o)
 -{
--    tcg_gen_qemu_ld_i64(o->out, o->in2, get_mem_index(s),
--                        MO_BESL | s->insn->data);
+-    tcg_gen_qemu_ld_i64(o->out, o->in2, get_mem_index(s), MO_UB);
 -    return DISAS_NEXT;
 -}
 -
- static DisasJumpType op_ld32u(DisasContext *s, DisasOps *o)
+ static DisasJumpType op_ld16s(DisasContext *s, DisasOps *o)
  {
-     tcg_gen_qemu_ld_i64(o->out, o->in2, get_mem_index(s),
+     tcg_gen_qemu_ld_i64(o->out, o->in2, get_mem_index(s), MO_BESW);
 diff --git a/target/s390x/tcg/insn-data.h.inc b/target/s390x/tcg/insn-data.h.inc
-index d6cc157cb2..46a4a23d2a 100644
+index 989e40ce34..865ef23ebd 100644
 --- a/target/s390x/tcg/insn-data.h.inc
 +++ b/target/s390x/tcg/insn-data.h.inc
-@@ -418,12 +418,12 @@
- 
- /* LOAD */
-     C(0x1800, LR,      RR_a,  Z,   0, r2_o, 0, cond_r1r2_32, mov2, 0)
--    D(0x5800, L,       RX_a,  Z,   0, a2, new, r1_32, ld32s, 0, 0)
--    D(0xe358, LY,      RXY_a, LD,  0, a2, new, r1_32, ld32s, 0, 0)
-+    D(0x5800, L,       RX_a,  Z,   0, a2, new, r1_32, ld, 0, MO_BESL)
-+    D(0xe358, LY,      RXY_a, LD,  0, a2, new, r1_32, ld, 0, MO_BESL)
-     C(0xb904, LGR,     RRE,   Z,   0, r2_o, 0, r1, mov2, 0)
-     C(0xb914, LGFR,    RRE,   Z,   0, r2_32s, 0, r1, mov2, 0)
-     D(0xe304, LG,      RXY_a, Z,   0, a2, r1, 0, ld64, 0, 0)
--    D(0xe314, LGF,     RXY_a, Z,   0, a2, r1, 0, ld32s, 0, 0)
-+    D(0xe314, LGF,     RXY_a, Z,   0, a2, r1, 0, ld, 0, MO_BESL)
-     F(0x2800, LDR,     RR_a,  Z,   0, f2, 0, f1, mov2, 0, IF_AFP1 | IF_AFP2)
-     F(0x6800, LD,      RX_a,  Z,   0, m2_64, 0, f1, mov2, 0, IF_AFP1)
-     F(0xed65, LDY,     RXY_a, LD,  0, m2_64, 0, f1, mov2, 0, IF_AFP1)
-@@ -434,9 +434,9 @@
- /* LOAD IMMEDIATE */
-     C(0xc001, LGFI,    RIL_a, EI,  0, i2, 0, r1, mov2, 0)
- /* LOAD RELATIVE LONG */
--    D(0xc40d, LRL,     RIL_b, GIE, 0, ri2, new, r1_32, ld32s, 0, MO_ALIGN)
-+    D(0xc40d, LRL,     RIL_b, GIE, 0, ri2, new, r1_32, ld, 0, MO_BESL | MO_ALIGN)
-     D(0xc408, LGRL,    RIL_b, GIE, 0, ri2, r1, 0, ld64, 0, MO_ALIGN)
--    D(0xc40c, LGFRL,   RIL_b, GIE, 0, ri2, r1, 0, ld32s, 0, MO_ALIGN)
-+    D(0xc40c, LGFRL,   RIL_b, GIE, 0, ri2, r1, 0, ld, 0, MO_BESL | MO_ALIGN)
- /* LOAD ADDRESS */
-     C(0x4100, LA,      RX_a,  Z,   0, a2, 0, r1, mov2, 0)
-     C(0xe371, LAY,     RXY_a, LD,  0, a2, 0, r1, mov2, 0)
-@@ -464,9 +464,9 @@
-     C(0x1200, LTR,     RR_a,  Z,   0, r2_o, 0, cond_r1r2_32, mov2, s32)
-     C(0xb902, LTGR,    RRE,   Z,   0, r2_o, 0, r1, mov2, s64)
-     C(0xb912, LTGFR,   RRE,   Z,   0, r2_32s, 0, r1, mov2, s64)
--    D(0xe312, LT,      RXY_a, EI,  0, a2, new, r1_32, ld32s, s64, 0)
-+    D(0xe312, LT,      RXY_a, EI,  0, a2, new, r1_32, ld, s64, MO_BESL)
-     D(0xe302, LTG,     RXY_a, EI,  0, a2, r1, 0, ld64, s64, 0)
--    D(0xe332, LTGF,    RXY_a, GIE, 0, a2, r1, 0, ld32s, s64, 0)
-+    D(0xe332, LTGF,    RXY_a, GIE, 0, a2, r1, 0, ld, s64, MO_BESL)
-     F(0xb302, LTEBR,   RRE,   Z,   0, e2, 0, cond_e1e2, mov2, f32, IF_BFP)
-     F(0xb312, LTDBR,   RRE,   Z,   0, f2, 0, f1, mov2, f64, IF_BFP)
-     F(0xb342, LTXBR,   RRE,   Z,   x2h, x2l, 0, x1_P, movx, f128, IF_BFP)
+@@ -523,10 +523,10 @@
+ /* LOAD LOGICAL CHARACTER */
+     C(0xb994, LLCR,    RRE,   EI,  0, r2_8u, 0, r1_32, mov2, 0)
+     C(0xb984, LLGCR,   RRE,   EI,  0, r2_8u, 0, r1, mov2, 0)
+-    C(0xe394, LLC,     RXY_a, EI,  0, a2, new, r1_32, ld8u, 0)
+-    C(0xe390, LLGC,    RXY_a, Z,   0, a2, r1, 0, ld8u, 0)
++    D(0xe394, LLC,     RXY_a, EI,  0, a2, new, r1_32, ld, 0, MO_UB)
++    D(0xe390, LLGC,    RXY_a, Z,   0, a2, r1, 0, ld, 0, MO_UB)
+ /* LOAD LOGICAL CHARACTER HIGH */
+-    C(0xe3c2, LLCH,    RXY_a, HW,  0, a2, new, r1_32h, ld8u, 0)
++    D(0xe3c2, LLCH,    RXY_a, HW,  0, a2, new, r1_32h, ld, 0, MO_UB)
+ /* LOAD LOGICAL HALFWORD */
+     C(0xb995, LLHR,    RRE,   EI,  0, r2_16u, 0, r1_32, mov2, 0)
+     C(0xb985, LLGHR,   RRE,   EI,  0, r2_16u, 0, r1, mov2, 0)
 -- 
 2.43.0
 
