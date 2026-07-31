@@ -4,75 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFA51C54F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 05:58:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61095C55167
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 05:58:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpgFq-0002ls-Ps; Fri, 31 Jul 2026 01:57:59 -0400
+	id 1wpgFm-0002kT-CW; Fri, 31 Jul 2026 01:57:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quintin.kong@qq.com>)
- id 1wpdC9-000779-DY
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 22:41:57 -0400
-Received: from out203-205-221-153.mail.qq.com ([203.205.221.153])
+ (Exim 4.90_1) (envelope-from <blduan@linux.alibaba.com>)
+ id 1wpeM5-0005rF-Uj; Thu, 30 Jul 2026 23:56:18 -0400
+Received: from [115.124.30.110] (helo=out30-110.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quintin.kong@qq.com>)
- id 1wpdC6-00086S-3B
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 22:41:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1785465704; bh=uolrCXAgGpQ5zPICvAlS/LROyqguWsEQTm1bkdNWpX0=;
- h=From:To:Cc:Subject:Date:References:In-Reply-To;
- b=o6oTWMG4iK/o8JCp2+HVJlhy0ZoHgYAPQUknyNmfRVB15KhrBOoxqjoaAeHXNU836
- bh7HVCzcdzVL2hs5XeHYRYBCdTW42K1ryZA0l57uh4GXZ17Y1m2MMZPtJIexzS19ab
- rv0Kzu+OiOqZHkOEyHU6H2Sutg+o46HrfqkjvFFA=
-X-QQ-XMRINFO: Mp0Kj//9VHAxbwdiBxLhoa0B9o/CdkkPZw==
-X-QQ-XMAILINFO: M1JY6XCfJolWC4i1/T8Gq8fbsMb4h8FRiw3vPVPwK10lOqWdTuaFePDGkKH4Zg
- YCT/eBMkOW+C5acthSxjkF7Mj9gqC4kSuSU+3iWZSOUz89PSD3T/OONbk/93U+7t+cj2j60BAlz+k
- rBDeC+qkibRgzCIT6oaRK2S+WhfrmacYyVw/atd00vn3VsbpNkzUCMXtLy8zccdPSIkDmww0Xrm9A
- 71oPxTGt5ue1NjpVpWuCETNMMcR8DdjSIrsDcG14leqRnyviAW6FkCHq681Qz2jCUwW1fy3RtqZg8
- oPDK1+SA7g23bcIJy/tDX5OXCn+dupOGJrEAb1ppSUAonTkWhWGvUmZHN7PyDPu+xk4X2A/HXEvTN
- yWiV+qsajEFXn9qEAwmjguzdddd20GQSCH58AJ0jZrk9THOyEAOaj6glakT5ceU4HLN3cFitXcYs6
- mFKY31Z8LMgT4OSWS2cRc3j+fUBIiv8n6BI6QdGF087HyxvxZvNWe2WcqucLGraOr4wv1Tu8S3GbU
- fgKyfoZfhfEZuY7Vp4JnARaRfI6F69Yu0++gBLPOPWh4c5bhKyrxTUxPm7LugEsrPGDm6Z4NAh3M3
- d71nJyRBdujNxwXTYoOWJ1VNJEPp4i5bCl/C8EPalgZxQcRi1bv/A63Qysg0WrHNlA1lfiAa8szEE
- QFsm8zwvFAmB0dzki/izUMBKcW41VdDYo0Oa03Gg+y4rGt3jBXty6+5obAizh+06j1rMcEBwNrsvm
- dUczUIrShA6XMhmxE+v60j55imbzIxWoYwOvcllsB/LR/mbgTuA/U4w7F192BhotU4tp4/vMbRWUS
- 73lnyPH4sYRgMRnxYT/OSgYTa/sJD4LkzRKpM/SWzaU5jIxTpRwT0jcbAARZ+YSqkBuSj9rehj7dj
- ExZ/y7YdFG3K7UuWmYojQBxJ8XlcfVH77kK3AA5GJS9+m5Qw4h1OwWMQ6hbTzZsCJYQCO8z7VmptO
- U6UY2vUy3d9wN6CxPMIYu1jLOWloeODxQaBdq+xXDxnIr6dbCrSa6T30TYu8TPe5TghenNcs1b74F
- J3h7clQZFkYwbv1CJq221U5ZN8w==
-From: "=?utf-8?B?MjM1ODU0MzYzMg==?=" <quintin.kong@qq.com>
-To: "=?utf-8?B?UmljaGFyZCBIZW5kZXJzb24=?=" <richard.henderson@linaro.org>,
- "=?utf-8?B?cWVtdS1kZXZlbA==?=" <qemu-devel@nongnu.org>
-Cc: "=?utf-8?B?bWp0?=" <mjt@tls.msk.ru>
-Subject: =?utf-8?B?5Zue5aSN77yaW1BBVENIIDAvMl0gdGNnL21pcHMg?=
- =?utf-8?B?c3RhYmxlIHBhdGNoZXM=?=
-Mime-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_NextPart_6A6C0B67_279CB8C0_604CCBF7"
-Content-Transfer-Encoding: 8Bit
-Date: Thu, 30 Jul 2026 22:41:43 -0400
-X-Priority: 3
-Message-ID: <tencent_59F6685A752C39270BBA9F63D254F496AC0A@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-References: <20260729222732.12927-1-richard.henderson@linaro.org>
-In-Reply-To: <20260729222732.12927-1-richard.henderson@linaro.org>
-X-QQ-mid: xmseza59-0t1785465703tcz02zecq
-Received-SPF: pass client-ip=203.205.221.153; envelope-from=quintin.kong@qq.com;
- helo=out203-205-221-153.mail.qq.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FROM_EXCESS_BASE64=0.001, HELO_STATIC_HOST=-0.001, HTML_MESSAGE=0.001,
- NO_FM_NAME_IP_HOSTN=1.552, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <blduan@linux.alibaba.com>)
+ id 1wpeM0-0002HY-AD; Thu, 30 Jul 2026 23:56:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1785470153; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=lOIM/Cc14RzT2Ss1jXc7sxt3HuykJrKEV9sxrNWyD+s=;
+ b=WNyZtZbRp0w85tD9OLoAi0SN76GaNn7vm9qYi+Vt/JjonCVYXUxuNlxoC1oelRmz+O9V0ukiOSnGXkK+amZtVQHcmDFCJ5hMNnMdWF5ZVgIVWaICzYCixQb3qBSQy9ATsiClGYyjEbqoZNQbwl9ALL7KUmgg/mM9H4sMlgIqVuw=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R121e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
+ MF=blduan@linux.alibaba.com; NM=1; PH=DS; RN=7; SR=0;
+ TI=SMTPD_---0X86jwNG_1785469833; 
+Received: from ea134-sw16.eng.xrvm.cn(mailfrom:blduan@linux.alibaba.com
+ fp:SMTPD_---0X86jwNG_1785469833 cluster:ay36) by smtp.aliyun-inc.com;
+ Fri, 31 Jul 2026 11:50:37 +0800
+From: Baolong Duan <blduan@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair23@gmail.com, dbarboza@ventanamicro.com,
+ cxx194832@alibaba-inc.com, zengxiangyi.zxy@alibaba-inc.com,
+ Baolong Duan <blduan@linux.alibaba.com>
+Subject: [RFC PATCH v1 01/17] docs/system/riscv/virt: document the cove-vm
+ machine option
+Date: Fri, 31 Jul 2026 11:49:55 +0800
+Message-Id: <20260731035011.4178103-2-blduan@linux.alibaba.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260731035011.4178103-1-blduan@linux.alibaba.com>
+References: <20260731035011.4178103-1-blduan@linux.alibaba.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.110 (deferred)
+Received-SPF: pass client-ip=115.124.30.110;
+ envelope-from=blduan@linux.alibaba.com;
+ helo=out30-110.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 31 Jul 2026 01:57:34 -0400
+X-Mailman-Approved-At: Fri, 31 Jul 2026 01:57:33 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,159 +72,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
+Describe the cove-vm option of the virt machine and how a CoVE TEE VM
+(TVM) differs from a regular KVM guest: its memory and vCPU state are
+owned by the TEE Security Manager (TSM), the guest images are measured
+before it starts, interrupts are delivered as MSIs only, there is no
+virtio-mmio transport and vhost cannot be used.
 
-------=_NextPart_6A6C0B67_279CB8C0_604CCBF7
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
+The option itself is added by the following patches.
 
-SGkgUmljaGFyZCwNCg0KDQpUaGFua3MgdmVyeSBtdWNoIGZvciBjbGVhcmluZyB1cCB0aGUg
-SFRNTCBkYW1hZ2UgZnJvbSBteSBtYWlsZXIgYW5kIGZvciB0aGUgcmV2aWV3Lg0KSSBhZ3Jl
-ZSB0aGF0IGZpeGluZyZuYnNwO3RoZSZuYnNwO2FkZHJlc3MmbmJzcDtpbnNpZGUmbmJzcDt0
-aGUmbmJzcDtjYWxsZWQgZnVuY3Rpb24gY291bGQgYmUgYmV0dGVyLg0KVGhhbmtzIGFnYWlu
-LCBhbmQgdGhhbmtzIE1pY2hhZWwgZm9yIHRha2luZyB0aGVzZSBvbnRvIHN0YWJsZS0xMC4w
-LzEwLjEuDQoNCg0KQmVzdCwNClF1aW50aW4NCg0KDQogICAgICAgICDljp/lp4vpgq7ku7YN
-CiAgICAgICAgIA0KICAgICAgIA0K5Y+R5Lu25Lq677yaUmljaGFyZCBIZW5kZXJzb24gPHJp
-Y2hhcmQuaGVuZGVyc29uQGxpbmFyby5vcmcmZ3Q7DQrlj5Hku7bml7bpl7TvvJoyMDI25bm0
-N+aciDI55pelIDE4OjI3DQrmlLbku7bkurrvvJpxZW11LWRldmVsIDxxZW11LWRldmVsQG5v
-bmdudS5vcmcmZ3Q7DQrmioTpgIHvvJptanQgPG1qdEB0bHMubXNrLnJ1Jmd0OywgMjM1ODU0
-MzYzMiA8MjM1ODU0MzYzMkBxcS5jb20mZ3Q7LCBxdWludGluLmtvbmcgPHF1aW50aW4ua29u
-Z0BxcS5jb20mZ3Q7DQrkuLvpopjvvJpbUEFUQ0ggMC8yXSB0Y2cvbWlwcyBzdGFibGUgcGF0
-Y2hlcw0KDQoNCg0KICAgICAgIFN1cGVyY2VkZXM6Jm5ic3A7dGVuY2VudF9FMjI2OUU3N0Qy
-Q0NGNDBBQUUzRTY5RjY3NzgwMzk3QjBBMEFAcXEuY29tDQooIltSRkMmbmJzcDtQQVRDSCZu
-YnNwOzExLjAmbmJzcDswLzJdJm5ic3A7dGNnL21pcHM2NDombmJzcDtGaXgmbmJzcDtzaGlm
-dHMmbmJzcDthbmQmbmJzcDt1bmFsaWduZWQmbmJzcDtsb2FkcyZuYnNwOy0mbmJzcDtbRE9S
-QS1CXSIpDQoNCkhpJm5ic3A7UXVlbnRpbiwmbmJzcDt0aGFua3MmbmJzcDtmb3ImbmJzcDt0
-aGVzZS4mbmJzcDsmbmJzcDtOb3RlJm5ic3A7dGhhdCZuYnNwO0kmbmJzcDtjYW5ub3QmbmJz
-cDtldmVuJm5ic3A7Y29tcGlsZSZuYnNwO3Rlc3QNCm1pcHM2NCZuYnNwO2FueW1vcmUmbmJz
-cDtiZWNhdXNlJm5ic3A7RGViaWFuJm5ic3A7YnVzdGVyJm5ic3A7d2FzJm5ic3A7dGhlJm5i
-c3A7bGFzdCZuYnNwO29zJm5ic3A7cmVsZWFzZSwmbmJzcDthbmQNCmJ1c3RlciZuYnNwO2hh
-cyZuYnNwO3BhY2thZ2UmbmJzcDt2ZXJzaW9ucyZuYnNwO3RvbyZuYnNwO29sZCZuYnNwO2Zv
-ciZuYnNwO3FlbXUuDQoNCkkndmUmbmJzcDtmaXhlZCZuYnNwO3VwJm5ic3A7dGhlJm5ic3A7
-aHRtbCZuYnNwO2RhbWFnZSZuYnNwO2Zyb20mbmJzcDt5b3VyJm5ic3A7bWFpbGVyLCZuYnNw
-O3Jldmlld2VkJm5ic3A7dGhlJm5ic3A7Y2hhbmdlcywNCmFuZCZuYnNwO2hhdmUmbmJzcDtj
-aGFuZ2VkJm5ic3A7dGhlJm5ic3A7c2Vjb25kJm5ic3A7cGF0Y2gmbmJzcDt0byZuYnNwO2Zp
-eCZuYnNwO3RoZSZuYnNwO2FkZHJlc3MmbmJzcDtpbnNpZGUmbmJzcDt0aGUmbmJzcDtjYWxs
-ZWQNCmZ1bmN0aW9uLiZuYnNwOyZuYnNwO0lmJm5ic3A7b25lJm5ic3A7d2FudGVkJm5ic3A7
-dG8mbmJzcDtiYWNrcG9ydCZuYnNwO3RoZSZuYnNwO2ZpeCZuYnNwO2FsbCZuYnNwO3RoZSZu
-YnNwO3dheSZuYnNwO3RvJm5ic3A7cWVtdSZuYnNwO3Y4LA0Kb25lJm5ic3A7d291bGQmbmJz
-cDtoYXZlJm5ic3A7dG8mbmJzcDthcHBseSZuYnNwO3lvdXImbmJzcDtwYXRjaCZuYnNwO2lu
-Jm5ic3A7dHdvJm5ic3A7bG9jYXRpb25zJm5ic3A7Zm9yJm5ic3A7bWlwczMyLg0KDQpNaWNo
-YWVsLCZuYnNwO3RoZSZuYnNwO2ZpcnN0Jm5ic3A7cGF0Y2gmbmJzcDthcHBsaWVzJm5ic3A7
-Y2xlYW5seSZuYnNwO2Zyb20mbmJzcDtzdGFibGUtMTAuMSwmbmJzcDthbmQmbmJzcDt0aGUN
-CnNlY29uZCZuYnNwO2FwcGxpZXMmbmJzcDtmcm9tJm5ic3A7c3RhYmxlLTEwLjAuDQoNCg0K
-cn4NCg0KDQpRdWludGluJm5ic3A7S29uZyZuYnNwOygyKToNCiZuYnNwOyZuYnNwO3RjZy9t
-aXBzNjQ6Jm5ic3A7Rml4Jm5ic3A7dmFyaWFibGUmbmJzcDtzaGlmdCZuYnNwO29wZXJhbmQm
-bmJzcDtvcmRlcg0KJm5ic3A7Jm5ic3A7dGNnL21pcHM2NDombmJzcDtQcmVzZXJ2ZSZuYnNw
-O3RoZSZuYnNwO2Jhc2UmbmJzcDtvZiZuYnNwO3VuYWxpZ25lZCZuYnNwO2xvYWRzDQoNCiZu
-YnNwO3RjZy9taXBzL3RjZy10YXJnZXQuYy5pbmMmbmJzcDt8Jm5ic3A7MjImbmJzcDsrKysr
-KysrKysrKysrKystLS0tLS0tDQombmJzcDsxJm5ic3A7ZmlsZSZuYnNwO2NoYW5nZWQsJm5i
-c3A7MTUmbmJzcDtpbnNlcnRpb25zKCspLCZuYnNwOzcmbmJzcDtkZWxldGlvbnMoLSkNCg0K
-LS0mbmJzcDsNCjIuNDMuMA==
+Signed-off-by: Baolong Duan <blduan@linux.alibaba.com>
+---
+ docs/system/riscv/virt.rst | 39 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
-------=_NextPart_6A6C0B67_279CB8C0_604CCBF7
-Content-Type: text/html;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
-
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6IDEuNDM7IGZvbnQtZmFtaWx5OiAtYXBwbGUtc3lz
-dGVtLCBzeXN0ZW0tdWk7IGZvbnQtc2l6ZTogMTRweDsgY29sb3I6IHJnYigwLCAwLCAwKTsi
-PkhpIFJpY2hhcmQsPC9kaXY+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6IDEuNDM7IGZvbnQt
-ZmFtaWx5OiAtYXBwbGUtc3lzdGVtLCBzeXN0ZW0tdWk7IGZvbnQtc2l6ZTogMTRweDsgY29s
-b3I6IHJnYigwLCAwLCAwKTsiPjxiciAgLz48L2Rpdj48ZGl2IHN0eWxlPSJsaW5lLWhlaWdo
-dDogMS40MzsgZm9udC1mYW1pbHk6IC1hcHBsZS1zeXN0ZW0sIHN5c3RlbS11aTsgZm9udC1z
-aXplOiAxNHB4OyBjb2xvcjogcmdiKDAsIDAsIDApOyI+VGhhbmtzIHZlcnkgbXVjaCBmb3Ig
-Y2xlYXJpbmcgdXAgdGhlIEhUTUwgZGFtYWdlIGZyb20gbXkgbWFpbGVyIGFuZCBmb3IgdGhl
-IHJldmlldy48L2Rpdj48ZGl2IHN0eWxlPSJsaW5lLWhlaWdodDogMS40MzsgZm9udC1mYW1p
-bHk6IC1hcHBsZS1zeXN0ZW0sIHN5c3RlbS11aTsgZm9udC1zaXplOiAxNHB4OyBjb2xvcjog
-cmdiKDAsIDAsIDApOyI+SSBhZ3JlZSB0aGF0IGZpeGluZyZuYnNwO3RoZSZuYnNwO2FkZHJl
-c3MmbmJzcDtpbnNpZGUmbmJzcDt0aGUmbmJzcDtjYWxsZWQgZnVuY3Rpb24gY291bGQgYmUg
-YmV0dGVyLjwvZGl2PjxkaXYgc3R5bGU9ImxpbmUtaGVpZ2h0OiAxLjQzOyBmb250LWZhbWls
-eTogLWFwcGxlLXN5c3RlbSwgc3lzdGVtLXVpOyBmb250LXNpemU6IDE0cHg7IGNvbG9yOiBy
-Z2IoMCwgMCwgMCk7Ij5UaGFua3MgYWdhaW4sIGFuZCB0aGFua3MgTWljaGFlbCBmb3IgdGFr
-aW5nIHRoZXNlIG9udG8gc3RhYmxlLTEwLjAvMTAuMS48L2Rpdj48ZGl2IHN0eWxlPSJsaW5l
-LWhlaWdodDogMS40MzsgZm9udC1mYW1pbHk6IC1hcHBsZS1zeXN0ZW0sIHN5c3RlbS11aTsg
-Zm9udC1zaXplOiAxNHB4OyBjb2xvcjogcmdiKDAsIDAsIDApOyI+PGJyICAvPjwvZGl2Pjxk
-aXYgc3R5bGU9ImxpbmUtaGVpZ2h0OiAxLjQzOyBmb250LWZhbWlseTogLWFwcGxlLXN5c3Rl
-bSwgc3lzdGVtLXVpOyBmb250LXNpemU6IDE0cHg7IGNvbG9yOiByZ2IoMCwgMCwgMCk7Ij5C
-ZXN0LDwvZGl2PjxkaXYgc3R5bGU9ImxpbmUtaGVpZ2h0OiAxLjQzOyBmb250LWZhbWlseTog
-LWFwcGxlLXN5c3RlbSwgc3lzdGVtLXVpOyBmb250LXNpemU6IDE0cHg7IGNvbG9yOiByZ2Io
-MCwgMCwgMCk7Ij5RdWludGluPC9kaXY+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6IDEuNDM7
-Ij48YnIgIC8+PC9kaXY+PGFydGljbGUgc3R5bGU9ImxpbmUtaGVpZ2h0OjEuNDMiPjxkaXYg
-c3R5bGU9ImRpc3BsYXk6ZmxleDthbGlnbi1pdGVtczpjZW50ZXI7cGFkZGluZy10b3A6OHB4
-IiBjb250ZW50ZWRpdGFibGU9ImZhbHNlIj4KICAgICAgICA8ZGl2IHN0eWxlPSJjb2xvcjoj
-OTU5REE2O2ZvbnQtc2l6ZToxMnB4O2xpbmUtaGVpZ2h0OjMwcHgiPuWOn+Wni+mCruS7tjwv
-ZGl2PgogICAgICAgIDxociBzdHlsZT0iYm9yZGVyLXdpZHRoOiBtZWRpdW07IGJvcmRlci1z
-dHlsZTogbm9uZTsgYm9yZGVyLWNvbG9yOiBjdXJyZW50Y29sb3I7IGJvcmRlci1pbWFnZTog
-bm9uZTtib3JkZXItd2lkdGg6bWVkaXVtO2JvcmRlci1zdHlsZTpub25lO2JvcmRlci1jb2xv
-cjpjdXJyZW50Y29sb3I7Ym9yZGVyLWltYWdlOm5vbmU7ZmxleC1ncm93OjE7Ym9yZGVyLXRv
-cDoxcHggc29saWQgcmdiYSgyMSwgNDYsIDc0LCAwLjA3KTttYXJnaW4tbGVmdDo4cHgiICAv
-PgogICAgICA8L2Rpdj48dGFibGUgZGF0YS11bmVkaXRhYmxlPSJ0cnVlIiBzdHlsZT0ibGlu
-ZS1oZWlnaHQ6IDIwcHg7IGJvcmRlci1yYWRpdXM6IDZweDsgYmFja2dyb3VuZC1jb2xvcjog
-cmdiYSgyMCwgNDYsIDc3LCAwLjA1KTsgbWFyZ2luOiAwcHg7IHdpZHRoOiAxMDAlOyI+PHRi
-b2R5Pjx0cj48dGQgc3R5bGU9ImxpbmUtaGVpZ2h0OiAyMHB4OyBwYWRkaW5nOiA4cHg7Ij48
-ZGl2IHN0eWxlPSJsaW5lLWhlaWdodDogMjBweDsgZm9udC1zaXplOiAxMnB4OyI+PHNwYW4g
-c3R5bGU9ImNvbG9yOiByZ2IoOTIsIDk3LCAxMDIpOyI+5Y+R5Lu25Lq677yaPC9zcGFuPjxz
-cGFuIHN0eWxlPSJjb2xvcjogcmdiKDAsIDAsIDApOyI+UmljaGFyZCBIZW5kZXJzb248L3Nw
-YW4+IDxzcGFuIHN0eWxlPSJjb2xvcjogcmdiKDE0OSwgMTU3LCAxNjYpOyI+Jmx0O3JpY2hh
-cmQuaGVuZGVyc29uQGxpbmFyby5vcmcmZ3Q7PC9zcGFuPjwvZGl2PjxkaXYgc3R5bGU9Imxp
-bmUtaGVpZ2h0OiAyMHB4OyBmb250LXNpemU6IDEycHg7Ij48c3BhbiBzdHlsZT0iY29sb3I6
-IHJnYig5MiwgOTcsIDEwMik7Ij7lj5Hku7bml7bpl7TvvJo8L3NwYW4+PHNwYW4gc3R5bGU9
-ImNvbG9yOiByZ2IoMCwgMCwgMCk7Ij4yMDI25bm0N+aciDI55pelIDE4OjI3PC9zcGFuPjwv
-ZGl2PjxkaXYgc3R5bGU9ImxpbmUtaGVpZ2h0OiAyMHB4OyBmb250LXNpemU6IDEycHg7Ij48
-c3BhbiBzdHlsZT0iY29sb3I6IHJnYig5MiwgOTcsIDEwMik7Ij7mlLbku7bkurrvvJo8L3Nw
-YW4+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoMCwgMCwgMCk7Ij5xZW11LWRldmVsPC9zcGFu
-PiA8c3BhbiBzdHlsZT0iY29sb3I6IHJnYigxNDksIDE1NywgMTY2KTsiPiZsdDtxZW11LWRl
-dmVsQG5vbmdudS5vcmcmZ3Q7PC9zcGFuPjwvZGl2PjxkaXYgc3R5bGU9ImxpbmUtaGVpZ2h0
-OiAyMHB4OyBmb250LXNpemU6IDEycHg7Ij48c3BhbiBzdHlsZT0iY29sb3I6IHJnYig5Miwg
-OTcsIDEwMik7Ij7mioTpgIHvvJo8L3NwYW4+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoMCwg
-MCwgMCk7Ij5tanQ8L3NwYW4+IDxzcGFuIHN0eWxlPSJjb2xvcjogcmdiKDE0OSwgMTU3LCAx
-NjYpOyI+Jmx0O21qdEB0bHMubXNrLnJ1Jmd0OywgPC9zcGFuPjxzcGFuIHN0eWxlPSJjb2xv
-cjogcmdiKDAsIDAsIDApOyI+MjM1ODU0MzYzMjwvc3Bhbj4gPHNwYW4gc3R5bGU9ImNvbG9y
-OiByZ2IoMTQ5LCAxNTcsIDE2Nik7Ij4mbHQ7MjM1ODU0MzYzMkBxcS5jb20mZ3Q7LCA8L3Nw
-YW4+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoMCwgMCwgMCk7Ij5xdWludGluLmtvbmc8L3Nw
-YW4+IDxzcGFuIHN0eWxlPSJjb2xvcjogcmdiKDE0OSwgMTU3LCAxNjYpOyI+Jmx0O3F1aW50
-aW4ua29uZ0BxcS5jb20mZ3Q7PC9zcGFuPjwvZGl2PjxkaXYgc3R5bGU9ImxpbmUtaGVpZ2h0
-OiAyMHB4OyBmb250LXNpemU6IDEycHg7Ij48c3BhbiBzdHlsZT0iY29sb3I6IHJnYig5Miwg
-OTcsIDEwMik7Ij7kuLvpopjvvJo8L3NwYW4+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoMCwg
-MCwgMCk7Ij5bUEFUQ0ggMC8yXSB0Y2cvbWlwcyBzdGFibGUgcGF0Y2hlczwvc3Bhbj48L2Rp
-dj48L3RkPjwvdHI+PC90Ym9keT48L3RhYmxlPjxkaXY+PGJyICAvPjwvZGl2PgogICAgICBT
-dXBlcmNlZGVzOiZuYnNwO3RlbmNlbnRfRTIyNjlFNzdEMkNDRjQwQUFFM0U2OUY2Nzc4MDM5
-N0IwQTBBQHFxLmNvbTxiciAgLz4oIltSRkMmbmJzcDtQQVRDSCZuYnNwOzExLjAmbmJzcDsw
-LzJdJm5ic3A7dGNnL21pcHM2NDombmJzcDtGaXgmbmJzcDtzaGlmdHMmbmJzcDthbmQmbmJz
-cDt1bmFsaWduZWQmbmJzcDtsb2FkcyZuYnNwOy0mbmJzcDtbRE9SQS1CXSIpPGJyICAvPjxi
-ciAgLz5IaSZuYnNwO1F1ZW50aW4sJm5ic3A7dGhhbmtzJm5ic3A7Zm9yJm5ic3A7dGhlc2Uu
-Jm5ic3A7Jm5ic3A7Tm90ZSZuYnNwO3RoYXQmbmJzcDtJJm5ic3A7Y2Fubm90Jm5ic3A7ZXZl
-biZuYnNwO2NvbXBpbGUmbmJzcDt0ZXN0PGJyICAvPm1pcHM2NCZuYnNwO2FueW1vcmUmbmJz
-cDtiZWNhdXNlJm5ic3A7RGViaWFuJm5ic3A7YnVzdGVyJm5ic3A7d2FzJm5ic3A7dGhlJm5i
-c3A7bGFzdCZuYnNwO29zJm5ic3A7cmVsZWFzZSwmbmJzcDthbmQ8YnIgIC8+YnVzdGVyJm5i
-c3A7aGFzJm5ic3A7cGFja2FnZSZuYnNwO3ZlcnNpb25zJm5ic3A7dG9vJm5ic3A7b2xkJm5i
-c3A7Zm9yJm5ic3A7cWVtdS48YnIgIC8+PGJyICAvPkkndmUmbmJzcDtmaXhlZCZuYnNwO3Vw
-Jm5ic3A7dGhlJm5ic3A7aHRtbCZuYnNwO2RhbWFnZSZuYnNwO2Zyb20mbmJzcDt5b3VyJm5i
-c3A7bWFpbGVyLCZuYnNwO3Jldmlld2VkJm5ic3A7dGhlJm5ic3A7Y2hhbmdlcyw8YnIgIC8+
-YW5kJm5ic3A7aGF2ZSZuYnNwO2NoYW5nZWQmbmJzcDt0aGUmbmJzcDtzZWNvbmQmbmJzcDtw
-YXRjaCZuYnNwO3RvJm5ic3A7Zml4Jm5ic3A7dGhlJm5ic3A7YWRkcmVzcyZuYnNwO2luc2lk
-ZSZuYnNwO3RoZSZuYnNwO2NhbGxlZDxiciAgLz5mdW5jdGlvbi4mbmJzcDsmbmJzcDtJZiZu
-YnNwO29uZSZuYnNwO3dhbnRlZCZuYnNwO3RvJm5ic3A7YmFja3BvcnQmbmJzcDt0aGUmbmJz
-cDtmaXgmbmJzcDthbGwmbmJzcDt0aGUmbmJzcDt3YXkmbmJzcDt0byZuYnNwO3FlbXUmbmJz
-cDt2OCw8YnIgIC8+b25lJm5ic3A7d291bGQmbmJzcDtoYXZlJm5ic3A7dG8mbmJzcDthcHBs
-eSZuYnNwO3lvdXImbmJzcDtwYXRjaCZuYnNwO2luJm5ic3A7dHdvJm5ic3A7bG9jYXRpb25z
-Jm5ic3A7Zm9yJm5ic3A7bWlwczMyLjxiciAgLz48YnIgIC8+TWljaGFlbCwmbmJzcDt0aGUm
-bmJzcDtmaXJzdCZuYnNwO3BhdGNoJm5ic3A7YXBwbGllcyZuYnNwO2NsZWFubHkmbmJzcDtm
-cm9tJm5ic3A7c3RhYmxlLTEwLjEsJm5ic3A7YW5kJm5ic3A7dGhlPGJyICAvPnNlY29uZCZu
-YnNwO2FwcGxpZXMmbmJzcDtmcm9tJm5ic3A7c3RhYmxlLTEwLjAuPGJyICAvPjxiciAgLz48
-YnIgIC8+cn48YnIgIC8+PGJyICAvPjxiciAgLz5RdWludGluJm5ic3A7S29uZyZuYnNwOygy
-KTo8YnIgIC8+Jm5ic3A7Jm5ic3A7dGNnL21pcHM2NDombmJzcDtGaXgmbmJzcDt2YXJpYWJs
-ZSZuYnNwO3NoaWZ0Jm5ic3A7b3BlcmFuZCZuYnNwO29yZGVyPGJyICAvPiZuYnNwOyZuYnNw
-O3RjZy9taXBzNjQ6Jm5ic3A7UHJlc2VydmUmbmJzcDt0aGUmbmJzcDtiYXNlJm5ic3A7b2Ym
-bmJzcDt1bmFsaWduZWQmbmJzcDtsb2FkczxiciAgLz48YnIgIC8+Jm5ic3A7dGNnL21pcHMv
-dGNnLXRhcmdldC5jLmluYyZuYnNwO3wmbmJzcDsyMiZuYnNwOysrKysrKysrKysrKysrKy0t
-LS0tLS08YnIgIC8+Jm5ic3A7MSZuYnNwO2ZpbGUmbmJzcDtjaGFuZ2VkLCZuYnNwOzE1Jm5i
-c3A7aW5zZXJ0aW9ucygrKSwmbmJzcDs3Jm5ic3A7ZGVsZXRpb25zKC0pPGJyICAvPjxiciAg
-Lz4tLSZuYnNwOzxiciAgLz4yLjQzLjA8YnIgIC8+CjwvYXJ0aWNsZT48ZGl2IHN0eWxlPSJs
-aW5lLWhlaWdodDogMS40MzsiPjxiciAgLz48L2Rpdj4=
-
-------=_NextPart_6A6C0B67_279CB8C0_604CCBF7--
+diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
+index 60850970ce..d053dbc300 100644
+--- a/docs/system/riscv/virt.rst
++++ b/docs/system/riscv/virt.rst
+@@ -146,6 +146,45 @@ The following machine-specific options are supported:
+ 
+   Enables the riscv-iommu-sys platform device. Defaults to 'off'.
+ 
++- cove-vm=[on|off]
++
++  When this option is "on" the guest is created as a RISC-V CoVE
++  (Confidential VM Extension) TEE VM, or TVM. Defaults to "off". See
++  `Running a confidential VM`_ below.
++
++Running a confidential VM
++-------------------------
++
++With "cove-vm=on" the ``virt`` machine creates a TEE VM (TVM) instead of a
++regular KVM guest. The memory and the vCPU state of a TVM are owned by the
++TEE Security Manager (TSM) running in M-mode and are not accessible to the
++host, which changes the machine in a few ways:
++
++- the kernel, the initrd and the device tree are added to the initial
++  measurement of the guest before it starts, so that the guest can be
++  attested later on;
++
++- interrupts are delivered as MSIs only. An IMSIC is therefore mandatory and
++  "aia=aplic-imsic" is selected automatically when no AIA mode is requested.
++  The APLIC is emulated by QEMU because KVM does not implement one for a TVM;
++
++- no virtio-mmio transport is created. Devices have to be attached to the
++  PCIe host bridge, and they always negotiate VIRTIO_F_ACCESS_PLATFORM so
++  that DMA is bounced through memory the guest shares explicitly;
++
++- vhost cannot be used, as the kernel datapath has no access to guest memory.
++
++This requires a host with CoVE support, both in the firmware and in KVM, and
++it only works with ``-accel kvm``. An example command line is:
++
++.. code-block:: bash
++
++  $ qemu-system-riscv64 -M virt,cove-vm=on -accel kvm \
++      -m 256M -smp 1 -nographic \
++      -kernel Image -append "console=ttyS0 root=/dev/vda" \
++      -drive file=rootfs.ext4,format=raw,id=hd0,if=none \
++      -device virtio-blk-pci,drive=hd0,disable-legacy=on
++
+ Running Linux kernel
+ --------------------
+ 
+-- 
+2.34.1
 
 
