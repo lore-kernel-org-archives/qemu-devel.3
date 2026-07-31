@@ -4,116 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 218C5C54F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 15:10:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2781CC5516F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 15:34:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wposV-0004u3-Go; Fri, 31 Jul 2026 11:10:27 -0400
+	id 1wppEQ-0002Fc-3d; Fri, 31 Jul 2026 11:33:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imbrenda@linux.ibm.com>)
- id 1wposU-0004tJ-61; Fri, 31 Jul 2026 11:10:26 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imbrenda@linux.ibm.com>)
- id 1wposS-0003n5-IR; Fri, 31 Jul 2026 11:10:25 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66VBlcSK1730395; Fri, 31 Jul 2026 15:10:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=lXLxEA
- HCnjW0fmgzDBTUJ7UWP1rLkRZMJAsvxH0PsZ8=; b=Wr4th+0TKrk6IqcVJVeo+x
- K8NcUEx473NsoB2zHRFUhXcOfdWgHJLFFqWg2SdV7ciu0xqGDEBkA/eogoTERVIr
- kFbwCVwCqe8PvbtbF1FRo+c6sQ/IOOiP/SzH2DyvWzk0pVVwYw0p2MLo1b5KH0Gb
- M3odJedjpw81NMvhj9cMo9eosTh5gsuUQfFNW1gbxrvPrBRiI8k4FBIMdSkUDHUj
- I/Wz3mX+Hld4fL6tyei0PCNBy+iOEORdXRbkHTUCxyJeNi435MHir1Mv8wJjmo2c
- MSawtBjFpch0DFjrqzGvuaTqDZmZz8+m5lJXxCWndDLYe5tlZIhymdFPgJxbQ0Sw
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuw7wnyw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 31 Jul 2026 15:10:17 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66VEfIF6019716;
- Fri, 31 Jul 2026 15:10:16 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fna5yg4y4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 31 Jul 2026 15:10:16 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66VFAA1X31916378
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 31 Jul 2026 15:10:10 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 905842004B;
- Fri, 31 Jul 2026 15:10:10 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B077E20043;
- Fri, 31 Jul 2026 15:10:09 +0000 (GMT)
-Received: from p-imbrenda (unknown [9.111.4.62])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with SMTP;
- Fri, 31 Jul 2026 15:10:09 +0000 (GMT)
-Date: Fri, 31 Jul 2026 17:10:06 +0200
-From: Claudio Imbrenda <imbrenda@linux.ibm.com>
-To: Matthew Rosato <mjrosato@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, borntraeger@de.ibm.com,
- frankja@linux.ibm.com, pasic@linux.ibm.com, mhartmay@linux.ibm.com,
- david@kernel.org, farman@linux.ibm.com, richard.henderson@linaro.org,
- iii@linux.ibm.com, cohuck@redhat.com
-Subject: Re: [PATCH v2 1/1] target/s390x: Allow 2G hugepages guest backing
-Message-ID: <20260731171006.26bb1d4b@p-imbrenda>
-In-Reply-To: <43521ee6-6fa1-48ae-a72f-94e304bfe3fb@linux.ibm.com>
-References: <20260729163043.843517-1-imbrenda@linux.ibm.com>
- <20260729163043.843517-2-imbrenda@linux.ibm.com>
- <d186d6e1-a820-490e-b616-2ac521d3a20e@linux.ibm.com>
- <20260730142001.760e057c@p-imbrenda>
- <43521ee6-6fa1-48ae-a72f-94e304bfe3fb@linux.ibm.com>
-Organization: IBM
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from
+ <prod-mta-13.8631fc262581453bbf619ec5b2062170.19fb8ce47f6000e099@swg.vates.tech>)
+ id 1wppEB-0002Ew-K6
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 11:32:53 -0400
+Received: from prod-mta-13.swg-srv.net ([185.255.28.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <prod-mta-13.8631fc262581453bbf619ec5b2062170.19fb8ce47f6000e099@swg.vates.tech>)
+ id 1wppE5-00016p-MT
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 11:32:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vates.tech;
+ q=dns/txt; s=selector1; bh=E74rtg7xvJElw5aFZgAvQQASAvQyMsRJ5/BdWO3+NuM=;
+ h=from:subject:date:message-id:to:cc:mime-version:content-type:feedback-id;
+ b=OXXqSlzdt6viKU+J7nfRqMblI2u3zBF4aslkCWfaoUYgp20l3sWe6GtWLVmTNlMOK6q1yPZIE
+ cn8IwoJmr487pe9scHjs9Fh5qEKnXkvsFd6+jAPTZp6F9PF0jv7IOCd2QoWHCF4Jm7zC6ccU4qP
+ b5WLmxuJ+YWjvwr/mO/yU8OsXVSSjssFuAXE53vWQ+87BiZaQqt0EadmpKddlz4NoUU3x5APcXK
+ 2dyE8rtP0dhbbamFEEKNhgwr89scFkgS6GGeK4AUPsOR3M/zdjkJcsvidTr2NyT+CN1lU1j/cCg
+ AbXmB47PxdmJiCWJ7L5oRo/E/xNMrjBrUGGixPfAcP6g==
+Received: from mail2.vates.fr ([37.26.189.201] mail2.vates.fr)
+ (Authenticated sender:
+ 8631fc262581453bbf619ec5b2062170/smtp/7773de5a-2839-4720-82ee-e06722ae1d3e)
+ by prod-mta-13.swg-srv.net (ZoneMTA - prod-mta-13) with ESMTPSA id
+ 19fb8ce47f6000e099.004 for <qemu-devel@nongnu.org>
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+ Fri, 31 Jul 2026 15:32:34 +0000
+X-Zone-Loop: 5ed27483226ac31a6a422bd0663b7bdc17119e0a187a
+x-campaign-type: default
+x-transaction-id: 9f909b2e-e8c8-4401-a03f-22e9c3d40a6f
+x-swg-uid: 01-3633f46f-e195-40f0-917d-8641eb31be36
+X-Mailer: Sweego
+Message-ID: <1785511954.8631fc262581453bbf619ec5b2062170.19fb8ce47f6000e099@vates.tech>
+x-swg-bid: 1785511954.8631fc262581453bbf619ec5b2062170.19fb8ce47f6000e099
+Feedback-ID: default:8631fc262581453bbf619ec5b2062170:Sweego
+x-campaign-id: default
+x-client-id: 8631fc262581453bbf619ec5b2062170
+X-Originating-IP: [37.26.189.201]
+Received: from l14.home (areims-651-1-80-194.w90-18.abo.wanadoo.fr
+ [90.18.187.194]) (Authenticated sender: anthony.perard)
+ by mail2.vates.fr (Postfix) with ESMTPSA id A2E4B8310E;
+ Fri, 31 Jul 2026 17:32:33 +0200 (CEST)
+From: Anthony PERARD <anthony.perard@vates.tech>
+To: qemu-devel@nongnu.org
+Cc: Anthony PERARD <anthony.perard@vates.tech>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ xen-devel@lists.xenproject.org
+Subject: [PATCH] hw/xen-pt: Rework mapping of MSI-X related page
+Date: Fri, 31 Jul 2026 17:32:05 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: MWrWtykTmc5jw1w9hu3JbAhg9ZJlzgnL
-X-Proofpoint-ORIG-GUID: MWrWtykTmc5jw1w9hu3JbAhg9ZJlzgnL
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMxMDExMyBTYWx0ZWRfX4/jB3Pw6lmHt
- jNSGTixTyGl8x1RJxv3TN2cW6V4JkLKGah/6KjaRF1kwsQbVnrWAe/sx7wYXq3nfbqZLCbsv0AS
- rkEUBYE/z6tpcA9tnyOqU61JhLBoiTG0SMIgyvoIniTOJftFaeiewwApkLR3KEDVPgXnrTegfOw
- jvIY1EhD9GjOWb8AhLz9ZaFTgndbBZCvtY+bakRza8lpg4EVBwsG2zFdK2Katg4xf2B4+zrf8nt
- G3sTSNu5rIwHyhYnEXCXifG+qji6UJKCNib6AH6oMXlmzBfiwSUemkEZbxD1KWkzLTPYHvzPimc
- 3vc27rn05HAmnBmDu8evhIVWz4clGNItEkyZ/l7jd/GkJDYkWsz0keNHS2nXvJS5pr5Mpq4it+9
- qwNIO6iGwfOoEGw16aSWYW15yFZrMsWd3aKaQbDi1HQz57DTslY/rzORBeZMbnTvD6zC7nQJ1wl
- Fx4np4K3xMxAeEugr5A==
-X-Authority-Analysis: v=2.4 cv=SKFykuvH c=1 sm=1 tr=0 ts=6a6cbad9 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=x421397KOkagA9VlIqoA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMxMDExMyBTYWx0ZWRfX7HhN0QsrtyKf
- nLZBeWaF3V7OvbEBCBf8ooFw6hA+OggEcU+hxTR5Q20zD64uq6btIc6zLwa7T+IVOmECgd9Saq7
- Wsr3anpmCu0yZQwdVKdYAhtNiFEVZLo=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-31_04,2026-07-30_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0
- lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607310113
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=imbrenda@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-BM-Disclaimer: Yes
+Content-Type: multipart/alternative;
+ boundary="-=Part.190d.85dbe06311ba886a.19fb8ce456c.58c1da0940306110=-"
+X-Bm-Milter-Handled: 4ffbd6c1-ee69-4e1b-aabd-f977039bd3e2
+X-Bm-Transport-Timestamp: 1785511953773
+Received-SPF: pass client-ip=185.255.28.18;
+ envelope-from=prod-mta-13.8631fc262581453bbf619ec5b2062170.19fb8ce47f6000e099@swg.vates.tech;
+ helo=prod-mta-13.swg-srv.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ MSGID_FROM_MTA_HEADER=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,21 +92,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 30 Jul 2026 14:59:19 -0400
-Matthew Rosato <mjrosato@linux.ibm.com> wrote:
+---=Part.190d.85dbe06311ba886a.19fb8ce456c.58c1da0940306110=-
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> >>
-> >> Do you have planned future patches that you are confident will soon make
-> >> use of these get_hpage_1m() and get_hpage_2g() helpers?  
-> > 
-> > yes, which is why I put them there :)
-> >  
-> OK, I won't ask for a respin if you're planning to use them soon.
-> 
-> Thanks!
-> 
-> Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+The mmap() call appears to only map the MSI-X entries but mmap will
+map full pages, make that evident with ROUND_UP()=2E
 
-aaaand I just realized I can simplify things further... I
-think I will need to do a respin anyway
+pci_msix_read() will read past the current length given to mmap() as
+the memory region "xen-pci-pt-msix" is been given a whole page as
+size=2E
+
+Also adjust the munmap() call to use the same length as used in
+mmap()=2E And fix the pointer phys_iomem_base as it has been adjusted
+with table_offset_adjust after the mmap() call=2E
+
+Lastly, adjust the memory region "xen-pci-pt-msix" size with
+msix->table_offset_adjust in case the offset isn't 0, and use ROUND_UP
+instead of open coding it=2E
+
+Signed-off-by: Anthony PERARD <anthony=2Eperard@vates=2Etech>
+---
+ hw/xen/xen_pt_msi=2Ec | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
+
+diff --git a/hw/xen/xen_pt_msi=2Ec b/hw/xen/xen_pt_msi=2Ec
+index df15ccf0d030=2E=2Ef94f1adcd576 100644
+--- a/hw/xen/xen_pt_msi=2Ec
++++ b/hw/xen/xen_pt_msi=2Ec
+@@ -561,12 +561,6 @@ int xen_pt_msix_init(XenPCIPassthroughState *s, uint3=
+2_t base)
+         msix->msix_entry[i]=2Epirq =3D XEN_PT_UNASSIGNED_PIRQ;
+     }
+=20
+-    memory_region_init_io(&msix->mmio, OBJECT(s), &pci_msix_ops,
+-                          s, "xen-pci-pt-msix",
+-                          (total_entries * PCI_MSIX_ENTRY_SIZE
+-                           + XC_PAGE_SIZE - 1)
+-                          & XC_PAGE_MASK);
+-
+     rc =3D xen_host_pci_get_long(hd, base + PCI_MSIX_TABLE, &table_off);
+     if (rc) {
+         XEN_PT_ERR(d, "Failed to read PCI_MSIX_TABLE field\n");
+@@ -588,7 +582,9 @@ int xen_pt_msix_init(XenPCIPassthroughState *s, uint32=
+_t base)
+     msix->table_offset_adjust =3D table_off & 0x0fff;
+     msix->phys_iomem_base =3D
+         mmap(NULL,
+-             total_entries * PCI_MSIX_ENTRY_SIZE + msix->table_offset_adj=
+ust,
++             ROUND_UP(total_entries * PCI_MSIX_ENTRY_SIZE
++                      + msix->table_offset_adjust,
++                      XC_PAGE_SIZE),
+              PROT_READ,
+              MAP_SHARED | MAP_LOCKED,
+              fd,
+@@ -605,6 +601,13 @@ int xen_pt_msix_init(XenPCIPassthroughState *s, uint3=
+2_t base)
+     XEN_PT_LOG(d, "mapping physical MSI-X table to %p\n",
+                msix->phys_iomem_base);
+=20
++    memory_region_init_io(&msix->mmio, OBJECT(s), &pci_msix_ops,
++                          s, "xen-pci-pt-msix",
++                          ROUND_UP(total_entries * PCI_MSIX_ENTRY_SIZE
++                                   + msix->table_offset_adjust,
++                                   XC_PAGE_SIZE)
++                          - msix->table_offset_adjust);
++
+     memory_region_add_subregion_overlap(&s->bar[bar_index], table_off,
+                                         &msix->mmio,
+                                         2); /* Priority: pci default + 1 =
+*/
+@@ -629,8 +632,10 @@ void xen_pt_msix_unmap(XenPCIPassthroughState *s)
+     if (msix->phys_iomem_base) {
+         XEN_PT_LOG(&s->dev, "unmapping physical MSI-X table from %p\n",
+                    msix->phys_iomem_base);
+-        munmap(msix->phys_iomem_base, msix->total_entries * PCI_MSIX_ENTR=
+Y_SIZE
+-               + msix->table_offset_adjust);
++        munmap(msix->phys_iomem_base - msix->table_offset_adjust,
++               ROUND_UP(msix->total_entries * PCI_MSIX_ENTRY_SIZE
++                        + msix->table_offset_adjust,
++                        XC_PAGE_SIZE));
+     }
+=20
+     memory_region_del_subregion(&s->bar[msix->bar_index], &msix->mmio);
+
+
+-- 
+Anthony Perard | Vates XCP-ng Developer
+
+XCP-ng & Xen Orchestra - Vate=
+s solutions
+
+web: https://vates=2Etech
+---=Part.190d.85dbe06311ba886a.19fb8ce456c.58c1da0940306110=---
 
