@@ -4,144 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A818EC5516D
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 08:56:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F05AAC5516D
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 08:59:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpj2M-0000RL-5B; Fri, 31 Jul 2026 04:56:14 -0400
+	id 1wpj4w-00010W-Eq; Fri, 31 Jul 2026 04:58:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wpj2J-0000Qn-BG
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 04:56:11 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wpj2H-0006KQ-RN
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 04:56:11 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66V8ZLlS3292977
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 08:56:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- QUJJTWbrr3vKrGsbB2bpPH0jWSSzXTntLvPb8G7zocs=; b=nCithzlzO964Jfnm
- /zrLFkPjqTTUehhhebLskdAuFk8v6XqyT1S0ourL2MqrGhruQSJy1x8NP82DYveY
- xWY2r0iQP2ykKRWYswuDTyxRuPbFyhGsndZzqDo3bAvhYvay/eilVt8ilvCnT29T
- QBuVLdAFSSx/ja4WwfoIseMuHADYB1490uIxeUnWOHcUcg62376ZqHM65tR3/4PB
- OBE30688P9MyrUnf/ySD1+04SdSpe3JkVDMForWqVQFWqdlJcL8QmGKjKXklSAlg
- Qs/Ec/ciBBlPPuw6G5gQe96kFXYqVIzfFPpjKaZwEQ6ez9HUVMCxIzmYnQZIwqy0
- xWVE8g==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4frrayg2qb-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 08:56:03 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51c1a9764f0so7672511cf.1
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 01:56:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wpj4u-0000zl-RW
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 04:58:52 -0400
+Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wpj4s-0006Qx-V4
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 04:58:52 -0400
+Received: by mail-yx1-xb133.google.com with SMTP id
+ 956f58d0204a3-6679d88abdcso959189d50.2
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 01:58:50 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785488329; cv=none;
+ d=google.com; s=arc-20260327;
+ b=czzFPaqz62v+Ysy74iL51hyD1O9kaguEOuUlMKWGAEuibMQfRnlH9nfIp2yhW1jATe
+ rRwqvWaczxiw7Wu7Vytir14qp463dWw4RsG7eQQ4iCEhkkoOIFLCvt0rgq7UrrlRLdOC
+ c0Ll0mp1KyL85pIInQwu1FF8wYXwdPWjjHUjH9BZrMnDtG0KWhN15Kmlc6OzDaJxH14i
+ zSWbw/XFhlsuGPPC4Z695InT7XzAsO+ZV5jS7WkbL/YBNFVy5RYvLx02sKeUlsa1bCSH
+ N3f+yTl7smbltd34NVeyOmhPlMPgMYAOuuyRstipXLvdTgdLGzmTEy6YAQdyqRKEdyGx
+ tCqg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=cjzJ3LqOhhqUQuv3Ul2oRa8Rsc/LKEczqA8n96bIPVM=;
+ fh=Yl+iNZ7S1Pp6aV5bTwkL5eTB1LNUnCRlxbaofhjMwNE=;
+ b=FbKYYvd/C9KeX2jfa3eB5sGQzcFXpL7cMVSnECKkTO6G7PeyltGjIDzGwpq3rctpYO
+ PbVhMJXEOJewodoGMo1Tqyio8+i/r2y3ixxBz5m2ETLEa8Md1+weBm989p9oOqAn2p4n
+ OzDI1UYM6Jmx7/FarBSwXHHY47AhDcC7j5ctTQ78UDWmTrG8S8njMpItmNc0iiZOhB9J
+ yu40BlqVIofgM2016CrXyW3YdcRzdzInu4oYjoz34l/AUJfryOeaHPzM0x8xX3vxjcK9
+ x4GTbUNIcqPamR8hv8bj5RHS+NMD+oSZQVPELgqZbr/no+3uoT2ZtMhbcTtfihq4SCII
+ 3w8w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1785488157; x=1786092957; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=QUJJTWbrr3vKrGsbB2bpPH0jWSSzXTntLvPb8G7zocs=;
- b=a4E89LxN0lg5CjUPY5kPhu2Xa9ijKMYifjOYYmYqVRk2GMxHaKzA1GbiwtY9djSofc
- 7os4H/kQVBe3VBMfEoPxQhvlYRA/Q5AHEuYwKAme7R1i+uBdCADtUwbBZKhbeNEUF1Ko
- draDViXYfpE+Gz8b+XTbCObP+cSIctjDznCuuK3Vzg1n8fjFJlaSoBB2LO0BaxnwYUed
- p+lx4KyyPayQs4OJpwaTtaXanaQUZkcadDNPwtsXladR6ISRglkC4NaX1G6HhrUcenZ4
- yeTbUGZ7QGLmISb8rwiTnKSeeg/XSlB6RT7R0+7LSVIUVZr68Pz8LRa0+BTXcbZlUWcF
- 3OoA==
+ d=linaro.org; s=google; t=1785488329; x=1786093129; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=cjzJ3LqOhhqUQuv3Ul2oRa8Rsc/LKEczqA8n96bIPVM=;
+ b=DFNznq5juPvXHslGHxjI+xv83t/tn6wZAZVvPxQKBZE4AaOori49B8iBa0IQJ9sqqW
+ /OsoSgrVMz0faDm2xdVWh1K60+I+6URYc5NpeETnIVGBkyAOhEKIJnhipvQyJtnAIGZA
+ I9fkYs8JTKdPHZsJG7kIzhpNCYO8Svg/Qd/Q+uan7x+3cwe6LwbwrZzORiV6UUALCIMf
+ KbvEihB+T6yYISIAgYgRgYR2jDEeLAMAvqA1INws8to86GT4PJoMY16LNPJuPDrsPINR
+ cpnP3zKOIQ1BtA2JeMbaioXAGJEZcU/FdF6fGxbpTp34WsqInREzAK+Zi0L4XePwM3Lw
+ QCyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785488157; x=1786092957;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=QUJJTWbrr3vKrGsbB2bpPH0jWSSzXTntLvPb8G7zocs=;
- b=tKeOhCBBXCyuR/HG/DaOfqGDWJoW51egDUll+eLs+7BkXxvaXmF9XXoCAp88pKEfWr
- 1rqxN4KWiv0d+Umg3cJJxMlvOz+N/JfXzbrAysV22xbYD0OJRsjOJ2fw1Y+pCjz7/0BH
- qwXwt3sXAYeWUVA/arXRhUoJUOE+raX+WfKD2ymGCoVWrCCm6IUqnzFcP0LzwdPL+C44
- QR/FJFV0SzvRgZAZQrL9Apw+Jq1WlNaVgZHmt+Hgr3Lqw86rYg+oD0r2fcN626zO838o
- F7/9Dm6UV1g8s1o3+p6zYgSbH+P5Wh2KsLVazVZ6Dvf7jsXo5czSDN8RsKsVc9NI3dHR
- cBhw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrcKTsZgtS+eddXcPxjpuXNjZjPPOfJhXAT1d+olUMMrXskcyJTvKHQvZq1pNed7rF0RIj/vOaFZGfY@nongnu.org
-X-Gm-Message-State: AOJu0Yy500ZATZPh8xWz+1nr2rQ9JhRQIGXx0tv9AJnc4gFG57L3hs6v
- +Fe2cTzlphffbZF4SBZlRs5zOR+E+kOOyRmnYt5EGpS06QL/fOuqgjN4/pGRxPWWMEPYNv61wYZ
- c2e4lklFmo6Pe6a1VQmMRWJXdQ5U/pSpFRLpSDREVORFVpSXolRHsZOjTKQ==
-X-Gm-Gg: AR+sD12SHjB+pHr4jF4T18/S7LzYuE3VgrmEs2tekXHaA084thqcWd/qqIhy7hxx4+m
- rZ2e6x3X5ckJPEAAYVoqXXdVr1Kvi4pyuj8n6lnE+C4xHDE8AMOcnVhXdjRVpRA6cX/uSS3ow5S
- cid2u/ueeUncYnBbeISqcBIDx08R8MH6Tjv8p1pPxykcogq5otrBujmFF4/MVBHY0unzUtsGntv
- JY59wPOpdJczt4siCjLMDovoKXklE9Fa2A0ol9phEVt3iF6H7LVeYT72JTPHzFiX9lUEFirA60f
- UwgILYR1IbUwe/lzYBrP3ANbnUJaWUxng3PKJNu1bLIHbxpuQOIVzOAEUPTwYMX+ZlvcJP0eE+n
- 8xohdX/F0znOUk/AvFYlopTGZof8eJ5qYrvo6T7tIZR0iy0fPTz4=
-X-Received: by 2002:a05:622a:410d:b0:51c:7d0:7ed7 with SMTP id
- d75a77b69052e-52b4b0200aemr15163491cf.39.1785488156997; 
- Fri, 31 Jul 2026 01:55:56 -0700 (PDT)
-X-Received: by 2002:a05:622a:410d:b0:51c:7d0:7ed7 with SMTP id
- d75a77b69052e-52b4b0200aemr15163301cf.39.1785488156620; 
- Fri, 31 Jul 2026 01:55:56 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6a09c5b1bebsm888744a12.12.2026.07.31.01.55.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 Jul 2026 01:55:55 -0700 (PDT)
-Message-ID: <1a6bc7bc-e728-4b76-801c-667e8fd829ce@oss.qualcomm.com>
-Date: Fri, 31 Jul 2026 10:55:54 +0200
+ d=1e100.net; s=20251104; t=1785488329; x=1786093129;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=cjzJ3LqOhhqUQuv3Ul2oRa8Rsc/LKEczqA8n96bIPVM=;
+ b=eYkdL2sZALoH8fsQDqd7N+deuSBZQ+kjAn6yxgjT3uAulLod2ynOVqdE9nOjWHd4xQ
+ RZWG7k8JfWTPOX3NRBlYotglo3C9JgETXcQOOtZ6sny8URNYzeay2LnL6iWFkVheJ61l
+ OiVKIswcX+263yACSdVQ7KxwOgucc8kZA7vq5DdpKd0mFcLJccRSrpytyFhA9gT/0Bs5
+ 7A4f+wFcbNttMSnBsWylEFM+O9JHwlmonLKq4dwCNmRoetXByRtVOz4lH1boBLJ+M1aT
+ P5pYos9v5DwMTtNRHHlc6u3HSWTTXXdO6kxkomFktGUfbhLvdIp9wlihtUK8gnRyp99p
+ 2P4g==
+X-Gm-Message-State: AOJu0YxSOxcXN66BSbEoNVilMo4bsC28K6HHteu7IZpEf37KFbPhQceP
+ vd3PsDVqlCbmQ8u1ojkGRwvBxwDB9cpPaQki5FeMRe0km8PMesmfqQLUXXSv1ip32QLhvEdHbGn
+ 9Q3glkDTRoCisPAC7UBZJnmrR9YrVc5Q9GnO3UNkQcQ==
+X-Gm-Gg: AR+sD12B6LNpiX/UafkAr8ap8SA2HDvZgGooudGodsSCaZXz9+lNNYn0Vq5GF9kWPp4
+ Bsq9RpVVQyV9sZMeZQES2pxT14Whu82VYw0D/04Lm7BkktwoN1HMTWewprkEnPMBkne12ScQ6au
+ MCNzvjcGnQrj/74Ur2ZowfoFjkR4X2ka7oHxbb7RPkHOLk/9z5mpVATnJktRlqQg/ujrlzXjKWF
+ rxZJXXZn/DiLxd/7+0Zj6PB5CkCZRjwrHbsbzssbvOe3GemXGJnKzsxWKqgi2UJXCwZ8WO4qjCW
+ hw/MGIQ3jaKOQyQxJi+XwNH2wZBgjXNQBaHirnCD3BiPza9i+Xl0jk5plo09F6dCcw2FA/h4RRk
+ gtR9SzMbUhmAP3x8gHl/EXuhqRtuh
+X-Received: by 2002:a53:b45d:0:b0:668:2e46:41b5 with SMTP id
+ 956f58d0204a3-669454aac14mr548397d50.47.1785488329163; Fri, 31 Jul 2026
+ 01:58:49 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/11] tcg: Add tcg_gen_revbit{32,64}
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: anjo@rev.ng, qemu-arm@nongnu.org, git@xen0n.name, 17746591750@163.com,
- maobibo@loongson.cn, lixianglai@loongson.cn, philmd@mailo.com
-References: <20260731000503.170446-1-richard.henderson@linaro.org>
- <20260731000503.170446-3-richard.henderson@linaro.org>
- <9ed4f5ac-c51c-4fe6-8517-488913ecf50c@oss.qualcomm.com>
- <2a9588f6-7d71-4522-91b5-c015858b0d17@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <2a9588f6-7d71-4522-91b5-c015858b0d17@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: Y5S0aAsvOb0v51e3hgEBQQEsxOZQZzr-
-X-Authority-Analysis: v=2.4 cv=Y9fIdBeN c=1 sm=1 tr=0 ts=6a6c6323 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=_fhm7UBy9G9jopjA_eIA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: Y5S0aAsvOb0v51e3hgEBQQEsxOZQZzr-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMxMDA2NCBTYWx0ZWRfXwiigChARR/S2
- CyZWF/l9IfRaz3qCpdEiAfTNt3whtADa2YBKJzZi0xNZ89Osufqp4lp8OOPJ7bkLI7klBkWJ+bf
- ST8evDi+YELdmj291aTnz27flB9+Ks4/Z2k8jTFmZGUqDrN+c20FPDzxO5MHup3utkfC0ZrdpzZ
- S6U5pqW98oA4nc3leIzW3d52lPIoX5PG62yh+nYt8bD6aRYWtLFvpUq3j7Zw+APNR7pGGme6cfN
- SVAnIUAIt8enRRbPGzzxmRQ4DqfddjDybkSAL57fEuBTh0k7+jnnG3kxjGrL4G0ebIAFsmgUGKy
- tm/KEpfGhiFfFrRiIPgteQWzmJzDH+Me28ZnErx5qqEFC53zECtw7qQ2ExE+BviRj0RA+cuq9L8
- uUjIwkmhyMYNY2YkxCWn+RWQnEsclv5Udoe1jY1fF+erSvY/3K6hoc8jtby8XfMkED7fR3s7y7s
- 0YFdXmYt8fN8bhkKwVQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMxMDA2NCBTYWx0ZWRfX5Rwy0OfUIZSX
- IH3hCFus50gE/gB+/00QXHUtL5+huAthBj2ulwQzc2EFFOOTgfTGaVdqwIw7K+GJMJmRaQhRAS3
- pkiD3jZdPeTmxVDRucUvunEgBOR7ldk=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-31_03,2026-07-30_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 spamscore=0 phishscore=0 lowpriorityscore=0
- adultscore=0 priorityscore=1501 malwarescore=0 impostorscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607310064
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260730205846.19479-1-stefanha@redhat.com>
+ <20260730205846.19479-3-stefanha@redhat.com>
+In-Reply-To: <20260730205846.19479-3-stefanha@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 31 Jul 2026 09:58:36 +0100
+X-Gm-Features: AUfX_mxlzeSqCJD9cOWoq3g9Vs2ibL5edy5Gf9kCAY7YrqrYTBrtlQ6XwJUMXPM
+Message-ID: <CAFEAcA9Opun4GED3TGoJB-tDKFy=70raJxRK9gSSe7booz-vaQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] virtio: use Error for queue size validation in
+ virtio_add_queue()
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ virtio-fs@lists.linux.dev, Hanna Reitz <hreitz@redhat.com>, 
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Milan Zamazal <mzamazal@redhat.com>, 
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Dorjoy Chowdhury <dorjoychy111@gmail.com>, 
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>, Alexander Graf <graf@amazon.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Jason Wang <jasowangio@gmail.com>, 
+ David Hildenbrand <david@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-block@nongnu.org, 
+ Greg Kurz <groug@kaod.org>, Raphael Norwitz <rnorwitz@nvidia.com>,
+ Eric Auger <eric.auger@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Kuan-Wei Chiu <visitorckw@gmail.com>,
+ Amit Shah <amit@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,34 +134,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/7/26 08:41, Philippe Mathieu-DaudÃ© wrote:
-> On 31/7/26 08:08, Philippe Mathieu-DaudÃ© wrote:
->> On 31/7/26 02:04, Richard Henderson wrote:
->>> Add generic expanders for reversing bits within a word.
->>>
->>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->>> ---
->>>   include/tcg/tcg-op-common.h |  3 ++
->>>   include/tcg/tcg-op.h        |  5 ++++
->>>   tcg/tcg-op.c                | 59 +++++++++++++++++++++++++++++++++++++
->>>   3 files changed, 67 insertions(+)
->>
->> Missing listing in docs/devel/tcg-ops.rst,
-> 
-> I now see that in "tcg: Add revbit{32,64} opcodes" in patch #7.
-> Since they are for frontends I'd expect them documented in this
-> patch, not #7 (backends).
+On Thu, 30 Jul 2026 at 21:59, Stefan Hajnoczi <stefanha@redhat.com> wrote:
+>
+> Coverity is unhappy with the code path where the x-override-queue-size
+> property value is passed to g_new0() since it is a signed int rather
+> than an unsigned int:
+>
+>       *** CID 1664271:         Error handling issues  (NEGATIVE_RETURNS)
+>       /builds/qemu-project/qemu/hw/virtio/virtio.c: 2595             in virtio_add_queue()
+>       2589         }
+>       2590
+>       2591         vdev->vq[i].vring.num = queue_size;
+>       2592         vdev->vq[i].vring.num_default = queue_size;
+>       2593         vdev->vq[i].vring.align = VIRTIO_PCI_VRING_ALIGN;
+>       2594         vdev->vq[i].handle_output = handle_output;
+>       >>>     CID 1664271:         Error handling issues  (NEGATIVE_RETURNS)
+>       >>>     "__n" is passed to a parameter that cannot be negative.
+>       2595         vdev->vq[i].used_elems = g_new0(VirtQueueElement, queue_size);
+>
+> Introduce an Error **errp argument to virtio_add_queue() and set it when
+> the queue_size argument or the x-override-queue-size property value are
+> invalid.
+>
+> At the moment none of the callers propagate the Error object. Instead
+> they are all modified to pass &error_abort so that the error message is
+> printed and the program terminates (it also terminated before). Further
+> work, especially in new device emulation code, could actually propagate
+> the Error object but is left for the future.
 
-I  guess I keep misunderstanding this document; I refer to it with
-frontends but it might be for backends. I also guess you already
-explained that to me. Nevermind.
 
-> 
->> otherwise:
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
->>
->>
-> 
-> 
 
+> diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
+> index bf64d1231a8..4045414cd2f 100644
+> --- a/hw/scsi/virtio-scsi.c
+> +++ b/hw/scsi/virtio-scsi.c
+> @@ -1317,10 +1317,13 @@ void virtio_scsi_common_realize(DeviceState *dev,
+>      s->sense_size = VIRTIO_SCSI_SENSE_DEFAULT_SIZE;
+>      s->cdb_size = VIRTIO_SCSI_CDB_DEFAULT_SIZE;
+>
+> -    s->ctrl_vq = virtio_add_queue(vdev, s->conf.virtqueue_size, ctrl);
+> -    s->event_vq = virtio_add_queue(vdev, s->conf.virtqueue_size, evt);
+> +    s->ctrl_vq = virtio_add_queue(vdev, s->conf.virtqueue_size, ctrl,
+> +                                  &error_abort);
+> +    s->event_vq = virtio_add_queue(vdev, s->conf.virtqueue_size, evt,
+> +                                   &error_abort);
+
+The virtqueue_size here is user-settable via the device property,
+and the realize function only checks that it is at least 2, not
+for any upper bound. So this one at least ought ideally to be
+propagating the error up. Still, this is no worse than the
+previous situation, where we abort() inside virtio_add_queue().
+
+thanks
+-- PMM
 
