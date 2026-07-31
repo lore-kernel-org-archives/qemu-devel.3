@@ -4,144 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B03C5C55167
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 17:30:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F56EC54F54
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 17:33:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpr49-0007e3-Ib; Fri, 31 Jul 2026 13:30:37 -0400
+	id 1wpr6i-00085p-RF; Fri, 31 Jul 2026 13:33:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wpr3y-0007Um-8D
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 13:30:27 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wpr3v-00065o-QV
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 13:30:25 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66VFOOX8215387
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 17:30:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- MsSPBW2RttFdlfwlUhpdiE6jWIwLdglknk1eL8d0dWA=; b=KrKB+btUxibclRdC
- HKjEEiR4Q7ilVkBUGAXIlWxzdOKo9WHGmvR8QORJ+c7T3/k0awL51Ll1zXpE5BrS
- dtA6ttxDX0cF2hni4VQNgQo+KXdB4vGxq82SMwEf63GiefecgqnFpwLXydDJUyqo
- 7VMFpb5UtprPoagjd49sV+irVaIvWkp/q7huGzkJKANTPyEEPi5BH//Jhk5/f2Os
- eJNBnSPIkPiUw3p+mV1q2WERQDYrPDB7fuI4KlTW4c0L9Z86AKDJqzTK2g8P5Kl1
- 95xugbfWnlmEGEz9772mF+JkfDEiURz92HOWTGS6xuYUz0Ic0xA+mIPj7NRugjgv
- fAcL+Q==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4frujusg63-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 17:30:19 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2ccb6f6a3f4so15255515ad.1
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 10:30:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <oliverhenryc@gmail.com>)
+ id 1wpr6h-00085Y-Kl
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 13:33:15 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <oliverhenryc@gmail.com>)
+ id 1wpr6f-0006EZ-Sq
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 13:33:15 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-c160875e029so15119766b.3
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 10:33:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785519192; cv=none;
+ d=google.com; s=arc-20260327;
+ b=PyyI8B0BatEcpDbCJslppQFWR2jVJm9mc+EYiaK60qh+XhtVPsg6Hqj3Z+5lYPh2gh
+ WqCQAyG/kXZmPyc1Yzy6jmjpfjwIaaMNFIJh9I5YLRMiBwVFYNwM7hMOOcCHvRF7khTi
+ rpD0+hZEBX1u8fcqt2V6CxsNBFPRVgluoFFyTIlNZvLb8MdfriTIDCBWeYhMSk1gbzV/
+ T2Cq4OWQvB/Y8NLm2Xr3BGoX3iagBy2LFmo4fTF4i+HJ2z+FJkn/NV5iS1F3ighR8Bqn
+ HNjAXHDug1pFAzFWy3FEjNfI/WoszgK+pw7rtBaW9Pp611m9OamJqscTfPWJdWYwHs+Y
+ xqRA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=sxrDHD3fHtsaGAoO9OlKh4eK82emC/L4hcej619Vp7w=;
+ fh=vPinGPxx/1+aDQf02ZUnvpyuMQtJPOpb7Jete3Oc3CQ=;
+ b=X+FhT/iazDkeuN00tM4Jh1IET8ewTHhkA21G/mwwCnSmjEbS8Y1VmVGKVvdCk7L/o6
+ GhEffB9DLLIPKOcxmG2nhqjmTpenBP4Ceq2YFmXj4eAvxp/rXNLCu0cmfXDp64WK69qL
+ JgzEKnihyKFpF6CWVDoLUu2IpeMGxy51rrmnK6q8IXROIzlsgnfl9zlGhHbb6kdIssl3
+ 8qHZBHYry8SobQx7EC4TC0biOj0VLFmJF+SxsO5+/sGdQol2rbTVyIog74OUvk5sg74w
+ urdIsjypbvNDUHIrV8gVdo4ecHKtY7cmWUvHuFTR5c9QW9ctShOWcNl9sREa/HgNVBuo
+ /DTA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1785519019; x=1786123819; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=MsSPBW2RttFdlfwlUhpdiE6jWIwLdglknk1eL8d0dWA=;
- b=NPaI2FxudEuG7UMUWz0aQtYXt+v9WdjmDRRmeLXMCQCWGa/iiWOgfnMSH39C7+yWB2
- npMBbNpC4m6Xi4d9vbLK9vzKfYGPiVn80eXlpE95phlxz/IM53zEjYTH6dB0M0+eiY6a
- 56LomrmxRXVZaLLkirmviY6DWs/Lail2HNxC681Hpdk5gS3h57kFlc6Cl64zpB5CC9kl
- PCZ3Mr5hibkAFhz9d8Yg6AqRWfg9HWNMAUanSXnmi+dfq0cCNd9cQQDYTfgsLBxWaUQe
- bY24UaEDlqU+KXU/7u5pBpsEHeNG1TZLgq/5QRtXaXWLZCjzEpW4i1N9D31UPnkTw6aG
- PenQ==
+ d=gmail.com; s=20251104; t=1785519192; x=1786123992; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=sxrDHD3fHtsaGAoO9OlKh4eK82emC/L4hcej619Vp7w=;
+ b=M8Qd6g3DrWFnGfYIrKNzvjx3rZ78hTkrslncsOTiA08MAtjVogVCPsvG2ODU2LvBdC
+ DtkaadtS3ic/Q2PN3LWkxMYln7EckWsyPP48O2TYYQ8RvnBs+aYfikVUDpJRuhiV5aha
+ sZBYQ3vejkQCMq6j5FQ/QiroJ/DJdR6z/S+PsSs+1O4JGkNs+fdf9In8l/ISoW/gdd6+
+ r27iWhW2hn7DQ7kjgDJeut5CCnmlLVAgomSaPjro6Qy/76yg325JZvIbAI0AwGtuPlOk
+ 7u9lDq9XV1SMhjpg2CxPccVLBB/UiKNw60jcVXDykkQkHhSilSHpin70IePuHkO7tbNj
+ H11g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785519019; x=1786123819;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=MsSPBW2RttFdlfwlUhpdiE6jWIwLdglknk1eL8d0dWA=;
- b=OQrEl1vfnWqkND4R0T/Ir04YvWLO5u21c733yXb0/CmnaBYefUSniRFgrI/8Kjzid8
- 9uhOkQVtM7Ro579gtZMnYGCMuEFDCvphLq4jCE6aALr9Bc1gG+BGRWu3EMz21uUvPSjQ
- VW4dyDjrrDsIG9SdLamDXeD9BfrTPSMhh+cYwBoigUgq0liuHVtHJXxnpyU5oFfLXpjr
- GC745I1zxCpNNq6d/DNKv0PDwyWpv5PBG/owAmFPGCSLSCihIB/S2Y0EPQ9WX9HTBKkO
- Ax9c9qU8Yk7pHbVcTx4YAR3LyVwA5+lDId1aZFAWp604L7TCOOGS+MsAu08Zbl5ybotv
- e6LA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoFYZ7zusL1bnus+WYWAzkrU34KFSMH4uz7y3DAg6mThKUJ6O/NVaxKyZPRxo0+E/8vENY/RpeHs26u@nongnu.org
-X-Gm-Message-State: AOJu0YyQYBMPIe2Ohu/3BObLiD5jX7IkvrYfSvUX/Ezap7jeoEdRUZrb
- kNjQBDi4vdj5Zvxelv0d1SpZtGRGJAPcp7GgogT5FK6a5/59tKFJAfT2i2WqIdOKts7yUV1FmRO
- t6iLxKWHpdC4/UOFpXTtPwiI+0rC4xmdrCnPZPypS0q5htLnJ8kmQHJDLoQ==
-X-Gm-Gg: AR+sD10qwyVt9SLa3F4TfAdOV66n88bdLtF4epx3Y580jjbmECgt3JCB7ZSiK+Z+R4V
- PrhVGbMFsnc5Cwygr1YR2T3YubeYKOxDdvRRf5hgMyz3mPrrZchpNktiQIMF8vo46sm4K2uoQEr
- O3joKYqq5AlV4oxzMebxj0HaM1v/3wWEO6mqqC1vnhWSGIoNkPLWm1nQlwWrxW+L97ZPqkmMk/Z
- xznzYThlMXhbqpF2hpMwoT28fRD0SAXfzdo7YLt1/KGWnVTbQpBpC6Atyzqb5CwyBfKetnyQwds
- eTTAAIDx/nF4zTSK2JQ++1qvVQiLDOcjDQuDqzK5GA83TgZS8Avw2mg+SLPktMwLtJ3neOgJgtl
- +Z1DVBSdV3/AYJ52neKgf0qQZp2S8xAn+XnxfON3be2VuhCAfJMn4txrGZR6vu3TlgxZt
-X-Received: by 2002:a17:903:41c6:b0:2c9:97a7:3283 with SMTP id
- d9443c01a7336-2d053717161mr4341155ad.23.1785519018665; 
- Fri, 31 Jul 2026 10:30:18 -0700 (PDT)
-X-Received: by 2002:a17:903:41c6:b0:2c9:97a7:3283 with SMTP id
- d9443c01a7336-2d053717161mr4340765ad.23.1785519018150; 
- Fri, 31 Jul 2026 10:30:18 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d04b1594b0sm8286465ad.71.2026.07.31.10.30.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 31 Jul 2026 10:30:17 -0700 (PDT)
-Message-ID: <3ac6125e-be6c-40c0-8034-021554cd269c@oss.qualcomm.com>
-Date: Fri, 31 Jul 2026 10:30:17 -0700
+ d=1e100.net; s=20251104; t=1785519192; x=1786123992;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=sxrDHD3fHtsaGAoO9OlKh4eK82emC/L4hcej619Vp7w=;
+ b=a7OnNKc4FspZ2oPgVoY2tmdsAg8X/lgQxuMA8pzf4/mo+0WHa4yZWa72c48nOC22yF
+ Q7lwbpptx0l9KNa7h+Os7bBUemdz2pU3pZoA1dcBuS5bDXdxusdRBG0BwyJ9UHvb9dqE
+ /Rvr6UyqF3DxvoEGr+m3Et3Gg6DFXGfRfVXgzvO/U8wWioJoNReVJS89xr4kY/BaS+UP
+ Hpqd25PIX35AOiYSplVRzRCW3eE0PuYfC/HViCaHd7prDXY9sFloQTbjnAwV0okxj2HS
+ 0NCfm8+Dih46gJvLdPuoMM/qn55Zt/sbWORtqvXqcnUZrhweKkT0bU921LLz+XPFPIiG
+ rpwA==
+X-Gm-Message-State: AOJu0Yza1saond/IsNCMg/RGniH0s3DmKRmAp1u3H9vLoFmabz40BYt+
+ uPMGO0mD0ElzdeqvLJcNECuK402be6xppNapbYuxpu7texmn9ejmbMVFWmANymSl0q7qV0YxWgj
+ Ef0qZ3HFiL2+hdVhjrTUhZNM/1xkOgJc=
+X-Gm-Gg: AR+sD12H0Wpa0/iEqOpsAeYfl0sK/MFwieTUr+CNGELqiSQ5praL79JMCHnBISQlGEd
+ ADT8PM5pYChBhVo8IG91oVNKrIoJaRM4T+2tj4+JwQ1E4+5JK1YQ+NXxGaAb+uqAai+iT4QJOCm
+ NHNzX9unrh/79MsqAe5Gdc0ytuLZQ/PM//SXkENFB2R9kmK49KpALfNeEhZoSaFMLzKYrHvJCu4
+ WsjMQHelBLzz2BjUuKg+u8U33osH/qwnTyTEDHnfmdbfbrUXv/Xo4IWtbV9Q4IXMJIyT/GMiLkR
+ dOpg4bXr3zGB5cIuSXXQSLzt2pPzwev+vg5gZIEUWNvBt5AF4wKLzhPwtuQFcJILDgXYoXKxQy5
+ K
+X-Received: by 2002:a17:907:3c8a:b0:c16:604a:b2bd with SMTP id
+ a640c23a62f3a-c1fe81e28b1mr35315466b.3.1785519191902; Fri, 31 Jul 2026
+ 10:33:11 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 04/18] hw/hexagon: move the TLB to hex-subsys
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: philmd@oss.qualcomm.com, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- matheus.bernardino@oss.qualcomm.com
-References: <20260730012824.1135905-1-brian.cain@oss.qualcomm.com>
- <20260730012824.1135905-5-brian.cain@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260730012824.1135905-5-brian.cain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=U6Giy+ru c=1 sm=1 tr=0 ts=6a6cdbab cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=bP8p35ZJUs-PDvbpqJ4A:9 a=QEXdDO2ut3YA:10
- a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-ORIG-GUID: FjSqd56KXmUZ9xpPNggwhgwAWHW4LujE
-X-Proofpoint-GUID: FjSqd56KXmUZ9xpPNggwhgwAWHW4LujE
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMxMDEzNCBTYWx0ZWRfX5xMbYfDdXEal
- bIXBIGOdldNFDPqfKWNIxS0MuMYBtIsW/wSAGQxLQYf8cKiRNf4J/mELGnO35dfdwx1XtdiSrLF
- fea8jWbLP0+olZwYhn8kkpOLg6R8oe/l5mv5/cHnIJxmK6Xk/+gViyfRtA19MTEGhMmbmKUmNRL
- FLFpvMWS8gfHoztOLTRyxlwyHF+TSE3AFluE+S6952T1nwsQ983tWjPOrtIc7kCNg2MuImDDklN
- DpOKgvnOGESAa8RNzWTKNDrHxPQVNa0tj/A/l8ESU8Ie+297L8g0pOy9hpjDzwXl3sBn/1AHyNI
- K61A+5nCQKsPaFAKH351PZsl/kVH+mrShEBWjIGW3Vt/EpAoYjo9HCDkXbqTL2n0oKjWZUNrvLq
- 6CYzeZorWRwj+uWnnode3hXi11URFeK4hBHXvVsiJ3Ta+SzIyvUt4NJEPfqr2Zx6SbYgzYclaLX
- EOR44Z/1+1KT5su8x3g==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMxMDEzNCBTYWx0ZWRfXxZhqA0a9UWWI
- Qn4R0p+MTCO8LO8k133yh7rV/uFgtQj+W7qfS6HDkIVMON8mTlnzDOR7HRQnlO+SdI+emUhOwEu
- asIj0xRBvwIDU6t/GoGjGKZRHlQx4vw=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-31_05,2026-07-30_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 phishscore=0 priorityscore=1501 malwarescore=0
- lowpriorityscore=0 adultscore=0 spamscore=0 bulkscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607310134
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260730230449.963-1-oliverhenryc@gmail.com>
+ <92c3b7f6-4afa-7a61-1843-fbfe855cb9c4@eik.bme.hu>
+In-Reply-To: <92c3b7f6-4afa-7a61-1843-fbfe855cb9c4@eik.bme.hu>
+From: Oliver C <oliverhenryc@gmail.com>
+Date: Fri, 31 Jul 2026 13:32:59 -0400
+X-Gm-Features: AUfX_mzELJy5RAhrwtYdjCOh4PbrYxECvhHuyBykSc9l1H0w-MwJ2QihGgSJaZQ
+Message-ID: <CAGxFFDP0mL-6fZcMQkJm7V1mDepC64Y+YFN-CcgqP0OrMX3w4A@mail.gmail.com>
+Subject: Re: [PATCH] sdl2: fix HighDPI display scaling
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, 
+ marcandre.lureau@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=oliverhenryc@gmail.com; helo=mail-ej1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,18 +119,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/29/2026 6:28 PM, Brian Cain wrote:
-> The TLB device is sized from the config table, so both machines create
-> it identically.
-> 
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  include/hw/hexagon/hexagon.h |  1 +
->  hw/hexagon/hex-subsys.c      | 16 ++++++++++++++++
->  hw/hexagon/hexagon_dsp.c     | 10 ----------
->  hw/hexagon/virt.c            | 10 ----------
->  4 files changed, 17 insertions(+), 20 deletions(-)
-> 
+> Does this mean that on hiDPI displays now a 640x480 guest screen
+> (like BIOS or legacy guest) shows a tiny unusable window?
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+This is correct, but:
+
+> ...the issue that other ui backends should do the same so just changing
+> one backend may lead to inconsistency.
+
+the gtk backend exhibits the same behavior as the sdl backend with my chang=
+es,
+i.e. it creates a 640x480 guest screen in physical pixels (my machine has a
+4k monitor with 150% scaling), just like the new changes. So these changes
+in fact make it more consistent. Although, I just noticed that gtk has
+a 'scale' option,
+which scales the window size, and stretches the surface to it. I
+suppose this can
+be added to sdl. I think it would also be a good idea to enable linear filt=
+ering
+when stretching the surface, so it doesn't look as blurry.
+
+> Despite the patch is just two lines maybe it's not a trivial change.
+
+Gotcha, sorry this is my first time sending a patch through mailing
+list, so thanks for bearing with me.
+
+Oliver
+
+On Fri, Jul 31, 2026 at 7:05=E2=80=AFAM BALATON Zoltan <balaton@eik.bme.hu>=
+ wrote:
+>
+> On Thu, 30 Jul 2026, Oliver Clarke wrote:
+> > This makes sdl2 windows work well with dpi scaling. It fixes the issue
+> > of the display surface being stretched to fit the dpi corrected window
+> > (which created a blurry result).
+> >
+> > Note, this does not do any scaling, it just tells the os to not scale
+> > the window. Before, when the console requested size 640x480, the logica=
+l
+> > size of the window was 640x480, and the physical size was scaled by the
+> > dpi scaling. Now, both the logical and physical size will be 640x480.
+> > This is unlike most dpi aware programs which usually do have the scaled
+> > physical size, then also make the render target that scaled size as
+> > well. This doesn't make as much sense for QEMU, since the guest is
+> > responsible for modesetting, and they should get the exact physical
+> > pixels they request (if i modeset to 3840x2160, I wouldn't want this to
+> > be scaled in any way).
+>
+> Despite the patch is just two lines maybe it's not a trivial change. Does
+> this mean that on hiDPI displays now a 640x480 guest screen (like BIOS or
+> legacy guest) shows a tiny unusable window? In that case maybe this needs
+> to be switchable with a property or turn off scaling of 4k and higher
+> resolutions but then we get to the issue that other ui backends should do
+> the same so just changing one backend may lead to inconsistency. Did you
+> check how is this handled in other ui backends?
+>
+> Regards,
+> BALATON Zoltan
+>
+> > Signed-off-by: Oliver Clarke <oliverhenryc@gmail.com>
+> > ---
+> > ui/sdl2.c | 3 ++-
+> > 1 file changed, 2 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/ui/sdl2.c b/ui/sdl2.c
+> > index 1c97d23a47..1910477db4 100644
+> > --- a/ui/sdl2.c
+> > +++ b/ui/sdl2.c
+> > @@ -102,7 +102,7 @@ void sdl2_window_create(struct sdl2_console *scon)
+> >         flags |=3D SDL_WINDOW_OPENGL;
+> >     }
+> > #endif
+> > -
+> > +    flags |=3D SDL_WINDOW_ALLOW_HIGHDPI;
+> >     scon->real_window =3D SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED,
+> >                                          SDL_WINDOWPOS_UNDEFINED,
+> >                                          surface_width(scon->surface),
+> > @@ -907,6 +907,7 @@ static void sdl2_display_init(DisplayState *ds, Dis=
+playOptions *o)
+> >     char *dir;
+> >
+> >     assert(o->type =3D=3D DISPLAY_TYPE_SDL);
+> > +    SDL_SetHint(SDL_HINT_WINDOWS_DPI_AWARENESS, "permonitorv2");
+> >
+> >     if (SDL_GetHintBoolean("QEMU_ENABLE_SDL_LOGGING", SDL_FALSE)) {
+> >         SDL_LogSetAllPriority(SDL_LOG_PRIORITY_VERBOSE);
+> >
 
