@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81625C55174
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 18:58:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 389D1C5516F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 18:58:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpsQi-0008MT-0v; Fri, 31 Jul 2026 14:58:00 -0400
+	id 1wpsQj-00005p-6m; Fri, 31 Jul 2026 14:58:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wpsPW-0007S1-EU
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 14:56:47 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1wpsPX-0007Sf-NI
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 14:56:48 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wpsPT-0002F4-2X
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 14:56:45 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2ce87c7e3bbso13925855ad.1
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 11:56:42 -0700 (PDT)
+ id 1wpsPW-0002FL-5Y
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 14:56:47 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2cc891373e0so14333935ad.2
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 11:56:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785524201; x=1786129001; darn=nongnu.org;
+ d=linaro.org; s=google; t=1785524202; x=1786129002; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=GC3PuJ5nU2dAA6CO/lRMcZG7iiR1Dy/m71YIBt+D3DA=;
- b=H24v8xFlkRpB3Y3Bo2XE1GV+BQGsR81dFwRMyHkNduBOOO/Si763CkEnVylZ496Nlu
- q1rttkg2JJsCJqtpwrlcx3JSkE6AbgN5H1tS6LUKCfYV6W4ykRplnWYqD9IupGgVoMhd
- mWbfoPEZv2RJxY2Towmipu2SOBWwZvWU9FSRcQd/T7ttYh/HU83+bIRElkXwcQlQfpER
- bpZrmWa6kkWbCsjyebcwmYVDD8TDw3P9sVW2IvQgCcbioXQfXtf2zWBaTXwVdoizdwZt
- rgMZKMDKUXrOdP5ufgER0xyWGBUi3GTynliFR9wSVa4ddGpsmb0K/m10tBzmjtwIL1CF
- lRlQ==
+ bh=zt/qHmJMGDq4h+mK6cca3/a9QuK2s82OW00Vxg/CvcU=;
+ b=cOfQ9N3WPnvlu/YO0BD3XoMatCGm2w5epUCHNXiBszEGW1nUfR8dnj3omkno4K7AwV
+ jiuHbWB671BzmqQZnxVZ9H5ZjaqCZo9LfQjoVO4MwBlKOqcO8twenAneu5ijosJDeCE4
+ lRmehE+wx6UjJZFOAqRwx+ApbwsLW3x8UCBjN2qPngktSDammRTETa8TmiSP+I+BfP7o
+ ejcA7V/gN73+N+w1uWxTmYDMDP0h4I83bRuM4aQs/ufSquOtueY4PkriFGinL11oPalw
+ dwSo33uM+eySqeP2Em7HPbTMl9gSY5BBxYUpxaSJIM6PwxyfrnonlRG4wCsMPDCsnOY/
+ GkTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785524201; x=1786129001;
+ d=1e100.net; s=20251104; t=1785524202; x=1786129002;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=GC3PuJ5nU2dAA6CO/lRMcZG7iiR1Dy/m71YIBt+D3DA=;
- b=qOpf5tovMYxNEpJrDQFWrM+tj5+A01raKF1q3cqzZpfgDriJwgmQd9Ur4I7GGfnino
- 7bifk/fbFMUub4oLs0Y3S1rRYUJ9Ks23ICEIiSOjPasqDgKE8KVGOqXNUybwvKjgk3wu
- WG97v6qWdq+VX+fr0/F78APqvvEL5INjLFQ9UOwnnqBQI1+58A2eWLjGO5X2Spac3q3N
- n9VuSw3UIE4/2hVKKReZzK834TOsz+/xU2b3BHdZIi8kMV5lrCjL4s45zFCfpnlNyBO5
- YoAdF3nYR7GMm73heQRy9p08Ktgh8sRWnAU0V/J6L9EhzWUPrGw7sXUeXZcODVvhBiyw
- Zs0g==
-X-Gm-Message-State: AOJu0YxUXL9tDyKjkKBv9z3GJKdwrjMvMM66nbUXQP7ydKQduNFFqY5C
- 0x0htyqatO5XYZnNIM3O39X8dbvTtMrWgeShrlCLmxOVta+Uuajznq9VtI+gQQyivyG4ALRw5sf
- FxCjC
-X-Gm-Gg: AR+sD11yqidYfxgeYY0Q+2nsS3Oq9DeX5r0bO9HqaoYe85V7qaq7y/Gb2VTTWQ/ktvC
- CEUknR7KI0gp/38sfEGduyNKwZygG8ros6FM5p0pQ7rnlf7cQ4ktceAjkMVfJRH4Znwk7wLjPzp
- aBqeUki/Ie6ylpOS0Mm7Fs7qbgRmhkgfMDZMI358Opq5gBcvoeeO0v1LsZs0gQe0fVOXL871Erl
- bHBR+suUVfYnQaNIJ02u5bxsRtvfEQ0gmLc0uI8Zws7RZg1eoZT5YqJkq7fsXfjsJPD08ObSHX5
- DfCLmbtJgbe7qy77MQ1yTcRh3+9aaEDWTUy1eDFoAxYWNtNapGH20T5F3GaN5SmjsI5f1jHXb8Y
- NpUzNooB9y+Ud/sVdI4b8U28QnmEmfIHesXQB7kX/iWRyL7KV/3ZiHhyRXIIwkK+XxmwzFN8Ag4
- 9ox9jKo6eA6lqW7Rdxkmqu5rdicH+Wk1h1p13GDgq++x7CuBIIUVzSi6NJPd4hccROXuWs8upN2
- JpkQUqCd8YGRUxJuPh6hnvEVmLcXlg=
-X-Received: by 2002:a17:902:f541:b0:2ca:5970:732d with SMTP id
- d9443c01a7336-2d0524810e8mr10726545ad.41.1785524201232; 
- Fri, 31 Jul 2026 11:56:41 -0700 (PDT)
+ bh=zt/qHmJMGDq4h+mK6cca3/a9QuK2s82OW00Vxg/CvcU=;
+ b=fmGh+aMd7BrZ6v6Bqpdx12WnXqoSgyPRuqtA89wwIPDn0bn0btRieSWVJKE9b3pTfI
+ usTIA0biyZql5i2dXZfh7sexIhIjY5e1Juf+Gq3MCbjcBZsEfS2Ep2NM3ZuqedpxEsBw
+ Av71EHEmp4FxFH8hR9LqFJzhBYF185rE1DkbJAhfHYCJ0tmw+S9sR+VXVbnxEA4Y14tN
+ PqGMZOWEoTVWrTL7ipJTmeNl9zHWE637LEWLXKY7a3L9Vmuwb4UeO94HoJK6ef815QwR
+ 3YbHPutgnlc6Um/OZrybgIahwSsktti1vu0MeCFz2Fgldtvwa24owsmwxUj08fNQ/fO/
+ OS1g==
+X-Gm-Message-State: AOJu0YxhC4ajRJlr486+TCqJDYgQodhGnvimK6y39dYi/YtsNLBjRZmj
+ xp+0d/3DLSqz3lHdHjrnLaJ1B1fmQtld0aJKQ6Zb8x2hq2t59FcMjBWTW23RErWZXZK3v3/gCXY
+ FyjOu
+X-Gm-Gg: AR+sD13LEA1bzSjkQriBoazB3Rz3PHb1HJFpGqUqMN5Jpl8XXiO7SquzpniGNsiMIT+
+ GJb/wBHnpPhqMYBWiWjUFZJsxRt/NNbEZ044jJpLbKpEZigy0PrJQMP7qZXi7/XmgDbJS0lTSv5
+ z4hZOhuVDPi5lMhVwnfG+8kwVSSaetzVxausGGalQXitGNiWYbdOjYe7GI1gcAt594wQU8AqQYQ
+ SD3Priu8BghxsFQ6Igm/8HBbNrJ/uXnPRLG3A5gkduUHwTe2pfXnfp9JHICo3uySouO/fASfNzb
+ Ga/J85u8OUBqUlRxfwqQZvkPxFdPNeFZ3CQsgQD3ymQWFMM8tLhXQh/Junu1LDSxqRwHN9XlHbV
+ Rp+f55858Ql1Wqq34dkKwFn/jerCe/ooWEEGz26HXUzvqst7mAwXp2/GBY8PZhv5U3U/caev6SL
+ gFowtQgR/GUJvS9xO7xscthTfWegZzWhnoUjiIzPgquco5CL1XLd+jIYBLUqSzlySx4UY9UJBIR
+ KFoEok637usw8XT44W2/ElkYX+vVvM=
+X-Received: by 2002:a17:902:f78e:b0:2ca:c68:c554 with SMTP id
+ d9443c01a7336-2d05241f274mr9270045ad.38.1785524202131; 
+ Fri, 31 Jul 2026 11:56:42 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d04ae193fasm9356625ad.7.2026.07.31.11.56.40
+ d9443c01a7336-2d04ae193fasm9356625ad.7.2026.07.31.11.56.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 Jul 2026 11:56:40 -0700 (PDT)
+ Fri, 31 Jul 2026 11:56:41 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org,
 	philmd@oss.qualcomm.com
-Subject: [PATCH 13/14] target/s390x: Use op_st for STORE REVERSED
-Date: Fri, 31 Jul 2026 11:56:26 -0700
-Message-ID: <20260731185628.23161-14-richard.henderson@linaro.org>
+Subject: [PATCH 14/14] target/s390x: Simplify LRVR
+Date: Fri, 31 Jul 2026 11:56:27 -0700
+Message-ID: <20260731185628.23161-15-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260731185628.23161-1-richard.henderson@linaro.org>
 References: <20260731185628.23161-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,64 +102,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the MemOp parameter to op_st to directly perform a
-little-endian store, rather than a separate byte reverse
-before the store.
+If we drop TCG_BSWAP_IZ, we don't need to zero-extend r1 on input.
+Since the output gets passed to deposit in wout_r1_32, the high
+bits of the bswap output need not have any specific value, so we
+can drop TCG_BSWAP_OZ.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/s390x/tcg/translate.c     | 13 -------------
- target/s390x/tcg/insn-data.h.inc |  6 +++---
- 2 files changed, 3 insertions(+), 16 deletions(-)
+ target/s390x/tcg/translate.c     | 2 +-
+ target/s390x/tcg/insn-data.h.inc | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
-index 7c1961567d..09c5541615 100644
+index 09c5541615..07ec01232d 100644
 --- a/target/s390x/tcg/translate.c
 +++ b/target/s390x/tcg/translate.c
-@@ -3713,12 +3713,6 @@ static DisasJumpType op_rosbg(DisasContext *s, DisasOps *o)
+@@ -3715,7 +3715,7 @@ static DisasJumpType op_rosbg(DisasContext *s, DisasOps *o)
+ 
+ static DisasJumpType op_rev32(DisasContext *s, DisasOps *o)
+ {
+-    tcg_gen_bswap32_i64(o->out, o->in2, TCG_BSWAP_IZ | TCG_BSWAP_OZ);
++    tcg_gen_bswap32_i64(o->out, o->in2, 0);
      return DISAS_NEXT;
  }
  
--static DisasJumpType op_rev16(DisasContext *s, DisasOps *o)
--{
--    tcg_gen_bswap16_i64(o->out, o->in2, TCG_BSWAP_IZ | TCG_BSWAP_OZ);
--    return DISAS_NEXT;
--}
--
- static DisasJumpType op_rev32(DisasContext *s, DisasOps *o)
- {
-     tcg_gen_bswap32_i64(o->out, o->in2, TCG_BSWAP_IZ | TCG_BSWAP_OZ);
-@@ -5543,13 +5537,6 @@ static void in2_r1_o(DisasContext *s, DisasOps *o)
- }
- #define SPEC_in2_r1_o 0
- 
--static void in2_r1_16u(DisasContext *s, DisasOps *o)
--{
--    o->in2 = tcg_temp_new_i64();
--    tcg_gen_ext16u_i64(o->in2, regs[get_field(s, r1)]);
--}
--#define SPEC_in2_r1_16u 0
--
- static void in2_r1_32u(DisasContext *s, DisasOps *o)
- {
-     o->in2 = tcg_temp_new_i64();
 diff --git a/target/s390x/tcg/insn-data.h.inc b/target/s390x/tcg/insn-data.h.inc
-index 691f8222ab..774a3cec36 100644
+index 774a3cec36..0dbd433ce5 100644
 --- a/target/s390x/tcg/insn-data.h.inc
 +++ b/target/s390x/tcg/insn-data.h.inc
-@@ -882,9 +882,9 @@
- /* STORE HIGH ON CONDITION */
-     D(0xebe1, STOCFH,  RSY_b, LOC2, 0, 0, 0, 0, soc, 0, 2)
- /* STORE REVERSED */
--    C(0xe33f, STRVH,   RXY_a, Z,   la2, r1_16u, new, m1_16, rev16, 0)
--    C(0xe33e, STRV,    RXY_a, Z,   la2, r1_32u, new, m1_32, rev32, 0)
--    C(0xe32f, STRVG,   RXY_a, Z,   la2, r1_o, new, m1_64, rev64, 0)
-+    D(0xe33f, STRVH,   RXY_a, Z,   r1_o, a2, 0, 0, st, 0, MO_LEUW)
-+    D(0xe33e, STRV,    RXY_a, Z,   r1_o, a2, 0, 0, st, 0, MO_LEUL)
-+    D(0xe32f, STRVG,   RXY_a, Z,   r1_o, a2, 0, 0, st, 0, MO_LEUQ)
- 
- /* STORE CLOCK */
-     F(0xb205, STCK,    S,     Z,   la2, 0, new, m1_64, stck, 0, IF_IO)
+@@ -588,7 +588,7 @@
+     F(0xb340, LPXBR,   RRE,   Z,   x2h, x2l, new_P, x1_P, absf128, f128, IF_BFP)
+     F(0xb370, LPDFR,   RRE,   FPSSH, 0, f2, new, f1, absf64, 0, IF_AFP1 | IF_AFP2)
+ /* LOAD REVERSED */
+-    C(0xb91f, LRVR,    RRE,   Z,   0, r2_32u, new, r1_32, rev32, 0)
++    C(0xb91f, LRVR,    RRE,   Z,   0, r2_o, new, r1_32, rev32, 0)
+     C(0xb90f, LRVGR,   RRE,   Z,   0, r2_o, r1, 0, rev64, 0)
+     D(0xe31f, LRVH,    RXY_a, Z,   0, a2, new, r1_16, ld, 0, MO_LEUW)
+     D(0xe31e, LRV,     RXY_a, Z,   0, a2, new, r1_32, ld, 0, MO_LEUL)
 -- 
 2.43.0
 
