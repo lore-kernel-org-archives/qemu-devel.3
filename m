@@ -4,143 +4,172 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF042C54F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 06:50:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE5C8C55167
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 07:00:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wph3u-0007T5-RF; Fri, 31 Jul 2026 02:49:42 -0400
+	id 1wphCv-0000QQ-G5; Fri, 31 Jul 2026 02:59:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wph3s-0007Sb-Rb
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 02:49:40 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1wphCq-0000Px-S1
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 02:58:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wph3q-0002nX-LG
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 02:49:39 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66V6glxU3140222
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 06:49:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- aV9499miaokKje4uxfGrh+AyuYg2OfLjuDuINFSujCs=; b=ObhDy82iDmKL1PmV
- xckjZ3SAUJgdEBPNuXv/1CrDVYt79qIQCFtUrYJIpSaEVYoCbUjDPVnx/iQpBT+4
- f/MhQhWSL+VLtE5GXYuhRQ0AXT7rBN+mWP3Nnu0Q1QDDx7g53XPaknyfptHg1vmJ
- u6WTbXucd/zfDfVrKjcAR+7pOqGNsK5FN5CKrqOKGEigqc76Kp3T3xaLyNuC09J9
- OxWdme4ZZ0md24xX3CIbvxoNKA45toDr2QUwW60J91cPsCgHV1jQbC5BJQykuGsq
- GPfJxI7gI/jClJLqUkvKiCuP5xA3T2ElnsWWIABeDiGGFXhoAXUtvTpxdJH+fAli
- fCsy3Q==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4frpp700v5-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 06:49:36 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8fdace20927so6619426d6.2
- for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 23:49:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1wphCl-0004FM-OU
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 02:58:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785481123;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=EA6rzEfT75ah/b26SMkT5oY0vbEU+pBa2Z2U/mhpPBk=;
+ b=PRczTZNbdcHFJaIMAhN449Nez7raPO1IX705zfeVuWpHUfORnUEwdeVgqd3V19yTb2wSFf
+ pERivo0YvaZFQ4OsxGaQobIHpp6mPOSHLKGKB1bOQ1r5sl94Qk+mt4PSLALVKQ78W/AcwB
+ JliuZ8Ct6rpCwP3MU8a0foxsIGXDBNk=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-600-1zEH1EvvPLWCp0DvrLOd_g-1; Fri, 31 Jul 2026 02:58:41 -0400
+X-MC-Unique: 1zEH1EvvPLWCp0DvrLOd_g-1
+X-Mimecast-MFC-AGG-ID: 1zEH1EvvPLWCp0DvrLOd_g_1785481120
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-c160b9c0676so34181866b.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 23:58:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1785480576; x=1786085376; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=aV9499miaokKje4uxfGrh+AyuYg2OfLjuDuINFSujCs=;
- b=NqQGmKXhHl1TFABF0h7NLdMSeRY+oosNuRgRh2DRfyD4nRC282vwsjxEBZoNjk4kGZ
- LW7rtUG36GrpsoIqNz70FM3dYQuZtBgUrty6Xd0WWhM95wc5YTgpyb9aZEO5PHysjFoX
- T7gJg0GCdvcu/FPDfk4agVJeRYRShTJQHSUOZ3cgP8uKsGg6TUuYAPpTnBIF7yWiQF3f
- 15iVVEJxLUnLRUjlkyTvMWb1xF/5vIyzeX+8FSMy+Atq+QpyxUbTbwoKIrNMQCNmkSeI
- 4XzXxAMfhC1pqj10mwe0a52LBDb/akBCv3faiMiFD10Km4Fwy7kNRt3FJilmFh8Jr8e/
- ijiw==
+ d=redhat.com; s=google; t=1785481120; x=1786085920; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=EA6rzEfT75ah/b26SMkT5oY0vbEU+pBa2Z2U/mhpPBk=;
+ b=TpUe+KBw+RdaJgZB8i3EduF+A71UzNQyQ9jtOhGHkya3mg738qJGrJILGSquFwxt1m
+ 96k85cAe6iaCn3RGWvuywvGit834AHf2fBRJkGgbQzm9Ak4Uil7ibtul5gJ0zWmMHytV
+ mETGOTHMu7AEEBZGFPW6xrqtBeR8GqIryC6vjo+YP8AViYrIhd7fUc27qP8Hl2X+4Orf
+ SZJI67LGOGeb5o+dQMqxYMxtaSQHapkVCwtCo1bwjAFHp4ddnPypxKGF6t/NPWSEvHZt
+ pPTP+8qwSy0H+GjIYoj62YRRYeOo6UE6xG/U8W3JNYWye5+B2C99K0S9LK0nWlN7HV/Q
+ QseQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785480576; x=1786085376;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1785481120; x=1786085920;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=aV9499miaokKje4uxfGrh+AyuYg2OfLjuDuINFSujCs=;
- b=mC3KQj3K5AjrliDwR058gPXhQ1xHnqyieLuTv6Zfg29b82lnFsokt0Hk8QSIw5KtVH
- keG/znPovNtQZeOKTIzK55HH/lKNi4F+2H4akXPe33jd5kaEsdv1JZtwKCaADxmgg85I
- Sf0NjCIvPKV6/VS19ZP/ZIVoDxo6pCZvZJU5E7vAn3YC41d2kXwBnZk8sRDhmcP/dGhh
- HRa9w0CYKz17z9pNj6U32GNs3CHvfCgUDV5qH+QWlkB9lPDk6fg4SPnSoy9yVKHS0Cp8
- 13Ur5yxGarP05xlrwm6h0qHy2Ru7YdZQU2A4yi47xPOXcVrXnASQUym5nJ1XFWitp1w9
- 8rkg==
+ bh=EA6rzEfT75ah/b26SMkT5oY0vbEU+pBa2Z2U/mhpPBk=;
+ b=Uj+NIC8wHdaw//+vwAWuDfWGoi2KUa/k2cI/AP1WlsN5DbMTRW+lGfAvNCZiNOWGOo
+ 20sXbpVwFaV8vWENm+6/nEb6W4lYuvJjuRCt5ROy4hNdCiIBkb6r9ybZO6g7CGwu455x
+ fvd8scG4mqvUtR73anUICpqi9CdF7DhCmgkeaq7jWOGZ7HmjZmukBI0/Yb+ybZeeum26
+ C8AaBCwAiNxD9Mivba5GgOXyBTJZlo3yn3+FpcLK3V8QC3aifG+85glhv2IAo+Dpuhtc
+ CBftmDOl1KhM20tuO96PJH1U/aVCHt9VLlzNaEK9Qzk5zcurS0A5bWXRnCPNB6ZA4Uvi
+ 0Gvg==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rr3otq+PNXFHtk2mid5AjUFoLX260+FiGIyABDdlrviN0oiUqMfSZGlRzJVX/BNbIRHvEjmHUie9IS5@nongnu.org
-X-Gm-Message-State: AOJu0YxJzf8A6DEef4MNmPVVC/7U5dripuRd20E5t/Qvm0qzQxpcP9ss
- a7Vq4pKjk0APGY+Agm/BWV7vSgadCO5OMi86TlOCoXc8/epvaizUH3to9hedDL2sVxcgHZFqjPq
- 3i6114sUuknPmoCJ0k5KKv5qLqrWtOGf0ywKRy7w58oXpU8KVhf6a2akQyw==
-X-Gm-Gg: AR+sD11tww2mo1D7Kb/8X1kuwezvNgOOweSCrKZGuVUo0OyjxPyJJNAPEwN85IIvthT
- G12Wa31lEGMi13+og5myvyIDZEjHIwU3K6/MQhhVop4u/hHaIrr0l6D/dm3sxYS9g22LVqsZM5T
- /7lv15MAcCjFbBg6QuM1wl2DEoMH+JmPmkWy4Z22mc56HJAakvsc9AjkGiS+Qx+hMBWFsJk0ih0
- x+MjYv66IaPPqfOnbhP/wdgatj/nnMLmM0MNKUQrlQ/Ex4qUTVJo43XY9pPgA/PAabG2zxfUblu
- aEbyFvMnxERIyyOibmOt4C0cdmT9d9U0dSXtBdeqHgHlogt3cNr5UL0eEgOWTd1orNF3nl80FfU
- LOGqt9ciSNYxDakKka3tuIQ983+A49Al4N1ZN2MmyRhuQvIgE7lg=
-X-Received: by 2002:a05:622a:4897:b0:51c:44c:6ad with SMTP id
- d75a77b69052e-52b4af24401mr8224831cf.21.1785480575698; 
- Thu, 30 Jul 2026 23:49:35 -0700 (PDT)
-X-Received: by 2002:a05:622a:4897:b0:51c:44c:6ad with SMTP id
- d75a77b69052e-52b4af24401mr8224631cf.21.1785480575305; 
- Thu, 30 Jul 2026 23:49:35 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47fd41e2961sm1393239f8f.13.2026.07.30.23.49.33
+ AHgh+Rru/4vTfrIKULbT0GN+qreB3hs1l/qiwDu8dbjNfCfrVMAJRXL/B9nLU+2PyLUi6hlYxLQJrkKo+A9f@nongnu.org
+X-Gm-Message-State: AOJu0YzHfwHEswHBRQnvXOmP8ECCFO/JXaxMqjBmAV+5tmFuuiI/AWpj
+ 60FVz/4I8NfYHAzAqZwpmcrz677MoajnPLjwEwiE+DNxW5xEodLjhUEwhZ4xYiSjOm15TBUe7B+
+ UsNnRyGPDtLZ9c8mM/my+2iI41Hl6yiXrU/144SlqqI01vrvEB7g6z5V0
+X-Gm-Gg: AR+sD11HvFxe68CujD5d/Zwk1ZUHDjVC9ljL5/5aW9gvuq+KYRiV+MtxXsIEiTisJCS
+ pz0ahF4H9FtQ4sSBL0Mt7PglFzOGc/E1C8OcGGnlp9FmhP2jTrMuqs6wDS96vC99hyouXLDlO6i
+ RIFicgkGgdWVozVyE4Dm1goxaTjtGzGuqsH6Zt1wfCZynI8aWFLTlEw/X1kgpG2bFRvYG4jU9HL
+ 5a1Tns1ztw3grKVuHYiMDFewbaEOcCOm8IOo1dxg/bv+BEx4iiII12o8LVk9FUTNteQiVuBuqER
+ 3g+neV7mLciygSoAM+fkKOSYvIMItSbr8YpZz4nN8J9akn3h2Ziz114JraqRRsfSqdHuN9tnNto
+ o41gRVZIlfrmsdqPJmZ864RVF+1tVGPaijMZAZyM=
+X-Received: by 2002:a17:907:8b8b:b0:c12:9b98:209e with SMTP id
+ a640c23a62f3a-c1fd21624f5mr35109666b.23.1785481120198; 
+ Thu, 30 Jul 2026 23:58:40 -0700 (PDT)
+X-Received: by 2002:a17:907:8b8b:b0:c12:9b98:209e with SMTP id
+ a640c23a62f3a-c1fd21624f5mr35107466b.23.1785481119508; 
+ Thu, 30 Jul 2026 23:58:39 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:e10:ef90:343a:68f:2e91:95c?
+ ([2a01:e0a:e10:ef90:343a:68f:2e91:95c])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c1fd4454472sm34427966b.34.2026.07.30.23.58.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Jul 2026 23:49:34 -0700 (PDT)
-Message-ID: <348faafd-2346-43dd-85d0-4ed7fe965ebb@oss.qualcomm.com>
-Date: Fri, 31 Jul 2026 08:49:33 +0200
+ Thu, 30 Jul 2026 23:58:38 -0700 (PDT)
+Message-ID: <29ce3d38-24b4-4c5f-81f4-c09648b2b662@redhat.com>
+Date: Fri, 31 Jul 2026 08:58:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/11] tcg: Add tcg_gen_revbit{32,64}
+Subject: Re: [PATCH v2 2/2] virtio: use Error for queue size validation in
+ virtio_add_queue()
+To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Kevin Wolf <kwolf@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ virtio-fs@lists.linux.dev, Hanna Reitz <hreitz@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Milan Zamazal <mzamazal@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Dorjoy Chowdhury <dorjoychy111@gmail.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>, Alexander Graf
+ <graf@amazon.com>, Jason Wang <jasowangio@gmail.com>,
+ David Hildenbrand <david@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ qemu-block@nongnu.org, Greg Kurz <groug@kaod.org>,
+ Raphael Norwitz <rnorwitz@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Kuan-Wei Chiu <visitorckw@gmail.com>, Amit Shah <amit@kernel.org>
+References: <20260730205846.19479-1-stefanha@redhat.com>
+ <20260730205846.19479-3-stefanha@redhat.com>
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: anjo@rev.ng, qemu-arm@nongnu.org, git@xen0n.name, 17746591750@163.com,
- maobibo@loongson.cn, lixianglai@loongson.cn, philmd@mailo.com,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20260731000503.170446-1-richard.henderson@linaro.org>
- <20260731000503.170446-3-richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260731000503.170446-3-richard.henderson@linaro.org>
+From: Laurent Vivier <lvivier@redhat.com>
+Autocrypt: addr=lvivier@redhat.com; keydata=
+ xsFNBFYFJhkBEAC2me7w2+RizYOKZM+vZCx69GTewOwqzHrrHSG07MUAxJ6AY29/+HYf6EY2
+ WoeuLWDmXE7A3oJoIsRecD6BXHTb0OYS20lS608anr3B0xn5g0BX7es9Mw+hV/pL+63EOCVm
+ SUVTEQwbGQN62guOKnJJJfphbbv82glIC/Ei4Ky8BwZkUuXd7d5NFJKC9/GDrbWdj75cDNQx
+ UZ9XXbXEKY9MHX83Uy7JFoiFDMOVHn55HnncflUncO0zDzY7CxFeQFwYRbsCXOUL9yBtqLer
+ Ky8/yjBskIlNrp0uQSt9LMoMsdSjYLYhvk1StsNPg74+s4u0Q6z45+l8RAsgLw5OLtTa+ePM
+ JyS7OIGNYxAX6eZk1+91a6tnqfyPcMbduxyBaYXn94HUG162BeuyBkbNoIDkB7pCByed1A7q
+ q9/FbuTDwgVGVLYthYSfTtN0Y60OgNkWCMtFwKxRaXt1WFA5ceqinN/XkgA+vf2Ch72zBkJL
+ RBIhfOPFv5f2Hkkj0MvsUXpOWaOjatiu0fpPo6Hw14UEpywke1zN4NKubApQOlNKZZC4hu6/
+ 8pv2t4HRi7s0K88jQYBRPObjrN5+owtI51xMaYzvPitHQ2053LmgsOdN9EKOqZeHAYG2SmRW
+ LOxYWKX14YkZI5j/TXfKlTpwSMvXho+efN4kgFvFmP6WT+tPnwARAQABzSNMYXVyZW50IFZp
+ dmllciA8bHZpdmllckByZWRoYXQuY29tPsLBeAQTAQIAIgUCVgVQgAIbAwYLCQgHAwIGFQgC
+ CQoLBBYCAwECHgECF4AACgkQ8ww4vT8vvjwpgg//fSGy0Rs/t8cPFuzoY1cex4limJQfReLr
+ SJXCANg9NOWy/bFK5wunj+h/RCFxIFhZcyXveurkBwYikDPUrBoBRoOJY/BHK0iZo7/WQkur
+ 6H5losVZtrotmKOGnP/lJYZ3H6OWvXzdz8LL5hb3TvGOP68K8Bn8UsIaZJoeiKhaNR0sOJyI
+ YYbgFQPWMHfVwHD/U+/gqRhD7apVysxv5by/pKDln1I5v0cRRH6hd8M8oXgKhF2+rAOL7gvh
+ jEHSSWKUlMjC7YwwjSZmUkL+TQyE18e2XBk85X8Da3FznrLiHZFHQ/NzETYxRjnOzD7/kOVy
+ gKD/o7asyWQVU65mh/ECrtjfhtCBSYmIIVkopoLaVJ/kEbVJQegT2P6NgERC/31kmTF69vn8
+ uQyW11Hk8tyubicByL3/XVBrq4jZdJW3cePNJbTNaT0d/bjMg5zCWHbMErUib2Nellnbg6bc
+ 2HLDe0NLVPuRZhHUHM9hO/JNnHfvgiRQDh6loNOUnm9Iw2YiVgZNnT4soUehMZ7au8PwSl4I
+ KYE4ulJ8RRiydN7fES3IZWmOPlyskp1QMQBD/w16o+lEtY6HSFEzsK3o0vuBRBVp2WKnssVH
+ qeeV01ZHw0bvWKjxVNOksP98eJfWLfV9l9e7s6TaAeySKRRubtJ+21PRuYAxKsaueBfUE7ZT
+ 7zfOwU0EVgUmGQEQALxSQRbl/QOnmssVDxWhHM5TGxl7oLNJms2zmBpcmlrIsn8nNz0rRyxT
+ 460k2niaTwowSRK8KWVDeAW6ZAaWiYjLlTunoKwvF8vP3JyWpBz0diTxL5o+xpvy/Q6YU3BN
+ efdq8Vy3rFsxgW7mMSrI/CxJ667y8ot5DVugeS2NyHfmZlPGE0Nsy7hlebS4liisXOrN3jFz
+ asKyUws3VXek4V65lHwB23BVzsnFMn/bw/rPliqXGcwl8CoJu8dSyrCcd1Ibs0/Inq9S9+t0
+ VmWiQWfQkz4rvEeTQkp/VfgZ6z98JRW7S6l6eophoWs0/ZyRfOm+QVSqRfFZdxdP2PlGeIFM
+ C3fXJgygXJkFPyWkVElr76JTbtSHsGWbt6xUlYHKXWo+xf9WgtLeby3cfSkEchACrxDrQpj+
+ Jt/JFP+q997dybkyZ5IoHWuPkn7uZGBrKIHmBunTco1+cKSuRiSCYpBIXZMHCzPgVDjk4viP
+ brV9NwRkmaOxVvye0vctJeWvJ6KA7NoAURplIGCqkCRwg0MmLrfoZnK/gRqVJ/f6adhU1oo6
+ z4p2/z3PemA0C0ANatgHgBb90cd16AUxpdEQmOCmdNnNJF/3Zt3inzF+NFzHoM5Vwq6rc1JP
+ jfC3oqRLJzqAEHBDjQFlqNR3IFCIAo4SYQRBdAHBCzkM4rWyRhuVABEBAAHCwV8EGAECAAkF
+ AlYFJhkCGwwACgkQ8ww4vT8vvjwg9w//VQrcnVg3TsjEybxDEUBm8dBmnKqcnTBFmxN5FFtI
+ WlEuY8+YMiWRykd8Ln9RJ/98/ghABHz9TN8TRo2b6WimV64FmlVn17Ri6FgFU3xNt9TTEChq
+ AcNg88eYryKsYpFwegGpwUlaUaaGh1m9OrTzcQy+klVfZWaVJ9Nw0keoGRGb8j4XjVpL8+2x
+ OhXKrM1fzzb8JtAuSbuzZSQPDwQEI5CKKxp7zf76J21YeRrEW4WDznPyVcDTa+tz++q2S/Bp
+ P4W98bXCBIuQgs2m+OflERv5c3Ojldp04/S4NEjXEYRWdiCxN7ca5iPml5gLtuvhJMSy36gl
+ U6IW9kn30IWuSoBpTkgV7rLUEhh9Ms82VWW/h2TxL8enfx40PrfbDtWwqRID3WY8jLrjKfTd
+ R3LW8BnUDNkG+c4FzvvGUs8AvuqxxyHbXAfDx9o/jXfPHVRmJVhSmd+hC3mcQ+4iX5bBPBPM
+ oDqSoLt5w9GoQQ6gDVP2ZjTWqwSRMLzNr37rJjZ1pt0DCMMTbiYIUcrhX8eveCJtY7NGWNyx
+ FCRkhxRuGcpwPmRVDwOl39MB3iTsRighiMnijkbLXiKoJ5CDVvX5yicNqYJPKh5MFXN1bvsB
+ kmYiStMRbrD0HoY1kx5/VozBtc70OU0EB8Wrv9hZD+Ofp0T3KOr1RUHvCZoLURfFhSQ=
+In-Reply-To: <20260730205846.19479-3-stefanha@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMxMDA0NSBTYWx0ZWRfX4VAt6QtT2jbb
- VJ73Hxty7O/mCqGNTQUNeF0kTwe2QFdcBDZqrJZTBSD6atYzoKR5ezMSf8XWbAM1x1hSWIihxHB
- 4xJwSsyoojAf8lvHp6F2bHHRILv3SOr5AVGjU1H/oIl987O7lPSF24peRwClS9kFFbr7rOniRi8
- +jK/mgaAq9veSxqy1qTyo+WygelD5jRx+pKY0pmosdv2bs78UGZIxJiNabStmsY0H60k8kAfEFK
- 7Hp7h6CordllSataQev4DCRAGNbTbKlpqXq8lpdOXt03Bet0YpxsUpbqd3xvjY+cNKYnpLBAL7v
- /JSV4stBmB088u78PoNCM2QwsuDMyn6GzsvJln0RjeWhIg6gPHD46NkjP0HRCBok7C2qGhVGOfz
- 1rX4lPzhpOENlYbQQ64zKSPSne9+2YNV0XLufJgQ66g0TxYykUJIuQ8kD7V/G5FBWWvcL45jur9
- T6TE7LKwaoQum17YtqA==
-X-Proofpoint-ORIG-GUID: ulymyZ3AUJmz98SByA3iaQub3ktEWFDc
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMxMDA0NSBTYWx0ZWRfX8hd6elNu7hdQ
- ECJzd+0/H7qBcctO+4wt5ZRxZGRcXW6Fl423FkHKMZv0H9AotM04Tz7RzASdRcbjnvD0zLHv3Jc
- vYvRbdizq8KKn3CzBWyp4I0VRE4JOJg=
-X-Proofpoint-GUID: ulymyZ3AUJmz98SByA3iaQub3ktEWFDc
-X-Authority-Analysis: v=2.4 cv=AsXeGu9P c=1 sm=1 tr=0 ts=6a6c4580 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=KKAkSRfTAAAA:8 a=CkTU4zPvt2Zb_C_0CqoA:9 a=QEXdDO2ut3YA:10
- a=iYH6xdkBrDN1Jqds4HTS:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-31_02,2026-07-30_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 spamscore=0 malwarescore=0 impostorscore=0
- priorityscore=1501 lowpriorityscore=0 bulkscore=0 adultscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607310045
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=lvivier@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,46 +185,582 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
-
-On 31/7/26 02:04, Richard Henderson wrote:
-> Add generic expanders for reversing bits within a word.
+On 7/30/26 22:58, Stefan Hajnoczi wrote:
+> Coverity is unhappy with the code path where the x-override-queue-size
+> property value is passed to g_new0() since it is a signed int rather
+> than an unsigned int:
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>        *** CID 1664271:         Error handling issues  (NEGATIVE_RETURNS)
+>        /builds/qemu-project/qemu/hw/virtio/virtio.c: 2595             in virtio_add_queue()
+>        2589         }
+>        2590
+>        2591         vdev->vq[i].vring.num = queue_size;
+>        2592         vdev->vq[i].vring.num_default = queue_size;
+>        2593         vdev->vq[i].vring.align = VIRTIO_PCI_VRING_ALIGN;
+>        2594         vdev->vq[i].handle_output = handle_output;
+>        >>>     CID 1664271:         Error handling issues  (NEGATIVE_RETURNS)
+>        >>>     "__n" is passed to a parameter that cannot be negative.
+>        2595         vdev->vq[i].used_elems = g_new0(VirtQueueElement, queue_size);
+> 
+> Introduce an Error **errp argument to virtio_add_queue() and set it when
+> the queue_size argument or the x-override-queue-size property value are
+> invalid.
+> 
+> At the moment none of the callers propagate the Error object. Instead
+> they are all modified to pass &error_abort so that the error message is
+> printed and the program terminates (it also terminated before). Further
+> work, especially in new device emulation code, could actually propagate
+> the Error object but is left for the future.
+> 
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 > ---
->   include/tcg/tcg-op-common.h |  3 ++
->   include/tcg/tcg-op.h        |  5 ++++
->   tcg/tcg-op.c                | 59 +++++++++++++++++++++++++++++++++++++
->   3 files changed, 67 insertions(+)
+>   include/hw/virtio/virtio.h     |  2 +-
+>   hw/9pfs/virtio-9p-device.c     |  2 +-
+>   hw/audio/virtio-snd.c          |  8 ++++----
+>   hw/block/vhost-user-blk.c      |  3 ++-
+>   hw/block/virtio-blk.c          |  3 ++-
+>   hw/char/virtio-serial-bus.c    | 14 +++++++------
+>   hw/display/virtio-gpu-base.c   |  8 ++++----
+>   hw/input/virtio-input.c        |  6 ++++--
+>   hw/net/virtio-net.c            | 15 +++++++++-----
+>   hw/scsi/virtio-scsi.c          |  9 ++++++---
+>   hw/virtio/vdpa-dev.c           |  3 ++-
+>   hw/virtio/vhost-user-base.c    |  3 ++-
+>   hw/virtio/vhost-user-fs.c      |  8 ++++++--
+>   hw/virtio/vhost-user-scmi.c    |  6 ++++--
+>   hw/virtio/vhost-vsock-common.c |  9 ++++++---
+>   hw/virtio/virtio-balloon.c     | 15 +++++++++-----
+>   hw/virtio/virtio-crypto.c      |  6 ++++--
+>   hw/virtio/virtio-iommu.c       |  6 ++++--
+>   hw/virtio/virtio-mem.c         |  3 ++-
+>   hw/virtio/virtio-nsm.c         |  2 +-
+>   hw/virtio/virtio-pmem.c        |  2 +-
+>   hw/virtio/virtio-rng.c         |  2 +-
+>   hw/virtio/virtio-rtc.c         |  3 ++-
+>   hw/virtio/virtio.c             | 37 ++++++++++++++++++++++++++++++----
+>   24 files changed, 120 insertions(+), 55 deletions(-)
+
+Reviewed-by: Laurent Vivier <lvivier@redhat.com>
+
 > 
-> diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
-> index 1fe342db0d..91f59dc11e 100644
-> --- a/include/tcg/tcg-op-common.h
-> +++ b/include/tcg/tcg-op-common.h
+> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+> index ff7f837fb92..a5d4264cd42 100644
+> --- a/include/hw/virtio/virtio.h
+> +++ b/include/hw/virtio/virtio.h
+> @@ -303,7 +303,7 @@ void virtio_device_set_child_bus_name(VirtIODevice *vdev, char *bus_name);
+>   typedef void (*VirtIOHandleOutput)(VirtIODevice *, VirtQueue *);
+>   
+>   VirtQueue *virtio_add_queue(VirtIODevice *vdev, unsigned int queue_size,
+> -                            VirtIOHandleOutput handle_output);
+> +                            VirtIOHandleOutput handle_output, Error **errp);
+>   
+>   void virtio_del_queue(VirtIODevice *vdev, int n);
+>   
+> diff --git a/hw/9pfs/virtio-9p-device.c b/hw/9pfs/virtio-9p-device.c
+> index 2774fc2290a..6b96ca77621 100644
+> --- a/hw/9pfs/virtio-9p-device.c
+> +++ b/hw/9pfs/virtio-9p-device.c
+> @@ -236,7 +236,7 @@ static void virtio_9p_device_realize(DeviceState *dev, Error **errp)
+>   
+>       v->config_size = sizeof(struct virtio_9p_config) + strlen(s->fsconf.tag);
+>       virtio_init(vdev, VIRTIO_ID_9P, v->config_size);
+> -    v->vq = virtio_add_queue(vdev, MAX_REQ, handle_9p_output);
+> +    v->vq = virtio_add_queue(vdev, MAX_REQ, handle_9p_output, &error_abort);
+>   }
+>   
+>   static void virtio_9p_device_unrealize(DeviceState *dev)
+> diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+> index 694bcebb60f..bfd9abecd13 100644
+> --- a/hw/audio/virtio-snd.c
+> +++ b/hw/audio/virtio-snd.c
+> @@ -1089,13 +1089,13 @@ static void virtio_snd_realize(DeviceState *dev, Error **errp)
+>       default_params.format = VIRTIO_SND_PCM_FMT_S16;
+>       default_params.rate = VIRTIO_SND_PCM_RATE_48000;
+>       vsnd->queues[VIRTIO_SND_VQ_CONTROL] =
+> -        virtio_add_queue(vdev, 64, virtio_snd_handle_ctrl);
+> +        virtio_add_queue(vdev, 64, virtio_snd_handle_ctrl, &error_abort);
+>       vsnd->queues[VIRTIO_SND_VQ_EVENT] =
+> -        virtio_add_queue(vdev, 64, virtio_snd_handle_event);
+> +        virtio_add_queue(vdev, 64, virtio_snd_handle_event, &error_abort);
+>       vsnd->queues[VIRTIO_SND_VQ_TX] =
+> -        virtio_add_queue(vdev, 64, virtio_snd_handle_tx_xfer);
+> +        virtio_add_queue(vdev, 64, virtio_snd_handle_tx_xfer, &error_abort);
+>       vsnd->queues[VIRTIO_SND_VQ_RX] =
+> -        virtio_add_queue(vdev, 64, virtio_snd_handle_rx_xfer);
+> +        virtio_add_queue(vdev, 64, virtio_snd_handle_rx_xfer, &error_abort);
+>       qemu_mutex_init(&vsnd->cmdq_mutex);
+>       QTAILQ_INIT(&vsnd->cmdq);
+>       QSIMPLEQ_INIT(&vsnd->invalid);
+> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+> index 2e5b3ae1b14..77fc53ee681 100644
+> --- a/hw/block/vhost-user-blk.c
+> +++ b/hw/block/vhost-user-blk.c
+> @@ -516,7 +516,8 @@ static void vhost_user_blk_device_realize(DeviceState *dev, Error **errp)
+>       s->virtqs = g_new(VirtQueue *, s->num_queues);
+>       for (i = 0; i < s->num_queues; i++) {
+>           s->virtqs[i] = virtio_add_queue(vdev, s->queue_size,
+> -                                        vhost_user_blk_handle_output);
+> +                                        vhost_user_blk_handle_output,
+> +                                        &error_abort);
+>       }
+>   
+>       s->inflight = g_new0(struct vhost_inflight, 1);
+> diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+> index 6b92066aff4..5b978e357ee 100644
+> --- a/hw/block/virtio-blk.c
+> +++ b/hw/block/virtio-blk.c
+> @@ -1815,7 +1815,8 @@ static void virtio_blk_device_realize(DeviceState *dev, Error **errp)
+>       s->sector_mask = (s->conf.conf.logical_block_size / BDRV_SECTOR_SIZE) - 1;
+>   
+>       for (i = 0; i < conf->num_queues; i++) {
+> -        virtio_add_queue(vdev, conf->queue_size, virtio_blk_handle_output);
+> +        virtio_add_queue(vdev, conf->queue_size, virtio_blk_handle_output,
+> +                         &error_abort);
+>       }
+>       qemu_coroutine_inc_pool_size(conf->num_queues * conf->queue_size / 2);
+>   
+> diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
+> index c1973f0248f..7e1d74c988c 100644
+> --- a/hw/char/virtio-serial-bus.c
+> +++ b/hw/char/virtio-serial-bus.c
+> @@ -1033,9 +1033,9 @@ static void virtio_serial_device_realize(DeviceState *dev, Error **errp)
+>       vser->ovqs = g_new(VirtQueue *, vser->serial.max_virtserial_ports);
+>   
+>       /* Add a queue for host to guest transfers for port 0 (backward compat) */
+> -    vser->ivqs[0] = virtio_add_queue(vdev, 128, handle_input);
+> +    vser->ivqs[0] = virtio_add_queue(vdev, 128, handle_input, &error_abort);
+>       /* Add a queue for guest to host transfers for port 0 (backward compat) */
+> -    vser->ovqs[0] = virtio_add_queue(vdev, 128, handle_output);
+> +    vser->ovqs[0] = virtio_add_queue(vdev, 128, handle_output, &error_abort);
+>   
+>       /* TODO: host to guest notifications can get dropped
+>        * if the queue fills up. Implement queueing in host,
+> @@ -1044,15 +1044,17 @@ static void virtio_serial_device_realize(DeviceState *dev, Error **errp)
+>        * this will save 4Kbyte of guest memory per entry. */
+>   
+>       /* control queue: host to guest */
+> -    vser->c_ivq = virtio_add_queue(vdev, 32, control_in);
+> +    vser->c_ivq = virtio_add_queue(vdev, 32, control_in, &error_abort);
+>       /* control queue: guest to host */
+> -    vser->c_ovq = virtio_add_queue(vdev, 32, control_out);
+> +    vser->c_ovq = virtio_add_queue(vdev, 32, control_out, &error_abort);
+>   
+>       for (i = 1; i < vser->bus.max_nr_ports; i++) {
+>           /* Add a per-port queue for host to guest transfers */
+> -        vser->ivqs[i] = virtio_add_queue(vdev, 128, handle_input);
+> +        vser->ivqs[i] = virtio_add_queue(vdev, 128, handle_input,
+> +                                         &error_abort);
+>           /* Add a per-per queue for guest to host transfers */
+> -        vser->ovqs[i] = virtio_add_queue(vdev, 128, handle_output);
+> +        vser->ovqs[i] = virtio_add_queue(vdev, 128, handle_output,
+> +                                         &error_abort);
+>       }
+>   
+>       vser->ports_map = g_malloc0((DIV_ROUND_UP(vser->serial.max_virtserial_ports, 32))
+> diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
+> index 946e56b42f6..f808d1f6743 100644
+> --- a/hw/display/virtio-gpu-base.c
+> +++ b/hw/display/virtio-gpu-base.c
+> @@ -238,11 +238,11 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
+>   
+>       if (virtio_gpu_virgl_enabled(g->conf)) {
+>           /* use larger control queue in 3d mode */
+> -        virtio_add_queue(vdev, 256, ctrl_cb);
+> -        virtio_add_queue(vdev, 16, cursor_cb);
+> +        virtio_add_queue(vdev, 256, ctrl_cb, &error_abort);
+> +        virtio_add_queue(vdev, 16, cursor_cb, &error_abort);
+>       } else {
+> -        virtio_add_queue(vdev, 64, ctrl_cb);
+> -        virtio_add_queue(vdev, 16, cursor_cb);
+> +        virtio_add_queue(vdev, 64, ctrl_cb, &error_abort);
+> +        virtio_add_queue(vdev, 16, cursor_cb, &error_abort);
+>       }
+>   
+>       g->hw_ops = &virtio_gpu_ops;
+> diff --git a/hw/input/virtio-input.c b/hw/input/virtio-input.c
+> index 6494cfbbe82..192b1ea8c61 100644
+> --- a/hw/input/virtio-input.c
+> +++ b/hw/input/virtio-input.c
+> @@ -259,8 +259,10 @@ static void virtio_input_device_realize(DeviceState *dev, Error **errp)
+>       assert(vinput->cfg_size <= sizeof(virtio_input_config));
+>   
+>       virtio_init(vdev, VIRTIO_ID_INPUT, vinput->cfg_size);
+> -    vinput->evt = virtio_add_queue(vdev, 64, virtio_input_handle_evt);
+> -    vinput->sts = virtio_add_queue(vdev, 64, virtio_input_handle_sts);
+> +    vinput->evt = virtio_add_queue(vdev, 64, virtio_input_handle_evt,
+> +                                   &error_abort);
+> +    vinput->sts = virtio_add_queue(vdev, 64, virtio_input_handle_sts,
+> +                                   &error_abort);
+>   }
+>   
+>   static void virtio_input_finalize(Object *obj)
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index 814b99a43d2..ab7611274a7 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -2996,19 +2996,22 @@ static void virtio_net_add_queue(VirtIONet *n, int index)
+>       VirtIODevice *vdev = VIRTIO_DEVICE(n);
+>   
+>       n->vqs[index].rx_vq = virtio_add_queue(vdev, n->net_conf.rx_queue_size,
+> -                                           virtio_net_handle_rx);
+> +                                           virtio_net_handle_rx,
+> +                                           &error_abort);
+>   
+>       if (n->net_conf.tx && !strcmp(n->net_conf.tx, "timer")) {
+>           n->vqs[index].tx_vq =
+>               virtio_add_queue(vdev, n->net_conf.tx_queue_size,
+> -                             virtio_net_handle_tx_timer);
+> +                             virtio_net_handle_tx_timer,
+> +                             &error_abort);
+>           n->vqs[index].tx_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+>                                                 virtio_net_tx_timer,
+>                                                 &n->vqs[index]);
+>       } else {
+>           n->vqs[index].tx_vq =
+>               virtio_add_queue(vdev, n->net_conf.tx_queue_size,
+> -                             virtio_net_handle_tx_bh);
+> +                             virtio_net_handle_tx_bh,
+> +                             &error_abort);
+>           n->vqs[index].tx_bh = virtio_bh_new_guarded(DEVICE(vdev),
+>                                                       virtio_net_tx_bh,
+>                                                       &n->vqs[index]);
+> @@ -3069,7 +3072,8 @@ static void virtio_net_change_num_queues(VirtIONet *n, int new_num_queues)
+>       }
+>   
+>       /* add ctrl_vq last */
+> -    n->ctrl_vq = virtio_add_queue(vdev, 64, virtio_net_handle_ctrl);
+> +    n->ctrl_vq = virtio_add_queue(vdev, 64, virtio_net_handle_ctrl,
+> +                                  &error_abort);
+>   }
+>   
+>   static void virtio_net_set_multiqueue(VirtIONet *n, int multiqueue)
+> @@ -4001,7 +4005,8 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+>   
+>       virtio_net_add_queue(n, 0);
+>   
+> -    n->ctrl_vq = virtio_add_queue(vdev, 64, virtio_net_handle_ctrl);
+> +    n->ctrl_vq = virtio_add_queue(vdev, 64, virtio_net_handle_ctrl,
+> +                                  &error_abort);
+>       qemu_macaddr_default_if_unset(&n->nic_conf.macaddr);
+>       memcpy(&n->mac[0], &n->nic_conf.macaddr, sizeof(n->mac));
+>       n->status = VIRTIO_NET_S_LINK_UP;
+> diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
+> index bf64d1231a8..4045414cd2f 100644
+> --- a/hw/scsi/virtio-scsi.c
+> +++ b/hw/scsi/virtio-scsi.c
+> @@ -1317,10 +1317,13 @@ void virtio_scsi_common_realize(DeviceState *dev,
+>       s->sense_size = VIRTIO_SCSI_SENSE_DEFAULT_SIZE;
+>       s->cdb_size = VIRTIO_SCSI_CDB_DEFAULT_SIZE;
+>   
+> -    s->ctrl_vq = virtio_add_queue(vdev, s->conf.virtqueue_size, ctrl);
+> -    s->event_vq = virtio_add_queue(vdev, s->conf.virtqueue_size, evt);
+> +    s->ctrl_vq = virtio_add_queue(vdev, s->conf.virtqueue_size, ctrl,
+> +                                  &error_abort);
+> +    s->event_vq = virtio_add_queue(vdev, s->conf.virtqueue_size, evt,
+> +                                   &error_abort);
+>       for (i = 0; i < s->conf.num_queues; i++) {
+> -        s->cmd_vqs[i] = virtio_add_queue(vdev, s->conf.virtqueue_size, cmd);
+> +        s->cmd_vqs[i] = virtio_add_queue(vdev, s->conf.virtqueue_size, cmd,
+> +                                         &error_abort);
+>       }
+>   }
+>   
+> diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
+> index 6dc684ab096..1f96985056b 100644
+> --- a/hw/virtio/vdpa-dev.c
+> +++ b/hw/virtio/vdpa-dev.c
+> @@ -151,7 +151,8 @@ static void vhost_vdpa_device_realize(DeviceState *dev, Error **errp)
+>       v->virtqs = g_new0(VirtQueue *, v->dev.nvqs);
+>       for (i = 0; i < v->dev.nvqs; i++) {
+>           v->virtqs[i] = virtio_add_queue(vdev, v->queue_size,
+> -                                        vhost_vdpa_device_dummy_handle_output);
+> +                                        vhost_vdpa_device_dummy_handle_output,
+> +                                        &error_abort);
+>       }
+>   
+>       return;
+> diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
+> index 478ec68f093..fe14718fba3 100644
+> --- a/hw/virtio/vhost-user-base.c
+> +++ b/hw/virtio/vhost-user-base.c
+> @@ -334,7 +334,8 @@ static void vub_device_realize(DeviceState *dev, Error **errp)
+>       for (i = 0; i < vub->num_vqs; i++) {
+>           g_ptr_array_add(vub->vqs,
+>                           virtio_add_queue(vdev, vub->vq_size,
+> -                                         vub_handle_output));
+> +                                         vub_handle_output,
+> +                                         &error_abort));
+>       }
+>   
+>       vub->vhost_dev.nvqs = vub->num_vqs;
+> diff --git a/hw/virtio/vhost-user-fs.c b/hw/virtio/vhost-user-fs.c
+> index 209993918a3..57100ba2c4c 100644
+> --- a/hw/virtio/vhost-user-fs.c
+> +++ b/hw/virtio/vhost-user-fs.c
+> @@ -245,12 +245,16 @@ static void vuf_device_realize(DeviceState *dev, Error **errp)
+>       virtio_init(vdev, VIRTIO_ID_FS, sizeof(struct virtio_fs_config));
+>   
+>       /* Hiprio queue */
+> -    fs->hiprio_vq = virtio_add_queue(vdev, fs->conf.queue_size, vuf_handle_output);
+> +    fs->hiprio_vq = virtio_add_queue(vdev, fs->conf.queue_size,
+> +                                     vuf_handle_output,
+> +                                     &error_abort);
+>   
+>       /* Request queues */
+>       fs->req_vqs = g_new(VirtQueue *, fs->conf.num_request_queues);
+>       for (i = 0; i < fs->conf.num_request_queues; i++) {
+> -        fs->req_vqs[i] = virtio_add_queue(vdev, fs->conf.queue_size, vuf_handle_output);
+> +        fs->req_vqs[i] = virtio_add_queue(vdev, fs->conf.queue_size,
+> +                                          vuf_handle_output,
+> +                                          &error_abort);
+>       }
+>   
+>       /* 1 high prio queue, plus the number configured */
+> diff --git a/hw/virtio/vhost-user-scmi.c b/hw/virtio/vhost-user-scmi.c
+> index 02dc088ea98..1da916585aa 100644
+> --- a/hw/virtio/vhost-user-scmi.c
+> +++ b/hw/virtio/vhost-user-scmi.c
+> @@ -250,8 +250,10 @@ static void vu_scmi_device_realize(DeviceState *dev, Error **errp)
+>   
+>       virtio_init(vdev, VIRTIO_ID_SCMI, 0);
+>   
+> -    scmi->cmd_vq = virtio_add_queue(vdev, 256, vu_scmi_handle_output);
+> -    scmi->event_vq = virtio_add_queue(vdev, 256, vu_scmi_handle_output);
+> +    scmi->cmd_vq = virtio_add_queue(vdev, 256, vu_scmi_handle_output,
+> +                                    &error_abort);
+> +    scmi->event_vq = virtio_add_queue(vdev, 256, vu_scmi_handle_output,
+> +                                      &error_abort);
+>       scmi->vhost_dev.nvqs = 2;
+>       scmi->vhost_dev.vqs = g_new0(struct vhost_virtqueue, scmi->vhost_dev.nvqs);
+>       vhost_vqs = scmi->vhost_dev.vqs;
+> diff --git a/hw/virtio/vhost-vsock-common.c b/hw/virtio/vhost-vsock-common.c
+> index b79f4c9ce66..584891ff005 100644
+> --- a/hw/virtio/vhost-vsock-common.c
+> +++ b/hw/virtio/vhost-vsock-common.c
+> @@ -254,13 +254,16 @@ void vhost_vsock_common_realize(VirtIODevice *vdev)
+>   
+>       /* Receive and transmit queues belong to vhost */
+>       vvc->recv_vq = virtio_add_queue(vdev, VHOST_VSOCK_QUEUE_SIZE,
+> -                                      vhost_vsock_common_handle_output);
+> +                                    vhost_vsock_common_handle_output,
+> +                                    &error_abort);
+>       vvc->trans_vq = virtio_add_queue(vdev, VHOST_VSOCK_QUEUE_SIZE,
+> -                                       vhost_vsock_common_handle_output);
+> +                                     vhost_vsock_common_handle_output,
+> +                                     &error_abort);
+>   
+>       /* The event queue belongs to QEMU */
+>       vvc->event_vq = virtio_add_queue(vdev, VHOST_VSOCK_QUEUE_SIZE,
+> -                                       vhost_vsock_common_handle_output);
+> +                                     vhost_vsock_common_handle_output,
+> +                                     &error_abort);
+>   
+>       vvc->vhost_dev.nvqs = ARRAY_SIZE(vvc->vhost_vqs);
+>       vvc->vhost_dev.vqs = vvc->vhost_vqs;
+> diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
+> index 4c5f486ba23..3aca375d5c6 100644
+> --- a/hw/virtio/virtio-balloon.c
+> +++ b/hw/virtio/virtio-balloon.c
+> @@ -887,13 +887,17 @@ static void virtio_balloon_device_realize(DeviceState *dev, Error **errp)
+>           return;
+>       }
+>   
+> -    s->ivq = virtio_add_queue(vdev, 128, virtio_balloon_handle_output);
+> -    s->dvq = virtio_add_queue(vdev, 128, virtio_balloon_handle_output);
+> -    s->svq = virtio_add_queue(vdev, 128, virtio_balloon_receive_stats);
+> +    s->ivq = virtio_add_queue(vdev, 128, virtio_balloon_handle_output,
+> +                              &error_abort);
+> +    s->dvq = virtio_add_queue(vdev, 128, virtio_balloon_handle_output,
+> +                              &error_abort);
+> +    s->svq = virtio_add_queue(vdev, 128, virtio_balloon_receive_stats,
+> +                              &error_abort);
+>   
+>       if (virtio_has_feature(s->host_features, VIRTIO_BALLOON_F_FREE_PAGE_HINT)) {
+>           s->free_page_vq = virtio_add_queue(vdev, VIRTQUEUE_MAX_SIZE,
+> -                                           virtio_balloon_handle_free_page_vq);
+> +                                           virtio_balloon_handle_free_page_vq,
+> +                                           &error_abort);
+>           precopy_add_notifier(&s->free_page_hint_notify);
+>   
+>           object_ref(OBJECT(s->iothread));
+> @@ -904,7 +908,8 @@ static void virtio_balloon_device_realize(DeviceState *dev, Error **errp)
+>   
+>       if (virtio_has_feature(s->host_features, VIRTIO_BALLOON_F_REPORTING)) {
+>           s->reporting_vq = virtio_add_queue(vdev, 32,
+> -                                           virtio_balloon_handle_report);
+> +                                           virtio_balloon_handle_report,
+> +                                           &error_abort);
+>       }
+>   
+>       reset_stats(s);
+> diff --git a/hw/virtio/virtio-crypto.c b/hw/virtio/virtio-crypto.c
+> index 79e2acb56cc..b65ec611163 100644
+> --- a/hw/virtio/virtio-crypto.c
+> +++ b/hw/virtio/virtio-crypto.c
+> @@ -1091,14 +1091,16 @@ static void virtio_crypto_device_realize(DeviceState *dev, Error **errp)
+>       vcrypto->vqs = g_new0(VirtIOCryptoQueue, vcrypto->max_queues);
+>       for (i = 0; i < vcrypto->max_queues; i++) {
+>           vcrypto->vqs[i].dataq =
+> -                 virtio_add_queue(vdev, 1024, virtio_crypto_handle_dataq_bh);
+> +                 virtio_add_queue(vdev, 1024, virtio_crypto_handle_dataq_bh,
+> +                                  &error_abort);
+>           vcrypto->vqs[i].dataq_bh =
+>                    virtio_bh_new_guarded(dev, virtio_crypto_dataq_bh,
+>                                          &vcrypto->vqs[i]);
+>           vcrypto->vqs[i].vcrypto = vcrypto;
+>       }
+>   
+> -    vcrypto->ctrl_vq = virtio_add_queue(vdev, 1024, virtio_crypto_handle_ctrl);
+> +    vcrypto->ctrl_vq = virtio_add_queue(vdev, 1024, virtio_crypto_handle_ctrl,
+> +                                        &error_abort);
+>       if (!cryptodev_backend_is_ready(vcrypto->cryptodev)) {
+>           vcrypto->status &= ~VIRTIO_CRYPTO_S_HW_READY;
+>       } else {
+> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+> index 533bd5073f2..c2ccdd87889 100644
+> --- a/hw/virtio/virtio-iommu.c
+> +++ b/hw/virtio/virtio-iommu.c
+> @@ -1433,8 +1433,10 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
+>       virtio_init(vdev, VIRTIO_ID_IOMMU, sizeof(struct virtio_iommu_config));
+>   
+>       s->req_vq = virtio_add_queue(vdev, VIOMMU_DEFAULT_QUEUE_SIZE,
+> -                             virtio_iommu_handle_command);
+> -    s->event_vq = virtio_add_queue(vdev, VIOMMU_DEFAULT_QUEUE_SIZE, NULL);
+> +                                 virtio_iommu_handle_command,
+> +                                 &error_abort);
+> +    s->event_vq = virtio_add_queue(vdev, VIOMMU_DEFAULT_QUEUE_SIZE, NULL,
+> +                                   &error_abort);
+>       s->cmd_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL_RT,
+>                                   virtio_iommu_handle_command_timer, s);
+>   
+> diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+> index 35e03ed7599..1c79bc75c13 100644
+> --- a/hw/virtio/virtio-mem.c
+> +++ b/hw/virtio/virtio-mem.c
+> @@ -966,7 +966,8 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
+>       vmem->bitmap = bitmap_new(vmem->bitmap_size);
+>   
+>       virtio_init(vdev, VIRTIO_ID_MEM, sizeof(struct virtio_mem_config));
+> -    vmem->vq = virtio_add_queue(vdev, 128, virtio_mem_handle_request);
+> +    vmem->vq = virtio_add_queue(vdev, 128, virtio_mem_handle_request,
+> +                                &error_abort);
+>   
+>       /*
+>        * With "dynamic-memslots=off" (old behavior) we always map the whole
+> diff --git a/hw/virtio/virtio-nsm.c b/hw/virtio/virtio-nsm.c
+> index 3bf5e7009a4..6fc3fbb5852 100644
+> --- a/hw/virtio/virtio-nsm.c
+> +++ b/hw/virtio/virtio-nsm.c
+> @@ -1660,7 +1660,7 @@ static void virtio_nsm_device_realize(DeviceState *dev, Error **errp)
+>   
+>       virtio_init(vdev, VIRTIO_ID_NITRO_SEC_MOD, 0);
+>   
+> -    vnsm->vq = virtio_add_queue(vdev, 2, handle_input);
+> +    vnsm->vq = virtio_add_queue(vdev, 2, handle_input, &error_abort);
+>   }
+>   
+>   static void virtio_nsm_device_unrealize(DeviceState *dev)
+> diff --git a/hw/virtio/virtio-pmem.c b/hw/virtio/virtio-pmem.c
+> index 6f7271c140a..ac7952bbf4f 100644
+> --- a/hw/virtio/virtio-pmem.c
+> +++ b/hw/virtio/virtio-pmem.c
+> @@ -129,7 +129,7 @@ static void virtio_pmem_realize(DeviceState *dev, Error **errp)
+>   
+>       host_memory_backend_set_mapped(pmem->memdev, true);
+>       virtio_init(vdev, VIRTIO_ID_PMEM, sizeof(struct virtio_pmem_config));
+> -    pmem->rq_vq = virtio_add_queue(vdev, 128, virtio_pmem_flush);
+> +    pmem->rq_vq = virtio_add_queue(vdev, 128, virtio_pmem_flush, &error_abort);
+>       pmem->inflight = 1;
+>   }
+>   
+> diff --git a/hw/virtio/virtio-rng.c b/hw/virtio/virtio-rng.c
+> index d68d9011953..b3136431252 100644
+> --- a/hw/virtio/virtio-rng.c
+> +++ b/hw/virtio/virtio-rng.c
+> @@ -219,7 +219,7 @@ static void virtio_rng_device_realize(DeviceState *dev, Error **errp)
+>   
+>       virtio_init(vdev, VIRTIO_ID_RNG, 0);
+>   
+> -    vrng->vq = virtio_add_queue(vdev, 8, handle_input);
+> +    vrng->vq = virtio_add_queue(vdev, 8, handle_input, &error_abort);
+>       vrng->quota_remaining = vrng->conf.max_bytes;
+>       vrng->rate_limit_timer = timer_new_ms(QEMU_CLOCK_VIRTUAL,
+>                                                  check_rate_limit, vrng);
+> diff --git a/hw/virtio/virtio-rtc.c b/hw/virtio/virtio-rtc.c
+> index 32de9c16503..3bd488bc7ba 100644
+> --- a/hw/virtio/virtio-rtc.c
+> +++ b/hw/virtio/virtio-rtc.c
+> @@ -135,7 +135,8 @@ static void virtio_rtc_device_realize(DeviceState *dev, Error **errp)
+>       VirtIORtc *vrtc = VIRTIO_RTC(dev);
+>   
+>       virtio_init(vdev, VIRTIO_ID_CLOCK, 0);
+> -    vrtc->vq = virtio_add_queue(vdev, 64, virtio_rtc_handle_request);
+> +    vrtc->vq = virtio_add_queue(vdev, 64, virtio_rtc_handle_request,
+> +                                &error_abort);
+>   }
+>   
+>   static void virtio_rtc_device_unrealize(DeviceState *dev)
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index e1210f024c6..629eadeb74b 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -2565,8 +2565,9 @@ void virtio_queue_set_vector(VirtIODevice *vdev, int n, uint16_t vector)
+>   }
+>   
+>   VirtQueue *virtio_add_queue(VirtIODevice *vdev, unsigned int queue_size,
+> -                            VirtIOHandleOutput handle_output)
+> +                            VirtIOHandleOutput handle_output, Error **errp)
+>   {
+> +    ERRP_GUARD();
+>       int i;
+>   
+>       for (i = 0; i < VIRTIO_QUEUE_MAX; i++) {
+> @@ -2574,15 +2575,43 @@ VirtQueue *virtio_add_queue(VirtIODevice *vdev, unsigned int queue_size,
+>               break;
+>       }
+>   
+> -    if (i == VIRTIO_QUEUE_MAX || queue_size > VIRTQUEUE_MAX_SIZE)
+> -        abort();
+> +    if (i == VIRTIO_QUEUE_MAX) {
+> +        error_setg(errp, "Exceeded maximum number of virtqueues (%d)", i);
+> +        return NULL;
+> +    }
+> +
+> +    if (queue_size > VIRTQUEUE_MAX_SIZE) {
+> +        error_setg(errp, "Virtqueue size %u exceeds the max (%u)",
+> +                   queue_size, VIRTQUEUE_MAX_SIZE);
+> +        return NULL;
+> +    }
+>   
+>       BusState *qbus = qdev_get_parent_bus(DEVICE(vdev));
+>       if (qbus && qbus->parent &&
+>           object_property_find(OBJECT(qbus->parent), VIRTIO_QUEUE_SIZE_OVERRIDE)) {
+>           int override = object_property_get_int(OBJECT(qbus->parent),
+>                                                  VIRTIO_QUEUE_SIZE_OVERRIDE,
+> -                                               &error_abort);
+> +                                               errp);
+> +
+> +        if (*errp) {
+> +            return NULL;
+> +        }
+> +        if (override < 0) {
+> +            /*
+> +             * The property type should be UINT16, so this can't happen, but
+> +             * help out Coverity.
+> +             */
+> +            error_setg(errp, "%s (%d) cannot be negative",
+> +                       VIRTIO_QUEUE_SIZE_OVERRIDE, override);
+> +            return NULL;
+> +        }
+> +        if (override > VIRTQUEUE_MAX_SIZE) {
+> +            error_setg(errp, "%s (%d) exceeds the max (%d)",
+> +                       VIRTIO_QUEUE_SIZE_OVERRIDE, override,
+> +                       VIRTQUEUE_MAX_SIZE);
+> +            return NULL;
+> +        }
+> +
+>           if (override) {
+>               queue_size = override;
+>           }
 
-> @@ -275,6 +276,8 @@ void tcg_gen_smax_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
->   void tcg_gen_umin_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
->   void tcg_gen_umax_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
->   void tcg_gen_abs_i64(TCGv_i64, TCGv_i64);
-> +void tcg_gen_revbit32_i64(TCGv_i64 ret, TCGv_i64 arg, int flags);
-> +void tcg_gen_revbit64_i64(TCGv_i64 ret, TCGv_i64 arg);
-
-Could the bswap flag be defined once per target?
-
-- output sign-extended (TCG_BSWAP_OS):
-
-   alpha, hppa, loongarch, m68k, mips, riscv, rx, sh4, tricore
-
-- output zero-extended (TCG_BSWAP_OZ):
-
-   arm, avr, hexagon, microblaze, openrisc, ppc, sparc, x86, xtensa
-
-- input/output zero-extended (TCG_BSWAP_IZ | TCG_BSWAP_OZ):
-
-   s390x
-
-Having to manually encode it on each frontend doesn't sound optimal.
-
-Note, we have some target-specific TCG information in TCGCPUOps
-(useful at runtime for heterogeneous emulation).
 
