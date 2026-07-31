@@ -4,96 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03940C55173
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 17:47:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9C0BC5516D
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 17:49:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wprK8-00066D-NT; Fri, 31 Jul 2026 13:47:08 -0400
+	id 1wprMB-0007Kz-E0; Fri, 31 Jul 2026 13:49:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wprJy-00064n-JE
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 13:47:02 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ id 1wprM9-0007IB-AX
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 13:49:13 -0400
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wprJu-00082L-Gl
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 13:46:57 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-6689402c7bfso1395997d50.1
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 10:46:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785520011; cv=none;
+ id 1wprM7-0008RA-VN
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 13:49:13 -0400
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-8114a4542b2so19731707b3.1
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 10:49:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785520151; cv=none;
  d=google.com; s=arc-20260327;
- b=cBRvWDE3iLZF+gAXMb6nv0qaGS9lvBOjvNQ3DbXfjbQjq37nNWOI8e91XV7rHpFLb1
- YWFt76wPx96bNMC9cX/yM/LJrYjpoWg1KmsGZGoa+DS+jZ4bQ41wZYkewSlRR0GLdGqO
- 7a9AQYEpV4vlTMlKAo4530jzU/MSqtZTbXol6F5VBZ2I8kCVxz4toL6KgYg1Rac/HUy2
- zJC3S4JrvTrmEAbdGdBFyZLCbxVbz8YlF4BmpkT8uJxbMrIe/YwMeoxEfNptB2knSb7o
- w0kX36km23xicH/bxTWP1bTMrsCfgROcSmptd7j+zFQMV/NTt528vZ+5MRvkHy3fKwyh
- Fldw==
+ b=HTm4IysQ3H3LM+MtDFPwZGKdAMQswLiF2n3aII5vyqJS6w5waGXVg5jQfsxpAhw6lx
+ 7a8V8cmTmeEzR0PZUNF4rLOskKNU6JTCWHEl6zh8KogvEo/NTk2vxfATzLUl96YmQT4i
+ zE5oV2Kb6jlCZOeDoudZXqH1soTUBAwx1qJ1lfoiAL/q0/ERzuuLNViCyNvmQYeG72B7
+ dfjoRhmCShaTttYe4oqPyr9TB4Go1rtxl7qXEGmIXSNbZ/F56thihnET6eMK/0So53DZ
+ o5mxM4E//VxYgTnhjGwtgikNNgaXpyuYc6u3L5DtL+0SEf6KZzpaS3uJzHDcUFoEPLwK
+ B3LQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=nxVW1r7MPiFQtaZmJ6m7+lZfEOVo+HD0BGnYA/H8WSo=;
+ bh=tg3KSb9E5/pqu001+cu3W/Lq1boDE3D0/BkB1VuNc50=;
  fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=R78qhDXZpTkaPfyPjS8e9HRSJk4T9M2ODkwvrQNOKjPTw1ptvRk1yFLuRh0DecvaJI
- 4nFl1wVn5lwDeNAjZyuS2xnxJeomHqcUCYAVWvEkwUEB8lT9p8Qt244qc+GtFYBeLEfV
- G7jMyOXaJ6LI29sgHdJ/Wo0VOePywjhkQD3LOhoSksDEt7GbcS9wCbvRrj4yV1g8MACg
- sbz6Ff6kE8Hhe5y40aePM0W4zoNhegnBlxnPTOiIU2SjNwGAikQgR/bTpk/oM3V/9UId
- XN6WxqXM0xenj92Tdwnbe3p9diECJh3A/xvqMgDeWGrPOmaNiVFtPl69wsjXjcM2CDNF
- xzMA==; darn=nongnu.org
+ b=EK2gsyNtVQ9QfgBbgmYNGvMTQdXsECeiUxX6Bp9dvE0WQZ1RZczoWYYR71JbXdQDdM
+ El6yvBmMIQRcpXSQ3DOYJmZgzXg76Gb9xMmObR4COD9F9zebxxkquCEN4ueOXiN3Et6J
+ pd7vfpaGL83Ev8mwDGlQPPyI6CtQm2w4Lq4qZ1fOYk6/NzSZo5Js+SZGwrVT98fjdId4
+ 5nC+kedp+kqC/9UOpmpyQlHpBTyw40J6UV/sZ6A44Ixq4I0jf4EeXBdVuZ5DiscG+Fi0
+ pKbb0kVQBJHew6vXnGbGaYOXYTjy0iu0wYPVBKSnVN6bHJbfe9jLJlkI/Qg7+min0Hlh
+ 8WmQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785520011; x=1786124811; darn=nongnu.org;
+ d=linaro.org; s=google; t=1785520151; x=1786124951; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=nxVW1r7MPiFQtaZmJ6m7+lZfEOVo+HD0BGnYA/H8WSo=;
- b=EJN/FErzx6qjDLawIOU8SgSXrdjfl8/c/QbKIaEeLAiaH2sJCQWEibLdHGuoXBTflY
- WwixKQLxfs+JI1TkvWEKoG+Po+aoR0effehqdgJCBTC86RwXaLNI5aatRc+B7GrLh5aj
- Rw21dbosgTBx30Dp/SsNI10HCl+QXENrpaeC18JfzIKbybTtnJYYnW3JU2mFOgCXeSZu
- h82elhvAmu5HNUp6HqGq6FP5w9uZQVuHr0VuTYmYZZrWgfkAcT78s+rgcckjLmETxSO3
- Z9jBCBw3wMqs+IpoU3V+7IdjfS8F2AOdW8pySoBiJIT02RhE43ZqqEoV96DjCe3agNbn
- rhPg==
+ :content-type; bh=tg3KSb9E5/pqu001+cu3W/Lq1boDE3D0/BkB1VuNc50=;
+ b=DKpep+Dex8OTXkRVosTwsfm4tmAJpQiekNde3aMJ6bVkjUKJhtMlVWGkQJB9HdVOWp
+ G/rDeljvrfWe5WL0wzU7ZDViR/RcRmjk7xV0rVW/POUjKxC6imRQnUe8Dnb6UoHnLQ8i
+ SwbNp0tsdka2lDgUVRKnFlKdAvKawLAm/FQpceLOGt7lMW/9PGPnndSpkO7yLiihWdDu
+ 4+SyK/BMHuOeve92kig2xWNWB5y5GP4qQ8goELmu759r0w3cahgZN1OX4CyownFNSB+Q
+ iYaqpIc62T/UqkdBXZtDXyUJ6Alp5ZjhzsL56l/fXamMPTmx+okT8shUyTJwrn/CJvQH
+ jWPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785520011; x=1786124811;
+ d=1e100.net; s=20251104; t=1785520151; x=1786124951;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=nxVW1r7MPiFQtaZmJ6m7+lZfEOVo+HD0BGnYA/H8WSo=;
- b=DtT5WWwgZ54BvLpAV1LR7xKS0yCbJ6UiyDlm/HIBpH3ZtHZ6uQx8LZk7i4vje/9zun
- Rh9NRX3tbIGSf4iIRDOYnUFvgLywwPTfvPIsqYTuByXBUO3KTmEPvKeZDguy3H3R/Zxc
- IWy00NEBc7F7ioRBtOyZQljHqcaW6U8qh0EgMUmVzcDvgL4bELZLmBJnwXY5MKo8Tj7Y
- SRBnNqY/1/IeSiEAt7EeKseprOiileq6YNzGg0/MBsTz8W85bBpH6NI91lnnowZptb2G
- /9vEh/c0fkj2mClt1DTecU1VIy6wQkKaHUh5vfOSMrANboN8KM+Aytz4q41SqlxdzV11
- i4NQ==
-X-Gm-Message-State: AOJu0YzXFeffWh2RjF5YuKe5JhKoEWfKiqPxssSGRFbE+UUQz4EMMPXu
- QWpj8z5xHB2L18nnFuck5YOxUe0gfGJPt8QZQBW1U2xuTe+URlB/Mn1HgToAIRbyU9RXqFuzfj/
- WMWiTiaSiZb+QFOw+s++D5C+x2UTyFRvojFdfpwbvbw==
-X-Gm-Gg: AR+sD11FuIXWHdrB0YC0K6ETyKhFrKhzjJNGlG3GdtidonSAVU8iNl0pgTaOnBE2EPl
- V4gkkHUORRbs0WRxfBvyr3liFUe+WyGCIUdowSOJqD/ffK06gRsOoETn5AplPGtYAPghvG5lkfh
- OWmSMKjc9gzOxZoEEGQq7MmwGNXrlhtiDR/08QFMgVlwhDW/eDjPygFkU6uQpisJQaVnF8ZFBTk
- jIDF6oeYmiZqcGcvWmX8JmJAVMyHTM4oLpUg45ZF7W8iAaxIHnPjVSI5oVaWVkxzlEqnwPKoGTz
- 16EwUHrh5fe8TUy7UD/6y90rCwCNHTBETkQUob3pKEwKLi29YUKKGkiHdbev+81e5A8Gi1e90Z7
- o9bpIK1i6eZXH0M//NDZe3GDg/i3L
-X-Received: by 2002:a53:db0b:0:b0:668:568e:8618 with SMTP id
- 956f58d0204a3-6694efde7fdmr879479d50.1.1785520011068; Fri, 31 Jul 2026
- 10:46:51 -0700 (PDT)
+ bh=tg3KSb9E5/pqu001+cu3W/Lq1boDE3D0/BkB1VuNc50=;
+ b=cdTmwNfN00MNLpR/8SjS4JKnAhGJyc0jk0X++a9404mwdbMCYlzBtflEPiG+Y0cmn2
+ /G1aAf3NWZo7ga+2DpWUUzpe7zbwYXQW03Z7rqrSfM7Z3CMI+b4oETDiBFeXiXRGH1bG
+ OKzbRfjoaLX/VWxaQxO4rYd+9cZidsUtVzSILjsy0gKL3S78F8C8ixJ4es6bz16+QcHs
+ MvhYnn6sXBkxW5mhe5jdnD1jrJqGsEyEv8rMm6ZqB6Q+OxAfulVsueTYukc/bkSjS6pa
+ SxObqgLmN+7vdsWKwjb+Prk+wEDM7LA83gFCsHfujltARjvnABi4vlIWt2JUns8uAQbb
+ TBWw==
+X-Gm-Message-State: AOJu0YyI0RwAgAjwQ+5aPC7sXSKFHojCozCXImI1n/B3QzHvmac9uZLw
+ Lw7bl6o33R82WDDXp146zdUN7yYOIfd5A84mSR5IuUq0ORxcBU7kWH1pNuUynkIPgZ71T3MiFed
+ 3nNhV4ytXkZBK9OnRadmOVI/VYY84M7uQMtiezDgeKngnM0abpUSK
+X-Gm-Gg: AR+sD13Uutb4DtDZ5TE6T/ovuBO+oG0ikIC68cbpXAUCnzdc/B/Bvl2V+DW4FwTB3dK
+ CqGtpnh2pR19+iv913rHBKOczuyA9cKdZ7H8eP/XxjjuwKy6EnDUMLgvhYv6xGTduus71Yxllz5
+ 96NKmmpJXKmxW5zn3cc0xK8ZTfQybTEzrPMkoA9h0KSEmkRWHxgdFI2r6zO4m+LbiOXAxo5CQ4S
+ c1tCoqAbT3cPZfc6dOdlP2Ap0bXreIz+fusJ2DMfZEUuHw62kewGxq7Kx/ECo7IjeHJllWw+1XU
+ oTd8BpGp/OM0pYLaGJuAmrbOmHqGbQEojUKAmb/HDI0tp00FHHqX/UeaYWBxDXvzaB46UeE1C3b
+ Uk6HP1bDhy9A7doU92FgNTQ6mY6wT
+X-Received: by 2002:a05:690c:670e:b0:81c:c77b:3546 with SMTP id
+ 00721157ae682-81fd4b5a1fcmr10601587b3.21.1785520150569; Fri, 31 Jul 2026
+ 10:49:10 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260724031123.76597-1-richard.henderson@linaro.org>
- <20260724031123.76597-4-richard.henderson@linaro.org>
-In-Reply-To: <20260724031123.76597-4-richard.henderson@linaro.org>
+ <20260724031123.76597-6-richard.henderson@linaro.org>
+In-Reply-To: <20260724031123.76597-6-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 31 Jul 2026 18:46:39 +0100
-X-Gm-Features: AUfX_mwlwSiLwrDKY0AGcE9mtDwX06M3suwmRLlhqqzpw_kDHrEGeCtiPIF9jd4
-Message-ID: <CAFEAcA_5gcPt2cvKDHx24KwNYtWs7Z2--Qeh-8iBqPaukLqwtQ@mail.gmail.com>
-Subject: Re: [PATCH 3/6] target/arm: Implement HCR_EL2.TID3 trap on undefined
- TID3 registers
+Date: Fri, 31 Jul 2026 18:48:57 +0100
+X-Gm-Features: AUfX_mxGk2F8aSh_JgVQt-7gXRA-omlK1T6Zse-BobWTZnkcNJnAUhbBzMBme60
+Message-ID: <CAFEAcA8z9R28Um+ympuZ7xcAJoCn-EBynxRN=SGmF-XT+bi-0g@mail.gmail.com>
+Subject: Re: [PATCH 5/6] target/arm: Implement SCR_EL3.TID5
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,29 +115,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 24 Jul 2026 at 04:12, Richard Henderson
+On Fri, 24 Jul 2026 at 04:11, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> It is IMPLEMENTATION DEFINED whether HCR_EL2.TID3 traps on registers
-> within the range which are not explicitly listed.  Previously we chose
-> not to honor the TID3 bit.
->
-> However, with FEAT_IDTE3 it becomes mandatory to honor SCR_EL3.TID3
-> on these registers
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/helper.c | 17 +++++++++++++++--
+>  1 file changed, 15 insertions(+), 2 deletions(-)
 
-NB that it's mandatory to honour HCR_EL2.TID3 if FEAT_FGT is present,
-and we already choose to do so for V8. It's only V7 where we don't.
-
->, so we might as well honor HCR_EL2.TID3 too.
-
-I'm not in favour of this, because there's some complicated
-history behind HCR_EL2.TID3, as outlined in the commit message
-of 205ca535ab ("target/arm: Correctly honour HCR.TID3 for v7A cores").
-I would prefer to leave the trap behaviour as it is now [i.e.
-"on v7, trap only the specific registers; on v8, take the IMPDEF
-choice to trap the whole range"], because the wording in the
-v7A Arm ARM is rather vague. I also have a feeling that I looked at real
-v7A h/w and it didn't trap these, but I might be misremembering.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
