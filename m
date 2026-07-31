@@ -4,46 +4,175 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8572EC55167
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 10:24:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D591C5516D
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 10:32:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpkOy-0003Kp-4k; Fri, 31 Jul 2026 06:23:40 -0400
+	id 1wpkXV-00051f-GK; Fri, 31 Jul 2026 06:32:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <agraf@csgraf.de>) id 1wpkOv-0003KU-Gn
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 06:23:38 -0400
-Received: from mail.csgraf.de ([85.25.223.15] helo=zulu616.server4you.de)
+ (Exim 4.90_1) (envelope-from <prvs=6654ce66d=graf@amazon.de>)
+ id 1wpkXN-0004uw-Gh
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 06:32:27 -0400
+Received: from fra-out-009.esa.eu-central-1.outbound.mail-perimeter.amazon.com
+ ([3.64.237.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <agraf@csgraf.de>) id 1wpkOt-0002bL-Ad
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 06:23:37 -0400
-Received: from [192.168.106.196]
- (dynamic-077-002-060-183.77.2.pool.telefonica.de [77.2.60.183])
- by csgraf.de (Postfix) with ESMTPSA id 003D5608027F;
- Fri, 31 Jul 2026 12:23:31 +0200 (CEST)
-Message-ID: <5bb69baf-a00f-4b71-8065-90a7cfc7da8b@csgraf.de>
-Date: Fri, 31 Jul 2026 12:23:31 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/9] hw/misc/vmlaunchupdate: Introduce hypervisor
- fw-cfg interface support
-To: Ani Sinha <anisinha@redhat.com>, Gerd Hoffman <kraxel@redhat.com>
-Cc: graf@amazon.com, qemu-devel@nongnu.org
+ (Exim 4.90_1) (envelope-from <prvs=6654ce66d=graf@amazon.de>)
+ id 1wpkXK-0003Ve-Qj
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 06:32:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amazon.de; i=@amazon.de; q=dns/txt; s=amazoncorp2;
+ t=1785493938; x=1817029938;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=fNdQWkleZvJDBZfSvK/cHOZXZqPsPDvPaee6/a7swkU=;
+ b=UnXMQ7N89/vTrtVYAUfK08XAP0vTsPtZdxLEEhGpHu/ALV5CMpvwZ4BI
+ fTt2VIgLLlNrTjWgLNNiXWzJ7jKU2XhKfdrN6ajzeUQt2kI96zEJb8QW6
+ KrW6Z2TRDkvfKUM+FKQs81gk2Bn9Z9bDeo+X94NjI/0JUu5rpQqu3nUDA
+ wALVuoUdGSblzprC6w/LOslrycSG7/YqSK/LuCC3tXVzADeMkYtw+no98
+ 180fCnAgWMwVquIEF8B5K3GaBbfr+dCHDwLqLVPYrQdS5+hGEBGPDx0O8
+ kxKAQAyg/KE8ouggSsVrDt6rQuTN4oblSG+OqzmpKbM5L0kNEZJaI/mod A==;
+X-CSE-ConnectionGUID: Heblw5+RQK2Co/3auIGG1w==
+X-CSE-MsgGUID: SrTYWfm2QU6tvSpvQ5OavQ==
+X-IronPort-AV: E=Sophos;i="6.25,196,1779148800"; d="scan'208";a="17103934"
+Received: from ip-10-6-3-216.eu-central-1.compute.internal (HELO
+ smtpout.naws.eu-central-1.prod.farcaster.email.amazon.dev) ([10.6.3.216])
+ by internal-fra-out-009.esa.eu-central-1.outbound.mail-perimeter.amazon.com
+ with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Jul 2026 10:32:09 +0000
+Received: from EX19MTAEUB001.ant.amazon.com [54.240.197.226:31386]
+ by smtpin.naws.eu-central-1.prod.farcaster.email.amazon.dev [10.0.31.97:2525]
+ with esmtp (Farcaster)
+ id f664e0e9-6475-43a6-a10e-d0c91c892c0e; Fri, 31 Jul 2026 10:32:08 +0000 (UTC)
+X-Farcaster-Flow-ID: f664e0e9-6475-43a6-a10e-d0c91c892c0e
+Received: from EX19EXOEUA001.ant.amazon.com (10.252.50.110) by
+ EX19MTAEUB001.ant.amazon.com (10.252.51.26) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.45;
+ Fri, 31 Jul 2026 10:32:08 +0000
+Received: from EX19EXOEUA001.ant.amazon.com (10.252.50.110) by
+ EX19EXOEUA001.ant.amazon.com (10.252.50.110) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.45;
+ Fri, 31 Jul 2026 10:32:08 +0000
+Received: from FR5P281CU006.outbound.protection.outlook.com (10.252.51.94) by
+ EX19EXOEUA001.ant.amazon.com (10.252.50.110) with Microsoft SMTP
+ Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.45
+ via Frontend Transport; Fri, 31 Jul 2026 10:32:08 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=StT7U4dxlfGbaABUUe/a5cPh8Xltiao4LMnBw6ELw39TdUt13b9+O6gWTgZOdS1SLC3nyHogEhvCU4G/X0Sb5sE3OYG8gWu/dZCp3HxRP2a0jFUTbMbSxZEuFlTe3V0oL7iBsJa2gWOdHq84hM8EF6QLum2u9B2hpo9tJpT39OUE9bDss+MGr4L1dS4HGsg67BeGfufe3IlcS+Uh2PCu3Rkk/WzIA9fKm8vN+ufYjTy6WEUg2Fa41YkmvcoD6MYmTWaLi6Y1cAKdJ6K23jtJqWGDm0My3iUu+hX+5uRStV9jpGtJVImiClwhOl3IYyERkHO25aba65JMpMCuLhw2Zg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fNdQWkleZvJDBZfSvK/cHOZXZqPsPDvPaee6/a7swkU=;
+ b=cw92QyGGeV+QKIT4dnWsg7zu9hq6p8DeFy5VUPmoqiZVsWZwlUmK/ut2Wmbasuj2DxUgwsLnaOLIL0WsT3gT0U8GFBLg55hssUnJQEV0f2vQji3iRa9Mnst2IPO8xzUuQQXE29V3SROaCnt9O9U1A9yoL3mK0Hwm7KT/Do4wTWq33xRHtixFib6ek8trZXlMnDW2tC7SAu/4DqVVqLKmKS7VxLSeSFbhch0f9ufCP5cO7ZzG3XsAcqeTOOS0+MiLqlRCNp8ovTr0DYfbKV67LqSJ1pZC/GPPNmOuhzw7tsp8LQofQ+GNxzy0QXQwZRP9Nbyw5kSwUUU+JHZkXABnIw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amazon.de; dmarc=pass action=none header.from=amazon.de;
+ dkim=pass header.d=amazon.de; arc=none
+Received: from FRSP281MB6250.DEUP281.PROD.OUTLOOK.COM (2603:10a6:d10:1e0::23)
+ by BEUP281MB3480.DEUP281.PROD.OUTLOOK.COM (2603:10a6:b10:a0::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.15; Fri, 31 Jul
+ 2026 10:32:02 +0000
+Received: from FRSP281MB6250.DEUP281.PROD.OUTLOOK.COM
+ ([fe80::7ad:f028:e0a7:bd4b]) by FRSP281MB6250.DEUP281.PROD.OUTLOOK.COM
+ ([fe80::7ad:f028:e0a7:bd4b%6]) with mapi id 15.21.0270.012; Fri, 31 Jul 2026
+ 10:32:02 +0000
+From: "Graf (AWS), Alexander" <graf@amazon.de>
+To: Ani Sinha <anisinha@redhat.com>
+CC: "Graf (AWS), Alexander" <graf@amazon.de>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "kraxel@redhat.com" <kraxel@redhat.com>
+Subject: Re: [PATCH v3 0/9] Introducing guest driven VM launch update
+ mechanism (BYOF interface)
+Thread-Topic: [PATCH v3 0/9] Introducing guest driven VM launch update
+ mechanism (BYOF interface)
+Thread-Index: AQHdINfSmej04q6d+U6lPNotL6hc/w==
+Date: Fri, 31 Jul 2026 10:32:01 +0000
+Message-ID: <30ac6502-b4a7-4f88-a837-69ea4da7f1ee@amazon.com>
 References: <20260730071254.80695-1-anisinha@redhat.com>
- <20260730071254.80695-6-anisinha@redhat.com>
+In-Reply-To: <20260730071254.80695-1-anisinha@redhat.com>
+Accept-Language: en-US
 Content-Language: en-US
-From: Alexander Graf <agraf@csgraf.de>
-In-Reply-To: <20260730071254.80695-6-anisinha@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=85.25.223.15; envelope-from=agraf@csgraf.de;
- helo=zulu616.server4you.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amazon.de;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: FRSP281MB6250:EE_|BEUP281MB3480:EE_
+x-ms-office365-filtering-correlation-id: f39cb5e5-2f16-487a-b781-08deeeeef56b
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|23010399003|366016|1800799024|376014|10067099003|11063799006|56012099006|18002099003|22082099003|38070700021;
+x-microsoft-antispam-message-info: 77ijp6aDGtMh3VGdP6WMeWOgZxpNxxw7zJzfjgOQdOjS8iGm9otiLO/k8wfUUexXGXs3JD2dBw9eYLbwEjXTpv5OC0qdemcXw3YBHztFjetgdrfrPTfryLASonT4SUAUhrWHm7FBTTY4XaxOoogj6JmUAbrmzcF1sWfcQPNbUASMLD2icW1RRtSpFr1tLJQoUyJNl8JXT9OQYuSPKsMuKQB92gKSk0onbz7PULzpnhV6LqML8fA0IKf1NFCLM87pmnDUKQV9i2Oy4ZGKo+/uETyxGshyzLkATozom3Mb2wQ+QsgsDFus7shsIjZOtaZd0HSUwhZAKmSDQ4SykJ+SI/IsxCGb6uuI1fS3NVwsskDcPT7zEm91jaXB4iOG+4LAE3iqbRbXcxeaxB146TrkTcz27L+AuQ/wB3mcQ0tYjwQcNqxwGhB3AmsKOk6+epQxd4XUYAEkZEHV56MNr7aKF5OfvkO49l4G9+UQ0D5X0di15wAJCg0FqW1S+bmgATelP7F1bBSCZUL+tjDaW9ZGpAgb4jcIY1OgLc/+r3G7fv8pbBf+5pQMieJKjfG7gCOqloSuXpli+jh4umh5Ba8ARf4dAK53nc9IKzOQ49NDLapequLsOTF29BSE+BNxJd+GU0/nxqnK+BLrt3tmn9q7b1nTgcDwvSG28ngpfvFSlYlIlkKH5zN6b8dEXV10RPQ3eQkxNZZIDwMnkjUn0hmGvO58K9R1Nc321lwi0ZJf5/A=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:FRSP281MB6250.DEUP281.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(10067099003)(11063799006)(56012099006)(18002099003)(22082099003)(38070700021);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?OGRTdDYvUE1PTXI2MHVVakcyRFp4RTNMWlFJQURPVE1iT3hvZUxhbXlrWW8z?=
+ =?utf-8?B?UDg5SlpVNmlvdGVGQ3ZSblhnRmwwQ2pLV0FtbXZrenBWUlJZeDN1L3lqSHBr?=
+ =?utf-8?B?SndwR3ZoS3NxZ0MyZzRDcUtHc1NTMWN5ZTdQTWJvYlk3MzRKQ3J3RERhTkFR?=
+ =?utf-8?B?ckRaSVQ2a04vRTJ5TFpNVXppbHhMd2YrellUbG1FQWltc1o3a1VmdnJWZlFY?=
+ =?utf-8?B?aTBkeFVrQ3d6SGdoMDE5MXB0bXY5aVB4bjJ6VkZmWUY4cldUVUcrTG1Jd3Qw?=
+ =?utf-8?B?Zy95MS9ibWpDRUR0MkNyc3RheG1MTlFmbjlkUSsvU1IyMEtjeDMrelpNV3lN?=
+ =?utf-8?B?REVJaXpNQlBDcTBHcnNVaUFobGtibDR6U0ErMlhvTFpQdHhPaG9Ka21UWGx1?=
+ =?utf-8?B?b2FsWjlqbGJkMThWaU5Eem5SSEQ1Z0dMbVJteUpkcmFCMXYvQlJWRU03K0dZ?=
+ =?utf-8?B?MGR4Wi9QWkM0UVo1YWhPaWZWWXA4UFVaS2JZVElaQnQ3WjhlTTRWUkhTcGJj?=
+ =?utf-8?B?Z3JMZUlQTFRjdWJ0NWVpU0w2bW0vMm5ndUtCY2dYejFTVWt6Q0VRMzZjL0do?=
+ =?utf-8?B?VWxMOWFqSjZDN0swSTFHY0VXZlZsM3pERjNpWnpaTWYzaDdyQlgxb1I1WTg1?=
+ =?utf-8?B?WUNVTVV1Tjh1RDMvQmJLdlI3LzhZMGxJdGZBUkc0L2djOTFiWlFjdHB1TTdT?=
+ =?utf-8?B?RDloK1Q3bzA2REhKaDZ6WHl1QS9vODl3TVV2bDhnY01HS05WK1IzN21pVEdQ?=
+ =?utf-8?B?SUlhdlpwRXY0YjdLRm5FVE53amsxSFAraWEyNXhRZERFUVNnUzU3MUVNV3Nk?=
+ =?utf-8?B?QjdLbGJRWGhMdGRlRHVsOGZsL0NsVTBQS2lOOGZydDdyMitkdE55NnpLMEtw?=
+ =?utf-8?B?ZUYvTTZGS3VIellmTncvRkdGU2xCTUUyTGNhMmpOaEh4T1R3MFpVNXp0ZTgv?=
+ =?utf-8?B?TGhMN1RHY3lQSGxHdkNTMmF2SStOT2JiZ1lRREVsYmI0TFdqMHZaQWo2TE9v?=
+ =?utf-8?B?Z0dLYXYyMHpMbDltN0ZieUFyOVgyRjFYV25ZVlBkRTl4VThRR1hnWmNla0xn?=
+ =?utf-8?B?UFBwMFloejVYVnRBZTlTWmcyeVE0Z1ZKNS9KS25rWDRBcW9QSE5lc0h4QzFm?=
+ =?utf-8?B?c3VBWW9WQitWRVMwZU1XQ1FUT2hBa3BHaml1S09IUSs4OUtjMGtrNmtjT2Rz?=
+ =?utf-8?B?VU5zbm9raU9KeXR4czFLWUVWdTNFbWJ6aUJ5ZGV6dno5VzdBNEcwRmc2L3Fw?=
+ =?utf-8?B?NWxvWmxTL2F6d01NalQ1Z3MxQnRHVGE5Q2tQRXJZek5GK1ZVakI1MnkrYUdR?=
+ =?utf-8?B?TXJqR1Q5QjFQQXNmVkxaSHRwZ0J0UTJnQnZJaVRMZTZSa21YQ0UyZnNKYkRn?=
+ =?utf-8?B?OVF5MnltTVNnaWhTdjhGS05DMzlkSGdwZ1RTRlRucE9qSDcxTEdHd1ZtUGJF?=
+ =?utf-8?B?Q3FDU044TlQ5SXJydXdrQ2F1WGNJMnd0SHoxS3VBOXRYenFicE9MZXBZZ1NW?=
+ =?utf-8?B?TkNYSHNaUzBxaW13aUVjQ2lqbGVMVE5NZzJZQXVpZnBZOGZyaWJhSmQyR0RQ?=
+ =?utf-8?B?ZVd3KzZHNDdFcnptbjFFblpMY1dwc2UxSG9yZTI3VW9tT2dBWC9mOWFMSVds?=
+ =?utf-8?B?cGx2eHd3dlJORjRqU2o0a21TeW9kdzFiWXd0WTVTSVhxeklMUElTM25CSUJW?=
+ =?utf-8?B?TkJDVjRKeFk5aXl4VDdJTUx0KzRXbnMzbTNzTC9aM2QrSjJHeHd1U3NzRFNM?=
+ =?utf-8?B?REVqc0dQQzhqMnBUeW5mZGltNFZlL2JuSHBsaEhyYmpvcTJaTTZUNXFtZVQ3?=
+ =?utf-8?B?bk1KY2d4dDVTeVFFTWgyWFk0aEIrSnlQRUplaW1kMzJFTkV2TUJzZ1E4Z1pY?=
+ =?utf-8?B?RjBrUGIrM2lyaW80MlJXWVprSVJzKy9DZTRmUTBpMjRhTWpkWkh0MFk2SW9X?=
+ =?utf-8?B?UHN3Y1FnMkdpUElzSGgyYVFTMTlVUGhmT05va3J0STFLVmZ4SkJwVThBZTJK?=
+ =?utf-8?B?Q2paT3RBZ1RuRDhuNlovSVBzQ0lRQm9IRlNPeHlhaW00REJSZ245bHZwZjda?=
+ =?utf-8?B?eXppT0dyS00wdWZQaDNzQ2FsZUpidkR1V0srdXFJMzlOMTlBODRhNzNRR1Fj?=
+ =?utf-8?B?M21ZbG1sYy95cmdWZDEvMTJRK0NteHkxU1FXMm1HRkRxVFRxL2s2clNaWXFm?=
+ =?utf-8?B?WnEwSTM4dS9iTzFQV2YyUUxGRGo2TjFOSFpDSzB2RzVHZEh6R1VrOUdSaDR2?=
+ =?utf-8?B?R3hDaHZMYUY3R3o3S3FDQmRuL0twdngrRGNuV3RndkduYS9CUWhIdzlIdWFr?=
+ =?utf-8?Q?hdXxB2mZA+Dq1rKupg?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <196A6DFD8FBD694992A8AFE7C7B742B7@DEUP281.PROD.OUTLOOK.COM>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-Exchange-RoutingPolicyChecked: bGe1BgcY58K1Q083yDMBOFEIHH/FYs9BemwGfxQtEeKvLusPSTPCKHHu46IEsvC8MMnMZeKjWgyDB9oB1cupE7BQTxWWJ+cAPYEnFabp+y591fQaG133EO2d3VODhsYUgy7WzD4x50Wgaa2NZEgYQbFlmmvP7owAqHEYGysaL7CwKEjr9aAusfAIBhxp/G2kqe8411Hh4lNP+Xe0F66pQvK9Tql0gcv4w9UB5uDfGsbwsed2hGtK25E31UHqL8ZM89S47F1ICP5BBrIh9JpG/i4t7XvOCxTRPJ1oOD6k27CwPol3fkTgA3zolN31ZOm9+mMJOONDUkp705yGvoWb4A==
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: FRSP281MB6250.DEUP281.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: f39cb5e5-2f16-487a-b781-08deeeeef56b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Jul 2026 10:32:01.9803 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 5280104a-472d-4538-9ccf-1e1d0efe8b1b
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 82JvELxC2JmcEyH+HZYUTAVxU6Wg4tm7H1EonCZHHg7mC4COQnYOo8iBGe+yyKUD
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BEUP281MB3480
+X-OriginatorOrg: amazon.de
+Received-SPF: pass client-ip=3.64.237.68;
+ envelope-from=prvs=6654ce66d=graf@amazon.de;
+ helo=fra-out-009.esa.eu-central-1.outbound.mail-perimeter.amazon.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -59,229 +188,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 30.07.26 09:12, Ani Sinha wrote:
-> VM launch update is a mechanism where the virtual machines can use IGVM
-> file bundle to boot into a trusted execution environment without
-> having to depend on a untrusted party to provide the IGVM bundle or firmware
-> image. This is particularly useful for confidential virtual machines that
-> are deployed in the cloud where the tenant and the cloud provider are two
-> different entities. In this scenario, virtual machines can bring their own
-> trusted IGVM file containing a trusted firmware image
-> bundled as a part of their filesystem and then use this hypervisor interface
-> to update to a trusted and deterministic boot state.
-> This also allows the guests to have a consistent measurements on the firmware
-> image.
->
-> Currently, this mechanism only works if the VM was started with IGVM in the
-> first place.
->
-> This change introduces support for the fw-cfg based hypervisor interface
-> and the corresponding device. The interface is made generic
-> enough so that guests are free to use their own ABI to pass required
-> information between initial and trusted execution contexts (where they are
-> running their own trusted boot state) without the hypervisor getting
-> involved in between.
->
-> Currently, this device is only supported for x86 machines. Presence of
-> IGVM host libraries is also required for parsing IGVM files. Hence, the device
-> cannot be initialized for other machine types or hosts where IGVM support
-> is not present. Trying to initialize it for arm for example will lead to failure:
->
-> $ ./qemu-system-arm -device vm-launch-update -machine virt
-> qemu-system-arm: -device vmfwupdate: This machine does not support vm-launch-update device
->
-> Functional and qtests will be added in a subsequent patch.
->
-> CC: Alex Graf <graf@amazon.com>
-> CC: Gerd Hoffman <kraxel@redhat.com>
->
-> Reviewed-by: Gerd Hoffmann <kraxel@redhat.com>
-> Signed-off-by: Ani Sinha <anisinha@redhat.com>
-> ---
->   hw/misc/meson.build              |   3 +
->   hw/misc/trace-events             |   6 +
->   hw/misc/vmlaunchupdate.c         | 309 +++++++++++++++++++++++++++++++
->   include/hw/misc/vmlaunchupdate.h |  38 ++++
->   4 files changed, 356 insertions(+)
->   create mode 100644 hw/misc/vmlaunchupdate.c
->   create mode 100644 include/hw/misc/vmlaunchupdate.h
->
-> diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-> index 23265f6035..b8c7de295e 100644
-> --- a/hw/misc/meson.build
-> +++ b/hw/misc/meson.build
-> @@ -163,6 +163,9 @@ specific_ss.add(when: 'CONFIG_MIPS_ITU', if_true: files('mips_itu.c'))
->   
->   specific_ss.add(when: 'CONFIG_RISCV_MIPS_CMGCR', if_true: files('riscv_cmgcr.c'))
->   specific_ss.add(when: 'CONFIG_RISCV_MIPS_CPC', if_true: files('riscv_cpc.c'))
-> +if igvm.found()
-> +   specific_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('vmlaunchupdate.c'))
-> +endif
->   
->   system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
->   
-> diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-> index c9a868b3ef..2d6d2238c5 100644
-> --- a/hw/misc/trace-events
-> +++ b/hw/misc/trace-events
-> @@ -442,3 +442,9 @@ iommu_testdev_dma_read(uint64_t gva, uint32_t len) "gva=0x%" PRIx64 " len=%u"
->   iommu_testdev_dma_verify(uint32_t expected, uint32_t actual) "expected=0x%x actual=0x%x"
->   iommu_testdev_dma_result(uint32_t result) "DMA completed result=0x%x"
->   iommu_testdev_dma_armed(bool armed) "armed=%d"
-> +
-> +# vmlaunchupdate.c
-> +launch_update_write(void) ""
-> +vmlaunch_reset_enter(void) ""
-> +vm_launchupdate_finalize(void) ""
-> +restore_host_x86_igvm(void) ""
-> diff --git a/hw/misc/vmlaunchupdate.c b/hw/misc/vmlaunchupdate.c
-> new file mode 100644
-> index 0000000000..5b0222310b
-> --- /dev/null
-> +++ b/hw/misc/vmlaunchupdate.c
-> @@ -0,0 +1,309 @@
-> +/*
-> + * Guest driven VM launch component update (using IGVM) device
-> + * For details and specification, please look at docs/specs/vmlaunchupdate.rst.
-> + *
-> + * Copyright (C) 2026 Red Hat, Inc.
-> + *
-> + * Authors: Ani Sinha <anisinha@redhat.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "qemu/module.h"
-> +#include "system/physmem.h"
-> +#include "system/reset.h"
-> +#include "qemu/target-info-qapi.h"
-> +#include "hw/nvram/fw_cfg.h"
-> +#include "hw/core/qdev-properties.h"
-> +#include "hw/i386/pc.h"
-> +#include "exec/cpu-common.h"
-> +#include "hw/misc/vmlaunchupdate.h"
-> +#include "system/igvm.h"
-> +#include "system/igvm-internal.h"
-> +#include "qemu/error-report.h"
-> +#include "trace.h"
-> +
-> +/* returns NULL unless there is exactly one device */
-> +static VMLaunchUpdateState *vm_launchupdate_find(void)
-> +{
-> +    Object *o = object_resolve_path_type("", TYPE_VMLAUNCHUPDATE, NULL);
-> +
-> +    return o ? VMLAUNCHUPDATE(o) : NULL;
-> +}
-> +
-> +static bool vmlaunchupdate_supported(void)
-> +{
-> +    return target_arch() == SYS_EMU_TARGET_X86_64;
-> +}
-> +
-> +static void init_vm_launch_update(VMLaunchUpdateState *s)
-> +{
-> +    s->launch_update.capabilities = VM_LAUNCHUPDATE_FORMAT_IGVM;
-> +    s->launch_update.control = 0;
-> +
-> +    if (s->disabled) {
-> +        s->launch_update.control |= VM_LAUNCHUPDATE_CTL_DISABLE;
-> +    }
-> +
-> +    s->launch_update.version = VM_LAUNCHUPDATE_VERSION;
-> +    return;
-> +}
-> +
-> +static void clear_init_vm_launch_update(VMLaunchUpdateState *s)
-> +{
-> +    memset(&s->launch_update, 0, sizeof(s->launch_update));
-> +    init_vm_launch_update(s);
-> +}
-> +
-> +static int process_x86_igvm(VMLaunchUpdateState *s,
-> +                            uint64_t fw_image_addr, uint64_t fw_image_size)
-> +{
-> +    X86MachineState *x86machine = X86_MACHINE(qdev_get_machine());
-> +    IgvmCfg *igvmc = x86machine->igvm;
-> +    IgvmHandle igvm;
-> +    void *image_addr_ptr;
-> +    hwaddr len;
-> +
-> +    if (!igvmc) {
-> +        /* The VM was not started with an IGVM, bail */
-> +        info_report("guest was not initially started with IGVM, "
-> +                    "not changing launch state.");
-> +        return -2;
-> +    }
-> +
-> +    if (!fw_image_addr || !fw_image_size) {
-> +        return -1;
-> +    }
-> +
-> +    len = (hwaddr) fw_image_size;
-> +    image_addr_ptr = physical_memory_map((hwaddr) fw_image_addr,
-> +                                         (hwaddr *) &len, 0);
-> +
-> +    if (!image_addr_ptr || (len < fw_image_size)) {
-> +        warn_report("vmlaunchupdate: Invalid guest addresses.");
-> +        physical_memory_unmap(image_addr_ptr, len, 0, 0);
-
-
-On !image_addr_ptr, wouldn't this invoke unmap(NULL)?
-
-
-> +        return -1;
-> +    }
-> +
-> +    igvm = igvm_new_from_binary(image_addr_ptr, fw_image_size);
-> +    if (igvm < 0) {
-> +        warn_report("vmlaunchupdate: Unable to parse IGVM file %"
-> +                    PRIx64 ": %" PRIx64, fw_image_addr, fw_image_size);
-
-
-Don't we need to unmap here as well, like above?
-
-I think the best way to make this code pretty is a goto err with 
-conditional unmap.
-
-
-> +        return -1;
-> +    }
-> +
-> +    /* free previous file context */
-> +    if (igvmc->file >= 0) {
-> +        igvm_free(igvmc->file);
-> +    }
-> +    /* set new context */
-> +    igvmc->file = igvm;
-> +
-> +    physical_memory_unmap(image_addr_ptr, len, 0, 0);
-> +    info_report("vmlaunchupdate: new IGVM context set.");
-> +
-> +    return 0;
-> +}
-> +
-> +static void restore_host_x86_igvm(void)
-> +{
-> +    X86MachineState *x86machine = X86_MACHINE(qdev_get_machine());
-> +    IgvmCfg *igvmc = x86machine->igvm;
-
-
-The igvm property can be NULL, if nobody set igvm-cfg. So if you launch 
-QEMU with just "-device vm-launch-update", it will crash here. You check 
-it above in process_x86_igvm(), but not here. Maybe create a generic 
-function that does the info_report and bails out?
-
-
-> +    Error *errp;
-
-
-Please always preinitialize errp with NULL. Typically callers expects 
-that it's NULL, so they can choose not to touch it on error.
-
-
-Alex
-
+DQpPbiAzMC4wNy4yNiAwOToxMiwgQW5pIFNpbmhhIHdyb3RlOg0KPiBUaGlzIGlzIHRoZSByZXN1
+cnJlY3Rpb24gb2YgdGhlIHdvcmsgdGhhdCB3YXMgcHJldmlvdXNseSBkaXNjdXNzZWQgaGVyZToN
+Cj4gaHR0cHM6Ly9saXN0cy5lbmRzb2Z0d2FyZXBhdGVudHMub3JnL2FyY2hpdmUvaHRtbC9xZW11
+LWRldmVsLzIwMjUtMDMvbXNnMDU4NzIuaHRtbA0KPg0KPiBUaGlzIHJlbGF0ZXMgdG8gdGhlICdi
+cmluZyB5b3VyIG93biBmaXJtd2FyZScgd29yayB0aGF0IHdlIGFyZSBkcml2aW5nIGF0IFJlZCBI
+YXQsDQo+IG5vdyB3aXRoIElHVk0gc3VwcG9ydC4NCj4NCj4gVGhlIHBhdGNoc2V0IGluY2x1ZGVz
+IGEgc3BlYyBkb2MgdGhhdCBoYXMgbW9yZSBkZXRhaWxzLg0KPg0KPiBUaGlzIHBhdGNoc2V0IGlt
+cGxlbWVudHMgdGhlIGh5cGVydmlzb3IgaW50ZXJmYWNlIHVzaW5nIGZ3LWNmZy4gVXNpbmcgdGhp
+cyBpbnRlcmZhY2UsIHRoZSBndWVzdA0KPiBjYW4gcGFzcyBpdHMgb3duIElHVk0gZmlsZSB0byB0
+aGUgaHlwZXJ2aXNvci4gVXBvbiByZXNldCwgdGhlIGh5cGVydmlzb3IgcmUtaW5pdGlhbGl6ZXMg
+dGhlIGd1ZXN0DQo+IHVzaW5nIHRoZSBJR1ZNIGZpbGUgdGhlIGd1ZXN0IHByb3ZpZGVkLiAgVGhp
+cyBpcyB1c2VmdWwgaW4gb3JkZXIgdG8gaGF2ZSBkZXRlcm1pbmlzdGljIGFuZCB0cnVzdHdvcnRo
+eQ0KPiBsYXVuY2ggbWVhc3VyZW1lbnRzLCBtb3N0bHkgZm9yIHRoZSBjbG91ZCBjb25maWRlbnRp
+YWwgZ3Vlc3QgZGVwbG95bWVudHMuDQo+DQo+IFRoaXMgcGF0Y2hzZXQgaGFzIGFkZGVkIGZ1bmN0
+aW9uYWwgYW5kIHVuaXQgdGVzdHMgdGhhdCBleGVyY2l6ZSB0aGUgaHlwZXJ2aXNvciBpbnRlcmZh
+Y2UuIEl0IGhhcyBiZWVuDQo+IHRlc3RlZCBmb3IgYm90aCBjb25maWRlbnRpYWwgZ3Vlc3RzIGFu
+ZCBub24tY29uZmlkZW50aWFsIGd1ZXN0cy4gR2VyZCBoYXMgYWxzbyBpbmRlcGVuZGVudGx5IHRl
+c3RlZA0KPiB0aGUgcGF0Y2hzZXQuDQoNCg0KVmVyeSBuaWNlLCB0aGFua3MgYSBidW5jaCBmb3Ig
+cHVzaGluZyB0aGlzIHRocm91Z2ghDQoNClJldmlld2VkLWJ5OiBBbGV4YW5kZXIgR3JhZiA8Z3Jh
+ZkBhbWF6b24uY29tPg0KDQoNCkFsZXgNCg0K
 
