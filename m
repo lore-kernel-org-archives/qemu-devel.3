@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23EBCC54F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 05:59:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4FF3C55167
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 06:00:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpgFY-0002bl-8B; Fri, 31 Jul 2026 01:57:40 -0400
+	id 1wpgFY-0002cf-Ud; Fri, 31 Jul 2026 01:57:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <blduan@linux.alibaba.com>)
- id 1wpeM5-0005qr-6J; Thu, 30 Jul 2026 23:56:18 -0400
-Received: from [115.124.30.118] (helo=out30-118.freemail.mail.aliyun.com)
+ id 1wpeM5-0005rE-Sh; Thu, 30 Jul 2026 23:56:18 -0400
+Received: from [115.124.30.119] (helo=out30-119.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <blduan@linux.alibaba.com>)
- id 1wpeM0-0002Hn-78; Thu, 30 Jul 2026 23:56:16 -0400
+ id 1wpeM0-0002Id-8L; Thu, 30 Jul 2026 23:56:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1785470157; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=VJWkJluchzKSNULaL74QEFDHFaTH5ibDQItbZKM6t28=;
- b=MAQhj9yWOj6ZlEWDXIavJfXKGwWWBXnZnMnuJziKsy5KletC3dXh7s/aSi6ZV3bF7FaAN89cKLtDrnz6r/2RSspzkkSbozBDKvDgGJ654sClyBMC2P+40E+LLlLNZP3keIA76weHP73aNeoEOy64+3eizfRGTYM9tBecMSyPPaA=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R121e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045098064;
+ t=1785470168; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=niXZVhC6dZEmlpUlZukHv4t50+0oDWItTHBANrdas1g=;
+ b=MYBj0xYNxOBLil091XudCcgj/ObhEpeJ38WfYEjWmtApEtYKaVL4c5bnVrrUBRq9KWZQe++Zcr5jys1GZFH986GNk6ieDdkYPUwOuCQkbIfWp3NIhFK5J01LTsMY33iWrfE5iG5leFkh2uAvnqzvahiX8nSiu61zugatf4HmX8M=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R171e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
  MF=blduan@linux.alibaba.com; NM=1; PH=DS; RN=7; SR=0;
- TI=SMTPD_---0X86jwOS_1785469837; 
+ TI=SMTPD_---0X86jwUT_1785469856; 
 Received: from ea134-sw16.eng.xrvm.cn(mailfrom:blduan@linux.alibaba.com
- fp:SMTPD_---0X86jwOS_1785469837 cluster:ay36) by smtp.aliyun-inc.com;
- Fri, 31 Jul 2026 11:50:45 +0800
+ fp:SMTPD_---0X86jwUT_1785469856 cluster:ay36) by smtp.aliyun-inc.com;
+ Fri, 31 Jul 2026 11:50:57 +0800
 From: Baolong Duan <blduan@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair23@gmail.com, dbarboza@ventanamicro.com,
  cxx194832@alibaba-inc.com, zengxiangyi.zxy@alibaba-inc.com,
  Baolong Duan <blduan@linux.alibaba.com>
-Subject: [RFC PATCH v1 02/17] hw/riscv/virt: add the cove-vm machine property
-Date: Fri, 31 Jul 2026 11:49:56 +0800
-Message-Id: <20260731035011.4178103-3-blduan@linux.alibaba.com>
+Subject: [RFC PATCH v1 10/17] target/riscv/kvm: skip unsupported KVM requests
+ for a CoVE guest
+Date: Fri, 31 Jul 2026 11:50:04 +0800
+Message-Id: <20260731035011.4178103-11-blduan@linux.alibaba.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260731035011.4178103-1-blduan@linux.alibaba.com>
 References: <20260731035011.4178103-1-blduan@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.118 (deferred)
-Received-SPF: pass client-ip=115.124.30.118;
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.119 (deferred)
+Received-SPF: pass client-ip=115.124.30.119;
  envelope-from=blduan@linux.alibaba.com;
- helo=out30-118.freemail.mail.aliyun.com
+ helo=out30-119.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -56,7 +57,7 @@ X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
  USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 31 Jul 2026 01:57:31 -0400
+X-Mailman-Approved-At: Fri, 31 Jul 2026 01:57:33 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,182 +72,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A RISC-V CoVE guest is a TEE VM (TVM) whose memory and vCPU state are
-owned by the TEE Security Manager (TSM) rather than by the host.  Add a
-'cove-vm' property to the virt machine to ask for one.
+A TEE VM has no APLIC and no PLIC, and its timer state lives inside the
+TVM where the host cannot read it.  Skip the KVM requests that would fail
+or return meaningless data: reading the timer back, injecting a wired
+interrupt, and the APLIC part of the in-kernel AIA setup.
 
-Subsystems outside of hw/riscv/, such as the KVM accelerator and the
-virtio code, have to know whether the guest is a TVM.  The state is
-therefore mirrored into target independent code and queried through
-riscv_cove_vm_active(); keeping the implementation in hw/core/machine.c
-avoids a link time dependency on target/riscv.
-
-Nothing looks at the property yet.  Add a MAINTAINERS entry for the new
-header.
+Note that kvm_mark_guest_state_protected(), which SEV and TDX use, would
+cover the vCPU state part of this generically.  It is not used here
+because it also changes the reset and migration paths, which have not
+been evaluated for CoVE yet.
 
 Signed-off-by: Baolong Duan <blduan@linux.alibaba.com>
 ---
- MAINTAINERS             |  6 ++++++
- hw/core/machine.c       | 18 ++++++++++++++++++
- hw/riscv/virt.c         | 26 ++++++++++++++++++++++++++
- include/hw/riscv/cove.h | 24 ++++++++++++++++++++++++
- include/hw/riscv/virt.h |  1 +
- 5 files changed, 75 insertions(+)
- create mode 100644 include/hw/riscv/cove.h
+ target/riscv/kvm/kvm-cpu.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 902db77218..dab130a45a 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -391,6 +391,12 @@ F: target/riscv/XVentanaCondOps.decode
- F: target/riscv/insn_trans/trans_xventanacondops.c.inc
- F: disas/riscv-xventana*
- 
-+RISC-V CoVE
-+M: Baolong Duan <blduan@linux.alibaba.com>
-+L: qemu-riscv@nongnu.org
-+S: Maintained
-+F: include/hw/riscv/cove.h
-+
- RENESAS RX CPUs
- R: Yoshinori Sato <yoshinori.sato@nifty.com>
- S: Orphan
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 73b4d82b4a..578a5cdde5 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -16,6 +16,7 @@
- #include "system/replay.h"
- #include "hw/core/boards.h"
- #include "hw/core/loader.h"
-+#include "hw/riscv/cove.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "qapi/qapi-visit-machine.h"
-@@ -1335,6 +1336,23 @@ bool machine_require_guest_memfd(MachineState *machine)
-     return machine->cgs && machine->cgs->require_guest_memfd;
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 67c99d68ce..23c2ae2214 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1477,7 +1477,13 @@ static void kvm_riscv_vm_state_change(void *opaque, bool running,
+     if (running) {
+         kvm_riscv_put_regs_timer(cs);
+     } else {
+-        kvm_riscv_get_regs_timer(cs);
++        /*
++         * The timer state of a CoVE guest is kept inside the TVM and cannot
++         * be read back by the host.
++         */
++        if (!riscv_cove_vm_active()) {
++            kvm_riscv_get_regs_timer(cs);
++        }
+     }
  }
  
-+/*
-+ * Whether the machine runs as a RISC-V CoVE guest. This lives here, and not
-+ * in hw/riscv/, because target independent code has to query it and must not
-+ * depend on the RISC-V machine being linked in.
-+ */
-+static bool riscv_cove_vm;
-+
-+bool riscv_cove_vm_active(void)
-+{
-+    return riscv_cove_vm;
-+}
-+
-+void riscv_cove_vm_set_active(bool active)
-+{
-+    riscv_cove_vm = active;
-+}
-+
- static char *cpu_slot_to_string(const CPUArchId *cpu)
- {
-     GString *s = g_string_new(NULL);
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 51bac47a91..a76587d362 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -35,6 +35,7 @@
- #include "hw/riscv/riscv-iommu-bits.h"
- #include "hw/riscv/virt.h"
- #include "hw/riscv/boot.h"
-+#include "hw/riscv/cove.h"
- #include "hw/riscv/fdt-common.h"
- #include "hw/riscv/machines-qom.h"
- #include "hw/riscv/numa.h"
-@@ -1321,6 +1322,11 @@ static void virt_machine_init(MachineState *machine)
-         exit(1);
-     }
+@@ -1791,6 +1797,14 @@ void kvm_riscv_set_irq(RISCVCPU *cpu, int irq, int level)
+     int ret;
+     unsigned virq = level ? KVM_INTERRUPT_SET : KVM_INTERRUPT_UNSET;
  
-+    if (s->cove_vm && !kvm_enabled()) {
-+        error_report("'cove-vm' is only available with KVM acceleration");
-+        exit(1);
++    /*
++     * A CoVE guest has neither APLIC nor PLIC, so there is no wired
++     * interrupt to inject.
++     */
++    if (riscv_cove_vm_active()) {
++        return;
 +    }
 +
-     /* Initialize sockets */
-     mmio_irqchip = virtio_irqchip = pcie_irqchip = NULL;
-     for (i = 0; i < socket_count; i++) {
-@@ -1652,6 +1658,21 @@ static void virt_set_iommu_sys(Object *obj, Visitor *v, const char *name,
-     visit_type_OnOffAuto(v, name, &s->iommu_sys, errp);
- }
- 
-+static bool virt_get_cove_vm(Object *obj, Error **errp)
-+{
-+    RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
-+
-+    return s->cove_vm;
-+}
-+
-+static void virt_set_cove_vm(Object *obj, bool value, Error **errp)
-+{
-+    RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
-+
-+    s->cove_vm = value;
-+    riscv_cove_vm_set_active(value);
-+}
-+
- bool virt_is_acpi_enabled(RISCVVirtState *s)
- {
-     return s->acpi != ON_OFF_AUTO_OFF;
-@@ -1780,6 +1801,11 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
-                               NULL, NULL);
-     object_class_property_set_description(oc, "iommu-sys",
-                                           "Enable IOMMU platform device");
-+
-+    object_class_property_add_bool(oc, "cove-vm", virt_get_cove_vm,
-+                                   virt_set_cove_vm);
-+    object_class_property_set_description(oc, "cove-vm",
-+                                          "Enable CoVE confidential VM");
- }
- 
- static const TypeInfo virt_machine_typeinfo = {
-diff --git a/include/hw/riscv/cove.h b/include/hw/riscv/cove.h
-new file mode 100644
-index 0000000000..0b29a00786
---- /dev/null
-+++ b/include/hw/riscv/cove.h
-@@ -0,0 +1,24 @@
-+/*
-+ * RISC-V Confidential VM Extension (CoVE)
-+ *
-+ * Copyright (c) 2026 Alibaba Group
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_RISCV_COVE_H
-+#define HW_RISCV_COVE_H
-+
-+/*
-+ * A CoVE guest is a TEE VM (TVM) whose memory and vCPU state are owned by
-+ * the TEE Security Manager (TSM) instead of the host. Subsystems outside of
-+ * hw/riscv/ have to behave differently for such a guest, so the state is
-+ * kept in target independent code.
-+ *
-+ * riscv_cove_vm_set_active() is called by the machine that implements CoVE
-+ * while its properties are parsed, before any device is created.
-+ */
-+bool riscv_cove_vm_active(void);
-+void riscv_cove_vm_set_active(bool active);
-+
-+#endif /* HW_RISCV_COVE_H */
-diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-index 36a2def410..99e073ef9a 100644
---- a/include/hw/riscv/virt.h
-+++ b/include/hw/riscv/virt.h
-@@ -60,6 +60,7 @@ struct RISCVVirtState {
-     char *oem_id;
-     char *oem_table_id;
-     OnOffAuto acpi;
-+    bool cove_vm;
-     const MemMapEntry *memmap;
-     struct GPEXHost *gpex_host;
-     OnOffAuto iommu_sys;
+     if (irq != IRQ_S_EXT) {
+         perror("kvm riscv set irq != IRQ_S_EXT\n");
+         abort();
+@@ -1924,8 +1938,11 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+      * This is done by leaving KVM_DEV_RISCV_AIA_CONFIG_SRCS
+      * unset. We can also skip KVM_DEV_RISCV_AIA_ADDR_APLIC
+      * since KVM won't be using it.
++     *
++     * The same applies to a CoVE guest: KVM does not implement an
++     * APLIC for a TVM, only the IMSIC is used.
+      */
+-    if (!kvm_kernel_irqchip_split()) {
++    if (!kvm_kernel_irqchip_split() && !riscv_cove_vm_active()) {
+         ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
+                                 KVM_DEV_RISCV_AIA_CONFIG_SRCS,
+                                 &aia_irq_num, true, NULL);
 -- 
 2.34.1
 
