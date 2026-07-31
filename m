@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74416C5516F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AF1AC55167
 	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 16:46:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpqMk-0003MK-Fq; Fri, 31 Jul 2026 12:45:46 -0400
+	id 1wpqMi-0003Ln-Og; Fri, 31 Jul 2026 12:45:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wpqMg-0003LW-EF
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 12:45:44 -0400
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ id 1wpqMa-0003Ks-DT
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 12:45:38 -0400
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wpqMc-0006j1-6b
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 12:45:41 -0400
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-81e86df8987so17173017b3.3
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 09:45:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785516336; cv=none;
+ id 1wpqMY-0006iF-Ik
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 12:45:35 -0400
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-668432fe416so1391023d50.0
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 09:45:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785516333; cv=none;
  d=google.com; s=arc-20260327;
- b=hMU5Ad37Jlh59Q3JnBoWTDUNBoEzldLEsGefhlKraYs0kWi212GAmOBs+JAw0/2+kA
- /miOzo+AmfUF/mb/xSVKV9VpSmgRgRjmkWK32mwOBkuYOys07uVBpr57VMx1dUfznOEN
- wvTEh+gp3n/u2EOt0Kqfkoa/XuGyLPDlZ1IiV8E+0VocbgW9lLWYnyQoleFQo1kofNrg
- saEuMb2qwjKkwIoWAPd6rRTQZdd7ChjW0/eioUYAFjLMHQfvjUeDm1CjNz7Y6RIfTDgI
- XWxizfihhrED8weN/WfbZO+GkhDKofHgi+/t9FLScC76mSg/2DJ4cGpFRESA8lN+Vq9K
- Zunw==
+ b=oHNLvnh6RCsHOZP0OY6E8/Bp88JER2S0+0y3QgOIQdSBZuphd1bYBpGSFlxvb5ddMy
+ h/xjB9b1pG5A6xVggHMOhizVz1maEPbWUNvjSUAt5yto7zydFQ9YuIgZhwv/SO+VfjhM
+ h25kf3qt5R8954nuO4nCc+vygmmyDlesd4/N/pZbY9vAanXIj7HlvSAKaIzNV3y159OR
+ 4sjl2DvoHMPAKmFOsIM0HsucyBMVmOhwttukHWAmpzB7nFoiFGQ3UisRhUgrsC+TGzg1
+ MAlaQvGfu0szv+Dc3JaTKn9kXK3ii27i9xC4CGRI0PVyLJU3VF2IncGBBscTAOCT69Bm
+ TLqg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=A+NGJY56fgdNcLlC/wNsXA1YhWHl/XQ+obiPU9wc6i8=;
+ bh=wYc3wfIbaPEVPTdi9duaQIHDhvUaOqZn1n3L3eHAKTE=;
  fh=Cl1qdbMJi69Nzml0jHfOHf5GnLHYX18FskqlTJAdaH0=;
- b=GRLbeVNqt5aE8ZFey8Xs1iO6KjqWkj5VRQ1KAY6Gr0DC4NH1KUcPjFDZA78oWFAwC4
- qKdCPiGpmF614ixCKZ2hA03VlSHl4FNGS8gt1x9PlPtR9WWSCaCURseq2TROqYOzcm30
- eFqcLoMn3zd/z3pw7RpVMAIyKNIWAI+uPfxisUrFOvzp4GAaqeO8sAP+pTqQDGoB2DQc
- jK71KTEYMBboyUVaPkaFSex09H2bB+Mo0/mtzqX+xrAcZSTIrHxfYs9dzjTh+zBJgB9B
- HqMtRbR4yPagUQqE5pRnjqfd7smVdSrpkjTECht/JfMNOPOGFEKxPTIZfpSeytpMqyoc
- wJig==; darn=nongnu.org
+ b=dbojlxW5Y5A2FxTUg2Wrw9fD15ONVR1zNL8X5LVxFQeEAae2XDnJdOMs4bqYY5L8Pm
+ NkR54jO1jTaay/O61ZnXx5LzttlxE/Nh07qf227B3+HT0uHGtmEZMH6zPZe7jf/ITZi/
+ ZLJawMTSEc3yTatjxgjQSDXto8EbzJlhBdKQd3c6NamjufU8VdtXtNt3djUaki4shDv8
+ LxOywSOsyfckfgDQGJAiQ8oebaxwj81R5Vu9eRM0M1x7kOTUDeZ8kf1E79eds/1sV4+g
+ vS0fzymhvjdiu7qgJXEguRLyidtRDhp5S/3IGkRtJU+GITBu1DqzalgBcBsu+6hviWz0
+ c6mg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785516336; x=1786121136; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1785516333; x=1786121133; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=A+NGJY56fgdNcLlC/wNsXA1YhWHl/XQ+obiPU9wc6i8=;
- b=aEYE3jw2EXL+mrQVkdmIA9tGHu5tfVhy9Wr72Qyl9ztuX7Wo+WctCNVF1pozIe1+1T
- XGL/upF/b2MKHZ+lN+rLURyAPMXEATftAHv33+NCqOnDVZ5vf/EC78NLcDZX6khRqAkF
- htUAT0QOaez7VLxPqgejCvDOUGczRmmi4X6knPoLzcqwCZ7+HqVKxaijEAM3lDfNv8LS
- m/sbwzgomSJ0UioZoh//jR4N4XRAZvVmE7HiQyHo24MX5TuRi2BCHbjC4REZLo+OLNRL
- WTOQt/vww0mNIKvVf0AuYCA/F9yXUaaI/pZGTKJjuqK/k+L2y1o9b6tBK4AtCwjARpsm
- pd3w==
+ bh=wYc3wfIbaPEVPTdi9duaQIHDhvUaOqZn1n3L3eHAKTE=;
+ b=Qy6x8OCZOGNLtdw0p0ImPMq2JpfrZYRjeWPI5gxHKgHKEx1Lg1ur+3f719LBANthi8
+ LJSrVYh5Kj+YyQy8X3M8jMXegx2M7ph96FlIoWd9jYGe4T+GbXtsIHNp0zgtaNndvSNZ
+ 7JmrsinWX/Ilt8eUwilFyr4j8E0hUxj7syvBp0dfv+ru44GU1anm0EOfbAtxCC+e9kPO
+ R0OSLBZfQf9wHCxcxxYiFS8n+KKBADEEK1IPRJbc4n02t0sGFp3eZN0CvTMKT+Vmatxa
+ d9UFD0W7Ed9K2qGTI0hzFa7/GS3SuB4HviDqF07x1W+a9t8mAO99Cl/D0qJ7D/MDc1oD
+ dWlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785516336; x=1786121136;
+ d=1e100.net; s=20251104; t=1785516333; x=1786121133;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=A+NGJY56fgdNcLlC/wNsXA1YhWHl/XQ+obiPU9wc6i8=;
- b=kkUwL66F3olRcDJc7lpTqJdD6L+kKkZU1tYv8mnZOiQawa3zhljkFa3/QQggPRG3Rm
- m2Bo6nJG1xPPDUOCtcKcsEDLo4esuSHsCq21/7pSEN4xv2aE2xFHDGn+E9Oq64mxQ0Ol
- 8E0J2CbSeu+92k/6jqhv6gIBO9L/SkyuC7FGW8tr28DRzOS+C7VYnDheD04nlJvQdFU3
- DOEu2aD2qkHadAPetg1drNRjVf9obttRyYiqquvm9bKL55nw3fkwzkc0mysVOR2cFFmY
- KNNJWF/CoKgc8tzh5b0Dv11uEP8P6MTBhSHul/B3G+qvAO+g0t+SyVVWte3cIEcotUsV
- w2yg==
-X-Gm-Message-State: AOJu0Yw5oLaHE9Vwfyy3Aj4uVIMsvjkDbqy0YLAOI1rWCNqRToLuE57B
- sU01y/RQT3hb/1A74aqR2Xhf9zIAVPHzmgEyGWlHL+iYB3wh1oqAM+l2WtC9Wuh26FFUDJYK2sf
- ldlcqiAxIcfqKhQvvGmBJedJVASbKBk0=
-X-Gm-Gg: AR+sD13NITgIGZrlbaRuRaYDgQcGf3nJSk9W1HZOjjHV022UkDat4GO+TzLiMjYvJX5
- KZVGSoUcMTVEub8rKbr95gU1R89cRJAxcqgw5zMhgL69SAIq2uknIAsEA8P2MiDSO27zBgu4DJZ
- /gRM46a+wueA3jpgfLorLPM5mOwrf2WxgDduwQv0cSLdouvOKIrCCfN5QWuu8VTl+t/q8cFZoA3
- DBraAA/C5vK4CdkkFEDTkfLpJ9B921CKKk9NcqJAiTdhitRhtOz57jrEb8UBHDorhqLiffblB2X
- ACGuy4nhpxESzvffCqvCDxojqEe7Bd4VnO2hHb6OEqv77HBdPowGe2WUKQ==
-X-Received: by 2002:a05:690c:650c:b0:80c:5cfa:34bc with SMTP id
- 00721157ae682-81fd4a2d324mr8298937b3.11.1785516335867; Fri, 31 Jul 2026
- 09:45:35 -0700 (PDT)
+ bh=wYc3wfIbaPEVPTdi9duaQIHDhvUaOqZn1n3L3eHAKTE=;
+ b=a2n+bc6Bhp4W+vqq46jtahoCqFw8mik6b8kakY4jRqEJWfObVQuqvY4HE429d2tRHF
+ lwIjRsokUuclFX58LYdxqWe9u+VB/DTlJMMHQkwWYFiZeNAImJGh7oH5x2wLdMd/IeRe
+ bCxoQiw1KUiKX04gIQV9z3RVzBULKOMderDZFHKJLk6GO26Jk4lLOvLUXfkNPXkrQSza
+ qRpeykA8tsA9bfs3mw0gsz43MNb1I+CeqaY13K0Op08cQ5lufvcCt0CVF8XNFrC5au0g
+ V+dlH5jFHkeIwoYfvplN4bOli6kqGXiSKQsOgji7ix639uUpnPNFOVXfJc4taOFOwGyc
+ p6BQ==
+X-Gm-Message-State: AOJu0YwJuZhqaO1l08OhaQhFV+WNiEEDZ+dcPrPj+gRb6OffCExlrgba
+ l/nk+wEaxmzWInXL58iWmB2mOYbuJ30BE1w6UjOMcANebzhau6D2AhqQIGirQWySLSNHfw2BD3H
+ JvTV2nwPnyprT3OhbcyLZma89/1VmBJY=
+X-Gm-Gg: AR+sD11eokin/wWqYYUJrM4IUcgcYWrrRPa2cx7FEtgsRlTAOMOApviIo9mOesgmTUJ
+ 5xdJ3j4xjTkE85luzx12Quyw6s3yeqZqsSX9CLMkJrjusRtxRGLw+mMv5svoF4QoVRyDRTszcsg
+ cnAOtlGBxSNlCiwUnR6+5SFEDOicBfrtxkChQDiGjaLRL+nze7QqarEaryNpMR482FdwY/aGiYo
+ M0Zc3nS4f6Zqjl0iyzKkTAPg0JkTpI09xhkE3AJGYBLwJBRukVrZ6svjpOwmJ8DHdDB84/zTCf6
+ TRw3hZUi5M4Jm2pCUpNBSWn4pFSV9WfXE8na4+jg0q1LbeA=
+X-Received: by 2002:a53:a286:0:b0:664:9736:424d with SMTP id
+ 956f58d0204a3-6694f2311b9mr777231d50.48.1785516332942; Fri, 31 Jul 2026
+ 09:45:32 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260731093618.2961031-1-peter.maydell@linaro.org>
- <20260731093618.2961031-2-peter.maydell@linaro.org>
-In-Reply-To: <20260731093618.2961031-2-peter.maydell@linaro.org>
+ <20260731093618.2961031-3-peter.maydell@linaro.org>
+In-Reply-To: <20260731093618.2961031-3-peter.maydell@linaro.org>
 From: Bin Meng <bmeng.cn@gmail.com>
-Date: Sat, 1 Aug 2026 00:45:24 +0800
-X-Gm-Features: AUfX_mzaWx-YS8aYWdWlf7-OToGLz8fmf8Tf1fomxUBtRRN4xAQ5lSchil9obxA
-Message-ID: <CAEUhbmUzztbEtCD6yPi+D3j4xK_k_hC+ck1t5ed-Vm=aAyNGyQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] hw/net/rtl8139: Fix handling of VLAN tags on incoming
- short packets
+Date: Sat, 1 Aug 2026 00:45:20 +0800
+X-Gm-Features: AUfX_mz0715DY8a6Juscg-DPC85d26eXheXj0xofXYZCpADTfXgyMLpcLogXhY4
+Message-ID: <CAEUhbmWx8mdX5xJ=O4620onXk4-HoOR=jULVcfYfRom-SF+dow@mail.gmail.com>
+Subject: Re: [PATCH 2/2] hw/net/rtl8139: Send whole of vlan-tagged packet when
+ doing loopback
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, Jason Wang <jasowangio@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yw1-x1136.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=bmeng.cn@gmail.com; helo=mail-yx1-xb12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,47 +121,24 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Fri, Jul 31, 2026 at 5:36=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
 .org> wrote:
 >
-> The rtl8139 receive code handles VLAN tags in incoming packets by
-> copying the VLAN tag to a special field in the receive descriptor,
-> and copying only the actual payload data to the receive buffer.  This
-> code tries to ensure that it pads out the payload to at least
-> MIN_BUF_SIZE bytes.
+> In rtl8139_transfer_frame(), if we are transmitting a frame over
+> loopback then we do this by calling qemu_receive_packet().  If we
+> have an iovec rather than a simple buffer (which happens only when
+> we're sending a packet where we are inserting a vlan tag), we have to
+> convert this into a simple buffer first using iov_to_buf().  However,
+> when we do this we forget to also update the 'size' local variable to
+> the size of the new simple buffer, so we will truncate the packet by
+> 4 bytes (the size of the vlan tag).
 >
-> In commit 63b901bfd30 we removed the main "pad short frames" code
-> from this device because we switched to requiring net backends to do
-> the padding.  However we didn't notice that this broke the VLAN tag
-> handling, which relied on the old code making the buffer at least
-> MIN_BUF_SIZE + VLAN_HLEN bytes so that it could copy MIN_BUF_SIZE
-> bytes into the receive buffer even after removing the VLAN tag.  The
-> result is that the guest can make us read 4 bytes off the end of a
-> buffer by feeding itself a suitable short packet in loopback mode.
+> Correct the logic so we don't truncate vlan-tagged packets when
+> sending them over loopback.
 >
-> The old behaviour is actually not correct, because the IEEE802.1Q
-> standard says that the minimum ethernet frame size remains 64 bytes
-> including the 4 checksum bytes, and so when a tag is present the
-> payload data only needs to be 56 bytes.  (A bridge implementation can
-> choose to pad tagged frames out to 68 bytes, but it doesn't have to,
-> and so all devices have to correctly handle incoming tagged frames
-> that are 64 bytes long.)
->
-> The RTL8139 datasheet isn't very communicative on this topic, but
-> there's nothing that suggests it adds extra padding on receive that
-> didn't exist in the incoming packet.
->
-> Drop the last remnants of the padding handling from this device;
-> this avoids overcopying into the guest when we receive a short
-> VLAN tagged packet.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3518
+> Cc: qemu-stable@nongnu.org
+> Reported-by: Bin Meng <bmeng.cn@gmail.com>
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
-> I had been looking at this from the POV of making the generic
-> net code add extra padding when a VLAN tag is present, but I
-> went and read the 802.1Q spec and I now think this is just a
-> place where the rtl8139 code got it wrong.
-> ---
->  hw/net/rtl8139.c | 5 -----
->  1 file changed, 5 deletions(-)
+>  hw/net/rtl8139.c | 1 +
+>  1 file changed, 1 insertion(+)
 >
 
 Reviewed-by: Bin Meng <bin.meng@processmission.com>
