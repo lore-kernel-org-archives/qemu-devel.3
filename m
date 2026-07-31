@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D272C55174
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 18:47:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDB68C5516F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 18:47:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpsG4-0003vg-70; Fri, 31 Jul 2026 14:47:00 -0400
+	id 1wpsGC-0003wF-0h; Fri, 31 Jul 2026 14:47:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
- id 1wpsFy-0003vL-DK
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 14:46:54 -0400
+ id 1wpsFz-0003vS-K1
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 14:46:56 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wpsFw-0000ka-NG
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 14:46:54 -0400
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wpsFx-0000ke-Sc
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 14:46:55 -0400
 Received: from laptop.localdomain (unknown [86.121.140.206])
- by linux.microsoft.com (Postfix) with ESMTPSA id 833CC20B7166;
- Fri, 31 Jul 2026 11:46:30 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 833CC20B7166
+ by linux.microsoft.com (Postfix) with ESMTPSA id 1EE5E20B7168;
+ Fri, 31 Jul 2026 11:46:32 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 1EE5E20B7168
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1785523592;
- bh=h/Q5odEgWjhSZDgL5Ge/d4dfY3PI49uaA7sY3/HNPqA=;
- h=From:To:Cc:Subject:Date:From;
- b=X5cCzmVQqus6BuWf176TuXReL6lwC/HMF439XOxDgduzFohSLT4qvAZCE2dJo1ZfA
- nMx4tTU+dgoUZN1atYpi9otPZfDvbvOfSmjzryX5ZeAqEbbuPhJE9pMetcc0EfeVt2
- 46LJVCMCSswgqcKkggnixGXqRZ185VxN/f2FShOo=
+ s=default; t=1785523594;
+ bh=zX5yTOow2rpg7OVRkUI8/A9eA3aPrnOgzFBXmaniZmI=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=dd9edWlD9hRcApwvTGoyyrMFYzuhwHGEf45b6O4Xhz9tdc4uW1kXwvihpWVLDwoDI
+ cgrHjpxT4YDUIODwgcsLMenYAOR2JmcjAXP22+VKbPx5T3p+C/79A+TQihO+mbrfvr
+ ee7YNQJ1vR88FSKaAzmIk47l4deayhM6cWYIVIWQ=
 From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Wei Liu <liuwe@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
@@ -37,12 +37,15 @@ Cc: Wei Liu <liuwe@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
  =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@microsoft.com>,
  =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PATCH v2 0/4] accel/mshv: add gdbstub guest debugging support
-Date: Fri, 31 Jul 2026 21:46:38 +0300
-Message-ID: <20260731184643.89604-1-dblanzeanu@linux.microsoft.com>
+Subject: [PATCH v2 1/4] include/hw/hyperv: add ABI for exception intercepts
+ and pending events
+Date: Fri, 31 Jul 2026 21:46:39 +0300
+Message-ID: <20260731184643.89604-2-dblanzeanu@linux.microsoft.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260731184643.89604-1-dblanzeanu@linux.microsoft.com>
+References: <20260731184643.89604-1-dblanzeanu@linux.microsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=13.77.154.182;
  envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
@@ -67,92 +70,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series brings guest debugging to the MSHV accelerator by
-implementing software breakpoints and single-stepping, so that gdb can
-attach to an MSHV guest through QEMU's gdbstub.
+Import the hypervisor definitions needed to intercept guest exceptions
+and to inject events back into a guest, in preparation for gdbstub
+debugging support in the MSHV accelerator.
 
-It follows the KVM gdbstub implementation closely, and borrows the WHPX
-approach where the MSHV interface differs from KVM:
+Add:
+  - union hv_intercept_parameters, struct hv_input_install_intercept and
+    HVCALL_INSTALL_INTERCEPT, used to install an exception intercept on
+    the partition;
+  - struct hv_x64_exception_intercept_message, the message delivered on
+    an intercepted exception, carrying the faulting RIP, the exception
+    vector and the instruction bytes;
+  - HV_X64_PENDING_EVENT_EXCEPTION, the pending-event type for an
+    exception.
 
-  - it installs a partition-wide intercept for the #DB exception
-    (HVCALL_INSTALL_INTERCEPT). #BP (INT3) is deliberately left to the
-    guest's own IDT and is never intercepted, as WHPX does.
+These definitions mirror the hypervisor headers and have no functional
+effect on their own.
 
-  - only software breakpoints are supported. A breakpoint is an INT1
-    (opcode 0xf1) patched into guest memory, which raises a #DB when
-    executed. Hardware breakpoints and watchpoints are not supported.
+Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+---
+ include/hw/hyperv/hvgdk_mini.h | 56 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
 
-  - it never touches the guest debug registers (DR0-DR7), so guest state
-    is not clobbered. The only guest register used is RFLAGS.TF, toggled
-    around the vCPU run for single-stepping and kept out of env->eflags
-    so it cannot be read back and re-armed.
-
-  - it re-injects the #DB back into the guest (via
-    HV_REGISTER_PENDING_EVENT0) when the faulting RIP does not match a
-    debugger breakpoint, so a guest-owned #DB is delivered through the
-    guest's own IDT.
-
-When a vCPU is created we register the accel ops that gdb drives once it
-is attached:
-
-  - mshv_update_guest_debug
-  - mshv_insert_gdbstub_breakpoint
-  - mshv_remove_gdbstub_breakpoint
-  - mshv_remove_all_gdbstub_breakpoints
-
-For each insert request from gdb the ops save the original byte at the
-target address and patch in 0xf1; on a remove request the saved byte is
-restored, after which gdb single-steps over the original instruction and
-re-inserts the breakpoint. When the vCPU executes the 0xf1 byte a #DB
-vmexits to QEMU. mshv_handle_debug() then checks whether the RIP where
-the vCPU stopped matches a breakpoint installed by gdb, or whether
-single-stepping is active, and if so reports the stop to gdb. If the RIP
-does not match any debugger breakpoint the #DB is assumed to be
-guest-owned and is re-injected so the guest can handle it.
-
-Known limitations:
-
-  - Once installed, the #DB intercept stays for the lifetime
-    of the VM and every #DB - including those the guest raises itself -
-    vmexits to QEMU.
-
-  - Because attribution relies on matching the faulting RIP against the
-    debugger's breakpoint list, a guest that legitimately executes INT1 or
-    raises its own #DB at an address that also holds a debugger breakpoint
-    cannot be disambiguated; such overlaps are not expected in practice.
-
-The series is organised as:
-
-  1. include/hw/hyperv: add ABI for exception intercepts and pending
-     events
-  2. accel/mshv: add gdbstub software breakpoint support
-  3. target/i386/mshv: support single-stepping
-  4. accel/mshv: break the vCPU run loop on exit_request
-     This commit fixes a race condition encountered during testing with guests
-     that run infinite loops with some debugging opcodes.
-
-I have tested this patch series by using both a guest that doesn't use debugging
-and one that triggers the #DB and #BP exceptions (#DB is re-injected and #BP is
-not intercepted at all).
-
-Changes since v1:
-- refactored the HVMSG_X64_EXCEPTION_INTERCEPT vmexit handle to be contained in
-  a standalone function handle_exception_interrupt
-- add new commit that checks the mshv vcpu run loop for exit requests before
-  re-entering MSHV_RUN_VP. This ensures a busy vCPU doesn't ignore gdb commands.
-
-Doru Blânzeanu (4):
-  include/hw/hyperv: add ABI for exception intercepts and pending events
-  accel/mshv: add gdbstub software breakpoint support
-  target/i386/mshv: support single-stepping
-  accel/mshv: break the vCPU run loop on exit_request
-
- accel/mshv/mshv-all.c          | 175 ++++++++++++++++++++++++++++++++-
- include/hw/hyperv/hvgdk_mini.h |  56 +++++++++++
- include/system/mshv_int.h      |  14 +++
- target/i386/mshv/mshv-cpu.c    | 154 +++++++++++++++++++++++++++++
- 4 files changed, 398 insertions(+), 1 deletion(-)
-
+diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+index f8838a31bb..c81928d0c2 100644
+--- a/include/hw/hyperv/hvgdk_mini.h
++++ b/include/hw/hyperv/hvgdk_mini.h
+@@ -22,6 +22,9 @@
+ #define HV_X64_MSR_TSC_FREQUENCY    0x40000022
+ #define HV_X64_MSR_APIC_FREQUENCY   0x40000023
+ 
++/* event_type values for hv_x64_pending_exception_event */
++#define HV_X64_PENDING_EVENT_EXCEPTION 0
++
+ typedef enum hv_register_name {
+     /* Pending Interruption Register */
+     HV_REGISTER_PENDING_INTERRUPTION = 0x00010002,
+@@ -236,6 +239,29 @@ enum hv_intercept_type {
+     HV_INTERCEPT_TYPE_INVALID               = 0XFFFFFFFF,
+ };
+ 
++union hv_intercept_parameters {
++    /* HV_INTERCEPT_PARAMETERS is defined to be an 8-byte field. */
++    uint64_t as_uint64;
++    /* HV_INTERCEPT_TYPE_X64_IO_PORT */
++    uint16_t io_port;
++    /* HV_INTERCEPT_TYPE_X64_CPUID */
++    uint32_t cpuid_index;
++    /* HV_INTERCEPT_TYPE_X64_APIC_WRITE */
++    uint32_t apic_write_mask;
++    /* HV_INTERCEPT_TYPE_EXCEPTION */
++    uint16_t exception_vector;
++    /* HV_INTERCEPT_TYPE_X64_MSR_INDEX */
++    uint32_t msr_index;
++    /* N.B. Other intercept types do not have any parameters. */
++};
++
++struct hv_input_install_intercept {
++    uint64_t partition_id;
++    uint32_t access_type; /* mask */
++    uint32_t intercept_type; /* enum hv_intercept_type */
++    union hv_intercept_parameters intercept_parameter;
++} QEMU_PACKED;
++
+ struct hv_u128 {
+     uint64_t low_part;
+     uint64_t high_part;
+@@ -836,6 +862,35 @@ struct hv_x64_memory_intercept_message {
+     uint8_t instruction_bytes[16];
+ } QEMU_PACKED;
+ 
++struct hv_x64_exception_intercept_message {
++    struct hv_x64_intercept_message_header header;
++    uint16_t exception_vector;
++    uint8_t exception_info;
++    uint8_t instruction_byte_count;
++    uint32_t error_code;
++    uint64_t exception_parameter; /* DR6 for #DB, CR2 for #PF */
++    uint64_t reserved;
++    uint8_t instruction_bytes[16];
++    struct hv_x64_segment_register ds_segment;
++    struct hv_x64_segment_register ss_segment;
++    uint64_t rax;
++    uint64_t rcx;
++    uint64_t rdx;
++    uint64_t rbx;
++    uint64_t rsp;
++    uint64_t rbp;
++    uint64_t rsi;
++    uint64_t rdi;
++    uint64_t r8;
++    uint64_t r9;
++    uint64_t r10;
++    uint64_t r11;
++    uint64_t r12;
++    uint64_t r13;
++    uint64_t r14;
++    uint64_t r15;
++} QEMU_PACKED;
++
+ union hv_message_flags {
+     uint8_t asu8;
+     struct {
+@@ -943,6 +998,7 @@ struct hv_cpuid {
+ 
+ #define HVCALL_GET_PARTITION_PROPERTY    0x0044
+ #define HVCALL_SET_PARTITION_PROPERTY    0x0045
++#define HVCALL_INSTALL_INTERCEPT         0x004d
+ #define HVCALL_GET_VP_REGISTERS          0x0050
+ #define HVCALL_SET_VP_REGISTERS          0x0051
+ #define HVCALL_TRANSLATE_VIRTUAL_ADDRESS 0x0052
 -- 
 2.53.0
 
