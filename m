@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94F74C5516D
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 07:03:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29CA5C54F54
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 07:05:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wphHb-0002Tv-IJ; Fri, 31 Jul 2026 03:03:51 -0400
+	id 1wphIz-0003H5-EK; Fri, 31 Jul 2026 03:05:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1wphHX-0002Qj-3R
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 03:03:47 -0400
+ id 1wphIt-0003GM-Lo
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 03:05:11 -0400
 Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1wphHV-0004mj-Nm
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 03:03:46 -0400
+ id 1wphIr-0004qi-VM
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 03:05:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1785481426; x=1817017426;
+ t=1785481510; x=1817017510;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=fsR2QftS0gbhwMDEj+tg6yYm3dWNvlhPmNhkKBZzbtQ=;
- b=C5m7IS2GxIP9cEzHfPKu1KzbwQiuNRGLhU5ZVgBh4I2O3Flb8gk1lFi9
- l97JuTYCE8mIBZqCPhRzQmEvZWWQnVJ5Ug7F/k5u+pevP7rKI0XP+sfAh
- 6RHj0Ic/5MgQbf2z0x8k98FTysy4rvlQ9Cl0qSlAgqPoeXJ3L7pL0l3vT
- DU9nnvORuYKmjTZOmIUNdXb74o9+S49dtd3N7R2MKslEQqKNwWeqf3DJj
- gvkoStMJiRN1YwF1Aowyhoy/luK2m2KvRv3yf/O2zmTWg4zmAvNoECf/5
- 3PsUF5OsCSeuVPj6W4HF2I5TWjAIV0x83vPaVSGfYq/3yO30UoH5GrFT3 w==;
-X-CSE-ConnectionGUID: HPCZdMhhSsS77zbAZJ3Mpw==
-X-CSE-MsgGUID: ae9crvmuRjiWo5mWNTjQzQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11860"; a="85231575"
-X-IronPort-AV: E=Sophos;i="6.25,196,1779174000"; d="scan'208";a="85231575"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ bh=+2gH6d0mvPbRq5RRTPhJOH3p5CfgPHiv91vDTc5GU4g=;
+ b=AmokqTT1uQn/WQT5pL6/EvFQzuNvlVP7XF0o6H8/bMyT2ZNaQlkawRFe
+ 1pXxcjQhFpPuPc3TlFUYdGX6gUdJdDDtoCjbzAbpH+wPEUj+QOZM3bmda
+ dvj8gi6Ux1QbbtL3NopDIwRW6pyizXSltHAfH0qDqWQcquXp4AaCQ+yw0
+ bGEEmPWsHkcA167Ojxa0lg6LS0md8ddFl+Yx9RD6O1k2LNh4s7xUEv8gw
+ e9Mqs58+wyIm5A3Q9gssP2uTTaajXFt1rTCIBPA+0XyOgthBv14U3pQGs
+ SZqT4J1PGyKDnRBXKFV7BzUZIEnenKyPyDuEanhm/A0J2O4YMLnz2z0se g==;
+X-CSE-ConnectionGUID: ep2ntCHeTCuN/0ratVokoA==
+X-CSE-MsgGUID: rx8hHr6ATh2OYynFjCZ/BA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11860"; a="85231692"
+X-IronPort-AV: E=Sophos;i="6.25,196,1779174000"; d="scan'208";a="85231692"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Jul 2026 00:03:44 -0700
-X-CSE-ConnectionGUID: uliembHEQvOELL0xelCWMw==
-X-CSE-MsgGUID: hRWFoFTbTfGE475h0uzvVQ==
+ 31 Jul 2026 00:05:07 -0700
+X-CSE-ConnectionGUID: UOzxglkEQLead0t9YnX5og==
+X-CSE-MsgGUID: xc0QzjWxTMqyBUzm4jtdWA==
 X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,196,1779174000"; d="scan'208";a="259267745"
 Received: from zhaoliu1-desk.sh.intel.com (HELO localhost) ([10.238.208.118])
- by fmviesa003.fm.intel.com with ESMTP; 31 Jul 2026 00:03:42 -0700
-Date: Fri, 31 Jul 2026 15:03:41 +0800
+ by orviesa010.jf.intel.com with ESMTP; 31 Jul 2026 00:05:06 -0700
+Date: Fri, 31 Jul 2026 15:05:05 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: zhang_wei@open-hieco.net
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  "Michael S . Tsirkin" <mst@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
-Subject: Re: [PATCH v1 2/9] target/i386: Hide Intel cache CPUID leaves for
- Hygon
-Message-ID: <amxIzcG2sSLLljng@intel.com>
+Subject: Re: [PATCH v1 3/9] target/i386: Hide ARCH_CAPABILITIES for Hygon
+Message-ID: <amxJIUQXIgXwHR4s@intel.com>
 References: <20260706055530.1752094-1-zhang_wei@open-hieco.net>
- <20260706055530.1752094-3-zhang_wei@open-hieco.net>
+ <20260706055530.1752094-4-zhang_wei@open-hieco.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260706055530.1752094-3-zhang_wei@open-hieco.net>
+In-Reply-To: <20260706055530.1752094-4-zhang_wei@open-hieco.net>
 Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -59
@@ -83,33 +83,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 06, 2026 at 01:55:23PM +0800, zhang_wei@open-hieco.net wrote:
-> Date: Mon,  6 Jul 2026 13:55:23 +0800
+On Mon, Jul 06, 2026 at 01:55:24PM +0800, zhang_wei@open-hieco.net wrote:
+> Date: Mon,  6 Jul 2026 13:55:24 +0800
 > From: zhang_wei@open-hieco.net
-> Subject: [PATCH v1 2/9] target/i386: Hide Intel cache CPUID leaves for Hygon
+> Subject: [PATCH v1 3/9] target/i386: Hide ARCH_CAPABILITIES for Hygon
 > X-Mailer: git-send-email 2.43.7
 > 
 > From: Tina Zhang <zhang_wei@open-hieco.net>
 > 
-> When x-vendor-cpuid-only is enabled, QEMU suppresses CPUID leaves 2
-> and 4 for AuthenticAMD CPUs because those leaves describe Intel cache
-> information.  Hygon Dhyana uses the HygonGenuine vendor string, so it
-> currently skips that filtering and can expose Intel cache leaves together
-> with AMD/Hygon extended cache leaves.
+> IA32_ARCH_CAPABILITIES is an Intel-defined MSR.  KVM can synthesize the
+> CPUID bit and read-only MSR for non-Intel guests, and QEMU already hides
+> that interface for AMD CPU models because Windows may not expect it on
+> AMD-compatible CPUs.
 > 
-> That is inconsistent guest-visible CPUID: Hygon Dhyana provides cache
-> information through the extended cache leaves, so it should not also
-> advertise the Intel cache descriptor and deterministic cache parameter
-> leaves.
+> Hygon Dhyana uses the HygonGenuine vendor string, so it currently skips
+> that AMD filter.  If arch-capabilities=on is requested, QEMU can expose
+> CPUID.7.0.EDX[ARCH_CAPABILITIES] and the associated MSR feature word to
+> a Hygon guest.
 > 
-> Apply the same leaf 2 and leaf 4 filtering to Hygon CPUs when Hygon
-> vendor ABI fixes are enabled.  The property keeps the old CPUID output
-> for pc-11.0 and older machine types.
+> That creates a vendor-inconsistent CPU ABI: the guest sees an
+> AMD-compatible vendor and cache/topology interface, but also sees an
+> Intel-specific architectural capabilities MSR.  Guests that choose CPU
+> mitigation or feature paths from the vendor can mis-handle that
+> combination; Windows is known to be sensitive to ARCH_CAPABILITIES on
+> AMD-compatible CPUs.
+> 
+> Apply the same ARCH_CAPABILITIES hiding rule to Hygon CPUs when Hygon
+> vendor ABI fixes are enabled.  Keep arch_cap_always_on as the migration
+> escape hatch, and keep the old Hygon CPUID/MSR output for pc-11.0 and
+> older machine types via x-hygon-vendor-abi-fixes=false.
 > 
 > Signed-off-by: Tina Zhang <zhang_wei@open-hieco.net>
 > ---
->  target/i386/cpu.c | 19 +++++++++++++++++--
->  1 file changed, 17 insertions(+), 2 deletions(-)
+>  target/i386/cpu.c | 33 ++++++++++++++++++++++++---------
+>  1 file changed, 24 insertions(+), 9 deletions(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
