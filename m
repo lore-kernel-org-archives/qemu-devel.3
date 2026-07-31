@@ -4,93 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 099F6C54F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 09:32:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D49EC55167
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 09:37:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpjb8-0006Yj-A5; Fri, 31 Jul 2026 05:32:10 -0400
+	id 1wpjfL-0007Rl-MZ; Fri, 31 Jul 2026 05:36:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wpjb5-0006YP-RA; Fri, 31 Jul 2026 05:32:07 -0400
-Received: from fhigh-b2-smtp.messagingengine.com ([202.12.124.153])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wpjb4-0002Cc-C8; Fri, 31 Jul 2026 05:32:07 -0400
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 719D97A0122;
- Fri, 31 Jul 2026 05:32:04 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-02.internal (MEProxy); Fri, 31 Jul 2026 05:32:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1785490324; x=
- 1785576724; bh=ThzjpddC4DsxghiN4NvwmQyDw64na/DBhNhTlOWH4Ts=; b=v
- FSS6mdeN9eh2IhfbbtPxS8wvIExupLQlSTgwleuRnOkcou9UNipmvxiudhUs4Ba5
- 7HRFkbme2FT7YTTkJnoyQqBOPf5nKbH6QivS/Qkxzah6EMh/d5swvpLD5VA17WfE
- GBZrM/9h3DyPIQNHxilG6K8ZNB8Nz3ly0crCLcSd99D3ZsqEtc6TAYZpJ/q9ShOZ
- u/vW8jluOMHL+7BpqzG90FRcNU9Ia6vRYOEtYQN1bVJDU9ConCRvGWpzo8wJufgq
- qLH3c55u9uIzemQG3s8hqJYChtQjtDKauPCuzR1idluHFvnJ/LE8Psi0ialrRv/C
- 06F0RTYHYK7nFZglC30bw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
- 1785490324; x=1785576724; bh=ThzjpddC4DsxghiN4NvwmQyDw64na/DBhNh
- TlOWH4Ts=; b=leTqeMEj9in7GzmWj/vWNWGX1ksMb7jELxMPOcQvcUXa1x2sKw9
- jjjG4nbYiBnYT5SG4Ggmqgi4tYI0JIZA7rMNyTZH10yRnu5yh0V4WF/FEZG5x+oB
- QC/VhyIR3aleTuxAEf1B5+dQLsvYkOGUCJKUNpG60/YS2iPR/5bkVlQd8Ropxbpm
- VqmioH+BoDePSmkxmMOYEIIsvzf5rrdMsccNq8Uln5/e7CwxQzTvy+jZuLNzk5Fc
- IL1X3N5hsBhrXth5qIcK38E9GwLXAdnd/GHsg312jKiw5dWs4vWl62cf5eEKYo9l
- zuL6xlxktJuZfZqrqqNHStSTuK2eeWyOHqA==
-X-ME-Sender: <xms:k2tsaqADs47w3AlNCTwXOLjQkiBUMU00TuPgiW_uz6WUL9v43vkDmw>
- <xme:k2tsavdpKj4j5LZ01NDrooCgbRucBamKXpt8vdRw0jxGNrhNOkyVYcxE9RL1i3udP
- 6NFvPzd6q7LGJZO0qtm9dWTwQ3Z1wgcWhtIR1L2O5Gs2YL2-BB93NE>
-X-ME-Received: <xmr:k2tsasl-_4LZOR1iMUfh9VVLA34XSdWgdOB5iwKwRTMNdI9hj-mIgmfgiM8RGw>
-X-ME-Proxy-Cause: dmFkZTEi6UlvsavDqCbSnKLWvpAaMLKZohS0PTf7f8zl0oYEt17p/1QZd6KAXtKNC/m1Rq
- ippVfQSB5eu8blNQZ0I/Rv4oSLk4dRKwZAkHo4QKBsckBIicfgg0Abj2ECueWry/ktGsSs
- RmEWKHgkwphuTkzkgZY9ODUBRwJQGrCQtBvFZO/RGJg4bActoXr55h2mD1fISdRfrIPhWg
- oY+ML+tdrO8ztJPH4+HuDRZon3cpY6vlak+1kXj1ndgTP/3SP7svRKzvbYonkouFhimEic
- fLbSRxbi5YZ//JHaiOkJJJuufA0I9Iiuah9utYNLds/gGFxRgn0eUK5FLI6yIzrigbP2om
- a2g4HWLco72TK9h/UiIlfSn0SLjMnRQcVx28YDSIG2K5mOG/lvaNn02GqhLLJ8iCE28PhE
- 3IydHrlE+GssIhgWMsCk8CozJScRzQZsi/95fPoC8bXpLPBaP+W+UxNNrBc1MZKibmezid
- Ar5eKaTQ+/5ciHRrHSDhNb/ooWw35lb3PXWbJzdyNAENXae37fZ+AbBg4vhxxYl5TZ8hxX
- y9HHY2rjiB5Co+0THkhSxfm3dKc9xRwezW9AEWk8wddFa8wTSb6f5Pdd54/rKGpB+cYFGZ
- S+ibUgdo1d3mvxCIukiVezrotWL4OmId5QHIzuZSxMIjdO8s7N/s+nQVq0Jg
-X-ME-Proxy: <xmx:k2tsauGVy4BJr2HIBwGnGOe0mI2MqjuYvnXJVIQ8J4JAB6LFlT8b7A>
- <xmx:k2tsas7SBvRT65MUGnh3scoyFyFSAZnHeeyDGTxDcjJV2vZN_q-cOg>
- <xmx:k2tsaulD5JBJCyEfRWn14L7PoelD8zW0INCERBe_yPx9_xqRlgFSMw>
- <xmx:k2tsapoUtbanC_jt2SLz4T17u7ReJJXnuqlltarxuS02qShFPPOvpw>
- <xmx:lGtsahbZSt-BWig5lQ0tl2NUpSlHfJFyI4bmmEzYenlts4p05B19XcXe>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 31 Jul 2026 05:32:03 -0400 (EDT)
-Date: Fri, 31 Jul 2026 11:32:02 +0200
-From: Klaus Jensen <its@irrelevant.dk>
-To: Minwoo Im <minwoo.im.dev@gmail.com>
-Cc: Keith Busch <kbusch@kernel.org>, Jesper Devantier <foss@defmacro.it>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Minwoo Im <minwoo.im@samsung.com>
-Subject: Re: [PATCH 1/3] hw/nvme: drop AER requests without aiocb in
- nvme_del_sq()
-Message-ID: <amxrkvNDWoVwU4Qs@AALNPWKJENSEN.aal.scsc.local>
-References: <20260729103454.26947-1-minwoo.im@samsung.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wpjfF-0007Qw-TN
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 05:36:27 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wpjfD-0002dB-NK
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 05:36:25 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-476a130c138so920696f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 02:36:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1785490582; x=1786095382; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=0+HekxhPTXUqW3FXCX3ePVvrMLmZ/u7/wQufHqeCYMI=;
+ b=KgeQ/EsOXf/as/W0EwTS69IOI32zrzxePbAO720Vx2ckDQnjKE9S5pv/TVPQwHt55h
+ QChJSPXlyfSk2uX+64pgcY59woTYTqG9+yN5UWT48Y7IbqlOwCi4rJ1QrlG6p57doEI2
+ AQpVQlzCdaLUYr6ei+Ra4kKlmus/uafzdqEzo5PtDZ/g4UxCjvSIpg2jpbdPebQNiW6a
+ Q1oCFZ+rEZxWIkfroSAE+SKvNVqA0KjVF1xx4p0F7xfrupAVeJ9aetyY+o2SJUuiRgqp
+ ortWNmYgU1/PLx2X3iHdT2dsATqWXFT37e/g2qItJuecmHgh7XRxmTRsNwmGGrrnodlS
+ /I4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785490582; x=1786095382;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=0+HekxhPTXUqW3FXCX3ePVvrMLmZ/u7/wQufHqeCYMI=;
+ b=QYc0KUw+IG6keDrf9raBmJPnw5L2A0x2rivRrcvUal6cQrlbd14t74ZA6dE7pV5tKK
+ qK1QOQQ0M5cqi94z6mIeVKtTA/ag1UE6/0R3vywRIpYuA+nyHEPlcoDS9g+0UudzSVow
+ kS8kJTwT5XDW49T/2S1FBONRxv61yDicNRzRCdMrMCkTFjxorjihKEOv4N81a4XReKwz
+ zhTqIinFla5gSMnjdvyS6F1ogXFqzGWi29GRLOK6ceETcllzLuFCSbAZIjmNVtyfNNAK
+ ERytz0IxBweRMrV/o+aj3jcgnD4fjRe6T4cX2eFx4O2p3zaYGMSXyx4QSXew0JF8/UFB
+ c2Mg==
+X-Gm-Message-State: AOJu0YyiuSQbcqQShIHADTJjk1E59sCX5F1O1GW9+FExodGj0bki0CQ6
+ klgv4ybz/GjDTlgQ7hQlzVgQhWzodWYs0PC3uzlnp+6ZFkbLMwdM47kgAhwMzMhv1oqA6+7Dhly
+ tXwKu
+X-Gm-Gg: AR+sD11HVHL/ncYmCO5uJh90WWIlYUuJItLk6dz/dKXfkav7KleKRJIpW/Qm+xO4lX0
+ mqin9P29/KhklkUGDyMqzrkA2iCVcUUTtGJrbjYujES5RQ8BMcq9mhHhh7OUGlCQ0tYaQoNrHHT
+ kQxnsnSRXLwK0a02DeU99j7FQBg0/foFr1uyaWYzm94Woaii7iRLBQaNJyYDecGo2XWOyfeS0Go
+ SQEcA1YnBAuAx00lYbVyG6LTS1aRbVUWVU5N8lj47J6MmQ0vuHyPt6DVyIo60+QAXayv+m+0i0C
+ QgG1XcqvfKfw3eu6msN0p/ncIwKRFdxAuMseGPV4/VuEaonXbAumy5HEWqLP1LhR4w7zSTuweH8
+ Whw4oIAJwoC3ao1gPexKwQWX/Gllfvy2ra5M/9kO6d0TT6IohnjsyK1UVyp2qLk/f3cKgOptcJF
+ gXO8qrJfRGDD+7urlT9+rshnYs4Dbb9BlRXMmqaMliMjyOr/cN8oHL4DStrzLNhC8Y67F2DlsX6
+ jrbbkY/UyI9ylBPN1oZbf4bM4Acz4CTkPgMHGt3c+Sk3qAxS4Ot52drRHejVUr3DURYiA==
+X-Received: by 2002:a05:6000:2dc2:b0:47f:9220:3d with SMTP id
+ ffacd0b85a97d-47fd2b61f70mr3096977f8f.58.1785490581680; 
+ Fri, 31 Jul 2026 02:36:21 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47fd41e296csm2861208f8f.12.2026.07.31.02.36.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 31 Jul 2026 02:36:21 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Jason Wang <jasowangio@gmail.com>,
+	Bin Meng <bmeng.cn@gmail.com>
+Subject: [PATCH 1/2] hw/net/rtl8139: Fix handling of VLAN tags on incoming
+ short packets
+Date: Fri, 31 Jul 2026 10:36:17 +0100
+Message-ID: <20260731093618.2961031-2-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260731093618.2961031-1-peter.maydell@linaro.org>
+References: <20260731093618.2961031-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="yj0GnnuDYDkmNVLY"
-Content-Disposition: inline
-In-Reply-To: <20260729103454.26947-1-minwoo.im@samsung.com>
-Received-SPF: pass client-ip=202.12.124.153; envelope-from=its@irrelevant.dk;
- helo=fhigh-b2-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,70 +103,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---yj0GnnuDYDkmNVLY
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The rtl8139 receive code handles VLAN tags in incoming packets by
+copying the VLAN tag to a special field in the receive descriptor,
+and copying only the actual payload data to the receive buffer.  This
+code tries to ensure that it pads out the payload to at least
+MIN_BUF_SIZE bytes.
 
-On Jul 29 19:34, Minwoo Im wrote:
-> nvme_del_sq() asserted r->aiocb was always set when canceling a
-> queue's inflight requests. A pending Async Event Request has no
-> aiocb (nvme_aer() parks it without issuing any block I/O), so
-> deleting a queue with an outstanding AER trips the assert instead of
-> just dropping the request.
->=20
-> Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
-> ---
->  hw/nvme/ctrl.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
->=20
-> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-> index a67e1598891c..e715de8247d1 100644
-> --- a/hw/nvme/ctrl.c
-> +++ b/hw/nvme/ctrl.c
-> @@ -4858,12 +4858,14 @@ static uint16_t nvme_del_sq(NvmeCtrl *n, NvmeRequ=
-est *req)
->      sq =3D n->sq[qid];
->      while (!QTAILQ_EMPTY(&sq->out_req_list)) {
->          r =3D QTAILQ_FIRST(&sq->out_req_list);
-> -        assert(r->aiocb);
->          r->status =3D NVME_CMD_ABORT_SQ_DEL;
-> -        blk_aio_cancel(r->aiocb);
-> -    }
-> =20
-> -    assert(QTAILQ_EMPTY(&sq->out_req_list));
-> +        if (r->aiocb) {
-> +            blk_aio_cancel(r->aiocb);
-> +        } else {
-> +            QTAILQ_REMOVE(&sq->out_req_list, r, entry);
-> +        }
-> +    }
-> =20
->      if (!nvme_check_cqid(n, sq->cqid)) {
->          cq =3D n->cq[sq->cqid];
-> --=20
-> 2.34.1
->=20
->=20
+In commit 63b901bfd30 we removed the main "pad short frames" code
+from this device because we switched to requiring net backends to do
+the padding.  However we didn't notice that this broke the VLAN tag
+handling, which relied on the old code making the buffer at least
+MIN_BUF_SIZE + VLAN_HLEN bytes so that it could copy MIN_BUF_SIZE
+bytes into the receive buffer even after removing the VLAN tag.  The
+result is that the guest can make us read 4 bytes off the end of a
+buffer by feeding itself a suitable short packet in loopback mode.
 
-Thanks,
+The old behaviour is actually not correct, because the IEEE802.1Q
+standard says that the minimum ethernet frame size remains 64 bytes
+including the 4 checksum bytes, and so when a tag is present the
+payload data only needs to be 56 bytes.  (A bridge implementation can
+choose to pad tagged frames out to 68 bytes, but it doesn't have to,
+and so all devices have to correctly handle incoming tagged frames
+that are 64 bytes long.)
 
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+The RTL8139 datasheet isn't very communicative on this topic, but
+there's nothing that suggests it adds extra padding on receive that
+didn't exist in the incoming packet.
 
---yj0GnnuDYDkmNVLY
-Content-Type: application/pgp-signature; name=signature.asc
+Drop the last remnants of the padding handling from this device;
+this avoids overcopying into the guest when we receive a short
+VLAN tagged packet.
 
------BEGIN PGP SIGNATURE-----
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3518
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+I had been looking at this from the POV of making the generic
+net code add extra padding when a VLAN tag is present, but I
+went and read the 802.1Q spec and I now think this is just a
+place where the rtl8139 code got it wrong.
+---
+ hw/net/rtl8139.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmpsa5IACgkQTeGvMW1P
-DelymQf/evsuqw+aH4yYNdECcTZmWwHtqcr8fp4QHqenGjBGOGLgdsGWqbR5vRsW
-dXb2sQmJBTW5wWEXalrCGuiMB6tVejIglYXJNmCunfREhFMT80zeecwI8rcAHsny
-ImRjdRbUO0ssAKPger6uRmbm2ET12E8Roo2k/lF509y6je5yR/N/t+Qy/qOfnB1b
-IQ80AzyhknU3dEwGB0v8PrJySa/FLka0aMvIxHl9F+AVHUackPpaIQvbucJ0wBw4
-3S9mi5QByMeqg0gaKM3FU6cjbotI0JM0e/EsURP138aQOh9PhZqvfc+A9n3rkBXf
-Wwadtg+S/zK9IorNBmQKN2fndfcHZA==
-=l7Vl
------END PGP SIGNATURE-----
+diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
+index 424af73a18..2b61c171f2 100644
+--- a/hw/net/rtl8139.c
++++ b/hw/net/rtl8139.c
+@@ -778,7 +778,6 @@ static void rtl8139_write_buffer(RTL8139State *s, const void *buf, int size)
+     s->RxBufAddr += size;
+ }
+ 
+-#define MIN_BUF_SIZE 60
+ static inline dma_addr_t rtl8139_addr64(uint32_t low, uint32_t high)
+ {
+     return low | ((uint64_t)high << 32);
+@@ -1007,10 +1006,6 @@ static ssize_t rtl8139_receive(NetClientState *nc,
+             lduw_be_p(&buf[ETH_ALEN * 2]) == ETH_P_VLAN) {
+             dot1q_buf = &buf[ETH_ALEN * 2];
+             size -= VLAN_HLEN;
+-            /* if too small buffer, use the tailroom added duing expansion */
+-            if (size < MIN_BUF_SIZE) {
+-                size = MIN_BUF_SIZE;
+-            }
+ 
+             rxdw1 &= ~CP_RX_VLAN_TAG_MASK;
+             /* BE + ~le_to_cpu()~ + cpu_to_le() = BE */
+-- 
+2.43.0
 
---yj0GnnuDYDkmNVLY--
 
