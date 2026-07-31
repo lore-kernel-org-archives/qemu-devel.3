@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 154F5C55167
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 06:00:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64049C55167
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 06:00:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpgFo-0002ll-Hc; Fri, 31 Jul 2026 01:57:56 -0400
+	id 1wpgFo-0002lY-9C; Fri, 31 Jul 2026 01:57:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <blduan@linux.alibaba.com>)
- id 1wpeM8-0005u7-SV; Thu, 30 Jul 2026 23:56:20 -0400
-Received: from [115.124.30.112] (helo=out30-112.freemail.mail.aliyun.com)
+ id 1wpeM9-0005uy-US; Thu, 30 Jul 2026 23:56:22 -0400
+Received: from [115.124.30.119] (helo=out30-119.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <blduan@linux.alibaba.com>)
- id 1wpeM4-0002Io-L1; Thu, 30 Jul 2026 23:56:20 -0400
+ id 1wpeM7-0002Jc-I0; Thu, 30 Jul 2026 23:56:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1785470171; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=GQ/4VXmOCNFDf0yhmuSdsBqHH33B0VAJ2TNmvzzIRV0=;
- b=Ks+KPtX+SrBjPJ9epnoi3SwmAasSar4vft7wrOGqOx+wDe+lvplWeAo9ZkQfwxuq2t1K2d+la0dMe+5Jb9wKjcmiEkM8h5SjqR3hEKrJBZBZ7jdi4TYR8C2USnvL7I2cCYWmPdjQCIPuYvQJfkujPWQ0DQP3H9TLMUxO14/TypY=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R171e4; CH=green; DM=||false|;
+ t=1785470176; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=RAtJ32hEdTI4Y88GDT5CEtSyJ9YBee4mz+bhPMzq8kI=;
+ b=moM1uPHFhELmS8dLk31r1wpX0mFDisxajJ4JoW3eLkO/vRnBEy7gxEgwEEaoN608xPyOFdq+G0zRw8nx3G5drdZb9A9leZfTSTcJrqSwh9UXP2W8Nq33gQJADMgpqmUWwbZLO+whfgtAg38nrlH9aT7HXnxIErj1HsN1GCCWCmk=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R181e4; CH=green; DM=||false|;
  DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032089153;
  MF=blduan@linux.alibaba.com; NM=1; PH=DS; RN=7; SR=0;
- TI=SMTPD_---0X86jwVB_1785469858; 
+ TI=SMTPD_---0X86jwVc_1785469860; 
 Received: from ea134-sw16.eng.xrvm.cn(mailfrom:blduan@linux.alibaba.com
- fp:SMTPD_---0X86jwVB_1785469858 cluster:ay36) by smtp.aliyun-inc.com;
- Fri, 31 Jul 2026 11:50:59 +0800
+ fp:SMTPD_---0X86jwVc_1785469860 cluster:ay36) by smtp.aliyun-inc.com;
+ Fri, 31 Jul 2026 11:51:01 +0800
 From: Baolong Duan <blduan@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair23@gmail.com, dbarboza@ventanamicro.com,
  cxx194832@alibaba-inc.com, zengxiangyi.zxy@alibaba-inc.com,
  Baolong Duan <blduan@linux.alibaba.com>
-Subject: [RFC PATCH v1 12/17] hw/net/virtio-net: do not use vhost for a CoVE
+Subject: [RFC PATCH v1 13/17] accel/kvm: only register the DRAM slot of a CoVE
  guest
-Date: Fri, 31 Jul 2026 11:50:06 +0800
-Message-Id: <20260731035011.4178103-13-blduan@linux.alibaba.com>
+Date: Fri, 31 Jul 2026 11:50:07 +0800
+Message-Id: <20260731035011.4178103-14-blduan@linux.alibaba.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260731035011.4178103-1-blduan@linux.alibaba.com>
 References: <20260731035011.4178103-1-blduan@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.112 (deferred)
-Received-SPF: pass client-ip=115.124.30.112;
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.119 (deferred)
+Received-SPF: pass client-ip=115.124.30.119;
  envelope-from=blduan@linux.alibaba.com;
- helo=out30-112.freemail.mail.aliyun.com
+ helo=out30-119.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -72,41 +72,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The in-kernel vhost datapath has no access to the memory of a TEE VM, so
-it cannot be used.
+The TSM tracks the confidential region of a TEE VM itself.  Registering
+the remaining memory slots of the machine, such as the mask ROM or the
+flash, overwrites that region and the guest fails to start.
+
+Filtering them by slot number is a workaround rather than a solution:
+the machine should describe which regions belong to the confidential
+guest instead.  Suggestions on how to express that are very welcome.
 
 Signed-off-by: Baolong Duan <blduan@linux.alibaba.com>
 ---
- hw/net/virtio-net.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ accel/kvm/kvm-all.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 814b99a43d..4f8db1a1aa 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -28,6 +28,7 @@
- #include "qemu/config-file.h"
- #include "qobject/qdict.h"
- #include "hw/virtio/virtio-net.h"
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 005abb1c54..2753bf8b8b 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -26,6 +26,7 @@
+ #include "qapi/error.h"
+ #include "hw/pci/msi.h"
+ #include "hw/pci/msix.h"
 +#include "hw/riscv/cove.h"
- #include "net/vhost_net.h"
- #include "net/announce.h"
- #include "hw/virtio/virtio-bus.h"
-@@ -326,6 +327,14 @@ static void virtio_net_vhost_status(VirtIONet *n, uint8_t status)
-             }
-         }
+ #include "hw/s390x/adapter.h"
+ #include "gdbstub/enums.h"
+ #include "system/kvm_int.h"
+@@ -393,6 +394,16 @@ static int kvm_set_user_memory_region(KVMMemoryListener *kml, KVMSlot *slot, boo
+     struct kvm_userspace_memory_region2 mem = {};
+     int ret;
  
-+        /*
-+         * vhost cannot be used with a CoVE guest: the kernel datapath has no
-+         * access to the memory of the TVM.
-+         */
-+        if (riscv_cove_vm_active()) {
-+            return;
-+        }
++    /*
++     * Only the DRAM slot is registered with KVM for a CoVE guest: the TSM
++     * tracks the confidential region of the TVM itself and registering the
++     * other slots (MROM, flash, ...) would overwrite it.
++     */
++    if (riscv_cove_vm_active() && (slot->slot & 0xffff) != 0 &&
++        slot->memory_size > 0) {
++        return 0;
++    }
 +
-         n->vhost_started = 1;
-         r = vhost_net_start(vdev, n->nic->ncs, queue_pairs, cvq);
-         if (r < 0) {
+     mem.slot = slot->slot | (kml->as_id << 16);
+     mem.guest_phys_addr = slot->start_addr;
+     mem.userspace_addr = (unsigned long)slot->ram;
 -- 
 2.34.1
 
