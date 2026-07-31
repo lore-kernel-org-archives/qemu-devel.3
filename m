@@ -4,101 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DA5AC5516F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 18:06:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D272C55174
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 18:47:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wprc2-0006O6-BW; Fri, 31 Jul 2026 14:05:38 -0400
+	id 1wpsG4-0003vg-70; Fri, 31 Jul 2026 14:47:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wprc0-0006Nj-Fx
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 14:05:36 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wprby-0002wc-Of
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 14:05:36 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-6680ae2031fso1098942d50.3
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 11:05:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785521133; cv=none;
- d=google.com; s=arc-20260327;
- b=p3JbPao7VViPI9WlLwqpp3DbQyumsymLYQeLWVCqXj6bxn0opaH1o/18uKZPS5KiOd
- FQ5yRuAwPYzuN+e4B6fQWnyReNzKe3BdCLL8xC2bVQp01losCGHADNkxPAMIxUfOVtbg
- RgyHLBHr27fILY2xBeNzZYPwFx1rLIouixqDBexh4WPQRw/CetqPJOrC3Jxkh1SUw2CC
- jciImC19Y8S1qvKuFoNAmp2EkmdX91UyO0MfGAjyDob9eyBy/Mv4ubPIaeUbfO7lAlO+
- WjZv0Mqx2BOVldP+hze5yVQZ5EBWoZAp1AZ8wj1aS3y1/B1i0joNYr41E9ZuD8BY7DMX
- Rv9A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=5S9gN/jFvniC6qSLID9ELn8k3pszI/eh5UwHh5bns3w=;
- fh=hkJYBzlLFB1Hu+yotcIJBiJRRwI/iNOrLzc4m4v/pUY=;
- b=ayDTpsk3JXV+XyBIf9JBWEL8FaioqVHMBxsyWPEmFPUSn4s6HXQ+tf65Lyhzhqmrya
- F3CBXEkZ7u+hObSde2H+75R6F35oq7gZ7DKZHUIhNHw489ATXAGa/PwPRBZPc1kTj/y6
- RS7+tVljw7nn0fHD5ahp5KwX9/1m1pCFbBTPx4x97XIU9RlB1+tcfoX0+eTdpDdYK6l2
- 9ZHS+tiup9rMALn8vFil5ap4TWcZwP+ViY4AchWA+pLjif195Q5n0rLIuAH1Le6yDRJ3
- N5ax2Kkprccn9uAotWak5dMvTSzubE5rn6omm0R++OJhWGpjea9buA6LneX39BNrx1Aj
- 4hOg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785521133; x=1786125933; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=5S9gN/jFvniC6qSLID9ELn8k3pszI/eh5UwHh5bns3w=;
- b=kc1z4XDp0eD4qR31G+W3R0Q4162dBC3rfkd99/lurJ3ggRQuqjrtHqCSZ119Jlu8co
- xYqnjqousNtULnrOUMOhb4FjCD7beOhdzWfj40a35InLLw8JWjmE7KuwFplHVmOJ+2vy
- +J/6xLlRfzgPKMy70e9uYvZzd5SZA1wF4xzvZt6ACdCn4UtqhDNsFDOqSho0FlZPnoS9
- c9ptK9xrphKr73P3AOJBgAz/leiMQeYdok5gmq3910z/MVI0cMQ987z75mxhpZMRq9lO
- LKBwmmpUVBqAqi7V2RhaHFZrUi6aBHUAxOABXrwvHOcFeEIoGeOyjc+NIVKSlTCavFMp
- bi1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785521133; x=1786125933;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=5S9gN/jFvniC6qSLID9ELn8k3pszI/eh5UwHh5bns3w=;
- b=pXskEpM13KV1iHMXkPxG6GYcYw+KLS3ruafKVUxusbD4OzuO7zLYpjKtSbcO+AvC9C
- +huqA9sAIMLoP2QLO9SxwQU16BhSaVTf75DKvObkSN8k+yPwDmRMNkyQrPSh7jfZzjGV
- 61/zXJdA+WNTxLnaxyvXpWOF44R+Q6/fBS/lzkOD/7hwNf3AjtZRP8EI9piLfpazlxws
- YvYK+X59o2TJRhjnGC7PoY1XHaAS/PBcw2DlMy29VUdpuyH2IIFsyPgpQAkSb4xfNCYX
- qaC4vxUzX2q+xqxiN3gVDbj5HTicfPMMLRUMYAHLoL6Zf3HiedvcJBY6fgi9ex8xQ3uD
- zIvA==
-X-Gm-Message-State: AOJu0YxOaA3HSuuTZJbk5ECsarc98oVvxOCY0AKc+Lfah0Vot166ikfn
- O88v0BXajTF6MSMkGhtb0x6AjucpVM/K0S9MN5pxA6rmV41rU/MtPea7wy002ccxiY7YH3yb+nP
- Kq+DsBz1a/kBfNUOZErB2wtcfUeFMpf8+6PelpHXYlw==
-X-Gm-Gg: AR+sD13YRHnW+fEo8dxmSPbIa3L6AMsPpnOed5oOjIz44hG5DIkQHl1cuJqOw9rZd68
- sFbV8tXZgQJccBNFYG1woN5OeT1Sfqkp5sR/MC4XcYv4KC2FldyTnGqhil/Bcn0U2MMw5ACr/uY
- DpX3tJTTI19Vdaang/TSZOgnrmVMiV/DWN5wAuCVp7G9NTLRzOemfTjEjZUcTJGAJumCq3VOjlG
- LydxOrl73zcMmvBoooN9JCIUw4YhTFF7a8wb9MREqDnYjuiwEUUpfX1E3Jj0gdwHlFhlSk0xcPw
- n6NCidH4L3FHUtWhLuC2xBx1YEe/78PF3FXIdgt0thqIT+b0I/6cSu7UH5xqXy1h4VcC9VOV71F
- H69niU4IWcQZ3lypuZRc1r7mI8xEm
-X-Received: by 2002:a53:ebc3:0:b0:667:bb94:18d9 with SMTP id
- 956f58d0204a3-6694f06361emr841777d50.13.1785521132559; Fri, 31 Jul 2026
- 11:05:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
+ id 1wpsFy-0003vL-DK
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 14:46:54 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wpsFw-0000ka-NG
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 14:46:54 -0400
+Received: from laptop.localdomain (unknown [86.121.140.206])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 833CC20B7166;
+ Fri, 31 Jul 2026 11:46:30 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 833CC20B7166
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1785523592;
+ bh=h/Q5odEgWjhSZDgL5Ge/d4dfY3PI49uaA7sY3/HNPqA=;
+ h=From:To:Cc:Subject:Date:From;
+ b=X5cCzmVQqus6BuWf176TuXReL6lwC/HMF439XOxDgduzFohSLT4qvAZCE2dJo1ZfA
+ nMx4tTU+dgoUZN1atYpi9otPZfDvbvOfSmjzryX5ZeAqEbbuPhJE9pMetcc0EfeVt2
+ 46LJVCMCSswgqcKkggnixGXqRZ185VxN/f2FShOo=
+From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
+To: qemu-devel@nongnu.org
+Cc: Wei Liu <liuwe@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
+ Magnus Kulke <magnuskulke@microsoft.com>,
+ =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@microsoft.com>,
+ =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>
+Subject: [PATCH v2 0/4] accel/mshv: add gdbstub guest debugging support
+Date: Fri, 31 Jul 2026 21:46:38 +0300
+Message-ID: <20260731184643.89604-1-dblanzeanu@linux.microsoft.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-References: <20260728192913.61279-1-deller@kernel.org>
-In-Reply-To: <20260728192913.61279-1-deller@kernel.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 31 Jul 2026 19:05:20 +0100
-X-Gm-Features: AUfX_mwlUYFzWDz5giYQ765QmEpU2k6-J_gQmQ2BvTZOMTQUdT2QFyApk7EtawA
-Message-ID: <CAFEAcA_8o2A8FDsJKacde+pdj4HzA5c7aTw=k7tmONYXD4=c_w@mail.gmail.com>
-Subject: Re: [PATCH] linux-user: Fix msqid_ds struct wrt 32-bit big endian
- architectures
-To: Helge Deller <deller@kernel.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,71 +67,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 28 Jul 2026 at 20:32, Helge Deller <deller@kernel.org> wrote:
->
-> From: Helge Deller <deller@gmx.de>
->
-> Make sure that the time entries (msg_stime, msg_rtime and msg_ctime)
-> are defined as 64-bit time_t values, since the userspace may access
-> the whole 64-bit value. By this change we fix the word ordering for
-> 32-bit big endian architectures as well.
->
-> This fixes the msgctl01 LTP testcase on hppa32.
->
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> ---
->  linux-user/syscall.c | 30 ++++++++++++------------------
->  1 file changed, 12 insertions(+), 18 deletions(-)
->
-> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> index 740142825d..c93b770ced 100644
-> --- a/linux-user/syscall.c
-> +++ b/linux-user/syscall.c
-> @@ -4216,21 +4216,15 @@ static inline abi_long do_semtimedop(int semid,
->  }
->  #endif
+This series brings guest debugging to the MSHV accelerator by
+implementing software breakpoints and single-stepping, so that gdb can
+attach to an MSHV guest through QEMU's gdbstub.
 
-I see this has already gone into git, but some late review
-comments. I suspect this is mostly me being confused rather
-than actual problems.
+It follows the KVM gdbstub implementation closely, and borrows the WHPX
+approach where the MSHV interface differs from KVM:
 
->
-> +#define target_time64_t         abi_ullong
-> +#define target_swap_time64(x)   tswap64(x)
-> +
->  struct target_msqid_ds
+  - it installs a partition-wide intercept for the #DB exception
+    (HVCALL_INSTALL_INTERCEPT). #BP (INT3) is deliberately left to the
+    guest's own IDT and is never intercepted, as WHPX does.
 
-Is this the kernel's "struct msqid_ds" (which it calls "Obsolete, used
-only for backwards compatibility and libc5 compiles") or its msqid64_ds?
-The layout matches msqid64_ds, which makes our struct a bit
-confusingly named.
+  - only software breakpoints are supported. A breakpoint is an INT1
+    (opcode 0xf1) patched into guest memory, which raises a #DB when
+    executed. Hardware breakpoints and watchpoints are not supported.
 
->  {
->      struct target_ipc_perm msg_perm;
-> -    abi_ulong msg_stime;
-> -#if TARGET_ABI_BITS == 32
-> -    abi_ulong __unused1;
-> -#endif
-> -    abi_ulong msg_rtime;
-> -#if TARGET_ABI_BITS == 32
-> -    abi_ulong __unused2;
-> -#endif
-> -    abi_ulong msg_ctime;
-> -#if TARGET_ABI_BITS == 32
-> -    abi_ulong __unused3;
-> -#endif
-> +    target_time64_t msg_stime;
-> +    target_time64_t msg_rtime;
-> +    target_time64_t msg_ctime;
+  - it never touches the guest debug registers (DR0-DR7), so guest state
+    is not clobbered. The only guest register used is RFLAGS.TF, toggled
+    around the vCPU run for single-stepping and kept out of env->eflags
+    so it cannot be read back and re-armed.
 
-Assuming msqid64_ds, the kernel version of this struct has a comment:
- * 64 bit architectures use a 64-bit long time field here, while
- * 32 bit architectures have a pair of unsigned long values.
- * On big-endian systems, the lower half is in the wrong place.
+  - it re-injects the #DB back into the guest (via
+    HV_REGISTER_PENDING_EVENT0) when the faulting RIP does not match a
+    debugger breakpoint, so a guest-owned #DB is delivered through the
+    guest's own IDT.
 
-That would make tswap64() not the right swap for 32-bit big
-endian guests.
+When a vCPU is created we register the accel ops that gdb drives once it
+is attached:
 
-thanks
--- PMM
+  - mshv_update_guest_debug
+  - mshv_insert_gdbstub_breakpoint
+  - mshv_remove_gdbstub_breakpoint
+  - mshv_remove_all_gdbstub_breakpoints
+
+For each insert request from gdb the ops save the original byte at the
+target address and patch in 0xf1; on a remove request the saved byte is
+restored, after which gdb single-steps over the original instruction and
+re-inserts the breakpoint. When the vCPU executes the 0xf1 byte a #DB
+vmexits to QEMU. mshv_handle_debug() then checks whether the RIP where
+the vCPU stopped matches a breakpoint installed by gdb, or whether
+single-stepping is active, and if so reports the stop to gdb. If the RIP
+does not match any debugger breakpoint the #DB is assumed to be
+guest-owned and is re-injected so the guest can handle it.
+
+Known limitations:
+
+  - Once installed, the #DB intercept stays for the lifetime
+    of the VM and every #DB - including those the guest raises itself -
+    vmexits to QEMU.
+
+  - Because attribution relies on matching the faulting RIP against the
+    debugger's breakpoint list, a guest that legitimately executes INT1 or
+    raises its own #DB at an address that also holds a debugger breakpoint
+    cannot be disambiguated; such overlaps are not expected in practice.
+
+The series is organised as:
+
+  1. include/hw/hyperv: add ABI for exception intercepts and pending
+     events
+  2. accel/mshv: add gdbstub software breakpoint support
+  3. target/i386/mshv: support single-stepping
+  4. accel/mshv: break the vCPU run loop on exit_request
+     This commit fixes a race condition encountered during testing with guests
+     that run infinite loops with some debugging opcodes.
+
+I have tested this patch series by using both a guest that doesn't use debugging
+and one that triggers the #DB and #BP exceptions (#DB is re-injected and #BP is
+not intercepted at all).
+
+Changes since v1:
+- refactored the HVMSG_X64_EXCEPTION_INTERCEPT vmexit handle to be contained in
+  a standalone function handle_exception_interrupt
+- add new commit that checks the mshv vcpu run loop for exit requests before
+  re-entering MSHV_RUN_VP. This ensures a busy vCPU doesn't ignore gdb commands.
+
+Doru Blânzeanu (4):
+  include/hw/hyperv: add ABI for exception intercepts and pending events
+  accel/mshv: add gdbstub software breakpoint support
+  target/i386/mshv: support single-stepping
+  accel/mshv: break the vCPU run loop on exit_request
+
+ accel/mshv/mshv-all.c          | 175 ++++++++++++++++++++++++++++++++-
+ include/hw/hyperv/hvgdk_mini.h |  56 +++++++++++
+ include/system/mshv_int.h      |  14 +++
+ target/i386/mshv/mshv-cpu.c    | 154 +++++++++++++++++++++++++++++
+ 4 files changed, 398 insertions(+), 1 deletion(-)
+
+-- 
+2.53.0
+
 
