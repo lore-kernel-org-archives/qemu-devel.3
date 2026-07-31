@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40239C54F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 12:25:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 542F3C54F54
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 12:26:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpmIK-0000Cc-U4; Fri, 31 Jul 2026 08:24:56 -0400
+	id 1wpmJK-0001jG-FV; Fri, 31 Jul 2026 08:25:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1wpmIJ-0000C1-G5
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 08:24:55 -0400
-Received: from mail-wr1-f51.google.com ([209.85.221.51])
+ id 1wpmJI-0001iw-M5
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 08:25:56 -0400
+Received: from mail-wr1-f46.google.com ([209.85.221.46])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1wpmIH-0006wO-SD
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 08:24:55 -0400
-Received: by mail-wr1-f51.google.com with SMTP id
- ffacd0b85a97d-47f707e5d75so692726f8f.1
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 05:24:53 -0700 (PDT)
+ id 1wpmJH-0007Tu-7C
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 08:25:56 -0400
+Received: by mail-wr1-f46.google.com with SMTP id
+ ffacd0b85a97d-472326ca506so642862f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 05:25:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785500692; x=1786105492;
+ d=1e100.net; s=20251104; t=1785500754; x=1786105554;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=W8IM84HQwR+GmEFj4f2b5VofQX2ndjN7l5cc/QZMq3s=;
- b=e5cR4TiykPdMBTR5ejX2OO9DKRPLrt+WqGVftGYPnb+Wh8D1i82aXChBiWMkuDl9tu
- 147xTVRjYJLdQL+N2hLJhZA09QUcdTNGZISUadzjCjubH9ad0fduNpqSNKm5Sgt6L0uh
- swyungrNlAkWRUp01oxkkS1HRVxv2p0ZJiBVNPqzRVduYLPNt7hz3pj2puuqBe9pqd38
- Mz/j+Ye1waB6OMM1aZLQ6SR7mV8c/+sy25zv0GI+WdhfMKkXM3JXlHofmFbGDyRnMKIG
- nYxkZ2rNcAvnDNTkBoOleCdDtjMpKtn2/fq4EXkb6yhxXvR2ojCCwSeytKblLVAAtEHB
- RKVg==
-X-Gm-Message-State: AOJu0YxjN8WN0jAVuzXkKbLBxy0BQ7XHgdYkgJ3NbmvuTwU20HAsZSRq
- Bu0IKh51m0YFgIwrXU5V42Zi0I3kY51LciSEHjzXtRH8yQSe/+dEKRpTE3+yuI8b
-X-Gm-Gg: AR+sD11Nt9GSIDmBQhCTbaAM/4fvxJSK6bAiIZK9aiN2m6H8WbsiwxLcrOxZYB68qwQ
- kCjG6gfQrBgoAPkFWEIpzpLPnJa4D3cpByVeNPGrZPsy5LEKKN4IXPEOqwNPe+//Nc+nhLYmYat
- 0tEkQ8cQbsdR66J+D8r3JPJJFi5C6N92BQnlRVEzR0ZAAKuK6745ndhWebyhuYpIEE+bfbTwRBB
- obhNvPQCc0KgH/E2AKHUGev9RcCoMbDxUuqf+EJ6oUiruL/3y60gJ6GGw6tKoWSpffGpyZwBmew
- 2u/hOSsjqDiE1uo9OoM0J84YwDFOkLUJUJcqH28KtXtpJ1NIEcPi3C8wPQ4Et8DVTSsU+TDhOha
- JRHpvczgyMpBvE5eyfFB6vNrdYxDnb9togAzgCj9ZX2AViP1FqqVUzLKabzikICks4ZbKgbDi9a
- hmGwJhYuIX28Z6N2OjRcuPFN7THdb+8p1BjilTe7JkPHLrPh51305tx7CUA0pOdmc1p6qXNqqxo
- ltEeAtCER8zvj3mt3dgD0vuywNmozieF7m7
-X-Received: by 2002:a05:6000:178a:b0:47f:d072:87d7 with SMTP id
- ffacd0b85a97d-47fd2abab7bmr3954083f8f.9.1785500692238; 
- Fri, 31 Jul 2026 05:24:52 -0700 (PDT)
+ bh=9Rx1so6O2DvHoxNj8RGDiYjwjmDl40dAURIIyBXbKtg=;
+ b=iiUGxTg6MYIthJ4CDI+QEXcwyz6yD/xHc9rTHnx5C6QZ535W/+yvcluXSm9V3x/5L/
+ VBLAgjVOg2Xs3YMyx1hBFO9Qf0oqNbpu+ISGnGyjEra8t8SyWwE/i0d8sLMrO4m/eG81
+ Ets0duL95ZvNCn/QgNFaYMpno28nWpdZDmYULsQlaZ0dkCocbeiz3iiOYW4Hkxtm22sc
+ OG0+ER1UykfM4FmAaL5iTliSRXSGrLL8OuscHhqu8XwGoBcDF05pKxUrHli9wmS4Cy09
+ eULSNc85EQA+2/qr/tVoYVG3bgNaWoc/NPPPTyXmkzeNIgCJxTCQgmW7JumXEWPqSIIT
+ jv7w==
+X-Gm-Message-State: AOJu0YxJsc8JVE1W38I7pDlkqZjuvpn3ucuS56YcWRfOStf3B6bo/WCc
+ LTv+aoCvBGqEFeanHOFK0AyMze2+ytQzWXGKTQLDsFgAxmuXp1RSYdydNRvDw6yR
+X-Gm-Gg: AR+sD12VZJ+07Ozh3TTGOwS/mUUnXZBLz18WxrbcAvpvCgt02w1xxhWJlmRjQifib9O
+ hVJrkNfTU0eFTsP7XXiMSSPIxjCm2/x41FVxmJXhX7+QLErVw7oRsIQ1dNt+HY2oF8hYFPMWFoK
+ 3gQGshpx0JX8z11WasBpOT+TUapqB6km3TZGUnpsX+1iG6TObuOHNEASxbqw2U3rvAOPMnxsRWQ
+ Mj5jke/GxJvK7zUB6xl0Tqt2yiCxZgD6vSBX7P4v9zcSpmhH9Yso9QEUaHKQx6z9TKG+oQJnhOf
+ 9FXwbYhBVLgIIrLfgbrIkDmLNxKklS7D2wcWryvx1E/S2byR896qqGrkYBiNEvCbefmITTnqFYr
+ IwesvA9yKZq45EcZy8CaA5KmLP4EWtgxEYlmzr1VQjz86gqgPd96YpOWM8kIdQDPVZkDW4a72cc
+ cakM1RsiPPvf8XclgnZgGYKqWkhfZib5NTtdBlOgnrEawdwt7V4nnD4Kw/fTAf2HFWbrRgdEB+s
+ M0VAhGiUNiekxpuPrzH+m3hj+MT0XIsMjRt
+X-Received: by 2002:a05:6000:2c02:b0:475:f0f0:9ef7 with SMTP id
+ ffacd0b85a97d-47fd2b653e6mr4749189f8f.60.1785500753574; 
+ Fri, 31 Jul 2026 05:25:53 -0700 (PDT)
 Received: from localhost (89-93-216-19.hfc.dyn.abo.bbox.fr. [89.93.216.19])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47fd456a5a4sm4341229f8f.20.2026.07.31.05.24.51
+ ffacd0b85a97d-47fd456a6d7sm4455881f8f.19.2026.07.31.05.25.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 Jul 2026 05:24:51 -0700 (PDT)
-Date: Fri, 31 Jul 2026 12:45:00 +0200
-Subject: [PATCH v2 01/25] hw/sensor: tmp105: make device state private to
- the implementation
+ Fri, 31 Jul 2026 05:25:53 -0700 (PDT)
+Date: Fri, 31 Jul 2026 12:45:01 +0200
+Subject: [PATCH v2 02/25] hw/sensor: tmp105: name the parent object field
+ parent_obj
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260731-sanmiguel-bmc-locator-v2-1-1266926ba769@free.fr>
+Message-Id: <20260731-sanmiguel-bmc-locator-v2-2-1266926ba769@free.fr>
 References: <20260731-sanmiguel-bmc-locator-v2-0-1266926ba769@free.fr>
 In-Reply-To: <20260731-sanmiguel-bmc-locator-v2-0-1266926ba769@free.fr>
 To: qemu-devel@nongnu.org
@@ -76,15 +76,15 @@ Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Emmanuel Blot <eblot@meta.com>, Emmanuel Blot <emmanuel.blot@free.fr>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1785494707; l=3828;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1785494707; l=2294;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=2PsFiadmEidEKMJIZBsHzExJztIGcn8WD0wRouSeWs4=;
- b=qI6Pe1NAfhoE3o3F7JNmzS9/eZ20JQVfOwpYafN0/yieFYcg5BQruxFL9rY4vFS9U+E+9nOaR
- n+/8JHlBGpfDaJNxkE4Ok0LI2s+pe8kDPAXAugXd1aGa4Kv8qDGdMbE
+ bh=IPpKdB4GNfibCBuZaz5CjB0TPUppqW5ZDDXX0F0+Glo=;
+ b=eZW/p0A+N6UUAczLR7SIkQA4mEdwYgg4QdPiKGpwSCI4ay9LnsvtdaVbJEi9mxOdIgLtkyCRk
+ Fpu/jwFsk6IAoBWndOiQz8363WM7HDhwsW8sCaS+1QqK7u3z2Shr5Ty
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.221.51; envelope-from=eblot.ml@gmail.com;
- helo=mail-wr1-f51.google.com
+Received-SPF: pass client-ip=209.85.221.46; envelope-from=eblot.ml@gmail.com;
+ helo=mail-wr1-f46.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -110,134 +110,70 @@ From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The TMP105State struct, its cast macro and typedef are used only within
-tmp105.c. Move them out of the public header into the source file and
-drop the now-unused includes; the header is reduced to the TYPE_TMP105
-name, with its guard renamed to the path-derived form per current QEMU
-convention.
-
-While here, normalize the source file include order to match the other
-hw/sensor devices.
+QEMU coding conventions expect the embedded parent object of a QOM type
+to be named parent_obj. Rename the TMP105State I2CSlave member
+accordingly and update its references; the change is purely cosmetic.
 
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- hw/sensor/tmp105.c         | 45 ++++++++++++++++++++++++++++++++++++++++-----
- include/hw/sensor/tmp105.h | 40 ++--------------------------------------
- 2 files changed, 42 insertions(+), 43 deletions(-)
+ hw/sensor/tmp105.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/hw/sensor/tmp105.c b/hw/sensor/tmp105.c
-index c5089d74f4b..6069c0905d9 100644
+index 6069c0905d..aabeb34f08 100644
 --- a/hw/sensor/tmp105.c
 +++ b/hw/sensor/tmp105.c
-@@ -19,16 +19,51 @@
+@@ -42,7 +42,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(TMP105State, TMP105)
   */
- 
- #include "qemu/osdep.h"
--#include "hw/i2c/i2c.h"
--#include "hw/core/irq.h"
--#include "migration/vmstate.h"
--#include "hw/sensor/tmp105.h"
-+#include "qemu/module.h"
- #include "qapi/error.h"
- #include "qapi/visitor.h"
--#include "qemu/module.h"
-+#include "qom/object.h"
-+#include "hw/sensor/tmp105.h"
-+#include "hw/sensor/tmp105_regs.h"
-+#include "hw/core/irq.h"
- #include "hw/core/registerfields.h"
-+#include "hw/i2c/i2c.h"
-+#include "migration/vmstate.h"
- #include "trace.h"
- 
-+OBJECT_DECLARE_SIMPLE_TYPE(TMP105State, TMP105)
-+
-+/**
-+ * TMP105State:
-+ * @config: Bits 5 and 6 (value 32 and 64) determine the precision of the
-+ * temperature. See Table 8 in the data sheet.
-+ *
-+ * @see_also: http://www.ti.com/lit/gpn/tmp105
-+ */
-+struct TMP105State {
-+    /*< private >*/
-+    I2CSlave i2c;
-+    /*< public >*/
-+
-+    uint8_t len;
-+    uint8_t buf[2];
-+    qemu_irq pin;
-+
-+    uint8_t pointer;
-+    uint8_t config;
-+    int16_t temperature;
-+    int16_t limit[2];
-+    int faults;
-+    uint8_t alarm;
-+    /*
-+     * The TMP105 initially looks for a temperature rising above T_high;
-+     * once this is detected, the condition it looks for next is the
-+     * temperature falling below T_low. This flag is false when initially
-+     * looking for T_high, true when looking for T_low.
-+     */
-+    bool detect_falling;
-+};
-+
- FIELD(CONFIG, SHUTDOWN_MODE,        0, 1)
- FIELD(CONFIG, THERMOSTAT_MODE,      1, 1)
- FIELD(CONFIG, POLARITY,             2, 1)
-diff --git a/include/hw/sensor/tmp105.h b/include/hw/sensor/tmp105.h
-index 244e2989feb..daece592e9b 100644
---- a/include/hw/sensor/tmp105.h
-+++ b/include/hw/sensor/tmp105.h
-@@ -11,45 +11,9 @@
-  * This work is licensed under the terms of the GNU GPL, version 2 or
-  * later. See the COPYING file in the top-level directory.
-  */
--#ifndef QEMU_TMP105_H
--#define QEMU_TMP105_H
--
--#include "hw/i2c/i2c.h"
--#include "hw/sensor/tmp105_regs.h"
--#include "qom/object.h"
-+#ifndef HW_SENSOR_TMP105_H
-+#define HW_SENSOR_TMP105_H
- 
- #define TYPE_TMP105 "tmp105"
--OBJECT_DECLARE_SIMPLE_TYPE(TMP105State, TMP105)
--
--/**
-- * TMP105State:
-- * @config: Bits 5 and 6 (value 32 and 64) determine the precision of the
-- * temperature. See Table 8 in the data sheet.
-- *
-- * @see_also: http://www.ti.com/lit/gpn/tmp105
-- */
--struct TMP105State {
--    /*< private >*/
+ struct TMP105State {
+     /*< private >*/
 -    I2CSlave i2c;
--    /*< public >*/
--
--    uint8_t len;
--    uint8_t buf[2];
--    qemu_irq pin;
--
--    uint8_t pointer;
--    uint8_t config;
--    int16_t temperature;
--    int16_t limit[2];
--    int faults;
--    uint8_t alarm;
--    /*
--     * The TMP105 initially looks for a temperature rising above T_high;
--     * once this is detected, the condition it looks for next is the
--     * temperature falling below T_low. This flag is false when initially
--     * looking for T_high, true when looking for T_low.
--     */
--    bool detect_falling;
--};
++    I2CSlave parent_obj;
+     /*< public >*/
  
- #endif
+     uint8_t len;
+@@ -187,12 +187,12 @@ static void tmp105_read(TMP105State *s)
+         break;
+     }
+ 
+-    trace_tmp105_read(s->i2c.address, s->pointer);
++    trace_tmp105_read(s->parent_obj.address, s->pointer);
+ }
+ 
+ static void tmp105_write(TMP105State *s)
+ {
+-    trace_tmp105_write(s->i2c.address, s->pointer);
++    trace_tmp105_write(s->parent_obj.address, s->pointer);
+ 
+     switch (s->pointer & 3) {
+     case TMP105_REG_TEMPERATURE:
+@@ -200,7 +200,7 @@ static void tmp105_write(TMP105State *s)
+ 
+     case TMP105_REG_CONFIG:
+         if (FIELD_EX8(s->buf[0] & ~s->config, CONFIG, SHUTDOWN_MODE)) {
+-            trace_tmp105_write_shutdown(s->i2c.address);
++            trace_tmp105_write_shutdown(s->parent_obj.address);
+         }
+         s->config = FIELD_DP8(s->buf[0], CONFIG, ONE_SHOT, 0);
+         s->faults = tmp105_faultq[FIELD_EX8(s->config, CONFIG, FAULT_QUEUE)];
+@@ -305,7 +305,7 @@ static const VMStateDescription vmstate_tmp105 = {
+         VMSTATE_INT16(temperature, TMP105State),
+         VMSTATE_INT16_ARRAY(limit, TMP105State, 2),
+         VMSTATE_UINT8(alarm, TMP105State),
+-        VMSTATE_I2C_SLAVE(i2c, TMP105State),
++        VMSTATE_I2C_SLAVE(parent_obj, TMP105State),
+         VMSTATE_END_OF_LIST()
+     },
+     .subsections = (const VMStateDescription * const []) {
+@@ -338,7 +338,7 @@ static void tmp105_realize(DeviceState *dev, Error **errp)
+ 
+     qdev_init_gpio_out(&i2c->qdev, &s->pin, 1);
+ 
+-    tmp105_reset(&s->i2c);
++    tmp105_reset(&s->parent_obj);
+ }
+ 
+ static void tmp105_initfn(Object *obj)
 
 -- 
 2.50.1
