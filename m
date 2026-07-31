@@ -4,120 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 675EDC5516D
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 11:21:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A887AC54F54
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 11:23:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wplIh-0001f2-5v; Fri, 31 Jul 2026 07:21:15 -0400
+	id 1wplKh-0002fs-1k; Fri, 31 Jul 2026 07:23:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <GuoQing.Zhang@amd.com>)
- id 1wplIe-0001ep-1Y
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 07:21:12 -0400
-Received: from mail-southcentralusazon11013031.outbound.protection.outlook.com
- ([40.93.196.31] helo=SA9PR02CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <GuoQing.Zhang@amd.com>)
- id 1wplIb-0003Mc-HP
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 07:21:11 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=la+QEKseMdmQLt6xRjtjSMZxlP7gmmtbd5NcI+lIXKqfswsCGYoiW8OdkqTq7RoIfQrB8jERpEbqszf6v6Ifhtup/v1iuiWxLFpcabNzm+J6AGBGILEsz0RlJm5XLroJanwvIhIM2LEFKd8CC7FnWG3hio3ET7W96x2uk45PxkTS6SW2Vo1M/vGytYm1Ay2MYN0BZ9B6C8CyBE0Xuh5ZF5CncJrnwXU6RUa/wLbMT6Bv/qAQ5zDP9mh7sAhZ3vpf5UUEnBPYnB0IcSUXDnFRwmDF0zUMxBxLzIH3LB22S02Tt6qAMUi4wMyoXNxrsJCKkLNFyAG/PNd9E5Qpc3Eizg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TmBh2Ntne/mWXFIjcKPrgMKsvw3s8E2xIrEMYyrUBn0=;
- b=SaG7G0GNH4Gh2Ev2+u6qbeH+EuNBBSYVQOpuaqGocPQBZbTjRJDTOnAsGAraxzpPgHSkEdiYQDqnC7FUAda+fPwhNKSLc82IeGnitBEONP05k7zqL6DlsZE8O0isTCOgoPKmexYoSQtxyXghU0Azk2fPYj63QlGunXHRyLCD0sLwfBWoiPMfdVZ2GR9ctUBTkHUbotlM7gFsF/ZHOZ9KT0z7hIjD14otZ8l/WzoW1uchfK7B9U5/cFeKqQxA1PTnDAUq90ICroNfmTzm0IEWabAnCNtG7bPEbxN0ta4BD1aJftjVhttnIhSIN2qC/GVC6jeqJy6nhY832BrV2sBqgw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TmBh2Ntne/mWXFIjcKPrgMKsvw3s8E2xIrEMYyrUBn0=;
- b=LIJ5adUk84TyqshfDcrAOWJNe2xNbJh3bpBlRYuYiuvlWDLHU9w+uAG4dB4SYB4HGahC/xghH7ZMLGArMczSw001XFHA1O49dIxQMo+BR4ptt5L97FTjtayf8XDJJxPgCzlrLy9d2CaWdifmYSqzJALwUUNxve7Fx22GwIWAxAU=
-Received: from MN2PR05CA0051.namprd05.prod.outlook.com (2603:10b6:208:236::20)
- by DS0PR12MB8573.namprd12.prod.outlook.com (2603:10b6:8:162::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.16; Fri, 31 Jul
- 2026 11:16:00 +0000
-Received: from BL02EPF0002992C.namprd02.prod.outlook.com
- (2603:10b6:208:236:cafe::56) by MN2PR05CA0051.outlook.office365.com
- (2603:10b6:208:236::20) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.292.10 via Frontend Transport; Fri,
- 31 Jul 2026 11:16:00 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
-Received: from satlexmb08.amd.com (165.204.84.17) by
- BL02EPF0002992C.mail.protection.outlook.com (10.167.249.57) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.292.8 via Frontend Transport; Fri, 31 Jul 2026 11:16:00 +0000
-Received: from Satlexmb09.amd.com (10.181.42.218) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Fri, 31 Jul
- 2026 06:16:00 -0500
-Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb09.amd.com
- (10.181.42.218) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Fri, 31 Jul
- 2026 04:15:59 -0700
-Received: from [10.67.184.128] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.41 via Frontend
- Transport; Fri, 31 Jul 2026 06:15:57 -0500
-Message-ID: <b454973f-275f-4f75-8367-8b6230d42bbf@amd.com>
-Date: Fri, 31 Jul 2026 19:15:56 +0800
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wplKf-0002fb-JU
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 07:23:17 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wplKd-0003XD-Ph
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 07:23:17 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-c15e2dab83eso122284266b.1
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 04:23:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785496994; cv=none;
+ d=google.com; s=arc-20260327;
+ b=KGsEyZIMG+zFE9Qmzxt4ixshr+0EPyyD2ICRNbRbSMXjG+i7OvZ4n5o/QbfQoQuLzI
+ SEk8D1sIqASKpYqm9hZnD2Eby34jWDsn4T/SwXqkHnc5xQ3Q01QEBxsjyBH1/up00uYi
+ iQWI24+NfUGKZcI92t+BWbxZF0R17MNfmFbFkz4be+gAnjEUwLeC3mMyIxNJdE+MeqH1
+ prcO4mOSTf2LIl9OOT/Hy6u65zN8jVbSkfQXjI2MhvvMT3SInBs9ooemk3gVIfmUZwuk
+ 1rl33aLfU77oGlLpDjbOJSnFKvYI5+mfYq30JBPxKl926/fPDXKt2vYytswKAidXbLOe
+ v12A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=InK3sWlMEUJtrTZNEBYtXG69eUj4xBvtz1Lt8ToMqhs=;
+ fh=xChv7ieWS1sj6jE9IHpGYXOFSuW+3i48YUpPGYmP/DA=;
+ b=K01rPOfZVWcnzeWzldQMFF3gWE/vUuYaaMcQEpZE6kfo5VLpb6Rbx5AVDwskW8yb7J
+ 2zu+M4mHSZsUaK5VTV3Qc/0AsTQ/UzTNH/ExRpufJkAI6kIbb3NhGFXEnDTNq0pvbVHn
+ BER+6nLnlGGGE3GzHAPU1/kv4jzKqiBAwBfaJJ6l4qk3yLLMG4gHocMNSxk6LHS5PCfJ
+ HJpP8DBO9Vtnj9c53Eyypx7ybSf24380ThaBjxwgHlxiOJJdJ5ui0FLx6MRJbEmWoBFq
+ hOnDv8Sp9jwedVwV8i6e6b+aMoN4cmJTdInmUE+1Qes/REfMGMwi6wy4Ah+I7Q6nOQp8
+ h25g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1785496994; x=1786101794; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=InK3sWlMEUJtrTZNEBYtXG69eUj4xBvtz1Lt8ToMqhs=;
+ b=m8BIJrFiT0RziNupkMAlbxfi5R8DIaYQkUe0vcLlIs/YtPhWLvxfiff1RoiH9sjfp/
+ eI8+Bx9B/RYUX5/7T4y7+1MV92kcpuV23DeLq+3IWUo73AO/Ntzo4FpKw/dQGRYzqYWE
+ 6qXwjXpGFc0yCBQ9L+uw1avXF2XRl3Od1+wQJUciMLC6KFyFBtfhJ64H5H8Bbsai92yS
+ BaqanrV644mv31742/g6dwSzuA5kgqrg4Y7tFxLRqJz0moJ3ljMo+pOQGaeS/mGBs9YN
+ 1FsUyHkc5FJedl4eFAaPiBSazbRWGijd6heOJPqe65bU/N/577AuTXSFw+gXn1mNE9Dd
+ dImw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785496994; x=1786101794;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=InK3sWlMEUJtrTZNEBYtXG69eUj4xBvtz1Lt8ToMqhs=;
+ b=h3E0bJlyFi+5PGVMjw5rtSdCSp9ocwSd95+tYH6pcq233FHBMt3wfGcBUBxez0O0bI
+ jo7NLNfGYRxMkA7C5uajvQjAZd/wpH5yXYA85MMwcAgAgM6Htr6NwhTVgGggYabbKJ4Q
+ 27rgw9viWaAiYqA2chbYktzAfTHgsEIXGvyLF4Q1YPWXbOQcw5yo4gf1P3Idrd8Mfk1n
+ clFjhOdcLXGoLlT7u19jFJlCvjMHx+cq6APW2xHOIkqf91qbaZFbZLtZ1I3ZOA8vXBhw
+ FQlrCgXXRYWPO2N2oYWw3KQd6W3ZPza14p0IajyNlZwaAM/kc/5F9I/B0pHDHEnyYVY1
+ ii6Q==
+X-Gm-Message-State: AOJu0YyDEd1nUpCH6q/viKcNJNqj9Ngh4mE//ZPGt3XpdtwYqHiyxsVl
+ 5RRBTLV1QHNB/VaMqXyARjxdkftkp0t5uLqfarARBot6YrFwAxpOA2dgah95We+tta4GAiOwHTC
+ 0WrVwJeB1R/08gxzDhq+O8w7PRJ3S6Eq6KcY1ywYuwg==
+X-Gm-Gg: AR+sD11Y5GPFAck9ObuOpF2ho4rOvaRwgwQg5EdhUhXrRIPFi9218MB6r+cFjHXv+pc
+ aEBdOvn2U6ylp0qQMgLbiLeqyW5Wbog4aFi3wWbCKhH1hFlbtWmyTV8WmSEbTOjsmspcA0ZhGuz
+ KUmHM0dTJhIZtpN4wMiG5uwDQiw5Z2GC69AHBDbPOnVjfb77keVQIJ/JFL2D5CAMu/oSTXMCQ5k
+ VHUKijUecIvvzq+KSb65axntqCbnHuAZrmUOFgXgpePfZA7X5XS+fMYwUg5J0BWkIL2qtCR55F+
+ nkFvKyI2m7Ou7N9xzwO/b9BaikrsBrOVsRg9J7EGi8s+Y+usJ8FBlNdLpELlw8NnT2Iq9jybS6k
+ M5g7tR8yEmKKHbq6oXgqJtjXViGik
+X-Received: by 2002:a17:907:60cb:b0:c04:fc6:d6bc with SMTP id
+ a640c23a62f3a-c1fd2534c68mr91287666b.36.1785496994250; Fri, 31 Jul 2026
+ 04:23:14 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] migration/rdma: add x-rdma-chunk-size parameter
-To: Peter Xu <peterx@redhat.com>, Samuel Zhang <guoqing.zhang@amd.com>,
- "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
-CC: <qemu-devel@nongnu.org>, <farosas@suse.de>, <eblake@redhat.com>,
- <armbru@redhat.com>, <Emily.Deng@amd.com>, <Victor.Zhao@amd.com>,
- <PengJu.Zhou@amd.com>, <Qing.Ma@amd.com>
-References: <20260330064758.2816891-1-guoqing.zhang@amd.com>
- <ampSFcrRagKtf5y_@x1.local>
-Content-Language: en-US
-From: "Zhang, GuoQing (Sam)" <guoqzhan@amd.com>
-In-Reply-To: <ampSFcrRagKtf5y_@x1.local>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF0002992C:EE_|DS0PR12MB8573:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0ed1bb4b-7010-4c74-08ce-08deeef51a06
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|23010399003|376014|1800799024|36860700016|6133799003|56012099006|11063799006|4143699003|10067099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: sPvjMmtq72q6tqMkE/sRm4RglgoFjjrxSyzSawkM3Do9pb428gGBiBUZJ1jT8hUvdQ8fYsafXOGSPBIQkBoGUHjxad8r/BtEaGvEY5/Try2xXOJBscIUhPuEdFfleUAKAGigzK7TOzVhvFEsH3Vk8Ka9QtI2bpGfoXBEvtaOLwXuj6EmihV+qxQi5mliDzTAC4omcj7uVKclB8ddPUYrqeRssu16/6YXVAElBcNr330rgVDIblNk8drfIuaBc4oeVcR+fi17IcMUg9deYUm2Wr0n6IAiVscJcM4X8Afjnj4Ds1M9g95DMyGH/ly9W4dpy8ssNSkdnI+a9cCyVrWNwPbGJPAF0Sw9sAsWKwSJBGbWKKiWouN7aRD1SsE453Vq2PSEmRu9yaV+59x9qIvxS8ngo/WsXmcT3jq0DoYso/p/GSF+laFWdEQuOcH6DCrgKKP+mgkuOSEHfHWZGGmMAAjQm/AvA0adeIfq54YBQbjXqSFbqM7EpH5imJgCEzShUSjngDNnOldUDQNDg/76H8srh5alFKtsVfmhvvYj65m2vyw250M2BC/3eiMUgF3pLwAS3Ku++K4eSm42pRoC3t3njz0laX3erRPHiAE9YJ5+VLnhaPXSQtQFU4z1/Rolu9uEFdZoKjhh7kTuCrNhcR1qMEId2iymQOOQEN29druY0tsbVy3R2f2aeQUi03oWxmdK2AEvh+wLR8q0o2k/jQ==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb08.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(23010399003)(376014)(1800799024)(36860700016)(6133799003)(56012099006)(11063799006)(4143699003)(10067099003)(18002099003)(22082099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: HiTDTNGXZJQB4n2baVRKcph8+DZECEvkOvj3BfWqCII3dUnW8R0q7pgJjxfF0qfCBeRxSMx1AEWYpGa7tdpng/pgQn495n1b+YLmr0f8du3EZ8w9+onBeaNLgnk9T6cP6eUQ0t90Taj/roz27tL8lTIobinMTU55MBZx8zLnOjuTTc0xLYAFIgashWrYYWPaD/RAXBwsp2IT7LhK3KsSF0hXKyoMOnUyuMMkVbjqQstjIEb2ygGYgOCYM+iz6nxJjtI/mnOcxnSFuvFsqmxV8JRjt6BbBojAl8awCWSjtntjymGFgYFDO9U4TMQKpU95Oyuyg+DgF8rtOZHU9ugV58rfWYkTP4VRJeIF3GeX2ZuiOpCqrqUPYIJU/mAYmEb55FmlPRY9ygLIxZpGG0OntADfii2reI9MusJ0RhL2WTB0+84hU4SxxeSxX+l9/uAL
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Jul 2026 11:16:00.3749 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0ed1bb4b-7010-4c74-08ce-08deeef51a06
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb08.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0002992C.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8573
-Received-SPF: permerror client-ip=40.93.196.31;
- envelope-from=GuoQing.Zhang@amd.com;
- helo=SA9PR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+References: <20260723233605.805-1-simonxhy0404@gmail.com>
+ <20260723233605.805-4-simonxhy0404@gmail.com>
+In-Reply-To: <20260723233605.805-4-simonxhy0404@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 31 Jul 2026 12:23:01 +0100
+X-Gm-Features: AUfX_mwBkZ9KC78z7Lj9vK0K5G9IER25jvT6ElX3PJjTZ2DYcKRhFir9ey051pA
+Message-ID: <CAFEAcA9d2SgtXvgRfBZiaZ8GgivLVJowKFccShLvjE6Qrb9rtw@mail.gmail.com>
+Subject: Re: [PATCH 3/4] hw/misc/iotkit-sysinfo: make sys_config2 configurable
+ for SSE-310
+To: Simon Xu <simonxhy0404@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Owen Giles <owen.giles@hpe.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Robert Elliott <elliott@hpe.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -134,67 +119,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, 24 Jul 2026 at 00:36, Simon Xu <simonxhy0404@gmail.com> wrote:
+>
+> Add sys_config2 as QEMU property like sys_config.
+> - Modify the sys_config2 register on the SSE-310 for the NPU configurations.
+> - Currently sys_config2 is configured to report Ethos-U55 as the NPU type.
 
+Ah, here's sys_config2. For v2, if you say in the previous
+patch "this implements all the sysinfo changes for SSE-310
+except for ..." then you clue reviewers in to the fact
+that they should expect that to be added later in the series.
 
-Hi Peter,
+>
+> Reviewed-by: Owen Giles <owen.giles@hpe.com>
+> Reviewed-by: Robert Elliott <elliott@hpe.com>
+> Signed-off-by: Simon Xu <simonxhy0404@gmail.com>
+> ---
+>  hw/arm/armsse.c                  | 21 +++++++++++++++++++++
+>  hw/misc/iotkit-sysinfo.c         | 11 +++++++++++
+>  include/hw/misc/iotkit-sysinfo.h |  2 ++
+>  3 files changed, 34 insertions(+)
+>
+> diff --git a/hw/arm/armsse.c b/hw/arm/armsse.c
+> index 1847c73322..cf8f6c25d1 100644
+> --- a/hw/arm/armsse.c
+> +++ b/hw/arm/armsse.c
+> @@ -806,6 +806,22 @@ static uint32_t armsse_sys_config_value(ARMSSE *s, const ARMSSEInfo *info)
+>      return sys_config;
+>  }
+>
+> +static uint32_t armsse_sys_config2_value(ARMSSE *s, const ARMSSEInfo *info)
+> +{
+> +    /* Return the SYS_CONFIG2 value for this SSE */
+> +    uint32_t sys_config2;
+> +
+> +    switch (info->sse_version) {
+> +    case ARMSSE_SSE310:
+> +        sys_config2 = 0;
+> +        sys_config2 = deposit32(sys_config2, 0, 3, 1); /* NPU0 = Ethos-U55 */
 
-Sorry for late reply. I just got the time and machine to look into this.
+We don't implement the NPU0, though, so we should not advertise
+that it is present.
 
-For current upstream code, qemu_rdma_write() len is always
-TARGET_PAGE_SIZE (4KB), which is far less than the 1MB chunk size.
-The mergeable check bounds current_length within a single chunk, so
-current_length can never reach rdma_merge_max(). You're right that
-it's dead code in this case.
+Putting in all the machinery for the property as this patch does is
+fine, but since we always want to report 0 I'm also OK with
+hardcoding 0 in the sysinfo device the way we do for SYS_CONFIG1.
 
-I did experiment with len being 2MB and chunk size being 1MB, where
-the condition does trigger: mergeable fails, current_length resets
-to 0, then += 2MB, hitting rdma_merge_max() (2 * 1MB = 2MB). But
-even in that case, removing this flush caused no issue, since the
-buffer gets flushed on the next qemu_rdma_write() call when
-mergeable fails anyway or on rdma_registration_stop() at the end.
+> +        break;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +    return sys_config2;
+> +}
+> +
+>  /* Clock frequency in HZ of the 32KHz "slow clock" */
+>  #define S32KCLK (32 * 1000)
+>
+> @@ -1496,6 +1512,11 @@ static void armsse_realize(DeviceState *dev, Error **errp)
+>                                      info->sse_version, &error_abort);
+>              object_property_set_int(OBJECT(&s->sysinfo), "IIDR",
+>                                      info->iidr, &error_abort);
+> +            if (info->sse_version == ARMSSE_SSE310) {
+> +                object_property_set_int(OBJECT(&s->sysinfo), "SYS_CONFIG2",
+> +                                        armsse_sys_config2_value(s, info),
+> +                                        &error_abort);
+> +            }
 
-Thanks,
-Samuel
+You don't need to make this conditional on sse_version. The property
+always exists on the sysinfo device. If you add cases for
+ARMSSE_IOTKIT, ARMSSE_SSE200, ARM_SSE300 that return 0, then
+we will set the property to 0 (and the sysinfo device won't use
+the value anyway).
 
+>              if (!sysbus_realize(sbd, errp)) {
+>                  return;
+>              }
+> diff --git a/hw/misc/iotkit-sysinfo.c b/hw/misc/iotkit-sysinfo.c
+> index 21e161bdc2..0905949ef7 100644
+> --- a/hw/misc/iotkit-sysinfo.c
+> +++ b/hw/misc/iotkit-sysinfo.c
+> @@ -31,6 +31,7 @@
+>  REG32(SYS_VERSION, 0x0)
+>  REG32(SYS_CONFIG, 0x4)
+>  REG32(SYS_CONFIG1, 0x8)
+> +REG32(SYS_CONFIG2, 0xc)
+>  REG32(IIDR, 0xfc8)
+>  REG32(PID4, 0xfd0)
+>  REG32(PID5, 0xfd4)
+> @@ -87,6 +88,15 @@ static uint64_t iotkit_sysinfo_read(void *opaque, hwaddr offset,
+>              goto bad_read;
+>          }
+>          break;
+> +    case A_SYS_CONFIG2:
+> +        switch (s->sse_version) {
+> +        case ARMSSE_SSE310:
+> +            return s->sys_config2;
+> +            break;
+> +        default:
+> +            goto bad_read;
+> +        }
+> +        break;
+>      case A_IIDR:
+>          switch (s->sse_version) {
+>          case ARMSSE_SSE300:
+> @@ -144,6 +154,7 @@ static const MemoryRegionOps iotkit_sysinfo_ops = {
+>  static const Property iotkit_sysinfo_props[] = {
+>      DEFINE_PROP_UINT32("SYS_VERSION", IoTKitSysInfo, sys_version, 0),
+>      DEFINE_PROP_UINT32("SYS_CONFIG", IoTKitSysInfo, sys_config, 0),
+> +    DEFINE_PROP_UINT32("SYS_CONFIG2", IoTKitSysInfo, sys_config2, 0),
+>      DEFINE_PROP_UINT32("sse-version", IoTKitSysInfo, sse_version, 0),
+>      DEFINE_PROP_UINT32("IIDR", IoTKitSysInfo, iidr, 0),
+>  };
+> diff --git a/include/hw/misc/iotkit-sysinfo.h b/include/hw/misc/iotkit-sysinfo.h
+> index 36dc702c53..1c1b2758d9 100644
+> --- a/include/hw/misc/iotkit-sysinfo.h
+> +++ b/include/hw/misc/iotkit-sysinfo.h
+> @@ -16,6 +16,7 @@
+>   * QEMU interface:
+>   *  + QOM property "SYS_VERSION": value to use for SYS_VERSION register
+>   *  + QOM property "SYS_CONFIG": value to use for SYS_CONFIG register
+> + *  + QOM property "SYS_CONFIG2": value to use for SYS_CONFIG2 register
+>   *  + sysbus MMIO region 0: the system information register bank
+>   */
+>
+> @@ -38,6 +39,7 @@ struct IoTKitSysInfo {
+>      /* Properties */
+>      uint32_t sys_version;
+>      uint32_t sys_config;
+> +    uint32_t sys_config2;
+>      uint32_t sse_version;
+>      uint32_t iidr;
+>  };
 
-On 2026/7/30 03:18, Peter Xu wrote:
-> I'm looking at some RDMA security tickets recently, and I stumbled on top
-> of this chunk size problem.  Since this is very recently touched, I figured
-> maybe I should ask here,
->
-> On Mon, Mar 30, 2026 at 02:47:58PM +0800, Samuel Zhang wrote:
->> @@ -2176,7 +2178,7 @@ static int qemu_rdma_write(RDMAContext *rdma,
->>       rdma->current_length += len;
->>   
->>       /* flush it if buffer is too large */
->> -    if (rdma->current_length >= RDMA_MERGE_MAX) {
->> +    if (rdma->current_length >= rdma_merge_max()) {
-> [1]
->
-> What is this rdma_merge_max()?  Why it's twice the chunk size, and even if
-> I believe when reaching here the current_length should have been throttled
-> by chunk size too?
->
->>           return qemu_rdma_write_flush(rdma, errp);
->>       }
-> I mean, in qemu_rdma_buffer_mergeable():
->
->      ...
->      chunk_end = ram_chunk_end(block, rdma->current_chunk);
->      ...
->      if ((host_addr + len) > chunk_end) {
->          return false;
->      }
->
-> I believe it means when len will go beyond chunk size, it'll force a flush
-> already.
->
-> With that, when reaching [1] above, we either should have just flushed, or
-> we're under chunk size (which further guarantees smaller than
-> 2*chunk_size).
->
-> What did I miss?  Or, is this line [1] dead code?
->
-> Thanks,
->
+thanks
+-- PMM
 
