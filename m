@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FA64C55173
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 22:01:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF849C55173
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 22:01:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpvHb-00063C-3h; Fri, 31 Jul 2026 18:00:47 -0400
+	id 1wpvHi-00066L-0v; Fri, 31 Jul 2026 18:00:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wpvHZ-00062n-VU
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 18:00:45 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wpvHc-00064C-BX
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 18:00:48 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wpvHY-0007SC-6S
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 18:00:45 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-47f84023916so1565191f8f.3
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 15:00:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wpvHa-0007Sm-HZ
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 18:00:48 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-47f3b39f2a1so904982f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 15:00:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1785535242; x=1786140042; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=rBzIw572nJiJtgZhzdHI29JhC6MCZxhECAbrxgyPImk=;
- b=ClHU5TXsHhHURqWOaPckn0YvphB8fO750IWl0RWXauXxZfKfjILKRN+g4vFNNV1xgn
- uPAez70LRcM9frY25JMj2/TP4a2x/w/eptC6W7pvenKzW9umDCIYN5MeTJjkuE21lMt/
- uf2YBVleVok3r9cNwYrnqvFUbOyS+8AVp+RJAeINQk8PdIEbWwk02JBzdxsgKkOS1oc9
- yBOlo8oWDEY/Zmud994vlw5RwGdwDyJkb0UME2Fa2OOPf8kwgtkUH2aakWMEXOFf0DaD
- OcQtkbNgerKge5y9Rlf7H698ZPmCcfkl5AEN4qjW5u3yvrAQdjqWwGONGanMm0k8wB1O
- 3Nrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785535242; x=1786140042;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=openvz.org; s=google; t=1785535245; x=1786140045; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=rBzIw572nJiJtgZhzdHI29JhC6MCZxhECAbrxgyPImk=;
- b=X3Mbg1rdtaWCZO0aVhDAQB+HGbthd0G4XjguKPimLxNMqgku2VUBdyOdmxattKBAvE
- V3Jx7GBYrahv3/V7cdoseiTRd3F8QnIpa7HUal6f+2iB4o4RgLWv5NLMm31LCtrk1n/o
- zUCP3OZjZSIaYKP2pLh+kUaPZfuLCRBHnTb1lMCWa793m93tkzvWpAWrd/Y14TJvVKkN
- NbWuAEsxGhzYobtAvSpJW4bdgHlSWGQVCNu/q4iaARuW5jFYcHysxLfbFw1sL1J/jpDE
- w2kyetGEc+odTPXs7QXoBb1xcR1V44aQNCWVZBJ8WpHGvH+4VBgARdBGxav3aeT9NnNe
- sM+Q==
+ bh=EqUCep0HZSTo8W3y5ufyYcxJQO20NzUS0NZ7qB5Dt3s=;
+ b=g3ta6camtSBV/Hjy6teFwssOYe8KvSXTgNE3g7AXVO1PQOgoxIWJ2KbClLWmWiMk0t
+ Gsk3w3lyx3B4oBWiTaWeowVj0vQHRIv9xNHoDfjDDJNB4pbBT1T15RCR2s6EpNRoxMlm
+ DVWcaAbVs4dFNQTfIC7cZuv/PHERbWs1Sg3+8AoKZEgD5dsZcDX+UcgEqIww/2Yr56Jz
+ SQuCPWrVQIfonv/kYnTehQq6Ee3OEmR7Pj2kvx/rxRasS9VsMJ7z0mYIzhCBf901rEES
+ hx5NclKNS9izP4XRqh+jE3xJ6c7n4go6H/fEnGF89aqN4occ4VmINAsTT3zdndfwrdov
+ LZbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785535245; x=1786140045;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=EqUCep0HZSTo8W3y5ufyYcxJQO20NzUS0NZ7qB5Dt3s=;
+ b=rouLuyR6CC5hcGHeR995INtPbM4S50YF35lAkPUm2tzDBp9Yf8SYFMp/iDqZK0BuOT
+ Y26NWlgV2RuvUJUj7nV07ucDDaE4+FuW5e0r06fxELclQoPV0gO1vbI3OB/F/YIg3qxA
+ gghIWwOTfblr6R13JVb4YViOqsBNShtsms8zBv+78sAgKFD+g4EQLugucO6RKEPnbURr
+ eCD5JE7aXePzKJaTVvWKcUy6ivQ0nlq5/DYZ+STCJia8/92Xt37alb4fCCvIDzpzApp+
+ nLaKdD1IQL1f9R8oAoeHutz8p2+FNiq8wgxH5vC8ln1c/WDBl+Rz7c1IGXhkFMGQu+XN
+ DRTw==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrL8WmZAXGsA/8jTLFIFSbIXyn7h1vN0wCGDUMYW2VEPbe9PtG0yEyf8U+5CWS6yDElKO1Ly5QL891N@nongnu.org
-X-Gm-Message-State: AOJu0YzBb8qIpOwPdq+PCJRsc97MqDGvDDoit0md+iwFZ0/KxznjXRhn
- HCKamDwF2ZP+OMWb97kXXr+JhOqNVX3P+WUuahQ7W/9948Ha/VG0Pr3wtfvjxkbYFFo=
-X-Gm-Gg: AR+sD10Tv9mW9DmLXL3ppsfhyA/PFLRz6ekuaxoHyuM1XzXVFrwUncKhJO8emHP4Ach
- QTNCIbTD2MLh7HmaaoMkzW8C7oW901ot0LQ9BswUX0HSnSL8rZvuza3STaEhrmDHBrC9xcfPr5h
- YUZPf6EjiN72TxD6FU727d5h5FT6L2Ml3NazrP3b9o0toweTMEwqDXaGsa2Ii2s6keJEBl4UDP5
- ONHmZUOwe4vdltMsCRxtrOv8H9TBaBUuF+/K/zH6FDB8CpvCNVh10vMUqAl+B1qD4cDRRj3zrib
- KX2KAW733GPh19RVyV05HnhudMHRf1VkWfycy1H5hSNW0fZE0R1+mUtGtHWwgy/skw23/WoW4de
- p56J0Pydn/uA/fZws1HevoMup5mLoyxMLAtaxFZd7Tzv9zAg2MLMCA4wZiC4QGfH3ONx+oVaMkQ
- seVaV3GdLfV3Abl9OXZHePgDXw14cdtnfH0UeeE5gNK4RiBRmd71aCI3pV
-X-Received: by 2002:a05:6000:25c6:b0:47f:97a6:1334 with SMTP id
- ffacd0b85a97d-47fd731956emr2494648f8f.46.1785535242221; 
- Fri, 31 Jul 2026 15:00:42 -0700 (PDT)
+ AHgh+RrAKfRfstwjLpnywj7PtvPX7Bb5tuoA1+niZ305LxGzB44NCWeEmqiOEdx2cdvDQX+d2CLcSbOjmQyS@nongnu.org
+X-Gm-Message-State: AOJu0YyESwys6DU4wGd7IaD/a07OJVCtVDM/2800yRfkWmvHAYQA+CzM
+ rEUC63suLffhoYDBav2GG8Kp9WvjmQF0F4rvBSxTT1/JGCofcU6uaOTPhj1zakV5nec=
+X-Gm-Gg: AR+sD13FehG8NJUPhLOMFSenlZhHTu7gkoyBoEQRjlnpId9uRQQyKdNcrFVSEkJ3gCS
+ D07P02l6xBZq3EsLWe7bzA4bGQBwa5zUQgiRmSR/ajF6eZMnUDyYq8199vHRGrzaJ5ecAZtb9C9
+ 43Qpbz8BwtT7u1mUxVtGCfN5KJMUNz1MpRRm3haQyefhlF+Gkv0ZEfhwwKnZRMNw8X5QgO5pS4C
+ DUq3dPVJ1YwZZ0+NiIaFYD6UFdPeUm3awvDN14ziob0cTLD48UddBVQ6+JbaPXBcNCffSZL/IaQ
+ j4gqzC2LGG90bLlo7huFAyj8alk/Hs1sL18+hYLTDl6hRRfVu2+3TR1WMrrPQJIQhLO33tRatir
+ pjRlBNKbunRB0SIxzwwWkAKH6SslxEACaWxb7pcxCko29zmP2fmkariAwn1ajmmBBPYgjE5Es+7
+ m7vK5MP0M6jPxG2zqn22l2BV9zlluu+qP4fOwlu+VUByA8J/0MSaYXmwSa2+uYMhFVPuFF
+X-Received: by 2002:a05:6000:b44:b0:47f:81c4:36a5 with SMTP id
+ ffacd0b85a97d-47fd72a8cdfmr2140256f8f.15.1785535245168; 
+ Fri, 31 Jul 2026 15:00:45 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:1758:fc6:a5f8:a15f])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47fd41e2cf1sm9711152f8f.10.2026.07.31.15.00.41
+ ffacd0b85a97d-47fd41e2cf1sm9711152f8f.10.2026.07.31.15.00.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 Jul 2026 15:00:41 -0700 (PDT)
+ Fri, 31 Jul 2026 15:00:44 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-block@nongnu.org,
 	qemu-stable@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: den@openvz.org, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH 0/2] qcow2: silent corruption when a dirty image becomes
- writable
-Date: Sat,  1 Aug 2026 00:00:37 +0200
-Message-ID: <20260731220039.1765584-1-den@openvz.org>
+Subject: [PATCH 2/2] qcow2: repair a dirty image when it becomes writable
+Date: Sat,  1 Aug 2026 00:00:39 +0200
+Message-ID: <20260731220039.1765584-3-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260731220039.1765584-1-den@openvz.org>
+References: <20260731220039.1765584-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=den@openvz.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=den@openvz.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,112 +102,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Today I have faced real data corrupt from our customer with the
-situation very close to the one addressed in the patch
-"qcow2: do not try to clear the dirty bit on a read-only node" and
-that is interesting. I was really unsure that design is correct
-but with today case I can say that correct thing was done.
+A dirty image must be repaired before anything allocates a cluster in
+it. qcow2_do_open() does that, but only for a node that is writable
+from the start. A node opened read-only skips it, and nothing revisits
+the question once that node becomes writable, which block-commit does
+routinely: commit_active_start() and commit_start() reopen the base
+read-write for the duration of the job.
 
-The problem
------------
+With lazy refcounts the on-disk refcount block then still accounts for
+the metadata clusters only, so the allocator restarts at the front of
+the image and hands out clusters that L2 entries point at. Two guest
+offsets end up sharing one host cluster. Nothing fails, the corrupt bit
+stays clear, and a clean close clears the dirty bit, so no later open
+repairs the image either.
 
-qcow2_do_open() repairs an image carrying QCOW2_INCOMPAT_DIRTY, but only
-for a node that is writable from the start:
-
-    if (!(flags & BDRV_O_CHECK) && bdrv_is_writable(bs) &&
-        (s->incompatible_features & QCOW2_INCOMPAT_DIRTY)) {
-
-A node opened read-only skips it, correctly, since it resolves nothing
-and writes nothing. Nothing revisits the question when that same node
-later becomes writable, and bdrv_reopen() is not an exotic way to get
-there: commit_active_start() and commit_start() both reopen the base
-read-write for the duration of the job, so an ordinary block-commit onto
-a read-only backing file is enough.
-
-With lazy refcounts the refcount blocks are not written again once the
-dirty bit is set, so an image left behind by a killed QEMU has an
-on-disk refcount block that accounts for the metadata clusters and
-nothing else. Every data cluster reads as free. s->free_cluster_index
-starts at 0, so the first allocation after such a reopen starts at the
-front of the image and hands out clusters that L2 entries still point
-at.
-
-The result is aliasing: two guest offsets mapped onto one host cluster,
-so the guest reads back data belonging to some other offset. Nothing
-about this fails. No I/O error is reported, the corrupt bit stays clear,
-and a clean close clears the dirty bit as well, so no later open will
-repair the image either. Afterwards qemu-img check reports
-
-    ERROR cluster N refcount=1 reference=2
-    ERROR cluster N refcount=0 reference=1
-    ERROR OFLAG_COPIED data cluster: l2_entry=<host>|COPIED refcount=0
-
-and the only runtime witness, if something eventually frees one of those
-clusters, is a bare
-
-    qcow2_free_clusters failed: Invalid argument
-
-on stderr, with the guest none the wiser.
-
-How it looked in production
----------------------------
-
-A VM was killed while its storage was unavailable, leaving a 100 GiB
-volume dirty. It came back with a snapshot-revert overlay on top, so the
-volume itself was now the read-only backing file, and the overlay was
-committed into it two and a half hours later. 8082 host clusters ended
-up referenced by two L2 entries each, roughly 8 GiB of guest data
-cross-mapped. The guest filesystem began failing metadata verification
-on buffers holding fragments of unrelated files.
-
-Two properties of the damage are worth recording, because they are what
-told us this was not a race:
-
- - aliasing is exactly two-way, never three or more, which is a single
-   monotonic sweep of the allocator rather than a window hit repeatedly;
-
- - it stops dead at the host cluster that was the image end at the
-   moment the volume was made writable. Everything allocated after that
-   point is intact.
-
-qemu-img check -r all makes the metadata self-consistent again, and then
-honestly reports no errors, but it cannot un-alias anything. The guest
-data stays wrong.
-
-Reproducer
-----------
-
-Under a second, no guest and no block job required:
-
-  qemu-img create -f qcow2 -o compat=1.1,lazy_refcounts=on base.qcow2 1G
-  qemu-io -f qcow2 -c "write -P 0xaa 0 100M" -c flush \
-          -c "sigraise 9" base.qcow2
-
-  qemu-io -r -f qcow2 base.qcow2 \
-      <<< $'reopen -w\nwrite -P 0xbb 900M 100M\nquit'
-
-  qemu-io -r -f qcow2 -c "read -v 0 16" base.qcow2
-  # 00000000:  bb bb bb bb bb bb bb bb bb bb bb bb bb bb bb bb
-
-The flush is load-bearing: it writes out the L2 cache but not the
-refcount blocks, which is exactly the asymmetry the bug needs. Guest
-fsyncs supply it in production, so a long-running VM is the ideal
-victim. qemu-img commit of an overlay reaches the same state through
-commit_active_start().
+Do the repair in qcow2_reopen_commit_post(). bdrv_reopen_prepare() runs
+before bdrv_list_refresh_perms(), so it holds no BLK_PERM_WRITE and,
+with auto-read-only, bs->file may still have an O_RDONLY descriptor.
+commit_post cannot reject the reopen, so signal corruption if the
+repair fails rather than let writes alias live clusters. An inactive
+node is skipped: bdrv_activate() calls qcow2_do_open() again through
+qcow2_co_invalidate_cache().
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 CC: Kevin Wolf <kwolf@redhat.com>
 CC: Hanna Reitz <hreitz@redhat.com>
+---
+ block/qcow2.c              | 14 ++++++++++++++
+ tests/qemu-iotests/039     | 24 ++++++++++++++++++++++++
+ tests/qemu-iotests/039.out | 17 +++++++++++++++++
+ 3 files changed, 55 insertions(+)
 
-Denis V. Lunev (2):
-  qcow2: do not clear the dirty bit when reopening a read-only node
-  qcow2: repair a dirty image when it becomes writable
-
- block/qcow2.c              | 25 ++++++++++++++++++++++---
- tests/qemu-iotests/039     | 35 +++++++++++++++++++++++++++++++++++
- tests/qemu-iotests/039.out | 22 ++++++++++++++++++++++
- 3 files changed, 79 insertions(+), 3 deletions(-)
-
+diff --git a/block/qcow2.c b/block/qcow2.c
+index 1543255eba..e660655a0d 100644
+--- a/block/qcow2.c
++++ b/block/qcow2.c
+@@ -2147,8 +2147,22 @@ static void qcow2_reopen_commit(BDRVReopenState *state)
+ 
+ static void qcow2_reopen_commit_post(BDRVReopenState *state)
+ {
++    BDRVQcow2State *s = state->bs->opaque;
++
+     GRAPH_RDLOCK_GUARD_MAINLOOP();
+ 
++    if (bdrv_is_writable(state->bs) &&
++        (s->incompatible_features & QCOW2_INCOMPAT_DIRTY)) {
++        BdrvCheckResult result = {0};
++        int ret;
++
++        ret = bdrv_check(state->bs, &result, BDRV_FIX_ERRORS | BDRV_FIX_LEAKS);
++        if (ret < 0 || result.check_errors) {
++            qcow2_signal_corruption(state->bs, true, -1, -1,
++                                    "Could not repair dirty image");
++        }
++    }
++
+     if (state->flags & BDRV_O_RDWR) {
+         Error *local_err = NULL;
+ 
+diff --git a/tests/qemu-iotests/039 b/tests/qemu-iotests/039
+index a5be81bc4a..255dc2e7e5 100755
+--- a/tests/qemu-iotests/039
++++ b/tests/qemu-iotests/039
+@@ -137,6 +137,30 @@ $QEMU_IO -c "write 0 512" "$TEST_IMG" | _filter_qemu_io
+ # The dirty bit must not be set
+ _qcow2_dump_header | grep incompatible_features
+ 
++echo
++echo "== Reopening a dirty image read/write should repair it =="
++
++_make_test_img -o "compat=1.1,lazy_refcounts=on" $size
++
++_NO_VALGRIND \
++$QEMU_IO -c "write -P 0x5a 0 512" \
++         -c "sigraise $(kill -l KILL)" "$TEST_IMG" 2>&1 \
++    | _filter_qemu_io
++
++# The dirty bit must be set
++_qcow2_dump_header | grep incompatible_features
++
++# The refcounts are only resolved when the node becomes writable. Without
++# that, this write is allocated on top of the cluster at offset 0 and reading
++# it back returns the data written here.
++$QEMU_IO -r -c "reopen -w" \
++            -c "write -P 0xb1 1M 512" \
++            -c "read -P 0x5a 0 512" "$TEST_IMG" | _filter_qemu_io
++
++# The dirty bit must not be set
++_qcow2_dump_header | grep incompatible_features
++_check_test_img
++
+ echo
+ echo "== Creating an image file with lazy_refcounts=off =="
+ 
+diff --git a/tests/qemu-iotests/039.out b/tests/qemu-iotests/039.out
+index 3c71e5a3dd..62073916a9 100644
+--- a/tests/qemu-iotests/039.out
++++ b/tests/qemu-iotests/039.out
+@@ -64,6 +64,23 @@ wrote 512/512 bytes at offset 0
+ 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ incompatible_features     []
+ 
++== Reopening a dirty image read/write should repair it ==
++Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
++wrote 512/512 bytes at offset 0
++512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
++incompatible_features     [0]
++ERROR cluster 5 refcount=0 reference=1
++Rebuilding refcount structure
++Repairing cluster 1 refcount=1 reference=0
++Repairing cluster 2 refcount=1 reference=0
++wrote 512/512 bytes at offset 1048576
++512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 512/512 bytes at offset 0
++512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++incompatible_features     []
++No errors were found on the image.
++
+ == Creating an image file with lazy_refcounts=off ==
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
+ wrote 512/512 bytes at offset 0
 -- 
 2.53.0
 
