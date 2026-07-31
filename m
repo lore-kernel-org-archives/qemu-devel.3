@@ -4,108 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 536A3C5516D
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 12:58:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17198C54F54
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 13:07:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpmoT-00011V-Pj; Fri, 31 Jul 2026 08:58:09 -0400
+	id 1wpmwd-0002lc-UF; Fri, 31 Jul 2026 09:06:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wpmoS-000113-2a
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 08:58:08 -0400
-Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wpmoQ-0004bO-9g
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 08:58:07 -0400
-Received: by mail-yx1-xb132.google.com with SMTP id
- 956f58d0204a3-66807ba2f0fso1297000d50.3
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 05:58:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785502685; cv=none;
- d=google.com; s=arc-20260327;
- b=Uy6Z058CVDzhbThlDM58fjwpCCFoTaa9JOX4VEwlrnCBU/J8SGqA7g6Z0tmFXkrqf1
- 4UvgOEYZj/r989Ofc8+fH7Hx16+p5RJ4OREKi+HXeUCAfE+vMy35rll9YmQ7S27F9sRD
- HdMhSCUYaxsXsTpjRECEmuWbR0+wcXnLK402wmOOeenL3aQUFxVBFXOLFf9iwTc26gmo
- 7OqIQKTwWoA0rdRjHq8Jaw5pf0KrnIuJq6KniXPvKZ2NRLiDR9mtzUNaiOLDYplcS/xy
- 9Lc9sMfIpYlZbhnPpXu0WVDH+5TFhdGrmpxu/Ny/APg/uvp8uXYF/tLwhdDIk3V3xcyA
- Jgaw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=zT010dL9zwi/EIWKfQkcBqsb9hq/y0PhOEutY5xxjRU=;
- fh=ez+LVd8M9hy1dnJgxFB0699yjwsZu5xnMX7Bb9/3STE=;
- b=qjs808+vRJ2q4evTPXCjIuY1PoKt1hpOwERa9imxQorngMZstbtW5DRsqUy85LHF24
- UW/brR28KtXFdl0ag31bX5v8ove88ApJZ4Ct4JvUSpFE69+QFgwvu2UyKJzwN8kX2VYr
- tlsCNN3Q87rI5PcEDkzTT902WJqqs5UeLQHbdqRpI8FjTK25XSOWhl0as5q6QBWyyr4M
- hR5tLCnvrQrIGvXCnXvywE4c3IdFf6Ac5wYe552KjAzOAAuWLQKUU8u660ETWqA91FAu
- sG71rhCa8w7Xy7hFz2Gvt2+wYf/Zs7Ke849fiuY9eswIMzi18/A33N7TdjW4uq+hRDdp
- Ic0A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wpmwc-0002kv-56
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 09:06:34 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wpmwZ-0006Xu-MF
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 09:06:33 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66VBjdLO4054639
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 13:06:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ VSwV7LTIGbap8owHH2xw1MJU4PQgeevELg+GTAKVFyw=; b=FPexjjKxL3T40Ip3
+ TiEU2QaoYHHcny3N4lWeTyYN0t9o07AF11eI169JHIDmVRBZY95rAbU855ZQclQ+
+ sw7f3L/Nfy4y0uuXriYsVN1qSljQfHTAEu1Hqibi++IG7DxKGHIFzxJh5zSE3znK
+ cBivD6+rmymWQb9dPIsQpmNl7aGY1N2uQy6EnaZbu0lFX6DudAWzxSfJ1SzXtKUG
+ tNkddcn6+AyvQCVQXfGadUI89Sqk8mi31+gV4cJVRys/X2wV5Rc96SeHduffEY9v
+ Vol4M8Soe7NSqMhNBk99Zp/MhyJQbwy23xa6moUaCb1dp+9YlWTKMXorPlk76CxU
+ FOGg2g==
+Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
+ [209.85.217.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fru4808xf-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 13:06:28 +0000 (GMT)
+Received: by mail-vs1-f71.google.com with SMTP id
+ ada2fe7eead31-73c040cc990so262564137.0
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 06:06:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785502685; x=1786107485; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=zT010dL9zwi/EIWKfQkcBqsb9hq/y0PhOEutY5xxjRU=;
- b=jh+jSTIh7ROKDTZDxO/R7hNJ0NnHTLyoMq3r6ljIOHfvYpfz+rONrybyK+zrPcktDp
- 0xgg6jJVlgVbbNuQs6D0f8v0EkFLTuZV6SsBlvgfeKc7bMbOcT93dCH+z/qXMpI0tncd
- gtgErPyBRLvF1FOC3DyhzKYqO8iRABEuVoOrWca+BM90Vn7XV0al/2cde97sRpM3g7WM
- zPKdO2szhjTfuggbSNMettnTae8ExQVzwtWIsihuDDatqlcWTa1iCQLB5NkRbvWUzu1q
- xVFstw+qTe3XIGhGrqIfRZUJNBMqbUl9rxKU55iID1qCd96i+1aHGNGOerU230gyR4VH
- p5IQ==
+ d=oss.qualcomm.com; s=google; t=1785503188; x=1786107988; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=VSwV7LTIGbap8owHH2xw1MJU4PQgeevELg+GTAKVFyw=;
+ b=ZBmGjcsZP0Z1pSWOWiE84GXOP1oGZSnysyypsW1vmrxOXhbVIh192ffQgYyrmu3RNx
+ HsR3HF3dj1M1GVnESg11qoCLDf6ZoEVIDeZ2OHWiN8ZgsP0e65nApY7FgAUhvXVyJHgc
+ DHD90aqnrEB4yR9GZmwuZ/b0j0p2kr7pHYLsH3sh25rb6H05yopDJjeR9g2PAi1hZmU1
+ OUnhVAHuqO+REmsRk4szEn24xOXbxs/Q+knSBGbIwkFgJjuGX0CKxBPiI+cXHSYsmiGu
+ JMrR6KSgrmT2dI0Oq4LQqLvsWC1rspXqUIwvCgAUGMHNyncIC9AqhRO/iqXQvscWOisy
+ sXuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785502685; x=1786107485;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=zT010dL9zwi/EIWKfQkcBqsb9hq/y0PhOEutY5xxjRU=;
- b=JnvtydgT385fDruNHIUL8MjlmtKgdicYpK6+ak3d0Ry38/B3lVzzvou50kehIand+k
- kCEVbMayWXlTLEIYBPjmL780NxrCAK4RCsut0yd5VEQpXMv86ViQQlhNNbVamZmqh/Eb
- cLKoEBCabK+RswtHSZg0YdIG0oNnkqye6FHW+QUmXycko/wpKJCdj4Uhv1kTdMhtFWV5
- 8CAaJFsBoKFQ50ZVnAjm0qBQ0krUzVSAJCCu5BrLYzaszWh3xF514r+Y+9hadYH6ruPh
- 8cjQu+pu+22/xi92y4/AIelqbtoWmlezvcvxoUVB4uK8tgJ41pupydgQRBADH6xgDQ9C
- d2ww==
-X-Gm-Message-State: AOJu0YzpylkBBmNS1BAOtwdBKn0jIocNVkeUEehdGABjvL1ADDVrlhcO
- IbCROVxfmrmijms8yHDu3Fv5IwcatcVgMKcVkAUGBhoCn07vzKtaCjbJAkSGfHEjHSC/M8cqWf3
- kPI7ElqzYFxi1FY2peIFyJVW29g88K0OQhf5o3oHh4w==
-X-Gm-Gg: AR+sD13PfBZpW+4csnr2KHbESimoYiiNa3nRFTxCqVZrOd5sASYkSdXoGZByf3mzr7/
- vxcVYc2AlOLKUowZTqshXcU1YhvbxmkfoQFDCfibDRTKxoaq7pMx/0YOai/VJjB38GChQYRZwYZ
- AJGRGOJqhEXAW9P8FE3KT2ed4G/NrnOOE5oGjzADrph3U/xoa4/2gb56AtAQbofxpSWJakw2gQo
- RXfGMjnEpg5ius+DO8+Q8FKOMwxhGp/i40+uQGB7rwg8G0N461+KM1xZMxro9qDYy5iCsUlqv2h
- WFoEGJ7burTd09dkBM5jBHZkjIA6in5cJavfbfJ+onxDmoCwngbowxnqV/32mCjTrIxMXSUrCEw
- Jz1MskOE6zXolsUOepKg2bHi87Aak
-X-Received: by 2002:a05:690e:4887:20b0:660:4936:95d5 with SMTP id
- 956f58d0204a3-66945480ec9mr1111441d50.40.1785502684845; Fri, 31 Jul 2026
- 05:58:04 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785503188; x=1786107988;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=VSwV7LTIGbap8owHH2xw1MJU4PQgeevELg+GTAKVFyw=;
+ b=h03OOrcsgeHyrp83tmOSIIxBLKWdqQnrWwK1JTsxdGwOKXDynBS3+skh9gki8FIIjS
+ EVmwFbETDpHi9Q1iWY2pxHscIEXeWN9unZE7JhOjDCvhrwLk5d3aiWz/8OszRFedWPfU
+ HbxXsA4KA6YcokspW9wAV0Ex+YiX3ZzuBAri8F7/uygwBkhUAaje3l9bfk612jY+420/
+ 2nY8PmmDQ9cg2wRRgt1oJxresvjKYQCpGSsHjmQXfwWyZSMKxZN5YOHZS5l9GI3+et3M
+ krPSLt9FpZ9y3Q4PjX/ZkBsSSF2AYIQkR17mH4vjlHW46/qnGab84di2lr9XZYgQEJk5
+ nYxw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpuK7gTgPnTMZYeSJcMjDz8prtst76XApnZOiGFzOLH20WItKlSsFjfOLFpQpv4+u4vIe/BU2UpTA87@nongnu.org
+X-Gm-Message-State: AOJu0Yysuu8xVGUYFBAaYttHOV8j3qKaNWptSPjWn78m0a67L+hGlil0
+ MpMGSfCMs5fwHdbpuMDOv4GSS45cIK3BXz8RPx3c8OM39oT5PeMDTX9TnuhsihB01FkTQM200h0
+ uasexuStPnemtGwrKpfT0EEXbRM6GCfvKTcWE2aH75QYGzU0DSL6mNhvoEw==
+X-Gm-Gg: AR+sD10G0IWQ/S0aHkUEWjfTUcfNnVMOniolmdpbDLejq7l82m1pgg/FLIO693Qs2vV
+ aPNdvIBo9ZNtmZNEwuzeGNuqgG5h/y5YU7B3ef0ARpsWtbUo7+T9+GbLK2W/pxj+QWkWeKGCcHi
+ S+8F+X3yjEMsZHym/VCL1oVDaU3K+9ifEErxzQJecS0PyZostR5lCfYRDgC+tbPBEOKONFsqCjh
+ 4zmdEWpkm7uWJvr9RXcKTJhEG5gAF6NYuKDWtbmUUM+MR5LzXjbrJDX+LzLDqcQSISOAdtaUdJG
+ 5b6kDDXWF/jzBBFQfRT+EdUSOEOrP4WW5GVpWcnB20EoBkdHshXDR3T5mm/fnl6LMKIeKI9f2RW
+ q2VxAiUh2Lk0peMgZCZIXqFr2P/IBK2VDNxbsWNJgCkfAyrqhlCw=
+X-Received: by 2002:a05:6102:4b10:b0:74d:ce65:4739 with SMTP id
+ ada2fe7eead31-758f7554264mr899036137.8.1785503187914; 
+ Fri, 31 Jul 2026 06:06:27 -0700 (PDT)
+X-Received: by 2002:a05:6102:4b10:b0:74d:ce65:4739 with SMTP id
+ ada2fe7eead31-758f7554264mr898907137.8.1785503187407; 
+ Fri, 31 Jul 2026 06:06:27 -0700 (PDT)
+Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c1fd4454306sm159195766b.36.2026.07.31.06.06.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 31 Jul 2026 06:06:25 -0700 (PDT)
+Message-ID: <aebdcaeb-efa1-4ab2-b48a-e0a183bb53da@oss.qualcomm.com>
+Date: Fri, 31 Jul 2026 15:06:24 +0200
 MIME-Version: 1.0
-References: <20260723233605.805-1-simonxhy0404@gmail.com>
- <20260723233605.805-2-simonxhy0404@gmail.com>
- <CAFEAcA_Ybrqb0g-cZYf6yL2eHRUZ6PfeWQMiVrVVeFJFp3q8KA@mail.gmail.com>
- <DM6PR02MB49408F0E20F38E117E7FA08FFECF2@DM6PR02MB4940.namprd02.prod.outlook.com>
-In-Reply-To: <DM6PR02MB49408F0E20F38E117E7FA08FFECF2@DM6PR02MB4940.namprd02.prod.outlook.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 31 Jul 2026 13:57:52 +0100
-X-Gm-Features: AUfX_mwhHN4YczljuUr35pt2yA3jGS3PHiNYGl4bxDW-fsy_E23m7ZYAtHpjLvY
-Message-ID: <CAFEAcA8h9ca6gjKrBjvzX63OJ+1TCy=TTDCHA=0SHdv_TsFVGg@mail.gmail.com>
-Subject: Re: [PATCH 1/4] target/arm/tcg/cpu-v7m.c: add cortex-m85 model
-To: Simon Xu <simonxhy0404@gmail.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, 
- Owen Giles <owen.giles@hpe.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Robert Elliott <elliott@hpe.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/net/vmxnet3: Do not abort if guest provides bad
+ interrupt numbers
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>
+Cc: Jason Wang <jasowangio@gmail.com>, qemu-trivial@nongnu.org,
+ qemu-stable@nongnu.org
+References: <20260731113352.189066-1-thuth@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260731113352.189066-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=IJsyzAvG c=1 sm=1 tr=0 ts=6a6c9dd4 cx=c_pps
+ a=P2rfLEam3zuxRRdjJWA2cw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=p0WdMEafAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=UJx2ctYxQamrb8bvw3MA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=ODZdjJIeia2B_SHc_B0f:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMxMDA5OSBTYWx0ZWRfX0/+Z8or3bVx+
+ 1Hgf5vXL6zBY0NBFXnEf8b8RkxE2Lrgexu05TXpl4QRmcQMovM57/dLzBuxyNOcDjtlTzQRaFCO
+ N/WhKFAGd+82CaabHh0uTAF/0Qw2K7Q=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMxMDA5OSBTYWx0ZWRfX7Pwf4EHnlbue
+ 7uA+uQDFGbl/f8dMdpZL4+d4/743HJdc5p/Ie5qlWqbR2rrTlRr7TmUTmdiNv+WPAqNP8CISvYD
+ MIh8K1Mj3hwiiRCtwwMk0boGhFlVEZKe7NIBwsAUe+Tga5MHo5qjYtMRNOwWO6I1a805jt1/MS4
+ Ns4frhJFGOUSBQ6yJb1K+q7/AKRTuUThTmpt9g+N/Zw5c0qHeMRAhHiNFTIrMf0ZqNF2+To58iX
+ j/wWLF1R3NvXy7jIZsiIblhbbq0Dl8owDiMQ6hLuzrhXgnB+ZuJ/uyU/xeR6be0IfC3Z7MkcW9n
+ c0oZdU3taQoQ1gbhlWjyTeNkaqg90YIYwhkbS7vtvMg+mJhZiltt7iAb1ipnBRXLQKBhMrOFfFn
+ sLGzMjjrY/CPukalFS9WxrXIgfJi4xgXafUEa4B+0WwR/NyKTeE0eI26IQffDH4eTk7v6viAL6J
+ V+RDHaROBj9xADT8M/g==
+X-Proofpoint-GUID: N7Zj5nCuwRXO1mnA3KAB6naIUSt9hRkG
+X-Proofpoint-ORIG-GUID: N7Zj5nCuwRXO1mnA3KAB6naIUSt9hRkG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-31_04,2026-07-30_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 priorityscore=1501 malwarescore=0 suspectscore=0 phishscore=0
+ adultscore=0 clxscore=1015 lowpriorityscore=0 spamscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607310099
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,49 +156,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 24 Jul 2026 at 19:11, Simon Xu <simonxhy0404@gmail.com> wrote:
->
-> > The major reason IMHO to add a Cortex-M85 model would be to
-> > have a CPU that supports M-profile PACBTI, so wouldn't
-> > it be better to implement the feature first and then
-> > add the CPU and the board model that uses it ?
+On 31/7/26 13:33, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> vmxnet3_validate_interrupts() currently aborts via hw_error() if
+> the guest provided bad interrupt numbers. This should not happen,
+> QEMU should rather refuse to activate the device in this case instead.
+> Thus propagate the error to the callers to handle it more gracefully
+> there.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/539
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   v2: Drop the unnecessary vmxnet3_reset()
+> 
+>   hw/net/vmxnet3.c | 34 ++++++++++++++++++++++++++--------
+>   1 file changed, 26 insertions(+), 8 deletions(-)
 
-> I understand your reasoning behind adding the feature first then the CPU/boards
-> so that there's something to use the features. I looked through the patchew and
-> saw that was how you handled it with the M55 CPU and v8.1-m features.
->
-> To explain myself, this patch series was a part of my intern project at HPE. We
-> currently have a fork of QEMU where we use it to emulate the HPE BMC. I am
-> working on implementing the currently unavailable M85 CPU with the Custom
-> Datapath Extension for internal use. I thought I could potentially upstream only
-> the M85 CPU and related machines. I didn't include CDE because it was not fully
-> polished and PACBTI because it was not super critical to my experimentations.
->
-> I do agree there are no architectural differences between the M55 and M85 right
-> now so I fully understand if this patch series is not sufficient for upstreaming.
 
-I definitely think it's a great start and it's most of the work
-that we'd need to do to be able to add a Cortex-M85 model.
-We also had a series submitted which made an attempt at
-the PACBTI implementation (though it only tried to do it
-for user-mode, so it's also missing some parts):
-https://lore.kernel.org/qemu-devel/20260518-pr-pacbti-v1-0-8932a885b03d@foss.st.com/
+> @@ -1554,7 +1568,9 @@ static void vmxnet3_activate_device(VMXNET3State *s)
+>                  sizeof(s->rxq_descr[i].rxq_stats));
+>       }
+>   
+> -    vmxnet3_validate_interrupts(s);
+> +    if (!vmxnet3_validate_interrupts(s)) {
+> +        return;
+> +    }
 
-I've made review comments on the other parts of this patchset.
-If you have time to work through those and respin, then I
-might be able to find time to sort out the PACBTI part,
-even if we can't commit the an555 board code immediately.
-And even if not, we have these patches in the archive that
-somebody else can pick up some day.
+Better, thanks.
 
-Incidentally, the custom datapath extensions would be a much
-trickier thing to upstream, since by definition they're custom.
-The Arm Fast Models handle these by letting the user supply
-a plugin DLL that implements whatever the custom insns are,
-but for QEMU external user-facing interfaces are always awkward
-and it feels like specifying that in a workable way would be
-a lot of effort for an extremely niche feature.
+If nobody queue this patch, I can take it via my hw-misc tree, but
+after the release (since this is a very old issue).
 
-thanks
--- PMM
+Regards,
+
+Phil.
 
