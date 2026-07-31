@@ -4,115 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00873C54F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 16:33:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74416C5516F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 16:46:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpqAl-0001QW-17; Fri, 31 Jul 2026 12:33:23 -0400
+	id 1wpqMk-0003MK-Fq; Fri, 31 Jul 2026 12:45:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wpqAf-0001PP-Se
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 12:33:17 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1wpqMg-0003LW-EF
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 12:45:44 -0400
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wpqAd-0003lQ-Jv
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 12:33:17 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 70FEE418A;
- Fri, 31 Jul 2026 16:33:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1785515589; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=TpyaHivTc4ihb/sUbJAVJi4mhk8+byBB6H8u9uyiLQU=;
- b=rkhhNdBwMMXlRhGyArotBzfTJe8/kXydVV2eE6XD7J0aiDPa0x16L5vUzXroqEtBFbcZXl
- K54c80nwKFms+lo4zdG1nY/Sau3y3vismacy+scaFRCeeWI43GlO+gAPpBV7Ps0OmfackB
- HA8jZcPysHw1PoAB011SwFnUN8KOOr0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1785515589;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=TpyaHivTc4ihb/sUbJAVJi4mhk8+byBB6H8u9uyiLQU=;
- b=c4Z49IwIcsSMQc7rWbH6hmK6v35PUltUop/J5cO+3f6+frYKbyvwun4aH/ee8n6884O1E7
- G/55xXj8AQm1eAAQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=JhNTubF5;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=lKiQihl7
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1785515585; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=TpyaHivTc4ihb/sUbJAVJi4mhk8+byBB6H8u9uyiLQU=;
- b=JhNTubF5qK4SujVlsWnSDmwis1Pefp7ghkrlGW8azfpTcX95wenqeOQ9++ugAJKH5aZU45
- pJ+EA5ussFGttfoaWMmmEErTSEXsMnGNfPVEAt3h1UzNUQOmim5lbPoa+1NkRYhdGaay+7
- iZxMBuMDaNlVvpXyrUcyeVA2y2efCYg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1785515585;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=TpyaHivTc4ihb/sUbJAVJi4mhk8+byBB6H8u9uyiLQU=;
- b=lKiQihl7cZz4wSwC3HFl/XgJaIaLx4zMeE3lbSRarqb9K0c3mYdedkl1SP7eNanYacMTA8
- XRkDW4iWkc4hNOCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 12724779B0;
- Fri, 31 Jul 2026 16:33:04 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 2SZDNUDObGordwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 31 Jul 2026 16:33:04 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>, Alexandr
- Moshkov <dtalexundeer@yandex-team.ru>
-Subject: Re: [PATCH 2/4] migration: Introduce VMStateOffset
-In-Reply-To: <87ldarm8rp.fsf@suse.de>
-References: <20260729225227.1170574-1-farosas@suse.de>
- <20260729225227.1170574-3-farosas@suse.de>
- <3166925a-0456-42b6-80d3-8154e3e66825@yandex-team.ru>
- <87o6fnmf4c.fsf@suse.de> <amzGTh3DXvX9ovJQ@x1.local>
- <87ldarm8rp.fsf@suse.de>
-Date: Fri, 31 Jul 2026 13:33:02 -0300
-Message-ID: <87ik5vm85d.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1wpqMc-0006j1-6b
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 12:45:41 -0400
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-81e86df8987so17173017b3.3
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 09:45:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785516336; cv=none;
+ d=google.com; s=arc-20260327;
+ b=hMU5Ad37Jlh59Q3JnBoWTDUNBoEzldLEsGefhlKraYs0kWi212GAmOBs+JAw0/2+kA
+ /miOzo+AmfUF/mb/xSVKV9VpSmgRgRjmkWK32mwOBkuYOys07uVBpr57VMx1dUfznOEN
+ wvTEh+gp3n/u2EOt0Kqfkoa/XuGyLPDlZ1IiV8E+0VocbgW9lLWYnyQoleFQo1kofNrg
+ saEuMb2qwjKkwIoWAPd6rRTQZdd7ChjW0/eioUYAFjLMHQfvjUeDm1CjNz7Y6RIfTDgI
+ XWxizfihhrED8weN/WfbZO+GkhDKofHgi+/t9FLScC76mSg/2DJ4cGpFRESA8lN+Vq9K
+ Zunw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=A+NGJY56fgdNcLlC/wNsXA1YhWHl/XQ+obiPU9wc6i8=;
+ fh=Cl1qdbMJi69Nzml0jHfOHf5GnLHYX18FskqlTJAdaH0=;
+ b=GRLbeVNqt5aE8ZFey8Xs1iO6KjqWkj5VRQ1KAY6Gr0DC4NH1KUcPjFDZA78oWFAwC4
+ qKdCPiGpmF614ixCKZ2hA03VlSHl4FNGS8gt1x9PlPtR9WWSCaCURseq2TROqYOzcm30
+ eFqcLoMn3zd/z3pw7RpVMAIyKNIWAI+uPfxisUrFOvzp4GAaqeO8sAP+pTqQDGoB2DQc
+ jK71KTEYMBboyUVaPkaFSex09H2bB+Mo0/mtzqX+xrAcZSTIrHxfYs9dzjTh+zBJgB9B
+ HqMtRbR4yPagUQqE5pRnjqfd7smVdSrpkjTECht/JfMNOPOGFEKxPTIZfpSeytpMqyoc
+ wJig==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785516336; x=1786121136; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=A+NGJY56fgdNcLlC/wNsXA1YhWHl/XQ+obiPU9wc6i8=;
+ b=aEYE3jw2EXL+mrQVkdmIA9tGHu5tfVhy9Wr72Qyl9ztuX7Wo+WctCNVF1pozIe1+1T
+ XGL/upF/b2MKHZ+lN+rLURyAPMXEATftAHv33+NCqOnDVZ5vf/EC78NLcDZX6khRqAkF
+ htUAT0QOaez7VLxPqgejCvDOUGczRmmi4X6knPoLzcqwCZ7+HqVKxaijEAM3lDfNv8LS
+ m/sbwzgomSJ0UioZoh//jR4N4XRAZvVmE7HiQyHo24MX5TuRi2BCHbjC4REZLo+OLNRL
+ WTOQt/vww0mNIKvVf0AuYCA/F9yXUaaI/pZGTKJjuqK/k+L2y1o9b6tBK4AtCwjARpsm
+ pd3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785516336; x=1786121136;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=A+NGJY56fgdNcLlC/wNsXA1YhWHl/XQ+obiPU9wc6i8=;
+ b=kkUwL66F3olRcDJc7lpTqJdD6L+kKkZU1tYv8mnZOiQawa3zhljkFa3/QQggPRG3Rm
+ m2Bo6nJG1xPPDUOCtcKcsEDLo4esuSHsCq21/7pSEN4xv2aE2xFHDGn+E9Oq64mxQ0Ol
+ 8E0J2CbSeu+92k/6jqhv6gIBO9L/SkyuC7FGW8tr28DRzOS+C7VYnDheD04nlJvQdFU3
+ DOEu2aD2qkHadAPetg1drNRjVf9obttRyYiqquvm9bKL55nw3fkwzkc0mysVOR2cFFmY
+ KNNJWF/CoKgc8tzh5b0Dv11uEP8P6MTBhSHul/B3G+qvAO+g0t+SyVVWte3cIEcotUsV
+ w2yg==
+X-Gm-Message-State: AOJu0Yw5oLaHE9Vwfyy3Aj4uVIMsvjkDbqy0YLAOI1rWCNqRToLuE57B
+ sU01y/RQT3hb/1A74aqR2Xhf9zIAVPHzmgEyGWlHL+iYB3wh1oqAM+l2WtC9Wuh26FFUDJYK2sf
+ ldlcqiAxIcfqKhQvvGmBJedJVASbKBk0=
+X-Gm-Gg: AR+sD13NITgIGZrlbaRuRaYDgQcGf3nJSk9W1HZOjjHV022UkDat4GO+TzLiMjYvJX5
+ KZVGSoUcMTVEub8rKbr95gU1R89cRJAxcqgw5zMhgL69SAIq2uknIAsEA8P2MiDSO27zBgu4DJZ
+ /gRM46a+wueA3jpgfLorLPM5mOwrf2WxgDduwQv0cSLdouvOKIrCCfN5QWuu8VTl+t/q8cFZoA3
+ DBraAA/C5vK4CdkkFEDTkfLpJ9B921CKKk9NcqJAiTdhitRhtOz57jrEb8UBHDorhqLiffblB2X
+ ACGuy4nhpxESzvffCqvCDxojqEe7Bd4VnO2hHb6OEqv77HBdPowGe2WUKQ==
+X-Received: by 2002:a05:690c:650c:b0:80c:5cfa:34bc with SMTP id
+ 00721157ae682-81fd4a2d324mr8298937b3.11.1785516335867; Fri, 31 Jul 2026
+ 09:45:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-5.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- DWL_DNSWL_LOW(-1.00)[suse.de:dkim];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MISSING_XM_UA(0.00)[]; TO_DN_SOME(0.00)[];
- MIME_TRACE(0.00)[0:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_TLS_ALL(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCPT_COUNT_FIVE(0.00)[5]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,suse.de:dkim];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: 70FEE418A
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+References: <20260731093618.2961031-1-peter.maydell@linaro.org>
+ <20260731093618.2961031-2-peter.maydell@linaro.org>
+In-Reply-To: <20260731093618.2961031-2-peter.maydell@linaro.org>
+From: Bin Meng <bmeng.cn@gmail.com>
+Date: Sat, 1 Aug 2026 00:45:24 +0800
+X-Gm-Features: AUfX_mzaWx-YS8aYWdWlf7-OToGLz8fmf8Tf1fomxUBtRRN4xAQ5lSchil9obxA
+Message-ID: <CAEUhbmUzztbEtCD6yPi+D3j4xK_k_hC+ck1t5ed-Vm=aAyNGyQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] hw/net/rtl8139: Fix handling of VLAN tags on incoming
+ short packets
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Jason Wang <jasowangio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=bmeng.cn@gmail.com; helo=mail-yw1-x1136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,180 +118,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+On Fri, Jul 31, 2026 at 5:36=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> The rtl8139 receive code handles VLAN tags in incoming packets by
+> copying the VLAN tag to a special field in the receive descriptor,
+> and copying only the actual payload data to the receive buffer.  This
+> code tries to ensure that it pads out the payload to at least
+> MIN_BUF_SIZE bytes.
+>
+> In commit 63b901bfd30 we removed the main "pad short frames" code
+> from this device because we switched to requiring net backends to do
+> the padding.  However we didn't notice that this broke the VLAN tag
+> handling, which relied on the old code making the buffer at least
+> MIN_BUF_SIZE + VLAN_HLEN bytes so that it could copy MIN_BUF_SIZE
+> bytes into the receive buffer even after removing the VLAN tag.  The
+> result is that the guest can make us read 4 bytes off the end of a
+> buffer by feeding itself a suitable short packet in loopback mode.
+>
+> The old behaviour is actually not correct, because the IEEE802.1Q
+> standard says that the minimum ethernet frame size remains 64 bytes
+> including the 4 checksum bytes, and so when a tag is present the
+> payload data only needs to be 56 bytes.  (A bridge implementation can
+> choose to pad tagged frames out to 68 bytes, but it doesn't have to,
+> and so all devices have to correctly handle incoming tagged frames
+> that are 64 bytes long.)
+>
+> The RTL8139 datasheet isn't very communicative on this topic, but
+> there's nothing that suggests it adds extra padding on receive that
+> didn't exist in the incoming packet.
+>
+> Drop the last remnants of the padding handling from this device;
+> this avoids overcopying into the guest when we receive a short
+> VLAN tagged packet.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3518
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> I had been looking at this from the POV of making the generic
+> net code add extra padding when a VLAN tag is present, but I
+> went and read the 802.1Q spec and I now think this is just a
+> place where the rtl8139 code got it wrong.
+> ---
+>  hw/net/rtl8139.c | 5 -----
+>  1 file changed, 5 deletions(-)
+>
 
-> Peter Xu <peterx@redhat.com> writes:
->
->> On Fri, Jul 31, 2026 at 11:02:27AM -0300, Fabiano Rosas wrote:
->>> Hi Vladimir, I've been looking at this, could you clarify which vmstates
->>> do you think we could merge? I don't see it, either VARRAY vs. VBUFFER
->>> or VARRAY vs. BUFFER, also ARRAY vs. BUFFER doesn't seem to work.
->>> 
->>> One main point of difference is the size_offset/num_offset variants are
->>> only known at load-time, so we can't convert them between each other at
->>> build time because the either the total size or num will not be know.
->>
->> Something like this?
->>
->> NOTE: I hid a fix to a comment that is irrelevant.. which I mentioned @size
->> and @size_offset can't co-exist, but it can when VMS_MULTIPLY is set.  I
->> had a vague feeling we can further clean vmstate flags.
->
-> Is there a reason we cannot use .num for MULTIPLY instead of .size?
->
->>
->> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
->> index 24631fd678..3a02709650 100644
->> --- a/include/migration/vmstate.h
->> +++ b/include/migration/vmstate.h
->> @@ -69,17 +69,15 @@ enum VMStateFlags {
->>       * }). Dereference the pointer before using it as basis for
->>       * further pointer arithmetic (see e.g. VMS_ARRAY). Does not
->>       * affect the meaning of VMStateField.num_offset or
->> -     * VMStateField.size_offset; see VMS_VARRAY and VMS_VBUFFER for
->> -     * those.
->> +     * VMStateField.size_offset; see VMS_VARRAY for those.
->>       */
->>      VMS_POINTER          = 0x002,
->>  
->>      /* The field is an array of fixed size. VMStateField.num contains
->>       * the number of entries in the array. The size of each entry is
->>       * given by VMStateField.size and / or opaque +
->> -     * VMStateField.size_offset; see VMS_VBUFFER and
->> -     * VMS_MULTIPLY. Each array entry will be processed individually
->> -     * (VMStateField.info.get()/put() if VMS_STRUCT is not set,
->> +     * VMStateField.size_offset. Each array entry will be processed
->> +     * individually (VMStateField.info.get()/put() if VMS_STRUCT is not set,
->>       * recursion into VMStateField.vmsd if VMS_STRUCT is set). May not
->>       * be combined with VMS_VARRAY.
->>       */
->> @@ -108,18 +106,10 @@ enum VMStateFlags {
->>       */
->>      VMS_ARRAY_OF_POINTER = 0x040,
->>  
->> -    /* The size of the individual entries (a single array entry if
->> -     * VMS_ARRAY or VMS_VARRAY are set, or the field itself if
->> -     * neither is set) is variable (i.e. not known at compile-time),
->> -     * but the same for all entries. Use the int32_t at opaque +
->> -     * VMStateField.size_offset (subject to VMS_MULTIPLY) to determine
->> -     * the size of each (and every) entry. */
->> -    VMS_VBUFFER          = 0x100,
->> -
->>      /* Multiply the entry size given by the int32_t at opaque +
->> -     * VMStateField.size_offset (see VMS_VBUFFER description) with
->> -     * VMStateField.size to determine the number of bytes to be
->> -     * allocated. Only valid in combination with VMS_VBUFFER. */
->> +     * VMStateField.size_offset with VMStateField.size to determine the
->> +     * number of bytes to be allocated.
->> +     */
->>      VMS_MULTIPLY         = 0x200,
->>  
->>      /* Fail loading the serialised VM state if this field is missing
->> @@ -181,8 +171,8 @@ struct VMStateField {
->>  
->>      /*
->>       * @size or @size_offset specifies the size of the element embeded in
->> -     * the field.  Only one of them should be present never both.  When
->> -     * @size_offset is used together with VMS_VBUFFER, it means the size is
->> +     * the field.  Only one of them should be present never both, except
->> +     * VMS_MULTIPLY.  When @size_offset is used, it means the size is
->>       * dynamic calculated instead of a constant.
->>       *
->>       * When the field is an array of any type, this stores the size of one
->> @@ -696,7 +686,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
->>      .size_offset  = vmstate_field_offset(_state, _field_size),       \
->>      .size         = (_multiply),                                      \
->>      .info         = &vmstate_info_buffer,                            \
->> -    .flags        = VMS_VBUFFER|VMS_POINTER|VMS_MULTIPLY,            \
->> +    .flags        = VMS_VARRAY|VMS_POINTER|VMS_MULTIPLY,              \
->>      .offset       = offsetof(_state, _field),                        \
->>  }
->>  
->> @@ -706,7 +696,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
->>      .field_exists = (_test),                                         \
->>      .size_offset  = vmstate_field_offset(_state, _field_size),       \
->>      .info         = &vmstate_info_buffer,                            \
->> -    .flags        = VMS_VBUFFER|VMS_POINTER,                         \
->> +    .flags        = VMS_VARRAY|VMS_POINTER,                          \
->>      .offset       = offsetof(_state, _field),                        \
->>  }
->>  
->> @@ -720,7 +710,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
->>      .field_exists = (_test),                                         \
->>      .size_offset  = vmstate_field_offset(_state, _field_size),       \
->>      .info         = &vmstate_info_buffer,                            \
->> -    .flags        = VMS_VBUFFER|VMS_POINTER|VMS_ALLOC,               \
->> +    .flags        = VMS_VARRAY|VMS_POINTER|VMS_ALLOC,                \
->>      .offset       = offsetof(_state, _field),                        \
->>  }
->>  
->> @@ -798,7 +788,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
->>      .version_id   = (_version),                                      \
->>      .size_offset  = vmstate_field_offset(_state, _field_size),       \
->>      .info         = &vmstate_info_bitmap,                            \
->> -    .flags        = VMS_VBUFFER|VMS_POINTER,                         \
->> +    .flags        = VMS_VARRAY|VMS_POINTER,                          \
->>      .offset       = offsetof(_state, _field),                        \
->>  }
->>  
->> @@ -1200,9 +1190,6 @@ extern const VMStateInfo vmstate_info_g_byte_array;
->>  #define VMSTATE_BUFFER_START_MIDDLE(_f, _s, _start) \
->>      VMSTATE_BUFFER_START_MIDDLE_V(_f, _s, _start, 0)
->>  
->> -#define VMSTATE_PARTIAL_VBUFFER(_f, _s, _size)                        \
->> -    VMSTATE_VBUFFER(_f, _s, 0, NULL, _size)
->> -
->>  #define VMSTATE_PARTIAL_VBUFFER_UINT32(_f, _s, _size)                        \
->>      VMSTATE_VBUFFER_UINT32(_f, _s, 0, NULL, _size)
->>  
->> diff --git a/migration/vmstate.c b/migration/vmstate.c
->> index bc8eb3d3ca..f7363a8776 100644
->> --- a/migration/vmstate.c
->> +++ b/migration/vmstate.c
->> @@ -102,7 +102,7 @@ static uint64_t vmstate_n_elems(void *opaque, const VMStateField *field)
->>  
->>      if (field->flags & VMS_ARRAY) {
->>          n_elems = field->num;
->> -    } else if (field->flags & VMS_VARRAY) {
->> +    } else if (field->num_offset.size) {
->
-> Hmm, is it better to infer from the data rather than having the explicit
-> flag? And if so, can't we remove VMS_VARRAY flag altogether?
->
-> From Vladimir's message I though the intent was not only to remove the
-> flag, but to remove the definition of VMSTATE_VBUFFER entirely and
-> somehow fit that case into VMSTATE_VARRAY, removing size_offset along
-> with it.
->
->>          n_elems = vmstate_read_from_offset(opaque,
->>      &field->num_offset); }
->>  
->> @@ -114,17 +114,17 @@ static uint64_t vmstate_size(void *opaque, const VMStateField *field)
->>  {
->>      uint64_t size;
->>  
->> -    if (field->flags & VMS_VBUFFER) {
->> -        size = vmstate_read_from_offset(opaque, &field->size_offset);
->> -        if (field->flags & VMS_MULTIPLY) {
->> -            size *= field->size;
->> -        }
->> -    } else if (field->flags & VMS_ARRAY_OF_POINTER) {
->> +    if (field->flags & VMS_ARRAY_OF_POINTER) {
->>          /*
->>           * For an array of pointer, the each element is always size of a
->>           * host pointer.
->>           */
->>          size = sizeof(void *);
->> +    } else if (field->size_offset.size) {
->> +        size = vmstate_read_from_offset(opaque, &field->size_offset);
->> +        if (field->flags & VMS_MULTIPLY) {
->> +            size *= field->size;
->> +        }
->>      } else {
->>          size = field->size;
->
-> Since we're talking about flags, I'd like to be able to assert(size) at
-> this point
-
-But size can legitimately be 0 I guess. Nevermind.
+Reviewed-by: Bin Meng <bin.meng@processmission.com>
 
