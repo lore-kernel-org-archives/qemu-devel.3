@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 635BCC55167
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 07:07:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF0D0C54F54
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 07:09:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wphKS-00046W-Pf; Fri, 31 Jul 2026 03:06:48 -0400
+	id 1wphMi-0004Z9-W0; Fri, 31 Jul 2026 03:09:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1wphKP-00045I-Qu
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 03:06:45 -0400
-Received: from mgamail.intel.com ([192.198.163.10])
+ id 1wphMb-0004Yv-9V
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 03:09:01 -0400
+Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1wphKO-00053y-Bb
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 03:06:45 -0400
+ id 1wphMZ-000591-GP
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 03:09:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1785481604; x=1817017604;
+ t=1785481739; x=1817017739;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=ZPmdXFnnpW1uYPCavwrjqrpVSftazrir+BDPF72Y+g4=;
- b=Eu2l671Jy+vafR9xT/ZCv9lIzMHUta521dTpqrvdJkApGJWtDQNd45Vg
- yPU9csGhnXZBSwGY4RoJpL7D8rWbZKF4SourMd2pGa+5jxp/17RqIkI7I
- pCuoTNOt3HuLmONxpToYuVJ9tBSnR+/k5l0Uolr2yKnGQ+EWrma1i1OGJ
- IDTlwfCBv9vc4XMjG/NasWIQlq9cNwV8d7A4+WO09eGprNWDabqj3hkJy
- VnbQxH0iNBKccOo2fq1cUQjwgwXbihBfKgcO+10UDGVwZy66fvjWgkL0c
- nSAt+x2yVQniMUHxCLXbLaR6TTZWCbGBAxpI3990J3gGaHOaxFur5p/aq g==;
-X-CSE-ConnectionGUID: 1PbyzB3EToeHPMrZ0pVMRw==
-X-CSE-MsgGUID: 0vdA5pF6S1WQ3YVcL64l3Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11860"; a="97480593"
-X-IronPort-AV: E=Sophos;i="6.25,196,1779174000"; d="scan'208";a="97480593"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Jul 2026 00:06:42 -0700
-X-CSE-ConnectionGUID: Qoj14TtJRr653khBEo1d8w==
-X-CSE-MsgGUID: 4tUYOQ7WTqSHaqFU5VSDow==
+ bh=ZfkmrXDF8nASwD6vtOWXhAlfiFwV9JT2BPLpEGdXUbw=;
+ b=gCRjmPhP8+m9BdjUxZt4u/4JR+xPnVN0bdWJspy84JuyPqUt8+onMs88
+ NYGikmi5mduFWFBL2b/Y1EiCre6qFsaJNCUWNHKXmX9Y74LvxxqWugIkQ
+ 4qtD1i/mLB9qILyXCiAsvdQB7CskgKN10tgPwBgZ7R3NOtn05yVT9lDdB
+ QaGDh8E6XHHW9Ra6h2Bj1QmO/glKfrIie3zsn3JfoPSy7bPTLizIb+wKs
+ 9V0rHh/FpJdwXt8tqTwBsbiVxefYW62IeVJl4THbVkuqK+TeYXDEG4OrW
+ N5cSD+MGfsc2XsASxx5rbyPri27AEJMEUkeD6uIplKioE8Pvp9VVrigia g==;
+X-CSE-ConnectionGUID: jDkHjHwkT/28Vu5ZjvaH9w==
+X-CSE-MsgGUID: lZnEntg0TTGA5ZNdtt1rQg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11860"; a="85978972"
+X-IronPort-AV: E=Sophos;i="6.25,196,1779174000"; d="scan'208";a="85978972"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 31 Jul 2026 00:08:57 -0700
+X-CSE-ConnectionGUID: aoHWJ+x5T3+SbffF+QVMYA==
+X-CSE-MsgGUID: QRd2/T6LTtaZq6qP9/6r9Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,196,1779174000"; d="scan'208";a="290460436"
+X-IronPort-AV: E=Sophos;i="6.25,196,1779174000"; d="scan'208";a="259928929"
 Received: from zhaoliu1-desk.sh.intel.com (HELO localhost) ([10.238.208.118])
- by orviesa002.jf.intel.com with ESMTP; 31 Jul 2026 00:06:41 -0700
-Date: Fri, 31 Jul 2026 15:06:39 +0800
+ by orviesa008.jf.intel.com with ESMTP; 31 Jul 2026 00:08:56 -0700
+Date: Fri, 31 Jul 2026 15:08:55 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: zhang_wei@open-hieco.net
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  "Michael S . Tsirkin" <mst@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
-Subject: Re: [PATCH v1 4/9] target/i386/kvm: Use AMD MCE status encoding for
+Subject: Re: [PATCH v1 8/9] target/i386: Use AMD legacy cache fallback for
  Hygon
-Message-ID: <amxJf2elltpmBHFD@intel.com>
+Message-ID: <amxKB6CmYaAvk/CX@intel.com>
 References: <20260706055530.1752094-1-zhang_wei@open-hieco.net>
- <20260706055530.1752094-5-zhang_wei@open-hieco.net>
+ <20260706055530.1752094-9-zhang_wei@open-hieco.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260706055530.1752094-5-zhang_wei@open-hieco.net>
-Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20260706055530.1752094-9-zhang_wei@open-hieco.net>
+Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -59
 X-Spam_score: -6.0
@@ -84,36 +84,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> +/*
-> + * Use AMD-style MCE status records for QEMU-injected memory failures on
-> + * AMD and Hygon CPUs.
-> + */
-> +static bool kvm_mce_inject_uses_amd_status(const CPUX86State *env)
-> +{
-> +    return IS_AMD_CPU(env) || IS_HYGON_CPU(env);
-> +}
-> +
->  static void kvm_mce_inject(X86CPU *cpu, hwaddr paddr, int code)
->  {
->      CPUState *cs = CPU(cpu);
-> @@ -707,7 +716,7 @@ static void kvm_mce_inject(X86CPU *cpu, hwaddr paddr, int code)
->      uint64_t mcg_status = MCG_STATUS_MCIP | MCG_STATUS_RIPV;
->      int flags = 0;
->  
-> -    if (!IS_AMD_CPU(env)) {
-> +    if (!kvm_mce_inject_uses_amd_status(env)) {
-
-Maybe we can check hygon directly here?
-
-
-Regards,
-Zhao
-
->          status |= MCI_STATUS_S | MCI_STATUS_UC;
->          if (code == BUS_MCEERR_AR) {
->              status |= MCI_STATUS_AR | 0x134;
-> -- 
-> 2.43.7
+On Mon, Jul 06, 2026 at 01:55:29PM +0800, zhang_wei@open-hieco.net wrote:
+> Date: Mon,  6 Jul 2026 13:55:29 +0800
+> From: zhang_wei@open-hieco.net
+> Subject: [PATCH v1 8/9] target/i386: Use AMD legacy cache fallback for Hygon
+> X-Mailer: git-send-email 2.43.7
 > 
+> From: Tina Zhang <zhang_wei@open-hieco.net>
 > 
+> When legacy-cache=on, x86_cpu_realizefn() builds a hardcoded cache
+> model.  It selected the AMD legacy cache table only for CPUs with the
+> AuthenticAMD vendor ID.  Dhyana uses the HygonGenuine vendor ID, so this
+> explicit compatibility path fell back to QEMU's old Intel legacy cache
+> table.
+> 
+> The wrong table is visible through AMD extended cache leaves.  With the
+> Intel legacy table, Dhyana reports 32 KiB, 8-way L1 caches in CPUID
+> 0x80000005 and a 4 MiB, 16-way L2 cache in CPUID 0x80000006.  Linux
+> uses the AMD/Hygon cache enumeration path for Hygon and reads these AMD
+> extended cache leaves.
+> 
+> Use the AMD legacy cache table for Hygon in this fallback path when the
+> new Hygon vendor ABI fixes are enabled.
+> Keep the old fallback for pc-11.0 and
+> older machine types through x-hygon-vendor-abi-fixes=false.
+> 
+> The default Dhyana model is unchanged because it provides EPYC cache_info
+> and therefore defaults legacy-cache to off.  The guest-visible change is
+> limited to users who explicitly configure legacy-cache=on on new machine
+> types.
+> 
+> Signed-off-by: Tina Zhang <zhang_wei@open-hieco.net>
+> ---
+>  target/i386/cpu.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
 
