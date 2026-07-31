@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02833C55167
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 09:37:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB8DFC55179
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 09:37:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpjfH-0007R2-Mu; Fri, 31 Jul 2026 05:36:29 -0400
+	id 1wpjfL-0007Rh-MB; Fri, 31 Jul 2026 05:36:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wpjfE-0007Qk-MO
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 05:36:25 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1wpjfH-0007R3-1m
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 05:36:27 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wpjfC-0002d7-Lq
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 05:36:24 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-47f707e5d75so540993f8f.1
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 02:36:21 -0700 (PDT)
+ id 1wpjfF-0002dJ-C6
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 05:36:26 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-47f707e5d75so541021f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 02:36:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785490581; x=1786095381; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=QTQkt42F2hscRyHtvxvg8wwiTcMOrENCPf1iXntbkuA=;
- b=rPted6jbqMne/2tsVB2Ys3B4SBpNHFDsNCJB7urmQxcaNT3toIEZt5QEaCng4EE4Wh
- 5tbUfNs89RAHARjJ2p+Q5O/BRDx9YTuNoDiBaWRkodeKnVZHgDaDFVdAB8V9SBoj8phn
- 52gAactWlfdOo3CyXUOgBEcc7VL8b1dbXmycBssliC84SODqoR2NSk90GHxkNgMfi0Kj
- kqM2YOMzVrJSR2dgRkZQ9gdHTiQMFkrIC87pIdZAGZFulI4GmkYUXLrlBXjok4XiMMh9
- MHAz11+m0RvVWfvkmzt60nMs2ODvziA8VmICc4eK5GA8gm1gdlESX5OWrdvZBPaeLChO
- G6Ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785490581; x=1786095381;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1785490584; x=1786095384; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=QTQkt42F2hscRyHtvxvg8wwiTcMOrENCPf1iXntbkuA=;
- b=eZmfPnU2Hs7fmh09UMbfEjum44rY8h/5urbA5ioW3yWMosNKL2KZtUz37VgTg0GChR
- QLvzUJSkZ8zsux0b+lkizPty7dC5lex1E9P6IsWR8vKo3HsdKUOmWgrGbqdlnRRy3MMU
- FFNF/WidxRv4K2WXc4EvrtrVImotfQw1Rh7XIlUu8dfR1WIYuFM+89t8oPADljzsNDKt
- YaJ8anmnRz0R9dYr+I6tGoZdwrnuqzpaFCihL/ipW3zE6PUOfmbOnsrUmsvk97RWIGnJ
- 1sh821X5na3vdVjtfh6xB1mVYIS9mVXvzpKSVCnZOEjeariNL09A9xwdAAUEiNQudDsW
- gFeA==
-X-Gm-Message-State: AOJu0Yx3dQU0trKf8/0gpylt1ZSAkNNqPLlOWU8CMjwQnbdXWz6W0Sue
- q5UMsgYyV8OU8y3UtyythEgI+q0T3iSzUQP/RXswiQ88ZKbCg77T7UU1auae6UKd4nMitvWn3JZ
- 9V2pl
-X-Gm-Gg: AR+sD13pRCvf/ER9GH0bM5dLdPig/77yajNF2xmUQm49InP0xDFmmsEzD0MPB3RT5C2
- jens5Z7CFtvoIRJaPSzFJ+jgNmKYyJfCN3IwRmgW3Ba6yiAYE3gfIxC9c17ZKqW2Fbag2QP4n5U
- k2Jf0dQbCr3Vu90n9DtUafc4zfJt1IlJRbyKflQMtDHV4phk7SSf/bppqFBHa3x60FimQyHUOT1
- x+BywnAzesnOB4ZRobxzHz3HXVY54ASYZrWfQKPEKgieoaIVFdQt9jXCRoisZG0VNW+b0eLie94
- JV4TjziNHW6i3pN17buZPUvA/eIuJapNtBBykUJWDekqNsTacDQviw40pd/sk6ADdlgaceb6HGy
- BUiZzAMmXo7FfGFIJ9UQ4+J+wX/yRWbv4E1gZqtsZt+mHHQFUTOzRVfMfjMl/7PBg/DL6C4hNmD
- vJa50wS1yxrf2/PBGOJ/rrXiQX6BEx77mg02f+jyo4s28qjyM/w41NGKNhmI++3I9zdApoOe//B
- Q4b/gHhB97c7C1N5eBxvo8K0OD1QhU9YBoOcvpxC+1xJIfWhBYxLFUDOxeKEB/8h8HFPOKmTOLJ
- zPctvw==
-X-Received: by 2002:a05:6000:3113:b0:47f:91f0:9a8 with SMTP id
- ffacd0b85a97d-47fd2ae2504mr3079139f8f.23.1785490580693; 
- Fri, 31 Jul 2026 02:36:20 -0700 (PDT)
+ bh=UwSfonjEOpdx3NsZ6QlNEhIH3TDtFP3V1EzW8Nka/3o=;
+ b=b0GsRfVy7X+r0SvFH6hcmvUljLOrhSg3p7tNq1trWnd3uOtLkuQ0exv6d9du+KiLnL
+ QvTbNl07bQ3QUwvStTys8vT1w2sOoriZGnAknf4dp/mbTJJFxkLoblUwpeSamtPWfKzo
+ I8+DwW19e8HmiZhetg14VK6GVI+feOttf+Lq9UN/zoS+rkCq2kdaxGDds85BEpUMEg9P
+ 6NLYH6Cz7wF1iAbSHuq0O+t+QF3PCmWGzZHlR1VPUVVD30SMahMFXydCag2lsnR6Hz3K
+ wOxVwWZDdpps31RwwLZaYaH01ap4yg8t2SlPvlUJN8ESRKMUSLEAN1UyfBr/YZmlp6oi
+ jxHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785490584; x=1786095384;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=UwSfonjEOpdx3NsZ6QlNEhIH3TDtFP3V1EzW8Nka/3o=;
+ b=gzTo8YPPXAZ/la7LDCzg4PB9OYeP97rcJLcxriPkUKx72JzJ4Qm+KyGNec+sqv9w4I
+ vFnSgmp7GKxJqHykMfp0XEAIpPCwv3xA5lDw6yw9S9gGij+9FGwENB9J2fkiczgbzQfd
+ bmzdZ/F4D8K60k217kq+IHNgf2kufG2+wAkMvC1WeKioTv2f1PXd/9vcBSR86oBRm0FD
+ v7PwleGVFUYIvCjJ94YcTt1p8V6tw7CR8C7WwoKGiuf1gAA4yPr6M2Wu2JV1PstzapMV
+ H1RGHgtTZmIoBmm+othNUVjvd+esXit3kwP2E+DnzYKKz8M52C0dMvCZwlhi1Del64L5
+ QLTA==
+X-Gm-Message-State: AOJu0YxsyJhMzVogy95ZpyB8sfB62ccUBSRJE2GJFksbmxAPkQzQW7+2
+ 1nMFM7PvKh4SDVGIJsD1JDTowTcwbcdvn3evaxk5uB1Z/44z7kbrFrimtqw+AuTzboo2oDSsvh3
+ uryU5
+X-Gm-Gg: AR+sD12AcbtdheZx0Z2421MJ9Hu3nre449KQORG3kTH1VH21fKqsDGDGmPmgh3Jr/AC
+ Y3UJKvN8xFM1mT/i8ciy3NkH0rz2qLTPfiT+vCvUUf3CwoNU+td5aNXMjcbujl91T41wX9OEfFO
+ d+THSvqWeoM/9HaUWoqHs66QDZdMDkFy/zaqonxD0OGcuXHc+C/qryx9ohMglc51pkhiyk4r7wY
+ erBOgWTDCFNM6zF6HXcytdyXQLXWQqvom4b5F0ncaXdJfXA6zNK+MQua5ayjg74j1uwu+6ssDV3
+ XQNRbHvPkYAj9POKh5scmmIud0JJLAK0JZHmsgaKZ+Wuf5JFj8L4M4z61TK2PgtS3amP070/lWC
+ FG/9vrW8uOLmfDuPaD3e9FXDZ7Ogyrs3oqluAQm+TbQTLxokPoRmwLMn2FUk/qIYhYapw+2Gd/i
+ tpjajSl3T8QpNTqBAddi29E5lNVlDqDqoga8O3RwsSfOy1SwAGJC05gSSsLKL6mc/XMGQGShBGd
+ o4eHU/cBJRW1KfRRFMdeWK0DC4J8T4/W+lKzD3e3SRjbXXMVX7toN6wELHBDtx+Y28RzA==
+X-Received: by 2002:a05:6000:2c02:b0:47f:9dab:f676 with SMTP id
+ ffacd0b85a97d-47fd2b5525dmr3476219f8f.31.1785490583788; 
+ Fri, 31 Jul 2026 02:36:23 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47fd41e296csm2861208f8f.12.2026.07.31.02.36.19
+ ffacd0b85a97d-47fd41e296csm2861208f8f.12.2026.07.31.02.36.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 Jul 2026 02:36:19 -0700 (PDT)
+ Fri, 31 Jul 2026 02:36:21 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowangio@gmail.com>,
 	Bin Meng <bmeng.cn@gmail.com>
-Subject: [PATCH 0/2] hw/net/rtl8139: fix vlan tag related bugs
-Date: Fri, 31 Jul 2026 10:36:16 +0100
-Message-ID: <20260731093618.2961031-1-peter.maydell@linaro.org>
+Subject: [PATCH 2/2] hw/net/rtl8139: Send whole of vlan-tagged packet when
+ doing loopback
+Date: Fri, 31 Jul 2026 10:36:18 +0100
+Message-ID: <20260731093618.2961031-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260731093618.2961031-1-peter.maydell@linaro.org>
+References: <20260731093618.2961031-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,51 +103,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset fixes a couple of bugs in the rtl8139 device related
-to its handling of vlan tags.
+In rtl8139_transfer_frame(), if we are transmitting a frame over
+loopback then we do this by calling qemu_receive_packet().  If we
+have an iovec rather than a simple buffer (which happens only when
+we're sending a packet where we are inserting a vlan tag), we have to
+convert this into a simple buffer first using iov_to_buf().  However,
+when we do this we forget to also update the 'size' local variable to
+the size of the new simple buffer, so we will truncate the packet by
+4 bytes (the size of the vlan tag).
 
-The first is one that showed up as
-https://gitlab.com/qemu-project/qemu/-/work_items/3518 -- a guest
-can send a carefully constructed packet to itself over loopback
-(or receive on over the network) that makes the vlan tag extraction
-code overread the packet buffer by 4 bytes, leaking that data into
-the guest. This is a regression that we introduced when we moved
-"pad short packets" from individual network devices into the core
-net code. Bin and I had a discussion about this:
-https://lore.kernel.org/qemu-devel/CAFEAcA_UhmCxJc16CHE=4ZR1+PA0=4-29=fEe+d+iUmhLTzpuQ@mail.gmail.com/
-where we started off thinking that we should fix this in the core
-net code, but after looking at the 802.1Q spec I think that it is
-a bug in the rtl8139 code, and it shouldn't be trying to pad the
-packet as much as it is. So patch 1 fixes this by dropping that
-attempt at padding entirely, so we always write exactly what we
-get from the net backend into the receive buffer.
+Correct the logic so we don't truncate vlan-tagged packets when
+sending them over loopback.
 
-Patch 2 fixes a bug that Bin pointed out during that conversation:
-when we insert a vlan tag while sending a packet over loopback we
-don't adjust the size that we pass to qemu_receive_packet(), so we
-truncate the last 4 bytes of data.
+Cc: qemu-stable@nongnu.org
+Reported-by: Bin Meng <bmeng.cn@gmail.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/net/rtl8139.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Big disclaimer here: I have tested these with "make check" and
-with the buffer-overrun repro case from the bug report, and with
-a simple guest VM. But we don't seem to document how to set up
-a guest which receives and handles vlan-tagged packets, so I have
-no idea how to actually test that part.
-
-I don't think we need to be in a tearing hurry to get these fixes
-into git, so although I've tagged them for stable I'm expecting
-to get them in after we re-open for 11.2 rather than trying to
-squeeze them into 11.1 at this point.
-
-thanks
--- PMM
-
-Peter Maydell (2):
-  hw/net/rtl8139: Fix handling of VLAN tags on incoming short packets
-  hw/net/rtl8139: Send whole of vlan-tagged packet when doing loopback
-
- hw/net/rtl8139.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
-
+diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
+index 2b61c171f2..16479284ee 100644
+--- a/hw/net/rtl8139.c
++++ b/hw/net/rtl8139.c
+@@ -1765,6 +1765,7 @@ static void rtl8139_transfer_frame(RTL8139State *s, uint8_t *buf, int size,
+             buf2 = g_malloc(buf2_size);
+             iov_to_buf(iov, 3, 0, buf2, buf2_size);
+             buf = buf2;
++            size = buf2_size;
+         }
+ 
+         DPRINTF("+++ transmit loopback mode\n");
 -- 
 2.43.0
 
