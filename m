@@ -4,101 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87EA6C5516F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 17:50:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB124C5516F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 17:57:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wprMr-0007r6-Ah; Fri, 31 Jul 2026 13:49:57 -0400
+	id 1wprTb-0001JP-NG; Fri, 31 Jul 2026 13:56:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wprMp-0007oo-UD
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 13:49:55 -0400
-Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wprMo-0008SK-HP
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 13:49:55 -0400
-Received: by mail-yx1-xb132.google.com with SMTP id
- 956f58d0204a3-667971437d6so1625486d50.2
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 10:49:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785520193; cv=none;
- d=google.com; s=arc-20260327;
- b=bx6vXURKgzh5qojYXsI3p1kqnQl0TFzNS/07HoH1DLiXcjacnwvLZv9fonTGHkeG3s
- s/6QTWAwZS1nEv5EEEEgy6ZffVAnAKQ2++C/LHqKaVzBX53fePhjDGtLP5gPZUWtyPYB
- FKsq/nNW+A0zBG+1uCBM0K+ZEVwRpv50QIpna7ImLIaJ0cv3XumrZFeSq3gVgpo+JY1Q
- JlIVNYkRGviHIh/IIfTJWIetsTmPtiEHKM+Cukuu0cYFTTBZrrpOZtAMFdnaahju3PyZ
- 5eq6VOds04F7RMmFXFgy3zvNnzvIB8mHgq0MezTb5Ulk7I5fTaTyd675CySKP9v1v+Np
- A+ng==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=KAY7xaZof6hH24L7wXujUquBCBGGch5CCXJK4qBU+K0=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=XB5v2Gz4yapnxffhnJvHn0r3w6lKIJwAQP0n2OW48DxmoeHmIytiK7adOZU0iOaAkI
- ojJCqnbuKRTXMjE7yB2MOJ157UMfo3iXyBS7EbjbCp7Top0JaVdFggdYz2Y2mToJ49Ks
- ldNrbLoOrxs2+mrKQ3RyEGKhu119FbP2QAAdu5jpVvKmjEnncQJelR6utbBSHwxQ2ORg
- 8Q2MlOTe8vGOWV7Riuo7mV6FtZ4mR1hIJMX1U3roYX/JeWNePjZ3z5cAYEq5JJB05HCn
- 8q2oGlPJjmoREyfiKp+xX2VdxUIub+BKM1IQtz/SrMfZRDJbfR1B/2PtCfrn29kMwg6P
- 9nig==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785520193; x=1786124993; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=KAY7xaZof6hH24L7wXujUquBCBGGch5CCXJK4qBU+K0=;
- b=Bth268t3MZOb/4wjHFxMMB3NHlId5ryRQMhWvbuaRqZljbvSuZNa1pr6Cm0lYC6CCa
- wb0f4WnSrH1NLFQbCikPcmCdB//GNfLruzT02tQ2Dnyx6HZ57dgEXj/D+85wusGug+Kj
- lJHph2r9/MLEX53Fdlqcg3rUkYWqrGjss2Ecp9RW8puOh24A0UBgf1yPGCBZpMIYXK0H
- yqgvMF+G8fL/Ts3FowujUF/9gg55/gTZlgdQpXMqMaAU7rTFxcRzG8tGeSi8cVCNi/3I
- 6dxgED5i5MnahsT7Xfpc4tus9wFXzun4uwS+P1RrGRhVeaXC5xiPx53P31jspiddwI0j
- xgww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785520193; x=1786124993;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=KAY7xaZof6hH24L7wXujUquBCBGGch5CCXJK4qBU+K0=;
- b=d0WeprFdKGwK1zNyHe0uWh1SSlMn/NcHS20lZ5LRlODS7hJwPENpLjzVA0DuqSAP6E
- zDLiEVlC3LIJXyhrwDZTbMUYnvug6zhiU0wwk0IVRoJEMM1Vz23ozUvOx6K6GDICou+x
- kDDa7E0qrl3ONn1uYxGzwWo3QnoqttBvronQdGXkHOlBo2eeV78YK/UDJRLotY+saj8V
- BCeaO1EFEIVzQxSn6I/TvHZkbCX7hrymoMcBt7Oc2c2eWPpIgYJEbhHQhzpg/DMWwrJk
- NCghpBx29Xuw8eaZa96lIq5mwshio/HgU6E50QU8SqR5J85AAg5IJOhnp/cFDmBJghxH
- k/6g==
-X-Gm-Message-State: AOJu0YzgD3hSxOZekj5CA5quh2ga1+6d8EDELBF17WNhENzllwI3ZigI
- v2J2LnoYSYuTv+j7aCIdfYhKfDIX7/WIxayFeoAGn0XXoTxpgh2FigNw2oDsAYfvCqddSqWvKSQ
- X2VsqNdYBBYYawLOgSHcnzQpBs2LKmslz+mUfO3dOhc+hsyXIIh0k
-X-Gm-Gg: AR+sD11NAXM8UuEv6UDvncvNFslaEOsf/j+bB3eFvmM9XahTQgLBooCH7ZhXphS4CzS
- D+rvB/hzK/22WmuIUVvw0aSrsJEkgvnECl5ZyUBACbpM4aMNlhksBqkBVwKTGL3AbqDEILpGYll
- S0KkKs/tQZGJNya1k17XgGzuhWHoWx35E3L+l5LccSrEK1ckp6J9olL8rwUlGVi3haca7E2N/oY
- FvJcJY3uIWOcxdD57SIUKxDdjZXSj/D2gtnGBw8i++TPiHau6xjB+Nx6/3sOgjA+LpS7dnxcxQZ
- 7N5ai+NVZwcueDnesYZMzcumkir4mX3NihOjMJm6SC51JiJEqVDVUnKpYMDGsovlgtZB9WKy/Hb
- D0Y9KlBvSIQ3L9SGitoaa5qXZHS45
-X-Received: by 2002:a53:c90c:0:b0:668:9567:db70 with SMTP id
- 956f58d0204a3-6694f1db7e0mr869863d50.40.1785520193357; Fri, 31 Jul 2026
- 10:49:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wprTY-0001Da-DW; Fri, 31 Jul 2026 13:56:53 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wprTW-0001vP-DZ; Fri, 31 Jul 2026 13:56:52 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66VFlpGI2311761; Fri, 31 Jul 2026 17:56:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Oeqknu
+ MV+GgOs77yUg7P9xXp1e8JK79Xf7Wk5A9LMX0=; b=UarBMtyWokXjV8cGYnbIk8
+ rtVnDfwAuN5jWRBkTAPlOuMauwDm1LnVD+EFgzcipWKG0ZIEybHqhUMMCtThwiPh
+ zvf/YV1UNn76wlb6CqEZciTWcyjIMrEvl20TccFnOVF3S/OhLYt1SeiTpspA+/iE
+ F4s1Gz0KrSYt+5DYiLm4osDnvLffre0F/ozXXDJmchKH7u21kUZOr80TyrS8DdmO
+ lRlWE8bBN69fV8LdbDWifGCvIQdSNDvZ7bFQ9+MS9kc57uomkNyHwxbry6HQgfDq
+ eKSpiCIudFMvOLHkr29S3ZVHV0BaaRG6HOkLviW5evFpFgrSnDwGGVbTjGbQy8vg
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuwddamp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 31 Jul 2026 17:56:44 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66VHuFAO032017;
+ Fri, 31 Jul 2026 17:56:43 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fn9pgrtdj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 31 Jul 2026 17:56:43 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66VHufTl4588276
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 31 Jul 2026 17:56:41 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BA23D5805B;
+ Fri, 31 Jul 2026 17:56:41 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C81C358058;
+ Fri, 31 Jul 2026 17:56:40 +0000 (GMT)
+Received: from [9.61.160.189] (unknown [9.61.160.189])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 31 Jul 2026 17:56:40 +0000 (GMT)
+Message-ID: <488e5ec0-2b96-4cb7-830d-76c8e493e05b@linux.ibm.com>
+Date: Fri, 31 Jul 2026 13:56:40 -0400
 MIME-Version: 1.0
-References: <20260724031123.76597-1-richard.henderson@linaro.org>
- <20260724031123.76597-7-richard.henderson@linaro.org>
-In-Reply-To: <20260724031123.76597-7-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 31 Jul 2026 18:49:41 +0100
-X-Gm-Features: AUfX_mzKTaZ2MfzVyUe4FTJaxNyPXtUP6kSrImfLgw-LBuiOW7ePM4_zc4_gTOQ
-Message-ID: <CAFEAcA8KUCzKjQ5+s4-Gtt4N79uyjzsMOWEsdeWAU6_WUmBq9Q@mail.gmail.com>
-Subject: Re: [PATCH 6/6] target/arm: Enable FEAT_IDTE3 for -cpu max
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] target/s390x/tcg: Set STCK/STCKF condition code
+ after the store
+To: Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Cornelia Huck <cohuck@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>
+Cc: David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260714203206.363028-1-iii@linux.ibm.com>
+Content-Language: en-US
+From: Eric Farman <farman@linux.ibm.com>
+Autocrypt: addr=farman@linux.ibm.com; keydata=
+ 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
+ y8m0x6unNti2MZIUMy0m2gcE
+In-Reply-To: <20260714203206.363028-1-iii@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: lc3fpjUnA7e2nRXmLfTO34tfjuoamYWd
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMxMDEzNiBTYWx0ZWRfX2lryNxDkukpN
+ vH7wIgHQ/XO1L/SO0GEVUVD9/ONzTvFoMAYjBCxNL12rhFoVuQzxm5Pz/sQg8suo/FvvI7SZ8AI
+ eA0dbBusT5wmYlFeIlfOXMgAMzBAF2c=
+X-Authority-Analysis: v=2.4 cv=E/z9Y6dl c=1 sm=1 tr=0 ts=6a6ce1dc cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=tcd8Mcrn2PGfhcq-lLYA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMxMDEzNiBTYWx0ZWRfX+fYej8Cyza7p
+ xh0UeX2kMpf2dIWdGHOx3sLGkBIcNhWUx7k6cEjUAQI17lUmRQgxEAXRyGfTt6DAzv+0zETfYtq
+ 5yHZHYs4xiBQDpcLXA802nEKHhxk8AUI4EXMmRzY+6MLnMDGSjR7YOJXipkB0MJAuhrmuQJDyv3
+ 8kb5tMb7W1MfOOlk43pJHficwITZGdK/UxQiv6E3u5/nhvb7yhEF6zIclUaiRrCWih3KlQFMh+z
+ pCQ6pzAvVZtHBRjKf+EBMZ6/0RxI9hCTHeejEKHQquCiIxrDiaMUGJS2MZFQS2OVeJpWFcYULtx
+ qgLTY3/HIHpAhlEtrEIeWifCbpFtD/rzr7WsCbrthuPeA4d5BKnVFiLrnqQObS9FYOHAAVNZPic
+ 2ghV8teAptGRPlaJyXjWpx6mWspnveYWax0GAeNqfpsnv2dQhUm0VZqUeFuhtUk5A0UhJbfZ04j
+ t+euNmRi1KF8KFluz3A==
+X-Proofpoint-GUID: lc3fpjUnA7e2nRXmLfTO34tfjuoamYWd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-31_05,2026-07-30_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 spamscore=0 clxscore=1015 phishscore=0
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607310136
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,13 +170,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 24 Jul 2026 at 04:12, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-thanks
--- PMM
+On 7/14/26 4:29 PM, Ilya Leoshkevich wrote:
+> Hi,
+> 
+> Ido reported an assertion failure after failing STCKF and provided a
+> small assembly snippet that causes it.
+> 
+> This series fixes the issue and adds a test based on that snippet.
+> 
+> Best regards,
+> Ilya
+> 
+> Ilya Leoshkevich (2):
+>    target/s390x/tcg: Set STCK/STCKF condition code after the store
+>    tests/tcg/s390x: Test STCKF condition code on a faulting store
+
+Thanks! Applied for 11.2
+
+> 
+>   target/s390x/tcg/insn-data.h.inc |  4 +--
+>   target/s390x/tcg/translate.c     |  2 ++
+>   tests/tcg/s390x/Makefile.target  |  1 +
+>   tests/tcg/s390x/stckf.c          | 44 ++++++++++++++++++++++++++++++++
+>   4 files changed, 49 insertions(+), 2 deletions(-)
+>   create mode 100644 tests/tcg/s390x/stckf.c
+> 
+
 
