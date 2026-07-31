@@ -4,105 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7018C54F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 11:16:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F744C5516D
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 11:17:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wplDJ-0000Kk-6f; Fri, 31 Jul 2026 07:15:41 -0400
+	id 1wplEI-0000Wt-TT; Fri, 31 Jul 2026 07:16:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wplDH-0000KM-JE
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 07:15:39 -0400
-Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wplDE-0001BF-Cv
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 07:15:38 -0400
-Received: by mail-yx1-xb132.google.com with SMTP id
- 956f58d0204a3-6688acd1a51so1081796d50.3
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 04:15:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785496534; cv=none;
- d=google.com; s=arc-20260327;
- b=iiBKwUOXILR36g5weZoh29FI4KBaWWhX06cbMsPEfN/EhpQBJah8L+9k8rbn0EzVGu
- RpBfEgE5mcmzHLRDdgJljzHX7GyUsQEBxS/vuGtEJNpymz1EGDcFwOTK7OCVvoSGhfxp
- +8pIOKimg4VsNpLZoQlWHt9SgKSKkgm896EjhYOFfFZStQ2LdnUhcrLR+M9CsEBG2oGG
- rHqP41KNOUBkl5J51vhBHIpkNKAkMUEk7hkVnmDhAw6nt2DHiIG6hbZq5aT6yJqhao+K
- dF7HitjCuhDTd94RoXQfKjcTvMzSE7OibW+ZF2HGgMstRmIf4LELRmBZlHSjxVvln3FA
- eRnw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=zXFbAPEIomg84gCkIGAVnHi0vMeB7bxnsVA6omErrGs=;
- fh=xChv7ieWS1sj6jE9IHpGYXOFSuW+3i48YUpPGYmP/DA=;
- b=k/KCQ5x4VWUbq66cFETb4TlVbUilnVe4Ra0lJgAtk9wgh9thDF/0bhj+z9C5a6JnfN
- 7B4NsQp8afkVVpKBAgmk5ti8L6glsgLXzxtNSTcMhBqylPImDBHL9+uZlMfjhWHJSrbV
- 0kWZ3/KZn3jLh2vftrWYs0xvw7Wgif7bF/oD05Erf2TN7ext/RtSI1o1eRahezGd4JL8
- 0CQO/CserlUftQreh+eGhhI2XX3pGsUriw8l+cmYhivrzndMHJwYJGWeHNszNnFBaflV
- VdCfRVaWB3SrgOu0ZJV/M17fhFRJcGlZBr8jicy9m5byHvmlF4+vhLYxor9O7kt8WWR7
- u6Iw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wplEB-0000VX-Jx
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 07:16:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wplE8-0001GI-G2
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 07:16:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785496590;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=GdWtbUahspZk4iHO3/6745Tf8kqHgAYaLLC7wwzgq1E=;
+ b=JcxImacwL/p50oi7hKow16SVqVOqwIHsFsUEFpdQkqdWQUbH20+I+LQVRHBD270dlrIgkB
+ Dn+aK2qgHfXYEePr5YswwAQNd5F9fVpBDq39vYFEK1+Ji1/ZqzC223Fu45YyU1yzx7iqH3
+ wuorjIwRQG5Vl79jzTDeiWWSLN2G1kg=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-471-VEJQFA58OQiIDgmO8Y8VVw-1; Fri, 31 Jul 2026 07:16:28 -0400
+X-MC-Unique: VEJQFA58OQiIDgmO8Y8VVw-1
+X-Mimecast-MFC-AGG-ID: VEJQFA58OQiIDgmO8Y8VVw_1785496587
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-c15fed5653eso63022866b.2
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 04:16:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785496534; x=1786101334; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=zXFbAPEIomg84gCkIGAVnHi0vMeB7bxnsVA6omErrGs=;
- b=iiCQRv5KNBa7lhjccHB2X5Bi4/TOsgTyrdr7L0lD2QpzCqIHSquauQJl1rB7c8QPpB
- PqbGR6TMDNJwgXmmowNpz0V5V5dzEoM3dxrId/ZB/6ci2+SmKne0cpD1OvMaReznt73G
- y67u/L1VnfAlHaq8kcB9NrhxvqDOvknnNu9W8y2zqCsrIJBgT2EQDmF2LHaAmH3iK+b7
- BIsK34x84M6Kz3Y3L9NI8193oLimNcH0MOkZtnIAqQwkwlIT1FbEmrA2JLvZReT4kilp
- 3+w8hR/r/9IryJAkywGBtMEv/DirTWujJ8m2q3cFlgKERs4Miof1bg4XsABTsLuEymJ1
- tYdw==
+ d=redhat.com; s=google; t=1785496587; x=1786101387; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=GdWtbUahspZk4iHO3/6745Tf8kqHgAYaLLC7wwzgq1E=;
+ b=APD5VBMW7Bd+GbfU7QHSuYzCXy6R41pej1l7TlDtEsCbu8VEVr6gc1+cibR4NdkGna
+ bubVh68ompuztU1KFw5Ein6qCFcM7BXAvQ/QjlDL6/hV6iM+RG7O1X9t1NrdKgrdGZC/
+ t1rg9CPkX5znD4CcqrEwgrzujHBGtuVfkTZYJV8YKojWypzd4SXLUH1azYD487OWZivA
+ Z0bIm7QLRwt/VYFJ8FfuKhV5Mhfk5UgSf7lIntcRtIqdmHyn/t3jL1ThEMF71HPLGbLj
+ +Vnym2jvBpSFLLFl5xNsksSqMiaGiGdKnEA/j7/SLKHlidRTzNteF5jIdvT+KgY7ErEg
+ UhCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785496534; x=1786101334;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=zXFbAPEIomg84gCkIGAVnHi0vMeB7bxnsVA6omErrGs=;
- b=N3McGGIclt11NYO5v5l7IjzHMrp+wYpnCuNtwse25fxaP+1CbARqWxdCJo4rmac+CI
- k9v8gIuMwlUVvLqg9mkDqUblb+4EAwq63IPuZBNmcBC+zdRWvlr9nQqnLMoLYa7LbO7x
- W8pTdIDPqxjo2MgUlkoDtr1SEM7bpDYZKY7o7RA8H8ZdbmxOFXHvgW7/FcZEZDOZlQow
- kvoPEohYeFZzeFkL5mc/iw6c0MNfeWT09gjOJu+Xi6ORiH1uzmtpqs/7zWAzyA884jpN
- MUdxt/Q/HkBWXrnt6Pnnrp493+Fi1KOqOW316lS/k48cx4s5iKthef3uVKv2SCpbhILE
- VvwA==
-X-Gm-Message-State: AOJu0YyhslcqqzIKTyQzHaCDa/ED0oCZV4KNeTE4/F4Z13B5OqXSWtnO
- wqF2NteK+uHtUX9YEA5gRZNrem3ahV3MwMGeO5/W6JjQUHoTZEvhGVSliRn9261SB1rnGdttkMf
- TpgTuuJMjO6l4/qdEiNwiZ2kE0VpsLDMBIFR+4PBZ5A==
-X-Gm-Gg: AR+sD12oFq8ok25BjmfwDrSFCj93r3S0+crkbIF3GDP9u/6fcXJAEKLZhxa/7HDMktG
- GRiwsc8Tf6iNiVoOTBMjp0fQIh3/S4eKzXLCBw+U1P/9FE1muy6CYyPaJuhfPSbLNqUR2oS/tyz
- xSTFo9TCsA48WgNlBP6/J/VnvKHSvLNj9csh7Bp3XAffbTEr+w39A146eNPW6niiwChLGM8mWzW
- SOoPpgL8YWu4AGeQSP6oafkKzYvoX3QBsJQkd8q7+/DSkXI28udNN1t+aTzFNUFm6KdfTi1X7zC
- W2fGgwHgGMB5NhOPvuzrD1cVy5cIpb6y1NZ/O4dhCAOrmdELsmuXgj/Atrm6fA7HknXQV8Qxmd0
- tK5841Or+g6LavGguqtiQph+O4HFo
-X-Received: by 2002:a05:690e:138b:b0:667:9e0d:24ab with SMTP id
- 956f58d0204a3-6694a0b9d33mr566664d50.36.1785496519225; Fri, 31 Jul 2026
- 04:15:19 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785496587; x=1786101387;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=GdWtbUahspZk4iHO3/6745Tf8kqHgAYaLLC7wwzgq1E=;
+ b=pbqWnXxhgTPwFGOiS0zDesorTHct7D7sPv8CrVph5MuXJ1Ay8hX1yPYM2ty5yrc/Bj
+ M1SHyE/EPjYSlPSbqO6/9QmaZmObyR1xSOIhGreO5Of0MDcN+7oVUcj3D/2mKNoLSkL3
+ eE2/gkpKA1w5IISSLAxsLDUnx7Bc5cajA8u+O3zXXEqP2Cp+U4evscxDA/8Xcp3cHNkm
+ jq9m1TvYjBz5snKyBAXKuzRGXq7lvcrHBdhR6v0P8XpIF/aOVKzxn/joPLBw+YcBkLWT
+ jE8R40elshfVtewnoPYozJz0ql0kXw6QQ1Ohd3K3yuqvUUI4dHIqZzPVdHodzIj3i3uY
+ z5gQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rqvgf9KFw24mrQU4UoLm6Ix4nLP+AyDBZ9QpXCAWhNCuBL1oWmel8LcRr3ReWcz16Uf96DWHdGpky+8@nongnu.org
+X-Gm-Message-State: AOJu0Yymh4j/xPxbzBl8zWlydIhWTdFJMb4R+4mXbWkj73Mi2w3DeQvw
+ eM3/HFaY/ZeIFb1Wh1GIMN8wIJ6MIXqWhKMTvcQel9xVKxpjoR9X1e7cwzz2VQoFFcik7C59/51
+ e5v86CBBV6tbtUmLOAigqT+pQQ8yGLqG+YV43l4WVWkr1CxtN4tiEsCvF
+X-Gm-Gg: AR+sD10XH8QcCTtA5aH7TlZmDfvE1owxmGqmF1AaRXFAGD3Np1tWDE9vp+gEKSWkaOi
+ yRl4y6E0Mz5jZYLL9b4GBm+V9ePKSM/ORv/Q91wZjqkC+FduzVyp7ZObDq3uiPaHmuBNoVAne0R
+ tda8c+Nmem1uW8w6H5wTW5/ZZTBWi/d0thJ8iVvYDTH6yCYmYRNVbRrCUnheW5OV5cKdGjgBCXD
+ mKlka4ZeofQKUgswv7qvfreve/VIoFj82fo0Mi3d0WJHTWCDXdB6bDWRrQhMz/WgnQABCUUgYTZ
+ 3KT6O6iHKzNikd0LuCQkKPJdZuXEo3sxt7OvhTuBw/LCoJs9AbY7o1l9Lvrl/54oiNAtnQc=
+X-Received: by 2002:a17:907:5c9:b0:c15:c638:d03c with SMTP id
+ a640c23a62f3a-c1fd28ae233mr89394166b.47.1785496587224; 
+ Fri, 31 Jul 2026 04:16:27 -0700 (PDT)
+X-Received: by 2002:a17:907:5c9:b0:c15:c638:d03c with SMTP id
+ a640c23a62f3a-c1fd28ae233mr89391666b.47.1785496586797; 
+ Fri, 31 Jul 2026 04:16:26 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.51.53]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c1fd3cc3ea1sm123530766b.26.2026.07.31.04.16.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 31 Jul 2026 04:16:25 -0700 (PDT)
+Message-ID: <59d99863-07a1-4cc0-8334-e45918a8dee1@redhat.com>
+Date: Fri, 31 Jul 2026 13:16:24 +0200
 MIME-Version: 1.0
-References: <20260723233605.805-1-simonxhy0404@gmail.com>
- <20260723233605.805-3-simonxhy0404@gmail.com>
-In-Reply-To: <20260723233605.805-3-simonxhy0404@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 31 Jul 2026 12:15:07 +0100
-X-Gm-Features: AUfX_mxtEf66yTQsa41Lhs9ODf9hm7uQRQvDXKcUg1GlFPxZsGj6dYqP6aLAY5o
-Message-ID: <CAFEAcA-1PZ5=tKEk-A65WQUKjGP0P3PvFKFCxFbiEQEq+ohvxQ@mail.gmail.com>
-Subject: Re: [PATCH 2/4] hw/arm/armsse: add Arm Corstone SSE-310
-To: Simon Xu <simonxhy0404@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Owen Giles <owen.giles@hpe.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Robert Elliott <elliott@hpe.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/net/vmxnet3: Do not abort if guest provides bad
+ interrupt numbers
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org, Dmitry Fleytman <dmitry.fleytman@gmail.com>
+Cc: Jason Wang <jasowangio@gmail.com>, qemu-trivial@nongnu.org,
+ qemu-stable@nongnu.org
+References: <20260730143943.1117129-1-thuth@redhat.com>
+ <976c63a9-4ffd-44e6-b549-1bcb16f7ebb2@oss.qualcomm.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <976c63a9-4ffd-44e6-b549-1bcb16f7ebb2@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,215 +165,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 24 Jul 2026 at 00:36, Simon Xu <simonxhy0404@gmail.com> wrote:
->
-> Add Arm Corstone SSE-310 model.
-> - Include new NPU power policy unit and configuration interface in device
-> list as unimplemented devices.
-> - sys_version and iidr values from the "SSE-310 with M85 and U55 FPGA"
-> documentation for the mps3-an555.
-> - Refractor comments and code pertaining to both the SSE-300 and SSE-310.
-> - Add support for SSE-310 in the iotkit files.
-> - Add SSE-310 PIDR and CIDR registers according to the SSE-310 TRM.
->
-> Arm Corstone SSE-310 TRM:
-> https://developer.arm.com/documentation/102778/0000/
->
-> Reviewed-by: Owen Giles <owen.giles@hpe.com>
-> Reviewed-by: Robert Elliott <elliott@hpe.com>
-> Signed-off-by: Simon Xu <simonxhy0404@gmail.com>
-> ---
->  hw/arm/armsse.c                 | 208 +++++++++++++++++++++++++++++++-
->  hw/misc/iotkit-secctl.c         |  18 +++
->  hw/misc/iotkit-sysctl.c         |  60 +++++++--
->  hw/misc/iotkit-sysinfo.c        |  12 +-
->  include/hw/arm/armsse-version.h |   2 +
->  include/hw/arm/armsse.h         |   1 +
->  6 files changed, 287 insertions(+), 14 deletions(-)
+On 31/07/2026 08.03, Philippe Mathieu-Daudé wrote:
+> Hi Thomas,
+> 
+> On 30/7/26 16:39, Thomas Huth wrote:
+>> From: Thomas Huth <thuth@redhat.com>
+>>
+>> vmxnet3_validate_interrupts() currently aborts via hw_error() if
+>> the guest provided bad interrupt numbers. This should not happen,
+>> QEMU should rather refuse to activate the device in this case instead.
+>> Thus propagate the error to the callers to handle it more gracefully
+>> there.
+>>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/539
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   hw/net/vmxnet3.c | 35 +++++++++++++++++++++++++++--------
+>>   1 file changed, 27 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
+>> index 8569484b2f2..1c5d1d740cc 100644
+>> --- a/hw/net/vmxnet3.c
+>> +++ b/hw/net/vmxnet3.c
+>> @@ -1336,32 +1336,46 @@ static bool vmxnet3_verify_intx(VMXNET3State *s, 
+>> int intx)
+>>           || intx == pci_get_byte(s->parent_obj.config + 
+>> PCI_INTERRUPT_PIN) - 1;
+>>   }
+>> -static void vmxnet3_validate_interrupt_idx(bool is_msix, int idx)
+>> +static bool vmxnet3_validate_irq_idx(const char *type, bool is_msix, int 
+>> idx)
+>>   {
+>>       int max_ints = is_msix ? VMXNET3_MAX_INTRS : VMXNET3_MAX_NMSIX_INTRS;
+>> +
+>>       if (idx >= max_ints) {
+>> -        hw_error("Bad interrupt index: %d\n", idx);
+>> +        qemu_log_mask(LOG_GUEST_ERROR,
+>> +                      "vmxnet3: Bad %s queue interrupt index: %d\n",
+>> +                      type, idx);
+>> +        return false;
+>>       }
+>> +
+>> +    return true;
+>>   }
+>> -static void vmxnet3_validate_interrupts(VMXNET3State *s)
+>> +static bool vmxnet3_validate_interrupts(VMXNET3State *s)
+>>   {
+>>       int i;
+>>       VMW_CFPRN("Verifying event interrupt index (%d)", s->event_int_idx);
+>> -    vmxnet3_validate_interrupt_idx(s->msix_used, s->event_int_idx);
+>> +    if (!vmxnet3_validate_irq_idx("event", s->msix_used, s- 
+>> >event_int_idx)) {
+>> +        return false;
+>> +    }
+>>       for (i = 0; i < s->txq_num; i++) {
+>>           int idx = s->txq_descr[i].intr_idx;
+>>           VMW_CFPRN("Verifying TX queue %d interrupt index (%d)", i, idx);
+>> -        vmxnet3_validate_interrupt_idx(s->msix_used, idx);
+>> +        if (!vmxnet3_validate_irq_idx("TX", s->msix_used, idx)) {
+>> +            return false;
+>> +        }
+>>       }
+>>       for (i = 0; i < s->rxq_num; i++) {
+>>           int idx = s->rxq_descr[i].intr_idx;
+>>           VMW_CFPRN("Verifying RX queue %d interrupt index (%d)", i, idx);
+>> -        vmxnet3_validate_interrupt_idx(s->msix_used, idx);
+>> +        if (!vmxnet3_validate_irq_idx("RX", s->msix_used, idx)) {
+>> +            return false;
+>> +        }
+>>       }
+>> +
+>> +    return true;
+>>   }
+>>   static bool vmxnet3_validate_queues(VMXNET3State *s)
+>> @@ -1554,7 +1568,10 @@ static void vmxnet3_activate_device(VMXNET3State *s)
+>>                  sizeof(s->rxq_descr[i].rxq_stats));
+>>       }
+>> -    vmxnet3_validate_interrupts(s);
+>> +    if (!vmxnet3_validate_interrupts(s)) {
+>> +        vmxnet3_reset(s);
+>> +        return;
+> 
+> We definitively want to return here to not set s->device_active,
+> but calling vmxnet3_reset() in the middle of a command handler is
+> surprising. Maybe call it in the caller?
+I've added it here as precautionary measure, but looking at the code flow 
+again, it's likely not really necessary here: vmxnet3_deactivate_device() 
+does not do anything at all since device_active has not been set yet. And 
+all the other early returns in vmxnet3_activate_device() also don't do this.
 
-I would prefer if we split this patch up into smaller pieces.
-Adding the secctl handling, the sysctl handling, sysinfo, and
-the main armsse support itself are all pieces that are easier to
-review separately. If you'd split this patch up I would have
-been able to mark some of the subpatches as reviewed already.
+So let's simply drop that vmxnet3_reset() from the patch. I'll send a v2...
 
-> diff --git a/hw/arm/armsse.c b/hw/arm/armsse.c
-> index ddb210c895..1847c73322 100644
-> --- a/hw/arm/armsse.c
-> +++ b/hw/arm/armsse.c
-> @@ -26,7 +26,7 @@
->  #include "hw/core/qdev-clock.h"
->
->  /*
-> - * The SSE-300 puts some devices in different places to the
-> + * The SSE-300 and SSE-310 put some devices in different places to the
->   * SSE-200 (and original IoTKit). We use an array of these structs
->   * to define how each variant lays out these devices. (Parts of the
->   * SoC that are the same for all variants aren't handled via these
-> @@ -118,6 +118,18 @@ static const Property sse300_properties[] = {
->      DEFINE_PROP_UINT32("CPU0_MPU_S", ARMSSE, cpu_mpu_s[0], 8),
->  };
->
-> +static const Property sse310_properties[] = {
-> +    DEFINE_PROP_LINK("memory", ARMSSE, board_memory, TYPE_MEMORY_REGION,
-> +                     MemoryRegion *),
-> +    DEFINE_PROP_UINT32("EXP_NUMIRQ", ARMSSE, exp_numirq, 64),
-> +    DEFINE_PROP_UINT32("SRAM_ADDR_WIDTH", ARMSSE, sram_addr_width, 21),
-> +    DEFINE_PROP_UINT32("init-svtor", ARMSSE, init_svtor, 0x10000000),
-> +    DEFINE_PROP_BOOL("CPU0_FPU", ARMSSE, cpu_fpu[0], true),
-> +    DEFINE_PROP_BOOL("CPU0_DSP", ARMSSE, cpu_dsp[0], true),
-> +    DEFINE_PROP_UINT32("CPU0_MPU_NS", ARMSSE, cpu_mpu_ns[0], 8),
-> +    DEFINE_PROP_UINT32("CPU0_MPU_S", ARMSSE, cpu_mpu_s[0], 8),
-> +};
-> +
->  static const ARMSSEDeviceInfo iotkit_devices[] = {
->      {
->          .name = "timer0",
-> @@ -480,6 +492,146 @@ static const ARMSSEDeviceInfo sse300_devices[] = {
->      }
->  };
->
-> +static const ARMSSEDeviceInfo sse310_devices[] = {
-> +    {
+  Thomas
 
-This is a very long block of data about the SSE310 devices
-which is almost but not quite identical to the existing one
-for SSE300. It would be easier to review if your commit message
-stated which devices are new in the SSE310 memory map and
-which have moved compared to the SSE300.
-
-> +        .name = "timer0",
-> +        .type = TYPE_SSE_TIMER,
-> +        .index = 0,
-> +        .addr = 0x48000000,
-> +        .ppc = 0,
-> +        .ppc_port = 0,
-> +        .irq = 3,
-> +    },
-
-> +    {
-> +        .name = "s32ktimer",
-> +        .type = TYPE_CMSDK_APB_TIMER,
-> +        .index = 0,
-> +        .addr = 0x4802f000,
-> +        .ppc = 1,
-> +        .ppc_port = 0,
-> +        .irq = 2,
-> +        .slowclk = true,
-> +    },
-> +    {
-> +        .name = "s32kwatchdog",
-> +        .type = TYPE_CMSDK_APB_WATCHDOG,
-> +        .index = 0,
-> +        .addr = 0x5802e000,
-
-This is different to what we set for SSE-300, and it looks
-like that's a bug in the SSE-300 implementation. This is
-the "SLOWCLK Watchdog", and both the SSE-300 and SSE-310
-docs list it as being only in the Secure access region
-(0x58....), and not in the NS region (0x48...). We should
-fix the SSE-300 bug.
-
-> +        .ppc = NO_PPC,
-> +        .irq = NMI_0,
-> +        .slowclk = true,
-> +    },
-
-> diff --git a/hw/misc/iotkit-sysctl.c b/hw/misc/iotkit-sysctl.c
-> index dff89c677f..e6b1fe5d32 100644
-> --- a/hw/misc/iotkit-sysctl.c
-> +++ b/hw/misc/iotkit-sysctl.c
-
-> @@ -193,6 +204,7 @@ static uint64_t iotkit_sysctl_read(void *opaque, hwaddr offset,
->              break;
->          case ARMSSE_SSE300:
->              /* In SSE300 this is reserved (for INITSVTOR2) */
-> +        case ARMSSE_SSE310:
-
-For this and the others similar, you should put the two "case" lines
-together, and update the comment.
-
->              goto bad_offset;
->          default:
->              g_assert_not_reached();
-
-As well as all the registers that are the same as SSE300, the
-SSE310 has one extra register in the sysctl block: PPUINTSTAT, at
-offset 0x128. We don't implement the PPUs in QEMU, but we should at
-least implement this register as RAZ with a LOG_UNIMP log if the guest
-tries to read it.
-
-> diff --git a/hw/misc/iotkit-sysinfo.c b/hw/misc/iotkit-sysinfo.c
-> index 19f089e6ee..21e161bdc2 100644
-> --- a/hw/misc/iotkit-sysinfo.c
-> +++ b/hw/misc/iotkit-sysinfo.c
-> @@ -58,6 +58,12 @@ static const int sysinfo_sse300_id[] = {
->      0x0d, 0xf0, 0x05, 0xb1, /* CID0..CID3 */
->  };
->
-> +static const int sysinfo_sse310_id[] = {
-> +    0x04, 0x00, 0x00, 0x00, /* PID4..PID7 */
-> +    0x58, 0xb8, 0x2b, 0x00, /* PID0..PID3 */
-> +    0x0d, 0xf0, 0x05, 0xb1, /* CID0..CID3 */
-> +};
-> +
->  static uint64_t iotkit_sysinfo_read(void *opaque, hwaddr offset,
->                                      unsigned size)
->  {
-> @@ -68,13 +74,13 @@ static uint64_t iotkit_sysinfo_read(void *opaque, hwaddr offset,
->      case A_SYS_VERSION:
->          r = s->sys_version;
->          break;
-> -
->      case A_SYS_CONFIG:
->          r = s->sys_config;
->          break;
->      case A_SYS_CONFIG1:
->          switch (s->sse_version) {
->          case ARMSSE_SSE300:
-> +        case ARMSSE_SSE310:
->              return 0;
->              break;
->          default:
-> @@ -84,6 +90,7 @@ static uint64_t iotkit_sysinfo_read(void *opaque, hwaddr offset,
->      case A_IIDR:
->          switch (s->sse_version) {
->          case ARMSSE_SSE300:
-> +        case ARMSSE_SSE310:
->              return s->iidr;
->              break;
->          default:
-> @@ -95,6 +102,9 @@ static uint64_t iotkit_sysinfo_read(void *opaque, hwaddr offset,
->          case ARMSSE_SSE300:
->              r = sysinfo_sse300_id[(offset - A_PID4) / 4];
->              break;
-> +        case ARMSSE_SSE310:
-> +            r = sysinfo_sse310_id[(offset - A_PID4) / 4];
-> +            break;
->          default:
->              r = sysinfo_id[(offset - A_PID4) / 4];
->              break;
-
-As well as these changes to sysinfo, which are all fine, the SSE310
-has an extra SYS_CONFIG2 register which the SSE300 does not. We
-can hardwire it to "return 0" like we do for SYS_CONFIG1,
-because the only interesting field in it is "is there an NPU
-present", which for us is always "no".
-
-> diff --git a/include/hw/arm/armsse.h b/include/hw/arm/armsse.h
-> index bdf2d4db8e..d0dcba1fbb 100644
-> --- a/include/hw/arm/armsse.h
-> +++ b/include/hw/arm/armsse.h
-> @@ -127,6 +127,7 @@ OBJECT_DECLARE_TYPE(ARMSSE, ARMSSEClass,
->  #define TYPE_IOTKIT "iotkit"
->  #define TYPE_SSE200 "sse-200"
->  #define TYPE_SSE300 "sse-300"
-> +#define TYPE_SSE310 "sse-310"
-
-There's a comment at the top of this file starting "Currently we model:"
-which documents what we implement. We should add SSE-310 to that.
-(I forgot to do this for SSE-300, unfortunately.)
-
-thanks
--- PMM
 
