@@ -4,89 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC783C55174
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 00:07:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EA3CC55165
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 00:15:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpakd-0001ny-Ru; Thu, 30 Jul 2026 20:05:23 -0400
+	id 1wpatf-0000np-6M; Thu, 30 Jul 2026 20:14:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wpakX-0001l0-QS
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 20:05:17 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wpakT-0001ME-Cg
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 20:05:17 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-ca913a601fbso241846a12.3
- for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 17:05:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wpate-0000ng-Dq
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 20:14:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wpatc-0002qH-Sd
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 20:14:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785456879;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kJJbPYCO1KgBGuvg+Sp+bCrDLZrTUzSVFbz8NihyqqA=;
+ b=Lf0oOC6b52bZgy5skisrOroh/sST0UliDF50bOE8DgGmkJXTzCpulby4Vt7NSbEe39NNPV
+ ANlBv20L8WG1M1QY8N4DBwCBGGSYTTJK4VTVSpY4azcUvLIe06UT5ujPIuJkl/9DDvYQ/A
+ wCn/Sxit7gCahL8bZ+fJwOhbnE8Mhww=
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
+ [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-497-qCzDdgVaPlmsYPZ6XE_xnw-1; Thu, 30 Jul 2026 20:14:37 -0400
+X-MC-Unique: qCzDdgVaPlmsYPZ6XE_xnw-1
+X-Mimecast-MFC-AGG-ID: qCzDdgVaPlmsYPZ6XE_xnw_1785456877
+Received: by mail-pf1-f198.google.com with SMTP id
+ d2e1a72fcca58-8482b95574dso513252b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 17:14:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785456312; x=1786061112; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=rF9N2CY1bZsgTOugZFtnqkshHdgIZ9fG+p309nwOK2g=;
- b=OtHamJp83uTsH8sg6E2gjibGTblWURuZFkZ4vXESaxBKGy/nhp/gNprycFLgJTQI0i
- VEzWQ6/brqtS69QQer8RIkuKie/LV/zmgmU4Wm8wahiA25H8W3YEloK6Ufk1OqF7QqdX
- WRYkrpf2eo5/Fp6am/1MQkyU7M/bySTATjYePwRFdvsiSFBoXqRk8XOXLO1Ue5tOs5e3
- PZoLAa31da7dxvw+c/2UJl91IDAyzRKUKZnXaoF3677S+pZpT9VHCzkxwOojHwVS9yFT
- 3LZs3Gvx5zK3ECy/BFRjXN6XhqQqnc97RoCEv0Kjj4l+0Thu0921QfQiEXaDaghC6DbT
- wFlQ==
+ d=redhat.com; s=google; t=1785456877; x=1786061677; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=kJJbPYCO1KgBGuvg+Sp+bCrDLZrTUzSVFbz8NihyqqA=;
+ b=a+ShKzDCkcWAfj1TIIToHMLOqBjyA8Nhgyls7BQa91RwAcOHTeDyAal0IXmV9iIKpk
+ fXX8TLLn1xvnm481EorK5Gn0rH+NOaC16Omq7+nFo/UiQRTwvl/wLZ2GZ6TMjN73jKgB
+ kGp3wM69wJlmT/VO18dSBt5zFufALs+BiiZ15qLsQnnoh5U08KQSrci/v0SF8jljy7PE
+ ZjjlwEBG+puxRBsM4jqCQN/elFxomasp0H3qXGdsoeVEOTVfjRpJJBpVPBvskenTyrQD
+ UebrsbQX5SnvWZbJRLcsRCW9unqHIt/o3+KQKbXQnZu8tysSG/w4pkuH9FCSGB4veiPY
+ R51Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785456312; x=1786061112;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=rF9N2CY1bZsgTOugZFtnqkshHdgIZ9fG+p309nwOK2g=;
- b=PB/4DvvCCZFo4oDYsQ4Fuw/QfoSeJeUWGzvKvXoruaZSuZOLR2KlL0mQeZUU2GCgpI
- pZUs80+m5CDpbxwajzoqXp3x914E5P+ySsbsd4cozobWHGhD2GCK3Pd9K8MJjrKs1C8l
- vOfujqI8mapmD7uCNVrbBxIEYE5aLQV2CbTan33ACMtJjSgSLGy4ohDZTrGStMfzelK6
- HuOUHv8dXsRz1GKvLt+BlE2LZCtUgXzti6H5ncT+PGVb3os1AkS5cMCPY12evTUmOuvK
- B1sfHpeqjLSaa7qGYgVfqjvNTsz/M1Hdgep/obhOTyNDmBjDUYLXb0PnLoVg96YwsQeZ
- SELA==
-X-Gm-Message-State: AOJu0Yw+9+0nNaJ1+8ve5Rokj5rpDtpoahXoedcOxBeA5OKIbDwObKXx
- TSI5WDfXMfyUVzUNEWwfgR0PkOpFYW/0Rzh8izHWwzYBDiK2HUGGsxrez60LKNUvQ6qQss3AbFy
- hW08A
-X-Gm-Gg: AR+sD11IO5FLz7dK5jLSryfXBhVRPtMmb+gW5YurO1g4abZSi8yAGtM174R3M5XLGI1
- N2QZyaaS8efD3w+Qpr5Whg1ihbjquzy/UJh/evbwwWVbuyZE6hozLIOCPUYk8EflDvaoemBhIOg
- XcoUv/CkOmpqlJgnipBwqOW3eh7DFr83d9YoQizdKNhTFn47WOPOYcN3rKfpfQ2IPafI0xdHXaT
- Fe9bS2/C3zemxjqAUcdQ1aYMOAJfs7OmN4fW743kVHLezKEOQpjCUqSu9mB0YYn532FpKmFbBpf
- EfAi1vydkoOGb9/AQ58o9ZA+uoGFkZ82yDRu8xAQlePUTPhD73RzmSURl1iOcYaSoRHM0gW3Hn3
- Lc+OEInpbqAUb1t2hEYk6a2UI20F6x6sdrAOZXNvkdWlL8Q8DakFkV/0JylAJRyEhsIezcfVf7x
- T5NhfpmhZRtq0TI95QyCYhxQwjTW9wZ7KFe3y7JjT8R421Z8kGgNUVT3sckgHH6gyhwyu9+dKCR
- Yx3Ryy80pb36a5KyxBe
-X-Received: by 2002:a05:6a21:9d8e:b0:3bf:a7d5:df38 with SMTP id
- adf61e73a8af0-3c90067d551mr4324997637.9.1785456311768; 
- Thu, 30 Jul 2026 17:05:11 -0700 (PDT)
-Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cbdb7a999ddsm2656460a12.4.2026.07.30.17.05.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Jul 2026 17:05:11 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: anjo@rev.ng, qemu-arm@nongnu.org, git@xen0n.name, 17746591750@163.com,
- maobibo@loongson.cn, lixianglai@loongson.cn, philmd@mailo.com
-Subject: [PATCH 08/11] tcg/optimize: Handle revbit{32,64}
-Date: Thu, 30 Jul 2026 17:05:00 -0700
-Message-ID: <20260731000503.170446-9-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260731000503.170446-1-richard.henderson@linaro.org>
-References: <20260731000503.170446-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20251104; t=1785456877; x=1786061677;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=kJJbPYCO1KgBGuvg+Sp+bCrDLZrTUzSVFbz8NihyqqA=;
+ b=G0JkVEdXTf9LDs36r1Mi5XK3Gow10SOPjd8MRCe/7ZZzbcl7B2w/ZAGBHQJ5XLKwbK
+ ZWb4lNvoUXGE5U9MizonfGtN/Eq78Gdu7eLkIh2NkM40mdn3kC+q56epf+STSByonQg5
+ XCskLnd9YPX3/fH13w0q9OnQ5i4sD245fFe/nviBgkdqxCtCS2rZNnYNpmiW7BPi1Q6z
+ apdp+r68sU2HIpRnJhLhwqPaEQ6e4AmhCfNfKvqi7mXP7SBUlLjrFu91TiaoFzrE7wtf
+ YMXEAJCHXH59W+DDbW0/4tB1EHwQgo33oyMJtgnLNNgiUAO9t34JKeVr2LAPuW92U3FC
+ q/mw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoGCwpno2WSg7y2A+Lh1y+g1HrDR0YONaSohVUaC4zbJT1g9frRzwydZ8vYnWmKh72zGcu6DediTkzy@nongnu.org
+X-Gm-Message-State: AOJu0Yy1vc61qvbKDnrB7ncmDt4CMdC4L+CuOKsEgCPoLNEfnPl0RCEx
+ M3HdkAoNaeG9o3XWpA4PEQpJPJdJbHBjfUEhst+Gj8QRyAD0To4tsx/hAdRtXVLNVpuqbjYuEJH
+ 4AH4TWHDZwYyBYv3323zCDk53RsGzplWKFRnAYzRnajk42RmvffK9K2zq
+X-Gm-Gg: AR+sD13Y2iM3HgP05rJ6E+zk+6OtaC0rSSOmqub3np0bqNkbqJ6a2HIy8NZ8Po4pPc/
+ 3IXwNahKLA74fvz42tm1qGTqSJL0leNdmaIrw2z/8kgU7MAknm0K63YQB0zYyBS1BCJ1s62V7fy
+ w6Jvd21BIAT8L9hoa5kVhi1sCoBIKXGYgtq40QU7rZRbxEMc7yPTrt740eB0l+cEK69p1sVw2RT
+ owmAYN2BlE5NMYvm+hZiiE8w9hHdMoO5J+UHtyGoMAOjtY3XHilKIHlyZXvximdYp6YD7tWQCAx
+ j/w8G+RA/idYekmRk7ia9oiCHh9AnJtGCOO6T0DdYXrlcHfdewzgX6sSffGGhmU7euAMsZDESpS
+ +8Maio/A2KycWc1k6KkX19mMxt8qHhIG1Xz2UT7ieO5k=
+X-Received: by 2002:a05:6a20:db90:b0:3c3:ca18:b4a4 with SMTP id
+ adf61e73a8af0-3c9008abe14mr4318247637.43.1785456876797; 
+ Thu, 30 Jul 2026 17:14:36 -0700 (PDT)
+X-Received: by 2002:a05:6a20:db90:b0:3c3:ca18:b4a4 with SMTP id
+ adf61e73a8af0-3c9008abe14mr4318224637.43.1785456876370; 
+ Thu, 30 Jul 2026 17:14:36 -0700 (PDT)
+Received: from [192.168.68.51] (n175-34-8-244.mrk21.qld.optusnet.com.au.
+ [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-31504baa01dsm27389614eec.12.2026.07.30.17.14.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 30 Jul 2026 17:14:35 -0700 (PDT)
+Message-ID: <be2ac432-f166-4fc3-abf4-10824560f3e6@redhat.com>
+Date: Fri, 31 Jul 2026 10:14:27 +1000
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 2/3] system/memory: Use qemu_ram_move() for directly
+ accessible regions
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, "Michael S. Tsirkin"
+ <mst@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, peterx@redhat.com,
+ philmd@oss.qualcomm.com, richard.henderson@linaro.org, alex@shazbot.org,
+ berrange@redhat.com, philmd@mailo.com, david@kernel.org,
+ pbonzini@redhat.com, phrdina@redhat.com, jugraham@redhat.com,
+ liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn, shan.gavin@gmail.com
+References: <20260728031731.286666-1-gshan@redhat.com>
+ <20260728031731.286666-3-gshan@redhat.com>
+ <20260729182316-mutt-send-email-mst@kernel.org>
+ <CAFEAcA8nxsXNPuqOoc4DGnHbCKQ-pBJib4JhXnYkzMg79GMfAA@mail.gmail.com>
+ <20260730062155-mutt-send-email-mst@kernel.org>
+ <CAFEAcA_xWqomb6jPf_9RmAfaf77uHajMkQk4biOcK3xR+Rgunw@mail.gmail.com>
+ <3da739fb-cc3e-42ed-ae7c-46afa38151ab@redhat.com>
+Content-Language: en-US
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <3da739fb-cc3e-42ed-ae7c-46afa38151ab@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,99 +134,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These are nearly identical to bswap, so reuse fold_bswap.
+On 7/30/26 8:50 PM, Cédric Le Goater wrote:
+> On 7/30/26 12:34, Peter Maydell wrote:
+>> On Thu, 30 Jul 2026 at 11:27, Michael S. Tsirkin <mst@redhat.com> wrote:
+>>>
+>>> On Thu, Jul 30, 2026 at 10:24:32AM +0100, Peter Maydell wrote:
+>>>> The idea is rather just to ignore the unaligned-access-to-not-RAM
+>>>> case as "only a theoretical issue" and default it to memmove().
+>>>> If anybody reports an actual problem we can think about it then :-)
+>>
+>>> Well given the only reported case of virtio DMA into vfio memory we have is
+>>> GH100 and that one is mapped MT_NORMAL, I'm fine with that.
+>>
+>>> I feel extending vfio to report the mapping type to userspace might
+>>> not be a bad idea down the road, though. "Directly accessible"
+>>> is a very rough approximation to the rich variety of mappings
+>>> available across architectures.
+>>
+>> Yes, this sounds like a good longer term idea. If userspace doesn't
+>> have a way to know what the mapping behind something it's mmap()ed
+>> is then it can't know what operations it can and can't safely do.
+>>
+> Gavin, didn't you have the idea of using a VFIO region caps for that ?
+> 
+> This is similar to what we did on POWER9 with :
+> 
+>     VFIO_REGION_INFO_CAP_NVLINK2_SSATGT
+> 
+> which exported GPU RAM to the userspace too.
+> 
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/optimize.c | 48 +++++++++++++++++++++++++-----------------------
- 1 file changed, 25 insertions(+), 23 deletions(-)
+The idea was initially proposed by Michael in the comments for (RFCv1)
+patch of inheriting the max dma bounce buffer size from the parent [1].
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index fcdef25bee..49242bdacb 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -534,6 +534,13 @@ static uint64_t do_constant_folding_2(TCGOpcode op, TCGType type,
-     case INDEX_op_bswap64:
-         return bswap64(x);
- 
-+    case INDEX_op_revbit32:
-+        x = revbit32(x);
-+        return y & TCG_BSWAP_OS ? (int32_t)x : x;
-+
-+    case INDEX_op_revbit64:
-+        return revbit64(x);
-+
-     case INDEX_op_ext_i32_i64:
-         return (int32_t)x;
- 
-@@ -1491,41 +1498,34 @@ static bool fold_bswap(OptContext *ctx, TCGOp *op)
-                                                     ti_const_val(t1), flags));
-     }
- 
--    z_mask = t1->z_mask;
--    o_mask = t1->o_mask;
--    s_mask = 0;
-+    z_mask = do_constant_folding(op->opc, ctx->type, t1->z_mask, flags);
-+    o_mask = do_constant_folding(op->opc, ctx->type, t1->o_mask, flags);
- 
-     switch (op->opc) {
-     case INDEX_op_bswap16:
--        z_mask = bswap16(z_mask);
--        o_mask = bswap16(o_mask);
--        if (flags & TCG_BSWAP_OS) {
--            z_mask = (int16_t)z_mask;
--            o_mask = (int16_t)o_mask;
--            s_mask = INT16_MIN;
--        } else if (!(flags & TCG_BSWAP_OZ)) {
--            z_mask |= MAKE_64BIT_MASK(16, 48);
--        }
-+        s_mask = INT16_MIN;
-         break;
-     case INDEX_op_bswap32:
--        z_mask = bswap32(z_mask);
--        o_mask = bswap32(o_mask);
--        if (flags & TCG_BSWAP_OS) {
--            z_mask = (int32_t)z_mask;
--            o_mask = (int32_t)o_mask;
--            s_mask = INT32_MIN;
--        } else if (!(flags & TCG_BSWAP_OZ)) {
--            z_mask |= MAKE_64BIT_MASK(32, 32);
--        }
-+    case INDEX_op_revbit32:
-+        s_mask = INT32_MIN;
-         break;
-     case INDEX_op_bswap64:
--        z_mask = bswap64(z_mask);
--        o_mask = bswap64(o_mask);
-+    case INDEX_op_revbit64:
-+        s_mask = 0;
-         break;
-     default:
-         g_assert_not_reached();
-     }
- 
-+    if (flags & TCG_BSWAP_OS) {
-+        /* s_mask set */
-+    } else {
-+        if (!(flags & TCG_BSWAP_OZ)) {
-+            z_mask |= s_mask << 1;
-+        }
-+        s_mask = 0;
-+    }
-+
-     return fold_masks_zos(ctx, op, z_mask, o_mask, s_mask);
- }
- 
-@@ -3095,6 +3095,8 @@ void tcg_optimize(TCGContext *s)
-         case INDEX_op_bswap16:
-         case INDEX_op_bswap32:
-         case INDEX_op_bswap64:
-+        case INDEX_op_revbit32:
-+        case INDEX_op_revbit64:
-             done = fold_bswap(&ctx, op);
-             break;
-         case INDEX_op_clz:
--- 
-2.43.0
+[1] https://lore.kernel.org/qemu-arm/20260610121026-mutt-send-email-mst@kernel.org/
+
+We can't simply call to glibc::memmove() even it's known that the MemoryRegion
+is mapped through MT_NORMAL due to issue that one-byte stores have been translated
+to triple one-byte stores by glibc::memmove() in glibc-2.24+ for aarch64 [2].
+
+[2] https://lore.kernel.org/qemu-devel/20260527091711.3901-1-liugang24219@sangfor.com.cn
+
+Besides, I guess we have similar issue on those MemoryRegion created by
+memory_region_init_ram_from_{fd, file}. At present, those regions are assumed
+to be regular RAM (backed by MT_NORMAL). The assumption isn't always correct.
+
+Thanks,
+Gavin
 
 
