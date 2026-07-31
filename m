@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6023BC5516F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 16:21:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0225EC5516F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 16:21:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wppyM-0004nM-9P; Fri, 31 Jul 2026 12:20:34 -0400
+	id 1wppzI-0005Cm-VJ; Fri, 31 Jul 2026 12:21:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wppyK-0004kd-LH
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 12:20:32 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1wppyg-0004wk-Sk
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 12:21:02 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wppyJ-0000Rs-0C
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 12:20:32 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-47de008b020so839921f8f.1
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 09:20:30 -0700 (PDT)
+ id 1wppyd-0000U9-7Q
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 12:20:53 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-6a0a4aa99bdso616670a12.1
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 09:20:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785514829; x=1786119629; darn=nongnu.org;
+ d=linaro.org; s=google; t=1785514848; x=1786119648; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=BHKzpHIUye2WTFtFvbffFyBvvLiRS1+zoQg46eAos8Q=;
- b=m3w9Z9XyRhpR+k0npkOsoX1pAjdGVndhYlOeCXidyhWsd8IpiYCvLUYFh5+9AwSvJ2
- bdWOkxeGr8ckdM5d+EiAh1s3K5rY+8gQE/vtor834BCCoJyBudjaOmaf+Fw7ih3s3bOr
- w7s661T6KZnpVADVNwOLdxGBf4R+G9bFtvhfGJlnR8LTqligtZvcXencnCKVBaEPYd6Z
- S8Gz2WyC7V0VLkgsgFA9mkTLYEuu4uKnwW+mv1IdA5sA2AOk+gZF07TOP/w4F7HyQNc9
- B6HPie+oroXGU9UsthM70BcZNV5eAzaKCeYaDj3izVDL8wd9SYPZN9IL4Dp9YOfH4Ic7
- +bVw==
+ bh=FzYn4ydpkQH/vA7lgT61nvjD89r5G2v3Ua1oapSYA24=;
+ b=G+KfNdJmjH0nqw3uK7WO+PSqvu8EgW2cx+dA2q4e/C/s+cwi7sQjHS0a9nmp/riynC
+ om18VA5fyWbjeMdJ2wmqYxUjxJMPNrpgCuQ/q/WqNs0elbKrEMzxvApUUitMUpHheunu
+ EOPYUOZWhYesmOaYWHcXN0BCvLusbqi/+/PovT1WCF8ddTuo89O/TN40byBipPG00zhj
+ 92WtU98Ze22wp7J2nMIYDpDmY8Nl7bXGhp++Yh8lQwTLvVWPFNjkhKPPUUFRzUA/kS0K
+ QLxXHU5BM+2Z5nGctxWZSoT9kH/3LOGyjtQ4hA0PxoT4N1ppkQg8t1P5493imWI+v45V
+ j/2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785514829; x=1786119629;
+ d=1e100.net; s=20251104; t=1785514848; x=1786119648;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=BHKzpHIUye2WTFtFvbffFyBvvLiRS1+zoQg46eAos8Q=;
- b=BTkY/MIHuZh/ZMwMG3r8V7TbnjI9UCxrgwDocMgNWlEk3jsDewscoQqMqCTMvWIVPA
- 2hPY73sb+ptT04BTq/GkQR55G85DSvnG1Y7SeZsJKuO5mMP94wypFEeaqbQGm/EloTN/
- CQDzL06XAgKr3tiRabscg/UpMZpnyhDvV5doHwAykMoaINr84C0Ens7bEmM2IedlbHce
- yNcbwLLwuGGqBuO0qnV7980fZ4RjSwfbXdOVSSlXgF3TGyYnoA66vmmBsn4GtXJ4qHFh
- gtUM0Eqn5UZlRtFsyBXWjhPUERPu4bKZVcW3FK1lGcCzXZvxdioP7J2THoT7KOHX5xLK
- YxXg==
-X-Gm-Message-State: AOJu0YwqGVTTlixxgpo9YrZoBOmeraHeJyrIj0d79qkvcid/715pSR4C
- ke5h7yrnBRi8qM5wd2gFCcNsiwNDTLJ0x6J6GXrnMF2w2YtUDdl23ezDmierSwTvVMndmfnHm3a
- ptf/x
-X-Gm-Gg: AR+sD12+utTgNFM3jIa5EZFsjxFzKExnvGXxHT6zkY1qM2c5sdEoxYg9PxkndnEfUzj
- eVy4kMgCgykNfZf/eaIysU4DNSVHeaURL3N7Xt6lnjXRz2jaNW6tnAXBMr5UMuKOvD/3Uj7hKBB
- 2el9sHRHEq1jV06tE89rFXO4rG4GUOOxphwWmckOffFsoYElHCZ7jwGOjKc4HLp81lzdP/wXOkO
- z0UOOOvUpauGKT3JJRoHDR4mjvraCTaRVk0sTNwQecJgLJSNpir5RT3DQDzMIN3VV9wimEk5EOo
- 0X5iCer571TK7+WBx+OBp1JojDDcYUGHWq54SKoPYht5AAksHO75TMTlrFQ+LPeDeqbmmhm4sot
- ahms3q3Y2uM40HfDxVXTNEKkRXCZOThu0LXtPLyzEkdDRkQeVFfhAWGh5IDMOnRZI+4gOSdphnN
- +BgDu/oIsYmIKVHjPzb6xZw4Xv8ezvkp3wPuxVUWpGn2Jp2igTZyRldCiF75S2z3n9vmE/EDdlK
- yVeowO58upYZhqNQeMUkLq0+IyVT9QN8FzxMx+bpwgW7P98reXz9u/FdjyuIxuF4o6r7g==
-X-Received: by 2002:a05:6000:4698:b0:47f:96e3:5322 with SMTP id
- ffacd0b85a97d-47fd7264c9amr486451f8f.7.1785514828873; 
- Fri, 31 Jul 2026 09:20:28 -0700 (PDT)
+ bh=FzYn4ydpkQH/vA7lgT61nvjD89r5G2v3Ua1oapSYA24=;
+ b=TWuUtx3ONvX1YAHf9O+Tzx/HP5mAQSImkxABYwfgZRRcOgiN+S4jwTtiXdSHzoVVuE
+ XEzJ8yfNOF2EibR8BDgC9CJN06nlIRXF1WPA+a0WfzxHWm5goOaSstD6LXwTbQkjx4xw
+ g9cR5DAYufLWbLE94YWwLb18egpZBKkGZuseJmyHARBuP1PmRi7jwG3jusOjDEUCbxAx
+ Bme9b9M+DcwYG9MlAGvdKjFHQA4HXPV7vbviZmy2z5/iJOv+6mObRJUtOHeeIGK1xZDD
+ KtSeGiWV4DFKRP0D2vbbP/g1Kg27PrVJoAFX6rh4/HxIdVBmY7/mQN2zn8R2R3nUDY3V
+ 701A==
+X-Gm-Message-State: AOJu0YzK194XEI15XxIZ2zeAI6CIiqBucBVD/JUeLjwRYvtYaYm8peJi
+ B04zLa6XIbab7QIonK6ztAsaO3d+Dnc/EA3T0m9SVrrUQ+s9JfMvvBSCMy9cx9UZ35/K5IjBu+e
+ SyI6I
+X-Gm-Gg: AR+sD10mT2rvMiVxqf6uiXdIP0Q2KBz17pgxc3eFG1uy+Y2R4f9Tw09HbtSEGgDHyi8
+ i2XHSRA/103+7M7tL7DEKfH0LSunNIT++BUJmtIbr8GoHvD5AYC1rLVpWaXmPF3ggF56TFuBax6
+ 4YFiCixJJikdc9utPkSWrCBjbq03C14pAV9N5h3SqRG5evvGNAJhPVyxdBwLgtsaeXkV81Br+Pn
+ OpzgBXrAWBEgUn/07W69QWKmmtOigzgnkzBgFzgW0KY3NnNoZ1Hp2Xx0pRogjHb4BEbjd9PBlWJ
+ TRlDgXyNoF162h31mIOor1bO7eio2Gw9a3G0Ex7qdbAoTMMZ8iu9DGrA2RJWvCsz831gChhiT5f
+ 29CtgFd4J3iy309KUQmCqCwbkKCtTv2OtPVyephiUZqA9A1Z6VZEteN7x3YzddU9GAdHgyboBPW
+ ot2FcSKZlF1kl4Jc1721GQJxqZmfc988sLwtOE40tb9B3XdkzvqS3z+9jOQCuB+vuUy7U/DxERi
+ eONLmQr2o6J1ufMsNvMUa+V9li0DpVDjbxOYPuK3KM4nzRU+V67imb/M8Jvyvku82G1SDxyPOFU
+ vwth
+X-Received: by 2002:a17:906:882:b0:c0e:e136:5dc9 with SMTP id
+ a640c23a62f3a-c1fe8250f26mr15638166b.37.1785514833103; 
+ Fri, 31 Jul 2026 09:20:33 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47fd45a0c8bsm6328593f8f.34.2026.07.31.09.20.26
+ ffacd0b85a97d-47fd45a0c8bsm6328593f8f.34.2026.07.31.09.20.32
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 Jul 2026 09:20:27 -0700 (PDT)
+ Fri, 31 Jul 2026 09:20:32 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 1/4] target/arm: Fix b16b16 feature test for SME2 BFCLAMP, BFMAX,
- BFMIN
-Date: Fri, 31 Jul 2026 17:20:21 +0100
-Message-ID: <20260731162024.3097467-2-peter.maydell@linaro.org>
+Subject: [PULL 4/4] target/arm: Remove stale comment about WFE/SEV
+ implementation
+Date: Fri, 31 Jul 2026 17:20:24 +0100
+Message-ID: <20260731162024.3097467-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260731162024.3097467-1-peter.maydell@linaro.org>
 References: <20260731162024.3097467-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,52 +103,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+We forgot to remove a comment about WFE/SEV only being implemented
+for M-profile when we added the A-profile support for this; delete
+the stale text.
 
-These are controlled by FEAT_SVE_B16B16 not FEAT_SME_B16B16.
-
-Cc: qemu-stable@nongnu.org
-Fixes: bc65d2bd1cb ("target/arm: Implement SME2 Multiple and Single SVE Destructive")
-Fixes: 930760eb753 ("target/arm: Implement SME2 Multiple Vectors SVE Destructive")
-Fixes: 8b61eff8e72 ("target/arm: Implement SME2 FCLAMP, SCLAMP, UCLAMP")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260728111629.1705308-4-peter.maydell@linaro.org
 ---
- target/arm/tcg/translate-sme.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ target/arm/cpu.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index dcc4690fba..0794794e3d 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -756,7 +756,7 @@ static bool do_z2z_n1_fpst(DisasContext *s, arg_z2z_en *a,
-         return false;
-     }
-     /* These insns use MO_8 to encode BFloat16. */
--    if (esz == MO_8 && !dc_isar_feature(aa64_sme_b16b16, s)) {
-+    if (esz == MO_8 && !dc_isar_feature(aa64_sve_b16b16, s)) {
-         return false;
-     }
-     if (!sme_sm_enabled_check(s)) {
-@@ -793,7 +793,7 @@ static bool do_z2z_nn_fpst(DisasContext *s, arg_z2z_en *a,
-     if (fn == NULL) {
-         return false;
-     }
--    if (esz == MO_8 && !dc_isar_feature(aa64_sme_b16b16, s)) {
-+    if (esz == MO_8 && !dc_isar_feature(aa64_sve_b16b16, s)) {
-         return false;
-     }
-     if (!sme_sm_enabled_check(s)) {
-@@ -1850,7 +1850,7 @@ static bool trans_FCLAMP(DisasContext *s, arg_zzz_en *a)
-         return false;
-     }
-     /* This insn uses MO_8 to encode BFloat16. */
--    if (a->esz == MO_8 && !dc_isar_feature(aa64_sme_b16b16, s)) {
-+    if (a->esz == MO_8 && !dc_isar_feature(aa64_sve_b16b16, s)) {
-         return false;
-     }
-     if (!sme_sm_enabled_check(s)) {
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 03a30afcbe..c0492c8dfb 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -766,7 +766,6 @@ typedef struct CPUArchState {
+     /*
+      * The event register is shared by all ARM profiles (A/R/M),
+      * so it is stored in the top-level CPU state.
+-     * WFE/SEV handling is currently implemented only for M-profile.
+      */
+     bool event_register;
+ 
 -- 
 2.43.0
 
