@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 654C2C54F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 06:00:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52C1AC54F54
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 06:01:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpgFa-0002df-2n; Fri, 31 Jul 2026 01:57:42 -0400
+	id 1wpgFn-0002l7-Jn; Fri, 31 Jul 2026 01:57:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <blduan@linux.alibaba.com>)
- id 1wpeMA-0005v0-Cn; Thu, 30 Jul 2026 23:56:22 -0400
-Received: from [115.124.30.111] (helo=out30-111.freemail.mail.aliyun.com)
+ id 1wpeM7-0005u3-T3; Thu, 30 Jul 2026 23:56:19 -0400
+Received: from [115.124.30.133] (helo=out30-133.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <blduan@linux.alibaba.com>)
- id 1wpeM8-0002Jw-FE; Thu, 30 Jul 2026 23:56:22 -0400
+ id 1wpeM0-0002IQ-DO; Thu, 30 Jul 2026 23:56:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1785470175; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=62yiwq8K+mIfvMr+HXg569sklzBPLTqpmFcv2kAbwZ0=;
- b=JfO0xUKkqkQReqcZM2R1p2Tc1iLE02+DjoTNqbSfZcN0/ST8oSbBLmx3r8Vch1Koz+JC3zp5eKCk2NJIvzPufq8j7ePWCF+gVuK55E2CK2ajNzGRFwAdzVUMeKvHS3YrNoUg2DcpsJHktRUJHTHIG2JNeK5OuWdLxEIYMnCceBE=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R181e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
+ t=1785470165; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=zT65bYWPtx05OTO3AKdQnA1RvR6F8IODJEuPlw9LxxA=;
+ b=Cr1naZdjlfc4iLTPAqJxPybu1NIXLJLjh0GUUuaJhNsXsD2XeVaRlRlMS+PGgg76tLt9UFZ6xwCT5lLQ38W8T+dKUENIMrWSUGVF3U50m6QJlWHxyNqSc7NHY9E59sERhJYYP7GHaEKwkVMLgW9AYyJ5upmFBq0H29YDZjyk4tc=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R731e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037009110;
  MF=blduan@linux.alibaba.com; NM=1; PH=DS; RN=7; SR=0;
- TI=SMTPD_---0X86jwWs_1785469862; 
+ TI=SMTPD_---0X86jwSN_1785469850; 
 Received: from ea134-sw16.eng.xrvm.cn(mailfrom:blduan@linux.alibaba.com
- fp:SMTPD_---0X86jwWs_1785469862 cluster:ay36) by smtp.aliyun-inc.com;
- Fri, 31 Jul 2026 11:51:03 +0800
+ fp:SMTPD_---0X86jwSN_1785469850 cluster:ay36) by smtp.aliyun-inc.com;
+ Fri, 31 Jul 2026 11:50:51 +0800
 From: Baolong Duan <blduan@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair23@gmail.com, dbarboza@ventanamicro.com,
  cxx194832@alibaba-inc.com, zengxiangyi.zxy@alibaba-inc.com,
  Baolong Duan <blduan@linux.alibaba.com>
-Subject: [RFC PATCH v1 15/17] accel/kvm: pin the vCPU threads of a CoVE guest
-Date: Fri, 31 Jul 2026 11:50:09 +0800
-Message-Id: <20260731035011.4178103-16-blduan@linux.alibaba.com>
+Subject: [RFC PATCH v1 05/17] hw/riscv/boot: load and measure the images of a
+ CoVE guest
+Date: Fri, 31 Jul 2026 11:49:59 +0800
+Message-Id: <20260731035011.4178103-6-blduan@linux.alibaba.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260731035011.4178103-1-blduan@linux.alibaba.com>
 References: <20260731035011.4178103-1-blduan@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.111 (deferred)
-Received-SPF: pass client-ip=115.124.30.111;
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.133 (deferred)
+Received-SPF: pass client-ip=115.124.30.133;
  envelope-from=blduan@linux.alibaba.com;
- helo=out30-111.freemail.mail.aliyun.com
+ helo=out30-133.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -71,76 +72,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The TSM binds a TVM vCPU to the hart it first runs on, so the thread
-running it has to stay on that host CPU.  With every host CPU running a
-pinned vCPU thread the host is then starved, which shows up as RCU
-stalls, hence the short sleep after each KVM_RUN.
+The kernel and the initrd of a CoVE guest are part of the initial
+measurement of the TEE VM, which means they have to be written to guest
+memory and measured before the guest is started.
 
-Both are workarounds that do not belong in target independent code:
-thread placement is normally left to the user or to the management layer,
-and the sleep papers over a host scheduling problem.  Guidance on how to
-express the TSM requirement properly would be appreciated.
+Add riscv_cove_load_kernel(), which handles ELF, uImage and raw images,
+and measure the initrd as well when one is given.  The host address of a
+loaded image is derived from the RAM memory region because the memory
+slots of a TVM cannot be used for that this early during machine
+initialisation.
 
 Signed-off-by: Baolong Duan <blduan@linux.alibaba.com>
 ---
- accel/kvm/kvm-accel-ops.c | 16 ++++++++++++++++
- accel/kvm/kvm-all.c       |  9 +++++++++
- 2 files changed, 25 insertions(+)
+ hw/riscv/boot.c       | 91 +++++++++++++++++++++++++++++++++++++++++++
+ hw/riscv/trace-events |  4 ++
+ 2 files changed, 95 insertions(+)
 
-diff --git a/accel/kvm/kvm-accel-ops.c b/accel/kvm/kvm-accel-ops.c
-index c8e7aa3870..30e1cb181c 100644
---- a/accel/kvm/kvm-accel-ops.c
-+++ b/accel/kvm/kvm-accel-ops.c
-@@ -24,6 +24,7 @@
- #include "system/cpus.h"
- #include "qemu/guest-random.h"
- #include "qapi/error.h"
+diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+index 5e2dfa091a..70c4009a66 100644
+--- a/hw/riscv/boot.c
++++ b/hw/riscv/boot.c
+@@ -27,11 +27,14 @@
+ #include "hw/core/loader.h"
+ #include "hw/riscv/boot.h"
+ #include "hw/riscv/boot_opensbi.h"
 +#include "hw/riscv/cove.h"
++#include "kvm/kvm_riscv.h"
+ #include "elf.h"
+ #include "system/device_tree.h"
+ #include "system/qtest.h"
+ #include "system/kvm.h"
+ #include "system/reset.h"
++#include "trace.h"
  
- #include <linux/kvm.h>
- #include "kvm-cpus.h"
-@@ -43,6 +44,21 @@ static void *kvm_vcpu_thread_fn(void *arg)
-     r = kvm_init_vcpu(cpu, &error_fatal);
-     kvm_init_cpu_signals(cpu);
+ #include <libfdt.h>
  
-+    /*
-+     * The TSM binds a TVM vCPU to the hart it first runs on, so pin vCPU N
-+     * to host CPU N before the first KVM_RUN.
-+     */
-+    if (riscv_cove_vm_active()) {
-+        cpu_set_t cpuset;
+@@ -261,6 +264,86 @@ static void riscv_load_initrd(MachineState *machine, RISCVBootInfo *info)
+         qemu_fdt_setprop_u64(fdt, "/chosen", "linux,initrd-start", start);
+         qemu_fdt_setprop_u64(fdt, "/chosen", "linux,initrd-end", end);
+     }
 +
-+        CPU_ZERO(&cpuset);
-+        CPU_SET(cpu->cpu_index, &cpuset);
-+        if (sched_setaffinity(0, sizeof(cpuset), &cpuset) < 0) {
-+            error_report("Unable to pin vCPU %d: %s", cpu->cpu_index,
-+                         strerror(errno));
-+        }
++    /* The initrd is part of the initial measurement of a CoVE guest. */
++    if (riscv_cove_vm_active()) {
++        void *initrd_host = kvm_gpa_to_userspace_addr(kvm_state, start);
++        uint64_t aligned_size = ROUND_UP(size, 4 * KiB);
++
++        trace_riscv_cove_measure_initrd(start, aligned_size);
++        kvm_riscv_cove_measure_region((uint64_t)(uintptr_t)initrd_host,
++                                      start, aligned_size);
++    }
++}
++
++/* Load address of a raw kernel image, relative to the base of the RAM. */
++#define RISCV_COVE_KERNEL_OFFSET 0x200000
++
++/*
++ * Load the kernel of a CoVE guest and add it to the initial measurement of
++ * the TVM. ELF, uImage and raw images are supported.
++ *
++ * Unlike riscv_load_kernel(), the host address of the loaded image has to be
++ * computed from the RAM memory region: the KVM memory slots of a TVM are not
++ * usable for that yet at this point of the machine initialisation.
++ *
++ * Returns the guest physical address to start the guest from.
++ */
++static uint64_t riscv_cove_load_kernel(MachineState *machine,
++                                       const char *kernel_filename,
++                                       uint64_t mem_size,
++                                       symbol_fn_t sym_cb)
++{
++    MemoryRegion *ram = machine->ram;
++    void *ram_base = memory_region_get_ram_ptr(ram);
++    uint64_t elf_entry, elf_low, elf_high;
++    hwaddr uimage_ep, uimage_loadaddr;
++    hwaddr kernel_gpa;
++    ssize_t size;
++
++    size = load_elf_ram_sym(kernel_filename, NULL, NULL, NULL,
++                            &elf_entry, &elf_low, &elf_high,
++                            NULL, 0, EM_RISCV, 1, 0,
++                            NULL, false, sym_cb);
++    if (size > 0) {
++        trace_riscv_cove_measure_kernel("ELF", elf_low, elf_high - elf_low);
++        kvm_riscv_cove_measure_region((uint64_t)(uintptr_t)ram_base +
++                                      (elf_low - ram->addr),
++                                      elf_low, elf_high - elf_low);
++        return elf_entry;
 +    }
 +
-     /* signal CPU creation */
-     cpu_thread_signal_created(cpu);
-     qemu_guest_random_seed_thread_part2(cpu->random_seed);
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index aaaa88bd2b..7b33a9aa3a 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -3510,6 +3510,15 @@ int kvm_cpu_exec(CPUState *cpu)
-          * as true, cpu->exit_request will always read as true.
-          */
- 
-+        /*
-+         * Yield briefly after each KVM_RUN of a CoVE guest: with one pinned
-+         * vCPU thread per host CPU the host is otherwise starved and reports
-+         * RCU stalls.
-+         */
-+        if (riscv_cove_vm_active()) {
-+            usleep(100);
-+        }
++    uimage_loadaddr = LOAD_UIMAGE_LOADADDR_INVALID;
++    size = load_uimage_as(kernel_filename, &uimage_ep, &uimage_loadaddr,
++                          NULL, NULL, NULL, NULL);
++    if (size > 0) {
++        trace_riscv_cove_measure_kernel("uImage", uimage_loadaddr, size);
++        kvm_riscv_cove_measure_region((uint64_t)(uintptr_t)ram_base +
++                                      (uimage_loadaddr - ram->addr),
++                                      uimage_loadaddr, size);
++        return uimage_ep;
++    }
 +
-         attrs = kvm_arch_post_run(cpu, run);
++    /*
++     * Read the image straight into RAM: load_image_targphys_as() would
++     * register a ROM blob, whose contents are only written to guest memory
++     * when the machine is reset, long after the measurement has been taken.
++     */
++    kernel_gpa = ram->addr + RISCV_COVE_KERNEL_OFFSET;
++    size = load_image_size(kernel_filename,
++                           (char *)ram_base + RISCV_COVE_KERNEL_OFFSET,
++                           mem_size - RISCV_COVE_KERNEL_OFFSET);
++    if (size < 0) {
++        error_report("could not load kernel '%s': %s", kernel_filename,
++                     strerror(errno));
++        exit(1);
++    }
++
++    trace_riscv_cove_measure_kernel("raw", kernel_gpa, size);
++    kvm_riscv_cove_measure_region((uint64_t)(uintptr_t)ram_base +
++                                  RISCV_COVE_KERNEL_OFFSET,
++                                  kernel_gpa, size);
++    return kernel_gpa;
+ }
  
- #ifdef KVM_HAVE_MCE_INJECTION
+ void riscv_load_kernel(MachineState *machine,
+@@ -276,6 +359,14 @@ void riscv_load_kernel(MachineState *machine,
+ 
+     g_assert(kernel_filename != NULL);
+ 
++    /* A CoVE guest is loaded and measured before the TVM is finalised. */
++    if (riscv_cove_vm_active()) {
++        info->image_low_addr = riscv_cove_load_kernel(machine, kernel_filename,
++                                                      mem_size, sym_cb);
++        info->image_high_addr = info->image_low_addr;
++        goto out;
++    }
++
+     /*
+      * NB: Use low address not ELF entry point to ensure that the fw_dynamic
+      * behaviour when loading an ELF matches the fw_payload, fw_jump and BBL
+diff --git a/hw/riscv/trace-events b/hw/riscv/trace-events
+index b50b14a654..04f4b90efa 100644
+--- a/hw/riscv/trace-events
++++ b/hw/riscv/trace-events
+@@ -24,3 +24,7 @@ riscv_iommu_hpm_incr_ctr(uint64_t cntr_val) "cntr_val 0x%"PRIx64
+ riscv_iommu_hpm_iocntinh_cy(bool prev_cy_inh) "prev_cy_inh %d"
+ riscv_iommu_hpm_cycle_write(uint32_t ovf, uint64_t val) "ovf 0x%x val 0x%"PRIx64
+ riscv_iommu_hpm_evt_write(uint32_t ctr_idx, uint32_t ovf, uint64_t val) "ctr_idx 0x%x ovf 0x%x val 0x%"PRIx64
++
++# boot.c
++riscv_cove_measure_kernel(const char *format, uint64_t gpa, uint64_t size) "%s kernel gpa 0x%"PRIx64" size 0x%"PRIx64
++riscv_cove_measure_initrd(uint64_t gpa, uint64_t size) "initrd gpa 0x%"PRIx64" size 0x%"PRIx64
 -- 
 2.34.1
 
