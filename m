@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80218C5516F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 16:20:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6023BC5516F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 16:21:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wppyN-0004nv-RS; Fri, 31 Jul 2026 12:20:35 -0400
+	id 1wppyM-0004nM-9P; Fri, 31 Jul 2026 12:20:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wppyM-0004nO-AN
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 12:20:34 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ id 1wppyK-0004kd-LH
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 12:20:32 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wppyK-0000ST-DT
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 12:20:34 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-47f707e5d75so923784f8f.1
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 09:20:32 -0700 (PDT)
+ id 1wppyJ-0000Rs-0C
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 12:20:32 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-47de008b020so839921f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 09:20:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785514831; x=1786119631; darn=nongnu.org;
+ d=linaro.org; s=google; t=1785514829; x=1786119629; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=Dmffb3ULkb7vIrdJ/QxkfBW61OXPmSDopnqZevPnXk4=;
- b=eMCZ5CVBUTwOnQPpUfi6L1rlMMCdj6iERgDiRzpxoJN4vLJAQyJQM73ohITK7ooO2M
- BY74u9UsEnU3T1fyWH1+sCMsTEP0dzZ6Vs1ulo0EpjwmcZkN3DHDZt3N+ohrjJHUpGhE
- +hDP+3CHnEyAaAe2IpNzeLCvLVGJ5XbKZfTaQpnrsLHKqRDkwrl/e4IYNl42QQ79vBfr
- vNkmB3TnJU+K7wJv8+GHXouVrzl38zuk39aY3VINx7bW5shxdVITsMrzSuVy4ZnBvm/Q
- Uq1YzxYVzEAKAWgJQ9Fr8MVPVihbjXB0PxHxpz6zpMVq9Hgozee17BtdKBHL1+VwtzDP
- G1FA==
+ bh=BHKzpHIUye2WTFtFvbffFyBvvLiRS1+zoQg46eAos8Q=;
+ b=m3w9Z9XyRhpR+k0npkOsoX1pAjdGVndhYlOeCXidyhWsd8IpiYCvLUYFh5+9AwSvJ2
+ bdWOkxeGr8ckdM5d+EiAh1s3K5rY+8gQE/vtor834BCCoJyBudjaOmaf+Fw7ih3s3bOr
+ w7s661T6KZnpVADVNwOLdxGBf4R+G9bFtvhfGJlnR8LTqligtZvcXencnCKVBaEPYd6Z
+ S8Gz2WyC7V0VLkgsgFA9mkTLYEuu4uKnwW+mv1IdA5sA2AOk+gZF07TOP/w4F7HyQNc9
+ B6HPie+oroXGU9UsthM70BcZNV5eAzaKCeYaDj3izVDL8wd9SYPZN9IL4Dp9YOfH4Ic7
+ +bVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785514831; x=1786119631;
+ d=1e100.net; s=20251104; t=1785514829; x=1786119629;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=Dmffb3ULkb7vIrdJ/QxkfBW61OXPmSDopnqZevPnXk4=;
- b=Al2WH2zz1sSfoC1goAWHxKpuv5yUEa75TwKRMIr27GhHqbzB4Th7AoVATXnWPr6z+E
- 5RvUO9N0jyzIOTwUxcWDp2sUIj2NMlJde/aI43hxSGIuPP1OeGm8AXnQtxxAbfBkyAZY
- 7qz8HhvR33Sx++IQkzyTSIvw+5lvnqc52ZQbyaCBgUjwu1aBivFVs+R/tQUTLLurCiFm
- 6uZDrcxwMBfZniaf+U2xUG4bmvny+QqqCm+h+lhvGkqOHcKRKLWcc3YzWSzBolvfoQkT
- vN2u7CWubuFSQ3hIFWPbwdMqWB/pB1b1pKwW/cnuOAYidqO52wyIPPSVj/wpJFuZ7KHn
- xx2Q==
-X-Gm-Message-State: AOJu0YzuTPBrBr7XUVgslECGANZfG17K1jk4cquDTObT9k2xanSIaIeZ
- EKsp0hgJCDiXt8Fixl+nq8CvmWLnSaS8FBWaJgHaHif05TxcZr9OydjF+gk5k7dUImCgV7Gaw50
- 1JgbU
-X-Gm-Gg: AR+sD10z49ybMjcDpqyZZTMUtvierK1CoYPuK7RubSoY6ZxJiMKLQvyi9pmMC7VJoNF
- IHzTUpnQIrJkduq/c8RMZWjNQM459u9Jsk/G0//jwiTdQBl2fcVFOm9L71vaVY/Mif3vQEshpzE
- Aet20B+XuakvprX385v3OyyL+RW3UTNH9/E1mC6ZZnLXRw8kF5kPiUvC4BbZmxq61Z62VXat41l
- gCD/UR05rfMTwPYy5MnN0dg+FmHdBds243Ofrz938XefEI0lw3walJFZVTALUBKnaoC7XH4oA//
- ISQ8pdy7lP4LS1xILVlUBQXo02wVULsKaZ687uLxZ/4tGXkbR8iINmjzoVFfhOAOxJhF2YDktQ4
- hpRz2l4fDVdm53n9+rrpw1dV2XspRdgQOXontxmVB4+7UZJGM8kNNdvgLOZ72cUaBhX/Q9Vn50c
- kNveH/60fW+pNKWxIaA+ZZ6AawZsYLuhzQBJQwBLnTpHENZvqdidTWao6HC432t3VkExY1kyx29
- +nxebSZqBDdzAKfYO1xv87Y1/v9nRaAUMWeySX3zH1nu9FcnEW2gWSuAMpXbaxd/0r8AthoTNHG
- u8ec
-X-Received: by 2002:a05:6000:24c7:b0:47f:8b23:195f with SMTP id
- ffacd0b85a97d-47fd731f513mr514057f8f.46.1785514830411; 
- Fri, 31 Jul 2026 09:20:30 -0700 (PDT)
+ bh=BHKzpHIUye2WTFtFvbffFyBvvLiRS1+zoQg46eAos8Q=;
+ b=BTkY/MIHuZh/ZMwMG3r8V7TbnjI9UCxrgwDocMgNWlEk3jsDewscoQqMqCTMvWIVPA
+ 2hPY73sb+ptT04BTq/GkQR55G85DSvnG1Y7SeZsJKuO5mMP94wypFEeaqbQGm/EloTN/
+ CQDzL06XAgKr3tiRabscg/UpMZpnyhDvV5doHwAykMoaINr84C0Ens7bEmM2IedlbHce
+ yNcbwLLwuGGqBuO0qnV7980fZ4RjSwfbXdOVSSlXgF3TGyYnoA66vmmBsn4GtXJ4qHFh
+ gtUM0Eqn5UZlRtFsyBXWjhPUERPu4bKZVcW3FK1lGcCzXZvxdioP7J2THoT7KOHX5xLK
+ YxXg==
+X-Gm-Message-State: AOJu0YwqGVTTlixxgpo9YrZoBOmeraHeJyrIj0d79qkvcid/715pSR4C
+ ke5h7yrnBRi8qM5wd2gFCcNsiwNDTLJ0x6J6GXrnMF2w2YtUDdl23ezDmierSwTvVMndmfnHm3a
+ ptf/x
+X-Gm-Gg: AR+sD12+utTgNFM3jIa5EZFsjxFzKExnvGXxHT6zkY1qM2c5sdEoxYg9PxkndnEfUzj
+ eVy4kMgCgykNfZf/eaIysU4DNSVHeaURL3N7Xt6lnjXRz2jaNW6tnAXBMr5UMuKOvD/3Uj7hKBB
+ 2el9sHRHEq1jV06tE89rFXO4rG4GUOOxphwWmckOffFsoYElHCZ7jwGOjKc4HLp81lzdP/wXOkO
+ z0UOOOvUpauGKT3JJRoHDR4mjvraCTaRVk0sTNwQecJgLJSNpir5RT3DQDzMIN3VV9wimEk5EOo
+ 0X5iCer571TK7+WBx+OBp1JojDDcYUGHWq54SKoPYht5AAksHO75TMTlrFQ+LPeDeqbmmhm4sot
+ ahms3q3Y2uM40HfDxVXTNEKkRXCZOThu0LXtPLyzEkdDRkQeVFfhAWGh5IDMOnRZI+4gOSdphnN
+ +BgDu/oIsYmIKVHjPzb6xZw4Xv8ezvkp3wPuxVUWpGn2Jp2igTZyRldCiF75S2z3n9vmE/EDdlK
+ yVeowO58upYZhqNQeMUkLq0+IyVT9QN8FzxMx+bpwgW7P98reXz9u/FdjyuIxuF4o6r7g==
+X-Received: by 2002:a05:6000:4698:b0:47f:96e3:5322 with SMTP id
+ ffacd0b85a97d-47fd7264c9amr486451f8f.7.1785514828873; 
+ Fri, 31 Jul 2026 09:20:28 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47fd45a0c8bsm6328593f8f.34.2026.07.31.09.20.28
+ ffacd0b85a97d-47fd45a0c8bsm6328593f8f.34.2026.07.31.09.20.26
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 Jul 2026 09:20:29 -0700 (PDT)
+ Fri, 31 Jul 2026 09:20:27 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 2/4] target/arm: Don't NOP the SEV insn on v6K CPUs
-Date: Fri, 31 Jul 2026 17:20:22 +0100
-Message-ID: <20260731162024.3097467-3-peter.maydell@linaro.org>
+Subject: [PULL 1/4] target/arm: Fix b16b16 feature test for SME2 BFCLAMP, BFMAX,
+ BFMIN
+Date: Fri, 31 Jul 2026 17:20:21 +0100
+Message-ID: <20260731162024.3097467-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260731162024.3097467-1-peter.maydell@linaro.org>
 References: <20260731162024.3097467-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,69 +102,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When we implememented SEV to do something on A-profile rather than
-being a nop, we got the condition slightly wrong, and made it only
-effective from v7.  In fact the instruction's Arm encoding has
-non-NOP behaviour from ARMv6K.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The effect is that a kernel boot may hang on a v6K CPU like the
-ARM11MPCore.
+These are controlled by FEAT_SVE_B16B16 not FEAT_SME_B16B16.
 
-(This wouldn't have been so noticeable if we feature checked the WFE
-instruction, and had made the same mistake for the condition on both
-instructions.  But we never have done the feature checks that we
-ought on WFE, so the mistake on SEV meant that we showed the 11mpcore
-guest a WFE that did something and a SEV that was a NOP.)
-
-The v7A Arm ARM is not entirely clear about whether v6K has the Thumb
-SEV encoding or not: it says "ARMv7 (executes as NOP in ARMv6T2)",
-leaving v6K not stated.  The 11MPCore TRM says it has at least WFI in
-both Arm and Thumb, and the v7A Arm ARM uses the same condition text
-for WFI, so I make the assumption that WFI, WFE, and SEV all get
-their functionality for both Thumb and Arm in v6K.  It's possible
-that this differed between v6K CPUs -- the 1176 TRM says it has the
-v6K STREXD/STREXH/STREXB etc, but the WFI is the old-style cp15 one.
-
-Keeping the condition check the same for both Thumb and Arm encodings
-is the conservative choice: if guests try to execute the Thumb SEV
-insn it will be because they want SEV, not because they want a NOP.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4044
-Fixes: 60e7ee5bb7cd ("target/arm: implements SEV/SEVL for all modes")
+Cc: qemu-stable@nongnu.org
+Fixes: bc65d2bd1cb ("target/arm: Implement SME2 Multiple and Single SVE Destructive")
+Fixes: 930760eb753 ("target/arm: Implement SME2 Multiple Vectors SVE Destructive")
+Fixes: 8b61eff8e72 ("target/arm: Implement SME2 FCLAMP, SCLAMP, UCLAMP")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260728111629.1705308-2-peter.maydell@linaro.org
 ---
- target/arm/tcg/translate.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ target/arm/tcg/translate-sme.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index a1fc050618..6e52ad082e 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -3246,12 +3246,19 @@ static bool trans_YIELD(DisasContext *s, arg_YIELD *a)
- static bool trans_SEV(DisasContext *s, arg_SEV *a)
- {
-     /*
--     * SEV is a NOP for user-mode emulation. For v6T2 and earlier
--     * non-M-profile cores this encoding is a NOP hint.
-+     * SEV is a NOP for user-mode emulation. The instruction is
-+     * also a NOP hint on cores that pre-date the architectural
-+     * feature that adds it:
-+     * - M-profile always has SEV
-+     * - for A/R profile, it exists from v6K onward
-+     * The v7A Arm ARM is not entirely clear about whether v6K has the
-+     * Thumb SEV or not; we make the condition the same, to be
-+     * conservative. (If guests try to execute the Thumb SEV insn it
-+     * will be because they want SEV, not because they want a NOP.)
-      */
- #ifndef CONFIG_USER_ONLY
-     if (arm_dc_feature(s, ARM_FEATURE_M) ||
--        arm_dc_feature(s, ARM_FEATURE_V7)) {
-+        arm_dc_feature(s, ARM_FEATURE_V6K)) {
-         gen_helper_sev(tcg_env);
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index dcc4690fba..0794794e3d 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -756,7 +756,7 @@ static bool do_z2z_n1_fpst(DisasContext *s, arg_z2z_en *a,
+         return false;
      }
- #endif
+     /* These insns use MO_8 to encode BFloat16. */
+-    if (esz == MO_8 && !dc_isar_feature(aa64_sme_b16b16, s)) {
++    if (esz == MO_8 && !dc_isar_feature(aa64_sve_b16b16, s)) {
+         return false;
+     }
+     if (!sme_sm_enabled_check(s)) {
+@@ -793,7 +793,7 @@ static bool do_z2z_nn_fpst(DisasContext *s, arg_z2z_en *a,
+     if (fn == NULL) {
+         return false;
+     }
+-    if (esz == MO_8 && !dc_isar_feature(aa64_sme_b16b16, s)) {
++    if (esz == MO_8 && !dc_isar_feature(aa64_sve_b16b16, s)) {
+         return false;
+     }
+     if (!sme_sm_enabled_check(s)) {
+@@ -1850,7 +1850,7 @@ static bool trans_FCLAMP(DisasContext *s, arg_zzz_en *a)
+         return false;
+     }
+     /* This insn uses MO_8 to encode BFloat16. */
+-    if (a->esz == MO_8 && !dc_isar_feature(aa64_sme_b16b16, s)) {
++    if (a->esz == MO_8 && !dc_isar_feature(aa64_sve_b16b16, s)) {
+         return false;
+     }
+     if (!sme_sm_enabled_check(s)) {
 -- 
 2.43.0
 
