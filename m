@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C123C55167
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 10:04:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8572EC55167
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 10:24:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpk5l-0005UU-Ik; Fri, 31 Jul 2026 06:03:49 -0400
+	id 1wpkOy-0003Kp-4k; Fri, 31 Jul 2026 06:23:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <agraf@csgraf.de>) id 1wpk5k-0005UB-27
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 06:03:48 -0400
+ (Exim 4.90_1) (envelope-from <agraf@csgraf.de>) id 1wpkOv-0003KU-Gn
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 06:23:38 -0400
 Received: from mail.csgraf.de ([85.25.223.15] helo=zulu616.server4you.de)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <agraf@csgraf.de>) id 1wpk5i-0006At-3P
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 06:03:47 -0400
+ (Exim 4.90_1) (envelope-from <agraf@csgraf.de>) id 1wpkOt-0002bL-Ad
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 06:23:37 -0400
 Received: from [192.168.106.196]
  (dynamic-077-002-060-183.77.2.pool.telefonica.de [77.2.60.183])
- by csgraf.de (Postfix) with ESMTPSA id 610E7608027F;
- Fri, 31 Jul 2026 12:03:42 +0200 (CEST)
-Message-ID: <ad328c87-eef8-40ae-842c-cea5633cc2d9@csgraf.de>
-Date: Fri, 31 Jul 2026 12:03:42 +0200
+ by csgraf.de (Postfix) with ESMTPSA id 003D5608027F;
+ Fri, 31 Jul 2026 12:23:31 +0200 (CEST)
+Message-ID: <5bb69baf-a00f-4b71-8065-90a7cfc7da8b@csgraf.de>
+Date: Fri, 31 Jul 2026 12:23:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/9] hw/misc/vmlaunchupdate: add api header
-To: Ani Sinha <anisinha@redhat.com>, Gerd Hoffman <kraxel@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v3 5/9] hw/misc/vmlaunchupdate: Introduce hypervisor
+ fw-cfg interface support
+To: Ani Sinha <anisinha@redhat.com>, Gerd Hoffman <kraxel@redhat.com>
 Cc: graf@amazon.com, qemu-devel@nongnu.org
 References: <20260730071254.80695-1-anisinha@redhat.com>
- <20260730071254.80695-5-anisinha@redhat.com>
+ <20260730071254.80695-6-anisinha@redhat.com>
 Content-Language: en-US
 From: Alexander Graf <agraf@csgraf.de>
-In-Reply-To: <20260730071254.80695-5-anisinha@redhat.com>
+In-Reply-To: <20260730071254.80695-6-anisinha@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=85.25.223.15; envelope-from=agraf@csgraf.de;
@@ -62,32 +61,88 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 30.07.26 09:12, Ani Sinha wrote:
-> Add a separate header file for guest usable api definitions.
+> VM launch update is a mechanism where the virtual machines can use IGVM
+> file bundle to boot into a trusted execution environment without
+> having to depend on a untrusted party to provide the IGVM bundle or firmware
+> image. This is particularly useful for confidential virtual machines that
+> are deployed in the cloud where the tenant and the cloud provider are two
+> different entities. In this scenario, virtual machines can bring their own
+> trusted IGVM file containing a trusted firmware image
+> bundled as a part of their filesystem and then use this hypervisor interface
+> to update to a trusted and deterministic boot state.
+> This also allows the guests to have a consistent measurements on the firmware
+> image.
+>
+> Currently, this mechanism only works if the VM was started with IGVM in the
+> first place.
+>
+> This change introduces support for the fw-cfg based hypervisor interface
+> and the corresponding device. The interface is made generic
+> enough so that guests are free to use their own ABI to pass required
+> information between initial and trusted execution contexts (where they are
+> running their own trusted boot state) without the hypervisor getting
+> involved in between.
+>
+> Currently, this device is only supported for x86 machines. Presence of
+> IGVM host libraries is also required for parsing IGVM files. Hence, the device
+> cannot be initialized for other machine types or hosts where IGVM support
+> is not present. Trying to initialize it for arm for example will lead to failure:
+>
+> $ ./qemu-system-arm -device vm-launch-update -machine virt
+> qemu-system-arm: -device vmfwupdate: This machine does not support vm-launch-update device
+>
+> Functional and qtests will be added in a subsequent patch.
 >
 > CC: Alex Graf <graf@amazon.com>
 > CC: Gerd Hoffman <kraxel@redhat.com>
+>
+> Reviewed-by: Gerd Hoffmann <kraxel@redhat.com>
 > Signed-off-by: Ani Sinha <anisinha@redhat.com>
 > ---
->   .../standard-headers/misc/vmlaunchupdate.h    | 102 ++++++++++++++++++
->   1 file changed, 102 insertions(+)
->   create mode 100644 include/standard-headers/misc/vmlaunchupdate.h
+>   hw/misc/meson.build              |   3 +
+>   hw/misc/trace-events             |   6 +
+>   hw/misc/vmlaunchupdate.c         | 309 +++++++++++++++++++++++++++++++
+>   include/hw/misc/vmlaunchupdate.h |  38 ++++
+>   4 files changed, 356 insertions(+)
+>   create mode 100644 hw/misc/vmlaunchupdate.c
+>   create mode 100644 include/hw/misc/vmlaunchupdate.h
 >
-> diff --git a/include/standard-headers/misc/vmlaunchupdate.h b/include/standard-headers/misc/vmlaunchupdate.h
+> diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+> index 23265f6035..b8c7de295e 100644
+> --- a/hw/misc/meson.build
+> +++ b/hw/misc/meson.build
+> @@ -163,6 +163,9 @@ specific_ss.add(when: 'CONFIG_MIPS_ITU', if_true: files('mips_itu.c'))
+>   
+>   specific_ss.add(when: 'CONFIG_RISCV_MIPS_CMGCR', if_true: files('riscv_cmgcr.c'))
+>   specific_ss.add(when: 'CONFIG_RISCV_MIPS_CPC', if_true: files('riscv_cpc.c'))
+> +if igvm.found()
+> +   specific_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('vmlaunchupdate.c'))
+> +endif
+>   
+>   system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
+>   
+> diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+> index c9a868b3ef..2d6d2238c5 100644
+> --- a/hw/misc/trace-events
+> +++ b/hw/misc/trace-events
+> @@ -442,3 +442,9 @@ iommu_testdev_dma_read(uint64_t gva, uint32_t len) "gva=0x%" PRIx64 " len=%u"
+>   iommu_testdev_dma_verify(uint32_t expected, uint32_t actual) "expected=0x%x actual=0x%x"
+>   iommu_testdev_dma_result(uint32_t result) "DMA completed result=0x%x"
+>   iommu_testdev_dma_armed(bool armed) "armed=%d"
+> +
+> +# vmlaunchupdate.c
+> +launch_update_write(void) ""
+> +vmlaunch_reset_enter(void) ""
+> +vm_launchupdate_finalize(void) ""
+> +restore_host_x86_igvm(void) ""
+> diff --git a/hw/misc/vmlaunchupdate.c b/hw/misc/vmlaunchupdate.c
 > new file mode 100644
-> index 0000000000..fc18f8faf7
+> index 0000000000..5b0222310b
 > --- /dev/null
-> +++ b/include/standard-headers/misc/vmlaunchupdate.h
-
-
-Didn't standard-headers usually get imported from somewhere, like Linux? 
-Where does this one originate? If it's self written, why not put it into 
-include/hw/misc?
-
-
-> @@ -0,0 +1,102 @@
+> +++ b/hw/misc/vmlaunchupdate.c
+> @@ -0,0 +1,309 @@
 > +/*
-> + * Guest driven VM launch state update device via IGVM.
-> + * The definitions in this header defines the API for the hypervisor interface.
+> + * Guest driven VM launch component update (using IGVM) device
 > + * For details and specification, please look at docs/specs/vmlaunchupdate.rst.
 > + *
 > + * Copyright (C) 2026 Red Hat, Inc.
@@ -95,103 +150,136 @@ include/hw/misc?
 > + * Authors: Ani Sinha <anisinha@redhat.com>
 > + *
 > + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + */
-> +#ifndef VMLAUNCHUPDATE_API_H
-> +#define VMLAUNCHUPDATE_API_H
-> +
-> +/* fw-cfg file definition */
-> +#define FILE_VMLAUNCHUPDATE "etc/vmlaunchupdate"
-> +
-> +/* version */
-> +#define VM_LAUNCHUPDATE_VERSION 0x01
-> +
-> +/* format bits, used by both 'capabilities' and 'control'  */
-> +
-> +/* igvm */
-> +#define VM_LAUNCHUPDATE_FORMAT_IGVM           (1ULL << 32)
-> +
-> +/* 'control' field bits  */
-> +
-> +/* disable vmlaunchupdate interface */
-> +#define VM_LAUNCHUPDATE_CTL_DISABLE            (1 << 0)
-> +/* revert to the original host provided igvm */
-> +#define VM_LAUNCHUPDATE_CTL_HOST_IGVM          (1 << 1)
-> +
-> +/* The combination of the above two ctl interfaces work as
-> + * follows:
-> + *
-> + * A) CTL_HOST_IGVM=off CTL_DISABLE=off
-> + *
-> + * Supplied IGVM file replaces the firmware permanently.  Updating the
-> + * firmware again is possible.
-> + *
-> + * B) CTL_HOST_IGVM=off CTL_DISABLE=on
-> + *
-> + * Supplied IGVM file replaces the firmware permanently.  Updating the
-> + * firmware again is not possible.
-> + *
-> + * C) CTL_HOST_IGVM=on CTL_DISABLE=off
-> + *
-> + * Supplied IGVM file replaces the firmware for one reset.  Resetting
-> + * again will switch back to the original firmware.  Updating the
-> + * firmware again is possible.
-> + *
-> + * D) CTL_HOST_IGVM=on CTL_DISABLE=on
-> + *
-> + * Supplied IGVM file replaces the firmware for one reset.  Resetting
-> + * again will switch back to the original firmware.  Updating the
-> + * firmware again is NOT possible.
-> + *
 > + */
 > +
-> +/* status code */
-> +enum VMLaunchUpdateStatus {
-> +    VM_LAUNCHUPDATE_SUCCESS,
-> +    VM_LAUNCHUPDATE_LOAD_FAIL,
-> +    VM_LAUNCHUPDATE_NOT_IGVM_INIT,
-> +};
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "qemu/module.h"
+> +#include "system/physmem.h"
+> +#include "system/reset.h"
+> +#include "qemu/target-info-qapi.h"
+> +#include "hw/nvram/fw_cfg.h"
+> +#include "hw/core/qdev-properties.h"
+> +#include "hw/i386/pc.h"
+> +#include "exec/cpu-common.h"
+> +#include "hw/misc/vmlaunchupdate.h"
+> +#include "system/igvm.h"
+> +#include "system/igvm-internal.h"
+> +#include "qemu/error-report.h"
+> +#include "trace.h"
 > +
-> +typedef struct {
-> +    /* api version */
-> +    uint16_t version;
+> +/* returns NULL unless there is exactly one device */
+> +static VMLaunchUpdateState *vm_launchupdate_find(void)
+> +{
+> +    Object *o = object_resolve_path_type("", TYPE_VMLAUNCHUPDATE, NULL);
 > +
-> +    /*
-> +     * The guest can read this in order to determine if loading new IGVM
-> +     * succeeded.
-> +     */
-> +    uint16_t status;
+> +    return o ? VMLAUNCHUPDATE(o) : NULL;
+> +}
 > +
-> +    uint32_t _padding;
+> +static bool vmlaunchupdate_supported(void)
+> +{
+> +    return target_arch() == SYS_EMU_TARGET_X86_64;
+> +}
 > +
-> +    /* VMM capabilities, read-only. */
-> +    uint64_t capabilities;
-> +    /* control bits, see VMFWUPDATE_CTL_* */
-> +    uint64_t control;
+> +static void init_vm_launch_update(VMLaunchUpdateState *s)
+> +{
+> +    s->launch_update.capabilities = VM_LAUNCHUPDATE_FORMAT_IGVM;
+> +    s->launch_update.control = 0;
 > +
-> +    /*
-> +     * address and size of the IGVM image.  Will be cleared when
-> +     * the write completes successfully and IGVM file is correctly parsed.
-> +     */
-> +    uint64_t fw_image_addr;
-> +    uint64_t fw_image_size;
+> +    if (s->disabled) {
+> +        s->launch_update.control |= VM_LAUNCHUPDATE_CTL_DISABLE;
+> +    }
 > +
-> +    /*
-> +     * address + size of opaque blob.  The guest can use this to pass on
-> +     * information, for example which memory region the linux kernel has been
-> +     * loaded to.  writable, will be kept intact on firmware update.
-> +     */
-> +    uint64_t opaque_addr;
-> +    uint64_t opaque_size;
+> +    s->launch_update.version = VM_LAUNCHUPDATE_VERSION;
+> +    return;
+> +}
 > +
-> +} VMLaunchUpdate;
+> +static void clear_init_vm_launch_update(VMLaunchUpdateState *s)
+> +{
+> +    memset(&s->launch_update, 0, sizeof(s->launch_update));
+> +    init_vm_launch_update(s);
+> +}
+> +
+> +static int process_x86_igvm(VMLaunchUpdateState *s,
+> +                            uint64_t fw_image_addr, uint64_t fw_image_size)
+> +{
+> +    X86MachineState *x86machine = X86_MACHINE(qdev_get_machine());
+> +    IgvmCfg *igvmc = x86machine->igvm;
+> +    IgvmHandle igvm;
+> +    void *image_addr_ptr;
+> +    hwaddr len;
+> +
+> +    if (!igvmc) {
+> +        /* The VM was not started with an IGVM, bail */
+> +        info_report("guest was not initially started with IGVM, "
+> +                    "not changing launch state.");
+> +        return -2;
+> +    }
+> +
+> +    if (!fw_image_addr || !fw_image_size) {
+> +        return -1;
+> +    }
+> +
+> +    len = (hwaddr) fw_image_size;
+> +    image_addr_ptr = physical_memory_map((hwaddr) fw_image_addr,
+> +                                         (hwaddr *) &len, 0);
+> +
+> +    if (!image_addr_ptr || (len < fw_image_size)) {
+> +        warn_report("vmlaunchupdate: Invalid guest addresses.");
+> +        physical_memory_unmap(image_addr_ptr, len, 0, 0);
 
 
-In theory, we may want to allow all of this logic with TCG eventually. 
-At that point, we need to watch out for different struct layout 
-constraints implied by the compiler. It's probably best to mark this 
-struct QEMU_PACKED right away to not run into accidental padding on 
-obscure platforms later.
+On !image_addr_ptr, wouldn't this invoke unmap(NULL)?
+
+
+> +        return -1;
+> +    }
+> +
+> +    igvm = igvm_new_from_binary(image_addr_ptr, fw_image_size);
+> +    if (igvm < 0) {
+> +        warn_report("vmlaunchupdate: Unable to parse IGVM file %"
+> +                    PRIx64 ": %" PRIx64, fw_image_addr, fw_image_size);
+
+
+Don't we need to unmap here as well, like above?
+
+I think the best way to make this code pretty is a goto err with 
+conditional unmap.
+
+
+> +        return -1;
+> +    }
+> +
+> +    /* free previous file context */
+> +    if (igvmc->file >= 0) {
+> +        igvm_free(igvmc->file);
+> +    }
+> +    /* set new context */
+> +    igvmc->file = igvm;
+> +
+> +    physical_memory_unmap(image_addr_ptr, len, 0, 0);
+> +    info_report("vmlaunchupdate: new IGVM context set.");
+> +
+> +    return 0;
+> +}
+> +
+> +static void restore_host_x86_igvm(void)
+> +{
+> +    X86MachineState *x86machine = X86_MACHINE(qdev_get_machine());
+> +    IgvmCfg *igvmc = x86machine->igvm;
+
+
+The igvm property can be NULL, if nobody set igvm-cfg. So if you launch 
+QEMU with just "-device vm-launch-update", it will crash here. You check 
+it above in process_x86_igvm(), but not here. Maybe create a generic 
+function that does the info_report and bails out?
+
+
+> +    Error *errp;
+
+
+Please always preinitialize errp with NULL. Typically callers expects 
+that it's NULL, so they can choose not to touch it on error.
 
 
 Alex
