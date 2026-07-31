@@ -4,94 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A994C5516D
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 12:37:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEE93C5516D
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 12:38:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpmUG-0008PU-LL; Fri, 31 Jul 2026 08:37:16 -0400
+	id 1wpmV7-0000Pw-GJ; Fri, 31 Jul 2026 08:38:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1wpmUF-0008P7-Af
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 08:37:15 -0400
-Received: from mail-wr1-f54.google.com ([209.85.221.54])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <eblot.ml@gmail.com>)
- id 1wpmUC-00015m-SQ
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 08:37:15 -0400
-Received: by mail-wr1-f54.google.com with SMTP id
- ffacd0b85a97d-47ddf7b09aaso965385f8f.3
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 05:37:12 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785501431; x=1786106231;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=SaZC1cOxgZJU/k/mGTboz1OJK2cBdIvYp2zJU+PV7Cs=;
- b=pQBrIOmdXJDcXBimSSZYVrduiTD4SJ8lkvr5JltGwp+cOVixRltkNfPeuxENINEgEF
- LcrdQ0IauL3ZQi005cOacr1AOi3g/zpflkbq8md5ZoP9NWp3cJAHk8baRAr1aSKJdWED
- 9+ATVg4XkRsBuMZalHwZ00d8hAGxutYyfFm2XhUD0YpVomYpIfYXQelUN6dQT03g/BEs
- j99i1GTOLVGwOgiZvzhPiRklMbxRrVKnQCbhlums5of0OOrcb03yrOvjxzc1gF5qBtSh
- PZWVj66z4G7CcbDLR4ixH3pSy89ZgDwI70ch6o5kSdoyMJqwx5NJAG6s3gsKWc+cUhFT
- 5w7Q==
-X-Gm-Message-State: AOJu0Yx1YjQ29OuFTFnJir2kgaNMDEk+lrnG2/pXgDjQoRVI1ML1fGFk
- J4Ddd8JS/hV4rRN/1DmjutNQZsvQEpSk3Kbr5g9LbfocrI9hSBqbYEG1I8oikz8e
-X-Gm-Gg: AR+sD12ZjdVMGR7vMpajOrMi50uUqcxVRxCu3XKEpdXTy9ydSPiIDdsZO/+oYACTXgi
- ZpZdsWATvKTOnp2Gis3wENXAFy4/qRhqTfFCJZeuZPuv47BbT7Mb7jINl98U0K++4CgYk+W/bAY
- XeAJslHQTMxdhWUPANyaFe5BcOZWzT/SOjC/zuy/BbDFU4HsMFb4BcOl848pRGKoothUXNeisCJ
- i7kDOD/E2j/593Tm7u+Zh/1kgEIt779+wK5KacnNZmy1SDWcivN9sMq++Vnqrv2y06ZsfRKKs9+
- eOCskysAWhBGomzxvVoEl3YEhU4jEphlcab3I8m+QJ+swRiFqFv3qixLxkh7tGrATIa1+TKS1Nx
- tFsSKPV69i03Igp8JbmVAP1XoKdXpwCoibGaWg3REVBajsnECyPxcu/g6JTMPlw6F1Cw9xx5gIz
- TYIJnGxP+LjzstY/Edba5PNHfDaWD9BUxQ+T7nY5QRugy6OVc6QoDhNftnxw4Xy/e0Di88v7exQ
- atia2MKFFCLCwupuMVJgOwkaWWSaH3+VdmE
-X-Received: by 2002:a05:6000:4011:b0:47f:86d5:d1d7 with SMTP id
- ffacd0b85a97d-47fd2ab9128mr4174789f8f.6.1785501431029; 
- Fri, 31 Jul 2026 05:37:11 -0700 (PDT)
-Received: from localhost (89-93-216-19.hfc.dyn.abo.bbox.fr. [89.93.216.19])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47fd458b05fsm4513056f8f.28.2026.07.31.05.37.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 Jul 2026 05:37:10 -0700 (PDT)
-Date: Fri, 31 Jul 2026 12:45:12 +0200
-Subject: [PATCH v2 13/25] hw/arm: sanmiguel: populate EEPROM data
+ (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1wpmV4-0000PX-RE
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 08:38:07 -0400
+Received: from mail-centralusazon11011017.outbound.protection.outlook.com
+ ([52.101.62.17] helo=DM5PR21CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1wpmV2-00017k-UZ
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 08:38:06 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=JBnzDwNem+dq5MdrySZSoHITvscLCb45H7tHx06T/ol1QsTQDkBcxLxUYGsFnGOumr94NmKn83XTctId4sLKweQlhKXlRKbOyGHZVVi4tsy5AblW5nTCUvoaqydzvlbm0N2nDEs6XKZYRkv51hb+6pV+CZOItUD0ldjJoPsGNNfIDfNYwh+kw+CR6/3RS0WupCpYv6jiruUj/I3Vc3qGUAIcsi/q4EkH86BbfOON0br/QeyPt1NZkWJ0N/Xj8ZiqXT6QBsjLVdqnd+/BBhm6h2KU/Yp3iEX+GyYwI2oeaN/rV1P7jOGiTQENE1Z4hwPWBEwnZWRe34qOrr+fjBqCGQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Mv4BkR3eYoNhJ848I4xQWyV0T0ovNat2qkt2+z8VHXA=;
+ b=B5c9rlmZV3G3ueIDG9jltjW5TInkPMnBegIeiTUWbW+OgZfk6/UfhMukF5k8HwyWAy/FRtp0L6iRmysubsuNHTKCgtVUrxHFqVCgtCuhpwIPbBW9lrjSWkHj5+GwrBOh72jmjz6f6DQXCF7tdaY4qJtK2itT9Ta1EqzHksW6WmiTbCWoDi85RS3tI8iqTKzual/iyf+hGg8s5bjac2Q/Luh6NaspMm9v169c5pyi5PN+4H9WGHWwtWUYsFm7Wg2z4j1JhgRoMEN5qc+Cdaqq7ExBvLZLQ9gcc4BoYQGMjLQhcBDmjvFmDptWv5K2CFXR58Hz6u6JWcsKAywEYcZkpg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Mv4BkR3eYoNhJ848I4xQWyV0T0ovNat2qkt2+z8VHXA=;
+ b=B4pa/UU6oWYWuZpZtIGRXVEopoUlNGYweygB7DU4CCloB6XntKt+BVksLn+1rhMUpshOKz0za/I4hVMZdaiF7ZS8bvTR4XPoOt0r/65XoMREFPEw5VDNgZEEqSwWOUuy/BMg8KxKZyRmtSOLu0YBv7W5yLIcbKivbEGzm80RzN0=
+Received: from MW4PR04CA0336.namprd04.prod.outlook.com (2603:10b6:303:8a::11)
+ by DS0PR12MB8562.namprd12.prod.outlook.com (2603:10b6:8:164::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.15; Fri, 31 Jul
+ 2026 12:32:57 +0000
+Received: from SJ5PEPF000001D1.namprd05.prod.outlook.com
+ (2603:10b6:303:8a:cafe::95) by MW4PR04CA0336.outlook.office365.com
+ (2603:10b6:303:8a::11) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.270.16 via Frontend Transport; Fri,
+ 31 Jul 2026 12:32:57 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SJ5PEPF000001D1.mail.protection.outlook.com (10.167.242.53) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.292.8 via Frontend Transport; Fri, 31 Jul 2026 12:32:57 +0000
+Received: from [10.85.38.54] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Fri, 31 Jul
+ 2026 07:32:53 -0500
+Message-ID: <79db539c-a89c-411f-8a34-ab49ca6b4bf2@amd.com>
+Date: Fri, 31 Jul 2026 18:02:51 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260731-sanmiguel-bmc-locator-v2-13-1266926ba769@free.fr>
-References: <20260731-sanmiguel-bmc-locator-v2-0-1266926ba769@free.fr>
-In-Reply-To: <20260731-sanmiguel-bmc-locator-v2-0-1266926ba769@free.fr>
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Steven Lee <steven_lee@aspeedtech.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
- qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Thomas Huth <th.huth+qemu@posteo.eu>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Emmanuel Blot <eblot@meta.com>, Emmanuel Blot <emmanuel.blot@free.fr>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1785494708; l=14814;
- i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=8TJY/flswX+pacJAJohPVkRNRAiHgkLgviQcHgmd5dU=;
- b=mjeoA0RsH1B1Srl+S+WRAWSddJUPr4Q2zR6Vls7f7TS+6KLq6grgL71HClQOwU9PbCxdQAxSA
- SG9p2kgSX/8BD8d0PyYRdFnUcO7L0Pn6IArXinE2PB2VEz6RO1f9zAs
-X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
- pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=209.85.221.54; envelope-from=eblot.ml@gmail.com;
- helo=mail-wr1-f54.google.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+CC: <sarunkod@amd.com>, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Ani Sinha <anisinha@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, "Igor
+ Mammedov" <imammedo@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, "Richard
+ Henderson" <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>,
+ <vasant.hegde@amd.com>, <suravee.suthikulpanit@amd.com>
+Subject: Re: [PATCH 4/8] acpi_build: Use IOMMU pci device to build IOMMU
+ device ID
+To: "Michael S. Tsirkin" <mst@redhat.com>
+References: <20260511123937.32743-1-sarunkod@amd.com>
+ <20260511123937.32743-5-sarunkod@amd.com>
+ <20260731054920-mutt-send-email-mst@kernel.org>
+From: Sairaj Kodilkar <sarunkod@amd.com>
+Content-Language: en-US
+In-Reply-To: <20260731054920-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001D1:EE_|DS0PR12MB8562:EE_
+X-MS-Office365-Filtering-Correlation-Id: e3301f51-c3c5-485a-9c89-08deeeffd9dc
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700016|23010399003|376014|1800799024|82310400026|6133799003|10067099003|11063799006|56012099006|4143699003|22082099003|18002099003|3023799007;
+X-Microsoft-Antispam-Message-Info: dRu29zvRgks+VXzm0DhgwL9ekyGAP4Rll7a69YezT/nB3fQyNm0dMcywH0u8Blf3n2laLnU0Pg5rBbOe0QkLeqdiVPwSiX+uKVhwobE+WGbar7AJTZVQ49R4Cfp01uIAwbkH+afFQmbXEj5+XY8JkpqkcxPZvMx4cnl7EPHrW/j6E0hyLLKlC8Z4VXvcVRrVQjgfqCrMIhJNJxg8bGwvI5zD2rkzYaHrBygqbUGs8T9FuhIkCZTMdXJL7Ye6EOWQjkTS+Xr/sbnfSxcV2F3B3y7xE4w8/NU0nCQCudGMd402p79c96Vx0qPmoQ0gatFlZAG3ugfLGtP58/3AlnLfCN4Hh/KE6CzPo3j28O6zAmaHNGjCS461xqQ8l/bYLUVvZxQVBSoK9osXskT2t9IbmWI5KJAqXBozQDJUivZ3US7iDiwEpD20sWo7rOGc/5etfZUIGJH/35MKA907jqrrNy6l2IlnHrg2CeaWH+PqiR2pdP4vt34paCHE6Nr8awmejhpLo3oEvcKKUR7/TpaO+WX09YMQfPzEANR9ZuGw7o7EGlWDEr6a/qvAYkmODGsgYDwtOMQEwVSOemOOfUkjB/enzld2QbP0tQLBC09LzhlgkN+MLNLumhjPfxZ2S3ZJazUCbxwnslEJQCKKih6bQeBq9aYJ6NbAClwYyp4XtdfeEQhtTwH/3KJhQyTjqvgEI2gF5yitHvxDOhmv9aOD1A==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700016)(23010399003)(376014)(1800799024)(82310400026)(6133799003)(10067099003)(11063799006)(56012099006)(4143699003)(22082099003)(18002099003)(3023799007);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: h9mscvlUZl1ibuPpWJRz3u+Bpq1kYJLto8cwHfSTlVBlXcLrLxIb3TClXdQkMUUPqzrX2yS0kJ5Ii0HV1u7y8302trtuI+e/xp3C1r3gshir6v2B/Cu50mse4reWpM86bl7h+HeUnY8AIpGxbWeZbe5Lr470IaB4x3f3xnJfrGG/tNoqu9EFlCNaM/MfDLQ4YwYcpVmlV0xXJQaALBYrtLLy0dQkogszJejgxjeG33aVXQSPatgx62IQ0zqD5PVQiULUCsdD0S4OqrABz0yufAO6szr8I5txMX8wBTsS8Z2DKpFMy3XAhVS0lyFlND7eTvqxBtt52aA/MmK+fjQwA7bNgLLqp8WjFHlSAvF6Ntqdri4Amn+5FyvYuZ67Q3hOzFMn/2C0h69fn2SOW8lQ1h83Z+m8V74Yke4vMaKnsat2M+w6kGBpOzioafO8rBqf
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Jul 2026 12:32:57.1655 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e3301f51-c3c5-485a-9c89-08deeeffd9dc
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001D1.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8562
+Received-SPF: permerror client-ip=52.101.62.17; envelope-from=Sairaj.K@amd.com;
+ helo=DM5PR21CU001.outbound.protection.outlook.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,339 +128,83 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Emmanuel Blot <emmanuel.blot@free.fr>
-From:  Emmanuel Blot via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Populate AT24C FRU EEPROMs with real data from physical device.
 
-Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
----
- hw/arm/aspeed_ast2600_sanmiguel.c | 275 +++++++++++++++++++++++++++++++++++++-
- 1 file changed, 269 insertions(+), 6 deletions(-)
 
-diff --git a/hw/arm/aspeed_ast2600_sanmiguel.c b/hw/arm/aspeed_ast2600_sanmiguel.c
-index 0f766449ae..251dab141f 100644
---- a/hw/arm/aspeed_ast2600_sanmiguel.c
-+++ b/hw/arm/aspeed_ast2600_sanmiguel.c
-@@ -23,6 +23,267 @@
- 
- #define TYPE_DS1338 "ds1338"
- 
-+/*
-+ * "Front IO" FRU data. Generated with frugen.
-+ *
-+ *    {
-+ *      "board": {
-+ *        "mfg": "Quanta",
-+ *        "pname": "San Miguel FIO EVT (QEMU)",
-+ *        "pn": "00000000000",
-+ *        "serial": "0000000000000",
-+ *        "date": "03/10/2026 00:00",
-+ *        "custom": ["19-101243"]
-+ *      },
-+ *      "product": {
-+ *        "mfg": "Quanta",
-+ *        "pname": "CI-San Miguel",
-+ *        "pn": "10000000001",
-+ *        "ver": "EVT",
-+ *        "serial": "10000000000000001",
-+ *        "atag": "QEMU"
-+ *      }
-+ *    }
-+ */
-+static const uint8_t fio_eeprom[] = {
-+  0x01, 0x00, 0x00, 0x01, 0x0a, 0x00, 0x00, 0xf4, 0x01, 0x09, 0x19, 0x90,
-+  0xd2, 0xf6, 0xc6, 0x51, 0x75, 0x61, 0x6e, 0x74, 0x61, 0xd9, 0x53, 0x61,
-+  0x6e, 0x20, 0x4d, 0x69, 0x67, 0x75, 0x65, 0x6c, 0x20, 0x46, 0x49, 0x4f,
-+  0x20, 0x45, 0x56, 0x54, 0x20, 0x28, 0x51, 0x45, 0x4d, 0x55, 0x29, 0x8a,
-+  0x10, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x89, 0x10,
-+  0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x04, 0x01, 0xc0, 0x87, 0x51, 0xd6,
-+  0x44, 0x50, 0x24, 0x51, 0x13, 0xc1, 0x00, 0xf5, 0x01, 0x08, 0x19, 0xc6,
-+  0x51, 0x75, 0x61, 0x6e, 0x74, 0x61, 0xcd, 0x43, 0x49, 0x2d, 0x53, 0x61,
-+  0x6e, 0x20, 0x4d, 0x69, 0x67, 0x75, 0x65, 0x6c, 0x89, 0x11, 0x04, 0x41,
-+  0x10, 0x04, 0x41, 0x10, 0x14, 0x01, 0x83, 0xa5, 0x4d, 0x03, 0x8d, 0x11,
-+  0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x04, 0x41, 0x11,
-+  0x83, 0x71, 0xd9, 0xd6, 0xc0, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x9b,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff
-+};
-+static const size_t fio_eeprom_len = sizeof(fio_eeprom);
-+
-+/*
-+ * "Power Distribution Board" FRU data. Generated with frugen.
-+ *
-+ *    {
-+ *      "chassis": {
-+ *        "type": 23,
-+ *        "pn": "",
-+ *        "serial": ""
-+ *      },
-+ *      "board": {
-+ *        "mfg": "Quanta",
-+ *        "pname": "San Miguel PDB EVT (QEMU)",
-+ *        "pn": "00000000000",
-+ *        "serial": "0000000000000",
-+ *        "date": "03/10/2026 00:00",
-+ *        "custom": ["19-101240"]
-+ *      },
-+ *      "product": {
-+ *        "mfg": "Quanta",
-+ *        "pname": "CI-San Miguel",
-+ *        "pn": "10000000001",
-+ *        "ver": "EVT",
-+ *        "serial": "10000000000000001",
-+ *        "atag": "QEMU"
-+ *      }
-+ *    }
-+ */
-+static const uint8_t pdb_eeprom[] = {
-+  0x01, 0x00, 0x01, 0x02, 0x0b, 0x00, 0x00, 0xf1, 0x01, 0x01, 0x17, 0xc0,
-+  0xc0, 0xc1, 0x00, 0xa6, 0x01, 0x09, 0x19, 0x90, 0xd2, 0xf6, 0xc6, 0x51,
-+  0x75, 0x61, 0x6e, 0x74, 0x61, 0xd9, 0x53, 0x61, 0x6e, 0x20, 0x4d, 0x69,
-+  0x67, 0x75, 0x65, 0x6c, 0x20, 0x50, 0x44, 0x42, 0x20, 0x45, 0x56, 0x54,
-+  0x20, 0x28, 0x51, 0x45, 0x4d, 0x55, 0x29, 0x8a, 0x10, 0x04, 0x41, 0x10,
-+  0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x89, 0x10, 0x04, 0x41, 0x10, 0x04,
-+  0x41, 0x10, 0x04, 0x01, 0xc0, 0x87, 0x51, 0xd6, 0x44, 0x50, 0x24, 0x51,
-+  0x10, 0xc1, 0x00, 0x00, 0x01, 0x08, 0x19, 0xc6, 0x51, 0x75, 0x61, 0x6e,
-+  0x74, 0x61, 0xcd, 0x43, 0x49, 0x2d, 0x53, 0x61, 0x6e, 0x20, 0x4d, 0x69,
-+  0x67, 0x75, 0x65, 0x6c, 0x89, 0x11, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10,
-+  0x14, 0x01, 0x83, 0xa5, 0x4d, 0x03, 0x8d, 0x11, 0x04, 0x41, 0x10, 0x04,
-+  0x41, 0x10, 0x04, 0x41, 0x10, 0x04, 0x41, 0x11, 0x83, 0x71, 0xd9, 0xd6,
-+  0xc0, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x9b, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff
-+};
-+static const size_t pdb_eeprom_len = sizeof(pdb_eeprom);
-+
-+/*
-+ * "Secure Control Module" FRU data. Generated with frugen.
-+ *
-+ *    {
-+ *      "chassis": {
-+ *        "type": 23,
-+ *        "pn": "",
-+ *        "serial": "",
-+ *        "custom": [""]
-+ *      },
-+ *      "board": {
-+ *        "mfg": "Quanta",
-+ *        "pname": "San Miguel SCM EVT (QEMU)",
-+ *        "pn": "00000000000",
-+ *        "serial": "0000000000000",
-+ *        "date": "03/10/2026 00:00",
-+ *        "custom": ["19-101242"]
-+ *      },
-+ *      "product": {
-+ *        "mfg": "Quanta",
-+ *        "pname": "CI-San Miguel",
-+ *        "pn": "10000000001",
-+ *        "ver": "EVT",
-+ *        "serial": "10000000000000001",
-+ *        "atag": "QEMU"
-+ *      }
-+ *    }
-+ */
-+static const uint8_t scm_eeprom[] = {
-+  0x01, 0x00, 0x01, 0x02, 0x0b, 0x00, 0x00, 0xf1, 0x01, 0x01, 0x17, 0xc0,
-+  0xc0, 0xc0, 0xc1, 0xe6, 0x01, 0x09, 0x19, 0x90, 0xd2, 0xf6, 0xc6, 0x51,
-+  0x75, 0x61, 0x6e, 0x74, 0x61, 0xd9, 0x53, 0x61, 0x6e, 0x20, 0x4d, 0x69,
-+  0x67, 0x75, 0x65, 0x6c, 0x20, 0x53, 0x43, 0x4d, 0x20, 0x45, 0x56, 0x54,
-+  0x20, 0x28, 0x51, 0x45, 0x4d, 0x55, 0x29, 0x8a, 0x10, 0x04, 0x41, 0x10,
-+  0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x89, 0x10, 0x04, 0x41, 0x10, 0x04,
-+  0x41, 0x10, 0x04, 0x01, 0xc0, 0x87, 0x51, 0xd6, 0x44, 0x50, 0x24, 0x51,
-+  0x12, 0xc1, 0x00, 0xf1, 0x01, 0x08, 0x19, 0xc6, 0x51, 0x75, 0x61, 0x6e,
-+  0x74, 0x61, 0xcd, 0x43, 0x49, 0x2d, 0x53, 0x61, 0x6e, 0x20, 0x4d, 0x69,
-+  0x67, 0x75, 0x65, 0x6c, 0x89, 0x11, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10,
-+  0x14, 0x01, 0x83, 0xa5, 0x4d, 0x03, 0x8d, 0x11, 0x04, 0x41, 0x10, 0x04,
-+  0x41, 0x10, 0x04, 0x41, 0x10, 0x04, 0x41, 0x11, 0x83, 0x71, 0xd9, 0xd6,
-+  0xc0, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x9b, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff
-+};
-+static const size_t scm_eeprom_len = sizeof(scm_eeprom);
-+
-+/*
-+ * "SMM Carrier" FRU data. Generated with frugen.
-+ *
-+ *    {
-+ *      "chassis": {
-+ *        "type": 23,
-+ *        "pn": "",
-+ *        "serial": ""
-+ *      },
-+ *      "board": {
-+ *        "mfg": "Quanta",
-+ *        "pname": "San Miguel SMM Carrier EVT (QEMU)",
-+ *        "pn": "00000000000",
-+ *        "serial": "0000000000000",
-+ *        "date": "03/11/2026 17:36",
-+ *        "custom": ["19-101238"]
-+ *      },
-+ *      "product": {
-+ *        "mfg": "Quanta",
-+ *        "pname": "CI-San Miguel",
-+ *        "pn": "10000000001",
-+ *        "ver": "EVT",
-+ *        "serial": "10000000000000001",
-+ *        "atag": "QEMU"
-+ *      }
-+ *    }
-+ */
-+static const uint8_t smm_eeprom[] = {
-+  0x01, 0x00, 0x01, 0x02, 0x0c, 0x00, 0x00, 0xf0, 0x01, 0x01, 0x17, 0xc0,
-+  0xc0, 0xc1, 0x00, 0xa6, 0x01, 0x0a, 0x19, 0x4c, 0x85, 0xf7, 0xc6, 0x51,
-+  0x75, 0x61, 0x6e, 0x74, 0x61, 0xe1, 0x53, 0x61, 0x6e, 0x20, 0x4d, 0x69,
-+  0x67, 0x75, 0x65, 0x6c, 0x20, 0x53, 0x4d, 0x4d, 0x20, 0x43, 0x61, 0x72,
-+  0x72, 0x69, 0x65, 0x72, 0x20, 0x45, 0x56, 0x54, 0x20, 0x28, 0x51, 0x45,
-+  0x4d, 0x55, 0x29, 0x8a, 0x10, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x04,
-+  0x41, 0x10, 0x89, 0x10, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x04, 0x01,
-+  0xc0, 0x87, 0x51, 0xd6, 0x44, 0x50, 0x24, 0x4d, 0x18, 0xc1, 0x00, 0x84,
-+  0x01, 0x08, 0x19, 0xc6, 0x51, 0x75, 0x61, 0x6e, 0x74, 0x61, 0xcd, 0x43,
-+  0x49, 0x2d, 0x53, 0x61, 0x6e, 0x20, 0x4d, 0x69, 0x67, 0x75, 0x65, 0x6c,
-+  0x89, 0x11, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x14, 0x01, 0x83, 0xa5,
-+  0x4d, 0x03, 0x8d, 0x11, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x04, 0x41,
-+  0x10, 0x04, 0x41, 0x11, 0x83, 0x71, 0xd9, 0xd6, 0xc0, 0xc1, 0x00, 0x00,
-+  0x00, 0x00, 0x00, 0x9b, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff
-+};
-+static const size_t smm_eeprom_len = sizeof(smm_eeprom);
-+
-+/*
-+ * "SMM Extender" FRU data. Generated with frugen.
-+ *
-+ *    {
-+ *      "chassis": {
-+ *        "type": 23,
-+ *        "pn": "",
-+ *        "serial": ""
-+ *      },
-+ *      "board": {
-+ *        "mfg": "Quanta",
-+ *        "pname": "San Miguel SMM Extender EVT (QEMU)",
-+ *        "pn": "00000000000",
-+ *        "serial": "0000000000000",
-+ *        "date": "03/10/2026 00:00",
-+ *        "custom": ["19-101239"]
-+ *      },
-+ *      "product": {
-+ *        "mfg": "Quanta",
-+ *        "pname": "CI-San Miguel",
-+ *        "pn": "10000000001",
-+ *        "ver": "EVT",
-+ *        "serial": "10000000000000001",
-+ *        "atag": "QEMU"
-+ *      }
-+ *    }
-+ */
-+static const uint8_t smm_ext_eeprom[] = {
-+  0x01, 0x00, 0x01, 0x02, 0x0c, 0x00, 0x00, 0xf0, 0x01, 0x01, 0x17, 0xc0,
-+  0xc0, 0xc1, 0x00, 0xa6, 0x01, 0x0a, 0x19, 0x90, 0xd2, 0xf6, 0xc6, 0x51,
-+  0x75, 0x61, 0x6e, 0x74, 0x61, 0xe2, 0x53, 0x61, 0x6e, 0x20, 0x4d, 0x69,
-+  0x67, 0x75, 0x65, 0x6c, 0x20, 0x53, 0x4d, 0x4d, 0x20, 0x45, 0x78, 0x74,
-+  0x65, 0x6e, 0x64, 0x65, 0x72, 0x20, 0x45, 0x56, 0x54, 0x20, 0x28, 0x51,
-+  0x45, 0x4d, 0x55, 0x29, 0x8a, 0x10, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10,
-+  0x04, 0x41, 0x10, 0x89, 0x10, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x04,
-+  0x01, 0xc0, 0x87, 0x51, 0xd6, 0x44, 0x50, 0x24, 0x4d, 0x19, 0xc1, 0x7b,
-+  0x01, 0x08, 0x19, 0xc6, 0x51, 0x75, 0x61, 0x6e, 0x74, 0x61, 0xcd, 0x43,
-+  0x49, 0x2d, 0x53, 0x61, 0x6e, 0x20, 0x4d, 0x69, 0x67, 0x75, 0x65, 0x6c,
-+  0x89, 0x11, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x14, 0x01, 0x83, 0xa5,
-+  0x4d, 0x03, 0x8d, 0x11, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x04, 0x41,
-+  0x10, 0x04, 0x41, 0x11, 0x83, 0x71, 0xd9, 0xd6, 0xc0, 0xc1, 0x00, 0x00,
-+  0x00, 0x00, 0x00, 0x9b, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+  0xff, 0xff, 0xff, 0xff
-+};
-+static const size_t smm_ext_eeprom_len = sizeof(smm_ext_eeprom);
-+
- static void sanmiguel_bmc_i2c_init(AspeedMachineState *bmc)
- {
-     /* Reference: aspeed-bmc-facebook-sanmiguel.dts */
-@@ -56,7 +317,8 @@ static void sanmiguel_bmc_i2c_init(AspeedMachineState *bmc)
-     /* smm_temp: lm75@48 */
-     i2c_slave_create_simple(i2c[5], TYPE_TMP75, 0x48);
-     /* smm_fru: eeprom@50 (24c128 = 16 KiB) */
--    at24c_eeprom_init(i2c[5], 0x50, 16 * KiB);
-+    at24c_eeprom_init_rom(i2c[5], 0x50, 16 * KiB, smm_eeprom, smm_eeprom_len);
-+
-     /* rtc@6f — nct3018y (ds1338 stand-in) */
-     i2c_slave_create_simple(i2c[5], TYPE_DS1338, 0x6f);
- 
-@@ -81,16 +343,16 @@ static void sanmiguel_bmc_i2c_init(AspeedMachineState *bmc)
-     /* pdb_temp: lm75@4e */
-     i2c_slave_create_simple(i2c[9], TYPE_TMP75, 0x4e);
-     /* pdb_fru: eeprom@50 (24c128 = 16 KiB) */
--    at24c_eeprom_init(i2c[9], 0x50, 16 * KiB);
-+    at24c_eeprom_init_rom(i2c[9], 0x50, 16 * KiB, pdb_eeprom, pdb_eeprom_len);
- 
-     /* &i2c10 — SCM */
-     /* scm_temp: lm75@48 */
-     i2c_slave_create_simple(i2c[10], TYPE_TMP75, 0x48);
-     /* scm_fru: eeprom@50 (24c128 = 16 KiB) */
--    at24c_eeprom_init(i2c[10], 0x50, 16 * KiB);
-+    at24c_eeprom_init_rom(i2c[10], 0x50, 16 * KiB, scm_eeprom, scm_eeprom_len);
- 
-     /* &i2c11 — Switch Config */
--    /* sw_config: eeprom@50 (24c64 = 8 KiB) */
-+    /* sw_config: eeprom@50 (24c64 = 8 KiB) — blank (content not modelled) */
-     at24c_eeprom_init(i2c[11], 0x50, 8 * KiB);
- 
-     /* &i2c12 — empty */
-@@ -100,13 +362,14 @@ static void sanmiguel_bmc_i2c_init(AspeedMachineState *bmc)
-     /* smm_ext_ioexp: pca9554@38 */
-     i2c_slave_create_simple(i2c[13], TYPE_PCA9554, 0x38);
-     /* smm_ext_fru: eeprom@55 (24c128 = 16 KiB) */
--    at24c_eeprom_init(i2c[13], 0x55, 16 * KiB);
-+    at24c_eeprom_init_rom(i2c[13], 0x55, 16 * KiB, smm_ext_eeprom,
-+                          smm_ext_eeprom_len);
- 
-     /* &i2c14 — FIO */
-     /* fio_ioexp: pca9555@20 */
-     i2c_slave_create_simple(i2c[14], TYPE_PCA9555, 0x20);
-     /* fio_fru: eeprom@50 (24c64 = 8 KiB) */
--    at24c_eeprom_init(i2c[14], 0x50, 8 * KiB);
-+    at24c_eeprom_init_rom(i2c[14], 0x50, 8 * KiB, fio_eeprom, fio_eeprom_len);
- 
-     /* &i2c15 — empty */
- }
+On 7/31/2026 3:20 PM, Michael S. Tsirkin wrote:
+> On Mon, May 11, 2026 at 06:09:33PM +0530, Sairaj Kodilkar wrote:
+>> Currently, build_amd_iommu() uses "addr" property to build the device ID for
+>> IOMMU device and advertise it throught IVRS. But this property does not encode
+>> IOMMU bus. This will be a problem if IOMMU is attached to different bus.
+>> Hence use iommu pci device which provides bus, to build the IOMMU device ID.
+>>
+>> Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+>> Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+> 
+> But is this called after firmware has enumerated the pci bus?
+> And I guess OS better not change that bus number eh?
+> 
 
--- 
-2.50.1
+Hi Michael
+
+Yes, the ACPI function is called two times -- during qemu initialization
+and firmware writes. During first call, bus numbers are 0 and during
+second call, IVRS is created with bus number. This second IVRS
+overwrites the first one.
+
+Thanks
+Sairaj
+
+>> ---
+>>  hw/i386/acpi-build.c | 12 ++++++------
+>>  1 file changed, 6 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+>> index e4ad01eec037..718e3f546b18 100644
+>> --- a/hw/i386/acpi-build.c
+>> +++ b/hw/i386/acpi-build.c
+>> @@ -1752,10 +1752,13 @@ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
+>>                  const char *oem_table_id)
+>>  {
+>>      AMDVIState *s = AMD_IOMMU_DEVICE(x86_iommu_get_default());
+>> +    PCIDevice *iommu_dev = &(s->pci->dev);
+>>      GArray *ivhd_blob = g_array_new(false, true, 1);
+>>      AcpiTable table = { .sig = "IVRS", .rev = 1, .oem_id = oem_id,
+>>                          .oem_table_id = oem_table_id };
+>>      uint64_t feature_report;
+>> +    int iommu_bus = pci_bus_num(pci_get_bus(iommu_dev));
+>> +    uint16_t iommu_devid = PCI_BUILD_BDF(iommu_bus, iommu_dev->devfn);
+>>  
+>>      acpi_table_begin(&table, table_data);
+>>      /* IVinfo - IO virtualization information common to all
+>> @@ -1816,9 +1819,7 @@ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
+>>      /* IVHD length */
+>>      build_append_int_noprefix(table_data, ivhd_blob->len + 24, 2);
+>>      /* DeviceID */
+>> -    build_append_int_noprefix(table_data,
+>> -                              object_property_get_int(OBJECT(s->pci), "addr",
+>> -                                                      &error_abort), 2);
+>> +    build_append_int_noprefix(table_data, iommu_devid, 2);
+>>      /* Capability offset */
+>>      build_append_int_noprefix(table_data, s->pci->capab_offset, 2);
+>>      /* IOMMU base address */
+>> @@ -1850,10 +1851,9 @@ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
+>>  
+>>      /* IVHD length */
+>>      build_append_int_noprefix(table_data, ivhd_blob->len + 40, 2);
+>> +
+>>      /* DeviceID */
+>> -    build_append_int_noprefix(table_data,
+>> -                              object_property_get_int(OBJECT(s->pci), "addr",
+>> -                                                      &error_abort), 2);
+>> +    build_append_int_noprefix(table_data, iommu_devid, 2);
+>>      /* Capability offset */
+>>      build_append_int_noprefix(table_data, s->pci->capab_offset, 2);
+>>      /* IOMMU base address */
+>> -- 
+>> 2.34.1
+> 
 
 
