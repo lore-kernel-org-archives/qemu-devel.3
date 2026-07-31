@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F57AC54F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 06:00:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 154F5C55167
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 06:00:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpgFa-0002fE-Nw; Fri, 31 Jul 2026 01:57:42 -0400
+	id 1wpgFo-0002ll-Hc; Fri, 31 Jul 2026 01:57:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <blduan@linux.alibaba.com>)
- id 1wpeM9-0005uu-5R; Thu, 30 Jul 2026 23:56:22 -0400
-Received: from [115.124.30.97] (helo=out30-97.freemail.mail.aliyun.com)
+ id 1wpeM8-0005u7-SV; Thu, 30 Jul 2026 23:56:20 -0400
+Received: from [115.124.30.112] (helo=out30-112.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <blduan@linux.alibaba.com>)
- id 1wpeM2-0002Ii-Dc; Thu, 30 Jul 2026 23:56:20 -0400
+ id 1wpeM4-0002Io-L1; Thu, 30 Jul 2026 23:56:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1785470169; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=YaMOXhMK+4204mX9njUvyFccbt16zqb7oJOy5G7LF9Y=;
- b=XfVGqfWh1GLmCOQm/3gK3QtXrtgJ9GohamDVTj0bZiXRLuIrF3C+MZXD/7yM40F0M7l3ty82Yb/sNYnNlibnZXDdlXs6NntI7UA28iGb0qDNS4QNdn+BDGEn5CHR4/vQ1tmC7QX57rVEvBes8W9rij9x7Uh8YxurqvQQpLP/Q3M=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R191e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045133197;
+ t=1785470171; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=GQ/4VXmOCNFDf0yhmuSdsBqHH33B0VAJ2TNmvzzIRV0=;
+ b=Ks+KPtX+SrBjPJ9epnoi3SwmAasSar4vft7wrOGqOx+wDe+lvplWeAo9ZkQfwxuq2t1K2d+la0dMe+5Jb9wKjcmiEkM8h5SjqR3hEKrJBZBZ7jdi4TYR8C2USnvL7I2cCYWmPdjQCIPuYvQJfkujPWQ0DQP3H9TLMUxO14/TypY=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R171e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032089153;
  MF=blduan@linux.alibaba.com; NM=1; PH=DS; RN=7; SR=0;
- TI=SMTPD_---0X86jwTx_1785469855; 
+ TI=SMTPD_---0X86jwVB_1785469858; 
 Received: from ea134-sw16.eng.xrvm.cn(mailfrom:blduan@linux.alibaba.com
- fp:SMTPD_---0X86jwTx_1785469855 cluster:ay36) by smtp.aliyun-inc.com;
- Fri, 31 Jul 2026 11:50:55 +0800
+ fp:SMTPD_---0X86jwVB_1785469858 cluster:ay36) by smtp.aliyun-inc.com;
+ Fri, 31 Jul 2026 11:50:59 +0800
 From: Baolong Duan <blduan@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair23@gmail.com, dbarboza@ventanamicro.com,
  cxx194832@alibaba-inc.com, zengxiangyi.zxy@alibaba-inc.com,
  Baolong Duan <blduan@linux.alibaba.com>
-Subject: [RFC PATCH v1 09/17] hw/intc/riscv_aplic: emulate the APLIC for a
- CoVE guest
-Date: Fri, 31 Jul 2026 11:50:03 +0800
-Message-Id: <20260731035011.4178103-10-blduan@linux.alibaba.com>
+Subject: [RFC PATCH v1 12/17] hw/net/virtio-net: do not use vhost for a CoVE
+ guest
+Date: Fri, 31 Jul 2026 11:50:06 +0800
+Message-Id: <20260731035011.4178103-13-blduan@linux.alibaba.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260731035011.4178103-1-blduan@linux.alibaba.com>
 References: <20260731035011.4178103-1-blduan@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.97 (deferred)
-Received-SPF: pass client-ip=115.124.30.97;
- envelope-from=blduan@linux.alibaba.com; helo=out30-97.freemail.mail.aliyun.com
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.112 (deferred)
+Received-SPF: pass client-ip=115.124.30.112;
+ envelope-from=blduan@linux.alibaba.com;
+ helo=out30-112.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -71,42 +72,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-KVM does not implement an APLIC for a TEE VM, so emulate it in QEMU
-while still using the in-kernel IMSIC, exactly like in split irqchip
-mode.
+The in-kernel vhost datapath has no access to the memory of a TEE VM, so
+it cannot be used.
 
 Signed-off-by: Baolong Duan <blduan@linux.alibaba.com>
 ---
- hw/intc/riscv_aplic.c | 9 +++++++++
+ hw/net/virtio-net.c | 9 +++++++++
  1 file changed, 9 insertions(+)
 
-diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-index 84606e9f3d..897147c2d5 100644
---- a/hw/intc/riscv_aplic.c
-+++ b/hw/intc/riscv_aplic.c
-@@ -36,6 +36,7 @@
- #include "kvm/kvm_riscv.h"
- #include "migration/vmstate.h"
- #include "trace.h"
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 814b99a43d..4f8db1a1aa 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -28,6 +28,7 @@
+ #include "qemu/config-file.h"
+ #include "qobject/qdict.h"
+ #include "hw/virtio/virtio-net.h"
 +#include "hw/riscv/cove.h"
+ #include "net/vhost_net.h"
+ #include "net/announce.h"
+ #include "hw/virtio/virtio-bus.h"
+@@ -326,6 +327,14 @@ static void virtio_net_vhost_status(VirtIONet *n, uint8_t status)
+             }
+         }
  
- #define APLIC_MAX_IDC                  (1UL << 14)
- #define APLIC_MAX_SOURCE               1024
-@@ -172,6 +173,14 @@ bool riscv_use_emulated_aplic(bool msimode)
-         return true;
-     }
- 
-+    /*
-+     * KVM does not implement an APLIC for a CoVE guest, so emulate it in
-+     * QEMU while still using the in-kernel IMSIC, like in split mode.
-+     */
-+    if (riscv_cove_vm_active()) {
-+        return true;
-+    }
++        /*
++         * vhost cannot be used with a CoVE guest: the kernel datapath has no
++         * access to the memory of the TVM.
++         */
++        if (riscv_cove_vm_active()) {
++            return;
++        }
 +
-     if (!riscv_is_kvm_aia_aplic_imsic(msimode)) {
-         return true;
-     }
+         n->vhost_started = 1;
+         r = vhost_net_start(vdev, n->nic->ncs, queue_pairs, cvq);
+         if (r < 0) {
 -- 
 2.34.1
 
