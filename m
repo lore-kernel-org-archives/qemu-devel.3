@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFCACC55167
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 00:06:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98C17C55167
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 00:06:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpakd-0001nx-Qh; Thu, 30 Jul 2026 20:05:23 -0400
+	id 1wpakX-0001kn-SP; Thu, 30 Jul 2026 20:05:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wpakW-0001jB-ID
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 20:05:16 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ id 1wpakU-0001eW-Jd
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 20:05:14 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wpakR-0001LS-FT
- for qemu-devel@nongnu.org; Thu, 30 Jul 2026 20:05:16 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-c9d1fff21edso227012a12.1
- for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 17:05:11 -0700 (PDT)
+ id 1wpakR-0001LB-87
+ for qemu-devel@nongnu.org; Thu, 30 Jul 2026 20:05:14 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-84e507b079dso341519b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Jul 2026 17:05:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785456310; x=1786061110; darn=nongnu.org;
+ d=linaro.org; s=google; t=1785456308; x=1786061108; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=x2x1tHQ9kIpJilZT8/tLtEUfAeCBYPruxXp7vNHzIQU=;
- b=I6B7UY4bj+41Yo7Zv+eoTBcC0TJ8NpgD3MEPNrLw3mR6OZirL6bqeDsi97QUy7LgPX
- 6wtC6fBYU56+gvwtqC8hUPoRIONalSGMEG5r5nn8opqdYMNfA3RsXvKGkpGyZ8/l9+5S
- E4PMVHqym7cS5KGt0NoVyRU30r/NH8UPrssEzgl4MV6wuHa9+MVAIkG+ocYXZoePTdfo
- vx5RAyitFA4ZqjWyb6rH3xNuIYyw2r/+kUc9cf7pN8BOtTMOHUT2tO48bKJdqm3Btkxp
- ZvqHQ6HwOZsREIcD5VbGUI1XWK58TyXqAuPWzeio9PJvmzNd3UPu7Ta47WNQm4+Ew/3+
- Yy7A==
+ bh=Rdh3OOkoPnHUJw/UD4a6FqZEuxZNNZ9BwpVlBszcZe8=;
+ b=byjCDJXdluHeIdmlst3Ih6oNAF4FQXb2MY/A+9Pdil2B3JksKviEFmH0XbNcf/o5xu
+ o7WZKrBzgDVZcdhavDvJSC7xY5hz495ZfwKnt1a1R9V7Lk74UzWHl3IQ6fWjC0g9L/k3
+ 6aAJClfQoYb7WA1wGdE2PTg40r/y0Z5jCBMaDntd2GxQA/fGjxh59ZmHSZHsk4sVefS+
+ 1LWIvbva/6dU33lEmXM92Bg4iJOyUVOTTRgSg6soonKWw3r3lwfBzqGmaD9QMAzXAWZE
+ Fxc8IwGN9JgwxUx57PYdwLDOkAPNadS+158WBz+cHRLRMHF2RTHrDgEfPM4rRe/hoOat
+ IwRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785456310; x=1786061110;
+ d=1e100.net; s=20251104; t=1785456308; x=1786061108;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=x2x1tHQ9kIpJilZT8/tLtEUfAeCBYPruxXp7vNHzIQU=;
- b=e1GWMHBEySks1Rk/YVa5XMARLzyIi+Q1mh74xJxDSgCCAPc4x4Qd6C2VySNESUdkVK
- A1WTm+Ruhle2mUVBFmWUToQC7O5d71sbrWY4SS2ebDnW5/SCdc3G+afnmBV/+8edq58L
- H8XxsWO9DxT3VFvMR1WA2/lkaU9DsFa/Ny7lHkLBOMk/vYWTR6EOJTGt2zjuOPZnhAM3
- kvqqrFoTOa2ZftWKZahHR/e0eQ4GBypb7MAP87O6nXXcGR73zFWhP+O/NRQh87EJAAqm
- rxX9mtBWESoF7TdEpdjH1mUvrlIbixoOQIdStj+6rjpEsKEFTgsIMS1MaYZ4xESJx5/l
- 9pQw==
-X-Gm-Message-State: AOJu0YxW30s9jbY9vRCsp5lbPsttQU3+80Y/W09lmixHcFfglft7RUUK
- M52Djctlc9hD4+762je7DN1l0BsaeLk8afOFxnOWwhvpHL/CDwnralDqYhlnlYedGFW5gVF0WPh
- cZ7r9
-X-Gm-Gg: AR+sD11L9+LWHIiN4B49AuU22FXgL5V7JycIZ+yH3HuSxGLIY0mbG0Rzdm1DxPd2MZ7
- w/nPmZPS5hvsDgy9FrIpUP8pYu+4H4woXWIY6N8LKdO5NADyBTu2TXXMsndX7gLwY3tVDmQH/jh
- ogxR5NcNwhf/Km0qAkBsF33QGQLzFG3m35UHsQ97bRY3xu8jc7MdiWHQQEy4ZWoQL0NKtJCOH+e
- VgOfoGxnEUWjAb5GoVvXbEhvjPxyCKsS28w1vPZ/FnKla3TNxGw6/j/ClJ5Jf/fVLXuDxUn56xx
- xJbG7dJOSr5w4WLt18Yy+BMkOBhRKiJPY+UO3acEpa0RQzbqXg4mJeVt59hI+1PDEikaxdYar2L
- qsWNvME9dQD7iXKrASLPUGXuqg59X7EbAr5Lsfz2hFaMsXRSicCfYWv0xhCTmKiaiua+uKKctDV
- dAar/Oxprn41KfmWjLEn/CFu4w2kfA8kwl/ZdwoozV2A/KUpDl/T0MCKnf+BMmFqPH2yAjVerz8
- 8RF8a6se4ZGgGLSrX6Q
-X-Received: by 2002:a05:6a20:7f8b:b0:3bf:a0e5:99a0 with SMTP id
- adf61e73a8af0-3c90d5cedb1mr2288298637.47.1785456310062; 
- Thu, 30 Jul 2026 17:05:10 -0700 (PDT)
+ bh=Rdh3OOkoPnHUJw/UD4a6FqZEuxZNNZ9BwpVlBszcZe8=;
+ b=rKosTiGHbL6I9S3TC7FlCKXtf1GM6OyMAdBPMkp4DZFvdNzm0ugKIPvU2WX3j27ix1
+ xW2ymzthQupd0Z6DI24aOeKm5tDos3ZqcV1SvmvbqreEAL0Z6ulPhw2Eod8npK7JwDV0
+ NGrrvf5EBRNUV/Awj9eYcYFLlq4CNCmdTJyIlGGFNwMkjtCp4EgtPCxUnOcdCZn4Vhqj
+ OCRc/G6YJFux0BumU59m0depmRwyAcY/3/pFv+5mZuJITk6vsLHH/5KJFftVdmK1qdxb
+ 7DY1NS7LapjGTs6jG/2iL/Eq4PXj9DjsSym5yxRFLP2BurdRXVM9/Dry6y1dXT9u3ioT
+ iLyw==
+X-Gm-Message-State: AOJu0Ywqwv34fMcwgiX4g2Rk8WusXHroKbhBXEW9E/5WcXNC1ehhL2eD
+ pFrEUQFvCEO6U/ysR/BJn9hFXB/Qw2F8QlpzEADblxrDtpIoWPgFmmZy62r9b0c1wexwv0Tzt/y
+ T7tPW
+X-Gm-Gg: AR+sD12eUI7WkXA5n7bFm4aHn+9EH6hbVjTjDjd3vZa25Ifv7a0/xFkt7Pn0wMPigsd
+ FnzQkISbykq7B3ywiCmnPbYhbJ4/fWKFaKaIfsW+Gyc0IeKBFuuZKp64W9HbMDR9couLlsx1zI1
+ z19s00MHbl+U9kUTUhnqUi2HVyZ2z3EbbpaEIyxDdCHNzKe5s14d4S603/IhSUXe/YcC2H+ZiPo
+ t99fCOdljB+2IntdlLR0LzZeEY4W0+0yX8+Vfq9EfUUNVskdETni4gb1d0oNi8TL1SAIIz4HCJX
+ PZ8LQDTYPRTOTngiGV5zr6AtUL0gY41vy1v/0JmJdoGHU2FT9u4EG4M4sm2IV3VrHFV6zbuJrin
+ ZWIO7C4pu2s6lbnJ4jklDjzUrZqBMPubtUYJ91O2kH8U3/fDtIT7E7E/gMbhtFRm22fTXz41BGu
+ b1G6/mW38U9ITp/Ex3mC99LLmcg1ks5JMMx6Qfhji2PQGC+Rt54KD/9RUzpyfamsotP6aYgrYMX
+ xH3iEJ5KO7liTPIgBP2
+X-Received: by 2002:a05:6a20:7f9a:b0:3c3:8fc3:5373 with SMTP id
+ adf61e73a8af0-3c90085c8b8mr3827736637.35.1785456308136; 
+ Thu, 30 Jul 2026 17:05:08 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cbdb7a999ddsm2656460a12.4.2026.07.30.17.05.09
+ 41be03b00d2f7-cbdb7a999ddsm2656460a12.4.2026.07.30.17.05.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Jul 2026 17:05:09 -0700 (PDT)
+ Thu, 30 Jul 2026 17:05:07 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: anjo@rev.ng, qemu-arm@nongnu.org, git@xen0n.name, 17746591750@163.com,
  maobibo@loongson.cn, lixianglai@loongson.cn, philmd@mailo.com
-Subject: [PATCH 06/11] target/mips: Expand octeon reflections inline
-Date: Thu, 30 Jul 2026 17:04:58 -0700
-Message-ID: <20260731000503.170446-7-richard.henderson@linaro.org>
+Subject: [PATCH 04/11] target/loongarch: Use generic tcg_gen_revbit*
+Date: Thu, 30 Jul 2026 17:04:56 -0700
+Message-ID: <20260731000503.170446-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260731000503.170446-1-richard.henderson@linaro.org>
 References: <20260731000503.170446-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,188 +102,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use tcg_gen_revbit64_i64 instead of out-of-line helpers.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/mips/helper.h               |  7 -----
- target/mips/tcg/octeon_crypto.c    | 35 ---------------------
- target/mips/tcg/octeon_translate.c | 49 ++++++++++++++++++++++++++----
- 3 files changed, 43 insertions(+), 48 deletions(-)
+ target/loongarch/tcg/helper.h                   |  2 --
+ target/loongarch/tcg/op_helper.c                | 10 ----------
+ target/loongarch/tcg/insn_trans/trans_bit.c.inc |  9 +++++++--
+ 3 files changed, 7 insertions(+), 14 deletions(-)
 
-diff --git a/target/mips/helper.h b/target/mips/helper.h
-index 786117813a..779b87101d 100644
---- a/target/mips/helper.h
-+++ b/target/mips/helper.h
-@@ -27,10 +27,6 @@ DEF_HELPER_FLAGS_4(rotx, TCG_CALL_NO_RWG_SE, tl, tl, i32, i32, i32)
+diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
+index 8a6c62f116..4b0fc81db6 100644
+--- a/target/loongarch/tcg/helper.h
++++ b/target/loongarch/tcg/helper.h
+@@ -5,8 +5,6 @@
  
- /* Octeon COP2 selector operation helpers. */
- DEF_HELPER_1(octeon_cp2_mf_crc_iv_reflect, i64, env)
--DEF_HELPER_1(octeon_cp2_mf_gfm_mul_reflect0, i64, env)
--DEF_HELPER_1(octeon_cp2_mf_gfm_mul_reflect1, i64, env)
--DEF_HELPER_1(octeon_cp2_mf_gfm_resinp_reflect0, i64, env)
--DEF_HELPER_1(octeon_cp2_mf_gfm_resinp_reflect1, i64, env)
- DEF_HELPER_2(octeon_cp2_mt_crc_write_iv_reflect, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_crc_write_polynomial_reflect, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_crc_write_byte, void, env, i64)
-@@ -43,9 +39,6 @@ DEF_HELPER_2(octeon_cp2_mt_crc_write_dword, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_crc_write_var, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_crc_write_dword_reflect, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_crc_write_var_reflect, void, env, i64)
--DEF_HELPER_2(octeon_cp2_mt_gfm_mul_reflect0, void, env, i64)
--DEF_HELPER_2(octeon_cp2_mt_gfm_mul_reflect1, void, env, i64)
--DEF_HELPER_2(octeon_cp2_mt_gfm_xor0_reflect, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_gfm_xormul1_reflect, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_gfm_xormul1, void, env, i64)
- DEF_HELPER_1(octeon_cp2_mt_sha3_startop, void, env)
-diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
-index fbf80be2a5..118397e632 100644
---- a/target/mips/tcg/octeon_crypto.c
-+++ b/target/mips/tcg/octeon_crypto.c
-@@ -2127,41 +2127,6 @@ uint64_t helper_octeon_cp2_mf_crc_iv_reflect(CPUMIPSState *env)
-     return octeon_crc_reflect32_by_byte(env->octeon_crypto.crc_iv);
+ DEF_HELPER_2(raise_exception, noreturn, env, i32)
+ 
+-DEF_HELPER_FLAGS_1(bitrev_w, TCG_CALL_NO_RWG_SE, tl, tl)
+-DEF_HELPER_FLAGS_1(bitrev_d, TCG_CALL_NO_RWG_SE, tl, tl)
+ DEF_HELPER_FLAGS_1(bitswap, TCG_CALL_NO_RWG_SE, tl, tl)
+ 
+ DEF_HELPER_FLAGS_3(asrtle_d, TCG_CALL_NO_WG, void, env, tl, tl)
+diff --git a/target/loongarch/tcg/op_helper.c b/target/loongarch/tcg/op_helper.c
+index e63ac66daa..37afa8e92d 100644
+--- a/target/loongarch/tcg/op_helper.c
++++ b/target/loongarch/tcg/op_helper.c
+@@ -22,16 +22,6 @@ void helper_raise_exception(CPULoongArchState *env, uint32_t exception)
+     do_raise_exception(env, exception, GETPC());
  }
  
--uint64_t helper_octeon_cp2_mf_gfm_mul_reflect0(CPUMIPSState *env)
+-target_ulong helper_bitrev_w(target_ulong rj)
 -{
--    return revbit64(env->octeon_crypto.gfm_mul[0]);
+-    return (int32_t)revbit32(rj);
 -}
 -
--uint64_t helper_octeon_cp2_mf_gfm_mul_reflect1(CPUMIPSState *env)
+-target_ulong helper_bitrev_d(target_ulong rj)
 -{
--    return revbit64(env->octeon_crypto.gfm_mul[1]);
+-    return revbit64(rj);
 -}
 -
--uint64_t helper_octeon_cp2_mf_gfm_resinp_reflect0(CPUMIPSState *env)
--{
--    return revbit64(env->octeon_crypto.gfm_resinp[0]);
--}
--
--uint64_t helper_octeon_cp2_mf_gfm_resinp_reflect1(CPUMIPSState *env)
--{
--    return revbit64(env->octeon_crypto.gfm_resinp[1]);
--}
--
--void helper_octeon_cp2_mt_gfm_mul_reflect0(CPUMIPSState *env, uint64_t value)
--{
--    env->octeon_crypto.gfm_mul[0] = revbit64(value);
--}
--
--void helper_octeon_cp2_mt_gfm_mul_reflect1(CPUMIPSState *env, uint64_t value)
--{
--    env->octeon_crypto.gfm_mul[1] = revbit64(value);
--}
--
--void helper_octeon_cp2_mt_gfm_xor0_reflect(CPUMIPSState *env, uint64_t value)
--{
--    env->octeon_crypto.gfm_resinp[0] ^= revbit64(value);
--}
--
- static void octeon_gfm_xormul1_common(MIPSOcteonCryptoState *crypto,
-                                       uint64_t value)
+ target_ulong helper_bitswap(target_ulong v)
  {
-diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index a0db6630c7..b689adb46b 100644
---- a/target/mips/tcg/octeon_translate.c
-+++ b/target/mips/tcg/octeon_translate.c
-@@ -28,6 +28,8 @@
-     TRANS(NAME, trans_octeon_cp2_mf_hsh_pair, \
-           OCTEON_CRYPTO_OFFSET(FIELD[2 * (INDEX)]), \
-           OCTEON_CRYPTO_OFFSET(FIELD[2 * (INDEX) + 1]))
-+#define CP2_MF_REFLECT(NAME, FIELD) \
-+    TRANS(NAME, trans_octeon_cp2_mf_reflect, OCTEON_CRYPTO_OFFSET(FIELD))
- #define CP2_MF_HELPER(NAME, SUFFIX) \
-     TRANS(NAME, trans_octeon_cp2_mf_helper, \
-           gen_helper_octeon_cp2_mf_ ## SUFFIX)
-@@ -44,6 +46,8 @@
-     TRANS(NAME, trans_octeon_cp2_mt_hsh_pair, \
-           OCTEON_CRYPTO_OFFSET(FIELD[2 * (INDEX)]), \
-           OCTEON_CRYPTO_OFFSET(FIELD[2 * (INDEX) + 1]))
-+#define CP2_MT_REFLECT(NAME, FIELD) \
-+    TRANS(NAME, trans_octeon_cp2_mt_reflect, OCTEON_CRYPTO_OFFSET(FIELD))
- #define CP2_MT_HELPER(NAME, SUFFIX) \
-     TRANS(NAME, trans_octeon_cp2_mt_helper, \
-           gen_helper_octeon_cp2_mt_ ## SUFFIX)
-@@ -110,6 +114,17 @@ static bool trans_octeon_cp2_mf_hsh_pair(DisasContext *ctx, arg_cp2 *a,
-     return true;
+     v = ((v >> 1) & (target_ulong)0x5555555555555555ULL) |
+diff --git a/target/loongarch/tcg/insn_trans/trans_bit.c.inc b/target/loongarch/tcg/insn_trans/trans_bit.c.inc
+index ee5fa003ce..3d24e320ce 100644
+--- a/target/loongarch/tcg/insn_trans/trans_bit.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_bit.c.inc
+@@ -178,6 +178,11 @@ static void gen_masknez(TCGv dest, TCGv src1, TCGv src2)
+     tcg_gen_movcond_tl(TCG_COND_NE, dest, src2, zero, zero, src1);
  }
  
-+static bool trans_octeon_cp2_mf_reflect(DisasContext *ctx, arg_cp2 *a,
-+                                        int offset)
++static void gen_bitrev_w(TCGv dest, TCGv src)
 +{
-+    TCGv_i64 value = tcg_temp_new_i64();
-+
-+    tcg_gen_ld_i64(value, tcg_env, offset);
-+    tcg_gen_revbit64_i64(value, value);
-+    gen_store_gpr(value, a->rt);
-+    return true;
++    tcg_gen_revbit32_tl(dest, src, TCG_BSWAP_OS);
 +}
 +
- static bool trans_octeon_cp2_mf_helper(DisasContext *ctx, arg_cp2 *a,
-                                        void (*gen_helper)(TCGv_i64, TCGv_env))
- {
-@@ -183,6 +198,17 @@ static bool trans_octeon_cp2_mt_xor_i64(DisasContext *ctx, arg_cp2 *a,
-     return true;
- }
- 
-+static bool trans_octeon_cp2_mt_reflect(DisasContext *ctx, arg_cp2 *a,
-+                                        int offset)
-+{
-+    TCGv_i64 value = tcg_temp_new_i64();
-+
-+    gen_load_gpr(value, a->rt);
-+    tcg_gen_revbit64_i64(value, value);
-+    tcg_gen_st_i64(value, tcg_env, offset);
-+    return true;
-+}
-+
- static bool trans_octeon_cp2_mt_helper(DisasContext *ctx, arg_cp2 *a,
-                                        void (*gen_helper)(TCGv_env, TCGv_i64))
- {
-@@ -200,6 +226,17 @@ static bool trans_octeon_cp2_mt_helper_env(DisasContext *ctx, arg_cp2 *a,
-     return true;
- }
- 
-+static void gen_helper_octeon_cp2_mt_gfm_xor0_reflect(TCGv_env t_env,
-+                                                      TCGv_i64 value)
-+{
-+    TCGv_i64 resinp = tcg_temp_new_i64();
-+
-+    tcg_gen_revbit64_i64(value, value);
-+    tcg_gen_ld_i64(resinp, t_env, OCTEON_CRYPTO_OFFSET(gfm_resinp[0]));
-+    tcg_gen_xor_i64(resinp, resinp, value);
-+    tcg_gen_st_i64(resinp, t_env, OCTEON_CRYPTO_OFFSET(gfm_resinp[0]));
-+}
-+
- CP2_MF_HSH_PAIR(CVM_MF_HSH_DAT0, hsh_dat, 0);
- CP2_MF_HSH_PAIR(CVM_MF_HSH_DAT1, hsh_dat, 1);
- CP2_MF_HSH_PAIR(CVM_MF_HSH_DAT2, hsh_dat, 2);
-@@ -241,10 +278,10 @@ CP2_MF_I64(CVM_MF_LLM_DATA1, llm_data[1]);
- 
- CP2_MF_HELPER(CVM_MF_CRC_IV_REFLECT, crc_iv_reflect);
- CP2_MF_I64(CVM_MF_SHA3_DAT24, sha3_dat24);
--CP2_MF_HELPER(CVM_MF_GFM_MUL_REFLECT0, gfm_mul_reflect0);
--CP2_MF_HELPER(CVM_MF_GFM_MUL_REFLECT1, gfm_mul_reflect1);
--CP2_MF_HELPER(CVM_MF_GFM_RESINP_REFLECT0, gfm_resinp_reflect0);
--CP2_MF_HELPER(CVM_MF_GFM_RESINP_REFLECT1, gfm_resinp_reflect1);
-+CP2_MF_REFLECT(CVM_MF_GFM_MUL_REFLECT0, gfm_mul[0])
-+CP2_MF_REFLECT(CVM_MF_GFM_MUL_REFLECT1, gfm_mul[1])
-+CP2_MF_REFLECT(CVM_MF_GFM_RESINP_REFLECT0, gfm_resinp[0])
-+CP2_MF_REFLECT(CVM_MF_GFM_RESINP_REFLECT1, gfm_resinp[1])
- CP2_MF_I64(CVM_MF_HSH_DATW0, hsh_dat[0]);
- CP2_MF_I64(CVM_MF_HSH_DATW1, hsh_dat[1]);
- CP2_MF_I64(CVM_MF_HSH_DATW2, hsh_dat[2]);
-@@ -281,8 +318,8 @@ CP2_MT_HSH_PAIR(CVM_MT_HSH_IV0, hsh_iv, 0);
- CP2_MT_HSH_PAIR(CVM_MT_HSH_IV1, hsh_iv, 1);
- CP2_MT_HSH_PAIR(CVM_MT_HSH_IV2, hsh_iv, 2);
- CP2_MT_HSH_PAIR(CVM_MT_HSH_IV3, hsh_iv, 3);
--CP2_MT_HELPER(CVM_MT_GFM_MUL_REFLECT0, gfm_mul_reflect0);
--CP2_MT_HELPER(CVM_MT_GFM_MUL_REFLECT1, gfm_mul_reflect1);
-+CP2_MT_REFLECT(CVM_MT_GFM_MUL_REFLECT0, gfm_mul[0]);
-+CP2_MT_REFLECT(CVM_MT_GFM_MUL_REFLECT1, gfm_mul[1]);
- CP2_MT_HELPER(CVM_MT_GFM_XOR0_REFLECT, gfm_xor0_reflect);
- CP2_MT_I64(CVM_MT_3DES_KEY0, des3_key[0]);
- CP2_MT_I64(CVM_MT_3DES_KEY1, des3_key[1]);
+ TRANS(ext_w_h, ALL, gen_rr, EXT_NONE, EXT_NONE, tcg_gen_ext16s_tl)
+ TRANS(ext_w_b, ALL, gen_rr, EXT_NONE, EXT_NONE, tcg_gen_ext8s_tl)
+ TRANS(clo_w, ALL, gen_rr, EXT_NONE, EXT_NONE, gen_clo_w)
+@@ -196,8 +201,8 @@ TRANS(revh_2w, 64, gen_rr, EXT_NONE, EXT_NONE, gen_revh_2w)
+ TRANS(revh_d, 64, gen_rr, EXT_NONE, EXT_NONE, gen_revh_d)
+ TRANS(bitrev_4b, ALL, gen_rr, EXT_ZERO, EXT_SIGN, gen_helper_bitswap)
+ TRANS(bitrev_8b, 64, gen_rr, EXT_NONE, EXT_NONE, gen_helper_bitswap)
+-TRANS(bitrev_w, ALL, gen_rr, EXT_NONE, EXT_SIGN, gen_helper_bitrev_w)
+-TRANS(bitrev_d, 64, gen_rr, EXT_NONE, EXT_NONE, gen_helper_bitrev_d)
++TRANS(bitrev_w, ALL, gen_rr, EXT_NONE, EXT_NONE, gen_bitrev_w)
++TRANS(bitrev_d, 64, gen_rr, EXT_NONE, EXT_NONE, tcg_gen_revbit64_i64)
+ TRANS(maskeqz, ALL, gen_rrr, EXT_NONE, EXT_NONE, EXT_NONE, gen_maskeqz)
+ TRANS(masknez, ALL, gen_rrr, EXT_NONE, EXT_NONE, EXT_NONE, gen_masknez)
+ TRANS(bytepick_w, ALL, gen_rrr_sa, EXT_NONE, EXT_NONE, gen_bytepick_w)
 -- 
 2.43.0
 
