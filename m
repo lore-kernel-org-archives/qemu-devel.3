@@ -4,195 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63E74C55173
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 19:37:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47B3FC55173
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 19:39:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpt2H-0002rI-Ux; Fri, 31 Jul 2026 15:36:49 -0400
+	id 1wpt4P-0003bf-75; Fri, 31 Jul 2026 15:39:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wpt2G-0002pW-56
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 15:36:48 -0400
-Received: from mout.gmx.net ([212.227.15.15])
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1wpt4K-0003aq-WE; Fri, 31 Jul 2026 15:38:57 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wpt2E-0007II-9a
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 15:36:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1785526598; x=1786131398; i=deller@gmx.de;
- bh=jl2scJfjn5P+FmNmpyO13Qk9+xcQQOLivZZSY2mKe44=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=nOWD3s8nlbRXhzZlAUhgK0SOmgSMRw0I2nniuK97DZ/Cb5PyALGJhiE4BdfYeOnX
- O3XbeWn35OZksUT2PjwD3wqHG7OD/bZdqjYEDMy+kuwpgBeykmYhLy/k/ReYabkDu
- qW27ujyzr6ZuKPXGk1K91YYyVOnz5MxLvy0oUTanD+pyrLWfE5CeryXaGCJbrKKDw
- jgLHWYVflIfD9h2ovf1XI+92NiAagWNH2QzwaiXkH4aI3O81w28+n5CJydQywUqJa
- NavC9AUNtVkAcXrzhJ3SY+qcICfK8o2gKYO8azIub5Oz3tRoUtPz6zmNxKgVAbnVb
- nm+CRWNxGSGAoDsx0w==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MkHMZ-1xEBAt1jnV-00ZZiD; Fri, 31
- Jul 2026 21:36:38 +0200
-Message-ID: <244987da-f6d8-47a8-ac4a-16a71c660e36@gmx.de>
-Date: Fri, 31 Jul 2026 21:36:37 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user: Fix msqid_ds struct wrt 32-bit big endian
- architectures
-To: Peter Maydell <peter.maydell@linaro.org>, Helge Deller <deller@kernel.org>
-Cc: qemu-devel@nongnu.org
-References: <20260728192913.61279-1-deller@kernel.org>
- <CAFEAcA_8o2A8FDsJKacde+pdj4HzA5c7aTw=k7tmONYXD4=c_w@mail.gmail.com>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <CAFEAcA_8o2A8FDsJKacde+pdj4HzA5c7aTw=k7tmONYXD4=c_w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:khHClGqzXndj0UAOtBYPw8vAhabg1bgaaxMD+cpkRPsaS8P+b9D
- 6SsTn5mTde5tWhID6CbexSjo/MUp9kkv1uT8S6babkfT/hTX5odBh2Rmm3TiJfI2SoF36Vn
- 9tAdICRPBrvQWQnZkRFN2M0lWTpe7V3lxESV/3j1oUznW2lBOu62ENflqo6/uap2TE1UzNJ
- GGIz07Mfn4llIOzHIqqeA==
-UI-OutboundReport: notjunk:1;M01:P0:uPqGAEYC0eA=;43ky6p3qGCgRt6VJeLsVfGkKPHn
- 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
- 0gHdUKHus9vF7T8JDxVZWzy2LfNw=
-Received-SPF: pass client-ip=212.227.15.15; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1wpt4I-0007Nh-Q5; Fri, 31 Jul 2026 15:38:56 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66VImH3B2704185; Fri, 31 Jul 2026 19:38:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=6Ddhv5/ZirXj5nkCyGZbEAPC1AE/SAv9er9XluO6Hwk=; b=fzJhnJkZzxdt
+ 1m/hQSwrG2+NGnqYmuUxVMoCvSf6Xu2yqOZU332tFymxd0W34AC4oDY7dtZNmQB7
+ rS2hzLrRNcYPaUkkkQtN1P0ntKjZT3rgxs4DZfI2MpQh121pQMmLIahlMoC187h9
+ 5yBbw8Ok3i+VRTg8Tf7Ydj6ohgKxxE5J3J2U9PtFfv6DEsQ1etgLLgjSzReQiINm
+ sK3pS5FhBAJBC9/Sq+epKoY9u+XCGQb0w6eDBsN7amMbk+eukGXWUz+9GmLZRRoh
+ 9MZK7mdmFbsIcTOHNvCi0HFvrTPcOR/cf80j36oy9MKT9EghPHVhlKTsZ0WeiV+5
+ 1cwW2gmbIA==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fmuwddrgk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 31 Jul 2026 19:38:26 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66VJQHRF029250;
+ Fri, 31 Jul 2026 19:38:25 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fn8fkhcw7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 31 Jul 2026 19:38:25 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66VJcObn19399364
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 31 Jul 2026 19:38:24 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1FD2558045;
+ Fri, 31 Jul 2026 19:38:24 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8D01758050;
+ Fri, 31 Jul 2026 19:38:22 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 31 Jul 2026 19:38:22 +0000 (GMT)
+Message-ID: <5fe8c426f7ec9481f947073fc7253cff73417301.camel@linux.ibm.com>
+Subject: Re: [PATCH v2 1/8] fsi/cfam: Add common CFAM base class
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Mikail Sadic <mikail.sadic@ibm.com>, clg@kaod.org, peter.maydell@linaro.org
+Cc: pbonzini@redhat.com, ninad@linux.ibm.com, titusr@google.com,
+ jeuk20.kim@samsung.com, philmd@mailo.com, steven_lee@aspeedtech.com,
+ leetroy@gmail.com, jamin_lin@aspeedtech.com, kane_chen@aspeedtech.com,
+ andrew@codeconstruct.com.au, joel@jms.id.au, calebs@linux.ibm.com,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Date: Fri, 31 Jul 2026 14:38:22 -0500
+In-Reply-To: <20260730200945.1113936-2-mikail.sadic@ibm.com>
+References: <20260730200945.1113936-1-mikail.sadic@ibm.com>
+ <20260730200945.1113936-2-mikail.sadic@ibm.com>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: 77i9NbOMpi6few12fVfxTKlt6EP5mZjz
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzMxMDE0NiBTYWx0ZWRfX0KMO6KgpK/R7
+ CoVoyPkh8q0TW0K0xB4QepAIy0ftuJpBzW0G7b5sGLk73NDV8u82UsSukjuDdHsBMV+dbu0x2Hg
+ ixkF8+Pwbe3FXL14VuYC/JrBWSN1oRE=
+X-Authority-Analysis: v=2.4 cv=E/z9Y6dl c=1 sm=1 tr=0 ts=6a6cf9b3 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=WWijEow3Kwlsb-A3EsMA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzMxMDE0NiBTYWx0ZWRfXwqX7NTJhhDuJ
+ 5J8qUDg7E+YNHoeiLc+Dv+jYPeC11daJKTdU/P7eZYMrE1YiYO5DvvqlxvUCPVXb6Ir6CY6Lkod
+ tw1eVEBtNJ6PZGw94vBT0j2SsJtUw01VxbzgFRvcXYBEw4MnhYYYqNOnyvFDIc//+uCyMIV5qbA
+ GH7VWCwuNEnEPhSRFyggk4oL90qL513lHp3kjjWjG3i0Hud15EVOJ2ThaScitH7F1kpkr7oczfR
+ a+wcj+bVT9Ozu+aoEChn7MgCwrX0ZvUojhS5oK4Kz0fWWeTtKwahTHxU5tO1Wjt3zZTPoWJxd1o
+ jsmwUBJJMhLsx5cCaEKVHJPXbEe0RGPktLiroHyavxdaFecuyw1krapBkbwoYO81ncrMitGzFzH
+ B0I/1MmBll5GRTEtT9F4adNPLzlWmXKzrTehMeORk+1m/35oKweO1rZhFtpvJdV6wzkQyHrLjGb
+ Lnfrt1XaG3wn20wil0A==
+X-Proofpoint-GUID: r3564naAKPA7HbVwqw_fWJCiMGy9lezd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-31_06,2026-07-30_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 spamscore=0 clxscore=1011 phishscore=0
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607310146
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -205,97 +125,333 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Peter,
+On Thu, 2026-07-30 at 15:09 -0500, Mikail Sadic wrote:
+> Prepare a common CFAM parent class for CFAM-S implementation.
+> 
+> Add an abstract TYPE_FSI_CFAM_COMMON with an FSICFAMCommonClass holding
+> what varies between types: the config table, the offsets of the FSI
+> responder and the local bus within the register slot, and a
+> realize_engines() hook for the engines on the local bus. Its realize is
+> driven by those fields, so one realize serves every type. TYPE_FSI_CFAM
+> keeps its name and becomes the first derived type, supplying the P9
+> config table, its slot offsets and the scratchpad engine. The config
+> table becomes data, still written with the same CFAM_CONFIG_REG()
+> expressions, which move to the header so a derived type can describe its
+> own table the same way.
+> 
+> No functional change: same memory map, same config words, same type and
+> child names. aspeed_fsi-test verified.
+> 
+> Signed-off-by: Mikail Sadic <mikail.sadic@ibm.com>
+> ---
+>  include/hw/fsi/cfam.h |  58 ++++++++++++++++++--
+>  hw/fsi/cfam.c         | 123 ++++++++++++++++++++++++------------------
+>  hw/fsi/fsi-master.c   |   2 +-
+>  3 files changed, 127 insertions(+), 56 deletions(-)
+> 
+> diff --git a/include/hw/fsi/cfam.h b/include/hw/fsi/cfam.h
+> index cceb4bd6f1..0f5464b4a0 100644
+> --- a/include/hw/fsi/cfam.h
+> +++ b/include/hw/fsi/cfam.h
+> @@ -7,18 +7,44 @@
+>  #ifndef FSI_CFAM_H
+>  #define FSI_CFAM_H
+>  
+> +#include "qemu/units.h"
+>  #include "system/memory.h"
+>  
+>  #include "hw/fsi/fsi.h"
+>  #include "hw/fsi/lbus.h"
+>  
+> +/*
+> + * All CFAM flavors present a register slot holding a config table, an FSI
+> + * responder and a local bus carrying the engines the config table describes.
+> + * That is the common model; each flavor supplies its own table, slot layout
+> + * and engines.
+> + */
+> +#define TYPE_FSI_CFAM_COMMON "cfam-common"
+> +OBJECT_DECLARE_TYPE(FSICFAMCommonState, FSICFAMCommonClass, FSI_CFAM_COMMON)
 
-On 7/31/26 20:05, Peter Maydell wrote:
-> On Tue, 28 Jul 2026 at 20:32, Helge Deller <deller@kernel.org> wrote:
->>
->> From: Helge Deller <deller@gmx.de>
->>
->> Make sure that the time entries (msg_stime, msg_rtime and msg_ctime)
->> are defined as 64-bit time_t values, since the userspace may access
->> the whole 64-bit value. By this change we fix the word ordering for
->> 32-bit big endian architectures as well.
->>
->> This fixes the msgctl01 LTP testcase on hppa32.
->>
->> Signed-off-by: Helge Deller <deller@gmx.de>
->> ---
->>   linux-user/syscall.c | 30 ++++++++++++------------------
->>   1 file changed, 12 insertions(+), 18 deletions(-)
->>
->> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
->> index 740142825d..c93b770ced 100644
->> --- a/linux-user/syscall.c
->> +++ b/linux-user/syscall.c
->> @@ -4216,21 +4216,15 @@ static inline abi_long do_semtimedop(int semid,
->>   }
->>   #endif
->=20
-> I see this has already gone into git, but some late review
-> comments. I suspect this is mostly me being confused rather
-> than actual problems.
->=20
->>
->> +#define target_time64_t         abi_ullong
->> +#define target_swap_time64(x)   tswap64(x)
->> +
->>   struct target_msqid_ds
->=20
-> Is this the kernel's "struct msqid_ds" (which it calls "Obsolete, used
-> only for backwards compatibility and libc5 compiles") or its msqid64_ds?
+I would prefer it if you could drop the `State` suffix from the name. 
+We probably don't need the `FSI` prefix either since I believe there
+are only FSI-based CFAMs, but it's already there from before so it's
+fine for now.
 
-Yes, it's msqid64_ds.
+> +
+>  #define TYPE_FSI_CFAM "cfam"
+> -#define FSI_CFAM(obj) OBJECT_CHECK(FSICFAMState, (obj), TYPE_FSI_CFAM)
+> +OBJECT_DECLARE_SIMPLE_TYPE(FSICFAMState, FSI_CFAM)
+>  
+>  /* P9-ism */
+>  #define CFAM_CONFIG_NR_REGS 0x28
+>  
+> -typedef struct FSICFAMState {
+> +#define FSI_CFAM_SLOT_SIZE   (2 * MiB)
+> +#define FSI_CFAM_CONFIG_SIZE 0x400
+> +
+> +#define ENGINE_CONFIG_NEXT            BIT(31)
+> +#define ENGINE_CONFIG_TYPE_PEEK       (0x02 << 4)
+> +#define ENGINE_CONFIG_TYPE_FSI        (0x03 << 4)
+> +#define ENGINE_CONFIG_TYPE_SCRATCHPAD (0x06 << 4)
+> +
+> +/* Valid, slots, version, type, crc */
+> +#define CFAM_CONFIG_REG(__VER, __TYPE, __CRC)   \
+> +    (ENGINE_CONFIG_NEXT       |   \
+> +     0x00010000               |   \
+> +     (__VER)                  |   \
+> +     (__TYPE)                 |   \
+> +     (__CRC))
+> +
+> +struct FSICFAMCommonState {
+>      /* < private > */
+>      FSISlaveState parent;
+>  
+> @@ -28,7 +54,33 @@ typedef struct FSICFAMState {
+>      MemoryRegion mr;
+>  
+>      FSILBus lbus;
+> +};
+> +
+> +struct FSICFAMCommonClass {
+> +    /* < private > */
+> +    DeviceClass parent_class;
+> +
+> +    /* < public > */
+> +    /* Config table served by the common ops, one word per 4-byte offset */
+> +    const uint32_t *config;
+> +    unsigned config_nr;
+> +
+> +    /* Layout of the register slot */
+> +    hwaddr responder_offset;
+> +    hwaddr lbus_offset;
+> +
+> +    /* Realize and map this flavor's local bus engines */
+> +    bool (*realize_engines)(FSICFAMCommonState *cfam, Error **errp);
+> +};
+> +
+> +struct FSICFAMState {
+> +    /* < private > */
+> +    FSICFAMCommonState parent;
+> +
+>      FSIScratchPad scratchpad;
+> -} FSICFAMState;
+> +};
+> +
+> +bool fsi_cfam_add_engine(FSICFAMCommonState *cfam, DeviceState *engine,
+> +                         hwaddr offset, Error **errp);
+>  
+>  #endif /* FSI_CFAM_H */
+> diff --git a/hw/fsi/cfam.c b/hw/fsi/cfam.c
+> index 54c0b05769..361cb34808 100644
+> --- a/hw/fsi/cfam.c
+> +++ b/hw/fsi/cfam.c
+> @@ -16,19 +16,6 @@
+>  
+>  #include "hw/core/qdev-properties.h"
+>  
+> -#define ENGINE_CONFIG_NEXT            BIT(31)
+> -#define ENGINE_CONFIG_TYPE_PEEK       (0x02 << 4)
+> -#define ENGINE_CONFIG_TYPE_FSI        (0x03 << 4)
+> -#define ENGINE_CONFIG_TYPE_SCRATCHPAD (0x06 << 4)
+> -
+> -/* Valid, slots, version, type, crc */
+> -#define CFAM_CONFIG_REG(__VER, __TYPE, __CRC)   \
+> -    (ENGINE_CONFIG_NEXT       |   \
+> -     0x00010000               |   \
+> -     (__VER)                  |   \
+> -     (__TYPE)                 |   \
+> -     (__CRC))
+> -
+>  #define TO_REG(x)                          ((x) >> 2)
+>  
+>  #define CFAM_CONFIG_CHIP_ID                TO_REG(0x00)
+> @@ -36,34 +23,33 @@
+>  #define CFAM_CONFIG_CHIP_ID_P9             0xc0022d15
+>  #define CFAM_CONFIG_CHIP_ID_BREAK          0xc0de0000
+>  
+> +/*
+> + * Config table of the P9 CFAM: the chip ID followed by one entry per engine,
+> + * entry n describing the engine at address n * 4. We need to add future
+> + * engines from address 0x10 onwards.
+> + */
+> +static const uint32_t cfam_p9_config[] = {
+> +    CFAM_CONFIG_CHIP_ID_P9,
+> +    CFAM_CONFIG_REG(0x1000, ENGINE_CONFIG_TYPE_PEEK, 0xc),
+> +    CFAM_CONFIG_REG(0x5000, ENGINE_CONFIG_TYPE_FSI, 0xa),
+> +    CFAM_CONFIG_REG(0x1000, ENGINE_CONFIG_TYPE_SCRATCHPAD, 0x7),
+> +};
+> +
+>  static uint64_t fsi_cfam_config_read(void *opaque, hwaddr addr, unsigned size)
+>  {
+> +    FSICFAMCommonClass *cc = FSI_CFAM_COMMON_GET_CLASS(opaque);
+> +    unsigned int reg = TO_REG(addr);
+> +
+>      trace_fsi_cfam_config_read(addr, size);
+>  
+> -    switch (addr) {
+> -    case 0x00:
+> -        return CFAM_CONFIG_CHIP_ID_P9;
+> -    case 0x04:
+> -        return CFAM_CONFIG_REG(0x1000, ENGINE_CONFIG_TYPE_PEEK, 0xc);
+> -    case 0x08:
+> -        return CFAM_CONFIG_REG(0x5000, ENGINE_CONFIG_TYPE_FSI, 0xa);
+> -    case 0xc:
+> -        return CFAM_CONFIG_REG(0x1000, ENGINE_CONFIG_TYPE_SCRATCHPAD, 0x7);
+> -    default:
+> -        /*
+> -         * The config table contains different engines from 0xc onwards.
+> -         * The scratch pad is already added at address 0xc. We need to add
+> -         * future engines from address 0x10 onwards. Returning 0 as engine
+> -         * is not implemented.
+> -         */
+> -        return 0;
+> -    }
+> +    /* Engines past the end of the table are not implemented */
+> +    return reg < cc->config_nr ? cc->config[reg] : 0;
+>  }
+>  
+>  static void fsi_cfam_config_write(void *opaque, hwaddr addr, uint64_t data,
+>                                    unsigned size)
+>  {
+> -    FSICFAMState *cfam = FSI_CFAM(opaque);
+> +    FSICFAMCommonState *cfam = FSI_CFAM_COMMON(opaque);
+>  
+>      trace_fsi_cfam_config_write(addr, size, data);
+>  
+> @@ -109,59 +95,92 @@ static const struct MemoryRegionOps fsi_cfam_unimplemented_ops = {
+>      .endianness = DEVICE_BIG_ENDIAN,
+>  };
+>  
+> -static void fsi_cfam_instance_init(Object *obj)
+> +bool fsi_cfam_add_engine(FSICFAMCommonState *cfam, DeviceState *engine,
+> +                         hwaddr offset, Error **errp)
+>  {
+> -    FSICFAMState *s = FSI_CFAM(obj);
+> +    if (!qdev_realize(engine, BUS(&cfam->lbus), errp)) {
+> +        return false;
+> +    }
+>  
+> -    object_initialize_child(obj, "scratchpad", &s->scratchpad,
+> -                            TYPE_FSI_SCRATCHPAD);
+> +    memory_region_add_subregion(&cfam->lbus.mr, offset,
+> +                                &FSI_LBUS_DEVICE(engine)->iomem);
+> +    return true;
+>  }
+>  
+> -static void fsi_cfam_realize(DeviceState *dev, Error **errp)
+> +static void fsi_cfam_common_realize(DeviceState *dev, Error **errp)
+>  {
+> -    FSICFAMState *cfam = FSI_CFAM(dev);
+> +    FSICFAMCommonState *cfam = FSI_CFAM_COMMON(dev);
+> +    FSICFAMCommonClass *cc = FSI_CFAM_COMMON_GET_CLASS(dev);
+>      FSISlaveState *slave = FSI_SLAVE(dev);
+> +    const char *type = object_get_typename(OBJECT(dev));
+> +    g_autofree char *config_name = g_strdup_printf("%s.config", type);
+>  
+>      /* Each slave has a 2MiB address space */
+>      memory_region_init_io(&cfam->mr, OBJECT(cfam), &fsi_cfam_unimplemented_ops,
+> -                          cfam, TYPE_FSI_CFAM, 2 * MiB);
+> +                          cfam, type, FSI_CFAM_SLOT_SIZE);
 
-> The layout matches msqid64_ds, which makes our struct a bit
-> confusingly named.
+There is now an extended addressing mode that allows a single CFAM to
+have 8MB instead of having 4 cascaded CFAM's sharing the 8MB space, but
+I understand if you don't want to implement this now.
 
-True.
-In a follow-up patch this better should be renamed to target_msqid64_ds.
+>  
+>      qbus_init(&cfam->lbus, sizeof(cfam->lbus), TYPE_FSI_LBUS, DEVICE(cfam),
+>                NULL);
+>  
+>      memory_region_init_io(&cfam->config_iomem, OBJECT(cfam), &cfam_config_ops,
+> -                          cfam, TYPE_FSI_CFAM ".config", 0x400);
+> +                          cfam, config_name, FSI_CFAM_CONFIG_SIZE);
+>  
+>      memory_region_add_subregion(&cfam->mr, 0, &cfam->config_iomem);
+> -    memory_region_add_subregion(&cfam->mr, 0x800, &slave->iomem);
+> -    memory_region_add_subregion(&cfam->mr, 0xc00, &cfam->lbus.mr);
+> +    memory_region_add_subregion(&cfam->mr, cc->responder_offset, &slave->iomem);
+> +    memory_region_add_subregion(&cfam->mr, cc->lbus_offset, &cfam->lbus.mr);
+> +
+> +    cc->realize_engines(cfam, errp);
+> +}
+> +
+> +static void fsi_cfam_common_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +
+> +    dc->bus_type = TYPE_FSI_BUS;
+> +    dc->realize = fsi_cfam_common_realize;
+> +}
+> +
+> +static bool fsi_cfam_realize_engines(FSICFAMCommonState *cfam, Error **errp)
+> +{
+> +    FSICFAMState *s = FSI_CFAM(cfam);
+>  
+>      /* Add scratchpad engine */
+> -    if (!qdev_realize(DEVICE(&cfam->scratchpad), BUS(&cfam->lbus), errp)) {
+> -        return;
+> -    }
+> +    object_initialize_child(OBJECT(s), "scratchpad", &s->scratchpad,
+> +                            TYPE_FSI_SCRATCHPAD);
+>  
+> -    FSILBusDevice *fsi_dev = FSI_LBUS_DEVICE(&cfam->scratchpad);
+> -    memory_region_add_subregion(&cfam->lbus.mr, 0, &fsi_dev->iomem);
+> +    return fsi_cfam_add_engine(cfam, DEVICE(&s->scratchpad), 0, errp);
+>  }
+>  
+>  static void fsi_cfam_class_init(ObjectClass *klass, const void *data)
+>  {
+> -    DeviceClass *dc = DEVICE_CLASS(klass);
+> -    dc->bus_type = TYPE_FSI_BUS;
+> -    dc->realize = fsi_cfam_realize;
+> +    FSICFAMCommonClass *cc = FSI_CFAM_COMMON_CLASS(klass);
+> +
+> +    cc->config = cfam_p9_config;
+> +    cc->config_nr = ARRAY_SIZE(cfam_p9_config);
+> +    cc->responder_offset = 0x800;
+> +    cc->lbus_offset = 0xc00;
+> +    cc->realize_engines = fsi_cfam_realize_engines;
+>  }
+>  
+> +static const TypeInfo fsi_cfam_common_info = {
+> +    .name = TYPE_FSI_CFAM_COMMON,
+> +    .parent = TYPE_FSI_SLAVE,
+> +    .instance_size = sizeof(FSICFAMCommonState),
+> +    .class_size = sizeof(FSICFAMCommonClass),
+> +    .class_init = fsi_cfam_common_class_init,
+> +    .abstract = true,
+> +};
+> +
+>  static const TypeInfo fsi_cfam_info = {
+>      .name = TYPE_FSI_CFAM,
+> -    .parent = TYPE_FSI_SLAVE,
+> -    .instance_init = fsi_cfam_instance_init,
+> +    .parent = TYPE_FSI_CFAM_COMMON,
+>      .instance_size = sizeof(FSICFAMState),
+>      .class_init = fsi_cfam_class_init,
+>  };
+>  
+>  static void fsi_cfam_register_types(void)
+>  {
+> +    type_register_static(&fsi_cfam_common_info);
+>      type_register_static(&fsi_cfam_info);
+>  }
+>  
+> diff --git a/hw/fsi/fsi-master.c b/hw/fsi/fsi-master.c
+> index 083a5507ab..d82df1c094 100644
+> --- a/hw/fsi/fsi-master.c
+> +++ b/hw/fsi/fsi-master.c
+> @@ -130,7 +130,7 @@ static void fsi_master_realize(DeviceState *dev, Error **errp)
+>      }
+>  
+>      /* address ? */
+> -    memory_region_add_subregion(&s->opb2fsi, 0, &s->cfam.mr);
+> +    memory_region_add_subregion(&s->opb2fsi, 0, &s->cfam.parent.mr);
+>  }
+>  
+>  static void fsi_master_reset(DeviceState *dev)
 
->>   {
->>       struct target_ipc_perm msg_perm;
->> -    abi_ulong msg_stime;
->> -#if TARGET_ABI_BITS =3D=3D 32
->> -    abi_ulong __unused1;
->> -#endif
->> -    abi_ulong msg_rtime;
->> -#if TARGET_ABI_BITS =3D=3D 32
->> -    abi_ulong __unused2;
->> -#endif
->> -    abi_ulong msg_ctime;
->> -#if TARGET_ABI_BITS =3D=3D 32
->> -    abi_ulong __unused3;
->> -#endif
->> +    target_time64_t msg_stime;
->> +    target_time64_t msg_rtime;
->> +    target_time64_t msg_ctime;
->=20
-> Assuming msqid64_ds, the kernel version of this struct has a comment:
->   * 64 bit architectures use a 64-bit long time field here, while
->   * 32 bit architectures have a pair of unsigned long values.
->   * On big-endian systems, the lower half is in the wrong place.
-
-Those comments are from the generic header:
-include/uapi/asm-generic/msgbuf.h
-and I think the last sentence about big-endian systems is wrong, as
-most platforms provide an own architecture-specific header file, e.g:
-arch/xtensa/include/uapi/asm/msgbuf.h
-and the big-endian platforms seem to have their high-word first.
-
-> That would make tswap64() not the right swap for 32-bit big
-> endian guests.
- =20
-I did my testing on the 32-bit hppa/parisc platform, and with my patch
-the results in qemu were correct and were the same as on physical machines=
-.
-
-I just tried in a 32-bit powerpc chroot and the msgctl01 now succeeds ther=
-e as well.
-So, I think my patch is generally ok.
-
-Helge
 
