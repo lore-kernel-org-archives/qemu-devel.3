@@ -4,110 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDDC0C55167
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 17:11:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA5C8C55167
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 17:19:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpql4-0007uY-AN; Fri, 31 Jul 2026 13:10:54 -0400
+	id 1wpqsc-0002F3-E6; Fri, 31 Jul 2026 13:18:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wpql2-0007uC-0v
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 13:10:52 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wpqsZ-0002Eg-Tp
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 13:18:40 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wpql0-0001pl-7y
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 13:10:51 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-69fc856b00eso1478844a12.2
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 10:10:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785517848; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wpqsY-0003Oo-8u
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 13:18:39 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-6682259cb3dso2006906d50.1
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 10:18:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785518316; cv=none;
  d=google.com; s=arc-20260327;
- b=qVs4mdnp4CeluezkdOUnTvJhq4bZm88OqAKEZv9FlyYFJSAi5mvl+WVpRS1PfCFzqB
- GQBLC+a2OzP7oVakQCAfroc1UGn7dE8t013/TfTz2+lLYgh8PF5vwG0Nqx25JwcOn3Fq
- YgssotQyaut5G0C/Dvb0FBAnYFuhlKiSC1oY4pr5n2LdeTSl8+miY5EzGIYLMqBvvP87
- 4OWt81Y/Z/HF4fPVVaHjO4+yecDqXLNx8fdF62ypv294lPXZ+p2BxWV9ygiFN2rJHzM6
- JkkFsJ62Q8yz8jj3Lrcn1CX3vC+WFySNjjDYelsTVNrONo6qVcUq383V4htJJOFrFfkG
- lewg==
+ b=AuMNG5jFTaEWMjzpjS5KaA9cRzpL2wu6t+7zPuu1A2XfZgZ13uLKNt0Y9bkZ6I+44r
+ b17bpQQh96aWPdqSFKyIGPP5z5tMKzBI+mRSq8NWOQt16wRDrHk3W5RoQKnqyLHLf/c/
+ TlDZ3Uf8oU3F7ClvmNmC7cU7AEzUR4S3o0Kp4pglbEu/VNXbvsJcDoRkj82X3gKjPB/Z
+ sILhsfWS5FtF3GBAJJ8P4996K5/mkm9Yf63nYUXAqDeYgnAdn4+1AGqT8XBxhl0bxMqe
+ RSsUqMYqLQXPjusAiuj5wSl8eFraUSNM0nVAtlDI7luCdOr7o9GlZr7syKB+tfXsXETV
+ SMTA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=Ko4IoMN576l5mmq3IdfKwWLvvs6uThQRba347hcZpfY=;
- fh=UaA1yCOjKZbN2T3Nzlq9jhGnddnHE8rnoiFOPAMopGg=;
- b=GcXKkJlH2rZejGELkQt7lJhWy7mkKJpvhbnyE2SOY9X2rsA9vSoX/EwiGC7GlSVII5
- MvG8l8GYyvkb4oeXDN2Gi1H1aSkqscongQSqz/9bU/60goJ33camub3B1uVPws5kL8VV
- HTE3gBf5xirDhS4CQpp9E2KocSZEfNBTZcuCaf+TLGa5WBC2UUBSNia6J6m5pxZDUOSP
- d1PJizOIL1SxBr6T4jSxgMqDDcQEfmUmJZr384/9mLU05KoOnP/5Ud626bPaGbVAtNwN
- g6+RTe3+qzLqK/eSEHKGAx45Q8K1nhDNW5eBmWP3VBbO1ZUx2lAR53i/DcWYmPA1knVH
- E6Rg==; darn=nongnu.org
+ bh=omtbnAWJ7gT+EeQw4NcL/o7/7ierY46TkjZcU+nlTt8=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=TjaPaEi1TFmeYcDeYBxgJd46VtyiziKHDBrqRU9AqVz0Qih4GvCT5VvJ9X7F+YnJjP
+ mIcew2rRRQHd/txlxE8wdm42mpafPVFl68rMH3Ng/kil5dxWvzCxBeSjsEOBhXGt5RLr
+ wYZYvk7yAlliyUBxhmWj9DbYHNhqvDGmOpyO9F7ip8xtB4eufGPvtXZ3CWN210li6WDS
+ 59ymuJuSZXB7CxVObFI9+ZQr7YWVVLu06oBSxku2NV9S7aSe4CIFDnfyfI1Y+DJD3Xa0
+ cNm2fyLZQEr5jppkRQDc8Bf5fPp4SQcoVXSVla251eXKB9GB5szmqIvde+dYhK1vfJRD
+ 2Gcw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785517848; x=1786122648; darn=nongnu.org;
+ d=linaro.org; s=google; t=1785518316; x=1786123116; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Ko4IoMN576l5mmq3IdfKwWLvvs6uThQRba347hcZpfY=;
- b=T0+tfu1UEVyfb9pUFO3uBYUvZVP+XPM8VQuTFz60kVd1M/6v0GGSkF2Stl3WJxp+Aw
- EcXw4PXhh6opaLKdyVT4+NbWEccIKkUuyXX/8uNJ94RLpawYhH32E5dWlUtQ10BKvcCk
- Rl4RV8y9Gf8LguHU+L0Q9NnkRr3r8+2GR9amadD51HB6ftaldpO3Ojd2AVf7xYG826hM
- +TyKYRdBh2q4yfyEbpr6SsTBi/JjUH3ZFfDhyzK4JINWDX9Cb8kuxP3PVguwQAPbGCG1
- pDfrenVxjLU7mkaXbTBYvFGkgCc79RMEJPoAS0EHrVhIw2g9AOd272qnGaVupQVV9WFz
- 0NOQ==
+ :content-type; bh=omtbnAWJ7gT+EeQw4NcL/o7/7ierY46TkjZcU+nlTt8=;
+ b=MBYRYPlH24WxTIWyNmfuYP3jSpOrwTdgYfc7MvfitGNUeGRgN/kUwcdRE24UmTXbfv
+ tly85qZ2bkYMmxZElrN/6amuBwiVn41Q+HbVOTraBVCj8R+38veoBE3uHd64BzTVozW0
+ brvFWBxrGSVw16+JpH5oGU9rm6+NaKJ9BaU0yTEvCHN+OaX3WpclBTwBTbceS3R9ki8R
+ dp3q4dfYk/x+5VANoCAUOTwxIrUtxSn0Hj9XlpxSAv2jyT2jNivCk+xv8m+CHqnLvtL1
+ lDi6MeIQXFZ9fqCb0caUYaFqGAvOjXkUH51LDJlgi97YDB8x6bNZ/f1G5khsu9cfg8mc
+ nlBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785517848; x=1786122648;
+ d=1e100.net; s=20251104; t=1785518316; x=1786123116;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=Ko4IoMN576l5mmq3IdfKwWLvvs6uThQRba347hcZpfY=;
- b=UfEznL95UQRxK9Oz37RG1Sag40yx9TyfVsSkbYQUirIWq2ZdS3Q9HZBqZ2FfYnVyy1
- qn8QPpbUZJ6rQOasU6wanoiwrrTv2iR2wlTCrQXJatEb9iOpYjGLYuKJTPbtyOT78LDw
- exZmsgamtoONuz50PEGVKq2UQipwBqpjd5HPvnuufhznWY9oyOGITNVwGeRsFQkceDbx
- Xw//mMWZyUhIb8HBHkiV6V9KzikTKvnuyC1+X1ai5yPfxXk2jvv9G2fvmAUzMjdg4OYz
- Ze+dVNspBXCwPEwjXslz1rl2Mc3tSqg5v+F8Cveva4Cswl7r4C+VO9X/cpP1vjNJxKn5
- Y8Wg==
-X-Gm-Message-State: AOJu0YylaOSo9PBcF/OFowHc+lzZ0KTXFdoHj1d2Wa1CzsUFt6ATxSlE
- LYFu2WQXaaqSrioURMfrRq+2G0QvF1UnTofu+jTcPzbHhF0bcTFqu3VVCv6U04C4/HJVCqB2CqA
- tnTrNQkDQYLtQ0Iq9Hi5JTsqT7Ms2AeI=
-X-Gm-Gg: AR+sD12wZ/HFuGDnUEuHJFtoAK9SVPWDxVP411HtXrbWGoxB1YMZMEdA56HjZ0DNsto
- Sjec5aHzTeqqeDk3fagLSZXjkk6pedesoGLbdmjAkHZPVTUUqWZdLQTgv4gZSrloQTUIfVj0CoG
- a/eEw0vq7Frb6pchmGHZKQ3PLXWaDXwCpayAVcJKM2df0XDqZ6ZbxAdq8tAqlLjoNLZQNWL/z1h
- qw3uDiVZZBGjMVxj+dh/SDYqWdwCTN5zATkbl1QWfzKBgmXdKPJ2nhiubk+ZkkoUY24XrCi3Xh3
- ExRoY0fh70BcdJeZtD9AwYqUamb1El/TfKVcKGmZHUTN
-X-Received: by 2002:a05:6402:1f49:b0:6a0:a560:1637 with SMTP id
- 4fb4d7f45d1cf-6a0a7ca333fmr316838a12.14.1785517848048; Fri, 31 Jul 2026
- 10:10:48 -0700 (PDT)
+ bh=omtbnAWJ7gT+EeQw4NcL/o7/7ierY46TkjZcU+nlTt8=;
+ b=NYxRm5GM/fo0FF+3KTcjMVgLc6LNqKmZ9gyvSijCQaVCsPu2bBgEDCjxat062WVaKH
+ y4HbCw+vzPiof+pDiGZTFimGZUiKTPyikAfzmVNgz5pRrkfh4TuVtCZn3M70VS/P6sdE
+ vWJ7PqftoKMzeQ4YX3wR3pfNMXkcNSjK82A0aPrmyOyHJ+OT0Y8qQ51BBFllA3swf3i+
+ vOk978y0U/qChAtcuTX3Q3YVmc2pyxkDKbcFVcBI8KX2LLP4BRXDikrYzH/c9DCcCxPw
+ 8YyTo7GospAcd4sGEXrtU0I/xpjUK60Yjlvm/5WIP9KWNohmRerjOB+qPJCcNhcO6mml
+ GlIw==
+X-Gm-Message-State: AOJu0Yxr03+jfSR8YFniSIsA3ZnWRqAumxoWyuDJ6G08Wy/NStwkp4Ua
+ 2JhXjikxBsgHlI2HGkOWZMgbRKwbeKBMDNeXGkGvOsZocbbitSG7Sd3FyBAL9R6jXKfPHd4k78B
+ luqXWKvglDy5h+p60rPzlqLzDoPpAxCSHBjMZtzfjXg==
+X-Gm-Gg: AR+sD11p1KMFnkEsjMAw6YlHgIXAx2vBaLkWESyjXabVcOy2F1nn7s4qS2PDce5Xw3K
+ LWQUTlOXLGu1zR/PCTj+y7ZtgOW2F/gm0pltu3n2iP5dyjWCkJYhjHJA/vMNH58/L48V6G+v6Go
+ ECkS33xmWoBzer+/cFRWw6FXlnBLUqb0f29ukBF76qsR8ewV4coTLwWaP5WaGDUfv0wrRtr9XBh
+ Rw7I44Z0XkRRbULqs9WGyN9NoJBJUj456duz2WHO3oa9XxaV/q6iYQ9gQvbY+Sou6djZklrVyzZ
+ ua5o8rRp6MlJLdxBbzxGQcBKQD1THq2IgiZQmV2f8Llo1mUn0AhW18OeNeNC5jYyRfDsMJQq81W
+ xxozRFLSSi7VReHEHtQwRXjuQGk6Y
+X-Received: by 2002:a05:690e:483:b0:668:9a36:b229 with SMTP id
+ 956f58d0204a3-6694f9c809fmr516112d50.21.1785518316000; Fri, 31 Jul 2026
+ 10:18:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260716172108.87700-1-zhangckid@gmail.com>
- <20260716172108.87700-7-zhangckid@gmail.com>
- <87a4rkplof.fsf@pond.sub.org>
- <CAK3tnv+UMEsZTR12iY74sD42m5nNhYEtyF58QxVoG-JAeUZHcw@mail.gmail.com>
- <87cxw3aah5.fsf@pond.sub.org>
-In-Reply-To: <87cxw3aah5.fsf@pond.sub.org>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Sat, 1 Aug 2026 01:10:35 +0800
-X-Gm-Features: AUfX_mxelj1tlfoSBDBMGgbSqkLntbTD7kgHI1UM7NLr4NQkF7bPw9Fx0s-n9Iw
-Message-ID: <CAK3tnv+g_m27CEj_PRUyHVsViZv74H+dtHmxw9yjEQqSVVuN-Q@mail.gmail.com>
-Subject: Re: [RESEND PATCH V10 06/15] monitor: Update tracking iothread users
- with holder
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>, 
- Eric Blake <eblake@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, 
- Jason Wang <jasowang@redhat.com>, Fam Zheng <fam@euphon.net>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="00000000000012b73b0657eb454a"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=zhangckid@gmail.com; helo=mail-ed1-x52a.google.com
+References: <20260724030616.76180-1-richard.henderson@linaro.org>
+ <20260724030616.76180-5-richard.henderson@linaro.org>
+In-Reply-To: <20260724030616.76180-5-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 31 Jul 2026 18:18:23 +0100
+X-Gm-Features: AUfX_myXAONAjc7DMz64_rxqPZNqjd8vJMPxypMkFWAQqdUKmqSBMY_faOiGkDk
+Message-ID: <CAFEAcA-M+oQ2O_GojNK-S3iYP4GPxYMqaiZsB0t9sPvvFvazDw@mail.gmail.com>
+Subject: Re: [PATCH 4/6] target/arm: Implement FGWTE3 traps
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,174 +115,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000012b73b0657eb454a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Fri, 24 Jul 2026 at 04:07, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/tcg/op_helper.c     | 36 ++++++++++++++++++++++------------
+>  target/arm/tcg/translate-a64.c | 13 +++++++++++-
+>  2 files changed, 35 insertions(+), 14 deletions(-)
+>
+> diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
+> index c4433be2ed..f040a3fc87 100644
+> --- a/target/arm/tcg/op_helper.c
+> +++ b/target/arm/tcg/op_helper.c
+> @@ -1067,12 +1067,10 @@ const void *HELPER(access_check_cp_reg)(CPUARMState *env, uint32_t key,
+>       * higher priority than trap-to-EL3, and we don't care about priority
+>       * order with other EL2 traps because the syndrome value is the same.
+>       */
 
-On Fri, Jul 31, 2026, 3:23=E2=80=AFPM Markus Armbruster <armbru@redhat.com>=
- wrote:
+We should extend this comment, e.g something like:
+   FGWTE3 traps are exclusively traps to EL3 on EL3-accessible-only
+   registers, so there's no possibility of a trap to EL2, and we
+   can check these here also.
 
-> Zhang Chen <zhangckid@gmail.com> writes:
+> -    if (arm_fgt_active(env, arm_current_el(env))) {
+> +    if (ri->fgt) {
+>          uint64_t trapword = 0;
+>          unsigned int idx = FIELD_EX32(ri->fgt, FGT, IDX);
+>          unsigned int bitpos = FIELD_EX32(ri->fgt, FGT, BITPOS);
+> -        bool rev = FIELD_EX32(ri->fgt, FGT, REV);
+> -        bool nxs = FIELD_EX32(ri->fgt, FGT, NXS);
+>          bool trapbit;
 >
-> > On Tue, Jul 21, 2026 at 8:33=E2=80=AFPM Markus Armbruster <armbru@redha=
-t.com>
-> wrote:
-> >>
-> >> Zhang Chen <zhangckid@gmail.com> writes:
-> >>
-> >> > Based on monitor QOM path tracking iothread users with holder.
-> >> > Introduce the AioContext in the Monitor struct to avoid repeated
-> calls to
-> >> > iothread_get_aio_context() and ensure symmetrical ref/unref during
-> >> > monitor lifecycle.
-> >> >
-> >> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> >>
-> >> Why are repeated calls bad?
-> >>
-> >> How would symmetry be lost?
-> >>
-> >
-> > OK, will add detailed comments like this in the next version:
-> >
-> > Avoid repeated calls: Under the holder tracking model, fetching the
-> > AioContext increments the IOThread refcount and registers holder
-> metadata.
-> > Dynamically querying it in helper functions (e.g., suspend, BH
-> scheduling)
-> > leads to redundant refcount churn.
+>          if (ri->fgt & FGT_EXEC) {
+> @@ -1085,19 +1083,31 @@ const void *HELPER(access_check_cp_reg)(CPUARMState *env, uint32_t key,
+>              assert(idx < ARRAY_SIZE(env->cp15.fgt_write));
+>              trapword = env->cp15.fgt_write[idx];
+>          }
+> +        trapbit = extract64(trapword, bitpos, 1);
 >
-> Right here, we still have
->
->     AioContext *iothread_get_aio_context(IOThread *iothread)
->     {
->         return iothread->ctx;
->     }
->
-> and complicating code to avoid additional calls feels dubious.
->
-> PATCH 14 changes it to
->
->     AioContext *iothread_get_aio_context(IOThread *iothread,
->                                          const IOThreadHolder *holder)
->     {
->         /* Add IOThreadHolder to the list */
->         iothread_ref(iothread, holder);
->
->         return iothread->ctx;
+> -        if (nxs && (arm_hcrx_el2_eff(env) & HCRX_FGTNXS)) {
+> +        if ((ri->access & ~PL3_RW) == 0) {
+>              /*
+> -             * If HCRX_EL2.FGTnXS is 1 then the fine-grained trap for
+> -             * TLBI maintenance insns does *not* apply to the nXS variant.
+> +             * EL3 cpreg -- must be FGWTE3, and FGWTE3_EL3 can only be
+> +             * set from AArch64, and if the feature is enabled.
+>               */
+> -            trapbit = 0;
+> -        } else {
+> -            trapbit = extract64(trapword, bitpos, 1);
+> -        }
+> -        if (trapbit != rev) {
+> -            res = CP_ACCESS_TRAP_EL2;
+> -            goto fail;
+> +            if (trapbit) {
+> +                res = CP_ACCESS_TRAP_EL3;
+> +                goto fail;
+> +            }
+> +        } else if (arm_fgt_active(env, arm_current_el(env))) {
+> +            bool nxs = FIELD_EX32(ri->fgt, FGT, NXS);
+> +            bool rev = FIELD_EX32(ri->fgt, FGT, REV);
+> +            if (nxs && (arm_hcrx_el2_eff(env) & HCRX_FGTNXS)) {
+> +                /*
+> +                 * If HCRX_EL2.FGTnXS is 1 then the fine-grained trap for
+> +                 * TLBI maintenance insns does *not* apply to the nXS variant.
+> +                 */
+> +                trapbit = 0;
+> +            }
+> +            if (trapbit != rev) {
+> +                res = CP_ACCESS_TRAP_EL2;
+> +                goto fail;
+> +            }
+>          }
 >      }
 >
-> Are you making this change in preparation of PATCH 14?
+> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+> index 1780490065..ff880eab8d 100644
+> --- a/target/arm/tcg/translate-a64.c
+> +++ b/target/arm/tcg/translate-a64.c
+> @@ -2886,6 +2886,7 @@ static void handle_sys(DisasContext *s, bool isread,
+>  {
+>      uint32_t key = ENCODE_AA64_CP_REG(op0, op1, crn, crm, op2);
+>      const ARMCPRegInfo *ri = get_arm_cp_reginfo(s->cp_regs, key);
+> +    bool need_helper = false;
+>      bool need_exit_tb = false;
+>      bool nv_trap_to_el2 = false;
+>      bool nv_redirect_reg = false;
+> @@ -2999,7 +3000,17 @@ static void handle_sys(DisasContext *s, bool isread,
+>          ri = redirect_cpreg(s, key, isread);
+>      }
 >
+> -    if (ri->accessfn || (ri->fgt && s->fgt_active)) {
+> +    if (ri->accessfn) {
+> +        need_helper = true;
+> +    } else if (ri->fgt) {
 
+I might add a comment here:
+   /*
+    * EL3-only access means this must be an FGWTE3 trap (which are always
+    * active); otherwise it's an FGT trap to EL2.
+    */
 
-Yes, following Stefan's earlier suggestion allows for lifecycle management
-to be completed with minimal disruption.
+> +        if ((ri->access & ~PL3_RW) == 0) {
+> +            need_helper = (arm_dc_feature(s, ARM_FEATURE_EL3) &&
+> +                           dc_isar_feature(aa64_fgwte3, s));
+> +        } else {
+> +            need_helper = s->fgt_active;
+> +        }
+> +    }
+> +    if (need_helper) {
+>          /* Emit code to perform further access permissions checks at
+>           * runtime; this may result in an exception.
+>           */
 
-Thanks
-Chen
+Otherwise
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-
-> > Ensure lifecycle symmetry: Storing AioContext in mon->ctx establishes a
-> > strict 1-to-1 lifecycle pairing: a single
-> iothread_ref_and_get_aio_context()
-> > in monitor_complete() matched by a single iothread_put_aio_context()
-> > in monitor_cleanup().
-> >
-> > Thanks
-> > Chen
->
->
-
---00000000000012b73b0657eb454a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><br><div class=3D"gmail_quote gmail_quote_co=
-ntainer"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Jul 31, 2026, 3:23=
-=E2=80=AFPM Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armb=
-ru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" sty=
-le=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Zhang =
-Chen &lt;<a href=3D"mailto:zhangckid@gmail.com" target=3D"_blank" rel=3D"no=
-referrer">zhangckid@gmail.com</a>&gt; writes:<br>
-<br>
-&gt; On Tue, Jul 21, 2026 at 8:33=E2=80=AFPM Markus Armbruster &lt;<a href=
-=3D"mailto:armbru@redhat.com" target=3D"_blank" rel=3D"noreferrer">armbru@r=
-edhat.com</a>&gt; wrote:<br>
-&gt;&gt;<br>
-&gt;&gt; Zhang Chen &lt;<a href=3D"mailto:zhangckid@gmail.com" target=3D"_b=
-lank" rel=3D"noreferrer">zhangckid@gmail.com</a>&gt; writes:<br>
-&gt;&gt;<br>
-&gt;&gt; &gt; Based on monitor QOM path tracking iothread users with holder=
-.<br>
-&gt;&gt; &gt; Introduce the AioContext in the Monitor struct to avoid repea=
-ted calls to<br>
-&gt;&gt; &gt; iothread_get_aio_context() and ensure symmetrical ref/unref d=
-uring<br>
-&gt;&gt; &gt; monitor lifecycle.<br>
-&gt;&gt; &gt;<br>
-&gt;&gt; &gt; Signed-off-by: Zhang Chen &lt;<a href=3D"mailto:zhangckid@gma=
-il.com" target=3D"_blank" rel=3D"noreferrer">zhangckid@gmail.com</a>&gt;<br=
->
-&gt;&gt;<br>
-&gt;&gt; Why are repeated calls bad?<br>
-&gt;&gt;<br>
-&gt;&gt; How would symmetry be lost?<br>
-&gt;&gt;<br>
-&gt;<br>
-&gt; OK, will add detailed comments like this in the next version:<br>
-&gt;<br>
-&gt; Avoid repeated calls: Under the holder tracking model, fetching the<br=
->
-&gt; AioContext increments the IOThread refcount and registers holder metad=
-ata.<br>
-&gt; Dynamically querying it in helper functions (e.g., suspend, BH schedul=
-ing)<br>
-&gt; leads to redundant refcount churn.<br>
-<br>
-Right here, we still have<br>
-<br>
-=C2=A0 =C2=A0 AioContext *iothread_get_aio_context(IOThread *iothread)<br>
-=C2=A0 =C2=A0 {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 return iothread-&gt;ctx;<br>
-=C2=A0 =C2=A0 }<br>
-<br>
-and complicating code to avoid additional calls feels dubious.<br>
-<br>
-PATCH 14 changes it to<br>
-<br>
-=C2=A0 =C2=A0 AioContext *iothread_get_aio_context(IOThread *iothread,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0co=
-nst IOThreadHolder *holder)<br>
-=C2=A0 =C2=A0 {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Add IOThreadHolder to the list */<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 iothread_ref(iothread, holder);<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 return iothread-&gt;ctx;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-Are you making this change in preparation of PATCH 14?<br></blockquote></di=
-v></div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div dir=3D=
-"auto">Yes, following Stefan&#39;s earlier suggestion allows for lifecycle =
-management to be completed with minimal disruption.</div><div dir=3D"auto">=
-<br></div><div dir=3D"auto">Thanks</div><div dir=3D"auto">Chen</div><div di=
-r=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quot=
-e_container"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;b=
-order-left:1px #ccc solid;padding-left:1ex">
-<br>
-&gt; Ensure lifecycle symmetry: Storing AioContext in mon-&gt;ctx establish=
-es a<br>
-&gt; strict 1-to-1 lifecycle pairing: a single iothread_ref_and_get_aio_con=
-text()<br>
-&gt; in monitor_complete() matched by a single iothread_put_aio_context()<b=
-r>
-&gt; in monitor_cleanup().<br>
-&gt;<br>
-&gt; Thanks<br>
-&gt; Chen<br>
-<br>
-</blockquote></div></div></div>
-
---00000000000012b73b0657eb454a--
+thanks
+-- PMM
 
