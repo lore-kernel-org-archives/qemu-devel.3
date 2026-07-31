@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDB68C5516F
-	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 18:47:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30F60C5516F
+	for <qemu-devel@archiver.kernel.org>; Fri, 31 Jul 2026 18:47:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpsGC-0003wF-0h; Fri, 31 Jul 2026 14:47:08 -0400
+	id 1wpsGJ-0003y3-MJ; Fri, 31 Jul 2026 14:47:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
- id 1wpsFz-0003vS-K1
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 14:46:56 -0400
+ id 1wpsG5-0003w6-EJ
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 14:47:02 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wpsFx-0000ke-Sc
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 14:46:55 -0400
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wpsG3-0000lB-SK
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 14:47:01 -0400
 Received: from laptop.localdomain (unknown [86.121.140.206])
- by linux.microsoft.com (Postfix) with ESMTPSA id 1EE5E20B7168;
- Fri, 31 Jul 2026 11:46:32 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 1EE5E20B7168
+ by linux.microsoft.com (Postfix) with ESMTPSA id 97A6820B7166;
+ Fri, 31 Jul 2026 11:46:38 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 97A6820B7166
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1785523594;
- bh=zX5yTOow2rpg7OVRkUI8/A9eA3aPrnOgzFBXmaniZmI=;
+ s=default; t=1785523600;
+ bh=5+UQpHggV+ssrmgk4pMyPIETP+XYPgitYa5UPuD2ZXs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=dd9edWlD9hRcApwvTGoyyrMFYzuhwHGEf45b6O4Xhz9tdc4uW1kXwvihpWVLDwoDI
- cgrHjpxT4YDUIODwgcsLMenYAOR2JmcjAXP22+VKbPx5T3p+C/79A+TQihO+mbrfvr
- ee7YNQJ1vR88FSKaAzmIk47l4deayhM6cWYIVIWQ=
+ b=nFTkD8VePD7U+ImkVk1jLApKq/k7UACBdGXoYKtUslH43HcsWyyv7JrPU+NO8fr84
+ r6fkytJc+k9bD/PpsypdBIxxPr2tiMuRSXqwf1rkKS8QfRZY72KRnDYsxE981EYTAn
+ qneLOygOANbkIoK2xHeCvcheO691VJ429xvHfm+k=
 From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Wei Liu <liuwe@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
@@ -37,10 +37,9 @@ Cc: Wei Liu <liuwe@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
  =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@microsoft.com>,
  =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PATCH v2 1/4] include/hw/hyperv: add ABI for exception intercepts
- and pending events
-Date: Fri, 31 Jul 2026 21:46:39 +0300
-Message-ID: <20260731184643.89604-2-dblanzeanu@linux.microsoft.com>
+Subject: [PATCH v2 3/4] target/i386/mshv: support single-stepping
+Date: Fri, 31 Jul 2026 21:46:41 +0300
+Message-ID: <20260731184643.89604-4-dblanzeanu@linux.microsoft.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260731184643.89604-1-dblanzeanu@linux.microsoft.com>
 References: <20260731184643.89604-1-dblanzeanu@linux.microsoft.com>
@@ -70,117 +69,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Import the hypervisor definitions needed to intercept guest exceptions
-and to inject events back into a guest, in preparation for gdbstub
-debugging support in the MSHV accelerator.
-
-Add:
-  - union hv_intercept_parameters, struct hv_input_install_intercept and
-    HVCALL_INSTALL_INTERCEPT, used to install an exception intercept on
-    the partition;
-  - struct hv_x64_exception_intercept_message, the message delivered on
-    an intercepted exception, carrying the faulting RIP, the exception
-    vector and the instruction bytes;
-  - HV_X64_PENDING_EVENT_EXCEPTION, the pending-event type for an
-    exception.
-
-These definitions mirror the hypervisor headers and have no functional
-effect on their own.
+Single-step by toggling RFLAGS.TF around the vCPU run, as WHPX does.
+TF is set only on the live register, never in env->eflags, so it is not read
+back and re-applied by a later register store.
+The resulting #DB is reported to gdb by mshv_handle_debug() whenever the vCPU
+is single-stepping.
 
 Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
 Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- include/hw/hyperv/hvgdk_mini.h | 56 ++++++++++++++++++++++++++++++++++
- 1 file changed, 56 insertions(+)
+ target/i386/mshv/mshv-cpu.c | 50 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
 
-diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
-index f8838a31bb..c81928d0c2 100644
---- a/include/hw/hyperv/hvgdk_mini.h
-+++ b/include/hw/hyperv/hvgdk_mini.h
-@@ -22,6 +22,9 @@
- #define HV_X64_MSR_TSC_FREQUENCY    0x40000022
- #define HV_X64_MSR_APIC_FREQUENCY   0x40000023
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index b15776b9bd..af4f90385e 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -2000,17 +2000,67 @@ static int handle_exception_interrupt(CPUState *cpu,
+     return 0;
+ }
  
-+/* event_type values for hv_x64_pending_exception_event */
-+#define HV_X64_PENDING_EVENT_EXCEPTION 0
++/*
++ * Flip RFLAGS.TF like WHPX. Set it only on the live register, not env->eflags,
++ * so a later store won't put it back.
++ */
++static int arch_set_single_step(CPUState *cpu, bool enable)
++{
++    X86CPU *x86cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86cpu->env;
++    hv_register_assoc assoc = { .name = HV_X64_REGISTER_RFLAGS };
++    uint64_t rflags;
++    int ret;
 +
- typedef enum hv_register_name {
-     /* Pending Interruption Register */
-     HV_REGISTER_PENDING_INTERRUPTION = 0x00010002,
-@@ -236,6 +239,29 @@ enum hv_intercept_type {
-     HV_INTERCEPT_TYPE_INVALID               = 0XFFFFFFFF,
- };
++    if (env->regs_page && env->regs_page->isvalid != 0) {
++        rflags = env->regs_page->rflags;
++        rflags = enable ? (rflags | TF_MASK) : (rflags & ~TF_MASK);
++        env->regs_page->rflags = rflags;
++        env->regs_page->dirty |= (1u << HV_X64_REGISTER_CLASS_FLAGS);
++        return 0;
++    }
++
++    ret = mshv_get_generic_regs(cpu, &assoc, 1);
++    if (ret < 0) {
++        return ret;
++    }
++    rflags = assoc.value.reg64;
++    rflags = enable ? (rflags | TF_MASK) : (rflags & ~TF_MASK);
++    assoc.value.reg64 = rflags;
++    return mshv_set_generic_regs(cpu, &assoc, 1);
++}
++
+ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
+ {
+     int ret;
+     enum MshvVmExit exit_reason;
+     int cpu_fd = mshv_vcpufd(cpu);
++    bool single_step;
++
++    /* enable single stepping by flipping RFLAGS.TF */
++    single_step = cpu_single_stepping(cpu);
++    if (single_step) {
++        ret = arch_set_single_step(cpu, true);
++        if (ret < 0) {
++            error_report("Failed to arm single-step (TF) on vcpu %d: %s",
++                         cpu->cpu_index, strerror(-ret));
++            *exit = MshvVmExitShutdown;
++            return -1;
++        }
++    }
  
-+union hv_intercept_parameters {
-+    /* HV_INTERCEPT_PARAMETERS is defined to be an 8-byte field. */
-+    uint64_t as_uint64;
-+    /* HV_INTERCEPT_TYPE_X64_IO_PORT */
-+    uint16_t io_port;
-+    /* HV_INTERCEPT_TYPE_X64_CPUID */
-+    uint32_t cpuid_index;
-+    /* HV_INTERCEPT_TYPE_X64_APIC_WRITE */
-+    uint32_t apic_write_mask;
-+    /* HV_INTERCEPT_TYPE_EXCEPTION */
-+    uint16_t exception_vector;
-+    /* HV_INTERCEPT_TYPE_X64_MSR_INDEX */
-+    uint32_t msr_index;
-+    /* N.B. Other intercept types do not have any parameters. */
-+};
-+
-+struct hv_input_install_intercept {
-+    uint64_t partition_id;
-+    uint32_t access_type; /* mask */
-+    uint32_t intercept_type; /* enum hv_intercept_type */
-+    union hv_intercept_parameters intercept_parameter;
-+} QEMU_PACKED;
-+
- struct hv_u128 {
-     uint64_t low_part;
-     uint64_t high_part;
-@@ -836,6 +862,35 @@ struct hv_x64_memory_intercept_message {
-     uint8_t instruction_bytes[16];
- } QEMU_PACKED;
+     ret = ioctl(cpu_fd, MSHV_RUN_VP, msg);
+     if (ret < 0) {
+         return MshvVmExitShutdown;
+     }
  
-+struct hv_x64_exception_intercept_message {
-+    struct hv_x64_intercept_message_header header;
-+    uint16_t exception_vector;
-+    uint8_t exception_info;
-+    uint8_t instruction_byte_count;
-+    uint32_t error_code;
-+    uint64_t exception_parameter; /* DR6 for #DB, CR2 for #PF */
-+    uint64_t reserved;
-+    uint8_t instruction_bytes[16];
-+    struct hv_x64_segment_register ds_segment;
-+    struct hv_x64_segment_register ss_segment;
-+    uint64_t rax;
-+    uint64_t rcx;
-+    uint64_t rdx;
-+    uint64_t rbx;
-+    uint64_t rsp;
-+    uint64_t rbp;
-+    uint64_t rsi;
-+    uint64_t rdi;
-+    uint64_t r8;
-+    uint64_t r9;
-+    uint64_t r10;
-+    uint64_t r11;
-+    uint64_t r12;
-+    uint64_t r13;
-+    uint64_t r14;
-+    uint64_t r15;
-+} QEMU_PACKED;
++    /* disable single stepping by flipping RFLAGS.TF */
++    if (single_step && arch_set_single_step(cpu, false) < 0) {
++        error_report("Failed to clear single-step (TF) on vcpu %d",
++                     cpu->cpu_index);
++        return -1;
++    }
 +
- union hv_message_flags {
-     uint8_t asu8;
-     struct {
-@@ -943,6 +998,7 @@ struct hv_cpuid {
- 
- #define HVCALL_GET_PARTITION_PROPERTY    0x0044
- #define HVCALL_SET_PARTITION_PROPERTY    0x0045
-+#define HVCALL_INSTALL_INTERCEPT         0x004d
- #define HVCALL_GET_VP_REGISTERS          0x0050
- #define HVCALL_SET_VP_REGISTERS          0x0051
- #define HVCALL_TRANSLATE_VIRTUAL_ADDRESS 0x0052
+     switch (msg->header.message_type) {
+     case HVMSG_UNRECOVERABLE_EXCEPTION:
+         return MshvVmExitShutdown;
 -- 
 2.53.0
 
