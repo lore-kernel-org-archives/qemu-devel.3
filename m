@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04B41C54FCD
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Aug 2026 07:13:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1270C54FCD
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Aug 2026 07:35:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wq3tZ-0001eX-P5; Sat, 01 Aug 2026 03:12:34 -0400
+	id 1wq4Er-0004KF-15; Sat, 01 Aug 2026 03:34:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wq3tX-0001eP-QB
- for qemu-devel@nongnu.org; Sat, 01 Aug 2026 03:12:31 -0400
+ id 1wq4En-0004Jp-LO
+ for qemu-devel@nongnu.org; Sat, 01 Aug 2026 03:34:29 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wq3tU-0007Hh-GT
- for qemu-devel@nongnu.org; Sat, 01 Aug 2026 03:12:31 -0400
+ id 1wq4Ei-0001EU-TY
+ for qemu-devel@nongnu.org; Sat, 01 Aug 2026 03:34:29 -0400
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6717CMV8037362
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6717YFpJ045046
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 1 Aug 2026 16:12:22 +0900 (JST)
+ Sat, 1 Aug 2026 16:34:16 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=p1ZJBzQRwpo56oYxUfoSQb8+xU0eNE7zf1z8W6dA3Fc=; 
+DKIM-Signature: a=rsa-sha256; bh=Uredlk/Lh8RFePPbyh2ZPEpQZ+ZkibYcYDsvWnfaNTY=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1785568342; v=1;
- b=HOwU8xWAsACXyzLXS1+mWb8RlPudye7hffrzHgj3wvgPmPd0MIkPIjjc7UVuBli2
- olcR0Wv7zzpdhOp6JpL4wJHCY3XPL0x/Je21EIJD5/kKi8VaPppLtyi601W0L1nc
- xJDIIcbBwg6LZNHUl+eh6V2VDnm+IxuTQrOJpfeI9D74YwH7c7CDCP0JTn7MyAJo
- GkPa0iwLSOI9CWzvyjIcHvFFjO1TlevPCd8LxiDHVgLZMg563ZaHdqIxY4HZf2rH
- SJg1d7bVL+yQpD3slbWYmhITq3Qo6w9xvWlpCxm1vpStvIY8TACpsZifNF5O3pLS
- h1+nOYDvz1ZaNG9s//CJYA==
-Message-ID: <11151483-95e4-4e82-8664-5f61f4bf2cb6@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 1 Aug 2026 16:12:21 +0900
+ s=rs20250326; t=1785569656; v=1;
+ b=EQvSK8fEYnUXTPIH2RTqLqr7wAma866Xt7nL03TuVje1dcG8FiqH+qHiWza8YTUL
+ jsD7NVeVtZslWwv/HCgNL1Nkpgu9ROTEFnT4xfTUS3oGJ5Aq7fQwq0VxdBi7dnRG
+ 7Djv8GNnImqAgdpzjKV7dIosB9TTUt1IkCNrWtLUTem0TgME/TMUNsW5ft44kyRo
+ tCjk/dZffL05oa2kHm+AV8d9xe2X49/GzNupJ0rjHMlsy2e+H1X343KOqZGXFOTp
+ StwUOXgTgn3LbkxjrsZOV2X7LZiBKSWiKRRfJrNtnVihOm7u7QSip2IQKhliFUlP
+ c9w8hhnA8qSD8Cp9oJGU3Q==
+Message-ID: <48bdaf93-70a0-4a0d-bc5d-3aeb1e603806@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sat, 1 Aug 2026 16:34:15 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] virtio-gpu: reject requests with short/truncated
- control headers
-To: Ankur Saini <ankur98saini@gmail.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-References: <20260729-virtio-gpu-short-header-v2-1-18036a97219a@gmail.com>
- <fca5a423-cba9-452f-86f5-c382524b7087@rsg.ci.i.u-tokyo.ac.jp>
- <CAE+rwOMBiusrWqbWFgA6Tqxi1pvE4KWEcJkmmw3+0RUYHNiGaQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/display/virtio-gpu: validate blob iov size in
+ create_blob
+To: Thomas Huth <thuth@redhat.com>, marcandre.lureau@redhat.com,
+ qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+References: <20260724035712.856636-1-marcandre.lureau@redhat.com>
+ <bfcab7d8-c7ae-4c2a-be79-6bdc5c8faaf7@rsg.ci.i.u-tokyo.ac.jp>
+ <b0733bce-3902-47a1-a617-5f4aeda06fbe@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <CAE+rwOMBiusrWqbWFgA6Tqxi1pvE4KWEcJkmmw3+0RUYHNiGaQ@mail.gmail.com>
+In-Reply-To: <b0733bce-3902-47a1-a617-5f4aeda06fbe@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -79,157 +78,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/29 16:28, Ankur Saini wrote:
-> Thanks. Just to clarify, the vhost-user-gpu check was already there and 
-> compares the return value of iov_to_buf(), not iov_size(). != and < 
-> should be equivalent for vhost-user-gpu check so I left it unchanged.
+On 2026/07/30 0:19, Thomas Huth wrote:
+> On 24/07/2026 08.26, Akihiko Odaki wrote:
+>> On 2026/07/24 12:57, marcandre.lureau@redhat.com wrote:
+>>> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>>
+>>> virtio_gpu_resource_create_blob() stores the guest-controlled blob_size
+>>> without checking it against the total size of the iov backing entries.
+>>> Since both values are independently guest-controlled, a malicious guest
+>>> can set blob_size much larger than the actual iov backing. Subsequent
+>>> SET_SCANOUT_BLOB checks bounds against the inflated blob_size, allowing
+>>> a pixman surface to be created over the undersized buffer. Any display
+>>> refresh then reads past the actual allocation, potentially crashing
+>>> QEMU or leaking host memory contents depending on the backing type.
+>>>
+>>> Reject the resource early when the iov backing is smaller than the
+>>> declared blob_size.
+>>
+>> The same invariant also needs to be enforced when backing is supplied
+>> by VIRTIO_GPU_CMD_RESOURCE_ATTACH_BACKING and when blob migration state
+>> is loaded. Otherwise, newly attached backing or state received from an
+>> older source can bypass this fix.
+>>
+>> The check cannot be unconditional at resource creation, however. The
+>> specification permits nr_entries == 0 so that backing can be attached
+>> later for swap-in/swap-out. As written, this patch rejects that valid
+>> request:
+>>
+>>  > To facilitate drivers that support swap-in and swap-out, nr_entries
+>>  > may be zero and VIRTIO_GPU_CMD_RESOURCE_ATTACH_BACKING may be
+>>  > subsequently used. VIRTIO_GPU_CMD_RESOURCE_DETACH_BACKING may be
+>>  > used to unassign memory entries.
+>>
+>> https://docs.oasis-open.org/virtio/virtio/v1.3/virtio- 
+>> v1.3.html#x1-4120008
+> 
+> The patch that is proposed in https://gitlab.com/qemu-project/qemu/-/ 
+> work_items/4112 also checks for res->iov_cnt > 0 ... would that fix your 
+> concerns?
 
-The fact that the checks compare different values made me look at how 
-virtio-gpu copies commands.
-
-For commands with type-specific fields, processing copies the request
-in two stages:
-
-1. Copy the common header to determine the command type.
-2. Copy the complete type-specific command.
-
-vhost-user-gpu open-codes the first step in vg_handle_ctrl() and uses 
-VUGPU_FILL_CMD() for the second. virtio-gpu uses VIRTIO_GPU_FILL_CMD() 
-for both steps.
-
-Both fill macros already detect a short copy, but only log and return. 
-They should instead complete the malformed request with 
-ERR_INVALID_PARAMETER. For a common-header copy, the partially copied 
-header must also be cleared before forming the response.
-
-Once VIRTIO_GPU_FILL_CMD() handles this failure, the new check in 
-virtio_gpu_process_cmdq() will be unnecessary because the macro covers 
-the first step. Fixing both macros will also reject truncated 
-type-specific commands.
+Yes, it would. Marc-André has since sent v3, which addresses my
+concerns.
 
 Regards,
 Akihiko Odaki
 
 > 
-> The new virtio-gpu check looks at the total iov size, which can be 
-> larger than the header for valid commands, so it needs to use <. Would 
-> you still prefer changing the vhost-user-gpu condition to < for consistency?
+>   Thomas
 > 
-> Regards,
-> Ankur Saini
 > 
-> On Wed, Jul 29, 2026 at 9:31 AM Akihiko Odaki <odaki@rsg.ci.i.u- 
-> tokyo.ac.jp <mailto:odaki@rsg.ci.i.u-tokyo.ac.jp>> wrote:
 > 
->     On 2026/07/29 5:44, Ankur Saini wrote:
->      > A control request shorter than virtio_gpu_ctrl_hdr can leave cmd_hdr
->      > partially initialized. If the supplied bytes set the fence flag,
->     stale
->      > fence metadata may later be returned to the guest.
->      >
->      > The vhost-user-gpu backend has the same issue: it logs a short header
->      > copy but continues to process the partially initialized command.
->      >
->      > Validate the common header length before dispatch in both paths.
->     Clear
->      > cmd_hdr and complete malformed requests with ERR_INVALID_PARAMETER so
->      > stale fields cannot reach the response.
-> 
->     vhost-user-gpu and virtio-gpu has slightly different conditions:
-> 
->     - vhost-user-gpu rejects: iov_size() != sizeof(cmd->cmd_hdr)
->     - virtio-gpu rejects: iov_size() < sizeof(cmd->cmd_hdr)
-> 
->     Ideally they should be consistent.
-> 
->     Regards,
->     Akihiko Odaki
-> 
->      >
->      > Fixes: CVE-2026-18054
->      > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4094
->     <https://gitlab.com/qemu-project/qemu/-/work_items/4094>
->      > Reported-by: Ankur Saini <ankur98saini@gmail.com
->     <mailto:ankur98saini@gmail.com>>
->      > Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp
->     <mailto:odaki@rsg.ci.i.u-tokyo.ac.jp>>
->      > Signed-off-by: Ankur Saini <ankur98saini@gmail.com
->     <mailto:ankur98saini@gmail.com>>
->      > ---
->      > Changes in v2:
->      > - Also reject short/truncated control headers in vhost-user-gpu.
->      > - Expand the commit message to describe both affected paths.
->      > - Link to v1: https://lore.kernel.org/qemu-devel/20260728-virtio-
->     gpu-short-header-v1-1-af19a00b100d@gmail.com <https://
->     lore.kernel.org/qemu-devel/20260728-virtio-gpu-short-header-v1-1-
->     af19a00b100d@gmail.com>
->      > ---
->      >   contrib/vhost-user-gpu/vhost-user-gpu.c | 21 ++++++++++++---------
->      >   hw/display/virtio-gpu.c                 | 10 ++++++++--
->      >   2 files changed, 20 insertions(+), 11 deletions(-)
->      >
->      > diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/
->     vhost-user-gpu/vhost-user-gpu.c
->      > index bb41758e34..8149834745 100644
->      > --- a/contrib/vhost-user-gpu/vhost-user-gpu.c
->      > +++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
->      > @@ -924,16 +924,19 @@ vg_handle_ctrl(VuDev *dev, int qidx)
->      >           if (len != sizeof(cmd->cmd_hdr)) {
->      >               g_warning("%s: command size incorrect %zu vs %zu\n",
->      >                         __func__, len, sizeof(cmd->cmd_hdr));
->      > -        }
->      > -
->      > -        virtio_gpu_ctrl_hdr_bswap(&cmd->cmd_hdr);
->      > -        g_debug("%d %s\n", cmd->cmd_hdr.type,
->      > -                vg_cmd_to_string(cmd->cmd_hdr.type));
->      > -
->      > -        if (vg->virgl) {
->      > -            vg_virgl_process_cmd(vg, cmd);
->      > +            memset(&cmd->cmd_hdr, 0, sizeof(cmd->cmd_hdr));
->      > +            vg_ctrl_response_nodata(
->      > +                vg, cmd, VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER);
->      >           } else {
->      > -            vg_process_cmd(vg, cmd);
->      > +            virtio_gpu_ctrl_hdr_bswap(&cmd->cmd_hdr);
->      > +            g_debug("%d %s\n", cmd->cmd_hdr.type,
->      > +                    vg_cmd_to_string(cmd->cmd_hdr.type));
->      > +
->      > +            if (vg->virgl) {
->      > +                vg_virgl_process_cmd(vg, cmd);
->      > +            } else {
->      > +                vg_process_cmd(vg, cmd);
->      > +            }
->      >           }
->      >
->      >           if (cmd->state != VG_CMD_STATE_FINISHED) {
->      > diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
->      > index 4d46a4eb10..15a845eff6 100644
->      > --- a/hw/display/virtio-gpu.c
->      > +++ b/hw/display/virtio-gpu.c
->      > @@ -1105,8 +1105,14 @@ void virtio_gpu_process_cmdq(VirtIOGPU *g)
->      >               break;
->      >           }
->      >
->      > -        /* process command */
->      > -        vgc->process_cmd(g, cmd);
->      > +        if (unlikely(iov_size(cmd->elem.out_sg, cmd->elem.out_num) <
->      > +                     sizeof(cmd->cmd_hdr))) {
->      > +            memset(&cmd->cmd_hdr, 0, sizeof(cmd->cmd_hdr));
->      > +            virtio_gpu_ctrl_response_nodata(
->      > +                g, cmd, VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER);
->      > +        } else {
->      > +            vgc->process_cmd(g, cmd);
->      > +        }
->      >
->      >           /* command suspended */
->      >           if (!cmd->finished && !(cmd->cmd_hdr.flags &
->     VIRTIO_GPU_FLAG_FENCE)) {
->      >
->      > ---
->      > base-commit: 299e7557ed15a9a325620698add379a3ce2d1d95
->      > change-id: 20260728-virtio-gpu-short-header-476aa1dae4f7
->      >
->      > Best regards,
+>>
+>>>
+>>> Fixes: CVE-2026-66021
+>>> Fixes: e0933d91b1cd ("virtio-gpu: Add virtio_gpu_resource_create_blob")
+>>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3945
+>>> Reported-by: "sundayjiang(蒋浩天)" <sundayjiang@tencent.com>
+>>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>> ---
+>>>   hw/display/virtio-gpu.c | 10 ++++++++++
+>>>   1 file changed, 10 insertions(+)
+>>>
+>>> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+>>> index eac039c3c366..cc6dbd116618 100644
+>>> --- a/hw/display/virtio-gpu.c
+>>> +++ b/hw/display/virtio-gpu.c
+>>> @@ -372,6 +372,16 @@ static void 
+>>> virtio_gpu_resource_create_blob(VirtIOGPU *g,
+>>>           return;
+>>>       }
+>>> +    if (iov_size(res->iov, res->iov_cnt) < res->blob_size) {
+>>> +        qemu_log_mask(LOG_GUEST_ERROR,
+>>> +                      "%s: backing storage smaller than blob size\n",
+>>> +                      __func__);
+>>> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
+>>> +        virtio_gpu_cleanup_mapping(g, res);
+>>> +        g_free(res);
+>>> +        return;
+>>> +    }
+>>> +
+>>>       virtio_gpu_init_udmabuf(res);
+>>>       QTAILQ_INSERT_HEAD(&g->reslist, res, next);
+>>>   }
+>>
+>>
 > 
 
 
