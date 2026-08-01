@@ -4,62 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1468BC5516F
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Aug 2026 02:30:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62045C5516F
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Aug 2026 02:37:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpzTr-0008Mi-Qj; Fri, 31 Jul 2026 22:29:44 -0400
+	id 1wpzan-0000zi-JC; Fri, 31 Jul 2026 22:36:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wpzTm-0008Ma-DY
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 22:29:38 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wpzTj-0001SN-5T
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 22:29:38 -0400
-Received: from [192.168.10.145] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6712TO93001257
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 1 Aug 2026 11:29:25 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=4B6hNvTdU1xGQzzNg5XsAX9znigXoMQ1O4T3bnYPhKc=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1785551365; v=1;
- b=g33t1nDbWKRLToQQluKXGMaRJfp8sk0P/S3iFKkX4cHmf27jqzHBWHm/FKtbbnVK
- 4og+oFsS/UEndnPX0YOWvS9Cd1YKr9L5kN5+T+4xse3nSGSPGIE0b4j82ffqEKKz
- otSJg5Fg3FGTupAFwYQ5O2qZNXHTcB8pERJY5+jhoC8wlLxe/RA8ruGcIf5bBB+b
- SdfNGUHcAOG+ST3heGVWbTvOzUcGYsSFMVXb5NL7W3mQ9WjivUWY3G9LCDur7FuY
- JWH2ITSk5FMs0N3qaDlGCz3bUwssYCQLnSui4aGbpvRDsNzaj01o6PQLKsWk5WUO
- +m4mHWfLrqYH3E5Z1Obc9w==
-Message-ID: <54e7685b-f096-4bf4-a35b-52f6228454c4@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 1 Aug 2026 11:29:24 +0900
+ (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
+ id 1wpzal-0000zU-Q9
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 22:36:51 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
+ id 1wpzak-0002TY-1t
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 22:36:51 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-383cb94f742so1619845a91.3
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 19:36:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785551808; x=1786156608; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Uhmcq3yottUrqtH1+lqIIyV++HT1uJb3VqGZ8iCAfUA=;
+ b=hdAp0SH3Gvrsyfzmmhn3XLG4NwNCypfm9p8rEadjJcS0Z5YjZ4G5c2AstRlWO+dicX
+ WePGqMQ7upBAm63TuIF9bt+TfFa/EmcV5Z+QOC3V7dtEMkK6L54y+KkxFRF2XZgmxr1G
+ u4fJiE4CIjoifIypnfV8dOI3QUXnUaWm0i0NrTkhJpYoYf/F4HZk1NlVSsH0FoOKbcfT
+ O1XUAvntW0YP429+383WqDgrHIpSECUtIPwG3VbTYGsB5/f35sGpIcClx1UzfQlYPo/F
+ uG5NjD+ux4KGjo+tBtnqYlHHOQfQ0gAUFuiqjAc184DbofKEesKfFHWVqlcHvIDeWbOl
+ 6Gtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785551808; x=1786156608;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Uhmcq3yottUrqtH1+lqIIyV++HT1uJb3VqGZ8iCAfUA=;
+ b=Hs81u5lWA+e6gLu8uira0Xfp7m94wOPkk1yJ33mc+pmPzZp4ilWVYvJdK+B2fXaG4M
+ lgGK1Uwa/lUWaYb3V+1rGQTufpYZCduSqKaG/+vVHvma8JKg+is/w9o9iQdN1GmPlcVH
+ Llsvxljlz5qscpah3w14nOMk8FKvO9otym6D+DKhg2Bd68TqF19CYalvD4ofjugAnvFg
+ M0AoxYmXqkyLzrv36kayre2VgCBF5n6hl2fwfy2Z3jnvyC+QMwSdk4mAF22gBE/ExVQv
+ AIYmGbIR+4jgtMkUJGSnLivS/OkPH3CT0tEN3oDKXoLh++vuulV1nO08VrQBKMNSjCPv
+ g7og==
+X-Gm-Message-State: AOJu0YxS5RN2775pI+aFRbuB3sFaKx28TSaWcHeu1HuFCCaYsEFTkmJT
+ FY+DVsGHQh6S5GH5Beys3D2wpvuSp/KqOcZI2X3WJeqrrUb/HPsC0Wbogb0PNUDY
+X-Gm-Gg: AR+sD12LfywlUBH+FwwRjjJKS/9Y2qIfgmcoF5YdSTLDfLdZnwfQHnJ4+xfPQhuRhrV
+ 0FVQTxDetNaRAv2efQnzvNdp42Kj5zz7Wgqies80B5OsXNYXGlrJKU4nOPgm+1bZL6TYYIVIkSc
+ Z6uxZ3SHNGKajr0KtDnYYvFHPhJsqCFBUMn7JsBCU8R0J9L0kiW0SIeNECdN9g3Xjr5QE0E3bUS
+ pBRpp2eML3YnlBghA8bWd4cwiOWjD5XPwo8WY53MGKndPkc9S4bJdlAfLhCbsN1U8CPPbJ6Na21
+ xf+dsw+RZ/Yonk0aN1DOxFunYSRpDlwjT4KqV8cA6ewa2cE54uBNa74qcK/4TjOMd4f/GdtNGxX
+ S12st+yfzM5gOWFt23/93WVVC2YVIZsnPktbKSwUob9oBhjDRASYX/feRr//BXupncM/i5+qTrO
+ 1BHYHEsEThfNUTfAL+ks3iluYTpHxK1laCaYTKk9w2TSaDaMRnL3I7dGNmXwF4CzkQzz/2m8PVI
+ ozx1Ud9yCrMBPsbbMBqhzv6H017
+X-Received: by 2002:a17:90a:dfcb:b0:38f:5828:857e with SMTP id
+ 98e67ed59e1d1-38fbc493a09mr1835021a91.16.1785551807980; 
+ Fri, 31 Jul 2026 19:36:47 -0700 (PDT)
+Received: from setun ([223.228.61.127]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3153dd4e47dsm15678889eec.3.2026.07.31.19.36.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 31 Jul 2026 19:36:46 -0700 (PDT)
+From: Aadeshveer Singh <aadeshveer07@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com, farosas@suse.de, pbonzini@redhat.com, philmd@mailo.com,
+ lvivier@redhat.com, ayoub@saferwall.com, pierrick.bouvier@oss.qualcomm.com,
+ Aadeshveer Singh <aadeshveer07@gmail.com>
+Subject: [PATCH v4 00/11] migration: fast snapshot load
+Date: Sat,  1 Aug 2026 08:06:17 +0530
+Message-ID: <20260801023628.22665-1-aadeshveer07@gmail.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] virtio-gpu: use g_try_malloc to avoid guest-triggered
- abort
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: akihiko.odaki@gmail.com, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-References: <20260729071950.276303-1-marcandre.lureau@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260729071950.276303-1-marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=aadeshveer07@gmail.com; helo=mail-pj1-x102b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,256 +99,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/29 16:19, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> Use g_try_malloc/g_try_new0 for guest-controlled allocation, so failure
-> returns an error to the guest rather than crashing the host (glib
-> behaviour).
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3898
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
-> Based-on: <20260710134720.2317856-1-marcandre.lureau@redhat.com> ("[PATCH] vhost-user-gpu: fix integer overflow in buffer allocation")
-> v3:
->   - also try allocations for SG DMA mappings
-> ---
->   contrib/vhost-user-gpu/vhost-user-gpu.c | 25 +++++++++++------
->   contrib/vhost-user-gpu/virgl.c          |  6 ++++-
->   contrib/vhost-user-gpu/vugbm.c          |  5 +++-
->   hw/display/virtio-gpu-rutabaga.c        | 14 ++++++++--
->   hw/display/virtio-gpu-virgl.c           |  6 ++++-
->   hw/display/virtio-gpu.c                 | 36 +++++++++++++++++--------
->   6 files changed, 68 insertions(+), 24 deletions(-)
-> 
-> diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/vhost-user-gpu/vhost-user-gpu.c
-> index ee9858c397ce..0fd115300425 100644
-> --- a/contrib/vhost-user-gpu/vhost-user-gpu.c
-> +++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
-> @@ -487,7 +487,7 @@ vg_create_mapping_iov(VuGpu *g,
->                         struct virtio_gpu_ctrl_command *cmd,
->                         struct iovec **iov)
->   {
-> -    struct virtio_gpu_mem_entry *ents;
-> +    g_autofree struct virtio_gpu_mem_entry *ents = NULL;
->       size_t esize, s;
->       int i;
->   
-> @@ -498,17 +498,22 @@ vg_create_mapping_iov(VuGpu *g,
->       }
->   
->       esize = sizeof(*ents) * ab->nr_entries;
-> -    ents = g_malloc(esize);
-> +    ents = g_try_malloc(esize);
-> +    if (!ents && esize) {
-> +        return -1;
-> +    }
->       s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
->                      sizeof(*ab), ents, esize);
->       if (s != esize) {
->           g_critical("%s: command data size incorrect %zu vs %zu",
->                      __func__, s, esize);
-> -        g_free(ents);
->           return -1;
->       }
->   
-> -    *iov = g_new0(struct iovec, ab->nr_entries);
-> +    *iov = g_try_new0(struct iovec, ab->nr_entries);
-> +    if (!*iov && ab->nr_entries) {
-> +        return -1;
-> +    }
->       for (i = 0; i < ab->nr_entries; i++) {
->           uint64_t len = ents[i].length;
->           (*iov)[i].iov_len = ents[i].length;
-> @@ -517,12 +522,10 @@ vg_create_mapping_iov(VuGpu *g,
->               g_critical("%s: resource %d element %d",
->                          __func__, ab->resource_id, i);
->               g_free(*iov);
-> -            g_free(ents);
->               *iov = NULL;
->               return -1;
->           }
->       }
-> -    g_free(ents);
->       return 0;
->   }
->   
-> @@ -828,8 +831,14 @@ vg_resource_flush(VuGpu *g,
->                   PIXMAN_FORMAT_BPP(pixman_image_get_format(res->image)) / 8;
->               size_t size = width * height * bpp;
->   
-> -            void *p = g_malloc(VHOST_USER_GPU_HDR_SIZE +
-> -                               sizeof(VhostUserGpuUpdate) + size);
-> +            void *p = g_try_malloc(VHOST_USER_GPU_HDR_SIZE +
-> +                                   sizeof(VhostUserGpuUpdate) + size);
-> +            if (!p) {
-> +                pixman_region_fini(&region);
-> +                pixman_region_fini(&finalregion);
-> +                cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-> +                break;
-> +            }
->               VhostUserGpuMsg *msg = p;
->               msg->request = VHOST_USER_GPU_UPDATE;
->               msg->size = sizeof(VhostUserGpuUpdate) + size;
-> diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
-> index 550fd03bf5c4..20bae57d0fe4 100644
-> --- a/contrib/vhost-user-gpu/virgl.c
-> +++ b/contrib/vhost-user-gpu/virgl.c
-> @@ -209,7 +209,11 @@ virgl_cmd_submit_3d(VuGpu *g,
->           return;
->       }
->   
-> -    buf = g_malloc(cs.size);
-> +    buf = g_try_malloc(cs.size);
-> +    if (!buf && cs.size) {
-> +        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-> +        return;
-> +    }
->       s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
->                      sizeof(cs), buf, cs.size);
->       if (s != cs.size) {
-> diff --git a/contrib/vhost-user-gpu/vugbm.c b/contrib/vhost-user-gpu/vugbm.c
-> index 710d54529779..e2d8385fd857 100644
-> --- a/contrib/vhost-user-gpu/vugbm.c
-> +++ b/contrib/vhost-user-gpu/vugbm.c
-> @@ -13,7 +13,10 @@
->   static bool
->   mem_alloc_bo(struct vugbm_buffer *buf)
->   {
-> -    buf->mmap = g_malloc((uint64_t)buf->width * buf->height * 4);
-> +    buf->mmap = g_try_malloc((uint64_t)buf->width * buf->height * 4);
-> +    if (!buf->mmap && buf->width && buf->height) {
-> +        return false;
-> +    }
->       buf->stride = buf->width * 4;
->       return true;
->   }
-> diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-> index e28aad94eead..60f64d9a8fa7 100644
-> --- a/hw/display/virtio-gpu-rutabaga.c
-> +++ b/hw/display/virtio-gpu-rutabaga.c
-> @@ -360,10 +360,20 @@ rutabaga_cmd_submit_3d(VirtIOGPU *g,
->           return;
->       }
->   
-> -    buf = g_new0(uint8_t, cs.size);
-> +    buf = g_try_new0(uint8_t, cs.size);
-> +    if (!buf && cs.size) {
-> +        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-> +        return;
-> +    }
->       s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
->                      sizeof(cs), buf, cs.size);
-> -    CHECK(s == cs.size, cmd);
-> +    if (s != cs.size) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: size mismatch (%zu/%u)\n",
-> +                      __func__, s, cs.size);
-> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-> +        return;
-> +    }
->   
->       rutabaga_cmd.ctx_id = cs.hdr.ctx_id;
->       rutabaga_cmd.cmd = buf;
-> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-> index d9e5b0110497..028ab776df6a 100644
-> --- a/hw/display/virtio-gpu-virgl.c
-> +++ b/hw/display/virtio-gpu-virgl.c
-> @@ -615,7 +615,11 @@ static void virgl_cmd_submit_3d(VirtIOGPU *g,
->           return;
->       }
->   
-> -    buf = g_malloc(cs.size);
-> +    buf = g_try_malloc(cs.size);
-> +    if (!buf && cs.size) {
-> +        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-> +        return;
-> +    }
->       s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
->                      sizeof(cs), buf, cs.size);
->       if (s != cs.size) {
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index c707f1f516ea..6894d500fb36 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -882,7 +882,10 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
->       }
->   
->       esize = sizeof(*ents) * nr_entries;
-> -    ents = g_malloc(esize);
-> +    ents = g_try_malloc(esize);
-> +    if (!ents && esize) {
-> +        return -1;
-> +    }
->       s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
->                      offset, ents, esize);
->       if (s != esize) {
-> @@ -903,6 +906,7 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
->           hwaddr len;
->           void *map;
->   
-> +        /* TODO: a common DMA map SG helper */
->           do {
->               len = l;
->               map = dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, &len,
-> @@ -911,20 +915,23 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
->               if (!map) {
->                   qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map MMIO memory for"
->                                 " element %d\n", __func__, e);
-> -                virtio_gpu_cleanup_mapping_iov(g, *iov, v);
-> -                g_free(ents);
-> -                *iov = NULL;
-> -                if (addr) {
-> -                    g_free(*addr);
-> -                    *addr = NULL;
-> -                }
-> -                return -1;
-> +                goto err;
->               }
->   
->               if (!(v % 16)) {
-> -                *iov = g_renew(struct iovec, *iov, v + 16);
-> +                struct iovec *new_iov;
-> +                new_iov = g_try_renew(struct iovec, *iov, v + 16);
-> +                if (!new_iov) {
-> +                    goto err;
-> +                }
-> +                *iov = new_iov;
->                   if (addr) {
-> -                    *addr = g_renew(uint64_t, *addr, v + 16);
-> +                    uint64_t *new_addr;
-> +                    new_addr = g_try_renew(uint64_t, *addr, v + 16);
-> +                    if (!new_addr) {
-> +                        goto err;
-> +                    }
+This series implements a "fast snapshot load" mechanism to
+significantly reduce the perceived resume time of a VM from a snapshot
+file.
 
-The current range is mapped before either g_try_renew(). If growth 
-fails, the mapping has not been stored and v has not been incremented, 
-so err only unmaps earlier entries, leaving the current entry mapped.
+Currently, resuming a VM from a snapshot file requires loading all RAM
+pages into the QEMU instance before execution begins. This extension
+allows the user to run the VM nearly instantly by loading only the
+required device states up front and loading RAM pages lazily, by
+trapping access to pages that have not yet been loaded.
 
-> +                    *addr = new_addr;
->                   }
->               }
->               (*iov)[v].iov_base = map;
-> @@ -942,6 +949,13 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
->   
->       g_free(ents);
->       return 0;
-> +
-> +err:
-> +    virtio_gpu_cleanup_mapping_iov(g, *iov, v);
-> +    *iov = NULL;
-> +    g_clear_pointer(addr, g_free);
+Using the Linux userfaultfd syscall, a fault thread catches all page
+faults caused by the guest and loads in the pages required to keep
+the VM running. Concurrently, an eager background thread iteratively
+loads all remaining pages into RAM so the guest does not have to
+depend on the fault thread indefinitely.
 
-This unconditionally dereferences the optional addr argument.
+Much of code is reused from postcopy for fault handling and precopy
+for reading mapped ram file. Implementation revolves around two
+threads named the fault thread and eager load thread. Fault thread as
+name suggests catches page faults by the guest and serves them using
+userfaultfd. Postcopy fault thread is reused but instead of requesting
+source for a page it loads the page directly by reading from file. In
+order to remove the dependency of guest on fault thread indefinitely
+the eager load thread loads in the entire RAM sequentially, and after
+iterating through the entire RAM signals fault thread to exit and
+calls cleanup.
 
-Regards,
-Akihiko Odaki
+In order to prevent the case of a page being loaded twice(in the
+case when eager load thread is loading it and fault thread also
+tries to serve fault on same page) a bitmap called pending_bmap is
+used to track pages which are pending and not being loaded by any
+thread. Atomic operations on this bitmap allows coordination between
+threads to prevent any unwanted behaviours
 
-> +    g_free(ents);
-> +    return -1;
->   }
->   
->   void virtio_gpu_cleanup_mapping_iov(VirtIOGPU *g,
+This patch series was tested on a single machine:
+host OS   : Fedora 44
+host RAM  : 32GB DDR5(4KB pagesize)
+host CPU  : Intel Ultra9 185H(22 cores, x86_64)
+
+Guests tested:
+- KVM enabled
+  guest OS  : Fedora 44
+  guest RAM : 16GB(4KB pagesize)
+  guest CPU : 4 cores(x86_64)
+- emulated power PC
+  guest OS  : Debian 10
+  guest RAM : 2GB(64KB pagesize)
+  guest CPU : 2 cores(ppc)
+- host using 2MB hugepages
+  guest OS  : Debian 13
+  guest RAM : 16GB(16KB pagesize)
+  guest CPU : 4 cores(x86_64)
+
+Future direction:
+- Add support for multifd
+- Add support for vhost-user
+
+---
+v3 -> v4
+
+- Set errp in qemu_get_buffer_at on failing if file is in failure
+  state to ensure errp is set if a function returns failure
+- Update logic for postcopy_mapped_ram_load_page in patch 7 to support
+  all possibilities of guest and host pagesizes as pointed by Peter
+- This also improves on correctness by not relying on mapped ram
+  filling zeropages with zero values as pointed by Peter
+- Simplified postcopy_ram_eager_load_thread logic in patch 8 for exit
+  as suggested by Peter
+- Use a more generalized language in documentation overview as
+  suggested by Peter
+- Added a check against vhost user in case of fast snapshot load in
+  options.c(Patch 9) as suggested by Peter
+
+Aadeshveer Singh (11):
+  migration: Propagate error in postcopy setup functions
+  migration: Extract blocktime marking helper
+  migration: Rename postcopy_listen_thread_bh
+  migration: Use file_bmap for RAMBlock during incoming file load
+  migration: Make qemu_get_buffer_at() thread-safe
+  migration: add RAMBlock field and helper for fast snapshot load
+  migration: add support for fault thread to load pages from disk
+  migration: add eager load thread and setup for fast snapshot load
+  migration: update capability conflict test for postcopy-ram+mapped-ram
+  migration/tests: Add test for fast snapshot load
+  docs/migration: Add documentation for fast snapshot load feature
+
+ docs/devel/migration/fast-snapshot-load.rst |  82 +++++
+ docs/devel/migration/features.rst           |   1 +
+ include/qemu/notify.h                       |   2 +
+ include/system/ramblock.h                   |   6 +
+ migration/migration.c                       |  60 ++--
+ migration/migration.h                       |   5 +
+ migration/options.c                         |  20 +-
+ migration/postcopy-ram.c                    | 324 +++++++++++++++++---
+ migration/postcopy-ram.h                    |   8 +-
+ migration/qemu-file.c                       |  11 +-
+ migration/qemu-file.h                       |   4 +-
+ migration/ram.c                             |  94 +++++-
+ migration/savevm.c                          |  16 +
+ migration/savevm.h                          |   2 +
+ migration/trace-events                      |   2 +
+ tests/qtest/migration/file-tests.c          |  24 ++
+ tests/qtest/migration/misc-tests.c          |  52 ----
+ util/notify.c                               |   5 +
+ 18 files changed, 575 insertions(+), 143 deletions(-)
+ create mode 100644 docs/devel/migration/fast-snapshot-load.rst
+
+-- 
+2.55.0
 
 
