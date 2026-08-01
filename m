@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C095CC55171
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Aug 2026 02:38:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7514CC55171
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Aug 2026 02:38:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpzc3-0002Ps-09; Fri, 31 Jul 2026 22:38:11 -0400
+	id 1wpzcP-0002oZ-5E; Fri, 31 Jul 2026 22:38:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wpzbv-0002GP-JN
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 22:38:04 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1wpzc5-0002TW-9I
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 22:38:20 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wpzbt-0002Yq-Jr
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 22:38:03 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2cc891373e0so17094425ad.2
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 19:38:01 -0700 (PDT)
+ id 1wpzc3-0002a3-KX
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 22:38:13 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-38e347638adso2033687a91.0
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 19:38:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785551880; x=1786156680; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1785551890; x=1786156690; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=XRnm5RmBx7iEg/dNO7tKTfWv8DxHd4baJ5mHfXaMt9I=;
- b=E4F7uzko+XAMFS8YaGudJx6FcpkJCDOtHKPXxmqZnkTDUJAgOgHajIm3yr2sLj8oG9
- 4JbPGOpFYphcVRphkdJ3ebC4ggTOEhNb0yibDS0rFKrtkui0l5/gTK8zrTDryyqC4RWZ
- WJ3KnU6brzJHLQFmyEC55kU7024pH843ft4iFHrtSBhJPGFY2WDAhVXzwwE7ezYSLEPx
- pnuk5cmUAJEExHBtfpVtEwUyee5bd+wMQVS2veV16ljwm/5EnEy/uMxEJhyEZHMcRRuF
- XERQ4WwVOsFgF+KijZikEle9AHN2QEuu8E1/Kiw7MeMedZnE14O76/LsHDVIEAiSgIqt
- bzvA==
+ bh=PNV42ycjQBrAbERsecIeez8mURVQ70RaMpJO6wcrDxo=;
+ b=bvjwdgxZpizVudt3oHPHledYX/2EvvawqxiP8yiLdJxuTVDlKa0bdPuYd4Sv4R0dRf
+ 1rlUB+/a3eNUemmmBzDTQysUZ0SOpDMBMT76ZI96pWU2mgDVh0tYAEyZgLENwgJ3nBlm
+ 3WUAcwlnAPjnXI0Ltn1J05OW0JxAILd8aAi14xz9ZCP/AjTGvDuWWHBu9Lb8QJ6AAMz/
+ DrQ/+tcP7v5QWPLqpPUgIKdftNwP8gIxCMqd+Tvg7O5lnOqFFLfq+n79ABEUn4iB0Jko
+ HZ86yvyzOAxEfDHaHnBAQtGPsQI6m/PBV8GqWP5RJNtKSvgCz2iyDD70G4e0mGN5FYHF
+ v8Jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785551880; x=1786156680;
+ d=1e100.net; s=20251104; t=1785551890; x=1786156690;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=XRnm5RmBx7iEg/dNO7tKTfWv8DxHd4baJ5mHfXaMt9I=;
- b=Q5+dkVzAbvxxDAXWqHnOK2uSisv8SyVZRXJB7sW/k5doe1WftAt2db6R+63BBhlh7z
- cAk8Ot1bMBaNKAmS3HRGf8F4EUUEKmRj/uA/b/Tctv+VabmYX1QLWpnqCm6dQeYRTHHJ
- ebpZhETxywBkd9Ob3ghpKsVKkNJ/TB+lmWAk4o4TrrmRcPApGNH+OhHhma8a2xkkXRLJ
- Dg6vWzqx3KhIQ0LGKurB8u9wuFenquzuREJeG2t039DptCKD8q02O/9UKcQRvqJN8SNs
- 1sz3sywHs0dNtbiyRgOqKx8syfawMQHY09HR8hxgtEyaVyOeZqSh8vHmSxXm9PPxvumx
- kAfg==
-X-Gm-Message-State: AOJu0YzKwd1ungPe6gR2u6XiadxHcoCqz9LpuQZ9JLI1AFRyjPr9o6uE
- Z1ZXJU/sS1U3F6tbWGa8yQ/lR6Ccpwt0z0U12tomWccNPJMW727qDkHuk0wsUUxj
-X-Gm-Gg: AR+sD10oF/R2gqpPU6UZuxaZ6G83l5buHS9mtqNyFp+49NegeuE2L4FzW1snL0ElhXf
- cOKbdUx9wjGRrz/Gjn1N+xPUm2veaJS2qbFWg8Imtpk0xQ8fZZBs6x0W5F4gHiC8Lu92SUzGpjD
- 9Wp5QxxGW0mumVw8ajB9aVGtnWIH21gcjHdLIALisrTak2QzHsOlmHqXQhnHQDBC7Ak5PWPY+iN
- jPsZv8r5+eYe02WCEK98p6jwDDmhZOHO736nOmT1Hge7C8lp5pMunx6W6VMmmyuRHvlePXerZJa
- /PBH+J/odWm6OdLj7wSgOwzOM9hCQuW7cDdO7L40ngwoZLqZchVuTNXm7ORFmwkxm2k4/axFTLC
- gDUcxDxx1DzH+Qn2BJfo5XFUuXWG/kHTx+OjORsNoREIhlL7d2FdRgv29b79vRGjNjlZoqOgarD
- mt4Ir4WkqLADCuo3rEfx4YFrImH3ve48rA8pmwk6FTdfm0hbiB/P4XyyDY5zXMnY6ktmFXKN4Ty
- VbpMwjAarAPgAR/6Q==
-X-Received: by 2002:a05:6a21:1bc2:b0:3c3:abd4:ac74 with SMTP id
- adf61e73a8af0-3c92a8400eamr1916424637.39.1785551880301; 
- Fri, 31 Jul 2026 19:38:00 -0700 (PDT)
+ bh=PNV42ycjQBrAbERsecIeez8mURVQ70RaMpJO6wcrDxo=;
+ b=HipebkVA9y72SeC7NSshjbWnw7cLwMfTFlMrvbmmt+yz455nqb8cTYTsUsK1PzAWz/
+ tD7LgsKMmm3ebeDWfBffxYpp9sbWIeAuo4mCrFw6iXPrcW3CTvHhmCZ75KSxz+wduDhI
+ RrQpawxwEnADrdM/h+06rbZirTfbXevfdv7E6+L8kapii4Pud6n7FNUXCRh1Mblp9FA7
+ OCb+8HGjaW7ygtugOwxtXD6J+6A4uuhp8QhPjgObaQutGfWVkdyNRLWxxhmMbPi/453x
+ WuQgGqU6EAWJEuZ3hGiv9P54PZJ9jPWR8JJK3UE4TIRDep9NpBR5nx5jHV6PW/Lrm3U0
+ 4mgw==
+X-Gm-Message-State: AOJu0YzcdKk/ZVGq2hmYpOO7IWy15sPUOP5sqyJCCzE0a9bbP0FVyFie
+ W5AKP+EBFjb4YHLee4jqUlzjV9rWN1DAvZLvTUsNVrGuj/Tx6HXCeZ//Tnmvrw==
+X-Gm-Gg: AR+sD11qhNMrH0f/xdzuZgaXvAZO3Y+WWRPtgCebDjn8JlS3jTu4yHSi1fQYWwavOjl
+ ioZAePX081lyVb5J/Grn9Q+93ETeF2G49hKb01JMSFeGyrH3onHgf7rLWEVzArSImHx8Wku9IKH
+ jAKBuu4TmqhG3V/P0QENiEAznaHEVdDympy82xvMGJ17Mvv9h1V1cECs1PfCCkXW0TEZTbdxOxl
+ A5QVuU8CWH41Z4NcwgtQFk5rCfVXYkmKBEWpCvalT0cK/SVF2VAMZx46/qFDAAUaygLmkGsRuUz
+ 4V3RBPTMZb2xBYbFBhzB6jl5GRt3KVKfNr0zXkiLvQrN/1O9VNiog7NosRiAYPbJHlov9voYlgR
+ osmvBR63YtHQZtb5bMY8tpW9hAApL2kpNGbncVob3+puPSQskYCWiuZnkWOYwRjww/p05/iZtUc
+ B3Hn+CqQ7LC4rIUveI0YlK/z3hrC9sF0+iuF0nDeeqe0GAEYmTH6Nn5QK7tKkFfzaMZ+9i3OTap
+ ssUpfNefszKDuSS
+X-Received: by 2002:a17:90b:5403:b0:38d:b36e:9813 with SMTP id
+ 98e67ed59e1d1-38fbc434501mr1955779a91.11.1785551890293; 
+ Fri, 31 Jul 2026 19:38:10 -0700 (PDT)
 Received: from setun ([223.228.61.127]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3153dd4e47dsm15678889eec.3.2026.07.31.19.37.55
+ 5a478bee46e88-3153dd4e47dsm15678889eec.3.2026.07.31.19.38.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 Jul 2026 19:37:59 -0700 (PDT)
+ Fri, 31 Jul 2026 19:38:09 -0700 (PDT)
 From: Aadeshveer Singh <aadeshveer07@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, farosas@suse.de, pbonzini@redhat.com, philmd@mailo.com,
  lvivier@redhat.com, ayoub@saferwall.com, pierrick.bouvier@oss.qualcomm.com,
  Aadeshveer Singh <aadeshveer07@gmail.com>
-Subject: [PATCH v4 09/11] migration: update capability conflict test for
- postcopy-ram+mapped-ram
-Date: Sat,  1 Aug 2026 08:06:26 +0530
-Message-ID: <20260801023628.22665-10-aadeshveer07@gmail.com>
+Subject: [PATCH v4 11/11] docs/migration: Add documentation for fast snapshot
+ load feature
+Date: Sat,  1 Aug 2026 08:06:28 +0530
+Message-ID: <20260801023628.22665-12-aadeshveer07@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260801023628.22665-1-aadeshveer07@gmail.com>
 References: <20260801023628.22665-1-aadeshveer07@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=aadeshveer07@gmail.com; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=aadeshveer07@gmail.com; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,190 +103,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the test test_validate_caps_pair, which asserted postcopy-ram
-and mapped-ram capabilities cannot be active together. The new fast
-snapshot load feature is exactly this pair of capabilities active
-together, with the following patches in this series, this combination
-will now supported and be functional.
-
-Remove the capability check that rejected mapped-ram and postcopy-ram
-being set simultaneously, as this combination now corresponds to fast
-snapshot load.
-
-Add a capability check against setting multifd when configured for fast
-snapshot load as it is not supported yet. Also add capability check
-against setting postcopy-preempt as it is incompatible.
-
-Add infrastructure to check postcopy_notifier_list being empty in
-capaility checking to block vhost-user with fast snapshot load as it is
-not supported.
-
-A smoke test exercising this feature has been added further in this
-series.
+Add documenatation for fast snapshot load covering an overview, the
+architecture, usage and limitations.
 
 Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
 ---
- include/qemu/notify.h              |  2 ++
- migration/options.c                | 20 ++++++++++--
- migration/postcopy-ram.c           |  5 +++
- migration/postcopy-ram.h           |  1 +
- tests/qtest/migration/misc-tests.c | 52 ------------------------------
- util/notify.c                      |  5 +++
- 6 files changed, 31 insertions(+), 54 deletions(-)
+ docs/devel/migration/fast-snapshot-load.rst | 82 +++++++++++++++++++++
+ docs/devel/migration/features.rst           |  1 +
+ 2 files changed, 83 insertions(+)
+ create mode 100644 docs/devel/migration/fast-snapshot-load.rst
 
-diff --git a/include/qemu/notify.h b/include/qemu/notify.h
-index abf18dbf59..666d13f727 100644
---- a/include/qemu/notify.h
-+++ b/include/qemu/notify.h
-@@ -75,4 +75,6 @@ void notifier_with_return_remove(NotifierWithReturn *notifier);
- int notifier_with_return_list_notify(NotifierWithReturnList *list,
-                                      void *data, Error **errp);
- 
-+bool notifier_with_return_list_empty(NotifierWithReturnList *list);
+diff --git a/docs/devel/migration/fast-snapshot-load.rst b/docs/devel/migration/fast-snapshot-load.rst
+new file mode 100644
+index 0000000000..fe2361d6fe
+--- /dev/null
++++ b/docs/devel/migration/fast-snapshot-load.rst
+@@ -0,0 +1,82 @@
++==================
++Fast Snapshot Load
++==================
 +
- #endif
-diff --git a/migration/options.c b/migration/options.c
-index 5cbfd29099..4f8cc5fd6e 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -727,10 +727,26 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
-                        "Mapped-ram migration is incompatible with xbzrle");
-             return false;
-         }
-+    }
++Overview
++========
++Fast snapshot load is an extension of the postcopy migration feature
++to disk loads.
 +
-+    if (new_caps[MIGRATION_CAPABILITY_MAPPED_RAM] &&
-+        new_caps[MIGRATION_CAPABILITY_POSTCOPY_RAM]) {
-+        if (new_caps[MIGRATION_CAPABILITY_MULTIFD]) {
-+            error_setg(errp,
-+                       "Multifd is not supported with fast snapshot load");
-+            return false;
-+        }
++Unlike a usual snapshot load, which requires all VM data (RAM as well
++as device states) to be loaded into host RAM from the snapshot file
++for the guest to run, fast snapshot load uses postcopy infrastructure
++to load in only the required device states and allows RAM pages to
++be loaded after the guest starts execution. The idea is to start the
++guest and serve its page faults on the go, reducing the perceived
++resume time for large snapshots.
 +
-+        if (new_caps[MIGRATION_CAPABILITY_POSTCOPY_PREEMPT]) {
-+            error_setg(
-+                errp,
-+                "Postcopy Preempt is incompatible with fast snapshot load");
-+            return false;
-+        }
- 
--        if (new_caps[MIGRATION_CAPABILITY_POSTCOPY_RAM]) {
-+        if (!postcopy_notifier_list_empty()) {
-             error_setg(errp,
--                       "Mapped-ram migration is incompatible with postcopy");
-+                       "vhost-user is not supported with fast snapshot load");
-             return false;
-         }
-     }
-diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index 8bfe04523a..e01ac628f5 100644
---- a/migration/postcopy-ram.c
-+++ b/migration/postcopy-ram.c
-@@ -82,6 +82,11 @@ int postcopy_notify(enum PostcopyNotifyReason reason, Error **errp)
-                                             &pnd, errp);
- }
- 
-+bool postcopy_notifier_list_empty(void)
-+{
-+    return notifier_with_return_list_empty(&postcopy_notifier_list);
-+}
++Architecture
++============
++This feature combines postcopy migration and mapped-ram capabilities
++to load RAM pages on demand. It is done by catching guest faults using
++Linux ``userfaultfd`` and loading the page by calculating the offset
++of its location in the snapshot file using mapped-ram capabilities.
 +
- /*
-  * NOTE: this routine is not thread safe, we can't call it concurrently. But it
-  * should be good enough for migration's purposes.
-diff --git a/migration/postcopy-ram.h b/migration/postcopy-ram.h
-index c58a60bc8a..edba7b0240 100644
---- a/migration/postcopy-ram.h
-+++ b/migration/postcopy-ram.h
-@@ -136,6 +136,7 @@ void postcopy_add_notifier(NotifierWithReturn *nn);
- void postcopy_remove_notifier(NotifierWithReturn *n);
- /* Call the notifier list set by postcopy_add_start_notifier */
- int postcopy_notify(enum PostcopyNotifyReason reason, Error **errp);
-+bool postcopy_notifier_list_empty(void);
- 
- void postcopy_thread_create(MigrationIncomingState *mis,
-                             QemuThread *thread, const char *name,
-diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
-index ec6d438cdc..4e0deb7f18 100644
---- a/tests/qtest/migration/misc-tests.c
-+++ b/tests/qtest/migration/misc-tests.c
-@@ -201,55 +201,6 @@ static void do_test_validate_uri_channel(MigrateCommon *args)
-     migrate_end(from, to, false);
- }
- 
--static void validate_caps_pair(QTestState *from,
--                               const char *first_capability,
--                               const char *second_capability,
--                               const char *expected_error)
--{
--    QDict *rsp;
--    const char *error_desc;
--
--    migrate_set_capability(from, first_capability, true);
--
--    rsp = qtest_qmp_assert_failure_ref(
--        from,
--        "{ 'execute': 'migrate-set-capabilities',"
--        "  'arguments': { 'capabilities': [ { "
--        "      'capability': %s, 'state': true } ] } }",
--        second_capability);
--
--    error_desc = qdict_get_str(rsp, "desc");
--    g_assert_cmpstr(error_desc, ==, expected_error);
--    qobject_unref(rsp);
--
--    migrate_set_capability(from, first_capability, false);
--}
--
--static void test_validate_caps_pair(char *test_path, MigrateCommon *args)
--{
--    g_autofree char *serial_path = g_strconcat(tmpfs, "/src_serial", NULL);
--    g_autofree char *cap_pair = g_path_get_basename(test_path);
--    QTestState *from, *to;
--
--    args->start.hide_stderr = true;
--    args->start.only_source = true;
--
--    if (migrate_start(&from, &to, &args->start)) {
--        return;
--    }
--
--    if (g_str_equal(cap_pair, "mapped_ram_postcopy")) {
--        const char *error =
--            "Mapped-ram migration is incompatible with postcopy";
--
--        validate_caps_pair(from, "mapped-ram", "postcopy-ram", error);
--        validate_caps_pair(from, "postcopy-ram", "mapped-ram", error);
--    }
--
--    qtest_quit(from);
--    unlink(serial_path);
--}
--
- static void test_validate_uri_channels_both_set(char *name, MigrateCommon *args)
- {
-     args->uri = "tcp:127.0.0.1:0",
-@@ -309,7 +260,4 @@ void migration_test_add_misc(MigrationTestEnv *env)
-                        test_validate_uri_channels_both_set);
-     migration_test_add("/migration/validate_uri/channels/none_set",
-                        test_validate_uri_channels_none_set);
--    migration_test_add_suffix("/migration/validate_caps/",
--                              "mapped_ram_postcopy",
--                              test_validate_caps_pair);
- }
-diff --git a/util/notify.c b/util/notify.c
-index c6e158ffb3..8d2657e411 100644
---- a/util/notify.c
-+++ b/util/notify.c
-@@ -75,3 +75,8 @@ int notifier_with_return_list_notify(NotifierWithReturnList *list, void *data,
-     }
-     return ret;
- }
++Fault Thread
++------------
++The fault thread uses Linux ``userfaultfd`` to catch page faults caused
++by guest and directly load the page from the snapshot file. It is
++very similar to network postcopy fault thread, with primary difference
++being it loads pages directly by reading from the snapshot file.
 +
-+bool notifier_with_return_list_empty(NotifierWithReturnList *list)
-+{
-+    return QLIST_EMPTY(&list->notifiers);
-+}
++Eager Thread
++------------
++Eager thread iterates over all pages in RAM and loads each page not
++yet loaded by fault thread. It is required as unlike network postcopy
++where majority of RAM has already been loaded via precopy, here entire
++RAM is waiting to be loaded. If there is no eager loading thread each
++page will only be loaded when it is required by guest. In case there
++are some background pages that are never/rarely accessed by guest,
++the system will be locked in migration state indefinitely.
++
++Synchronization
++---------------
++In order to make sure both of these threads do not load the same page
++twice potentially overwriting and corrupting user RAM, a bitmap is
++used (``RAMBlock->pending_bmap``) which tracks the pages claimed to
++be loaded by threads. This prevents race condition when one thread
++is loading the page and other one tries to do the same.
++
++Usage
++=====
++
++Simply enable ``mapped-ram`` and ``postcopy-ram`` capabilities on
++the destination:
++
++.. code-block:: text
++
++    migrate_set_capability mapped-ram on
++    migrate_set_capability postcopy-ram on
++
++Use a ``file:`` URI for migration:
++
++.. code-block:: text
++
++    migrate_incoming file:/path/to/snapshot/file
++
++Limitations
++===========
++
++ - Multifd
++    Fast snapshot load is currently incompatible with ``multifd``
++    capability. While ``mapped-ram`` allows for parallel disk I/O,
++    coupling it with ``postcopy`` capability requires additional
++    infrastructure.
++
++ - Host OS support
++    Because this feautre essentially depends on ``userfaultfd``
++    to trap page faults, it is supported only on Linux hosts.
++
++ - vhost-user
++    Fast snapshot load does not currently support ``vhost-user``
++    backends.
+diff --git a/docs/devel/migration/features.rst b/docs/devel/migration/features.rst
+index 9aef79e7fa..23c2a93173 100644
+--- a/docs/devel/migration/features.rst
++++ b/docs/devel/migration/features.rst
+@@ -11,6 +11,7 @@ Migration has plenty of features to support different use cases.
+    vfio
+    virtio
+    mapped-ram
++   fast-snapshot-load
+    CPR
+    qpl-compression
+    uadk-compression
 -- 
 2.55.0
 
