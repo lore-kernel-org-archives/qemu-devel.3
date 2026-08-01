@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30D44C55171
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Aug 2026 02:38:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95D7EC5516F
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Aug 2026 02:38:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpzbj-0001cU-JH; Fri, 31 Jul 2026 22:37:51 -0400
+	id 1wpzbq-0001zc-NM; Fri, 31 Jul 2026 22:38:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wpzbh-0001Sk-8p
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 22:37:49 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ id 1wpzbm-0001sd-Bj
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 22:37:54 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wpzbf-0002XS-Cz
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 22:37:48 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-3810c5d691bso1502073a91.1
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 19:37:46 -0700 (PDT)
+ id 1wpzbk-0002Y5-5O
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 22:37:54 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2cace91f112so17975885ad.0
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 19:37:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785551865; x=1786156665; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1785551871; x=1786156671; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=5vvoJt7uuGazpbvBnQG9ExbIA/smYa698BGAb2WHfG0=;
- b=jmIvV6kpFeKoHuLidHmPFmxpXj2ifplumafOWkQ5y104oRO+6n7BzDJ+OC/xlyxLNS
- MJf4j+Xqape8WeZ9Hb6x6Aqnfk/10kiJuX5frVX+l8//3KOI6d9Jdzr9o0LesnlhPlh1
- 10w/zvlvTI6FOBqLKjxVVZLbbvTUCmf8ICxMJrcF9flilon4QPVmgTQnAEBQMgrx8hC9
- qvnBClV/s+f8cB14cgTwFhh1KNVYV2y9iULr9rvHtWwlWgdd9Hhqo7jxrtKTOrD+lwRP
- 7TQUaFs7Qo0HXzHJs6g4M0bpo2B2rqiZWpS40yEnD6HNno6wBWcc6NkpdO+UskkMA9Lf
- cVPg==
+ bh=V0OeYZjdGaY4S9lTtzE4pbuibV2LNEpD2FdO/1gBCT4=;
+ b=aYHzxCIQdtmBFnQJ4K2clyaMAPe6PT/Nmhln8LG7PmOrxfN2h9BPlcJlUAHg7tOc9T
+ QMeJDAju1ycDUphfeiEG8QfC49G+qHZzqmobb1IvqolE+mtFiI5C4T08oQv/9shYfnnS
+ kA+BFJEZRpr7RmGQBKVM8mOnEyylsEbj47n5/xhD1ga2E0oQbs6uGsbaRW0EyMpIAPOm
+ gjOkxrZuW33keLHefmVUvnOkLwUi5K/9l6Zw6KZRV94QyZpiua5E8vwJ7Zz6jWDnqE6g
+ wKbPmL8emvV/yGt5wbgTT94YXn3cxGr1CTobp+1rxWna0+T8yhqnWqn87PEoHs1WZ1zd
+ f/LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785551866; x=1786156666;
+ d=1e100.net; s=20251104; t=1785551871; x=1786156671;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=5vvoJt7uuGazpbvBnQG9ExbIA/smYa698BGAb2WHfG0=;
- b=s1+jbYkCs7ilQjpGHfFVEzMAJt0L6/0JHR2UJdpiIys+9eOMxziFZ8shidgGNrqfQQ
- syx04Uq6x9M2KrTeTRKam+RdIPTTz9KzPJ3UuEsl0AwOpCcpS772FNsJZhpr4lRFsRGj
- MCUzJh98t+r8odBWenag2kwHQrX87rp+AKzlVzqQU/o4v4HJEdGiIAwlE2bDIGa7pt13
- YTP+O+2Hr/I8m3Sy7DkxuX03epo62VqWkqWM+wwU+ibKXqKjZ+rRfUooSTj1V6k94KKA
- 5Vil3X8e7MibGGsPdC7Jjncyj+UuE9ChP57cCM9SNfexLOvh1mqUmEdSUwLb9+QKohCA
- PMVA==
-X-Gm-Message-State: AOJu0YxDhoPXMc3/77OmIJhp8f40D+2opxf6ZTViPHOkQvpIy9wdYqwU
- OayEw6xU1ukfHrYqfRxf3IR6ZkYVQGYiIiqHqEcj83Fyq6i4wfgYktmbKtt3b/iA
-X-Gm-Gg: AR+sD13IwEovjZfwZYU9a3JfNNTd9r/N5lF1vuiQvGeTsCWZKkWra/EoXgT/buf1P5n
- s2Y3lQ/oYahRggB56gkEP8hSLaLhO9r3JNUz5odDB4GJsJ9vQCNRdol3vtdyaDMAFDv9KAHJ/xw
- WO+JZdibfQhpIx6fNxZ6tp5+SidLOpJ/bKVQ6Ljp+bT7TR6GFTvfJONyuTP2KM7yInh51CYYPj5
- 5J/IqLxDBfXjgtWewOgVskasEN9cu+UjUCtlttXW+xD+uyCk9iQYO9WJhGz6nPz6hOOgL5foBVO
- ri71zww1TQU8YPXzv4/dq9KRdhIAErBB9uWVD5zT1OFfsWVUM6ScDGIUUu8mSwKLdMQLhCQp+Tz
- 8GDgrCfD0P3ZYrKpNL4XuJkP34NnWMWSvHeStrAXXmFw13PWKVNk4/nuMLB7UouOKI5fSiMUR3a
- Py+p+6F9z9MHarJ4vzGKocXfgBdEfDRDS30GhOC9GrBc1hkXINBo+aOupgZSw30WBkEA/KVn6gA
- 0mQo1AyHAdSHaag
-X-Received: by 2002:a17:90b:4b8f:b0:38e:2524:7272 with SMTP id
- 98e67ed59e1d1-38fbc56c8d6mr1714545a91.39.1785551865582; 
- Fri, 31 Jul 2026 19:37:45 -0700 (PDT)
+ bh=V0OeYZjdGaY4S9lTtzE4pbuibV2LNEpD2FdO/1gBCT4=;
+ b=DLEyZgo7qGvgDxzFrBmwbaQcgj7uefcQ1JidpDzG1AE/7WqVat7r9E3T0DDEGQXaGF
+ 4jmXkR8CYx3cmpLVphBWDTqG4RXhxurnMBRrtsDu+cWud8t0mIKi/dbovwu1BidXbwxH
+ YkpGHVrSCQZTqFmmUJrrr6ZEog14W4kZfp+g0bY49LWVoMkSuF/dvSWRQI/Y0zdgxTGJ
+ KiH3hpbLkZhDnp2Dmx7FVSaLHdvWIv1vCZyFc4I93B3eHVODJYEcbqifz8kap8nnAM+y
+ 8va3UnAX4obv6gUBwZo3sU9TV0cErFrdyS+9Pr79G4njn1UZ+15ak4prU8/c+2iqIV1/
+ PsZg==
+X-Gm-Message-State: AOJu0Yw6o4uunaMetmi5qodlwmVkuZYGDyuDO9Kb+oIhog51Y/Jk1n6P
+ oy7Yk7mN23VmtPWqDvEofSS+JvfQgWMHhkk2451wo5zsmYwDNhmvgoIChfjPRs2N
+X-Gm-Gg: AR+sD13neOmFQk3SAawnLqUxtIazdHS5m6p/LY3wwD+HmXMNpRoAIw1O0SicXzJJuqd
+ B8/xLMcD/HB7quNDlTh+a6mLFHWvJFMkl2NH8enqyaiQQmNXf6Mim1e9HenkZ7viNSSaMinJnYk
+ gUlJzCJ3deLyoLTyw/zXmLmiz97MPjkOE4TQ3edIpT4dk6pIQkKYFPSgIp+KNwud8cCIeqWq1Ko
+ 0Y4kCMG6Crxxg+ijhToidsi0FHAuAcnpeU6/afcpTFzjyLeNJ3YHkWRF+bNvXrm5+J3FM7fjpMi
+ /1+3xj0UrFV22wo7kDwbJQA8yUeqC7Pw+PMO8BftUmvml4nJm4t+kRk5Lyq0GuUOQ87PCSSDCSZ
+ 3HkGpzAhklUk+H3v88ar0/iv0QwkEe7T8RxDrcu+tHu6m4YSH/XetzeIZnVZHrEH/Fg1AS42gNT
+ iSCToSu9nhT/H4FWCsg1UERQpCFOLdWtviBYNkRerhXgHkpcZCrBL8VCLri6KxkA5nifryU3uSv
+ MCHQ8fPHW7txd2n
+X-Received: by 2002:a05:6a20:ae24:b0:3b3:1c7b:ff7 with SMTP id
+ adf61e73a8af0-3c92a83880cmr1867325637.46.1785551870503; 
+ Fri, 31 Jul 2026 19:37:50 -0700 (PDT)
 Received: from setun ([223.228.61.127]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3153dd4e47dsm15678889eec.3.2026.07.31.19.37.41
+ 5a478bee46e88-3153dd4e47dsm15678889eec.3.2026.07.31.19.37.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 Jul 2026 19:37:44 -0700 (PDT)
+ Fri, 31 Jul 2026 19:37:49 -0700 (PDT)
 From: Aadeshveer Singh <aadeshveer07@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, farosas@suse.de, pbonzini@redhat.com, philmd@mailo.com,
  lvivier@redhat.com, ayoub@saferwall.com, pierrick.bouvier@oss.qualcomm.com,
  Aadeshveer Singh <aadeshveer07@gmail.com>
-Subject: [PATCH v4 06/11] migration: add RAMBlock field and helper for fast
- snapshot load
-Date: Sat,  1 Aug 2026 08:06:23 +0530
-Message-ID: <20260801023628.22665-7-aadeshveer07@gmail.com>
+Subject: [PATCH v4 07/11] migration: add support for fault thread to load
+ pages from disk
+Date: Sat,  1 Aug 2026 08:06:24 +0530
+Message-ID: <20260801023628.22665-8-aadeshveer07@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260801023628.22665-1-aadeshveer07@gmail.com>
 References: <20260801023628.22665-1-aadeshveer07@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=aadeshveer07@gmail.com; helo=mail-pj1-x1031.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=aadeshveer07@gmail.com; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -12
+X-Spam_score: -1.3
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URG_BIZ=0.573 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,152 +103,251 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add pending_bmap field per RAMBlock which is a Bitmap to store
-internal state of which pages have been read by some thread to ensure
-coordination between fault thread and eager load thread.
+In fast snapshot load, we would like to serve faults as soon as possible
+hence loading pages directly instead of requesting a source
 
-Modify parse_ramblock_mapped_ram(), to not load the actual RAMBlocks
-data in postcopy case as that will be loaded by fault thread and eager
-thread after the VM starts running.
+Add postcopy_mapped_ram_load_page() function which serves single page
+fault. It uses bitmap_test_and_clear_atomic() on pending_bmap to prevent
+multiple threads from loading same page. It loads a page or pages
+depending on size of guest pages and host pages, loading exactly the
+larger of two. If the entire page is zero postcopy_place_page_zero() is
+used for efficiency and in case some part is non zero it is part by part
+loaded on loop using new function postcopy_mapped_ram_load_guest_page()
+which loads a single guest page in a buffer which is then placed using
+postcopy_place_page(). This covers all possible cases for various page
+sizes of host and guest.
 
-Change ram_load() to use new function ram_should_load_postcopy_pages()
-to decide how to load/read RAM.
+Update postcopy_ram_fault_thread to call postcopy_mapped_ram_load_page
+instead of requesting source in case of fast snapshot load. to_src_file
+check is bypassed in fast snapshot load case as there is no source.
+
+Call try_mark_postcopy_blocktime_begin on every page fault to support
+postcopy-blocktime.
+
+Allocate another channel in postcopy_temp_pages_setup(like the preempt
+case), for both the fault thread and eager thread to load pages
+independently.
 
 Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
 ---
- include/system/ramblock.h |  6 ++++
- migration/ram.c           | 59 +++++++++++++++++++++++++++++++++++----
- 2 files changed, 59 insertions(+), 6 deletions(-)
+ migration/postcopy-ram.c | 174 +++++++++++++++++++++++++++++++++++----
+ 1 file changed, 157 insertions(+), 17 deletions(-)
 
-diff --git a/include/system/ramblock.h b/include/system/ramblock.h
-index 4435f8d55f..83187bf44c 100644
---- a/include/system/ramblock.h
-+++ b/include/system/ramblock.h
-@@ -60,6 +60,12 @@ struct RAMBlock {
- 
-     /* Bitmap of already received pages.  Only used on destination side. */
-     unsigned long *receivedmap;
-+    /*
-+     * Bitmap for pages that are yet to be read from disk. It is required for
-+     * fault thread and eager thread to keep note of which pages are currently
-+     * being read. Used by fast snapshot load.
-+     */
-+    unsigned long *pending_bmap;
- 
-     /*
-      * bitmap to track already cleared dirty bitmap.  When the bit is
-diff --git a/migration/ram.c b/migration/ram.c
-index 967db7c0db..734fd90e12 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -263,6 +263,18 @@ static void ramblock_file_bmap_init(void)
-     }
+diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+index 2e2c9fae10..1da9c4309b 100644
+--- a/migration/postcopy-ram.c
++++ b/migration/postcopy-ram.c
+@@ -949,6 +949,121 @@ int postcopy_wake_shared(struct PostCopyFD *pcfd,
+                        pagesize);
  }
  
-+static void ramblock_pending_bmap_init(void)
++/*
++ * Load a single guest page from source file into the buffer.
++ * NOTE: This is not an atomic operation and should not be used to directly load
++ * pages on page faults in postcopy. It is meant to fill in buffer that can then
++ * be copied into the faulting location using UFFDIO_COPY.
++ */
++static bool postcopy_mapped_ram_load_guest_page(MigrationIncomingState *mis,
++                                                RAMBlock *rb,
++                                                ram_addr_t rb_offset, void *buf,
++                                                Error **errp)
 +{
-+    RAMBlock *rb;
++    ERRP_GUARD();
++    size_t page = rb_offset / qemu_target_page_size();
++    size_t read;
 +
-+    RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
-+        assert(!rb->pending_bmap);
-+        size_t size = rb->max_length / qemu_ram_pagesize(rb);
-+        rb->pending_bmap = bitmap_new(size);
-+        bitmap_set(rb->pending_bmap, 0, size);
-+    }
-+}
++    if (test_bit(page, rb->file_bmap)) {
++        /*
++         * This can happen concurrently, but it's thread-safe because
++         * qemu_get_buffer_at() is thread-safe, and the caller will be using
++         * different temporary buffers.
++         */
++        read =
++            qemu_get_buffer_at(mis->from_src_file, buf, qemu_target_page_size(),
++                               rb->pages_offset + rb_offset, errp);
 +
- static void ramblock_recv_map_init(void)
- {
-     RAMBlock *rb;
-@@ -3762,6 +3774,10 @@ static int ram_load_setup(QEMUFile *f, void *opaque, Error **errp)
-     ramblock_recv_map_init();
-     if (migrate_mapped_ram()) {
-         ramblock_file_bmap_init();
-+        if (migrate_postcopy_ram()) {
-+            /* fast snapshot load */
-+            ramblock_pending_bmap_init();
++        if (read != qemu_target_page_size()) {
++            error_prepend(errp,
++                          "Could not read page %zu from RAM Block %s: ", page,
++                          rb->idstr);
++            return false;
 +        }
-     }
- 
-     return 0;
-@@ -3782,6 +3798,7 @@ static int ram_load_cleanup(void *opaque)
-     RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
-         g_clear_pointer(&rb->receivedmap, g_free);
-         g_clear_pointer(&rb->file_bmap, g_free);
-+        g_clear_pointer(&rb->pending_bmap, g_free);
-     }
- 
-     return 0;
-@@ -4201,9 +4218,12 @@ static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
-         return;
-     }
- 
--    if (!read_ramblock_mapped_ram(f, block, num_pages, block->file_bmap,
--                                  errp)) {
--        return;
-+    if (!migrate_postcopy_ram()) {
-+        /* Do not load RAM during setup for fast snapshot load */
-+        if (!read_ramblock_mapped_ram(f, block, num_pages, block->file_bmap,
-+                                      errp)) {
-+            return;
-+        }
-     }
- 
-     /* Skip pages array */
-@@ -4475,15 +4495,42 @@ static int ram_load_precopy(QEMUFile *f)
-     return ret;
- }
- 
-+static bool ram_should_load_postcopy_pages(void)
-+{
-+    /* This is pure precopy, we don't need to load pages in postcopy way */
-+    if (!postcopy_is_running()) {
-+        return false;
++    } else {
++        memset(buf, '\0', qemu_target_page_size());
 +    }
-+
-+    /*
-+     * This is postcopy, but when with mapped-ram, pages are not loaded in the
-+     * migration stream here, but done separately in a thread eagerly reading
-+     * pages from the snapshot.  Here, we only need to read the ram headers,
-+     * reusing the precopy code.
-+     * TODO: when we have separate function to parse RAM headers we should
-+     * switch to that.
-+     */
-+    if (migrate_mapped_ram()) {
-+        return false;
-+    }
-+
-+    /*
-+     * Genuine network postcopy, we will load pages in this current stream and
-+     * they need to be done in postcopy way.
-+     */
 +    return true;
 +}
 +
- static int ram_load(QEMUFile *f, void *opaque, int version_id)
- {
-     int ret = 0;
-     static uint64_t seq_iter;
-     /*
-      * If system is running in postcopy mode, page inserts to host memory must
--     * be atomic
-+     * be atomic. However, fast snapshot load uses the mapped ram precopy like
-+     * path to read block headers and populating bitmaps.
-      */
--    bool postcopy_running = postcopy_is_running();
-+    bool load_postcopy_pages = ram_should_load_postcopy_pages();
++/**
++ * postcopy_mapped_ram_load_page() - Load pages required to access host address.
++ * @mis: Migration Incoming State.
++ * @rb: RAMBlock from where page is loaded.
++ * @rb_offset: Offset of target page in RAMBlock.
++ * @haddr: Base of target page where to load in page.
++ * @channel: Used to identify between threads and use corresponding temp.
++ * @errp: Set error in case of failure
++ *
++ * Load page(s) from RAMBlock covering the faulting address. We might need to
++ * load multiple pages in the case when host page size is greater than guest
++ * page size. As userfaultfd works on granularity of host pages, we might need
++ * to load guest pages in single operation.
++ *
++ * Return: True on success.
++ */
++static bool postcopy_mapped_ram_load_page(MigrationIncomingState *mis,
++                                          RAMBlock *rb, ram_addr_t rb_offset,
++                                          uint64_t haddr, int channel,
++                                          Error **errp)
++{
++    void *place_source = mis->postcopy_tmp_pages[channel].tmp_huge_page;
++    char *buffer_ptr = (char *)place_source;
++    size_t guest_pages_to_load =
++        MAX(1, qemu_ram_pagesize(rb) / qemu_target_page_size());
++    size_t host_page;
++    size_t page;
++
++    /*
++     * If guest page size is greater than host page size uffd needs to load one
++     * guest page and multiple host pages, hence the offsets need to aligned
++     * with guest pages (which is automatically aligned with host pages). In the
++     * same case we need to check range of bits on pending_bmap(bit per host
++     * page) to decide whether all the page have been loaded
++     */
++    rb_offset = ROUND_DOWN(rb_offset, qemu_target_page_size());
++    haddr = ROUND_DOWN(haddr, qemu_target_page_size());
++    host_page = rb_offset / qemu_ram_pagesize(rb);
++    page = rb_offset >> qemu_target_page_bits();
++
++    if (bitmap_test_and_clear_atomic(
++            rb->pending_bmap, host_page,
++            MAX(1, qemu_target_page_size() / qemu_ram_pagesize(rb)))) {
++        if (find_next_bit(rb->file_bmap, page + guest_pages_to_load, page) ==
++            page + guest_pages_to_load) {
++            /* It is efficient to use UFFDIO_ZERO if all pages are zero */
++            if (postcopy_place_page_zero(mis, (void *)haddr, rb)) {
++                error_setg(errp,
++                           "Failed to place zero page %zu from RAM Block %s at "
++                           "address %" PRIu64,
++                           page, rb->idstr, haddr);
++                return false;
++            }
++        } else {
++            size_t load_size = guest_pages_to_load * qemu_target_page_size();
++            size_t offset;
++
++            for (offset = 0; offset < load_size;
++                 offset += qemu_target_page_size()) {
++                if (!postcopy_mapped_ram_load_guest_page(
++                        mis, rb, rb_offset + offset, buffer_ptr + offset,
++                        errp)) {
++                    return false;
++                }
++            }
++
++            if (postcopy_place_page(mis, (void *)haddr, place_source, rb)) {
++                error_setg(errp,
++                           "Failed to place page %zu from RAM Block %s at "
++                           "address %" PRIu64,
++                           page, rb->idstr, haddr);
++                return false;
++            }
++        }
++    }
++    return true;
++}
++
+ /*
+  * NOTE: @tid is only used when postcopy-blocktime feature is enabled, and
+  * also optional: when zero is provided, the fault accounting will be ignored.
+@@ -1310,6 +1425,7 @@ static void *postcopy_ram_fault_thread(void *opaque)
+     int ret;
+     size_t index;
+     RAMBlock *rb = NULL;
++    Error *local_err = NULL;
  
-     seq_iter++;
+     trace_postcopy_ram_fault_thread_entry();
+     rcu_register_thread();
+@@ -1351,11 +1467,13 @@ static void *postcopy_ram_fault_thread(void *opaque)
+             break;
+         }
  
-@@ -4499,7 +4546,7 @@ static int ram_load(QEMUFile *f, void *opaque, int version_id)
-      */
-     trace_ram_load_start();
-     WITH_RCU_READ_LOCK_GUARD() {
--        if (postcopy_running) {
-+        if (load_postcopy_pages) {
+-        if (!mis->to_src_file) {
++        if (!migrate_mapped_ram() && !mis->to_src_file) {
              /*
-              * Note!  Here RAM_CHANNEL_PRECOPY is the precopy channel of
-              * postcopy migration, we have another RAM_CHANNEL_POSTCOPY to
+-             * Possibly someone tells us that the return path is
+-             * broken already using the event. We should hold until
+-             * the channel is rebuilt.
++             * Possibly someone tells us that the return path is broken already
++             * using the event. We should hold until the channel is rebuilt.
++             * Fast snapshot load doesn't support pause and recover, because
++             * it's not necessary: we can fail right away when QEMU just booted
++             * with nothing to lose.
+              */
+             postcopy_pause_fault_thread(mis);
+         }
+@@ -1418,18 +1536,37 @@ static void *postcopy_ram_fault_thread(void *opaque)
+                                                 qemu_ram_get_idstr(rb),
+                                                 rb_offset,
+                                                 msg.arg.pagefault.feat.ptid);
++
++            if (migrate_mapped_ram()) {
++                /* Load page directly in case of fast snapshot load */
++
++                uintptr_t aligned = (uintptr_t)ROUND_DOWN(
++                    msg.arg.pagefault.address, qemu_ram_pagesize(rb));
++
++                if (try_mark_postcopy_blocktime_begin(
++                        mis, rb, rb_offset, (uintptr_t)aligned,
++                        msg.arg.pagefault.feat.ptid)) {
++                    if (!postcopy_mapped_ram_load_page(
++                            mis, rb, rb_offset, aligned, RAM_CHANNEL_POSTCOPY,
++                            &local_err)) {
++                        error_report_err(local_err);
++                        break;
++                    }
++                }
++            } else {
+ retry:
+-            /*
+-             * Send the request to the source - we want to request one
+-             * of our host page sizes (which is >= TPS)
+-             */
+-            ret = postcopy_request_page(mis, rb, rb_offset,
+-                                        msg.arg.pagefault.address,
+-                                        msg.arg.pagefault.feat.ptid);
+-            if (ret) {
+-                /* May be network failure, try to wait for recovery */
+-                postcopy_pause_fault_thread(mis);
+-                goto retry;
++                /*
++                 * Send the request to the source - we want to request one
++                 * of our host page sizes (which is >= TPS)
++                 */
++                ret = postcopy_request_page(mis, rb, rb_offset,
++                                            msg.arg.pagefault.address,
++                                            msg.arg.pagefault.feat.ptid);
++                if (ret) {
++                    /* May be network failure, try to wait for recovery */
++                    postcopy_pause_fault_thread(mis);
++                    goto retry;
++                }
+             }
+         }
+ 
+@@ -1501,8 +1638,11 @@ static int postcopy_temp_pages_setup(MigrationIncomingState *mis, Error **errp)
+     unsigned i, channels;
+     void *temp_page;
+ 
+-    if (migrate_postcopy_preempt()) {
+-        /* If preemption enabled, need extra channel for urgent requests */
++    if (migrate_postcopy_preempt() || migrate_mapped_ram()) {
++        /*
++         * If preemption enabled or it is fast snapshot load, need extra channel
++         * for urgent requests/faults
++         */
+         mis->postcopy_channels = RAM_CHANNEL_MAX;
+     } else {
+         /* Both precopy/postcopy on the same channel */
 -- 
 2.55.0
 
