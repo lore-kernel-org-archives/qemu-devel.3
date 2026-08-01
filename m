@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0236C55171
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Aug 2026 00:19:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 832B8C55171
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Aug 2026 00:19:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpxQZ-0004lj-Dh; Fri, 31 Jul 2026 20:18:11 -0400
+	id 1wpxQd-0004o0-Dj; Fri, 31 Jul 2026 20:18:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1wpxQM-0004jT-Od
+ (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1wpxQJ-0004jK-QJ
  for qemu-devel@nongnu.org; Fri, 31 Jul 2026 20:18:02 -0400
-Received: from sonic315-55.consmr.mail.gq1.yahoo.com ([98.137.65.31])
+Received: from sonic303-25.consmr.mail.gq1.yahoo.com ([98.137.64.206])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1wpxQI-0001bD-SM
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 20:17:57 -0400
+ (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1wpxQH-0001at-RP
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 20:17:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aol.com; s=a2048;
- t=1785543473; bh=ffO8qrCy0LABWluXubgddMD+88wzPHM657OWh8V4ys8=;
+ t=1785543472; bh=dt4PNu6AZ8WmochcJSUTO58mxubi+byKBAAny8f1ZfI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject:Reply-To;
- b=jBEsPlsKDZ9k3OFUK2pNIuuFEyLSfjnjdOdeflcM4v+Iuc+0ClVkgXoYY/svRgtXdwNMMOj5MxOZzCh8OmgbY05QVK7S0EQVGjXbA/z0TYifQ6HcBjHU7kgvrYZlcXXUgcasTrSMBef8IPLNQJzA1c3dZrOwwfT1GUOxrxpIcdH68v/rVwh3X5dg2DoRJ0B5ELph6O7Xw/uWzQnlZhJCUP57DHZOhKlwU2ZBnNVw54WnfS/rG6B0KSefzZ1+LQpi19a8OptFY2UaizDVK2r97xYvtolsNxAvwQSgzXcTksXj6WSi89UqeAOw+Je11P3+Sn5RlyEgAWTRoMOXhhcYAA==
+ b=N9WwHxoB+cf3cO+Co06Yt+h8kaZi09MEcr8dsgrkRZjvSYks/E2U/RUsfSCMDCJ5EbQq8bFpRiSj4z8sM2XsEk7e/+RNQINe24YUDWi2aVVHHbCBz95r387g4xUXOW9Vlod5CgXmMmAAmzIgA96GbeEozdnNmXgfFrzINvsyQg5Y1bHhWxPhOTLXynFGFOZPcAFBSK6GhQrCzg1T/2kNDLCeAVfhr1Qpg3zGO7PPnXf6SYD+v972nBg/D/eeIDZTC7rK3hBX66P/ByxvhAMAkOCfjUbLCmZtG4fmLURSn5bCAtjIaOoVGQ4sHiNuF23oXREJBoLidNXBluGgN/ktgg==
 X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1785543473; bh=kuDA4OeFX9PVEeDeut7LzAaV7cmzKLjJEjtDq8yrl7C=;
+ t=1785543472; bh=uijYDbf63QNZRyqSO+BcjNAdvkUvYboCyFEczonTTzC=;
  h=X-Sonic-MF:From:To:Subject:Date:From:Subject;
- b=ah8qZSRF+83WizDbIeD1p/nOf1ufgUYy9ODrru1BhoHk1bID+XlbapZJlK3nbaEjkGYa2JYpJIwmpq9KS64VbJ/kRqruWPxXwU4P+SEaNXeBgQ+4ujW25yJyAZo2Las9zn+Gv7l9naY5dgBtpGhC45RjRiQcyEeASAkrn0bBPySmU4VARCFcruGUBwELyWmhgZkAcp9Bm0ms3qFO5tGQWGildXOTgCOnvgNsSA0rRYoFR8t86XxCI5elBvaGeb4Q1ccTAbd9eMk6gWXZoQQwvYUTx4udbL6DgKjwCX6WbogjCfnmMo79/UF67QimBgljSOZVEJuypPLTvnrpRK9oCQ==
-X-YMail-OSG: .NpycOsVM1n53CI.4.B7xsmBIgwyCi_2EPd5rWydy.y4Jx4SOCYE2eEJ5PUQZ3k
- yPsyl_7JvTWTXRpTdq4LYYGUNXjMQfAv4eKdwrpnKtHYCo9PNJntOrIFdkkgXGsJtYUHf_EFo4Wg
- t6_b.9REPKN9Hm8ov46q5b584SuQyo8V38u.VHTBAZ3sNd6Lsv32a2e_N9gmiap71hcSlLyPZRVD
- LdR5O6wdUt8cYkVbHcwLOO2ql6UXi0E3ecZ_4VPh1IS708crJmcrx3_4H9Zqx0Er5q6ypDOdoy6a
- aB4De4X7.PzHhxyLJwAB4D1oDsZkpppMk34TXVQXj7XsD0NZSQSTBAg7fdHAVMHMUYiWTtD1aay1
- _Z.Inm.TPl60eZ5wWeiIgkUtHe666jIny9S0LE6yB0X35ItXpNdJtbopxSh3wOp8Hzlw32vbrOCi
- Gr0O6QCHO4oEVKigOtlnOPuGYPuKAyYT9VQgZl3qzPcZBQFzpqdNXrx_8Uuy00TwSaav9RDQCG6N
- 48m6jAN8aO2lzlYf6Nh62C9N3WeR78QfkOEuNFGEkIeHAn3hi3Sm2Q100c0.tm11pVQZ09c7UB40
- _YTZ5r2xqzelhc9iuNUXCQYCJWdSWQgrK4.SODSIRj5eeeW5jB9R2MC7CuVuEHRGp0BUqC1MFKgc
- eBULYVninRRrVEfHDzm8hU7TBPWoYB4ymiaW6RTPBegJpUH_nTvnNFrII2hi8ueffnmYmNzdivVU
- qA4TyibE0TGsUrDZImr6iGUwDqLFXuZHHdllEadGvzviJ2TDKgzhRy.L9UFzfXa65caBkZ6C6OfS
- lWtNV0ffqmVniZm8X3kh7JrZaenOVtYzE0u9SI8NZJd9QNFLiO3Fvw1OLXaV1RSc8tGcuDb4R.AH
- nfmmyIuUyMiTzUmHPhn4s3ila.2ot0DURu264JPjWLml2UL6p2XBJ1RvgHeTPErCiX8._cMVQHfb
- MBQQljgrx1dSJHxiMwqQWaC.8QKbUm1lYSm7Vh50bACkhzRiN.JOCaM5PhLxhKjjJ4Ovgbk.mJUu
- PtyobS.4uknqGkrFWSuQakYOtqcMxw2oxYaM5bp5auSwk7ExnLjSfB_RYp2CxeK3wQwlDKWYXfLT
- v8iiCd67R2vGvmu.f166JZqfHc3H4OE9Ua8yfmchOC8liPHIPBC6BrunMUh59oRphcDWfuKk4CLS
- ZONTkXuq.XcUoxVEj2TpZT.3WMvu2Sg3S2qfAs4U6oPkuZRK0UQL5KzsTPd99c8mgbLlBAp0K80E
- 0k.LoaSq_sAvOXmBg.XNgRlKL2eVIih2lLaduFxuSnGrH9mLF5yRWqP21gIkZIS_JMQkln1E91aa
- nO8J6qUi5B3ZttmOcfniCcGld1Liwpjv6UZpeDNRBMg5IMM.iCZGGEEdr2w8pWtcALGTPo_goGEy
- UzIPXclVB3DRKqykBe0uJ6IEJauEGYpXj2CRww33kMFdSDvwriLv_iTZviDcHNTmyUyKJyDNUaQW
- X0OUJtLngRa04ZxAv4hQdTFqptK2TC2AAT9YKvPFFQATKbrgkY7QQq.EAGLnNazUJ.m37uk75DNY
- Gox2hTs2DiaD2RoDYYF1KmNUuKfu39Wy6oD_.rFp6lqXzx.n0QA.x6pVw7.CzirBwsjzYx2x4fxK
- TzPnMTcgZ2MqCJsGY.uqXi1RiuGuaqR53dglmzCnPKUM9KLkGBSHGWN9tKzcYAP3BaqDXffHMTIl
- RLxHrI9OJ3f1OYSYXPf2qIHEZIwPAFkikqhQRJNu04VvZV4PHdnFT2KA6gmRe4YApZbqP1w2TQAJ
- oOotujPdAIY4S.Mu6v6ojACnWD1o4iSlt.ATJkQMZm9pED4Vqm.SoZs4c_sWNhDckPfHJi8ZdR_K
- 7KowPOpIlyz.vCu49qlDW6PWXl2iZkgsQQVprcFk03OgBldqz9EG6sc3btedLB2opDobiBH4aDx_
- gbWOOCXYEr9MmkbU9KZ60_5tuVxx7y79oR3Kua6giOCegMdtbd9YYLOuRFkg.UStCnnlyuSZgcZy
- vvIakHp9bk7rndw7SC9Y44sI.2HibJATn1Je6GSJfE5BEUSVmNtWsyqV83rqBcBPm9Dzj2oEkpdh
- _7E_mFC4M0xtu7U01UdOSHT0Dj5aqXBzK8N3KeQUD7ORBN3HptKdarioYdt5grFMFdfHdcfsm.o_
- uFz9HFDHN0X8bbi8t4wUYXn0GzUbbROQZgCUYerUBa6dzOQWPh3UA9dTyc8ksssz_h20Fpa_ZIzd
- lEwaKmNTiKXf.GliX5Y4OCHMCKabx_u3I482.U2XSexQKndZxRw--
+ b=r/iLX5neOxLm1Hizrb85XBD85w5EzXJZZ8eub5uQw6xuLCA59zaDclf6AFPv8uY8IoMeT0kvgb+jB6m0hxfYoGaNbrOoiAwhLZJ0WyWrGxsRlldsu2vqjT2iF7r5DMCgvVhmPwJrM7Aobh9xl5M7otYR4T19PQEiE5EmN5hsoD4ozilwGGCKcpqthlTeCRaaJmEJZwFM0NuL6Qq2WneLEkNl/luUHL/f807PPj5xpwPTItm4lS27aVlCnItQx9I9BmRZlXYZ4nh6a1DucfEZrpGdIwmkAp1nJuAyntHllEmCKok7+xSAD+XRNyv9M83FRQ9HZJw4gnnjj6aFZT0eQA==
+X-YMail-OSG: OB._0IMVM1mru75Egk5pnS7mtmdxlDFp2MywWseBRLa7DWCM3r2ltqo3uqt6Lyd
+ Rt6xkeJS27P0r8Cq9siuuneSs9DQEtjumqKQ7oSfJP8gBtQ5hHZpkRl_KbOsVhoDKSlom8eoCXk9
+ JjHDjqTOSzaRqfLbPNESGpRwHWksXrNIHZlhkDUUmMFutW.2LZ8OCiNPEFln2gALzKvPxvqylyDN
+ A64ZIaHkUfyEkQNxs1DM8flmn0ffPHLyPfkcl7eaOtOcUHbt0JlSuUklWSz5SZfUaDQQWOWNiUuf
+ ydP9LfQ3xYGgYr7KwBqvU9X9IWpDYW9.WrGii5uPQ9HgcuS32UX0Az_t76hE_G2MCFiteoTBYqJ3
+ gO2JhwkRLQtVvUeoBmd0dyjzON7NCN5VoqINBBwULMJh1.LRezBmCysQMlq_urADxbeYkRenKlSM
+ VAim1BV3a7EDH_T2zCTvXrB2vvY2dSDCH61a7.QQNWUrXwlDWHzSQqVm5cOO5o4LdZ3ZzSnQWJk1
+ zEyUHzw4h_M_7qtNpRNQUdhFxVZE5s8P4JsMiGwggyfL8Mp5Xn5G2ZK5JqJirNWSsXIwQrDomOqz
+ MKRQT3JOHBlihZvTUurD0k0W1NzLdhlvWnIiKWtcPY.exoLeDU_H3jC_2TI.W1HWxWDYjU2EUk4Q
+ qde8I9juKv7Bz3YJZTJSu0UBQK2gdk0IQ593t5_EKQCGicz7aQVoIlbUtj3fptqrYxQJwaJXndVl
+ roGCqXppEdlq4ZOishAOVtEMklUj32gRPDhgVb5edvwlOtIZ.NJEb8u1vKJzgzZFDLjn2g.QPHtF
+ 7QMslpSYIrysjLpMVv9eQ3Fa2S.IP0.OPH3zSiUTZu6bPFdxLqmPmoMYc2rS_CY7IV4XkEwC7lZK
+ xVPYDwytZphPJw5ZAi05DXHVtaqQZxNkDb3_5CYfloqCCpbPob2t0GATkhSY3U9LWMltNlcZ6U0Q
+ 4fBOVSINurtn11QitxYCFr4WHAVqhs2sSaOgTkKQXaMifuHyx7kbzMQauQvgNiSplzYD4ZGdFBBO
+ .1VY8EBlvsSEDhGwBDDM5fkRFip6dmzegTzdVbmxNx3QdyoD0JDt0PpYXQ01F2Igehn9FDwp9QLB
+ Bml8OdklLIxPkOOnWCetld7UM2.9WD_mdXZD8g8TBKhlRCrSg0Nql67T5AaWKEkjYhEZDZbxqBPO
+ GgWKypu7Klzo3l_y6Q_HXpi7BI8vmJaA65nm8CCwB5axK7iD_7dyqGjheHasTKLSHkdIBeF4UCaH
+ UkDLwuoAMbWNLb7fMUwFxv0DTdZX0CIw9K0ouP9WnXioFium_U1pjC3vqIhkkgNsQAqceziWFAiz
+ etyzoFqTmd2nz81SrTVGIgGIc5_OTPKbW84Umg_mDLfddrDXjiCwkAZ8iw180wWjJ.apfEiLPdaT
+ y.Xfgbp2blqyDCBpAEFcEVMRHnm1xR6Aiucqi4DpYtmnyhaEM_nycUDv4hT3fFpCjQICTx8.rrHA
+ lbXBnhe8VIddi9bvxPoi7NRr7k6kYPn2sKOnSyv9f_A.ZCrMnqr2C9afaRzW47BMDk8BSXG2RgZU
+ _LoUHFazGGVf3gT3j1Js5JGisHskglTYXC_FohCPrLg51G_KgIXOrptXU.W0fmkmw1NtfIGpSk5r
+ N05d1xpYhlQMLuwN3_q0XhbFbnFpT1F0iGfdhdEQAwPl5yvCCTVI0HLl4baoxwRxs0TEo1eSJwqf
+ DUpikmUktwPHd6DjjSW1dpfVkae_uWupiZvJbeJ22YCl0aeQFoW.l_70f3jwYBzdczzh73nOkzFl
+ WvzGwkNbXpxvX6JrNrWb9AbpgqYvj.5kZI9poCc.c6FuO5n_vmdm1XhmtG2jczhbrYB.bHvr1z7w
+ lRBEA.CUOHl9dH3TY8v36HscptEguga4ggzGTPM6I_obHCxUERH7KvqHLND8j0aquqZxcgh0r2It
+ XI_95HG_RMDAxh95F6zw5nPkRLLR4FBY7qMHSSdPiG4DTLrIk0aJFaPkllXhhxKDn7INc60jIhbU
+ JUsuuIZU1W2ZBLixsXeV583GXc7tJgfMwtLl4.nn6JLm5xi8NNei4bKIUHeY4XBlq8_dsahsEjyJ
+ 8BB9M9uVlNvlK31Nl9wNoNOArKQT_oNbPdxx7xTXuaM_WX5KU9WAoJjjEt5TdpO4GhrPE8lEbDb2
+ O7qxsO9vYc.gBTyHmwg__.QdRz.fHIsn9AC.kop66w.LeJbK4vrF2AKivfAprBdQFk8UM3o8F20T
+ r87KSJZ6c5tp3msZ2VRwI_fIpIYm1ujTHSmn4WTVtrSV512mc5A--
 X-Sonic-MF: <brchuckz@aol.com>
-X-Sonic-ID: 8c31a32f-648a-4935-9991-1504277b6dc1
+X-Sonic-ID: 4ab60735-23cf-4f17-a1e3-b99ab0ce6955
 Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic315.consmr.mail.gq1.yahoo.com with HTTP; Sat, 1 Aug 2026 00:17:53 +0000
+ sonic303.consmr.mail.gq1.yahoo.com with HTTP; Sat, 1 Aug 2026 00:17:52 +0000
 Received: by hermes--production-bf1-54b5569bdc-h5zdx (Yahoo Inc. Hermes SMTP
  Server) with ESMTPA ID 655a093bcead2c5289eeab02aa189b76; 
- Sat, 01 Aug 2026 00:17:48 +0000 (UTC)
+ Sat, 01 Aug 2026 00:17:46 +0000 (UTC)
 From: Chuck Zmudzinski <brchuckz@aol.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, xen-devel@lists.xenproject.org,
@@ -73,23 +73,23 @@ Cc: qemu-stable@nongnu.org, xen-devel@lists.xenproject.org,
  Jan Beulich <jbeulich@suse.com>, Andrew Cooper <andrew.cooper3@citrix.com>,
  =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger@xenproject.org>,
  Teddy Astie <teddy.astie@vates.tech>, Tomita Moeko <tomitamoeko@gmail.com>
-Subject: [PATCH v4 5/6] xen/igd: implement support for extended VBT
-Date: Fri, 31 Jul 2026 20:17:29 -0400
-Message-ID: <20260801001737.16509-6-brchuckz@aol.com>
+Subject: [PATCH v4 4/6] xen/igd: enable guest creation when ROM read fails
+Date: Fri, 31 Jul 2026 20:17:28 -0400
+Message-ID: <20260801001737.16509-5-brchuckz@aol.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260801001737.16509-1-brchuckz@aol.com>
 References: <20260801001737.16509-1-brchuckz@aol.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=98.137.65.31; envelope-from=brchuckz@aol.com;
- helo=sonic315-55.consmr.mail.gq1.yahoo.com
+Received-SPF: pass client-ip=98.137.64.206; envelope-from=brchuckz@aol.com;
+ helo=sonic303-25.consmr.mail.gq1.yahoo.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,336 +105,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Newer devices with versions of the OpRegion >= 2 require an
-extended bios table (VBT) in some cases and also in some cases
-require modifications to the OpRegion for proper operation in
-the guest. This is in contrast to legacy devices in which the
-VBT is always embedded within the OpRegion.
+For newer IGD devices, the host option ROM is not readable from sysfs
+and this results in a call to error_fail() that causes Qemu to
+exit(1) so guest creation fails with the current implementation for
+many newer IGD devices. But this read failure need not be a fatal
+error causing guest creation to fail because the guest does not need
+the option ROM to successfully boot and run. The guest only needs the
+option ROM for getting graphics output from the guest during early
+boot before the guest OS loads the Intel IGD graphics drivers.
 
-This makes the current approach of providing only the unmodified
-host OpRegion to the guest with no guest access to the VBT
-insufficient for proper support of devices with OpRegion version
-2 or higher and an extended VBT.
+To fix this, allow guest creation to continue by avoiding setting errp
+if the attempt to read the host ROM file from sysfs fails. In this case,
+the memory for the guest option ROM has been allocated so free that
+memory by calling object_unparent(OBJECT(&s->dev.rom)) before
+continuing.
 
-Support for extended VBT also depends on compatible support in
-hvmloader. If such support is lacking in hvmloader, fall back to
-the current protocol that does not provide support for extended VBT.
+Replace the error_report() and error_printf() messages for this case
+when the option ROM cannot be read via sysfs with a suitable
+info_report() message.
 
-To implement support for extended VBT:
+In the case when the host option ROM cannot be read via the sysfs
+interface, xen_pt_register_regions() will attempt to setup the option
+ROM for the guest the same way it would for any other Xen passthrough
+PCI device that has an option ROM.
 
-Instead of configuring the guest with access to the unmodified
-host OpRegion via hypervisor mapping of the OpRegion from
-the host to the guest, temporarily map the host OpRegion and
-VBT into the guest, allowing the guest (hvmloader) to get copies
-of the host OpRegion and VBT which hvmloader can modify as needed
-to support cases that require modifications to the OpRegion.
-
-In xen_pt_unregister_vga_regions(), do not try to unmap the OpRegion
-in cases when the OpRegion is not mapped during normal operation of
-the guest, and replace the constant '3' with the macro
-XEN_PCI_INTEL_OPREGION_PAGES which is defined to be 3.
-To implement this:
-
-Use 'done = true' to end further processing when the OpRegion does
-not need to be unmapped in xen_pt_unregister_vga_regions(), and use
-'guest_supports_opregion2 = false' to end further processing when the
-OpRegion does need to be unmapped in xen_pt_unregister_vga_regions().
-
-The OpRegion 2+ support that can be provided by this patch and a
-compatible patch to hvmloader is required to fix code 43 errors in
-Windows guests that have an Intel IGD with extended VBT passed
-through to the guest.
-
-Link: https://lore.kernel.org/kvm/20211012124855.52463-1-colin.xu@gmail.com/
 Signed-off-by: Chuck Zmudzinski <brchuckz@aol.com>
 ---
 Changes in v4:
   - v4 is the first version of the series that has this patch
 
-The companion patch to hvmloader that is needed to make this patch take
-effect is available here:
+This patch provides initial support for many newer Intel IGD devices
+so, at least, guest creation will not fail if such newer Intel
+IGD devices are passed through to a Xen HVM guest. But this patch
+alone is not sufficient for proper operation of the Intel IGD
+for many, if not all, of the newer Intel IGD devices when passed
+through to a Xen HVM guest.
 
-https://lore.kernel.org/qemu-devel/20260801000354.16446-1-brchuckz@aol.com/
+There are two main problems with more recent, modern devices:
 
- hw/xen/xen_pt_graphics.c | 231 +++++++++++++++++++++++++++++++++++++--
- 1 file changed, 223 insertions(+), 8 deletions(-)
+1. The newer divices might require patches to the Intel OpRegion
+   and also an extended video bios table (VBT). Without support
+   for these aspects of the newer devices, the experience will
+   not be great and in many cases the Intel IGD still will not
+   function properly in the guest.
+
+2. The newer devices only work with UEFI AFAICT, and the Ovmf*
+   platforms provided by the upsream edk2 project do not provide
+   support for the Intel IGD. It appears the problem is that the
+   ekd2 project deems the fact that the hardware manufacturer does
+   not provide the necessary firmware, the EFI graphics output
+   protocol (GOP) driver, in the ordinary way by making the EFI
+   GOP driver accessible in virtual environments via the option
+   ROM of the real PCI device, to be a reason to reject patches
+   that add support for the Intel IGD. This, however, is not a
+   fatal problem since it only affects the guest during early boot
+   when OVMF or the bootloader is running and the guest OS
+   graphics drivers have not yet been loaded. Lack of support
+   for the Intel IGD in OVMF does not seem to affect the experience
+   negatively once the guest OS graphics drivers have been loaded.
+   So efforts to address this problem are only important in cases
+   when it is necessary to get graphics output from OVMF and/or
+   the guest bootloader.
+
+The next two patches in this patchset address these two problems.
+Of those two patches, the first one is more necessary, and the
+second of those two patches is only needed to provide graphics output
+from the guest during early boot.
+
+ hw/xen/xen_pt_graphics.c | 7 +++++++
+ hw/xen/xen_pt_load_rom.c | 5 +----
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/hw/xen/xen_pt_graphics.c b/hw/xen/xen_pt_graphics.c
-index a124233..3d2a94c 100644
+index 0ae95cc..a124233 100644
 --- a/hw/xen/xen_pt_graphics.c
 +++ b/hw/xen/xen_pt_graphics.c
-@@ -12,7 +12,26 @@
- static unsigned long igd_guest_opregion;
- static unsigned long igd_host_opregion;
- 
-+/*
-+ * These are true until they are set to false when the guest first
-+ * accesses the OpRegion address register for a read or write,
-+ * respectively.
-+ */
-+static bool first_guest_opregion_read = true;
-+static bool first_guest_opregion_write = true;
-+
-+static uint32_t guest_opregion_extra_writes;
-+static bool guest_supports_opregion2 = false;
-+static bool done = false;
-+static unsigned long rvda; /* absolute host VBT address */
-+static unsigned long vbt_guest_pgbase;
-+static uint32_t vbt_nr_pages;
-+
- #define XEN_PCI_INTEL_OPREGION_MASK 0xfff
-+#define XEN_PCI_INTEL_OPREGION_PAGES 0x3
-+#define XEN_PCI_INTEL_OPREGION_ENABLE_ACCESSED 0x1
-+#define XEN_PCI_INTEL_OPREGION_DISABLE_ACCESS 0x0
-+#define XEN_PCI_INTEL_OPREGION2_SUPPORT_MASK 0x1
- 
- typedef struct VGARegion {
-     int type;           /* Memory or port I/O */
-@@ -117,11 +136,11 @@ int xen_pt_unregister_vga_regions(XenHostPCIDevice *dev)
-         }
-     }
- 
--    if (igd_guest_opregion) {
-+    if (!guest_supports_opregion2 && igd_guest_opregion) {
-         ret = xc_domain_memory_mapping(xen_xc, xen_domid,
-                 (unsigned long)(igd_guest_opregion >> XC_PAGE_SHIFT),
-                 (unsigned long)(igd_host_opregion >> XC_PAGE_SHIFT),
--                3,
-+                XEN_PCI_INTEL_OPREGION_PAGES,
-                 DPCI_REMOVE_MAPPING);
-         if (ret) {
-             return ret;
-@@ -239,7 +258,30 @@ void xen_pt_setup_vga(XenPCIPassthroughState *s, XenHostPCIDevice *dev,
- 
- uint32_t igd_read_opregion(XenPCIPassthroughState *s)
- {
-+    if (!igd_host_opregion)
-+        /* We just work with LE. */
-+        xen_host_pci_get_block(&s->real_device, XEN_PCI_INTEL_OPREGION,
-+                               (uint8_t *)&igd_host_opregion, 4);
-+
-+    /*
-+     * By returning igd_host_opregion here instead of 0, we can
-+     * indicate to hvmloader that we support OpRegion 2.
-+     *
-+     * The conditions are there to prevent returning igd_host_opregion
-+     * to guests that have a version of hvmloader that lacks support
-+     * for OpRegion 2. We do this to maintain backward compatibility for
-+     * guests with earlier versions of hvmloader that always expect us
-+     * to return 0 instead of igd_host_opregion when igd_guest_opregion
-+     * is not yet set to a non-zero value.
-+     */
-+    if (first_guest_opregion_read && !igd_guest_opregion &&
-+        first_guest_opregion_write) {
-+        first_guest_opregion_read = false;
-+        return igd_host_opregion;
-+    }
-+
-     uint32_t val = 0;
-+    first_guest_opregion_read = false;
- 
-     if (!igd_guest_opregion) {
-         return val;
-@@ -251,21 +293,194 @@ uint32_t igd_read_opregion(XenPCIPassthroughState *s)
-     return val;
- }
- 
--#define XEN_PCI_INTEL_OPREGION_PAGES 0x3
--#define XEN_PCI_INTEL_OPREGION_ENABLE_ACCESSED 0x1
- void igd_write_opregion(XenPCIPassthroughState *s, uint32_t val)
- {
-     int ret;
- 
--    if (igd_guest_opregion) {
-+    /* hvmloader with OpRegion 2 support uses lsb of val to indicate support */
-+    if ((val & XEN_PCI_INTEL_OPREGION2_SUPPORT_MASK) &&
-+        first_guest_opregion_write) {
-+        guest_supports_opregion2 = true;
-+    } else if (first_guest_opregion_write) {
-+        XEN_PT_LOG(&s->dev, "hvmloader lacks extended VBT support, "
-+                   "continuing with legacy support only\n");
-+    }
-+
-+    if ((!guest_supports_opregion2 && igd_guest_opregion) || done) {
-         XEN_PT_LOG(&s->dev, "opregion register already been set, ignoring %x\n",
-                    val);
+@@ -187,6 +187,13 @@ void xen_pt_setup_vga(XenPCIPassthroughState *s, XenHostPCIDevice *dev,
          return;
      }
  
--    /* We just work with LE. */
--    xen_host_pci_get_block(&s->real_device, XEN_PCI_INTEL_OPREGION,
--            (uint8_t *)&igd_host_opregion, 4);
-+    if (guest_supports_opregion2 && !first_guest_opregion_write) {
-+        /*
-+         * OpRegion 2 is supported and we are processing
-+         * additional writes that the legacy protocol ignores.
-+         *
-+         * We should always return from this if block to prevent
-+         * executing code below which is only for the first write
-+         * when we map the host OpRegion into the guest.
-+         */
-+        guest_opregion_extra_writes++;
-+        switch (guest_opregion_extra_writes) {
-+        case 1:
-+            /*
-+             * Hvmloader expects us to store the value as the least
-+             * significant DWORD of rvda.
-+             */
-+            rvda = (unsigned long)val;
-+            break;
-+        case 2:
-+            /*
-+             * Hvmloader expects us to store the value as the most
-+             * significant DWORD of rvda and unmap the OpRegion if
-+             * rvda is not equal to zero.
-+             *
-+             * If the unmapping fails, hvmloader will fall back to the
-+             * behavior of older versions which simply map the OpRegion
-+             * from the host to the guest without trying to configure
-+             * the guest with OpRegion 2 with extended VBT support.
-+             */
-+            rvda |= (unsigned long)(val) << 32;
-+            if (rvda) {
-+                ret = xc_domain_memory_mapping(xen_xc, xen_domid,
-+                                               (unsigned long)
-+                                               (igd_guest_opregion >> XC_PAGE_SHIFT),
-+                                               (unsigned long)
-+                                               (igd_host_opregion >> XC_PAGE_SHIFT),
-+                                               XEN_PCI_INTEL_OPREGION_PAGES,
-+                                               DPCI_REMOVE_MAPPING);
-+                if (ret) {
-+                    XEN_PT_ERR(&s->dev, "[%d]:Can't unmap IGD host opregion:0x%lx"
-+                               " from guest opregion:0x%lx.\n", ret,
-+                               (unsigned long)(igd_host_opregion >> XC_PAGE_SHIFT),
-+                               (unsigned long)(igd_guest_opregion >> XC_PAGE_SHIFT));
-+                    rvda = 0;
-+                    guest_supports_opregion2 = false;
-+                }
-+                ret = xc_domain_iomem_permission(xen_xc, xen_domid,
-+                                                 (unsigned long)
-+                                                 (igd_host_opregion >> XC_PAGE_SHIFT),
-+                                                 XEN_PCI_INTEL_OPREGION_PAGES,
-+                                                 XEN_PCI_INTEL_OPREGION_DISABLE_ACCESS);
-+                if (ret) {
-+                    XEN_PT_WARN(&s->dev, "[%d]:Can't disable access to IGD host"
-+                                " OpRegion: 0x%x.\n", ret,
-+                                (unsigned long)(igd_host_opregion >> XC_PAGE_SHIFT));
-+                }
-+            } else {
-+                guest_supports_opregion2 = false;
-+            }
-+            break;
-+        case 3:
-+            /*
-+             * Hvmloader expects us to store the value as the address
-+             * to map the VBT to in the guest and to map the VBT at the
-+             * provided address in the guest. Hvmloader encodes the number
-+             * of pages to map in the least significant 12 bits of the
-+             * provided address.
-+             *
-+             * If VBT verification fails, hvmloader can't determine if the
-+             * VBT is mapped but corrupted or unmapped, so it crashes the
-+             * guest as an unrecoverable error.
-+             */
-+
-+            /* address (gfn) to map VBT to in the guest */
-+            vbt_guest_pgbase = val >> XC_PAGE_SHIFT;
-+            vbt_nr_pages = val & XEN_PCI_INTEL_OPREGION_MASK;
-+            ret = xc_domain_iomem_permission(xen_xc, xen_domid,
-+                                             (unsigned long)(rvda >> XC_PAGE_SHIFT),
-+                                             vbt_nr_pages,
-+                                             XEN_PCI_INTEL_OPREGION_ENABLE_ACCESSED);
-+            if (ret) {
-+                XEN_PT_ERR(&s->dev, "[%d]:Can't enable access to IGD host VBT:"
-+                           " 0x%lx.\n", ret,
-+                           (unsigned long)(rvda >> XC_PAGE_SHIFT)),
-+                rvda = 0;
-+                vbt_guest_pgbase = 0;
-+                vbt_nr_pages = 0;
-+                done = true;
-+                break;
-+            }
-+            ret = xc_domain_memory_mapping(xen_xc, xen_domid,
-+                                           (unsigned long)vbt_guest_pgbase,
-+                                           (unsigned long)(rvda >> XC_PAGE_SHIFT),
-+                                           vbt_nr_pages, DPCI_ADD_MAPPING);
-+            if (ret) {
-+                XEN_PT_ERR(&s->dev, "[%d]:Can't map IGD host VBT:0x%lx to"
-+                           " guest VBT:0x%lx.\n", ret,
-+                           (unsigned long)(rvda >> XC_PAGE_SHIFT),
-+                           (unsigned long)vbt_guest_pgbase);
-+                rvda = 0;
-+                vbt_guest_pgbase = 0;
-+                vbt_nr_pages = 0;
-+                done = true;
-+                break;
-+            }
-+            XEN_PT_LOG(&s->dev, "Map VBT: 0x%lx -> 0x%lx\n",
-+                       (unsigned long)(rvda >> XC_PAGE_SHIFT),
-+                       (unsigned long)vbt_guest_pgbase);
-+            XEN_PT_LOG(&s->dev, "VBT host address: 0x%lx\n", rvda);
-+            break;
-+        case 4:
-+            /*
-+             * Hvmloader expects us to store the given value as the
-+             * final value for the register that stores the OpRegion
-+             * address in the guest. We also unmap the VBT since the
-+             * guest now has its own copy of both it and the OpRegion.
-+             *
-+             * If the unmapping fails the VBT will be mapped where
-+             * hvmloader needs to place the OpRegion plus VBT in the
-+             * guest E820 map. In this case, hvmloader will crash with
-+             * BUG() rather than try to use the mapped VBT with the
-+             * guest's copy of the OpRegion.
-+             */
-+            igd_guest_opregion = val;
-+            ret = xc_domain_memory_mapping(xen_xc, xen_domid,
-+                                           (unsigned long)vbt_guest_pgbase,
-+                                           (unsigned long)(rvda >> XC_PAGE_SHIFT),
-+                                           vbt_nr_pages, DPCI_REMOVE_MAPPING);
-+            if (ret) {
-+                XEN_PT_ERR(&s->dev, "[%d]:Can't unmap IGD host VBT:0x%lx from"
-+                           " guest VBT:0x%lx.\n", ret,
-+                           (unsigned long)(rvda >> XC_PAGE_SHIFT),
-+                           (unsigned long)vbt_guest_pgbase);
-+                rvda = 0;
-+                done = true;
-+                break;
-+            }
-+
-+            ret = xc_domain_iomem_permission(xen_xc, xen_domid,
-+                                             (unsigned long)(rvda >> XC_PAGE_SHIFT),
-+                                             vbt_nr_pages,
-+                                             XEN_PCI_INTEL_OPREGION_DISABLE_ACCESS);
-+            if (ret) {
-+                XEN_PT_WARN(&s->dev, "[%d]:Can't disable access to IGD host"
-+                            " VBT: 0x%x.\n", ret,
-+                            (unsigned long)(rvda >> XC_PAGE_SHIFT));
-+            }
-+
-+            done = true;
-+            break;
-+        default:
-+            break;
-+        }
++    /* Case when the host ROM file from sysfs could not be read */
++    if (!bios_size) {
++        object_unparent(OBJECT(&s->dev.rom));
++        bios = NULL;
 +        return;
 +    }
 +
-+    /*
-+     * This code handles the first write to the register from the guest.
-+     * It maps the host OpRegion into the guest.
-+     *
-+     * Set first_guest_opregion_write to false to enable more writes
-+     * if OpRegion 2 is supported.
-+     */
-+    first_guest_opregion_write = false;
-+
-+    if (!igd_host_opregion)
-+        /* We just work with LE. */
-+        xen_host_pci_get_block(&s->real_device, XEN_PCI_INTEL_OPREGION,
-+                               (uint8_t *)&igd_host_opregion, 4);
-     igd_guest_opregion = (unsigned long)(val & ~XEN_PCI_INTEL_OPREGION_MASK)
-                             | (igd_host_opregion & XEN_PCI_INTEL_OPREGION_MASK);
+     if (bios_size < sizeof(struct rom_header)) {
+         error_setg(errp, "VGA: VBIOS image corrupt (too small)");
+         return;
+diff --git a/hw/xen/xen_pt_load_rom.c b/hw/xen/xen_pt_load_rom.c
+index 407b630..eaf0ae1 100644
+--- a/hw/xen/xen_pt_load_rom.c
++++ b/hw/xen/xen_pt_load_rom.c
+@@ -77,10 +77,7 @@ void *pci_assign_dev_load_option_rom(PCIDevice *dev,
+     memset(ptr, 0xff, dev->romsize);
+ 
+     if (!fread(ptr, 1, st.st_size, fp)) {
+-        error_report("pci-assign: Cannot read from host %s", rom_file);
+-        error_printf("Device option ROM contents are probably invalid "
+-                     "(check dmesg).\nSkip option ROM probe with rombar=0, "
+-                     "or load from file with romfile=\n");
++        info_report("pci-assign: Cannot read Option ROM %s from host", rom_file);
+         goto close_rom;
+     }
  
 -- 
 2.52.0
