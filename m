@@ -4,105 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15150C55172
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Aug 2026 12:12:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EA9BC55172
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Aug 2026 12:29:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wq8Z4-0005k3-DW; Sat, 01 Aug 2026 08:11:42 -0400
+	id 1wq8pS-0001zJ-GN; Sat, 01 Aug 2026 08:28:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wq8Z2-0005jj-JT
- for qemu-devel@nongnu.org; Sat, 01 Aug 2026 08:11:40 -0400
-Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wq8Z0-0007C8-Ti
- for qemu-devel@nongnu.org; Sat, 01 Aug 2026 08:11:40 -0400
-Received: by mail-yx1-xb132.google.com with SMTP id
- 956f58d0204a3-6689402c7bfso2126464d50.1
- for <qemu-devel@nongnu.org>; Sat, 01 Aug 2026 05:11:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785586297; cv=none;
- d=google.com; s=arc-20260327;
- b=MgHGJIRqnpGosXomwJj/Zd/JO4LdqsODo/Bv/7n5tJ4XgTDxg8wQoIq03HbY/uF2IU
- SWk+nm+gP9iqOYJA14YJ9sVODN0Cc7hnG5XeajA/oEJzSEyvuI4QJvwYARm4tcaVq18C
- fsVAUUiYamd9iWxDmfOz7AHwBjMwLL4S8AbzZ24coXziS45TWMtwao/nCmOn1+wq5RQX
- 76aGgIPmM4dDFzurW8w8+cJaz00SyLlqghJ/Wt9Eb4XTmqpjqx8hUGvY+MvAFqe8N770
- jVLiidnp9RCbJIAHOh/fjj1AZnZADx8j7gxoxowAzAIG1ZL9A8NEh0N0ijYChFdf3MP/
- 8Bxw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=UgjMXdi8cONATIG/iFrROZJif2ZP+tde7p50i4hrn2c=;
- fh=s870vv0EBWm78XykxktPTJCvLP2dEvc6/lYXeGp6vUI=;
- b=Q7PYDHXMwle0rmFMmaI+Lx//fMuvU5YAqvRv9LuSlB0xTe0Xn31qxgnAVv5f33xNJT
- 0BFnCEsHtd1szR80y1SAztFSEfmwRgY3+LN4VU3m0MclTcNOnpe+CIgSNQVtnjp5cEXd
- v0PUGmNpv4EWk/qVEsw4+I14UgbA+DFEDhEHDAv9s9Kqfz55LefsPmDzEdrmFziE1WWn
- f7PvaVABK7EnTx9s1VH8FBaeZpAPeBzPQufuqafEq7RbCsU3BQarXeou289uLCKigjz7
- 1y7i5iZSSlzcZTK7NSaFv2ThDt0nyFno+jI9XawrRGe+IAE81TDo9bQrISGJ+DEQzLBb
- punw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wq8pB-0001sG-LY
+ for qemu-devel@nongnu.org; Sat, 01 Aug 2026 08:28:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wq8p8-0000YX-LK
+ for qemu-devel@nongnu.org; Sat, 01 Aug 2026 08:28:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785587296;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=p9Ldg8XRWAStEwrKwEk229Ow21z+ZkX5wHxcNyX5Rnc=;
+ b=CCgvKf2q4XuJAoNrDV17/OscBH3eWuwRrPxwXuxabDy4OIkHw1yOAGqFCbiln/Y4JkKWsn
+ 5ZkP2PDFZrj04c3VNxYPmKA/K4+Ma2w5BLKtuRl7pjc5sLdV+2kCgrV6/U6gsZqIIs+QRU
+ LMH9UjFMrpeqYT/dRWVMbqLG2XV7Cak=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-335-Mg0Sj_d3O-GV4zfHGGfLFQ-1; Sat, 01 Aug 2026 08:28:13 -0400
+X-MC-Unique: Mg0Sj_d3O-GV4zfHGGfLFQ-1
+X-Mimecast-MFC-AGG-ID: Mg0Sj_d3O-GV4zfHGGfLFQ_1785587292
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-38e2f61c09dso2780963a91.2
+ for <qemu-devel@nongnu.org>; Sat, 01 Aug 2026 05:28:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785586297; x=1786191097; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=UgjMXdi8cONATIG/iFrROZJif2ZP+tde7p50i4hrn2c=;
- b=MQNUQk9Ur/pPMTP/zsNOQ1TdO7bKu72KCFmll1y8g+90FzCrktMnGlrUA4VAcMNgfZ
- me16P5qZWYThYBuAHES3XTQqmaIH39cbk70FldNpvnRx03VQAzG3vrFRik19WeAlt0Ee
- HHCLEiovE1qA3LVXjIgKtyVsRLZNd7Do+EFvXKzkDsLdQmgaZ8HHUqKtp3YpeIb+VGfk
- 1cxpfEOQWFOpf+XoJ/ZkNLm4JsQ2+AUlVIgD9imwglNO+Rftsem9RLVbg+OgGDdshGvx
- o7UcAWPHgMZr7L1eQ1r681TZIHzUVZd8fdsLtEEAmMXBAHXpHrKCqdBZWAo4wcGl/+oF
- KrWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785586297; x=1786191097;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ d=redhat.com; s=google; t=1785587292; x=1786192092; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:content-type:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=UgjMXdi8cONATIG/iFrROZJif2ZP+tde7p50i4hrn2c=;
- b=L3ny5cxspOxJF/bfxM/uQPqBm2Nbcyk9U64au2as/34kI6zPaVT19CXp/SlzCFQTQQ
- pte+6/XBVE1dfeMqp+x4DBSUgdwywXMP74pqz6MB2GPMD98wZjisvpopURFxdDv2hfPn
- jcUdymCyI6NRbm1D0j+HSz3eRMVRUncamXbZD6J3Ir2dDC+SPPVE9z/89DAtNZAKYqMy
- IrBhPxHtGMQWaVKKbWDic8EtDUhieNvyB0gAj76nx+Sq3bwpgUvBnNwZvsGL4UiDEHaP
- zPJIy8gX0zzwqmWVTDHF0ha63YEz6QCNtSqFT2nCd9+cFsgMh7I3H1bA2oaMBWeH11uP
- Cb1A==
+ bh=p9Ldg8XRWAStEwrKwEk229Ow21z+ZkX5wHxcNyX5Rnc=;
+ b=SIKxhbWfJEnjtwgaaPyLORicRiK4d+NH1J1emM7+J8wOJJ7mufPCxbV3Kx8A00sVXy
+ lfoSltDxHUaxD9ZCGnlM666RlY1+0MughbwpYNLLKlhv18fKPVp/Izt5hLGIKrc2dsc6
+ pGJqGCsdwMIMUNxD3jQp0lbLcMVf5owAlRDwLoyVNqbBMRJSrv4N+FZP89A2tHvm6mZ+
+ UxfT26oPhL1LKcpqT+nDMcj0kGOCikhJfWJaCAqmPChvsphc84PXCJD84G9exz3j76Ns
+ 2qJmC2kpoL/j/qZBdYu0DaJ/T+QcXzVvUKcooazzuH1sTFjQ6JXUIxvmc3QBHdyv+khG
+ kBoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785587292; x=1786192092;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:content-type:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=p9Ldg8XRWAStEwrKwEk229Ow21z+ZkX5wHxcNyX5Rnc=;
+ b=YbNx2MSbsTrafMxiJmwVX57LsMbgmmhzaoCLsYZTJIKYNhxYyxA90HlB8wQcBt3EbK
+ 1YxaEai1KcbDN92mlcWdcW+dpuX0TXKXiBtXe3xWpG/QsCHAGCtfXP9x1gJ4e6bdl4OE
+ UxsJHvKks5g0iqmEKy6P8Pb/pWxrx8fPATQC4o5fpeAerQ2WjYMx3I9YLlfRFTV5gDRD
+ 9dbfS3mPnqeD3qlAWU7QUpPsE9/7j2n8TxbFb9LhqPoCaM0TnsWWja4RkzqTAcbYtxzk
+ mHScyasKH9jJZ5ceWFu8fDERo+WcxuPnRT6XhqYjIbfhC8EOWhANiGYaKHBjTUIUpjsQ
+ Rv/A==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpIUY0+ETGhC0+evMNWIxMZP51jKijkRS0gb0VDg09ygMaBCyLD32LzH1AFzDXLZFpqb8/byFpXTMYI@nongnu.org
-X-Gm-Message-State: AOJu0YxChD4Vq9ahtC08+Mn3NF7TxuuYZNDq2R8MDOBaihVbiM6AzgCz
- oM5zrWk8ZOt0Omwjui1b7DlqSaM5cp+d47fia4y16dH419QSFD3KUtfBq9MaAvbpeUCmsvWAKw+
- wMtBmqvt99DVbaMV/MQGolglBqa1F7RUFyZjsvj4i3A==
-X-Gm-Gg: AR+sD12zAxC6JXxVom3QQw9yQ5RI3U4hrQ3HU6Q5X9BBQ/P4VR8ekgmepp585tqRFuk
- 93uccs1oxzm7Ks/eoFoL+LnpAXm90hofJoRW1YFvXKWnhaqgJ9pa9cxAXZPGLRVPyL02lETfz4x
- me0mbfZwR4J4MfoqO7IWeAyL68weQi2acRf2g2TW0raTPqZmD9Qnkw76CnOAh+vUtTeecRsQKVF
- 16B1gtc9o84fAlp6lQLKk87G4aalmqoZrAIoA/o4meKS4/hjcGuHsMYVosBvBCf1jFqmpnUumS5
- F2EWupg5vXdcxniVUZr6gH4QYKwFfx7rg2lwwmK4GicOm7D8eRZaNwbXdBIqTrjpZG3vNKeCY+5
- +pYT5ewjAQKy3vw3DgLX2CNAPBiyZ
-X-Received: by 2002:a05:690e:1b68:b0:664:e8ac:21ce with SMTP id
- 956f58d0204a3-6694f0eafeamr3915501d50.24.1785586297098; Sat, 01 Aug 2026
- 05:11:37 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260728192913.61279-1-deller@kernel.org>
- <CAFEAcA_8o2A8FDsJKacde+pdj4HzA5c7aTw=k7tmONYXD4=c_w@mail.gmail.com>
- <244987da-f6d8-47a8-ac4a-16a71c660e36@gmx.de>
-In-Reply-To: <244987da-f6d8-47a8-ac4a-16a71c660e36@gmx.de>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 1 Aug 2026 13:11:25 +0100
-X-Gm-Features: AUfX_mw6FMB1j47_BSEB6mE72Q92qufkdI8m2ML_DxyrqcsjEj2266zwiq3eM6I
-Message-ID: <CAFEAcA9F8rauUNc2NAqbnf1f7-0O_ivft1XOftwt1hW0YWeeJw@mail.gmail.com>
-Subject: Re: [PATCH] linux-user: Fix msqid_ds struct wrt 32-bit big endian
- architectures
-To: Helge Deller <deller@gmx.de>
-Cc: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ AHgh+RrqCDbMOSNSZVs0HIAUGKbCA1QGonmBP6C3QCgr6PaIcHcO/I5ueDarHIuMPPv8rNhafluM6Qha3YJI@nongnu.org
+X-Gm-Message-State: AOJu0YyWhHsoru32DkAkQ05MYU3svwIx+3M4/wC7exAXQNmK6N7WedEl
+ Zb2MbYxRi9qOgHYurO6pAw/VL+TXNWsruD5zMhT+TD+nSq78W0vDKAZq/zvO3kl3lip6EqJsinC
+ ZEYEkc+WRAuLDnoumG1GYTC/ujdIlnglEoja780gEgeKqZANDYUS85ya5
+X-Gm-Gg: AR+sD13tH3gihlTZiFTm3ivkICn45elenpL+HTs5LK82NZNOWlmN8D5RU4HusG1vOEE
+ vyMP7m9RakdNnm0FN7ONEDrtmz0pmMRMkSdXQB8090rHp8+fxtzkfxoOmltl/H6RFUmZJ+K483P
+ 9G0j5eGJ0NgFVQXUvbva11cMXyBSFumlJq1KA9ngBkeg3KJfIxCaW7tQTRj73t2IDY1k7k99yHs
+ OpJHxLWQq/45/x3iP5ZtyFdi+6AOvsPW46fcHqVWZoUEnIEOcVF3MsNlzqS6AcO+N/gYckrdxCm
+ GQw65cmvb2SL8EyrJg+olNr26HamZt3139XySH67FlFvX0Bq6+5nUvJAqOuwCvR6aoLusjR/CbS
+ TkaZ4O/7OUuxsaPZvuSlpd0iStMkla4yttL2+DGG9ZghpukD9tUGurjc=
+X-Received: by 2002:a17:90b:524b:b0:38f:2168:b9cb with SMTP id
+ 98e67ed59e1d1-38fbc3e5c67mr2847914a91.9.1785587292120; 
+ Sat, 01 Aug 2026 05:28:12 -0700 (PDT)
+X-Received: by 2002:a17:90b:524b:b0:38f:2168:b9cb with SMTP id
+ 98e67ed59e1d1-38fbc3e5c67mr2847892a91.9.1785587291654; 
+ Sat, 01 Aug 2026 05:28:11 -0700 (PDT)
+Received: from smtpclient.apple ([223.236.229.143])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3153e06fc98sm16791963eec.21.2026.08.01.05.28.09
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Sat, 01 Aug 2026 05:28:11 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
+Subject: Re: [PATCH v3 2/9] igvm: track memory regions
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <96ad911f-6f07-4616-b911-617dde2f12de@csgraf.de>
+Date: Sat, 1 Aug 2026 17:57:56 +0530
+Cc: Gerd Hoffmann <kraxel@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Alexander Graf <graf@amazon.com>,
+ qemu-devel <qemu-devel@nongnu.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <C1C5D784-4C75-4FE6-BEEA-F879C73E0D7B@redhat.com>
+References: <20260730071254.80695-1-anisinha@redhat.com>
+ <20260730071254.80695-3-anisinha@redhat.com>
+ <96ad911f-6f07-4616-b911-617dde2f12de@csgraf.de>
+To: Alexander Graf <agraf@csgraf.de>
+X-Mailer: Apple Mail (2.3864.600.51.1.1)
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,111 +127,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 31 Jul 2026 at 20:36, Helge Deller <deller@gmx.de> wrote:
->
-> Hello Peter,
->
-> On 7/31/26 20:05, Peter Maydell wrote:
-> > On Tue, 28 Jul 2026 at 20:32, Helge Deller <deller@kernel.org> wrote:
-> >>
-> >> From: Helge Deller <deller@gmx.de>
-> >>
-> >> Make sure that the time entries (msg_stime, msg_rtime and msg_ctime)
-> >> are defined as 64-bit time_t values, since the userspace may access
-> >> the whole 64-bit value. By this change we fix the word ordering for
-> >> 32-bit big endian architectures as well.
-> >>
-> >> This fixes the msgctl01 LTP testcase on hppa32.
-> >>
-> >> Signed-off-by: Helge Deller <deller@gmx.de>
-> >> ---
-> >>   linux-user/syscall.c | 30 ++++++++++++------------------
-> >>   1 file changed, 12 insertions(+), 18 deletions(-)
-> >>
-> >> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> >> index 740142825d..c93b770ced 100644
-> >> --- a/linux-user/syscall.c
-> >> +++ b/linux-user/syscall.c
-> >> @@ -4216,21 +4216,15 @@ static inline abi_long do_semtimedop(int semid,
-> >>   }
-> >>   #endif
-> >
-> > I see this has already gone into git, but some late review
-> > comments. I suspect this is mostly me being confused rather
-> > than actual problems.
-> >
-> >>
-> >> +#define target_time64_t         abi_ullong
-> >> +#define target_swap_time64(x)   tswap64(x)
-> >> +
-> >>   struct target_msqid_ds
-> >
-> > Is this the kernel's "struct msqid_ds" (which it calls "Obsolete, used
-> > only for backwards compatibility and libc5 compiles") or its msqid64_ds?
->
-> Yes, it's msqid64_ds.
->
-> > The layout matches msqid64_ds, which makes our struct a bit
-> > confusingly named.
->
-> True.
-> In a follow-up patch this better should be renamed to target_msqid64_ds.
->
-> >>   {
-> >>       struct target_ipc_perm msg_perm;
-> >> -    abi_ulong msg_stime;
-> >> -#if TARGET_ABI_BITS == 32
-> >> -    abi_ulong __unused1;
-> >> -#endif
-> >> -    abi_ulong msg_rtime;
-> >> -#if TARGET_ABI_BITS == 32
-> >> -    abi_ulong __unused2;
-> >> -#endif
-> >> -    abi_ulong msg_ctime;
-> >> -#if TARGET_ABI_BITS == 32
-> >> -    abi_ulong __unused3;
-> >> -#endif
-> >> +    target_time64_t msg_stime;
-> >> +    target_time64_t msg_rtime;
-> >> +    target_time64_t msg_ctime;
-> >
-> > Assuming msqid64_ds, the kernel version of this struct has a comment:
-> >   * 64 bit architectures use a 64-bit long time field here, while
-> >   * 32 bit architectures have a pair of unsigned long values.
-> >   * On big-endian systems, the lower half is in the wrong place.
->
-> Those comments are from the generic header:
-> include/uapi/asm-generic/msgbuf.h
-> and I think the last sentence about big-endian systems is wrong, as
-> most platforms provide an own architecture-specific header file, e.g:
-> arch/xtensa/include/uapi/asm/msgbuf.h
-> and the big-endian platforms seem to have their high-word first.
 
-The comment is correct for any bigendian 32-bit system that
-uses the kernel's asm-generic structure. Maybe there just aren't
-any of those that we care about?
 
-> > That would make tswap64() not the right swap for 32-bit big
-> > endian guests.
->
-> I did my testing on the 32-bit hppa/parisc platform, and with my patch
-> the results in qemu were correct and were the same as on physical machines.
->
-> I just tried in a 32-bit powerpc chroot and the msgctl01 now succeeds there as well.
-> So, I think my patch is generally ok.
+> On 31 Jul 2026, at 3:28=E2=80=AFPM, Alexander Graf <agraf@csgraf.de> =
+wrote:
+>=20
+>=20
+> On 30.07.26 09:12, Ani Sinha wrote:
+>> From: Gerd Hoffmann <kraxel@redhat.com>
+>>=20
+>> Memory regions added by the current IGVM needs to be tracked so that =
+they can be
+>> freed when a new IGVM is loaded.
+>>=20
+>> Reviewed-by: Ani Sinha <anisinha@redhat.com>
+>> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+>> ---
+>>  backends/igvm-cfg.c            |  1 +
+>>  backends/igvm.c                | 20 ++++++++++++--------
+>>  include/system/igvm-internal.h |  6 ++++++
+>>  3 files changed, 19 insertions(+), 8 deletions(-)
+>>=20
+>> diff --git a/backends/igvm-cfg.c b/backends/igvm-cfg.c
+>> index e1f09855f6..38438a7b1e 100644
+>> --- a/backends/igvm-cfg.c
+>> +++ b/backends/igvm-cfg.c
+>> @@ -65,6 +65,7 @@ static void igvm_complete(UserCreatable *uc, Error =
+**errp)
+>>      IgvmCfg *igvm =3D IGVM_CFG(uc);
+>>        igvm->file =3D qigvm_file_init(igvm->filename, errp);
+>> +    QTAILQ_INIT(&igvm->memory_regions);
+>>  }
+>>    OBJECT_DEFINE_TYPE_WITH_INTERFACES(IgvmCfg, igvm_cfg, IGVM_CFG, =
+OBJECT,
+>> diff --git a/backends/igvm.c b/backends/igvm.c
+>> index 534032fed8..9e7c90d386 100644
+>> --- a/backends/igvm.c
+>> +++ b/backends/igvm.c
+>> @@ -220,7 +220,7 @@ static void *qigvm_prepare_memory(QIgvm *ctx, =
+uint64_t addr, uint64_t size,
+>>                                    int region_identifier, Error =
+**errp)
+>>  {
+>>      ERRP_GUARD();
+>> -    MemoryRegion *igvm_pages =3D NULL;
+>> +    IgvmMemoryRegion *imr =3D NULL;
+>>      Int128 gpa_region_size;
+>>      MemoryRegionSection mrs =3D
+>>          memory_region_find(get_system_memory(), addr, size);
+>> @@ -254,23 +254,27 @@ static void *qigvm_prepare_memory(QIgvm *ctx, =
+uint64_t addr, uint64_t size,
+>>           */
+>>          g_autofree char *region_name =3D
+>>              g_strdup_printf("igvm.%X", region_identifier);
+>> -        igvm_pages =3D g_new0(MemoryRegion, 1);
+>> +        imr =3D g_new0(IgvmMemoryRegion, 1);
+>> +        imr->mr =3D g_new0(MemoryRegion, 1);
+>>          if (ctx->machine_state->cgs &&
+>>              ctx->machine_state->cgs->require_guest_memfd) {
+>> -            if (!memory_region_init_ram_guest_memfd(igvm_pages, =
+NULL,
+>> +            if (!memory_region_init_ram_guest_memfd(imr->mr, NULL,
+>=20
+>=20
+> Please make sure to track them with owner set to =
+OBJECT(ctx->machine_state).
 
-Yeah, 32-bit powerpc also provides its own structure definition.
+This will not work as the owner will have to be of TYPE_DEVICE not of =
+TYPE_MACHINE.
 
-I think it's worth having a comment about this, at least, because
-otherwise the obvious assumption is that our struct which has
-no target-specific ifdefs is supposed to match the kernel's
-asm-generic struct.
+> Without owner, reference counting is disabled and we end up leaking =
+memory regions on cleanup you introduce in patch 3 later.
+>=20
+>=20
+> Alex
 
-We could alternatively follow the kernel more closely in having our
-generic struct match the kernel's and then having the archs which
-have custom versions override that, but that would be a bunch of
-extra work to get to the same place in the end.
 
-thanks
--- PMM
 
