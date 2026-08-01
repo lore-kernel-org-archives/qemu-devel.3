@@ -4,85 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 285CCC55173
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Aug 2026 16:36:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 623FAC55172
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Aug 2026 17:18:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqCgN-0006TY-J0; Sat, 01 Aug 2026 12:35:31 -0400
+	id 1wqDLL-0007Dt-9Q; Sat, 01 Aug 2026 13:17:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wqCgM-0006TA-1H
- for qemu-devel@nongnu.org; Sat, 01 Aug 2026 12:35:30 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wqCgK-000704-1Q
- for qemu-devel@nongnu.org; Sat, 01 Aug 2026 12:35:29 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-8485b358552so2284542b3a.2
- for <qemu-devel@nongnu.org>; Sat, 01 Aug 2026 09:35:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785602126; x=1786206926; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=kPldCZGbcZmVcaN2Dkp+QTsRTaWOwqsDnM4M2w5J35k=;
- b=MYoWXI2rdv/cKxHDsBPQ1enWvPaCgb7Drvpnwxn5pH0VY9AxH4Tw2dxOASjEpuT9lw
- icxA+Z0g+qLyeFzrZbQTXbqchnyJDphkznz/Tr89XnNGIcmj58kDd4ufwEK6Oji6ga8A
- +E3QUqj3ADjrFyojoslpQSUaq7051Q9nRD0OE5nm2kFmfKpTGTmZ0vLqG78mDkTSmSFh
- ftPOlxEc1etEa6YjOsRBkl5waYhspYPhzUobB/EsbiVCLKzAbBB7hA8G5HGhgwk8q/CN
- ODgVGz+BLbTDcCL6QTNR57ae0/HqwyxlxcHt63ZyaLv/INaFmtxilIsBv8ks+oUWMMNu
- XQHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785602126; x=1786206926;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=kPldCZGbcZmVcaN2Dkp+QTsRTaWOwqsDnM4M2w5J35k=;
- b=Ulpf3owL8O1TXc7CBRW2PaUDFxn5AIC/6ceXG1pwlUqJrcex7Rn6A5cjiMwQfLbAX4
- SSGrd9BKmABkEKZY2hNZyXBW8O5Jq5+WyIh2YO/c1t8neJWiliZAGJgvUtdDdURXdjol
- kmvCzy8CVjszT8Rgorm7sP/2l7UAN11V57pNsXsjttW8wySWglq6QqbpM+x+kockIp5W
- Cr77Is6qEb07K/4/c0YxyE6+4IrX2jD5r7VGXenBdfxtRC8bXJZuLS9atQ+6aOOyU5mi
- ZYqR60FniDwV07qrlKWfkn3jIpL9o0N6VZXUZm4ZKBdz08AlExIsKtHdUYQSk4bUNBp0
- dPjg==
-X-Gm-Message-State: AOJu0YyfgWGGyXxIM7WDX39XQTcz7CIBiSRBxceoZkIvl2t6D9kFuVMB
- LDV22we3A0ZHBBPLqstonp4pM61AeCM6032x5t44LPu9VrXT1WKbGHb5+KnRpo401kVQ156yc/H
- YelqL
-X-Gm-Gg: AR+sD12fNdIZmkxQvfIEvFvKc0+b6J0HQjI3H1SS7RDKg2iWKLFIXS04jbZ79zTyXzG
- M/jvrLf2Iqv0lgfRMsysZLosovpmELnJdPbe0uwbQPmFdd6d+3sZnKxG9xX1wZnXeGXEH9x0yyq
- 2UIQjCzDA/fidzUz2G1GNpEXCFL7zOFzmfpkMogsu5gIdEReTWvcsfJ8Q/Udn1HbXk9WhJrN8sQ
- onSlcUo8zDoDdp7B81BHaDqCL/KjXOxNsddlkVwUNgwqODhmLVPJD16dSOsR5sQjeuj/mu25BsH
- tSTidiAr8B0jZN24e/r3QfGoRis3W3HzoyIuNr0uYZab1iy2kGZI6i+zeKD8Fw6Com8rpvQYdY7
- 96mtGd7Ocp0YWkku28XEWti0RGD3y8FaLqfEqAwUiw8b6osx6Cn4EzetFtBifgljR53ZUW5rH8Z
- K2GrMuYdLFx7jl7tpqCA93r03NuAClUGaknzFyJ9hUp3z0kPJEE9jYvaJt+hMj19B7gZalwn4p3
- KTET+AVa0LD2wsmJn4U
-X-Received: by 2002:a05:6a00:3012:b0:845:3fea:96c with SMTP id
- d2e1a72fcca58-84ee4800c6bmr3531776b3a.21.1785602125978; 
- Sat, 01 Aug 2026 09:35:25 -0700 (PDT)
-Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-84ee1b049e5sm1392819b3a.58.2026.08.01.09.35.25
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 01 Aug 2026 09:35:25 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 0/1] target/i386 patch queue
-Date: Sat,  1 Aug 2026 09:35:23 -0700
-Message-ID: <20260801163524.62111-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wqDLH-0007Bk-LF
+ for qemu-devel@nongnu.org; Sat, 01 Aug 2026 13:17:47 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wqDL9-00039b-0q
+ for qemu-devel@nongnu.org; Sat, 01 Aug 2026 13:17:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=z7vIW4BHjacOOTizPQ55dTU8g8m53OULKUyiaJqt/W4=; b=he0n8xgzyt2hI2bW
+ 1tr6v5rsnvCO/LMv49Lxcvp2Nb2ZyXZpifzZhAEwDV/jcSEDJMz8wwbD43XIAGE6BWstM2fUhKM+U
+ NAkKg9oZugO9nZ8W9i+jJFtqJchx0mvIrRZ8Zz0MZYd8k9wKFLnM5UcfxZP5c5w69aay3V6ccraru
+ UbotcYZhK6Sjjayq0TiFa7BsKxpHFDoBfgdzZZ7SMmDdSMzCePSiU1tABOA5J36jFZYelsT8DR4j3
+ S8X3TcYdeZs8AebKbzEycW+mp4g1vXt/HAnkUl4xdEfAZYmW5+5ZSPyAg2pDUO7yNyZZAkXNw53dA
+ gx/vqcfym/t8xt+YpA==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1wqDL4-000000009Kn-0aH2;
+ Sat, 01 Aug 2026 17:17:34 +0000
+Date: Sat, 1 Aug 2026 17:17:34 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Tripp R <tripprobins@gmail.com>, hreitz@redhat.com, kwolf@redhat.com
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] added the inpsect block command ('xb') to print the
+ contents within a block device to the monitor.
+Message-ID: <am4qLtVApsOMHqis@gallifrey>
+References: <20260726-xbcmd-v1-1-0ddbdcf82fcb@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <20260726-xbcmd-v1-1-0ddbdcf82fcb@gmail.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.100+deb13-amd64 (x86_64)
+X-Uptime: 16:45:21 up 22:47,  3 users,  load average: 0.00, 0.02, 0.00
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,25 +69,249 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit b428fe036233cbd15d37e3c027ab6ca4d3661a80:
+* Tripp R (tripprobins@gmail.com) wrote:
+> 'xb' (examine block) is almost identical in usage to 'x' and 'xp', having the same targuments for those commands , albeit preceded by a drive name.
 
-  Merge tag 'pull-target-arm-20260731' of https://gitlab.com/pm215/qemu into staging (2026-07-31 16:19:04 -0400)
+Hi Tripp,
+  Thanks for resending this.  Note that normally you'd mark this as being a 'v2' version.
+I'm copying in Kevin and Hanna from the Block layer; although there's still
+some work to do here.
 
-are available in the Git repository at:
+> ---
+> Implemented the xb (examine block) command to print the contents of a block     device to the console.
+> 
+> It is effectively a clone of the x/xp commands (examine memory / examine        physical memory), having the same arguments for those commands, albeit preceded by the name of a block driver.
 
-  https://gitlab.com/rth7680/qemu.git tags/pull-i386-20260801
+OK, these are still a bit weirdly formatted; you seem to have spaces added between 'block device'
+and 'examine physical' rather than the line actually being broken into two lines.
 
-for you to fetch changes up to c25f69595ad052473463540f4d7944b9b73e94ec:
+> 
+> e.g. usage
+>          xd floppy0 /510c 0
 
-  target/i386: Update cc_op for SAHF (2026-08-01 09:33:18 -0700)
+Remember to include the explanation.
 
-----------------------------------------------------------------
-target/i386: Update cc_op for SAHF
+Also, I'd shorten the subject, something like
+  [PATCH] Add the inspect block command ('xb')
 
-----------------------------------------------------------------
-Richard Henderson (1):
-      target/i386: Update cc_op for SAHF
+> Signed-off-by: Tripp R <tripprobins@gmail.com>
+> ---
+>  hmp-commands.hx       |  14 +++++++
+>  include/monitor/hmp.h |   1 +
+>  monitor/hmp-cmds.c    | 104 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 119 insertions(+)
+> 
+> diff --git a/hmp-commands.hx b/hmp-commands.hx
+> index 7ae2468a3d..db63b58a47 100644
+> --- a/hmp-commands.hx
+> +++ b/hmp-commands.hx
+> @@ -472,6 +472,20 @@ ERST
+>          .cmd        = hmp_memory_dump,
+>      },
+>  
+> +SRST
+> +``xb/``\ *fmt* *addr*
+> +  Block memory dump starting at *addr*.
 
- target/i386/tcg/emit.c.inc | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+Block *device* not memory - or just 'Block dump'
+
+> +ERST
+> +
+> +    {
+> +        .name       = "xb",
+> +        .args_type  = "device:s, fmt:/,addr:l",
+> +        .params     = "device /fmt addr",
+> +        .help       = "block memory dump starting at 'addr'",
+
+again not 'block memory'
+
+> +        .cmd        = hmp_block_dump,
+> +    },
+> +
+> +
+>  SRST
+>  ``x/``\ *fmt* *addr*
+>    Virtual memory dump starting at *addr*.
+
+> diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+> index 9258a049bf..0c3e8a30c2 100644
+> --- a/include/monitor/hmp.h
+> +++ b/include/monitor/hmp.h
+> @@ -182,6 +182,7 @@ void hmp_info_local_apic(Monitor *mon, const QDict *qdict);
+>  void hmp_info_sev(Monitor *mon, const QDict *qdict);
+>  void hmp_info_sgx(Monitor *mon, const QDict *qdict);
+>  void hmp_info_via(Monitor *mon, const QDict *qdict);
+> +void hmp_block_dump(Monitor *mon, const QDict *qdict);
+>  void hmp_memory_dump(Monitor *mon, const QDict *qdict);
+>  void hmp_physical_memory_dump(Monitor *mon, const QDict *qdict);
+>  void hmp_info_registers(Monitor *mon, const QDict *qdict);
+> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+> index e9fb8d827a..5d4a6c6a78 100644
+> --- a/monitor/hmp-cmds.c
+> +++ b/monitor/hmp-cmds.c
+> @@ -39,8 +39,12 @@
+>  #include "system/hw_accel.h"
+>  #include "system/memory.h"
+>  #include "system/system.h"
+> +#include "system/block-backend-common.h"
+> +#include "system/block-backend-io.h"
+> +#include "system/block-backend-global-state.h"
+>  #include "disas/disas.h"
+>  
+> +
+
+Stray extra line
+
+>  /* Please update hmp-commands.hx when adding or changing commands */
+>  static HMPCommand hmp_info_cmds[] = {
+>  #include "hmp-commands-info.h"
+> @@ -584,6 +588,89 @@ void hmp_info_registers(Monitor *mon, const QDict *qdict)
+>      }
+>  }
+>  
+> +
+> +static void block_dump(Monitor *mon, BlockBackend* blk, int count, int format, 
+> +    int wsize, int64_t offset)
+> +{
+> +    uint8_t buf[16];
+> +
+> +    uint16_t max_digits = 0;
+> +
+> +    switch (format) {
+> +    case 'o':
+> +        max_digits = DIV_ROUND_UP(wsize * 8, 3);
+> +        break;
+> +    default:
+> +    case 'x':
+> +        max_digits = (wsize * 8) / 4;
+> +        break;
+> +    case 'u':
+> +    case 'd':
+> +        max_digits = DIV_ROUND_UP(wsize * 8 * 10, 33);
+> +        break;
+> +    case 'c':
+> +        wsize = 1;
+> +        break;
+> +    }
+
+This code is a copy/paste out of memory_dump; it's always best
+to avoid copy paste - so if you can move this code out of memory_dump
+into a function - e.g. digits_for_format say, and then just call
+it from both places it would be best.
+
+> +    while (count > 0) {
+> +        int bytes = MIN(16, count * wsize);
+> +
+> +        if (blk_pread(blk, offset, bytes, buf, 0) < 0) {
+> +            monitor_printf(mon,
+> +                           "Read failed at 0x%" PRIx64 "\n",
+> +                           offset);
+> +            return;
+> +        }
+> +
+> +        monitor_printf(mon, "%08" PRIx64 ": ", offset);
+> +
+> +        for (int i = 0; i < bytes; i += wsize) {
+> +            uint64_t v;
+> +
+> +            switch (wsize) {
+> +            case 1:
+> +                v = buf[i];
+> +                break;
+> +            case 2:
+> +                v = lduw_le_p(buf + i);
+> +                break;
+> +            case 4:
+> +                v = ldl_le_p(buf + i);
+> +                break;
+> +            case 8:
+> +                v = ldq_le_p(buf + i);
+> +                break;
+
+I don't think you need to use the magic ld*_le_p functions here - those
+are normally used for access to guest ram, which the 'x' command does;
+you can use normal C casts etc here.
+
+> +            default:
+> +                v=0;
+> +            }
+> +            switch (format) {
+> +            case 'o':
+> +                monitor_printf(mon, "0%*" PRIo64, max_digits, v);
+> +                break;
+> +            case 'x':
+> +                monitor_printf(mon, "0x%0*" PRIx64, max_digits, v);
+> +                break;
+> +            case 'u':
+> +                monitor_printf(mon, "%*" PRIu64, max_digits, v);
+> +                break;
+> +            case 'd':
+> +                monitor_printf(mon, "%*" PRId64, max_digits, v);
+> +                break;
+> +            case 'c':
+> +                monitor_printc(mon, v);
+> +                break;
+> +            }
+> +        }
+
+Again this is a block of code copied from memory_dump; so better
+to share a function rather than copy.
+
+> +        monitor_printf(mon, "\n");
+> +
+> +        offset += bytes;
+> +        count -= bytes / wsize;
+
+OK, so you're printing one entry per line rather than memory_dump's
+fancier trick of printing a few on a line; I prefer memory_dumps way
+of doing it - your example dump of 510 bytes must be annoying to scroll
+through!
+
+Dave
+
+> +    }
+> +}
+> +
+>  static void memory_dump(Monitor *mon, int count, int format, int wsize,
+>                          uint64_t addr, bool is_physical)
+>  {
+> @@ -692,6 +779,23 @@ static void memory_dump(Monitor *mon, int count, int format, int wsize,
+>      }
+>  }
+>  
+> +void hmp_block_dump(Monitor *mon, const QDict *qdict)
+> +{
+> +    int count = qdict_get_int(qdict, "count");
+> +    int format = qdict_get_int(qdict, "format");
+> +    int size = qdict_get_int(qdict, "size");
+> +    vaddr addr = qdict_get_int(qdict, "addr");
+> +    const char* dblock = qdict_get_str(qdict, "device");
+> +
+> +    BlockBackend *blk = blk_by_name(dblock);
+> +
+> +    if (!blk) {
+> +        monitor_printf(mon, "Invalid block device name '%s'.\n\r", dblock);
+> +        return;
+> +    }
+> +    block_dump(mon,blk, count, format, size, addr);
+> +}
+> +
+>  void hmp_memory_dump(Monitor *mon, const QDict *qdict)
+>  {
+>      int count = qdict_get_int(qdict, "count");
+> 
+> ---
+> base-commit: 443e02410695b35a27fad18217424b6370358be7
+> change-id: 20260726-xbcmd-7fa889067f15
+> 
+> Best regards,
+> -- 
+> Tripp R <tripprobins@gmail.com>
+> 
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
