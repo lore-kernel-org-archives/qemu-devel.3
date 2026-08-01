@@ -4,84 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C03BC55174
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 285CCC55173
 	for <qemu-devel@archiver.kernel.org>; Sat,  1 Aug 2026 16:36:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqCgO-0006U0-Uj; Sat, 01 Aug 2026 12:35:32 -0400
+	id 1wqCgN-0006TY-J0; Sat, 01 Aug 2026 12:35:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wqCgM-0006TI-Og
+ id 1wqCgM-0006TA-1H
  for qemu-devel@nongnu.org; Sat, 01 Aug 2026 12:35:30 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wqCgL-000708-8R
- for qemu-devel@nongnu.org; Sat, 01 Aug 2026 12:35:30 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-84830c774a0so2020658b3a.1
- for <qemu-devel@nongnu.org>; Sat, 01 Aug 2026 09:35:28 -0700 (PDT)
+ id 1wqCgK-000704-1Q
+ for qemu-devel@nongnu.org; Sat, 01 Aug 2026 12:35:29 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-8485b358552so2284542b3a.2
+ for <qemu-devel@nongnu.org>; Sat, 01 Aug 2026 09:35:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785602127; x=1786206927; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=6jl/iPB3Wi7SsOT6gDvjuoDVlsE5CkYEVKruv5Tv6x4=;
- b=Li5qm3V7bEpAe2N86rJnGH1qGIuf57fGONV8GeiAaLnrVUHHOdf5qUmvj/5xshuJD8
- B+LFpFF2KL4QEQNPCBRSpRTDNeal5zAPEBUvbV2JjfIbtggXvWXVW48vqiC5mAp0U6GK
- fHJPvKbvhuttNzEI1eB55Ma3USBxSC7mq3YV1eocf7hgcYJRvhUMGFXNPcK5KabQn1XI
- vF1FuDQKs7Rnh2CF5O9WiZ4HiRZMvXhm86UEzToB9trwaSWmpZ94RqXkEiVvV0w2PL5W
- BZGsYNfCi0NkJIF/UcjDHdbxd9O1PcaIirKxjT4Z2ZKN+Vma1ALkV2bHg7lBvbIo2teg
- 3krA==
+ d=linaro.org; s=google; t=1785602126; x=1786206926; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=kPldCZGbcZmVcaN2Dkp+QTsRTaWOwqsDnM4M2w5J35k=;
+ b=MYoWXI2rdv/cKxHDsBPQ1enWvPaCgb7Drvpnwxn5pH0VY9AxH4Tw2dxOASjEpuT9lw
+ icxA+Z0g+qLyeFzrZbQTXbqchnyJDphkznz/Tr89XnNGIcmj58kDd4ufwEK6Oji6ga8A
+ +E3QUqj3ADjrFyojoslpQSUaq7051Q9nRD0OE5nm2kFmfKpTGTmZ0vLqG78mDkTSmSFh
+ ftPOlxEc1etEa6YjOsRBkl5waYhspYPhzUobB/EsbiVCLKzAbBB7hA8G5HGhgwk8q/CN
+ ODgVGz+BLbTDcCL6QTNR57ae0/HqwyxlxcHt63ZyaLv/INaFmtxilIsBv8ks+oUWMMNu
+ XQHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785602127; x=1786206927;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=6jl/iPB3Wi7SsOT6gDvjuoDVlsE5CkYEVKruv5Tv6x4=;
- b=aYQm6HVri5GrBWz3VHfJ7H7yjx+6V3gXwRoi7SIARjIsVSiwiU0aKToB4dYVoWjhWu
- E+JQzW8glh5omstYi9Tg7m8g1Bq3Ufm4dGK9Jgtqug9VM20nm6fziy/2U+GjqACYzD2g
- O3UfjQLhs2cA+lL21Jolr9EquVTUlGyA9Au8EImo64HBpEnIvmESYpe+PdMjhraL09S3
- wpHryKV5C9AQaDcHKGBXZ9bSvJRTzQv0KjXOvqEMj9Y9ZTKRxe9smrjMtzWK20ql5kJz
- cgqN/yUKiIkBXxOW957Bac88N5cGlr9ydUY/Z8NpEFSt04C1IkqVxkbn94q1pFy9iJvT
- M2yw==
-X-Gm-Message-State: AOJu0Yx02paa5QFs4e1WfkMU0U/ir8xUQUIKtrgaecuVR4Gbex5etG7T
- HMyEeODoktckXw7/nBuEHuVB2jUpusI9OEY4FvRPYdJYfwHr3m+us5w5aAqBFbCN9uNXlwgvgTH
- DFOm8
-X-Gm-Gg: AR+sD12PXMygF/78VxYccjNuKYm/QYBXBjXkXSukocB85bYefuDv6tUNToZW5ftPb0N
- 0/u8eYmTmuXqrP7Z5EIQ0BlsbUrfvD6LFMAeD16G8r/1pgoh5FS10SrD8FEml9+B64oVp2soXng
- Q3vDvp12tB5UXvUhre3TMWxUDz0KYLW8LL49ZiSQ8i0l746aBIRN/hSDMNumLJgIg6MCahZnloi
- DFsY+j1nzOy1mrx1mESb8dKcMxeW9Sn8IpVNMl44zjs8YvxE01P9YxH7PJBI3c/VoNkjQlm65uH
- NRrc+8an4/v7aEiEwL8vAyGdaRLsdLOXvO2zMXaajx5srO8x7XQckbPS/54FDz+4LtxgvQ1s2WB
- jVcSexhnmwTsT0W3peEOKWVRHoH8qzHz8/J4P0lYufq0HgEgILoNRhmW1zV9b2OYC9sZrTvn0EQ
- zodAtUF/tIwztWEgjVjQDzL7qmJYSK7+H7fvxIto2bjXJ+YHi7tcsc8W6zbrHr5rZab7oV3I47F
- jS4VSp4by4tNL/WZ4hf
-X-Received: by 2002:a05:6a00:430b:b0:845:d285:3b6e with SMTP id
- d2e1a72fcca58-84ee48f431bmr3461553b3a.58.1785602127280; 
- Sat, 01 Aug 2026 09:35:27 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785602126; x=1786206926;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=kPldCZGbcZmVcaN2Dkp+QTsRTaWOwqsDnM4M2w5J35k=;
+ b=Ulpf3owL8O1TXc7CBRW2PaUDFxn5AIC/6ceXG1pwlUqJrcex7Rn6A5cjiMwQfLbAX4
+ SSGrd9BKmABkEKZY2hNZyXBW8O5Jq5+WyIh2YO/c1t8neJWiliZAGJgvUtdDdURXdjol
+ kmvCzy8CVjszT8Rgorm7sP/2l7UAN11V57pNsXsjttW8wySWglq6QqbpM+x+kockIp5W
+ Cr77Is6qEb07K/4/c0YxyE6+4IrX2jD5r7VGXenBdfxtRC8bXJZuLS9atQ+6aOOyU5mi
+ ZYqR60FniDwV07qrlKWfkn3jIpL9o0N6VZXUZm4ZKBdz08AlExIsKtHdUYQSk4bUNBp0
+ dPjg==
+X-Gm-Message-State: AOJu0YyfgWGGyXxIM7WDX39XQTcz7CIBiSRBxceoZkIvl2t6D9kFuVMB
+ LDV22we3A0ZHBBPLqstonp4pM61AeCM6032x5t44LPu9VrXT1WKbGHb5+KnRpo401kVQ156yc/H
+ YelqL
+X-Gm-Gg: AR+sD12fNdIZmkxQvfIEvFvKc0+b6J0HQjI3H1SS7RDKg2iWKLFIXS04jbZ79zTyXzG
+ M/jvrLf2Iqv0lgfRMsysZLosovpmELnJdPbe0uwbQPmFdd6d+3sZnKxG9xX1wZnXeGXEH9x0yyq
+ 2UIQjCzDA/fidzUz2G1GNpEXCFL7zOFzmfpkMogsu5gIdEReTWvcsfJ8Q/Udn1HbXk9WhJrN8sQ
+ onSlcUo8zDoDdp7B81BHaDqCL/KjXOxNsddlkVwUNgwqODhmLVPJD16dSOsR5sQjeuj/mu25BsH
+ tSTidiAr8B0jZN24e/r3QfGoRis3W3HzoyIuNr0uYZab1iy2kGZI6i+zeKD8Fw6Com8rpvQYdY7
+ 96mtGd7Ocp0YWkku28XEWti0RGD3y8FaLqfEqAwUiw8b6osx6Cn4EzetFtBifgljR53ZUW5rH8Z
+ K2GrMuYdLFx7jl7tpqCA93r03NuAClUGaknzFyJ9hUp3z0kPJEE9jYvaJt+hMj19B7gZalwn4p3
+ KTET+AVa0LD2wsmJn4U
+X-Received: by 2002:a05:6a00:3012:b0:845:3fea:96c with SMTP id
+ d2e1a72fcca58-84ee4800c6bmr3531776b3a.21.1785602125978; 
+ Sat, 01 Aug 2026 09:35:25 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-84ee1b049e5sm1392819b3a.58.2026.08.01.09.35.26
+ d2e1a72fcca58-84ee1b049e5sm1392819b3a.58.2026.08.01.09.35.25
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 01 Aug 2026 09:35:26 -0700 (PDT)
+ Sat, 01 Aug 2026 09:35:25 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Quante <christian@quante.one>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 1/1] target/i386: Update cc_op for SAHF
-Date: Sat,  1 Aug 2026 09:35:24 -0700
-Message-ID: <20260801163524.62111-2-richard.henderson@linaro.org>
+Subject: [PULL 0/1] target/i386 patch queue
+Date: Sat,  1 Aug 2026 09:35:23 -0700
+Message-ID: <20260801163524.62111-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260801163524.62111-1-richard.henderson@linaro.org>
-References: <20260801163524.62111-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,41 +99,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Removing the call to gen_compute_eflags meant we no longer
-updated cc_op after computing EFLAGS.
+The following changes since commit b428fe036233cbd15d37e3c027ab6ca4d3661a80:
 
-Cc: qemu-stable@nongnu.org
-Fixes: da7649c6aeef ("target/i386/tcg: do not compute all flags for SAHF")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3537
-Tested-by: Christian Quante <christian@quante.one>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
+  Merge tag 'pull-target-arm-20260731' of https://gitlab.com/pm215/qemu into staging (2026-07-31 16:19:04 -0400)
+
+are available in the Git repository at:
+
+  https://gitlab.com/rth7680/qemu.git tags/pull-i386-20260801
+
+for you to fetch changes up to c25f69595ad052473463540f4d7944b9b73e94ec:
+
+  target/i386: Update cc_op for SAHF (2026-08-01 09:33:18 -0700)
+
+----------------------------------------------------------------
+target/i386: Update cc_op for SAHF
+
+----------------------------------------------------------------
+Richard Henderson (1):
+      target/i386: Update cc_op for SAHF
+
  target/i386/tcg/emit.c.inc | 9 ++++++---
  1 file changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index e4ef5a8758..473f415766 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -3780,10 +3780,13 @@ static void gen_SAHF(DisasContext *s, X86DecodedInsn *decode)
-         return gen_illegal_opcode(s);
-     }
-     tcg_gen_shri_tl(s->T0, cpu_regs[R_EAX], 8);
--    gen_neg_setcc(s, JCC_O << 1, cpu_cc_src);
--    tcg_gen_andi_tl(cpu_cc_src, cpu_cc_src, CC_O);
-+    gen_neg_setcc(s, JCC_O << 1, s->T1);
-+    tcg_gen_andi_tl(s->T1, s->T1, CC_O);
-     tcg_gen_andi_tl(s->T0, s->T0, CC_S | CC_Z | CC_A | CC_P | CC_C);
--    tcg_gen_or_tl(cpu_cc_src, cpu_cc_src, s->T0);
-+    tcg_gen_or_tl(s->T0, s->T0, s->T1);
-+
-+    decode->cc_src = s->T0;
-+    decode->cc_op = CC_OP_EFLAGS;
- }
- 
- static void gen_SALC(DisasContext *s, X86DecodedInsn *decode)
--- 
-2.43.0
-
 
