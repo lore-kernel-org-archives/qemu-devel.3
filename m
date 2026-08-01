@@ -4,100 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2CBFC55172
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Aug 2026 11:51:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90523C55172
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Aug 2026 12:03:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wq8Fd-0006D2-Ox; Sat, 01 Aug 2026 07:51:39 -0400
+	id 1wq8Qe-0001z9-Cr; Sat, 01 Aug 2026 08:03:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brchuckz@netscape.net>)
- id 1wq8FX-0006Cb-Eo
- for qemu-devel@nongnu.org; Sat, 01 Aug 2026 07:51:32 -0400
-Received: from sonic305-19.consmr.mail.gq1.yahoo.com ([98.137.64.82])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wq8Qc-0001ye-EL
+ for qemu-devel@nongnu.org; Sat, 01 Aug 2026 08:02:58 -0400
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <brchuckz@netscape.net>)
- id 1wq8FV-0002mV-6D
- for qemu-devel@nongnu.org; Sat, 01 Aug 2026 07:51:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=netscape.net; s=a2048;
- t=1785585084; bh=fuiv5o+ZM6uC/qcEX+Tzmuq7yIkIt71ND7aoktB7eoE=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From:Subject:Reply-To;
- b=RzrSTEwcS6DdKfMZCyRalp4+SYc+zLSn8i0BDw8EJ+IqKSwtQ1YC+E0i6jvhUQoITreHxMMhubTFv4mH2Ap8VX9CbBDfZ8NXyBRuoneFABkpJc1reVMd58iEZhNqnRaCczrNAsZtt8y/9qGKxgvfyix0Eoq+rF/553X9Xro36R6GtG0EQs4Pk0Sr+HpKaRBMHd5ejBk5I0Z6BXRzF3CR7IeWCOM1z59aMWsBuXmNtZ5vFFyTqivcQ+zUChOpac12c+UqItZv1Fq5D++lAGwk+9PolsLHWhBq6sgc2nTkiy6EmfoCV9EWxlJhBUnZVMwYaJIfcEQ/JDf0UX5IQ0V6TQ==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1785585084; bh=N1KTBtU3ESCjUWEFdgsobkxQoc0Bd7zyUuVx50lfR4k=;
- h=X-Sonic-MF:Date:Subject:To:From:From:Subject;
- b=tCOVNGsXenhDGDx13ti0hjjT5Fs2Z6Mksu2Gftu24N4xBrQi5XSgDRMFcvp//TNG7iGPuWZd2P3RwTUOAZAqtjBa2X2NHEBr7YVLCeH2nkOYsTswBZ1353sjNFHKefJ2dBelpLB+tDIT1P8s/IbC+hXJRG2jYxsU//oyovSNKCsBQCELHot33BAUB7bXG42NwR/Wze15/sVLeWL1qSLUwPXrZ8To8kp6f5k1QBdmofIE5sAvTLTky4woa7a3vzxJiIxNygE70jwUCZPhkojEUH4DFPWsqirUqPhYlSjsYsDs1re1oKjFxpL50dihFJ4KarLybkbkm1cIIch5L1L7uA==
-X-YMail-OSG: aKsnXoYVM1msTfRexnj39EqPGrx117cWtsOWgBMvH8i.wtCxTTdrSq.xKjIGhhO
- 8lTaENnx.Xo71QG6aCfadwl10j5BWRCUFbZEmBK8nYFnJZPGqjzykIdoVlFJkhPgS7dO63IARVSe
- hnMAnDINxz9zG8vu7rUw2QIK9Xf7AcWXeuAMA7bSoKauxYxW9lii_CUX5t887g_wPE_dQo9SKXBF
- Yg3DWRVLAGXozWK4kXSr1OeSkNQGesu4y9tQ1YPKzy.lah4ydU7YYJ0Qzw7nRRHAT955kteiHpJB
- O2J3Wdd3ZzPsS1WgFA9rU7cq8UUSEdVv_0UCbxFlb_6Phzqa52c8Rd8w4zka8TQhirkXjxeqWGgC
- PfDVuu21XHzEoClVppiJdeYPi4oymsTjEbCuWpsuTkY8DDLuN5KBX9YZC28PsDniiiip1NoH5a4_
- NBiVYKNq7yRvnNLGiEbKdzeZ4u.6A1oDK25PH0AxbntTQisb8B10lp3j02Df_E6xp4N8Qzwa72jY
- duJZv14j_26ufz6sYMbknq8HfAjdXna9sd7W.ezfzqx7Np574d76tdlESBD7xIBdCSMV8hR7b70k
- qaSYI2HWBozE9Lt0DvXBm0AK6eVeGn1u9BVcxBiKE4emHqSvdtO4AELZEpLksHCIb7WzGWyipR2J
- 1Nm4gRF6IFyyLBxLK94NbZA_Vfs.KJSkL_AMpj3eAK.lBnvDcU1zqVrmyBCG2Mjgkn2UggHHyhaR
- 4RXSjRYc.R8194Q9N3_Fnk5PFJh9wv_A41hE3FgWG0LcN8CJR_YsqquLMfz9xEm7IcKqmylpoK33
- AHXzR5nSsR.0xsC.A9McnS79jd2X77yu0zX5rhec5oSjxR9eS46lZJ3Rtxpi8mvRnHskGfKCkER1
- drpBotZBSKUy911Q81Yf4YHRF.KSIa68On7FVAJGyGlIzGRoRsUbJnjXeZqxnIE7vOaNHo8uf_QQ
- xIgtGyDAPe2hSf6OEUhUDVL0lpIxOsSQ70cI2PfYNezQ1KHk3.HGH6shG3rZWZ6mn0IYRtqPktFF
- LgFFwwwK7FmobjmNT19pvsUv8C0EJ_588HWu38pBwSesiDWM.Rja_m4CHfNVBDTE9xj06yW.GfjF
- 8WZf.HwaSVvE4C_MpYKm4DIURVWq44GwjYJzwgiLCQKlKhFfzXKVAnsQgKCr9gdg7NlHifqve6h_
- MtOlBADM9Lawz0A9XYGhQ9vwvZjkIe.ae_s6nDqYMNi2AwOpLgrPTDgvukQmexdym3tx7Elpz9vF
- qtiQUpOarTaXtGaec3879KS.e.CoD3LkwWX28b1sEuwuxQOX1GCaiJYgV9hRIXrK9xZ56iV7MciI
- ORNQUdBt27x2zjlwwhyYCBRgLw7tTG61fGj8y9OQmfLskMi8nwtzDyH4M_eLLPgXC6TdvhC3ACbf
- ohN05lM.10W.u5mVmnUopLpl.8z33pOLEqqaQYIfQcIuS4TEuDCbY9z.qBvhfRBvH11EjtG77n6T
- D5Tt0iAMyw4MyvzgYri3ffFMG_sSzgBPAAlx85U7jcDooFaUiMFajhiBnlXPqhAYgpsEQnkudmJ6
- VKV4a6T9m0Fzr.CEII_QtUOJC9vTNly3zXYz2sdkMeJtcgOQv64hurf4qbsv0SZBF.ohrzBziImy
- RcfHR2oY9fnTxuRzZMtjZonw9uaTfXkmnwFMZ1d2Ln.K7OHrFo3J0ZbrTQzpH1ODkudlLkO6yfLM
- 0W1nIl470Fyl1oLUajyErKVDdp5wg47TzCmtqgrNotvvrl.IDEP3BBFvI.4iyQdSbMH.1f7rjKtt
- ELkUF4MQ3Ey_4Jw7dtJFwtJ1iSdbk_3hENT7LcrJKztteNQREAr5PEJwPx2mQDHaOX28y8Q7X1mR
- 2nHLW8oeNxwKD8wNhM1BxLNJ1fysYkWDMVGjCd3u0K2kpYvuCEkyJCnmIofToOvHHhoK0TXXIIXc
- 0scGm5z2JvQCXTZpG75wKaFd71l4ykoyNdK7tbs8BqL2F0_lEv0gxnhgxoeyuHh.hjqv5ncyunKT
- JyDOuGV_Ze2_sPIcQJUSIj7EHOiKOxK5C1pE..VP9gE28WCkTapNCpmxgU5mf1yxmD53OAazKudJ
- R753iIExk0QwgcKhQL8YyX1q2vFoHOeiXpPAH6RemvB9XQ26Pzwmo8R23nkVhD7GW9ntvJ2wJabJ
- IT7vxFkCTAlqVQq.PWsw8MO6Zsr3M6g65YYrKD2yARUoymbqYhHYK9ohd0_RhF9GzXDSeIhhkcwE
- oYn6aytZTzy2z1Yivb0zaqBfRGbEBlbHYxM3hIA1D0wHq0EdXJgc.G4CjL_YVO_h5
-X-Sonic-MF: <brchuckz@netscape.net>
-X-Sonic-ID: cf8f62cc-639d-4ae9-8f4f-fa4e168ee8ab
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic305.consmr.mail.gq1.yahoo.com with HTTP; Sat, 1 Aug 2026 11:51:24 +0000
-Received: by hermes--production-ne1-6f6bdbdd7c-jtc22 (Yahoo Inc. Hermes SMTP
- Server) with ESMTPA ID 2c6e9c6518a5b71581c74d9ac6047a6d; 
- Sat, 01 Aug 2026 11:51:20 +0000 (UTC)
-Message-ID: <1418735a-2ed4-4f89-a9e4-631f5423608d@netscape.net>
-Date: Sat, 1 Aug 2026 07:51:19 -0400
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wq8Qa-00053O-QW
+ for qemu-devel@nongnu.org; Sat, 01 Aug 2026 08:02:58 -0400
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-6689f36ae56so2825165d50.3
+ for <qemu-devel@nongnu.org>; Sat, 01 Aug 2026 05:02:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785585775; cv=none;
+ d=google.com; s=arc-20260327;
+ b=LW+K2L/XLIMhLq/xh09JRmhxKDj01vPNsUVj7GIkxHHf+EzWFpIZkhDB5t0vewpjh7
+ BtiyS/qhNa24Z2EqJEWfGJfshbBd9Q98m2YGrb2sNVGQnqlCcbtG/Lc1vgZh7nKzZV0e
+ A9U7EXCJixpzvwKMhFSY7Vwi0uy5sIXVWTI5bSVftHCX40kVGGMXIwsDsXQzFH9YM6Ft
+ Bsxs9ZN2YTiL9EzVk52c+2DJYi9SYsIMKqbCV1Sb9YFi5KS3pbvM1wiR3VK82qq7MJ3b
+ XRponAaiIn0W0o55gj44AD1BoHosqHeezvl9yyPfeKtkZpV1db9Re4G/mV7ErGOSbdsN
+ NeSw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=Cy9zAdN3Y3pgbgW57Qg3suhyIf4Ln6sO/8ETzrpdyTE=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=PRCsE1cjYmYRY6QPSzhX4aLQUB6Fz76ZGSAMaRIPFQsgEt6Y1Q1Joz18g40c6AlLOx
+ Q/qsSSyDu830HFxSSM4+KBQ7eTLq6j4PyyCryzf68Lp1jLll+7jWkHTAZyF9cji0VpeJ
+ u4SUJvGSGEui3DeX7Jx9rg9pwJQFuWoDAuiwu4+vqRvy5vf4NKE5LXb0n89LHwUTKJS6
+ LZv3EmzHzjCPurfqXW5DVAic/Aoh01qe8g8EeGWGnoxszTKDJTGG4DDp26vXPloGI63F
+ 9AggfkpRTpPDWDHdw3sIBpPqHenBTU16r+CwxN+Kot3TuDtFNika3CIiE/J3tvkF5GPa
+ ATjA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1785585775; x=1786190575; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=Cy9zAdN3Y3pgbgW57Qg3suhyIf4Ln6sO/8ETzrpdyTE=;
+ b=Dz1avYhL7I8pV7js//Xfxhe+65fHubopy69Bjv0ZTVTp6kY8ObsLpDOmGkj2sNy3KY
+ uELPwodeG2k5VUXf+F1OOaTXL70oJIyMovn3k5tDRM1VL3mYnnDPYvHIqDcO2nwY0QGN
+ /lMaehb9vf8MFpPlB43Ah4q14xCwdDdJwA5NCZYyBNaaMMLHeul+MX+98m5gi2bK0q6w
+ xPdEl551IaL0wzVGsxwilRHYaW4h5xHtqAGHNqOFTPRPj4rz7BVxAg5CGxE4PYeJeE/L
+ l++5wx2PUU6RNJawRzFQrtjSX3Rw9hNTsJDFfpSUzZjh9DXMwuJwglPkQdJNEi+nsALW
+ E3uQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785585775; x=1786190575;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=Cy9zAdN3Y3pgbgW57Qg3suhyIf4Ln6sO/8ETzrpdyTE=;
+ b=WDnBkQ3NqMqYFn7RFk+VcShaHbLvLjPuecepQMRuiS057336Lm/VArkfuSFRGV8Y5P
+ S8T9NhHkeaTzm3DsuD65NPyHmIS9XKGdemcVW+Z3XhKsXLxXcQgtsqzHyvE9bXsyQ/y3
+ Da34EEso1G9Vk+Y522vVKJB/ub/J7WwNA6EejGtAwcsN/Bn8abIEaza9Kw47gNePk8R6
+ GbYrdA7U44X0iRxU2AGXyCZ4LkVnqLC5KpjeZ8+ImjeaJIU4XFQys4l1eSOVNDgUrIt3
+ Dc+zlMEXcytFy4VboCIFHhXJVbIosVaD9lfNtLsFUVA9uQhvuL430fqvDs5Ru5bYeenT
+ McMA==
+X-Gm-Message-State: AOJu0YxG7HGHCfO9h28UhkA7Qtg43g7wIh5a92/KKbp4d9J3FFNi11p7
+ N8ggvX86RDIPLsDUA29BKQ5eMY16S/4Omflh9j6eetVGouhYygqqi6G71Tw90IWsyhUdQrHuzXm
+ jZtzFsxUGpwthUMTADCw7eEBe7Kb/MvqhsclKfzyUpPP8YcsWaqYn
+X-Gm-Gg: AR+sD10RlrXStKbdvCKeqVKZclIZqXIVF+HYDOfGtT0Q1pbC4q7dBxwXwiEFD7iw/G5
+ ZQsNgOWpET4chpBSbEhYgdBgPlU/Xgb/FQ6ZqRhiOEl3nLYDePoznLqnMdv5hTD9G3rdeHz6vs9
+ h/m7zIf9oQdCVar1UpH/AZIk0lf8vo8mdQR1J/PFIhoihesjY8D7XArEcj5j2oWPFNUpkU9vYSZ
+ U7M/YXleRkMopV8AYFLKg27jQvJI2+GP3kYMpagitcT4wcjOLprw/WMpter/4FZi12EoSXrPAqZ
+ PHY9qZNbvXFKHGIUxYbBBaaXpIgZAibnF33iOwQYyaWfZe7E/QDCi6HVIcu37iLONhirB/vM24d
+ OdDC+EGIjftIR1PkBXD4sVi7Nol9E
+X-Received: by 2002:a05:690e:155b:10b0:667:e04a:8a3f with SMTP id
+ 956f58d0204a3-6694efcc215mr3765403d50.5.1785585775108; Sat, 01 Aug 2026
+ 05:02:55 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/6] xen/igd: use custom option ROM if provided
-To: Chuck Zmudzinski <brchuckz@aol.com>, qemu-devel@nongnu.org,
- Tomita Moeko <tomitamoeko@gmail.com>
-Cc: qemu-stable@nongnu.org, xen-devel@lists.xenproject.org,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Jan Beulich <jbeulich@suse.com>, Andrew Cooper <andrew.cooper3@citrix.com>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger@xenproject.org>,
- Teddy Astie <teddy.astie@vates.tech>
-References: <20260801001737.16509-1-brchuckz@aol.com>
- <20260801001737.16509-7-brchuckz@aol.com>
-Content-Language: en-US
-From: Chuck Zmudzinski <brchuckz@netscape.net>
-In-Reply-To: <20260801001737.16509-7-brchuckz@aol.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Mailer: WebService/1.1.26215
- mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.aol
-Received-SPF: pass client-ip=98.137.64.82; envelope-from=brchuckz@netscape.net;
- helo=sonic305-19.consmr.mail.gq1.yahoo.com
+References: <20260724030616.76180-1-richard.henderson@linaro.org>
+ <20260724030616.76180-2-richard.henderson@linaro.org>
+ <CAFEAcA-BkEG59qM8sRtEtD-Y0-LC5sWfuWhMFTLnEcGDcvvDmQ@mail.gmail.com>
+ <2efdfc06-b522-40f9-9aca-88d1a258ea14@linaro.org>
+In-Reply-To: <2efdfc06-b522-40f9-9aca-88d1a258ea14@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sat, 1 Aug 2026 13:02:43 +0100
+X-Gm-Features: AUfX_myZWXT3hjyw_gscfcrMhqzVB-Re83sU3tjqw1lh98aGsoSasQ1GMzqdn20
+Message-ID: <CAFEAcA_LP-QMw=E4yb+tnY-Q-hOzD0TAUL6Ay2Z0oys9CdWTig@mail.gmail.com>
+Subject: Re: [PATCH 1/6] target/arm: Add FGWTE3_EL3
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,39 +117,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/31/2026 8:17 PM, Chuck Zmudzinski wrote:
+On Fri, 31 Jul 2026 at 20:15, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 7/31/26 09:30, Peter Maydell wrote:
+> >> @@ -553,7 +553,7 @@ typedef struct CPUArchState {
+> >>            * FEAT_FGT2 will add more elements to these arrays.
+> >>            */
+> >>           uint64_t fgt_read[2]; /* HFGRTR, HDFGRTR */
+> >> -        uint64_t fgt_write[2]; /* HFGWTR, HDFGWTR */
+> >> +        uint64_t fgt_write[3]; /* HFGWTR, HDFGWTR, FGWTE3 */
+> >>           uint64_t fgt_exec[1]; /* HFGITR */
+> >
+> > GICv5 also has some new fgt registers, incidentally; implementation
+> > of them in my w-i-p gicv5 branch:
+> > https://gitlab.com/pm215/qemu/-/commit/31900667e440a136c60b984c9e7c9e9a95d708df
+> >
+> > I don't think there's any particular clash here, though. The
+> > one thing I do wonder about is that FGWTE3 has only a
+> > write trap version, whereas the gicv5 regs have both read
+> > and write trap versions. We rely on being able to use the same
+> > index for fgt_read[] and fgt_write[].
+>
+> We do?  Where?
+>
+> E.g. HFGRTR and HFGWTR have separate names, and could therefore can have separate indexes
+> in cpregs.h.
 
-> 
-> As mentioned in the message accompanying Patch 4 of this patchset,
-> the official edk2 project does not provide support for the Intel
-> IGD, but some OVMF patches for Intel IGD support are available
-> online for KVM/VFIO guests, such as at the links below (they apply
-> to the OvmfPkgX64 platform):
-> 
-> https://github.com/cmd2001/build-edk2-gvtd
-> https://eci.intel.com/docs/3.3/components/kvm-hypervisor.html#build-ovmf-fd-for-kvm
-> https://github.com/LongQT-sea/intel-igpu-passthru
+For registers that can be FGT-trapped independently for both read and
+write, we put only a single index and bitpos into ri->fgt, and then
+access_check_cp_reg will look the index up in either fgt_read[] or
+fgt_write[] depending on whether the access is a read or not.
+Essentially we rely on the read-trap config registers and the
+write-trap config registers being in pairs with identical layout
+so we don't have to separately store an (index,bitpos) for R and W.
 
-And also from Tomita:
+(fgt_exec[] has an independent order because "this is a sysreg
+we check for an exec-trap" overrides looking at whether it's
+a read or a write.)
 
-https://github.com/tomitamoeko/VfioIgdPkg
-
-Thanks, Tomita!
-
-> 
-> With such patches it is reported that the passed through Intel
-> IGD device lights up the display during early boot from OVMF
-> and the guest bootloader in KVM/VFIO guests provided that the
-> administrator provides the correct ROM file via the 'romfile'
-> setting for the passed thorugh Intel iGD device and applies
-> appropriate patches to the OvmfPkgX64 platform.
-> 
-> It should also be possible to add Intel IGD support for the OvmfXen
-> platform also but I have not seen any such patches online for OvmfXen
-> and if anyone knows of such patches online I would be interested to
-> be informed about them. I am also working on my own patches to
-> add Intel IGD support to the OvmfXen platform, in private for now.
-> If anyone is interested, I can make the work I have done so far
-> toward this goal avalable online.
-> 
+thanks
+-- PMM
 
