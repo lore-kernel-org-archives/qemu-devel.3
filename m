@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7514CC55171
-	for <qemu-devel@archiver.kernel.org>; Sat,  1 Aug 2026 02:38:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96613C55171
+	for <qemu-devel@archiver.kernel.org>; Sat,  1 Aug 2026 02:38:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wpzcP-0002oZ-5E; Fri, 31 Jul 2026 22:38:33 -0400
+	id 1wpzcM-0002h2-9e; Fri, 31 Jul 2026 22:38:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wpzc5-0002TW-9I
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 22:38:20 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1wpzc1-0002Pt-Jf
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 22:38:10 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wpzc3-0002a3-KX
- for qemu-devel@nongnu.org; Fri, 31 Jul 2026 22:38:13 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-38e347638adso2033687a91.0
- for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 19:38:11 -0700 (PDT)
+ id 1wpzc0-0002ZL-5k
+ for qemu-devel@nongnu.org; Fri, 31 Jul 2026 22:38:09 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-cbb662575d3so923361a12.0
+ for <qemu-devel@nongnu.org>; Fri, 31 Jul 2026 19:38:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785551890; x=1786156690; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1785551885; x=1786156685; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=PNV42ycjQBrAbERsecIeez8mURVQ70RaMpJO6wcrDxo=;
- b=bvjwdgxZpizVudt3oHPHledYX/2EvvawqxiP8yiLdJxuTVDlKa0bdPuYd4Sv4R0dRf
- 1rlUB+/a3eNUemmmBzDTQysUZ0SOpDMBMT76ZI96pWU2mgDVh0tYAEyZgLENwgJ3nBlm
- 3WUAcwlnAPjnXI0Ltn1J05OW0JxAILd8aAi14xz9ZCP/AjTGvDuWWHBu9Lb8QJ6AAMz/
- DrQ/+tcP7v5QWPLqpPUgIKdftNwP8gIxCMqd+Tvg7O5lnOqFFLfq+n79ABEUn4iB0Jko
- HZ86yvyzOAxEfDHaHnBAQtGPsQI6m/PBV8GqWP5RJNtKSvgCz2iyDD70G4e0mGN5FYHF
- v8Jg==
+ bh=Buj700lO1RUwuoSNslVesdLNoDjj+hRS++McAC+2AR4=;
+ b=pE378p77xts9aKCuv1q9l8T5L/6nltdRGnE+oucUessT7y6y/QYgRXBB9nkCZjW5qD
+ BNvNW5imA3dUKPwqbSrDMe5kQgsqzWB9+i5x1SDQuUXWF3DLvSVR/308yKVp697qlsnB
+ 1L49kZRtzakwE6B8rfjcrXZv97z+K4HeJy7iv4vBNn87ilTMVWLe+k8Cd8xvqDiOeGoD
+ XSkug4JjLofuNTPVlu7KVjlHtD5sKEU2LKojSWn6qXORzNgcKfQL0SkHcZucryximYKK
+ FJmUbc5tXRuP/1blkIe1yc+F/wOSE8m+dt6QpckBAl88uKZ/14FnubKcV+2C6NfS8Q0r
+ s1Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785551890; x=1786156690;
+ d=1e100.net; s=20251104; t=1785551885; x=1786156685;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=PNV42ycjQBrAbERsecIeez8mURVQ70RaMpJO6wcrDxo=;
- b=HipebkVA9y72SeC7NSshjbWnw7cLwMfTFlMrvbmmt+yz455nqb8cTYTsUsK1PzAWz/
- tD7LgsKMmm3ebeDWfBffxYpp9sbWIeAuo4mCrFw6iXPrcW3CTvHhmCZ75KSxz+wduDhI
- RrQpawxwEnADrdM/h+06rbZirTfbXevfdv7E6+L8kapii4Pud6n7FNUXCRh1Mblp9FA7
- OCb+8HGjaW7ygtugOwxtXD6J+6A4uuhp8QhPjgObaQutGfWVkdyNRLWxxhmMbPi/453x
- WuQgGqU6EAWJEuZ3hGiv9P54PZJ9jPWR8JJK3UE4TIRDep9NpBR5nx5jHV6PW/Lrm3U0
- 4mgw==
-X-Gm-Message-State: AOJu0YzcdKk/ZVGq2hmYpOO7IWy15sPUOP5sqyJCCzE0a9bbP0FVyFie
- W5AKP+EBFjb4YHLee4jqUlzjV9rWN1DAvZLvTUsNVrGuj/Tx6HXCeZ//Tnmvrw==
-X-Gm-Gg: AR+sD11qhNMrH0f/xdzuZgaXvAZO3Y+WWRPtgCebDjn8JlS3jTu4yHSi1fQYWwavOjl
- ioZAePX081lyVb5J/Grn9Q+93ETeF2G49hKb01JMSFeGyrH3onHgf7rLWEVzArSImHx8Wku9IKH
- jAKBuu4TmqhG3V/P0QENiEAznaHEVdDympy82xvMGJ17Mvv9h1V1cECs1PfCCkXW0TEZTbdxOxl
- A5QVuU8CWH41Z4NcwgtQFk5rCfVXYkmKBEWpCvalT0cK/SVF2VAMZx46/qFDAAUaygLmkGsRuUz
- 4V3RBPTMZb2xBYbFBhzB6jl5GRt3KVKfNr0zXkiLvQrN/1O9VNiog7NosRiAYPbJHlov9voYlgR
- osmvBR63YtHQZtb5bMY8tpW9hAApL2kpNGbncVob3+puPSQskYCWiuZnkWOYwRjww/p05/iZtUc
- B3Hn+CqQ7LC4rIUveI0YlK/z3hrC9sF0+iuF0nDeeqe0GAEYmTH6Nn5QK7tKkFfzaMZ+9i3OTap
- ssUpfNefszKDuSS
-X-Received: by 2002:a17:90b:5403:b0:38d:b36e:9813 with SMTP id
- 98e67ed59e1d1-38fbc434501mr1955779a91.11.1785551890293; 
- Fri, 31 Jul 2026 19:38:10 -0700 (PDT)
+ bh=Buj700lO1RUwuoSNslVesdLNoDjj+hRS++McAC+2AR4=;
+ b=AZhJK3n3cRxskMbBB673Halftu46/szvVi8ZJfAOqzTIKb1DszGTFTcdtVEaZsJqTJ
+ ji0AGJ+28621S5fmZvi/3e6KYjckdPA/m4yOjkb32pjcqnaijICJHQvXe3pB//SP74Kj
+ dUwdwTwDvo50a96+cjoqIlnf25RN/CdY3jUarN+LrPtlGw2TtEMgriAn6Eotpqaaj0Pd
+ pV20goDVguN8JiqMCYnk9iiZPHiLeXEBhZ9hDaaNK0MM0RIYvH5N2KnM/alU8/mos14/
+ Txv7aCtmmPXiiB7Aou+H9k0MP2Y9mYQ9yn4tSdazuddiHB3OcFadNaD7BlhDNn0KLg1q
+ BV8w==
+X-Gm-Message-State: AOJu0Yx0vlUII0ASxKx6B7AM3WVrjXUT+8ViLiY1YIUj/XVcSxeLlY7n
+ dp3rIVhxOzXoA9TkY7HQoUXjbefqATKxbBMak7FD1MpZkT4Zf0WMhvw+Ck14gA==
+X-Gm-Gg: AR+sD124Jix9IDTSgtKHZR3vbeDFe6af/7vGqJfy2CXrhvShdWbqMui1uVHtW7iidv4
+ ebDIarppFV0rbiMl0BMtp40dDNDo1wrlr5e8coMOpdfnbo1FDefI18ue4N4bMxWfcwljov6oR7R
+ W+AeP/xBIpi+usPNd456S/6KYdzDbSXdgvoKbpxO5IrxgMEMC3aI99xdigAYBUSe8eGZjV+P2hE
+ 0upyxC3DJw6sF3QLxX87J5VI/6aCwngk5U6szjSqo75JJIkQJ49Yx/IvwmZyS/dEaNoO6uo4WaZ
+ 4UfNoMuz6cJZAtfR2QOjX57h7VA1MdXNyRB84tp5OFULVCVdn/0rtoMsSwVYx7Cfk1fWPAwa2/m
+ 26T4cYklgh8DPApy2nEhIRDfZsJKoSwsJtAw4tLOuT2jHhjdttWicAydlXUyJ7Aa/KKAMP1vj9j
+ COB2jG0aYo4mm2sY1kSCzclls7jrQTJePEpaAM0k7NLlL6lZJXWBk4oqe4drGEjmQJXFWF0aSuQ
+ mui/qqmGqooxIa+
+X-Received: by 2002:a05:6a20:2584:b0:3bf:b885:2fae with SMTP id
+ adf61e73a8af0-3c92aa52cfbmr1871818637.56.1785551885248; 
+ Fri, 31 Jul 2026 19:38:05 -0700 (PDT)
 Received: from setun ([223.228.61.127]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3153dd4e47dsm15678889eec.3.2026.07.31.19.38.05
+ 5a478bee46e88-3153dd4e47dsm15678889eec.3.2026.07.31.19.38.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 31 Jul 2026 19:38:09 -0700 (PDT)
+ Fri, 31 Jul 2026 19:38:04 -0700 (PDT)
 From: Aadeshveer Singh <aadeshveer07@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, farosas@suse.de, pbonzini@redhat.com, philmd@mailo.com,
  lvivier@redhat.com, ayoub@saferwall.com, pierrick.bouvier@oss.qualcomm.com,
  Aadeshveer Singh <aadeshveer07@gmail.com>
-Subject: [PATCH v4 11/11] docs/migration: Add documentation for fast snapshot
- load feature
-Date: Sat,  1 Aug 2026 08:06:28 +0530
-Message-ID: <20260801023628.22665-12-aadeshveer07@gmail.com>
+Subject: [PATCH v4 10/11] migration/tests: Add test for fast snapshot load
+Date: Sat,  1 Aug 2026 08:06:27 +0530
+Message-ID: <20260801023628.22665-11-aadeshveer07@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260801023628.22665-1-aadeshveer07@gmail.com>
 References: <20260801023628.22665-1-aadeshveer07@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=aadeshveer07@gmail.com; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=aadeshveer07@gmail.com; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,116 +102,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add documenatation for fast snapshot load covering an overview, the
-architecture, usage and limitations.
+Add test_postcopy_file_mapped_ram() to test for saving a snapshot in
+mapped ram format and loading it using postcopy/fast snapshot load.
+
+Test is similar to test_precopy_file_mapped_ram() with additional
+start_hook to set postcopy capabilities on the receiving end.
 
 Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 ---
- docs/devel/migration/fast-snapshot-load.rst | 82 +++++++++++++++++++++
- docs/devel/migration/features.rst           |  1 +
- 2 files changed, 83 insertions(+)
- create mode 100644 docs/devel/migration/fast-snapshot-load.rst
+ tests/qtest/migration/file-tests.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/docs/devel/migration/fast-snapshot-load.rst b/docs/devel/migration/fast-snapshot-load.rst
-new file mode 100644
-index 0000000000..fe2361d6fe
---- /dev/null
-+++ b/docs/devel/migration/fast-snapshot-load.rst
-@@ -0,0 +1,82 @@
-+==================
-+Fast Snapshot Load
-+==================
+diff --git a/tests/qtest/migration/file-tests.c b/tests/qtest/migration/file-tests.c
+index 5118d9dec9..c7e4b05c61 100644
+--- a/tests/qtest/migration/file-tests.c
++++ b/tests/qtest/migration/file-tests.c
+@@ -190,6 +190,25 @@ static void test_multifd_file_mapped_ram_dio(char *name, MigrateCommon *args)
+     test_file_common(args, true);
+ }
+ 
++static void *migrate_hook_start_postcopy_mapped_ram(QTestState *from,
++                                                    QTestState *to)
++{
++    migrate_set_capability(
++        to, MigrationCapability_lookup.array[MIGRATION_CAPABILITY_POSTCOPY_RAM],
++        true);
 +
-+Overview
-+========
-+Fast snapshot load is an extension of the postcopy migration feature
-+to disk loads.
++    return NULL;
++}
 +
-+Unlike a usual snapshot load, which requires all VM data (RAM as well
-+as device states) to be loaded into host RAM from the snapshot file
-+for the guest to run, fast snapshot load uses postcopy infrastructure
-+to load in only the required device states and allows RAM pages to
-+be loaded after the guest starts execution. The idea is to start the
-+guest and serve its page faults on the go, reducing the perceived
-+resume time for large snapshots.
++static void test_postcopy_file_mapped_ram(char *name, MigrateCommon *args)
++{
++    args->start.caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true;
 +
-+Architecture
-+============
-+This feature combines postcopy migration and mapped-ram capabilities
-+to load RAM pages on demand. It is done by catching guest faults using
-+Linux ``userfaultfd`` and loading the page by calculating the offset
-+of its location in the snapshot file using mapped-ram capabilities.
++    args->start_hook = migrate_hook_start_postcopy_mapped_ram;
 +
-+Fault Thread
-+------------
-+The fault thread uses Linux ``userfaultfd`` to catch page faults caused
-+by guest and directly load the page from the snapshot file. It is
-+very similar to network postcopy fault thread, with primary difference
-+being it loads pages directly by reading from the snapshot file.
++    test_file_common(args, false);
++}
 +
-+Eager Thread
-+------------
-+Eager thread iterates over all pages in RAM and loads each page not
-+yet loaded by fault thread. It is required as unlike network postcopy
-+where majority of RAM has already been loaded via precopy, here entire
-+RAM is waiting to be loaded. If there is no eager loading thread each
-+page will only be loaded when it is required by guest. In case there
-+are some background pages that are never/rarely accessed by guest,
-+the system will be locked in migration state indefinitely.
+ #ifndef _WIN32
+ static void migrate_hook_end_multifd_mapped_ram_fdset(QTestState *from,
+                                                       QTestState *to,
+@@ -330,6 +349,11 @@ void migration_test_add_file(MigrationTestEnv *env)
+     migration_test_add("/migration/multifd/file/mapped-ram/live",
+                        test_multifd_file_mapped_ram_live);
+ 
++    if (env->has_uffd) {
++        migration_test_add("/migration/postcopy/file/mapped-ram",
++                           test_postcopy_file_mapped_ram);
++    }
 +
-+Synchronization
-+---------------
-+In order to make sure both of these threads do not load the same page
-+twice potentially overwriting and corrupting user RAM, a bitmap is
-+used (``RAMBlock->pending_bmap``) which tracks the pages claimed to
-+be loaded by threads. This prevents race condition when one thread
-+is loading the page and other one tries to do the same.
-+
-+Usage
-+=====
-+
-+Simply enable ``mapped-ram`` and ``postcopy-ram`` capabilities on
-+the destination:
-+
-+.. code-block:: text
-+
-+    migrate_set_capability mapped-ram on
-+    migrate_set_capability postcopy-ram on
-+
-+Use a ``file:`` URI for migration:
-+
-+.. code-block:: text
-+
-+    migrate_incoming file:/path/to/snapshot/file
-+
-+Limitations
-+===========
-+
-+ - Multifd
-+    Fast snapshot load is currently incompatible with ``multifd``
-+    capability. While ``mapped-ram`` allows for parallel disk I/O,
-+    coupling it with ``postcopy`` capability requires additional
-+    infrastructure.
-+
-+ - Host OS support
-+    Because this feautre essentially depends on ``userfaultfd``
-+    to trap page faults, it is supported only on Linux hosts.
-+
-+ - vhost-user
-+    Fast snapshot load does not currently support ``vhost-user``
-+    backends.
-diff --git a/docs/devel/migration/features.rst b/docs/devel/migration/features.rst
-index 9aef79e7fa..23c2a93173 100644
---- a/docs/devel/migration/features.rst
-+++ b/docs/devel/migration/features.rst
-@@ -11,6 +11,7 @@ Migration has plenty of features to support different use cases.
-    vfio
-    virtio
-    mapped-ram
-+   fast-snapshot-load
-    CPR
-    qpl-compression
-    uadk-compression
+ #ifndef _WIN32
+     migration_test_add("/migration/multifd/file/mapped-ram/fdset",
+                        test_multifd_file_mapped_ram_fdset);
 -- 
 2.55.0
 
