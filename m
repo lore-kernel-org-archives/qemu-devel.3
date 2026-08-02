@@ -4,53 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 573DEC55171
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Aug 2026 12:18:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64C84C55175
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Aug 2026 13:59:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqV8B-0007Kp-A9; Sun, 02 Aug 2026 08:17:27 -0400
+	id 1wqWiQ-0003ev-Jv; Sun, 02 Aug 2026 09:58:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nendensu@ispras.ru>)
- id 1wqJdl-0006RU-VL; Sat, 01 Aug 2026 20:01:18 -0400
-Received: from mail.ispras.ru ([83.149.199.84])
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nendensu@ispras.ru>)
- id 1wqJdi-0006vU-QP; Sat, 01 Aug 2026 20:01:17 -0400
-Received: from DESKTOP-J3VFOUN.localdomain (unknown [62.217.189.53])
- by mail.ispras.ru (Postfix) with ESMTPSA id E682E406E9AC;
- Sun,  2 Aug 2026 00:01:09 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru E682E406E9AC
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
- s=default; t=1785628870;
- bh=vunbb94ED8cx/ncK3P5gD8vDOmHoWA8kRt9ImI/RdEo=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=MVfLocwxbNP0GBFjr4fbeADlB96/dC90mOmIUnaIlvAhv72Z7aiV+9MUDkZLoHgFf
- cDYpKJjw23oAERnARLPnUFLadxwKniMNrNhU9a3x58bVvuXWutx+Wlbu6flHbwLWE8
- 1eBOuvqV0l6xLB4s8inanfccnwQv4SCf3M0RnRMw=
-From: Ivan Efremov <nendensu@ispras.ru>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wqWiN-0003eW-VP
+ for qemu-devel@nongnu.org; Sun, 02 Aug 2026 09:58:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wqWiM-0002w0-Ci
+ for qemu-devel@nongnu.org; Sun, 02 Aug 2026 09:58:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785679132;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=TNFD38u0rw68I7RAfUBGkRxN10CA2c4sPdJYnQw1yrE=;
+ b=JRZqhp12c6TfAKe2a5BESa9LzGZjI8g0eVoBm/uITcKb1Gz/xU3iI0AdoE91Wb2kLyqK9D
+ vQuEfkYbUM5TsHYopoSyXq59yVtzskyqBxfiwK0ssJVAhMFJ2IBignWoPhgqIAfrG7mt5H
+ nCtVJ7lK7zQXCRG8LfBFYngNwnhAfUw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-359-a4BppoUiNWCp7fXGsw1y4A-1; Sun,
+ 02 Aug 2026 09:58:50 -0400
+X-MC-Unique: a4BppoUiNWCp7fXGsw1y4A-1
+X-Mimecast-MFC-AGG-ID: a4BppoUiNWCp7fXGsw1y4A_1785679129
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7D89D1800350
+ for <qemu-devel@nongnu.org>; Sun,  2 Aug 2026 13:58:49 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.44.32.25])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5B14630002E9; Sun,  2 Aug 2026 13:58:48 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, palmer@dabbelt.com,
- farosas@suse.de, lvivier@redhat.com, Ivan Efremov <nendensu@ispras.ru>
-Subject: [PATCH 1/2] target/riscv: Fix seed CSR sign extension
-Date: Sun,  2 Aug 2026 03:00:47 +0300
-Message-ID: <20260802000048.691333-2-nendensu@ispras.ru>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260802000048.691333-1-nendensu@ispras.ru>
-References: <20260802000048.691333-1-nendensu@ispras.ru>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 0/2] vfio queue
+Date: Sun,  2 Aug 2026 15:58:44 +0200
+Message-ID: <20260802135846.328866-1-clg@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=83.149.199.84; envelope-from=nendensu@ispras.ru;
- helo=mail.ispras.ru
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.811,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 02 Aug 2026 08:17:15 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,42 +79,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The SEED_OPST_* macros expanded to int expressions. When
-bit 31 was present, converting a CSR seed value to target_ulong
-on RV64 sign extended the value and incorrectly set the upper 32 bits.
+The following changes since commit b428fe036233cbd15d37e3c027ab6ca4d3661a80:
 
-Make the SEED_OPST_* constants unsigned so that CSR values are
-zero extended on RV64.
+  Merge tag 'pull-target-arm-20260731' of https://gitlab.com/pm215/qemu into staging (2026-07-31 16:19:04 -0400)
 
-Fixes: 77442380ecbe ("target/riscv: rvk: add CSR support for Zkr")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4121
-Signed-off-by: Ivan Efremov <nendensu@ispras.ru>
----
- target/riscv/cpu_bits.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+are available in the Git repository at:
 
-diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-index 3f146a43fe..c01050ce2b 100644
---- a/target/riscv/cpu_bits.h
-+++ b/target/riscv/cpu_bits.h
-@@ -1086,11 +1086,11 @@ typedef enum CTRType {
-     (HVICTL_VTI | HVICTL_IID | HVICTL_IPRIOM | HVICTL_IPRIO)
- 
- /* seed CSR bits */
--#define SEED_OPST                        (0b11 << 30)
--#define SEED_OPST_BIST                   (0b00 << 30)
--#define SEED_OPST_WAIT                   (0b01 << 30)
--#define SEED_OPST_ES16                   (0b10 << 30)
--#define SEED_OPST_DEAD                   (0b11 << 30)
-+#define SEED_OPST                        (0b11U << 30)
-+#define SEED_OPST_BIST                   (0b00U << 30)
-+#define SEED_OPST_WAIT                   (0b01U << 30)
-+#define SEED_OPST_ES16                   (0b10U << 30)
-+#define SEED_OPST_DEAD                   (0b11U << 30)
- /* PMU related bits */
- #define MIE_LCOFIE                         (1 << IRQ_PMU_OVF)
- 
--- 
-2.43.0
+  https://github.com/legoater/qemu/ tags/pull-vfio-20260802
+
+for you to fetch changes up to 338d81b22b4dc6c45299da1114925a4b086d6e00:
+
+  vfio/pci: Guard accel_irqchip_begin_route_changes() calls (2026-08-02 15:53:05 +0200)
+
+----------------------------------------------------------------
+vfio queue:
+
+* Fix accel_irqchip_begin_route_changes() abort under TCG
+* Fix SIGSEGV in vfio_connect_kvm_msi_virq() during loadvm
+
+----------------------------------------------------------------
+Cédric Le Goater (1):
+      vfio/pci: Guard accel_irqchip_begin_route_changes() calls
+
+Tycho Andersen (AMD) (1):
+      hw/vfio: Fix liveness check in vfio_connect_kvm_msi_virq()
+
+ hw/vfio/pci.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 
