@@ -4,51 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7B8DC55171
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Aug 2026 11:33:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94089C55171
+	for <qemu-devel@archiver.kernel.org>; Sun,  2 Aug 2026 11:48:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqUQn-0000vO-Aq; Sun, 02 Aug 2026 07:32:39 -0400
+	id 1wqUft-0003MB-K9; Sun, 02 Aug 2026 07:48:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nendensu@ispras.ru>)
- id 1wqUQe-0000rh-Uj; Sun, 02 Aug 2026 07:32:29 -0400
-Received: from mail.ispras.ru ([83.149.199.84])
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nendensu@ispras.ru>)
- id 1wqUQc-00070D-3h; Sun, 02 Aug 2026 07:32:28 -0400
-Received: from DESKTOP-J3VFOUN.localdomain (unknown [62.217.189.53])
- by mail.ispras.ru (Postfix) with ESMTPSA id 53CFA406E9A8;
- Sun,  2 Aug 2026 11:32:22 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 53CFA406E9A8
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
- s=default; t=1785670342;
- bh=OeUtX3MFYx5OI4D5LkUpJUOeDd9GdM2ff8ea3tnflKE=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=GzWIwLeat3jkWa2dPTejlXb0VYKE8CkvpV0cJEIBfs1zLEqqM8d9RBh8r9mMaHpLy
- e2TSRWpHYXWp5yhv9hanDCzXyirvkLZEklvgd5L18yv2c53ZDM8K1ZS5p/4wIeFJd9
- 3ssM6AVE4b1qut/+XzTEC8r9dcpK23XKv7qEViuc=
-From: Ivan Efremov <nendensu@ispras.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, palmer@dabbelt.com,
- farosas@suse.de, lvivier@redhat.com, Ivan Efremov <nendensu@ispras.ru>
-Subject: [PATCH 2/2] tests/qtest: Add seed CSR zero extension test
-Date: Sun,  2 Aug 2026 14:31:29 +0300
-Message-ID: <20260802113130.7818-3-nendensu@ispras.ru>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260802113130.7818-1-nendensu@ispras.ru>
-References: <20260802113130.7818-1-nendensu@ispras.ru>
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wqUfQ-00037z-NL
+ for qemu-devel@nongnu.org; Sun, 02 Aug 2026 07:47:46 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wqUfM-0008Iq-Kd
+ for qemu-devel@nongnu.org; Sun, 02 Aug 2026 07:47:43 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-6a0ed8a10ceso225639a12.3
+ for <qemu-devel@nongnu.org>; Sun, 02 Aug 2026 04:47:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785671257; cv=none;
+ d=google.com; s=arc-20260327;
+ b=C95W7RK75SrR752H8XZtxbDDo/ed7XAKOrOgZtKAUmC140zD3bZr4n46nHldyGroza
+ 6HUoT1l5s95Trm1Edgou2hFzIz0QqfqIbLmqlMChE5TNY3wur+xDiNV/bt6PqSgsioyD
+ fjAuxjvymF91IJAMzKH/Nju4XLpcE6elLQRdCcH+y8sTT3j5HF0rA/AMu19HhDqAfCz0
+ BRSdxf+3bZCZGpCz3idsAHYj0gP6/la/BL6Fv/ReEmBlk7AqYvy2ZSRXqgQ8Tptf4VDi
+ 6HZqacrIZIZAcbuvV/GiaQWpdoQ24GaJFBh2Bjpv4xZgyJ8R/e/CDcHhpW2LaxAy1WGh
+ Zh4w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=3X9det38Io24u5nf0zK9X3XLBPXpIWFltxhldsxowZA=;
+ fh=Fi9leVjchoVZBzhzHTswcGE21LDkhk/aPMzEep374U8=;
+ b=HH+j57ZXgjCXAJm2MnLfeJExGFzCJcHiqHwjj1L+6mdrqGUijBDOvWB5i1ybXplxmm
+ /H+kmjtfAtiTTQ1I/wUHAxMeqQkHjXbO+iw6IvoRHOzAgGMNvXncnLb7rB4Jw2YB3qob
+ gU+Jj61iBHaP291xSNa0T94V8yqlZzZUYDyrb1W18kIFJnd9AXdn7W0mmIERlTjU7T4b
+ WAa8ACek3q1ZihLYBsmXsPWW50V+6SIAI8+y1nVPoK8PJ2MlNlu+9vzvpgUesNmAMWVe
+ VxzR9hAnK6x6lheHVT+cwySa/RnKIFBpi5l/N3VTY8A/cgkT9QIvLzNTOVkIz/OhPbMM
+ ZqQg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785671257; x=1786276057; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=3X9det38Io24u5nf0zK9X3XLBPXpIWFltxhldsxowZA=;
+ b=Zxyyey3nXg+yWy53CQrc7hLgZo0L/FW1cCPUKTRDmzree62skCVlr63EE/s/Sx4MOD
+ gTTtI/tV0mhY8xszvJaoTM9LiSdk7W+aUpkn7X8FT82hji+6lRHjm2kQj8SUik9QNN0g
+ u5H4zaK8KA9UxfdZAin4Ziueqgztdj/Eoi1Y/0ALSNiOkeeXU7GVVnpvOt7Nuwut6GyL
+ pyB997cb6m61utCC0BgkvRtc4cmCejwereKQ94QEWpCQCHcxum1uI/urSeghARAldoGo
+ MhGMBRnTTIZ7JWWJp3rn/HDJb+g8s0jPJp7yx8SRRZxv1H20LjOV5/qT1h6/OzH/PRRd
+ upew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785671257; x=1786276057;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=3X9det38Io24u5nf0zK9X3XLBPXpIWFltxhldsxowZA=;
+ b=Iu7zeeMSWlDusiaS24TvE8cFE1wmN1czuDxHuS3seVQdpcrmqnvE7b2UaaWbSbw8A7
+ 9uDa/xyIZkw2uEPAX/9mLxA8qVuLUF33kk/DTzRSrg5JlensX2/YtSKhBHjgMyXxm8Nr
+ vMDcxN3SsrEunuy7HcfecS70wYay7oS43g1Qnlj3VxLk9VDbWMgzvTysqsbM4GnILXuT
+ VlJRuY2rBBcYvhmk6VFJBKQcyGU+hL4aH6tUN+ohZk/WcOVju3LQ/KsP7qt74/5uaXh6
+ aKLRigvgQcQC1qnng5j7GrlN0kOOY+qd5zFH0h8hmaMW5Wm5xkr5FEf2rnPsX+L3uG4f
+ Fl+Q==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rovqdsy3VKSvhVzbDzTsUN02Rh81yQI8yGcfDQj3augNWNB3Ru55lQDjMEPf74C18OFSYJSOj/hEN0o@nongnu.org
+X-Gm-Message-State: AOJu0Yymw8VJbmwAfe3hiuZnc1DZV+hZDcev9AX1j38Oe2pSN2hb8/QF
+ +Tp/f44leD18VXv9b6ZdME83StfKMqwdLWRT3mfDVjdPt+ccBA6Egv+mqgA0GDaQzYrUc2VJscd
+ +NCckP5dLTPQmtbhbXXi6PntVWadVZDk=
+X-Gm-Gg: AR+sD113eoFpOETP+VZLSQG4czcb3Ai6mJ5i1U1CiXv0Y3X1Ya9FuR9e0dmbu1EHBmu
+ nu9RSXnT6jLM29v8sxPG/VrfNtKPBEB/aZVTHoLTy4wb6ogiMZzj8rOBDx4v1CWL9oiNg1X1bDr
+ uBuHvgylX6ttebjJ4JJSL4nGNPiN9VT2PRbvkhsH8qVCntX2XtpZErFxW/D4vzrnqpbktVxHfPN
+ C60SwW/H8kjU3ZdR8AfQEdfAPOsmNAJi8WZdbjArk4ubzQ9oWerZapT8oEgpt3MKeaXY3CXSeaZ
+ 5qs//jDPq0sX9AJpk/RUbD0JEnEVHhK0WklZwPp0XyzVZzlLDrnFvMQ4yaFTprw+U0xb+EHrlJx
+ AWQ==
+X-Received: by 2002:a05:6402:324e:b0:69f:b347:a681 with SMTP id
+ 4fb4d7f45d1cf-6a0a7c6c13cmr4054285a12.4.1785671257155; Sun, 02 Aug 2026
+ 04:47:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=83.149.199.84; envelope-from=nendensu@ispras.ru;
- helo=mail.ispras.ru
+References: <20260729084046.22211-1-kwolf@redhat.com>
+ <20260729131927.GA1379893@fedora>
+In-Reply-To: <20260729131927.GA1379893@fedora>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Sun, 2 Aug 2026 07:47:24 -0400
+X-Gm-Features: AUfX_mzeTWFittyK246WMSn1MyzXPRqqbj_yqneSFEaHl7uWYX1Xrk3FmLH38v0
+Message-ID: <CAJSP0QV_ZT2o1w3f+krQMAqxO7X1Sa_33apVfF+rB8vQvszm5w@mail.gmail.com>
+Subject: Re: [PULL v2 00/17] Block layer patches
+To: Kevin Wolf <kwolf@redhat.com>, Fiona Ebner <f.ebner@proxmox.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, 
+ Stefan Hajnoczi <stefanha@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,65 +121,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a qtest that reads the seed CSR on RV64 machine with Zkr support
-and verifies that the upper 32 bits are clear.
+On Wed, Jul 29, 2026 at 9:19=E2=80=AFAM Stefan Hajnoczi <stefanha@redhat.co=
+m> wrote:
+>
+> Applied, thanks.
 
-Signed-off-by: Ivan Efremov <nendensu@ispras.ru>
----
- tests/qtest/riscv-csr-test.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+This was sent out in error. The series has not been applied yet.
 
-diff --git a/tests/qtest/riscv-csr-test.c b/tests/qtest/riscv-csr-test.c
-index bb1b0ffed3..7479a5c5bc 100644
---- a/tests/qtest/riscv-csr-test.c
-+++ b/tests/qtest/riscv-csr-test.c
-@@ -20,6 +20,12 @@
- #define CSR_MVENDORID       0xf11
- #define CSR_MISELECT        0x350
- 
-+#define CSR_SEED           0x015
-+
-+#define SEED_OPST_MASK     (UINT64_C(0x3) << 30)
-+#define SEED_OPST_ES16     (UINT64_C(0x2) << 30)
-+#define SEED_OPST_DEAD     (UINT64_C(0x3) << 30)
-+
- static void run_test_csr(void)
- {
-     uint64_t res;
-@@ -46,12 +52,32 @@ static void run_test_csr(void)
-     qtest_quit(qts);
- }
- 
-+static void run_test_seed_csr(void)
-+{
-+    uint64_t val = 0;
-+    uint64_t opst;
-+    QTestState *qts;
-+
-+    qts = qtest_init("-machine virt -cpu tt-ascalon");
-+
-+    qtest_csr_call(qts, "get_csr", 0, CSR_SEED, &val);
-+
-+    opst = val & SEED_OPST_MASK;
-+    g_assert_true(opst == SEED_OPST_ES16 ||
-+                  opst == SEED_OPST_DEAD);
-+
-+    g_assert_cmphex(val >> 32, ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
- int main(int argc, char **argv)
- {
-     g_test_init(&argc, &argv, NULL);
- 
-     if (qtest_has_machine("virt")) {
-         qtest_add_func("/cpu/csr", run_test_csr);
-+        qtest_add_func("/cpu/csr/seed", run_test_seed_csr);
-     }
- 
-     return g_test_run();
--- 
-2.43.0
+The following CI failure occurred. It is probably caused by "iotests:
+test O_TRUNC behavior for fuse exports":
 
+************* Module tests.fuse-truncate
+tests/fuse-truncate:43:4: W0702: No exception type(s) specified (bare-excep=
+t)
+tests/fuse-truncate:48:4: W0702: No exception type(s) specified (bare-excep=
+t)
+
+https://gitlab.com/qemu-project/qemu/-/jobs/15659234232#L166
+
+Please take a look and resend.
+
+Stefan
 
