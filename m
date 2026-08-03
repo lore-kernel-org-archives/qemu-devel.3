@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED922C55182
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 22:45:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8431EC55184
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 22:45:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wr1PH-0005Jw-BQ; Mon, 03 Aug 2026 18:45:15 -0400
+	id 1wr1P0-00057N-EJ; Mon, 03 Aug 2026 18:44:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wr1PF-0005JV-HJ; Mon, 03 Aug 2026 18:45:13 -0400
-Received: from fout-a4-smtp.messagingengine.com ([103.168.172.147])
+ id 1wr1Oz-000570-CQ; Mon, 03 Aug 2026 18:44:57 -0400
+Received: from fhigh-a7-smtp.messagingengine.com ([103.168.172.158])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wr1PE-00058a-1y; Mon, 03 Aug 2026 18:45:13 -0400
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
- by mailfout.phl.internal (Postfix) with ESMTP id E25D1EC00F8;
- Mon,  3 Aug 2026 18:45:10 -0400 (EDT)
+ id 1wr1Oy-00056Q-2R; Mon, 03 Aug 2026 18:44:57 -0400
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id AD1BB1400144;
+ Mon,  3 Aug 2026 18:44:54 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-05.internal (MEProxy); Mon, 03 Aug 2026 18:45:10 -0400
+ by phl-compute-01.internal (MEProxy); Mon, 03 Aug 2026 18:44:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1785797110; x=
- 1785883510; bh=08Dw4PPoAm/LKsvgv8DbTs0HZilaul6ArOzGW8pFwwE=; b=E
- YLZll+ckbpiGVViNhqlq14zLgns9jiXlONBMFlHi1Wg/FOvuxax7hwffDnz2FQdT
- 6psPKgy8HqHOG0aWXNIuixouTIbZats7RplwTND/4Xxq31+QJbPG7WSFdY8om4sS
- DbIZbILX42bvnpEt1WhTVbuxIgkXjX573qFqlpPKbQAv8nT++3SMNpn8AXIk+njG
- NdOj0U2uVn9IQzLaw04zQWbyVsCFKzhjV8AY8clIEkCnX9s2iQEbIgj77azouw+m
- cS+bcLZMycTmTSn0MkzDmS327Rbvkz31Ktwcsv4aC93IOkPcEQ9fQ8VLlQ8TgieJ
- 34b15flpnOAy9V4VjDfow==
+ :reply-to:subject:subject:to:to; s=fm2; t=1785797094; x=
+ 1785883494; bh=pK99277ZRIB+F3LySItCEjYQAHjcaVfqLnt6i3fHIM0=; b=H
+ CCw9G4ubb+BvQGn8OS5Bj0/qEaUkvZqLKcgqiLTdh3wYNNSEEQQjATgHJmUmyhus
+ IwQ7Avzj5u/M/q2Or2laD6EqDMTzrCl0Ds4ef58jydFeGBmigzQ0Nw2oSteb47/o
+ MiLfssTkt+vNg672ZMD/I6ZzSqRhLkXIBNzYZ5GwFjPBnOwdWDg8RHUS7f4Tnqsr
+ DBwYszcJdMKmZe0DpaSdcB6AThkPTXUGAur+riHG550DfL6zi8JPrlZQifmb6D2M
+ jCgqTDaT3hi/LcG5A7+Uw6I1pGnpckKhOcj8Y7XQU6z9WN6VlLN/Ie29o59nNjdl
+ ZtmluyHjlIlefQMizObHg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1785797110; x=1785883510; bh=0
- 8Dw4PPoAm/LKsvgv8DbTs0HZilaul6ArOzGW8pFwwE=; b=O4KXZz+jdhJtjQQkd
- ZkuKdSetK9EYsl3M7hS7hchUdG+OorC85BQCwM75X1lqiDhad0azhPjKe6qcysIz
- i+zJj4Vu8dYXmKRfWD6zeOZJfWpPzm+uaXl7yBTgTkE/xCe0UgE4BDAIsSVuQ/kZ
- zxvTWTSlopWWgrQqOG6GUF4lf3zFqiD37CFNkR5XVIwzDABS9YAflxkF5A1/eKRY
- UN+kg6bfJr1hZAHPSBdt+ZMuUv2wekNKt3LR41NWHJzAGi//gC4FX92Ob9KTi9q6
- DaX986kM/l+oXafGakOi0ZLRfby852Kd7CkD9UYaWfzYk7erhUepNEnhZuu23AFY
- lCCQw==
-X-ME-Sender: <xms:9hlxaulKQwOTY67oYDsdltKF15qtd9YR69NXnt2GRR0URyYM4ayIgA>
- <xme:9hlxav6aDUjxP-XDbThNcxrAg9xBnZNNhIqETyWB68n1OBNlXX1gl-YY1Vof1vx1t
- GN8_LD1FS9UcohHtvyuU008n2goTz6Rr7w6ax0SPRqDjsA4bAkT1sXq>
-X-ME-Received: <xmr:9hlxasiNDYG-cPNfM7ZNq2r0q0OYxMkzmyRfRGsQcT2VJXX2B8eEgwdf9iNQ0FBJWjYW0fOiTMefChNkN9gQkGMIsAnqcAwpEVehMV8j5NgGuw>
-X-ME-Proxy-Cause: dmFkZTFXkk6770ximeuBos74vR2JiBpZatXZdclZlrPAvXrkA2heiaORyn0hnKWjHIRFWz
- VbtxK/TPD3OPlr90XHwHeI5GUrlhvgfz4Lvo6r65by747p5uA18KRjwtDjikUtoj3P+0nB
- lq6xDGx6w7uwP2bGW43bVFZ1cGeRRCGDZ0al+jx8IF34pWJZQBEy2DAXQABe3WZODjLjaj
- n6FUTjfBkCgWWQ3B0dzUuYP3vgstYOAUo2y11UOwsS2R1/vVRd5ZlDgahgbEv1vO9/EWR4
- tVOm7v0luKRlwrMs97altgzlqVKEuvuMELDl/BKSIuu0iy+KbUSanj1oojsLt9GxB8iCh5
- ARMd0Pj6B3dNtEq/yIqYrZkfjAfFlKZknfUs16Mhnq9nJ39xWy+jd2jhiYqRiCvcgEF1Jg
- IrmxWb+Mk8Bjx/kjoVV8oR+FCokqa1SQaIeDlt3fbsyPbYdz1TjGba/2rQ4JPACmcb6klI
- 4a6KvAzq+4htm3dN5i0RBR/0JQ/bQwNtR1ijtXBlZOIkTNC/vOGuB1FEj9KiK9JjUrnS0i
- F5vzSZTr+NpgvdApBtu5WDCNxkcXQmNxMw9npAJ7J85YhmBuOnjqKPtCwjYc84t6SWs4Pz
- WVb3P3gjt4BjlhfLWaiEx+cAW2WYOo6EhaGwPUvPGtdPtt/vg9r9NIsfIxqg
-X-ME-Proxy: <xmx:9hlxakEJ8NI73OCms71KlyoW_535nf2xttR0sCd0t7KeJvS3jpMocQ>
- <xmx:9hlxaqQU_fGv5tVAr7VYP-2dvpmbEIm0dl3iD_odEy4BwES_hSKxtQ>
- <xmx:9hlxapw_Zh2orwauUVXVOmkB-kWm08xkC67tFxJDyxwKgN14mLkMgg>
- <xmx:9hlxaufLvXUcbdCeqway6EdiwDeZptpKRgFrD7PlBKzAiWX1ex9S6g>
- <xmx:9hlxavv4wCdmm9LoeYup1lhl2fxepU8KH3-JNVj6DGeYGHeHafI1d8kX>
+ :x-me-sender:x-sasl-enc; s=fm3; t=1785797094; x=1785883494; bh=p
+ K99277ZRIB+F3LySItCEjYQAHjcaVfqLnt6i3fHIM0=; b=itOVSJRSGIoksn2Ad
+ FawTHAe07TSC8018TJDkUc5/p5kLOhS3elspYM3KrbU73FQdrzCh2iOyXgSoFSfX
+ X8IjonJtc18TEBzenZTHXeJuKsqaEtS3wUp30TnqpqgW2EQFoWMQmQ3mZsaloKCJ
+ MkwgotbMj0fp/HEjF5768sem2nYVVMTMFkW+lJqXGaSKBf+FBHcROYSy0WdIpU0z
+ Hj5KWi3x/hyELUQdUcAnRvLvBp4hw42bCNBqqejLCOdhMKy24bAEMQhPyfM20L4J
+ NykkUpdah0b5KV3g/Jv6HI5ecYFLQNKulT5UwqZekMv2JRDtvxLjiNMnuLnx7Uzp
+ AXkuA==
+X-ME-Sender: <xms:5hlxalKoN1wcqqPgJkt663lLYeuS85fw6eTV7h3sbqZsWbyjQ_nDRg>
+ <xme:5hlxahkNJp5LqzZ1Y1qZrC-rHgUW6-sYUQfPKIKrwIadGwIBwGsgJcCwTe4529KE6
+ DhRVwgoSW7n0Bw5oXWHOR1RIJq0C1QOqua2squxm7NbYoePH8siX25j>
+X-ME-Received: <xmr:5hlxauYFCxCCnRl9UjnUyBlyhYsg8l0ZEXNkT5PQsmZ7cbgzoE2ilbhOIlvClRz4i7hPOJVgwHGQ2uuzviuzq7ZQjx-3Sr3Ke_Sn_eAIjzA13w>
+X-ME-Proxy-Cause: dmFkZTFeYi8b03TbMhsFw7/oxx/QrEVsMwlPi+oaba5QCP69t8QrgketamvRj8WkFvrAR+
+ DZnowf3ijlnjgkMrNhPwzyJf+CeU/gVrhoMStZ3AeNquyEbKN1pd8OaBik9dfnStlbPiGl
+ bEzo4w3pwxmzoCU4GhOSut/DC3EUTMVoH4IhsBWVontBvwLinUs91fRMicF74mGHxFXg/d
+ mzyD6vlH4ENWopYcfYB78XmcHQfQKeIdVMRV9ecSdz4hwu1DEpIgZ2VL4UqdEJth9+GSKg
+ Q8GcssenJ51ghx5TAvOH20mB8nWpuYquKBpGUyPGkY3sm6c/PGBw0dMerxRoJLHCL9qQR8
+ uFJiqkNV/slhRzr9VIXU67SY45fACjGaOFKyzLm+smphc3/sDjTnohfqYPg9tmGaJtex5N
+ 5XV85Hp1uSi3Yu4AbY1DSeZQHMUEy9t1zTNVJGMQsskU+Dv2j999bztw7HgnlK3QTXmpiN
+ 41YBXadN++OXJ4vtKBFzasUadxWSNOd/QiIfsoqkirTjfHccz4igmgCBNmEX8cAXe32WDO
+ Y3MjhX51BM1APG+6wGAayptHIrxQxVy3RtoilBKQXO8HoalfCgjd1nVU49l4Xy7+mM2vfw
+ mU9UZDF5jlCTiLyrDYfe3Yihpk79i6Y1MeB8FsGwj65wG0Gj+ZVFbXDAgQjQ
+X-ME-Proxy: <xmx:5hlxat8N0hc0madhrI9roVLahnLsEorVWw5rVF0Ycd4o7MsrzuoUQA>
+ <xmx:5hlxatZ6IHyG8t528frhvN4WoGTYJUE087_krCNo9AJtV3ktw59OKg>
+ <xmx:5hlxaneS7QkbbBzs-o7kxeaJ0b4xhCvcpktYLccEKt062m_OEVWS8w>
+ <xmx:5hlxaqkekD9o7xLk1LLSIdoKtIKJiUnEuzTOd4X4CKo6cFIC7_ftDg>
+ <xmx:5hlxag1eVB1ZA3IGHHoZC18GbMFILjOeMIDDEpxbMlWK4OxAy4fCyrQb>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Aug 2026 18:45:06 -0400 (EDT)
+ 3 Aug 2026 18:44:48 -0400 (EDT)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org,
- Jesper Wendel Devantier <foss@defmacro.it>,
+ Minwoo Im <minwoo.im.dev@gmail.com>, qemu-stable@nongnu.org,
+ Minwoo Im <minwoo.im@samsung.com>, Klaus Jensen <k.jensen@samsung.com>,
  Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- qemu-block@nongnu.org
-Subject: [PULL 4/4] hw/nvme: fix leak on copy ranges
-Date: Mon,  3 Aug 2026 15:44:35 -0700
-Message-ID: <20260803224436.38768-5-its@irrelevant.dk>
+ Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
+Subject: [PULL 1/4] hw/nvme: drop AER requests without aiocb in nvme_del_sq()
+Date: Mon,  3 Aug 2026 15:44:32 -0700
+Message-ID: <20260803224436.38768-2-its@irrelevant.dk>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260803224436.38768-1-its@irrelevant.dk>
 References: <20260803224436.38768-1-its@irrelevant.dk>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=103.168.172.147; envelope-from=its@irrelevant.dk;
- helo=fout-a4-smtp.messagingengine.com
+Received-SPF: pass client-ip=103.168.172.158; envelope-from=its@irrelevant.dk;
+ helo=fhigh-a7-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -108,34 +108,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Klaus Jensen <k.jensen@samsung.com>
+From: Minwoo Im <minwoo.im.dev@gmail.com>
 
-The buffer holding the ranges for the copy command is not correctly
-deallocated.
-
-Fix this.
+nvme_del_sq() asserted r->aiocb was always set when canceling a
+queue's inflight requests. A pending Async Event Request has no
+aiocb (nvme_aer() parks it without issuing any block I/O), so
+deleting a queue with an outstanding AER trips the assert instead of
+just dropping the request.
 
 Cc: qemu-stable@nongnu.org
-Link: https://gitlab.com/qemu-project/qemu/-/work_items/4072
-Fixes: 796d20681d9b ("hw/nvme: reimplement the copy command to allow aio cancellation")
-Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
+Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
 Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 ---
- hw/nvme/ctrl.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/nvme/ctrl.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 8461b6fbdeae..4893cf7e7418 100644
+index bd6ad64b2000..e3eadf3d1dd0 100644
 --- a/hw/nvme/ctrl.c
 +++ b/hw/nvme/ctrl.c
-@@ -2811,6 +2811,7 @@ static void nvme_copy_done(NvmeCopyAIOCB *iocb)
+@@ -4862,12 +4862,14 @@ static uint16_t nvme_del_sq(NvmeCtrl *n, NvmeRequest *req)
+     sq = n->sq[qid];
+     while (!QTAILQ_EMPTY(&sq->out_req_list)) {
+         r = QTAILQ_FIRST(&sq->out_req_list);
+-        assert(r->aiocb);
+         r->status = NVME_CMD_ABORT_SQ_DEL;
+-        blk_aio_cancel(r->aiocb);
+-    }
  
-     qemu_iovec_destroy(&iocb->iov);
-     g_free(iocb->bounce);
-+    g_free(iocb->ranges);
+-    assert(QTAILQ_EMPTY(&sq->out_req_list));
++        if (r->aiocb) {
++            blk_aio_cancel(r->aiocb);
++        } else {
++            QTAILQ_REMOVE(&sq->out_req_list, r, entry);
++        }
++    }
  
-     if (iocb->ret < 0) {
-         block_acct_failed(stats, &iocb->acct.read);
+     if (!nvme_check_cqid(n, sq->cqid)) {
+         cq = n->cq[sq->cqid];
 -- 
 2.53.0
 
