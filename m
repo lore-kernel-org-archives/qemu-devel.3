@@ -4,95 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBE7CC55179
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 13:42:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC9C6C55843
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 13:47:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqsvv-0002zb-Kk; Mon, 03 Aug 2026 09:42:23 -0400
+	id 1wqt02-0003zk-1x; Mon, 03 Aug 2026 09:46:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wqsvt-0002vc-0A; Mon, 03 Aug 2026 09:42:21 -0400
-Received: from fhigh-a8-smtp.messagingengine.com ([103.168.172.159])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wqszv-0003yt-TB
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 09:46:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wqsvq-0005e3-Q7; Mon, 03 Aug 2026 09:42:20 -0400
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 7A8CE140005A;
- Mon,  3 Aug 2026 09:42:15 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-06.internal (MEProxy); Mon, 03 Aug 2026 09:42:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1785764535; x=
- 1785850935; bh=Yf+4Fzg7f0snJO6beJsfUmDHnJi35JliFYCVVt+uQAE=; b=l
- ClM+nTKWfGv0Qlw2EU/xL9Qg/81rO0GVF6XdIzcJnXAdJSTklBqPeHhYYESLeoZm
- 531unUen2wCyVhs61+DiEnfj5/VvZw8W6OFEDgAQ5Spg2b5sqjaT9LJar0WnRAzr
- fdmxn1DBTkZvwRWrXB+2uXmY6m1RUmsPWWQtpm4F+6C8JXSsGxcUuh1padwrnEzM
- Vuqxwu4WGKfFCGEWkvmdr26T7Uv9ghlk2J2GfvMYXePO5tibEt9eI8sPMbbCQoUM
- 01EQy7W5oVJukSavdDXoI8ARt1k5z7MrtLBes2VPxS6mABi4N2pT98ctxY45fpqa
- iZ7eotnIXe/E9B++lqC3w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
- 1785764535; x=1785850935; bh=Yf+4Fzg7f0snJO6beJsfUmDHnJi35JliFYC
- VVt+uQAE=; b=b7XmYVV4jzhirS454gX6uQikK9FJmfh4gs6aW09A6teofelCfSF
- PPZLsOVN7zn/gL93ph+n/mR9Cxe1F3uR0HuCQ1c6QBYbXXlkmbgXkoHLXnwxyGiU
- oZ4UdMaWJDTh358ZIuMwfRGimTE08Q3Nnq/7KNPc2HNCag7+dx6MoIo//fQA3swF
- Kx+yjKxsKvofOq/E3664+gn+qdm5TUdQFg+ifwGJI1aU60dVWUzhMGRRkfIbcLpb
- nnzAd7ZMXi2URX0iapTJ+FmXjcwvPdSsqewC/IiREp0L0/Ne5BxaIxITE/Avk+Rl
- dqjQEiEMxcxjJIu+CB1gRPl5qn1PVpYUuBw==
-X-ME-Sender: <xms:tppwalYUbO4eGthagUFIxm5FhS2tKlqI314r1pfrcxS4dnJc4BimJg>
- <xme:tppwamdM30OwI__yl7sgS-2jPI-uASAaabnnnAUxN9qNuvBKdziWDSuimgNdkoxBT
- m5qSTGrXyMZWnAS25NPCH_5eoyqr6gdTkGseNocVLyaCunwQQ9aTeU>
-X-ME-Received: <xmr:tppwan1thrnerF_RnB-vM_Ji4PLN4Mev5fomtm6ZWoL2vWG--4jN6XEG>
-X-ME-Proxy-Cause: dmFkZTEFX7S3CrIZ2Q969ISaDx9N61yiBWeeOE6QgYRBh/Y0njSV2LglHSCevB/Et6x9h/
- QZM/56V/vmxZk+sJp/qTT/8VLS1XwftckgdnqVg3Pf0RES8Pzk3sbkDi6EL2Ehdk1ZTedr
- gDBf7aNDqmTYmjrXpsRlfIzC6cnigkglEbm86Hb3kvYGkmpB8y4gm7bN9b1pqhfAbV6QaL
- 53vtBmvvQ/gag3eYR/Y+uVY3qweApaSskicXd6EmOwZXoi23KJviyzSzOs2uvxvpc6sy3U
- EreDMT2OdNaj2gQavIzA8hhk9PLRJVPO46IBi7NTk/3o4bya9nVZutRmGNdr0LW0+wamly
- 9iIkUOCH8ONaCcCNkkAQdWdUlWy1FmHIgmu/Ead0bH6m9HRRuA1STC8IfeoTcFrFFOr2B+
- HzRfJNFDMqN3yFGdKrqHHDvuqagfbJnkB82J1cj/yc3eMtNUImDYYpcy4zCQaysGhx6w/+
- tFe1o4ZmeQ136tsNZ/xMp59M8FrvJY1F9ov+Z1G07UxHNMitcwwV1crzPsQz6jR4/PvBiE
- PpIqzK2QT+MPaaxYvLqqU1GkEcEeeX41WCvMwtNbck43/3p/RZkH4Kme4TQRYhcCvlbG+X
- NRvkikL6NUy1NZWyCX8S0sLtFm0kMnXWtcsUmXN4cqwqyBr7ANpajSlWX+AQ
-X-ME-Proxy: <xmx:tppwalLnP6i39lII-Edxxck-r-1SI-rtKqWOhG5azxuZ8qYrqtZjHg>
- <xmx:tppwauHnLfwx5lDzltlaZVv7ZZV2Mm5MPTsiAJAKsIbZ89cRexktyw>
- <xmx:tppwapX-NPS71YRlpnDu-0JMfACx921mpn6xTVlQeuqJ83P3tdViwg>
- <xmx:tppwauzR5KZRqtVyfQtGoR9XJR75dDcr8oSXR3S45GhQ87QZK3fTjg>
- <xmx:t5pwamae6BzdOPZhRDnT2v8ybU6Clru1_BCf5-PdtxyX1SljkMqN0ZNL>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Aug 2026 09:42:14 -0400 (EDT)
-Date: Mon, 3 Aug 2026 06:42:13 -0700
-From: Klaus Jensen <its@irrelevant.dk>
-To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Cc: qemu-devel@nongnu.org,
- =?utf-8?B?U3TDqXBoYW5l?= Graber <stgraber@stgraber.org>,
- Keith Busch <kbusch@kernel.org>, qemu-block@nongnu.org,
- Jesper Devantier <foss@defmacro.it>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: Re: [PATCH v3 0/2] hw/nvme: support online resize
-Message-ID: <anCasYYUJBhDqOKS@AALNPWKJENSEN.aal.scsc.local>
-References: <20260803083046.110121-1-alexander@mihalicyn.com>
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wqszs-0006Vn-S8
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 09:46:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785764788;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=clQ8oxgBiu9V0p8RvuISxI5zCabsH/c0QTq//4l9q1A=;
+ b=LYuendcTmQKkolyqrmoBohVmymNKLn3h0v/4AMVluFKQHQWlCGur8VZD6q0xnRVHb7qKZg
+ W8fM3pfZ36F4FEtu/fz3BRpTeqeMvd1MVd3zmwWIo82oB5J41zBUn+q3e0JgiOf2JCqyWb
+ X7qEkYMArO70SZhZ+T9mqSSGXljy/xs=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-230-ByZXAoM3OPqDKtMpf7dKBw-1; Mon, 03 Aug 2026 09:46:25 -0400
+X-MC-Unique: ByZXAoM3OPqDKtMpf7dKBw-1
+X-Mimecast-MFC-AGG-ID: ByZXAoM3OPqDKtMpf7dKBw_1785764785
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4957287363bso13838645e9.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 06:46:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1785764784; x=1786369584; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=clQ8oxgBiu9V0p8RvuISxI5zCabsH/c0QTq//4l9q1A=;
+ b=kmdcf6gIPzbVp7nFXBhmUxDz0aSiWMTm3R+Cb8jbWV31e6He5Ax1p527DX10cXr/vk
+ wSR/ZWelTBXyhvDeBdIPS8uPVd4Re1Mwxqogu4zK8gRztgJ9k45Yw23a+ANqZ2OcSPtN
+ HBwxlWDEVGH6+GG6Z1guh0vhzXPuCtrhtrASFbycAZzou8kYHgsGytN7eK3jGxvOyrY5
+ R2fyVsAAwOJKqvvMTdMqRM12BllZDEk4ZlDf31J7Y1Ubmh5iJEJGZ5nW3z7PakYpB3we
+ lqJzGblbClr2GXT5Nmo/1GbCmqTiCtrNU2MsA8L68wqNygO+OpUtQXjQHdfOZosAj+a3
+ c9PQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785764784; x=1786369584;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=clQ8oxgBiu9V0p8RvuISxI5zCabsH/c0QTq//4l9q1A=;
+ b=cGwmM4nteoDHizwKUihfQhJ8pnVArod2iHu5xZyYdBRjYFwmPnmcJ6qcJy+7s6MLJd
+ SKFT4b4JvZkcASSl/kmcguVUJFtvkNa5Usvym/TCqgVNwTNfDU6YQPR5uVevEs4Go2qf
+ Iq2l8OhGw6jvYGsIyQFItew0fE5c/0lDM0iDCXPILV/YW8nSumlvu66p7FR1JLXraO84
+ 6BwvLMVjVr0k6MbH7GYmcMAIO6wkPryaCdcisQQyQoQ04CxRW4tE5tq4BtI06VPSBpRd
+ j9DpTf8NTdrnmlGzVgK0AKtVznKm5+fCI4VBpi9gwQAcGxJA9g+zvuyOWPaLkxdcX4ov
+ LQ8w==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqthJiDSSJL6FlIqRgnXl/BSKBimfKHijat7DR+r1PEmHWuDb4Jk+B8RZvmuVr+6qaVURcMwMJDcjyQ@nongnu.org
+X-Gm-Message-State: AOJu0Yw1+4mKgBwFS1HpmwEvYzMzpPqu+DQRln4561y4slSpmlNLAOd8
+ NAnLa1Lfclvg/21eza/IDtHcBmESotaVqGGsq0TPXYyLdRmERRG8n3QmJKGiFcU+f/WK1ILcP9t
+ B6pHlFdawROqNfNcaT13TFcMWkjoNzpMQ0hiKhD/v69Aya6LLU6qCoFPW
+X-Gm-Gg: AR+sD13tBz5qR4Mkitlgiqz72Fk8dNoc6TH9UCPmmEXK1otSJE8T37D4hlouxjNHNQ/
+ lv3r9ffHrCIUQEf7npNZy4dWse73TxmTe4zIUAad6c/boogxNVaFAzIg6CwGR54o1UA5YSugA8M
+ LZIXqslvKoyFNMeyH8RMXMWKOTREhGJbWkW+yW+jYen4FRuBjx5n8ArEdL4We8ZVDb0xibFcxgp
+ SyrmGbnkOWXlbsEKnHTbPhw+dFlhZvryJoC5eG3vrPsossOMsLLcSeCYeZh9ENinxDY+Z96ag/E
+ gonm+l/IdkFOeh0Tw8W6Ng+KYOH9uDOi9lpOsCGHE+53exKq+TnzGoAfeeCLtzwgwQ13mYVvsYM
+ Y0RAqnEPM5vCIJFvESPAlm3we0LzqSnl39K9z7/AkPGfrrbj1gbFuc6XsfV2le4cizgShXmVC94
+ /bqEQ/vEu8Hpayik1d7j2kO+4Qx6Vtdg==
+X-Received: by 2002:a05:600c:628d:b0:490:e5c1:b8bf with SMTP id
+ 5b1f17b1804b1-4980c64e4c8mr238636795e9.13.1785764784465; 
+ Mon, 03 Aug 2026 06:46:24 -0700 (PDT)
+X-Received: by 2002:a05:600c:628d:b0:490:e5c1:b8bf with SMTP id
+ 5b1f17b1804b1-4980c64e4c8mr238636115e9.13.1785764784079; 
+ Mon, 03 Aug 2026 06:46:24 -0700 (PDT)
+Received: from ?IPV6:2003:cf:d73d:549a:e584:7c7b:2611:32a1?
+ (p200300cfd73d549ae5847c7b261132a1.dip0.t-ipconnect.de.
+ [2003:cf:d73d:549a:e584:7c7b:2611:32a1])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49807b917desm215979585e9.10.2026.08.03.06.46.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Aug 2026 06:46:23 -0700 (PDT)
+Message-ID: <9478d870-641b-4f3c-a5da-9026a0ec137d@redhat.com>
+Date: Mon, 3 Aug 2026 15:46:21 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="QvzZtpiYT/8oiZKU"
-Content-Disposition: inline
-In-Reply-To: <20260803083046.110121-1-alexander@mihalicyn.com>
-Received-SPF: pass client-ip=103.168.172.159; envelope-from=its@irrelevant.dk;
- helo=fhigh-a8-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 12/15] hw/virtio/vhost-user: send isolation regions to
+ device
+To: Connor Kite <connorkite@gmail.com>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Haixu Cui <quic_haixcui@quicinc.com>, Raphael Norwitz <rnorwitz@nvidia.com>,
+ Kevin Wolf <kwolf@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org,
+ virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Jason Wang <jasowangio@gmail.com>,
+ Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Eugenio_P=C3=A9rez?=
+ <eperezma@redhat.com>, Alyssa Ross <hi@alyssa.is>,
+ Demi Marie Obenour <demiobenour@gmail.com>
+References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
+ <20260723-vhost-user-isolated-memory-v1-12-6b97c439eb28@gmail.com>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <20260723-vhost-user-isolated-memory-v1-12-6b97c439eb28@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.811,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,75 +145,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---QvzZtpiYT/8oiZKU
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 24.07.26 00:30, Connor Kite wrote:
+> Adds features to fill a vhost_user_set_mem_table message with the
+> addresses of isolation memory regions corresponding to bounce buffers
+> and vrings.
+>
+> Signed-off-by: Connor Kite <connorkite@gmail.com>
+> ---
+>   hw/virtio/vhost-user.c | 80 +++++++++++++++++++++++++++++++++++++++++++++++++-
+>   1 file changed, 79 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> index 710cf966f8..acabfb7f1c 100644
+> --- a/hw/virtio/vhost-user.c
+> +++ b/hw/virtio/vhost-user.c
+> @@ -625,6 +625,21 @@ static void vhost_user_fill_msg_region(struct vhost_dev *dev,
+>       dst->mmap_offset = mmap_offset;
+>   }
+>   
+> +static void vhost_user_fill_msg_region_iso(VhostUserMemoryRegion *dst,
+> +                                           const struct vhost_user *u,
+> +                                           const struct vhost_memory_region
+> +                                           *iova_reg)
+> +{
+> +    assert(u != NULL && dst != NULL && iova_reg != NULL);
+> +    uint64_t offset;
+> +
+> +    offset = iova_reg->userspace_addr - u->iso_memory.base_addr;
+> +    dst->userspace_addr = iova_reg->userspace_addr;
+> +    dst->memory_size = iova_reg->memory_size;
+> +    dst->guest_phys_addr = iova_reg->userspace_addr;
+> +    dst->mmap_offset = offset;
+> +}
+> +
+>   static int vhost_user_fill_set_mem_table_msg(struct vhost_user *u,
+>                                                struct vhost_dev *dev,
+>                                                VhostUserMsg *msg,
+> @@ -1136,7 +1151,33 @@ static void cleanup_isolation_regions(struct vhost_dev *dev)
+>       }
+>   }
+>   
+> -__attribute__((unused))
+> +struct iova_tree_traversal_args {
+> +    VhostUserMsg *msg;
+> +    struct vhost_user *u;
+> +    int *fds;
+> +    size_t *fd_num;
+> +};
+> +
+> +static gboolean vhost_user_iova_tree_traverse_funct(gpointer key,
+> +                                                    gpointer value,
+> +                                                    gpointer data)
 
-On Aug  3 10:30, Alexander Mikhalitsyn wrote:
-> From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
->=20
-> Dear friends,
->=20
-> This patchset is aimed to support online resize for NVMe emulated
-> device. My approach is simple - I just implement (BlockDevOps *)->resize_=
-cb()
-> callback and ensure that AER notification is fired to all controllers usi=
-ng
-> a namespace that is being resized.
->=20
-> Testing.
->=20
-> I manually validated this with Debian 13 VM (a resized disk was a root di=
-sk) and
-> Windows Server 2022 (a resized disk was a secondary one).
->=20
-> Git tree:
-> https://gitlab.com/mihalicyn/qemu/-/commits/nvme-resize
->=20
-> Changelog for version 3:
-> - rebased
->=20
-> Changelog for version 2:
-> - checkpatch fixes
-> - rebased
-> - CI is green (https://gitlab.com/mihalicyn/qemu/-/pipelines/2602102750)
->=20
-> Kind regards,
-> Alex
->=20
-> Alexander Mikhalitsyn (2):
->   hw/nvme: initialize ns->subsys for n->namespace
->   hw/nvme: support online resize
->=20
->  hw/nvme/ctrl.c | 10 ++++++++
->  hw/nvme/ns.c   | 68 +++++++++++++++++++++++++++++++++++++++++++++++++-
->  hw/nvme/nvme.h |  2 ++
->  3 files changed, 79 insertions(+), 1 deletion(-)
->=20
-> --=20
-> 2.47.3
->=20
->=20
+This function name doesn’t really say what the function does, and more 
+describes its type.
 
-LGTM.
+> +{
+> +    struct iova_tree_traversal_args *args = data;
+> +    struct vhost_memory_region msg_region;
+> +    VhostUserMemoryRegion region_buffer;
+> +    DMAMap *map = key;
+> +    args->fds[*args->fd_num] = args->u->iso_memory.iso_fd;
 
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+Generally: I find it quite hard to read code where general statements 
+come after a list of declarations without an empty line, especially if 
+there is an empty line later. Visually, this last line to me looks like 
+another variable declaration.
 
---QvzZtpiYT/8oiZKU
-Content-Type: application/pgp-signature; name=signature.asc
+> +
+> +    msg_region.guest_phys_addr = map->iova;
+> +    msg_region.memory_size = map->size + 1;
+> +    msg_region.userspace_addr = map->iova;
+> +    vhost_user_fill_msg_region_iso(&region_buffer, args->u, &msg_region);
+> +    args->msg->payload.memory.regions[*args->fd_num] = region_buffer;
 
------BEGIN PGP SIGNATURE-----
+Why does `vhost_user_fill_msg_region_iso()` exist when this is the only 
+caller, and we could just fill `regions[i]` here directly?
 
-iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmpwmrEACgkQTeGvMW1P
-Dem5ZggAmfMv7VyPoNEQMQkgR7fI2tIi6zCaNqlCBVvC3jzC6k7rLIQ7D+DyjHpb
-HP6IBq8zIfa94Y1e+DF1uwgYv4lN0EIVhX3q2e6nOtn3yYJasAaFVS2yEXOMaBOn
-vEpL17ToFrzqb3dBQ2JnXNTjBl8e8hauDeFnJUSmGJBWgwCGN78EKNX/Bncnm9+4
-etrEKPb8Z2KGJr01zzn/RRKn14paAmW3YWkHzTh60aZLmaQPjHAfvEJYRBSUF6IX
-rPgMjtY14v/+gxS0yXFX7KRdYN3LHb8JJJg4rDnoAP7FQt2n1hgR9WtymTOUONe9
-3qRzy06jNgFbJI0cWiL5PTI2UCQdyA==
-=wet8
------END PGP SIGNATURE-----
+> +    (*args->fd_num)++;
 
---QvzZtpiYT/8oiZKU--
+As noted by Akihiko, there needs to be some bounds checking. At least 
+against `VHOST_MEMORY_BASELINE_NREGIONS`, but even better against the 
+array size of `args->msg->payload.memory.regions` and the caller should 
+pass the size of `fds[]` via `args`.
+
+(And I’m also with Stefan, something with `index` would be better. Maybe 
+`region_idx`.)
+
+> +
+> +    return false;
+> +}
+> +
+>   static int init_isolation_regions(struct vhost_dev *dev,
+>                                     VhostUserMsg *msg,
+>                                     int *fds, size_t *fd_num)
+> @@ -1234,6 +1275,24 @@ static int init_isolation_regions(struct vhost_dev *dev,
+>                                         map->translated_addr);
+>       }
+>   
+> +    struct iova_tree_traversal_args args = {
+> +        .fd_num = fd_num,
+> +        .fds = fds,
+> +        .msg = msg,
+> +        .u = u
+> +    };
+
+Personal preference: I would like `*fd_num = 0` somewhere here, or 
+`assert(*fd_num == 0)` before the iteration. Yes, the caller initializes 
+it to zero, but it is just not obvious here, and it seems necessary for 
+correct semantics.
+
+(And the open question whether `fd_num` should be renamed here, too, or 
+can keep that name. Not sure.)
+
+> +
+> +    vhost_iova_tree_foreach(u->iso_iova_tree,
+> +                            vhost_user_iova_tree_traverse_funct, &args);
+> +
+> +    msg->payload.memory.nregions = *fd_num;
+> +
+> +    assert(*fd_num != 0);
+
+Am I wrong or should `*fd_num == nregions`? Is it possible that 
+`*fd_num` is less because regions end up joined? Can you add a comment 
+on when they would differ?
+
+Hanna
+
+> +
+> +    msg->hdr.size = sizeof(msg->payload.memory.nregions);
+> +    msg->hdr.size += sizeof(msg->payload.memory.padding);
+> +    msg->hdr.size += *fd_num * sizeof(VhostUserMemoryRegion);
+> +
+>       return 0;
+>   }
+
+[...]
+
 
