@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF4A9C5518E
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 07:30:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6849EC55184
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 07:31:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqn79-0003N0-3R; Mon, 03 Aug 2026 03:29:35 -0400
+	id 1wqn78-0003Lz-8J; Mon, 03 Aug 2026 03:29:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1wqn71-0003Jl-1G; Mon, 03 Aug 2026 03:29:27 -0400
+ id 1wqn73-0003Ke-Rp; Mon, 03 Aug 2026 03:29:30 -0400
 Received: from forwardcorp1d.mail.yandex.net
  ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1wqn6v-0005x9-Ly; Mon, 03 Aug 2026 03:29:25 -0400
+ id 1wqn71-00060F-5H; Mon, 03 Aug 2026 03:29:29 -0400
 Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id C249D80D4E;
- Mon, 03 Aug 2026 10:29:15 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 5815A80D93;
+ Mon, 03 Aug 2026 10:29:24 +0300 (MSK)
 Received: from dtalexundeer-nx.yandex-team.ru (unknown
  [2a02:6bf:8080:a53::1:f])
  by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id rSdSxZ08oGk0-xdSajdkB; Mon, 03 Aug 2026 10:29:15 +0300
+ id rSdSxZ08oGk0-tOK2oaWC; Mon, 03 Aug 2026 10:29:23 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1785742155;
- bh=iSRfiVuk1wth5RJuqWTYKlTX2s0R3hHUfPsUzTQ8cD8=;
+ s=default; t=1785742163;
+ bh=jmKCJp1iaPfwL9g4BXdCpfOJn8v1FlQIelet4JuFyoc=;
  h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=SdiU7zeXXkVsGit4j4qi7Y/O721GpTOHSPRQ6+LuSbetCgPizo001zn0VaZqA8FAW
- At6+Lp0Q3rPdrFK4JSW227epj6XZ1nv39yHouvUbGjbzH4gTidI3pmFsI9qn0S3lez
- 8Q9Kqwmdq9oDWjgNZb03INJFl2YGD5ioyr6FHoWc=
+ b=xBrWYAFgGo4O3RPDUtbj95WirrfSSW8a3x9gkhJFoyk/L8btLIMJr+JDpzZL2dgk1
+ o6AEPjgSq92inKAFcXyqwycK3AeKIswnz1+DtsnKATnMxS9dAKB1Sz/crHfzGQcQQ7
+ 9KlJwSnf0TXb+cZRa+TDyAkHV3EH1sjT7KOCh6rU=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
@@ -57,10 +57,10 @@ Cc: Stefano Garzarella <sgarzare@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
  Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Subject: [PATCH v6 1/6] vhost-user: add skip_drain param to
- do_vhost_virtqueue_stop
-Date: Mon,  3 Aug 2026 12:28:48 +0500
-Message-Id: <20260803072853.2920007-2-dtalexundeer@yandex-team.ru>
+Subject: [PATCH v6 6/6] vhost-user-blk: use GET_VRING_BASE_SKIP_DRAIN when
+ inflight-migration is on
+Date: Mon,  3 Aug 2026 12:28:53 +0500
+Message-Id: <20260803072853.2920007-7-dtalexundeer@yandex-team.ru>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260803072853.2920007-1-dtalexundeer@yandex-team.ru>
 References: <20260803072853.2920007-1-dtalexundeer@yandex-team.ru>
@@ -88,311 +88,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently do_vhost_virtqueue_stop always sends GET_VRING_BASE to the
-back-end, which requires the back-end to drain all in-flight I/O before
-stopping the vring.
+Currently during live migration vhost-user-blk sends GET_VRING_BASE to
+stop vrings, which causes the back-end to drain all in-flight I/O before
+returning. This blocks the migration source until all I/O completes,
+adding significant downtime proportional to the I/O load.
 
-Add a skip_drain parameter to do_vhost_virtqueue_stop and propagate it
-up through vhost_virtqueue_stop, vhost_dev_stop and their callers.
-The parameter will be used in a follow-up commit to send a new protocol
-message that instructs the back-end to suspend in-flight I/O immediately
-instead of draining it.
+When inflight-migration is enabled, send GET_VRING_BASE_SKIP_DRAIN
+instead. This instructs the back-end to immediately suspend in-flight
+I/O and record it in the shared inflight region, which is then migrated
+to the destination host along with the rest of the device state.
+
+Since inflight-migration can only be toggled while the VM is running,
+i2ts value at stop time reliably reflects the intent set on a live VM.
+There is no need to check migration runstate to decide whether to skip
+draining. Using GET_VRING_BASE_SKIP_DRAIN on a regular VM stop is
+safe - the back-end records any in-flight requests in the shared
+inflight region, and they will be resubmitted when the VM starts again
+via SET_INFLIGHT_FD.
+
+If the back-end does not support
+VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN,
+migration is aborted with an error in pre_save rather than hitting an
+assert at runtime.
 
 Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
 ---
- backends/cryptodev-vhost.c     |  2 +-
- backends/vhost-user.c          |  2 +-
- hw/block/vhost-user-blk.c      |  2 +-
- hw/net/vhost_net.c             |  9 +++++----
- hw/scsi/vhost-scsi-common.c    |  2 +-
- hw/virtio/vdpa-dev.c           |  2 +-
- hw/virtio/vhost-user-base.c    |  2 +-
- hw/virtio/vhost-user-fs.c      |  2 +-
- hw/virtio/vhost-user-scmi.c    |  2 +-
- hw/virtio/vhost-vsock-common.c |  2 +-
- hw/virtio/vhost.c              | 28 +++++++++++++++++++---------
- include/hw/virtio/vhost.h      |  7 +++++--
- 12 files changed, 38 insertions(+), 24 deletions(-)
+ hw/block/vhost-user-blk.c      | 29 +++++++++++++++++++++++------
+ hw/virtio/vhost-user.c         |  3 +--
+ include/hw/virtio/vhost-user.h |  1 -
+ 3 files changed, 24 insertions(+), 9 deletions(-)
 
-diff --git a/backends/cryptodev-vhost.c b/backends/cryptodev-vhost.c
-index c6069f4e5b..f1ca6bcd4e 100644
---- a/backends/cryptodev-vhost.c
-+++ b/backends/cryptodev-vhost.c
-@@ -109,7 +109,7 @@ static void
- cryptodev_vhost_stop_one(CryptoDevBackendVhost *crypto,
-                                  VirtIODevice *dev)
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index 7a7e1a6d19..6a11dc23c3 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -135,10 +135,7 @@ static bool vhost_user_blk_inflight_needed(void *opaque)
  {
--    vhost_dev_stop(&crypto->dev, dev, false);
-+    vhost_dev_stop(&crypto->dev, dev, false, false);
-     vhost_dev_disable_notifiers(&crypto->dev, dev);
+     struct VHostUserBlk *s = opaque;
+ 
+-    bool inflight_migration = virtio_has_feature(s->dev.protocol_features,
+-                               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
+-
+-    return inflight_migration;
++    return s->inflight_migration;
  }
  
-diff --git a/backends/vhost-user.c b/backends/vhost-user.c
-index 380d825023..0423c2d4ec 100644
---- a/backends/vhost-user.c
-+++ b/backends/vhost-user.c
-@@ -108,7 +108,7 @@ vhost_user_backend_stop(VhostUserBackend *b)
+ 
+@@ -239,11 +236,13 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
          return 0;
      }
  
--    ret = vhost_dev_stop(&b->dev, b->vdev, true);
-+    ret = vhost_dev_stop(&b->dev, b->vdev, true, false);
- 
-     if (k->set_guest_notifiers &&
-         (err = k->set_guest_notifiers(qbus->parent, b->dev.nvqs, false)) < 0) {
-diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-index b2e46eb3f9..e3b873af7c 100644
---- a/hw/block/vhost-user-blk.c
-+++ b/hw/block/vhost-user-blk.c
-@@ -232,7 +232,7 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
++    bool skip_drain = vhost_user_blk_inflight_needed(s);
++
+     force_stop = s->skip_get_vring_base_on_force_shutdown &&
                   qemu_force_shutdown_requested();
  
      ret = force_stop ? vhost_dev_force_stop(&s->dev, vdev, true) :
--                       vhost_dev_stop(&s->dev, vdev, true);
-+                       vhost_dev_stop(&s->dev, vdev, true, false);
+-                       vhost_dev_stop(&s->dev, vdev, true, false);
++                       vhost_dev_stop(&s->dev, vdev, true, skip_drain);
  
      err = k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false);
      if (err < 0) {
-diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-index 323d117735..6e05c995f1 100644
---- a/hw/net/vhost_net.c
-+++ b/hw/net/vhost_net.c
-@@ -384,7 +384,7 @@ fail:
-     if (net->nc->info->poll) {
-         net->nc->info->poll(net->nc, true);
-     }
--    vhost_dev_stop(&net->dev, dev, false);
-+    vhost_dev_stop(&net->dev, dev, false, false);
- fail_start:
-     return r;
- }
-@@ -403,7 +403,7 @@ static void vhost_net_stop_one(struct vhost_net *net,
-     if (net->nc->info->poll) {
-         net->nc->info->poll(net->nc, true);
-     }
--    vhost_dev_stop(&net->dev, dev, false);
-+    vhost_dev_stop(&net->dev, dev, false, false);
-     if (net->nc->info->stop) {
-         net->nc->info->stop(net->nc);
-     }
-@@ -636,7 +636,8 @@ void vhost_net_virtqueue_reset(VirtIODevice *vdev, NetClientState *nc,
-     vhost_virtqueue_stop(&net->dev,
-                          vdev,
-                          net->dev.vqs + idx,
--                         net->dev.vq_index + idx);
-+                         net->dev.vq_index + idx,
-+                         false);
- }
+@@ -375,7 +374,6 @@ static int vhost_user_blk_connect(DeviceState *dev, Error **errp)
+     vhost_dev_set_config_notifier(&s->dev, &blk_ops);
  
- int vhost_net_virtqueue_restart(VirtIODevice *vdev, NetClientState *nc,
-@@ -686,7 +687,7 @@ err_start:
-         assert(ret >= 0);
-     }
- 
--    vhost_dev_stop(&net->dev, vdev, false);
-+    vhost_dev_stop(&net->dev, vdev, false, false);
- 
-     return r;
- }
-diff --git a/hw/scsi/vhost-scsi-common.c b/hw/scsi/vhost-scsi-common.c
-index e19800a0bc..e546a6dc75 100644
---- a/hw/scsi/vhost-scsi-common.c
-+++ b/hw/scsi/vhost-scsi-common.c
-@@ -108,7 +108,7 @@ int vhost_scsi_common_stop(VHostSCSICommon *vsc)
-     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
-     int ret = 0;
- 
--    ret = vhost_dev_stop(&vsc->dev, vdev, true);
-+    ret = vhost_dev_stop(&vsc->dev, vdev, true, false);
- 
-     if (k->set_guest_notifiers) {
-         int r = k->set_guest_notifiers(qbus->parent, vsc->dev.nvqs, false);
-diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
-index 94188d37bb..b86d0b664a 100644
---- a/hw/virtio/vdpa-dev.c
-+++ b/hw/virtio/vdpa-dev.c
-@@ -300,7 +300,7 @@ static void vhost_vdpa_device_stop(VirtIODevice *vdev)
-         return;
-     }
- 
--    vhost_dev_stop(&s->dev, vdev, false);
-+    vhost_dev_stop(&s->dev, vdev, false, false);
- 
-     ret = k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false);
+     s->vhost_user.supports_config = true;
+-    s->vhost_user.supports_inflight_migration = s->inflight_migration;
+     ret = vhost_dev_init(&s->dev, &s->vhost_user, VHOST_BACKEND_TYPE_USER, 0,
+                          errp);
      if (ret < 0) {
-diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
-index 39b5e637fc..abeae1a064 100644
---- a/hw/virtio/vhost-user-base.c
-+++ b/hw/virtio/vhost-user-base.c
-@@ -78,7 +78,7 @@ static int vub_stop(VirtIODevice *vdev)
-         return 0;
-     }
+@@ -598,10 +596,29 @@ static struct vhost_dev *vhost_user_blk_get_vhost(VirtIODevice *vdev)
+     return &s->dev;
+ }
  
--    ret = vhost_dev_stop(&vub->vhost_dev, vdev, true);
-+    ret = vhost_dev_stop(&vub->vhost_dev, vdev, true, false);
- 
-     err = k->set_guest_notifiers(qbus->parent, vub->vhost_dev.nvqs, false);
-     if (err < 0) {
-diff --git a/hw/virtio/vhost-user-fs.c b/hw/virtio/vhost-user-fs.c
-index 209993918a..0d8842817a 100644
---- a/hw/virtio/vhost-user-fs.c
-+++ b/hw/virtio/vhost-user-fs.c
-@@ -111,7 +111,7 @@ static int vuf_stop(VirtIODevice *vdev)
-         return 0;
-     }
- 
--    ret = vhost_dev_stop(&fs->vhost_dev, vdev, true);
-+    ret = vhost_dev_stop(&fs->vhost_dev, vdev, true, false);
- 
-     err = k->set_guest_notifiers(qbus->parent, fs->vhost_dev.nvqs, false);
-     if (err < 0) {
-diff --git a/hw/virtio/vhost-user-scmi.c b/hw/virtio/vhost-user-scmi.c
-index 9470f68c1f..9fa65d7d8b 100644
---- a/hw/virtio/vhost-user-scmi.c
-+++ b/hw/virtio/vhost-user-scmi.c
-@@ -101,7 +101,7 @@ static int vu_scmi_stop(VirtIODevice *vdev)
-         return 0;
-     }
- 
--    ret = vhost_dev_stop(vhost_dev, vdev, true);
-+    ret = vhost_dev_stop(vhost_dev, vdev, true, false);
- 
-     err = k->set_guest_notifiers(qbus->parent, vhost_dev->nvqs, false);
-     if (err < 0) {
-diff --git a/hw/virtio/vhost-vsock-common.c b/hw/virtio/vhost-vsock-common.c
-index b79f4c9ce6..4ef037627b 100644
---- a/hw/virtio/vhost-vsock-common.c
-+++ b/hw/virtio/vhost-vsock-common.c
-@@ -106,7 +106,7 @@ int vhost_vsock_common_stop(VirtIODevice *vdev)
-         return 0;
-     }
- 
--    ret = vhost_dev_stop(&vvc->vhost_dev, vdev, true);
-+    ret = vhost_dev_stop(&vvc->vhost_dev, vdev, true, false);
- 
-     err = k->set_guest_notifiers(qbus->parent, vvc->vhost_dev.nvqs, false);
-     if (err < 0) {
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index af41841b52..2a62550222 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -23,6 +23,7 @@
- #include "qemu/log.h"
- #include "standard-headers/linux/vhost_types.h"
- #include "hw/virtio/virtio-bus.h"
-+#include "hw/virtio/vhost-user.h"
- #include "hw/mem/memory-device.h"
- #include "migration/blocker.h"
- #include "migration/qemu-file-types.h"
-@@ -1496,8 +1497,13 @@ fail:
- static int do_vhost_virtqueue_stop(struct vhost_dev *dev,
-                                    struct VirtIODevice *vdev,
-                                    struct vhost_virtqueue *vq,
--                                   unsigned idx, bool force)
-+                                   unsigned idx, bool force,
-+                                   bool skip_drain)
- {
-+    if (skip_drain) {
-+        assert(vhost_user_has_protocol_feature(dev,
-+               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT));
++static bool vhost_user_blk_pre_save(void *opaque, Error **errp)
++{
++    VHostUserBlk *s = VHOST_USER_BLK(opaque);
++
++    bool inflight_migration_enabled = vhost_user_has_protocol_feature(&s->dev,
++                               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN);
++
++    if (vhost_user_blk_inflight_needed(s) && !inflight_migration_enabled) {
++        error_setg(errp, "can't migrate vhost-user-blk device: "
++                         "backend doesn't support "
++                         "VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN "
++                         "protocol feature");
++        return false;
 +    }
-     int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, idx);
-     struct vhost_vring_state state = {
-         .index = vhost_vq_index,
-@@ -1547,9 +1553,10 @@ static int do_vhost_virtqueue_stop(struct vhost_dev *dev,
- int vhost_virtqueue_stop(struct vhost_dev *dev,
-                          struct VirtIODevice *vdev,
-                          struct vhost_virtqueue *vq,
--                         unsigned idx)
-+                         unsigned idx,
-+                         bool skip_drain)
- {
--    return do_vhost_virtqueue_stop(dev, vdev, vq, idx, false);
-+    return do_vhost_virtqueue_stop(dev, vdev, vq, idx, false, skip_drain);
- }
++
++    return true;
++}
++
+ static const VMStateDescription vmstate_vhost_user_blk_inflight = {
+     .name = "vhost-user-blk/inflight",
+     .version_id = 1,
+     .needed = vhost_user_blk_inflight_needed,
++    .pre_save_errp = vhost_user_blk_pre_save,
+     .fields = (const VMStateField[]) {
+         VMSTATE_VHOST_INFLIGHT_REGION(inflight, VHostUserBlk),
+         VMSTATE_END_OF_LIST()
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index 58b142cbee..c8a3d184c8 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -2571,8 +2571,7 @@ static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
+             }
+         }
  
- static int vhost_virtqueue_set_busyloop_timeout(struct vhost_dev *dev,
-@@ -2302,7 +2309,8 @@ fail_vq:
-         vhost_virtqueue_stop(hdev,
-                              vdev,
-                              hdev->vqs + i,
--                             hdev->vq_index + i);
-+                             hdev->vq_index + i,
-+                             false);
-     }
- 
- fail_mem:
-@@ -2317,7 +2325,7 @@ fail_features:
- 
- /* Host notifiers must be enabled at this point. */
- static int do_vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev,
--                             bool vrings, bool force)
-+                             bool vrings, bool force, bool skip_drain)
- {
-     int i;
-     int rc = 0;
-@@ -2344,7 +2352,8 @@ static int do_vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev,
-                                       vdev,
-                                       hdev->vqs + i,
-                                       hdev->vq_index + i,
--                                      force);
-+                                      force,
-+                                      skip_drain);
-     }
-     if (hdev->vhost_ops->vhost_reset_status) {
-         hdev->vhost_ops->vhost_reset_status(hdev);
-@@ -2366,15 +2375,16 @@ static int do_vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev,
-     return rc;
- }
- 
--int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-+int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings,
-+                   bool skip_drain)
- {
--    return do_vhost_dev_stop(hdev, vdev, vrings, false);
-+    return do_vhost_dev_stop(hdev, vdev, vrings, false, skip_drain);
- }
- 
- int vhost_dev_force_stop(struct vhost_dev *hdev, VirtIODevice *vdev,
-                          bool vrings)
- {
--    return do_vhost_dev_stop(hdev, vdev, vrings, true);
-+    return do_vhost_dev_stop(hdev, vdev, vrings, true, false);
- }
- 
- int vhost_net_set_backend(struct vhost_dev *hdev,
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index 684bafcaad..33b88f95ea 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -228,6 +228,7 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings);
-  * @hdev: common vhost_dev structure
-  * @vdev: the VirtIODevice structure
-  * @vrings: true to have vrings disabled in this call
-+ * @skip_drain: true to notice back-end to skip draining all in-flight requests
-  *
-  * Stop the vhost device. After the device is stopped the notifiers
-  * can be disabled (@vhost_dev_disable_notifiers) and the device can
-@@ -235,7 +236,8 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings);
-  *
-  * Return: 0 on success, != 0 on error when stopping dev.
-  */
--int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings);
-+int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings,
-+                   bool skip_drain);
+-        if (!u->user->supports_inflight_migration ||
+-            !virtio_has_feature(protocol_features,
++        if (!virtio_has_feature(protocol_features,
+                                 VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD)) {
+             protocol_features &= ~(1ULL <<
+                                VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
+diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
+index 47c13f8677..78b4fba27f 100644
+--- a/include/hw/virtio/vhost-user.h
++++ b/include/hw/virtio/vhost-user.h
+@@ -73,7 +73,6 @@ typedef struct VhostUserState {
+     GPtrArray *notifiers;
+     int memory_slots;
+     bool supports_config;
+-    bool supports_inflight_migration;
+ } VhostUserState;
  
  /**
-  * vhost_dev_force_stop() - force stop the vhost device
-@@ -393,7 +395,8 @@ int vhost_device_iotlb_miss(struct vhost_dev *dev, uint64_t iova, int write);
- int vhost_virtqueue_start(struct vhost_dev *dev, struct VirtIODevice *vdev,
-                           struct vhost_virtqueue *vq, unsigned idx);
- int vhost_virtqueue_stop(struct vhost_dev *dev, struct VirtIODevice *vdev,
--                         struct vhost_virtqueue *vq, unsigned idx);
-+                         struct vhost_virtqueue *vq, unsigned idx,
-+                         bool skip_drain);
- 
- void vhost_dev_reset_inflight(struct vhost_inflight *inflight);
- void vhost_dev_free_inflight(struct vhost_inflight *inflight);
 -- 
 2.34.1
 
