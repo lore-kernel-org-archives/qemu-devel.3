@@ -4,111 +4,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BBFBC5516F
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 05:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8B02C5516F
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 05:41:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wql10-00014Z-7k; Mon, 03 Aug 2026 01:15:06 -0400
+	id 1wqlPU-0003FX-Rt; Mon, 03 Aug 2026 01:40:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wql0u-000142-8F
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 01:15:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@bull.com>)
+ id 1wqlPN-0003Bk-P8
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 01:40:19 -0400
+Received: from smarthost2.eviden.com ([80.78.11.83])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wql0q-0001t5-IJ
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 01:14:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785734094;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=yPRW5VxT8Q4Mo22GJAAwhAdjOLJ68T1jeK2iNXk8mGw=;
- b=ePbp4L98grtZcYWOCaUz6vNRmBi+AlfLjnuT4jMXGe6GnXvA5I8OSr0S1FroS1yqm/R6Sh
- myyhtn3CUrBCYna2DbZXfy2thBaWsmfKUZHpYIAJmeEH0YZISWIpjtRVBfii237tHVFT8C
- ifaxoFj/b4pXUr62IX4c+Os1UPKv5QM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-263-OklGnmieMfqmGvyM0aZzog-1; Mon,
- 03 Aug 2026 01:14:53 -0400
-X-MC-Unique: OklGnmieMfqmGvyM0aZzog-1
-X-Mimecast-MFC-AGG-ID: OklGnmieMfqmGvyM0aZzog_1785734092
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 21AC0180048E
- for <qemu-devel@nongnu.org>; Mon,  3 Aug 2026 05:14:52 +0000 (UTC)
-Received: from [10.44.32.52] (unknown [10.44.32.52])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0714A1956086; Mon,  3 Aug 2026 05:14:49 +0000 (UTC)
-Message-ID: <69be7bb2-cc30-4788-8bb5-6a6c51a65bb9@redhat.com>
-Date: Mon, 3 Aug 2026 07:14:45 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 1/3] scripts/qapi: enum with conditional first item must
- be optional
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-References: <20260724130044.1369843-1-pbonzini@redhat.com>
- <20260724130044.1369843-2-pbonzini@redhat.com> <87a4rf61e9.fsf@pond.sub.org>
- <CABgObfaAnbH6eV3Gu305KjNBN9MCJN0TwPbbrE2ZkMWO4Mcxcg@mail.gmail.com>
- <87qzkozskq.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@bull.com>)
+ id 1wqlPL-0004IR-K7
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 01:40:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=bull.com; i=@bull.com; q=dns/txt; s=mail;
+ t=1785735616; x=1817271616;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=PeDH6a1qZ+rmTJmsHXLC4R8mma6I95G3Wnakm7AW7dk=;
+ b=H0v8pfvKLdhklorNUddKQEQY+ybEcZOFIcsFYEYa4l2GY4Zc+YM2qha8
+ xszQtazn8jrqTKXDgcdZwGZFgzvcPVm/y2/IFkZOvTQz6hpH/T3E0MQBK
+ GabiIaAyq5j/YjyEQdYRNvv2NLc5Bjar0wKcOQ1+Z/rE/Yd4JiRA1My0y
+ Kw4autPGWmu04qG7cf8Sr+d4FQiKWgA1I9//Icv2fRiZeCWY42QZjh3K7
+ EEO8sF+vCghxOSwZHYKPr22yOfr/wl/8zovYBlkfvF21nUA3VI/qy2w0C
+ pa0XJ9myrUL2LFLIKyur/ktgHDOtNl/ILdjFXXBjNCeVSE4tOpxNBpmIJ Q==;
+X-CSE-ConnectionGUID: 3BbiEeuqRAKG+k585TtRLQ==
+X-CSE-MsgGUID: +mP4n1jdQb6UDAt96KPHPg==
+IronPort-SDR: 6a7029b9_baBW0FVFZDWzQtDFgI9YXIRu7pQX4Cv7YU7JpK5Ijw6VNSf
+ vLCawv2y/gk25K+BznRwk5l0i69RAl0A0cX82sA==
+X-IronPort-AV: E=Sophos;i="6.25,201,1779141600"; d="scan'208";a="48540239"
+X-MGA-submission: =?us-ascii?q?MDGyCMZ8l4zXYVPHN1ZakCaspD1Y9TCzUGf3rK?=
+ =?us-ascii?q?5QUYi6F39fw4febIkYfrwR/wyBUrp7c+OptExuMFDZrzUyPAD1s1It39?=
+ =?us-ascii?q?EnKdMZXUlHAiSB4b/cYkLOn9Xp+/0KXMnzIe2wRRrVaWEcgR0/VoPXfH?=
+ =?us-ascii?q?rDWtJi28nby57H+ioDg5Jsdg=3D=3D?=
+Received: from mail-northeuropeazon11011058.outbound.protection.outlook.com
+ (HELO DU2PR03CU002.outbound.protection.outlook.com) ([52.101.65.58])
+ by smarthost2.eviden.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
+ 03 Aug 2026 07:40:09 +0200
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=UVEab5duz9Z3Tw+bQL2ZlYBDYSVqvfSu3bAi6iOl2KkcCRiSOijeM5CoikG0DOwddVLn6AP0IAjJbfHU3hK56eEExSG0Usxp2Nn56UHDx07rzf1B9cdhzV7M/rE0a/GZI196oJZhf1z2GjvNBJdPZLliGmKPIjcUJfZBV3Lz6qpM2gTtML9RSJWr+229wa3F5sxk96+GG/l8VFmvlUo6uEbF+eejN2P7UMGRbtfzRbIPE30gwaO/isL4ZtkiJd+XDtmVutzieAZFlXum3q1GRqKIeSqcyOldniE7wZyIqLqIduWbqFxvMKsScNW6aH0w8d8bE9ZaKJMmWkrFHlkBZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=PeDH6a1qZ+rmTJmsHXLC4R8mma6I95G3Wnakm7AW7dk=;
+ b=gk+UGSnR8OdI6e43gJNEJfblSfGhGNXgOZg1vweYP5IfZY++yBUh13auaR8CKq4Nl4EijP5RvRKtIWh7Pp1BxTigOp7DzXVQ4wUIeCRW68zd4bfnI9C7H9eU3V+AfCHum3dk3s6axnOiDRm/2xZkYsQe2sbwtwY9B/ImJ23DxRDv9u/ugJcv/05OjqvJCDeeCq81m5VrWgQJK+HT38lQ6G5S3IcqbUqG2eD5yqxt4D7LeWhW0X50+CXAYnFP6vKvrYsP4VswK/mlTRTAAukMogeYMQBrRz2hjcjdYuNsUClvOi9K7VBC6qn7co6NH1yc3p2Gx8e1W9p4rghHDIsTUg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=bull.com; dmarc=pass action=none header.from=bull.com;
+ dkim=pass header.d=bull.com; arc=none
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
+ by PR3PR07MB6987.eurprd07.prod.outlook.com (2603:10a6:102:71::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.14; Mon, 3 Aug
+ 2026 05:40:06 +0000
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::4b08:9add:5e19:eaaf]) by AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::4b08:9add:5e19:eaaf%4]) with mapi id 15.21.0292.013; Mon, 3 Aug 2026
+ 05:40:06 +0000
+From: =?utf-8?B?Q2zDqW1lbnQgTUFUSElFVS0tRFJJRg==?=
+ <clement.mathieu--drif@bull.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "pbonzini@redhat.com"
+ <pbonzini@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
+ "jasowangio@gmail.com" <jasowangio@gmail.com>, "zhenzhong.duan@intel.com"
+ <zhenzhong.duan@intel.com>, "kevin.tian@intel.com" <kevin.tian@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>, "baolu.lu@linux.intel.com"
+ <baolu.lu@linux.intel.com>
+Subject: Re: [PATCH v1] intel_iommu: Expose SMPWC when SVM is enabled
+Thread-Topic: [PATCH v1] intel_iommu: Expose SMPWC when SVM is enabled
+Thread-Index: AQHdIpiwj2+asGS6SESECAGeCbz3Y7aLGzAAgAC0sYA=
+Date: Mon, 3 Aug 2026 05:40:06 +0000
+Message-ID: <36e03eda2384213c5766e5940e2376aa6c50e6e5.camel@bull.com>
+References: <20260802160408.645484-1-clement.mathieu--drif@bull.com>
+ <20260802145308-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20260802145308-mutt-send-email-mst@kernel.org>
+Accept-Language: en-GB, fr-FR, en-US
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <87qzkozskq.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|PR3PR07MB6987:EE_
+x-ms-office365-filtering-correlation-id: 1ac77ca3-cbfb-445e-968c-08def121ac61
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|23010399003|376014|1800799024|38070700021|56012099006|11063799006|10067099003|4143699003|22082099003|18002099003;
+x-microsoft-antispam-message-info: SJDsg/Rawf1sGsgZK/dOalVEmE3K0p/uoNASY+mfdgXaQpD5OcDqPykOmWBxrW1lwz/i/DV3j9z/EEkI/0jUmL0rXC9nQdEckoEr3ECbtPhiB+AJiPGDxB4aq9XZUYnNlmfDhkPFTsYHhwdmCSZOVp6mKem5K8kULTNmaFp9JHgxKsgl2omOdphtJRhvo8bd2pYISCA1GEsuTW6GrhDMPgJoo2TSEcKiBcuTWCftvl1G/6N/3E+BmBDKeshSHRJRJV/7XR37C7mjQKvsWg3mBhcK6PE0Lz0vPAPhy9lC7tdVK2xR8///SuOSdxwTkOFiTovMMBPmxFOd/hlmAb/Tdx6O2Kgo0svn/cOrJQu4vbq7+uOuITw9OCmkmxG3Ro9EZ7MDJkiL651pTaHxP/i7aknEsRvFiGs0na+JN+D6bQsck2Enof3TuL2gevB08WHTsl9agAI15MGfq/j1iDFER5MuqG76ca+3UiFoDuNn0djfIz1CE+I/QylGPNR+CQCj0x/gHFX++yGbTimRXL1H/dU6loSzATmSAK3S54r7MNPLydiifqtQj1LE/t9LcvTkYdLwZpuRxlZXkTnd19on6CBgHY2q9s5EiYUubABTGm08w3UJ7yBI4JS9o7e9AIWsCMDGsWGgiDVxSGW0fxZUtWqCGAigYyod8xvm/QWaEuw2L2EyAqkh4AizsY1aQ1EUzLaxqhbit+p5pt5DCEOY66UpDtP7mioV/7vsxwkmMXk=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(38070700021)(56012099006)(11063799006)(10067099003)(4143699003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?K0JxNE5zakVqZUxyc05PdUc0QkF4a1hLdHc3ZkRmODA5SGEySzRTT0hJMkVP?=
+ =?utf-8?B?TDUzR3UwalhORTdOSDNFWGxncHFBVUlxMytveG5WWGw5eE5BYjVLOVN5MWdy?=
+ =?utf-8?B?WktRek5LVGJWQ2Y4UW9MZGZPbW5PRTdWV2FtUHVlNldqZ2pCQndaOENoRUVq?=
+ =?utf-8?B?YWlzOVFaMGcxQm1OL3NBK2NLZ2l1Y0FHN3dpb1B0MjVRNFNLazc0QVMyRjZQ?=
+ =?utf-8?B?R3hkODJvSU05Uk9EUHNoMXY2eSs1bXFKczlVUFZUZUlGOUxTN2lxVGtDT01F?=
+ =?utf-8?B?QzRycGY5YjBBZjVwWWswN3hoZ3FBT1ROZUV5bVM4dWJRY1dOS3NQbXFmQmV0?=
+ =?utf-8?B?SVk3ZThNSHJzTDYrV016a3FvY1hCbjhXalZ3ZWg1aGZQQjEyZ0RROUhjSGtI?=
+ =?utf-8?B?cVNreGhMYlhhMHRic2k2Q012aFU2N3QrNjhlRURaQU5GZUxPcjI1Q2xFK040?=
+ =?utf-8?B?WnN0WngxWmwwL0ZTUHpIT1ZHOG93ZWZHbm9RQWdUT0RJbDZRUG1tTEhuUnVv?=
+ =?utf-8?B?d2hwTDkxSWcyOUJCb3E2dG1IT3pNcGNkdVZnMnpjUElWZ3JndmtJSVYxMlBl?=
+ =?utf-8?B?Uk9SMFhEZytibkdXZTN5L2tHdGoxemhPYVJKWnhBYlloSU8rVFNMdXRxQ2N1?=
+ =?utf-8?B?SExpT05QaE1oR1F5UE1VbkJ4anljTmFHV1ZIQ29RazVxZldoRnVFTC9nS0I2?=
+ =?utf-8?B?VWtKMWtVbXVLbE12bFJkWU9BOWRFS3BDYkFUTWI0ZlVPUHdYKzJwcklwZVg5?=
+ =?utf-8?B?ZHVqTGtCZFBYQWJYRUlnajhXMmNuNHJ5aXdhQmxGK3hlVzV2L0hBWHFTMWFP?=
+ =?utf-8?B?alJpSzREekx1dHRrUVNWeWZtME90ZmZoRXNaYmV2OUQwVkF5d3FhbFNDQy8w?=
+ =?utf-8?B?Q1R3SG5ydVNTcXM5UENyNFFwUk0zajFXZXZtRGRFYmlUWnZqTFFKbU1OaWhv?=
+ =?utf-8?B?N2ozVERxUUl3Y25ubFNyeEk2TmQ0M0M2MWwyWnRpcS9vSFBFdVZyeGhRdzVV?=
+ =?utf-8?B?VVhsdEhxU1FlVDAyVFNFL3VWMDB3a0FPcXQwVFV6RmFjaDVxbmdVeHp0Y3Qy?=
+ =?utf-8?B?TTJDdWl4bjJPODdDakdzQnRnYU10MTVxaXNzdERnbDNHVkE0R1pxdkVzTTcy?=
+ =?utf-8?B?d3FJem1Hb0loSHQxMXNGeEJyT2tyYUZtdGZvNUVkRFdiRGdIRGFhSmJZRlRN?=
+ =?utf-8?B?Y0Y5K2xBSVFtZjVNTzZabXVQSzFiWktlekdwU29zKzA0aWpoVlV0R01OVXJt?=
+ =?utf-8?B?akxCWVd0S0ZBYXA3QXh4MTFIbnoyMmRXM3JhdDZDWTdlMjh5cmhMcm5MaGpR?=
+ =?utf-8?B?SVYwTUpHNmFpMHpSQnIvUjdieTV0ekN1dGlRcjhWODg4Y3J3YmFUNm5Ed0ND?=
+ =?utf-8?B?eEd4dE0yd3B0ZWJrblRKMi9ha3VGeFMvY3JTQ2x1N3RoeUxqQ2hWVmJMMUdl?=
+ =?utf-8?B?Q0ZveEtsOGM2NDZyeGVhVEtycHlhdEZxQ25pTjlabDJLZ1k4M05sQzRwTTJI?=
+ =?utf-8?B?VTMzb0ZyZ25QRGlMRG55Y3ErZzNia1VuaFhWNEpZRlYrOVBUZW9sejI1K2VF?=
+ =?utf-8?B?eHhCOEdjTjVyVEx3TVVGZk1LeThEVWhSNm1SV21rS2xrTUhvM1kwdjFFazFo?=
+ =?utf-8?B?QllsNkEraThMSDE2bThnclN4VVFIMTI0T2VRMCtVL3hQZ3hNVHJqRzdKL3Js?=
+ =?utf-8?B?REtKblk2d09zc3h2RkhNd1JlZ2xtRVVDRk9GSlpXUnNCbmNXODZZYkJXQVo5?=
+ =?utf-8?B?bDZGbFJlcktjaTVDTktRMjhwT0NOUHFSOWM5WmdLWnZ3Q3ZwRnVSZEZLTk1v?=
+ =?utf-8?B?Z0EwY2JJeWx1UmQ1bFAzVjFvRHRGS1pwVjNxUk9hd3RMVUNiSldpeDV5Qk42?=
+ =?utf-8?B?MnBnbUhXMXFsRXdyamw2ZWhHZVdNVkdvaEtLNVZoL2RtaHgvbXdQRmd6d0xs?=
+ =?utf-8?B?Y2JKVlN1bDNzbVN3OEhzZzIrODNlSi9ITUowZTRSeUNPcWJkb3F1ZU54Undi?=
+ =?utf-8?B?aXlBeHM4WGUya1ZORk9sd2hONE1DcTdBMXN1Umd5aGx6VnpuSTNKMVFqUnFO?=
+ =?utf-8?B?NTFXUlFiUG1weDFmbW9kTkhGWEVXd3M2V05DY0t0em9oaGU2MjZwN3VCQklD?=
+ =?utf-8?B?b0R1MDMwTnF4a1VHOHpiUTVBMUxJRW9oNXN4eSt4dkJMZjIxNFVwbmZmRll4?=
+ =?utf-8?B?Z2x1MWZwSGo2T3pmNDhzSmVTNTNpY2paU3B5NXptZ3VDVVltdnFjcUtiMUxP?=
+ =?utf-8?B?MWRPZEJjeHl6Wk5NME93U01ZeVhpb3RsNUowdWF5dm9BMDRJeUpQTzRoL3Bq?=
+ =?utf-8?B?VWx4QlhleVo0ZXFVbjQzL21xVnBTdm9mR09aS1JncWtaaGZKWVNBcWZpTWI4?=
+ =?utf-8?Q?nAujYA7yr8mjAm36ek1v3u2SEXArZnjCU4oqm?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <C848E71164373F4BB78098895415540D@eurprd07.prod.outlook.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-Exchange-RoutingPolicyChecked: aZ7zXTIRfKAnT+Db6it5DhIaNXx0IG9pNqihTmLUAbfUY9qCR+RyvPKNqjQcSpnKy6eoWhGxFegD9z0qKUsWjPgEI4+IplDapYsHcbmhySO5HoqAGeL/H7xplmg7pxrbh1Tr+sC53JsbluoMbNa1FGQQ6wjyyvqXNVoyisTKJ449MCF2+235u9P2L6ba62xUz5yu/o6+KUvuPa7yHkD7TJYdplJQS4KXMeID3ZDeiuJDWSF5LCwsdCKgyQzhjc/s4lF783WAXQGdE8lSEuLrwhJ46w3R763wMRRVK3S2FSsL3M7QDJEnDDiOsLAK+sqWuvt5Ivv1F8SZrNCU5w9FHQ==
+X-OriginatorOrg: bull.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1ac77ca3-cbfb-445e-968c-08def121ac61
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Aug 2026 05:40:06.1169 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Pndt1MQ8+cyhtrkjzkpcpY/1KUFSwnuMT5r7wVY9InDrO5BalImLgEaHEr0xzKI+WCM9dAwP0eHJ8ERt/F1WklC6ymw28DhW4JEaM4kgpJI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR07MB6987
+Received-SPF: pass client-ip=80.78.11.83;
+ envelope-from=clement.mathieu--drif@bull.com; helo=smarthost2.eviden.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.811,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,185 +176,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/27/26 11:32, Markus Armbruster wrote:
-> I count 168 enum types including tests, 12 have conditional members, and
-> none of them have a first member that is conditional.  So this is merely
-> a latent issue.  Doesn't mean we shouldn't get rid of it, of course.
-
-Yes, it's latent.  Rust issues (see below) obviously are latent too.
-
->>> However, I'm not sure your solution fixes this problem completely.
->>>
->>> Code providing an explicit default then is still fine:
->>>
->>>      if (!arg.has_opt) {
->>>          arg.opt = ENUM_TYPE_MUMBLE;
->>>      }
->>>
->>> But we often use arg.opt without checking arg.has_opt for brevity.  This
->>> is an implicit default to zero, whatever zero may mean.  If the optional
->>> enum's first member is conditional, this default depends on build
->>> configuration.
->>>
->>> Stupidest solution that could possibly work: an enum's first member
->>> cannot be conditional.
->>
->> That would prevent an enum that is entirely compiled out, which seems like
->> a plausibly desirable feature.
->>
->> Honestly I think this is a C problem, not a QAPI problem. Skipping has_xx
->> for bools that default to false is already borderline; doing it for enums
->> is well into "you shouldn't do it" territory.
-> 
-> Let's review how we represent optional members in C.
-> 
-> * Values of absent members are zero-initialized.
-> 
-> * Anything that doesn't map to pointers: we need has_member.
-> 
->    When the default is zero, which is fairly common, there's again no
->    need to explicitly supply it.  We just use obj.member, without
->    cluttering the code with .has_member conditionals.
-> 
-> In my opinion, this (non-)usage of .has_member is just *fine* as long as
-> the meaning of zero is well-defined at the QAPI level. [...]
-> It's well-defined for enums as long as the enum's first member is
-> unconditional.  The meaning of zero is admittedly less obvious there.
-> We could certainly change the existing code to only read obj.member
-> where guarded by if (obj.has_member).  Inhowfar we'd then succeed at
-> keeping the shorter (and in my opinion more readable) forms from
-> creeping back is less certain.
-
-I'm certain they would creep back, and I guess it's also fine if the 
-enum has a 'default' or 'none' value.  But the language doesn't make a 
-difference, because the programmer just uses "0" even if the first 
-member is conditional.
-
-Instead, the Rust backend won't let you write Default::default() if the 
-first item is conditional; it's a compile-time failure.  In that sense 
-the C language has a deficiency.
-
-> But what's the benefit?  Enabling "a plausibly desirable feature" we
-> haven't found a use for is one, but I don't think it can justify the
-> change.
-
-The plausibly desirable feature if enums with conditional items only. 
-The alternative is to forbid enums that can disappear completely.
-
-How desirable is it?  Here are the two that come closest:
-
-{ 'enum': 'Qcow2CompressionType',
-    'data': [ 'zlib', { 'name': 'zstd', 'if': 'CONFIG_ZSTD' } ] }
-
-{ 'enum': 'BlockExportType',
-    'data': [ 'nbd',
-              { 'name': 'vhost-user-blk',
-                'if': 'CONFIG_VHOST_USER_BLK_SERVER' },
-              { 'name': 'fuse', 'if': 'CONFIG_FUSE' },
-              { 'name': 'vduse-blk', 'if': 'CONFIG_VDUSE_BLK_EXPORT' } ] }
-
-Other cases have a 'none' or even a 'default' member (DisplayType). 
-Qcow2CompressionType could grow one in case zlib option becomes mandatory.
-
-BlockExportType is the most potentially problematic, because it does not 
-make sense to have 'none' there.  It would still not be usable - for 
-example the C visit_type_BlockExportOptions_members() would collapse to
-
-     if (!visit_type_q_obj_BlockExportOptions_base_members(...) {
-         return false;
-     }
-     switch (obj->type) {
-     default:
-         abort();
-     }
-
-i.e. basically "return false" because neither visit_type_BlockExportType 
-nor visit_type_q_obj_BlockExportOptions_base_members can succeed.
-
-However, QAPI schema generation would work, meaning that you _could_ 
-write the QMP commands generically, even if in practice they're dead 
-code.  Bug or feature?
-
->> Rust would spell it "Default::default()"; the language can help rejecting
->> it if you have mandatory string fields (it would recursively default boxed
->> structs, unlike C) but it cannot do anything about portability; this patch
->> closes the gap completely for Rust, and does what it can for C.
-> 
-> I wouldn't call it a portability problem.  The actual problem is that
-> build-time configuration can have unwanted effects at least in theory.
-> Since different host platforms can require different configuration,
-> porting can trigger the problem.
-
-Yeah, portability in a wider sense---such as different behavior of 
-clients when talking to different QEMU binaries.
-
-> You propose to
-> 
-> * Forbid empty enums [PATCH 2].  They are allowed simply because I never
->    found a compelling reason to forbid them.  Yes, they're useless, but
->    users can figure that out without the QAPI generator insisting.
-> 
->    Does forbidding them help Rust?
-
-Somewhat; I cannot generate Default::default() for them.  It would be 
-easy enough to skip generation of that method, but you'd still get a 
-Rust compilation error if you put them in a struct.
-
-IMO this is telling us that empty enums should indeed fail to compile 
-even earlier, in the QAPI schema generator.
-
-Empty enum types cannot be created, and neither can any structs or 
-commands they contain.   There's simply no way to have code that refers 
-to them, unless they're wrapped in something else that lets the code 
-pretend they can exist: for example you can make a field optional and 
-write "None" for it.
-
-With conditionally empty enums, this at least makes sense as a concept; 
-on the other hand I just don't see the point in unconditionally empty 
-enums, even if they're optional, so I left them out.
-
->    You still allow enums whose members are all conditional.  Build
->    configuration could make these empty, but there are conceivable uses.
-
-I allow them because patch 1 forces them to be optional and then, even 
-if *the enum* has no default, "None" is a sensible default for *the 
-field*.  In Rust, unlike C, I cannot just access the value of the enum 
-if it's "None"; on top of that, optional_field.unwrap_or_default() fails 
-to compile because the enum has no default.
-
-> * Require members of enum type to be optional when the enum's first
->    member is conditional [PATCH 1].
-> 
->    Does this help Rust?
-
-Yes, it lets me cop out of writing a Default::default() implementation 
-for them, while letting them have a sensible default ("None", just like 
-in C) if embedded in a struct.
-
-Again, the language is IMO telling us that enums with a conditional 
-first member are in general a bad idea, and the solution is to catch 
-them earlier, in the QAPI schema generator.
-
-I didn't ban them outright because IMO the fact that in C you can shoot 
-yourself in the foot, and assume a meaning of "zero" for such an enum, 
-*is* a language problem.  In particular it is a language problem that it 
-is not able to express the relationship between has_foo and foo.
-
-But I can be convinced to do it, if you think we need not care about 
-cases like BlockExportType.
-
-Paolo
-
-> I believe these rules are mildly bothersome to explain.  Which you
-> sidestepped by not documenting them in docs/devel/qapi-code-gen.rst :)
->
-> To actually prevent it reliably, we'd have to attack the root of the
-> problem, namely the meaning of enum types' zero value.  The obvious way
-> to do that is to require enums to have an unconditional first member.
-> This is also simpler to document, I think.
-> 
-> Drawback: it removes the ability to define an enum whose members are all
-> conditional, usable with optional object members.  Does this matter
-> enough to complicate things?
-
+DQoNCk9uIFN1biwgMjAyNi0wOC0wMiBhdCAxNDo1MyAtMDQwMCwgTWljaGFlbCBTLiBUc2lya2lu
+IHdyb3RlOg0KPiBDYXV0aW9uOiBFeHRlcm5hbCBlbWFpbC4gRG8gbm90IG9wZW4gYXR0YWNobWVu
+dHMgb3IgY2xpY2sgbGlua3MsIHVubGVzcyB0aGlzIGVtYWlsIGNvbWVzIGZyb20gYSBrbm93biBz
+ZW5kZXIgYW5kIHlvdSBrbm93IHRoZSBjb250ZW50IGlzIHNhZmUuDQo+IA0KPiANCj4gT24gU3Vu
+LCBBdWcgMDIsIDIwMjYgYXQgMDQ6MDU6MDhQTSArMDAwMCwgQ2zDqW1lbnQgTUFUSElFVS0tRFJJ
+RiB3cm90ZToNCj4gDQo+ID4gU1ZNIGluIExpbnV4IHJlcXVpcmVzIFNNUFdDIGFzIG9mIDc4MGRm
+ZWQ2ODg2Mi4NCj4gDQo+IA0KPiBBbmQgd2hhdCBpcyA3ODBkZmVkNjg4NjI/DQoNCkEgY29tbWl0
+IGluIHRoZSBsaW51eCB0cmVlLCBpcyB0aGVyZSBhIGRlZGljYXRlZCB0YWcgZm9yIHRoYXQ/DQoN
+Ck1heWJlICJMaW5rOiBsaW5rX3RvX2dpdGh1YiI/DQoNCj4gDQo+IA0KPiA+IFRoaXMgaXMgZnJl
+ZSBpbiB0aGUNCj4gPiBjdXJyZW50IGltcGxlbWVudGF0aW9uIGFzIGl0IGlzIGFscmVhZHkgaW4g
+bGluZSB3aXRoIHRoZSBleHBlY3RlZA0KPiA+IGJlaGF2aW91ci4NCj4gPiANCj4gPiBTaWduZWQt
+b2ZmLWJ5OiBDbGVtZW50IE1hdGhpZXUtLURyaWYgPFtjbGVtZW50Lm1hdGhpZXUtLWRyaWZAYnVs
+bC5jb21dKG1haWx0bzpjbGVtZW50Lm1hdGhpZXUtLWRyaWZAYnVsbC5jb20pPg0KPiA+IC0tLQ0K
+PiA+IMKgaHcvaTM4Ni9pbnRlbF9pb21tdS5jwqDCoMKgwqDCoMKgwqDCoMKgIHwgMyArKy0NCj4g
+PiDCoGh3L2kzODYvaW50ZWxfaW9tbXVfaW50ZXJuYWwuaCB8IDEgKw0KPiA+IMKgMiBmaWxlcyBj
+aGFuZ2VkLCAzIGluc2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkNCj4gPiANCj4gPiBkaWZmIC0t
+Z2l0IGEvaHcvaTM4Ni9pbnRlbF9pb21tdS5jIGIvaHcvaTM4Ni9pbnRlbF9pb21tdS5jDQo+ID4g
+aW5kZXggODI0NTQ1MmQ4OS4uOWYyMTYyMmE0ZiAxMDA2NDQNCj4gPiAtLS0gYS9ody9pMzg2L2lu
+dGVsX2lvbW11LmMNCj4gPiArKysgYi9ody9pMzg2L2ludGVsX2lvbW11LmMNCj4gPiBAQCAtNTEw
+OCw3ICs1MTA4LDggQEAgc3RhdGljIHZvaWQgdnRkX2luaXQoSW50ZWxJT01NVVN0YXRlICpzKQ0K
+PiA+IMKgwqDCoMKgIH0NCj4gPiANCj4gPiDCoMKgwqDCoCBpZiAocy0+c3ZtKSB7DQo+ID4gLcKg
+wqDCoMKgwqDCoMKgIHMtPmVjYXAgfD0gVlREX0VDQVBfUFJTIHwgVlREX0VDQVBfUERTIHwgVlRE
+X0VDQVBfTldGUzsNCj4gPiArwqDCoMKgwqDCoMKgwqAgcy0+ZWNhcCB8PSBWVERfRUNBUF9QUlMg
+fCBWVERfRUNBUF9QRFMgfCBWVERfRUNBUF9OV0ZTIHwNCj4gPiArwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgIFZURF9FQ0FQX1NNUFdDUzsNCj4gPiDCoMKgwqDCoCB9DQo+ID4g
+DQo+ID4gwqDCoMKgwqAgdnRkX3Jlc2V0X2NhY2hlcyhzKTsNCj4gPiBkaWZmIC0tZ2l0IGEvaHcv
+aTM4Ni9pbnRlbF9pb21tdV9pbnRlcm5hbC5oIGIvaHcvaTM4Ni9pbnRlbF9pb21tdV9pbnRlcm5h
+bC5oDQo+ID4gaW5kZXggOTI0ZTkxY2I4YS4uZGY3YTBlZmE2ZSAxMDA2NDQNCj4gPiAtLS0gYS9o
+dy9pMzg2L2ludGVsX2lvbW11X2ludGVybmFsLmgNCj4gPiArKysgYi9ody9pMzg2L2ludGVsX2lv
+bW11X2ludGVybmFsLmgNCj4gPiBAQCAtMjAyLDYgKzIwMiw3IEBADQo+ID4gwqAjZGVmaW5lIFZU
+RF9FQ0FQX1NNVFPCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICgxVUxMIDw8IDQzKQ0KPiA+
+IMKgI2RlZmluZSBWVERfRUNBUF9TU1RTwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAoMVVM
+TCA8PCA0NikNCj4gPiDCoCNkZWZpbmUgVlREX0VDQVBfRlNUU8KgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqAgKDFVTEwgPDwgNDcpDQo+ID4gKyNkZWZpbmUgVlREX0VDQVBfU01QV0NTwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgICgxVUxMIDw8IDQ4KQ0KPiA+IA0KPiA+IMKgLyogQ0FQX1JFRyAq
+Lw0KPiA+IMKgLyogKG9mZnNldCA+PiA0KSA8PCAyNCAqLw0KPiA+IC0tDQo+ID4gMi41NC4wDQo+
+IA0KPiA=
 
