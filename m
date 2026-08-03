@@ -4,104 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0B3FC5518F
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 10:26:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95F69C5518F
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 10:32:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqprQ-00068Y-Bp; Mon, 03 Aug 2026 06:25:32 -0400
+	id 1wqpxx-00078s-GV; Mon, 03 Aug 2026 06:32:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wqprO-000685-A4
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 06:25:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wqpxw-00078e-1T
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 06:32:16 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wqprL-0000SE-I6
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 06:25:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785752725;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=GNr95apc5PDPRVlIwX/V/QlypOkWK5TF77CZ0ZaErlA=;
- b=VG8h5vE6lw/0OuhXserWanM6fYxI9DMYxmzwGqDa27KQkIiSg31Z4M6YKTxIknUxoDa96P
- YCejuf12ZMfw+OMQ7c/Lv1HzfZexbGACXr/XasBUKHxa43OAHxUpjDUrcchQzknlZoLPTq
- MmiCJ7FPojPM9MwfuXClVmCjfrFO+lw=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-108-09x-OM3zO0CCW_byQyuwNg-1; Mon, 03 Aug 2026 06:25:24 -0400
-X-MC-Unique: 09x-OM3zO0CCW_byQyuwNg-1
-X-Mimecast-MFC-AGG-ID: 09x-OM3zO0CCW_byQyuwNg_1785752723
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-475e540a0ffso2094189f8f.3
- for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 03:25:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785752723; x=1786357523; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=GNr95apc5PDPRVlIwX/V/QlypOkWK5TF77CZ0ZaErlA=;
- b=LJ+Pokdx/XmJsOE0g1/3ih6hEIAFAYZvmJBrTmZLcmZsfIwJ5uMNnTVK8oDjnKu72G
- rya0PZ+NBhCZkjHvuatjjyo+1A6oWfLEbGe5AhfnG0AwgPv5gWOXScB5IpmzP/GDVghb
- jZA0T0FdxFlYMtVfUw5qSkJL4kjC7O1GZuAuX8PdLFDd5MkxtNFIcATxRNbIxDuEpQON
- +ZE3ZpIzRwtWqZs3Jqs/6A1/1ssa6gIFK4v5/1V4IyrJu2CbTwPpefi95VSsKCzOvehR
- nkOU5Fes6+qJnUVoLE85OMKgta7hdzfI/YSqu8SSGdbQIy85LCcoQRgV01E479yW+/5E
- Urkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785752723; x=1786357523;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=GNr95apc5PDPRVlIwX/V/QlypOkWK5TF77CZ0ZaErlA=;
- b=IflVXtRiD7Uwba60VdmHeIOlSGhwz7pcKV07qEYO3KXnpg/Z1SiJuu1WMbpZT/IK/C
- zxehLs1sdNgVwIpYt2D2elc+zQRQl557dIdPEHEnQAP6DKePxjfKGCbV1hYGWCWJ2Bba
- /vF9VB6bHtRTI3hJMLMH0VYMjOkgllF1NqW4YJBkYBGsopSs64yZE+U+iYLDo6HvJN5b
- JKhgYqnOTxhhIf2/Z78xZhMcV8vejt9k6tON1gbweq1dNYgS8MCZ72Ft/ta4gZPKWNdc
- AOaO9MSD7OW1FQRwKLe+GItvrkBAaoH0N4E+u9kMEkWuupY35X33zeEL/7UVRzZwgiTQ
- 8m3Q==
-X-Gm-Message-State: AOJu0YwU/ND4JAI/bDCWyqDVb+z6gE0cnwnC8BpHiQImbLX2Tybr6DM/
- n4nQF74xoALebx66e6vOHzbFhzLSanY7QgYPsgiBqc/CmEDV+Ap6mPeaIni6cU4tYfRmdQFRSRY
- ovLKcitfKhj//LJbN9PE2aKEQHpno9nESNuMK1KwJ1GnpHayzFOcfs5gw
-X-Gm-Gg: AR+sD10ofCb6Cn/qRhiqiIiPAZhSwJedWzsFBsS5aJOFUz8FE16Ivx8ZrxrpDkAD1My
- a4LyLRCGKG4tpjHj2SifCvLcJW0Q2mlYsUfZugor2fU+ARHbCQ0dXnUZ3Z/AEouS/01S00V5OHQ
- AEE9zuiNpKFIKxq878KVvznI+RmmOHY8FRrBVYN15I8WyvtQomlCh8d5U2C8CgrF/8jqiqaGzGR
- nRdADi159Bw7T5HOtF+5d0NLpGvIbJmeQO57WHJjkriDgftQCLdKnMw/ywhJY2Q361rHB7xoOsF
- nBTuHmFYO1gbkkFEsr9m7IyZcqscengg7kMTOzdyyDIftLV1BMdGbvTupxJRQw+pjJx0ms3Ac/c
- F357sWGJFOsOstrAOydPSug==
-X-Received: by 2002:a05:6000:469a:b0:47f:95ce:6f48 with SMTP id
- ffacd0b85a97d-47fd72ba4f9mr18202122f8f.11.1785752723072; 
- Mon, 03 Aug 2026 03:25:23 -0700 (PDT)
-X-Received: by 2002:a05:6000:469a:b0:47f:95ce:6f48 with SMTP id
- ffacd0b85a97d-47fd72ba4f9mr18202051f8f.11.1785752722579; 
- Mon, 03 Aug 2026 03:25:22 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-28-14.inter.net.il. [80.230.28.14])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47fd41e296csm29035868f8f.12.2026.08.03.03.25.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Aug 2026 03:25:21 -0700 (PDT)
-Date: Mon, 3 Aug 2026 06:25:19 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Bin Guo <guobin@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, Eric Auger <eric.auger@redhat.com>,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH] hw/virtio/virtio-iommu: Reject inverted MAP range
-Message-ID: <20260803062510-mutt-send-email-mst@kernel.org>
-References: <20260803094302.95228-1-guobin@linux.alibaba.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wqpxs-0001Fv-W8
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 06:32:15 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 673AW1Q5061639
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Mon, 3 Aug 2026 19:32:01 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=CcXFUw3pW+zvo7JdjBYqbnUFq/1yJF5XqKnr3Xq4qX4=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1785753121; v=1;
+ b=J1lxUTaNgxA1GMExKsOLFVI6P5uDW5RTz/Lyoqrt/nByArf5IF6zNgyrq0ASz3tq
+ TPiKqGg1+eqAaSjaZfTQh1wa9YglH6+bba4XwERldmnsYygRm4eRfzFlJ4OGgtKr
+ wH0iUaDN398ch3iJYwE8lLcYnmRCQnBpLdwr5qVEJAEoOJhBXGrT+JwG/eccr3Im
+ /L12R8He9g9PMiyJcT9/a3EtNg8Ho9hbcgfKRV85BxlGyt0r9PJ+ktm4+C3i+/fK
+ oaudYrLhCpg5QYXqqqj+Jn5x5VDdAtJtiYyU0HqoM/EeHRGhfPld05DnrltoN/Ex
+ gjakY+uq8LK35uq0GerPGQ==
+Message-ID: <2579e4f0-d557-4061-bc0d-7c1592705a82@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 3 Aug 2026 19:32:00 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260803094302.95228-1-guobin@linux.alibaba.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/display/virtio-gpu: Always reject invalid scanout
+ bounds
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+References: <20260803-scanout-v1-1-c9831dafdab2@rsg.ci.i.u-tokyo.ac.jp>
+ <f18b62fc-9efe-4741-af01-5190f902165f@oss.qualcomm.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <f18b62fc-9efe-4741-af01-5190f902165f@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.811,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,38 +77,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 03, 2026 at 05:43:02PM +0800, Bin Guo wrote:
-> virtio_iommu_map() did not check that virt_end >= virt_start.  An
-> inverted range corrupts the GTree comparator contract (interval_cmp
-> returns non-zero for a key compared with itself), causing an infinite
-> loop in virtio_iommu_unmap() while holding s->mutex.
+On 2026/08/03 19:17, Philippe Mathieu-Daudé wrote:
+> Hi Akihiko,
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4104
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
-
-Same as 20260729131953.1720567-1-physicalmtea@gmail.com ?
-
-> ---
->  hw/virtio/virtio-iommu.c | 4 ++++
->  1 file changed, 4 insertions(+)
+> On 3/8/26 10:45, Akihiko Odaki wrote:
+>> virtio-gpu does not consistently check scanout bounds with wraparound
+>> handling. In the unchecked virgl SET_SCANOUT path, guest dimensions
+>> reach qemu_console_resize(), qemu_create_displaysurface(), and
+>> ultimately qemu_pixman_image_new_shareable(..., &error_abort), so an
+>> invalid rectangle can terminate QEMU. Implement a check with proper
+>> wraparound handling and apply it consistently.
+>>
+>> Fixes: 9d9e152136bd ("virtio-gpu: add 3d mode and virgl rendering 
+>> support.")
+>> Fixes: 32db3c63ae11 ("virtio-gpu: Add virtio_gpu_set_scanout_blob")
+>> Fixes: 7c092f17ccee ("virtio-gpu: Handle resource blob commands")
+>> Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for 
+>> gfxstream")
+>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>> ---
+>>   include/hw/virtio/virtio-gpu.h   |  5 +++++
+>>   hw/display/virtio-gpu-rutabaga.c |  6 ++++++
+>>   hw/display/virtio-gpu-virgl.c    | 20 +++++++++-----------
+>>   hw/display/virtio-gpu.c          | 36 +++++++++++++++++++++ 
+>> +--------------
+>>   4 files changed, 42 insertions(+), 25 deletions(-)
 > 
-> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-> index 533bd5073f..cc863e90d2 100644
-> --- a/hw/virtio/virtio-iommu.c
-> +++ b/hw/virtio/virtio-iommu.c
-> @@ -807,6 +807,10 @@ static int virtio_iommu_map(VirtIOIOMMU *s,
->          return VIRTIO_IOMMU_S_INVAL;
->      }
->  
-> +    if (virt_end < virt_start) {
-> +        return VIRTIO_IOMMU_S_INVAL;
-> +    }
-> +
->      domain = g_tree_lookup(s->domains, GUINT_TO_POINTER(domain_id));
->      if (!domain) {
->          return VIRTIO_IOMMU_S_NOENT;
-> -- 
-> 2.50.1 (Apple Git-155)
+> 
+>> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+>> index 4d46a4eb10fa..3c0e38c1def0 100644
+>> --- a/hw/display/virtio-gpu.c
+>> +++ b/hw/display/virtio-gpu.c
+>> @@ -622,6 +622,26 @@ static uint32_t 
+>> virtio_gpu_format_bytes_pp(pixman_format_code_t format)
+>>       return DIV_ROUND_UP(PIXMAN_FORMAT_BPP(format), 8);
+>>   }
+>> +bool virtio_gpu_check_scanout_bounds(uint32_t scanout_id, uint32_t 
+>> resource_id,
+>> +                                     uint32_t width, uint32_t height,
+>> +                                     const struct virtio_gpu_rect *r,
+>> +                                     uint32_t *error)
+>> +{
+>> +    if (r->width < 16 ||
+>> +        r->height < 16 ||
+>> +        (uint64_t)r->x + r->width > width ||
+>> +        (uint64_t)r->y + r->height > height) {
+>> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout %d bounds 
+>> for"
+>> +                      " resource %d, fb %d %d, rect (%d,%d)+%d,%d\n",
+>> +                      __func__, scanout_id, resource_id, width, height,
+> 
+> __func__ will always be "virtio_gpu_check_scanout_bounds", maybe we
+> want the caller instead? Otherwise simply drop?
+> 
+> Since we rework this code, in case we are debugging broken guest driver,
+> it could be more helpful to log one LOG_GUEST_ERROR per error type:
+> 
+>      if (r->width < 16) { ... }
+>      if (r->height < 16) { ... }
+>      ...
+
+I don't have a strong opinion here, but if I'm debugging a broken guest, 
+probably I would use the printed function name to look up this code and 
+then figure out what's wrong by comparing with the actual condition.
+
+This applies to other instances of LOG_GUEST_ERROR; ideally it would be 
+nice if there is some sort of guideline, though I think people have 
+different opinions what such a guideline should say.
+
+Regards,
+Akihiko Odaki
+
+> 
+>> +                      r->x, r->y, r->width, r->height);
+>> +        *error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
+>> +        return false;
+>> +    }
+>> +
+>> +    return true;
+>> +}
+>> +
+>>   static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
+>>                                         uint32_t scanout_id,
+>>                                         struct virtio_gpu_framebuffer 
+>> *fb,
+>> @@ -635,20 +655,8 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
+>>       scanout = &g->parent_obj.scanout[scanout_id];
+>> -    if (r->x > fb->width ||
+>> -        r->y > fb->height ||
+> 
+>  > -        r->width > fb->width ||
+>  > -        r->height > fb->height ||
+> 
+> Do we want to remove these checks?
+> 
+>> -        r->width < 16 ||
+>> -        r->height < 16 ||
+> 
+>> -        r->x + r->width > fb->width ||
+>> -        r->y + r->height > fb->height) {
+>> -        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout %d bounds 
+>> for"
+>> -                      " resource %d, rect (%d,%d)+%d,%d, fb %d %d\n",
+>> -                      __func__, scanout_id, res->resource_id,
+>> -                      r->x, r->y, r->width, r->height,
+>> -                      fb->width, fb->height);
+>> -        *error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
+>> +    if (!virtio_gpu_check_scanout_bounds(scanout_id, res->resource_id,
+>> +                                         fb->width, fb->height, r, 
+>> error)) {
+>>           return false;
+>>       }
+>>
+>> ---
+>> base-commit: 299e7557ed15a9a325620698add379a3ce2d1d95
+>> change-id: 20260803-scanout-c7cf28c1890e
+>>
+>> Best regards,
+>> -- 
+>> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>
+>>
+> 
 
 
