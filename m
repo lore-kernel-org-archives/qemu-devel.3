@@ -4,126 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C3D6C55182
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 804DFC55838
 	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 18:27:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqxNH-0008NP-6H; Mon, 03 Aug 2026 14:26:55 -0400
+	id 1wqxNO-0008Oc-3F; Mon, 03 Aug 2026 14:27:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wqxN8-0008Mm-Da
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 14:26:46 -0400
-Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wqxNF-0008NZ-JK
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 14:26:55 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wqxN5-0004gA-3g
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 14:26:45 -0400
-Received: by mail-qt1-x82e.google.com with SMTP id
- d75a77b69052e-51bfa429aa6so1366081cf.0
- for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 11:26:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785781602; cv=none;
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wqxNB-0004gf-CD
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 14:26:52 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-6a0ed034947so2236543a12.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 11:26:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785781608; cv=none;
  d=google.com; s=arc-20260327;
- b=Z9pS7XfYUk2FhoPM+7S0D5WCtD/aJVaPJZgmrCV3U/7pAP1HSPbOeWMKb0ck20mKrL
- /dM+ghAE67DP+wR6MOzP5PgfW9ogpNunzJhjcJjKUzCOpcXSTfN6Rg1yQlomjQdX1aob
- xV+6BNalzbr7IAX8lgIbQfBNcyMrx59O38hj6kYnExG4Bj3B51IANALDM5vBCMYzn7lL
- 5cSl5MVwGU6VIM4yl8P/95VfcEI9F7da+pn4POBI/IhXTDY5etEON4J0GSPklt2vEdbY
- /VwQB1uOB9EmFJCd0Bm6Mz1RAlreanQ6+0f8/TAm+fTJjOPKabnlGmCwbMn5z+2NKji3
- TZ5g==
+ b=oC+BKwBL51ZcX5PJCG7JB2jCmyOOoXa2TCXBOMOXoJUyySKRViqi6cYs/ffoh0RU0l
+ 1nLw1MdZcwccW7OipEKKe0PGdVg0ojDgn4DYdu0LfUsBkHoiz/wVXwao/Sac+qojlzYo
+ i7pH/zQEE9w++YD9aqhJH0MZRWnD/ZK7rAq/mFp1+pR+sKEv7VeuUY3skhdQjrmb3nVu
+ ci8pY/y8c3ql12JSqCuXGO5hkslcX5mSeOLm4BqdTasvGeDOF+3wmrXtipRJmDHwyJbR
+ w7MYu27j+FVlQuMAywjvmqzJhevD63Y7p67/I+SBHRpYxIsTqJCeLkm3/l8Pa+nrZ62B
+ Qngw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=cU2cx1htDUJjTg39cgrGf62olsMzxqfpRXt77GHEV1A=;
- fh=5c2zzDCO3AarKeAiMGTbVWF3GfaVX9WQmTkvlSIBr/A=;
- b=T62IH3NM2CWPcD+CkKf9fA8k5emYkIlk0m37rQRvbH1yudYWzSpJvEouCcdufglOJd
- KCVBddrbr+qVenLczf4TEUX3akHqnD19KeGIIPdx1mUVBqYn03mg2gEHNLUI+bK19iEu
- qKXNXpsEsDlX5SM5wH5/rCSLtUx6SXnekRO8QsSXsS9EmmPyqaCWwaYYMlooo2MyfJnZ
- 60+kctoTxzTWlhIPgDoFPd4daC9vVXetRvHN1biJqYrIHF2C31lcnfno2mBzuP1phcHL
- OBMxE/+wGkD8jp5UuYZNgBSZlUoHscha/mGj5H5N7xVflqjZTkpNeyB+mqVPxzZHHQSM
- IHGw==; darn=nongnu.org
+ bh=QEjPKU4HZBGH/Oc9mDqEaZ8wd0TP442/45E1X9r7Y9w=;
+ fh=TRyg5hw6T48qQHDinJW7gNxLF+rjoOcQR3jmqz5910c=;
+ b=NEX3ahlhot1WAyhZOzSQa5R44EfkT7Y0FHbUHIWazM/7MYauHLxiYqvceaS9tic1Ti
+ sxpugo/qVZEwtyxIoxAKxDTSJrNp2FAqbvdVtoDoVe60qXfwYx9U4yB1aCVf0bzX844R
+ QY2CYs6iw81h1EQ5KJab9njTIWrrddAQ+AZz6x+V9wa3F1Fi7NfAejODMovPzXazRBFu
+ 08s7ObfA7DDTU8Zdgl4YR6FIhhFZ5pUUy+KUU7JNFEU77Fi0drvpFkpG1/fDPxqJcdCP
+ S6zi7zzuEkeiDGYJyGsVr+SS0TNYMylw1ZxvczSjUFUpssSqYBrEtKdwhCiReiFH0Z6R
+ exuQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785781602; x=1786386402; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1785781608; x=1786386408; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=cU2cx1htDUJjTg39cgrGf62olsMzxqfpRXt77GHEV1A=;
- b=kRoglRt9xKo93dzLU5dpt+9xFnj73pIN13QLMuowFuWEJrDopUeNk3xWF8qUHyJVyb
- rlySbb8fLpXzSBUBgLCAV2NRcHuz5WZdu15jUFjf/coF2IYufPvv1WtqzNDzD7CTX3JK
- lz0mnkEP2BIwN3xbQOcz/KTfX6fb31/4tw4mYC/tlATcIdhIjsSwbtc5UNU57udYb6kx
- 4VZhJvo1L2edNpHQ6IeTueW2k4cUC56LWBOyrn6Xh91sI75mHZh33Kr/R9WI3mpXSOkX
- XGb4RNdtt+3wiWVpx1j17g7kRyD/eI/IxRkf6yToMtkCX62osMhfZs7GcbaDWrKq+eVL
- ZuLA==
+ bh=QEjPKU4HZBGH/Oc9mDqEaZ8wd0TP442/45E1X9r7Y9w=;
+ b=sqHMmnzy7VEK69pVXlBg1M7IsqXeXhTPmkI5ZfCMfv2uSVJG+JHFd/YZwiAIG6npB6
+ /j+82q+4zTf4atj87FKonW6rXOejZzFITLlM5k3IQcVQz8kI0AjPa39FVdveA7ychrAf
+ 4gS9rT63rVnpMPO6+g7u+6fxGT1y9d0e3O2UEX9EZ13Mdb5XnyGXw7417+xfOPRw6Vww
+ +6CgUQc8FRwQ7z01VlDyqTQvMUtVA1I0yFh8bu5fdyR5qUzeDhRY0AKjeUatnn4Y8Xp7
+ geyDFld5Fj4CYXnX5Kw8riqKWGTMpot92vVN/BIYLQC6taoKsRQ+eRqS/btwLCN+27xS
+ e2sQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785781602; x=1786386402;
+ d=1e100.net; s=20251104; t=1785781608; x=1786386408;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=cU2cx1htDUJjTg39cgrGf62olsMzxqfpRXt77GHEV1A=;
- b=c4jzPCSZep87yYD1b6zBPsjdyCed6MgAOzuIm3tMtqBAd6uCSmxOLKRZK4fVCt5aM3
- o0+NcUvRTO7++NGbFsRoeFjVveRBWSOidmBiEMRFVj1K30ojnqMQH9plXkngXXmjUp3V
- pvTQNKGgLAXrVx7ygofVGhorWGtzHRvwZ/BlvSWgsyU+B2rIRM37dxcFp+MdB/GsW3FM
- QUEM4QVug20mAWom8thP0FyJolDvBlVF51uTZum5o19gDw9wrLcXa54ygfwgEp7VKi6C
- Up3UXqCvRlPY+5DXLWyOgbk5RXlDRAAmiVh9dER/HnhatWgt5h7kAYVEcwYnTn+ju27M
- cTrw==
-X-Gm-Message-State: AOJu0YxUyAMPv9lX0HVCeMMfhAIhx6NkEXTowtts8wpUcCJ9CdbE06S5
- Ok0UQFuYXCmryXhNP5qrto6tS0djZZcigMW5MScotaykqkLHu2UdV/4+5sMShWgXiLnBn9/DXCB
- 7tJfm9FHi413Fg6JC5SZYrMdOITG8Q4c=
-X-Gm-Gg: AR+sD13uYeV46JDWrb0FnF696YLwICzQxOIGanrI1ogbXA5VEXK0SqB90DiLriJQEpM
- LKAjfyIzTFIMWewZyTVUjfH9Ag1kASX2a1kQu8/S48ri/O+PZ72Bxa1DfHlfYqXRXBlHqYxNXgR
- O9AjIAWORvISUXVARaPLd2KFwfiE/68BW8COshKZsJxNySMhL+4b6wflPUbOEGdV4L0Z5CcN8U1
- VcHX/Z5FwG9o4SPAY/NMF7LKk3GOSsuHnHt4J1EepIYOt7h7lo5uYfJPAdFf+P7ONFA6xKgtcvC
- HEKOcxt971QZnYH5ek//PpWL2jegD13COR9nz7ui6xNS6kND+teaGl9HsiZXF2o2WM44tBQTQ5o
- u
-X-Received: by 2002:a05:622a:5a13:b0:517:146d:2cb5 with SMTP id
- d75a77b69052e-52cd35f7718mr14076591cf.20.1785781601773; Mon, 03 Aug 2026
- 11:26:41 -0700 (PDT)
+ bh=QEjPKU4HZBGH/Oc9mDqEaZ8wd0TP442/45E1X9r7Y9w=;
+ b=LElHYGycViWzzvph1SlhIeREcpBC5P8IbvpASswVC+NJ3vfVBbHSr9PH/ezkRVC3SC
+ tFMadNUjr1LNfZ1lY0xd5vyyL1K941vJYRGZUuihdSmppryGd5mrcOaNVFLEHKq7y3WG
+ hs/VQ9OJHA5d7An3DMPMXmMwXhlg/O3LWxGOjeiGt8EQZ74Bv1wKr7Z5zy4STH69uXMb
+ nbjKIH6AnvNV+ICmyrpk1udXpLgc/c+xSQFLtY/wBIdXjonSebXaX3Tz13C9zv65Usin
+ E16dhx5FnDWbxQPJhk/JKRLWkb+HTwV/YJOOsui9vumzXD0zvvROQpME+XAEkS95JKTL
+ Jrjg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpCTFSMUVcPkTf28pYCQurk+gaQxXb0v4c1DYlUewjiidVtcvZw29kd6bCPsqLPHHZYL4zqd3jIKFGX@nongnu.org
+X-Gm-Message-State: AOJu0YzKdsyqYVD1VIwU8tkgdyKAmQwpMv8aNcE0EMD8mGQ9gNsrkcF6
+ ujxWx+gE9UqQLTqlvmfMfnb3y3RxU26adgfuiz8np0JJXfWMdh8UGMSHJxy9O8HvvX5SnudhOJX
+ oiH3MS6m3FiCaN9yQIQBv8dXPFE4ATcE=
+X-Gm-Gg: AR+sD136i7FBlyx9Vb0ljBJhl0xF/kC3LESdm1M4MiDbHSFI4+RXhAwUuxWrM/N5kXt
+ UUR1nPmNcl1+p8AdvCefut/jQ+IlOuimYgTAhz1V45AvFwxzR3IFnB+Z8eE8EDy6y8MShjE/T4A
+ RqowjyFtwmvJ/Fx4FaethVepp3bgAfRCUdLcY14noS2/7lucc95OcQGmeke1XLGVmN7etzXj8mt
+ ZNdWsdThaCahV3nizK0HFEkKbpmLyHrGZCPew96PUg7LOKkKrVXjaX46BvEQGpRSC0f4xaQSes+
+ rWG7G9jv0RjlV/A+JLRQneWVDLrYgbwc02RbdRfewhbrCeJwsIV2zB1kRyFxSVMzxWxlM7dhacj
+ TF822j0wL2isF
+X-Received: by 2002:a05:6402:21c4:b0:698:1973:1daa with SMTP id
+ 4fb4d7f45d1cf-6a0a7ca8530mr9130992a12.18.1785781607652; Mon, 03 Aug 2026
+ 11:26:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
- <20260723-vhost-user-isolated-memory-v1-11-6b97c439eb28@gmail.com>
- <20260728175931.GI371693@fedora>
-In-Reply-To: <20260728175931.GI371693@fedora>
-From: Connor Kite <connorkite@gmail.com>
-Date: Mon, 3 Aug 2026 11:26:29 -0700
-X-Gm-Features: AUfX_mw627TW1QIKX7ZVVWRqH-pVbRrnDnqjVkySiArQktWAgdvKFLa79MaLLGU
-Message-ID: <CA+spn3qkZ-2=4q2nn_6-wp85U4Xv3oaDAmCHEP_yB=N4aZSceg@mail.gmail.com>
-Subject: Re: [PATCH RFC 11/15] hw/virtio/vhost-user: create isolation region
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, 
- Mathieu Poirier <mathieu.poirier@linaro.org>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Haixu Cui <quic_haixcui@quicinc.com>, 
- Raphael Norwitz <rnorwitz@nvidia.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
- Milan Zamazal <mzamazal@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org, 
- virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
- zhenwei pi <zhenwei.pi@linux.dev>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
- Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
+References: <20260803084754.20803-1-kwolf@redhat.com>
+In-Reply-To: <20260803084754.20803-1-kwolf@redhat.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Mon, 3 Aug 2026 14:26:35 -0400
+X-Gm-Features: AUfX_myBkzz0obbkA-rYtP6Hbzjdg1UsKsV4itJv1Nn07aCGNwlyIq62a9Ofzkc
+Message-ID: <CAJSP0QVrxBadH3YCwnd+wv5Pf+rWR1dzrvcPr5Kb8CkY6-2EFw@mail.gmail.com>
+Subject: Re: [PULL v3 00/17] Block layer patches
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, stefanha@redhat.com, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
- envelope-from=connorkite@gmail.com; helo=mail-qt1-x82e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,128 +119,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 28, 2026 at 10:59=E2=80=AFAM Stefan Hajnoczi <stefanha@redhat.c=
-om> wrote:
-> >
-> > +typedef struct IsolationRegion {
-> > +    uint64_t base_addr;
-> > +    uint64_t vring_base_addr;
-> > +    uint64_t size;
-> > +    int iso_fd;
-> > +} IsolationRegion;
+On Mon, Aug 3, 2026 at 4:48=E2=80=AFAM Kevin Wolf <kwolf@redhat.com> wrote:
 >
-> The purpose of the base_addr and vring_base_addr fields is not obvious.
-> I suggest adjusting the types, names, and adding comments to make the
-> purpose clearer:
+> The following changes since commit b428fe036233cbd15d37e3c027ab6ca4d3661a=
+80:
 >
->   typedef struct {
->       void *mem;           /* mapped shared memory */
->       size_t size;
->       uint64_t vring_iova;
->       int fd;              /* shared memory fd */
->   } IsolationRegion;
+>   Merge tag 'pull-target-arm-20260731' of https://gitlab.com/pm215/qemu i=
+nto staging (2026-07-31 16:19:04 -0400)
 >
+> are available in the Git repository at:
+>
+>   https://repo.or.cz/qemu/kevin.git for-upstream
+>
+> for you to fetch changes up to 52227e25712629406c89c4902b39962f8b9b6f2c:
+>
+>   iotests: increase timeouts for tests to 5 minutes (2026-08-03 10:42:29 =
++0200)
+>
+> ----------------------------------------------------------------
+> Block layer patches
+>
+> - Fix missing locking in latency histogram setters
+> - coroutine: fix lost wakeup in qemu_co_sleep_wake()
+> - floppy: Fix READ/WRITE/FORMAT/READ ID behaviour with missing medium
+> - qcow2: Fix crash on closing a read-only image with dirty bit set
+> - cloop: fix integer overflow in total_sectors calculation
+> - dmg: Fix out of bounds accesses (CVE-2026-65929, CVE-2026-65928)
+> - FUSE export: fix regression with O_TRUNC when export is not growable
 
-Agreed on adding clarification.  Is there a reason to change from uint64_t
-to void * for referencing the shared memory region address?  Most uses of
-that variable expect uint64_t currently.  Here's what I am currently thinki=
-ng:
+The check-python-minreqs job is still failing:
 
-typedef struct IsolationRegion {
-    uint64_t shared_mem_addr; /* mapped shared memory */
-    uint64_t vring_iova_addr; /* beginning of vring region in shared memory=
- */
-    size_t size;
-    int fd; /* shared memory iova */
-} IsolationRegion;
-
+tests/fuse-truncate:43: error: invalid syntax [syntax]
 ...
-> > +
-> > +    /* Isolated memory data*/
-> > +    struct IsolationRegion iso_memory;
+tests/fuse-truncate:43:19: E0001: Parsing failed: 'invalid syntax
+(<unknown>, line 43)' (syntax-error)
+
+https://gitlab.com/qemu-project/qemu/-/jobs/15683823681#L217
+
+You can run the job locally like this:
+
+$ make docker-image-python
+$ podman run --rm -i -v $PWD:/usr/src/qemu:z qemu/python /bin/bash -c
+"cd /usr/src/qemu && make -C python check-minreqs"
+
+The invalid syntax also prevents the fuse-truncate test from running
+successfully:
+
+>>> LD_LIBRARY_PATH=3D/builds/qemu-project/qemu/build/subprojects/libvfio-u=
+ser/lib MSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=
+=3D1:print_stacktrace=3D1 PYTHON=3D/builds/qemu-project/qemu/build/pyvenv/b=
+in/python3 ASAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summar=
+y=3D1 UBSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D=
+1:print_stacktrace=3D1 RUST_BACKTRACE=3D1 MESON_TEST_ITERATION=3D1 MALLOC_P=
+ERTURB_=3D36 /builds/qemu-project/qemu/build/pyvenv/bin/python3 /builds/qem=
+u-project/qemu/build/../tests/qemu-iotests/check -tap -nbd fuse-truncate --=
+source-dir /builds/qemu-project/qemu/tests/qemu-iotests --build-dir /builds=
+/qemu-project/qemu/build/tests/qemu-iotests
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80 =E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95
+stderr:
+--- /builds/qemu-project/qemu/tests/qemu-iotests/tests/fuse-truncate.out
++++ /builds/qemu-project/qemu/build/scratch/raw-nbd-fuse-truncate/fuse-trun=
+cate.out.bad
+@@ -1,5 +1,4 @@
+-...
+-----------------------------------------------------------------------
+-Ran 3 tests
+-
+-OK
++ File "/builds/qemu-project/qemu/tests/qemu-iotests/tests/fuse-truncate",
+line 43
++ except OSError, subprocess.CalledProcessError:
++ ^
++SyntaxError: invalid syntax
+(test program exited with status code 1)
+
+https://gitlab.com/qemu-project/qemu/-/jobs/15683823663#L179
+
+Stefan
+
+> - iotests: Various small fixes
 >
-> struct is not necessary since there is a typedef:
+> ----------------------------------------------------------------
+> Christian Quante (2):
+>       hw/block/fdc: select the drive named by the READ ID command
+>       hw/block/fdc: report a missing address mark on an empty drive
 >
->   IsolationRegion iso_memory;
+> Daniel P. Berrang=C3=A9 (1):
+>       iotests: increase timeouts for tests to 5 minutes
 >
-
-Agreed!  This will be fixed.
-
-> > +    VhostIOVATree *iso_iova_tree;
+> Denis V. Lunev (8):
+>       block/accounting: take stats->lock in latency histogram setters
+>       block/qapi: take stats->lock when reading BlockAcctStats for query-=
+blockstats
+>       tests/unit: add reproducer for BlockAcctStats histogram locking rac=
+e
+>       qcow2: do not try to clear the dirty bit on a read-only node
+>       iotests: run the test pool with the 'fork' start method
+>       iotests: skip FUSE tests when FUSE is not usable
+>       iotests/migrate-bitmaps-postcopy-test: replace the timing assertion=
+ with a content check
+>       coroutine: fix lost wakeup in qemu_co_sleep_wake()
 >
-> The IOVA tree seems to be closely used with IsolationRegion. Maybe this
-> field should move into IsolationRegion?
+> Fiona Ebner (2):
+>       block/export/fuse: fix regression with O_TRUNC when export is not g=
+rowable
+>       iotests: test O_TRUNC behavior for fuse exports
 >
-
-Agreed.  Since the IOVA tree is basically tracking mappings to the
-isolation regions, these can comfortably be grouped together.
-
-...
+> Stefan Hajnoczi (3):
+>       dmg: fix out-of-bounds load in search_chunk() (CVE-2026-65929)
+>       dmg: refuse to open files with no chunks
+>       dmg: reject inconsistent UDRW chunk sector count and length (CVE-20=
+26-65928)
 >
-> nregions is uint32_t, so i should also be uint32_t to avoid
-> signed/unsigned comparisons.
+> malike (1):
+>       block/cloop: fix integer overflow in total_sectors calculation
 >
-
-Agreed.  Will fix this.
-
-...
-
+>  include/block/accounting.h                         |   1 +
+>  include/qemu/coroutine.h                           |  17 +-
+>  block/accounting.c                                 |  11 +-
+>  block/cloop.c                                      |   3 +-
+>  block/dmg.c                                        |  36 ++++-
+>  block/export/fuse.c                                |  12 ++
+>  block/qapi.c                                       |   3 +
+>  block/qcow2.c                                      |   6 +-
+>  hw/block/fdc.c                                     |  55 ++++++-
+>  tests/qtest/fdc-test.c                             |  70 ++++++++-
+>  tests/unit/test-block-accounting.c                 | 115 ++++++++++++++
+>  tests/unit/test-coroutine.c                        |  53 +++++++
+>  util/qemu-coroutine-sleep.c                        |  53 +++++--
+>  tests/qemu-iotests/testrunner.py                   |   4 +-
+>  tests/qemu-iotests/039                             |  11 ++
+>  tests/qemu-iotests/039.out                         |   3 +
+>  tests/qemu-iotests/common.rc                       |  14 ++
+>  tests/qemu-iotests/meson.build                     |  15 +-
+>  tests/qemu-iotests/tests/file-io-error             |   4 +-
+>  tests/qemu-iotests/tests/fuse-allow-other          |   2 +
+>  tests/qemu-iotests/tests/fuse-mmap-shared          |   9 +-
+>  tests/qemu-iotests/tests/fuse-truncate             | 171 +++++++++++++++=
+++++++
+>  tests/qemu-iotests/tests/fuse-truncate.out         |   5 +
+>  .../tests/migrate-bitmaps-postcopy-test            |  15 +-
+>  tests/unit/meson.build                             |   1 +
+>  25 files changed, 633 insertions(+), 56 deletions(-)
+>  create mode 100644 tests/unit/test-block-accounting.c
+>  create mode 100755 tests/qemu-iotests/tests/fuse-truncate
+>  create mode 100644 tests/qemu-iotests/tests/fuse-truncate.out
 >
-> Please avoid duplicating the memory layout calculations. When packed
-> vring support is added to vhost-shadow-virtqueue.c this will become more
-> complex and it should be done in a single place. vhost-shadow-virtque.c
-> should expose an API for the size calculation.
 >
-
-I think I originally did this because the svqs weren't initialized yet
-at this stage.
-However, I can cut down on the duplication with a new function in
-vhost-shadow-virtqueue that makes a dummy svq with the correct num value
-and calls the existing functions to get device and driver area sizes.
-...
-
-> Please make the name unique (e.g. using dev->vdev->name).
->
-
-I will do this by prepending "iso_mem_" to dev->vdev->name.
-
-...
-
->
-> Is it possible to use 0 as the IOVA base address so that QEMU's
-> addresses aren't leaked to the vhost-user back-end? It's good security
-> practice not to reveal memory addresses to the outside world because
-> that information can be used to defeat address space randomization or
-> infer memory addresses of other data structures.
->
-
-That should be possible.
-
-> > +
-> > +    assert(&u->iso_memory.iso_fd >=3D 0);
->
-> The dereference operator should not be used here, it's the iso_fd value
-> that is being tested.
->
-
-Got it.  This will be fixed.
-
-> > +    DMAMap *map;
-> > +    DMAMap vring_map =3D {
-> > +        .perm =3D IOMMU_RW,
-> > +        .size =3D total_vring_size - 1,
-> > +        /*vrings are allocated on tree first, so will be assigned base=
- addr*/
-> > +        .translated_addr =3D u->iso_memory.base_addr
->
-> Why is this field assigned here, I think this field is used as the
-> output of vhost_iova_tree_map_alloc() rather than an input (e.g. see
-> vhost_vdpa_svq_map_rings())?
->
-
-Yes, I suppose this doesn't need to be assigned here.  As it currently stan=
-ds,
-that value is just getting assigned back to itself in
-vhost_iova_tree_map_alloc().  I'll fix this for the values in
-`buffer_regions`, too
 
