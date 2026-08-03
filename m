@@ -4,110 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FDD7C55822
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 18:04:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EF0EC55182
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 18:07:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqx14-0005Od-Ta; Mon, 03 Aug 2026 14:03:58 -0400
+	id 1wqx4I-000643-BJ; Mon, 03 Aug 2026 14:07:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wqx12-0005Lb-Uk
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 14:03:56 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wqx11-0001xd-6J
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 14:03:56 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-69c108fee7fso5328713a12.3
- for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 11:03:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785780233; cv=none;
- d=google.com; s=arc-20260327;
- b=aBeKwiDMTHmS7zB7N0WksJhXXv96U4wNnvt5oo0+rnpMvs7R0GxfEDrAbrXYtm+Snl
- qqk2ulgL7jtGQeRQ3Gk+GYuyXpVybzGoIRdIDCUrysMh9YHV53XhmHg/woXhAmvupUcS
- Axh9pry5gs9aqOYXpEoCIkqzo9h1ezkvZBazz6fhxesj8pmuUSCqoq4OISLbOvc2d/9I
- CIntkxngxMKWIHwbnwUHm/1/vwGwua23sR5LT4l89izpPg6h0uwkZ3J3dSo2ioBAtcdq
- cuWpcJrajfHe/TGVnRua3pdNc8GUWGPbNxPW8eLJ5OZkXwCvdj/WIpmg8Wpk0HaJ7giw
- h7VQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=XngoENQlPTIFXB1Hcb2TbmZoVPBM7zPfK91Vv2+R1tc=;
- fh=h16i3VOeren5plqeFlaCrnhkV7gBXyQyuz2h2P5WdUQ=;
- b=X/EKBpSRo+wQEcoub4AIW9ukeTAaQHHES89K0hGLs/MNxX7eXjWv5+Pn7SLgOUZqx1
- KX/iTisVEvETmS554+36Uqs/pSf+zPAM+BoCf3ohjT2YdMaK8bciFhNyejkQHnklvpGO
- NJ5rJLybt2nzY248vs1HuvAombaUJHNRU4Ww7rPKTgcYKdH8y+jzUfHHYeDe45ph1U1d
- 8NqmYQvcJ77AYxfWcc4dh/S7hpTRFi1o4e2alEfkT97AUrziYVyCRgSbiFtwFiFTh7cN
- Lqt2zB3MyEO56r8Rof1OGcMlRumIgvqBcqnoyG7I54WxzWxe+BLSyUJ/+eFWU9jv7e8h
- 4LBQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785780233; x=1786385033; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=XngoENQlPTIFXB1Hcb2TbmZoVPBM7zPfK91Vv2+R1tc=;
- b=hTNIkIR3qIzYZfpsQUGmiTfAKWwThyUsKv9TyNNwW7LaleqtzaDBbwTYbjNzWo4k3u
- aIKsgC5ZKJwkCIiKi516n0fFViwsr4lBSQUGfSvectNxdI2ta7YZqloS+v8esOp3xdTs
- /J66MFXdoF4Gqy/mon1bS5sfKfgF4NVx3LkEZ/j7NiHsBhKRqg0o5AcPpisSWZcUTzf/
- PXAm+UwknyuGDDTyJETsbl0A5XRU5snjod1+x8X+8utECUmn0jJz+aJ07WWk4eBWrpvP
- UedHep3Ysrop1hF8HS7gEv6NW+nkwxOAQIegwdWkOdZoKz1+jkX18T29l1NwGxOGJlg7
- DpvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785780233; x=1786385033;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=XngoENQlPTIFXB1Hcb2TbmZoVPBM7zPfK91Vv2+R1tc=;
- b=lV3DJJB20oAFkpkTF1aDBBAEnU6kUYyAMlftfhMPEJDg7/gPtDYbbhQvlU4NEAuhRI
- Ra309YNTWbRfEPmjyt/gGlaw8Fb9UFBRxiK6VSDBtKlPcIY+KV6R2z04FThsQEy/25P3
- TmOAhcDxzsSMqT7pnlzVh+igHWvmFCrGPNMnzcHEbAjmCF5WZFmY9BZ8cySgEMWuno52
- je09SMKF3IvimoYV9fPvQ1eup4pgVyZ7XljiwS3N5nVSYovK+9fryIHEYu+aiO+t7sI7
- j4k8dU5PhMrG7mCBQp/2ZFdwK/myaa2f+e1eOcx+5KQKKsvgmePaUSJJg1BpKK+2BVx1
- EgIg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrQ/lMmcQATePNoae2rBvprjTXf2P/BTXCjU1plU43e6/k2z2vWjGJrWmTLl/Dt1X7InKAIal9FgbqL@nongnu.org
-X-Gm-Message-State: AOJu0YyV2ppZwPV7mB/3XwmyO+Kkpjj6LEhKwyPAU4iytBu+mz7L8ngK
- U42ki7X9jfYMuC6nJ+xSY+IS2ruCUIEpK5GQNT2iNHVGAfndjSADucFoHVVcaYsPNx0ZgWsYFs2
- u/Mht5NH4QMI0QBzYm8D+SbkUdqvCu10=
-X-Gm-Gg: AR+sD10TiUCN2ZjPDVOpV7XTk/V1HdiQKXmlRwd2uMLIc70iSDKlnzLhUmKu0Xdlp8P
- ennXS6V+nSyA3TV2pVGO985MSCZz8ArANEvgt/ZDNXHbADD9/jP00l1EZIcgGik8ss+cDCEMQyp
- nt0AG5DPn48BftQX4ELPI82M1DKNRUpoAtpriKDCIae+Z/Bw9XnH9VrZtySes1HUvNrxByakyx/
- KbdFAopb/32ZukMgVmD6N/9j5GY3psXeM8w3ntbcqRPi2dLVJ7OUjfSVYHrUs05934IVsKkLoF3
- rxQ6s8A0LQtEUmSZmLHjuolQ7QirhVEnvTjwb7csDpZWkakG0NkrVcrw0Og4vRaF+i8FybT8psN
- xryPjzZoCzfT+Xw==
-X-Received: by 2002:a05:6402:44d8:b0:6a0:567c:c2fe with SMTP id
- 4fb4d7f45d1cf-6a0a7ce217amr7425412a12.20.1785780233016; Mon, 03 Aug 2026
- 11:03:53 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260803174735.362574-1-stefanha@redhat.com>
- <anDVj0QcD5JfwT8H@redhat.com>
-In-Reply-To: <anDVj0QcD5JfwT8H@redhat.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 3 Aug 2026 14:03:40 -0400
-X-Gm-Features: AUfX_mxM6rCKSJVS7zoGFnKk1jg58S87k_8yf9IVhRYnRSPcWqSd-37w0wB9KXU
-Message-ID: <CAJSP0QUkz=q78OvQ7OnNUxqbRVQpwXY-4pTrtYUK8Lub+9X+Bw@mail.gmail.com>
-Subject: Re: [PATCH] tests/docker: use stable URLs for zlib tarballs
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org, 
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wqx4H-00063v-BL
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 14:07:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wqx4F-0002R1-LW
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 14:07:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785780434;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=UhoLSNRSydRUmuoqLwVXhX82dux4MNKUJB+eoY99KS8=;
+ b=hrEYkT5lKPy+gb+nfRAbLEZ3YOPWXoRAHoAn1Iv0Wq1zHUz385sXeHRxod1xTOrnm8wskL
+ p2rCkl1X04PJfk44o9j9IGPMRYuwnbPFN5FRfVgVOpt9y6QQNPUx+1/fJeDL5pHhte6yiP
+ web8rReN2e39xjnnbHXzMiG0RL4nHOU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-80-WKxGH38jM6yv_Mfza4FMJg-1; Mon,
+ 03 Aug 2026 14:07:06 -0400
+X-MC-Unique: WKxGH38jM6yv_Mfza4FMJg-1
+X-Mimecast-MFC-AGG-ID: WKxGH38jM6yv_Mfza4FMJg_1785780423
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4A042195609D; Mon,  3 Aug 2026 18:07:03 +0000 (UTC)
+Received: from localhost (unknown [10.2.17.42])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4062B1956087; Mon,  3 Aug 2026 18:07:01 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Kohei Tokunaga <ktokunaga.mail@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Kohei Tokunaga <ktokunaga.mail@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] tests/docker: use stable URLs for zlib tarballs
+Date: Mon,  3 Aug 2026 14:07:00 -0400
+Message-ID: <20260803180700.367388-1-stefanha@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.811,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,21 +85,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 3, 2026 at 1:54=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
-dhat.com> wrote:
->
-> On Mon, Aug 03, 2026 at 01:47:35PM -0400, Stefan Hajnoczi wrote:
-> > The tarballs at https://zlib.net/zlib-X.Y.Z.tar.xz become unavailable
-> > when a new release is made. This breaks the emsdk-wasm64-cross.docker
-> > file that fetches the tarball and builds zlib from source.
-> >
-> > There is actually an archive available with a stable URL. Use that
-> > instead. This does require switching from bzip2 to gzip since bzip2
-> > tarballs are not available in the archive.
->
-> "...from  xz to gzip since xz tarballs...."
+The tarballs at https://zlib.net/zlib-X.Y.Z.tar.xz become unavailable
+when a new release is made. This breaks the emsdk-wasm64-cross.docker
+file that fetches the tarball and builds zlib from source.
 
-Thanks for spotting this. I'll send a v2.
+There is actually an archive available with a stable URL. Use that
+instead. This does require switching from xz to gzip since xz tarballs
+are not available in the archive.
 
-Stefan
+The upshot is that the emsdk-wasm64-cross Docker image build will
+continue working into the future without causing CI breakage when the
+zlib project makes a new release.
+
+Reported-by: Michael Tokarev <mjt@tls.msk.ru>
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
+v2:
+- Fix "bzip2 to gzip since bzip2" typo. It should have been xz instead
+  of bzip2. [danpb]
+
+ tests/docker/dockerfiles/emsdk-wasm64-cross.docker | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tests/docker/dockerfiles/emsdk-wasm64-cross.docker b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
+index c04a741b0e5..4f26ce7a269 100644
+--- a/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
++++ b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
+@@ -56,8 +56,8 @@ EOF
+ FROM build-base AS zlib-dev
+ ARG ZLIB_VERSION
+ RUN mkdir -p /zlib
+-RUN curl -Ls https://zlib.net/zlib-$ZLIB_VERSION.tar.xz | \
+-    tar xJC /zlib --strip-components=1
++RUN curl -Ls https://zlib.net/fossils/zlib-$ZLIB_VERSION.tar.gz | \
++    tar xzC /zlib --strip-components=1
+ WORKDIR /zlib
+ RUN emconfigure ./configure --prefix=$TARGET --static
+ RUN emmake make install -j$(nproc)
+-- 
+2.55.0
+
 
