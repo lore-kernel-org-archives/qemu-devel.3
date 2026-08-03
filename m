@@ -4,107 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6349CC55184
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 12:40:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45807C55182
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 12:43:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqrxI-0004ek-V2; Mon, 03 Aug 2026 08:39:44 -0400
+	id 1wqs03-0006TV-2U; Mon, 03 Aug 2026 08:42:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wqrxH-0004eL-EN; Mon, 03 Aug 2026 08:39:43 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wqrzn-0006R1-Hu
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 08:42:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wqrxB-00040X-7b; Mon, 03 Aug 2026 08:39:38 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 673CHlAF1943463; Mon, 3 Aug 2026 12:39:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=pEsmx3XfoIfSdT8oa
- iaTqbNchSNgXaw5dgtKXXN2Py4=; b=EZLqp4qvSx/t7DdWGJqRMSlFZdBz2gfGF
- G5YTT4rM44b5nXAMErtHCt14QuWPjDTQTiv5XioZWFi3yS8MOLdMgEyChbb0g3l2
- sRNy5oyUjmkdJP9hkUWbTb6yWh0jczw2yznyz+HiVTR8wKIaqg7uChdvm4kLHiEX
- cf8+/ovlHsDmwZK+bY50co2nBRn1V4cUpEIiunVo4rR2irho93Rql+QfANL/s+LS
- 5FZN7By3UHyot2oXBbRThMLxuJWVI9ciJC/4tmJAQsrn+eZeYdzMC1JQqgnFdLqy
- HC+XQ5zdMqqAWHG3Y0URUlOrpyHn9wYoKVeeP8mgcXZwnghcgxWFA==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fs77g0k1e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 03 Aug 2026 12:39:35 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 673CQFEr009738;
- Mon, 3 Aug 2026 12:39:34 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fsvmh59n6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 03 Aug 2026 12:39:34 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 673CdWiV47841774
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 3 Aug 2026 12:39:32 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4ABB420043;
- Mon,  3 Aug 2026 12:39:32 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1791320040;
- Mon,  3 Aug 2026 12:39:32 +0000 (GMT)
-Received: from li-d2cd37cc-2ca3-11b2-a85c-84ed3706e5a0.ibm.com (unknown
- [9.111.49.55]) by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  3 Aug 2026 12:39:32 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: richard.henderson@linaro.org, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, philmd@oss.qualcomm.com,
- Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v2] tests/tcg/s390x: Test LOAD and STORE REVERSED
-Date: Mon,  3 Aug 2026 14:38:34 +0200
-Message-ID: <20260803123928.1875606-1-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260731185628.23161-1-richard.henderson@linaro.org>
-References: <20260731185628.23161-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wqrzm-0004nQ-3x
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 08:42:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785760936;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MD5L2RI6FXBTDArIKOWoWQi83VBLigF6a+njSU+nb0s=;
+ b=PFunkW8HPbkVNwjhHsbsjbKgpU8d0xi0weQ8XShC+HyEuf0U2/RWfFwqVzQsWZWm6ZgV0G
+ owMual5fJKDUvoTa64x6FvcYUd3oVmuCbCuMkl5kg4FD0bW6oEzv//wklIqrRpS2u2Dpxl
+ 7lw3EHwBTJRpH/xaXBNgBEYNFPrCEp4=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-294-nmfmxWYjM_u3iiOHvjcYbg-1; Mon, 03 Aug 2026 08:42:03 -0400
+X-MC-Unique: nmfmxWYjM_u3iiOHvjcYbg-1
+X-Mimecast-MFC-AGG-ID: nmfmxWYjM_u3iiOHvjcYbg_1785760922
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-5b2a24ae6deso1921704e87.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 05:42:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1785760922; x=1786365722; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=MD5L2RI6FXBTDArIKOWoWQi83VBLigF6a+njSU+nb0s=;
+ b=b0ycRUZbwB7rrJhkD2W9w8gDIwzTbJCUvnD6DcVe5F6MPIOH+g34u7dAHsmOMYKeBt
+ tK4O3wrC616PltqDpX8p01afuXGfkWmjB9J9uY+xOO/RAdPEhyOeP9C9V1MLunnJUq5T
+ 1YewArVpMocSgmsunahdHu+Ma2urrRWHmxDXkSMjbkLV9wt3pZzlEElmrf87sx6cSW0d
+ nvWeUWY68Q5e4F3+aiwYlciBP+ReV0dPvb9S6+C6NaD6F6SNxSYcF8v7o0r4WDaMtF9H
+ Dtpe3TiwtRfO59ONVTm+t3wMZO2MJoK8mr1MjAAU8J+RyuZorHtujOlVx12zH6Eu2BAh
+ xHsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785760922; x=1786365722;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=MD5L2RI6FXBTDArIKOWoWQi83VBLigF6a+njSU+nb0s=;
+ b=Q4EvvUvF6R/h+iQgw9ouzniiDIRAolujKr8ElxUmUq0C26jLzPF9Ip4E/NmzbrTeGz
+ eChIfoMEqyN6QrnykoFGGed/Ex1XJcoOZ0lEMavkvZnL8KrkJN1Tjvns47YSuEvDk2vN
+ VAAIJwpAHOUgsG61zwW+QFapic+9EO7i8y+4RYRUhKW9476BseAL9kIZOinJg/G2tzDw
+ DEUuh+wzhyhjjTq0jK83Eooqp/peGQbcZEP4q8R8pVqIweHo2iRkaPX7SWUUSOknAQVj
+ inQ7vmGftDHA84u/3LGOPS0iysbLVf2+iSsgNAynopNlPLw7TPCh8WbdgZfY8XnH2J85
+ s0PA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rq8EVu7xtERM10NJ5C39geYHxox0VY+B4Hb1RJVdMb29BVb3fA1XSxzeyYBwqO03FpiiCta6Fc4F5Xp@nongnu.org
+X-Gm-Message-State: AOJu0YxHltrJeqtzMCJ4BD58ZpmyqP4ysF4IgjcKN1Yhu2eQ9zi0Ozgi
+ UBx569K0aej/UQ+Z3dOD2KZZR8TgHEI1NHU04ghp+hJ0hr8gcrBof4jDxdierkj6cgoFMKZ/NEE
+ ooJpdlBN9LStmYMRw5PDlFn9ehKranQwd+MaIgJUIKm6jhqyQEi+PyJCO
+X-Gm-Gg: AR+sD131WjSyJWdCKR5qGpz9CW71X9Cbs1tegxD3BhhTtUtmAhkj6zC2HEx7FAa02v/
+ 7WLJrragQfldkyc2+fHJGrM+yF3pxmTapu3UOkWMeVgp9o0vazwKgms5yt4MDqGPLJv6x80F7RC
+ 6Nyy1sPpZ0FjBq+rD3K+cPLXTusEl+2eWUG9oJ/e4PBuPQ3ApNXG9uX8eV77PEEbqtXkMVcK1h8
+ uO+h2AaHJktgMdhB5lngCqST72u6M8Ms1mpoN9EqjJMr5DXQXZzSWikMUHKEnBSR2yh9vsnmXq3
+ x2ki3WjVaCMIH/M5W8nPYpQYIZV4T+L6+NRI3cUQJQ8nR2HUL4wwNlngeRDGPYDyxATSf/V0aVK
+ OBFhwEJMv28QViOAQVZmkrxByznOj7sST7SNCiHMb5c/kDUtQtTm+qGnlNGpI9B9vzjuqi9kflQ
+ Rpl3aH2gV1TayAEf1URKqLQ1ph8mkZTg==
+X-Received: by 2002:ac2:4c53:0:b0:5b2:e956:b459 with SMTP id
+ 2adb3069b0e04-5b2e956b575mr1077181e87.12.1785760922308; 
+ Mon, 03 Aug 2026 05:42:02 -0700 (PDT)
+X-Received: by 2002:ac2:4c53:0:b0:5b2:e956:b459 with SMTP id
+ 2adb3069b0e04-5b2e956b575mr1077168e87.12.1785760921925; 
+ Mon, 03 Aug 2026 05:42:01 -0700 (PDT)
+Received: from ?IPV6:2003:cf:d73d:549a:e584:7c7b:2611:32a1?
+ (p200300cfd73d549ae5847c7b261132a1.dip0.t-ipconnect.de.
+ [2003:cf:d73d:549a:e584:7c7b:2611:32a1])
+ by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-5b2e245653csm2066246e87.72.2026.08.03.05.41.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Aug 2026 05:42:01 -0700 (PDT)
+Message-ID: <39200a6f-8241-4033-ba7a-5c9bbbdc8ff1@redhat.com>
+Date: Mon, 3 Aug 2026 14:41:57 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 08/15] hw/virtio/vhost-shadow-virtqueue: used handler
+To: Connor Kite <connorkite@gmail.com>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Haixu Cui <quic_haixcui@quicinc.com>, Raphael Norwitz <rnorwitz@nvidia.com>,
+ Kevin Wolf <kwolf@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org,
+ virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Jason Wang <jasowangio@gmail.com>,
+ Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Eugenio_P=C3=A9rez?=
+ <eperezma@redhat.com>, Alyssa Ross <hi@alyssa.is>,
+ Demi Marie Obenour <demiobenour@gmail.com>
+References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
+ <20260723-vhost-user-isolated-memory-v1-8-6b97c439eb28@gmail.com>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <20260723-vhost-user-isolated-memory-v1-8-6b97c439eb28@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODAzMDExMCBTYWx0ZWRfXxrLhvJukT8hd
- 5x+pEQid5uOt2kDa0peu6mGya0SCzIN1EJMDhVNPQmtqgR6C8y747QTrM+HjCH+qkHRvbygTjOa
- BeQSl2jR9DJGUZVIlJqAopG60ALTJu5vK1TKO17EjfWNCTK2redHJuvdi6WMYgclsFVenl/FW9q
- ntiMYkLeU1BgLJiROFz6ggb/3gJY3ojVo6VqlgNKyrz8sjwoBvLJZaFzZ/Af5Fd8701eU8S0RWs
- 5kbsOh8hKUIKcMHZgfn0yefU3D7KAyrDpAtRAPyQk5F5PF+3I7pInR6s5KqjiY1uS++B8G0jVYU
- em6N6h0OTnoBbWG3nRmW9TnP19oa399mY2wZPjaRnFbc6UoKrAgCEfZEDlapm+axUlXuO8djwQN
- mtvdqjsfYWA6cDWb7cppfBRCD84lqyFGH5NHrjMNzFRRLlJjH9kv1e4e83zuVtNuBXUo66OT7Rq
- XE4FkVxUklA8LN/MX2w==
-X-Authority-Analysis: v=2.4 cv=WIFPmHsR c=1 sm=1 tr=0 ts=6a708c07 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
- a=aV6vEkSo3a4riJS5YlcA:9 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: pOB9hwo4Swt20kqO2XVGtvBBQYIDCwR9
-X-Proofpoint-ORIG-GUID: pOB9hwo4Swt20kqO2XVGtvBBQYIDCwR9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODAzMDExMCBTYWx0ZWRfX1RfYn79Ykv7I
- Z5zlNNwEhXIgbVH4dF9r+OB5gshzPqfTXsNEb6U/XD0AiimNJIp3kEku6E2LpSc71jwmAcGL6s8
- Tfk4aeQUApfAdgQ8zsvG694qlX0e8ls=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-03_03,2026-07-30_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 lowpriorityscore=0 priorityscore=1501 phishscore=0 malwarescore=0
- suspectscore=0 clxscore=1015 impostorscore=0 bulkscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608030110
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.811,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,84 +144,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a small test to prevent regressions.
+On 24.07.26 00:30, Connor Kite wrote:
+> Adds a handler callback to shadow virtqueues in order to enable
+> non-default processing of used vring elements from the device.
+>
+> Signed-off-by: Connor Kite <connorkite@gmail.com>
+> ---
+>   hw/virtio/vhost-shadow-virtqueue.c |  4 ++++
+>   hw/virtio/vhost-shadow-virtqueue.h | 14 ++++++++++++++
+>   2 files changed, 18 insertions(+)
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
+The avail handler replaces `vhost_svq_add_element()`. I find it a bit 
+unintuitive that this handler does not replace `virtqueue_fill()`, i.e. 
+that it is not a “mirror” of the avail handler; that the avail handler 
+actually handles avail elements, whereas the used handler is “just” a 
+callback on each used element. Was that intentional? (If so, I think the 
+comment should be explicit about this choice.)
 
-v1 -> v2: CC: qemu-devel@nongnu.org.
-          Check that upper bytes are not modified.
-
- tests/tcg/s390x/Makefile.target       |  1 +
- tests/tcg/s390x/load-store-reversed.c | 46 +++++++++++++++++++++++++++
- 2 files changed, 47 insertions(+)
- create mode 100644 tests/tcg/s390x/load-store-reversed.c
-
-diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
-index 0ca030ded01..fe1fba3de2f 100644
---- a/tests/tcg/s390x/Makefile.target
-+++ b/tests/tcg/s390x/Makefile.target
-@@ -50,6 +50,7 @@ TESTS+=cvb
- TESTS+=ts
- TESTS+=ex-smc
- TESTS+=divide-to-integer
-+TESTS+=load-store-reversed
- 
- cdsg: CFLAGS+=-pthread
- cdsg: LDFLAGS+=-pthread
-diff --git a/tests/tcg/s390x/load-store-reversed.c b/tests/tcg/s390x/load-store-reversed.c
-new file mode 100644
-index 00000000000..bcc6b98dd3b
---- /dev/null
-+++ b/tests/tcg/s390x/load-store-reversed.c
-@@ -0,0 +1,46 @@
-+/*
-+ * Test the LOAD REVERSED and STORE REVERSED instructions.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <assert.h>
-+#include <stdlib.h>
-+
-+int main(void)
-+{
-+    long i = 0x123456789abcdefULL, o;
-+
-+    o = i;
-+    asm("lrvr %0,%1" : "+r" (o) : "r" (i));
-+    assert(o == 0x1234567efcdab89ULL);
-+
-+    o = i;
-+    asm("lrvgr %0,%1" : "+r" (o) : "r" (i));
-+    assert(o == 0xefcdab8967452301ULL);
-+
-+    o = i;
-+    asm("lrvh %0,%1" : "=r" (o) : "T" (i));
-+    assert(o == 0x123456789ab2301ULL);
-+
-+    o = i;
-+    asm("lrv %0,%1" : "=r" (o) : "T" (i));
-+    assert(o == 0x123456767452301ULL);
-+
-+    o = i;
-+    asm("lrvg %0,%1" : "=r" (o) : "T" (i));
-+    assert(o == 0xefcdab8967452301ULL);
-+
-+    o = i;
-+    asm("strvh %1,%0" : "=T" (o) : "r" (i));
-+    assert(o == 0xefcd456789abcdefULL);
-+
-+    o = i;
-+    asm("strv %1,%0" : "=T" (o) : "r" (i));
-+    assert(o == 0xefcdab8989abcdefULL);
-+
-+    o = i;
-+    asm("strvg %1,%0" : "=T" (o) : "r" (i));
-+    assert(o == 0xefcdab8967452301ULL);
-+
-+    return EXIT_SUCCESS;
-+}
--- 
-2.55.0
+Hanna
 
 
