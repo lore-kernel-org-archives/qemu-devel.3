@@ -4,79 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0065C55196
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B31A7C55822
 	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 22:17:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wr0yB-00008H-WA; Mon, 03 Aug 2026 18:17:16 -0400
+	id 1wr0yB-000050-Td; Mon, 03 Aug 2026 18:17:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pmazzini@gmail.com>)
- id 1wqvwV-0001IJ-Hz
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 12:55:12 -0400
-Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pmazzini@gmail.com>)
- id 1wqvwT-0001Ib-8z
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 12:55:10 -0400
-Received: by mail-ot1-x332.google.com with SMTP id
- 46e09a7af769-7e6128bd9b3so1643345a34.1
- for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 09:55:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785776108; x=1786380908; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=FDQYQuAOCiXKhm0JQeg1ZjVTKHWYWTzjTg1cjoh81jI=;
- b=m72y/0TZTJiYL0aSm68xeGEGRMmTWThXq/cBXNUxwKpSpHxHnwOPKzB/toUNc0JSAO
- XdWGIO3FyVxfStiJxVXDeB5stcJgoyIVvddDddr7gxJoEunJtPfaUvLAV28Wk4338ogO
- UzlvnwIU4FQVCWeICiu+JbRkq6cifUmtskhdvoaf5AgnUj92u/FJ8ZPPfRMkGVewPj+T
- 8TcwoF1LyYNtUOy7uVE8NdaxlIJlsWq358VsWO0rLH9bR87URtbdddS0eKjtjpZK7uav
- JWj0nz1BP9zuCwjWDO1iJbqWbq7QTZGIygSKFUy/Z7w9rX3JX8ABVdf5cJMZ/in4h2W9
- T7Xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785776108; x=1786380908;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=FDQYQuAOCiXKhm0JQeg1ZjVTKHWYWTzjTg1cjoh81jI=;
- b=OwMZX1srKup++Bu0nS1m12o9UULTd3O9z0VAPuGO0BVexsPgDWdrkn0OaBERpHz+yc
- ra5O+UD9rbijk8RVMVAvLLvESQ9gCizpfPbFUiW3TAvubLVFse0HkQ8v6QI1YYhUZWaB
- aAO5fE7wToGBqyXwQ7wZA6QhiM6CkMg9w8YXgYDb2fQZntcAT/fLvxN0mPdETYry0x0C
- LDegjpNeMepjS6nYE8htSbSJ1Vko/2keAIGgQ6RwFo7pMwgR5YZmEqnKS7FTT2c/nvPQ
- wbjUeTNqWUfAIzdaZ+7FdR8F5CZ33Yc7iy15AC8MH2ZUKQiBQYn1P4cvtZId3u3XOgW0
- R17g==
-X-Gm-Message-State: AOJu0YxwJo7emBTKZwQHJQJ2IK8vocDdhyndlPK9Z0MHPVvrlCAv28Ax
- h1NBPneXCZL01F63YEWF5F4b27P3NJee2q7ZR2XQM6ljX5BlTtrfreJc+AAU05p+DV6djw==
-X-Gm-Gg: AR+sD13R9/y9B6z2fo/Gc8i60XrT78EtQNTTVpfv7+5WjD/jn5DsEQSuiTeP7XdPhpR
- +JnZNNDKONioU7VVWvI4aZRSskTS1r0fZXgg9XioxdtGlbt/6ZzjixpZfQz/XN0/XSau3Yg820i
- 3yMzfr5+BcStlr8y37wj9KY9KVDUZZ1tJoGNCST/ZUgkAQSgoIE0Ze9ICvkJWz3DGy18OyipozH
- 2zPN6B0OCvE16LzY/sRKfUHln42mai6KgCxmHjg4jmrJYYsb0AXMQvemuBuZZR9rPGtcJ7rk4Wt
- KVsER3MWGS08aPgEkSQ3FMr2h7aTtn2izmJJxpVjaj8afY0oyidArDlGTjggFbEqXV9RGLR0aZX
- awEckML38MIamzCk311TKIHaH3GRrrgNSXZ89BpjeJPbbJi0HyI6C83DIwehMyWrSfyRa89m39/
- azgFTLuoUxrPAtGP/ukDiQTPpoqmZZrKZuz8lvAtHJVudRB3c9Nvu2xWTEASqjfioEYOdHeM/z1
- lN1sA==
-X-Received: by 2002:a05:6830:6018:b0:7dc:c7aa:22bd with SMTP id
- 46e09a7af769-7f196bedf8cmr18091302a34.6.1785776108041; 
- Mon, 03 Aug 2026 09:55:08 -0700 (PDT)
-Received: from devvm55912.cln0.facebook.com ([2a03:2880:31ff:59::])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7f18ed970adsm8080490a34.8.2026.08.03.09.55.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Aug 2026 09:55:07 -0700 (PDT)
-From: Pablo Mazzini <pmazzini@gmail.com>
+ (Exim 4.90_1) (envelope-from <guochun.wang@foxmail.com>)
+ id 1wqueC-0001NJ-Ns
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 11:32:13 -0400
+Received: from xmbghk7.mail.qq.com ([43.163.128.49])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <guochun.wang@foxmail.com>)
+ id 1wque8-0004qn-V8
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 11:32:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+ s=s201512; t=1785771116;
+ bh=8BVzs/IT6pVQ73xUL2jI08jtpjaUmlmJAohvK5vWoWk=;
+ h=From:To:Cc:Subject:Date;
+ b=KBsMFss18lbjl0vUa4A9i0h6CErmq7jDSYRpCKEo0+5rG6jI0odJ9C1sELOq1U1lG
+ RlV06Ls1vfjTn1NheHq9bxX20uQ9ECZcK4VaS80+8KfpwkqURjXP4+eQsSj6+S6DwA
+ 1YXC8aWcA3TJXzIVxTqLlSx8cln/FSC7+Y5oQFbI=
+Received: from DESKTOP-8MIQOKD.localdomain ([117.13.168.66])
+ by newxmesmtplogicsvrsza53-0.qq.com (NewEsmtp) with SMTP
+ id 72397CE1; Mon, 03 Aug 2026 23:28:35 +0800
+X-QQ-mid: xmsmtpt1785770915txxdcygnp
+Message-ID: <tencent_B90E44EAD06F6676AF9B572898242037BB0A@qq.com>
+X-QQ-XMAILINFO: MR06con9IFZDhRyiZ6G5z/7aaDNJMBgV97bLjzI92pdJ5Y250OKN2I1NNwDzI8
+ XHU/vRhg0bCGACTw3e2JN+dL5DnwYNmkezXCCtEvKb5U9CPZSSXJGPIHITU/+pb7diciN+vHBv4A
+ 3Huk+Bhc7HRZgNB1wjKRowTHfpKB9jVc85ac+iAMHDuhmtO2Ie5kwzIHFrzCIbo0Dccl8wOUBqD1
+ E+nvtBjvWWzFSuX798a1BWznQXOcMsdW2j0XGcI92+gpLDIovBub3/L2xSj8z5rIYyx95plXV6MQ
+ T7O2B1nRU9Rab8irlVxKtUsHNn8LLwpO/syeUM/enuwH1G7YrzFh3FJK3lsmG5gQOeucDCmbZyMK
+ fTL1OyHBQ3fpjqeTzNEwKDb6NA7O7MG+61Kk+hufd5thywhzjhhiiiysrOk4flBqZI4OmPjrUtx3
+ g6CKxkxh2zPoOjKt61MYNh7C1niE8BHTyoPugx5y0nVgrkXzUjOGpjexm34ebvGalh6Ix2p4Eivh
+ 71rG5MGwQRyxnsSvRN+QkPHrv3cdG4QjG5wLX1SWBgmEjc7Tg5H4yOJRqsaCqVCPjvozza6aYeDK
+ 2p8cRx0eE/drfIG14wie57AaE13wJdnhaRj76Ksv4xOIvRZHIVotmLfMV2afqtg3e8DGbzt7xRQ1
+ 31RlLND8jIceVpTbWle6I2v3N+0weJIwN/Vw9EEQ23mn5IW97gvYNLXGDQ13MG1IczMd4kJyuati
+ NLY1VdxfBuMMp/Y/2qzaW6aZoDjmRoHG6IuKbQ08z8cPI9Mu+cgl5Ait28Et2akzosVzgRY8jnbK
+ QVbeo2sUxCnGvPHBzSvK1rpxTsI87Kp0mIo5HWTRC/Dccfy8PQ3PAOKYUZeTMyYvjAECbymXp2ba
+ Zb92YXjEZmqyTxEvwazJbI4sWa8NI7LwpbrM7+NIdf2/shU1xragDHftGfu/NhGfMPZwiSkaULuv
+ x/OBLU5cwxAKtcw20FvQf9OmxH3U3Q2iYesSoGJ8gXYbfbtz9IQOtLBFiBc9FuCMucCQjXJ5rndA
+ adtdpX0ES27keZUaKltb62jvmulcGfF+kkTKdNE4BVzNTPzbRTjxVOkOH+zVFwR1JD6g5BrwOG2C
+ JBahnFeuE87s5nS/U=
+X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
+From: guochun.wang@foxmail.com
 To: qemu-devel@nongnu.org
-Cc: philmd@mailo.com, bmeng.cn@gmail.com, qemu-block@nongnu.org,
- Pablo Mazzini <pmazzini@gmail.com>
-Subject: [PATCH] hw/sd/sdhci: model the i.MX uSDHC clock,
- reset values and DMA boundary
-Date: Mon,  3 Aug 2026 09:53:56 -0700
-Message-ID: <20260803165419.2349160-1-pmazzini@gmail.com>
-X-Mailer: git-send-email 2.53.0
+Cc: chao.liu@processmission.com, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, pbonzini@redhat.com, farosas@suse.de,
+ lvivier@redhat.com, qemu-riscv@nongnu.org,
+ guochun wang <guochun.wang@foxmail.com>
+Subject: [PATCH 0/2] Add K230 SoC GPIO controller support
+Date: Mon,  3 Aug 2026 23:28:30 +0800
+X-OQ-MSGID: <20260803152832.222022-1-guochun.wang@foxmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::332;
- envelope-from=pmazzini@gmail.com; helo=mail-ot1-x332.google.com
+Received-SPF: pass client-ip=43.163.128.49;
+ envelope-from=guochun.wang@foxmail.com; helo=xmbghk7.mail.qq.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -85,7 +72,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 03 Aug 2026 18:17:03 -0400
+X-Mailman-Approved-At: Mon, 03 Aug 2026 18:17:05 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,83 +87,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The i.MX uSDHC differs from the Freescale eSDHC that this file already
-models in three ways that a vendor U-Boot depends on.
+From: guochun wang <guochun.wang@foxmail.com>
 
-Clock enables.  The classic eSDHC keeps them in SYSCTL.  The uSDHC moved
-them to VENDOR_SPEC bits 11-14.  Teach SDHC_CLOCK_IS_ON() about the
-VENDOR_SPEC enable.
+The Kendryte K230 SoC contains two APB GPIO controllers derived from
+the Synopsys DesignWare APB GPIO (the Linux gpio-k230 driver is itself
+based on gpio-dwapb.c, and shares the same register layout), with a
+Canaan-specific compatible ("canaan,k230-apb-gpio") and hardlock
+integration. This series implements the device model, wires it into
+the K230 SoC, and adds qtest coverage.
 
-Interrupt status enables.  Unlike the SD Host Controller standard, the
-eSDHC does not reset these to zero, which commit d060b2789f7 already
-models for fsl-esdhc-be/le.  The uSDHC behaves the same way.
+Patch 1 implements the controller model following the K230 Technical
+Reference Manual v0.3.1: software control mode (DR/DDR/CTL), external
+port multiplexing, per-pin IRQ output, edge and level interrupt
+detection, EOI/mask/gating logic, DDR/CTL mode switching with pending
+interrupt preservation, and three-phase Resettable API support with
+VMState migration. It also instantiates the two controllers (gpio0 at
+0x9140B000, gpio1 at 0x9140C000) in the K230 SoC, replacing the
+previous unimplemented-device placeholders, and wires each controller's
+32 per-pin IRQ lines to the PLIC (sources 32..63 and 64..95).
 
-SDMA buffer boundary.  The uSDHC's internal DMA has none; it transfers
-the whole programmed block count and reports only Transfer Complete.
+Patch 2 adds 16 qtest cases covering reset values, edge and level
+interrupts (rising/falling/both-edge, active-high/active-low), EOI
+clearing, INTEN gating and INTMASK masking, mode-switching behaviour,
+PLIC claim/complete flow, and the second controller instance.
 
-Signed-off-by: Pablo Mazzini <pmazzini@gmail.com>
----
- hw/sd/sdhci-internal.h |  7 +++++--
- hw/sd/sdhci.c          | 12 ++++++++----
- 2 files changed, 13 insertions(+), 6 deletions(-)
+Hardware control mode, debounce logic, the combined interrupt output,
+and clock-domain synchronization are intentionally not modelled; they
+have no observable effect under QEMU and are documented in the patch 1
+commit message.
 
-diff --git a/hw/sd/sdhci-internal.h b/hw/sd/sdhci-internal.h
-index 4aeed120bf..60bed5af30 100644
---- a/hw/sd/sdhci-internal.h
-+++ b/hw/sd/sdhci-internal.h
-@@ -124,8 +124,11 @@ FIELD(SDHC_PWRCON, BUS_VOLTAGE,        1, 3);
- #define SDHC_CLOCK_INT_EN              0x0001
- #define SDHC_CLOCK_SDCLK_EN            (1 << 2)
- #define SDHC_CLOCK_CHK_MASK            0x0007
--#define SDHC_CLOCK_IS_ON(x)            \
--    (((x) & SDHC_CLOCK_CHK_MASK) == SDHC_CLOCK_CHK_MASK)
-+/* The i.MX uSDHC keeps its clock enables in VENDOR_SPEC instead */
-+#define ESDHC_CKEN                     (1 << 14)
-+#define SDHC_CLOCK_IS_ON(clkcon, vendor_spec)                  \
-+    ((((clkcon) & SDHC_CLOCK_CHK_MASK) == SDHC_CLOCK_CHK_MASK) \
-+     || ((vendor_spec) & ESDHC_CKEN))
- 
- /* R/W Timeout Control Register 0x0 */
- #define SDHC_TIMEOUTCON                0x2E
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index e58a610397..b354c0f31f 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -308,7 +308,8 @@ static void sdhci_reset(SDHCIState *s)
-     s->stopped_state = sdhc_not_stopped;
-     s->pending_insert_state = false;
-     if (object_dynamic_cast(OBJECT(s), TYPE_FSL_ESDHC_BE) ||
--            object_dynamic_cast(OBJECT(s), TYPE_FSL_ESDHC_LE)) {
-+            object_dynamic_cast(OBJECT(s), TYPE_FSL_ESDHC_LE) ||
-+            object_dynamic_cast(OBJECT(s), TYPE_IMX_USDHC)) {
-         s->norintstsen = 0x013f;
-         s->errintstsen = 0x117f;
-     }
-@@ -613,9 +614,12 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
-     /*
-      * XXX: Some sd/mmc drivers (for example, u-boot-slp) do not account for
-      * possible stop at page boundary if initial address is not page aligned,
--     * allow them to work properly
-+     * allow them to work properly.  The i.MX uSDHC has no "Host SDMA Buffer
-+     * Boundary" at all: its internal DMA transfers the whole programmed
-+     * block count and reports only Transfer Complete.
-      */
--    if ((s->sdmasysad % boundary_chk) == 0) {
-+    if ((s->sdmasysad % boundary_chk) == 0 &&
-+        !object_dynamic_cast(OBJECT(s), TYPE_IMX_USDHC)) {
-         page_aligned = true;
-     }
- 
-@@ -994,7 +998,7 @@ static void sdhci_data_transfer(void *opaque)
- 
- static bool sdhci_can_issue_command(SDHCIState *s)
- {
--    if (!SDHC_CLOCK_IS_ON(s->clkcon) ||
-+    if (!SDHC_CLOCK_IS_ON(s->clkcon, s->vendor_spec) ||
-         (((s->prnsts & SDHC_DATA_INHIBIT) || s->stopped_state) &&
-         ((s->cmdreg & SDHC_CMD_DATA_PRESENT) ||
-         ((s->cmdreg & SDHC_CMD_RESPONSE) == SDHC_CMD_RSP_WITH_BUSY &&
+The series has been tested against the Linux gpio-k230 driver and the
+existing K230 qtest suite.
+
+Cc: Chao Liu <chao.liu@processmission.com>
+Cc: Alistair Francis <alistair.francis@wdc.com>
+Cc: qemu-riscv@nongnu.org
+
+guochun wang (2):
+  hw/gpio: add K230 GPIO controller model
+  tests/qtest: add K230 GPIO controller test
+
+ MAINTAINERS                  |   3 +
+ hw/gpio/Kconfig              |   3 +
+ hw/gpio/k230_gpio.c          | 362 ++++++++++++++++++++++++++++++
+ hw/gpio/meson.build          |   1 +
+ hw/riscv/Kconfig             |   1 +
+ hw/riscv/k230.c              |  27 ++-
+ include/hw/gpio/k230_gpio.h  |  73 +++++
+ include/hw/riscv/k230.h      |   5 +
+ tests/qtest/k230-gpio-test.c | 521 +++++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build      |   2 +-
+ 10 files changed, 991 insertions(+), 7 deletions(-)
+ create mode 100644 hw/gpio/k230_gpio.c
+ create mode 100644 include/hw/gpio/k230_gpio.h
+ create mode 100644 tests/qtest/k230-gpio-test.c
+
 -- 
-2.53.0
+2.43.0
 
 
