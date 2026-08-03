@@ -4,90 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15FB1C55190
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 08:31:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C1E5C55175
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 08:46:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqo4W-0007xj-Df; Mon, 03 Aug 2026 04:30:56 -0400
+	id 1wqoJ4-0001zL-J2; Mon, 03 Aug 2026 04:45:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wqo4U-0007wS-Q5
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 04:30:54 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wqo4S-0005sP-5S
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 04:30:54 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-495437bb891so14299695e9.1
- for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 01:30:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1785745851; x=1786350651; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=JzG4apXpiNocLsXpog0bsCdeoy9IhVdLqM3yABb24X8=;
- b=HdwNkx7JW5cfC5sXOxbzRnPyl7shYpxYjj7AUrSZmJP3aUCvFZNqfFJ4mCSEWbQMPt
- sixkIZGRtCPsJDQbkfQfMjLc2l35MMAtLfPcrROXYvKazrhN92RZ7LrhCVrtfaWhY89C
- w7AUpLKwXQ+662PQmO50PlZ8N/P1EOdGy/RGo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785745851; x=1786350651;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=JzG4apXpiNocLsXpog0bsCdeoy9IhVdLqM3yABb24X8=;
- b=C3GNfgJccvLalo5ssWh6N6Boh2igzqUsif27dRK2HXFL7sdEQrS0gu0d+MXLbLwhcb
- p3hzfWYwitRrCVP1YYdX9KEbhMWRJEXkYgZ0sE3B8Pu8liNaeoUv6wgipXrG3bk5rESh
- 34bFrv9h4140UhvtCcKKHZymlWps1BduC5c6Ks1gTFaa1ckkOCMOJFF5EIM63+8/k9u9
- p4nHFuJvpCapk9XbAIJVxoFAhH18vXR+0S/yoHup1ePpiaC/etrFg/lSXnccFStOcM9m
- SQ9yojvq6n10SpIbxtg5pIn5WLKtdyMlT9fGYL4bBPN7X+XcUf6Q52T7WCjj9tqk5uMa
- LnOA==
-X-Gm-Message-State: AOJu0YzTT9ySs2p/rwkIovFPxLNtepuPgvgBhutlSFMsKBZQhRBzkWp1
- jUMWH/o1gTxefTHCq4g0PX1wl89+1XhdczTIJzXZt7m7FmDTjzwtWumhn/CKkO0bd/rrlju3Qwc
- BH6cX
-X-Gm-Gg: AR+sD13LU6b/82qVITjmnAPv8gs6qGKonJzWbF9UwFnbbPqX//aLlrg2CRdSWpb2xXi
- Ed3EpGbZpgNFnZy+NS8hY5xX7l/VwnEIc+i9H4HTaX7N1q48VsnwLNw25hyQpebNxnub2cYdb6H
- 9kCe9fP41W1SS0pM3DNkdqJwposAUczjLZz4m0lrQGNATbaRKNfMmtBeDDyji7DS0Wu1fKVYJRL
- +s9ABPdE4haT0eWVhKVNMKsnwUfO+h/Ec7N0Nxa0Ks1eFvkJj3yZhO1cpV/YfblrQpEUhUo6J8d
- CwyLyTj0xj6bapkGbXJh+eS7lWg+jUxFlx3yXMC5bGYlZz4BR1e0eDtkGHjpVtNnidsYqOjPSrj
- 0h3tUdevMldL9WHMMz+kwl45lBWmqrRDAG2ouaiYvif+djmbbq/dKrfrIbDm0fVeHSiStj31XoU
- lrzOTiOiQUtQU5QomJr+lkOt7AEv0L5UWWpixgLZrqyrvR8K4x6JSIP32rpS2hVa3hsfHfMI3Zb
- bacKiqzRQ9vxa1DS5zLaenodWWQlmhoC4uLyUbCRMLmU6mJGOAfPtAD9SPOJA==
-X-Received: by 2002:a05:600c:3506:b0:495:3bc6:d381 with SMTP id
- 5b1f17b1804b1-4980eb8e287mr133749885e9.2.1785745850629; 
- Mon, 03 Aug 2026 01:30:50 -0700 (PDT)
-Received: from alex-laptop.lan
- (p200300cf574a7200803110ea947f174a.dip0.t-ipconnect.de.
- [2003:cf:574a:7200:8031:10ea:947f:174a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49807bb45ebsm152286045e9.4.2026.08.03.01.30.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Aug 2026 01:30:50 -0700 (PDT)
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
- Alexander Mikhalitsyn <alexander@mihalicyn.com>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- qemu-block@nongnu.org, Jesper Devantier <foss@defmacro.it>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH v3 2/2] hw/nvme: support online resize
-Date: Mon,  3 Aug 2026 10:30:46 +0200
-Message-ID: <20260803083046.110121-3-alexander@mihalicyn.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260803083046.110121-1-alexander@mihalicyn.com>
-References: <20260803083046.110121-1-alexander@mihalicyn.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wqoJ2-0001zA-EB
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 04:45:56 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wqoIz-0007W3-N1
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 04:45:56 -0400
+Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.183]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6738jbOn026885
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Mon, 3 Aug 2026 17:45:39 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=/n1Y4udR3p70a7efRtD8QoF3yraKqrO4yBgCmSRJc/k=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-Id:To:Subject:Date;
+ s=rs20250326; t=1785746739; v=1;
+ b=j3S3nLEOOyIkV1N+llQLNY7TYiAJ2NOfVMlt+3noMy3IJO98BG2GnqPRegL2mSE9
+ QgKJHR5MEMSN3JG8//7YgPkTjjGFobBJ70NW22DqOsK3TM0WgI45qE3PsWjeTwWj
+ tfrfD1jvEhr0DaImwhVckxkmQiaIVwDnCjpTtCQ1P5rGprCOAYHxSebcQY+MoygU
+ iqTDPg3g1xVxyIAHEwD4JSZatc2WUty3rHJ6ZzKSvZ66RDFWaPdS9UCEzIj4ZCmk
+ wZArBDP1me0FUNpqauizIg4GAkzBbdJFiOGLBjlztkwk72UBIHWvN/uHizZSpllt
+ xPTiVfNVBN9IaHAUbhWXpQ==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 03 Aug 2026 17:45:25 +0900
+Subject: [PATCH] hw/display/virtio-gpu: Always reject invalid scanout
+ bounds
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260803-scanout-v1-1-c9831dafdab2@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQ5AMBCF4avIrDWpSihXEQvGYCxKOioScXfF8
+ kv+9y4Q8kwCdXKBp4OFVxeRpQng3LmJFA/RYLQptNW5EuzcGnaFJY7GYmYrTRDrzdPI5/fUtL8
+ l9Avh/s7hvh8gZ+rNawAAAA==
+X-Change-ID: 20260803-scanout-c7cf28c1890e
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.16-dev-925f5
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7029;
+ i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
+ bh=RLFDNKk8UtS2ny7VvGaG0piI28YqqELWzMQUAnpgoTg=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ1ZBqPHJ+kr9rf8zuG/Pn1O+4dMBy++L/E//Kny5osrs9
+ afFv739OkpZGMS4GGTFFFlSinZza0TXfipMiG+BmcPKBDKEgYtTACbC9JKR4X9nTvqW2Hsir+//
+ Nn77ekoQq6ziPQ+JU1sCOSd9uVN0/wnDP5tmH5Ot4vG1xU+uRqm+Pvvu05GpzlGrg/QPvVh/U/r
+ dZz4A
+X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
+ fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,151 +86,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+virtio-gpu does not consistently check scanout bounds with wraparound
+handling. In the unchecked virgl SET_SCANOUT path, guest dimensions
+reach qemu_console_resize(), qemu_create_displaysurface(), and
+ultimately qemu_pixman_image_new_shareable(..., &error_abort), so an
+invalid rectangle can terminate QEMU. Implement a check with proper
+wraparound handling and apply it consistently.
 
-Implement (BlockDevOps *)->resize_cb() for NVMe namespace to enable
-online resize support.
-
-We must handle cases when multiple namespaces are attached to
-a single controller, or namespace is shared across a few
-different controllers by iterating over controllers attached to
-a NvmeSubsystem and properly notify every controller about a size change.
-
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Fixes: 9d9e152136bd ("virtio-gpu: add 3d mode and virgl rendering support.")
+Fixes: 32db3c63ae11 ("virtio-gpu: Add virtio_gpu_set_scanout_blob")
+Fixes: 7c092f17ccee ("virtio-gpu: Handle resource blob commands")
+Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for gfxstream")
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
-v3:
-    - rebased
-v2:
-    - check-patch fixes
----
- hw/nvme/ctrl.c |  9 +++++++
- hw/nvme/ns.c   | 68 +++++++++++++++++++++++++++++++++++++++++++++++++-
- hw/nvme/nvme.h |  2 ++
- 3 files changed, 78 insertions(+), 1 deletion(-)
+ include/hw/virtio/virtio-gpu.h   |  5 +++++
+ hw/display/virtio-gpu-rutabaga.c |  6 ++++++
+ hw/display/virtio-gpu-virgl.c    | 20 +++++++++-----------
+ hw/display/virtio-gpu.c          | 36 ++++++++++++++++++++++--------------
+ 4 files changed, 42 insertions(+), 25 deletions(-)
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 710c3e0d77d..d60b3e105a1 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -7009,6 +7009,15 @@ static uint16_t nvme_ns_attachment(NvmeCtrl *n, NvmeRequest *req)
-     return NVME_SUCCESS;
- }
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 2f60c72078b3..287262228d33 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -363,6 +363,11 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
+                                    struct virtio_gpu_scanout *s,
+                                    uint32_t resource_id);
  
-+void nvme_ctrl_notify_ns_resize(NvmeCtrl *ctrl, NvmeNamespace *ns)
-+{
-+    if (!test_and_set_bit(ns->params.nsid, ctrl->changed_nsids)) {
-+        nvme_enqueue_event(ctrl, NVME_AER_TYPE_NOTICE,
-+                           NVME_AER_INFO_NOTICE_NS_ATTR_CHANGED,
-+                           NVME_LOG_CHANGED_NSLIST);
-+    }
-+}
++bool virtio_gpu_check_scanout_bounds(uint32_t scanout_id, uint32_t resource_id,
++                                     uint32_t width, uint32_t height,
++                                     const struct virtio_gpu_rect *r,
++                                     uint32_t *error);
 +
- typedef struct NvmeFormatAIOCB {
-     BlockAIOCB common;
-     BlockAIOCB *aiocb;
-diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
-index 7f0f9ac7662..e2954fd91b3 100644
---- a/hw/nvme/ns.c
-+++ b/hw/nvme/ns.c
-@@ -163,6 +163,70 @@ lbaf_found:
-     return 0;
- }
+ /**
+  * virtio_gpu_scanout_blob_to_fb() - fill out fb based on scanout data
+  * fb: the frame-buffer descriptor to fill out
+diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
+index e28aad94eead..a054f8117f14 100644
+--- a/hw/display/virtio-gpu-rutabaga.c
++++ b/hw/display/virtio-gpu-rutabaga.c
+@@ -315,6 +315,12 @@ rutabaga_cmd_set_scanout(VirtIOGPU *g, struct virtio_gpu_ctrl_command *cmd)
+     res = virtio_gpu_find_resource(g, ss.resource_id);
+     CHECK(res, cmd);
  
-+static void nvme_ns_resize_cb(void *opaque)
-+{
-+    NvmeNamespace *ns = opaque;
-+    int64_t size;
-+    int cntlid, notified_ctrls;
-+
-+    size = blk_getlength(ns->blkconf.blk);
-+    if (size < 0) {
-+        error_report("can't get size of block device %s: %s",
-+                     blk_name(ns->blkconf.blk), strerror(-size));
++    if (!virtio_gpu_check_scanout_bounds(ss.scanout_id, ss.resource_id,
++                                         res->width, res->height, &ss.r,
++                                         &cmd->error)) {
 +        return;
 +    }
 +
-+    ns->size = size;
-+    nvme_ns_init_format(ns);
-+
-+    if (!ns->attached) {
-+        return;
+     if (!res->image) {
+         pixman_format_code_t pformat;
+         pformat = virtio_gpu_get_pixman_format(res->format);
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index d9e5b0110497..6e298f997d66 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -560,7 +560,7 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
+     }
+     g->parent_obj.enable = 1;
+ 
+-    if (ss.resource_id && ss.r.width && ss.r.height) {
++    if (ss.resource_id) {
+         struct virgl_renderer_resource_info info;
+         void *d3d_tex2d = NULL;
+ 
+@@ -581,6 +581,11 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
+             cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
+             return;
+         }
++        if (!virtio_gpu_check_scanout_bounds(ss.scanout_id, ss.resource_id,
++                                             info.width, info.height, &ss.r,
++                                             &cmd->error)) {
++            return;
++        }
+         qemu_console_resize(g->parent_obj.scanout[ss.scanout_id].con,
+                             ss.r.width, ss.r.height);
+         virgl_renderer_force_ctx_0();
+@@ -987,16 +992,9 @@ static void virgl_cmd_set_scanout_blob(VirtIOGPU *g,
+         return;
+     }
+ 
+-    if (ss.width < 16 ||
+-        ss.height < 16 ||
+-        ss.r.x + ss.r.width > ss.width ||
+-        ss.r.y + ss.r.height > ss.height) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout %d bounds for"
+-                      " resource %d, rect (%d,%d)+%d,%d, fb %d %d\n",
+-                      __func__, ss.scanout_id, ss.resource_id,
+-                      ss.r.x, ss.r.y, ss.r.width, ss.r.height,
+-                      ss.width, ss.height);
+-        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++    if (!virtio_gpu_check_scanout_bounds(ss.scanout_id, ss.resource_id,
++                                         ss.width, ss.height, &ss.r,
++                                         &cmd->error)) {
+         return;
+     }
+ 
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 4d46a4eb10fa..3c0e38c1def0 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -622,6 +622,26 @@ static uint32_t virtio_gpu_format_bytes_pp(pixman_format_code_t format)
+     return DIV_ROUND_UP(PIXMAN_FORMAT_BPP(format), 8);
+ }
+ 
++bool virtio_gpu_check_scanout_bounds(uint32_t scanout_id, uint32_t resource_id,
++                                     uint32_t width, uint32_t height,
++                                     const struct virtio_gpu_rect *r,
++                                     uint32_t *error)
++{
++    if (r->width < 16 ||
++        r->height < 16 ||
++        (uint64_t)r->x + r->width > width ||
++        (uint64_t)r->y + r->height > height) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout %d bounds for"
++                      " resource %d, fb %d %d, rect (%d,%d)+%d,%d\n",
++                      __func__, scanout_id, resource_id, width, height,
++                      r->x, r->y, r->width, r->height);
++        *error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        return false;
 +    }
 +
-+    /*
-+     * Okay, the namespace is attached so we need to notify all controllers
-+     * about size change.
-+     *
-+     * Let's just take ns->subsys, iterate over all controllers and find
-+     * to which of them our namespace is attached.
-+     */
-+
-+    assert(ns->subsys);
-+    assert(ns->subsys->ctrls);
-+
-+    notified_ctrls = 0;
-+    for (cntlid = 0; cntlid < ARRAY_SIZE(ns->subsys->ctrls); cntlid++) {
-+        NvmeCtrl *ctrl;
-+
-+        /* notified everyone? */
-+        if (notified_ctrls == ns->attached) {
-+            break;
-+        }
-+
-+        ctrl = nvme_subsys_ctrl(ns->subsys, cntlid);
-+        if (!ctrl) {
-+            continue;
-+        }
-+
-+        for (uint32_t nsid = 1; nsid <= NVME_MAX_NAMESPACES; nsid++) {
-+            NvmeNamespace *ns_iter = ctrl->namespaces[nsid];
-+
-+            if (!ns_iter || ns_iter != ns) {
-+                continue;
-+            }
-+
-+            nvme_ctrl_notify_ns_resize(ctrl, ns);
-+
-+            notified_ctrls++;
-+            break;
-+        }
-+    }
++    return true;
 +}
 +
-+static const BlockDevOps nvme_ns_block_ops = {
-+    .resize_cb     = nvme_ns_resize_cb,
-+};
-+
- static int nvme_ns_init_blk(NvmeNamespace *ns, Error **errp)
- {
-     bool read_only;
-@@ -172,10 +236,12 @@ static int nvme_ns_init_blk(NvmeNamespace *ns, Error **errp)
+ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
+                                       uint32_t scanout_id,
+                                       struct virtio_gpu_framebuffer *fb,
+@@ -635,20 +655,8 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
+ 
+     scanout = &g->parent_obj.scanout[scanout_id];
+ 
+-    if (r->x > fb->width ||
+-        r->y > fb->height ||
+-        r->width < 16 ||
+-        r->height < 16 ||
+-        r->width > fb->width ||
+-        r->height > fb->height ||
+-        r->x + r->width > fb->width ||
+-        r->y + r->height > fb->height) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout %d bounds for"
+-                      " resource %d, rect (%d,%d)+%d,%d, fb %d %d\n",
+-                      __func__, scanout_id, res->resource_id,
+-                      r->x, r->y, r->width, r->height,
+-                      fb->width, fb->height);
+-        *error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++    if (!virtio_gpu_check_scanout_bounds(scanout_id, res->resource_id,
++                                         fb->width, fb->height, r, error)) {
+         return false;
      }
  
-     read_only = !blk_supports_write_perm(ns->blkconf.blk);
--    if (!blkconf_apply_backend_options(&ns->blkconf, read_only, false, errp)) {
-+    if (!blkconf_apply_backend_options(&ns->blkconf, read_only, true, errp)) {
-         return -1;
-     }
- 
-+    blk_set_dev_ops(ns->blkconf.blk, &nvme_ns_block_ops, ns);
-+
-     if (ns->blkconf.discard_granularity == -1) {
-         ns->blkconf.discard_granularity =
-             MAX(ns->blkconf.logical_block_size, MIN_DISCARD_GRANULARITY);
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index 43e3c916f73..a4b2c01a2cc 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -764,6 +764,8 @@ void nvme_atomic_configure_max_write_size(bool dn, uint16_t awun,
- void nvme_ns_atomic_configure_boundary(bool dn, uint16_t nabsn,
-                                        uint16_t nabspf, NvmeAtomic *atomic);
- 
-+void nvme_ctrl_notify_ns_resize(NvmeCtrl *ctrl, NvmeNamespace *ns);
-+
- extern const VMStateDescription nvme_vmstate_atomic;
- extern const VMStateDescription nvme_vmstate_ns;
- 
--- 
-2.47.3
+
+---
+base-commit: 299e7557ed15a9a325620698add379a3ce2d1d95
+change-id: 20260803-scanout-c7cf28c1890e
+
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
 
