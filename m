@@ -4,80 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66D40C55822
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 18:03:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FDD7C55822
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 18:04:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqx02-0004yU-Im; Mon, 03 Aug 2026 14:02:54 -0400
+	id 1wqx14-0005Od-Ta; Mon, 03 Aug 2026 14:03:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wqwzx-0004yB-46
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 14:02:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wqwzv-0001s4-Bz
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 14:02:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785780166;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LaIjBQzddi9bXdXWKhHbvioIYX5xzKyOJyibHmbA/6U=;
- b=UZMeIzsFOqnb/IZXsv0bdPKKoak0ZWDDAlmtPHgLCfXHIaykhoDGopeRY0VKPiglG5ebp6
- sPEoM6QfM1bYlehk1w5yXx1hfiC+dKqHRtQj6D1ulnNMwhnvzPnVUiN83xh+1IKTm5ja11
- tF/pms+/DETov31WngZzQi/c1oIWkMw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-304-SqK_hOxEPEeJoehTG7juYQ-1; Mon,
- 03 Aug 2026 14:02:32 -0400
-X-MC-Unique: SqK_hOxEPEeJoehTG7juYQ-1
-X-Mimecast-MFC-AGG-ID: SqK_hOxEPEeJoehTG7juYQ_1785780151
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 17625195605F; Mon,  3 Aug 2026 18:02:31 +0000 (UTC)
-Received: from localhost (unknown [10.2.17.42])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3B8CA1800480; Mon,  3 Aug 2026 18:02:30 +0000 (UTC)
-Date: Mon, 3 Aug 2026 14:02:29 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
-Cc: "Denis V. Lunev" <den@virtuozzo.com>,
- Stefan Hajnoczi <stefanha@gmail.com>, John Snow <jsnow@redhat.com>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org,
- "Denis V. Lunev" <den@openvz.org>
-Subject: Re: [PULL 1/8] MAINTAINERS: add myself to IDE maintainers
-Message-ID: <20260803180228.GA365806@fedora>
-References: <20260730081325.1816193-1-den@openvz.org>
- <20260730081325.1816193-2-den@openvz.org>
- <CAJSP0QUnp4=pPYQvGvTEoBCndvJb0o=Z0RzehP30KKK_svyXCA@mail.gmail.com>
- <f271fcff-4428-421b-b2b7-472cd8bf3cba@virtuozzo.com>
- <CAJSP0QX8JnTSWHQeQrH5dKHeC4oA9CMTzHAZNhzt_8gKorJ9Gw@mail.gmail.com>
- <3f84a950-d079-4e05-a3c5-daf81672b3e4@virtuozzo.com>
- <7239bc2e-b180-42ab-ae56-454557cb3194@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wqx12-0005Lb-Uk
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 14:03:56 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wqx11-0001xd-6J
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 14:03:56 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-69c108fee7fso5328713a12.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 11:03:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785780233; cv=none;
+ d=google.com; s=arc-20260327;
+ b=aBeKwiDMTHmS7zB7N0WksJhXXv96U4wNnvt5oo0+rnpMvs7R0GxfEDrAbrXYtm+Snl
+ qqk2ulgL7jtGQeRQ3Gk+GYuyXpVybzGoIRdIDCUrysMh9YHV53XhmHg/woXhAmvupUcS
+ Axh9pry5gs9aqOYXpEoCIkqzo9h1ezkvZBazz6fhxesj8pmuUSCqoq4OISLbOvc2d/9I
+ CIntkxngxMKWIHwbnwUHm/1/vwGwua23sR5LT4l89izpPg6h0uwkZ3J3dSo2ioBAtcdq
+ cuWpcJrajfHe/TGVnRua3pdNc8GUWGPbNxPW8eLJ5OZkXwCvdj/WIpmg8Wpk0HaJ7giw
+ h7VQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=XngoENQlPTIFXB1Hcb2TbmZoVPBM7zPfK91Vv2+R1tc=;
+ fh=h16i3VOeren5plqeFlaCrnhkV7gBXyQyuz2h2P5WdUQ=;
+ b=X/EKBpSRo+wQEcoub4AIW9ukeTAaQHHES89K0hGLs/MNxX7eXjWv5+Pn7SLgOUZqx1
+ KX/iTisVEvETmS554+36Uqs/pSf+zPAM+BoCf3ohjT2YdMaK8bciFhNyejkQHnklvpGO
+ NJ5rJLybt2nzY248vs1HuvAombaUJHNRU4Ww7rPKTgcYKdH8y+jzUfHHYeDe45ph1U1d
+ 8NqmYQvcJ77AYxfWcc4dh/S7hpTRFi1o4e2alEfkT97AUrziYVyCRgSbiFtwFiFTh7cN
+ Lqt2zB3MyEO56r8Rof1OGcMlRumIgvqBcqnoyG7I54WxzWxe+BLSyUJ/+eFWU9jv7e8h
+ 4LBQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785780233; x=1786385033; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=XngoENQlPTIFXB1Hcb2TbmZoVPBM7zPfK91Vv2+R1tc=;
+ b=hTNIkIR3qIzYZfpsQUGmiTfAKWwThyUsKv9TyNNwW7LaleqtzaDBbwTYbjNzWo4k3u
+ aIKsgC5ZKJwkCIiKi516n0fFViwsr4lBSQUGfSvectNxdI2ta7YZqloS+v8esOp3xdTs
+ /J66MFXdoF4Gqy/mon1bS5sfKfgF4NVx3LkEZ/j7NiHsBhKRqg0o5AcPpisSWZcUTzf/
+ PXAm+UwknyuGDDTyJETsbl0A5XRU5snjod1+x8X+8utECUmn0jJz+aJ07WWk4eBWrpvP
+ UedHep3Ysrop1hF8HS7gEv6NW+nkwxOAQIegwdWkOdZoKz1+jkX18T29l1NwGxOGJlg7
+ DpvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785780233; x=1786385033;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=XngoENQlPTIFXB1Hcb2TbmZoVPBM7zPfK91Vv2+R1tc=;
+ b=lV3DJJB20oAFkpkTF1aDBBAEnU6kUYyAMlftfhMPEJDg7/gPtDYbbhQvlU4NEAuhRI
+ Ra309YNTWbRfEPmjyt/gGlaw8Fb9UFBRxiK6VSDBtKlPcIY+KV6R2z04FThsQEy/25P3
+ TmOAhcDxzsSMqT7pnlzVh+igHWvmFCrGPNMnzcHEbAjmCF5WZFmY9BZ8cySgEMWuno52
+ je09SMKF3IvimoYV9fPvQ1eup4pgVyZ7XljiwS3N5nVSYovK+9fryIHEYu+aiO+t7sI7
+ j4k8dU5PhMrG7mCBQp/2ZFdwK/myaa2f+e1eOcx+5KQKKsvgmePaUSJJg1BpKK+2BVx1
+ EgIg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrQ/lMmcQATePNoae2rBvprjTXf2P/BTXCjU1plU43e6/k2z2vWjGJrWmTLl/Dt1X7InKAIal9FgbqL@nongnu.org
+X-Gm-Message-State: AOJu0YyV2ppZwPV7mB/3XwmyO+Kkpjj6LEhKwyPAU4iytBu+mz7L8ngK
+ U42ki7X9jfYMuC6nJ+xSY+IS2ruCUIEpK5GQNT2iNHVGAfndjSADucFoHVVcaYsPNx0ZgWsYFs2
+ u/Mht5NH4QMI0QBzYm8D+SbkUdqvCu10=
+X-Gm-Gg: AR+sD10TiUCN2ZjPDVOpV7XTk/V1HdiQKXmlRwd2uMLIc70iSDKlnzLhUmKu0Xdlp8P
+ ennXS6V+nSyA3TV2pVGO985MSCZz8ArANEvgt/ZDNXHbADD9/jP00l1EZIcgGik8ss+cDCEMQyp
+ nt0AG5DPn48BftQX4ELPI82M1DKNRUpoAtpriKDCIae+Z/Bw9XnH9VrZtySes1HUvNrxByakyx/
+ KbdFAopb/32ZukMgVmD6N/9j5GY3psXeM8w3ntbcqRPi2dLVJ7OUjfSVYHrUs05934IVsKkLoF3
+ rxQ6s8A0LQtEUmSZmLHjuolQ7QirhVEnvTjwb7csDpZWkakG0NkrVcrw0Og4vRaF+i8FybT8psN
+ xryPjzZoCzfT+Xw==
+X-Received: by 2002:a05:6402:44d8:b0:6a0:567c:c2fe with SMTP id
+ 4fb4d7f45d1cf-6a0a7ce217amr7425412a12.20.1785780233016; Mon, 03 Aug 2026
+ 11:03:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="gzC6LNYQiHggD/KO"
-Content-Disposition: inline
-In-Reply-To: <7239bc2e-b180-42ab-ae56-454557cb3194@oss.qualcomm.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.811,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260803174735.362574-1-stefanha@redhat.com>
+ <anDVj0QcD5JfwT8H@redhat.com>
+In-Reply-To: <anDVj0QcD5JfwT8H@redhat.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Mon, 3 Aug 2026 14:03:40 -0400
+X-Gm-Features: AUfX_mxM6rCKSJVS7zoGFnKk1jg58S87k_8yf9IVhRYnRSPcWqSd-37w0wB9KXU
+Message-ID: <CAJSP0QUkz=q78OvQ7OnNUxqbRVQpwXY-4pTrtYUK8Lub+9X+Bw@mail.gmail.com>
+Subject: Re: [PATCH] tests/docker: use stable URLs for zlib tarballs
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Kohei Tokunaga <ktokunaga.mail@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x532.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,63 +123,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---gzC6LNYQiHggD/KO
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, Aug 3, 2026 at 1:54=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
+>
+> On Mon, Aug 03, 2026 at 01:47:35PM -0400, Stefan Hajnoczi wrote:
+> > The tarballs at https://zlib.net/zlib-X.Y.Z.tar.xz become unavailable
+> > when a new release is made. This breaks the emsdk-wasm64-cross.docker
+> > file that fetches the tarball and builds zlib from source.
+> >
+> > There is actually an archive available with a stable URL. Use that
+> > instead. This does require switching from bzip2 to gzip since bzip2
+> > tarballs are not available in the archive.
+>
+> "...from  xz to gzip since xz tarballs...."
 
-On Sun, Aug 02, 2026 at 04:13:35PM +0200, Philippe Mathieu-Daud=C3=A9 wrote:
-> On 31/7/26 23:17, Denis V. Lunev wrote:
-> > On 7/31/26 22:18, Stefan Hajnoczi wrote:
-> > > On Fri, Jul 31, 2026 at 9:45=E2=80=AFAM Denis V. Lunev <den@virtuozzo=
-=2Ecom> wrote:
-> > > > On 7/30/26 16:55, Stefan Hajnoczi wrote:
-> > > > > On Thu, Jul 30, 2026 at 4:14=E2=80=AFAM Denis V. Lunev <den@openv=
-z.org> wrote:
-> > > > > > Signed-off-by: Denis V. Lunev <den@openvz.org>
-> > > > > > CC: Stefan Hajnoczi <stefanha@redhat.com>
-> > > > > > CC: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> > > > > > ---
-> > > > > >   MAINTAINERS | 1 +
-> > > > > >   1 file changed, 1 insertion(+)
-> > > > > >=20
-> > > > > > diff --git a/MAINTAINERS b/MAINTAINERS
-> > > > > > index 902db77218..4628793dde 100644
-> > > > > > --- a/MAINTAINERS
-> > > > > > +++ b/MAINTAINERS
-> > > > > > @@ -2160,6 +2160,7 @@ F: docs/specs/edu.rst
-> > > > > >=20
-> > > > > >   IDE
-> > > > > >   M: John Snow <jsnow@redhat.com>
-> > > > > > +M: Denis V. Lunev <den@openvz.org>
-> > > > > Waiting for acknowledgement from John.
->=20
-> Note, Denis is not removing / replacing John, but simply
-> stepping up to co-maintain an area unattented since quite
-> some time. I doubt John will oppose to that precious and
-> scarce help.
-
-I don't think so either, but he should be involved in the process of
-adding a co-maintainer. There is no rush, let's give him a few more
-days rather than making the decision for him.
+Thanks for spotting this. I'll send a v2.
 
 Stefan
-
---gzC6LNYQiHggD/KO
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmpw17QACgkQnKSrs4Gr
-c8jM7Qf/eKKxtAsNYNngqNDSe3CyWOC15JluORMh8/g5arHOj5DJMPrMSc1w2W0y
-ToWLjJyNxqWO6m1BVukSI364QCOpUb2oa9vS8TTlLU5yJO/2Yp+VM9XrERJmWgCv
-gL1DwDP7g0a91RD9uUiPD9dRqNRw1H0UKrjrTtPj9G2kTtQoqFy0/fjvjyS+WuTd
-LJRfeDL0/yOcsAirlZ5dmot5i+nVbDPrjnbOwGQyRy7/nn9pMEcYPt0/Admg+Pbd
-tuEpmxeqaaSdwPAjU7bRrKmY3uXOZV6DHHvNoVpOQBV8msHU9M17xMRq0z++vQuC
-9pHFz+kn3uhWt1PXgBYpEZiRKqtCrg==
-=YkZ9
------END PGP SIGNATURE-----
-
---gzC6LNYQiHggD/KO--
-
 
