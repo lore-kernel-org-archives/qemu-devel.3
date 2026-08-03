@@ -4,105 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 804DFC55838
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 18:27:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73310C55196
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 19:20:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqxNO-0008Oc-3F; Mon, 03 Aug 2026 14:27:02 -0400
+	id 1wqyCQ-0005Sn-7H; Mon, 03 Aug 2026 15:19:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wqxNF-0008NZ-JK
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 14:26:55 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wqxNB-0004gf-CD
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 14:26:52 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-6a0ed034947so2236543a12.0
- for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 11:26:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785781608; cv=none;
- d=google.com; s=arc-20260327;
- b=oC+BKwBL51ZcX5PJCG7JB2jCmyOOoXa2TCXBOMOXoJUyySKRViqi6cYs/ffoh0RU0l
- 1nLw1MdZcwccW7OipEKKe0PGdVg0ojDgn4DYdu0LfUsBkHoiz/wVXwao/Sac+qojlzYo
- i7pH/zQEE9w++YD9aqhJH0MZRWnD/ZK7rAq/mFp1+pR+sKEv7VeuUY3skhdQjrmb3nVu
- ci8pY/y8c3ql12JSqCuXGO5hkslcX5mSeOLm4BqdTasvGeDOF+3wmrXtipRJmDHwyJbR
- w7MYu27j+FVlQuMAywjvmqzJhevD63Y7p67/I+SBHRpYxIsTqJCeLkm3/l8Pa+nrZ62B
- Qngw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=QEjPKU4HZBGH/Oc9mDqEaZ8wd0TP442/45E1X9r7Y9w=;
- fh=TRyg5hw6T48qQHDinJW7gNxLF+rjoOcQR3jmqz5910c=;
- b=NEX3ahlhot1WAyhZOzSQa5R44EfkT7Y0FHbUHIWazM/7MYauHLxiYqvceaS9tic1Ti
- sxpugo/qVZEwtyxIoxAKxDTSJrNp2FAqbvdVtoDoVe60qXfwYx9U4yB1aCVf0bzX844R
- QY2CYs6iw81h1EQ5KJab9njTIWrrddAQ+AZz6x+V9wa3F1Fi7NfAejODMovPzXazRBFu
- 08s7ObfA7DDTU8Zdgl4YR6FIhhFZ5pUUy+KUU7JNFEU77Fi0drvpFkpG1/fDPxqJcdCP
- S6zi7zzuEkeiDGYJyGsVr+SS0TNYMylw1ZxvczSjUFUpssSqYBrEtKdwhCiReiFH0Z6R
- exuQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785781608; x=1786386408; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=QEjPKU4HZBGH/Oc9mDqEaZ8wd0TP442/45E1X9r7Y9w=;
- b=sqHMmnzy7VEK69pVXlBg1M7IsqXeXhTPmkI5ZfCMfv2uSVJG+JHFd/YZwiAIG6npB6
- /j+82q+4zTf4atj87FKonW6rXOejZzFITLlM5k3IQcVQz8kI0AjPa39FVdveA7ychrAf
- 4gS9rT63rVnpMPO6+g7u+6fxGT1y9d0e3O2UEX9EZ13Mdb5XnyGXw7417+xfOPRw6Vww
- +6CgUQc8FRwQ7z01VlDyqTQvMUtVA1I0yFh8bu5fdyR5qUzeDhRY0AKjeUatnn4Y8Xp7
- geyDFld5Fj4CYXnX5Kw8riqKWGTMpot92vVN/BIYLQC6taoKsRQ+eRqS/btwLCN+27xS
- e2sQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785781608; x=1786386408;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=QEjPKU4HZBGH/Oc9mDqEaZ8wd0TP442/45E1X9r7Y9w=;
- b=LElHYGycViWzzvph1SlhIeREcpBC5P8IbvpASswVC+NJ3vfVBbHSr9PH/ezkRVC3SC
- tFMadNUjr1LNfZ1lY0xd5vyyL1K941vJYRGZUuihdSmppryGd5mrcOaNVFLEHKq7y3WG
- hs/VQ9OJHA5d7An3DMPMXmMwXhlg/O3LWxGOjeiGt8EQZ74Bv1wKr7Z5zy4STH69uXMb
- nbjKIH6AnvNV+ICmyrpk1udXpLgc/c+xSQFLtY/wBIdXjonSebXaX3Tz13C9zv65Usin
- E16dhx5FnDWbxQPJhk/JKRLWkb+HTwV/YJOOsui9vumzXD0zvvROQpME+XAEkS95JKTL
- Jrjg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpCTFSMUVcPkTf28pYCQurk+gaQxXb0v4c1DYlUewjiidVtcvZw29kd6bCPsqLPHHZYL4zqd3jIKFGX@nongnu.org
-X-Gm-Message-State: AOJu0YzKdsyqYVD1VIwU8tkgdyKAmQwpMv8aNcE0EMD8mGQ9gNsrkcF6
- ujxWx+gE9UqQLTqlvmfMfnb3y3RxU26adgfuiz8np0JJXfWMdh8UGMSHJxy9O8HvvX5SnudhOJX
- oiH3MS6m3FiCaN9yQIQBv8dXPFE4ATcE=
-X-Gm-Gg: AR+sD136i7FBlyx9Vb0ljBJhl0xF/kC3LESdm1M4MiDbHSFI4+RXhAwUuxWrM/N5kXt
- UUR1nPmNcl1+p8AdvCefut/jQ+IlOuimYgTAhz1V45AvFwxzR3IFnB+Z8eE8EDy6y8MShjE/T4A
- RqowjyFtwmvJ/Fx4FaethVepp3bgAfRCUdLcY14noS2/7lucc95OcQGmeke1XLGVmN7etzXj8mt
- ZNdWsdThaCahV3nizK0HFEkKbpmLyHrGZCPew96PUg7LOKkKrVXjaX46BvEQGpRSC0f4xaQSes+
- rWG7G9jv0RjlV/A+JLRQneWVDLrYgbwc02RbdRfewhbrCeJwsIV2zB1kRyFxSVMzxWxlM7dhacj
- TF822j0wL2isF
-X-Received: by 2002:a05:6402:21c4:b0:698:1973:1daa with SMTP id
- 4fb4d7f45d1cf-6a0a7ca8530mr9130992a12.18.1785781607652; Mon, 03 Aug 2026
- 11:26:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <foss@defmacro.it>)
+ id 1wqyCJ-0005S8-UC; Mon, 03 Aug 2026 15:19:40 -0400
+Received: from fout-b6-smtp.messagingengine.com ([202.12.124.149])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <foss@defmacro.it>)
+ id 1wqyCH-0002Z9-9K; Mon, 03 Aug 2026 15:19:39 -0400
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+ by mailfout.stl.internal (Postfix) with ESMTP id 8F7081D000CF;
+ Mon,  3 Aug 2026 15:19:31 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-10.internal (MEProxy); Mon, 03 Aug 2026 15:19:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=defmacro.it; h=
+ cc:cc:content-type:content-type:date:date:from:from:in-reply-to
+ :in-reply-to:message-id:mime-version:references:reply-to:subject
+ :subject:to:to; s=fm3; t=1785784771; x=1785871171; bh=Bvf/HcXrKf
+ REddMnbxJsjJNdEpB04UbsDUV2EVkrMvE=; b=Q1dtj0DR3ig+cdptCOmqeVc3dH
+ Ati15NT3Q7UDnGu4cN/gqkmZN9KXOVJ4rJzYFLPr9tuVJbgJ9QQ8E2vrmfF1059V
+ 6SxWp+y/JVJz6ClE7u7Ar/SKkauYuMFkhHo4+BuJvTTyZXPLOIlseth7Jxq0OhT7
+ QIHjfavNCAKzFBd/U7C7OmDh87ad3kp+FeQAB3RyH+FWNGNKIZmU2KagQhpmMBMg
+ uq4kzj+Hf2JIXnyTMCBv6AR7BZP2vLwZk7fnKm5cToniquBF3PULfwrZ0dfhTUSn
+ V3v+pBvdxjS1dQGZVURS+peQrd4BeaqL4WoCVI9UKlbA3aWJi3RJc7ZSv46w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+ 1785784771; x=1785871171; bh=Bvf/HcXrKfREddMnbxJsjJNdEpB04UbsDUV
+ 2EVkrMvE=; b=N+Nj+3Q31E5ivW5nslyAePyPYL4YtyMpwSlgAoHy+jIwmLhzf/g
+ 3UmdHXjl6l0Aq1+Tv7t8R937w4qirP9G6D6CPO8mcjGmUtIFLiKxFOwWsK3mv7Bh
+ iOxRIfurFhHtWiCraciTOI+yqvT0uieQLiHYAOIAe7zVEqNL6aIJImgFgSY/VMTw
+ rkrYzV+WIKiNgFlVs5jcuAhjD6eSltf3QCbeJyYiO9VleHBqgvQHp356XDw66Yd+
+ 09j5nZ7HdHsaChC2cIPK4soL1VMzKUQHFH4QP4I72teeN2pWp1c4Kyo1XoackuFe
+ DGbUmmyudR8DJX9sJ6jblPCXj1fF82fzcOw==
+X-ME-Sender: <xms:wulwahro7aTrFJK6Tvask0J0L49dvC5UpnlPcPXvd5UD37JulL-wdA>
+ <xme:wulwasmIx38uyowFLPGtqE8sjIyhfdaCGm0XPmcK6Uiy6Bz9uTA20zVTj7oFvKjop
+ 2qAXOX7jhrShbBDDGU6y_nlh_-UjoUxYizVL-wTz02M8EuPCVWPKVOM>
+X-ME-Received: <xmr:wulwapwbX2q-TD2yzSHJVrP-2jtRvTQI7hEGRoVHfsKGQxQlun9RVdqGqH2zHW0IBtLBfwYcX4ocUnvvZ9Vt>
+X-ME-Proxy-Cause: dmFkZTE2xIgYhENYam9QVAqJIHMz/l7bLwUg0TjCZCr1Cg2C8sKcrEp95UVEj3s5oXVFnw
+ 566DINAkpNBZ6QCb6T2AHlwFg4xRlkutpLyEbxiCABuWGgZ6RQHTjTj8XPkKGYv2+npSfC
+ 1cJQfsrkkmzePm5VNR2f7VYpt5hcisUY7NcLqgcnhb1eWbwEnvMHB/FjwPDTarAPIoCNZb
+ 3kh40w5JEM2P/rfEiNNy4/dcpH0MkSpQOzWr4SVHwf4grNhNUylV4JKCc0Am+FEnV2hOss
+ lHq5dNHZI33k/KedHpmEBDHnNOqI03+QmH+2WqASInWuTLIMCAT/IbgHZGkJkkE62u46uA
+ VZFz0mPoZphAdz88YNTKXcVVXBpLiOedQQZtM33uvmJaB7fKC7f0s/274jqRg+TXIDs+lj
+ SKSkxwLaBTdCWJ3Bfii6LyRqNFgLAxlp5Mcdy5Rh007euNajuDrZDeSTmrpCiMHvg/bpAZ
+ 5VekRgSXiMZGqVoPw2ccL24v+vIv3f84VIW2jUq433ItvDsrC0pX1xhkOnmJ4mTF4iYanI
+ CzfQNw1syPQYUwm5Y17OE8MebjPGFKN7NoLJZdfbvB/1k0Drm2/r1cI7UjGlaIfG0lkEnB
+ EhraZhMiOK+ZTsmMtSBPqkH/npfgflfNAGh/iA7yK5oRqKfVDSp631lO33bw
+X-ME-Proxy: <xmx:wulwas8qjnC8Qpt2-EUN_WdpKtpQ6LylT5erI5d2OyOm6865dZajNQ>
+ <xmx:wulwatKOleh_p3oKxc0qClQBb6lA0ahoxx-z3Gq6CkryA25mTk2GJA>
+ <xmx:wulwaifrgw-RDwv2r3SJd-PUqqWN6YhIfQn9jICKUjTjg9-tyCQEDw>
+ <xmx:wulwas_42SDcvg4qYhgEc5s6BWYi3THpr-G1wj4r9rBHreuEvx-sIQ>
+ <xmx:w-lwaiNopEuiZ8aXXnD01qI_vY60bifXNZJk9O7FNFaoJgcLRIeLqeaL>
+Feedback-ID: ic0014905:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 3 Aug 2026 15:19:29 -0400 (EDT)
+Date: Mon, 03 Aug 2026 19:19:30 +0000
+From: Jesper Wendel Devantier <foss@defmacro.it>
+To: Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org, Keith Busch <kbusch@kernel.org>,
+ qemu-block@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH] hw/nvme: fix leak on copy ranges
+Message-ID: <20260803211755.2-foss@defmacro.it>
+In-Reply-To: 20260731-fix-copy-ranges-leak-v1-1-a344434c9925@samsung.com
+References: 20260731-fix-copy-ranges-leak-v1-1-a344434c9925@samsung.com
 MIME-Version: 1.0
-References: <20260803084754.20803-1-kwolf@redhat.com>
-In-Reply-To: <20260803084754.20803-1-kwolf@redhat.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 3 Aug 2026 14:26:35 -0400
-X-Gm-Features: AUfX_myBkzz0obbkA-rYtP6Hbzjdg1UsKsV4itJv1Nn07aCGNwlyIq62a9Ofzkc
-Message-ID: <CAJSP0QVrxBadH3YCwnd+wv5Pf+rWR1dzrvcPr5Kb8CkY6-2EFw@mail.gmail.com>
-Subject: Re: [PULL v3 00/17] Block layer patches
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, stefanha@redhat.com, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+X-Mailer: lorebird
+X-OriginalDate: 
+Received-SPF: pass client-ip=202.12.124.149; envelope-from=foss@defmacro.it;
+ helo=fout-b6-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,160 +105,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 3, 2026 at 4:48=E2=80=AFAM Kevin Wolf <kwolf@redhat.com> wrote:
->
-> The following changes since commit b428fe036233cbd15d37e3c027ab6ca4d3661a=
-80:
->
->   Merge tag 'pull-target-arm-20260731' of https://gitlab.com/pm215/qemu i=
-nto staging (2026-07-31 16:19:04 -0400)
->
-> are available in the Git repository at:
->
->   https://repo.or.cz/qemu/kevin.git for-upstream
->
-> for you to fetch changes up to 52227e25712629406c89c4902b39962f8b9b6f2c:
->
->   iotests: increase timeouts for tests to 5 minutes (2026-08-03 10:42:29 =
-+0200)
->
-> ----------------------------------------------------------------
-> Block layer patches
->
-> - Fix missing locking in latency histogram setters
-> - coroutine: fix lost wakeup in qemu_co_sleep_wake()
-> - floppy: Fix READ/WRITE/FORMAT/READ ID behaviour with missing medium
-> - qcow2: Fix crash on closing a read-only image with dirty bit set
-> - cloop: fix integer overflow in total_sectors calculation
-> - dmg: Fix out of bounds accesses (CVE-2026-65929, CVE-2026-65928)
-> - FUSE export: fix regression with O_TRUNC when export is not growable
 
-The check-python-minreqs job is still failing:
 
-tests/fuse-truncate:43: error: invalid syntax [syntax]
-...
-tests/fuse-truncate:43:19: E0001: Parsing failed: 'invalid syntax
-(<unknown>, line 43)' (syntax-error)
-
-https://gitlab.com/qemu-project/qemu/-/jobs/15683823681#L217
-
-You can run the job locally like this:
-
-$ make docker-image-python
-$ podman run --rm -i -v $PWD:/usr/src/qemu:z qemu/python /bin/bash -c
-"cd /usr/src/qemu && make -C python check-minreqs"
-
-The invalid syntax also prevents the fuse-truncate test from running
-successfully:
-
->>> LD_LIBRARY_PATH=3D/builds/qemu-project/qemu/build/subprojects/libvfio-u=
-ser/lib MSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=
-=3D1:print_stacktrace=3D1 PYTHON=3D/builds/qemu-project/qemu/build/pyvenv/b=
-in/python3 ASAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summar=
-y=3D1 UBSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D=
-1:print_stacktrace=3D1 RUST_BACKTRACE=3D1 MESON_TEST_ITERATION=3D1 MALLOC_P=
-ERTURB_=3D36 /builds/qemu-project/qemu/build/pyvenv/bin/python3 /builds/qem=
-u-project/qemu/build/../tests/qemu-iotests/check -tap -nbd fuse-truncate --=
-source-dir /builds/qemu-project/qemu/tests/qemu-iotests --build-dir /builds=
-/qemu-project/qemu/build/tests/qemu-iotests
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80 =E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95
-stderr:
---- /builds/qemu-project/qemu/tests/qemu-iotests/tests/fuse-truncate.out
-+++ /builds/qemu-project/qemu/build/scratch/raw-nbd-fuse-truncate/fuse-trun=
-cate.out.bad
-@@ -1,5 +1,4 @@
--...
------------------------------------------------------------------------
--Ran 3 tests
--
--OK
-+ File "/builds/qemu-project/qemu/tests/qemu-iotests/tests/fuse-truncate",
-line 43
-+ except OSError, subprocess.CalledProcessError:
-+ ^
-+SyntaxError: invalid syntax
-(test program exited with status code 1)
-
-https://gitlab.com/qemu-project/qemu/-/jobs/15683823663#L179
-
-Stefan
-
-> - iotests: Various small fixes
+On 2026-07-31T11:26:53+02:00, Klaus Jensen <its@irrelevant.dk> wrote:
+> From: Klaus Jensen <k.jensen@samsung.com>
 >
-> ----------------------------------------------------------------
-> Christian Quante (2):
->       hw/block/fdc: select the drive named by the READ ID command
->       hw/block/fdc: report a missing address mark on an empty drive
+> The buffer holding the ranges for the copy command is not correctly
+> deallocated.
 >
-> Daniel P. Berrang=C3=A9 (1):
->       iotests: increase timeouts for tests to 5 minutes
+> Fix this.
 >
-> Denis V. Lunev (8):
->       block/accounting: take stats->lock in latency histogram setters
->       block/qapi: take stats->lock when reading BlockAcctStats for query-=
-blockstats
->       tests/unit: add reproducer for BlockAcctStats histogram locking rac=
-e
->       qcow2: do not try to clear the dirty bit on a read-only node
->       iotests: run the test pool with the 'fork' start method
->       iotests: skip FUSE tests when FUSE is not usable
->       iotests/migrate-bitmaps-postcopy-test: replace the timing assertion=
- with a content check
->       coroutine: fix lost wakeup in qemu_co_sleep_wake()
+> Cc: qemu-stable@nongnu.org
+> Link: https://gitlab.com/qemu-project/qemu/-/work_items/4072
+> Fixes: 796d20681d9b ("hw/nvme: reimplement the copy command to allow aio cancellation")
+> Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+> ---
+>  hw/nvme/ctrl.c | 1 +
+>  1 file changed, 1 insertion(+)
 >
-> Fiona Ebner (2):
->       block/export/fuse: fix regression with O_TRUNC when export is not g=
-rowable
->       iotests: test O_TRUNC behavior for fuse exports
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index bd6ad64b2000..aa98f7cf8048 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
+> @@ -2811,6 +2811,7 @@ static void nvme_copy_done(NvmeCopyAIOCB *iocb)
+>  
+>      qemu_iovec_destroy(&iocb->iov);
+>      g_free(iocb->bounce);
+> +    g_free(iocb->ranges);
+>  
+>      if (iocb->ret < 0) {
+>          block_acct_failed(stats, &iocb->acct.read);
 >
-> Stefan Hajnoczi (3):
->       dmg: fix out-of-bounds load in search_chunk() (CVE-2026-65929)
->       dmg: refuse to open files with no chunks
->       dmg: reject inconsistent UDRW chunk sector count and length (CVE-20=
-26-65928)
+> ---
+> base-commit: 0345ef676befc1a180d2f63bceaf3fca1d07ee88
+> change-id: 20260731-fix-copy-ranges-leak-06242c584712
 >
-> malike (1):
->       block/cloop: fix integer overflow in total_sectors calculation
->
->  include/block/accounting.h                         |   1 +
->  include/qemu/coroutine.h                           |  17 +-
->  block/accounting.c                                 |  11 +-
->  block/cloop.c                                      |   3 +-
->  block/dmg.c                                        |  36 ++++-
->  block/export/fuse.c                                |  12 ++
->  block/qapi.c                                       |   3 +
->  block/qcow2.c                                      |   6 +-
->  hw/block/fdc.c                                     |  55 ++++++-
->  tests/qtest/fdc-test.c                             |  70 ++++++++-
->  tests/unit/test-block-accounting.c                 | 115 ++++++++++++++
->  tests/unit/test-coroutine.c                        |  53 +++++++
->  util/qemu-coroutine-sleep.c                        |  53 +++++--
->  tests/qemu-iotests/testrunner.py                   |   4 +-
->  tests/qemu-iotests/039                             |  11 ++
->  tests/qemu-iotests/039.out                         |   3 +
->  tests/qemu-iotests/common.rc                       |  14 ++
->  tests/qemu-iotests/meson.build                     |  15 +-
->  tests/qemu-iotests/tests/file-io-error             |   4 +-
->  tests/qemu-iotests/tests/fuse-allow-other          |   2 +
->  tests/qemu-iotests/tests/fuse-mmap-shared          |   9 +-
->  tests/qemu-iotests/tests/fuse-truncate             | 171 +++++++++++++++=
-++++++
->  tests/qemu-iotests/tests/fuse-truncate.out         |   5 +
->  .../tests/migrate-bitmaps-postcopy-test            |  15 +-
->  tests/unit/meson.build                             |   1 +
->  25 files changed, 633 insertions(+), 56 deletions(-)
->  create mode 100644 tests/unit/test-block-accounting.c
->  create mode 100755 tests/qemu-iotests/tests/fuse-truncate
->  create mode 100644 tests/qemu-iotests/tests/fuse-truncate.out
+> Best regards,
+> -- 
+> Klaus Jensen <k.jensen@samsung.com>
 >
 >
+>
+From reading the routines operating on NvmeCopyAIOCB, this seems correct.
+
+Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
+
+
 
