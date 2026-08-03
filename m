@@ -4,64 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95F69C5518F
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 10:32:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1383FC55184
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 10:47:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqpxx-00078s-GV; Mon, 03 Aug 2026 06:32:18 -0400
+	id 1wqqCY-0000pc-4t; Mon, 03 Aug 2026 06:47:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wqpxw-00078e-1T
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 06:32:16 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wqpxs-0001Fv-W8
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 06:32:15 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 673AW1Q5061639
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 3 Aug 2026 19:32:01 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=CcXFUw3pW+zvo7JdjBYqbnUFq/1yJF5XqKnr3Xq4qX4=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1785753121; v=1;
- b=J1lxUTaNgxA1GMExKsOLFVI6P5uDW5RTz/Lyoqrt/nByArf5IF6zNgyrq0ASz3tq
- TPiKqGg1+eqAaSjaZfTQh1wa9YglH6+bba4XwERldmnsYygRm4eRfzFlJ4OGgtKr
- wH0iUaDN398ch3iJYwE8lLcYnmRCQnBpLdwr5qVEJAEoOJhBXGrT+JwG/eccr3Im
- /L12R8He9g9PMiyJcT9/a3EtNg8Ho9hbcgfKRV85BxlGyt0r9PJ+ktm4+C3i+/fK
- oaudYrLhCpg5QYXqqqj+Jn5x5VDdAtJtiYyU0HqoM/EeHRGhfPld05DnrltoN/Ex
- gjakY+uq8LK35uq0GerPGQ==
-Message-ID: <2579e4f0-d557-4061-bc0d-7c1592705a82@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 3 Aug 2026 19:32:00 +0900
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wqqCX-0000pS-8b
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 06:47:21 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wqqCV-0002cU-7G
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 06:47:20 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-38de840f2f0so2036694a91.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 03:47:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785754037; cv=none;
+ d=google.com; s=arc-20260327;
+ b=CAIt+QmoJLU0YZpLdF1IgQbJVy8ZEhZ/6MBpe3EaNNZmnajJo6yO+b24iaBLPk4yOX
+ +DntdIAUCNu/ScE9DNlv9ScedN8VNvYXRY0JMv4Ipaiuze2uMPWC9zjNV0UkUPgU0sX3
+ tgV1im+eOiswQEE1WZZsEhHTqCYPFWBsRM8x75ju2/qjKbSWwN4ryt37OPyiWZyLs55A
+ oOLsZvT8fGnA9ynX/3ClfkeaF6asSWKqWUeNiQwNDdZk4s3TCjCKnYGNhxj6ZtKXwSkP
+ miFuMPoYn/YighsiAtyZwpzZVddXxT60JutwCQzr1VTyTP71Ymp+JVfISuUI5LtPA6xC
+ m9vg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=XVmSE596qKM8Y7UezYMq4fO+fEeBdRdhmoQSaU2e2F8=;
+ fh=i9CwLnv/dHKZ45lJ1t8Mfhr83l6jrA0+RwEVVJT7XdI=;
+ b=nXGhVO1BQdzWzaryBQNUSapmgIscgi7C0Us7UTaRS7bxMQgbDK9wZ2PPBs6pqoHJoE
+ XO4yeCo6jhP0G+oNDcqept9g8OYvemDt7NoIA0FveBYu784RPgKbtZ5hfhm6u5ihBYWz
+ 5r7Bwchz8dlGBPlo2APTR/PGUesqf7uXMYfekuJ6Eg58z54vcpWpbZzoiCIHI5fbv/tZ
+ LSS9N3rh6MyALDWdS247K704Vw/wNGq4Uga4VAC0enERcizLe5GATrGA2/+N2TNK1YiF
+ A0vMl4L7tzrWAcrn/CnVFI6y8j+glLl+sHvPE4MDsL+HcPcePtPaQwXSvqiVOPkKG7+A
+ 6l6w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1785754037; x=1786358837; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=XVmSE596qKM8Y7UezYMq4fO+fEeBdRdhmoQSaU2e2F8=;
+ b=ZWtnTjXHuIetfcqp43c3CQhFuY5hMXqwWmmEOnPhaSP5Oyk/wmCci11OwpUjnlHIBs
+ 5b9VVYwfIFjDFv44/zqmXH/lHGkjIRBnB9XMvN9TKaOiPG7EcrOR943AUoCz8cHQluV5
+ YQJ9+NjmNv4O5gCgit2td9sSjHwOl1w0XrulqRATnfihreSWgxW7ieHBVMU09uQEaLWl
+ dqLow6oE4kqqaxaHeVNrwM4Q2Pk1dWAABHfYhaNY0+V/SwCL+IvDp5ygYp5YewLzx2U8
+ X5hsdg1B3ZFv+seTCO0ApdG7iM5PEpHlfAJ1Tz92vI3aF2ku9m0JJXuY4D0VQ8UmwzJg
+ 4i3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785754037; x=1786358837;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=XVmSE596qKM8Y7UezYMq4fO+fEeBdRdhmoQSaU2e2F8=;
+ b=tDZl+djUaN8e3ZdjbBm6cH1AQeFE9Ioc4BvImmPlZvmo1GiyWX074Zwa0SpUI/ad8r
+ 8uu5XvA2J5TBk+8ohE0i3C9OopqRJS3gKY0qCdo5SyzN9v4vyUDYWTUw/wizT0d3oWHv
+ Gl92Fj4T0f2tTiL5K8Yx7dimHaa5N3HrTv9lM4l6BZ27vM+/oahi0/Ot4+pvSbfw56Lb
+ wPXHo83kSd3TZmydCbm+cF7QGNyct5XNBD24vaOLhRfMMP4CeOolnnJbkcbM28uFtzh1
+ fA1tLOYbrT53luaTfZbk/9xpdsaLuCmFijtfHHEb9eAvSz29+NThzhy0LHQ3BNbrc/ip
+ 8JYA==
+X-Gm-Message-State: AOJu0YyCoEtOzNof6Cm9kU+gekn1UYvOP7rj1ZCfMU1ys3G4WbSxeBDu
+ RnIA2stLd/tG9QJHC3XIFXYwy1++4UHTDyJ8pOASzgbqcka/GDENnzJZDvyWEr+eJaKm8VSz2Xi
+ C60WEPpnnkftQAZpbMtz9R9JJeXUl+H5zBrmsRyE=
+X-Gm-Gg: AR+sD111AhxLGgBVHl3cO9xrmlGpfh01MUzbOxXw6l+LtQJsV/iil0CGqhcX0aNlhuK
+ hHApInRZyY4eFccPNco81BQVBukZI8S6GV3vZzkHw0AIZFJR23ZDIg7tm3DKhcPjEQyciBJRSCg
+ nIcIJRAXIQUZ77O/2cJOnj9BpgJL0y6SBM0R88NUCSvJQGnzEydXRLpcfr3HdXMbSTV1/CV7QaR
+ Xm9Sw4oqpPKHK6f/3z+tUGde8BIuGcUapY6i3YxRkFflpSUtSf9nSyvN6L3mn3C5Lw4jCt2GqHD
+ 6NpNGUZKALllA68S1IkJ/tgbJsWQDUfxOuh8e/XUFKnlkdSpzYFjGxhEzWOgMav38IpW70mmEpg
+ R
+X-Received: by 2002:a17:90b:2dca:b0:38e:6dd:a9ad with SMTP id
+ 98e67ed59e1d1-38fbc0baf26mr9437564a91.0.1785754037170; Mon, 03 Aug 2026
+ 03:47:17 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/display/virtio-gpu: Always reject invalid scanout
- bounds
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-References: <20260803-scanout-v1-1-c9831dafdab2@rsg.ci.i.u-tokyo.ac.jp>
- <f18b62fc-9efe-4741-af01-5190f902165f@oss.qualcomm.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <f18b62fc-9efe-4741-af01-5190f902165f@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260728151456.3704099-1-marcandre.lureau@redhat.com>
+In-Reply-To: <20260728151456.3704099-1-marcandre.lureau@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 3 Aug 2026 14:47:05 +0400
+X-Gm-Features: AUfX_mw1pA5Lt4SUK-LDXfAMRoNKat9xJd2WogPHKjRGxb3J0_WbBHuTqMbA2yc
+Message-ID: <CAJ+F1C+w5n9V_cc0v=dK-4OG+ZS4GB3km6vOiY5kir4iPCNSgw@mail.gmail.com>
+Subject: Re: [PATCH] hw/display/vga: fix panning_buf OOB after text/graphics
+ switch
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Warisjeet Singh <sinxx198@gmail.com>, 
+ Gerd Hoffmann <kraxel@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pj1-x102a.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.248,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,127 +120,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/03 19:17, Philippe Mathieu-Daudé wrote:
-> Hi Akihiko,
-> 
-> On 3/8/26 10:45, Akihiko Odaki wrote:
->> virtio-gpu does not consistently check scanout bounds with wraparound
->> handling. In the unchecked virgl SET_SCANOUT path, guest dimensions
->> reach qemu_console_resize(), qemu_create_displaysurface(), and
->> ultimately qemu_pixman_image_new_shareable(..., &error_abort), so an
->> invalid rectangle can terminate QEMU. Implement a check with proper
->> wraparound handling and apply it consistently.
->>
->> Fixes: 9d9e152136bd ("virtio-gpu: add 3d mode and virgl rendering 
->> support.")
->> Fixes: 32db3c63ae11 ("virtio-gpu: Add virtio_gpu_set_scanout_blob")
->> Fixes: 7c092f17ccee ("virtio-gpu: Handle resource blob commands")
->> Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for 
->> gfxstream")
->> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->> ---
->>   include/hw/virtio/virtio-gpu.h   |  5 +++++
->>   hw/display/virtio-gpu-rutabaga.c |  6 ++++++
->>   hw/display/virtio-gpu-virgl.c    | 20 +++++++++-----------
->>   hw/display/virtio-gpu.c          | 36 +++++++++++++++++++++ 
->> +--------------
->>   4 files changed, 42 insertions(+), 25 deletions(-)
-> 
-> 
->> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
->> index 4d46a4eb10fa..3c0e38c1def0 100644
->> --- a/hw/display/virtio-gpu.c
->> +++ b/hw/display/virtio-gpu.c
->> @@ -622,6 +622,26 @@ static uint32_t 
->> virtio_gpu_format_bytes_pp(pixman_format_code_t format)
->>       return DIV_ROUND_UP(PIXMAN_FORMAT_BPP(format), 8);
->>   }
->> +bool virtio_gpu_check_scanout_bounds(uint32_t scanout_id, uint32_t 
->> resource_id,
->> +                                     uint32_t width, uint32_t height,
->> +                                     const struct virtio_gpu_rect *r,
->> +                                     uint32_t *error)
->> +{
->> +    if (r->width < 16 ||
->> +        r->height < 16 ||
->> +        (uint64_t)r->x + r->width > width ||
->> +        (uint64_t)r->y + r->height > height) {
->> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout %d bounds 
->> for"
->> +                      " resource %d, fb %d %d, rect (%d,%d)+%d,%d\n",
->> +                      __func__, scanout_id, resource_id, width, height,
-> 
-> __func__ will always be "virtio_gpu_check_scanout_bounds", maybe we
-> want the caller instead? Otherwise simply drop?
-> 
-> Since we rework this code, in case we are debugging broken guest driver,
-> it could be more helpful to log one LOG_GUEST_ERROR per error type:
-> 
->      if (r->width < 16) { ... }
->      if (r->height < 16) { ... }
->      ...
+On Tue, Jul 28, 2026 at 7:16=E2=80=AFPM <marcandre.lureau@redhat.com> wrote=
+:
+>
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> The fields last_width and last_height serve two purposes: the text
+> renderer counts in characters, the graphics renderer in pixels.
+> panning_buf reallocation is guarded by geometry-change check, so the
+> unit mismatch can trick it into thinking nothing changed when the
+> resolution actually grew.
+>
+> A guest can trigger this by switching graphics -> text -> graphics:
+>
+>   1. Enter graphics mode with a small width (CR01=3D0x00, 8 pixels).
+>      The predicate fires and panning_buf is allocated for that width.
+>
+>   2. Switch to text mode with a large width (CR01=3D0xFF, 256 chars).
+>      The text renderer stores 256 into last_width. The text path
+>      never touches panning_buf.
+>
+>   3. Switch back to graphics with a width that happens to equal 256
+>      in pixels (CR01=3D0x1F, 32*8 =3D 256). The predicate sees
+>      256 =3D=3D 256 and skips the realloc. With horizontal pel panning
+>      enabled, vga_draw_line4() then writes a full 256-pixel scanline
+>      into the buffer still sized for 8 pixels -- a 960-byte heap
+>      overflow on every scanline, every refresh.
+>
+> Fix it by reallocating unconditionally panning_buf on
+> vga_draw_graphic().
+>
+> Fixes: CVE-2026-17516
+> Fixes: 973a724eb006 ("vga: implement horizontal pel panning in graphics m=
+odes")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4085
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> Signed-off-by: Warisjeet Singh <sinxx198@gmail.com>
+> [ Marc- Andr=C3=A9 - drop realloc() resize condition & commit message ]
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-I don't have a strong opinion here, but if I'm debugging a broken guest, 
-probably I would use the printed function name to look up this code and 
-then figure out what's wrong by comparing with the actual condition.
+ping
 
-This applies to other instances of LOG_GUEST_ERROR; ideally it would be 
-nice if there is some sort of guideline, though I think people have 
-different opinions what such a guideline should say.
-
-Regards,
-Akihiko Odaki
-
-> 
->> +                      r->x, r->y, r->width, r->height);
->> +        *error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
->> +        return false;
->> +    }
->> +
->> +    return true;
->> +}
->> +
->>   static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
->>                                         uint32_t scanout_id,
->>                                         struct virtio_gpu_framebuffer 
->> *fb,
->> @@ -635,20 +655,8 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
->>       scanout = &g->parent_obj.scanout[scanout_id];
->> -    if (r->x > fb->width ||
->> -        r->y > fb->height ||
-> 
->  > -        r->width > fb->width ||
->  > -        r->height > fb->height ||
-> 
-> Do we want to remove these checks?
-> 
->> -        r->width < 16 ||
->> -        r->height < 16 ||
-> 
->> -        r->x + r->width > fb->width ||
->> -        r->y + r->height > fb->height) {
->> -        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout %d bounds 
->> for"
->> -                      " resource %d, rect (%d,%d)+%d,%d, fb %d %d\n",
->> -                      __func__, scanout_id, res->resource_id,
->> -                      r->x, r->y, r->width, r->height,
->> -                      fb->width, fb->height);
->> -        *error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
->> +    if (!virtio_gpu_check_scanout_bounds(scanout_id, res->resource_id,
->> +                                         fb->width, fb->height, r, 
->> error)) {
->>           return false;
->>       }
->>
->> ---
->> base-commit: 299e7557ed15a9a325620698add379a3ce2d1d95
->> change-id: 20260803-scanout-c7cf28c1890e
->>
->> Best regards,
->> -- 
->> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>
->>
-> 
-
+> ---
+>  hw/display/vga.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/hw/display/vga.c b/hw/display/vga.c
+> index abe3f8e07758..da0c331486eb 100644
+> --- a/hw/display/vga.c
+> +++ b/hw/display/vga.c
+> @@ -1647,11 +1647,12 @@ static void vga_draw_graphic(VGACommonState *s, i=
+nt full_update)
+>          s->last_line_offset =3D s->params.line_offset;
+>          s->last_depth =3D depth;
+>          s->last_byteswap =3D byteswap;
+> -        /* 16 extra pixels are needed for double-width planar modes.  */
+> -        s->panning_buf =3D g_realloc(s->panning_buf,
+> -                                   (disp_width + 16) * sizeof(uint32_t))=
+;
+>          full_update =3D 1;
+>      }
+> +
+> +    /* 16 extra pixels are needed for double-width planar modes. */
+> +    s->panning_buf =3D g_realloc(s->panning_buf,
+> +                               (disp_width + 16) * sizeof(uint32_t));
+>      if (surface_data(surface) !=3D s->vram_ptr + (s->params.start_addr *=
+ 4)
+>          && !surface_is_allocated(surface)) {
+>          /* base address changed (page flip) -> shared display surfaces
+> --
+> 2.55.0
+>
+>
 
