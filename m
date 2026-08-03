@@ -4,112 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E643CC55184
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 15:37:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4F4DC55184
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 15:44:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wquia-00021Y-Oe; Mon, 03 Aug 2026 11:36:44 -0400
+	id 1wqupD-0003Tg-6G; Mon, 03 Aug 2026 11:43:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
- id 1wquiZ-000212-6i
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 11:36:43 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
- id 1wquiW-0005Jb-Pg
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 11:36:42 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-66899fe9077so4877710d50.1
- for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 08:36:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785771399; cv=none;
- d=google.com; s=arc-20260327;
- b=XTJv7X27bXQtb3mPs8KGMB11gmcU21wwOwnC1lMCAz4fbLl2PmxuewYHgMogYZXj9+
- 8xHw2JSQNZHxyKK0I++jrJ+HJVpqFNJNqO+j5Z1zjOZN/yuOZyelh61sZptkC9YMAmbx
- igPbhEzuhpa/JqJ8fsaWO+3w4gVq+K1YtISWfKr8paSF6TDCmrQIRY3FT+qj2/F3N8Gh
- n9ZFTq++aRlHGysg35rfjYI24HB/2AGmRr0EO+DpEV9rw5rryA//PHt9OnxhmScvEFSr
- KAgY5ievO9F6OkV4bb3n8pOGCLfyxLfh88jfi79DKafBruK1Bus/S+wxvrXzN8nYmJB9
- M5zg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=/61s61PnuLGlENAZQ+sgwsYvHw7dHcW1Z4x6tceh/eg=;
- fh=KbJM6/Akmqct5KIaKEA8hDba4OTZlQvLUQNOl4bj/PQ=;
- b=lQ+sLvITv/jLFlxcp8aaEeiylRutDo+JimtWg+POD1UARvHofHxeoqIOwO+TPYClyS
- KFlYpN85l77BqlwVxc32PcTyfUD7xnGxBxW0BXh46esuDSDyeZm6+oNJkkqL0hBUQTwR
- X3ppNvhDtI6AcuZecYioebNMzSi3Si79Fhv0O8eBCbW9pdkBUda5y+PMMHkflKhHuunh
- TBBcnbgyfF+MLJBXN+2HKcjVgDvHm+UW4WjPUBsl4UXKL3q3oY52mKHSnvLl4ZwxYNmv
- UbHz9vuCJjCYbK8rH9i7NGhTjApyM+dwrYP7Ffbkz1+8H4BbflggT9T8ZiEYuXV7sS/o
- Q2eQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wqup8-0003TN-Q6
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 11:43:31 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wqup6-0005zl-LQ
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 11:43:30 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 673EC2kT1355162
+ for <qemu-devel@nongnu.org>; Mon, 3 Aug 2026 15:43:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ PsAGDFOalmANRUmQpq6erEVVHl2rEyxRaBSCENNWyfQ=; b=Kk76LKLrO/c2pZJR
+ OyUzRsPjajb8LK5WxU135OWg0BNTaMwUUC/GamT8MLVOWz3GKkLxqdF2bFLWiN0d
+ DB0D3BorPfpZy4Gh0rpR6LInPKD1S10u5X0ACQfSsBMB8yhclwYLJkXt+TrpVdSt
+ m969FTvf2NfHUM/t1uWL36ZBD0Cu6VPC/G37iSN+SWK2RLgF9dg/8YP93Af7u36S
+ BN/Pecd8amsPmLIN42TrCVK136bF4Jx44czyKh684TaC2EXh9xhEjQb4YCGpT5hX
+ ouG8Q5wJop3/IPlDBRGr1Wu1as/Cuj3UTE999QemnCXy5AfBUSJKgoo5qbfOhoDK
+ RGXxyQ==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ftnrdab5u-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 15:43:24 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8fdace20927so34367456d6.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 08:43:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1785771399; x=1786376199; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=/61s61PnuLGlENAZQ+sgwsYvHw7dHcW1Z4x6tceh/eg=;
- b=FGwxpOvRn95vT46oKgnCPOjemr/sE6vEIrUw0DOlM5n0SVZYowblmCx3Bftk5l08Qr
- H7DOfvmbeZrtqBRL2iqo5ebQ8wn1mcO07mE0i1Dnh/yyazsoHyjfw2TyI7szW/AaxC5w
- sH+QgOhTd5/VsUBvqhZx/6iZbjXT+U4nml1L5rmjtIklVUgk3uTk0J2UUJXTp2+BRdTV
- 1u11DNpEjoj67TSh84TCrUXukxTwWgeMzFtRa6GWV8/SwFfU07C5pBpb6eA1qspHp6Tt
- Yc37NCZoYJ/ty7kuTn5ebWb2exstvvGISs5GND6mZEJ9vXdgWbPE7MUUugAOG6J22ASh
- yjpw==
+ d=oss.qualcomm.com; s=google; t=1785771803; x=1786376603; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=PsAGDFOalmANRUmQpq6erEVVHl2rEyxRaBSCENNWyfQ=;
+ b=DiZG8rCZXIxjpP6XwabkAf8wt+o3uL/FFtImN+5z1IGWeFTK90NwbK6P8xOWkeuSp6
+ EuRGi5cl/q0vM0LcyCXqCZiro1grCeN9/HMP8T+bqq3xoTwjW1ZXlLWAUcPm/PbHpBSS
+ qfYWn+XK3uxUCLuj6dP9aP13P/1tVVdbgcWWFhQu6NKxit2Za6vd5bbCQ6Zf1mi3+rP2
+ Qsef+pjQkGkMahtFONC1mSBKZhmCEiR6tRreliVvLBmWlT/wXvOQ1AwYTjv7jOd+xRaN
+ AOPHmw51qCzag2B1f+X6VT3yyxZeoaHqAUd6UyOBQDKYvrYPHW+aWHppy05gYprxXG7B
+ VFgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785771399; x=1786376199;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=/61s61PnuLGlENAZQ+sgwsYvHw7dHcW1Z4x6tceh/eg=;
- b=h8kibZLx96UokVnjpzhmKxQtfCFZQPhfEqlcqIxTauI74E3Hjl2tCfNRdTKhP069Q1
- 9mppVbO47trIvkAIfeFS/CsFO0M6JaUWmQI1KsY3/t1xRywfw+qYMD878TGNU4qIdjKY
- KN+KpuCgGiX+Axq6SFBZ0xkrltnfaZ9VKUMRi1rhE4A/ni3sgMLson9WvK37bKMBtd3u
- 5m0g78ienvrlrhqfczsj5NjCFC0AET+Fefj8QRPGU19GtnKygenMNS1Qe4rH+CjGm3Gd
- aZEzR97w3hBov3j1yaNyFnn39UiJO9uo9XEitRmHMBFCpVNN3/LiilGq4c0wicTXFGC4
- iUFQ==
-X-Gm-Message-State: AOJu0YySLh/fSPZI9963zPLR36WjJUPujkQQMfqklZ6sO88TecxTCplC
- Ji5qqGV18ibP6yBejZ4jRibBU9OGwvZlKvhnvDOjm5NwnVOm00i3nF4O9asc8kSrIS8tyV9EjNp
- S+dWauV1D0F+syDIyPqHR4WCY42v4r6z9B1UeZwHosA==
-X-Gm-Gg: AR+sD118w6wWh+H1xSdqpLwfrMOnLzuUZDsT9jV1gBgV8dDTkih6Co2aJHr5TPBIcwa
- 6JTe1DTO/91vx8tvcjj02qOUX4BXk3QIMfSjODpdv7E4YOU+3ref2K+d0za0OW5sXAB0xwt99OC
- R31cIvra34F6wB/WMCdWwxpPMH9afIXIqMbfw3WGIuWB8PmU1+hGpQw5SXn92gwr1q/TU64W0Io
- HtE+Fk5WO4wFgTmxWVSAm86En2Ovi4T7ZVKySlIlQ2SrfR2S93qbJ3TG9iWtcySuVYn/wYTmT5L
- pIhxQreZF/j1nO0pmkYGPQyyO0EnDwy4J37ca5dSqzQfOskud2qVuD/wMS4DLit//JZUiItEUig
- =
-X-Received: by 2002:a05:690e:4883:10b0:664:77d8:ffc0 with SMTP id
- 956f58d0204a3-6694f1bd2eemr9467981d50.39.1785771398720; Mon, 03 Aug 2026
- 08:36:38 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785771803; x=1786376603;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=PsAGDFOalmANRUmQpq6erEVVHl2rEyxRaBSCENNWyfQ=;
+ b=RAbQEq3xxpdmKoQJqoMdJnhuPHJNZGdG+PUM4NNKBjG2CBB/zBg2QAY+NNqaUf13YV
+ CUF680hR1BKVlBcU/jqDcqP+qhS6HhqA8Ypf+YLMS4r/75vBv0oz/GTkGkS6SlQ0q9XM
+ 7/JAMr5E7QR5OfPi57+nYj6659OxadczLb2ZKlR2NXoEfsFKhzwNFpjRNFdaWx6x5lND
+ YDUwVxi66MfyqArWkbmp53MyhAb4XrC8rn/XzGbEBb/SUYEIbPjcTu4yNa9pRwuCct51
+ aiM163fuE0xD1fsUySvsPXy1rIE0OX0zBglypvqhX2kpxRzeWX1WnaAJO78VNZGCOJrv
+ fcHA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Ro3LjEsBRe309e5m+sSEZ3SwD9Hq7ow+753UYNpUJcTuUspQof12QaNF9N1Fsg3ch8GeXJsDQ52tIJE@nongnu.org
+X-Gm-Message-State: AOJu0YzsU0wA6AgsDJRxH/9kF1ZDryPYials6XHV6ZexQZD3N2feOXAV
+ slEUQ8BUQsMhhoKd10fW2H9cbUdQQxtR1QNbC80x1F8ZOLHxylYtmzEm1e3u+Ic16+SJXFGV7iz
+ vPaDKVCet/3iZXAbH5pOvYpOmCf6RdJTRYz6rWiDeVwLnppU5jAGofmxnDw==
+X-Gm-Gg: AR+sD12vOmRIgtSij9I+U1XgReipZuvcjUfbKeSN32WQr3tWrKdk5h3/LLe2VqmSaOK
+ 4Dvk3AexuSEYOJZSS0CJSzGtG97C6P8A1DrlINnqLpICPtnadFJoqtyBvs4Dpji4qYHogf+Udgg
+ bCBOKU76pXdOS8NI5JmXqBxRcAPwnwhdlAiDWI5Q8r4n47aTiSbW2C+5YPUSxK6UKbL9on+UtGy
+ KFnh1kMUZ0n8l8qPDJPKeN0GYS+Rks3vwBa4WW/j6EX0xniAEzM4fmZzKQDYYZfRWhywcQVrUnf
+ EyPKtqelTMm9R0NEadsGIchMP39wBnxWz05vzSU4vFeSQ2pHbhEgAR52UXUQxpcvexEUVS/iesL
+ qNxuFvsXZIoGOzTeQqEsCcojWu+/A/AvHDH/9Nw3FCcD8FfCb9auvGRFyPVGyqA74
+X-Received: by 2002:ad4:5d43:0:b0:8f2:860f:4dec with SMTP id
+ 6a1803df08f44-908496573d7mr198678056d6.15.1785771802993; 
+ Mon, 03 Aug 2026 08:43:22 -0700 (PDT)
+X-Received: by 2002:ad4:5d43:0:b0:8f2:860f:4dec with SMTP id
+ 6a1803df08f44-908496573d7mr198677116d6.15.1785771802308; 
+ Mon, 03 Aug 2026 08:43:22 -0700 (PDT)
+Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
+ [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-908435b607bsm77117096d6.23.2026.08.03.08.43.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Aug 2026 08:43:21 -0700 (PDT)
+Message-ID: <6dfdd807-c6e7-4548-b4c0-73460295a7e7@oss.qualcomm.com>
+Date: Mon, 3 Aug 2026 10:43:20 -0500
 MIME-Version: 1.0
-References: <20260729-atlantis_prcm-v1-0-502882933e51@oss.tenstorrent.com>
- <20260729-atlantis_prcm-v1-1-502882933e51@oss.tenstorrent.com>
- <am_5OAFG6L6ZnoXE@ChaodeMacBook-Pro.local>
-In-Reply-To: <am_5OAFG6L6ZnoXE@ChaodeMacBook-Pro.local>
-From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Date: Mon, 3 Aug 2026 10:36:27 -0500
-X-Gm-Features: AUfX_mzRMGqZ4V_WXBDEi27jodrvKBAYAsliLI3xxH6aT8RzlPB4HNJPSgMFYEk
-Message-ID: <CAEev2e_Aj+8PJqH14gxYcn0Ni9qhvprW2Q04_ynu6FL0sPj9tw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] hw/misc: Add Tenstorrent Atlantis PRCM model
-To: Chao Liu <chao.liu@processmission.com>
-Cc: qemu-devel@nongnu.org, Joel Stanley <joel@jms.id.au>, 
- Nicholas Piggin <npiggin@gmail.com>, Michael Ellerman <mpe@kernel.org>, 
- Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=asrinivasan@tenstorrent.com; helo=mail-yx1-xb133.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 18/18] tests/functional/hexagon: enable more arch_tests
+ cases
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: philmd@oss.qualcomm.com, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ matheus.bernardino@oss.qualcomm.com
+References: <20260730012824.1135905-1-brian.cain@oss.qualcomm.com>
+ <20260730012824.1135905-19-brian.cain@oss.qualcomm.com>
+ <0c791fd2-f4d0-4f3e-8ad5-4d61ccd724fe@oss.qualcomm.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <0c791fd2-f4d0-4f3e-8ad5-4d61ccd724fe@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODAzMDE0MCBTYWx0ZWRfX7e75LPdcJ8hc
+ h5KoqnVbeMBpxVmUDM8kEJ6uOdFi5bPcs2YF9f8PZ6nzhp2X3pxstWtqiMh+BtFSa/ybdwO6bQd
+ 8WoJXISMk10tRhg+Gd9/RinKcby0uOg=
+X-Authority-Analysis: v=2.4 cv=f/94wuyM c=1 sm=1 tr=0 ts=6a70b71c cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=EUspDBNiAAAA:8 a=iOqveM9gcD56OA4DGjMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=pJ04lnu7RYOZP9TFuWaZ:22
+X-Proofpoint-GUID: jwjlMKFrjjszHPr05qrvaeUS2Byr_ZfU
+X-Proofpoint-ORIG-GUID: jwjlMKFrjjszHPr05qrvaeUS2Byr_ZfU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODAzMDE0MCBTYWx0ZWRfX2bAv8fwrv+vP
+ IkB8tf0V7zakY6sRzuVDj6b7Cho7zr3Eu2svGl7ZFV7lLNFTwiCbCopPLpqz/WYBa67Zr8sMp77
+ zkNgoarsgqjMTdZwPapUcxpr4joyIKWTp4rk1+VN/1S6F1Mdc8xGqwU4fe3mhn9xtlKIzT1OYrf
+ J+pGOogHmSk3chUdYehTHihDluKqw37jzWo40lmQt3f1kWE5NnuuAI+7DtjOzq2Fwe4w6pVKb3p
+ TlEvxEuToA8o4SkIp0w6XsNX9jkWBb9S1HXc1PKVJVbvKSy1QcJf2q1v7yOLcpcPh0bwtdGS56+
+ HpDvICoNyjsOttebn2lHm003mp/bWy0brDZn4JEDo/+MrlDvnnogWlawFQIR/P2Rn8gnP9xzZ/o
+ kuxdismRftYx+TTwV5Q3vGFvu056dP4K4MZzZYlAwreFO8ESNyVU+n6F1IoPpJXOpcnC74/VNEM
+ DdxZo7GL1CJVu/xfpJw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-03_03,2026-08-03_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 adultscore=0 priorityscore=1501 malwarescore=0 spamscore=0
+ bulkscore=0 impostorscore=0 suspectscore=0 clxscore=1015 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608030140
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,258 +158,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Chao,
 
-On Sun, Aug 2, 2026 at 9:25=E2=80=AFPM Chao Liu <chao.liu@processmission.co=
-m> wrote:
+On 7/31/2026 12:42 PM, Pierrick Bouvier wrote:
+> On 7/29/2026 6:28 PM, Brian Cain wrote:
+>> Add more tests from hexagon-arch-tests, enabled by QTimer device.
+>>
+>> These exercise cache maintenance ops, l2vic, thread start/stop, tlb/mmu
+>> operations, and user-mode transitions.
+>>
+>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>> ---
+>>   tests/functional/hexagon/test_arch_tests.py | 32 +++++++++++++++++++++
+>>   1 file changed, 32 insertions(+)
+>>
+>> diff --git a/tests/functional/hexagon/test_arch_tests.py b/tests/functional/hexagon/test_arch_tests.py
+>> index 2bb34f9b8dc..0834398c3b1 100755
+>> --- a/tests/functional/hexagon/test_arch_tests.py
+>> +++ b/tests/functional/hexagon/test_arch_tests.py
+>> @@ -58,6 +58,38 @@ def test_int_steering(self) -> None:
+>>           """
+>>           self.run_uart_test("test_int_steering")
+>>   
+>> +    def test_cache(self) -> None:
+>> +        """Tests cache operations: dckill/ickill, l2kill, dczeroa,
+>> +        dccleaninva, cache disable/enable, barriers, and dcinva/dccleana.
+>> +        """
+>> +        self.run_uart_test("test_cache")
+>> +
+>> +    def test_l2vic(self) -> None:
+>> +        """Tests the L2VIC interrupt controller: enable readback,
+>> +        interrupt type readback, VID capture, and the fast interface.
+>> +        """
+>> +        self.run_uart_test("test_l2vic")
+>> +
+>> +    def test_threads(self) -> None:
+>> +        """Tests hardware thread management: start/stop, MODECTL state,
+>> +        per-thread HTID, shared memory, wait/resume, STID priority, and
+>> +        SCHEDCFG/BESTWAIT readback.
+>> +        """
+>> +        self.run_uart_test("test_threads")
+>> +
+>> +    def test_tlb_mmu(self) -> None:
+>> +        """Tests TLB/MMU operations: write/read/probe/invalidate,
+>> +        global entries, multiple entries, overwrite, ASID matching,
+>> +        and permission checks.
+>> +        """
+>> +        self.run_uart_test("test_tlb_mmu")
+>> +
+>> +    def test_user_mode(self) -> None:
+>> +        """Tests user mode / privilege transitions: supervisor mode,
+>> +        SSR UM/IE/XE/CE/PE bits, and the trap0 user-mode exit handler.
+>> +        """
+>> +        self.run_uart_test("test_user_mode")
+>> +
+>>   
+>>   if __name__ == "__main__":
+>>       QemuSystemTest.main()
+> A general question on the pattern we have here.
 >
-> On Wed, Jul 29, 2026 at 10:21:34AM +0800, Anirudh Srinivasan wrote:
-> > This device present in Tenstorrent Atlantis has registers that control
-> > clocks, reset and other misc functionality in the SoC. This commit adds
-> > models for the RCPU, HSIO, PCIE, MM and 2 DDR PRCMs.
-> >
-> > Co-developed-by: Portia Stephens <portias@oss.tenstorrent.com>
-> > Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
-> > Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-> > ---
-> >  MAINTAINERS                        |   2 +
-> >  hw/misc/meson.build                |   1 +
-> >  hw/misc/trace-events               |   4 +
-> >  hw/misc/tt_atlantis_prcm.c         | 436 +++++++++++++++++++++++++++++=
-++++++++
-> >  include/hw/misc/tt_atlantis_prcm.h |  51 +++++
-> >  5 files changed, 494 insertions(+)
-> >
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index e25df9493c..49c1a5ad76 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -1802,7 +1802,9 @@ R: Portia Stephens <portias@oss.tenstorrent.com>
-> >  L: qemu-riscv@nongnu.org
-> >  S: Supported
-> >  F: docs/system/riscv/tt_*.rst
-> > +F: hw/misc/tt_*.c
-> >  F: hw/riscv/tt_*.c
-> > +F: include/hw/misc/tt_*.h
-> >  F: include/hw/riscv/tt_*.h
-> >  F: tests/functional/riscv64/test_tt_*.py
-> >
-> > diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-> > index 23265f6035..26627013f3 100644
-> > --- a/hw/misc/meson.build
-> > +++ b/hw/misc/meson.build
-> > @@ -36,6 +36,7 @@ system_ss.add(when: 'CONFIG_SIFIVE_E_PRCI', if_true: =
-files('sifive_e_prci.c'))
-> >  system_ss.add(when: 'CONFIG_SIFIVE_E_AON', if_true: files('sifive_e_ao=
-n.c'))
-> >  system_ss.add(when: 'CONFIG_SIFIVE_U_OTP', if_true: files('sifive_u_ot=
-p.c'))
-> >  system_ss.add(when: 'CONFIG_SIFIVE_U_PRCI', if_true: files('sifive_u_p=
-rci.c'))
-> > +system_ss.add(when: 'CONFIG_TENSTORRENT', if_true: files('tt_atlantis_=
-prcm.c'))
-> >
-> >  subdir('macio')
-> >
-> > diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-> > index c9a868b3ef..9359a4e66d 100644
-> > --- a/hw/misc/trace-events
-> > +++ b/hw/misc/trace-events
-> > @@ -442,3 +442,7 @@ iommu_testdev_dma_read(uint64_t gva, uint32_t len) =
-"gva=3D0x%" PRIx64 " len=3D%u"
-> >  iommu_testdev_dma_verify(uint32_t expected, uint32_t actual) "expected=
-=3D0x%x actual=3D0x%x"
-> >  iommu_testdev_dma_result(uint32_t result) "DMA completed result=3D0x%x=
-"
-> >  iommu_testdev_dma_armed(bool armed) "armed=3D%d"
-> > +
-> > +# tt_atlantis_prcm.c
-> > +tt_atlantis_prcm_read(uint32_t domain, uint64_t offset, uint64_t data)=
- "domain 0x%02x offset 0x%" PRIx64 " data 0x%" PRIx64
-> > +tt_atlantis_prcm_write(uint32_t domain, uint64_t offset, uint64_t data=
-) "domain 0x%02x offset 0x%" PRIx64 " data 0x%" PRIx64
-> > diff --git a/hw/misc/tt_atlantis_prcm.c b/hw/misc/tt_atlantis_prcm.c
-> > new file mode 100644
-> > index 0000000000..d341e1a8c3
-> > --- /dev/null
-> > +++ b/hw/misc/tt_atlantis_prcm.c
-> > @@ -0,0 +1,436 @@
-> > +/*
-> > + * PRCM (Clock and Reset Controller) in Tenstorrent Atlantis SoC
-> > + *
-> > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > + *
-> > + * Copyright 2026 Tenstorrent
-> > + */
-> > +
-> > +#include "qemu/osdep.h"
-> > +#include "qemu/bitops.h"
-> > +#include "qapi/error.h"
-> > +#include "qemu/log.h"
-> > +#include "hw/misc/tt_atlantis_prcm.h"
-> > +#include "hw/core/qdev-properties.h"
-> > +#include "hw/core/registerfields.h"
-> > +#include "hw/core/irq.h"
-> > +#include "trace.h"
-> > +
-> > +#define TO_REG(offset) ((offset) >> 2)
-> > +
-> > +#define PLL_LOCK_BIT        31
-> > +#define PLL_FBDIV_LSB       14
-> > +#define PLL_POSTDIV2_LSB    11
-> > +#define PLL_POSTDIV1_LSB    8
-> > +#define PLL_REFDIV_LSB      2
-> > +#define PLL_BYPASS_BIT      1
-> > +
-> > +#define PLL_RESET_VAL(BYPASS, REFDIV, POSTDIV1, POSTDIV2, FBDIV, LOCK)=
-         \
-> > +  ((LOCK << PLL_LOCK_BIT) | (FBDIV << PLL_FBDIV_LSB) |                =
-         \
-> > +   (POSTDIV2 << PLL_POSTDIV2_LSB) | (POSTDIV1 << PLL_POSTDIV1_LSB) |  =
-         \
-> > +   (REFDIV << PLL_REFDIV_LSB) | (BYPASS << PLL_BYPASS_BIT))
-> > +
-> > +#define RCPU_PLL_RCPU_CFG   TO_REG(0)
-> > +#define RCPU_PLL_NOCC_CFG   TO_REG(0x4)
-> > +#define RCPU_NOCC_CLK_CFG   TO_REG(0x8)
-> > +#define RCPU_RCPU_DIV_CFG   TO_REG(0xc)
-> > +#define RCPU_RCPU_BLK_CG    TO_REG(0x14)
-> > +#define RCPU_LSIO_BLK_CG    TO_REG(0x18)
-> > +#define RCPU_RCPU_BLK_RST   TO_REG(0x1c)
-> > +#define RCPU_LSIO_BLK_RST   TO_REG(0x20)
-> > +#define RCPU_PLL_RCPU_EN    TO_REG(0x11c)
-> > +#define RCPU_PLL_NOCC_EN    TO_REG(0x120)
-> > +#define RCPU_PLL_MM_EN      TO_REG(0x0124)
-> > +#define RCPU_PLL1_MM_EN     TO_REG(0x0128)
-> > +#define RCPU_PLL_HSIO_EN    TO_REG(0x12c)
-> > +#define RCPU_PLL_PCIE_EN    TO_REG(0x138)
-> > +#define RCPU_PLL_I2S_EN     TO_REG(0x13C)
-> > +#define RCPU_PLL_MM_CFG     TO_REG(0x19c)
-> > +#define RCPU_PLL_HSIO_CFG   TO_REG(0x1a0)
-> > +#define RCPU_PLL_PCIE_CFG   TO_REG(0x1ac)
-> > +#define RCPU_BOOT_MODE_CFG  TO_REG(0x1b0)
-> > +#define RCPU_PLL_I2S_CFG    TO_REG(0x1f4)
-> > +#define RCPU_I2S_DIV_CFG    TO_REG(0x1f8)
-> > +#define RCPU_BUS_CFG        TO_REG(0x1fc)
-> > +#define RCPU_PLL1_MM_CFG    TO_REG(0x2a4)
-> > +
-> > +#define HSIO_HSIO_DIV_CFG       TO_REG(0x0)
-> > +#define HSIO_HSIO_DIV_CFG1      TO_REG(0x4)
-> > +#define HSIO_HSIO_BLK_CG        TO_REG(0x8)
-> > +#define HSIO_HSIO_BLK_RST       TO_REG(0xc)
-> > +#define HSIO_HSIO_GMAC_DIV_CFG  TO_REG(0x10)
-> > +
-> > +#define PCIE_SUBS_RST_CTL   TO_REG(0x0)
-> > +#define PCIE_SUBS_CG_CTL    TO_REG(0x4)
-> > +#define PCIE_SUBS_CK_CTL    TO_REG(0x8)
-> > +
-> > +#define MM_MM_CLK_GATE_CFG  TO_REG(0x8)
-> > +#define MM_MM_CLK_DIV_CFG   TO_REG(0xC)
-> > +#define MM_MM_CLK_SEL_CFG   TO_REG(0x10)
-> > +#define MM_MM_RSTN          TO_REG(0x14)
-> > +#define MM_MM_CLK_DIV_CFG1  TO_REG(0x130)
-> > +
-> > +#define DDRC_STAT           TO_REG(0x10014)
-> > +#define DDRC_DFISTAT        TO_REG(0x10514)
-> > +#define DDRC_SWSTAT         TO_REG(0x10c84)
-> > +
-> > +#define PLL_EN              BIT(0)
-> > +#define RCPU_PLL_BUS_CG_EN  BIT(7)
-> > +#define HSIO_PLL_BUS_CG_EN  BIT(3)
-> > +#define PCIE_PLL_BUS_CG_EN  BIT(1)
-> > +#define NOCC_PLL_BUS_CG_EN  BIT(0)
-> > +
-> > +#define RCPU_BOOT_MODE_UART      (0x0 << 4)
-> > +#define RCPU_BOOT_MODE_NOR       (0x1 << 4)
-> > +#define RCPU_BOOT_MODE_SD        (0x2 << 4)
-> > +
-> > +#define RCPU_DOMAIN_SIZE   0x10000
-> > +#define HSIO_DOMAIN_SIZE   0x510
-> > +#define PCIE_DOMAIN_SIZE   0x100
-> > +#define MM_DOMAIN_SIZE     0x1000
-> > +#define DDRC0_DOMAIN_SIZE  0x101000
-> > +#define DDRC1_DOMAIN_SIZE  0x101000
-> > +
-> > +static uint64_t tt_atlantis_prcm_read(void *opaque, hwaddr offset,
-> > +                                               unsigned size) {
-> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(opaque);
-> > +    TTAtlantisPRCMClass *c =3D TT_ATLANTIS_PRCM_GET_CLASS(s);
-> > +    uint32_t data;
-> > +
-> > +    if (offset >=3D c->regs_size) {
-> > +        qemu_log_mask(LOG_GUEST_ERROR,
-> > +                      "%s: Out-of-bounds read at offset 0x%" HWADDR_PR=
-Ix "\n",
-> > +                      __func__, offset);
-> > +        return 0;
-> > +    }
-> > +    data =3D s->regs[TO_REG(offset)];
-> > +
-> > +    trace_tt_atlantis_prcm_read(c->domain, offset, data);
-> > +    return data;
-> > +}
-> > +
-> > +static void tt_atlantis_prcm_write(void *opaque, hwaddr offset,
-> > +                                            uint64_t data, unsigned si=
-ze) {
-> Consider aligning the wrapped lines with the first parameter.
+> If those tests can be compiled with hexagon-cross container, would it
+> make sense to add them to tcg/tests/hexagon/system directly in the future?
+> Hopefully will be more easy once we have meson tcg-tests, so you don't
+> need to add all dependencies by hand.
+
+
+Glad you asked -- in a downstream fork, we originally did have several 
+tests like these (not these particular ones but ~similar scope) running 
+in check-tcg.  But we pivoted away from that because:
+
+1. they're not testing merely translation: they depend on several sysemu 
+devices.  More like integration/functional testing.
+
+2. sometimes it's useful to verify not merely the exit code but also 
+some output text to semihost/uart console.  This *can* be done with 
+shell programs in make/meson, but it feels like "coloring outside of the 
+lines."
+
+3. most other architectures seem to have fairly ~light system emu 
+check-tcg tests, perhaps because of #1/2?
+
+
+We did this change with the assumption that these sysemu check-tcg tests 
+wouldn't be welcomed by community because it diverges from what other 
+targets do.  But maybe that was an overreaction?
+
+It's certainly convenient to have test cases in-project so that changes 
+to the tests don't require an indirect step to update a test code repo.  
+So, we can do whatever best conforms to the project idioms in this 
+regard.  Note that these particular tests in this patch are written in 
+Rust and would introduce a new dependency (in the existing container, I 
+suppose) beyond the C/C++ toolchain.  Fine w/me but food for thought.
+
+
 >
-> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(opaque);
-> > +    TTAtlantisPRCMClass *c =3D TT_ATLANTIS_PRCM_GET_CLASS(s);
-> > +
-> > +    trace_tt_atlantis_prcm_write(c->domain, offset, data);
-> > +
-> > +    if (offset >=3D c->regs_size) {
-> > +        qemu_log_mask(LOG_GUEST_ERROR,
-> > +                      "%s: Out-of-bounds write at offset 0x%" HWADDR_P=
-RIx "\n",
-> > +                      __func__, offset);
-> > +        return;
-> > +    }
-> > +
-> > +    switch (TO_REG(offset)) {
-> > +    default:
-> > +        s->regs[TO_REG(offset)] =3D data;
-> > +        break;
-> > +    }
-> > +}
-> > +
-> > +static void tt_atlantis_prcm_rcpu_write(void *opaque, hwaddr offset,
-> > +                                            uint64_t data, unsigned si=
-ze) {
-> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(opaque);
-> > +
-> > +    tt_atlantis_prcm_write(opaque, offset, data, size);
-> > +
-> > +    bool pll_en_written =3D false;
-> > +    uint32_t pll_reg_offset;
-> > +    switch TO_REG(offset)
-> > +    {
-> > +        case RCPU_PLL_RCPU_EN:
-> > +            pll_en_written =3D true;
-> > +            pll_reg_offset =3D RCPU_PLL_RCPU_CFG;
-> > +            break;
-> This should follow the QEMU coding style:
->
->     switch (TO_REG(offset)) {
->     case RCPU_PLL_RCPU_EN:
->         pll_en_written =3D true;
->         pll_reg_offset =3D RCPU_PLL_RCPU_CFG;
->         break;
->     ...
->     case RCPU_PLL_I2S_EN:
->         pll_en_written =3D true;
->         pll_reg_offset =3D RCPU_PLL_I2S_CFG;
->         break;
->     default:
->       g_assert_not_reached();
->     }
-
-Thanks, checkpatch didn't seem to point these out. Will fix them up in V2.
-
-Regards
-Anirudh Srinivasan
-
-> Thanks,
-> Chao
+> Regards,
+> Pierrick
 
