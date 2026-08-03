@@ -4,76 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9B80C55175
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 07:31:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD1D3C55175
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 08:12:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqn78-0003Lt-4b; Mon, 03 Aug 2026 03:29:34 -0400
+	id 1wqnmN-0001cO-Tw; Mon, 03 Aug 2026 04:12:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1wqn71-0003Jm-1c; Mon, 03 Aug 2026 03:29:27 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1wqn6v-0005x4-Lt; Mon, 03 Aug 2026 03:29:23 -0400
-Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 25DDD806DC;
- Mon, 03 Aug 2026 10:29:14 +0300 (MSK)
-Received: from dtalexundeer-nx.yandex-team.ru (unknown
- [2a02:6bf:8080:a53::1:f])
- by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id rSdSxZ08oGk0-sKfWIuR8; Mon, 03 Aug 2026 10:29:13 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1785742153;
- bh=4bPvWX8Bl6sQAkGXhxfZM9mm5a/Z0JCU18UzmbNVPus=;
- h=Message-Id:Date:Cc:Subject:To:From;
- b=DXMifX0X2DmWt4LT6R3nMngUZT13Z4yR4taSr33wTu8bEHeTDcXvQfg3E+fKroQ+W
- 15GGUmxWfJu3DEudKFdMlw/E0HKNli26DXufo9xRNBkx2T+eCk14iORwjFdqgGmoDY
- ikBseB8YIuoCvDBGHwDJxRfy7kawiHkmcbNxp0R4=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1wqnmN-0001bo-1B
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 04:12:11 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1wqnmK-0003fL-Lc
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 04:12:10 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-49557167508so16093735e9.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 01:12:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mihalicyn.com; s=mihalicyn; t=1785744727; x=1786349527; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=AZRKMVtsLh2FlJrqbHcFTrJa0a2L1BmpZYhwv58PQLU=;
+ b=edbqH8xROwDXDb+RUiiV3RdxZYs/L5I6ewwNDzHsaSrI8Kz7R+RmQX+63/0TzluhpM
+ 4m3WCmliB1oq6tiVvct1FSOfymbetyQIp6DXRU+xgaqmws0PBsCt26KVhpYnRej+MGvT
+ GNDnaCPqEuowuql/y3xGEYjtYcmgV4lixodko=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785744727; x=1786349527;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=AZRKMVtsLh2FlJrqbHcFTrJa0a2L1BmpZYhwv58PQLU=;
+ b=rXqwZdC+7p25jQgBD9XYmay8hwel4ZTjw50goC90AdfhUbsViz6D1wCMHkN+j/5/5M
+ YiLOiHuM7ZHl6XOTL3+zkYI5mnOaJltDc+Y4Gh699MS7GIxvohmsqEP+loWWC0diFBrE
+ iSNog20bQ+AwR1yKGo16k+XuUtRgkJykP4YMkuo7BPRVfl/+ZanJWEEEw9ZckYKy9LYz
+ Yrhq7LYHDA+/Z1qGV+yRQ4WSbZxPYxM8/AbH/YSyWEdfnVGPL+Vivc9FV91xlzeQBUfv
+ voI+MKCdfidp6MBTl1KcE8as2B1pttQsbpoQiWWaAzlLPJ1CrUFlgIHFJMGcsafRbrTO
+ zkmA==
+X-Gm-Message-State: AOJu0YxsFCbHhuA7d2YYKfy+DWnyHsiBz9nvOPTQRTJ/PRqbJZ0JMXR7
+ BBNDu7EBmpfajPMcgobmd7ce6p0uTpouiSDz05/qs3KtoGKXruSrljWQzXEsZgdS9JbHkZC+lJ3
+ B8oU6
+X-Gm-Gg: AR+sD13nxUWlKZ18YghOk4x/NFHmGUlVXtZieRK/cp+XKAirrEhiXfbXU4RKxHVQL9i
+ qWP6/yjt1sZhFuDrwplZUuXZk7JtlVi3z7f+x2eWUWDTU4wuPYRW8rX9Qex0HDM0SJc8b/IaplM
+ w2PuoZXehSwGV9bTM8QP+aYSVhkzchGn4pvhS22z3svYIOQzkr4yNX5A8otWMcVBdCgfP438ro8
+ dXThlUGo81povHvJ7YlfaLQwXq1CKv+pGU8YfZ38meT6DgoLDk3UMLdWbjvZBml7ju1bm/K3YXb
+ acbUlJDzEfJQK0zVoJklyw6ezqT54ktyyxTATFDjV9zRlozo44Sa6eh3updosKzM8CPBmjSF2ct
+ YWdatezyPtoL7o/euGPPg39NtRRrp71CXkwUp+aJOnX1ZbUWFaC3x5lnxB/0+HlbQ/VAlAdQDdU
+ LTwOjPeerZBTMYdBUKv7YXggVBNqeD/oJU9r2ZebfptstNW0xgIo0ucwCGdjKeSdNjQdPzzOj5n
+ O5hoDD3ZcowVKnIBYMEBMKTB4rU5qzhXdbQs9pvUngcbLPuUg/b7+U/ytWPE9E0QiDjgz9h
+X-Received: by 2002:a05:600c:917:b0:496:c06b:9fb4 with SMTP id
+ 5b1f17b1804b1-4980c65c487mr135716155e9.14.1785744727058; 
+ Mon, 03 Aug 2026 01:12:07 -0700 (PDT)
+Received: from alex-laptop.lan
+ (p200300cf574a7200803110ea947f174a.dip0.t-ipconnect.de.
+ [2003:cf:574a:7200:8031:10ea:947f:174a])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49807b98284sm209358435e9.12.2026.08.03.01.12.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 03 Aug 2026 01:12:06 -0700 (PDT)
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
 To: qemu-devel@nongnu.org
-Cc: Stefano Garzarella <sgarzare@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, zhenwei pi <zhenwei.pi@linux.dev>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- Jason Wang <jasowangio@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Milan Zamazal <mzamazal@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Fam Zheng <fam@euphon.net>,
- virtio-fs@lists.linux.dev,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Jason Wang <jasowang@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Raphael Norwitz <rnorwitz@nvidia.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Subject: [PATCH v6 0/6] vhost-user-blk: allow toggling inflight-migration at
- runtime
-Date: Mon,  3 Aug 2026 12:28:47 +0500
-Message-Id: <20260803072853.2920007-1-dtalexundeer@yandex-team.ru>
-X-Mailer: git-send-email 2.34.1
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Alexander Mikhalitsyn <alexander@mihalicyn.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Subject: [PATCH v5 05/10] hw/audio/virtio-sound: free all stream buffers on
+ reset
+Date: Mon,  3 Aug 2026 10:11:54 +0200
+Message-ID: <20260803081159.91981-6-alexander@mihalicyn.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260803081159.91981-1-alexander@mihalicyn.com>
+References: <20260803081159.91981-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -85,89 +111,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v5 -> v6:
-- block changing inflight-migration property while VM is not running
-- remove checking runstate in vhost_user_blk_stop() since it's not necessary
-- updated cover letter: changed subject and description to focus on
-  runtime toggling of inflight-migration rather than cross-version
-  migration compatibility
+From: Volker Rümelin <vr_qemu@t-online.de>
 
-v4 -> v5:
-- introduce protocol feature VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN
-  to guard the new message, instead of reusing the existing
-  VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INLIFGHT. Update docs.
-- improved commit messages.
+All remaining stream buffers in the stream queues must
+be freed after a reset. This is the initial state of the
+virtio-sound device.
 
-v3 -> v4:
-- add new protocol message GET_VRING_BASE_SKIP_DRAIN instead of parameter to GET_VRING_BASE message. This new message can be send instead of GET_VRING_BASE, allowing back-end to suspend inflight I/O immediately instead of waiting and completing them.
-- rebase to newer master
-
-v2 -> v3:
-- fix complile problems
-- add assert check in do_vhost_virtio_stop
-- make inflight-migration property mutable
-
-v1 -> v2:
-- reorganize commits: make refactor commits first, then core semantic change
-- add additional pre_save check for inflight migration possibility
-
+Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
+[AM: trivial variable rename s -> vsnd]
+Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
+v4:
+	- reduced a scope of loop counter variable in virtio_snd_reset
+	  (as suggested by Manos Pitsidianakis)
+---
+ hw/audio/virtio-snd.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-This is v6 of the series previously sent as:
-"[PATCH v5 0/6] vhost-user-blk: add compatibility with older qemu versions"
-
-This series allows the inflight-migration property of vhost-user-blk to
-be toggled at runtime via qom-set without restarting the VM or
-reconnecting to the back-end.
-
-Currently, the inflight migration behaviour is controlled by
-VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT, which is negotiated once
-at connection time. Once negotiated, the back-end always uses suspend
-semantics on GET_VRING_BASE -- there is no way for the front-end to
-request normal drain behaviour on a per-call basis. This makes it
-impossible to disable inflight-migration at runtime.
-
-To solve this, the series introduces a new protocol message
-VHOST_USER_GET_VRING_BASE_SKIP_DRAIN (id=45) guarded by a new protocol
-feature VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN. The message
-instructs the back-end to suspend in-flight I/O immediately rather than
-draining it. This gives the front-end explicit per-call control:
-GET_VRING_BASE for normal drain, GET_VRING_BASE_SKIP_DRAIN when
-inflight-migration is enabled.
-
-In vhost-user-blk, GET_VRING_BASE_SKIP_DRAIN is sent whenever
-inflight-migration is on. The inflight-migration
-property can only be changed while the VM is running, so its value at
-stop time reliably reflects the user's intent.
-
-Alexandr Moshkov (6):
-  vhost-user: add skip_drain param to do_vhost_virtqueue_stop
-  vhost-user: add GET_VRING_BASE_SKIP_DRAIN message
-  vhost-user: use skip_drain with GET_VRING_BASE_SKIP_DRAIN message
-  vhost-user-blk: make inflight-migration prop mutable on running vm
-  vhost-user-blk: move inflight_needed higher
-  vhost-user-blk: use GET_VRING_BASE_SKIP_DRAIN when inflight-migration
-    is on
-
- backends/cryptodev-vhost.c        |  2 +-
- backends/vhost-user.c             |  2 +-
- docs/interop/vhost-user.rst       | 88 +++++++++++++++++++------------
- hw/block/vhost-user-blk.c         | 60 ++++++++++++++++++---
- hw/net/vhost_net.c                |  9 ++--
- hw/scsi/vhost-scsi-common.c       |  2 +-
- hw/virtio/vdpa-dev.c              |  2 +-
- hw/virtio/vhost-user-base.c       |  2 +-
- hw/virtio/vhost-user-fs.c         |  2 +-
- hw/virtio/vhost-user-scmi.c       |  2 +-
- hw/virtio/vhost-user.c            | 47 ++++++++++++++---
- hw/virtio/vhost-vsock-common.c    |  2 +-
- hw/virtio/vhost.c                 | 34 ++++++++----
- include/hw/virtio/vhost-backend.h |  1 +
- include/hw/virtio/vhost-user.h    |  2 +-
- include/hw/virtio/vhost.h         |  7 ++-
- 16 files changed, 189 insertions(+), 75 deletions(-)
-
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index 84083be8825..f9822fc609a 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -1364,6 +1364,16 @@ static void virtio_snd_reset(VirtIODevice *vdev)
+         QTAILQ_REMOVE(&vsnd->cmdq, cmd, next);
+         virtio_snd_ctrl_cmd_free(cmd);
+     }
++
++    for (uint32_t i = 0; i < vsnd->snd_conf.streams; i++) {
++        VirtIOSoundPCMStream *stream = &vsnd->streams[i];
++        VirtIOSoundPCMBuffer *buffer;
++
++        while ((buffer = QSIMPLEQ_FIRST(&stream->queue))) {
++            QSIMPLEQ_REMOVE_HEAD(&stream->queue, entry);
++            virtio_snd_pcm_buffer_free(buffer);
++        }
++    }
+ }
+ 
+ static void virtio_snd_class_init(ObjectClass *klass, const void *data)
 -- 
-2.34.1
+2.47.3
 
 
