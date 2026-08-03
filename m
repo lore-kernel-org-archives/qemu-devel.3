@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1BF9C55182
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 19:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 589D1C55182
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 19:42:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqyW5-0000Y1-Sq; Mon, 03 Aug 2026 15:40:05 -0400
+	id 1wqyYZ-00016F-TA; Mon, 03 Aug 2026 15:42:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mpatocka@redhat.com>)
- id 1wqyW4-0000Xt-I3
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 15:40:04 -0400
+ id 1wqyYY-00015s-4M
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 15:42:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mpatocka@redhat.com>)
- id 1wqyW2-00052v-RF
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 15:40:04 -0400
+ id 1wqyYW-0005Sj-SE
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 15:42:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785786001;
+ s=mimecast20190719; t=1785786156;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=jhxxe5YH1XoA2W6fjeD0OvEICcTahHqGGvfqyuhxkLY=;
- b=TnYLPrJqMJU0lWpmjvY0t7xxJJHhhVxOvPdb05cQI9Dx04C17VMd9EKyaCUyCZIZryMFjY
- KxeBoQ/8pX1Mz3WiLrqF7pKT33kBGbVmzDk29bz1sgAud9FKHNEZGFMG5Of/gMZiec2/kQ
- LeBbUQ+r1mq8KpBejJfybLsKQL2Iplc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=AhkiJp4+15IaxzAMvaarwRrINaSGbJl7Aghi0L+4bFA=;
+ b=CncE7ZcMJk0zhy5FLUg39sBujFBGpu9sfNbz6ys4TSOpyOB3HznzrHiP/NHvDbPdOWR9uf
+ 2hSSS6/xANNRkL0Z7ORPliTLjWXJ1Y5+mCnT9qxNy8KM22OEl3JFM3lyEOerDWKU/Ayu2Y
+ tD7NuURvbi33OLLwOyzVMq9XOMHuAjk=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-622-IZ0K9hK0P_2UVrn5Jod7GA-1; Mon,
- 03 Aug 2026 15:38:41 -0400
-X-MC-Unique: IZ0K9hK0P_2UVrn5Jod7GA-1
-X-Mimecast-MFC-AGG-ID: IZ0K9hK0P_2UVrn5Jod7GA_1785785920
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-341-a0uOdBB6OtyssUXqSstxNg-1; Mon,
+ 03 Aug 2026 15:42:34 -0400
+X-MC-Unique: a0uOdBB6OtyssUXqSstxNg-1
+X-Mimecast-MFC-AGG-ID: a0uOdBB6OtyssUXqSstxNg_1785786153
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C9256195609F; Mon,  3 Aug 2026 19:38:39 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A42471956047; Mon,  3 Aug 2026 19:42:33 +0000 (UTC)
 Received: from [10.44.32.79] (unknown [10.44.32.79])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7AB0D1800480; Mon,  3 Aug 2026 19:38:38 +0000 (UTC)
-Date: Mon, 3 Aug 2026 21:38:32 +0200 (CEST)
+ id 6BB091800480; Mon,  3 Aug 2026 19:42:32 +0000 (UTC)
+Date: Mon, 3 Aug 2026 21:42:29 +0200 (CEST)
 From: Mikulas Patocka <mpatocka@redhat.com>
 To: Yoshinori Sato <yoshinori.sato@nifty.com>, 
  Richard Henderson <richard.henderson@linaro.org>
 cc: qemu-devel@nongnu.org
-Subject: [PATCH] linux-user/sh4: Fix crashes on signal delivery in conditional
- delay slot
-Message-ID: <99f60fb8-e9db-e775-38db-44df9514a4c7@redhat.com>
+Subject: [PATCH] linux-user/sh4: Deliver SIGILL on invalid instruction
+Message-ID: <2a3f1f1e-459e-5d36-0c1c-e56568cced9c@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
@@ -80,34 +79,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If we get a signal in the delay slot, we must roll-back the PC to the
-jump instruction. This was already fixed by the commit 3b894b699c9a
-("linux-user/sh4: Fix crashes on signal delivery"), however this fix
-omits a test for TB_FLAG_DELAY_SLOT_COND. TB_FLAG_DELAY_SLOT_COND is set
-by the conditional delayed branches bf/s and bt/s. Qemu did not roll-back
-the PC in this case, resulting in incorrect program execution.
-
-This patch fixes it.
+On invalid instruction, deliver SIGILL rather than crashing the whole
+process unconditionally.
 
 Cc: qemu-stable@nongnu.org
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 
 ---
- linux-user/sh4/signal.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ linux-user/sh4/cpu_loop.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-Index: qemu/linux-user/sh4/signal.c
+Index: qemu/linux-user/sh4/cpu_loop.c
 ===================================================================
---- qemu.orig/linux-user/sh4/signal.c	2026-08-02 18:02:30.000000000 +0200
-+++ qemu/linux-user/sh4/signal.c	2026-08-02 18:03:09.000000000 +0200
-@@ -109,7 +109,7 @@ static void unwind_gusa(CPUSH4State *reg
-            the SP, otherwise we would be pushing the signal context to
-            invalid memory.  */
-         regs->gregs[15] = regs->gregs[1];
--    } else if (regs->flags & TB_FLAG_DELAY_SLOT) {
-+    } else if (regs->flags & (TB_FLAG_DELAY_SLOT | TB_FLAG_DELAY_SLOT_COND)) {
-         /* If we are in a delay slot, push the previous instruction.  */
-         regs->pc -= 2;
-     }
+--- qemu.orig/linux-user/sh4/cpu_loop.c	2026-08-02 19:02:25.000000000 +0200
++++ qemu/linux-user/sh4/cpu_loop.c	2026-08-02 19:06:40.000000000 +0200
+@@ -64,6 +64,10 @@ void cpu_loop(CPUSH4State *env)
+             cpu_exec_step_atomic(cs);
+             arch_interrupt = false;
+             break;
++        case 0x180:
++            /* Illegal instruction */
++            force_sig_fault(TARGET_SIGILL, TARGET_ILL_ILLOPC, env->pc);
++            break;
+         default:
+             fprintf(stderr, "Unhandled trap: 0x%x\n", trapnr);
+             cpu_dump_state(cs, stderr, 0);
 
 
