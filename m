@@ -4,107 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1383FC55184
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 10:47:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FE74C55179
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 11:01:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqqCY-0000pc-4t; Mon, 03 Aug 2026 06:47:22 -0400
+	id 1wqqPy-0003V3-BI; Mon, 03 Aug 2026 07:01:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wqqCX-0000pS-8b
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 06:47:21 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wqqCV-0002cU-7G
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 06:47:20 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-38de840f2f0so2036694a91.0
- for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 03:47:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785754037; cv=none;
- d=google.com; s=arc-20260327;
- b=CAIt+QmoJLU0YZpLdF1IgQbJVy8ZEhZ/6MBpe3EaNNZmnajJo6yO+b24iaBLPk4yOX
- +DntdIAUCNu/ScE9DNlv9ScedN8VNvYXRY0JMv4Ipaiuze2uMPWC9zjNV0UkUPgU0sX3
- tgV1im+eOiswQEE1WZZsEhHTqCYPFWBsRM8x75ju2/qjKbSWwN4ryt37OPyiWZyLs55A
- oOLsZvT8fGnA9ynX/3ClfkeaF6asSWKqWUeNiQwNDdZk4s3TCjCKnYGNhxj6ZtKXwSkP
- miFuMPoYn/YighsiAtyZwpzZVddXxT60JutwCQzr1VTyTP71Ymp+JVfISuUI5LtPA6xC
- m9vg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=XVmSE596qKM8Y7UezYMq4fO+fEeBdRdhmoQSaU2e2F8=;
- fh=i9CwLnv/dHKZ45lJ1t8Mfhr83l6jrA0+RwEVVJT7XdI=;
- b=nXGhVO1BQdzWzaryBQNUSapmgIscgi7C0Us7UTaRS7bxMQgbDK9wZ2PPBs6pqoHJoE
- XO4yeCo6jhP0G+oNDcqept9g8OYvemDt7NoIA0FveBYu784RPgKbtZ5hfhm6u5ihBYWz
- 5r7Bwchz8dlGBPlo2APTR/PGUesqf7uXMYfekuJ6Eg58z54vcpWpbZzoiCIHI5fbv/tZ
- LSS9N3rh6MyALDWdS247K704Vw/wNGq4Uga4VAC0enERcizLe5GATrGA2/+N2TNK1YiF
- A0vMl4L7tzrWAcrn/CnVFI6y8j+glLl+sHvPE4MDsL+HcPcePtPaQwXSvqiVOPkKG7+A
- 6l6w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785754037; x=1786358837; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=XVmSE596qKM8Y7UezYMq4fO+fEeBdRdhmoQSaU2e2F8=;
- b=ZWtnTjXHuIetfcqp43c3CQhFuY5hMXqwWmmEOnPhaSP5Oyk/wmCci11OwpUjnlHIBs
- 5b9VVYwfIFjDFv44/zqmXH/lHGkjIRBnB9XMvN9TKaOiPG7EcrOR943AUoCz8cHQluV5
- YQJ9+NjmNv4O5gCgit2td9sSjHwOl1w0XrulqRATnfihreSWgxW7ieHBVMU09uQEaLWl
- dqLow6oE4kqqaxaHeVNrwM4Q2Pk1dWAABHfYhaNY0+V/SwCL+IvDp5ygYp5YewLzx2U8
- X5hsdg1B3ZFv+seTCO0ApdG7iM5PEpHlfAJ1Tz92vI3aF2ku9m0JJXuY4D0VQ8UmwzJg
- 4i3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785754037; x=1786358837;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=XVmSE596qKM8Y7UezYMq4fO+fEeBdRdhmoQSaU2e2F8=;
- b=tDZl+djUaN8e3ZdjbBm6cH1AQeFE9Ioc4BvImmPlZvmo1GiyWX074Zwa0SpUI/ad8r
- 8uu5XvA2J5TBk+8ohE0i3C9OopqRJS3gKY0qCdo5SyzN9v4vyUDYWTUw/wizT0d3oWHv
- Gl92Fj4T0f2tTiL5K8Yx7dimHaa5N3HrTv9lM4l6BZ27vM+/oahi0/Ot4+pvSbfw56Lb
- wPXHo83kSd3TZmydCbm+cF7QGNyct5XNBD24vaOLhRfMMP4CeOolnnJbkcbM28uFtzh1
- fA1tLOYbrT53luaTfZbk/9xpdsaLuCmFijtfHHEb9eAvSz29+NThzhy0LHQ3BNbrc/ip
- 8JYA==
-X-Gm-Message-State: AOJu0YyCoEtOzNof6Cm9kU+gekn1UYvOP7rj1ZCfMU1ys3G4WbSxeBDu
- RnIA2stLd/tG9QJHC3XIFXYwy1++4UHTDyJ8pOASzgbqcka/GDENnzJZDvyWEr+eJaKm8VSz2Xi
- C60WEPpnnkftQAZpbMtz9R9JJeXUl+H5zBrmsRyE=
-X-Gm-Gg: AR+sD111AhxLGgBVHl3cO9xrmlGpfh01MUzbOxXw6l+LtQJsV/iil0CGqhcX0aNlhuK
- hHApInRZyY4eFccPNco81BQVBukZI8S6GV3vZzkHw0AIZFJR23ZDIg7tm3DKhcPjEQyciBJRSCg
- nIcIJRAXIQUZ77O/2cJOnj9BpgJL0y6SBM0R88NUCSvJQGnzEydXRLpcfr3HdXMbSTV1/CV7QaR
- Xm9Sw4oqpPKHK6f/3z+tUGde8BIuGcUapY6i3YxRkFflpSUtSf9nSyvN6L3mn3C5Lw4jCt2GqHD
- 6NpNGUZKALllA68S1IkJ/tgbJsWQDUfxOuh8e/XUFKnlkdSpzYFjGxhEzWOgMav38IpW70mmEpg
- R
-X-Received: by 2002:a17:90b:2dca:b0:38e:6dd:a9ad with SMTP id
- 98e67ed59e1d1-38fbc0baf26mr9437564a91.0.1785754037170; Mon, 03 Aug 2026
- 03:47:17 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260728151456.3704099-1-marcandre.lureau@redhat.com>
-In-Reply-To: <20260728151456.3704099-1-marcandre.lureau@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 3 Aug 2026 14:47:05 +0400
-X-Gm-Features: AUfX_mw1pA5Lt4SUK-LDXfAMRoNKat9xJd2WogPHKjRGxb3J0_WbBHuTqMbA2yc
-Message-ID: <CAJ+F1C+w5n9V_cc0v=dK-4OG+ZS4GB3km6vOiY5kir4iPCNSgw@mail.gmail.com>
-Subject: Re: [PATCH] hw/display/vga: fix panning_buf OOB after text/graphics
- switch
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wqqPw-0003Ul-UX
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 07:01:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wqqPu-0004Dr-Pb
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 07:01:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785754868;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=j0C0qE5XCIUHjOd0KA0bPOF7f8mApdhEAst88+ilBcc=;
+ b=deSMjxEy0f0cE1k4f3IsdFZXvjV3XRPMZlBpMTgNG8mzH8igF0EWboPRiY2CAT+/REu7br
+ ZnZ3y8V94WyUuhQAAR6xlY8/KeHWT1uFJ79fNmkl5RO8EKkR4oBHr8Y22xShNGqIv/OuKf
+ Wpq6JTyLR87fjhBXSAfkBoiBoturw/U=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-401-ZzOh5UM3NoSMZPbXmTVM2Q-1; Mon,
+ 03 Aug 2026 07:01:03 -0400
+X-MC-Unique: ZzOh5UM3NoSMZPbXmTVM2Q-1
+X-Mimecast-MFC-AGG-ID: ZzOh5UM3NoSMZPbXmTVM2Q_1785754861
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4B1EA180029F; Mon,  3 Aug 2026 11:01:01 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.2])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B34ED180049F; Mon,  3 Aug 2026 11:00:59 +0000 (UTC)
+From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Warisjeet Singh <sinxx198@gmail.com>, 
- Gerd Hoffmann <kraxel@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pj1-x102a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.248,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Cc: akihiko.odaki@gmail.com,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [PATCH v4] virtio-gpu: use g_try_malloc to avoid guest-triggered abort
+Date: Mon,  3 Aug 2026 15:00:56 +0400
+Message-ID: <20260803110056.1624324-1-marcandre.lureau@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.811,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,76 +87,253 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 28, 2026 at 7:16=E2=80=AFPM <marcandre.lureau@redhat.com> wrote=
-:
->
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> The fields last_width and last_height serve two purposes: the text
-> renderer counts in characters, the graphics renderer in pixels.
-> panning_buf reallocation is guarded by geometry-change check, so the
-> unit mismatch can trick it into thinking nothing changed when the
-> resolution actually grew.
->
-> A guest can trigger this by switching graphics -> text -> graphics:
->
->   1. Enter graphics mode with a small width (CR01=3D0x00, 8 pixels).
->      The predicate fires and panning_buf is allocated for that width.
->
->   2. Switch to text mode with a large width (CR01=3D0xFF, 256 chars).
->      The text renderer stores 256 into last_width. The text path
->      never touches panning_buf.
->
->   3. Switch back to graphics with a width that happens to equal 256
->      in pixels (CR01=3D0x1F, 32*8 =3D 256). The predicate sees
->      256 =3D=3D 256 and skips the realloc. With horizontal pel panning
->      enabled, vga_draw_line4() then writes a full 256-pixel scanline
->      into the buffer still sized for 8 pixels -- a 960-byte heap
->      overflow on every scanline, every refresh.
->
-> Fix it by reallocating unconditionally panning_buf on
-> vga_draw_graphic().
->
-> Fixes: CVE-2026-17516
-> Fixes: 973a724eb006 ("vga: implement horizontal pel panning in graphics m=
-odes")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4085
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: Warisjeet Singh <sinxx198@gmail.com>
-> [ Marc- Andr=C3=A9 - drop realloc() resize condition & commit message ]
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-ping
+Use g_try_malloc/g_try_new0 for guest-controlled allocation, so failure
+returns an error to the guest rather than crashing the host (glib
+behaviour).
 
-> ---
->  hw/display/vga.c | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
->
-> diff --git a/hw/display/vga.c b/hw/display/vga.c
-> index abe3f8e07758..da0c331486eb 100644
-> --- a/hw/display/vga.c
-> +++ b/hw/display/vga.c
-> @@ -1647,11 +1647,12 @@ static void vga_draw_graphic(VGACommonState *s, i=
-nt full_update)
->          s->last_line_offset =3D s->params.line_offset;
->          s->last_depth =3D depth;
->          s->last_byteswap =3D byteswap;
-> -        /* 16 extra pixels are needed for double-width planar modes.  */
-> -        s->panning_buf =3D g_realloc(s->panning_buf,
-> -                                   (disp_width + 16) * sizeof(uint32_t))=
-;
->          full_update =3D 1;
->      }
-> +
-> +    /* 16 extra pixels are needed for double-width planar modes. */
-> +    s->panning_buf =3D g_realloc(s->panning_buf,
-> +                               (disp_width + 16) * sizeof(uint32_t));
->      if (surface_data(surface) !=3D s->vram_ptr + (s->params.start_addr *=
- 4)
->          && !surface_is_allocated(surface)) {
->          /* base address changed (page flip) -> shared display surfaces
-> --
-> 2.55.0
->
->
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3898
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+Based-on: <20260710134720.2317856-1-marcandre.lureau@redhat.com> ("[PATCH] vhost-user-gpu: fix integer overflow in buffer allocation")
+v4:
+ - unmap the inflight dma map on failure
+ - fix optional addr handling
+---
+ contrib/vhost-user-gpu/vhost-user-gpu.c | 25 ++++++++++-----
+ contrib/vhost-user-gpu/virgl.c          |  6 +++-
+ contrib/vhost-user-gpu/vugbm.c          |  5 ++-
+ hw/display/virtio-gpu-rutabaga.c        | 14 +++++++--
+ hw/display/virtio-gpu-virgl.c           |  6 +++-
+ hw/display/virtio-gpu.c                 | 42 ++++++++++++++++++-------
+ 6 files changed, 74 insertions(+), 24 deletions(-)
+
+diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/vhost-user-gpu/vhost-user-gpu.c
+index ee9858c397ce..0fd115300425 100644
+--- a/contrib/vhost-user-gpu/vhost-user-gpu.c
++++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
+@@ -487,7 +487,7 @@ vg_create_mapping_iov(VuGpu *g,
+                       struct virtio_gpu_ctrl_command *cmd,
+                       struct iovec **iov)
+ {
+-    struct virtio_gpu_mem_entry *ents;
++    g_autofree struct virtio_gpu_mem_entry *ents = NULL;
+     size_t esize, s;
+     int i;
+ 
+@@ -498,17 +498,22 @@ vg_create_mapping_iov(VuGpu *g,
+     }
+ 
+     esize = sizeof(*ents) * ab->nr_entries;
+-    ents = g_malloc(esize);
++    ents = g_try_malloc(esize);
++    if (!ents && esize) {
++        return -1;
++    }
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    sizeof(*ab), ents, esize);
+     if (s != esize) {
+         g_critical("%s: command data size incorrect %zu vs %zu",
+                    __func__, s, esize);
+-        g_free(ents);
+         return -1;
+     }
+ 
+-    *iov = g_new0(struct iovec, ab->nr_entries);
++    *iov = g_try_new0(struct iovec, ab->nr_entries);
++    if (!*iov && ab->nr_entries) {
++        return -1;
++    }
+     for (i = 0; i < ab->nr_entries; i++) {
+         uint64_t len = ents[i].length;
+         (*iov)[i].iov_len = ents[i].length;
+@@ -517,12 +522,10 @@ vg_create_mapping_iov(VuGpu *g,
+             g_critical("%s: resource %d element %d",
+                        __func__, ab->resource_id, i);
+             g_free(*iov);
+-            g_free(ents);
+             *iov = NULL;
+             return -1;
+         }
+     }
+-    g_free(ents);
+     return 0;
+ }
+ 
+@@ -828,8 +831,14 @@ vg_resource_flush(VuGpu *g,
+                 PIXMAN_FORMAT_BPP(pixman_image_get_format(res->image)) / 8;
+             size_t size = width * height * bpp;
+ 
+-            void *p = g_malloc(VHOST_USER_GPU_HDR_SIZE +
+-                               sizeof(VhostUserGpuUpdate) + size);
++            void *p = g_try_malloc(VHOST_USER_GPU_HDR_SIZE +
++                                   sizeof(VhostUserGpuUpdate) + size);
++            if (!p) {
++                pixman_region_fini(&region);
++                pixman_region_fini(&finalregion);
++                cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
++                break;
++            }
+             VhostUserGpuMsg *msg = p;
+             msg->request = VHOST_USER_GPU_UPDATE;
+             msg->size = sizeof(VhostUserGpuUpdate) + size;
+diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
+index 550fd03bf5c4..20bae57d0fe4 100644
+--- a/contrib/vhost-user-gpu/virgl.c
++++ b/contrib/vhost-user-gpu/virgl.c
+@@ -209,7 +209,11 @@ virgl_cmd_submit_3d(VuGpu *g,
+         return;
+     }
+ 
+-    buf = g_malloc(cs.size);
++    buf = g_try_malloc(cs.size);
++    if (!buf && cs.size) {
++        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
++        return;
++    }
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    sizeof(cs), buf, cs.size);
+     if (s != cs.size) {
+diff --git a/contrib/vhost-user-gpu/vugbm.c b/contrib/vhost-user-gpu/vugbm.c
+index 710d54529779..e2d8385fd857 100644
+--- a/contrib/vhost-user-gpu/vugbm.c
++++ b/contrib/vhost-user-gpu/vugbm.c
+@@ -13,7 +13,10 @@
+ static bool
+ mem_alloc_bo(struct vugbm_buffer *buf)
+ {
+-    buf->mmap = g_malloc((uint64_t)buf->width * buf->height * 4);
++    buf->mmap = g_try_malloc((uint64_t)buf->width * buf->height * 4);
++    if (!buf->mmap && buf->width && buf->height) {
++        return false;
++    }
+     buf->stride = buf->width * 4;
+     return true;
+ }
+diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
+index e28aad94eead..60f64d9a8fa7 100644
+--- a/hw/display/virtio-gpu-rutabaga.c
++++ b/hw/display/virtio-gpu-rutabaga.c
+@@ -360,10 +360,20 @@ rutabaga_cmd_submit_3d(VirtIOGPU *g,
+         return;
+     }
+ 
+-    buf = g_new0(uint8_t, cs.size);
++    buf = g_try_new0(uint8_t, cs.size);
++    if (!buf && cs.size) {
++        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
++        return;
++    }
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    sizeof(cs), buf, cs.size);
+-    CHECK(s == cs.size, cmd);
++    if (s != cs.size) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: size mismatch (%zu/%u)\n",
++                      __func__, s, cs.size);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        return;
++    }
+ 
+     rutabaga_cmd.ctx_id = cs.hdr.ctx_id;
+     rutabaga_cmd.cmd = buf;
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index d9e5b0110497..028ab776df6a 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -615,7 +615,11 @@ static void virgl_cmd_submit_3d(VirtIOGPU *g,
+         return;
+     }
+ 
+-    buf = g_malloc(cs.size);
++    buf = g_try_malloc(cs.size);
++    if (!buf && cs.size) {
++        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
++        return;
++    }
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    sizeof(cs), buf, cs.size);
+     if (s != cs.size) {
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index c707f1f516ea..c97622115d46 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -882,7 +882,10 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+     }
+ 
+     esize = sizeof(*ents) * nr_entries;
+-    ents = g_malloc(esize);
++    ents = g_try_malloc(esize);
++    if (!ents && esize) {
++        return -1;
++    }
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    offset, ents, esize);
+     if (s != esize) {
+@@ -903,6 +906,7 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+         hwaddr len;
+         void *map;
+ 
++        /* TODO: a common DMA map SG helper */
+         do {
+             len = l;
+             map = dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, &len,
+@@ -911,20 +915,27 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+             if (!map) {
+                 qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map MMIO memory for"
+                               " element %d\n", __func__, e);
+-                virtio_gpu_cleanup_mapping_iov(g, *iov, v);
+-                g_free(ents);
+-                *iov = NULL;
+-                if (addr) {
+-                    g_free(*addr);
+-                    *addr = NULL;
+-                }
+-                return -1;
++                goto err;
+             }
+ 
+             if (!(v % 16)) {
+-                *iov = g_renew(struct iovec, *iov, v + 16);
++                struct iovec *new_iov;
++                new_iov = g_try_renew(struct iovec, *iov, v + 16);
++                if (!new_iov) {
++                    dma_memory_unmap(VIRTIO_DEVICE(g)->dma_as, map, len,
++                                     DMA_DIRECTION_TO_DEVICE, len);
++                    goto err;
++                }
++                *iov = new_iov;
+                 if (addr) {
+-                    *addr = g_renew(uint64_t, *addr, v + 16);
++                    uint64_t *new_addr;
++                    new_addr = g_try_renew(uint64_t, *addr, v + 16);
++                    if (!new_addr) {
++                        dma_memory_unmap(VIRTIO_DEVICE(g)->dma_as, map, len,
++                                         DMA_DIRECTION_TO_DEVICE, len);
++                        goto err;
++                    }
++                    *addr = new_addr;
+                 }
+             }
+             (*iov)[v].iov_base = map;
+@@ -942,6 +953,15 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+ 
+     g_free(ents);
+     return 0;
++
++err:
++    virtio_gpu_cleanup_mapping_iov(g, *iov, v);
++    *iov = NULL;
++    if (addr) {
++        g_clear_pointer(addr, g_free);
++    }
++    g_free(ents);
++    return -1;
+ }
+ 
+ void virtio_gpu_cleanup_mapping_iov(VirtIOGPU *g,
+-- 
+2.55.0
+
 
