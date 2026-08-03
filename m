@@ -4,73 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C1E5C55175
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 08:46:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2A80C55175
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 08:48:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqoJ4-0001zL-J2; Mon, 03 Aug 2026 04:45:59 -0400
+	id 1wqoL8-0002Rf-Ty; Mon, 03 Aug 2026 04:48:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wqoJ2-0001zA-EB
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 04:45:56 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wqoL7-0002RF-8l
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 04:48:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wqoIz-0007W3-N1
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 04:45:56 -0400
-Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
- [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6738jbOn026885
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 3 Aug 2026 17:45:39 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=/n1Y4udR3p70a7efRtD8QoF3yraKqrO4yBgCmSRJc/k=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1785746739; v=1;
- b=j3S3nLEOOyIkV1N+llQLNY7TYiAJ2NOfVMlt+3noMy3IJO98BG2GnqPRegL2mSE9
- QgKJHR5MEMSN3JG8//7YgPkTjjGFobBJ70NW22DqOsK3TM0WgI45qE3PsWjeTwWj
- tfrfD1jvEhr0DaImwhVckxkmQiaIVwDnCjpTtCQ1P5rGprCOAYHxSebcQY+MoygU
- iqTDPg3g1xVxyIAHEwD4JSZatc2WUty3rHJ6ZzKSvZ66RDFWaPdS9UCEzIj4ZCmk
- wZArBDP1me0FUNpqauizIg4GAkzBbdJFiOGLBjlztkwk72UBIHWvN/uHizZSpllt
- xPTiVfNVBN9IaHAUbhWXpQ==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 03 Aug 2026 17:45:25 +0900
-Subject: [PATCH] hw/display/virtio-gpu: Always reject invalid scanout
- bounds
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wqoL5-0007az-Oc
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 04:48:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785746882;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ZJl26top9iuvsWjoGOyhL6gsNlKtGXNJMlyMgSgo98U=;
+ b=DPjLKJ1Co3JaioaDfP2OK9y/IGAX/g5bTxjziMyi1ogzqYkkXKDgQiBHDIc80dfX0d4xT1
+ UAIyhyCrhhSeSSrgNgr7ah4nm7A9iFHJVnzQR3UkP33kAtTWCh5vUeAdOZNoZ/d1K2ebDe
+ 8UF0QxWTxOIQRJxiTA8qV2vMoWi3R5U=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-211-phiQAXpVNWer3Vm-6TKZTw-1; Mon,
+ 03 Aug 2026 04:47:59 -0400
+X-MC-Unique: phiQAXpVNWer3Vm-6TKZTw-1
+X-Mimecast-MFC-AGG-ID: phiQAXpVNWer3Vm-6TKZTw_1785746878
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 81C01195605E; Mon,  3 Aug 2026 08:47:58 +0000 (UTC)
+Received: from merkur.redhat.com (unknown [10.44.49.164])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id CB3B1424; Mon,  3 Aug 2026 08:47:56 +0000 (UTC)
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: kwolf@redhat.com,
+	stefanha@redhat.com,
+	qemu-devel@nongnu.org
+Subject: [PULL v3 00/17] Block layer patches
+Date: Mon,  3 Aug 2026 10:47:54 +0200
+Message-ID: <20260803084754.20803-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260803-scanout-v1-1-c9831dafdab2@rsg.ci.i.u-tokyo.ac.jp>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQ5AMBCF4avIrDWpSihXEQvGYCxKOioScXfF8
- kv+9y4Q8kwCdXKBp4OFVxeRpQng3LmJFA/RYLQptNW5EuzcGnaFJY7GYmYrTRDrzdPI5/fUtL8
- l9Avh/s7hvh8gZ+rNawAAAA==
-X-Change-ID: 20260803-scanout-c7cf28c1890e
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.16-dev-925f5
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7029;
- i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=RLFDNKk8UtS2ny7VvGaG0piI28YqqELWzMQUAnpgoTg=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ1ZBqPHJ+kr9rf8zuG/Pn1O+4dMBy++L/E//Kny5osrs9
- afFv739OkpZGMS4GGTFFFlSinZza0TXfipMiG+BmcPKBDKEgYtTACbC9JKR4X9nTvqW2Hsir+//
- Nn77ekoQq6ziPQ+JU1sCOSd9uVN0/wnDP5tmH5Ot4vG1xU+uRqm+Pvvu05GpzlGrg/QPvVh/U/r
- dZz4A
-X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
- fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.811,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,164 +80,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio-gpu does not consistently check scanout bounds with wraparound
-handling. In the unchecked virgl SET_SCANOUT path, guest dimensions
-reach qemu_console_resize(), qemu_create_displaysurface(), and
-ultimately qemu_pixman_image_new_shareable(..., &error_abort), so an
-invalid rectangle can terminate QEMU. Implement a check with proper
-wraparound handling and apply it consistently.
+The following changes since commit b428fe036233cbd15d37e3c027ab6ca4d3661a80:
 
-Fixes: 9d9e152136bd ("virtio-gpu: add 3d mode and virgl rendering support.")
-Fixes: 32db3c63ae11 ("virtio-gpu: Add virtio_gpu_set_scanout_blob")
-Fixes: 7c092f17ccee ("virtio-gpu: Handle resource blob commands")
-Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for gfxstream")
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
- include/hw/virtio/virtio-gpu.h   |  5 +++++
- hw/display/virtio-gpu-rutabaga.c |  6 ++++++
- hw/display/virtio-gpu-virgl.c    | 20 +++++++++-----------
- hw/display/virtio-gpu.c          | 36 ++++++++++++++++++++++--------------
- 4 files changed, 42 insertions(+), 25 deletions(-)
+  Merge tag 'pull-target-arm-20260731' of https://gitlab.com/pm215/qemu into staging (2026-07-31 16:19:04 -0400)
 
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index 2f60c72078b3..287262228d33 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -363,6 +363,11 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
-                                    struct virtio_gpu_scanout *s,
-                                    uint32_t resource_id);
- 
-+bool virtio_gpu_check_scanout_bounds(uint32_t scanout_id, uint32_t resource_id,
-+                                     uint32_t width, uint32_t height,
-+                                     const struct virtio_gpu_rect *r,
-+                                     uint32_t *error);
-+
- /**
-  * virtio_gpu_scanout_blob_to_fb() - fill out fb based on scanout data
-  * fb: the frame-buffer descriptor to fill out
-diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-index e28aad94eead..a054f8117f14 100644
---- a/hw/display/virtio-gpu-rutabaga.c
-+++ b/hw/display/virtio-gpu-rutabaga.c
-@@ -315,6 +315,12 @@ rutabaga_cmd_set_scanout(VirtIOGPU *g, struct virtio_gpu_ctrl_command *cmd)
-     res = virtio_gpu_find_resource(g, ss.resource_id);
-     CHECK(res, cmd);
- 
-+    if (!virtio_gpu_check_scanout_bounds(ss.scanout_id, ss.resource_id,
-+                                         res->width, res->height, &ss.r,
-+                                         &cmd->error)) {
-+        return;
-+    }
-+
-     if (!res->image) {
-         pixman_format_code_t pformat;
-         pformat = virtio_gpu_get_pixman_format(res->format);
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index d9e5b0110497..6e298f997d66 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -560,7 +560,7 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
-     }
-     g->parent_obj.enable = 1;
- 
--    if (ss.resource_id && ss.r.width && ss.r.height) {
-+    if (ss.resource_id) {
-         struct virgl_renderer_resource_info info;
-         void *d3d_tex2d = NULL;
- 
-@@ -581,6 +581,11 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
-             cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
-             return;
-         }
-+        if (!virtio_gpu_check_scanout_bounds(ss.scanout_id, ss.resource_id,
-+                                             info.width, info.height, &ss.r,
-+                                             &cmd->error)) {
-+            return;
-+        }
-         qemu_console_resize(g->parent_obj.scanout[ss.scanout_id].con,
-                             ss.r.width, ss.r.height);
-         virgl_renderer_force_ctx_0();
-@@ -987,16 +992,9 @@ static void virgl_cmd_set_scanout_blob(VirtIOGPU *g,
-         return;
-     }
- 
--    if (ss.width < 16 ||
--        ss.height < 16 ||
--        ss.r.x + ss.r.width > ss.width ||
--        ss.r.y + ss.r.height > ss.height) {
--        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout %d bounds for"
--                      " resource %d, rect (%d,%d)+%d,%d, fb %d %d\n",
--                      __func__, ss.scanout_id, ss.resource_id,
--                      ss.r.x, ss.r.y, ss.r.width, ss.r.height,
--                      ss.width, ss.height);
--        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-+    if (!virtio_gpu_check_scanout_bounds(ss.scanout_id, ss.resource_id,
-+                                         ss.width, ss.height, &ss.r,
-+                                         &cmd->error)) {
-         return;
-     }
- 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 4d46a4eb10fa..3c0e38c1def0 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -622,6 +622,26 @@ static uint32_t virtio_gpu_format_bytes_pp(pixman_format_code_t format)
-     return DIV_ROUND_UP(PIXMAN_FORMAT_BPP(format), 8);
- }
- 
-+bool virtio_gpu_check_scanout_bounds(uint32_t scanout_id, uint32_t resource_id,
-+                                     uint32_t width, uint32_t height,
-+                                     const struct virtio_gpu_rect *r,
-+                                     uint32_t *error)
-+{
-+    if (r->width < 16 ||
-+        r->height < 16 ||
-+        (uint64_t)r->x + r->width > width ||
-+        (uint64_t)r->y + r->height > height) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout %d bounds for"
-+                      " resource %d, fb %d %d, rect (%d,%d)+%d,%d\n",
-+                      __func__, scanout_id, resource_id, width, height,
-+                      r->x, r->y, r->width, r->height);
-+        *error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-+        return false;
-+    }
-+
-+    return true;
-+}
-+
- static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
-                                       uint32_t scanout_id,
-                                       struct virtio_gpu_framebuffer *fb,
-@@ -635,20 +655,8 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
- 
-     scanout = &g->parent_obj.scanout[scanout_id];
- 
--    if (r->x > fb->width ||
--        r->y > fb->height ||
--        r->width < 16 ||
--        r->height < 16 ||
--        r->width > fb->width ||
--        r->height > fb->height ||
--        r->x + r->width > fb->width ||
--        r->y + r->height > fb->height) {
--        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout %d bounds for"
--                      " resource %d, rect (%d,%d)+%d,%d, fb %d %d\n",
--                      __func__, scanout_id, res->resource_id,
--                      r->x, r->y, r->width, r->height,
--                      fb->width, fb->height);
--        *error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-+    if (!virtio_gpu_check_scanout_bounds(scanout_id, res->resource_id,
-+                                         fb->width, fb->height, r, error)) {
-         return false;
-     }
- 
+are available in the Git repository at:
 
----
-base-commit: 299e7557ed15a9a325620698add379a3ce2d1d95
-change-id: 20260803-scanout-c7cf28c1890e
+  https://repo.or.cz/qemu/kevin.git for-upstream
 
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+for you to fetch changes up to 52227e25712629406c89c4902b39962f8b9b6f2c:
+
+  iotests: increase timeouts for tests to 5 minutes (2026-08-03 10:42:29 +0200)
+
+----------------------------------------------------------------
+Block layer patches
+
+- Fix missing locking in latency histogram setters
+- coroutine: fix lost wakeup in qemu_co_sleep_wake()
+- floppy: Fix READ/WRITE/FORMAT/READ ID behaviour with missing medium
+- qcow2: Fix crash on closing a read-only image with dirty bit set
+- cloop: fix integer overflow in total_sectors calculation
+- dmg: Fix out of bounds accesses (CVE-2026-65929, CVE-2026-65928)
+- FUSE export: fix regression with O_TRUNC when export is not growable
+- iotests: Various small fixes
+
+----------------------------------------------------------------
+Christian Quante (2):
+      hw/block/fdc: select the drive named by the READ ID command
+      hw/block/fdc: report a missing address mark on an empty drive
+
+Daniel P. Berrangé (1):
+      iotests: increase timeouts for tests to 5 minutes
+
+Denis V. Lunev (8):
+      block/accounting: take stats->lock in latency histogram setters
+      block/qapi: take stats->lock when reading BlockAcctStats for query-blockstats
+      tests/unit: add reproducer for BlockAcctStats histogram locking race
+      qcow2: do not try to clear the dirty bit on a read-only node
+      iotests: run the test pool with the 'fork' start method
+      iotests: skip FUSE tests when FUSE is not usable
+      iotests/migrate-bitmaps-postcopy-test: replace the timing assertion with a content check
+      coroutine: fix lost wakeup in qemu_co_sleep_wake()
+
+Fiona Ebner (2):
+      block/export/fuse: fix regression with O_TRUNC when export is not growable
+      iotests: test O_TRUNC behavior for fuse exports
+
+Stefan Hajnoczi (3):
+      dmg: fix out-of-bounds load in search_chunk() (CVE-2026-65929)
+      dmg: refuse to open files with no chunks
+      dmg: reject inconsistent UDRW chunk sector count and length (CVE-2026-65928)
+
+malike (1):
+      block/cloop: fix integer overflow in total_sectors calculation
+
+ include/block/accounting.h                         |   1 +
+ include/qemu/coroutine.h                           |  17 +-
+ block/accounting.c                                 |  11 +-
+ block/cloop.c                                      |   3 +-
+ block/dmg.c                                        |  36 ++++-
+ block/export/fuse.c                                |  12 ++
+ block/qapi.c                                       |   3 +
+ block/qcow2.c                                      |   6 +-
+ hw/block/fdc.c                                     |  55 ++++++-
+ tests/qtest/fdc-test.c                             |  70 ++++++++-
+ tests/unit/test-block-accounting.c                 | 115 ++++++++++++++
+ tests/unit/test-coroutine.c                        |  53 +++++++
+ util/qemu-coroutine-sleep.c                        |  53 +++++--
+ tests/qemu-iotests/testrunner.py                   |   4 +-
+ tests/qemu-iotests/039                             |  11 ++
+ tests/qemu-iotests/039.out                         |   3 +
+ tests/qemu-iotests/common.rc                       |  14 ++
+ tests/qemu-iotests/meson.build                     |  15 +-
+ tests/qemu-iotests/tests/file-io-error             |   4 +-
+ tests/qemu-iotests/tests/fuse-allow-other          |   2 +
+ tests/qemu-iotests/tests/fuse-mmap-shared          |   9 +-
+ tests/qemu-iotests/tests/fuse-truncate             | 171 +++++++++++++++++++++
+ tests/qemu-iotests/tests/fuse-truncate.out         |   5 +
+ .../tests/migrate-bitmaps-postcopy-test            |  15 +-
+ tests/unit/meson.build                             |   1 +
+ 25 files changed, 633 insertions(+), 56 deletions(-)
+ create mode 100644 tests/unit/test-block-accounting.c
+ create mode 100755 tests/qemu-iotests/tests/fuse-truncate
+ create mode 100644 tests/qemu-iotests/tests/fuse-truncate.out
 
 
