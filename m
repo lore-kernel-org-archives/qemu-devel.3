@@ -4,56 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D091C55184
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 08:23:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 332DBC5518F
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 08:31:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqnwM-0006Gq-7y; Mon, 03 Aug 2026 04:22:30 -0400
+	id 1wqo4W-0007y4-Vx; Mon, 03 Aug 2026 04:30:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wqnwJ-0006GX-Jc; Mon, 03 Aug 2026 04:22:28 -0400
-Received: from [115.124.30.111] (helo=out30-111.freemail.mail.aliyun.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wqnwE-0004yU-Ba; Mon, 03 Aug 2026 04:22:27 -0400
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1wqo4U-0007wc-Ut
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 04:30:54 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1wqo4T-0005sb-4n
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 04:30:54 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4954afac04bso21254145e9.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 01:30:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1785745321; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=y1Q8i2iYq0RjyKWrT6Ztl3CM44wiJ0LqRiZoy8IoF2U=;
- b=tZTFHnL35RRAbh6RnmwYa/bzekIXUUu3LVOSORpGYZ+ZTuYIKHz/HErwCSrKot2d6B78LSTi0T3qlluTNbSsBuermqiYW3fTSJKSJSHdOYqJOgTavh3VxRIht1FR3Z7AhcxwUV6yGKdYSQZUctZO0/N1iNqovOt2ony5R565zos=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R101e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045098064;
- MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=6; SR=0;
- TI=SMTPD_---0X8HSVZC_1785745319; 
-Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0X8HSVZC_1785745319 cluster:ay36) by smtp.aliyun-inc.com;
- Mon, 03 Aug 2026 16:22:00 +0800
-From: Bin Guo <guobin@linux.alibaba.com>
+ d=mihalicyn.com; s=mihalicyn; t=1785745851; x=1786350651; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=CID5Hpm0v73NwXBM9LbFqUvU3gkL1k8VrFg/apDGjLs=;
+ b=OP3AYjx2IskEJcGEYGflOR2Ys9m4YmTDKC3qKDyX9d8S1Th9WQqIZSupcO/F7h/q2L
+ pZFMdnBdZqvOz59YY8qXF6nq6ktue9mhHYHM3aH/WozkBBbQhXLCphkNy5u4CteRmedQ
+ gRsLU8KW46NOvzzttT1VZcPjx2M4u8JNVm97o=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785745851; x=1786350651;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=CID5Hpm0v73NwXBM9LbFqUvU3gkL1k8VrFg/apDGjLs=;
+ b=rRx4+CN3gNTmgWXKKDGBw3YyKJKaYM8JEu035Ynblrv80YOvqyqApgG9rXncF6Aa/E
+ rLzNnZBXOoDJLrpmEyTCtlbDAQZHjm2MnV/fR+gZyODpLZfHXQYn6YueiAOKnEvQHtbr
+ NPs+1EWzkbjcGJf/YSaVxIobTWTze4MilNK4TWfZ5WEXErxLl6vRYHIdHNCleV/esp0X
+ s0EiL1rXShpeSUkyD7klCQK3gBWrhdfbRvtbDAULmiTsDJkpqf6vNh5iaFgwiRztzSm5
+ 807PxG7fyadUnW/fX2Q+mAiHMBhDfj0NUe6xiWXGLO7+RHZpf29HEPZd7wbMyNDgUoGF
+ RtKA==
+X-Gm-Message-State: AOJu0Yy8DXZgkEN4UIagvfUy0a8PTtVfKhm1gdDmcFcDbwLDE2zKYguq
+ oR/9sjYwdW10j/+gAKOQtzrSqgcTtexY640zogf7CyICDFJnmHi7HeYiL4Q4hz53AUujeQvbvOm
+ X95wM
+X-Gm-Gg: AR+sD12Jt7Z2zVIem9xF816gEYPeqUAyBFl9sJfvMxYLILA6PX3CO4gEyNueRKsI9Zk
+ aiwQ4hpLyMkm1+J9DnnHrxhxlJoYH+YXF3jM5NqQQdk5PehgGYMUU4Vck5bNdQSmPDI6MTpvQBU
+ jRn/zXntk+5RkLShatvZ5mo2OnBNAqtQ9hSWv4rxhNdYEGNJTStwgaFpzodMu8Gc3rxAstvQc58
+ +BtU66KqQDRllvvIJEV4L6dLF7xzlHILbeh2gOsB1mBZVy2F2aMhZRIBVLWN9D6oERsmFMnc0r9
+ btsxcZDYjeCN1SLCp/W+cgP6zCBFHOPoYiRx2mG8fl7TzDzUnihwx2ULcpbO923vybLM5G0Ilo0
+ 5j3gtUwsGcqbXUyDKuF99+H2efLaxnQmJzV/mlNEnuGv7SePQITh1MshtSYfSTi9PSMXz44Fshj
+ SrmR8aYAZzOfG/oy0abrwkJvpCgwwMi4MffjWlMGVfbYSiy3OkVeMUU50+osRQ3ubTapycdWiem
+ dO7dY+SvrINL2YiIcgWzLhqLVGZqLeKDZLZSWNpB/7R/CS47UgL82DydLcx
+X-Received: by 2002:a05:600c:3509:b0:493:cefc:d113 with SMTP id
+ 5b1f17b1804b1-4980c66c7e4mr201511795e9.5.1785745848446; 
+ Mon, 03 Aug 2026 01:30:48 -0700 (PDT)
+Received: from alex-laptop.lan
+ (p200300cf574a7200803110ea947f174a.dip0.t-ipconnect.de.
+ [2003:cf:574a:7200:8031:10ea:947f:174a])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49807bb45ebsm152286045e9.4.2026.08.03.01.30.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 03 Aug 2026 01:30:47 -0700 (PDT)
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, qemu-stable@nongnu.org
-Subject: [PATCH] hw/display/virtio-gpu: Unmap DMA regions on reset
-Date: Mon,  3 Aug 2026 16:21:58 +0800
-Message-ID: <20260803082158.62998-1-guobin@linux.alibaba.com>
-X-Mailer: git-send-email 2.50.1
+Cc: =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
+ Alexander Mikhalitsyn <alexander@mihalicyn.com>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ qemu-block@nongnu.org, Jesper Devantier <foss@defmacro.it>,
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Subject: [PATCH v3 0/2] hw/nvme: support online resize
+Date: Mon,  3 Aug 2026 10:30:44 +0200
+Message-ID: <20260803083046.110121-1-alexander@mihalicyn.com>
+X-Mailer: git-send-email 2.47.3
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.111 (deferred)
-Received-SPF: pass client-ip=115.124.30.111;
- envelope-from=guobin@linux.alibaba.com;
- helo=out30-111.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,37 +102,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio_gpu_reset() freed in-flight commands without unmapping the
-DMA regions acquired by virtqueue_pop().  Call virtqueue_detach_element()
-before g_free() in both drain loops.
+From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3467
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
----
- hw/display/virtio-gpu.c | 2 ++
- 1 file changed, 2 insertions(+)
+Dear friends,
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 4d46a4eb10..96c0d15930 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -1687,12 +1687,14 @@ void virtio_gpu_reset(VirtIODevice *vdev)
-     while (!QTAILQ_EMPTY(&g->cmdq)) {
-         cmd = QTAILQ_FIRST(&g->cmdq);
-         QTAILQ_REMOVE(&g->cmdq, cmd, next);
-+        virtqueue_detach_element(cmd->vq, &cmd->elem, 0);
-         g_free(cmd);
-     }
- 
-     while (!QTAILQ_EMPTY(&g->fenceq)) {
-         cmd = QTAILQ_FIRST(&g->fenceq);
-         QTAILQ_REMOVE(&g->fenceq, cmd, next);
-+        virtqueue_detach_element(cmd->vq, &cmd->elem, 0);
-         g->inflight--;
-         g_free(cmd);
-     }
+This patchset is aimed to support online resize for NVMe emulated
+device. My approach is simple - I just implement (BlockDevOps *)->resize_cb()
+callback and ensure that AER notification is fired to all controllers using
+a namespace that is being resized.
+
+Testing.
+
+I manually validated this with Debian 13 VM (a resized disk was a root disk) and
+Windows Server 2022 (a resized disk was a secondary one).
+
+Git tree:
+https://gitlab.com/mihalicyn/qemu/-/commits/nvme-resize
+
+Changelog for version 3:
+- rebased
+
+Changelog for version 2:
+- checkpatch fixes
+- rebased
+- CI is green (https://gitlab.com/mihalicyn/qemu/-/pipelines/2602102750)
+
+Kind regards,
+Alex
+
+Alexander Mikhalitsyn (2):
+  hw/nvme: initialize ns->subsys for n->namespace
+  hw/nvme: support online resize
+
+ hw/nvme/ctrl.c | 10 ++++++++
+ hw/nvme/ns.c   | 68 +++++++++++++++++++++++++++++++++++++++++++++++++-
+ hw/nvme/nvme.h |  2 ++
+ 3 files changed, 79 insertions(+), 1 deletion(-)
+
 -- 
-2.50.1 (Apple Git-155)
+2.47.3
 
 
