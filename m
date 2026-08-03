@@ -4,70 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86B44C55182
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 18:08:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55050C55822
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 18:09:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqx5D-0006Pe-7h; Mon, 03 Aug 2026 14:08:15 -0400
+	id 1wqx6H-0006mK-Pv; Mon, 03 Aug 2026 14:09:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <whitebox@nefkom.net>)
- id 1wqx5C-0006PW-7L
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 14:08:14 -0400
-Received: from mail-out.m-online.net ([212.18.0.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <whitebox@nefkom.net>)
- id 1wqx5A-0002Uc-9v
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 14:08:13 -0400
-Received: from mail-out.m-online.net (mail-out.m-online.net [212.18.0.9])
- by mail-out.m-online.net (Postfix) with ESMTP id 4hDPmS6MYCz1r8mH;
- Mon,  3 Aug 2026 20:08:08 +0200 (CEST)
-Received: from frontend03.mail.m-online.net (unknown [192.168.6.182])
- by mail-out.m-online.net (Postfix) with ESMTP id 4hDPmS498Sz1r8mD;
- Mon,  3 Aug 2026 20:08:08 +0200 (CEST)
-Received: from localhost (dynscan3.mnet-online.de [192.168.6.87])
- by mail.m-online.net (Postfix) with ESMTP id 4hDPmS3jH2z1qqlR;
- Mon,  3 Aug 2026 20:08:08 +0200 (CEST)
-X-Virus-Scanned: amavis at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.6.182])
- by localhost (dynscan3.mail.m-online.net [192.168.6.87]) (amavis, port 10024)
- with ESMTP id GLFg8kdflT3u; Mon,  3 Aug 2026 20:08:07 +0200 (CEST)
-X-Auth-Info: KVQMtLA5ACx1Cqdgze3f+LESlC9idEpOqwTX554b2Q3NQfFz1BMiNGyMfXRoWqQO
-Received: from igel.home (aftr-62-216-202-244.dynamic.mnet-online.de
- [62.216.202.244])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
- (No client certificate requested)
- by mail.mnet-online.de (Postfix) with ESMTPSA;
- Mon,  3 Aug 2026 20:08:07 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
- id 0FE892C0AE6; Mon, 03 Aug 2026 20:08:07 +0200 (CEST)
-From: Andreas Schwab <schwab@linux-m68k.org>
-To: Helge Deller <deller@gmx.de>
-Cc: Peter Maydell <peter.maydell@linaro.org>,  Helge Deller
- <deller@kernel.org>,  qemu-devel@nongnu.org
-Subject: Re: [PATCH] linux-user: Fix msqid_ds struct wrt 32-bit big endian
- architectures
-In-Reply-To: <a8c13cdc-54c3-4913-bc6e-956cbfe082cb@gmx.de>
-References: <20260728192913.61279-1-deller@kernel.org>
- <CAFEAcA_8o2A8FDsJKacde+pdj4HzA5c7aTw=k7tmONYXD4=c_w@mail.gmail.com>
- <244987da-f6d8-47a8-ac4a-16a71c660e36@gmx.de>
- <CAFEAcA9F8rauUNc2NAqbnf1f7-0O_ivft1XOftwt1hW0YWeeJw@mail.gmail.com>
- <a8c13cdc-54c3-4913-bc6e-956cbfe082cb@gmx.de>
-Date: Mon, 03 Aug 2026 20:08:06 +0200
-Message-ID: <87ecgfkrg9.fsf@igel.home>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wqx6E-0006mA-V1
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 14:09:19 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wqx6C-0002Yj-4A
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 14:09:18 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-6983f20a8bfso6062071a12.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 11:09:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785780549; cv=none;
+ d=google.com; s=arc-20260327;
+ b=rKJGSa7CG9E9pLJk4yKTsCv6/LF40r0M3o1bJt4RNOR02/NP2Q1jYrXpWvWX8CNq2w
+ Ijl14yVorItrpKSHFDt8EuvZdARLPqIhxcTh3zP9p84p7B5yzULHGUPlIMdAmqPJLDjr
+ waSdpVCcnVPJohJhgghdef7IWMDocslVsLL896Ync34gMR8nAoYmFN7gkB+VThaDityW
+ ELObHRNeRKUr8w3o+qLfO5BbndWF5aoyy3VCEQ08PkjB7HQpKKKbMIjsMs3WOOzETawj
+ OU7FP2uxGNDG6ZAvQtvSvft3kKewzqfzVq/OnjeUongoQ1cNaPiJ81bu1/AyGEh4zCJi
+ hqBg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=a9+f17//kPXmpMy7ZzUPz1bauowQzxOA+c1xKzNhnAE=;
+ fh=wzl9jMok7pbKGLGrD2z5a8AfFR3CQLcrDOLbNIJZ8cg=;
+ b=GS9KObyElXOwgVtjDFgf9UjZsdvJ522XYFYdlTr9xXAoP/3sQP9OAFfPcT6XFW+9qI
+ XHD2IvhUqCW93c56LDjhFKzN4dxYSajdgbvkZDSNFRXSPYvWnluaef1JMZKS+TdvbnpR
+ nhFoLjz2D5icoUkVemD+++c4G/ebkmzfFl0KWisfNUeXzOLZ1QwLo59RQBUEqTaWWyIo
+ upEKd0c7oKIMC5JxtdQxP4aOJ+UTuxzawz70GDZRgF88dBx0xvBhcpl5gChaK5cMkxNI
+ FphK727dJnld8L9BvwKd0ygxBHJwZ535uqkhXWinVhTLRctPvsZLZXwN7FoWHWQxlUMH
+ 50nQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785780549; x=1786385349; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=a9+f17//kPXmpMy7ZzUPz1bauowQzxOA+c1xKzNhnAE=;
+ b=iYp2NoGmzANKIclfCougzH9QG3d6NtfrhT331S0TvfoxIBSwg+HGj95FpmuJlf2hgY
+ HodCRDt0t9zqZmRoKWOi7zj5XfGrVcdpZAEd761YIUKxUc8PUP325EcOGGO+/R7ZIeH1
+ KK/Iw/DsdzKBiStmdgV7EJ1G8Wl66oqTDnNYMLhO5s9MkIDeYxN+nLjgtFcVKR+DaCSV
+ RAFJgzEMchVGwqKi5+ujF1uGNUh1GjLJpIycl5d2QQM7of2fejEeMX68mt9ufz7DkQln
+ pQz9lYfZPL/lyFymVvGa8pozpw0WaWCUVsHq1fmy9valbCjguzwU6I6bYQ4wm5vebO89
+ 7w3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785780549; x=1786385349;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=a9+f17//kPXmpMy7ZzUPz1bauowQzxOA+c1xKzNhnAE=;
+ b=MUoQmFHN8ExRVRQMV7gd5HvA0MXHYquSF4q4mL9ZcirPIqnq0xScYE0gu/o7Tkw0RM
+ u8u0SWHJpHTkBr6vOFTgLa7sJugJwILGDTb7DD3gWfcg8U6F25jpdt+f3PC/lGLGGx0r
+ oA0QPbJFI3nk0wHC9bTw0pkevpMgwm9iWw2r8DyC/1NaW7sKBtdU/TCeg+CXNkyOiCgf
+ 0FjmJ/RXF4rywgDRZcWYI/AHA439rL6vgagRU1khzf0N0aejZLPE5o0ZlZDHjC3OIlxO
+ Sa4tRvpTQ10ZbaEhe31NZStHg7mUVjtnsmNthYcLUjEwE+IQGYRh3Ye638Q+G51jFzcn
+ ygrQ==
+X-Gm-Message-State: AOJu0YxnDdWnYbGGK4o148iK1SFhvU/Ju3wYJOXOOKb4gyY5DMCBOaVu
+ Z8d7vvHJZR+pITDA0DgyVDYEZOYok8ZMHj9TK3v7V5cgy+soO4Gi38smDBMb42RVspJeCc6Q4VF
+ a7heqkbace57KUtcgvqStfoWsHM3RuIE=
+X-Gm-Gg: AR+sD13gmlrUo+01SFxsZCGWtlxoKvCDIHU5FjROEFl3ksWWrbtsylfnkqWTih9tgBV
+ 9dI5g7mPEKWkHUeU2V5VpInNpiWfDrgePwE4SMgtz+vOpvTddBf+TvqlcbdUfJ3pSLLI/Vr4bAx
+ yXazygtfyubhnydcoGlWIaJoz8LHt2qYeXi3G/Ewm3Nu39FstiIAsU7mgNFiVS0vrkXzKhOyJpi
+ cJ83coQQzn0LqxSuL4bL75asPeedGw1mFfaYAw5/qNW22KQID21maaiQDPnTVtoLtyOssbZ8i4F
+ yJ/i+A9vspAZagb8Lp/6BnaXNJb0E3VWj0lL7gzYypqIoH+o77ou5ft+gsJtGSECR/VewCXKHTm
+ nmw==
+X-Received: by 2002:a05:6402:21d9:b0:69c:794d:4862 with SMTP id
+ 4fb4d7f45d1cf-6a0a7c614f9mr8966251a12.7.1785780548769; Mon, 03 Aug 2026
+ 11:09:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-Received-SPF: pass client-ip=212.18.0.9; envelope-from=whitebox@nefkom.net;
- helo=mail-out.m-online.net
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+References: <20260803180700.367388-1-stefanha@redhat.com>
+In-Reply-To: <20260803180700.367388-1-stefanha@redhat.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Mon, 3 Aug 2026 14:08:55 -0400
+X-Gm-Features: AUfX_mwi0pXT44bc3Q_I2_TNDYYAmCMariY4c5kgoVuUG7DQnPPC19qezVuT7hA
+Message-ID: <CAJSP0QVzgmN1uBmB+9Bj1GqYfcW0iGq2E0Qg9JTuLKe1+5+-Qg@mail.gmail.com>
+Subject: Re: [PATCH] tests/docker: use stable URLs for zlib tarballs
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Kohei Tokunaga <ktokunaga.mail@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,29 +119,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Aug 01 2026, Helge Deller wrote:
+This is v2 of the patch.
 
-> m68k could be a problem.
-> The other big-arches seem to be handled correctly by the kernel:
-> arch/sparc/include/uapi/asm/msgbuf.h:struct msqid64_ds {
-> arch/parisc/include/uapi/asm/msgbuf.h:struct msqid64_ds {
-> arch/xtensa/include/uapi/asm/msgbuf.h:struct msqid64_ds {
-> arch/x86/include/uapi/asm/msgbuf.h:struct msqid64_ds {
-> arch/powerpc/include/uapi/asm/msgbuf.h:struct msqid64_ds {
-> arch/mips/include/uapi/asm/msgbuf.h:struct msqid64_ds {
-> arch/mips/include/uapi/asm/msgbuf.h:struct msqid64_ds {
-> arch/mips/include/uapi/asm/msgbuf.h:struct msqid64_ds {
-
-glibc commit 9f9feb6d5d says:
-
-    * Some older 32-bit big-endian architectures have padding before
-      rather than after time fields, although the preferred generic
-      approach is padding after the time fields independent of endianness.
-
-and m68k uses the "preferred" approach.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-"And now for something completely different."
+Stefan
 
