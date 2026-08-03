@@ -4,142 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59B6AC55179
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 11:49:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC198C55179
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 11:54:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqrAG-00005e-1E; Mon, 03 Aug 2026 07:49:04 -0400
+	id 1wqrEk-0001Ju-Le; Mon, 03 Aug 2026 07:53:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wqrAD-000056-L6
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 07:49:01 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wqrAB-0003pI-WA
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 07:49:01 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 673B9t43051648
- for <qemu-devel@nongnu.org>; Mon, 3 Aug 2026 11:48:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- cxsw5N4jJ/n1S3+fFpQVbypg/bFRiTJMzeFOLOhiJw8=; b=SJGTvPbM9eMR/Iyf
- yRiJ8XJpkm1JL/9lSUFX1mHaGIXz9lgoOva2h4W6PTqqAYQb8Lu9ZZ/XJTOJ570r
- iySlt38RwQmwXK6L4EXfulnButYbVDoDslXa18X8zgsgyRYCoDQWolK8adFuAbl9
- tYvUzPfxLqgujabiiXNOlZtFfYAUK/+qLRcYeBHaDzHO4G8ihHHrAN3x8hFoYDCh
- QL+DX8yz9sU6iLKC/aYnkfeydUct3DtpzmKw839MEKcq4VhyU9YVFo4T6Xg+hFbt
- 0b+LZIGhyqoz4HzWmgAYXsrnD/I0Prr7VZHFF0L3u5+wtaJhAv9E53wThtcrG8pd
- JK4w4A==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ftnrb9bd3-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 11:48:57 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51c1c7f135bso59036211cf.0
- for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 04:48:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1785757733; x=1786362533; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=cxsw5N4jJ/n1S3+fFpQVbypg/bFRiTJMzeFOLOhiJw8=;
- b=ijml0ok/GosdTRN03ivSNw7pqUqcakyQ2DJ3PglG4hVOsV2ke5yprCiJFKqk1pBNsl
- tcnW/eGxD0RljvdaYf2LysHjZtxESepmHe21HOOmPuo9taqgZ2LZfGi/LxhxlAgKfFqK
- m3Nm/q1ewegbd6xyNdj67ahZwgHycAYIdz5DdtEbKJiyyJ8YLElCDBpVyg2adhgzuoDG
- 0bbuPLIM4s7K4WP9NoOesxPwDt1rwiwdkSvKX4SIJ1L/MAKhgCDrfDslk9GMbBCQIsTY
- hEDYXFJYOmOtJjsYgDTEodx9dAoTukYN/4lLu7Xos4SImIvhdyILnzBTpS7f6GN8XEH1
- 1UiQ==
+ (Exim 4.90_1) (envelope-from <geert.uytterhoeven@gmail.com>)
+ id 1wqrEh-0001JZ-U3
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 07:53:39 -0400
+Received: from mail-ua1-f49.google.com ([209.85.222.49])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <geert.uytterhoeven@gmail.com>)
+ id 1wqrEb-0004ZS-IX
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 07:53:35 -0400
+Received: by mail-ua1-f49.google.com with SMTP id
+ a1e0cc1a2514c-977bbf2eb3aso751966241.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 04:53:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785757733; x=1786362533;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=cxsw5N4jJ/n1S3+fFpQVbypg/bFRiTJMzeFOLOhiJw8=;
- b=UQVnykGyqzAHrIIloLotWDqlgCoJdfYp5lfDX/L/vb9ZzxIDjdugU++mK5uloHQHMd
- kSidIuEtnH+Czi3zAEYrSkq0GbioIdr9ZEDvY16zuqQwkM03LAi2KGT4moPUV2yGEfW3
- huoLv/owFuArh6xSHfs+ONMpzFupJRlnqS/OxyxnC9KRhYoS8RWELainBtGoTk2UMP4w
- F68HLZKkoSXXJi86Lx6O5QCce1+7/h5Em1l/889m+18/mbTiu10zubbBb6MyDV1W1/Im
- Ej/zI98qnKzp1tiT/ZhbcAhLk5/BP7m5+Z+ezmcPrwtBKUg3mWV9vmvcuFUGlf8ch3sD
- 8kDg==
-X-Gm-Message-State: AOJu0YzLlNYLnIacYRAjHuM7yURJsT0fhPIJaO7WEgk8y0/TbkkD1fuf
- /9NOCnUS00oQ0ToIe2hDSS2pV3JAp962th1xV1+3z0AJrZ9EJ4nepFbdoa5lJcr/xqPwnb7sGFW
- i4qPxMPGBR6TKnPRAmo7jVZmxo5ONQclQpdLaW1T//14gS7EceKyQIABYm/ZGCL/wsQ==
-X-Gm-Gg: AR+sD13zHr7y9NKp3S9kbDWY+i5fKgT/s51ofH5eQBlkM1+YVDBc06UwCA4/7rE3v6u
- hADW8ODCJugHHI9BHXDwtC9BA0XRqCMxblaMODu2UK3N9G9NCPjD+MQcWlELwClBBfJXuDIIWRa
- O/bFliQjZZpaO0VFJWdAQnlg58LNIMq0hvuAo+wJaRH5xnNRHTB6EXrtpe+jgJFZIH+gykZV5fU
- cgNrPhTQWyYPptpkgEPTepduc31YXO9gv9+Jqma2KlvR6D66CrqfRyZTFcVrQmpgzL2j1Urz3Xm
- l9rKCCl5qJfWb7ubr6aVCmxTKTI1fn7HHjQzCHCBL3Hz+dRGYOtECCQWw96fRNy6SnNHGku4FJi
- ULcXn2B21VU1zINj3t9ApyhJX/3MJHRFXDEfyXS5gyoE6a/Oam3g=
-X-Received: by 2002:a05:622a:2509:b0:52b:4e1f:941d with SMTP id
- d75a77b69052e-52b5666d93cmr194190761cf.6.1785757733530; 
- Mon, 03 Aug 2026 04:48:53 -0700 (PDT)
-X-Received: by 2002:a05:622a:2509:b0:52b:4e1f:941d with SMTP id
- d75a77b69052e-52b5666d93cmr194190431cf.6.1785757733125; 
- Mon, 03 Aug 2026 04:48:53 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47fd456a6d7sm33173850f8f.19.2026.08.03.04.48.52
+ d=1e100.net; s=20251104; t=1785758012; x=1786362812;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=nF1vhNpaBlVQXaTiQuSq2URjmBitCLtKJIgx6H39Z+U=;
+ b=TlmZU6y0fkmjoInQeDRyyvcgwxo0MQoQLMGm4W8ghHAMmHJGL7GL2tURixw4ZrbN4T
+ e0OcXnMPM20baRcwgJsXiok1G52mbr0vSKeuf6CBtVvA1A9/oHZopIDEK4fbCQGXIv1v
+ TEfyfcDC3ERKSLR8ig+0M4e7wuOlg0oqsqcVzdM6jGVunaCPQb29EcXyHHy9QCaeLbgt
+ IjcdmS1Z9KOuahkaUT7wTXw5NoaHkcmfQL8j+GjGPBL2gdHRcQGEw3pZpadTJX/Wo4oF
+ v/TYXxLhPtKSkDKKq9PIEDr3eZiXAIxgKvizpw/uO3oA8LFtgrDmziUTWWgMGfNeZgXz
+ lyyw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqCDeUyMiEs46+VTOWV8rdVkjS5UA8mxSx6v9OeO7rgdzKIZfxb5dkuWGrb0av+Ya4EzlCFlls1kWK4@nongnu.org
+X-Gm-Message-State: AOJu0Ywmyb9Rg4lnMRl8RBCBnXhT6zzEKRcrQwCEvhTJYXEORBvkFZhm
+ Iy0C3dnMhQWJnkOP+Q0OhyQ0PR/tyxN8tU3vKRwZawuLZl3Y0TKMcB2ge9dVy/Mf
+X-Gm-Gg: AR+sD101uWyHbvwRnIIxBjlHYT0P/OcgWg4vMI/Qj5K79z9zsXXZOb9RV7xOX4B4D8p
+ xoUI/qIHaF7OUK7Cc4gJnAuiZtGMbJxxzocT9q2Q3Lk4kYbqWtBypIChEKWlKfuxK3vOczPW2mP
+ FZrvAv4fWztQcuihXUR8FbGdX0dOWpYUggIRKIJgL4dnan3Z6yH0TuDFQppUZyysYw7PJYOh/Zi
+ hUuStrSFmyqoyR0NmMkMMcn7LExKRHcSdFcG7/B7epOzoIGUU261r+x7ozJ2s7QehRsk1CWnpPd
+ oDX5blYotl33+PJzmabD2sNlrHthwj/UH5SYk/QHgIBYp9vRz50WvjST+mbVjASTINL7kDXynTE
+ Y0ol6QfmlpZhV6f8o408VXOCWkw4vX5mF9ju07w0/qPrJ3uVNF4HuyV2xEJFrZhLrqC9u/PZ5ea
+ I6CPsuTZzIp3O/L7a3d7W6DuqD9NzGHnbXQJTjHXVeeZGxUJK+l+ckG8yEZEaMnjAK9eskMv4Qi
+ dmP4N1RUhiKNYKPXLWWnu9MWw==
+X-Received: by 2002:a05:6102:94d:b0:740:22ba:8a4e with SMTP id
+ ada2fe7eead31-75b222654aemr5131478137.6.1785758011901; 
+ Mon, 03 Aug 2026 04:53:31 -0700 (PDT)
+Received: from mail-vs1-f53.google.com (mail-vs1-f53.google.com.
+ [209.85.217.53]) by smtp.gmail.com with ESMTPSA id
+ a1e0cc1a2514c-977e6a40a5csm6212927241.10.2026.08.03.04.53.31
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Aug 2026 04:48:52 -0700 (PDT)
-Message-ID: <a5bc26b5-2191-46b5-b93d-7dba4ef016d0@oss.qualcomm.com>
-Date: Mon, 3 Aug 2026 13:48:51 +0200
+ Mon, 03 Aug 2026 04:53:31 -0700 (PDT)
+Received: by mail-vs1-f53.google.com with SMTP id
+ ada2fe7eead31-738bcf9a573so1062367137.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 04:53:31 -0700 (PDT)
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqNgZwfJBXtxtFKBTUoEu9awqCw26COM1LfwTPVXUHoh269H+Kqxc4Q+KrNRWXjQypt7hd6u0rYO7R3@nongnu.org
+X-Received: by 2002:a05:6102:1591:b0:740:2974:1b19 with SMTP id
+ ada2fe7eead31-75b21d62f06mr6144315137.4.1785758011219; Mon, 03 Aug 2026
+ 04:53:31 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vhost-user-gpu: fix integer overflow in buffer allocation
-Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-References: <20260710134720.2317856-1-marcandre.lureau@redhat.com>
- <5df23403-6da0-4431-be8a-a74c82298894@oss.qualcomm.com>
- <CAJ+F1C+yCx72e9AE6Vz-2a3cz+GqN-ovvFcSBXdDvyiEh5u8Qg@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <CAJ+F1C+yCx72e9AE6Vz-2a3cz+GqN-ovvFcSBXdDvyiEh5u8Qg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODAzMDEwNSBTYWx0ZWRfX8myOHMjTUdeN
- 3zatokXSd/nhbN3WuqLl6dYHSoJg9h8YpM6fSMhI77jOOwuEsjtxImDcmAJq3npd+kfU5cC9kbK
- CaHVzO72nL6L3w2+mqzg7UvCpiEXWJY=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODAzMDEwNSBTYWx0ZWRfX4jzXQctQWAuc
- mOFpKEA75K5TQzu1deCTpiFkfslQOV3ybTWYIabJty6saomu6zbsXPcesy844Bs/3Q8mihPZpka
- 4yODgXURPzctdHA2Un2hdbfRi6DzJt/hOKC3trV3uO9v43aM6hi50rG6YxzBkwftV/s4fNze+/t
- y5nRE4bl0u1LmOgsaCiuqfLtZ6PW5lV4WfCfhdrA3yS9XWxrfre7nsFMiWAzx/TV3hC2eHmBx6M
- n9pCPAZ5kpDAlNNf0u6xhi4tVXWY8rVKfZp03gxEtNAoLk5M3QzOjv+k7o+kaxUOCq7ishOws07
- ECU4imQ7/TkS+uFT9ti9/N4h7rBWjmZ0vIcu4dQ4hayABeTlvyB2/BIBPUGOeCCDNivd3z3khlS
- XH8LcSscJSnLxLgxe+onsnJNjugE4jfDZCYxu9y8gb/sfHuF/mjt2Fuo1QR7gCqmlic9mxU5yzy
- y4WckBj8TpCd/GM2lkA==
-X-Authority-Analysis: v=2.4 cv=RNSD2Yi+ c=1 sm=1 tr=0 ts=6a708029 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=p0WdMEafAAAA:8 a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=6b3zXhvIAAAA:8
- a=vpfsDNsLfHy5G1n11wMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22 a=vnv6_c11HO5uxQbMB8V9:22
-X-Proofpoint-GUID: ju4jNQDuJqisHus4oy2BSCvCjp93er1d
-X-Proofpoint-ORIG-GUID: ju4jNQDuJqisHus4oy2BSCvCjp93er1d
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-02_06,2026-07-30_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0 clxscore=1015 adultscore=0 lowpriorityscore=0
- malwarescore=0 phishscore=0 impostorscore=0 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608030105
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260728192913.61279-1-deller@kernel.org>
+ <CAFEAcA_8o2A8FDsJKacde+pdj4HzA5c7aTw=k7tmONYXD4=c_w@mail.gmail.com>
+ <244987da-f6d8-47a8-ac4a-16a71c660e36@gmx.de>
+ <CAFEAcA9F8rauUNc2NAqbnf1f7-0O_ivft1XOftwt1hW0YWeeJw@mail.gmail.com>
+ <a8c13cdc-54c3-4913-bc6e-956cbfe082cb@gmx.de>
+ <89e75011-61fb-4cbc-9583-4117005e58dc@gmx.de>
+In-Reply-To: <89e75011-61fb-4cbc-9583-4117005e58dc@gmx.de>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Mon, 3 Aug 2026 13:53:19 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdV6pwzjmC8cnhxhTNAvHh7yC3_C5LdVe4RbiaZamMUQgw@mail.gmail.com>
+X-Gm-Features: AUfX_my3VnNuW4JRO5szmPOHoPyZtpemhqyO-_qjLmVKmfoRw9opDc8LPXNvtiw
+Message-ID: <CAMuHMdV6pwzjmC8cnhxhTNAvHh7yC3_C5LdVe4RbiaZamMUQgw@mail.gmail.com>
+Subject: Re: [PATCH] linux-user: Fix msqid_ds struct wrt 32-bit big endian
+ architectures
+To: Helge Deller <deller@gmx.de>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Helge Deller <deller@kernel.org>,
+ qemu-devel@nongnu.org, linux-m68k <linux-m68k@lists.linux-m68k.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=209.85.222.49;
+ envelope-from=geert.uytterhoeven@gmail.com; helo=mail-ua1-f49.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,66 +108,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/7/26 08:48, Marc-AndrÃ© Lureau wrote:
-> Hi
-> 
-> On Fri, Jul 10, 2026 at 7:35 PM Philippe Mathieu-Daudé
-> <philmd@oss.qualcomm.com> wrote:
->>
->> On 10/7/26 15:47, marcandre.lureau@redhat.com wrote:
->>> From: Marc-André Lureau <marcandre.lureau@redhat.com>
->>>
->>> A malicious guest can trigger a heap buffer overflow in the
->>> vhost-user-gpu backend by sending a VIRTIO_GPU_CMD_RESOURCE_CREATE_2D
->>> with large width and height values (e.g. 65537x65537). The allocation
->>> size width * height * 4 silently wraps in uint32_t arithmetic,
->>> resulting in a much smaller allocation than expected. Subsequent
->>> VIRTIO_GPU_CMD_TRANSFER_TO_HOST_2D writes past the heap buffer.
->>>
->>> The in-tree virtio-gpu device (hw/display/virtio-gpu.c) already handles
->>> this via calc_image_hostmem() with uint64_t arithmetic and an overflow
->>> check. Apply the same approach to the vhost-user-gpu contrib backend:
->>>
->>> - Add an overflow check in vugbm_buffer_create() rejecting dimensions
->>>     where width * height * 4 exceeds UINT32_MAX
->>> - Promote the size arithmetic to uint64_t in mem_alloc_bo() and
->>>     udmabuf_get_size()
->>> - Check the return value of vugbm_buffer_create() in
->>>     vg_resource_create_2d(), which was previously ignored
->>>
->>> Fixes: CVE-2026-15264
->>> Reported-by: "Vulnerability Report" <vr@darknavy.com>
->>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3940
->>> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
->>> ---
->>>    contrib/vhost-user-gpu/vhost-user-gpu.c |  8 +++++++-
->>>    contrib/vhost-user-gpu/vugbm.c          | 11 +++++++++--
->>>    2 files changed, 16 insertions(+), 3 deletions(-)
->>
->>
->>> diff --git a/contrib/vhost-user-gpu/vugbm.c b/contrib/vhost-user-gpu/vugbm.c
->>> index 503d0a4566f..710d5452977 100644
->>> --- a/contrib/vhost-user-gpu/vugbm.c
->>> +++ b/contrib/vhost-user-gpu/vugbm.c
->>> @@ -13,7 +13,7 @@
->>>    static bool
->>>    mem_alloc_bo(struct vugbm_buffer *buf)
->>>    {
->>> -    buf->mmap = g_malloc(buf->width * buf->height * 4);
->>> +    buf->mmap = g_malloc((uint64_t)buf->width * buf->height * 4);
->>
->> Just curious, would this also work safely?
->>
->>          buf->mmap = g_malloc_n(4, buf->width * buf->height);
->>
->> The GLib description is:
->>
->>     This function is similar to g_malloc(),
->>     allocating (n_blocks * n_block_bytes) bytes,
->>     but care is taken to detect possible overflow
->>     during multiplication.
-> 
-> Yes, that would be similar.
+CC linux-m68k
 
-OK, then patch LGTM!
+On Sat, 1 Aug 2026 at 23:39, Helge Deller <deller@gmx.de> wrote:
+>
+> (Adding Geert as kernel m68k maintainer)
+>
+> On 8/1/26 22:58, Helge Deller wrote:
+> > On 8/1/26 14:11, Peter Maydell wrote:
+> >> On Fri, 31 Jul 2026 at 20:36, Helge Deller <deller@gmx.de> wrote:
+> >>>
+> >>> Hello Peter,
+> >>>
+> >>> On 7/31/26 20:05, Peter Maydell wrote:
+> >>>> On Tue, 28 Jul 2026 at 20:32, Helge Deller <deller@kernel.org> wrote:
+> >>>>>
+> >>>>> From: Helge Deller <deller@gmx.de>
+> >>>>>
+> >>>>> Make sure that the time entries (msg_stime, msg_rtime and msg_ctime)
+> >>>>> are defined as 64-bit time_t values, since the userspace may access
+> >>>>> the whole 64-bit value. By this change we fix the word ordering for
+> >>>>> 32-bit big endian architectures as well.
+> >>>>>
+> >>>>> This fixes the msgctl01 LTP testcase on hppa32.
+> >>>>>
+> >>>>> Signed-off-by: Helge Deller <deller@gmx.de>
+> >>>>> ---
+> >>>>>    linux-user/syscall.c | 30 ++++++++++++------------------
+> >>>>>    1 file changed, 12 insertions(+), 18 deletions(-)
+> >>>>>
+> >>>>> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> >>>>> index 740142825d..c93b770ced 100644
+> >>>>> --- a/linux-user/syscall.c
+> >>>>> +++ b/linux-user/syscall.c
+> >>>>> @@ -4216,21 +4216,15 @@ static inline abi_long do_semtimedop(int semid,
+> >>>>>    }
+> >>>>>    #endif
+> >>>>
+> >>>> I see this has already gone into git, but some late review
+> >>>> comments. I suspect this is mostly me being confused rather
+> >>>> than actual problems.
+> >>>>
+> >>>>>
+> >>>>> +#define target_time64_t         abi_ullong
+> >>>>> +#define target_swap_time64(x)   tswap64(x)
+> >>>>> +
+> >>>>>    struct target_msqid_ds
+> >>>>
+> >>>> Is this the kernel's "struct msqid_ds" (which it calls "Obsolete, used
+> >>>> only for backwards compatibility and libc5 compiles") or its msqid64_ds?
+> >>>
+> >>> Yes, it's msqid64_ds.
+> >>>
+> >>>> The layout matches msqid64_ds, which makes our struct a bit
+> >>>> confusingly named.
+> >>>
+> >>> True.
+> >>> In a follow-up patch this better should be renamed to target_msqid64_ds.
+> >>>
+> >>>>>    {
+> >>>>>        struct target_ipc_perm msg_perm;
+> >>>>> -    abi_ulong msg_stime;
+> >>>>> -#if TARGET_ABI_BITS == 32
+> >>>>> -    abi_ulong __unused1;
+> >>>>> -#endif
+> >>>>> -    abi_ulong msg_rtime;
+> >>>>> -#if TARGET_ABI_BITS == 32
+> >>>>> -    abi_ulong __unused2;
+> >>>>> -#endif
+> >>>>> -    abi_ulong msg_ctime;
+> >>>>> -#if TARGET_ABI_BITS == 32
+> >>>>> -    abi_ulong __unused3;
+> >>>>> -#endif
+> >>>>> +    target_time64_t msg_stime;
+> >>>>> +    target_time64_t msg_rtime;
+> >>>>> +    target_time64_t msg_ctime;
+> >>>>
+> >>>> Assuming msqid64_ds, the kernel version of this struct has a comment:
+> >>>>    * 64 bit architectures use a 64-bit long time field here, while
+> >>>>    * 32 bit architectures have a pair of unsigned long values.
+> >>>>    * On big-endian systems, the lower half is in the wrong place.
+> >>>
+> >>> Those comments are from the generic header:
+> >>> include/uapi/asm-generic/msgbuf.h
+> >>> and I think the last sentence about big-endian systems is wrong, as
+> >>> most platforms provide an own architecture-specific header file, e.g:
+> >>> arch/xtensa/include/uapi/asm/msgbuf.h
+> >>> and the big-endian platforms seem to have their high-word first.
+> >>
+> >> The comment is correct for any bigendian 32-bit system that
+> >> uses the kernel's asm-generic structure. Maybe there just aren't
+> >> any of those that we care about?
+> >
+> > m68k could be a problem.
+> > The other big-arches seem to be handled correctly by the kernel:
+> > arch/sparc/include/uapi/asm/msgbuf.h:struct msqid64_ds {
+> > arch/parisc/include/uapi/asm/msgbuf.h:struct msqid64_ds {
+> > arch/xtensa/include/uapi/asm/msgbuf.h:struct msqid64_ds {
+> > arch/x86/include/uapi/asm/msgbuf.h:struct msqid64_ds {
+> > arch/powerpc/include/uapi/asm/msgbuf.h:struct msqid64_ds {
+> > arch/mips/include/uapi/asm/msgbuf.h:struct msqid64_ds {
+> > arch/mips/include/uapi/asm/msgbuf.h:struct msqid64_ds {
+> > arch/mips/include/uapi/asm/msgbuf.h:struct msqid64_ds {
+> >
+> >>>> That would make tswap64() not the right swap for 32-bit big
+> >>>> endian guests.
+> >>>
+> >>> I did my testing on the 32-bit hppa/parisc platform, and with my patch
+> >>> the results in qemu were correct and were the same as on physical machines.
+> >>>
+> >>> I just tried in a 32-bit powerpc chroot and the msgctl01 now succeeds there as well.
+> >>> So, I think my patch is generally ok.
+> >>
+> >> Yeah, 32-bit powerpc also provides its own structure definition.
+> >>
+> >> I think it's worth having a comment about this, at least, because
+> >> otherwise the obvious assumption is that our struct which has
+> >> no target-specific ifdefs is supposed to match the kernel's
+> >> asm-generic struct.
+> >
+> > Yes, I will the testing on m68k, afterwards I can come up with a proposal.
+> > Maybe it makes sense to modify the kernel comment too....
+>
+>
+> The msgctl01 testcase from LTP gives this preprocessed code on m68k:
+> ...
+> # 27 "/usr/include/m68k-linux-gnu/bits/types/struct_msqid_ds.h" 3 4
+> struct msqid_ds
+> {
+>
+> # 1 "/usr/include/m68k-linux-gnu/bits/types/struct_msqid64_ds_helper.h" 1 3 4
+> # 20 "/usr/include/m68k-linux-gnu/bits/types/struct_msqid64_ds_helper.h" 3 4
+>    struct ipc_perm msg_perm;
+>    __time64_t msg_stime;
+>    __time64_t msg_rtime;
+>    __time64_t msg_ctime;
+>    __syscall_ulong_t __msg_cbytes;
+>    msgqnum_t msg_qnum;
+>    msglen_t msg_qbytes;
+>    __pid_t msg_lspid;
+>    __pid_t msg_lrpid;
+>    unsigned long int __glibc_reserved4;
+>    unsigned long int __glibc_reserved5;
+> # 31 "/usr/include/m68k-linux-gnu/bits/types/struct_msqid_ds.h" 2 3 4
+> # 53 "/usr/include/m68k-linux-gnu/bits/types/struct_msqid_ds.h" 3 4
+> };
+>
+> but the testcase fails with:
+> msgctl01.c:53: TFAIL: msg_ctime = 6a6e65d900000000, expected 6a6e65d9
+>
+> So, for m68k either the glibc or the kernel is wrong.
+> At least they don't agree with each other.
+>
+> I think it would be beneficial, if the m68k kernel would follow m68k's
+> glibc implementation of msqid64_ds.
+>
+> Helge
 
