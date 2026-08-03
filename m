@@ -4,74 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FE74C55179
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 11:01:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F73EC55179
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 11:11:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqqPy-0003V3-BI; Mon, 03 Aug 2026 07:01:14 -0400
+	id 1wqqZm-0005UY-S1; Mon, 03 Aug 2026 07:11:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wqqPw-0003Ul-UX
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 07:01:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wqqZh-0005UF-0d
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 07:11:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wqqPu-0004Dr-Pb
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 07:01:12 -0400
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wqqZe-00062i-QE
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 07:11:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785754868;
+ s=mimecast20190719; t=1785755473;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=j0C0qE5XCIUHjOd0KA0bPOF7f8mApdhEAst88+ilBcc=;
- b=deSMjxEy0f0cE1k4f3IsdFZXvjV3XRPMZlBpMTgNG8mzH8igF0EWboPRiY2CAT+/REu7br
- ZnZ3y8V94WyUuhQAAR6xlY8/KeHWT1uFJ79fNmkl5RO8EKkR4oBHr8Y22xShNGqIv/OuKf
- Wpq6JTyLR87fjhBXSAfkBoiBoturw/U=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-401-ZzOh5UM3NoSMZPbXmTVM2Q-1; Mon,
- 03 Aug 2026 07:01:03 -0400
-X-MC-Unique: ZzOh5UM3NoSMZPbXmTVM2Q-1
-X-Mimecast-MFC-AGG-ID: ZzOh5UM3NoSMZPbXmTVM2Q_1785754861
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4B1EA180029F; Mon,  3 Aug 2026 11:01:01 +0000 (UTC)
-Received: from localhost (unknown [10.44.22.2])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B34ED180049F; Mon,  3 Aug 2026 11:00:59 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: akihiko.odaki@gmail.com,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Subject: [PATCH v4] virtio-gpu: use g_try_malloc to avoid guest-triggered abort
-Date: Mon,  3 Aug 2026 15:00:56 +0400
-Message-ID: <20260803110056.1624324-1-marcandre.lureau@redhat.com>
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uWjXZkR+pRIJq2CPruMl7+kP9c+Hy4/85oZ/M794UmQ=;
+ b=Ur79CiL6dyWDwMvTGpvVeVRFmQBxIUM9C1yYVlFSyN9UTLG400nRdcRvcz+htLmpthYZ6/
+ BDaDjIMFyeXtYOQmIDPsfWQP9wu2C1SyTYv6aRwje7txLoRks0+T82PWRObgSRpvfLSSFF
+ VcroIveiRO6xGr6dF7lXV4h2KLThIaw=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-298-4gIhy3deP-2oQ8pQ-gVBtQ-1; Mon, 03 Aug 2026 07:11:11 -0400
+X-MC-Unique: 4gIhy3deP-2oQ8pQ-gVBtQ-1
+X-Mimecast-MFC-AGG-ID: 4gIhy3deP-2oQ8pQ-gVBtQ_1785755471
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-ca8aee88725so5026054a12.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 04:11:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785755471; cv=none;
+ d=google.com; s=arc-20260327;
+ b=HipddlmABDkhPkEluFT1dIGbOqV39uiWlsIh4SVwy+lm/XfLvfVLdoYFJZcYJNTJSM
+ 4JpqTygpruBWZE3yJS0lExl1zksMt7XgsnicKTGzjpmrnifFTimyVnuj+KIAz5ZRvaT0
+ kmAZls/EZOOiorao2njX1BR9bkASvjQzTmkixjl4nIhhcThRypThdXuifOb9ogQl54lx
+ 4YX/LR2TAstk27NzkdyGzSK+2bgXn1J/cepc1rJaaMvLYgQCtMTj/SSUJKHPlkriUnBx
+ bD9XYs2H7KQGZreNLjEIRkWUzh1IPnwV87Edwvnhldm4dZSJK4kuEIBiiHwWT2PlkeDc
+ luzw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=uWjXZkR+pRIJq2CPruMl7+kP9c+Hy4/85oZ/M794UmQ=;
+ fh=4wBBUZ8BjOyAMokcc/DbepkPpbRHeYF6hiVjL7CUbYw=;
+ b=piW97UcCWfBAzMw8Urmqc/2ZagcSpWaIaYUiwmtOUdGTr1QFqgksT+pe6JnrQKxAhR
+ c4IHCDo43EbEj1HKYeZkCPkCdD5tueHj6KjD6KkSQCGPkqeJRMe2htQlrYzMF55s6j1h
+ p7CgUXxLPkGCkrYYC9lXEjf5F4ewh3xYg8Qx1RG0/H66A1XDz0UJ6jRk7IPsCVeA428c
+ PuJktCbhPngwe4HqXN2h9ZMS5Er3PXfa0jZxvQpAo3ouYdo94iqc1Nv+JesgK8w/4DIG
+ PdhS2gx8TUpe1eZWZSf1OstDwgMDiJrRICPUyOOlwbzsFw56PwCVWx7IdGXSTM1WtvAz
+ UrUQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1785755471; x=1786360271; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=uWjXZkR+pRIJq2CPruMl7+kP9c+Hy4/85oZ/M794UmQ=;
+ b=o+6DemXosIb5N0un1vR3tV9xdaKpjAg+sJ89lvrYWO5OuLFv5afHZ3ejSj+7nnYHeS
+ GhDIYZC1vj0VeVlUehJN2fe0dz6hs9QW2S9d53Y+KaWbR9qpi8GIQPsu+PXQ2MlzTFsL
+ Q4KTFKc4QP3ZjS3WfhqoQJEE8/afcN7JfnMzGQjTFNvKIJbLs2GzdVbwzQgG6erulebB
+ SFYH2iiqhpm794murujpujWLSfk2sd40bEb9sMVoY33KFCZddQLH5l2XRp64dW5bcumI
+ 3LB5cKd9njK2WHpFZYagd+lBOJuZTgeYF5AHglRk/5xDg6yYHn6KxK2vubGK1BtKPVxv
+ LNng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785755471; x=1786360271;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=uWjXZkR+pRIJq2CPruMl7+kP9c+Hy4/85oZ/M794UmQ=;
+ b=PJYOsS3Xu6LlFHYUJK5X8voc3tB8tTuszsPgNFhIO6TzJ1EuLCKKB42RX8ivRcA9KA
+ mETXy2y3sfyFEcwVs7DcDFDtZmSFGI68v61dBvM2s3sM5SNZ67T5bl0f3HZ7K6VkPQzr
+ TGLFIKTzHSpLN/mNZdZA9YLz+c17yj2aosoWgSPwlxAraZNZasGpl/iKsckgBMxPKpxU
+ xMLxN8HE/YPHY1qtQmsdU0+4tlgDsj2BdJjE3sNUsvIHnrcoM+TRTsADgquA9klHJn3T
+ cy8xmJzG068ow0IfdUAm/RV/9bcfUFV8eBcs/kmqyNm0Ko882zDw/K6kJAM6SkR4QuLE
+ E3ZA==
+X-Gm-Message-State: AOJu0YzMMM0xmUSK77wBrjO9HNZmpU0yEFTJJ6eTDynON4dppKKQq7CZ
+ jinJYhAlUT5lRBPqyKXPGTR8MRGlTEUcdYe7f8E4H+YtOVW5L3MZHMOqYZuelHgG1xXLTOtHd1U
+ Xac1GuFgLR7wTxcTYn0sIZSj5GCUKmfMDzaxDcto718GEWzOd1QKCsScV8wvvSAhxSVUpe1atg5
+ /OCRK6XDKHMq0L/SDzjAa1pdVhuqiIY3En1KEO+GLglw==
+X-Gm-Gg: AR+sD10GZo5Htm0GzqG6rvSwvRlZqX121QyhDYORFziPVrkSCqAzlRaNFdVPDiD7uj4
+ QLUQTLfRzWd2ZSV0UWMOvjWcEkRiDlL9tCksCUCGoYP35tGOEZBaDzy82OLB0iByEKdsjkdIBFZ
+ YOlyOcxjds1HuXoGd84BD5ZtUoXXBExm/JI8DavBiXacxRQ/MecmBBd9+ZDBScJ0sCIZcBMWpJV
+ 0qR2fa+YP44HJ8KP1BPaW+ALLoF7PJoXO1X5IggC5MJ7yVLntpTQ8mkfQypSKbI/7tYTvTSvvIu
+ jQ==
+X-Received: by 2002:aa7:8891:0:b0:848:7b92:8e68 with SMTP id
+ d2e1a72fcca58-84ee49031cdmr8209463b3a.66.1785755470432; 
+ Mon, 03 Aug 2026 04:11:10 -0700 (PDT)
+X-Received: by 2002:aa7:8891:0:b0:848:7b92:8e68 with SMTP id
+ d2e1a72fcca58-84ee49031cdmr8209420b3a.66.1785755469772; Mon, 03 Aug 2026
+ 04:11:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
+References: <20260725122411.1769492-1-marcandre.lureau@redhat.com>
+In-Reply-To: <20260725122411.1769492-1-marcandre.lureau@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 3 Aug 2026 15:10:57 +0400
+X-Gm-Features: AUfX_mxOBIrchvxSsdvRn_R3lRshAwJbGT6WPI--DUY0GdPcwpV7DEXK7c_Cfa8
+Message-ID: <CAMxuvawO0RfUvL6oZcZHvRxsTBvLPAQnOhoO7Q-184YLohwr3g@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/display/qxl: validate primary surface stride
+ against width
+To: qemu-devel@nongnu.org
+Cc: akihiko.odaki@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
 X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.811,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,253 +137,259 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On Sat, Jul 25, 2026 at 4:24=E2=80=AFPM <marcandre.lureau@redhat.com> wrote=
+:
+>
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> The existing validation in qxl_create_guest_primary() checks that
+> abs(stride) * height fits in vgamem_size and that stride is 4-byte
+> aligned, but never checks that abs(stride) is large enough to hold one
+> row of pixels for the declared width and format.
+>
+> A malicious guest can create a primary surface with a stride much
+> smaller than width * bytes_per_pixel (e.g. stride=3D4 for a 64-wide 32bpp
+> surface). The spice server rejects this via red_validate_surface(), but
+> the return is void and QEMU unconditionally proceeds to set up the local
+> rendering state. On the next display refresh, VNC or SDL reads width *
+> bytes_pp per scanline from a region backed by only stride bytes per
+> row, causing a host-side out-of-bounds read.
+>
+> Add three checks in qxl_create_guest_primary() before creating the
+> surface:
+>  - reject unknown surface formats
+>  - reject zero width or height
+>  - reject surfaces where abs(stride) < width * bytes_per_pixel
+>
+> Also fix three related issues in qxl-render.c:
+>  - qxl_blit() used abs_stride to advance the dst pointer into the
+>    DisplaySurface, but when stride is negative the DisplaySurface is a
+>    packed buffer whose stride may be smaller. Use surface_stride()
+>    instead.
+>  - qxl_render_update_area_unlocked() uses guest_head0_width (set via
+>    QXL_IO_MONITORS_CONFIG_ASYNC) without validating it against
+>    abs_stride, bypassing the new validation. Clamp the effective width
+>    to abs_stride / bytes_pp to prevent out-of-bounds access while
+>    tolerating the normal transient where the monitor config arrives
+>    before the primary surface is resized to match.
+>  - Similarly, guest_head0_height bypasses qxl_create_guest_primary()
+>    validation. Without clamping, abs_stride * height can overrun
+>    vgamem_size, and the product can also overflow 32 bits (e.g.
+>    abs_stride=3D16 MiB, height=3D256 wraps to zero), defeating the
+>    qxl_phys2virt() bounds check. Clamp height to
+>    vgamem_size / abs_stride to prevent both.
+>
+> Fixes: CVE-2026-16271
+> Fixes: 3761abb16784 ("hw/display/qxl: fix signed to unsigned comparison")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3637
+> Reported-by: huntr bubble
+> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+> ---
+> v2:
+>  - also clamp height
+>  - factor out qxl_format_bpp() helper
 
-Use g_try_malloc/g_try_new0 for guest-controlled allocation, so failure
-returns an error to the guest rather than crashing the host (glib
-behaviour).
+ping
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3898
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
-Based-on: <20260710134720.2317856-1-marcandre.lureau@redhat.com> ("[PATCH] vhost-user-gpu: fix integer overflow in buffer allocation")
-v4:
- - unmap the inflight dma map on failure
- - fix optional addr handling
----
- contrib/vhost-user-gpu/vhost-user-gpu.c | 25 ++++++++++-----
- contrib/vhost-user-gpu/virgl.c          |  6 +++-
- contrib/vhost-user-gpu/vugbm.c          |  5 ++-
- hw/display/virtio-gpu-rutabaga.c        | 14 +++++++--
- hw/display/virtio-gpu-virgl.c           |  6 +++-
- hw/display/virtio-gpu.c                 | 42 ++++++++++++++++++-------
- 6 files changed, 74 insertions(+), 24 deletions(-)
-
-diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/vhost-user-gpu/vhost-user-gpu.c
-index ee9858c397ce..0fd115300425 100644
---- a/contrib/vhost-user-gpu/vhost-user-gpu.c
-+++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
-@@ -487,7 +487,7 @@ vg_create_mapping_iov(VuGpu *g,
-                       struct virtio_gpu_ctrl_command *cmd,
-                       struct iovec **iov)
- {
--    struct virtio_gpu_mem_entry *ents;
-+    g_autofree struct virtio_gpu_mem_entry *ents = NULL;
-     size_t esize, s;
-     int i;
- 
-@@ -498,17 +498,22 @@ vg_create_mapping_iov(VuGpu *g,
-     }
- 
-     esize = sizeof(*ents) * ab->nr_entries;
--    ents = g_malloc(esize);
-+    ents = g_try_malloc(esize);
-+    if (!ents && esize) {
-+        return -1;
-+    }
-     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-                    sizeof(*ab), ents, esize);
-     if (s != esize) {
-         g_critical("%s: command data size incorrect %zu vs %zu",
-                    __func__, s, esize);
--        g_free(ents);
-         return -1;
-     }
- 
--    *iov = g_new0(struct iovec, ab->nr_entries);
-+    *iov = g_try_new0(struct iovec, ab->nr_entries);
-+    if (!*iov && ab->nr_entries) {
-+        return -1;
-+    }
-     for (i = 0; i < ab->nr_entries; i++) {
-         uint64_t len = ents[i].length;
-         (*iov)[i].iov_len = ents[i].length;
-@@ -517,12 +522,10 @@ vg_create_mapping_iov(VuGpu *g,
-             g_critical("%s: resource %d element %d",
-                        __func__, ab->resource_id, i);
-             g_free(*iov);
--            g_free(ents);
-             *iov = NULL;
-             return -1;
-         }
-     }
--    g_free(ents);
-     return 0;
- }
- 
-@@ -828,8 +831,14 @@ vg_resource_flush(VuGpu *g,
-                 PIXMAN_FORMAT_BPP(pixman_image_get_format(res->image)) / 8;
-             size_t size = width * height * bpp;
- 
--            void *p = g_malloc(VHOST_USER_GPU_HDR_SIZE +
--                               sizeof(VhostUserGpuUpdate) + size);
-+            void *p = g_try_malloc(VHOST_USER_GPU_HDR_SIZE +
-+                                   sizeof(VhostUserGpuUpdate) + size);
-+            if (!p) {
-+                pixman_region_fini(&region);
-+                pixman_region_fini(&finalregion);
-+                cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-+                break;
-+            }
-             VhostUserGpuMsg *msg = p;
-             msg->request = VHOST_USER_GPU_UPDATE;
-             msg->size = sizeof(VhostUserGpuUpdate) + size;
-diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
-index 550fd03bf5c4..20bae57d0fe4 100644
---- a/contrib/vhost-user-gpu/virgl.c
-+++ b/contrib/vhost-user-gpu/virgl.c
-@@ -209,7 +209,11 @@ virgl_cmd_submit_3d(VuGpu *g,
-         return;
-     }
- 
--    buf = g_malloc(cs.size);
-+    buf = g_try_malloc(cs.size);
-+    if (!buf && cs.size) {
-+        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-+        return;
-+    }
-     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-                    sizeof(cs), buf, cs.size);
-     if (s != cs.size) {
-diff --git a/contrib/vhost-user-gpu/vugbm.c b/contrib/vhost-user-gpu/vugbm.c
-index 710d54529779..e2d8385fd857 100644
---- a/contrib/vhost-user-gpu/vugbm.c
-+++ b/contrib/vhost-user-gpu/vugbm.c
-@@ -13,7 +13,10 @@
- static bool
- mem_alloc_bo(struct vugbm_buffer *buf)
- {
--    buf->mmap = g_malloc((uint64_t)buf->width * buf->height * 4);
-+    buf->mmap = g_try_malloc((uint64_t)buf->width * buf->height * 4);
-+    if (!buf->mmap && buf->width && buf->height) {
-+        return false;
-+    }
-     buf->stride = buf->width * 4;
-     return true;
- }
-diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-index e28aad94eead..60f64d9a8fa7 100644
---- a/hw/display/virtio-gpu-rutabaga.c
-+++ b/hw/display/virtio-gpu-rutabaga.c
-@@ -360,10 +360,20 @@ rutabaga_cmd_submit_3d(VirtIOGPU *g,
-         return;
-     }
- 
--    buf = g_new0(uint8_t, cs.size);
-+    buf = g_try_new0(uint8_t, cs.size);
-+    if (!buf && cs.size) {
-+        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-+        return;
-+    }
-     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-                    sizeof(cs), buf, cs.size);
--    CHECK(s == cs.size, cmd);
-+    if (s != cs.size) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: size mismatch (%zu/%u)\n",
-+                      __func__, s, cs.size);
-+        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-+        return;
-+    }
- 
-     rutabaga_cmd.ctx_id = cs.hdr.ctx_id;
-     rutabaga_cmd.cmd = buf;
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index d9e5b0110497..028ab776df6a 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -615,7 +615,11 @@ static void virgl_cmd_submit_3d(VirtIOGPU *g,
-         return;
-     }
- 
--    buf = g_malloc(cs.size);
-+    buf = g_try_malloc(cs.size);
-+    if (!buf && cs.size) {
-+        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-+        return;
-+    }
-     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-                    sizeof(cs), buf, cs.size);
-     if (s != cs.size) {
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index c707f1f516ea..c97622115d46 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -882,7 +882,10 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
-     }
- 
-     esize = sizeof(*ents) * nr_entries;
--    ents = g_malloc(esize);
-+    ents = g_try_malloc(esize);
-+    if (!ents && esize) {
-+        return -1;
-+    }
-     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-                    offset, ents, esize);
-     if (s != esize) {
-@@ -903,6 +906,7 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
-         hwaddr len;
-         void *map;
- 
-+        /* TODO: a common DMA map SG helper */
-         do {
-             len = l;
-             map = dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, &len,
-@@ -911,20 +915,27 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
-             if (!map) {
-                 qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map MMIO memory for"
-                               " element %d\n", __func__, e);
--                virtio_gpu_cleanup_mapping_iov(g, *iov, v);
--                g_free(ents);
--                *iov = NULL;
--                if (addr) {
--                    g_free(*addr);
--                    *addr = NULL;
--                }
--                return -1;
-+                goto err;
-             }
- 
-             if (!(v % 16)) {
--                *iov = g_renew(struct iovec, *iov, v + 16);
-+                struct iovec *new_iov;
-+                new_iov = g_try_renew(struct iovec, *iov, v + 16);
-+                if (!new_iov) {
-+                    dma_memory_unmap(VIRTIO_DEVICE(g)->dma_as, map, len,
-+                                     DMA_DIRECTION_TO_DEVICE, len);
-+                    goto err;
-+                }
-+                *iov = new_iov;
-                 if (addr) {
--                    *addr = g_renew(uint64_t, *addr, v + 16);
-+                    uint64_t *new_addr;
-+                    new_addr = g_try_renew(uint64_t, *addr, v + 16);
-+                    if (!new_addr) {
-+                        dma_memory_unmap(VIRTIO_DEVICE(g)->dma_as, map, len,
-+                                         DMA_DIRECTION_TO_DEVICE, len);
-+                        goto err;
-+                    }
-+                    *addr = new_addr;
-                 }
-             }
-             (*iov)[v].iov_base = map;
-@@ -942,6 +953,15 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
- 
-     g_free(ents);
-     return 0;
-+
-+err:
-+    virtio_gpu_cleanup_mapping_iov(g, *iov, v);
-+    *iov = NULL;
-+    if (addr) {
-+        g_clear_pointer(addr, g_free);
-+    }
-+    g_free(ents);
-+    return -1;
- }
- 
- void virtio_gpu_cleanup_mapping_iov(VirtIOGPU *g,
--- 
-2.55.0
+> ---
+>  hw/display/qxl.h        |  2 ++
+>  hw/display/qxl-render.c | 46 ++++++++++++++++----------------
+>  hw/display/qxl.c        | 59 +++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 84 insertions(+), 23 deletions(-)
+>
+> diff --git a/hw/display/qxl.h b/hw/display/qxl.h
+> index 48d664f77736..6f5b96fe86cc 100644
+> --- a/hw/display/qxl.h
+> +++ b/hw/display/qxl.h
+> @@ -181,6 +181,8 @@ void qxl_spice_oom(PCIQXLDevice *qxl);
+>  void qxl_spice_reset_memslots(PCIQXLDevice *qxl);
+>  void qxl_spice_reset_image_cache(PCIQXLDevice *qxl);
+>  void qxl_spice_reset_cursor(PCIQXLDevice *qxl);
+> +bool qxl_format_bpp(PCIQXLDevice *qxl, SpiceSurfaceFmt format,
+> +                    uint32_t *bytes_pp, uint32_t *bits_pp);
+>
+>  /* qxl-logger.c */
+>  int qxl_log_cmd_cursor(PCIQXLDevice *qxl, QXLCursorCmd *cmd, int group_i=
+d);
+> diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
+> index 4799c9e8befd..b0a71a95ad66 100644
+> --- a/hw/display/qxl-render.c
+> +++ b/hw/display/qxl-render.c
+> @@ -27,6 +27,7 @@
+>  static void qxl_blit(PCIQXLDevice *qxl, QXLRect *rect)
+>  {
+>      DisplaySurface *surface =3D qemu_console_surface(qxl->vga.con);
+> +    int dst_stride =3D surface_stride(surface);
+>      uint8_t *dst =3D surface_data(surface);
+>      uint8_t *src;
+>      int len, i;
+> @@ -45,14 +46,14 @@ static void qxl_blit(PCIQXLDevice *qxl, QXLRect *rect=
+)
+>      } else {
+>          src +=3D rect->top * qxl->guest_primary.abs_stride;
+>      }
+> -    dst +=3D rect->top  * qxl->guest_primary.abs_stride;
+> +    dst +=3D rect->top  * dst_stride;
+>      src +=3D rect->left * qxl->guest_primary.bytes_pp;
+>      dst +=3D rect->left * qxl->guest_primary.bytes_pp;
+>      len  =3D (rect->right - rect->left) * qxl->guest_primary.bytes_pp;
+>
+>      for (i =3D rect->top; i < rect->bottom; i++) {
+>          memcpy(dst, src, len);
+> -        dst +=3D qxl->guest_primary.abs_stride;
+> +        dst +=3D dst_stride;
+>          src +=3D qxl->guest_primary.qxl_stride;
+>      }
+>  }
+> @@ -64,27 +65,9 @@ void qxl_render_resize(PCIQXLDevice *qxl)
+>      qxl->guest_primary.qxl_stride =3D sc->stride;
+>      qxl->guest_primary.abs_stride =3D abs(sc->stride);
+>      qxl->guest_primary.resized++;
+> -    switch (sc->format) {
+> -    case SPICE_SURFACE_FMT_16_555:
+> -        qxl->guest_primary.bytes_pp =3D 2;
+> -        qxl->guest_primary.bits_pp =3D 15;
+> -        break;
+> -    case SPICE_SURFACE_FMT_16_565:
+> -        qxl->guest_primary.bytes_pp =3D 2;
+> -        qxl->guest_primary.bits_pp =3D 16;
+> -        break;
+> -    case SPICE_SURFACE_FMT_32_xRGB:
+> -    case SPICE_SURFACE_FMT_32_ARGB:
+> -        qxl->guest_primary.bytes_pp =3D 4;
+> -        qxl->guest_primary.bits_pp =3D 32;
+> -        break;
+> -    default:
+> -        fprintf(stderr, "%s: unhandled format: %x\n", __func__,
+> -                qxl->guest_primary.surface.format);
+> -        qxl->guest_primary.bytes_pp =3D 4;
+> -        qxl->guest_primary.bits_pp =3D 32;
+> -        break;
+> -    }
+> +    /* fallback to default bpp if format is unknown */
+> +    qxl_format_bpp(qxl, sc->format, &qxl->guest_primary.bytes_pp,
+> +                   &qxl->guest_primary.bits_pp);
+>  }
+>
+>  static void qxl_set_rect_to_surface(PCIQXLDevice *qxl, QXLRect *area)
+> @@ -103,6 +86,23 @@ static void qxl_render_update_area_unlocked(PCIQXLDev=
+ice *qxl)
+>      int height =3D qxl->guest_head0_height ?: qxl->guest_primary.surface=
+.height;
+>      int i;
+>
+> +    if (width <=3D 0 || height <=3D 0) {
+> +        qxl_set_guest_bug(qxl, "%s: invalid dimension %dx%d",
+> +                          __func__, width, height);
+> +        goto end;
+> +    }
+> +
+> +    if (qxl->guest_primary.bytes_pp > 0) {
+> +        int max_width =3D qxl->guest_primary.abs_stride
+> +                        / qxl->guest_primary.bytes_pp;
+> +        width =3D MIN(width, max_width);
+> +    }
+> +
+> +    if (qxl->guest_primary.abs_stride > 0) {
+> +        int max_height =3D qxl->vgamem_size / qxl->guest_primary.abs_str=
+ide;
+> +        height =3D MIN(height, max_height);
+> +    }
+> +
+>      if (qxl->guest_primary.resized) {
+>          qxl->guest_primary.resized =3D 0;
+>          qxl->guest_primary.data =3D qxl_phys2virt(qxl,
+> diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+> index b7d871b9ee33..384b8767b8e6 100644
+> --- a/hw/display/qxl.c
+> +++ b/hw/display/qxl.c
+> @@ -1489,6 +1489,47 @@ static void qxl_create_guest_primary_complete(PCIQ=
+XLDevice *qxl)
+>      qxl_render_resize(qxl);
+>  }
+>
+> +/*
+> + * Convert a SpiceSurfaceFormat to bytes per pixel and bits per pixel.
+> + *
+> + * Only valid for surface suitable for rendering.
+> + */
+> +bool qxl_format_bpp(PCIQXLDevice *qxl, SpiceSurfaceFmt format,
+> +                    uint32_t *bytes_pp, uint32_t *bits_pp)
+> +{
+> +    uint32_t bypp =3D 4;
+> +    uint32_t bipp =3D 32;
+> +    bool ret =3D true;
+> +
+> +    switch (format) {
+> +    case SPICE_SURFACE_FMT_16_555:
+> +        bypp =3D 2;
+> +        bipp =3D 15;
+> +        break;
+> +    case SPICE_SURFACE_FMT_16_565:
+> +        bypp =3D 2;
+> +        bipp =3D 16;
+> +        break;
+> +    case SPICE_SURFACE_FMT_32_xRGB:
+> +    case SPICE_SURFACE_FMT_32_ARGB:
+> +        bypp =3D 4;
+> +        bipp =3D 32;
+> +        break;
+> +    default:
+> +        ret =3D false;
+> +        qxl_set_guest_bug(qxl, "%s: unhandled format: %x", __func__, for=
+mat);
+> +    }
+> +
+> +    if (bytes_pp !=3D NULL) {
+> +        *bytes_pp =3D bypp;
+> +    }
+> +    if (bits_pp !=3D NULL) {
+> +        *bits_pp =3D bipp;
+> +    }
+> +
+> +    return ret;
+> +}
+> +
+>  static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
+>                                       qxl_async_io async)
+>  {
+> @@ -1496,6 +1537,7 @@ static void qxl_create_guest_primary(PCIQXLDevice *=
+qxl, int loadvm,
+>      QXLSurfaceCreate *sc =3D &qxl->guest_primary.surface;
+>      uint32_t requested_height =3D le32_to_cpu(sc->height);
+>      int requested_stride =3D le32_to_cpu(sc->stride);
+> +    uint32_t bytes_pp;
+>
+>      if (requested_stride =3D=3D INT32_MIN ||
+>          abs(requested_stride) * (uint64_t)requested_height
+> @@ -1532,6 +1574,23 @@ static void qxl_create_guest_primary(PCIQXLDevice =
+*qxl, int loadvm,
+>          return;
+>      }
+>
+> +    if (!qxl_format_bpp(qxl, surface.format, &bytes_pp, NULL)) {
+> +        return;
+> +    }
+> +
+> +    if (surface.width =3D=3D 0 || surface.height =3D=3D 0) {
+> +        qxl_set_guest_bug(qxl, "%s: zero dimension %ux%u",
+> +                          __func__, surface.width, surface.height);
+> +        return;
+> +    }
+> +
+> +    if ((uint64_t)surface.width * bytes_pp > abs(surface.stride)) {
+> +        qxl_set_guest_bug(qxl, "%s: stride too small for width:"
+> +                          " stride %d width %u bpp %u",
+> +                          __func__, surface.stride, surface.width, bytes=
+_pp);
+> +        return;
+> +    }
+> +
+>      surface.mouse_mode =3D true;
+>      surface.group_id   =3D MEMSLOT_GROUP_GUEST;
+>      if (loadvm) {
+> --
+> 2.55.0
+>
 
 
