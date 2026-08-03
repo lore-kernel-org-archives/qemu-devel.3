@@ -4,77 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3B98C55184
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 22:45:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED922C55182
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 22:45:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wr1Ou-00056W-Nm; Mon, 03 Aug 2026 18:44:52 -0400
+	id 1wr1PH-0005Jw-BQ; Mon, 03 Aug 2026 18:45:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1wr1Ot-00056O-I6
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 18:44:51 -0400
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wr1PF-0005JV-HJ; Mon, 03 Aug 2026 18:45:13 -0400
 Received: from fout-a4-smtp.messagingengine.com ([103.168.172.147])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1wr1Or-00056E-Ek
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 18:44:51 -0400
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailfout.phl.internal (Postfix) with ESMTP id C9A9AEC0198;
- Mon,  3 Aug 2026 18:44:47 -0400 (EDT)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wr1PE-00058a-1y; Mon, 03 Aug 2026 18:45:13 -0400
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+ by mailfout.phl.internal (Postfix) with ESMTP id E25D1EC00F8;
+ Mon,  3 Aug 2026 18:45:10 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-01.internal (MEProxy); Mon, 03 Aug 2026 18:44:47 -0400
+ by phl-compute-05.internal (MEProxy); Mon, 03 Aug 2026 18:45:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to; s=fm2; t=1785797087; x=1785883487; bh=T0OXPcKTHt
- XIlM1YislenNZve9HHS3s70OdpUTe/Y3M=; b=6xEbVgVBLoWPn8135C249IbsYS
- rcsP3J2qsTH3DHVq80SJvm5IXeGu7usdTK778dYD6THDNtJ+x+0XE557XPEzKKQp
- zKPery3VplM4PQlKiK2IbhnBcDCV+0PfEv0g6zmoeW9KIoQKNnkVLi0BCNXFcKMy
- m1pcQ4QIc5sgbEDFYCivllp1bbk4MCI0vxWxK6Kv5anrlIsLjh8w7TOQz1RO+R5N
- phoJVlBXplihy/69+pGg/pWuT9v92vDkn72/vKMAC3oBBvko95T5kt/6rG+Q+om1
- xjyIRGJbSAitP8oOSN7fQaAjB+8eiZBAMMZ4CXHZQv4blBREtk1Kyw6afexg==
+ :from:in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm2; t=1785797110; x=
+ 1785883510; bh=08Dw4PPoAm/LKsvgv8DbTs0HZilaul6ArOzGW8pFwwE=; b=E
+ YLZll+ckbpiGVViNhqlq14zLgns9jiXlONBMFlHi1Wg/FOvuxax7hwffDnz2FQdT
+ 6psPKgy8HqHOG0aWXNIuixouTIbZats7RplwTND/4Xxq31+QJbPG7WSFdY8om4sS
+ DbIZbILX42bvnpEt1WhTVbuxIgkXjX573qFqlpPKbQAv8nT++3SMNpn8AXIk+njG
+ NdOj0U2uVn9IQzLaw04zQWbyVsCFKzhjV8AY8clIEkCnX9s2iQEbIgj77azouw+m
+ cS+bcLZMycTmTSn0MkzDmS327Rbvkz31Ktwcsv4aC93IOkPcEQ9fQ8VLlQ8TgieJ
+ 34b15flpnOAy9V4VjDfow==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
- 1785797087; x=1785883487; bh=T0OXPcKTHtXIlM1YislenNZve9HHS3s70Od
- pUTe/Y3M=; b=RovHvyWPP6r42+nVTDGXudRsYjK5+MFAb20hJRSrYlJeyAym/ZA
- 0dZI2dm/WZzTipZN4M5ooa0WOK00NHsd5pfKwgPYm6HP4dsN4yWCn651SxGUD5bV
- F2s+JaAUx5Pw0q9LT38XNbvB2pWn0FBX0EO6ETlUtB9JsuzEFiFrUvb3Zovj778N
- td52OcKgV1RWIKFNeiE0PpBlP/dKEZrymE7xTicv1p+rv9BjbmJUu6qkR48ykSGC
- M5frxfRVw3S7E+trYkx5yD8T0SWEsTK+eThr5K5vCO4Vqt5XSOdWw1lbwipPzezo
- NSKQ6hPEFOgeMkp8OYmyeKJgw1ZfAKlY7pQ==
-X-ME-Sender: <xms:3xlxaie0OydlQv_-i-MDIZhYPvIeZMLPMbVy9vkYyuYriItcANxeIg>
- <xme:3xlxagiq0tvS9khD1vY9ugdoppzx645ybHiYGVZAredDB2lpSI5umeew6adTfON48
- TECkJ5znAiHJJFoGZYs88x_XdulPzd1foWo9ZmxJIud4BDS_02JLXY>
-X-ME-Received: <xmr:3xlxaipIamiYdk_UXw7kodI-RH2KaffKHGZ-lZJmoWUD1kj7sLvmsdUS97gIQ-3f3RfthKjApdoS3aFMwCwBSR-DdwENkWjQQ9LPCugpbgyyfw>
-X-ME-Proxy-Cause: dmFkZTFBJJ8ptpckixU4FgGD5uUi21Ve97eYwbtSUoMzdnYuBqVoF8kYPkdxu+xO8rTb9g
- +74x3WSIyxKhQ5pyYYOmA3/tUhpW+vGDwRbhBMsqcnxCSBIEEM3GQQeNVFXKobh8zTQtR1
- hF5ab/qwcxi//UaDMXggZXaffGcwpZ3Uom8MYnwLgpyZQfSG9VVdvEanpdJfQRgQ46OZJc
- 5GNWQgBt28uvhdf5BvtPUs4zH63KdXE9H9DGM90mm7Rv6MPxv2uLOuSGXudmUrArOrlCdI
- /I8BGVCGFKOEFASwaw91XW1mBkV0hVT4sva+Znawa69Q5yCqGiZ0VfVaFdkvLQ1i6kHQYp
- haPdALvVK/uyCU1HX10g5eVNGJ2slEwMijanirZYOHMG2f1I/imH1FMX7bGTK9+IXdusVY
- soHZ2l7v+mMdeYj+u0sNo6HHQQiTyEtp28qlJel2w2n/rnDtFAehGrN2qfizLGDBdNQMlM
- nbNWGHJI0AsjROe28C07x0ZzRc6MGDXdmABxXHuffjxs+HH+XjjutTdDC6sCaxfm6yKwxW
- v+3Yy2Hce2zvfl4i5VkqHQH3iFDLLyhgfciA9QidbAjgj8pZbmTxgxTsTox52l++AFj5Eq
- BEjiaez5BTVu4E6jm84/QBLTVNlB5QEvaRMpkPbaYARGQwStRlNwv+LldyMA
-X-ME-Proxy: <xmx:3xlxaoFtoJbweq2SJEeLK0eHIBZoEOSmuNuPWmlNuqH6WAYB4qwbmQ>
- <xmx:3xlxakmOGkqMADVYt-djHV9lcvetvO2bgnj8ZpKHvYzffR14ysxi8w>
- <xmx:3xlxarmuOsu1limBiCU3PeLPgLtaNKHzE8vf2SEsSIvvgAyqXLFRbQ>
- <xmx:3xlxalsW5CvVcRHDOt2eV61HJBDTrUMlFES_W2BcKK4GzQnm_77cfg>
- <xmx:3xlxakyKBKtbXypGtPA65BRFx0DCseiKcn58P0F304_b9R9cubnGsY0->
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm3; t=1785797110; x=1785883510; bh=0
+ 8Dw4PPoAm/LKsvgv8DbTs0HZilaul6ArOzGW8pFwwE=; b=O4KXZz+jdhJtjQQkd
+ ZkuKdSetK9EYsl3M7hS7hchUdG+OorC85BQCwM75X1lqiDhad0azhPjKe6qcysIz
+ i+zJj4Vu8dYXmKRfWD6zeOZJfWpPzm+uaXl7yBTgTkE/xCe0UgE4BDAIsSVuQ/kZ
+ zxvTWTSlopWWgrQqOG6GUF4lf3zFqiD37CFNkR5XVIwzDABS9YAflxkF5A1/eKRY
+ UN+kg6bfJr1hZAHPSBdt+ZMuUv2wekNKt3LR41NWHJzAGi//gC4FX92Ob9KTi9q6
+ DaX986kM/l+oXafGakOi0ZLRfby852Kd7CkD9UYaWfzYk7erhUepNEnhZuu23AFY
+ lCCQw==
+X-ME-Sender: <xms:9hlxaulKQwOTY67oYDsdltKF15qtd9YR69NXnt2GRR0URyYM4ayIgA>
+ <xme:9hlxav6aDUjxP-XDbThNcxrAg9xBnZNNhIqETyWB68n1OBNlXX1gl-YY1Vof1vx1t
+ GN8_LD1FS9UcohHtvyuU008n2goTz6Rr7w6ax0SPRqDjsA4bAkT1sXq>
+X-ME-Received: <xmr:9hlxasiNDYG-cPNfM7ZNq2r0q0OYxMkzmyRfRGsQcT2VJXX2B8eEgwdf9iNQ0FBJWjYW0fOiTMefChNkN9gQkGMIsAnqcAwpEVehMV8j5NgGuw>
+X-ME-Proxy-Cause: dmFkZTFXkk6770ximeuBos74vR2JiBpZatXZdclZlrPAvXrkA2heiaORyn0hnKWjHIRFWz
+ VbtxK/TPD3OPlr90XHwHeI5GUrlhvgfz4Lvo6r65by747p5uA18KRjwtDjikUtoj3P+0nB
+ lq6xDGx6w7uwP2bGW43bVFZ1cGeRRCGDZ0al+jx8IF34pWJZQBEy2DAXQABe3WZODjLjaj
+ n6FUTjfBkCgWWQ3B0dzUuYP3vgstYOAUo2y11UOwsS2R1/vVRd5ZlDgahgbEv1vO9/EWR4
+ tVOm7v0luKRlwrMs97altgzlqVKEuvuMELDl/BKSIuu0iy+KbUSanj1oojsLt9GxB8iCh5
+ ARMd0Pj6B3dNtEq/yIqYrZkfjAfFlKZknfUs16Mhnq9nJ39xWy+jd2jhiYqRiCvcgEF1Jg
+ IrmxWb+Mk8Bjx/kjoVV8oR+FCokqa1SQaIeDlt3fbsyPbYdz1TjGba/2rQ4JPACmcb6klI
+ 4a6KvAzq+4htm3dN5i0RBR/0JQ/bQwNtR1ijtXBlZOIkTNC/vOGuB1FEj9KiK9JjUrnS0i
+ F5vzSZTr+NpgvdApBtu5WDCNxkcXQmNxMw9npAJ7J85YhmBuOnjqKPtCwjYc84t6SWs4Pz
+ WVb3P3gjt4BjlhfLWaiEx+cAW2WYOo6EhaGwPUvPGtdPtt/vg9r9NIsfIxqg
+X-ME-Proxy: <xmx:9hlxakEJ8NI73OCms71KlyoW_535nf2xttR0sCd0t7KeJvS3jpMocQ>
+ <xmx:9hlxaqQU_fGv5tVAr7VYP-2dvpmbEIm0dl3iD_odEy4BwES_hSKxtQ>
+ <xmx:9hlxapw_Zh2orwauUVXVOmkB-kWm08xkC67tFxJDyxwKgN14mLkMgg>
+ <xmx:9hlxaufLvXUcbdCeqway6EdiwDeZptpKRgFrD7PlBKzAiWX1ex9S6g>
+ <xmx:9hlxavv4wCdmm9LoeYup1lhl2fxepU8KH3-JNVj6DGeYGHeHafI1d8kX>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Aug 2026 18:44:44 -0400 (EDT)
+ 3 Aug 2026 18:45:06 -0400 (EDT)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Klaus Jensen <k.jensen@samsung.com>
-Subject: [PULL 0/4] hw/nvme queue
-Date: Mon,  3 Aug 2026 15:44:31 -0700
-Message-ID: <20260803224436.38768-1-its@irrelevant.dk>
+ Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org,
+ Jesper Wendel Devantier <foss@defmacro.it>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ qemu-block@nongnu.org
+Subject: [PULL 4/4] hw/nvme: fix leak on copy ranges
+Date: Mon,  3 Aug 2026 15:44:35 -0700
+Message-ID: <20260803224436.38768-5-its@irrelevant.dk>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260803224436.38768-1-its@irrelevant.dk>
+References: <20260803224436.38768-1-its@irrelevant.dk>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=103.168.172.147; envelope-from=its@irrelevant.dk;
@@ -103,32 +110,33 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Klaus Jensen <k.jensen@samsung.com>
 
-Hi,
+The buffer holding the ranges for the copy command is not correctly
+deallocated.
 
-The following changes since commit b428fe036233cbd15d37e3c027ab6ca4d3661a80:
+Fix this.
 
-  Merge tag 'pull-target-arm-20260731' of https://gitlab.com/pm215/qemu into staging (2026-07-31 16:19:04 -0400)
+Cc: qemu-stable@nongnu.org
+Link: https://gitlab.com/qemu-project/qemu/-/work_items/4072
+Fixes: 796d20681d9b ("hw/nvme: reimplement the copy command to allow aio cancellation")
+Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+---
+ hw/nvme/ctrl.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-are available in the Git repository at:
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 8461b6fbdeae..4893cf7e7418 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -2811,6 +2811,7 @@ static void nvme_copy_done(NvmeCopyAIOCB *iocb)
+ 
+     qemu_iovec_destroy(&iocb->iov);
+     g_free(iocb->bounce);
++    g_free(iocb->ranges);
+ 
+     if (iocb->ret < 0) {
+         block_acct_failed(stats, &iocb->acct.read);
+-- 
+2.53.0
 
-  https://gitlab.com/birkelund/qemu.git tags/pull-nvme-20260803
-
-for you to fetch changes up to 7a34f7b8794b29cd1bd4dfa45f7d8e8daba7cff5:
-
-  hw/nvme: fix leak on copy ranges (2026-08-03 15:35:20 -0700)
-
-----------------------------------------------------------------
-nvme queue
-
-----------------------------------------------------------------
-Klaus Jensen (1):
-      hw/nvme: fix leak on copy ranges
-
-Minwoo Im (3):
-      hw/nvme: drop AER requests without aiocb in nvme_del_sq()
-      hw/nvme: factor out nvme_sq_cancel_inflight()
-      hw/nvme: cancel inflight requests on controller reset
-
- hw/nvme/ctrl.c | 42 ++++++++++++++++++++++++++++++++++--------
- 1 file changed, 34 insertions(+), 8 deletions(-)
 
