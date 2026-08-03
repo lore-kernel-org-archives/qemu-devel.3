@@ -4,112 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E09FC55162
-	for <qemu-devel@archiver.kernel.org>; Sun,  2 Aug 2026 19:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FC8AC55174
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 01:29:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqcDL-0000k3-NO; Sun, 02 Aug 2026 15:51:15 -0400
+	id 1wqhUF-0007lL-TJ; Sun, 02 Aug 2026 21:29:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wqcDK-0000jT-5H
- for qemu-devel@nongnu.org; Sun, 02 Aug 2026 15:51:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wqcDH-00043A-Bc
- for qemu-devel@nongnu.org; Sun, 02 Aug 2026 15:51:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785700269;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=yi8phIHzoQKcFpYtA8ucQzawmyX4YiPBDBn1JKKqQQg=;
- b=HXBS1wOeaSkOFoCN90oJfNk1utuKGCPygw83YBUGpNv9RnVUll4NgS+j9fwHBxARJ8O1Us
- SxogHBHnQ6GruqFjd5r/Cx3guD0BB/bhAnwFq4nl9/AW4aoWsh1Ml9VKLY9fjc6Ry2BY1Y
- ymPdxaNqHfqX86Kp8lMRgmQM0rQ1ZQU=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-299-3s9vOKyDMliHVEoeC3CjSg-1; Sun, 02 Aug 2026 15:51:08 -0400
-X-MC-Unique: 3s9vOKyDMliHVEoeC3CjSg-1
-X-Mimecast-MFC-AGG-ID: 3s9vOKyDMliHVEoeC3CjSg_1785700267
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4955ecd8a10so12003485e9.3
- for <qemu-devel@nongnu.org>; Sun, 02 Aug 2026 12:51:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1wqhUE-0007kn-3x
+ for qemu-devel@nongnu.org; Sun, 02 Aug 2026 21:29:02 -0400
+Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1wqhUC-0002Cz-0p
+ for qemu-devel@nongnu.org; Sun, 02 Aug 2026 21:29:01 -0400
+Received: by mail-qt1-x82b.google.com with SMTP id
+ d75a77b69052e-51c8e2e39easo25307851cf.0
+ for <qemu-devel@nongnu.org>; Sun, 02 Aug 2026 18:28:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785720539; cv=none;
+ d=google.com; s=arc-20260327;
+ b=o75jXgZWE18unu/7ZtR3JAPSGGfsiXV61xouPFzgHoUMV1H4GR4Pf9AQpzaICdkCgG
+ sY88sSpVE225PlWBNsqAvHBioQ3XveVKuA6IQQ2wlDzjfwiACOO90NBhuECmfnhHFm1u
+ bnJew2A1t0RDbWKYpGTxTsaIQm3i2luOMwK2VyTV1wVO/0vghQXwNTlUB6KRI/N1D5UH
+ 0r0AxYMX3NjlS98YbmZXY1+lo2vmzXYfGXRl1jghGPaYzzw1C5422yHWTMbuOYxUssEZ
+ twIL1jmL3eQEHcPWoDoRDVBKpcCjGUFKQBHXRVt5yP0IVnn0jztBCY+nvpJGIIpuLrxE
+ JuDw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=BBn0j7iI1Nqb2OtfHct3QoHfOlWs1RAEEWBSgQBWdPQ=;
+ fh=zAf9Wul48xkTrIs6bAeEfpaQhknOU2iSq1CvwgfZtyM=;
+ b=GwMUrbcI1s1d2t3KArHEm/gllF6w2SNZuW23CnoyqmZ5BPXvC47iC/mvwRY0aSLDfj
+ JfGW0k19+FVBWlYHxbR/KrnNV2X7otjn4GZMuzTqOYqcXzSQxH82QH0BPQeyN9CYGX1/
+ vuZn5ZCokMCjx2G5/xpJwDdS1OYRmYhSx5FzpnBdctz40wkOcUT1x1eBX4xZPXoLtPw1
+ pQOiSzmxYODp/U3jxcTJl/jdtAMQEDkMs8O3wcUfct/tmpwR/XEL4CGDEVh9qwBIva7C
+ MRk1xsG31PEPud0j2BFA1reef2B5xcP3LVwwDAxOVxSpItxQfNFDcHGN1doFEqRr0xtn
+ XZsQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785700267; x=1786305067; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=yi8phIHzoQKcFpYtA8ucQzawmyX4YiPBDBn1JKKqQQg=;
- b=YG12/ht7fVNJ5sHm9clePHdBq9VAzyRJSLYfUvyTvCIaSgNaajWUb/4+nzqEmNK1Oi
- xzL6GeGs4fUAzH+kECJEddTdgxvlarh/1D8WxsOlpvmWX3BdVZdvxYuyYBVfYOV84agK
- sJNK4SRD8D18Eqra2MKifqOYPpAJs+g+TlVOFiJxPy4YUD7yK+hwDyTkY82FMX3Uh2Gz
- APWyFZvSB1+ldD5vh1IOOs6eSlj/tcpDAtPcw95QyLCcdqsKrOB+DYIJxawojxs7by81
- p6GmUY/sgnRDkSvloS8GgQa0/BmmtiNJ3+bcsnrmx6B5aH9XO7eV/dvaARomBmMq5HL8
- LPag==
+ d=gmail.com; s=20251104; t=1785720539; x=1786325339; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=BBn0j7iI1Nqb2OtfHct3QoHfOlWs1RAEEWBSgQBWdPQ=;
+ b=JWzkWS9LLZsF5OwrJfIdQG+cGPWTlEgJuQGDSXEY5Dk36/jAc9GiOwvDm9kysXSDUT
+ aG/R2FZdl/VaHxByv5UuBz2Z3JmJsbhyVCr+2X0bI+gm9ucbOAwJaemZqpcWsVu4Ffij
+ y8KpRXhMSwTF56d75keLDtwjZGM6JhQUo4Cw+iassNBCemk0F55wYKiuJyI20CHtFmQS
+ 82IsKcPpsOYQL1qxhRQAFk1SaTXrT1MBPEZNGO6Qgx05DOuhKqtRc6Px55QqYRag1opm
+ SRw79l/AoiVMVwI67rOYGrAiz9z1NqbUTdbmGxIde8Ha3edhC5xf0hN7D7N4vRZRGnYK
+ ZBmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785700267; x=1786305067;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=yi8phIHzoQKcFpYtA8ucQzawmyX4YiPBDBn1JKKqQQg=;
- b=hCw73V30fHKNQ4/C5YZ20bRPUwkeOCyzQP5gysihkLcR8kCgKeaAc5YAkUwtCuFV6m
- D9x+JOSYPQh1jfiUeTQpTmQE8TJ/CX3XEK0gGl07hZm4lC2oNoefSkyy6qSqMFFi56Pl
- mI+z32YgCZ9aAQUu3wXahUe0IZA7ev/5WOTw7vZcUuY9TByqEDTOpBQmgBOfdeOcADBr
- KkahsOOCE2uXOkONuCS1Fx6+UOi6bVFYvovzPCXu/lPuGMPZvRPzw6DpLBa34zHvY0l4
- vMv73MSzF7UevYbSEr8EYEKWt/LLU348K4b25mNsZzRCSSOWfGRJ9XVbDxtmks+oxOBW
- 82jg==
-X-Gm-Message-State: AOJu0YwK+Y/LsJ/lnRpT3q3RJcToDPY9/+pXT1RuNYurcq2gI+CGZUvC
- x8/hya/b4TY55YYhpQFxjpZxWZgEo05jO7XnzA0WkNXFj/CfPXtWiDNsf5/vHbLUIMPQKLG8Wsc
- DBirgEMoL/VfoC+pGG+3/FtFsihLlexzXK0IDiTA5vtkX+dSvKn0sFJ1c
-X-Gm-Gg: AR+sD13dYdIxkFqkIv9vI3ZGYPSMM8Pq9EC0IqgvYNU5GSRvTF2Au8TRSAvWo+uvEli
- 8xXx2VI1XaTzoCJpNw6ykad4RdpR/0lpRIMu5P5ETuMfn+tzRFyiO/EUXyRTOnwU5NxNVXTaAEW
- 9JiAY+t8og/QCUJ23ssgLCrbJlNSeNynrAQDJ1depofhnRNS+PsK13qZJ6zMhrnAfmFuqZfhA1x
- YH/ZOYGuEODdGBHyZPGrUcw12MyfKHknqb2SzxaNahadO1oFqpDrPBqZ6pH1bMovHo8Lo5Fykuh
- t676pjKyx6GBba3Uz3XMFXea47pJ6054/8IVa8AABFDUqJfjn+84AQWYbT6cCC2+kmTAVZg2dTI
- LVkbSMGkJyGGi9xcu7hnFrg==
-X-Received: by 2002:a05:600c:4fc5:b0:495:4e1d:82df with SMTP id
- 5b1f17b1804b1-4980f233e12mr159387005e9.10.1785700266497; 
- Sun, 02 Aug 2026 12:51:06 -0700 (PDT)
-X-Received: by 2002:a05:600c:4fc5:b0:495:4e1d:82df with SMTP id
- 5b1f17b1804b1-4980f233e12mr159386565e9.10.1785700265996; 
- Sun, 02 Aug 2026 12:51:05 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-28-14.inter.net.il. [80.230.28.14])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47fd458bf7csm26532661f8f.32.2026.08.02.12.51.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 02 Aug 2026 12:51:05 -0700 (PDT)
-Date: Sun, 2 Aug 2026 15:51:02 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH v2] docs/devel: relax policy on AI-generated contributions
-Message-ID: <20260802154350-mutt-send-email-mst@kernel.org>
-References: <20260529094619.1034458-1-pbonzini@redhat.com>
+ d=1e100.net; s=20251104; t=1785720539; x=1786325339;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=BBn0j7iI1Nqb2OtfHct3QoHfOlWs1RAEEWBSgQBWdPQ=;
+ b=KgRL+f7mbADM0XYoHQZY7S2LkgZSPiIv8HSYNkqfci57TzLf2KNfPe8e1ggGebQHhY
+ HEpaZxyS9dJlpGyZP2U66y+n5M2a5YHFaZXDvWr3zltBZ1n4oYjmXuNoZEM2YmZv6mav
+ XvBP8n6N0hH9SW6Ia21LJ+zE4mR+B7AuPmwBbXqNER8OtdR9ka/EWgu1AByDc0jLopia
+ mrCF/KYFoJJejtTk+iEfUi3DSvnSs1+e1HZRsk6VtKsZLAalPk+xCm4ni2jR4e5Zqyy5
+ Gak5z6YyMouKtSDdYlRBivf9KuWbNlThY8h/5vYnL9wXSTg6uxDAUlrGEewE6/Tbjj/J
+ 6tfw==
+X-Gm-Message-State: AOJu0YzOljSoZ7NC4oUneCuCDYv+3k8t5ejIcZPXpWOSuAy1Z2uLHnS8
+ MPKicHkeVyTu+1d2Nkh2mCgKClW0TWK1/jo7ViUY0a2/jRCsN/0GvTpaLZcIWuTDmD+cKn3yMAC
+ 7Y3QL8R5ufY1W/Rh3n5rfEpN1khpwTRA=
+X-Gm-Gg: AR+sD12w8hBDmS+m598/s7ZRRHClzZD6v/JpeWz+IxS4qTHCikr51EbSRSSEWCqoLV/
+ lHB2fb2WuWlqSAMOOGrWks4yyGTm0OPKcss8C+ayOBrtP6C3y120MOqkBpN7tSnaap8TT7nHUw2
+ mWWKI3Hynzk7hoHo3QL8vEc26efHtRTsKclKDDfkjE8pGbNxsp62gMZo5OPePr8I7z11xsLj+oo
+ hp3JMANIXOiya6yXDiauMqE0u7uv5VVTlD0vREcPb67pVm4qdszTv5PhHq366umNjqx2+qm71jf
+ R/+cJp3aFae4JQjcxlJImIBxkrOdbzTAQOlIbO5H3yMsvjSCoxpxcUshxRY2dMaoGjV+tjyM8/h
+ lxglufUsVka0=
+X-Received: by 2002:a05:622a:34a:b0:50d:3e1e:7998 with SMTP id
+ d75a77b69052e-52b567b2834mr159101381cf.37.1785720538621; Sun, 02 Aug 2026
+ 18:28:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260529094619.1034458-1-pbonzini@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
+ <20260723-vhost-user-isolated-memory-v1-11-6b97c439eb28@gmail.com>
+ <9f5869df-0484-456e-8060-b3a9f74a388b@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <9f5869df-0484-456e-8060-b3a9f74a388b@rsg.ci.i.u-tokyo.ac.jp>
+From: Connor Kite <connorkite@gmail.com>
+Date: Sun, 2 Aug 2026 18:28:47 -0700
+X-Gm-Features: AUfX_mzZDcm4a9vrCa4Ld9wCsHu6UqJwZERC-Vg76qBXAzrql4EJBxcYlE9h9LA
+Message-ID: <CA+spn3oGVk0YNKNcFpiCWqg_EPNjeM9W2UwGwepRND27GP8ydg@mail.gmail.com>
+Subject: Re: [PATCH RFC 11/15] hw/virtio/vhost-user: create isolation region
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Raphael Norwitz <rnorwitz@nvidia.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org, 
+ virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
+ zhenwei pi <zhenwei.pi@linux.dev>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
+ Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
+ envelope-from=connorkite@gmail.com; helo=mail-qt1-x82b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.811,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,274 +137,261 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 29, 2026 at 11:46:19AM +0200, Paolo Bonzini wrote:
-> Until now QEMU's code provenance policy declined any contribution
-> believed to include or derive from AI-generated content.  A blanket ban
-> was easy to maintain while LLM output was rarely usable on its own, but
-> as the tools improved an absolute prohibition has become harder to
-> justify.
-> 
-> The concern that motivated the policy is unchanged, and it is worth stating
-> precisely: the DCO is about whether the submitter has the legal right to
-> contribute the code, not about "creative expression".  While the status of
-> LLM output seems to be converging towards non-copyrightability, questions
-> around unintentional reproduction of copyrighted code are still open.
-> What has shifted is the balance of risk:
-> 
-> - projects accepting AI-assisted content have not run into serious
->   legal trouble so far, which suggests the probability of the risk
->   materializing is not high;
-> 
-> - other organizations, such as Red Hat[1], have assessed the risk as
->   acceptable -- though a community of individual developers does not
->   have the legal backing of a company, and even an unfounded dispute
->   would be a long-lasting distraction from work on QEMU.
-> 
-> Nevertheless, even Red Hat mentions that "the possibility of occasional
-> replication cannot be ignored".  In QEMU's view, attentiveness and
-> oversight are not a practical way to address this; yet as a copyleft
-> project, copyright and code provenance are of utmost importance to us.
-> Therefore, it remains prudent to only permit AI assistance where the
-> ramifications of copyright violations are at least easy to revert and
-> unlikely to spread: tests, documentation, mechanical changes, and small
-> bug fixes.  Core code that other things depend on, and that cannot
-> simply be thrown away once a problem is noticed long after the fact,
-> stays off-limits without prior agreement from a maintainer.
-> 
-> Related to this, and already visible in the incredible uptick in
-> security reports, is the question of maintainer burnout and the shift in
-> effort from the author to the reviewer of the code.  AI lowers the cost of
-> producing a patch but does nothing to lower the cost of understanding and
-> reviewing one; if anything it raises it, since a reviewer can no longer
-> assume that the submitter has reasoned through every line.  The limits
-> above work just as much to keep the volume of review work sustainable.
-> 
-> Revise the policy according to the above considerations, and introduce the
-> "AI-used-for:" trailer as a record of where AI was used.  The standard is
-> slightly different from the more usual "Assisted-by"; the intention is for
-> the metadata to provide more information for reviewers to judge the result.
-> 
-> In any case, use of AI does not relax any other contribution requirement:
-> authors still comply with the DCO and take responsibility for the whole
-> patch via Signed-off-by.
-> 
-> [Commit message largely based on
->  https://lore.kernel.org/qemu-devel/ahXbxzB4C_lr6b0N@redhat.com/, by
->  Kevin Wolf. - Paolo]
+On Fri, Jul 24, 2026 at 5:53=E2=80=AFAM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+...
+>
+> u->iso_memory is zeroed before they are read here.
+>
+...
+>
+> This should be new_entry as per: docs/devel/style.rst
+>
+...
+>
+> The check of u->iso_memory.base_addr is redundant;
+> cleanup_isolation_regions() performs that check.
+>
+> cleanup_isolation_regions() also calls vhost_iova_tree_delete(), so the
+> duplicate call of the function leads to use-after-free and double-free.
+>
 
-So GCC has now decided that 15 lines or so is ok, if a maintainer
-decides so, and that one
-should only count significantly different changes, what they call,
-following the gnu maintainer guidelines "legally significant contributions":
+Thanks!  Will fix these.
 
-	A change of just a few lines (less than 15 or so) is not legally
-	significant for copyright. A regular series of repeated changes, such as
-	renaming a symbol, is not legally significant even if the symbol has to
-	be renamed in many places. 
+>
+> I wonder if it is fine to dismiss return values of
+> vhost_iova_tree_map_alloc() and vhost_iova_tree_map_alloc_gpa().
+>
 
+It probably makes sense to add a check here and return with the value on er=
+ror
 
-I note that the gnu project maintainer guidelines follow this with
-" Keep in mind, however, that a series of minor changes by the same
-person can add up to a significant contribution. What counts is the
-total contribution of the person; it is irrelevant which parts of it
-were contributed when."
-
-which I guess would be hard to apply to AI generated code, so they don't
-try.
-
-
-GCC also makes an exception for tests and I guess we could make
-an exception for internal developer docs?
-
-
-
-> [1] https://www.redhat.com/en/blog/ai-assisted-development-and-open-source-navigating-legal-issues
-> Acked-by: Michael S. Tsirkin <mst@redhat.com>
-> Cc: Alex Bennée <alex.bennee@linaro.org>
-> Cc: Alistair Francis <alistair.francis@wdc.com>
-> Cc: BALATON Zoltan <balaton@eik.bme.hu>
-> Cc: Daniel P. Berrangé <berrange@redhat.com>
-> Cc: Fabiano Rosas <farosas@suse.de>
-> Cc: Kevin Wolf <kwolf@redhat.com>
-> Cc: Peter Maydell <peter.maydell@linaro.org>
-> Cc: Warner Losh <imp@bsdimp.com>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Link: https://lore.kernel.org/qemu-devel/20260524083329-mutt-send-email-mst@kernel.org/T/
-> Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
-> ---
->  docs/devel/code-provenance.rst | 142 ++++++++++++++++++++++-----------
->  1 file changed, 94 insertions(+), 48 deletions(-)
-> 
-> diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
-> index 65b8f232a08..857588c43ba 100644
-> --- a/docs/devel/code-provenance.rst
-> +++ b/docs/devel/code-provenance.rst
-> @@ -1,7 +1,7 @@
->  .. _code-provenance:
->  
-> -Code provenance
-> -===============
-> +Code provenance and AI usage
-> +============================
->  
->  Certifying patch submissions
->  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> @@ -288,62 +288,108 @@ content generators below.
->  Use of AI-generated content
->  ~~~~~~~~~~~~~~~~~~~~~~~~~~~
->  
-> -TL;DR:
-> +.. warning::
->  
-> -  **Current QEMU project policy is to DECLINE any contributions which are
-> -  believed to include or derive from AI generated content. This includes
-> -  ChatGPT, Claude, Copilot, Llama and similar tools.**
-> +   Please read the below policy before using AI to contribute code or
-> +   documentation to QEMU.  This applies to ChatGPT, Claude, Copilot,
-> +   Llama, and similar tools.**
->  
-> -  **This policy does not apply to other uses of AI, such as researching APIs
-> -  or algorithms, static analysis, or debugging, provided their output is not
-> -  included in contributions.**
-> +The increasing prevalence of AI-assisted software development,
-> +and especially the use of content generated by `Large Language Models
-> +<https://en.wikipedia.org/wiki/Large_language_model>`__ (LLMs),
-> +poses a number of difficult questions.
->  
-> -The increasing prevalence of AI-assisted software development results in a
-> -number of difficult legal questions and risks for software projects, including
-> -QEMU.  Of particular concern is content generated by `Large Language Models
-> -<https://en.wikipedia.org/wiki/Large_language_model>`__ (LLMs).
-> +Risks to open source projects include maintainer burnout from an
-> +increased number of contributions, as well as the risk to the project
-> +from unintentional inclusion of copyrighted material in the LLM's output.
-> +In order to mitigate these risks, the QEMU project currently allows
-> +using AI/LLM tools to produce patches in a limited set of scenarios:
->  
-> -The QEMU community requires that contributors certify their patch submissions
-> -are made in accordance with the rules of the `Developer's Certificate of
-> -Origin (DCO) <dco>`.
-> +**Mechanical changes**
-> +  If you can use a deterministic tool, it is preferred that you use it
-> +  and not replace it with AI. If you don't know how to do the change
-> +  deterministically, you can ask the AI for help.
->  
-> -To satisfy the DCO, the patch contributor has to fully understand the
-> -copyright and license status of content they are contributing to QEMU. With AI
-> -content generators, the copyright and license status of the output is
-> -ill-defined with no generally accepted, settled legal foundation.
-> +**Small bug fixes**
-> +  These should be limited to 20 lines of code or less, not including
-> +  tests.  You are still expected to :ref:`understand and explain your changes
-> +  <write_a_meaningful_commit_message>` and the rationale behind them.
->  
-> -Where the training material is known, it is common for it to include large
-> -volumes of material under restrictive licensing/copyright terms. Even where
-> -the training material is all known to be under open source licenses, it is
-> -likely to be under a variety of terms, not all of which will be compatible
-> -with QEMU's licensing requirements.
-> +**Documentation and code comments**
-> +  While AI can help draft text, it still requires significant human
-> +  oversight.  Pay attention to the organization and flow of the generated
-> +  text, and strictly fact-check all technical details as LLMs are prone
-> +  to being confidently wrong.
->  
-> -How contributors could comply with DCO terms (b) or (c) for the output of AI
-> -content generators commonly available today is unclear.  The QEMU project is
-> -not willing or able to accept the legal risks of non-compliance.
-> +**Tests**
-> +  Note that you must still confirm that each test actually exercises
-> +  the intended behavior including, for regression tests, that it
-> +  fails without the code under test and passes for the right reason.
->  
-> -The QEMU project thus requires that contributors refrain from using AI content
-> -generators on patches intended to be submitted to the project, and will
-> -decline any contribution if use of AI is either known or suspected.
-> +These boundaries do not apply to other uses of AI, such as researching
-> +APIs or algorithms, static analysis, or debugging, provided the model's
-> +output is not included in contributions.
->  
-> -Examples of tools impacted by this policy includes GitHub's CoPilot, OpenAI's
-> -ChatGPT, Anthropic's Claude, and Meta's Code Llama, and code/content
-> -generation agents which are built on top of such tools.
-> +If you wish to send large amounts of AI-generated changes, or any other
-> +contribution not in the above categories, please get in touch with the
-> +maintainer beforehand.  These can be treated as experiments, at the
-> +discretion of the maintainer and the community, with no obligation
-> +to accept them.
->  
-> -This policy may evolve as AI tools mature and the legal situation is
-> -clarified.
-> +**Use of AI does not remove the need for authors to comply with all
-> +other requirements for contribution.**  In particular, the
-> +``Signed-off-by`` label in a patch submission is a statement that
-> +the author takes responsibility for the entire contents of the patch,
-> +certifying that their patch submission is made in accordance with the
-> +rules of the `Developer's Certificate of Origin (DCO) <dco>`.
->  
-> -Exceptions
-> -^^^^^^^^^^
-> +Commit messages for AI-assisted changes
-> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->  
-> -The QEMU project welcomes discussion on any exceptions to this policy,
-> -or more general revisions. This can be done by contacting the qemu-devel
-> -mailing list with details of a proposed tool, model, usage scenario, etc.
-> -that is beneficial to QEMU, while still mitigating issues around compliance
-> -with the DCO.  After discussion, any exception will be listed below.
-> +When AI/LLM tools produce or substantively shape your patch, add an
-> +``AI-used-for:`` line before ``Signed-off-by``, as a reminder of your
-> +DCO obligations and a guide to reviewers.  The text is one or more of
-> +``code``, ``tests``, ``docs``, ``research``, possibly followed by an
-> +explanation in parentheses:
->  
-> -Exceptions do not remove the need for authors to comply with all other
-> -requirements for contribution.  In particular, the "Signed-off-by"
-> -label in a patch submission is a statement that the author takes
-> -responsibility for the entire contents of the patch, including any parts
-> -that were generated or assisted by AI tools or other tools.
-> +.. code-block:: none
-> +
-> +     AI-used-for: tests, docs
-> +     AI-used-for: code
-> +     AI-used-for: code (refactoring)
-> +     AI-used-for: code (prototype)
-> +     AI-used-for: research
-> +
-> +``AI-used-for`` should not be included for "background" usage such as
-> +autocomplete or obtaining a pre-review of the patch.
-> +
-> +There is no requirement to include your prompts or summarize the
-> +conversation in the commit message or cover letter, but you may do so
-> +if you think it helps a reviewer judge the result.  For example:
-> +
-> +**Helpful prompts**
-> +  These describe concrete constraints or instructions, making it easy for a
-> +  reviewer to see how the tool's output was guided:
-> +
-> +  * "move field ``foo`` from ``struct aa`` to ``struct bb``.  If a
-> +    function already has a local variable or parameter of type ``struct
-> +    bb``, use it instead of accessing ``aa.bb``"
-> +
-> +  * "add an implementation of the trait for ``Mutex<T: MyTrait>``; it
-> +    takes the lock around the calls and forwards to ``T``"
-> +
-> +**Unhelpful prompts**
-> +  These are too generic to provide meaningful context.  You can of course
-> +  use them in the context of a complex interaction with the LLM, but they
-> +  should not be included in the commit message:
-> +
-> +  * "write user-facing documentation for the new tool"
-> +
-> +  * "write testcases for the new functions"
-> +
-> +QEMU does *not* use ``Assisted-by``, ``Co-authored-by`` or ``Generated-by``
-> +trailers to indicate AI usage.  In particular, it is not necessary to
-> +specify the exact AI model or tool used to create the commit.
-> +
-> +Deterministic tooling (sed, coccinelle, formatters) is out of scope for
-> +the trailer, but should be mentioned in the commit message.
-> -- 
-> 2.54.0
-
+On Fri, Jul 24, 2026 at 5:53=E2=80=AFAM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>
+> On 2026/07/24 7:30, Connor Kite wrote:
+> > If memory isolation mode is active for the vhost-user device adds
+> > features to:
+> > - Gather the size required for bounce buffers and vrings in shared
+> >    isolation region
+> > - Allocate the required space in an anonymous file
+> > - Create a vhost-iova-tree with space to map entire isolation region
+> > - Map guest memory regions and shared vrings into the tree
+> > - Release these resources upon backend cleanup
+> >
+> > Signed-off-by: Connor Kite <connorkite@gmail.com>
+> > ---
+> >   hw/virtio/vhost-user.c | 129 ++++++++++++++++++++++++++++++++++++++++=
++++++++++
+> >   1 file changed, 129 insertions(+)
+> >
+> > diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> > index f296b63fb9..710cf966f8 100644
+> > --- a/hw/virtio/vhost-user.c
+> > +++ b/hw/virtio/vhost-user.c
+> > @@ -18,6 +18,7 @@
+> >   #include "hw/virtio/vhost-backend.h"
+> >   #include "hw/virtio/virtio.h"
+> >   #include "hw/virtio/virtio-net.h"
+> > +#include "hw/virtio/vhost-iova-tree.h"
+> >   #include "chardev/char-fe.h"
+> >   #include "io/channel-socket.h"
+> >   #include "system/kvm.h"
+> > @@ -25,6 +26,7 @@
+> >   #include "qemu/main-loop.h"
+> >   #include "qemu/uuid.h"
+> >   #include "qemu/sockets.h"
+> > +#include "qemu/memfd.h"
+> >   #include "system/runstate.h"
+> >   #include "system/cryptodev.h"
+> >   #include "migration/postcopy-ram.h"
+> > @@ -320,6 +322,13 @@ static VhostUserMsg m __attribute__ ((unused));
+> >   /* The version of the protocol we support */
+> >   #define VHOST_USER_VERSION    (0x1)
+> >
+> > +typedef struct IsolationRegion {
+> > +    uint64_t base_addr;
+> > +    uint64_t vring_base_addr;
+> > +    uint64_t size;
+> > +    int iso_fd;
+> > +} IsolationRegion;
+> > +
+> >   struct vhost_user {
+> >       struct vhost_dev *dev;
+> >       /* Shared between vhost devs of the same virtio device */
+> > @@ -353,6 +362,10 @@ struct vhost_user {
+> >        * by the backend (see @features).
+> >        */
+> >       uint64_t protocol_features;
+> > +
+> > +    /* Isolated memory data*/
+> > +    struct IsolationRegion iso_memory;
+> > +    VhostIOVATree *iso_iova_tree;
+> >   };
+> >
+> >   struct scrub_regions {
+> > @@ -1109,6 +1122,121 @@ static int vhost_user_set_mem_table_postcopy(st=
+ruct vhost_dev *dev,
+> >       return 0;
+> >   }
+> >
+> > +/* TODO: Is there any notifier cleanup required here?*/
+> > +static void cleanup_isolation_regions(struct vhost_dev *dev)
+> > +{
+> > +    struct vhost_user *u =3D dev->opaque;
+> > +    if (u->iso_memory.base_addr) {
+> > +        vhost_iova_tree_delete(u->iso_iova_tree);
+> > +        u->iso_iova_tree =3D NULL;
+> > +        memset(&u->iso_memory, 0, sizeof(IsolationRegion));
+> > +        qemu_memfd_free((gpointer) u->iso_memory.base_addr, u->iso_mem=
+ory.size,
+> > +                         u->iso_memory.iso_fd);
+>
+> u->iso_memory is zeroed before they are read here.
+>
+> > +        u->iso_memory.base_addr =3D 0;
+> > +    }
+> > +}
+> > +
+> > +__attribute__((unused))
+> > +static int init_isolation_regions(struct vhost_dev *dev,
+> > +                                  VhostUserMsg *msg,
+> > +                                  int *fds, size_t *fd_num)
+> > +{
+> > +    Error *err =3D NULL;
+> > +    struct vhost_user *u =3D dev->opaque;
+> > +    uint32_t nregions =3D dev->mem->nregions;
+> > +    uint64_t buffer_reg_size =3D 0;
+> > +    DMAMap newEntry =3D {
+>
+> This should be new_entry as per: docs/devel/style.rst
+>
+> > +        .perm =3D IOMMU_RW
+> > +    };
+> > +    g_autoptr(GArray) buffer_regions =3D
+> > +        g_array_new(FALSE, TRUE, sizeof(DMAMap));
+> > +
+> > +    msg->hdr.request =3D VHOST_USER_SET_MEM_TABLE;
+> > +
+> > +    /* In case of reset, clear old regions*/
+> > +    if (u->iso_memory.base_addr !=3D 0) {
+> > +        cleanup_isolation_regions(dev);
+> > +        vhost_iova_tree_delete(u->iso_iova_tree);
+> > +    }
+>
+> The check of u->iso_memory.base_addr is redundant;
+> cleanup_isolation_regions() performs that check.
+>
+> cleanup_isolation_regions() also calls vhost_iova_tree_delete(), so the
+> duplicate call of the function leads to use-after-free and double-free.
+>
+> > +
+> > +    /* Gather information for bounce buffers to be mapped */
+> > +    for (int i =3D 0; i < nregions; i++) {
+> > +        struct vhost_memory_region *dev_region =3D &dev->mem->regions[=
+i];
+> > +        hwaddr size =3D ROUND_UP(dev_region->memory_size,
+> > +                      qemu_real_host_page_size());
+> > +        newEntry.translated_addr =3D dev_region->guest_phys_addr;
+> > +        newEntry.size =3D size - 1;
+> > +        buffer_reg_size +=3D size;
+> > +        g_array_append_val(buffer_regions, newEntry);
+> > +    }
+> > +
+> > +    int num;
+> > +    size_t desc_size;
+> > +    size_t avail_size;
+> > +    size_t driver_area_size;
+> > +    size_t device_area_size;
+> > +    size_t total_vring_size =3D 0;
+> > +    size_t total_mmap_size;
+> > +
+> > +    /* Get space required for all vrings */
+> > +    for (int j =3D 0; j < dev->nvqs; j++) {
+> > +        num =3D virtio_queue_get_num(dev->vdev, dev->vq_index + j);
+> > +        desc_size =3D sizeof(vring_desc_t) * num;
+> > +        avail_size =3D offsetof(vring_avail_t, ring[num]) +
+> > +                        sizeof(uint16_t);
+> > +        driver_area_size =3D ROUND_UP(desc_size + avail_size,
+> > +                            qemu_real_host_page_size());
+> > +        device_area_size =3D ROUND_UP(offsetof(vring_used_t, ring[num]=
+) +
+> > +                                    sizeof(uint16_t),
+> > +                                    qemu_real_host_page_size());
+> > +        total_vring_size +=3D driver_area_size + device_area_size;
+> > +    }
+> > +
+> > +    total_mmap_size =3D buffer_reg_size + total_vring_size;
+> > +
+> > +    /* Allocate and map an anonymous file to hold the isolation region=
+ */
+> > +    u->iso_memory.base_addr =3D (uint64_t) qemu_memfd_alloc("iso_r",
+> > +                              total_mmap_size,
+> > +                              F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEA=
+L,
+> > +                              &u->iso_memory.iso_fd, &err);
+> > +    u->iso_memory.size =3D total_mmap_size;
+> > +
+> > +    if (err) {
+> > +        error_report_err(err);
+> > +        cleanup_isolation_regions(dev);
+> > +        return -1;
+> > +    }
+> > +
+> > +    uint64_t last_addr =3D int128_get64(int128_add(u->iso_memory.base_=
+addr,
+> > +                                                 total_mmap_size - 1))=
+;
+> > +
+> > +    /*
+> > +     * Instantiates iova tree sized to map bounce buffers and vrings t=
+o the
+> > +     * isolation region in host va.
+> > +     */
+> > +    u->iso_iova_tree =3D vhost_iova_tree_new(u->iso_memory.base_addr, =
+last_addr);
+> > +
+> > +    assert(&u->iso_memory.iso_fd >=3D 0);
+> > +    DMAMap *map;
+> > +    DMAMap vring_map =3D {
+> > +        .perm =3D IOMMU_RW,
+> > +        .size =3D total_vring_size - 1,
+> > +        /*vrings are allocated on tree first, so will be assigned base=
+ addr*/
+> > +        .translated_addr =3D u->iso_memory.base_addr
+> > +    };
+> > +
+> > +    vhost_iova_tree_map_alloc(u->iso_iova_tree, &vring_map,
+> > +                              vring_map.translated_addr);
+> > +    u->iso_memory.vring_base_addr =3D vring_map.iova;
+> > +    for (int i =3D 0; i < buffer_regions->len; i++) {
+> > +        map =3D &g_array_index(buffer_regions, DMAMap, i);
+> > +        vhost_iova_tree_map_alloc_gpa(u->iso_iova_tree, map,
+> > +                                      map->translated_addr);
+>
+> I wonder if it is fine to dismiss return values of
+> vhost_iova_tree_map_alloc() and vhost_iova_tree_map_alloc_gpa().
+>
+> Regards,
+> Akihiko Odaki
+>
+> > +    }
+> > +
+> > +    return 0;
+> > +}
+> > +
+> >   static int vhost_user_set_mem_table(struct vhost_dev *dev,
+> >                                       struct vhost_memory *mem)
+> >   {
+> > @@ -2681,6 +2809,7 @@ static int vhost_user_backend_cleanup(struct vhos=
+t_dev *dev)
+> >       g_free(u->region_rb_offset);
+> >       u->region_rb_offset =3D NULL;
+> >       u->region_rb_len =3D 0;
+> > +    cleanup_isolation_regions(dev);
+> >       g_free(u);
+> >       dev->opaque =3D 0;
+> >
+> >
+>
 
