@@ -4,61 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBA64C55196
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 21:02:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 460C0C55182
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 21:14:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqznB-0006Ti-Em; Mon, 03 Aug 2026 17:01:49 -0400
+	id 1wqzye-00085n-9g; Mon, 03 Aug 2026 17:13:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wqzn7-0006TS-7W
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 17:01:45 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wqzn5-0000Aj-EV
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 17:01:44 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 1168360A59;
- Mon,  3 Aug 2026 21:01:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3C831F000E9;
- Mon,  3 Aug 2026 21:01:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1785790898;
- bh=bY2KJIhnhmWBex2exMsEUUldtupO89FVahXGNRIrCsM=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=BsiCGo9T97MlsPmg3cX14PI61kE4eJQEhV6pRB8xn0u9BDGZ3fdKSzLzH6BAPuy0s
- CyoToC5kY57eT3Q8hbKjcWbA/RnsDkmp+atDuJEhNi/LUSTEWkf+jYBBWOj+70ckRC
- amoOwF+DfYBlK1Lz4Rx1/MkEgtFzhXTL9Dq/8FjoNtxk1WEIG0A2A05yVMsD1RIzeK
- o8Gfxvf7Bx+DGZ1d9YlgJizWTtYTNUVA9Mzd61dIXkECY2k8WLScRbeCX8RxEE7Akq
- HLVUlRqTZsyqulZz0hvX921HsezwvDxYb4lB7j+YnpeHVpogTQ/OA9fkzkJbt4xih0
- ZeCG1Pk2PjAhg==
-Date: Mon, 3 Aug 2026 23:01:35 +0200
-From: Helge Deller <deller@kernel.org>
-To: Andreas Schwab <schwab@linux-m68k.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: Helge Deller <deller@gmx.de>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] linux-user: Fix msqid_ds struct wrt 32-bit big endian
- architectures
-Message-ID: <anEBr8nK-4nKmuXj@p100>
-References: <20260728192913.61279-1-deller@kernel.org>
- <CAFEAcA_8o2A8FDsJKacde+pdj4HzA5c7aTw=k7tmONYXD4=c_w@mail.gmail.com>
- <244987da-f6d8-47a8-ac4a-16a71c660e36@gmx.de>
- <CAFEAcA9F8rauUNc2NAqbnf1f7-0O_ivft1XOftwt1hW0YWeeJw@mail.gmail.com>
- <a8c13cdc-54c3-4913-bc6e-956cbfe082cb@gmx.de>
- <87ecgfkrg9.fsf@igel.home>
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1wqzyc-00085E-2H
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 17:13:38 -0400
+Received: from mail-qt1-x830.google.com ([2607:f8b0:4864:20::830])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1wqzya-0002c9-MP
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 17:13:37 -0400
+Received: by mail-qt1-x830.google.com with SMTP id
+ d75a77b69052e-51c5382806fso36916071cf.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 14:13:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785791615; cv=none;
+ d=google.com; s=arc-20260327;
+ b=XrXW2F1jmhCKTNnD4O8zB28p0ANLYfHN8EmOOCqA+ElIfX61C9X6I1FnFEVEo7Ft9V
+ a7WHauLhiTggX5SshFCXFYyIT0QD0ZcvqgcQ5777M3qLslKKEs5lEBoQm2gPyg4pdmEu
+ yLRpVgmcOJ4Xo+Almd3GofgMeAQhfGfJq/Zo7tkii5D9LRg9N0cAVhLIauc8JrWYxThA
+ RuQvWt2ehzY1Ou4NzVIv1sfowLdamEA0Bq/OQ/ohEY19KR0dOCNaAurXr4bSZVlmZkyb
+ IBqNg1Rqao4UIC6lk/nUgfLaJZP+xGc2ZH5uNOqqnsnmGmRGgEE3Dbg4F2Lp2sM1CvVb
+ x1OA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=hT+cJbgNjyBy4vcwWTIgV40hxtVdgcRtIAyv/2vkSGQ=;
+ fh=azakwI4Xb9f6DnAcztET+ugSHXzSSw4voANLU4fk32Q=;
+ b=VbSxfDK8VAJ8Yo0kx/xy/hrWHHdighlXBMVbV1zBhaSH3sl9xOA4Y4bWEqaiFtLyOD
+ kwaXI4tad2ovT2kJg20Q2PEvXTPHrqBgucOI3Va72tur8fjZDizzM8BTg2mzfkUk5oZE
+ B+VkadN612bKF2qmF4MQnS7BG+nLzMO9GjpjResxhIxGbg17N2QZtHm3bthDovhqm7xE
+ 0bsQ5CNB/jvmrY0zqGUcD2qDHsqs2PGqK/+X+626yPPjXjIAVeoKKLCDCGo40CETLIuG
+ jFMJc6w2+RWPkAztInztDkW05rC0T243Q3ORGcuCyNvqCreqjO2kAy3f9bnEvgNk/a20
+ axKw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785791615; x=1786396415; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=hT+cJbgNjyBy4vcwWTIgV40hxtVdgcRtIAyv/2vkSGQ=;
+ b=Vj65TGqajjX++fC7Tb0AGAoxE9SsfCsA6wLHyg67s0NiluByv3NcDxPmwHmgprXZb6
+ 7yRcekJ4STUnwIrXx/ory00IW1uc7Zuv2qOcxIhum8msgwudwHkyqUhuotID7nFf28EF
+ xgKd+AeK9d/iHf69qzDMl7l92FRAdcOD0K1yBiU3n4p9vipNjlsk29+YpOaux7yFQVoC
+ TuQ7wzx0n4SqDJg/alVtygTlzydgI3aF4wVzDXfSMWt46FCqQEi1vc3e27ua6//6u+P2
+ hUUsr5861dDA6w5PXWSXnfIyEHuhIyyNAWlp+NOoIcMMpiMLmjYQj4WGJAdFBcrUbCkI
+ ea1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785791615; x=1786396415;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=hT+cJbgNjyBy4vcwWTIgV40hxtVdgcRtIAyv/2vkSGQ=;
+ b=T1Bsm+VWM0N2XCmbmTM+6oHNu4rGm9i8bcfdMo1k5Xof5TWqYPoCaHSbMUZOz5lynZ
+ FKTW1Xwm9iGJfcFT9IqYetlCZWcCPZrBiotQjMVfli6T4/tTmw2qOXgcVq3DxvOygswY
+ FdMAkpbmeHuuxkzaKRQ7PYJFuLpRheSsyP5sX1zhIW5TWpEjp28Nbg5wU6yyjc5CxXvk
+ aj6ZGZ2++ilj2zv/GDc6bEMyGcct0lwGzF+rFmSR29XV2mojk6IQWeFI3K17s+f2adfH
+ U1FCCRmG1BBjZPVK89YyJWE7f+Db5BsgFlf6Q40FZcpTdd4TKmWMPK23GX8w/Z3/VRs4
+ yJEA==
+X-Gm-Message-State: AOJu0YzxM3TmdBEKuBI+d6VEbFnKj98phYI1fnP+RTmbQxkaOk3poVhH
+ 2GC4R7kbnv6Bki5vTt7RF2pc/E3BNWyTprBw0eDft0+gOs4WGTZZF+sNnjzTfYEDSnHM23FcX1a
+ Uvr7AmuXOQxw/jaQ1PXF8YSMr9cyoy3k=
+X-Gm-Gg: AR+sD12OZnmKmEwG6OD/gA0bdYtYystRp9Pb5mKU8KJaGugXi+poKiDKIMz/aNQNHKr
+ jLri+blBUox92I3bwDwAnPveLrc1s8UoiqPEvy4Iz8gp7hJHihn/2IYx47tsghmFc3GYNQ3SNhq
+ tKVfRe+2gHLlqU49vT66XJWrqdUeVO/Nf84k2txXfeaw68cCsaLkWJmjj9TbltT+8RzA+DHQrfA
+ fsoUjczdEWSOkj9wsh4PQmNupCWW/Qd1fK362mteQowE1paGI6QD2rUvdhCu3wQlKd3NCETXOnV
+ 4u4DHcbBH2WImOHT28eEtyAH6aeR0Kc8MRBTQKbhxbNHc99xIQlzJ9PDtuEzSLNnWYUQbA/NHkK
+ a
+X-Received: by 2002:ac8:5c8f:0:b0:51c:2190:3b47 with SMTP id
+ d75a77b69052e-52b5666c7d8mr246614041cf.2.1785791615528; Mon, 03 Aug 2026
+ 14:13:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87ecgfkrg9.fsf@igel.home>
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.811,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
+ <20260723-vhost-user-isolated-memory-v1-6-6b97c439eb28@gmail.com>
+ <f7776822-106c-47d0-ada9-fab75f68c76d@redhat.com>
+In-Reply-To: <f7776822-106c-47d0-ada9-fab75f68c76d@redhat.com>
+From: Connor Kite <connorkite@gmail.com>
+Date: Mon, 3 Aug 2026 14:13:24 -0700
+X-Gm-Features: AUfX_mxjrOT6EN9f6nOZy_M_lmCwvv6GQNTDcDJCJ16qrlFbkhRfh-vc1CvT5tQ
+Message-ID: <CA+spn3rjAu5EcWBwG4NJmwqobdggJmZYVPrvn5Yq58Zyf0NEDA@mail.gmail.com>
+Subject: Re: [PATCH RFC 06/15] util/iova-tree: g_tree_foreach wrapper
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Haixu Cui <quic_haixcui@quicinc.com>, 
+ Raphael Norwitz <rnorwitz@nvidia.com>, Kevin Wolf <kwolf@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org, 
+ virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
+ zhenwei pi <zhenwei.pi@linux.dev>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
+ Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::830;
+ envelope-from=connorkite@gmail.com; helo=mail-qt1-x830.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,71 +138,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Andreas Schwab <schwab@linux-m68k.org>:
-> On Aug 01 2026, Helge Deller wrote:
-> 
-> > m68k could be a problem.
-> > The other big-arches seem to be handled correctly by the kernel:
-> > arch/sparc/include/uapi/asm/msgbuf.h:struct msqid64_ds {
-> > arch/parisc/include/uapi/asm/msgbuf.h:struct msqid64_ds {
-> > arch/xtensa/include/uapi/asm/msgbuf.h:struct msqid64_ds {
-> > arch/x86/include/uapi/asm/msgbuf.h:struct msqid64_ds {
-> > arch/powerpc/include/uapi/asm/msgbuf.h:struct msqid64_ds {
-> > arch/mips/include/uapi/asm/msgbuf.h:struct msqid64_ds {
-> > arch/mips/include/uapi/asm/msgbuf.h:struct msqid64_ds {
-> > arch/mips/include/uapi/asm/msgbuf.h:struct msqid64_ds {
-> 
-> glibc commit 9f9feb6d5d says:
-> 
->     * Some older 32-bit big-endian architectures have padding before
->       rather than after time fields, although the preferred generic
->       approach is padding after the time fields independent of endianness.
-> 
-> and m68k uses the "preferred" approach.
+On Mon, Aug 3, 2026 at 5:36=E2=80=AFAM Hanna Czenczek <hreitz@redhat.com> w=
+rote:
+>
+>
+> Can you document roughly what the function looks like? Because the type
+> (`GTraverseFunc`) is not defined in qemu. I know it has a boolean as a
+> return type, and that one argument of it is going to be `gpointer data`,
+> but surely it will also take a tree element.
+>
+> Hanna
 
-Thanks for the info, Andreas!
-The msgctl01 LTP testcase does work correctly on a physical m68k
-machine for me, so glibc/kernel seems ok, esp. regarding msqid64_ds.
+I have updated the comment to describe the usage of GTraverseFunc as
+below:
 
-Regarding qemu linux-user the patch below seems to fix the LTP msgctl01
-testcase in my m68k qemu chroot. Peter, do you mind reviewing the patch?
-
-Helge
--------
-
-From: Helge Deller <deller@gmx.de>
-Date: Mon, 3 Aug 2026 22:49:46 +0200
-Subject: [PATCH] linux-user: Fox msqid64_ds for 32-bit big endian m68k target
-
-On some older 32 bit big-endian architectures (like m68k) the 64-bit time
-fields of msqid64_ds is a pair of unsigned long values, where the lower
-half is in the wrong place. Adjust the target_swap_time64() macro
-accordingly.
-
-Fixes: 9e3df3019d21 ("linux-user: Fix msqid_ds struct wrt 32-bit big endian architectures")
-Noticed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index dc028686f4..1a18fea52d 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -4217,7 +4217,16 @@ static inline abi_long do_semtimedop(int semid,
- #endif
- 
- #define target_time64_t         abi_ullong
--#define target_swap_time64(x)   tswap64(x)
-+/*
-+  * On some older 32 bit big-endian architectures (like m68k) the 64-bit time
-+  * fields of msqid64_ds is a pair of unsigned long values, where the lower
-+  * half is in the wrong place.
-+ */
-+#ifdef TARGET_M68K
-+# define target_swap_time64(x)   (tswap32(x) | (((uint64_t)tswap32((x) >> 32)) << 32))
-+#else
-+# define target_swap_time64(x)   tswap64(x)
-+#endif
- 
- struct target_msqid_ds
- {
+/**
+* iova_tree_foreach:
+*
+* @tree: the iova tree to traverse
+* @func: the function called at every node. A true return value ends traver=
+sal.
+*              Arguments:
+*                  gpointer key: key of current node
+*                  gpointer value: value of current node
+*                  gpointer data: data passed in at g_tree_foreach call
+*              Return: gboolean
+* @data: an argument passed to func
+*
+* Wrapper to call g_tree_foreach on the underlying g_tree. g_tree_foreach w=
+ill
+* traverse through every node of the tree, barring an early return. At each
+* node, g_tree_foreach calls func with pointers to the node key, node value=
+,
+* and a pointer to data passed in by the caller.
+*
+* Return: None
+*/
 
