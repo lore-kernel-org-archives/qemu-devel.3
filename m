@@ -4,109 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BB5CC55184
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 16:16:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8567FC55182
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 17:10:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqvHt-0006I6-0V; Mon, 03 Aug 2026 12:13:13 -0400
+	id 1wqwAQ-0002jM-I2; Mon, 03 Aug 2026 13:09:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1wqvHS-00061K-0b; Mon, 03 Aug 2026 12:12:46 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1wqvHP-00034r-As; Mon, 03 Aug 2026 12:12:45 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 673EHoYe2282779; Mon, 3 Aug 2026 16:12:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=gVJ5/l9qbSpOyFbwI
- pE11qxzJWNwUiLc0YoLgR2jK1g=; b=HSyqdM0iiuwwHdSJRFxwt96osoJ5sBTfa
- qNBCYLnvt+m3FgOEP1oSmf/cXXj0sgTdTqMX7Kpl3rjBI/9etRaKOY0qa+71caB9
- SxTwqnv43xYro5uzfAUK4nmll8FRh378vBfb46oc2RGCP7mfYYGTvyt+JSXx1jcD
- MEwPW2w8mRUEUXSwCG+e1IM+N3eKWdgMoPcKZGjUj+6TQFaL4D5KF/2bn+8LWIgu
- yy8OikAIwjgGyhlp6W+gb39ely16iApAH6UPq5ggBoCpOpWizflZEYE3uoXdbG7f
- ENyTTRmZiydseLQFFE6ekgP9Fo4TTx0IhCbSn7shlhXOc2FUwUVSw==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fs8h4sqv5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 03 Aug 2026 16:12:37 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 673GBFbd013151;
- Mon, 3 Aug 2026 16:12:36 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fsu4qeb5y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 03 Aug 2026 16:12:36 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 673GCW0Z32178568
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 3 Aug 2026 16:12:32 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7750720040;
- Mon,  3 Aug 2026 16:12:32 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4E0CF2004B;
- Mon,  3 Aug 2026 16:12:32 +0000 (GMT)
-Received: from funtu2.ibm.com (unknown [9.111.207.251])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  3 Aug 2026 16:12:32 +0000 (GMT)
-From: Harald Freudenberger <freude@linux.ibm.com>
-To: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- thuth@redhat.com, berrange@redhat.com
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, linux-s390@vger.kernel.org, 
- dengler@linux.ibm.com, borntraeger@linux.ibm.com,
- fcallies@linux.ibm.com, cohuck@redhat.com
-Subject: [PATCH v13 09/18] target/s390x: Minimal AES XTS support for cpacf pcc
- instruction
-Date: Mon,  3 Aug 2026 18:12:26 +0200
-Message-ID: <20260803161235.228704-10-freude@linux.ibm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260803161235.228704-1-freude@linux.ibm.com>
-References: <20260803161235.228704-1-freude@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <ankur98saini@gmail.com>)
+ id 1wqwAP-0002j7-0S
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 13:09:33 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ankur98saini@gmail.com>)
+ id 1wqwAN-0002v0-0n
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 13:09:32 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-ca80d708489so80788a12.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 10:09:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785776969; x=1786381769; darn=nongnu.org;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=HToaX+isloW5Su/GMIByyeFd2LWF90rLz/Q4Zq0AnFg=;
+ b=CueBYAZav4fURBj+ciHfirASSwALynGj5DUQJY1dHKmDNdZalYqWYnxKQbv3suq1wY
+ zeUvITEXLciSx2m9hWcj6WTKl3kdOTWJRq2A2gNKoXz6O7M7pIg7pSTOeCPkyqy5RjSp
+ l649Q8qX/Pv0tUqtZ1pw7rZ4uTykMXQykXy+rHE4SRL+OYPnwBrsaasqEIAACU8cEb+7
+ Qbcb8+c2bn7hLB0CQ/jNl3WqroL0BCS6wIjLhn6qhTKohqg1pTRal6nZZOElg4of+qGP
+ tYQH86mgPgBF3YM17O8PX9RwBN3jtsTpUAW1S+Uf0B4wLzyQnwZrCzkZjfjUlFW7HS/I
+ EL9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785776969; x=1786381769;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=HToaX+isloW5Su/GMIByyeFd2LWF90rLz/Q4Zq0AnFg=;
+ b=E09ll6cjQ+6v3EJQTc0yAynJSzkFJw/lGXO/pVmhpgzl7/qFlzpXYPz0oJ88rSY/Xa
+ KyNO0nBM41B+7OPsPkC/PqPHxnthoIYFeI3SCJCi70zr6m/ui/EPJzUFE+8iLbffrkk1
+ qbZ7hhdaqQ1A+XntXYIgxSeKCjdK+KKCSna+ZOA3ZfE6lz+HqDCvluk1CGxhz2CYNLPW
+ UcFTK1CohO+eLEiHl5GeXEZ/MTAc1wOHD8uCntZi4w9uQrS15Y1PaQZ9nCfS7Cz38m86
+ uOXjSFko+Q40GDeSzx/4G9HLB8a7vtpUAhF8h7g+UmdZvNdfzvjiJlG5vdqRR2qpINxg
+ eVfA==
+X-Gm-Message-State: AOJu0Yy06pIYzk02Ts3IUpcQ70MF3Sj+lgGi5SaltU9Erdu9FeYs7aKY
+ +q9U4Kg/PN9O8pppbyZ3qKpATHJpgpiuazFTOcdAxdDAyyuGRv23m6hO
+X-Gm-Gg: AR+sD13u2Ramtta6VkqQMU7OcSB4Pzw3ZbMedTMtpb9HIlUx6Sr3sLE1yUdDEcNszsw
+ hGsok1LowtRKQNSEwe/3xy2DRecLo78FxVFD16kJwAQHvJrSQ3St22TZ155j4TyjBPTKFL9ydRQ
+ hGmwntq4S0i1RBmefM7/RNRCd79UcGE6zHQjVly54ty7L7qgeTyAG6n3LNnz6/oSaVlBo2opUQY
+ h3iamLbqKb+5CY9mT33eam56/+Y/VIDYXt5dUPSpglGi6EcujFjRJYMb1UbGGw7cE8Dov1oBbr3
+ qOWuLwWbQtuQkvuHniglZTukI6/6AfFnFvfyum9FjAJpsjDvCtdr9PEzLs698w2iNYGSNPK5v1D
+ MwU1HZ8kVfvhhxhq1uueRhNqx0riprme8a0M5TZqepeMNAGCagsrnfBSkgfeT9ptYhHfLaM8MxP
+ B0YAKJDmK9noDZmOEkTc5W/4AW2mdwjGKJcJtXTLYFPx0xrKv5fWAN/hNIxdJAvJGHgOgLufYd7
+ 2j88KbL
+X-Received: by 2002:a05:6a21:1391:b0:39b:bc11:9ec5 with SMTP id
+ adf61e73a8af0-3cb6c7f4960mr398350637.13.1785776968950; 
+ Mon, 03 Aug 2026 10:09:28 -0700 (PDT)
+Received: from [127.0.1.1] ([49.43.137.199]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3153e06fe9fsm37193405eec.25.2026.08.03.10.09.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 03 Aug 2026 10:09:28 -0700 (PDT)
+From: Ankur Saini <ankur98saini@gmail.com>
+Date: Mon, 03 Aug 2026 22:39:21 +0530
+Subject: [PATCH v3] virtio-gpu: reject requests with short/truncated
+ control headers
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODAzMDE0MSBTYWx0ZWRfX2m/7FZ3GS2Y0
- 9Isy+OAhkJwVuymupmh8U6oeM4Rr9ZyoiHMdNEib7A+GxOhvg8pJBe1V1TnXiAfw60hGsr84zFq
- oeUyPyYPaXjz2iKr6tu3HJGxD8D1EvM=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODAzMDE0MSBTYWx0ZWRfXzuVWQafEZddC
- jgSi4wp16oSFqWrT7n3uP5zRDBIrr/Pf/VrcSqzXFCjJAMRgxss4941wdrrhn6tjg0en7f46Fu8
- esDLx7rejihAHsDGy7s/s7w9VlPFwMybbcSqNKxiuTpBVm67fu34CBjgyiNVgqnWj659dwhANQz
- gM/pJSxQ3NlDKIcXXWDPy8GX0ZCm3bNWIsH3ho/l3eSMc3HU9VFh5Pg6CnpASG1B7dHbnS12FQ7
- puaeyezeoLUMFD9UrI75tIPJrRXnn5azBfSK4jyMB2QLF415JUjuJej9vU3LKVVkozgal+Vauji
- ohhevxd4tAJCZHflryQ20qke3by7x9YpojIlepSPD0afaA81DO2Hms9N0cAaz1OrC+ZCzULbOfW
- txbnw5SGJacmnsnA2OPxBJEOSN9P1XqO0tDeuxgAtYMw3hofs8Q8IvUCvQjuU9quwtDgWtFDBHz
- Hd1eufkF+W9X7u2pp4g==
-X-Authority-Analysis: v=2.4 cv=SI1ykuvH c=1 sm=1 tr=0 ts=6a70bdf5 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=WW2E3BMAMqXElFb4OSsA:9
-X-Proofpoint-ORIG-GUID: csNIZQpdOZdanx2kRpW-2UtWIGIdZxkQ
-X-Proofpoint-GUID: csNIZQpdOZdanx2kRpW-2UtWIGIdZxkQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-03_03,2026-08-03_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 suspectscore=0 impostorscore=0 spamscore=0
- phishscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608030141
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=freude@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260803-virtio-gpu-short-header-v3-1-936c1daa8e61@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4XNTQ6CMBCG4auQrh3TFsKPK+9hXIx0oJMIJS02G
+ sLdLazYGJfvl8wziwjkmYK4ZIvwFDmwG1Pkp0y0FseegE1qoaUuZaVriOxndtBPLwjW+RksoSE
+ PRVUiKoNUdJVI15Onjt+7fLunthxm5z/7o6i29b8ZFSjATjUo5UNJaa79gPw8t24Qmxn10Wl+O
+ zo5qpZ5iU2lE3d01nX9AmYEVSQGAQAA
+X-Change-ID: 20260728-virtio-gpu-short-header-476aa1dae4f7
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, 
+ Ankur Saini <ankur98saini@gmail.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1785776965; l=4987;
+ i=ankur98saini@gmail.com; s=20260728; h=from:subject:message-id;
+ bh=W11FG/ccdeQxgzPgSlNnBqK9L7ctUyxmKGN68cQ1oNQ=;
+ b=DQgW9AbGHIjZKJC6Bz68bhPuuSE3Yfz87w1RyrDGbqCVnDWw38+NiR9shGETpsi8xrvG1/bBu
+ R6+4S1w8GDQDOUHUt8V0jyT0xhytisIjobJDiopeUiPKQ64ZwBsrpuV
+X-Developer-Key: i=ankur98saini@gmail.com; a=ed25519;
+ pk=fiA1ENLrWfuTIKes9f/fn/hIbq1fqEHYxopa8LdM/8s=
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=ankur98saini@gmail.com; helo=mail-pg1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,148 +117,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Support CPACF pcc subfunctions PCC-Compute-XTS-Parameter-AES-128
-and PCC-Compute-XTS-Parameter-AES-245 but only for the special
-case block sequential number is 0. However, this covers the s390
-AES XTS implementation in the Linux kernel and Libica and thus
-also Opencryptoki clear key via Libica.
+A short control request can leave command data partially initialized.
+For the common header, guest-controlled flags can then cause stale fence
+metadata to be returned to the guest.
 
-Tested-by: Holger Dengler <dengler@linux.ibm.com>
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+The command fill helpers detect a short copy but only log and return,
+leaving the malformed request without an error or completion. Make
+VIRTIO_GPU_FILL_CMD() clear the partially copied object and complete the
+request with ERR_INVALID_PARAMETER. Make VUGPU_FILL_CMD() report the same
+error through the existing vhost-user-gpu dispatcher. This also rejects
+truncated type-specific commands.
+
+The vhost-user-gpu common header is copied outside VUGPU_FILL_CMD(), so
+clear it and complete the request directly when that copy is short.
+
+Fixes: CVE-2026-18054
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4094
+Reported-by: Ankur Saini <ankur98saini@gmail.com>
+Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Ankur Saini <ankur98saini@gmail.com>
 ---
- target/s390x/gen-features.c      |  2 ++
- target/s390x/tcg/cpacf.h         |  2 ++
- target/s390x/tcg/cpacf_aes.c     | 54 ++++++++++++++++++++++++++++++++
- target/s390x/tcg/crypto_helper.c | 20 ++++++++++++
- 4 files changed, 78 insertions(+)
+Changes in v3:
+- Handle short copies in VIRTIO_GPU_FILL_CMD() and VUGPU_FILL_CMD(),
+  also rejecting truncated type-specific commands.
+- Clear partially copied QEMU command data before completing the error.
+- Keep vhost-user-gpu's explicit common-header check and drop the
+  redundant virtio_gpu_process_cmdq() check.
+- Rebase onto current master.
+- Link to v2: https://lore.kernel.org/qemu-devel/20260729-virtio-gpu-short-header-v2-1-18036a97219a@gmail.com
 
-diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
-index 3281037958..4132d7b932 100644
---- a/target/s390x/gen-features.c
-+++ b/target/s390x/gen-features.c
-@@ -931,6 +931,8 @@ static uint16_t qemu_MAX[] = {
-     S390_FEAT_KMCTR_AES_128,
-     S390_FEAT_KMCTR_AES_192,
-     S390_FEAT_KMCTR_AES_256,
-+    S390_FEAT_PCC_XTS_AES_128,
-+    S390_FEAT_PCC_XTS_AES_256,
- };
+Changes in v2:
+- Also reject short/truncated control headers in vhost-user-gpu.
+- Expand the commit message to describe both affected paths.
+- Link to v1: https://lore.kernel.org/qemu-devel/20260728-virtio-gpu-short-header-v1-1-af19a00b100d@gmail.com
+---
+ contrib/vhost-user-gpu/vhost-user-gpu.c | 21 ++++++++++++---------
+ contrib/vhost-user-gpu/vugpu.h          |  1 +
+ include/hw/virtio/virtio-gpu.h          |  3 +++
+ 3 files changed, 16 insertions(+), 9 deletions(-)
+
+diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/vhost-user-gpu/vhost-user-gpu.c
+index bb41758e34..8149834745 100644
+--- a/contrib/vhost-user-gpu/vhost-user-gpu.c
++++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
+@@ -924,16 +924,19 @@ vg_handle_ctrl(VuDev *dev, int qidx)
+         if (len != sizeof(cmd->cmd_hdr)) {
+             g_warning("%s: command size incorrect %zu vs %zu\n",
+                       __func__, len, sizeof(cmd->cmd_hdr));
+-        }
+-
+-        virtio_gpu_ctrl_hdr_bswap(&cmd->cmd_hdr);
+-        g_debug("%d %s\n", cmd->cmd_hdr.type,
+-                vg_cmd_to_string(cmd->cmd_hdr.type));
+-
+-        if (vg->virgl) {
+-            vg_virgl_process_cmd(vg, cmd);
++            memset(&cmd->cmd_hdr, 0, sizeof(cmd->cmd_hdr));
++            vg_ctrl_response_nodata(
++                vg, cmd, VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER);
+         } else {
+-            vg_process_cmd(vg, cmd);
++            virtio_gpu_ctrl_hdr_bswap(&cmd->cmd_hdr);
++            g_debug("%d %s\n", cmd->cmd_hdr.type,
++                    vg_cmd_to_string(cmd->cmd_hdr.type));
++
++            if (vg->virgl) {
++                vg_virgl_process_cmd(vg, cmd);
++            } else {
++                vg_process_cmd(vg, cmd);
++            }
+         }
  
- /****** END FEATURE DEFS ******/
-diff --git a/target/s390x/tcg/cpacf.h b/target/s390x/tcg/cpacf.h
-index 4af7bc753c..cbb6090b44 100644
---- a/target/s390x/tcg/cpacf.h
-+++ b/target/s390x/tcg/cpacf.h
-@@ -247,5 +247,7 @@ int cpacf_aes_ctr(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-                   uint64_t *src_ptr_reg, uint64_t *src_len_reg,
-                   uint64_t *ctr_ptr_reg, uint32_t type,
-                   uint8_t fc, uint8_t mod);
-+int cpacf_aes_pcc(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-+                  uint64_t param_addr, uint8_t fc);
- 
- #endif /* S390X_CPACF_H */
-diff --git a/target/s390x/tcg/cpacf_aes.c b/target/s390x/tcg/cpacf_aes.c
-index a94c5e74e1..1127452f28 100644
---- a/target/s390x/tcg/cpacf_aes.c
-+++ b/target/s390x/tcg/cpacf_aes.c
-@@ -254,3 +254,57 @@ int cpacf_aes_ctr(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
- 
-     return !len ? 0 : 3;
- }
-+
-+int cpacf_aes_pcc(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-+                  uint64_t param_addr, uint8_t fc)
-+{
-+    uint8_t key[32], tweak[AES_BLOCK_SIZE], buf[AES_BLOCK_SIZE];
-+    int keysize, i;
-+    AES_KEY exkey;
-+
-+    switch (fc) {
-+    case CPACF_PCC_XTS_AES_128:
-+        keysize = 16;
-+        break;
-+    case CPACF_PCC_XTS_AES_256:
-+        keysize = 32;
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    /* fetch block sequence nr from param block into buf */
-+    read_guest_wrap_u8(env, mmu_idx, ra,
-+                       param_addr + keysize + AES_BLOCK_SIZE,
-+                       buf, AES_BLOCK_SIZE);
-+
-+    /* is the block sequence nr 0 ? */
-+    for (i = 0; i < AES_BLOCK_SIZE && !buf[i]; i++) {
-+            ;
-+    }
-+    if (i < AES_BLOCK_SIZE) {
-+        /* no, sorry handling of non zero block sequence is not implemented */
-+        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-+        return 1;
-+    }
-+
-+    /* fetch key from param block */
-+    read_guest_wrap_u8(env, mmu_idx, ra, param_addr, key, keysize);
-+
-+    /* fetch tweak from param block into tweak */
-+    read_guest_wrap_u8(env, mmu_idx, ra,
-+                       param_addr + keysize, tweak, AES_BLOCK_SIZE);
-+
-+    /* expand key */
-+    AES_set_encrypt_key(key, keysize * 8, &exkey);
-+
-+    /* encrypt tweak */
-+    AES_encrypt(tweak, buf, &exkey);
-+
-+    /* store encrypted tweak into xts parameter field of the param block */
-+    write_guest_wrap_u8(env, mmu_idx, ra,
-+                        param_addr + keysize + 3 * AES_BLOCK_SIZE,
-+                        buf, AES_BLOCK_SIZE);
-+
-+    return 0;
-+}
-diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/tcg/crypto_helper.c
-index 7dd6ae4ed4..9f4408f1c5 100644
---- a/target/s390x/tcg/crypto_helper.c
-+++ b/target/s390x/tcg/crypto_helper.c
-@@ -170,6 +170,23 @@ static int cpacf_ppno(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-     return rc;
- }
- 
-+static int cpacf_pcc(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-+                     uint8_t fc)
-+{
-+    int rc = 0;
-+
-+    switch (fc) {
-+    case CPACF_PCC_XTS_AES_128:
-+    case CPACF_PCC_XTS_AES_256:
-+            rc = cpacf_aes_pcc(env, mmu_idx, ra, env->regs[1], fc);
-+            break;
-+    default:
-+        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-+    }
-+
-+    return rc;
-+}
-+
- uint32_t HELPER(msa)(CPUS390XState *env, uint32_t r1, uint32_t r2, uint32_t r3,
-                      uint32_t type)
- {
-@@ -226,6 +243,9 @@ uint32_t HELPER(msa)(CPUS390XState *env, uint32_t r1, uint32_t r2, uint32_t r3,
-     case S390_FEAT_TYPE_KMCTR:
-         rc = cpacf_kmctr(env, mmu_idx, ra, r1, r2, r3, fc, mod);
-         break;
-+    case S390_FEAT_TYPE_PCC:
-+        rc = cpacf_pcc(env, mmu_idx, ra, fc);
-+        break;
-     case S390_FEAT_TYPE_PPNO:
-         rc = cpacf_ppno(env, mmu_idx, ra, r1, r2, r3, fc);
-         break;
+         if (cmd->state != VG_CMD_STATE_FINISHED) {
+diff --git a/contrib/vhost-user-gpu/vugpu.h b/contrib/vhost-user-gpu/vugpu.h
+index 2374eb90cb..aaf2870cb2 100644
+--- a/contrib/vhost-user-gpu/vugpu.h
++++ b/contrib/vhost-user-gpu/vugpu.h
+@@ -179,6 +179,7 @@ struct virtio_gpu_ctrl_command {
+         if (vugpufillcmd_s_ != sizeof(out)) {                   \
+             g_critical("%s: command size incorrect %zu vs %zu", \
+                        __func__, vugpufillcmd_s_, sizeof(out)); \
++            cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER; \
+             return;                                             \
+         }                                                       \
+     } while (0)
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 2f60c72078..f965defa6b 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -315,6 +315,9 @@ struct VirtIOGPURutabaga {
+             qemu_log_mask(LOG_GUEST_ERROR,                              \
+                           "%s: command size incorrect %zu vs %zu\n",    \
+                           __func__, virtiogpufillcmd_s_, sizeof(out));  \
++            memset(&out, 0, sizeof(out));                               \
++            virtio_gpu_ctrl_response_nodata(                            \
++                g, cmd, VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER);         \
+             return;                                                     \
+         }                                                               \
+     } while (0)
+
+---
+base-commit: b428fe036233cbd15d37e3c027ab6ca4d3661a80
+change-id: 20260728-virtio-gpu-short-header-476aa1dae4f7
+
+Best regards,
 -- 
-2.43.0
+Ankur Saini <ankur98saini@gmail.com>
 
 
