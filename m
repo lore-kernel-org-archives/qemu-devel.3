@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 140C2C55184
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 08:12:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07DD2C55184
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 08:12:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqnmJ-0001an-Sk; Mon, 03 Aug 2026 04:12:07 -0400
+	id 1wqnmU-0001eq-En; Mon, 03 Aug 2026 04:12:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wqnmH-0001aQ-PT
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 04:12:05 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1wqnmS-0001eJ-1y
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 04:12:16 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wqnmG-0003em-CH
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 04:12:05 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4953de5be0aso11322325e9.0
- for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 01:12:03 -0700 (PDT)
+ id 1wqnmQ-0003gO-5r
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 04:12:15 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-47f904e80eeso2837216f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 01:12:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1785744723; x=1786349523; darn=nongnu.org;
+ d=mihalicyn.com; s=mihalicyn; t=1785744732; x=1786349532; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=H69vIMTc6zbjreaaAW8A21vCRMcF+sLX1oKxSski0YU=;
- b=aGE8NNxQX0c6MUPdi6Hi8N+96p+tlu9MU4oO+pfj2YK/ZoYjVT8i9EOc8oPxwCz7hb
- msvyPI3KkX/ZlEDyoZO0SGnVxjP9uowEjq3LI7UYbcHXcVrgSqIFSRzqLXC520VZd4g6
- G9hl3mmKCavQKIc8B+6nnnnpFAF/2Wa7buiHU=
+ bh=+ELrjsZqo0Fw4SJlqfLv6tV+ltQSyYmy368fF7LwM9E=;
+ b=UYbWnKMnKPG8gJjBaFoeZnfV2lAcd3f7gGbHEBuLW1M4ur5d2x+NifMdp46rlS1d6j
+ tELzotUd6ckWpUu/dsWCDckiqX6mZbDKdpluxUZVJe2a5ccUo52/0u5YqKRoNYPBtHgR
+ iSGlRuSYdF+vYUVKrkwRVKMHjzx9p4Kx8GFK0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785744723; x=1786349523;
+ d=1e100.net; s=20251104; t=1785744732; x=1786349532;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=H69vIMTc6zbjreaaAW8A21vCRMcF+sLX1oKxSski0YU=;
- b=IIcPxCx+I9Hiuo6MbJBPpU7MU+RYmOqsoYjDn1cbz68D4rpLqK7mZj3Zz2kgazb0ja
- 4KjdJigd4CL9WIqpIQiZ5UkyzYZBM4esnbboFIy+HeK9wD/SAzbzTqhDKwS7xlyF4RK4
- HDGJ/twnFlO7NEVkkZTbS+XAXcgnlTPV+/+OnNZ2UOpiQHoRBdVvg5Iiui/BXjhURp//
- Rfly553Z7WROj0SIWCXWLWoP7Wx01NzWBtO+hF35PBxINzmofPEMNGCYwlx7toE1OEcJ
- BBYWcTPWolTslrRUSc+D71OwZ7lPKQgYfTl8J5nmy0UW4a+I2n3YzRuVF3UBeylhzZon
- JvFQ==
-X-Gm-Message-State: AOJu0YxbXtWvI2n3Ne+wBAAgmn83S/U7e39XywrTfWt08/XP8e0ccw3r
- DcgZDOFF+JQdnl3jX2mfGWn2IJdsF28xhccybHcqO0FiLZeXG42ExSCzIUZioPECSW+wMg6y2dl
- Tp/bP
-X-Gm-Gg: AR+sD13a6+pdT0BgYE8/cE85A5VLJxVBAaedU3yXEpakRmKh5T/1aVW0tsJrdR8azpP
- zejCPF+uC8EcLa5s+3LIBxImCxdSN9bCGDNqY6K1nobyArXeXxnstEJTYsU3zGNLQuF5cfNJYoO
- GlBvcEeGfrW1NwhsReydSQyvoelAmshiBWG92MMLmezlIahk46DeX0yzqycbOWgXmfs+VF7vXA2
- QC8cWwpQErwV4AxnM8i1yBEJiv7o/WjnjP2XU25CRCEAkuc4FGwDayEJj5INDvLVy1Bcr4MLMqv
- wYbtTqJ3lVKcqDeLcUuATc+smm9ludfgV7ky5VVfVgqZgWZ6kM1dofNe2boo4qpGjfK7SiBm/pu
- M4svIJvsUH7TDwS05Ar1Te4SaAaYyKVGf6YyifhVjfhJLgeXY42HrQWB4uj4o/NV2Xn43taGkba
- DvGDAOGptbR/LY6Q5HAqeNWSxfom3DAgbAWi+7SYCDez38aPY0FrkiEgWz/N/ViEm+LBELZpcE1
- Bh4R832YNFac6HKB/utKs8YGy/Vvr342ZCGcZrkjDxoZdWXpkmEd8nUrhY9
-X-Received: by 2002:a05:600c:564b:b0:496:c93d:e2f with SMTP id
- 5b1f17b1804b1-4980c65e93bmr137863995e9.15.1785744722661; 
- Mon, 03 Aug 2026 01:12:02 -0700 (PDT)
+ bh=+ELrjsZqo0Fw4SJlqfLv6tV+ltQSyYmy368fF7LwM9E=;
+ b=cJeimmZMdQfcDazu9va6jTEs/9OnSDQ43u6qIU72EyDTJaxsE8o4nhXRpaKrzUm9gH
+ 4YEsKOoEFrFAcxcYbGRaSsvx/E9tnjy37fEvjmHxIBa4PHIsCVAluISDL/VV8N3CKZ5T
+ zaq4YblYbLWYfxPtxhP36ieE3fGRxVwnbKUmrY3wFQtyP+k2a7AagS+YcrDjwKDpt41p
+ V55GDdKc1VBoY/K0O2T7uW1jjN22LD/rpN+bAwT3GbeleFFRhIyBS0tVqLZoT6RZsLTQ
+ 12kbgZEWym2cyzviJj9+L0OeAxKi9GTJLUjQURr2M4+WvKuMxiC6T/1odstZWKPt4jqM
+ Y5Vg==
+X-Gm-Message-State: AOJu0YydPaZ2hatCOSf5nmxxJex4HTzsgU8HuyWVeJixfIPEw0kk5DlP
+ yG/5CkX/Vmj3kAYkhClugy6byKNPTB6KFd2tLCyb3iMkQIx2ZvEm9ivlc5PGc1PKrzcAmfsZcGv
+ 9D2mt
+X-Gm-Gg: AR+sD13MaDutYnlFc9wcZHzcgHmSE9EWQ9FY3772LFPiO+TWZxszyEFrRqUfBX9cFaK
+ jKkYyx4kh3RoBY9bwBL49o2+3E18S3rJQcZuwaPmSFoxM9d71n+tN8UUjOY0QnRLe0z6JYp6FcU
+ PNyD3+mLR/eO1OFp/sBXu/PMqWGu1t6+HY13q1dSvABi5UkAux01a3fVoJbJlwSyRN4sUYrpoMo
+ 4/my9OmVnjIK0XN4oQOS+0KO6t2arFT0xI4Hu8lboWJWhviAgQ2Furq4qHpsr/MhHBkwSoBMmF8
+ eHRxqYlc1T4pQIYMI3E/DqUtlywOj/sZtNyda6rgaobCjHLe9wxrlzm/eT5rjdcsSFV4UU6ctRi
+ LGm4Nw10R9ZveptehJYl+TMzRPTJyf+2OQ64qwQRyBZuqp8HwhcI7ACvyH8BrCV+rU6RCTjc7eA
+ K2pXKfRINhCKgQHZE20/w3VppN10aE91EEm341+khCsx+0aLUMFr9FC+0yCpAX/Y2lMmlZn8LT7
+ H9rSd2d9/vtjaqSEVbIMzlxa6bV7YwOY4FZKK0L6ZJBjCOiRokw3S5w5GTI
+X-Received: by 2002:a05:600c:a016:b0:495:573e:1c54 with SMTP id
+ 5b1f17b1804b1-4980c6523bamr229663095e9.9.1785744732393; 
+ Mon, 03 Aug 2026 01:12:12 -0700 (PDT)
 Received: from alex-laptop.lan
  (p200300cf574a7200803110ea947f174a.dip0.t-ipconnect.de.
  [2003:cf:574a:7200:8031:10ea:947f:174a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49807b98284sm209358435e9.12.2026.08.03.01.12.01
+ 5b1f17b1804b1-49807b98284sm209358435e9.12.2026.08.03.01.12.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Aug 2026 01:12:01 -0700 (PDT)
+ Mon, 03 Aug 2026 01:12:11 -0700 (PDT)
 From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
 To: qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
@@ -77,18 +77,17 @@ Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
  Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH v5 01/10] hw/audio/virtio-sound: remove channel positions
- field from VirtIOSoundPCMStream
-Date: Mon,  3 Aug 2026 10:11:50 +0200
-Message-ID: <20260803081159.91981-2-alexander@mihalicyn.com>
+Subject: [PATCH v5 10/10] hw/audio/virtio-sound: add missing vmstate fields
+Date: Mon,  3 Aug 2026 10:11:59 +0200
+Message-ID: <20260803081159.91981-11-alexander@mihalicyn.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260803081159.91981-1-alexander@mihalicyn.com>
 References: <20260803081159.91981-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,52 +110,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+From: Volker Rümelin <vr_qemu@t-online.de>
 
-This field seems to be useless currently, as we
-don't implement VIRTIO_SND_R_CHMAP_INFO.
+The virtio-sound device is currently not migratable. Add the
+missing VMSTATE fields, enable migration and reconnect the audio
+streams after migration.
 
-Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+The queue_inuse[] array variables mimic the inuse variable in
+struct VirtQueue which is private. They are needed to restart
+the virtio queues after migration.
+
+Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
+[AM: trivial rebase changes]
 Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
 v4:
-	- moved this patch to the beginning of the series
+	- added assert(. > 0) before decremeting s->queue_inuse[.]
 	  (suggested by Manos Pitsidianakis)
 v3:
-	- this patch was added
+	- added latency_bytes field to VMStateDescription
+
+	As suggested by Marc-André Lureau:
+	- removed the "rc" variable from virtio_snd_post_load()
+	- dropped info field from VMStateDescription, because
+	  it can't be modified by guest and initialized only from realize
+	- added minimum_version_id/version_id so we can extend VMStateDescription
+	  without breaking compatibility in the future
 ---
- hw/audio/virtio-snd.c         | 2 --
- include/hw/audio/virtio-snd.h | 2 --
- 2 files changed, 4 deletions(-)
+ hw/audio/virtio-snd.c         | 83 +++++++++++++++++++++++++++++++----
+ include/hw/audio/virtio-snd.h |  1 +
+ 2 files changed, 76 insertions(+), 8 deletions(-)
 
 diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index 694bcebb60f..46d81cc9ec4 100644
+index 12473862d24..6df7ea0eb04 100644
 --- a/hw/audio/virtio-snd.c
 +++ b/hw/audio/virtio-snd.c
-@@ -463,8 +463,6 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound *s, uint32_t stream_id)
-     stream->info.rates = supported_rates;
-     stream->params = *params;
+@@ -24,7 +24,6 @@
+ #include "qapi/error.h"
+ #include "hw/audio/virtio-snd.h"
  
--    stream->positions[0] = VIRTIO_SND_CHMAP_FL;
--    stream->positions[1] = VIRTIO_SND_CHMAP_FR;
-     stream->as = as;
+-#define VIRTIO_SOUND_VM_VERSION 1
+ #define VIRTIO_SOUND_JACK_DEFAULT 0
+ #define VIRTIO_SOUND_STREAM_DEFAULT 2
+ #define VIRTIO_SOUND_CHMAP_DEFAULT 0
+@@ -74,17 +73,40 @@ static uint32_t supported_rates = BIT(VIRTIO_SND_PCM_RATE_5512)
+                                 | BIT(VIRTIO_SND_PCM_RATE_192000)
+                                 | BIT(VIRTIO_SND_PCM_RATE_384000);
  
-     if (stream->info.direction == VIRTIO_SND_D_OUTPUT) {
++static const VMStateDescription vmstate_virtio_snd_stream = {
++    .name = "virtio-sound-stream",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(state, VirtIOSoundPCMStream),
++        VMSTATE_UINT32(params.buffer_bytes, VirtIOSoundPCMStream),
++        VMSTATE_UINT32(params.period_bytes, VirtIOSoundPCMStream),
++        VMSTATE_UINT32(params.features, VirtIOSoundPCMStream),
++        VMSTATE_UINT8(params.channels, VirtIOSoundPCMStream),
++        VMSTATE_UINT8(params.format, VirtIOSoundPCMStream),
++        VMSTATE_UINT8(params.rate, VirtIOSoundPCMStream),
++        VMSTATE_UINT32(latency_bytes, VirtIOSoundPCMStream),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
+ static const VMStateDescription vmstate_virtio_snd_device = {
+-    .name = TYPE_VIRTIO_SND,
+-    .version_id = VIRTIO_SOUND_VM_VERSION,
+-    .minimum_version_id = VIRTIO_SOUND_VM_VERSION,
++    .name = "virtio-sound-device",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32_ARRAY(queue_inuse, VirtIOSound, VIRTIO_SND_VQ_MAX),
++        VMSTATE_STRUCT_VARRAY_POINTER_UINT32(streams, VirtIOSound,
++            snd_conf.streams,
++            vmstate_virtio_snd_stream, VirtIOSoundPCMStream),
++        VMSTATE_END_OF_LIST()
++    },
+ };
+ 
+ static const VMStateDescription vmstate_virtio_snd = {
+-    .name = TYPE_VIRTIO_SND,
+-    .unmigratable = 1,
+-    .minimum_version_id = VIRTIO_SOUND_VM_VERSION,
+-    .version_id = VIRTIO_SOUND_VM_VERSION,
++    .name = "virtio-sound",
++    .version_id = 1,
++    .minimum_version_id = 1,
+     .fields = (const VMStateField[]) {
+         VMSTATE_VIRTIO_DEVICE,
+         VMSTATE_END_OF_LIST()
+@@ -813,6 +835,8 @@ process_cmd(VirtIOSound *s, virtio_snd_ctrl_command *cmd)
+                  sizeof(virtio_snd_hdr));
+     virtqueue_push(cmd->vq, cmd->elem,
+                    sizeof(virtio_snd_hdr) + cmd->payload_size);
++    g_assert(s->queue_inuse[VIRTIO_SND_VQ_CONTROL] > 0);
++    s->queue_inuse[VIRTIO_SND_VQ_CONTROL] -= 1;
+     virtio_notify(VIRTIO_DEVICE(s), cmd->vq);
+ }
+ 
+@@ -859,6 +883,7 @@ static void virtio_snd_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
+ 
+     elem = virtqueue_pop(vq, sizeof(VirtQueueElement));
+     while (elem) {
++        s->queue_inuse[VIRTIO_SND_VQ_CONTROL] += 1;
+         cmd = g_new0(virtio_snd_ctrl_command, 1);
+         cmd->elem = elem;
+         cmd->vq = vq;
+@@ -976,6 +1001,7 @@ static void virtio_snd_handle_tx_xfer(VirtIODevice *vdev, VirtQueue *vq)
+             goto tx_err;
+         }
+ 
++        vsnd->queue_inuse[VIRTIO_SND_VQ_TX] += 1;
+         buffer = g_malloc0(sizeof(VirtIOSoundPCMBuffer) + size);
+         buffer->elem = elem;
+         buffer->populated = false;
+@@ -1060,6 +1086,7 @@ static void virtio_snd_handle_rx_xfer(VirtIODevice *vdev, VirtQueue *vq)
+             goto rx_err;
+         }
+ 
++        vsnd->queue_inuse[VIRTIO_SND_VQ_RX] += 1;
+         buffer = g_malloc0(sizeof(VirtIOSoundPCMBuffer) + size);
+         buffer->elem = elem;
+         buffer->vq = vq;
+@@ -1200,6 +1227,8 @@ static inline void return_tx_buffer(VirtIOSoundPCMStream *stream,
+     virtqueue_push(buffer->vq,
+                    buffer->elem,
+                    sizeof(virtio_snd_pcm_status));
++    g_assert(stream->s->queue_inuse[VIRTIO_SND_VQ_TX] > 0);
++    stream->s->queue_inuse[VIRTIO_SND_VQ_TX] -= 1;
+     virtio_notify(VIRTIO_DEVICE(stream->s), buffer->vq);
+     QSIMPLEQ_REMOVE(&stream->queue,
+                     buffer,
+@@ -1293,6 +1322,8 @@ static inline void return_rx_buffer(VirtIOSoundPCMStream *stream,
+     virtqueue_push(buffer->vq,
+                    buffer->elem,
+                    sizeof(virtio_snd_pcm_status) + buffer->size);
++    g_assert(stream->s->queue_inuse[VIRTIO_SND_VQ_RX] > 0);
++    stream->s->queue_inuse[VIRTIO_SND_VQ_RX] -= 1;
+     virtio_notify(VIRTIO_DEVICE(stream->s), buffer->vq);
+     QSIMPLEQ_REMOVE(&stream->queue,
+                     buffer,
+@@ -1411,6 +1442,37 @@ static void virtio_snd_unrealize(DeviceState *dev)
+     virtio_cleanup(vdev);
+ }
+ 
++static int virtio_snd_post_load(VirtIODevice *vdev)
++{
++    VirtIOSound *s = VIRTIO_SND(vdev);
++    uint32_t i;
++
++    for (i = 0; i < s->snd_conf.streams; i++) {
++        struct VirtIOSoundPCMStream *stream;
++
++        stream = virtio_snd_pcm_get_stream(s, i);
++        if (virtio_snd_pcm_state_prepared(stream->state)) {
++            virtio_snd_pcm_open(stream);
++
++            if (stream->state == VIRTIO_SND_PCM_STATE_STARTED) {
++                virtio_snd_pcm_set_active(stream, true);
++            }
++        }
++    }
++
++    for (i = 0; i < VIRTIO_SND_VQ_MAX; i++) {
++        if (s->queue_inuse[i]) {
++            if (!virtqueue_rewind(s->queues[i], s->queue_inuse[i])) {
++                error_report(
++                    "virtio-snd: could not rewind %u elements in queue %u",
++                    s->queue_inuse[i], i);
++            }
++            s->queue_inuse[i] = 0;
++        }
++    }
++
++    return 0;
++}
+ 
+ static void virtio_snd_reset(VirtIODevice *vdev)
+ {
+@@ -1442,6 +1504,10 @@ static void virtio_snd_reset(VirtIODevice *vdev)
+             virtio_snd_pcm_buffer_free(buffer);
+         }
+     }
++
++    for (uint32_t i = 0; i < VIRTIO_SND_VQ_MAX; i++) {
++        vsnd->queue_inuse[i] = 0;
++    }
+ }
+ 
+ static void virtio_snd_class_init(ObjectClass *klass, const void *data)
+@@ -1455,6 +1521,7 @@ static void virtio_snd_class_init(ObjectClass *klass, const void *data)
+ 
+     dc->vmsd = &vmstate_virtio_snd;
+     vdc->vmsd = &vmstate_virtio_snd_device;
++    vdc->post_load = virtio_snd_post_load;
+     vdc->realize = virtio_snd_realize;
+     vdc->unrealize = virtio_snd_unrealize;
+     vdc->get_config = virtio_snd_get_config;
 diff --git a/include/hw/audio/virtio-snd.h b/include/hw/audio/virtio-snd.h
-index e28f1be5db9..f8bb5c95b97 100644
+index 85d5d7c8619..384d2868c19 100644
 --- a/include/hw/audio/virtio-snd.h
 +++ b/include/hw/audio/virtio-snd.h
-@@ -137,8 +137,6 @@ struct VirtIOSoundPCMStream {
-     virtio_snd_pcm_info info;
-     virtio_snd_pcm_set_params params;
-     uint32_t id;
--    /* channel position values (VIRTIO_SND_CHMAP_XXX) */
--    uint8_t positions[VIRTIO_SND_CHMAP_MAX_SIZE];
-     VirtIOSound *s;
-     bool flushing;
-     audsettings as;
+@@ -194,6 +194,7 @@ struct VirtIOSound {
+     VirtIODevice parent_obj;
+ 
+     VirtQueue *queues[VIRTIO_SND_VQ_MAX];
++    uint32_t queue_inuse[VIRTIO_SND_VQ_MAX];
+     uint64_t features;
+     VirtIOSoundPCMStream *streams;
+     AudioBackend *audio_be;
 -- 
 2.47.3
 
