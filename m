@@ -4,94 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B90FC55182
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 12:27:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2E7DC55182
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 12:30:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wqrlF-0001KU-53; Mon, 03 Aug 2026 08:27:17 -0400
+	id 1wqrnt-0001x9-5R; Mon, 03 Aug 2026 08:30:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wqrlD-0001KI-4l
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 08:27:15 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wqrno-0001wa-6z
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 08:29:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wqrlB-0001tK-Gc
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 08:27:14 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wqrnm-0002T0-TW
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 08:29:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785760032;
+ s=mimecast20190719; t=1785760194;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kI4s89XDYGPNsnyejJHNkn52INgL7JiA8hxwCbXttYM=;
- b=QkcNSVOePHIyjle+7QD2G1uZ+DoVAczWHOLFULHHvqmodhlu5qUWBSkBvgOVy9HNbgswWn
- 2GKhIiXgQZi1It42vwIPNfDGN0M4Vj1EpSZZy6xR/mGxBlrFCxjnE81U2TFm5RO5qPMIXJ
- GswSKLVanxAG0xPtQLNWtIL2nkC/vJc=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TmN2Y/7ZeBKHjtIw5m996fudj11ti+C+v1YnO949IzM=;
+ b=DJBr2bqaTKk05MDzD04ihIyCY5Q9mF3ML3rAFgPJjKGOeqo6b4qk31CJdwoTFg7PvUdbeq
+ Dl+OZUnhaRdkUTcngDkawDTsPcKZ81P80UJGkHaxjtyEB8epxnU+LSoeHnyoYoL1TXZ/DQ
+ YwfCZSP5qx9Z7zvI8x1PM4YMQkRlwv4=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-99-yXS9TnvDNRSr3Mi8ZEhJWQ-1; Mon, 03 Aug 2026 08:27:06 -0400
-X-MC-Unique: yXS9TnvDNRSr3Mi8ZEhJWQ-1
-X-Mimecast-MFC-AGG-ID: yXS9TnvDNRSr3Mi8ZEhJWQ_1785760025
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-47f8580ed9eso3366097f8f.0
- for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 05:27:06 -0700 (PDT)
+ us-mta-175-rGSJ-EFFMDGkgm93DyavYA-1; Mon, 03 Aug 2026 08:29:43 -0400
+X-MC-Unique: rGSJ-EFFMDGkgm93DyavYA-1
+X-Mimecast-MFC-AGG-ID: rGSJ-EFFMDGkgm93DyavYA_1785760182
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49554715277so19126685e9.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 05:29:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785760025; x=1786364825; darn=nongnu.org;
+ d=redhat.com; s=google; t=1785760182; x=1786364982; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=kI4s89XDYGPNsnyejJHNkn52INgL7JiA8hxwCbXttYM=;
- b=OcnF1oEGCnL1Lm5/eI3t1ZO8zPbbL02xsZpS3HjrsddiEVVXc/8HcZ+eg+AC53UbSV
- qDHkYWtHxzynP4tIGwfmO2ilmvCoKQXDs8hHN11CzIcR/b7V9OMfuUV4jYHtSmMeATj5
- XF/xW2zqezve5hm5wAF+8hLLWQXYvxaZNSzVbrWtvMnlnh45SSMac6TgUgKV8XKeIxJN
- NrtYo7MV5CAB6OALxj/mEYz8Qjkm19uCxFFQgzFNK7i7JK7JO3LfIwZY61APZc8efKgq
- eWADyfmXMxZ4xQWKWCTgeFQK6E3cKdw6+VAjxrlmaagiCyGWMZdAMYO9DGCMgFgwD72x
- tpJQ==
+ :content-type; bh=TmN2Y/7ZeBKHjtIw5m996fudj11ti+C+v1YnO949IzM=;
+ b=D5hN7nQTyGKmlv4u9jVcA/gSnkA/E8u11abl8ZkDPLyeg0EOMpiPJ47eTkRISXL6Y/
+ +ZuFD1kzhDghaenC/QP2XTUE2ugVrvRQlKzYDyKcwgVjLnQGUuugy9Y39+zwy/7MJrEu
+ eEZWsANt2bEnR7QBahzT+sh3HA1Wn8g8uplP9qNBVFC+IwPfXJkfkCRopjqgPnWBHdlY
+ l6KkPMbdSuPXntyTMqZu3JwYDABBWdreZcC2mK+MUmQrpBriTR5aF217Apjtvy/fBfK+
+ aOVyCBGnwTxKb4UcFTTmT02d4bPmHUh5UaWVXxbBfGCzQ5VUeGkmrl8S9jor3SCGIdBK
+ 4QhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785760025; x=1786364825;
+ d=1e100.net; s=20251104; t=1785760182; x=1786364982;
  h=content-transfer-encoding:content-type:in-reply-to:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=kI4s89XDYGPNsnyejJHNkn52INgL7JiA8hxwCbXttYM=;
- b=A3V/w5AGw0AdPzSqH0jMOkuborLW+64g61kWHcjXbW2GggjV7MCMNXlGIrEcuwYTNk
- YhiI/UaR3Io0pDjqIDG4sgSvgf8VlmYzCUheVrMBdjRAw4ncSCyKe1b1n/TgXtI9TGvF
- +Hg31NhfLmoDmUglcFe2buZeY6zQbu104gH1jVJ2qUhGOV76ueCKY9uEGRH8h1rJLJlk
- y9+u2rY6lr7OVNNGVaDsYjpXzL8khErrIggZ1ZfiYJccjPyQxh3eYnirgwsl45VZ+Eyv
- 79mfqnx/jb7GhuSbhT197muXz1HY9yjrFGd1juo61cvN5D0J35qdx3jS6oNIqhF5DCJn
- +KGw==
+ bh=TmN2Y/7ZeBKHjtIw5m996fudj11ti+C+v1YnO949IzM=;
+ b=XxGdKSgLULDKmxOEhwoQ4MxItPwmTx75vv2/fLfDsGcX7LOLyzs9uyJe89Cg4GXctd
+ kFOVbyXcafb2iwprPbKqBN1FtOQ3LsgeFeJHbXP8JgZog9A3OjqAHbeKp4xR0Wb1j9/r
+ uxicD/6Z9UJPA/YTuchYrge6pytaEI10VB0/zb8hdJLopcckmakVstfxb3cXJXptIoln
+ azp/Hxaq0zoI319u3zCYY2libSoBwPwCDoldpeQl3lPEffZlpS4ZLFJuxM3ebjgVTEGb
+ eTGfL9yvSjeLx7IkJtVPsL3M2vDsa6OfDvklxNCmWPN9mTtvmCip0tKjB68y7DBhjyKJ
+ hoTQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rp0iuccb6VhGRyy1ZxXu91Fy9YMph7zooH4APC1QrhCI94htpl87phxCUYqQrljrBU6aiFq1Prd5j7k@nongnu.org
-X-Gm-Message-State: AOJu0YyAREjjL8z7Mq6S4/f7oDKMSGTR08hlYfgDQvCTbX9eHsKapGu2
- XF+1ZiB8VfQ1NnLtHV4EnNH1PlpjkaTloGoWB/cBMR79/mVSwBCbpFR9VOAr+2eeyqfwK+8dHQJ
- qSQ3KjcBepE4nGovOjCFLxShSX9TV0Rv7k4pX3beamL07wWm1WpKQUO7Z
-X-Gm-Gg: AR+sD10v+YXoQf+AzWYs5MFLGlxr2uAWM7kuo41nva3ZAGfLLUFx1nVuphQxD8Jf73i
- u7T0ixPa+lpj4pOO4qKPEkdIl6jJY3HlEwwBItDiEyjGR0lpaHExQ76ELZga5m74ErwhwpCoWkD
- tfBv+2l1TKPqmZNij34HMGL2eD8MHSL3eZavkZ7G3XFHYik5xR5OhV92sY2967ncGPSwO5ZBwkk
- G4ShzEP0LYJwkROsIgB1naN5wuKFTHJqimSMkcSfU+AfZdMkNA/fapWE+NYbgb2C/bvm6BXG/ON
- nvJHg5B26cwctJ+QudZQHsFcpM24W4fYeM9gUNKolvBoKZoTp+6BsbYzsm1g+/17NcrbIllBUYm
- frZYee1GvbtllT+5ttNlgsng/Tx4C2WyhXqrbrZO0c0bancgSiS17Gxex+XEP2RsqOz2XsLY89r
- 27P1KCYYSse8z3IDiHCTbEb1qAug4vPA==
-X-Received: by 2002:a05:6000:43d4:10b0:47f:90df:4ec6 with SMTP id
- ffacd0b85a97d-47fd72a00bemr21145774f8f.6.1785760024816; 
- Mon, 03 Aug 2026 05:27:04 -0700 (PDT)
-X-Received: by 2002:a05:6000:43d4:10b0:47f:90df:4ec6 with SMTP id
- ffacd0b85a97d-47fd72a00bemr21145611f8f.6.1785760024284; 
- Mon, 03 Aug 2026 05:27:04 -0700 (PDT)
+ AHgh+RosFFWtggTcuYr+OtKxK1QprcNBMDbP7HkAuRzxi9p0bYG6cQ5zgJU8ablIBFd3w8yux8U/3X42BxdG@nongnu.org
+X-Gm-Message-State: AOJu0Yxc3YB+DuTWJbVFWbhiQ1d1ZDrmgDrg9smugqXME7uAl4Mwp9tb
+ bJWm9wH9miIzWS1i3pOsyam3mWEvp8ydMYhKDTWHEFYw4yAfFRNxRJOqD4ilmDwiku9f/TEBuAZ
+ D/k9MtshLQJ3QKSguiwgr0wQsfXvpyFF6UWmGtyWhcmArNlnsQfXeoDUk
+X-Gm-Gg: AR+sD11A9FWBz8oi+qw4DURTuEurnSJw8YslC9v7prWooJQLYF8fsXDUg6MumXYPRni
+ jCMKjc3+EYLjFIkTD7F2esMt6HCdg1dKwwMvricI6reYInxDwHHidAyMP5AqtsT5dljwqhr3nwW
+ is1Gomq97hmSOm7mm7uhChb1VFrRu5zaO2vckeGz7YdM6DRos4mIqccZnIWfJzplx1tzEB8mcR5
+ Be87iIRMgrnDtyrWZbWJmKXxC0G6njxP7qCsyhlHA543TuyTd6q8yEFC+GPPBHyUmSzO7jylE5a
+ 9VBUi6DTPDiYfwUmTQC6E5iLWCIBSKOUmiKGuWGtIW8yNEhp8ZExRfeOeyQFX4wl24nwHu6kDGl
+ CRzpGM/69mmQ0Hx4o7fqetidDjEH0NlVpbcRSr8gTURfZchjbau87dDgngsTKpMjhuKDW0knNR0
+ A8rs4mi5efCozYeIDuw+Y8qQFZ89dCKQ==
+X-Received: by 2002:a05:600c:4fc5:b0:495:4e1d:82df with SMTP id
+ 5b1f17b1804b1-4980f233e12mr221917115e9.10.1785760180150; 
+ Mon, 03 Aug 2026 05:29:40 -0700 (PDT)
+X-Received: by 2002:a05:600c:4fc5:b0:495:4e1d:82df with SMTP id
+ 5b1f17b1804b1-4980f233e12mr221915055e9.10.1785760179048; 
+ Mon, 03 Aug 2026 05:29:39 -0700 (PDT)
 Received: from ?IPV6:2003:cf:d73d:549a:e584:7c7b:2611:32a1?
  (p200300cfd73d549ae5847c7b261132a1.dip0.t-ipconnect.de.
  [2003:cf:d73d:549a:e584:7c7b:2611:32a1])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47fd45a0ae0sm33696154f8f.33.2026.08.03.05.27.02
+ 5b1f17b1804b1-49807b5f0c3sm205973705e9.5.2026.08.03.05.29.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Aug 2026 05:27:03 -0700 (PDT)
-Message-ID: <6f915ae4-f9b7-4e27-9c3a-3a99917b499f@redhat.com>
-Date: Mon, 3 Aug 2026 14:27:01 +0200
+ Mon, 03 Aug 2026 05:29:38 -0700 (PDT)
+Message-ID: <e40ea812-8774-46c3-aee6-511c6fbd07cc@redhat.com>
+Date: Mon, 3 Aug 2026 14:29:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 04/15] net/vhost-user: add memory isolation
+Subject: Re: [PATCH RFC 05/15] vhost-user: add memory_isolation to
+ VhostUserState
 To: Connor Kite <connorkite@gmail.com>, qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>,
@@ -114,12 +115,12 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  <eperezma@redhat.com>, Alyssa Ross <hi@alyssa.is>,
  Demi Marie Obenour <demiobenour@gmail.com>
 References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
- <20260723-vhost-user-isolated-memory-v1-4-6b97c439eb28@gmail.com>
+ <20260723-vhost-user-isolated-memory-v1-5-6b97c439eb28@gmail.com>
 Content-Language: en-US
 From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <20260723-vhost-user-isolated-memory-v1-4-6b97c439eb28@gmail.com>
+In-Reply-To: <20260723-vhost-user-isolated-memory-v1-5-6b97c439eb28@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
@@ -145,53 +146,62 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 24.07.26 00:30, Connor Kite wrote:
-> Add a memory-isolation property to NetdevPassOptions and
-> NetDevVhostUserOptions in net.json.  This property will
-> be used for vhost-user devices to disable access to guest
-> memory from devices.
+> Add a memory_isolation bool to the VhostUserState struct. This
+> bool is set within vhost_user_init(), which takes a
+> memory_isolation bool as an argument.
 >
-> It will be passed into vhost_user_init() in a future patch.
+> Refactor all call locations of vhost_user_init to include the new
+> argument.
 >
 > Signed-off-by: Connor Kite <connorkite@gmail.com>
 > ---
->   net/passt.c      |  7 +++++++
->   net/vhost-user.c |  4 ++++
->   qapi/net.json    | 15 +++++++++++----
->   3 files changed, 22 insertions(+), 4 deletions(-)
+>   backends/cryptodev-vhost-user.c     |  2 +-
+>   backends/vhost-user.c               |  4 ++--
+>   hw/block/vhost-user-blk.c           |  3 ++-
+>   hw/display/vhost-user-gpu.c         |  3 ++-
+>   hw/scsi/vhost-user-scsi.c           |  3 ++-
+>   hw/virtio/vhost-stub.c              |  3 ++-
+>   hw/virtio/vhost-user-base.c         |  3 ++-
+>   hw/virtio/vhost-user-fs.c           |  3 ++-
+>   hw/virtio/vhost-user-scmi.c         |  3 ++-
+>   hw/virtio/vhost-user-vsock.c        |  3 ++-
+>   hw/virtio/vhost-user.c              |  5 ++++-
+>   include/hw/virtio/vhost-user.h      |  6 +++++-
+>   include/system/vhost-user-backend.h |  3 ++-
+>   net/passt.c                         | 13 ++++++++-----
+>   net/vhost-user.c                    |  9 +++++----
+>   15 files changed, 43 insertions(+), 23 deletions(-)
 
 [...]
 
-> diff --git a/qapi/net.json b/qapi/net.json
-> index 1a6382825c..4588c7014b 100644
-> --- a/qapi/net.json
-> +++ b/qapi/net.json
-> @@ -213,6 +213,9 @@
->   #
->   # @param: parameter to pass to passt command
->   #
-> +# @memory-isolation: enable memory isolation.  Only has effect if
-> +#     using vhost-user.  (default: false)
-> +#
->   # Since: 10.1
->   ##
->   { 'struct': 'NetdevPasstOptions',
-> @@ -250,7 +253,8 @@
->       '*ipv6':               'bool',
->       '*tcp-ports':          ['PasstPortForward'],
->       '*udp-ports':          ['PasstPortForward'],
-> -    '*param':              ['PasstParameter'] },
-> +    '*param':              ['PasstParameter'],
-> +    '*memory-isolation':   'bool'},
->       'if': 'CONFIG_PASST' }
+> diff --git a/net/passt.c b/net/passt.c
+> index ce80186883..a3021f37ef 100644
+> --- a/net/passt.c
+> +++ b/net/passt.c
 
-I have a gut feeling there ought to be a better way to add an option the 
-only works for vhost-user, but maybe not. I certainly don’t have a 
-constructive suggestions. :)
+[...]
 
-(Apart from that, my only comments would be the QAPI “since” field 
-missing, as Markus noted on the previous patch, and the patch ordering 
-Stefan has noted.)
+> @@ -735,14 +738,14 @@ int net_init_passt(const Netdev *netdev, const char *name,
+>       s->pidfile = pidfile;
+>   
+>       if (netdev->u.passt.has_vhost_user && netdev->u.passt.vhost_user) {
+> -        bool memory_isolation G_GNUC_UNUSED = false;
+> +        bool memory_isolation = false;
+>   
+>           if (netdev->u.passt.has_memory_isolation &&
+> -           netdev->u.passt.memory_isolation) {
+> +            netdev->u.passt.memory_isolation) {
+>               memory_isolation = true;
+>           }
+
+I think this part of the hunk should be squashed into HEAD^.
 
 Hanna
+
+> -        if (net_passt_vhost_user_init(s, errp) == -1) {
+> +        if (net_passt_vhost_user_init(s, memory_isolation, errp) == -1) {
+>               qemu_del_net_client(nc);
+>               return -1;
+>           }
 
 
