@@ -4,128 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C353C55184
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 15:23:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53494C55184
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 15:47:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrGyr-0001a3-A8; Tue, 04 Aug 2026 11:23:01 -0400
+	id 1wrHLo-0006Dq-Sz; Tue, 04 Aug 2026 11:46:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1wrGyq-0001Zu-Ds
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 11:23:00 -0400
-Received: from mail-westeuropeazon11021090.outbound.protection.outlook.com
- ([52.101.70.90] helo=AS8PR04CU009.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1wrGyo-0005LE-Q2
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 11:23:00 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IjwmTUGUhgNXFgn2hlIdu7/g3NYbSHh1ymiZSUvEvcBGmyIq+HJhc1fe/tIIACxoHfiJRX4SLBdEq1yWUcO9zDY5oYH7kWbJixW5gzWuiZtBcluJviJAoa/K+kLxMabQjG8XwcDYXiaRoZaofEsnFW4FrtFaiiqKmfQNnKhXWgvtjPpHzADcxyS2iv8B7Tv0gdRrwRv+2r2UmUTejDLJTyl9qA+QfRLxz4ksGjpriPKrTI5vnjCfSP4hCc7iZ79Rwui4dvoRBQnB6h/CPrm789AkT44IAveV7JYi3EzQhWGYOJS21AZvb5xqHFDsa7wJ3pkMoOsn6raeGGtcJsDIIQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Xhm+DC9Bnesz0E11hOU1Zettghsj+W9WuLmdOiaFuZ8=;
- b=c7VclPBBByFDKVyAx0WGoZQwMIotMmMl2FSWZ0qKuzG+vRyv/oLUiNRkRq5BXjfKvOGNckjTG2s8aScjdNWDN1RIjgYC/B9ws8Mhgo/pohQqMe+P4xH7xtFvmDU4b791jRaxR9GeQwAThESHemG3HkiE4U+bFJEMjOlBuG5GW7m4oyOZYi7U/jX5ve5UfUSOyY5AGYWc5pY19UOvrOKJ4mN+X/+mqrtD6+Te9XDC9ORKC+3e6tmUIQOmj2SNyYCEZ9oYIqlIkgJUZr0Msjh9TyV1zTq8Oe/AlIFmLoabr0Pe7Iy21WmOaXYRC2M4VdPBxfyXe5TKwNEkH2Jy/n6MHQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Xhm+DC9Bnesz0E11hOU1Zettghsj+W9WuLmdOiaFuZ8=;
- b=xgDaEXNE9/bcynzPJvYPkbQ7UXmXsiFEGSKlK+qoiqu4j932ELU6/8/Dtje5ygz4a1Xq7x1DXQmSUm5vfeU3PijRpeeUh13Q6+mQi3vmupkjaMeChYZoynmhiiqfla3di8cyCpgO1Kee8LS2HhMBehTHjmnx266k/ecdG8rdxkQVMTiYftueaJ3Mn+TPKCCPoCgUnDlnsqkoDrZaRogtLY4QhKHKWKv559+5T6KN3iwymJ3gkrGOoq9gK1DCrcGQ+5O83kp+muQLqD+LfTee9x6FU9dGuklydHETGJkGOB/KhQE69o0LOc3+lRAqudSF+KabGHeKEceNzivCxA08vw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by GVXPR08MB11713.eurprd08.prod.outlook.com
- (2603:10a6:150:2be::12) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.18; Tue, 4 Aug
- 2026 15:17:54 +0000
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0270.016; Tue, 4 Aug 2026
- 15:17:54 +0000
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, kwolf@redhat.com, peterx@redhat.com,
- andrey.drobyshev@virtuozzo.com
-Subject: [PATCH 2/9] scripts/qemugdb: coroutine: Get rid of fallback pattern
- when dumping backtrace
-Date: Tue,  4 Aug 2026 18:17:36 +0300
-Message-ID: <20260804151743.937694-3-andrey.drobyshev@virtuozzo.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20260804151743.937694-1-andrey.drobyshev@virtuozzo.com>
-References: <20260804151743.937694-1-andrey.drobyshev@virtuozzo.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: VI1PR09CA0148.eurprd09.prod.outlook.com
- (2603:10a6:803:12c::32) To VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wrHLj-0006DK-CP
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 11:46:42 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wrHLi-0008U2-2D
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 11:46:39 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-6a0794669a6so6682289a12.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Aug 2026 08:46:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785858396; cv=none;
+ d=google.com; s=arc-20260327;
+ b=dvaDhI21oksxvTEk64dlMQh+Ou2ifDIlcs8gBxAEu7OHur1ToNPyLqvNOqULngc/Y3
+ 7F3aWKn60iqjfQM9NsMivMqHOO/f1fAHyOMXK9j5De2TH4Pqxigvhumzg6qRJ73RgYtr
+ gKbbR1f4a/B3hGGHeNHq1QOexkOMILbZl31eUHp1qOeHW/tfQmfstavVpvJ2RwN03tKS
+ XM643FaRRPe9MENdUd7YjsWtychEb+uMyhi5f3agB3B+pdRj1G1XfeqNlN/ddXNw1WzU
+ xBQ7+758YkfAghbPEVLojJhmTNNRnvMtnSynmHn+AwcpjAM5gS7uQ0k20pQ6LtWAuGNk
+ MXWQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=5hRZkUBov2oo6lhHiXMhi3iCVaISD3LAqJHT9ycCdWg=;
+ fh=ErhCrVLVjWLuNVM4dnEwne6AMWC8gdwKuMkozzRcRHc=;
+ b=MDyxFeHXRbQMfDmnKoIATHHBf1kUFN9XNiP2bYvwYxPtDQTZnPe4DYIwJqwprhomvj
+ 2L+cMyv+TtHVLAMd+Ycyx9mQY55+Vp2BhZLyvKwEbiHgI0F5ZxoXnWMq0rpzWYtKp+CM
+ EltUPG2NHLYjUJAYyLZRRs8BlSZd+q1UVjViS9Y3XkmY8unNMhtOdjgKA0SY94+Vtf10
+ rsFPFxSUoBnXIaADUr0Bw/Qh3YXeRye8GgbLtylAsOMQJXb9ZkaEr4F+W4T5OIjdvVHO
+ I2gWCuoql0iRDfLAk13naGyliRif/FbTJwR+aPpEFNw/tc1qo7dPQ9ZHHsygmdcf7D64
+ FFCw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785858396; x=1786463196; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=5hRZkUBov2oo6lhHiXMhi3iCVaISD3LAqJHT9ycCdWg=;
+ b=ZPHAuD+q7arjhcZEirKeAxsE1qoaqyulwDf1emY4h1JIfEkwkvnUDaMb1Y7Zc5ikt9
+ 2JFZn2fpsw+OMum3CJB2TGGXZc1uCxbfCkpy5CLQ4O9XDF+dGbuHY8rDNVYDLhHljbH6
+ G3Z1wMkIOfJFMX+YA0cgzkNJhqdPd2et0fT3AlKHt81FmE8vUROsieNBLvxRbwaCdaTk
+ 6UdZyGo+jLfCKfTrqVHJLXw5YlaHODopFL8YbEBto3mirE7fSMc+0dGkE/IdoAqR4VgZ
+ Kl1boDd6VNG3KH9VKH6HX++Te7maW+Z/dWXFsGIxUw7srcqc8fz2hO9VzU4FQj1CDo5w
+ hqjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785858396; x=1786463196;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=5hRZkUBov2oo6lhHiXMhi3iCVaISD3LAqJHT9ycCdWg=;
+ b=mpoCxPg/j4oJ5IhshUBcvWXNBb5ClzMVPUVwlIgo24/e57Qv28WcngNJ7/j0iMvRNK
+ /dYNjpSFRLs3SZJlr3/gXTfErVrwkBpgmEBIHKeT6r28H7J68owWuLNXm7qkg+taJCDI
+ DVeISO19ELWYmYpOfuTxDrW1qer0ZE86iHfgnuAm8dxukG7iS2YTq95lqwXB6L5jXvnd
+ wNov12J6YaQCQ3dwL1FGX5wZBoKpXCvZeVxRQ04YVWDecDu7FGepJtCR9iR/rWeRgVW+
+ GWO2oSLeIuUbcpCU2so1GKZO3+RFRPOHw9uc/BEbd+JIxAjDiltWVH0GMMzCLJHqJi0I
+ 4pMA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrsJ4xIWXzLZK7ASxXB+zDfjY4Vq9IgsUhSyGG28zLcFD6F/aUsA5EffsMfq5bnINcSiS28wAbAQ4Hc@nongnu.org
+X-Gm-Message-State: AOJu0Ywgq6CviRY3r6dHY++S1vWN2ecFFfe05sR6Nkmo8Q6fcdTdfupn
+ iQoN+n6GwvThkTmh6toshhb78Ib29zbfZyR0tY7sx0vS7OYOs4rEp+PHmje0i2sGqU2S+DerBoR
+ LQMhicXjQd0ywyZGNrR2mtLuTMZHR+kA=
+X-Gm-Gg: AR+sD12HoUNsVxFcjJNcqzsYQQ+PvY/ZEHJ7qm0X4PhGlCwCDxwxcP/ypCqZ7mSGc/s
+ ExNi6zitqPlN6rbYbGFBm8rDoHF662+jwssg5w/Tanupe279inWt/2w85NFrB7txVaHYFcuI+Vm
+ TRco1WDHtGKaxIh+V/VEjVKOva6Ki+UI70a6Rje6we7kcbuIqsw6vPiRt1dhkGTkEr0tSdippuw
+ gnye/rKEtCAOfW9a2sSL/tHmHdjKgc9mitz0jhjFkXXlMt2oVNMw95SxWyMg6IPLJxHIJ8Gc+B4
+ dKAFp21wtSnvZtRTPbTuseJeiximjCFBGmoJpD+e9kghj2qGVmk3denvivApt1TjQKvV3SjJp2m
+ Gow==
+X-Received: by 2002:a05:6402:52d1:b0:69e:8ad:5162 with SMTP id
+ 4fb4d7f45d1cf-6a0a7c60ee0mr12890079a12.1.1785858396422; Tue, 04 Aug 2026
+ 08:46:36 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|GVXPR08MB11713:EE_
-X-MS-Office365-Filtering-Correlation-Id: 43921ee0-479b-4d00-e41c-08def23b8e46
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|23010399003|376014|52116014|1800799024|38350700014|6133799003|56012099006|5023799004|10067099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: dx4UQN/7SU3QOkEYQXpMbRjHHQotDFyI7GmNXnrc2+NgPCFxy/Ae54c4+AvDsuy3Bn+uA3ccJbOb12zBIV8+foBdy9OLKwQFTV9F86N4K6WArZjDHkCRSFnAqn2P2FLgXtsw1mwqTFPCC8y/zo9v4klUyal0xmg9Dn+L8KyFzrHIYLh194/HbIFK/yTSLvxOxNxqY2hDUy3GJus+qtG24CBWP6gZypVKDyu7e12ElzjtZONgIfkkO9Lev6ecQ08cMwhQ9xIkLN9no6WVhPr/cCWaCDsBMAYcf3qvsSWth8U/pHTLJE6EYyGMPLhsr9/siD68GAqp2QHCvtfMzqrWUdOVTT+1k4I7sWU2+VNztF9k+Z7uFwafUr4Ab1jJcQAwe0b0Zk+QBCrmrw7xSwteOBMQE3ODZMddr2kia6cjyQ7IcbKa7T/+WO1idQiJxCGBjtfCsL74tcGtfl///rSQ+DeLDm5lU7fZX0+gg6BQoROer+HRRWcKyBy+7uV1b3cbqgycQNdmpHnM7h1WV6K/eaVhQZ7TAtYcnAWhqQIAxMgZtSchNeTPkM8AEc5yl7qDLbWmWwzNL1P6BtbuBXw5P4eGv2kmes8z9AT2XTP8nC3TcS8DxgNR1LePB+cgHxencI0HdhN89HIt4qZheBFu4Fxi1NzGOxJxTv5Vi449deLX8SjwGv6xMzc8MTQCONtzJgQiGr6/qcl0beyxbBKNXatnV7/FUpHuo2NdakLiLG4=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(23010399003)(376014)(52116014)(1800799024)(38350700014)(6133799003)(56012099006)(5023799004)(10067099003)(22082099003)(18002099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?bHg5AF4DiPG6F/5mFfcHy9P6PP6nIYgHzvYkTvmXU7GDSr5GbguVbmV84Mhi?=
- =?us-ascii?Q?9UdCC3geT4Ki/UsOU0t3+1wxYfplOKG5qOZs79chLwcWNRowtBHMq1WOo68P?=
- =?us-ascii?Q?wOYXPCBZbRk7G9+28+Z4ZtfBmUQZSbiETVMEWgFJemkNWjdWYhuyiRtp0EnB?=
- =?us-ascii?Q?ip2UqrxsUT1yfXbGoTFhPw5LjkYEi87Si+fBQj6L+sqb4CCnKeOzX2zzaSdF?=
- =?us-ascii?Q?gdIge2fVPlhqosbKUFphnVEXaEkZXIBbMkMXwv2KXxWFQ34gEuRxHpaCem8z?=
- =?us-ascii?Q?3HywjO/4crt77krURq42VbQVzM4giL2lTSM4ca2EPpTBMZKkBD11cE61eRmU?=
- =?us-ascii?Q?f8E7N/Qkv9bj+1OERAeYpZD0l6IyrpoPNEzdM6HDFc1z7N0qb0t25lTOAHSm?=
- =?us-ascii?Q?J9iuahT1Jsg10aWPtWPzIAQUGoq0rmUPkDR2+B+Xactr25wTn4Efuretd9ln?=
- =?us-ascii?Q?pObXh/2k6VWH6muFD6PoQKn/0v877ghXLS7ElZzNfs+RH2yb74bDpc2R5Nlq?=
- =?us-ascii?Q?svLGFJ9WcfZOz0P9rdlBnvYKO0E4fChotvLdT6WOMCq69lKR50Nk7XgD7RYx?=
- =?us-ascii?Q?7n+e0Bu11HAgw8ny07Wf8zJ/vtF3t1mwFuj2u6f+Mqhn6PTSluVMtydvkvd8?=
- =?us-ascii?Q?qxbZ/tknI/4ixrgx3BQNievKRSirCyMRmDRGqyL7ZklA9fao8RykEsIjpxah?=
- =?us-ascii?Q?Ai329yVXD2IGchux9+AAg7gIYxFzjwMELdK6lxt7qMP8zUcIihu0CTVml3Am?=
- =?us-ascii?Q?gR9dYdCR4SFvHKGxlu3rr0MZHniQc+WzBluMjn56UDP8u8y4rL2Aim/JyjpY?=
- =?us-ascii?Q?J1M6IBRf8QPlarF0eddg2j/qfHkMr/afTmsPtp2VFxSLqHu7SYkJx8n6iiAA?=
- =?us-ascii?Q?dKPYq+f85r1uyExGMIbK+XKq40C9mneosdGW0nu6rmgotAKNPsoxocOoMdzj?=
- =?us-ascii?Q?ALsk8Uus8xbQhkaYvXxFiBBa8grpZgibl2ubTkaJNCyR+XQEC/80qT2Arv0A?=
- =?us-ascii?Q?3Qv6MEqeyuKO3FxpDLkiO6Y1S136mH1pm7ukDLtu2fiMUAblphT77LbpyWXC?=
- =?us-ascii?Q?mTwpqNhHZZUTuei9ZZmG+GD1PgBHjcf9BiV638bj0EXl3MQNRnV+pAEpg6Yx?=
- =?us-ascii?Q?MbBgxyxzRXQfJxUIrvD3U4+FHwBqP7CbvrO1HIVuV3fN0dBm0xykfnvQHygj?=
- =?us-ascii?Q?jcBwGxZ+2XWy2jTw+hVDMGgc08num6qPJFPMl5VcMXzNWoLCOmkmeqm0ZO7b?=
- =?us-ascii?Q?HrEDk3MUyZutlc/CRn1cFDcZJE6Qw+mun6LDkdaY7KrkxJ2Emqi4zKQOorYS?=
- =?us-ascii?Q?RiSe+1tgQZfjH8dDcyYIIujxfr0z30Doi31mglr3DJdS77KNImrtVAQJ+Ntb?=
- =?us-ascii?Q?aQM1v7eR6mfWcPpFhRPtVZ1zuJw/q4WS/V+FSpgvvWFKlp6BNZdO9uNjMmKU?=
- =?us-ascii?Q?B0pFwkMLaBDHi5rKmmD4qKZVGqq8LJnPmZ4t//MA8MUmBnrQwzZUKySWrAWg?=
- =?us-ascii?Q?WZucwxBmW2/C13CyXDfXHqmdcoPIiN2fLeJJEBtbAsdHOCRyeWPHMHy4AE/+?=
- =?us-ascii?Q?3Nq84pgAsH17xUlBbmXTQVvq4kq3jDw1ZSrHJMp6RpGQvSxoTt9csALwBrrm?=
- =?us-ascii?Q?qa5ME0LFIoLEQxn7h/f3K3goUnjXFSsUYA+GtgxVKsV5YW9RVwD6wTjgMm9U?=
- =?us-ascii?Q?KkHMIDIO2B36uZcxN1fDuj7LGtoJOS28ktLafLCO62LOrTaXJVPhLvgi4Gx8?=
- =?us-ascii?Q?iEVn/2QZuwQ0r5UQDRyBeyn8FZgVdes=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 43921ee0-479b-4d00-e41c-08def23b8e46
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Aug 2026 15:17:54.0427 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Zaao9xsTYmR/pc4idGpQW2h5RnGiMLVw4Ci7Hg+I0Fcw94z7KVWnmaOj3s0Gx2bL/pWOXj7OoizRIV1bPyQBp8ctzLSHyjb1IjtFyjUhTd8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVXPR08MB11713
-Received-SPF: pass client-ip=52.101.70.90;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=AS8PR04CU009.outbound.protection.outlook.com
+References: <20260804121000.444745-3-hi@alyssa.is>
+In-Reply-To: <20260804121000.444745-3-hi@alyssa.is>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Tue, 4 Aug 2026 11:46:23 -0400
+X-Gm-Features: AUfX_mzl88qsHpx1f7GKHGeFWfVE4rOddYdtPMVRqddQY0GH97n9c0RwEHTLbmo
+Message-ID: <CAJSP0QWtiREX+8Hoek6edYDacNm07MqnzfFM6daGa9tWvMyMHw@mail.gmail.com>
+Subject: Re: [PATCH] vhost-user.rst: fix typo
+To: Alyssa Ross <hi@alyssa.is>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ Albert Esteve <aesteve@redhat.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -142,91 +123,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently upon invocation of 'qemu bt' / 'qemu coroutine' we try live
-process backtrace dump first, and if it fails - fallback to coredump.
-That causes us needless work and catching an exception.  In my previous
-commit 42f3c143c3a0 ("scripts/qemugdb: coroutine: Add option for obtaining
-detailed trace in coredump") class Coredump was introduced, and each
-invocation already calls init_coredump().  Let's just pass the result of
-this call further as a bool param and make a decision based upon it.
-Apply the same pattern to obtaining coroutine pointer.
+On Tue, Aug 4, 2026 at 8:11=E2=80=AFAM Alyssa Ross <hi@alyssa.is> wrote:
+>
+> The protocol feature is named SHMEM.  SHMEM_MAP is one of the
+> requests.
+>
+> Fixes: 588acb45c2 ("vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec")
+> Signed-off-by: Alyssa Ross <hi@alyssa.is>
+> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
+> (Resending after accidentally not sending to the list the first time.)
+>
+>  docs/interop/vhost-user.rst | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Note that we deliberately lose a safety net here: the bare except used to
-swallow any failure of the live dump, not just the absence of a live
-process, and silently fall back to the raw unwind.  Such a failure is now
-reported to the user instead.
-
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
----
- scripts/qemugdb/coroutine.py | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
-
-diff --git a/scripts/qemugdb/coroutine.py b/scripts/qemugdb/coroutine.py
-index d1e6722d14d..d3f31bab9fe 100644
---- a/scripts/qemugdb/coroutine.py
-+++ b/scripts/qemugdb/coroutine.py
-@@ -281,20 +281,19 @@ def dump_backtrace_live(regs):
-             # restore previously selected frame in any case
-             selected_frame.select()
- 
--def bt_jmpbuf(jmpbuf, detailed=False):
-+def bt_jmpbuf(jmpbuf, is_coredump, detailed=False):
-     '''Backtrace a jmpbuf'''
-     regs = get_jmpbuf_regs(jmpbuf)
--    try:
-+    if not is_coredump:
-         # This reuses gdb's "bt" command, which can be slightly prettier
-         # but only works with live sessions.
-         dump_backtrace_live(regs)
--    except:
--        if detailed:
--            # Obtain detailed trace by patching regs in copied coredump
--            dump_backtrace_patched(regs)
--        else:
--            # If above doesn't work, fallback to poor man's unwind
--            dump_backtrace(regs)
-+    elif detailed:
-+        # Obtain detailed trace by patching regs in copied coredump
-+        dump_backtrace_patched(regs)
-+    else:
-+        # Obtain a non-detailed trace by poor man's unwind
-+        dump_backtrace(regs)
- 
- def co_cast(co):
-     return co.cast(gdb.lookup_type('CoroutineUContext').pointer())
-@@ -353,7 +352,7 @@ def invoke(self, arg, from_tty):
- 
-         try:
-             bt_jmpbuf(coroutine_to_jmpbuf(gdb.parse_and_eval(argv[0])),
--                      detailed=detailed)
-+                      is_coredump, detailed=detailed)
-         finally:
-             coredump.restore_regs()
- 
-@@ -390,10 +389,10 @@ def invoke(self, arg, from_tty):
- 
-         gdb.execute("bt")
- 
--        try:
-+        if not is_coredump:
-             # This only works with a live session
-             co_ptr = gdb.parse_and_eval("qemu_coroutine_self()")
--        except:
-+        else:
-             # Fallback to use hard-coded ucontext vars if it's coredump
-             co_ptr = gdb.parse_and_eval("co_tls_current")
- 
-@@ -407,7 +406,8 @@ def invoke(self, arg, from_tty):
-                 if co_ptr == 0:
-                     break
-                 gdb.write("\nCoroutine at " + str(co_ptr) + ":\n")
--                bt_jmpbuf(coroutine_to_jmpbuf(co_ptr), detailed=detailed)
-+                bt_jmpbuf(coroutine_to_jmpbuf(co_ptr), is_coredump,
-+                          detailed=detailed)
-         finally:
-             coredump.restore_regs()
- 
--- 
-2.47.1
-
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
