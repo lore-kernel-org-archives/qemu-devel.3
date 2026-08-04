@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 085F8C5518F
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 07:21:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6076EC55ABA
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 07:21:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wr9Sf-00039K-GE; Tue, 04 Aug 2026 03:21:17 -0400
+	id 1wr9Su-0003vB-MO; Tue, 04 Aug 2026 03:21:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wr9Sd-00038u-QJ
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 03:21:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wr9Sr-0003jW-ON
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 03:21:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wr9Sc-0001Xr-9h
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 03:21:15 -0400
+ id 1wr9Sp-0001YU-DB
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 03:21:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785828073;
+ s=mimecast20190719; t=1785828086;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xLTgyxY9t4cPAN5vmpA9Vq9M1u5pAtCooxqyWOTxbao=;
- b=D/I9UexnAPi6P+D408b41ij2nE9zjoHcH9PXI/kFGURhCaFXACvjE9j8fPYlXJKOqTYJ1H
- sCbaaIV6VnSQhtJtfTJqNammleKKp5/9C/15Wjn/3x2Dp0Y+jnFrnQEt0swpBFHo9zjEOf
- Jih7oPxFF0b6z7z1wd9cOpKk82Gga2w=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=l+5DIBFkHj3MpvRH+EMQbVA7d1EFloNPTRZrCzMHzlM=;
+ b=TGvP3fEKO0Wn5ZtDJF1BQ7hWwqv9qqylmQ0H74Se6OC7foY7fuUf/As2/NUD+JfMzCBweN
+ qTLJQZrDa5iiG56qNrJL0P03n/dYSupJbLVZBc8p9tXoTjkFeicMNITNJehTQg+2MF/h6h
+ 5I3C/EF0oI2hywyph7NRhF4uXWSR0IA=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-79-KMuBmVa-OH-SNGqKmrnzdg-1; Tue,
- 04 Aug 2026 03:21:12 -0400
-X-MC-Unique: KMuBmVa-OH-SNGqKmrnzdg-1
-X-Mimecast-MFC-AGG-ID: KMuBmVa-OH-SNGqKmrnzdg_1785828071
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-82-Li71nkCSN3mPwEw_IRbG3A-1; Tue,
+ 04 Aug 2026 03:21:20 -0400
+X-MC-Unique: Li71nkCSN3mPwEw_IRbG3A-1
+X-Mimecast-MFC-AGG-ID: Li71nkCSN3mPwEw_IRbG3A_1785828080
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EDD76180057E; Tue,  4 Aug 2026 07:21:10 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D140B18002C1
+ for <qemu-devel@nongnu.org>; Tue,  4 Aug 2026 07:21:19 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.2])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2124C300019F; Tue,  4 Aug 2026 07:21:03 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 280BB414; Tue,  4 Aug 2026 07:21:17 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 04 Aug 2026 11:18:57 +0400
-Subject: [GIT PULL 8/9] hw/display/virtio-gpu: Unmap DMA regions on reset
+Date: Tue, 04 Aug 2026 11:18:58 +0400
+Subject: [GIT PULL 9/9] qapi/dump: add allowed-by-guest feature to win-dmp
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260804-fix-v1-8-0c2be5390809@redhat.com>
+Message-Id: <20260804-fix-v1-9-0c2be5390809@redhat.com>
 References: <20260804-fix-v1-0-0c2be5390809@redhat.com>
 In-Reply-To: <20260804-fix-v1-0-0c2be5390809@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, "Michael S. Tsirkin" <mst@redhat.com>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1303;
+Cc: stefanha@redhat.com, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Ani Sinha <anisinha@redhat.com>, Eric Blake <eblake@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2712;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=6pt76Ocwcwq2ZkN5Bq1JB7UBUtXQ0SHmKMc3+x+kQHk=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqcZJdNRcM6gwc/02TQ5MnL7EqesJaJTc4FZjce
- eijx5SXGGSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCanGSXQAKCRDa6OEJdZac
- 5blqD/sH6Ugjs7DIopypDFg65ZZYjhtolONc3d6qo2q4BXMQm+rRVW6eAEuQRKlTnfz3D610YXV
- j+JLjBrzp/K5rIcPgQVk6/EJnJ/OC5+V2L43tr3krqPVfdsostn1J2/hzN7DQDYrvez5PIAOhBT
- ShD7q9lo5fGjNgKexuwrRjwe4fwP+XW4GPqwoKOR81wHO/8MwR+3geo7xgnzELejK+W1m8VcpQG
- 4Dur7F9D22iH70mgwvVPswAXWPRxmcn7uH7mpZ/k8+hJ95z28Cs8Ug2kMQBJZMKMTXMyB+ENvpk
- 5bXyyFY2D/sc2Khmgp8DMSDH5WuF2cEjF2/HEshyut3k/xnt3zE5V6cATknIOT2fwno1VMBH+TS
- K4yMp+lyLiJ+VusBw+4M7bc3Qj7mAgb4g046hm250L8xSsu4V5ksQMllOdQVS4RZpQvPIcXo1zR
- lTzUojlAv8oSx5iF/e3rhIcz/McTuXJq76gYMQ9DACKNhQmqLYYDARUCZcS99iArOICxG0GOG0V
- WM/1hSgjzJuFgp5TxgUPpZJ1w0Rmt5ryzjYLwNiViYBxuNYz8L7Qdh7kWM1/qvSr2IH/vG3Hcax
- PHIH//ZwF0lB4i6k2uBVCH5QP2I5wn+V+LleHHqX1yk4ARFVDkDAL1BGK99xTPQ07Uy/ieSihPc
- aMBSJ/E0fePUI+Q==
+ bh=MW7OVd74nIo16HSj5Bdl5yYs6LiN+vBhp4QxuK4O7gg=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqcZJdSnIKZEBAgwjQMKcPRjfnS6V8k/18qyDdl
+ McuO2bHbc6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCanGSXQAKCRDa6OEJdZac
+ 5dwhD/45DFJTe3wdxqWfQIlpj8AjCOQ5uxpBvPjgRgNTWkKD3cOR8XX3///OtrObWzuDuvrXoau
+ j2Qqa5H1OWlmb0Oga76/6ElxcCLeQ3EVIypBdyMe3ktqYecR4kHuVwS2YUdvu7YA/4yRuCiZZjl
+ k0qVMieIyf/ooc6UqDc9yzu1Ri3paRYbohu9puN7OQjTn/Eryw4xMq/CuJun9ga29BILMNzUaWl
+ XWq9W96DTDD2eHQkeusWIlwDd6OrqndBQUOb7kB6ikQLfoF7Z5yA7XXx8WsuK3bin7OMPUJHBS1
+ GL93VoOoMYJ7g7ABxkoJAqAUMtvolOrQYcZvNC01zzt0tfgYXhFgucTV124sHF/fSLEPPpayAU2
+ lSdsCjAd2iLAeQD+InCFbi4vmd7x/I03Tjvm4a7ullbqZhxCjnzS4Mh7MT8zTTBbatQzFAUSWUy
+ cclphtzDVceLCOKyz8eAA+cjwfmHz3GHehZJARxi6yCvX50cWjRxOBU7hyq5OmQ/b7C6IYnIW3U
+ mduOAT9CpTj0eDw0xc6Ab98JmzGREmXlU2jAUL0v696x2cjtMQAHlicMFIn8Cltg/6v/FJMXvZZ
+ gmAaCAfvv6tif277CCgN1YOJDXPR0Qg+PdNc0bYaOwGZtzmFLo81OCW4/FxaC0Ep083WCkP4BBY
+ CQdSwiQRD2xrF4g==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
@@ -87,8 +88,8 @@ X-Spam_score: -2.9
 X-Spam_bar: --
 X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.811,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,41 +105,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Guo <guobin@linux.alibaba.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-virtio_gpu_reset() freed in-flight commands without unmapping the
-DMA regions acquired by virtqueue_pop().  Call virtqueue_detach_element()
-before g_free() in both drain loops.
+Commit 1c0e259c5a35 ("dump: make win_dump_available() check vmcoreinfo
+for a Windows dump header") changed two things in a way that is visible
+to QMP clients but not to introspection:
+query-dump-guest-memory-capability now lists win-dmp only for a guest
+that has published a Windows dump header through the vmcoreinfo device,
+and dump-guest-memory, which shares win_dump_available(), rejects the
+format otherwise. Before that, both accepted win-dmp on any x86
+machine.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3467
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+A client that wants to select win-dmp automatically therefore cannot
+trust the capability query on its own: on an older QEMU it reports
+win-dmp for every x86 guest, Linux ones included, where the resulting
+dump is useless. libvirt ran into exactly this while picking a format
+for on_crash and watchdog triggered dumps, and has no way to tell the
+two behaviours apart.
+
+Add an 'allowed-by-guest' feature to the win-dmp member of
+DumpGuestMemoryFormat so the fixed behaviour becomes discoverable.
+DumpGuestMemoryFormat is reachable from both
+query-dump-guest-memory-capability's return type and
+dump-guest-memory's arguments, so a single flag covers both halves of
+the change. Where the feature is absent, a reported win-dmp says
+nothing about the guest, and a client that needs the dump to be
+loadable afterwards should fall back to elf.
+
+CC: Eric Blake <eblake@redhat.com>
+CC: Markus Armbruster <armbru@redhat.com>
+CC: "Marc-André Lureau" <marcandre.lureau@redhat.com>
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260803082158.62998-1-guobin@linux.alibaba.com>
+Message-ID: <20260731155001.1204103-1-den@openvz.org>
 ---
- hw/display/virtio-gpu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ qapi/dump.json | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index c15d4b527d0e..fbb6fec7a0ad 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -1725,12 +1725,14 @@ void virtio_gpu_reset(VirtIODevice *vdev)
-     while (!QTAILQ_EMPTY(&g->cmdq)) {
-         cmd = QTAILQ_FIRST(&g->cmdq);
-         QTAILQ_REMOVE(&g->cmdq, cmd, next);
-+        virtqueue_detach_element(cmd->vq, &cmd->elem, 0);
-         g_free(cmd);
-     }
+diff --git a/qapi/dump.json b/qapi/dump.json
+index 726b5208703c..690f3963fe15 100644
+--- a/qapi/dump.json
++++ b/qapi/dump.json
+@@ -38,6 +38,13 @@
+ # @win-dmp: Windows full crashdump format, can be used instead of ELF
+ #     converting (since 2.13)
+ #
++# Features:
++#
++# @allowed-by-guest: If present, @win-dmp is listed by
++#     `query-dump-guest-memory-capability`, and accepted by
++#     `dump-guest-memory`, only when the guest has published a Windows
++#     dump header through the vmcoreinfo device (since 11.1)
++#
+ # Since: 2.0
+ ##
+ { 'enum': 'DumpGuestMemoryFormat',
+@@ -45,7 +52,7 @@
+       'elf',
+       'kdump-zlib', 'kdump-lzo', 'kdump-snappy',
+       'kdump-raw-zlib', 'kdump-raw-lzo', 'kdump-raw-snappy',
+-      'win-dmp' ] }
++      { 'name': 'win-dmp', 'features': ['allowed-by-guest'] } ] }
  
-     while (!QTAILQ_EMPTY(&g->fenceq)) {
-         cmd = QTAILQ_FIRST(&g->fenceq);
-         QTAILQ_REMOVE(&g->fenceq, cmd, next);
-+        virtqueue_detach_element(cmd->vq, &cmd->elem, 0);
-         g->inflight--;
-         g_free(cmd);
-     }
+ ##
+ # @dump-guest-memory:
 
 -- 
 2.55.0
