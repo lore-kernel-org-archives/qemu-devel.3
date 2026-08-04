@@ -4,83 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07114C55172
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 08:15:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A635C55172
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 08:20:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrAJ6-0004Fa-Ig; Tue, 04 Aug 2026 04:15:30 -0400
+	id 1wrANp-0004rQ-E1; Tue, 04 Aug 2026 04:20:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wrAIt-0004Eo-Nw
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 04:15:17 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wrAIq-0006hz-6R
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 04:15:13 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-c1fbe461f59so612169266b.2
- for <qemu-devel@nongnu.org>; Tue, 04 Aug 2026 01:15:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785831310; x=1786436110; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=l1ywmDlSnsyVnFY+j1dUg7E6denwEEGi/Oe/GulMPr8=;
- b=HQU3y45SeJu7RjZcOuPy7u8ZtcUNlESBhb1HhAHV35waMt560Pdg9H4RI5hRO1n3c4
- RRc98ygBP5tsLSBf1Rz2zXo8y/yLzupXic7hC1FWHe6Hs+sOPpO5dsXF7SU05YQiHjQa
- zyf5IZVEd3OpRIiU8yrqmivAY5eP4581N9LMQ02kEz9R2jSj8R5E3JTDcNE/44MrolbA
- jvLdBPvSd4ZxTcrI2EcI3kLMVl0+R4GdFmyDXE6ckqzuoWg1/Qr6dUzAKodOh+CtLzO6
- K58kz+39iOMm/Qu0I8BMI2BtcPElB67xZ3TGBlypIKuupWVKSGBCp+yogoTO1GRY0MZ/
- h5kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785831310; x=1786436110;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=l1ywmDlSnsyVnFY+j1dUg7E6denwEEGi/Oe/GulMPr8=;
- b=n5aCNPK2NwlCmbU63DZPzOlGPbgjYZhvjBTGoA7MzqiXDuIPGbL/K2vSdr7o9rXjbL
- /4i0jzUI3iO01CnTTthlQ2KxiMR/cUJQ/vDShogsWzsbxiv3pUm7TXaUHG9FPoi/UH39
- AZ7EhxL+L6/T6qX5/hFomi11KItYlp89FhkEtEEH6Z8PnYXv3TphVAzk6SpCo4vlGDvz
- ZMYPXBDNjZL7FmP9X7p0QQtUGci3w54r7YJLrgxhNgIHMpcE2W+LcqE8AgrVlhOfgUC6
- 6BLUM+Ao2MurLVe4GMiFrtqqPylfcUCOrS6nws0C2KDJk02uuWoStykH6TGy6VvZlei4
- bWnQ==
-X-Gm-Message-State: AOJu0YwiagEuZhM2gHBArY4FOVPFVPfmZim50aDK4tL+vcUnEj+uA7a4
- AA34yrGHj0Ccmo2AFp39Yj6EfVtmQkFhhfVu620uXgE7XVtDL2sYo6E2gihDfwAC
-X-Gm-Gg: AR+sD11uwtOQ+HlWDgFUK6g1V19lNrbSkMl5HU1P5zT38L8AVJULWel6wu4W+DxO3qF
- aibU4goQkg6D3SW0rfu6utAuM4UgkZI1XltkcxT6nsi7ddvl0GL4rW5BYEEQkkwE9WI/yBj/1vW
- YsOxmOho60wbDq/uaXg/+DkeJuy2E4GFizAuCfsDjzI1OQIg1khVQLfeBPW6t9siJCDC4Dk9/71
- VbeSGLD3C9DjfVLra+q+Dw+k8dGlLpylZTwUUBzMhr1UIbw+3FvQLls5tKHN+i2fCh5C+/9Sv5q
- UgOzloe7zDl4Nu3WofzgM++o+8UKvQ1AhlO/YsL0CHIYKgjtEi9g6bJ69KApeFpVUYWQp7bfHgN
- 1du995KuFgCKPjHAf+2mZyyMD9YBj4BZWmofOGnRrdK9tKu35HYbj0na8Syh6EoTyRX/ZQqsuW2
- nwzpl0zH/SjrnGF5Yl6KP0xskqRhFzJnLH3hv+ZduhNlPiCu2c4Zsrm4YlJiB4FdAwfIRqU3knp
- d1lvVHXphQ=
-X-Received: by 2002:a17:907:fd0b:b0:c1c:332b:74a1 with SMTP id
- a640c23a62f3a-c1fe7f59914mr1053443566b.28.1785831309886; 
- Tue, 04 Aug 2026 01:15:09 -0700 (PDT)
-Received: from DE-PF5B95TD.embedded.cmblu.dev ([87.129.199.250])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c201265eb75sm204521566b.3.2026.08.04.01.15.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Aug 2026 01:15:09 -0700 (PDT)
-From: Wadim Mueller <wafgo01@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org, bmeng.cn@gmail.com, qemu-block@nongnu.org,
- Wadim Mueller <wafgo01@gmail.com>
-Subject: [PATCH] hw/sd/sdhci: complete non-interrupt ADMA descriptor chains in
- one pass
-Date: Tue,  4 Aug 2026 10:14:59 +0200
-Message-ID: <20260804081459.8007-1-wafgo01@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1wrANh-0004q4-FT; Tue, 04 Aug 2026 04:20:14 -0400
+Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1wrANe-0007MM-L9; Tue, 04 Aug 2026 04:20:13 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=DzmGpxfYwDcmol8MJvdeM2d7I7iSSdVDmc3Lc3tpVHkiGGW50VrA+hmBnKe3vcCBZcyeIHCD6+p5A1rxCXEFxGtzgYCmd2heNTfjPfTXaCRVO0CeLOrfwZAGsxqH+atxuLhiqsGVgqwtRE0E+8LY55lqJbhL85IE7AttWn4j3x8fzwLth7j5rfIGoMnypEDEiZbGCdNe5LLum9wB6SbsqsjisTYRhOuCT5IriqdM2xAV1qBSZ1v0oUSvqu5mvS2ajMub+FHokle9zeyRPYHHR6ZgQQclSBOjTCl39surRLMg327D8OBvAQEXQ25fH8nX/cids2bTrosl18KBchG39A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=YWcXH+YFJtNGR+DoMJCF2Dwc6kYERlpqIVN+tuJcSY0=;
+ b=fKm27qnknhy1c9Bn7zQl1GAo2l4zgKSls2LKpm+ESeM0mUNPsVwuJNAUIj/eSTQqW0t08FY8ASKUUVz4XqiewdAmCZHdKHA43exOh4g6SNxotET18YnnKiCb0ZWeRp591eiYrmbmKP1gqBYIVJSXSUiqYWf+8jKMn3//ubsgfiJUJ4s53HtGTIgQWK5+5MDwunvxC9rCRZDkBuZJCS0tzKaIkvVHO4hdIhDaTLAqP97QHQVS3rC59sBJc+GJ3tHmrRXKa9Y+98+0+329tenQA8KlvT3o0HulPC+F3R/F8mgrj21Og572g/L+5huL4Sagwpk1UjK6bxZ/153sasWtvg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=YWcXH+YFJtNGR+DoMJCF2Dwc6kYERlpqIVN+tuJcSY0=;
+ b=elAUE7e7c68UcPVyAXsUuo0s0BKjd1TEx59WP5nCBCiD+7iOUlE9nW6myX0ENIzh+oFWuWOtoHPAGGwVHc0Cmo6m+SHJykThVk1CZLArZUVFj6EY8RqLCEvW/lUZ96HoCcJDZCmg8zP8ap63MTJQB1EWylefOoNlPqd67TesHnt7xMQHqYKH3sUEenqXGEXzPXh6Rd6QW1dvD3vbF2r2NlEuciAGmUw9q32P+91F8WAG/GnugMKEJGQFYn73uht3n0NcT0eVVC5Y24ot0dR4Q8sugCG348hUiF0UZuusmVrcZd4Bdt/63imnmrjY+6G8EEuyMRYqBMdJ3gsZfzW8Mg==
+Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
+ by KL1PR06MB6961.apcprd06.prod.outlook.com (2603:1096:820:120::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.18; Tue, 4 Aug
+ 2026 08:19:58 +0000
+Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
+ ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
+ ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0270.017; Tue, 4 Aug 2026
+ 08:19:58 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
+Subject: [PATCH v1 1/8] hw/i2c/aspeed_i2c: Support the AST2700 master buffer
+ mode
+Thread-Topic: [PATCH v1 1/8] hw/i2c/aspeed_i2c: Support the AST2700 master
+ buffer mode
+Thread-Index: AQHdI+oJej/VRjOooE6GyyY7X4Sxpw==
+Date: Tue, 4 Aug 2026 08:19:57 +0000
+Message-ID: <20260804081955.1563537-2-jamin_lin@aspeedtech.com>
+References: <20260804081955.1563537-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260804081955.1563537-1-jamin_lin@aspeedtech.com>
+Accept-Language: zh-TW, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|KL1PR06MB6961:EE_
+x-ms-office365-filtering-correlation-id: aaa2f8d8-9af9-4b11-9891-08def2012c1a
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|366016|1800799024|23010399003|56012099006|10067099003|18002099003|22082099003|38070700021;
+x-microsoft-antispam-message-info: pii4YkJIM1XWGqgnNPvWqVMGTlP26vGuF/EVYbFaOSLGSNvxqfCuekgyf/hM7Bi6mQjwCRWWUIJIUpMVYkLr3tKfgAPtCfDP8xgoQGiasawPv5nvUvH00j+7bNTKalkmYqy3YvYmw7uVVZ9FX1EGd2SLVLt36M1i1N9M3HplOWV3pH+saRQad+8Lq5xg2WBQ3+sYxCDlMTfzQkq4GVIBbZFGR0nn84rGsM4Mo7NJN4x5e09e4wTZsKAUAuIOTDA4MYaFL7rY2ONGuJdI8jeBPvHrhQFILhGOefmuoo0k0XPuHXCjep7dLZDRXTDg4LnvyuR46xg7mKLz8TB8Q+451isQLJnsVcW6WA7G1BrL5iBf36fehxPFpuADuno2aEqxXg9vmDQgHUG6O1Di3joI9KzIwwjNyK5Qg1LpU4Sjbgm2zQ9mvaMYeRPm7XMOb+V4qOkrASR+H/OVjqKJEl4jPnqFn0EaqxPGgsJBrnW6UzaZYrkfnxzJkpXM45nwdsjjLw/dDoxnknbVrpnbXbiXx6v6/NvY4J8MQPSIpNThhY0prGRuZ+co1+Jizb6hEzNKa42b773BvouKGlSZp/95QvwYUxRr1kXnL2pu6dTnelUqFL3XKguLHp+Jgq3wTIktGYBDFddwRah1TDhUAkrasrbigLv4KVA6WMuOWE+PB+uJB/3hZBLuZNhJN9oOEMJAz3oqpygYCEZCpxYOjRlr2yTZw1D9u3Pb69i4HeCCZz4=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(56012099006)(10067099003)(18002099003)(22082099003)(38070700021);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?O+UdssOcXaovJR3sneq2LO9p+UIFPbxa4zhYYODRI4jji4Sx3y56hi0zv4?=
+ =?iso-8859-1?Q?bzsWaHNb/uG2PoFMmYsfDD4xhmr1xXsEucrp2LVHATwUVa/kyNOWAtjNBI?=
+ =?iso-8859-1?Q?1u5zeEs4w0g7id+QXwCfH6rjgf9a2MXRD/tsMJYHIBaUII+RQbr1eHPcoF?=
+ =?iso-8859-1?Q?kfR1Q8NnwzFNN4EyzHSQMEuFusMyXJLIk06IsRldNiJhXlidiNCArX77ex?=
+ =?iso-8859-1?Q?ILD3aPBuictfBawGjgN0T0PHAAZa3iler40G/swfPqa+fLwEWvnqNOaamJ?=
+ =?iso-8859-1?Q?Z5ZJYIzUTHT1NFCTOGx04nh/cdmLBGvBaLktd00ikvLXWa5sRjglspsU4k?=
+ =?iso-8859-1?Q?O1JspSPq7kRQ9jnroLUgWhtDZ2JwwRpdnxwyGFfLuMqUYPdREzpSEXEVuO?=
+ =?iso-8859-1?Q?LyslOPypnW7HAwKyelQ5StQwnNVsfLsz3W66Hj3OIePboM3RVXMW9bj5ef?=
+ =?iso-8859-1?Q?GDDNPfishfexnO6twpoK+Uv8JVCz6QusrlYFTpzXuyBBe3maQOkChKYdDL?=
+ =?iso-8859-1?Q?9RT5keJ9LU+SwCHqtoeTylgGfWC68XVORdsNff8do2Wwi4oiOFIEyMS3p9?=
+ =?iso-8859-1?Q?lfC2h/KNTE8p0XVdlS1solRvgauuuTp7v+92b0lX/T6zUS6jhYOU4a7gXF?=
+ =?iso-8859-1?Q?go+2D0P9PiF95XCdHIP6kmzvH10obrpxJJJ7emJbdpw4+fWd0mp8HSMi9P?=
+ =?iso-8859-1?Q?Q58SPqB1gNPsRjc36vzZ+2YqahC5GgXDWkyh7kyWasmKmh5qf5vT0rXn5z?=
+ =?iso-8859-1?Q?InVQyVkIx5l/JO1m/cFCfD7Mw8+LZ1N5UBW4dE5tJ4CchByKSSmHDGGtAI?=
+ =?iso-8859-1?Q?gcbsodRlx1XBMsji7wRe0KOuGQVi7jMJzFHXyUD8KJHK/vSMzyNyHZdC08?=
+ =?iso-8859-1?Q?mKA6TKRa/BBnjGVqsH2p3xfO14WrD2Km3IHh98u+Vp3QmsA+UUZj6sYakf?=
+ =?iso-8859-1?Q?XJyZ5I4rCnBVYnFB08/sFq8LMrCBNXx3mItNkYTe5rvMKP7fQ5Q8ri1zEx?=
+ =?iso-8859-1?Q?IrREZ0+cejOvQB4O0YcfkKXOwwx4CnE+CFgLr7zbjzCSSNJeVHDnvCn7AS?=
+ =?iso-8859-1?Q?LwhJvn99gjWwq6Tv5hZMeok3f2KsGrsbx+53Mi2Px/CyeaZenCjvUhIP4g?=
+ =?iso-8859-1?Q?6KBJ436a6S49E0Hj5iH4Kni/V1lLCjtyCnGHLjumujMhxtp4RcMp5JrlHO?=
+ =?iso-8859-1?Q?4D/jsJkwzf19zMLy1inLBjxQxZnhTgY3PK/T1xAF6DLYElohlhjQ7OxW5I?=
+ =?iso-8859-1?Q?S2DbubrOkvxVPnPu2awKWimgGbjE4aqxXg7T6RUph8YO/VGs1yQCFV4kgI?=
+ =?iso-8859-1?Q?H0d1yrjcJ7B6+yBkkptyVduWX0+6PSbiW1/ckO2rxdkPnaQ356LWZwHHQG?=
+ =?iso-8859-1?Q?qB6yhn14EkTLwLZr4FA8bs6K3eOXFJzgG3NNMzTNeMfjbo9yh33qxNLrd0?=
+ =?iso-8859-1?Q?JRODxTvFX0yZM/j+PIUqtItX/PUmMa0pcKaJEHILpIAlMP+3msaRvR2bho?=
+ =?iso-8859-1?Q?5XleGawLh3J4jREqAqCwZEmzOpoabmb3TDcmG8948Sk1HYAwWBYElSCdIl?=
+ =?iso-8859-1?Q?5lyZ+KW0EifPgjBXYTYNa3V5bt1ehRItVKE83PVddDDRwQI7/TKN50BEmH?=
+ =?iso-8859-1?Q?yMrIHN3TlImNeHL5vmgGTzX4sOLVwge0P91L201WdHk4p/6Ar1s3jfzzSE?=
+ =?iso-8859-1?Q?GUABEscutu/ApnSfBhi9DsqYFp/rPACYMZTm+jtD5+2HxMZxSUKwXflTKL?=
+ =?iso-8859-1?Q?y7NI4Z22iG8mfgIpbP5pK3ZVRd3Lr3tntwyCltlYGZGNzLemV41KHMm3Hx?=
+ =?iso-8859-1?Q?0EYMTLRgMw=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=wafgo01@gmail.com; helo=mail-ej1-x630.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Exchange-RoutingPolicyChecked: CFffQWpwQutyJGq2T8IjegJSTzsiAjVjogyra6raT+0hko7q5qoi/MO6AN2SJcQLxHaeHrfH0Qd0BTNPxWmgbGOtDEo9kRdlntEUSqljzskQBEwlSrV8tys3xW35Nb4D1omJ0u429GKpf5Xi3Hc2A71fd66IGxBfkMa80jLxN5Mq2GgFhSDZiboOBJXypn3V+4ayy3JLJOhvS3qiTguvK5azuobIJBylRO+OYtRIrn04hmu0cFbicVqgAS0E/uJkYGr19LeE67kAykE9p3zrF6AW2c/m9qYDI+MKZGj0VcVFbWOUllLFXx0HMrPlsfpOI3wAJwAUrxYSnlNuK1dU1w==
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: aaa2f8d8-9af9-4b11-9891-08def2012c1a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Aug 2026 08:19:57.9002 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 54dU69rkw5rc0AQN/15FO7DkenbxTAd1GrZBF2vZFEfxo0QfuzB2/CpuwYJNjey/uYTL/gXzNy47TyUjJpQ7KQGmMIsdiQCxvPlwVb8IIgg=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR06MB6961
+Received-SPF: pass client-ip=2a01:111:f403:c405::7;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=TYDPR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,99 +149,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-sdhci_do_adma() processes at most SDHC_ADMA_DESCS_PER_DELAY descriptors
-per invocation and then reschedules itself SDHC_TRANSFER_DELAY ns later
-on QEMU_CLOCK_VIRTUAL.  For a large bulk transfer this spreads the DMA
-across hundreds of virtual-clock round-trips, advancing the guest's
-virtual time between descriptor batches.
-
-A guest that bounds the transfer with its own data/status timeout
-(counted in guest time) can then see that timeout expire mid-transfer.
-Concretely, U-Boot on a TI AM64x reading a ~28 MiB image with a single
-CMD18 multi-block ADMA2 read intermittently aborts with "Timeout for
-status update" and falls back to (failing) distro boot.  The transfer
-itself is correct; only the artificial per-batch pacing triggers the
-guest timeout.
-
-Run a descriptor chain that carries no SDHC_ADMA_ATTR_INT attribute to
-completion within a single call.  Chains that do request a DMA-boundary
-interrupt still deliver it and reschedule exactly as before, so a guest
-relying on that pacing is unaffected.
-
-Now that the per-call bound is gone, cap the number of descriptors
-processed per call so that a malformed or circular descriptor list (a
-self-referencing link, or a persistently faulting non-END/non-INT
-descriptor) cannot spin the calling thread forever; on overflow, break
-to the existing reschedule path so the main loop stays responsive.
-
-Signed-off-by: Wadim Mueller <wafgo01@gmail.com>
----
- hw/sd/sdhci-internal.h |  9 +++++++++
- hw/sd/sdhci.c          | 23 +++++++++++++++++++++--
- 2 files changed, 30 insertions(+), 2 deletions(-)
-
-diff --git a/hw/sd/sdhci-internal.h b/hw/sd/sdhci-internal.h
-index 9f768c418e..bb586a9666 100644
---- a/hw/sd/sdhci-internal.h
-+++ b/hw/sd/sdhci-internal.h
-@@ -278,6 +278,15 @@ FIELD(SDHC_MAXCURR, V18_VDD2,         32, 8); /* since v4.20 */
- #define SDHC_INSERTION_DELAY            (NANOSECONDS_PER_SECOND)
- #define SDHC_TRANSFER_DELAY             100
- #define SDHC_ADMA_DESCS_PER_DELAY       5
-+/*
-+ * Upper bound on ADMA2 descriptors handled in a single sdhci_do_adma()
-+ * call, as a safety valve against a malformed or circular descriptor
-+ * list. A well-formed transfer terminates far below this via END or
-+ * blkcnt == 0 (even a 4 GiB transfer built from 64 KiB TRAN descriptors
-+ * is only ~64K descriptors); the bound merely guarantees the loop makes
-+ * a decision instead of spinning forever.
-+ */
-+#define SDHC_ADMA_MAX_DESCRIPTORS       (1 << 20)
- #define SDHC_CMD_RESPONSE               (3 << 0)
- 
- enum {
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 89b595ce4a..e8e8928b4f 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -779,7 +779,6 @@ static void sdhci_do_adma(SDHCIState *s)
-     const MemTxAttrs attrs = { .memory = true };
-     ADMADescr dscr = {};
-     MemTxResult res = MEMTX_ERROR;
--    int i;
- 
-     if (s->trnmod & SDHC_TRNS_BLK_CNT_EN && !s->blkcnt) {
-         /* Stop Multiple Transfer */
-@@ -787,7 +786,27 @@ static void sdhci_do_adma(SDHCIState *s)
-         return;
-     }
- 
--    for (i = 0; i < SDHC_ADMA_DESCS_PER_DELAY; ++i) {
-+    /*
-+     * Process the descriptor chain to completion (END or blkcnt == 0),
-+     * yielding to the guest only for a descriptor carrying the INT
-+     * attribute (a DMA-boundary interrupt, handled at the end of the loop).
-+     *
-+     * Historically at most SDHC_ADMA_DESCS_PER_DELAY descriptors were
-+     * handled per call before rescheduling SDHC_TRANSFER_DELAY ns later on
-+     * QEMU_CLOCK_VIRTUAL. That pacing is only needed so a guest can observe
-+     * the intermediate DMA-interrupt state; a bulk transfer that requests
-+     * no interrupt does not need slicing, and throttling it across many
-+     * virtual-clock round-trips can make it race a guest-side transfer
-+     * timeout. Run such chains to completion in one call instead.
-+     *
-+     * SDHC_ADMA_MAX_DESCRIPTORS bounds the loop so a malformed or circular
-+     * chain cannot spin here forever; on overflow, break to the reschedule
-+     * path so the main loop stays responsive.
-+     */
-+    for (unsigned int adma_descs = 0; ; adma_descs++) {
-+        if (adma_descs >= SDHC_ADMA_MAX_DESCRIPTORS) {
-+            break;
-+        }
-         s->admaerr &= ~SDHC_ADMAERR_LENGTH_MISMATCH;
- 
-         get_adma_description(s, &dscr);
--- 
-2.43.0
-
+The AST2700 I2C controller can move master DMA payloads through its=0A=
+internal SRAM pool rather than DRAM. The Linux driver calls this "buffer=0A=
+mode" and selects it by default. Buffer mode reuses the master DMA=0A=
+command bits (TX/RX_DMA_EN) and the DMA length registers, so the only=0A=
+difference from a DRAM transfer is where the data comes from and goes=0A=
+to: an offset into the pool programmed in I2CM_DMA_TX/RX_ADDR. The=0A=
+I2CC_VERSION_CTRL FUNC_CFG_DMA_EN bit selects between the two.=0A=
+=0A=
+Implement I2CC_VERSION_CTRL and, when FUNC_CFG_DMA_EN is clear, move the=0A=
+payload through the pool buffer instead of DRAM.=0A=
+=0A=
+I2CC_VERSION_CTRL resets to all ones, so guests that never program it=0A=
+keep targeting DRAM and behave as before. The register sits above the=0A=
+register window of the earlier SoCs, which are therefore unaffected.=0A=
+=0A=
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
+---=0A=
+ include/hw/i2c/aspeed_i2c.h |  2 +=0A=
+ hw/i2c/aspeed_i2c.c         | 79 +++++++++++++++++++++++++++++++++++++=0A=
+ 2 files changed, 81 insertions(+)=0A=
+=0A=
+diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h=0A=
+index 156998e7c1..05937a7a0b 100644=0A=
+--- a/include/hw/i2c/aspeed_i2c.h=0A=
++++ b/include/hw/i2c/aspeed_i2c.h=0A=
+@@ -231,6 +231,8 @@ REG32(I2CS_DMA_TX_ADDR_HI, 0x68)=0A=
+     FIELD(I2CS_DMA_TX_ADDR_HI, ADDR_HI, 0, 7)=0A=
+ REG32(I2CS_DMA_RX_ADDR_HI, 0x6c)=0A=
+     FIELD(I2CS_DMA_RX_ADDR_HI, ADDR_HI, 0, 7)=0A=
++REG32(I2CC_VERSION_CTRL, 0x94)=0A=
++    FIELD(I2CC_VERSION_CTRL, FUNC_CFG_DMA_EN, 2, 1)=0A=
+ =0A=
+ struct AspeedI2CState;=0A=
+ =0A=
+diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c=0A=
+index 27afcaecee..68bdcd0e25 100644=0A=
+--- a/hw/i2c/aspeed_i2c.c=0A=
++++ b/hw/i2c/aspeed_i2c.c=0A=
+@@ -159,6 +159,7 @@ static uint64_t aspeed_i2c_bus_new_read(AspeedI2CBus *b=
+us, hwaddr offset,=0A=
+     case A_I2CS_INTR_CTRL:=0A=
+     case A_I2CS_DMA_LEN_STS:=0A=
+     case A_I2CS_INTR_STS:=0A=
++    case A_I2CC_VERSION_CTRL:=0A=
+         value =3D bus->regs[offset / sizeof(*bus->regs)];=0A=
+         break;=0A=
+     case A_I2CC_DMA_ADDR:=0A=
+@@ -295,6 +296,65 @@ static int aspeed_i2c_dma_read(AspeedI2CBus *bus, uint=
+8_t *data)=0A=
+     return 0;=0A=
+ }=0A=
+ =0A=
++/*=0A=
++ * In AST2700 buffer mode the master DMA command bits (TX/RX_DMA_EN) and t=
+he=0A=
++ * DMA length registers are reused, but data is moved through the controll=
+er=0A=
++ * internal SRAM pool at the offset programmed in I2CM_DMA_TX/RX_ADDR inst=
+ead=0A=
++ * of DRAM. FUNC_CFG_DMA_EN selects between the two (set =3D DRAM).=0A=
++ */=0A=
++static bool aspeed_i2c_bus_dma_to_pool(AspeedI2CBus *bus)=0A=
++{=0A=
++    return aspeed_i2c_is_new_mode(bus->controller) &&=0A=
++           !ARRAY_FIELD_EX32(bus->regs, I2CC_VERSION_CTRL, FUNC_CFG_DMA_EN=
+);=0A=
++}=0A=
++=0A=
++static int aspeed_i2c_bus_send_dma_pool(AspeedI2CBus *bus)=0A=
++{=0A=
++    AspeedI2CClass *aic =3D ASPEED_I2C_GET_CLASS(bus->controller);=0A=
++    uint32_t reg_dma_len =3D aspeed_i2c_bus_dma_len_offset(bus);=0A=
++    uint32_t reg_cmd =3D aspeed_i2c_bus_cmd_offset(bus);=0A=
++    uint32_t offset =3D bus->regs[R_I2CM_DMA_TX_ADDR];=0A=
++    uint8_t *pool_base =3D aic->bus_pool_base(bus);=0A=
++    int ret =3D -1;=0A=
++    int i;=0A=
++=0A=
++    ARRAY_FIELD_DP32(bus->regs, I2CM_DMA_LEN_STS, TX_LEN, 0);=0A=
++    for (i =3D 0; bus->regs[reg_dma_len] &&=0A=
++                offset + i < ASPEED_I2C_BUS_POOL_SIZE; i++) {=0A=
++        trace_aspeed_i2c_bus_send("BUFF", i + 1, bus->regs[reg_dma_len],=
+=0A=
++                                  pool_base[offset + i]);=0A=
++        ret =3D i2c_send(bus->bus, pool_base[offset + i]);=0A=
++        bus->regs[reg_dma_len]--;=0A=
++        ARRAY_FIELD_DP32(bus->regs, I2CM_DMA_LEN_STS, TX_LEN, i + 1);=0A=
++        if (ret) {=0A=
++            break;=0A=
++        }=0A=
++    }=0A=
++    SHARED_ARRAY_FIELD_DP32(bus->regs, reg_cmd, TX_DMA_EN, 0);=0A=
++    return ret;=0A=
++}=0A=
++=0A=
++static void aspeed_i2c_bus_recv_dma_pool(AspeedI2CBus *bus)=0A=
++{=0A=
++    AspeedI2CClass *aic =3D ASPEED_I2C_GET_CLASS(bus->controller);=0A=
++    uint32_t reg_dma_len =3D aspeed_i2c_bus_dma_len_offset(bus);=0A=
++    uint32_t reg_cmd =3D aspeed_i2c_bus_cmd_offset(bus);=0A=
++    uint32_t offset =3D bus->regs[R_I2CM_DMA_RX_ADDR];=0A=
++    uint8_t *pool_base =3D aic->bus_pool_base(bus);=0A=
++    int i;=0A=
++=0A=
++    ARRAY_FIELD_DP32(bus->regs, I2CM_DMA_LEN_STS, RX_LEN, 0);=0A=
++    for (i =3D 0; bus->regs[reg_dma_len] &&=0A=
++                offset + i < ASPEED_I2C_BUS_POOL_SIZE; i++) {=0A=
++        pool_base[offset + i] =3D i2c_recv(bus->bus);=0A=
++        trace_aspeed_i2c_bus_recv("BUFF", i + 1, bus->regs[reg_dma_len],=
+=0A=
++                                  pool_base[offset + i]);=0A=
++        bus->regs[reg_dma_len]--;=0A=
++        ARRAY_FIELD_DP32(bus->regs, I2CM_DMA_LEN_STS, RX_LEN, i + 1);=0A=
++    }=0A=
++    SHARED_ARRAY_FIELD_DP32(bus->regs, reg_cmd, RX_DMA_EN, 0);=0A=
++}=0A=
++=0A=
+ static int aspeed_i2c_bus_send(AspeedI2CBus *bus)=0A=
+ {=0A=
+     AspeedI2CClass *aic =3D ASPEED_I2C_GET_CLASS(bus->controller);=0A=
+@@ -320,6 +380,10 @@ static int aspeed_i2c_bus_send(AspeedI2CBus *bus)=0A=
+         }=0A=
+         SHARED_ARRAY_FIELD_DP32(bus->regs, reg_cmd, TX_BUFF_EN, 0);=0A=
+     } else if (SHARED_ARRAY_FIELD_EX32(bus->regs, reg_cmd, TX_DMA_EN)) {=
+=0A=
++        /* In buffer mode the DMA moves data through the pool, not DRAM */=
+=0A=
++        if (aspeed_i2c_bus_dma_to_pool(bus)) {=0A=
++            return aspeed_i2c_bus_send_dma_pool(bus);=0A=
++        }=0A=
+         /* In new mode, clear how many bytes we TXed */=0A=
+         if (aspeed_i2c_is_new_mode(bus->controller)) {=0A=
+             ARRAY_FIELD_DP32(bus->regs, I2CM_DMA_LEN_STS, TX_LEN, 0);=0A=
+@@ -385,6 +449,11 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)=0A=
+         SHARED_ARRAY_FIELD_DP32(bus->regs, reg_pool_ctrl, RX_COUNT, i & 0x=
+ff);=0A=
+         SHARED_ARRAY_FIELD_DP32(bus->regs, reg_cmd, RX_BUFF_EN, 0);=0A=
+     } else if (SHARED_ARRAY_FIELD_EX32(bus->regs, reg_cmd, RX_DMA_EN)) {=
+=0A=
++        /* In buffer mode the DMA moves data through the pool, not DRAM */=
+=0A=
++        if (aspeed_i2c_bus_dma_to_pool(bus)) {=0A=
++            aspeed_i2c_bus_recv_dma_pool(bus);=0A=
++            return;=0A=
++        }=0A=
+         /* In new mode, clear how many bytes we RXed */=0A=
+         if (aspeed_i2c_is_new_mode(bus->controller)) {=0A=
+             ARRAY_FIELD_DP32(bus->regs, I2CM_DMA_LEN_STS, RX_LEN, 0);=0A=
+@@ -854,6 +923,9 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus,=
+ hwaddr offset,=0A=
+                                                       I2CS_DMA_RX_ADDR_HI,=
+=0A=
+                                                       ADDR_HI);=0A=
+         break;=0A=
++    case A_I2CC_VERSION_CTRL:=0A=
++        bus->regs[R_I2CC_VERSION_CTRL] =3D value;=0A=
++        break;=0A=
+     default:=0A=
+         qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%" HWADDR_PRIx "\=
+n",=0A=
+                       __func__, offset);=0A=
+@@ -1497,6 +1569,13 @@ static void aspeed_i2c_bus_reset_hold(Object *obj, R=
+esetType type)=0A=
+     memset(s->regs, 0, sizeof(s->regs));=0A=
+     s->pending_intr_sts =3D 0;=0A=
+     i2c_end_transfer(s->bus);=0A=
++    /*=0A=
++     * I2CC_VERSION_CTRL resets to all-ones. FUNC_CFG_DMA_EN is therefore =
+set,=0A=
++     * so master DMA targets DRAM unless the guest clears it to select buf=
+fer=0A=
++     * mode. Guests unaware of buffer mode never touch this register and k=
+eep=0A=
++     * doing DRAM DMA.=0A=
++     */=0A=
++    s->regs[R_I2CC_VERSION_CTRL] =3D 0xffffffff;=0A=
+ }=0A=
+ =0A=
+ static void aspeed_i2c_bus_realize(DeviceState *dev, Error **errp)=0A=
+-- =0A=
+2.43.0=0A=
 
