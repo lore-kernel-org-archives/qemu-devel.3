@@ -4,145 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2A26C55838
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 02:52:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE00BC55182
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 02:55:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wr5Fj-0003ff-79; Mon, 03 Aug 2026 22:51:39 -0400
+	id 1wr5JV-0004Nz-Gd; Mon, 03 Aug 2026 22:55:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wr5Fh-0003fK-DA
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 22:51:37 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
+ id 1wr5JT-0004Nm-Vl; Mon, 03 Aug 2026 22:55:32 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wr5Ff-0006Hg-M8
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 22:51:37 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67417p991670518
- for <qemu-devel@nongnu.org>; Tue, 4 Aug 2026 02:51:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- LNF9enBXs165gq7lT0dBrle7K5dJESVbQ9HbQDcB/4I=; b=f/AU8kJzcIQYitip
- nVKNZmnGhwqIfvWQc0bo4mh4XR+KtTlQuE9SYqjXy9QQS+seq0fT72tdIpWQriJP
- o64lb9KrVa+hiMMx06Tvy6hA+YSvL7spcmbuz5vXr0a0pzMLC7EyMi0Z4O6Gx/zY
- hJ1l01A8ChonX9i4fvGB6pwovJXvcMy+TWvpNcdOPrCEo0yziPOx9VzVyYN5TOlr
- t99l4k6pBzaRwGUuZgLSZVV0v8TTwrLCIP8gEkRXNt1sSq+fu7iC+QHhx4OKH4r4
- 5Q4mB/l0EshZi6lj9Q7Gs6/k+fJYi86UBgkVaRqyVmWIHaIXOpxwyeY04GDPrGsN
- axbSWg==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ftx7m2e2j-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 04 Aug 2026 02:51:31 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-8e934385db1so40828506d6.0
- for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 19:51:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1785811889; x=1786416689; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=LNF9enBXs165gq7lT0dBrle7K5dJESVbQ9HbQDcB/4I=;
- b=iWoFoWOP0zf1MPMJAhbrazzHduUe5oSp6PFJOUwaxfm4uirH74ivxJfiR2FJqmxGtT
- REj+4+OOPnYqCiq2962o+EoNqwFsbIgP1m5/RoISUho/S/WjdOVAr42OHnWQWYYhoOSm
- T1sbNc62wOUhlXiSd86J9JgT4EwJQYNcqAzUPwe2iBqrolnU0O9SAt8NTaP3fDYSyHUz
- RR525CySayc+FcCwpIH+1oq+zgjZ4vpMIWHdqjAXFJfmChgyCjvDim6jXCI65ToKV/ra
- dgZaHMZA+qgOsqtRFlDiSXtfAG991xHAdFsyyUh5Jr6qMTcT6cF/qZ7ncPvp1//1aZQt
- Wcyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785811889; x=1786416689;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=LNF9enBXs165gq7lT0dBrle7K5dJESVbQ9HbQDcB/4I=;
- b=sHjfDTGjsCsYJXFXOxtolCFDGgvdCN8jYmmGPUsVKXGLboucsF4YDaVbmL+e79LQjU
- h9W26GxXhn4xvvu87fqjzOqFmONXP3SnrfDFpSEczMDrkgrdRLCv/C7qbqnahKXQzTEy
- ext+QT8DY3qIDSWehn/MC8RwRN9h0kLOljnsnxj9D7eupQzTSTHcX7nyzoMIrISVKYKi
- aSF/Y+Ltv2g4zhyTbgTL4O1Yx4LM++T8uHHrkMDPSMEzAkzD7oZsPSiIOUK8yELLNc/j
- hqHdO657EKO28PSwRZ+jluaivWuBzeBdrqzFAC4ZS8C3e4QJx6KABs0dzyt7ugtlmT4U
- KMOQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpVV7fuOcZb43Pr/T/xZxV26xLvrZEDpdhDM7lxXPU/0wxE9NOpd1bOU7ISVKYw+vbNqWlQe5lIEjWS@nongnu.org
-X-Gm-Message-State: AOJu0YwvaXW7OBWkjIOE99bNetn/0Nty0lV+dAy32+pr0YAp0cvuGGJZ
- 8s+slgET46yIkIR5BRW/Fi0i2ZCu3Ex+NEuRyPP32WxXUMFNxLZIqzeSxQZz6R+5R2+h59efEhg
- 8qJsMs49ZWbk9OtQ1NFeo/hji8layb4eQzqnssTgRgEUlmJRK9GBZagKEnw==
-X-Gm-Gg: AR+sD11DzdsW66oJMobx/NOQat074r8biuBFHks3a/CYejAonpkLiWDYutf4CDTRFiX
- z91JgXYh2L8BzS5eu4Yi5l9BGHEJEjqjDJv8jUF25JnnEuhaAItb7D6CSTKLN8TPdJsHgy/tR/8
- Hnms1yOuxdQPMjINfL7PMUt4vEK0BmK0WtyNS8A3lfx0v0GDwIBW4gPN1rIleZj8mROJ2vdXUPx
- xe/AeNg7LBo9mTyqjkKBiokWVSpAfyH02ivZrSzUP3uR9Biwb0TaaWWITqlVmdWZyotbFBjhorI
- BUw5aXyjc243hhLBNvv+6O/BuP06A9VbzAGtlkq9iVl+uh+7RfCWlBiEI+dnvS+IL0nDzNOuuRs
- 4SzzYN1H7kDdNhugJeNupq8yro93NaI+RVY0=
-X-Received: by 2002:a05:622a:c84:b0:51c:92a0:b2cb with SMTP id
- d75a77b69052e-52b5682e980mr238774141cf.26.1785811889406; 
- Mon, 03 Aug 2026 19:51:29 -0700 (PDT)
-X-Received: by 2002:a05:622a:c84:b0:51c:92a0:b2cb with SMTP id
- d75a77b69052e-52b5682e980mr238773931cf.26.1785811889013; 
- Mon, 03 Aug 2026 19:51:29 -0700 (PDT)
-Received: from [192.168.69.212] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49949fc2b98sm45809315e9.2.2026.08.03.19.51.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Aug 2026 19:51:27 -0700 (PDT)
-Message-ID: <9fba5d26-486e-4415-a086-d15473bbbc56@oss.qualcomm.com>
-Date: Tue, 4 Aug 2026 04:51:26 +0200
+ (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
+ id 1wr5JS-0006xx-24; Mon, 03 Aug 2026 22:55:31 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6741HntM3631509; Tue, 4 Aug 2026 02:55:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=D3FmN20BCSriKK8UK
+ IuKfFMQvTeV6aZpXrVzihu6dXM=; b=GbyStSfqYCWwSd5IlIJy720iBqjteZ/Fr
+ 8P6tnQ08OziYnr1OnECEtyI817ct/mBOzVxa8yWu1iPmpMS4gjN7mvdLSnXJPyAM
+ bfoRFFEnD6HuK4bZVxPYJJjvGa8v2KGWlEWPrmNUcqd+TSm2rVUPR2+XriLJztID
+ g1rpwYfkgKHAmKmpeeuDIZmFmOT1gLkqYE5qggXWNgsRW6Dh5NcPaq57SS7I0Eis
+ OANLarvEnFcpuxfFjx+B7SIeTmwaoPhxUzjVrivvqpWQrc8XwTDzZBERlTvDmT3b
+ DhobuwvaaKix5UzJKXvzQG42pfgPIzNsJN7y0zUyAz5jE/fwNU45w==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fs8a3us9t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 04 Aug 2026 02:55:27 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6742fjvK026264;
+ Tue, 4 Aug 2026 02:55:26 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fswtyfvkg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 04 Aug 2026 02:55:26 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6742tMG050397504
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 4 Aug 2026 02:55:22 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 529072004B;
+ Tue,  4 Aug 2026 02:55:22 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EE20220040;
+ Tue,  4 Aug 2026 02:55:20 +0000 (GMT)
+Received: from li-609d1fcc-36b3-11b2-a85c-cc82146838dd.ibm.com.com (unknown
+ [9.43.70.186]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  4 Aug 2026 02:55:20 +0000 (GMT)
+From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Cc: rathc@linux.ibm.com, Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+Subject: [RFC PATCH v2] target/ppc: Migrate atomic loads to decodetree
+Date: Tue,  4 Aug 2026 08:25:17 +0530
+Message-ID: <20260804025517.632254-1-nikhilks@linux.ibm.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <b75abeab-969d-4866-ae5c-4ac424394adf@linux.ibm.com>
+References: <b75abeab-969d-4866-ae5c-4ac424394adf@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/11] tcg/loongarch64: Import REVBIT insns
-To: Richard Henderson <richard.henderson@linaro.org>, git@xen0n.name,
- qemu-devel@nongnu.org
-Cc: anjo@rev.ng, qemu-arm@nongnu.org, 17746591750@163.com, maobibo@loongson.cn,
- lixianglai@loongson.cn, philmd@mailo.com,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-References: <20260731000503.170446-1-richard.henderson@linaro.org>
- <20260731000503.170446-11-richard.henderson@linaro.org>
- <4b5db4f0-bad1-48e0-bde6-f72ae4681f39@oss.qualcomm.com>
- <a2b68ee9-861f-4511-a2e8-13889d08c151@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <a2b68ee9-861f-4511-a2e8-13889d08c151@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA0MDAyMCBTYWx0ZWRfX5BTJzOm5KXUJ
- ZLKDItyS8SGW5L1caNT1+pIxjH+wB8H8o5otOvaswBmYtaFIiyy6n5RY8jaNoumi5H2LK/TV1kb
- E7kxc1HeMGgkLlg7juf7mlc9TDKmXtMFOnSJWULrSvbiONJATE+TcyosesmIeOFj4w4WBM0phNh
- YLPMrvSqGFTihWWNZ9B/5QjSzKQW38DPCgEfbbD6dX0qCylsgd3QVMhupx9W8OaJq/OmCvVSZsR
- vqGvpl5E3tIukgn3+5SyICR9+5MNGjwIK5q/C70SPHuHRG/Xsx7m6kw1jZFH5I8IubjqGmEot4h
- 4qx879FijoPIR9P30UIQYpFGhEMVhbPsfEgEDxBLTsjsgJ+A3F12tZx2B0SlSNdRvRBuFt3NTIf
- nIl05dM0Zqe0pmkwyPR8ZeEhSCFzISkEZD8Mldu6nFeJ7Rf10w/sIwv2K4C202fveF52LN92P0U
- N0yCj1cxQi0A7f78clg==
-X-Authority-Analysis: v=2.4 cv=TIt1jVla c=1 sm=1 tr=0 ts=6a7153b3 cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=NEAV23lmAAAA:8 a=2hlkDxslWKAfz-EcSkAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=1HOtulTD9v-eNWfpl4qZ:22
-X-Proofpoint-ORIG-GUID: TEjlZaECILfEMkz8HCh_4aA3DFePvg_R
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODA0MDAyMCBTYWx0ZWRfX26U67wIZVnZa
- AeW0+vExRNGrhfdRttGaBMAjBp6AIKi7PrWi2KiVTHJ8ltGbJnEipZprA7HZkyXKP9k3FDooyhd
- 7koF1jk+9nzWVJciiXEvcvGCXz+k3Hs=
-X-Proofpoint-GUID: TEjlZaECILfEMkz8HCh_4aA3DFePvg_R
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=E6P9Y6dl c=1 sm=1 tr=0 ts=6a71549f cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=-DTolxHDGJQozeEdauoA:9
+X-Proofpoint-ORIG-GUID: BSc3WuF_7aINqCLr9kS3aYHvkIduXJmE
+X-Proofpoint-GUID: BSc3WuF_7aINqCLr9kS3aYHvkIduXJmE
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA0MDAyMSBTYWx0ZWRfX2dNyoDD/oKjM
+ XtLX6sv88uoKyKRESpQqebkosU3IMbaEKZMCP9RfmIqWpTYlMtgLTa2EsPUecV3FShUmwyUTxB9
+ AoqTxR3pofarJmoJtQ1cNCuB22PL2/Y=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA0MDAyMSBTYWx0ZWRfX+4Xz6BKdbGjm
+ m+BzaUYAIA6A/zl8aGcjQaFMVMMqySX8yu3a7IJI+ezLHSjC+Chz3gNxiDLnZIB5Pvh2D+WfdcW
+ Sv4s37J+DrxL5YEl7PhhBFwmlhTEgik8N6tDWtd/Mqu9r9St9oD8ymiyLCrQPa6VYy/lniMSSVD
+ 3S9F4afdDIRJwMqwnB7tGsw8wVBDgRf803oBFOefMFFUbXFAmk4UbiM0WsB7VYChw55snk6Xd+v
+ gXJeSK2rXLgfAfAcGkC5pprM7lFgPzj2L61OwdXKtEMM2jjtqhZbPDI/8QFoLgspCmdQ5WyZPzG
+ bx25pTtd/0TSPzE0UFdfKEI8LeOSTPpvYgPWbuV+fDbl6+vb0HyBb3whqsqBno5EjSm+Ql9D9Af
+ w79NoXsoQ+7oF/yZHyRdtJxACyV+W91eq1yLSehyFua6zg0BlGnT2gTVz4UscI456a0TVhNFQBg
+ eJ/W5NkQstLblf8/0dw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-04_01,2026-08-03_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 phishscore=0 bulkscore=0 malwarescore=0
- priorityscore=1501 spamscore=0 suspectscore=0 impostorscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608040020
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ bulkscore=0 clxscore=1015 lowpriorityscore=0 priorityscore=1501
+ suspectscore=0 adultscore=0 spamscore=0 malwarescore=0 impostorscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608040021
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=nikhilks@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,36 +119,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/8/26 19:26, Richard Henderson wrote:
-> On 8/3/26 08:06, Philippe Mathieu-Daudé wrote:
->>>    * This file is auto-generated by genqemutcgdefs from
->>>    * https://github.com/loongson-community/loongarch-opcodes,
->>> - * from commit 7f353fb69bd99ce6edfad7ad63948c4bb526f0bf.
->>> + * from commit 40ea52087699392ad911387b666541891d33da31.
->>
->> I couldn't find it then noticed your
->> https://github.com/loongson-community/loongarch-opcodes/pull/10,
->> so pending it to be merged?
-> 
-> Yes.
-> 
->>> -static int32_t __attribute__((unused))
->>> -encode_d_slot(LoongArchInsn opc, uint32_t d)
->>> +static int32_t __attribute__((unused)) encode_d_slot(LoongArchInsn opc,
->>> +                                                     uint32_t d)
->>
->> What triggered this code churn? Could we commit before generating for
->> REVBIT opcodes?
-> 
-> It looks like the program passes off to clang-format.  Perhaps a version 
-> change in the year since last regenerated?
+Migrate load-and-reserve instructions (lbarx, lharx, lwarx, ldarx,
+lqarx) to decodetree using the X-form layout.
 
-Then maybe call genqemutcgdefs to regenerate clang-formatted in a
-preliminary patch? Would also help reverts.
+A shared helper (do_load_locked) is introduced for standard-width
+variants, while LQARX is handled separately due to its 128-bit
+semantics and register pairing constraints.
 
-> 
-> 
-> r~
-> 
+The implementation preserves legacy behavior, including:
+  - Reservation granularity and overwrite semantics
+  - Alignment requirements
+  - Invalid instruction cases for LQARX
+
+Testing:
+  - Verified TCG equivalence with legacy implementation
+
+Signed-off-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+[cr: ppc32 build fix, using @X_rc for decode]
+---
+v1 -> v2:
+  - Replaced verbose trans_XXX() handlers for lbarx, lharx, lwarx, and 
+    ldarx with TRANS, TRANS64, and TRANS_FLAGS2 macros (per Chinmay).
+
+ target/ppc/insn32.decode |   7 +++
+ target/ppc/translate.c   | 124 +++++++++++++++++++--------------------
+ 2 files changed, 69 insertions(+), 62 deletions(-)
+
+diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+index 342e65dadf..26948e08a7 100644
+--- a/target/ppc/insn32.decode
++++ b/target/ppc/insn32.decode
+@@ -1309,6 +1309,13 @@ XVF64GERNN      111011 ... -- .... 0 ..... 11111010 ..-  @XX3_at xa=%xx_xa_pair
+ ##Extend Sign Word and Shift Left Immediate XS-form
+ EXTSWSLI         011111 ..... ..... ..... 110111101 . .         @XS
+ 
++## Load and Reserve Instructions
++LBARX           011111 ..... ..... ..... 0000110100 .   @X_rc
++LHARX           011111 ..... ..... ..... 0001110100 .   @X_rc
++LWARX           011111 ..... ..... ..... 0000010100 .   @X_rc
++LDARX           011111 ..... ..... ..... 0001010100 .   @X_rc
++LQARX           011111 ..... ..... ..... 0100010100 .   @X_rc
++
+ ## Vector Division Instructions
+ 
+ VDIVSW          000100 ..... ..... ..... 00110001011    @VX
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index e627f48f9e..cc9287dcc5 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -2947,30 +2947,6 @@ static void gen_isync(DisasContext *ctx)
+     ctx->base.is_jmp = DISAS_EXIT_UPDATE;
+ }
+ 
+-static void gen_load_locked(DisasContext *ctx, MemOp memop)
+-{
+-    TCGv gpr = cpu_gpr[rD(ctx->opcode)];
+-    TCGv t0 = tcg_temp_new();
+-
+-    gen_set_access_type(ctx, ACCESS_RES);
+-    gen_addr_reg_index(ctx, t0);
+-    tcg_gen_qemu_ld_tl(gpr, t0, ctx->mem_idx, DEF_MEMOP(memop) | MO_ALIGN);
+-    tcg_gen_mov_tl(cpu_reserve, t0);
+-    tcg_gen_movi_tl(cpu_reserve_length, memop_size(memop));
+-    tcg_gen_mov_tl(cpu_reserve_val, gpr);
+-}
+-
+-#define LARX(name, memop)                  \
+-static void gen_##name(DisasContext *ctx)  \
+-{                                          \
+-    gen_load_locked(ctx, memop);           \
+-}
+-
+-/* lwarx */
+-LARX(lbarx, MO_UB)
+-LARX(lharx, MO_UW)
+-LARX(lwarx, MO_UL)
+-
+ static void gen_fetch_inc_conditional(DisasContext *ctx, MemOp memop,
+                                       TCGv EA, TCGCond cond, int addend)
+ {
+@@ -3219,42 +3195,9 @@ STCX(sthcx_, MO_UW)
+ STCX(stwcx_, MO_UL)
+ 
+ #if defined(TARGET_PPC64)
+-/* ldarx */
+-LARX(ldarx, MO_UQ)
+ /* stdcx. */
+ STCX(stdcx_, MO_UQ)
+ 
+-/* lqarx */
+-static void gen_lqarx(DisasContext *ctx)
+-{
+-    int rd = rD(ctx->opcode);
+-    TCGv EA, hi, lo;
+-    TCGv_i128 t16;
+-
+-    if (unlikely((rd & 1) || (rd == rA(ctx->opcode)) ||
+-                 (rd == rB(ctx->opcode)))) {
+-        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
+-        return;
+-    }
+-
+-    gen_set_access_type(ctx, ACCESS_RES);
+-    EA = tcg_temp_new();
+-    gen_addr_reg_index(ctx, EA);
+-
+-    /* Note that the low part is always in RD+1, even in LE mode.  */
+-    lo = cpu_gpr[rd + 1];
+-    hi = cpu_gpr[rd];
+-
+-    t16 = tcg_temp_new_i128();
+-    tcg_gen_qemu_ld_i128(t16, EA, ctx->mem_idx, DEF_MEMOP(MO_128 | MO_ALIGN));
+-    tcg_gen_extr_i128_i64(lo, hi, t16);
+-
+-    tcg_gen_mov_tl(cpu_reserve, EA);
+-    tcg_gen_movi_tl(cpu_reserve_length, 16);
+-    tcg_gen_st_tl(hi, tcg_env, offsetof(CPUPPCState, reserve_val));
+-    tcg_gen_st_tl(lo, tcg_env, offsetof(CPUPPCState, reserve_val2));
+-}
+-
+ /* stqcx. */
+ static void gen_stqcx_(DisasContext *ctx)
+ {
+@@ -5741,6 +5684,68 @@ static bool trans_EXTSWSLI(DisasContext *ctx, arg_XS *a)
+     return true;
+ }
+ 
++/*
++ * Load-and-reserve core
++ */
++static bool do_load_locked(DisasContext *ctx, arg_X_rc *a, MemOp memop)
++{
++    TCGv EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
++    TCGv gpr = cpu_gpr[a->rt];
++
++    gen_set_access_type(ctx, ACCESS_RES);
++
++    tcg_gen_qemu_ld_tl(gpr, EA, ctx->mem_idx, memop | MO_ALIGN);
++
++    tcg_gen_mov_tl(cpu_reserve, EA);
++    tcg_gen_movi_tl(cpu_reserve_length, memop_size(memop));
++
++    tcg_gen_mov_tl(cpu_reserve_val, gpr);
++
++    return true;
++}
++
++TRANS_FLAGS2(ATOMIC_ISA206, LBARX, do_load_locked, DEF_MEMOP(MO_UB))
++TRANS_FLAGS2(ATOMIC_ISA206, LHARX, do_load_locked, DEF_MEMOP(MO_UW))
++TRANS(LWARX, do_load_locked, DEF_MEMOP(MO_UL))
++TRANS64(LDARX, do_load_locked, DEF_MEMOP(MO_UQ))
++
++static bool trans_LQARX(DisasContext *ctx, arg_LQARX *a)
++{
++    REQUIRE_64BIT(ctx);
++    REQUIRE_INSNS_FLAGS2(ctx, ISA207S);
++#if defined(TARGET_PPC64)
++    TCGv EA;
++    TCGv_i128 t16;
++    /* Must use even register and avoid overlap */
++    if (unlikely((a->rt & 1) || (a->rt == a->ra) || (a->rt == a->rb))) {
++        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
++        return true;
++    }
++
++    gen_set_access_type(ctx, ACCESS_RES);
++    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
++    t16 = tcg_temp_new_i128();
++
++    tcg_gen_qemu_ld_i128(t16, EA, ctx->mem_idx,
++                         DEF_MEMOP(MO_128 | MO_ALIGN));
++
++    tcg_gen_extr_i128_i64(cpu_gpr[a->rt + 1],
++                         cpu_gpr[a->rt],
++                         t16);
++
++    tcg_gen_mov_tl(cpu_reserve, EA);
++    tcg_gen_movi_tl(cpu_reserve_length, 16);
++
++    tcg_gen_st_i64(cpu_gpr[a->rt],
++                   tcg_env, offsetof(CPUPPCState, reserve_val));
++    tcg_gen_st_i64(cpu_gpr[a->rt + 1],
++                   tcg_env, offsetof(CPUPPCState, reserve_val2));
++#else
++    qemu_build_not_reached();
++#endif
++    return true;
++}
++
+ #include "translate/fixedpoint-impl.c.inc"
+ 
+ #include "translate/fp-impl.c.inc"
+@@ -5853,9 +5858,6 @@ GEN_HANDLER(lswx, 0x1F, 0x15, 0x10, 0x00000001, PPC_STRING),
+ GEN_HANDLER(stswi, 0x1F, 0x15, 0x16, 0x00000001, PPC_STRING),
+ GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
+ GEN_HANDLER(isync, 0x13, 0x16, 0x04, 0x03FFF801, PPC_MEM),
+-GEN_HANDLER_E(lbarx, 0x1F, 0x14, 0x01, 0, PPC_NONE, PPC2_ATOMIC_ISA206),
+-GEN_HANDLER_E(lharx, 0x1F, 0x14, 0x03, 0, PPC_NONE, PPC2_ATOMIC_ISA206),
+-GEN_HANDLER(lwarx, 0x1F, 0x14, 0x00, 0x00000000, PPC_RES),
+ GEN_HANDLER_E(lwat, 0x1F, 0x06, 0x12, 0x00000001, PPC_NONE, PPC2_ISA300),
+ GEN_HANDLER_E(stwat, 0x1F, 0x06, 0x16, 0x00000001, PPC_NONE, PPC2_ISA300),
+ GEN_HANDLER_E(stbcx_, 0x1F, 0x16, 0x15, 0, PPC_NONE, PPC2_ATOMIC_ISA206),
+@@ -5864,8 +5866,6 @@ GEN_HANDLER2(stwcx_, "stwcx.", 0x1F, 0x16, 0x04, 0x00000000, PPC_RES),
+ #if defined(TARGET_PPC64)
+ GEN_HANDLER_E(ldat, 0x1F, 0x06, 0x13, 0x00000001, PPC_NONE, PPC2_ISA300),
+ GEN_HANDLER_E(stdat, 0x1F, 0x06, 0x17, 0x00000001, PPC_NONE, PPC2_ISA300),
+-GEN_HANDLER(ldarx, 0x1F, 0x14, 0x02, 0x00000000, PPC_64B),
+-GEN_HANDLER_E(lqarx, 0x1F, 0x14, 0x08, 0, PPC_NONE, PPC2_LSQ_ISA207),
+ GEN_HANDLER2(stdcx_, "stdcx.", 0x1F, 0x16, 0x06, 0x00000000, PPC_64B),
+ GEN_HANDLER_E(stqcx_, 0x1F, 0x16, 0x05, 0, PPC_NONE, PPC2_LSQ_ISA207),
+ #endif
+-- 
+2.54.0
 
 
