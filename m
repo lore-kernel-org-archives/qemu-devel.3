@@ -4,82 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 111E8C5518F
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 17:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D82E3C55184
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 17:02:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrIVN-00008Z-Kr; Tue, 04 Aug 2026 13:00:41 -0400
+	id 1wrIVH-0008VS-G6; Tue, 04 Aug 2026 13:00:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wrIVM-00006q-2g
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 13:00:40 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wrIV4-0008Tb-NA
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 13:00:26 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wrIVJ-0000iv-QJ
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 13:00:39 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-472326ca506so17548f8f.2
- for <qemu-devel@nongnu.org>; Tue, 04 Aug 2026 10:00:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wrIV1-0000g2-U2
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 13:00:21 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-47de008b020so79866f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Aug 2026 10:00:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1785862836; x=1786467636; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=qVItmy4f/C2z27f9ZFHpOg432dejiRYIjmnW1fhYMUs=;
- b=H4+sCTEFlcCDuaP0RZoeIZ2GMEdf/AjPR6j+vRrnqO625ZdOvgL2Ao446w82ivGYpV
- psoZWotoVF/gAAg0BeZ55S1BhFqRtjTsafUxl/UGBT3FSnGP/Rip5RUCYRZgd0109vDY
- CH+0E11uleK5eig7kY3RQf5UOnNZlECvuF+5fgGKR3jzmCMmiDpej1O4cMOLCJFy67b0
- 1akWZCSmRVZQf5251iVqnqGtWQh/qRmBc39yO4+tL69GMHt/KfT+dCjITLqLj1Nz2sK2
- LN9gFzTajb5dGFczoJxPq01PO/7fFCJpBbOINH4yfn0aO5tAoEnQNB+Q7ksfdNZO64eS
- mhVw==
+ d=openvz.org; s=google; t=1785862818; x=1786467618; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=yQK6PHDh5QKXrHb70XqWY9/HU72OmNMd2B31QgcOomc=;
+ b=Gx2q9U1+h1tpNwnPLtCZOEXi3Txy2CjrEIdFESPng3Wehbqa4OdUM1ixrPSuV1aEqw
+ MjKT8nn+4G+6TwL5evSMvtjbP8L6IeglNT/n37GON8gi7InGCvEDdk4JLJGnQr4cpzWw
+ 1Y9A4IqSduQ4zxMa17LlXoInR7/YoCUkFfqjhJSg+TlF/tKMg4oQNpsJqO93nTvxCTEM
+ t+mHbFZuX869KK3T+x/GN/oSKCX4DnPEea9hT00B7jb97E3iRwHj7PDQzCzYFNuc2J83
+ JJkgI7B9sVXmK7mXymKyF1JGVal3AmWIqGDLul0c2kjiEIGPZ/H3h2fY3fdwq+yQ7RPk
+ FBOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785862836; x=1786467636;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=qVItmy4f/C2z27f9ZFHpOg432dejiRYIjmnW1fhYMUs=;
- b=QwJinRE6zDgeaYipXrChyNut/q43ML8a/B5rRaiXAUE/40E7FCTywjdyfHCBk8HzAY
- +N6mSgiaY//XpFYGydWR61n/PW+hIvJt7IoSrZDq/MZlAU4ID3nK4bL9ZFvKizR5BxSV
- 0kW2CTAOQ4y19vjD5zYxob7nAUe3SpqyhUktSk1x3t0MeE3a7voxs2eC3Gwjv5AUZpre
- 18shbxLRwPvARespz8YgLcgzEL8k0cemr/PgeYB2aC/dqXgSVHzBFGvOsRJdJB6jXo7s
- gAuACQhKC3/b8T6t3YtEwpC1NcWC/tvAvwzCkK2fMtTef9PhfFuT33s+s0fn5J3edbIL
- 8RcQ==
-X-Gm-Message-State: AOJu0YwPyimRFwN2HuJAP8IG11fkLwALRA/KSH4dGKwooHJZpJI1Sc+k
- RJ1PmqoxyunQgEZhonEVLaWvJ5idKFhM5+7KN4jCqNDWghMOebTHSG7Ajiz6Ax8XViZXAmY/2OH
- RJJDl
-X-Gm-Gg: AR+sD132bZaiwyF1PTAd/Y0+4cx6FhD/McfY03E/ATEU81GdmW48wxJ8PFmk/zz9iXJ
- x4N5TdTAaS3rVTXKhMTcSxnbQWnmeiWgoAUvt1RacA+j1FhhTCncriKmzm7EAys11YgQcHSO/Wp
- EpBu7Y3gxgpxdsErAwiyOQRj7mfxsrLEr0egZUH/uYlbC4AMvAJ3xQLIwUb6ArfPG0XxalXDUGz
- yVIE2Hvz2XeKEVeLU7ykGHkqKj8bU3gLh7yM5tA5Li8phfJOTa7KkcZkfmSqcWNXxJH/aFyNbKX
- YlrlkAxh2zkuwzPKVIAsKxlOUDBRozCkOzRyUgh0e/5lAkgj1BCZm1wk+WFmxLovO2/JZG5Bm19
- mV+2MIlMuNhNMW4TUegCBoMz/e7kRC1qP0LCrFkG1n3iujUEqBr/+e1qhUr/xoa51j04zIxXrCI
- 4Ou5n74GK0fKz1eSpNfJbpGe5nVPhI2TUfpvtwhk32uJ3bwQ==
-X-Received: by 2002:a5d:65c7:0:b0:47f:e877:641b with SMTP id
- ffacd0b85a97d-47fec50e3c7mr1134511f8f.11.1785862836311; 
- Tue, 04 Aug 2026 10:00:36 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785862818; x=1786467618;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=yQK6PHDh5QKXrHb70XqWY9/HU72OmNMd2B31QgcOomc=;
+ b=Y9al/dpq47e/dULXG9JS/PkjyJ+cBWQRgnJRlRRPFcE6W21V8+o6qAGBu6rqo852R1
+ ExdCThXI4CrmkCyFjLpnBY3xiI/FtLfYKkbw7L6QkKpaIGE42uwCyW1J6vdxrRVEEdoL
+ /PwP4bTfa1m6qnkHj6a6j8LfrmP8HmmMNO50ES98lCc3F+xeQ2+PkVRcL+djwOQX5vEs
+ VatSbp+97EK96zwWN7xQaZRspcOTL7r8Vfq3KUVHdjWI+1btD9B6iOooBoVKDhtWj8Up
+ A75TZTquudxD4Dh3Nge9R4QBXF8I5dhou3IZkKpd/s/uBpxiebhteP3W54ZWEHtLkFdQ
+ q4lw==
+X-Gm-Message-State: AOJu0YyQakkSMl55nr2jHmVrwzxixBMCSczRcL4R6g9ryJFI4TDsxEeY
+ jB0qFEDPcI5lFw7YFLmTmDHKz3Hl+WN/2kGjmntf+x+3OrVQpjq0oOeZzIksZmufoGV1mn/OJYP
+ R6Un3
+X-Gm-Gg: AR+sD12yKBUIwa6LPODO/qnz9cHhmeQGxKEOCFbjuWVk7NPGCaDBRc13TrSJy40Mml/
+ pTKIU0f1zSsxzurdDfCTT5v7jrDGks+k59bOLPFbaHaDVra/09v+Q66xC8jIE5C8jO+fx+UXoOo
+ MuZ4s2gtM02n78MDMR4x85Sfqh3fnLAQiBgLqM7lp17jT+Z6ryIcqbHX9pLlTtoyuPUO5jM7WAf
+ r5VGptEMNEzgrsHV80su5dnk/I3q96fmH+ErbYlqs2OqaVCQ6emsrFuMS/k2NAvFJ9zwcS/v6Qj
+ NGRWZWuzhBzLFOg+CL5QAM86aeAET5UpDcR/wBEpManaZwDX59SfbdBHTpdldxHuffBho/qZvGt
+ OHNTIWczE97j+FKRY+IQzKZlQJmSSjrLJ9SmSEpsL4uCglV/Z32X7ovH0KywOaNXP16ySHlPBFR
+ C0jmHgUAkCQmD90tLqvmkJbi0+S+SXwdz2hL+LXYnGGiqlYw==
+X-Received: by 2002:a5d:584d:0:b0:47f:8b0f:7172 with SMTP id
+ ffacd0b85a97d-47fe81a16f0mr12710409f8f.6.1785862818188; 
+ Tue, 04 Aug 2026 10:00:18 -0700 (PDT)
 Received: from athena ([213.133.28.44]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47fec23ec3asm1234116f8f.31.2026.08.04.10.00.35
+ ffacd0b85a97d-47fec23ec3asm1234116f8f.31.2026.08.04.10.00.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Aug 2026 10:00:35 -0700 (PDT)
+ Tue, 04 Aug 2026 10:00:17 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
  "Denis V. Lunev" <den@openvz.org>, Stefan Hajnoczi <stefanha@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL v2 6/7] hw/ide/atapi: read the whole elementary transfer
- asynchronously
-Date: Tue,  4 Aug 2026 19:00:13 +0200
-Message-ID: <20260804170015.3128363-7-den@openvz.org>
+Subject: [PULL v2 0/7] IDE patches
+Date: Tue,  4 Aug 2026 19:00:07 +0200
+Message-ID: <20260804170015.3128363-1-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260804170015.3128363-1-den@openvz.org>
-References: <20260804170015.3128363-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=den@openvz.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=den@openvz.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,274 +97,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-An ATAPI PIO read whose byte-count limit spans more than one CD sector
-must fetch the later sectors of a DRQ burst from inside the completion
-of the first, asynchronous read. cd_read_sector_sync() did this with a
-synchronous blk_pread(), which runs blk_wait_while_drained() before
-issuing the request.
+The following changes since commit e1705a25aff35635c360bbaba4c2731d019a422a:
 
-If a drain is in progress when that completion runs -- as happens when
-a guest reset reaches virtio_blk_stop_ioeventfd() ->
-bdrv_drain_all_begin() while an ATAPI read is in flight on the same
-QEMU -- the nested read is queued until the drained section ends while
-the outer completion still holds blk->in_flight. bdrv_drain_all_begin()
-then waits forever for that in_flight count to drop: the main loop is
-wedged in the drain with the BQL held, and every other QMP/monitor
-operation blocks behind it.
+  Update version for v11.1.0-rc2 release (2026-07-29 06:16:08 -0400)
 
-Read the whole elementary transfer in a single asynchronous request up
-front instead, so no read is ever issued in the middle of a burst.
-cd_read_sector() now reads all the sectors a burst spans (the raw
-2352-byte case is unpacked in place on completion) and
-cd_read_sector_sync() is removed. The DMA path already batched its
-reads and is unchanged.
+are available in the Git repository at:
+
+  https://gitlab.com/dlunev/qemu tags/pull-ide-2026-08-04
+
+for you to fetch changes up to 9a249de6ae86124b436b5e839e285aeb333ea8c0:
+
+  tests/qtest/ahci: regression test for ATAPI read vs. drain (2026-08-04 18:40:34 +0200)
+
+----------------------------------------------------------------
+IDE patches
+
+- fix a main-loop deadlock when an ATAPI PIO read spanning several
+  sectors is in flight while a drain starts: the nested sector fetch
+  was issued synchronously from inside the completion of the first
+  read and queued behind the drain, which then never finished
+- read the whole ATAPI elementary transfer in one asynchronous
+  request instead, removing cd_read_sector_sync()
+- extend the IDE/AHCI qtest coverage of ATAPI CD reads: parametrized
+  read helper, multi-sector DMA, raw 2352-byte READ CD on both
+  delivery paths, and a regression test for the deadlock above
+
+Changes since v1:
+- MAINTAINERS patch dropped
+- spare blank line no longer added and removed within the series
+
+NOTE: 'hw/ide: Don't divide by zero if guest specifies 0 sectors requires'
+is not ready for me, skipped from this submission.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 CC: Stefan Hajnoczi <stefanha@redhat.com>
 CC: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- hw/ide/atapi.c | 180 +++++++++++++++++++++++--------------------------
- 1 file changed, 84 insertions(+), 96 deletions(-)
 
-diff --git a/hw/ide/atapi.c b/hw/ide/atapi.c
-index a42b748521..0ea149ad8c 100644
---- a/hw/ide/atapi.c
-+++ b/hw/ide/atapi.c
-@@ -88,46 +88,14 @@ static void cd_data_to_raw(uint8_t *buf, int lba)
-     memset(buf, 0, 288);
- }
- 
--static int
--cd_read_sector_sync(IDEState *s)
--{
--    int ret;
--    block_acct_start(blk_get_stats(s->blk), &s->acct,
--                     ATAPI_SECTOR_SIZE, BLOCK_ACCT_READ);
--
--    trace_cd_read_sector_sync(s->lba);
--
--    switch (s->cd_sector_size) {
--    case 2048:
--        ret = blk_pread(s->blk, (int64_t)s->lba << ATAPI_SECTOR_BITS,
--                        ATAPI_SECTOR_SIZE, s->io_buffer, 0);
--        break;
--    case 2352:
--        ret = blk_pread(s->blk, (int64_t)s->lba << ATAPI_SECTOR_BITS,
--                        ATAPI_SECTOR_SIZE, s->io_buffer + 16, 0);
--        if (ret >= 0) {
--            cd_data_to_raw(s->io_buffer, s->lba);
--        }
--        break;
--    default:
--        block_acct_invalid(blk_get_stats(s->blk), BLOCK_ACCT_READ);
--        return -EIO;
--    }
--
--    if (ret < 0) {
--        block_acct_failed(blk_get_stats(s->blk), &s->acct);
--    } else {
--        block_acct_done(blk_get_stats(s->blk), &s->acct);
--        s->lba++;
--        s->io_buffer_index = 0;
--    }
--
--    return ret;
--}
--
- static void cd_read_sector_cb(void *opaque, int ret)
- {
-     IDEState *s = opaque;
-+    int et = s->elementary_transfer_size;
-+    int skip = s->io_buffer_index;
-+    int nsec = DIV_ROUND_UP(skip + et, s->cd_sector_size);
-+    uint8_t *buf;
-+    int i;
- 
-     trace_cd_read_sector_cb(s->lba, ret);
- 
-@@ -140,34 +108,64 @@ static void cd_read_sector_cb(void *opaque, int ret)
-     block_acct_done(blk_get_stats(s->blk), &s->acct);
- 
-     if (s->cd_sector_size == 2352) {
--        cd_data_to_raw(s->io_buffer, s->lba);
-+        /* unpack back-to-front so a sector never clobbers an unmoved one */
-+        for (i = nsec - 1; i >= 0; i--) {
-+            memmove(s->io_buffer + i * 2352 + 16, s->io_buffer + i * 2048,
-+                    ATAPI_SECTOR_SIZE);
-+            cd_data_to_raw(s->io_buffer + i * 2352, s->lba + i);
-+        }
-     }
- 
--    s->lba++;
--    s->io_buffer_index = 0;
-     s->status &= ~BUSY_STAT;
- 
--    ide_atapi_cmd_reply_end(s);
-+    s->nsector = (s->nsector & ~7) | ATAPI_INT_REASON_IO;
-+    s->lcyl = et & 0xff;
-+    s->hcyl = (et >> 8) & 0xff;
-+    ide_bus_set_irq(s->bus);
-+
-+    /* a boundary sector shared with the next burst is re-read there */
-+    buf = s->io_buffer + skip;
-+    s->packet_transfer_size -= et;
-+    s->lba += (skip + et) / s->cd_sector_size;
-+    s->io_buffer_index = (skip + et) % s->cd_sector_size;
-+    s->elementary_transfer_size = 0;
-+
-+    if (ide_transfer_start_norecurse(s, buf, et, ide_atapi_cmd_reply_end)) {
-+        ide_atapi_cmd_reply_end(s);
-+    }
- }
- 
-+/*
-+ * Read the whole elementary transfer (one DRQ burst) in a single async
-+ * request. No read is issued mid-burst, so unlike the old synchronous
-+ * rebuffer it cannot deadlock against a concurrent drain.
-+ */
- static int cd_read_sector(IDEState *s)
- {
--    void *buf;
-+    int et = s->elementary_transfer_size;
-+    int skip = s->io_buffer_index;
-+    int nsec = DIV_ROUND_UP(skip + et, s->cd_sector_size);
- 
-     if (s->cd_sector_size != 2048 && s->cd_sector_size != 2352) {
-         block_acct_invalid(blk_get_stats(s->blk), BLOCK_ACCT_READ);
-         return -EINVAL;
-     }
- 
--    buf = (s->cd_sector_size == 2352) ? s->io_buffer + 16 : s->io_buffer;
--    qemu_iovec_init_buf(&s->qiov, buf, ATAPI_SECTOR_SIZE);
-+    /* a burst is bounded by the byte count limit, so it fits io_buffer */
-+    assert(nsec * s->cd_sector_size <= s->io_buffer_total_len);
-+
-+    /*
-+     * Read the payload packed at the front of io_buffer; the 2352 raw case is
-+     * unpacked into place on completion.
-+     */
-+    qemu_iovec_init_buf(&s->qiov, s->io_buffer, nsec * ATAPI_SECTOR_SIZE);
- 
-     trace_cd_read_sector(s->lba);
- 
-     block_acct_start(blk_get_stats(s->blk), &s->acct,
--                     ATAPI_SECTOR_SIZE, BLOCK_ACCT_READ);
-+                     nsec * ATAPI_SECTOR_SIZE, BLOCK_ACCT_READ);
- 
--    ide_buffered_readv(s, (int64_t)s->lba << 2, &s->qiov, 4,
-+    ide_buffered_readv(s, (int64_t)s->lba << 2, &s->qiov, nsec * 4,
-                        cd_read_sector_cb, s);
- 
-     s->status |= BUSY_STAT;
-@@ -222,59 +220,49 @@ static uint16_t atapi_byte_count_limit(IDEState *s)
- void ide_atapi_cmd_reply_end(IDEState *s)
- {
-     int byte_count_limit, size, ret;
--    while (s->packet_transfer_size > 0) {
--        trace_ide_atapi_cmd_reply_end(s, s->packet_transfer_size,
--                                      s->elementary_transfer_size,
--                                      s->io_buffer_index);
--
--        /* see if a new sector must be read */
--        if (s->lba != -1 && s->io_buffer_index >= s->cd_sector_size) {
--            if (!s->elementary_transfer_size) {
--                ret = cd_read_sector(s);
--                if (ret < 0) {
--                    ide_atapi_io_error(s, ret);
--                }
--                return;
--            } else {
--                /* rebuffering within an elementary transfer is
--                 * only possible with a sync request because we
--                 * end up with a race condition otherwise */
--                ret = cd_read_sector_sync(s);
--                if (ret < 0) {
--                    ide_atapi_io_error(s, ret);
--                    return;
--                }
-+
-+    trace_ide_atapi_cmd_reply_end(s, s->packet_transfer_size,
-+                                  s->elementary_transfer_size,
-+                                  s->io_buffer_index);
-+
-+    if (s->lba != -1 && s->packet_transfer_size > 0) {
-+        byte_count_limit = atapi_byte_count_limit(s);
-+        trace_ide_atapi_cmd_reply_end_bcl(s, byte_count_limit);
-+        size = s->packet_transfer_size;
-+        if (size > byte_count_limit) {
-+            /* byte count limit must be even if this case */
-+            if (byte_count_limit & 1) {
-+                byte_count_limit--;
-             }
-+            size = byte_count_limit;
-         }
--        if (s->elementary_transfer_size > 0) {
--            /* there are some data left to transmit in this elementary
--               transfer */
--            size = s->cd_sector_size - s->io_buffer_index;
--            if (size > s->elementary_transfer_size)
--                size = s->elementary_transfer_size;
--        } else {
--            /* a new transfer is needed */
--            s->nsector = (s->nsector & ~7) | ATAPI_INT_REASON_IO;
--            ide_bus_set_irq(s->bus);
--            byte_count_limit = atapi_byte_count_limit(s);
--            trace_ide_atapi_cmd_reply_end_bcl(s, byte_count_limit);
--            size = s->packet_transfer_size;
--            if (size > byte_count_limit) {
--                /* byte count limit must be even if this case */
--                if (byte_count_limit & 1)
--                    byte_count_limit--;
--                size = byte_count_limit;
--            }
--            s->lcyl = size & 0xff;
--            s->hcyl = size >> 8;
--            s->elementary_transfer_size = size;
--            /* we cannot transmit more than one sector at a time */
--            if (s->lba != -1) {
--                if (size > (s->cd_sector_size - s->io_buffer_index))
--                    size = (s->cd_sector_size - s->io_buffer_index);
-+        s->elementary_transfer_size = size;
-+        ret = cd_read_sector(s);
-+        if (ret < 0) {
-+            ide_atapi_io_error(s, ret);
-+        }
-+        return;
-+    }
-+
-+    while (s->packet_transfer_size > 0) {
-+        /* a new transfer is needed */
-+        s->nsector = (s->nsector & ~7) | ATAPI_INT_REASON_IO;
-+        ide_bus_set_irq(s->bus);
-+        byte_count_limit = atapi_byte_count_limit(s);
-+        trace_ide_atapi_cmd_reply_end_bcl(s, byte_count_limit);
-+        size = s->packet_transfer_size;
-+        if (size > byte_count_limit) {
-+            /* byte count limit must be even if this case */
-+            if (byte_count_limit & 1) {
-+                byte_count_limit--;
-             }
--            trace_ide_atapi_cmd_reply_end_new(s, s->status);
-+            size = byte_count_limit;
-         }
-+        s->lcyl = size & 0xff;
-+        s->hcyl = size >> 8;
-+        s->elementary_transfer_size = size;
-+        trace_ide_atapi_cmd_reply_end_new(s, s->status);
-+
-         s->packet_transfer_size -= size;
-         s->elementary_transfer_size -= size;
-         s->io_buffer_index += size;
-@@ -329,7 +317,7 @@ static void ide_atapi_cmd_read_pio(IDEState *s, int lba, int nb_sectors,
-     s->lba = lba;
-     s->packet_transfer_size = nb_sectors * sector_size;
-     s->elementary_transfer_size = 0;
--    s->io_buffer_index = sector_size;
-+    s->io_buffer_index = 0;
-     s->cd_sector_size = sector_size;
- 
-     ide_atapi_cmd_reply_end(s);
--- 
+----------------------------------------------------------------
+Denis V. Lunev (7):
+      tests/qtest/ide-test: parametrize the ATAPI CD-ROM read test
+      tests/qtest/ide-test: add a multi-sector ATAPI DMA read test
+      tests/qtest/ide-test: cover raw (2352-byte) ATAPI CD reads
+      tests/qtest/libqos/ahci: support raw (2352-byte) READ CD
+      tests/qtest/ahci: cover raw (2352-byte) ATAPI CD reads
+      hw/ide/atapi: read the whole elementary transfer asynchronously
+      tests/qtest/ahci: regression test for ATAPI read vs. drain
+
+ hw/ide/atapi.c            | 180 +++++++++++++++-----------------
+ tests/qtest/ahci-test.c   | 134 ++++++++++++++++++++++++
+ tests/qtest/ide-test.c    | 211 ++++++++++++++++++++++++--------------
+ tests/qtest/libqos/ahci.c |   5 +
+ tests/qtest/libqos/ahci.h |   2 +
+ 5 files changed, 360 insertions(+), 172 deletions(-)
+
+--
 2.53.0
 
 
