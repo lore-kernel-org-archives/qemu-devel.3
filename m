@@ -4,68 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22AAFC55172
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 06:10:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B644C55822
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 06:19:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wr8Lu-0002m4-Fi; Tue, 04 Aug 2026 02:10:14 -0400
+	id 1wr8UI-0006Ou-TL; Tue, 04 Aug 2026 02:18:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wr8Lr-0002lv-Ff
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 02:10:12 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wr8Lo-0002Gw-Fw
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 02:10:11 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Axw+k1gnFqGy4KAA--.10247S3;
- Tue, 04 Aug 2026 14:09:58 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJBxEuQ0gnFquQ8jAA--.58388S2;
- Tue, 04 Aug 2026 14:09:56 +0800 (CST)
-Subject: Re: [PATCH 2/3] hw/loongarch/virt: Set MADT revision to 6
-To: Dongyan Qian <qiandongyan@loongson.cn>, qemu-devel@nongnu.org
-Cc: 17746591750@163.com, lixianglai@loongson.cn, jiaxun.yang@flygoat.com
-References: <20260804033036.2614008-1-qiandongyan@loongson.cn>
- <20260804033036.2614008-3-qiandongyan@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <658601d7-1660-3a53-7b21-9d878fdafa4f@loongson.cn>
-Date: Tue, 4 Aug 2026 14:09:40 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1wr8UF-0006Nq-1W; Tue, 04 Aug 2026 02:18:52 -0400
+Received: from [115.124.30.101] (helo=out30-101.freemail.mail.aliyun.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1wr8U6-0003Ds-Ge; Tue, 04 Aug 2026 02:18:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1785824288; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=maVIwWUplBrDFGg9ssiWNz1AoCInfkOYmHZDZeSB0xI=;
+ b=PR8CutBPWnZ+ILlKzIKpAv5zrXTnlJYaDLEwcezTGRTrYMTlTVO9M2zl9KS0lYkVp69gVje8M0G9d6bvBQnxEa6CVLkjOHl6XgFbBaON5OCh2saVzOcgW36Kkv57R9MDxcT6gZSKfs3b47UGNXsSvwohFFDFK6YcknuVheidDrw=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R111e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045098064;
+ MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=5; SR=0;
+ TI=SMTPD_---0X8MuO96_1785824285; 
+Received: from localhost(mailfrom:guobin@linux.alibaba.com
+ fp:SMTPD_---0X8MuO96_1785824285 cluster:ay36) by smtp.aliyun-inc.com;
+ Tue, 04 Aug 2026 14:18:06 +0800
+From: Bin Guo <guobin@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ qemu-block@nongnu.org, qemu-stable@nongnu.org
+Subject: [PATCH] hw/scsi/megasas: Abort in-flight commands before resetting
+ frames
+Date: Tue,  4 Aug 2026 14:18:05 +0800
+Message-ID: <20260804061805.39492-1-guobin@linux.alibaba.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-In-Reply-To: <20260804033036.2614008-3-qiandongyan@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxEuQ0gnFquQ8jAA--.58388S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxJrWkZr1rtr47ZFW7WF48GrX_yoW8AF1xpF
- 4ruw1rtFn8XwnxZ39rJ3yF9F15ZrsxG3WI9a1jkryUCwnrKry8WF4S9FW3tFy3C3s5Gr4q
- qw4rt347WFWUZrcCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UNvtZU
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.459,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.101 (deferred)
+Received-SPF: pass client-ip=115.124.30.101;
+ envelope-from=guobin@linux.alibaba.com;
+ helo=out30-101.freemail.mail.aliyun.com
+X-Spam_score_int: -88
+X-Spam_score: -8.9
+X-Spam_bar: --------
+X-Spam_report: (-8.9 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001, SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,48 +67,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+megasas_init_firmware() called megasas_reset_frames() without first
+aborting in-flight SCSI requests.  This destroyed their scatter-gather
+lists (setting the AddressSpace pointer to NULL) while the requests were
+still active.  A subsequent MFI_IDB abort would then dereference the NULL
+AddressSpace in dma_aio_cancel().
 
+Abort all commands before resetting frames, mirroring what
+megasas_soft_reset() already does.
 
-On 2026/8/4 上午11:30, Dongyan Qian wrote:
-> The LoongArch virt machine emits Core PIC, EIO PIC, MSI PIC and BIO PIC
-> subtables, but advertises MADT revision 1. Revision 1 predates these
-> LoongArch interrupt controller structures.
-> 
-> ACPI 6.5 introduced the LoongArch interrupt controller structures and
-> defined MADT revision 6. ACPI 6.6 raises the MADT revision to 7 for the
-> additional RISC-V interrupt controller structures, while leaving the
-> LoongArch structures unchanged.
-> 
-> Since the virt machine emits only the LoongArch structures defined by
-> ACPI 6.5, set the MADT header revision to 6, the minimum revision that
-> describes the table contents.
-> 
-> ACPI specifications:
-> https://uefi.org/specs/ACPI/6.5/
-> https://uefi.org/specs/ACPI/6.6/
-> 
-> Fixes: 735143f10d3 ("hw/loongarch: Add acpi ged support")
-> Signed-off-by: Dongyan Qian <qiandongyan@loongson.cn>
-> ---
->   hw/loongarch/virt-acpi-build.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
-> index a0b445f297..600ef60fc5 100644
-> --- a/hw/loongarch/virt-acpi-build.c
-> +++ b/hw/loongarch/virt-acpi-build.c
-> @@ -128,7 +128,7 @@ build_madt(GArray *table_data, BIOSLinker *linker,
->       MachineClass *mc = MACHINE_GET_CLASS(ms);
->       const CPUArchIdList *arch_ids = mc->possible_cpu_arch_ids(ms);
->       int i, arch_id, flags;
-> -    AcpiTable table = { .sig = "APIC", .rev = 1, .oem_id = lvms->oem_id,
-> +    AcpiTable table = { .sig = "APIC", .rev = 6, .oem_id = lvms->oem_id,
->                           .oem_table_id = lvms->oem_table_id };
->   
->       acpi_table_begin(&table, table_data);
-> 
-For this series.
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4092
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+---
+ hw/scsi/megasas.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+diff --git a/hw/scsi/megasas.c b/hw/scsi/megasas.c
+index 9e712721f8..e9758ddb90 100644
+--- a/hw/scsi/megasas.c
++++ b/hw/scsi/megasas.c
+@@ -641,6 +641,7 @@ static int megasas_init_firmware(MegasasState *s, MegasasCmd *cmd)
+     struct mfi_init_qinfo *initq = NULL;
+     uint32_t flags;
+     int ret = MFI_STAT_OK;
++    int i;
+ 
+     if (s->reply_queue_pa) {
+         trace_megasas_initq_mapped(s->reply_queue_pa);
+@@ -684,6 +685,9 @@ static int megasas_init_firmware(MegasasState *s, MegasasCmd *cmd)
+     trace_megasas_init_queue((unsigned long)s->reply_queue_pa,
+                              s->reply_queue_len, s->reply_queue_head,
+                              s->reply_queue_tail, flags);
++    for (i = 0; i < s->fw_cmds; i++) {
++        megasas_abort_command(&s->frames[i]);
++    }
+     megasas_reset_frames(s);
+     s->fw_state = MFI_FWSTATE_OPERATIONAL;
+ out:
+-- 
+2.50.1 (Apple Git-155)
 
 
