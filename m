@@ -4,110 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53494C55184
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 15:47:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4211C55822
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 16:28:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrHLo-0006Dq-Sz; Tue, 04 Aug 2026 11:46:44 -0400
+	id 1wrI00-0004RO-9m; Tue, 04 Aug 2026 12:28:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wrHLj-0006DK-CP
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 11:46:42 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wrHzz-0004R0-02
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 12:28:15 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wrHLi-0008U2-2D
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 11:46:39 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-6a0794669a6so6682289a12.2
- for <qemu-devel@nongnu.org>; Tue, 04 Aug 2026 08:46:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785858396; cv=none;
- d=google.com; s=arc-20260327;
- b=dvaDhI21oksxvTEk64dlMQh+Ou2ifDIlcs8gBxAEu7OHur1ToNPyLqvNOqULngc/Y3
- 7F3aWKn60iqjfQM9NsMivMqHOO/f1fAHyOMXK9j5De2TH4Pqxigvhumzg6qRJ73RgYtr
- gKbbR1f4a/B3hGGHeNHq1QOexkOMILbZl31eUHp1qOeHW/tfQmfstavVpvJ2RwN03tKS
- XM643FaRRPe9MENdUd7YjsWtychEb+uMyhi5f3agB3B+pdRj1G1XfeqNlN/ddXNw1WzU
- xBQ7+758YkfAghbPEVLojJhmTNNRnvMtnSynmHn+AwcpjAM5gS7uQ0k20pQ6LtWAuGNk
- MXWQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=5hRZkUBov2oo6lhHiXMhi3iCVaISD3LAqJHT9ycCdWg=;
- fh=ErhCrVLVjWLuNVM4dnEwne6AMWC8gdwKuMkozzRcRHc=;
- b=MDyxFeHXRbQMfDmnKoIATHHBf1kUFN9XNiP2bYvwYxPtDQTZnPe4DYIwJqwprhomvj
- 2L+cMyv+TtHVLAMd+Ycyx9mQY55+Vp2BhZLyvKwEbiHgI0F5ZxoXnWMq0rpzWYtKp+CM
- EltUPG2NHLYjUJAYyLZRRs8BlSZd+q1UVjViS9Y3XkmY8unNMhtOdjgKA0SY94+Vtf10
- rsFPFxSUoBnXIaADUr0Bw/Qh3YXeRye8GgbLtylAsOMQJXb9ZkaEr4F+W4T5OIjdvVHO
- I2gWCuoql0iRDfLAk13naGyliRif/FbTJwR+aPpEFNw/tc1qo7dPQ9ZHHsygmdcf7D64
- FFCw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wrHzx-0004ha-3h
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 12:28:14 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-47fe2d179e2so1553838f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Aug 2026 09:28:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785858396; x=1786463196; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=5hRZkUBov2oo6lhHiXMhi3iCVaISD3LAqJHT9ycCdWg=;
- b=ZPHAuD+q7arjhcZEirKeAxsE1qoaqyulwDf1emY4h1JIfEkwkvnUDaMb1Y7Zc5ikt9
- 2JFZn2fpsw+OMum3CJB2TGGXZc1uCxbfCkpy5CLQ4O9XDF+dGbuHY8rDNVYDLhHljbH6
- G3Z1wMkIOfJFMX+YA0cgzkNJhqdPd2et0fT3AlKHt81FmE8vUROsieNBLvxRbwaCdaTk
- 6UdZyGo+jLfCKfTrqVHJLXw5YlaHODopFL8YbEBto3mirE7fSMc+0dGkE/IdoAqR4VgZ
- Kl1boDd6VNG3KH9VKH6HX++Te7maW+Z/dWXFsGIxUw7srcqc8fz2hO9VzU4FQj1CDo5w
- hqjA==
+ d=openvz.org; s=google; t=1785860891; x=1786465691; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=doJMfvC/HoJmidjxg/Ea9PYkKHlqmHNdC+NWmbB3DN0=;
+ b=bn7OsqIzrvdMbgPIbvOziaJCoM3OIVLUTwPHdVzywu+kto5EdDjh0jcCkk4VodqKdW
+ XMy+Px/jNeIZ+nmKf2jhnle6oD4J0JYrQcBfnRUwWgxWOB+QHGoEzPgZfmiOfbE6M6Fk
+ wfvglxU69hC+Lcfn+PPYJGERmwQ6lfr14zcNsCV8MaDGcx8h9us8ppLOrZp1ZspPfP+T
+ 6h4XstvvnlIv+bRcUTSvbh7dEztiUB1YQzjB4gp0hx5SJvzvljCzgjA0HZmzG1CGD11u
+ aM7cmv+MJgaF2N78cri7dnRPGvbNV2NhMt8SuL/znHbgQH23MoPyWXLtbKF2sfnCxscM
+ 0IYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785858396; x=1786463196;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=5hRZkUBov2oo6lhHiXMhi3iCVaISD3LAqJHT9ycCdWg=;
- b=mpoCxPg/j4oJ5IhshUBcvWXNBb5ClzMVPUVwlIgo24/e57Qv28WcngNJ7/j0iMvRNK
- /dYNjpSFRLs3SZJlr3/gXTfErVrwkBpgmEBIHKeT6r28H7J68owWuLNXm7qkg+taJCDI
- DVeISO19ELWYmYpOfuTxDrW1qer0ZE86iHfgnuAm8dxukG7iS2YTq95lqwXB6L5jXvnd
- wNov12J6YaQCQ3dwL1FGX5wZBoKpXCvZeVxRQ04YVWDecDu7FGepJtCR9iR/rWeRgVW+
- GWO2oSLeIuUbcpCU2so1GKZO3+RFRPOHw9uc/BEbd+JIxAjDiltWVH0GMMzCLJHqJi0I
- 4pMA==
+ d=1e100.net; s=20251104; t=1785860891; x=1786465691;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=doJMfvC/HoJmidjxg/Ea9PYkKHlqmHNdC+NWmbB3DN0=;
+ b=TpyAnJq8sl7A1lMlNmQ1538ub5AGGsJTOhljWCz1/h23/dYFjhNUJSd31b1FE0rR9a
+ mXJqmptsnWMsaGSNBtskPTToCrbuQK6A0XteM1dXV+zzA/1EXE34TPoRmOiMANeOgUOE
+ c/DczWH6rcKKmDdUxKEBOCIMEojuHwmVcGieQWTon+8eoh6jFih1B5AKEtmKT5feNYJE
+ JX8Npd1RRNDwma+X7HNzOG6zQlVaI0RMDne7LCwkH1Ct5YQfNfDUMSr8F3kLiNHwrCFf
+ KYa2ywU+gDLbfx2/FOzWtQB9z5M7FZmMszbGZWWq3n/PTq0k+f4jCTCJ5uB3Mdymk+3u
+ 1VYQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrsJ4xIWXzLZK7ASxXB+zDfjY4Vq9IgsUhSyGG28zLcFD6F/aUsA5EffsMfq5bnINcSiS28wAbAQ4Hc@nongnu.org
-X-Gm-Message-State: AOJu0Ywgq6CviRY3r6dHY++S1vWN2ecFFfe05sR6Nkmo8Q6fcdTdfupn
- iQoN+n6GwvThkTmh6toshhb78Ib29zbfZyR0tY7sx0vS7OYOs4rEp+PHmje0i2sGqU2S+DerBoR
- LQMhicXjQd0ywyZGNrR2mtLuTMZHR+kA=
-X-Gm-Gg: AR+sD12HoUNsVxFcjJNcqzsYQQ+PvY/ZEHJ7qm0X4PhGlCwCDxwxcP/ypCqZ7mSGc/s
- ExNi6zitqPlN6rbYbGFBm8rDoHF662+jwssg5w/Tanupe279inWt/2w85NFrB7txVaHYFcuI+Vm
- TRco1WDHtGKaxIh+V/VEjVKOva6Ki+UI70a6Rje6we7kcbuIqsw6vPiRt1dhkGTkEr0tSdippuw
- gnye/rKEtCAOfW9a2sSL/tHmHdjKgc9mitz0jhjFkXXlMt2oVNMw95SxWyMg6IPLJxHIJ8Gc+B4
- dKAFp21wtSnvZtRTPbTuseJeiximjCFBGmoJpD+e9kghj2qGVmk3denvivApt1TjQKvV3SjJp2m
- Gow==
-X-Received: by 2002:a05:6402:52d1:b0:69e:8ad:5162 with SMTP id
- 4fb4d7f45d1cf-6a0a7c60ee0mr12890079a12.1.1785858396422; Tue, 04 Aug 2026
- 08:46:36 -0700 (PDT)
+ AHgh+RpHUGT/0JrzO+bnainu+HMHvv5hO3ecf5CHGAXPb3JM8gXd2WsSgXFFIRNAEJ4lsjpjztb0Y8rVgGCn@nongnu.org
+X-Gm-Message-State: AOJu0Yyy76ldXmVyOg+5E/+JTBZsO/5J6ssmHhdLmr/RS2u+gwY5FRcz
+ lK+UDl8kD3MB700ZrXFSQCJAl9ikGFN2GoPdPrYDzg9wQ2C6HhI6H2dhrTCoN+GN1Cw=
+X-Gm-Gg: AR+sD12JqnTgJ37SdivkQhBinAnuPkZOK5SR9jFXfqSG4JwAd5SUPFr1Tpi/wGmv9mA
+ 2TSxpZ+COb9ViGO0t45aCGHvX9SoeT13NdZ5Pn9BVtU+IlhLyHFQb3eQbXFRS2uOQk7bRMARc65
+ lLAxbmLdHlW80ph2IqmGg4l5oUp51gOQdqPLcieo5B7w9U6mt/JKWjCwmBc+iCMabxXUyv2NYlx
+ WitI0oXa1cFJpTjf6hCXwB5FV2/5MqU1pWW3qS0J/STZfbJpXPwzb1BgjtVI8dm+XHRiJS9L4VV
+ 4uKL7N0eORaMT+uf7jnN9FWwWEWG+7S7xsOLfLeqjNFeBC8D9Mba2EfcEo5qx918ZpqerUIUMIw
+ X2UlCgtY/oTSkLPVPvw0rcT3IPpLanf+vXwuCw7Gjsmw0SmR/nr+NOVe5H3Hn3sZQU9uyIbLCRw
+ L3cyMfyrZfnzPiGNmh1BYJT++VVGmrzhX/gOWkiXqScKFibQ==
+X-Received: by 2002:a05:6000:4006:b0:46e:c978:7ddc with SMTP id
+ ffacd0b85a97d-47fec62e675mr725914f8f.24.1785860890551; 
+ Tue, 04 Aug 2026 09:28:10 -0700 (PDT)
+Received: from athena ([213.133.28.44]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47febfe6b26sm1136119f8f.16.2026.08.04.09.28.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 04 Aug 2026 09:28:09 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: den@openvz.org, qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH] hw/ide: Don't divide by zero if guest specifies 0 sectors
+Date: Tue,  4 Aug 2026 18:28:05 +0200
+Message-ID: <20260804162806.3090749-1-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260630104249.2533126-1-peter.maydell@linaro.org>
+References: <20260630104249.2533126-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-References: <20260804121000.444745-3-hi@alyssa.is>
-In-Reply-To: <20260804121000.444745-3-hi@alyssa.is>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Tue, 4 Aug 2026 11:46:23 -0400
-X-Gm-Features: AUfX_mzl88qsHpx1f7GKHGeFWfVE4rOddYdtPMVRqddQY0GH97n9c0RwEHTLbmo
-Message-ID: <CAJSP0QWtiREX+8Hoek6edYDacNm07MqnzfFM6daGa9tWvMyMHw@mail.gmail.com>
-Subject: Re: [PATCH] vhost-user.rst: fix typo
-To: Alyssa Ross <hi@alyssa.is>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- Albert Esteve <aesteve@redhat.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x536.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=den@openvz.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,20 +99,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 4, 2026 at 8:11=E2=80=AFAM Alyssa Ross <hi@alyssa.is> wrote:
->
-> The protocol feature is named SHMEM.  SHMEM_MAP is one of the
-> requests.
->
-> Fixes: 588acb45c2 ("vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec")
-> Signed-off-by: Alyssa Ross <hi@alyssa.is>
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> ---
-> (Resending after accidentally not sending to the list the first time.)
->
->  docs/interop/vhost-user.rst | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+I have spent some time on what the ATA contract actually says about
+INITIALIZE DEVICE PARAMETERS, mostly because of the reasoning quoted
+below, and ended up with a set of findings.
 
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+On 30.06.2026 12:42, Peter Maydell wrote:
+> INITIALIZE DRIVE
+> PARAMETERS is specified to not check the input values for validity;
+> instead no error is posted until some other command makes an illegal
+> access. So we have to cope with a 0 divisor here.
+
+1) That premise does not hold for ATA-2 and later. ATA-5 8.16.8, with
+   the same wording in ATA-4 8.16.8:
+
+     If the host requests a CHS translation that is not supported by
+     the device, the device shall return command aborted. [...]
+     If the requested CHS translation is not supported, the device
+     shall fail all media access commands with an ID Not Found error
+     until a valid CHS translation is established.
+
+   ATA-2 7.18 speaks to the "no error is posted" behaviour directly in
+   NOTE 26: previous ATA specifications were unclear, some
+   implementations indicate no error at all, but most of those still
+   fail media access commands. The command was dropped entirely in
+   ATA-6 along with CHS addressing.
+
+2) Zero sectors per logical track is an unsupported translation by
+   definition, not a borderline case: ATA-5 6.2 numbers CHS sectors
+   from one, and ATA-2 D.2.8 limits IDENTIFY DEVICE word 56 to values
+   between 1 and 255. So 8.16.6 has us abort the command, and the
+   error belongs there rather than on the later access.
+
+Your question below the --- line, whether we should check the addresses
+a guest uses against the CHS limits it selected, is a real gap as well,
+but I would keep it apart from the crash fix.
+
+For me this changes where the fix has to live. There are further
+consequences, one of them around migration, but they are much easier to
+discuss with the code in hand, so let me send that first.
+
+Den
 
