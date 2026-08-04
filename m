@@ -4,68 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C5A6C55184
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 14:39:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C071FC5518F
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 14:47:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrGHg-0000fL-DC; Tue, 04 Aug 2026 10:38:24 -0400
+	id 1wrGPX-0002T7-Ht; Tue, 04 Aug 2026 10:46:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1wrGHc-0000f7-Ki
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 10:38:20 -0400
-Received: from [115.124.30.100] (helo=out30-100.freemail.mail.aliyun.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1wrGHU-0008S0-PG
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 10:38:20 -0400
+ (Exim 4.90_1) (envelope-from <huang.botsz@gmail.com>)
+ id 1wrGPQ-0002Rm-6y
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 10:46:25 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <huang.botsz@gmail.com>)
+ id 1wrGPN-00013Z-EV
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 10:46:23 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-3900e39d935so589617a91.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Aug 2026 07:46:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1785854266; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
- bh=ZmTMd2/iXkXfubc4u2eOyilowVn0BJ/PBdpB44bui3w=;
- b=uhQhlQHmGHgGHEpigVQHCtptFIC4huYFwaDo/NHlv78atWSUga0ihiUIlf77nL+ZdfHAyS16LURdEoAwpdrEp2w3x/5Yqfi4sGbMps/vsA8z7B/EHFmfLpSixJWIA5B7WGL8lEEdbJxnOlQ0UDrn1EIYd7+1m9zFOssDZIDt4og=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R371e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
- MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=2; SR=0;
- TI=SMTPD_---0X8OZEmn_1785854261; 
-Received: from
- riscv-project-v011122129236.ea134.tbsite.net(mailfrom:lyndra@linux.alibaba.com
- fp:SMTPD_---0X8OZEmn_1785854261 cluster:ay36) by smtp.aliyun-inc.com;
- Tue, 04 Aug 2026 22:37:45 +0800
-From: TANG Tiancheng <lyndra@linux.alibaba.com>
-Date: Tue, 04 Aug 2026 22:37:19 +0800
-Subject: [PATCH] scripts/checkpatch: Match paths beginning with hw/
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260804-b4-checkpatch-hw-path-v1-1-91b88679f2d9@linux.alibaba.com>
-X-B4-Tracking: v=1; b=H4sIAB75cWoC/x2MQQqEMAwAvyI5b6BqteJXFg82RhMElVZUEP9u8
- TZzmLkhclCO0GY3BD406rokyX8ZkPTLxKhDcihMUZvGWPQWSZjmrd9JUE5MIEiDdc5XZeV8A6n
- dAo96fd9/9zwvwu1mS2cAAAA=
-X-Change-ID: 20260804-b4-checkpatch-hw-path-cd477b5357b8
+ d=gmail.com; s=20251104; t=1785854777; x=1786459577; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=CSa5gtZjReAy+ibyYVDzpszBYSW7M8VPvzqtePKDMK8=;
+ b=M5eU3tydIEteeYCtiY/u8UDe39/Y6fZb92YdpZTCVMXCc7QJBqSiNl4a2uM9cb4lS8
+ L9jvjSV62MOi5njKsx+ybSCoP9+CihBqg3LEPXlqg679ZB+06pAsbZK6pXkA5CqIP1u5
+ ZkMaNic5JzF+TfDYJQlUzJWjxFJ5qDyuNTEzQRAKie5Yfkm7jpi8xp786l74kOdxJYfN
+ hrLD0qD2vYOAyI6z+4Kjqg2GbkkQ59WPD7U3dTcqG7/nGks5Z9NUz2oVnq+MsB3MwAx/
+ 2sQHTf9WvryyabYIU1vdAYVjz+lNQNeFShXMHPvUErQ8sTPjGAbVdjX8xB+5LgeUTK+i
+ 0uwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785854777; x=1786459577;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=CSa5gtZjReAy+ibyYVDzpszBYSW7M8VPvzqtePKDMK8=;
+ b=OsjyP+iaxAFhtkygHbfVOQdFRC6Z86GuY2SzMqeq3XK1mu5+aV+RXYpPxB700Ka9gw
+ a8RqY8LOMjPxnRe3qv06L3Soh9iwlsYMjRgdQzO4kQJi0pGgH4njfeASXiQq495GY04T
+ DAJ7LKYQh9V2fpG8mgykRYIghTBus31NlNwiSqHlTDfBZJ7omJW8w6xsp6JL2wVL/j0G
+ 1swFXGSWycGnvxnLmhonq2jdkqptRRw608K+a1C11YmFzUmTmXTk5/dplFs5xMlUYF15
+ Q7Q1SAXdTsWzvZWaK7m9EgmQ/1LUKz++YK0Rrh+2uvWKhxbrbAtoBnYp75rAE+jmNAst
+ C1RQ==
+X-Gm-Message-State: AOJu0YyeuSzwDNAKsPOLxmDDa1CTr1NGck9qfMz0iqmoKuaeI9vy35Ds
+ GXImhaKVTKTebS40z2ziGaUcWHN3KJhT+Kw7yBJbQIi0dhxiQjBz6BTXmXMx9w==
+X-Gm-Gg: AR+sD114r2floZTxwWyLzWpKv64Ps3m75/QDQ3HKsygsNnQsq8IScTCwtavJBYMHBRl
+ LQ6YUqGAo0hk4xiEXCFNcnySfoB8Lt7h+qGyiT3aP9PAGnrlV8yVn9kBqLiu+TlnOlS1zq7W5WU
+ QGwU1kuYaD24wQI/2Lm79n42Bi96/XQuj01S2U0pM6hstmg8338397pMZCfB9u5G/OJWwOfN7i3
+ e2N88dWyDjSpd93x6wjLNux871vjgiPQ+BFk8LTjnTtKwsFImZq+bngi5bGDlTszY+f98rEM9mE
+ pM/ci0fYVdfF15CBCVDBrkPsGF9voR+ThjENj5P+fBNubOK/CAlv4E12E8owv8Q5vZLnUr8/hJR
+ rrnNIe5PM7v3yFEaS45cO5HZjnqCPPXeFewvFkgYNmf7lK+gOARQNiEm8upOrKI7HO2Db6a8+Uh
+ 7pC+FFoOWY2Xja9jOE73R2LXNb3VioFjm7XFpKTlp2ajscs3cfpuIHXQoZajAqjGev/60t+ymKe
+ u9xAfAeOdQ+x2bjjGz/EcQWAKAevpp/4REWNzjjTCSMv0ldVWeg3FIwCGn9zqtFKDiIV1+29AlS
+ 8ej6Y+2VlE/Wo5uBmMM9KOfB5XtNYXkYiZ5N5bhlODPUKQ==
+X-Received: by 2002:a17:90b:3852:b0:38e:5964:97a8 with SMTP id
+ 98e67ed59e1d1-38fbc46d032mr12071305a91.16.1785854776683; 
+ Tue, 04 Aug 2026 07:46:16 -0700 (PDT)
+Received: from botszhome.. (118-171-39-160.dynamic-ip.hinet.net.
+ [118.171.39.160]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-38febffb36dsm1553009a91.7.2026.08.04.07.46.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 04 Aug 2026 07:46:16 -0700 (PDT)
+From: botszhuang <huang.botsz@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Chao Liu <chao.liu@processmission.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1785854265; l=3426;
- i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
- bh=iTvSziGfbs1n3Wk6FJsyWV76mMrDxG85MgpEkilKO7I=;
- b=Mf7+34hRYdn8GvDG8GACRL9gZg+6it7KZhJHl5Yfm/8xellf209wCS2P0Peyv4QWqQGioqj3l
- W8q7a2gUWk0AlnLtQg9adXg08wZBLnc+r7yGM3o9uUd9lyy/vRkR1t8
-X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
- pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.100 (deferred)
-Received-SPF: pass client-ip=115.124.30.100;
- envelope-from=lyndra@linux.alibaba.com;
- helo=out30-100.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+Cc: peter.maydell@linaro.org, philmd@mailo.com, qemu-arm@nongnu.org,
+ sef1548@gmail.com, botszhuang <huang.botsz@gmail.com>
+Subject: [PATCH] hw/i2c/bcm2835_i2c: Correct iomem size
+Date: Tue,  4 Aug 2026 22:46:11 +0800
+Message-ID: <20260804144611.31735-1-huang.botsz@gmail.com>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=huang.botsz@gmail.com; helo=mail-pj1-x1034.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,82 +99,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Patch mode strips the leading a/ and b/ components from file paths,
-leaving repository-relative paths such as hw/riscv/foo.c.  The checks
-for qemu_bh_new() and aio_bh_new() currently require /hw/ in $realfile,
-so they miss paths beginning with hw/ in both normal Git patches and
---file mode.
+The last valid register is the Clock Stretch Timeout (CLKT) at
+offset 0x1c. Since it is a 32-bit register, the total memory
+region size should be 0x1c + 4 = 0x20.
 
-Match either the start of $realfile or a slash before hw/, making
-patch and file modes consistent while preserving nested /hw/ matches.
+Update the size parameter in memory_region_init_io() from 0x24
+to 0x20 to accurately reflect the hardware specification.
 
-Fixes: ef56ffbdd6b0 ("checkpatch: add qemu_bh_new/aio_bh_new checks")
-Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+Signed-off-by: botszhuang <huang.botsz@gmail.com>
 ---
-The checks for qemu_bh_new() and aio_bh_new() introduced by
-ef56ffbdd6b0 are intended to cover files under hw/.  In patch mode,
-checkpatch removes Git's leading a/ and b/ path components before
-setting $realfile.  A file under the repository's hw/ directory is
-therefore represented as hw/foo.c.  Since the checks require /hw/,
-they do not recognize that path.  The same false negative occurs in
---file mode when given a repository-relative path such as
-hw/misc/i2c-echo.c.
+ hw/i2c/bcm2835_i2c.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The problem can be reproduced from an unmodified upstream QEMU checkout
-at the series base:
-
-  $ git show b14037f37f9 -- hw/misc/i2c-echo.c |
-      scripts/checkpatch.pl --patch \
-          --test-only=aio_bh_new_guarded --no-summary -
-  Your patch has no obvious style problems and is ready for submission.
-
-Commit b14037f37f9 adds a qemu_bh_new() call under hw/, so that result is
-a false negative.  Repository-relative file mode reproduces the issue:
-
-  $ scripts/checkpatch.pl --file hw/misc/i2c-echo.c \
-      --test-only=aio_bh_new_guarded --no-summary
-  hw/misc/i2c-echo.c has no obvious style problems and is ready for
-  submission.
-
-Before this patch, both invocations succeed without reporting the call.
-After this patch, both report:
-
-  ERROR: use aio_bh_new_guarded() instead of qemu_bh_new*() to avoid
-  reentrancy problems
-
-and return failure as expected.  The analogous aio_bh_new() check was
-verified with hw/i386/kvm/xen_evtchn.c.
----
- scripts/checkpatch.pl | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 03f35e75012c8c7a00b67f036e4befb2ea162d4a..9ae7693a4f388597dc11a58a85736d511fbcc62c 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -3223,11 +3223,13 @@ sub process {
- 			ERROR("use sigaction to establish signal handlers; signal is not portable\n" . $herecurr);
- 		}
- # recommend aio_bh_new_guarded instead of legacy qemu_bh_new / qemu_bh_new_guarded
--        if ($realfile =~ /.*\/hw\/.*/ && $line =~ /\bqemu_bh_new(_guarded)?\s*\(/) {
-+		if ($realfile =~ m{(?:^|/)hw/} &&
-+		    $line =~ /\bqemu_bh_new(_guarded)?\s*\(/) {
- 			ERROR("use aio_bh_new_guarded() instead of qemu_bh_new*() to avoid reentrancy problems\n" . $herecurr);
- 		}
- # recommend aio_bh_new_guarded instead of aio_bh_new
--        if ($realfile =~ /.*\/hw\/.*/ && $line =~ /\baio_bh_new\s*\(/) {
-+		if ($realfile =~ m{(?:^|/)hw/} &&
-+		    $line =~ /\baio_bh_new\s*\(/) {
- 			ERROR("use aio_bh_new_guarded() instead of aio_bh_new() to avoid reentrancy problems\n" . $herecurr);
- 		}
- # check for DEVICE_NATIVE_ENDIAN, use explicit endianness instead
-
----
-base-commit: b428fe036233cbd15d37e3c027ab6ca4d3661a80
-change-id: 20260804-b4-checkpatch-hw-path-cd477b5357b8
-
-Best regards,
+diff --git a/hw/i2c/bcm2835_i2c.c b/hw/i2c/bcm2835_i2c.c
+index 34de1f36e5..5f6093087d 100644
+--- a/hw/i2c/bcm2835_i2c.c
++++ b/hw/i2c/bcm2835_i2c.c
+@@ -222,7 +222,7 @@ static void bcm2835_i2c_realize(DeviceState *dev, Error **errp)
+     s->bus = i2c_init_bus(dev, NULL);
+ 
+     memory_region_init_io(&s->iomem, OBJECT(dev), &bcm2835_i2c_ops, s,
+-                          TYPE_BCM2835_I2C, 0x24);
++                          TYPE_BCM2835_I2C, 0x20);
+     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iomem);
+     sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);
+ }
 -- 
-TANG Tiancheng <lyndra@linux.alibaba.com>
+2.43.0
 
 
